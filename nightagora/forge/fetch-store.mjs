@@ -97,11 +97,13 @@ const deployed = JSON.parse(recordBytes.toString('utf8')).assets ?? []
     belong to the repository or to the sources, never to the store. */
 function filesOfRecord(e) {
   const out = []
-  const file = (r) => {
+  const file = (r, optional = false) => {
     if (r && typeof r === 'object' && typeof r.path === 'string' && r.path && !r.path.endsWith('/') && !r.path.includes('*'))
-      out.push({ path: r.path, sha256: r.sha256, bytes: r.bytes })
+      out.push({ path: r.path, sha256: r.sha256, bytes: r.bytes, optional })
   }
-  file(e)
+  // a released original is served by its previews; an unhashed record with a
+  // source of its own may live at that source rather than in the store
+  if (e.original_held !== false) file(e, !e.sha256 && typeof e.source_url === 'string')
   if (Array.isArray(e.previews)) e.previews.forEach(file)
   file(e.crop)
   for (const key of ['ktx2', 'ktx2_calm']) if (e[key] && typeof e[key] === 'object') Object.values(e[key]).forEach(file)
@@ -240,6 +242,7 @@ function licenceLines(e) {
 
 let done = 0, fetched = 0, fetchedBytes = 0
 const missing = []
+const elsewhere = []
 const broken = []
 async function fetchOne(w) {
   const file = target(w)
@@ -251,7 +254,7 @@ async function fetchOne(w) {
   const answer = await get(url)
   if (answer.status === 404) {
     await answer.body?.cancel()
-    missing.push(`${w.scope}/${w.path}`)
+    ;(w.optional ? elsewhere : missing).push(`${w.scope}/${w.path}`)
     return
   }
   if (!answer.ok || !answer.body) {
@@ -301,7 +304,8 @@ if (process.stdout.isTTY) process.stdout.write('\n')
 
 note({
   complete: missing.length + broken.length === 0,
-  files: list.length - missing.length - broken.length,
+  files: list.length - missing.length - broken.length - elsewhere.length,
+  elsewhere,
   bytes: total,
   left_out: { whole_folders: wholeFolders, display_false: 'all' },
   missing,
@@ -310,6 +314,7 @@ note({
 
 const seconds = Math.round((Date.now() - started) / 1000)
 console.log(`${fetched} fetched (${mb(fetchedBytes)}) in ${seconds} s, ${list.length - todo.length} already here; ${requests} requests to ${PUBLIC_ORIGIN}`)
+for (const m of elsewhere) console.log(`  kept at its own source, not in the store: ${m}`)
 for (const m of missing) console.log(`  not on the site (404): ${m}`)
 for (const b of broken) console.log(`  failed: ${b}`)
 console.log(missing.length || broken.length ? 'run it again to retry what failed' : `the copy is complete; \`pnpm dev\` now reads it`)
