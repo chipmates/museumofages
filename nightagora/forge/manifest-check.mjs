@@ -2,7 +2,12 @@
 // build refuses to produce a bundle whose assets cannot say where they came
 // from. It runs as a pre-step of `pnpm build` and stands alone:
 //
-//   node forge/manifest-check.mjs [--json] [--quiet]
+//   node forge/manifest-check.mjs [--json] [--quiet] [--records-only]
+//
+// --records-only checks what the repository itself carries (the app's own
+// records, their fields, no stray bytes) and leaves out the store's bytes
+// and the source's references, which need the store: the check a clean
+// runner with no store can make.
 //
 // What fails a build:
 //   · a file in the asset store with no manifest entry
@@ -28,24 +33,34 @@ import { join, sep } from 'node:path'
 import {
   APP_ROOT,
   appScopes,
+  FETCHED_NOTE,
   filesOf,
   mergeManifests,
   scopes,
+  storeKind,
   strayAppFiles,
   STORE,
 } from './vite-na-assets.mjs'
 
 const JSON_OUT = process.argv.includes('--json')
 const QUIET = process.argv.includes('--quiet') || JSON_OUT
+const RECORDS_ONLY = process.argv.includes('--records-only')
 
-// The store is the arm's, not the repository's: no byte of it is public. A
-// clone with no store still builds and says why, and the gate report fails
-// on the missing store instead, so the arm can never silence the check by
-// moving a folder.
-if (!existsSync(STORE) && !appScopes().length) {
-  const said = { store: null, ok: true, reason: `no asset store at ${STORE}`, assets: 0, errors: [] }
-  console.log(JSON_OUT ? JSON.stringify(said, null, 2) : said.reason)
-  process.exit(0)
+// The store is not the repository's: no byte of it is public. Without it,
+// or with only a copy fetched from the public site, the full check cannot
+// vouch for a single byte, so it fails and says why, even when quiet: a
+// build that runs it first stops with a reason instead of an exit code.
+const KIND = storeKind()
+if (KIND !== 'own' && !RECORDS_ONLY) {
+  const reason = KIND === 'none'
+    ? `no asset store at ${STORE}: the full check and a production build need the museum's store ` +
+      '(set NA_ASSET_STORE to its folder); --records-only checks what the repository carries'
+    : `the store at ${STORE} is a copy fetched from the public site (${FETCHED_NOTE}): ` +
+      'the full check and a production build need the museum\'s own store'
+  const said = { store: null, ok: false, reason, assets: 0, errors: [reason] }
+  if (JSON_OUT) console.log(JSON.stringify(said, null, 2))
+  else console.error(`MANIFEST CHECK FAILED: ${reason}`)
+  process.exit(1)
 }
 
 const SRC = join(APP_ROOT, 'src')
@@ -151,7 +166,7 @@ for (const scope of local) {
 
 // ----------------------------------------------------- the bytes on disk
 const sha = (file) => createHash('sha256').update(readFileSync(file)).digest('hex')
-for (const scope of scopeList) {
+for (const scope of RECORDS_ONLY ? [] : scopeList) {
   const named = new Set()
   for (const e of assets.filter((a) => a.wing === scope)) {
     for (const { record, where, required } of filesByEntry.get(e)) {
@@ -258,7 +273,7 @@ function references() {
   return found
 }
 
-const refs = references()
+const refs = RECORDS_ONLY ? new Map() : references()
 const resolved = new Map()
 for (const [ref, where] of refs) {
   const entry =
@@ -314,6 +329,8 @@ if (!QUIET) {
   if (errors.length) {
     console.log('MANIFEST CHECK FAILED:')
     for (const e of errors) console.log(' ·', e)
+  } else if (RECORDS_ONLY) {
+    console.log('every record complete (records only: the store\'s bytes and the source\'s references were not checked)')
   } else {
     console.log('every asset named, hashed and displayable')
   }
@@ -324,6 +341,7 @@ if (JSON_OUT)
     JSON.stringify(
       {
         store: STORE,
+        ...(RECORDS_ONLY ? { recordsOnly: true } : {}),
         scopes: scopeList,
         assets: assets.length,
         appScopes: [...local],

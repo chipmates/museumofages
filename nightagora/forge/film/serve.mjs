@@ -67,7 +67,8 @@ function filmPlugin() {
         createReadStream(file).pipe(res)
       })
   }
-  return { name: 'na-film', configureServer: serve, configurePreviewServer: serve }
+  // first: without a store the asset plugin's own /film/ reads the public site
+  return { name: 'na-film', enforce: 'pre', configureServer: serve, configurePreviewServer: serve }
 }
 
 if (DIST) {
