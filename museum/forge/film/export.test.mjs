@@ -6,6 +6,7 @@
 //   node --test forge/film/export.test.mjs
 import { test } from 'node:test'
 import assert from 'node:assert/strict'
+import { spawnSync } from 'node:child_process'
 import { mkdtempSync, readFileSync, rmSync } from 'node:fs'
 import { tmpdir } from 'node:os'
 import { join } from 'node:path'
@@ -17,6 +18,7 @@ import { FPS } from './graph.mjs'
 const G = 18.083329887855317
 const FRAMES = 544
 const PLAIN = 'stop:study>stop:chamber'
+const NO_FFMPEG = spawnSync('ffmpeg', ['-version']).error ? 'needs ffmpeg on the PATH' : false
 /** the most a clip can spend under its buffer, in kbit */
 const most = (v) => X264.vbv.init * v.bufsize + v.maxrate * (FRAMES + X264.vbv.spareFrames) / FPS
 
@@ -58,7 +60,7 @@ async function encodeTiny(clip, frames, graphSeconds) {
   return out
 }
 
-test('the encoder caps a plain clip on every rung and leaves an exempt one uncapped, the one-frame clip too', async () => {
+test('the encoder caps a plain clip on every rung and leaves an exempt one uncapped, the one-frame clip too', { skip: NO_FFMPEG }, async () => {
   const [garden] = BYTE_EXEMPT.clips
   for (const [clip, frames, seconds] of [[garden, 1, 0], [PLAIN, 1, 0], [garden, 12, 0.4], [PLAIN, 12, 0.4]]) {
     const rungs = await encodeTiny(clip, frames, seconds)

@@ -26,7 +26,7 @@ jobs:
   museum:
     name: Museum (types, records, film tests)
     runs-on: ubuntu-24.04
-    timeout-minutes: 30
+    timeout-minutes: 15
     defaults:
       run:
         working-directory: museum
@@ -58,6 +58,10 @@ jobs:
       - name: Install
         run: pnpm install --frozen-lockfile
 
+      # The encoder test reads the cap x264 writes into a tiny stream.
+      - name: Install ffmpeg
+        run: sudo apt-get update -qq && sudo apt-get install -y -qq --no-install-recommends ffmpeg
+
       - name: Type check
         run: pnpm exec tsc --noEmit -p .
 
@@ -67,9 +71,51 @@ jobs:
         run: node forge/manifest-check.mjs --records-only
 
       # A test that needs the store, a film release or the star catalogue
-      # skips and says why.
+      # skips and says why. The slow files run in the job below.
       - name: Film tests
-        run: node --test forge/film/*.test.mjs forge/best-of-rights.test.mjs forge/night/real-sky.test.mjs
+        run: |
+          shopt -s extglob
+          node --test forge/film/!(film-check|global-key|library|motion|evening).test.mjs forge/best-of-rights.test.mjs forge/night/real-sky.test.mjs
+
+  film-slow:
+    name: Film tests (${{ matrix.file }})
+    runs-on: ubuntu-24.04
+    # film-check builds the wing's world six times: about 18 minutes here.
+    timeout-minutes: 45
+    defaults:
+      run:
+        working-directory: museum
+    env:
+      NA_PUBLIC_ORIGIN: 'off'
+    strategy:
+      fail-fast: false
+      matrix:
+        file: [film-check, global-key, library, motion, evening]
+
+    steps:
+      - name: Check out
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+
+      - name: Set up pnpm
+        uses: pnpm/action-setup@ea17c68df8912ef543352723c149a84f56e3d413 # v6.1.0
+        with:
+          package_json_file: museum/package.json
+
+      - name: Set up Node.js
+        uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
+        with:
+          node-version-file: .nvmrc
+          cache: pnpm
+          cache-dependency-path: museum/pnpm-lock.yaml
+
+      - name: Install
+        run: pnpm install --frozen-lockfile
+
+      - name: Film tests
+        run: node --test forge/film/${{ matrix.file }}.test.mjs
 
   site:
     name: Site (Python ${{ matrix.python }})
