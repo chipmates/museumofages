@@ -249,7 +249,9 @@ async function fetchOne(w) {
   mkdirSync(dirname(file), { recursive: true })
   if (!existsSync(licenceFile(w))) writeFileSync(licenceFile(w), licenceLines(w.entry))
   if (VERIFY && existsSync(file) && (!w.sha256 || sha(file) === w.sha256)) return
-  const url = `${PUBLIC_ORIGIN}/na/${w.scope}/${w.path.split('/').map(encodeURIComponent).join('/')}`
+  // encodeURI, not encodeURIComponent: the bucket's keys carry the commas of
+  // an IIIF region literally, and an escaped comma names another key
+  const url = `${PUBLIC_ORIGIN}/na/${w.scope}/${encodeURI(w.path)}`
   requests++
   const answer = await get(url)
   if (answer.status === 404) {
