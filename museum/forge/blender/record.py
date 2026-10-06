@@ -17,8 +17,8 @@ the date, so anybody can rebuild the file and get the same bytes.
 """
 
 import hashlib
+import importlib.util
 import json
-import os
 import sys
 from pathlib import Path
 
@@ -28,25 +28,12 @@ def sha256(path):
 
 
 def store_root(app):
-    """the store as forge/vite-na-assets.mjs finds it: NA_ASSET_STORE, else
-    asset-store/ beside the app, else one the workspace keeps above it"""
-    named = os.getenv('NA_ASSET_STORE')
-    if named:
-        return Path(named).resolve()
-    beside = Path(app).resolve().parent / 'asset-store'
-    if beside.exists():
-        return beside
-    here = Path(app).resolve()
-    for _ in range(12):
-        inside = here / 'internal' / 'night-agora' / 'assets'
-        if inside.exists():
-            return inside
-        if here.name == 'night-agora' and (here / 'assets').exists():
-            return here / 'assets'
-        if here.parent == here:
-            break
-        here = here.parent
-    raise SystemExit('no asset store found above ' + str(app))
+    """the store as forge/vite-na-assets.mjs finds it, by kit/paths.py, loaded
+    as a file because the kit's package imports bpy"""
+    spec = importlib.util.spec_from_file_location('kit_paths', Path(__file__).resolve().parent / 'kit' / 'paths.py')
+    paths = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(paths)
+    return paths.store_from(app)
 
 
 def records(receipt, packed):

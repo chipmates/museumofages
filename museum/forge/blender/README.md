@@ -40,8 +40,8 @@ so a seat that cannot run it gets the eyes' `/bake` call printed instead.
 | the record | the store's own `manifest.json` for that scope |
 
 The store is the folder `NA_ASSET_STORE` names, else `asset-store/` beside
-the app, else a store the workspace keeps above the checkout (found by
-walking up); `forge/vite-na-assets.mjs` resolves it the same way. A build
+the app, else the `store` of the nearest `.museum-local.json` at or above the
+app; `forge/vite-na-assets.mjs` resolves it the same way. A build
 writes into the store, so it needs the museum's own store: a copy fetched
 from the public site (`forge/fetch-store.mjs`) is for viewing. The packer is
 `GLTFPACK`, else `<store>/../tools/bin/gltfpack`, else `gltfpack` on the

@@ -39,6 +39,7 @@ import { pathToFileURL } from 'node:url'
 import { gunzipSync } from 'node:zlib'
 import sharp from 'sharp'
 import { APP_ROOT, assertServer, browserArgs, FRAME_TIME_FLAGS, headHere, waitForServer } from '../rig.mjs'
+import { MARKER, localPath } from '../local-paths.mjs'
 import { FPS, FRAMINGS, buildGraph } from './graph.mjs'
 import { openReplay, replayEdge } from './replay.mjs'
 import { eveningTrack } from './evening.mjs'
@@ -50,15 +51,14 @@ import {
 
 export const JOB_FORMAT = 'vinci-film-job-v1'
 export const LEDGER = 'ledger.jsonl'
-/** THE GATE LOCK that keeps long runs apart, found upward from the checkout
-    or named by NA_LOCK_DIR: slot A, or slot B at this battery share or more */
+/** THE GATE LOCK that keeps long runs apart, in the folder NA_LOCK_DIR names,
+    else the `lock` of the nearest .museum-local.json at or above the checkout
+    (forge/local-paths.mjs): slot A, or slot B at this battery share or more */
 export function findLockDir(from = APP_ROOT) {
   if (process.env['NA_LOCK_DIR']) return resolve(process.env['NA_LOCK_DIR'])
-  for (let at = from; ; at = dirname(at)) {
-    const here = join(at, 'internal', 'night-agora', 'program', 'forge')
-    if (existsSync(here)) return here
-    if (dirname(at) === at) throw new Error(`no program forge above ${from}: name it with NA_LOCK_DIR`)
-  }
+  const named = localPath('lock', from)
+  if (named) return named
+  throw new Error(`no lock folder named for ${from}: name it with NA_LOCK_DIR or as "lock" in a ${MARKER}`)
 }
 const LOCK_SLOTS = ['.gate-lock', '.gate-lock-b']
 const SLOT_B_BATTERY = 90
@@ -253,7 +253,7 @@ function battery() {
   } catch { return 0 }
 }
 /**
- * The gate lock by `scratch/locked.sh`'s own protocol: a slot is a folder made
+ * The gate lock by the protocol every holder of it keeps: a slot is a folder made
  * by mkdir; slot B only on the charger or at 90 percent battery or more; the owner and the time
  * written inside. Only a slot this process made is ever removed.
  */

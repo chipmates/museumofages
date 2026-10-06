@@ -15,6 +15,9 @@ node_modules/
 # A local copy of the public asset store (museum/forge/fetch-store.mjs)
 /asset-store/
 
+# The local paths of one machine (museum/forge/local-paths.mjs)
+.museum-local.json
+
 # Build output
 dist/
 .vite/

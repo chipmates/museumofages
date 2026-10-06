@@ -17,8 +17,9 @@
  *                                            path: staged in place of the pool's
  *                                            and cut into their pyramids
  *   --patch <file>                           where the store patch is written
- *   --from <dir>                             the research folder (default: found
- *                                            by walking up, or NA_BEST_OF)
+ *   --from <dir>                             the research folder (default:
+ *                                            NA_BEST_OF, else the `best_of`
+ *                                            of .museum-local.json)
  *   --draft                                  write even where a label is missing or
  *                                            a lead line is refused: the refused
  *                                            lead stands down, the gap is listed
@@ -55,6 +56,7 @@ import { copyFileSync, existsSync, mkdirSync, readdirSync, readFileSync, rmSync,
 import { dirname, join, resolve } from 'node:path'
 import { fileURLToPath } from 'node:url'
 import { STORE } from './vite-na-assets.mjs'
+import { MARKER, localPath } from './local-paths.mjs'
 import { CARRIED, carryRights, embeddedRights, profileName } from './best-of-rights.mjs'
 import { CODEX_ROLE, expectedTileFiles, filesUnder, jpegSize, scaleFactorsFor, tileRecipe, treeHash } from './tiles-check.mjs'
 
@@ -73,18 +75,16 @@ const argv = process.argv.slice(2)
 const flag = name => argv.includes(name)
 const option = name => { const at = argv.indexOf(name); return at >= 0 ? argv[at + 1] : undefined }
 
-function findResearch(from) {
-  let dir = from
-  for (let up = 0; up < 12; up++) {
-    const inside = join(dir, 'internal', 'night-agora', 'program', 'research', 'best-of-0928')
-    if (existsSync(inside)) return inside
-    const parent = resolve(dir, '..')
-    if (parent === dir) break
-    dir = parent
-  }
-  throw new Error('no research folder found: pass --from <dir> or set NA_BEST_OF')
+/** the research folder: --from, else NA_BEST_OF, else the `best_of` of the
+    nearest .museum-local.json at or above the app (forge/local-paths.mjs) */
+function researchFolder(from) {
+  const named = option('--from') ?? process.env.NA_BEST_OF
+  if (named) return named
+  const marked = localPath('best_of', from)
+  if (marked) return marked
+  throw new Error(`no research folder found: pass --from <dir>, set NA_BEST_OF or name it as "best_of" in a ${MARKER}`)
 }
-const FROM = option('--from') ?? process.env.NA_BEST_OF ?? findResearch(APP)
+const FROM = researchFolder(APP)
 
 const warnings = []
 const warn = text => warnings.push(text)

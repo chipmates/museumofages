@@ -17,6 +17,7 @@ import { createHash } from 'node:crypto'
 import { dirname, extname, join, normalize, resolve } from 'node:path'
 import { Readable, pipeline } from 'node:stream'
 import { fileURLToPath } from 'node:url'
+import { MARKER, localPath } from './local-paths.mjs'
 
 const HERE = dirname(fileURLToPath(import.meta.url))
 export const APP_ROOT = resolve(HERE, '..')
@@ -25,27 +26,17 @@ export const APP_ROOT = resolve(HERE, '..')
    2. `asset-store/` beside the app, where `forge/fetch-store.mjs` puts a
       copy of the public store (outside vite's root, so the watcher never
       walks a few thousand pictures);
-   3. a store the workspace keeps outside the repository, found by walking
-      up rather than by counting folders, because a worktree sits several
-      folders deeper than the main checkout.
-   With none of them on disk there is no store, and STORE names the second. */
+   3. the `store` of the nearest `.museum-local.json` at or above the app
+      (forge/local-paths.mjs): a store kept outside the checkout, shared by
+      every worktree below that file.
+   With none of them there is no store, and STORE names the second. A store
+   the first or the third names is taken as named: when it is not on disk,
+   the dev server says where it looked. */
 export const DEFAULT_STORE = resolve(APP_ROOT, '..', 'asset-store')
-function findStore(from) {
-  let dir = from
-  for (let up = 0; up < 12; up++) {
-    const inside = join(dir, 'internal', 'night-agora', 'assets')
-    if (existsSync(inside)) return inside
-    if (dir.endsWith('night-agora') && existsSync(join(dir, 'assets'))) return join(dir, 'assets')
-    const parent = resolve(dir, '..')
-    if (parent === dir) break
-    dir = parent
-  }
-  return null
-}
 
 export const STORE = process.env.NA_ASSET_STORE
   ? resolve(process.env.NA_ASSET_STORE)
-  : existsSync(DEFAULT_STORE) ? DEFAULT_STORE : (findStore(APP_ROOT) ?? DEFAULT_STORE)
+  : existsSync(DEFAULT_STORE) ? DEFAULT_STORE : (localPath('store', APP_ROOT) ?? DEFAULT_STORE)
 const CACHE = process.env.NA_ASSET_CACHE === '1'
 
 /* A COPY IS NOT THE STORE. fetch-store.mjs leaves this note at the root of
@@ -65,7 +56,8 @@ export function notBuildable() {
   if (kind === 'own') return null
   return kind === 'none'
     ? `no asset store at ${STORE}. The full check and a production build need the museum's own ` +
-      'store: set NA_ASSET_STORE to its folder. Without one, `pnpm dev` reads the public site, ' +
+      `store: set NA_ASSET_STORE to its folder, or name it as "store" in a ${MARKER}. ` +
+      'Without one, `pnpm dev` reads the public site, ' +
       '`node forge/fetch-store.mjs` copies it for offline viewing (a copy does not build), and ' +
       '`node forge/manifest-check.mjs --records-only` checks what the repository itself carries.'
     : `the store at ${STORE} is a copy fetched from the public site (${FETCHED_NOTE}). ` +

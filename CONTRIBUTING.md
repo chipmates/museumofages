@@ -38,6 +38,8 @@ The museum comes up on [localhost:5199](http://localhost:5199). The lobby is at 
 NA_ASSET_STORE=/path/to/store pnpm dev
 ```
 
+To name the store once for every checkout and worktree below a folder, put a `.museum-local.json` holding `{"store": "/path/to/store"}` there, a file git ignores and `.env.example` explains.
+
 How a store is laid out is written at the top of `museum/forge/vite-na-assets.mjs`.
 
 ## The checks
