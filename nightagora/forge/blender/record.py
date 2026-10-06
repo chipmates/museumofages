@@ -18,6 +18,7 @@ the date, so anybody can rebuild the file and get the same bytes.
 
 import hashlib
 import json
+import os
 import sys
 from pathlib import Path
 
@@ -27,6 +28,14 @@ def sha256(path):
 
 
 def store_root(app):
+    """the store as forge/vite-na-assets.mjs finds it: NA_ASSET_STORE, else
+    asset-store/ beside the app, else one the workspace keeps above it"""
+    named = os.getenv('NA_ASSET_STORE')
+    if named:
+        return Path(named).resolve()
+    beside = Path(app).resolve().parent / 'asset-store'
+    if beside.exists():
+        return beside
     here = Path(app).resolve()
     for _ in range(12):
         inside = here / 'internal' / 'night-agora' / 'assets'

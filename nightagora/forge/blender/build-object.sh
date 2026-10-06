@@ -36,10 +36,9 @@ set -euo pipefail
 
 BLENDER=${BLENDER:-/opt/homebrew/bin/blender}
 HERE="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-# the packer stands beside the STORE, which is found by walking up from the
-# app rather than counted in folders: a round's clone sits several levels
-# deeper than the sealed app and a counted path lands outside the tree
-GLTFPACK=${GLTFPACK:-"$HERE/../../../../internal/night-agora/tools/bin/gltfpack"}
+# the packer: GLTFPACK, else the one kept beside the store's work folder
+# (resolved once the store is, below), else gltfpack on the PATH
+GLTFPACK=${GLTFPACK:-}
 
 APP=""; SCRIPT=""; STAGE="all"; SIZE=""; SAMPLES=""; EYES="${NA_EYES_PORT:-}"; GIVEN=""
 while [[ $# -gt 0 ]]; do
@@ -125,7 +124,8 @@ mkdir -p "$MODELS"
 
 # --- 3. the pack, one per tier --------------------------------------------
 [ -x "$GLTFPACK" ] || GLTFPACK="$(dirname "$WORK_ROOT")/tools/bin/gltfpack"
-[ -x "$GLTFPACK" ] || { echo "no gltfpack at $GLTFPACK" >&2; exit 1; }
+[ -x "$GLTFPACK" ] || GLTFPACK="$(command -v gltfpack || true)"
+[ -n "$GLTFPACK" ] && [ -x "$GLTFPACK" ] || { echo "no gltfpack: set GLTFPACK, or put gltfpack on the PATH" >&2; exit 1; }
 PAIRS=()
 for TIER in $TIERS; do
   read -r RAW LIMIT <<<"$(python3 - "$RECEIPT" "$TIER" <<'PY'

@@ -35,9 +35,17 @@ so a seat that cannot run it gets the eyes' `/bake` call printed instead.
 
 | what | where |
 |---|---|
-| the authoring blend, the atlases, the raw glbs, the receipt | `internal/night-agora/blender/<object>/` |
+| the authoring blend, the atlases, the raw glbs, the receipt | the work folder beside the store, `<store>/../blender/<object>/` |
 | the packed tiers | the store, `<scope>/models/<object>/<object>-<tier>.glb` |
 | the record | the store's own `manifest.json` for that scope |
+
+The store is the folder `NA_ASSET_STORE` names, else `asset-store/` beside
+the app, else a store the workspace keeps above the checkout (found by
+walking up); `forge/vite-na-assets.mjs` resolves it the same way. A build
+writes into the store, so it needs the museum's own store: a copy fetched
+from the public site (`forge/fetch-store.mjs`) is for viewing. The packer is
+`GLTFPACK`, else `<store>/../tools/bin/gltfpack`, else `gltfpack` on the
+`PATH`.
 
 Nothing but source lives in this repository: an atlas or a blend committed
 here would be the store moving into public git, which the Manifest Law

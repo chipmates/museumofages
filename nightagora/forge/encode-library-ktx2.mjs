@@ -9,9 +9,10 @@
 //   node forge/encode-library-ktx2.mjs [set ...] [--maps albedo,normal] [--calm] [--go]
 //
 // Without `--go` it encodes into the scratch folder and prints the scores,
-// and the store is not touched. The encoder is the store's own gltfpack
-// (`internal/night-agora/tools/bin/gltfpack`), UASTC for every class, the
-// rows flipped to match the decoded photograph the library uploads.
+// and the store is not touched. The encoder is gltfpack (GLTFPACK, else the
+// copy kept beside the store at `<store>/../tools/bin/gltfpack`), UASTC for
+// every class, the rows flipped to match the decoded photograph the library
+// uploads.
 //
 // THE CALM PACK (`--calm`) is the same recipe over a smaller photograph. The
 // calm tier never uploads a map above 1024 (`texturesFor` in stack/materials),
@@ -45,7 +46,7 @@ const CALM_SIZE = {
   'grass-short': 512, 'stone-tuffeau': 512,
   'earth-packed': 1024, 'bronze-dark': 1024, 'limestone-pale': 1024, 'marble-lapis': 1024,
 }
-const GLTFPACK = resolve(STORE, '..', 'tools', 'bin', 'gltfpack')
+const GLTFPACK = process.env['GLTFPACK'] ?? resolve(STORE, '..', 'tools', 'bin', 'gltfpack')
 const RECIPE = ['-tc', '-tu', '-tfy', '-tj', '4']
 const LIBRARY = join(STORE, 'library')
 const WORK = join(process.env['NA_SCRATCH'] ?? tmpdir(), 'na-ktx2')

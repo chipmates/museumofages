@@ -1,10 +1,12 @@
 """Where a build script reads and writes.
 
-Three roots, found by walking up from the app rather than counted in folders,
-so a script runs the same from the sealed app and from a round's clone: the
-asset STORE (the museum's bytes, outside the public repository), the LIBRARY
-inside it (the CC0 sets a surface is dressed from), and the WORK folder beside
-the store, which holds the authoring blend, the atlases and the raw export.
+Three roots: the asset STORE (the museum's bytes, outside the public
+repository), the LIBRARY inside it (the CC0 sets a surface is dressed from),
+and the WORK folder beside the store, which holds the authoring blend, the
+atlases and the raw export. The store is found as forge/vite-na-assets.mjs
+finds it, so a script runs the same from the main checkout and from a
+worktree: NA_ASSET_STORE, else `asset-store/` beside the app, else a store
+the workspace keeps above the checkout, found by walking up.
 Only the packed glb crosses into the store, and nothing at all crosses into
 the repository: an atlas or a blend committed there would be the store moving
 into public git, which the Manifest Law forbids.
@@ -20,10 +22,13 @@ def app_root() -> Path:
 
 
 def store() -> Path:
-    """the asset store: internal/night-agora/assets, wherever the app stands"""
+    """the asset store, wherever the app stands"""
     named = os.getenv('NA_ASSET_STORE')
     if named:
         return Path(named).resolve()
+    beside = app_root().parent / 'asset-store'
+    if beside.exists():
+        return beside
     here = app_root()
     for _ in range(12):
         inside = here / 'internal' / 'night-agora' / 'assets'
