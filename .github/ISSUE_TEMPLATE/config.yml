@@ -1,0 +1,8 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Security problem
+    url: https://github.com/chipmates/museumofages/blob/main/SECURITY.md
+    about: Report it quietly by mail first. Please do not open a public issue for it.
+  - name: Your institution holds a work shown here
+    url: https://museumofages.org/what-this-museum-is/
+    about: If something on its label should change, write to contact@museumofages.org. The page says how the museum labels what it shows.

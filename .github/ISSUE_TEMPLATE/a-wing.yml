@@ -1,0 +1,58 @@
+name: A wing you'd like to see
+description: A life and a place you would like to see in the museum
+labels: ["wing"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        The da Vinci wing tells one life in the place where it ended, on one day the sources give. If there is another life and place you would like to see, tell us here.
+
+        A wing is a lot of work, from the research to the film, and building one together with people from outside is new for us. So it starts with this conversation, and nothing here is a promise that a wing will be built.
+
+  - type: input
+    id: who
+    attributes:
+      label: Whose life?
+    validations:
+      required: true
+
+  - type: input
+    id: where
+    attributes:
+      label: Which place?
+      description: A house, a room, a workshop, a garden. A place that still stands or one that is well described.
+    validations:
+      required: true
+
+  - type: input
+    id: when
+    attributes:
+      label: Which day or moment?
+      description: A day that a source from the time documents is the best start. A season or a year works too.
+    validations:
+      required: false
+
+  - type: textarea
+    id: sources
+    attributes:
+      label: The sources
+      description: Letters, diaries, plans, surveys, the standard works. A book with its pages, an archive record or a link.
+    validations:
+      required: true
+
+  - type: textarea
+    id: works
+    attributes:
+      label: The works, and where open copies could come from
+      description: Which works belong in the wing, who holds them, and where a copy is offered under an open licence or as public domain. Paste each licence line word for word.
+    validations:
+      required: false
+
+  - type: checkboxes
+    id: help
+    attributes:
+      label: Could you help with it?
+      options:
+        - label: The research and the sources
+        - label: The code (the rooms, the machines, the film)
+        - label: The texts in English or German

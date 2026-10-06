@@ -1,0 +1,77 @@
+name: Correction
+description: A credit, a date, a sentence or a label that is wrong
+labels: ["correction"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Every stop's record names its sources. If a credit, a date or a sentence is wrong, tell us here with your source. We correct it as soon as we have checked it.
+
+        If your institution holds the work, you can also write to contact@museumofages.org.
+
+  - type: dropdown
+    id: kind
+    attributes:
+      label: What is wrong?
+      options:
+        - A credit or a licence line
+        - A date
+        - A sentence
+        - A label (a title, a holder, a size, a place)
+        - A grade (documented, reconstructed, conjectural, not known)
+        - The English and the German say different things
+        - Something else
+    validations:
+      required: true
+
+  - type: input
+    id: where
+    attributes:
+      label: Where is it?
+      description: The wing and the stop, the work, or the address of the page.
+      placeholder: "The Leonardo da Vinci wing, the mechanism hall, the record of the aerial screw"
+    validations:
+      required: true
+
+  - type: textarea
+    id: now
+    attributes:
+      label: What it says now
+      description: Copy the words as they stand, or describe what is shown.
+    validations:
+      required: true
+
+  - type: textarea
+    id: should
+    attributes:
+      label: What it should say
+    validations:
+      required: true
+
+  - type: textarea
+    id: source
+    attributes:
+      label: Your source
+      description: A book with its page, an archive record, or the holder's own page. A correction with a source moves fastest.
+      placeholder: "The holder's catalogue entry at https://... gives ..."
+    validations:
+      required: true
+
+  - type: input
+    id: licence-line
+    attributes:
+      label: For a holder, the record's licence line
+      description: If your institution holds the work, paste the licence line from its record, so we change the right one.
+    validations:
+      required: false
+
+  - type: dropdown
+    id: language
+    attributes:
+      label: Which language does it apply to?
+      options:
+        - English
+        - German
+        - Both
+    validations:
+      required: true

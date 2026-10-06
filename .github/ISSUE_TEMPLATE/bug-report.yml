@@ -1,0 +1,160 @@
+name: Bug report
+description: Something in the museum or on museumofages.org does not work
+labels: ["bug"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for telling us. The questions below help us see what you saw. For a wrong credit, date or sentence, the correction form is quicker.
+
+  - type: dropdown
+    id: where
+    attributes:
+      label: Where were you?
+      options:
+        - The lobby
+        - The Leonardo da Vinci wing
+        - The pages of museumofages.org around the museum
+        - Not sure
+    validations:
+      required: true
+
+  - type: input
+    id: stop
+    attributes:
+      label: Which stop?
+      description: In a wing, the stop's name as the wing shows it, or what stood in front of you.
+      placeholder: "The mechanism hall, at the aerial screw"
+    validations:
+      required: false
+
+  - type: input
+    id: address
+    attributes:
+      label: The address in your browser
+      description: Copy it from the address bar, with everything after the question mark.
+      placeholder: "https://museumofages.org/w/vinci?film=job&lang=en"
+    validations:
+      required: false
+
+  - type: textarea
+    id: description
+    attributes:
+      label: What happened?
+      description: What did you see, and what did you expect instead?
+      placeholder: "When I open the drawer at the reading table, the text is cut off. I expected to read all of it."
+    validations:
+      required: true
+
+  - type: textarea
+    id: steps
+    attributes:
+      label: How did you get there?
+      description: The steps from the start, if you remember them.
+      placeholder: |
+        1. Open museumofages.org on a phone
+        2. Enter the wing
+        3. Go to the reading table and open the drawer
+    validations:
+      required: false
+
+  - type: dropdown
+    id: device
+    attributes:
+      label: Device
+      options:
+        - Phone, held upright
+        - Phone, held sideways
+        - Tablet
+        - Desktop or laptop
+    validations:
+      required: true
+
+  - type: dropdown
+    id: system
+    attributes:
+      label: Operating system
+      options:
+        - iOS or iPadOS
+        - Android
+        - macOS
+        - Windows
+        - Linux
+        - Other
+    validations:
+      required: true
+
+  - type: dropdown
+    id: browser
+    attributes:
+      label: Browser
+      options:
+        - Chrome
+        - Safari
+        - Firefox
+        - Edge
+        - Samsung Internet
+        - Other
+    validations:
+      required: true
+
+  - type: input
+    id: browser-version
+    attributes:
+      label: Browser version
+      description: If you know it. It is usually under About in the browser's menu.
+    validations:
+      required: false
+
+  - type: dropdown
+    id: graphics
+    attributes:
+      label: Does your browser offer WebGPU?
+      description: The museum draws with WebGPU where the browser offers it, and with WebGL2 where it does not.
+      options:
+        - "Yes"
+        - "No"
+        - Don't know
+    validations:
+      required: true
+
+  - type: dropdown
+    id: detail
+    attributes:
+      label: Detail
+      description: The setting under Instruments, then Detail.
+      options:
+        - Calm
+        - Standard
+        - Hero
+        - I did not change it
+        - Don't know
+    validations:
+      required: false
+
+  - type: dropdown
+    id: language
+    attributes:
+      label: Language
+      options:
+        - English
+        - German
+    validations:
+      required: true
+
+  - type: textarea
+    id: screenshots
+    attributes:
+      label: Screenshots
+      description: If a picture shows the problem faster than a paragraph, add it here.
+    validations:
+      required: false
+
+  - type: textarea
+    id: console
+    attributes:
+      label: Console errors
+      description: On a desktop, open your browser's developer tools, look at the Console tab, and paste anything red in here.
+      render: shell
+    validations:
+      required: false

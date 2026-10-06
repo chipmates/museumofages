@@ -91,6 +91,8 @@ MUSEUM_TEXTS = SRC / "museum-texts.json"
 # host forwards (_redirects).
 SOURCE = "/source"
 SOURCE_TO = "https://github.com/chipmates/museumofages"
+# The licence of the museum's own texts and pictures, named in the footer once the code is open.
+CC_BY_SA = "https://creativecommons.org/licenses/by-sa/4.0/"
 # The address a visitor writes to, on every page that names one. No built file may carry any other address.
 MAIL = "contact@museumofages.org"
 MAIL_SHAPE = r"[A-Za-z0-9._%+-]+@[A-Za-z0-9-]+(?:\.[A-Za-z0-9-]+)*\.[A-Za-z]{2,}"
@@ -1204,6 +1206,7 @@ def build(out, registry, wing_dirs, mark=None, topics=True, quiet=False, more_pi
         w.update({
             "html.project_over": line if PROJECT_LINE_AT == "over" else "", "html.project": line if PROJECT_LINE_AT != "over" else "",
             "html.source_item": f'<li><a href="{SOURCE}">{w["footer.source"]}</a></li>' if SOURCE_LINK else "",
+            "html.licence": f' <span>{w["footer.licence_a"]} <a href="{CC_BY_SA}{"deed.de" if c.lang == "de" else ""}">CC\u00a0BY-SA\u00a04.0</a>.</span>' if SOURCE_LINK else "",
             "lang": c.lang, "other_lang": other, "og_locale": "en_GB" if c.lang == "en" else "de_DE", "theme_color": theme,
             "static": c.static, "svg.arrow": ARROW, "script.faces": FACES_SCRIPT,
             "href.home": c.to(c.addr("home")), "href.what": c.to(c.addr("what")), "href.imprint": c.to(c.addr("imprint")),

@@ -1,0 +1,23 @@
+cff-version: 1.2.0
+message: "If you cite Museum of Ages, please cite it as below."
+title: "Museum of Ages"
+abstract: "A digital museum. We rebuild what was. You walk through it. One wing is open: Leonardo da Vinci's last house in Amboise, as it may have stood on 10 October 1517, rebuilt in code."
+type: software
+authors:
+  - name: "ChipMates gemeinnützige GmbH"
+    city: "Freiburg im Breisgau"
+    country: DE
+    email: "contact@museumofages.org"
+    website: "https://museumofages.org"
+url: "https://museumofages.org"
+repository-code: "https://github.com/chipmates/museumofages"
+license: AGPL-3.0-or-later
+version: "0.1.0"
+# date-released: add the opening day here (YYYY-MM-DD, unquoted), the same date as the CHANGELOG's 0.1.0
+keywords:
+  - digital museum
+  - cultural heritage
+  - reconstruction
+  - Leonardo da Vinci
+  - three.js
+  - WebGPU

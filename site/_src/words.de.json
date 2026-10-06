@@ -158,6 +158,7 @@
     "enter": "Ins Museum",
     "originals": "Die Originale der gezeigten Werke bewahren die Museen, Bibliotheken und Sammlungen, die in den Beschriftungen genannt sind.",
     "rights": "© ChipMates gemeinnützige GmbH",
+    "licence_a": "Unsere eigenen Texte und Bilder stehen unter",
     "data_a": "Haus und Gelände sind nach Kartendaten",
     "data_osm": "©\u00a0OpenStreetMap-Mitwirkende",
     "data_b": "(ODbL 1.0) und Höhendaten des IGN gebaut (RGE ALTI®, abgerufen am 8. September 2026, Licence Ouverte 2.0).",
@@ -245,7 +246,7 @@
     "register_value": "[Registergericht und Registernummer]",
     "contact_term": "Kontakt",
     "s6_h": "Code und Rechte",
-    "s6_p": "Der Code des Museums ist Open Source unter der Lizenz AGPL-3.0: Jeder darf ihn lesen, nutzen und unter dieser Lizenz verändern. Inhaberin der Rechte an den Texten und Bildern, die das Museum selbst herstellt, ist die ChipMates gemeinnützige GmbH.",
+    "s6_p": "Der Code des Museums ist Open Source unter der Lizenz AGPL-3.0. Eigene Texte und Bilder stehen unter CC BY-SA 4.0: Jeder darf sie teilen und bearbeiten, auch kommerziell, mit Nennung des Museums, Link zur Lizenz, Angabe von Änderungen und Weitergabe von Bearbeitungen unter derselben Lizenz. Ausgenommen sind fremde Werke und Daten wie Reproduktionen, Musik, Zitate und Geodaten sowie Name und Zeichen des Museums.",
     "s6_before": "Der Code des Museums ist noch nicht öffentlich. Wir werden ihn unter der Lizenz AGPL-3.0 veröffentlichen, einer Open-Source-Lizenz. Dann darf ihn jeder lesen, nutzen und unter dieser Lizenz verändern. Inhaberin der Rechte an den Texten und Bildern, die das Museum selbst herstellt, ist die ChipMates gemeinnützige GmbH.",
     "s7_h": "Barrierefreiheit und Datenschutz",
     "s7_p": "Das Museum ist einmal für das Handy und einmal für den Computer gebaut, auf Deutsch und Englisch, in einfachen Worten. Ziel ist WCAG 2.2 AA, der verbreitete Standard für barrierefreie Websites. Es setzt keine Tracking-Cookies und erstellt keine Profile. Die Einzelheiten stehen auf der Datenschutzseite.",
@@ -285,7 +286,7 @@
     "links_h": "Haftung für Links",
     "links_p": "Diese Website verlinkt auf Websites anderer, zum Beispiel auf Museen, Bibliotheken und Sammlungen. Auf deren Inhalte haben wir keinen Einfluss. Für sie ist der jeweilige Anbieter verantwortlich. Beim Setzen eines Links haben wir keinen Rechtsverstoß erkannt. Erfahren wir von einem, entfernen wir den Link.",
     "copy_h": "Urheberrecht",
-    "copy_p": "Inhaberin der Rechte an den Texten, Bildern und Filmen, die wir selbst herstellen, ist die ChipMates gemeinnützige GmbH. Der Code dieser Website ist Open Source unter der Lizenz AGPL-3.0. Für jede Reproduktion gilt die Lizenzzeile in ihrer Beschriftung. Was eine offene Lizenz oder die Gemeinfreiheit erlaubt, schränken wir nicht ein. Inhalte anderer sind als solche gekennzeichnet. Wer eine Urheberrechtsverletzung bemerkt, schreibt uns bitte. Wir prüfen den Hinweis und entfernen den Inhalt, wenn er zutrifft.",
+    "copy_p": "Inhaberin der Rechte an den Texten, Bildern und Filmen, die wir selbst erstellen, ist die ChipMates gemeinnützige GmbH. Wir stellen sie unter die Lizenz CC BY-SA 4.0 (Namensnennung, Weitergabe unter gleichen Bedingungen 4.0 International). Ausgenommen sind Werke und Daten anderer, die darin vorkommen, etwa Reproduktionen, Musik, Zitate und Geodaten, sowie Name und Zeichen des Museums. Der Code des Museums und dieser Website ist Open Source unter der Lizenz AGPL-3.0. Für jede Reproduktion gilt die Lizenzzeile in ihrer Beschriftung. Was eine offene Lizenz oder die Gemeinfreiheit erlaubt, schränken wir nicht ein. Inhalte anderer nennen wir in ihrer Beschriftung und in ihrem Eintrag. Wer eine Urheberrechtsverletzung bemerkt, schreibt uns bitte. Wir prüfen den Hinweis und entfernen den Inhalt, wenn er zutrifft.",
     "copy_p_before": "Inhaberin der Rechte an den Texten, Bildern und Filmen, die wir selbst herstellen, ist die ChipMates gemeinnützige GmbH. Der Code dieser Website ist noch nicht öffentlich. Wir werden ihn unter der Lizenz AGPL-3.0 veröffentlichen. Für jede Reproduktion gilt die Lizenzzeile in ihrer Beschriftung. Was eine offene Lizenz oder die Gemeinfreiheit erlaubt, schränken wir nicht ein. Inhalte anderer sind als solche gekennzeichnet. Wer eine Urheberrechtsverletzung bemerkt, schreibt uns bitte. Wir prüfen den Hinweis und entfernen den Inhalt, wenn er zutrifft."
   },
   "notfound": {
