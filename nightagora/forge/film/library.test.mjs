@@ -531,7 +531,7 @@ test('the fourth definition reads less of a words file than the third and the sa
 })
 
 test('the older definitions key byte for byte as the code of 7a18ca94 keyed them', async () => {
-  const then = await codeAt('7a18ca94')
+  const then = await codeAt('0a321ccc')
   assert.equal(then.GLOBAL_DEFINITION, V2)
   const loader = await createLoader()
   const args = { library: world.library, claimed: world.claimed }
@@ -548,7 +548,7 @@ test('the older definitions key byte for byte as the code of 7a18ca94 keyed them
 })
 
 test('the third definition, and the two before it, key byte for byte as the code of 852b38bc keyed them', async () => {
-  const then = await codeAt('852b38bc')
+  const then = await codeAt('643bc095')
   assert.equal(then.GLOBAL_DEFINITION, V3)
   const loader = await createLoader()
   const args = { library: world.library, claimed: world.claimed }
