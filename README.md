@@ -142,12 +142,12 @@ Museum of Ages is a project of ChipMates gemeinnützige GmbH, a small German non
 
 | What | Terms |
 |---|---|
-| The code in this repository | [AGPL-3.0](LICENSE) |
+| The code in this repository | [AGPL-3.0](LICENSE) or any later version |
 | The texts and pictures the museum makes itself | [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/), © ChipMates gemeinnützige GmbH |
 | Each reproduction | Its own licence line, on its label and in its record |
 | The map and relief data the house is built from | ODbL 1.0, © OpenStreetMap contributors, and Licence Ouverte 2.0 from IGN |
 | Everything else the museum and its site take from others | As listed in [THIRD-PARTY.md](THIRD-PARTY.md) |
 
-The originals stay with their holders. Seven kinds of licence and rights note are in the wing today, among them CC0 and, for the scans of the Bibliothèque de l'Institut de France, CC BY-NC-ND 3.0 FR. Where a holder claims rights in the image of a public domain work, the label says so. A file under a licence that allows no changes is shown whole, byte for byte. No page or view that shows a file under a non-commercial licence asks for donations or carries advertising. The CC BY-SA covers the museum's own texts and the stills and films it renders. It does not cover what others made inside them, such as reproductions, music, quotations and map data, nor the museum's name and logo. [CONTENT-LICENSE.md](CONTENT-LICENSE.md) has the full note and shows how to credit a still.
+The originals stay with their holders. Several kinds of licence and rights note are in the wing today, among them CC0 and, for the scans of the Bibliothèque de l'Institut de France, CC BY-NC-ND 3.0 FR. Where a holder claims rights in the image of a public domain work, the label says so. A file under a licence that allows no changes is shown whole, byte for byte. No page or view that shows a file under a non-commercial licence asks for donations or carries advertising. The CC BY-SA covers the museum's own texts and the stills and films it renders. It does not cover what others made inside them, such as reproductions, music, quotations and map data, nor the museum's name and logo. [CONTENT-LICENSE.md](CONTENT-LICENSE.md) has the full note and shows how to credit a still.
 
 We are glad when a walk here ends in front of the real thing: in Amboise, in a museum, in the reading room of a library. Questions and corrections go to [contact@museumofages.org](mailto:contact@museumofages.org).

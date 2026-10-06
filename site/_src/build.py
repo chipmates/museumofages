@@ -1206,7 +1206,7 @@ def build(out, registry, wing_dirs, mark=None, topics=True, quiet=False, more_pi
         w.update({
             "html.project_over": line if PROJECT_LINE_AT == "over" else "", "html.project": line if PROJECT_LINE_AT != "over" else "",
             "html.source_item": f'<li><a href="{SOURCE}">{w["footer.source"]}</a></li>' if SOURCE_LINK else "",
-            "html.licence": f' <span>{w["footer.licence_a"]} <a href="{CC_BY_SA}{"deed.de" if c.lang == "de" else ""}">CC\u00a0BY-SA\u00a04.0</a>.</span>' if SOURCE_LINK else "",
+            "html.licence": f' <span>{w["footer.licence_a"]} <a rel="license" href="{CC_BY_SA}{"deed.de" if c.lang == "de" else ""}">CC\u00a0BY-SA\u00a04.0</a>.</span>' if SOURCE_LINK else "",
             "lang": c.lang, "other_lang": other, "og_locale": "en_GB" if c.lang == "en" else "de_DE", "theme_color": theme,
             "static": c.static, "svg.arrow": ARROW, "script.faces": FACES_SCRIPT,
             "href.home": c.to(c.addr("home")), "href.what": c.to(c.addr("what")), "href.imprint": c.to(c.addr("imprint")),
