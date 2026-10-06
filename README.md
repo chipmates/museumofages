@@ -92,7 +92,7 @@ To work offline, fetch a copy once. `node forge/fetch-store.mjs` downloads the p
 
 `pnpm typecheck` runs on any clone, and so does `node forge/manifest-check.mjs --records-only`, which checks every record the repository carries. `pnpm build` checks every file it ships against its record, so it needs the museum's own store. Without one, or with a fetched copy, it stops with a message that says so.
 
-Leave out `film=job` and the same address runs the live engine the film is rendered from. `tier=calm`, `tier=standard` or `tier=hero` in the address sets its detail.
+Leave out `film=job` and the same address runs the live engine the film is rendered from. Without a local store it reads about 220 MB of textures and models from museumofages.org before the first stop. `tier=calm`, `tier=standard` or `tier=hero` in the address sets its detail.
 
 ### The website
 
