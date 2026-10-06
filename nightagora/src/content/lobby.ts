@@ -19,8 +19,8 @@ const NAME_IN_TITLE: Bilingual = {
 }
 /** what a search result reads after the name and the line: true of every wing, so it counts nothing */
 const WING_IN_SEARCH: Bilingual = {
-  en: 'Each wing is one life, in the places where it was lived, with works and sources.',
-  de: 'Jeder Flügel ist ein Leben, dort, wo es gelebt wurde, mit Werken und Quellen.',
+  en: 'Each wing tells one story from one age, in its setting, built in 3D from sources.',
+  de: 'Jeder Flügel erzählt eine Geschichte aus einem Zeitalter, an ihrem Schauplatz, in 3D nach den Quellen gebaut.',
 }
 
 /** The front door's words, with the museum's German beside its English. */
@@ -43,12 +43,12 @@ export const LOBBY_TEXT = {
   shareLocale: { en: 'en_GB', de: 'de_DE' },
   descentTitle: { en: 'The museum', de: 'Das Museum' },
   descentMuseum: {
-    en: 'A digital museum of thirty lives. Each in the place they lived, at a real hour of a real day.',
-    de: 'Dreißig Leben in einem digitalen Museum. Dort, wo sie lebten, zu einer bestimmten Stunde an einem wirklichen Tag.',
+    en: 'Each wing belongs to one age and shows one place, built from the sources, with its people, animals or things.',
+    de: 'Jeder Flügel gehört zu einem Zeitalter und zeigt einen nach den Quellen gebauten Ort mit seinen Menschen, Tieren oder Dingen.',
   },
   descentWalk: {
-    en: `Welcome to ${NAME_SET}. Walk where they lived and look closer at what they made.`,
-    de: `Willkommen im ${NAME_SET}. Geh, wo sie lebten, und schau genauer hin, was sie schufen.`,
+    en: `Welcome to ${NAME_SET}. Step into a place from another age and look closer at what was there.`,
+    de: `Willkommen im ${NAME_SET}. Betritt einen Ort aus einer anderen Zeit und sieh dir genauer an, was dort war.`,
   },
   tonight: { en: 'Tonight', de: 'Heute Nacht' },
   firstLight: { en: 'First light', de: 'Das erste Licht' },
