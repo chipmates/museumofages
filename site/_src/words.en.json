@@ -247,7 +247,7 @@
     "contact_term": "Contact",
     "s6_h": "Code and rights",
     "s6_p": "The museum's code is open source under the AGPL-3.0 or later. The museum's own texts and pictures are under CC BY-SA 4.0: anyone may share and adapt them, commercially too, if they credit the museum, link the licence, mark changes and share adaptations under the same licence. Excluded are works and data of others, such as reproductions, music, quotations and map data, and the museum's name and logo.",
-    "s6_before": "The museum's code is not public yet. It will be published under the AGPL-3.0 or a later version, an open source licence. Anyone may then read it, use it and change it under that licence. The copyright in the texts and pictures the museum makes itself lies with ChipMates gemeinnützige GmbH.",
+    "s6_before": "The museum's code is not public yet. It will be published under an open source licence, the AGPL-3.0 or any later version. Anyone may then read it, use it and change it under that licence. The rights in the texts and pictures the museum makes itself lie with ChipMates gemeinnützige GmbH.",
     "s7_h": "Accessibility and privacy",
     "s7_p": "The museum is built once for the phone and once for the desktop, in English and German, in plain words. It aims at WCAG 2.2 AA, the common standard for accessible websites. It sets no tracking cookies and does no profiling. The details are on the privacy page.",
     "trust": "Nonprofit · Open Source · No tracking cookies, no profiling",

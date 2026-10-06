@@ -143,7 +143,7 @@ Museum of Ages is a project of ChipMates gemeinnützige GmbH, a small German non
 | What | Terms |
 |---|---|
 | The code in this repository | [AGPL-3.0](LICENSE) or any later version |
-| The texts and pictures the museum makes itself | [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/), © ChipMates gemeinnützige GmbH |
+| The texts and pictures the museum makes itself | [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/), © ChipMates gemeinnützige GmbH and contributors |
 | Each reproduction | Its own licence line, on its label and in its record |
 | The map and relief data the house is built from | ODbL 1.0, © OpenStreetMap contributors, and Licence Ouverte 2.0 from IGN |
 | Everything else the museum and its site take from others | As listed in [THIRD-PARTY.md](THIRD-PARTY.md) |

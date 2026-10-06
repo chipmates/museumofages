@@ -1,0 +1,10 @@
+SPDX-FileCopyrightText: OpenStreetMap contributors <https://www.openstreetmap.org/copyright>
+SPDX-FileCopyrightText: IGN, RGE ALTI®, consulted 8 September 2026
+SPDX-FileCopyrightText: ChipMates gemeinnützige GmbH
+SPDX-License-Identifier: ODbL-1.0
+
+closluce.json as a whole is under the Open Database License 1.0,
+https://opendatacommons.org/licenses/odbl/1-0/. It contains data from
+OpenStreetMap, © OpenStreetMap contributors, and relief values from IGN
+RGE ALTI® under the Licence Ouverte 2.0. CONTENT-LICENSE.md at the root
+of the repository has the full note.
