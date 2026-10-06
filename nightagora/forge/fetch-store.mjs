@@ -177,7 +177,7 @@ for (const w of list) {
 }
 const total = list.reduce((n, w) => n + (w.bytes ?? 0), 0) + zoomBytes
 const todo = list.filter((w) => VERIFY || !present(w))
-const todoBytes = todo.reduce((n, w) => n + (w.bytes ?? 0), 0) + (todo.some((w) => w.bytes === undefined) ? zoomBytes : 0)
+const todoBytes = todo.reduce((n, w) => n + (w.bytes ?? 0), 0) + (todo.some((w) => w.licenceAt) ? zoomBytes : 0)
 
 console.log(`the record: ${recordUrl} (${deployed.length} entries, ${mb(recordBytes.length)})`)
 console.log(`the copy:   ${INTO}`)
