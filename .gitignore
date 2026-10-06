@@ -12,6 +12,9 @@ Thumbs.db
 node_modules/
 .pnpm-store/
 
+# A local copy of the public asset store (nightagora/forge/fetch-store.mjs)
+/asset-store/
+
 # Build output
 dist/
 .vite/
