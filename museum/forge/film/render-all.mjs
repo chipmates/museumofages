@@ -50,9 +50,8 @@ import {
 
 export const JOB_FORMAT = 'vinci-film-job-v1'
 export const LEDGER = 'ledger.jsonl'
-/** THE PROGRAM'S GATE LOCK, found upward from the checkout (a worktree of a
-    round, the museum inside the public repository, or its own): slot A, or
-    slot B at this battery share or more (`scratch/locked.sh`'s own rule) */
+/** THE GATE LOCK that keeps long runs apart, found upward from the checkout
+    or named by NA_LOCK_DIR: slot A, or slot B at this battery share or more */
 export function findLockDir(from = APP_ROOT) {
   if (process.env['NA_LOCK_DIR']) return resolve(process.env['NA_LOCK_DIR'])
   for (let at = from; ; at = dirname(at)) {
@@ -572,7 +571,7 @@ async function run(flags) {
   const PORT = Number(flags.get('port') ?? process.env['FORGE_PORT'] ?? 5573)
   const ORIGIN_PORT = Number(flags.get('origin-port') ?? PORT - 1)
   const BASE = `http://127.0.0.1:${PORT}`
-  const lock = gateLock({ mode: String(flags.get('lock') ?? 'gate'), owner: process.env['LOCK_OWNER'] ?? 'w7 film job', log })
+  const lock = gateLock({ mode: String(flags.get('lock') ?? 'gate'), owner: process.env['LOCK_OWNER'] ?? 'film job', log })
   const session = `${stamp()} ${process.pid}`
   const replay = await openReplay()
   const graph = buildGraph(replay.wing)
