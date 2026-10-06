@@ -18,6 +18,8 @@ export default defineConfig({
   ],
   build: {
     target: 'esnext',
+    // the licence notices of the third-party code the bundle ships, as a file beside it
+    license: { fileName: 'third-party-licenses.md' },
     /* THE THREE BENCHES ARE NOT PART OF THE MUSEUM. All are dev and preview
        only: vite's dev server serves any page at the root, and a build
        carries one only when a rig asks, so the bundle a visitor downloads
