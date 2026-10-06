@@ -16,8 +16,8 @@ What the museum and museumofages.org use from others, and under which licence. T
 
 | Font | Licence | Copyright notice | Where |
 |---|---|---|---|
-| Cardo, the serif | SIL Open Font License 1.1 | © 2002-2011 David J. Perry | `site/site/static/fonts/cardo-400.woff2`, licence in `LICENSE-Cardo.txt` beside it |
-| Marcellus, the sans, with Reserved Font Name "Marcellus" | SIL Open Font License 1.1 | © 2012 Brian J. Bonislawsky DBA Astigmatic (AOETI) | `site/site/static/fonts/marcellus-400.woff2`, licence in `LICENSE-Marcellus.txt` beside it |
+| Cardo, the serif | SIL Open Font License 1.1 | © 2002-2011 David J. Perry | `site/_src/fonts/cardo-400.woff2`, licence in `LICENSE-Cardo.txt` beside it |
+| Marcellus, the sans, with Reserved Font Name "Marcellus". The site serves a cut with added Polish letters, so the cut carries its own name, Ages Display, as the licence asks of a modified version | SIL Open Font License 1.1 | © 2012 Brian J. Bonislawsky DBA Astigmatic (AOETI) | `site/_src/fonts/marcellus-400.woff2`, licence in `LICENSE-Marcellus.txt` beside it |
 
 The museum itself sets its words in the fonts of your system and ships no font file. The letters it builds in 3D are drawn in its own code.
 

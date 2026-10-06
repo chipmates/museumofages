@@ -2,6 +2,7 @@
 """Cuts the site's sans font from the full file, with the letters a holder's name may need.
 
     python3 _src/tools/make_fonts.py            write _src/fonts/marcellus-400.woff2 and _src/fonts.json
+    python3 _src/tools/make_fonts.py --rename   give the existing cut its own names
     python3 _src/tools/make_fonts.py --check    say what the two font files hold, write nothing
 
 The sans was the common Latin cut, which has no Polish letters: a holder's name in Polish fell back to another
@@ -55,8 +56,29 @@ def ranges(points):
     return out
 
 
+# The cut adds letters, so under the OFL it is a Modified Version and may not carry the Reserved
+# Font Name: its own names say "Ages Display". The copyright, trademark and licence notices stay.
+SANS_NAME = "Ages Display"
+
+
+def rename(font):
+    for record in font["name"].names:
+        if record.nameID in (1, 4, 16):
+            record.string = SANS_NAME
+        elif record.nameID == 3:
+            record.string = f"ChipMates: {SANS_NAME}: 2026"
+        elif record.nameID == 6:
+            record.string = SANS_NAME.replace(" ", "") + "-Regular"
+
+
 def main():
     sans, serif = FONTS / "marcellus-400.woff2", FONTS / "cardo-400.woff2"
+    if "--rename" in sys.argv:
+        font = TTFont(sans)
+        rename(font)
+        font.save(sans)
+        print(f"{sans.name}: named {SANS_NAME}")
+        return
     if "--check" in sys.argv:
         for path in (sans, serif):
             points = set(held(path))
@@ -81,6 +103,7 @@ def main():
     cutter = subset.Subsetter(options)
     cutter.populate(unicodes=want)
     cutter.subset(font)
+    rename(font)
     subset.save_font(font, str(sans), options)
     LIST.write_text(json.dumps({
         "_note": "What the site's two font files hold, as ranges of code points. Written by tools/make_fonts.py, read by the build.",
