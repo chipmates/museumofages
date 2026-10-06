@@ -158,6 +158,9 @@
     "enter": "Enter the museum",
     "originals": "The originals of the works shown are held by the museums, libraries and collections named on the labels.",
     "rights": "© ChipMates gemeinnützige GmbH",
+    "data_a": "The house and its grounds are built from map data",
+    "data_osm": "©\u00a0OpenStreetMap contributors",
+    "data_b": "(ODbL 1.0) and relief data from IGN (RGE ALTI®, consulted 8 September 2026, Licence Ouverte 2.0).",
     "motion_pause": "Pause motion",
     "motion_play": "Resume motion"
   },

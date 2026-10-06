@@ -158,7 +158,7 @@
           "kind": "Reproduktionen",
           "what": "vorn die Taufe Christi von Verrocchio und Leonardo, dann die Verkündigung, beide in den Uffizien.",
           "alt": "Eine lange dunkelblaue Wand mit gerahmten Reproduktionen von Gemälden unter Strahlern, vorn die Taufe Christi und die Verkündigung. Vor der Wand stehen Holzbänke. Ein Standbild aus dem Film des Museums.",
-          "src": "Die Bilder an der Wand sind Reproduktionen, jede mit Quelle und Lizenz auf ihrer Beschriftung im Flügel.",
+          "src": "Die Bilder an der Wand sind Reproduktionen, jede mit Quelle und Lizenz auf ihrer Beschriftung im Flügel. {museum:it108}",
           "src_to": "originals"
         },
         {
@@ -272,7 +272,7 @@
           "title": "Das Abendmahl im Hof",
           "kind": "Reproduktion",
           "what": "das Original ist ein Wandbild im Speisesaal des Klosters Santa Maria delle Grazie in Mailand. Die Wand im Hof ist in Code gebaut.",
-          "src": "{museum:supper_credit}",
+          "src": "{museum:supper_credit} {museum:it108}",
           "alt": "Eine Reproduktion des Abendmahls füllt eine helle Wand in einem Hof: eine Reihe von Figuren an einem langen Tisch in einem gemalten Raum. Ein Standbild aus dem Film des Museums."
         }
       ]

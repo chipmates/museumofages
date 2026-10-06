@@ -216,7 +216,7 @@ LIMITS = [
     (r"wing:.*\.names\.[\w-]+$", 34), (r"wing:.*\.terms$", 240), (r"wing:.*\.close\.intro$", 300), (r"wing:.*\.source$", 160),
     (r"wing:.*piece\.(tag_a|tag_b|pause|play)$", 20), (r"wing:.*piece\.(hint|slider_label|canvas_label)$", 90),
     (r"wing:.*quote\.from$", 44), (r"wing:.*\.age$", 60), (r"wing:.*\.age_k$", 24), (r"wing:numbers\.\d+\.num$", 16),
-    (r"wing:.*\.src$", 230), (r"wing:.*\.what$", 190), (r"wing:.*\.key\.(full|quiet)$", 150),
+    (r"wing:.*\.src$", 290), (r"wing:.*\.what$", 190), (r"wing:.*\.key\.(full|quiet)$", 150),
     (r"wing:.*\.p\.\d+$|wing:end\.p$|wing:.*field\.p$", 490), (r"wing:.*rows\.\d+\.k$", 32), (r"wing:.*rows\.\d+\.v$", 190),
     (r"wing:.*places\.\w+$|wing:.*lists\.\d+\.h$", 28), (r"wing:holds\..*\.(after|unit)$", 14), (r"wing:.*\.(still|no_sheet)$", 60),
     (r"wing:numbers\.\d+\.term$", 22), (r"wing:numbers\.\d+\.text$", 110), (r"wing:out\.line$", 130), (r"", 420),

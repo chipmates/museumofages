@@ -158,7 +158,7 @@
           "kind": "Reproductions",
           "what": "in front The Baptism of Christ, by Verrocchio and Leonardo, then the Annunciation, both in the Uffizi.",
           "alt": "A long wall in dark blue hung with framed reproductions of paintings under spotlights, the nearest two The Baptism of Christ and the Annunciation. Wooden benches stand in front of the wall. A still from the museum's film.",
-          "src": "The pictures on the wall are reproductions, each with its source and licence on its label in the wing.",
+          "src": "The pictures on the wall are reproductions, each with its source and licence on its label in the wing. {museum:it108}",
           "src_to": "originals"
         },
         {
@@ -272,7 +272,7 @@
           "title": "The Last Supper in the court",
           "kind": "Reproduction",
           "what": "the original is a wall painting in the dining hall of the monastery of Santa Maria delle Grazie in Milan. The wall in the court is built in code.",
-          "src": "{museum:supper_credit}",
+          "src": "{museum:supper_credit} {museum:it108}",
           "alt": "A reproduction of the Last Supper fills a pale wall in a court: a row of figures at a long table in a painted room. A still from the museum's film."
         }
       ]

@@ -158,6 +158,9 @@
     "enter": "Ins Museum",
     "originals": "Die Originale der gezeigten Werke bewahren die Museen, Bibliotheken und Sammlungen, die in den Beschriftungen genannt sind.",
     "rights": "© ChipMates gemeinnützige GmbH",
+    "data_a": "Haus und Gelände sind nach Kartendaten",
+    "data_osm": "©\u00a0OpenStreetMap-Mitwirkende",
+    "data_b": "(ODbL 1.0) und Höhendaten des IGN gebaut (RGE ALTI®, abgerufen am 8. September 2026, Licence Ouverte 2.0).",
     "motion_pause": "Bewegung anhalten",
     "motion_play": "Bewegung fortsetzen"
   },

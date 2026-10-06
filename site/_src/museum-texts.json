@@ -8,7 +8,8 @@
     "nightagora/src/wings/vinci/pictures/data/paintings.json",
     "nightagora/src/wings/vinci/pictures/visitor-copy.ts",
     "nightagora/src/wings/vinci/pictures/policy-label.ts",
-    "nightagora/public/na-manifest.json"
+    "nightagora/public/na-manifest.json",
+    "nightagora/src/wings/vinci/pictures/opening-register.ts"
   ],
   "en": {
     "lion_label": "Old accounts tell of a lion Leonardo made for a King of France. It walked a few steps, stopped and opened its chest full of lilies.",
@@ -27,10 +28,11 @@
     "lisa_record": "The Louvre identifies the sitter as Lisa Gherardini, wife of Francesco del Giocondo.",
     "lisa_size": "The painting measures 79.4 × 53.4 cm.",
     "lisa_holder": "From the Louvre collection, Paris.",
-    "lisa_credit": "Historical print digitised by the National Library of Poland. Public domain image via Wikimedia Commons.",
+    "lisa_credit": "Public domain reproduction from Wikimedia Commons.",
     "valve_holder": "Royal Collection, RCIN 919082.",
     "sheet_credit": "Public domain work. Reproduction from Wikimedia Commons.",
-    "deluge_credit": "A deluge. Leonardo da Vinci. Public domain work. Reproduction from Wikimedia Commons."
+    "deluge_credit": "A deluge. Leonardo da Vinci. Public domain work. Reproduction from Wikimedia Commons.",
+    "it108": "Italian Codice dei beni culturali, art. 108 comma 3-bis: exemption for non-profit study, research and promotion of knowledge of the cultural heritage."
   },
   "de": {
     "lion_label": "Alte Berichte erzählen von einem Löwen, den Leonardo für einen König von Frankreich machte. Er ging einige Schritte, blieb stehen und öffnete die Brust voller Lilien.",
@@ -49,9 +51,10 @@
     "lisa_record": "Der Louvre identifiziert die Dargestellte als Lisa Gherardini, Ehefrau von Francesco del Giocondo.",
     "lisa_size": "Das Gemälde misst 79,4 × 53,4 cm.",
     "lisa_holder": "Aus der Sammlung des Louvre in Paris.",
-    "lisa_credit": "Historischer Druck, digitalisiert von der polnischen Nationalbibliothek. Gemeinfreies Bild aus Wikimedia Commons.",
+    "lisa_credit": "Gemeinfreie Reproduktion aus Wikimedia Commons.",
     "valve_holder": "Royal Collection, RCIN 919082.",
     "sheet_credit": "Gemeinfreies Werk. Reproduktion aus Wikimedia Commons.",
-    "deluge_credit": "Eine Sintflut. Leonardo da Vinci. Gemeinfreies Werk. Reproduktion aus Wikimedia Commons."
+    "deluge_credit": "Eine Sintflut. Leonardo da Vinci. Gemeinfreies Werk. Reproduktion aus Wikimedia Commons.",
+    "it108": "Italienischer Codice dei beni culturali, Art. 108 comma 3-bis: Ausnahme für Studium, Forschung und Förderung der Kenntnis des Kulturerbes, jeweils ohne Gewinnabsicht."
   }
 }
