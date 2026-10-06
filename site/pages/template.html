@@ -1,0 +1,198 @@
+<!--@ page -->
+<!doctype html>
+<html lang="{{lang}}">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<!--csp-->
+{{html.preload}}<title>{{meta.title}}</title>
+<meta name="description" content="{{meta.description}}">
+<style>{{css.inline}}</style>
+<style>{{css.faces}}</style>
+<link rel="canonical" href="{{url.self}}">
+<link rel="alternate" hreflang="en" href="{{url.en}}">
+<link rel="alternate" hreflang="de" href="{{url.de}}">
+<link rel="alternate" hreflang="x-default" href="{{url.en}}">
+<meta name="color-scheme" content="dark">
+<link rel="icon" href="data:,">
+{{html.theme}}<meta property="og:type" content="article">
+<meta property="og:site_name" content="Museum of Ages">
+<meta property="og:title" content="{{meta.og_title}}">
+<meta property="og:description" content="{{meta.description}}">
+<meta property="og:url" content="{{url.self}}">
+<meta property="og:locale" content="{{og_locale}}">
+<meta property="og:image" content="{{url.og_image}}">
+<meta property="og:image:width" content="{{og.width}}">
+<meta property="og:image:height" content="{{og.height}}">
+<meta property="og:image:alt" content="{{meta.og_image_alt}}">
+<meta name="twitter:card" content="summary_large_image">
+</head>
+<body class="sp-body">
+{{html.header}}
+
+<main id="main" class="sp" data-page="{{page.id}}" data-lang="{{lang}}">
+  <div class="wrap">
+    <nav class="sp-crumbs" aria-label="{{labels.crumbs}}">
+      <ol>
+        <li><a href="{{href.home}}">{{labels.crumb_home}}</a></li>
+        <li><a href="{{href.wing}}">{{wing.name}}</a></li>
+        <li aria-current="page">{{labels.crumb_here}}</li>
+      </ol>
+    </nav>
+
+    <header class="sp-top">
+      <div class="sp-top__text">
+        <h1{{attr.h1}}>{{top.h1}}</h1>
+        <p class="sp-answer">{{top.answer}}</p>
+      </div>
+      <figure class="plate sp-frame" data-slot="frame">
+        <div class="hang">{{html.frame_picture}}</div>
+        <!-- On a phone the label is one line, so the door stands on the first screen. -->
+        <figcaption class="label sp-frame__label">
+          <span class="label__title">{{top.frame.title}}</span>
+          <span class="label__what"><span class="tag">{{top.frame.tag}}<span class="vh">:</span></span> <span class="sp-frame__what">{{top.frame.what}}</span></span>
+        </figcaption>
+      </figure>
+      <!-- The one way in. No script is wired to the hooks: the site's measurement is not decided. -->
+      <div class="sp-way">
+        <a class="door" href="{{href.enter}}" data-page="{{page.id}}" data-slot="door-answer"><span>{{top.door.text}}</span>{{svg.arrow}}</a>
+        <p class="sp-way__note">{{top.door.note}}</p>
+        <p class="sp-way__leads">{{top.door.leads}}</p>
+      </div>
+    </header>
+
+    <div class="sp-grid">
+      <nav class="sp-toc" aria-label="{{labels.toc}}">
+        <h2 class="key sp-toc__h">{{labels.toc}}</h2>
+        <ol>
+{{html.toc}}
+        </ol>
+      </nav>
+
+      <div class="sp-body__main">
+{{html.blocks}}
+      </div>
+    </div>
+  </div>
+</main>
+
+{{html.footer}}
+<script type="application/ld+json">{{jsonld}}</script>
+</body>
+</html>
+<!--@ toc_item -->
+          <li><a href="#{{id}}">{{nav}}</a></li>
+<!--@ figure -->
+<figure class="plate sp-plate">
+  <div class="hang">{{html.picture}}</div>
+  <!-- The heading above the plate is its title: the label says what kind of thing the picture shows. -->
+  <figcaption class="label sp-plate__label"><span class="label__what"><span class="tag">{{tag}}<span class="vh">:</span></span> {{what}}</span></figcaption>
+</figure>
+<!--@ row -->
+<div><dt class="key">{{label}}</dt><dd>{{v}}</dd></div>
+<!--@ place -->
+<p class="sp-place"><span class="key">{{labels.in_museum}}<span class="vh">:</span></span> {{place}}</p>
+<!--@ block:places -->
+<section class="sp-sec sp-places" id="{{id}}">
+  <h2>{{h}}</h2>
+  <p class="sp-intro">{{intro}}</p>
+  <div class="sp-stands">
+{{html.rows}}
+  </div>
+  <p class="sp-after">{{after}}</p>
+</section>
+<!--@ stand -->
+<article class="sp-stand">
+  <h3>{{term}}</h3>
+  {{html.pic}}
+  <p class="sp-stand__text">{{text}}</p>
+</article>
+<!--@ term_row -->
+<div><dt>{{term}}</dt><dd>{{text}}</dd></div>
+<!--@ block:group -->
+<section class="sp-sec sp-group" id="{{id}}">
+  <h2>{{h}}</h2>
+  <p class="sp-intro">{{intro}}</p>
+{{html.items}}
+</section>
+<!--@ item -->
+<article class="sp-item" id="{{id}}">
+  <h3>{{name}}</h3>
+  {{html.place}}
+  {{html.pic}}
+  <div class="sp-text">
+    <p class="sp-does">{{does}}</p>
+  </div>
+  <dl class="sp-rows">
+{{html.rows}}
+  </dl>
+</article>
+<!--@ block:feature -->
+<section class="sp-sec sp-feature" id="{{id}}">
+  <h2>{{h}}</h2>
+  <div class="sp-item">
+    {{html.place}}
+    {{html.pic}}
+    <div class="sp-text">
+{{html.paras}}
+    </div>
+    <dl class="sp-rows">
+{{html.rows}}
+    </dl>
+  </div>
+</section>
+<!--@ para -->
+<p class="sp-does">{{text}}</p>
+<!--@ block:notes -->
+<section class="sp-sec sp-notes" id="{{id}}">
+  <h2>{{h}}</h2>
+  <p class="sp-intro">{{intro}}</p>
+  <dl class="sp-dir sp-dir--long">
+{{html.rows}}
+  </dl>
+</section>
+<!--@ block:faq -->
+<section class="sp-sec sp-faq" id="{{id}}">
+  <h2>{{h}}</h2>
+{{html.items}}
+</section>
+<!--@ faq_item -->
+<div class="sp-q">
+  <h3>{{q}}</h3>
+  <p>{{a}}</p>
+</div>
+<!--@ block:sources -->
+<section class="sp-sec sp-sources" id="{{id}}">
+  <h2>{{h}}</h2>
+  <p class="sp-intro">{{intro}}</p>
+  <h3 class="key">{{holders_h}}</h3>
+  <ul class="sp-holders">
+{{html.holders}}
+  </ul>
+{{html.notes}}
+  <h3 class="key">{{editions_h}}</h3>
+  <ul class="sp-holders sp-editions">
+{{html.editions}}
+  </ul>
+  <p class="sp-contact">{{contact}} <a href="{{href.imprint}}">{{contact_link}}</a></p>
+  <p class="sp-more"><a class="more" href="{{href.what}}"><span>{{what_link}}</span>{{svg.arrow}}</a></p>
+</section>
+<!--@ holder -->
+<li><span class="sp-holders__name">{{name}}, {{place}}</span> <span class="sp-holders__what">{{text}}</span></li>
+<!--@ edition -->
+<li><span class="sp-holders__name">{{name}}</span> <span class="sp-holders__what">{{text}}<span class="sp-links">
+{{html.links}}
+</span></span></li>
+<!--@ link -->
+<a href="{{href}}">{{label}}</a>
+<!--@ note -->
+<p class="sp-note">{{text}}</p>
+<!--@ block:close -->
+<section class="sp-sec sp-close" id="{{id}}">
+  <h2>{{h}}</h2>
+  <p class="sp-intro">{{p}}</p>
+  <div class="sp-way">
+    <a class="door" href="{{href.enter}}" data-page="{{page.id}}" data-slot="door-end"><span>{{door.text}}</span>{{svg.arrow}}</a>
+    <p class="sp-way__note">{{door.note}}</p>
+  </div>
+</section>

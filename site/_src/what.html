@@ -1,0 +1,157 @@
+<!doctype html>
+<html lang="{{lang}}" class="sheet">
+<head>
+{{head}}
+</head>
+<body class="doc">
+{{header}}
+
+<main id="main" class="statement">
+  <div class="wrap statement__grid">
+    <header class="statement__head">
+      <h1>{{page_what.h1}}</h1>
+      <p class="lead">{{page_what.lead}}</p>
+    </header>
+
+    <nav class="toc" aria-label="{{page_what.toc_h}}">
+      <h2 class="toc__h">{{page_what.toc_h}}</h2>
+      <ol>
+        <li><a href="#web">{{page_what.s1_h}}</a></li>
+        <li><a href="#mission">{{page_what.m_h}}</a></li>
+        <li><a href="#shown">{{page_what.s2_h}}</a></li>
+        <li><a href="#sure">{{page_what.s2_four_h}}</a></li>
+        <li><a href="#originals">{{page_what.s3_h}}</a></li>
+        <li><a href="#words">{{page_what.s4_h}}</a></li>
+        <li><a href="#who">{{page_what.s5_h}}</a></li>
+        <li><a href="#open">{{page_what.s6_h}}</a></li>
+        <li><a href="#access">{{page_what.s7_h}}</a></li>
+        <li><a href="#corrections">{{page_what.s8_h}}</a></li>
+      </ol>
+    </nav>
+
+    <div class="statement__body">
+      <section id="web">
+        <h2>{{page_what.s1_h}}</h2>
+        <p>{{page_what.s1_p1}}</p>
+        <p>{{page_what.s1_p2}} {{html.today}}</p>
+      </section>
+
+      <!-- The mission: the one sentence, why, the museum's role as this and not that, the barriers it takes down
+           today, what it does not do yet, and a close. -->
+      <section id="mission" class="mission">
+        <h2>{{page_what.m_h}}</h2>
+        <p class="mission__one">{{page_what.m_one}}</p>
+        <p>{{page_what.m_p1}}</p>
+        <p>{{page_what.m_p2}}</p>
+        <h3>{{page_what.m_role_h}}</h3>
+        <ul class="mission__role">
+          <li>{{page_what.m_role_1}}</li>
+          <li>{{page_what.m_role_2}}</li>
+          <li>{{page_what.m_role_3}}</li>
+          <li>{{page_what.m_role_4}}</li>
+        </ul>
+        <h3>{{page_what.m_bar_h}}</h3>
+        <dl class="pair mission__bars">
+          <div><dt>{{page_what.m_bar_1_term}}</dt><dd>{{page_what.m_bar_1_text}}</dd></div>
+          <div><dt>{{page_what.m_bar_2_term}}</dt><dd>{{page_what.m_bar_2_text}}</dd></div>
+          <div><dt>{{page_what.m_bar_3_term}}</dt><dd>{{page_what.m_bar_3_text}}</dd></div>
+          <div><dt>{{page_what.m_bar_4_term}}</dt><dd>{{page_what.m_bar_4_text}}</dd></div>
+          <div><dt>{{page_what.m_bar_5_term}}</dt><dd>{{page_what.m_bar_5_text}}</dd></div>
+        </dl>
+        <h3>{{page_what.m_not_h}}</h3>
+        <p>{{page_what.m_not_p}}</p>
+        <p class="mission__close">{{page_what.m_close}} <span class="mission__em">{{page_what.m_close_em}}</span></p>
+      </section>
+
+      <section id="shown">
+        <h2>{{page_what.s2_h}}</h2>
+        <p>{{page_what.s2_p}}</p>
+        <dl class="pair">
+          <div><dt>{{page_what.s2_a_term}}</dt><dd>{{page_what.s2_a_text}}</dd></div>
+          <div><dt>{{page_what.s2_b_term}}</dt><dd>{{page_what.s2_b_text}}</dd></div>
+        </dl>
+        {{html.plate}}
+        <h3>{{page_what.s2_lic_h}}</h3>
+        <p>{{page_what.s2_lic_p}}</p>
+        <ul class="kinds">
+          <li>{{page_what.s2_lic_1}}</li>
+          <li>{{page_what.s2_lic_2}}</li>
+          <li>{{page_what.s2_lic_3}}</li>
+          <li>{{page_what.s2_lic_4}}</li>
+          <li>{{page_what.s2_lic_5}}</li>
+          <li>{{page_what.s2_lic_6}}</li>
+          <li>{{page_what.s2_lic_7}}</li>
+        </ul>
+        <p>{{page_what.s2_lic_after}}</p>
+      </section>
+
+      <section id="sure">
+        <h2>{{page_what.s2_four_h}}</h2>
+        <p class="honesty">{{page_what.honesty}}</p>
+        <p>{{page_what.s2_four_p}}</p>
+        {{html.grades}}
+      </section>
+
+      <section id="originals">
+        <h2>{{page_what.s3_h}}</h2>
+        <!-- The holders stand in full on a wing's own page. Here: first the way to each wing's list, then the sentence. -->
+        {{html.originals}}
+        <p>{{page_what.s3_p1}}</p>
+        <p>{{page_what.s3_p3}}</p>
+      </section>
+
+      <section id="words">
+        <h2>{{page_what.s4_h}}</h2>
+        <p class="made">{{page_what.s4_made}}</p>
+        <p>{{page_what.s4_p1}}</p>
+        <p>{{page_what.s4_p2}}</p>
+      </section>
+
+      <section id="who">
+        <h2>{{page_what.s5_h}}</h2>
+        <p>{{page_what.s5_p1}}</p>
+        <p>{{page_what.s5_p2}} {{page_what.s5_pays}}</p>
+        {{html.who}}
+        <dl class="card">
+          <div><dt>{{page_what.org_term}}</dt><dd>{{page_what.org_value}}</dd></div>
+          <div><dt>{{page_what.address_term}}</dt>{{org.address_dd}}</div>
+          <div><dt>{{page_what.register_term}}</dt>{{org.register_dd}}</div>
+          <div><dt>{{page_what.contact_term}}</dt><dd>{{html.mail}}</dd></div>
+        </dl>
+        {{html.other}}
+      </section>
+
+      <section id="open">
+        <h2>{{page_what.s6_h}}</h2>
+        <!-- By the switch SOURCE_LINK in build.py: the sentence and the link once the repository is public, or the
+             sentence that is true before. -->
+        {{html.code}}
+      </section>
+
+      <section id="access">
+        <h2>{{page_what.s7_h}}</h2>
+        <p>{{page_what.s7_p}}</p>
+        <p class="trust trust--line">{{page_what.trust}}</p>
+      </section>
+
+      <section id="corrections">
+        <h2>{{page_what.s8_h}}</h2>
+        <p>{{page_what.s8_p}}</p>
+        <p>{{page_what.s8_inst}}</p>
+        <p><a class="more" href="{{href.imprint}}"><span>{{inst.imprint}}</span>{{svg.arrow}}</a></p>
+      </section>
+
+      <div class="statement__end">
+        <a class="door" href="{{href.enter}}"><span>{{page_what.enter}}</span>{{svg.arrow}}</a>
+        <a class="more more--back" href="{{href.home}}"><span>{{page_what.back}}</span></a>
+      </div>
+    </div>
+  </div>
+</main>
+
+{{footer}}
+{{script.faces}}
+<script type="application/ld+json">{{jsonld}}</script>
+<script src="{{static}}site.js" defer></script>
+</body>
+</html>

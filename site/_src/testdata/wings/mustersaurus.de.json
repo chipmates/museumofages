@@ -1,0 +1,179 @@
+{
+  "_note": "STAND-IN, TEST ONLY. A wing of a second collection: an invented animal. It proves that the wing template takes a wing that is no person: no house, no machine, no picture room, no holders, no topic page, no sky at the end. Never built into dist/.",
+  "meta": {
+    "title": "Der Flügel zum Mustersaurus | Museum of Ages, ein digitales Museum",
+    "description": "Platzhaltertext: ein Flügel über ein erfundenes Tier, mit {count:stops} Stationen.",
+    "share_alt": "Platzhalterbild."
+  },
+  "first": {
+    "lede": "Platzhaltertext: ein Rundgang mit {count:stops} Stationen, von den Knochen bis zum ganzen Tier.",
+    "piece": {
+      "title": "Das ganze Tier",
+      "kind": "Rekonstruktion",
+      "what": "eine Platzhalterzeichnung",
+      "alt": "Eine Strichzeichnung eines zweibeinigen Tiers mit langem Schwanz, von der Seite. Ein Platzhalterbild."
+    }
+  },
+  "landing": {
+    "piece": {
+      "title": "Das ganze Tier",
+      "kind": "Rekonstruktion",
+      "what": "eine Platzhalterzeichnung",
+      "alt": "Eine Strichzeichnung eines zweibeinigen Tiers mit langem Schwanz, von der Seite. Ein Platzhalterbild.",
+      "beats": [
+        "Was geblieben ist: die Knochen.",
+        "Was wir nachgebaut haben: die Muskeln, dann die Haut.",
+        "Wie sicher: Jedes Teil trägt seinen Grad."
+      ],
+      "install": {
+        "name": "stand-in",
+        "script": "stand-in-piece.js",
+        "pause": "Anhalten",
+        "play": "Abspielen"
+      }
+    }
+  },
+  "card": {
+    "kind": "Rekonstruktion",
+    "what": "das Skelett, eine Platzhalterzeichnung",
+    "alt": "Eine Strichzeichnung des Skeletts eines zweibeinigen Tiers. Ein Platzhalterbild."
+  },
+  "intro": {
+    "p": "Platzhaltertext: Der Flügel baut ein Tier in drei Schritten auf."
+  },
+  "rooms": [
+    {
+      "id": "body",
+      "h": "Von den Knochen zum Tier",
+      "note": "Drei Schritte",
+      "p": [
+        "Platzhaltertext. Erst das Skelett, dann die Muskeln darüber, dann das ganze Tier."
+      ],
+      "plates": [
+        {
+          "pic": {
+            "stem": "t-skeleton",
+            "widths": [
+              600,
+              1200
+            ]
+          },
+          "title": "Das Skelett",
+          "kind": "Reproduktion",
+          "what": "Platzhalterzeichnung",
+          "alt": "Das Skelett, in Linien gezeichnet. Ein Platzhalterbild."
+        },
+        {
+          "pic": {
+            "stem": "t-muscles",
+            "widths": [
+              600,
+              1200
+            ]
+          },
+          "title": "Die Muskeln",
+          "kind": "Rekonstruktion",
+          "what": "Platzhalterzeichnung",
+          "alt": "Der Umriss des Tiers mit schraffierten Muskeln. Ein Platzhalterbild."
+        },
+        {
+          "pic": {
+            "stem": "t-animal",
+            "widths": [
+              600,
+              1200
+            ]
+          },
+          "title": "Das ganze Tier",
+          "kind": "Rekonstruktion",
+          "what": "Platzhalterzeichnung",
+          "alt": "Das Tier als gefüllte Form. Ein Platzhalterbild."
+        }
+      ]
+    },
+    {
+      "id": "size",
+      "h": "Wie groß war es?",
+      "note": "Neben einem Menschen",
+      "hang": "wide",
+      "p": [
+        "Platzhaltertext. Das Tier steht neben einem Menschen von 1,80 Metern, über einem Maßstab von zwölf Metern."
+      ],
+      "plates": [
+        {
+          "pic": {
+            "stem": "t-size",
+            "widths": [
+              800,
+              1600
+            ]
+          },
+          "title": "Neben einem Menschen",
+          "kind": "Schaubild",
+          "what": "Platzhalterzeichnung",
+          "alt": "Das Tier neben einer kleinen Menschenfigur über einem Maßstab. Ein Platzhalterbild."
+        }
+      ]
+    },
+    {
+      "id": "ground",
+      "h": "Wo es gefunden wurde",
+      "note": "Ein Raum ohne Bild",
+      "p": [
+        "Platzhaltertext für einen Raum ohne Bild. Er schließt an den Raum davor an."
+      ],
+      "plates": []
+    }
+  ],
+  "stop": {
+    "n": 3,
+    "grade": "reconstructed",
+    "intro": "Platzhaltertext: eine Station dieses Flügels, mit ihren drei Ebenen.",
+    "stage": {
+      "pic": {
+        "stem": "t-skeleton",
+        "widths": [
+          600,
+          1200
+        ]
+      },
+      "alt": "Das Skelett, in Linien gezeichnet. Ein Platzhalterbild.",
+      "title": "Das Skelett",
+      "kind": "Reproduktion",
+      "what": "Platzhalterzeichnung"
+    },
+    "title": "Es lief auf zwei Beinen",
+    "layers": [
+      {
+        "text": "Platzhalterzeile: das Erste, was du liest."
+      },
+      {
+        "text": "Platzhalterschublade: ein paar Sätze mehr, für alle, die sie öffnen."
+      },
+      {
+        "text": "Platzhaltereintrag: was belegt ist und was rekonstruiert."
+      }
+    ]
+  },
+  "numbers": [
+    {
+      "count": "stops",
+      "num": "{n}",
+      "term": "Stationen",
+      "text": "Platzhaltertext."
+    },
+    {
+      "count": "bones",
+      "num": "rund {n}",
+      "term": "Knochen",
+      "text": "Platzhaltertext."
+    }
+  ],
+  "end": {
+    "id": "end",
+    "dir": "Die letzte Station",
+    "note": "Die letzte Station",
+    "h": "Der Rundgang endet beim ganzen Tier",
+    "p": "Platzhaltertext. Dann endet der Rundgang."
+  }
+}

@@ -1,0 +1,348 @@
+/* The first screen of the museum's page and of a wing's page, set inline: the wall, the place of the showpiece,
+   the lettering, the door. Then what a tall screen can already see under it: the four facts and the head of the
+   wall of wings on the museum's page, the directory on a wing's page. No rule here names a wing. */
+
+/* ---------- 1. First screen (phone): the plate hangs under the bar, the lettering and the door stand under it ---------- */
+.hero{position:relative;display:flex;flex-direction:column}
+/* The plate and the words fill the screen between them: the words take what they need, the plate takes the rest,
+   up to 46 percent of the screen. So the name, the door and the note stand above the fold in either language. */
+.hero__first{display:flex;flex-direction:column;min-height:calc(100svh - var(--top-h) - var(--by) - 34px)}
+/* The place of a showpiece. Its box is set by the screen alone, never by what stands in it: a piece that arrives
+   later moves nothing. */
+.hero__plate{order:-1;flex:1 1 auto;display:flex;flex-direction:column;padding:20px var(--pad) 0}
+.hero__plate .hang{flex:1 1 150px;min-height:150px;max-height:46svh;--pool-up:64px;--pool-side:30%;--pool-down:-30%}
+.hero__plate picture{position:absolute;inset:0}
+.hero__img{height:100%;object-fit:cover}
+.hero__label{flex:none;margin-top:14px;gap:0;padding-top:8px}
+.hero__label .label__title{font-size:.9375rem}
+.hero__label .label__what{font-size:.75rem;line-height:1.4}
+.hero__label .tag{font-size:.6875rem}
+.hero__label .label__src{display:none}
+/* The film's music credit: on a phone it stands while the film is out, in the room of the caption's hidden lines,
+   so the frame keeps its height and nothing moves. */
+.hero__label .label__music{display:none}
+@media (max-width:599px){
+  .hero__plate.is-film .hero__label .label__title{grid-row:1;grid-column:1}
+  .hero__plate.is-film .hero__label .label__what,.hero__plate.is-film .hero__label .label__music{grid-row:2;grid-column:1}
+  .hero__plate.is-film .hero__label .label__music{display:block;font-size:.75rem;line-height:1.4}
+  /* An upright phone gives the running film a tall frame up to the screen's free height; the first screen's
+     squeeze applies only before the press and again after the film. */
+  .hero__plate.is-film .hang{flex:none;height:min(125vw,calc(100svh - var(--top-h) - var(--by) - 96px));max-height:none}
+}
+/* With a piece installed, its caption changes with each beat: two lines are kept for it from the first paint. */
+[data-piece] .hero__label .label__what{min-height:2.8em}
+/* A piece's own canvas or clip (class "piece") lies over the still, inside the frame's line. */
+.hero__plate .hang>.piece{position:absolute;z-index:1;inset:2px;width:calc(100% - 4px);height:calc(100% - 4px);max-width:none;object-fit:cover}
+/* A walk of pictures: each lies over the still and comes and goes in a slow dissolve. */
+.walk picture{opacity:0;transition:opacity 1.4s ease}
+.walk picture.is-on{opacity:1}
+.frame__img{width:100%;height:100%;object-fit:cover}
+/* The control's row is kept from the first paint, and a flex row has no line box to grow when the button appears. */
+.place__controls{display:flex;margin-top:10px;height:44px}
+/* A place that waits for a press: the sound control joins the row while the film is out, and a long word wraps. */
+.hero__plate[data-press] .place__controls{flex-wrap:wrap;gap:8px;height:auto;min-height:44px}
+.hero__plate[data-press] .plate-btn{flex:0 0 auto;white-space:nowrap}
+/* The four grades, shown by a piece inside its own box. */
+.grades{position:absolute;z-index:2;left:8px;right:8px;bottom:8px;display:flex;flex-wrap:wrap;gap:6px}
+.grades li{display:flex;align-items:center;gap:7px;padding:4px 8px;background:color-mix(in srgb,var(--ground-edge) 86%,transparent);box-shadow:inset 0 0 0 1px var(--hair-strong);font-family:var(--sans);font-size:.6875rem;line-height:1.3;letter-spacing:.1em;text-transform:uppercase;color:var(--ink)}
+
+.hero__head{flex:none;padding:14px var(--pad) 0}
+.hero__title{display:block}
+.hero__name{display:block;font-size:clamp(2.2rem,12.4vw,3.4rem);line-height:1;letter-spacing:-.012em;white-space:nowrap}
+/* A wing's name may be long: it breaks where it must and keeps its lines even. */
+.hero__name--wing{white-space:normal;text-wrap:balance;font-size:clamp(2.05rem,11vw,3.2rem);line-height:1.02}
+.hero__kicker{display:none}
+.hero__crumb{display:flex;align-items:center;gap:.7em;margin-bottom:7px;font-family:var(--sans);font-size:.8125rem;line-height:1.3;letter-spacing:.04em;color:var(--ink-quiet)}
+.hero__crumb a{padding:14px 0;margin:-14px 0;color:var(--ink-soft);text-decoration-color:var(--hair-strong)}
+.hero__crumb span{display:inline-flex;align-items:center;gap:.7em}
+.hero__crumb span::before{content:"/";color:var(--hair-strong)}
+.hero__text{flex:none;padding:0 var(--pad) 10px}
+.hero__tagline{margin-top:11px;font-size:clamp(1.25rem,5.6vw,1.5rem);line-height:1.28;color:var(--ink)}
+.hero__tagline span{display:block;text-wrap:balance}
+/* What a visitor finds today, from the registry. */
+.hero__today{margin-top:9px;font-size:1.0625rem;line-height:1.35;color:var(--ink-soft);text-wrap:balance}
+/* A wing's facts, set as a wall label sets them: the key small, the fact in the text's own size. The short rule
+   over them is the wing's one colour note. */
+.hero__facts{position:relative;margin-top:12px;padding-top:11px;display:grid;grid-template-columns:auto minmax(0,1fr);gap:1px 14px;align-items:baseline}
+.hero__facts::before{content:"";position:absolute;left:0;top:0;width:44px;height:2px;background:var(--note,var(--mark))}
+.hero__facts>div{display:grid;grid-template-columns:subgrid;grid-column:1/-1;align-items:baseline}
+.hero__facts dt{font-family:var(--sans);font-size:.75rem;line-height:1.5;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-soft)}
+.hero__facts dd{font-size:1rem;line-height:1.35;color:var(--ink);text-wrap:balance}
+.hero__lede{margin-top:9px;font-size:1rem;line-height:1.42;color:var(--ink-body)}
+.hero__go{margin-top:18px}
+/* The door is as wide as its words need and no wider: the plate stays the largest light on the screen. */
+.hero__go .door{min-width:min(100%,14.5rem)}
+.hero__note{margin-top:8px;font-family:var(--sans);font-size:.9375rem;line-height:1.5;color:var(--ink-quiet)}
+.hero__note a{display:inline-block;padding:11px 0;margin:-11px 0;color:var(--ink-soft)}
+/* A wing's page on a narrow screen: the piece's control is one small button at the label's right end, so no row
+   of the first screen is spent on it and the door stays above the fold. Its words stay for a screen reader. */
+@media (max-width:599px){
+  .hero--wing .hero__plate{position:relative}
+  .hero--wing .place__controls{position:absolute;right:var(--pad);bottom:0;margin:0}
+  .hero--wing .plate-btn{width:44px;padding:0;gap:0;justify-content:center;font-size:0}
+  .hero--wing .hero__plate[data-piece] .hero__label{padding-right:56px}
+  /* The kind word keeps a line of its own. Beside it, a beat that fits in one typeface and not in its stand-in
+     jumps a line when the web font arrives, and that one jump is the page's layout shift. */
+  .hero--wing .hero__plate[data-piece] .hero__label .tag{display:block;margin-right:0}
+}
+/* A tall phone has room for more wall over the frame, so the lamp's arc shows under the bar. */
+@media (min-height:701px) and (max-width:599px){.hero__plate{padding-top:28px}}
+/* A short phone (320 by 568): everything tightens a little so the plate keeps its share. */
+@media (max-height:700px) and (max-width:599px){
+  .hero__first{min-height:calc(100svh - var(--top-h) - var(--by) - 22px)}
+  /* With the project line on, the plate gives up most of the line's height, so the door stays in sight. */
+  .hero__plate .hang{flex-basis:calc(150px - var(--by) * .72);min-height:calc(150px - var(--by) * .72)}
+  .hero__plate{padding-top:16px}
+  .hero__label{margin-top:12px;padding-top:7px}
+  .hero__head{padding-top:10px}
+  .hero__name{font-size:clamp(2.1rem,11.6vw,3.2rem)}
+  .hero__name--wing{font-size:clamp(1.9rem,10.2vw,3rem)}
+  .hero__crumb{margin-bottom:5px}
+  .hero__tagline{margin-top:8px;font-size:1.125rem;line-height:1.24}
+  .hero__today{margin-top:6px;font-size:1rem}
+  .hero__facts{margin-top:9px;padding-top:8px}
+  .hero__facts dd{font-size:.9375rem}
+  .hero__lede{margin-top:7px;font-size:.9375rem;line-height:1.4}
+  .hero__go{margin-top:13px}
+  .hero__go .door{min-height:50px}
+  .hero__note{margin-top:6px;font-size:.875rem;line-height:1.45}
+}
+/* The narrowest short phone: the fold is the first screen's end, and every gap gives a little to the plate. */
+@media (max-height:600px) and (max-width:359px){
+  .hero__first{min-height:calc(100svh - var(--top-h) - var(--by))}
+  .hero__plate{padding-top:12px}
+  .hero__label{margin-top:9px;padding-top:6px}
+  .hero__head{padding-top:6px}
+  .hero__text{padding-bottom:2px}
+  .hero__tagline{margin-top:6px;line-height:1.2}
+  .hero__today{margin-top:4px}
+  .hero__go{margin-top:11px}
+  .hero__go .door{min-height:48px}
+  .hero__note{margin-top:5px;line-height:1.4}
+  /* A wing's page: the way back is the bar's name here, and the one sentence sets a size smaller, so the door
+     and its note stand above the fold. */
+  .hero__crumb{display:none}
+  .hero__facts{margin-top:7px;padding-top:7px}
+  .hero__lede{margin-top:6px;font-size:.875rem;line-height:1.36}
+  /* The link to the statement stands in the menu and the footer: here the note keeps to one line. */
+  .hero--wing .hero__note a{display:none}
+}
+
+/* The museum at a glance */
+.glance{padding:30px var(--pad) 0}
+.glance__facts{display:grid;grid-template-columns:1fr 1fr;border-top:1px solid var(--hair)}
+.glance__facts>div{padding:14px 12px 14px 0;border-bottom:1px solid var(--hair)}
+.glance__facts>div:nth-child(even){padding-left:14px;border-left:1px solid var(--hair)}
+.glance__facts dt{font-family:var(--sans);font-size:.75rem;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-soft)}
+.glance__facts dd{font-size:1rem;line-height:1.4;margin-top:4px;color:var(--ink);text-wrap:balance}
+.glance__by{margin-top:16px;font-family:var(--sans);font-size:.9375rem;line-height:1.5;color:var(--ink-soft)}
+.glance__by .trust{display:block;margin-top:8px}
+/* The narrowest phones: one fact a row on the full width, so no line holds two words only. */
+@media (max-width:359px){
+  .glance__facts{grid-template-columns:1fr}
+  .glance__facts>div,.glance__facts>div:nth-child(even){padding:11px 0 12px;border-left:0}
+  .glance__facts dd{margin-top:2px;text-wrap:pretty}
+}
+
+/* ---------- 2. The wings: a wall. It is dark, and where something hangs it is lit. An open wing hangs as a plate,
+   the newest largest. The others hang in two sizes on one centre line, their labels on one line under it,
+   so a wall of thirty is a hang and never a grid of boxes. ---------- */
+/* While one wing is open: a quiet line that says so, and that more are being made. */
+.head .wings__now{font-family:var(--sans);font-size:.9375rem;line-height:1.5;color:var(--ink-soft)}
+.wgroup{margin-top:30px}
+.wgroup+.wgroup{margin-top:64px;padding-top:30px;border-top:1px solid var(--hair)}
+.wgroup__name{font-size:1.75rem;line-height:1.15}
+.wgroup__line{margin-top:6px;font-family:var(--sans);font-size:.9375rem;line-height:1.5;color:var(--ink-soft);max-width:34rem}
+.wall{margin-top:34px;display:grid;grid-template-columns:repeat(12,minmax(0,1fr));column-gap:16px}
+.wcard{position:relative;grid-column:span 5;grid-row:span 2;display:grid;grid-template-rows:subgrid}
+.wcard--m{grid-column:span 7}
+.wcard__plate{grid-row:span 2;display:grid;grid-template-rows:subgrid}
+.wcard__plate .hang{align-self:center;--pool-up:34px;--pool-side:26%;--pool-down:-34%}
+/* The label's narrow column is the wing's one colour note. */
+.wcard .wcard__label{align-self:start;margin-top:14px;margin-bottom:40px;padding:1px 0 2px 11px;border-left:3px solid var(--note,var(--mark));gap:2px;max-width:none}
+.wcard__label::before{content:none}
+.wcard__name{font-size:1.0625rem;line-height:1.22}
+.wcard__name a{display:block;padding:12px 0;margin:-12px 0;text-decoration:none}
+/* A small plate is one target: the whole card leads to the wing's page. */
+.wcard__name a::after{content:"";position:absolute;inset:0}
+.wcard__name a:focus-visible{outline:0;box-shadow:none}
+.wcard__name a:focus-visible::after{outline:2px solid var(--focus);outline-offset:4px}
+.wcard__dates{font-family:var(--sans);font-size:.8125rem;line-height:1.4;color:var(--ink-quiet)}
+/* The newest open wing: the full width, with the place and day it shows and its own door. */
+.wcard--feature{grid-column:1/-1;grid-row:auto;display:block}
+.wcard--feature .wcard__plate{display:block}
+.wcard--feature .hang{--pool-up:60px;--pool-side:28%;--pool-down:-40%}
+.wcard--feature .wcard__label{margin-top:20px;margin-bottom:48px;padding-left:14px;gap:3px}
+.wcard--feature:last-child .wcard__label{margin-bottom:0}
+.wcard--feature .wcard__name{font-size:1.75rem;line-height:1.1}
+.wcard--feature .wcard__name a::after{content:none}
+.wcard--feature .wcard__name a{display:inline-block;padding:7px 0;margin:-7px 0}
+.wcard--feature .wcard__name a:focus-visible{outline:2px solid var(--focus);outline-offset:3px}
+.wcard--feature .wcard__dates{font-size:.9375rem}
+.wcard__shows{margin-top:8px;font-size:1.0625rem;line-height:1.35;color:var(--ink)}
+.wcard__shows .key{display:block}
+.wcard--feature .label__what{margin-top:6px}
+.wcard__go{display:flex;flex-wrap:wrap;align-items:center;gap:6px 22px;margin-top:14px}
+/* The wings in the making and the planned ones are names on the dark wall: nothing hangs there yet. */
+.wlists{display:flex;flex-wrap:wrap;gap:30px 48px;margin-top:8px;padding-top:16px;border-top:1px solid var(--hair)}
+.wlist{flex:1 1 9.5rem}
+/* Two columns of names from 320 px up. */
+.wlist ul{margin-top:8px;columns:8rem;column-gap:20px}
+.wlist li{break-inside:avoid;padding:6px 0;font-size:1.0625rem;line-height:1.25;color:var(--ink-soft)}
+.wlist__dates{display:block;font-family:var(--sans);font-size:.8125rem;line-height:1.4;color:var(--ink-quiet)}
+
+/* ---------- 3. A wing's page: the head of its rooms, and the directory of what it holds ---------- */
+.wing__top{display:grid;gap:34px}
+.wing__film{font-size:1.0625rem;color:var(--ink-quiet)!important}
+.directory dl{border-top:1px solid var(--hair-strong)}
+.directory dl>div{display:grid;grid-template-columns:minmax(0,9.6em) minmax(0,1fr);column-gap:14px;border-bottom:1px solid var(--hair);align-items:baseline}
+.directory dt{font-size:1.0625rem;line-height:1.3;color:var(--ink)}
+/* Each row is a way to its room: the whole row is the target, the name is the link, a small arrow points down the page. */
+.directory dl>div{position:relative;padding:0 20px 0 0}
+@media (max-width:359px){.directory dl>div{grid-template-columns:1fr;row-gap:2px}}
+@media (min-width:360px) and (max-width:959px){.directory dl>div{grid-template-columns:minmax(0,8.6em) minmax(0,1fr)}}
+/* The link's own box is 46 px high, and its ::after spreads the target over the whole row. */
+.directory dt a{display:flex;align-items:center;min-height:46px;text-decoration:none}
+@media (max-width:359px){
+  .directory dl>div{padding-bottom:11px}
+  .directory dt a{display:block;min-height:0;padding:11px 0 24px;margin-bottom:-24px}
+}
+.directory dt a::after{content:"";position:absolute;inset:0}
+.directory dl>div::after{content:"";position:absolute;right:2px;top:50%;width:12px;height:12px;margin-top:-6px;background:var(--hair-strong);-webkit-mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12' fill='none' stroke='%23000' stroke-width='1.1' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M6 1.2v9.3M2.4 7l3.6 3.6L9.6 7'/%3E%3C/svg%3E") center/contain no-repeat;mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12' fill='none' stroke='%23000' stroke-width='1.1' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M6 1.2v9.3M2.4 7l3.6 3.6L9.6 7'/%3E%3C/svg%3E") center/contain no-repeat;pointer-events:none}
+.directory dl>div:hover dt{color:var(--mark-ink)}
+.directory dl>div:hover::after{background:var(--mark)}
+.directory dt a:focus-visible{outline:0;box-shadow:none}
+.directory dt a:focus-visible::after{outline:2px solid var(--focus);outline-offset:1px;border-radius:1px}
+.directory dd{font-family:var(--sans);font-size:.875rem;line-height:1.4;color:var(--ink-quiet)}
+
+/* ---------- Tablet ---------- */
+@media (min-width:600px){
+  .hero__first{min-height:0}
+  .hero__plate .hang{flex:none;height:clamp(300px,calc(100svh - var(--top-h) - var(--by) - 470px),540px);max-height:none;--pool-up:72px;--pool-side:20%;--pool-down:-46%}
+  .hero__label .label__src,.hero__label .label__music{display:block}
+  /* The film never changes the caption's line, it only hides it: no second line is kept for it. */
+  .hero__plate[data-press] .hero__label .label__what{min-height:0}
+  .hero__lede{margin-top:14px;font-size:1.125rem;max-width:34rem}
+  .hero__facts dd{font-size:1.0625rem}
+  .wall{column-gap:20px}
+  .wcard{grid-column:span 3}
+  .wcard--m{grid-column:span 4}
+  .wcard--feature{grid-column:1/-1}
+  .wlist{flex:1 1 11rem}
+  .wlist ul{columns:11rem;column-gap:24px}
+}
+/* Four facts in a row only where a cell is wide enough for more than two words a line. */
+@media (min-width:760px){
+  .glance__facts{grid-template-columns:repeat(4,1fr)}
+  .glance__facts>div,.glance__facts>div:nth-child(even){padding:14px 14px 14px 0;border-left:0}
+  .glance__facts>div+div,.glance__facts>div+div:nth-child(even){padding-left:16px;border-left:1px solid var(--hair)}
+}
+
+/* ---------- Desktop: its own build. The visitor stands in front of a wall. The name is lettering on it, in the
+   light of the one lamp. Under the lettering the plate hangs on eight columns, as large as the screen lets it,
+   with its label under its left corner as on a wall. The words stand beside it, from the frame's top edge
+   to its foot, where the door is. ---------- */
+@media (min-width:960px){
+  .hero{--padx:max(var(--pad),calc((100vw - 1200px) / 2));display:block;padding:0 var(--padx)}
+  .hero__first{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));grid-template-rows:auto auto;column-gap:24px;min-height:0;padding:40px 0 126px}
+  .hero__head{grid-column:1/-1;grid-row:1;display:flex;flex-wrap:wrap;align-items:baseline;gap:0 26px;padding:0 0 30px;position:relative;z-index:2}
+  .hero__crumb{flex:0 0 100%;margin-bottom:10px;font-size:.875rem}
+  /* Lettering on a wall stands a little off it and throws a short shadow down. */
+  .hero__name,.hero__name--wing{font-size:clamp(4.2rem,7.2vw,5.6rem);line-height:.96;letter-spacing:-.02em;white-space:nowrap;
+    text-shadow:0 2px 2px color-mix(in srgb,var(--shade) 62%,transparent)}
+  /* A long name takes a second line before it leaves the wall. */
+  .hero__name--wing{white-space:normal;line-height:1}
+  .hero__kicker{display:block;font-family:var(--sans);font-size:.875rem;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-soft)}
+  .hero__plate{order:0;grid-column:1/9;grid-row:2;display:block;position:relative;padding:0}
+  /* The plate is as wide as its eight columns and as high as its picture, or as the screen lets it. */
+  .hero__plate .hang{flex:none;height:auto;aspect-ratio:16/9;min-height:300px;max-height:calc(100svh - var(--top-h) - var(--by) - 294px);--pool-up:190px;--pool-side:46%;--pool-down:-30%}
+  /* The museum's film, which waits for a press, fills its eight columns. */
+  .hero__plate[data-press] .hang{max-height:none}
+  /* The one lamp: its light is warm on the cool wall, and a brighter arc stands over the frame's top edge. */
+  .hero__plate .hang::before{--l:color-mix(in srgb,var(--lit,var(--ground-lit)) 90%,var(--lamp));
+    background:var(--grain) 0 0/64px 64px,
+      radial-gradient(ellipse 30% 24% at 50% 30%,color-mix(in srgb,var(--lamp) 12%,transparent) 0,transparent 100%),
+      radial-gradient(ellipse 50% 50% at 50% 46%,var(--l) 0,var(--l) 30%,color-mix(in oklab,var(--l) 84%,transparent) 42%,color-mix(in oklab,var(--l) 60%,transparent) 55%,color-mix(in oklab,var(--l) 36%,transparent) 68%,color-mix(in oklab,var(--l) 16%,transparent) 81%,color-mix(in oklab,var(--l) 5%,transparent) 92%,transparent 100%)}
+  /* The frame's shadow falls straight down the wall, away from the lamp. */
+  .hero__plate .hang>picture{box-shadow:0 4px 8px color-mix(in srgb,var(--shade) 60%,transparent),0 26px 32px -12px color-mix(in srgb,var(--shade) 92%,transparent),0 70px 84px -34px color-mix(in srgb,var(--shade) 78%,transparent)}
+  /* A large plate carries a heavier moulding. */
+  .hero__plate .hang>picture{border-width:4px;outline-offset:-5px}
+  .hero__plate .hang>.piece{inset:4px;width:calc(100% - 8px);height:calc(100% - 8px)}
+  .hero__img{transform-origin:50% 70%}
+  /* The label hangs under the frame's left corner, out of the row's height: the words beside the plate end at its foot. */
+  .hero__label{position:absolute;left:0;top:100%;margin-top:20px;max-width:30rem}
+  .hero__label .label__title{font-size:1rem}
+  .hero__label .label__what{font-size:.8125rem}
+  .place__controls{position:absolute;right:0;top:100%}
+  /* On the museum's page the film's music credit hangs under the label: the first screen keeps room for its two lines. */
+  .hero--home .hero__first{padding-bottom:166px}
+  .hero__text{grid-column:9/13;grid-row:2;display:flex;flex-direction:column;position:relative;z-index:2;padding:0 0 0 12px}
+  .hero__tagline{margin-top:-.2em;font-size:clamp(1.375rem,2.05vw,1.625rem);line-height:1.26}
+  .hero__tagline span+span{margin-top:.3em}
+  .hero__today{margin-top:22px;font-size:1.125rem;line-height:1.45;max-width:20rem}
+  .hero__facts{margin-top:2px;padding-top:16px;grid-template-columns:minmax(0,1fr);gap:0}
+  .hero__facts>div{grid-template-columns:minmax(0,1fr)}
+  .hero__facts>div+div{margin-top:12px}
+  .hero__facts dd{font-size:1.25rem;line-height:1.3}
+  .hero__lede{margin-top:20px;font-size:1.0625rem;line-height:1.5;max-width:22rem}
+  /* The door follows the words. What room is left stands under it, beside the plate's foot. */
+  .hero__go{margin-top:28px}
+  .hero__note{margin-top:12px}
+
+  .glance{position:relative;z-index:2;padding:0 0 26px;display:grid;grid-template-columns:repeat(12,1fr);column-gap:24px;border-top:1px solid var(--hair)}
+  .glance__facts{grid-column:1/9;border-top:0}
+  .glance__facts>div,.glance__facts>div+div,.glance__facts>div+div:nth-child(even){border-bottom:0;padding-block:18px 0}
+  .glance__facts dd{font-size:1.0625rem}
+  .glance__by{grid-column:9/13;margin:0;padding:18px 0 0 24px;border-left:1px solid var(--hair);font-size:.875rem}
+
+  /* The wall of wings */
+  .wgroup{margin-top:40px}
+  .wgroup+.wgroup{margin-top:96px;padding-top:40px}
+  .wgroup__name{font-size:2.125rem}
+  .wgroup__line{font-size:1rem}
+  .wall{margin-top:56px;column-gap:24px}
+  .wcard__plate .hang{--pool-up:46px;--pool-side:22%;--pool-down:-38%}
+  .wcard .wcard__label{margin-bottom:64px}
+  .wcard__name{font-size:1.1875rem}
+  /* The newest: its label stands beside the frame's foot, as a label hangs beside a large work. */
+  .wcard--feature{display:grid;grid-template-columns:subgrid;align-items:end;margin-bottom:84px}
+  .wcard--feature .wcard__plate{display:contents}
+  .wcard--feature .hang{grid-column:1/9;--pool-up:96px;--pool-side:24%;--pool-down:-44%}
+  .wcard--feature .wcard__label{grid-column:9/13;align-self:end;margin:0 0 0 12px;padding-left:18px}
+  .wcard--feature .wcard__name{font-size:2.5rem;line-height:1.04;letter-spacing:-.012em}
+  .wcard--feature .wcard__dates{font-size:1rem}
+  .wcard__shows{margin-top:16px;font-size:1.1875rem}
+  .wcard__go{margin-top:20px}
+  .wlists{padding-top:20px}
+
+  /* A wing's page: what the wing shows on seven columns, the ways to its rooms beside it. */
+  .wing.band{padding-top:96px}
+  .wing__top{grid-template-columns:repeat(12,1fr);column-gap:24px;align-items:start}
+  .wing__top .head{grid-column:1/8}
+  .directory{grid-column:8/13;margin-top:12px}
+  .directory dl>div{grid-template-columns:minmax(0,5fr) minmax(0,7fr)}
+  .directory dt{font-size:1.125rem}
+  .directory dd{font-size:.9375rem}
+}
+/* A narrow desktop: the lettering gives way a little, and the words beside the plate keep their measure. */
+@media (min-width:960px) and (max-width:1179px){
+  .hero__plate{grid-column:1/8}
+  .hero__text{grid-column:8/13}
+}
+/* The ways to a wing's rooms, under its first screen: a list on a phone, rows of three on a middle screen, one
+   row of six on a wide one. Each name with its note under it, the whole cell the target. */
+.roomnav{margin-top:40px}
+@media (min-width:600px){
+  .roomnav .directory dl{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));column-gap:24px;border-top:0}
+  .roomnav .directory dl>div{display:block;padding:12px 22px 14px 0;border-top:1px solid var(--hair-strong);border-bottom:0}
+  .roomnav .directory dt a{display:block;min-height:0}
+  .roomnav .directory dd{margin-top:3px}
+  .roomnav .directory dl>div::after{top:16px;margin-top:0}
+}
+@media (min-width:960px){
+  .roomnav{margin-top:56px}
+  .roomnav .directory{margin-top:0}
+}
+@media (min-width:1180px){
+  .roomnav .directory dl{grid-template-columns:repeat(6,minmax(0,1fr))}
+}

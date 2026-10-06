@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="{{lang}}" class="sheet">
+<head>
+{{head}}
+</head>
+<body class="doc">
+{{header}}
+
+<main id="main" class="statement">
+  <div class="wrap statement__grid">
+    <header class="statement__head">
+      <h1>{{imprint.h1}}</h1>
+    </header>
+
+    <div class="statement__body statement__body--alone">
+{{legal.body}}
+      <div class="statement__end">
+        <a class="more more--back" href="{{href.home}}"><span>{{page_what.back}}</span></a>
+      </div>
+    </div>
+  </div>
+</main>
+
+{{footer}}
+{{script.faces}}
+<script src="{{static}}site.js" defer></script>
+</body>
+</html>

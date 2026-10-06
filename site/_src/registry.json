@@ -1,0 +1,225 @@
+{
+  "_note": "THE REGISTRY: every collection and every wing of the site, read by every page. One key per wing (the museum app's own slug), in the order the wings opened: the last open one is the newest and hangs largest. Keys that start with an underscore are not wings. state: open, making or planned. An open wing needs every key below, its two data files in wings/ and its pictures: the build stops otherwise. name, page, door, about, never_say and claim_phrase are the six keys the topic pages' build reads (pages/build.py, WINGS_FILE). note: the wing's one colour, written here because a wing is data: the build checks its lightness and chroma against the palette's bounds. wall: deep, wall or lifted. pictures: hero is the first picture of the wing's own page, card its plate on the wall of wings, share its link preview. landing is optional: another first picture for the landing's place when this wing is the newest, with its words under landing.piece in the wing's data. Without it the landing hangs hero. A first screen takes only a frame of the museum's own build in which no reproduction can be seen. counts: only for a wing without a facts file (wings/<wing>.facts.json), which otherwise holds every number. out: optional, the wing's one way to another site of the organisation ({lang} is the page's language). Its line of words is out.line in the wing's data, and both stand on the page about the museum. when: the year the wing shows, a number, negative before the year one: the menu lists the wings in the order of time.",
+  "_collections": [
+    {
+      "slug": "lives",
+      "state": "open",
+      "name": {
+        "en": "Lives",
+        "de": "Leben"
+      },
+      "line": {
+        "en": "Places where people from history lived and worked.",
+        "de": "Orte, an denen Menschen aus der Geschichte lebten und arbeiteten."
+      },
+      "dates_key": {
+        "en": "Lived",
+        "de": "Lebte"
+      }
+    }
+  ],
+  "vinci": {
+    "collection": "lives",
+    "state": "open",
+    "name": {
+      "en": "Leonardo da Vinci",
+      "de": "Leonardo da Vinci"
+    },
+    "page": {
+      "en": "leonardo-da-vinci",
+      "de": "de/leonardo-da-vinci"
+    },
+    "door": {
+      "en": "/w/vinci?film=job&lang=en",
+      "de": "/w/vinci?film=job&lang=de"
+    },
+    "dates": {
+      "en": "1452 to 1519",
+      "de": "1452 bis 1519"
+    },
+    "shows": {
+      "place": {
+        "en": "Clos Lucé in Amboise",
+        "de": "Clos Lucé in Amboise"
+      },
+      "day": {
+        "en": "10 October 1517",
+        "de": "10. Oktober 1517"
+      }
+    },
+    "when": 1517,
+    "pictures": {
+      "hero": {
+        "stem": "v-works",
+        "widths": [
+          960,
+          1600
+        ],
+        "size": [
+          1600,
+          900
+        ],
+        "phone": {
+          "stem": "v-works-m",
+          "widths": [
+            780,
+            1080
+          ],
+          "size": [
+            1080,
+            810
+          ]
+        },
+        "alt": "first.piece.alt",
+        "focus": {
+          "phone": "62% 50%",
+          "wide": "50% 50%"
+        }
+      },
+      "landing": {
+        "stem": "v-hall",
+        "widths": [
+          960,
+          1600
+        ],
+        "size": [
+          1600,
+          900
+        ],
+        "phone": {
+          "stem": "v-hall-m",
+          "widths": [
+            780,
+            1080
+          ],
+          "size": [
+            1080,
+            810
+          ]
+        },
+        "alt": "landing.piece.alt",
+        "focus": {
+          "phone": "12% 60%",
+          "wide": "50% 60%"
+        }
+      },
+      "card": {
+        "stem": "v-house",
+        "widths": [
+          480,
+          800,
+          1600
+        ],
+        "size": [
+          1600,
+          900
+        ],
+        "alt": "card.alt"
+      },
+      "share": {
+        "file": "og-1200x630.jpg",
+        "size": [
+          1200,
+          630
+        ],
+        "alt": "meta.share_alt"
+      }
+    },
+    "film": {
+      "_note": "What the museum's film says of this wing: line at the house in the full film, offer in the arrival cut, sky said once, held under its sky and house, inside.line what the room is that the film looks into, ground.focus the band of the card picture under the seven stars as shares [x centre, top, bottom]. The year is when.",
+      "line": {
+        "en": "Leonardo’s last house, rebuilt.",
+        "de": "Leonardos letztes Haus, nachgebaut."
+      },
+      "offer": {
+        "en": "1517. Leonardo’s last house, rebuilt. You can walk in.",
+        "de": "1517. Leonardos letztes Haus, nachgebaut. Du kannst hineingehen."
+      },
+      "sky": {
+        "en": "We computed this sky.",
+        "de": "Den Himmel haben wir berechnet."
+      },
+      "held": {
+        "en": "Clos Lucé in Amboise, 10 October 1517",
+        "de": "Clos Lucé in Amboise, 10. Oktober 1517"
+      },
+      "inside": {
+        "line": {
+          "en": "Our own hall for his machines.",
+          "de": "Unser eigener Saal für seine Maschinen."
+        }
+      },
+      "ground": {
+        "focus": [
+          0.44,
+          0.03,
+          0.6
+        ]
+      }
+    },
+    "wall": "wall",
+    "note": "#9c503e",
+    "topics": [
+      {
+        "slug": {
+          "en": "inventions",
+          "de": "erfindungen"
+        },
+        "name": {
+          "en": "Leonardo da Vinci's inventions",
+          "de": "Leonardo da Vincis Erfindungen"
+        },
+        "line": {
+          "en": "What Leonardo da Vinci drew, what was ever built and what was older than he was.",
+          "de": "Was Leonardo da Vinci zeichnete, was je gebaut wurde und was älter war als er."
+        }
+      }
+    ],
+    "out": {
+      "name": "Agora Cosmica",
+      "href": "https://agoracosmica.org/app?figure=leonardo-da-vinci&lang={lang}"
+    },
+    "about": {
+      "@type": "Person",
+      "name": "Leonardo da Vinci",
+      "birthDate": "1452-04-15",
+      "deathDate": "1519-05-02",
+      "sameAs": "https://www.wikidata.org/wiki/Q762"
+    },
+    "never_say": [
+      [
+        "\\b95\\b",
+        "the walk has 17 stops and about 75 works around them"
+      ],
+      [
+        "pavilion|pavillon",
+        "the place under the parachute is the court / der Hof"
+      ],
+      [
+        "courtyard",
+        "the court of the machines is the court / der Hof"
+      ],
+      [
+        "wasserschraube",
+        "the German word is Wasserschnecke"
+      ],
+      [
+        "where he worked|in dem er arbeitete",
+        "no source says he worked in the great hall"
+      ],
+      [
+        "evening sun|abendlicht|abendsonne",
+        "the hour in the stills is the afternoon"
+      ],
+      [
+        "notebook sheets|blättern seiner notizbücher",
+        "say after his sheets"
+      ],
+      [
+        "\\bfourteen machines stand|\\bvierzehn maschinen stehen",
+        "fifteen are built, nine stand in the hall"
+      ]
+    ],
+    "claim_phrase": "his machines|seine maschinen|his invention|seine erfindung|da vinci's inventions|da vincis erfindungen"
+  }
+}

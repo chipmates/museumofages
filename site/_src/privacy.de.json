@@ -1,0 +1,95 @@
+{
+  "_note": "Die Worte der Datenschutzseite, Deutsch, als Deutsch geschrieben und nicht als Übersetzung. Gleiche Form wie privacy.en.json: ein Abschnitt ist eine Überschrift und ein Körper, ein Block ist ein Absatz (Zeichenkette) oder eine Liste. Links als [Text](Ziel), Ziel ist eine https-Adresse, eine mailto-Adresse oder page:imprint für das Impressum. Die Seite duzt wie die ganze Website.",
+  "title": "Datenschutz | Museum of Ages, ein digitales Museum",
+  "description": "Wie Museum of Ages, ein digitales Museum, mit Daten umgeht: kein Konto, keine eigenen Cookies, und was der Hoster und dein Browser tun.",
+  "h1": "Datenschutz",
+  "lead": "Diese Seite sagt, was mit Daten geschieht, wenn du Museum of Ages besuchst. Kurz: Du brauchst kein Konto, wir setzen keine Cookies, und wir behalten nichts, woran wir dich beim nächsten Besuch wiedererkennen könnten.",
+  "updated_label": "Stand",
+  "updated": "5. Oktober 2026",
+  "sections": [
+    {
+      "h": "Wer verantwortlich ist",
+      "body": [
+        "Betreiberin von Museum of Ages ist die ChipMates gemeinnützige GmbH, Schusterstr. 50, 79098 Freiburg im Breisgau, Deutschland. Du erreichst uns unter [contact@museumofages.org](mailto:contact@museumofages.org). Alle Angaben stehen im [Impressum](page:imprint).",
+        "Einen Datenschutzbeauftragten haben wir nicht bestellt, weil das Gesetz es für uns nicht verlangt (Art. 37 DSGVO, § 38 BDSG)."
+      ]
+    },
+    {
+      "h": "Wenn du eine Seite öffnest",
+      "body": [
+        "Damit du eine Seite siehst, fragt dein Browser sie bei unserem Hoster an. Dessen Server verarbeiten dabei deine IP-Adresse, die Adresse der Seite, den Zeitpunkt und das, was dein Browser über sich mitteilt, etwa welcher Browser er ist, welche Sprache eingestellt ist und von welcher Seite du kommst. Ohne deine IP-Adresse kann dich keine Seite erreichen. Die übrigen Angaben schickt dein Browser bei jeder Anfrage von sich aus mit.",
+        "Unser Hoster ist Cloudflare, Inc., 101 Townsend St, San Francisco, CA 94107, USA. Cloudflare liefert diese Website in unserem Auftrag aus, auf Grundlage eines Vertrags zur Auftragsverarbeitung. Zum Schutz seines eigenen Netzes wertet Cloudflare Verbindungsdaten außerdem in eigener Verantwortung aus, wie es seine Datenschutzerklärung beschreibt.",
+        "Rechtsgrundlage ist Art. 6 Abs. 1 lit. f DSGVO. Unser berechtigtes Interesse ist, die Website zuverlässig auszuliefern und vor Angriffen zu schützen.",
+        "Eigene Server-Protokolle führen wir nicht. Cloudflare bewahrt die Anfragedaten, die es uns zeigt, bis zu 31 Tage auf. Für seine eigenen Protokolle nennt die [Datenschutzerklärung von Cloudflare](https://www.cloudflare.com/de-de/privacypolicy/) die Regeln, nach denen es löscht, und keine feste Zahl von Tagen."
+      ]
+    },
+    {
+      "h": "Was wir sehen können",
+      "body": [
+        "Cloudflare zeigt uns Summen für die Website: wie viele Anfragen ankamen und wie viele Daten sie bewegt haben, ungefähr wie viele verschiedene Besucherinnen und Besucher es waren, aus welchen Ländern die Anfragen kamen, und wie viele Cloudflare gestoppt hat. Diese Summen nennen niemanden.",
+        "Cloudflare zeigt uns außerdem eine Stichprobe einzelner Anfragen aus den letzten 31 Tagen. Jede hat ihre IP-Adresse, die Adresse der Seite, das Land und den Namen des Browsers. In der Stichprobe sind Anfragen, die Cloudflare durchgelassen hat, ebenso wie solche, die es gestoppt oder geprüft hat. Wir nutzen sie, um Angriffe und Fehler zu finden.",
+        "Selbst zählen wir nichts. Diese Website hat kein Analyse-Werkzeug, zeigt keine Werbung und lädt keine Zählpixel oder Skripte anderer Firmen."
+      ]
+    },
+    {
+      "h": "Cookies und Speicher in deinem Browser",
+      "body": [
+        "Wir setzen keine Cookies, und die Seiten dieser Website speichern nichts in deinem Browser. Ein Fall liegt beim Hoster: Prüft der Schutz von Cloudflare deinen Browser, bevor er eine Anfrage durchlässt, setzt Cloudflare ein Cookie namens cf_clearance, damit es dich nicht gleich noch einmal prüft. Das Cookie dient nur dazu.",
+        "Der Flügel, durch den du gehst, legt ein paar kurze Notizen im Speicher deines Browsers ab, damit er so funktioniert, wie du ihn verlassen hast:",
+        [
+          "Deine Einstellung für den Ton, an oder aus, und dein Gehtempo, falls du eines gewählt hast.",
+          "Für jeden Flügel den Tag deines Besuchs, die Stationen, an denen du gestanden hast, und die Werke, die du geöffnet hast, damit das Ende des Rundgangs sie dir zeigen kann. Uhrzeiten und dein Weg werden nicht festgehalten. Mit einem neuen Tag beginnt eine neue Liste.",
+          "Ein Vermerk, dass dein Gerät eine Szene als Film bekommt. Er wird einmal gesetzt, wenn das Gerät für die live berechnete Szene zu langsam ist.",
+          "Nur für den offenen Tab: dass der Auftakt und ein Hinweis schon gezeigt wurden, und ein Zeitvermerk, falls der Flügel nach einem Grafikfehler einmal neu laden musste."
+        ],
+        "Diese Notizen bleiben auf deinem Gerät, bis du sie löschst. Die Notizen für den offenen Tab verschwinden, wenn du ihn schließt. Keine davon wird an uns oder an andere gesendet. Du entfernst sie, indem du in deinem Browser die Daten dieser Website löschst.",
+        "Eine Einwilligung holen wir dafür nicht ein, weil die Notizen für eine Funktion nötig sind, die du nutzt (§ 25 Abs. 2 Nr. 2 TDDDG). Dieselbe Regel deckt das Cookie des Hosters: Ohne es würde ein geprüfter Browser auf jeder Seite neu geprüft."
+      ]
+    },
+    {
+      "h": "Nichts von anderen Firmen",
+      "body": [
+        "Schriften, Bilder, Filme und Skripte kommen von dieser Website und aus unserem eigenen Speicher beim selben Hoster. Die Seiten laden keine Schriften, Karten, Videos oder Schaltflächen anderer Firmen."
+      ]
+    },
+    {
+      "h": "Links zu anderen Websites",
+      "body": [
+        "Manche Seiten verlinken auf andere Websites, zum Beispiel auf die Museen, Bibliotheken und Sammlungen, die die Originale bewahren, und auf unseren Quellcode. Folgst du einem solchen Link, verlässt du diese Website, und es gelten die Regeln der anderen."
+      ]
+    },
+    {
+      "h": "Wenn du uns schreibst oder anrufst",
+      "body": [
+        "Schreibst du uns eine E-Mail oder rufst du uns an, nutzen wir deine Adresse oder Nummer und das, was du uns mitteilst, um dir zu antworten. Rechtsgrundlage ist Art. 6 Abs. 1 lit. f DSGVO, unser berechtigtes Interesse, Anfragen zu beantworten. Unsere E-Mails laufen über einen E-Mail-Anbieter in der Schweiz, der sie in unserem Auftrag verarbeitet. Die Europäische Kommission hat der Schweiz ein angemessenes Datenschutzniveau bescheinigt. Wir löschen den Austausch, wenn die Sache erledigt ist, sofern uns kein Gesetz zu längerer Aufbewahrung verpflichtet."
+      ]
+    },
+    {
+      "h": "Daten außerhalb der Europäischen Union",
+      "body": [
+        "Cloudflare ist ein Unternehmen aus den USA und beantwortet Anfragen von Servern auf der ganzen Welt, in der Regel von einem in deiner Nähe. Für Übermittlungen in die USA ist Cloudflare nach dem EU-US Data Privacy Framework zertifiziert, das die Europäische Kommission am 10. Juli 2023 als angemessenen Schutz anerkannt hat. Unser Vertrag mit Cloudflare enthält außerdem die Standardvertragsklauseln der EU, für jede Übermittlung, die das Framework nicht abdeckt. Der Vertrag ist öffentlich: [Cloudflares Zusatz zur Auftragsverarbeitung](https://www.cloudflare.com/de-de/cloudflare-customer-dpa/)."
+      ]
+    },
+    {
+      "h": "Deine Rechte",
+      "body": [
+        "Nach der DSGVO hast du das Recht zu erfahren, welche Daten wir über dich verarbeiten (Art. 15), falsche Daten berichtigen zu lassen (Art. 16), Daten löschen zu lassen (Art. 17), ihre Verarbeitung einschränken zu lassen (Art. 18) und, wo das Gesetz es vorsieht, Daten, die du uns gegeben hast, in einem gängigen Format zu erhalten (Art. 20).",
+        "Du kannst dich auch bei einer Datenschutzbehörde beschweren (Art. 77). Für uns zuständig ist der Landesbeauftragte für den Datenschutz und die Informationsfreiheit Baden-Württemberg, Heilbronner Straße 35, 70191 Stuttgart, [www.baden-wuerttemberg.datenschutz.de](https://www.baden-wuerttemberg.datenschutz.de).",
+        "Offen gesagt: Wir haben fast nichts, was wir für dich nachschlagen könnten. Es gibt keine Konten, und die Notizen des Flügels liegen auf deinem Gerät, nicht bei uns.",
+        "Wir treffen keine automatisierten Entscheidungen über dich und bilden keine Profile."
+      ]
+    },
+    {
+      "h": "Dein Recht auf Widerspruch",
+      "body": [
+        "Du kannst jederzeit aus Gründen, die sich aus deiner besonderen Situation ergeben, einer Verarbeitung widersprechen, die auf unserem berechtigten Interesse beruht (Art. 21 DSGVO). Schreib dazu an die Adresse oben auf dieser Seite."
+      ]
+    },
+    {
+      "h": "Wenn sich diese Seite ändert",
+      "body": [
+        "Diese Seite beschreibt die Website, wie sie heute ist. Ändert sich etwas, zum Beispiel wenn wir beginnen, Besuche selbst zu zählen, ändern wir zuerst diese Seite."
+      ]
+    }
+  ]
+}

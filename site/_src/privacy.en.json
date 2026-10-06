@@ -1,0 +1,95 @@
+{
+  "_note": "The privacy page's words, English. A section is a heading and a body. A body block is a string (one paragraph) or a list of strings (a bullet list). A link is written [label](target): the target is a full https address, a mailto address, or page:imprint for the legal notice of the same language. Every sentence describes what the site does: a change to its hosts, its storage or its scripts changes this page, in both languages.",
+  "title": "Privacy | Museum of Ages, a digital museum",
+  "description": "How Museum of Ages, a digital museum, handles data: no account, no cookies of ours, and what the host and your browser do.",
+  "h1": "Privacy",
+  "lead": "This page says what happens to data when you visit Museum of Ages. In short: you need no account, we set no cookies, and we keep nothing that lets us recognise you on your next visit.",
+  "updated_label": "As of",
+  "updated": "5 October 2026",
+  "sections": [
+    {
+      "h": "Who is responsible",
+      "body": [
+        "Museum of Ages is run by ChipMates gemeinnützige GmbH, Schusterstr. 50, 79098 Freiburg im Breisgau, Germany. You reach us at [contact@museumofages.org](mailto:contact@museumofages.org). The full details are in the [legal notice](page:imprint).",
+        "We have not appointed a data protection officer, because the law does not require one for us (Art. 37 GDPR and § 38 BDSG, the German Federal Data Protection Act)."
+      ]
+    },
+    {
+      "h": "When you open a page",
+      "body": [
+        "To show you a page, your browser asks our host for it. The host's servers then process your IP address, the address of the page, the date and time, and what your browser says about itself, such as which browser it is, its language and the page you came from. Without your IP address no page can reach you. The other details your browser sends along with every request.",
+        "Our host is Cloudflare, Inc., 101 Townsend St, San Francisco, CA 94107, USA. Cloudflare delivers this site for us under a data processing agreement. To protect its own network, Cloudflare also evaluates connection data on its own responsibility, as its privacy policy describes.",
+        "The legal basis is Art. 6 (1) (f) GDPR. Our legitimate interest is to deliver the site reliably and to protect it against attacks.",
+        "We keep no server logs of our own. Cloudflare keeps the request records it shows us for up to 31 days. For its own logs, [Cloudflare's privacy policy](https://www.cloudflare.com/privacypolicy/) names the rules it deletes by and no fixed number of days."
+      ]
+    },
+    {
+      "h": "What we can see",
+      "body": [
+        "Cloudflare shows us totals for the site: how many requests arrived and how much data they moved, about how many different visitors there were, from which countries the requests came, and how many Cloudflare stopped. These totals name no one.",
+        "Cloudflare also shows us a sample of single requests from the last 31 days. Each one has its IP address, the address of the page, the country and the name of the browser. The sample holds requests Cloudflare let through as well as those it stopped or checked. We use it to find attacks and faults.",
+        "We run no counting of our own. This site has no analytics tool, shows no advertising, and loads no counting pixels or scripts from other companies."
+      ]
+    },
+    {
+      "h": "Cookies and storage in your browser",
+      "body": [
+        "We set no cookies, and the pages of this site store nothing in your browser. One case is the host's: if Cloudflare's protection checks your browser before it lets a request through, Cloudflare sets a cookie named cf_clearance so that it does not check you again at once. The cookie serves only that.",
+        "The wing you walk through keeps a few short notes in your browser's storage so that it works the way you left it:",
+        [
+          "Your sound setting, on or off, and your walking pace if you chose one.",
+          "For each wing, the day of your visit, the stops you stood at and the works you opened, so that the end of the walk can show them to you. It holds no times and no route. A new day starts a new list.",
+          "A mark that your device gets one scene as a film. It is set once if the device is too slow for the live scene.",
+          "For the open tab only: that the opening and a hint have already been shown, and a time mark if the wing had to reload once after a graphics error."
+        ],
+        "These notes stay on your device until you clear them. The notes for the open tab go when you close it. None of them is sent to us or to anyone else. You remove them by clearing this site's data in your browser.",
+        "We do not ask for consent for these notes, because they are needed for a function you use (§ 25 (2) no. 2 TDDDG, the German law on data protection in digital services). The same rule covers the host's cookie: without it a checked browser would be checked again on every page."
+      ]
+    },
+    {
+      "h": "Nothing from other companies",
+      "body": [
+        "Fonts, pictures, films and scripts come from this site and from our own storage at the same host. The pages load no fonts, maps, videos or buttons from other companies."
+      ]
+    },
+    {
+      "h": "Links to other websites",
+      "body": [
+        "Some pages link to other websites, for example to the museums, libraries and collections that hold the originals, and to our source code. When you follow such a link, you leave this site and the other site's rules apply."
+      ]
+    },
+    {
+      "h": "When you write to us or call us",
+      "body": [
+        "If you send us an e-mail or call us, we use your address or number and what you tell us to answer you. The legal basis is Art. 6 (1) (f) GDPR, our legitimate interest in answering. Our e-mail runs with a mail provider in Switzerland that handles it on our behalf. The European Commission has recognised Switzerland as a country with adequate data protection. We delete the exchange when the matter is closed, unless the law obliges us to keep it longer."
+      ]
+    },
+    {
+      "h": "Data outside the European Union",
+      "body": [
+        "Cloudflare is a company in the USA and answers requests from servers around the world, as a rule from one near you. For transfers to the USA, Cloudflare is certified under the EU-US Data Privacy Framework, which the European Commission recognised as adequate protection on 10 July 2023. Our agreement with Cloudflare also contains the EU's standard contractual clauses, for any transfer the framework does not cover. The agreement is public: [Cloudflare's data processing addendum](https://www.cloudflare.com/cloudflare-customer-dpa/)."
+      ]
+    },
+    {
+      "h": "Your rights",
+      "body": [
+        "Under the GDPR you have the right to learn which data about you we process (Art. 15), to have wrong data corrected (Art. 16), to have data erased (Art. 17), to have its processing restricted (Art. 18) and, where the law grants it, to receive data you gave us in a common format (Art. 20).",
+        "You can also complain to a data protection authority (Art. 77). The one responsible for us is the Landesbeauftragte für den Datenschutz und die Informationsfreiheit Baden-Württemberg, Heilbronner Straße 35, 70191 Stuttgart, [www.baden-wuerttemberg.datenschutz.de](https://www.baden-wuerttemberg.datenschutz.de).",
+        "To be plain about it: we hold almost nothing that we could look up for you. There are no accounts, and the wing's notes are on your device, not with us.",
+        "We make no automated decisions about you and build no profiles."
+      ]
+    },
+    {
+      "h": "Your right to object",
+      "body": [
+        "You can object at any time, for reasons that arise from your particular situation, to processing that rests on our legitimate interest (Art. 21 GDPR). Write to the address at the top of this page."
+      ]
+    },
+    {
+      "h": "When this page changes",
+      "body": [
+        "This page describes the site as it is today. If something changes, for example if we begin to count visits ourselves, this page is changed first."
+      ]
+    }
+  ]
+}

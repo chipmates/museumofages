@@ -1,0 +1,30 @@
+{
+  "_note": "THE PICTURES of the search pages, read by pages/make_pictures.py. Each line cuts one still of the museum's film (from the folder MOA_FILM_STILLS names: the stills stay outside the repository) into the sizes a page serves, AVIF and WebP, in pages/pics/img/. A name starts with the wing it belongs to, because the pages' pictures and the site's own share one folder once they are joined, and a name must not be taken twice. 'crop' is a key of 'crops' or a cut of its own as WxH+X+Y; without it the whole frame is taken. The posters (2112x1016, a machine alone on its floor) all take one cut, 1500x844 from the middle: 16:9 like every other plate, so the set reads as one catalogue and the machine stands larger. 'share' are the pictures a page shows when its address is shared, 1200x630 as JPEG.",
+  "crops": { "poster": "1500x844+380+102" },
+  "pictures": [
+    { "name": "vinci-poster-aerial-screw", "file": "poster-aerial-screw.webp", "crop": "poster", "widths": [720, 1440] },
+    { "name": "vinci-poster-anemometer", "file": "poster-anemometer.webp", "crop": "poster", "widths": [720, 1440] },
+    { "name": "vinci-poster-ball-bearing", "file": "poster-ball-bearing.webp", "crop": "poster", "widths": [720, 1440] },
+    { "name": "vinci-poster-camera-obscura", "file": "poster-camera-obscura.webp", "crop": "poster", "widths": [720, 1440] },
+    { "name": "vinci-poster-flywheel", "file": "poster-flywheel.webp", "crop": "poster", "widths": [720, 1440] },
+    { "name": "vinci-poster-inclinometer", "file": "poster-inclinometer.webp", "crop": "poster", "widths": [720, 1440] },
+    { "name": "vinci-poster-lathe", "file": "poster-lathe.webp", "crop": "poster", "widths": [720, 1440] },
+    { "name": "vinci-poster-mechanical-lion", "file": "poster-mechanical-lion.webp", "crop": "poster", "widths": [720, 1440] },
+    { "name": "vinci-poster-miter-lock-gates", "file": "poster-miter-lock-gates.webp", "crop": "poster", "widths": [720, 1440] },
+    { "name": "vinci-poster-multi-barrel-gun", "file": "poster-multi-barrel-gun.webp", "crop": "poster", "widths": [720, 1440] },
+    { "name": "vinci-poster-proportional-compass", "file": "poster-proportional-compass.webp", "crop": "poster", "widths": [720, 1440] },
+    { "name": "vinci-poster-revolving-crane", "file": "poster-revolving-crane.webp", "crop": "poster", "widths": [720, 1440] },
+    { "name": "vinci-poster-rolling-mill", "file": "poster-rolling-mill.webp", "crop": "poster", "widths": [720, 1440] },
+    { "name": "vinci-poster-water-lifting-screw", "file": "poster-water-lifting-screw.webp", "crop": "poster", "widths": [720, 1440] },
+    { "name": "vinci-stop-flight", "file": "stop-flight.webp", "widths": [800, 1600] },
+    { "name": "vinci-stop-works", "file": "stop-works.webp", "widths": [800, 1600] },
+    { "name": "vinci-stop-hall", "file": "stop-hall.webp", "widths": [800, 1600] },
+    { "name": "vinci-stop-reading-table", "file": "stop-reading-table.webp", "widths": [800, 1600] },
+    { "name": "vinci-view-parachute", "file": "view-parachute.webp", "widths": [800, 1600] },
+    { "name": "vinci-view-anemometer", "file": "view-anemometer.webp", "widths": [800, 1600] },
+    { "name": "vinci-view-water-lifting-screw", "file": "view-water-lifting-screw.webp", "widths": [800, 1600] }
+  ],
+  "share": [
+    { "name": "vinci-inventions-og-1200x630", "file": "stop-works.webp", "crop": "1920x1008+0+60" }
+  ]
+}

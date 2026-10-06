@@ -1,0 +1,856 @@
+{
+  "_note": "THE WORDS of the page 'Leonardo da Vinci's inventions', English. Every displayed sentence of the page lives here and in the twin inventions.de.json. The two files hold the same structure: the same blocks in the same order, the same items, the same pictures. Change words here, then run `python3 pages/build.py`. Every fact comes from the wing's checked material. No em dash, no en dash, no semicolon.",
+  "page": {
+    "id": "vinci-inventions",
+    "wing": "vinci",
+    "slug": "inventions",
+    "published": null,
+    "og_image": {
+      "file": "vinci-inventions-og-1200x630.jpg",
+      "width": 1200,
+      "height": 630
+    }
+  },
+  "pics": {
+    "flight": {
+      "stem": "vinci-stop-flight",
+      "widths": [
+        800,
+        1600
+      ],
+      "sizes": "(min-width: 960px) 288px, (min-width: 600px) 240px, calc(100vw - 40px)"
+    },
+    "works": {
+      "stem": "vinci-stop-works",
+      "widths": [
+        800,
+        1600
+      ],
+      "sizes": "(min-width: 1280px) 588px, (min-width: 960px) 46vw, 100vw"
+    },
+    "court": {
+      "stem": "vinci-view-anemometer",
+      "widths": [
+        800,
+        1600
+      ],
+      "sizes": "(min-width: 1280px) 333px, (min-width: 960px) 27vw, (min-width: 600px) calc(50vw - 44px), calc(100vw - 40px)"
+    },
+    "house": {
+      "stem": "vinci-stop-hall",
+      "widths": [
+        800,
+        1600
+      ],
+      "sizes": "(min-width: 1280px) 333px, (min-width: 960px) 27vw, (min-width: 600px) calc(50vw - 44px), calc(100vw - 40px)"
+    },
+    "table": {
+      "stem": "vinci-stop-reading-table",
+      "widths": [
+        800,
+        1600
+      ],
+      "sizes": "(min-width: 1280px) 333px, (min-width: 960px) 27vw, (min-width: 600px) calc(50vw - 44px), calc(100vw - 40px)"
+    },
+    "parachute": {
+      "stem": "vinci-view-parachute",
+      "widths": [
+        800,
+        1600
+      ],
+      "sizes": "(min-width: 960px) 288px, (min-width: 600px) 240px, calc(100vw - 40px)"
+    },
+    "inclinometer": {
+      "stem": "vinci-poster-inclinometer",
+      "widths": [
+        720,
+        1440
+      ],
+      "sizes": "(min-width: 960px) 288px, (min-width: 600px) 240px, calc(100vw - 40px)"
+    },
+    "lock_gates": {
+      "stem": "vinci-poster-miter-lock-gates",
+      "widths": [
+        720,
+        1440
+      ],
+      "sizes": "(min-width: 960px) 288px, (min-width: 600px) 240px, calc(100vw - 40px)"
+    },
+    "water_screw": {
+      "stem": "vinci-poster-water-lifting-screw",
+      "widths": [
+        720,
+        1440
+      ],
+      "sizes": "(min-width: 960px) 288px, (min-width: 600px) 240px, calc(100vw - 40px)"
+    },
+    "crane": {
+      "stem": "vinci-poster-revolving-crane",
+      "widths": [
+        720,
+        1440
+      ],
+      "sizes": "(min-width: 960px) 288px, (min-width: 600px) 240px, calc(100vw - 40px)"
+    },
+    "rolling_mill": {
+      "stem": "vinci-poster-rolling-mill",
+      "widths": [
+        720,
+        1440
+      ],
+      "sizes": "(min-width: 960px) 288px, (min-width: 600px) 240px, calc(100vw - 40px)"
+    },
+    "drilling_machine": {
+      "stem": "vinci-poster-lathe",
+      "widths": [
+        720,
+        1440
+      ],
+      "sizes": "(min-width: 960px) 288px, (min-width: 600px) 240px, calc(100vw - 40px)"
+    },
+    "ball_bearing": {
+      "stem": "vinci-poster-ball-bearing",
+      "widths": [
+        720,
+        1440
+      ],
+      "sizes": "(min-width: 960px) 288px, (min-width: 600px) 240px, calc(100vw - 40px)"
+    },
+    "flywheel": {
+      "stem": "vinci-poster-flywheel",
+      "widths": [
+        720,
+        1440
+      ],
+      "sizes": "(min-width: 960px) 288px, (min-width: 600px) 240px, calc(100vw - 40px)"
+    },
+    "anemometer": {
+      "stem": "vinci-poster-anemometer",
+      "widths": [
+        720,
+        1440
+      ],
+      "sizes": "(min-width: 960px) 288px, (min-width: 600px) 240px, calc(100vw - 40px)"
+    },
+    "proportional_compass": {
+      "stem": "vinci-poster-proportional-compass",
+      "widths": [
+        720,
+        1440
+      ],
+      "sizes": "(min-width: 960px) 288px, (min-width: 600px) 240px, calc(100vw - 40px)"
+    },
+    "camera_obscura": {
+      "stem": "vinci-poster-camera-obscura",
+      "widths": [
+        720,
+        1440
+      ],
+      "sizes": "(min-width: 960px) 288px, (min-width: 600px) 240px, calc(100vw - 40px)"
+    },
+    "organ_gun": {
+      "stem": "vinci-poster-multi-barrel-gun",
+      "widths": [
+        720,
+        1440
+      ],
+      "sizes": "(min-width: 960px) 288px, (min-width: 600px) 240px, calc(100vw - 40px)"
+    },
+    "lion": {
+      "stem": "vinci-poster-mechanical-lion",
+      "widths": [
+        720,
+        1440
+      ],
+      "sizes": "(min-width: 960px) 288px, (min-width: 600px) 240px, calc(100vw - 40px)"
+    },
+    "hall": {
+      "stem": "vinci-view-water-lifting-screw",
+      "widths": [
+        800,
+        1600
+      ],
+      "sizes": "(min-width: 1280px) 333px, (min-width: 960px) 27vw, (min-width: 600px) calc(50vw - 44px), calc(100vw - 40px)"
+    }
+  },
+  "meta": {
+    "title": "Leonardo da Vinci's inventions: 15 rebuilt | Museum of Ages",
+    "description": "What Leonardo da Vinci drew, what was ever built and what was older than he was. Fifteen machines, rebuilt in code in a digital museum, each with its source.",
+    "og_title": "Leonardo da Vinci's inventions: fifteen machines rebuilt in a digital museum",
+    "og_image_alt": "Four wooden machines in the mechanism hall in low afternoon sun: lock gates, the aerial screw with its spiral sail, a water screw and a rolling mill. Reconstructions after sheets by Leonardo da Vinci, built in code."
+  },
+  "labels": {
+    "crumbs": "You are here",
+    "crumb_home": "Museum",
+    "crumb_here": "Inventions",
+    "toc": "On this page",
+    "tag_reconstructions": "Reconstructions",
+    "tag_reconstruction": "Reconstruction",
+    "in_museum": "In the museum",
+    "row_sheet": "The sheet",
+    "row_ours": "Our choice",
+    "row_built": "Was it built",
+    "row_accounts": "The sources",
+    "tag_reproduction": "Reproduction",
+    "plate_what": "built in code after his sheet"
+  },
+  "top": {
+    "h1": "Leonardo da Vinci's inventions",
+    "answer": "Leonardo da Vinci drew machines to fly, to raise water, to measure and for war. Most he never built, as far as anyone knows. Some were not his idea. Fifteen stand in this museum, rebuilt in code.",
+    "frame": {
+      "pic": "works",
+      "focus": "50% 70%",
+      "title": "In the mechanism hall",
+      "tag": "tag_reconstructions",
+      "what": "from the left: lock gates, the aerial screw, a water screw and a rolling mill, all after his sheets",
+      "alt": "A high hall with a slatted wooden ceiling and a band of windows, in low afternoon sun. Four wooden machines stand on low plinths: lock gates, the aerial screw with its spiral sail, a water screw in its frame and a rolling mill."
+    },
+    "door": {
+      "text": "Enter the museum",
+      "note": "Free entry, no account.",
+      "leads": "The door opens the Leonardo wing at its beginning. The plan of the wing takes you to the mechanism hall."
+    }
+  },
+  "blocks": [
+    {
+      "type": "places",
+      "id": "where",
+      "nav": "Where they stand",
+      "h": "Where the machines stand in the museum",
+      "intro": "Museum of Ages is a digital museum. Its first wing is Leonardo da Vinci's, and its machines stand in three places. The plan of the wing lists each machine under the place where it stands. Press a name there, and that machine's close look opens.",
+      "rows": [
+        {
+          "term": "The mechanism hall",
+          "text": "Nine machines: the aerial screw, lock gates, a water screw, a rolling mill, a drilling machine, a ball bearing, a flywheel, a camera obscura and an organ gun.",
+          "pic": {
+            "pic": "hall",
+            "tag": "tag_reconstructions",
+            "what": "the water screw, behind it the aerial screw, at the right the rolling mill",
+            "alt": "A wooden water screw stands on a low plinth in a hall with bare walls: a slanted shaft wound with dark coils in a frame, its lower end in a trough. Behind it at the left the spiral sail of the aerial screw, at the right edge the toothed wheel of the rolling mill. Low afternoon sun falls in through a band of windows."
+          }
+        },
+        {
+          "term": "The court",
+          "text": "Three machines: the parachute, the revolving crane and the anemometer. The parachute stands outside because it is taller than the hall's roof.",
+          "pic": {
+            "pic": "court",
+            "tag": "tag_reconstructions",
+            "what": "the anemometer on its plinth, at the left the turning base of the crane",
+            "alt": "A paved court with fallen leaves in front of a pale wall, half in shadow. A small wooden frame with a hanging plate, the anemometer, stands on a dark plinth. At the left edge the round wooden base of the crane, beyond the court a lawn and a garden wall."
+          }
+        },
+        {
+          "term": "The house",
+          "text": "Three in its great hall: an inclinometer and a proportional compass on the table, and the mechanical lion by the wall.",
+          "pic": {
+            "pic": "house",
+            "tag": "tag_reconstructions",
+            "what": "on the table the inclinometer and the proportional compass, by the wall the lion",
+            "alt": "A room with a beamed ceiling, red floor tiles and lattice windows. Afternoon sun falls across a long trestle table with a glass dome on a stand and a pair of compasses standing upright. A lion of wood and metal stands by the wall at the left."
+          }
+        },
+        {
+          "term": "The reading table",
+          "text": "Here you turn through more than 200 pages of his notebooks, sorted into seventeen topics, Flight and Machines among them. Each page names its notebook and leaf, and you can read it in his hand, in a mirror and as text. At rest a facsimile of Manuscript B, printed in 1883, lies open. The aerial screw's sheet, folio 83 verso, is in that facsimile.",
+          "pic": {
+            "pic": "table",
+            "tag": "tag_reproduction",
+            "what": "the facsimile of Manuscript B, printed in 1883, public domain by age. The manuscript is held by the Bibliothèque de l'Institut de France in Paris. The room is built in code.",
+            "alt": "A dark panelled room with one hanging lamp. Under the lamp an open book lies on a long table, and a chair stands in front of it."
+          }
+        }
+      ],
+      "after": "Fourteen of the fifteen follow one of his sheets. The lion follows old accounts, because no drawing of it survives. Each is labelled as a reconstruction."
+    },
+    {
+      "type": "group",
+      "id": "flying-machines",
+      "nav": "Flying machines",
+      "h": "The flying machines",
+      "intro": "Leonardo wanted people to fly. No flight of his own is documented. Two of his studies for flight stand rebuilt here, with an instrument he meant for a flier.",
+      "items": [
+        {
+          "id": "aerial-screw",
+          "name": "The aerial screw",
+          "place": "Mechanism hall",
+          "does": "A spiral sail of linen on a mast, often called his helicopter. His note says that a screw made well, of linen sealed with starch and turned fast, will rise into the air.",
+          "rows": [
+            {
+              "k": "row_sheet",
+              "v": "Manuscript B, folio 83 verso. Bibliothèque de l'Institut de France, Paris. The notebook is dated to about 1487 to 1489. The sheet gives one size: eight braccia from rim to centre, about 4.7 metres. It names no drive for the large screw. For a small model of paper it names a spring: a thin strip of iron, twisted and let go."
+            },
+            {
+              "k": "row_ours",
+              "v": "The pitch of the spiral, the timber, the bearing and the drive. In the museum it turns five times a minute and stays on the ground."
+            },
+            {
+              "k": "row_built",
+              "v": "No record is known of it being built in his lifetime. By our estimate a machine of 400 kilograms would need at least nineteen kilowatts to lift itself. A rider at the level of the hour record holds about half a kilowatt for an hour, so four of them make about two."
+            }
+          ],
+          "pic": {
+            "pic": "flight",
+            "tag": "tag_reconstructions",
+            "what": "the aerial screw in the mechanism hall, at the left the lock gates, both after his sheets",
+            "alt": "The aerial screw stands in a high hall with a slatted wooden ceiling: a wooden mast on a round base with a spiral sail of linen, lit by low afternoon sun that throws its shadow on the wall. At the left stand wooden lock gates on a low plinth."
+          }
+        },
+        {
+          "id": "parachute",
+          "name": "The parachute",
+          "place": "The court",
+          "does": "A tent of sealed linen, twelve braccia across and twelve high, about seven metres each way. He claimed a man could drop under it from a great height unhurt. That is his claim, not a tested finding.",
+          "rows": [
+            {
+              "k": "row_sheet",
+              "v": "Codex Atlanticus, folio 1058 verso. Veneranda Biblioteca Ambrosiana, Milan. The sheet is dated to about 1485."
+            },
+            {
+              "k": "row_ours",
+              "v": "The frame, the ropes and the ring. The sheet gives them no thickness and no length."
+            },
+            {
+              "k": "row_built",
+              "v": "No jump in his lifetime is documented. In 2000 a man came down under a heavy replica, cut it away and landed under a second, modern parachute. Earlier Italian drawings of parachutes are dated to the 1470s."
+            }
+          ],
+          "pic": {
+            "pic": "parachute",
+            "tag": "tag_reconstructions",
+            "what": "the parachute in the court, seen from below. Behind it the crane and the anemometer",
+            "alt": "The underside of the parachute, a pyramid of pale linen, fills the top of the picture. Below it a paved court with fallen leaves, at the left a wooden crane and a small anemometer on a plinth, and trees in autumn colours beyond a low wall."
+          }
+        },
+        {
+          "id": "inclinometer",
+          "name": "The inclinometer",
+          "place": "The house, on the table",
+          "does": "A weight hanging over a circle, shielded from the wind. It was meant to show a flier whether he travels level or tilted.",
+          "rows": [
+            {
+              "k": "row_sheet",
+              "v": "Codex Atlanticus, folio 1058 recto, the other side of the parachute's sheet. Veneranda Biblioteca Ambrosiana, Milan. The sheet is dated to about 1485."
+            },
+            {
+              "k": "row_ours",
+              "v": "The glass hood, the tilting stand and every size. The sheet gives none."
+            },
+            {
+              "k": "row_built",
+              "v": "No example from his lifetime is verified."
+            }
+          ],
+          "pic": {
+            "pic": "inclinometer",
+            "tag": "tag_reconstruction",
+            "alt": "The inclinometer alone on a tiled floor: a glass dome over a round plate marked with circles, a small weight hanging on a thread inside it, on a wooden stand."
+          }
+        }
+      ]
+    },
+    {
+      "type": "group",
+      "id": "water",
+      "nav": "Water",
+      "h": "Machines for water",
+      "intro": "He drew machines for water too. Canal locks and the water screw were in use before he was born. Reference works often credit him with one part: the lock gate of two leaves that meet at an angle.",
+      "items": [
+        {
+          "id": "lock-gates",
+          "name": "The lock gates",
+          "place": "Mechanism hall",
+          "does": "Two leaves of a canal lock that meet at an angle. The higher water presses them shut, and a small door in each leaf lets water through first, so a boat can pass from one level to the next.",
+          "rows": [
+            {
+              "k": "row_sheet",
+              "v": "Codex Atlanticus, folio 656a recto. Veneranda Biblioteca Ambrosiana, Milan. It records the gate of the San Marco lock in Milan. Its date is not settled: the standard catalogue of the codex gives about 1493 to 1495, a museum in Milan about 1506."
+            },
+            {
+              "k": "row_ours",
+              "v": "The sizes. We show one pair of gates that opens and closes at equal water levels."
+            },
+            {
+              "k": "row_built",
+              "v": "The lock existed. Bartolomeo Della Valle built the connecting locks. Reference works often credit Leonardo with this kind of gate. A museum in Milan leaves his share open: the sheet may record his improvement of the small doors, or a first survey of them after they were built. None of the sources we read makes him the inventor of canal locks."
+            }
+          ],
+          "pic": {
+            "pic": "lock_gates",
+            "tag": "tag_reconstruction",
+            "alt": "The lock gates alone on a tiled floor: two wooden leaves on a stone sill meet at a slight angle, each with a small square door near its foot."
+          }
+        },
+        {
+          "id": "water-screw",
+          "name": "The water screw",
+          "place": "Mechanism hall",
+          "does": "A tube wound round a shaft. Each turn of the crank lifts water up the tube to a higher channel or cistern.",
+          "rows": [
+            {
+              "k": "row_sheet",
+              "v": "Codex Atlanticus, folio 6 recto. Veneranda Biblioteca Ambrosiana, Milan. The sheet shows several ways of raising water, and this side of it carries no writing. It is dated to about 1480."
+            },
+            {
+              "k": "row_ours",
+              "v": "The crank, the supports and the size."
+            },
+            {
+              "k": "row_built",
+              "v": "No build of this design is established. The water screw itself is ancient: Vitruvius had already described it."
+            }
+          ],
+          "pic": {
+            "pic": "water_screw",
+            "tag": "tag_reconstruction",
+            "alt": "The water screw alone on a tiled floor: a slanted shaft wound with dark coils lies in a wooden frame, its lower end in a trough."
+          }
+        }
+      ]
+    },
+    {
+      "type": "group",
+      "id": "workshop",
+      "nav": "Workshop",
+      "h": "Machines for the workshop",
+      "intro": "These five lift, roll, drill and turn. For none of them is a build in his lifetime verified.",
+      "items": [
+        {
+          "id": "crane",
+          "name": "The revolving crane",
+          "place": "The court",
+          "does": "A crane with one jib. A hand crank winds the rope onto a drum, and the jib swings the load round to where it is wanted.",
+          "rows": [
+            {
+              "k": "row_sheet",
+              "v": "Manuscript B, folio 49 recto. Bibliothèque de l'Institut de France, Paris. The notebook is dated to about 1487 to 1489."
+            },
+            {
+              "k": "row_ours",
+              "v": "The counterweight, the supports and every size."
+            }
+          ],
+          "pic": {
+            "pic": "crane",
+            "tag": "tag_reconstruction",
+            "alt": "The revolving crane alone on a tiled floor: a post with one jib on a round turning base, and a rope with a stone block hanging from the jib."
+          }
+        },
+        {
+          "id": "rolling-mill",
+          "name": "The rolling mill",
+          "place": "Mechanism hall",
+          "does": "Two rollers that press tin thinner and more even. A crank drives the upper roller, and moving the lower one changes the gap.",
+          "rows": [
+            {
+              "k": "row_sheet",
+              "v": "Manuscript I, folio 48 verso. Bibliothèque de l'Institut de France, Paris. The note names tin and bell bronze. The notebook is dated to about 1497 to 1499."
+            },
+            {
+              "k": "row_ours",
+              "v": "The gearing. Nothing is rolled here, and the gap stays where it is set."
+            }
+          ],
+          "pic": {
+            "pic": "rolling_mill",
+            "tag": "tag_reconstruction",
+            "alt": "The rolling mill alone on a tiled floor: two rollers, one above the other, between wooden uprights, with a large toothed wheel and a crank at the side."
+          }
+        },
+        {
+          "id": "drilling-machine",
+          "name": "The drilling machine",
+          "place": "Mechanism hall",
+          "does": "A drill driven by a body, without a motor. A rope is wound round the spindle, so a stroke of the foot turns it one way and a bent bow turns it back. The sheet carries no note on the drill. A museum in Vinci reads the drawing this way, and our model follows that reading.",
+          "rows": [
+            {
+              "k": "row_sheet",
+              "v": "Codex Atlanticus, folio 108 recto. Veneranda Biblioteca Ambrosiana, Milan. The sheet is dated to about 1495 to 1497."
+            },
+            {
+              "k": "row_ours",
+              "v": "The sizes of the bow, the foot bar and the spool. The drill is not fed into anything."
+            }
+          ],
+          "pic": {
+            "pic": "drilling_machine",
+            "tag": "tag_reconstruction",
+            "alt": "The drilling machine alone on a tiled floor: a low wooden bench with a spindle, and above it a tall post with a thin bent rod and a cord that runs down to the spindle."
+          }
+        },
+        {
+          "id": "ball-bearing",
+          "name": "The ball bearing",
+          "place": "Mechanism hall",
+          "does": "Eight wooden balls between two plates, so a heavy load rolls as it turns and rubs less. Small wheels on pivots keep each ball from touching the next.",
+          "rows": [
+            {
+              "k": "row_sheet",
+              "v": "Codex Madrid I, folio 20 verso. Biblioteca Nacional de España, Madrid. The notebook is from the 1490s and carries the dates 1493 and 1497."
+            },
+            {
+              "k": "row_ours",
+              "v": "The shapes of the balls and the small wheels. They are how we read the sheet."
+            }
+          ],
+          "pic": {
+            "pic": "ball_bearing",
+            "tag": "tag_reconstruction",
+            "alt": "The ball bearing alone on a tiled floor: a thick round plate with a hole in its centre rests on a ring of balls above a second ring, on two wooden beams."
+          }
+        },
+        {
+          "id": "flywheel",
+          "name": "The flywheel",
+          "place": "Mechanism hall",
+          "does": "A heavy wheel that stores movement and gives it back when the drive falters. The sheet compares turning weights and asks which arrangement runs best.",
+          "rows": [
+            {
+              "k": "row_sheet",
+              "v": "Codex Madrid I, folio 114 recto. Biblioteca Nacional de España, Madrid. The notebook is from the 1490s and carries the dates 1493 and 1497."
+            },
+            {
+              "k": "row_ours",
+              "v": "Four equal weights on rigid spokes. That arrangement is the museum's own. It is not one of the figures on the sheet."
+            }
+          ],
+          "pic": {
+            "pic": "flywheel",
+            "tag": "tag_reconstruction",
+            "alt": "The flywheel alone on a tiled floor: an upright post on a cross-shaped foot carries four spokes, each with a ball at its end."
+          }
+        }
+      ]
+    },
+    {
+      "type": "group",
+      "id": "instruments",
+      "nav": "Instruments",
+      "h": "Instruments for measuring and seeing",
+      "intro": "Three smaller pieces. One reads the wind, one changes the size of a drawing, one shows what light does on its way into a dark room.",
+      "items": [
+        {
+          "id": "anemometer",
+          "name": "The anemometer",
+          "place": "The court",
+          "does": "Wind pushes a hinged plate out of the upright. The higher it rides on its curved scale, the harder the wind. His note wants more: to measure how far one travels in an hour with a wind, and for that it asks for a clock. The plate alone shows only the wind's force.",
+          "rows": [
+            {
+              "k": "row_sheet",
+              "v": "Codex Atlanticus, folio 675 recto. Veneranda Biblioteca Ambrosiana, Milan. The sheet is dated to about 1487 to 1490."
+            },
+            {
+              "k": "row_ours",
+              "v": "The marks on the scale, the frame and every size."
+            },
+            {
+              "k": "row_built",
+              "v": "No build in his lifetime is verified. Leon Battista Alberti described a similar plate in 1450, so the sources do not support calling it Leonardo's invention alone."
+            }
+          ],
+          "pic": {
+            "pic": "anemometer",
+            "tag": "tag_reconstruction",
+            "alt": "The anemometer alone on a tiled floor: a wooden frame on two feet with a square board hanging from its top bar and a curved scale beside it."
+          }
+        },
+        {
+          "id": "proportional-compass",
+          "name": "The proportional compass",
+          "place": "The house, on the table",
+          "does": "Two pointed legs that cross at a pivot. It carries a distance across at a chosen proportion, which is how a drawing is made larger or smaller.",
+          "rows": [
+            {
+              "k": "row_sheet",
+              "v": "Codex Forster I, folio 4 recto, from 1505 in Florence. Victoria and Albert Museum, National Art Library, London."
+            },
+            {
+              "k": "row_ours",
+              "v": "The place of the pivot. We set it so the long points open twice as far as the short ones."
+            },
+            {
+              "k": "row_built",
+              "v": "No surviving instrument and no record of one being made is known for this drawing."
+            }
+          ],
+          "pic": {
+            "pic": "proportional_compass",
+            "tag": "tag_reconstruction",
+            "alt": "The proportional compass standing on its two long points on a tiled floor: two dark legs cross at a pivot, with two short points above it."
+          }
+        },
+        {
+          "id": "camera-obscura",
+          "name": "The camera obscura",
+          "place": "Mechanism hall",
+          "does": "A dark room with one small hole. The rays of light cross in the hole and put the picture on paper upside down. He was studying how the eye sees.",
+          "rows": [
+            {
+              "k": "row_sheet",
+              "v": "Manuscript D, folio 8 recto. Bibliothèque de l'Institut de France, Paris. The note describes a small round hole in a thin iron plate. The notebook is dated to about 1508 to 1509."
+            },
+            {
+              "k": "row_ours",
+              "v": "The small chamber itself. The note gives no depth for the room and no size for the hole."
+            },
+            {
+              "k": "row_built",
+              "v": "The note describes an experiment. It does not show that he invented the camera obscura."
+            }
+          ],
+          "pic": {
+            "pic": "camera_obscura",
+            "tag": "tag_reconstruction",
+            "alt": "The camera obscura alone on a tiled floor: a wooden box, open at one side to show the inside. A candle burns in front of the wall with the small hole, and inside the box its picture stands upside down."
+          }
+        }
+      ]
+    },
+    {
+      "type": "group",
+      "id": "war",
+      "nav": "War machine",
+      "h": "A war machine",
+      "intro": "One war machine stands in the hall, as a display that cannot fire.",
+      "items": [
+        {
+          "id": "organ-gun",
+          "name": "The organ gun",
+          "place": "Mechanism hall",
+          "does": "Thirty-three barrels in three rows on one frame. His note says eleven are fired at a time. Turning the frame brings the next row to the top.",
+          "rows": [
+            {
+              "k": "row_sheet",
+              "v": "Codex Atlanticus, folio 157 recto. Veneranda Biblioteca Ambrosiana, Milan. The sheet is dated to about 1480 to 1482."
+            },
+            {
+              "k": "row_ours",
+              "v": "The sizes of the carriage and its speed. Nothing fires here: the barrels are solid."
+            },
+            {
+              "k": "row_built",
+              "v": "We found no record of a build in his lifetime."
+            }
+          ],
+          "pic": {
+            "pic": "organ_gun",
+            "tag": "tag_reconstruction",
+            "alt": "The organ gun alone on a tiled floor: a cart on two spoked wheels carries a frame with rows of dark barrels and a handle at its side."
+          }
+        }
+      ]
+    },
+    {
+      "type": "feature",
+      "id": "mechanical-lion",
+      "nav": "The lion",
+      "h": "The mechanical lion",
+      "place": "The house, by the wall of the great hall",
+      "paras": [
+        "The lion is the one machine here without a sheet. Vasari wrote in 1568 that the King of France came to Milan and that Leonardo, asked for something strange, made a lion. It walked several steps, then opened its chest and showed it full of lilies."
+      ],
+      "rows": [
+        {
+          "k": "row_accounts",
+          "v": "Old accounts only. No drawing of the lion survives, and the accounts disagree on the place, the date and the king."
+        },
+        {
+          "k": "row_ours",
+          "v": "Everything inside: a spring, a train of wheels, cranks that swing the legs, a count wheel that ends the walk and a latch that opens the chest."
+        },
+        {
+          "k": "row_built",
+          "v": "The old accounts say it walked. Nothing of it survives."
+        }
+      ],
+      "pic": {
+        "pic": "lion",
+        "tag": "tag_reconstruction",
+        "what": "built in code after old accounts",
+        "alt": "The mechanical lion alone on a tiled floor: a lion of wood and metal with its tail raised, the wheels of its works showing in its flank."
+      }
+    },
+    {
+      "type": "notes",
+      "id": "not-built",
+      "nav": "Tank, bridges, robot",
+      "h": "The tank, the bridges and the robot knight",
+      "intro": "The museum has not built any of these. Most belong to twenty-seven other studies of his that give too little to build from. Some sheets of those studies are among the pages at the reading table.",
+      "rows": [
+        {
+          "term": "The armoured car, often called his tank",
+          "text": "A covered fighting wagon on a loose sheet in the British Museum in London, which dates it to about 1485. People inside turn cranks, and the note calls for eight of them. The British Museum records it as unbuilt. The sheet gives no sizes, and how the wagon would steer is not settled."
+        },
+        {
+          "term": "The bridge of poles",
+          "text": "Codex Atlanticus, folio 69a recto and folio 71 verso, in the Veneranda Biblioteca Ambrosiana in Milan, dated to about 1485 to 1487 by the standard catalogue. They show a temporary wooden bridge for an army. His note says to weave the bridge. A museum in Vinci reads the drawing as logs that lock into each other and stand without rope. We found no record that one was built in his lifetime."
+        },
+        {
+          "term": "The bridge for the Golden Horn",
+          "text": "Manuscript L, folio 66 recto, in the Bibliothèque de l'Institut de France in Paris, a notebook dated to about 1497 to 1504. A sketch with a note: a bridge from Pera to Constantinople, 40 braccia wide, 70 above the water and 600 long. It is thought to date from 1502. It was not built. In 2001 a footbridge after the sketch opened in Norway."
+        },
+        {
+          "term": "The flapping wings",
+          "text": "Manuscript B, dated to about 1487 to 1489, holds several studies of machines with beating wings, among them folios 74 verso and 80 recto. On one the pilot lies down and works the wings with his feet. On another he stands, and the span is 40 braccia, about 23 metres. No flight in his lifetime is documented."
+        },
+        {
+          "term": "The glider studies",
+          "text": "The Codex on the Flight of Birds, from 1505, is in the Biblioteca Reale in Turin. Its pages study wing joints, control cords and balance. None of them is a complete plan for a glider."
+        },
+        {
+          "term": "The mechanical knight, often called his robot",
+          "text": "The knight is a modern reading that joins separate studies in the Codex Atlanticus, dated to about 1495 to 1497. We know of no complete drawing of a knight, and no build in his lifetime is established."
+        },
+        {
+          "term": "The diving gear",
+          "text": "Codex Arundel, folio 24 verso, in the British Library in London, and Codex Atlanticus, folio 909 verso, dated to about 1485 to 1487. The notes describe breathing tubes with joints of leather and iron, a glass mask and bags. They give no complete way to supply air, and no dive with this gear is established."
+        },
+        {
+          "term": "The self-moving cart",
+          "text": "Codex Atlanticus, folio 812 recto, dated to about 1478, by an older study to about 1482 to 1484. Researchers today read hidden coiled springs as its drive and see it as a cart for the theatre. It is not a proven car for passengers."
+        },
+        {
+          "term": "The giant crossbow",
+          "text": "Codex Atlanticus, folio 149b recto, dated to about 1485. He gives a span of 42 braccia, about 24 to 25 metres. The sheet does not settle how the huge bow would be made, and no build in his lifetime is documented."
+        }
+      ]
+    },
+    {
+      "type": "faq",
+      "id": "questions",
+      "nav": "Questions",
+      "h": "Questions people ask",
+      "items": [
+        {
+          "q": "What did Leonardo da Vinci invent?",
+          "a": "It is hard to name a machine that was surely his own idea and surely built. He drew many, and for almost all of them our research found no record that he built one. Several kinds were older than he was: canal locks, the water screw, a wind plate that Alberti described in 1450. Reference works often credit him with the lock gate of two leaves that meet at an angle. What the sheets do hold is his own working out of a problem: an aerial screw of starched linen, a parachute with its sizes, a bearing of eight wooden balls."
+        },
+        {
+          "q": "Did Leonardo da Vinci invent the helicopter?",
+          "a": "He drew an aerial screw, a spiral sail on a mast, and wrote that it would rise if it was turned fast. The sheet names no drive for the large one. For a small paper model it names a twisted strip of iron as a spring. No record is known of it being built in his lifetime, and by our estimate a machine of 400 kilograms would need at least nineteen kilowatts to lift itself. Calling it a helicopter says more than the sheet does."
+        },
+        {
+          "q": "Did Leonardo da Vinci's flying machine work?",
+          "a": "No flight of his own is documented. His studies of flapping wings give no complete plan to build from. In his notebook on the flight of birds a promise of flight is written about the future. It is not a report."
+        },
+        {
+          "q": "Did Leonardo da Vinci invent the tank?",
+          "a": "He drew an armoured car, a covered wagon moved by people turning cranks inside. The British Museum, which holds the drawing, records it as unbuilt. Calling the drawing a tank does not show that he invented the modern tank."
+        },
+        {
+          "q": "Did Leonardo da Vinci design a bridge?",
+          "a": "Yes, more than one. Two sheets of the Codex Atlanticus, dated to about 1485 to 1487, show a temporary wooden bridge for an army. A museum in Vinci reads it as logs that hold each other without rope. A sketch in Manuscript L is for a bridge from Pera to Constantinople, across the Golden Horn. It was not built. In 2001 a footbridge after that sketch opened in Norway."
+        },
+        {
+          "q": "Where are Leonardo da Vinci's notebooks today?",
+          "a": "The originals are in a few libraries and collections, none of them in this museum. The Codex Atlanticus, with 1,119 leaves, is in the Veneranda Biblioteca Ambrosiana in Milan. Twelve notebooks are in the Bibliothèque de l'Institut de France in Paris, two in the Biblioteca Nacional de España in Madrid, and five, bound in three volumes, in the Victoria and Albert Museum in London. About 550 leaves are in the Royal Collection at Windsor. The Codex Arundel is in the British Library in London, the Codex on the Flight of Birds in the Biblioteca Reale in Turin. One notebook is privately owned. At this museum's reading table you turn photographed pages, and each one names the notebook it comes from."
+        }
+      ]
+    },
+    {
+      "type": "sources",
+      "id": "sources",
+      "nav": "Sources",
+      "h": "Sources",
+      "intro": "The facts on this page come from the research for the museum's Leonardo wing. They were checked against the holders' catalogues and the digital editions of the notebooks, as far as these could be read. In the museum each machine's close look carries its record: the sheet, what the sheet does not say, the arithmetic and the sources.",
+      "holders_h": "Where the fourteen drawings are held",
+      "holders": [
+        {
+          "name": "Veneranda Biblioteca Ambrosiana",
+          "place": "Milan",
+          "text": "Codex Atlanticus, folios 6 recto, 108 recto, 157 recto, 656a recto, 675 recto, 1058 recto and 1058 verso."
+        },
+        {
+          "name": "Bibliothèque de l'Institut de France",
+          "place": "Paris",
+          "text": "Manuscript B, folios 49 recto and 83 verso. Manuscript D, folio 8 recto. Manuscript I, folio 48 verso."
+        },
+        {
+          "name": "Biblioteca Nacional de España",
+          "place": "Madrid",
+          "text": "Codex Madrid I, folios 20 verso and 114 recto."
+        },
+        {
+          "name": "Victoria and Albert Museum, National Art Library",
+          "place": "London",
+          "text": "Codex Forster I, folio 4 recto."
+        }
+      ],
+      "notes": [
+        "For the lion: Vasari, Le vite, in the edition of 1568, and later accounts.",
+        "For the drawings we have not built: the British Museum and the British Library in London, the Biblioteca Reale in Turin, and the two libraries named above for the Codex Atlanticus and for Manuscripts B and L.",
+        "The dates of the Codex Atlanticus sheets follow the standard catalogue of the codex, as the Museo Galileo's edition prints it. The dates of the Paris notebooks and of Codex Forster I are the holders' own.",
+        "The museum names these houses as the holders of the originals. It is independent of all of them.",
+        "The pictures on this page are frames from the museum's own film: rooms and machines built in code. The book at the reading table is a printed facsimile of Manuscript B from 1883, in the public domain by age."
+      ],
+      "editions_h": "Where you can read the sheets yourself",
+      "editions": [
+        {
+          "name": "Veneranda Biblioteca Ambrosiana",
+          "text": "The Codex Atlanticus, sheet by sheet, with a year for each.",
+          "links": [
+            {
+              "label": "The Codex Atlanticus online",
+              "href": "https://codex-atlanticus.ambrosiana.it/"
+            }
+          ]
+        },
+        {
+          "name": "Bibliothèque de l'Institut de France",
+          "text": "Its own pages on the Paris notebooks, in French.",
+          "links": [
+            {
+              "label": "Manuscript B",
+              "href": "https://minerva.bibliotheque-institutdefrance.fr/expositions/exhibitions/2-carnet-b2"
+            },
+            {
+              "label": "Manuscript D",
+              "href": "https://minerva.bibliotheque-institutdefrance.fr/expositions/exhibitions/5-carnet-d"
+            },
+            {
+              "label": "Manuscript I",
+              "href": "https://minerva.bibliotheque-institutdefrance.fr/expositions/exhibitions/10-carnet-i2"
+            },
+            {
+              "label": "Manuscript L",
+              "href": "https://minerva.bibliotheque-institutdefrance.fr/expositions/exhibitions/12-carnet-l2"
+            }
+          ]
+        },
+        {
+          "name": "Biblioteca Leonardiana",
+          "text": "The library in Vinci. Its digital edition, e-Leo, shows each sheet with its transcription, in Italian.",
+          "links": [
+            {
+              "label": "e-Leo, opened at the parachute's sheet",
+              "href": "https://www.leonardodigitale.com/sfoglia/codice-atlantico/1058-v/"
+            }
+          ]
+        },
+        {
+          "name": "Museo Galileo",
+          "text": "Its edition of the Codex Atlanticus, made with the Ambrosiana, prints the catalogue entries for every sheet.",
+          "links": [
+            {
+              "label": "The edition, opened at the parachute's sheet",
+              "href": "https://teche.museogalileo.it/leonardo/foglio/index.html?lang=it&num=ATL.2116.1"
+            }
+          ]
+        }
+      ],
+      "contact": "If a date, a folio or a holder is wrong, tell us and we will correct it.",
+      "contact_link": "To the legal notice",
+      "what_link": "What this museum is"
+    },
+    {
+      "type": "close",
+      "id": "enter",
+      "nav": "",
+      "h": "See the machines in the museum",
+      "p": "The door opens the Leonardo wing at its beginning. The picture room comes first, the mechanism hall later on the walk.",
+      "door": {
+        "text": "Enter the museum",
+        "note": "Free entry, no account."
+      }
+    }
+  ]
+}

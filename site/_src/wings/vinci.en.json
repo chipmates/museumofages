@@ -1,0 +1,754 @@
+{
+  "_note": "EVERY WORD OF THIS WING'S PAGE, one file per language with the same structure. The wing's entry in registry.json holds what is not a sentence (addresses, the door, dates, the pictures of the first screen and of the wall). NUMBERS: no digit is written here. {count:<name>} gives a number of the facts file (wings/<wing>.facts.json, under counts or set) in digits, {word:<name>} and {Word:<name>} give it as a word. {shows:place} and {shows:day} come from the registry. QUOTED TEXTS: {museum:<key>} gives one of the museum's own texts from museum-texts.json, word for word. A credit line (a key that ends in src) may carry a sheet's own numbers. A room with no plate joins the text of the room before it. holds: the picture index, one entry per group. Its names, sizes, holders and lists come from the facts file by the key under from. rooms.<n>.p is one or two sentences. holds.groups.<machines>.close is one stop shown up close (its three texts are the museum's own, by {museum:<key>}), .names gives a machine a plain name by its id (without one the inventory's name stands), .terms explains a group's terms once. landing.close is the picture of the landing's closing band. numbers: a number and its name, text is optional. out.line is the line beside the registry's out link, on the page about the museum.",
+  "meta": {
+    "title": "Leonardo da Vinci digital museum: paintings and inventions",
+    "description": "A walk to Leonardo da Vinci's last house in Amboise: {count:pictures} pictures, the Mona Lisa close to her real size, {count:machines} machines, his notebooks. Free entry, no account.",
+    "landing_today": "Open today: Leonardo da Vinci's last house in Amboise.",
+    "share_alt": "The aerial screw in the mechanism hall: a wooden mast with a spiral sail of linen in low afternoon sun, its shadow on the wall. A reconstruction after a sheet by Leonardo da Vinci, built in code."
+  },
+  "first": {
+    "lede": "A walk of {count:stops} stops past about {count:works} works you can step up to: {count:pictures} pictures close to their real size, {count:machines} machines, {count:sheets} anatomy sheets and his notebooks.",
+    "piece": {
+      "title": "A walk through the wing",
+      "kind": "From the film",
+      "what": "The mechanism hall.",
+      "alt": "A high hall with a slatted wooden ceiling and a band of windows, in warm low sun. Wooden machines stand on low plinths: lock gates, the aerial screw with its spiral sail, a water screw and a rolling mill. A still from the museum's film. The machines are reconstructions built in code.",
+      "beats": [
+        "The reading table.",
+        "His life as a line in the floor.",
+        "The yard of Clos Lucé."
+      ],
+      "frames": [
+        {
+          "pic": {
+            "stem": "v-table",
+            "widths": [
+              960,
+              1600
+            ],
+            "phone": {
+              "stem": "v-table-m",
+              "widths": [
+                780,
+                1080
+              ]
+            }
+          },
+          "alt": "A dark panelled room with one hanging lamp. Under the lamp an open book lies on a long table, and a chair stands in front of it. A still from the museum's film.",
+          "src": "The book on the table is a printed edition of 1883, public domain by age.",
+          "focus": {
+            "phone": "50% 50%",
+            "wide": "50% 50%"
+          }
+        },
+        {
+          "pic": {
+            "stem": "v-line",
+            "widths": [
+              800,
+              1228
+            ],
+            "phone": {
+              "stem": "v-line-m",
+              "widths": [
+                480,
+                720
+              ]
+            }
+          },
+          "alt": "A stone floor with years cut into it in a line, each beside a small round stud. The nearest stud is red. A still from the museum's film.",
+          "src": "",
+          "focus": {
+            "phone": "50% 88%",
+            "wide": "50% 60%"
+          }
+        },
+        {
+          "pic": {
+            "stem": "v-court",
+            "widths": [
+              960,
+              1600
+            ],
+            "phone": {
+              "stem": "v-court-m",
+              "widths": [
+                780,
+                1080
+              ]
+            }
+          },
+          "alt": "A narrow yard between tall brick walls with stone corners. Steps lead up to the door of a brick house with a small tower. A still from the museum's film.",
+          "src": "",
+          "focus": {
+            "phone": "50% 40%",
+            "wide": "50% 40%"
+          }
+        }
+      ],
+      "install": {
+        "name": "walk",
+        "script": "walk.js",
+        "pause": "Pause",
+        "play": "Play",
+        "keep_kind": true
+      }
+    }
+  },
+  "landing": {
+    "piece": {
+      "title": "The great hall of Clos Lucé",
+      "kind": "Reconstruction",
+      "what": "a room of Leonardo da Vinci's last house, rebuilt in code.",
+      "alt": "A room with a beamed ceiling, red floor tiles and lattice windows. Afternoon sun falls across a long trestle table with two small models on it. A mechanical lion stands by the wall on the left. A still from the museum's film. The room is a reconstruction built in code.",
+      "src": "Still from the museum's own film"
+    },
+    "close": {
+      "pic": {
+        "stem": "start",
+        "widths": [
+          960,
+          1600
+        ],
+        "phone": {
+          "stem": "start-m",
+          "widths": [
+            800,
+            1200
+          ]
+        }
+      },
+      "title": "The wing from the head of the stair",
+      "kind": "Built in code",
+      "what": "the picture room behind its glass wall, and the parachute in the court. The halls are the museum's own design.",
+      "src": "Behind the glass hang reproductions of his pictures, each credited in the wing.",
+      "alt": "Seen from the head of a stair: a long low gallery with a glass wall and framed pictures inside, and beside it a square court under a tall pyramid of linen on thin poles. Meadows and haze behind. A still from the museum's film."
+    }
+  },
+  "card": {
+    "kind": "Reconstruction",
+    "what": "the house from the garden side, in low sun",
+    "alt": "A tall brick house with stone corners stands on a walled terrace in low sun, under a branch with autumn leaves. A still from the museum's film. The house is a reconstruction built in code.",
+    "src": "After plans and photographs of the house."
+  },
+  "intro": {
+    "p": "The wing shows {shows:place} on {shows:day}: his last house, on one day of his life. The day is documented: Antonio de Beatis wrote it down in his diary. He was secretary to Cardinal Luigi d'Aragona, who came to visit that day. The hour is our choice. Beside the house stand the museum's own rooms for his pictures, his machines, his notebooks and his anatomy sheets.",
+    "film": "You go from stop to stop through a film, made with the museum's own software. At most stops you can step up to the works.",
+    "stills": "The pictures of rooms on this page are stills from that film."
+  },
+  "rooms": [
+    {
+      "id": "pictures",
+      "h": "The picture room",
+      "note": "Where the walk begins",
+      "p": [
+        "His pictures hang on one wall, more than {count:wall_m} metres long, roughly in the order he made them, each close to its real size. The Mona Lisa hangs among them."
+      ],
+      "lamp": "low",
+      "plates": [
+        {
+          "pic": {
+            "stem": "v-picture-room",
+            "widths": [
+              800,
+              1600
+            ]
+          },
+          "title": "The wall of pictures",
+          "kind": "Reproductions",
+          "what": "in front The Baptism of Christ, by Verrocchio and Leonardo, then the Annunciation, both in the Uffizi.",
+          "alt": "A long wall in dark blue hung with framed reproductions of paintings under spotlights, the nearest two The Baptism of Christ and the Annunciation. Wooden benches stand in front of the wall. A still from the museum's film.",
+          "src": "The pictures on the wall are reproductions, each with its source and licence on its label in the wing.",
+          "src_to": "originals"
+        },
+        {
+          "pic": {
+            "stem": "v-scale-en",
+            "widths": [
+              960,
+              1600
+            ],
+            "phone": {
+              "stem": "v-scale-m",
+              "widths": [
+                560,
+                800
+              ]
+            }
+          },
+          "title": "Lady with an Ermine, up close",
+          "kind": "Reproduction",
+          "what": "the painting as the wing shows it when you step up. The bar at the lower left shows ten centimetres on the painting. The lettering at the top left is a later inscription on the panel itself.",
+          "src": "Held by the Muzeum Narodowe w Krakowie, Czartoryski Museum, Kraków. Public domain work. Reproduction from Wikimedia Commons.",
+          "alt": "A screenshot of the wing: the Lady with an Ermine on a black ground, a young woman in a red and blue dress holding a white ermine. At the painting's lower left a bar marked ten centimetres."
+        }
+      ]
+    },
+    {
+      "id": "hall",
+      "h": "The mechanism hall",
+      "note": "Machines that move",
+      "hang": "wide",
+      "p": [
+        "{Word:hall} machines stand here, built in code after his sheets: the aerial screw, lock gates, a water screw, a rolling mill, a drilling machine, a flywheel, a ball bearing, a gun with three rows of barrels, and the camera obscura in its own dark bay. Each can be set in motion and seen up close, with the sheet it comes from. Two of the kinds, the lock gates and the water screw, were in use before his time."
+      ],
+      "plates": [
+        {
+          "pic": {
+            "stem": "v-flywheel",
+            "widths": [
+              960,
+              1600
+            ]
+          },
+          "title": "In the mechanism hall",
+          "kind": "Reconstructions",
+          "what": "the flywheel up close, behind it the gun with three rows of barrels, the ball bearing on the left.",
+          "alt": "The flywheel up close: a wooden spindle on a cross of beams with struts, four arms at the top with stone balls at their ends, and a small crank. Behind it the gun with three rows of barrels, its spoked wheel in front. On the left the ball bearing on a dark plinth. A still from the museum's film."
+        }
+      ]
+    },
+    {
+      "id": "gallery",
+      "h": "The long gallery",
+      "note": "Notebooks, the body, his life",
+      "p": [
+        "The gallery holds the reading table, a wall of his anatomy sheets and the dates of his life, cut into the floor. Each of the three is a stop of the walk."
+      ],
+      "plates": [
+        {
+          "pic": {
+            "stem": "v-body",
+            "widths": [
+              800,
+              1600
+            ]
+          },
+          "title": "The wall of anatomy sheets",
+          "kind": "Reproductions",
+          "what": "his sheets in four rows in a lit case, a chest of drawers below them. The room is built in code.",
+          "alt": "A dark panelled wall with a lit case of framed drawings in four rows, a chest of flat drawers below it and one more framed drawing apart on the right. A still from the museum's film.",
+          "src": "Leonardo's sheets, held by the Royal Collection, Windsor. Public domain works, in reproductions from Wikimedia Commons."
+        },
+        {
+          "pic": {
+            "stem": "v-page-en",
+            "widths": [
+              960,
+              1600
+            ],
+            "phone": {
+              "stem": "v-page-m",
+              "widths": [
+                560,
+                800
+              ]
+            }
+          },
+          "title": "A page of his notebook, up close",
+          "kind": "Reproduction",
+          "what": "the reading table's close view of the page with the aerial screw, from the printed facsimile of {count:volume_year}. Every page of the book turns this way.",
+          "src": "Paris manuscript B, folio 83 verso, held by the Bibliothèque de l'Institut de France, Paris, Ms 2173. Shown in the facsimile by Charles Ravaisson-Mollien, Les manuscrits de Léonard de Vinci, vol. II, Paris 1883. Public domain.",
+          "alt": "A screenshot of the wing's reading table: the page of the printed facsimile at the close view, a sheet in sepia with the drawing of the aerial screw and lines of mirror writing, lit on the dark table."
+        }
+      ]
+    },
+    {
+      "id": "court",
+      "h": "The court",
+      "note": "The Last Supper at its real size",
+      "p": [
+        "Outside, a wall carries the Last Supper. Beside it stand the parachute, the revolving crane and a wind gauge. The court is the museum's own design, not a place from his life."
+      ],
+      "plates": [
+        {
+          "pic": {
+            "stem": "v-supper",
+            "widths": [
+              800,
+              1600
+            ]
+          },
+          "title": "The Last Supper in the court",
+          "kind": "Reproduction",
+          "what": "the original is a wall painting in the dining hall of the monastery of Santa Maria delle Grazie in Milan. The wall in the court is built in code.",
+          "src": "{museum:supper_credit}",
+          "alt": "A reproduction of the Last Supper fills a pale wall in a court: a row of figures at a long table in a painted room. A still from the museum's film."
+        }
+      ]
+    },
+    {
+      "id": "house",
+      "h": "The house",
+      "note": "Clos Lucé, his last home",
+      "p": [
+        "His last house, Clos Lucé in Amboise, is rebuilt in code from plans and photographs. You enter one room only, the great hall: on its table two instruments after his sheets, by the wall the mechanical lion. The chapel, the study window and the north room you see from outside."
+      ],
+      "plates": [
+        {
+          "pic": {
+            "stem": "v-lion",
+            "widths": [
+              800,
+              1600
+            ]
+          },
+          "title": "The great hall",
+          "kind": "Reconstruction",
+          "what": "the hall in afternoon sun, with the mechanical lion by the window.",
+          "alt": "A lion of wood and metal with gears showing in its flank stands on red floor tiles by a lattice window, in afternoon sun. At the right the end of a bench and a table. A still from the museum's film. The room is a reconstruction built in code.",
+          "quote": {
+            "text": "{museum:lion_label}",
+            "from": "From its label in the museum"
+          }
+        }
+      ]
+    }
+  ],
+  "stop": {
+    "id": "picture-room-lisa",
+    "grade": "documented",
+    "title": "{museum:lisa_chapter}",
+    "age_k": "His age",
+    "age": "{museum:lisa_age}",
+    "stage": {
+      "pic": {
+        "stem": "v-lisa-m",
+        "widths": [
+          720,
+          1000
+        ],
+        "wide": {
+          "stem": "v-lisa",
+          "widths": [
+            800,
+            1280
+          ]
+        }
+      },
+      "alt": "A long dark blue wall hung with framed reproductions under spotlights. The Mona Lisa hangs among them, and more frames run on to her left. A still from the museum's film.",
+      "title": "Mona Lisa",
+      "kind": "Reproduction",
+      "what": "the Mona Lisa in the picture room, the wall of pictures running on to her left. {museum:lisa_holder}",
+      "src": "{museum:lisa_credit} The other frames hold reproductions as well, each with its source and licence on its label in the wing."
+    },
+    "layers": [
+      {
+        "text": "{museum:lisa_line}"
+      },
+      {
+        "text": "{museum:lisa_drawer}"
+      },
+      {
+        "text": "{museum:lisa_record} {museum:lisa_size}"
+      }
+    ]
+  },
+  "holds": {
+    "lead": "Here is what the wing holds, in the order of the walk: every picture, machine, page and sheet you can step up to.",
+    "groups": [
+      {
+        "id": "paintings",
+        "form": "wall",
+        "from": "paintings",
+        "h": "The paintings",
+        "note": "Every work, its holder, its size",
+        "p": [
+          "{count:hung_works} works hang here: {count:hung_paintings} paintings and {word:hung_drawings} drawings. One portrait, Ginevra de' Benci, hangs twice: its front and its painted back.",
+          "The Mona Lisa is less than a metre tall. Most are his own work or work he had a hand in. One is a copy by other hands, and the last is from his workshop.",
+          "They are reproductions, each with its holder and its size in the list. A word after a size, such as disputed or workshop, says who is thought to have made the work. It is not one of the museum's four grades. A predella is a small panel from the foot of an altarpiece."
+        ],
+        "field": {
+          "h": "The Last Supper",
+          "p": "It is a wall painting, so it is not in the picture room. It fills a wall in the court: {count:supper_w_m} by {count:supper_h_m} metres, as large as the original in Milan.",
+          "holder": "cenacolo",
+          "stop": "supper-wall"
+        }
+      },
+      {
+        "id": "machines",
+        "form": "set",
+        "from": "machines",
+        "h": "The machines",
+        "note": "{Word:machines}, built in code",
+        "p": [
+          "The museum builds {word:machines} machines in code: {word:from_sheets} after his sheets and the lion after old accounts. {Word:moving} of them move. Only the parachute stands still.",
+          "No record is known of the aerial screw being built in his lifetime."
+        ],
+        "places": {
+          "hall": "In the mechanism hall",
+          "court": "In the court",
+          "house": "In the house"
+        },
+        "after": "after",
+        "still": "It stands still.",
+        "no_sheet": "From old accounts. No sheet of it is known.",
+        "alt_each": "The museum's reconstruction, built in code. A still from its film.",
+        "terms": "A codex is a bound book of handwritten leaves. 656r means leaf 656, front. A v means the back, so 83v is the back of leaf 83.",
+        "names": {
+          "aerial-screw": "Aerial screw",
+          "miter-lock-gates": "Lock gates",
+          "flywheel": "Flywheel",
+          "camera-obscura": "Camera obscura",
+          "water-lifting-screw": "Water screw",
+          "rolling-mill": "Rolling mill",
+          "lathe": "Drilling machine",
+          "ball-bearing": "Ball bearing",
+          "multi-barrel-gun": "Gun with three rows of barrels",
+          "parachute": "Parachute",
+          "revolving-crane": "Revolving crane",
+          "anemometer": "Wind gauge",
+          "mechanical-lion": "Mechanical lion"
+        },
+        "close": {
+          "intro": "Here it is the aerial screw.",
+          "quote": {
+            "text": "{museum:screw_label}",
+            "from": "From its label in the museum"
+          },
+          "stage": {
+            "pic": {
+              "stem": "machine-poster-square",
+              "widths": [
+                1080
+              ],
+              "wide": {
+                "stem": "machine-poster-wide",
+                "widths": [
+                  1200
+                ]
+              }
+            },
+            "alt": "A model of the aerial screw, split by a line of red chalk. On the left it is drawn in red chalk lines, on the right it is built in wood and linen, in low sun, with its shadow on the wall behind.",
+            "title": "The aerial screw",
+            "kind": "Reconstruction",
+            "what": "after Leonardo's sheet. A separate model from the one in the museum.",
+            "src": "Built in code for this page",
+            "piece": {
+              "name": "aerial-screw",
+              "script": "machine.js",
+              "tag_a": "Lines",
+              "tag_b": "Built",
+              "hint": "Drag the line to compare, the machine to turn it.",
+              "slider_label": "Show more of the lines or more of the built machine",
+              "canvas_label": "The aerial screw in 3D. The left and right arrow keys turn it.",
+              "pause": "Pause",
+              "play": "Let it turn"
+            }
+          },
+          "title": "{museum:fly_chapter}",
+          "age_k": "His age",
+          "age": "{museum:fly_age}",
+          "layers": [
+            {
+              "text": "{museum:fly_line}"
+            },
+            {
+              "text": "{museum:fly_drawer}"
+            },
+            {
+              "text": "{museum:fly_record} {museum:fly_record_folio}"
+            }
+          ],
+          "source": "Manuscript B, folio 83 verso, that is leaf 83, the back. The holder's number: Ms 2173. About 1487 to 1489.",
+          "rows": [
+            {
+              "k": "On the sheet",
+              "v": "A spiral surface on a mast, with a frame and a round base. One size: eight braccia, an old measure, rim to centre."
+            },
+            {
+              "k": "Our choice",
+              "v": "How steep the spiral is, the timber and its joints, the bearing, the drive and the speed."
+            },
+            {
+              "k": "Where the sheet is",
+              "v": "Bibliothèque de l'Institut de France, Paris.",
+              "lang": "fr"
+            },
+            {
+              "k": "What it does",
+              "v": "It turns five times a minute, as in the museum, and stays on the ground."
+            }
+          ]
+        }
+      },
+      {
+        "id": "notebooks",
+        "form": "text",
+        "h": "The notebooks",
+        "note": "A table, and pages to turn",
+        "p": [
+          "On the reading table lies a printed copy of {count:volume_year} of two of his notebooks. You can turn all its {count:volume_pages} pages, and {count:volume_sides} of them show the notebooks' own sides, in his mirror writing from right to left.",
+          "{count:topics} topics gather {count:topic_pages} pages from his notebooks. A shelf holds {word:shelf_books} more books of his notes to turn, {count:shelf_sides} sides in all."
+        ],
+        "plates": [
+          {
+            "pic": {
+              "stem": "v-codex",
+              "widths": [
+                800,
+                1600
+              ]
+            },
+            "title": "The book on the table",
+            "kind": "Reproduction",
+            "what": "open at the page with the aerial screw",
+            "src": "Charles Ravaisson-Mollien, Les manuscrits de Léonard de Vinci, vol. II, Paris 1883. Public domain by age. The notebooks are held by the Bibliothèque de l'Institut de France in Paris.",
+            "alt": "An open book on a wooden table under warm light. The left page is printed text, the right page shows a notebook page with a drawing. A still from the museum's film. The pages are from a printed copy of {count:volume_year}."
+          }
+        ],
+        "lists": [
+          {
+            "h": "The topics",
+            "from": "topics",
+            "show": "name",
+            "n": "pages",
+            "unit": "pages"
+          },
+          {
+            "h": "The shelf",
+            "from": "shelf",
+            "show": "name",
+            "n": "sides",
+            "unit": "sides"
+          }
+        ],
+        "stop": "reading-table",
+        "terms": "A side is one face of a leaf."
+      },
+      {
+        "id": "body",
+        "form": "text",
+        "h": "The body",
+        "note": "Anatomy and a glass heart",
+        "p": [
+          "On a wall of the long gallery hang {count:sheets} of his anatomy sheets, reproductions of originals in the Royal Collection at Windsor.",
+          "One sheet hangs apart: the heart valve. He drew the flow curling behind its flaps, and the curls help shut the valve, as he wrote. At its stop a film of about {count:heart_seconds} seconds shows that in the museum's own glass model, built from his notes."
+        ],
+        "hang": "wide",
+        "plates": [
+          {
+            "pic": {
+              "stem": "v-heart",
+              "widths": [
+                800,
+                1600
+              ],
+              "phone": {
+                "stem": "v-heart-m",
+                "widths": [
+                  600,
+                  864
+                ]
+              }
+            },
+            "title": "The glass model of the heart valve",
+            "kind": "Reconstruction",
+            "what": "the museum's own model, built from his notes. A still from its film.",
+            "alt": "A glass vessel with a narrow waist stands on black. Fine gold grains drift inside it and gather in a pale band at the waist. A still from the museum's film of its own model."
+          },
+          {
+            "pic": {
+              "stem": "v-valve",
+              "widths": [
+                640,
+                960
+              ]
+            },
+            "title": "The aortic valve",
+            "kind": "Reproduction",
+            "what": "his sheet on the valve, in its frame. The wall behind it is built in code.",
+            "src": "{museum:valve_holder} {museum:sheet_credit}",
+            "alt": "A drawing in a pale mat and a thin wooden frame hangs alone on a dark wall: a page of small sketches of the heart and lines of mirror writing. A still from the museum's film."
+          }
+        ],
+        "lists": [
+          {
+            "h": "The sheets, by title",
+            "from": "sheets",
+            "show": "title",
+            "fold": true
+          }
+        ],
+        "stop": "body"
+      },
+      {
+        "id": "life",
+        "form": "text",
+        "h": "His life",
+        "note": "Dates cut into the floor",
+        "p": [
+          "The timeline of his life holds {count:dates} dates. {Word:dates_floor} of them are cut into the floor of the long gallery, and a date in the floor opens the timeline there.",
+          "It is told in {word:periods} parts and names {word:people} people around him, from his teacher to the king of France."
+        ],
+        "lists": [
+          {
+            "h": "The parts",
+            "from": "periods",
+            "show": "self"
+          },
+          {
+            "h": "The people",
+            "from": "people",
+            "show": "self"
+          }
+        ],
+        "stop": "line-early"
+      },
+      {
+        "id": "last-house",
+        "form": "text",
+        "h": "The house and the grave",
+        "note": "What is his and what is not",
+        "p": [
+          "Room by room: what the sources give, and where the wing made a choice."
+        ],
+        "plates": [
+          {
+            "pic": {
+              "stem": "house",
+              "widths": [
+                800,
+                1600
+              ]
+            },
+            "title": "Clos Lucé, seen from outside",
+            "kind": "Reconstruction",
+            "what": "the house from its north gable, across the terrace. On the small stand in front of it lies one of his sheets, a reproduction too small to read here.",
+            "src": "{museum:deluge_credit} Held by the Royal Collection, Windsor, RCIN 912380.",
+            "alt": "A tall brick house with stone corners and a steep gable, seen across a paved terrace in low sun, trees in autumn leaves at its sides. In front of it a small stand on a post. A still from the museum's film. The house is a reconstruction built in code."
+          }
+        ],
+        "rows": [
+          {
+            "k": "The great hall",
+            "v": "Rebuilt from plans and photographs. The fireplace dates from about {count:chimney_year}.",
+            "stop": "hall"
+          },
+          {
+            "k": "The furniture in the hall",
+            "v": "The table, the bench, the chest, the chair, the stools and the candlesticks are not his own. A house like this had such things at the time.",
+            "stop": "hall"
+          },
+          {
+            "k": "The small chapel",
+            "v": "Seen from outside. Tradition dates it to {count:chapel_year}. That is not confirmed. Its wall paintings may be by his pupils. That too is not settled.",
+            "stop": "oratory"
+          },
+          {
+            "k": "The study's window",
+            "v": "Seen from outside. The wing places the visit of {shows:day} behind this window. That is our guess: the diary names no room. Under it you can open one of his sheets. It shows a deluge.",
+            "stop": "study"
+          },
+          {
+            "k": "The north room",
+            "v": "Seen from outside. The museum in the real house places his room here. That is a proposal, not a record.",
+            "stop": "chamber"
+          },
+          {
+            "k": "The grave court",
+            "v": "The museum's own court, not his grave: a pale slab with his name. He asked for a grave in the castle church. It was pulled down. Nobody is sure where he rests, so the stop is named Presumed.",
+            "stop": "grave"
+          }
+        ]
+      }
+    ]
+  },
+  "numbers": [
+    {
+      "count": "stops",
+      "num": "{n}",
+      "term": "Stops",
+      "text": ""
+    },
+    {
+      "count": "works",
+      "num": "about {n}",
+      "term": "Works",
+      "text": ""
+    },
+    {
+      "count": "pictures",
+      "num": "{n}",
+      "term": "Pictures",
+      "text": ""
+    },
+    {
+      "count": "machines",
+      "num": "{n}",
+      "term": "Machines",
+      "text": ""
+    },
+    {
+      "count": "sheets",
+      "num": "{n}",
+      "term": "Anatomy sheets",
+      "text": ""
+    },
+    {
+      "count": "topic_pages",
+      "num": "{n}",
+      "term": "Notebook pages",
+      "text": "Gathered by topic on the reading table."
+    },
+    {
+      "count": "volume_pages",
+      "num": "{n}",
+      "term": "Pages to turn",
+      "text": "All of them in the book on the reading table."
+    },
+    {
+      "count": "shelf_sides",
+      "num": "{n}",
+      "term": "Sides on the shelf",
+      "text": "In the books of his notes on the shelf beside the table."
+    },
+    {
+      "count": "dates",
+      "num": "{n}",
+      "term": "Dates of his life",
+      "text": ""
+    }
+  ],
+  "holders": {
+    "p": "In the order the walk meets them:",
+    "after": "The museum names these museums, libraries and collections because they hold the originals, and for no other reason. It is independent of every one of them."
+  },
+  "out": {
+    "line": "Our other project: Leonardo da Vinci's life as a story, and a conversation with an AI Leonardo."
+  },
+  "end": {
+    "id": "stars",
+    "dir": "The grave court",
+    "note": "The last stop",
+    "h": "The wing ends under the stars",
+    "p": "At the last stop, the grave court, it gets dark and you look up. The stars stand as they stood over Clos Lucé at {word:hour} in the evening of {shows:day}. They are worked out star by star from a star catalogue, for the day the diary gives and the hour we chose. The sunset shows a usual October evening, not that one, and the shooting star is the museum's own.",
+    "plate": {
+      "pic": {
+        "stem": "grave-court",
+        "widths": [
+          560,
+          960,
+          1600
+        ]
+      },
+      "title": "The grave court",
+      "kind": "Built in code",
+      "what": "the museum's own court: the slab with his name, a board with the low sun of the day he died at a minute we chose, the stone with the year of the dig. At the left a painting by Ingres.",
+      "src": "Jean-Auguste-Dominique Ingres, François Ier reçoit les derniers soupirs de Léonard de Vinci, 1818. Petit Palais, musée des Beaux-Arts de la Ville de Paris. Image: CC0 Paris Musées.",
+      "alt": "A walled court in low sun, a young tree in autumn leaves. On the paving a pale slab with the name Leonardo da Vinci, behind it a board on two posts with a small block and its long shadow, and a small stone with a year. At the left a painting in a dark frame. A still from the museum's film."
+    },
+    "sky": {
+      "pic": {
+        "stem": "sky",
+        "widths": [
+          960
+        ]
+      },
+      "title": "Looking up",
+      "kind": "Built in code",
+      "what": "the stars of that evening over Clos Lucé, the end of the walk",
+      "alt": "A deep blue night sky full of stars, with the dark crowns of trees at its lower edge."
+    }
+  }
+}

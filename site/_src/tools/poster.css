@@ -1,0 +1,5 @@
+html,body{margin:0;height:100%;background:var(--edge)}
+#stage{--stage-line:var(--chalk);--stage-line-2:var(--text-3);position:relative;width:100vw;height:100vh;background:var(--edge);overflow:hidden}
+#stage.linen{--stage-line:var(--linen)}
+#stage canvas{position:absolute;inset:0;width:100%;height:100%}
+#err{position:fixed;left:8px;top:8px;color:var(--linen);font:14px monospace;white-space:pre-wrap}

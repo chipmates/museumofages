@@ -1,0 +1,17 @@
+# The build's output and its test builds: made by python3 _src/build.py, never committed.
+/dist/
+/_test/
+# The pictures and the film's music the build needs: the repository keeps only their list (_src/fetch-list.json).
+# python3 _src/tools/fetch.py fetches them here.
+/_src/img/
+/_src/media/
+/pages/pics/
+*.part
+# Work folders of the tools and of the topic pages' own build and tests.
+/_work/
+/pages/out/
+/pages/_work/
+/pages/last-good/
+__pycache__/
+*.pyc
+.DS_Store

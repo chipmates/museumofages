@@ -1,0 +1,1653 @@
+{
+ "_note": "THE FACTS OF THIS WING'S PAGE. Every number, name, size and holder the page shows is read from here. Made from the wing's inventory by tools/make_facts.py, which the build runs again to compare: a value here that the inventory does not carry stops the build. Set by hand, in one edit each: the values under set, the two switches under links (pages: an entry with a page links to it. wing: every entry says 'see it in the wing' and opens the wing at its stop), and an entry's page (its address under the wing's page, per language). In the wing's words a number is written {count:<name>} for digits and {word:<name>} or {Word:<name>} for the word.",
+ "_made_by": "tools/make_facts.py",
+ "links": {
+  "pages": false,
+  "wing": false
+ },
+ "set": {
+  "wall_m": 34,
+  "wall_long_m": 34.6,
+  "person_m": 1.7,
+  "supper_w_m": 8.8,
+  "supper_h_m": 4.6,
+  "volume_year": "1883",
+  "sheet_from": "1487",
+  "sheet_to": "1489",
+  "heart_seconds": 30,
+  "chimney_year": "1500",
+  "chapel_year": "1492",
+  "line_m": 26,
+  "hour": 9
+ },
+ "counts": {
+  "stops": 17,
+  "works": 75,
+  "pictures": 25,
+  "hung_works": 24,
+  "hung_paintings": 22,
+  "hung_drawings": 2,
+  "machines": 15,
+  "moving": 14,
+  "from_sheets": 14,
+  "hall": 9,
+  "court": 3,
+  "house": 3,
+  "sheets": 29,
+  "topics": 17,
+  "topic_pages": 207,
+  "volume_pages": 438,
+  "volume_sides": 188,
+  "volume_b_sides": 168,
+  "volume_d_sides": 20,
+  "shelf_books": 7,
+  "shelf_sides": 1158,
+  "dates": 56,
+  "dates_floor": 12,
+  "periods": 7,
+  "people": 7,
+  "holders": 22,
+  "class_documented": 14,
+  "class_disputed": 4,
+  "class_qualified": 4,
+  "class_workshop": 1,
+  "class_copy": 1
+ },
+ "wall": {
+  "span_m": 34.6,
+  "moulding_m": 0.08,
+  "datum_m": 1.55,
+  "supper": {
+   "w_m": 8.8,
+   "h_m": 4.6,
+   "sill_m": 0.62
+  }
+ },
+ "stops": [
+  "picture-room",
+  "picture-room-lisa",
+  "picture-room-west",
+  "flight",
+  "works",
+  "reading-table",
+  "body",
+  "body-valve",
+  "line-early",
+  "supper-wall",
+  "arrival",
+  "courtyard",
+  "hall",
+  "oratory",
+  "study",
+  "chamber",
+  "grave"
+ ],
+ "paintings": [
+  {
+   "n": 1,
+   "id": "baptism-of-christ",
+   "face": "front",
+   "title": {
+    "en": "The Baptism of Christ",
+    "de": "Taufe Christi"
+   },
+   "h_cm": 177,
+   "w_cm": 151,
+   "slot_cm": 151,
+   "date": "About 1470 to 1475",
+   "class": "documented",
+   "holder": "uffizi",
+   "stop": "picture-room",
+   "page": null
+  },
+  {
+   "n": 2,
+   "id": "annunciation",
+   "face": "front",
+   "title": {
+    "en": "Annunciation",
+    "de": "Die Verkündigung"
+   },
+   "h_cm": 98,
+   "w_cm": 217,
+   "slot_cm": 217,
+   "date": "About 1472",
+   "class": "documented",
+   "holder": "uffizi",
+   "stop": "picture-room",
+   "page": null
+  },
+  {
+   "n": 3,
+   "id": "ginevra-de-benci",
+   "face": "front",
+   "title": {
+    "en": "Ginevra de' Benci",
+    "de": "Bildnis der Ginevra de' Benci"
+   },
+   "h_cm": 38.1,
+   "w_cm": 37,
+   "slot_cm": 37,
+   "date": "About 1474 to 1478",
+   "class": "documented",
+   "holder": "nga",
+   "stop": "picture-room",
+   "page": null
+  },
+  {
+   "n": 4,
+   "id": "ginevra-de-benci",
+   "face": "reverse",
+   "title": {
+    "en": "Ginevra de' Benci",
+    "de": "Bildnis der Ginevra de' Benci"
+   },
+   "h_cm": 38.1,
+   "w_cm": 37,
+   "slot_cm": 37,
+   "date": "About 1474 to 1478",
+   "class": "documented",
+   "holder": "nga",
+   "stop": "picture-room",
+   "page": null
+  },
+  {
+   "n": 5,
+   "id": "madonna-of-the-carnation",
+   "face": "front",
+   "title": {
+    "en": "Madonna of the Carnation",
+    "de": "Madonna mit der Nelke"
+   },
+   "h_cm": 62,
+   "w_cm": 48.5,
+   "slot_cm": 48.5,
+   "date": "About 1475",
+   "class": "documented",
+   "holder": "pinakothek",
+   "stop": "picture-room",
+   "page": null
+  },
+  {
+   "n": 6,
+   "id": "benois-madonna",
+   "face": "front",
+   "title": {
+    "en": "Benois Madonna",
+    "de": "Madonna Benois"
+   },
+   "h_cm": 49.5,
+   "w_cm": 33,
+   "slot_cm": 33,
+   "date": "About 1478 to 1480",
+   "class": "documented",
+   "holder": "hermitage",
+   "stop": "picture-room",
+   "page": null
+  },
+  {
+   "n": 7,
+   "id": "saint-jerome",
+   "face": "front",
+   "title": {
+    "en": "Saint Jerome in the Wilderness",
+    "de": "Der heilige Hieronymus"
+   },
+   "h_cm": 103,
+   "w_cm": 75,
+   "slot_cm": 75,
+   "date": "About 1480 to 1490",
+   "class": "documented",
+   "holder": "vaticana",
+   "stop": "picture-room",
+   "page": null
+  },
+  {
+   "n": 8,
+   "id": "adoration-of-the-magi",
+   "face": "front",
+   "title": {
+    "en": "Adoration of the Magi",
+    "de": "Anbetung der Könige aus dem Morgenland"
+   },
+   "h_cm": 240,
+   "w_cm": 244,
+   "slot_cm": 240.0,
+   "date": "About 1481 to 1482",
+   "class": "documented",
+   "holder": "uffizi",
+   "stop": "picture-room",
+   "page": null
+  },
+  {
+   "n": 9,
+   "id": "annunciation-predella",
+   "face": "front",
+   "title": {
+    "en": "Annunciation, predella panel",
+    "de": "Die Verkündigung, Predella"
+   },
+   "h_cm": 16,
+   "w_cm": 60,
+   "slot_cm": 60,
+   "date": "About 1475 to 1478",
+   "class": "disputed",
+   "holder": "louvre",
+   "stop": "picture-room",
+   "page": null
+  },
+  {
+   "n": 10,
+   "id": "virgin-of-the-rocks-louvre",
+   "face": "front",
+   "title": {
+    "en": "Virgin of the Rocks, Louvre version",
+    "de": "Felsgrottenmadonna, Louvre-Fassung"
+   },
+   "h_cm": 199.5,
+   "w_cm": 122,
+   "slot_cm": 122,
+   "date": "About 1483 to 1494",
+   "class": "documented",
+   "holder": "louvre",
+   "stop": "picture-room",
+   "page": null
+  },
+  {
+   "n": 11,
+   "id": "portrait-of-a-musician",
+   "face": "front",
+   "title": {
+    "en": "Portrait of a Musician",
+    "de": "Bildnis eines Musikers"
+   },
+   "h_cm": 44.7,
+   "w_cm": 32,
+   "slot_cm": 32,
+   "date": "About 1485",
+   "class": "disputed",
+   "holder": "ambrosiana",
+   "stop": "picture-room",
+   "page": null
+  },
+  {
+   "n": 12,
+   "id": "lady-with-an-ermine",
+   "face": "front",
+   "title": {
+    "en": "Lady with an Ermine",
+    "de": "Dame mit dem Hermelin"
+   },
+   "h_cm": 54.8,
+   "w_cm": 40.3,
+   "slot_cm": 40.3,
+   "date": "About 1489 to 1491",
+   "class": "documented",
+   "holder": "czartoryski",
+   "stop": "picture-room",
+   "page": null
+  },
+  {
+   "n": 13,
+   "id": "la-belle-ferronniere",
+   "face": "front",
+   "title": {
+    "en": "La Belle Ferronnière",
+    "de": "Bildnis einer Dame, genannt La Belle Ferronnière"
+   },
+   "h_cm": 63,
+   "w_cm": 45,
+   "slot_cm": 45,
+   "date": "About 1490 to 1497",
+   "class": "documented",
+   "holder": "louvre",
+   "stop": "picture-room",
+   "page": null
+  },
+  {
+   "n": 14,
+   "id": "madonna-litta",
+   "face": "front",
+   "title": {
+    "en": "Madonna Litta",
+    "de": "Madonna Litta"
+   },
+   "h_cm": 42,
+   "w_cm": 33,
+   "slot_cm": 33,
+   "date": "About 1490",
+   "class": "disputed",
+   "holder": "hermitage",
+   "stop": "picture-room",
+   "page": null
+  },
+  {
+   "n": 15,
+   "id": "burlington-house-cartoon",
+   "face": "front",
+   "title": {
+    "en": "The Burlington House Cartoon",
+    "de": "Die Jungfrau mit dem Kind, der heiligen Anna und Johannes dem Täufer"
+   },
+   "h_cm": 141.5,
+   "w_cm": 104.6,
+   "slot_cm": 104.6,
+   "date": "About 1506 to 1508",
+   "class": "documented",
+   "holder": "national-gallery",
+   "stop": "picture-room",
+   "page": null
+  },
+  {
+   "n": 16,
+   "id": "yarnwinder-buccleuch",
+   "face": "front",
+   "title": {
+    "en": "Madonna of the Yarnwinder, Buccleuch version",
+    "de": "Madonna mit der Spindel, Buccleuch-Fassung"
+   },
+   "h_cm": 48.3,
+   "w_cm": 36.9,
+   "slot_cm": 36.9,
+   "date": "About 1501",
+   "class": "qualified",
+   "holder": "buccleuch",
+   "stop": "picture-room",
+   "page": null
+  },
+  {
+   "n": 17,
+   "id": "yarnwinder-lansdowne",
+   "face": "front",
+   "title": {
+    "en": "Madonna of the Yarnwinder, Lansdowne version",
+    "de": "Madonna mit der Spindel, Lansdowne-Fassung"
+   },
+   "h_cm": 49.5,
+   "w_cm": 37.1,
+   "slot_cm": 36.4,
+   "date": "About 1501",
+   "class": "qualified",
+   "holder": "griffin",
+   "stop": "picture-room",
+   "page": null
+  },
+  {
+   "n": 18,
+   "id": "anghiari-copy",
+   "face": "front",
+   "title": {
+    "en": "The Fight for the Standard, after the Battle of Anghiari",
+    "de": "Der Kampf um die Standarte, nach der Schlacht von Anghiari"
+   },
+   "h_cm": 45.3,
+   "w_cm": 63.6,
+   "slot_cm": 63.6,
+   "date": "Sixteenth century, reworked in the early seventeenth century",
+   "class": "copy",
+   "holder": "louvre",
+   "stop": "picture-room",
+   "page": null
+  },
+  {
+   "n": 19,
+   "id": "mona-lisa",
+   "face": "front",
+   "title": {
+    "en": "Mona Lisa",
+    "de": "Mona Lisa"
+   },
+   "h_cm": 79.4,
+   "w_cm": 53.4,
+   "slot_cm": 53.4,
+   "date": "About 1503 to 1519",
+   "class": "documented",
+   "holder": "louvre",
+   "stop": "picture-room-lisa",
+   "page": null
+  },
+  {
+   "n": 20,
+   "id": "virgin-of-the-rocks-london",
+   "face": "front",
+   "title": {
+    "en": "Virgin of the Rocks, London version",
+    "de": "Felsgrottenmadonna, Londoner Fassung"
+   },
+   "h_cm": 189.5,
+   "w_cm": 120,
+   "slot_cm": 120,
+   "date": "About 1491 to 1508",
+   "class": "qualified",
+   "holder": "national-gallery",
+   "stop": "picture-room",
+   "page": null
+  },
+  {
+   "n": 21,
+   "id": "virgin-and-child-with-st-anne",
+   "face": "front",
+   "title": {
+    "en": "The Virgin and Child with Saint Anne",
+    "de": "Die Jungfrau mit dem Kind und der heiligen Anna"
+   },
+   "h_cm": 168,
+   "w_cm": 113,
+   "slot_cm": 113,
+   "date": "About 1503 to 1519",
+   "class": "documented",
+   "holder": "louvre",
+   "stop": "picture-room",
+   "page": null
+  },
+  {
+   "n": 22,
+   "id": "salvator-mundi",
+   "face": "front",
+   "title": {
+    "en": "Salvator Mundi",
+    "de": "Salvator Mundi"
+   },
+   "h_cm": 65.7,
+   "w_cm": 45.7,
+   "slot_cm": 45.7,
+   "date": "About 1499 to 1510",
+   "class": "disputed",
+   "holder": "owner",
+   "stop": "picture-room",
+   "page": null
+  },
+  {
+   "n": 23,
+   "id": "saint-john-the-baptist",
+   "face": "front",
+   "title": {
+    "en": "Saint John the Baptist",
+    "de": "Johannes der Täufer"
+   },
+   "h_cm": 72.9,
+   "w_cm": 56.3,
+   "slot_cm": 56.3,
+   "date": "About 1508 to 1519",
+   "class": "documented",
+   "holder": "louvre",
+   "stop": "picture-room",
+   "page": null
+  },
+  {
+   "n": 24,
+   "id": "la-scapigliata",
+   "face": "front",
+   "title": {
+    "en": "La Scapigliata",
+    "de": "Scapigliata"
+   },
+   "h_cm": 24.7,
+   "w_cm": 21,
+   "slot_cm": 21,
+   "date": "About 1506 to 1508",
+   "class": "qualified",
+   "holder": "parma",
+   "stop": "picture-room",
+   "page": null
+  },
+  {
+   "n": 25,
+   "id": "bacchus",
+   "face": "front",
+   "title": {
+    "en": "Bacchus, formerly Saint John the Baptist",
+    "de": "Bacchus, ehemals Johannes der Täufer"
+   },
+   "h_cm": 177,
+   "w_cm": 115,
+   "slot_cm": 115,
+   "date": "About 1517 to 1520",
+   "class": "workshop",
+   "holder": "louvre",
+   "stop": "picture-room",
+   "page": null
+  }
+ ],
+ "machines": [
+  {
+   "n": 1,
+   "id": "parachute",
+   "name": {
+    "en": "Pyramidal parachute",
+    "de": "Pyramidenfallschirm"
+   },
+   "where": "court",
+   "stop": "supper-wall",
+   "moves": false,
+   "sheet": {
+    "en": "Codex Atlanticus 1058v",
+    "de": "Codex Atlanticus 1058v"
+   },
+   "holder": "ambrosiana",
+   "page": null
+  },
+  {
+   "n": 2,
+   "id": "revolving-crane",
+   "name": {
+    "en": "Revolving crane",
+    "de": "Drehkran"
+   },
+   "where": "court",
+   "stop": "supper-wall",
+   "moves": true,
+   "sheet": {
+    "en": "Manuscript B 49r",
+    "de": "Manuskript B 49r"
+   },
+   "holder": "institut",
+   "page": null
+  },
+  {
+   "n": 3,
+   "id": "anemometer",
+   "name": {
+    "en": "Hinged-plate anemometer",
+    "de": "Windmesser mit Klappplatte"
+   },
+   "where": "court",
+   "stop": "supper-wall",
+   "moves": true,
+   "sheet": {
+    "en": "Codex Atlanticus 675r",
+    "de": "Codex Atlanticus 675r"
+   },
+   "holder": "ambrosiana",
+   "page": null
+  },
+  {
+   "n": 4,
+   "id": "aerial-screw",
+   "name": {
+    "en": "Aerial screw",
+    "de": "Luftschraube"
+   },
+   "where": "hall",
+   "stop": "flight",
+   "moves": true,
+   "sheet": {
+    "en": "Manuscript B 83v",
+    "de": "Manuskript B 83v"
+   },
+   "holder": "institut",
+   "page": null
+  },
+  {
+   "n": 5,
+   "id": "miter-lock-gates",
+   "name": {
+    "en": "Miter lock gates",
+    "de": "Stemmtore einer Schleuse"
+   },
+   "where": "hall",
+   "stop": "flight",
+   "moves": true,
+   "sheet": {
+    "en": "Codex Atlanticus 656r, detail a",
+    "de": "Codex Atlanticus 656r, Detail a"
+   },
+   "holder": "ambrosiana",
+   "page": null
+  },
+  {
+   "n": 6,
+   "id": "flywheel",
+   "name": {
+    "en": "Balanced flywheel study",
+    "de": "Studie eines ausgewuchteten Schwungrads"
+   },
+   "where": "hall",
+   "stop": "flight",
+   "moves": true,
+   "sheet": {
+    "en": "Codex Madrid I 114r",
+    "de": "Codex Madrid I 114r"
+   },
+   "holder": "bne",
+   "page": null
+  },
+  {
+   "n": 7,
+   "id": "camera-obscura",
+   "name": {
+    "en": "Camera obscura notes",
+    "de": "Notizen zur Camera obscura"
+   },
+   "where": "hall",
+   "stop": "flight",
+   "moves": true,
+   "sheet": {
+    "en": "Paris Manuscript D 8r",
+    "de": "Pariser Manuskript D 8r"
+   },
+   "holder": "institut",
+   "page": null
+  },
+  {
+   "n": 8,
+   "id": "water-lifting-screw",
+   "name": {
+    "en": "Archimedean screw and water lifting",
+    "de": "Wasserschnecke und Wasserhebung"
+   },
+   "where": "hall",
+   "stop": "works",
+   "moves": true,
+   "sheet": {
+    "en": "Codex Atlanticus 6r",
+    "de": "Codex Atlanticus 6r"
+   },
+   "holder": "ambrosiana",
+   "page": null
+  },
+  {
+   "n": 9,
+   "id": "rolling-mill",
+   "name": {
+    "en": "Tin rolling mill",
+    "de": "Walzwerk für Zinn"
+   },
+   "where": "hall",
+   "stop": "works",
+   "moves": true,
+   "sheet": {
+    "en": "Manuscript I 48v",
+    "de": "Manuskript I 48v"
+   },
+   "holder": "institut",
+   "page": null
+  },
+  {
+   "n": 10,
+   "id": "lathe",
+   "name": {
+    "en": "Reciprocating drilling lathe",
+    "de": "Bohrmaschine mit wechselnder Drehrichtung"
+   },
+   "where": "hall",
+   "stop": "works",
+   "moves": true,
+   "sheet": {
+    "en": "Codex Atlanticus 108r",
+    "de": "Codex Atlanticus 108r"
+   },
+   "holder": "ambrosiana",
+   "page": null
+  },
+  {
+   "n": 11,
+   "id": "ball-bearing",
+   "name": {
+    "en": "Thrust ball bearing",
+    "de": "Axialkugellager"
+   },
+   "where": "hall",
+   "stop": "works",
+   "moves": true,
+   "sheet": {
+    "en": "Codex Madrid I 20v",
+    "de": "Codex Madrid I 20v"
+   },
+   "holder": "bne",
+   "page": null
+  },
+  {
+   "n": 12,
+   "id": "multi-barrel-gun",
+   "name": {
+    "en": "Three-bank organ gun",
+    "de": "Orgelgeschütz mit drei Rohrreihen"
+   },
+   "where": "hall",
+   "stop": "works",
+   "moves": true,
+   "sheet": {
+    "en": "Codex Atlanticus 157r",
+    "de": "Codex Atlanticus 157r"
+   },
+   "holder": "ambrosiana",
+   "page": null
+  },
+  {
+   "n": 13,
+   "id": "inclinometer",
+   "name": {
+    "en": "Pendulum inclinometer",
+    "de": "Neigungsmesser mit Lot"
+   },
+   "where": "house",
+   "stop": "hall",
+   "moves": true,
+   "sheet": {
+    "en": "Codex Atlanticus 1058r",
+    "de": "Codex Atlanticus 1058r"
+   },
+   "holder": "ambrosiana",
+   "page": null
+  },
+  {
+   "n": 14,
+   "id": "proportional-compass",
+   "name": {
+    "en": "Proportional compass",
+    "de": "Proportionalzirkel"
+   },
+   "where": "house",
+   "stop": "hall",
+   "moves": true,
+   "sheet": {
+    "en": "Codex Forster I 4r",
+    "de": "Codex Forster I 4r"
+   },
+   "holder": "vam",
+   "page": null
+  },
+  {
+   "n": 15,
+   "id": "mechanical-lion",
+   "name": {
+    "en": "Mechanical lion",
+    "de": "Mechanischer Löwe"
+   },
+   "where": "house",
+   "stop": "hall",
+   "moves": true,
+   "sheet": null,
+   "holder": null,
+   "page": null
+  }
+ ],
+ "topics": [
+  {
+   "id": "flight",
+   "name": {
+    "en": "Flight",
+    "de": "Fliegen"
+   },
+   "pages": 18
+  },
+  {
+   "id": "machines",
+   "name": {
+    "en": "Machines",
+    "de": "Maschinen"
+   },
+   "pages": 15
+  },
+  {
+   "id": "the-parts-of-machines",
+   "name": {
+    "en": "The parts of machines",
+    "de": "Die Teile der Maschinen"
+   },
+   "pages": 14
+  },
+  {
+   "id": "war-and-weapons",
+   "name": {
+    "en": "War and weapons",
+    "de": "Krieg und Waffen"
+   },
+   "pages": 13
+  },
+  {
+   "id": "water-in-motion",
+   "name": {
+    "en": "Water in motion",
+    "de": "Wasser in Bewegung"
+   },
+   "pages": 10
+  },
+  {
+   "id": "rivers-and-water-machines",
+   "name": {
+    "en": "Rivers and water machines",
+    "de": "Flüsse und Wassermaschinen"
+   },
+   "pages": 15
+  },
+  {
+   "id": "churches-and-domes",
+   "name": {
+    "en": "Churches and domes",
+    "de": "Kirchen und Kuppeln"
+   },
+   "pages": 11
+  },
+  {
+   "id": "cities-and-fortresses",
+   "name": {
+    "en": "Cities and fortresses",
+    "de": "Städte und Festungen"
+   },
+   "pages": 11
+  },
+  {
+   "id": "light-and-the-eye",
+   "name": {
+    "en": "Light and the eye",
+    "de": "Licht und Auge"
+   },
+   "pages": 14
+  },
+  {
+   "id": "advice-to-painters",
+   "name": {
+    "en": "Advice to painters",
+    "de": "Rat an die Maler"
+   },
+   "pages": 10
+  },
+  {
+   "id": "faces-and-bodies",
+   "name": {
+    "en": "Faces and bodies",
+    "de": "Gesichter und Körper"
+   },
+   "pages": 14
+  },
+  {
+   "id": "horses-and-the-great-horse",
+   "name": {
+    "en": "Horses and the great horse",
+    "de": "Pferde und das große Pferd"
+   },
+   "pages": 10
+  },
+  {
+   "id": "plants-and-animals",
+   "name": {
+    "en": "Plants and animals",
+    "de": "Pflanzen und Tiere"
+   },
+   "pages": 8
+  },
+  {
+   "id": "the-earth-and-the-sky",
+   "name": {
+    "en": "The earth and the sky",
+    "de": "Erde und Himmel"
+   },
+   "pages": 11
+  },
+  {
+   "id": "geometry-and-patterns",
+   "name": {
+    "en": "Geometry and patterns",
+    "de": "Geometrie und Muster"
+   },
+   "pages": 9
+  },
+  {
+   "id": "his-words",
+   "name": {
+    "en": "His words",
+    "de": "Seine Worte"
+   },
+   "pages": 16
+  },
+  {
+   "id": "letters-and-his-life",
+   "name": {
+    "en": "Letters and his life",
+    "de": "Briefe und sein Leben"
+   },
+   "pages": 8
+  }
+ ],
+ "shelf": [
+  {
+   "id": "madrid-I",
+   "title": {
+    "en": "The book of machines",
+    "de": "Das Buch der Maschinen"
+   },
+   "name": {
+    "en": "Codex Madrid I",
+    "de": "Codex Madrid I"
+   },
+   "sides": 368,
+   "holder": "bne"
+  },
+  {
+   "id": "madrid-II",
+   "title": {
+    "en": "Fortresses, maps and geometry",
+    "de": "Festungen, Karten und Geometrie"
+   },
+   "name": {
+    "en": "Codex Madrid II",
+    "de": "Codex Madrid II"
+   },
+   "sides": 316,
+   "holder": "bne"
+  },
+  {
+   "id": "birds",
+   "title": {
+    "en": "The flight of birds",
+    "de": "Der Vogelflug"
+   },
+   "name": {
+    "en": "Codex on the Flight of Birds",
+    "de": "Kodex über den Vogelflug"
+   },
+   "sides": 36,
+   "holder": "reale"
+  },
+  {
+   "id": "trivulzianus",
+   "title": {
+    "en": "Learning words",
+    "de": "Wörter lernen"
+   },
+   "name": {
+    "en": "Codex Trivulzianus",
+    "de": "Codex Trivulzianus"
+   },
+   "sides": 94,
+   "holder": "trivulziana"
+  },
+  {
+   "id": "paris-A",
+   "title": {
+    "en": "Perspective",
+    "de": "Perspektive"
+   },
+   "name": {
+    "en": "Paris Manuscript A",
+    "de": "Pariser Manuskript A"
+   },
+   "sides": 15,
+   "holder": "institut"
+  },
+  {
+   "id": "atlanticus",
+   "title": {
+    "en": "The largest collection",
+    "de": "Die größte Sammlung"
+   },
+   "name": {
+    "en": "Codex Atlanticus, excerpts",
+    "de": "Codex Atlanticus, Auszüge"
+   },
+   "sides": 44,
+   "holder": "ambrosiana"
+  },
+  {
+   "id": "arundel",
+   "title": {
+    "en": "Notes from forty years",
+    "de": "Notizen aus vierzig Jahren"
+   },
+   "name": {
+    "en": "Codex Arundel",
+    "de": "Codex Arundel"
+   },
+   "sides": 285,
+   "holder": "british-library"
+  }
+ ],
+ "sheets": [
+  {
+   "id": "rcin-919000",
+   "title": {
+    "en": "The bones of the foot",
+    "de": "Die Knochen des Fußes"
+   },
+   "stop": "body",
+   "apart": false
+  },
+  {
+   "id": "rcin-919001",
+   "title": {
+    "en": "The bones and muscles of the shoulder",
+    "de": "Die Knochen und Muskeln der Schulter"
+   },
+   "stop": "body",
+   "apart": false
+  },
+  {
+   "id": "rcin-919002",
+   "title": {
+    "en": "The throat, and the muscles of the leg",
+    "de": "Der Hals und die Muskeln des Beins"
+   },
+   "stop": "body",
+   "apart": false
+  },
+  {
+   "id": "rcin-919003",
+   "title": {
+    "en": "The superficial anatomy of the shoulder and neck",
+    "de": "Die oberflächliche Anatomie von Schulter und Hals"
+   },
+   "stop": "body",
+   "apart": false
+  },
+  {
+   "id": "rcin-919004",
+   "title": {
+    "en": "The bones of the arm and leg",
+    "de": "Die Knochen von Arm und Bein"
+   },
+   "stop": "body",
+   "apart": false
+  },
+  {
+   "id": "rcin-919005",
+   "title": {
+    "en": "The muscles of the arm, and the veins of the arm and trunk",
+    "de": "Die Muskeln des Arms und die Venen von Arm und Rumpf"
+   },
+   "stop": "body",
+   "apart": false
+  },
+  {
+   "id": "rcin-919006",
+   "title": {
+    "en": "The muscles of the leg, and the intercostal muscles",
+    "de": "Die Muskeln des Beins und die Zwischenrippenmuskeln"
+   },
+   "stop": "body",
+   "apart": false
+  },
+  {
+   "id": "rcin-919007",
+   "title": {
+    "en": "The vertebral column",
+    "de": "Die Wirbelsäule"
+   },
+   "stop": "body",
+   "apart": false
+  },
+  {
+   "id": "rcin-919008",
+   "title": {
+    "en": "The bones and muscles of the leg",
+    "de": "Die Knochen und Muskeln des Beins"
+   },
+   "stop": "body",
+   "apart": false
+  },
+  {
+   "id": "rcin-919009",
+   "title": {
+    "en": "The bones, muscles and tendons of the hand",
+    "de": "Die Knochen, Muskeln und Sehnen der Hand"
+   },
+   "stop": "body",
+   "apart": false
+  },
+  {
+   "id": "rcin-919010",
+   "title": {
+    "en": "The muscles and tendons of the sole of the foot",
+    "de": "Die Muskeln und Sehnen der Fußsohle"
+   },
+   "stop": "body",
+   "apart": false
+  },
+  {
+   "id": "rcin-919011",
+   "title": {
+    "en": "The bones of the foot, and the shoulder",
+    "de": "Die Knochen des Fußes und die Schulter"
+   },
+   "stop": "body",
+   "apart": false
+  },
+  {
+   "id": "rcin-919012",
+   "title": {
+    "en": "The skeleton",
+    "de": "Das Skelett"
+   },
+   "stop": "body",
+   "apart": false
+  },
+  {
+   "id": "rcin-919013",
+   "title": {
+    "en": "The muscles of the shoulder and arm, and the bones of the foot",
+    "de": "Die Muskeln von Schulter und Arm sowie die Knochen des Fußes"
+   },
+   "stop": "body",
+   "apart": false
+  },
+  {
+   "id": "rcin-919014",
+   "title": {
+    "en": "The muscles of the leg",
+    "de": "Die Muskeln des Beins"
+   },
+   "stop": "body",
+   "apart": false
+  },
+  {
+   "id": "rcin-919015",
+   "title": {
+    "en": "The muscles of the upper spine",
+    "de": "Die Muskeln der oberen Wirbelsäule"
+   },
+   "stop": "body",
+   "apart": false
+  },
+  {
+   "id": "rcin-919016",
+   "title": {
+    "en": "The tendons of the lower leg and foot",
+    "de": "Die Sehnen des Unterschenkels und des Fußes"
+   },
+   "stop": "body",
+   "apart": false
+  },
+  {
+   "id": "rcin-919017",
+   "title": {
+    "en": "The muscles and tendons of the lower leg and foot",
+    "de": "Die Muskeln und Sehnen des Unterschenkels und des Fußes"
+   },
+   "stop": "body",
+   "apart": false
+  },
+  {
+   "id": "rcin-919018",
+   "title": {
+    "en": "The veins of the face, and a torso",
+    "de": "Die Venen des Gesichts und ein Torso"
+   },
+   "stop": "body",
+   "apart": false
+  },
+  {
+   "id": "rcin-919019",
+   "title": {
+    "en": "Notes on the senses and the nervous system",
+    "de": "Notizen zu den Sinnen und zum Nervensystem"
+   },
+   "stop": "body",
+   "apart": false
+  },
+  {
+   "id": "rcin-919028",
+   "title": {
+    "en": "The heart compared to a seed",
+    "de": "Das Herz im Vergleich mit einem Samen"
+   },
+   "stop": "body",
+   "apart": false
+  },
+  {
+   "id": "rcin-919055",
+   "title": {
+    "en": "The uterus of a gravid cow",
+    "de": "Die Gebärmutter einer trächtigen Kuh"
+   },
+   "stop": "body",
+   "apart": false
+  },
+  {
+   "id": "rcin-919057",
+   "title": {
+    "en": "The skull sectioned",
+    "de": "Der aufgeschnittene Schädel"
+   },
+   "stop": "body",
+   "apart": false
+  },
+  {
+   "id": "rcin-919058",
+   "title": {
+    "en": "The cranium sectioned",
+    "de": "Der aufgeschnittene Hirnschädel"
+   },
+   "stop": "body",
+   "apart": false
+  },
+  {
+   "id": "rcin-919075",
+   "title": {
+    "en": "The anatomy of the neck",
+    "de": "Die Anatomie des Halses"
+   },
+   "stop": "body",
+   "apart": false
+  },
+  {
+   "id": "rcin-919101",
+   "title": {
+    "en": "The fetus, and the muscles attached to the pelvis",
+    "de": "Der Fötus und die am Becken ansetzenden Muskeln"
+   },
+   "stop": "body",
+   "apart": false
+  },
+  {
+   "id": "rcin-919102",
+   "title": {
+    "en": "The fetus in the womb",
+    "de": "Der Fötus im Mutterleib"
+   },
+   "stop": "body",
+   "apart": false
+  },
+  {
+   "id": "rcin-919116",
+   "title": {
+    "en": "Studies of the nerves and muscles, the heart, and optics",
+    "de": "Studien zu Nerven und Muskeln, zum Herzen und zur Optik"
+   },
+   "stop": "body",
+   "apart": false
+  },
+  {
+   "id": "rcin-919082",
+   "title": {
+    "en": "The aortic valve",
+    "de": "Die Aortenklappe"
+   },
+   "stop": "body-valve",
+   "apart": true
+  }
+ ],
+ "periods": [
+  {
+   "en": "Vinci and Florence, 1452 to 1481",
+   "de": "Vinci und Florenz, 1452 bis 1481"
+  },
+  {
+   "en": "Milan, 1482 to 1499",
+   "de": "Mailand, 1482 bis 1499"
+  },
+  {
+   "en": "Venice, Florence and the Romagna, 1500 to 1506",
+   "de": "Venedig, Florenz und die Romagna, 1500 bis 1506"
+  },
+  {
+   "en": "Milan again, 1506 to 1513",
+   "de": "Wieder Mailand, 1506 bis 1513"
+  },
+  {
+   "en": "Rome, 1513 to 1516",
+   "de": "Rom, 1513 bis 1516"
+  },
+  {
+   "en": "Amboise, 1516 to 1519",
+   "de": "Amboise, 1516 bis 1519"
+  },
+  {
+   "en": "After 1519, what was left",
+   "de": "Nach 1519, was blieb"
+  }
+ ],
+ "people": [
+  {
+   "en": "Andrea del Verrocchio",
+   "de": "Andrea del Verrocchio"
+  },
+  {
+   "en": "Ludovico Sforza",
+   "de": "Ludovico Sforza"
+  },
+  {
+   "en": "Salaì",
+   "de": "Salaì"
+  },
+  {
+   "en": "Melzi",
+   "de": "Melzi"
+  },
+  {
+   "en": "Cesare Borgia",
+   "de": "Cesare Borgia"
+  },
+  {
+   "en": "Charles d’Amboise",
+   "de": "Charles d’Amboise"
+  },
+  {
+   "en": "Francis I",
+   "de": "Franz I."
+  }
+ ],
+ "holders": [
+  {
+   "name": {
+    "en": "Gallerie degli Uffizi",
+    "de": "Gallerie degli Uffizi"
+   },
+   "lang": {
+    "en": "it",
+    "de": "it"
+   },
+   "note": {
+    "en": "Florence",
+    "de": "Florenz"
+   },
+   "id": "uffizi"
+  },
+  {
+   "name": {
+    "en": "National Gallery of Art",
+    "de": "National Gallery of Art"
+   },
+   "lang": {
+    "en": "en",
+    "de": "en"
+   },
+   "note": {
+    "en": "Washington",
+    "de": "Washington"
+   },
+   "id": "nga"
+  },
+  {
+   "name": {
+    "en": "Bayerische Staatsgemäldesammlungen, Alte Pinakothek",
+    "de": "Bayerische Staatsgemäldesammlungen, Alte Pinakothek"
+   },
+   "lang": {
+    "en": "de",
+    "de": "de"
+   },
+   "note": {
+    "en": "Munich",
+    "de": "München"
+   },
+   "id": "pinakothek"
+  },
+  {
+   "name": {
+    "en": "State Hermitage Museum",
+    "de": "Staatliche Eremitage"
+   },
+   "lang": {
+    "en": "en",
+    "de": "de"
+   },
+   "note": {
+    "en": "Saint Petersburg",
+    "de": "Sankt Petersburg"
+   },
+   "id": "hermitage"
+  },
+  {
+   "name": {
+    "en": "Pinacoteca Vaticana",
+    "de": "Pinacoteca Vaticana"
+   },
+   "lang": {
+    "en": "it",
+    "de": "it"
+   },
+   "note": {
+    "en": "Vatican City",
+    "de": "Vatikanstadt"
+   },
+   "id": "vaticana"
+  },
+  {
+   "name": {
+    "en": "Musée du Louvre",
+    "de": "Musée du Louvre"
+   },
+   "lang": {
+    "en": "fr",
+    "de": "fr"
+   },
+   "note": {
+    "en": "Paris",
+    "de": "Paris"
+   },
+   "id": "louvre"
+  },
+  {
+   "name": {
+    "en": "Veneranda Biblioteca Ambrosiana",
+    "de": "Veneranda Biblioteca Ambrosiana"
+   },
+   "lang": {
+    "en": "it",
+    "de": "it"
+   },
+   "note": {
+    "en": "Milan",
+    "de": "Mailand"
+   },
+   "id": "ambrosiana"
+  },
+  {
+   "name": {
+    "en": "Muzeum Narodowe w Krakowie, Muzeum Książąt Czartoryskich",
+    "de": "Muzeum Narodowe w Krakowie, Muzeum Książąt Czartoryskich"
+   },
+   "lang": {
+    "en": "pl",
+    "de": "pl"
+   },
+   "note": {
+    "en": "Kraków",
+    "de": "Krakau"
+   },
+   "id": "czartoryski"
+  },
+  {
+   "name": {
+    "en": "National Gallery",
+    "de": "National Gallery"
+   },
+   "lang": {
+    "en": "en",
+    "de": "en"
+   },
+   "note": {
+    "en": "London",
+    "de": "London"
+   },
+   "id": "national-gallery"
+  },
+  {
+   "name": {
+    "en": "Buccleuch collection",
+    "de": "Sammlung Buccleuch"
+   },
+   "lang": {
+    "en": "en",
+    "de": "de"
+   },
+   "note": {
+    "en": "on loan to National Galleries of Scotland",
+    "de": "Leihgabe an die National Galleries of Scotland"
+   },
+   "id": "buccleuch"
+  },
+  {
+   "name": {
+    "en": "Kenneth C. Griffin Collection",
+    "de": "Kenneth C. Griffin Collection"
+   },
+   "lang": {
+    "en": "en",
+    "de": "en"
+   },
+   "note": {
+    "en": "on loan to The Metropolitan Museum of Art",
+    "de": "Leihgabe an das Metropolitan Museum of Art"
+   },
+   "id": "griffin"
+  },
+  {
+   "name": {
+    "en": "Private collection",
+    "de": "Privatsammlung"
+   },
+   "lang": {
+    "en": "en",
+    "de": "de"
+   },
+   "note": {
+    "en": "present location unconfirmed",
+    "de": "heutiger Aufenthaltsort unbestätigt"
+   },
+   "id": "owner"
+  },
+  {
+   "name": {
+    "en": "Galleria Nazionale di Parma, Complesso della Pilotta",
+    "de": "Galleria Nazionale di Parma, Complesso della Pilotta"
+   },
+   "lang": {
+    "en": "it",
+    "de": "it"
+   },
+   "note": {
+    "en": "Parma",
+    "de": "Parma"
+   },
+   "id": "parma"
+  },
+  {
+   "name": {
+    "en": "Bibliothèque de l'Institut de France",
+    "de": "Bibliothèque de l'Institut de France"
+   },
+   "lang": {
+    "en": "fr",
+    "de": "fr"
+   },
+   "note": {
+    "en": "Paris",
+    "de": "Paris"
+   },
+   "id": "institut"
+  },
+  {
+   "name": {
+    "en": "Biblioteca Nacional de España",
+    "de": "Biblioteca Nacional de España"
+   },
+   "lang": {
+    "en": "es",
+    "de": "es"
+   },
+   "note": {
+    "en": "Madrid",
+    "de": "Madrid"
+   },
+   "id": "bne"
+  },
+  {
+   "name": {
+    "en": "Biblioteca Reale",
+    "de": "Biblioteca Reale"
+   },
+   "lang": {
+    "en": "it",
+    "de": "it"
+   },
+   "note": {
+    "en": "Turin",
+    "de": "Turin"
+   },
+   "id": "reale"
+  },
+  {
+   "name": {
+    "en": "Biblioteca Trivulziana, Castello Sforzesco",
+    "de": "Biblioteca Trivulziana, Castello Sforzesco"
+   },
+   "lang": {
+    "en": "it",
+    "de": "it"
+   },
+   "note": {
+    "en": "Milan",
+    "de": "Mailand"
+   },
+   "id": "trivulziana"
+  },
+  {
+   "name": {
+    "en": "British Library",
+    "de": "British Library"
+   },
+   "lang": {
+    "en": "en",
+    "de": "en"
+   },
+   "note": {
+    "en": "London",
+    "de": "London"
+   },
+   "id": "british-library"
+  },
+  {
+   "name": {
+    "en": "Royal Collection",
+    "de": "Royal Collection"
+   },
+   "lang": {
+    "en": "en",
+    "de": "en"
+   },
+   "note": {
+    "en": "Windsor",
+    "de": "Windsor"
+   },
+   "id": "royal-collection"
+  },
+  {
+   "name": {
+    "en": "Museo del Cenacolo Vinciano, Santa Maria delle Grazie",
+    "de": "Museo del Cenacolo Vinciano, Santa Maria delle Grazie"
+   },
+   "lang": {
+    "en": "it",
+    "de": "it"
+   },
+   "note": {
+    "en": "Milan",
+    "de": "Mailand"
+   },
+   "id": "cenacolo"
+  },
+  {
+   "name": {
+    "en": "Victoria and Albert Museum, National Art Library",
+    "de": "Victoria and Albert Museum, National Art Library"
+   },
+   "lang": {
+    "en": "en",
+    "de": "en"
+   },
+   "note": {
+    "en": "London",
+    "de": "London"
+   },
+   "id": "vam"
+  },
+  {
+   "name": {
+    "en": "Petit Palais, Musée des Beaux-Arts de la Ville de Paris",
+    "de": "Petit Palais, Musée des Beaux-Arts de la Ville de Paris"
+   },
+   "lang": {
+    "en": "fr",
+    "de": "fr"
+   },
+   "note": {
+    "en": "Paris",
+    "de": "Paris"
+   },
+   "id": "petit-palais"
+  }
+ ],
+ "heart_film_seconds": 30.0167
+}

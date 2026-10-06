@@ -1,0 +1,34 @@
+/* ---------- Footer: the wall's edge, the same on every page. It says who runs the museum,
+   in the secondary colour at a size nobody has to look for, with the legal notice beside it. ---------- */
+.foot{background:var(--ground-edge);border-top:1px solid var(--hair);padding-block:44px 110px;font-family:var(--sans);font-size:.9375rem;line-height:1.55;color:var(--ink-soft)}
+.foot__grid{display:grid;gap:32px}
+/* The name alone: the sign's cut on 24 stands on the name's baseline. */
+.foot__brand{display:flex;align-items:baseline;gap:12px;color:var(--ink);margin-bottom:12px}
+.foot__brand .brand__name{font-size:1.5rem}
+.foot__brand .brand__mark{width:24px;height:24px}
+.foot__about p+p{margin-top:8px}
+.foot__about{max-width:34rem}
+.foot__by{font-size:1rem;color:var(--ink-soft)}
+.foot__by a{display:inline-block;padding:11px 0;margin:-11px 0 -11px .3em;color:var(--ink);white-space:nowrap}
+.foot__h{font-family:var(--sans);font-size:.75rem;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-soft);margin-bottom:8px}
+.foot__org p:not(.foot__h){color:var(--ink)}
+.foot__org dl{margin-top:8px;display:grid;gap:6px}
+.foot__org dt{display:inline;color:var(--ink-quiet)}
+.foot__org dt::after{content:": "}
+.foot__org dd{display:inline;color:var(--ink-soft)}
+.todo{color:var(--ink-quiet);font-style:normal}
+.foot__nav a{display:inline-flex;align-items:center;min-height:44px;color:var(--ink-soft);text-decoration-color:var(--hair-strong)}
+.foot__nav a:hover{color:var(--ink)}
+.foot__fine{padding-top:18px;border-top:1px solid var(--hair);font-size:.8125rem;display:grid;gap:4px;color:var(--ink-quiet)}
+.foot__fine p>span{display:block}
+.foot__tools{margin-top:10px}
+.motion{min-height:44px;padding:0 16px;background:transparent;border:1px solid var(--hair-strong);border-radius:2px;font-family:var(--sans);font-size:.875rem;letter-spacing:.03em;color:var(--ink-soft);cursor:pointer}
+.motion:hover{border-color:var(--ink);color:var(--ink)}
+@media (min-width:600px){
+  .foot__grid{grid-template-columns:1.4fr 1fr 1fr}
+  .foot__fine{grid-column:1/-1}
+}
+@media (min-width:960px){
+  .foot{padding-block:64px 56px}
+  .foot__grid{grid-template-columns:5fr 4fr 3fr;column-gap:48px}
+}

@@ -1,0 +1,14 @@
+{
+  "tab-32.png": {
+    "from": "tab.svg",
+    "size": 32,
+    "source_sha256": "3786880aa48892fac655dec3d949e1bb22e440e7a77233aa0ea70ef9f9a3cca1",
+    "sha256": "3b00a0763dad2951aad8489b0fe87e4cdf6747d9ba43da9c6094d1bfa29c6cbf"
+  },
+  "home-180.png": {
+    "from": "app.svg",
+    "size": 180,
+    "source_sha256": "6e6c75c75567b75391880d29172a65a63b9a46600d95ce5f458093167c23debd",
+    "sha256": "b516ae20e11de541251c0c38636e5e75614f3c7b1d3b910ba0a537ef98d8fb7f"
+  }
+}

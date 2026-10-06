@@ -1,0 +1,42 @@
+/* The lit wall. This is the one place a colour value is written: every other rule reads these by name,
+   and every tint is a color-mix() of them. The roles that pages use are set from these in base.css. */
+:root{
+  /* The wall: one family of blue grey, from the lamps off to the centre of a lamp's pool. */
+  --edge:#10121d;
+  --well:#161926;
+  --page:#1c1f2e;
+  --raised:#242839;
+  --wall:#2b3044;
+  --wall-lit:#383e54;
+  /* What is written, and what opens. */
+  --linen:#ece7de;
+  --text-2:#c8cddd;
+  --text-3:#abb0c3;
+  --lamp:#f9d3a9;
+  --linen-down:#d6d0c4;
+  /* The one mark: red chalk, always a line. */
+  --chalk:#cb8561;
+  --chalk-text:#e4a885;
+  /* Lines, and the frame every picture has. */
+  --line:#343747;
+  --line-wall:#41465a;
+  --line-strong:#8b92a5;
+  --frame:#70604e;
+  /* The stone sheet: a reading page in the device's light setting. */
+  --stone:#e8e6df;
+  --stone-raised:#f2f0ea;
+  --stone-well:#dddbd2;
+  --stone-text-2:#424759;
+  --stone-text-3:#555a6c;
+  --stone-line:#c8c7c4;
+  --stone-line-strong:#6b7184;
+  --stone-door-warm:#2e344a;
+  --brick:#9f4325;
+  --brick-text:#90391e;
+  /* The four grades, one colour each: the museum app's own values (--ui-sure-* in the app's index.html), mirrored
+     here so a grade looks the same on the site and in the wing. The build stops if they drift apart. */
+  --sure-documented:#8cba8b;
+  --sure-reconstructed:#d2a557;
+  --sure-conjectural:#df9385;
+  --sure-unknown:#a8b3b7;
+}

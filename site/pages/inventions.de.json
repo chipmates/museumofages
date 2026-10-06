@@ -1,0 +1,856 @@
+{
+  "_note": "DIE TEXTE der Seite 'Leonardo da Vincis Erfindungen', Deutsch. Jeder angezeigte Satz der Seite steht hier und im Zwilling inventions.en.json. Beide Dateien haben denselben Aufbau: dieselben Blöcke in derselben Reihenfolge, dieselben Einträge, dieselben Bilder. Texte hier ändern, dann `python3 pages/build.py` ausführen. Jede Tatsache stammt aus dem geprüften Material des Flügels. Die Leserinnen und Leser werden geduzt. Kein Gedankenstrich, kein Semikolon.",
+  "page": {
+    "id": "vinci-inventions",
+    "wing": "vinci",
+    "slug": "erfindungen",
+    "published": null,
+    "og_image": {
+      "file": "vinci-inventions-og-1200x630.jpg",
+      "width": 1200,
+      "height": 630
+    }
+  },
+  "pics": {
+    "flight": {
+      "stem": "vinci-stop-flight",
+      "widths": [
+        800,
+        1600
+      ],
+      "sizes": "(min-width: 960px) 288px, (min-width: 600px) 240px, calc(100vw - 40px)"
+    },
+    "works": {
+      "stem": "vinci-stop-works",
+      "widths": [
+        800,
+        1600
+      ],
+      "sizes": "(min-width: 1280px) 588px, (min-width: 960px) 46vw, 100vw"
+    },
+    "court": {
+      "stem": "vinci-view-anemometer",
+      "widths": [
+        800,
+        1600
+      ],
+      "sizes": "(min-width: 1280px) 333px, (min-width: 960px) 27vw, (min-width: 600px) calc(50vw - 44px), calc(100vw - 40px)"
+    },
+    "house": {
+      "stem": "vinci-stop-hall",
+      "widths": [
+        800,
+        1600
+      ],
+      "sizes": "(min-width: 1280px) 333px, (min-width: 960px) 27vw, (min-width: 600px) calc(50vw - 44px), calc(100vw - 40px)"
+    },
+    "table": {
+      "stem": "vinci-stop-reading-table",
+      "widths": [
+        800,
+        1600
+      ],
+      "sizes": "(min-width: 1280px) 333px, (min-width: 960px) 27vw, (min-width: 600px) calc(50vw - 44px), calc(100vw - 40px)"
+    },
+    "parachute": {
+      "stem": "vinci-view-parachute",
+      "widths": [
+        800,
+        1600
+      ],
+      "sizes": "(min-width: 960px) 288px, (min-width: 600px) 240px, calc(100vw - 40px)"
+    },
+    "inclinometer": {
+      "stem": "vinci-poster-inclinometer",
+      "widths": [
+        720,
+        1440
+      ],
+      "sizes": "(min-width: 960px) 288px, (min-width: 600px) 240px, calc(100vw - 40px)"
+    },
+    "lock_gates": {
+      "stem": "vinci-poster-miter-lock-gates",
+      "widths": [
+        720,
+        1440
+      ],
+      "sizes": "(min-width: 960px) 288px, (min-width: 600px) 240px, calc(100vw - 40px)"
+    },
+    "water_screw": {
+      "stem": "vinci-poster-water-lifting-screw",
+      "widths": [
+        720,
+        1440
+      ],
+      "sizes": "(min-width: 960px) 288px, (min-width: 600px) 240px, calc(100vw - 40px)"
+    },
+    "crane": {
+      "stem": "vinci-poster-revolving-crane",
+      "widths": [
+        720,
+        1440
+      ],
+      "sizes": "(min-width: 960px) 288px, (min-width: 600px) 240px, calc(100vw - 40px)"
+    },
+    "rolling_mill": {
+      "stem": "vinci-poster-rolling-mill",
+      "widths": [
+        720,
+        1440
+      ],
+      "sizes": "(min-width: 960px) 288px, (min-width: 600px) 240px, calc(100vw - 40px)"
+    },
+    "drilling_machine": {
+      "stem": "vinci-poster-lathe",
+      "widths": [
+        720,
+        1440
+      ],
+      "sizes": "(min-width: 960px) 288px, (min-width: 600px) 240px, calc(100vw - 40px)"
+    },
+    "ball_bearing": {
+      "stem": "vinci-poster-ball-bearing",
+      "widths": [
+        720,
+        1440
+      ],
+      "sizes": "(min-width: 960px) 288px, (min-width: 600px) 240px, calc(100vw - 40px)"
+    },
+    "flywheel": {
+      "stem": "vinci-poster-flywheel",
+      "widths": [
+        720,
+        1440
+      ],
+      "sizes": "(min-width: 960px) 288px, (min-width: 600px) 240px, calc(100vw - 40px)"
+    },
+    "anemometer": {
+      "stem": "vinci-poster-anemometer",
+      "widths": [
+        720,
+        1440
+      ],
+      "sizes": "(min-width: 960px) 288px, (min-width: 600px) 240px, calc(100vw - 40px)"
+    },
+    "proportional_compass": {
+      "stem": "vinci-poster-proportional-compass",
+      "widths": [
+        720,
+        1440
+      ],
+      "sizes": "(min-width: 960px) 288px, (min-width: 600px) 240px, calc(100vw - 40px)"
+    },
+    "camera_obscura": {
+      "stem": "vinci-poster-camera-obscura",
+      "widths": [
+        720,
+        1440
+      ],
+      "sizes": "(min-width: 960px) 288px, (min-width: 600px) 240px, calc(100vw - 40px)"
+    },
+    "organ_gun": {
+      "stem": "vinci-poster-multi-barrel-gun",
+      "widths": [
+        720,
+        1440
+      ],
+      "sizes": "(min-width: 960px) 288px, (min-width: 600px) 240px, calc(100vw - 40px)"
+    },
+    "lion": {
+      "stem": "vinci-poster-mechanical-lion",
+      "widths": [
+        720,
+        1440
+      ],
+      "sizes": "(min-width: 960px) 288px, (min-width: 600px) 240px, calc(100vw - 40px)"
+    },
+    "hall": {
+      "stem": "vinci-view-water-lifting-screw",
+      "widths": [
+        800,
+        1600
+      ],
+      "sizes": "(min-width: 1280px) 333px, (min-width: 960px) 27vw, (min-width: 600px) calc(50vw - 44px), calc(100vw - 40px)"
+    }
+  },
+  "meta": {
+    "title": "Leonardo da Vincis Erfindungen, nachgebaut | Museum of Ages",
+    "description": "Was Leonardo da Vinci zeichnete, was je gebaut wurde und was älter war als er. Fünfzehn Maschinen, in Code gebaut in einem digitalen Museum, jede mit Quelle.",
+    "og_title": "Leonardo da Vincis Erfindungen: fünfzehn Maschinen, nachgebaut in einem digitalen Museum",
+    "og_image_alt": "Vier hölzerne Maschinen in der Maschinenhalle im Licht der tief stehenden Nachmittagssonne: Schleusentore, die Luftschraube mit ihrem Spiralsegel, eine Wasserschnecke und ein Walzwerk. Rekonstruktionen nach Blättern von Leonardo da Vinci, in Code gebaut."
+  },
+  "labels": {
+    "crumbs": "Du bist hier",
+    "crumb_home": "Museum",
+    "crumb_here": "Erfindungen",
+    "toc": "Auf dieser Seite",
+    "tag_reconstructions": "Rekonstruktionen",
+    "tag_reconstruction": "Rekonstruktion",
+    "in_museum": "Im Museum",
+    "row_sheet": "Das Blatt",
+    "row_ours": "Unsere Wahl",
+    "row_built": "Wurde es gebaut",
+    "row_accounts": "Die Quellen",
+    "tag_reproduction": "Reproduktion",
+    "plate_what": "nach seinem Blatt in Code gebaut"
+  },
+  "top": {
+    "h1": "Leonardo da Vincis Erfindungen",
+    "answer": "Leonardo da Vinci zeichnete Maschinen zum Fliegen, zum Wasserheben, zum Messen und für den Krieg. Die meisten baute er nie, soweit man weiß. Manche waren nicht seine Idee. Fünfzehn stehen in diesem Museum, in Code gebaut.",
+    "frame": {
+      "pic": "works",
+      "focus": "50% 70%",
+      "title": "In der Maschinenhalle",
+      "tag": "tag_reconstructions",
+      "what": "von links: Schleusentore, die Luftschraube, eine Wasserschnecke und ein Walzwerk, alle nach seinen Blättern",
+      "alt": "Eine hohe Halle mit einer Lamellendecke aus Holz und einem Fensterband, im Licht der tief stehenden Nachmittagssonne. Vier hölzerne Maschinen stehen auf flachen Podesten: Schleusentore, die Luftschraube mit ihrem Spiralsegel, eine Wasserschnecke in ihrem Gestell und ein Walzwerk."
+    },
+    "door": {
+      "text": "Ins Museum",
+      "note": "Eintritt frei, kein Konto.",
+      "leads": "Die Tür führt an den Anfang des Leonardo-Flügels. Über den Plan des Flügels kommst du zur Maschinenhalle."
+    }
+  },
+  "blocks": [
+    {
+      "type": "places",
+      "id": "where",
+      "nav": "Wo sie stehen",
+      "h": "Wo die Maschinen im Museum stehen",
+      "intro": "Museum of Ages ist ein digitales Museum. Sein erster Flügel gehört Leonardo da Vinci, und die Maschinen stehen dort an drei Orten. Der Plan des Flügels nennt jede Maschine unter dem Ort, an dem sie steht. Drückst du dort auf ihren Namen, siehst du sie aus der Nähe.",
+      "rows": [
+        {
+          "term": "Die Maschinenhalle",
+          "text": "Neun Maschinen: die Luftschraube, Schleusentore, eine Wasserschnecke, ein Walzwerk, eine Bohrmaschine, ein Kugellager, ein Schwungrad, eine Camera obscura und ein Orgelgeschütz.",
+          "pic": {
+            "pic": "hall",
+            "tag": "tag_reconstructions",
+            "what": "die Wasserschnecke, dahinter die Luftschraube, rechts das Walzwerk",
+            "alt": "Eine hölzerne Wasserschnecke steht auf einem flachen Podest in einer Halle mit kahlen Wänden: eine schräg liegende Welle mit dunklen Windungen in einem Gestell, ihr unteres Ende in einem Trog. Dahinter links das Spiralsegel der Luftschraube, am rechten Rand das Zahnrad des Walzwerks. Durch ein Fensterband fällt tief stehende Nachmittagssonne."
+          }
+        },
+        {
+          "term": "Der Hof",
+          "text": "Drei Maschinen: der Fallschirm, der Drehkran und der Windmesser. Der Fallschirm steht draußen, weil er höher ist als das Dach der Halle.",
+          "pic": {
+            "pic": "court",
+            "tag": "tag_reconstructions",
+            "what": "der Windmesser auf seinem Sockel, links der Drehsockel des Krans",
+            "alt": "Ein gepflasterter Hof mit Laub vor einer hellen Wand, halb im Schatten. Auf einem dunklen Sockel steht ein kleines Holzgestell mit einer hängenden Platte, der Windmesser. Am linken Rand der runde Holzsockel des Krans, hinter dem Hof eine Wiese und eine Gartenmauer."
+          }
+        },
+        {
+          "term": "Das Haus",
+          "text": "Drei im Großen Saal: ein Neigungsmesser und ein Proportionalzirkel auf dem Tisch, der mechanische Löwe an der Wand.",
+          "pic": {
+            "pic": "house",
+            "tag": "tag_reconstructions",
+            "what": "auf dem Tisch der Neigungsmesser und der Proportionalzirkel, an der Wand der Löwe",
+            "alt": "Ein Raum mit Balkendecke, roten Bodenfliesen und Rautenfenstern. Nachmittagssonne fällt über einen langen Tisch auf Böcken, auf dem eine Glasglocke auf einem Ständer und ein aufrecht stehender Zirkel zu sehen sind. Links an der Wand steht ein Löwe aus Holz und Metall."
+          }
+        },
+        {
+          "term": "Der Lesetisch",
+          "text": "Hier blätterst du durch mehr als 200 Seiten seiner Notizbücher, geordnet nach siebzehn Themen, darunter Fliegen und Maschinen. Jede Seite nennt ihr Notizbuch und ihr Blatt, und du kannst sie in seiner Handschrift, im Spiegel und als Text lesen. In Ruhe liegt ein 1883 gedrucktes Faksimile des Manuskripts B aufgeschlagen. Das Blatt der Luftschraube, Blatt 83 verso, ist in diesem Faksimile enthalten.",
+          "pic": {
+            "pic": "table",
+            "tag": "tag_reproduction",
+            "what": "das 1883 gedruckte Faksimile des Manuskripts B, gemeinfrei wegen seines Alters. Das Manuskript bewahrt die Bibliothèque de l'Institut de France in Paris. Der Raum ist in Code gebaut.",
+            "alt": "Ein dunkler, holzgetäfelter Raum mit einer Hängelampe. Unter der Lampe liegt ein aufgeschlagenes Buch auf einem langen Tisch, davor steht ein Stuhl."
+          }
+        }
+      ],
+      "after": "Vierzehn der fünfzehn folgen einem seiner Blätter. Der Löwe folgt alten Berichten, denn eine Zeichnung von ihm ist nicht erhalten. Jede Maschine ist als Rekonstruktion beschriftet."
+    },
+    {
+      "type": "group",
+      "id": "flying-machines",
+      "nav": "Flugmaschinen",
+      "h": "Die Flugmaschinen",
+      "intro": "Leonardo wollte, dass Menschen fliegen. Ein eigener Flug von ihm ist nicht belegt. Zwei seiner Studien zum Fliegen stehen hier als Rekonstruktion, dazu ein Gerät, das er für einen Flieger gedacht hat.",
+      "items": [
+        {
+          "id": "aerial-screw",
+          "name": "Die Luftschraube",
+          "place": "Maschinenhalle",
+          "does": "Ein spiralförmiges Segel aus Leinen an einem Mast, oft sein Hubschrauber genannt. In seiner Notiz steht: Eine gut gemachte Schraube aus Leinen, mit Stärke abgedichtet und schnell gedreht, steigt in die Luft.",
+          "rows": [
+            {
+              "k": "row_sheet",
+              "v": "Manuskript B, Blatt 83 verso. Bibliothèque de l'Institut de France, Paris. Das Notizbuch wird auf etwa 1487 bis 1489 datiert. Das Blatt nennt ein Maß: acht Braccia vom Rand zur Mitte, etwa 4,7 Meter. Einen Antrieb für die große Schraube nennt es nicht. Für ein kleines Modell aus Papier nennt es eine Feder: einen dünnen Eisenstreifen, verdreht und losgelassen."
+            },
+            {
+              "k": "row_ours",
+              "v": "Die Steigung der Spirale, das Holz, das Lager und der Antrieb. Im Museum dreht sie sich fünfmal in der Minute und bleibt am Boden."
+            },
+            {
+              "k": "row_built",
+              "v": "Dass sie zu seinen Lebzeiten gebaut wurde, ist nicht bekannt. Nach unserer Schätzung bräuchte eine Maschine von 400 Kilogramm mindestens neunzehn Kilowatt, um abzuheben. Ein Radfahrer auf dem Niveau des Stundenweltrekords hält etwa ein halbes Kilowatt eine Stunde lang, vier schaffen zusammen also etwa zwei."
+            }
+          ],
+          "pic": {
+            "pic": "flight",
+            "tag": "tag_reconstructions",
+            "what": "die Luftschraube in der Maschinenhalle, links die Schleusentore, beide nach seinen Blättern",
+            "alt": "Die Luftschraube steht in einer hohen Halle mit einer Lamellendecke aus Holz: ein Holzmast auf rundem Sockel mit einem spiralförmigen Segel aus Leinen, von tief stehender Nachmittagssonne beleuchtet, ihr Schatten fällt auf die Wand. Links stehen hölzerne Schleusentore auf einem flachen Podest."
+          }
+        },
+        {
+          "id": "parachute",
+          "name": "Der Fallschirm",
+          "place": "Hof",
+          "does": "Ein Zelt aus abgedichtetem Leinen, zwölf Braccia breit und zwölf hoch, das sind je etwa sieben Meter. Darunter, schrieb er, falle ein Mensch aus großer Höhe unversehrt. Das ist seine Behauptung, kein geprüfter Befund.",
+          "rows": [
+            {
+              "k": "row_sheet",
+              "v": "Codex Atlanticus, Blatt 1058 verso. Veneranda Biblioteca Ambrosiana, Mailand. Das Blatt wird auf etwa 1485 datiert."
+            },
+            {
+              "k": "row_ours",
+              "v": "Der Rahmen, die Seile und der Ring. Das Blatt nennt für sie weder Stärken noch Längen."
+            },
+            {
+              "k": "row_built",
+              "v": "Ein Sprung zu seinen Lebzeiten ist nicht belegt. Im Jahr 2000 sank ein Mann unter einem schweren Nachbau herab, trennte ihn ab und landete an einem zweiten, modernen Fallschirm. Ältere italienische Zeichnungen von Fallschirmen werden in die 1470er Jahre datiert."
+            }
+          ],
+          "pic": {
+            "pic": "parachute",
+            "tag": "tag_reconstructions",
+            "what": "der Fallschirm im Hof, von unten gesehen. Dahinter der Kran und der Windmesser",
+            "alt": "Die Unterseite des Fallschirms, eine Pyramide aus hellem Leinen, füllt den oberen Teil des Bildes. Darunter ein gepflasterter Hof mit Laub, links ein hölzerner Kran und ein kleiner Windmesser auf einem Sockel, hinter einer niedrigen Mauer Bäume in Herbstfarben."
+          }
+        },
+        {
+          "id": "inclinometer",
+          "name": "Der Neigungsmesser",
+          "place": "Haus, auf dem Tisch",
+          "does": "Ein Gewicht, das über einem Kreis hängt, vor Wind geschützt. Es sollte einem Flieger zeigen, ob er waagerecht fliegt oder geneigt.",
+          "rows": [
+            {
+              "k": "row_sheet",
+              "v": "Codex Atlanticus, Blatt 1058 recto, die andere Seite des Fallschirmblatts. Veneranda Biblioteca Ambrosiana, Mailand. Das Blatt wird auf etwa 1485 datiert."
+            },
+            {
+              "k": "row_ours",
+              "v": "Die Glashaube, die kippbare Unterlage und alle Maße. Das Blatt nennt keine."
+            },
+            {
+              "k": "row_built",
+              "v": "Ein Exemplar aus seiner Zeit ist nicht gesichert."
+            }
+          ],
+          "pic": {
+            "pic": "inclinometer",
+            "tag": "tag_reconstruction",
+            "alt": "Der Neigungsmesser allein auf einem Fliesenboden: eine Glasglocke über einer runden Platte mit Kreisen, darin ein kleines Gewicht an einem Faden, auf einem Holzständer."
+          }
+        }
+      ]
+    },
+    {
+      "type": "group",
+      "id": "water",
+      "nav": "Wasser",
+      "h": "Maschinen für das Wasser",
+      "intro": "Er zeichnete auch Wassermaschinen. Kanalschleusen und die Wasserschnecke waren schon in Gebrauch, als er geboren wurde. Eine Torform schreiben ihm Nachschlagewerke oft zu: das Schleusentor aus zwei Flügeln, die schräg gegeneinander schließen.",
+      "items": [
+        {
+          "id": "lock-gates",
+          "name": "Die Schleusentore",
+          "place": "Maschinenhalle",
+          "does": "Die zwei Flügel eines Schleusentors, die schräg gegeneinander schließen. Das höhere Wasser drückt sie zu, und eine kleine Tür in jedem Flügel lässt vorher Wasser durch. So kommt ein Boot von einem Wasserstand zum nächsten.",
+          "rows": [
+            {
+              "k": "row_sheet",
+              "v": "Codex Atlanticus, Blatt 656a recto. Veneranda Biblioteca Ambrosiana, Mailand. Es zeigt das Tor der Schleuse San Marco in Mailand. Die Datierung ist offen: Der Standardkatalog des Codex nennt etwa 1493 bis 1495, ein Mailänder Museum etwa 1506."
+            },
+            {
+              "k": "row_ours",
+              "v": "Die Maße. Wir zeigen ein Paar Tore, das sich bei gleichem Wasserstand öffnet und schließt."
+            },
+            {
+              "k": "row_built",
+              "v": "Die Schleuse gab es. Bartolomeo Della Valle baute die verbindenden Schleusen. Nachschlagewerke schreiben Leonardo diese Torform oft zu. Ein Mailänder Museum lässt seinen Anteil offen: Das Blatt könne eine Verbesserung der kleinen Türen festhalten oder sie nach ihrem Bau erstmals aufzeichnen. Zum Erfinder der Kanalschleuse macht ihn keine der Quellen, die wir gelesen haben."
+            }
+          ],
+          "pic": {
+            "pic": "lock_gates",
+            "tag": "tag_reconstruction",
+            "alt": "Die Schleusentore allein auf einem Fliesenboden: Zwei hölzerne Torflügel auf einer steinernen Schwelle treffen sich in einem flachen Winkel, jeder hat unten eine kleine quadratische Tür."
+          }
+        },
+        {
+          "id": "water-screw",
+          "name": "Die Wasserschnecke",
+          "place": "Maschinenhalle",
+          "does": "Ein Rohr, um eine Welle gewunden. Jede Drehung der Kurbel hebt das Wasser im Rohr nach oben, in eine höhere Rinne oder einen Speicher.",
+          "rows": [
+            {
+              "k": "row_sheet",
+              "v": "Codex Atlanticus, Blatt 6 recto. Veneranda Biblioteca Ambrosiana, Mailand. Das Blatt zeigt mehrere Arten, Wasser zu heben, und trägt auf dieser Seite keine Schrift. Es wird auf etwa 1480 datiert."
+            },
+            {
+              "k": "row_ours",
+              "v": "Die Kurbel, die Stützen und die Größe."
+            },
+            {
+              "k": "row_built",
+              "v": "Ein Bau genau dieses Entwurfs ist nicht belegt. Die Wasserschnecke selbst ist antik: Schon Vitruvius beschrieb sie."
+            }
+          ],
+          "pic": {
+            "pic": "water_screw",
+            "tag": "tag_reconstruction",
+            "alt": "Die Wasserschnecke allein auf einem Fliesenboden: Eine schräg liegende Welle mit dunklen Windungen ruht in einem Holzgestell, ihr unteres Ende in einem Trog."
+          }
+        }
+      ]
+    },
+    {
+      "type": "group",
+      "id": "workshop",
+      "nav": "Werkstatt",
+      "h": "Maschinen für die Werkstatt",
+      "intro": "Diese fünf heben, walzen, bohren und drehen. Für keine von ihnen ist ein Bau zu seinen Lebzeiten belegt.",
+      "items": [
+        {
+          "id": "crane",
+          "name": "Der Drehkran",
+          "place": "Hof",
+          "does": "Ein Kran mit einem Ausleger. Eine Handkurbel wickelt das Seil auf eine Trommel, und der Ausleger schwenkt die Last dorthin, wo sie gebraucht wird.",
+          "rows": [
+            {
+              "k": "row_sheet",
+              "v": "Manuskript B, Blatt 49 recto. Bibliothèque de l'Institut de France, Paris. Das Notizbuch wird auf etwa 1487 bis 1489 datiert."
+            },
+            {
+              "k": "row_ours",
+              "v": "Das Gegengewicht, die Stützen und alle Maße."
+            }
+          ],
+          "pic": {
+            "pic": "crane",
+            "tag": "tag_reconstruction",
+            "alt": "Der Drehkran allein auf einem Fliesenboden: ein Pfosten mit einem Ausleger auf einem runden Drehsockel, am Ausleger hängt ein Seil mit einem Steinblock."
+          }
+        },
+        {
+          "id": "rolling-mill",
+          "name": "Das Walzwerk",
+          "place": "Maschinenhalle",
+          "does": "Zwei Walzen, die Zinn dünner und gleichmäßiger pressen. Eine Kurbel treibt die obere Walze, mit der unteren stellt man den Spalt ein.",
+          "rows": [
+            {
+              "k": "row_sheet",
+              "v": "Manuskript I, Blatt 48 verso. Bibliothèque de l'Institut de France, Paris. Die Notiz nennt Zinn und Glockenbronze. Das Notizbuch wird auf etwa 1497 bis 1499 datiert."
+            },
+            {
+              "k": "row_ours",
+              "v": "Die Verzahnung. Hier wird nichts gewalzt, und der Spalt bleibt, wie er steht."
+            }
+          ],
+          "pic": {
+            "pic": "rolling_mill",
+            "tag": "tag_reconstruction",
+            "alt": "Das Walzwerk allein auf einem Fliesenboden: zwei Walzen übereinander zwischen hölzernen Ständern, an der Seite ein großes Zahnrad und eine Kurbel."
+          }
+        },
+        {
+          "id": "drilling-machine",
+          "name": "Die Bohrmaschine",
+          "place": "Maschinenhalle",
+          "does": "Ein Bohrer ohne Motor, den ein Mensch antreibt. Das Seil ist um die Welle gewickelt: Ein Tritt dreht sie in die eine Richtung, ein gespannter Bogen zurück. Eine Notiz zum Bohrer trägt das Blatt nicht. So liest ein Museum in Vinci die Zeichnung, und unser Modell folgt dieser Lesart.",
+          "rows": [
+            {
+              "k": "row_sheet",
+              "v": "Codex Atlanticus, Blatt 108 recto. Veneranda Biblioteca Ambrosiana, Mailand. Das Blatt wird auf etwa 1495 bis 1497 datiert."
+            },
+            {
+              "k": "row_ours",
+              "v": "Die Maße von Bogen, Fußstange und Spule. Der Bohrer wird nicht vorgeschoben."
+            }
+          ],
+          "pic": {
+            "pic": "drilling_machine",
+            "tag": "tag_reconstruction",
+            "alt": "Die Bohrmaschine allein auf einem Fliesenboden: eine niedrige Holzbank mit einer Spindel, darüber ein hoher Pfosten mit einem dünnen gebogenen Stab, von dem eine Schnur zur Spindel läuft."
+          }
+        },
+        {
+          "id": "ball-bearing",
+          "name": "Das Kugellager",
+          "place": "Maschinenhalle",
+          "does": "Acht Holzkugeln zwischen zwei Platten. So rollt eine schwere Last beim Drehen und reibt weniger. Kleine Räder auf Zapfen halten jede Kugel von der nächsten fern.",
+          "rows": [
+            {
+              "k": "row_sheet",
+              "v": "Codex Madrid I, Blatt 20 verso. Biblioteca Nacional de España, Madrid. Das Notizbuch stammt aus den 1490er Jahren und trägt die Daten 1493 und 1497."
+            },
+            {
+              "k": "row_ours",
+              "v": "Die Form der Kugeln und der kleinen Räder. So lesen wir das Blatt."
+            }
+          ],
+          "pic": {
+            "pic": "ball_bearing",
+            "tag": "tag_reconstruction",
+            "alt": "Das Kugellager allein auf einem Fliesenboden: Eine dicke runde Scheibe mit einem Loch in der Mitte ruht auf einem Kranz von Kugeln über einem zweiten Ring, auf zwei Holzbalken."
+          }
+        },
+        {
+          "id": "flywheel",
+          "name": "Das Schwungrad",
+          "place": "Maschinenhalle",
+          "does": "Ein schweres Rad, das Bewegung speichert und zurückgibt, wenn der Antrieb stockt. Das Blatt vergleicht umlaufende Gewichte und fragt, welche Anordnung am besten läuft.",
+          "rows": [
+            {
+              "k": "row_sheet",
+              "v": "Codex Madrid I, Blatt 114 recto. Biblioteca Nacional de España, Madrid. Das Notizbuch stammt aus den 1490er Jahren und trägt die Daten 1493 und 1497."
+            },
+            {
+              "k": "row_ours",
+              "v": "Vier gleiche Gewichte an starren Speichen. Diese Anordnung stammt vom Museum. Sie ist keine der Figuren auf dem Blatt."
+            }
+          ],
+          "pic": {
+            "pic": "flywheel",
+            "tag": "tag_reconstruction",
+            "alt": "Das Schwungrad allein auf einem Fliesenboden: Ein senkrechter Pfosten auf einem Kreuzfuß trägt vier Speichen, jede mit einer Kugel am Ende."
+          }
+        }
+      ]
+    },
+    {
+      "type": "group",
+      "id": "instruments",
+      "nav": "Messgeräte",
+      "h": "Geräte zum Messen und zum Sehen",
+      "intro": "Drei kleinere Stücke. Eines misst den Wind, eines ändert die Größe einer Zeichnung, eines zeigt, was das Licht auf dem Weg in einen dunklen Raum tut.",
+      "items": [
+        {
+          "id": "anemometer",
+          "name": "Der Windmesser",
+          "place": "Hof",
+          "does": "Der Wind drückt eine Klappplatte aus der Senkrechten. Je höher sie an ihrem Bogen steht, desto stärker weht er. Seine Notiz will mehr: messen, wie weit man mit einem Wind in einer Stunde kommt, und dafür verlangt sie eine Uhr. Die Platte allein zeigt nur die Kraft des Windes.",
+          "rows": [
+            {
+              "k": "row_sheet",
+              "v": "Codex Atlanticus, Blatt 675 recto. Veneranda Biblioteca Ambrosiana, Mailand. Das Blatt wird auf etwa 1487 bis 1490 datiert."
+            },
+            {
+              "k": "row_ours",
+              "v": "Die Teilstriche, das Gestell und alle Maße."
+            },
+            {
+              "k": "row_built",
+              "v": "Ein Bau zu seinen Lebzeiten ist nicht gesichert. Leon Battista Alberti beschrieb 1450 eine ähnliche Platte. Als Leonardos alleinige Erfindung belegen die Quellen sie also nicht."
+            }
+          ],
+          "pic": {
+            "pic": "anemometer",
+            "tag": "tag_reconstruction",
+            "alt": "Der Windmesser allein auf einem Fliesenboden: ein Holzgestell auf zwei Füßen, an dessen oberem Balken ein quadratisches Brett hängt, daneben eine gebogene Skala."
+          }
+        },
+        {
+          "id": "proportional-compass",
+          "name": "Der Proportionalzirkel",
+          "place": "Haus, auf dem Tisch",
+          "does": "Zwei spitze Schenkel, die sich an einem Gelenk kreuzen. Er überträgt eine Strecke in einem gewählten Verhältnis. So wird eine Zeichnung größer oder kleiner.",
+          "rows": [
+            {
+              "k": "row_sheet",
+              "v": "Codex Forster I, Blatt 4 recto, von 1505 aus Florenz. Victoria and Albert Museum, National Art Library, London."
+            },
+            {
+              "k": "row_ours",
+              "v": "Die Lage des Gelenks. Wir haben es so gesetzt, dass die langen Spitzen doppelt so weit öffnen wie die kurzen."
+            },
+            {
+              "k": "row_built",
+              "v": "Zu dieser Zeichnung ist weder ein erhaltenes Instrument noch ein Beleg für einen Bau bekannt."
+            }
+          ],
+          "pic": {
+            "pic": "proportional_compass",
+            "tag": "tag_reconstruction",
+            "alt": "Der Proportionalzirkel steht auf seinen zwei langen Spitzen auf einem Fliesenboden: Zwei dunkle Schenkel kreuzen sich an einem Gelenk, darüber zwei kurze Spitzen."
+          }
+        },
+        {
+          "id": "camera-obscura",
+          "name": "Die Camera obscura",
+          "place": "Maschinenhalle",
+          "does": "Ein dunkler Raum mit einem kleinen Loch. Im Loch kreuzen sich die Lichtstrahlen und werfen das Bild verkehrt herum aufs Papier. Er untersuchte damit, wie das Auge sieht.",
+          "rows": [
+            {
+              "k": "row_sheet",
+              "v": "Manuskript D, Blatt 8 recto. Bibliothèque de l'Institut de France, Paris. Die Notiz beschreibt ein kleines rundes Loch in einer dünnen Eisenplatte. Das Notizbuch wird auf etwa 1508 bis 1509 datiert."
+            },
+            {
+              "k": "row_ours",
+              "v": "Die kleine Kammer selbst. Die Notiz nennt weder die Tiefe des Raums noch die Größe des Lochs."
+            },
+            {
+              "k": "row_built",
+              "v": "Die Notiz beschreibt einen Versuch. Sie belegt nicht, dass er die Camera obscura erfand."
+            }
+          ],
+          "pic": {
+            "pic": "camera_obscura",
+            "tag": "tag_reconstruction",
+            "alt": "Die Camera obscura allein auf einem Fliesenboden: ein Holzkasten, an einer Seite offen, damit man hineinsieht. Vor der Wand mit dem kleinen Loch brennt eine Kerze, im Kasten steht ihr Bild auf dem Kopf."
+          }
+        }
+      ]
+    },
+    {
+      "type": "group",
+      "id": "war",
+      "nav": "Kriegsmaschine",
+      "h": "Eine Kriegsmaschine",
+      "intro": "Eine Kriegsmaschine steht in der Halle, als Schaustück, das nicht schießen kann.",
+      "items": [
+        {
+          "id": "organ-gun",
+          "name": "Das Orgelgeschütz",
+          "place": "Maschinenhalle",
+          "does": "Dreiunddreißig Rohre in drei Reihen auf einem Gestell. Nach seiner Notiz werden jeweils elf zugleich abgefeuert. Dreht man das Gestell, kommt die nächste Reihe nach oben.",
+          "rows": [
+            {
+              "k": "row_sheet",
+              "v": "Codex Atlanticus, Blatt 157 recto. Veneranda Biblioteca Ambrosiana, Mailand. Das Blatt wird auf etwa 1480 bis 1482 datiert."
+            },
+            {
+              "k": "row_ours",
+              "v": "Die Maße des Wagens und sein Tempo. Hier wird nicht geschossen: Die Rohre sind massiv."
+            },
+            {
+              "k": "row_built",
+              "v": "Einen Beleg für einen Bau zu seinen Lebzeiten haben wir nicht gefunden."
+            }
+          ],
+          "pic": {
+            "pic": "organ_gun",
+            "tag": "tag_reconstruction",
+            "alt": "Das Orgelgeschütz allein auf einem Fliesenboden: Ein Karren auf zwei Speichenrädern trägt ein Gestell mit Reihen dunkler Rohre und einem Griff an der Seite."
+          }
+        }
+      ]
+    },
+    {
+      "type": "feature",
+      "id": "mechanical-lion",
+      "nav": "Der Löwe",
+      "h": "Der mechanische Löwe",
+      "place": "Haus, an der Wand des Großen Saals",
+      "paras": [
+        "Der Löwe ist die eine Maschine hier ohne Blatt. Vasari schrieb 1568, der König von Frankreich sei nach Mailand gekommen, und Leonardo, um etwas Seltsames gebeten, habe einen Löwen gemacht. Der ging einige Schritte, öffnete dann die Brust und zeigte sie voller Lilien."
+      ],
+      "rows": [
+        {
+          "k": "row_accounts",
+          "v": "Nur alte Berichte. Eine Zeichnung des Löwen ist nicht erhalten, und die Berichte nennen verschiedene Orte, Jahre und Könige."
+        },
+        {
+          "k": "row_ours",
+          "v": "Alles im Inneren: eine Feder, ein Räderwerk, Kurbeln, die die Beine schwingen, ein Zählrad, das den Gang beendet, und ein Riegel, der die Brust öffnet."
+        },
+        {
+          "k": "row_built",
+          "v": "Die alten Berichte sagen, dass er ging. Erhalten ist nichts von ihm."
+        }
+      ],
+      "pic": {
+        "pic": "lion",
+        "tag": "tag_reconstruction",
+        "what": "nach alten Berichten in Code gebaut",
+        "alt": "Der mechanische Löwe allein auf einem Fliesenboden: ein Löwe aus Holz und Metall mit erhobenem Schwanz, in seiner Flanke sind die Räder des Werks zu sehen."
+      }
+    },
+    {
+      "type": "notes",
+      "id": "not-built",
+      "nav": "Panzer, Brücken, Roboter",
+      "h": "Der Panzer, die Brücken und der Roboter",
+      "intro": "Nichts davon hat das Museum gebaut. Die meisten gehören zu siebenundzwanzig weiteren Studien von ihm, die zu wenig hergeben, um danach zu bauen. Einige Blätter dieser Studien gehören zu den Seiten am Lesetisch.",
+      "rows": [
+        {
+          "term": "Der gepanzerte Wagen, oft sein Panzer genannt",
+          "text": "Ein geschlossener Kampfwagen auf einem einzelnen Blatt im British Museum in London, das es auf etwa 1485 datiert. Menschen im Inneren drehen Kurbeln, die Notiz nennt acht. Das British Museum führt ihn als nicht gebaut. Das Blatt nennt keine Maße, und wie der Wagen gelenkt werden sollte, ist offen."
+        },
+        {
+          "term": "Die Brücke aus Stangen",
+          "text": "Codex Atlanticus, Blatt 69a recto und Blatt 71 verso, in der Veneranda Biblioteca Ambrosiana in Mailand, vom Standardkatalog auf etwa 1485 bis 1487 datiert. Sie zeigen eine hölzerne Behelfsbrücke für ein Heer. In seiner Notiz heißt es, man solle die Brücke flechten. Ein Museum in Vinci liest die Zeichnung so: Stämme, die ineinandergreifen und ohne Seil stehen. Einen Beleg, dass eine zu seinen Lebzeiten gebaut wurde, haben wir nicht gefunden."
+        },
+        {
+          "term": "Die Brücke über das Goldene Horn",
+          "text": "Manuskript L, Blatt 66 recto, in der Bibliothèque de l'Institut de France in Paris, ein Notizbuch, das auf etwa 1497 bis 1504 datiert wird. Eine Skizze mit einer Notiz: eine Brücke von Pera nach Konstantinopel, 40 Braccia breit, 70 über dem Wasser und 600 lang. Man nimmt an, dass sie von 1502 stammt. Gebaut wurde sie nicht. 2001 wurde in Norwegen eine Fußgängerbrücke nach der Skizze eröffnet."
+        },
+        {
+          "term": "Die Schlagflügel",
+          "text": "Manuskript B, auf etwa 1487 bis 1489 datiert, enthält mehrere Studien zu Geräten mit schlagenden Flügeln, darunter die Blätter 74 verso und 80 recto. Auf dem einen liegt der Pilot und bewegt die Flügel mit den Füßen. Auf dem anderen steht er, und die Spannweite beträgt 40 Braccia, etwa 23 Meter. Ein Flug zu seinen Lebzeiten ist nicht belegt."
+        },
+        {
+          "term": "Die Studien zum Gleitflug",
+          "text": "Der Kodex über den Vogelflug von 1505 liegt in der Biblioteca Reale in Turin. Seine Seiten untersuchen Flügelgelenke, Steuerzüge und das Gleichgewicht. Keine von ihnen ist ein vollständiger Plan für einen Gleiter."
+        },
+        {
+          "term": "Der mechanische Ritter, oft sein Roboter genannt",
+          "text": "Der Ritter ist eine heutige Deutung, die getrennte Studien im Codex Atlanticus verbindet. Sie werden auf etwa 1495 bis 1497 datiert. Eine vollständige Zeichnung eines Ritters kennen wir nicht, und ein Bau zu seinen Lebzeiten ist nicht gesichert."
+        },
+        {
+          "term": "Das Tauchgerät",
+          "text": "Codex Arundel, Blatt 24 verso, in der British Library in London, und Codex Atlanticus, Blatt 909 verso, auf etwa 1485 bis 1487 datiert. Die Notizen beschreiben Atemrohre mit Verbindungen aus Leder und Eisen, eine Glasmaske und Beutel. Wie die Luft vollständig geführt werden soll, steht dort nicht, und ein Tauchgang mit dieser Ausrüstung ist nicht belegt."
+        },
+        {
+          "term": "Der selbstfahrende Wagen",
+          "text": "Codex Atlanticus, Blatt 812 recto, auf etwa 1478 datiert, von einer älteren Untersuchung auf etwa 1482 bis 1484. Forscher deuten heute verdeckte Spiralfedern als Antrieb und sehen in ihm einen Wagen für das Theater. Ein Auto für Fahrgäste ist damit nicht belegt."
+        },
+        {
+          "term": "Die Riesenarmbrust",
+          "text": "Codex Atlanticus, Blatt 149b recto, auf etwa 1485 datiert. Er nennt 42 Braccia Spannweite, etwa 24 bis 25 Meter. Wie der riesige Bogen gebaut sein sollte, lässt das Blatt offen, und ein Bau zu seinen Lebzeiten ist nicht belegt."
+        }
+      ]
+    },
+    {
+      "type": "faq",
+      "id": "questions",
+      "nav": "Fragen",
+      "h": "Häufige Fragen",
+      "items": [
+        {
+          "q": "Was hat Leonardo da Vinci erfunden?",
+          "a": "Eine Maschine, die sicher seine eigene Idee war und sicher gebaut wurde, lässt sich schwer nennen. Er zeichnete viele, und für fast alle fand unsere Recherche keinen Beleg, dass er eine davon baute. Mehrere Arten waren älter als er: Kanalschleusen, die Wasserschnecke, eine Windplatte, die Alberti 1450 beschrieb. Nachschlagewerke schreiben ihm oft das Schleusentor aus zwei schräg schließenden Flügeln zu. Was auf den Blättern steht, ist sein eigenes Durchdenken einer Aufgabe: eine Luftschraube aus gestärktem Leinen, ein Fallschirm mit seinen Maßen, ein Lager aus acht Holzkugeln."
+        },
+        {
+          "q": "Hat Leonardo da Vinci den Hubschrauber erfunden?",
+          "a": "Er zeichnete eine Luftschraube, ein Spiralsegel an einem Mast, und schrieb, schnell gedreht steige sie auf. Einen Antrieb für die große nennt das Blatt nicht. Für ein kleines Papiermodell nennt es einen verdrehten Eisenstreifen als Feder. Dass sie zu seinen Lebzeiten gebaut wurde, ist nicht bekannt, und nach unserer Schätzung bräuchte eine Maschine von 400 Kilogramm mindestens neunzehn Kilowatt, um abzuheben. Wer sie Hubschrauber nennt, sagt mehr, als das Blatt hergibt."
+        },
+        {
+          "q": "Hat Leonardo da Vincis Flugmaschine funktioniert?",
+          "a": "Ein eigener Flug von ihm ist nicht belegt. Seine Studien zu Schlagflügeln ergeben keinen vollständigen Bauplan. In seinem Notizbuch über den Vogelflug kündigt er einen Flug an, geschrieben in der Zukunftsform. Ein Bericht ist das nicht."
+        },
+        {
+          "q": "Hat Leonardo da Vinci den Panzer erfunden?",
+          "a": "Er zeichnete einen gepanzerten Wagen, geschlossen und von Menschen bewegt, die im Inneren Kurbeln drehen. Das British Museum, das die Zeichnung bewahrt, führt ihn als nicht gebaut. Die Bezeichnung Panzer beweist nicht, dass er den modernen Panzer erfand."
+        },
+        {
+          "q": "Hat Leonardo da Vinci eine Brücke entworfen?",
+          "a": "Ja, mehr als eine. Zwei Blätter des Codex Atlanticus, auf etwa 1485 bis 1487 datiert, zeigen eine hölzerne Behelfsbrücke für ein Heer. Ein Museum in Vinci liest sie als Stämme, die einander ohne Seil halten. Eine Skizze im Manuskript L gilt einer Brücke von Pera nach Konstantinopel, über das Goldene Horn. Gebaut wurde sie nicht. 2001 wurde in Norwegen eine Fußgängerbrücke nach dieser Skizze eröffnet."
+        },
+        {
+          "q": "Wo sind Leonardo da Vincis Notizbücher heute?",
+          "a": "Die Originale liegen in wenigen Bibliotheken und Sammlungen, keines davon in diesem Museum. Der Codex Atlanticus mit 1.119 Blättern liegt in der Veneranda Biblioteca Ambrosiana in Mailand. Zwölf Notizbücher sind in der Bibliothèque de l'Institut de France in Paris, zwei in der Biblioteca Nacional de España in Madrid und fünf, in drei Bänden gebunden, im Victoria and Albert Museum in London. Etwa 550 Blätter liegen in der Royal Collection in Windsor. Der Codex Arundel ist in der British Library in London, der Kodex über den Vogelflug in der Biblioteca Reale in Turin. Ein Notizbuch ist in Privatbesitz. Am Lesetisch dieses Museums blätterst du durch fotografierte Seiten, und jede nennt das Notizbuch, aus dem sie stammt."
+        }
+      ]
+    },
+    {
+      "type": "sources",
+      "id": "sources",
+      "nav": "Quellen",
+      "h": "Quellen",
+      "intro": "Die Tatsachen auf dieser Seite stammen aus der Recherche zum Leonardo-Flügel des Museums. Sie wurden mit den Katalogen der Häuser und den digitalen Ausgaben der Notizbücher abgeglichen, soweit diese zugänglich waren. Im Museum hat jede Maschine, aus der Nähe gesehen, ihren Eintrag: das Blatt, was das Blatt nicht sagt, die Rechnung und die Quellen.",
+      "holders_h": "Wo die vierzehn Zeichnungen liegen",
+      "holders": [
+        {
+          "name": "Veneranda Biblioteca Ambrosiana",
+          "place": "Mailand",
+          "text": "Codex Atlanticus, Blätter 6 recto, 108 recto, 157 recto, 656a recto, 675 recto, 1058 recto und 1058 verso."
+        },
+        {
+          "name": "Bibliothèque de l'Institut de France",
+          "place": "Paris",
+          "text": "Manuskript B, Blätter 49 recto und 83 verso. Manuskript D, Blatt 8 recto. Manuskript I, Blatt 48 verso."
+        },
+        {
+          "name": "Biblioteca Nacional de España",
+          "place": "Madrid",
+          "text": "Codex Madrid I, Blätter 20 verso und 114 recto."
+        },
+        {
+          "name": "Victoria and Albert Museum, National Art Library",
+          "place": "London",
+          "text": "Codex Forster I, Blatt 4 recto."
+        }
+      ],
+      "notes": [
+        "Zum Löwen: Vasari, Le vite, in der Ausgabe von 1568, und spätere Berichte.",
+        "Zu den Zeichnungen, die wir nicht gebaut haben: das British Museum und die British Library in London, die Biblioteca Reale in Turin und die beiden oben genannten Bibliotheken für den Codex Atlanticus und für die Manuskripte B und L.",
+        "Die Datierungen der Blätter des Codex Atlanticus folgen dem Standardkatalog des Codex, wie ihn die Ausgabe des Museo Galileo abdruckt. Die Datierungen der Pariser Notizbücher und des Codex Forster I stammen von den Häusern selbst.",
+        "Das Museum nennt diese Häuser, weil sie die Originale bewahren. Es ist von ihnen allen unabhängig.",
+        "Die Bilder auf dieser Seite sind Standbilder aus dem eigenen Film des Museums: Räume und Maschinen, in Code gebaut. Das Buch am Lesetisch ist ein 1883 gedrucktes Faksimile des Manuskripts B, gemeinfrei wegen seines Alters."
+      ],
+      "editions_h": "Wo du die Blätter selbst lesen kannst",
+      "editions": [
+        {
+          "name": "Veneranda Biblioteca Ambrosiana",
+          "text": "Der Codex Atlanticus, Blatt für Blatt, jedes mit einer Jahreszahl.",
+          "links": [
+            {
+              "label": "Der Codex Atlanticus online",
+              "href": "https://codex-atlanticus.ambrosiana.it/"
+            }
+          ]
+        },
+        {
+          "name": "Bibliothèque de l'Institut de France",
+          "text": "Ihre eigenen Seiten zu den Pariser Notizbüchern, auf Französisch.",
+          "links": [
+            {
+              "label": "Manuskript B",
+              "href": "https://minerva.bibliotheque-institutdefrance.fr/expositions/exhibitions/2-carnet-b2"
+            },
+            {
+              "label": "Manuskript D",
+              "href": "https://minerva.bibliotheque-institutdefrance.fr/expositions/exhibitions/5-carnet-d"
+            },
+            {
+              "label": "Manuskript I",
+              "href": "https://minerva.bibliotheque-institutdefrance.fr/expositions/exhibitions/10-carnet-i2"
+            },
+            {
+              "label": "Manuskript L",
+              "href": "https://minerva.bibliotheque-institutdefrance.fr/expositions/exhibitions/12-carnet-l2"
+            }
+          ]
+        },
+        {
+          "name": "Biblioteca Leonardiana",
+          "text": "Die Bibliothek in Vinci. Ihre digitale Ausgabe e-Leo zeigt jedes Blatt mit seiner Umschrift, auf Italienisch.",
+          "links": [
+            {
+              "label": "e-Leo, aufgeschlagen beim Blatt des Fallschirms",
+              "href": "https://www.leonardodigitale.com/sfoglia/codice-atlantico/1058-v/"
+            }
+          ]
+        },
+        {
+          "name": "Museo Galileo",
+          "text": "Seine Ausgabe des Codex Atlanticus, mit der Ambrosiana erarbeitet, druckt die Katalogeinträge zu jedem Blatt ab.",
+          "links": [
+            {
+              "label": "Die Ausgabe, aufgeschlagen beim Blatt des Fallschirms",
+              "href": "https://teche.museogalileo.it/leonardo/foglio/index.html?lang=it&num=ATL.2116.1"
+            }
+          ]
+        }
+      ],
+      "contact": "Ist ein Datum, ein Blatt oder ein Haus falsch angegeben, schreib uns, und wir korrigieren es.",
+      "contact_link": "Zum Impressum",
+      "what_link": "Was dieses Museum ist"
+    },
+    {
+      "type": "close",
+      "id": "enter",
+      "nav": "",
+      "h": "Die Maschinen im Museum ansehen",
+      "p": "Die Tür führt an den Anfang des Leonardo-Flügels. Zuerst kommt der Bildersaal, die Maschinenhalle später auf dem Rundgang.",
+      "door": {
+        "text": "Ins Museum",
+        "note": "Eintritt frei, kein Konto."
+      }
+    }
+  ]
+}

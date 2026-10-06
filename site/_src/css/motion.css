@@ -1,0 +1,26 @@
+/* ---------- Motion: only after load, only for readers who have not asked for stillness.
+   Nothing here ever hides content: a plate below the fold stands a little dim with its lamp low,
+   and as it arrives the lamp comes up. ---------- */
+@media (prefers-reduced-motion:no-preference){
+  .is-loaded .hero__img{animation:settle 24s var(--ease) both}
+  @keyframes settle{from{transform:scale(1)}to{transform:scale(1.04)}}
+
+  /* Transitions exist only once the reader has scrolled (.is-armed): styles that arrive late never animate in. */
+  .is-armed [data-lit] img,.is-armed [data-lit] svg{transition:filter 1.1s ease}
+  .is-armed [data-lit] .hang::before{transition:opacity 1.4s ease}
+  .is-armed [data-lit] .label::before{transition:transform .8s .25s var(--ease)}
+  [data-lit].is-dim img,[data-lit].is-dim svg{filter:brightness(.5) saturate(.7)}
+  [data-lit].is-dim .hang::before{opacity:.15}
+  [data-lit].is-dim .label::before{transform:scaleX(0)}
+
+  /* The wall of wings: its lamps come on one after another, from the newest plate outward. site.js numbers them. */
+  .is-armed .wall [data-lit] img{transition-delay:calc(var(--i,0) * 110ms)}
+  .is-armed .wall [data-lit] .hang::before{transition-delay:calc(var(--i,0) * 110ms + 80ms)}
+  /* A showpiece's caption changes with its beats: the words cross over, the line keeps its height. */
+  [data-place] .label__what,[data-place] .label__src--slide{transition:opacity .35s ease}
+  [data-place] .label.is-changing .label__what,[data-place] .label.is-changing .label__src--slide{opacity:0}
+  .motion-paused .hero__img{animation-play-state:paused}
+}
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation:none!important;transition:none!important;scroll-behavior:auto!important}
+}

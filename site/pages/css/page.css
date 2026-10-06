@@ -1,0 +1,163 @@
+/* The museum's search pages: only what the site's shared styles do not have (the answer block, the
+   list of things with their plates, the sources, the questions). Set inline after the site's tokens
+   and base styles, so the door, the plate with its frame and pool, the label and the small-caps key
+   are the site's own. Phone first; the desktop build starts at 960px. Colours: only the site's roles. */
+
+.sp{padding-block:10px 72px}
+
+/* ---------- Where the reader is ---------- */
+.sp-crumbs{font-family:var(--sans);font-size:.8125rem;line-height:1.4;letter-spacing:.04em;color:var(--ink-quiet)}
+.sp-crumbs ol{display:flex;flex-wrap:wrap;column-gap:8px}
+.sp-crumbs li+li::before{content:"/";margin-right:8px;color:var(--hair-strong)}
+.sp-crumbs a{display:inline-block;padding:13px 0;margin:-13px 0;color:var(--ink-soft);text-decoration:none}
+.sp-crumbs a:hover{color:var(--ink);text-decoration:underline}
+
+/* ---------- The answer, its frame and the door ---------- */
+.sp-top{display:grid;gap:16px;margin-top:10px}
+.sp-top h1{font-size:clamp(1.875rem,8.2vw,2.375rem);line-height:1.08;letter-spacing:-.012em}
+/* The wing's name stands on one line of the h1. A long name is set smaller on a phone so it still fits
+   the narrowest column, and one too long for any line wraps between its words, the lines kept even. */
+.sp-top h1.sp-h1--long{font-size:clamp(1.5rem,6.6vw,2.375rem)}
+.sp-top h1.sp-h1--wrap{text-wrap:balance}
+.sp-answer{margin-top:10px;font-size:1.125rem;line-height:1.5;color:var(--ink);max-width:36rem}
+/* German display text never hyphenates (the site's rule); the answer is display text. */
+:lang(de) .sp-answer{hyphens:manual;-webkit-hyphens:manual}
+.sp-frame .hang{--pool-up:74%;--pool-side:30%;--pool-down:10%}
+/* On a phone the frame is cut to two to one and its label is one line: the door must stand on the first screen. */
+.sp-frame img{aspect-ratio:2/1;object-fit:cover;object-position:50% 62%}
+.sp-frame .sp-frame__label{display:flex;flex-wrap:wrap;align-items:baseline;column-gap:12px;row-gap:2px;margin-top:14px;padding-top:11px}
+.sp-frame__what{display:none}
+.sp-way{display:grid;gap:8px;justify-items:start}
+/* The door is as wide as its words need, never a bar across a phone (the site's rule). */
+.sp-way .door{min-width:min(100%,14.5rem)}
+.sp-way__note{font-family:var(--sans);font-size:.875rem;line-height:1.45;color:var(--ink-soft)}
+.sp-way__leads{font-family:var(--sans);font-size:.875rem;line-height:1.5;color:var(--ink-quiet);max-width:34rem}
+
+/* ---------- The page below the answer ---------- */
+.sp-grid{display:grid;margin-top:40px}
+.sp-toc{font-family:var(--sans);font-size:.9375rem;padding-top:16px;border-top:1px solid var(--hair-strong)}
+.sp-toc ol{margin-top:2px;columns:2;column-gap:20px}
+.sp-toc li{break-inside:avoid}
+.sp-toc a{display:inline-flex;align-items:center;min-height:44px;min-width:44px;color:var(--ink-soft);text-decoration:none}
+.sp-toc a:hover{color:var(--ink);text-decoration:underline}
+
+.sp-sec{padding-top:32px;margin-top:40px;border-top:1px solid var(--hair)}
+.sp-body__main>.sp-sec:first-child{border-top-color:var(--hair-strong)}
+.sp-sec h2{font-size:1.75rem;line-height:1.15;letter-spacing:-.005em}
+.sp-intro,.sp-after{margin-top:12px;color:var(--ink-body);max-width:38rem}
+
+/* A plate inside the page: every one the same cut, the same frame, the same place under its heading.
+   The heading names it, so its label is one quiet line without the chalk mark, and its pool stays
+   close, so it lights the wall and not the lines above it. */
+.sp-plate{margin-top:14px}
+.sp-plate .hang{--pool-up:30px;--pool-side:12%;--pool-down:-46%}
+.sp-plate img{aspect-ratio:16/9;object-fit:cover}
+.sp-plate .sp-plate__label{margin-top:11px;padding-top:0;max-width:none}
+.sp-plate__label::before{content:none}
+
+/* The places of the wing, each with its picture */
+.sp-stands{display:grid;gap:40px;margin-top:28px;max-width:42rem}
+.sp-stand h3{font-size:1.3125rem;line-height:1.25}
+.sp-stand__text{margin-top:12px;color:var(--ink-body)}
+.sp-after{margin-top:28px}
+
+/* A drawing we have not built, with what is known of it */
+.sp-dir{margin-top:20px;border-top:1px solid var(--hair);max-width:42rem}
+.sp-dir>div{padding:13px 0 15px;border-bottom:1px solid var(--hair)}
+.sp-dir dt{font-family:var(--serif);font-size:1.1875rem;line-height:1.25;color:var(--ink)}
+.sp-dir dd{margin-top:5px;color:var(--ink-soft)}
+
+/* One thing: its name, where it stands, its plate, what it does, then the sheet, our part and the record */
+.sp-item{margin-top:48px;max-width:42rem}
+.sp-item h3{font-size:1.4375rem;line-height:1.2}
+.sp-place{margin-top:6px;font-family:var(--sans);font-size:.875rem;line-height:1.45;color:var(--ink-soft)}
+.sp-place .key{margin-right:.5em}
+.sp-text{margin-top:14px}
+.sp-does{color:var(--ink-body);max-width:38rem}
+.sp-does+.sp-does{margin-top:10px}
+.sp-feature .sp-item{margin-top:8px}
+.sp-rows{margin-top:16px;border-top:1px solid var(--hair);max-width:42rem}
+.sp-rows>div{display:grid;gap:2px;padding:9px 0 11px;border-bottom:1px solid var(--hair)}
+.sp-rows dd{font-family:var(--sans);font-size:.9375rem;line-height:1.5;color:var(--ink-soft)}
+
+/* Questions */
+.sp-q{margin-top:28px;max-width:38rem}
+.sp-q h3{font-size:1.3125rem;line-height:1.25}
+.sp-q p{margin-top:8px;color:var(--ink-body)}
+
+/* Sources */
+.sp-sources h3{margin-top:28px}
+.sp-holders{margin-top:8px;max-width:42rem;border-bottom:1px solid var(--hair)}
+.sp-holders li{display:grid;gap:2px;padding:10px 0 11px;border-top:1px solid var(--hair);font-family:var(--sans);font-size:.9375rem;line-height:1.45}
+.sp-holders__name{color:var(--ink)}
+.sp-holders__what{color:var(--ink-soft)}
+/* A link out of the museum: a line of its own, tall enough for a thumb. */
+.sp-editions li{padding-bottom:2px}
+.sp-links{display:flex;flex-wrap:wrap;column-gap:22px}
+.sp-links a{display:inline-block;padding:11px 0;color:var(--ink)}
+.sp-note,.sp-contact{margin-top:12px;font-family:var(--sans);font-size:.9375rem;line-height:1.5;color:var(--ink-soft);max-width:38rem}
+.sp-contact a{display:inline-block;padding:11px 0;margin:-11px 0}
+.sp-more{margin-top:6px}
+
+.sp-close .sp-way{margin-top:22px}
+
+/* The narrowest phones: the door has to stand on the first screen, so the top is set closer. */
+@media (max-width:359px){
+  .sp-crumbs{letter-spacing:0}
+  .sp-crumbs ol{column-gap:6px}
+  .sp-crumbs li+li::before{margin-right:6px}
+  .sp-top{gap:10px;margin-top:6px}
+  .sp-top h1{font-size:1.75rem}
+  .sp-top h1.sp-h1--long{font-size:1.375rem}
+  .sp-answer{margin-top:8px;font-size:1rem}
+  .sp-frame img{aspect-ratio:5/2}
+  .sp-frame .sp-frame__label{margin-top:9px;padding-top:7px;row-gap:0}
+  .sp-frame .label__title{font-size:1rem}
+}
+
+@media (min-width:600px){
+  .sp-frame img{aspect-ratio:16/9;object-position:50% 50%}
+  .sp-toc ol{columns:3}
+  .sp-stands{grid-template-columns:1fr 1fr;column-gap:24px;row-gap:44px}
+  /* The plate hangs at the left of its entry, the name and the words beside it, the rows below both. */
+  .sp-item{display:grid;grid-template-columns:15rem minmax(0,1fr);grid-template-rows:auto auto 1fr auto;column-gap:24px;
+    grid-template-areas:"pic name" "pic place" "pic text" "rows rows"}
+  .sp-item>h3{grid-area:name}
+  .sp-item>.sp-place{grid-area:place}
+  .sp-item>.sp-plate{grid-area:pic;margin-top:5px}
+  /* Beside the words the plate is narrow: the kind word takes a line of its own. */
+  .sp-item .sp-plate__label .tag{display:block}
+  .sp-item>.sp-text{grid-area:text;margin-top:10px}
+  .sp-item>.sp-rows{grid-area:rows;margin-top:22px}
+  .sp-feature .sp-item{margin-top:20px}
+  .sp-feature .sp-item>.sp-place{margin-top:0}
+}
+@media (min-width:960px){
+  .sp{padding-block:22px 120px}
+  .sp-top{grid-template-columns:repeat(12,1fr);column-gap:24px;row-gap:28px;margin-top:30px;align-items:start}
+  .sp-top__text{grid-column:1/7}
+  .sp-frame{grid-column:7/13;grid-row:1/3}
+  .sp-frame .hang{--pool-up:44%;--pool-side:26%;--pool-down:14%}
+  .sp-frame .sp-frame__label{display:grid;gap:3px;margin-top:18px;padding-top:13px}
+  .sp-frame__what{display:inline}
+  .sp-way{grid-column:1/7;gap:8px}
+  /* The smallest size is the one at which a name of the longest kept length still fits the text column. */
+  .sp-top h1{font-size:clamp(2.625rem,4.5vw,3.875rem);line-height:1.04;letter-spacing:-.014em}
+  .sp-top h1.sp-h1--long{font-size:clamp(2rem,3.3vw,2.875rem)}
+  .sp-answer{margin-top:22px;font-size:1.3125rem;line-height:1.5}
+  .sp-grid{grid-template-columns:repeat(12,1fr);column-gap:24px;margin-top:88px}
+  .sp-toc{grid-column:1/4;position:sticky;top:calc(var(--top-h) + 24px);align-self:start}
+  .sp-toc ol{columns:1}
+  .sp-body__main{grid-column:5/12}
+  .sp-body__main>.sp-sec:first-child{margin-top:0}
+  /* One right edge for the lines, the lists and the plates: the column's own. */
+  .sp-dir,.sp-item,.sp-rows,.sp-holders,.sp-stands{max-width:none}
+  .sp-sec{padding-top:40px;margin-top:56px}
+  .sp-sec h2{font-size:2.125rem}
+  .sp-item{margin-top:56px;grid-template-columns:18rem minmax(0,1fr);column-gap:28px}
+  .sp-item h3{font-size:1.5625rem}
+  .sp-rows>div{grid-template-columns:9.5rem 1fr;gap:18px;padding:10px 0 12px}
+  .sp-rows dt{padding-top:3px}
+  .sp-holders li{grid-template-columns:19rem 1fr;gap:18px}
+  .sp-links{column-gap:26px}
+}

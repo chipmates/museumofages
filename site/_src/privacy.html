@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="{{lang}}" class="sheet">
+<head>
+{{head}}
+</head>
+<body class="doc">
+{{header}}
+
+<main id="main" class="statement">
+  <div class="wrap statement__grid">
+    <header class="statement__head">
+      <h1>{{privacy.h1}}</h1>
+      <p class="lead">{{privacy.lead}}</p>
+      <p class="statement__date">{{privacy.updated}}</p>
+    </header>
+
+    <nav class="toc toc--long" aria-label="{{page_what.toc_h}}">
+      <h2 class="toc__h">{{page_what.toc_h}}</h2>
+      <ol>{{html.toc}}</ol>
+    </nav>
+
+    <!-- The sections come from the privacy page's own data: their number and their order are the data's. -->
+    <div class="statement__body">
+{{html.sections}}
+      <div class="statement__end">
+        <a class="more more--back" href="{{href.home}}"><span>{{page_what.back}}</span></a>
+      </div>
+    </div>
+  </div>
+</main>
+
+{{footer}}
+{{script.faces}}
+<script src="{{static}}site.js" defer></script>
+</body>
+</html>

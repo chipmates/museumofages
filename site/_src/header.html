@@ -1,0 +1,39 @@
+<a class="skip" href="#main">{{a11y.skip}}</a>
+
+<!-- The header: the bar, which stays, and the line that says whose project this is (one switch in build.py),
+     which leaves the screen with the page. -->
+<header class="masthead">
+{{html.project_over}}<div class="top" data-top>
+  <div class="top__in">
+    <a class="brand" href="{{href.home}}">
+      <!-- The sign, drawn into the page (build.py): the master on 32 beside the name and the small line. -->
+      <span class="brand__mark is-set" data-slot="mark" aria-hidden="true">{{svg.sign}}</span>
+      <span class="brand__text"><span class="brand__name">Museum of Ages</span> <span class="brand__desc">{{brand.descriptor}}</span></span>
+    </a>
+    <!-- The menu, the same on every page, from the registry. The bar carries it on a wide screen. -->
+    <nav class="top__nav" aria-label="{{a11y.nav}}">
+      {{html.nav_wings}}
+      <a href="{{href.what}}"{{attr.what_current}}>{{nav.what}}</a>
+    </nav>
+    <a class="lang" href="{{href.lang_other}}" lang="{{other_lang}}" hreflang="{{other_lang}}">{{a11y.lang_switch}}</a>
+    <!-- The one way in: the door of the page's wing, or of the newest open wing. -->
+    <a class="door door--small top__door" href="{{href.enter}}"><span>{{nav.enter}}</span>{{svg.arrow}}</a>
+    <!-- The same menu on a narrow screen, behind three lines of rising weight: layers of earth. Its name is spoken,
+         not shown. It opens without a script. -->
+    <details class="menu" data-menu>
+      <summary class="menu__btn"><span class="vh">{{nav.menu}}</span><span class="menu__layers" aria-hidden="true"><span></span><span></span><span></span></span></summary>
+      <div class="menu__panel" id="site-menu">
+        <nav aria-label="{{a11y.nav}}">
+          {{html.menu_wings}}
+          <ul class="menu__list menu__list--site">
+            <li><a href="{{href.what}}"{{attr.what_current}}>{{nav.what}}</a></li>
+            <li><a href="{{href.lang_other}}" lang="{{other_lang}}" hreflang="{{other_lang}}">{{a11y.lang_switch}}</a></li>
+          </ul>
+        </nav>
+        <a class="door menu__door" href="{{href.enter}}"><span>{{nav.enter}}</span>{{svg.arrow}}</a>
+      </div>
+    </details>
+  </div>
+  <div class="arc" aria-hidden="true"><span class="arc__line"><span class="arc__sun"></span></span></div>
+</div>
+{{html.project}}</header>

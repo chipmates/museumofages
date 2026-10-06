@@ -1,0 +1,550 @@
+/* Museum of Ages, the museum's page and a wing's page below the first screen. Loaded without blocking the first
+   paint. No rule here names a wing or one of its rooms: a room's hang follows from how many plates it has and
+   from their shapes (render.py), and a plate's own cut is written in the wing's data. */
+
+/* ---------- A wing's rooms, in the order of the walk: a small hang each. Its name comes first, then its picture
+   with the label, then one or two sentences. What a room holds stands lower on the page. ---------- */
+.rooms{margin-top:44px;display:grid;gap:60px}
+.room{display:grid;gap:16px;align-content:start;scroll-margin-top:20px}
+.room h3{font-size:1.625rem;line-height:1.18}
+/* A room's plate and its words are one block under its name: the words follow their own caption. */
+.room__body{display:grid;gap:16px;align-content:start}
+.room .label{margin-top:16px}
+.room__text p{color:var(--ink-body);max-width:34rem}
+.room__text p+p{margin-top:10px}
+.room__plates{display:grid;gap:26px}
+/* A room that is itself a lit wall: its lamp is lower, so the room's own lights carry. */
+.room--lamp-low,.place--lamp-low{--lit:color-mix(in oklab,var(--ground-lit) 78%,var(--ground-wall))}
+
+/* ---------- A group of the index that is plates beside text. Its heading is its first line on every screen:
+   no picture stands above the heading it belongs to. ---------- */
+.place{margin-top:72px;display:grid;gap:26px;scroll-margin-top:20px}
+.place__h{order:-2;margin-bottom:-8px;font-size:1.625rem;line-height:1.18}
+.place__text p{color:var(--ink-body);max-width:34rem}
+.place__text p+p{margin-top:10px}
+/* Two plates, the narrow one first: plate, text, plate. The wide one first: the text opens the group. */
+.place--tall-first .place__p--tall{order:1}
+.place--tall-first .place__text{order:2}
+.place--tall-first .place__p--wide{order:3}
+.place--wide-first .place__text,.place--row .place__text,.place--wide .place__text{order:-1}
+/* A term's half sentence, the first time the term stands: a quiet note under the text it belongs to. */
+.terms,.place__text .terms,.hgroup__text .terms{font-family:var(--sans);font-size:.8125rem;line-height:1.5;letter-spacing:.01em;color:var(--ink-quiet);max-width:34rem}
+.place__text .terms{margin-top:12px}
+.hgroup__text .terms{margin-top:14px}
+/* ---------- How a visit works: one stop of the newest wing, its picture and its three texts ---------- */
+.stop__grid{display:grid;gap:34px}
+.plate-btn{display:inline-flex;align-items:center;gap:10px;min-height:44px;padding:0 16px;background:transparent;border:1px solid var(--hair-strong);border-radius:2px;font-family:var(--sans);font-size:.9375rem;letter-spacing:.03em;color:var(--ink);cursor:pointer}
+.plate-btn::before{content:"";width:11px;height:11px;border-inline:3.5px solid currentColor}
+.plate-btn[data-held="true"]::before{width:0;height:0;border:0;border-block:6px solid transparent;border-left:10px solid currentColor}
+.plate-btn:hover{border-color:var(--ink)}
+/* The film's sound: its sign shows the sound as it is, waves while it plays, a cross while it is off. */
+.snd{display:inline-flex;align-items:center;gap:10px;min-height:44px;padding:0 16px;background:transparent;border:1px solid var(--hair-strong);border-radius:2px;font-family:var(--sans);font-size:.9375rem;letter-spacing:.03em;color:var(--ink);cursor:pointer;white-space:nowrap;flex:0 0 auto}
+.snd:hover{border-color:var(--ink)}
+.snd svg{width:18px;height:18px;flex:none}
+.snd .snd__mute,.snd[aria-pressed="true"] .snd__waves{display:none}
+.snd[aria-pressed="true"] .snd__mute{display:inline}
+/* On a phone the button is its sign alone, so it stays in one row with the film's control. */
+@media (max-width:599px){
+  .snd{width:44px;padding:0;justify-content:center}
+  .snd .snd__t{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap}
+}
+/* A stage with a model to turn is a niche in the wall: the darkest ground, so the model's light is the only
+   light in it. Until the model has loaded, and where it cannot, its poster is the picture. */
+.stage__view{--split:40%;--stage-line:var(--mark);--stage-line-2:var(--ink-quiet);position:relative;aspect-ratio:1/1;background:var(--ground-edge);overflow:hidden;touch-action:pan-y;user-select:none;-webkit-user-select:none}
+.stage__view picture{position:absolute;inset:0}
+.stage__poster,.stage__canvas{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.stage__canvas{opacity:0;transition:opacity .5s;cursor:grab}
+.stage__view.is-live .stage__canvas{opacity:1}
+.stage__view.is-held .stage__canvas{cursor:grabbing}
+.stage__tag{position:absolute;top:14px;font-family:var(--sans);font-size:.75rem;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-soft);pointer-events:none}
+.stage__tag--a{left:16px}
+.stage__tag--b{right:16px}
+/* The line between the drawing and the built machine is the chalk line. Its grip is a ring, never a fill. */
+.stage__rule{position:absolute;top:0;bottom:0;left:var(--split);width:1px;background:var(--mark);pointer-events:none}
+.stage__rule::after{content:"";position:absolute;left:50%;bottom:22px;width:44px;height:44px;margin-left:-22px;border-radius:50%;border:1px solid var(--ink);background:color-mix(in srgb,var(--ground-edge) 86%,transparent) center/22px 22px no-repeat;background-image:linear-gradient(to right,transparent 9px,var(--ink) 9px,var(--ink) 10px,transparent 10px,transparent 12px,var(--ink) 12px,var(--ink) 13px,transparent 13px)}
+.stage__range{position:absolute;left:0;right:0;bottom:22px;width:100%;height:44px;margin:0;opacity:0;cursor:ew-resize;-webkit-appearance:none;appearance:none;background:transparent}
+.stage__range::-webkit-slider-thumb{-webkit-appearance:none;width:44px;height:44px}
+.stage__range::-moz-range-thumb{width:44px;height:44px;border:0}
+.stage__range:disabled{display:none}
+.stage__view:has(.stage__range:disabled) .stage__rule::after{display:none}
+.stage__view:has(.stage__range:focus-visible) .stage__rule::after{outline:2px solid var(--focus);outline-offset:3px}
+/* The model's control and hint stand under the caption, so the caption stays directly under the picture. The
+   row keeps its height from the first paint. */
+.stage__controls{display:flex;flex-wrap:wrap;align-items:center;gap:6px 16px;margin-top:12px;min-height:44px}
+.stage .label{margin-top:14px;max-width:none}
+.stage .hang{--pool-down:-50%}
+/* One stop of a set, up close: its model, the museum's own label for it, its three texts, and what the sheet
+   gives beside what the museum chose. On the phone the rows follow the model, and the texts come after them. */
+.upclose{margin-top:34px;padding-top:26px;border-top:1px solid var(--hair-strong);display:grid;gap:26px}
+.upclose__head h4{font-family:var(--sans);font-size:.75rem;line-height:1.5;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-soft)}
+.upclose__head p{margin-top:8px;color:var(--ink-body);max-width:34rem}
+.upclose__quote{margin:0;padding-top:16px;position:relative;font-size:1.1875rem;line-height:1.36;max-width:34rem}
+.upclose__quote::before{content:"";position:absolute;left:0;top:0;width:28px;height:1px;background:var(--mark)}
+.upclose__quote footer{margin-top:6px}
+.upclose .layers{order:1}
+.upclose__rows{margin-top:-18px}
+.layers .sources>p{font-family:var(--sans);font-size:.9375rem;line-height:1.5;color:var(--ink-body)}
+/* A list of terms and what stands beside each: a row a term. */
+.sheet{border-bottom:1px solid var(--hair)}
+.sheet>div{display:grid;grid-template-columns:minmax(7.4rem,.3fr) 1fr;column-gap:16px;padding:10px 0;border-top:1px solid var(--hair)}
+@media (max-width:359px){.sheet>div{grid-template-columns:1fr;row-gap:2px}}
+.sheet dt{font-family:var(--sans);font-size:.75rem;line-height:1.75;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-soft)}
+.sheet dd{font-family:var(--sans);font-size:.9375rem;line-height:1.5;color:var(--ink-body)}
+
+/* The museum's own stop, quoted. */
+.layers{display:grid;gap:0;align-content:start}
+.from{padding:0 0 18px}
+.from__k,.layer__name{font-family:var(--sans);font-size:.75rem;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-soft);line-height:1.5}
+.from__title{margin-top:4px;font-size:1.75rem;line-height:1.15}
+.from__age{font-family:var(--sans);font-size:.9375rem;color:var(--ink-quiet)}
+/* The page's own key in front of the museum's words. */
+.from__age .key{margin-right:.5em}
+/* How sure the wing is of this stop: its grade's bead and word, as in the list of the four. */
+.from__sure{display:flex;align-items:center;gap:10px;margin-top:10px;font-family:var(--sans);font-size:.75rem;line-height:1.5;letter-spacing:.1em;text-transform:uppercase;color:var(--ink)}
+.layer{padding:16px 0 18px;border-top:1px solid var(--hair)}
+.layer--1{border-top-color:var(--hair-strong)}
+.layer p{margin-top:6px}
+/* The second layer, the record and the source open on request. The name is the whole line of the summary,
+   48 px high, with a plus that turns into a minus. */
+.layers details{padding:0}
+.layers summary{display:flex;align-items:center;justify-content:space-between;gap:16px;min-height:48px;cursor:pointer;list-style:none}
+.layers summary::-webkit-details-marker{display:none}
+.layers summary::after{content:"";flex:none;width:13px;height:13px;background:linear-gradient(var(--ink),var(--ink)) center/100% 1px no-repeat,linear-gradient(var(--ink),var(--ink)) center/1px 100% no-repeat}
+.layers details[open]>summary::after{background:linear-gradient(var(--ink),var(--ink)) center/100% 1px no-repeat}
+.layers summary:hover .layer__name{color:var(--ink)}
+.layers details>blockquote,.layers details>p{padding-bottom:18px}
+.layers details p{margin-top:0}
+.layer--1 p{font-size:1.4375rem;line-height:1.26;color:var(--ink)}
+.layer--2 p{font-size:1.0625rem;line-height:1.55;color:var(--ink-body)}
+.layer--3 p{font-size:1rem;line-height:1.55;color:var(--ink-body)}
+.sample{font-family:var(--sans);font-size:.8125rem;line-height:1.5;letter-spacing:.03em;color:var(--ink-quiet);padding-top:12px;border-top:1px solid var(--hair)}
+.sample+.sample{padding-top:6px;border-top:0}
+
+/* How sure we are: one sentence as wall lettering, the chalk rule beside it, and under it the four grades,
+   each a word behind its bead. */
+.sure{padding:4px 0 6px 20px;border-left:2px solid var(--mark)}
+.sure__h{font-family:var(--sans);font-size:.75rem;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-soft)}
+.sure__say{margin-top:10px;font-size:clamp(1.25rem,5.6vw,1.5rem);line-height:1.3;letter-spacing:-.003em;color:var(--ink);max-width:32ch;hyphens:manual;-webkit-hyphens:manual}
+.sure__grades{margin-top:20px;display:grid;gap:11px}
+.sure__grades li{display:flex;align-items:center;gap:12px;font-family:var(--sans);font-size:.8125rem;line-height:1.3;letter-spacing:.1em;text-transform:uppercase;color:var(--ink)}
+
+/* ---------- A place lower on a page, under the showpiece contract: its still in a box of the still's own shape ---------- */
+.showpiece{margin-top:26px;display:grid;grid-template-columns:minmax(0,1fr) auto;column-gap:14px;align-items:start}
+.showpiece .hang{grid-column:1/-1}
+.showpiece .place__controls{position:static;margin-top:12px}
+@media (max-width:599px){.showpiece .plate-btn{width:44px;padding:0;gap:0;justify-content:center;font-size:0}}
+.showpiece .hang{aspect-ratio:4/3}
+.showpiece picture{position:absolute;inset:0}
+.showpiece__img{width:100%;height:100%;object-fit:cover}
+.showpiece .hang>.piece{position:absolute;z-index:1;inset:2px;width:calc(100% - 4px);height:calc(100% - 4px);max-width:none;object-fit:cover}
+.showpiece .label{margin-top:10px}
+.showpiece[data-piece] .label__what{min-height:2.8em}
+
+/* ---------- What a wing holds: the picture index, a group a form ---------- */
+.hgroup{margin-top:72px;scroll-margin-top:20px}
+.hgroup__text h3{font-size:1.625rem;line-height:1.18}
+.hgroup__text p{margin-top:10px;color:var(--ink-body);max-width:34rem}
+/* What follows a group's text, a block of its own: after the text on a narrow screen, across the wall on a wide one. */
+.hgroup__more{display:grid;gap:24px;max-width:34rem}
+.place--wide-first>.hgroup__more,.place--row>.hgroup__more,.place--wide>.hgroup__more,.place--lead>.hgroup__more{order:-1}
+.place--tall-first>.hgroup__more{order:2}
+.hgroup__go{margin-top:14px}
+.seeit{display:inline-flex;align-items:center;min-height:44px;font-family:var(--sans);font-size:.875rem;letter-spacing:.02em;color:var(--ink-soft)}
+
+/* What a wing holds stands closed, as a museum keeps its checklist apart from the walk: the heading is the way
+   to open it, a square sign at the line's end says open or closed. */
+.fold__sum{display:flex;align-items:center;justify-content:space-between;gap:20px;min-height:64px;padding-bottom:14px;border-bottom:1px solid var(--hair-strong);cursor:pointer;list-style:none}
+.fold__sum::-webkit-details-marker{display:none}
+.fold__sum h2{font-size:1.75rem;line-height:1.15;letter-spacing:0}
+.fold__sign{flex:none;width:44px;height:44px;border:1px solid var(--hair-strong);background:linear-gradient(var(--ink),var(--ink)) center/14px 1px no-repeat,linear-gradient(var(--ink),var(--ink)) center/1px 14px no-repeat}
+.fold[open]>.fold__sum .fold__sign{background:linear-gradient(var(--ink),var(--ink)) center/14px 1px no-repeat}
+.fold__sum:hover .fold__sign{border-color:var(--ink)}
+.fold>.wing__top{margin-top:26px}
+/* Closed, it is one line: the space around it shrinks to fit a line, not a section. */
+.holds:has(>.wrap>.fold:not([open])){padding-top:calc(var(--band) * .7)}
+.holds:has(>.wrap>.fold:not([open]))+.facts{margin-top:calc(var(--band) * .5)}
+
+/* The works on a wall: one numbered list in the order they hang, each with its holder and its size. */
+.hgroup--wall>.wl{margin-top:22px}
+.wl{border-top:1px solid var(--hair)}
+.wl li{display:grid;grid-template-columns:1.9em minmax(0,1fr);column-gap:8px;padding:9px 0 10px;border-bottom:1px solid var(--hair);break-inside:avoid}
+.wl li::before{content:attr(value);grid-row:1/5;padding-top:.22em;font-family:var(--sans);font-size:.8125rem;line-height:1.3;color:var(--ink-soft)}
+.wl li>*{grid-column:2}
+.wl__t{font-size:1.0625rem;line-height:1.28;color:var(--ink)}
+.wl__face{display:block;font-family:var(--sans);font-size:.8125rem;line-height:1.45;color:var(--ink-soft)}
+.wl__h,.wl__s{font-family:var(--sans);font-size:.8125rem;line-height:1.45;color:var(--ink-soft)}
+.wl__s{color:var(--ink-quiet)}
+.wl__class{margin-left:.5em;font-size:.75rem;letter-spacing:.1em;text-transform:uppercase;color:var(--ink)}
+.wl__note{margin-top:10px;font-family:var(--sans);font-size:.8125rem;line-height:1.45;color:var(--ink-quiet)}
+.wfield{margin-top:44px;padding-top:26px;border-top:1px solid var(--hair)}
+.wfield h4{font-size:1.375rem;line-height:1.2}
+.wfield p{margin-top:8px;color:var(--ink-body);max-width:34rem}
+.wfield .wl__h{margin-top:10px}
+
+/* A set of made things: each with its picture, its plain name and under it its sheet, by where it stands. Every
+   tile is one size. On a narrow screen a row each, the picture small beside the name. */
+.mgroups{margin-top:36px;display:grid;gap:34px}
+.mgroup>.key{display:block;padding-bottom:9px;border-bottom:1px solid var(--hair-strong)}
+.mitem{border-bottom:1px solid var(--hair)}
+.mplate{display:grid;grid-template-columns:104px minmax(0,1fr);column-gap:14px;align-items:center;padding:11px 0}
+.mplate .hang::before{content:none}
+.mplate .hang>picture{box-shadow:none}
+.mcap{display:grid;gap:2px}
+.mcap__name{font-size:1.0625rem;line-height:1.25;color:var(--ink)}
+.mcap__sheet{font-family:var(--sans);font-size:.8125rem;line-height:1.4;color:var(--ink-soft)}
+.mcap__note{display:block;color:var(--ink-quiet)}
+
+/* A list from a wing's facts: a name a row, with its number at the row's end where it has one. */
+.fl__h{display:flex;justify-content:space-between;align-items:baseline;gap:16px;padding-bottom:7px;border-bottom:1px solid var(--hair-strong)}
+.fl__unit{font-family:var(--sans);font-size:.75rem;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-quiet)}
+.fl li{display:flex;justify-content:space-between;align-items:baseline;gap:16px;padding:7px 0 8px;border-bottom:1px solid var(--hair);font-size:1rem;line-height:1.35;color:var(--ink)}
+.fl__sub{display:block;font-family:var(--sans);font-size:.8125rem;line-height:1.4;color:var(--ink-quiet)}
+.fl__n{flex:none;font-family:var(--sans);font-size:.9375rem;color:var(--ink-soft)}
+.fl--fold summary{display:flex;align-items:center;justify-content:space-between;gap:16px;min-height:46px;border-bottom:1px solid var(--hair-strong);cursor:pointer;list-style:none}
+.fl--fold summary::-webkit-details-marker{display:none}
+.fl--fold summary::after{content:"";flex:none;width:13px;height:13px;background:linear-gradient(var(--ink),var(--ink)) center/100% 1px no-repeat,linear-gradient(var(--ink),var(--ink)) center/1px 100% no-repeat}
+.fl--fold[open]>summary::after{background:linear-gradient(var(--ink),var(--ink)) center/100% 1px no-repeat}
+.fl--fold summary:hover .key{color:var(--ink)}
+/* One plate across the wall and a second beside the text: the text opens the group on a narrow screen. */
+.place--lead .place__text{order:-1}
+
+/* ---------- Where to read on: a wing's page ends on a quiet strip of ways on. The door stands above it, in the
+   end of the walk. ---------- */
+.after{padding-bottom:calc(var(--band) * .8)}
+.after__grid{display:grid;gap:26px}
+.after .head h2{font-size:1.75rem;line-height:1.15;letter-spacing:0}
+.after .head .lead{margin-top:10px;font-size:1.0625rem}
+.after .topics{margin-top:0}
+
+/* ---------- 6. What this museum is, and the note for institutions: here the lamps are on along the whole wall.
+   One band of the wall's own tone, flat, with the wall's hairlines. ---------- */
+.what,.inst{--ground:var(--wall);--hair:var(--line-wall);background:var(--ground)}
+.what{margin-top:var(--band);padding-block:calc(var(--band) * .62) 0;box-shadow:0 -1px 0 var(--hair)}
+.what__grid{display:grid;gap:30px}
+.what__more{margin-top:18px}
+.ledger{border-top:1px solid var(--hair-strong)}
+.ledger>div{padding:20px 0 22px;border-bottom:1px solid var(--hair)}
+.ledger>div:last-child{border-bottom:0}
+.ledger dt{font-family:var(--sans);font-size:.75rem;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-soft)}
+.ledger dd{margin-top:8px;font-size:1.125rem;line-height:1.55;color:var(--ink);max-width:38rem}
+.inst{padding-block:0 calc(var(--band) * .62);box-shadow:0 1px 0 var(--hair)}
+.inst__grid{display:grid;gap:22px;padding-top:36px;border-top:1px solid var(--hair-strong)}
+.inst .head h2{font-size:clamp(1.75rem,7vw,2.125rem);line-height:1.12}
+.inst__body p{font-size:1.0625rem;line-height:1.6;color:var(--ink-body);max-width:38rem}
+.inst__body p+p{margin-top:12px}
+.inst__links{display:flex;flex-wrap:wrap;gap:0 28px;margin-top:14px!important}
+
+/* ---------- A wing in numbers and under them the holders of its originals: one band of lit wall. The numbers are
+   a short ledger, a name and its number a row, with a second line only where the data gives one. The holders
+   stand here in full, and nowhere else on the site: every row a name and under it its town. ---------- */
+.facts{margin-top:var(--band);padding-block:calc(var(--band) * .62);box-shadow:0 -1px 0 var(--hair),0 1px 0 var(--hair)}
+.facts__grid{display:grid;gap:52px}
+.facts__holders{scroll-margin-top:calc(var(--top-h) + 20px)}
+.facts h2{font-size:1.75rem;line-height:1.15}
+.facts p{margin-top:12px;color:var(--ink-body);max-width:36rem}
+.tally{margin-top:18px;border-top:1px solid var(--hair-strong)}
+.tally>div{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:baseline;align-content:flex-start;gap:0 16px;padding:9px 0 10px;border-bottom:1px solid var(--hair)}
+.tally__term{font-family:var(--sans);font-size:.9375rem;line-height:1.45;color:var(--ink-body)}
+.tally__n{font-size:1.3125rem;line-height:1.2;color:var(--ink);white-space:nowrap}
+.tally__text{flex:0 0 100%;margin-top:2px;font-family:var(--sans);font-size:.875rem;line-height:1.45;color:var(--ink-soft)}
+.holders{margin-top:14px;max-width:38rem;border-bottom:1px solid var(--hair)}
+.holders li{display:grid;gap:1px;padding:10px 0;border-top:1px solid var(--hair);font-family:var(--sans);font-size:.9375rem;line-height:1.45}
+.holders li span+span{color:var(--ink-quiet)}
+.facts .apart{color:var(--ink)}
+.topics{margin-top:10px;border-top:1px solid var(--hair-strong)}
+.topics li{padding:8px 0 16px;border-bottom:1px solid var(--hair)}
+.topics .more{font-family:var(--serif);font-size:1.25rem;letter-spacing:0;line-height:1.25;min-height:48px}
+.topics__line{display:block;font-family:var(--sans);font-size:.9375rem;line-height:1.45;color:var(--ink-body);max-width:34rem}
+/* ---------- The end of a wing's walk ---------- */
+.close{position:relative;margin-top:var(--band);padding-block:0}
+.close__sky{position:absolute;left:0;right:0;bottom:0;height:min(100%,760px);z-index:-2;overflow:hidden}
+.close__sky img{width:100%;height:100%;object-fit:cover;object-position:50% 100%;opacity:var(--stars,1)}
+.close__sky::before{content:"";position:absolute;inset:0;z-index:1;background:linear-gradient(to bottom,var(--ground),color-mix(in srgb,var(--ground) 20%,transparent) 42%,transparent 70%)}
+.close__sky::after{content:"";position:absolute;left:0;right:0;bottom:0;height:150px;z-index:1;background:linear-gradient(to top,var(--ground) 0,color-mix(in srgb,var(--ground) 90%,transparent) 50%,transparent)}
+.close__sky .label{position:absolute;z-index:2;left:var(--pad);right:var(--pad);bottom:14px;padding-top:10px}
+.close__grid{display:grid;gap:34px;padding-bottom:330px}
+/* A wing whose walk ends without a sky closes on the wall itself. */
+.close--plain .close__grid{padding-bottom:calc(var(--band) * .8)}
+.close__grave img{filter:brightness(var(--day,1))}
+/* The court's lamp goes down with its light. */
+.close__grave .hang::before{opacity:var(--day,1)}
+.close__go{margin-top:24px}
+/* In the end of the walk the door is a line of its own after the picture: the grid's gap sets it apart. */
+.close--end .close__go{margin-top:0}
+.close__go .door{min-width:min(100%,14.5rem)}
+.close__go .hero__note{margin-top:14px}
+/* The museum's page closes on the wall itself: what is open today, the door, and a picture of the open wing. */
+.close--home{margin-top:calc(var(--band) * .7)}
+.close--pic .close__plate .label{margin-top:16px}
+/* After the stars the page goes on in the dark: where to read on follows close under the sky. */
+.close--end+.after{padding-top:calc(var(--band) * .5)}
+
+/* The phone's door */
+.dock{position:fixed;left:0;right:0;bottom:0;z-index:30;padding:10px var(--pad) calc(10px + env(safe-area-inset-bottom));background:var(--ground-edge);box-shadow:0 -1px 0 var(--hair);transform:translateY(110%);visibility:hidden;transition:transform .35s var(--ease),visibility 0s .35s}
+.dock.is-up{transform:none;visibility:visible;transition:transform .35s var(--ease),visibility 0s}
+/* The dock's door stands at the thumb's side and is no wider than its words: a fixed bar of linen across
+   the screen would outshine every plate that passes over it. */
+.dock{display:flex;justify-content:flex-end}
+.dock .door{min-width:min(100%,12rem);min-height:48px}
+
+/* ---------- Tablet ---------- */
+@media (min-width:600px){
+  /* The rooms hang two to a row, name, plate and words on shared lines. */
+  .rooms{grid-template-columns:repeat(2,minmax(0,1fr));column-gap:24px;row-gap:64px}
+  .room--full,.room--wide,.room--row,.room--lone{grid-column:1/-1}
+  .room__plates{grid-auto-flow:column;grid-auto-columns:minmax(0,1fr)}
+  /* The names of a row share one line, so the plates under them start together. */
+  @supports (grid-template-rows:subgrid){
+    .room{grid-row:span 2;grid-template-rows:subgrid;row-gap:16px}
+    .room--row{grid-row:auto;grid-template-rows:none}
+  }
+  .place--tall-first .place__p--tall{max-width:30rem}
+  .place--row{grid-template-columns:repeat(3,minmax(0,1fr));column-gap:20px}
+  .place--row .place__h,.place--row .place__text{grid-column:1/-1}
+  .showpiece .hang{aspect-ratio:16/9}
+  /* the wall's list in two columns */
+  .hgroup--wall>.wl{columns:2;column-gap:24px}
+  .hgroup__more:has(>.fl+.fl){grid-template-columns:1fr 1fr;column-gap:24px;max-width:none;align-items:start}
+  /* made things hang as plates, three in a row */
+  .mlist{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:28px 20px;margin-top:20px}
+  .mitem{border-bottom:0}
+  .mplate{display:block;padding:0}
+  .mcap{margin-top:11px}
+}
+
+/* ---------- Desktop ---------- */
+@media (min-width:960px){
+  .dock{display:none}
+
+  /* The rooms hang three to a row. Where their number does not divide by three, the first hang larger: two
+     across the wall, or one with its words beside it. */
+  .rooms{margin-top:64px;grid-template-columns:repeat(6,minmax(0,1fr));row-gap:84px}
+  .room{grid-column:span 2}
+  .room h3{font-size:1.75rem}
+  .room__text p{font-size:1.125rem}
+  .room--half{grid-column:span 3}
+  .room--half h3{font-size:2rem}
+  .room--full,.room--wide,.room--row{grid-column:1/-1}
+  /* One plate on eight columns, its name and words beside it. */
+  .room--full,.room--wide{grid-template-columns:repeat(12,minmax(0,1fr));column-gap:24px;grid-row:auto}
+  .room--full .room__body,.room--wide .room__body{display:contents}
+  .room--full{grid-template-rows:auto 1fr}
+  .room--full h3{grid-column:9/13;grid-row:1;font-size:2rem}
+  .room--full .room__p{grid-column:1/9;grid-row:1/3}
+  .room--full .room__text{grid-column:9/13;grid-row:2}
+  /* One plate across the wall under its name, its label under its left corner, its words under its right half. */
+  .room--wide{grid-template-rows:auto auto auto;row-gap:20px}
+  .room--wide h3{grid-column:1/13;grid-row:1;font-size:2rem}
+  .room--wide .room__p{grid-column:1/13;grid-row:2}
+  .room--wide .room__text{grid-column:7/13;grid-row:3}
+  .room--wide .hang{--pool-up:84px;--pool-side:6%;--pool-down:-56%}
+  @supports (grid-template-rows:subgrid){
+    .room--wide .room__p{display:grid;grid-template-columns:subgrid;grid-template-rows:subgrid;grid-row:2/4}
+    .room--wide .room__p .hang{grid-column:1/-1;grid-row:1}
+    .room--wide .room__p .label{grid-column:1/6;grid-row:2;align-self:start;margin-top:0}
+    .room--wide .room__text{padding-top:10px}
+  }
+
+  /* The index's groups of plates and text: editorial rows on twelve columns, the heading on the first line. */
+  .place{margin-top:118px;grid-template-columns:repeat(12,1fr);column-gap:24px;row-gap:26px;align-items:start}
+  .place__h{order:0;grid-column:1/13;grid-row:1;margin-bottom:0;font-size:2rem}
+  .place__text p{font-size:1.1875rem}
+  .place .hang,.room .hang,.stage .hang,.showpiece .hang,.close__grave .hang,.close__plate .hang{--pool-up:76px;--pool-side:16%;--pool-down:-48%}
+
+  /* Two plates, the narrow one first: it keeps four columns and the height of its neighbour. */
+  .place--tall-first .place__p--tall{grid-column:1/5;grid-row:2/4;max-width:none}
+  .place--tall-first .place__p--wide{grid-column:5/13;grid-row:2}
+  .place--tall-first .place__text{order:0;grid-column:9/13;grid-row:3}
+  /* Two plates, the wide one first: the narrow one hangs lower beside it. */
+  .place--wide-first .place__p--wide{grid-column:1/9;grid-row:2}
+  .place--wide-first .place__p--tall{grid-column:9/13;grid-row:2/4;margin-top:88px}
+  .place--wide-first .place__text{order:0;grid-column:4/9;grid-row:3}
+  /* One plate beside its text, on alternating sides down the page. The heading stands over both, so the plate
+     is under its heading on either side. */
+  .place--side-a .place__text{grid-column:1/7;grid-row:2}
+  .place--side-a .place__p{grid-column:8/13;grid-row:2}
+  .place--side-b .place__p{grid-column:1/7;grid-row:2}
+  .place--side-b .place__text{grid-column:8/13;grid-row:2}
+  /* One plate across the wall, its text under its right half. */
+  .place--wide .place__p{grid-column:1/13;grid-row:2}
+  .place--wide .place__text{order:0;grid-column:7/13;grid-row:3}
+  .place--wide .hang{--pool-up:84px;--pool-side:6%;--pool-down:-56%}
+  /* One plate across the wall, a second under its left half, the text under its right half. */
+  .place--lead .place__p--wide{grid-column:1/13;grid-row:2}
+  .place--lead .place__p--wide .hang{--pool-up:84px;--pool-side:6%;--pool-down:-56%}
+  .place--lead .place__p--second{grid-column:1/6;grid-row:3;margin-top:28px}
+  .place--lead .place__text{order:0;grid-column:7/13;grid-row:3;padding-top:28px}
+  /* Three plates and more: the text over them, the plates in one row. */
+  .place--row .place__text{grid-column:1/-1;grid-row:2}
+  .place--row .place__p{grid-column:span 4}
+  .place--text .place__h,.place--text .place__text{grid-column:1/8}
+
+  /* Label and text share one line under the plate. */
+  @supports (grid-template-rows:subgrid){
+    .place--tall-first .place__p--wide,.place--wide .place__p,.place--wide-first .place__p--wide{display:grid;grid-template-columns:subgrid;grid-template-rows:subgrid;grid-row:2/4}
+    .place--tall-first .place__p--wide .hang,.place--wide .place__p .hang,.place--wide-first .place__p--wide .hang{grid-column:1/-1;grid-row:1}
+    .place--tall-first .place__p--wide .label,.place--wide .place__p .label,.place--wide-first .place__p--wide .label{grid-row:2;align-self:start;margin-top:0}
+    .place--tall-first .place__p--wide .label{grid-column:1/5}
+    .place--wide .place__p .label{grid-column:1/6}
+    .place--wide-first .place__p--wide .label{grid-column:1/4}
+    .place--tall-first .place__text,.place--wide .place__text,.place--wide-first .place__text{padding-top:10px}
+    /* The narrow plate takes the height of its neighbour, no more. */
+    .place--tall-first .place__p--tall{display:grid;grid-template-rows:subgrid}
+    .place--tall-first .place__p--tall .hang{grid-row:1;min-height:0}
+    .place--tall-first .place__p--tall picture{position:absolute;inset:0}
+    .place--tall-first .place__p--tall img{position:absolute;inset:0;height:100%;aspect-ratio:auto}
+    .place--tall-first .place__p--tall .label{grid-row:2;align-self:start;margin-top:0}
+  }
+  /* How a visit works: the stop's picture on seven columns, its texts beside it, and beside the opening words
+     how sure the museum is. */
+  .stop__grid{grid-template-columns:repeat(12,1fr);column-gap:24px;row-gap:56px}
+  .stop__head{grid-column:1/8;grid-row:1}
+  .stage{grid-column:1/8;grid-row:2}
+  .stage__view{aspect-ratio:10/9}
+  .stage__tag{top:18px}
+  .stage__tag--a{left:20px}
+  .stage__tag--b{right:20px}
+  .layers{grid-column:8/13;grid-row:2;padding-left:16px}
+  /* A stop up close: the texts beside the model, and under both, across the wall, what stands on the sheet and
+     what the museum chose. So neither column runs on beside an empty one. */
+  .upclose{margin-top:56px;padding-top:40px;grid-template-columns:repeat(12,1fr);column-gap:24px;row-gap:44px;align-items:start}
+  .upclose__head{grid-column:1/8;grid-row:1}
+  .upclose__head p{font-size:1.1875rem}
+  .upclose__quote{grid-column:8/13;grid-row:1;align-self:end;margin-left:16px;font-size:1.375rem;line-height:1.3}
+  .upclose .layers{order:0;grid-row:2}
+  .from__title{font-size:2.125rem}
+  .layer--1 p{font-size:1.625rem;line-height:1.22}
+  .layer--2 p{font-size:1.125rem}
+  .sheet>div{grid-template-columns:11rem 1fr;padding:13px 0}
+  .upclose__rows{grid-column:1/13;grid-row:3;margin-top:0;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));column-gap:24px;border-bottom:0}
+  .upclose__rows>div{display:block;padding:14px 0 20px;border-top:1px solid var(--hair-strong)}
+  .upclose__rows dd{margin-top:4px;max-width:30rem}
+  .stop--visit .sure{grid-column:8/13;grid-row:1;align-self:end;margin-left:16px;padding:6px 0 8px 24px}
+  .sure__say{font-size:clamp(1.3125rem,1.75vw,1.5rem);line-height:1.28}
+
+  /* What a wing holds */
+  .hgroup{margin-top:118px}
+  .hgroup__text h3{font-size:2rem}
+  .hgroup__text p{font-size:1.1875rem}
+  /* A group's lists and rows hang across the wall under its plates and text, two lists side by side */
+  .place>.hgroup__more,.place>.hgroup__more:has(>.fl+.fl){order:0;max-width:none;grid-column:1/13;grid-row:4;margin-top:18px;grid-template-columns:repeat(12,1fr);column-gap:24px;row-gap:28px;align-items:start}
+  .place--side-a>.hgroup__more,.place--side-b>.hgroup__more,.place--text>.hgroup__more{grid-row:3}
+  .hgroup__more>*{grid-column:1/13}
+  .hgroup__more>.fl{grid-column:1/7}
+  .hgroup__more>.fl+.fl{grid-column:8/13}
+  .place--lead>.hgroup__more>.fl:only-child,.place--wide>.hgroup__more>.fl:only-child{grid-column:7/13}
+  .place--lead:has(>.hgroup__more) .place__p--second{grid-row:3/5}
+  .place--lead>.hgroup__more{margin-top:0}
+  .fl--fold ul{columns:2;column-gap:24px}
+  .fl--fold li{break-inside:avoid}
+  .hgroup__more>.sheet{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));column-gap:24px;border-bottom:0}
+  .hgroup__more>.sheet>div{display:block;padding:14px 0 20px;border-top:1px solid var(--hair-strong)}
+  .hgroup__more>.sheet dd{margin-top:4px;max-width:24rem}
+  .fold__sum h2{font-size:2.125rem}
+  .fold>.wing__top{margin-top:34px}
+  .hgroup--wall>.wl{columns:3;column-gap:28px;margin-top:28px}
+  .wfield{margin-top:64px;padding-top:36px}
+  .wfield h4{font-size:1.625rem}
+  /* A set: its words, then one stop up close (or its showpiece on eight columns with the words beside it). Under
+     them every thing is a tile of one size, five to a row: the places stand side by side, each as many columns
+     wide as the build gives it (render.py, set_spans), so they fill the row together and leave no hole. */
+  .hgroup--set{display:grid;grid-template-columns:repeat(12,1fr);column-gap:24px;align-items:start}
+  .hgroup--set>*{grid-column:1/13}
+  .hgroup--set .hgroup__text{grid-column:1/8}
+  .hgroup--set .showpiece{grid-column:1/9;grid-row:1;margin-top:0}
+  .hgroup--set:has(.showpiece) .hgroup__text{grid-column:9/13;grid-row:1;padding-left:12px}
+  .mgroups{margin-top:64px;grid-template-columns:repeat(5,minmax(0,1fr));column-gap:24px;row-gap:30px;align-items:start}
+  .mgroup--s2{grid-column:span 2}
+  .mgroup--s3{grid-column:span 3}
+  .mgroup--s4{grid-column:span 4}
+  .mgroup--s5{grid-column:span 5}
+  .mlist{margin-top:22px;grid-template-columns:minmax(0,1fr);gap:30px 24px}
+  .mgroup--s2 .mlist{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .mgroup--s3 .mlist{grid-template-columns:repeat(3,minmax(0,1fr))}
+  .mgroup--s4 .mlist{grid-template-columns:repeat(4,minmax(0,1fr))}
+  .mgroup--s5 .mlist{grid-template-columns:repeat(5,minmax(0,1fr))}
+  /* The places share their rows, so every tile of a row is one height across the whole wall. The build writes
+     how many rows a place spans. */
+  @supports (grid-template-rows:subgrid){
+    .mgroup{display:grid;grid-template-columns:subgrid;grid-template-rows:subgrid}
+    .mgroup>.key{grid-column:1/-1;grid-row:1;align-self:end}
+    .mgroup .mlist{grid-column:1/-1;grid-row:2/-1;margin-top:0;grid-template-columns:subgrid;grid-template-rows:subgrid}
+  }
+  .mcap__name{font-size:1.0625rem}
+
+  /* Where to read on: the ways side by side. The build says how many stand in a row. */
+  .after .head h2{font-size:2.125rem}
+  .after .topics{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));column-gap:24px}
+  .after .topics--c1{grid-template-columns:minmax(0,34rem)}
+  .after .topics--c2{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .after .topics--c4{grid-template-columns:repeat(4,minmax(0,1fr))}
+  .close--end+.after{padding-top:calc(var(--band) * .4)}
+
+  /* What this museum is */
+  .what__grid{grid-template-columns:repeat(12,1fr);column-gap:24px;row-gap:52px}
+  .what__head{grid-column:1/13;display:grid;grid-template-columns:repeat(12,1fr);column-gap:24px;align-items:end}
+  .what__head h2{grid-column:1/7}
+  .what__head .lead{grid-column:1/7;margin-top:22px}
+  .what__more{grid-column:9/13;grid-row:2;margin:0;justify-self:end;align-self:end}
+  /* Without a lead the link stands on the heading's own line. */
+  .what__head:not(:has(.lead)) .what__more{grid-row:1}
+  .ledger{grid-column:1/13;display:grid;grid-template-columns:1fr 1fr;column-gap:72px;border-top:0}
+  .ledger>div{padding:22px 0 30px;border-top:1px solid var(--hair);border-bottom:0}
+  .ledger>div:nth-child(-n+2){border-top-color:var(--hair-strong)}
+  .ledger dd{margin-top:10px;font-size:1.1875rem;max-width:none}
+  .what{margin-top:calc(var(--band) - 40px)}
+  .place--wide .place__text p,.place--wide-first .place__text p{text-wrap:balance}
+  .inst{padding-top:22px}
+  .inst__grid{grid-template-columns:repeat(12,1fr);column-gap:24px;padding-top:52px}
+  .inst .head{grid-column:1/6}
+  .inst .head h2{font-size:2.375rem}
+  .inst__body{grid-column:7/13}
+  .inst__body p{font-size:1.125rem}
+
+  /* A wing in numbers: the ledger three to a row across the wall, the holders under it */
+  .facts__grid{gap:72px}
+  .facts h2{font-size:2.125rem}
+  .tally{margin-top:22px;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));column-gap:24px}
+  .tally>div{padding:10px 0 11px}
+  .tally__term{font-size:1rem}
+  .tally__n{font-size:1.375rem}
+
+  /* The end of the walk */
+  .close{margin-top:calc(var(--band) * .7)}
+  .close__sky{height:min(100%,900px)}
+  .close__sky .label{left:auto;right:max(var(--pad),calc((100vw - 1200px) / 2));bottom:22px;text-align:right;justify-items:end;max-width:26rem}
+  .close__sky .label::before{left:auto;right:0}
+  .close__grid{grid-template-columns:repeat(12,1fr);column-gap:24px;align-items:end;padding-bottom:360px}
+  /* The picture beside the words, and the door under the words as the part's last line. */
+  .close--end .close__grid{grid-template-rows:1fr auto}
+  .close__grave{grid-column:1/6;grid-row:1/3}
+  .close__text{grid-column:7/13;grid-row:1;padding-bottom:6px}
+  .close--end .close__go{grid-column:7/13;grid-row:2}
+  .close--plain .close__text,.close--plain.close--end .close__go{grid-column:1/8}
+  /* The museum's page: the words and the door on five columns, the picture of the open wing beside them. */
+  .close--pic .close__grid{align-items:center}
+  .close--pic .close__text{grid-column:1/6;padding-bottom:0}
+  .close--pic .close__plate{grid-column:7/13;grid-row:1}
+}
+/* A narrow desktop: the four rows set their key over their value, so the value keeps a readable measure. */
+@media (min-width:960px) and (max-width:1179px){
+  .sheet>div{grid-template-columns:1fr;row-gap:2px}
+}
+@media (min-width:1180px){
+  .upclose__rows{grid-template-columns:repeat(4,minmax(0,1fr))}
+}
+/* The holders in two columns that share their rows, so both end on one line and every row is one height: from
+   the width at which the longest name fits one line of a column (render.py, HOLDERS_TWO). The build writes how
+   many rows. */
+@media (min-width:1040px){
+  .facts .holders{max-width:none;display:grid;grid-auto-flow:column;grid-template-columns:repeat(2,minmax(0,1fr));column-gap:24px;border-bottom:0;border-top:1px solid var(--hair)}
+  .facts .holders li{border-top:0;border-bottom:1px solid var(--hair)}
+  .facts .holders li span{white-space:nowrap}
+}
+/* Without scripts the desktop cannot open the stop's layers itself: where the browser lets a style do it,
+   they stand open all the same. With scripts this never applies. */
+@media (min-width:960px){
+  html:not(.js) .layers details:not([open])::details-content{content-visibility:visible;display:block}
+  html:not(.js) .layers details:not([open])>summary{cursor:default}
+  html:not(.js) .layers details:not([open])>summary::after{display:none}
+}

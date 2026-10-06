@@ -1,0 +1,40 @@
+<footer class="foot">
+  <div class="wrap foot__grid">
+    <div class="foot__about">
+      <p class="foot__brand">
+        <span class="brand__mark is-set" data-slot="mark" aria-hidden="true">{{svg.sign_name}}</span>
+        <span class="brand__name">Museum of Ages</span>
+      </p>
+      <!-- Who runs the museum, with the legal notice beside it: the same line on every page. -->
+      <p class="foot__by">{{footer.about}} <a href="{{href.imprint}}">{{footer.imprint}}</a></p>
+      <p>{{footer.mission}}</p>
+      <p class="trust">{{glance.trust}}</p>
+    </div>
+    <div class="foot__org">
+      <p class="foot__h">{{footer.org_h}}</p>
+      <p>{{footer.org_name}}</p>
+      <dl>
+        <div><dt>{{footer.address_term}}</dt>{{org.address_dd}}</div>
+        <div><dt>{{footer.register_term}}</dt>{{org.register_dd}}</div>
+      </dl>
+    </div>
+    <nav class="foot__nav" aria-label="{{a11y.footer_nav}}">
+      <p class="foot__h">{{footer.links_h}}</p>
+      <ul>
+        <li><a href="{{href.what}}">{{footer.what}}</a></li>
+        <li><a href="{{href.privacy}}">{{footer.privacy}}</a></li>
+        <li><a href="{{href.imprint}}">{{footer.imprint}}</a></li>
+        <!-- The link to the code, behind one switch in build.py (SOURCE_LINK): an address of the site itself, which the
+             host forwards to the repository. -->
+        {{html.source_item}}
+        <li><a href="{{href.lang_other}}" lang="{{other_lang}}" hreflang="{{other_lang}}">{{a11y.lang_switch}}</a></li>
+        <li><a href="{{href.enter}}">{{footer.enter}}</a></li>
+      </ul>
+    </nav>
+    <div class="foot__fine">
+      <p><span>{{footer.rights}}</span> <span>{{footer.originals}}</span></p>
+      <p class="foot__tools"><button class="motion" type="button" data-motion-toggle data-pause="{{footer.motion_pause}}" data-play="{{footer.motion_play}}" hidden>{{footer.motion_pause}}</button></p>
+    </div>
+  </div>
+</footer>
+{{html.mark}}

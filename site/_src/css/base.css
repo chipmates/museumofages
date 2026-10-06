@@ -1,0 +1,300 @@
+/* Museum of Ages. Shared by every page and set inline by build.py.
+   Phone first; the desktop build starts at 960px. Colours: only the names of tokens.css, through the roles below. */
+
+/* Stand-ins sized to the web fonts, so the swap does not move a line. */
+@font-face{font-family:"Cardo fallback";src:local("Georgia");size-adjust:97%}
+@font-face{font-family:"Marcellus fallback";src:local("Arial"),local("Helvetica");size-adjust:102%}
+
+/* The roles on the wall. A museum page is the wall for every visitor. The bar, the footer and a wall band
+   say them again, so they stay the wall on a stone sheet too. */
+:root,.top,.project,.foot,.dock,.wallband{
+  --ground:var(--page);
+  --ground-edge:var(--edge);
+  --ground-well:var(--well);
+  --ground-raised:var(--raised);
+  --ground-wall:var(--wall);
+  --ground-lit:var(--wall-lit);
+  --ink:var(--linen);
+  --ink-body:color-mix(in srgb,var(--linen) 86%,var(--text-2));
+  --ink-soft:var(--text-2);
+  /* Quiet text is for side notes at 13 px and above, never smaller. */
+  --ink-quiet:var(--text-3);
+  /* The mark is a line: an underline, a tick, a rule. Never a fill. */
+  --mark:var(--chalk);
+  --mark-ink:var(--chalk-text);
+  --door-bg:var(--linen);
+  --door-ink:var(--edge);
+  --door-warm:var(--lamp);
+  --door-down:var(--linen-down);
+  --hair:var(--line);
+  --hair-strong:var(--line-strong);
+  --frame-line:var(--frame);
+  --shade:var(--edge);
+  --focus:var(--linen);
+  /* The ring round a grade's bead: the wing's thin starlight ring on the wall. */
+  --bead-ring:color-mix(in srgb,var(--linen) 92%,transparent);
+}
+/* A band of lit wall under text: its hairlines are the wall's. */
+.wallband{--ground:var(--wall);--hair:var(--line-wall);background:var(--ground);color:var(--ink)}
+/* A reading page follows the device: the stone sheet in the light setting, the wall in the dark one. */
+@media (prefers-color-scheme:light){
+  html.sheet{
+    --ground:var(--stone);
+    --ground-edge:var(--stone-well);
+    --ground-well:var(--stone-well);
+    --ground-raised:var(--stone-raised);
+    --ground-wall:var(--wall);
+    --ink:var(--page);
+    --ink-body:var(--page);
+    --ink-soft:var(--stone-text-2);
+    --ink-quiet:var(--stone-text-3);
+    --mark:var(--brick);
+    --mark-ink:var(--brick-text);
+    --door-bg:var(--page);
+    --door-ink:var(--stone-raised);
+    --door-warm:var(--stone-door-warm);
+    --door-down:var(--edge);
+    --hair:var(--stone-line);
+    --hair-strong:var(--stone-line-strong);
+    --focus:var(--page);
+    /* On the stone a light ring would vanish: the bead keeps its colour inside a ring of the ink. */
+    --bead-ring:var(--page);
+  }
+}
+
+:root{
+  --serif:"Cardo","Cardo fallback","Iowan Old Style","Palatino Linotype",Georgia,serif;
+  /* "Moa figures" holds the ten digits only (see faces() in build.py): the sans has no true zero. */
+  --sans:"Moa figures","Marcellus","Marcellus fallback","Optima","Candara","Segoe UI",system-ui,sans-serif;
+
+  --pad:20px;
+  --top-h:56px;
+  /* The line with the bar that says whose project this is: its height, and the room a first screen leaves for
+     it. The build sets the room to the height while the line is on (one switch in build.py). */
+  --by-h:32px;
+  --by:0px;
+  --band:88px;
+  --ease:cubic-bezier(.2,.7,.2,1);
+  /* The grain over a pool of light. It is switched on after load (build.py writes the rule), never before the first paint. */
+  --grain:none;
+  color-scheme:dark;
+}
+html.sheet{color-scheme:light dark}
+
+*,*::before,*::after{box-sizing:border-box}
+html{background:var(--ground);color:var(--ink);-webkit-text-size-adjust:100%;text-size-adjust:100%;scroll-padding-top:var(--top-h)}
+body{margin:0;font-family:var(--serif);font-size:1.125rem;line-height:1.6;background:var(--ground);overflow-wrap:break-word;overflow-x:clip;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale}
+img,svg,canvas{display:block;max-width:100%}
+img{height:auto}
+h1,h2,h3,h4,h5,h6,p,dl,dd,ul,ol,figure,blockquote{margin:0}
+ul,ol{padding:0;list-style:none}
+h1,h2,h3,h4,h5,h6{font-weight:400;text-wrap:balance}
+p,dd,li{text-wrap:pretty}
+button{font:inherit;color:inherit}
+a{color:inherit;text-decoration-color:var(--mark);text-decoration-thickness:1px;text-underline-offset:.22em}
+a:hover{color:var(--mark-ink)}
+/* The ring is linen with a ring of the ground between, so it shows on every ground and over a picture. */
+:focus-visible{outline:2px solid var(--focus);outline-offset:3px;border-radius:1px;box-shadow:0 0 0 3px var(--ground)}
+::selection{background:var(--ink);color:var(--ground)}
+[hidden]{display:none!important}
+
+.vh{position:absolute;width:1px;height:1px;margin:-1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap}
+.skip{position:absolute;left:var(--pad);top:-80px;z-index:50;background:var(--door-bg);color:var(--door-ink);font-family:var(--sans);padding:12px 16px;text-decoration:none}
+.skip:focus{top:8px}
+.wrap{width:100%;max-width:1280px;margin-inline:auto;padding-inline:var(--pad)}
+/* Each part of a page is its own layer, so a pool of light lies over that part's ground and under all its words,
+   and it ends at the screen's sides without widening the page. */
+main>section,main>.wrap{isolation:isolate;overflow-x:clip}
+
+/* ---------- The door: the one way in. Linen, the lightest shape on the screen, one per screen. ---------- */
+.door{display:inline-flex;align-items:center;justify-content:center;gap:14px;white-space:nowrap;min-height:54px;padding:0 22px 0 24px;background:var(--door-bg);color:var(--door-ink);font-family:var(--sans);font-size:1.0625rem;letter-spacing:.03em;text-decoration:none;border-radius:2px;transition:background-color .25s}
+.door:hover,.door:focus-visible{background:var(--door-warm);color:var(--door-ink)}
+.door:active{background:var(--door-down)}
+.door .arrow{flex:none;transition:transform .25s var(--ease)}
+.door:hover .arrow,.door:focus-visible .arrow{transform:translateX(4px)}
+/* The second door: an outline in the border grey with the text's own colour. */
+.door--small{min-height:44px;padding:0 14px 0 16px;font-size:.9375rem;gap:10px;background:transparent;color:var(--ink);box-shadow:inset 0 0 0 1px var(--hair-strong)}
+.door--small:hover,.door--small:focus-visible{background:transparent;color:var(--ink);box-shadow:inset 0 0 0 1px var(--ink)}
+.door--small:focus-visible{box-shadow:inset 0 0 0 1px var(--ink),0 0 0 3px var(--ground)}
+.door--small:active{background:var(--ground-raised)}
+.door--small .arrow{width:16px;height:16px}
+
+.more{display:inline-flex;align-items:center;gap:10px;min-height:44px;font-family:var(--sans);font-size:1rem;letter-spacing:.02em;color:var(--ink);text-decoration:underline;text-decoration-color:var(--mark)}
+.more:hover{color:var(--mark-ink)}
+.more .arrow{width:16px;height:16px;transition:transform .25s var(--ease)}
+.more:hover .arrow{transform:translateX(4px)}
+
+.trust{font-family:var(--sans);font-size:.8125rem;letter-spacing:.06em;color:var(--ink-quiet)}
+
+/* ---------- What hangs: a plate, its frame line, the pool of light behind it ---------- */
+.plate{position:relative}
+/* .hang is the thing on the wall. It carries the pool; its one child (a picture, a drawing, a stage) carries the frame. */
+.hang{position:relative}
+/* The frame is a slim moulding: two pixels of warm brown, its top edge catching the lamp, then a dark slip of one
+   pixel before the picture. So no picture edge touches the wall, and the shadow falls straight down. */
+.hang>picture,.hang>svg,.hang>.stage__view{display:block;border:2px solid var(--frame-line);border-top-color:color-mix(in srgb,var(--frame-line) 58%,var(--lamp));border-bottom-color:color-mix(in srgb,var(--frame-line) 78%,var(--shade));outline:1px solid var(--shade);outline-offset:-3px;box-shadow:0 3px 6px color-mix(in srgb,var(--shade) 55%,transparent),0 18px 26px -10px color-mix(in srgb,var(--shade) 88%,transparent),0 44px 60px -30px color-mix(in srgb,var(--shade) 70%,transparent)}
+.hang>picture{overflow:hidden;background:var(--ground-wall)}
+.hang>picture>img,.hang>svg{width:100%}
+/* The pool: the wall's lit tone, full behind the plate's upper part and eased out to nothing in four steps, with a
+   grain over it against banding. It is wide and flat and lies over the frame's top, as a lamp above the picture
+   throws it: an arc of light on the wall over the frame, light beside its upper half, none under it. So the label
+   stands in the frame's shadow. --pool-up is how far the arc rises over the frame, --pool-side how far it reaches
+   past each side (in percent of the plate's width), --pool-down where it ends (minus 40 percent: four tenths of
+   the plate's height above its foot). --lit is the pool's tone: a wing or a room may set it on any element
+   above the plate. It never moves the layout. */
+.hang{--pool-up:60px;--pool-side:28%;--pool-down:-40%}
+.hang::before{content:"";position:absolute;z-index:-1;pointer-events:none;
+  inset:calc(var(--pool-up) * -1) calc(var(--pool-side) * -1) calc(var(--pool-down) * -1);
+  --l:var(--lit,var(--ground-lit));
+  background:var(--grain) 0 0/64px 64px,radial-gradient(ellipse 50% 50% at 50% 50%,var(--l) 0,var(--l) 44%,color-mix(in oklab,var(--l) 82%,transparent) 55%,color-mix(in oklab,var(--l) 50%,transparent) 68%,color-mix(in oklab,var(--l) 20%,transparent) 82%,color-mix(in oklab,var(--l) 6%,transparent) 92%,transparent 100%);
+  -webkit-mask-image:radial-gradient(ellipse 50% 50% at 50% 50%,var(--page) 78%,transparent 100%);mask-image:radial-gradient(ellipse 50% 50% at 50% 50%,var(--page) 78%,transparent 100%)}
+/* On the stone sheet a picture hangs on a wall band, and the band is the light. */
+.wallband .hang::before{content:none}
+
+/* ---------- The wall label: what it is, what kind of thing, where the picture comes from ---------- */
+.label{display:grid;gap:3px;padding-top:13px;position:relative;max-width:34rem}
+.label::before{content:"";position:absolute;left:0;top:0;width:28px;height:1px;background:var(--mark);transform-origin:left center}
+.label__title{font-size:1.0625rem;line-height:1.35;color:var(--ink)}
+.label__what{font-family:var(--sans);font-size:.875rem;line-height:1.5;color:var(--ink-soft);text-wrap:pretty}
+/* The kind word at 12 px takes the full ink: the quiet colour is never used this small. */
+.tag{font-size:.75rem;letter-spacing:.1em;text-transform:uppercase;color:var(--ink);margin-right:.4em}
+.label__src,.label__hint,.label__music{font-family:var(--sans);font-size:.8125rem;line-height:1.45;color:var(--ink-quiet)}
+.label__src a,.label__music a{display:inline-block;padding:14px 0;margin:-14px 0}
+/* A credit that comes and goes with one slide of a piece: its two lines are kept, so nothing under the label moves. */
+.label__src--slide{min-height:2.9em}
+.label__quote{margin:4px 0 2px;font-size:1.0625rem;line-height:1.4;color:var(--ink)}
+.label__quote footer{margin-top:2px;font-family:var(--sans);font-size:.8125rem;color:var(--ink-quiet)}
+.plate .label{margin-top:18px}
+/* One of the four grades as the wing marks it: a 12 px bead of the grade's colour in a 1.5 px ring. Its word
+   always stands beside it. */
+.bead{flex:none;width:12px;height:12px;border-radius:50%;background:var(--sure);box-shadow:0 0 0 1.5px var(--bead-ring)}
+.bead--documented{--sure:var(--sure-documented)}
+.bead--reconstructed{--sure:var(--sure-reconstructed)}
+.bead--conjectural{--sure:var(--sure-conjectural)}
+.bead--unknown{--sure:var(--sure-unknown)}
+@media (forced-colors:active){.bead{background:CanvasText;box-shadow:none}}
+/* A small-caps key: the term of a list, the name of a layer. */
+.key{font-family:var(--sans);font-size:.75rem;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-soft)}
+
+/* ---------- Header: solid from the first pixel, so every word in it is readable ---------- */
+.masthead{display:contents}
+.top{position:sticky;top:0;z-index:20;height:var(--top-h);background:var(--ground);color:var(--ink);box-shadow:0 1px 0 var(--hair)}
+/* Whose project this is: one slim, quiet line with the bar, in the bar's own colours on every ground. It leaves
+   the screen with the page, the bar stays. Its link is the whole line, and its target reaches 44 px. */
+.project{position:relative;z-index:19;height:var(--by-h);background:var(--ground-edge);box-shadow:0 1px 0 var(--hair);font-family:var(--sans);font-size:.75rem;line-height:1;letter-spacing:.05em;color:var(--ink-soft)}
+/* The link is a full touch target: it reaches under the slim line, over the empty wall there. Over the bar it
+   has no room to reach into and stays as high as the line. */
+.project a{position:relative;display:block;height:44px;max-width:1280px;margin-inline:auto;padding-inline:var(--pad);line-height:var(--by-h);color:inherit;text-decoration:none;white-space:nowrap}
+.project--over a{height:100%}
+.project a:hover{color:var(--ink)}
+.project a:focus-visible{outline-offset:-3px}
+@media (max-width:359px){.project{font-size:.6875rem;letter-spacing:.02em;color:var(--ink)}}
+/* The narrowest short phone (320 by 568): the bar and the line are each a little lower, so a first screen keeps its door in sight. */
+@media (max-height:600px) and (max-width:359px){:root{--top-h:48px;--by-h:28px}}
+.top__in{height:100%;display:flex;align-items:center;gap:8px;padding-inline:var(--pad);max-width:1280px;margin-inline:auto}
+.brand{display:inline-flex;align-items:center;gap:12px;min-height:44px;text-decoration:none;color:var(--ink);margin-right:auto}
+.brand:hover{color:var(--ink)}
+/* The sign, the master on 32 beside the name and the small line. Both are centred in the bar, so the sign lies on
+   whole pixels and its foot meets the small line's baseline. Built in linen, drawn in chalk, on every ground. */
+.brand__mark{flex:none;display:block;width:32px;height:32px}
+.sign__built{fill:var(--linen)}
+.sign__drawn{stroke:var(--chalk)}
+.brand__text{display:flex;flex-direction:column;gap:3px}
+.brand__name{font-family:var(--serif);font-size:1.25rem;line-height:1;letter-spacing:.005em;white-space:nowrap}
+.brand__desc{font-family:var(--sans);font-size:.75rem;line-height:1;letter-spacing:.07em;color:var(--ink-soft);white-space:nowrap}
+.top__nav{display:none}
+.lang{display:inline-flex;align-items:center;justify-content:center;min-width:44px;min-height:44px;padding-inline:6px;font-family:var(--sans);font-size:.9375rem;letter-spacing:.03em;color:var(--ink-soft);text-decoration:underline;text-decoration-color:var(--hair-strong)}
+.lang:hover{color:var(--ink)}
+.top__door{display:none}
+/* The narrowest phones: the language switch stands in the menu only. */
+@media (max-width:359px){.top .lang{display:none}}
+
+/* The menu behind one word: the bar's links on a narrow screen. A details element, so it opens without a script. */
+.menu__btn{display:inline-flex;align-items:center;justify-content:center;width:44px;height:44px;margin-right:-11px;color:var(--ink-soft);cursor:pointer;list-style:none;user-select:none;-webkit-user-select:none}
+.menu__btn::-webkit-details-marker,.drop>summary::-webkit-details-marker{display:none}
+/* Three layers of earth: one line three times, told apart by its weight alone, the thinnest on top. */
+.menu__layers{display:grid;gap:5px;width:22px}
+.menu__layers span{display:block;height:1px;background:currentColor}
+.menu__layers span:nth-child(2){height:2px}
+.menu__layers span:nth-child(3){height:3px}
+.menu__btn:hover,.menu[open] .menu__btn{color:var(--ink)}
+/* Open: two even lines cross, the sign for closing. */
+.menu[open] .menu__layers span{height:1.5px}
+.menu[open] .menu__layers span:nth-child(1){transform:translateY(6.5px) rotate(45deg)}
+.menu[open] .menu__layers span:nth-child(2){opacity:0}
+.menu[open] .menu__layers span:nth-child(3){transform:translateY(-6.5px) rotate(-45deg)}
+.menu__panel{position:absolute;left:0;right:0;top:100%;max-height:calc(100svh - var(--top-h));overflow-y:auto;overscroll-behavior:contain;padding:8px var(--pad) 26px;background:var(--ground-edge);box-shadow:0 1px 0 var(--hair),0 34px 44px -24px var(--shade)}
+.menu__h{margin-top:16px;font-family:var(--sans);font-size:.75rem;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-soft)}
+.menu__list a{display:flex;align-items:center;min-height:50px;font-size:1.25rem;line-height:1.2;color:var(--ink);text-decoration:none;border-bottom:1px solid var(--hair)}
+.menu__list a[aria-current]{text-decoration:underline;text-decoration-color:var(--mark);text-decoration-thickness:2px;text-underline-offset:.4em}
+.menu__list--site{margin-top:14px}
+.menu__list--site a{font-family:var(--sans);font-size:1rem;letter-spacing:.02em;color:var(--ink-soft)}
+.menu__door{display:flex;margin-top:22px}
+/* Closed, the panel takes no box at all, so nothing in it can be measured or reached. */
+.menu:not([open]) .menu__panel{display:none}
+
+/* The arc under the header: the visit from its first stop to the stars, drawn as one chalk line. */
+.arc{display:none}
+.js .arc{display:block;position:absolute;left:0;right:0;bottom:-1px;height:1px}
+.arc__line{position:absolute;inset:0;background:linear-gradient(to right,var(--mark),var(--mark)) no-repeat;background-size:calc(var(--arc,0) * 100%) 100%}
+.arc__sun{opacity:calc(var(--arc,0) * 60);position:absolute;top:-2px;left:calc(var(--arc,0) * 100%);width:1px;height:5px;background:var(--mark)}
+
+/* ---------- Bands and heads ---------- */
+.band{padding-block:var(--band) 0}
+.head h2,.close__text h2{font-size:clamp(2rem,8.4vw,2.5rem);line-height:1.08;letter-spacing:-.01em}
+.lead{font-size:1.1875rem;line-height:1.55;color:var(--ink-body);margin-top:18px;max-width:36rem}
+.head p+p{margin-top:14px;max-width:36rem;color:var(--ink-body)}
+/* On the phone a short last line is the browser's to mend: it evens out the lines of running text and of
+   captions, as far as it does that (a browser without it keeps the build's bound last words). */
+@media (max-width:599px){
+  p,dd,li,.label__what,.label__src{text-wrap:balance}
+  /* A page's first screen keeps its breaks as they were: there a word that changes its line when the web font
+     arrives is a move the reader sees. */
+  .hero__lede,.hero__note,.hero__label .label__what,.statement__head .lead{text-wrap:pretty}
+}
+/* German body text may hyphenate on the phone. Display-size text never does, nor does the company's name. */
+@media (max-width:599px){
+  :lang(de) p,:lang(de) dd,:lang(de) li{hyphens:auto;-webkit-hyphens:auto;hyphenate-limit-chars:10 4 4}
+  :lang(de) .lead,:lang(de) .hero__lede,:lang(de) .glance dd,:lang(de) .layer--1 p,:lang(de) .sure__say,:lang(de) .honesty,:lang(de) .made,:lang(de) .label__quote p,:lang(de) .foot__by{hyphens:manual;-webkit-hyphens:manual}
+}
+.nh{hyphens:none;-webkit-hyphens:none}
+.nw{white-space:nowrap}
+
+@media (min-width:600px){
+  :root{--pad:32px}
+}
+@media (min-width:960px){
+  :root{--pad:40px;--top-h:68px;--band:148px}
+  body{font-size:1.1875rem}
+  .top__in{gap:6px}
+  .top__nav{display:flex;gap:2px;font-family:var(--sans);font-size:.9375rem;letter-spacing:.03em}
+  .top__nav a{display:inline-flex;align-items:center;min-height:44px;padding:0 12px;color:var(--ink-soft);text-decoration:none;white-space:nowrap}
+  .top__nav a:hover{color:var(--ink)}
+  /* You are here: the words in full ink and a chalk line under them. */
+  .top__nav a[aria-current]{color:var(--ink);text-decoration:underline;text-decoration-color:var(--mark);text-decoration-thickness:2px;text-underline-offset:.5em}
+  .lang{padding-inline:12px}
+  .top__door{display:inline-flex;margin-left:6px}
+  .menu{display:none}
+  /* Several open wings stand behind one word in the bar. */
+  .drop{position:relative}
+  .drop>summary{display:inline-flex;align-items:center;gap:9px;min-height:44px;padding:0 12px;color:var(--ink-soft);white-space:nowrap;cursor:pointer;list-style:none}
+  .drop>summary::after{content:"";width:6px;height:6px;border-right:1px solid currentColor;border-bottom:1px solid currentColor;transform:translateY(-2px) rotate(45deg)}
+  .drop>summary:hover,.drop[open]>summary{color:var(--ink)}
+  .drop__panel{position:absolute;left:-6px;top:calc(100% + 12px);width:max-content;min-width:16rem;max-width:44rem;max-height:calc(100svh - var(--top-h) - 30px);overflow-y:auto;padding:4px 18px 14px;background:var(--ground-edge);box-shadow:0 0 0 1px var(--hair),0 30px 44px -22px var(--shade)}
+  .drop__panel .menu__list a{min-height:44px;padding:0;font-family:var(--serif);font-size:1.0625rem;letter-spacing:0;color:var(--ink)}
+  .drop__panel .menu__list:has(li:nth-child(9)){columns:2;column-gap:28px}
+  .drop__panel .menu__list li{break-inside:avoid}
+  .head h2,.close__text h2{font-size:clamp(2.6rem,4.1vw,3.5rem);line-height:1.04;letter-spacing:-.014em}
+  .lead{font-size:1.3125rem;margin-top:22px}
+}
+@media (min-width:1280px){
+  .wrap{padding-inline:40px}
+}
+@media print{
+  .top,.project,.dock,.arc{display:none}
+  .hang::before{content:none}
+  body{background:none;color:CanvasText}
+  /* On paper the sign is one ink, as its paper drawing is. */
+  .sign__built{fill:CanvasText}
+  .sign__drawn{stroke:CanvasText}
+}

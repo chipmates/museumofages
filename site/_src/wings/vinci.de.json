@@ -1,0 +1,754 @@
+{
+  "_note": "EVERY WORD OF THIS WING'S PAGE, one file per language with the same structure. The wing's entry in registry.json holds what is not a sentence (addresses, the door, dates, the pictures of the first screen and of the wall). NUMBERS: no digit is written here. {count:<name>} gives a number of the facts file (wings/<wing>.facts.json, under counts or set) in digits, {word:<name>} and {Word:<name>} give it as a word. {shows:place} and {shows:day} come from the registry. QUOTED TEXTS: {museum:<key>} gives one of the museum's own texts from museum-texts.json, word for word. A credit line (a key that ends in src) may carry a sheet's own numbers. A room with no plate joins the text of the room before it. holds: the picture index, one entry per group. Its names, sizes, holders and lists come from the facts file by the key under from. rooms.<n>.p is one or two sentences. holds.groups.<machines>.close is one stop shown up close (its three texts are the museum's own, by {museum:<key>}), .names gives a machine a plain name by its id (without one the inventory's name stands), .terms explains a group's terms once. landing.close is the picture of the landing's closing band. numbers: a number and its name, text is optional. out.line is the line beside the registry's out link, on the page about the museum.",
+  "meta": {
+    "title": "Leonardo da Vinci, digitales Museum: Bilder und Erfindungen",
+    "description": "Leonardo da Vincis letztes Haus als Rundgang: {count:pictures} Bilder, die Mona Lisa annähernd in Originalgröße, {count:machines} Maschinen, seine Notizbücher. Eintritt frei, kein Konto.",
+    "landing_today": "Bereits geöffnet: der Flügel Leonardo da Vinci.",
+    "share_alt": "Die Luftschraube in der Maschinenhalle: ein Holzmast mit einem spiralförmigen Leinensegel im Licht der tief stehenden Nachmittagssonne, der Schatten an der Wand. Eine Rekonstruktion nach einem Blatt von Leonardo da Vinci, in Code gebaut."
+  },
+  "first": {
+    "lede": "Ein Rundgang mit {count:stops} Stationen und rund {count:works} Werken, die du dir aus der Nähe ansehen kannst: {count:pictures} Bilder annähernd in Originalgröße, {count:machines} Maschinen, {count:sheets} anatomische Blätter und seine Notizbücher.",
+    "piece": {
+      "title": "Ein Gang durch den Flügel",
+      "kind": "Aus dem Film",
+      "what": "Die Maschinenhalle.",
+      "alt": "Eine hohe Halle mit Holzdecke und Fensterband, im warmen Licht der tief stehenden Sonne. Auf flachen Sockeln stehen hölzerne Maschinen: Schleusentore, die Luftschraube mit ihrem Spiralsegel, eine Wasserschnecke und ein Walzwerk. Ein Standbild aus dem Film des Museums.",
+      "beats": [
+        "Der Lesetisch.",
+        "Sein Leben als Linie im Boden.",
+        "Der Hof von Clos Lucé."
+      ],
+      "frames": [
+        {
+          "pic": {
+            "stem": "v-table",
+            "widths": [
+              960,
+              1600
+            ],
+            "phone": {
+              "stem": "v-table-m",
+              "widths": [
+                780,
+                1080
+              ]
+            }
+          },
+          "alt": "Ein dunkler, holzgetäfelter Raum mit einer Hängelampe. Unter der Lampe liegt ein aufgeschlagenes Buch auf einem langen Tisch, davor steht ein Stuhl. Ein Standbild aus dem Film des Museums.",
+          "src": "Das Buch auf dem Tisch ist eine gedruckte Ausgabe von 1883, gemeinfrei wegen ihres Alters.",
+          "focus": {
+            "phone": "50% 50%",
+            "wide": "50% 50%"
+          }
+        },
+        {
+          "pic": {
+            "stem": "v-line",
+            "widths": [
+              800,
+              1228
+            ],
+            "phone": {
+              "stem": "v-line-m",
+              "widths": [
+                480,
+                720
+              ]
+            }
+          },
+          "alt": "Ein Steinboden, in den Jahreszahlen in einer Reihe geschnitten sind, jede neben einem kleinen runden Knopf. Der vorderste Knopf ist rot. Ein Standbild aus dem Film des Museums.",
+          "src": "",
+          "focus": {
+            "phone": "50% 88%",
+            "wide": "50% 60%"
+          }
+        },
+        {
+          "pic": {
+            "stem": "v-court",
+            "widths": [
+              960,
+              1600
+            ],
+            "phone": {
+              "stem": "v-court-m",
+              "widths": [
+                780,
+                1080
+              ]
+            }
+          },
+          "alt": "Ein schmaler Hof zwischen hohen Backsteinmauern mit steinernen Ecken. Stufen führen zur Tür eines Backsteinhauses mit einem kleinen Turm. Ein Standbild aus dem Film des Museums.",
+          "src": "",
+          "focus": {
+            "phone": "50% 40%",
+            "wide": "50% 40%"
+          }
+        }
+      ],
+      "install": {
+        "name": "walk",
+        "script": "walk.js",
+        "pause": "Anhalten",
+        "play": "Abspielen",
+        "keep_kind": true
+      }
+    }
+  },
+  "landing": {
+    "piece": {
+      "title": "Der Große Saal von Clos Lucé",
+      "kind": "Rekonstruktion",
+      "what": "ein Raum in Leonardo da Vincis letztem Haus, in Code nachgebaut.",
+      "alt": "Ein Raum mit Balkendecke, roten Bodenfliesen und Rautenfenstern. Nachmittagssonne fällt über einen langen Tisch auf Böcken, auf dem zwei kleine Modelle stehen. Links an der Wand steht ein mechanischer Löwe. Ein Standbild aus dem Film des Museums. Der Raum ist eine Rekonstruktion, in Code gebaut.",
+      "src": "Standbild aus dem Film des Museums"
+    },
+    "close": {
+      "pic": {
+        "stem": "start",
+        "widths": [
+          960,
+          1600
+        ],
+        "phone": {
+          "stem": "start-m",
+          "widths": [
+            800,
+            1200
+          ]
+        }
+      },
+      "title": "Der Flügel vom Kopf der Treppe",
+      "kind": "In Code gebaut",
+      "what": "der Bildersaal hinter seiner Glaswand und der Fallschirm im Hof. Die Hallen sind ein Entwurf des Museums.",
+      "src": "Hinter dem Glas hängen Reproduktionen seiner Bilder, jede mit ihrer Beschriftung im Flügel.",
+      "alt": "Vom Kopf einer Treppe aus: eine lange, niedrige Galerie mit einer Glaswand und gerahmten Bildern darin, daneben ein quadratischer Hof unter einer hohen Pyramide aus Leinen auf dünnen Stangen. Dahinter Wiesen und Dunst. Ein Standbild aus dem Film des Museums."
+    }
+  },
+  "card": {
+    "kind": "Rekonstruktion",
+    "what": "das Haus von der Gartenseite, in tief stehender Sonne",
+    "alt": "Ein hohes Backsteinhaus mit steinernen Ecken steht auf einer ummauerten Terrasse in tief stehender Sonne, unter einem Ast mit Herbstlaub. Ein Standbild aus dem Film des Museums. Das Haus ist eine Rekonstruktion, in Code gebaut.",
+    "src": "Nach Plänen und Fotografien des Hauses."
+  },
+  "intro": {
+    "p": "Der Flügel zeigt {shows:place} am {shows:day}: sein letztes Haus an einem Tag seines Lebens. Der Tag ist dokumentiert: Antonio de Beatis schrieb ihn in sein Tagebuch. Er war Sekretär des Kardinals Luigi d'Aragona, der an diesem Tag zu Besuch kam. Die Stunde haben wir gewählt. Neben dem Haus stehen die eigenen Räume des Museums. Sie zeigen seine Bilder, Maschinen, Notizbücher und anatomischen Blätter.",
+    "film": "Du gehst von Station zu Station durch einen Film, berechnet mit der eigenen Software des Museums. An den meisten Stationen kannst du an die Werke herantreten.",
+    "stills": "Die Bilder der Räume auf dieser Seite sind Standbilder aus diesem Film."
+  },
+  "rooms": [
+    {
+      "id": "pictures",
+      "h": "Der Bildersaal",
+      "note": "Hier beginnt der Rundgang",
+      "p": [
+        "Seine Bilder hängen an einer gut {count:wall_m} Meter langen Wand, ungefähr in der Reihenfolge ihrer Entstehung, jedes annähernd in Originalgröße. Die Mona Lisa hängt dazwischen."
+      ],
+      "lamp": "low",
+      "plates": [
+        {
+          "pic": {
+            "stem": "v-picture-room",
+            "widths": [
+              800,
+              1600
+            ]
+          },
+          "title": "Die Wand mit den Bildern",
+          "kind": "Reproduktionen",
+          "what": "vorn die Taufe Christi von Verrocchio und Leonardo, dann die Verkündigung, beide in den Uffizien.",
+          "alt": "Eine lange dunkelblaue Wand mit gerahmten Reproduktionen von Gemälden unter Strahlern, vorn die Taufe Christi und die Verkündigung. Vor der Wand stehen Holzbänke. Ein Standbild aus dem Film des Museums.",
+          "src": "Die Bilder an der Wand sind Reproduktionen, jede mit Quelle und Lizenz auf ihrer Beschriftung im Flügel.",
+          "src_to": "originals"
+        },
+        {
+          "pic": {
+            "stem": "v-scale-de",
+            "widths": [
+              960,
+              1600
+            ],
+            "phone": {
+              "stem": "v-scale-m",
+              "widths": [
+                560,
+                800
+              ]
+            }
+          },
+          "title": "Die Dame mit dem Hermelin, aus der Nähe",
+          "kind": "Reproduktion",
+          "what": "das Bild, wie der Flügel es zeigt, wenn du herantrittst. Der Balken links unten zeigt zehn Zentimeter auf dem Bild. Die Schrift oben links ist eine spätere Inschrift auf der Tafel selbst.",
+          "src": "Bewahrt vom Muzeum Narodowe w Krakowie, Czartoryski-Museum, Krakau. Gemeinfreies Werk. Reproduktion aus Wikimedia Commons.",
+          "alt": "Eine Bildschirmaufnahme aus dem Flügel: die Dame mit dem Hermelin auf schwarzem Grund, eine junge Frau in rotem und blauem Kleid mit einem weißen Hermelin im Arm. Links unten im Bild ein Balken für zehn Zentimeter."
+        }
+      ]
+    },
+    {
+      "id": "hall",
+      "h": "Die Maschinenhalle",
+      "note": "Maschinen, die laufen",
+      "hang": "wide",
+      "p": [
+        "Hier stehen {word:hall} Maschinen, in Code gebaut nach seinen Blättern: die Luftschraube, Schleusentore, eine Wasserschnecke, ein Walzwerk, eine Bohrmaschine, ein Schwungrad, ein Kugellager, ein Geschütz mit drei Rohrreihen und die Camera obscura in ihrer dunklen Nische. Jede lässt sich in Gang setzen und aus der Nähe ansehen, mit dem Blatt, von dem sie stammt. Zwei Arten darunter, die Schleusentore und die Wasserschnecke, waren schon vor seiner Zeit in Gebrauch."
+      ],
+      "plates": [
+        {
+          "pic": {
+            "stem": "v-flywheel",
+            "widths": [
+              960,
+              1600
+            ]
+          },
+          "title": "In der Maschinenhalle",
+          "kind": "Rekonstruktionen",
+          "what": "das Schwungrad aus der Nähe, dahinter das Geschütz mit drei Rohrreihen, links das Kugellager.",
+          "alt": "Das Schwungrad aus der Nähe: eine Holzspindel auf einem Balkenkreuz mit Streben, oben vier Arme mit Steinkugeln an den Enden und eine kleine Kurbel. Dahinter das Geschütz mit drei Rohrreihen, vorn sein Speichenrad. Links das Kugellager auf dunklem Sockel. Ein Standbild aus dem Film des Museums."
+        }
+      ]
+    },
+    {
+      "id": "gallery",
+      "h": "Die lange Galerie",
+      "note": "Notizbücher, Körper, Leben",
+      "p": [
+        "In der Galerie stehen der Lesetisch, eine Wand mit seinen anatomischen Blättern und im Boden die Daten seines Lebens. Jedes von den dreien ist eine Station des Rundgangs."
+      ],
+      "plates": [
+        {
+          "pic": {
+            "stem": "v-body",
+            "widths": [
+              800,
+              1600
+            ]
+          },
+          "title": "Die Wand mit den anatomischen Blättern",
+          "kind": "Reproduktionen",
+          "what": "seine Blätter in vier Reihen in einer beleuchteten Vitrine, darunter ein Schrank mit flachen Schubladen. Der Raum ist in Code gebaut.",
+          "alt": "Eine dunkle, getäfelte Wand mit einer beleuchteten Vitrine voller gerahmter Zeichnungen in vier Reihen, darunter ein Schrank mit flachen Schubladen, rechts für sich eine weitere gerahmte Zeichnung. Ein Standbild aus dem Film des Museums.",
+          "src": "Leonardos Blätter, bewahrt von der Royal Collection in Windsor. Gemeinfreie Werke, als Reproduktionen aus Wikimedia Commons."
+        },
+        {
+          "pic": {
+            "stem": "v-page-de",
+            "widths": [
+              960,
+              1600
+            ],
+            "phone": {
+              "stem": "v-page-m",
+              "widths": [
+                560,
+                800
+              ]
+            }
+          },
+          "title": "Eine Seite seines Notizbuchs, nah",
+          "kind": "Reproduktion",
+          "what": "die Nahansicht des Lesetischs: die Seite mit der Luftschraube, aus dem gedruckten Faksimile von {count:volume_year}. So blätterst du jede Seite des Buchs um.",
+          "src": "Pariser Manuskript B, Blatt 83 verso, bewahrt von der Bibliothèque de l'Institut de France, Paris, Ms 2173. Gezeigt im Faksimile von Charles Ravaisson-Mollien, Les manuscrits de Léonard de Vinci, Bd. II, Paris 1883. Gemeinfrei.",
+          "alt": "Eine Bildschirmaufnahme vom Lesetisch des Flügels: die Seite des gedruckten Faksimiles in der Nahansicht, ein Blatt in Sepia mit der Zeichnung der Luftschraube und Zeilen in Spiegelschrift, hell auf dem dunklen Tisch."
+        }
+      ]
+    },
+    {
+      "id": "court",
+      "h": "Der Hof",
+      "note": "Das Abendmahl in Originalgröße",
+      "p": [
+        "Draußen trägt eine Wand das Abendmahl. Daneben stehen der Fallschirm, der Drehkran und der Windmesser. Der Hof ist ein Entwurf des Museums, kein Ort aus seinem Leben."
+      ],
+      "plates": [
+        {
+          "pic": {
+            "stem": "v-supper",
+            "widths": [
+              800,
+              1600
+            ]
+          },
+          "title": "Das Abendmahl im Hof",
+          "kind": "Reproduktion",
+          "what": "das Original ist ein Wandbild im Speisesaal des Klosters Santa Maria delle Grazie in Mailand. Die Wand im Hof ist in Code gebaut.",
+          "src": "{museum:supper_credit}",
+          "alt": "Eine Reproduktion des Abendmahls füllt eine helle Wand in einem Hof: eine Reihe von Figuren an einem langen Tisch in einem gemalten Raum. Ein Standbild aus dem Film des Museums."
+        }
+      ]
+    },
+    {
+      "id": "house",
+      "h": "Das Haus",
+      "note": "Clos Lucé, sein letztes Zuhause",
+      "p": [
+        "Sein letztes Haus, Clos Lucé in Amboise, ist in Code nachgebaut, nach Plänen und Fotografien. Du betrittst nur einen Raum, den Großen Saal: auf dem Tisch zwei Instrumente nach seinen Blättern, an der Wand der mechanische Löwe. Die Kapelle, das Fenster des Studierzimmers und das Nordzimmer siehst du von außen."
+      ],
+      "plates": [
+        {
+          "pic": {
+            "stem": "v-lion",
+            "widths": [
+              800,
+              1600
+            ]
+          },
+          "title": "Der Große Saal",
+          "kind": "Rekonstruktion",
+          "what": "der Saal in der Nachmittagssonne, am Fenster der mechanische Löwe.",
+          "alt": "Ein Löwe aus Holz und Metall, in dessen Flanke Zahnräder zu sehen sind, steht auf roten Bodenfliesen an einem Rautenfenster, in der Nachmittagssonne. Rechts das Ende einer Bank und eines Tisches. Ein Standbild aus dem Film des Museums. Der Raum ist eine Rekonstruktion, in Code gebaut.",
+          "quote": {
+            "text": "{museum:lion_label}",
+            "from": "Aus der Beschriftung im Museum"
+          }
+        }
+      ]
+    }
+  ],
+  "stop": {
+    "id": "picture-room-lisa",
+    "grade": "documented",
+    "title": "{museum:lisa_chapter}",
+    "age_k": "Leonardo",
+    "age": "{museum:lisa_age}",
+    "stage": {
+      "pic": {
+        "stem": "v-lisa-m",
+        "widths": [
+          720,
+          1000
+        ],
+        "wide": {
+          "stem": "v-lisa",
+          "widths": [
+            800,
+            1280
+          ]
+        }
+      },
+      "alt": "Eine lange dunkelblaue Wand mit gerahmten Reproduktionen unter Strahlern. Die Mona Lisa hängt dazwischen, und links von ihr folgen weitere Rahmen. Ein Standbild aus dem Film des Museums.",
+      "title": "Mona Lisa",
+      "kind": "Reproduktion",
+      "what": "die Mona Lisa im Bildersaal, links von ihr läuft die Wand mit den Bildern weiter. {museum:lisa_holder}",
+      "src": "{museum:lisa_credit} Auch die anderen Rahmen tragen Reproduktionen, jede mit Quelle und Lizenz auf ihrer Beschriftung im Flügel."
+    },
+    "layers": [
+      {
+        "text": "{museum:lisa_line}"
+      },
+      {
+        "text": "{museum:lisa_drawer}"
+      },
+      {
+        "text": "{museum:lisa_record} {museum:lisa_size}"
+      }
+    ]
+  },
+  "holds": {
+    "lead": "Hier steht, was der Flügel zeigt, in der Reihenfolge des Rundgangs: jedes Bild, jede Maschine, jede Seite und jedes Blatt, an das du herantreten kannst.",
+    "groups": [
+      {
+        "id": "paintings",
+        "form": "wall",
+        "from": "paintings",
+        "h": "Die Gemälde",
+        "note": "Jedes Werk mit Standort und Größe",
+        "p": [
+          "Hier hängen {count:hung_works} Werke: {count:hung_paintings} Gemälde und {word:hung_drawings} Zeichnungen. Ein Bildnis, Ginevra de' Benci, hängt zweimal: die Vorderseite und die bemalte Rückseite.",
+          "Die Mona Lisa ist keinen Meter hoch. Die meisten sind seine eigenen Werke oder solche, an denen er mitgearbeitet hat. Eines ist eine Kopie von fremder Hand, das letzte stammt aus seiner Werkstatt.",
+          "Es sind Reproduktionen. Die Liste nennt zu jeder, wer das Original bewahrt, und ihre Größe. Ein Wort hinter der Größe, etwa umstritten oder Werkstatt, sagt, wem das Werk zugeschrieben wird. Das ist keiner der vier Grade. Eine Predella ist eine kleine Tafel vom Sockel eines Altarbilds."
+        ],
+        "field": {
+          "h": "Das Abendmahl",
+          "p": "Es ist ein Wandbild, darum hängt es nicht im Bildersaal. Es füllt eine Wand im Hof: {count:supper_w_m} mal {count:supper_h_m} Meter, so groß wie das Original in Mailand.",
+          "holder": "cenacolo",
+          "stop": "supper-wall"
+        }
+      },
+      {
+        "id": "machines",
+        "form": "set",
+        "from": "machines",
+        "h": "Die Maschinen",
+        "note": "{Word:machines}, in Code gebaut",
+        "p": [
+          "Das Museum baut {word:machines} Maschinen in Code: {word:from_sheets} nach seinen Blättern und den Löwen nach alten Berichten. {Word:moving} davon bewegen sich. Nur der Fallschirm steht still.",
+          "Ein Beleg dafür, dass die Luftschraube zu seinen Lebzeiten gebaut wurde, ist nicht bekannt."
+        ],
+        "places": {
+          "hall": "In der Maschinenhalle",
+          "court": "Im Hof",
+          "house": "Im Haus"
+        },
+        "after": "nach",
+        "still": "Er steht still.",
+        "no_sheet": "Nach alten Berichten. Kein Blatt des Löwen ist bekannt.",
+        "alt_each": "Eine Rekonstruktion des Museums, in Code gebaut. Ein Standbild aus seinem Film.",
+        "terms": "Ein Codex ist ein gebundenes Buch aus handgeschriebenen Blättern. 656r heißt Blatt 656, Vorderseite. Ein v steht für die Rückseite: 83v ist die Rückseite von Blatt 83.",
+        "names": {
+          "aerial-screw": "Luftschraube",
+          "miter-lock-gates": "Schleusentore",
+          "flywheel": "Schwungrad",
+          "camera-obscura": "Camera obscura",
+          "water-lifting-screw": "Wasserschnecke",
+          "rolling-mill": "Walzwerk",
+          "lathe": "Bohrmaschine",
+          "ball-bearing": "Kugellager",
+          "multi-barrel-gun": "Geschütz mit drei Rohrreihen",
+          "parachute": "Fallschirm",
+          "revolving-crane": "Drehkran",
+          "anemometer": "Windmesser",
+          "mechanical-lion": "Mechanischer Löwe"
+        },
+        "close": {
+          "intro": "Hier ist es die Luftschraube.",
+          "quote": {
+            "text": "{museum:screw_label}",
+            "from": "Aus der Beschriftung im Museum"
+          },
+          "stage": {
+            "pic": {
+              "stem": "machine-poster-square",
+              "widths": [
+                1080
+              ],
+              "wide": {
+                "stem": "machine-poster-wide",
+                "widths": [
+                  1200
+                ]
+              }
+            },
+            "alt": "Ein Modell der Luftschraube, von einer Linie in Rötel geteilt. Links ist es in Rötellinien gezeichnet, rechts aus Holz und Leinen gebaut, im Licht der tief stehenden Sonne, mit seinem Schatten an der Wand dahinter.",
+            "title": "Die Luftschraube",
+            "kind": "Rekonstruktion",
+            "what": "nach Leonardos Blatt. Ein anderes Modell als das im Museum.",
+            "src": "Für diese Seite in Code gebaut",
+            "piece": {
+              "name": "aerial-screw",
+              "script": "machine.js",
+              "tag_a": "Linien",
+              "tag_b": "Gebaut",
+              "hint": "Zieh die Linie zum Vergleich, die Maschine zum Drehen.",
+              "slider_label": "Mehr von den Linien oder mehr von der gebauten Maschine zeigen",
+              "canvas_label": "Die Luftschraube in 3D. Die Pfeiltasten links und rechts drehen sie.",
+              "pause": "Anhalten",
+              "play": "Drehen lassen"
+            }
+          },
+          "title": "{museum:fly_chapter}",
+          "age_k": "",
+          "age": "{museum:fly_age}",
+          "layers": [
+            {
+              "text": "{museum:fly_line}"
+            },
+            {
+              "text": "{museum:fly_drawer}"
+            },
+            {
+              "text": "{museum:fly_record} {museum:fly_record_folio}"
+            }
+          ],
+          "source": "Manuskript B, Blatt 83 verso, also die Rückseite von Blatt 83. Signatur der Bibliothek: Ms 2173. Um 1487 bis 1489.",
+          "rows": [
+            {
+              "k": "Auf dem Blatt",
+              "v": "Eine spiralförmige Fläche an einem Mast, mit Gestell und rundem Sockel. Ein Maß: acht Braccia, ein altes Längenmaß, vom Rand zur Mitte."
+            },
+            {
+              "k": "Unsere Wahl",
+              "v": "Wie steil die Spirale ist, das Holz und seine Verbindungen, das Lager, der Antrieb und das Tempo."
+            },
+            {
+              "k": "Wo das Blatt liegt",
+              "v": "Bibliothèque de l'Institut de France, Paris.",
+              "lang": "fr"
+            },
+            {
+              "k": "Was sie tut",
+              "v": "Sie dreht sich fünfmal in der Minute, wie im Museum, und bleibt am Boden."
+            }
+          ]
+        }
+      },
+      {
+        "id": "notebooks",
+        "form": "text",
+        "h": "Die Notizbücher",
+        "note": "Ein Tisch, Seiten zum Blättern",
+        "p": [
+          "Auf dem Lesetisch liegt eine gedruckte Ausgabe von {count:volume_year} mit zwei seiner Notizbücher. Du kannst alle {count:volume_pages} Seiten umblättern, und {count:volume_sides} davon zeigen die Seiten der Notizbücher selbst, in seiner Spiegelschrift von rechts nach links.",
+          "{count:topics} Themen versammeln {count:topic_pages} Seiten aus seinen Notizbüchern. In einem Regal stehen {word:shelf_books} weitere Bücher mit seinen Notizen zum Blättern, zusammen {count:shelf_sides} Seiten."
+        ],
+        "plates": [
+          {
+            "pic": {
+              "stem": "v-codex",
+              "widths": [
+                800,
+                1600
+              ]
+            },
+            "title": "Das Buch auf dem Tisch",
+            "kind": "Reproduktion",
+            "what": "aufgeschlagen auf der Seite mit der Luftschraube",
+            "src": "Charles Ravaisson-Mollien, Les manuscrits de Léonard de Vinci, Bd. II, Paris 1883. Gemeinfrei wegen ihres Alters. Die Notizbücher bewahrt die Bibliothèque de l'Institut de France in Paris.",
+            "alt": "Ein aufgeschlagenes Buch auf einem Holztisch in warmem Licht. Die linke Seite ist gedruckter Text, die rechte zeigt eine Notizbuchseite mit einer Zeichnung. Ein Standbild aus dem Film des Museums. Die Seiten stammen aus einer gedruckten Ausgabe von {count:volume_year}."
+          }
+        ],
+        "lists": [
+          {
+            "h": "Die Themen",
+            "from": "topics",
+            "show": "name",
+            "n": "pages",
+            "unit": "Seiten"
+          },
+          {
+            "h": "Das Regal",
+            "from": "shelf",
+            "show": "name",
+            "n": "sides",
+            "unit": "Seiten"
+          }
+        ],
+        "stop": "reading-table",
+        "terms": "Gezählt sind Blattseiten: Jedes Blatt hat eine Vorderseite und eine Rückseite."
+      },
+      {
+        "id": "body",
+        "form": "text",
+        "h": "Der Körper",
+        "note": "Anatomie und ein Herz aus Glas",
+        "p": [
+          "An einer Wand der langen Galerie hängen {count:sheets} seiner anatomischen Blätter, Reproduktionen von Originalen aus der Royal Collection in Windsor.",
+          "Ein Blatt hängt für sich: die Herzklappe. Er zeichnete, wie das Blut hinter der Klappe Wirbel bildet. Die Wirbel helfen, sie zu schließen, so schrieb er. An dieser Station zeigt ein Film von etwa {count:heart_seconds} Sekunden das am Glasmodell des Museums, nach seinen Notizen gebaut."
+        ],
+        "hang": "wide",
+        "plates": [
+          {
+            "pic": {
+              "stem": "v-heart",
+              "widths": [
+                800,
+                1600
+              ],
+              "phone": {
+                "stem": "v-heart-m",
+                "widths": [
+                  600,
+                  864
+                ]
+              }
+            },
+            "title": "Das Glasmodell der Herzklappe",
+            "kind": "Rekonstruktion",
+            "what": "ein Modell des Museums, nach seinen Notizen gebaut. Ein Standbild aus dem Film dazu.",
+            "alt": "Ein Glasgefäß mit schmaler Taille steht auf Schwarz. Feine goldene Körner treiben darin und sammeln sich in einem hellen Band an der Taille. Ein Standbild aus dem Film des Museums über sein eigenes Modell."
+          },
+          {
+            "pic": {
+              "stem": "v-valve",
+              "widths": [
+                640,
+                960
+              ]
+            },
+            "title": "Die Aortenklappe",
+            "kind": "Reproduktion",
+            "what": "sein Blatt zur Klappe, in seinem Rahmen. Die Wand dahinter ist in Code gebaut.",
+            "src": "{museum:valve_holder} {museum:sheet_credit}",
+            "alt": "Eine Zeichnung in hellem Passepartout und schmalem Holzrahmen hängt allein an einer dunklen Wand: eine Seite mit kleinen Skizzen des Herzens und Zeilen in Spiegelschrift. Ein Standbild aus dem Film des Museums."
+          }
+        ],
+        "lists": [
+          {
+            "h": "Die Blätter, nach Titel",
+            "from": "sheets",
+            "show": "title",
+            "fold": true
+          }
+        ],
+        "stop": "body"
+      },
+      {
+        "id": "life",
+        "form": "text",
+        "h": "Sein Leben",
+        "note": "Daten im Boden",
+        "p": [
+          "Die Chronik seines Lebens hat {count:dates} Daten. {Word:dates_floor} davon sind in den Boden der langen Galerie eingelassen, und ein Datum im Boden öffnet die Chronik an dieser Stelle.",
+          "Sie ist in {word:periods} Teilen erzählt und nennt {word:people} Menschen um ihn, von seinem Lehrer bis zum König von Frankreich."
+        ],
+        "lists": [
+          {
+            "h": "Die Teile",
+            "from": "periods",
+            "show": "self"
+          },
+          {
+            "h": "Die Menschen",
+            "from": "people",
+            "show": "self"
+          }
+        ],
+        "stop": "line-early"
+      },
+      {
+        "id": "last-house",
+        "form": "text",
+        "h": "Das Haus und das Grab",
+        "note": "Was ihm gehörte und was nicht",
+        "p": [
+          "Raum für Raum: was die Quellen hergeben und wo der Flügel eine Wahl getroffen hat."
+        ],
+        "plates": [
+          {
+            "pic": {
+              "stem": "house",
+              "widths": [
+                800,
+                1600
+              ]
+            },
+            "title": "Clos Lucé von außen",
+            "kind": "Rekonstruktion",
+            "what": "das Haus vom Nordgiebel aus, über die Terrasse hinweg. Auf dem kleinen Pult davor liegt eines seiner Blätter, eine Reproduktion, hier zu klein zum Lesen.",
+            "src": "{museum:deluge_credit} Bewahrt von der Royal Collection, Windsor, RCIN 912380.",
+            "alt": "Ein hohes Backsteinhaus mit steinernen Ecken und steilem Giebel, über eine gepflasterte Terrasse hinweg in tief stehender Sonne, an den Seiten Bäume mit Herbstlaub. Davor ein kleines Pult auf einem Pfosten. Ein Standbild aus dem Film des Museums. Das Haus ist eine Rekonstruktion, in Code gebaut."
+          }
+        ],
+        "rows": [
+          {
+            "k": "Der Große Saal",
+            "v": "Nachgebaut nach Plänen und Fotografien. Der Kamin stammt aus der Zeit um {count:chimney_year}.",
+            "stop": "hall"
+          },
+          {
+            "k": "Die Möbel im Saal",
+            "v": "Tisch, Bank, Truhe, Stuhl, Hocker und Leuchter gehörten nicht ihm. Es sind Möbel, wie sie zu jener Zeit in einem solchen Haus üblich waren.",
+            "stop": "hall"
+          },
+          {
+            "k": "Die kleine Kapelle",
+            "v": "Von außen zu sehen. Die Überlieferung datiert sie auf {count:chapel_year}. Bestätigt ist das nicht. Die Wandbilder stammen vielleicht von seinen Schülern. Sicher ist auch das nicht.",
+            "stop": "oratory"
+          },
+          {
+            "k": "Das Fenster des Studierzimmers",
+            "v": "Von außen zu sehen. Der Flügel legt den Besuch vom {shows:day} hinter dieses Fenster. Vermutet: Das Tagebuch nennt keinen Raum. Darunter öffnest du eines seiner Blätter, eine Sintflut.",
+            "stop": "study"
+          },
+          {
+            "k": "Das Nordzimmer",
+            "v": "Von außen zu sehen. Das Museum im echten Haus sieht sein Zimmer hier. Das ist eine Annahme, kein Beleg.",
+            "stop": "chamber"
+          },
+          {
+            "k": "Der Grabhof",
+            "v": "Hof des Museums, nicht sein Grab: eine Platte mit seinem Namen. Er wollte in der Schlosskirche liegen. Die wurde abgerissen. Wo er liegt, ist nicht sicher. So heißt die Station: Vermutlich.",
+            "stop": "grave"
+          }
+        ]
+      }
+    ]
+  },
+  "numbers": [
+    {
+      "count": "stops",
+      "num": "{n}",
+      "term": "Stationen",
+      "text": ""
+    },
+    {
+      "count": "works",
+      "num": "rund {n}",
+      "term": "Werke",
+      "text": ""
+    },
+    {
+      "count": "pictures",
+      "num": "{n}",
+      "term": "Bilder",
+      "text": ""
+    },
+    {
+      "count": "machines",
+      "num": "{n}",
+      "term": "Maschinen",
+      "text": ""
+    },
+    {
+      "count": "sheets",
+      "num": "{n}",
+      "term": "Anatomische Blätter",
+      "text": ""
+    },
+    {
+      "count": "topic_pages",
+      "num": "{n}",
+      "term": "Notizbuchseiten",
+      "text": "Nach Themen geordnet, auf dem Lesetisch."
+    },
+    {
+      "count": "volume_pages",
+      "num": "{n}",
+      "term": "Seiten zum Blättern",
+      "text": "Alle im Buch auf dem Lesetisch."
+    },
+    {
+      "count": "shelf_sides",
+      "num": "{n}",
+      "term": "Seiten im Regal",
+      "text": "In den Büchern mit seinen Notizen im Regal neben dem Tisch."
+    },
+    {
+      "count": "dates",
+      "num": "{n}",
+      "term": "Daten seines Lebens",
+      "text": ""
+    }
+  ],
+  "holders": {
+    "p": "In der Reihenfolge, in der der Rundgang sie erreicht:",
+    "after": "Das Museum nennt diese Museen, Bibliotheken und Sammlungen, weil sie die Originale bewahren, aus keinem anderen Grund. Es ist von jedem von ihnen unabhängig."
+  },
+  "out": {
+    "line": "Unser anderes Projekt: Leonardo da Vincis Leben als Geschichte und ein Gespräch mit einem KI-Leonardo."
+  },
+  "end": {
+    "id": "stars",
+    "dir": "Der Grabhof",
+    "note": "Die letzte Station",
+    "h": "Der Flügel endet unter den Sternen",
+    "p": "An der letzten Station, dem Grabhof, wird es dunkel, und du schaust hinauf. Die Sterne stehen so, wie sie am Abend des {shows:day} um {word:hour} Uhr über Clos Lucé standen. Stern für Stern sind sie aus einem Sternkatalog berechnet, für den Tag aus dem Tagebuch und die Stunde, die wir gewählt haben. Der Sonnenuntergang zeigt einen gewöhnlichen Oktoberabend, nicht diesen einen, und die Sternschnuppe ist vom Museum.",
+    "plate": {
+      "pic": {
+        "stem": "grave-court",
+        "widths": [
+          560,
+          960,
+          1600
+        ]
+      },
+      "title": "Der Grabhof",
+      "kind": "In Code gebaut",
+      "what": "der Hof des Museums: die Platte mit seinem Namen, eine Tafel mit der tiefen Sonne seines Todestags zu einer gewählten Minute, der Stein mit dem Jahr der Grabung. Links ein Bild von Ingres.",
+      "src": "Jean-Auguste-Dominique Ingres, François Ier reçoit les derniers soupirs de Léonard de Vinci, 1818. Petit Palais, musée des Beaux-Arts de la Ville de Paris. Bild: CC0 Paris Musées.",
+      "alt": "Ein ummauerter Hof in tiefer Sonne, ein Baum im Herbstlaub. Auf dem Pflaster eine helle Platte mit dem Namen Leonardo da Vinci, dahinter eine Tafel mit einem Klotz und langem Schatten, daneben ein Stein mit einer Jahreszahl. Links ein Bild in dunklem Rahmen. Ein Standbild aus dem Film des Museums."
+    },
+    "sky": {
+      "pic": {
+        "stem": "sky",
+        "widths": [
+          960
+        ]
+      },
+      "title": "Der Blick nach oben",
+      "kind": "In Code gebaut",
+      "what": "die Sterne jenes Abends über Clos Lucé, das Ende des Rundgangs",
+      "alt": "Ein tiefblauer Nachthimmel voller Sterne, am unteren Rand die dunklen Kronen von Bäumen."
+    }
+  }
+}

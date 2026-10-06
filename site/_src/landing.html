@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="{{lang}}">
+<head>
+{{head}}
+</head>
+<body class="home">
+{{header}}
+
+<main id="main">
+
+<!-- 1. The first screen: the wall, a still of the newest wing in the place of the landing's showpiece, the name, the door.
+     Then the museum at a glance. -->
+{{html.first}}
+{{script.faces}}
+
+<!-- 2. The wings: a wall. Where something hangs, it is lit. Everything here is read from the registry. -->
+{{html.wall}}
+
+<!-- 3. How a visit works, with one stop of the newest open wing as the example, and how sure the museum is. -->
+{{html.visit}}
+
+<!-- 4. What this museum is -->
+<section class="what" id="what" aria-labelledby="what-h">
+  <div class="wrap what__grid">
+    <div class="head what__head">
+      <h2 id="what-h">{{what.heading}}</h2>
+      {{html.what_lead}}
+      <p class="what__more"><a class="more" href="{{href.what}}"><span>{{what.link}}</span>{{svg.arrow}}</a></p>
+    </div>
+    <dl class="ledger">
+      <div><dt>{{what.i1_term}}</dt><dd>{{what.i1_text}}</dd></div>
+      <div><dt>{{what.i2_term}}</dt><dd>{{what.i2_text}}</dd></div>
+      <div><dt>{{what.i3_term}}</dt><dd>{{what.i3_text}}</dd></div>
+      <div><dt>{{what.i4_term}}</dt><dd>{{what.i4_text}} {{what.i4_pays}}</dd></div>
+      <div><dt>{{what.i5_term}}</dt><dd>{{what.i5_text}}</dd></div>
+      <div><dt>{{what.i6_term}}</dt><dd>{{what.i6_text}}</dd></div>
+    </dl>
+  </div>
+</section>
+
+<!-- 5. For museums, libraries and the press -->
+<section class="inst" id="institutions" aria-labelledby="inst-h">
+  <div class="wrap">
+    <div class="inst__grid">
+      <div class="head">
+        <h2 id="inst-h">{{inst.heading}}</h2>
+      </div>
+      <div class="inst__body">
+        <p>{{inst.p1}}</p>
+        <p>{{inst.p2}}</p>
+        <p>{{inst.p3}}</p>
+        <p class="inst__links"><a class="more" href="{{href.imprint}}"><span>{{inst.imprint}}</span>{{svg.arrow}}</a> <a class="more" href="{{href.what}}"><span>{{inst.statement}}</span>{{svg.arrow}}</a></p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 6. What is open today, and the door again -->
+{{html.closing}}
+
+</main>
+
+{{footer}}
+
+<!-- The phone's door: fixed to the bottom edge once the first screen's button has scrolled away. -->
+<div class="dock" data-dock hidden>
+  <a class="door" href="{{href.enter}}"><span>{{nav.enter}}</span>{{svg.arrow}}</a>
+</div>
+<script type="application/ld+json">{{jsonld}}</script>
+<script src="{{static}}site.js" defer></script>
+{{script.film}}
+</body>
+</html>

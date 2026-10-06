@@ -1,0 +1,179 @@
+{
+  "_note": "STAND-IN, TEST ONLY. A wing of a second collection: an invented animal. It proves that the wing template takes a wing that is no person: no house, no machine, no picture room, no holders, no topic page, no sky at the end. Never built into dist/.",
+  "meta": {
+    "title": "The Mustersaurus wing | Museum of Ages, a digital museum",
+    "description": "Stand-in text: a wing about an invented animal, with {count:stops} stops.",
+    "share_alt": "Stand-in picture."
+  },
+  "first": {
+    "lede": "Stand-in text: a walk of {count:stops} stops, from the bones to the complete animal.",
+    "piece": {
+      "title": "The complete animal",
+      "kind": "Reconstruction",
+      "what": "a stand-in drawing",
+      "alt": "A line drawing of a two-legged animal with a long tail, seen from the side. A stand-in picture."
+    }
+  },
+  "landing": {
+    "piece": {
+      "title": "The complete animal",
+      "kind": "Reconstruction",
+      "what": "a stand-in drawing",
+      "alt": "A line drawing of a two-legged animal with a long tail, seen from the side. A stand-in picture.",
+      "beats": [
+        "What is left: the bones.",
+        "What we rebuilt: the muscles, then the skin.",
+        "How sure: each part carries its grade."
+      ],
+      "install": {
+        "name": "stand-in",
+        "script": "stand-in-piece.js",
+        "pause": "Pause",
+        "play": "Play"
+      }
+    }
+  },
+  "card": {
+    "kind": "Reconstruction",
+    "what": "the skeleton, a stand-in drawing",
+    "alt": "A line drawing of the skeleton of a two-legged animal. A stand-in picture."
+  },
+  "intro": {
+    "p": "Stand-in text: the wing builds one animal up in three steps."
+  },
+  "rooms": [
+    {
+      "id": "body",
+      "h": "From the bones to the animal",
+      "note": "Three steps",
+      "p": [
+        "Stand-in text. First the skeleton, then the muscles laid over it, then the complete animal."
+      ],
+      "plates": [
+        {
+          "pic": {
+            "stem": "t-skeleton",
+            "widths": [
+              600,
+              1200
+            ]
+          },
+          "title": "The skeleton",
+          "kind": "Reproduction",
+          "what": "stand-in drawing",
+          "alt": "The skeleton, drawn in lines. A stand-in picture."
+        },
+        {
+          "pic": {
+            "stem": "t-muscles",
+            "widths": [
+              600,
+              1200
+            ]
+          },
+          "title": "The muscles",
+          "kind": "Reconstruction",
+          "what": "stand-in drawing",
+          "alt": "The outline of the animal with hatched muscles. A stand-in picture."
+        },
+        {
+          "pic": {
+            "stem": "t-animal",
+            "widths": [
+              600,
+              1200
+            ]
+          },
+          "title": "The complete animal",
+          "kind": "Reconstruction",
+          "what": "stand-in drawing",
+          "alt": "The animal as a filled shape. A stand-in picture."
+        }
+      ]
+    },
+    {
+      "id": "size",
+      "h": "How big was it?",
+      "note": "Beside a person",
+      "hang": "wide",
+      "p": [
+        "Stand-in text. The animal stands beside a person of 1.80 metres, over a scale of twelve metres."
+      ],
+      "plates": [
+        {
+          "pic": {
+            "stem": "t-size",
+            "widths": [
+              800,
+              1600
+            ]
+          },
+          "title": "Beside a person",
+          "kind": "Diagram",
+          "what": "stand-in drawing",
+          "alt": "The animal beside a small human figure over a scale. A stand-in picture."
+        }
+      ]
+    },
+    {
+      "id": "ground",
+      "h": "Where it was found",
+      "note": "A room without a picture",
+      "p": [
+        "Stand-in text for a room that has no plate. It joins the room before it."
+      ],
+      "plates": []
+    }
+  ],
+  "stop": {
+    "n": 3,
+    "grade": "reconstructed",
+    "intro": "Stand-in text: one stop of this wing, with its three layers.",
+    "stage": {
+      "pic": {
+        "stem": "t-skeleton",
+        "widths": [
+          600,
+          1200
+        ]
+      },
+      "alt": "The skeleton, drawn in lines. A stand-in picture.",
+      "title": "The skeleton",
+      "kind": "Reproduction",
+      "what": "stand-in drawing"
+    },
+    "title": "It walked on two legs",
+    "layers": [
+      {
+        "text": "Stand-in line: the first thing you read."
+      },
+      {
+        "text": "Stand-in drawer: a few sentences more, for a reader who opens it."
+      },
+      {
+        "text": "Stand-in record: what is documented and what is reconstructed."
+      }
+    ]
+  },
+  "numbers": [
+    {
+      "count": "stops",
+      "num": "{n}",
+      "term": "Stops",
+      "text": "Stand-in text."
+    },
+    {
+      "count": "bones",
+      "num": "about {n}",
+      "term": "Bones",
+      "text": "Stand-in text."
+    }
+  ],
+  "end": {
+    "id": "end",
+    "dir": "The last stop",
+    "note": "The last stop",
+    "h": "The walk ends at the complete animal",
+    "p": "Stand-in text. Then the walk ends."
+  }
+}

@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="{{lang}}">
+<head>
+{{head}}
+</head>
+<body class="wingpage">
+{{header}}
+
+<main id="main">
+
+<!-- 1. The first screen: the place of this wing's showpiece (a walk of five pictures), its name, what it shows, its door. -->
+{{html.first}}
+{{script.faces}}
+
+<!-- 1b. The ways to the rooms, under the first screen: one line a room, and one for the walk's end. -->
+<nav class="roomnav" aria-label="{{wingpage.rooms_nav}}"><div class="wrap">{{html.directory}}</div></nav>
+
+<!-- 2. What the wing shows, and the rooms in the order of the walk: a picture and a few
+     sentences each. Every word and picture comes from the wing's data file. -->
+<section class="wing band" id="wing" aria-labelledby="wing-h">
+  <div class="wrap">
+    <div class="wing__top">
+      <div class="head">
+        <h2 id="wing-h">{{wingpage.dir_h}}</h2>
+        <p class="lead">{{wing.intro}}</p>
+        {{html.intro_more}}
+      </div>
+    </div>
+    {{html.rooms}}
+  </div>
+</section>
+
+<!-- 3. What the wing holds: a picture index by group, from the wing's facts file -->
+{{html.holds}}
+
+<!-- 4. One band: the wing in numbers, and every holder of an original -->
+{{html.facts}}
+
+<!-- 5. The end of the walk. Its last line is the door. -->
+{{html.end}}
+
+<!-- 6. Last: a strip of ways on. The wing's last step leads here (#more). -->
+{{html.more}}
+
+</main>
+
+{{footer}}
+
+<div class="dock" data-dock hidden>
+  <a class="door" href="{{href.enter}}"><span>{{nav.enter}}</span>{{svg.arrow}}</a>
+</div>
+<script type="application/ld+json">{{jsonld}}</script>
+<script src="{{static}}site.js" defer></script>
+</body>
+</html>
