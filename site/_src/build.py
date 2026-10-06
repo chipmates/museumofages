@@ -246,6 +246,15 @@ def load(path):
     return json.loads(Path(path).read_text(encoding="utf-8"))
 
 
+def local_imprint():
+    """The legal notice's details the repository leaves out, from the nearest .museum-local.json at or above the
+    site (git ignores it): {"imprint": {"rep_name": "..."}}. Without one, the word files' placeholders show."""
+    for folder in (SRC, *SRC.parents):
+        if (folder / ".museum-local.json").exists():
+            return load(folder / ".museum-local.json").get("imprint") or {}
+    return {}
+
+
 def skip(why):
     if why not in SKIPPED:
         SKIPPED.append(why)
@@ -374,8 +383,13 @@ class Site:
         self.mark, self.pics, self.notes = mark, R.Pics(pic_dirs), []
         self.newest = self.open[-1] if self.open else None
         self.words = {lang: flatten(load(SRC / f"words.{lang}.json")) for lang in LANGS}
+        self.imprint_local = local_imprint()
         for lang in LANGS:
             self.words[lang].pop("_note", None)
+            for key, value in self.imprint_local.items():
+                if f"imprint.{key}" not in self.words[lang]:
+                    raise SystemExit(f'.museum-local.json names "imprint": "{key}", a detail the legal notice does not have')
+                self.words[lang][f"imprint.{key}"] = value
         self.words_attr = {lang: {k: esc(v) for k, v in self.words[lang].items()} for lang in LANGS}
         # a name of several words never breaks, and no paragraph ends on a word alone
         self.names = {lang: sorted({e["name"][lang] for e in self.wings.values() if " " in e.get("name", {}).get(lang, "")}, key=len, reverse=True)
@@ -1428,6 +1442,8 @@ def build(out, registry, wing_dirs, mark=None, topics=True, quiet=False, more_pi
         print(f"{STATIC + '/site.css':46} {(static_dir / 'site.css').stat().st_size:6} bytes")
         for note in site.notes:
             print(f"For the writer (not a failure): {note}")
+        print("The legal notice names its representative from .museum-local.json." if site.imprint_local.get("rep_name") else
+              "The legal notice shows a placeholder for its representative (no .museum-local.json names one): not for the live site.")
         print(f"The project line is {'on, ' + PROJECT_LINE_AT + ' the bar' if PROJECT_LINE else 'off'}. "
               f"The link to the source code is {'on' if SOURCE_LINK else 'off'}.")
         print(f"{len(built)} pages, {len(site.open)} open wing(s), {len(site.collections)} collection(s). All checks passed.")
