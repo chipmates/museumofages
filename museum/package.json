@@ -2,7 +2,21 @@
   "name": "museum-of-ages",
   "private": true,
   "version": "0.1.0",
+  "description": "Museum of Ages, a digital museum. We rebuild what was. You walk through it.",
+  "license": "AGPL-3.0-or-later",
+  "homepage": "https://museumofages.org",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/chipmates/museumofages.git",
+    "directory": "museum"
+  },
+  "bugs": {
+    "url": "https://github.com/chipmates/museumofages/issues"
+  },
   "type": "module",
+  "engines": {
+    "node": ">=22.12.0"
+  },
   "scripts": {
     "dev": "vite",
     "build": "node forge/manifest-check.mjs --quiet && vite build",
