@@ -1,0 +1,119 @@
+# What a clean runner can check without the museum's asset store.
+#
+# Not a step here: `pnpm build`. The production build checks every file it
+# ships against the asset store, which lives outside this repository, and
+# stops without it by design (forge/manifest-check.mjs). The full manifest
+# check and the film keys run where the store is.
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+  # A new push to a pull request cancels its older run. On main every commit
+  # keeps a result of its own.
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+
+jobs:
+  museum:
+    name: Museum (types, records, film tests)
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    defaults:
+      run:
+        working-directory: museum
+    env:
+      # Nothing in this job reads the live site.
+      NA_PUBLIC_ORIGIN: 'off'
+
+    steps:
+      - name: Check out
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          # Some film tests read pinned commits of this history.
+          fetch-depth: 0
+          persist-credentials: false
+
+      - name: Set up pnpm
+        uses: pnpm/action-setup@ea17c68df8912ef543352723c149a84f56e3d413 # v6.1.0
+        with:
+          # The version comes from the packageManager field.
+          package_json_file: museum/package.json
+
+      - name: Set up Node.js
+        uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
+        with:
+          node-version-file: .nvmrc
+          cache: pnpm
+          cache-dependency-path: museum/pnpm-lock.yaml
+
+      - name: Install
+        run: pnpm install --frozen-lockfile
+
+      - name: Type check
+        run: pnpm exec tsc --noEmit -p .
+
+      # The records the repository carries and their fields. The bytes they
+      # describe and the references from the source need the store.
+      - name: Records
+        run: node forge/manifest-check.mjs --records-only
+
+      # A test that needs the store, a film release or the star catalogue
+      # skips and says why.
+      - name: Film tests
+        run: node --test forge/film/*.test.mjs forge/best-of-rights.test.mjs forge/night/real-sky.test.mjs
+
+  site:
+    name: Site (Python ${{ matrix.python }})
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    strategy:
+      fail-fast: false
+      matrix:
+        # The python3 that macOS ships, and the newest. The build needs the
+        # standard library only.
+        python: ['3.9', '3.14']
+
+    steps:
+      - name: Check out
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+
+      - name: Set up Python
+        uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7.0.0
+        with:
+          python-version: ${{ matrix.python }}
+
+      # The repository keeps only the list of the site's pictures and music.
+      # The cache follows the list, so the live site is read when it changes.
+      - name: Cache the site's pictures
+        uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
+        with:
+          path: |
+            site/_src/img
+            site/_src/media
+            site/pages/pics
+          key: site-pictures-${{ hashFiles('site/_src/fetch-list.json') }}
+
+      - name: Fetch the site's pictures
+        run: python3 site/_src/tools/fetch.py
+
+      - name: Build the site
+        run: python3 site/_src/build.py
+
+      - name: Build the test registries and the other switch states
+        run: |
+          python3 site/_src/build.py --test
+          python3 site/_src/build.py --switches
+
+      - name: Topic page tests
+        run: python3 site/pages/test_build.py
