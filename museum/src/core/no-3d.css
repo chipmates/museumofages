@@ -1,0 +1,131 @@
+/* THE SCREEN FOR A BROWSER THAT CANNOT DRAW THE ROOMS. The words stand on
+   the interface's wall, solid, so they hold their contrast over any still;
+   the still keeps the glass above them. Mounted only while the screen stands. */
+
+/* nothing of the app stands beside the screen: the door's still, the screen
+   and the plain mirror for readers stay */
+:root[data-na-no3d] body > :not(.na-no3d, #na-first, .static-soul) { display: none; }
+
+.na-no3d {
+  position: fixed;
+  inset: 0;
+  z-index: 6;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  overflow-y: auto;
+  padding: 24px 24px max(9vh, 58px);
+  color: var(--ui-text);
+  font-family: var(--serif);
+}
+
+.na-no3d-picture { position: fixed; inset: 0; z-index: 0; pointer-events: none; }
+.na-no3d-still {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: 50% 50%;
+  opacity: 0;
+  transition: opacity 400ms ease;
+}
+.na-no3d-picture[data-shown] .na-no3d-still { opacity: 1; }
+/* the plate's foot falls a little darker, so it sits in the picture and not on it */
+.na-no3d::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  background: linear-gradient(to bottom, transparent 42%, color-mix(in srgb, var(--ui-ground-deep) 58%, transparent));
+}
+
+.na-no3d-plate {
+  position: relative;
+  z-index: 2;
+  flex: 0 0 auto;
+  /* at the foot, and still reachable by scrolling on a glass too short for it */
+  margin-top: auto;
+  width: min(600px, 100%);
+  padding: 22px 26px 6px;
+  border: 1px solid var(--ui-line);
+  border-radius: var(--ui-r-box);
+  background: var(--ui-ground);
+  box-shadow: var(--plate-lift);
+}
+/* with no picture coming the wide glass holds the plate in its middle */
+.na-no3d[data-ground] .na-no3d-plate { margin-bottom: auto; }
+.na-no3d-line {
+  margin: 0;
+  font: 400 clamp(1.375rem, 1.9vw, 1.625rem)/1.32 var(--serif);
+  letter-spacing: .005em;
+  color: var(--ui-text);
+  text-wrap: pretty;
+  hyphens: manual;
+}
+.na-no3d-keep { white-space: nowrap; }
+.na-no3d-help {
+  margin: 12px 0 0;
+  max-width: 58ch;
+  font: 400 1.0625rem/1.55 var(--serif);
+  color: var(--ui-text-quiet);
+  text-wrap: pretty;
+}
+/* a build that names no page has no link row: the words keep the top's air below them */
+.na-no3d-help:last-child { padding-bottom: 16px; }
+.na-no3d-way {
+  margin: 16px 0 0;
+  border-top: 1px solid var(--ui-line);
+  padding-top: 6px;
+}
+.na-no3d-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 44px;
+  font: 400 1rem/1.3 var(--sans);
+  letter-spacing: .005em;
+  color: var(--ui-way);
+  text-decoration: underline;
+  text-decoration-color: color-mix(in srgb, var(--ui-way) 46%, transparent);
+  text-decoration-thickness: 1px;
+  text-underline-offset: 5px;
+  border-radius: var(--ui-r-control);
+}
+.na-no3d-link:hover { text-decoration-color: var(--ui-way); }
+.na-no3d-link:focus { outline: none; }
+.na-no3d-link:focus-visible { outline: 2px solid var(--ui-way); outline-offset: 3px; }
+.na-no3d-arrow {
+  flex: 0 0 auto;
+  width: 16px;
+  height: 16px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.6;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+/* the phone: the plate stands at the foot, across the glass, as the film's box does */
+@media (max-aspect-ratio: 9/10) {
+  .na-no3d { padding: 0; }
+  .na-no3d-still { height: max(100vh, 100lvh); }
+  .na-no3d-plate {
+    width: 100%;
+    padding: 18px 16px max(12px, env(safe-area-inset-bottom));
+    border-width: 1px 0 0;
+    border-radius: 0;
+    box-shadow: none;
+  }
+  .na-no3d[data-ground] .na-no3d-plate { margin-bottom: 0; }
+  .na-no3d-line { font-size: 1.25rem; line-height: 1.36; }
+  .na-no3d-help { margin-top: 10px; font-size: .9375rem; line-height: 1.52; }
+  .na-no3d-help:last-child { padding-bottom: 6px; }
+  .na-no3d-way { margin-top: 14px; padding-top: 4px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .na-no3d-still { transition: none; }
+}

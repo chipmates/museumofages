@@ -12,6 +12,7 @@ import { channel, EASE } from './core/motion'
 import { PANE_AMONG, PANE_SHARED, paneWords } from './content/panes'
 import { loadLikenesses, paneLikeness, type LikenessRecord } from './content/likenesses'
 import { createStack } from './stack'
+import { stackOrScreen } from './core/no-3d'
 import type { GradeName } from './stack/grade'
 import { isTierName, type TierName } from './stack/tier'
 import { createWingFrame, stationFromHash } from './wings/frame'
@@ -125,6 +126,9 @@ const wingEl: HTMLElement = wingHost
 
 const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches
 
+/** what the build names: a wing's own page on the site, the site's front page */
+const SETTINGS: Settings = import.meta.env
+
 const scene = new Scene()
 const camera = new PerspectiveCamera(46, innerWidth / innerHeight, 0.1, 200)
 camera.position.set(0, 0, 0)
@@ -132,8 +136,13 @@ camera.position.set(0, 0, 0)
 /* The stack is built before anything is put in the scene: the backend and the
    tier are facts about the machine, and every scene below asks the tier what
    it may afford. Top-level await, so no organ is ever constructed against a
-   renderer that does not exist yet. */
-const stack = await createStack({})
+   renderer that does not exist yet. A browser that can draw with neither
+   backend gets the plain screen instead, and nothing below it is built. */
+const stack = await stackOrScreen(() => createStack({}), () => {
+  const here = wingPath()
+  const wing = here && wingBySlug(here.slug) ? here.slug : ''
+  return { wing, page: wing ? wayOut(SETTINGS, wing, lang(), false) : sitePage(SETTINGS, lang()) }
+})
 const renderer = stack.renderer
 stage.appendChild(renderer.domElement)
 stack.setScene(scene, camera, 'cold-moon')
@@ -1444,9 +1453,6 @@ declare global {
 const wingFrame = createWingFrame(wingEl, (finished) => toLobby(finished), stack, () => performance.now() / 1000)
 let wingSlug = ''
 const bench = createBench(stack, () => toLobby())
-/** what the build names: a wing's own page on the site, the site's front page */
-const SETTINGS: Settings = import.meta.env
-
 /** A wing's own address, with the station the visitor stood at. */
 function wingPath(): { slug: string; station: number | string } | null {
   const m = /^\/w\/([a-z0-9-]{1,64})\/?$/.exec(location.pathname)
