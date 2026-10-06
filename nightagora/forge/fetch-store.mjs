@@ -8,8 +8,8 @@
 //   <copy>/FETCHED.json                 where and when the copy was made
 //
 //   node forge/fetch-store.mjs [--into <folder>] [--scope wing-vinci,library]
-//                              [--only <scope/path prefix>] [--dry-run] [--yes]
-//                              [--concurrency 4] [--verify]
+//                              [--zoom <px>|all] [--only <scope/path prefix>]
+//                              [--dry-run] [--yes] [--concurrency 4] [--verify]
 //
 // The copy goes to NA_ASSET_STORE, else `asset-store/` beside the app, where
 // `pnpm dev` finds it. NA_PUBLIC_ORIGIN names the site (default
@@ -18,9 +18,11 @@
 // and names itself in every request.
 //
 // What it leaves out: a file the record marks display:false (the public site
-// never serves one), and the folders a record names as a whole (the
-// deep-zoom pieces, about a hundred thousand files, and the procedural
-// recipes, which have no bytes). Online, the dev server reads what a copy
+// never serves one), the procedural recipes (no bytes), and unless asked the
+// deep-zoom pieces a close look draws (IIIF level 0 folders, about 128,000
+// files in all). --zoom 1024 adds the levels whose whole picture is at most
+// 1024 pixels on its long side, enough for a close look at screen size;
+// --zoom all adds every piece. Online, the dev server reads what a copy
 // lacks from the public site. A copy is for dev only: a production build
 // refuses it.
 import { createHash } from 'node:crypto'
@@ -39,6 +41,7 @@ const YES = args.includes('--yes')
 const VERIFY = args.includes('--verify')
 const SCOPES = flag('--scope')?.split(',').filter(Boolean) ?? null
 const ONLY = flag('--only')
+const ZOOM = flag('--zoom') === 'all' ? Infinity : Math.max(0, Number(flag('--zoom') ?? 0) || 0)
 const CONCURRENCY = Math.max(1, Math.min(8, Number(flag('--concurrency') ?? 4)))
 const INTO = resolve(flag('--into') ?? process.env.NA_ASSET_STORE ?? DEFAULT_STORE)
 
@@ -105,12 +108,50 @@ function filesOfRecord(e) {
   return out
 }
 
+/** a deep-zoom folder's pieces as libvips writes IIIF level 0: for each
+    scale factor s, regions of tile_size * s source pixels named x,y,w,h (or
+    `full` when one region is the whole picture), each scaled to ceil(w / s)
+    by ceil(h / s); only the levels whose whole picture fits in `cap` */
+function piecesOf(e, cap) {
+  const { width: W, height: H, tile_size: T, scale_factors: S } = e
+  if (![W, H, T].every(Number.isSafeInteger) || !Array.isArray(S)) return null
+  // one licence line per folder: the pieces are one picture
+  const licenceAt = `${e.path}licence.txt`
+  const out = [{ path: `${e.path}info.json`, licenceAt }]
+  let share = 0, all = 0
+  for (const s of S) {
+    all += 1 / (s * s)
+    if (Math.max(W, H) / s > cap) continue
+    share += 1 / (s * s)
+    const step = T * s
+    for (let y = 0; y < H; y += step) {
+      for (let x = 0; x < W; x += step) {
+        const w = Math.min(step, W - x), h = Math.min(step, H - y)
+        const region = x === 0 && y === 0 && w === W && h === H ? 'full' : `${x},${y},${w},${h}`
+        out.push({ path: `${e.path}${region}/${Math.ceil(w / s)},${Math.ceil(h / s)}/0/default.jpg`, licenceAt })
+      }
+    }
+  }
+  // the record weighs the folder; its share by pixels is the estimate
+  return { files: out, bytes: Number.isSafeInteger(e.bytes) && all ? Math.round((e.bytes * share) / all) : 0 }
+}
+
 const wanted = new Map() // `${scope}/${path}` -> { scope, path, sha256, bytes, entry }
-let wholeFolders = 0
+let wholeFolders = 0, zoomFolders = 0, zoomBytes = 0
 for (const e of deployed) {
   if (e.display !== true || e.class === 'REFERENCE-ONLY') continue
   if (SCOPES && !SCOPES.includes(e.wing)) continue
-  if (typeof e.path === 'string' && (e.path.endsWith('/') || e.path.includes('*'))) wholeFolders++
+  const folder = typeof e.path === 'string' && (e.path.endsWith('/') || e.path.includes('*'))
+  const pieces = folder && ZOOM > 0 ? piecesOf(e, ZOOM) : null
+  if (folder && !pieces) wholeFolders++
+  if (pieces && (!ONLY || `${e.wing}/${e.path}`.startsWith(ONLY) || ONLY.startsWith(`${e.wing}/${e.path}`))) {
+    zoomFolders++
+    zoomBytes += pieces.bytes
+    for (const f of pieces.files) {
+      const key = `${e.wing}/${f.path}`
+      if (!wanted.has(key)) wanted.set(key, { scope: e.wing, ...f, entry: e })
+    }
+  }
   for (const f of filesOfRecord(e)) {
     const key = `${e.wing}/${f.path}`
     if (ONLY && !key.startsWith(ONLY)) continue
@@ -121,7 +162,8 @@ for (const e of deployed) {
 
 // ---------------------------------------------------------------- the plan
 const target = (w) => join(INTO, w.scope, w.path)
-const present = (w) => existsSync(target(w)) && (!Number.isSafeInteger(w.bytes) || statSync(target(w)).size === w.bytes)
+const licenceFile = (w) => (w.licenceAt ? join(INTO, w.scope, w.licenceAt) : `${target(w)}.licence.txt`)
+const present = (w) => existsSync(target(w)) && (Number.isSafeInteger(w.bytes) ? statSync(target(w)).size === w.bytes : statSync(target(w)).size > 0)
 const list = [...wanted.values()]
 const byScope = new Map()
 for (const w of list) {
@@ -131,15 +173,16 @@ for (const w of list) {
   if (present(w)) s.have++
   byScope.set(w.scope, s)
 }
-const total = list.reduce((n, w) => n + (w.bytes ?? 0), 0)
+const total = list.reduce((n, w) => n + (w.bytes ?? 0), 0) + zoomBytes
 const todo = list.filter((w) => VERIFY || !present(w))
-const todoBytes = todo.reduce((n, w) => n + (w.bytes ?? 0), 0)
+const todoBytes = todo.reduce((n, w) => n + (w.bytes ?? 0), 0) + (todo.some((w) => w.bytes === undefined) ? zoomBytes : 0)
 
 console.log(`the record: ${recordUrl} (${deployed.length} entries, ${mb(recordBytes.length)})`)
 console.log(`the copy:   ${INTO}`)
 for (const [scope, s] of [...byScope].sort()) console.log(`  ${scope.padEnd(12)} ${String(s.files).padStart(6)} files  ${mb(s.bytes).padStart(9)}  (${s.have} already here)`)
-console.log(`total ${list.length} files, ${mb(total)}; to fetch now ${todo.length} files, ${mb(todoBytes)}`)
-console.log(`left out: ${wholeFolders} records that name a whole folder (deep-zoom pieces, procedural recipes) and every display:false file`)
+if (zoomFolders) console.log(`deep zoom: ${zoomFolders} folders, levels up to ${ZOOM === Infinity ? 'full size' : `${ZOOM} px`}, about ${mb(zoomBytes)} (estimated from each folder's record)`)
+console.log(`total ${list.length} files, ${zoomBytes ? 'about ' : ''}${mb(total)}; to fetch now ${todo.length} files (${todo.length} requests), ${mb(todoBytes)}`)
+console.log(`left out: ${wholeFolders} records that name a whole folder${ZOOM ? '' : ' (deep-zoom pieces: --zoom 1024 or --zoom all; procedural recipes)'} and every display:false file`)
 
 const drift = recordDrift(deployed)
 if (!drift.same)
@@ -189,7 +232,7 @@ const broken = []
 async function fetchOne(w) {
   const file = target(w)
   mkdirSync(dirname(file), { recursive: true })
-  writeFileSync(`${file}.licence.txt`, licenceLines(w.entry))
+  if (!existsSync(licenceFile(w))) writeFileSync(licenceFile(w), licenceLines(w.entry))
   if (VERIFY && existsSync(file) && (!w.sha256 || sha(file) === w.sha256)) return
   const url = `${PUBLIC_ORIGIN}/na/${w.scope}/${w.path.split('/').map(encodeURIComponent).join('/')}`
   requests++
@@ -232,7 +275,7 @@ async function worker() {
       }
     } else {
       // already here: its licence line still stands beside it
-      if (!existsSync(`${target(w)}.licence.txt`)) writeFileSync(`${target(w)}.licence.txt`, licenceLines(w.entry))
+      if (!existsSync(licenceFile(w))) writeFileSync(licenceFile(w), licenceLines(w.entry))
     }
     done++
     if (process.stdout.isTTY && Date.now() - last > 500) {
@@ -253,6 +296,7 @@ writeFileSync(join(INTO, FETCHED_NOTE), JSON.stringify({
   only: ONLY ?? null,
   files: list.length - missing.length - broken.length,
   bytes: total,
+  zoom: ZOOM === Infinity ? 'all' : ZOOM,
   left_out: { whole_folders: wholeFolders, display_false: 'all' },
   missing,
   broken,
