@@ -69,8 +69,10 @@ SIGN_FILES = {
 # a place with the name alone the cut on 24. Each is read from the lockup it stands in, in px.
 SIGN_CUTS = {"block": ("lockup-wall.svg", 32), "name": ("lockup-wall-name.svg", 24)}
 # What every page names in static/sign/: the tab's own cut on 16, its picture at 32 for a browser that takes no
-# SVG icon, and a phone's home screen. The two pictures are made by tools/make_icons.py (icons.json records from what).
-ICONS = (("icon", 'sizes="32x32" type="image/png"', "tab-32.png", 32), ("icon", 'type="image/svg+xml"', "tab.svg", None),
+# SVG icon, at 96 for search results (a multiple of 48 px), and a phone's home screen. The pictures are made by
+# tools/make_icons.py (icons.json records from what).
+ICONS = (("icon", 'sizes="32x32" type="image/png"', "tab-32.png", 32), ("icon", 'sizes="96x96" type="image/png"', "tab-96.png", 96),
+         ("icon", 'type="image/svg+xml"', "tab.svg", None),
          ("apple-touch-icon", "", "home-180.png", 180))
 # The empty icon the topic pages' own template carries: the build sets the site's icons in its place.
 EMPTY_ICON = '<link rel="icon" href="data:,">'

@@ -5,6 +5,12 @@
     "source_sha256": "3786880aa48892fac655dec3d949e1bb22e440e7a77233aa0ea70ef9f9a3cca1",
     "sha256": "3b00a0763dad2951aad8489b0fe87e4cdf6747d9ba43da9c6094d1bfa29c6cbf"
   },
+  "tab-96.png": {
+    "from": "tab.svg",
+    "size": 96,
+    "source_sha256": "3786880aa48892fac655dec3d949e1bb22e440e7a77233aa0ea70ef9f9a3cca1",
+    "sha256": "51c9664a40bc79b4523dadb9710cf0959dc61fa9e07230e756ca85da0ada24d2"
+  },
   "home-180.png": {
     "from": "app.svg",
     "size": 180,

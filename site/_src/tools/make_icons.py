@@ -1,9 +1,10 @@
 #!/usr/bin/env python3
-"""Makes the sign's two PNG icons from its own files, without a browser.
+"""Makes the sign's PNG icons from its own files, without a browser.
 
     python3 _src/tools/make_icons.py
 
     sign/tab.svg -> sign/tab-32.png    the tab's cut on 16 at twice its size, for a browser that takes no SVG icon
+    sign/tab.svg -> sign/tab-96.png    the same at six times, for search results, which ask a multiple of 48 px
     sign/app.svg -> sign/home-180.png  a phone's home screen
 and sign/icons.json with the hash of each source and each picture: the build reads it, so a picture made from an
 older drawing stops the build.
@@ -22,7 +23,7 @@ from pathlib import Path
 from PIL import Image, ImageDraw
 
 SIGN = Path(__file__).resolve().parent.parent / "sign"
-MADE = (("tab.svg", "tab-32.png", 32), ("app.svg", "home-180.png", 180))
+MADE = (("tab.svg", "tab-32.png", 32), ("tab.svg", "tab-96.png", 96), ("app.svg", "home-180.png", 180))
 SAMPLES = 16
 NS = "{http://www.w3.org/2000/svg}"
 NUM = r"[-+]?(?:\d+\.?\d*|\.\d+)(?:[eE][-+]?\d+)?"
