@@ -1,0 +1,28 @@
+# https://editorconfig.org
+root = true
+
+[*]
+charset = utf-8
+end_of_line = lf
+indent_style = space
+indent_size = 2
+insert_final_newline = true
+trim_trailing_whitespace = true
+
+[*.py]
+indent_size = 4
+
+# A line break in Markdown can be two trailing spaces.
+[*.md]
+trim_trailing_whitespace = false
+
+# Data files are written by tools, each in its own layout, and some are
+# hashed, as are the sign's drawings: an editor leaves their bytes alone.
+[*.{json,jsonl,yaml,svg}]
+indent_size = unset
+insert_final_newline = unset
+trim_trailing_whitespace = unset
+
+[LICENSE]
+insert_final_newline = unset
+trim_trailing_whitespace = unset

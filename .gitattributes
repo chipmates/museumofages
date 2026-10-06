@@ -1,0 +1,38 @@
+# Text checks out with LF on every system. The film keys hash the museum's
+# sources and the site's build hashes its sign's files, so a byte changed on
+# checkout would move a key or stop a build.
+* text=auto eol=lf
+
+# Binary: never converted, never merged line by line.
+*.avif  binary
+*.webp  binary
+*.png   binary
+*.jpg   binary
+*.jpeg  binary
+*.gif   binary
+*.ico   binary
+*.woff  binary
+*.woff2 binary
+*.ttf   binary
+*.otf   binary
+*.wasm  binary
+*.mp4   binary
+*.mp3   binary
+*.ktx2  binary
+*.glb   binary
+
+# A copy of the texture transcoder that three.js ships, kept as it came.
+museum/public/basis/** linguist-vendored
+
+# Written by a tool and never edited by hand: collapsed in a diff, left out
+# of the language bar. The wing's story.ts is written by a tool too, but its
+# diff is the wing's words, which a review reads.
+museum/pnpm-lock.yaml                                         linguist-generated
+museum/src/wings/vinci/farewell-night-stars.ts                linguist-generated
+museum/src/wings/vinci/pictures/bench/gi-index.ts             linguist-generated
+museum/src/wings/vinci/pictures/bench/gi-data/*.json          linguist-generated
+museum/src/wings/vinci/data/rail-clearance.json               linguist-generated
+museum/src/wings/vinci/pictures/data/store-audit.json         linguist-generated
+museum/src/wings/vinci/table/data/best-of.json                linguist-generated
+museum/src/wings/vinci/table/data/best-of-texts.ts            linguist-generated
+site/_src/js/sky-ages.js                                      linguist-generated
