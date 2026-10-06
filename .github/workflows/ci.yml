@@ -156,6 +156,14 @@ jobs:
       - name: Build the site
         run: python3 site/_src/build.py
 
+      # Every address a built page points at on its own site answers. An
+      # address on another host is listed, never fetched.
+      - name: The pages' own links
+        run: |
+          python3 -m http.server -d site/dist 8000 --bind 127.0.0.1 > /dev/null 2>&1 &
+          sleep 1
+          python3 site/pages/check_links.py http://127.0.0.1:8000 $(cd site/dist && find . -name index.html | sed 's|^\./||; s|index.html$||; s|^$|/|' | sort)
+
       - name: Build the test registries and the other switch states
         run: |
           python3 site/_src/build.py --test
