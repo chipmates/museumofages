@@ -33,11 +33,10 @@ import { join, sep } from 'node:path'
 import {
   APP_ROOT,
   appScopes,
-  FETCHED_NOTE,
   filesOf,
   mergeManifests,
+  notBuildable,
   scopes,
-  storeKind,
   strayAppFiles,
   STORE,
 } from './vite-na-assets.mjs'
@@ -50,13 +49,8 @@ const RECORDS_ONLY = process.argv.includes('--records-only')
 // or with only a copy fetched from the public site, the full check cannot
 // vouch for a single byte, so it fails and says why, even when quiet: a
 // build that runs it first stops with a reason instead of an exit code.
-const KIND = storeKind()
-if (KIND !== 'own' && !RECORDS_ONLY) {
-  const reason = KIND === 'none'
-    ? `no asset store at ${STORE}: the full check and a production build need the museum's store ` +
-      '(set NA_ASSET_STORE to its folder); --records-only checks what the repository carries'
-    : `the store at ${STORE} is a copy fetched from the public site (${FETCHED_NOTE}): ` +
-      'the full check and a production build need the museum\'s own store'
+const reason = RECORDS_ONLY ? null : notBuildable()
+if (reason) {
   const said = { store: null, ok: false, reason, assets: 0, errors: [reason] }
   if (JSON_OUT) console.log(JSON.stringify(said, null, 2))
   else console.error(`MANIFEST CHECK FAILED: ${reason}`)

@@ -59,6 +59,19 @@ export function storeKind() {
   return existsSync(join(STORE, FETCHED_NOTE)) ? 'fetched' : 'own'
 }
 
+/** why a build or the full check cannot run here, or null when the store is its own */
+export function notBuildable() {
+  const kind = storeKind()
+  if (kind === 'own') return null
+  return kind === 'none'
+    ? `no asset store at ${STORE}. The full check and a production build need the museum's own ` +
+      'store: set NA_ASSET_STORE to its folder. Without one, `pnpm dev` reads the public site, ' +
+      '`node forge/fetch-store.mjs` copies it for offline viewing (a copy does not build), and ' +
+      '`node forge/manifest-check.mjs --records-only` checks what the repository itself carries.'
+    : `the store at ${STORE} is a copy fetched from the public site (${FETCHED_NOTE}). ` +
+      'The full check and a production build need the museum\'s own store: set NA_ASSET_STORE to its folder.'
+}
+
 /* THE PUBLIC SITE a dev server reads for what is not on disk:
    NA_PUBLIC_ORIGIN, or `off` for no network at all. Its paths mirror the
    bucket: /na/<scope>/<path> the store, /film/<release>/<path> the films,
@@ -426,13 +439,8 @@ export function naAssets() {
       /* A BUILD READS THE STORE ITSELF. Without it, or from a copy of the
          public record, the bundle's record would be a guess or a mirror of
          another build: both stop here, whatever ran before. */
-      if (command === 'build' && storeKind() !== 'own') {
-        this.error(storeKind() === 'none'
-          ? `no asset store at ${STORE}. A production build reads the museum's own store: set NA_ASSET_STORE to its folder. ` +
-            '`pnpm dev` runs without one and reads the public site.'
-          : `the store at ${STORE} is a copy fetched from the public site (${FETCHED_NOTE}). ` +
-            'A production build reads the museum\'s own store, never a copy of a deployed record.')
-      }
+      const why = command === 'build' ? notBuildable() : null
+      if (why) this.error(why)
       const { problems } = writeMerged()
       for (const p of problems) this.warn(p)
     },
