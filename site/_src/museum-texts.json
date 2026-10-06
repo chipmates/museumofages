@@ -1,15 +1,15 @@
 {
   "_note": "THE MUSEUM'S OWN TEXTS, copied word for word from the wing's own files as they stand (the files under _from). Never reword them here. A wing's data file takes one with {museum:<key>}. The build looks each text up in those files and stops when one is not there word for word. _from gives each file's path from the repository's root, and the build reads them only when every one of them is there.",
   "_from": [
-    "nightagora/src/wings/vinci/story.ts",
-    "nightagora/src/wings/vinci/content.ts",
-    "nightagora/src/wings/vinci/machines/data/records.json",
-    "nightagora/src/wings/vinci/pictures/data/store-audit.json",
-    "nightagora/src/wings/vinci/pictures/data/paintings.json",
-    "nightagora/src/wings/vinci/pictures/visitor-copy.ts",
-    "nightagora/src/wings/vinci/pictures/policy-label.ts",
-    "nightagora/public/na-manifest.json",
-    "nightagora/src/wings/vinci/pictures/opening-register.ts"
+    "museum/src/wings/vinci/story.ts",
+    "museum/src/wings/vinci/content.ts",
+    "museum/src/wings/vinci/machines/data/records.json",
+    "museum/src/wings/vinci/pictures/data/store-audit.json",
+    "museum/src/wings/vinci/pictures/data/paintings.json",
+    "museum/src/wings/vinci/pictures/visitor-copy.ts",
+    "museum/src/wings/vinci/pictures/policy-label.ts",
+    "museum/public/na-manifest.json",
+    "museum/src/wings/vinci/pictures/opening-register.ts"
   ],
   "en": {
     "lion_label": "Old accounts tell of a lion Leonardo made for a King of France. It walked a few steps, stopped and opened its chest full of lilies.",

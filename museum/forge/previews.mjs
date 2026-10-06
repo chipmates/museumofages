@@ -59,7 +59,7 @@ const CLOCK = 12.4
 const SETTLE_MS = 2600, STILL_TRIES = 14
 
 const LICENCE = 'Generated for this work, regenerable from its script; a frame of the museum\'s own procedural model.'
-const MODEL = 'Night Agora renderer, headless; forge/previews.mjs'
+const MODEL = 'Museum of Ages renderer, headless; forge/previews.mjs'
 const DATE = '2026-09-20'
 
 /** Every exhibit the strip can show whose record carries no picture. The

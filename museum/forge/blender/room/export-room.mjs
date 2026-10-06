@@ -243,7 +243,7 @@ async function main() {
   for (const r of Object.values(recipes)) if (r.floor) r.floor.files = await writeFloorMaps(floorSource, join(OUT, 'textures'))
 
   // THE glTF MATERIALS, one per recipe (and one per role of a split surface)
-  const gltf = new Gltf(`nightagora forge/blender/room/export-room.mjs @ ${headHere().slice(0, 8)}`)
+  const gltf = new Gltf(`museum forge/blender/room/export-room.mjs @ ${headHere().slice(0, 8)}`)
   const names = new Map(), defs = new Map(), sidecar = {}
   const materialDef = (recipe, key) => {
     const id = `${recipe.uuid}|${key ?? ''}`

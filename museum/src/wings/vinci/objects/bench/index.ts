@@ -293,7 +293,7 @@ export function createObjectBench(stack: Stack): BenchModule {
     host.append(viewport)
 
     const header = node('header', 'ob-header')
-    const brand = node('p', 'ob-brand', 'Night Agora')
+    const brand = node('p', 'ob-brand', 'Museum of Ages')
     brand.dataset['naBrand'] = ''
     header.append(brand, node('p', 'ob-kicker', piece?.kicker ?? ''), node('h1', 'ob-heading', piece?.title ?? ''))
     header.append(node('p', 'ob-hour', piece?.hour.label ?? ''))

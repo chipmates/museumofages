@@ -25,7 +25,7 @@ OUT = HERE.parent / "wings" / "vinci.facts.json"
 INVENTORY = Path(os.environ.get("MOA_INVENTORY", ""))
 # The wing's own hang and layout in the museum app beside the site (read only): the build compares the wall's
 # drawing with them when they are there.
-WING = HERE.parent.parent.parent / "nightagora" / "src" / "wings" / "vinci" / "collection"
+WING = HERE.parent.parent.parent / "museum" / "src" / "wings" / "vinci" / "collection"
 HANG = WING / "hang.ts"
 LAYOUT = WING / "layout.ts"
 

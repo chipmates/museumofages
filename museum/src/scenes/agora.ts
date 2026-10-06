@@ -1,4 +1,4 @@
-/* THE NIGHT AGORA — the marble, the pillars, one fire, and the night
+/* THE AGORA — the marble, the pillars, one fire, and the night
    standing behind them.
 
    This is the room the whole night keeps returning to, so it is built as a

@@ -28,7 +28,7 @@ from buildlib import (ARROW, BANNED, CSP_MARK, FACES_SCRIPT, LOOSE_PAIR, NBSP, R
 
 SRC = Path(__file__).resolve().parent
 ROOT = SRC.parent
-# The repository's root: the museum app stands beside this folder, in nightagora/.
+# The repository's root: the museum app stands beside this folder, in museum/.
 REPO = ROOT.parent
 SITE = ROOT / "dist"
 TEST_OUT = ROOT / "_test"
@@ -75,9 +75,9 @@ ICONS = (("icon", 'sizes="32x32" type="image/png"', "tab-32.png", 32), ("icon", 
 # The empty icon the topic pages' own template carries: the build sets the site's icons in its place.
 EMPTY_ICON = '<link rel="icon" href="data:,">'
 # The museum app's own list of wings: an open wing's slug must stand in it. Read only, and only where it is there.
-APP_WINGS = REPO / "nightagora" / "src" / "wings" / "registry.ts"
+APP_WINGS = REPO / "museum" / "src" / "wings" / "registry.ts"
 # The museum app's shell (read only): the four grade colours the site's tokens mirror (--ui-sure-*).
-APP_SHELL = REPO / "nightagora" / "index.html"
+APP_SHELL = REPO / "museum" / "index.html"
 # The tool that cuts the pictures: it knows the film frame each picture comes from, and the frames of the second
 # rights tier. A frame stands once across the museum's page and a wing's page, whatever its picture's name.
 IMAGE_JOBS = SRC / "tools" / "make_images.py"

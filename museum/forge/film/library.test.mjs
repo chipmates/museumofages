@@ -284,7 +284,8 @@ test("the panel's style is scoped to the panel's own elements", () => {
 async function codeAt(rev) {
   const dir = mkdtempSync(path.join(tmpdir(), 'keys-at-'))
   const here = pathToFileURL(path.join(APP_ROOT, 'forge/film/')).href
-  const show = (f) => execFileSync('git', ['-C', APP_ROOT, 'show', `${rev}:./forge/film/${f}`], { encoding: 'utf8', maxBuffer: 1 << 26 })
+  // before the app's folder was renamed, commits hold it in nightagora/
+  const show = (f) => { try { return execFileSync('git', ['-C', APP_ROOT, 'show', `${rev}:./forge/film/${f}`], { encoding: 'utf8', maxBuffer: 1 << 26, stdio: ['ignore', 'pipe', 'ignore'] }) } catch { return execFileSync('git', ['-C', APP_ROOT, 'show', `${rev}:nightagora/forge/film/${f}`], { encoding: 'utf8', maxBuffer: 1 << 26 }) } }
   const bare = (t) => t.replace(/from '(\.\.?\/[^']+)'/g, (m, spec) => (spec === './library.mjs' ? m : `from '${new URL(spec, here).href}'`))
     .replace(/from 'typescript'/g, `from '${import.meta.resolve('typescript')}'`)
   for (const f of ['keys.mjs', 'library.mjs']) writeFileSync(path.join(dir, f), bare(show(f)))

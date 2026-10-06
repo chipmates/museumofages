@@ -60,10 +60,13 @@ function baseReader(rev) {
     }
   }
   const top = execFileSync('git', ['-C', APP_ROOT, 'rev-parse', '--show-toplevel'], { encoding: 'utf8' }).trim()
-  const prefix = path.relative(top, APP_ROOT).split(path.sep).join('/')
+  let prefix = path.relative(top, APP_ROOT).split(path.sep).join('/')
   const commit = execFileSync('git', ['-C', APP_ROOT, 'rev-parse', '--verify', `${rev}^{commit}`], { encoding: 'utf8' }).trim()
-  const listed = new Set(execFileSync('git', ['-C', top, 'ls-tree', '-r', '--name-only', commit, '--', `${prefix}/src`], { encoding: 'utf8', maxBuffer: 1 << 26 })
-    .split('\n').filter(Boolean).map((file) => file.slice(prefix.length + 1)))
+  const lsAt = (dir) => execFileSync('git', ['-C', top, 'ls-tree', '-r', '--name-only', commit, '--', `${dir}/src`], { encoding: 'utf8', maxBuffer: 1 << 26 })
+    .split('\n').filter(Boolean).map((file) => file.slice(dir.length + 1))
+  // before the app's folder was renamed, commits hold it in nightagora/
+  let listed = new Set(lsAt(prefix))
+  if (!listed.size && prefix !== 'nightagora') { prefix = 'nightagora'; listed = new Set(lsAt(prefix)) }
   return {
     exists: (relative) => listed.has(relative),
     read: (relative) => execFileSync('git', ['-C', APP_ROOT, 'show', `${commit}:${prefix}/${relative}`], { encoding: 'utf8', maxBuffer: 1 << 28 }),
