@@ -202,6 +202,18 @@ if (todo.length && !YES) {
    record is public, its unshown file is not): the merged record dev builds
    from this copy is then the deployed one, byte for byte */
 mkdirSync(INTO, { recursive: true })
+// the note goes first: an interrupted copy is still a copy, and the next run resumes it
+const note = (extra) => writeFileSync(join(INTO, FETCHED_NOTE), JSON.stringify({
+  origin: PUBLIC_ORIGIN,
+  fetched_at: new Date().toISOString(),
+  record_sha256: createHash('sha256').update(recordBytes).digest('hex'),
+  app_records_sha256: appRecordsDigest(deployed),
+  scopes: SCOPES ?? 'all',
+  only: ONLY ?? null,
+  zoom: ZOOM === Infinity ? 'all' : ZOOM,
+  ...extra,
+}, null, 2) + '\n')
+note({ complete: false })
 const scopesOfStore = new Map()
 for (const e of deployed) {
   if (e.origin !== 'store') continue
@@ -287,20 +299,14 @@ async function worker() {
 await Promise.all(Array.from({ length: CONCURRENCY }, worker))
 if (process.stdout.isTTY) process.stdout.write('\n')
 
-writeFileSync(join(INTO, FETCHED_NOTE), JSON.stringify({
-  origin: PUBLIC_ORIGIN,
-  fetched_at: new Date().toISOString(),
-  record_sha256: createHash('sha256').update(recordBytes).digest('hex'),
-  app_records_sha256: appRecordsDigest(deployed),
-  scopes: SCOPES ?? 'all',
-  only: ONLY ?? null,
+note({
+  complete: missing.length + broken.length === 0,
   files: list.length - missing.length - broken.length,
   bytes: total,
-  zoom: ZOOM === Infinity ? 'all' : ZOOM,
   left_out: { whole_folders: wholeFolders, display_false: 'all' },
   missing,
   broken,
-}, null, 2) + '\n')
+})
 
 const seconds = Math.round((Date.now() - started) / 1000)
 console.log(`${fetched} fetched (${mb(fetchedBytes)}) in ${seconds} s, ${list.length - todo.length} already here; ${requests} requests to ${PUBLIC_ORIGIN}`)

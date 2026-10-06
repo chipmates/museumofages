@@ -389,6 +389,7 @@ export function naAssets() {
     let note = {}
     try { note = JSON.parse(readFileSync(join(STORE, FETCHED_NOTE), 'utf8')) } catch {}
     say(`The asset store is a copy fetched from ${note.origin ?? 'the public site'}${note.fetched_at ? ` on ${note.fetched_at.slice(0, 10)}` : ''} (${STORE}).`)
+    if (note.complete === false) log.warn('  The copy is incomplete: run node forge/fetch-store.mjs again to resume it.', { timestamp: false })
     say(PUBLIC_ORIGIN
       ? `What it lacks comes from ${PUBLIC_ORIGIN} as you browse; NA_PUBLIC_ORIGIN=off keeps everything local.`
       : 'NA_PUBLIC_ORIGIN is off: what the copy lacks answers 404.')

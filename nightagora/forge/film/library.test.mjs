@@ -22,7 +22,7 @@ import { BUILT_FLAGS, BUILT_READS, READER_ROLES, STATEMENT_HELPERS, STATEMENT_RE
   panelStyleScoped, propertyReads, readerPlacement, sourcesAt, statementOf, statementShape, statementsPlacement, tablePlacement, wordsPlacement } from './library.mjs'
 import { APP_ROOT, WING_DIR, createLoader } from './load.mjs'
 import { libraryOf, mountWorld } from './scene.mjs'
-import { mergeManifests } from '../vite-na-assets.mjs'
+import { mergeManifests, storeKind } from '../vite-na-assets.mjs'
 
 const sha256 = (text) => createHash('sha256').update(text).digest('hex')
 const read = (file) => readFileSync(path.join(APP_ROOT, file), 'utf8')
@@ -103,7 +103,11 @@ test('a words edit moves the global key only by what is not a display text', asy
   assert.deepEqual(movedParts(base.now, (await keysAt(flag, rerecord(store, flag))).now), ['words records, their display texts left out'])
 })
 
-test("the flat reader's records move nothing; a texture a frame binds still moves the key", async () => {
+// a clean checkout has no store, so no codex page or library record to move
+const NO_RECORDS = !store.some((e) => e.role === 'codex-page') && storeKind() !== 'own'
+  ? 'no asset store here: the codex pages and the library textures are store records' : false
+
+test("the flat reader's records move nothing; a texture a frame binds still moves the key", { skip: NO_RECORDS }, async () => {
   const base = await keysAt()
   const codex = store.find((e) => e.role === 'codex-page')
   assert.ok(codex, 'the store holds codex pages')
@@ -119,7 +123,7 @@ test("the flat reader's records move nothing; a texture a frame binds still move
   assert.notEqual((await keysAt({}, store.map((e) => (e === page ? { ...e, sha256: '2'.repeat(64) } : e)))).now.key, base.now.key, "an ms page (the table's, the study's) still moves it")
 })
 
-test('each wire trips back to the global key when its proof no longer holds', async () => {
+test('each wire trips back to the global key when its proof no longer holds', async (t) => {
   const sources = sourcesAt(), graph = importGraph(sources)
   const wordsWith = (overlay) => { const s = sourcesAt({ overlay }); return wordsPlacement({ sources: s, graph: importGraph(s), worldFiles: new Set(worldFiles) }) }
   const readerWith = (overlay, frameShaping) => { const s = sourcesAt({ overlay }); return readerPlacement({ sources: s, graph: importGraph(s), frameShaping }) }
@@ -152,6 +156,7 @@ test('each wire trips back to the global key when its proof no longer holds', as
   assert.equal(readerWith({}, ["function buildTheHouse(){ shelf.show('codex-thumb') }"]).placed, false, "the index's frame-shaping code names the reader")
   assert.equal(readerWith({}, ['function buildTheHouse(){ SHELF_BOOKS.forEach(show) }']).placed, false, "the index's frame-shaping code uses the register")
   // tripped, the reader's records key as they did
+  if (NO_RECORDS) return t.diagnostic(`the last wire not checked: ${NO_RECORDS}`)
   const loader = await createLoader()
   const off = { words: {}, reader: { placed: false, why: 'test' } }
   const codex = store.find((e) => e.role === 'codex-page')

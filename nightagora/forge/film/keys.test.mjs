@@ -9,7 +9,7 @@ import { BYTE_EXEMPT } from './film-check.mjs'
 import { DELIVERY, clipDeliveryKey, deliveryKey, drawable, globalKey } from './keys.mjs'
 import { createLoader } from './load.mjs'
 import { libraryOf } from './scene.mjs'
-import { mergeManifests } from '../vite-na-assets.mjs'
+import { mergeManifests, storeKind } from '../vite-na-assets.mjs'
 
 const loader = await createLoader()
 const store = libraryOf(mergeManifests())
@@ -38,7 +38,10 @@ test("the glass heart's films and posters leave the global key where it was", ()
   assert.equal(keyOf([...without, ...planted]), keyOf(without), 'a film, a poster and a sound written to the store move nothing')
 })
 
-test('a texture the world binds moves the global key', () => {
+// a clean checkout has no store, so no library record to move
+const NO_TEXTURE = !texture && storeKind() !== 'own' ? 'no asset store here: the library textures are store records' : false
+
+test('a texture the world binds moves the global key', { skip: NO_TEXTURE }, () => {
   assert.ok(texture, 'the store holds a library texture')
   const moved = store.map((e) => (e === texture ? { ...e, sha256: '0'.repeat(64) } : e))
   const before = globalKey(loader, { library: store, claimed: new Set() })
