@@ -36,7 +36,7 @@ Fifteen machines are rebuilt from what the sources give, fourteen from his sheet
   <sub>The great hall of Clos Lucé, rebuilt from plans and photographs. The lion by the wall is built after old accounts. No sheet of it is known.</sub>
 </p>
 
-Museum of Ages is a website, built once for the phone and once for the desktop, in English and German. Free entry, no account. It draws with WebGPU and falls back to WebGL2, and a browser with neither sees a still picture. There are no spoken words yet, and the wing hasn't been tested with a screen reader.
+Museum of Ages is a website, built once for the phone and once for the desktop, in English and German. Free entry, no account. It draws with WebGPU and falls back to WebGL2. A browser with neither gets one plain page that says so, with a link to the wing's page on the site. There are no spoken words yet, and the wing hasn't been tested with a screen reader.
 
 ## How sure a statement is
 
