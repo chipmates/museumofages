@@ -54,7 +54,7 @@ test('a frame past either end is read at that end', () => {
 })
 
 const RELEASE = process.env['FILM_RELEASE']
-test('a release: every leg meets itself, and both ends meet', { skip: !RELEASE || !existsSync(join(RELEASE ?? '', 'film.json')) }, () => {
+test('a release: every leg meets itself, and both ends meet', { skip: !RELEASE || !existsSync(join(RELEASE ?? '', 'film.json')) ? 'set FILM_RELEASE to a release folder (its film.json)' : false }, () => {
   const release = JSON.parse(readFileSync(join(RELEASE, 'film.json'), 'utf8'))
   const track = (file) => JSON.parse(readFileSync(join(RELEASE, file), 'utf8')).map((p) => p.split(',').map(Number))
   let legs = 0
