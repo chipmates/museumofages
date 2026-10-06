@@ -260,13 +260,29 @@ def check_outside():
     if missing:
         raise SystemExit(f"{len(missing)} of the {len(listed)} pictures and media files the build needs are not here "
                          f"(the first: {missing[0].relative_to(ROOT)}). The repository does not keep them: run "
-                         f"python3 _src/tools/fetch.py to fetch them from {ORIGIN}, or tools/make_images.py to cut them "
-                         "where the film's stills are at hand.")
+                         f"python3 site/_src/tools/fetch.py from the repository's root to fetch them from {ORIGIN}, or "
+                         "site/_src/tools/make_images.py to cut them where the film's stills are at hand.")
 
 
 def museum_missing(site):
-    """The first of the wing's own files under _from that is not there, or None."""
-    return next((f for f in site.museum.get("_from", []) if not (REPO / f).exists()), None)
+    """The first of the wing's own files under _from that is not there, or None. A merged record that holds
+    only this checkout's records counts as not there: a dev server without a store wrote it, and the texts
+    the museum quotes from the store's records are not in it."""
+    for f in site.museum.get("_from", []):
+        if not (REPO / f).exists():
+            return f
+        if f.endswith("na-manifest.json") and checkout_only(REPO / f):
+            return f
+    return None
+
+
+def checkout_only(path):
+    """True when every record of a merged na-manifest.json came from this checkout's own assets/."""
+    try:
+        assets = json.loads(path.read_text(encoding="utf-8")).get("assets", [])
+    except (OSError, ValueError, AttributeError):
+        return False
+    return bool(assets) and all(a.get("origin") == "app" for a in assets)
 
 
 def walk(obj, fn, path=""):
@@ -496,9 +512,12 @@ def check_words(site):
     sources = [REPO / f for f in site.museum.get("_from", [])]
     if sources and not site.mark and museum_missing(site):
         missing = museum_missing(site)
-        made = " (the museum's own build writes it: build the museum first)" if missing.endswith("na-manifest.json") else ""
+        made = ""
+        if missing.endswith("na-manifest.json"):
+            made = (" with the store's records (a dev server without a store writes this checkout's records only)"
+                    if (REPO / missing).exists() else " (the museum's dev server or build writes it)")
         skip(f"the museum's texts, the grades' words and the example stop against the wing's own files: {missing} is not there{made}")
-    if sources and all(f.exists() for f in sources) and not site.mark:
+    if sources and not museum_missing(site) and not site.mark:
         source = "".join(f.read_text(encoding="utf-8") for f in sources)
         for lang in LANGS:
             for key, text in site.museum[lang].items():
@@ -845,7 +864,7 @@ def check_no_wing_named(site):
 def museum_sources(site):
     """The wing's own files the museum's quoted texts come from, read once, or None where they cannot be read."""
     files = [REPO / f for f in site.museum.get("_from", [])]
-    if not files or not all(f.exists() for f in files):
+    if not files or museum_missing(site):
         return None
     return {f: f.read_text(encoding="utf-8") for f in files}
 
