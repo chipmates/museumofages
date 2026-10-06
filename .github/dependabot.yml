@@ -1,0 +1,72 @@
+version: 2
+
+updates:
+  # The museum's packages. A pull request from here is merged only after the
+  # full manifest check and the film keys check, run with the asset store.
+  # The keys hash the museum's own sources and records, not the installed
+  # packages, so an update that changes how a frame is drawn leaves every key
+  # as it was: a pull request of the film group also gets the film's stills
+  # compared before it lands.
+  - package-ecosystem: "npm"
+    directory: "/museum"
+    schedule:
+      interval: "weekly"
+      day: "monday"
+    # A release is proposed once it is a week old.
+    cooldown:
+      default-days: 7
+    open-pull-requests-limit: 3
+    ignore:
+      # Every three.js release (0.186, 0.187 and on) can change what the
+      # engine draws, and public/basis/ holds a copy of its texture
+      # transcoder. A move to a new release is made by hand, with that copy
+      # and a new film, so only its patches come from here.
+      - dependency-name: "three"
+        update-types: ["version-update:semver-major", "version-update:semver-minor"]
+      - dependency-name: "@types/three"
+        update-types: ["version-update:semver-major", "version-update:semver-minor"]
+      # 7.x is the native compiler with no JS compiler API, and the forge
+      # reads the wing's sources through that API (forge/film/load.mjs).
+      - dependency-name: "typescript"
+        update-types: ["version-update:semver-major"]
+    groups:
+      # What draws or writes the film: the engine and its types, the
+      # Playwright browser it is rendered in, and sharp, which encodes its
+      # stills. They travel together and apart from the rest.
+      film:
+        patterns:
+          - "three"
+          - "@types/three"
+          - "playwright"
+          - "sharp"
+        update-types:
+          - "minor"
+          - "patch"
+      # Everything else, minor and patch together. A major update of any
+      # package gets a pull request of its own.
+      minor-and-patch:
+        patterns:
+          - "*"
+        exclude-patterns:
+          - "three"
+          - "@types/three"
+          - "playwright"
+          - "sharp"
+        update-types:
+          - "minor"
+          - "patch"
+
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "monthly"
+    cooldown:
+      default-days: 7
+    open-pull-requests-limit: 2
+    groups:
+      actions:
+        patterns:
+          - "*"
+        update-types:
+          - "minor"
+          - "patch"
