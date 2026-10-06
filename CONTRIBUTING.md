@@ -47,20 +47,23 @@ From `museum/`:
 ```bash
 pnpm typecheck                      # the strict type check
 node forge/manifest-check.mjs --records-only   # every record and its licence line, no store needed
-node --test forge/film/*.test.mjs   # the film's tests
+node --test forge/film/*.test.mjs   # the film's tests, about nine minutes on a ten-core laptop
 ```
 
 `pnpm build` runs the full manifest check first. It stops the build when something the museum shows has no record, when a record has no licence line, or when a file does not match its hash. Matching the files needs a local store, so on a clean clone `pnpm build` stops and says so. The records-only check above is the part every clone can run.
 
-Two of the film's tests compare today's code with the code of earlier commits, so they need the whole history. A plain `git clone` has it, a shallow clone does not. A few tests also read a film release when `FILM_RELEASE` names one, and skip that part without it.
+Most of that time goes to five files that build the wing's world again and again (`film-check`, `global-key`, `library`, `motion`, `evening`). To try one change, run its own file: `node --test forge/film/keys.test.mjs`. CI runs the five in parallel jobs of their own.
+
+Two of the film's tests compare today's code with the code of earlier commits, so they need the whole history. A plain `git clone` has it, a shallow clone does not. A few tests also read a film release when `FILM_RELEASE` names one, and skip that part without it. The encoder test needs `ffmpeg` on the PATH and skips without it.
 
 From the repository's root:
 
 ```bash
+python3 site/_src/tools/fetch.py    # once: the site's pictures and media
 python3 site/_src/build.py          # the site, with every check
 ```
 
-CI runs all four on every pull request ([ci.yml](.github/workflows/ci.yml)).
+CI runs these on every pull request ([ci.yml](.github/workflows/ci.yml)), and checks that every link a built page has to its own site answers.
 
 ## The site
 
