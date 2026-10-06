@@ -38,6 +38,8 @@ This Code of Conduct applies to all project spaces: GitHub issues, pull requests
 
 Report unacceptable behavior to ChipMates gemeinnützige GmbH, which runs the museum, at **contact@museumofages.org**. We answer every report within two weeks, and we review it fairly, hearing everyone involved.
 
+If your report concerns the person who reads that address, report it to GitHub instead, with the report option on the comment, issue or profile.
+
 ChipMates decides on the response, which may include:
 
 1. **Correction.** A private conversation about the impact of the behavior.
