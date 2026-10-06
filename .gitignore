@@ -1,0 +1,52 @@
+# OS and editor
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/*
+!.vscode/extensions.json
+*.swp
+*.swo
+**/.claude/settings.local.json
+
+# Dependencies
+node_modules/
+.pnpm-store/
+
+# Build output
+dist/
+.vite/
+*.tsbuildinfo
+
+# Test artifacts
+coverage/
+playwright-report/
+test-results/
+*.test.log
+
+# Logs and runtime
+*.log
+logs/
+*.pid
+*.pid.lock
+
+# Cache
+.cache/
+.eslintcache
+
+# Python runtime artifacts
+**/__pycache__/
+*.pyc
+.venv/
+
+# Cloudflare Wrangler
+.wrangler/
+
+# Environment and secrets
+.env
+.env.*
+!.env.example
+!.env.*.example
+.dev.vars
+*.pem
+*.key
+secrets/
