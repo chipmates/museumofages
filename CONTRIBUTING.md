@@ -131,4 +131,4 @@ Commit messages: a subject in the imperative (`Fix`, `Add`, `Drop`), under 72 ch
 
 ## Code
 
-TypeScript strict, `pnpm typecheck` at zero errors. Every material is written in TSL, so the same node graph runs on WebGPU and on WebGL2. pnpm only: no `package-lock.json`, no `yarn.lock`. A comment says what the code cannot show, in a line or two, and names no person. Every control is at least 44 px on a side (WCAG 2.2 AA).
+TypeScript strict, `pnpm typecheck` at zero errors. Every material is written in TSL, so the same node graph runs on WebGPU and on WebGL2. pnpm only: no `package-lock.json`, no `yarn.lock`. A comment says what the code cannot show, in a line or two, and names no person. Every control is at least 44 px on a side, above the 24 px that WCAG 2.2 AA asks.

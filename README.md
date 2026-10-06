@@ -38,7 +38,7 @@ Museum of Ages has one wing today: Leonardo da Vinci's last house, Clos Lucé in
   <sub><a href="https://museumofages.org">museumofages.org</a>: free entry, no account, English or German. <a href="docs/TOUR.md">A tour in pictures</a> credits every work you see.</sub>
 </p>
 
-This repository holds the museum itself in `museum/` and the code of its website in `site/`. The code, the texts in both languages and a record for every picture are all here, open to read, to check and to improve. [How you can take part](#how-you-can-take-part) says where to start.
+This repository holds the museum itself in `museum/` and the code of its website in `site/`. The code, the texts in both languages and the records of everything the museum builds are here, open to read and to check. [How you can take part](#how-you-can-take-part) says where to start.
 
 ## What you see
 
@@ -63,14 +63,14 @@ Museum of Ages is a website, built once for the phone and once for the desktop, 
 
 ## How sure a statement is
 
-"As it was, as far as we know." Every stop carries one of four grades. The word stands under the stop's title, in its own colour, and the [statement page](https://museumofages.org/what-this-museum-is/) uses the same four:
+"As it was, as far as we know." Every stop carries one of four grades. A mark before the stop's title shows which, each grade in its own shape and colour, and the stop's record names it in words. The [statement page](https://museumofages.org/what-this-museum-is/) uses the same four:
 
-| Grade | What it means |
-|---|---|
-| Documented | A source from the time says it, and we name the source. |
-| Reconstructed | No source says it outright. We worked it out from what the sources give. |
-| Conjectural | We think so, or a scholar does, and no source says it. Take it as a reasoned guess. |
-| Not known | Nobody knows. We say that too, and we leave the gap open. |
+| Grade | Mark | What it means |
+|---|---|---|
+| Documented | Full disc | A source from the time says it, and we name the source. |
+| Reconstructed | Half disc | No source says it outright. We worked it out from what the sources give. |
+| Conjectural | Open ring | We think so, or a scholar does, and no source says it. Take it as a reasoned guess. |
+| Not known | Broken ring | Nobody knows. We say that too, and we leave the gap open. |
 
 Words like disputed or workshop in the list of paintings are something else. They say who is thought to have made a work.
 
@@ -86,11 +86,11 @@ A stop has three layers of text: the line you read first, a drawer that opens wh
   <sub>The record at the first stop of the mechanism hall. Its grade is reconstructed.</sub>
 </p>
 
-The labels also say what is ours. The furniture in the great hall isn't his own. A house like this had such things at the time. The court with the Last Supper is the museum's design, not a place from his life. The wing places the visit of 1517 behind the study's window, and that is our guess, because the diary names no room. The stars at the last stop are worked out star by star from a catalogue, for the day the diary gives and an hour we chose. The sunset is a usual October evening, and the shooting star is the museum's own.
+The labels also say what is ours. The furniture in the great hall isn't his own. A house like this had such things at the time. The court with the Last Supper is the museum's design, not a place from his life. The diary of 1517 names no room, so the rooms are our choice: the wing receives the cardinal in the great hall and puts what his secretary saw behind the study's window. The stars at the last stop are worked out star by star from a catalogue, for the day the diary gives and an hour we chose. The sunset is a usual October evening, and the shooting star is the museum's own.
 
 ## How it was made
 
-The museum's statement page says how the words are made: "A person reads, corrects and approves every text before it is published. The drafts are written with AI from a research file that names a source for every fact." The code was written with AI help as well. Each machine's record in `museum/assets/wing-vinci/manifest.json` names the model that wrote its code.
+The museum's statement page says how the words are made: "A person reads, corrects and approves every text before it is published. The drafts are written with AI from a research file that names a source for every fact." Those research files aren't public yet, though some records here point to them. Each stop's record in the museum names its sources. The code was written with AI help as well. Each machine's record in `museum/assets/wing-vinci/manifest.json` names the model that wrote its code.
 
 No picture in the wing comes from an image model. The rooms and machines are built in code and filmed in the museum's own engine, and the textures are CC0 photo scans. A few props are CC0 models from an open library, a cask and a basket among them. The paintings, drawings and notebook pages are reproductions: digital copies of public domain works, each labelled with its holder and its licence line.
 
@@ -107,7 +107,7 @@ The camera that films it never moves on an unproved line. When the wing starts, 
 
 In the film only one thing is drawn live: a machine in its close look. Where the device can't hold 30 frames a second, and on every phone for now, the machine plays as a filmed cycle instead. A painting's close view is a tile pyramid in OpenSeadragon, so you can zoom into the reproduction.
 
-Every reproduction and every built thing has a record, and every record carries a licence line. The records live in this repository under `museum/assets/`. The art lives in an asset store outside git and is served from museumofages.org. `pnpm build` runs `forge/manifest-check.mjs` first, which stops the build when something the museum shows has no record or when a file doesn't match its hash.
+Every reproduction and every built thing has a record, and every record carries a licence line. The records of built things live in this repository under `museum/assets/`. The art and the records of the reproductions live in an asset store outside git, and the build writes every record into one file, `na-manifest.json`, which museumofages.org serves with the art. `pnpm build` runs `forge/manifest-check.mjs` first, which stops the build when something the museum shows has no record or when a file doesn't match its hash.
 
 The website is static HTML, built from `site/_src/` by a Python script that uses only the standard library.
 

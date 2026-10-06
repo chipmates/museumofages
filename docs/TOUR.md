@@ -55,7 +55,7 @@ A stop has a line you read first, a drawer with a few more lines, and a record t
 
 <p align="center">
   <img src="../.github/assets/tour/08-great-hall.webp" alt="A room of the house with a beamed ceiling, red floor tiles and lattice windows. Afternoon sun falls across a long trestle table with small models on it, and a mechanical lion stands by the wall on the left. The bar below says nobody knows where the cardinal was received and that the museum chose this hall." width="100%" /><br/>
-  <em>The great hall of Clos Lucé. The diary of 1517 names no room for the cardinal's visit, and the stop says the museum chose this one.</em>
+  <em>The great hall of Clos Lucé. The diary of 1517 names no room, and the stop says the museum chose this hall to receive the cardinal.</em>
 </p>
 
 ## The end of the walk

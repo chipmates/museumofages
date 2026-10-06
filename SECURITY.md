@@ -29,4 +29,4 @@ Only the live site and the main branch of this repository get fixes.
 
 ## What there is to protect
 
-The museum has no accounts and no logins. It sets no tracking cookies and does no profiling. The wing keeps a few notes in your browser's storage, such as your sound setting and the stops you stood at, and they stay on your device. The [privacy page](https://museumofages.org/privacy/) lists them all.
+The museum has no accounts and no logins. It sets no tracking cookies and does no profiling. The wing keeps a few notes in your browser's storage, such as your sound setting and your walking pace, and they stay on your device. The [privacy page](https://museumofages.org/privacy/) lists them all.
