@@ -1,27 +1,44 @@
+<p align="center">
+  <a href="https://museumofages.org"><img src=".github/assets/mark.svg" alt="Museum of Ages" width="112" /></a>
+</p>
+
 <h1 align="center">Museum of Ages</h1>
 
 <p align="center">a digital museum</p>
 
-<p align="center"><strong>We rebuild what was. You walk through it.</strong></p>
+<p align="center">
+  <strong>We rebuild what was. You walk through it.</strong><br/>
+  <sub>Nonprofit · Open Source · No tracking cookies, no profiling</sub>
+</p>
+
+<p align="center">
+  <a href="https://github.com/chipmates/museumofages/actions/workflows/ci.yml"><img src="https://img.shields.io/github/actions/workflow/status/chipmates/museumofages/ci.yml?branch=main&style=flat-square&label=CI&labelColor=2b3044" alt="CI" /></a>
+  <a href="LICENSE"><img src="https://img.shields.io/badge/code-AGPL--3.0--or--later-cb8561?style=flat-square&labelColor=2b3044" alt="Code: AGPL-3.0-or-later" /></a>
+  <a href="CONTENT-LICENSE.md"><img src="https://img.shields.io/badge/texts%20and%20pictures-CC%20BY--SA%204.0-cb8561?style=flat-square&labelColor=2b3044" alt="Texts and pictures: CC BY-SA 4.0" /></a>
+  <a href="#how-it-is-built"><img src="https://img.shields.io/badge/drawn%20with-WebGPU%20%C2%B7%20WebGL2-ece7de?style=flat-square&labelColor=2b3044" alt="Drawn with WebGPU or WebGL2" /></a>
+</p>
 
 <p align="center">
   <a href="https://museumofages.org/w/vinci?film=job&amp;lang=en">Enter the museum</a> ·
   <a href="https://museumofages.org">museumofages.org</a> ·
+  <a href="docs/TOUR.md">Tour</a> ·
   <a href="#run-it-locally">Run it locally</a> ·
   <a href="#how-sure-a-statement-is">How sure a statement is</a> ·
   <a href="#how-you-can-take-part">Take part</a>
 </p>
 
-<p align="center"><sub>Nonprofit · Open Source · No tracking cookies, no profiling</sub></p>
-
 Museum of Ages has one wing today: Leonardo da Vinci's last house, Clos Lucé in Amboise, on 10 October 1517, rebuilt in code. You move through it as a film, stop by stop, 17 stops in all. At most of them you can step up to the work in front of you, and the machines in the mechanism hall can be set in motion. Each stop tells you how sure we are of what it says.
 
-This repository holds the museum itself in `museum/` and the code of its website in `site/`. The code, the texts in both languages and a record for every picture are all here, open to read, to check and to improve. [How you can take part](#how-you-can-take-part) says where to start.
-
 <p align="center">
-  <img src=".github/assets/mechanism-hall.webp" alt="A high hall with a slatted wooden ceiling and a band of windows, in warm low sun. Wooden machines stand on low plinths: lock gates, the aerial screw with its spiral sail, a water screw and a rolling mill. A still from the museum's film. The machines are reconstructions built in code." width="100%" /><br/>
-  <sub>The mechanism hall, a still from the museum's film. The hall is the museum's own design. The machines are built in code after his sheets.</sub>
+  <a href="https://museumofages.org/w/vinci?film=job&amp;lang=en"><picture>
+    <source media="(prefers-reduced-motion: reduce)" srcset=".github/assets/demo-poster.webp" />
+    <img src=".github/assets/demo.webp" alt="A short walk through the da Vinci wing. It opens on Leonardo's pen drawing of the Arno valley, walks down a stair into a long picture room, steps up to the Mona Lisa and zooms into her face, sets a wooden aerial screw turning, and ends under a night sky full of stars." width="100%" />
+  </picture></a><br/>
+  <sub>From the door to the stars, in 33 seconds. The museum itself is slower: a stop holds until you go on.</sub><br/>
+  <sub><a href="https://museumofages.org">museumofages.org</a>: free entry, no account, English or German. <a href="docs/TOUR.md">A tour in pictures</a> credits every work you see.</sub>
 </p>
+
+This repository holds the museum itself in `museum/` and the code of its website in `site/`. The code, the texts in both languages and a record for every picture are all here, open to read, to check and to improve. [How you can take part](#how-you-can-take-part) says where to start.
 
 ## What you see
 
@@ -38,6 +55,12 @@ Fifteen machines are rebuilt from what the sources give, fourteen from his sheet
 
 Museum of Ages is a website, built once for the phone and once for the desktop, in English and German. Free entry, no account. It draws with WebGPU and falls back to WebGL2. A browser with neither gets one plain page that says so, with a link to the wing's page on the site. There are no spoken words yet, and the wing hasn't been tested with a screen reader.
 
+<p align="center">
+  <img src=".github/assets/tour/10-phone-stop.webp" alt="On a phone, the wooden aerial screw stands tall in a hall with a slatted ceiling and a high window. Below, the stop reads He wanted to fly, Leonardo at about 30, with the line In Milan he drew machines like these. He wanted to fly. Nobody wrote down that he ever did." width="28%" />
+  <img src=".github/assets/tour/11-phone-close-look.webp" alt="On a phone, the Mona Lisa fills the screen in its close look, with a 20 cm scale bar in the upper corner. Below it are the line It was stolen from the Louvre in 1911. It was found in Florence two years later, and a gold button for the next work." width="28%" /><br/>
+  <sub>On a phone: a stop in the mechanism hall, and the Mona Lisa's close look.</sub>
+</p>
+
 ## How sure a statement is
 
 "As it was, as far as we know." Every stop carries one of four grades. The word stands under the stop's title, in its own colour, and the [statement page](https://museumofages.org/what-this-museum-is/) uses the same four:
@@ -53,6 +76,16 @@ Words like disputed or workshop in the list of paintings are something else. The
 
 A stop has three layers of text: the line you read first, a drawer that opens when you want more, and the record, which names the sources. The Mona Lisa's stop is graded documented, and its drawer says that in October 1503 a clerk in Florence wrote in the margin of a book that Leonardo was at work on a head of Lisa del Giocondo. At the aerial screw the record says: "Reconstructed from Ms B f. 83v. No lifetime flight is documented."
 
+<p align="center">
+  <img src=".github/assets/layer-drawer.webp" alt="The lower edge of the Mona Lisa in its wooden frame, and below it the stop's drawer, open. It is headed A woman called Lisa, Leonardo at 51, 2 / 17, and its five short lines say that what hangs here is a reproduction, that the painting itself is in Paris, that in October 1503 a clerk in Florence wrote in the margin of a book, that the note says Leonardo was at work on a head of Lisa del Giocondo, and that the name the picture carries today is in a book from 1550." width="100%" /><br/>
+  <sub>The drawer at the Mona Lisa's stop, open under the painting.</sub>
+</p>
+
+<p align="center">
+  <img src=".github/assets/layer-record.webp" alt="The record panel at the first stop of the mechanism hall, with the tabs This station, This room and The wing. It is graded Reconstructed and headed The mechanism hall, one: flight. A note says the machines are shown without anyone working them, and the text says the aerial screw was rebuilt from one page of Manuscript B and that no flight of his own is documented." width="72%" /><br/>
+  <sub>The record at the first stop of the mechanism hall. Its grade is reconstructed.</sub>
+</p>
+
 The labels also say what is ours. The furniture in the great hall isn't his own. A house like this had such things at the time. The court with the Last Supper is the museum's design, not a place from his life. The wing places the visit of 1517 behind the study's window, and that is our guess, because the diary names no room. The stars at the last stop are worked out star by star from a catalogue, for the day the diary gives and an hour we chose. The sunset is a usual October evening, and the shooting star is the museum's own.
 
 ## How it was made
@@ -60,6 +93,11 @@ The labels also say what is ours. The furniture in the great hall isn't his own.
 The museum's statement page says how the words are made: "A person reads, corrects and approves every text before it is published. The drafts are written with AI from a research file that names a source for every fact." The code was written with AI help as well. Each machine's record in `museum/assets/wing-vinci/manifest.json` names the model that wrote its code.
 
 No picture in the wing comes from an image model. The rooms and machines are built in code and filmed in the museum's own engine, and the textures are CC0 photo scans. A few props are CC0 models from an open library, a cask and a basket among them. The paintings, drawings and notebook pages are reproductions: digital copies of public domain works, each labelled with its holder and its licence line.
+
+<p align="center">
+  <img src=".github/assets/mechanism-hall.webp" alt="A high hall with a slatted wooden ceiling and a band of windows, in warm low sun. Wooden machines stand on low plinths: lock gates, the aerial screw with its spiral sail, a water screw and a rolling mill. A still from the museum's film. The machines are reconstructions built in code." width="100%" /><br/>
+  <sub>The mechanism hall, a still from the museum's film. The hall is the museum's own design. The machines are built in code after his sheets.</sub>
+</p>
 
 ## How it is built
 
