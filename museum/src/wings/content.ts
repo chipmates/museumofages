@@ -225,6 +225,9 @@ export function sayDataInPlace(root: unknown): void {
 /** A pair out of two parallel records, each language's own field. */
 export const pairOf = <E, D>(both: { en: E; de: D }, field: (side: E | D) => string): Bilingual => ({ en: field(both.en), de: field(both.de) })
 
+/** A pair's words where the catalog holds them, and nothing (no English, no miss) where it does not. */
+export const sayIfKnown = (s: Bilingual): string | undefined => (catalogPage() ? catalog?.pair(s) : undefined)
+
 /** A word a catalog files under its own name (`lang.tag`); none on an English or German page. */
 export const sayNamed = (key: string): string | undefined => catalog?.named(key)
 

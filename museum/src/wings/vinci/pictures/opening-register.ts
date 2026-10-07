@@ -6,7 +6,7 @@
  * data lives in data/opening-drawings.json, as the paintings' does in theirs.
  */
 import drawingsSource from './data/opening-drawings.json?raw'
-import { catalogPage, sayAs } from '../../content'
+import { catalogPage, fill, say, sayAs, sayIfKnown } from '../../content'
 
 export interface OpeningBilingual { readonly en: string; readonly de: string }
 
@@ -118,13 +118,39 @@ export function openingHonesty(drawing: OpeningDrawing): OpeningBilingual {
   return { en: line('en'), de: line('de') }
 }
 
+/* The honesty line's parts as patterns, for a page in another language: the
+   store's line is the English and German one above, and these read the same. */
+const PHOTO_CREDIT = {
+  en: 'Photograph by {0}, {1}, released into the public domain by the photographer ({2}).',
+  de: 'Aufnahme von {0}, {1}, vom Fotografen gemeinfrei gestellt ({2}).',
+}
+const CORRECTED = {
+  en: 'Perspective corrected and cropped to the visible sheet, a non-creative correction, no retouching.',
+  de: 'Perspektive entzerrt und auf das sichtbare Blatt beschnitten, eine nicht schöpferische Korrektur, ohne Retusche.',
+}
+const HOLDER = { en: 'Holder: {0}, {1}.', de: 'Sammlung: {0}, {1}.' }
+
+/** the honesty line on a catalog page: each part by its own pair, the names as the store writes them */
+function honestyInPageWords(drawing: OpeningDrawing): string {
+  const photo = drawing.photograph
+  return [`${say(drawing.title)}. ${drawing.maker}, ${say(drawing.date_label)}.`, say(TIER2_DRAWING_HONESTY),
+    fill(say(PHOTO_CREDIT), [photo.by, say(photo.taken_label), photo.licence_template]), say(CORRECTED),
+    fill(say(HOLDER), [say(drawing.holder), say(drawing.inventory)])].join(' ')
+}
+
 /** The label as the card's record shows it: the honesty line, then the
  * code line as its own paragraph. The correction's steps stay in the record
  * and the store's note; the label names the correction once. */
 export function openingLabel(drawing: OpeningDrawing, language: 'en' | 'de'): readonly string[] {
-  const honesty = sayAs(openingHonesty(drawing), language)
   const code = drawing.holder_type === 'italian-state' ? sayAs(ITALIAN_CODE_LINE, language) : ''
-  const body = code && (!catalogPage() || honesty.endsWith(code)) ? honesty.slice(0, honesty.length - code.length).trimEnd() : honesty
+  if (catalogPage()) {
+    // the whole line as the catalog holds it, where its code line can be told apart; else its parts
+    const whole = sayIfKnown(openingHonesty(drawing))
+    const body = whole !== undefined && (!code || whole.endsWith(code)) ? whole.slice(0, whole.length - code.length).trimEnd() : honestyInPageWords(drawing)
+    return [body, ...(code ? [code] : [])]
+  }
+  const honesty = sayAs(openingHonesty(drawing), language)
+  const body = code ? honesty.slice(0, honesty.length - code.length).trimEnd() : honesty
   return [body, ...(code ? [code] : [])]
 }
 

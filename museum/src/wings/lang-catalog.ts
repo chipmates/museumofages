@@ -42,15 +42,22 @@ export async function openCatalog(tag: PageLang): Promise<Catalog> {
   }
   /* A PAIR JOINED FROM PAIRS: a record the words put together from two
      statements, a space between them, reads as its parts, cut at a sentence's
-     end on both sides where each half is a pair of its own. */
+     end on both sides where each half is a pair of its own; a part closed by
+     a full stop the words added ("Documented. The title.") reads without it. */
   const ends = (text: string): number[] => [...text.matchAll(/[.!?…]["”’)]?\s/g)].map(m => m.index + m[0].length)
+  const part = (s: Bilingual): string | undefined => {
+    const found = own(s)
+    if (found !== undefined || !s.en.endsWith('.') || !s.de.endsWith('.')) return found
+    const bare = own({ en: s.en.slice(0, -1), de: s.de.slice(0, -1) })
+    return bare === undefined ? undefined : bare.endsWith(".") ? bare : `${bare}.`
+  }
   const joined = (s: Bilingual, depth = 0): string | undefined => {
     if (depth > 8) return undefined
     for (const i of ends(s.en)) for (const j of ends(s.de)) {
-      const head = own({ en: s.en.slice(0, i).trimEnd(), de: s.de.slice(0, j).trimEnd() })
+      const head = part({ en: s.en.slice(0, i).trimEnd(), de: s.de.slice(0, j).trimEnd() })
       if (head === undefined) continue
       const rest = { en: s.en.slice(i), de: s.de.slice(j) }
-      const tail = own(rest) ?? joined(rest, depth + 1)
+      const tail = part(rest) ?? joined(rest, depth + 1)
       if (tail !== undefined) return `${head} ${tail}`
     }
     return undefined
