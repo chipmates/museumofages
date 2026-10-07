@@ -36,16 +36,17 @@
 .foot__else{margin-top:6px;font-size:.875rem;color:var(--ink-quiet)}
 
 /* A translated language's first screen says so, small and calm, under the project line. */
-.aitag{display:flex;align-items:center;min-height:var(--ai-h);margin:0;padding:4px var(--pad);background:var(--ground-edge);box-shadow:0 1px 0 var(--hair);font-family:var(--sans);font-size:.75rem;line-height:1.35;letter-spacing:.03em;color:var(--ink-soft)}
+.aitag{position:relative;z-index:19;display:flex;align-items:center;min-height:var(--ai-h);margin:0;padding:4px max(var(--pad),calc(50% - 640px + var(--pad)));background:var(--ground-edge);box-shadow:0 1px 0 var(--hair);font-family:var(--sans);font-size:.75rem;line-height:1.35;letter-spacing:.03em;color:var(--ink-soft)}
 
 /* The English front page's hint for a browser that asks for another listed language. */
-.hint{margin:0;padding:2px var(--pad);background:var(--ground-edge);font-family:var(--sans);font-size:.875rem}
+.hint{position:relative;z-index:19;margin:0;padding:2px max(var(--pad),calc(50% - 640px + var(--pad)));background:var(--ground-edge);font-family:var(--sans);font-size:.875rem}
 .hint a{display:inline-flex;align-items:center;min-height:44px;color:var(--ink);text-decoration:underline;text-decoration-color:var(--mark)}
 .hint[hidden]{display:none}
 
 /* The root's 404 page: one line in each other listed language. */
-.stub__row{margin-top:10px;font-family:var(--sans);font-size:.9375rem;color:var(--ink-soft)}
-.stub__row a{display:inline-flex;align-items:center;min-height:44px;color:var(--ink)}
+.stub__row{margin-top:14px;font-family:var(--sans);font-size:.9375rem;line-height:1.5;color:var(--ink-soft)}
+/* Inline, so the row wraps as one sentence; the padding makes the 44px target without opening the line. */
+.stub__row a{padding:13px 0;color:var(--ink)}
 
 /* Bulgarian is set in its own two faces, which hold its letters and their Bulgarian forms (buildlib.LANG_FACES).
    The museum's name keeps its own face. A style the faces do not have is not faked. */
@@ -54,4 +55,4 @@
   --sans:"Museum Bulgarian Sans","Segoe UI",system-ui,sans-serif;
   font-synthesis:none;
 }
-:lang(bg) .brand__name{font-family:"Cardo","Cardo fallback","Iowan Old Style","Palatino Linotype",Georgia,serif}
+:lang(bg) .brand__name,:lang(bg) .hero__name:not(.hero__name--wing){font-family:"Cardo","Cardo fallback","Iowan Old Style","Palatino Linotype",Georgia,serif}
