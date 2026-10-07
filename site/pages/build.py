@@ -334,6 +334,11 @@ def site_chrome(site_built, lang, root, twins, door):
         raise SystemExit(f"{source}: the section on rights (#open) was not found")
     licence = re.search(r'<a\b(?=[^>]*\brel="license")[^>]*\bhref="(https://[^"]+)"', page)
     out["licence"], out["rights"] = (licence.group(1) if licence else rights), rights
+    # the language menu and the line on how the words were made take the site's language rules, with the bar's
+    # height as the site's page sets it for them
+    by = re.search(r":root\{--by:[^}]*\}", page)
+    out["langs"] = 'class="langs' in out["header"] or 'class="aitag"' in out["header"] or 'class="hint' in out["header"]
+    out["by"] = by.group(0) if by else ""
     out["publisher"], out["alternate_name"] = None, "Museum of Ages"
     for block in re.findall(r'<script type="application/ld\+json">(.*?)</script>', page, flags=re.S):
         for node in json.loads(block.replace("<\\/", "</")).get("@graph", []):
@@ -706,7 +711,7 @@ def render(page, lang, data, shared, out_root):
         "url.self": urls[lang],
         "url.og_image": f"{ORIGIN}/{STATIC}/img/{og['file']}",
         "og.width": str(og["width"]), "og.height": str(og["height"]),
-        "css.inline": shared["css"],
+        "css.inline": shared["css"] + (shared["langs_css"] + chrome["by"] if chrome["langs"] else ""),
         "css.faces": faces(root, lang) + focus_rule(frame),
         "html.preload": pics.preload(frame["pic"]),
         "html.theme": f'<meta name="theme-color" content="{chrome["theme"]}">\n' if chrome["theme"] else "",
@@ -908,6 +913,7 @@ def build_pages(out_dir, site_src=SITE_SRC, site_built=SITE_BUILT, pages=PAGES, 
         "css": css_min(*[site["css"] / f"{n}.css" for n in CSS_BEFORE], *[HERE / "css" / f"{n}.css" for n in OWN_CSS],
                        *[site["css"] / f"{n}.css" for n in CSS_AFTER]),
         "pic_folders": [PICS, site_built / STATIC / "img"],
+        "langs_css": css_min(site["css"] / "langs.css") if (site["css"] / "langs.css").is_file() else "",
     }
 
     # the two faces travel with their licence files
