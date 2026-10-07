@@ -75,6 +75,9 @@ class Case(unittest.TestCase):
         module = importlib.util.module_from_spec(spec)
         spec.loader.exec_module(module)
         module.WINGS_FILE = self.registry
+        # the fixtures are written in English and German: the build runs in those two, whatever else is built
+        module.LANGS = tuple(c for c in module.LANGS if c in ("en", "de"))
+        module.LISTED = tuple(c for c in module.LISTED if c in ("en", "de"))
         out = self.dir / "out"
         written = module.build_pages(out, site_src=site_src, site_built=site_built, quiet=True)
         return out, written

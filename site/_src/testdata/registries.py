@@ -11,6 +11,7 @@ import copy
 import json
 from pathlib import Path
 
+import languages
 import render as R
 from . import draw
 
@@ -42,7 +43,24 @@ def registries(real, src, test_out, site_img):
     first = next(k for k in real if not k.startswith("_"))
     made = test_out / "_data"
     made.mkdir(parents=True, exist_ok=True)
-    base = {lang: json.loads((src / "wings" / f"{first}.{lang}.json").read_text(encoding="utf-8")) for lang in ("en", "de")}
+    # every built language: a stand-in says in English what it has no words for
+    built = languages.Languages().built
+    langs = languages.Languages()
+    base = {lang: json.loads((src / "wings" / f"{first}.{lang}.json").read_text(encoding="utf-8")) for lang in built}
+
+    def every(obj, slug=None):
+        """A stand-in's words in every built language: its page and door in the language's folder, the rest in English."""
+        for path, leaf in languages.leaves(obj).items():
+            for code in built:
+                if code in leaf:
+                    continue
+                if slug and path == "page":
+                    leaf[code] = langs.folder(code) + slug
+                elif slug and path == "door":
+                    leaf[code] = f"/w/{slug}?lang={langs.door_lang(code)}"
+                else:
+                    leaf[code] = leaf["en"]
+        return obj
 
     def pic(stem, widths):
         return {"stem": stem, "widths": widths, "size": list(pics.size(stem, max(widths)))}
@@ -53,7 +71,7 @@ def registries(real, src, test_out, site_img):
         entry = {"collection": "lives", "state": state, "name": {"en": en, "de": de or en}, "when": int(died),
                  "dates": {"en": f"{born} to {died}", "de": f"{born} bis {died}"}}
         if state != "open":
-            return slug, entry
+            return slug, every(entry, slug)
         hero, card = REUSE[i % 6], REUSE[(i + 3) % len(REUSE)]
         entry.update(copy.deepcopy({k: real[first][k] for k in ("wall", "about", "never_say", "claim_phrase")}))
         entry.update({
@@ -62,10 +80,11 @@ def registries(real, src, test_out, site_img):
             "pictures": {"hero": dict(pic(*hero), alt="first.piece.alt"), "card": dict(pic(*card), alt="card.alt"), "share": real[first]["pictures"]["share"]},
             "note": ["#9c503e", "#2f8478", "#8a6a2c", "#6a62b0", "#a0527a"][i % 5], "wall": ["wall", "deep", "lifted"][i % 3], "topics": [],
         })
+        every(entry, slug)
         if piece_on_page:
             entry["pictures"]["landing"] = dict(pic(*card), alt="landing.piece.alt")
         # the first wing's words under the stand-in's name, with its own first screen and card
-        for lang in ("en", "de"):
+        for lang in built:
             d = copy.deepcopy(base[lang])
             d.pop("_copied", None)
             if piece_on_page:
@@ -87,15 +106,19 @@ def registries(real, src, test_out, site_img):
         # the first wing's facts too, without the name of the tool that checks them against its inventory
         facts = json.loads((src / "wings" / f"{first}.facts.json").read_text(encoding="utf-8"))
         facts.pop("_made_by", None)
-        (made / f"{slug}.facts.json").write_text(json.dumps(facts, ensure_ascii=False), encoding="utf-8")
-        return slug, entry
+        for lang in built:
+            own = languages.load_own(src / "wings", f"{first}.facts", lang)
+            if own is not None:
+                languages.merge_leaves(facts, own, lang, "")
+        (made / f"{slug}.facts.json").write_text(json.dumps(every(facts), ensure_ascii=False), encoding="utf-8")
+        return slug, every(entry, slug)
 
     def beast(name, state):
         slug = slug_of(name)
         entry = {"collection": "animals", "state": state, "name": {"en": name, "de": name}, "when": -66000000 - len(name),
                  "dates": {"en": "68 to 66 million years ago", "de": "vor 68 bis 66 Millionen Jahren"}}
         if state != "open":
-            return slug, entry
+            return slug, every(entry, slug)
         entry.update({
             "_data": "mustersaurus", "page": {"en": slug, "de": f"de/{slug}"}, "door": {"en": f"/w/{slug}", "de": f"/w/{slug}?lang=de"},
             "shows": {"place": {"en": "A test place", "de": "Ein Testort"}, "day": {"en": "one day in the Cretaceous", "de": "ein Tag in der Kreidezeit"}},
@@ -105,7 +128,7 @@ def registries(real, src, test_out, site_img):
             "note": "#4f8a4a", "wall": "deep", "counts": {"stops": 9, "bones": 300}, "topics": [],
             "about": {"@type": "Thing", "name": name}, "never_say": [], "claim_phrase": "",
         })
-        return slug, entry
+        return slug, every(entry, slug)
 
     def reg(lives, animals=(), piece_on_page=None):
         out = {"_note": "TEST REGISTRY. Stand-in wings.", "_collections": copy.deepcopy(real["_collections"])}
@@ -114,6 +137,7 @@ def registries(real, src, test_out, site_img):
                                         "line": {"en": "Each wing builds one animal up: its bones, its muscles, the complete animal.",
                                                  "de": "Jeder Flügel baut ein Tier auf: die Knochen, die Muskeln, das ganze Tier."},
                                         "dates_key": {"en": "Lived", "de": "Lebte"}})
+            every(out["_collections"][-1])
         out[first] = copy.deepcopy(real[first])
         for i, state in lives:
             slug, entry = life(i, state, i == piece_on_page)
@@ -123,7 +147,14 @@ def registries(real, src, test_out, site_img):
             out[slug] = entry
         return out
 
-    dirs, pic_dirs = [src / "wings", made, HERE / "wings"], [HERE / "img"]
+    # the stand-in animal's words in a language it has none in: its English, beside the others
+    beasts = HERE / "wings"
+    if any(not (beasts / f"mustersaurus.{lang}.json").exists() for lang in built):
+        for lang in built:
+            have = beasts / f"mustersaurus.{lang}.json"
+            (made / have.name).write_bytes((have if have.exists() else beasts / "mustersaurus.en.json").read_bytes())
+        beasts = made
+    dirs, pic_dirs = [src / "wings", made, beasts], [HERE / "img"]
     yield "today", copy.deepcopy(real), dirs, pic_dirs
     yield "three", reg([(1, "open"), (23, "open")], piece_on_page=23), dirs, pic_dirs
     # thirty wings in one collection: twelve open, eighteen in the making

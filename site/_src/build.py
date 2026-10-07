@@ -372,13 +372,15 @@ def oklch(value):
 
 
 # Bulgarian sets about 15 percent wider than German in its face: its limits are the German ones divided by this.
+# The museum's name is the same Latin letters in every language.
 WIDER = {"bg": 1.149}
+SAME_WIDTH = r"^hero\.name$"
 
 
 def limit_for(key, lang="en"):
     for pattern, limit in LIMITS:
         if re.search(pattern, key):
-            return math.floor(limit / WIDER[lang]) if lang in WIDER else limit
+            return math.floor(limit / WIDER[lang]) if lang in WIDER and not re.search(SAME_WIDTH, key) else limit
 
 
 class Ctx:
@@ -387,6 +389,7 @@ class Ctx:
     def __init__(self, site, lang, here):
         self.__dict__.update(site.__dict__)
         self.site, self.lang, self.here = site, lang, here
+        self.deed = L.entries[lang]["deed"]
         self.w, self.a, self.raw = site.words_html[lang], site.words_attr[lang], site.words[lang]
         self.wd = {slug: both[lang] for slug, both in site.data.items()}
         self.facts = site.facts
@@ -407,6 +410,10 @@ class Ctx:
 
     def addr(self, kind, lang=None):
         return L.page(lang or self.lang, kind)
+
+    def elsewhere(self, kind):
+        """A link to a page the language does not have (its legal notice) leads to the English one, and says so."""
+        return ' hreflang="en"' if kind == "imprint" and not L.has_imprint(self.lang) else ""
 
     def collection(self, slug):
         return next(x for x in self.collections if x["slug"] == slug)
@@ -475,8 +482,8 @@ class Site:
                     self.problems += languages.merge_leaves(self.facts[slug], languages.load_own(found[0], f"{name}.facts", lang), lang,
                                                             f"wings/{name}.facts.{lang}.json")
             self.data_written[slug] = {lang: load(found[0] / f"{name}.{lang}.json") for lang in LANGS}
-            self.data_raw[slug] = {lang: walk(self.data_written[slug][lang], lambda p, t, s=slug, l=lang: space(self.filled(s, l, t), l))
-                                   for lang in LANGS}
+            self.data_raw[slug] = {lang: walk(self.data_written[slug][lang], lambda p, t, s=slug, l=lang: self.filled(s, l, t) if
+                                              re.search(NOT_WORDS, p) else space(self.filled(s, l, t), l)) for lang in LANGS}
             self.data[slug] = {lang: walk(self.data_raw[slug][lang], lambda p, t, l=lang: self.ready(p, t, l)) for lang in LANGS}
         self.wing_dirs = wing_dirs
 
@@ -1356,8 +1363,7 @@ def publisher():
 
 
 def imprint_lang(c):
-    """A link to the legal notice from a language without one of its own leads to the English page, and says so."""
-    return "" if L.has_imprint(c.lang) else ' hreflang="en"'
+    return c.elsewhere("imprint")
 
 
 def website(c, description):

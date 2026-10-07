@@ -133,6 +133,9 @@ BANNED_FACTS = [
 CLAIM_ALLOWED = (r"^meta\.", r"^top\.h1$", r"\.q$")
 # How the words are made is said once, on the page about the museum. A page here carries no line on it.
 
+# What is no sentence in a data file: its page, its pictures, addresses and keys.
+NOT_SPACED = r"^(_|page\.|pics\.)|\.(href|focus|pic|tag|k|type|id|stem|sizes)$"
+
 BLOCK_TYPES = ("places", "group", "feature", "notes", "faq", "sources", "close")
 
 
@@ -308,6 +311,9 @@ def site_chrome(site_built, lang, root, twins, door):
         text = re.sub(r'(<a\b[^>]*?\bhref=")[^"]*("[^>]*\blang="([^"]*)" hreflang="\3")',
                       lambda m: m.group(1) + twins[m.group(3)] + m.group(2) if m.group(3) in twins else m.group(0), text)
         text = text.replace(' aria-current="page"', "")
+        # in the list of languages, this page's own is the current one
+        own = re.escape(L.html(lang))
+        text = re.sub(r'(<li><a href="[^"]*" lang="%s" hreflang="%s")>' % (own, own), r'\1 aria-current="page">', text)
         # every way in leads to this page's wing, whatever door the site's page carried when it was built
         text = re.sub(r'(<a class="door[^"]*" href=")[^"]*"', lambda m: m.group(1) + esc(door) + '"', text)
         text = re.sub(rf'href="(?:{DOOR_SHAPE}|{OLD_DOOR})"', f'href="{esc(door)}"', text)
@@ -565,7 +571,7 @@ def render(page, lang, data, shared, out_root):
     twins = {L.html(code): root + page_path(shared["data"][page][code], wing, code) + "/" for code in LANGS}
     door = wing["door"][lang]
     chrome = site_chrome(shared["chrome_pages"], lang, root, twins, door)
-    names = Names(shared["names"], wing["name"][lang], lang)
+    names = Names(shared["names"] + shared["own_names"][lang], wing["name"][lang], lang)
     rich = names.mark
 
     def site_page(name, code=lang):
@@ -838,10 +844,16 @@ def build_pages(out_dir, site_src=SITE_SRC, site_built=SITE_BUILT, pages=PAGES, 
     missing = [f"{p}.{lang}.json" for p in pages for lang in LANGS if not (HERE / f"{p}.{lang}.json").is_file()]
     if missing:
         raise SystemExit(f"{', '.join(missing)} missing: every built language (languages.json) has every page")
-    # French punctuation takes its narrow spaces here, as on the site's own pages
-    spaced = lambda obj, lang: ({k: spaced(v, lang) for k, v in obj.items()} if isinstance(obj, dict) else
-                                [spaced(v, lang) for v in obj] if isinstance(obj, list) else
-                                LIB.space(obj, lang) if isinstance(obj, str) else obj)
+    # French punctuation takes its narrow spaces here, as on the site's own pages: in the words, never in a
+    # picture's sizes, an address or a key
+    def spaced(obj, lang, path=""):
+        if isinstance(obj, dict):
+            return {k: spaced(v, lang, f"{path}.{k}" if path else k) for k, v in obj.items()}
+        if isinstance(obj, list):
+            return [spaced(v, lang, f"{path}.{i}") for i, v in enumerate(obj)]
+        if isinstance(obj, str) and not re.search(NOT_SPACED, path):
+            return LIB.space(obj, lang)
+        return obj
     data = {p: {lang: spaced(json.loads((HERE / f"{p}.{lang}.json").read_text(encoding="utf-8")), lang) for lang in LANGS} for p in pages}
     registry = json.loads(WINGS_FILE.read_text(encoding="utf-8"))
     merged = LANG.merge_registry(registry, WINGS_FILE.parent, L, LANGS)
@@ -886,7 +898,7 @@ def build_pages(out_dir, site_src=SITE_SRC, site_built=SITE_BUILT, pages=PAGES, 
     site = site_parts(site_src, site_built)
     shared = {
         "parts": parts, "data": data, "site_built": site_built, "chrome_pages": site["pages"], "wing": wing,
-        "names": names,
+        "names": names, "own_names": own_names,
         "css": css_min(*[site["css"] / f"{n}.css" for n in CSS_BEFORE], *[HERE / "css" / f"{n}.css" for n in OWN_CSS],
                        *[site["css"] / f"{n}.css" for n in CSS_AFTER]),
         "pic_folders": [PICS, site_built / STATIC / "img"],

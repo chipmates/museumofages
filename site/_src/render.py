@@ -140,7 +140,8 @@ def place_hooks(c, p):
 # music. Its words are the site's (film.*), its list of wings is written by the build beside its script.
 FILM = {"name": "sky-ages", "script": "sky-ages.js", "data": "sky-ages-data.js", "music": "music.mp3", "music_script": "film-music.js"}
 MUSIC_BY = ("Scott Buckley", "https://www.scottbuckley.com.au")
-MUSIC_LICENCE = ("CC BY 4.0", {"en": "https://creativecommons.org/licenses/by/4.0/", "de": "https://creativecommons.org/licenses/by/4.0/deed.de"})
+# the licence's page in the page's language: its address and the language's deed (languages.json)
+MUSIC_LICENCE = ("CC BY 4.0", "https://creativecommons.org/licenses/by/4.0/")
 
 
 def film_hooks(c):
@@ -154,7 +155,7 @@ def film_hooks(c):
     control = (f'<p class="place__controls"><button class="plate-btn" type="button" data-place-toggle data-stop="{a["film.pause"]}" '
                f'data-go="{a["film.play"]}" data-go-more="{a["film.watch"]}" hidden>{w["film.pause"]}</button></p>')
     credit = (w["film.music"].replace("{artist}", f'<a href="{MUSIC_BY[1]}" rel="noopener">{MUSIC_BY[0]}</a>')
-              .replace("{licence}", f'<a href="{MUSIC_LICENCE[1][c.lang]}" rel="noopener">{MUSIC_LICENCE[0]}</a>'))
+              .replace("{licence}", f'<a href="{MUSIC_LICENCE[1]}{c.deed}" rel="noopener">{MUSIC_LICENCE[0]}</a>'))
     return hook, inside, control, f'<span class="label__music">{credit}</span>'
 
 
@@ -874,7 +875,8 @@ def other_sites(c):
     for slug in c.open:
         link, line = c.wings[slug].get("out"), c.wd[slug].get("out", {}).get("line")
         if link and line:
-            href = esc(link["href"].replace("{lang}", c.lang))
+            # the other site in the page's language where it speaks it (speaks), else in English
+            href = esc(link["href"].replace("{lang}", c.lang if c.lang in link.get("speaks", [c.lang]) else "en"))
             out.append(f'<p class="other"><a class="more" href="{href}" rel="noopener"><span>{esc(link["name"])}</span>{ARROW}</a>'
                        f'<span class="other__line">{line}</span></p>')
     return "".join(out)
@@ -925,12 +927,12 @@ def prose(c, text):
     def link(m):
         words, target = m.group(1), m.group(2)
         if target.startswith("page:"):
-            return f'<a href="{c.to(c.addr(target[5:]))}">{words}</a>'
+            return f'<a href="{c.to(c.addr(target[5:]))}"{c.elsewhere(target[5:])}>{words}</a>'
         if not re.match(r"(https://|mailto:)", target):
             raise SystemExit(f"a reading page links to {target!r}: only https, mailto and page:<name> are allowed")
         rel = "" if target.startswith("mailto:") else ' rel="noopener"'
         return f'<a href="{target}"{rel}>{words}</a>'
-    return re.sub(r"\[([^\]]+)\]\(([^)\s]+)\)", link, sign_whole(esc(bind(text))))
+    return re.sub(r"\[([^\]]+)\]\(([^)\s]+)\)", link, sign_whole(esc(bind(text, c.lang))))
 
 
 def reading_sections(c, sections):
