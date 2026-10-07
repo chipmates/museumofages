@@ -279,7 +279,8 @@ CLIP_MAX = 1_500_000
 WING_KEYS = ("collection", "state", "name", "page", "door", "dates", "shows", "when", "pictures", "wall", "note", "topics",
              "about", "never_say", "claim_phrase")
 # What is no sentence in a wing's data file: names of pictures and scripts, cuts, the names of other keys.
-NOT_WORDS = r"(^_|\.pic\.|\.crop\.|\.focus\.|\.loads\.\d+$|\.(id|form|from|show|n|stop|holder|count|script|clip|name|lang|hang|lamp|href|src_to|grade)$)"
+# A quote's own credit (quote.from) is words; every other "from" names the list a group reads.
+NOT_WORDS = r"(^_|\.pic\.|\.crop\.|\.focus\.|\.loads\.\d+$|(?<!\.quote)\.from$|\.(id|form|show|n|stop|holder|count|script|clip|name|lang|hang|lamp|href|src_to|grade)$)"
 # The running text of a wing's data: a paragraph's last words are kept together, and a wing's name is never broken.
 PROSE = r"(^|\.)(p(\.\d+)?|lede|what|src|text|v|intro|line|terms|after|lead|stills|source)$"
 # Where a wing's sentence may carry digits: a credit line, a shelf mark, the explanation of a leaf number, the
