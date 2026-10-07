@@ -31,13 +31,15 @@ export function contentKey(en, de, pointer = '') {
   return fnv1a64(pointer ? `${en}${SEP}${de}${SEP}${pointer}` : `${en}${SEP}${de}`)
 }
 
-/** A number as a pattern sees it: digits, with inner groups or decimals ("1,234", "4.5"). */
-const NUMBER = /\d+(?:[.,]\d+)*/g
+/** A slot a caller fills (`{0}`, `{name}`), or a run of digits. */
+const PART = /\{\w+\}|[0-9]+/g
 
-/** A string with each number replaced by {0}, {1} in order, and the numbers it held. */
+/** A string with its slots and its runs of digits numbered {0}, {1} in the
+    order they stand, as the unit cutter keys a pattern: `values[i]` gives
+    back a digit run, or the slot as it was written, for the caller to fill. */
 export function foldNumbers(text) {
   const values = []
-  const pattern = text.replace(NUMBER, (n) => `{${values.push(n) - 1}}`)
+  const pattern = text.replace(PART, (part) => `{${values.push(part) - 1}}`)
   return { pattern, values }
 }
 

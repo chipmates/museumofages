@@ -40,15 +40,22 @@ test('the key is the pair, joined by U+0001; a pointer is a third part', () => {
   assert.match(contentKey('x', 'y'), /^[0-9a-f]{16}$/)
 })
 
-test('a pattern folds each language’s numbers in its own order', () => {
+test('a pattern numbers its slots and digit runs in the order they stand, as the cutter keys it', () => {
   assert.deepEqual(foldNumbers('3 wings open'), { pattern: '{0} wings open', values: ['3'] })
-  assert.deepEqual(foldNumbers('from 1452 to 1519, about 4.5 m and 1,234 pages'),
-    { pattern: 'from {0} to {1}, about {2} m and {3} pages', values: ['1452', '1519', '4.5', '1,234'] })
+  assert.deepEqual(foldNumbers('from 1452 to 1519, about 4.5 m'),
+    { pattern: 'from {0} to {1}, about {2}.{3} m', values: ['1452', '1519', '4', '5'] })
+  assert.deepEqual(foldNumbers('{0}, from the 1883 facsimile'), { pattern: '{0}, from the {1} facsimile', values: ['{0}', '1883'] })
+  assert.deepEqual(foldNumbers('measures 79.4 cm. {0}'), { pattern: 'measures {0}.{1} cm. {2}', values: ['79', '4', '{0}'] })
   assert.deepEqual(foldNumbers('no number here'), { pattern: 'no number here', values: [] })
   assert.equal(patternKey('3 wings open', '3 Flügel offen'), contentKey('{0} wings open', '{0} Flügel offen'))
   assert.equal(patternKey('7 wings open', '7 Flügel offen'), patternKey('3 wings open', '3 Flügel offen'))
+  // the cutter's two keys of this kind
+  assert.equal(patternKey('{0}, from the 1883 facsimile. The original is in the Institut de France.',
+    '{0}, aus dem Faksimile von 1883. Das Original befindet sich im Institut de France.'), 'cc1e1399c26700f4')
+  assert.equal(patternKey('1 wing open', '1 Flügel offen'), '8187b46db72cdff2')
   assert.equal(fillPattern('{0} ailes ouvertes', ['3']), '3 ailes ouvertes')
   assert.equal(fillPattern('de {1} à {0}', ['1452', '1519']), 'de 1519 à 1452')
+  assert.equal(fillPattern('{0}, d’après le fac-similé de {1}', ['{0}', '1883']), '{0}, d’après le fac-similé de 1883')
   assert.equal(fillPattern('{2} reste', ['1']), '{2} reste')
 })
 
