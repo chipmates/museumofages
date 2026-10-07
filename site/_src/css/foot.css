@@ -15,6 +15,8 @@
 .foot__org dl{margin-top:8px;display:grid;gap:6px}
 .foot__org dt{display:inline;color:var(--ink-quiet)}
 .foot__org dt::after{content:": "}
+/* French sets a narrow no-break space before the colon */
+:lang(fr) .foot__org dt::after{content:"\202F: "}
 .foot__org dd{display:inline;color:var(--ink-soft)}
 .todo{color:var(--ink-quiet);font-style:normal}
 .foot__nav a{display:inline-flex;align-items:center;min-height:44px;color:var(--ink-soft);text-decoration-color:var(--hair-strong)}
