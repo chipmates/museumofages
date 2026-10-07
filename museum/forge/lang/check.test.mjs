@@ -58,6 +58,10 @@ const CASES = [
   ['a tag that says native too early', (f) => { f['tag.json'].walk = false }, /walk is false, the catalogs say true/],
   ['a tag still up on a native surface', (f) => { f['tag.json'].records = true }, /records is true, the catalogs say false/],
   ['a fixture file', (f) => { f['_fixture.json'] = { _: 'note' } }, /a fixture: drop it before landing/],
+  ['a source for a passage the chunk does not hold', (f) => { f['walk.json'][`prov.${C}.kind`] = 'ours' }, /names a passage walk\.json does not hold/],
+  ['a source of an unknown kind', (f) => { f['walk.json'][`prov.${A}.kind`] = 'printed' }, /not edition or ours/],
+  ['a source label with a dash', (f) => { f['walk.json'][`prov.${A}.label`] = 'Traduction — 1910' }, /a dash or a semicolon/],
+  ['a source key of another field', (f) => { f['walk.json'][`prov.${A}.year`] = '1910' }, /is not a content key/],
 ]
 
 for (const [name, fn, want] of CASES) {
@@ -66,6 +70,15 @@ for (const [name, fn, want] of CASES) {
     assert.ok(problems.some((p) => want.test(p)), `${name}: ${JSON.stringify(problems)}`)
   })
 }
+
+test('a passage may name its source: an old edition with its credit, or the museum\'s own', () => {
+  assert.deepEqual(broken((f) => {
+    f['walk.json'][`prov.${A}.kind`] = 'edition'
+    f['walk.json'][`prov.${A}.label`] = 'Traduction de Joséphin Péladan, Textes choisis, 1907.'
+    f['walk.json'][`prov.${A}.rest`] = 'Traduction de Péladan, 1907.'
+    f['walk.json'][`prov.${B}.kind`] = 'ours'
+  }), [])
+})
 
 test('a holder\'s own semicolon passes where the status marks it verbatim', () => {
   assert.deepEqual(broken((f) => { f['walk.json'][A] = 'Manuscrit L, vers 1497-1502 ; 1504.'; f['status.json'][A] = rec('checked', { verbatim_signs: true }) }), [])

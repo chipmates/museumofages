@@ -7,7 +7,9 @@
 // `tag.json` (whether a surface still carries the translation tag). This check
 // needs neither the English nor the German: every catalog a flat object of
 // 16-hex keys and strings (or plural forms), every placeholder well formed, no
-// dash or semicolon, and the status and the tag agreeing with the catalogs.
+// dash or semicolon, and the status and the tag agreeing with the catalogs. A
+// passage of his words may name its source beside it (`prov.<key>.kind`,
+// `.label`, `.rest`): an old edition of the language, or the museum's own.
 // A file whose name starts with `_` is a fixture: it is reported, as it must
 // never land. Exit 1 on any problem.
 
@@ -16,6 +18,7 @@ import { dirname, join, resolve } from 'node:path'
 import { fileURLToPath } from 'node:url'
 
 const KEY = /^[0-9a-f]{16}$/
+const PROV = /^prov\.([0-9a-f]{16})\.(kind|label|rest)$/
 const TAG = /^[a-z]{2,3}(?:-[A-Z]{2})?$/
 const PLURAL = new Set(['zero', 'one', 'two', 'few', 'many', 'other'])
 const STATUS = new Set(['kept', 'draft', 'checked', 'frozen', 'native'])
@@ -68,6 +71,7 @@ export function checkLanguage(tag, files) {
 
   // every catalog: a flat object, 16-hex keys, strings or plural forms, no dash or semicolon
   const seen = new Map()
+  const provs = []
   const surface = Object.fromEntries(SURFACES.map((s) => [s, []]))
   for (const f of real) {
     const d = files[f]
@@ -75,6 +79,8 @@ export function checkLanguage(tag, files) {
     if (!d || typeof d !== 'object' || Array.isArray(d)) { say(f, 'not a flat object'); continue }
     if (!SURFACE_OF[chunk]) say(f, `not one of the chunks ${Object.keys(SURFACE_OF).join(', ')}`)
     for (const [key, value] of Object.entries(d)) {
+      const prov = PROV.exec(key)
+      if (prov) { provs.push([f, key, prov[1], prov[2], value]); continue }
       if (!KEY.test(key)) { say(f, `${key} is not a content key`); continue }
       if (seen.has(key)) say(f, `${key} stands in ${seen.get(key)} too`)
       seen.set(key, f)
@@ -95,6 +101,16 @@ export function checkLanguage(tag, files) {
     }
   }
   for (const [key, rec] of Object.entries(status)) if (rec?.status && rec.status !== 'kept' && !seen.has(key)) say('status.json', `${key} is ${rec.status} and stands in no catalog`)
+
+  // a passage's source: its passage stands in the same catalog, the kind is a word the page knows, a label a text
+  for (const [f, key, of, field, value] of provs) {
+    if (seen.get(of) !== f) say(f, `${key} names a passage ${f} does not hold`)
+    if (field === 'kind') { if (value !== 'edition' && value !== 'ours') say(f, `${key} is ${JSON.stringify(value)}, not edition or ours`); continue }
+    if (typeof value !== 'string' || !value.trim()) { say(f, `${key} is not a text`); continue }
+    const p = placeholderProblem(value)
+    if (p) say(f, `${key}: ${p}`)
+    if (SIGNS.test(value)) say(f, `${key} holds a dash or a semicolon`)
+  }
 
   // the tag: true until every string on its surface is native
   if (tagFile && typeof tagFile === 'object') {

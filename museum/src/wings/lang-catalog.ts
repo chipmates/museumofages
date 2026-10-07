@@ -17,11 +17,16 @@ const TAGS = import.meta.glob<Record<string, unknown>>('../../lang/*/tag.json', 
 export type TagStatus = 'ai' | 'checked' | 'native'
 export type TagSurface = 'walk' | 'records' | 'codex' | 'pictures'
 
+/** An old edition's text carries its own credit; the museum's translation takes the label's own words. */
+export interface Provenance { kind: 'edition' | 'ours'; label?: string; rest?: string }
+
 export interface Catalog {
   /** a pair's words: its own key first, then its pattern with the numbers put back */
   pair(s: Bilingual): string | undefined
   /** a word the catalog files under a name of its own */
   named(key: string): string | undefined
+  /** where a passage of his words comes from: an old edition of the language with its credit, or the museum's own translation */
+  provenance(en: string, de: string): Provenance | undefined
   /** a surface's status, written as a word or as the flag that the tag stands; a surface the file does not name counts as unread */
   status(surface: TagSurface): TagStatus
 }
@@ -72,6 +77,12 @@ export async function openCatalog(tag: PageLang): Promise<Catalog> {
       return asked.get(key) ?? undefined
     },
     named: (key) => entries.get(key),
+    provenance(en, de) {
+      const key = contentKey(en, de)
+      const kind = entries.get(`prov.${key}.kind`)
+      if (kind !== 'edition' && kind !== 'ours') return undefined
+      return { kind, label: entries.get(`prov.${key}.label`), rest: entries.get(`prov.${key}.rest`) }
+    },
     status(surface) {
       const said = read[surface]
       // a flag says whether the tag still stands: false once a person has read every string there

@@ -5,7 +5,7 @@
  */
 import indexRaw from './data/best-of.json?raw'
 import { TOPIC_TEXTS } from './data/best-of-texts'
-import { catalogPage, figure, isOne, sayMaybe, sideAs } from '../../content'
+import { catalogPage, figure, isOne, sayMaybe, sayProvenance, sideAs } from '../../content'
 import type { ManifestEntry, ManifestIndex } from '../../../manifest'
 import { assetAddress, assetPyramidBase } from '../../../stack/materials'
 import type { DeepPlateSource } from '../../vitrine/deep-plate'
@@ -150,10 +150,17 @@ export const topicOfPage = (id: string): BestOfTopic | undefined => bestOfTopic(
 export const said = (words: BestOfWords | null | undefined, lang: BestOfLang): string => (words ? sayMaybe(words.en ?? undefined, words.de ?? undefined, lang) : undefined) ?? ''
 
 /** A passage's or a lead's words in the page's language: English and German
- * their own record; a catalog page reads it field by field. */
+ * their own record; a catalog page reads it field by field, and its source
+ * from the catalog: an old edition's own credit, or the museum's translation
+ * under the label's words. Where the catalog does not say, the English stands
+ * with its own kind. */
 export const textOf = (both: { en?: BestOfText | null; de?: BestOfText | null }, lang: BestOfLang): BestOfText | null | undefined => {
   const own = both[lang]
-  return own && catalogPage() && both.en ? sideAs({ en: both.en, de: both.de ?? null }, lang) as BestOfText : own
+  if (!own || !catalogPage() || !both.en) return own
+  const shown = sideAs({ en: both.en, de: both.de ?? null }, lang) as BestOfText
+  const source = sayProvenance(both.en.text, both.de?.text)
+  if (!source) return { ...shown, kind: both.en.kind }
+  return { ...shown, kind: source.kind === 'edition' ? 'printed' : 'ours', label: source.label ?? shown.label, rest: source.rest ?? shown.rest }
 }
 
 const loaded = new Map<string, Promise<Record<string, BestOfPageTexts>>>()

@@ -3,7 +3,7 @@
    own lang attribute picks. Displayed text follows the house writing
    rules: no em or en dashes, no semicolons, short sentences. */
 
-import type { Catalog, TagSurface } from './lang-catalog'
+import type { Catalog, Provenance, TagSurface } from './lang-catalog'
 
 export type Lang = 'en' | 'de'
 
@@ -230,6 +230,10 @@ export const sayIfKnown = (s: Bilingual): string | undefined => (catalogPage() ?
 
 /** A word a catalog files under its own name (`lang.tag`); none on an English or German page. */
 export const sayNamed = (key: string): string | undefined => catalog?.named(key)
+
+/** Where a passage of his words comes from on a catalog page; nothing where the catalog does not say. */
+export const sayProvenance = (en: string, de: string | null | undefined): Provenance | undefined =>
+  catalogPage() ? catalog?.provenance(en, de ?? '') : undefined
 
 /** Whether a surface still owes its reader the line that no person has read
     its words yet: on a catalog page until the surface is read by a person. */
