@@ -11,6 +11,7 @@
  * every control are the caller's, already in the page's language.
  */
 import { setRegister } from '../frame'
+import { sayAs } from '../content'
 import { deskAny, deskOn } from '../desk-switches'
 import { createCloseLookBand, type CloseLookBand } from '../desk-closelook'
 import { noteOpened } from '../visit'
@@ -849,7 +850,7 @@ export function createVitrine(options: {
     if (lookMore.parentElement !== controls) controls.prepend(lookMore)
     if (lookLess.parentElement !== controls || lookLess.previousElementSibling !== lookMore) lookMore.after(lookLess)
     lookMoreWord.textContent = frame.more
-    lookLessWord.textContent = FOLD_SAYS[options.lang()]
+    lookLessWord.textContent = sayAs(FOLD_SAYS, options.lang())
     lookArrowPath.setAttribute('d', UP)
     lessArrowPath.setAttribute('d', DOWN)
     lookMore.setAttribute('aria-expanded', 'false')
@@ -1087,7 +1088,7 @@ export function createVitrine(options: {
   function nameTheGrabber(): void {
     const words = exhibit?.payload?.raiseWords
     // opened, the grab folds the window and says so, as the sideways key does
-    const fold = FOLD_SAYS[options.lang()]
+    const fold = sayAs(FOLD_SAYS, options.lang())
     grab.setAttribute('aria-label', words ? (raised ? words.down : words.up) : raised ? fold : options.raiseLabel?.() ?? '')
     grabSays.textContent = raised ? fold : ''
     // drawn beside the name, the key says the host's one short word on every kind: a payload's longer name would run into the name

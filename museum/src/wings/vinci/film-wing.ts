@@ -49,9 +49,11 @@ import { createTurnLine, TURN_LINE_CSS } from './turn-line'
 import { countArrival, countStop } from '../../core/museum-count'
 import { FILM_RELEASE } from '../film-release'
 
-const text = (value: VinciText): string => value[lang()]
+const text = (value: VinciText): string => say(value)
 /** the rail's way into the sources window */
 const SOURCES_WORD = { en: 'Sources', de: 'Quellen' }
+/** the fold over a record's full sentences */
+const FULL_RECORD = { en: 'Full record', de: 'Vollständiger Nachweis' }
 const make = <K extends keyof HTMLElementTagNameMap>(tag: K, cls: string, value?: string): HTMLElementTagNameMap[K] => {
   const node = document.createElement(tag)
   node.className = cls
@@ -725,7 +727,7 @@ export function createWing(): WingModule {
   function fold(host: HTMLElement, full: HTMLElement): void {
     const details = make('details', 'vinci-record-fold')
     const summary = document.createElement('summary')
-    summary.textContent = lang() === 'de' ? 'Vollständiger Nachweis' : 'Full record'
+    summary.textContent = say(FULL_RECORD)
     details.append(summary, full)
     host.append(details)
   }

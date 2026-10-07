@@ -17,6 +17,7 @@ import { deskMark } from './desk-chrome'
 import { deskControl } from './desk-story'
 import { setCloseLookBand } from './desk-stage'
 import { setRegister } from './frame'
+import { langTag, sayAs } from './content'
 import { LOBBY_TEXT } from '../content/lobby'
 import type { VinciCertainty, VinciText } from './vinci/content'
 import type { VitrinePlace } from './vitrine/types'
@@ -141,7 +142,7 @@ export function createCloseLookBand(options: {
   /** the band's height changed, so the window lays its payload out again */
   resized(): void
 }): CloseLookBand {
-  const say = (value: VinciText): string => value[options.lang()]
+  const say = (value: VinciText): string => sayAs(value, options.lang())
 
   const root = make('div', 'desk-clb')
   const stepBack = make('button', 'desk-clb-step')
@@ -297,7 +298,7 @@ export function createCloseLookBand(options: {
       // reader asked to read, and the next side's words take the same place
       const keep = next.id === view?.id && !drawer.hidden
       view = next
-      root.lang = language
+      root.lang = langTag(language)
       stepBack.textContent = ''
       stepBack.append(icon(STEP_BACK), document.createTextNode(next.room))
       nameRow.textContent = ''
@@ -306,7 +307,7 @@ export function createCloseLookBand(options: {
       nameRow.dataset['catalogue'] = String(Boolean(entry))
       numeral.textContent = entry?.number ?? ''
       title.textContent = next.title
-      title.lang = language
+      title.lang = langTag(language)
       // a page by topic names its folio where a catalogue names a date
       const date = entry?.date ?? next.set?.seat ?? ''
       clock.textContent = date
@@ -326,10 +327,10 @@ export function createCloseLookBand(options: {
       })
       line.textContent = next.line ?? ''
       line.hidden = !next.line
-      line.lang = language
+      line.lang = langTag(language)
       note.textContent = next.note ?? ''
       note.hidden = !next.note
-      note.lang = language
+      note.lang = langTag(language)
       // THE MODULE'S OWN SENTENCES GO BEHIND ONE WORD. At rest the band says
       // the name and the line; everything the module wrote about the work is
       // one press away, which is what keeps the label a label.
@@ -339,7 +340,7 @@ export function createCloseLookBand(options: {
       if (held) root.dataset['drawer'] = 'open'
       else delete root.dataset['drawer']
       drawer.setAttribute('aria-label', next.title)
-      drawer.lang = language
+      drawer.lang = langTag(language)
       paintMore()
       more.setAttribute('aria-disabled', String(!drawerWords.childElementCount))
       foot.textContent = ''

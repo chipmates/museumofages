@@ -1,13 +1,17 @@
 /* THE LICENCE A VISITOR READS. The store keeps each source's licence by its
    raw English name; a public-domain line reads in the page's language, and a
-   Creative Commons licence keeps its own name. It imports nothing and is
-   imported only by the display sites, so a word here moves no film key. */
+   Creative Commons licence keeps its own name. It imports only the page's
+   words and is imported only by the display sites, so a word here moves no
+   film key. */
+import { sayAs } from '../content'
+
 const SHOWN: Readonly<Record<string, { readonly en: string; readonly de: string }>> = {
   'Public domain': { en: 'Public domain', de: 'Gemeinfrei' },
 }
 
 export function shownLicence(raw: string, language: 'en' | 'de'): string {
-  return SHOWN[raw.trim()]?.[language] ?? raw
+  const shown = SHOWN[raw.trim()]
+  return shown ? sayAs(shown, language) : raw
 }
 
 /** every licence line a record shows, in the page's language */

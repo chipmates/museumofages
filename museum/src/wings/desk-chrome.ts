@@ -15,6 +15,7 @@ import { deskOn } from './desk-switches'
 import { setDeskBand } from './desk-stage'
 import { deskControl, deskCutBetween, deskStoryStop } from './desk-story'
 import { setRegister } from './frame'
+import { sayAs } from './content'
 import { LOBBY_TEXT } from '../content/lobby'
 import type { VinciCertainty, VinciText } from './vinci/content'
 import { lobbyWord } from './vinci/ending-talk'
@@ -212,7 +213,7 @@ export function createDeskChrome(host: DeskChromeHost): DeskChrome {
      the stage is the window less that height, and nothing of the museum ever
      stands on the picture. */
   const stage = deskOn('stage')
-  const say = (value: VinciText): string => value[host.lang()]
+  const say = (value: VinciText): string => sayAs(value, host.lang())
 
   const band = make('div', 'desk-low')
   band.dataset['words'] = String(words)

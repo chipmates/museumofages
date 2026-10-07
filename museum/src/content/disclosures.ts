@@ -10,6 +10,8 @@
    Displayed text follows the house writing rules: no em or en dashes, no
    semicolons, short sentences. */
 
+import { sayAs } from '../wings/content'
+
 export type DisclosureKey = 'stone' | 'ink'
 
 export interface DisclosureLine {
@@ -39,5 +41,5 @@ export const DISCLOSURE_KEYS = Object.keys(DISCLOSURES) as DisclosureKey[]
 
 /** what the canon says in the language the page is set in */
 export function disclosure(key: DisclosureKey, lang: 'en' | 'de' = 'en'): string {
-  return DISCLOSURES[key][lang]
+  return sayAs(DISCLOSURES[key], lang)
 }

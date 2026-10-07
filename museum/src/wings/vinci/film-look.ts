@@ -5,7 +5,7 @@
 
 import type { PerspectiveCamera, Scene } from 'three/webgpu'
 import type { Stack } from '../../stack'
-import { lang } from '../content'
+import { figure, filled, lang, pairOf, say, sayAs, sayEnglish, sayMaybe } from '../content'
 import { vinciCertaintyWords, type VinciCertainty, type VinciText } from './content'
 import { getWork, findEvidencePlates, findPlateEntries } from './pictures/register'
 import { createPictureRecord, createWindowWorkLabel, policyLabelText, PICTURE_CERTAINTY_KEY } from './pictures/policy-label'
@@ -14,7 +14,7 @@ import { validatePaintingRecord } from './pictures/policy'
 import { machineCatalog, type MachineSlug } from './machines/catalog'
 import { createVinciCloseLook, createVinciMachinePayload, createVinciShowpiecePayload, fillVinciLimitSlots, renderVinciShowpieceRecord, vinciDeathbedCard,
   vinciLine, vinciLimits, vinciMachineCard, vinciMachineClockWords, vinciMachineSheet, vinciMachineSteps, vinciManuscriptWords, vinciPlaceCard,
-  vinciFolioLabel, vinciPlaceTitle, vinciRoomName, vinciSheetRecords, vinciSheetSides, vinciShowpiece, vinciWorkTitle,
+  vinciFolioLabel, vinciMachineWordsInPlace, vinciPlaceTitle, vinciRoomName, vinciSheetRecords, vinciSheetSides, vinciShowpiece, vinciWorkTitle,
   VINCI_EXHIBIT_CARD, VINCI_PAGE_HONESTY, VINCI_VITRINE_WORDS, type VinciPlaceCertainty, type VinciPlaceId, type VinciShowpiece } from './collection/close-look'
 import { createVinciPaintingView, vinciPlateWords } from './collection/deep-plate'
 import { hangCatalogue } from './collection/catalogue'
@@ -106,7 +106,7 @@ export interface FilmLookHost {
   cinema?(): VitrineCinema | null
 }
 
-const text = (value: VinciText): string => value[lang()]
+const text = (value: VinciText): string => say(value)
 const make = <K extends keyof HTMLElementTagNameMap>(tag: K, cls: string, value?: string): HTMLElementTagNameMap[K] => {
   const node = document.createElement(tag)
   node.className = cls
@@ -214,7 +214,7 @@ export function createFilmLook(h: FilmLookHost) {
       const [, workId, face] = id.split('/') as [string, string, 'front' | 'reverse']
       try { return text(vinciWorkTitle(getWork(workId), face)) } catch { return '' }
     }
-    if (id.startsWith('machine/')) return machineCatalog[id.slice('machine/'.length) as MachineSlug]?.title[lang()] ?? ''
+    if (id.startsWith('machine/')) { const machine = machineCatalog[id.slice('machine/'.length) as MachineSlug]; return machine ? say(machine.title) : '' }
     if (id.startsWith('sheet/')) return assets ? vinciSheetRecords(id, assets)?.title ?? '' : ''
     if (id === VINCI_STUDY_LEAF) return text(STUDY_SHEET_WORDS.title)
     return ''
@@ -299,7 +299,7 @@ export function createFilmLook(h: FilmLookHost) {
     }
     if (kind === 'machine') {
       const slug = id.slice('machine/'.length) as MachineSlug
-      const title = machineCatalog[slug].title[lang()]
+      const title = say(machineCatalog[slug].title)
       const words = vinciMachineCard(slug, h.narrow(), { word: text(vinciCertaintyWords.reconstructed), colour: PICTURE_CERTAINTY_KEY[2]!.colour })
       const record = (): void => h.openRecord(id, machineCatalog[slug].title, 'reconstructed', host => host.append(make('p', 'vinci-statement', text(machineCatalog[slug].label))))
       // the door beside the model opens the sheet itself wherever the wing holds its picture
@@ -311,6 +311,7 @@ export function createFilmLook(h: FilmLookHost) {
       const live = choice.mode === 'live' || !filmed
         ? await Promise.all([import('./machines'), import('./print')]) : null
       let island: TurntablePayload | null = null
+      vinciMachineWordsInPlace(slug)
       const makeLive = () => {
         const [{ buildMachine }, { PRINT, STATION_EXPOSURE, STATION_TOE, KEY_RIG }] = live!
         const at = h.station() as keyof typeof STATION_EXPOSURE
@@ -354,13 +355,13 @@ export function createFilmLook(h: FilmLookHost) {
         holder: (plate as { holder_url?: string } | undefined)?.holder_url, source: plate?.source_url }) : vinciPlaceCard(id as VinciPlaceId, placeCertainty)
     // the light model's card and record read its own words, which the bench's file cannot carry
     if (id === 'grave-diagram') {
-      for (const line of place.card[0]?.querySelectorAll('p') ?? []) line.textContent = GRAVE_LIGHT[lang()]
+      for (const line of place.card[0]?.querySelectorAll('p') ?? []) line.textContent = say(GRAVE_LIGHT)
       const record = place.record
       place.record = host => {
         record(host)
         // the record closes on the card's own line, in the visitor's language
         for (const line of [...host.querySelectorAll<HTMLElement>('.vinci-record > p[lang]')].slice(-1)) {
-          line.textContent = GRAVE_LIGHT[line.lang === 'de' ? 'de' : 'en']
+          line.textContent = sayAs(GRAVE_LIGHT, line.lang === 'de' ? 'de' : 'en')
         }
       }
     }
@@ -429,7 +430,7 @@ export function createFilmLook(h: FilmLookHost) {
   function machineSheet(slug: MachineSlug): MachineSheet | null {
     if (!assets) return null
     const language = lang()
-    const title = machineCatalog[slug].title[language]
+    const title = sayAs(machineCatalog[slug].title, language)
     const plate = machinePlate(slug)
     if (plate) {
       const stem = plate.file.replace(/^.*\//, '').replace(/\.[a-z]+$/, '')
@@ -437,7 +438,7 @@ export function createFilmLook(h: FilmLookHost) {
       if (!near) return null
       const scan = near as typeof near & { width?: number; height?: number; licence?: string }
       const thumb = assets.byId.get(`vinci/ms-thumb/${stem}`)
-      const shows = language === 'de' ? plate.what_it_shows_de : plate.what_it_shows_en
+      const shows = sayAs({ en: plate.what_it_shows_en, de: plate.what_it_shows_de }, language)
       return { title, name: machineCatalog[slug].title, shows, window: null, thumb: thumb ? assetAddress(thumb) : null, mirror: null, credit: null,
         source: vinciLeafSource(assets, plate.file, { file: assetAddress(near), width: scan.width ?? 0, height: scan.height ?? 0 }),
         record: [shows, scan.licence ?? ''] }
@@ -445,21 +446,21 @@ export function createFilmLook(h: FilmLookHost) {
     const page = bestOfPage(SHEET_PAGE[slug] ?? '')
     const found = page ? bestOfSource(page, assets) : null
     if (page && found) {
-      const credit = (language === 'de' ? found.record.honesty_de : found.record.honesty_en) ?? found.record.licence
-      const name = page.name?.[language] ?? page.seat[language]
-      return { title: name, name: page.name ?? page.seat, shows: page.caption?.[language] ?? '', source: found.source, window: page.leaf, thumb: found.thumb,
+      const credit = sayMaybe(found.record.honesty_en, found.record.honesty_de, language) ?? found.record.licence
+      const name = sayAs(page.name ?? page.seat, language)
+      return { title: name, name: page.name ?? page.seat, shows: page.caption ? sayAs(page.caption, language) : '', source: found.source, window: page.leaf, thumb: found.thumb,
         // a copy in another hand has no mirror, and a scan its holder lets nobody alter is never turned
         mirror: page.hand === 'his' && page.mirror === 'own'
-          ? (page.direction === 'ordinary' ? bestOfKey('mirror_ordinary', language) : null) ?? MIRROR_EXPLANATION[language].documented : null,
+          ? (page.direction === 'ordinary' ? bestOfKey('mirror_ordinary', language) : null) ?? sayAs(pairOf(MIRROR_EXPLANATION, side => side.documented), language) : null,
         credit,
-        record: [page.name ? `${name} · ${page.seat[language]}` : name, (language === 'de' ? found.record.honesty_de : found.record.honesty_en) ?? page.credit, found.record.licence] }
+        record: [page.name ? `${name} · ${sayAs(page.seat, language)}` : name, sayMaybe(found.record.honesty_en, found.record.honesty_de, language) ?? page.credit, found.record.licence] }
     }
     const scan = bestOfRecord(assets, SHEET_SCAN[slug] ?? '')
     if (scan?.role === 'codex-page' && scan.width && scan.height) {
-      const credit = (language === 'de' ? scan.honesty_de : scan.honesty_en) ?? scan.licence
+      const credit = sayMaybe(scan.honesty_en, scan.honesty_de, language) ?? scan.licence
       return { title, name: machineCatalog[slug].title, shows: '', source: { pyramid: null, file: assetAddress(scan), width: scan.width, height: scan.height }, window: null, thumb: null,
-        mirror: MIRROR_EXPLANATION[language].documented, credit,
-        record: [...machineCatalog[slug].folio.map(folio => `${folio.codex} ${folio.folio} · ${folio.holder} · ${folio.catalogue_reference}`), credit] }
+        mirror: sayAs(pairOf(MIRROR_EXPLANATION, side => side.documented), language), credit,
+        record: [...machineCatalog[slug].folio.map(folio => `${sayEnglish(folio.codex)} ${folio.folio} · ${folio.holder} · ${folio.catalogue_reference}`), credit] }
     }
     return null
   }
@@ -520,7 +521,7 @@ export function createFilmLook(h: FilmLookHost) {
       stripLabel: h.room, holder: '', honesty: text(VINCI_PAGE_HONESTY) }),
       start: 'study-sheet', words: vinciManuscriptWords(), tier: () => 'standard' })
     const record = (): void => h.openRecord(door, STUDY_SHEET_WORDS.title, 'documented', host => {
-      for (const line of [text(STUDY_SHEET_WORDS.shows), (lang() === 'de' ? sheet.page.honesty_de : sheet.page.honesty_en) ?? ''])
+      for (const line of [text(STUDY_SHEET_WORDS.shows), sayMaybe(sheet.page.honesty_en, sheet.page.honesty_de, lang()) ?? ''])
         if (line) host.append(make('p', 'vinci-statement', line))
     })
     // the line under the sheet is the card's own (the side names no head, so it stays)
@@ -572,7 +573,7 @@ export function createFilmLook(h: FilmLookHost) {
       h.openRecord(door, { en: at.title, de: at.title }, 'documented', host => {
         const block = make('div', 'vinci-record')
         block.dataset['register'] = 'record'
-        for (const line of [lang() === 'de' ? at.page.honesty_de : at.page.honesty_en, at.page.licence]) block.append(make('p', 'vinci-statement', line))
+        for (const line of [say({ en: at.page.honesty_en, de: at.page.honesty_de }), at.page.licence]) block.append(make('p', 'vinci-statement', line))
         host.append(block)
       })
     }
@@ -595,7 +596,7 @@ export function createFilmLook(h: FilmLookHost) {
       stripLabel: h.room, holder: '', honesty: text(VINCI_PAGE_HONESTY) }),
       start: id, words: vinciManuscriptWords(), tier: () => 'standard' })
     const record = (): void => h.openRecord(door, { en: sheet.title, de: sheet.title }, 'documented', host => {
-      for (const line of [lang() === 'de' ? sheet.page.honesty_de : sheet.page.honesty_en, sheet.page.licence]) host.append(make('p', 'vinci-statement', line))
+      for (const line of [say({ en: sheet.page.honesty_en, de: sheet.page.honesty_de }), sheet.page.licence]) host.append(make('p', 'vinci-statement', line))
     })
     // THE WAY BACK TO THE FILM is the look's own way back: the band's arrow on
     // the desktop, the card row's first seat on the phone
@@ -695,10 +696,10 @@ export function createFilmLook(h: FilmLookHost) {
     const plate = (() => { const leaf = screwLeaf(); const stem = leaf?.file.replace(/^.*\//, '').replace(/\.[a-z]+$/, ''); const entry = stem ? assets?.byId.get(`vinci/ms-thumb/${stem}`) : undefined; return entry ? assetAddress(entry) : null })()
     return {
       name: { en: SHELF_UI.en.shelf, de: SHELF_UI.de.shelf },
-      measure: { en: measure.en.replace('{n}', pages), de: measure.de.replace('{n}', pages) },
+      measure: filled(measure, { n: figure(Number(pages), pages) }),
       columns: 6,
-      absent: { heading: TABLE_UI[language].absent, items: shownAbsences(language).map(absence => ({ title: absence.title, reason: absence.reason })) },
-      books: { heading: TABLE_UI[language].codices, items: SHELF_BOOKS.map(book => ({ id: book.entry ? book.id : EDITION_WHOLE,
+      absent: { heading: sayAs(pairOf(TABLE_UI, ui => ui.absent), language), items: shownAbsences(language).map(absence => ({ title: absence.title, reason: absence.reason })) },
+      books: { heading: sayAs(pairOf(TABLE_UI, ui => ui.codices), language), items: SHELF_BOOKS.map(book => ({ id: book.entry ? book.id : EDITION_WHOLE,
         title: text(book.official), preview: book.entry ? shelfPlate(book.entry) : plate })) },
     }
   }

@@ -10,7 +10,7 @@ import { createVitrine, type Vitrine, type VitrineCinema, type VitrineExhibit, t
 import { createTurntablePayload, type TurntableEye, type TurntableOptions, type TurntablePayload, type TurntableViewpoint } from '../../vitrine/turntable'
 import type { ReaderSide, ReaderWords } from '../../vitrine/reader'
 import { MIRROR_EXPLANATION } from '../table/content'
-import { lang, say } from '../../content'
+import { catalogPage, fill, figure, lang, langTag, pairOf, say, sayAs, sayEnglish } from '../../content'
 import { FURTHER, NEARER } from './deep-plate'
 import type { Grade, Stack } from '../../../stack'
 import { assetAddress } from '../../../stack/materials'
@@ -35,7 +35,7 @@ import { createShowpiecePayload, type ShowpieceCut, type ShowpieceExtent, type S
 import type { FolioSheet } from '../../vitrine/folio'
 import type { ManifestEntry, ManifestIndex } from '../../../manifest'
 import { validateSheetRecord, type SheetManifestEntry } from '../pictures/sheet-record'
-import { vinciSheetTitle } from './strip'
+import { vinciSheetName } from './strip'
 import { uiSure } from '../../ui-sure'
 
 export type VinciCloseLook = Vitrine
@@ -61,8 +61,8 @@ export function createVinciCloseLook(options: {
   // The window owns no words: the mark that dismisses it and the grabber
   // that raises its card take the wing's own, in the page's language.
   return createVitrine({ ...options, id: VINCI_EXHIBIT_CARD, lang,
-    closeLabel: () => VINCI_VITRINE_WORDS.close[lang()],
-    raiseLabel: () => CONTROLS.shared.more[lang()] })
+    closeLabel: () => say(VINCI_VITRINE_WORDS.close),
+    raiseLabel: () => say(CONTROLS.shared.more) })
 }
 
 type Words = { en: string; de: string }
@@ -84,12 +84,13 @@ export const VINCI_PAGE_HONESTY: Words = CARDS.honesty_variants.page
 export function vinciManuscriptWords(): ReaderWords & { hand: string; mirror: string; print: string
   backToLeaf: string; leaves: string; moreLeaf: string } {
   const language = lang(), words = CARDS.controls.manuscript
-  return { hand: words.hand[language], mirror: words.mirror[language], print: words.print[language],
-    backToLeaf: words.back_to_leaf[language], place: words.place[language], leaves: words.leaves[language],
-    moreLeaf: words.more_leaf[language], whole: CARDS.controls.machine.viewpoints[0]![language],
-    nearer: NEARER[language], further: FURTHER[language], ceiling: CARDS.zoom_ceiling_scan[language],
-    previous: CARDS.controls.date.previous[language], next: CARDS.controls.date.next[language],
-    more: CONTROLS.shared.more[language], moreLabel: words.more_leaf[language], back: words.back_to_leaf[language] }
+  const said = (pair: Words): string => sayAs(pair, language)
+  return { hand: said(words.hand), mirror: said(words.mirror), print: said(words.print),
+    backToLeaf: said(words.back_to_leaf), place: said(words.place), leaves: said(words.leaves),
+    moreLeaf: said(words.more_leaf), whole: said(CARDS.controls.machine.viewpoints[0]!),
+    nearer: said(NEARER), further: said(FURTHER), ceiling: said(CARDS.zoom_ceiling_scan),
+    previous: said(CARDS.controls.date.previous), next: said(CARDS.controls.date.next),
+    more: said(CONTROLS.shared.more), moreLabel: said(words.more_leaf), back: said(words.back_to_leaf) }
 }
 const CONTROLS = (JSON.parse(cardsRaw) as { controls: {
   shared: { back: Words; record: Words; more: Words }
@@ -112,7 +113,7 @@ const SIZES = (JSON.parse(sizesRaw) as { sizes: Record<string, Words> }).sizes
  * adds or refuses, in the page's language: the record's two slots. */
 export function vinciLimits(id: string): { limit: string | null; visualNote: string | null } {
   const slots = LIMITS[id]
-  return { limit: slots?.limit?.[lang()] ?? null, visualNote: slots?.visual_note?.[lang()] ?? null }
+  return { limit: slots?.limit ? say(slots.limit) : null, visualNote: slots?.visual_note ? say(slots.visual_note) : null }
 }
 
 /** The record's two slots, filled where the text seat wrote them. */
@@ -149,7 +150,7 @@ const ROOM_SHORT = (JSON.parse(cardsRaw) as { station_short_names?: Record<strin
 /** THE ROOM A CLOSE LOOK'S ONE STEP BACK NAMES: its short name, where the
  * card data gives one, since the full name is a chapter title. */
 export function vinciRoomName(station: string, full: Words): string {
-  return (ROOM_SHORT[station] ?? full)[lang()]
+  return say(ROOM_SHORT[station] ?? full)
 }
 
 /** A work's own name by its face: the register names a reverse as its own. */
@@ -165,12 +166,12 @@ export function vinciWorkTitle(work: { title_en: string; title_de: string; rever
 export function vinciSheetSides(sheets: readonly { id: string; page: ManifestEntry; thumb: ManifestEntry }[], colour: string): ReaderSide[] {
   const words = vinciManuscriptWords()
   const ways = [{ id: 'hand', label: words.hand },
-    { id: 'mirror', label: words.mirror, mirrored: true, line: MIRROR_EXPLANATION[lang()].documented }]
+    { id: 'mirror', label: words.mirror, mirrored: true, line: say(pairOf(MIRROR_EXPLANATION, side => side.documented)) }]
   return sheets.map(sheet => {
     const page = validateSheetRecord(sheet.page, 'sheet-page')
     const thumb = validateSheetRecord(sheet.thumb, 'sheet-thumb')
     const holder = (sheet.page as ManifestEntry & { holder?: string }).holder ?? ''
-    return { id: sheet.id, label: vinciSheetTitle(lang() === 'de' ? page.entry.honesty_de : page.entry.honesty_en), shows: '',
+    return { id: sheet.id, label: vinciSheetName(page.entry), shows: '',
       head: vinciLine(`sheet/${sheet.id}`),
       source: { pyramid: null, file: assetAddress(page.entry), width: page.pixels.width, height: page.pixels.height },
       thumb: assetAddress(thumb.entry), ways, colour, holder }
@@ -268,8 +269,15 @@ const uncited = (text: string): string => text.replace(/\s*\[\d+(?:\s*,\s*\d+)*\
 function folioName(slug: MachineSlug): string {
   return machineCatalog[slug].folio.map(f => `${f.codex} ${lang() === 'de' ? 'Blatt' : 'f.'} ${f.folio}`).join(', ')
 }
-/** A sheet's name as the German view says the codices elsewhere: the dossiers name them in English. */
+/** a sheet's place in its codex, in the page's order of the two */
+const FOLIO_PLACE: Words = { en: '{0} f. {1}', de: '{0} Blatt {1}' }
+/** A sheet's name as the German view says the codices elsewhere: the dossiers name them in English. A
+ * catalog page reads the English name `folioName` made and says each codex and its sheet in its own words. */
 export function vinciFolioLabel(label: string): string {
+  if (catalogPage()) return label.split(', ').map(name => {
+    const place = /^(.+?) f\. (.+)$/.exec(name)
+    return place ? fill(say(FOLIO_PLACE), [sayEnglish(place[1]!), place[2]!]) : sayEnglish(name)
+  }).join(', ')
   return lang() === 'de'
     ? label.split(', ').map(name => name.replace(/^Paris Manuscript /, 'Pariser Manuskript ').replace(/^Manuscript /, 'Manuskript ')).join(', ')
     : label
@@ -285,9 +293,9 @@ export function vinciMachineCard(slug: MachineSlug, narrow: boolean, certainty: 
   description.id = `vitrine-description-${slug}`
   setRegister(description, 'drawer')
   const at = record.sections.en.findIndex(section => section.title === 'The mechanism')
-  const mechanism = at < 0 ? null : record.sections[language][at]
-  const label = make('p', '', record.label[language])
-  if (mechanism) description.append(make('p', '', uncited(mechanism.body)))
+  const mechanism = at < 0 ? null : sayAs({ en: record.sections.en[at]!.body, de: record.sections.de[at]!.body }, language)
+  const label = make('p', '', sayAs(record.label, language))
+  if (mechanism) description.append(make('p', '', uncited(mechanism)))
   // The flight quotation is read under the parachute since the court's
   // plaque stop left the walk: its words stay in the never-said record.
   if (slug === 'parachute') {
@@ -296,9 +304,9 @@ export function vinciMachineCard(slug: MachineSlug, narrow: boolean, certainty: 
     quote.lang = 'en'
     // the source line names the year itself, so it is not said twice here
     description.append(
-      make('p', '', language === 'de' ? plate.title_de : plate.title_en), quote,
-      make('p', '', language === 'de' ? plate.line_de : plate.line_en),
-      make('p', 'vitrine-meta', language === 'de' ? plate.where_de : plate.where_en))
+      make('p', '', sayAs({ en: plate.title_en, de: plate.title_de }, language)), quote,
+      make('p', '', sayAs({ en: plate.line_en, de: plate.line_de }, language)),
+      make('p', 'vitrine-meta', sayAs({ en: plate.where_en, de: plate.where_de }, language)))
   }
   const card: HTMLElement[] = narrow ? [] : [label]
   // TWO TO FOUR SENTENCES ON A CARD. The mechanism is one deliberate control
@@ -313,7 +321,7 @@ export function vinciMachineCard(slug: MachineSlug, narrow: boolean, certainty: 
   }
   if (description.childElementCount) {
     description.hidden = true
-    const more = make('button', 'vitrine-more', VINCI_VITRINE_WORDS.more[language])
+    const more = make('button', 'vitrine-more', sayAs(VINCI_VITRINE_WORDS.more, language))
     more.type = 'button'
     more.setAttribute('aria-expanded', 'false')
     more.setAttribute('aria-controls', description.id)
@@ -333,18 +341,20 @@ function machineAfter(slug: MachineSlug, certainty: { word: string; colour: stri
   const word = make('p', 'vitrine-certainty', certainty.word)
   word.style.setProperty('--certainty', uiSure(certainty.colour))
   after.push(word)
-  const said = SIZES[slug]?.[language]
-  after.push(make('p', 'vitrine-meta', said ?? machineEnvelope(slug, language)))
+  const size = SIZES[slug]
+  after.push(make('p', 'vitrine-meta', size ? sayAs(size, language) : machineEnvelope(slug, language)))
   const absence = BENCH_ABSENCE[slug]
-  if (absence) after.push(make('p', 'vitrine-meta', absence[language]))
+  if (absence) after.push(make('p', 'vitrine-meta', sayAs(absence, language)))
   return after
 }
 
+/** the envelope's three numerals and its unit, in the page's order */
+const ENVELOPE: Words = { en: '{0} × {1} × {2} m', de: '{0} × {1} × {2} m' }
 /** The envelope's three numerals, in the page's own separator. */
 function machineEnvelope(slug: MachineSlug, language: 'en' | 'de'): string {
   const { x, y, z } = dossiers[slug].scale_m
-  const metres = (value: number): string => language === 'de' ? String(value).replace('.', ',') : String(value)
-  return `${metres(x)} × ${metres(y)} × ${metres(z)} m`
+  const metres = (value: number): string => figure(value, language === 'de' ? String(value).replace('.', ',') : String(value))
+  return fill(sayAs(ENVELOPE, language), [metres(x), metres(y), metres(z)])
 }
 
 /** THE RECORD behind "Where it comes from": the folio, the sections, the
@@ -355,8 +365,12 @@ export function renderVinciMachineRecord(slug: MachineSlug, host: HTMLElement): 
   const full = make('div', 'vinci-record')
   setRegister(full, 'record')
   for (const folio of record.folio) full.append(make('p', 'vinci-statement', `${folio.codex} ${folio.folio} · ${folio.holder} · ${folio.catalogue_reference}`))
-  for (const section of record.sections[language]) full.append(make('h3', '', section.title), make('p', 'vinci-statement', section.body))
-  full.append(make('pre', 'vinci-arithmetic', record.arithmetic[language]))
+  record.sections.en.forEach((section, i) => {
+    const other = record.sections.de[i]
+    full.append(make('h3', '', sayAs({ en: section.title, de: other?.title ?? '' }, language)),
+      make('p', 'vinci-statement', sayAs({ en: section.body, de: other?.body ?? '' }, language)))
+  })
+  full.append(make('pre', 'vinci-arithmetic', sayAs(record.arithmetic, language)))
   full.append(make('p', 'vinci-statement', machineEnvelope(slug, language)))
   for (const gap of record.gaps) full.append(make('p', 'vinci-statement', gap))
   for (const slot of ['limit', 'visual_note']) {
@@ -377,19 +391,36 @@ export function vinciMachineSheet(slug: MachineSlug, open: () => void): { src: P
     src: thumb ? loadManifest().then(index => { const entry = index.byId.get(thumb); return entry?.display ? assetAddress(entry) : null }) : null,
     label: folioName(slug),
     // a machine no sheet of his survives for (the lion): the door opens its record, and says so
-    name: VINCI_VITRINE_WORDS.provenance[lang()],
+    name: say(VINCI_VITRINE_WORDS.provenance),
     open,
   }
 }
 
 /** The machine's steps and the words of its clock, in the page's language. */
 export function vinciMachineSteps(slug: MachineSlug): { text: string; certainty: string }[] {
-  return (STEPS[slug] ?? []).map(step => ({ text: step[lang()], certainty: step.certainty }))
+  return (STEPS[slug] ?? []).map(step => ({ text: say(step), certainty: step.certainty }))
 }
 export function vinciMachineClockWords(): { play: string; pause: string; again: string; clock: string } {
   const language = lang()
-  return { play: VINCI_VITRINE_WORDS.play[language], pause: VINCI_VITRINE_WORDS.pause[language],
-    again: VINCI_VITRINE_WORDS.again[language], clock: CONTROLS.machine.clock[language] }
+  return { play: sayAs(VINCI_VITRINE_WORDS.play, language), pause: sayAs(VINCI_VITRINE_WORDS.pause, language),
+    again: sayAs(VINCI_VITRINE_WORDS.again, language), clock: sayAs(CONTROLS.machine.clock, language) }
+}
+
+/** THE LIVE ISLAND'S WORDS ON A CATALOG PAGE. The payload below picks its
+ * words by `lang()`, and every machine's cycle key reads its code, so a
+ * catalog language puts its words into the data the payload reads, once,
+ * before the island is made: each pair's English becomes the page's word.
+ * English and German pages return at once. */
+const wordsInPlace = new Set<string>()
+export function vinciMachineWordsInPlace(slug: MachineSlug): void {
+  if (!catalogPage() || wordsInPlace.has(slug)) return
+  const swap = (pair: Words | undefined): void => { if (pair) pair.en = say(pair) }
+  if (!wordsInPlace.size) for (const pair of [...CONTROLS.machine.viewpoints, CONTROLS.machine.play, CONTROLS.machine.pause, CONTROLS.machine.clock, VINCI_VITRINE_WORDS.again]) swap(pair)
+  wordsInPlace.add(slug)
+  for (const pair of Object.values(CONTROLS.machine.viewpoint_labels?.[slug] ?? {})) swap(pair)
+  swap(machineCatalog[slug].title)
+  for (const step of STEPS[slug] ?? []) swap(step)
+  for (const part of Object.values(PARTS[slug] ?? {})) swap(part)
 }
 
 export function createVinciMachinePayload(options: {
@@ -498,7 +529,7 @@ export function vinciShowpiece(id: string, index: ManifestIndex): VinciShowpiece
   if (!cuts.wide && !cuts.upright) return null
   const language = lang()
   return { id, cuts, seconds: seconds || Math.max(...film.lines.map(line => line.from)) + 1,
-    lines: film.lines.map(line => ({ from: line.from, text: line[language] })), sources: film.lines.map(line => line.source),
+    lines: film.lines.map(line => ({ from: line.from, text: sayAs(line, language) })), sources: film.lines.map(line => line.source),
     certainty: film.certainty, licence: records[0]!.licence, ...(film.extent ? { extent: film.extent } : {}) }
 }
 
@@ -513,7 +544,7 @@ export function vinciSheetRecords(id: string, index: ManifestIndex): { page: She
   }
   const page = pick('sheet-page'), thumb = pick('sheet-thumb')
   if (!page || !thumb) return null
-  return { page, thumb, title: vinciSheetTitle(lang() === 'de' ? page.honesty_de : page.honesty_en) }
+  return { page, thumb, title: vinciSheetName(page) }
 }
 
 /** THE FILM IN THE VITRINE, its words in the page's language: play and pause
@@ -525,7 +556,7 @@ export function createVinciShowpiecePayload(show: VinciShowpiece, options: {
 }): ShowpiecePayload {
   const language = lang()
   return createShowpiecePayload({ cuts: show.cuts, framing: options.framing, seconds: show.seconds, title: options.title, lines: show.lines,
-    words: { play: CONTROLS.machine.play[language], pause: CONTROLS.machine.pause[language], clock: options.title }, sheet: options.sheet,
+    words: { play: sayAs(CONTROLS.machine.play, language), pause: sayAs(CONTROLS.machine.pause, language), clock: options.title }, sheet: options.sheet,
     ...(show.extent ? { extent: show.extent } : {}) })
 }
 
@@ -535,7 +566,7 @@ export function renderVinciShowpieceRecord(show: VinciShowpiece, sheet: SheetMan
   const full = make('div', 'vinci-record')
   setRegister(full, 'record')
   if (sheet) {
-    full.append(make('p', 'vinci-statement', lang() === 'de' ? sheet.honesty_de : sheet.honesty_en))
+    full.append(make('p', 'vinci-statement', say({ en: sheet.honesty_en, de: sheet.honesty_de })))
     full.append(make('p', 'vinci-statement', sheet.licence))
   }
   full.append(make('p', 'vinci-statement', show.licence))
@@ -582,8 +613,8 @@ const GRAVE_TRANSFER = {
 } as const
 function inLanguage(host: HTMLElement, words: Both): void {
   const language = lang()
-  const paragraph = make('p', 'vinci-statement', cut(words[language]))
-  paragraph.lang = language
+  const paragraph = make('p', 'vinci-statement', cut(sayAs(words, language)))
+  paragraph.lang = langTag(language)
   host.append(paragraph)
 }
 function recordRoot(host: HTMLElement): HTMLElement {
@@ -609,13 +640,13 @@ export function vinciPlaceTitle(id: VinciPlaceId | 'picture/deathbed-painting/fr
   const language = lang()
   if (id === 'picture/deathbed-painting/front') {
     const label = NEVER_SAID.deathbed_label
-    return { title: language === 'de' ? label.title_de : label.title_en, certainty: 'conjectural' }
+    return { title: sayAs({ en: label.title_en, de: label.title_de }, language), certainty: 'conjectural' }
   }
   if (id === 'plaque/flight-quote') {
     const plate = NEVER_SAID.court_plaque
-    return { title: language === 'de' ? plate.title_de : plate.title_en, certainty: 'documented' }
+    return { title: sayAs({ en: plate.title_en, de: plate.title_de }, language), certainty: 'documented' }
   }
-  return id === 'grave-diagram' ? { title: GRAVE_WORDS.diagram[language], certainty: 'reconstructed' }
+  return id === 'grave-diagram' ? { title: sayAs(GRAVE_WORDS.diagram, language), certainty: 'reconstructed' }
     : { title: GRAVE_WORDS.slab, certainty: 'documented' }
 }
 
@@ -628,9 +659,9 @@ export function vinciPlaceCard(id: VinciPlaceId, certainty: (key: VinciPlaceCert
     const quote = make('p', '', plate.quote)
     quote.lang = 'en'
     return {
-      title: language === 'de' ? plate.title_de : plate.title_en, certainty: 'documented',
-      card: [drawer(language === 'de' ? plate.line_de : plate.line_en)],
-      after: [certaintyWord(certainty('documented')), quote, make('p', 'vitrine-meta', `${language === 'de' ? plate.where_de : plate.where_en} · ${plate.when}`)],
+      title: sayAs({ en: plate.title_en, de: plate.title_de }, language), certainty: 'documented',
+      card: [drawer(sayAs({ en: plate.line_en, de: plate.line_de }, language))],
+      after: [certaintyWord(certainty('documented')), quote, make('p', 'vitrine-meta', `${sayAs({ en: plate.where_en, de: plate.where_de }, language)} · ${plate.when}`)],
       record(host) {
         const full = recordRoot(host)
         inLanguage(full, { en: plate.title_en, de: plate.title_de })
@@ -644,8 +675,8 @@ export function vinciPlaceCard(id: VinciPlaceId, certainty: (key: VinciPlaceCert
   }
   if (id === 'grave-diagram') {
     return {
-      title: GRAVE_WORDS.diagram[language], certainty: 'reconstructed',
-      card: [drawer(GRAVE_DIAGRAM[language])],
+      title: sayAs(GRAVE_WORDS.diagram, language), certainty: 'reconstructed',
+      card: [drawer(sayAs(GRAVE_DIAGRAM, language))],
       after: [certaintyWord(certainty('reconstructed'))],
       record(host) {
         const full = recordRoot(host)
@@ -658,7 +689,7 @@ export function vinciPlaceCard(id: VinciPlaceId, certainty: (key: VinciPlaceCert
   }
   return {
     title: GRAVE_WORDS.slab, certainty: 'documented',
-    card: [drawer(GRAVE_SOURCE[language])],
+    card: [drawer(sayAs(GRAVE_SOURCE, language))],
     after: [certaintyWord(certainty('documented'))],
     record(host) {
       const full = recordRoot(host)
@@ -692,10 +723,10 @@ export function vinciDeathbedCard(
     return line
   }
   return {
-    title: language === 'de' ? label.title_de : label.title_en, certainty: 'conjectural',
-    card: [drawer(language === 'de' ? label.label_de : label.label_en, language === 'de' ? label.last_words_de : label.last_words_en)],
+    title: sayAs({ en: label.title_en, de: label.title_de }, language), certainty: 'conjectural',
+    card: [drawer(sayAs({ en: label.label_en, de: label.label_de }, language), sayAs({ en: label.last_words_en, de: label.last_words_de }, language))],
     after: [certaintyWord(certainty), make('p', 'vitrine-meta', `${GRAVE_WORDS.painter} · ${GRAVE_WORDS.holder}`),
-      make('p', 'vitrine-meta', GRAVE_WORDS.enlarged[language])],
+      make('p', 'vitrine-meta', sayAs(GRAVE_WORDS.enlarged, language))],
     record(host) {
       const full = recordRoot(host)
       inLanguage(full, { en: label.record_en, de: label.record_de })

@@ -21,7 +21,7 @@
  * step it a width at a time; and the line beside it says which cell of how
  * many is in view, so a row that can be moved says that it can.
  */
-import { lang } from '../../content'
+import { say } from '../../content'
 import { deskOn } from '../../desk-switches'
 import { DESK_SET_CHANGED } from '../../overview'
 import { uiSure } from '../../ui-sure'
@@ -46,6 +46,11 @@ export function vinciSheetTitle(honesty: string): string {
   const dated = said.search(/,?\s+(?:c\.\s?|um\s)\d{3,4}/)
   if (dated >= 0 && (stop < 0 || dated < stop)) return said.slice(0, dated)
   return stop < 0 ? said : said.slice(0, stop)
+}
+
+/** A sheet's name in the page's words: each language's own cut of its credit line. */
+export function vinciSheetName(entry: { honesty_en: string; honesty_de: string }): string {
+  return say({ en: vinciSheetTitle(entry.honesty_en), de: vinciSheetTitle(entry.honesty_de) })
 }
 
 /* THE ROW'S THUMBNAILS ARE THE ROOM'S OWN PREVIEWS, made small once. The
@@ -347,9 +352,9 @@ export function createVinciHangStrip(options: {
   function paintLabel(): void {
     // The hang's own name is the hang's. A second wall is named by the room
     // it stands in, which is the label the row already carries.
-    row.setAttribute('aria-label', wall === null || !wall.hang ? named : WALL_WORDS.hang_row[lang()])
-    back.setAttribute('aria-label', STEP_WORDS.previous[lang()])
-    on.setAttribute('aria-label', STEP_WORDS.next[lang()])
+    row.setAttribute('aria-label', wall === null || !wall.hang ? named : say(WALL_WORDS.hang_row))
+    back.setAttribute('aria-label', say(STEP_WORDS.previous))
+    on.setAttribute('aria-label', say(STEP_WORDS.next))
   }
   function paintScale(): void {
     scale.hidden = wall === null || wall.total < 2
@@ -361,7 +366,7 @@ export function createVinciHangStrip(options: {
     // station the eye is already off the wall, and the control resolved to
     // the station the visitor was standing at: a word that did nothing.
     whole.hidden = at < 1
-    whole.textContent = WALL_WORDS.whole_wall[lang()]
+    whole.textContent = say(WALL_WORDS.whole_wall)
     paintPlace()
   }
   /** WHICH OF HOW MANY IS IN VIEW. At a stop of the wall the place is the
@@ -372,7 +377,7 @@ export function createVinciHangStrip(options: {
     const total = wall !== null ? wall.total : entries.length
     const stop = wall !== null && wall.place >= 1 ? Math.min(wall.total, wall.place) : rowPlace()
     place.textContent = total < 2 || stop < 1 ? ''
-      : WALL_WORDS.place[lang()].replace('{n}', String(stop)).replace('{total}', String(total))
+      : say(WALL_WORDS.place).replace('{n}', String(stop)).replace('{total}', String(total))
     foot.hidden = !place.textContent && whole.hidden
   }
   /** The row stands unless something stands for it. */

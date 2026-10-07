@@ -16,6 +16,7 @@
 import { createDeepPlatePayload, type DeepPlatePayload, type DeepPlateSource, type DeepPlateTier, type DeepPlateWindow } from './deep-plate'
 import css from './reader.css?inline'
 import { uiSure } from '../ui-sure'
+import { fill, sayAs } from '../content'
 import type { VitrinePayload, VitrinePayloadHost, VitrinePeek } from './types'
 
 /** One way of looking at one side. The first is what stands when the side
@@ -165,7 +166,7 @@ export interface ReaderRoom {
 /** What a reader of the screen hears on a phone's one turn between two
  * ways, before the name of the way standing now ("Now showing: His hand").
  * Never drawn. */
-const TURN_SAYS = { en: 'Now showing', de: 'Jetzt zu sehen' } as const
+const TURN_SAYS = { en: 'Now showing: {0}', de: 'Jetzt zu sehen: {0}' } as const
 
 /** Frames the room draws before it may be held, after the last change. */
 const SETTLE_FRAMES = 2
@@ -482,7 +483,7 @@ export function createReaderPayload(options: {
       const to = shown[way === 0 ? 1 : 0], now = shown[way]
       turn.hidden = !turned
       turn.textContent = turned && to ? to.label : ''
-      turnSaid.textContent = turned && now && host ? `${TURN_SAYS[host.lang]}: ${now.label}` : ''
+      turnSaid.textContent = turned && now && host ? fill(sayAs(TURN_SAYS, host.lang), [now.label]) : ''
     }
     // A PAGE WITH ONE WAY HAS NO SEGMENTS, and the two that step the book
     // take the row rather than standing in a corner of it.

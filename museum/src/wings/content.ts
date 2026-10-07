@@ -56,6 +56,75 @@ export const say = (s: Bilingual): string => {
   return catalog?.(s) ?? s.en
 }
 
+/** A pair in the language a host hands down: English and German exactly as
+    `s[world]`; a catalog language from its catalog, else English. */
+export const sayAs = (s: Bilingual, world: Lang): string => {
+  const page = pageLang()
+  if (page === 'en' || page === 'de') return s[world]
+  return catalog?.(s) ?? s.en
+}
+
+/** A string English and German visitors both read in English (a title as
+    published, a codex's name): a catalog language files it under the pair
+    with an empty German. */
+export const sayEnglish = (en: string): string => {
+  const page = pageLang()
+  if (page === 'en' || page === 'de') return en
+  return catalog?.({ en, de: '' }) ?? en
+}
+
+/** The tag an element's words carry: the world language a host hands down
+    on an English or German page, the page's own on a catalog page. */
+export const langTag = (world: Lang): string => {
+  const page = pageLang()
+  return page === 'en' || page === 'de' ? world : page
+}
+
+/** A pattern pair with its slots filled, still a pair for `say`: English and
+    German each as written; a catalog page's own words, filled, stand on the
+    English side, which `say` hands back since no entry is filed under them. */
+export const filled = (pattern: Bilingual, values: readonly string[] | Readonly<Record<string, string>>): Bilingual =>
+  catalogPage() ? { en: fill(say(pattern), values), de: '' } : { en: fill(pattern.en, values), de: fill(pattern.de, values) }
+
+/** A pair whose sides may be missing: English and German as `side[world]`; a
+    catalog page from its catalog, else the English side. */
+export const sayMaybe = (en: string | undefined, de: string | undefined, world: Lang): string | undefined => {
+  const page = pageLang()
+  if (page === 'en' || page === 'de') return world === 'de' ? de : en
+  return en === undefined ? undefined : catalog?.({ en, de: de ?? '' }) ?? en
+}
+
+/** A pair out of two parallel records, each language's own field. */
+export const pairOf = <E, D>(both: { en: E; de: D }, field: (side: E | D) => string): Bilingual => ({ en: field(both.en), de: field(both.de) })
+
+/** Whether the page reads a catalog language. */
+export const catalogPage = (): boolean => {
+  const page = pageLang()
+  return page !== 'en' && page !== 'de'
+}
+
+/** A pattern's slots, `{0}` or `{name}`, filled; a slot with no value stays as written. */
+export const fill = (pattern: string, values: readonly string[] | Readonly<Record<string, string>>): string =>
+  pattern.replace(/\{(\w+)\}/g, (whole, slot: string) => (values as Record<string, string>)[slot] ?? whole)
+
+/** A runtime number: English and German as the caller writes it; a catalog
+    language in its own form (a year without grouping). */
+export const figure = (n: number, written: string = String(n), options: Intl.NumberFormatOptions = {}): string => {
+  const page = pageLang()
+  if (page === 'en' || page === 'de') return written
+  return new Intl.NumberFormat(page, options).format(n)
+}
+export const YEAR: Intl.NumberFormatOptions = { useGrouping: false }
+
+/** The pair a count picks: English and German by `n === 1` as the words were
+    written; a catalog language by its own plural rules (French takes the one
+    form for 0 as well). */
+export const sayCount = (n: number, one: Bilingual, other: Bilingual): string => {
+  const page = pageLang()
+  if (page === 'en' || page === 'de') return say(n === 1 ? one : other)
+  return say(new Intl.PluralRules(page).select(n) === 'one' ? one : other)
+}
+
 /** The lobby's own plate: how much of the museum stands today. */
 export function wingCount(open: number, preparing: number): string {
   const plural = (n: number, one: Bilingual, many: Bilingual): string =>

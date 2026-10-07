@@ -11,6 +11,7 @@
    museum's own certainty mark, and the one press that walks. */
 
 import { deskControl } from '../desk-story'
+import { sayAs } from '../content'
 import { LOBBY_TEXT } from '../../content/lobby'
 import type { VinciCertainty, VinciText } from '../vinci/content'
 
@@ -136,7 +137,7 @@ function setName(cells: readonly DeskOverviewCell[]): VinciText {
 }
 
 export function createDeskOverview(host: DeskOverviewHost): DeskOverview {
-  const say = (value: VinciText): string => value[host.lang()]
+  const say = (value: VinciText): string => sayAs(value, host.lang())
   /** the count's own words: the table counts topics */
   const counted = (): VinciText => (host.unit?.() === 'topics' ? TOPICS : WORD.count())
 
