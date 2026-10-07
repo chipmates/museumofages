@@ -588,6 +588,7 @@ def render(page, lang, data, shared, out_root):
         "href.what": site_page("what"),
         "href.privacy": site_page("privacy"),
         "href.imprint": site_page("imprint"),
+        "attr.imprint_lang": "" if L.has_imprint(lang) else ' hreflang="en"',
         "href.enter": esc(door),
         "svg.arrow": chrome["arrow"],
     }
