@@ -1,0 +1,51 @@
+/* THE PAGES IN ANOTHER LANGUAGE. Loaded with a catalog only, so an English
+   or German page carries none of it.
+
+   A Bulgarian page sets every stack in the site's own Bulgarian faces (Latin
+   and Cyrillic in one cut, one weight; the museum's faces have no Cyrillic).
+   A face is fetched only where a Bulgarian page uses it, and nothing is
+   faked: no bold or slanted letters the files do not hold. */
+@font-face {
+  font-family: 'Museum Bulgarian Serif';
+  src: url('./fonts/bg/bulgarian-serif-400.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Museum Bulgarian Sans';
+  src: url('./fonts/bg/bulgarian-sans-400.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+:root:lang(bg) {
+  --serif: 'Museum Bulgarian Serif', Georgia, 'Times New Roman', serif;
+  --press-display: 'Museum Bulgarian Serif', 'Iowan Old Style', 'Baskerville', 'Palatino Linotype', Palatino, Georgia, serif;
+  --press-register: 'Museum Bulgarian Serif', 'Iowan Old Style', 'Palatino Linotype', Palatino, Georgia, serif;
+  --sans: 'Museum Bulgarian Sans', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --press-ui: 'Museum Bulgarian Sans', 'Optima', 'Candara', 'Segoe UI', system-ui, sans-serif;
+}
+:lang(bg) { font-synthesis: none; }
+
+/* THE TAG under the welcome's line: smaller and quieter than the line, the
+   originals' names each a full target. */
+.na-plate-tag,
+.na-plate-tag-link {
+  max-width: 54ch;
+  font: .875rem/1.5 var(--sans);
+  color: color-mix(in srgb, var(--na-starlight) 72%, var(--na-mist));
+}
+.na-plate-tag { margin: 14px 0 0; }
+.na-plate-tag-link { margin: 0; }
+.na-plate-tag-link a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  padding: 0 6px;
+  color: var(--na-starlight);
+  text-decoration: underline;
+  text-decoration-color: color-mix(in srgb, var(--na-starlight) 40%, transparent);
+  text-underline-offset: 4px;
+}
+.na-plate-tag-link a:focus-visible { outline: 1px solid var(--na-gold); outline-offset: 2px; }

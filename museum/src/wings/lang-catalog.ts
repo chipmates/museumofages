@@ -22,7 +22,7 @@ export interface Catalog {
   pair(s: Bilingual): string | undefined
   /** a word the catalog files under a name of its own */
   named(key: string): string | undefined
-  /** a surface's status; a surface the file does not name counts as unread */
+  /** a surface's status, written as a word or as the flag that the tag stands; a surface the file does not name counts as unread */
   status(surface: TagSurface): TagStatus
 }
 
@@ -44,6 +44,8 @@ export async function openCatalog(tag: PageLang): Promise<Catalog> {
     named: (key) => entries.get(key),
     status(surface) {
       const said = read[surface]
+      // a flag says whether the tag still stands: false once a person has read every string there
+      if (typeof said === 'boolean') return said ? 'ai' : 'native'
       return said === 'checked' || said === 'native' ? said : 'ai'
     },
   }

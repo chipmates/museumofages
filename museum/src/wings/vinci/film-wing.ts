@@ -6,7 +6,7 @@
    in the frozen form's one graded box. */
 
 import { leaveWingFinished, setRegister, type WingHosts, type WingModule, type WingStation } from '../frame'
-import { lang, say, WING_TEXT } from '../content'
+import { lang, say, tagged, WING_TEXT } from '../content'
 import { LOBBY_TEXT } from '../../content/lobby'
 import { vinciAbsences, vinciCertaintyWords, vinciCollectionThreshold, vinciContent, vinciEveningSky, vinciGrounds, vinciHourArithmetic, vinciHourIntegrity, vinciHourLabel,
   vinciReconstruction, vinciRightsPolicy, vinciRoomStationIds, vinciSourcesHeadings, vinciWingCounts,
@@ -168,6 +168,9 @@ export function createWing(): WingModule {
       only for a visit that has met its opening, and begins like any other
       before that. */
   const namedEntry = /(?:^|[#&])s=/.test(location.hash) && (vinciWelcomeSeen() || !/^#s=0?$/.test(location.hash))
+  /** An entry that names a later stop in a translation no person has read yet meets the door
+      once a visit, since the door carries the tag; its way in stands at the stop named. */
+  const tagEntry = namedEntry && tagged('walk') && !vinciWelcomeSeen()
   let above = false
   let doorDone: (() => void) | null = null
   let hosts: WingHosts | undefined
@@ -1132,7 +1135,7 @@ export function createWing(): WingModule {
   /** THE DOOR STANDS AT THE FIRST STOP, once a visit, and a driven browser
       meets it only when its address asks for one */
   function doorWanted(): boolean {
-    if (card !== 0 || vinciWelcomeSeen()) return false
+    if ((card !== 0 && !tagEntry) || vinciWelcomeSeen()) return false
     return !navigator.webdriver || new URLSearchParams(location.search).has('opening')
   }
   function openDoor(): void {
@@ -1223,7 +1226,7 @@ export function createWing(): WingModule {
     // the visit enters at the stop asked for, or at the first this release carries
     if (!carried(card)) card = asked = Math.max(0, LIFE.findIndex((_, i) => carried(i)))
     // a release that does not carry the first stop has no door to stand at
-    if (welcome && card !== 0) {
+    if (welcome && card !== 0 && !tagEntry) {
       welcome.dispose(); welcome = undefined
       doorStanding = false
       delete document.documentElement.dataset['naDoor']

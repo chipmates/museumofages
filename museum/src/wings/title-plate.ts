@@ -33,6 +33,9 @@ export interface PlateWords {
   handle: string
   /** the door's book, as its seat displays it */
   about?: string
+  /** a page read in a translation no person has read yet says so under the line,
+      and names the originals, each linked where `originals` names it */
+  tag?: { line: string; link?: string; originals?: readonly { word: string; href: string; lang: string }[] }
 }
 
 export interface PlateLeaf {
@@ -254,7 +257,25 @@ export function createTitlePlate(host: HTMLElement, parts: PlateParts): TitlePla
       })
     }
     wall.append(make('p', 'na-plate-line', words.line))
+    if (words.tag) wall.append(...tagOf(words.tag))
     return wall
+  }
+
+  function tagOf(tag: NonNullable<PlateWords['tag']>): HTMLElement[] {
+    const line = make('p', 'na-plate-tag', tag.line)
+    if (!tag.link) return [line]
+    const link = make('p', 'na-plate-tag-link')
+    let rest = tag.link
+    for (const original of tag.originals ?? []) {
+      const at = rest.indexOf(original.word)
+      if (at < 0) continue
+      const a = make('a', '', original.word)
+      a.href = original.href; a.lang = original.lang; a.hreflang = original.lang
+      link.append(rest.slice(0, at), a)
+      rest = rest.slice(at + original.word.length)
+    }
+    link.append(rest)
+    return [line, link]
   }
 
   function leafletOf(words: PlateWords): HTMLElement {
