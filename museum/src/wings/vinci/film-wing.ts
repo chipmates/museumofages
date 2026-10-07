@@ -6,7 +6,7 @@
    in the frozen form's one graded box. */
 
 import { leaveWingFinished, setRegister, type WingHosts, type WingModule, type WingStation } from '../frame'
-import { lang, say, tagged, WING_TEXT } from '../content'
+import { lang, pageLang, say, tagged, WING_TEXT } from '../content'
 import { LOBBY_TEXT } from '../../content/lobby'
 import { vinciAbsences, vinciCertaintyWords, vinciCollectionThreshold, vinciContent, vinciEveningSky, vinciGrounds, vinciHourArithmetic, vinciHourIntegrity, vinciHourLabel,
   vinciReconstruction, vinciRightsPolicy, vinciRoomStationIds, vinciSourcesHeadings, vinciWingCounts,
@@ -547,10 +547,10 @@ export function createWing(): WingModule {
     const key = `${node}|${station}|${lang()}|${b.left},${b.top},${b.width}x${b.height}`
     if (!walking && key === wordsAt) return
     const seam = picture
-    const drawn = words.paint(station, lang(), point => {
+    const drawn = words.paint(station, pageLang(), point => {
       const at = seam.project(point)
       return at ? { x: b.left + at.x, y: b.top + at.y } : null
-    })
+    }, say)
     // a rest whose print is not read yet is asked again, for a second at most;
     // a walk's key never stands for a rest, so the rest after it paints again
     if (drawn || ++wordsTries > 60) { wordsAt = walking ? `${key}|walk` : key; wordsTries = 0 }

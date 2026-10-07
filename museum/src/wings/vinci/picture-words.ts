@@ -7,13 +7,19 @@
    They are drawn at rest, and only at the stations whose picture holds them
    in clear view: a projection knows no wall, so the station is the proof of
    sight, save where a run names the solids that stand before it at one of
-   its station's views. */
+   its station's views. A catalog language's words come by their English
+   and German pair and are set by `catalog-lettering.ts` in the same places. */
 import { Matrix4, Vector3 } from 'three/webgpu'
+import type { PageLang } from '../content'
+import { catalogGraveLettering, catalogLineLettering, type Words } from './catalog-lettering'
 import { LINE_FLOOR_SECTIONS, lineLettering, lineSectionShift, type LinePiece } from './line/lettering'
 import { graveDeathbedLettering, graveLettering, type GraveFace, type GraveLetters } from './grave/lettering'
 import { GRAVE_AT, LINE_FLOOR_AT } from './collection/layout'
 
-type Language = 'en' | 'de'
+type Language = PageLang
+const own = (language: Language): language is 'en' | 'de' => language === 'en' || language === 'de'
+/** a catalog language with no words handed: the English, in its letters */
+const english: Words = pair => pair.en
 type Point = readonly [number, number, number]
 
 /** How the letters take the light: the floor's and the stones' ink, or bronze. */
@@ -69,17 +75,21 @@ function whollyBehind(contours: readonly Float32Array[], face: Float32Array): bo
   return contours.every(c => { for (let i = 0; i < c.length; i += 3) if (n.dot(p.fromArray(c, i).sub(a)) >= 0) return false; return true })
 }
 
-const cache = new Map<Language, PictureWordRun[]>()
-/** Every run of words the wing's objects carry, in one language. */
-export function pictureWords(language: Language): PictureWordRun[] {
-  const had = cache.get(language)
+const cache = new Map<Words, Map<Language, PictureWordRun[]>>()
+/** Every run of words the wing's objects carry, in one language. A catalog
+ * language reads each word through `word`, the page's own lookup. */
+export function pictureWords(language: Language, word: Words = english): PictureWordRun[] {
+  const kept = cache.get(word) ?? new Map<Language, PictureWordRun[]>()
+  cache.set(word, kept)
+  const had = kept.get(language)
   if (had) return had
   const runs: PictureWordRun[] = []
   const floor = new Matrix4().makeTranslation(...LINE_FLOOR_AT)
   for (const section of LINE_FLOOR_SECTIONS) {
     const base = floor.clone().multiply(new Matrix4().makeTranslation(0, 0, lineSectionShift(section.row)))
     for (let n = section.selected; n < section.selected + 4; n++) {
-      const lettering = lineLettering(n, section.selected, language, false, section.lettering)
+      const lettering = own(language) ? lineLettering(n, section.selected, language, false, section.lettering)
+        : catalogLineLettering(n, section.selected, section.lettering, word)
       for (const [kind, piece] of [['word', lettering.word], ['cue', lettering.cue]] as const) {
         if (!piece) continue
         const contours = contoursOf(piece.outline, floorMatrix(base, piece))
@@ -95,8 +105,8 @@ export function pictureWords(language: Language): PictureWordRun[] {
     const behind = (letters.behind ?? []).map(face => faceOf(face, grave)).filter(face => whollyBehind(contours, face))
     return { id: letters.id, stations: GRAVE_STATIONS, contours, finish: letters.finish, ...(behind.length ? { behind } : {}) }
   }
-  for (const letters of [...graveLettering(language), ...graveDeathbedLettering(language)]) runs.push(fromGrave(letters))
-  cache.set(language, runs)
+  for (const letters of own(language) ? [...graveLettering(language), ...graveDeathbedLettering(language)] : catalogGraveLettering(word)) runs.push(fromGrave(letters))
+  kept.set(language, runs)
   return runs
 }
 
@@ -106,8 +116,9 @@ export type PictureProjector = (point: Point) => { x: number; y: number } | null
 export interface PictureWordsLayer {
   /** Draw the runs the station holds, projected; `null` takes them down.
    * False when the station holds runs and not one of them could be projected:
-   * the picture's camera is not known yet, and the caller asks again. */
-  paint(station: string | null, language: Language, project: PictureProjector): boolean
+   * the picture's camera is not known yet, and the caller asks again. A
+   * catalog language comes with the page's `word` lookup. */
+  paint(station: string | null, language: Language, project: PictureProjector, word?: Words): boolean
   hide(): void
   dispose(): void
 }
@@ -207,12 +218,12 @@ export function createPictureWords(place: (layer: SVGSVGElement) => void): Pictu
     delete svg.dataset['shown']
   }
   return {
-    paint(station, language, project) {
+    paint(station, language, project, word) {
       if (!station) { hide(); return true }
       const d = new Map<PictureWordFinish, string[]>()
       const screened = new Set<string>()
       let held = 0, drawn = 0
-      for (const run of pictureWords(language)) {
+      for (const run of pictureWords(language, word)) {
         if (!run.stations.includes(station)) continue
         held++
         const traced = trace(run.contours, project)
