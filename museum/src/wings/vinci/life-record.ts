@@ -5,7 +5,7 @@
    film) composes the same life the live wing composes in its own closure. */
 
 import cardsSource from './data/cards.json?raw'
-import { catalogPage, lang, sayAs, sayMaybe } from '../content'
+import { alreadySaid, catalogPage, lang, sayAs, sayMaybe } from '../content'
 import { vinciContent, vinciHourValues, vinciLifeBands, vinciLifeCertaintyCounted, vinciLifeCut, vinciLifeFloorCount, vinciLifeHourMark,
   vinciLifePeople, vinciLifeSecondLine, vinciLifeWorksCount, vinciLifeWorksEmpty, vinciLifeWorksRow, vinciThroughLine, type VinciText } from './content'
 import { LINE_SECTIONS, LINE_STUDS, type Stud } from './line/studs'
@@ -118,8 +118,8 @@ export function vinciLifeRecord(hangs: (exhibit: string) => boolean): LifeRecord
     { cut: spokenCount(VINCI_LIFE_CUT.size, language), total: spokenCount(LINE_STUDS.length, language) }))
   return { bands, events, works: lifeWorks(hangs), people, sure,
     here: LINE_STUDS.find(stud => stud.date === vinciHourValues.julianDate)?.id,
-    words: { throughLine: vinciThroughLine, secondLine: { en: fill(sayAs(vinciLifeSecondLine, 'en'), span), de: fill(sayAs(vinciLifeSecondLine, 'de'), span) },
-      honesty: { en: counted('en'), de: counted('de') }, cut: vinciLifeCut,
+    words: { throughLine: vinciThroughLine, secondLine: { en: alreadySaid(fill(sayAs(vinciLifeSecondLine, 'en'), span)), de: fill(sayAs(vinciLifeSecondLine, 'de'), span) },
+      honesty: { en: alreadySaid(counted('en')), de: counted('de') }, cut: vinciLifeCut,
       worksRow: vinciLifeWorksRow, worksCount: vinciLifeWorksCount, worksCountOneUndated: WORKS_COUNT_ONE_UNDATED, worksEmpty: vinciLifeWorksEmpty, age: AGE_WORDS, back: CARDS.controls.shared.back,
       provenance: CARDS.controls.machine.provenance, hour: vinciLifeHourMark },
     span }
