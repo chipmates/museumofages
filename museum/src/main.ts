@@ -27,8 +27,9 @@ import { LOBBY_LINKS, LOBBY_TEXT } from './content/lobby'
 import { gaitPace, setGaitPace } from './wings/vinci/gait'
 import { benchOptions, benchPath, createBench, type BenchOptions } from './bench'
 
-// a catalog language's words are in before the first is written
-await wordsReady()
+// a catalog language's words are in before the first is written; English and German never wait
+const firstLanguage = pageLang()
+if (firstLanguage !== 'en' && firstLanguage !== 'de') await wordsReady()
 
 function syncLobbyCopy(): void {
   document.documentElement.lang = pageLang()
