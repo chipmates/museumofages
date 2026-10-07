@@ -14,6 +14,7 @@
 import { dateYears, type LifeGap, type LifeScale } from './scale'
 import type { Bi, LifeBand, LifeRecord } from './types'
 import { fill } from './words'
+import { sayAs } from '../content'
 
 const NS = 'http://www.w3.org/2000/svg'
 
@@ -264,7 +265,7 @@ export function drawLifePlate(options: {
     const from = start + PLATE.gutter / 2, to = Math.max(start + PLATE.least, end - PLATE.gutter / 2)
     const widest = pieces(from, to, gapRuns).reduce<{ left: number; right: number } | null>(
       (held, piece) => !held || piece.right - piece.left > held.right - held.left ? piece : held, null)
-    const words = band.place[language]
+    const words = sayAs(band.place, language)
     const base = narrow ? PLATE.name.narrow : PLATE.name.wide
     const held = widest !== null && nameSize(words, widest.right - widest.left, base, PLATE.name.floor) !== null
     const run = held ? widest : { left: from, right: to }

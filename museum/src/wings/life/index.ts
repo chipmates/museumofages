@@ -23,6 +23,7 @@ import css from './life.css?inline'
 import { windowOwnsTheScreen } from '../window-chrome'
 import { deskAny } from '../desk-switches'
 import { renderLifeDate } from './card'
+import { isOne, sayAs } from '../content'
 import { drawLifePlate, type LifePlate } from './plate'
 import { chronological, dateYears, lifeCounts, lifeScale, machineDate, workYears, type LifeGap } from './scale'
 import { LIFE_BAND_WORDS, LIFE_CALENDARS, LIFE_COUNTS, LIFE_ROW_WORDS, LIFE_WORDS, LIFE_WORKS_COUNT, capitalise, countedCertainties, fill, spokenCount } from './words'
@@ -86,7 +87,7 @@ export function createWingLife(options: WingLifeOptions): WingLife {
     if (words) element.textContent = words
     return element
   }
-  const say = (value: Bi): string => value[options.lang()]
+  const say = (value: Bi): string => sayAs(value, options.lang())
 
   const dialog = document_.createElement('dialog')
   dialog.className = 'wing-life'
@@ -185,7 +186,7 @@ export function createWingLife(options: WingLifeOptions): WingLife {
     second.textContent = say(record.words.secondLine)
     close.textContent = say(LIFE_WORDS.close)
     shutMark.setAttribute('aria-label', say(LIFE_WORDS.close))
-    spine.setAttribute('aria-label', LIFE_ROW_WORDS.places[language])
+    spine.setAttribute('aria-label', sayAs(LIFE_ROW_WORDS.places, language))
 
     /* THE RIBBON, and the presses laid over it. A segment is a 44 px target
        on a wide stage; on a phone the narrowest of them is seventeen pixels,
@@ -203,7 +204,7 @@ export function createWingLife(options: WingLifeOptions): WingLife {
       - (parseFloat(frame.paddingTop) || 0) - (parseFloat(frame.paddingBottom) || 0)
     plate = drawn
       ? drawLifePlate({ record, scale, area: { width: area }, language, narrow, open: band, at,
-        afterWords: LIFE_WORDS.afterSpan[language], ...(side ? { side: { room } } : {}) })
+        afterWords: sayAs(LIFE_WORDS.afterSpan, language), ...(side ? { side: { room } } : {}) })
       : undefined
     presses.replaceChildren()
     drawing.replaceChildren(...(plate ? [plate.element] : []), presses)
@@ -224,8 +225,8 @@ export function createWingLife(options: WingLifeOptions): WingLife {
     const older = record.events.filter(event => event.date.calendar && event.date.calendar !== 'Gregorian')
     const kept = older[0]?.date.calendar
     const last = Math.max(...older.filter(event => event.date.calendar === kept).map(event => dateYears(event.date)?.to ?? -Infinity))
-    const notes = [plate && scale.gaps.length ? LIFE_WORDS.caption[language] : '',
-      kept && Number.isFinite(last) ? fill(LIFE_COUNTS.calendar[language], { last, calendar: LIFE_CALENDARS[kept]?.[language] ?? kept }) : '']
+    const notes = [plate && scale.gaps.length ? sayAs(LIFE_WORDS.caption, language) : '',
+      kept && Number.isFinite(last) ? fill(sayAs(LIFE_COUNTS.calendar, language), { last, calendar: (LIFE_CALENDARS[kept] ? sayAs(LIFE_CALENDARS[kept], language) : kept) }) : '']
     caption.textContent = notes.filter(Boolean).join(' ')
     caption.hidden = !caption.textContent
     const runs = plate && !narrow ? pressRuns(plate.bands, plate.width) : []
@@ -233,7 +234,7 @@ export function createWingLife(options: WingLifeOptions): WingLife {
       const press = make('button', 'wing-life-press')
       press.type = 'button'
       press.dataset['band'] = segment.id
-      press.setAttribute('aria-label', segment.name[language])
+      press.setAttribute('aria-label', sayAs(segment.name, language))
       press.setAttribute('aria-controls', periodBody.id)
       press.setAttribute('aria-expanded', String(segment.id === band))
       press.tabIndex = segment.id === band ? 0 : -1
@@ -252,7 +253,7 @@ export function createWingLife(options: WingLifeOptions): WingLife {
     // would have stood. The list beside it is the whole of that life.
     if (!plate) {
       drawing.hidden = false
-      drawing.replaceChildren(make('p', 'wing-life-nothing', LIFE_WORDS.noYears[language]))
+      drawing.replaceChildren(make('p', 'wing-life-nothing', sayAs(LIFE_WORDS.noYears, language)))
     }
 
     paintSpine(record, language)
@@ -269,7 +270,7 @@ export function createWingLife(options: WingLifeOptions): WingLife {
     /* THE ABSENCES STAND BESIDE WHAT IS SHOWN, counted from the record and
        never written down beside it. */
     counts.replaceChildren(
-      make('p', 'wing-life-count', capitalise(fill(LIFE_COUNTS.dates[language], {
+      make('p', 'wing-life-count', capitalise(fill(sayAs(LIFE_COUNTS.dates, language), {
         total: spokenCount(tally.events.total, language),
         counted: countedCertainties(record.sure, tally.events.by, language),
       }))),
@@ -278,8 +279,8 @@ export function createWingLife(options: WingLifeOptions): WingLife {
     )
     /* A FAMILY THE RECORD HOLDS NONE OF IS NOT COUNTED. A life with no work
        in its register says nothing about works rather than counting none. */
-    const worksCount = tally.works.undated === 1 ? record.words.worksCountOneUndated ?? record.words.worksCount : record.words.worksCount
-    if (tally.works.total) counts.insertBefore(make('p', 'wing-life-count', capitalise(fill(worksCount[language], {
+    const worksCount = isOne(tally.works.undated) ? record.words.worksCountOneUndated ?? record.words.worksCount : record.words.worksCount
+    if (tally.works.total) counts.insertBefore(make('p', 'wing-life-count', capitalise(fill(sayAs(worksCount, language), {
       total: spokenCount(tally.works.total, language),
       dated: spokenCount(tally.works.dated, language),
       undated: spokenCount(tally.works.undated, language),
@@ -288,7 +289,7 @@ export function createWingLife(options: WingLifeOptions): WingLife {
        dates cannot be put on one says that instead, where the ribbon would
        have stood, and counting its silence in years would be a claim. */
     // A count is a word and a year is a numeral, in the same sentence.
-    if (drawn) counts.insertBefore(make('p', 'wing-life-count', capitalise(fill(LIFE_COUNTS.emptyYears[language], {
+    if (drawn) counts.insertBefore(make('p', 'wing-life-count', capitalise(fill(sayAs(LIFE_COUNTS.emptyYears, language), {
       empty: spokenCount(tally.emptyYears, language),
       span: spokenCount(record.span.to - record.span.from + 1, language),
       from: record.span.from, to: record.span.to,
@@ -396,7 +397,7 @@ export function createWingLife(options: WingLifeOptions): WingLife {
          reading's own heading. The afterlife is not a place, so it takes the
          word the ribbon's strip already carries. */
       const title = make('span', 'wing-life-item-title',
-        narrow ? (entry.afterlife ? LIFE_WORDS.after[language] : entry.place[language]) : entry.name[language])
+        narrow ? (entry.afterlife ? sayAs(LIFE_WORDS.after, language) : sayAs(entry.place, language)) : sayAs(entry.name, language))
       press.append(title, make('span', 'wing-life-item-count', dateCount(eventsOf(record, entry.id).length, language)))
       press.addEventListener('click', () => select(entry.id, 'spine'))
       press.addEventListener('keydown', event => step(event, record))
@@ -427,9 +428,9 @@ export function createWingLife(options: WingLifeOptions): WingLife {
     if (band === UNDATED) press.setAttribute('aria-current', 'true')
     // The row's own word for what it carries is the wing's; English lowercases
     // a noun inside a sentence and German does not.
-    const row = record.words.worksRow[language]
-    press.append(make('span', 'wing-life-item-title', LIFE_WORDS.undated[language]),
-      make('span', 'wing-life-item-count', capitalise(fill(LIFE_WORDS.undatedCount[language], {
+    const row = sayAs(record.words.worksRow, language)
+    press.append(make('span', 'wing-life-item-title', sayAs(LIFE_WORDS.undated, language)),
+      make('span', 'wing-life-item-count', capitalise(fill(sayAs(LIFE_WORDS.undatedCount, language), {
         n: spokenCount(undatedWorks(record).length, language),
         row: language === 'en' ? row.toLowerCase() : row,
       }))))
@@ -440,9 +441,9 @@ export function createWingLife(options: WingLifeOptions): WingLife {
   }
 
   function dateCount(n: number, language: 'en' | 'de'): string {
-    if (!n) return LIFE_BAND_WORDS.noDate[language]
-    if (n === 1) return LIFE_BAND_WORDS.oneDate[language]
-    return capitalise(fill(LIFE_BAND_WORDS.dates[language], { n: spokenCount(n, language) }))
+    if (!n) return sayAs(LIFE_BAND_WORDS.noDate, language)
+    if (isOne(n)) return sayAs(LIFE_BAND_WORDS.oneDate, language)
+    return capitalise(fill(sayAs(LIFE_BAND_WORDS.dates, language), { n: spokenCount(n, language) }))
   }
 
   /** The place the question's own answer leads to, where there is one. */
@@ -463,12 +464,12 @@ export function createWingLife(options: WingLifeOptions): WingLife {
     /* THE WORKS NO YEAR CAN HOLD stand on their own, with no dates to read
        and nobody named in years the record does not give them. */
     if (!entry) {
-      periodBody.append(make('h3', 'wing-life-period-name', LIFE_WORDS.undated[language]))
+      periodBody.append(make('h3', 'wing-life-period-name', sayAs(LIFE_WORDS.undated, language)))
       paintWorkList(record, undatedWorks(record), language, false)
       return
     }
-    periodBody.append(make('h3', 'wing-life-period-name', entry.name[language]),
-      make('p', 'wing-life-period-line', entry.line[language]))
+    periodBody.append(make('h3', 'wing-life-period-name', sayAs(entry.name, language)),
+      make('p', 'wing-life-period-line', sayAs(entry.line, language)))
     const own = eventsOf(record, entry.id)
     periodBody.append(dates(record, own, entry, gaps, language))
     const stops = [...periodBody.querySelectorAll<HTMLElement>('.wing-life-date-name')]
@@ -509,7 +510,7 @@ export function createWingLife(options: WingLifeOptions): WingLife {
     /* A DATE HTML CAN STATE IS A `time`; an approximate, disputed or open one
        keeps its words and its EDTF, and publishes no machine date it is not. */
     const machine = machineDate(event.date)
-    const label = make(machine ? 'time' : 'span', 'wing-life-date-label', event.date.label[language])
+    const label = make(machine ? 'time' : 'span', 'wing-life-date-label', sayAs(event.date.label, language))
     if (machine) label.setAttribute('datetime', machine)
     label.dataset['edtf'] = event.date.edtf
     label.dataset['calendar'] = event.date.calendar
@@ -518,7 +519,7 @@ export function createWingLife(options: WingLifeOptions): WingLife {
        rides on the word and never on the date, because the certainty is the
        event's and a date can be surer than what happened on it. */
     if (event.age !== null) press.append(make('span', 'wing-life-date-age',
-      fill((event.ageApproximate ? record.words.age.about : record.words.age.exact)[language], { years: event.age })))
+      fill(sayAs(event.ageApproximate ? record.words.age.about : record.words.age.exact, language), { years: event.age })))
     const sure = record.sure[event.certainty]
     if (sure) {
       const word = make('span', 'wing-life-date-sure')
@@ -526,13 +527,13 @@ export function createWingLife(options: WingLifeOptions): WingLife {
       dot.style.background = sure.colour
       dot.setAttribute('aria-hidden', 'true')
       word.style.setProperty('--certainty', sure.colour)
-      word.append(dot, document_.createTextNode(sure.word[language]))
+      word.append(dot, document_.createTextNode(sayAs(sure.word, language)))
       press.append(word)
     }
     // THE HOUR THE VISITOR IS STANDING IN is one of these dates, and the wing
     // says so in its own words beside it.
     if (record.here === event.id && record.words.hour)
-      press.append(make('span', 'wing-life-date-here', record.words.hour[language]))
+      press.append(make('span', 'wing-life-date-here', sayAs(record.words.hour, language)))
     /* ONE STOP FOR THE WHOLE LIST. Fourteen dates would be fourteen tab
        stops between the spine and the foot, so the list takes one and the
        arrows walk inside it. */
@@ -565,7 +566,7 @@ export function createWingLife(options: WingLifeOptions): WingLife {
 
   function gapNote(gap: LifeGap, language: 'en' | 'de'): HTMLElement {
     const item = make('li', 'wing-life-gap-note')
-    item.append(make('p', 'wing-life-gap-line', capitalise(fill(LIFE_COUNTS.gap[language], { years: spokenCount(gap.years, language) }))))
+    item.append(make('p', 'wing-life-gap-line', capitalise(fill(sayAs(LIFE_COUNTS.gap, language), { years: spokenCount(gap.years, language) }))))
     return item
   }
 
@@ -588,9 +589,9 @@ export function createWingLife(options: WingLifeOptions): WingLife {
   function paintWorkList(record: LifeRecord, own: readonly LifeWork[], language: 'en' | 'de', counted: boolean): void {
     const section = make('section', 'wing-life-section')
     section.dataset['row'] = 'works'
-    if (counted) section.append(make('h4', 'wing-life-row-name', record.words.worksRow[language]))
+    if (counted) section.append(make('h4', 'wing-life-row-name', sayAs(record.words.worksRow, language)))
     if (!own.length) {
-      section.append(make('p', 'wing-life-empty', record.words.worksEmpty[language]))
+      section.append(make('p', 'wing-life-empty', sayAs(record.words.worksEmpty, language)))
       periodBody.append(section)
       return
     }
@@ -598,12 +599,12 @@ export function createWingLife(options: WingLifeOptions): WingLife {
     for (const work of own) {
       const item = make('li', 'wing-life-work-item')
       item.dataset['domain'] = work.domain
-      item.append(make('span', 'wing-life-work-date', work.date?.label[language] ?? ''),
-        make('span', 'wing-life-work-title', work.title[language]))
+      item.append(make('span', 'wing-life-work-date', (work.date ? sayAs(work.date.label, language) : '')),
+        make('span', 'wing-life-work-title', sayAs(work.title, language)))
       /* THE PICTURE IS REACHED FROM THE LIFE: the sheet closes and the museum
          walks to the wall it hangs on, which is where it can be looked at. */
       if (work.exhibit) {
-        const door = make('button', 'wing-life-work-door', LIFE_WORDS.wall[language])
+        const door = make('button', 'wing-life-work-door', sayAs(LIFE_WORDS.wall, language))
         door.type = 'button'
         const exhibit = work.exhibit
         door.addEventListener('click', () => press(() => options.walk(exhibit)))
@@ -618,7 +619,7 @@ export function createWingLife(options: WingLifeOptions): WingLife {
     const words = shown === 0 ? LIFE_WORKS_COUNT.none
       : shown === own.length ? (own.length === 1 ? LIFE_WORKS_COUNT.only : LIFE_WORKS_COUNT.all)
         : shown === 1 ? LIFE_WORKS_COUNT.one : LIFE_WORKS_COUNT.some
-    section.append(make('p', 'wing-life-work-count', capitalise(fill(words[language], {
+    section.append(make('p', 'wing-life-work-count', capitalise(fill(sayAs(words, language), {
       shown: spokenCount(shown, language), total: spokenCount(own.length, language),
     }))))
     periodBody.append(section)
@@ -629,9 +630,9 @@ export function createWingLife(options: WingLifeOptions): WingLife {
     const people = record.people.filter(person => person.events.some(id => here.has(id)))
     const section = make('section', 'wing-life-section')
     section.dataset['row'] = 'people'
-    section.append(make('h4', 'wing-life-row-name', LIFE_ROW_WORDS.people[language]))
+    section.append(make('h4', 'wing-life-row-name', sayAs(LIFE_ROW_WORDS.people, language)))
     if (!people.length) {
-      section.append(make('p', 'wing-life-empty', LIFE_WORDS.noPeople[language]))
+      section.append(make('p', 'wing-life-empty', sayAs(LIFE_WORDS.noPeople, language)))
       periodBody.append(section)
       return
     }
@@ -641,9 +642,9 @@ export function createWingLife(options: WingLifeOptions): WingLife {
       const dot = make('span', 'wing-life-dot')
       dot.style.background = record.sure[person.certainty]?.colour ?? ''
       dot.setAttribute('aria-hidden', 'true')
-      item.append(dot, make('span', 'wing-life-person-name', person.name[language]),
-        make('span', 'wing-life-person-role', person.role[language]),
-        make('span', 'wing-life-person-sure', record.sure[person.certainty]?.word[language] ?? ''))
+      item.append(dot, make('span', 'wing-life-person-name', sayAs(person.name, language)),
+        make('span', 'wing-life-person-role', sayAs(person.role, language)),
+        make('span', 'wing-life-person-sure', (record.sure[person.certainty] ? sayAs(record.sure[person.certainty]!.word, language) : '')))
       list.append(item)
     }
     section.append(list)
@@ -657,11 +658,11 @@ export function createWingLife(options: WingLifeOptions): WingLife {
    * asked again. */
   function question(record: LifeRecord, language: 'en' | 'de'): HTMLElement {
     const box = make('div', 'wing-life-ask')
-    box.append(make('p', 'wing-life-ask-line', LIFE_WORDS.ask[language]))
+    box.append(make('p', 'wing-life-ask-line', sayAs(LIFE_WORDS.ask, language)))
     const row = make('div', 'wing-life-ask-row')
     const next = nextBand(record)
     for (const [index, word] of [LIFE_WORDS.askShow, LIFE_WORDS.askSkip].entries()) {
-      const control = make('button', 'wing-life-ask-control', word[language])
+      const control = make('button', 'wing-life-ask-control', sayAs(word, language))
       control.type = 'button'
       control.addEventListener('click', () => {
         asking = false
@@ -670,7 +671,7 @@ export function createWingLife(options: WingLifeOptions): WingLife {
       })
       row.append(control)
     }
-    box.append(row, make('p', 'wing-life-ask-note', LIFE_WORDS.askNote[language]))
+    box.append(row, make('p', 'wing-life-ask-note', sayAs(LIFE_WORDS.askNote, language)))
     return box
   }
 
@@ -692,8 +693,8 @@ export function createWingLife(options: WingLifeOptions): WingLife {
     paintPeriod(record, lifeScale(record.events, record.span).gaps, options.lang())
     placeCounts()
     const entry = bandOf(record, id)
-    if (entry) announce(`${entry.name[options.lang()]}. ${dateCount(eventsOf(record, id).length, options.lang())}`)
-    else if (id === UNDATED) announce(LIFE_WORDS.undated[options.lang()])
+    if (entry) announce(`${sayAs(entry.name, options.lang())}. ${dateCount(eventsOf(record, id).length, options.lang())}`)
+    else if (id === UNDATED) announce(sayAs(LIFE_WORDS.undated, options.lang()))
     if (from === 'spine') spine.querySelector<HTMLElement>(`[data-band="${id}"] .wing-life-item-name`)?.focus({ preventScroll: true })
     if (from === 'ribbon') presses.querySelector<HTMLElement>(`[data-band="${id}"]`)?.focus({ preventScroll: true })
     periodBody.scrollTop = 0
@@ -742,7 +743,7 @@ export function createWingLife(options: WingLifeOptions): WingLife {
     if (id && id !== previous) {
       const event = record.events.find(entry => entry.id === id)
       const sure = event ? record.sure[event.certainty] : undefined
-      if (event) announce(`${event.date.label[options.lang()]}. ${sure?.word[options.lang()] ?? ''}`)
+      if (event) announce(`${sayAs(event.date.label, options.lang())}. ${sure ? sayAs(sure.word, options.lang()) : ''}`)
       if (focus) periodBody.querySelector<HTMLElement>(`[data-event="${id}"]`)?.focus({ preventScroll: true })
     }
   }

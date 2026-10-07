@@ -10,6 +10,7 @@ import cardsRaw from '../data/cards.json?raw'
 import { holderLine, JOINT_WORK, policyCertainty } from '../pictures/policy-label'
 import type { PictureWork, ResolvedPicturePlate } from '../pictures/register'
 import { frameKey, hangNumber } from './picture-room-plan'
+import { sayAs, sayBoth } from '../../content'
 
 type Words = { en: string; de: string }
 const PICTURE = (JSON.parse(cardsRaw) as { controls: { picture: { reproduction?: Words } } }).controls.picture
@@ -40,11 +41,11 @@ export function hangCatalogue(work: PictureWork, face: 'front' | 'reverse' | nul
   entries: readonly ResolvedPicturePlate[], language: 'en' | 'de'): HangCatalogue | null {
   const number = hangNumber(frameKey(work.id, face ?? 'front'))
   if (number === null) return null
-  const date = language === 'de' ? work.date_label_de : work.date_label_en
-  const said = PICTURE.reproduction?.[language]
-  const kind = QUALIFIED.has(work.attribution_certainty) ? policyCertainty(work, entries.length > 0, entries).word[language]
-    : work.attribution_certainty === 'documented' && namedHands(work) > 1 ? JOINT_WORK[language] : null
+  const date = sayAs({ en: work.date_label_en, de: work.date_label_de }, language)
+  const said = PICTURE.reproduction ? sayAs(PICTURE.reproduction, language) : undefined
+  const kind = QUALIFIED.has(work.attribution_certainty) ? sayAs(policyCertainty(work, entries.length > 0, entries).word, language)
+    : work.attribution_certainty === 'documented' && namedHands(work) > 1 ? sayAs(JOINT_WORK, language) : null
   // the holder's own name stays as published; the place and the words round it follow the reader
-  const where = [holderLine(work, language), said, kind].filter((part): part is string => Boolean(part)).join(' · ')
+  const where = [sayBoth(side => holderLine(work, side), language), said, kind].filter((part): part is string => Boolean(part)).join(' · ')
   return { number: String(number), date, where, kind }
 }

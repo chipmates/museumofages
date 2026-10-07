@@ -15,7 +15,7 @@
    · THE WORDS ARE NOT HERE. They are in the wing's own content, with their
      certainty word, so this file holds a sheet and no claims. */
 
-import { lang } from '../content'
+import { say } from '../content'
 import { LIFE_WORDS } from '../life/words'
 import { createTitlePlate, plateGroups, type PlateGroup, type PlateLeaf } from '../title-plate'
 import { loadManifest, type ManifestEntry } from '../../manifest'
@@ -68,7 +68,7 @@ export function createVinciWelcome(
 ): VinciWelcome {
   const form = vinciOpening()
   const opening = form === 'now' ? null : vinciOpenings[form]
-  const text = (value: VinciText): string => value[lang()]
+  const text = (value: VinciText): string => say(value)
   const document_ = host.ownerDocument
   const phone = (): boolean => innerWidth / innerHeight <= 0.9
   const make = <K extends keyof HTMLElementTagNameMap>(tag: K, cls: string, words = ''): HTMLElementTagNameMap[K] => {

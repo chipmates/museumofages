@@ -8,7 +8,7 @@
  * room's existing words. A new key that is not written yet stands down to the
  * existing word its note in `forge/best-of.mjs` names, or to nothing.
  */
-import { lang } from '../../content'
+import { fill, lang, langTag, pairOf, sayAs, sayMaybe, sideAs } from '../../content'
 import { deskControl } from '../../desk-story'
 import type { ManifestIndex } from '../../../manifest'
 import { assetAddress } from '../../../stack/materials'
@@ -18,7 +18,7 @@ import type { VitrineExhibit, VitrinePeek } from '../../vitrine/types'
 import type { vinciManuscriptWords, VINCI_VITRINE_WORDS } from '../collection/close-look'
 import type { VinciText } from '../content'
 import { BEST_OF_NOTICES, BEST_OF_TOPICS, bestOfKey, bestOfRecord, bestOfSource, bestOfTopic, topicExhibit, topicPages,
-  topicTexts, type BestOfLang, type BestOfPage, type BestOfPageTexts, type BestOfPassage, type ScanRecord } from './best-of'
+  said, textOf, topicTexts, type BestOfLang, type BestOfPage, type BestOfPageTexts, type BestOfPassage, type ScanRecord } from './best-of'
 import { SHELF_BOOKS } from './codex-shelf'
 import { MIRROR_EXPLANATION, TABLE_UI } from './content'
 
@@ -69,7 +69,8 @@ const node = <K extends keyof HTMLElementTagNameMap>(tag: K, cls: string, text?:
 }
 
 /** His words stand in quotation marks, the page's language's own. */
-const quoted = (text: string, language: BestOfLang): string => language === 'de' ? `„${text}“` : `“${text}”`
+const QUOTE = { en: '“{0}”', de: '„{0}“' }
+const quoted = (text: string, language: BestOfLang): string => fill(sayAs(QUOTE, language), [text])
 
 /** The holders by a name a credit row holds in one row; any other by its
  * name before the first comma. */
@@ -95,10 +96,10 @@ export function createBestOfLook(options: BestOfLookOptions): BestOfLook {
   const language: BestOfLang = lang()
   const words = options.words.manuscript
   const VINCI_VITRINE_WORDS = options.words.vitrine
-  const copy = TABLE_UI[language]
+  const copy = sideAs(TABLE_UI, language)
   const topic = bestOfTopic(options.slug)
   const pages = topicPages(options.slug)
-  const title = topic?.title?.[language] ?? ''
+  const title = said(topic?.title, language)
   const at = BEST_OF_TOPICS.findIndex(entry => entry.slug === options.slug)
   const key = (name: Parameters<typeof bestOfKey>[0]): string | null => bestOfKey(name, language)
   let texts: Record<string, BestOfPageTexts> = {}
@@ -109,7 +110,7 @@ export function createBestOfLook(options: BestOfLookOptions): BestOfLook {
 
   /** Nothing printed: the museum holds no transcription, or the edition prints the drawing alone. */
   const noWords = (page: BestOfPage): string =>
-    (page.drawing_only ? BEST_OF_NOTICES.no_words_drawing_only?.[language] : null) ?? BEST_OF_NOTICES.no_words[language] ?? ''
+    (page.drawing_only ? sayMaybe(BEST_OF_NOTICES.no_words_drawing_only?.en ?? undefined, BEST_OF_NOTICES.no_words_drawing_only?.de ?? undefined, language) : null) ?? sayMaybe(BEST_OF_NOTICES.no_words.en ?? undefined, BEST_OF_NOTICES.no_words.de ?? undefined, language) ?? ''
 
   /** THE PICTURE'S OWN CREDIT: where the original is, and what the picture
    * is of it, a photograph or a printed facsimile of its year. */
@@ -130,11 +131,11 @@ export function createBestOfLook(options: BestOfLookOptions): BestOfLook {
    * every line, and the page's own phone line stands in where the lead or
    * the caption is too long, before the caption the peek fell back to. */
   function lineOf(page: BestOfPage): { head: string | null; note: string | null; peek: VitrinePeek; label: string | null } {
-    const lead = page.lead?.[language]
-    const caption = page.caption?.[language] || null
+    const lead = page.lead ? textOf(page.lead, language) : undefined
+    const caption = said(page.caption, language) || null
     const row = (...parts: (string | null | undefined)[]): string | null => parts.filter(Boolean).join(' · ') || null
     const picture = pictureCredit(page)
-    const phone = page.phone?.[language] ? page.phone : null
+    const phone = page.phone?.[language] ? { ...page.phone, [language]: sayAs(page.phone, language) } : null
     if (lead?.text) {
       const said = lead.kind === 'ours' ? key('ai_short') ?? lead.label : lead.rest ?? lead.label
       // the band's source row keeps one row; the phone's raised card has room for the whole credit
@@ -162,8 +163,8 @@ export function createBestOfLook(options: BestOfLookOptions): BestOfLook {
     const own = { ceiling: words.ceiling }
     const first = page.hand === 'copy' ? key('the_page') : key('way_hand') ?? words.hand
     if (!first) return []
-    const note = page.direction === 'ordinary' ? key('mirror_ordinary') ?? MIRROR_EXPLANATION[language].documented
-      : MIRROR_EXPLANATION[language].documented
+    const documented = sayAs(pairOf(MIRROR_EXPLANATION, side => side.documented), language)
+    const note = page.direction === 'ordinary' ? key('mirror_ordinary') ?? documented : documented
     const hand: ReaderWay = { id: 'hand', label: first, ...own }
     if (page.hand === 'copy' || page.mirror === 'none') return [hand]
     if (page.mirror === 'own') return [hand, { id: 'mirror', label: words.mirror, mirrored: true, line: note, ...own }]
@@ -171,13 +172,13 @@ export function createBestOfLook(options: BestOfLookOptions): BestOfLook {
     if (!record || !page.plate) return [hand]
     const plate = record as { honesty_en?: string; honesty_de?: string }
     const source: DeepPlateSource = { pyramid: null, file: assetAddress(record), width: page.plate.width, height: page.plate.height }
-    const said = key('mirror_plate') ?? [note, language === 'de' ? plate.honesty_de : plate.honesty_en].filter(Boolean).join(' ')
+    const said = key('mirror_plate') ?? [note, sayMaybe(plate.honesty_en, plate.honesty_de, language)].filter(Boolean).join(' ')
     return [hand, { id: 'mirror', label: words.mirror, mirrored: true, source, window: page.plate.window, line: said, ...own }]
   }
 
   /** "Flight, 2 of 18": the topic and the page's place in it. */
   function countOf(place: number, count: number): string {
-    const pattern = key('topic_count') ?? `{topic}, ${deskControl('picture', 'place')[language] || '{n} / {total}'}`
+    const pattern = key('topic_count') ?? `{topic}, ${sayAs(deskControl('picture', 'place'), language) || '{n} / {total}'}`
     return pattern.replace('{topic}', title).replace('{n}', String(place + 1)).replace('{total}', String(count))
   }
 
@@ -193,10 +194,10 @@ export function createBestOfLook(options: BestOfLookOptions): BestOfLook {
       ? { pyramid: null, file: assetAddress(spread), width: spread.width, height: spread.height } : null
     return {
       id: page.id,
-      label: page.name?.[language] ?? page.seat[language],
-      shows: page.caption?.[language] ?? '',
+      label: sayAs(page.name ?? page.seat, language),
+      shows: said(page.caption, language),
       // the translation's whole credit, where the source row says it short
-      notes: [topic?.line?.[language] ?? '', pictureWord(page) ?? '', !page.words ? noWords(page) : '', label ?? ''],
+      notes: [said(topic?.line, language), pictureWord(page) ?? '', !page.words ? noWords(page) : '', label ?? ''],
       source: opening ?? found.source,
       // the leaf, framed, where its photograph shows a ground around it: a
       // zoom state, with the whole photograph one step further out
@@ -208,7 +209,7 @@ export function createBestOfLook(options: BestOfLookOptions): BestOfLook {
       head,
       note,
       peek,
-      seat: page.name ? page.seat[language] : '',
+      seat: page.name ? sayAs(page.seat, language) : '',
       count: countOf(place, count),
       volume: options.slug,
       honesty: '',
@@ -221,7 +222,7 @@ export function createBestOfLook(options: BestOfLookOptions): BestOfLook {
   /** The struck words of the edition shown struck, the rest as printed. */
   function textNode(text: string, lang_: string): HTMLParagraphElement {
     const out = node('p', 'vitrine-source-text')
-    out.lang = lang_
+    out.lang = lang_ === 'en' || lang_ === 'de' ? langTag(lang_) : lang_
     for (const [part, piece] of printed(text).split('~~').entries()) {
       if (!piece) continue
       out.append(part % 2 ? node('s', '', piece) : document.createTextNode(piece))
@@ -246,12 +247,12 @@ export function createBestOfLook(options: BestOfLookOptions): BestOfLook {
     for (const passage of shown) {
       const section = node('section', 'reader-passage')
       if (passage.index === own?.lead) section.dataset['lead'] = 'true'
-      const words_ = italian ? passage.it : passage[language]
+      const words_ = italian ? passage.it : textOf(passage, language)
       const text = words_?.text ?? ''
       if (!text) continue
       if (passage.label_only) section.dataset['label'] = 'true'
       section.append(textNode(text, italian ? 'it' : language))
-      const label = italian ? passage.it?.label[language] : passage[language]?.label
+      const label = italian ? (passage.it ? sayMaybe(passage.it.label.en ?? undefined, passage.it.label.de ?? undefined, language) : undefined) : textOf(passage, language)?.label
       if (label) section.append(node('p', 'vitrine-meta', label))
       out.push(section)
     }
@@ -315,8 +316,8 @@ export function createBestOfLook(options: BestOfLookOptions): BestOfLook {
   // the record holds the page's source first: it is named after that
   const recordWord: VinciText = VINCI_VITRINE_WORDS.provenance
   const id = options.id ?? topicExhibit(options.slug)
-  const record = control(recordWord[language], () => options.openRecord(id, recordWord, renderRecord), 'record')
-  const shut = control(VINCI_VITRINE_WORDS.close[language], () => options.close(), 'close')
+  const record = control(sayAs(recordWord, language), () => options.openRecord(id, recordWord, renderRecord), 'record')
+  const shut = control(sayAs(VINCI_VITRINE_WORDS.close, language), () => options.close(), 'close')
 
   /** THE WALK IS TOPIC TO TOPIC: the gold is the next one, named, and the
    * circle the one before; the page's own arrows turn its pages. */
@@ -326,7 +327,7 @@ export function createBestOfLook(options: BestOfLookOptions): BestOfLook {
     button.type = 'button'
     button.disabled = !target
     if (target) {
-      const name = target.title?.[language] ?? ''
+      const name = said(target.title, language)
       button.setAttribute('aria-label', prefix ? (prefix.includes('{name}') ? prefix.replace('{name}', name) : `${prefix} · ${name}`) : name)
       button.addEventListener('click', () => options.openTopic(target.slug, button))
     }
@@ -344,11 +345,11 @@ export function createBestOfLook(options: BestOfLookOptions): BestOfLook {
     const add = (said: string | null | undefined, cls = 'vinci-statement'): void => {
       if (said) full.append(node('p', cls, said))
     }
-    add(page.name ? `${page.name[language]} · ${page.seat[language]}` : page.seat[language])
+    add(page.name ? `${sayAs(page.name, language)} · ${sayAs(page.seat, language)}` : sayAs(page.seat, language))
     const scan = index ? bestOfSource(page, index)?.record as (ScanRecord & { rights_notice?: string; licence_url?: string }) | undefined : undefined
     // the record's own line in the visitor's language, as the shelf's books read it (the Institut's is the
     // holder's, in French in both); the set's line where the record holds none
-    add((language === 'de' ? scan?.honesty_de : scan?.honesty_en) ?? page.credit)
+    add(sayMaybe(scan?.honesty_en, scan?.honesty_de, language) ?? page.credit)
     // the notice the picture's file carries, word for word from its record: the file's words are the credit
     add(scan?.rights_notice)
     const link = (label: string, url: string): void => {
@@ -372,7 +373,7 @@ export function createBestOfLook(options: BestOfLookOptions): BestOfLook {
       link(host_, scan.source_url)
     }
     // THE WHOLE BOOK: on the shelf where it stands there, at its holder's where not
-    const whole = deskControl('overview', 'whole_book')[language]
+    const whole = sayAs(deskControl('overview', 'whole_book'), language)
     const shelf = bookOf(page)
     const open = options.openBook
     if (shelf && open && whole) {
@@ -389,16 +390,16 @@ export function createBestOfLook(options: BestOfLookOptions): BestOfLook {
     // the plate the mirror shows, where it is not the page's own scan
     if (page.mirror === 'plate' && page.plate && index) {
       const plate = bestOfRecord(index, page.plate.path) as { honesty_en?: string; honesty_de?: string } | undefined
-      add(language === 'de' ? plate?.honesty_de : plate?.honesty_en)
+      add(sayMaybe(plate?.honesty_en, plate?.honesty_de, language))
     }
     const own = texts[page.id]
     if (page.words && own) {
-      const how = BEST_OF_NOTICES.how_made[language]
+      const how = sayMaybe(BEST_OF_NOTICES.how_made.en ?? undefined, BEST_OF_NOTICES.how_made.de ?? undefined, language)
       // the check's result is the coordinator's to write in; until then the sentence stands without it
       add(how?.replace(/\s*\{result\}\s*/, ' ').trim())
-      const ai = new Set(own.passages.map(passage => passage[language]).filter(t => t?.kind === 'ours').map(t => t!.label).filter(Boolean))
+      const ai = new Set(own.passages.map(passage => textOf(passage, language)).filter(t => t?.kind === 'ours').map(t => t!.label).filter(Boolean))
       for (const sentence of ai) add(sentence)
-      for (const passage of own.passages) for (const doubt of passage[language]?.doubts ?? []) add(doubt, 'vinci-statement vitrine-meta')
+      for (const passage of own.passages) for (const doubt of textOf(passage, language)?.doubts ?? []) add(doubt, 'vinci-statement vitrine-meta')
     }
     host.append(full)
   }
@@ -407,7 +408,7 @@ export function createBestOfLook(options: BestOfLookOptions): BestOfLook {
   const opening = first ? lineOf(first) : { head: null, note: null, peek: { note: '', line: null, source: null }, label: null }
   const exhibit: VitrineExhibit = {
     id,
-    title: first ? first.name?.[language] ?? first.seat[language] : title,
+    title: first ? sayAs(first.name ?? first.seat, language) : title,
     line: opening.head,
     note: opening.note,
     peek: opening.peek,

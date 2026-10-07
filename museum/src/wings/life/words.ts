@@ -10,6 +10,7 @@
  */
 
 import type { Bi } from './types'
+import { catalogPage, figure, sayAs } from '../content'
 
 export const LIFE_WORDS = {
   /** The control in the wing's bar, a bare noun the way the bar's others are. */
@@ -144,7 +145,7 @@ export function countedCertainties(sure: Record<string, { counted: Bi }>, by: Re
   const clauses: string[] = []
   for (const [key, words] of Object.entries(sure)) {
     const count = by[key] ?? 0
-    if (count > 0) clauses.push(fill(words.counted[language], { n: spokenCount(count, language) }))
+    if (count > 0) clauses.push(fill(sayAs(words.counted, language), { n: spokenCount(count, language) }))
   }
   return clauses.join(', ')
 }
@@ -170,6 +171,8 @@ const TENS: Record<'en' | 'de', readonly string[]> = {
  * A caller that asks anyway gets a numeral, which is visibly wrong in prose
  * rather than quietly ungrammatical. */
 export function spokenCount(value: number, language: 'en' | 'de'): string {
+  // a catalog language writes the figure: its words for numbers are not here
+  if (catalogPage()) return figure(value)
   if (!Number.isInteger(value) || value < 2 || value > 99) return String(value)
   if (value < 20) return ONES[language][value] ?? String(value)
   const ten = TENS[language][Math.floor(value / 10)] ?? '', one = ONES[language][value % 10] ?? ''

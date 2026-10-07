@@ -6,6 +6,7 @@
  * data lives in data/opening-drawings.json, as the paintings' does in theirs.
  */
 import drawingsSource from './data/opening-drawings.json?raw'
+import { catalogPage, sayAs } from '../../content'
 
 export interface OpeningBilingual { readonly en: string; readonly de: string }
 
@@ -121,9 +122,9 @@ export function openingHonesty(drawing: OpeningDrawing): OpeningBilingual {
  * code line as its own paragraph. The correction's steps stay in the record
  * and the store's note; the label names the correction once. */
 export function openingLabel(drawing: OpeningDrawing, language: 'en' | 'de'): readonly string[] {
-  const honesty = openingHonesty(drawing)[language]
-  const code = drawing.holder_type === 'italian-state' ? ITALIAN_CODE_LINE[language] : ''
-  const body = code ? honesty.slice(0, honesty.length - code.length).trimEnd() : honesty
+  const honesty = sayAs(openingHonesty(drawing), language)
+  const code = drawing.holder_type === 'italian-state' ? sayAs(ITALIAN_CODE_LINE, language) : ''
+  const body = code && (!catalogPage() || honesty.endsWith(code)) ? honesty.slice(0, honesty.length - code.length).trimEnd() : honesty
   return [body, ...(code ? [code] : [])]
 }
 

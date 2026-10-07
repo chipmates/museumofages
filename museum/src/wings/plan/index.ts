@@ -23,6 +23,7 @@ import { deskAny } from '../desk-switches'
 import { drawPlanPlate, PLATE_NAME_FLOOR, PLATE_NAME_PX, type PlanPlate } from './plate'
 import { PLAN_WORDS } from './words'
 import { deskControl } from '../desk-story'
+import { sayAs } from '../content'
 import type { PlanSite } from './types'
 
 export type { PlanHighlight, PlanRoom, PlanShape, PlanSite, PlanStation, RecapEntry } from './types'
@@ -102,7 +103,7 @@ export function createWingPlan(options: WingPlanOptions): WingPlan {
     if (words) element.textContent = words
     return element
   }
-  const say = <T extends { en: string; de: string }>(value: T): string => value[options.lang()]
+  const say = <T extends { en: string; de: string }>(value: T): string => sayAs(value, options.lang())
   const drawn = (box: string, d: string): SVGSVGElement => {
     const svg = document_.createElementNS('http://www.w3.org/2000/svg', 'svg')
     svg.setAttribute('viewBox', box)
@@ -275,7 +276,7 @@ export function createWingPlan(options: WingPlanOptions): WingPlan {
       entry.setAttribute('aria-current', String(station.id === standing))
       entry.append(
         make('span', 'wing-plan-entry-number', String(station.number)),
-        make('span', 'wing-plan-entry-name', station.name[language]),
+        make('span', 'wing-plan-entry-name', sayAs(station.name, language)),
       )
       if (stood.has(station.id) && station.id !== standing)
         entry.append(make('span', 'wing-plan-said', say(PLAN_WORDS.stood)))
@@ -294,8 +295,8 @@ export function createWingPlan(options: WingPlanOptions): WingPlan {
       const inner = make('ul', 'wing-plan-works')
       inner.id = `wing-plan-works-${station.number}`
       entry.setAttribute('aria-controls', inner.id)
-      const holds = works.length === 1 ? works[0]!.title[language] : say(deskControl('overview', 'things_to_see')).replace('{n}', String(works.length))
-      entry.setAttribute('aria-label', `${station.number} ${station.name[language]}, ${holds}`)
+      const holds = works.length === 1 ? sayAs(works[0]!.title, language) : say(deskControl('overview', 'things_to_see')).replace('{n}', String(works.length))
+      entry.setAttribute('aria-label', `${station.number} ${sayAs(station.name, language)}, ${holds}`)
       const fold = make('span', 'wing-plan-fold')
       fold.setAttribute('aria-hidden', 'true')
       fold.append(make('span', 'wing-plan-fold-count', String(works.length)), chevron())
@@ -317,7 +318,7 @@ export function createWingPlan(options: WingPlanOptions): WingPlan {
         const word = say(deskControl('walk', 'walk_there'))
         const walk = make('button', 'wing-plan-there')
         walk.type = 'button'
-        walk.setAttribute('aria-label', `${word} · ${station.name[language]}`)
+        walk.setAttribute('aria-label', `${word} · ${sayAs(station.name, language)}`)
         walk.append(make('span', 'wing-plan-there-word', word), arrow())
         walk.addEventListener('click', () => press(() => options.station(station.id)))
         there.append(walk)
@@ -325,7 +326,7 @@ export function createWingPlan(options: WingPlanOptions): WingPlan {
       }
       for (const work of works) {
         const line = make('li', '')
-        const button = make('button', 'wing-plan-work', work.title[language])
+        const button = make('button', 'wing-plan-work', sayAs(work.title, language))
         button.type = 'button'
         button.dataset['kind'] = work.kind
         button.addEventListener('click', () => press(() => options.highlight(work.id)))

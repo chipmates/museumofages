@@ -9,7 +9,7 @@
      narrow desktop window takes the upright form too, but it has no sideways
      to offer. */
 
-import { lang } from '../content'
+import { lang, langTag } from '../content'
 import { filmForm } from './film-cinema'
 import { openingWord } from './opening/arno-card'
 import css from './turn-line.css?inline'
@@ -69,7 +69,7 @@ export function createTurnLine(signal: AbortSignal): TurnLine {
     if (!said) return
     line = way.ownerDocument.createElement('p')
     line.className = 'turn-line'
-    line.lang = lang()
+    line.lang = langTag(lang())
     line.textContent = said
     way.after(line)
     markSeen()
@@ -77,7 +77,7 @@ export function createTurnLine(signal: AbortSignal): TurnLine {
     addEventListener('resize', () => { if (filmForm() !== 'upright') remove() }, { signal })
     addEventListener('na-language', () => {
       if (!line) return
-      line.lang = lang()
+      line.lang = langTag(lang())
       line.textContent = words()
     }, { signal })
   }

@@ -5,6 +5,7 @@
  */
 import indexRaw from './data/best-of.json?raw'
 import { TOPIC_TEXTS } from './data/best-of-texts'
+import { catalogPage, figure, isOne, sayMaybe, sideAs } from '../../content'
 import type { ManifestEntry, ManifestIndex } from '../../../manifest'
 import { assetAddress, assetPyramidBase } from '../../../stack/materials'
 import type { DeepPlateSource } from '../../vitrine/deep-plate'
@@ -120,10 +121,10 @@ export const BEST_OF_TOPICS: readonly BestOfTopic[] = INDEX.topics
 export const BEST_OF_PAGES: readonly BestOfPage[] = INDEX.pages
 export const BEST_OF_NOTICES = INDEX.notices
 /** A key of the room's new words in the page's language, or null until written. */
-export const bestOfKey = (key: BestOfKey, lang: BestOfLang): string | null => INDEX.keys?.[key]?.[lang] ?? null
+export const bestOfKey = (key: BestOfKey, lang: BestOfLang): string | null => { const words = INDEX.keys?.[key]; return words ? sayMaybe(words.en ?? undefined, words.de ?? undefined, lang) ?? null : null }
 /** A topic cell's page count, the singular for one page, or null until written. */
 export function topicPagesWord(n: number, lang: BestOfLang): string | null {
-  return ((n === 1 ? bestOfKey('topic_page', lang) : null) ?? bestOfKey('topic_pages', lang))?.replace('{n}', String(n)) ?? null
+  return ((isOne(n) ? bestOfKey('topic_page', lang) : null) ?? bestOfKey('topic_pages', lang))?.replace('{n}', figure(n)) ?? null
 }
 /** The topic the table opens at, and the page: the leaf the 1883 volume lies
  * open at in the room, here in colour. */
@@ -146,7 +147,14 @@ export function topicPages(slug: string): BestOfPage[] {
 export const topicOfPage = (id: string): BestOfTopic | undefined => bestOfTopic(PAGES.get(id)?.topic ?? '')
 
 /** The page's words in the language asked for, for a caption or a label. */
-export const said = (words: BestOfWords | null | undefined, lang: BestOfLang): string => words?.[lang] ?? ''
+export const said = (words: BestOfWords | null | undefined, lang: BestOfLang): string => (words ? sayMaybe(words.en ?? undefined, words.de ?? undefined, lang) : undefined) ?? ''
+
+/** A passage's or a lead's words in the page's language: English and German
+ * their own record; a catalog page reads it field by field. */
+export const textOf = (both: { en?: BestOfText | null; de?: BestOfText | null }, lang: BestOfLang): BestOfText | null | undefined => {
+  const own = both[lang]
+  return own && catalogPage() && both.en ? sideAs({ en: both.en, de: both.de ?? null }, lang) as BestOfText : own
+}
 
 const loaded = new Map<string, Promise<Record<string, BestOfPageTexts>>>()
 /** The words of every page of one topic, fetched once when the topic opens. */

@@ -12,6 +12,7 @@
  */
 
 import { LIFE_WORDS, fill } from './words'
+import { sayAs } from '../content'
 import type { LifeEvent, LifeRecord } from './types'
 
 export interface LifeDateHost {
@@ -39,18 +40,18 @@ export function renderLifeDate(options: LifeDateHost): void {
   const head = make('div', 'wing-life-date-head')
   const dateSure = record.sure[event.date.certainty]
   if (event.date.certainty !== event.certainty && dateSure) {
-    const word = make('span', 'wing-life-date-doubt', fill(LIFE_WORDS.dateSure[language], { word: dateSure.word[language] }))
+    const word = make('span', 'wing-life-date-doubt', fill(sayAs(LIFE_WORDS.dateSure, language), { word: sayAs(dateSure.word, language) }))
     word.style.setProperty('--certainty', dateSure.colour)
     head.append(word)
   }
-  if (event.date.disputed) head.append(make('span', 'wing-life-date-doubt', LIFE_WORDS.disputed[language]))
+  if (event.date.disputed) head.append(make('span', 'wing-life-date-doubt', sayAs(LIFE_WORDS.disputed, language)))
   if (head.childElementCount) host.append(head)
-  host.append(make('p', 'wing-life-date-line', event.line[language]))
+  host.append(make('p', 'wing-life-date-line', sayAs(event.line, language)))
   // Who set the year, or the style it is counted in, travels with the date.
-  if (event.date.note) host.append(make('p', 'wing-life-date-note', event.date.note[language]))
+  if (event.date.note) host.append(make('p', 'wing-life-date-note', sayAs(event.date.note, language)))
 
   if (event.source) {
-    const source = make('p', 'wing-life-date-source', event.source[language])
+    const source = make('p', 'wing-life-date-source', sayAs(event.source, language))
     // The reading of where a sentence comes from is the record's own voice.
     source.dataset['register'] = 'drawer'
     host.append(source)
@@ -60,9 +61,9 @@ export function renderLifeDate(options: LifeDateHost): void {
   // THE VISITOR IS STANDING ON THE FLOOR THAT CARRIES IT, so this is a mark
   // and not a door: there is nowhere to be walked to.
   if (event.walk && 'stud' in event.walk)
-    foot.append(make('p', 'wing-life-date-cut', record.words.cut[language]))
+    foot.append(make('p', 'wing-life-date-cut', sayAs(record.words.cut, language)))
   if (options.open && record.words.provenance) {
-    const door = make('button', 'wing-life-date-record', record.words.provenance[language])
+    const door = make('button', 'wing-life-date-record', sayAs(record.words.provenance, language))
     door.type = 'button'
     door.addEventListener('click', () => options.open?.(event, () => door.focus({ preventScroll: true })))
     foot.append(door)

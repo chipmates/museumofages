@@ -16,6 +16,7 @@
  * list beside it, which is why no text in here has to be reachable. */
 
 import type { PlanPoint, PlanSite } from './types'
+import { sayAs } from '../content'
 
 /** metres of clear ground around everything the plan draws */
 export const PLATE_PAD_M = 2.5
@@ -309,7 +310,7 @@ export function drawPlanPlate(
     rooms.append(rect)
     const face: Box = { l: Math.min(a.x, b.x), t: Math.min(a.y, b.y), r: Math.max(a.x, b.x), b: Math.max(a.y, b.y) }
     edges([{ x: face.l, y: face.t }, { x: face.r, y: face.t }, { x: face.r, y: face.b }, { x: face.l, y: face.b }], true)
-    if (room.name) wanted.push({ id: room.id, words: room.name[language], room: face, area: (face.r - face.l) * (face.b - face.t), hull: null })
+    if (room.name) wanted.push({ id: room.id, words: sayAs(room.name, language), room: face, area: (face.r - face.l) * (face.b - face.t), hull: null })
   }
 
   const path = (points: readonly PlanPoint[]): string =>
@@ -330,7 +331,7 @@ export function drawPlanPlate(
       face.t = Math.min(face.t, corner.y); face.b = Math.max(face.b, corner.y)
     }
     wanted.push({
-      id: shape.id, words: shape.name[language], room: face,
+      id: shape.id, words: sayAs(shape.name, language), room: face,
       area: (face.r - face.l) * (face.b - face.t), hull: shape.closed ? corners : null,
     })
   }

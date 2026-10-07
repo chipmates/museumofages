@@ -5,10 +5,10 @@
 
 import type { PerspectiveCamera, Scene } from 'three/webgpu'
 import type { Stack } from '../../stack'
-import { figure, filled, lang, pairOf, say, sayAs, sayEnglish, sayMaybe } from '../content'
+import { catalogPage, figure, filled, lang, langTag, pairOf, say, sayAs, sayEnglish, sayMaybe } from '../content'
 import { vinciCertaintyWords, type VinciCertainty, type VinciText } from './content'
 import { getWork, findEvidencePlates, findPlateEntries } from './pictures/register'
-import { createPictureRecord, createWindowWorkLabel, policyLabelText, PICTURE_CERTAINTY_KEY } from './pictures/policy-label'
+import { createPictureRecord, policyLabelText, PICTURE_CERTAINTY_KEY } from './pictures/policy-label'
 import { uiSureWithin } from '../ui-sure'
 import { validatePaintingRecord } from './pictures/policy'
 import { machineCatalog, type MachineSlug } from './machines/catalog'
@@ -16,7 +16,7 @@ import { createVinciCloseLook, createVinciMachinePayload, createVinciShowpiecePa
   vinciLine, vinciLimits, vinciMachineCard, vinciMachineClockWords, vinciMachineSheet, vinciMachineSteps, vinciManuscriptWords, vinciPlaceCard,
   vinciFolioLabel, vinciMachineWordsInPlace, vinciPlaceTitle, vinciRoomName, vinciSheetRecords, vinciSheetSides, vinciShowpiece, vinciWorkTitle,
   VINCI_EXHIBIT_CARD, VINCI_PAGE_HONESTY, VINCI_VITRINE_WORDS, type VinciPlaceCertainty, type VinciPlaceId, type VinciShowpiece } from './collection/close-look'
-import { createVinciPaintingView, vinciPlateWords } from './collection/deep-plate'
+import { createVinciPaintingView, sayPictureRecord as sayRecord, vinciPlateWords, windowWorkLabel } from './collection/deep-plate'
 import { hangCatalogue } from './collection/catalogue'
 import { filmLookKind, FILM_DEATHBED as DEATHBED, FILM_DEATHBED_PLATE, FILM_EDITION_WHOLE as EDITION_WHOLE, FILM_PLACES as PLACES, FILM_STUDY_LEAF as VINCI_STUDY_LEAF, FILM_STUDY_SHEET } from './film-look-kinds'
 import { countLook } from '../../core/museum-count'
@@ -48,7 +48,7 @@ import { createBestOfLook } from './table/best-of-look'
 import { EDITION_EXHIBIT, SHELF_BOOKS, shelfBook, shelfPlate } from './table/codex-shelf'
 import { shownAbsences } from './table/absences'
 import { createCodexReaderPayload } from './table/codex-reader'
-import { createReaderPayload as createEditionReader } from './table/reader'
+import { createReaderPayload as createEditionReader, shelfInPageWords } from './table/reader'
 import type { ReadingTable } from './table'
 import { SHELF_UI, TABLE_UI } from './table/content'
 
@@ -279,8 +279,9 @@ export function createFilmLook(h: FilmLookHost) {
       const record = (): void => h.openRecord(id, { en: work.title_en, de: work.title_de }, certainty, host => {
         const full = uiSureWithin(createPictureRecord(work, entries, evidence))
         full.hidden = false
+        if (catalogPage()) sayRecord(full)
         // the record speaks the page's language, as the label does
-        for (const column of full.querySelectorAll<HTMLElement>('.picture-label-language, .picture-fact[lang]')) if (column.lang !== lang()) column.remove()
+        for (const column of full.querySelectorAll<HTMLElement>('.picture-label-language, .picture-fact[lang]')) if (column.lang !== langTag(lang())) column.remove()
         host.append(full)
         for (const slot of ['limit', 'visual_note']) { const empty = make('p', 'vinci-statement'); empty.dataset['slot'] = slot; empty.hidden = true; full.append(empty) }
         fillVinciLimitSlots(id, full)
@@ -293,7 +294,7 @@ export function createFilmLook(h: FilmLookHost) {
       // ONE VIEW OF A PAINTING, the live wing's own: the deep plate with its zoom and its rule
       if (plate) openLook({ ...createVinciPaintingView({ id, title, line: vinciLine(id), work, entries, plate, ...vinciLimits(id), controls,
         from: () => null, standing: h.standing, narrow: h.narrow(), catalogue, tier }), walk, set, certainty }, from, how)
-      else openLook({ id, title, line: vinciLine(id), card: [uiSureWithin(createWindowWorkLabel(work, entries, lang(), h.narrow(), Boolean(catalogue?.kind)))],
+      else openLook({ id, title, line: vinciLine(id), card: [uiSureWithin(windowWorkLabel(work, entries, lang(), h.narrow(), Boolean(catalogue?.kind)))],
         payload: null, controls, walk, ...vinciLimits(id), set, certainty, catalogue }, from, how)
       return
     }
@@ -658,7 +659,7 @@ export function createFilmLook(h: FilmLookHost) {
   function openBook(id: string, from: HTMLElement | null): void {
     const book = shelfBook(id)
     if (!book) return
-    const reader = createCodexReaderPayload({ book, manifest: loadManifest(), words: vinciManuscriptWords(),
+    const reader = createCodexReaderPayload({ book, manifest: shelfInPageWords(book.codex, loadManifest()), words: vinciManuscriptWords(),
       more: text(VINCI_VITRINE_WORDS.more), colour: certaintyColour('documented'), tier: () => 'standard', changed: () => undefined,
       openBook: next => void open(next, null), openLeaf: () => void open(EDITION_WHOLE, null) })
     h.standDown(true)

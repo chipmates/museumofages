@@ -5,6 +5,7 @@
  * site and the recap's options, never from here. */
 
 import type { Bi } from './types'
+import { catalogPage, figure, fill, sayAs, sayCount } from '../content'
 
 export const PLAN_WORDS = {
   /** The control in the wing's bar, beside the sources of the station. A
@@ -54,12 +55,15 @@ const NUMBERS: Record<'en' | 'de', readonly string[]> = {
 }
 
 export function spokenCount(value: number, language: 'en' | 'de'): string {
+  // a catalog language writes the figure: its words for numbers are not here
+  if (catalogPage()) return figure(value)
   return NUMBERS[language][value] ?? String(value)
 }
 
 /** The offer's sentence for a record of this size, or null for an empty one. */
 export function visitOfferLine(count: number, language: 'en' | 'de'): string | null {
   if (count <= 0) return null
-  if (count === 1) return VISIT_OFFER.one[language]
-  return VISIT_OFFER.many[language].replace('{n}', spokenCount(count, language))
+  if (catalogPage()) return fill(sayCount(count, VISIT_OFFER.one, VISIT_OFFER.many), { n: spokenCount(count, language) })
+  if (count === 1) return sayAs(VISIT_OFFER.one, language)
+  return sayAs(VISIT_OFFER.many, language).replace('{n}', spokenCount(count, language))
 }

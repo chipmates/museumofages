@@ -1,9 +1,12 @@
 import { setRegister } from '../frame'
 import { windowOwnsTheScreen } from '../window-chrome'
 import { deskAny } from '../desk-switches'
-import { lang } from '../content'
+import { lang, say } from '../content'
 import { LOBBY_TEXT } from '../../content/lobby'
 import type { VinciCertainty, VinciText } from './content'
+
+/** the window's name, said to assistive technology */
+const SOURCES_TITLE = { en: 'Sources and reconstruction', de: 'Quellen und Rekonstruktion' }
 
 export type VinciSourcesTab = 'station' | 'room' | 'wing'
 
@@ -30,7 +33,7 @@ export function createVinciSourcesWindow(host: HTMLElement, control: HTMLButtonE
   dialog.className = 'vinci-dock'
   dialog.id = 'vinci-source-card'
   dialog.tabIndex = -1
-  dialog.setAttribute('aria-label', lang() === 'de' ? 'Quellen und Rekonstruktion' : 'Sources and reconstruction')
+  dialog.setAttribute('aria-label', say(SOURCES_TITLE))
   setRegister(dialog, 'drawer')
   const toolbar = document.createElement('div')
   toolbar.className = 'vinci-sources-toolbar'
@@ -47,7 +50,7 @@ export function createVinciSourcesWindow(host: HTMLElement, control: HTMLButtonE
   key.className = 'desk-key'
   key.setAttribute('aria-hidden', 'true')
   key.textContent = 'Esc'
-  close.append(LOBBY_TEXT.close[lang()], key)
+  close.append(say(LOBBY_TEXT.close), key)
   close.setAttribute('aria-keyshortcuts', 'Escape')
   close.addEventListener('click', () => dialog.close())
   // A press on the backdrop closes: on the phone the thumb is already below the window.
@@ -84,7 +87,7 @@ export function createVinciSourcesWindow(host: HTMLElement, control: HTMLButtonE
     const button = document.createElement('button')
     button.type = 'button'
     button.id = `vinci-sources-tab-${id}`
-    button.textContent = vinciSourcesTabs[id][lang()]
+    button.textContent = say(vinciSourcesTabs[id])
     button.setAttribute('role', 'tab')
     button.setAttribute('aria-controls', `vinci-sources-${id}`)
     button.addEventListener('click', () => select(id))

@@ -14,7 +14,7 @@
      words step down a size until they stand whole above the gold, and the
      opened label ends on a whole line. */
 
-import { lang, type Lang } from '../../content'
+import { lang, langTag, sayAs, type Lang } from '../../content'
 import { loadManifest, type ManifestIndex } from '../../../manifest'
 import { assetAddress } from '../../../stack/materials'
 import { filmForm } from '../film-cinema'
@@ -31,7 +31,7 @@ export function openingWord(key: string, language: Lang = lang()): string {
   const [scope, card, part] = key.split('.')
   const said = scope === 'opening' && card && part ? WORDS.opening[card]?.[part] : undefined
   if (!said?.[language]) throw new Error(`No opening word ${key} (${language})`)
-  return said[language]
+  return sayAs(said, language)
 }
 
 export const ARNO_OPENING = 'arno'
@@ -121,7 +121,7 @@ export async function openArnoCard(host: HTMLElement, options: ArnoCardOptions =
   const plate = admitted.files[admitted.files.length - 1]!
 
   const card = make('dialog', 'arno-card')
-  card.lang = language
+  card.lang = langTag(language)
   card.setAttribute('aria-labelledby', 'arno-card-line')
   // the sideways column reads the sheet's shape too, to stand level with it
   card.style.setProperty('--arno-ratio', `${plate.width} / ${plate.height}`)
@@ -131,7 +131,7 @@ export async function openArnoCard(host: HTMLElement, options: ArnoCardOptions =
   const stage = make('div', 'arno-stage')
   const sheet = make('figure', 'arno-sheet')
   const drawing = make('img', 'arno-drawing')
-  drawing.alt = `${ARNO_1473.maker}, ${ARNO_1473.title[language]}, ${ARNO_1473.date_label[language]}`
+  drawing.alt = `${ARNO_1473.maker}, ${sayAs(ARNO_1473.title, language)}, ${sayAs(ARNO_1473.date_label, language)}`
   drawing.width = plate.width
   drawing.height = plate.height
   drawing.decoding = 'async'

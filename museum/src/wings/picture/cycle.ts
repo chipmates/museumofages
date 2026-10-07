@@ -12,6 +12,7 @@ import { islandFit } from '../vitrine/fit'
 import { deskStageHeight } from '../desk-stage'
 import { paintSlider } from '../vitrine/slider'
 import { folioDoor, type FolioSheet } from '../vitrine/folio'
+import { langTag } from '../content'
 
 export interface CycleFile { file: string; bytes: number }
 
@@ -402,7 +403,7 @@ export function createCyclePayload(options: {
     if (step === active) return
     active = step
     host.caption.textContent = steps[step]?.text ?? ''
-    host.caption.lang = host.lang
+    host.caption.lang = langTag(host.lang)
     host.step?.(step, steps.length)
     stepButtons.forEach((button, i) => { if (i === step) button.setAttribute('aria-current', 'step'); else button.removeAttribute('aria-current') })
     host.describe(steps[step] ? `${options.title}. ${steps[step]!.text}` : options.title)
@@ -548,7 +549,7 @@ export function createCyclePayload(options: {
         const item = make('li', '')
         const button = make('button', 'vitrine-step-item')
         button.type = 'button'
-        button.lang = next.lang
+        button.lang = langTag(next.lang)
         const dot = make('span', 'vinci-title-dot')
         dot.dataset['certainty'] = step.certainty
         dot.setAttribute('aria-hidden', 'true')

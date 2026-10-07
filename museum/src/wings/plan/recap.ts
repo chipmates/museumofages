@@ -11,6 +11,7 @@
  */
 
 import { RECAP_WORDS } from './words'
+import { sayAs } from '../content'
 import type { RecapEntry } from './types'
 
 export interface WingRecapOptions {
@@ -34,7 +35,7 @@ let lines = 0
  * refresh it, so this composes and never keeps state. */
 export function createWingRecap(options: WingRecapOptions): HTMLElement {
   const language = options.lang()
-  const say = <T extends { en: string; de: string }>(value: T): string => value[language]
+  const say = <T extends { en: string; de: string }>(value: T): string => sayAs(value, language)
   const make = <K extends keyof HTMLElementTagNameMap>(tag: K, cls: string, words = ''): HTMLElementTagNameMap[K] => {
     const element = document.createElement(tag)
     element.className = cls

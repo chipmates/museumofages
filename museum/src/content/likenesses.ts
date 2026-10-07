@@ -10,7 +10,7 @@
 
 import { loadManifest, type ManifestEntry } from '../manifest'
 import { assetAddress } from '../stack/materials'
-import type { Lang } from '../wings/content'
+import { catalogPage, say, sayMaybe, type Lang } from '../wings/content'
 
 /** one measured file of a record: the original, a preview, a crop. Each file
     is hashed on its own, so a preview re-encoded at the same size still
@@ -80,6 +80,14 @@ const previewsOf = (record: LikenessRecord): LikenessFile[] =>
 /** the record's label with the honesty sentence and the code line taken off
     its end: those two stand as the credit's own second line */
 export function likenessCredit(record: LikenessRecord, language: Lang): { credit: string; note: string } {
+  if (!catalogPage()) return creditIn(record, language)
+  // a catalog page says the credit and each tail by its own pair
+  const en = creditIn(record, 'en'), de = creditIn(record, 'de')
+  const note = [sayMaybe(record.honesty_en, record.honesty_de, 'en'), sayMaybe(record.italian_state_en, record.italian_state_de, 'en')]
+  return { credit: say({ en: en.credit, de: de.credit }), note: en.note ? note.filter(Boolean).join(' ') : '' }
+}
+
+function creditIn(record: LikenessRecord, language: Lang): { credit: string; note: string } {
   const label = language === 'de' ? record.label_de : record.label_en
   const honesty = language === 'de' ? record.honesty_de : record.honesty_en
   const code = language === 'de' ? record.italian_state_de : record.italian_state_en

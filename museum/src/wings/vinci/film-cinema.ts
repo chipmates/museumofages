@@ -6,7 +6,7 @@
    opened caption's one scrolling column, the close look's card standing whole
    beside the work, and the panel's rows where no other part publishes them. */
 
-import { lang, WING_TEXT } from '../content'
+import { lang, langTag, say as sayPair, WING_TEXT } from '../content'
 import { deskMark } from '../desk-chrome'
 import { deskControl, deskStoryStop } from '../desk-story'
 import type { DeskPanelRow } from '../desk-panel'
@@ -112,7 +112,7 @@ function arrowUp(): SVGSVGElement {
 
 export function createFilmCinema(host: FilmCinemaHost): FilmCinema {
   const { box, wing, signal } = host
-  const say = (value: { en: string; de: string }): string => value[lang()]
+  const say = (value: { en: string; de: string }): string => sayPair(value)
   const part = (cls: string): HTMLElement | null => box.querySelector<HTMLElement>(`:scope > .${cls}, :scope > .cinema-panel > .${cls}`)
   const foot = box.querySelector<HTMLElement>('.film-foot')
   const gold = box.querySelector<HTMLElement>('.film-gold')
@@ -123,7 +123,7 @@ export function createFilmCinema(host: FilmCinemaHost): FilmCinema {
   const panel = make('div', 'cinema-panel')
   /* THE CAPTION: the line with its mark and the phone's own key at its end */
   const caption = make('p', 'cinema-caption')
-  caption.lang = lang()
+  caption.lang = langTag(lang())
   const mark = make('span', 'cinema-mark')
   const words = make('span', 'cinema-words')
   const more = make('button', 'cinema-more')
@@ -182,7 +182,7 @@ export function createFilmCinema(host: FilmCinemaHost): FilmCinema {
     publish()
     if (key === said) return
     said = key
-    caption.lang = lang()
+    caption.lang = langTag(lang())
     mark.replaceChildren(deskMark(stop?.certainty ?? 'reconstructed'))
     moreWord.textContent = say(deskControl('shared', 'read_more'))
     more.hidden = !opens

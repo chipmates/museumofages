@@ -9,6 +9,7 @@ import { route } from '../../../forge/film/router.mjs'
 import { samePlace } from '../../../forge/film/same-place.mjs'
 import filmCss from './film.css?inline'
 import type { FilmCycle } from './cycle'
+import { catalogPage, say } from '../content'
 import {
   PICTURE_ASPECT, lineIsLean, markCut, onBox, parsePrint, projectPrint,
   type CameraPrint, type PictureBox, type PictureEvent, type PictureFraming, type PictureMark,
@@ -1200,13 +1201,17 @@ export function createFilmSource(options: FilmOptions): PictureSource & { readou
     marks(node, lang, uncut = false) {
       const f = shownFraming
       const list = release.nodes[node]?.marks[f]?.[lang] ?? []
+      // a catalog page reads the English list, its words by the pair of the German mark with the same id
+      const german = catalogPage() ? new Map((release.nodes[node]?.marks[f]?.de ?? []).map(m => [m.id, m])) : null
       const box = fit()
       const out: PictureMark[] = []
       for (const m of list) {
         const p = onBox(PICTURE_ASPECT[f], box, m.u, m.v)
         // a mark the crop of this glass leaves out is not offered
         if (!uncut && markCut(p.x, p.y, box)) continue
-        out.push({ id: m.id, x: p.x, y: p.y, walks: m.walks, label: m.label, word: m.word, colour: m.colour })
+        const other = german?.get(m.id)
+        out.push({ id: m.id, x: p.x, y: p.y, walks: m.walks, colour: m.colour,
+          label: german ? say({ en: m.label, de: other?.label ?? '' }) : m.label, word: german ? say({ en: m.word, de: other?.word ?? '' }) : m.word })
       }
       return out
     },

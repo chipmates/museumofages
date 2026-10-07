@@ -6,7 +6,7 @@
  * belongs to this plate, what the plate shows for a visitor who cannot see
  * it, the sentence at the ceiling, and the rule's own numerals.
  */
-import { lang } from '../../content'
+import { catalogPage, lang, pairNodes, say, sayAs, sayDom, sayMaybe, type Lang } from '../../content'
 import { assetAddress, assetPyramidBase } from '../../../stack/materials'
 import { loadManifest, type ManifestEntry, type ManifestIndex } from '../../../manifest'
 import { createDeepPlatePayload, type DeepPlateDetail, type DeepPlatePayload, type DeepPlateSource, type DeepPlateTier, type DeepPlateWords } from '../../vitrine/deep-plate'
@@ -40,8 +40,8 @@ const LINES = (JSON.parse(linesRaw) as { lines: Record<string, { detail?: Detail
 /** THE RULE'S NUMERALS, as the card models write them. A numeral is a
  * measurement and reads the same in both languages, so the centimetres are
  * taken from the label itself rather than kept a second time in code. */
-const RULE: readonly { label: string; cm: number }[] = CARDS.rule_labels
-  .map(words => ({ label: words[lang()], cm: centimetres(words.en) }))
+const rule = (): readonly { label: string; cm: number }[] => CARDS.rule_labels
+  .map(words => ({ label: say(words), cm: centimetres(words.en) }))
   .filter(step => Number.isFinite(step.cm) && step.cm > 0)
 
 /** The centimetres a numeral names, in the unit it is written in. Deep in a
@@ -61,14 +61,15 @@ export const FURTHER: Words = CARDS.controls.picture.zoom_out
  * the register does not hold. */
 export const vinciPlateWords = (): DeepPlateWords => {
   const language = lang()
-  return { whole: CARDS.controls.machine.viewpoints[0]![language], nearer: NEARER[language],
-    further: FURTHER[language], ceiling: CARDS.zoom_ceiling[language], rule: RULE }
+  return { whole: sayAs(CARDS.controls.machine.viewpoints[0]!, language), nearer: sayAs(NEARER, language),
+    further: sayAs(FURTHER, language), ceiling: sayAs(CARDS.zoom_ceiling, language), rule: rule() }
 }
 
 /** What is on the plate, in the page's language, for a visitor who cannot
  * see it. Null where no one has written it yet. */
 export function vinciPlateDescription(id: string): string | null {
-  return DESCRIPTIONS[id]?.[lang()] ?? null
+  const description = DESCRIPTIONS[id]
+  return description ? sayMaybe(description.en, description.de, lang()) ?? null : null
 }
 
 /** WHAT A LINE POINTS AT on this plate, named in the page's language by the
@@ -78,7 +79,7 @@ export function vinciPlateDetails(id: string): readonly DeepPlateDetail[] {
   const detail = LINES[id]?.detail
   if (!detail) return []
   return [{ x: detail.x, y: detail.y, w: detail.w, h: detail.h,
-    name: lang() === 'de' ? detail.name_de : detail.name_en }]
+    name: sayMaybe(detail.name_en, detail.name_de, lang()) }]
 }
 
 /** THE STORE'S PYRAMID FOR THIS PLATE, or nothing. A record is read only
@@ -102,6 +103,37 @@ interface TilesRecord extends ManifestEntry {
  * shape and its centimetres in the same breath it is built. */
 let INDEX: ManifestIndex | null = null
 void loadManifest().then(index => { INDEX = index })
+const LABEL_MORE = { en: 'More of the label', de: 'Mehr von der Beschriftung' }
+const LABEL_LESS = { en: 'Less of the label', de: 'Weniger von der Beschriftung' }
+
+/** A work's label as a window carries it, in the page's words; its fold keeps them as it opens and closes. */
+export function windowWorkLabel(work: PictureWork, entries: readonly ResolvedPicturePlate[], language: Lang,
+  twoLevels: boolean, classAbove: boolean): HTMLElement {
+  const label = sayDom(side => createWindowWorkLabel(work, entries, side, twoLevels, classAbove), language)
+  if (!catalogPage()) return label
+  for (const more of label.querySelectorAll<HTMLElement>('.picture-label-more')) {
+    const words = { more: say(LABEL_MORE), less: say(LABEL_LESS) }
+    if (words.more === LABEL_MORE.en) continue
+    more.addEventListener('click', () => { more.textContent = more.getAttribute('aria-expanded') === 'true' ? words.less : words.more })
+  }
+  return label
+}
+
+const COMPLETE_DATA = { en: 'Complete data', de: 'Vollständige Daten' }
+
+/** A work's full record on a catalog page: built with both columns, the English one is said with the
+ * German beside it, and so is each fact; the German leaves with the column the page does not read. */
+export function sayPictureRecord(full: HTMLElement): void {
+  const en = full.querySelector('.picture-label-en'), de = full.querySelector('.picture-label-de')
+  if (en && de) pairNodes(en, de)
+  for (const fact of full.querySelectorAll<HTMLElement>('.picture-fact[lang="en"]')) {
+    const next = fact.nextElementSibling
+    if (next instanceof HTMLElement && next.lang === 'de') pairNodes(fact, next)
+  }
+  const data = full.querySelector('.picture-machine-chain > summary')
+  if (data) data.textContent = say(COMPLETE_DATA)
+}
+
 export function vinciDeepPlate(plate: ResolvedPicturePlate):
 { pyramid: DeepTilePyramid; width: number; height: number } | null {
   if (!INDEX) return null
@@ -225,7 +257,7 @@ export function createVinciPaintingView(options: {
   const language = lang()
   const registration = pictureDisplayWindow(options.plate.plate)
   const cut = registration ? pictureDisplayUV(registration) : null
-  const label = uiSureWithin(createWindowWorkLabel(options.work, options.entries, language, options.narrow, Boolean(options.catalogue?.kind)))
+  const label = uiSureWithin(windowWorkLabel(options.work, options.entries, language, options.narrow, Boolean(options.catalogue?.kind)))
   // THE DEEP SOURCE WHERE THE STORE HOLDS ONE. Its pixels are the view's
   // ceiling and the rule's own scale, so the centimetres are measured
   // against the source that stands in the window, not the wall's plate.
@@ -240,8 +272,8 @@ export function createVinciPaintingView(options: {
       width: deep ? deep.width : options.plate.pixels.width,
       height: deep ? deep.height : options.plate.pixels.height,
     },
-    words: { whole: CARDS.controls.machine.viewpoints[0]![language], nearer: NEARER[language],
-      further: FURTHER[language], ceiling: CARDS.zoom_ceiling[language], rule: RULE },
+    words: { whole: sayAs(CARDS.controls.machine.viewpoints[0]!, language), nearer: sayAs(NEARER, language),
+      further: sayAs(FURTHER, language), ceiling: sayAs(CARDS.zoom_ceiling, language), rule: rule() },
     from: options.from,
     standing: options.standing,
     tier: options.tier,

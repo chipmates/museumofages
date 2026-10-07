@@ -13,14 +13,14 @@
  * 250 printed sheets are one way away and the record reaches every one of
  * the 438 by name.
  */
-import { lang } from '../../content'
+import { catalogPage, fill, lang, pairOf, sayAs, sayBoth, sayDataInPlace, sayDom, sayMaybe, sideAs } from '../../content'
 import type { ManifestEntry, ManifestIndex } from '../../../manifest'
 import { assetAddress } from '../../../stack/materials'
 import type { DeepPlateSource, DeepPlateTier } from '../../vitrine/deep-plate'
 import { createReaderPayload as createReader, type ReaderBook, type ReaderSide } from '../../vitrine/reader'
 import type { VitrinePayload } from '../../vitrine/types'
 import { vinciLeafSource } from '../collection/deep-plate'
-import { CODEX_ENTRIES, buildCodexList } from './codex-shelf'
+import { CODEX_ABSENCES, CODEX_ENTRIES, SHELF_BOOKS, buildCodexList, codexSides } from './codex-shelf'
 import { buildShownAbsences } from './absences'
 import { CODEX_TITLES, FAMOUS_FOLIOS, MIRROR_EXPLANATION, SHELF_UI, TABLE_UI, folioKey, folioProvenance, hasItalian, type Language, type PageRecord } from './content'
 import type { ReadingTable } from './index'
@@ -42,6 +42,20 @@ export interface ReaderPayload extends VitrinePayload {
 
 /** The store's file name for one record of the edition. */
 const sheetKey = (page: PageRecord): string => page.file.split('/').pop()!.replace(/\.jpg$/, '')
+
+/** The codex reader reads the shelf's data and its pages' honesty lines in English. On a catalog page
+ * the shelf is said in place once, and the reader gets a copy of the manifest with its codex pages said,
+ * so every check that compares the manifest against its register still reads the source. */
+export function shelfInPageWords(codex: string, manifest: Promise<ManifestIndex>): Promise<ManifestIndex> {
+  if (!catalogPage()) return manifest
+  sayDataInPlace([TABLE_UI, MIRROR_EXPLANATION, SHELF_BOOKS, CODEX_ENTRIES, CODEX_ABSENCES, codexSides(codex)])
+  return manifest.then(index => ({ ...index, all: index.all.map(entry => {
+    if (entry.role !== 'codex-page') return entry
+    const page = { ...entry } as ManifestEntry & { honesty_en?: string; honesty_de?: string }
+    page.honesty_en = sayMaybe(page.honesty_en, page.honesty_de, 'en')
+    return page
+  }) }))
+}
 
 export function createReaderPayload(options: {
   table: ReadingTable
@@ -75,7 +89,7 @@ export function createReaderPayload(options: {
   const { table } = options
   const pages = table.pages
   const language: Language = lang()
-  const copy = TABLE_UI[language]
+  const copy = sideAs(TABLE_UI, language)
   let index: ManifestIndex | undefined
   let at = table.at()
   let holder = ''
@@ -126,7 +140,7 @@ export function createReaderPayload(options: {
     const own = { ceiling: options.words.ceiling }
     return [
       { id: 'hand', label: options.words.hand, ...own },
-      { id: 'mirror', label: options.words.mirror, mirrored: true, line: MIRROR_EXPLANATION[language].documented, ...own },
+      { id: 'mirror', label: options.words.mirror, mirrored: true, line: sayAs(pairOf(MIRROR_EXPLANATION, side => side.documented), language), ...own },
       ...(printed && facing ? [{ id: 'print', label: options.words.print, line: copy.printedPage,
         source: source(facing, printed), ...own }] : []),
       // the leaf as he wrote it, and the words the edition read off it
@@ -139,7 +153,7 @@ export function createReaderPayload(options: {
      side is, and where the second one begins. */
   const volumes = new Set(pages.filter(page => page.page_kind === 'facsimile').map(page => page.codex))
   const codexName = (letter: string | null): string =>
-    CODEX_ENTRIES.find(entry => entry.id === `paris-${letter}`)?.[language] ?? ''
+    { const entry = CODEX_ENTRIES.find(entry => entry.id === `paris-${letter}`); return entry ? sayAs(entry, language) : '' }
   const sideName = (page: PageRecord): string => {
     const name = volumes.size > 1 ? codexName(page.codex) : ''
     return name ? `${name}, ${identity(page)}` : identity(page)
@@ -156,13 +170,13 @@ export function createReaderPayload(options: {
       sides.push({
         id: folioKey(page),
         label: sideName(page),
-        shows: language === 'en' ? page.what_it_shows_en : page.what_it_shows_de,
+        shows: sayAs({ en: page.what_it_shows_en, de: page.what_it_shows_de }, language),
         source: source(page, read),
         window: windowOf(page),
         thumb: url(file(page, false)),
         ways: ways(page),
         colour: options.colour,
-        named: named ? named[language] : null,
+        named: named ? sayAs(named, language) : null,
         // ONE VOLUME, ONE STRIP: the book on the table binds two manuscripts,
         // and the manuscript a side belongs to is its part
         volume: 'edition',
@@ -176,8 +190,8 @@ export function createReaderPayload(options: {
       sides,
       // a part of the book says nothing of the leaves missing from the whole
       gaps: options.only ? [] : gapAfter(sides),
-      stripLabel: () => SHELF_UI[language].edition,
-      partLabel: part => [codexName(part), CODEX_TITLES[`paris-${part}`]?.[language] ?? ''],
+      stripLabel: () => sayAs(pairOf(SHELF_UI, ui => ui.edition), language),
+      partLabel: part => { const named = CODEX_TITLES[`paris-${part}`]; return [codexName(part), named ? sayAs(named, language) : ''] },
       holder,
       // the edition's credit stands in the record's licence line and its
       // provenance sentence, so the band's drawer leaves it there
@@ -197,7 +211,7 @@ export function createReaderPayload(options: {
       && (page.folio ?? 0) < first).pop()
     const id = before ? folioKey(before) : ''
     return sides.some(side => side.id === id)
-      ? [{ after: id, text: language === 'en' ? notice.what_it_shows_en : notice.what_it_shows_de }] : []
+      ? [{ after: id, text: sayAs({ en: notice.what_it_shows_en, de: notice.what_it_shows_de }, language) }] : []
   }
 
   /** The transcription and the translation, which are one deliberate press
@@ -300,8 +314,10 @@ export function createReaderPayload(options: {
       }
       add(copy.source, 'h3')
       add(copy.reproduction)
-      add(folioProvenance(page, language, identity(page)))
-      if (page.ocr_note_en) add(language === 'en' ? page.ocr_note_en : page.ocr_note_de ?? page.ocr_note_en)
+      // a catalog page says the provenance's pattern, its sheet's name in the slot
+      add(catalogPage() ? fill(sayBoth(side => folioProvenance(page, side, '{0}'), language), [identity(page)])
+        : folioProvenance(page, language, identity(page)))
+      if (page.ocr_note_en) add(sayMaybe(page.ocr_note_en, page.ocr_note_de, language) ?? page.ocr_note_en)
       // each link on a line of its own, or two of them read as one name
       const link = (label: string, url: string): void => {
         const a = document.createElement('a')
@@ -323,7 +339,7 @@ export function createReaderPayload(options: {
       // the ones it cannot show, and the eight studies this wing is built
       // from: the full chain, opened on purpose.
       add(copy.codices, 'h4')
-      full.append(buildCodexList(language, folioKey(page), key => payload.open(sideOf(key)), options.openBook))
+      full.append(sayDom(side => buildCodexList(side, folioKey(page), key => payload.open(sideOf(key)), options.openBook), language))
       add(copy.famous, 'h4')
       const leaves = document.createElement('ol')
       leaves.className = 'vitrine-reader-leaves'
@@ -332,7 +348,7 @@ export function createReaderPayload(options: {
         const go = document.createElement('button')
         go.type = 'button'
         go.className = 'vitrine-step-item'
-        go.textContent = `${famous.folio} · ${famous[language]}`
+        go.textContent = `${famous.folio} · ${sayAs(famous, language)}`
         go.setAttribute('aria-current', folioKey(page) === `B:${famous.folio}` ? 'page' : 'false')
         go.addEventListener('click', () => payload.open(`B:${famous.folio}`))
         item.append(go)

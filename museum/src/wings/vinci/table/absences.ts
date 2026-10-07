@@ -11,6 +11,7 @@
 import { bestOfKey, type BestOfKey } from './best-of'
 import { CODEX_ABSENCES } from './codex-shelf'
 import { TABLE_UI, type Language } from './content'
+import { pairOf, sayAs } from '../../content'
 
 /** The absences the admission overtook, by id, and the key of their new reason. */
 const OVERTAKEN: Readonly<Record<string, BestOfKey>> = {
@@ -23,8 +24,8 @@ const OVERTAKEN: Readonly<Record<string, BestOfKey>> = {
 export function shownAbsences(lang: Language): { title: string; holder: string; reason: string }[] {
   return CODEX_ABSENCES.flatMap(absence => {
     const key = OVERTAKEN[absence.id]
-    const reason = key ? bestOfKey(key, lang) : lang === 'de' ? absence.reason_de : absence.reason_en
-    return reason ? [{ title: lang === 'de' ? absence.de : absence.en, holder: lang === 'de' ? absence.holder_de : absence.holder_en, reason }] : []
+    const reason = key ? bestOfKey(key, lang) : sayAs({ en: absence.reason_en, de: absence.reason_de }, lang)
+    return reason ? [{ title: sayAs(absence, lang), holder: sayAs({ en: absence.holder_en, de: absence.holder_de }, lang), reason }] : []
   })
 }
 
@@ -39,7 +40,7 @@ const node = <K extends keyof HTMLElementTagNameMap>(tag: K, className: string, 
  * register's own list (`buildAbsences`) with the overtaken reasons replaced. */
 export function buildShownAbsences(lang: Language): HTMLElement {
   const section = node('section', 'vt-absence-section')
-  section.append(node('p', 'vt-absence-status', TABLE_UI[lang].absent))
+  section.append(node('p', 'vt-absence-status', sayAs(pairOf(TABLE_UI, ui => ui.absent), lang)))
   const list = node('ul', 'vt-absence-list')
   for (const absence of shownAbsences(lang)) {
     const item = node('li', 'vt-absence-item')

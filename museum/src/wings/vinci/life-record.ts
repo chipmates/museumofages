@@ -5,7 +5,7 @@
    film) composes the same life the live wing composes in its own closure. */
 
 import cardsSource from './data/cards.json?raw'
-import { lang } from '../content'
+import { catalogPage, lang, sayAs, sayMaybe } from '../content'
 import { vinciContent, vinciHourValues, vinciLifeBands, vinciLifeCertaintyCounted, vinciLifeCut, vinciLifeFloorCount, vinciLifeHourMark,
   vinciLifePeople, vinciLifeSecondLine, vinciLifeWorksCount, vinciLifeWorksEmpty, vinciLifeWorksRow, vinciThroughLine, type VinciText } from './content'
 import { LINE_SECTIONS, LINE_STUDS, type Stud } from './line/studs'
@@ -114,11 +114,11 @@ export function vinciLifeRecord(hangs: (exhibit: string) => boolean): LifeRecord
       counted: vinciLifeCertaintyCounted[key], colour: LINE_CERTAINTY[key].colour }])) as LifeRecord['sure']
   const span = { from: Number(BIRTH.date.slice(0, 4)), to: Number(DEATH.date.slice(0, 4)) }
   // the floor's count is read from the floor and names the room it stands in
-  const counted = (language: 'en' | 'de'): string => capitalise(fill(vinciLifeFloorCount[language],
+  const counted = (language: 'en' | 'de'): string => capitalise(fill(sayAs(vinciLifeFloorCount, language),
     { cut: spokenCount(VINCI_LIFE_CUT.size, language), total: spokenCount(LINE_STUDS.length, language) }))
   return { bands, events, works: lifeWorks(hangs), people, sure,
     here: LINE_STUDS.find(stud => stud.date === vinciHourValues.julianDate)?.id,
-    words: { throughLine: vinciThroughLine, secondLine: { en: fill(vinciLifeSecondLine.en, span), de: fill(vinciLifeSecondLine.de, span) },
+    words: { throughLine: vinciThroughLine, secondLine: { en: fill(sayAs(vinciLifeSecondLine, 'en'), span), de: fill(sayAs(vinciLifeSecondLine, 'de'), span) },
       honesty: { en: counted('en'), de: counted('de') }, cut: vinciLifeCut,
       worksRow: vinciLifeWorksRow, worksCount: vinciLifeWorksCount, worksCountOneUndated: WORKS_COUNT_ONE_UNDATED, worksEmpty: vinciLifeWorksEmpty, age: AGE_WORDS, back: CARDS.controls.shared.back,
       provenance: CARDS.controls.machine.provenance, hour: vinciLifeHourMark },
@@ -131,22 +131,24 @@ export function renderVinciLifeRecord(stud: Stud, host: HTMLElement): void {
   const page = host.ownerDocument, here = lang()
   const heading = host.querySelector<HTMLElement>('.vinci-certainty')
   const sure = LINE_CERTAINTY[stud.certainty as keyof typeof LINE_CERTAINTY]
-  if (heading && sure) { heading.textContent = sure[here]; heading.dataset['certainty'] = stud.certainty; heading.style.color = sure.colour }
+  if (heading && sure) { heading.textContent = sayAs(sure, here); heading.dataset['certainty'] = stud.certainty; heading.style.color = sure.colour }
   const full = page.createElement('div'); full.className = 'vinci-record'; full.dataset['register'] = 'record'
   const add = (text: string | null | undefined): void => {
     if (!text) return
     const line = page.createElement('p'); line.className = 'vinci-statement'; line.textContent = text; full.append(line)
   }
-  add(here === 'de' ? stud.date_label_de : stud.date_label_en)
-  add(here === 'de' ? stud.date_note_de : stud.date_note_en)
-  add(SOURCE_READINGS[stud.id]?.[here])
+  add(sayAs({ en: stud.date_label_en, de: stud.date_label_de }, here))
+  add(sayMaybe(stud.date_note_en, stud.date_note_de, here))
+  const reading = SOURCE_READINGS[stud.id]
+  add(reading ? sayAs(reading, here) : undefined)
   add(stud.document); add(stud.holder)
-  add(here === 'de' ? stud.qualifications_de : stud.qualifications_en)
-  for (const gap of here === 'de' ? stud.gaps_de : stud.gaps) add(gap)
+  add(sayMaybe(stud.qualifications_en, stud.qualifications_de, here))
+  const gaps = catalogPage() ? stud.gaps.map((gap, i) => sayAs({ en: gap, de: stud.gaps_de[i] ?? '' }, here)) : here === 'de' ? stud.gaps_de : stud.gaps
+  for (const gap of gaps) add(gap)
   // a link names the source as a person would, never the field it filled
   for (const source of stud.sources) {
     const link = page.createElement('a'); link.className = 'vinci-picture-source'
-    link.href = source.url; link.target = '_blank'; link.rel = 'noopener noreferrer'; link.textContent = here === 'de' ? source.name_de : source.name_en
+    link.href = source.url; link.target = '_blank'; link.rel = 'noopener noreferrer'; link.textContent = sayAs({ en: source.name_en, de: source.name_de }, here)
     full.append(link)
   }
   add(stud.licence_line)

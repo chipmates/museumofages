@@ -4,7 +4,7 @@
    work is the film's own press on its list, a date of the floor opens the
    life at the floor. The sheets arrive on the first press (film-sheets). */
 
-import { lang, WING_TEXT } from '../content'
+import { lang, say as sayPair, WING_TEXT } from '../content'
 import { PLAN_WORDS } from '../plan/words'
 import { LIFE_WORDS } from '../life/words'
 import { deskControl } from '../desk-story'
@@ -51,7 +51,7 @@ type Sheets = typeof import('./film-sheets')
 export function mountFilmWays(host: FilmWaysHost): void {
   const { hosts, signal } = host
   const wing = hosts.stage.parentElement!
-  const say = (value: VinciText): string => value[lang()]
+  const say = (value: VinciText): string => sayPair(value)
   const make = (cls: string, words: string, key: string, controls: string): HTMLButtonElement => {
     const button = document.createElement('button')
     button.type = 'button'

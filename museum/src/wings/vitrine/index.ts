@@ -11,7 +11,7 @@
  * every control are the caller's, already in the page's language.
  */
 import { setRegister } from '../frame'
-import { sayAs } from '../content'
+import { langTag, sayAs } from '../content'
 import { deskAny, deskOn } from '../desk-switches'
 import { createCloseLookBand, type CloseLookBand } from '../desk-closelook'
 import { noteOpened } from '../visit'
@@ -942,7 +942,7 @@ export function createVitrine(options: {
       else namingText.style.removeProperty(property)
     }
     naming.hidden = !said
-    naming.lang = options.lang()
+    naming.lang = langTag(options.lang())
     namingDot.hidden = !certainty
     if (certainty) namingDot.style.setProperty('--certainty', uiSure(certainty))
     else namingDot.style.removeProperty('--certainty')
@@ -959,10 +959,10 @@ export function createVitrine(options: {
    * control where the exhibit opens its set from it; and the source row. */
   function paintPlace(place: VitrinePlace | null | undefined, row: string | null | undefined): void {
     spoken.note = row ?? null
-    note.lang = options.lang()
+    note.lang = langTag(options.lang())
     const count = place?.said ?? ''
     seat.hidden = !place?.seat && !count
-    seat.lang = options.lang()
+    seat.lang = langTag(options.lang())
     seatWords.textContent = place?.seat ?? ''
     seatWords.hidden = !place?.seat
     countButton.textContent = count
@@ -1384,10 +1384,10 @@ export function createVitrine(options: {
       namingNumber.hidden = !entry
       entryRow.textContent = entry ? [entry.date, entry.where].filter(Boolean).join(' · ') : ''
       entryRow.hidden = !entry
-      entryRow.lang = options.lang()
+      entryRow.lang = langTag(options.lang())
       spoken = { head: next.line ?? null, note: null, short: next.peek?.line ?? null, restNote: next.peek?.note ?? null,
         restSource: next.peek?.source ?? null, own: next.peek?.own ?? null }
-      line.lang = options.lang()
+      line.lang = langTag(options.lang())
       paintPlace(next.set?.said || next.set?.seat ? next.set : null, next.note)
       paintLine(null)
       words.replaceChildren(...next.card)

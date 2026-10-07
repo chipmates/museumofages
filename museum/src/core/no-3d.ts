@@ -6,7 +6,7 @@
    starts behind it. */
 
 import css from './no-3d.css?inline'
-import { lang, say, type Bilingual } from '../wings/content'
+import { lang, langTag, say, sayAs, type Bilingual } from '../wings/content'
 import { FILM_RELEASE } from '../wings/film-release'
 import { LOBBY_TEXT } from '../content/lobby'
 
@@ -92,7 +92,7 @@ function showScreen(way: ScreenWay): void {
 
   const screen = document.createElement('main')
   screen.className = 'na-no3d'
-  screen.lang = language
+  screen.lang = langTag(language)
   const picture = document.createElement('div')
   picture.className = 'na-no3d-picture'
   picture.setAttribute('aria-hidden', 'true')
@@ -103,7 +103,7 @@ function showScreen(way: ScreenWay): void {
   line.append(...unbroken(say(WORDS.line)))
   const help = document.createElement('p')
   help.className = 'na-no3d-help'
-  help.append(...unbroken(WORDS.help[language]))
+  help.append(...unbroken(sayAs(WORDS.help, language)))
   plate.append(line, help)
   if (way.page) {
     const row = document.createElement('p')
@@ -112,7 +112,7 @@ function showScreen(way: ScreenWay): void {
     link.className = 'na-no3d-link'
     link.href = way.page
     const label = document.createElement('span')
-    label.textContent = (WING_LINK.get(way.wing) ?? LOBBY_TEXT.name)[language]
+    label.textContent = sayAs(WING_LINK.get(way.wing) ?? LOBBY_TEXT.name, language)
     const svgNs = 'http://www.w3.org/2000/svg'
     const icon = document.createElementNS(svgNs, 'svg')
     icon.setAttribute('viewBox', '0 0 16 16')

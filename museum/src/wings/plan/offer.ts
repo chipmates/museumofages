@@ -11,6 +11,7 @@
  */
 
 import { readVisit } from '../visit'
+import { sayAs } from '../content'
 import { RECAP_WORDS, VISIT_OFFER, visitOfferLine } from './words'
 
 export const LOBBY_OFFER = false
@@ -33,9 +34,9 @@ export function visitOffer(wing: string, language: 'en' | 'de'): VisitOffer | nu
   if (!record || !line) return null
   return {
     line,
-    again: VISIT_OFFER.again[language],
-    privacy: RECAP_WORDS.privacy[language],
-    forget: RECAP_WORDS.forget[language],
+    again: sayAs(VISIT_OFFER.again, language),
+    privacy: sayAs(RECAP_WORDS.privacy, language),
+    forget: sayAs(RECAP_WORDS.forget, language),
     count: record.opened.length,
   }
 }
