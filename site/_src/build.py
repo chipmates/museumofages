@@ -135,6 +135,18 @@ LOCKED_KEYS = ("tagline", "trust", "trust_before", "descriptor", "title", "missi
                "honesty")
 
 
+TRUST_KEYS = ("glance.trust", "page_what.trust")
+
+
+def trust_breaks(text, key):
+    """A trust line breaks only after a dot, and a short word (three letters or fewer) stays with its neighbour."""
+    if key not in TRUST_KEYS:
+        return text
+    parts = [re.sub(r"(?<!\S)(\S{1,3}) (?=\S)", "\\1" + NBSP, p) for p in text.split(" · ")]
+    parts = [re.sub(r"(\S) (\S{1,3})$", "\\1" + NBSP + "\\2", p) for p in parts]
+    return (NBSP + "· ").join(parts)
+
+
 def locked_lines():
     out = {}
     for code in L.order:
@@ -459,12 +471,12 @@ class Site:
         # a name of several words never breaks, and no paragraph ends on a word alone
         self.names = {lang: sorted({e["name"][lang] for e in self.wings.values() if " " in e.get("name", {}).get(lang, "")}, key=len, reverse=True)
                       for lang in LANGS}
-        self.words_html = {lang: {k: keep_whole(esc(whole_names(tail(bind(v, lang), short=k in ENDS), self.names[lang])))
+        self.words_html = {lang: {k: keep_whole(esc(trust_breaks(whole_names(tail(bind(v, lang), short=k in ENDS), self.names[lang]), k)))
                                   for k, v in self.words[lang].items()} for lang in LANGS}
         if not SOURCE_LINK:
             for lang in LANGS:
                 shown = self.words_html[lang]
-                shown["glance.trust"] = shown["page_what.trust"] = keep_whole(esc(space(self.locked(lang)["trust_before"], lang)))
+                shown["glance.trust"] = shown["page_what.trust"] = keep_whole(esc(trust_breaks(space(self.locked(lang)["trust_before"], lang), "glance.trust")))
                 shown.update({key: shown[key + "_before"] for key in BEFORE if key + "_before" in shown})
         self.privacy = {lang: walk(load(PRIVACY_WORDS / f"privacy.{lang}.json"), lambda p, t, l=lang: space(t, l)) for lang in LANGS}
         self.museum = load(MUSEUM_TEXTS)
