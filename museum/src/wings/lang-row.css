@@ -1,0 +1,19 @@
+/* The row of languages by their own names: as many to a line as fit, each a
+   full target, then the note in the panel's small type under them. */
+#instruments .inst-languages .inst-options {
+  flex-wrap: wrap;
+  gap: 8px 12px;
+}
+#instruments .inst-languages .inst-options button {
+  min-width: 0;
+  min-height: 44px;
+  padding: 10px 14px;
+}
+#instruments .inst-lang-note {
+  clear: both;
+  margin: 10px 0 0;
+  max-width: 46ch;
+  font: 13px/1.55 var(--press-ui);
+  color: var(--press-muted);
+}
+:root[data-na-panel='open'] #instruments .inst-lang-note { font-size: 14px; }

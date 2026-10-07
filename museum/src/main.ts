@@ -21,7 +21,8 @@ import type { DeskPanelRow } from './wings/desk-panel'
 import { readLabels, type ForgeLabel } from './core/labels'
 import { DISCLOSURES } from './content/disclosures'
 import { WINGS, wingBySlug, wingsOpen, wingsPreparing } from './wings/registry'
-import { lang, pageLang, say, wingCount, wordsReady } from './wings/content'
+import { catalogPage, lang, pageLang, say, wingCount, wordsReady } from './wings/content'
+import { publishedLangs } from './wings/languages'
 import { sitePage, wayOut, type Settings } from './wings/way-out'
 import { LOBBY_LINKS, LOBBY_TEXT } from './content/lobby'
 import { gaitPace, setGaitPace } from './wings/vinci/gait'
@@ -145,7 +146,7 @@ camera.position.set(0, 0, 0)
 const stack = await stackOrScreen(() => createStack({}), () => {
   const here = wingPath()
   const wing = here && wingBySlug(here.slug) ? here.slug : ''
-  return { wing, page: wing ? wayOut(SETTINGS, wing, lang(), false) : sitePage(SETTINGS, lang()) }
+  return { wing, page: wing ? wayOut(SETTINGS, wing, pageLang(), false) : sitePage(SETTINGS, pageLang()) }
 })
 const renderer = stack.renderer
 stage.appendChild(renderer.domElement)
@@ -1260,7 +1261,7 @@ instrumentsEl.addEventListener('keydown', (event) => {
 
 function syncInstruments(): void {
   for (const control of instrumentsEl.querySelectorAll<HTMLElement>('[data-language]'))
-    control.setAttribute('aria-pressed', String(control.dataset['language'] === lang()))
+    control.setAttribute('aria-pressed', String(control.dataset['language'] === pageLang()))
   for (const control of instrumentsEl.querySelectorAll<HTMLElement>('[data-tier-choice]'))
     control.setAttribute('aria-pressed', String(control.dataset['tierChoice'] === stack.tierName()))
   for (const control of instrumentsEl.querySelectorAll<HTMLElement>('[data-pace-choice]'))
@@ -1298,6 +1299,12 @@ for (const control of instrumentsEl.querySelectorAll<HTMLButtonElement>('[data-l
     if (language === 'en' || language === 'de') setLobbyLanguage(language)
   })
 }
+/* MORE THAN TWO LANGUAGES, OR A PAGE IN ANOTHER: the setting becomes a row of
+   languages by their own names, each a reload in its language. */
+const PUBLISHED = publishedLangs(import.meta.env['VITE_NA_LANGS'])
+const languageSetting = instrumentsEl.querySelector('[data-language]')?.closest('fieldset')
+if (languageSetting && (PUBLISHED.length > 2 || catalogPage()))
+  void import('./wings/lang-row').then(row => row.paintLanguageRow(languageSetting, PUBLISHED))
 /* THE PACE THE VISITOR SETS. It stands beside the tier because it is the same
    kind of choice: how the museum should behave on this device, kept on it. The
    row is built here rather than in the page, so the wing that owns the walk
@@ -1478,7 +1485,7 @@ async function openWing(slug: string, at: number | string, view?: string): Promi
   if (leaving) return
   const entry = wingBySlug(slug)
   if (!entry) {
-    const front = sitePage(SETTINGS, lang())
+    const front = sitePage(SETTINGS, pageLang())
     if (front) leaveTo(front, true)
     else toLobby()
     return
@@ -1539,7 +1546,7 @@ addEventListener('pageshow', (event) => {
     has `finished` the walk, and in place of the entry a `popped` history
     step landed on. Outside a wing it is the site's front page. */
 function toLobby(finished = false, popped = false): void {
-  const out = wingSlug ? wayOut(SETTINGS, wingSlug, lang(), finished) : sitePage(SETTINGS, lang())
+  const out = wingSlug ? wayOut(SETTINGS, wingSlug, pageLang(), finished) : sitePage(SETTINGS, pageLang())
   if (out) {
     leaveTo(out, popped)
     return
@@ -1794,7 +1801,7 @@ let lobbyAhead = false
 function sendLobbyAhead(): void {
   if (lobbyAhead) return
   // where the way home is a page of the site, no lobby follows the wing
-  if (wayOut(SETTINGS, wingSlug, lang(), false)) return
+  if (wayOut(SETTINGS, wingSlug, pageLang(), false)) return
   const count = wingFrame.stations()
   if (!count || wingFrame.station() !== count - 1) return
   lobbyAhead = true
@@ -2372,7 +2379,7 @@ function bootRoute(): boolean {
     // an address for a wing that does not exist: the site's front page
     // where the build names one. Otherwise the night begins where a night
     // begins, and the bar stops claiming a room that is not there
-    const front = sitePage(SETTINGS, lang())
+    const front = sitePage(SETTINGS, pageLang())
     if (front) {
       leaveTo(front, true)
       return true

@@ -5,6 +5,7 @@ import { naAssets } from './forge/vite-na-assets.mjs'
 import { naWingPages } from './forge/vite-na-wing-pages.mjs'
 import { LOBBY_TEXT } from './src/content/lobby'
 import { readSettings } from './src/wings/way-out'
+import { OWN_NAMES, publishedLangs } from './src/wings/languages'
 
 export default defineConfig({
   server: { port: 5199 },
@@ -14,6 +15,8 @@ export default defineConfig({
     naWingPages({
       read: readSettings,
       words: { name: LOBBY_TEXT.name.en, line: LOBBY_TEXT.tagline, inside: LOBBY_TEXT.titleInside },
+      languages: (settings) => publishedLangs(settings['VITE_NA_LANGS']),
+      names: OWN_NAMES,
     }),
   ],
   build: {

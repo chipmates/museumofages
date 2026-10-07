@@ -2,13 +2,16 @@
 // address and carries a static mirror of the lobby. A build that names a
 // wing's page on the site opens no lobby, so its document says so: the mirror
 // is left out and one plain block stands in its place, naming each wing that
-// has a page and linking to it in both languages, and the door's and the
-// sky's own words are emptied. A build that names no page is not touched.
+// has a page and linking to it in both languages, and in every other language
+// the build publishes that has a page, and the door's and the sky's own words
+// are emptied. A build that names no page is not touched.
 //
 // The block's words are the caller's (the museum's fixed name and line); the
-// wing's name is the register's.
-import { readFileSync } from 'node:fs'
+// wing's name is the register's; another language's link reads its words
+// from that language's catalog, or names the language where none is written.
+import { existsSync, readdirSync, readFileSync } from 'node:fs'
 import { join } from 'node:path'
+import { contentKey } from './lang/key.mjs'
 
 const MIRROR = /[ \t]*<!--(?:(?!-->)[\s\S])*?static mirror(?:(?!-->)[\s\S])*?-->\s*<section class="static-soul"[\s\S]*?<\/section>/
 /** THE DOOR'S AND THE SKY'S OWN WORDS in the document's source. The script
@@ -29,17 +32,31 @@ function register(root) {
   return [...text.matchAll(/slug:\s*'([a-z0-9-]+)',\s*name:\s*'([^']+)'/g)].map((m) => ({ slug: m[1], name: m[2] }))
 }
 
+/** a pair's words in a catalog language, read from its files beside the app */
+function catalogText(root, code, pair) {
+  const folder = join(root, 'lang', code)
+  if (!existsSync(folder)) return null
+  const key = contentKey(pair.en, pair.de)
+  for (const file of readdirSync(folder).filter((f) => f.endsWith('.json') && f !== 'tag.json').sort()) {
+    const text = JSON.parse(readFileSync(join(folder, file), 'utf8'))[key]
+    if (typeof text === 'string') return text
+  }
+  return null
+}
+
 /**
- * @param {{ read: (settings: Record<string, unknown>) => { wings: { key: string, en: string, de: string }[], refused: string[] },
- *   words: { name: string, line: { en: string, de: string }, inside: { en: string, de: string } } }} options
+ * @param {{ read: (settings: Record<string, unknown>) => { wings: { key: string, en: string, de: string, pages?: Record<string, string> }[], refused: string[] },
+ *   words: { name: string, line: { en: string, de: string }, inside: { en: string, de: string } },
+ *   languages?: (settings: Record<string, unknown>) => string[], names?: Record<string, string> }} options
  */
-export function naWingPages({ read, words }) {
-  let wings = [], root = ''
+export function naWingPages({ read, words, languages = () => ['en', 'de'], names = {} }) {
+  let wings = [], root = '', others = []
   return {
     name: 'na-wing-pages',
     configResolved(config) {
       root = config.root
       const said = read(config.env)
+      others = languages(config.env).filter((code) => code !== 'en' && code !== 'de')
       // a half-named pair or a far address is a build that would strand a visitor
       if (said.refused.length) throw new Error(`the wing pages' settings cannot be used: ${said.refused.join(', ')}`)
       const known = register(root)
@@ -56,6 +73,8 @@ export function naWingPages({ read, words }) {
         `    <h2>${esc(w.name)}</h2>`,
         `    <p><a href="${esc(w.en)}" hreflang="en" tabindex="-1">${esc(`${w.name} | ${words.inside.en}`)}</a></p>`,
         `    <p lang="de"><a href="${esc(w.de)}" hreflang="de" tabindex="-1">${esc(`${w.name} | ${words.inside.de}`)}</a></p>`,
+        ...others.filter((code) => w.pages?.[code]).map((code) =>
+          `    <p lang="${code}"><a href="${esc(w.pages[code])}" hreflang="${code}" tabindex="-1">${esc(`${w.name} | ${catalogText(root, code, words.inside) ?? names[code] ?? code}`)}</a></p>`),
       ])
       const block = [
         `  <section class="static-soul" aria-label="${esc(words.name)}">`,
