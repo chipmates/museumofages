@@ -32,6 +32,8 @@ const CATALOG_LANGS: readonly PageLang[] = ['fr', 'it', 'es', 'pt-BR', 'bg']
     `pt` and `pt-br` read as pt-BR), set on the page as its tag; otherwise
     the world language, untouched. */
 export function pageLang(): PageLang {
+  // the forge's checks run the wing's words under node, with no page: a host's world language stands there
+  if (typeof location === 'undefined') return 'en'
   const asked = (new URLSearchParams(location.search).get('lang') ?? '').toLowerCase()
   const code = asked === 'pt' || asked === 'pt-br' ? 'pt-BR' : CATALOG_LANGS.find((c) => c === asked)
   if (!code) return lang()
