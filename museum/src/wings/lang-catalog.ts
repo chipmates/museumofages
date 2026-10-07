@@ -34,12 +34,35 @@ export async function openCatalog(tag: PageLang): Promise<Catalog> {
   const entries = new Map<string, string>()
   for (const chunk of chunks) for (const [key, text] of Object.entries(chunk)) if (typeof text === 'string') entries.set(key, text)
   const read = tags[0] ?? {}
+  const own = (s: Bilingual): string | undefined => {
+    const found = entries.get(contentKey(s.en, s.de))
+    if (found !== undefined || !/\d/.test(s.en)) return found
+    const pattern = entries.get(patternKey(s.en, s.de))
+    return pattern === undefined ? undefined : fillPattern(pattern, foldNumbers(s.en).values)
+  }
+  /* A PAIR JOINED FROM PAIRS: a record the words put together from two
+     statements, a space between them, reads as its parts, cut at a sentence's
+     end on both sides where each half is a pair of its own. */
+  const ends = (text: string): number[] => [...text.matchAll(/[.!?…]["”’)]?\s/g)].map(m => m.index + m[0].length)
+  const joined = (s: Bilingual, depth = 0): string | undefined => {
+    if (depth > 8) return undefined
+    for (const i of ends(s.en)) for (const j of ends(s.de)) {
+      const head = own({ en: s.en.slice(0, i).trimEnd(), de: s.de.slice(0, j).trimEnd() })
+      if (head === undefined) continue
+      const rest = { en: s.en.slice(i), de: s.de.slice(j) }
+      const tail = own(rest) ?? joined(rest, depth + 1)
+      if (tail !== undefined) return `${head} ${tail}`
+    }
+    return undefined
+  }
+  const asked = new Map<string, string | null>()
   return {
     pair(s) {
-      const own = entries.get(contentKey(s.en, s.de))
-      if (own !== undefined || !/\d/.test(s.en)) return own
-      const pattern = entries.get(patternKey(s.en, s.de))
-      return pattern === undefined ? undefined : fillPattern(pattern, foldNumbers(s.en).values)
+      const found = own(s)
+      if (found !== undefined || !s.de) return found
+      const key = `${s.en}\u0001${s.de}`
+      if (!asked.has(key)) asked.set(key, joined(s) ?? null)
+      return asked.get(key) ?? undefined
     },
     named: (key) => entries.get(key),
     status(surface) {

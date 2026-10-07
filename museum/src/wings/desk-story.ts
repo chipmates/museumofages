@@ -13,6 +13,7 @@
 import cardsSource from './vinci/data/cards.json?raw'
 import { vinciStory, type VinciStoryCertainty } from './vinci/story'
 import type { VinciCertainty, VinciText } from './vinci/content'
+import { fillPair } from './content'
 
 export interface DeskStoryStop {
   id: string
@@ -65,10 +66,7 @@ function clock(said: VinciText | null): VinciText | null {
   if (value <= 0) return null
   const pattern = /\bnear\b/.test(said.en) ? AGE_WORDS.age_near
     : /\babout\b/.test(said.en) ? AGE_WORDS.age_about : AGE_WORDS.age
-  return {
-    en: pattern.en.replace('{years}', String(value)),
-    de: pattern.de.replace('{years}', String(value)),
-  }
+  return fillPair(pattern, { years: String(value) })
 }
 
 export const deskStory: readonly DeskStoryStop[] = vinciStory

@@ -6,6 +6,7 @@ import type { PlanHighlight, PlanPoint, PlanRoom, PlanShape, PlanSite, PlanStati
 import { COURT, GRAVE_ORIGIN, LINE_FIELD, ROOMS, SUPPER_WALL } from './collection/layout'
 import { dossier } from './site'
 import { vinciContent, vinciPlanRooms, type VinciText } from './content'
+import { alreadySaid } from '../content'
 import { parsePrint } from '../picture/seam'
 import { vinciLineHighlights } from './life-record'
 import type { FilmRelease } from '../picture/film'
@@ -73,7 +74,7 @@ export async function filmPlanHighlights(release: FilmRelease, stops: readonly F
     const ids = content.id === 'reading-table' ? sets.table : release.sets?.[content.id] ?? []
     for (const cell of ids.length ? await cells(ids) : []) {
       if (!cell.openable) continue
-      out.push({ id: cell.id, station: content.id, title: { en: language === 'en' ? cell.title : '', de: language === 'de' ? cell.title : '' }, kind: cell.kind })
+      out.push({ id: cell.id, station: content.id, title: { en: language === 'en' ? alreadySaid(cell.title) : '', de: language === 'de' ? cell.title : '' }, kind: cell.kind })
     }
   }
   return out

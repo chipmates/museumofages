@@ -59,13 +59,16 @@ export const say = (s: Bilingual): string => {
 }
 
 /** A pair the catalog lacks reads in English; the page keeps a list of them
-    (`__naLang.missed`) for the coverage read. */
+    (`__naLang.missed`) for the coverage read, and apart from them the pairs
+    asked for before the catalog was in (`__naLang.early`). */
 function fromCatalog(s: Bilingual): string {
   const said = catalog?.pair(s)
-  if (said !== undefined) return said
+  if (said !== undefined || !s.en) return said ?? s.en
   if (saidInPlace.has(s.en)) return s.en
-  const book = (globalThis as { __naLang?: { missed: Map<string, string> } }).__naLang ??= { missed: new Map() }
-  book.missed.set(s.en, s.de)
+  const made = fills.get(`${s.en}\u0001${s.de}`)
+  if (made) return fill(fromCatalog(made.pattern), made.values)
+  const book = (globalThis as { __naLang?: { missed: Map<string, string>; early: Map<string, string> } }).__naLang ??= { missed: new Map(), early: new Map() }
+  ;(catalog ? book.missed : book.early).set(s.en, s.de)
   return s.en
 }
 
@@ -158,6 +161,24 @@ export function pairNodes(en: Node, de: Node): void {
   const ours = en.childNodes, theirs = de.childNodes
   if (ours.length !== theirs.length) return
   for (let i = 0; i < ours.length; i++) pairNodes(ours[i]!, theirs[i]!)
+}
+
+/** A string a module has said already, handed on in a pair's English place: a
+    catalog page keeps it as said; English and German get it untouched. */
+export const alreadySaid = (text: string): string => {
+  if (catalogPage()) saidInPlace.add(text)
+  return text
+}
+
+/** Pattern pairs filled before any page language is known, by the pair they made. */
+const fills = new Map<string, { pattern: Bilingual; values: Readonly<Record<string, string>> }>()
+
+/** A pattern pair filled for English and German alike, as a module computes it
+    once; a catalog page's `say` finds the pattern again and fills its own words. */
+export function fillPair(pattern: Bilingual, values: Readonly<Record<string, string>>): Bilingual {
+  const pair = { en: fill(pattern.en, values), de: fill(pattern.de, values) }
+  fills.set(`${pair.en}\u0001${pair.de}`, { pattern, values })
+  return pair
 }
 
 /** Strings data already holds in the page's words, and the data said so. */
