@@ -69,6 +69,13 @@
 /* The one picture of a reading page hangs on a band of wall, on the stone sheet as on the dark page. */
 .statement__plate{margin-top:26px;margin-inline:calc(var(--pad) * -1);padding:26px var(--pad) 22px}
 .statement__plate .label{margin-top:16px}
+/* On the phone its picture is the newest wing's door, as on the landing: the sign's arch, the red chalk on its
+   right shoulder. Wider screens keep the whole still. */
+@media (max-width:599px){
+  .statement__plate .hang>picture{aspect-ratio:4/5;border-radius:999px 999px 0 0}
+  .statement__plate .hang>picture>img{height:100%;object-fit:cover}
+  .statement__plate .hang::after{content:"";position:absolute;inset:-9px -9px 0 50%;border:1.5px solid var(--chalk);border-left:0;border-bottom:0;border-top-right-radius:999px;pointer-events:none}
+}
 .statement__body{container-type:inline-size}
 .card{margin-top:20px;border:1px solid var(--hair);background:var(--ground-raised);padding:6px 18px}
 .card>div{padding:12px 0;border-bottom:1px solid var(--hair);display:grid;gap:2px}

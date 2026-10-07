@@ -183,6 +183,14 @@
 .wcard__shows .key{display:block}
 .wcard--feature .label__what{margin-top:6px}
 .wcard__go{display:flex;flex-wrap:wrap;align-items:center;gap:6px 22px;margin-top:14px}
+/* On the phone a wing's card is its door: the still in an arched frame, the sign's shape, the red chalk along
+   its right shoulder as on the sign. Wider screens keep the whole still. Only our own reconstructions hang in an
+   arch; a work's reproduction is never cut. */
+@media (max-width:599px){
+  .wcard--feature .hang>picture{aspect-ratio:4/5;border-radius:999px 999px 0 0}
+  .wcard--feature .hang>picture>img{height:100%;object-fit:cover}
+  .wcard--feature .hang::after{content:"";position:absolute;inset:-9px -9px 0 50%;border:1.5px solid var(--chalk);border-left:0;border-bottom:0;border-top-right-radius:999px;pointer-events:none}
+}
 /* The wings in the making and the planned ones are names on the dark wall: nothing hangs there yet. */
 .wlists{display:flex;flex-wrap:wrap;gap:30px 48px;margin-top:8px;padding-top:16px;border-top:1px solid var(--hair)}
 .wlist{flex:1 1 9.5rem}
