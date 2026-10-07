@@ -145,6 +145,10 @@ def esc(text):
     return html.escape(text, quote=True)
 
 
+def straight(name):
+    return name.replace("’", "'")
+
+
 class Names:
     """Marks the names that are kept whole in a displayed sentence.
 
@@ -154,17 +158,18 @@ class Names:
 
     def __init__(self, entries, wing_name, lang):
         self.lang, self.wing_name = lang, wing_name
-        self.table = {e["text"]: e for e in entries}
-        self.table[wing_name] = {"text": wing_name, "wing": True}
+        # a name is found whichever apostrophe a language's typography sets in it (l'Institut, l’Institut)
+        self.table = {straight(e["text"]): e for e in entries}
+        self.table[straight(wing_name)] = {"text": wing_name, "wing": True}
         # the longest name first, so a full name wins over its last word
         ordered = sorted(self.table, key=len, reverse=True)
-        self.find = re.compile(r"(?<!\w)(%s)('s|’s|s)?(?!\w)" % "|".join(re.escape(n) for n in ordered))
+        self.find = re.compile(r"(?<!\w)(%s)('s|’s|s)?(?!\w)" % "|".join(re.escape(n).replace("'", "['’]") for n in ordered))
 
     def mark(self, text, wrap_wing=False):
         """The sentence as HTML. wrap_wing lets the wing's name wrap where it is too long for a line."""
         out, last = [], 0
         for m in self.find.finditer(text):
-            entry, ending = self.table[m.group(1)], m.group(2) or ""
+            entry, ending = self.table[straight(m.group(1))], m.group(2) or ""
             out.append(esc(text[last:m.start()]))
             last = m.end()
             if entry.get("wing"):
@@ -183,7 +188,7 @@ class Names:
 
     def wing_run(self, text):
         """The length of the wing's name with its ending as it stands in a heading, or 0."""
-        runs = [len(m.group(0)) for m in self.find.finditer(text) if self.table[m.group(1)].get("wing")]
+        runs = [len(m.group(0)) for m in self.find.finditer(text) if self.table[straight(m.group(1))].get("wing")]
         return max(runs, default=0)
 
     def left_over(self, text):
