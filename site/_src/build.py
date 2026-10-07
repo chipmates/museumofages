@@ -151,6 +151,12 @@ def locked_lines():
 LOCKED = locked_lines()
 
 
+# The house's words for open source (each language adds its own in lang/<code>.json), and the one place that may say
+# them while the repository is closed: the licence is an open source licence, whoever can read the code.
+OPEN_WORD = r"open[ -]source|quelloffen"
+OF_THE_LICENCE = r"open[ -]source[ -]?(?:licen[cs]e|lizenz)"
+
+
 def lang_rules():
     """Each language's own rows of the house rules, its number words, and what it adds to bind() (lang/<code>.json)."""
     out = {}
@@ -158,7 +164,11 @@ def lang_rules():
         path = languages.LANG_DIR / f"{code}.json"
         data = json.loads(path.read_text(encoding="utf-8")) if path.is_file() else {}
         out[code] = {"never": [tuple(x) for x in data.get("never", [])], "for_the_writer": [tuple(x) for x in data.get("for_the_writer", [])],
-                     "gone": tuple(data.get("gone", [])), "banned": list(data.get("banned", []))}
+                     "gone": tuple(data.get("gone", [])), "banned": list(data.get("banned", [])),
+                     # the trust line's middle term, and the language's own words for open source beside the house's
+                     "trust_middle": data.get("trust_middle", "Open Source"),
+                     "open_word": OPEN_WORD + ("|" + data["open_word"] if data.get("open_word") else ""),
+                     "of_the_licence": OF_THE_LICENCE + ("|" + data["of_the_licence"] if data.get("of_the_licence") else "")}
         if data.get("number_words"):
             WORDS[code] = list(data["number_words"])
         buildlib.MORE[code] = {k: list(data[k]) for k in ("units", "stop") if data.get(k)}
@@ -181,9 +191,6 @@ def many(lang):
 # While the link to the code is off, the repository is closed and no page says the code is open. The trust line
 # then stands without its middle term, and each of these slots gives way to its twin, <key>_before.
 BEFORE = ("page_what.m_bar_3_text", "imprint.copy_p")
-OPEN_WORD = r"open[ -]source|quelloffen"
-# The one place that may say the words in that state: the licence is an open source licence, whoever can read the code.
-OF_THE_LICENCE = r"open[ -]source[ -]?(?:licen[cs]e|lizenz)"
 # A decided line is read for the forbidden signs only: its wording is fixed above, word for word.
 DECIDED = ("project.line",)
 # Slots that may stand empty: the page then shows nothing in their place and leaves no gap. The lead under "What
@@ -574,16 +581,16 @@ def check_words(site):
         for key in ("glance.trust", "page_what.trust"):
             if raw[key] != lock["trust"]:
                 problems.append(f"{lang}: {key} is not the locked trust wording")
-        if lock["trust"].replace(" · Open Source", "") != lock["trust_before"]:
+        if lock["trust"].replace(" · " + RULES[lang]["trust_middle"], "") != lock["trust_before"]:
             problems.append(f"{lang}: the trust line before the code opens is not the locked line without its middle term")
         if raw["brand.descriptor"] != lock["descriptor"]:
             problems.append(f"{lang}: brand.descriptor is not the decided line under the name")
         for key in BEFORE:
             if key in raw and key + "_before" not in raw:
                 problems.append(f"{lang}: {key} has no twin {key}_before for the time before the code opens")
-            elif key in raw and re.search(OPEN_WORD, raw[key + "_before"], flags=re.I):
+            elif key in raw and re.search(RULES[lang]["open_word"], raw[key + "_before"], flags=re.I):
                 problems.append(f"{lang}: {key}_before says open source, and it stands while the repository is closed")
-        if re.search(OPEN_WORD, re.sub(OF_THE_LICENCE, "", raw["page_what.s6_before"], flags=re.I), flags=re.I):
+        if re.search(RULES[lang]["open_word"], re.sub(RULES[lang]["of_the_licence"], "", raw["page_what.s6_before"], flags=re.I), flags=re.I):
             problems.append(f"{lang}: page_what.s6_before may call the licence open source, not the museum's code")
         if raw["meta.title"] != lock["title"]:
             problems.append(f"{lang}: meta.title is not the decided title of the museum's page")
@@ -2053,8 +2060,9 @@ def check_switches(out, site):
             problems.append(f"{name}: the page says quelloffen (the house writes Open Source)")
         if not SOURCE_LINK:
             licence = " ".join(html_text(site.words_html[lang]["page_what.s6_before"]).split())
-            allowed = len(re.findall(OPEN_WORD, licence, flags=re.I)) if licence in bare else 0
-            said = len(re.findall(OPEN_WORD, text, flags=re.I))
+            opened = RULES[lang]["open_word"] if lang in RULES else OPEN_WORD
+            allowed = len(re.findall(opened, licence, flags=re.I)) if licence in bare else 0
+            said = len(re.findall(opened, text, flags=re.I))
             if said != allowed:
                 problems.append(f"{name}: the repository is closed and the page says open source {said} times "
                                 f"({allowed} allowed, in the sentence that names the licence)")
