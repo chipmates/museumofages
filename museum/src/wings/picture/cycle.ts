@@ -12,7 +12,9 @@ import { islandFit } from '../vitrine/fit'
 import { deskStageHeight } from '../desk-stage'
 import { paintSlider } from '../vitrine/slider'
 import { folioDoor, type FolioSheet } from '../vitrine/folio'
-import { langTag } from '../content'
+import { figure, langTag } from '../content'
+
+const TENTHS: Intl.NumberFormatOptions = { minimumFractionDigits: 1, maximumFractionDigits: 1 }
 
 export interface CycleFile { file: string; bytes: number }
 
@@ -391,7 +393,7 @@ export function createCyclePayload(options: {
     const step = landed ?? stepAtFrame(frame)
     if (slider && !dragging) slider.value = String(Math.round((frame / Math.max(1, cycle.frames)) * 1000))
     if (slider) paintSlider(slider)
-    if (slider) slider.setAttribute('aria-valuetext', `${video.currentTime.toFixed(1)} s / ${cycle.period} s`)
+    if (slider) slider.setAttribute('aria-valuetext', `${figure(video.currentTime, video.currentTime.toFixed(1), TENTHS)} s / ${figure(cycle.period)} s`)
     if (play) {
       const text = video.paused ? options.words.play : options.words.pause
       if (play.textContent !== text) play.textContent = text
