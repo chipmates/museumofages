@@ -21,14 +21,17 @@ import type { DeskPanelRow } from './wings/desk-panel'
 import { readLabels, type ForgeLabel } from './core/labels'
 import { DISCLOSURES } from './content/disclosures'
 import { WINGS, wingBySlug, wingsOpen, wingsPreparing } from './wings/registry'
-import { lang, say, wingCount } from './wings/content'
+import { lang, pageLang, say, wingCount, wordsReady } from './wings/content'
 import { sitePage, wayOut, type Settings } from './wings/way-out'
 import { LOBBY_LINKS, LOBBY_TEXT } from './content/lobby'
 import { gaitPace, setGaitPace } from './wings/vinci/gait'
 import { benchOptions, benchPath, createBench, type BenchOptions } from './bench'
 
+// a catalog language's words are in before the first is written
+await wordsReady()
+
 function syncLobbyCopy(): void {
-  document.documentElement.lang = lang()
+  document.documentElement.lang = pageLang()
   for (const el of document.querySelectorAll<HTMLElement>('[data-lobby]')) {
     const key = el.dataset['lobby'] as keyof typeof LOBBY_TEXT
     if (!(key in LOBBY_TEXT)) continue

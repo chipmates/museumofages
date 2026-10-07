@@ -21,7 +21,40 @@ export interface Bilingual {
   de: string
 }
 
-export const say = (s: Bilingual): string => s[lang()]
+/** The languages a page can be read in. The world (marks, release, letters)
+    stays in `lang()`, so another language is a page language only. */
+export type PageLang = Lang | 'fr' | 'it' | 'es' | 'pt-BR' | 'bg'
+const CATALOG_LANGS: readonly PageLang[] = ['fr', 'it', 'es', 'pt-BR', 'bg']
+
+/** The page's language: a catalog language the address names (any case,
+    `pt` and `pt-br` read as pt-BR), set on the page as its tag; otherwise
+    the world language, untouched. */
+export function pageLang(): PageLang {
+  const asked = (new URLSearchParams(location.search).get('lang') ?? '').toLowerCase()
+  const code = asked === 'pt' || asked === 'pt-br' ? 'pt-BR' : CATALOG_LANGS.find((c) => c === asked)
+  if (!code) return lang()
+  if (document.documentElement.lang !== code) document.documentElement.lang = code
+  return code
+}
+
+/** A catalog's lookup, set once its chunks are in. */
+let catalog: ((s: Bilingual) => string | undefined) | null = null
+
+/** Loads the page language's catalog; English and German load nothing.
+    Awaited before the first words, since `say()` cannot wait. */
+export async function wordsReady(): Promise<void> {
+  const page = pageLang()
+  if (page === 'en' || page === 'de' || catalog) return
+  const { openCatalog } = await import('./lang-catalog')
+  catalog = await openCatalog(page)
+}
+
+/** English and German as written; a catalog language from its catalog, else English. */
+export const say = (s: Bilingual): string => {
+  const page = pageLang()
+  if (page === 'en' || page === 'de') return s[page]
+  return catalog?.(s) ?? s.en
+}
 
 /** The lobby's own plate: how much of the museum stands today. */
 export function wingCount(open: number, preparing: number): string {
