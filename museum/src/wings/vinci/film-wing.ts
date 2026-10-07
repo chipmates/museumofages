@@ -6,7 +6,7 @@
    in the frozen form's one graded box. */
 
 import { leaveWingFinished, setRegister, type WingHosts, type WingModule, type WingStation } from '../frame'
-import { lang, WING_TEXT } from '../content'
+import { lang, say, WING_TEXT } from '../content'
 import { LOBBY_TEXT } from '../../content/lobby'
 import { vinciAbsences, vinciCertaintyWords, vinciCollectionThreshold, vinciContent, vinciEveningSky, vinciGrounds, vinciHourArithmetic, vinciHourIntegrity, vinciHourLabel,
   vinciReconstruction, vinciRightsPolicy, vinciRoomStationIds, vinciSourcesHeadings, vinciWingCounts,
@@ -50,6 +50,8 @@ import { countArrival, countStop } from '../../core/museum-count'
 import { FILM_RELEASE } from '../film-release'
 
 const text = (value: VinciText): string => value[lang()]
+/** the rail's way into the sources window */
+const SOURCES_WORD = { en: 'Sources', de: 'Quellen' }
 const make = <K extends keyof HTMLElementTagNameMap>(tag: K, cls: string, value?: string): HTMLElementTagNameMap[K] => {
   const node = document.createElement(tag)
   node.className = cls
@@ -887,13 +889,13 @@ export function createWing(): WingModule {
     phone.name.textContent = ''
     phone.name.append(deskMark(stop?.certainty ?? 'reconstructed'), make('span', 'film-chapter', text(stop?.chapter ?? LIFE[card]!.name)))
     if (stop?.age && !atBirth(stop.age)) phone.name.append(make('span', 'film-clock', text(stop.age)))
-    phone.line.textContent = stop ? text(stop.line) : ''
+    phone.line.textContent = stop ? say(stop.line) : ''
     phone.drawer.textContent = ''
     if (drawerOpen && stop?.drawer) {
       for (const sentence of sentences(text(stop.drawer), lang())) phone.drawer.append(make('p', '', sentence))
     }
     phone.more.textContent = ''
-    phone.more.append(document.createTextNode(text(drawerOpen ? LOBBY_TEXT.close : deskControl('shared', 'read_more'))), icon(drawerOpen ? ARROW_DOWN : ARROW_UP))
+    phone.more.append(document.createTextNode(say(drawerOpen ? LOBBY_TEXT.close : deskControl('shared', 'read_more'))), icon(drawerOpen ? ARROW_DOWN : ARROW_UP))
     phone.more.hidden = !stop?.drawer
     // the record is the drawer's last row; a stop without a drawer keeps it in the key row
     const sheltered = Boolean(stop?.drawer)
@@ -1305,7 +1307,7 @@ export function createWing(): WingModule {
         if ((event as CustomEvent<{ row?: string }>).detail?.row === 'lobby') wing.querySelector<HTMLElement>('.wing-lobby')?.click()
       }, { signal })
     }
-    sourceButton = make('button', 'vinci-source', lang() === 'de' ? 'Quellen' : 'Sources')
+    sourceButton = make('button', 'vinci-source', say(SOURCES_WORD))
     sourceButton.type = 'button'
     sourceButton.setAttribute('aria-controls', 'vinci-source-card')
     sourceButton.addEventListener('click', () => { paintSources(null); sources?.select('station'); sources?.setOpen(true) })
@@ -1427,7 +1429,7 @@ export function createWing(): WingModule {
     },
     language() {
       module.stations = LIFE.map(s => ({ id: s.id, name: text(s.name), question: text(stationOf(s.station).door), door: stationOf(s.station).door.station }))
-      if (sourceButton) sourceButton.textContent = lang() === 'de' ? 'Quellen' : 'Sources'
+      if (sourceButton) sourceButton.textContent = say(SOURCES_WORD)
       paint()
     },
     // nothing draws but the machine's live island: the film is DOM over a held canvas

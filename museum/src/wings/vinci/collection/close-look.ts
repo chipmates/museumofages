@@ -10,7 +10,7 @@ import { createVitrine, type Vitrine, type VitrineCinema, type VitrineExhibit, t
 import { createTurntablePayload, type TurntableEye, type TurntableOptions, type TurntablePayload, type TurntableViewpoint } from '../../vitrine/turntable'
 import type { ReaderSide, ReaderWords } from '../../vitrine/reader'
 import { MIRROR_EXPLANATION } from '../table/content'
-import { lang } from '../../content'
+import { lang, say } from '../../content'
 import { FURTHER, NEARER } from './deep-plate'
 import type { Grade, Stack } from '../../../stack'
 import { assetAddress } from '../../../stack/materials'
@@ -141,7 +141,8 @@ export const VINCI_VITRINE_WORDS = {
 
 /** The one thing to remember about an exhibit, in the page's language. */
 export function vinciLine(id: string): string | null {
-  return LINES[id]?.[lang()] ?? null
+  const line = LINES[id]
+  return line ? say(line) : null
 }
 
 const ROOM_SHORT = (JSON.parse(cardsRaw) as { station_short_names?: Record<string, Words> }).station_short_names ?? {}

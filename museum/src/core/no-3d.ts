@@ -6,7 +6,7 @@
    starts behind it. */
 
 import css from './no-3d.css?inline'
-import { lang, type Bilingual } from '../wings/content'
+import { lang, say, type Bilingual } from '../wings/content'
 import { FILM_RELEASE } from '../wings/film-release'
 import { LOBBY_TEXT } from '../content/lobby'
 
@@ -100,7 +100,7 @@ function showScreen(way: ScreenWay): void {
   plate.className = 'na-no3d-plate'
   const line = document.createElement('h1')
   line.className = 'na-no3d-line'
-  line.append(...unbroken(WORDS.line[language]))
+  line.append(...unbroken(say(WORDS.line)))
   const help = document.createElement('p')
   help.className = 'na-no3d-help'
   help.append(...unbroken(WORDS.help[language]))
