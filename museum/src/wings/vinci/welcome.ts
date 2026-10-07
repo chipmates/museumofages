@@ -15,9 +15,10 @@
    · THE WORDS ARE NOT HERE. They are in the wing's own content, with their
      certainty word, so this file holds a sheet and no claims. */
 
-import { say, sayNamed, tagged } from '../content'
+import { say } from '../content'
+import { tagWords } from '../lang-tag'
 import { LIFE_WORDS } from '../life/words'
-import { createTitlePlate, plateGroups, type PlateGroup, type PlateLeaf, type PlateWords } from '../title-plate'
+import { createTitlePlate, plateGroups, type PlateGroup, type PlateLeaf } from '../title-plate'
 import { loadManifest, type ManifestEntry } from '../../manifest'
 import {
   vinciCertaintyWords, vinciDoorAbout, vinciOpenings, vinciSourceGroups, vinciSourceScopes, vinciThroughLine,
@@ -50,20 +51,6 @@ export function markVinciWelcomeSeen(): void {
   } catch {
     // A session store that refuses is not a reason to stop at the door.
   }
-}
-
-/** The tag a page read in an unread translation carries under the line, its originals linked
- *  to the same stop; none on an English or German page, or where the catalog writes none. */
-function tagWords(): { tag?: NonNullable<PlateWords['tag']> } {
-  const line = tagged('walk') ? sayNamed('lang.tag') : undefined
-  if (!line) return {}
-  const at = (code: 'en' | 'de'): string => {
-    const address = new URL(location.href)
-    address.searchParams.set('lang', code)
-    return `${address.pathname}${address.search}${address.hash}`
-  }
-  return { tag: { line, link: sayNamed('lang.tag_link'),
-    originals: [{ word: 'English', href: at('en'), lang: 'en' }, { word: 'Deutsch', href: at('de'), lang: 'de' }] } }
 }
 
 export interface VinciWelcome {
@@ -191,7 +178,7 @@ export function createVinciWelcome(
       leaflet: text(vinciWelcomeText.leaflet),
       handle: text(vinciWelcomeText.handle),
       about: text(vinciDoorAbout),
-      ...tagWords(),
+      tag: tagWords(),
     }),
     leaves,
     controls: () => [

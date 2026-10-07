@@ -15,6 +15,7 @@
      opened label ends on a whole line. */
 
 import { lang, langTag, sayAs, type Lang } from '../../content'
+import { tagNodes, tagWords } from '../../lang-tag'
 import { loadManifest, type ManifestIndex } from '../../../manifest'
 import { assetAddress } from '../../../stack/materials'
 import { filmForm } from '../film-cinema'
@@ -170,7 +171,10 @@ export async function openArnoCard(host: HTMLElement, options: ArnoCardOptions =
   // the mark rides at the end of the words, so a credit that wraps keeps it beside its last word
   const creditWords = make('span', 'arno-credit-words', bindForDisplay(said.credit))
   credit.append(creditWords, icon(CHEVRON_UP, 'arno-credit-mark'))
-  words.append(line, label, credit)
+  // an unread translation says so under the line, as the line stands: visible before any press
+  const tag = tagWords()
+  const tagged = tag ? tagNodes(tag, document_, 'arno-tag') : []
+  words.append(line, ...tagged, label, credit)
 
   const start = make('button', 'arno-start')
   start.type = 'button'
@@ -226,6 +230,7 @@ export async function openArnoCard(host: HTMLElement, options: ArnoCardOptions =
   function setLabel(open: boolean): void {
     label.hidden = !open
     line.hidden = open
+    for (const node of tagged) node.hidden = open
     credit.setAttribute('aria-expanded', String(open))
     if (open) card.dataset['label'] = 'open'
     else delete card.dataset['label']

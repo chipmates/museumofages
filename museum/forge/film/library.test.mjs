@@ -128,7 +128,7 @@ test('each wire trips back to the global key when its proof no longer holds', as
   const wordsWith = (overlay) => { const s = sourcesAt({ overlay }); return wordsPlacement({ sources: s, graph: importGraph(s), worldFiles: new Set(worldFiles) }) }
   const readerWith = (overlay, frameShaping) => { const s = sourcesAt({ overlay }); return readerPlacement({ sources: s, graph: importGraph(s), frameShaping }) }
   const welcome = `${WING_DIR}/welcome.ts`
-  const letters = wordsWith(plant(welcome, "import { say, sayNamed, tagged } from '../content'\n", "import { say, sayNamed, tagged } from '../content'\nimport { createText } from './words'\n"))
+  const letters = wordsWith(plant(welcome, "import { say } from '../content'\n", "import { say } from '../content'\nimport { createText } from './words'\n"))
   assert.equal(letters[CONTENT].placed, false, 'an importer of the words that reaches the letters')
   assert.match(letters[CONTENT].why, /welcome\.ts/)
   // an importer that reaches the letters through a module of its own

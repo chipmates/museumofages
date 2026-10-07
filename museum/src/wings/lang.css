@@ -28,8 +28,10 @@
 }
 :lang(bg) { font-synthesis: none; }
 
-/* THE TAG under the welcome's line: smaller and quieter than the line, the
-   originals' names each a full target. */
+/* THE TAG under the line of the Arno card and of the welcome: smaller and
+   quieter than the line, the originals' names each a full target. */
+.arno-tag,
+.arno-tag-link,
 .na-plate-tag,
 .na-plate-tag-link {
   max-width: 54ch;
@@ -37,8 +39,10 @@
   color: color-mix(in srgb, var(--na-starlight) 72%, var(--na-mist));
 }
 .na-plate-tag { margin: 14px 0 0; }
-.na-plate-tag-link { margin: 0; }
-.na-plate-tag-link a {
+.arno-tag { margin: 6px 0 0; }
+.arno-tag-link, .na-plate-tag-link { margin: 0; }
+.arno-tag[hidden], .arno-tag-link[hidden] { display: none; }
+:is(.arno-tag-link, .na-plate-tag-link) a {
   display: inline-flex;
   align-items: center;
   min-height: 44px;
@@ -48,4 +52,4 @@
   text-decoration-color: color-mix(in srgb, var(--na-starlight) 40%, transparent);
   text-underline-offset: 4px;
 }
-.na-plate-tag-link a:focus-visible { outline: 1px solid var(--na-gold); outline-offset: 2px; }
+:is(.arno-tag-link, .na-plate-tag-link) a:focus-visible { outline: 1px solid var(--na-gold); outline-offset: 2px; }
