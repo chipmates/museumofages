@@ -1,0 +1,19 @@
+{
+  "_note": "THE LOCKED LINES of this language, approved word for word. The build compares the words files with them and stops on any difference. A language without this file is built and checked, never listed. Change a line only with the owner's approval.",
+  "tagline": "We rebuild what was. You walk through it.",
+  "trust": "Nonprofit · Open Source · No tracking cookies, no profiling",
+  "trust_before": "Nonprofit · No tracking cookies, no profiling",
+  "descriptor": "a digital museum",
+  "title": "Museum of Ages: a digital museum of the past, rebuilt in 3D",
+  "mission": "We rebuild what was, one place at a time, and make it as accessible as we can, so that everyone can learn from it.",
+  "purpose": "Its purpose is education.",
+  "project": "A project of ChipMates gemeinnützige GmbH",
+  "grades": [
+    "Documented",
+    "Reconstructed",
+    "Conjectural",
+    "Not known"
+  ],
+  "made": "A person reads, corrects and approves every text before it is published. The drafts are written with AI from a research file that names a source for every fact.",
+  "honesty": "As it was, as far as we know."
+}

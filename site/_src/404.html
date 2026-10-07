@@ -1,10 +1,10 @@
 <!doctype html>
-<html lang="en" class="sheet">
+<html lang="{{lang}}" class="sheet">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 {{head.csp}}<meta name="robots" content="noindex">
-<title>{{en_title}} | Museum of Ages, a digital museum</title>
+<title>{{own_title}} | Museum of Ages, {{own_descriptor}}</title>
 <style>{{css}}</style>
 <style id="faces" media="not all">{{css.faces}}</style>
 <noscript><style>{{css.faces}}</style></noscript>
@@ -19,17 +19,11 @@
 <main id="main" class="statement">
   <div class="wrap stub__in">
     <div class="statement__head">
-      <h1>{{en_title}}</h1>
+      <h1>{{own_title}}</h1>
     </div>
-    <p class="lead">{{en_p}}</p>
-    <p><a class="more more--back" href="{{href.home}}"><span>{{en_back}}</span></a></p>
-    <hr>
-    <div lang="de">
-      <h2>{{de_title}}</h2>
-      <p class="lead">{{de_p}}</p>
-      <p><a class="more more--back" href="{{href.home_de}}"><span>{{de_back}}</span></a></p>
-    </div>
-    <p class="stub__go"><a class="door" href="{{href.enter}}"><span>{{en_enter}}</span>{{svg.arrow}}</a></p>
+    <p class="lead">{{own_p}}</p>
+    <p><a class="more more--back" href="{{href.home}}"><span>{{own_back}}</span></a></p>
+{{html.others}}    <p class="stub__go"><a class="door" href="{{href.enter}}"><span>{{own_enter}}</span>{{svg.arrow}}</a></p>
   </div>
 </main>
 

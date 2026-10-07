@@ -9,6 +9,11 @@ window.MoaSky = {"tIce":-30000.0,"seven":{"4301":"Dubhe","4295":"Merak","4554":"
   var F = window.MoaFilm = window.MoaFilm || {};
   var RAD = Math.PI / 180;
   F.RAD = RAD;
+  // the faces the film's words are set in: a language with faces of its own names them first (buildlib.LANG_FACES)
+  var OWN = /^bg\b/i.test(document.documentElement.lang || '') ? ['"Museum Bulgarian Serif"', '"Museum Bulgarian Sans"'] : ['', ''];
+  F.SERIF = (OWN[0] ? OWN[0] + ', ' : '') + 'Cardo, Georgia, serif';
+  F.SANS = (OWN[1] ? OWN[1] + ', ' : '') + 'Marcellus, Georgia, serif';
+  F.FACES = (OWN[0] ? [OWN[0], OWN[1]] : []).concat(['Marcellus', 'Cardo']);
   F.DPR = 2;
   F.plates = {};
 
@@ -128,18 +133,18 @@ window.MoaSky = {"tIce":-30000.0,"seven":{"4301":"Dubhe","4295":"Merak","4554":"
     ctx.fillStyle = F.tok.edge; ctx.fillRect(0, y, W, s);
     ctx.fillStyle = F.tok.lineWall; ctx.fillRect(0, y, W, 1);
     ctx.textBaseline = 'middle';
-    ctx.font = fs + 'px Marcellus, Georgia, serif';
+    ctx.font = fs + 'px ' + F.SANS;
     ctx.fillStyle = F.tok.text2;
     if ('letterSpacing' in ctx) ctx.letterSpacing = (fs * 0.14).toFixed(2) + 'px';
     ctx.textAlign = 'left';
     ctx.fillText((age || '').toUpperCase(), pad, y + s / 2 + 1);
     if ('letterSpacing' in ctx) ctx.letterSpacing = '0px';
-    ctx.font = (fs + 2.5) + 'px Marcellus, Georgia, serif';
+    ctx.font = (fs + 2.5) + 'px ' + F.SANS;
     ctx.fillStyle = F.tok.linen; ctx.textAlign = 'right';
     var yw = ctx.measureText(year || '').width;
     ctx.fillText(year || '', W - pad, y + s / 2 + 1);
     if (note) {
-      ctx.font = 'italic ' + (fs + 1) + 'px Cardo, Georgia, serif'; ctx.fillStyle = F.tok.chalkText;
+      ctx.font = 'italic ' + (fs + 1) + 'px ' + F.SERIF; ctx.fillStyle = F.tok.chalkText;
       ctx.fillText(note, W - pad - yw - 8, y + s / 2 + 1);
     }
     ctx.restore();
@@ -1242,27 +1247,47 @@ window.MoaFilm.plates.oil.markR = 2.3; window.MoaFilm.plates.oil.strokes = { len
           wing: '{place}, nachgebaut.', offer: '{year}. {place}, nachgebaut. Du kannst hineingehen.', wingLow: '{place}, {year}.',
           bc: 'um {n} v. Chr.', ad: 'um {n}', ago: 'vor etwa {n} Jahren', today: 'heute',
           prev: 'Fr\xfcher auf der Linie der Jahre', next: 'Sp\xe4ter auf der Linie der Jahre', film: 'Der Film der sieben Sterne',
-          more: 'Den ganzen Film ansehen', caption: 'Der Film des Museums' }
+          more: 'Den ganzen Film ansehen', caption: 'Der Film des Museums' },
+    // the other languages' words, written by the museum's writer: a word not written yet is said in English
+    fr: {}, it: {}, es: {}, 'pt-BR': {}, bg: {}
   };
+  var LANGS = ['en', 'de', 'fr', 'it', 'es', 'pt-BR', 'bg'];
+  // the page's language among the seven, from its lang attribute (pt-BR, or any language's first part)
+  function pageLang() {
+    var h = (document.documentElement.lang || 'en').toLowerCase(), i;
+    for (i = 0; i < LANGS.length; i++) if (LANGS[i].toLowerCase() === h) return LANGS[i];
+    for (i = 0; i < LANGS.length; i++) if (LANGS[i].slice(0, 2) === h.slice(0, 2)) return LANGS[i];
+    return 'en';
+  }
+  // a language's words, each one it has not written yet in English
+  var SAID = {};
+  function words(lang) {
+    if (SAID[lang]) return SAID[lang];
+    var own = WORDS[lang] || {}, out = {}, k;
+    for (k in WORDS.en) out[k] = own[k] || WORDS.en[k];
+    return (SAID[lang] = out);
+  }
+  // the mark between thousands, from five digits on
+  var MARK = { en: ',', de: '.', fr: '\u202f', it: '.', es: '\u202f', 'pt-BR': '.', bg: '\u00a0' };
   var OLDEST = -40000, ARRIVAL_MAX = 19.6, CENTURY = 100, HAND = 2.1;
   F.PLATES = PLATES; F.WORDS = WORDS;
 
   function tx(o, lang) { return o ? (typeof o === 'string' ? o : o[lang] || o.en || '') : ''; }
   function fill(s, map) { return s.replace(/\{(\w+)\}/g, function (m, k) { return map[k] == null ? '' : map[k]; }); }
   // one way of writing a number: four digits bare, five and more with the language's mark
-  function num(n, lang) { return n >= 10000 ? String(n).replace(/\B(?=(\d{3})+(?!\d))/g, lang === 'de' ? '.' : ',') : String(n); }
+  function num(n, lang) { return n >= 10000 ? String(n).replace(/\B(?=(\d{3})+(?!\d))/g, MARK[lang] || ',') : String(n); }
   function yearText(y, lang) {
     var a = Math.abs(y), n = a >= 10000 ? Math.round(a / 1000) * 1000 : a >= 1000 && y < 0 ? Math.round(a / 100) * 100 : Math.round(a / 10) * 10;
-    return y < 0 ? fill(WORDS[lang].bc, { n: num(n, lang) }) : y >= 1400 ? String(Math.round(y)) : fill(WORDS[lang].ad, { n: n });
+    return y < 0 ? fill(words(lang).bc, { n: num(n, lang) }) : y >= 1400 ? String(Math.round(y)) : fill(words(lang).ad, { n: n });
   }
-  function agoText(y, lang) { var n = NOW - y; n = n >= 10000 ? Math.round(n / 1000) * 1000 : Math.round(n / 100) * 100; return fill(WORDS[lang].ago, { n: num(n, lang) }); }
+  function agoText(y, lang) { var n = NOW - y; n = n >= 10000 ? Math.round(n / 1000) * 1000 : Math.round(n / 100) * 100; return fill(words(lang).ago, { n: num(n, lang) }); }
 
   // ---------- the two cuts, from the plates and the wings
   /* data.wings: the site's list in its own order (the last open one is the newest). Each: slug, state, name, place, year, ground, inside,
      and the wing's own sentences: line (the full film, at the house), offer (the arrival cut), sky (what the sky over it is), held (its held line), inside.line
      (what the room is that the film looks into: without it the film does not look in, so no room of ours passes for a room of then). */
   function build(cut, data, lang, opt) {
-    var W = WORDS[lang], wings = (data && data.wings) || [], open = wings.filter(function (w) { return w.state === 'open'; }), making = wings.filter(function (w) { return w.state === 'making'; });
+    var W = words(lang), wings = (data && data.wings) || [], open = wings.filter(function (w) { return w.state === 'open'; }), making = wings.filter(function (w) { return w.state === 'making'; });
     var dated = open.filter(function (w) { return w.year != null && w.year > OLDEST; }).sort(function (a, b) { return a.year - b.year; });
     var segs = [], t = 0, stops = [], USE = PLATES.filter(function (p) { return !p.out; });
     function lowOf(p, brief) {
@@ -1351,7 +1376,7 @@ window.MoaFilm.plates.oil.markR = 2.3; window.MoaFilm.plates.oil.strokes = { len
 
   // ---------- one player per box
   function Player(box, o) {
-    var self = this, lang = o.lang || ((document.documentElement.lang || 'en').slice(0, 2) === 'de' ? 'de' : 'en');
+    var self = this, lang = o.lang || pageLang();
     var canvas = o.canvas || document.createElement('canvas'), ctx = canvas.getContext('2d');
     var data = o.data || { wings: [] }, lines = {}, L = null, bakes = {}, imgs = {}, bufA = null, bufB = null, bufM = null, bufT = null;
     var still = o.img || (box && box.querySelector('img')), anchors = null, laid = { name: null, n: 0, full: false };
@@ -1402,7 +1427,7 @@ window.MoaFilm.plates.oil.markR = 2.3; window.MoaFilm.plates.oil.strokes = { len
       function one() { if (--n === 0) done(); }
       files.forEach(function (f) { image(f, one); });
       if (still && !(still.complete && still.naturalWidth)) { still.addEventListener('load', one, { once: true }); still.addEventListener('error', one, { once: true }); } else one();
-      if (document.fonts && document.fonts.load) Promise.all([document.fonts.load('12px Marcellus'), document.fonts.load('12px Cardo')]).then(one, one); else one();
+      if (document.fonts && document.fonts.load) Promise.all(F.FACES.map(function (f) { return document.fonts.load('12px ' + f); })).then(one, one); else one();
     };
 
     // ----- layers drawn once per size
@@ -1658,22 +1683,22 @@ window.MoaFilm.plates.oil.markR = 2.3; window.MoaFilm.plates.oil.strokes = { len
       g.save(); g.globalAlpha = a; g.textBaseline = 'top'; g.textAlign = 'left';
       if (text) {
         if (lab.lineAt) g.globalAlpha = a * F.ramp(tl, lab.lineAt, lab.lineAt + 0.4);
-        g.font = f1 + 'px Cardo, Georgia, serif'; g.fillStyle = F.tok.linen; lines = wrap(g, text, maxW);
-        if ((lines.length - 1) * lh + f1 > room) { g.font = f2 + 'px Cardo, Georgia, serif'; lh = f2 * 1.3; lines = wrap(g, text, maxW); }
+        g.font = f1 + 'px ' + F.SERIF; g.fillStyle = F.tok.linen; lines = wrap(g, text, maxW);
+        if ((lines.length - 1) * lh + f1 > room) { g.font = f2 + 'px ' + F.SERIF; lh = f2 * 1.3; lines = wrap(g, text, maxW); }
         for (i = 0; i < lines.length; i++) g.fillText(lines[i], pad, y0 + i * lh);
         below = lines.length * lh + 1;
       } else if (lab.note) {
-        g.font = f2 + 'px Cardo, Georgia, serif'; g.fillStyle = F.tok.text2; lines = wrap(g, lab.note, maxW);
+        g.font = f2 + 'px ' + F.SERIF; g.fillStyle = F.tok.text2; lines = wrap(g, lab.note, maxW);
         for (i = 0; i < lines.length && i * f2 * 1.3 + f2 <= room + 1; i++) g.fillText(lines[i], pad, y0 + i * f2 * 1.3);
         below = i * f2 * 1.3 + 1;
       } else if (lab.low) {
-        g.font = f1 + 'px Marcellus, Georgia, serif'; g.fillStyle = F.tok.linen; lines = wrap(g, lab.low, maxW);
+        g.font = f1 + 'px ' + F.SANS; g.fillStyle = F.tok.linen; lines = wrap(g, lab.low, maxW);
         for (i = 0; i < lines.length; i++) g.fillText(lines[i], pad, y0 + i * lh);
         below = lines.length * lh + 1;
       }
       // the held line under it (the source): always in a wide box, in a narrow one when the film is held (paused or stepped)
       if (below && full && lab.obj && (W0 >= 400 || self.paused)) {
-        g.font = f2 + 'px Cardo, Georgia, serif'; g.fillStyle = F.tok.text3; var ol = wrap(g, lab.obj, maxW);
+        g.font = f2 + 'px ' + F.SERIF; g.fillStyle = F.tok.text3; var ol = wrap(g, lab.obj, maxW);
         if (below + (ol.length - 1) * f2 * 1.3 + f2 <= room + 1) for (i = 0; i < ol.length; i++) g.fillText(ol[i], pad, y0 + below + i * f2 * 1.3);
       }
       g.restore();
@@ -1681,7 +1706,7 @@ window.MoaFilm.plates.oil.markR = 2.3; window.MoaFilm.plates.oil.strokes = { len
     function bandChip(g, text, a) {   // the band of years, above: it changes once, when its caption lands
       if (!text || a <= 0) return;
       var ph5 = L.W < 500, fs = ph5 ? 12 : 13.5, pad = ph5 ? 7 : 9, x = ph5 ? 8 : 12, y = x, w;
-      g.save(); g.globalAlpha = a; g.font = fs + 'px Marcellus, Georgia, serif';
+      g.save(); g.globalAlpha = a; g.font = fs + 'px ' + F.SANS;
       if ('letterSpacing' in g) g.letterSpacing = (fs * 0.08).toFixed(2) + 'px';
       w = g.measureText(text.toUpperCase()).width + 2 * pad;
       g.fillStyle = F.rgba(F.hex(F.tok.edge), 0.86); g.fillRect(x, y, w, fs + 2 * pad - 2);
@@ -1714,7 +1739,7 @@ window.MoaFilm.plates.oil.markR = 2.3; window.MoaFilm.plates.oil.strokes = { len
     function runningText(s, tl) {   // one way of counting per stretch: years ago through the oldest, the year after that
       var p = F.ease(F.ramp(tl, 0.15, s.dur - 0.45));
       if (s.running === 'ago') return agoText(s.to + (s.from - s.to) * Math.pow(1 - p, 2.6), lang);
-      return p >= 1 && s.to >= NOW ? WORDS[lang].today : yearText(s.from + (s.to - s.from) * p, lang);
+      return p >= 1 && s.to >= NOW ? words(lang).today : yearText(s.from + (s.to - s.from) * p, lang);
     }
     function bandAt(seg, tl) {
       if (!seg || !seg.label) return { text: null, a: 0 };
@@ -1797,7 +1822,7 @@ window.MoaFilm.plates.oil.markR = 2.3; window.MoaFilm.plates.oil.strokes = { len
     this.nightLayer = function () { return nightBake(); };
     this.layout = function () { return L; };
     this.drop = function () { bakes = {}; laid.name = null; };
-    this.words = WORDS[lang];
+    this.words = words(lang);
   }
   F.Player = Player;
 

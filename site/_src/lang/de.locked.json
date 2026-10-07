@@ -1,0 +1,19 @@
+{
+  "_note": "THE LOCKED LINES of this language, approved word for word. The build compares the words files with them and stops on any difference. A language without this file is built and checked, never listed. Change a line only with the owner's approval.",
+  "tagline": "Wir bauen nach, was war. Du gehst hinein.",
+  "trust": "Gemeinnützig · Open Source · Keine Tracking-Cookies, kein Profiling",
+  "trust_before": "Gemeinnützig · Keine Tracking-Cookies, kein Profiling",
+  "descriptor": "ein digitales Museum",
+  "title": "Museum of Ages: digitales Museum, Geschichte in 3D nachgebaut",
+  "mission": "Wir bauen nach, was war, einen Ort nach dem anderen, und machen es so zugänglich wie möglich, damit alle daraus lernen können.",
+  "purpose": "Ihr Zweck ist die Förderung der Bildung.",
+  "project": "Ein Projekt der ChipMates gemeinnützigen GmbH",
+  "grades": [
+    "Dokumentiert",
+    "Rekonstruiert",
+    "Vermutet",
+    "Nicht bekannt"
+  ],
+  "made": "Ein Mensch liest, korrigiert und gibt jeden Text frei, bevor er erscheint. Die Entwürfe entstehen mit KI aus einer Recherche, die für jede Tatsache eine Quelle nennt.",
+  "honesty": "So wie es war. Soweit wir wissen."
+}

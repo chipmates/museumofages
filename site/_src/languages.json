@@ -1,0 +1,28 @@
+{
+  "_note": "THE LANGUAGES of the site, read by both builds (site/_src/build.py and site/pages/build.py) through languages.py. One entry per language, in the order the switcher lists them. code: the code of its words files (words.<code>.json and the others). folder: where its pages stand, empty for English. html: its lang attribute (BCP 47). name: its own name, as the switcher shows it. og: its Open Graph locale. deed: the page of a Creative Commons licence in it, after the licence's address (empty: the English page). status: ai (translated with AI and read by no person yet: the pages say so) or native (written or read by a person who speaks it). slugs: the folder of each page kind in it, by kind (what, imprint, privacy), of each wing's page by the wing's key, and of each topic page by its English slug. imprint null: the language has no legal notice of its own and links the English one. slugs_draft true: the slugs are drafts, which the writers may improve before the language is listed. BUILT: the languages the build writes and checks. A built language that is not listed says noindex on every page and is linked from nowhere. LISTED: the languages that are live: hreflang, the sitemap, the switcher, the 404 page and the hint on the English front page. Every listed language is built. A language is listed only with its approved locked lines (lang/<code>.locked.json).",
+  "BUILT": ["en", "de"],
+  "LISTED": ["en", "de"],
+  "languages": [
+    {"code": "en", "folder": "", "html": "en", "name": "English", "og": "en_GB", "deed": "", "status": "native",
+     "slugs": {"what": "what-this-museum-is", "imprint": "imprint", "privacy": "privacy",
+               "wings": {"vinci": "leonardo-da-vinci"}, "topics": {"inventions": "inventions"}}},
+    {"code": "de", "folder": "de/", "html": "de", "name": "Deutsch", "og": "de_DE", "deed": "deed.de", "status": "native",
+     "slugs": {"what": "was-dieses-museum-ist", "imprint": "impressum", "privacy": "datenschutz",
+               "wings": {"vinci": "leonardo-da-vinci"}, "topics": {"inventions": "erfindungen"}}},
+    {"code": "fr", "folder": "fr/", "html": "fr", "name": "Français", "og": "fr_FR", "deed": "deed.fr", "status": "ai", "slugs_draft": true,
+     "slugs": {"what": "qu-est-ce-que-ce-musee", "imprint": null, "privacy": "confidentialite",
+               "wings": {"vinci": "leonard-de-vinci"}, "topics": {"inventions": "inventions"}}},
+    {"code": "it", "folder": "it/", "html": "it", "name": "Italiano", "og": "it_IT", "deed": "deed.it", "status": "ai", "slugs_draft": true,
+     "slugs": {"what": "cos-e-questo-museo", "imprint": null, "privacy": "privacy",
+               "wings": {"vinci": "leonardo-da-vinci"}, "topics": {"inventions": "invenzioni"}}},
+    {"code": "es", "folder": "es/", "html": "es", "name": "Español", "og": "es_ES", "deed": "deed.es", "status": "ai", "slugs_draft": true,
+     "slugs": {"what": "que-es-este-museo", "imprint": null, "privacy": "privacidad",
+               "wings": {"vinci": "leonardo-da-vinci"}, "topics": {"inventions": "inventos"}}},
+    {"code": "pt-BR", "folder": "pt-br/", "html": "pt-BR", "name": "Português (Brasil)", "og": "pt_BR", "deed": "deed.pt-br", "status": "ai", "slugs_draft": true,
+     "slugs": {"what": "o-que-e-este-museu", "imprint": null, "privacy": "privacidade",
+               "wings": {"vinci": "leonardo-da-vinci"}, "topics": {"inventions": "invencoes"}}},
+    {"code": "bg", "folder": "bg/", "html": "bg", "name": "Български", "og": "bg_BG", "deed": "deed.bg", "status": "ai", "slugs_draft": true,
+     "slugs": {"what": "kakvo-e-tozi-muzey", "imprint": null, "privacy": "poveritelnost",
+               "wings": {"vinci": "leonardo-da-vinchi"}, "topics": {"inventions": "izobreteniya"}}}
+  ]
+}

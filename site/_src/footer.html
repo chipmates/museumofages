@@ -6,7 +6,7 @@
         <span class="brand__name">Museum of Ages</span>
       </p>
       <!-- Who runs the museum, with the legal notice beside it: the same line on every page. -->
-      <p class="foot__by">{{footer.about}} <a href="{{href.imprint}}">{{footer.imprint}}</a></p>
+      <p class="foot__by">{{footer.about}} <a href="{{href.imprint}}"{{attr.imprint_lang}}>{{footer.imprint}}</a></p>{{html.imprint_elsewhere}}
       <p>{{footer.mission}}</p>
       <p class="trust">{{glance.trust}}</p>
     </div>
@@ -23,13 +23,12 @@
       <ul>
         <li><a href="{{href.what}}">{{footer.what}}</a></li>
         <li><a href="{{href.privacy}}">{{footer.privacy}}</a></li>
-        <li><a href="{{href.imprint}}">{{footer.imprint}}</a></li>
+        <li><a href="{{href.imprint}}"{{attr.imprint_lang}}>{{footer.imprint}}</a></li>
         <!-- The link to the code, behind one switch in build.py (SOURCE_LINK): an address of the site itself, which the
              host forwards to the repository. -->
         {{html.source_item}}
-        <li><a href="{{href.lang_other}}" lang="{{other_lang}}" hreflang="{{other_lang}}">{{a11y.lang_switch}}</a></li>
-        <li><a href="{{href.enter}}">{{footer.enter}}</a></li>
-      </ul>
+{{html.lang_foot}}        <li><a href="{{href.enter}}">{{footer.enter}}</a></li>
+      </ul>{{html.lang_foot_list}}
     </nav>
     <div class="foot__fine">
       <p><span>{{footer.rights}}</span>{{html.licence}} <span>{{footer.originals}}</span></p>

@@ -1,0 +1,10 @@
+{
+  "_note": "THIS LANGUAGE'S OWN ROWS of the house rules, read by build.py beside the shared ones (which hold English and German). never: [pattern, what to say instead], read against every sentence of the language, lower case. for_the_writer: the same, a note and no failure. gone: lines of an earlier state no page may carry. banned: filler words no sentence may carry (the dashes and the semicolon are banned in every language already). number_words: zero to twenty, for a wing's {word:<name>}. units and stop: words a number stays bound to, as regular expressions. The style sheet fills them.",
+  "never": [],
+  "for_the_writer": [],
+  "gone": [],
+  "banned": [],
+  "number_words": [],
+  "units": [],
+  "stop": []
+}

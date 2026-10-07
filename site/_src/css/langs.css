@@ -1,0 +1,57 @@
+/* Museum of Ages: the languages. Set inline by build.py on a page that needs it: from three languages on a page
+   (the switcher), on a page whose words no person has read yet (the line that says so), on the English front page
+   while it carries the hint. English and German alone never load it. */
+
+:root{
+  /* The line under the project line on a translated language's first screen: its room on a first screen. */
+  --ai-h:40px;
+}
+@media (min-width:600px){:root{--ai-h:28px}}
+
+/* The bar: the page's own language, which opens the list. A details element, so it opens without a script. */
+.langs{position:relative}
+.langs__btn{gap:7px;cursor:pointer;list-style:none;user-select:none;-webkit-user-select:none;text-decoration:none;white-space:nowrap}
+.langs__btn::-webkit-details-marker{display:none}
+.langs__btn::after{content:"";width:5px;height:5px;border-right:1px solid currentColor;border-bottom:1px solid currentColor;transform:translateY(-2px) rotate(45deg)}
+.langs[open] .langs__btn{color:var(--ink)}
+.langs__list{position:absolute;right:-8px;top:calc(100% + 6px);z-index:30;width:max-content;min-width:12.5rem;max-width:calc(100vw - 24px);margin:0;padding:6px 16px 10px;list-style:none;background:var(--ground-edge);box-shadow:0 0 0 1px var(--hair),0 30px 44px -22px var(--shade)}
+.langs__list a,.menu__list--langs a,.foot__langs a{display:flex;align-items:center;min-height:44px;font-family:var(--sans);text-decoration:none}
+.langs__list a{font-size:1rem;letter-spacing:.02em;color:var(--ink-soft);border-bottom:1px solid var(--hair)}
+.langs__list li:last-child a{border-bottom:0}
+.langs__list a:hover,.foot__langs a:hover{color:var(--ink)}
+/* The page's own language: in full ink, with the chalk line under it, as the bar marks where you are. */
+.langs__list a[aria-current],.menu__list--langs a[aria-current],.foot__langs a[aria-current]{color:var(--ink);text-decoration:underline;text-decoration-color:var(--mark);text-decoration-thickness:2px;text-underline-offset:.4em}
+.langs:not([open]) .langs__list{display:none}
+/* The narrowest phones: the languages stand in the menu only. */
+@media (max-width:359px){.top .langs{display:none}}
+
+/* The menu: the languages in two columns under their own small heading. */
+.menu__list--langs{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));column-gap:18px;margin-top:6px}
+.menu__list--langs a{min-height:44px;font-size:1rem;letter-spacing:.02em;color:var(--ink-soft)}
+
+/* The footer: one row of names that wraps. */
+.foot__langs{display:flex;flex-wrap:wrap;gap:0 18px;margin:0;padding:0;list-style:none}
+.foot__langs a{color:var(--ink-soft)}
+.foot__nav .foot__h+.foot__langs,.foot__nav ul+.foot__h{margin-top:16px}
+.foot__else{margin-top:6px;font-size:.875rem;color:var(--ink-quiet)}
+
+/* A translated language's first screen says so, small and calm, under the project line. */
+.aitag{display:flex;align-items:center;min-height:var(--ai-h);margin:0;padding:4px var(--pad);background:var(--ground-edge);box-shadow:0 1px 0 var(--hair);font-family:var(--sans);font-size:.75rem;line-height:1.35;letter-spacing:.03em;color:var(--ink-soft)}
+
+/* The English front page's hint for a browser that asks for another listed language. */
+.hint{margin:0;padding:2px var(--pad);background:var(--ground-edge);font-family:var(--sans);font-size:.875rem}
+.hint a{display:inline-flex;align-items:center;min-height:44px;color:var(--ink);text-decoration:underline;text-decoration-color:var(--mark)}
+.hint[hidden]{display:none}
+
+/* The root's 404 page: one line in each other listed language. */
+.stub__row{margin-top:10px;font-family:var(--sans);font-size:.9375rem;color:var(--ink-soft)}
+.stub__row a{display:inline-flex;align-items:center;min-height:44px;color:var(--ink)}
+
+/* Bulgarian is set in its own two faces, which hold its letters and their Bulgarian forms (buildlib.LANG_FACES).
+   The museum's name keeps its own face. A style the faces do not have is not faked. */
+:lang(bg){
+  --serif:"Museum Bulgarian Serif","Iowan Old Style","Palatino Linotype",Palatino,Georgia,serif;
+  --sans:"Museum Bulgarian Sans","Segoe UI",system-ui,sans-serif;
+  font-synthesis:none;
+}
+:lang(bg) .brand__name{font-family:"Cardo","Cardo fallback","Iowan Old Style","Palatino Linotype",Georgia,serif}

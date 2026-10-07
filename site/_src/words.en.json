@@ -7,6 +7,7 @@
     "skip": "Skip to the content",
     "nav": "The museum's pages",
     "lang_switch": "Deutsch",
+    "language": "Language",
     "footer_nav": "About this site",
     "crumb": "You are here"
   },
@@ -283,6 +284,9 @@
     "s6_h": "Responsible for content according to § 18 (2) MStV",
     "s8_p": "The notes on liability for content and links and on copyright are part of the German legal notice.",
     "s8_link": "To the German legal notice"
+  },
+  "hint": {
+    "line": "This museum is also in English."
   },
   "notfound": {
     "title": "Page not found",

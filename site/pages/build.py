@@ -25,6 +25,7 @@ repository keeps no picture). Nothing else: every pair of data files is built.
 import base64
 import hashlib
 import html
+import importlib.util
 import json
 import posixpath
 import re
@@ -37,9 +38,34 @@ HERE = Path(__file__).resolve().parent
 SITE_SRC = HERE.parent / "_src"
 SITE_BUILT = HERE.parent / "dist"
 
+
+def _site_module(name):
+    """A module of the site's source (_src), found from here upward: a test runs a copy of this file further down."""
+    for folder in (HERE, *HERE.parents):
+        path = folder / "_src" / f"{name}.py"
+        if path.is_file():
+            spec = importlib.util.spec_from_file_location(f"site_{name}", path)
+            mod = importlib.util.module_from_spec(spec)
+            keep, sys.dont_write_bytecode = sys.dont_write_bytecode, True
+            try:
+                spec.loader.exec_module(mod)
+            finally:
+                sys.dont_write_bytecode = keep
+            return mod
+    raise SystemExit(f"_src/{name}.py was not found above {HERE}")
+
+
+# The site's languages (languages.json): the pages are built in every built language, the listed ones are live.
+LANG = _site_module("languages")
+# the site's shared tools: a language's own faces, French punctuation
+LIB = _site_module("buildlib")
+L = LANG.Languages()
+if L.problems:
+    raise SystemExit("\n".join(L.problems))
+
 # The page of the built site whose header and footer every search page wears, and this folder's
 # copy of the last whole site for the time that page is not there.
-CHROME_PAGE = {"en": "what-this-museum-is/", "de": "de/was-dieses-museum-ist/"}
+CHROME_PAGE = {code: L.page(code, "what") for code in L.built}
 LAST_GOOD = HERE / "last-good"
 # This folder's own pictures. A picture that is not here is looked for in the site's folder.
 PICS = HERE / "pics" / "img"
@@ -55,7 +81,7 @@ ORIGIN = "https://museumofages.org"
 WINGS_FILE = SITE_SRC / "registry.json"
 WING_KEYS = ("name", "page", "door", "about", "never_say", "claim_phrase")
 # A door leads to a wing's own opening: no fragment, no parameter but the language.
-DOOR_SHAPE = r"/w/[a-z0-9-]+(?:\?(?:film=[a-z0-9-]+&(?:amp;)?)?lang=[a-z]{2})?"  # the release name opens the wing's early door
+DOOR_SHAPE = r"/w/[a-z0-9-]+(?:\?(?:film=[a-z0-9-]+&(?:amp;)?)?lang=[a-z]{2}(?:-[a-z]{2})?)?"  # the release name opens the wing's early door
 # The door's placeholder in the site's first build.
 OLD_DOOR = r"/enter(?:\?lang=[a-z]{2})?"
 # The folder of the static pages' files at the site's root. The museum app owns /assets/.
@@ -69,10 +95,14 @@ SITE_PAGES = {
     "privacy": {"en": ("privacy/",), "de": ("de/datenschutz/", "privacy/")},
     "imprint": {"en": ("imprint/",), "de": ("de/impressum/", "imprint/")},
 }
+# every other language's from the table (a language without a legal notice of its own links the English one)
+for _kind, _pages in SITE_PAGES.items():
+    for _code in L.built:
+        _pages.setdefault(_code, (L.page(_code, _kind),))
 
-LANGS = ("en", "de")
+LANGS, LISTED = L.built, L.listed
 # Every pair of data files in this folder is a page.
-PAGES = sorted(p.name[:-len(".en.json")] for p in HERE.glob("*.en.json"))
+PAGES = sorted(p.name[:-len(".en.json")] for p in HERE.glob("*.en.json") if not p.name.startswith("names."))
 
 # The style files a search page sets inline, in the site's order: its tokens and base styles, this
 # folder's own sheet, then the footer and the rule that stills every transition for readers who ask.
@@ -262,7 +292,7 @@ def site_parts(site_src, site_built):
                      f"styles and the fonts are taken from {LAST_GOOD.name}/.")}
 
 
-def site_chrome(site_built, lang, root, twin, door):
+def site_chrome(site_built, lang, root, twins, door):
     """The header, the footer, the arrow and the publisher's record, from the site's built statement page."""
     name = CHROME_PAGE[lang]
     source = chrome_file(site_built, lang)
@@ -274,8 +304,9 @@ def site_chrome(site_built, lang, root, twin, door):
         if not found:
             raise SystemExit(f"{source}: no {key} found")
         text = re.sub(r'\b(href|src)="([^"]*)"', lambda m: f'{m.group(1)}="{moved(m.group(2), prefix)}"', found.group(0))
-        # the language switch leads to this page's twin, and no link of the header is the current page
-        text = re.sub(r'(<a\b[^>]*?\bhref=")[^"]*("[^>]*\bhreflang="[^"]*")', lambda m: m.group(1) + twin + m.group(2), text)
+        # each way to another language leads to this page's twin in it, and no link of the header is the current page
+        text = re.sub(r'(<a\b[^>]*?\bhref=")[^"]*("[^>]*\blang="([^"]*)" hreflang="\3")',
+                      lambda m: m.group(1) + twins[m.group(3)] + m.group(2) if m.group(3) in twins else m.group(0), text)
         text = text.replace(' aria-current="page"', "")
         # every way in leads to this page's wing, whatever door the site's page carried when it was built
         text = re.sub(r'(<a class="door[^"]*" href=")[^"]*"', lambda m: m.group(1) + esc(door) + '"', text)
@@ -292,11 +323,14 @@ def site_chrome(site_built, lang, root, twin, door):
         raise SystemExit(f"{source}: the section on rights (#open) was not found")
     licence = re.search(r'<a\b(?=[^>]*\brel="license")[^>]*\bhref="(https://[^"]+)"', page)
     out["licence"], out["rights"] = (licence.group(1) if licence else rights), rights
-    out["publisher"] = None
+    out["publisher"], out["alternate_name"] = None, "Museum of Ages"
     for block in re.findall(r'<script type="application/ld\+json">(.*?)</script>', page, flags=re.S):
         for node in json.loads(block.replace("<\\/", "</")).get("@graph", []):
             if str(node.get("@id", "")).endswith("#publisher"):
                 out["publisher"] = node
+            # the museum's name with what it is, as the site's page in this language gives it
+            if node.get("@type") == "WebSite" and node.get("alternateName"):
+                out["alternate_name"] = node["alternateName"]
     theme = re.search(r'<meta name="theme-color" content="([^"]+)"', page)
     out["theme"] = theme.group(1) if theme else ""
     return out
@@ -322,7 +356,10 @@ def wing_of(page, data, wings):
 def lint(page, lang, data, wing, names):
     problems = []
     words = flatten({k: v for k, v in data.items() if k not in ("_note", "page", "pics")})
-    never = BANNED_FACTS + [tuple(rule) for rule in wing["never_say"]]
+    own = LANG.LANG_DIR / f"{lang}.json"
+    rows = json.loads(own.read_text(encoding="utf-8")) if own.is_file() else {}
+    never = BANNED_FACTS + [tuple(rule) for rule in wing["never_say"]] + [tuple(x) for x in rows.get("never", [])]
+    banned = BANNED + rows.get("banned", [])
     for key, text in words.items():
         where = f"{page}.{lang}: {key}"
         if key.endswith(".href"):
@@ -338,7 +375,7 @@ def lint(page, lang, data, wing, names):
         if not text.strip() and not key.endswith(".nav"):
             problems.append(f"{where} is empty")
         low = text.lower()
-        for bad in BANNED:
+        for bad in banned:
             if bad in low:
                 problems.append(f"{where} contains {bad!r}")
         for pattern, instead in never:
@@ -418,11 +455,12 @@ class Pictures:
                 f'imagesizes="{d["sizes"]}" fetchpriority="high">\n')
 
 
-def faces(root):
-    """The site's two faces and its figures. They swap in after the text is up: no script is needed."""
+def faces(root, lang=None):
+    """The site's two faces and its figures, and a language's own. They swap in after the text is up: no script is needed."""
     rule = ('@font-face{{font-family:"{name}";src:url("{root}{static}/fonts/{file}") format("woff2");'
             "font-weight:400;font-style:normal;font-display:swap{extra}}}")
-    return (rule.format(name="Cardo", root=root, static=STATIC, file="cardo-400.woff2", extra="")
+    own = "".join(rule.format(name=name, root=root, static=STATIC, file=file, extra="") for name, file, _ in LIB.LANG_FACES.get(lang, ()))
+    return own + (rule.format(name="Cardo", root=root, static=STATIC, file="cardo-400.woff2", extra="")
             + rule.format(name="Marcellus", root=root, static=STATIC, file="marcellus-400.woff2", extra="")
             + rule.format(name="Moa figures", root=root, static=STATIC, file="cardo-400.woff2",
                           extra=";unicode-range:U+30-39;size-adjust:108%"))
@@ -438,7 +476,7 @@ def focus_rule(frame):
 
 # ---------- structured data ----------
 
-def jsonld(lang, data, urls, pics, site, wing, licence, rights):
+def jsonld(lang, data, urls, pics, site, wing, alternate_name, licence, rights):
     self_url = urls[lang]
     pub = {"@id": f"{ORIGIN}/#publisher"}
     publisher = site or {
@@ -448,23 +486,23 @@ def jsonld(lang, data, urls, pics, site, wing, licence, rights):
     d = pics.defs[frame["pic"]]
     w, h = pics.size(frame["pic"])
     image_url = f"{ORIGIN}/{STATIC}/img/{d['stem']}-{max(d['widths'])}.webp"
-    home = f"{ORIGIN}/" if lang == "en" else f"{ORIGIN}/de/"
+    home = f"{ORIGIN}/{L.folder(lang)}"
     graph = [
         publisher,
         {
             "@type": "WebSite", "@id": f"{ORIGIN}/#website", "url": f"{ORIGIN}/", "name": "Museum of Ages",
-            "alternateName": "Museum of Ages, a digital museum" if lang == "en" else "Museum of Ages, ein digitales Museum",
-            "inLanguage": ["en", "de"], "publisher": pub,
+            "alternateName": alternate_name,
+            "inLanguage": [L.html(x) for x in LISTED], "publisher": pub,
         },
         {
             "@type": "WebPage", "@id": f"{self_url}#page", "url": self_url, "name": data["meta"]["title"],
-            "description": data["meta"]["description"], "inLanguage": lang,
+            "description": data["meta"]["description"], "inLanguage": L.html(lang),
             "isPartOf": {"@id": f"{ORIGIN}/#website"}, "publisher": pub,
             "breadcrumb": {"@id": f"{self_url}#crumbs"}, "primaryImageOfPage": {"@id": f"{self_url}#frame"},
         },
         {
             "@type": "Article", "@id": f"{self_url}#article", "headline": data["top"]["h1"],
-            "description": data["meta"]["description"], "inLanguage": lang,
+            "description": data["meta"]["description"], "inLanguage": L.html(lang),
             "mainEntityOfPage": {"@id": f"{self_url}#page"}, "image": {"@id": f"{self_url}#frame"},
             "author": pub, "publisher": pub, "isAccessibleForFree": True,
             "about": wing["about"],
@@ -493,7 +531,7 @@ def jsonld(lang, data, urls, pics, site, wing, licence, rights):
     for block in data["blocks"]:
         if block["type"] == "faq":
             graph.append({
-                "@type": "FAQPage", "@id": f"{self_url}#faq", "inLanguage": lang,
+                "@type": "FAQPage", "@id": f"{self_url}#faq", "inLanguage": L.html(lang),
                 "mainEntity": [{"@type": "Question", "name": item["q"],
                                 "acceptedAnswer": {"@type": "Answer", "text": item["a"]}} for item in block["items"]],
             })
@@ -503,6 +541,15 @@ def jsonld(lang, data, urls, pics, site, wing, licence, rights):
 
 # ---------- one page ----------
 
+def alternates(lang, urls):
+    """One line per listed language and English for any other, as the site's own pages carry them. A page of a
+    language that is not listed names none."""
+    if lang not in LISTED:
+        return ""
+    lines = [(L.html(x), urls[x]) for x in LISTED] + [("x-default", urls["en"])]
+    return "".join(f'<link rel="alternate" hreflang="{tag}" href="{url}">\n' for tag, url in lines)
+
+
 def page_path(data, wing, lang):
     """A search page stands one step below its wing's page."""
     return f"{wing['page'][lang].strip('/')}/{data['page']['slug'].strip('/')}"
@@ -510,15 +557,14 @@ def page_path(data, wing, lang):
 
 def render(page, lang, data, shared, out_root):
     parts, labels, wing = shared["parts"], data["labels"], shared["wing"][page]
-    other = "de" if lang == "en" else "en"
     path = page_path(data, wing, lang)
     depth = path.count("/") + 1
     root = "../" * depth
     urls = {code: f"{ORIGIN}/{page_path(shared['data'][page][code], wing, code)}/" for code in LANGS}
     pics = Pictures(data["pics"], shared["pic_folders"], root)
-    twin = root + page_path(shared["data"][page][other], wing, other) + "/"
+    twins = {L.html(code): root + page_path(shared["data"][page][code], wing, code) + "/" for code in LANGS}
     door = wing["door"][lang]
-    chrome = site_chrome(shared["chrome_pages"], lang, root, twin, door)
+    chrome = site_chrome(shared["chrome_pages"], lang, root, twins, door)
     names = Names(shared["names"], wing["name"][lang], lang)
     rich = names.mark
 
@@ -635,17 +681,21 @@ def render(page, lang, data, shared, out_root):
     og = data["page"]["og_image"]
     values = dict(base)
     values.update({
-        "lang": lang,
-        "og_locale": "en_GB" if lang == "en" else "de_DE",
+        "lang": L.html(lang),
+        "og_locale": L.entries[lang]["og"],
+        "html.og_alternates": "".join(f'<meta property="og:locale:alternate" content="{L.entries[x]["og"]}">\n'
+                                      for x in LISTED if x != lang) if len(LISTED) > 2 else "",
+        "html.robots": "" if lang in LISTED else '<meta name="robots" content="noindex">\n',
+        "html.alternates": alternates(lang, urls),
         "meta.title": esc(data["meta"]["title"]),
         "meta.description": esc(data["meta"]["description"]),
         "meta.og_title": esc(data["meta"]["og_title"]),
         "meta.og_image_alt": esc(data["meta"]["og_image_alt"]),
-        "url.self": urls[lang], "url.en": urls["en"], "url.de": urls["de"],
+        "url.self": urls[lang],
         "url.og_image": f"{ORIGIN}/{STATIC}/img/{og['file']}",
         "og.width": str(og["width"]), "og.height": str(og["height"]),
         "css.inline": shared["css"],
-        "css.faces": faces(root) + focus_rule(frame),
+        "css.faces": faces(root, lang) + focus_rule(frame),
         "html.preload": pics.preload(frame["pic"]),
         "html.theme": f'<meta name="theme-color" content="{chrome["theme"]}">\n' if chrome["theme"] else "",
         "html.header": chrome["header"],
@@ -662,7 +712,7 @@ def render(page, lang, data, shared, out_root):
         "top.door.leads": rich(data["top"]["door"]["leads"]),
         "html.toc": toc,
         "html.blocks": blocks,
-        "jsonld": jsonld(lang, data, urls, pics, chrome["publisher"], wing, chrome["licence"], chrome["rights"]),
+        "jsonld": jsonld(lang, data, urls, pics, chrome["publisher"], wing, chrome["alternate_name"], chrome["licence"], chrome["rights"]),
     })
     text = with_policy(fill(parts["page"], values))
     files = {f"img/{f}": pics.find(f) for name in sorted(pics.used) for f in pics.files(name)}
@@ -785,28 +835,47 @@ def build_pages(out_dir, site_src=SITE_SRC, site_built=SITE_BUILT, pages=PAGES, 
     Returns the list of written pages. Raises SystemExit with the problems when a rule is broken."""
     out_dir, site_src, site_built = Path(out_dir), Path(site_src), Path(site_built)
     parts = parts_of((HERE / "template.html").read_text(encoding="utf-8"))
-    data = {p: {lang: json.loads((HERE / f"{p}.{lang}.json").read_text(encoding="utf-8")) for lang in LANGS} for p in pages}
-    wings = {k: v for k, v in json.loads(WINGS_FILE.read_text(encoding="utf-8")).items() if not k.startswith("_")}
+    missing = [f"{p}.{lang}.json" for p in pages for lang in LANGS if not (HERE / f"{p}.{lang}.json").is_file()]
+    if missing:
+        raise SystemExit(f"{', '.join(missing)} missing: every built language (languages.json) has every page")
+    # French punctuation takes its narrow spaces here, as on the site's own pages
+    spaced = lambda obj, lang: ({k: spaced(v, lang) for k, v in obj.items()} if isinstance(obj, dict) else
+                                [spaced(v, lang) for v in obj] if isinstance(obj, list) else
+                                LIB.space(obj, lang) if isinstance(obj, str) else obj)
+    data = {p: {lang: spaced(json.loads((HERE / f"{p}.{lang}.json").read_text(encoding="utf-8")), lang) for lang in LANGS} for p in pages}
+    registry = json.loads(WINGS_FILE.read_text(encoding="utf-8"))
+    merged = LANG.merge_registry(registry, WINGS_FILE.parent, L, LANGS)
+    if merged:
+        raise SystemExit("\n".join(merged))
+    wings = {k: v for k, v in registry.items() if not k.startswith("_")}
     names = json.loads(NAMES_FILE.read_text(encoding="utf-8"))["names"]
+    # a language may add names of its own (names.<code>.json beside names.json)
+    own_names = {lang: json.loads((HERE / f"names.{lang}.json").read_text(encoding="utf-8"))["names"]
+                 if (HERE / f"names.{lang}.json").is_file() else [] for lang in LANGS}
 
     def kept(page, lang):
-        return Names(names, wing[page]["name"][lang], lang)
+        return Names(names + own_names[lang], wing[page]["name"][lang], lang)
 
     problems, wing = [], {}
-    for page, both in data.items():
-        a, b = both["en"], both["de"]
-        if a["page"].get("wing") != b["page"].get("wing"):
-            raise SystemExit(f"{page}: the two languages name different wings")
+    for page, every in data.items():
+        a = every["en"]
         wing[page] = wing_of(page, a, wings)
         for lang in LANGS:
-            problems += lint(page, lang, both[lang], wing[page], kept(page, lang))
-        if shape({k: v for k, v in a.items() if k != "page"}) != shape({k: v for k, v in b.items() if k != "page"}):
-            problems.append(f"{page}: the two languages do not hold the same structure")
-        if a["pics"] != b["pics"] or a["page"]["id"] != b["page"]["id"] or a["page"]["og_image"] != b["page"]["og_image"]:
-            problems.append(f"{page}: the two languages differ in pictures or in the page label")
-        for x, y in zip(a["blocks"], b["blocks"]):
-            if x["type"] != y["type"] or x["id"] != y["id"]:
-                problems.append(f"{page}: block {x['id']} and {y['id']} do not match")
+            b = every[lang]
+            problems += lint(page, lang, b, wing[page], kept(page, lang))
+            if lang == "en":
+                continue
+            if a["page"].get("wing") != b["page"].get("wing"):
+                raise SystemExit(f"{page}: {lang} names another wing than English")
+            if shape({k: v for k, v in a.items() if k != "page"}) != shape({k: v for k, v in b.items() if k != "page"}):
+                problems.append(f"{page}: {lang} does not hold the same structure as English" if lang != "de" else
+                                f"{page}: the two languages do not hold the same structure")
+            if a["pics"] != b["pics"] or a["page"]["id"] != b["page"]["id"] or a["page"]["og_image"] != b["page"]["og_image"]:
+                problems.append(f"{page}: {lang} differs from English in pictures or in the page label" if lang != "de" else
+                                f"{page}: the two languages differ in pictures or in the page label")
+            for x, y in zip(a["blocks"], b["blocks"]):
+                if x["type"] != y["type"] or x["id"] != y["id"]:
+                    problems.append(f"{page}: block {x['id']} and {y['id']} do not match")
     for name in OWN_CSS:
         body = re.sub(r"/\*.*?\*/", "", (HERE / "css" / f"{name}.css").read_text(encoding="utf-8"), flags=re.S)
         if re.search(r"#[0-9a-fA-F]{3,8}\b|rgba?\(|hsla?\(", body):
@@ -826,6 +895,10 @@ def build_pages(out_dir, site_src=SITE_SRC, site_built=SITE_BUILT, pages=PAGES, 
     # the two faces travel with their licence files
     fonts = site["fonts"]
     files = {f"fonts/{f.name}": f for f in [fonts / "cardo-400.woff2", fonts / "marcellus-400.woff2", *fonts.glob("LICENSE*")]}
+    # a built language's own faces, with their licences, in their folder
+    for code in LANGS:
+        if (fonts / code).is_dir():
+            files.update({f"fonts/{code}/{f.name}": f for f in (fonts / code).iterdir() if f.is_file()})
     built = []
     for page in pages:
         for lang in LANGS:

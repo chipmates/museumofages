@@ -91,17 +91,48 @@ NBSP = "\u00a0"
 # Pairs a line never breaks inside: a stop and its number, a number and its unit, a size of two numbers. The build
 # binds them in every sentence it sets, so no slot carries a special character. build.py reads every built page
 # for a pair left loose (LOOSE_PAIR).
+# The units of the other languages. A language's own file (lang/<code>.json, "units") may add more.
+UNITS_MORE = {
+    "fr": "mètres?|centimètres?|kilomètres?|secondes?|jours?|ans|années?|heures?|pour cent",
+    "it": "metri|metro|centimetri|chilometri|secondi|giorni|anni|ore|per cento",
+    "es": "metros?|centímetros?|kilómetros?|segundos?|días?|años?|horas?|por ciento",
+    "pt-BR": "metros?|centímetros?|quilômetros?|segundos?|dias?|anos?|horas?|por cento",
+    "bg": "метра|метър|сантиметра|километра|секунди|секунда|дни|ден|години|година|часа|процента|м|см|км",
+}
 UNIT = (r"(?:Metern?|metres?|meters?|Zentimetern?|centimetres?|Kilometern?|kilometres?|cm|mm|km|m|Kilowatt|kilowatts?|"
         r"Sekunden?|seconds?|Tagen?|days?|Jahren?|years?|Uhr|Prozent|percent)")
 TIMES = r"(?:mal|by|×)"
-LOOSE_PAIR = re.compile(rf"(?i:\b(?:Station|Stop)) \d|\d {TIMES}[ {NBSP}]\d|\d{NBSP}{TIMES} \d|\d {UNIT}\b")
+# The other languages' units are read for a loose pair too, on every page.
+ANY_UNIT = "(?:" + UNIT[3:-1] + "|" + "|".join(UNITS_MORE.values()) + ")"
+LOOSE_PAIR = re.compile(rf"(?i:\b(?:Station|Stop)) \d|\d {TIMES}[ {NBSP}]\d|\d{NBSP}{TIMES} \d|\d {ANY_UNIT}\b")
+# What a language may add to its pairs, from its own file (lang/<code>.json): units and the word for a stop.
+MORE = {}
 
 
-def bind(text):
-    """Sets a fixed space inside every pair that may not break: "Station 7", "34 Meter", "8,8 mal 4,6 Meter"."""
-    text = re.sub(r"\b(Station|Stop) (?=\d)", "\\1" + NBSP, text, flags=re.I)
+def bind(text, lang=None):
+    """Sets a fixed space inside every pair that may not break: "Station 7", "34 Meter", "8,8 mal 4,6 Meter".
+    In French it also sets the narrow space its punctuation takes (space())."""
+    more = MORE.get(lang, {})
+    stops = "|".join(["Station", "Stop"] + more.get("stop", []))
+    text = re.sub(rf"\b({stops}) (?=\d)", "\\1" + NBSP, text, flags=re.I)
     text = re.sub(rf"(\d) ({TIMES}) (?=\d)", "\\1" + NBSP + "\\2" + NBSP, text)
-    return re.sub(rf"(\d) (?={UNIT}\b)", "\\1" + NBSP, text)
+    extra = [UNITS_MORE[lang]] if lang in UNITS_MORE else []
+    extra += more.get("units", [])
+    unit = "(?:" + UNIT[3:-1] + "".join("|" + u for u in extra) + ")" if extra else UNIT
+    return space(re.sub(rf"(\d) (?={unit}\b)", "\\1" + NBSP, text), lang)
+
+
+NNBSP = "\u202f"
+
+
+def space(text, lang):
+    """French punctuation as the build sets it, never the writer: a narrow no-break space before : ! ? and inside
+    « ». A colon between digits or in an address stays as it is."""
+    if lang != "fr":
+        return text
+    text = re.sub(r"«[ \u00a0\u202f]*", "«" + NNBSP, text)
+    text = re.sub(r"[ \u00a0\u202f]*»", NNBSP + "»", text)
+    return re.sub(r"(?<=[^\s\u202f:!?])[ \u00a0]?([:!?]+)(?=[\s»)\]]|$)", NNBSP + r"\1", text)
 
 
 def tail(text, least=12, most=26, short=False):
@@ -137,24 +168,36 @@ WORDS = {
 }
 
 
+# How each language writes a number: the mark between thousands, the decimal mark, and the fewest digits the
+# whole part needs before it takes the mark (Spanish groups from five).
+NUMBERS = {"en": (",", ".", 4), "de": (".", ",", 4), "fr": (NNBSP, ",", 4), "it": (".", ",", 4), "es": (NNBSP, ",", 5),
+           "pt-BR": (".", ",", 4), "bg": (NBSP, ",", 4)}
+
+
 def number(value, lang, places=None):
     """A number as the language writes it: 1,158 and 8.8 in English, 1.158 and 8,8 in German. A text stays as it is."""
     if isinstance(value, str):
         return value
-    sep, point = (",", ".") if lang == "en" else (".", ",")
+    sep, point, least = NUMBERS[lang]
     if places is not None:
         text = f"{value:,.{places}f}"
     elif isinstance(value, float) and value != int(value):
         text = f"{value:,}"
     else:
         text = f"{int(value):,}"
-    return text.replace(",", "\x00").replace(".", point).replace("\x00", sep)
+    whole, _, part = text.partition(".")
+    if len(whole.replace(",", "").lstrip("-")) < least:
+        whole = whole.replace(",", "")
+    return whole.replace(",", sep) + (point + part if part else "")
 
 
 def number_word(value, lang):
-    if not isinstance(value, int) or not 0 <= value < len(WORDS[lang]):
+    words = WORDS.get(lang) or []
+    if not words:
+        raise SystemExit(f"{lang} has no number words yet: lang/{lang}.json lists them from zero to twenty (number_words)")
+    if not isinstance(value, int) or not 0 <= value < len(words):
         raise SystemExit(f"{value!r} has no word here: write it in digits, with {{count:<name>}}")
-    return WORDS[lang][value]
+    return words[value]
 
 
 def dump(graph):
@@ -170,11 +213,19 @@ def css(*names):
     return text.replace(";}", "}").strip()
 
 
-def faces(static):
+# The faces a language sets instead of the site's two: files in fonts/<code>/, set under :lang() by css/langs.css.
+# Bulgarian: cuts of Source Serif 4 (text and headings) and Source Sans 3 (labels) with the Cyrillic letters and
+# their Bulgarian forms, under names of their own (the licence reserves the name Source).
+LANG_FACES = {"bg": (("Museum Bulgarian Serif", "bg/bulgarian-serif-400.woff2", "bg_serif"),
+                     ("Museum Bulgarian Sans", "bg/bulgarian-sans-400.woff2", "bg_sans"))}
+
+
+def faces(static, lang=None):
     rule = (
         '@font-face{{font-family:"{name}";src:url("{static}fonts/{file}") format("woff2");'
         "font-weight:400;font-style:normal;font-display:swap}}"
     )
+    own = "".join(rule.format(name=name, static=static, file=file) for name, file, _ in LANG_FACES.get(lang, ()))
     # The sans draws its zero as a round O. Its digits come from the serif instead, which has lining
     # figures and a narrow zero: the same file, so no further request. 108% lifts them to the sans's cap height.
     figures = (
@@ -183,7 +234,7 @@ def faces(static):
     ).format(static=static)
     return rule.format(name="Cardo", static=static, file="cardo-400.woff2") + rule.format(
         name="Marcellus", static=static, file="marcellus-400.woff2"
-    ) + figures
+    ) + figures + own
 
 
 def grain(static):

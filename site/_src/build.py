@@ -22,9 +22,12 @@ import shutil
 import sys
 from pathlib import Path
 
+import buildlib
+import languages
 import render as R
-from buildlib import (ARROW, BANNED, CSP_MARK, FACES_SCRIPT, LOOSE_PAIR, NBSP, REST_SCRIPT, WORDS, bind, css, dump, esc, faces,
-                      fill, flatten, grain, keep_whole, number, number_word, shown_text, tail, whole_names, with_policy)
+from buildlib import (ARROW, BANNED, CSP_MARK, FACES_SCRIPT, LANG_FACES, LOOSE_PAIR, NBSP, NNBSP, REST_SCRIPT, WORDS, bind, css,
+                      dump, esc, faces, fill, flatten, grain, keep_whole, number, number_word, shown_text, space, tail,
+                      whole_names, with_policy)
 
 SRC = Path(__file__).resolve().parent
 ROOT = SRC.parent
@@ -42,7 +45,11 @@ FETCH_LIST = SRC / "fetch-list.json"
 # Where it is not, the build says once which check it skipped and why.
 SKIPPED = []
 ORIGIN = "https://museumofages.org"
-LANGS = ("en", "de")
+# The languages, from languages.json: LANGS are built and checked, LISTED are live.
+L = languages.Languages()
+if L.problems:
+    raise SystemExit("\n".join(L.problems))
+LANGS, LISTED = L.built, L.listed
 # True: every page says noindex and robots.txt closes the site. For a hidden test address.
 HIDDEN = False
 # The line on every page's first screen that says whose project the museum is (project.line). It is temporary:
@@ -98,47 +105,79 @@ CC_BY_SA = "https://creativecommons.org/licenses/by-sa/4.0/"
 # The address a visitor writes to, on every page that names one. No built file may carry any other address.
 MAIL = "contact@museumofages.org"
 MAIL_SHAPE = r"[A-Za-z0-9._%+-]+@[A-Za-z0-9-]+(?:\.[A-Za-z0-9-]+)*\.[A-Za-z]{2,}"
-WHAT_DIR = {"en": "what-this-museum-is", "de": "was-dieses-museum-ist"}
-IMPRINT_DIR = {"en": "imprint", "de": "impressum"}
-PRIVACY_DIR = {"en": "privacy", "de": "datenschutz"}
+WHAT_DIR = {c: e["slugs"]["what"] for c, e in L.entries.items()}
+IMPRINT_DIR = {c: e["slugs"]["imprint"] for c, e in L.entries.items() if e["slugs"]["imprint"]}
+PRIVACY_DIR = {c: e["slugs"]["privacy"] for c, e in L.entries.items()}
 STATES = ("open", "making", "planned")
 # The palette's rule for a wing: the depth of its wall, and one note inside these bounds.
 WALLS = {"deep": "var(--ground-wall)", "wall": None, "lifted": "color-mix(in srgb,var(--ground-lit) 84%,var(--ink))"}
 NOTE_L, NOTE_C = (0.46, 0.62), (0.075, 0.126)
 # A door may name the film release, so the wing's early door shows the first still before the app arrives.
-DOOR_SHAPE = r"/w/[a-z0-9-]+(?:\?(?:film=[a-z0-9-]+&)?lang=[a-z]{2})?"
+DOOR_SHAPE = r"/w/[a-z0-9-]+(?:\?(?:film=[a-z0-9-]+&)?lang=[a-z]{2}(?:-[a-z]{2})?)?"
 # Keys that exist in one language only: the German legal notice carries the organisation's own notes.
 ONE_LANGUAGE = {
     "de": {"imprint.content_h", "imprint.content_p", "imprint.links_h", "imprint.links_p", "imprint.copy_h", "imprint.copy_p",
            "imprint.copy_p_before"},
     "en": {"imprint.s8_p", "imprint.s8_link"},
 }
-LOCKED = {
-    "en": {"tagline": "We rebuild what was. You walk through it.",
-           "trust": "Nonprofit · Open Source · No tracking cookies, no profiling",
-           "trust_before": "Nonprofit · No tracking cookies, no profiling",
-           "descriptor": "a digital museum",
-           "title": "Museum of Ages: a digital museum of the past, rebuilt in 3D",
-           "mission": "We rebuild what was, one place at a time, and make it as accessible as we can, so that everyone can learn from it.",
-           "purpose": "Its purpose is education.",
-           "project": "A project of ChipMates gemeinnützige GmbH",
-           "grades": ("Documented", "Reconstructed", "Conjectural", "Not known"),
-           "made": "A person reads, corrects and approves every text before it is published. The drafts are written with AI "
-                   "from a research file that names a source for every fact.",
-           "honesty": "As it was, as far as we know."},
-    "de": {"tagline": "Wir bauen nach, was war. Du gehst hinein.",
-           "trust": "Gemeinnützig · Open Source · Keine Tracking-Cookies, kein Profiling",
-           "trust_before": "Gemeinnützig · Keine Tracking-Cookies, kein Profiling",
-           "descriptor": "ein digitales Museum",
-           "title": "Museum of Ages: digitales Museum, Geschichte in 3D nachgebaut",
-           "mission": "Wir bauen nach, was war, einen Ort nach dem anderen, und machen es so zugänglich wie möglich, damit alle daraus lernen können.",
-           "purpose": "Ihr Zweck ist die Förderung der Bildung.",
-           "project": "Ein Projekt der ChipMates gemeinnützigen GmbH",
-           "grades": ("Dokumentiert", "Rekonstruiert", "Vermutet", "Nicht bekannt"),
-           "made": "Ein Mensch liest, korrigiert und gibt jeden Text frei, bevor er erscheint. Die Entwürfe entstehen mit KI "
-                   "aus einer Recherche, die für jede Tatsache eine Quelle nennt.",
-           "honesty": "So wie es war. Soweit wir wissen."},
-}
+# A language without a legal notice of its own lacks the words of that page. The details the footer and the page
+# about the museum show stay. It carries one line instead, which leads to the English legal notice.
+IMPRINT_PAGE = r"^imprint\.(?!(?:street|city|country|register_court|register_no|rep_name|email)$)"
+NO_IMPRINT = {"footer.imprint_elsewhere"}
+# Keys only English and German carry: the short link to the other one, while they are the only two listed.
+TWO_ONLY = {"a11y.lang_switch"}
+# The slot of the line that says a language's words were translated with AI and read by no person yet: only a
+# language whose status is ai carries it, and it is exempt from the rule that says once how the words are made.
+AI_TAG = "ai.tag"
+# The locked lines of each language, word for word, from its approved file (lang/<code>.locked.json). A language
+# without one is built, never listed.
+LOCKED_KEYS = ("tagline", "trust", "trust_before", "descriptor", "title", "mission", "purpose", "project", "grades", "made",
+               "honesty")
+
+
+def locked_lines():
+    out = {}
+    for code in L.order:
+        path = languages.LANG_DIR / f"{code}.locked.json"
+        if path.is_file():
+            lines = {k: v for k, v in json.loads(path.read_text(encoding="utf-8")).items() if not k.startswith("_")}
+            if set(lines) != set(LOCKED_KEYS) or len(lines["grades"]) != 4:
+                raise SystemExit(f"lang/{path.name}: an approved file holds every locked line ({', '.join(LOCKED_KEYS)}), four grades")
+            lines["grades"] = tuple(lines["grades"])
+            out[code] = lines
+    return out
+
+
+LOCKED = locked_lines()
+
+
+def lang_rules():
+    """Each language's own rows of the house rules, its number words, and what it adds to bind() (lang/<code>.json)."""
+    out = {}
+    for code in L.order:
+        path = languages.LANG_DIR / f"{code}.json"
+        data = json.loads(path.read_text(encoding="utf-8")) if path.is_file() else {}
+        out[code] = {"never": [tuple(x) for x in data.get("never", [])], "for_the_writer": [tuple(x) for x in data.get("for_the_writer", [])],
+                     "gone": tuple(data.get("gone", [])), "banned": list(data.get("banned", []))}
+        if data.get("number_words"):
+            WORDS[code] = list(data["number_words"])
+        buildlib.MORE[code] = {k: list(data[k]) for k in ("units", "stop") if data.get(k)}
+    return out
+
+
+RULES = lang_rules()
+# Listed means live: a listed language needs its approved locked lines.
+if [c for c in LISTED if c not in LOCKED]:
+    raise SystemExit("languages.json lists " + ", ".join(c for c in LISTED if c not in LOCKED) + " without approved locked lines "
+                     "(lang/<code>.locked.json): a language is listed only with them, and built until then")
+
+
+def many(lang):
+    """From three languages on a page, the bar offers them behind one control and the menu and the footer list them
+    all. With English and German alone, the bar keeps its one short link."""
+    return len(L.shown(lang)) > 2 or set(L.shown(lang)) != {"en", "de"}
+
+
 # While the link to the code is off, the repository is closed and no page says the code is open. The trust line
 # then stands without its middle term, and each of these slots gives way to its twin, <key>_before.
 BEFORE = ("page_what.m_bar_3_text", "imprint.copy_p")
@@ -158,6 +197,8 @@ PHONE_LINES = "p,dd,li,.label__what,.label__src{text-wrap:balance}"
 # A number before the word for the museum's wings, in a figure or in a word: no page counts them. The words after
 # it keep a machine's two wings and a gate's two leaves (German: Flügel) out of the rule.
 SOME = r"(?:\d+|two|three|four|five|six|seven|eight|nine|ten|eleven|twelve|twenty|thirty|zwei|drei|vier|fünf|sechs|sieben|acht|neun|zehn|elf|zwölf|zwanzig|dreißig)"
+# The rule that says once how the words are made: the slot of a translated language's own line is exempt (AI_TAG).
+MADE_ONCE = r"with the help of ai|mithilfe von ki|written with ai, checked|mit ki geschrieben"
 # Statements no page may make, whatever wing it is about. A wing's own rules stand in its registry entry (never_say).
 # They are read against every sentence of the word files and of the wings' data, and against every built page.
 NEVER = [
@@ -170,7 +211,7 @@ NEVER = [
     (r"every wing ends|jeder flügel endet", "say what one wing does, not what every wing does"),
     (r"from (an )?open sources?|open sources\b|offenen quellen|offener quelle", "never say every image comes from an open source"),
     (r"public list|öffentliche liste", "the list is published with the museum"),
-    (r"with the help of ai|mithilfe von ki|written with ai, checked|mit ki geschrieben", "how the words are made is said once, on the page about the museum"),
+    (MADE_ONCE, "how the words are made is said once, on the page about the museum"),
     (r"second check|zweite prüfung|zweiten prüfung", "the sentence about a second check is gone"),
     (r"nothing records|nichts belegt", "say no record is known"),
     (r"stands at|steht am", "no sentence places a wing at a real place"),
@@ -330,10 +371,14 @@ def oklch(value):
             math.hypot(1.9779984951 * l - 2.4285922050 * m + 0.4505937099 * s, 0.0259040371 * l + 0.7827717662 * m - 0.8086757660 * s))
 
 
-def limit_for(key):
+# Bulgarian sets about 15 percent wider than German in its face: its limits are the German ones divided by this.
+WIDER = {"bg": 1.149}
+
+
+def limit_for(key, lang="en"):
     for pattern, limit in LIMITS:
         if re.search(pattern, key):
-            return limit
+            return math.floor(limit / WIDER[lang]) if lang in WIDER else limit
 
 
 class Ctx:
@@ -346,7 +391,7 @@ class Ctx:
         self.wd = {slug: both[lang] for slug, both in site.data.items()}
         self.facts = site.facts
         depth = here.count("/")
-        self.absolute = here == "404.html"
+        self.absolute = here.endswith("404.html")
         self.root = "/" if self.absolute else "../" * depth
         self.static = f"{self.root}{STATIC}/"
         name = esc(self.wings[self.newest]["name"][lang]).replace(" ", NBSP)
@@ -361,10 +406,7 @@ class Ctx:
         return (self.root + address) or "./"
 
     def addr(self, kind, lang=None):
-        lang = lang or self.lang
-        pre = "" if lang == "en" else "de/"
-        return {"home": pre, "what": f"{pre}{WHAT_DIR[lang]}/", "imprint": f"{pre}{IMPRINT_DIR[lang]}/",
-                "privacy": f"{pre}{PRIVACY_DIR[lang]}/"}[kind]
+        return L.page(lang or self.lang, kind)
 
     def collection(self, slug):
         return next(x for x in self.collections if x["slug"] == slug)
@@ -377,12 +419,20 @@ class Ctx:
 
 class Site:
     def __init__(self, registry, wing_dirs, pic_dirs, mark=None):
+        # every built language's share of the registry: English and German in it, the others beside it
+        self.problems = languages.merge_registry(registry, SRC, L)
         self.collections = registry["_collections"]
         self.wings = {k: v for k, v in registry.items() if not k.startswith("_")}
         self.open = [s for s, e in self.wings.items() if e.get("state") == "open"]
         self.mark, self.pics, self.notes = mark, R.Pics(pic_dirs), []
         self.newest = self.open[-1] if self.open else None
-        self.words = {lang: flatten(load(SRC / f"words.{lang}.json")) for lang in LANGS}
+        self.written = {}
+        for lang in LANGS:
+            if not (SRC / f"words.{lang}.json").is_file():
+                raise SystemExit(f"words.{lang}.json is missing: {lang} is built (languages.json) and has no words")
+            self.written[lang] = flatten(load(SRC / f"words.{lang}.json"))
+        # French punctuation takes its narrow spaces here, so every use of a sentence carries them
+        self.words = {lang: {k: space(v, lang) if isinstance(v, str) else v for k, v in self.written[lang].items()} for lang in LANGS}
         self.imprint_local = local_imprint()
         for lang in LANGS:
             self.words[lang].pop("_note", None)
@@ -394,18 +444,22 @@ class Site:
         # a name of several words never breaks, and no paragraph ends on a word alone
         self.names = {lang: sorted({e["name"][lang] for e in self.wings.values() if " " in e.get("name", {}).get(lang, "")}, key=len, reverse=True)
                       for lang in LANGS}
-        self.words_html = {lang: {k: keep_whole(esc(whole_names(tail(bind(v), short=k in ENDS), self.names[lang])))
+        self.words_html = {lang: {k: keep_whole(esc(whole_names(tail(bind(v, lang), short=k in ENDS), self.names[lang])))
                                   for k, v in self.words[lang].items()} for lang in LANGS}
         if not SOURCE_LINK:
             for lang in LANGS:
                 shown = self.words_html[lang]
-                shown["glance.trust"] = shown["page_what.trust"] = keep_whole(esc(LOCKED[lang]["trust_before"]))
+                shown["glance.trust"] = shown["page_what.trust"] = keep_whole(esc(space(self.locked(lang)["trust_before"], lang)))
                 shown.update({key: shown[key + "_before"] for key in BEFORE if key + "_before" in shown})
-        self.privacy = {lang: load(PRIVACY_WORDS / f"privacy.{lang}.json") for lang in LANGS}
+        self.privacy = {lang: walk(load(PRIVACY_WORDS / f"privacy.{lang}.json"), lambda p, t, l=lang: space(t, l)) for lang in LANGS}
         self.museum = load(MUSEUM_TEXTS)
+        for lang in LANGS:
+            # the museum's texts in a language the file does not hold: museum-texts.<code>.json beside it
+            if lang not in self.museum and (SRC / f"{MUSEUM_TEXTS.stem}.{lang}.json").is_file():
+                self.museum[lang] = load(SRC / f"{MUSEUM_TEXTS.stem}.{lang}.json")
         # a wing's words: as written (for the checks), with every number and quoted text filled in, and ready
         # for the page (escaped). Its facts file lies beside its two data files.
-        self.data_written, self.data_raw, self.data, self.facts, self.facts_at = {}, {}, {}, {}, {}
+        self.data_written, self.data_raw, self.data, self.facts, self.facts_at, self.facts_file = {}, {}, {}, {}, {}, {}
         for slug in self.open:
             entry = self.wings[slug]
             name = entry.get("_data", slug)
@@ -415,16 +469,26 @@ class Site:
             if (found[0] / f"{name}.facts.json").exists():
                 self.facts_at[slug] = found[0] / f"{name}.facts.json"
                 self.facts[slug] = load(self.facts_at[slug])
+                self.facts_file[slug] = copy.deepcopy(self.facts[slug])
+                # the facts' names and titles in another language: <wing>.facts.<code>.json beside it
+                for lang in LANGS:
+                    self.problems += languages.merge_leaves(self.facts[slug], languages.load_own(found[0], f"{name}.facts", lang), lang,
+                                                            f"wings/{name}.facts.{lang}.json")
             self.data_written[slug] = {lang: load(found[0] / f"{name}.{lang}.json") for lang in LANGS}
-            self.data_raw[slug] = {lang: walk(self.data_written[slug][lang], lambda p, t, s=slug, l=lang: self.filled(s, l, t)) for lang in LANGS}
+            self.data_raw[slug] = {lang: walk(self.data_written[slug][lang], lambda p, t, s=slug, l=lang: space(self.filled(s, l, t), l))
+                                   for lang in LANGS}
             self.data[slug] = {lang: walk(self.data_raw[slug][lang], lambda p, t, l=lang: self.ready(p, t, l)) for lang in LANGS}
         self.wing_dirs = wing_dirs
+
+    def locked(self, lang):
+        """The language's locked lines, with the narrow spaces its punctuation takes. Empty while none are approved."""
+        return {k: (space(v, lang) if isinstance(v, str) else v) for k, v in LOCKED.get(lang, {}).items()}
 
     def ready(self, path, text, lang):
         """A sentence of a wing as the page carries it: escaped, with its pairs bound (a number and its unit), and
         where it is running text, with its last words kept together and every wing's name whole."""
         if not re.search(NOT_WORDS, path):
-            text = bind(text)
+            text = bind(text, lang)
             if re.search(PROSE, path):
                 text = whole_names(tail(text), self.names[lang])
         return esc(text)
@@ -464,14 +528,40 @@ class Site:
 
 # ---------- checks before anything is written ----------
 
+def expected_keys(site, lang):
+    """The keys a language's words file holds: the English set, less what only English holds, with the German
+    legal notice's own notes in German, without the legal notice's page where the language has none, and with the
+    slot for the line on how its words were made while its status is ai."""
+    english = set(site.words["en"])
+    if lang == "en":
+        return english
+    keys = english - ONE_LANGUAGE["en"] - {AI_TAG} | ONE_LANGUAGE.get(lang, set())
+    if not L.has_imprint(lang):
+        keys = {k for k in keys if not re.search(IMPRINT_PAGE, k)} | NO_IMPRINT
+    if lang not in ("en", "de"):
+        keys -= TWO_ONLY
+    if L.entries[lang]["status"] == "ai":
+        keys |= {AI_TAG}
+    return keys
+
+
 def check_words(site):
     problems = []
     for lang in LANGS:
-        raw, lock = site.words[lang], LOCKED[lang]
-        other = "de" if lang == "en" else "en"
-        alone = set(raw) - set(site.words[other]) - ONE_LANGUAGE[lang]
-        if alone:
-            problems.append(f"words: keys present in {lang} only: {sorted(alone)}")
+        raw, lock = site.words[lang], site.locked(lang)
+        want = expected_keys(site, lang)
+        if lang != "en" and set(raw) - want:
+            problems.append(f"words: keys present in {lang} only: {sorted(set(raw) - want)}")
+        if lang != "en" and want - set(raw):
+            problems.append(f"words: keys missing in {lang}: {sorted(want - set(raw))}")
+        # the narrow spaces of French punctuation are the build's: a writer's own would be set twice
+        typed = sorted(k for k, v in site.written[lang].items() if isinstance(v, str) and NNBSP in v)
+        if typed:
+            problems.append(f"words.{lang}: {typed[:3]} carry a narrow no-break space, which the build sets")
+        if not lock:
+            # no approved locked lines yet: built and checked, never listed (languages.json)
+            problems += lint(site, f"words.{lang}", {k: v for k, v in raw.items() if not k.startswith("hero.tagline_")}, "", lang=lang)
+            continue
         if f'{raw["hero.tagline_1"]} {raw["hero.tagline_2"]}' != lock["tagline"]:
             problems.append(f"{lang}: the tagline is not the locked wording")
         for key in ("glance.trust", "page_what.trust"):
@@ -511,13 +601,13 @@ def check_words(site):
             problems.append(f"{lang}: page_what.s4_made is not the locked sentence on how the words are made")
         if raw["page_what.honesty"] != lock["honesty"]:
             problems.append(f"{lang}: page_what.honesty is not the locked honesty line")
-        if raw["imprint.email"] != MAIL:
+        if raw.get("imprint.email") != MAIL:
             problems.append(f"{lang}: imprint.email is not the museum's contact address")
         if raw["hero.name"] != "Museum of Ages":
             problems.append(f"{lang}: hero.name is not the museum's name")
-        problems += lint(site, f"words.{lang}", {k: v for k, v in raw.items() if not k.startswith("hero.tagline_")}, "")
+        problems += lint(site, f"words.{lang}", {k: v for k, v in raw.items() if not k.startswith("hero.tagline_")}, "", lang=lang)
         for key in ("page_what.description",):
-            for pattern, what in FOR_THE_WRITER:
+            for pattern, what in FOR_THE_WRITER + RULES[lang]["for_the_writer"]:
                 if re.search(pattern, raw[key].lower()):
                     site.notes.append(f"words.{lang}: {key}: {what}")
     for lang in LANGS:
@@ -533,38 +623,43 @@ def check_words(site):
             made = (" with the store's records (a dev server without a store writes this checkout's records only)"
                     if (REPO / missing).exists() else " (the museum's dev server or build writes it)")
         skip(f"the museum's texts, the grades' words and the example stop against the wing's own files: {missing} is not there{made}")
+    for lang in LANGS:
+        if lang not in site.museum:
+            problems.append(f"{MUSEUM_TEXTS.name}: {lang} is built and the museum's texts in it are not there "
+                            f"({MUSEUM_TEXTS.stem}.{lang}.json, copied from the wing's own words)")
+    for lang in [x for x in LANGS if x not in ("en", "de") and x in site.museum and not site.mark]:
+        skip(f"the museum's texts in {lang} against the wing's own words in {lang}: the wing's files hold English and German")
     if sources and not museum_missing(site) and not site.mark:
         source = "".join(f.read_text(encoding="utf-8") for f in sources)
-        for lang in LANGS:
+        for lang in ("en", "de"):
             for key, text in site.museum[lang].items():
                 if text not in source and json.dumps(text, ensure_ascii=False)[1:-1] not in source:
                     problems.append(f"{MUSEUM_TEXTS.name}: {lang}.{key} is not word for word in the wing's own files")
-    a, b = site.privacy["en"], site.privacy["de"]
     kinds = lambda d: [[("list", len(x)) if isinstance(x, list) else "p" for x in s["body"]] for s in d["sections"]]
-    if kinds(a) != kinds(b):
-        problems.append("privacy words: the two languages differ in the number of sections or in the shape of a body")
     for lang in LANGS:
+        if kinds(site.privacy[lang]) != kinds(site.privacy["en"]):
+            problems.append(f"privacy words: {lang} differs from English in the number of sections or in the shape of a body")
         flat = {k: v for k, v in strings(site.privacy[lang]).items() if not k.startswith("_")}
-        problems += [p for p in lint(site, f"privacy.{lang}", flat, "", limits=False)]
+        problems += [p for p in lint(site, f"privacy.{lang}", flat, "", limits=False, lang=lang)]
     return problems
 
 
-def lint(site, where, flat, prefix, limits=True, wing=None):
+def lint(site, where, flat, prefix, limits=True, wing=None, lang="en"):
     problems = []
-    never = list(NEVER)
+    never = list(NEVER) + RULES[lang]["never"]
     for slug in ([wing] if wing else site.open):
         never += [tuple(x) for x in site.wings[slug].get("never_say", [])]
     for key, text in flat.items():
         low = text.lower()
-        for bad in BANNED:
+        for bad in BANNED + RULES[lang]["banned"]:
             if bad in low and not (bad == ";" and key.startswith("sections")):
                 problems.append(f"{where}: {key} contains {bad!r}")
         for pattern, instead in never:
-            if key not in DECIDED and re.search(pattern, low):
+            if key not in DECIDED and re.search(pattern, low) and not (key == AI_TAG and pattern == MADE_ONCE):
                 problems.append(f"{where}: {key} matches /{pattern}/ ({instead})")
         if not text.strip() and not re.search(MAY_BE_EMPTY, prefix + key):
             problems.append(f"{where}: {key} is empty")
-        limit = limit_for(prefix + key)
+        limit = limit_for(prefix + key, lang)
         if limits and len(text) > limit:
             problems.append(f"{where}: {key} is {len(text)} characters, the limit is {limit}")
     return problems
@@ -578,8 +673,8 @@ def check_registry(site):
     slugs = {c.get("slug") for c in site.collections}
     for c in site.collections:
         for key in ("slug", "state", "name", "line", "dates_key"):
-            if key not in c or (key in ("name", "line", "dates_key") and set(c[key]) != set(LANGS)):
-                problems.append(f"registry: a collection lacks {key} in both languages")
+            if key not in c or (key in ("name", "line", "dates_key") and not set(LANGS) <= set(c[key])):
+                problems.append(f"registry: a collection lacks {key} in a built language")
     if not site.open:
         return problems + ["registry: no wing is open"]
     pages = set()
@@ -589,8 +684,8 @@ def check_registry(site):
             problems.append(f"{where} has the state {e.get('state')!r}, not one of {STATES}")
         if e.get("collection") not in slugs:
             problems.append(f"{where} names the collection {e.get('collection')!r}, which is not listed")
-        if set(e.get("name", {})) != set(LANGS):
-            problems.append(f"{where} lacks its name in both languages")
+        if not set(LANGS) <= set(e.get("name", {})):
+            problems.append(f"{where} lacks its name in a built language")
         if e.get("state") != "open":
             continue
         missing = [k for k in WING_KEYS if k not in e]
@@ -599,7 +694,7 @@ def check_registry(site):
             continue
         for lang in LANGS:
             page = e["page"].get(lang, "")
-            if not re.fullmatch(r"(de/)?[a-z0-9-]+", page) or page.startswith("de/") != (lang == "de") or page in pages:
+            if not page.startswith(L.folder(lang)) or not re.fullmatch(r"[a-z0-9-]+", page[len(L.folder(lang)):]) or page in pages:
                 problems.append(f"{where}: its {lang} page address {page!r} is not a free folder of that language")
             pages.add(page)
             if not re.fullmatch(DOOR_SHAPE, e["door"].get(lang, "")):
@@ -656,10 +751,11 @@ def pieces_of(d):
 
 def check_wing_data(site, slug):
     problems, e = [], site.wings[slug]
-    a, b = site.data_written[slug]["en"], site.data_written[slug]["de"]
     where = f"wings/{e.get('_data', slug)}"
-    if shape({k: v for k, v in a.items() if k != "_note"}) != shape({k: v for k, v in b.items() if k != "_note"}):
-        return [f"{where}: the two languages do not hold the same structure"]
+    plain = lambda d: shape({k: v for k, v in d.items() if k != "_note"})
+    odd = [lang for lang in LANGS if plain(site.data_written[slug][lang]) != plain(site.data_written[slug]["en"])]
+    if odd:
+        return [f"{where}: {', '.join(odd)} does not hold the same structure as English"]
     facts = site.facts.get(slug)
     for lang in LANGS:
         d, written = site.data_raw[slug][lang], site.data_written[slug][lang]
@@ -765,10 +861,10 @@ def check_wing_data(site, slug):
                 if unknown:
                     problems.append(f"{where}.{lang}: {at}.names gives a plain name to {unknown}, which the facts file does not hold")
         if not site.mark:
-            problems += lint(site, f"{where}.{lang}", flat, "wing:", wing=slug)
+            problems += lint(site, f"{where}.{lang}", flat, "wing:", wing=slug, lang=lang)
             # every number of a wing's page is read from its facts file: none is written into a sentence
             values = {v for part in ("counts", "set") for v in (facts or {}).get(part, {}).values() if isinstance(v, int)}
-            words = [WORDS[lang][v] for v in sorted(values) if 7 <= v < len(WORDS[lang])]
+            words = [WORDS[lang][v] for v in sorted(values) if 7 <= v < len(WORDS.get(lang, []))]
             for key, text in strings(written).items():
                 if re.search(NOT_WORDS, key) or re.search(DIGITS_OK, key):
                     continue
@@ -811,7 +907,7 @@ def check_facts(site, slug):
             if it.get("stop") not in facts.get("stops", []):
                 problems.append(f"{where}: {key}: {it.get('id')} names the stop {it.get('stop')!r}, which is not a stop of the wing")
             page = it.get("page")
-            if page is not None and (set(page) != set(LANGS) or not all(re.fullmatch(r"[a-z0-9-]+", page[l]) for l in LANGS)):
+            if page is not None and (not set(LANGS) <= set(page) or not all(re.fullmatch(r"[a-z0-9-]+", page[l]) for l in LANGS)):
                 problems.append(f"{where}: {key}: the page of {it.get('id')} needs one plain address per language")
     for it in facts.get("paintings", []) + [m for m in facts.get("machines", []) if m.get("holder")] + facts.get("shelf", []):
         if it["holder"] not in [h["id"] for h in facts.get("holders", [])]:
@@ -830,7 +926,7 @@ def check_facts(site, slug):
         sys.dont_write_bytecode = keep
     for why in getattr(mod, "skipped", lambda: [])():
         skip(f"{where}: {why}")
-    return problems + [f"{where}: {x}" for x in mod.compare(facts)]
+    return problems + [f"{where}: {x}" for x in mod.compare(site.facts_file[slug])]
 
 
 def check_css():
@@ -943,7 +1039,7 @@ def check_stop_quotes(site):
                 if text and not re.fullmatch(r"(?:\{museum:\w+\} ?)+", text):
                     problems.append(f"wings/{slug}.{lang}: the stop's {('title', 'age', 'line', 'drawer', 'record')[i]} is not "
                                     f"the museum's own text (write {{museum:<key>}})")
-            for text in quoted[:4]:
+            for text in quoted[:4] if lang in ("en", "de") else ():
                 for key in re.findall(r"\{museum:(\w+)\}", text):
                     words = site.museum[lang].get(key, "")
                     if words not in block and json.dumps(words, ensure_ascii=False)[1:-1] not in block:
@@ -1151,17 +1247,88 @@ def check_sign(out, signs):
 # ---------- the pages ----------
 
 def head_values(c, kind, title, description, canon, twins, og_title, share, share_alt, preload="", index=True, deferred=False):
-    noindex = HIDDEN or c.mark or not index
+    # a built language that is not listed is checked here and found by no search engine
+    noindex = HIDDEN or c.mark or not index or c.lang not in LISTED
     rest = f'<link rel="stylesheet" href="{c.static}site.css" media="print" id="rest">{REST_SCRIPT}\n' if deferred else ""
     return {
         "head.csp": CSP_MARK, "head.robots": '<meta name="robots" content="noindex">\n' if noindex else "",
         "head.preload": preload, "head.title": esc(title), "head.description": esc(description),
         "head.rest_noscript": f'<link rel="stylesheet" href="{c.static}site.css">' if deferred else "", "head.rest_link": rest,
-        "head.canonical": canon, "head.url_en": twins["en"], "head.url_de": twins["de"],
+        "head.canonical": canon, "head.alternates": alternates(c, kind, twins),
+        "head.og_alternates": "".join(f'<meta property="og:locale:alternate" content="{L.entries[x]["og"]}">\n'
+                                      for x in LISTED if x != c.lang) if len(LISTED) > 2 else "",
         "head.scheme": "dark" if deferred else "light dark", "head.og_type": "website" if kind == "home" else "article",
         "head.og_title": esc(og_title), "head.og_image": f"{ORIGIN}/{STATIC}/img/{share['file']}",
         "head.og_w": str(share["size"][0]), "head.og_h": str(share["size"][1]), "head.og_alt": share_alt,
     }
+
+
+def alternates(c, kind, twins):
+    """The page's twins for a search engine: one line per listed language that has this page, and English for any
+    other. A page of a language that is not listed names none, and no page names it."""
+    if c.lang not in LISTED:
+        return ""
+    have = [x for x in LISTED if kind != "imprint" or L.has_imprint(x)]
+    lines = [(L.html(x), twins[x]) for x in have] + [("x-default", twins["en"])]
+    return "".join(f'<link rel="alternate" hreflang="{tag}" href="{url}">\n' for tag, url in lines)
+
+
+def switcher(c, twin, kind):
+    """The ways to the page's twins in the other languages: (the bar's, the menu's item, the menu's list, the footer's
+    item, the footer's list). With English and German alone, one short link to the other one, as the site had it.
+    From three languages on, the bar shows the page's own and opens the list, without a script, and the menu and the
+    footer list them all. Each in its own name and language, no flags."""
+    if not many(c.lang):
+        other = "de" if c.lang == "en" else "en"
+        link = (f'<a href="{c.to(twin[other])}" lang="{other}" hreflang="{other}">{c.w["a11y.lang_switch"]}</a>')
+        return (f'    <a class="lang" href="{c.to(twin[other])}" lang="{other}" hreflang="{other}">{c.w["a11y.lang_switch"]}</a>\n',
+                f"            <li>{link}</li>\n", "", f"        <li>{link}</li>\n", "")
+    names = []
+    for x in L.shown(c.lang):
+        tag, here = L.html(x), ' aria-current="page"' if x == c.lang else ""
+        names.append(f'<li><a href="{c.to(twin[x])}" lang="{tag}" hreflang="{tag}"{here}>{esc(L.entries[x]["name"])}</a></li>')
+    spoken = c.w["a11y.language"]
+    bar = (f'    <details class="langs" data-drop><summary class="lang langs__btn"><span class="vh">{spoken} </span>'
+           f'{c.lang.split("-")[0].upper()}</summary><ul class="langs__list">{"".join(names)}</ul></details>\n')
+    menu = f'\n          <p class="menu__h">{spoken}</p>\n          <ul class="menu__list menu__list--langs">{"".join(names)}</ul>'
+    foot = f'\n      <p class="foot__h">{spoken}</p>\n      <ul class="foot__langs">{"".join(names)}</ul>'
+    return bar, "", menu, "", foot
+
+
+def lang_css(c, kind):
+    """The rules a page needs beyond the shared ones: the switcher's from three languages on, the line on how a
+    translated language's words were made, the hint on the English front page. None for English and German alone."""
+    ai = L.entries[c.lang]["status"] == "ai"
+    if not (many(c.lang) or ai or hint_on(c, kind)):
+        return ""
+    by = ":root{--by:calc(var(--by-h) + var(--ai-h))}" if PROJECT_LINE else ":root{--by:var(--ai-h)}"
+    return css("langs") + (by if ai else "")
+
+
+def hint_on(c, kind):
+    return kind == "home" and c.lang == "en" and len(LISTED) > 2
+
+
+def hint(c, kind):
+    """One line on the English front page for a visitor whose browser asks for another listed language, which leads
+    to it. No redirect, nothing stored, and off while English and German are the only two."""
+    if not hint_on(c, kind):
+        return ""
+    table = {}
+    for x in LISTED[1:]:
+        tag = L.html(x)
+        entry = [c.site.words[x]["hint.line"], c.to(L.page(x, "home")), tag]
+        table.setdefault(tag.lower(), entry)
+        table.setdefault(tag.split("-")[0].lower(), entry)
+    return (f'<p class="hint" data-hint="{esc(json.dumps(table, ensure_ascii=False, separators=(",", ":")))}" hidden></p>'
+            f"<script>{HINT_SCRIPT}</script>")
+
+
+# Reads the browser's languages in order: English shows nothing, the first listed one shows its line.
+HINT_SCRIPT = ("(function(){var h=document.querySelector('[data-hint]');if(!h)return;var t=JSON.parse(h.getAttribute('data-hint')),"
+               "n=navigator.languages||[navigator.language||''];for(var i=0;i<n.length;i++){var l=String(n[i]).toLowerCase(),"
+               "p=l.split('-')[0],e=t[l]||t[p];if(p==='en')return;if(e){var a=document.createElement('a');a.href=e[1];"
+               "a.textContent=e[0];a.lang=e[2];a.hreflang=e[2];h.appendChild(a);h.hidden=false;return}}})()")
 
 
 def wing_rules(site, slugs, first):
@@ -1188,17 +1355,22 @@ def publisher():
             "legalName": "ChipMates gemeinnützige GmbH"}
 
 
+def imprint_lang(c):
+    """A link to the legal notice from a language without one of its own leads to the English page, and says so."""
+    return "" if L.has_imprint(c.lang) else ' hreflang="en"'
+
+
 def website(c, description):
     return {"@type": "WebSite", "@id": f"{ORIGIN}/#website", "url": f"{ORIGIN}/", "name": "Museum of Ages",
-            "alternateName": "Museum of Ages, a digital museum" if c.lang == "en" else "Museum of Ages, ein digitales Museum",
-            "description": description, "inLanguage": list(LANGS), "publisher": {"@id": f"{ORIGIN}/#publisher"}}
+            "alternateName": f'Museum of Ages, {c.raw["brand.descriptor"]}',
+            "description": description, "inLanguage": [L.html(x) for x in LISTED], "publisher": {"@id": f"{ORIGIN}/#publisher"}}
 
 
 def build(out, registry, wing_dirs, mark=None, topics=True, quiet=False, more_pics=()):
     """Builds one site into out. Returns the list of (path, text, kind, lang)."""
     out = Path(out)
     site = Site(registry, list(wing_dirs), [IMG, *more_pics], mark)
-    problems = check_registry(site)
+    problems = site.problems or check_registry(site)
     if not problems:
         problems += check_words(site)
     problems += check_css() + check_no_wing_named(site) + check_sign_sources() + check_grade_marks(site) + check_stop_quotes(site)
@@ -1224,9 +1396,11 @@ def build(out, registry, wing_dirs, mark=None, topics=True, quiet=False, more_pi
 
     def common(c, kind, wing=None):
         w = dict(c.w)
-        other = "de" if c.lang == "en" else "en"
         entry = site.wings[wing] if wing else None
         twin = {l: (entry["page"][l].strip("/") + "/" if wing else c.addr("home" if kind == "lost" else kind, l)) for l in LANGS}
+        if kind == "imprint":
+            # a language without a legal notice of its own goes to its front page
+            twin.update({l: c.addr("home", l) for l in LANGS if not L.has_imprint(l)})
         door_of = entry or newest
         raw = c.raw
         if ORG_FILLED:
@@ -1238,17 +1412,24 @@ def build(out, registry, wing_dirs, mark=None, topics=True, quiet=False, more_pi
             w["org.register_dd"] = f'<dd class="todo">{esc(raw["footer.register_value"])}</dd>'
         who = c.to(c.addr("what")) + "#who"
         line = f'<p class="project project--{PROJECT_LINE_AT}"><a href="{who}">{w["project.line"]}</a></p>' if PROJECT_LINE else ""
+        # a language whose words no person has read yet says so on the first screen, under the project line
+        tag = f'<p class="aitag">{w[AI_TAG]}</p>' if L.entries[c.lang]["status"] == "ai" else ""
+        bar, menu_item, menu_list, foot_item, foot_list = switcher(c, twin, kind)
         w.update({
-            "html.project_over": line if PROJECT_LINE_AT == "over" else "", "html.project": line if PROJECT_LINE_AT != "over" else "",
+            "html.project_over": line if PROJECT_LINE_AT == "over" else "",
+            "html.project": (line if PROJECT_LINE_AT != "over" else "") + tag + hint(c, kind),
+            "html.lang_bar": bar, "html.lang_menu": menu_item, "html.lang_menu_list": menu_list,
+            "html.lang_foot": foot_item, "html.lang_foot_list": foot_list,
+            "html.imprint_elsewhere": "" if L.has_imprint(c.lang) else f'<p class="foot__else">{w["footer.imprint_elsewhere"]}</p>',
             "html.source_item": f'<li><a href="{SOURCE}">{w["footer.source"]}</a></li>' if SOURCE_LINK else "",
-            "html.licence": f' <span>{w["footer.licence_a"]} <a rel="license" href="{CC_BY_SA}{"deed.de" if c.lang == "de" else ""}">CC\u00a0BY-SA\u00a04.0</a>.</span>' if SOURCE_LINK else "",
-            "lang": c.lang, "other_lang": other, "og_locale": "en_GB" if c.lang == "en" else "de_DE", "theme_color": theme,
+            "html.licence": f' <span>{w["footer.licence_a"]} <a rel="license" href="{CC_BY_SA}{L.entries[c.lang]["deed"]}">CC\u00a0BY-SA\u00a04.0</a>.</span>' if SOURCE_LINK else "",
+            "lang": L.html(c.lang), "og_locale": L.entries[c.lang]["og"], "theme_color": theme,
             "static": c.static, "svg.arrow": ARROW, "script.faces": FACES_SCRIPT,
             "href.home": c.to(c.addr("home")), "href.what": c.to(c.addr("what")), "href.imprint": c.to(c.addr("imprint")),
             "href.privacy": c.to(c.addr("privacy")), "href.enter": esc(door_of["door"][c.lang]),
-            "href.lang_other": c.to(twin[other]), "attr.what_current": ' aria-current="page"' if kind == "what" else "",
+            "attr.what_current": ' aria-current="page"' if kind == "what" else "", "attr.imprint_lang": imprint_lang(c),
             "html.nav_wings": R.nav_wings(c, wing), "html.menu_wings": R.menu_wings(c, wing), "html.mark": marker,
-            "css.faces": faces(c.static), "page.kind": kind,
+            "css.faces": faces(c.static, c.lang), "page.kind": kind,
             "svg.sign": signs["block"], "svg.sign_name": signs["name"], "head.icons": icon_links(c.static),
         })
         return w, twin
@@ -1261,7 +1442,7 @@ def build(out, registry, wing_dirs, mark=None, topics=True, quiet=False, more_pi
 
     for lang in LANGS:
         # the museum's page
-        c = Ctx(site, lang, ("" if lang == "en" else "de/") + "index.html")
+        c = Ctx(site, lang, L.folder(lang) + "index.html")
         w, twin = common(c, "home")
         tagline = f'{c.raw["hero.tagline_1"]} {c.raw["hero.tagline_2"]}'
         # a wing may name itself more plainly for the landing's description, while it is the only open wing
@@ -1274,14 +1455,14 @@ def build(out, registry, wing_dirs, mark=None, topics=True, quiet=False, more_pi
         w.update(head_values(c, "home", c.raw["meta.title"], desc, f"{ORIGIN}/{twin[lang]}", {l: f"{ORIGIN}/{twin[l]}" for l in LANGS},
                              f"{named} {tagline}", share, c.at(c.wd[site.newest], share["alt"]), R.preload(c, sets), deferred=True))
         w.update({
-            "css.inline": first_css + grain(c.static) + wing_rules(site, site.open, ("landing", site.newest)),
+            "css.inline": first_css + lang_css(c, "home") + grain(c.static) + wing_rules(site, site.open, ("landing", site.newest)),
             "html.first": first, "html.wall": R.wall(c), "html.visit": R.stop_section(c, site.newest), "html.closing": R.closing(c),
             "script.film": f'<script src="{c.static}{R.FILM["music_script"]}" defer></script>',
             # an empty lead leaves no paragraph behind
             "html.what_lead": f'<p class="lead">{w["what.lead"]}</p>' if c.raw["what.lead"].strip() else "",
             "jsonld": dump([publisher(), website(c, desc), {
                 "@type": "CollectionPage", "@id": f"{ORIGIN}/{twin[lang]}#page", "url": f"{ORIGIN}/{twin[lang]}", "name": c.raw["meta.title"],
-                "description": desc, "inLanguage": lang, "isPartOf": {"@id": f"{ORIGIN}/#website"},
+                "description": desc, "inLanguage": L.html(lang), "isPartOf": {"@id": f"{ORIGIN}/#website"},
                 "publisher": {"@id": f"{ORIGIN}/#publisher"}, "isAccessibleForFree": True,
                 "hasPart": [{"@type": "WebPage", "name": site.wings[s]["name"][lang],
                              "url": f'{ORIGIN}/{site.wings[s]["page"][lang].strip("/")}/'} for s in site.open],
@@ -1304,14 +1485,14 @@ def build(out, registry, wing_dirs, mark=None, topics=True, quiet=False, more_pi
             if d["intro"].get("film") or d["intro"].get("stills"):
                 intro = f'<p class="wing__film">{d["intro"].get("film", "")} {d["intro"].get("stills", "")}</p>'
             w.update({
-                "css.inline": (first_css + grain(c.static) + wing_rules(site, [slug], ("wing", slug)) + R.crop_rules(d)
+                "css.inline": (first_css + lang_css(c, "wing") + grain(c.static) + wing_rules(site, [slug], ("wing", slug)) + R.crop_rules(d)
                                + R.frame_rules(d) + R.holds_rules(c, slug)),
                 "wing.slug": slug, "html.first": first, "wing.intro": d["intro"]["p"], "html.intro_more": intro,
                 "html.directory": R.room_directory(c, slug), "html.rooms": R.rooms(c, slug), "html.holds": R.holds(c, slug),
                 "html.facts": R.facts(c, slug), "html.end": R.end(c, slug), "html.more": R.more(c, slug),
                 "jsonld": dump([publisher(), website(c, raw_d["meta"]["description"]), {
                     "@type": "WebPage", "@id": f"{url}#page", "url": url, "name": raw_d["meta"]["title"],
-                    "description": raw_d["meta"]["description"], "inLanguage": lang, "isPartOf": {"@id": f"{ORIGIN}/#website"},
+                    "description": raw_d["meta"]["description"], "inLanguage": L.html(lang), "isPartOf": {"@id": f"{ORIGIN}/#website"},
                     "publisher": {"@id": f"{ORIGIN}/#publisher"}, "isAccessibleForFree": True, "about": e["about"],
                     "breadcrumb": {"@id": f"{url}#crumbs"},
                     "primaryImageOfPage": {"@type": "ImageObject", "url": f"{ORIGIN}/{STATIC}/img/{share['file']}",
@@ -1329,6 +1510,8 @@ def build(out, registry, wing_dirs, mark=None, topics=True, quiet=False, more_pi
         share = newest["pictures"]["share"]
         share_alt = Ctx(site, lang, "index.html").at(site.data[site.newest][lang], share["alt"])
         for kind in ("what", "imprint", "privacy"):
+            if kind == "imprint" and not L.has_imprint(lang):
+                continue
             c = Ctx(site, lang, c_addr(lang, kind) + "index.html")
             w, twin = common(c, kind)
             url = f"{ORIGIN}/{twin[lang]}"
@@ -1342,7 +1525,7 @@ def build(out, registry, wing_dirs, mark=None, topics=True, quiet=False, more_pi
                 group = {"what": "page_what", "imprint": "imprint"}[kind]
                 title, desc = c.raw[f"{group}.title"], c.raw[f"{group}.description"]
             w.update(head_values(c, kind, title, desc, url, {l: f"{ORIGIN}/{twin[l]}" for l in LANGS}, title, share, share_alt))
-            w["css.inline"] = doc_css + grain(c.static)
+            w["css.inline"] = doc_css + lang_css(c, kind) + grain(c.static)
             if kind == "what":
                 d = site.data[site.newest][lang]
                 name = esc(newest["name"][lang])
@@ -1355,7 +1538,7 @@ def build(out, registry, wing_dirs, mark=None, topics=True, quiet=False, more_pi
                 w["html.code"] = f"<p>{code}</p>{link}"
                 w["html.grades"] = R.grades_explained(c)
                 # who answers for the museum, in one line, with the legal notice behind the name
-                w["html.who"] = (f'<p class="who"><a href="{c.to(c.addr("imprint"))}">{w["imprint.rep_name"]}</a> {w["page_what.who_role"]}</p>')
+                w["html.who"] = (f'<p class="who"><a href="{c.to(c.addr("imprint"))}"{imprint_lang(c)}>{w["imprint.rep_name"]}</a> {w["page_what.who_role"]}</p>')
                 w["html.mail"] = f'<a href="mailto:{MAIL}">{MAIL}</a>'
                 card = newest["pictures"]["card"]
                 w["html.plate"] = (
@@ -1363,24 +1546,27 @@ def build(out, registry, wing_dirs, mark=None, topics=True, quiet=False, more_pi
                     + R.picture(c, [(None, card, "(min-width: 960px) 56vw, 100vw")], c.at(d, card["alt"]))
                     + "</div>" + R.label(name, d["card"]["kind"], d["card"]["what"], src=d["card"].get("src")) + "</figure>")
                 w["jsonld"] = dump([publisher(), website(c, desc), {
-                    "@type": "AboutPage", "@id": f"{url}#page", "url": url, "name": title, "description": desc, "inLanguage": lang,
+                    "@type": "AboutPage", "@id": f"{url}#page", "url": url, "name": title, "description": desc, "inLanguage": L.html(lang),
                     "isPartOf": {"@id": f"{ORIGIN}/#website"}, "about": {"@id": f"{ORIGIN}/#website"},
                     "publisher": {"@id": f"{ORIGIN}/#publisher"}}])
             if kind == "imprint":
                 w["legal.body"] = legal_body(lang, w, c.to(c.addr("imprint", "de")))
             finish(c, kind, w, t["legal" if kind == "imprint" else kind], c.here)
 
-    # the page for a wrong address is served at any depth: every link and file starts at the site's root
-    c = Ctx(site, "en", "404.html")
-    w, _ = common(c, "lost")
-    w["href.lang_other"] = "/de/"
-    w.update({"css": doc_css + grain(c.static), "head.csp": CSP_MARK, "href.home_de": "/de/"})
-    for lang in LANGS:
+    # the page for a wrong address is served at any depth: every link and file starts at the site's root. The host
+    # serves the nearest 404.html up the path: the root's speaks English and German, every other language's folder
+    # has its own.
+    for lang in ("en",) + tuple(x for x in LANGS if x not in ROOT_404):
+        c = Ctx(site, lang, L.folder(lang) + "404.html")
+        w, _ = common(c, "lost")
+        a = site.words_attr[lang]
+        w.update({"css": doc_css + lang_css(c, "lost") + grain(c.static), "head.csp": CSP_MARK,
+                  "own_descriptor": a["brand.descriptor"], "html.others": lost_others(site, lang) if lang == "en" else ""})
         for key in ("title", "p", "back", "enter"):
-            w[f"{lang}_{key}"] = site.words_attr[lang][f"notfound.{key}"]
-    w["header"] = fill(t["header"], w)
-    w["footer"] = fill(t["footer"], w)
-    built.append((out / "404.html", with_policy(fill(t["404"], w)), "lost", "en"))
+            w[f"own_{key}"] = a[f"notfound.{key}"]
+        w["header"] = fill(t["header"], w)
+        w["footer"] = fill(t["footer"], w)
+        built.append((out / L.folder(lang) / "404.html", with_policy(fill(t["404"], w)), "lost", lang))
 
     # write: the pages, the deferred sheet, the scripts, the sitemap, the robots file
     static_dir = out / STATIC
@@ -1414,7 +1600,9 @@ def build(out, registry, wing_dirs, mark=None, topics=True, quiet=False, more_pi
             dst.parent.mkdir(parents=True, exist_ok=True)
             if not dst.exists():
                 shutil.copyfile(site.pics.find(rel.split("/", 1)[1]), dst)
-    shutil.copytree(FONTS, static_dir / "fonts", dirs_exist_ok=True)
+    # a language's own faces (fonts/<code>/) travel only while it is built
+    unbuilt = [c for c in L.order if c not in LANGS]
+    shutil.copytree(FONTS, static_dir / "fonts", dirs_exist_ok=True, ignore=lambda d, names: [n for n in names if n in unbuilt])
 
     # the host forwards the site's own address of the code to the repository, once the repository is public
     (out / "_redirects").write_text(f"{SOURCE} {SOURCE_TO} 302\n" if SOURCE_LINK else "", encoding="utf-8")
@@ -1422,11 +1610,12 @@ def build(out, registry, wing_dirs, mark=None, topics=True, quiet=False, more_pi
     listed = [(k, l, p) for p, _, k, l in built if k in ("home", "wing", "what", "imprint", "privacy")]
     if topics and PAGES_BUILD.exists() and not mark:
         listed += [("topic", l, p) for l, p in build_topics(out)]
-    write_sitemap(out, site, listed)
+    # a built language that is not listed stands in no sitemap
+    write_sitemap(out, site, [x for x in listed if x[1] in LISTED])
 
     problems = []
     for path, text, kind, lang in built:
-        problems += check_built(out, path, text, kind)
+        problems += check_built(out, path, text, kind, site)
     for name in ["site.css"] + sorted(scripts):
         if "assets/" in (static_dir / name).read_text(encoding="utf-8"):
             problems.append(f"{STATIC}/{name}: something still points at assets/")
@@ -1454,8 +1643,26 @@ ORG_FILLED = True  # the footer's and the statement's address and register show 
 
 
 def c_addr(lang, kind):
-    pre = "" if lang == "en" else "de/"
-    return {"what": f"{pre}{WHAT_DIR[lang]}/", "imprint": f"{pre}{IMPRINT_DIR[lang]}/", "privacy": f"{pre}{PRIVACY_DIR[lang]}/"}[kind]
+    return L.page(lang, kind)
+
+
+# The languages the root's 404 page speaks in full. Every other one has a page in its folder.
+ROOT_404 = ("en", "de")
+
+
+def lost_others(site, lang):
+    """Under the English block of the root's 404: the German one, then one line in each other listed language."""
+    a = site.words_attr["de"]
+    out = ("    <hr>\n    <div lang=\"de\">\n"
+           f'      <h2>{a["notfound.title"]}</h2>\n      <p class="lead">{a["notfound.p"]}</p>\n'
+           f'      <p><a class="more more--back" href="/{L.folder("de")}"><span>{a["notfound.back"]}</span></a></p>\n    </div>\n')
+    for x in LISTED:
+        if x in ROOT_404:
+            continue
+        a, tag = site.words_attr[x], L.html(x)
+        out += (f'    <p class="stub__row" lang="{tag}">{a["notfound.p"]} '
+                f'<a href="/{L.folder(x)}" hreflang="{tag}">{a["notfound.back"]}</a></p>\n')
+    return out
 
 
 def html_text(text):
@@ -1504,7 +1711,7 @@ def build_topics(out):
     finally:
         sys.dont_write_bytecode = keep
         sys.path.remove(str(PAGES_BUILD.parent))
-    chrome = {"en": f"{WHAT_DIR['en']}/", "de": f"de/{WHAT_DIR['de']}/"}
+    chrome = {code: L.page(code, "what") for code in LANGS}
     if Path(mod.WINGS_FILE).resolve() != (SRC / "registry.json").resolve() or mod.CHROME_PAGE != chrome:
         raise SystemExit(f"The site's own pages are built. The topic pages' build ({PAGES_BUILD}) does not read this registry "
                          f"or does not take its header from the statement page: WINGS_FILE {mod.WINGS_FILE}, CHROME_PAGE {mod.CHROME_PAGE}")
@@ -1538,7 +1745,7 @@ def build_topics(out):
             new = new.replace(EMPTY_ICON, icon_links("../" * (len(name.parts) - 1) + f"{STATIC}/"))
         if new != text:
             path.write_text(new, encoding="utf-8")
-        lang = "de" if name.parts[0] == "de" else "en"
+        lang = next((c for c in LANGS if c != "en" and name.parts[0] + "/" == L.folder(c)), "en")
         found.append((lang, path))
     if problems:
         raise SystemExit("\n".join(problems))
@@ -1592,19 +1799,46 @@ def film_data(site):
 
 def write_sitemap(out, site, listed):
     rel = lambda p: str(Path(p).relative_to(out).parent).replace(".", "", 1).strip("/")
-    urls = sorted({f"{ORIGIN}/{rel(p)}/".replace("//", "/").replace("https:/", "https://") for _, _, p in listed})
-    body = "".join(f"  <url><loc>{u}</loc></url>\n" for u in urls)
+    url = lambda p: f"{ORIGIN}/{rel(p)}/".replace("//", "/").replace("https:/", "https://")
+    urls = sorted({url(p) for _, _, p in listed})
+    # From three listed languages on, each address names its twins, as the pages' heads do. With two, the heads alone.
+    twins = {}
+    if len(LISTED) > 2:
+        for page in pages_by_twin(out, listed):
+            for _, p in page:
+                twins[url(p)] = [(L.html(l), url(q)) for l, q in page] + [("x-default", url(dict(page)["en"]))] if "en" in dict(page) else []
+    link = lambda u: "".join(f'<xhtml:link rel="alternate" hreflang="{tag}" href="{v}"/>' for tag, v in twins.get(u, []))
+    body = "".join(f"  <url><loc>{u}</loc>{link(u)}</url>\n" for u in urls)
+    space = ' xmlns:xhtml="http://www.w3.org/1999/xhtml"' if twins else ""
     (out / "sitemap.xml").write_text(
-        '<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n' + body + "</urlset>\n",
+        f'<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"{space}>\n' + body + "</urlset>\n",
         encoding="utf-8")
     closed = HIDDEN or site.mark
     (out / "robots.txt").write_text(
         "User-agent: *\nDisallow: /\n" if closed else f"User-agent: *\nAllow: /\n\nSitemap: {ORIGIN}/sitemap.xml\n", encoding="utf-8")
 
 
+def pages_by_twin(out, listed):
+    """The listed pages grouped by the page they are a twin of: [[(lang, path), ...], ...], read from each page's own
+    hreflang lines, so the sitemap says what the heads say."""
+    groups = {}
+    for _, lang, p in listed:
+        text = Path(p).read_text(encoding="utf-8")
+        canon = re.search(r'<link rel="canonical" href="([^"]+)"', text)
+        twins = tuple(sorted(re.findall(r'<link rel="alternate" hreflang="(?!x-default)[\w-]+" href="([^"]+)"', text)))
+        groups.setdefault(twins or (canon.group(1) if canon else str(p),), []).append((lang, p))
+    return list(groups.values())
+
+
 # ---------- checks on what was built ----------
 
-def check_built(out, path, text, kind):
+def page_lang(text):
+    """The code of a built page's language, from its lang attribute."""
+    tag = re.search(r'<html lang="([\w-]+)"', text).group(1)
+    return next(c for c in L.order if L.html(c) == tag)
+
+
+def check_built(out, path, text, kind, site):
     problems = []
     name = path.relative_to(out)
     if "{{" in text or CSP_MARK in text:
@@ -1651,16 +1885,18 @@ def check_built(out, path, text, kind):
     twice = sorted({i for i in ids if ids.count(i) > 1})
     if twice:
         problems.append(f"{name}: the id {twice} stands more than once")
-    # the menu's button is three lines and no word: its name is spoken
-    if not re.search(r'<summary class="menu__btn"><span class="vh">(Menu|Menü)</span><span class="menu__layers" aria-hidden="true">'
-                     r'(<span></span>){3}</span></summary>', text):
+    # the menu's button is three lines and no word: its name is spoken, in the page's language
+    lang = page_lang(text)
+    if not re.search(r'<summary class="menu__btn"><span class="vh">%s</span><span class="menu__layers" aria-hidden="true">'
+                     r'(<span></span>){3}</span></summary>' % re.escape(site.words_html[lang]["nav.menu"]), text):
         problems.append(f"{name}: the menu's button needs its spoken name and its three lines")
-    # the four grades, wherever a page shows them: the decided words, in their order
-    lang = re.search(r'<html lang="(\w+)"', text).group(1)
+    problems += check_switcher(name, text, lang, kind)
+    # the four grades, wherever a page shows them: the decided words, in their order (a language without approved
+    # locked lines is read for its beads and their order only)
     for block in re.findall(r'<ul class="(?:sure__grades|grades)"[^>]*>(.*?)</ul>', text, flags=re.S) + re.findall(r'<dl class="graded">(.*?)</dl>', text, flags=re.S):
         items = re.findall(r"<(?:li|dt)>(.*?)</(?:li|dt)>", block, flags=re.S)
         shown = [html_text(re.sub(r"<svg\b.*?</svg>", "", x, flags=re.S)) for x in items]
-        if kind != "lost" and tuple(shown) != LOCKED[lang]["grades"]:
+        if kind != "lost" and lang in LOCKED and tuple(shown) != LOCKED[lang]["grades"]:
             problems.append(f"{name}: the four grades read {shown}, not the decided words")
         # each word behind the bead of its own grade, in the museum app's order
         if [re.match(r'<span class="bead bead--(\w+)" aria-hidden="true"></span><span>', x) and
@@ -1668,7 +1904,7 @@ def check_built(out, path, text, kind):
             problems.append(f"{name}: the four grades do not each stand behind their bead, in the order {R.GRADES}")
     # a stop's own grade: its bead and the decided word for it
     for g, word in re.findall(r'<p class="from__sure"><span class="bead bead--(\w+)" aria-hidden="true"></span><span>(.*?)</span></p>', text):
-        if g not in R.GRADES or html_text(word) != LOCKED[lang]["grades"][R.GRADES.index(g)]:
+        if g not in R.GRADES or (lang in LOCKED and html_text(word) != LOCKED[lang]["grades"][R.GRADES.index(g)]):
             problems.append(f"{name}: a stop's grade {g!r} reads {html_text(word)!r}, not the decided word")
     # the grades are beads now: no line marks are left
     if re.search(r'class="[^"]*\bgline\b|\.gline\b', text):
@@ -1752,6 +1988,35 @@ def check_built(out, path, text, kind):
     return problems
 
 
+def check_switcher(name, text, lang, kind):
+    """The ways to the other languages: with English and German alone, the one short link in the bar, the menu and the
+    footer. From three on, the bar's list and the menu's and the footer's, each the languages the page offers, in the
+    table's order, each in its own name, language and hreflang, the page's own marked, no other language anywhere."""
+    problems = []
+    shown = L.shown(lang)
+    links = re.findall(r'<a\b[^>]*\shreflang="([\w-]+)"[^>]*>(.*?)</a>', text)
+    named = [(tag, html_text(t)) for tag, t in links if html_text(t) in {e["name"] for e in L.entries.values()}]
+    if not many(lang):
+        other = L.html("de" if lang == "en" else "en")
+        if [tag for tag, _ in named] != [other] * 3 or len(re.findall(r'<a [^>]*lang="%s" hreflang="%s">' % (other, other), text)) != 3:
+            problems.append(f"{name}: the short link to the other language does not stand in the bar, the menu and the footer")
+        return problems
+    want = [(L.html(x), L.entries[x]["name"]) for x in shown]
+    lists = re.findall(r'<ul class="(langs__list|menu__list menu__list--langs|foot__langs)">(.*?)</ul>', text, flags=re.S)
+    if [k for k, _ in lists] != ["langs__list", "menu__list menu__list--langs", "foot__langs"]:
+        problems.append(f"{name}: the languages do not stand in the bar's list, the menu's and the footer's")
+    for where, block in lists:
+        got = re.findall(r'<li><a href="[^"]*" lang="([\w-]+)" hreflang="\1"( aria-current="page")?>([^<]*)</a></li>', block)
+        if [(tag, html_text(n)) for tag, _, n in got] != want or [tag for tag, cur, _ in got if cur] != [L.html(lang)]:
+            problems.append(f"{name}: the list {where} is not {[n for _, n in want]} with the page's own marked")
+    others = sorted({tag for tag, _ in named} - {t for t, _ in want})
+    if others:
+        problems.append(f"{name}: links to {others}, which the page does not offer")
+    if not re.search(r'<summary class="lang langs__btn"><span class="vh">[^<]+ </span>%s</summary>' % lang.split("-")[0].upper(), text):
+        problems.append(f"{name}: the bar's control does not show the page's own language")
+    return problems
+
+
 def check_switches(out, site):
     """The two switches, on every page of the built folder, the topic pages included. The project line: once on
     a page, inside the header, linked to who runs the museum, or on no page at all. The link to the code: on no
@@ -1765,17 +2030,18 @@ def check_switches(out, site):
             if lines or 'class="project' in text or BY_RULE in text:
                 problems.append(f"{name}: the project line is switched off and the page still carries it")
         else:
-            lang = re.search(r'<html lang="(\w+)"', text).group(1)
+            lang = page_lang(text)
             head = re.search(r'<header class="masthead">.*?</header>', text, flags=re.S)
             if len(lines) != 1 or not head or 'class="project' not in head.group(0):
                 problems.append(f"{name}: the project line stands {len(lines)} times, or not in the header")
-            elif lines[0][0] != PROJECT_LINE_AT or not lines[0][1].endswith("/#who") or html_text(lines[0][2]) != LOCKED[lang]["project"]:
+            elif lines[0][0] != PROJECT_LINE_AT or not lines[0][1].endswith("/#who") or (
+                    lang in LOCKED and html_text(lines[0][2]) != space(LOCKED[lang]["project"], lang)):
                 problems.append(f"{name}: the project line is not the decided line, linked to who runs the museum")
         # the trust line of the state on every page, and while the repository is closed no other word of open
         # source anywhere in the file (attributes and data included) but the sentence that names the licence
-        lang = re.search(r'<html lang="(\w+)"', text).group(1)
+        lang = page_lang(text)
         bare = " ".join(html_text(re.sub(r"<(script|style)\b.*?</\1>", "", text, flags=re.S)).split())
-        if LOCKED[lang]["trust" if SOURCE_LINK else "trust_before"] not in bare:
+        if lang in LOCKED and space(LOCKED[lang]["trust" if SOURCE_LINK else "trust_before"], lang) not in bare:
             problems.append(f"{name}: the trust line of this state ({'with' if SOURCE_LINK else 'without'} Open Source) is not on the page")
         if "quelloffen" in text.lower():
             problems.append(f"{name}: the page says quelloffen (the house writes Open Source)")
@@ -1802,11 +2068,28 @@ def check_fonts(site):
     at = SRC / "fonts.json"
     if not at.is_file():
         return ["fonts.json is missing: run tools/make_fonts.py"]
-    held = {c for a, b in load(at)["sans"] for c in range(a, b + 1)}
+    cuts = {k: {c for a, b in v for c in range(a, b + 1)} for k, v in load(at).items() if not k.startswith("_")}
     problems = []
+    for lang in LANGS:
+        missing = [key for _, _, key in LANG_FACES.get(lang, ()) if key not in cuts]
+        if missing:
+            problems.append(f"fonts.json lacks {missing}, the faces {lang} is set in: run tools/make_fonts.py --list")
+    if problems:
+        return problems
+    for lang in LISTED:
+        # every letter a listed language's words carry, the narrow spaces the build sets included, is in its faces
+        serif, sans = face_keys(lang)
+        texts = list(site.words[lang].values()) + list(strings(site.privacy[lang]).values())
+        texts += [t for d in site.data_raw.values() for t in strings(d[lang]).values()]
+        letters = {ch for t in texts if isinstance(t, str) for ch in bind(t, lang)} - set("\n\t")
+        lost = sorted(ch for ch in letters if ord(ch) not in cuts[serif] | cuts[sans])
+        if lost:
+            problems.append(f"{lang}: {''.join(lost)!r} ({', '.join(f'U+{ord(c):04X}' for c in lost)}) is in neither of its faces "
+                            f"({serif}, {sans} in fonts.json): another typeface would set it")
     for slug, facts in site.facts.items():
         for h in facts.get("holders", []):
             for lang in LANGS:
+                held = cuts[face_keys(lang)[1]]
                 if not h["note"][lang].strip():
                     problems.append(f"wings: the holder {h['id']} ({lang}) has no town or note: every row of the list is a name and a line under it")
                 long = max(len(h["name"][lang]), len(h["note"][lang]))
@@ -1819,6 +2102,12 @@ def check_fonts(site):
     return problems
 
 
+def face_keys(lang):
+    """The keys in fonts.json of the serif and the sans a language is set in."""
+    own = LANG_FACES.get(lang)
+    return (own[0][2], own[1][2]) if own else ("serif", "sans")
+
+
 def check_gone(out, site):
     """No page in the built folder, the topic pages included, carries a line of an earlier state, or one of the
     statements no page may make."""
@@ -1826,7 +2115,7 @@ def check_gone(out, site):
     for path in sorted(out.rglob("*.html")):
         text = path.read_text(encoding="utf-8")
         plain = " ".join(shown_text(text).split())
-        for line in GONE:
+        for line in GONE + tuple(x for code in L.order for x in RULES[code]["gone"]):
             if line in text or line in plain:
                 problems.append(f"{path.relative_to(out)}: the page still carries {line!r}")
         low = plain.lower()
@@ -1866,7 +2155,7 @@ def check_menu(out, built, site):
             problems.append(f"{path.relative_to(out)}: the menu is missing")
             continue
         entries = [html_text(x) for x in re.findall(r"<a\b[^>]*>(.*?)</a>", menu.group(0), flags=re.S)]
-        entries = [e for e in entries if e not in ("Deutsch", "English")]
+        entries = [e for e in entries if e not in {x["name"] for x in L.entries.values()}]
         if seen.setdefault(lang, entries) != entries:
             problems.append(f"{path.relative_to(out)}: its menu differs from the other {lang} pages")
         for block in re.findall(r'<ul class="menu__list">(.*?)</ul>', menu.group(0), flags=re.S):

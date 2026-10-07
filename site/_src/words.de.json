@@ -7,6 +7,7 @@
     "skip": "Zum Inhalt springen",
     "nav": "Die Seiten des Museums",
     "lang_switch": "English",
+    "language": "Sprache",
     "footer_nav": "Über diese Website",
     "crumb": "Du bist hier"
   },
@@ -288,6 +289,9 @@
     "copy_h": "Urheberrecht",
     "copy_p": "Inhaberin der Rechte an den Texten, Bildern und Filmen, die wir selbst erstellen, ist die ChipMates gemeinnützige GmbH. Wir stellen sie unter die Lizenz CC BY-SA 4.0 (Creative Commons Namensnennung-Share Alike 4.0 International). Ausgenommen sind Werke und Daten anderer, die darin vorkommen, etwa Reproduktionen, Musik, Zitate und Geodaten, sowie Name und Logo des Museums. Der Code des Museums und dieser Website ist Open Source unter der Lizenz AGPL-3.0 oder einer späteren Version. Für jede Reproduktion gilt die Lizenzzeile in ihrer Beschriftung. Was eine offene Lizenz oder die Gemeinfreiheit erlaubt, schränken wir nicht ein. Inhalte anderer nennen wir in ihrer Beschriftung und in ihrem Eintrag. Wer eine Urheberrechtsverletzung bemerkt, schreibt uns bitte. Wir prüfen den Hinweis und entfernen den Inhalt, wenn er zutrifft.",
     "copy_p_before": "Inhaberin der Rechte an den Texten, Bildern und Filmen, die wir selbst herstellen, ist die ChipMates gemeinnützige GmbH. Der Code dieser Website ist noch nicht öffentlich. Wir werden ihn unter der Lizenz AGPL-3.0 oder einer späteren Version veröffentlichen. Für jede Reproduktion gilt die Lizenzzeile in ihrer Beschriftung. Was eine offene Lizenz oder die Gemeinfreiheit erlaubt, schränken wir nicht ein. Inhalte anderer sind als solche gekennzeichnet. Wer eine Urheberrechtsverletzung bemerkt, schreibt uns bitte. Wir prüfen den Hinweis und entfernen den Inhalt, wenn er zutrifft."
+  },
+  "hint": {
+    "line": "Dieses Museum gibt es auch auf Deutsch."
   },
   "notfound": {
     "title": "Seite nicht gefunden",
