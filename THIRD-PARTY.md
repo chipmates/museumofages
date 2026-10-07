@@ -18,6 +18,8 @@ What the museum and museumofages.org use from others, and under which licence. T
 |---|---|---|---|
 | Cardo, the serif | SIL Open Font License 1.1 | © 2002-2011 David J. Perry | `site/_src/fonts/cardo-400.woff2`, licence in `LICENSE-Cardo.txt` beside it |
 | Marcellus, the sans, with Reserved Font Name "Marcellus". The site serves a cut with added Polish letters, so the cut carries its own name, Ages Display, as the licence asks of a modified version | SIL Open Font License 1.1 | © 2012 Brian J. Bonislawsky DBA Astigmatic (AOETI) | `site/_src/fonts/marcellus-400.woff2`, licence in `LICENSE-Marcellus.txt` beside it |
+| Source Serif 4, the serif of the Bulgarian pages. The site serves a cut of one weight with the Latin and Cyrillic letters and their Bulgarian forms, under its own name, Museum Bulgarian 04 | SIL Open Font License 1.1 | © 2014 The Source Serif 4 Project Authors | `site/_src/fonts/bg/bulgarian-serif-400.woff2`, licence in `LICENSE-SourceSerif4.txt` beside it. Shipped while Bulgarian is built |
+| Source Sans 3, the sans of the Bulgarian pages, with Reserved Font Name "Source". The site serves a cut of one weight with the Latin and Cyrillic letters and their Bulgarian forms, so the cut carries its own name, Museum Bulgarian 05, as the licence asks of a modified version | SIL Open Font License 1.1 | © 2010-2020 Adobe | `site/_src/fonts/bg/bulgarian-sans-400.woff2`, licence in `LICENSE-SourceSans3.txt` beside it. Shipped while Bulgarian is built |
 
 The museum itself sets its words in the fonts of your system and ships no font file. The letters it builds in 3D are drawn in its own code.
 

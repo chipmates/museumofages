@@ -1,15 +1,22 @@
 #!/usr/bin/env python3
 """Cuts the site's sans font from the full file, with the letters a holder's name may need.
 
-    python3 _src/tools/make_fonts.py            write _src/fonts/marcellus-400.woff2 and _src/fonts.json
-    python3 _src/tools/make_fonts.py --rename   give the existing cut its own names
-    python3 _src/tools/make_fonts.py --check    say what the two font files hold, write nothing
+    python3 _src/tools/make_fonts.py                 write _src/fonts/marcellus-400.woff2 and _src/fonts.json
+    python3 _src/tools/make_fonts.py --rename        give the existing cut its own names
+    python3 _src/tools/make_fonts.py --check         say what the two font files hold, write nothing
+    python3 _src/tools/make_fonts.py --narrow-space  add the narrow no-break space French takes to both cuts
+    python3 _src/tools/make_fonts.py --list          write fonts.json from the font files as they are
 
 The sans was the common Latin cut, which has no Polish letters: a holder's name in Polish fell back to another
 typeface. This cut keeps every letter of the old file and adds the Polish ones. The serif stays as it is: a
 holder's name is only ever set in the sans. fonts.json lists what each file holds, so the build (standard library
 only) can check a name against it. The two fonts it cuts from stay outside the repository: MOA_FONT_FULL names the
 full Marcellus file, MOA_FONT_BASE the Latin cut it replaces. Needs fontTools with brotli.
+
+A language's own faces stand in fonts/<code>/ (buildlib.LANG_FACES). fonts.json lists what they hold too, under
+their keys, so the build checks a language's words against the faces it is set in. The narrow no-break space
+(U+202F) is not in either source font: --narrow-space adds it to each cut as an empty letter as wide as the thin
+space, or half the word space where the font has no thin space. It needs neither outside file.
 """
 import json
 import os
@@ -18,8 +25,11 @@ from pathlib import Path
 
 from fontTools import subset
 from fontTools.ttLib import TTFont
+from fontTools.ttLib.tables._g_l_y_f import Glyph
 
 HERE = Path(__file__).resolve().parent
+sys.path.insert(0, str(HERE.parent))
+from buildlib import LANG_FACES  # noqa: E402
 FONTS = HERE.parent / "fonts"
 LIST = HERE.parent / "fonts.json"
 # Read only, from outside the repository: MOA_FONT_FULL, the full file, the same revision and the same widths as
@@ -71,8 +81,58 @@ def rename(font):
             record.string = SANS_NAME.replace(" ", "") + "-Regular"
 
 
+NARROW = 0x202F
+NOTE = "What the site's font files hold, as ranges of code points. Written by tools/make_fonts.py, read by the build."
+
+
+def write_list(sans, serif):
+    """fonts.json: the two cuts and every language's own faces."""
+    out = {"_note": NOTE, "sans": ranges(held(sans)), "serif": ranges(held(serif))}
+    for faces in LANG_FACES.values():
+        for _, file, key in faces:
+            if (FONTS / file).is_file():
+                out[key] = ranges(held(FONTS / file))
+    LIST.write_text(json.dumps(out, indent=1) + "\n", encoding="utf-8")
+
+
+def narrow_space(path):
+    """Adds U+202F to a cut as an empty letter, as wide as its thin space or half its word space. A cut that has it
+    is left as it is."""
+    font = TTFont(path, recalcTimestamp=False)
+    cmap = font.getBestCmap()
+    if NARROW in cmap:
+        return f"{path.name}: has U+202F already"
+    if "glyf" not in font:
+        raise SystemExit(f"make_fonts: {path.name} has no TrueType outlines, and this step adds a TrueType letter")
+    width = font["hmtx"][cmap[0x2009]][0] if 0x2009 in cmap else round(font["hmtx"][cmap[0x20]][0] / 2)
+    name = "uni202F"
+    order = font.getGlyphOrder() + [name]
+    font.setGlyphOrder(order)
+    font["glyf"].glyphs[name] = Glyph()
+    font["glyf"].glyphOrder = order
+    font["hmtx"].metrics[name] = (width, 0)
+    for table in font["cmap"].tables:
+        if table.isUnicode():
+            table.cmap[NARROW] = name
+    for tag in ("hdmx", "LTSH", "VDMX"):
+        if tag in font:
+            del font[tag]
+    font.flavor = "woff2"
+    font.save(path)
+    return f"{path.name}: U+202F added, {width} units wide of {font['head'].unitsPerEm}"
+
+
 def main():
     sans, serif = FONTS / "marcellus-400.woff2", FONTS / "cardo-400.woff2"
+    if "--list" in sys.argv:
+        write_list(sans, serif)
+        print(f"{LIST.name}: written")
+        return
+    if "--narrow-space" in sys.argv:
+        for path in (serif, sans):
+            print(narrow_space(path))
+        write_list(sans, serif)
+        return
     if "--rename" in sys.argv:
         font = TTFont(sans)
         rename(font)
@@ -105,9 +165,7 @@ def main():
     cutter.subset(font)
     rename(font)
     subset.save_font(font, str(sans), options)
-    LIST.write_text(json.dumps({
-        "_note": "What the site's two font files hold, as ranges of code points. Written by tools/make_fonts.py, read by the build.",
-        "sans": ranges(held(sans)), "serif": ranges(held(serif))}, indent=1) + "\n", encoding="utf-8")
+    write_list(sans, serif)
     print(f"{sans.name}: {sans.stat().st_size} bytes, {len(held(sans))} letters (the cut before: {BASE.stat().st_size} bytes, {len(a)})")
 
 
