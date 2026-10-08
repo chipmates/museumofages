@@ -11,7 +11,7 @@ How to help with the museum's code, its words and its records, and what a change
 | A screen reader report: how far you got, where it stopped making sense | The bug report form in the same picker |
 | A life and a place you would like to see as a wing | "A wing you'd like to see" in the same picker |
 | A picture the museum should show | "Something else" in the same picker, with the work, its holder, the page that offers the file and its licence line |
-| A third language | "Something else" in the same picker. The museum is built for English and German only today, so it needs work in the code first |
+| A read of a translation, or another language | "Something else" in the same picker. French, Italian, Spanish, Brazilian Portuguese and Bulgarian are machine translations until a person has read them |
 | A change to the code | A pull request, after the setup and the checks below |
 | Anything else | "Something else" in the same picker |
 | Your institution holds a work shown here | Mail to [contact@museumofages.org](mailto:contact@museumofages.org) |
@@ -85,6 +85,8 @@ Every displayed sentence exists in both languages.
 - In the wing, each text carries its English and its German side by side, as `en` and `de`.
 
 German runs about a third longer than English. Check a change to what you see in German too.
+
+The five other languages are made from these two. Their words sit in `museum/lang/<code>/` and in the site's words files for that language, and both are generated, so a pull request against them is overwritten by the next run. A wrong sentence in a translation goes through the correction form.
 
 A person reads, corrects and approves every English and German text before it is published. So for a wrong fact, the correction form is quicker than a pull request: we change the sentence in both languages and keep the house's voice. The voice is plain: short sentences, everyday words.
 

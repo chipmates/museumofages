@@ -35,10 +35,10 @@ Museum of Ages has one wing today: Leonardo da Vinci's last house, Clos Lucé in
     <img src=".github/assets/demo.webp" alt="A short walk through the da Vinci wing. It opens on Leonardo's pen drawing of the Arno valley, walks down a stair into a long picture room, steps up to the Mona Lisa and zooms into her face, sets a wooden aerial screw turning, and ends under a night sky full of stars." width="100%" />
   </picture></a><br/>
   <sub>From the door to the stars, in 33 seconds. The museum itself is slower: a stop holds until you go on.</sub><br/>
-  <sub><a href="https://museumofages.org">museumofages.org</a>: free entry, no account, English or German. <a href="docs/TOUR.md">A tour in pictures</a> credits every work you see.</sub>
+  <sub><a href="https://museumofages.org">museumofages.org</a>: free entry, no account. English and German, and five more languages translated with AI. <a href="docs/TOUR.md">A tour in pictures</a> credits every work you see.</sub>
 </p>
 
-This repository holds the museum itself in `museum/` and the code of its website in `site/`. The code, the texts in both languages and the records of everything the museum builds are here, open to read and to check. [How you can take part](#how-you-can-take-part) says where to start.
+This repository holds the museum itself in `museum/` and the code of its website in `site/`. The code, the texts in every language and the records of everything the museum builds are here, open to read and to check. [How you can take part](#how-you-can-take-part) says where to start.
 
 ## What you see
 
@@ -53,13 +53,28 @@ Fifteen machines are rebuilt from what the sources give, fourteen from his sheet
   <sub>The great hall of Clos Lucé, rebuilt from plans and photographs. The lion by the wall is built after old accounts. No sheet of it is known.</sub>
 </p>
 
-Museum of Ages is a website, built once for the phone and once for the desktop, in English and German. Free entry, no account. It draws with WebGPU and falls back to WebGL2. A browser with neither gets one plain page that says so, with a link to the wing's page on the site. There are no spoken words yet, and the wing hasn't been tested with a screen reader.
+Museum of Ages is a website, built once for the phone and once for the desktop, in English and German, and translated with AI into French, Italian, Spanish, Brazilian Portuguese and Bulgarian. Each translation says so until a person has read it. Free entry, no account. It draws with WebGPU and falls back to WebGL2. A browser with neither gets one plain page that says so, with a link to the wing's page on the site. There are no spoken words yet, and the wing hasn't been tested with a screen reader.
 
 <p align="center">
   <img src=".github/assets/tour/10-phone-stop.webp" alt="On a phone, the wooden aerial screw stands tall in a hall with a slatted ceiling and a high window. Below, the stop reads He wanted to fly, Leonardo at about 30, with the line In Milan he drew machines like these. He wanted to fly. Nobody wrote down that he ever did." width="28%" />
   <img src=".github/assets/tour/11-phone-close-look.webp" alt="On a phone, the Mona Lisa fills the screen in its close look, with a 20 cm scale bar in the upper corner. Below it are the line It was stolen from the Louvre in 1911. It was found in Florence two years later, and a gold button for the next work." width="28%" /><br/>
   <sub>On a phone: a stop in the mechanism hall, and the Mona Lisa's close look.</sub>
 </p>
+
+## What is inside
+
+- **The walk.** 17 stops that tell one story, past about 75 works you can step up to.
+- **The picture room.** 24 works hung close to their real size, 22 paintings and 2 drawings. Each label says how sure the attribution is: 14 documented, 4 disputed, 4 qualified, 1 from his workshop and 1 a copy of a lost work.
+- **The Last Supper.** On a court wall at the size of the original in Milan, 8.8 m by 4.6 m.
+- **The machines.** 15 rebuilt, and 14 of them move. Nine stand in the mechanism hall, three in the court and three in the house.
+- **The anatomy wall.** 29 of his anatomy sheets.
+- **The reading table.** A printed edition of 1883 of two of his notebooks, 438 pages to turn. 17 topics gather 207 pages from his notebooks. A shelf holds seven more books of his notes, 1,158 sides in all.
+- **The heart.** A film of about 30 seconds shows the flow behind a heart valve in the museum's own glass model, built from his notes.
+- **His life in dates.** Twelve dates of his life are cut into the gallery's floor.
+- **The house.** The great hall of Clos Lucé, rebuilt from plans and photographs.
+- **The sky.** The stars as they stood over Clos Lucé at nine in the evening of 10 October 1517, worked out star by star from a star catalogue.
+
+The works shown come from 22 collections, each named on its label.
 
 ## How sure a statement is
 
@@ -166,7 +181,7 @@ You don't need to write code to help. Here is what you can do today:
 - **Improve the code.** A machine's motion, the engine on a phone, the path without WebGPU, the site's pages. [CONTRIBUTING.md](CONTRIBUTING.md) has the setup, the checks and the bar a reconstruction has to meet. A displayed sentence always lands in English and German under the same key.
 - **Propose a picture.** Open an issue with the work, its holder, the page where the file is offered and its licence line word for word. We fetch it ourselves if the licence and the route allow it. A new picture never goes into this repository.
 - **Propose a wing.** The da Vinci wing tells one life in the place where it ended. If there's another life and place you'd like to see, open "A wing you'd like to see" in the same picker: who, where, which day, the sources that tell it, and where open copies of the works could come from. A wing is a lot of work, from the research to the film, and building one together with people from outside is new for us. So it starts with that conversation.
-- **Bring in a language.** Today the museum is built for English and German only, so a third language needs work in the code first. If you'd like to help with that, open an issue.
+- **Read a translation.** French, Italian, Spanish, Brazilian Portuguese and Bulgarian are machine translations today, and each says so. If one of them is your language, read a part of it against the English or the German and tell us what is wrong. A person's read is what takes the label off. Open an issue to start, and for another language as well.
 
 If your institution holds a work shown here, write to [contact@museumofages.org](mailto:contact@museumofages.org). A security problem goes to the same address, quietly first, as [SECURITY.md](SECURITY.md) says.
 
