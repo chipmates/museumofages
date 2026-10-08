@@ -10,8 +10,9 @@
 
 Serve a folder that holds the built site AND the built pages: dist/ after the site's build holds both.
 Only the local server is asked. An address on another host is listed, never fetched.
-The exit code is 1 when an address of the site itself is not found, apart from the --known ones
-and the ones in KNOWN_ELSEWHERE: the museum app's own routes, which the join brings.
+The exit code is 1 when an address of the site itself is not found, apart from the --known ones,
+the ones in KNOWN_ELSEWHERE (the museum app's own routes, which the join brings) and the ones the
+host forwards: the built folder's _redirects names them, and a plain file server knows nothing of it.
 """
 import html
 import re
@@ -50,9 +51,21 @@ def fetch(target):
     return code, text
 
 
+def forwards(base):
+    """The addresses the host forwards, each with where it sends them: the built folder's _redirects."""
+    try:
+        with urllib.request.urlopen(f"{base}/_redirects", timeout=10) as answer:
+            lines = answer.read().decode("utf-8", "replace").splitlines()
+    except urllib.error.HTTPError:
+        return {}
+    rows = (line.split() for line in lines if line.strip() and not line.lstrip().startswith("#"))
+    return {row[0]: row[1] for row in rows if len(row) >= 2}
+
+
 def main(base, pages, known=()):
     base = base.rstrip("/")
     host = urllib.parse.urlsplit(base).netloc
+    forwarded = forwards(base)
     bad = 0
     for page in pages:
         url = f"{base}/{page.lstrip('/')}"
@@ -64,6 +77,9 @@ def main(base, pages, known=()):
             parts = urllib.parse.urlsplit(target)
             if parts.netloc != host:
                 print(f"  outside  {ref}")
+                continue
+            if parts.path in forwarded:
+                print(f"  forward  {ref}  (the host sends it to {forwarded[parts.path]})")
                 continue
             code, body = fetch(target.split("#")[0])
             note = ""
