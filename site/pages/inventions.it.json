@@ -1,0 +1,856 @@
+{
+ "_note": "THE WORDS of the page 'Leonardo da Vinci's inventions', English. Every displayed sentence of the page lives here and in the twin inventions.de.json. The two files hold the same structure: the same blocks in the same order, the same items, the same pictures. Change words here, then run `python3 pages/build.py`. Every fact comes from the wing's checked material. No em dash, no en dash, no semicolon.",
+ "page": {
+  "id": "vinci-inventions",
+  "wing": "vinci",
+  "slug": "invenzioni",
+  "published": null,
+  "og_image": {
+   "file": "vinci-inventions-og-1200x630.jpg",
+   "width": 1200,
+   "height": 630
+  }
+ },
+ "pics": {
+  "flight": {
+   "stem": "vinci-stop-flight",
+   "widths": [
+    800,
+    1600
+   ],
+   "sizes": "(min-width: 960px) 288px, (min-width: 600px) 240px, calc(100vw - 40px)"
+  },
+  "works": {
+   "stem": "vinci-stop-works",
+   "widths": [
+    800,
+    1600
+   ],
+   "sizes": "(min-width: 1280px) 588px, (min-width: 960px) 46vw, 100vw"
+  },
+  "court": {
+   "stem": "vinci-view-anemometer",
+   "widths": [
+    800,
+    1600
+   ],
+   "sizes": "(min-width: 1280px) 333px, (min-width: 960px) 27vw, (min-width: 600px) calc(50vw - 44px), calc(100vw - 40px)"
+  },
+  "house": {
+   "stem": "vinci-stop-hall",
+   "widths": [
+    800,
+    1600
+   ],
+   "sizes": "(min-width: 1280px) 333px, (min-width: 960px) 27vw, (min-width: 600px) calc(50vw - 44px), calc(100vw - 40px)"
+  },
+  "table": {
+   "stem": "vinci-stop-reading-table",
+   "widths": [
+    800,
+    1600
+   ],
+   "sizes": "(min-width: 1280px) 333px, (min-width: 960px) 27vw, (min-width: 600px) calc(50vw - 44px), calc(100vw - 40px)"
+  },
+  "parachute": {
+   "stem": "vinci-view-parachute",
+   "widths": [
+    800,
+    1600
+   ],
+   "sizes": "(min-width: 960px) 288px, (min-width: 600px) 240px, calc(100vw - 40px)"
+  },
+  "inclinometer": {
+   "stem": "vinci-poster-inclinometer",
+   "widths": [
+    720,
+    1440
+   ],
+   "sizes": "(min-width: 960px) 288px, (min-width: 600px) 240px, calc(100vw - 40px)"
+  },
+  "lock_gates": {
+   "stem": "vinci-poster-miter-lock-gates",
+   "widths": [
+    720,
+    1440
+   ],
+   "sizes": "(min-width: 960px) 288px, (min-width: 600px) 240px, calc(100vw - 40px)"
+  },
+  "water_screw": {
+   "stem": "vinci-poster-water-lifting-screw",
+   "widths": [
+    720,
+    1440
+   ],
+   "sizes": "(min-width: 960px) 288px, (min-width: 600px) 240px, calc(100vw - 40px)"
+  },
+  "crane": {
+   "stem": "vinci-poster-revolving-crane",
+   "widths": [
+    720,
+    1440
+   ],
+   "sizes": "(min-width: 960px) 288px, (min-width: 600px) 240px, calc(100vw - 40px)"
+  },
+  "rolling_mill": {
+   "stem": "vinci-poster-rolling-mill",
+   "widths": [
+    720,
+    1440
+   ],
+   "sizes": "(min-width: 960px) 288px, (min-width: 600px) 240px, calc(100vw - 40px)"
+  },
+  "drilling_machine": {
+   "stem": "vinci-poster-lathe",
+   "widths": [
+    720,
+    1440
+   ],
+   "sizes": "(min-width: 960px) 288px, (min-width: 600px) 240px, calc(100vw - 40px)"
+  },
+  "ball_bearing": {
+   "stem": "vinci-poster-ball-bearing",
+   "widths": [
+    720,
+    1440
+   ],
+   "sizes": "(min-width: 960px) 288px, (min-width: 600px) 240px, calc(100vw - 40px)"
+  },
+  "flywheel": {
+   "stem": "vinci-poster-flywheel",
+   "widths": [
+    720,
+    1440
+   ],
+   "sizes": "(min-width: 960px) 288px, (min-width: 600px) 240px, calc(100vw - 40px)"
+  },
+  "anemometer": {
+   "stem": "vinci-poster-anemometer",
+   "widths": [
+    720,
+    1440
+   ],
+   "sizes": "(min-width: 960px) 288px, (min-width: 600px) 240px, calc(100vw - 40px)"
+  },
+  "proportional_compass": {
+   "stem": "vinci-poster-proportional-compass",
+   "widths": [
+    720,
+    1440
+   ],
+   "sizes": "(min-width: 960px) 288px, (min-width: 600px) 240px, calc(100vw - 40px)"
+  },
+  "camera_obscura": {
+   "stem": "vinci-poster-camera-obscura",
+   "widths": [
+    720,
+    1440
+   ],
+   "sizes": "(min-width: 960px) 288px, (min-width: 600px) 240px, calc(100vw - 40px)"
+  },
+  "organ_gun": {
+   "stem": "vinci-poster-multi-barrel-gun",
+   "widths": [
+    720,
+    1440
+   ],
+   "sizes": "(min-width: 960px) 288px, (min-width: 600px) 240px, calc(100vw - 40px)"
+  },
+  "lion": {
+   "stem": "vinci-poster-mechanical-lion",
+   "widths": [
+    720,
+    1440
+   ],
+   "sizes": "(min-width: 960px) 288px, (min-width: 600px) 240px, calc(100vw - 40px)"
+  },
+  "hall": {
+   "stem": "vinci-view-water-lifting-screw",
+   "widths": [
+    800,
+    1600
+   ],
+   "sizes": "(min-width: 1280px) 333px, (min-width: 960px) 27vw, (min-width: 600px) calc(50vw - 44px), calc(100vw - 40px)"
+  }
+ },
+ "meta": {
+  "title": "Invenzioni di Leonardo da Vinci: 15 rifatte | Museum of Ages",
+  "description": "Cosa ha disegnato Leonardo da Vinci, cosa è stato costruito, cosa c’era prima di lui. Quindici macchine ricostruite in codice in un museo digitale, con fonti.",
+  "og_title": "Le invenzioni di Leonardo da Vinci: quindici macchine ricostruite in un museo digitale",
+  "og_image_alt": "Quattro macchine di legno nella sala delle macchine, nel sole basso del pomeriggio: le porte battenti di una chiusa, la vite aerea con la sua vela a spirale, una vite di Archimede e un laminatoio. Ricostruzioni in codice dai fogli di Leonardo da Vinci."
+ },
+ "labels": {
+  "crumbs": "Sei qui",
+  "crumb_home": "Museo",
+  "crumb_here": "Invenzioni",
+  "toc": "In questa pagina",
+  "tag_reconstructions": "Ricostruzioni",
+  "tag_reconstruction": "Ricostruzione",
+  "in_museum": "Nel museo",
+  "row_sheet": "Il foglio",
+  "row_ours": "La nostra scelta",
+  "row_built": "Costruzione",
+  "row_accounts": "Le fonti",
+  "tag_reproduction": "Riproduzione",
+  "plate_what": "costruita in codice dal suo foglio"
+ },
+ "top": {
+  "h1": "Le invenzioni di Leonardo da Vinci",
+  "answer": "Leonardo da Vinci ha disegnato macchine per volare, per sollevare l’acqua, per misurare e per la guerra. Per la maggior parte, nessun documento noto dice che l’abbia costruita. Alcune non erano una sua idea. Quindici sono in questo museo, ricostruite in codice.",
+  "frame": {
+   "pic": "works",
+   "focus": "50% 70%",
+   "title": "Nella sala delle macchine",
+   "tag": "tag_reconstructions",
+   "what": "da sinistra: le porte battenti di una chiusa, la vite aerea, una vite di Archimede e un laminatoio, tutti ricostruiti dai suoi fogli",
+   "alt": "Una sala alta con un soffitto a listelli di legno e una fila di finestre, nel sole basso del pomeriggio. Su bassi basamenti ci sono quattro macchine di legno: le porte battenti di una chiusa, la vite aerea con la sua vela a spirale, una vite di Archimede nel suo telaio e un laminatoio."
+  },
+  "door": {
+   "text": "Entra nel museo",
+   "note": "Ingresso libero, senza account.",
+   "leads": "La porta ti conduce all’inizio dell’ala di Leonardo. Dalla pianta dell’ala arrivi alla sala delle macchine."
+  }
+ },
+ "blocks": [
+  {
+   "type": "places",
+   "id": "where",
+   "nav": "Dove sono",
+   "h": "Dove sono le macchine nel museo",
+   "intro": "Museum of Ages è un museo digitale. La sua prima ala è quella di Leonardo da Vinci, e lì le macchine stanno in tre luoghi. La pianta dell’ala elenca ogni macchina sotto il luogo in cui si trova. Premi lì il suo nome e la vedi da vicino.",
+   "rows": [
+    {
+     "term": "La sala delle macchine",
+     "text": "Nove macchine: la vite aerea, le porte battenti di una chiusa, una vite di Archimede, un laminatoio, un tornio per forare, un cuscinetto a sfere, un volano, una camera oscura e una mitragliera.",
+     "pic": {
+      "pic": "hall",
+      "tag": "tag_reconstructions",
+      "what": "la vite di Archimede, dietro la vite aerea, a destra il laminatoio",
+      "alt": "Una vite di Archimede di legno su un basso zoccolo, in una sala spoglia: un asse inclinato con spire scure in un telaio, il fondo in una vasca. Dietro, a sinistra la vela a spirale della vite aerea, a destra la ruota dentata del laminatoio. Da una fila di finestre entra il sole basso del pomeriggio."
+     }
+    },
+    {
+     "term": "Il cortile",
+     "text": "Tre macchine: il paracadute, la gru girevole e l’anemometro. Il paracadute sta fuori perché è più alto del tetto della sala.",
+     "pic": {
+      "pic": "court",
+      "tag": "tag_reconstructions",
+      "what": "l’anemometro sul suo basamento, a sinistra la base girevole della gru",
+      "alt": "Un cortile lastricato con foglie cadute, davanti a un muro chiaro, metà in ombra. Su un basamento scuro c’è un piccolo telaio di legno con una piastra appesa: l’anemometro. Sul bordo sinistro la base rotonda di legno della gru, oltre il cortile un prato e il muro di un giardino."
+     }
+    },
+    {
+     "term": "La casa",
+     "text": "Tre nella sala grande: un inclinometro e un compasso di proporzione sul tavolo, e il leone meccanico vicino al muro.",
+     "pic": {
+      "pic": "house",
+      "tag": "tag_reconstructions",
+      "what": "sul tavolo l’inclinometro e il compasso di proporzione, vicino al muro il leone",
+      "alt": "Una stanza con il soffitto a travi, un pavimento di mattonelle rosse e finestre a losanghe. Il sole del pomeriggio cade su un lungo tavolo su cavalletti, con una campana di vetro su un supporto e un compasso in piedi. Vicino al muro, a sinistra, c’è un leone di legno e metallo."
+     }
+    },
+    {
+     "term": "Il tavolo di lettura",
+     "text": "Qui sfogli più di 200 pagine dei suoi quaderni, ordinate in diciassette temi, tra cui il volo e le macchine. Ogni pagina indica il suo quaderno e il suo foglio, e puoi leggerla nella sua grafia, allo specchio e come testo. Quando non sfogli, resta aperto un facsimile del Manoscritto B, stampato nel 1883. Il disegno della vite aerea, al foglio 83 verso, è in questo facsimile.",
+     "pic": {
+      "pic": "table",
+      "tag": "tag_reproduction",
+      "what": "il facsimile del Manoscritto B, stampato nel 1883, di pubblico dominio perché i diritti sono scaduti. Originale: Bibliothèque de l’Institut de France, Parigi. La stanza è costruita in codice.",
+      "alt": "Una stanza scura con pannelli di legno e una lampada appesa. Sotto la lampada c’è un libro aperto su un lungo tavolo, e davanti c’è una sedia."
+     }
+    }
+   ],
+   "after": "Quattordici delle quindici macchine seguono un suo foglio. Il leone segue antichi racconti, perché non ne resta nessun disegno. La didascalia di ognuna dice che è una ricostruzione."
+  },
+  {
+   "type": "group",
+   "id": "flying-machines",
+   "nav": "Macchine per volare",
+   "h": "Le macchine per volare",
+   "intro": "Leonardo voleva che le persone volassero. Non è documentato nessun suo volo. Qui ci sono due suoi studi per il volo, ricostruiti, e uno strumento che aveva pensato per chi vola.",
+   "items": [
+    {
+     "id": "aerial-screw",
+     "name": "La vite aerea",
+     "place": "La sala delle macchine",
+     "does": "Una vela a spirale di lino montata su un’asta, spesso chiamata il suo elicottero. La sua nota dice che una vite ben fatta, di lino reso impermeabile con l’amido e girata velocemente, sale in aria.",
+     "rows": [
+      {
+       "k": "row_sheet",
+       "v": "Manoscritto B, foglio 83 verso. Bibliothèque de l’Institut de France, Parigi. Il quaderno è datato tra il 1487 e il 1489 circa. Il foglio riporta una sola misura: otto braccia, un’antica unità di lunghezza, dal bordo al centro, cioè circa 4,7 metri. Per la vite grande non dice che cosa la faccia girare. Per un piccolo modello di carta indica una molla: una sottile striscia di ferro, ritorta e poi lasciata andare."
+      },
+      {
+       "k": "row_ours",
+       "v": "Il passo della spirale, il legno, il cuscinetto e la forza che la fa girare. Nel museo fa cinque giri al minuto e resta a terra."
+      },
+      {
+       "k": "row_built",
+       "v": "Non è noto che sia stata costruita durante la sua vita. Stimiamo che una macchina di 400 chilogrammi abbia bisogno di almeno diciannove chilowatt per sollevarsi. Un ciclista al livello del record dell’ora tiene circa mezzo chilowatt per un’ora, quindi quattro ciclisti insieme ne danno circa due."
+      }
+     ],
+     "pic": {
+      "pic": "flight",
+      "tag": "tag_reconstructions",
+      "what": "la vite aerea nella sala delle macchine, a sinistra le porte della chiusa, entrambe ricostruite dai suoi fogli",
+      "alt": "La vite aerea in una sala alta con un soffitto a listelli di legno: un’asta di legno su una base rotonda con una vela a spirale di lino, nel sole basso del pomeriggio che getta la sua ombra sul muro. A sinistra, su un basso basamento, le porte di legno di una chiusa."
+     }
+    },
+    {
+     "id": "parachute",
+     "name": "Il paracadute",
+     "place": "Il cortile",
+     "does": "Una tenda di lino impermeabile, larga dodici braccia e alta dodici, cioè circa sette metri per lato. Leonardo sosteneva che sotto questa tenda un uomo potesse gettarsi da una grande altezza senza farsi male. È una sua affermazione, non un risultato provato.",
+     "rows": [
+      {
+       "k": "row_sheet",
+       "v": "Codice Atlantico, foglio 1058 verso. Veneranda Biblioteca Ambrosiana, Milano. Il foglio è datato intorno al 1485."
+      },
+      {
+       "k": "row_ours",
+       "v": "Il telaio, le corde e l’anello. Il foglio non ne indica né lo spessore né la lunghezza."
+      },
+      {
+       "k": "row_built",
+       "v": "Non è documentato nessun salto durante la sua vita. Nel 2000 un uomo è sceso sotto una copia pesante, se n’è staccato ed è atterrato con un secondo paracadute, moderno. Esistono disegni italiani di paracadute più antichi, datati tra il 1470 e il 1479."
+      }
+     ],
+     "pic": {
+      "pic": "parachute",
+      "tag": "tag_reconstructions",
+      "what": "il paracadute nel cortile, visto dal basso. Dietro, la gru e l’anemometro",
+      "alt": "La parte di sotto del paracadute, una piramide di lino chiaro, riempie la metà alta dell’immagine. Sotto, un cortile lastricato con foglie cadute, a sinistra una gru di legno e un piccolo anemometro su un basamento, e oltre un muro basso alberi con i colori dell’autunno."
+     }
+    },
+    {
+     "id": "inclinometer",
+     "name": "L’inclinometro",
+     "place": "La casa, sul tavolo",
+     "does": "Un peso appeso sopra un cerchio, al riparo dal vento. Doveva mostrare a chi vola se va in piano o inclinato.",
+     "rows": [
+      {
+       "k": "row_sheet",
+       "v": "Codice Atlantico, foglio 1058 recto, l’altro lato del foglio del paracadute. Veneranda Biblioteca Ambrosiana, Milano. Il foglio è datato intorno al 1485."
+      },
+      {
+       "k": "row_ours",
+       "v": "La campana di vetro, il supporto inclinabile e tutte le misure. Il foglio non ne dà nessuna."
+      },
+      {
+       "k": "row_built",
+       "v": "Non è verificato nessun esemplare del suo tempo."
+      }
+     ],
+     "pic": {
+      "pic": "inclinometer",
+      "tag": "tag_reconstruction",
+      "alt": "L’inclinometro da solo su un pavimento di piastrelle: una campana di vetro sopra un piatto rotondo segnato da cerchi, dentro un piccolo peso appeso a un filo, il tutto su un supporto di legno."
+     }
+    }
+   ]
+  },
+  {
+   "type": "group",
+   "id": "water",
+   "nav": "Acqua",
+   "h": "Le macchine per l’acqua",
+   "intro": "Ha disegnato anche macchine per l’acqua. Le chiuse dei canali e la vite di Archimede erano già in uso prima che lui nascesse. Le enciclopedie gli attribuiscono spesso una parte: la porta di chiusa fatta di due battenti che si incontrano ad angolo.",
+   "items": [
+    {
+     "id": "lock-gates",
+     "name": "Le porte battenti",
+     "place": "La sala delle macchine",
+     "does": "I due battenti di una chiusa, che si incontrano ad angolo. L’acqua più alta li spinge e li tiene chiusi, e una piccola porta in ogni battente fa passare prima un po’ d’acqua. Così una barca passa da un livello d’acqua al successivo.",
+     "rows": [
+      {
+       "k": "row_sheet",
+       "v": "Codice Atlantico, foglio 656a recto. Veneranda Biblioteca Ambrosiana, Milano. Il foglio registra la porta della conca di San Marco, una chiusa di Milano. La sua data non è stabilita: il catalogo di riferimento del codice dà tra il 1493 e il 1495 circa, un museo di Milano il 1506 circa."
+      },
+      {
+       "k": "row_ours",
+       "v": "Le misure. Mostriamo una coppia di porte che si apre e si chiude con l’acqua allo stesso livello."
+      },
+      {
+       "k": "row_built",
+       "v": "La chiusa esisteva. Bartolomeo Della Valle ha costruito le chiuse di collegamento. Le enciclopedie attribuiscono spesso a Leonardo questo tipo di porta. Un museo di Milano lascia aperta la sua parte: il foglio può registrare un suo miglioramento delle piccole porte, oppure solo un primo disegno fatto dopo che erano state costruite. Nessuna delle fonti che abbiamo letto dice che abbia inventato le chiuse dei canali."
+      }
+     ],
+     "pic": {
+      "pic": "lock_gates",
+      "tag": "tag_reconstruction",
+      "alt": "Le porte battenti da sole su un pavimento di piastrelle: due battenti di legno su una soglia di pietra si incontrano con un angolo leggero, ognuno con una piccola porta quadrata in basso."
+     }
+    },
+    {
+     "id": "water-screw",
+     "name": "La vite di Archimede",
+     "place": "La sala delle macchine",
+     "does": "Un tubo avvolto intorno a un asse. Ogni giro della manovella porta l’acqua su per il tubo, fino a un canale più alto o a una cisterna.",
+     "rows": [
+      {
+       "k": "row_sheet",
+       "v": "Codice Atlantico, foglio 6 recto. Veneranda Biblioteca Ambrosiana, Milano. Il foglio mostra diversi modi di sollevare l’acqua, e su questo lato non porta scritte. È datato intorno al 1480."
+      },
+      {
+       "k": "row_ours",
+       "v": "La manovella, i supporti e la grandezza."
+      },
+      {
+       "k": "row_built",
+       "v": "Non è stabilito che questo progetto sia mai stato costruito. La vite di Archimede in sé è antica: l’aveva già descritta Vitruvio."
+      }
+     ],
+     "pic": {
+      "pic": "water_screw",
+      "tag": "tag_reconstruction",
+      "alt": "La vite di Archimede da sola su un pavimento di piastrelle: un asse inclinato avvolto da spire scure poggia in un telaio di legno, con il fondo in una vasca."
+     }
+    }
+   ]
+  },
+  {
+   "type": "group",
+   "id": "workshop",
+   "nav": "Bottega",
+   "h": "Le macchine per la bottega",
+   "intro": "Queste cinque sollevano, laminano, forano e girano. Per nessuna è verificata una costruzione durante la sua vita.",
+   "items": [
+    {
+     "id": "crane",
+     "name": "La gru girevole",
+     "place": "Il cortile",
+     "does": "Una gru con un solo braccio. Una manovella avvolge la corda su un tamburo, e il braccio gira il carico fino al punto in cui serve.",
+     "rows": [
+      {
+       "k": "row_sheet",
+       "v": "Manoscritto B, foglio 49 recto. Bibliothèque de l’Institut de France, Parigi. Il quaderno è datato tra il 1487 e il 1489 circa."
+      },
+      {
+       "k": "row_ours",
+       "v": "Il contrappeso, i supporti e tutte le misure."
+      }
+     ],
+     "pic": {
+      "pic": "crane",
+      "tag": "tag_reconstruction",
+      "alt": "La gru girevole da sola su un pavimento di piastrelle: un palo con un solo braccio su una base rotonda che gira, e dal braccio pende una corda con un blocco di pietra."
+     }
+    },
+    {
+     "id": "rolling-mill",
+     "name": "Il laminatoio",
+     "place": "La sala delle macchine",
+     "does": "Due rulli che rendono lo stagno più sottile e più uniforme. Una manovella fa girare il rullo di sopra, e spostando quello di sotto si cambia la distanza tra i due.",
+     "rows": [
+      {
+       "k": "row_sheet",
+       "v": "Manoscritto I, foglio 48 verso. Bibliothèque de l’Institut de France, Parigi. La nota nomina lo stagno e il bronzo delle campane. Il quaderno è datato tra il 1497 e il 1499 circa."
+      },
+      {
+       "k": "row_ours",
+       "v": "Gli ingranaggi. Qui non si lamina niente, e la distanza tra i rulli resta quella che abbiamo fissato."
+      }
+     ],
+     "pic": {
+      "pic": "rolling_mill",
+      "tag": "tag_reconstruction",
+      "alt": "Il laminatoio da solo su un pavimento di piastrelle: due rulli, uno sopra l’altro, tra montanti di legno, con una grande ruota dentata e una manovella sul lato."
+     }
+    },
+    {
+     "id": "drilling-machine",
+     "name": "Il tornio per forare",
+     "place": "La sala delle macchine",
+     "does": "Un trapano mosso da una persona, senza motore. Una corda è avvolta intorno all’asse: una spinta del piede lo fa girare in un senso, e un arco teso lo fa tornare indietro. Il foglio non ha nessuna nota sul trapano. Un museo di Vinci legge così il disegno, e il nostro modello segue questa lettura.",
+     "rows": [
+      {
+       "k": "row_sheet",
+       "v": "Codice Atlantico, foglio 108 recto. Veneranda Biblioteca Ambrosiana, Milano. Il foglio è datato tra il 1495 e il 1497 circa."
+      },
+      {
+       "k": "row_ours",
+       "v": "Le misure dell’arco, della barra per il piede e del rocchetto. Il trapano gira a vuoto: non lo spingiamo dentro nessun materiale."
+      }
+     ],
+     "pic": {
+      "pic": "drilling_machine",
+      "tag": "tag_reconstruction",
+      "alt": "Il tornio per forare da solo su un pavimento di piastrelle: una bassa panca di legno con un asse, e sopra un palo alto con un’asta sottile piegata e una corda che scende fino all’asse."
+     }
+    },
+    {
+     "id": "ball-bearing",
+     "name": "Il cuscinetto a sfere",
+     "place": "La sala delle macchine",
+     "does": "Otto sfere di legno tra due piatti: così un carico pesante, quando gira, rotola e sfrega meno. Piccole ruote su perni tengono ogni sfera lontana dalla successiva.",
+     "rows": [
+      {
+       "k": "row_sheet",
+       "v": "Codice Madrid I, foglio 20 verso. Biblioteca Nacional de España, Madrid. Il quaderno risale al periodo tra il 1490 e il 1499 e porta le date 1493 e 1497."
+      },
+      {
+       "k": "row_ours",
+       "v": "La forma delle sfere e delle piccole ruote: è la nostra lettura del foglio."
+      }
+     ],
+     "pic": {
+      "pic": "ball_bearing",
+      "tag": "tag_reconstruction",
+      "alt": "Il cuscinetto a sfere da solo su un pavimento di piastrelle: un grosso disco rotondo con un foro al centro poggia su un anello di sfere, sopra un secondo anello, su due travi di legno."
+     }
+    },
+    {
+     "id": "flywheel",
+     "name": "Il volano",
+     "place": "La sala delle macchine",
+     "does": "Una ruota pesante che conserva il movimento e lo restituisce quando la spinta cala. Il foglio confronta pesi che girano e chiede quale disposizione funzioni meglio.",
+     "rows": [
+      {
+       "k": "row_sheet",
+       "v": "Codice Madrid I, foglio 114 recto. Biblioteca Nacional de España, Madrid. Il quaderno risale al periodo tra il 1490 e il 1499 e porta le date 1493 e 1497."
+      },
+      {
+       "k": "row_ours",
+       "v": "Quattro pesi uguali su raggi rigidi. Questa disposizione l’abbiamo scelta noi: non è una delle figure del foglio."
+      }
+     ],
+     "pic": {
+      "pic": "flywheel",
+      "tag": "tag_reconstruction",
+      "alt": "Il volano da solo su un pavimento di piastrelle: un palo dritto su un piede a croce porta quattro raggi, ognuno con una sfera all’estremità."
+     }
+    }
+   ]
+  },
+  {
+   "type": "group",
+   "id": "instruments",
+   "nav": "Strumenti",
+   "h": "Strumenti per misurare e per vedere",
+   "intro": "Tre pezzi più piccoli. Uno misura il vento, uno cambia la grandezza di un disegno, uno mostra che cosa fa la luce mentre entra in una stanza buia.",
+   "items": [
+    {
+     "id": "anemometer",
+     "name": "L’anemometro",
+     "place": "Il cortile",
+     "does": "Il vento spinge una piastra incernierata fuori dalla verticale. Più la piastra sale lungo la sua scala curva, più il vento è forte. La sua nota vuole di più: misurare quanta strada si fa in un’ora con un certo vento, e per questo chiede un orologio. La piastra da sola mostra solo la forza del vento.",
+     "rows": [
+      {
+       "k": "row_sheet",
+       "v": "Codice Atlantico, foglio 675 recto. Veneranda Biblioteca Ambrosiana, Milano. Il foglio è datato tra il 1487 e il 1490 circa."
+      },
+      {
+       "k": "row_ours",
+       "v": "I segni sulla scala, il telaio e tutte le misure."
+      },
+      {
+       "k": "row_built",
+       "v": "Non è verificata nessuna costruzione durante la sua vita. Leon Battista Alberti ha descritto una piastra simile nel 1450, quindi le fonti non permettono di chiamarla un’invenzione del solo Leonardo."
+      }
+     ],
+     "pic": {
+      "pic": "anemometer",
+      "tag": "tag_reconstruction",
+      "alt": "L’anemometro da solo su un pavimento di piastrelle: un telaio di legno su due piedi, con una tavoletta quadrata appesa alla sbarra in alto e, accanto, una scala curva."
+     }
+    },
+    {
+     "id": "proportional-compass",
+     "name": "Il compasso di proporzione",
+     "place": "La casa, sul tavolo",
+     "does": "Due gambe appuntite che si incrociano su un perno. Riporta una distanza in una proporzione scelta: così un disegno diventa più grande o più piccolo.",
+     "rows": [
+      {
+       "k": "row_sheet",
+       "v": "Codice Forster I, foglio 4 recto, scritto a Firenze nel 1505. Victoria and Albert Museum, National Art Library, Londra."
+      },
+      {
+       "k": "row_ours",
+       "v": "La posizione del perno. L’abbiamo messo in modo che le punte lunghe si aprano il doppio di quelle corte."
+      },
+      {
+       "k": "row_built",
+       "v": "Per questo disegno non è noto nessuno strumento sopravvissuto, e nessun documento noto dice che ne sia stato fatto uno."
+      }
+     ],
+     "pic": {
+      "pic": "proportional_compass",
+      "tag": "tag_reconstruction",
+      "alt": "Il compasso di proporzione in piedi sulle sue due punte lunghe, su un pavimento di piastrelle: due gambe scure si incrociano su un perno, e sopra il perno ci sono due punte corte."
+     }
+    },
+    {
+     "id": "camera-obscura",
+     "name": "La camera oscura",
+     "place": "La sala delle macchine",
+     "does": "Una stanza buia con un piccolo foro. Nel foro i raggi di luce si incrociano e portano l’immagine sulla carta, capovolta. Leonardo studiava come vede l’occhio.",
+     "rows": [
+      {
+       "k": "row_sheet",
+       "v": "Manoscritto D, foglio 8 recto. Bibliothèque de l’Institut de France, Parigi. La nota descrive un piccolo foro rotondo in una sottile lastra di ferro. Il quaderno è datato tra il 1508 e il 1509 circa."
+      },
+      {
+       "k": "row_ours",
+       "v": "La piccola camera stessa. La nota non dà né la profondità della stanza né la grandezza del foro."
+      },
+      {
+       "k": "row_built",
+       "v": "La nota descrive un esperimento. Non dimostra che sia stato lui a inventare la camera oscura."
+      }
+     ],
+     "pic": {
+      "pic": "camera_obscura",
+      "tag": "tag_reconstruction",
+      "alt": "La camera oscura da sola su un pavimento di piastrelle: una scatola di legno, aperta su un lato per mostrare l’interno. Davanti alla parete con il piccolo foro brucia una candela, e dentro la scatola la sua immagine è capovolta."
+     }
+    }
+   ]
+  },
+  {
+   "type": "group",
+   "id": "war",
+   "nav": "Macchina da guerra",
+   "h": "Una macchina da guerra",
+   "intro": "Nella sala c’è una macchina da guerra, esposta come modello che non può sparare.",
+   "items": [
+    {
+     "id": "organ-gun",
+     "name": "La mitragliera",
+     "place": "La sala delle macchine",
+     "does": "Trentatré canne in tre file su un solo telaio. La sua nota dice che se ne sparano undici alla volta. Se si gira il telaio, la fila successiva va in alto.",
+     "rows": [
+      {
+       "k": "row_sheet",
+       "v": "Codice Atlantico, foglio 157 recto. Veneranda Biblioteca Ambrosiana, Milano. Il foglio è datato tra il 1480 e il 1482 circa."
+      },
+      {
+       "k": "row_ours",
+       "v": "Le misure del carro e la sua velocità. Qui non spara niente: le canne sono piene."
+      },
+      {
+       "k": "row_built",
+       "v": "Non abbiamo trovato nessun documento di una costruzione durante la sua vita."
+      }
+     ],
+     "pic": {
+      "pic": "organ_gun",
+      "tag": "tag_reconstruction",
+      "alt": "La mitragliera da sola su un pavimento di piastrelle: un carro su due ruote a raggi porta un telaio con file di canne scure e una maniglia sul lato."
+     }
+    }
+   ]
+  },
+  {
+   "type": "feature",
+   "id": "mechanical-lion",
+   "nav": "Il leone",
+   "h": "Il leone meccanico",
+   "place": "La casa, vicino alla parete della sala grande",
+   "paras": [
+    "Il leone è l’unica macchina qui senza un foglio. Giorgio Vasari ha scritto nel 1568 che il re di Francia era venuto a Milano e che Leonardo, a cui avevano chiesto qualcosa di strano, aveva fatto un leone. Il leone camminava per alcuni passi, poi apriva il petto e lo mostrava pieno di gigli."
+   ],
+   "rows": [
+    {
+     "k": "row_accounts",
+     "v": "Solo antichi racconti. Non resta nessun disegno del leone, e i racconti non sono d’accordo sul luogo, sulla data e sul re."
+    },
+    {
+     "k": "row_ours",
+     "v": "Tutto l’interno: una molla, una serie di ruote, manovelle che muovono le zampe, una ruota che conta i passi e ferma la camminata, e un chiavistello che apre il petto."
+    },
+    {
+     "k": "row_built",
+     "v": "Gli antichi racconti dicono che camminava. Non ne resta niente."
+    }
+   ],
+   "pic": {
+    "pic": "lion",
+    "tag": "tag_reconstruction",
+    "what": "costruito in codice da antichi racconti",
+    "alt": "Il leone meccanico da solo su un pavimento di piastrelle: un leone di legno e metallo con la coda alzata, e nel fianco si vedono le ruote del suo meccanismo."
+   }
+  },
+  {
+   "type": "notes",
+   "id": "not-built",
+   "nav": "Carro armato, ponti, robot",
+   "h": "Il carro armato, i ponti e il cavaliere robot",
+   "intro": "Il museo non ha costruito nessuna di queste macchine. La maggior parte fa parte di altri ventisette suoi studi, che danno troppo poco per costruirle. Alcuni fogli di questi studi sono tra le pagine del tavolo di lettura.",
+   "rows": [
+    {
+     "term": "Il carro corazzato, spesso chiamato il suo carro armato",
+     "text": "Un carro da combattimento coperto, su un foglio sciolto del British Museum di Londra, che lo data intorno al 1485. All’interno alcune persone girano manovelle, e la nota ne vuole otto. Il British Museum lo registra come mai costruito. Il foglio non dà misure, e non è stabilito come si dovesse guidare il carro."
+    },
+    {
+     "term": "Il ponte autoportante, fatto di pali",
+     "text": "Codice Atlantico, fogli 69a recto e 71 verso, nella Veneranda Biblioteca Ambrosiana di Milano, datati tra il 1485 e il 1487 circa dal catalogo di riferimento. Mostrano un ponte di legno provvisorio per un esercito. La sua nota dice di intrecciarlo. Un museo di Vinci legge il disegno così: tronchi incastrati tra loro, in piedi senza corde. Non abbiamo trovato documenti di un ponte costruito durante la sua vita."
+    },
+    {
+     "term": "Il ponte sul Corno d’Oro",
+     "text": "Manoscritto L, foglio 66 recto, Bibliothèque de l’Institut de France, Parigi: un quaderno datato tra il 1497 e il 1504 circa. Uno schizzo con una nota: un ponte da Pera a Costantinopoli, largo 40 braccia, alto 70 sopra l’acqua e lungo 600. Il braccio è un’antica unità di lunghezza. Probabilmente è del 1502. Non è stato costruito. Nel 2001 in Norvegia è stata inaugurata una passerella fatta sul modello dello schizzo."
+    },
+    {
+     "term": "La macchina volante ad ala battente",
+     "text": "Il Manoscritto B, datato tra il 1487 e il 1489 circa, contiene diversi studi di macchine con ali che battono, tra cui i fogli 74 verso e 80 recto. In uno il pilota sta sdraiato e muove le ali con i piedi. In un altro sta in piedi, e l’apertura delle ali è di 40 braccia, circa 23 metri. Non è documentato nessun volo durante la sua vita."
+    },
+    {
+     "term": "Gli studi sul volo planato",
+     "text": "Il Codice sul volo degli uccelli, del 1505, è nella Biblioteca Reale di Torino. Le sue pagine studiano le articolazioni delle ali, le corde per guidare e l’equilibrio. Nessuna di queste pagine è un progetto completo di aliante."
+    },
+    {
+     "term": "Il cavaliere meccanico, spesso chiamato il suo robot",
+     "text": "Il cavaliere è una lettura moderna che unisce studi separati del Codice Atlantico, datati tra il 1495 e il 1497 circa. Non conosciamo nessun disegno completo di un cavaliere, e non è stabilito che ne sia stato costruito uno durante la sua vita."
+    },
+    {
+     "term": "L’attrezzatura per andare sott’acqua",
+     "text": "Codice Arundel, foglio 24 verso, nella British Library di Londra, e Codice Atlantico, foglio 909 verso, datati tra il 1485 e il 1487 circa. Le note descrivono tubi per respirare con giunti di cuoio e di ferro, una maschera di vetro e delle sacche. Non danno un modo completo per portare l’aria, e non è stabilito che qualcuno sia sceso sott’acqua con questa attrezzatura."
+    },
+    {
+     "term": "Il carro che si muove da solo",
+     "text": "Codice Atlantico, foglio 812 recto, datato intorno al 1478, mentre uno studio più vecchio lo data tra il 1482 e il 1484 circa. Oggi i ricercatori vedono come motore delle molle a spirale nascoste, e lo considerano un carro per il teatro. Non è provato che fosse un’auto per trasportare persone."
+    },
+    {
+     "term": "La balestra gigante",
+     "text": "Codice Atlantico, foglio 149b recto, datato intorno al 1485. Leonardo indica un’apertura di 42 braccia, tra 24 e 25 metri circa. Il foglio non chiarisce come si dovesse fare l’arco enorme, e non è documentata nessuna costruzione durante la sua vita."
+    }
+   ]
+  },
+  {
+   "type": "faq",
+   "id": "questions",
+   "nav": "Domande",
+   "h": "Domande frequenti",
+   "items": [
+    {
+     "q": "Che cosa ha inventato Leonardo da Vinci?",
+     "a": "È difficile indicare una macchina di cui sia certo che l’idea era sua e che è stata costruita. Ne ha disegnate molte, e per quasi tutte non abbiamo trovato documenti che dicano che l’abbia costruita lui. Diversi tipi erano più antichi di lui: le chiuse dei canali, la vite di Archimede, una piastra per il vento descritta da Alberti nel 1450. Le enciclopedie gli attribuiscono spesso la porta di chiusa a due battenti che si incontrano ad angolo. Ciò che i fogli mostrano davvero è il suo modo di risolvere un problema: una vite aerea di lino inamidato, un paracadute con le sue misure, un cuscinetto di otto sfere di legno."
+    },
+    {
+     "q": "Leonardo da Vinci ha inventato l’elicottero?",
+     "a": "Ha disegnato una vite aerea, una vela a spirale su un’asta, e ha scritto che, girata velocemente, sale in aria. Per quella grande il foglio non indica che cosa la faccia girare. Per un piccolo modello di carta indica come molla una striscia di ferro ritorta. Non è noto che sia stata costruita durante la sua vita, e stimiamo che una macchina di 400 chilogrammi abbia bisogno di almeno diciannove chilowatt per sollevarsi. Chiamarla elicottero dice più di quanto dica il foglio."
+    },
+    {
+     "q": "La macchina volante di Leonardo da Vinci funzionava?",
+     "a": "Non è documentato nessun suo volo. I suoi studi di ali battenti non danno un progetto completo da cui costruire. Nel suo quaderno sul volo degli uccelli c’è una promessa di volo, scritta al futuro. Non è il racconto di un volo fatto."
+    },
+    {
+     "q": "Leonardo da Vinci ha inventato il carro armato?",
+     "a": "Ha disegnato un carro corazzato, un carro coperto mosso da persone che all’interno girano manovelle. Il British Museum, che conserva il disegno, lo registra come mai costruito. Chiamare carro armato questo disegno non dimostra che abbia inventato il carro armato moderno."
+    },
+    {
+     "q": "Leonardo da Vinci ha progettato un ponte?",
+     "a": "Sì, più di uno. Due fogli del Codice Atlantico, datati tra il 1485 e il 1487 circa, mostrano un ponte provvisorio di legno per un esercito. Un museo di Vinci lo legge come tronchi che si tengono tra loro senza corde. Uno schizzo del Manoscritto L è per un ponte da Pera a Costantinopoli, sopra il Corno d’Oro. Non è stato costruito. Nel 2001 in Norvegia è stata inaugurata una passerella sul modello di quello schizzo."
+    },
+    {
+     "q": "Dove sono oggi i quaderni di Leonardo da Vinci?",
+     "a": "Gli originali sono in poche biblioteche e collezioni, e nessuno è in questo museo. Il Codice Atlantico, con 1.119 fogli, è nella Veneranda Biblioteca Ambrosiana di Milano. Dodici quaderni sono nella Bibliothèque de l’Institut de France, Parigi. Due sono nella Biblioteca nazionale di Spagna, a Madrid, e cinque, rilegati in tre volumi, nel Victoria and Albert Museum di Londra. Circa 550 fogli sono nella Royal Collection, a Windsor. Il Codice Arundel è nella British Library di Londra, il Codice sul volo degli uccelli nella Biblioteca Reale di Torino. Un quaderno è in una collezione particolare. Al tavolo di lettura del museo sfogli pagine fotografate, e ognuna indica il quaderno da cui viene."
+    }
+   ]
+  },
+  {
+   "type": "sources",
+   "id": "sources",
+   "nav": "Fonti",
+   "h": "Fonti",
+   "intro": "I fatti di questa pagina vengono dalla ricerca per l’ala di Leonardo del museo. Li abbiamo confrontati con i cataloghi di chi conserva gli originali e con le edizioni digitali dei quaderni, per quanto era possibile leggerli. Nel museo, quando guardi da vicino una macchina, trovi la sua scheda: il foglio, ciò che il foglio non dice, i calcoli e le fonti.",
+   "holders_h": "Dove sono conservati i quattordici disegni",
+   "holders": [
+    {
+     "name": "Veneranda Biblioteca Ambrosiana",
+     "place": "Milano",
+     "text": "Codice Atlantico, fogli 6 recto, 108 recto, 157 recto, 656a recto, 675 recto, 1058 recto e 1058 verso."
+    },
+    {
+     "name": "Bibliothèque de l’Institut de France",
+     "place": "Parigi",
+     "text": "Manoscritto B, fogli 49 recto e 83 verso. Manoscritto D, foglio 8 recto. Manoscritto I, foglio 48 verso."
+    },
+    {
+     "name": "Biblioteca Nacional de España",
+     "place": "Madrid",
+     "text": "Codice Madrid I, fogli 20 verso e 114 recto."
+    },
+    {
+     "name": "Victoria and Albert Museum, National Art Library",
+     "place": "Londra",
+     "text": "Codice Forster I, foglio 4 recto."
+    }
+   ],
+   "notes": [
+    "Per il leone: Vasari, Le vite, nell’edizione del 1568, e racconti successivi.",
+    "Per i disegni che non abbiamo costruito: il British Museum e la British Library di Londra, la Biblioteca Reale di Torino, e le due biblioteche nominate sopra per il Codice Atlantico e per i Manoscritti B e L.",
+    "Le date dei fogli del Codice Atlantico seguono il catalogo di riferimento del codice, come lo riporta l’edizione del Museo Galileo. Le date dei quaderni di Parigi e del Codice Forster I sono quelle di chi li conserva.",
+    "Il museo nomina queste istituzioni perché conservano gli originali. È indipendente da ognuna di loro.",
+    "Le immagini di questa pagina vengono dal film del museo: stanze e macchine costruite in codice. Il libro sul tavolo di lettura è un facsimile del Manoscritto B stampato nel 1883, di pubblico dominio perché i diritti sono scaduti."
+   ],
+   "editions_h": "Dove puoi leggere i fogli direttamente",
+   "editions": [
+    {
+     "name": "Veneranda Biblioteca Ambrosiana",
+     "text": "Il Codice Atlantico, foglio per foglio, ognuno con il suo anno.",
+     "links": [
+      {
+       "label": "Il Codice Atlantico online",
+       "href": "https://codex-atlanticus.ambrosiana.it/"
+      }
+     ]
+    },
+    {
+     "name": "Bibliothèque de l’Institut de France",
+     "text": "Le sue pagine sui quaderni di Parigi, in francese.",
+     "links": [
+      {
+       "label": "Manoscritto B",
+       "href": "https://minerva.bibliotheque-institutdefrance.fr/expositions/exhibitions/2-carnet-b2"
+      },
+      {
+       "label": "Manoscritto D",
+       "href": "https://minerva.bibliotheque-institutdefrance.fr/expositions/exhibitions/5-carnet-d"
+      },
+      {
+       "label": "Manoscritto I",
+       "href": "https://minerva.bibliotheque-institutdefrance.fr/expositions/exhibitions/10-carnet-i2"
+      },
+      {
+       "label": "Manoscritto L",
+       "href": "https://minerva.bibliotheque-institutdefrance.fr/expositions/exhibitions/12-carnet-l2"
+      }
+     ]
+    },
+    {
+     "name": "Biblioteca Leonardiana",
+     "text": "La biblioteca di Vinci. La sua edizione digitale, e-Leo, mostra ogni foglio con la sua trascrizione, in italiano.",
+     "links": [
+      {
+       "label": "e-Leo, aperto al foglio del paracadute",
+       "href": "https://www.leonardodigitale.com/sfoglia/codice-atlantico/1058-v/"
+      }
+     ]
+    },
+    {
+     "name": "Museo Galileo",
+     "text": "La sua edizione del Codice Atlantico, fatta insieme all’Ambrosiana, riporta le voci del catalogo per ogni foglio.",
+     "links": [
+      {
+       "label": "L’edizione, aperta al foglio del paracadute",
+       "href": "https://teche.museogalileo.it/leonardo/foglio/index.html?lang=it&num=ATL.2116.1"
+      }
+     ]
+    }
+   ],
+   "contact": "Se una data, un foglio o il nome di chi conserva un originale è sbagliato, scrivici e lo correggiamo.",
+   "contact_link": "Vai alle note legali",
+   "what_link": "Che cos’è questo museo"
+  },
+  {
+   "type": "close",
+   "id": "enter",
+   "nav": "",
+   "h": "Guarda le macchine nel museo",
+   "p": "La porta ti conduce all’inizio dell’ala di Leonardo. Prima c’è la sala dei quadri, poi, più avanti nel percorso, la sala delle macchine.",
+   "door": {
+    "text": "Entra nel museo",
+    "note": "Ingresso libero, senza account."
+   }
+  }
+ ]
+}

@@ -1,0 +1,420 @@
+{
+ "paintings": [
+  {
+   "title": "Le Baptême du Christ"
+  },
+  {
+   "title": "L’Annonciation"
+  },
+  {
+   "title": "Portrait de Ginevra de’ Benci"
+  },
+  {
+   "title": "Portrait de Ginevra de’ Benci"
+  },
+  {
+   "title": "La Madone à l’œillet"
+  },
+  {
+   "title": "La Madone Benois"
+  },
+  {
+   "title": "Saint Jérôme"
+  },
+  {
+   "title": "L’Adoration des mages"
+  },
+  {
+   "title": "L’Annonciation, prédelle"
+  },
+  {
+   "title": "La Vierge aux rochers, version du Louvre"
+  },
+  {
+   "title": "Portrait de musicien"
+  },
+  {
+   "title": "La Dame à l’hermine"
+  },
+  {
+   "title": "Portrait de femme, dit à tort La Belle Ferronnière"
+  },
+  {
+   "title": "La Madone Litta"
+  },
+  {
+   "title": "La Vierge, l’Enfant Jésus avec sainte Anne et saint Jean-Baptiste"
+  },
+  {
+   "title": "La Vierge au dévidoir, version Buccleuch"
+  },
+  {
+   "title": "La Vierge au dévidoir, version Lansdowne"
+  },
+  {
+   "title": "La Lutte pour l’étendard, d’après la Bataille d’Anghiari"
+  },
+  {
+   "title": "La Joconde"
+  },
+  {
+   "title": "La Vierge aux rochers, version de Londres"
+  },
+  {
+   "title": "La Vierge, l’Enfant Jésus et sainte Anne"
+  },
+  {
+   "title": "Salvator Mundi"
+  },
+  {
+   "title": "Saint Jean Baptiste"
+  },
+  {
+   "title": "La Scapigliata"
+  },
+  {
+   "title": "Bacchus, autrefois Saint Jean Baptiste"
+  }
+ ],
+ "machines": [
+  {
+   "name": "Parachute pyramidal",
+   "sheet": "Codex Atlanticus 1058v"
+  },
+  {
+   "name": "Grue à plate-forme annulaire",
+   "sheet": "Manuscrit B 49r"
+  },
+  {
+   "name": "Anémomètre à plaque",
+   "sheet": "Codex Atlanticus 675r"
+  },
+  {
+   "name": "Vis aérienne",
+   "sheet": "Manuscrit B 83v"
+  },
+  {
+   "name": "Portes busquées d’écluse, en V",
+   "sheet": "Codex Atlanticus 656r, détail a"
+  },
+  {
+   "name": "Étude de volant d’inertie équilibré",
+   "sheet": "Codex Madrid I 114r"
+  },
+  {
+   "name": "Notes sur la chambre noire",
+   "sheet": "Manuscrit D 8r"
+  },
+  {
+   "name": "Vis d’Archimède et élévation de l’eau",
+   "sheet": "Codex Atlanticus 6r"
+  },
+  {
+   "name": "Laminoir à étain",
+   "sheet": "Manuscrit I 48v"
+  },
+  {
+   "name": "Machine à percer à mouvement alternatif",
+   "sheet": "Codex Atlanticus 108r"
+  },
+  {
+   "name": "Butée à billes",
+   "sheet": "Codex Madrid I 20v"
+  },
+  {
+   "name": "Canons à plusieurs fûts en trois rangées",
+   "sheet": "Codex Atlanticus 157r"
+  },
+  {
+   "name": "Inclinomètre à pendule",
+   "sheet": "Codex Atlanticus 1058r"
+  },
+  {
+   "name": "Compas de réduction",
+   "sheet": "Codex Forster I 4r"
+  },
+  {
+   "name": "Lion automate"
+  }
+ ],
+ "topics": [
+  {
+   "name": "Le vol"
+  },
+  {
+   "name": "Les machines"
+  },
+  {
+   "name": "Les pièces des machines"
+  },
+  {
+   "name": "La guerre et les armes"
+  },
+  {
+   "name": "L’eau en mouvement"
+  },
+  {
+   "name": "Les rivières et les machines à eau"
+  },
+  {
+   "name": "Les églises et les coupoles"
+  },
+  {
+   "name": "Les villes et les forteresses"
+  },
+  {
+   "name": "La lumière et l’œil"
+  },
+  {
+   "name": "Conseils aux peintres"
+  },
+  {
+   "name": "Les visages et les corps"
+  },
+  {
+   "name": "Les chevaux et le grand cheval"
+  },
+  {
+   "name": "Les plantes et les animaux"
+  },
+  {
+   "name": "La Terre et le ciel"
+  },
+  {
+   "name": "La géométrie et les motifs"
+  },
+  {
+   "name": "Ses mots"
+  },
+  {
+   "name": "Les lettres et sa vie"
+  }
+ ],
+ "shelf": [
+  {
+   "title": "Le livre des machines",
+   "name": "Codex Madrid I"
+  },
+  {
+   "title": "Forteresses, cartes et géométrie",
+   "name": "Codex Madrid II"
+  },
+  {
+   "title": "Le vol des oiseaux",
+   "name": "Codex sur le vol des oiseaux"
+  },
+  {
+   "title": "Apprendre des mots",
+   "name": "Codex Trivulziano"
+  },
+  {
+   "title": "La perspective",
+   "name": "Manuscrit A"
+  },
+  {
+   "title": "La plus grande collection",
+   "name": "Codex Atlanticus, extraits"
+  },
+  {
+   "title": "Quarante ans de notes",
+   "name": "Codex Arundel"
+  }
+ ],
+ "sheets": [
+  {
+   "title": "Étude de l’épaule et des os du pied"
+  },
+  {
+   "title": "Squelette et muscles de l’épaule"
+  },
+  {
+   "title": "Anatomie de la gorge et des muscles de la jambe"
+  },
+  {
+   "title": "Anatomie superficielle de l’épaule et du cou"
+  },
+  {
+   "title": "Squelette du bras et de la jambe"
+  },
+  {
+   "title": "Muscles du bras, et veines du bras et du tronc"
+  },
+  {
+   "title": "Muscles de la jambe, et muscles intercostaux"
+  },
+  {
+   "title": "Colonne vertébrale"
+  },
+  {
+   "title": "Anatomie. Études des os de la jambe et du pied, de l’articulation du genou, des muscles de la jambe et du mécanisme de flexion de la jambe"
+  },
+  {
+   "title": "Os, muscles et tendons de la main"
+  },
+  {
+   "title": "Études anatomiques de la plante du pied"
+  },
+  {
+   "title": "Os du pied et de l’épaule"
+  },
+  {
+   "title": "Squelette"
+  },
+  {
+   "title": "Muscles de l’épaule et du bras, et os du pied"
+  },
+  {
+   "title": "Muscles de la jambe"
+  },
+  {
+   "title": "Muscles du haut de la colonne vertébrale"
+  },
+  {
+   "title": "Explication de l’anatomie de la musculature du mollet et du pied"
+  },
+  {
+   "title": "Explication de l’anatomie de la musculature du mollet et du pied"
+  },
+  {
+   "title": "Veines du visage et du torse"
+  },
+  {
+   "title": "Notes sur les sens et le système nerveux"
+  },
+  {
+   "title": "Le cœur comme graine"
+  },
+  {
+   "title": "Utérus d’une vache pleine"
+  },
+  {
+   "title": "Crâne sectionné"
+  },
+  {
+   "title": "Anatomie. Crâne sectionné"
+  },
+  {
+   "title": "Anatomie du cou"
+  },
+  {
+   "title": "Fœtus et muscles du bassin"
+  },
+  {
+   "title": "Fœtus dans l’utérus"
+  },
+  {
+   "title": "Études des nerfs, des muscles, du cœur et de l’optique"
+  },
+  {
+   "title": "La valve aortique"
+  }
+ ],
+ "periods": [
+  "Vinci et Florence, de 1452 à 1481",
+  "Milan, de 1482 à 1499",
+  "Venise, Florence et la Romagne, de 1500 à 1506",
+  "Retour à Milan, de 1506 à 1513",
+  "Rome, de 1513 à 1516",
+  "Amboise, de 1516 à 1519",
+  "Après 1519, ce qui est resté"
+ ],
+ "people": [
+  "Andrea del Verrocchio",
+  "Ludovic Sforza",
+  "Salai",
+  "Melzi",
+  "César Borgia",
+  "Charles II d’Amboise de Chaumont",
+  "François Ier"
+ ],
+ "holders": [
+  {
+   "name": "Gallerie degli Uffizi",
+   "note": "Florence"
+  },
+  {
+   "name": "National Gallery of Art",
+   "note": "Washington"
+  },
+  {
+   "name": "Bayerische Staatsgemäldesammlungen, Alte Pinakothek",
+   "note": "Munich"
+  },
+  {
+   "name": "Musée d’État de l’Ermitage",
+   "note": "Saint-Pétersbourg"
+  },
+  {
+   "name": "Pinacoteca Vaticana",
+   "note": "Cité du Vatican"
+  },
+  {
+   "name": "Musée du Louvre",
+   "note": "Paris"
+  },
+  {
+   "name": "Veneranda Biblioteca Ambrosiana",
+   "note": "Milan"
+  },
+  {
+   "name": "Muzeum Narodowe w Krakowie, Muzeum Książąt Czartoryskich",
+   "note": "Cracovie"
+  },
+  {
+   "name": "National Gallery",
+   "note": "Londres"
+  },
+  {
+   "name": "Collection du duc de Buccleuch",
+   "note": "en dépôt aux National Galleries of Scotland"
+  },
+  {
+   "name": "Kenneth C. Griffin Collection",
+   "note": "en dépôt au Metropolitan Museum of Art"
+  },
+  {
+   "name": "Collection particulière",
+   "note": "lieu actuel non confirmé"
+  },
+  {
+   "name": "Galleria Nazionale di Parma, Complesso della Pilotta",
+   "note": "Parme"
+  },
+  {
+   "name": "Bibliothèque de l’Institut de France",
+   "note": "Paris"
+  },
+  {
+   "name": "Biblioteca Nacional de España",
+   "note": "Madrid"
+  },
+  {
+   "name": "Biblioteca Reale",
+   "note": "Turin"
+  },
+  {
+   "name": "Biblioteca Trivulziana, Castello Sforzesco",
+   "note": "Milan"
+  },
+  {
+   "name": "British Library",
+   "note": "Londres"
+  },
+  {
+   "name": "Royal Collection",
+   "note": "Windsor"
+  },
+  {
+   "name": "Museo del Cenacolo Vinciano, Santa Maria delle Grazie",
+   "note": "Milan"
+  },
+  {
+   "name": "Victoria and Albert Museum, National Art Library",
+   "note": "Londres"
+  },
+  {
+   "name": "Petit Palais, musée des Beaux-Arts de la Ville de Paris",
+   "note": "Paris"
+  }
+ ]
+}

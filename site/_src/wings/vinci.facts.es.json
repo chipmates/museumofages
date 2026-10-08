@@ -1,0 +1,420 @@
+{
+ "paintings": [
+  {
+   "title": "Bautismo de Cristo"
+  },
+  {
+   "title": "Anunciación"
+  },
+  {
+   "title": "Ginevra de’ Benci"
+  },
+  {
+   "title": "Ginevra de’ Benci"
+  },
+  {
+   "title": "Virgen del clavel"
+  },
+  {
+   "title": "Madona Benois"
+  },
+  {
+   "title": "San Jerónimo"
+  },
+  {
+   "title": "Adoración de los Magos"
+  },
+  {
+   "title": "Anunciación, predela"
+  },
+  {
+   "title": "La Virgen de las rocas, versión del Louvre"
+  },
+  {
+   "title": "Retrato de un músico"
+  },
+  {
+   "title": "La dama del armiño"
+  },
+  {
+   "title": "Retrato de una dama de la corte de Milán, conocido como La bella ferretera"
+  },
+  {
+   "title": "Madonna Litta"
+  },
+  {
+   "title": "Cartón de Burlington House"
+  },
+  {
+   "title": "Virgen de la rueca, versión Buccleuch"
+  },
+  {
+   "title": "Virgen de la rueca, versión Lansdowne"
+  },
+  {
+   "title": "La lucha por el estandarte, a partir de La batalla de Anghiari"
+  },
+  {
+   "title": "La Gioconda"
+  },
+  {
+   "title": "La Virgen de las rocas, versión de Londres"
+  },
+  {
+   "title": "La Virgen y el Niño con santa Ana"
+  },
+  {
+   "title": "Salvator Mundi"
+  },
+  {
+   "title": "Juan el Bautista"
+  },
+  {
+   "title": "La despeinada"
+  },
+  {
+   "title": "Baco, antes Juan el Bautista"
+  }
+ ],
+ "machines": [
+  {
+   "name": "Paracaídas piramidal",
+   "sheet": "Codex Atlanticus 1058v"
+  },
+  {
+   "name": "Grúa giratoria",
+   "sheet": "Manuscrito B 49r"
+  },
+  {
+   "name": "Anemómetro de placa basculante",
+   "sheet": "Codex Atlanticus 675r"
+  },
+  {
+   "name": "Tornillo aéreo",
+   "sheet": "Manuscrito B 83v"
+  },
+  {
+   "name": "Compuertas tipo mitra",
+   "sheet": "Codex Atlanticus 656r, detalle a"
+  },
+  {
+   "name": "Estudio de volante de inercia equilibrado",
+   "sheet": "Códice Madrid I 114r"
+  },
+  {
+   "name": "Notas sobre la cámara oscura",
+   "sheet": "Manuscrito D 8r"
+  },
+  {
+   "name": "Tornillo de Arquímedes y elevación de agua",
+   "sheet": "Codex Atlanticus 6r"
+  },
+  {
+   "name": "Laminador de estaño",
+   "sheet": "Manuscrito I 48v"
+  },
+  {
+   "name": "Taladro de vaivén",
+   "sheet": "Codex Atlanticus 108r"
+  },
+  {
+   "name": "Rodamiento axial de bolas",
+   "sheet": "Códice Madrid I 20v"
+  },
+  {
+   "name": "Cañón de tres filas",
+   "sheet": "Codex Atlanticus 157r"
+  },
+  {
+   "name": "Inclinómetro de péndulo",
+   "sheet": "Codex Atlanticus 1058r"
+  },
+  {
+   "name": "Compás de reducción",
+   "sheet": "Codex Forster I 4r"
+  },
+  {
+   "name": "León mecánico"
+  }
+ ],
+ "topics": [
+  {
+   "name": "Vuelo"
+  },
+  {
+   "name": "Máquinas"
+  },
+  {
+   "name": "Partes de las máquinas"
+  },
+  {
+   "name": "Guerra y armas"
+  },
+  {
+   "name": "Agua en movimiento"
+  },
+  {
+   "name": "Ríos y máquinas de agua"
+  },
+  {
+   "name": "Iglesias y cúpulas"
+  },
+  {
+   "name": "Ciudades y fortalezas"
+  },
+  {
+   "name": "Luz y ojo"
+  },
+  {
+   "name": "Consejos para pintores"
+  },
+  {
+   "name": "Rostros y cuerpos"
+  },
+  {
+   "name": "Los caballos y el gran caballo"
+  },
+  {
+   "name": "Plantas y animales"
+  },
+  {
+   "name": "Tierra y cielo"
+  },
+  {
+   "name": "Geometría y patrones"
+  },
+  {
+   "name": "Sus palabras"
+  },
+  {
+   "name": "Sus cartas y su vida"
+  }
+ ],
+ "shelf": [
+  {
+   "title": "El libro de las máquinas",
+   "name": "Códice Madrid I"
+  },
+  {
+   "title": "Fortalezas, mapas y geometría",
+   "name": "Códice Madrid II"
+  },
+  {
+   "title": "El vuelo de los pájaros",
+   "name": "Códice sobre el vuelo de los pájaros"
+  },
+  {
+   "title": "Aprender palabras",
+   "name": "Codex Trivulzianus"
+  },
+  {
+   "title": "La perspectiva",
+   "name": "Manuscrito A"
+  },
+  {
+   "title": "La colección más grande",
+   "name": "Codex Atlanticus, extractos"
+  },
+  {
+   "title": "Notas de cuarenta años",
+   "name": "Códice Arundel"
+  }
+ ],
+ "sheets": [
+  {
+   "title": "Los huesos del pie"
+  },
+  {
+   "title": "Los huesos y los músculos del hombro"
+  },
+  {
+   "title": "La garganta y los músculos de la pierna"
+  },
+  {
+   "title": "La anatomía superficial del hombro y cuello"
+  },
+  {
+   "title": "Los huesos del brazo y de la pierna"
+  },
+  {
+   "title": "Los músculos del brazo y las venas del brazo y del tronco"
+  },
+  {
+   "title": "Los músculos de la pierna y los músculos entre las costillas"
+  },
+  {
+   "title": "La columna vertebral"
+  },
+  {
+   "title": "Los huesos de la pierna y sus músculos"
+  },
+  {
+   "title": "Los huesos, los músculos y los tendones de la mano"
+  },
+  {
+   "title": "Los músculos y los tendones de la planta del pie"
+  },
+  {
+   "title": "Los huesos del pie y el hombro"
+  },
+  {
+   "title": "El esqueleto"
+  },
+  {
+   "title": "Los músculos del hombro y del brazo, y los huesos del pie"
+  },
+  {
+   "title": "Los músculos de la pierna"
+  },
+  {
+   "title": "Los músculos de la parte alta de la columna"
+  },
+  {
+   "title": "Los tendones de la parte baja de la pierna y del pie"
+  },
+  {
+   "title": "Los músculos y los tendones de la parte baja de la pierna y del pie"
+  },
+  {
+   "title": "Las venas de la cara y un torso"
+  },
+  {
+   "title": "Notas sobre los sentidos y el sistema nervioso"
+  },
+  {
+   "title": "El corazón comparado con una semilla"
+  },
+  {
+   "title": "El feto de una vaca en el útero"
+  },
+  {
+   "title": "El cráneo seccionado"
+  },
+  {
+   "title": "El cráneo seccionado"
+  },
+  {
+   "title": "La anatomía del cuello humano"
+  },
+  {
+   "title": "El feto en la matriz y los músculos unidos a la pelvis"
+  },
+  {
+   "title": "El feto en el útero"
+  },
+  {
+   "title": "Estudios de los nervios y los músculos, el corazón y la óptica"
+  },
+  {
+   "title": "La válvula aórtica"
+  }
+ ],
+ "periods": [
+  "Vinci y Florencia, de 1452 a 1481",
+  "Milán, de 1482 a 1499",
+  "Venecia, Florencia y la Romaña, de 1500 a 1506",
+  "De nuevo Milán, de 1506 a 1513",
+  "Roma, de 1513 a 1516",
+  "Amboise, de 1516 a 1519",
+  "Después de 1519, lo que quedó"
+ ],
+ "people": [
+  "Andrea del Verrocchio",
+  "Ludovico Sforza",
+  "Salai",
+  "Melzi",
+  "César Borgia",
+  "Carlos II de Amboise",
+  "Francisco I"
+ ],
+ "holders": [
+  {
+   "name": "Gallerie degli Uffizi",
+   "note": "Florencia"
+  },
+  {
+   "name": "National Gallery of Art",
+   "note": "Washington D. C."
+  },
+  {
+   "name": "Bayerische Staatsgemäldesammlungen, Alte Pinakothek",
+   "note": "Múnich"
+  },
+  {
+   "name": "Museo del Hermitage",
+   "note": "San Petersburgo"
+  },
+  {
+   "name": "Pinacoteca Vaticana",
+   "note": "Ciudad del Vaticano"
+  },
+  {
+   "name": "Musée du Louvre",
+   "note": "París"
+  },
+  {
+   "name": "Veneranda Biblioteca Ambrosiana",
+   "note": "Milán"
+  },
+  {
+   "name": "Muzeum Narodowe w Krakowie, Muzeum Książąt Czartoryskich",
+   "note": "Cracovia"
+  },
+  {
+   "name": "National Gallery",
+   "note": "Londres"
+  },
+  {
+   "name": "Colección del duque de Buccleuch",
+   "note": "en préstamo a las National Galleries of Scotland"
+  },
+  {
+   "name": "Kenneth C. Griffin Collection",
+   "note": "en préstamo al Metropolitan Museum of Art"
+  },
+  {
+   "name": "Colección particular",
+   "note": "lugar actual no confirmado"
+  },
+  {
+   "name": "Galleria Nazionale di Parma, Complesso della Pilotta",
+   "note": "Parma"
+  },
+  {
+   "name": "Bibliothèque de l’Institut de France",
+   "note": "París"
+  },
+  {
+   "name": "Biblioteca Nacional de España",
+   "note": "Madrid"
+  },
+  {
+   "name": "Biblioteca Reale",
+   "note": "Turín"
+  },
+  {
+   "name": "Biblioteca Trivulziana, Castello Sforzesco",
+   "note": "Milán"
+  },
+  {
+   "name": "British Library",
+   "note": "Londres"
+  },
+  {
+   "name": "Royal Collection",
+   "note": "Windsor"
+  },
+  {
+   "name": "Museo del Cenacolo Vinciano, Santa Maria delle Grazie",
+   "note": "Milán"
+  },
+  {
+   "name": "Victoria and Albert Museum, National Art Library",
+   "note": "Londres"
+  },
+  {
+   "name": "Petit Palais, Musée des Beaux-Arts de la Ville de Paris",
+   "note": "París"
+  }
+ ]
+}

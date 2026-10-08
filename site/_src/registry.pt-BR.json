@@ -1,0 +1,32 @@
+{
+ "_collections": [
+  {
+   "name": "Vidas",
+   "line": "Lugares onde pessoas da história viveram e trabalharam.",
+   "dates_key": "Viveu"
+  }
+ ],
+ "vinci": {
+  "name": "Leonardo da Vinci",
+  "dates": "De 1452 a 1519",
+  "shows": {
+   "place": "o Clos Lucé, em Amboise",
+   "day": "10 de outubro de 1517"
+  },
+  "film": {
+   "line": "Reconstruímos a última casa de Leonardo.",
+   "offer": "1517. Reconstruímos a última casa de Leonardo. Você pode entrar.",
+   "sky": "Nós calculamos este céu.",
+   "held": "Clos Lucé, em Amboise, 10 de outubro de 1517",
+   "inside": {
+    "line": "A nossa própria sala para as máquinas dele."
+   }
+  },
+  "topics": [
+   {
+    "name": "As invenções de Leonardo da Vinci",
+    "line": "O que Leonardo da Vinci desenhou, o que foi construído e o que existia antes dele."
+   }
+  ]
+ }
+}

@@ -1,0 +1,66 @@
+{
+ "_note": "The landing film's words in this language, by plate index and WORDS key: sky-ages.js reads its words from code, so these wait for a reader.",
+ "PLATES": {
+  "0": {
+   "line": "Una cueva en Francia. Allí la gente dibujó osos.",
+   "when": "hace unos 36 000 años",
+   "place": "Una cueva en Francia",
+   "what": "Un oso, en la roca",
+   "note": "Lo dibujó el museo. No es una copia.",
+   "obj": "a partir de los osos de las cavernas trazados en rojo en la cueva de Chauvet, Ardecha"
+  },
+  "1": {
+   "place": "Egipto",
+   "what": "Una pata de toro",
+   "when": "hacia 2000 antes de Cristo",
+   "obj": "a partir de la tapa del ataúd de Idi, de Asiut (Tubinga)"
+  },
+  "2": {
+   "place": "China",
+   "what": "Siete puntos y una línea",
+   "when": "hacia 670",
+   "obj": "a partir del mapa celeste de Dunhuang (Londres, British Library)"
+  },
+  "3": {
+   "place": "Bagdad",
+   "short": "Un oso",
+   "what": "Un oso, dibujado a pluma",
+   "obj": "a partir del Libro de las estrellas fijas de Al Sufi, en su copia más antigua (Doha)"
+  },
+  "4": {
+   "place": "Núremberg",
+   "what": "Un oso, grabado en madera",
+   "obj": "a partir del mapa del cielo del norte de Durero (Imagines coeli septentrionales)"
+  },
+  "5": {
+   "place": "Arlés",
+   "what": "Siete estrellas sobre un río",
+   "obj": "a partir de la Noche estrellada sobre el Ródano, de Vincent van Gogh (París, Musée d’Orsay)"
+  },
+  "6": {
+   "place": "Un observatorio",
+   "what": "Solo estrellas, granos sobre vidrio",
+   "when": "hacia 1890",
+   "obj": "a la manera de los primeros mapas fotográficos del cielo"
+  }
+ },
+ "WORDS": {
+  "gap": "No se sabe qué veían en ellas.",
+  "outside": "Fuera, estas siete estrellas.",
+  "drift": "Dos de ellas se movieron unos dos grados.",
+  "door": "Puedes entrar.",
+  "end": "Las estrellas se quedaron. Los lugares bajo ellas cambiaron.",
+  "offer": "{year}. Reconstruimos {place}. Puedes entrar.",
+  "wing": "Reconstruimos {place}.",
+  "wingLow": "{place}, {year}.",
+  "ad": "hacia {n}",
+  "ago": "hace unos {n} años",
+  "bc": "hacia {n} antes de Cristo",
+  "today": "hoy",
+  "film": "La película de las siete estrellas",
+  "next": "Más tarde en la línea del tiempo",
+  "prev": "Antes en la línea del tiempo",
+  "caption": "La película del museo",
+  "more": "Ver la película completa"
+ }
+}

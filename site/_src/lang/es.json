@@ -4,7 +4,34 @@
   "for_the_writer": [],
   "gone": [],
   "banned": [],
-  "number_words": [],
+  "number_words": [
+    "cero",
+    "uno",
+    "dos",
+    "tres",
+    "cuatro",
+    "cinco",
+    "seis",
+    "siete",
+    "ocho",
+    "nueve",
+    "diez",
+    "once",
+    "doce",
+    "trece",
+    "catorce",
+    "quince",
+    "dieciséis",
+    "diecisiete",
+    "dieciocho",
+    "diecinueve",
+    "veinte"
+  ],
   "units": [],
-  "stop": []
+  "stop": [
+    "parada"
+  ],
+  "trust_middle": "Código abierto",
+  "open_word": "open[ -]source|código abierto",
+  "of_the_licence": "licencia (?:de )?(?:código abierto|open[ -]source)|licencia de software libre"
 }

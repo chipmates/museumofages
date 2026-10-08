@@ -1,0 +1,754 @@
+{
+ "_note": "EVERY WORD OF THIS WING'S PAGE, one file per language with the same structure. The wing's entry in registry.json holds what is not a sentence (addresses, the door, dates, the pictures of the first screen and of the wall). NUMBERS: no digit is written here. {count:<name>} gives a number of the facts file (wings/<wing>.facts.json, under counts or set) in digits, {word:<name>} and {Word:<name>} give it as a word. {shows:place} and {shows:day} come from the registry. QUOTED TEXTS: {museum:<key>} gives one of the museum's own texts from museum-texts.json, word for word. A credit line (a key that ends in src) may carry a sheet's own numbers. A room with no plate joins the text of the room before it. holds: the picture index, one entry per group. Its names, sizes, holders and lists come from the facts file by the key under from. rooms.<n>.p is one or two sentences. holds.groups.<machines>.close is one stop shown up close (its three texts are the museum's own, by {museum:<key>}), .names gives a machine a plain name by its id (without one the inventory's name stands), .terms explains a group's terms once. landing.close is the picture of the landing's closing band. numbers: a number and its name, text is optional. out.line is the line beside the registry's out link, on the page about the museum.",
+ "meta": {
+  "title": "Léonard de Vinci, musée numérique: tableaux et inventions",
+  "description": "Visitez la dernière maison de Léonard de Vinci à Amboise: {count:pictures} images, la Joconde presque grandeur nature, {count:machines} machines, ses carnets. Entrée libre, sans compte.",
+  "landing_today": "Déjà ouverte: la dernière maison de Léonard de Vinci, à Amboise.",
+  "share_alt": "La vis aérienne dans la salle des machines: un mât de bois avec une voile de lin en spirale, dans le soleil bas de l’après-midi, son ombre sur le mur. Une reconstitution d’après une feuille de Léonard de Vinci, construite en code."
+ },
+ "first": {
+  "lede": "Un parcours de {count:stops} étapes qui passe devant environ {count:works} œuvres à voir de près: {count:pictures} images presque grandeur nature, {count:machines} machines, {count:sheets} feuilles d’anatomie et ses carnets.",
+  "piece": {
+   "title": "Une promenade dans l’aile",
+   "kind": "Extrait du film",
+   "what": "La salle des machines.",
+   "alt": "Une haute salle au plafond de lattes, avec une bande de fenêtres, au soleil bas et chaud. Sur des socles bas, des machines en bois: des portes d’écluse, la vis aérienne et sa voile en spirale, une vis d’Archimède, un laminoir. Une image du film du musée. Machines reconstituées en code.",
+   "beats": [
+    "La table de lecture.",
+    "Sa vie, une ligne dans le sol.",
+    "La cour du Clos Lucé."
+   ],
+   "frames": [
+    {
+     "pic": {
+      "stem": "v-table",
+      "widths": [
+       960,
+       1600
+      ],
+      "phone": {
+       "stem": "v-table-m",
+       "widths": [
+        780,
+        1080
+       ]
+      }
+     },
+     "alt": "Une pièce sombre aux murs lambrissés, avec une seule lampe suspendue. Sous la lampe, un livre ouvert est posé sur une longue table, et une chaise est placée devant. Une image du film du musée.",
+     "src": "Le livre sur la table est une édition imprimée de 1883, du domaine public par ancienneté.",
+     "focus": {
+      "phone": "50% 50%",
+      "wide": "50% 50%"
+     }
+    },
+    {
+     "pic": {
+      "stem": "v-line",
+      "widths": [
+       800,
+       1228
+      ],
+      "phone": {
+       "stem": "v-line-m",
+       "widths": [
+        480,
+        720
+       ]
+      }
+     },
+     "alt": "Un sol de pierre où des années sont gravées en ligne, chacune à côté d’un petit bouton rond. Le bouton le plus proche est rouge. Une image du film du musée.",
+     "src": "",
+     "focus": {
+      "phone": "50% 88%",
+      "wide": "50% 60%"
+     }
+    },
+    {
+     "pic": {
+      "stem": "v-court",
+      "widths": [
+       960,
+       1600
+      ],
+      "phone": {
+       "stem": "v-court-m",
+       "widths": [
+        780,
+        1080
+       ]
+      }
+     },
+     "alt": "Une cour étroite entre de hauts murs de briques aux angles de pierre. Des marches montent vers la porte d’une maison de briques avec une petite tour. Une image du film du musée.",
+     "src": "",
+     "focus": {
+      "phone": "50% 40%",
+      "wide": "50% 40%"
+     }
+    }
+   ],
+   "install": {
+    "name": "walk",
+    "script": "walk.js",
+    "pause": "Mettre en pause",
+    "play": "Lecture",
+    "keep_kind": true
+   }
+  }
+ },
+ "landing": {
+  "piece": {
+   "title": "La grande salle du Clos Lucé",
+   "kind": "Reconstitution",
+   "what": "une pièce de la dernière maison de Léonard de Vinci, reconstituée en code.",
+   "alt": "Une pièce aux poutres apparentes, au sol de tomettes rouges, aux fenêtres à petits carreaux. Le soleil de l’après-midi tombe sur une longue table sur tréteaux, avec deux petites maquettes. À gauche, contre le mur, un lion automate. Une image du film du musée. La pièce est reconstituée en code.",
+   "src": "Image tirée du film du musée"
+  },
+  "close": {
+   "pic": {
+    "stem": "start",
+    "widths": [
+     960,
+     1600
+    ],
+    "phone": {
+     "stem": "start-m",
+     "widths": [
+      800,
+      1200
+     ]
+    }
+   },
+   "title": "L’aile vue du haut de l’escalier",
+   "kind": "Construit en code",
+   "what": "la salle des tableaux derrière son mur de verre, et le parachute dans la cour. Les salles sont conçues par le musée.",
+   "src": "Derrière le verre sont accrochées des reproductions de ses tableaux, chacune créditée dans l’aile.",
+   "alt": "Depuis le haut d’un escalier: une longue galerie basse avec un mur de verre et des tableaux encadrés à l’intérieur, et à côté une cour carrée sous une haute pyramide de toile de lin sur de fines perches. Derrière, des prés et de la brume. Une image du film du musée."
+  }
+ },
+ "card": {
+  "kind": "Reconstitution",
+  "what": "la maison côté jardin, dans un soleil bas",
+  "alt": "Une haute maison de briques aux angles de pierre se dresse sur une terrasse entourée de murs, à la lumière d’un soleil bas, sous une branche aux feuilles d’automne. Une image du film du musée. La maison est une reconstitution construite en code.",
+  "src": "D’après des plans et des photographies de la maison."
+ },
+ "intro": {
+  "p": "L’aile montre {shows:place} le {shows:day}: sa dernière maison, un jour de sa vie. Ce jour est documenté: Antonio de Beatis l’a noté dans son journal. Il était le secrétaire du cardinal Louis d’Aragon, venu en visite ce jour-là. Nous avons choisi l’heure. À côté de la maison se trouvent les salles du musée pour ses tableaux, ses machines, ses carnets et ses feuilles d’anatomie.",
+  "film": "Vous allez d’étape en étape dans un film, réalisé avec le logiciel du musée. À la plupart des étapes, vous pouvez vous approcher des œuvres.",
+  "stills": "Les images des salles sur cette page sont extraites de ce film."
+ },
+ "rooms": [
+  {
+   "id": "pictures",
+   "h": "La salle des tableaux",
+   "note": "Là où commence le parcours",
+   "p": [
+    "Ses œuvres sont accrochées sur un seul mur de plus de {count:wall_m} mètres, à peu près dans l’ordre où il les a faites, chacune presque grandeur nature. La Joconde est accrochée parmi elles."
+   ],
+   "lamp": "low",
+   "plates": [
+    {
+     "pic": {
+      "stem": "v-picture-room",
+      "widths": [
+       800,
+       1600
+      ]
+     },
+     "title": "Le mur des tableaux",
+     "kind": "Reproductions",
+     "what": "devant, le Baptême du Christ, de Verrocchio et Léonard, puis l’Annonciation, tous deux aux Offices.",
+     "alt": "Un long mur bleu foncé, avec des reproductions encadrées de tableaux sous des projecteurs. Les deux plus proches sont le Baptême du Christ et l’Annonciation. Des bancs de bois sont placés devant le mur. Une image du film du musée.",
+     "src": "Les œuvres du mur sont des reproductions, chacune avec sa source et sa licence sur son étiquette dans l’aile. {museum:it108}",
+     "src_to": "originals"
+    },
+    {
+     "pic": {
+      "stem": "v-scale-en",
+      "widths": [
+       960,
+       1600
+      ],
+      "phone": {
+       "stem": "v-scale-m",
+       "widths": [
+        560,
+        800
+       ]
+      }
+     },
+     "title": "La Dame à l’hermine, de près",
+     "kind": "Reproduction",
+     "what": "le tableau tel que l’aile le montre de près. La barre en bas à gauche mesure dix centimètres sur le tableau. Le texte en haut à gauche est une inscription plus tardive, sur le panneau même.",
+     "src": "Conservée par le Muzeum Narodowe w Krakowie, musée Czartoryski, Cracovie. Œuvre du domaine public. Reproduction issue de Wikimedia Commons.",
+     "alt": "Une capture d’écran de l’aile: la Dame à l’hermine sur fond noir, une jeune femme en robe rouge et bleue qui tient une hermine blanche. En bas à gauche du tableau, une barre marquée dix centimètres."
+    }
+   ]
+  },
+  {
+   "id": "hall",
+   "h": "La salle des machines",
+   "note": "Des machines qui bougent",
+   "hang": "wide",
+   "p": [
+    "{Word:hall} machines se trouvent ici, construites en code d’après ses feuilles: la vis aérienne, des portes d’écluse, une vis d’Archimède, un laminoir, une machine à percer, un volant d’inertie, un roulement à billes, une arme à trois rangées de canons, et la chambre noire dans son propre coin sombre. Vous pouvez mettre chacune en marche et la voir de près, avec la feuille d’où elle vient. Deux de ces types, les portes d’écluse et la vis d’Archimède, étaient déjà utilisés avant lui."
+   ],
+   "plates": [
+    {
+     "pic": {
+      "stem": "v-flywheel",
+      "widths": [
+       960,
+       1600
+      ]
+     },
+     "title": "Dans la salle des machines",
+     "kind": "Reconstitutions",
+     "what": "le volant d’inertie de près, derrière lui l’arme à trois rangées de canons, à gauche le roulement à billes.",
+     "alt": "Le volant d’inertie de près: un axe de bois sur une croix de poutres étayée, en haut quatre bras à boules de pierre au bout, et une petite manivelle. Derrière, l’arme à trois rangées de canons, roue à rayons devant. À gauche, le roulement à billes sur un socle sombre. Une image du film du musée."
+    }
+   ]
+  },
+  {
+   "id": "gallery",
+   "h": "La longue galerie",
+   "note": "Les carnets, le corps, sa vie",
+   "p": [
+    "La galerie abrite la table de lecture, un mur de ses feuilles d’anatomie et les dates de sa vie, gravées dans le sol. Chacun des trois est une étape du parcours."
+   ],
+   "plates": [
+    {
+     "pic": {
+      "stem": "v-body",
+      "widths": [
+       800,
+       1600
+      ]
+     },
+     "title": "Le mur des feuilles d’anatomie",
+     "kind": "Reproductions",
+     "what": "ses feuilles sur quatre rangs dans une vitrine éclairée, un meuble à tiroirs en dessous. La salle est construite en code.",
+     "alt": "Un mur sombre lambrissé, avec une vitrine éclairée de dessins encadrés sur quatre rangs, en dessous un meuble à tiroirs plats, et à droite, à part, un autre dessin encadré. Une image du film du musée.",
+     "src": "Feuilles de Léonard conservées par la Royal Collection, à Windsor. Œuvres du domaine public, en reproductions issues de Wikimedia Commons."
+    },
+    {
+     "pic": {
+      "stem": "v-page-en",
+      "widths": [
+       960,
+       1600
+      ],
+      "phone": {
+       "stem": "v-page-m",
+       "widths": [
+        560,
+        800
+       ]
+      }
+     },
+     "title": "Une page de son carnet, de près",
+     "kind": "Reproduction",
+     "what": "la vue rapprochée de la table de lecture: la page de la vis aérienne, tirée du fac-similé imprimé de {count:volume_year}. Chaque page du livre se tourne ainsi.",
+     "src": "Manuscrit B, folio 83 verso, conservé par la Bibliothèque de l’Institut de France, Paris, Ms 2173. Montré dans le fac-similé de Charles Ravaisson-Mollien, Les manuscrits de Léonard de Vinci, tome II, Paris 1883. Domaine public.",
+     "alt": "Une capture d’écran de la table de lecture de l’aile: la page du fac-similé imprimé en vue rapprochée, une feuille sépia avec le dessin de la vis aérienne et des lignes d’écriture en miroir, éclairée sur la table sombre."
+    }
+   ]
+  },
+  {
+   "id": "court",
+   "h": "La cour",
+   "note": "La Cène grandeur nature",
+   "p": [
+    "Dehors, un mur porte la Cène. À côté se trouvent le parachute, la grue à plate-forme annulaire et un anémomètre. La cour est conçue par le musée. Ce n’est pas un lieu de sa vie."
+   ],
+   "plates": [
+    {
+     "pic": {
+      "stem": "v-supper",
+      "widths": [
+       800,
+       1600
+      ]
+     },
+     "title": "La Cène dans la cour",
+     "kind": "Reproduction",
+     "what": "l’original est une peinture murale dans le réfectoire du couvent Santa Maria delle Grazie, à Milan. Le mur de la cour est construit en code.",
+     "src": "{museum:supper_credit} {museum:it108}",
+     "alt": "Une reproduction de la Cène couvre un mur clair dans une cour: une rangée de personnages à une longue table, dans une pièce peinte. Une image du film du musée."
+    }
+   ]
+  },
+  {
+   "id": "house",
+   "h": "La maison",
+   "note": "Le Clos Lucé, sa dernière maison",
+   "p": [
+    "Sa dernière maison, le Clos Lucé à Amboise, est reconstituée en code d’après des plans et des photographies. Vous n’entrez que dans une pièce, la grande salle: sur sa table, deux instruments d’après ses feuilles, et contre le mur, le lion automate. La chapelle, la fenêtre du cabinet de travail et la chambre nord, vous les voyez de l’extérieur."
+   ],
+   "plates": [
+    {
+     "pic": {
+      "stem": "v-lion",
+      "widths": [
+       800,
+       1600
+      ]
+     },
+     "title": "La grande salle",
+     "kind": "Reconstitution",
+     "what": "la salle au soleil de l’après-midi, avec le lion automate près de la fenêtre.",
+     "alt": "Un lion de bois et de métal, dont le flanc laisse voir des engrenages, se tient sur des tomettes rouges près d’une fenêtre à petits carreaux, au soleil de l’après-midi. À droite, le bout d’un banc et d’une table. Une image du film du musée. La pièce est une reconstitution construite en code.",
+     "quote": {
+      "text": "{museum:lion_label}",
+      "from": "Extrait de son étiquette au musée"
+     }
+    }
+   ]
+  }
+ ],
+ "stop": {
+  "id": "picture-room-lisa",
+  "grade": "documented",
+  "title": "{museum:lisa_chapter}",
+  "age_k": "Léonard",
+  "age": "{museum:lisa_age}",
+  "stage": {
+   "pic": {
+    "stem": "v-lisa-m",
+    "widths": [
+     720,
+     1000
+    ],
+    "wide": {
+     "stem": "v-lisa",
+     "widths": [
+      800,
+      1280
+     ]
+    }
+   },
+   "alt": "Un long mur bleu foncé, avec des reproductions encadrées sous des projecteurs. La Joconde est accrochée parmi elles, et d’autres cadres continuent à sa gauche. Une image du film du musée.",
+   "title": "La Joconde",
+   "kind": "Reproduction",
+   "what": "la Joconde dans la salle des tableaux, avec le mur qui continue à sa gauche. {museum:lisa_holder}",
+   "src": "{museum:lisa_credit} Les autres cadres portent aussi des reproductions, chacune avec sa source et sa licence sur son étiquette dans l’aile."
+  },
+  "layers": [
+   {
+    "text": "{museum:lisa_line}"
+   },
+   {
+    "text": "{museum:lisa_drawer}"
+   },
+   {
+    "text": "{museum:lisa_record} {museum:lisa_size}"
+   }
+  ]
+ },
+ "holds": {
+  "lead": "Voici ce que contient l’aile, dans l’ordre du parcours: chaque image, chaque machine, chaque page et chaque feuille que vous pouvez voir de près.",
+  "groups": [
+   {
+    "id": "paintings",
+    "form": "wall",
+    "from": "paintings",
+    "h": "Les tableaux",
+    "note": "Chaque œuvre, son lieu, sa taille",
+    "p": [
+     "{count:hung_works} œuvres sont accrochées ici: {count:hung_paintings} tableaux et {word:hung_drawings} dessins. Un portrait, celui de Ginevra de’ Benci, est accroché deux fois: sa face et son revers peint.",
+     "La Joconde mesure moins d’un mètre de haut. La plupart sont de lui, entièrement ou en partie. L’une est une copie faite par d’autres, et la dernière vient de son atelier.",
+     "Ce sont des reproductions. La liste donne pour chacune le lieu de l’original et sa taille. Un mot après une taille, comme contesté ou atelier, dit à qui l’œuvre est attribuée. Ce n’est pas l’un des quatre degrés du musée. Une prédelle est un petit panneau du bas d’un retable."
+    ],
+    "field": {
+     "h": "La Cène",
+     "p": "C’est une peinture murale: elle n’est donc pas dans la salle des tableaux. Elle couvre un mur de la cour, {count:supper_w_m} mètres de large sur {count:supper_h_m} de haut, aussi grande que l’original à Milan.",
+     "holder": "cenacolo",
+     "stop": "supper-wall"
+    }
+   },
+   {
+    "id": "machines",
+    "form": "set",
+    "from": "machines",
+    "h": "Les machines",
+    "note": "{Word:machines}, faites en code",
+    "p": [
+     "Le musée construit {word:machines} machines en code: {word:from_sheets} d’après ses feuilles, et le lion d’après d’anciens récits. {Word:moving} d’entre elles bougent. Seul le parachute reste immobile.",
+     "Aucun document connu ne dit que la vis aérienne a été construite de son vivant."
+    ],
+    "places": {
+     "hall": "Dans la salle des machines",
+     "court": "Dans la cour",
+     "house": "Dans la maison"
+    },
+    "after": "d’après",
+    "still": "Il reste immobile.",
+    "no_sheet": "D’après d’anciens récits. Aucune feuille connue.",
+    "alt_each": "Reconstitution du musée, construite en code. Une image de son film.",
+    "terms": "Un codex est un livre relié, fait de feuillets écrits à la main. 656r veut dire feuillet 656, recto. Un v veut dire verso, le dos: 83v est le verso du feuillet 83.",
+    "names": {
+     "aerial-screw": "Vis aérienne",
+     "miter-lock-gates": "Portes d’écluse",
+     "flywheel": "Volant d’inertie",
+     "camera-obscura": "Chambre noire",
+     "water-lifting-screw": "Vis d’Archimède",
+     "rolling-mill": "Laminoir",
+     "lathe": "Machine à percer",
+     "ball-bearing": "Roulement à billes",
+     "multi-barrel-gun": "Arme à trois rangées de canons",
+     "parachute": "Parachute",
+     "revolving-crane": "Grue à plate-forme annulaire",
+     "anemometer": "Anémomètre",
+     "mechanical-lion": "Lion automate"
+    },
+    "close": {
+     "intro": "Ici, c’est la vis aérienne.",
+     "quote": {
+      "text": "{museum:screw_label}",
+      "from": "Extrait de son étiquette au musée"
+     },
+     "stage": {
+      "pic": {
+       "stem": "machine-poster-square",
+       "widths": [
+        1080
+       ],
+       "wide": {
+        "stem": "machine-poster-wide",
+        "widths": [
+         1200
+        ]
+       }
+      },
+      "alt": "Une maquette de la vis aérienne, coupée en deux par une ligne de sanguine. À gauche, elle est dessinée en traits de sanguine. À droite, elle est construite en bois et en toile de lin, au soleil bas, avec son ombre sur le mur derrière.",
+      "title": "La vis aérienne",
+      "kind": "Reconstitution",
+      "what": "d’après la feuille de Léonard. Une autre maquette que celle du musée.",
+      "src": "Construite en code pour cette page",
+      "piece": {
+       "name": "aerial-screw",
+       "script": "machine.js",
+       "tag_a": "Traits",
+       "tag_b": "Construite",
+       "hint": "Faites glisser la ligne pour comparer, la machine pour la tourner.",
+       "slider_label": "Montrer davantage les traits ou la machine construite",
+       "canvas_label": "La vis aérienne en 3D. Les flèches gauche et droite du clavier la font tourner.",
+       "pause": "Mettre en pause",
+       "play": "Faire tourner"
+      }
+     },
+     "title": "{museum:fly_chapter}",
+     "age_k": "Son âge",
+     "age": "{museum:fly_age}",
+     "layers": [
+      {
+       "text": "{museum:fly_line}"
+      },
+      {
+       "text": "{museum:fly_drawer}"
+      },
+      {
+       "text": "{museum:fly_record} {museum:fly_record_folio}"
+      }
+     ],
+     "source": "Manuscrit B, folio 83 verso, c’est-à-dire le dos du feuillet 83. Cote de la bibliothèque: Ms 2173. Entre 1487 et 1489 environ.",
+     "rows": [
+      {
+       "k": "Sur la feuille",
+       "v": "Une surface en spirale sur un mât, avec un bâti et une base ronde. Une seule dimension: huit braccia, une ancienne mesure, du bord au centre."
+      },
+      {
+       "k": "Notre choix",
+       "v": "La pente de la spirale, le bois et ses assemblages, le palier, l’entraînement et la vitesse."
+      },
+      {
+       "k": "Où est la feuille",
+       "v": "Bibliothèque de l’Institut de France, Paris.",
+       "lang": "fr"
+      },
+      {
+       "k": "Ce qu’elle fait",
+       "v": "Elle tourne cinq fois par minute, comme dans le musée, et reste au sol."
+      }
+     ]
+    }
+   },
+   {
+    "id": "notebooks",
+    "form": "text",
+    "h": "Les carnets",
+    "note": "Une table, et des pages à tourner",
+    "p": [
+     "Sur la table de lecture est posée une édition imprimée de {count:volume_year}, qui reproduit deux de ses carnets. Vous pouvez tourner ses {count:volume_pages} pages, et {count:volume_sides} d’entre elles montrent les faces mêmes des carnets, dans son écriture en miroir, de droite à gauche.",
+     "{count:topics} thèmes réunissent {count:topic_pages} pages de ses carnets. Une étagère porte {word:shelf_books} autres livres de ses notes à feuilleter, {count:shelf_sides} faces en tout."
+    ],
+    "plates": [
+     {
+      "pic": {
+       "stem": "v-codex",
+       "widths": [
+        800,
+        1600
+       ]
+      },
+      "title": "Le livre sur la table",
+      "kind": "Reproduction",
+      "what": "ouvert à la page de la vis aérienne",
+      "src": "Charles Ravaisson-Mollien, Les manuscrits de Léonard de Vinci, tome II, Paris 1883. Domaine public par ancienneté. La Bibliothèque de l’Institut de France, à Paris, conserve les carnets.",
+      "alt": "Un livre ouvert sur une table en bois, sous une lumière chaude. La page de gauche est un texte imprimé, la page de droite montre une page de carnet avec un dessin. Une image du film du musée. Les pages viennent d’une édition imprimée de {count:volume_year}."
+     }
+    ],
+    "lists": [
+     {
+      "h": "Les thèmes",
+      "from": "topics",
+      "show": "name",
+      "n": "pages",
+      "unit": "pages"
+     },
+     {
+      "h": "L’étagère",
+      "from": "shelf",
+      "show": "name",
+      "n": "sides",
+      "unit": "faces"
+     }
+    ],
+    "stop": "reading-table",
+    "terms": "Une face est un côté d’un feuillet: chaque feuillet a un recto et un verso."
+   },
+   {
+    "id": "body",
+    "form": "text",
+    "h": "Le corps",
+    "note": "L’anatomie et un cœur de verre",
+    "p": [
+     "Sur un mur de la longue galerie sont accrochées {count:sheets} de ses feuilles d’anatomie, des reproductions d’originaux de la Royal Collection, à Windsor.",
+     "Une feuille est accrochée à part: la valve du cœur. Il a dessiné le sang qui forme des tourbillons derrière la valve. Ces tourbillons aident à la fermer, comme il l’a écrit. À cette étape, un film d’environ {count:heart_seconds} secondes le montre dans le modèle en verre du musée, construit d’après ses notes."
+    ],
+    "hang": "wide",
+    "plates": [
+     {
+      "pic": {
+       "stem": "v-heart",
+       "widths": [
+        800,
+        1600
+       ],
+       "phone": {
+        "stem": "v-heart-m",
+        "widths": [
+         600,
+         864
+        ]
+       }
+      },
+      "title": "Le modèle en verre de la valve du cœur",
+      "kind": "Reconstitution",
+      "what": "le modèle du musée, construit d’après ses notes. Une image de son film.",
+      "alt": "Un récipient de verre à la taille étroite est posé sur un fond noir. De fins grains dorés y flottent et se rassemblent en une bande claire à la taille. Une image du film que le musée a fait de son propre modèle."
+     },
+     {
+      "pic": {
+       "stem": "v-valve",
+       "widths": [
+        640,
+        960
+       ]
+      },
+      "title": "La valve aortique",
+      "kind": "Reproduction",
+      "what": "sa feuille sur la valve, dans son cadre. Le mur derrière est construit en code.",
+      "src": "{museum:valve_holder} {museum:sheet_credit}",
+      "alt": "Un dessin, dans un passe-partout clair et un fin cadre de bois, est accroché seul sur un mur sombre: une page de petits croquis du cœur et des lignes d’écriture en miroir. Une image du film du musée."
+     }
+    ],
+    "lists": [
+     {
+      "h": "Les feuilles, par titre",
+      "from": "sheets",
+      "show": "title",
+      "fold": true
+     }
+    ],
+    "stop": "body"
+   },
+   {
+    "id": "life",
+    "form": "text",
+    "h": "Sa vie",
+    "note": "Des dates gravées dans le sol",
+    "p": [
+     "La chronologie de sa vie compte {count:dates} dates. {Word:dates_floor} d’entre elles sont gravées dans le sol de la longue galerie, et une date du sol ouvre la chronologie à cet endroit.",
+     "Elle raconte sa vie en {word:periods} parties et nomme {word:people} personnes autour de lui, de son maître au roi de France."
+    ],
+    "lists": [
+     {
+      "h": "Les parties",
+      "from": "periods",
+      "show": "self"
+     },
+     {
+      "h": "Les personnes",
+      "from": "people",
+      "show": "self"
+     }
+    ],
+    "stop": "line-early"
+   },
+   {
+    "id": "last-house",
+    "form": "text",
+    "h": "La maison et la tombe",
+    "note": "Ce qui était à lui, ou non",
+    "p": [
+     "Pièce par pièce: ce que donnent les sources, et où l’aile a fait un choix."
+    ],
+    "plates": [
+     {
+      "pic": {
+       "stem": "house",
+       "widths": [
+        800,
+        1600
+       ]
+      },
+      "title": "Le Clos Lucé vu de l’extérieur",
+      "kind": "Reconstitution",
+      "what": "la maison côté pignon nord, de l’autre côté de la terrasse. Sur le petit pupitre devant elle est posée une de ses feuilles, une reproduction trop petite pour être lue ici.",
+      "src": "{museum:deluge_credit} Conservée par la Royal Collection, Windsor, RCIN 912380.",
+      "alt": "Une haute maison de briques aux angles de pierre et au pignon raide, vue de l’autre côté d’une terrasse pavée, au soleil bas, entre des arbres aux feuilles d’automne. Devant, un petit pupitre sur un poteau. Une image du film du musée. La maison est une reconstitution construite en code."
+     }
+    ],
+    "rows": [
+     {
+      "k": "La grande salle",
+      "v": "Reconstituée d’après des plans et des photographies. La cheminée date d’environ {count:chimney_year}.",
+      "stop": "hall"
+     },
+     {
+      "k": "Les meubles de la salle",
+      "v": "La table, le banc, le coffre, la chaise, les tabourets et les chandeliers ne sont pas les siens. Une maison comme celle-ci en avait de semblables à l’époque.",
+      "stop": "hall"
+     },
+     {
+      "k": "La petite chapelle",
+      "v": "Vue de l’extérieur. Selon la tradition, elle date de {count:chapel_year}. Ce n’est pas confirmé. Ses peintures murales sont attribuées aux élèves de Léonard. Cela non plus n’est pas établi.",
+      "stop": "oratory"
+     },
+     {
+      "k": "La fenêtre du cabinet de travail",
+      "v": "Vue du dehors. L’aile met la visite du {shows:day} derrière la fenêtre. C’est notre hypothèse: le journal ne nomme aucune pièce. Dessous, vous ouvrez une de ses feuilles, un déluge.",
+      "stop": "study"
+     },
+     {
+      "k": "La pièce nord",
+      "v": "Vue de l’extérieur. Le musée installé dans la vraie maison place la chambre de Léonard ici. C’est une proposition, pas un document.",
+      "stop": "chamber"
+     },
+     {
+      "k": "La cour de la tombe",
+      "v": "La cour du musée, pas sa tombe: une dalle à son nom. Il a demandé une tombe dans l’église du château, depuis démolie. Où il repose, personne n’en est sûr: l’étape s’appelle «Présumé».",
+      "stop": "grave"
+     }
+    ]
+   }
+  ]
+ },
+ "numbers": [
+  {
+   "count": "stops",
+   "num": "{n}",
+   "term": "Étapes",
+   "text": ""
+  },
+  {
+   "count": "works",
+   "num": "environ {n}",
+   "term": "Œuvres",
+   "text": ""
+  },
+  {
+   "count": "pictures",
+   "num": "{n}",
+   "term": "Tableaux",
+   "text": ""
+  },
+  {
+   "count": "machines",
+   "num": "{n}",
+   "term": "Machines",
+   "text": ""
+  },
+  {
+   "count": "sheets",
+   "num": "{n}",
+   "term": "Feuilles d’anatomie",
+   "text": ""
+  },
+  {
+   "count": "topic_pages",
+   "num": "{n}",
+   "term": "Pages de carnets",
+   "text": "Réunies par thème sur la table de lecture."
+  },
+  {
+   "count": "volume_pages",
+   "num": "{n}",
+   "term": "Pages à tourner",
+   "text": "Toutes dans le livre de la table de lecture."
+  },
+  {
+   "count": "shelf_sides",
+   "num": "{n}",
+   "term": "Faces sur l’étagère",
+   "text": "Dans les livres de ses notes, sur l’étagère à côté de la table."
+  },
+  {
+   "count": "dates",
+   "num": "{n}",
+   "term": "Dates de sa vie",
+   "text": ""
+  }
+ ],
+ "holders": {
+  "p": "Dans l’ordre où le parcours les rencontre:",
+  "after": "Le musée nomme ces musées, bibliothèques et collections parce qu’ils conservent les originaux, et pour aucune autre raison. Il est indépendant de chacun d’eux."
+ },
+ "out": {
+  "line": "Notre autre projet: la vie de Léonard de Vinci racontée comme une histoire, et une conversation avec Léonard, joué par une IA."
+ },
+ "end": {
+  "id": "stars",
+  "dir": "La cour de la tombe",
+  "note": "La dernière étape",
+  "h": "L’aile se termine sous les étoiles",
+  "p": "À la dernière étape, la cour de la tombe, la nuit tombe et vous levez les yeux. Les étoiles sont placées comme elles l’étaient au-dessus du Clos Lucé à {word:hour} heures du soir, le {shows:day}. Nous les avons calculées une à une à partir d’un catalogue d’étoiles, pour le jour que donne le journal et l’heure que nous avons choisie. Le coucher de soleil montre un soir d’octobre ordinaire, pas celui-là, et l’étoile filante est ajoutée par le musée.",
+  "plate": {
+   "pic": {
+    "stem": "grave-court",
+    "widths": [
+     560,
+     960,
+     1600
+    ]
+   },
+   "title": "La cour de la tombe",
+   "kind": "Construit en code",
+   "what": "la cour du musée: la dalle à son nom, un panneau avec le soleil bas du jour de sa mort, à une minute choisie par nous, la pierre avec l’année des fouilles. À gauche, un tableau d’Ingres.",
+   "src": "Jean-Auguste-Dominique Ingres, François Ier reçoit les derniers soupirs de Léonard de Vinci, 1818. Petit Palais, musée des Beaux-Arts de la Ville de Paris. Reproduction: CC0 Paris Musées.",
+   "alt": "Une cour close de murs, au soleil bas, un jeune arbre aux feuilles d’automne. Au sol, une dalle claire au nom de Léonard de Vinci. Derrière, un panneau sur deux pieds, avec un petit bloc et sa longue ombre, et une petite pierre datée. À gauche, un tableau au cadre sombre. Une image du film du musée."
+  },
+  "sky": {
+   "pic": {
+    "stem": "sky",
+    "widths": [
+     960
+    ]
+   },
+   "title": "Lever les yeux",
+   "kind": "Construit en code",
+   "what": "les étoiles de ce soir-là au-dessus du Clos Lucé, la fin du parcours",
+   "alt": "Un ciel de nuit d’un bleu profond, plein d’étoiles, avec en bas les cimes sombres des arbres."
+  }
+ }
+}

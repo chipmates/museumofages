@@ -1,0 +1,856 @@
+{
+ "_note": "THE WORDS of the page 'Leonardo da Vinci's inventions', English. Every displayed sentence of the page lives here and in the twin inventions.de.json. The two files hold the same structure: the same blocks in the same order, the same items, the same pictures. Change words here, then run `python3 pages/build.py`. Every fact comes from the wing's checked material. No em dash, no en dash, no semicolon.",
+ "page": {
+  "id": "vinci-inventions",
+  "wing": "vinci",
+  "slug": "inventions",
+  "published": null,
+  "og_image": {
+   "file": "vinci-inventions-og-1200x630.jpg",
+   "width": 1200,
+   "height": 630
+  }
+ },
+ "pics": {
+  "flight": {
+   "stem": "vinci-stop-flight",
+   "widths": [
+    800,
+    1600
+   ],
+   "sizes": "(min-width: 960px) 288px, (min-width: 600px) 240px, calc(100vw - 40px)"
+  },
+  "works": {
+   "stem": "vinci-stop-works",
+   "widths": [
+    800,
+    1600
+   ],
+   "sizes": "(min-width: 1280px) 588px, (min-width: 960px) 46vw, 100vw"
+  },
+  "court": {
+   "stem": "vinci-view-anemometer",
+   "widths": [
+    800,
+    1600
+   ],
+   "sizes": "(min-width: 1280px) 333px, (min-width: 960px) 27vw, (min-width: 600px) calc(50vw - 44px), calc(100vw - 40px)"
+  },
+  "house": {
+   "stem": "vinci-stop-hall",
+   "widths": [
+    800,
+    1600
+   ],
+   "sizes": "(min-width: 1280px) 333px, (min-width: 960px) 27vw, (min-width: 600px) calc(50vw - 44px), calc(100vw - 40px)"
+  },
+  "table": {
+   "stem": "vinci-stop-reading-table",
+   "widths": [
+    800,
+    1600
+   ],
+   "sizes": "(min-width: 1280px) 333px, (min-width: 960px) 27vw, (min-width: 600px) calc(50vw - 44px), calc(100vw - 40px)"
+  },
+  "parachute": {
+   "stem": "vinci-view-parachute",
+   "widths": [
+    800,
+    1600
+   ],
+   "sizes": "(min-width: 960px) 288px, (min-width: 600px) 240px, calc(100vw - 40px)"
+  },
+  "inclinometer": {
+   "stem": "vinci-poster-inclinometer",
+   "widths": [
+    720,
+    1440
+   ],
+   "sizes": "(min-width: 960px) 288px, (min-width: 600px) 240px, calc(100vw - 40px)"
+  },
+  "lock_gates": {
+   "stem": "vinci-poster-miter-lock-gates",
+   "widths": [
+    720,
+    1440
+   ],
+   "sizes": "(min-width: 960px) 288px, (min-width: 600px) 240px, calc(100vw - 40px)"
+  },
+  "water_screw": {
+   "stem": "vinci-poster-water-lifting-screw",
+   "widths": [
+    720,
+    1440
+   ],
+   "sizes": "(min-width: 960px) 288px, (min-width: 600px) 240px, calc(100vw - 40px)"
+  },
+  "crane": {
+   "stem": "vinci-poster-revolving-crane",
+   "widths": [
+    720,
+    1440
+   ],
+   "sizes": "(min-width: 960px) 288px, (min-width: 600px) 240px, calc(100vw - 40px)"
+  },
+  "rolling_mill": {
+   "stem": "vinci-poster-rolling-mill",
+   "widths": [
+    720,
+    1440
+   ],
+   "sizes": "(min-width: 960px) 288px, (min-width: 600px) 240px, calc(100vw - 40px)"
+  },
+  "drilling_machine": {
+   "stem": "vinci-poster-lathe",
+   "widths": [
+    720,
+    1440
+   ],
+   "sizes": "(min-width: 960px) 288px, (min-width: 600px) 240px, calc(100vw - 40px)"
+  },
+  "ball_bearing": {
+   "stem": "vinci-poster-ball-bearing",
+   "widths": [
+    720,
+    1440
+   ],
+   "sizes": "(min-width: 960px) 288px, (min-width: 600px) 240px, calc(100vw - 40px)"
+  },
+  "flywheel": {
+   "stem": "vinci-poster-flywheel",
+   "widths": [
+    720,
+    1440
+   ],
+   "sizes": "(min-width: 960px) 288px, (min-width: 600px) 240px, calc(100vw - 40px)"
+  },
+  "anemometer": {
+   "stem": "vinci-poster-anemometer",
+   "widths": [
+    720,
+    1440
+   ],
+   "sizes": "(min-width: 960px) 288px, (min-width: 600px) 240px, calc(100vw - 40px)"
+  },
+  "proportional_compass": {
+   "stem": "vinci-poster-proportional-compass",
+   "widths": [
+    720,
+    1440
+   ],
+   "sizes": "(min-width: 960px) 288px, (min-width: 600px) 240px, calc(100vw - 40px)"
+  },
+  "camera_obscura": {
+   "stem": "vinci-poster-camera-obscura",
+   "widths": [
+    720,
+    1440
+   ],
+   "sizes": "(min-width: 960px) 288px, (min-width: 600px) 240px, calc(100vw - 40px)"
+  },
+  "organ_gun": {
+   "stem": "vinci-poster-multi-barrel-gun",
+   "widths": [
+    720,
+    1440
+   ],
+   "sizes": "(min-width: 960px) 288px, (min-width: 600px) 240px, calc(100vw - 40px)"
+  },
+  "lion": {
+   "stem": "vinci-poster-mechanical-lion",
+   "widths": [
+    720,
+    1440
+   ],
+   "sizes": "(min-width: 960px) 288px, (min-width: 600px) 240px, calc(100vw - 40px)"
+  },
+  "hall": {
+   "stem": "vinci-view-water-lifting-screw",
+   "widths": [
+    800,
+    1600
+   ],
+   "sizes": "(min-width: 1280px) 333px, (min-width: 960px) 27vw, (min-width: 600px) calc(50vw - 44px), calc(100vw - 40px)"
+  }
+ },
+ "meta": {
+  "title": "15 inventions de Léonard de Vinci recréées | Museum of Ages",
+  "description": "Ce que Léonard de Vinci a dessiné, ce qui a été construit, ce qui le précédait. Quinze machines recréées en code dans un musée numérique, avec leurs sources.",
+  "og_title": "Les inventions de Léonard de Vinci: quinze machines reconstituées dans un musée numérique",
+  "og_image_alt": "Quatre machines en bois dans la salle des machines, au soleil bas de l’après-midi: des portes d’écluse, la vis aérienne et sa voile en spirale, une vis d’Archimède et un laminoir. Des reconstitutions d’après des feuilles de Léonard de Vinci, construites en code."
+ },
+ "labels": {
+  "crumbs": "Vous êtes ici",
+  "crumb_home": "Musée",
+  "crumb_here": "Inventions",
+  "toc": "Sur cette page",
+  "tag_reconstructions": "Reconstitutions",
+  "tag_reconstruction": "Reconstitution",
+  "in_museum": "Dans le musée",
+  "row_sheet": "La feuille",
+  "row_ours": "Notre choix",
+  "row_built": "Construction",
+  "row_accounts": "Les sources",
+  "tag_reproduction": "Reproduction",
+  "plate_what": "modèle construit en code, d’après sa feuille"
+ },
+ "top": {
+  "h1": "Les inventions de Léonard de Vinci",
+  "answer": "Léonard de Vinci a dessiné des machines pour voler, pour élever l’eau, pour mesurer et pour la guerre. Pour la plupart, aucun document connu ne dit qu’il les a construites. Certaines n’étaient pas son idée. Quinze se trouvent dans ce musée, reconstruites en code.",
+  "frame": {
+   "pic": "works",
+   "focus": "50% 70%",
+   "title": "Dans la salle des machines",
+   "tag": "tag_reconstructions",
+   "what": "de gauche à droite: des portes d’écluse, la vis aérienne, une vis d’Archimède et un laminoir, tous d’après ses feuilles",
+   "alt": "Une haute salle au plafond de lattes de bois, avec une rangée de fenêtres, au soleil bas de l’après-midi. Quatre machines en bois sur des socles bas: des portes d’écluse, la vis aérienne et sa voile en spirale, une vis d’Archimède dans son bâti et un laminoir."
+  },
+  "door": {
+   "text": "Entrer dans le musée",
+   "note": "Entrée libre, sans compte.",
+   "leads": "La porte ouvre l’aile Léonard à son début. Le plan de l’aile vous mène à la salle des machines."
+  }
+ },
+ "blocks": [
+  {
+   "type": "places",
+   "id": "where",
+   "nav": "Où elles se trouvent",
+   "h": "Où se trouvent les machines dans le musée",
+   "intro": "Museum of Ages est un musée numérique. Sa première aile est celle de Léonard de Vinci, et ses machines se trouvent à trois endroits. Le plan de l’aile range chaque machine sous l’endroit où elle se trouve. Choisissez un nom sur ce plan, et vous voyez cette machine de près.",
+   "rows": [
+    {
+     "term": "La salle des machines",
+     "text": "Neuf machines: la vis aérienne, des portes d’écluse, une vis d’Archimède, un laminoir, une machine à percer, un roulement à billes, un volant d’inertie, une chambre noire et une arme à trois rangées de canons.",
+     "pic": {
+      "pic": "hall",
+      "tag": "tag_reconstructions",
+      "what": "la vis d’Archimède, derrière elle la vis aérienne, à droite le laminoir",
+      "alt": "Une vis d’Archimède en bois sur un socle bas, dans une salle aux murs nus: un axe incliné à spires sombres dans un bâti, le bas dans un bac. Derrière, à gauche, la voile en spirale de la vis aérienne, à droite la roue dentée du laminoir. Un soleil bas d’après-midi entre par une rangée de fenêtres."
+     }
+    },
+    {
+     "term": "La cour",
+     "text": "Trois machines: le parachute, la grue à plate-forme annulaire et l’anémomètre. Le parachute est dehors, car il est plus haut que le toit de la salle.",
+     "pic": {
+      "pic": "court",
+      "tag": "tag_reconstructions",
+      "what": "l’anémomètre sur son socle, à gauche la base tournante de la grue",
+      "alt": "Une cour pavée couverte de feuilles mortes, devant un mur clair à moitié dans l’ombre. Sur un socle sombre, un petit bâti de bois avec une plaque suspendue: l’anémomètre. Au bord gauche, la base ronde en bois de la grue. Au-delà de la cour, une pelouse et un mur de jardin."
+     }
+    },
+    {
+     "term": "La maison",
+     "text": "Trois dans sa grande salle: un inclinomètre et un compas de réduction sur la table, et le lion automate contre le mur.",
+     "pic": {
+      "pic": "house",
+      "tag": "tag_reconstructions",
+      "what": "sur la table, l’inclinomètre et le compas de réduction, contre le mur, le lion",
+      "alt": "Une pièce au plafond à poutres, aux tomettes rouges et aux fenêtres à petits carreaux. Le soleil de l’après-midi tombe sur une longue table sur tréteaux, avec une cloche de verre sur un pied et un compas dressé. À gauche, contre le mur, se tient un lion de bois et de métal."
+     }
+    },
+    {
+     "term": "La table de lecture",
+     "text": "Ici, vous feuilletez plus de 200 pages de ses carnets, classées en dix-sept thèmes, dont «Le vol» et «Les machines». Chaque page indique son carnet et son feuillet. Vous pouvez la lire dans son écriture, dans un miroir et en transcription. Au repos, un fac-similé du Manuscrit B, imprimé en 1883, est ouvert. La feuille de la vis aérienne, le folio 83 verso, se trouve dans ce fac-similé.",
+     "pic": {
+      "pic": "table",
+      "tag": "tag_reproduction",
+      "what": "le fac-similé du Manuscrit B, imprimé en 1883, du domaine public par ancienneté. La Bibliothèque de l’Institut de France, à Paris, conserve le manuscrit. La pièce est construite en code.",
+      "alt": "Une pièce sombre aux murs lambrissés, avec une seule lampe suspendue. Sous la lampe, un livre ouvert est posé sur une longue table, avec une chaise devant."
+     }
+    }
+   ],
+   "after": "Quatorze des quinze machines reprennent une de ses feuilles. Le lion repose sur d’anciens récits, car aucun dessin de lui n’est conservé. L’étiquette de chaque machine la signale comme une reconstitution."
+  },
+  {
+   "type": "group",
+   "id": "flying-machines",
+   "nav": "Machines volantes",
+   "h": "Les machines volantes",
+   "intro": "Léonard voulait faire voler l’homme. Aucun document connu ne dit qu’il a volé lui-même. Le musée a reconstruit ici deux de ses études sur le vol, et un instrument que Léonard destinait à un homme en vol.",
+   "items": [
+    {
+     "id": "aerial-screw",
+     "name": "La vis aérienne",
+     "place": "Salle des machines",
+     "does": "Une voile de lin en spirale sur un mât, souvent appelée son hélicoptère. Selon sa note, une vis bien faite, en lin enduit d’amidon et tournée vite, s’élève dans l’air.",
+     "rows": [
+      {
+       "k": "row_sheet",
+       "v": "Manuscrit B, folio 83 verso, Bibliothèque de l’Institut de France, Paris. Le carnet est daté de 1487 à 1489 environ. La feuille donne une seule dimension: huit braccia, une ancienne mesure, du bord au centre, soit environ 4,7 mètres. Elle n’indique aucun entraînement pour la grande vis. Pour une petite maquette en papier, elle indique un ressort: une fine lame de fer, tordue puis relâchée."
+      },
+      {
+       "k": "row_ours",
+       "v": "La pente de la spirale, le bois, le palier et l’entraînement. Dans le musée, elle tourne cinq fois par minute et reste au sol."
+      },
+      {
+       "k": "row_built",
+       "v": "Aucun document connu ne dit qu’elle a été construite de son vivant. Nous estimons qu’une machine de 400 kilogrammes aurait besoin d’au moins dix-neuf kilowatts pour quitter le sol. Un cycliste au niveau du record de l’heure fournit environ un demi-kilowatt pendant une heure. Quatre cyclistes en fournissent donc environ deux."
+      }
+     ],
+     "pic": {
+      "pic": "flight",
+      "tag": "tag_reconstructions",
+      "what": "la vis aérienne dans la salle des machines, à gauche les portes d’écluse, toutes deux d’après ses feuilles",
+      "alt": "La vis aérienne dans une haute salle au plafond de lattes de bois: un mât de bois sur une base ronde, avec une voile de lin en spirale. Le soleil bas de l’après-midi l’éclaire et jette son ombre sur le mur. À gauche, des portes d’écluse en bois sur un socle bas."
+     }
+    },
+    {
+     "id": "parachute",
+     "name": "Le parachute",
+     "place": "La cour",
+     "does": "Une tente de toile de lin enduite, de douze braccia de large et douze de haut, soit environ sept mètres dans chaque sens. Il a écrit qu’avec elle, un homme peut se jeter d’une grande hauteur sans se blesser. C’est son affirmation, pas un résultat vérifié.",
+     "rows": [
+      {
+       "k": "row_sheet",
+       "v": "Codex Atlanticus, folio 1058 verso, Veneranda Biblioteca Ambrosiana, Milan. La feuille est datée de 1485 environ."
+      },
+      {
+       "k": "row_ours",
+       "v": "Le cadre, les cordes et l’anneau. La feuille ne leur donne ni épaisseur ni longueur."
+      },
+      {
+       "k": "row_built",
+       "v": "Aucun saut de son vivant n’est documenté. En 2000, un homme est descendu sous une lourde réplique, s’en est détaché, puis s’est posé sous un second parachute, moderne. Des dessins italiens de parachutes plus anciens sont datés des années 1470."
+      }
+     ],
+     "pic": {
+      "pic": "parachute",
+      "tag": "tag_reconstructions",
+      "what": "le parachute dans la cour, vu d’en dessous. Derrière lui, la grue et l’anémomètre",
+      "alt": "Le dessous du parachute, une pyramide de lin clair, remplit le haut de l’image. En dessous, une cour pavée couverte de feuilles mortes. À gauche, une grue en bois et un petit anémomètre sur un socle. Derrière un muret, des arbres aux couleurs d’automne."
+     }
+    },
+    {
+     "id": "inclinometer",
+     "name": "L’inclinomètre",
+     "place": "La maison, sur la table",
+     "does": "Un poids suspendu au-dessus d’un cercle, à l’abri du vent. Il devait montrer à un homme en vol s’il avance à l’horizontale ou penché.",
+     "rows": [
+      {
+       "k": "row_sheet",
+       "v": "Codex Atlanticus, folio 1058 recto, l’autre face de la feuille du parachute, Veneranda Biblioteca Ambrosiana, Milan. La feuille est datée de 1485 environ."
+      },
+      {
+       "k": "row_ours",
+       "v": "La cloche de verre, le support inclinable et toutes les mesures. La feuille n’en donne aucune."
+      },
+      {
+       "k": "row_built",
+       "v": "Aucun exemplaire datant de son vivant n’est attesté."
+      }
+     ],
+     "pic": {
+      "pic": "inclinometer",
+      "tag": "tag_reconstruction",
+      "alt": "L’inclinomètre seul sur un sol carrelé: une cloche de verre sur une plaque ronde marquée de cercles, avec à l’intérieur un petit poids pendu à un fil, le tout sur un pied en bois."
+     }
+    }
+   ]
+  },
+  {
+   "type": "group",
+   "id": "water",
+   "nav": "Eau",
+   "h": "Les machines pour l’eau",
+   "intro": "Il a aussi dessiné des machines pour l’eau. Les écluses de canal et la vis d’Archimède étaient déjà utilisées avant sa naissance. Les ouvrages de référence lui attribuent souvent une pièce: la porte d’écluse à deux battants qui se rejoignent en angle.",
+   "items": [
+    {
+     "id": "lock-gates",
+     "name": "Les portes d’écluse",
+     "place": "Salle des machines",
+     "does": "Les deux battants d’une écluse, qui se rejoignent en angle. L’eau, plus haute d’un côté, les tient fermés. Une petite porte dans chaque battant laisse d’abord passer l’eau, et un bateau peut alors passer d’un niveau à l’autre.",
+     "rows": [
+      {
+       "k": "row_sheet",
+       "v": "Codex Atlanticus, folio 656a recto, Veneranda Biblioteca Ambrosiana, Milan. La feuille montre la porte de l’écluse de San Marco, à Milan. Sa date n’est pas établie: le catalogue de référence du codex donne de 1493 à 1495 environ, un musée de Milan environ 1506."
+      },
+      {
+       "k": "row_ours",
+       "v": "Les mesures. Nous montrons une paire de portes qui s’ouvre et se ferme quand l’eau est au même niveau des deux côtés."
+      },
+      {
+       "k": "row_built",
+       "v": "L’écluse a existé. Bartolomeo della Valle a construit les écluses de liaison. Les ouvrages de référence attribuent souvent à Léonard ce type de porte. Un musée de Milan laisse ouverte la question de sa part: la feuille note peut-être son amélioration des petites portes, ou un premier relevé de ces portes après leur construction. Aucune des sources que nous avons lues ne fait de lui l’inventeur des écluses de canal."
+      }
+     ],
+     "pic": {
+      "pic": "lock_gates",
+      "tag": "tag_reconstruction",
+      "alt": "Les portes d’écluse seules sur un sol carrelé: deux battants de bois, sur un seuil de pierre, se rejoignent en un angle léger. Chacun a une petite porte carrée près du bas."
+     }
+    },
+    {
+     "id": "water-screw",
+     "name": "La vis d’Archimède",
+     "place": "Salle des machines",
+     "does": "Un tube enroulé autour d’un axe. À chaque tour de manivelle, l’eau monte dans le tube jusqu’à un canal plus haut ou une citerne.",
+     "rows": [
+      {
+       "k": "row_sheet",
+       "v": "Codex Atlanticus, folio 6 recto, Veneranda Biblioteca Ambrosiana, Milan. La feuille montre plusieurs façons d’élever l’eau, et cette face ne porte aucune écriture. Elle est datée de 1480 environ."
+      },
+      {
+       "k": "row_ours",
+       "v": "La manivelle, les supports et la taille."
+      },
+      {
+       "k": "row_built",
+       "v": "Aucune construction de ce modèle précis n’est documentée. La vis d’Archimède elle-même est antique: Vitruve l’avait déjà décrite."
+      }
+     ],
+     "pic": {
+      "pic": "water_screw",
+      "tag": "tag_reconstruction",
+      "alt": "La vis d’Archimède seule sur un sol carrelé: un axe incliné, entouré de spires sombres, repose dans un bâti de bois, le bas dans un bac."
+     }
+    }
+   ]
+  },
+  {
+   "type": "group",
+   "id": "workshop",
+   "nav": "Atelier",
+   "h": "Les machines pour l’atelier",
+   "intro": "Ces cinq machines soulèvent, laminent, percent et tournent. Pour aucune d’elles, une construction de son vivant n’est attestée.",
+   "items": [
+    {
+     "id": "crane",
+     "name": "La grue à plate-forme annulaire",
+     "place": "La cour",
+     "does": "Une grue à un seul bras. Une manivelle enroule la corde sur un tambour, et le bras fait pivoter la charge jusqu’à l’endroit voulu.",
+     "rows": [
+      {
+       "k": "row_sheet",
+       "v": "Manuscrit B, folio 49 recto, Bibliothèque de l’Institut de France, Paris. Le carnet est daté de 1487 à 1489 environ."
+      },
+      {
+       "k": "row_ours",
+       "v": "Le contrepoids, les supports et toutes les mesures."
+      }
+     ],
+     "pic": {
+      "pic": "crane",
+      "tag": "tag_reconstruction",
+      "alt": "La grue à plate-forme annulaire seule sur un sol carrelé: un poteau avec un seul bras, sur une base ronde qui tourne. Au bout du bras pend une corde avec un bloc de pierre."
+     }
+    },
+    {
+     "id": "rolling-mill",
+     "name": "Le laminoir",
+     "place": "Salle des machines",
+     "does": "Deux rouleaux qui pressent l’étain pour le rendre plus mince et plus régulier. Une manivelle entraîne le rouleau du haut, et le rouleau du bas se déplace pour changer l’écart.",
+     "rows": [
+      {
+       "k": "row_sheet",
+       "v": "Manuscrit I, folio 48 verso, Bibliothèque de l’Institut de France, Paris. La note nomme l’étain et le bronze de cloche. Le carnet est daté de 1497 à 1499 environ."
+      },
+      {
+       "k": "row_ours",
+       "v": "L’engrenage. Ici, rien n’est laminé, et l’écart reste tel qu’il est réglé."
+      }
+     ],
+     "pic": {
+      "pic": "rolling_mill",
+      "tag": "tag_reconstruction",
+      "alt": "Le laminoir seul sur un sol carrelé: deux rouleaux l’un au-dessus de l’autre, entre des montants de bois, avec sur le côté une grande roue dentée et une manivelle."
+     }
+    },
+    {
+     "id": "drilling-machine",
+     "name": "La machine à percer",
+     "place": "Salle des machines",
+     "does": "Une machine à percer sans moteur, actionnée par une personne. Une corde est enroulée autour de l’axe: une pression du pied le fait tourner dans un sens, un arc tendu le ramène dans l’autre. La feuille ne dit rien du perçage. Un musée de Vinci lit le dessin ainsi, et notre maquette suit cette lecture.",
+     "rows": [
+      {
+       "k": "row_sheet",
+       "v": "Codex Atlanticus, folio 108 recto, Veneranda Biblioteca Ambrosiana, Milan. La feuille est datée de 1495 à 1497 environ."
+      },
+      {
+       "k": "row_ours",
+       "v": "Les dimensions de l’arc, de la barre de pied et de la bobine. Ici, le foret n’avance pas."
+      }
+     ],
+     "pic": {
+      "pic": "drilling_machine",
+      "tag": "tag_reconstruction",
+      "alt": "La machine à percer seule sur un sol carrelé: un banc de bois bas avec un axe. Au-dessus, un haut poteau porte une fine tige courbée, d’où une corde descend jusqu’à l’axe."
+     }
+    },
+    {
+     "id": "ball-bearing",
+     "name": "La butée à billes",
+     "place": "Salle des machines",
+     "does": "Huit billes de bois entre deux plateaux. Ainsi, une lourde charge roule en tournant et frotte moins. De petites roues sur pivots empêchent chaque bille de toucher la suivante.",
+     "rows": [
+      {
+       "k": "row_sheet",
+       "v": "Codex Madrid I, folio 20 verso, Biblioteca Nacional de España, Madrid. Le carnet date des années 1490 et porte les dates 1493 et 1497."
+      },
+      {
+       "k": "row_ours",
+       "v": "La forme des billes et des petites roues. C’est notre lecture de la feuille."
+      }
+     ],
+     "pic": {
+      "pic": "ball_bearing",
+      "tag": "tag_reconstruction",
+      "alt": "Le roulement à billes seul sur un sol carrelé: un épais plateau rond, percé au centre, repose sur une couronne de billes, au-dessus d’un second anneau, sur deux poutres de bois."
+     }
+    },
+    {
+     "id": "flywheel",
+     "name": "Le volant d’inertie",
+     "place": "Salle des machines",
+     "does": "Une roue lourde qui garde le mouvement et le rend quand l’entraînement faiblit. La feuille compare des poids qui tournent et demande quelle disposition marche le mieux.",
+     "rows": [
+      {
+       "k": "row_sheet",
+       "v": "Codex Madrid I, folio 114 recto, Biblioteca Nacional de España, Madrid. Le carnet date des années 1490 et porte les dates 1493 et 1497."
+      },
+      {
+       "k": "row_ours",
+       "v": "Quatre poids égaux sur des rayons rigides. Cette disposition vient du musée. Elle n’est pas l’une des figures de la feuille."
+      }
+     ],
+     "pic": {
+      "pic": "flywheel",
+      "tag": "tag_reconstruction",
+      "alt": "Le volant d’inertie seul sur un sol carrelé: un poteau droit, sur un pied en croix, porte quatre rayons, chacun avec une boule au bout."
+     }
+    }
+   ]
+  },
+  {
+   "type": "group",
+   "id": "instruments",
+   "nav": "Instruments",
+   "h": "Des instruments pour mesurer et pour voir",
+   "intro": "Trois instruments plus petits. L’un mesure le vent, un autre change la taille d’un dessin, le dernier montre ce que fait la lumière quand elle entre dans une pièce sombre.",
+   "items": [
+    {
+     "id": "anemometer",
+     "name": "L’anémomètre",
+     "place": "La cour",
+     "does": "Le vent écarte de la verticale une plaque montée sur une charnière. Plus elle monte le long de son échelle courbe, plus le vent est fort. Sa note veut davantage: mesurer la distance parcourue en une heure avec un vent donné, et pour cela elle demande une horloge. La plaque seule ne montre que la force du vent.",
+     "rows": [
+      {
+       "k": "row_sheet",
+       "v": "Codex Atlanticus, folio 675 recto, Veneranda Biblioteca Ambrosiana, Milan. La feuille est datée de 1487 à 1490 environ."
+      },
+      {
+       "k": "row_ours",
+       "v": "Les graduations de l’échelle, le bâti et toutes les mesures."
+      },
+      {
+       "k": "row_built",
+       "v": "Aucune construction de son vivant n’est attestée. Leon Battista Alberti a décrit une plaque semblable en 1450. Les sources ne permettent donc pas d’en faire une invention de Léonard seul."
+      }
+     ],
+     "pic": {
+      "pic": "anemometer",
+      "tag": "tag_reconstruction",
+      "alt": "L’anémomètre seul sur un sol carrelé: un bâti de bois sur deux pieds, une planche carrée suspendue à sa barre du haut, et une échelle courbe à côté."
+     }
+    },
+    {
+     "id": "proportional-compass",
+     "name": "Le compas de réduction",
+     "place": "La maison, sur la table",
+     "does": "Deux branches pointues qui se croisent sur un pivot. Le compas reporte une longueur selon une proportion choisie. C’est ainsi qu’un dessin devient plus grand ou plus petit.",
+     "rows": [
+      {
+       "k": "row_sheet",
+       "v": "Codex Forster I, folio 4 recto, Florence, 1505. Victoria and Albert Museum, National Art Library, Londres."
+      },
+      {
+       "k": "row_ours",
+       "v": "La position du pivot. Nous l’avons choisie: les longues pointes s’ouvrent deux fois plus que les courtes."
+      },
+      {
+       "k": "row_built",
+       "v": "Pour ce dessin, aucun instrument conservé n’est connu, ni aucun document qui en mentionne la fabrication."
+      }
+     ],
+     "pic": {
+      "pic": "proportional_compass",
+      "tag": "tag_reconstruction",
+      "alt": "Le compas de réduction debout sur ses deux longues pointes, sur un sol carrelé: deux branches sombres se croisent sur un pivot, avec deux pointes courtes au-dessus."
+     }
+    },
+    {
+     "id": "camera-obscura",
+     "name": "La chambre noire",
+     "place": "Salle des machines",
+     "does": "Une pièce sombre avec un seul petit trou. Les rayons de lumière se croisent dans le trou et projettent l’image à l’envers sur le papier. Il étudiait ainsi comment l’œil voit.",
+     "rows": [
+      {
+       "k": "row_sheet",
+       "v": "Manuscrit D, folio 8 recto, Bibliothèque de l’Institut de France, Paris. La note décrit un petit trou rond dans une fine plaque de fer. Le carnet est daté de 1508 à 1509 environ."
+      },
+      {
+       "k": "row_ours",
+       "v": "La petite chambre elle-même. La note ne donne ni la profondeur de la pièce ni la taille du trou."
+      },
+      {
+       "k": "row_built",
+       "v": "La note décrit une expérience. Elle ne montre pas qu’il a inventé la chambre noire."
+      }
+     ],
+     "pic": {
+      "pic": "camera_obscura",
+      "tag": "tag_reconstruction",
+      "alt": "La chambre noire seule sur un sol carrelé: une boîte en bois, ouverte d’un côté pour montrer l’intérieur. Une bougie brûle devant la paroi au petit trou, et dans la boîte, son image apparaît à l’envers."
+     }
+    }
+   ]
+  },
+  {
+   "type": "group",
+   "id": "war",
+   "nav": "Machine de guerre",
+   "h": "Une machine de guerre",
+   "intro": "Une seule machine de guerre se trouve dans la salle, comme objet d’exposition: elle ne peut pas tirer.",
+   "items": [
+    {
+     "id": "organ-gun",
+     "name": "Le canon à plusieurs fûts",
+     "place": "Salle des machines",
+     "does": "Trente-trois canons en trois rangées sur un même bâti. Selon sa note, onze tirent à la fois. Quand le bâti tourne, la rangée suivante passe en haut.",
+     "rows": [
+      {
+       "k": "row_sheet",
+       "v": "Codex Atlanticus, folio 157 recto, Veneranda Biblioteca Ambrosiana, Milan. La feuille est datée de 1480 à 1482 environ."
+      },
+      {
+       "k": "row_ours",
+       "v": "Les dimensions du chariot et sa vitesse. Ici, rien ne tire: les canons sont pleins."
+      },
+      {
+       "k": "row_built",
+       "v": "Nous n’avons trouvé aucun document sur une construction de son vivant."
+      }
+     ],
+     "pic": {
+      "pic": "organ_gun",
+      "tag": "tag_reconstruction",
+      "alt": "L’arme à trois rangées de canons seule sur un sol carrelé: un chariot sur deux roues à rayons porte un bâti avec des rangées de canons sombres, et une poignée sur le côté."
+     }
+    }
+   ]
+  },
+  {
+   "type": "feature",
+   "id": "mechanical-lion",
+   "nav": "Le lion",
+   "h": "Le lion automate",
+   "place": "La maison, contre le mur de la grande salle",
+   "paras": [
+    "Le lion est la seule machine ici sans feuille. Vasari a écrit en 1568 que le roi de France était venu à Milan, et que Léonard, prié de faire quelque chose d’étrange, avait fabriqué un lion. Ce lion, écrit-il, a fait plusieurs pas, puis a ouvert sa poitrine, pleine de lys."
+   ],
+   "rows": [
+    {
+     "k": "row_accounts",
+     "v": "Seulement d’anciens récits. Aucun dessin du lion n’est conservé, et les récits ne s’accordent pas sur le lieu, la date et le roi."
+    },
+    {
+     "k": "row_ours",
+     "v": "Tout l’intérieur: un ressort, un train de roues, des manivelles qui font bouger les pattes, une roue de compte qui arrête la marche et un loquet qui ouvre la poitrine."
+    },
+    {
+     "k": "row_built",
+     "v": "Les anciens récits disent qu’il marchait. Il n’en reste rien."
+    }
+   ],
+   "pic": {
+    "pic": "lion",
+    "tag": "tag_reconstruction",
+    "what": "construit en code d’après d’anciens récits",
+    "alt": "Le lion automate seul sur un sol carrelé: un lion de bois et de métal, la queue levée. Son flanc laisse voir les roues de son mécanisme."
+   }
+  },
+  {
+   "type": "notes",
+   "id": "not-built",
+   "nav": "Char, ponts, robot",
+   "h": "Le char d’assaut, les ponts et le chevalier robot",
+   "intro": "Le musée n’a construit aucune de ces machines. La plupart font partie de vingt-sept autres études de Léonard, qui donnent trop peu d’éléments pour construire. Quelques feuilles de ces études figurent parmi les pages de la table de lecture.",
+   "rows": [
+    {
+     "term": "Le chariot blindé, souvent appelé son char d’assaut",
+     "text": "Un chariot de combat couvert, sur une feuille isolée du British Museum, à Londres, qui la date de 1485 environ. Des personnes, à l’intérieur, tournent des manivelles, et la note parle de huit personnes. Selon la fiche du British Museum, il n’a pas été construit. La feuille ne donne aucune mesure, et la façon de diriger le chariot n’est pas établie."
+    },
+    {
+     "term": "Le pont de perches",
+     "text": "Codex Atlanticus, folios 69a recto et 71 verso, à la Veneranda Biblioteca Ambrosiana, à Milan. Le catalogue de référence les date de 1485 à 1487 environ. Ils montrent un pont de bois provisoire pour une armée. Sa note dit qu’il faut tresser le pont. Un musée de Vinci lit le dessin comme des troncs qui s’emboîtent et tiennent sans corde. Nous n’avons trouvé aucun document sur une construction de son vivant."
+    },
+    {
+     "term": "Le pont sur la Corne d’Or",
+     "text": "Manuscrit L, folio 66 recto, à la Bibliothèque de l’Institut de France, à Paris, un carnet daté de 1497 à 1504 environ. Un croquis avec une note: un pont de Péra à Constantinople, large de 40 braccia, à 70 au-dessus de l’eau et long de 600. Il date probablement de 1502. Il n’a pas été construit. En 2001, une passerelle pour piétons d’après ce croquis a été inaugurée en Norvège."
+    },
+    {
+     "term": "Les ailes battantes",
+     "text": "Le Manuscrit B, daté de 1487 à 1489 environ, contient plusieurs études de machines aux ailes battantes, dont les folios 74 verso et 80 recto. Sur l’une, le pilote est couché et actionne les ailes avec ses pieds. Sur une autre, il est debout, et l’envergure est de 40 braccia, environ 23 mètres. Aucun vol de son vivant n’est documenté."
+    },
+    {
+     "term": "Les études de planeur",
+     "text": "Le Codex sur le vol des oiseaux, de 1505, est conservé à la Biblioteca Reale, à Turin. Ses pages étudient les articulations des ailes, les cordes de commande et l’équilibre. Aucune n’est un plan complet de planeur."
+    },
+    {
+     "term": "Le chevalier mécanique, souvent appelé son robot",
+     "text": "Ce chevalier est une lecture moderne, qui réunit des études séparées du Codex Atlanticus, datées de 1495 à 1497 environ. Nous ne connaissons aucun dessin complet d’un chevalier, et aucune construction de son vivant n’est établie."
+    },
+    {
+     "term": "Le scaphandre",
+     "text": "Codex Arundel, folio 24 verso, à la British Library, à Londres, et Codex Atlanticus, folio 909 verso, daté de 1485 à 1487 environ. Les notes décrivent des tubes pour respirer, avec des joints de cuir et de fer, un masque de verre et des sacs. Elles ne donnent pas de moyen complet d’apporter l’air, et aucune descente sous l’eau avec cet équipement n’est établie."
+    },
+    {
+     "term": "Le chariot qui avance seul",
+     "text": "Codex Atlanticus, folio 812 recto, daté de 1478 environ, et de 1482 à 1484 environ par une étude plus ancienne. Aujourd’hui, des chercheurs pensent que des ressorts en spirale cachés le faisaient avancer, et y voient un chariot pour le théâtre. L’idée d’une voiture pour transporter des passagers n’est pas prouvée."
+    },
+    {
+     "term": "L’arbalète géante",
+     "text": "Codex Atlanticus, folio 149b recto, daté de 1485 environ. Il donne une envergure de 42 braccia, soit environ 24 à 25 mètres. La feuille ne dit pas clairement comment fabriquer cet arc immense, et aucune construction de son vivant n’est documentée."
+    }
+   ]
+  },
+  {
+   "type": "faq",
+   "id": "questions",
+   "nav": "Questions",
+   "h": "Questions fréquentes",
+   "items": [
+    {
+     "q": "Qu’a inventé Léonard de Vinci?",
+     "a": "Il est difficile de citer une machine qui soit à coup sûr son idée et à coup sûr construite. Il en a dessiné beaucoup, mais pour presque toutes, nos recherches n’ont trouvé aucun document disant qu’il en a construit une. Plusieurs existaient avant lui: les écluses de canal, la vis d’Archimède, une plaque à vent décrite par Alberti en 1450. Les ouvrages de référence lui attribuent souvent la porte d’écluse à deux battants en angle. Ses feuilles montrent sa réflexion sur un problème: une vis aérienne en lin amidonné, un parachute avec ses mesures, un roulement à huit billes de bois."
+    },
+    {
+     "q": "Léonard de Vinci a-t-il inventé l’hélicoptère?",
+     "a": "Il a dessiné une vis aérienne, une voile en spirale sur un mât, et a écrit qu’elle s’élèverait en tournant vite. La feuille n’indique aucun entraînement pour la grande vis. Pour une petite maquette en papier, elle donne un ressort: une lame de fer tordue. Aucun document connu ne dit qu’elle a été construite de son vivant. Nous estimons qu’une machine de 400 kilogrammes aurait besoin d’au moins dix-neuf kilowatts pour décoller. L’appeler hélicoptère, c’est dire plus que la feuille."
+    },
+    {
+     "q": "La machine volante de Léonard de Vinci a-t-elle fonctionné?",
+     "a": "Aucun document connu ne dit qu’il a volé lui-même. Ses études d’ailes battantes ne donnent aucun plan complet pour construire. Dans son carnet sur le vol des oiseaux, il annonce un vol, écrit au futur. Ce n’est pas le récit d’un vol."
+    },
+    {
+     "q": "Léonard de Vinci a-t-il inventé le char d’assaut?",
+     "a": "Il a dessiné un chariot blindé: un chariot couvert, que des personnes font avancer en tournant des manivelles à l’intérieur. Selon le British Museum, qui conserve le dessin, il n’a pas été construit. Appeler ce dessin un char d’assaut ne montre pas qu’il a inventé le char moderne."
+    },
+    {
+     "q": "Léonard de Vinci a-t-il conçu un pont?",
+     "a": "Oui, plus d’un. Deux feuilles du Codex Atlanticus, datées de 1485 à 1487 environ, montrent un pont de bois provisoire pour une armée. Un musée de Vinci y voit des troncs qui se tiennent entre eux sans corde. Un croquis du Manuscrit L montre un pont de Péra à Constantinople, au-dessus de la Corne d’Or. Il n’a pas été construit. En 2001, une passerelle pour piétons d’après ce croquis a été inaugurée en Norvège."
+    },
+    {
+     "q": "Où sont aujourd’hui les carnets de Léonard de Vinci?",
+     "a": "Les originaux sont conservés dans quelques bibliothèques et collections, et aucun dans ce musée. Le Codex Atlanticus, avec ses 1 119 feuillets, est à la Veneranda Biblioteca Ambrosiana, à Milan. Douze carnets sont à la Bibliothèque de l’Institut de France, à Paris, deux à la Biblioteca Nacional de España, à Madrid, et cinq, reliés en trois volumes, au Victoria and Albert Museum, à Londres. Environ 550 feuillets sont dans la Royal Collection, à Windsor. Le Codex Arundel est à la British Library, à Londres, le Codex sur le vol des oiseaux à la Biblioteca Reale, à Turin. Un carnet appartient à un particulier. À la table de lecture de ce musée, vous feuilletez des pages photographiées, et chacune indique le carnet d’où elle vient."
+    }
+   ]
+  },
+  {
+   "type": "sources",
+   "id": "sources",
+   "nav": "Sources",
+   "h": "Sources",
+   "intro": "Les faits de cette page viennent des recherches faites pour l’aile Léonard du musée. Nous les avons comparés aux catalogues des institutions qui conservent les originaux et aux éditions numériques des carnets, quand nous avons pu les lire. Dans le musée, chaque machine vue de près a sa fiche: la feuille, ce que la feuille ne dit pas, le calcul et les sources.",
+   "holders_h": "Où sont conservés les quatorze dessins",
+   "holders": [
+    {
+     "name": "Veneranda Biblioteca Ambrosiana",
+     "place": "Milan",
+     "text": "Codex Atlanticus, folios 6 recto, 108 recto, 157 recto, 656a recto, 675 recto, 1058 recto et 1058 verso."
+    },
+    {
+     "name": "Bibliothèque de l’Institut de France",
+     "place": "Paris",
+     "text": "Manuscrit B, folios 49 recto et 83 verso. Manuscrit D, folio 8 recto. Manuscrit I, folio 48 verso."
+    },
+    {
+     "name": "Biblioteca Nacional de España",
+     "place": "Madrid",
+     "text": "Codex Madrid I, folios 20 verso et 114 recto."
+    },
+    {
+     "name": "Victoria and Albert Museum, National Art Library",
+     "place": "Londres",
+     "text": "Codex Forster I, folio 4 recto."
+    }
+   ],
+   "notes": [
+    "Pour le lion: Vasari, Le vite, dans l’édition de 1568, et des récits plus tardifs.",
+    "Pour les machines dessinées que nous n’avons pas construites: le British Museum et la British Library, à Londres, la Biblioteca Reale, à Turin, et les deux bibliothèques nommées plus haut pour le Codex Atlanticus et pour les Manuscrits B et L.",
+    "Les dates des feuilles du Codex Atlanticus suivent le catalogue de référence du codex, tel que l’imprime l’édition du Museo Galileo. Les dates des carnets de Paris et du Codex Forster I sont celles des institutions qui les conservent.",
+    "Le musée nomme ces institutions parce qu’elles conservent les originaux. Il est indépendant de toutes.",
+    "Les images de cette page sont tirées du film du musée: des pièces et des machines construites en code. Le livre de la table de lecture est un fac-similé imprimé du Manuscrit B, de 1883, du domaine public par ancienneté."
+   ],
+   "editions_h": "Où lire les feuilles vous-même",
+   "editions": [
+    {
+     "name": "Veneranda Biblioteca Ambrosiana",
+     "text": "Le Codex Atlanticus, feuille par feuille, avec une année pour chacune.",
+     "links": [
+      {
+       "label": "Le Codex Atlanticus en ligne",
+       "href": "https://codex-atlanticus.ambrosiana.it/"
+      }
+     ]
+    },
+    {
+     "name": "Bibliothèque de l’Institut de France",
+     "text": "Ses propres pages sur les carnets de Paris, en français.",
+     "links": [
+      {
+       "label": "Manuscrit B",
+       "href": "https://minerva.bibliotheque-institutdefrance.fr/expositions/exhibitions/2-carnet-b2"
+      },
+      {
+       "label": "Manuscrit D",
+       "href": "https://minerva.bibliotheque-institutdefrance.fr/expositions/exhibitions/5-carnet-d"
+      },
+      {
+       "label": "Manuscrit I",
+       "href": "https://minerva.bibliotheque-institutdefrance.fr/expositions/exhibitions/10-carnet-i2"
+      },
+      {
+       "label": "Manuscrit L",
+       "href": "https://minerva.bibliotheque-institutdefrance.fr/expositions/exhibitions/12-carnet-l2"
+      }
+     ]
+    },
+    {
+     "name": "Biblioteca Leonardiana",
+     "text": "La bibliothèque de Vinci. Son édition numérique, e-Leo, montre chaque feuille avec sa transcription, en italien.",
+     "links": [
+      {
+       "label": "e-Leo, ouvert à la feuille du parachute",
+       "href": "https://www.leonardodigitale.com/sfoglia/codice-atlantico/1058-v/"
+      }
+     ]
+    },
+    {
+     "name": "Museo Galileo",
+     "text": "Son édition du Codex Atlanticus, réalisée avec l’Ambrosiana, reproduit l’entrée du catalogue pour chaque feuille.",
+     "links": [
+      {
+       "label": "L’édition, ouverte à la feuille du parachute",
+       "href": "https://teche.museogalileo.it/leonardo/foglio/index.html?lang=it&num=ATL.2116.1"
+      }
+     ]
+    }
+   ],
+   "contact": "Si une date, un folio ou un lieu de conservation est faux, écrivez-nous et nous le corrigerons.",
+   "contact_link": "Voir les mentions légales",
+   "what_link": "Ce qu’est ce musée"
+  },
+  {
+   "type": "close",
+   "id": "enter",
+   "nav": "",
+   "h": "Voir les machines dans le musée",
+   "p": "La porte ouvre l’aile Léonard à son début. La salle des tableaux vient d’abord, la salle des machines plus loin dans le parcours.",
+   "door": {
+    "text": "Entrer dans le musée",
+    "note": "Entrée libre, sans compte."
+   }
+  }
+ ]
+}

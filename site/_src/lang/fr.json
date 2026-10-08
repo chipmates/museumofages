@@ -4,7 +4,47 @@
   "for_the_writer": [],
   "gone": [],
   "banned": [],
-  "number_words": [],
-  "units": [],
-  "stop": []
+  "number_words": [
+    "zéro",
+    "un",
+    "deux",
+    "trois",
+    "quatre",
+    "cinq",
+    "six",
+    "sept",
+    "huit",
+    "neuf",
+    "dix",
+    "onze",
+    "douze",
+    "treize",
+    "quatorze",
+    "quinze",
+    "seize",
+    "dix-sept",
+    "dix-huit",
+    "dix-neuf",
+    "vingt"
+  ],
+  "units": [
+    "janvier",
+    "février",
+    "mars",
+    "avril",
+    "mai",
+    "juin",
+    "juillet",
+    "août",
+    "septembre",
+    "octobre",
+    "novembre",
+    "décembre"
+  ],
+  "stop": [
+    "étape"
+  ],
+  "trust_middle": "Open source",
+  "open_word": "open[ -]source|logiciel libre|code source ouvert",
+  "of_the_licence": "licence open[ -]source|licence de logiciel libre"
 }

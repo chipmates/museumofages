@@ -1,0 +1,420 @@
+{
+ "paintings": [
+  {
+   "title": "Battesimo di Cristo"
+  },
+  {
+   "title": "Annunciazione"
+  },
+  {
+   "title": "Ritratto di Ginevra de’ Benci"
+  },
+  {
+   "title": "Ritratto di Ginevra de’ Benci"
+  },
+  {
+   "title": "Madonna del Garofano"
+  },
+  {
+   "title": "Madonna Benois"
+  },
+  {
+   "title": "San Girolamo nel deserto"
+  },
+  {
+   "title": "Adorazione dei Magi"
+  },
+  {
+   "title": "Annunciazione, tavola di predella"
+  },
+  {
+   "title": "Vergine delle Rocce, versione del Louvre"
+  },
+  {
+   "title": "Ritratto di Musico"
+  },
+  {
+   "title": "Dama con l’ermellino"
+  },
+  {
+   "title": "Ritratto di dama, detta la Belle Ferronnière"
+  },
+  {
+   "title": "Madonna Litta"
+  },
+  {
+   "title": "Cartone di sant’Anna, detto di Burlington House"
+  },
+  {
+   "title": "Madonna dei Fusi, versione Buccleuch"
+  },
+  {
+   "title": "Madonna dei Fusi, versione Lansdowne"
+  },
+  {
+   "title": "La lotta per lo stendardo, dalla Battaglia di Anghiari"
+  },
+  {
+   "title": "La Gioconda"
+  },
+  {
+   "title": "Vergine delle Rocce, versione di Londra"
+  },
+  {
+   "title": "Sant’Anna, la Vergine e il Bambino con l’agnellino"
+  },
+  {
+   "title": "Salvator Mundi"
+  },
+  {
+   "title": "San Giovanni Battista"
+  },
+  {
+   "title": "La Scapigliata"
+  },
+  {
+   "title": "Bacco, un tempo San Giovanni Battista"
+  }
+ ],
+ "machines": [
+  {
+   "name": "Paracadute a piramide",
+   "sheet": "Codice Atlantico 1058v"
+  },
+  {
+   "name": "Gru girevole",
+   "sheet": "Manoscritto B 49r"
+  },
+  {
+   "name": "Anemometro a lamelle",
+   "sheet": "Codice Atlantico 675r"
+  },
+  {
+   "name": "Vite aerea",
+   "sheet": "Manoscritto B 83v"
+  },
+  {
+   "name": "Chiusa a porte battenti",
+   "sheet": "Codice Atlantico 656r, dettaglio a"
+  },
+  {
+   "name": "Studio di un volano bilanciato",
+   "sheet": "Codice Madrid I 114r"
+  },
+  {
+   "name": "Esperimenti con la camera oscura",
+   "sheet": "Manoscritto D 8r"
+  },
+  {
+   "name": "Vite di Archimede e sollevamento dell’acqua",
+   "sheet": "Codice Atlantico 6r"
+  },
+  {
+   "name": "Laminatoio per lo stagno",
+   "sheet": "Manoscritto I 48v"
+  },
+  {
+   "name": "Tornio per forare a moto alterno",
+   "sheet": "Codice Atlantico 108r"
+  },
+  {
+   "name": "Cuscinetto volvente reggispinta",
+   "sheet": "Codice Madrid I 20v"
+  },
+  {
+   "name": "Mitragliera a tre file di canne",
+   "sheet": "Codice Atlantico 157r"
+  },
+  {
+   "name": "Inclinometro a pendolo",
+   "sheet": "Codice Atlantico 1058r"
+  },
+  {
+   "name": "Compasso di proporzione a vite",
+   "sheet": "Codice Forster I 4r"
+  },
+  {
+   "name": "Leone meccanico"
+  }
+ ],
+ "topics": [
+  {
+   "name": "Volo"
+  },
+  {
+   "name": "Macchine"
+  },
+  {
+   "name": "Parti delle macchine"
+  },
+  {
+   "name": "Guerra e armi"
+  },
+  {
+   "name": "Acqua in movimento"
+  },
+  {
+   "name": "Fiumi e macchine per l’acqua"
+  },
+  {
+   "name": "Chiese e cupole"
+  },
+  {
+   "name": "Città e fortezze"
+  },
+  {
+   "name": "Luce e occhio"
+  },
+  {
+   "name": "Consigli ai pittori"
+  },
+  {
+   "name": "Volti e corpi"
+  },
+  {
+   "name": "I cavalli e il Gran Cavallo"
+  },
+  {
+   "name": "Piante e animali"
+  },
+  {
+   "name": "La terra e il cielo"
+  },
+  {
+   "name": "Geometria e decorazioni"
+  },
+  {
+   "name": "Le sue parole"
+  },
+  {
+   "name": "Lettere e vita di Leonardo"
+  }
+ ],
+ "shelf": [
+  {
+   "title": "Il libro delle macchine",
+   "name": "Codice Madrid I"
+  },
+  {
+   "title": "Fortezze, mappe e geometria",
+   "name": "Codice Madrid II"
+  },
+  {
+   "title": "Il volo degli uccelli",
+   "name": "Codice sul volo degli uccelli"
+  },
+  {
+   "title": "Imparare le parole",
+   "name": "Codice Trivulziano"
+  },
+  {
+   "title": "Prospettiva",
+   "name": "Manoscritto A"
+  },
+  {
+   "title": "La raccolta più grande",
+   "name": "Codice Atlantico, estratti"
+  },
+  {
+   "title": "Appunti di quarant’anni",
+   "name": "Codice Arundel"
+  }
+ ],
+ "sheets": [
+  {
+   "title": "Ossa del piede"
+  },
+  {
+   "title": "Ossa e muscoli della spalla"
+  },
+  {
+   "title": "Gola e muscoli della gamba"
+  },
+  {
+   "title": "Anatomia superficiale della spalla e del collo"
+  },
+  {
+   "title": "Ossa del braccio e della gamba"
+  },
+  {
+   "title": "Muscoli del braccio, e vene del braccio e del tronco"
+  },
+  {
+   "title": "Muscoli della gamba e muscoli tra le costole"
+  },
+  {
+   "title": "Colonna vertebrale"
+  },
+  {
+   "title": "Ossa e muscoli della gamba"
+  },
+  {
+   "title": "Ossa, muscoli e tendini della mano"
+  },
+  {
+   "title": "Muscoli e tendini della pianta del piede"
+  },
+  {
+   "title": "Ossa del piede e una spalla"
+  },
+  {
+   "title": "Scheletro"
+  },
+  {
+   "title": "Muscoli della spalla e del braccio, e ossa del piede"
+  },
+  {
+   "title": "Muscoli della gamba"
+  },
+  {
+   "title": "Muscoli della parte alta della colonna vertebrale"
+  },
+  {
+   "title": "Tendini della parte bassa della gamba e del piede"
+  },
+  {
+   "title": "Muscoli e tendini della parte bassa della gamba e del piede"
+  },
+  {
+   "title": "Vene del volto e un torso"
+  },
+  {
+   "title": "Note sui sensi e sul sistema nervoso"
+  },
+  {
+   "title": "Cuore paragonato a un seme"
+  },
+  {
+   "title": "Utero di una mucca gravida"
+  },
+  {
+   "title": "Due vedute del cranio"
+  },
+  {
+   "title": "Cranio sezionato"
+  },
+  {
+   "title": "Anatomia del collo"
+  },
+  {
+   "title": "Feto e muscoli attaccati al bacino"
+  },
+  {
+   "title": "Feto nel grembo"
+  },
+  {
+   "title": "Studi di nervi e muscoli, del cuore e di ottica"
+  },
+  {
+   "title": "Valvola aortica"
+  }
+ ],
+ "periods": [
+  "Vinci e Firenze, dal 1452 al 1481",
+  "Milano, dal 1482 al 1499",
+  "Venezia, Firenze e la Romagna, dal 1500 al 1506",
+  "Di nuovo Milano, dal 1506 al 1513",
+  "Roma, dal 1513 al 1516",
+  "Amboise, dal 1516 al 1519",
+  "Dopo il 1519, ciò che è rimasto"
+ ],
+ "people": [
+  "Andrea del Verrocchio",
+  "Ludovico Sforza, detto il Moro",
+  "Salaì",
+  "Melzi",
+  "Cesare Borgia",
+  "Charles d’Amboise",
+  "Francesco I"
+ ],
+ "holders": [
+  {
+   "name": "Gallerie degli Uffizi",
+   "note": "Firenze"
+  },
+  {
+   "name": "National Gallery of Art",
+   "note": "Washington"
+  },
+  {
+   "name": "Bayerische Staatsgemäldesammlungen, Alte Pinakothek",
+   "note": "Monaco di Baviera"
+  },
+  {
+   "name": "Museo statale Ermitage",
+   "note": "San Pietroburgo"
+  },
+  {
+   "name": "Pinacoteca Vaticana",
+   "note": "Città del Vaticano"
+  },
+  {
+   "name": "Musée du Louvre",
+   "note": "Parigi"
+  },
+  {
+   "name": "Veneranda Biblioteca Ambrosiana",
+   "note": "Milano"
+  },
+  {
+   "name": "Muzeum Narodowe w Krakowie, Muzeum Książąt Czartoryskich",
+   "note": "Cracovia"
+  },
+  {
+   "name": "National Gallery",
+   "note": "Londra"
+  },
+  {
+   "name": "Collezione Buccleuch",
+   "note": "in prestito alle National Galleries of Scotland"
+  },
+  {
+   "name": "Kenneth C. Griffin Collection",
+   "note": "in prestito al Metropolitan Museum of Art"
+  },
+  {
+   "name": "Collezione particolare",
+   "note": "luogo attuale non confermato"
+  },
+  {
+   "name": "Galleria Nazionale di Parma, Complesso della Pilotta",
+   "note": "Parma"
+  },
+  {
+   "name": "Bibliothèque de l’Institut de France",
+   "note": "Parigi"
+  },
+  {
+   "name": "Biblioteca Nacional de España",
+   "note": "Madrid"
+  },
+  {
+   "name": "Biblioteca Reale",
+   "note": "Torino"
+  },
+  {
+   "name": "Biblioteca Trivulziana, Castello Sforzesco",
+   "note": "Milano"
+  },
+  {
+   "name": "British Library",
+   "note": "Londra"
+  },
+  {
+   "name": "Royal Collection",
+   "note": "Windsor"
+  },
+  {
+   "name": "Museo del Cenacolo Vinciano, Santa Maria delle Grazie",
+   "note": "Milano"
+  },
+  {
+   "name": "Victoria and Albert Museum, National Art Library",
+   "note": "Londra"
+  },
+  {
+   "name": "Petit Palais, Musée des Beaux-Arts de la Ville de Paris",
+   "note": "Parigi"
+  }
+ ]
+}

@@ -1,0 +1,65 @@
+{
+ "_note": "The landing film's words in this language, by plate index and WORDS key: sky-ages.js reads its words from code, so these wait for a reader.",
+ "PLATES": {
+  "0": {
+   "line": "Une grotte en France. Des gens y dessinaient des ours.",
+   "when": "il y a environ 36 000 ans",
+   "place": "Une grotte en France",
+   "what": "Un ours, sur la paroi",
+   "note": "Dessiné par le musée. Pas une copie.",
+   "obj": "d’après les ours des cavernes tracés en rouge de la grotte Chauvet-Pont d’Arc, Ardèche"
+  },
+  "1": {
+   "place": "Égypte",
+   "what": "Une cuisse de taureau",
+   "when": "vers 2000 avant Jésus-Christ",
+   "obj": "d’après le couvercle du cercueil d’Idi, Assiout (Tübingen)"
+  },
+  "2": {
+   "place": "Chine",
+   "what": "Sept points et une ligne",
+   "when": "vers 670",
+   "obj": "d’après la carte de Dunhuang, une carte du ciel (Londres, British Library)"
+  },
+  "3": {
+   "place": "Bagdad",
+   "short": "Un ours",
+   "what": "Un ours, à la plume",
+   "obj": "d’après le Livre des étoiles fixes d’al-Soufi, dans sa plus ancienne copie (Doha)"
+  },
+  "4": {
+   "place": "Nuremberg",
+   "what": "Un ours, en gravure sur bois",
+   "obj": "d’après la Carte de l’hémisphère céleste Nord, de Dürer"
+  },
+  "5": {
+   "what": "Sept étoiles au-dessus d’un fleuve",
+   "obj": "d’après la Nuit étoilée sur le Rhône de Vincent van Gogh (Paris, Musée d’Orsay)"
+  },
+  "6": {
+   "place": "Un observatoire",
+   "what": "Seulement des étoiles, des grains sur verre",
+   "when": "vers 1890",
+   "obj": "à la manière des premières cartes photographiques du ciel"
+  }
+ },
+ "WORDS": {
+  "gap": "Ce qu’ils y voyaient n’est pas connu.",
+  "outside": "Dehors, ces sept étoiles.",
+  "drift": "Deux d’entre elles se sont déplacées d’environ deux degrés.",
+  "door": "Vous pouvez y entrer.",
+  "end": "Les étoiles sont restées. Les lieux en dessous ont changé.",
+  "offer": "{year}. Nous avons reconstruit {place}. Vous pouvez y entrer.",
+  "wing": "Nous avons reconstruit {place}.",
+  "wingLow": "{place}, {year}.",
+  "ad": "vers {n}",
+  "ago": "il y a environ {n} ans",
+  "bc": "vers {n} avant Jésus-Christ",
+  "today": "aujourd’hui",
+  "film": "Le film des sept étoiles",
+  "next": "Plus tard sur la frise des années",
+  "prev": "Plus tôt sur la frise des années",
+  "caption": "Le film du musée",
+  "more": "Voir le film en entier"
+ }
+}

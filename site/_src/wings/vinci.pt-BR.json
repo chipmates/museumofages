@@ -1,0 +1,754 @@
+{
+ "_note": "EVERY WORD OF THIS WING'S PAGE, one file per language with the same structure. The wing's entry in registry.json holds what is not a sentence (addresses, the door, dates, the pictures of the first screen and of the wall). NUMBERS: no digit is written here. {count:<name>} gives a number of the facts file (wings/<wing>.facts.json, under counts or set) in digits, {word:<name>} and {Word:<name>} give it as a word. {shows:place} and {shows:day} come from the registry. QUOTED TEXTS: {museum:<key>} gives one of the museum's own texts from museum-texts.json, word for word. A credit line (a key that ends in src) may carry a sheet's own numbers. A room with no plate joins the text of the room before it. holds: the picture index, one entry per group. Its names, sizes, holders and lists come from the facts file by the key under from. rooms.<n>.p is one or two sentences. holds.groups.<machines>.close is one stop shown up close (its three texts are the museum's own, by {museum:<key>}), .names gives a machine a plain name by its id (without one the inventory's name stands), .terms explains a group's terms once. landing.close is the picture of the landing's closing band. numbers: a number and its name, text is optional. out.line is the line beside the registry's out link, on the page about the museum.",
+ "meta": {
+  "title": "Leonardo da Vinci, museu digital: pinturas e invenções",
+  "description": "Um percurso pela última casa de Leonardo da Vinci, em Amboise: {count:pictures} quadros, a Mona Lisa quase em tamanho real, {count:machines} máquinas, os cadernos dele. Entrada franca, sem cadastro.",
+  "landing_today": "Já aberta: a última casa de Leonardo da Vinci, em Amboise.",
+  "share_alt": "O parafuso aéreo na sala das máquinas: um mastro de madeira com uma vela de linho em espiral, sob o sol baixo da tarde, com a sombra na parede. Uma reconstrução a partir de uma folha de Leonardo da Vinci, feita em código."
+ },
+ "first": {
+  "lede": "Um percurso de {count:stops} paradas e cerca de {count:works} obras para ver de perto: {count:pictures} quadros quase em tamanho real, {count:machines} máquinas, {count:sheets} folhas de anatomia e os cadernos dele.",
+  "piece": {
+   "title": "Um percurso pela ala",
+   "kind": "Do filme",
+   "what": "A sala das máquinas.",
+   "alt": "Um salão alto com teto de ripas de madeira e uma faixa de janelas, sob um sol baixo e quente. Em bases baixas, máquinas de madeira: comportas, o parafuso aéreo com a vela em espiral, um parafuso de Arquimedes e um laminador. Uma imagem do filme do museu. As máquinas são reconstruções em código.",
+   "beats": [
+    "A mesa de leitura.",
+    "A vida dele como linha no chão.",
+    "O pátio do Clos Lucé."
+   ],
+   "frames": [
+    {
+     "pic": {
+      "stem": "v-table",
+      "widths": [
+       960,
+       1600
+      ],
+      "phone": {
+       "stem": "v-table-m",
+       "widths": [
+        780,
+        1080
+       ]
+      }
+     },
+     "alt": "Uma sala escura com paredes de madeira e uma luminária pendente. Sob a luminária, um livro aberto está sobre uma mesa comprida, e há uma cadeira na frente dela. Uma imagem do filme do museu.",
+     "src": "O livro sobre a mesa é uma edição impressa de 1883, em domínio público por causa da idade.",
+     "focus": {
+      "phone": "50% 50%",
+      "wide": "50% 50%"
+     }
+    },
+    {
+     "pic": {
+      "stem": "v-line",
+      "widths": [
+       800,
+       1228
+      ],
+      "phone": {
+       "stem": "v-line-m",
+       "widths": [
+        480,
+        720
+       ]
+      }
+     },
+     "alt": "Um piso de pedra com anos gravados em linha, cada um ao lado de um pequeno botão redondo. O botão mais próximo é vermelho. Uma imagem do filme do museu.",
+     "src": "",
+     "focus": {
+      "phone": "50% 88%",
+      "wide": "50% 60%"
+     }
+    },
+    {
+     "pic": {
+      "stem": "v-court",
+      "widths": [
+       960,
+       1600
+      ],
+      "phone": {
+       "stem": "v-court-m",
+       "widths": [
+        780,
+        1080
+       ]
+      }
+     },
+     "alt": "Um pátio estreito entre muros altos de tijolo com cantos de pedra. Degraus sobem até a porta de uma casa de tijolos com uma pequena torre. Uma imagem do filme do museu.",
+     "src": "",
+     "focus": {
+      "phone": "50% 40%",
+      "wide": "50% 40%"
+     }
+    }
+   ],
+   "install": {
+    "name": "walk",
+    "script": "walk.js",
+    "pause": "Pausar",
+    "play": "Reproduzir",
+    "keep_kind": true
+   }
+  }
+ },
+ "landing": {
+  "piece": {
+   "title": "O grande salão do Clos Lucé",
+   "kind": "Reconstrução",
+   "what": "um cômodo da última casa de Leonardo da Vinci, reconstruído em código.",
+   "alt": "Uma sala com teto de vigas, piso de lajotas vermelhas e janelas de treliça. O sol da tarde cai sobre uma mesa comprida de cavaletes com dois modelos pequenos. Um leão mecânico fica junto à parede, à esquerda. Uma imagem do filme do museu. A sala é uma reconstrução feita em código.",
+   "src": "Imagem do filme do próprio museu"
+  },
+  "close": {
+   "pic": {
+    "stem": "start",
+    "widths": [
+     960,
+     1600
+    ],
+    "phone": {
+     "stem": "start-m",
+     "widths": [
+      800,
+      1200
+     ]
+    }
+   },
+   "title": "A ala vista do alto da escada",
+   "kind": "Construído em código",
+   "what": "a sala dos quadros atrás da parede de vidro, e o paraquedas no pátio. As salas são criação do próprio museu.",
+   "src": "Atrás do vidro estão reproduções dos quadros de Leonardo, cada uma com o crédito na ala.",
+   "alt": "Vista do alto de uma escada: uma galeria longa e baixa com uma parede de vidro e quadros emoldurados dentro, e ao lado um pátio quadrado sob uma alta pirâmide de linho sobre varas finas. Atrás, campos e névoa. Uma imagem do filme do museu."
+  }
+ },
+ "card": {
+  "kind": "Reconstrução",
+  "what": "a casa vista do jardim, sob o sol baixo",
+  "alt": "Uma casa alta de tijolos com cantos de pedra fica sobre um terraço murado, sob o sol baixo, embaixo de um galho com folhas de outono. Uma imagem do filme do museu. A casa é uma reconstrução feita em código.",
+  "src": "A partir de plantas e fotografias da casa."
+ },
+ "intro": {
+  "p": "A ala mostra {shows:place} no dia {shows:day}: a última casa de Leonardo, em um dia da vida dele. O dia está documentado: Antonio de Beatis o anotou no diário. Ele era secretário do cardeal Luigi d’Aragona, que veio visitar a casa naquele dia. Nós escolhemos a hora. Ao lado da casa ficam as salas do próprio museu para os quadros, as máquinas, os cadernos e as folhas de anatomia de Leonardo.",
+  "film": "Você vai de parada em parada por um filme, feito com o software do próprio museu. Na maioria das paradas, você pode chegar perto das obras.",
+  "stills": "As vistas das salas nesta página são imagens desse filme."
+ },
+ "rooms": [
+  {
+   "id": "pictures",
+   "h": "A sala dos quadros",
+   "note": "Onde o percurso começa",
+   "p": [
+    "Os quadros de Leonardo ficam em uma parede de mais de {count:wall_m} metros, mais ou menos na ordem em que ele os fez, cada um perto do tamanho real. A Mona Lisa está entre eles."
+   ],
+   "lamp": "low",
+   "plates": [
+    {
+     "pic": {
+      "stem": "v-picture-room",
+      "widths": [
+       800,
+       1600
+      ]
+     },
+     "title": "A parede dos quadros",
+     "kind": "Reproduções",
+     "what": "na frente, o Batismo de Cristo, de Verrocchio e Leonardo, depois a Anunciação, as duas na Galeria Uffizi.",
+     "alt": "Uma longa parede azul-escura com reproduções emolduradas de pinturas sob refletores. As duas mais próximas são o Batismo de Cristo e a Anunciação. Bancos de madeira ficam diante da parede. Uma imagem do filme do museu.",
+     "src": "Os quadros da parede são reproduções, cada uma com fonte e licença na etiqueta, na ala. {museum:it108}",
+     "src_to": "originals"
+    },
+    {
+     "pic": {
+      "stem": "v-scale-en",
+      "widths": [
+       960,
+       1600
+      ],
+      "phone": {
+       "stem": "v-scale-m",
+       "widths": [
+        560,
+        800
+       ]
+      }
+     },
+     "title": "A Dama com Arminho, de perto",
+     "kind": "Reprodução",
+     "what": "a pintura como a ala mostra de perto. A barra embaixo, à esquerda, marca dez centímetros na pintura. As letras no alto, à esquerda, são uma inscrição posterior no próprio painel.",
+     "src": "Acervo do Muzeum Narodowe w Krakowie, Museu Czartoryski, Cracóvia. Obra em domínio público. Reprodução do Wikimedia Commons.",
+     "alt": "Uma captura de tela da ala: a Dama com Arminho sobre fundo preto, uma jovem de vestido vermelho e azul segurando um arminho branco. No canto inferior esquerdo da pintura, uma barra marca dez centímetros."
+    }
+   ]
+  },
+  {
+   "id": "hall",
+   "h": "A sala das máquinas",
+   "note": "Máquinas que se movem",
+   "hang": "wide",
+   "p": [
+    "{Word:hall} máquinas ficam aqui, construídas em código a partir das folhas de Leonardo: o parafuso aéreo, comportas de eclusa, um parafuso de Arquimedes, um laminador, uma máquina de furar, um volante de inércia, um rolamento de esferas, um canhão de trinta e três canos e a câmara escura, num nicho escuro. Cada uma pode ser posta em movimento e vista de perto, com a folha de onde vem. Dois desses tipos, as comportas e o parafuso de Arquimedes, já eram usados antes da época dele."
+   ],
+   "plates": [
+    {
+     "pic": {
+      "stem": "v-flywheel",
+      "widths": [
+       960,
+       1600
+      ]
+     },
+     "title": "Na sala das máquinas",
+     "kind": "Reconstruções",
+     "what": "o volante de inércia de perto, atrás dele o canhão de trinta e três canos e, à esquerda, o rolamento de esferas.",
+     "alt": "O volante de inércia de perto: um eixo de madeira numa cruz de vigas com escoras, quatro braços no alto com bolas de pedra e uma pequena manivela. Atrás, o canhão de três fileiras de canos, com a roda de raios à frente. À esquerda, o rolamento de esferas, na base escura. Imagem do filme do museu."
+    }
+   ]
+  },
+  {
+   "id": "gallery",
+   "h": "A galeria longa",
+   "note": "Cadernos, o corpo, a vida dele",
+   "p": [
+    "A galeria tem a mesa de leitura, uma parede com as folhas de anatomia de Leonardo e as datas da vida dele, gravadas no chão. Cada uma das três é uma parada do percurso."
+   ],
+   "plates": [
+    {
+     "pic": {
+      "stem": "v-body",
+      "widths": [
+       800,
+       1600
+      ]
+     },
+     "title": "A parede das folhas de anatomia",
+     "kind": "Reproduções",
+     "what": "as folhas dele em quatro fileiras numa vitrine iluminada, com um móvel de gavetas embaixo. A sala é construída em código.",
+     "alt": "Uma parede escura revestida de madeira, com uma vitrine iluminada de desenhos emoldurados em quatro fileiras, um móvel de gavetas rasas embaixo e mais um desenho emoldurado à parte, à direita. Uma imagem do filme do museu.",
+     "src": "Folhas de Leonardo, do acervo da Royal Collection, em Windsor. Obras em domínio público, em reproduções do Wikimedia Commons."
+    },
+    {
+     "pic": {
+      "stem": "v-page-en",
+      "widths": [
+       960,
+       1600
+      ],
+      "phone": {
+       "stem": "v-page-m",
+       "widths": [
+        560,
+        800
+       ]
+      }
+     },
+     "title": "Uma página do caderno dele, de perto",
+     "kind": "Reprodução",
+     "what": "a vista de perto da mesa de leitura, na página do parafuso aéreo, no fac-símile impresso de {count:volume_year}. Todas as páginas do livro viram assim.",
+     "src": "Manuscrito B, fólio 83 verso, acervo da Bibliothèque de l’Institut de France, Paris, Ms 2173. Mostrado no fac-símile de Charles Ravaisson-Mollien, Les manuscrits de Léonard de Vinci, volume II, Paris, 1883. Domínio público.",
+     "alt": "Uma captura de tela da mesa de leitura da ala: a página do fac-símile impresso, vista de perto, uma folha em sépia com o desenho do parafuso aéreo e linhas de escrita espelhada, clara sobre a mesa escura."
+    }
+   ]
+  },
+  {
+   "id": "court",
+   "h": "O pátio",
+   "note": "A Última Ceia em tamanho real",
+   "p": [
+    "Lá fora, uma parede traz a Última Ceia. Ao lado ficam o paraquedas, o guindaste giratório e um anemômetro. O pátio é criação do próprio museu, não um lugar da vida de Leonardo."
+   ],
+   "plates": [
+    {
+     "pic": {
+      "stem": "v-supper",
+      "widths": [
+       800,
+       1600
+      ]
+     },
+     "title": "A Última Ceia no pátio",
+     "kind": "Reprodução",
+     "what": "o original é uma pintura mural no refeitório do convento de Santa Maria delle Grazie, em Milão. A parede do pátio é construída em código.",
+     "src": "{museum:supper_credit} {museum:it108}",
+     "alt": "Uma reprodução da Última Ceia ocupa uma parede clara num pátio: uma fileira de figuras numa mesa comprida, numa sala pintada. Uma imagem do filme do museu."
+    }
+   ]
+  },
+  {
+   "id": "house",
+   "h": "A casa",
+   "note": "O Clos Lucé, a última casa dele",
+   "p": [
+    "A última casa de Leonardo, o Clos Lucé, em Amboise, foi reconstruída em código a partir de plantas e fotografias. Você entra em um só cômodo, o grande salão: na mesa, dois instrumentos feitos a partir das folhas dele, e junto à parede, o leão mecânico. Você vê de fora a capela, a janela do escritório e o quarto norte."
+   ],
+   "plates": [
+    {
+     "pic": {
+      "stem": "v-lion",
+      "widths": [
+       800,
+       1600
+      ]
+     },
+     "title": "O grande salão",
+     "kind": "Reconstrução",
+     "what": "o salão sob o sol da tarde, com o leão mecânico junto à janela.",
+     "alt": "Um leão de madeira e metal, com engrenagens à mostra no flanco, está sobre lajotas vermelhas junto a uma janela de treliça, sob o sol da tarde. À direita, a ponta de um banco e de uma mesa. Uma imagem do filme do museu. A sala é uma reconstrução feita em código.",
+     "quote": {
+      "text": "{museum:lion_label}",
+      "from": "Da etiqueta no museu"
+     }
+    }
+   ]
+  }
+ ],
+ "stop": {
+  "id": "picture-room-lisa",
+  "grade": "documented",
+  "title": "{museum:lisa_chapter}",
+  "age_k": "A idade dele",
+  "age": "{museum:lisa_age}",
+  "stage": {
+   "pic": {
+    "stem": "v-lisa-m",
+    "widths": [
+     720,
+     1000
+    ],
+    "wide": {
+     "stem": "v-lisa",
+     "widths": [
+      800,
+      1280
+     ]
+    }
+   },
+   "alt": "Uma longa parede azul-escura com reproduções emolduradas sob refletores. A Mona Lisa está entre elas, e mais molduras seguem à esquerda dela. Uma imagem do filme do museu.",
+   "title": "Mona Lisa",
+   "kind": "Reprodução",
+   "what": "a Mona Lisa na sala dos quadros, com a parede dos quadros seguindo à esquerda dela. {museum:lisa_holder}",
+   "src": "{museum:lisa_credit} As outras molduras também têm reproduções, cada uma com a fonte e a licença na etiqueta dela, na ala."
+  },
+  "layers": [
+   {
+    "text": "{museum:lisa_line}"
+   },
+   {
+    "text": "{museum:lisa_drawer}"
+   },
+   {
+    "text": "{museum:lisa_record} {museum:lisa_size}"
+   }
+  ]
+ },
+ "holds": {
+  "lead": "Aqui está o que a ala mostra, na ordem do percurso: cada quadro, máquina, página e folha que você pode ver de perto.",
+  "groups": [
+   {
+    "id": "paintings",
+    "form": "wall",
+    "from": "paintings",
+    "h": "As pinturas",
+    "note": "Cada obra, o acervo e o tamanho",
+    "p": [
+     "{count:hung_works} obras estão expostas aqui: {count:hung_paintings} pinturas e {word:hung_drawings} desenhos. Um retrato, Ginevra de’ Benci, aparece duas vezes: a frente e o verso pintado.",
+     "A Mona Lisa tem menos de um metro de altura. A maioria é obra dele ou obra em que ele trabalhou. Uma delas é uma cópia feita por outros pintores, e a última é do ateliê dele.",
+     "São reproduções. A lista dá, para cada uma, quem guarda o original e o tamanho. Uma palavra depois do tamanho, como “controverso” ou “ateliê”, diz a quem a obra é atribuída. Ela não é um dos quatro graus de certeza do museu. Uma predela é um pequeno painel da base de um retábulo."
+    ],
+    "field": {
+     "h": "A Última Ceia",
+     "p": "É uma pintura mural, por isso não fica na sala dos quadros. Ela ocupa uma parede do pátio: {count:supper_w_m} por {count:supper_h_m} metros, do tamanho do original em Milão.",
+     "holder": "cenacolo",
+     "stop": "supper-wall"
+    }
+   },
+   {
+    "id": "machines",
+    "form": "set",
+    "from": "machines",
+    "h": "As máquinas",
+    "note": "{Word:machines}, feitas em código",
+    "p": [
+     "O museu constrói {word:machines} máquinas em código: {word:from_sheets} a partir das folhas dele e o leão a partir de relatos antigos. {Word:moving} delas se movem. Só o paraquedas fica parado.",
+     "Nenhum documento conhecido mostra que o parafuso aéreo tenha sido construído enquanto Leonardo vivia."
+    ],
+    "places": {
+     "hall": "Na sala das máquinas",
+     "court": "No pátio",
+     "house": "Na casa"
+    },
+    "after": "a partir de",
+    "still": "Fica parado.",
+    "no_sheet": "De relatos antigos. Não se conhece folha com o leão.",
+    "alt_each": "Reconstrução do museu, feita em código. Uma imagem do filme do museu.",
+    "terms": "Um códice é um livro encadernado de folhas escritas à mão. 656r quer dizer folha 656, frente. Um v quer dizer o verso, então 83v é o verso da folha 83.",
+    "names": {
+     "aerial-screw": "Parafuso aéreo",
+     "miter-lock-gates": "Comportas de eclusa",
+     "flywheel": "Volante de inércia",
+     "camera-obscura": "Câmara escura",
+     "water-lifting-screw": "Parafuso de Arquimedes",
+     "rolling-mill": "Laminador",
+     "lathe": "Máquina de furar",
+     "ball-bearing": "Rolamento de esferas",
+     "multi-barrel-gun": "Canhão de trinta e três canos",
+     "parachute": "Paraquedas",
+     "revolving-crane": "Guindaste giratório",
+     "anemometer": "Anemômetro",
+     "mechanical-lion": "Leão mecânico"
+    },
+    "close": {
+     "intro": "Aqui, é o parafuso aéreo.",
+     "quote": {
+      "text": "{museum:screw_label}",
+      "from": "Da etiqueta no museu"
+     },
+     "stage": {
+      "pic": {
+       "stem": "machine-poster-square",
+       "widths": [
+        1080
+       ],
+       "wide": {
+        "stem": "machine-poster-wide",
+        "widths": [
+         1200
+        ]
+       }
+      },
+      "alt": "Um modelo do parafuso aéreo, dividido por uma linha de giz vermelho. À esquerda, ele está desenhado em traços de giz vermelho. À direita, está construído em madeira e linho, sob o sol baixo, com a sombra na parede ao fundo.",
+      "title": "O parafuso aéreo",
+      "kind": "Reconstrução",
+      "what": "a partir da folha de Leonardo. Um modelo diferente do que está no museu.",
+      "src": "Construído em código para esta página",
+      "piece": {
+       "name": "aerial-screw",
+       "script": "machine.js",
+       "tag_a": "Traços",
+       "tag_b": "Construída",
+       "hint": "Arraste a linha para comparar e a máquina para girar.",
+       "slider_label": "Mostrar mais dos traços ou mais da máquina construída",
+       "canvas_label": "O parafuso aéreo em 3D. As setas esquerda e direita do teclado giram o modelo.",
+       "pause": "Pausar",
+       "play": "Deixar girar"
+      }
+     },
+     "title": "{museum:fly_chapter}",
+     "age_k": "A idade dele",
+     "age": "{museum:fly_age}",
+     "layers": [
+      {
+       "text": "{museum:fly_line}"
+      },
+      {
+       "text": "{museum:fly_drawer}"
+      },
+      {
+       "text": "{museum:fly_record} {museum:fly_record_folio}"
+      }
+     ],
+     "source": "Manuscrito B, fólio 83 verso, ou seja, o verso da folha 83. Número de inventário: Ms 2173. Cerca de 1487 a 1489.",
+     "rows": [
+      {
+       "k": "Na folha",
+       "v": "Uma superfície em espiral num mastro, com uma armação e uma base redonda. Uma só medida: oito braccia, uma medida antiga, da borda ao centro."
+      },
+      {
+       "k": "Nossa escolha",
+       "v": "A inclinação da espiral, a madeira e os encaixes, o apoio do eixo, o que a faz girar e a velocidade."
+      },
+      {
+       "k": "Onde está a folha",
+       "v": "Bibliothèque de l’Institut de France, Paris.",
+       "lang": "fr"
+      },
+      {
+       "k": "O que faz",
+       "v": "Gira cinco vezes por minuto, como no museu, e fica no chão."
+      }
+     ]
+    }
+   },
+   {
+    "id": "notebooks",
+    "form": "text",
+    "h": "Os cadernos",
+    "note": "Uma mesa e páginas para virar",
+    "p": [
+     "Na mesa de leitura está uma cópia impressa de {count:volume_year} com dois cadernos dele. Você pode virar todas as {count:volume_pages} páginas, e {count:volume_sides} delas mostram as próprias faces dos cadernos, na escrita espelhada dele, da direita para a esquerda.",
+     "{count:topics} temas reúnem {count:topic_pages} páginas dos cadernos dele. Uma estante guarda mais {word:shelf_books} livros com as anotações dele para folhear, {count:shelf_sides} faces ao todo."
+    ],
+    "plates": [
+     {
+      "pic": {
+       "stem": "v-codex",
+       "widths": [
+        800,
+        1600
+       ]
+      },
+      "title": "O livro sobre a mesa",
+      "kind": "Reprodução",
+      "what": "aberto na página do parafuso aéreo",
+      "src": "Charles Ravaisson-Mollien, Les manuscrits de Léonard de Vinci, volume II, Paris, 1883. Domínio público por causa da idade. Os cadernos estão na Bibliothèque de l’Institut de France, em Paris.",
+      "alt": "Um livro aberto sobre uma mesa de madeira, sob uma luz quente. A página da esquerda é texto impresso, e a da direita mostra uma página de caderno com um desenho. Uma imagem do filme do museu. As páginas são de uma cópia impressa de {count:volume_year}."
+     }
+    ],
+    "lists": [
+     {
+      "h": "Os temas",
+      "from": "topics",
+      "show": "name",
+      "n": "pages",
+      "unit": "páginas"
+     },
+     {
+      "h": "A estante",
+      "from": "shelf",
+      "show": "name",
+      "n": "sides",
+      "unit": "faces"
+     }
+    ],
+    "stop": "reading-table",
+    "terms": "Uma face é um dos dois lados de uma folha."
+   },
+   {
+    "id": "body",
+    "form": "text",
+    "h": "O corpo",
+    "note": "Anatomia e um coração de vidro",
+    "p": [
+     "Em uma parede da galeria longa estão {count:sheets} folhas de anatomia dele, reproduções de originais da Royal Collection, em Windsor.",
+     "Uma folha fica à parte: a válvula do coração. Ele desenhou o fluxo fazendo redemoinhos atrás das abas, e esses redemoinhos ajudam a fechar a válvula, como ele escreveu. Na parada dela, um filme de cerca de {count:heart_seconds} segundos mostra isso no modelo de vidro do próprio museu, feito a partir das anotações dele."
+    ],
+    "hang": "wide",
+    "plates": [
+     {
+      "pic": {
+       "stem": "v-heart",
+       "widths": [
+        800,
+        1600
+       ],
+       "phone": {
+        "stem": "v-heart-m",
+        "widths": [
+         600,
+         864
+        ]
+       }
+      },
+      "title": "O modelo de vidro da válvula do coração",
+      "kind": "Reconstrução",
+      "what": "o modelo do próprio museu, feito a partir das anotações de Leonardo. Uma imagem do filme.",
+      "alt": "Um recipiente de vidro com cintura estreita, sobre fundo preto. Grãos dourados e finos flutuam dentro dele e se juntam numa faixa clara na cintura. Uma imagem do filme que o museu fez do próprio modelo."
+     },
+     {
+      "pic": {
+       "stem": "v-valve",
+       "widths": [
+        640,
+        960
+       ]
+      },
+      "title": "A válvula aórtica",
+      "kind": "Reprodução",
+      "what": "a folha dele sobre a válvula, na moldura. A parede atrás dela é construída em código.",
+      "src": "{museum:valve_holder} {museum:sheet_credit}",
+      "alt": "Um desenho com passe-partout claro e moldura fina de madeira está sozinho numa parede escura: uma página com pequenos esboços do coração e linhas de escrita espelhada. Uma imagem do filme do museu."
+     }
+    ],
+    "lists": [
+     {
+      "h": "As folhas, por título",
+      "from": "sheets",
+      "show": "title",
+      "fold": true
+     }
+    ],
+    "stop": "body"
+   },
+   {
+    "id": "life",
+    "form": "text",
+    "h": "A vida dele",
+    "note": "Datas gravadas no chão",
+    "p": [
+     "A linha do tempo da vida dele tem {count:dates} datas. {Word:dates_floor} delas estão gravadas no chão da galeria longa, e uma data no chão abre a linha do tempo naquele ponto.",
+     "Ela é contada em {word:periods} partes e cita {word:people} pessoas próximas dele, do mestre dele ao rei da França."
+    ],
+    "lists": [
+     {
+      "h": "As partes",
+      "from": "periods",
+      "show": "self"
+     },
+     {
+      "h": "As pessoas",
+      "from": "people",
+      "show": "self"
+     }
+    ],
+    "stop": "line-early"
+   },
+   {
+    "id": "last-house",
+    "form": "text",
+    "h": "A casa e o túmulo",
+    "note": "O que era dele e o que não era",
+    "p": [
+     "Cômodo por cômodo: o que as fontes dizem e onde a ala fez uma escolha."
+    ],
+    "plates": [
+     {
+      "pic": {
+       "stem": "house",
+       "widths": [
+        800,
+        1600
+       ]
+      },
+      "title": "O Clos Lucé visto de fora",
+      "kind": "Reconstrução",
+      "what": "a casa vista da empena norte, do outro lado do terraço. No pequeno suporte em frente está uma das folhas dele, uma reprodução pequena demais para ler aqui.",
+      "src": "{museum:deluge_credit} Acervo da Royal Collection, Windsor, RCIN 912380.",
+      "alt": "Uma casa alta de tijolos com cantos de pedra e uma empena íngreme, vista do outro lado de um terraço calçado, sob o sol baixo, entre árvores com folhas de outono. Na frente, um pequeno suporte sobre um poste. Uma imagem do filme do museu. A casa é uma reconstrução feita em código."
+     }
+    ],
+    "rows": [
+     {
+      "k": "O grande salão",
+      "v": "Reconstruído a partir de plantas e fotografias. A lareira é de cerca de {count:chimney_year}.",
+      "stop": "hall"
+     },
+     {
+      "k": "Os móveis do salão",
+      "v": "A mesa, o banco, o baú, a cadeira, os banquinhos e os castiçais não eram dele. Uma casa como esta tinha coisas assim na época.",
+      "stop": "hall"
+     },
+     {
+      "k": "A pequena capela",
+      "v": "Vista de fora. Segundo a tradição, ela é de {count:chapel_year}, mas não é certo. As pinturas das paredes podem ser dos alunos dele, mas isso também não está estabelecido.",
+      "stop": "oratory"
+     },
+     {
+      "k": "A janela do escritório",
+      "v": "Vista de fora. A ala põe a visita de {shows:day} atrás desta janela. É a nossa hipótese: o diário não cita nenhum cômodo. Embaixo, você pode abrir uma folha dele, com um dilúvio.",
+      "stop": "study"
+     },
+     {
+      "k": "O quarto norte",
+      "v": "Visto de fora. O museu do Clos Lucé situa o quarto dele aqui. Isso é uma proposta, não um registro.",
+      "stop": "chamber"
+     },
+     {
+      "k": "O pátio do túmulo",
+      "v": "O pátio do museu, não o túmulo: uma laje clara com o nome dele. Ele pediu um túmulo na igreja do castelo, depois demolida. Ninguém sabe onde ele descansa. Daí o nome da parada: Presumido.",
+      "stop": "grave"
+     }
+    ]
+   }
+  ]
+ },
+ "numbers": [
+  {
+   "count": "stops",
+   "num": "{n}",
+   "term": "Paradas",
+   "text": ""
+  },
+  {
+   "count": "works",
+   "num": "cerca de {n}",
+   "term": "Obras",
+   "text": ""
+  },
+  {
+   "count": "pictures",
+   "num": "{n}",
+   "term": "Quadros",
+   "text": ""
+  },
+  {
+   "count": "machines",
+   "num": "{n}",
+   "term": "Máquinas",
+   "text": ""
+  },
+  {
+   "count": "sheets",
+   "num": "{n}",
+   "term": "Folhas de anatomia",
+   "text": ""
+  },
+  {
+   "count": "topic_pages",
+   "num": "{n}",
+   "term": "Páginas de cadernos",
+   "text": "Reunidas por tema na mesa de leitura."
+  },
+  {
+   "count": "volume_pages",
+   "num": "{n}",
+   "term": "Páginas para virar",
+   "text": "Todas no livro da mesa de leitura."
+  },
+  {
+   "count": "shelf_sides",
+   "num": "{n}",
+   "term": "Faces na estante",
+   "text": "Nos livros com as anotações dele, na estante ao lado da mesa."
+  },
+  {
+   "count": "dates",
+   "num": "{n}",
+   "term": "Datas da vida dele",
+   "text": ""
+  }
+ ],
+ "holders": {
+  "p": "Na ordem em que aparecem no percurso:",
+  "after": "O museu cita estes museus, bibliotecas e coleções porque eles guardam os originais, e por nenhum outro motivo. O museu é independente de todos eles."
+ },
+ "out": {
+  "line": "Nosso outro projeto, em inglês e alemão: a vida de Leonardo da Vinci como história e uma conversa com um Leonardo criado com IA."
+ },
+ "end": {
+  "id": "stars",
+  "dir": "O pátio do túmulo",
+  "note": "A última parada",
+  "h": "A ala termina sob as estrelas",
+  "p": "Na última parada, o pátio do túmulo, escurece e você olha para cima. As estrelas estão como estavam sobre o Clos Lucé às {word:hour} da noite de {shows:day}. Calculamos cada estrela a partir de um catálogo de estrelas, para o dia que o diário dá e para a hora que escolhemos. O pôr do sol mostra um fim de tarde comum de outubro, não aquele, e a estrela cadente é uma criação do museu.",
+  "plate": {
+   "pic": {
+    "stem": "grave-court",
+    "widths": [
+     560,
+     960,
+     1600
+    ]
+   },
+   "title": "O pátio do túmulo",
+   "kind": "Construído em código",
+   "what": "o pátio do próprio museu: a laje com o nome dele, uma placa com o sol baixo do dia da morte dele, num minuto que escolhemos, a pedra com o ano da escavação. À esquerda, um quadro de Ingres.",
+   "src": "Jean-Auguste Dominique Ingres, Morte de Leonardo da Vinci (François Ier reçoit les derniers soupirs de Léonard de Vinci), 1818. Petit Palais, musée des Beaux-Arts de la Ville de Paris. Imagem: CC0 Paris Musées.",
+   "alt": "Um pátio murado sob o sol baixo, uma árvore jovem com folhas de outono. No chão, uma laje clara com o nome Leonardo da Vinci. Atrás, uma placa em dois postes, com um bloco pequeno e a sombra longa dele, e uma pedra com um ano. À esquerda, um quadro em moldura escura. Uma imagem do filme do museu."
+  },
+  "sky": {
+   "pic": {
+    "stem": "sky",
+    "widths": [
+     960
+    ]
+   },
+   "title": "Olhar para cima",
+   "kind": "Construído em código",
+   "what": "as estrelas daquela noite sobre o Clos Lucé, o fim do percurso",
+   "alt": "Um céu noturno azul-escuro cheio de estrelas, com as copas escuras das árvores na borda de baixo."
+  }
+ }
+}

@@ -1,0 +1,65 @@
+{
+ "_note": "The landing film's words in this language, by plate index and WORDS key: sky-ages.js reads its words from code, so these wait for a reader.",
+ "PLATES": {
+  "0": {
+   "line": "Una grotta in Francia. Qui alcune persone disegnavano orsi.",
+   "when": "circa 36.000 anni fa",
+   "place": "Una grotta in Francia",
+   "what": "Un orso sulla roccia",
+   "note": "Disegnato dal museo. Non è una copia.",
+   "obj": "sul modello dei disegni rossi di orsi delle caverne nella grotta Chauvet-Pont d’Arc, Ardèche"
+  },
+  "1": {
+   "place": "Egitto",
+   "what": "Una zampa di toro",
+   "when": "circa 2000 a.C.",
+   "obj": "sul modello del coperchio del sarcofago di Idi, da Assiut (Tubinga)"
+  },
+  "2": {
+   "place": "Cina",
+   "what": "Sette punti e una linea",
+   "when": "circa 670",
+   "obj": "sul modello della carta stellare di Dunhuang (Londra, British Library)"
+  },
+  "3": {
+   "place": "Baghdad",
+   "short": "Un orso",
+   "what": "Un orso, disegnato a penna",
+   "obj": "sul modello del libro delle stelle fisse di al-Sūfi, nella sua copia più antica (Doha)"
+  },
+  "4": {
+   "place": "Norimberga",
+   "what": "Un orso, inciso su legno",
+   "obj": "sul modello della carta del cielo del nord di Dürer"
+  },
+  "5": {
+   "what": "Sette stelle sopra un fiume",
+   "obj": "sul modello della Notte stellata sul Rodano di Vincent van Gogh (Parigi, Musée d’Orsay)"
+  },
+  "6": {
+   "place": "Un osservatorio",
+   "what": "Solo stelle, granelli sul vetro",
+   "when": "circa 1890",
+   "obj": "nello stile delle prime mappe fotografiche del cielo"
+  }
+ },
+ "WORDS": {
+  "gap": "Che cosa ci vedessero, non si sa.",
+  "outside": "Fuori, queste sette stelle.",
+  "drift": "Due di queste si sono spostate di circa due gradi.",
+  "door": "Puoi entrare.",
+  "end": "Le stelle sono rimaste. I luoghi sotto di loro sono cambiati.",
+  "offer": "{year}. {place}, nella nostra ricostruzione. Puoi entrare.",
+  "wing": "{place}, nella nostra ricostruzione.",
+  "wingLow": "{place}, {year}.",
+  "ad": "circa {n}",
+  "ago": "circa {n} anni fa",
+  "bc": "circa {n} a.C.",
+  "today": "oggi",
+  "film": "Il film delle sette stelle",
+  "next": "Più avanti sulla linea del tempo",
+  "prev": "Più indietro sulla linea del tempo",
+  "caption": "Il film del museo",
+  "more": "Guarda il film intero"
+ }
+}

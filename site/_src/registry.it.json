@@ -1,0 +1,32 @@
+{
+ "_collections": [
+  {
+   "name": "Le vite",
+   "line": "Luoghi in cui persone del passato hanno vissuto e lavorato.",
+   "dates_key": "Vita"
+  }
+ ],
+ "vinci": {
+  "name": "Leonardo da Vinci",
+  "dates": "dal 1452 al 1519",
+  "shows": {
+   "place": "Clos Lucé ad Amboise",
+   "day": "10 ottobre 1517"
+  },
+  "film": {
+   "line": "L’ultima casa di Leonardo, nella nostra ricostruzione.",
+   "offer": "1517. L’ultima casa di Leonardo, nella nostra ricostruzione. Puoi entrare.",
+   "sky": "Questo cielo l’abbiamo calcolato noi.",
+   "held": "Clos Lucé ad Amboise, 10 ottobre 1517",
+   "inside": {
+    "line": "La nostra sala per le sue macchine."
+   }
+  },
+  "topics": [
+   {
+    "name": "Le invenzioni di Leonardo da Vinci",
+    "line": "Cosa ha disegnato Leonardo da Vinci, cosa è stato mai costruito e cosa era più antico di lui."
+   }
+  ]
+ }
+}

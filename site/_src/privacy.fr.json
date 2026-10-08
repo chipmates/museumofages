@@ -1,0 +1,94 @@
+{
+ "_note": "The privacy page's words, English. A section is a heading and a body. A body block is a string (one paragraph) or a list of strings (a bullet list). A link is written [label](target): the target is a full https address, a mailto address, or page:imprint for the legal notice of the same language. Every sentence describes what the site does: a change to its hosts, its storage or its scripts changes this page, in both languages.",
+ "title": "Confidentialité | Museum of Ages, un musée numérique",
+ "description": "Comment Museum of Ages, un musée numérique, traite les données: pas de compte, aucun cookie de notre part, et ce que font l’hébergeur et votre navigateur.",
+ "h1": "Confidentialité",
+ "lead": "Cette page explique ce que deviennent les données quand vous visitez Museum of Ages. En bref: vous n’avez besoin d’aucun compte, nous ne déposons aucun cookie, et rien de ce que nous gardons ne nous permet de vous reconnaître à votre prochaine visite. Cette page est une traduction, fournie pour votre commodité. La version allemande fait foi.",
+ "updated_label": "Dernière mise à jour",
+ "updated": "5 octobre 2026",
+ "sections": [
+  {
+   "h": "Qui est responsable",
+   "body": [
+    "Museum of Ages est géré par ChipMates gemeinnützige GmbH, Schusterstr. 50, 79098 Freiburg im Breisgau (Fribourg-en-Brisgau), Allemagne. Vous pouvez nous écrire à [contact@museumofages.org](mailto:contact@museumofages.org). Toutes les informations figurent dans les [mentions légales](page:imprint).",
+    "Nous n’avons pas désigné de délégué à la protection des données, car la loi ne nous y oblige pas (article 37 du règlement général sur la protection des données, ou RGPD, et § 38 du BDSG, la loi fédérale allemande sur la protection des données)."
+   ]
+  },
+  {
+   "h": "Quand vous ouvrez une page",
+   "body": [
+    "Pour vous montrer une page, votre navigateur la demande à notre hébergeur. Ses serveurs traitent alors votre adresse IP, l’adresse de la page, la date et l’heure, et ce que votre navigateur dit de lui-même: par exemple quel navigateur c’est, sa langue et la page d’où vous venez. Sans votre adresse IP, aucune page ne peut vous parvenir. Votre navigateur envoie de lui-même les autres informations avec chaque requête.",
+    "Notre hébergeur est Cloudflare, Inc., 101 Townsend St, San Francisco, CA 94107, États-Unis. Cloudflare diffuse ce site pour notre compte, dans le cadre d’un contrat de sous-traitance. Pour protéger son propre réseau, Cloudflare analyse aussi des données de connexion sous sa propre responsabilité, comme le décrit sa politique de confidentialité.",
+    "La base légale est l’article 6, paragraphe 1, point f), du RGPD. Notre intérêt légitime est de diffuser le site de façon fiable et de le protéger contre les attaques.",
+    "Nous ne tenons pas nos propres journaux de serveur. Cloudflare conserve jusqu’à 31 jours les données des requêtes que Cloudflare nous montre. Pour ses propres journaux, la [politique de confidentialité de Cloudflare](https://www.cloudflare.com/fr-fr/privacypolicy/) indique les règles selon lesquelles Cloudflare les efface, mais ne fixe aucun nombre de jours."
+   ]
+  },
+  {
+   "h": "Ce que nous pouvons voir",
+   "body": [
+    "Cloudflare nous montre des totaux pour le site: combien de requêtes sont arrivées et combien de données elles ont transférées, à peu près combien de visiteurs différents il y a eu, de quels pays venaient les requêtes, et combien Cloudflare en a bloqué. Ces totaux ne nomment personne.",
+    "Cloudflare nous montre aussi un échantillon de requêtes individuelles des 31 derniers jours. Chacune porte son adresse IP, l’adresse de la page, le pays et le nom du navigateur. L’échantillon contient des requêtes que Cloudflare a laissé passer, et d’autres que Cloudflare a bloquées ou vérifiées. Nous nous en servons pour repérer les attaques et les erreurs.",
+    "Nous ne faisons aucun comptage nous-mêmes. Ce site n’a aucun outil de mesure d’audience, n’affiche aucune publicité et ne charge aucun pixel de comptage ni aucun script d’autres entreprises."
+   ]
+  },
+  {
+   "h": "Cookies et stockage dans votre navigateur",
+   "body": [
+    "Nous ne déposons aucun cookie, et les pages de ce site n’enregistrent rien dans votre navigateur. Un cas relève de l’hébergeur: si la protection de Cloudflare vérifie votre navigateur avant de laisser passer une requête, Cloudflare dépose un cookie nommé cf_clearance, pour ne pas vous vérifier de nouveau tout de suite. Ce cookie ne sert qu’à cela.",
+    "L’aile que vous parcourez garde quelques courtes notes dans le stockage de votre navigateur, pour fonctionner comme vous l’avez laissée:",
+    [
+     "Votre réglage du son, activé ou coupé, et votre vitesse de marche si vous en avez choisi une.",
+     "Une marque qui indique que votre appareil reçoit une scène sous forme de film. Elle est posée une seule fois si l’appareil est trop lent pour la scène calculée en direct.",
+     "Pour l’onglet ouvert seulement: le fait que l’ouverture et une indication ont déjà été montrées, et une heure notée si l’aile a dû se recharger une fois après une erreur graphique."
+    ],
+    "Ces notes restent sur votre appareil tant que vous ne les effacez pas. Les notes de l’onglet ouvert disparaissent quand vous le fermez. Aucune n’est envoyée, ni à nous ni à personne d’autre. Pour les supprimer, effacez les données de ce site dans votre navigateur.",
+    "Nous ne demandons pas votre consentement pour ces notes, car elles sont nécessaires à une fonction que vous utilisez (§ 25, alinéa 2, numéro 2, du TDDDG, la loi allemande sur la protection des données dans les services numériques). La même règle couvre le cookie de l’hébergeur: sans lui, un navigateur déjà vérifié serait vérifié de nouveau sur chaque page."
+   ]
+  },
+  {
+   "h": "Rien venant d’autres entreprises",
+   "body": [
+    "Les polices, les images, les films et les scripts viennent de ce site et de notre propre espace de stockage chez le même hébergeur. Les pages ne chargent aucune police, carte, vidéo ou bouton d’autres entreprises."
+   ]
+  },
+  {
+   "h": "Liens vers d’autres sites",
+   "body": [
+    "Certaines pages renvoient vers d’autres sites, par exemple vers les musées, les bibliothèques et les collections qui conservent les originaux, et vers notre code source. Quand vous suivez un tel lien, vous quittez ce site, et les règles de l’autre site s’appliquent."
+   ]
+  },
+  {
+   "h": "Quand vous nous écrivez ou nous appelez",
+   "body": [
+    "Si vous nous envoyez un e-mail ou nous appelez, nous utilisons votre adresse ou votre numéro, et ce que vous nous dites, pour vous répondre. La base légale est l’article 6, paragraphe 1, point f), du RGPD: notre intérêt légitime à répondre. Nos e-mails passent par un fournisseur en Suisse, qui les traite pour notre compte. La Commission européenne a reconnu à la Suisse un niveau de protection adéquat. Nous effaçons l’échange quand l’affaire est close, sauf si la loi nous oblige à le garder plus longtemps."
+   ]
+  },
+  {
+   "h": "Données hors de l’Union européenne",
+   "body": [
+    "Cloudflare, une entreprise des États-Unis, répond aux requêtes depuis des serveurs du monde entier, en général depuis un serveur proche de vous. Pour les transferts vers les États-Unis, Cloudflare est certifiée selon le cadre de protection des données UE-États-Unis (Data Privacy Framework), que la Commission européenne a jugé adéquat le 10 juillet 2023. Notre contrat avec Cloudflare contient aussi les clauses contractuelles types européennes, pour tout transfert que ce cadre ne couvre pas. Le contrat est public: [l’avenant de Cloudflare sur le traitement des données](https://www.cloudflare.com/cloudflare-customer-dpa/)."
+   ]
+  },
+  {
+   "h": "Vos droits",
+   "body": [
+    "Le RGPD vous donne le droit de savoir quelles données vous concernant nous traitons (article 15), de faire rectifier des données fausses (article 16), de faire effacer des données (article 17), de faire limiter leur traitement (article 18) et, quand la loi le prévoit, de recevoir dans un format courant les données que vous nous avez fournies (article 20).",
+    "Vous pouvez aussi adresser une réclamation à une autorité de protection des données (article 77). L’autorité compétente pour nous est celle du Bade-Wurtemberg: Der Landesbeauftragte für den Datenschutz und die Informationsfreiheit Baden-Württemberg, Heilbronner Straße 35, 70191 Stuttgart, [www.baden-wuerttemberg.datenschutz.de](https://www.baden-wuerttemberg.datenschutz.de).",
+    "Pour le dire franchement: nous ne détenons presque rien que nous pourrions rechercher pour vous. Il n’y a pas de comptes, et les notes de l’aile sont sur votre appareil, pas chez nous.",
+    "Nous ne prenons aucune décision automatisée vous concernant et ne créons aucun profil."
+   ]
+  },
+  {
+   "h": "Votre droit d’opposition",
+   "body": [
+    "Vous pouvez à tout moment vous opposer, pour des raisons liées à votre situation particulière, à un traitement fondé sur notre intérêt légitime (article 21 du RGPD). Écrivez pour cela à l’adresse indiquée en haut de cette page."
+   ]
+  },
+  {
+   "h": "Quand cette page change",
+   "body": [
+    "Cette page décrit le site tel qu’il est aujourd’hui. Si quelque chose change, par exemple si nous commençons à compter nous-mêmes les visites, nous modifions d’abord cette page."
+   ]
+  }
+ ]
+}

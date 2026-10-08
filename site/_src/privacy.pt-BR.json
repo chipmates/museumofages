@@ -1,0 +1,94 @@
+{
+ "_note": "The privacy page's words, English. A section is a heading and a body. A body block is a string (one paragraph) or a list of strings (a bullet list). A link is written [label](target): the target is a full https address, a mailto address, or page:imprint for the legal notice of the same language. Every sentence describes what the site does: a change to its hosts, its storage or its scripts changes this page, in both languages.",
+ "title": "Privacidade | Museum of Ages, um museu digital",
+ "description": "Como o Museum of Ages, um museu digital, trata os dados: sem cadastro, sem cookies nossos, e o que o provedor de hospedagem e o seu navegador fazem.",
+ "h1": "Privacidade",
+ "lead": "Esta página diz o que acontece com os dados quando você visita o Museum of Ages. Em resumo: você não precisa de cadastro, não instalamos cookies, e não guardamos nada que nos permita reconhecer você na próxima visita. Esta página é uma tradução para sua conveniência. A versão juridicamente vinculante é a alemã.",
+ "updated_label": "Atualizado em",
+ "updated": "5 de outubro de 2026",
+ "sections": [
+  {
+   "h": "Quem é o responsável",
+   "body": [
+    "O Museum of Ages é operado pela ChipMates gemeinnützige GmbH, Schusterstr. 50, 79098 Freiburg im Breisgau, Alemanha. Você pode falar conosco pelo endereço [contact@museumofages.org](mailto:contact@museumofages.org). Os detalhes completos estão nas [informações legais](page:imprint).",
+    "Não designamos um encarregado da proteção de dados, porque a lei não exige isso no nosso caso (art. 37 do Regulamento Geral sobre a Proteção de Dados, conhecido como GDPR, e § 38 da BDSG, a Lei Federal de Proteção de Dados da Alemanha)."
+   ]
+  },
+  {
+   "h": "Quando você abre uma página",
+   "body": [
+    "Para você ver uma página, o seu navegador a pede ao nosso provedor de hospedagem. Os servidores do provedor tratam então o seu endereço IP, o endereço da página, a data e a hora e o que o navegador informa sobre si mesmo, como o tipo de navegador, o idioma e a página de onde você veio. Sem o seu endereço IP, nenhuma página chega até você. O navegador envia os outros dados por conta própria, a cada solicitação.",
+    "Nosso provedor de hospedagem é a Cloudflare, Inc., com sede em São Francisco, nos Estados Unidos (101 Townsend St, San Francisco, CA 94107). A Cloudflare disponibiliza este site em nosso nome, com base em um contrato de tratamento de dados. Para proteger a própria rede, a Cloudflare também analisa dados de conexão sob responsabilidade própria, como descreve a política de privacidade dela.",
+    "O fundamento jurídico é o art. 6º, nº 1, alínea f), do GDPR. Nosso interesse legítimo é disponibilizar o site de forma confiável e protegê-lo contra ataques.",
+    "Não mantemos registros de servidor próprios. A Cloudflare guarda por até 31 dias os dados de solicitações que nos mostra. Para os registros dela mesma, a [política de privacidade da Cloudflare](https://www.cloudflare.com/pt-br/privacypolicy/) indica as regras pelas quais ela apaga os dados, mas não um número fixo de dias."
+   ]
+  },
+  {
+   "h": "O que nós podemos ver",
+   "body": [
+    "A Cloudflare nos mostra totais do site: quantas solicitações chegaram e que volume de dados elas movimentaram, quantos visitantes diferentes houve, aproximadamente, de quais países vieram as solicitações e quantas a Cloudflare bloqueou. Esses totais não nomeiam ninguém.",
+    "A Cloudflare também nos mostra uma amostra de solicitações individuais dos últimos 31 dias. Cada uma traz o endereço IP, o endereço da página, o país e o nome do navegador. A amostra inclui tanto solicitações que a Cloudflare deixou passar quanto as que ela bloqueou ou verificou. Nós a usamos para encontrar ataques e falhas.",
+    "Nós mesmos não contamos nada. Este site não tem ferramenta de análise, não mostra publicidade e não carrega pixels de contagem ou scripts de outras empresas."
+   ]
+  },
+  {
+   "h": "Cookies e armazenamento no seu navegador",
+   "body": [
+    "Não instalamos cookies, e as páginas deste site não guardam nada no seu navegador. Há um caso que é do provedor de hospedagem: se a proteção da Cloudflare verificar o seu navegador antes de deixar passar uma solicitação, a Cloudflare instala um cookie chamado cf_clearance, para não verificar você de novo logo em seguida. O cookie serve só para isso.",
+    "A ala que você percorre guarda algumas anotações curtas no armazenamento do seu navegador, para funcionar do jeito que você a deixou:",
+    [
+     "A sua configuração de som, ligado ou desligado, e o seu ritmo de caminhada, se você escolheu um.",
+     "Uma marca indicando que o seu aparelho recebe uma cena como filme. Ela é gravada uma vez, caso o aparelho seja lento demais para a cena calculada ao vivo.",
+     "Só para a aba aberta: a informação de que a abertura e uma dica já foram mostradas, e uma marca de horário, caso a ala tenha precisado recarregar uma vez depois de um erro gráfico."
+    ],
+    "Essas anotações ficam no seu aparelho até você apagá-las. As anotações da aba aberta somem quando você fecha a aba. Nenhuma delas é enviada para nós nem para mais ninguém. Você as remove apagando os dados deste site no seu navegador.",
+    "Não pedimos consentimento para essas anotações, porque elas são necessárias para uma função que você usa (§ 25 (2), nº 2, da TDDDG, a lei alemã de proteção de dados nos serviços digitais). A mesma regra cobre o cookie do provedor de hospedagem: sem ele, um navegador já verificado seria verificado de novo em cada página."
+   ]
+  },
+  {
+   "h": "Nada de outras empresas",
+   "body": [
+    "Fontes tipográficas, imagens, filmes e scripts vêm deste site e do nosso próprio espaço de armazenamento no mesmo provedor de hospedagem. As páginas não carregam fontes tipográficas, mapas, vídeos ou botões de outras empresas."
+   ]
+  },
+  {
+   "h": "Links para outros sites",
+   "body": [
+    "Algumas páginas têm links para outros sites, por exemplo para os museus, bibliotecas e coleções que guardam os originais, e para o nosso código-fonte. Quando você segue um desses links, sai deste site, e valem as regras do outro site."
+   ]
+  },
+  {
+   "h": "Quando você nos escreve ou telefona",
+   "body": [
+    "Se você nos enviar um e-mail ou nos telefonar, usamos o seu endereço ou número e o que você nos disser para responder. O fundamento jurídico é o art. 6º, nº 1, alínea f), do GDPR, o nosso interesse legítimo em responder a solicitações. Os nossos e-mails passam por um provedor na Suíça, que os trata em nosso nome. A Comissão Europeia reconheceu que a Suíça assegura um nível de proteção de dados adequado. Apagamos os dados dessa conversa quando o assunto estiver resolvido, salvo se uma lei nos obrigar a guardá-los por mais tempo."
+   ]
+  },
+  {
+   "h": "Dados fora da União Europeia",
+   "body": [
+    "A Cloudflare é uma empresa dos Estados Unidos e responde às solicitações a partir de servidores no mundo todo, em geral de um que fica perto de você. Para as transferências para os Estados Unidos, a Cloudflare é certificada no EU-U.S. Data Privacy Framework, que a Comissão Europeia reconheceu em 10 de julho de 2023 como um nível de proteção adequado. Nosso contrato com a Cloudflare também contém as cláusulas contratuais padrão da União Europeia, para toda transferência que o Data Privacy Framework não cubra. O contrato é público: [o adendo da Cloudflare sobre o tratamento de dados](https://www.cloudflare.com/cloudflare-customer-dpa/)."
+   ]
+  },
+  {
+   "h": "Os seus direitos",
+   "body": [
+    "Pelo GDPR, você tem o direito de saber quais dados sobre você nós tratamos (art. 15), de pedir que dados errados sejam corrigidos (art. 16), que dados sejam apagados (art. 17) e que o tratamento deles seja limitado (art. 18) e, nos casos em que a lei prevê, de receber num formato de uso corrente os dados que você nos forneceu (art. 20).",
+    "Você também pode apresentar uma reclamação a uma autoridade de controle de proteção de dados (art. 77). A autoridade competente no nosso caso é o Landesbeauftragte für den Datenschutz und die Informationsfreiheit Baden-Württemberg, Heilbronner Straße 35, 70191 Stuttgart, [www.baden-wuerttemberg.datenschutz.de](https://www.baden-wuerttemberg.datenschutz.de).",
+    "Falando com franqueza: não temos quase nada que possamos consultar para você. Não há contas de usuário, e as anotações da ala ficam no seu aparelho, não conosco.",
+    "Não tomamos decisões automatizadas sobre você e não criamos perfis."
+   ]
+  },
+  {
+   "h": "O seu direito de oposição",
+   "body": [
+    "Você pode se opor a qualquer momento, por motivos relacionados à sua situação particular, ao tratamento baseado no nosso interesse legítimo (art. 21 do GDPR). Para isso, escreva para o endereço que está no início desta página."
+   ]
+  },
+  {
+   "h": "Quando esta página muda",
+   "body": [
+    "Esta página descreve o site como ele é hoje. Se algo mudar, por exemplo, se começarmos a contar as visitas nós mesmos, primeiro mudamos esta página."
+   ]
+  }
+ ]
+}

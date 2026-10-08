@@ -1,0 +1,32 @@
+{
+ "_collections": [
+  {
+   "name": "Vies",
+   "line": "Des lieux où des personnes du passé ont vécu et travaillé.",
+   "dates_key": "Vie"
+  }
+ ],
+ "vinci": {
+  "name": "Léonard de Vinci",
+  "dates": "de 1452 à 1519",
+  "shows": {
+   "place": "le Clos Lucé à Amboise",
+   "day": "10 octobre 1517"
+  },
+  "film": {
+   "line": "Nous avons reconstruit la dernière maison de Léonard.",
+   "offer": "1517. Nous avons reconstruit la dernière maison de Léonard. Vous pouvez y entrer.",
+   "sky": "Nous avons calculé ce ciel.",
+   "held": "Le Clos Lucé à Amboise, le 10 octobre 1517",
+   "inside": {
+    "line": "Notre propre salle, pour ses machines."
+   }
+  },
+  "topics": [
+   {
+    "name": "Les inventions de Léonard de Vinci",
+    "line": "Ce que Léonard de Vinci a dessiné, ce qui a réellement été construit et ce qui existait avant lui."
+   }
+  ]
+ }
+}

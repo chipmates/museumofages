@@ -1,0 +1,420 @@
+{
+ "paintings": [
+  {
+   "title": "O Batismo de Cristo"
+  },
+  {
+   "title": "A Anunciação"
+  },
+  {
+   "title": "Retrato de Ginevra de’ Benci"
+  },
+  {
+   "title": "Retrato de Ginevra de’ Benci"
+  },
+  {
+   "title": "Madona do Cravo"
+  },
+  {
+   "title": "Madona Benois"
+  },
+  {
+   "title": "São Jerônimo no deserto"
+  },
+  {
+   "title": "A Adoração dos Magos"
+  },
+  {
+   "title": "Anunciação, predela"
+  },
+  {
+   "title": "Virgem dos Rochedos, versão do Louvre"
+  },
+  {
+   "title": "Retrato de um Músico"
+  },
+  {
+   "title": "Dama com Arminho"
+  },
+  {
+   "title": "La belle ferronnière"
+  },
+  {
+   "title": "Madona Litta"
+  },
+  {
+   "title": "A Virgem, o Menino, Sant’Ana e São João Batista"
+  },
+  {
+   "title": "Madona do Fuso, versão Buccleuch"
+  },
+  {
+   "title": "Madona do Fuso, versão Lansdowne"
+  },
+  {
+   "title": "A luta pelo estandarte, a partir da Batalha de Anghiari"
+  },
+  {
+   "title": "Mona Lisa"
+  },
+  {
+   "title": "Virgem dos Rochedos, versão de Londres"
+  },
+  {
+   "title": "A Virgem e o Menino com Santa Ana"
+  },
+  {
+   "title": "Salvator Mundi"
+  },
+  {
+   "title": "São João Batista"
+  },
+  {
+   "title": "La Scapigliata"
+  },
+  {
+   "title": "Baco, antes São João Batista"
+  }
+ ],
+ "machines": [
+  {
+   "name": "Paraquedas piramidal",
+   "sheet": "Codex Atlanticus 1058v"
+  },
+  {
+   "name": "Guindaste giratório",
+   "sheet": "Manuscrito B 49r"
+  },
+  {
+   "name": "Anemômetro de placa articulada",
+   "sheet": "Codex Atlanticus 675r"
+  },
+  {
+   "name": "Parafuso aéreo",
+   "sheet": "Manuscrito B 83v"
+  },
+  {
+   "name": "Porta mitra de eclusa",
+   "sheet": "Codex Atlanticus 656r, detalhe a"
+  },
+  {
+   "name": "Estudo de volante de inércia equilibrado",
+   "sheet": "Codex Madrid I 114r"
+  },
+  {
+   "name": "Notas sobre a câmara escura",
+   "sheet": "Manuscrito D 8r"
+  },
+  {
+   "name": "Parafuso de Arquimedes e elevação de água",
+   "sheet": "Codex Atlanticus 6r"
+  },
+  {
+   "name": "Laminador de estanho",
+   "sheet": "Manuscrito I 48v"
+  },
+  {
+   "name": "Máquina de furar de vaivém",
+   "sheet": "Codex Atlanticus 108r"
+  },
+  {
+   "name": "Rolamento axial de esferas",
+   "sheet": "Codex Madrid I 20v"
+  },
+  {
+   "name": "Canhão de trinta e três canos",
+   "sheet": "Codex Atlanticus 157r"
+  },
+  {
+   "name": "Inclinômetro de pêndulo",
+   "sheet": "Codex Atlanticus 1058r"
+  },
+  {
+   "name": "Compasso de redução",
+   "sheet": "Codex Forster I 4r"
+  },
+  {
+   "name": "Leão mecânico"
+  }
+ ],
+ "topics": [
+  {
+   "name": "Voo"
+  },
+  {
+   "name": "Máquinas"
+  },
+  {
+   "name": "Peças de máquinas"
+  },
+  {
+   "name": "Guerra e armas"
+  },
+  {
+   "name": "Água em movimento"
+  },
+  {
+   "name": "Rios e máquinas de água"
+  },
+  {
+   "name": "Igrejas e cúpulas"
+  },
+  {
+   "name": "Cidades e fortalezas"
+  },
+  {
+   "name": "Luz e olho"
+  },
+  {
+   "name": "Conselhos aos pintores"
+  },
+  {
+   "name": "Rostos e corpos"
+  },
+  {
+   "name": "Cavalos e o grande cavalo"
+  },
+  {
+   "name": "Plantas e animais"
+  },
+  {
+   "name": "A terra e o céu"
+  },
+  {
+   "name": "Geometria e padrões"
+  },
+  {
+   "name": "Palavras dele"
+  },
+  {
+   "name": "Cartas e vida dele"
+  }
+ ],
+ "shelf": [
+  {
+   "title": "O livro das máquinas",
+   "name": "Codex Madrid I"
+  },
+  {
+   "title": "Fortalezas, mapas e geometria",
+   "name": "Codex Madrid II"
+  },
+  {
+   "title": "O voo dos pássaros",
+   "name": "Codex sobre o voo dos pássaros"
+  },
+  {
+   "title": "Aprender palavras",
+   "name": "Codex Trivulzianus"
+  },
+  {
+   "title": "Perspectiva",
+   "name": "Manuscrito A"
+  },
+  {
+   "title": "A maior coleção",
+   "name": "Codex Atlanticus, trechos"
+  },
+  {
+   "title": "Notas de quarenta anos",
+   "name": "Codex Arundel"
+  }
+ ],
+ "sheets": [
+  {
+   "title": "Os ossos do pé"
+  },
+  {
+   "title": "Os ossos e músculos do ombro"
+  },
+  {
+   "title": "A garganta e os músculos da perna"
+  },
+  {
+   "title": "Estudo anatômico do ombro II"
+  },
+  {
+   "title": "Os ossos do braço e da perna"
+  },
+  {
+   "title": "Os músculos do braço e as veias do braço e do tronco"
+  },
+  {
+   "title": "Os músculos da perna e os músculos intercostais"
+  },
+  {
+   "title": "Estudos da coluna vertebral"
+  },
+  {
+   "title": "Os ossos e músculos da perna"
+  },
+  {
+   "title": "Os ossos, músculos e tendões da mão"
+  },
+  {
+   "title": "Os músculos e tendões da sola do pé"
+  },
+  {
+   "title": "O esqueleto do pé e o ombro"
+  },
+  {
+   "title": "O esqueleto"
+  },
+  {
+   "title": "Os músculos do ombro e do braço e os ossos do pé"
+  },
+  {
+   "title": "Os músculos da perna"
+  },
+  {
+   "title": "Os músculos do alto da coluna"
+  },
+  {
+   "title": "Os tendões da perna e do pé"
+  },
+  {
+   "title": "Os músculos e tendões da perna e do pé"
+  },
+  {
+   "title": "As veias do rosto e um tronco"
+  },
+  {
+   "title": "Notas sobre os sentidos e o sistema nervoso"
+  },
+  {
+   "title": "O coração comparado a uma semente"
+  },
+  {
+   "title": "O útero de uma vaca prenhe"
+  },
+  {
+   "title": "O crânio cortado"
+  },
+  {
+   "title": "O crânio seccionado"
+  },
+  {
+   "title": "A anatomia do pescoço"
+  },
+  {
+   "title": "O feto e os músculos presos à bacia"
+  },
+  {
+   "title": "O feto no útero"
+  },
+  {
+   "title": "Estudos dos nervos e músculos, do coração e da óptica"
+  },
+  {
+   "title": "A válvula aórtica"
+  }
+ ],
+ "periods": [
+  "Vinci e Florença, de 1452 a 1481",
+  "Milão, de 1482 a 1499",
+  "Veneza, Florença e a Romanha, de 1500 a 1506",
+  "Milão de novo, de 1506 a 1513",
+  "Roma, de 1513 a 1516",
+  "Amboise, de 1516 a 1519",
+  "Depois de 1519, o que ficou"
+ ],
+ "people": [
+  "Andrea del Verrocchio",
+  "Ludovico Sforza",
+  "Salai",
+  "Melzi",
+  "César Bórgia",
+  "Charles d’Amboise",
+  "Francisco I"
+ ],
+ "holders": [
+  {
+   "name": "Gallerie degli Uffizi",
+   "note": "Florença"
+  },
+  {
+   "name": "National Gallery of Art",
+   "note": "Washington, D.C."
+  },
+  {
+   "name": "Bayerische Staatsgemäldesammlungen, Alte Pinakothek",
+   "note": "Munique"
+  },
+  {
+   "name": "Museu Hermitage",
+   "note": "São Petersburgo"
+  },
+  {
+   "name": "Pinacoteca Vaticana",
+   "note": "Cidade do Vaticano"
+  },
+  {
+   "name": "Musée du Louvre",
+   "note": "Paris"
+  },
+  {
+   "name": "Veneranda Biblioteca Ambrosiana",
+   "note": "Milão"
+  },
+  {
+   "name": "Muzeum Narodowe w Krakowie, Muzeum Książąt Czartoryskich",
+   "note": "Cracóvia"
+  },
+  {
+   "name": "National Gallery",
+   "note": "Londres"
+  },
+  {
+   "name": "Coleção Buccleuch",
+   "note": "em empréstimo às National Galleries Scotland"
+  },
+  {
+   "name": "Kenneth C. Griffin Collection",
+   "note": "em empréstimo ao Metropolitan Museum of Art"
+  },
+  {
+   "name": "Coleção particular",
+   "note": "local atual não confirmado"
+  },
+  {
+   "name": "Galleria Nazionale di Parma, Complesso della Pilotta",
+   "note": "Parma"
+  },
+  {
+   "name": "Bibliothèque de l’Institut de France",
+   "note": "Paris"
+  },
+  {
+   "name": "Biblioteca Nacional de España",
+   "note": "Madri"
+  },
+  {
+   "name": "Biblioteca Reale",
+   "note": "Turim"
+  },
+  {
+   "name": "Biblioteca Trivulziana, Castello Sforzesco",
+   "note": "Milão"
+  },
+  {
+   "name": "British Library",
+   "note": "Londres"
+  },
+  {
+   "name": "Royal Collection",
+   "note": "Windsor"
+  },
+  {
+   "name": "Museo del Cenacolo Vinciano, Santa Maria delle Grazie",
+   "note": "Milão"
+  },
+  {
+   "name": "Victoria and Albert Museum, National Art Library",
+   "note": "Londres"
+  },
+  {
+   "name": "Petit Palais, Musée des Beaux-Arts de la Ville de Paris",
+   "note": "Paris"
+  }
+ ]
+}
