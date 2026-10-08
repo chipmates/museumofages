@@ -68,7 +68,7 @@ Museum of Ages is a website, built once for the phone and once for the desktop, 
 - **The Last Supper.** On a court wall at the size of the original in Milan, 8.8 m by 4.6 m.
 - **The machines.** 15 rebuilt, and 14 of them move. Nine stand in the mechanism hall, three in the court and three in the house.
 - **The anatomy wall.** 29 of his anatomy sheets.
-- **The reading table.** A printed edition of 1883 of two of his notebooks, 438 pages to turn. 17 topics gather 207 pages from his notebooks. A shelf holds seven more books of his notes, 1,158 sides in all.
+- **The reading table.** 17 topics gather 207 pages from his notebooks. A printed edition of 1883 of two of his notebooks lies on the table, 438 pages to turn. A shelf holds seven more books of his notes, 1,158 sides in all.
 - **The heart.** A film of about 30 seconds shows the flow behind a heart valve in the museum's own glass model, built from his notes.
 - **His life in dates.** Twelve dates of his life are cut into the gallery's floor.
 - **The house.** The great hall of Clos Lucé, rebuilt from plans and photographs.
