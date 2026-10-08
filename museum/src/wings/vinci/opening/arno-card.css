@@ -88,6 +88,81 @@
 }
 .arno-line[hidden] { display: none; }
 
+/* THE LANGUAGE LINE: the language the card is read in, by its own name, over
+   the sentence at the words' own x, in the row where the wing's name will
+   stand. The row is the band's own air, so the band stands where it stood;
+   the control is a 20 px row in a 44 px target that reaches over the row's
+   edges. */
+.arno-lang-row {
+  display: flex;
+  align-items: center;
+  height: var(--arno-name-row);
+  margin-top: calc(var(--arno-name-row) * -1);
+}
+.arno-lang {
+  flex: none;
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  padding: 10px 12px 10px 0;
+  border: 0;
+  background: none;
+  font: 500 0.9375rem/20px var(--sans);
+  color: color-mix(in srgb, var(--na-starlight) 78%, var(--na-mist));
+  cursor: pointer;
+}
+.arno-lang:hover, .arno-lang[aria-expanded='true'] { color: var(--na-starlight); }
+.arno-lang-face { display: inline-flex; align-items: center; gap: 6px; margin: 0 -6px; padding: 2px 6px; border-radius: var(--ui-r-control); }
+.arno-lang:focus-visible { outline: none; }
+.arno-lang:focus-visible .arno-lang-face { outline: 1px solid var(--na-gold); }
+.arno-lang-mark, .arno-lang-here {
+  flex: none;
+  width: 14px;
+  height: 14px;
+  fill: none;
+  stroke: var(--na-gold);
+  stroke-width: 1.6;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+.arno-lang-mark { transition: transform 180ms var(--arno-ease); }
+.arno-lang[aria-expanded='true'] .arno-lang-mark { transform: rotate(180deg); }
+/* THE LIST OF LANGUAGES lies over the card, placed by arno-lang.ts: the
+   band's own night and hairline, each language a full target */
+.arno-lang-list {
+  position: fixed;
+  z-index: 1;
+  box-sizing: border-box;
+  margin: 0;
+  padding: 6px 0;
+  min-width: 200px;
+  max-height: calc(100dvh - 16px);
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  list-style: none;
+  border-radius: var(--ui-r-box);
+  background: var(--na-abyss);
+  box-shadow:
+    inset 0 0 0 1px color-mix(in srgb, var(--na-gold) 34%, transparent),
+    0 18px 48px color-mix(in srgb, var(--na-abyss) 75%, transparent);
+}
+.arno-lang-list[hidden] { display: none; }
+.arno-lang-list a {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  min-height: 44px;
+  padding: 0 16px;
+  font: 500 0.9375rem/20px var(--sans);
+  color: color-mix(in srgb, var(--na-starlight) 86%, var(--na-mist));
+  text-decoration: none;
+  white-space: nowrap;
+}
+.arno-lang-list a:hover { color: var(--na-starlight); background: color-mix(in srgb, var(--na-gold) 10%, transparent); }
+.arno-lang-list a[aria-current] { color: var(--na-gold); }
+.arno-lang-list a:focus-visible { outline: 1px solid var(--na-gold); outline-offset: -4px; }
+
 /* THE CREDIT IS A WORD, with a hairline under it; it opens the label. Its
    words flow inline, so a credit that wraps keeps its mark beside the last
    word, and the padding makes a 44 px target of a 20 px row. */
@@ -205,6 +280,11 @@
     box-shadow: none;
   }
   .arno-words { max-width: none; }
+  /* the phone's band keeps no name row: the language stands in the air
+     between the drawing and the sentence, so neither moves, and stands down
+     while the record is open */
+  .arno-lang-row { height: 20px; margin: -22px 0 2px; }
+  .arno-card[data-label='open'] .arno-lang-row { display: none; }
   .arno-line { min-height: 0; font: 400 1.375rem/29px var(--serif); }
   .arno-credit { margin-top: 4px; }
   /* the share of the screen's height lands between two pixels: a label that fits by less than one must not scroll */
@@ -288,6 +368,19 @@
 }
 .arno-card[data-form='cinema'][data-step] .arno-band,
 .arno-card[data-form='cinema'][data-label='open'] .arno-band { padding-top: calc(var(--arno-st) + 8px); }
+/* THE LANGUAGE'S ROW AT THE COLUMN'S HEAD, only where the column holds it
+   under the words as they already stand (arno-card.ts): the sentence never
+   steps down a size for it. Over a drawing that stands down it takes the air,
+   so the sentence keeps level with the drawing's top; at the column's head it
+   takes the head's air. */
+.arno-card[data-form='cinema'] .arno-lang-row { flex: none; height: 20px; margin: 0 0 2px; }
+.arno-card[data-form='cinema']:is([data-language-row='off'], [data-label='open']) .arno-lang-row { display: none; }
+.arno-card[data-form='cinema']:not([data-step], [data-label='open'], [data-language-row='off']) .arno-band:has(.arno-lang-row) {
+  padding-top: max(var(--arno-st), calc(var(--arno-st) + var(--arno-sheet-top) - 6px - 22px));
+}
+.arno-card[data-form='cinema'][data-step]:not([data-label='open'], [data-language-row='off']) .arno-band:has(.arno-lang-row) {
+  padding-top: calc(var(--arno-st) + 2px);
+}
 /* the faint hairline between the drawing and its words, the close looks' */
 .arno-card[data-form='cinema'] .arno-band::before {
   content: '';
@@ -359,6 +452,6 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .arno-card, .arno-drawing, .arno-start, .arno-credit-mark { transition: none; }
+  .arno-card, .arno-drawing, .arno-start, .arno-credit-mark, .arno-lang-mark { transition: none; }
 }
 body.forge .arno-card, body.forge .arno-drawing { transition: none !important; }

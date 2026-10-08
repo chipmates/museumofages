@@ -9,6 +9,8 @@
      never waits on a card it cannot hang.
    · ONE TEXT AT A TIME. The card covers the whole glass in the museum's top
      layer; nothing of the wing reads through it while it stands.
+   · ITS LANGUAGE BY NAME. One quiet row over the sentence names the language
+     and opens the list of them (arno-lang.ts).
    · HELD SIDEWAYS (the wing's cinema form) the drawing stands beside its
      words: the words in a column at the right, the gold at its foot. The
      words step down a size until they stand whole above the gold, and the
@@ -21,6 +23,7 @@ import { assetAddress } from '../../../stack/materials'
 import { filmForm } from '../film-cinema'
 import { maskWholeLines, unmaskLines, wholeLines } from '../../vitrine/whole-lines'
 import { admitOpeningRecord, ARNO_1473, openingLabel, type OpeningFile } from '../pictures/opening-register'
+import { createArnoLanguages } from './arno-lang'
 import wordsSource from '../data/opening.json?raw'
 import cardCss from './arno-card.css?inline'
 
@@ -174,7 +177,9 @@ export async function openArnoCard(host: HTMLElement, options: ArnoCardOptions =
   // an unread translation says so under the line, as the line stands: visible before any press
   const tag = tagWords()
   const tagged = tag ? tagNodes(tag, document_, 'arno-tag') : []
-  words.append(line, ...tagged, label, credit)
+  const watch = new AbortController()
+  const languages = createArnoLanguages(document_, watch.signal)
+  words.append(...(languages ? [languages.row] : []), line, ...tagged, label, credit)
 
   const start = make('button', 'arno-start')
   start.type = 'button'
@@ -192,6 +197,7 @@ export async function openArnoCard(host: HTMLElement, options: ArnoCardOptions =
     const form = filmForm()
     card.dataset['form'] = form
     if (form !== 'cinema') {
+      delete card.dataset['languageRow']
       delete card.dataset['step']
       delete card.dataset['room']
       unmaskLines(label)
@@ -199,10 +205,17 @@ export async function openArnoCard(host: HTMLElement, options: ArnoCardOptions =
     }
     if (label.hidden) {
       delete card.dataset['room']
+      const whole = (): boolean => credit.getBoundingClientRect().bottom <= start.getBoundingClientRect().top - SIDE_AIR
+      // the words take their step without the language's row; the row then stands only where the column still holds it
+      card.dataset['languageRow'] = 'off'
       for (const step of SIDE_STEPS) {
         if (step) card.dataset['step'] = step
         else delete card.dataset['step']
-        if (credit.getBoundingClientRect().bottom <= start.getBoundingClientRect().top - SIDE_AIR) break
+        if (whole()) break
+      }
+      if (languages) {
+        delete card.dataset['languageRow']
+        if (!whole()) card.dataset['languageRow'] = 'off'
       }
     } else {
       for (const room of LABEL_ROOMS) {
@@ -222,7 +235,6 @@ export async function openArnoCard(host: HTMLElement, options: ArnoCardOptions =
     cancelAnimationFrame(pending)
     pending = requestAnimationFrame(then)
   }
-  const watch = new AbortController()
   addEventListener('resize', fit, { signal: watch.signal })
   label.addEventListener('scroll', () => later(cut), { passive: true, signal: watch.signal })
   void document_.fonts?.ready.then(() => { if (!watch.signal.aborted) fit() })
@@ -264,9 +276,10 @@ export async function openArnoCard(host: HTMLElement, options: ArnoCardOptions =
       resolve(end)
     }
     start.addEventListener('click', () => leave('started'))
-    // Escape folds the label first; on the bare card it is a way in like the button
+    // Escape folds the list of languages or the label first; on the bare card it is a way in like the button
     card.addEventListener('cancel', event => {
       event.preventDefault()
+      if (languages?.close()) return
       if (!label.hidden) { setLabel(false); credit.focus(); return }
       leave('started')
     })
