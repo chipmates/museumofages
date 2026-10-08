@@ -1440,11 +1440,13 @@ def build(out, registry, wing_dirs, mark=None, topics=True, quiet=False, more_pi
         who = c.to(c.addr("what")) + "#who"
         line = f'<p class="project project--{PROJECT_LINE_AT}"><a href="{who}">{w["project.line"]}</a></p>' if PROJECT_LINE else ""
         # a language whose words no person has read yet says so on the first screen, under the project line
-        tag = f'<p class="aitag">{w[AI_TAG]}</p>' if L.entries[c.lang]["status"] == "ai" else ""
+        tag = f'<p class="aitag" id="translation">{w[AI_TAG]}</p>' if L.entries[c.lang]["status"] == "ai" else ""
         bar, menu_item, menu_list, foot_item, foot_list = switcher(c, twin, kind)
         w.update({
             "html.project_over": line if PROJECT_LINE_AT == "over" else "",
             "html.project": (line if PROJECT_LINE_AT != "over" else "") + tag + hint(c, kind),
+            # the skip link lands on the tag where a page carries one, so nobody jumps past it
+            "html.skip_to": "#translation" if tag else "#main",
             "html.lang_bar": bar, "html.lang_menu": menu_item, "html.lang_menu_list": menu_list,
             "html.lang_foot": foot_item, "html.lang_foot_list": foot_list,
             "html.imprint_elsewhere": "" if L.has_imprint(c.lang) else f'<p class="foot__else">{w["footer.imprint_elsewhere"]}</p>',
