@@ -62,11 +62,19 @@ export const say = (s: Bilingual): string => {
 
 /** A pair the catalog lacks reads in English; the page keeps a list of them
     (`__naLang.missed`) for the coverage read, and apart from them the pairs
-    asked for before the catalog was in (`__naLang.early`). */
+    asked for before the catalog was in (`__naLang.early`). No gap: a pair
+    every language keeps as written, and the catalog's own words handed back
+    in a pair's English place. */
 function fromCatalog(s: Bilingual): string {
   const said = catalog?.pair(s)
-  if (said !== undefined || !s.en) return said ?? s.en
-  if (saidInPlace.has(s.en)) return s.en
+  if (said !== undefined) {
+    saidHere.set(said, (saidHere.get(said) ?? new Set<string>()).add(s.de))
+    return said
+  }
+  if (!s.en || saidInPlace.has(s.en) || catalog?.kept(s)) return s.en
+  // the catalog's own words handed back: alone, on both sides, or beside the German they were said for
+  const back = saidHere.get(s.en)
+  if (back && (!s.de || s.de === s.en || back.has(s.de))) return s.en
   const made = fills.get(`${s.en}\u0001${s.de}`)
   if (made) return fill(fromCatalog(made.pattern), made.values)
   const book = (globalThis as { __naLang?: { missed: Map<string, string>; early: Map<string, string> } }).__naLang ??= { missed: new Map(), early: new Map() }
@@ -100,9 +108,9 @@ export const langTag = (world: Lang): string => {
 
 /** A pattern pair with its slots filled, still a pair for `say`: English and
     German each as written; a catalog page's own words, filled, stand on the
-    English side, which `say` hands back since no entry is filed under them. */
+    English side, marked as said, so `say` hands them back and counts no gap. */
 export const filled = (pattern: Bilingual, values: readonly string[] | Readonly<Record<string, string>>): Bilingual =>
-  catalogPage() ? { en: fill(say(pattern), values), de: '' } : { en: fill(pattern.en, values), de: fill(pattern.de, values) }
+  catalogPage() ? { en: alreadySaid(fill(say(pattern), values)), de: '' } : { en: fill(pattern.en, values), de: fill(pattern.de, values) }
 
 /** A pair whose sides may be missing: English and German as `side[world]`; a
     catalog page from its catalog, else the English side. */
@@ -185,6 +193,8 @@ export function fillPair(pattern: Bilingual, values: Readonly<Record<string, str
 
 /** Strings data already holds in the page's words, and the data said so. */
 const saidInPlace = new Set<string>()
+/** What the catalog has said on this page, each with the German sides it was said for. */
+const saidHere = new Map<string, Set<string>>()
 const dataSaid = new WeakSet<object>()
 
 /** Shared data a module reads in English where no caller can hand it the

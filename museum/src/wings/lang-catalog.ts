@@ -23,6 +23,8 @@ export interface Provenance { kind: 'edition' | 'ours'; label?: string; rest?: s
 export interface Catalog {
   /** a pair's words: its own key first, then its pattern with the numbers put back */
   pair(s: Bilingual): string | undefined
+  /** a pair every language keeps as written (a name, an inscription): its English is its word, not a gap */
+  kept(s: Bilingual): boolean
   /** a word the catalog files under a name of its own */
   named(key: string): string | undefined
   /** where a passage of his words comes from: an old edition of the language with its credit, or the museum's own translation */
@@ -37,7 +39,11 @@ export async function openCatalog(tag: PageLang): Promise<Catalog> {
     Promise.all(Object.entries(files).filter(([file]) => file.startsWith(folder)).map(([, load]) => load()))
   const [chunks, tags] = await Promise.all([mine(CHUNKS), mine(TAGS)])
   const entries = new Map<string, string>()
-  for (const chunk of chunks) for (const [key, text] of Object.entries(chunk)) if (typeof text === 'string') entries.set(key, text)
+  const kept = new Set<string>()
+  for (const chunk of chunks) for (const [key, text] of Object.entries(chunk)) {
+    if (typeof text === 'string') entries.set(key, text)
+    else if ((text as { status?: unknown } | null)?.status === 'kept') kept.add(key)
+  }
   const read = tags[0] ?? {}
   const own = (s: Bilingual): string | undefined => {
     const found = entries.get(contentKey(s.en, s.de))
@@ -76,6 +82,7 @@ export async function openCatalog(tag: PageLang): Promise<Catalog> {
       if (!asked.has(key)) asked.set(key, joined(s) ?? null)
       return asked.get(key) ?? undefined
     },
+    kept: (s) => kept.has(contentKey(s.en, s.de)) || (/\d/.test(s.en) && kept.has(patternKey(s.en, s.de))),
     named: (key) => entries.get(key),
     provenance(en, de) {
       const key = contentKey(en, de)
