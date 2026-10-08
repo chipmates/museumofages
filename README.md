@@ -32,9 +32,9 @@ Museum of Ages has one wing today: Leonardo da Vinci's last house, Clos Lucé in
 <p align="center">
   <a href="https://museumofages.org/w/vinci?film=job&amp;lang=en"><picture>
     <source media="(prefers-reduced-motion: reduce)" srcset=".github/assets/demo-poster.webp" />
-    <img src=".github/assets/demo.webp" alt="A short walk through the da Vinci wing. It opens on Leonardo's pen drawing of the Arno valley, walks down a stair into a long picture room, steps up to the Mona Lisa and zooms into her face, sets a wooden aerial screw turning, and ends under a night sky full of stars." width="100%" />
+    <img src=".github/assets/demo.webp" alt="A short silent film of the da Vinci wing. A wooden aerial screw, rebuilt from one page of his notebooks, stands in a hall in low sun and then turns. The camera moves along a dark picture wall to the Mona Lisa, and her close look goes from the whole painting to her face and down to the cracks in the paint. A notebook page in a printed copy of 1883 shows his drawing of the aerial screw, and a mirror turns his writing around. The flow curls behind a flap in the museum's own glass model of a heart valve, built from his notes. Two rebuilt machines turn, a water screw and a flywheel. Then his last house, rebuilt in code, stands in the sun, and its great hall has a mechanical lion by the wall. An evening sky darkens into a night full of stars." width="100%" />
   </picture></a><br/>
-  <sub>From the door to the stars, in 33 seconds. The museum itself is slower: a stop holds until you go on.</sub><br/>
+  <sub>From the aerial screw to the stars, in 34 seconds. The museum itself is slower: a stop holds until you go on.</sub><br/>
   <sub><a href="https://museumofages.org">museumofages.org</a>: free entry, no account. English and German, and five more languages translated with AI. <a href="docs/TOUR.md">A tour in pictures</a> credits every work you see.</sub>
 </p>
 

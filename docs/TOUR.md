@@ -79,9 +79,9 @@ The pictures on this page and the moving picture in the README are the museum's 
 
 The note for those works reads: "Italian Codice dei beni culturali, art. 108 comma 3-bis: exemption for non-profit study, research and promotion of knowledge of the cultural heritage."
 
-**The door, and the start of the moving picture.** Leonardo da Vinci, landscape of the Arno valley, 1473. Gallerie degli Uffizi, Florence, inv. 8 P. "Public domain. Photograph by Tangopaso, released into the public domain by the photographer (PD-self), via Wikimedia Commons." With the Italian note.
+**The door.** Leonardo da Vinci, landscape of the Arno valley, 1473. Gallerie degli Uffizi, Florence, inv. 8 P. "Public domain. Photograph by Tangopaso, released into the public domain by the photographer (PD-self), via Wikimedia Commons." With the Italian note.
 
-**The picture room, and the walk through it.** In view at the first stop:
+**The picture room.** In view at the first stop:
 - The Baptism of Christ. Gallerie degli Uffizi, Florence. "Public domain". With the Italian note.
 - The Annunciation. Gallerie degli Uffizi, Florence. "Public domain". With the Italian note.
 - Ginevra de' Benci, front and back. National Gallery of Art, Washington. "Public domain; Creative Commons Zero (CC0); Courtesy National Gallery of Art, Washington; https://www.nga.gov/terms-and-notices", and for the back, "Public domain; Creative Commons Zero (CC0); Courtesy National Gallery of Art, Washington, via Google Arts & Culture and Wikimedia Commons; https://artsandculture.google.com/asset/uAEHQEjvDfQp1Q"
@@ -107,5 +107,12 @@ Further along the same wall, small in these pictures:
 **The aerial screw.** The facsimile page beside it: Manuscript B, Institut de France, Paris, in the facsimile by C. Ravaisson-Mollien, Paris 1883. "Public domain by age (published Paris, A. Quantin, 1883; editor Charles Ravaisson-Mollien d. 1919). Photolithographic facsimile of a public-domain manuscript: no new right under EU Directive 2019/790 art. 14 / UrhG s.68."
 
 **The court of the Last Supper.** The Last Supper. Museo del Cenacolo Vinciano, Santa Maria delle Grazie, Milan. "Public domain". With the Italian note.
+
+**The moving picture in the README.** It shows these works of others, in this order:
+- On the picture wall: the Burlington House Cartoon, the two versions of the Madonna of the Yarnwinder, the copy of the Battle of Anghiari and the Mona Lisa, each as above.
+- The Mona Lisa's close look, down to the cracks in the paint. Musée du Louvre, Paris. Reproduction: C2RMF, via Wikimedia Commons. "Public domain"
+- The notebook page with the aerial screw, also seen in a mirror: Manuscript B, folio 83 verso, Institut de France, Paris, from the facsimile by C. Ravaisson-Mollien, Paris 1883, in a scan from the Internet Archive. It is the page that stands beside the aerial screw, with the same licence line as above.
+
+Everything else in the moving picture is the museum's own, built in code: the mechanism hall, the aerial screw, the water screw and the flywheel, the reading table under the page, the glass model of the heart valve, built from his notes, the house, its great hall with the lion, the last court and the sky.
 
 **The record, the great hall, the stars and the stop on a phone** show no work of others. The stars are computed from the Yale Bright Star Catalogue, credited in [THIRD-PARTY.md](../THIRD-PARTY.md). The house rests on map data © [OpenStreetMap contributors](https://www.openstreetmap.org/copyright), ODbL, and relief data from IGN, RGE ALTI®, consulted 8 September 2026, Licence Ouverte 2.0.
