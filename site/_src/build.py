@@ -61,7 +61,7 @@ PROJECT_LINE_AT = "under"
 BY_RULE = ":root{--by:var(--by-h)}"
 # The link to the source code. False while the repository is not public: no page links to it, the host forwards
 # nothing, and the page about the museum says page_what.s6_before instead of page_what.s6_p.
-SOURCE_LINK = False
+SOURCE_LINK = True
 # The folder of the static pages' own files. The museum app owns /assets/.
 STATIC = "static"
 # The museum's sign: its drawing's files are set as they are and never edited, so the build checks their hashes.
