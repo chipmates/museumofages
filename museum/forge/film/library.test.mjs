@@ -536,8 +536,8 @@ test('the fourth definition reads less of a words file than the third and the sa
   assert.equal(globalKey(loader, { library: store, placement: off }).parts[WORDS_PART], base.v3.parts[WORDS_PART])
 })
 
-test('the older definitions key byte for byte as the code of 0a321ccc keyed them', async () => {
-  const then = await codeAt('0a321ccc')
+test('the older definitions key byte for byte as the code of 1401b3b9 keyed them', async () => {
+  const then = await codeAt('1401b3b9')
   assert.equal(then.GLOBAL_DEFINITION, V2)
   const loader = await createLoader()
   const args = { library: world.library, claimed: world.claimed }
@@ -553,8 +553,8 @@ test('the older definitions key byte for byte as the code of 0a321ccc keyed them
   console.log(`# ${GLOBAL_DEFINITION}: ${globalKey(loader, { ...args, placement: placedNow }).key}`)
 })
 
-test('the third definition, and the two before it, key byte for byte as the code of 643bc095 keyed them', async () => {
-  const then = await codeAt('643bc095')
+test('the third definition, and the two before it, key byte for byte as the code of e34fa9b7 keyed them', async () => {
+  const then = await codeAt('e34fa9b7')
   assert.equal(then.GLOBAL_DEFINITION, V3)
   const loader = await createLoader()
   const args = { library: world.library, claimed: world.claimed }
