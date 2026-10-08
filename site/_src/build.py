@@ -257,12 +257,13 @@ GONE = ("The privacy notice for this site is being written.", "Die Datenschutzer
 # Of the statements above, those that every built page is read for once more, the topic pages included.
 ON_EVERY_PAGE = NEVER[:5]
 # Length limits in characters, first match wins, set for German at 320 px. Paths of a wing's data file start with "wing:".
+# A trust line breaks only after a dot (trust_breaks), so it may run to three short rows.
 LIMITS = [
     (r"^film\.(title|watch)$", 28), (r"^film\.(pause|play|sound_on|sound_off)$", 20), (r"^film\.music$", 140),
     (r"(^|:)meta\.title$|page_what\.title$|imprint\.title$", 76), (r"description$", 180), (r"alt$", 300), (r"alt_each$", 90),
     (r"a11y\.lang_switch$", 8), (r"a11y\.", 40), (r"brand\.descriptor$", 20), (r"project\.line$", 48), (r"nav\.enter$|hero\.enter$", 20), (r"nav\.", 22),
     (r"hero\.name$", 14), (r"hero\.tagline_", 60), (r"hero\.entry_note$", 30), (r"hero\.what_link$", 26),
-    (r"today\.", 70), (r"glance\.f\d_term$", 18), (r"glance\.f\d_text$", 56), (r"glance\.publisher$", 120), (r"trust$", 70),
+    (r"today\.", 70), (r"glance\.f\d_term$", 18), (r"glance\.f\d_text$", 56), (r"glance\.publisher$", 120), (r"trust$", 84),
     (r"wings\.heading$|visit\.heading$|closing\.heading$|wingpage\.(holds_h|more_h)$", 32), (r"wings\.lead$", 110), (r"wings\.now$", 80),
     (r"wings\.(to_page|making_h|planned_h)$", 24), (r"wingpage\.(seeit|more_originals)$", 28), (r"wingpage\.more_", 130),
     (r"wingpage\.sizes_note$", 60), (r"wingpage\.", 28), (r"class\.", 28),
