@@ -7,14 +7,28 @@
      stands at with its `lang` set, as the panel's row loads it, so the page
      comes back in that language and the visitor stands on the card again.
    · NOTHING IS KEPT ON THE DEVICE.
-   · THE LIST IS LAID OVER THE CARD, never in its flow: above the line where
-     the glass has the room, under it otherwise, beside it on a short glass.
+   · THE LIST IS LAID OVER THE CARD, never in its flow, and never on the
+     gold way in. It takes a place that covers no words where the glass has
+     one (over the night above the desktop's band, over the drawing on a
+     phone), in two columns where one is too tall. On a long upright card no
+     such place is left: there it covers the words' whole column down to the
+     gold, so no word stands cut beside or under it.
    · ESCAPE IS THE CARD'S. A modal answers Escape itself, so the card folds
      the list through `close()` before it reads Escape as its way in. */
 
 import { pageLang, say, type PageLang } from '../../content'
 import { OWN_NAMES, publishedLangs } from '../../languages'
 import { LOBBY_TEXT } from '../../../content/lobby'
+
+/** What the list is placed by: the card's form and its parts as they stand. */
+export interface ArnoGround {
+  form(): 'desk' | 'upright' | 'cinema'
+  /** the drawing's sheet, the band of words, the sentence and the gold way in */
+  readonly sheet: HTMLElement
+  readonly band: HTMLElement
+  readonly line: HTMLElement
+  readonly start: HTMLElement
+}
 
 export interface ArnoLanguages {
   /** the row: the control and its list */
@@ -28,9 +42,11 @@ const CHEVRON_DOWN = 'M4 6l4 4 4-4'
 const CHECK = 'M3.5 8.5l3 3L12.5 5'
 /** the control's words stand this far inside its target (arno-card.css) */
 const INSET = 12
-/** the list's air to those words and to the glass's edge */
+/** the list's air to those words, to the gold way in and to the glass's edge */
 const NEAR = 8
 const EDGE = 8
+/** the phone's list starts on the drawing's edge, this far left of the words; its names keep their place */
+const OUTSET = 4
 
 function mark(document_: Document, path: string, cls: string): SVGSVGElement {
   const svg = document_.createElementNS(SVG, 'svg')
@@ -44,7 +60,7 @@ function mark(document_: Document, path: string, cls: string): SVGSVGElement {
 }
 
 /** The row for a card; nothing where the build publishes no second language. */
-export function createArnoLanguages(document_: Document, signal: AbortSignal): ArnoLanguages | undefined {
+export function createArnoLanguages(document_: Document, signal: AbortSignal, ground: ArnoGround): ArnoLanguages | undefined {
   const here = pageLang()
   const published = publishedLangs(import.meta.env['VITE_NA_LANGS'])
   // the page's own language stands in the list even where the build does not name it
@@ -108,28 +124,73 @@ export function createArnoLanguages(document_: Document, signal: AbortSignal): A
       link.href = at.href
     }
   }
+  /** the list's own height in one column or in two */
+  function tall(columns: 1 | 2): number {
+    if (columns === 2) list.dataset['columns'] = '2'
+    else delete list.dataset['columns']
+    return list.offsetHeight
+  }
   function place(): void {
     const at = control.getBoundingClientRect()
-    const wide = view.innerWidth, tall = view.innerHeight
-    const w = list.offsetWidth, h = list.offsetHeight
-    const within = (value: number, most: number): number => Math.max(EDGE, Math.min(most - EDGE, value))
-    let left = within(at.left, wide - w), top = at.top + INSET - NEAR - h
-    if (top < EDGE) top = at.bottom - INSET + NEAR
-    if (top + h > tall - EDGE) {
-      // a short glass: beside the control, on the side with the room
-      top = within(at.top, tall - h)
-      if (at.left - NEAR - w >= EDGE) left = at.left - NEAR - w
-      else if (at.right - INSET + NEAR + w <= wide - EDGE) left = at.right - INSET + NEAR
+    const glass = { w: view.innerWidth, h: view.innerHeight }
+    const form = ground.form()
+    for (const name of ['width', 'height', 'max-height', '--arno-lang-inset']) list.style.removeProperty(name)
+    let left = at.left, top = EDGE, where = 'over'
+    if (form === 'desk') {
+      // over the night above the band, its foot on the band's hairline
+      const foot = ground.band.getBoundingClientRect().top + 1
+      list.style.maxHeight = `${Math.floor(foot - EDGE)}px`
+      top = foot - tall(1)
+    } else if (form === 'cinema') {
+      // over the drawing's side from its top corner, clear of the words' column, as tall as the glass allows
+      const sheet = ground.sheet.getBoundingClientRect()
+      list.style.maxHeight = `${glass.h - EDGE * 2}px`
+      const one = tall(1)
+      left = sheet.right - list.offsetWidth
+      top = Math.min(glass.h - EDGE - one, sheet.top)
+      where = 'beside'
+    } else {
+      const words = at.top + INSET
+      const over = words - NEAR - EDGE
+      const sentence = ground.line.getBoundingClientRect().top
+      const under = ground.start.getBoundingClientRect().top - NEAR - sentence
+      left = at.left - OUTSET
+      list.style.setProperty('--arno-lang-inset', `${16 + OUTSET}px`)
+      const whole = `${Math.round(glass.w - left * 2)}px`
+      const one = tall(1)
+      if (one <= over) top = words - NEAR - one
+      else {
+        // every other place spans the glass from the drawing's one edge to the other
+        list.style.width = whole
+        const two = tall(2)
+        if (two <= over) top = words - NEAR - two
+        else if (Math.min(one, two) <= under) {
+          // no room over the words: their whole column down to the gold, so nothing stands cut
+          tall(one <= under ? 1 : 2)
+          list.style.height = `${Math.floor(under)}px`
+          top = sentence
+          where = 'under'
+        } else {
+          // a glass too short for either: over the words, as tall as the room is
+          list.style.maxHeight = `${Math.floor(over)}px`
+          top = words - NEAR - tall(1)
+          where = 'fitted'
+        }
+      }
     }
-    list.style.left = `${Math.round(left)}px`
-    list.style.top = `${Math.round(top)}px`
+    list.dataset['where'] = where
+    list.style.left = `${Math.round(Math.max(EDGE, Math.min(glass.w - EDGE - list.offsetWidth, left)))}px`
+    list.style.top = `${Math.round(Math.max(EDGE, top))}px`
   }
   function open(): void {
     address()
     list.hidden = false
     control.setAttribute('aria-expanded', 'true')
     place()
-    ;(links.find(link => link.hasAttribute('aria-current')) ?? links[0])?.focus({ preventScroll: true })
+    const here = links.find(link => link.hasAttribute('aria-current')) ?? links[0]
+    here?.focus({ preventScroll: true })
+    // a list cut to the glass shows the language being read
+    if (here && list.scrollHeight > list.clientHeight) list.scrollTop = here.offsetTop - (list.clientHeight - here.offsetHeight) / 2
   }
   function fold(): boolean {
     if (list.hidden) return false

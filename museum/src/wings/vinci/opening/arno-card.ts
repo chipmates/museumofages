@@ -14,7 +14,9 @@
    · HELD SIDEWAYS (the wing's cinema form) the drawing stands beside its
      words: the words in a column at the right, the gold at its foot. The
      words step down a size until they stand whole above the gold, and the
-     opened label ends on a whole line. */
+     opened label ends on a whole line.
+   · THE ONE THING THE LANGUAGE'S ROW MOVES: sideways it heads the words'
+     column, so the words stand about 22 px lower, still whole above the gold. */
 
 import { lang, langTag, sayAs, type Lang } from '../../content'
 import { tagNodes, tagWords } from '../../lang-tag'
@@ -79,6 +81,8 @@ const SIZES = '(max-aspect-ratio: 9/10) calc(100vw - 24px), min(calc(100vw - 128
 const SIDE_STEPS = ['', 'head', 'snug', 'tight'] as const
 /** the least air between the credit and the gold under it */
 const SIDE_AIR = 8
+/** upright, a drawing this far clear of the language's row lends the row its air */
+const ROW_AIR = 20
 /** the opened label's column, narrowest first: it widens until the label reads whole */
 const LABEL_ROOMS = ['', 'wider', 'widest'] as const
 
@@ -177,9 +181,7 @@ export async function openArnoCard(host: HTMLElement, options: ArnoCardOptions =
   // an unread translation says so under the line, as the line stands: visible before any press
   const tag = tagWords()
   const tagged = tag ? tagNodes(tag, document_, 'arno-tag') : []
-  const watch = new AbortController()
-  const languages = createArnoLanguages(document_, watch.signal)
-  words.append(...(languages ? [languages.row] : []), line, ...tagged, label, credit)
+  words.append(line, ...tagged, label, credit)
 
   const start = make('button', 'arno-start')
   start.type = 'button'
@@ -188,6 +190,9 @@ export async function openArnoCard(host: HTMLElement, options: ArnoCardOptions =
   arrow.append(icon(ARROW_ON, 'arno-start-icon'))
   start.append(make('span', 'arno-start-word', said.start), arrow)
   band.append(words, start)
+  const watch = new AbortController()
+  const languages = createArnoLanguages(document_, watch.signal, { form: filmForm, sheet, band, line, start })
+  if (languages) words.prepend(languages.row)
   options.under?.(start)
   card.append(style, stage, band)
 
@@ -198,6 +203,8 @@ export async function openArnoCard(host: HTMLElement, options: ArnoCardOptions =
     card.dataset['form'] = form
     if (form !== 'cinema') {
       delete card.dataset['languageRow']
+      if (languages && form === 'upright' && label.hidden
+        && languages.row.getBoundingClientRect().top - sheet.getBoundingClientRect().bottom >= ROW_AIR) card.dataset['languageRow'] = 'airy'
       delete card.dataset['step']
       delete card.dataset['room']
       unmaskLines(label)

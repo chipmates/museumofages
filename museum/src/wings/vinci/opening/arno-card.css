@@ -127,12 +127,16 @@
 }
 .arno-lang-mark { transition: transform 180ms var(--arno-ease); }
 .arno-lang[aria-expanded='true'] .arno-lang-mark { transform: rotate(180deg); }
-/* THE LIST OF LANGUAGES lies over the card, placed by arno-lang.ts: the
-   band's own night and hairline, each language a full target */
+/* THE LIST OF LANGUAGES lies over the card, placed and sized by
+   arno-lang.ts: the band's own night and hairline, each language a full
+   target, the rows sharing whatever height the list is given. It casts no
+   shadow, so the word that opened it reads the same wherever the list lies. */
 .arno-lang-list {
   position: fixed;
   z-index: 1;
   box-sizing: border-box;
+  display: grid;
+  grid-auto-rows: minmax(44px, 1fr);
   margin: 0;
   padding: 6px 0;
   min-width: 200px;
@@ -142,18 +146,25 @@
   list-style: none;
   border-radius: var(--ui-r-box);
   background: var(--na-abyss);
-  box-shadow:
-    inset 0 0 0 1px color-mix(in srgb, var(--na-gold) 34%, transparent),
-    0 18px 48px color-mix(in srgb, var(--na-abyss) 75%, transparent);
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--na-gold) 34%, transparent);
 }
 .arno-lang-list[hidden] { display: none; }
+/* two columns where one is too tall: read down the first, then the second */
+.arno-lang-list[data-columns='2'] {
+  grid-template-rows: repeat(4, minmax(44px, 1fr));
+  grid-auto-flow: column;
+  grid-auto-columns: auto;
+  justify-content: stretch;
+}
+.arno-lang-list li { display: flex; }
 .arno-lang-list a {
+  flex: 1;
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 24px;
   min-height: 44px;
-  padding: 0 16px;
+  padding: 0 16px 0 var(--arno-lang-inset, 16px);
   font: 500 0.9375rem/20px var(--sans);
   color: color-mix(in srgb, var(--na-starlight) 86%, var(--na-mist));
   text-decoration: none;
@@ -284,6 +295,9 @@
      between the drawing and the sentence, so neither moves, and stands down
      while the record is open */
   .arno-lang-row { height: 20px; margin: -22px 0 2px; }
+  /* under a drawing that stands clear of the words (arno-card.ts) the row
+     takes a little of that air for the gap under it */
+  .arno-card[data-language-row='airy'] .arno-lang-row { margin: -27px 0 7px; }
   .arno-card[data-label='open'] .arno-lang-row { display: none; }
   .arno-line { min-height: 0; font: 400 1.375rem/29px var(--serif); }
   .arno-credit { margin-top: 4px; }
