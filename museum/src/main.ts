@@ -23,11 +23,14 @@ import { DISCLOSURES } from './content/disclosures'
 import { WINGS, wingBySlug, wingsOpen, wingsPreparing } from './wings/registry'
 import { catalogPage, lang, pageLang, say, sayNamed, wingCount, wordsReady } from './wings/content'
 import { publishedLangs } from './wings/languages'
+import { adoptBrowserLanguage } from './wings/browser-lang'
 import { sitePage, wayOut, type Settings } from './wings/way-out'
 import { LOBBY_LINKS, LOBBY_TEXT } from './content/lobby'
 import { gaitPace, setGaitPace } from './wings/vinci/gait'
 import { benchOptions, benchPath, createBench, type BenchOptions } from './bench'
 
+// an address that names no language takes the browser's, before anything reads the page's
+adoptBrowserLanguage(publishedLangs(import.meta.env['VITE_NA_LANGS']))
 // a catalog language's words are in before the first is written; English and German never wait
 const firstLanguage = pageLang()
 if (firstLanguage !== 'en' && firstLanguage !== 'de') await wordsReady()
