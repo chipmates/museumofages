@@ -86,7 +86,7 @@ Every displayed sentence exists in both languages.
 
 German runs about a third longer than English. Check a change to what you see in German too.
 
-A person reads, corrects and approves every text before it is published. So for a wrong fact, the correction form is quicker than a pull request: we change the sentence in both languages and keep the house's voice. The voice is plain: short sentences, everyday words.
+A person reads, corrects and approves every English and German text before it is published. So for a wrong fact, the correction form is quicker than a pull request: we change the sentence in both languages and keep the house's voice. The voice is plain: short sentences, everyday words.
 
 ## The bar for a reconstruction
 

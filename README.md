@@ -90,7 +90,7 @@ The labels also say what is ours. The furniture in the great hall isn't his own.
 
 ## How it was made
 
-The museum's statement page says how the words are made: "A person reads, corrects and approves every text before it is published. The drafts are written with AI from a research file that names a source for every fact." Those research files aren't public yet, though some records here point to them. Each stop's record in the museum names its sources. The code was written with AI help as well. Each machine's record in `museum/assets/wing-vinci/manifest.json` names the model that wrote its code.
+The museum's statement page says how the words are made: "A person reads, corrects and approves every English and German text before it is published. The drafts are written with AI from a research file that names a source for every fact. The other languages are translated with AI, and each says so until a person has read it." Those research files aren't public yet, though some records here point to them. Each stop's record in the museum names its sources. The code was written with AI help as well. Each machine's record in `museum/assets/wing-vinci/manifest.json` names the model that wrote its code.
 
 No picture in the wing comes from an image model. The rooms and machines are built in code and filmed in the museum's own engine, and the textures are CC0 photo scans. A few props are CC0 models from an open library, a cask and a basket among them. The paintings, drawings and notebook pages are reproductions: digital copies of public domain works, each labelled with its holder and its licence line.
 

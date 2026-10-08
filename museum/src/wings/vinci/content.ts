@@ -416,8 +416,8 @@ const hall: VinciStatement = {
   carrier: 'vinci/house-hall',
 };
 const oratory = statement('oratory-date',
-  'Built in 1492 for Anne of Brittany.',
-  '1492 für Anne de Bretagne erbaut.',
+  'Built in 1492 for Anne of Brittany, by tradition.',
+  'Nach der Überlieferung 1492 für Anne de Bretagne erbaut.',
   'conjectural', 'document', 'brief/CONCEPT-OPUS.md §3 S4; certainty qualified by brief/BUILDING-DOSSIER.md § Roof and chapel, oratory paragraph');
 const oratoryDateQualification = statement('oratory-date-qualification',
   'The precise year is a reported tradition, not a measured construction date.',
@@ -493,8 +493,8 @@ const deathbedPainting: VinciStatement = {
   germanProvenance: 'museum translation',
 };
 const grave = statement('burial-record',
-  'He was buried on 12 August 1519 in the collegiate church of Saint-Florentin inside the chateau walls. That church was pulled down in 1807.',
-  'Er wurde am 12. August 1519 in der Stiftskirche Saint-Florentin innerhalb der Schlossmauern bestattet. Diese Kirche wurde 1807 abgerissen.',
+  'He was buried in the collegiate church of Saint-Florentin inside the chateau walls. The day is given as 12 August 1519, but it is disputed. That church was later pulled down.',
+  'Er wurde in der Stiftskirche Saint-Florentin innerhalb der Schlossmauern bestattet. Als Tag wird der 12. August 1519 genannt, doch das ist umstritten. Diese Kirche wurde später abgerissen.',
   'documented', 'document', 'brief/CONCEPT-OPUS.md §3 S19; verification qualified in brief/collection/timeline.json');
 
 type StationSeed = Omit<VinciStationContent, 'number' | 'door' | 'carrierClass' | 'carrierCertainty'>;
@@ -544,8 +544,8 @@ const stationCards: Record<VinciStationId, VinciText> = {
     de: 'Die Daten sind in den Boden geschnitten, und du gehst sein Leben an ihnen ab. Zwölf der sechsundfünfzig sind hier geschnitten. Zu jedem Datum steht der Beleg in den Quellen, und seine Farbe sagt, wie sicher wir sind. Von dieser Linie aus öffnet sich das ganze Leben.',
   },
   'reading-table': {
-    en: 'A page of Manuscript B lies open on this table, in a facsimile printed in 1883. He wrote from right to left because he was left handed, and a mirror reads it back. The notebook itself is in Paris.',
-    de: 'Auf diesem Tisch liegt eine Seite aus Manuskript B, in einem Faksimile von 1883. Er schrieb von rechts nach links, weil er Linkshänder war, und ein Spiegel liest es zurück. Das Notizbuch selbst liegt in Paris.',
+    en: 'A page of Manuscript B lies open on this table, in a facsimile printed in 1883. He was left-handed and wrote from right to left, and a mirror reads it back. No passage in his notebooks says why he wrote this way. The notebook itself is in Paris.',
+    de: 'Auf diesem Tisch liegt eine Seite aus Manuskript B, in einem Faksimile von 1883. Er war Linkshänder und schrieb von rechts nach links. Im Spiegel wird die Schrift lesbar. Nirgends in seinen Notizbüchern steht, warum er so schrieb. Das Notizbuch selbst liegt in Paris.',
   },
   body: {
     en: 'He opened bodies and drew what he found, and about six hundred of those sheets are at Windsor. Twenty-nine of them hang on this wall, each from a public reproduction the law lets us show. The sources name every sheet, its number in the royal collection and what its licence asks of us.',
@@ -564,8 +564,8 @@ const stationCards: Record<VinciStationId, VinciText> = {
     de: 'Das Abendmahl misst 460 mal 880 Zentimeter, und dieses Feld im Hof hat seine Größe. Das Gemälde selbst ist eine Refektoriumswand in Mailand und kann nicht reisen, denn er malte trocken auf den Putz und nicht in ihn hinein. Im Umriss hängt eine Reproduktion mit eigener Quelle und Lizenz.',
   },
   grave: {
-    en: 'He was buried on 12 August 1519 in a collegiate church inside the castle walls, and that church was pulled down in 1807. In 1863 a dig on the site found a nearly complete skeleton with stone fragments carrying parts of his name. The slab in the chapel reads LEONARDO DA VINCI, and the chapel’s own plaque speaks of presumed remains.',
-    de: 'Am 12. August 1519 wurde er in einer Stiftskirche innerhalb der Schlossmauern bestattet, und diese Kirche wurde 1807 abgerissen. 1863 fand eine Grabung an dieser Stelle ein fast vollständiges Skelett mit Steinfragmenten, die Teile seines Namens trugen. Die Platte in der Kapelle trägt die Worte LEONARDO DA VINCI, und die Tafel der Kapelle spricht von vermuteten Überresten.',
+    en: 'He was buried in a collegiate church inside the castle walls, and that church was later pulled down. The burial day is given as 12 August 1519, but it is disputed. In 1863 a dig on the site found a nearly complete skeleton with stone fragments carrying parts of his name. The slab in the chapel reads LEONARDO DA VINCI, and the chapel’s own plaque speaks of presumed remains.',
+    de: 'Er wurde in einer Stiftskirche innerhalb der Schlossmauern bestattet, und diese Kirche wurde später abgerissen. Als Tag der Bestattung wird der 12. August 1519 genannt, doch er ist umstritten. 1863 fand eine Grabung an dieser Stelle ein fast vollständiges Skelett mit Steinfragmenten, die Teile seines Namens trugen. Die Platte in der Kapelle trägt die Worte LEONARDO DA VINCI, und die Tafel der Kapelle spricht von vermuteten Überresten.',
   },
 };
 
