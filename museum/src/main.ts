@@ -21,7 +21,7 @@ import type { DeskPanelRow } from './wings/desk-panel'
 import { readLabels, type ForgeLabel } from './core/labels'
 import { DISCLOSURES } from './content/disclosures'
 import { WINGS, wingBySlug, wingsOpen, wingsPreparing } from './wings/registry'
-import { catalogPage, lang, pageLang, say, wingCount, wordsReady } from './wings/content'
+import { catalogPage, lang, pageLang, say, sayNamed, wingCount, wordsReady } from './wings/content'
 import { publishedLangs } from './wings/languages'
 import { sitePage, wayOut, type Settings } from './wings/way-out'
 import { LOBBY_LINKS, LOBBY_TEXT } from './content/lobby'
@@ -40,8 +40,11 @@ function syncLobbyCopy(): void {
     const text = say(LOBBY_TEXT[key])
     if (el instanceof HTMLMetaElement) el.content = text
     else el.textContent = text
-    if (el instanceof HTMLAnchorElement && key in LOBBY_LINKS)
-      el.href = say(LOBBY_LINKS[key as keyof typeof LOBBY_LINKS])
+    if (el instanceof HTMLAnchorElement && key in LOBBY_LINKS) {
+      // a catalog language names its own page where the site has one, and keeps the English page where it has none
+      const link = LOBBY_LINKS[key as keyof typeof LOBBY_LINKS]
+      el.href = catalogPage() ? sayNamed(`link.${key}`) ?? link.en : say(link)
+    }
   }
   const count = wingCount(wingsOpen(), wingsPreparing())
   for (const el of document.querySelectorAll<HTMLElement>('#lobby-plate, [data-lobby-count]'))

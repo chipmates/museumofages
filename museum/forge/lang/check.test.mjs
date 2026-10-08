@@ -18,6 +18,7 @@ function good() {
     'machines.json': { [C]: { one: '{0} machine', other: '{0} machines' } },
     'status.json': { [A]: rec('checked'), [B]: rec('draft'), [C]: rec('native'), '1111111111111111': rec('kept') },
     'tag.json': { walk: true, records: false, codex: true, pictures: true },
+    'named.json': { 'lang.tag': 'Traduit avec l’IA. Pas encore relu par une personne.', 'lang.tag_link': 'Texte original : English · Deutsch', 'link.privacy': '/fr/confidentialite/' },
   }
 }
 const broken = (fn) => { const f = good(); fn(f); return checkLanguage('fr', f) }
@@ -36,6 +37,11 @@ test('placeholders are well formed', () => {
 })
 
 const CASES = [
+  ['a tagged walk without its tag line', (f) => { delete f['named.json'] }, /the walk is tagged and lang\.tag is missing/],
+  ['a name the page does not ask for', (f) => { f['named.json']['lang.hello'] = 'Bonjour' }, /lang\.hello is not a name the page asks for/],
+  ['a link that is no page of the site', (f) => { f['named.json']['link.privacy'] = 'https://example.org/' }, /link\.privacy is .* not a page of the site/],
+  ['a link line that drops an original', (f) => { f['named.json']['lang.tag_link'] = 'Texte original : English' }, /does not name English and Deutsch/],
+  ['a dash in a named word', (f) => { f['named.json']['lang.tag_note'] = 'Traduit — pas relu.' }, /lang\.tag_note holds a dash/],
   ['a catalog that is a list', (f) => { f['walk.json'] = [] }, /walk\.json: not a flat object/],
   ['a key that is not a content key', (f) => { f['walk.json'].Back = 'Retour'; f['status.json'].Back = rec('draft') }, /Back is not a content key/],
   ['a value that is a number', (f) => { f['walk.json'][A] = 3 }, /neither a string nor plural forms/],

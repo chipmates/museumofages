@@ -10,6 +10,9 @@
 // dash or semicolon, and the status and the tag agreeing with the catalogs. A
 // passage of his words may name its source beside it (`prov.<key>.kind`,
 // `.label`, `.rest`): an old edition of the language, or the museum's own.
+// `named.json` holds the words filed under a name of their own: the tag of an
+// unread translation (`lang.tag`, `lang.tag_link`, `lang.tag_note`), which a
+// tagged walk must carry, and the site's pages in the language (`link.*`).
 // A file whose name starts with `_` is a fixture: it is reported, as it must
 // never land. Exit 1 on any problem.
 
@@ -26,6 +29,8 @@ const SURFACES = ['walk', 'records', 'codex', 'pictures']
 /** Which surface a chunk's strings stand on. */
 export const SURFACE_OF = { walk: 'walk', machines: 'records', life: 'records', codex: 'codex', pictures: 'pictures', credits: 'pictures' }
 const SIGNS = /[—–;]/
+const NAMED = /^(?:lang\.(?:tag|tag_link|tag_note)|link\.(?:aboutMuseum|legalNotice|privacy))$/
+const PAGE = /^\/[a-z]{2}(?:-[a-z]{2})?\/[a-z0-9-]+\/$/
 
 /** Placeholders: `{name}`, `{0}`, `{museum:fly_age}`; a brace never stands alone or nested. */
 export function placeholderProblem(text) {
@@ -48,7 +53,7 @@ export function checkLanguage(tag, files) {
   const problems = []
   const say = (file, msg) => problems.push(`${tag}/${file}: ${msg}`)
   if (!TAG.test(tag)) problems.push(`${tag}: not a language tag`)
-  const chunks = Object.keys(files).filter((f) => f !== 'status.json' && f !== 'tag.json')
+  const chunks = Object.keys(files).filter((f) => f !== 'status.json' && f !== 'tag.json' && f !== 'named.json')
   for (const f of chunks.filter((x) => x.startsWith('_'))) say(f, 'a fixture: drop it before landing')
   const real = chunks.filter((f) => !f.startsWith('_'))
   if (!real.length) return problems
@@ -111,6 +116,21 @@ export function checkLanguage(tag, files) {
     if (p) say(f, `${key}: ${p}`)
     if (SIGNS.test(value)) say(f, `${key} holds a dash or a semicolon`)
   }
+
+  // the named words: only the names the page asks for, a text each, a page of the site for a link
+  const named = files['named.json']
+  if (named !== undefined && (!named || typeof named !== 'object' || Array.isArray(named))) say('named.json', 'not a flat object')
+  else for (const [key, value] of Object.entries(named ?? {})) {
+    if (!NAMED.test(key)) { say('named.json', `${key} is not a name the page asks for`); continue }
+    if (typeof value !== 'string' || !value.trim()) { say('named.json', `${key} is not a text`); continue }
+    if (key.startsWith('link.')) { if (!PAGE.test(value)) say('named.json', `${key} is ${JSON.stringify(value)}, not a page of the site in a language`); continue }
+    const p = placeholderProblem(value)
+    if (p) say('named.json', `${key}: ${p}`)
+    if (SIGNS.test(value)) say('named.json', `${key} holds a dash or a semicolon`)
+    if (key === 'lang.tag_link' && !(value.includes('English') && value.includes('Deutsch'))) say('named.json', 'lang.tag_link does not name English and Deutsch, the two originals it links')
+  }
+  // a tagged walk says so where a visitor first meets it
+  if (tagFile?.walk === true && typeof named?.['lang.tag'] !== 'string') say('named.json', 'the walk is tagged and lang.tag is missing')
 
   // the tag: true until every string on its surface is native
   if (tagFile && typeof tagFile === 'object') {
