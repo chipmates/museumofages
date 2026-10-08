@@ -19,7 +19,7 @@
 </p>
 
 <p align="center">
-  <a href="https://museumofages.org/w/vinci?film=job&amp;lang=en">Enter the museum</a> ·
+  <a href="https://museumofages.org/w/vinci">Enter the museum</a> ·
   <a href="https://museumofages.org">museumofages.org</a> ·
   <a href="docs/TOUR.md">Tour</a> ·
   <a href="#run-it-locally">Run it locally</a> ·
@@ -30,7 +30,7 @@
 Museum of Ages has one wing today: Leonardo da Vinci's last house, Clos Lucé in Amboise, on 10 October 1517, rebuilt in code. You move through it as a film, stop by stop, 17 stops in all. At most of them you can step up to the work in front of you, and the machines in the mechanism hall can be set in motion. Each stop tells you how sure we are of what it says.
 
 <p align="center">
-  <a href="https://museumofages.org/w/vinci?film=job&amp;lang=en"><picture>
+  <a href="https://museumofages.org/w/vinci"><picture>
     <source media="(prefers-reduced-motion: reduce)" srcset=".github/assets/demo-poster.webp" />
     <img src=".github/assets/demo.webp" alt="A short silent film of the da Vinci wing. A wooden aerial screw, rebuilt from one page of his notebooks, stands in a hall in low sun and then turns. The camera moves along a dark picture wall to the Mona Lisa, and her close look goes from the whole painting to her face and down to the cracks in the paint. A notebook page in a printed copy of 1883 shows his drawing of the aerial screw, and a mirror turns his writing around. The flow curls behind a flap in the museum's own glass model of a heart valve, built from his notes. Two rebuilt machines turn, a water screw and a flywheel. Then his last house, rebuilt in code, stands in the sun, and its great hall has a mechanical lion by the wall. An evening sky darkens into a night full of stars." width="100%" />
   </picture></a><br/>
