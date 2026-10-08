@@ -424,6 +424,8 @@ export function createDeskChrome(host: DeskChromeHost): DeskChrome {
       if (said[i + 1] !== ' ') continue
       if (mark === '.' && language === 'de' && /(?:^|\D)\d{1,2}$/.test(said.slice(start, i))
         && /^ (?:Januar|Februar|März|April|Mai|Juni|Juli|August|September|Oktober|November|Dezember|Jahrhunderts?)(?!\p{L})/u.test(said.slice(i + 1))) continue
+      // an abbreviation ends no sentence: a short word's stop before a small letter ("1863 г. откриха", "Franz I. nach")
+      if (mark === '.' && /\p{Ll}/u.test(said[i + 2] ?? '') && /(?:^|[^\p{L}])\p{L}{1,3}$/u.test(said.slice(start, i))) continue
       out.push(said.slice(start, i + 1).trim())
       start = i + 1
     }
