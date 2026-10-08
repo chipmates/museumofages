@@ -17,7 +17,7 @@ The first public version. One wing is open: Leonardo da Vinci's last house in Am
 - **The lobby**, rendered live: WebGPU first, and the same node graph on WebGL2 where the browser has no adapter. It is in the code and opens at the dev server's root, and museumofages.org does not show it yet.
 - **Labels with four grades.** Each stop has three layers of text: the line you read first, a drawer, and the record, which names the sources. The labels tell four grades apart: documented, reconstructed, conjectural and not known.
 - **A record for everything shown.** Every reproduction and every built thing has a record with its licence line. `pnpm build` runs the manifest check first and stops when something shown has no record.
-- **Working from a clone.** Without the museum's store, the dev server reads the pictures and the film from museumofages.org as you browse, read only. `museum/forge/fetch-store.mjs` copies the pictures and records for offline work, each with its licence line. The build ships the licences of its bundled libraries as `third-party-licenses.md`.
+- **Working from a clone.** Without the museum's store, the dev server reads the pictures and the film from museumofages.org as you browse, read only. The build ships the licences of its bundled libraries as `third-party-licenses.md`.
 - **museumofages.org.** The start page, the wing's page, the page about the museum and the legal pages, in English and German, built by `site/_src/build.py`.
 
 [0.1.0]: https://github.com/chipmates/museumofages/releases/tag/v0.1.0

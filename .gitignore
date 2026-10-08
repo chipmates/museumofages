@@ -12,7 +12,7 @@ Thumbs.db
 node_modules/
 .pnpm-store/
 
-# A local copy of the public asset store (museum/forge/fetch-store.mjs)
+# A local asset store
 /asset-store/
 
 # The local paths of one machine (museum/forge/local-paths.mjs)

@@ -23,9 +23,8 @@ const HERE = dirname(fileURLToPath(import.meta.url))
 export const APP_ROOT = resolve(HERE, '..')
 /* WHERE THE STORE IS, first found wins:
    1. NA_ASSET_STORE, the store's folder;
-   2. `asset-store/` beside the app, where `forge/fetch-store.mjs` puts a
-      copy of the public store (outside vite's root, so the watcher never
-      walks a few thousand pictures);
+   2. `asset-store/` beside the app (outside vite's root, so the watcher
+      never walks a few thousand pictures);
    3. the `store` of the nearest `.museum-local.json` at or above the app
       (forge/local-paths.mjs): a store kept outside the checkout, shared by
       every worktree below that file.
@@ -39,8 +38,8 @@ export const STORE = process.env.NA_ASSET_STORE
   : existsSync(DEFAULT_STORE) ? DEFAULT_STORE : (localPath('store', APP_ROOT) ?? DEFAULT_STORE)
 const CACHE = process.env.NA_ASSET_CACHE === '1'
 
-/* A COPY IS NOT THE STORE. fetch-store.mjs leaves this note at the root of
-   what it fetched: the displayed files and the deployed records, never the
+/* A COPY IS NOT THE STORE. A copy of the public files carries this note at
+   its root: it holds the displayed files and the deployed records, never the
    unshown originals those records also name. Dev serves such a copy and
    reads the public site for what it lacks; a build refuses it. */
 export const FETCHED_NOTE = 'FETCHED.json'
@@ -57,8 +56,7 @@ export function notBuildable() {
   return kind === 'none'
     ? `no asset store at ${STORE}. The full check and a production build need the museum's own ` +
       `store: set NA_ASSET_STORE to its folder, or name it as "store" in a ${MARKER}. ` +
-      'Without one, `pnpm dev` reads the public site, ' +
-      '`node forge/fetch-store.mjs` copies it for offline viewing (a copy does not build), and ' +
+      'Without one, `pnpm dev` reads the public site and ' +
       '`node forge/manifest-check.mjs --records-only` checks what the repository itself carries.'
     : `the store at ${STORE} is a copy fetched from the public site (${FETCHED_NOTE}). ` +
       'The full check and a production build need the museum\'s own store: set NA_ASSET_STORE to its folder.'
@@ -367,7 +365,6 @@ export function naAssets() {
         return
       }
       say(`The pictures, the films and the record come from ${PUBLIC_ORIGIN} as you browse (read only).`)
-      say('To work offline: node forge/fetch-store.mjs (it shows the size before it starts), then restart.')
       deployedRecord()
         .then((buf) => {
           const d = recordDrift(JSON.parse(buf.toString('utf8')).assets ?? [])
@@ -381,7 +378,7 @@ export function naAssets() {
     let note = {}
     try { note = JSON.parse(readFileSync(join(STORE, FETCHED_NOTE), 'utf8')) } catch {}
     say(`The asset store is a copy fetched from ${note.origin ?? 'the public site'}${note.fetched_at ? ` on ${note.fetched_at.slice(0, 10)}` : ''} (${STORE}).`)
-    if (note.complete === false) log.warn('  The copy is incomplete: run node forge/fetch-store.mjs again to resume it.', { timestamp: false })
+    if (note.complete === false) log.warn('  The copy is incomplete.', { timestamp: false })
     say(PUBLIC_ORIGIN
       ? `What it lacks comes from ${PUBLIC_ORIGIN} as you browse; NA_PUBLIC_ORIGIN=off keeps everything local.`
       : 'NA_PUBLIC_ORIGIN is off: what the copy lacks answers 404.')

@@ -126,9 +126,7 @@ Then open [localhost:5199/w/vinci?film=job&lang=en](http://localhost:5199/w/vinc
 
 The museum's art is not in git. With no local store, the dev server reads what the wing shows from museumofages.org, the record of every file included, and its first lines in the terminal say so. The film alone is about 110 MB this way.
 
-To work offline, fetch a copy once. `node forge/fetch-store.mjs` downloads the pictures and records the wing shows into `asset-store/` beside the app, about 3.7 GB, with each file's licence line beside it, and prints the total size before it starts. The dev server finds that folder by itself (`NA_ASSET_STORE` points it at another one). The film is not part of the copy and still comes from the site, unless `NA_FILM_DIR` names a local folder of film releases. `NA_PUBLIC_ORIGIN=off` turns the network off.
-
-`pnpm typecheck` runs on any clone, and so does `node forge/manifest-check.mjs --records-only`, which checks every record the repository carries. `pnpm build` checks every file it ships against its record, so it needs the museum's own store. Without one, or with a fetched copy, it stops with a message that says so.
+`pnpm typecheck` runs on any clone, and so does `node forge/manifest-check.mjs --records-only`, which checks every record the repository carries. `pnpm build` checks every file it ships against its record, so it needs the museum's own store. Without one it stops with a message that says so.
 
 Leave out `film=job` and the same address runs the live engine the film is rendered from. Without a local store it reads about 220 MB of textures and models from museumofages.org before the first stop. `tier=calm`, `tier=standard` or `tier=hero` in the address sets its detail.
 
@@ -149,9 +147,9 @@ The fetch tool takes the files from the live site one at a time and keeps a file
 | What you see | What to do |
 |---|---|
 | pnpm or Vite refuses your Node version | Install Node.js 22.12 or newer. |
-| The wing opens without pictures | Read the dev server's first lines, they say where it looks. Check that museumofages.org is reachable, or fetch a copy as above. |
+| The wing opens without pictures | Read the dev server's first lines, they say where it looks. Check that museumofages.org is reachable. |
 | A 404 for one file in the browser console | Look at its record. A file marked `display: false` is never public, so that 404 is expected. |
-| `pnpm build` stops at the manifest check | It needs the museum's own store, and a fetched copy doesn't build. `node forge/manifest-check.mjs --records-only` checks what a clone can check. |
+| `pnpm build` stops at the manifest check | It needs the museum's own store. `node forge/manifest-check.mjs --records-only` checks what a clone can check. |
 | Your browser has no WebGPU | Nothing to do. The same scenes run on WebGL2. |
 | Your browser has neither WebGPU nor WebGL2 | The wing needs one of them. Turn on hardware acceleration, or try another browser. |
 | The site's build stops and names `fetch.py` | Run `python3 site/_src/tools/fetch.py` first. |

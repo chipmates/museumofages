@@ -32,7 +32,7 @@ pnpm dev
 
 The museum comes up on [localhost:5199](http://localhost:5199). The lobby is at the root and the Leonardo da Vinci wing at `/w/vinci`. Locally the wing runs its live engine, the same scenes its film is rendered from. An address with `?film=<release>` plays a film release instead, and the releases live outside this repository. `?tier=calm`, `?tier=standard` or `?tier=hero` sets the detail. A browser with no WebGPU adapter takes the WebGL2 path.
 
-**The museum's pictures are not in `museum/`.** Reproductions, textures and the film's frames sit in an asset store outside the repository and are served from the media origin in production. A clone has the code and the records of what it builds, and not the pictures. Without a store, the dev server reads them from museumofages.org as you browse, read only, and says so in its first lines. `node forge/fetch-store.mjs` copies them into `asset-store/` beside the app for offline work, and `NA_ASSET_STORE` points the dev server and the checks at a store somewhere else on your disk:
+**The museum's pictures are not in `museum/`.** Reproductions, textures and the film's frames sit in an asset store outside the repository and are served from the media origin in production. A clone has the code and the records of what it builds, and not the pictures. Without a store, the dev server reads them from museumofages.org as you browse, read only, and says so in its first lines. `NA_ASSET_STORE` points the dev server and the checks at a store on your disk:
 
 ```bash
 NA_ASSET_STORE=/path/to/store pnpm dev
