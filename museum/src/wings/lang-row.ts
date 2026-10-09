@@ -1,7 +1,8 @@
 /* THE LANGUAGE ROW of the museum's panel, once a build publishes more than
    English and German or the page reads another language. Each language
-   stands by its own name and in its own `lang`; a choice reloads the page in
-   that language at the stop it stands at (the address keeps its `#s=`).
+   stands by its own name and in its own `lang`; a choice is kept on the
+   device and reloads the page in that language at the stop it stands at
+   (the address keeps its `#s=`).
    The page's own language stands in the row even where the build does not
    list it, so a visitor sees what they are reading. While no person has read
    the page's words, the long note stands under the row.
@@ -10,6 +11,7 @@
    panel's two-letter switch and never fetches this file. */
 
 import { pageLang, sayNamed, tagged, type PageLang } from './content'
+import { keepLanguage } from './browser-lang'
 import { OWN_NAMES } from './languages'
 import './lang-row.css'
 
@@ -28,6 +30,7 @@ export function paintLanguageRow(setting: HTMLFieldSetElement, published: readon
     choice.setAttribute('aria-pressed', String(code === here))
     choice.addEventListener('click', () => {
       if (code === pageLang()) return
+      keepLanguage(code)
       const address = new URL(location.href)
       address.searchParams.set('lang', code)
       location.assign(address.href)

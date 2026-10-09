@@ -5,7 +5,7 @@
  "h1": "Privacidad",
  "lead": "Esta página explica qué pasa con los datos cuando visitas Museum of Ages. En resumen: no necesitas cuenta, no instalamos cookies y no guardamos nada que nos permita reconocerte en tu próxima visita. Esta página es una traducción para tu comodidad. La versión jurídicamente vinculante es la alemana.",
  "updated_label": "Última actualización",
- "updated": "5 de octubre de 2026",
+ "updated": "9 de octubre de 2026",
  "sections": [
   {
    "h": "Quién es el responsable",
@@ -38,6 +38,7 @@
     "El ala que recorres guarda unas pocas notas breves en el almacenamiento de tu navegador, para funcionar tal como la dejaste:",
     [
      "Tu ajuste de sonido, activado o desactivado, y tu velocidad al caminar, si elegiste una.",
+     "Tu idioma, si elegiste uno en el ala.",
      "Una marca de que tu dispositivo recibe una escena como película. Se guarda una sola vez si el dispositivo es demasiado lento para la escena calculada en tiempo real.",
      "Solo para la pestaña abierta: que ya se mostraron la introducción y una indicación, y una marca de tiempo si el ala tuvo que recargarse una vez tras un error gráfico."
     ],

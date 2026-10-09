@@ -5,7 +5,7 @@
  "h1": "Confidentialité",
  "lead": "Cette page explique ce que deviennent les données quand vous visitez Museum of Ages. En bref: vous n’avez besoin d’aucun compte, nous ne déposons aucun cookie, et rien de ce que nous gardons ne nous permet de vous reconnaître à votre prochaine visite. Cette page est une traduction, fournie pour votre commodité. La version allemande fait foi.",
  "updated_label": "Dernière mise à jour",
- "updated": "5 octobre 2026",
+ "updated": "9 octobre 2026",
  "sections": [
   {
    "h": "Qui est responsable",
@@ -38,6 +38,7 @@
     "L’aile que vous parcourez garde quelques courtes notes dans le stockage de votre navigateur, pour fonctionner comme vous l’avez laissée:",
     [
      "Votre réglage du son, activé ou coupé, et votre vitesse de marche si vous en avez choisi une.",
+     "Votre langue, si vous en avez choisi une dans l’aile.",
      "Une marque qui indique que votre appareil reçoit une scène sous forme de film. Elle est posée une seule fois si l’appareil est trop lent pour la scène calculée en direct.",
      "Pour l’onglet ouvert seulement: le fait que l’ouverture et une indication ont déjà été montrées, et une heure notée si l’aile a dû se recharger une fois après une erreur graphique."
     ],

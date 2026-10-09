@@ -4,7 +4,7 @@ import { test } from 'node:test'
 import { createLoader } from '../film/load.mjs'
 
 const loader = await createLoader()
-const { browserLanguage, addressInBrowserLanguage, adoptBrowserLanguage } = loader.load('src/wings/browser-lang.ts')
+const { browserLanguage, addressInBrowserLanguage, adoptBrowserLanguage, visitorLanguages, keepLanguage } = loader.load('src/wings/browser-lang.ts')
 const { LANGUAGES, publishedLangs } = loader.load('src/wings/languages.ts')
 
 // the loader's arrays belong to its own realm: copied, so they compare as this one's
@@ -52,6 +52,19 @@ test('a named language always wins, whatever it names', () => {
     assert.equal(addressInBrowserLanguage(`${AT}&${named}`, ['fr'], ALL), undefined, named)
 })
 
-test('with no browser behind it, nothing is adopted and nothing throws', () => {
+test('a language chosen by hand comes before the browser\'s', () => {
+  assert.deepEqual([...visitorLanguages('de', ['fr-FR', 'en'])], ['de', 'fr-FR', 'en'])
+  assert.equal(addressInBrowserLanguage(AT, visitorLanguages('bg', ['fr-FR', 'en']), ALL), `${AT}&lang=bg`)
+  assert.equal(addressInBrowserLanguage(AT, visitorLanguages('pt-BR', ['de']), ALL), `${AT}&lang=pt-BR`)
+  // nothing kept, or a note that names no language: the browser's languages stand
+  for (const kept of [null, undefined, '', 'xx']) assert.equal(browserLanguage(visitorLanguages(kept, ['fr-FR']), ALL), 'fr', String(kept))
+  // a kept language the build no longer publishes gives way
+  assert.equal(browserLanguage(visitorLanguages('bg', ['de-AT']), TWO), 'de')
+  // a named language wins over a kept one too
+  assert.equal(addressInBrowserLanguage(`${AT}&lang=fr`, visitorLanguages('de', ['en']), ALL), undefined)
+})
+
+test('with no browser behind it, nothing is adopted, nothing is kept and nothing throws', () => {
   assert.equal(adoptBrowserLanguage(ALL), undefined)
+  assert.equal(keepLanguage('de'), undefined)
 })

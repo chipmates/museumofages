@@ -4,12 +4,13 @@
    English and in German. None on an English or German page, and none once a
    person has read the walk's words. */
 
-import { sayNamed, tagged } from './content'
+import { sayNamed, tagged, type Lang } from './content'
+import { keepLanguage } from './browser-lang'
 
 export interface TagWords {
   line: string
   link?: string | undefined
-  originals?: readonly { word: string; href: string; lang: string }[]
+  originals?: readonly { word: string; href: string; lang: Lang }[]
 }
 
 export function tagWords(): TagWords | undefined {
@@ -24,7 +25,8 @@ export function tagWords(): TagWords | undefined {
     originals: [{ word: 'English', href: at('en'), lang: 'en' }, { word: 'Deutsch', href: at('de'), lang: 'de' }] }
 }
 
-/** the line and, where the catalog writes one, the line of originals, each original a link */
+/** the line and, where the catalog writes one, the line of originals, each
+    original a link, and a press on one a choice of language like any other */
 export function tagNodes(tag: TagWords, document_: Document, className: string): HTMLElement[] {
   const line = document_.createElement('p')
   line.className = className
@@ -39,6 +41,7 @@ export function tagNodes(tag: TagWords, document_: Document, className: string):
     const a = document_.createElement('a')
     a.textContent = original.word
     a.href = original.href; a.lang = original.lang; a.hreflang = original.lang
+    a.addEventListener('click', () => keepLanguage(original.lang))
     link.append(rest.slice(0, at), a)
     rest = rest.slice(at + original.word.length)
   }

@@ -6,7 +6,8 @@
    · A CHOICE IS AN ADDRESS. Each language links the address the visitor
      stands at with its `lang` set, as the panel's row loads it, so the page
      comes back in that language and the visitor stands on the card again.
-   · NOTHING IS KEPT ON THE DEVICE.
+   · A CHOICE IS KEPT ON THE DEVICE (browser-lang.ts), so a later visit by
+     an address that names no language opens in it.
    · THE LIST IS LAID OVER THE CARD, never in its flow, and never on the
      gold way in. It takes a place that covers no words where the glass has
      one (over the night above the desktop's band, over the drawing on a
@@ -17,6 +18,7 @@
      the list through `close()` before it reads Escape as its way in. */
 
 import { pageLang, say, type PageLang } from '../../content'
+import { keepLanguage } from '../../browser-lang'
 import { OWN_NAMES, publishedLangs } from '../../languages'
 import { LOBBY_TEXT } from '../../../content/lobby'
 
@@ -103,9 +105,9 @@ export function createArnoLanguages(document_: Document, signal: AbortSignal, gr
       link.setAttribute('aria-current', 'true')
       link.append(mark(document_, CHECK, 'arno-lang-here'))
     }
-    // the language being read is no journey: its press folds the list
+    // another language is kept and the link goes there; the one being read is no journey: its press folds the list
     link.addEventListener('click', event => {
-      if (code !== here) return
+      if (code !== here) { keepLanguage(code); return }
       event.preventDefault()
       close()
     })

@@ -5,7 +5,7 @@
   "h1": "Privacy",
   "lead": "This page says what happens to data when you visit Museum of Ages. In short: you need no account, we set no cookies, and we keep nothing that lets us recognise you on your next visit.",
   "updated_label": "As of",
-  "updated": "5 October 2026",
+  "updated": "9 October 2026",
   "sections": [
     {
       "h": "Who is responsible",
@@ -38,6 +38,7 @@
         "The wing you walk through keeps a few short notes in your browser's storage so that it works the way you left it:",
         [
           "Your sound setting, on or off, and your walking pace if you chose one.",
+          "Your language, if you chose one in the wing.",
           "A mark that your device gets one scene as a film. It is set once if the device is too slow for the live scene.",
           "For the open tab only: that the opening and a hint have already been shown, and a time mark if the wing had to reload once after a graphics error."
         ],

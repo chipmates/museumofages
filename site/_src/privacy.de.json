@@ -5,7 +5,7 @@
   "h1": "Datenschutz",
   "lead": "Diese Seite sagt, was mit Daten geschieht, wenn du Museum of Ages besuchst. Kurz: Du brauchst kein Konto, wir setzen keine Cookies, und wir behalten nichts, woran wir dich beim nächsten Besuch wiedererkennen könnten.",
   "updated_label": "Stand",
-  "updated": "5. Oktober 2026",
+  "updated": "9. Oktober 2026",
   "sections": [
     {
       "h": "Wer verantwortlich ist",
@@ -38,6 +38,7 @@
         "Der Flügel, durch den du gehst, legt ein paar kurze Notizen im Speicher deines Browsers ab, damit er so funktioniert, wie du ihn verlassen hast:",
         [
           "Deine Einstellung für den Ton, an oder aus, und dein Gehtempo, falls du eines gewählt hast.",
+          "Deine Sprache, falls du im Flügel eine gewählt hast.",
           "Ein Vermerk, dass dein Gerät eine Szene als Film bekommt. Er wird einmal gesetzt, wenn das Gerät für die live berechnete Szene zu langsam ist.",
           "Nur für den offenen Tab: dass der Auftakt und ein Hinweis schon gezeigt wurden, und ein Zeitvermerk, falls der Flügel nach einem Grafikfehler einmal neu laden musste."
         ],
