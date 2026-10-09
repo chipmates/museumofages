@@ -221,10 +221,12 @@ export function createArnoLanguages(document_: Document, signal: AbortSignal, gr
   })
   /* the focus walking on, or a press anywhere else, folds the list where it
      stands. A focus that goes nowhere folds nothing: a browser that gives a
-     pressed link no focus would fold the list under the press. */
+     pressed link no focus would fold the list under the press. Nowhere is
+     no next focus at all, or what the row stands in: Safari hands a pressed
+     link's focus to the card. */
   row.addEventListener('focusout', event => {
     const next = event.relatedTarget
-    if (next instanceof Node && !row.contains(next)) fold()
+    if (next instanceof Node && !row.contains(next) && !next.contains(row)) fold()
   })
   document_.addEventListener('pointerdown', event => {
     if (!list.hidden && event.target instanceof Node && !row.contains(event.target)) fold()
