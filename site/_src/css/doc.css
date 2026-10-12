@@ -83,8 +83,9 @@
 .card dd{font-family:var(--sans);font-size:1rem;color:var(--ink)}
 .card dd.todo{color:var(--ink-quiet)}
 .trust--line{margin-top:16px;color:var(--ink-soft)}
-/* The credit line to copy stands in a box of its own: one click or a long press takes all of it. */
-.credit{margin-top:8px!important;padding:12px 18px;border:1px solid var(--hair);background:var(--ground-raised);font-family:var(--sans);font-size:1rem;line-height:1.5;color:var(--ink)!important;-webkit-user-select:all;user-select:all}
+/* A line to copy stands in a box of its own, as wide as the column: one click or a long press takes all of it.
+   It fills its lines (no balancing) and is never hyphenated, so what is seen is what is copied. */
+.statement__body .credit{margin-top:8px;max-width:none;padding:12px 18px;border:1px solid var(--hair);background:var(--ground-raised);font-family:var(--sans);font-size:1rem;line-height:1.5;color:var(--ink);text-wrap:wrap;hyphens:manual;-webkit-hyphens:manual;-webkit-user-select:all;user-select:all}
 .statement__end{margin-top:44px;display:grid;gap:14px;justify-items:start}
 .statement__body--alone>.statement__end:first-child{margin-top:0}
 .statement__end .door{width:100%}

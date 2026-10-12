@@ -627,6 +627,32 @@ class PictureLicences(unittest.TestCase):
                     licensed += 1
         self.assertGreater(licensed, 50)
 
+    def test_each_picture_of_ours_a_page_holds_carries_licence_data(self):
+        # shown, linked, shared or already described: the sizes chart is linked, and its own ImageObject holds it
+        for path in self.pages:
+            text = path.read_text(encoding="utf-8")
+            data = self.graph(text)
+            if data is None:
+                continue
+            page_url = "https://museumofages.org/" + str(path.relative_to(SITE_BUILT)).removesuffix("index.html")
+            given = {i.get("contentUrl"): i for i in self.lib.image_objects(data)}
+            for url in self.lib.free_pictures_of(text, page_url, data):
+                self.assertIn("license", given.get(url, {}), (path, url))
+        sizes = (SITE_BUILT / "leonardo-da-vinci" / "sizes" / "index.html").read_text(encoding="utf-8")
+        frame = next(i for i in self.lib.image_objects(self.graph(sizes)) if i.get("@id", "").endswith("#frame"))
+        self.assertTrue(frame["contentUrl"].endswith(".png") and "license" in frame)
+
+    def test_the_lines_to_copy_are_one_form_in_every_language(self):
+        # the credit is the image data's creditText, the map line the English as written (no French spacing)
+        written = json.loads((SITE_SRC / "words.en.json").read_text(encoding="utf-8"))["page_what"]["use_map"]
+        for code in ("en", "de", "fr", "it", "es", "pt-BR", "bg"):
+            entry = next(e for e in json.loads((SITE_SRC / "languages.json").read_text(encoding="utf-8"))["languages"] if e["code"] == code)
+            text = (SITE_BUILT / entry["folder"] / entry["slugs"]["what"] / "index.html").read_text(encoding="utf-8")
+            section = re.search(r'<section id="use-our-pictures">.*?</section>', text, flags=re.S).group(0)
+            credit, maps = (html.unescape(re.sub(r"<[^>]+>", "", line)) for line in re.findall(r'<p class="credit"[^>]*>(.*?)</p>', section))
+            self.assertEqual(credit, self.lib.picture_terms(code, "")["creditText"], code)
+            self.assertEqual(maps, written, code)
+
     def test_licence_data_on_another_picture_is_found(self):
         image = {"@type": "ImageObject", "contentUrl": "https://museumofages.org/static/img/v-lisa-1600.webp",
                  "license": "https://creativecommons.org/licenses/by-sa/4.0/"}
@@ -638,14 +664,18 @@ class PictureLicences(unittest.TestCase):
         share = f"{origin}/static/img/og-1200x630.jpg"
         graph = {"@context": "https://schema.org", "@graph": [
             {"@type": "WebPage", "@id": f"{origin}/x/#page", "primaryImageOfPage": {"@type": "ImageObject", "url": share}}]}
+        chart = f"{origin}/static/img/vinci-sizes-chart-en-1600.png"
+        graph["@graph"].append({"@type": "ImageObject", "@id": f"{origin}/x/#frame", "url": chart, "contentUrl": chart})
         page = (f'<meta property="og:image" content="{share}">'
                 f'<img src="../static/img/v-works-1600.webp"><img src="../static/img/v-works-1600.webp">'
-                f'<img src="../static/img/v-lisa-1600.webp">'
+                f'<img src="../static/img/v-lisa-1600.webp"><a href="../static/img/vinci-sizes-chart-en-1600.png">chart</a>'
+                f'<a href="../static/img/vinci-poster-lathe-1440.webp">lathe</a>'
                 f'<script type="application/ld+json">{json.dumps(graph)}</script>')
         terms = self.lib.picture_terms("en", f"{origin}/what-this-museum-is/#use-our-pictures")
         images = list(self.lib.image_objects(self.graph(self.lib.with_picture_rights(page, f"{origin}/x/", terms))))
         urls = [i["contentUrl"] for i in images]
-        self.assertEqual(sorted(urls), [share, f"{origin}/static/img/v-works-1600.webp"])
+        self.assertEqual(sorted(urls), sorted([share, chart, f"{origin}/static/img/v-works-1600.webp",
+                                               f"{origin}/static/img/vinci-poster-lathe-1440.webp"]))
         self.assertTrue(all(i["license"] == terms["license"] and i["creditText"] for i in images))
         # the share picture the page already described took the data: no second object for it
         self.assertEqual(self.graph(self.lib.with_picture_rights(page, f"{origin}/x/", terms))["@graph"][0]

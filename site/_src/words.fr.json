@@ -60,8 +60,8 @@
   "what": "Ce qu’est ce musée"
  },
  "pictures": {
-  "credit_text": "Museum of Ages, ChipMates gemeinnützige GmbH et contributeurs, CC BY-SA 4.0",
-  "copyright_notice": "© ChipMates gemeinnützige GmbH et contributeurs"
+  "credit_text": "Museum of Ages, © ChipMates gemeinnützige GmbH and contributors, CC BY-SA 4.0",
+  "copyright_notice": "© ChipMates gemeinnützige GmbH and contributors"
  },
  "glance": {
   "f1_term": "Une aile",
@@ -202,15 +202,12 @@
   "s5_pays": "ChipMates gemeinnützige GmbH finance le musée.",
   "s6_before": "Le code du musée n’est pas encore public. Il sera publié sous une licence open source, la Licence publique générale GNU Affero (AGPL-3.0) ou toute version ultérieure. Chacun pourra alors le lire, l’utiliser et le modifier selon cette licence. Les droits sur les textes et les images que le musée crée lui-même appartiennent à ChipMates gemeinnützige GmbH.",
   "use_h": "Réutiliser nos images",
-  "use_p1": "Une grande partie de ce que vous voyez ici, nous l’avons fait nous-mêmes: les machines reconstruites en code, les salles conçues par le musée, le modèle en verre du cœur, les diagrammes, et les images de tout cela que montre le site. Vous pouvez utiliser ces images, les modifier et les diffuser, pour tout usage, y compris commercial.",
-  "use_p1b": "Elles sont publiées sous la licence Creative Commons CC BY-SA 4.0. Une image qui montre un tableau, un dessin ou une page de carnet n’en fait pas partie: voir plus bas.",
-  "use_p2": "La licence demande trois choses: nous citer, renvoyer à la licence et signaler si vous avez modifié l’image. Share alike, en français partage dans les mêmes conditions, demande une chose de plus: si vous modifiez une image et diffusez le résultat, il doit être publié sous la même licence.",
+  "use_p1": "Une bonne part de ce que vous voyez ici, nous l’avons faite nous-mêmes: les machines reconstruites en code, les salles conçues par le musée, le modèle en verre du cœur, les diagrammes et leurs images sur le site. Ces images sont sous CC BY-SA 4.0: utilisez-les et partagez ce que vous en faites sous la même licence. C’est le sens de share alike, partage dans les mêmes conditions. Une image qui montre un tableau, un dessin ou une page de carnet n’en fait pas partie.",
   "use_credit_lead": "La ligne de crédit à copier:",
-  "use_credit": "Museum of Ages, © ChipMates gemeinnützige GmbH et contributeurs, CC BY-SA 4.0",
-  "use_p3": "Placez sur Museum of Ages un lien vers la page d’où vient l’image, et sur CC BY-SA 4.0 un lien vers la licence, à l’adresse creativecommons.org/licenses/by-sa/4.0. Si vous l’avez recadrée, ajoutez le mot «recadrée».",
-  "use_p4": "Notre licence ne couvre pas les reproductions de tableaux, de dessins et de pages de carnets. Les originaux restent chez ceux qui les conservent, et chaque reproduction garde sa propre mention de licence, sur son étiquette et dans sa fiche. Une de nos images qui en montre une porte aussi cette mention.",
-  "use_p4b": "Les films restent sur le site: ils montrent des œuvres d’autres auteurs, c’est pourquoi nous ne les diffusons pas sous notre licence. Une image de la maison ou de son terrain nomme aussi les données cartographiques d’après lesquelles ils sont construits, comme le fait notre pied de page.",
-  "use_p5": "Si vous avez un doute, ou s’il vous faut une image en plus grand format, écrivez à contact@museumofages.org.",
+  "use_p2": "Placez sur Museum of Ages un lien vers la page d’où vient l’image, et sur CC BY-SA 4.0 un lien vers la licence. Si vous l’avez modifiée, dites-le, par exemple «recadrée». Si votre image montre la maison ou son terrain, ajoutez:",
+  "use_map": "Map data © OpenStreetMap contributors, ODbL. Relief: IGN, RGE ALTI®, Licence Ouverte 2.0.",
+  "use_p3": "Les reproductions de tableaux, de dessins et de pages de carnets gardent leur propre mention de licence, sur leur étiquette et dans leur fiche, et une de nos images qui en montre une porte aussi cette mention. Les originaux restent dans les musées, bibliothèques et collections qui les conservent. Les films montrent eux aussi des œuvres d’autres auteurs, qui gardent leurs propres conditions, c’est pourquoi ils ne font pas partie des images ci-dessus.",
+  "use_p4": "Si vous avez un doute ou s’il vous faut une image en plus grand format, écrivez à contact@museumofages.org.",
   "s6_h": "Code et droits",
   "s6_p": "Notre code est open source, sous la GNU AGPL, version 3.0 ou ultérieure. Nos textes et images sont sous CC BY-SA 4.0: chacun peut les partager et les adapter, même à des fins commerciales, s’il crédite le musée, renvoie à la licence, signale ses modifications et garde la même licence pour ses adaptations. Les œuvres et données d’autres auteurs (reproductions, musique, citations, données cartographiques) en sont exclues, comme le nom et le logo du musée.",
   "s7_h": "Accessibilité et protection des données",

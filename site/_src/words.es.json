@@ -60,8 +60,8 @@
   "what": "Qué es este museo"
  },
  "pictures": {
-  "credit_text": "Museum of Ages, ChipMates gemeinnützige GmbH y colaboradores, CC BY-SA 4.0",
-  "copyright_notice": "© ChipMates gemeinnützige GmbH y colaboradores"
+  "credit_text": "Museum of Ages, © ChipMates gemeinnützige GmbH and contributors, CC BY-SA 4.0",
+  "copyright_notice": "© ChipMates gemeinnützige GmbH and contributors"
  },
  "glance": {
   "f1_term": "Un ala",
@@ -202,15 +202,12 @@
   "s5_pays": "ChipMates gemeinnützige GmbH financia el museo.",
   "s6_before": "El código del museo todavía no es público. Lo publicaremos con una licencia de código abierto, la AGPL-3.0 o cualquier versión posterior. Entonces cualquiera podrá leerlo, usarlo y modificarlo según esa licencia. Los derechos sobre los textos y las imágenes que hace el propio museo pertenecen a ChipMates gemeinnützige GmbH.",
   "use_h": "Usar nuestras imágenes",
-  "use_p1": "Mucho de lo que ves aquí lo hicimos nosotros: las máquinas reconstruidas en código, las salas que diseñó el propio museo, el modelo de vidrio del corazón, los diagramas y las imágenes de todo ello que muestra el sitio. Puedes usar esas imágenes, modificarlas y compartirlas, para cualquier fin, también comercial.",
-  "use_p1b": "Están bajo la licencia Creative Commons CC BY-SA 4.0. Una imagen que muestra un cuadro, un dibujo o una página de cuaderno no está entre ellas: mira más abajo.",
-  "use_p2": "La licencia pide tres cosas: nombrarnos, enlazar la licencia y decir si cambiaste la imagen. Share alike, en español compartir igual, pide una cosa más: si cambias una imagen y compartes el resultado, debe salir con la misma licencia.",
+  "use_p1": "Mucho de lo que ves aquí lo hicimos nosotros: las máquinas reconstruidas en código, las salas que diseñó el propio museo, el modelo de vidrio del corazón, los diagramas y las imágenes de todo ello en el sitio. Esas imágenes están bajo CC BY-SA 4.0: úsalas, y comparte lo que hagas con ellas bajo la misma licencia. Eso es lo que significa share alike, compartir igual. Una imagen que muestra un cuadro, un dibujo o una página de cuaderno no está entre ellas.",
   "use_credit_lead": "La línea de crédito para copiar:",
-  "use_credit": "Museum of Ages, © ChipMates gemeinnützige GmbH y colaboradores, CC BY-SA 4.0",
-  "use_p3": "Enlaza Museum of Ages a la página de donde tomaste la imagen, y CC BY-SA 4.0 a la licencia, en creativecommons.org/licenses/by-sa/4.0. Si la recortaste, añade la palabra recortada.",
-  "use_p4": "Nuestra licencia no cubre las reproducciones de cuadros, dibujos y páginas de cuadernos. Los originales se quedan con quienes los conservan, y cada reproducción mantiene su propia licencia, en su etiqueta y en su ficha. Una imagen nuestra que muestra una lleva también esa licencia.",
-  "use_p4b": "Las películas se quedan en el sitio: muestran obras de otros, por eso no las publicamos con nuestra licencia. Una imagen de la casa o de su terreno nombra además los datos cartográficos con los que están construidos, como hace nuestro pie de página.",
-  "use_p5": "Si tienes dudas, o necesitas una imagen en un tamaño mayor, escribe a contact@museumofages.org.",
+  "use_p2": "Enlaza Museum of Ages a la página de donde tomaste la imagen, y CC BY-SA 4.0 a la licencia. Si la cambiaste, dilo, por ejemplo recortada. Si tu imagen muestra la casa o su terreno, añade:",
+  "use_map": "Map data © OpenStreetMap contributors, ODbL. Relief: IGN, RGE ALTI®, Licence Ouverte 2.0.",
+  "use_p3": "Las reproducciones de cuadros, dibujos y páginas de cuadernos mantienen su propia línea de licencia, en su etiqueta y en su ficha, y una imagen nuestra que muestra una lleva también esa línea. Los originales se quedan en los museos, bibliotecas y colecciones que los conservan. Las películas también muestran obras de otros, que mantienen sus propias condiciones, por eso no están entre las imágenes de arriba.",
+  "use_p4": "Si tienes dudas o necesitas una imagen en un tamaño mayor, escribe a contact@museumofages.org.",
   "s6_h": "Código y derechos",
   "s6_p": "El código del museo es de código abierto, con la AGPL-3.0 o una versión posterior. Nuestros textos e imágenes están bajo CC BY-SA 4.0: cualquiera puede compartirlos y adaptarlos, también con fines comerciales, si da crédito al museo, enlaza la licencia, indica los cambios y comparte sus adaptaciones con la misma licencia. Quedan fuera las obras y los datos de otros (reproducciones, música, citas, datos cartográficos) y el nombre y el logotipo del museo.",
   "s7_h": "Accesibilidad y privacidad",

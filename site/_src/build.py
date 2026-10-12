@@ -14,14 +14,12 @@ picture or a word. Standard library only.
 """
 import copy
 import hashlib
-import html
 import importlib.util
 import json
 import math
 import re
 import shutil
 import sys
-import urllib.parse
 from pathlib import Path
 
 import buildlib
@@ -30,8 +28,8 @@ import placed
 import render as R
 from buildlib import (ARROW, BANNED, CSP_MARK, FACES_SCRIPT, LANG_FACES, LOOSE_PAIR, NBSP, NNBSP, REST_SCRIPT, WORDS, bind, css,
                       dump, esc, faces, fill, flatten, grain, keep_whole, number, number_word, shown_text, space, tail,
-                      whole_names, with_policy, FREE_PICTURES, LD_BLOCK, image_objects, licence_problems, picture_stem,
-                      picture_terms, with_picture_rights)
+                      whole_names, with_policy, LD_BLOCK, free_pictures_of, image_objects, licence_problems, picture_terms,
+                      with_picture_rights)
 
 SRC = Path(__file__).resolve().parent
 ROOT = SRC.parent
@@ -305,7 +303,9 @@ LIMITS = [
     (r"wing:.*\.src$", 290), (r"wing:.*\.what$", 190), (r"wing:.*\.key\.(full|quiet)$", 150),
     (r"wing:.*\.p\.\d+$|wing:end\.p$|wing:.*field\.p$", 490), (r"wing:.*rows\.\d+\.k$", 32), (r"wing:.*rows\.\d+\.v$", 190),
     (r"wing:.*places\.\w+$|wing:.*lists\.\d+\.h$", 28), (r"wing:holds\..*\.(after|unit)$", 14), (r"wing:.*\.(still|no_sheet)$", 60),
-    (r"wing:numbers\.\d+\.term$", 22), (r"wing:numbers\.\d+\.text$", 110), (r"wing:out\.line$", 130), (r"page_what\.s6_p$", 460), (r"", 420),
+    (r"wing:numbers\.\d+\.term$", 22), (r"wing:numbers\.\d+\.text$", 110), (r"wing:out\.line$", 130), (r"page_what\.s6_p$", 460),
+    # the note on our pictures keeps its first and third paragraphs whole, as written (German runs to 461)
+    (r"page_what\.use_p[13]$", 470), (r"", 420),
 ]
 # A showpiece's one clip is fetched after the page has loaded, on a phone's connection too.
 CLIP_MAX = 1_500_000
@@ -1408,22 +1408,25 @@ def wing_rules(site, slugs, first):
 
 def use_pictures(c, w):
     """The statement page's section on reusing the museum's own pictures, and its line in the page's contents. The
-    credit line stands apart, so it can be copied whole, and the licence's address and the mail address are links."""
+    two lines to copy (the credit, the map data) stand apart in boxes, as written, in the one form every language
+    and the image data share."""
     deed = f"{CC_BY_SA}{L.entries[c.lang]['deed']}"
-    address, cc = "creativecommons.org/licenses/by-sa/4.0", "CC BY-SA 4.0"
+    cc = "CC\u00a0BY-SA\u00a04.0"
     linked = lambda key, text, plain, link: text.replace(plain, link, 1) if plain in text else sys.exit(
-        f"words.{c.lang}.json: page_what.{key} does not name {plain} as written")
-    # the address is copied as written: never broken or hyphenated (on a phone it takes a line of its own)
-    p3 = linked("use_p3", w["page_what.use_p3"], address, f'<a class="nw" href="{deed}">{address}</a>')
-    p5 = linked("use_p5", w["page_what.use_p5"], MAIL, w["html.mail"])
-    # the line to copy keeps plain spaces: only the licence's name is held on one line, by style
-    credit = linked("use_credit", esc(c.raw["page_what.use_credit"]), cc, f'<span class="nw">{cc}</span>')
-    # in the running text a no-break space holds the licence's name, but not its hyphen
-    hold = lambda html: re.sub("CC\u00a0BY-SA\u00a04\\.0", lambda m: f'<span class="nw">{m.group(0)}</span>', html)
-    body = "".join(f"\n        <p>{hold(w[f'page_what.{k}'])}</p>" for k in ("use_p1", "use_p1b", "use_p2", "use_credit_lead"))
-    section = (f'\n      <section id="{USE_PICTURES}">\n        <h2>{w["page_what.use_h"]}</h2>{body}'
-               f'\n        <p class="credit">{credit}</p>\n        <p>{hold(p3)}</p>\n        <p>{w["page_what.use_p4"]}</p>'
-               f'\n        <p>{w["page_what.use_p4b"]}</p>\n        <p>{p5}</p>\n      </section>\n')
+        f"words.{c.lang}.json: page_what.{key} does not name {plain!r} as written")
+    # a no-break space holds the licence's name, but not its hyphen
+    hold = lambda html: re.sub(cc, lambda m: f'<span class="nw">{m.group(0)}</span>', html)
+    p2 = linked("use_p2", w["page_what.use_p2"], cc, f'<a class="nw" href="{deed}">{cc}</a>')
+    p4 = linked("use_p4", w["page_what.use_p4"], MAIL, w["html.mail"])
+    # the lines to copy are English as written (no French spacing, plain spaces: they are copied); spans hold the names
+    own, as_written = ("" if c.lang == "en" else ' lang="en"'), c.written[c.lang]
+    names = re.compile(r"CC BY-SA 4\.0|© \w+|RGE ALTI®|Licence Ouverte 2\.0")
+    held = lambda m: f'<span class="nw">{m.group(0)}</span>'
+    box = lambda text: f'\n        <p class="credit"{own}>{names.sub(held, esc(text))}</p>'
+    section = (f'\n      <section id="{USE_PICTURES}">\n        <h2>{w["page_what.use_h"]}</h2>'
+               f'\n        <p>{hold(w["page_what.use_p1"])}</p>\n        <p>{w["page_what.use_credit_lead"]}</p>'
+               f'{box(as_written["pictures.credit_text"])}\n        <p>{p2}</p>{box(as_written["page_what.use_map"])}'
+               f'\n        <p>{w["page_what.use_p3"]}</p>\n        <p>{p4}</p>\n      </section>\n')
     return f'\n        <li><a href="#{USE_PICTURES}">{w["page_what.use_h"]}</a></li>', section
 
 
@@ -1438,10 +1441,10 @@ def check_picture_licences(out):
         if not block or not SOURCE_LINK:
             continue
         page_url = f"{ORIGIN}/{str(name).removesuffix('index.html')}"
-        given = {i.get("contentUrl"): i for i in image_objects(json.loads(block.group(2).replace("<\\/", "</")))}
-        shown = re.findall(r'<img\b[^>]*?\bsrc="([^"]+)"', text) + re.findall(r'<meta property="og:image" content="([^"]+)"', text)
-        for url in {urllib.parse.urljoin(page_url, html.unescape(s)) for s in shown}:
-            if picture_stem(url) in FREE_PICTURES and "license" not in given.get(url, {}):
+        data = json.loads(block.group(2).replace("<\\/", "</"))
+        given = {i.get("contentUrl"): i for i in image_objects(data)}
+        for url in free_pictures_of(text, page_url, data):
+            if "license" not in given.get(url, {}):
                 problems.append(f"{name}: {url} is the museum's own and carries no licence data")
         for image in given.values():
             target = image.get("acquireLicensePage")

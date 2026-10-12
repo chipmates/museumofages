@@ -252,22 +252,29 @@ def picture_terms(lang, note_url):
             "creator": {"@type": "Organization", "name": "ChipMates gemeinnützige GmbH", "url": "https://museumofages.org/"}}
 
 
+def free_pictures_of(text, page_url, data):
+    """The museum's own pictures a page holds, once each in the order met: those it shows (img), links (a href to a
+    picture file) or shares (og:image), and those its structured data already describes."""
+    found = []
+    for src in (re.findall(r'<img\b[^>]*?\bsrc="([^"]+)"', text) + re.findall(r'<a\b[^>]*?\bhref="([^"]+)"', text)
+                + re.findall(r'<meta property="og:image" content="([^"]+)"', text)):
+        found.append(urllib.parse.urljoin(page_url, html.unescape(src)))
+    found += [i.get("contentUrl") or i.get("url") or "" for i in image_objects(data)]
+    return list(dict.fromkeys(u for u in found if picture_stem(u) in FREE_PICTURES))
+
+
 def with_picture_rights(text, page_url, terms):
-    """Gives each of the museum's own pictures that the page shows (an img) or shares (og:image) its licence data,
-    once per picture: an ImageObject the page already describes takes the data, any other gets one of its own.
-    terms holds license, acquireLicensePage, creditText, copyrightNotice and creator. A page without structured
-    data stays as it is."""
+    """Gives each of the museum's own pictures that the page holds (free_pictures_of) its licence data, once per
+    picture: an ImageObject the page already describes takes the data, any other gets one of its own. terms holds
+    license, acquireLicensePage, creditText, copyrightNotice and creator. A page without structured data stays as
+    it is."""
     block = LD_BLOCK.search(text)
     if not block:
         return text
-    urls = []
-    for src in re.findall(r'<img\b[^>]*?\bsrc="([^"]+)"', text) + re.findall(r'<meta property="og:image" content="([^"]+)"', text):
-        url = urllib.parse.urljoin(page_url, html.unescape(src))
-        if picture_stem(url) in FREE_PICTURES and url not in urls:
-            urls.append(url)
+    data = json.loads(block.group(2).replace("<\\/", "</"))
+    urls = free_pictures_of(text, page_url, data)
     if not urls:
         return text
-    data = json.loads(block.group(2).replace("<\\/", "</"))
     known = {}
     for image in image_objects(data):
         for key in ("contentUrl", "url"):
