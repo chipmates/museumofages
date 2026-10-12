@@ -1,7 +1,7 @@
 {
  "_note": "The privacy page's words, English. A section is a heading and a body. A body block is a string (one paragraph) or a list of strings (a bullet list). A link is written [label](target): the target is a full https address, a mailto address, or page:imprint for the legal notice of the same language. Every sentence describes what the site does: a change to its hosts, its storage or its scripts changes this page, in both languages.",
  "title": "Privacidad | Museum of Ages, un museo digital",
- "description": "Cómo trata los datos Museum of Ages, un museo digital: sin cuenta, sin cookies propias, y lo que hacen el proveedor de alojamiento y tu navegador.",
+ "description": "Cómo trata los datos Museum of Ages, un museo digital: sin cuenta, sin cookies propias, lo que contamos nosotros mismos y lo que hace el proveedor de alojamiento.",
  "h1": "Privacidad",
  "lead": "Esta página explica qué pasa con los datos cuando visitas Museum of Ages. En resumen: no necesitas cuenta, no instalamos cookies y no guardamos nada que nos permita reconocerte en tu próxima visita. Esta página es una traducción para tu comodidad. La versión jurídicamente vinculante es la alemana.",
  "updated_label": "Última actualización",
@@ -107,7 +107,8 @@
   {
    "h": "Tu derecho de oposición",
    "body": [
-    "Puedes oponerte en cualquier momento, por motivos relacionados con tu situación particular, a un tratamiento basado en nuestro interés legítimo (artículo 21 del RGPD). Para ello, escribe a la dirección que aparece al principio de esta página."
+    "Puedes oponerte en cualquier momento, por motivos relacionados con tu situación particular, a un tratamiento basado en nuestro interés legítimo (artículo 21 del RGPD). Para ello, escribe a la dirección que aparece al principio de esta página.",
+    "También puedes oponerte al recuento sin escribirnos: si tu navegador envía la señal Global Privacy Control, el recuento no escribe ninguna fila para él. Algunos navegadores la envían por sí solos, en otros se puede activar en los ajustes o con una extensión."
    ]
   },
   {

@@ -1,7 +1,7 @@
 {
   "_note": "Die Worte der Datenschutzseite, Deutsch, als Deutsch geschrieben und nicht als Übersetzung. Gleiche Form wie privacy.en.json: ein Abschnitt ist eine Überschrift und ein Körper, ein Block ist ein Absatz (Zeichenkette) oder eine Liste. Links als [Text](Ziel), Ziel ist eine https-Adresse, eine mailto-Adresse oder page:imprint für das Impressum. Die Seite duzt wie die ganze Website.",
   "title": "Datenschutz | Museum of Ages, ein digitales Museum",
-  "description": "Wie Museum of Ages, ein digitales Museum, mit Daten umgeht: kein Konto, keine eigenen Cookies, und was der Hoster und dein Browser tun.",
+  "description": "Wie Museum of Ages, ein digitales Museum, mit Daten umgeht: kein Konto, keine eigenen Cookies, was wir selbst zählen, und was der Hoster und dein Browser tun.",
   "h1": "Datenschutz",
   "lead": "Diese Seite sagt, was mit Daten geschieht, wenn du Museum of Ages besuchst. Kurz: Du brauchst kein Konto, wir setzen keine Cookies, und wir behalten nichts, woran wir dich beim nächsten Besuch wiedererkennen könnten.",
   "updated_label": "Stand",
@@ -107,7 +107,8 @@
     {
       "h": "Dein Recht auf Widerspruch",
       "body": [
-        "Du kannst jederzeit aus Gründen, die sich aus deiner besonderen Situation ergeben, einer Verarbeitung widersprechen, die auf unserem berechtigten Interesse beruht (Art. 21 DSGVO). Schreib dazu an die Adresse oben auf dieser Seite."
+        "Du kannst jederzeit aus Gründen, die sich aus deiner besonderen Situation ergeben, einer Verarbeitung widersprechen, die auf unserem berechtigten Interesse beruht (Art. 21 DSGVO). Schreib dazu an die Adresse oben auf dieser Seite.",
+        "Gegen die Zählung geht es auch ohne Nachricht an uns: Sendet dein Browser das Signal Global Privacy Control, schreibt die Zählung für ihn keine Zeile. Manche Browser senden es von sich aus, in anderen lässt es sich in den Einstellungen oder mit einer Erweiterung einschalten."
       ]
     },
     {

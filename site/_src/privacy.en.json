@@ -1,7 +1,7 @@
 {
   "_note": "The privacy page's words, English. A section is a heading and a body. A body block is a string (one paragraph) or a list of strings (a bullet list). A link is written [label](target): the target is a full https address, a mailto address, or page:imprint for the legal notice of the same language. Every sentence describes what the site does: a change to its hosts, its storage, its counting or its scripts changes this page, in both languages. German is the binding text.",
   "title": "Privacy | Museum of Ages, a digital museum",
-  "description": "How Museum of Ages, a digital museum, handles data: no account, no cookies of ours, and what the host and your browser do.",
+  "description": "How Museum of Ages, a digital museum, handles data: no account, no cookies of ours, what we count ourselves, and what the host and your browser do.",
   "h1": "Privacy",
   "lead": "This page says what happens to data when you visit Museum of Ages. In short: you need no account, we set no cookies, and we keep nothing that lets us recognise you on your next visit.",
   "updated_label": "As of",
@@ -107,7 +107,8 @@
     {
       "h": "Your right to object",
       "body": [
-        "You can object at any time, for reasons that arise from your particular situation, to processing that rests on our legitimate interest (Art. 21 GDPR). Write to the address at the top of this page."
+        "You can object at any time, for reasons that arise from your particular situation, to processing that rests on our legitimate interest (Art. 21 GDPR). Write to the address at the top of this page.",
+        "You can also object to the count without writing to us: if your browser sends the Global Privacy Control signal, the count writes no row for it. Some browsers send it on their own, others let you turn it on in their settings or with an extension."
       ]
     },
     {

@@ -16,6 +16,8 @@ export async function onRequestPost({ request, env }) {
     // a browser on another site may not count here: its Origin, when it sends one, must be this site's own
     const origin = request.headers.get('Origin')
     if (origin && origin !== new URL(request.url).origin) return quiet()
+    // a browser that sends Global Privacy Control is not counted at all
+    if (request.headers.get('Sec-GPC') === '1') return quiet()
     const text = await request.text()
     if (!text || text.length > MAX_BODY) return quiet()
     let payload

@@ -174,6 +174,11 @@ test('a beacon from another site, a broken body or a long one writes nothing', a
   await none({ ...GOOD.page_read, step: 'constructor' })
 })
 
+test('a browser that sends Global Privacy Control writes nothing, for every step', async () => {
+  for (const payload of Object.values(GOOD)) await none(payload, { headers: { 'Sec-GPC': '1' } })
+  await one(GOOD.page_read, { headers: { 'Sec-GPC': '0' } })
+})
+
 test('without its dataset the route still answers 204 and writes nowhere', async () => {
   const answer = await onRequestPost({ request: new Request('https://museumofages.org/v1/funnel', { method: 'POST', body: JSON.stringify(GOOD.page_read), headers: { 'User-Agent': DESK } }), env: {} })
   assert.equal(answer.status, 204)

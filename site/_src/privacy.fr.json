@@ -1,7 +1,7 @@
 {
  "_note": "The privacy page's words, English. A section is a heading and a body. A body block is a string (one paragraph) or a list of strings (a bullet list). A link is written [label](target): the target is a full https address, a mailto address, or page:imprint for the legal notice of the same language. Every sentence describes what the site does: a change to its hosts, its storage or its scripts changes this page, in both languages.",
  "title": "Confidentialité | Museum of Ages, un musée numérique",
- "description": "Comment Museum of Ages, un musée numérique, traite les données: pas de compte, aucun cookie de notre part, et ce que font l’hébergeur et votre navigateur.",
+ "description": "Comment Museum of Ages, un musée numérique, traite les données: pas de compte, aucun cookie de notre part, ce que nous comptons nous-mêmes et ce que fait l’hébergeur.",
  "h1": "Confidentialité",
  "lead": "Cette page explique ce que deviennent les données quand vous visitez Museum of Ages. En bref: vous n’avez besoin d’aucun compte, nous ne déposons aucun cookie, et rien de ce que nous gardons ne nous permet de vous reconnaître à votre prochaine visite. Cette page est une traduction, fournie pour votre commodité. La version allemande fait foi.",
  "updated_label": "Dernière mise à jour",
@@ -107,7 +107,8 @@
   {
    "h": "Votre droit d’opposition",
    "body": [
-    "Vous pouvez à tout moment vous opposer, pour des raisons liées à votre situation particulière, à un traitement fondé sur notre intérêt légitime (article 21 du RGPD). Écrivez pour cela à l’adresse indiquée en haut de cette page."
+    "Vous pouvez à tout moment vous opposer, pour des raisons liées à votre situation particulière, à un traitement fondé sur notre intérêt légitime (article 21 du RGPD). Écrivez pour cela à l’adresse indiquée en haut de cette page.",
+    "Vous pouvez aussi vous opposer au comptage sans nous écrire: si votre navigateur envoie le signal Global Privacy Control, le comptage n’écrit aucune ligne pour lui. Certains navigateurs l’envoient d’eux-mêmes, d’autres permettent de l’activer dans leurs réglages ou avec une extension."
    ]
   },
   {

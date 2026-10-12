@@ -1,7 +1,7 @@
 {
  "_note": "The privacy page's words, English. A section is a heading and a body. A body block is a string (one paragraph) or a list of strings (a bullet list). A link is written [label](target): the target is a full https address, a mailto address, or page:imprint for the legal notice of the same language. Every sentence describes what the site does: a change to its hosts, its storage or its scripts changes this page, in both languages.",
  "title": "Privacidade | Museum of Ages, um museu digital",
- "description": "Como o Museum of Ages, um museu digital, trata os dados: sem cadastro, sem cookies nossos, e o que o provedor de hospedagem e o seu navegador fazem.",
+ "description": "Como o Museum of Ages, um museu digital, trata os dados: sem cadastro, sem cookies nossos, o que nós mesmos contamos e o que faz o provedor de hospedagem.",
  "h1": "Privacidade",
  "lead": "Esta página diz o que acontece com os dados quando você visita o Museum of Ages. Em resumo: você não precisa de cadastro, não instalamos cookies, e não guardamos nada que nos permita reconhecer você na próxima visita. Esta página é uma tradução para sua conveniência. A versão juridicamente vinculante é a alemã.",
  "updated_label": "Atualizado em",
@@ -107,7 +107,8 @@
   {
    "h": "O seu direito de oposição",
    "body": [
-    "Você pode se opor a qualquer momento, por motivos relacionados à sua situação particular, ao tratamento baseado no nosso interesse legítimo (art. 21 do GDPR). Para isso, escreva para o endereço que está no início desta página."
+    "Você pode se opor a qualquer momento, por motivos relacionados à sua situação particular, ao tratamento baseado no nosso interesse legítimo (art. 21 do GDPR). Para isso, escreva para o endereço que está no início desta página.",
+    "Você também pode se opor à contagem sem nos escrever: se o seu navegador envia o sinal Global Privacy Control, a contagem não grava nenhuma linha para ele. Alguns navegadores o enviam por conta própria, em outros é possível ativá-lo nas configurações ou com uma extensão."
    ]
   },
   {
