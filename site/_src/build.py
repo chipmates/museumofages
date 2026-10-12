@@ -107,6 +107,10 @@ COUNT_SCRIPT = "count.js"
 COUNT_LISTS = ROOT / "functions" / "_count" / "lists.js"
 COUNT_KINDS = {"home": "home", "what": "statement", "privacy": "privacy", "imprint": "imprint"}
 DOOR_PLACES = ("top", "item", "end")
+# Where the host runs the functions: every address but the files of the pages and of the walk's bundle, so a
+# picture or a script never costs a function's run. The count's edge needs the pages, the count its own route.
+ROUTES = {"version": 1, "include": ["/*"], "exclude": [f"/{STATIC}/*", "/assets/*", "/basis/*", "/favicon.svg", "/sitemap.xml",
+                                                       "/robots.txt", "/na-manifest.json", "/third-party-licenses.md"]}
 # The licence of the museum's own texts and pictures, named in the footer once the code is open.
 CC_BY_SA = "https://creativecommons.org/licenses/by-sa/4.0/"
 # The address a visitor writes to, on every page that names one. No built file may carry any other address.
@@ -1643,6 +1647,7 @@ def build(out, registry, wing_dirs, mark=None, topics=True, quiet=False, more_pi
 
     # the host forwards the site's own address of the code to the repository, once the repository is public
     (out / "_redirects").write_text(f"{SOURCE} {SOURCE_TO} 302\n" if SOURCE_LINK else "", encoding="utf-8")
+    (out / "_routes.json").write_text(json.dumps(ROUTES, indent=1) + "\n", encoding="utf-8")
 
     listed = [(k, l, p) for p, _, k, l in built if k in ("home", "wing", "what", "imprint", "privacy")]
     if topics and PAGES_BUILD.exists() and not mark:
