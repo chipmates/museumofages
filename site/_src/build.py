@@ -24,6 +24,7 @@ from pathlib import Path
 
 import buildlib
 import languages
+import placed
 import render as R
 from buildlib import (ARROW, BANNED, CSP_MARK, FACES_SCRIPT, LANG_FACES, LOOSE_PAIR, NBSP, NNBSP, REST_SCRIPT, WORDS, bind, css,
                       dump, esc, faces, fill, flatten, grain, keep_whole, number, number_word, shown_text, space, tail,
@@ -1663,6 +1664,7 @@ def build(out, registry, wing_dirs, mark=None, topics=True, quiet=False, more_pi
             problems.append(f"{STATIC}/{name}: something still points at assets/")
     problems += check_menu(out, built, site) + crawl(out, site) + check_gone(out, site) + check_mail(out) + check_switches(out, site) + check_fonts(site)
     problems += check_sign(out, signs) + check_pictures(out, built, site) + check_colours(out, built, site)
+    problems += placed.finish(out, STATIC, ORIGIN)
     if (out / "_redirects").read_text(encoding="utf-8").split() != ([SOURCE, SOURCE_TO, "302"] if SOURCE_LINK else []):
         problems.append("_redirects does not agree with the switch for the link to the code")
     if problems:
