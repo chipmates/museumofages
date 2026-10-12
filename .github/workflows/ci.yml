@@ -77,6 +77,11 @@ jobs:
           shopt -s extglob
           node --test forge/film/!(film-check|global-key|library|motion|evening).test.mjs forge/best-of-rights.test.mjs forge/night/real-sky.test.mjs
 
+      # The site's own count: every row its function can write and every one it must not, and the same closed
+      # lists in the function, the pages' script and the walk.
+      - name: Count tests
+        run: node --test ../site/tests/*.test.mjs
+
   film-slow:
     name: Film tests (${{ matrix.file }})
     runs-on: ubuntu-24.04
@@ -155,6 +160,10 @@ jobs:
 
       - name: Build the site
         run: python3 site/_src/build.py
+
+      # The build writes the count's lists from the registry. The repository must hold what it writes.
+      - name: The count's lists
+        run: git diff --exit-code site/functions/_count/lists.js
 
       # Every address a built page points at on its own site answers. An
       # address on another host is listed, never fetched.
