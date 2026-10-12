@@ -108,10 +108,13 @@ COUNT_SCRIPT = "count.js"
 COUNT_LISTS = ROOT / "functions" / "_count" / "lists.js"
 COUNT_KINDS = {"home": "home", "what": "statement", "privacy": "privacy", "imprint": "imprint"}
 DOOR_PLACES = ("top", "item", "end")
+# IndexNow: the key a search engine fetches from the site's root to trust our pings (public by design).
+INDEXNOW_KEY = "f8c88732c7bce7f2bf169a1877ed44e2"
 # Where the host runs the functions: every address but the files of the pages and of the walk's bundle, so a
 # picture or a script never costs a function's run. The count's edge needs the pages, the count its own route.
 ROUTES = {"version": 1, "include": ["/*"], "exclude": [f"/{STATIC}/*", "/assets/*", "/basis/*", "/favicon.svg", "/sitemap.xml",
-                                                       "/robots.txt", "/na-manifest.json", "/third-party-licenses.md"]}
+                                                       "/robots.txt", f"/{INDEXNOW_KEY}.txt", "/na-manifest.json",
+                                                       "/third-party-licenses.md"]}
 # The licence of the museum's own texts and pictures, named in the footer once the code is open.
 CC_BY_SA = "https://creativecommons.org/licenses/by-sa/4.0/"
 # The address a visitor writes to, on every page that names one. No built file may carry any other address.
@@ -1924,6 +1927,8 @@ def write_sitemap(out, site, listed):
     closed = HIDDEN or site.mark
     (out / "robots.txt").write_text(
         "User-agent: *\nDisallow: /\n" if closed else f"User-agent: *\nAllow: /\n\nSitemap: {ORIGIN}/sitemap.xml\n", encoding="utf-8")
+    if not closed:
+        (out / f"{INDEXNOW_KEY}.txt").write_text(INDEXNOW_KEY, encoding="utf-8")
 
 
 def pages_by_twin(out, listed):
