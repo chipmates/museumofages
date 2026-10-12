@@ -1721,14 +1721,14 @@
   {
    "path": "pages/pics/img/vinci-supper-og-de-1200x630.png",
    "url": "/static/img/vinci-supper-og-de-1200x630.png",
-   "bytes": 11863,
-   "sha256": "961fea35471b8abbf348f0d76cf4d9c92cd4bdec8deada93a9a71b5e053bf896"
+   "bytes": 14444,
+   "sha256": "58c64ab5888b0d9aa72cd8305bac467f2d210d7b70be578e7910f743fc06f554"
   },
   {
    "path": "pages/pics/img/vinci-supper-og-en-1200x630.png",
    "url": "/static/img/vinci-supper-og-en-1200x630.png",
-   "bytes": 10406,
-   "sha256": "4968ce84b3e682cbba549646f03fb203c0200c7dc7db83dcec2e37f50525199a"
+   "bytes": 12576,
+   "sha256": "0a74b39e2afa6237e2c177d314b38810c2540a5c16f7c282d6166fe2ebbd957c"
   },
   {
    "path": "pages/pics/img/vinci-view-anemometer-1600.avif",

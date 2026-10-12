@@ -93,6 +93,12 @@ NAMES_FILE = HERE / "names.json"
 # smaller size, in characters. A longer name has to wrap on a phone.
 KEEP_WHOLE = 19
 KEEP_SMALL = 24
+# An answer longer than this, in characters, takes the small phone's type on a phone up to 389 px wide, so the first
+# door still stands on a 360 by 780 screen.
+LONG_ANSWER = 400
+# A German ordinal before a century or a month never ends a line: "Im 17." there reads as a sentence's end.
+ORDINAL_DE = re.compile(r"\b(\d{1,2})\. (?=(?:Jahrhunderts?|Januar|Februar|März|April|Mai|Juni|Juli|August|September|Oktober|"
+                        r"November|Dezember)\b)")
 
 # The addresses, kept here and nowhere else. A wing's own addresses stand in its entry in WINGS_FILE.
 ORIGIN = "https://museumofages.org"
@@ -867,8 +873,9 @@ def render(page, lang, data, shared, out_root):
         plain = lambda s: s.replace(LIB.NBSP, " ")
         frame = {"title": dr["title"], "what": what, "alt": dr["alt"], "tag": dr["tag"], "still": og["file"],
                  "caption": plain(f'{dr["title"]}, {what}'), "description": plain(dr["alt"])}
-        frame_html = fill(parts["frame:chart"], {"html.figure": CHART.wall_figure(h_cm, w_cm, person_cm, {"person": labels["person"], "alt": dr["alt"]},
-                                                                                   LIB.number, lang),
+        frame_html = fill(parts["frame:chart"], {"html.figure": CHART.wall_figure(h_cm, w_cm, person_cm, {"person": labels["person"], "alt": dr["alt"],
+                                                                                    "arch": dr.get("arch_label")},
+                                                                                   LIB.number, lang, dr.get("inside")),
                                                  "title": rich(dr["title"]), "tag": rich(labels[dr["tag"]]), "what": rich(what)})
         preload, focus = "", ""
     else:
@@ -900,6 +907,7 @@ def render(page, lang, data, shared, out_root):
         "html.header": chrome["header"],
         "html.footer": chrome["footer"],
         "attr.h1": h1_class,
+        "attr.top": " sp-top--long" if len(data["top"]["answer"]) > LONG_ANSWER else "",
         "top.h1": names.mark(h1, wrap_wing=run > KEEP_SMALL),
         "top.answer": rich(data["top"]["answer"]),
         # the one place a sizes page says in which order its sizes stand
@@ -1112,6 +1120,8 @@ def load_pages(pages=PAGES):
         if isinstance(obj, list):
             return [spaced(v, lang, f"{path}.{i}", pairs) for i, v in enumerate(obj)]
         if isinstance(obj, str) and not re.search(NOT_SPACED, path):
+            if lang == "de":
+                obj = ORDINAL_DE.sub("\\1." + LIB.NBSP, obj)
             return LIB.bind(obj, lang) if pairs else LIB.space(obj, lang)
         return obj
     data = {p: {lang: spaced(json.loads((HERE / f"{p}.{lang}.json").read_text(encoding="utf-8")), lang,
@@ -1128,6 +1138,9 @@ def load_pages(pages=PAGES):
                                     "leave the slug to the registry")
                 d["page"]["slug"] = topic["slug"][lang]
             problems += [f"{p}.{lang}: {x}" for x in check_wing_facts(d, info[p]["facts"])]
+            # what the drawing shows inside its wall is one reading of the wall, the same in every language
+            if info[p]["drawing"] and d["top"]["drawing"].get("inside") != data[p][info[p]["langs"][0]]["top"]["drawing"].get("inside"):
+                problems.append(f"{p}.{lang}: top.drawing.inside differs from the {info[p]['langs'][0]} file's: the drawing is one")
             blocks = {b["type"] for b in d["blocks"]}
             wants = blocks & {"chart", "works", "table"} or ("figure" in d["top"])
             if wants and not works:
@@ -1168,6 +1181,11 @@ def check_wing_facts(d, facts):
             problems.append("labels.person does not give the facts' person")
         if d["page"].get("still"):
             problems.append("page.still is a chart's: a page with a drawing shares the drawing (page.og_image)")
+        size = ((facts or {}).get("wall") or {}).get(drawing.get("wall"))
+        if size and drawing.get("inside"):
+            problems += CHART.check_inside(drawing["inside"], size["h_m"], size["w_m"])
+        if drawing.get("arch_label") and not (drawing.get("inside") or {}).get("arch"):
+            problems.append("top.drawing.arch_label labels an arch the drawing does not draw")
     return problems
 
 
@@ -1187,10 +1205,11 @@ def still_jobs(pages=PAGES, loaded=None):
                 wall, facts = d["top"]["drawing"]["wall"], info[page]["facts"]
                 size = facts["wall"][wall]
                 words = {"h1": d["top"]["h1"].replace(LIB.NBSP, " "), "person": d["labels"]["person"].replace(LIB.NBSP, " "),
-                         "site": ORIGIN.split("://", 1)[1]}
+                         "site": ORIGIN.split("://", 1)[1],
+                         "arch": " ".join(d["top"]["drawing"].get("arch_label") or []).replace(LIB.NBSP, " ")}
                 jobs.append({"file": d["page"]["og_image"]["file"].replace("{lang}", code), "page": page, "lang": lang, "kind": "share",
                              "svg": CHART.wall_still_svg(CHART.cm_of(size["h_m"]), CHART.cm_of(size["w_m"]), CHART.cm_of(facts["set"]["person_m"]),
-                                                         words, LIB.number, lang, colours)})
+                                                         words, LIB.number, lang, colours, d["top"]["drawing"].get("inside"))})
                 continue
             if not d["page"].get("still") or not works:
                 continue

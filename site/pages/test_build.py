@@ -580,6 +580,16 @@ class Case(unittest.TestCase):
             num = lambda v: f"{v:g}".replace(".", "," if lang == "de" else ".")
             self.assertIn(f'{num(wall["h_m"])} × {num(wall["w_m"])} m</text>', top)
             self.assertNotIn("<img", top)
+            # the table and the door's arch at the wall's scale, the arch with its label, as the page reads them
+            inside = data["top"]["drawing"].get("inside")
+            if inside:
+                t, a = inside["table"], inside["arch"]
+                self.assertRegex(top, r'<rect class="sz-d" x="[\d.]+" y="[\d.]+" width="%g" height="%g"'
+                                 % ((t["to_m"] - t["from_m"]) * 300, (t["top_m"] - t["hem_m"]) * 300))
+                self.assertRegex(top, r'<path class="sz-a" d="M[\d.]+ 1450V%gA[\d.]+ [\d.]+ 0 0 1 [\d.]+ %gV1450"'
+                                 % (1450 - a["spring_m"] * 300, 1450 - a["spring_m"] * 300))
+                for line in data["top"]["drawing"].get("arch_label", []):
+                    self.assertIn(f">{html.escape(line)}</text>", top)
             # every way into the walk opens the wing at the page's stop: the top, the part on the wing, the end
             door = re.escape(wing["door"][lang].replace("&", "&amp;") + "#s=" + data["page"]["stop"])
             for place in ("top", "item", "end"):
@@ -633,6 +643,41 @@ class Case(unittest.TestCase):
         data["top"]["h1"] += " Anew"
         self.save("en", data, self.drawing_page)
         self.fails(r"the still \S+-en-1200x630\.png is older than its chart")
+
+    def test_a_table_or_an_arch_outside_the_wall_or_one_language_apart_stops_the_build(self):
+        if not self.drawing_page or "inside" not in self.data("en", self.drawing_page)["top"]["drawing"]:
+            self.skipTest("no drawing shows a table and an arch")
+        for lang in ("en", "de"):
+            data = self.data(lang, self.drawing_page)
+            data["top"]["drawing"]["inside"]["arch"]["to_m"] = 99
+            self.save(lang, data, self.drawing_page)
+        self.fails(r"top\.drawing\.inside\.arch does not lie inside the wall")
+        data = self.data("en", self.drawing_page)
+        data["top"]["drawing"]["inside"]["arch"]["to_m"] = 5
+        self.save("en", data, self.drawing_page)
+        self.fails(r"top\.drawing\.inside differs from the en file's")
+
+    def test_a_german_ordinal_keeps_its_noun_and_a_long_answer_its_door(self):
+        if not self.drawing_page:
+            self.skipTest("no page draws a wall")
+        out, written = self.build()
+        wing, topic, facts = self.drawing_facts()
+        de = (out / wing["page"]["de"].strip("/") / topic["slug"]["de"] / "index.html").read_text(encoding="utf-8")
+        if "17." in self.data("de", self.drawing_page)["top"]["answer"]:
+            self.assertIn("17.\u00a0Jahrhundert", de)
+            self.assertNotIn("17. Jahrhundert", de)
+        # a year that ends a sentence stays free to end a line
+        spec = importlib.util.spec_from_file_location("build_ordinal", self.dir / "build.py")
+        module = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(module)
+        self.assertEqual(module.ORDINAL_DE.sub("x", "im Jahr 1484. Forscher"), "im Jahr 1484. Forscher")
+        self.assertEqual(module.ORDINAL_DE.sub("\\1.#", "am 12. Oktober"), "am 12.#Oktober")
+        # only a long answer takes the small phone's type early
+        for path in written:
+            text = path.read_text(encoding="utf-8")
+            data, lang = self.page_of(path)
+            long = len(data["top"]["answer"]) > module.LONG_ANSWER
+            self.assertEqual('<header class="sp-top sp-top--long">' in text, long, path)
 
     def test_a_source_of_one_language_only_stands_in_that_language(self):
         if not self.drawing_page:
