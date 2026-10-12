@@ -745,8 +745,15 @@ def check_registry(site):
             if not e["dates"].get(lang) or not e["shows"].get("place", {}).get(lang) or not e["shows"].get("day", {}).get(lang):
                 problems.append(f"{where} lacks its dates, or the place and day it shows, in {lang}")
             for t in e["topics"]:
-                if not all(t.get(k, {}).get(lang) for k in ("slug", "name", "line")):
+                if lang in languages.topic_langs(t, LANGS) and not all(t.get(k, {}).get(lang) for k in ("slug", "name", "line")):
                     problems.append(f"{where}: a topic page lacks its slug, name or line in {lang}")
+        groups = {g["id"] for g in (site.data.get(slug, {}).get("en", {}).get("holds") or {}).get("groups", [])}
+        for t in e["topics"]:
+            # a page in fewer languages always has English: its other languages link the English page
+            if "langs" in t and (not isinstance(t["langs"], list) or "en" not in t["langs"] or set(t["langs"]) - set(L.order)):
+                problems.append(f"{where}: a topic page's langs {t['langs']!r} is not a list of the table's languages with English")
+            if "from" in t and t["from"] not in groups:
+                problems.append(f"{where}: a topic page is linked from the group {t['from']!r}, which the wing's page does not hold")
         if app is not None and not site.mark and slug not in app:
             problems.append(f"{where} is not in the museum app's own list ({APP_WINGS.name})")
         if not isinstance(e["when"], int) or isinstance(e["when"], bool):
@@ -1778,7 +1785,7 @@ def build_topics(out, site):
     outside = lambda page: re.findall(r'="([a-z][a-z0-9+.-]*:[^"]*)"', page)
     found, problems = [], []
     topic_kinds = {f'{e["page"][l].strip("/")}/{t["slug"][l]}': topic_count_kind(t) for e in site.wings.values() if e.get("state") == "open" for t in e.get("topics", [])
-                   for l in LANGS}
+                   for l in languages.topic_langs(t, LANGS)}
     for path in paths:
         text = path.read_text(encoding="utf-8")
         name = path.relative_to(out)
@@ -1822,7 +1829,9 @@ def wing_count_kind(slug, entry):
 
 
 def topic_count_kind(topic):
-    return topic["slug"]["en"].replace("-", "_")
+    """A topic page in the count: its count key in the registry, else its English address with underscores. A page
+    whose address is still to be settled names its key, so a new address never renames its rows."""
+    return topic.get("count") or topic["slug"]["en"].replace("-", "_")
 
 
 def count_lists(site):
@@ -2286,7 +2295,7 @@ def crawl(out, site):
     stops = {stop for f in site.facts.values() for stop in f.get("stops", [])}
     # a test build leaves the topic pages out: their addresses stand in the registry and are built by their own build
     topics = {f'{e["page"][l].strip("/")}/{t["slug"][l]}' for e in site.wings.values() if e.get("state") == "open"
-              for t in e.get("topics", []) for l in LANGS} if site.mark else set()
+              for t in e.get("topics", []) for l in languages.topic_langs(t, LANGS)} if site.mark else set()
     for path in sorted(out.rglob("*.html")):
         text = path.read_text(encoding="utf-8")
         name = path.relative_to(out)

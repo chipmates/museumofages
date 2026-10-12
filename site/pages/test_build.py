@@ -21,7 +21,7 @@ HERE = Path(__file__).resolve().parent
 SITE_SRC = HERE.parent / "_src"
 SITE_BUILT = HERE.parent / "dist"
 WORK = HERE / "_work" / "test"
-SOURCES = ["build.py", "template.html", "names.json", "css"]
+SOURCES = ["build.py", "chart.py", "template.html", "names.json", "css"]
 REGISTRY = SITE_SRC / "registry.json"
 LINKED = ["pics", "last-good"]
 # The two built pages whose header and footer the topic pages wear.
@@ -59,13 +59,22 @@ class Case(unittest.TestCase):
         for src in HERE.glob("*.??.json"):
             shutil.copy(src, self.dir / src.name)
         self.pages = sorted(p.name[:-len(".en.json")] for p in self.dir.glob("*.en.json"))
-        self.page = self.pages[0]
+        # the first page of film pictures and the first page of a wing's works at one scale
+        self.page = next(p for p in self.pages if "topic" not in self.data("en", p)["page"])
+        self.works_page = next((p for p in self.pages if "topic" in self.data("en", p)["page"]), None)
 
     def tearDown(self):
         shutil.rmtree(self.dir, ignore_errors=True)
 
     def data(self, lang, page=None):
         return json.loads((self.dir / f"{page or self.page}.{lang}.json").read_text(encoding="utf-8"))
+
+    def page_of(self, path):
+        """The data of a built page, by its main element's page label and its language."""
+        text = path.read_text(encoding="utf-8")
+        label = re.search(r'<main[^>]*data-page="([\w-]+)"', text).group(1)
+        lang = re.search(r'<html lang="(\w+)"', text).group(1)
+        return next(self.data(lang, p) for p in self.pages if self.data("en", p)["page"]["id"] == label), lang
 
     def save(self, lang, data, page=None):
         (self.dir / f"{page or self.page}.{lang}.json").write_text(json.dumps(data, ensure_ascii=False), encoding="utf-8")
@@ -140,7 +149,7 @@ class Case(unittest.TestCase):
                 continue
             names.add(key)
             names |= {part.lower() for name in wing["name"].values() for part in name.split() if len(part) > 3}
-        for name in ("template.html", "build.py", "css/page.css"):
+        for name in ("template.html", "build.py", "chart.py", "make_pictures.py", "css/page.css", "css/chart.css"):
             text = (HERE / name).read_text(encoding="utf-8").lower()
             for word in names:
                 self.assertNotIn(word, text, f"{name} names a wing: {word}")
@@ -248,12 +257,15 @@ class Case(unittest.TestCase):
         wings = self.wings()
         for path in written:
             text = path.read_text(encoding="utf-8")
-            lang = re.search(r'<html lang="(\w+)"', text).group(1)
-            data = self.data(lang)
+            data, lang = self.page_of(path)
             name = wings[data["page"]["wing"]]["name"][lang]
             own = self.own_part(text)
             # the site's rule that the span relies on travels with the page
             self.assertIn(".nw{white-space:nowrap}", text)
+            if name not in data["top"]["h1"]:
+                # a page whose heading does not name the wing keeps the name whole wherever it stands
+                self.assertNotIn(name, self.words(re.sub(r'<span class="nw">[^<]*</span>', " ", own)))
+                continue
             # in the h1 the name stands with its ending in one span that cannot wrap
             h1 = re.search(r"<h1[^>]*>(.*?)</h1>", own, flags=re.S).group(1)
             kept = re.findall(r'<span class="nw">([^<]*)</span>', h1)
@@ -293,7 +305,7 @@ class Case(unittest.TestCase):
         out, written = self.build()
         for path in written:
             text = path.read_text(encoding="utf-8")
-            lang = re.search(r'<html lang="(\w+)"', text).group(1)
+            data, lang = self.page_of(path)
             own = self.own_part(text)
             self.assertIn(".nh{hyphens:none", text)
             spans = re.findall(r'<span class="(?:nw nh|nh)"(?: lang="(\w+)")?>([^<]*)</span>', own)
@@ -311,6 +323,10 @@ class Case(unittest.TestCase):
                     wanted = entry.get("lang", "")
                     self.assertEqual(marked[word], "" if wanted == lang else wanted, word)
             self.assertGreater(found, 15)
+            if data["page"]["id"] != self.data("en")["page"]["id"]:
+                # a holder a page takes from its wing's facts carries the language the facts give it
+                self.assertIn('<span class="nh" lang="fr">Musée du Louvre</span>', own)
+                continue
             # the holders of the sources list, by name
             self.assertIn('<span class="nh" lang="it">Veneranda Biblioteca Ambrosiana</span>', own)
             self.assertIn('<span class="nh" lang="fr">Bibliothèque de l&#x27;Institut de France</span>', own)
@@ -362,6 +378,128 @@ class Case(unittest.TestCase):
             self.assertIn('<header class="top"', text)
             self.assertIn('<footer class="foot"', text)
         self.assertTrue((out / "static" / "fonts" / "marcellus-400.woff2").exists())
+
+
+    # ---- a page of its wing's works at one scale ----
+
+    def works_facts(self):
+        """The works page's wing, its facts and the registry's topic."""
+        data = self.data("en", self.works_page)
+        wing = self.wings()[data["page"]["wing"]]
+        topic = next(t for t in wing["topics"] if t.get("count") == data["page"]["topic"])
+        facts = json.loads((SITE_SRC / "wings" / f'{data["page"]["wing"]}.facts.json').read_text(encoding="utf-8"))
+        return wing, topic, facts
+
+    def test_a_works_page_reads_every_size_stop_and_door_from_the_facts(self):
+        if not self.works_page:
+            self.skipTest("no page shows a wing's works")
+        out, written = self.build()
+        wing, topic, facts = self.works_facts()
+        for lang in ("en", "de"):
+            rel = f'{wing["page"][lang].strip("/")}/{topic["slug"][lang]}/index.html'
+            text = (out / rel).read_text(encoding="utf-8")
+            own = self.own_part(text)
+            door = wing["door"][lang].replace("&", "&amp;")
+            works = facts["paintings"]
+            # one row of the table per work, its height and width as the facts give them
+            rows = re.findall(r"<tr><th scope=\"row\">(.*?)</tr>", own, flags=re.S)
+            self.assertEqual(len(rows), len(works) + 1)
+            for p, row in zip(works, rows):
+                cells = re.findall(r"<td>(.*?)</td>", row, flags=re.S)
+                fmt = lambda v: f"{v:g}".replace(".", "," if lang == "de" else ".")
+                self.assertTrue(cells[0].startswith(fmt(p["h_cm"])) and cells[1].startswith(fmt(p["w_cm"])), (p["id"], cells[:2]))
+                # and its own way into the wing, at its stop, counted as an item's door
+                self.assertIn(f'href="{door}#s={p["stop"]}" data-door="item"', row)
+            # every shape of the chart is its work's size, one em a metre
+            for p in works:
+                self.assertIn(f'width="{p["w_cm"] / 100:g}em" height="{p["h_cm"] / 100:g}em"', own)
+            # the first screen's door opens the wing at the stop of the work the page is about
+            mark = next(p for p in works if p["id"] == self.data(lang, self.works_page)["top"]["figure"]["work"])
+            self.assertRegex(text, r'<a class="door" href="%s#s=%s"[^>]*data-door="top"' % (re.escape(door), mark["stop"]))
+            # every way into the walk names its place among the count's doors
+            for a in re.findall(r'<a\b[^>]*href="/w/[^"]*"[^>]*>', text):
+                self.assertRegex(a, r'data-door="(top|item|end)"')
+
+    def test_a_line_with_another_size_stops_the_build(self):
+        if not self.works_page:
+            self.skipTest("no page shows a wing's works")
+        data = self.data("en", self.works_page)
+        block = next(b for b in data["blocks"] if b["type"] == "works")
+        block["lines"][0] = re.sub(r"\d+ ×", "178 ×", block["lines"][0], count=1)
+        self.save("en", data, self.works_page)
+        self.fails(r"line 1 does not carry its size")
+
+    def test_a_still_older_than_its_chart_stops_the_build(self):
+        if not self.works_page:
+            self.skipTest("no page shows a wing's works")
+        data = self.data("de", self.works_page)
+        next(b for b in data["blocks"] if b["type"] == "chart")["caption"] += " Neu."
+        self.save("de", data, self.works_page)
+        self.fails(r"older than its chart")
+
+    def test_the_address_is_the_topics_one_setting(self):
+        if not self.works_page:
+            self.skipTest("no page shows a wing's works")
+        data = self.data("en", self.works_page)
+        data["page"]["slug"] = "somewhere-else"
+        self.save("en", data, self.works_page)
+        self.fails(r"leave the slug to the registry")
+
+    def test_a_page_in_fewer_languages_names_only_those(self):
+        if not self.works_page:
+            self.skipTest("no page shows a wing's works")
+        wings = self.wings()
+        key = self.data("en", self.works_page)["page"]["wing"]
+        topic = next(t for t in wings[key]["topics"] if t.get("count") == self.data("en", self.works_page)["page"]["topic"])
+        topic["langs"] = ["en"]
+        self.registry.write_text(json.dumps(wings, ensure_ascii=False), encoding="utf-8")
+        out, written = self.build()
+        self.assertEqual(len(written), 2 * len(self.pages) - 1)
+        self.assertFalse((out / wings[key]["page"]["de"].strip("/") / topic["slug"]["de"]).exists())
+        text = (out / wings[key]["page"]["en"].strip("/") / topic["slug"]["en"] / "index.html").read_text(encoding="utf-8")
+        self.assertEqual(re.findall(r'<link rel="alternate" hreflang="([\w-]+)"', text), ["en", "x-default"])
+        # its way to German leads to the wing's German page
+        self.assertRegex(text, r'href="(?:\.\./)+%s/" lang="de" hreflang="de"' % re.escape(wings[key]["page"]["de"].strip("/")))
+
+
+class Built(unittest.TestCase):
+    """The site as its own build wrote it (python3 _src/build.py): the topic pages with their count."""
+
+    def test_a_topic_page_reaches_the_count_by_its_key(self):
+        wings = json.loads(REGISTRY.read_text(encoding="utf-8"))
+        lists = (HERE.parent / "functions" / "_count" / "lists.js").read_text(encoding="utf-8")
+        kinds = json.loads(re.search(r"PAGE_KINDS = Object\.freeze\((\[.*?\])\)", lists).group(1))
+        found = 0
+        for key, wing in wings.items():
+            if key.startswith("_") or wing.get("state") != "open":
+                continue
+            for topic in wing.get("topics", []):
+                kind = topic.get("count") or topic["slug"]["en"].replace("-", "_")
+                self.assertIn(kind, kinds)
+                for lang in topic.get("langs") or ["en", "de"]:
+                    page = SITE_BUILT / wing["page"][lang].strip("/") / topic["slug"][lang] / "index.html"
+                    self.assertIn(f'data-count="{kind}"', page.read_text(encoding="utf-8"), page)
+                    found += 1
+        self.assertGreater(found, 2)
+
+    def test_a_topic_page_stands_only_in_its_languages(self):
+        wings = json.loads(REGISTRY.read_text(encoding="utf-8"))
+        langs = json.loads((SITE_SRC / "languages.json").read_text(encoding="utf-8"))
+        for key, wing in wings.items():
+            if key.startswith("_") or wing.get("state") != "open":
+                continue
+            for topic in wing.get("topics", []):
+                if "langs" not in topic:
+                    continue
+                for entry in langs["languages"]:
+                    if entry["code"] in topic["langs"] or entry["code"] not in langs["BUILT"]:
+                        continue
+                    # a built language without the page has no folder of it, and its wing's page does not link it
+                    folder = SITE_BUILT / entry["folder"] / entry["slugs"]["wings"][key]
+                    self.assertTrue((folder / "index.html").is_file(), folder)
+                    for sub in folder.iterdir():
+                        self.assertFalse(sub.is_dir() and topic["slug"]["en"] in sub.name and sub.name not in entry["slugs"].get("topics", {}).values(), sub)
+                    self.assertNotIn(f'/{topic["slug"]["en"]}/"', (folder / "index.html").read_text(encoding="utf-8"))
 
 
 if __name__ == "__main__":

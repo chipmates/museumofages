@@ -176,6 +176,8 @@
 .wl__s{color:var(--ink-quiet)}
 .wl__class{margin-left:.5em;font-size:.75rem;letter-spacing:.1em;text-transform:uppercase;color:var(--ink)}
 .wl__note{margin-top:10px;font-family:var(--sans);font-size:.8125rem;line-height:1.45;color:var(--ink-quiet)}
+.wl__more{margin-top:6px}
+.wl__more .more{font-size:.9375rem}
 .wfield{margin-top:44px;padding-top:26px;border-top:1px solid var(--hair)}
 .wfield h4{font-size:1.375rem;line-height:1.2}
 .wfield p{margin-top:8px;color:var(--ink-body);max-width:34rem}

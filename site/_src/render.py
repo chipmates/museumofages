@@ -625,6 +625,9 @@ def wall_group(c, slug, g):
             f'<li value="{p["n"]}"><span class="wl__t">{title}</span><span class="wl__h">{holder_html(c, facts, p["holder"])}</span>'
             f'<span class="wl__s">{fmt(p["h_cm"])}{NBSP}×{NBSP}{fmt(p["w_cm"])}{NBSP}{w["wingpage.cm"]}{cls}</span>{see_it(c, slug, p["stop"])}</li>')
     listed = f'<ol class="wl" start="{items[0]["n"]}">{"".join(lines)}</ol><p class="wl__note">{w["wingpage.sizes_note"]}</p>'
+    # a topic page of this wing that names this group (from) is linked under its list, in the languages it is written in
+    listed += "".join(f'<p class="wl__more"><a class="more" href="{topic_href(c, slug, t)}"><span>{esc(t["name"][c.lang])}</span>{ARROW}</a></p>'
+                      for t in topics_here(c, slug) if t.get("from") == g["id"])
     field = ""
     f = g.get("field")
     if f and facts["wall"].get("supper"):
@@ -809,14 +812,22 @@ def go_in(c, slug):
             f'<p class="hero__note">{c.w["hero.entry_note"]}</p></div>')
 
 
+def topics_here(c, slug):
+    """A wing's topic pages that are written in the page's language (a topic's langs, else every language)."""
+    return [t for t in c.wings[slug].get("topics", []) if c.lang in t.get("langs", (c.lang,))]
+
+
+def topic_href(c, slug, t):
+    return c.to(c.wings[slug]["page"][c.lang].strip("/") + "/" + t["slug"][c.lang] + "/")
+
+
 def more(c, slug):
     """The page's last part, a quiet strip of ways on: the pages on this wing, the list of holders on this page,
     what the museum is. The door stands in the end of the walk above it. A wing without that part keeps it here."""
     w, reg, lang = c.w, c.wings[slug], c.lang
     entry = lambda href, name, line: (
         f'<li><a class="more" href="{href}"><span>{name}</span>{ARROW}</a><span class="topics__line">{line}</span></li>')
-    items = [entry(c.to(reg["page"][lang].strip("/") + "/" + t["slug"][lang] + "/"), esc(t["name"][lang]), esc(t["line"][lang]))
-             for t in reg.get("topics", [])]
+    items = [entry(topic_href(c, slug, t), esc(t["name"][lang]), esc(t["line"][lang])) for t in topics_here(c, slug)]
     if c.wd[slug].get("holders"):
         items.append(entry("#originals", w["wingpage.more_originals"], w["wingpage.more_originals_line"]))
     items.append(entry(c.to(c.addr("what")), w["nav.what"], w["wingpage.more_what_line"]))

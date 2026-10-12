@@ -122,16 +122,28 @@ def at(obj, path):
     return obj
 
 
+def topic_langs(topic, codes):
+    """The languages of codes a wing's topic page is written in: its own list (langs), or all of them."""
+    own = topic.get("langs")
+    return tuple(c for c in codes if own is None or c in own)
+
+
+# A leaf that is not written in a language at all (a topic page without that language): derived() returns it.
+NOT_HERE = object()
+
+
 def merge_leaves(obj, own, code, name, derived=None, optional=r"(^|\.)lang$"):
     """Writes code into every per-language leaf of obj, in place, from own (the language's file, the same keys with
     one string per leaf; None where there is no file). A leaf that already holds the language keeps it. derived(path,
-    leaf) gives a leaf's value where the language does not write it, or None. A leaf on optional takes English's value
-    where the file has none. Returns the problems."""
+    leaf) gives a leaf's value where the language does not write it, NOT_HERE where the language has no such leaf,
+    or None. A leaf on optional takes English's value where the file has none. Returns the problems."""
     problems = []
     for path, leaf in leaves(obj).items():
         if code in leaf:
             continue
         value = derived(path, leaf) if derived else None
+        if value is NOT_HERE:
+            continue
         if isinstance(value, str):
             leaf[code] = value
             continue
@@ -167,6 +179,12 @@ def merge_registry(registry, folder, langs, codes=None):
         slugs = langs.entries[code]["slugs"]
 
         def derived(path, leaf, code=code, slugs=slugs):
+            # a topic page written in fewer languages has no words, no name and no slug in the others
+            topic = re.match(r"^([^.]+)\.topics\.(\d+)\.", path)
+            if topic:
+                entry = at(registry, f"{topic.group(1)}.topics.{topic.group(2)}")
+                if isinstance(entry, dict) and code not in topic_langs(entry, (code,)):
+                    return NOT_HERE
             if not DERIVED.match(path):
                 return None
             wing = path.split(".", 1)[0]

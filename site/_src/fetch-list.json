@@ -1599,6 +1599,30 @@
    "sha256": "08ed52a64804623a466e8a571415619f345f6d09f104ad0af1cf3c9d6752c5ea"
   },
   {
+   "path": "pages/pics/img/vinci-sizes-chart-de-1600.png",
+   "url": "/static/img/vinci-sizes-chart-de-1600.png",
+   "bytes": 263607,
+   "sha256": "1f0b14fd226ba55d3579bea394ec81e998c3af0322e40718b50ff6db2a3950a3"
+  },
+  {
+   "path": "pages/pics/img/vinci-sizes-chart-en-1600.png",
+   "url": "/static/img/vinci-sizes-chart-en-1600.png",
+   "bytes": 257531,
+   "sha256": "4fe927e3571489121155b1bd3969e34025d336a0298c74b3bcb0a3ce7c001a29"
+  },
+  {
+   "path": "pages/pics/img/vinci-sizes-og-de-1200x630.png",
+   "url": "/static/img/vinci-sizes-og-de-1200x630.png",
+   "bytes": 63705,
+   "sha256": "6fc955695c0d91d41149a89d6fc35dd9c59f7b3f0d2e80d70f562a12fcf9cf98"
+  },
+  {
+   "path": "pages/pics/img/vinci-sizes-og-en-1200x630.png",
+   "url": "/static/img/vinci-sizes-og-en-1200x630.png",
+   "bytes": 60653,
+   "sha256": "dddc07630d4f2497080bf7a15d5609cd93315d277eb38b01e852a25bd2feff2a"
+  },
+  {
    "path": "pages/pics/img/vinci-stop-flight-1600.avif",
    "url": "/static/img/vinci-stop-flight-1600.avif",
    "bytes": 41759,

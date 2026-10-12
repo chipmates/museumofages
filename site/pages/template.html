@@ -42,17 +42,10 @@
         <h1{{attr.h1}}>{{top.h1}}</h1>
         <p class="sp-answer">{{top.answer}}</p>
       </div>
-      <figure class="plate sp-frame" data-slot="frame">
-        <div class="hang">{{html.frame_picture}}</div>
-        <!-- On a phone the label is one line, so the door stands on the first screen. -->
-        <figcaption class="label sp-frame__label">
-          <span class="label__title">{{top.frame.title}}</span>
-          <span class="label__what"><span class="tag">{{top.frame.tag}}<span class="vh">:</span></span> <span class="sp-frame__what">{{top.frame.what}}</span></span>
-        </figcaption>
-      </figure>
+{{html.frame}}
       <!-- The one way in. No script is wired to the hooks: the site's measurement is not decided. -->
       <div class="sp-way">
-        <a class="door" href="{{href.enter}}" data-page="{{page.id}}" data-slot="door-answer" data-door="top"><span>{{top.door.text}}</span>{{svg.arrow}}</a>
+        <a class="door" href="{{href.top}}" data-page="{{page.id}}" data-slot="door-answer" data-door="top"><span>{{top.door.text}}</span>{{svg.arrow}}</a>
         <p class="sp-way__note">{{top.door.note}}</p>
         <p class="sp-way__leads">{{top.door.leads}}</p>
       </div>
@@ -162,15 +155,9 @@
 <section class="sp-sec sp-sources" id="{{id}}">
   <h2>{{h}}</h2>
   <p class="sp-intro">{{intro}}</p>
-  <h3 class="key">{{holders_h}}</h3>
-  <ul class="sp-holders">
-{{html.holders}}
-  </ul>
+{{html.holders_part}}
 {{html.notes}}
-  <h3 class="key">{{editions_h}}</h3>
-  <ul class="sp-holders sp-editions">
-{{html.editions}}
-  </ul>
+{{html.editions_part}}
   <p class="sp-contact">{{contact}} <a href="{{href.imprint}}"{{attr.imprint_lang}}>{{contact_link}}</a></p>
   <p class="sp-more"><a class="more" href="{{href.what}}"><span>{{what_link}}</span>{{svg.arrow}}</a></p>
 </section>
@@ -191,5 +178,79 @@
   <div class="sp-way">
     <a class="door" href="{{href.enter}}" data-page="{{page.id}}" data-slot="door-end" data-door="end"><span>{{door.text}}</span>{{svg.arrow}}</a>
     <p class="sp-way__note">{{door.note}}</p>
+  </div>
+</section>
+<!--@ sources_holders -->
+  <h3 class="key">{{holders_h}}</h3>
+  <ul class="sp-holders">
+{{html.holders}}
+  </ul>
+<!--@ sources_editions -->
+  <h3 class="key">{{editions_h}}</h3>
+  <ul class="sp-holders sp-editions">
+{{html.editions}}
+  </ul>
+<!--@ frame:picture -->
+      <figure class="plate sp-frame" data-slot="frame">
+        <div class="hang">{{html.picture}}</div>
+        <!-- On a phone the label is one line, so the door stands on the first screen. -->
+        <figcaption class="label sp-frame__label">
+          <span class="label__title">{{title}}</span>
+          <span class="label__what"><span class="tag">{{tag}}<span class="vh">:</span></span> <span class="sp-frame__what">{{what}}</span></span>
+        </figcaption>
+      </figure>
+<!--@ frame:chart -->
+      <figure class="plate sp-frame sz-frame" data-slot="frame">
+        <div class="hang">{{html.figure}}</div>
+        <figcaption class="label sp-frame__label">
+          <span class="label__title">{{title}}</span>
+          <span class="label__what"><span class="tag">{{tag}}<span class="vh">:</span></span> <span class="sp-frame__what">{{what}}</span></span>
+        </figcaption>
+      </figure>
+<!--@ text_para -->
+  <p class="sp-does">{{text}}</p>
+<!--@ block:text -->
+<section class="sp-sec sp-prose" id="{{id}}">
+  <h2>{{h}}</h2>
+{{html.paras}}
+</section>
+<!--@ block:chart -->
+<section class="sp-sec sz-sec" id="{{id}}">
+  <h2>{{h}}</h2>
+  <p class="sp-intro">{{lead}}</p>
+  <!-- One figure is the query container: both panels take their scale from its width, the second three times the first. -->
+  <figure class="sz-chart">
+    <div class="sz-panel" role="img" aria-label="{{alt}}">
+{{html.all}}
+    </div>
+    <figcaption class="sz-cap">{{caption}}</figcaption>
+    <div class="sz-panel sz-panel--zoom" aria-hidden="true">
+{{html.zoom}}
+    </div>
+    <p class="sz-cap">{{zoom}}</p>
+  </figure>
+  <p class="sz-still"><a class="more" href="{{href.still}}"><span>{{still_link}}</span>{{svg.arrow}}</a></p>
+  <p class="sz-licence">{{licence}}</p>
+</section>
+<!--@ block:works -->
+<section class="sp-sec sz-sec" id="{{id}}">
+  <h2>{{h}}</h2>
+  <p class="sp-intro">{{intro}}</p>
+  <ol class="sz-list">
+{{html.items}}
+  </ol>
+</section>
+<!--@ block:table -->
+<section class="sp-sec sz-sec" id="{{id}}">
+  <h2>{{h}}</h2>
+  <!-- On a phone the table keeps its columns and scrolls sideways; the work's column stays in place. -->
+  <div class="sz-scroll" role="region" aria-labelledby="{{id}}-cap" tabindex="0">
+    <table class="sz-table">
+      <caption id="{{id}}-cap">{{caption}} <span class="sz-unit">{{unit}}</span></caption>
+      <thead><tr><th scope="col">{{cols.work}}</th><th scope="col">{{cols.height}}</th><th scope="col">{{cols.width}}</th><th scope="col">{{cols.holder}}</th><th scope="col">{{cols.place}}</th><th scope="col">{{cols.walk}}</th></tr></thead>
+      <tbody>
+{{html.rows}}
+      </tbody>
+    </table>
   </div>
 </section>

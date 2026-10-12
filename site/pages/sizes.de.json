@@ -1,0 +1,154 @@
+{
+  "_note": "THE WORDS of the sizes page, German. Poured from the writer's WORDS file of round 1 word for word; every size, holder and stop the page shows comes from the wing's facts file, and the build checks each line of works.lines against it. The two files hold the same structure. No em dash, no en dash, no semicolon.",
+  "page": {
+    "id": "vinci-sizes",
+    "wing": "vinci",
+    "topic": "sizes",
+    "published": null,
+    "og_image": {
+      "file": "vinci-sizes-og-{lang}-1200x630.png",
+      "width": 1200,
+      "height": 630
+    },
+    "still": {
+      "file": "vinci-sizes-chart-{lang}-1600.png"
+    }
+  },
+  "pics": {},
+  "meta": {
+    "title": "Wie groß ist die Mona Lisa? 79,4 × 53,4 cm | Museum of Ages",
+    "description": "Die Mona Lisa misst 79,4 mal 53,4 cm. Leonardos Werke und das Abendmahl in einem Maßstab neben einem Menschen, mit einer Tür zu jedem Bild im Museum.",
+    "og_title": "Wie groß ist die Mona Lisa? 79,4 × 53,4 cm",
+    "og_image_alt": "Ein Mensch von 1,70 Meter, die Mona Lisa mit 79,4 mal 53,4 Zentimetern und das Abendmahl mit 4,6 mal 8,8 Metern, in einem Maßstab gezeichnet."
+  },
+  "labels": {
+    "crumbs": "Du bist hier",
+    "crumb_home": "Museum",
+    "crumb_here": "Größen",
+    "toc": "Auf dieser Seite",
+    "tag_chart": "Für diese Seite gemacht",
+    "person": "1,70 m"
+  },
+  "top": {
+    "h1": "Wie groß ist die Mona Lisa?",
+    "answer": "Die Mona Lisa misst 79,4 mal 53,4 Zentimeter. Neben einem Menschen von 1,70 Meter ist sie nicht einmal halb so hoch und etwas mehr als einen halben Meter breit. Das Abendmahl ist 8,8 Meter breit: Sechzehn Mona Lisas hätten darauf nebeneinander Platz.",
+    "figure": {
+      "work": "mona-lisa",
+      "tag": "tag_chart",
+      "what": "neben einem Menschen von 1,70 Meter",
+      "alt": "Die Mona Lisa, 79,4 mal 53,4 Zentimeter, neben einem Menschen von 1,70 Meter, in einem Maßstab gezeichnet."
+    },
+    "door": {
+      "text": "Die Mona Lisa im Rundgang ansehen",
+      "note": "Eintritt frei, kein Konto.",
+      "leads": "Die Tür führt in den Leonardo-Flügel, an die Station der Mona Lisa. Jedes Werk unten hat seine eigene Tür zu seiner Station."
+    }
+  },
+  "blocks": [
+    {
+      "type": "chart",
+      "id": "chart",
+      "nav": "Das Diagramm",
+      "h": "Das Diagramm",
+      "lead": "Hier ist jedes Werk des Bildersaals, dazu das Abendmahl, in einem Maßstab gezeichnet.",
+      "caption": "Alle 24 Werke des Bildersaals und das Abendmahl in einem Maßstab, neben einem Menschen von 1,70 Meter. Die Größen sind die der Originale.",
+      "alt": "Ein Diagramm mit 24 Werken und dem Abendmahl in einem Maßstab neben einem Menschen von 1,70 Meter: Das Abendmahl ist 8,8 Meter breit und 4,6 Meter hoch, die größte Tafel, die Anbetung der Könige aus dem Morgenland, ist 2,4 Meter hoch, die Mona Lisa 79,4 Zentimeter, und die kleinste, die Predella der Verkündigung, 16 Zentimeter.",
+      "zoom": "Die Werke unter einem Meter noch einmal, {n}-mal größer, damit die kleinen lesbar sind.",
+      "licence": "Das Diagramm ist eine eigene Arbeit des Museums, CC BY-SA 4.0.",
+      "still_link": "Das Diagramm als Bild, 1600 Pixel breit"
+    },
+    {
+      "type": "text",
+      "id": "last-supper",
+      "nav": "Das Abendmahl",
+      "h": "Das Abendmahl",
+      "paras": [
+        "Das Abendmahl ist 8,8 Meter breit und 4,6 Meter hoch. Es ist ein Wandbild im Refektorium, dem Speisesaal des Klosters Santa Maria delle Grazie in Mailand, und kann darum in keinem Bildersaal hängen. Im Rundgang füllt eine Reproduktion davon eine Wand im Hof, mit denselben 8,8 mal 4,6 Metern. Was eine Reproduktion nicht zeigen kann: die Wand, zu der das Bild gehört, die Oberfläche seines Putzes und den Raum, für den es gemalt wurde."
+      ]
+    },
+    {
+      "type": "text",
+      "id": "near-real-size",
+      "nav": "Annähernd in Originalgröße",
+      "h": "Annähernd in Originalgröße",
+      "paras": [
+        "Im Rundgang hängen Reproduktionen. Jede ist annähernd in Originalgröße zu sehen, mit Quelle und Lizenz auf ihrer Beschriftung, und die Originale bewahren die Museen und Sammlungen, die diese Seite nennt. Die Größen hier sind die der Originale, wie ihre Häuser sie angeben."
+      ]
+    },
+    {
+      "type": "works",
+      "id": "works",
+      "nav": "Jedes Werk",
+      "h": "Jedes Werk",
+      "intro": "Jedes Werk in der Reihenfolge, in der es hängt, mit der Größe, die sein Haus angibt. Ein Wort hinter dem Haus, etwa umstritten oder Werkstatt, sagt, wem das Werk zugeschrieben wird. Eine Predella ist eine kleine Tafel vom Sockel eines Altarbilds.",
+      "lines": [
+        "Taufe Christi. 177 × 151 cm. Gallerie degli Uffizi, Florenz. Von Verrocchio und Leonardo. Höher als ein Mensch von 1,70 Meter.",
+        "Die Verkündigung. 98 × 217 cm. Gallerie degli Uffizi, Florenz. Über zwei Meter breit und keinen Meter hoch.",
+        "Bildnis der Ginevra de' Benci. 38,1 × 37 cm. National Gallery of Art, Washington. Fast quadratisch. Der Rundgang zeigt beide Seiten der Tafel.",
+        "Bildnis der Ginevra de' Benci, die Rückseite der Tafel. 38,1 × 37 cm. National Gallery of Art, Washington. Die bemalte Rückseite derselben Tafel: ein Werk, das zweimal hängt.",
+        "Madonna mit der Nelke. 62 × 48,5 cm. Bayerische Staatsgemäldesammlungen, Alte Pinakothek, München.",
+        "Madonna Benois. 49,5 × 33 cm. Staatliche Eremitage, Sankt Petersburg.",
+        "Der heilige Hieronymus. 103 × 75 cm. Pinacoteca Vaticana, Vatikanstadt. Knapp über einen Meter hoch.",
+        "Anbetung der Könige aus dem Morgenland. 240 × 244 cm. Gallerie degli Uffizi, Florenz. Das größte Werk an der Wand: fast quadratisch und 70 Zentimeter höher als ein Mensch von 1,70 Meter.",
+        "Die Verkündigung, Predella. 16 × 60 cm. Musée du Louvre, Paris. Umstritten. Die niedrigste Tafel an der Wand mit 16 Zentimetern, und fast viermal so breit wie hoch.",
+        "Felsgrottenmadonna, Louvre-Fassung. 199,5 × 122 cm. Musée du Louvre, Paris. Knapp unter zwei Meter hoch. Die Londoner Fassung ist zehn Zentimeter niedriger.",
+        "Bildnis eines Musikers. 44,7 × 32 cm. Veneranda Biblioteca Ambrosiana, Mailand. Umstritten.",
+        "Dame mit dem Hermelin. 54,8 × 40,3 cm. Muzeum Narodowe w Krakowie, Muzeum Książąt Czartoryskich, Krakau. Niedriger und schmaler als die Mona Lisa.",
+        "Bildnis einer Dame, genannt La Belle Ferronnière. 63 × 45 cm. Musée du Louvre, Paris.",
+        "Madonna Litta. 42 × 33 cm. Staatliche Eremitage, Sankt Petersburg. Umstritten.",
+        "Die Jungfrau mit dem Kind, der heiligen Anna und Johannes dem Täufer. 141,5 × 104,6 cm. National Gallery, London. Zeichnung. Die größere der zwei Zeichnungen an der Wand.",
+        "Madonna mit der Spindel, Buccleuch-Fassung. 48,3 × 36,9 cm. Sammlung Buccleuch, Leihgabe an die National Galleries of Scotland. Zuschreibung mit Vorbehalt. Zwei Fassungen eines Bildes hängen hier nebeneinander, fast gleich groß.",
+        "Madonna mit der Spindel, Lansdowne-Fassung. 49,5 × 37,1 cm. Kenneth C. Griffin Collection, Leihgabe an das Metropolitan Museum of Art. Zuschreibung mit Vorbehalt. Gut einen Zentimeter höher als die Buccleuch-Fassung.",
+        "Der Kampf um die Standarte, nach der Schlacht von Anghiari. 45,3 × 63,6 cm. Musée du Louvre, Paris. Spätere Kopie. Zeichnung. Eine Kopie von fremder Hand, und die zweite Zeichnung an der Wand.",
+        "Mona Lisa. 79,4 × 53,4 cm. Musée du Louvre, Paris. Hat im Rundgang ihre eigene Station. Von den anderen 23 Werken sind vierzehn niedriger als sie und neun höher.",
+        "Felsgrottenmadonna, Londoner Fassung. 189,5 × 120 cm. National Gallery, London. Zuschreibung mit Vorbehalt. Zehn Zentimeter niedriger als die Louvre-Fassung, und zwei schmaler.",
+        "Die Jungfrau mit dem Kind und der heiligen Anna. 168 × 113 cm. Musée du Louvre, Paris. Zwei Zentimeter unter einem Menschen von 1,70 Meter.",
+        "Salvator Mundi. 65,7 × 45,7 cm. Privatsammlung, heutiger Aufenthaltsort unbestätigt. Umstritten.",
+        "Johannes der Täufer. 72,9 × 56,3 cm. Musée du Louvre, Paris. Etwas niedriger und etwas breiter als die Mona Lisa.",
+        "Scapigliata. 24,7 × 21 cm. Galleria Nazionale di Parma, Complesso della Pilotta, Parma. Zuschreibung mit Vorbehalt. Das kleinste Werk an der Wand: ein Kopf, 21 Zentimeter breit.",
+        "Bacchus, ehemals Johannes der Täufer. 177 × 115 cm. Musée du Louvre, Paris. Werkstatt. Genauso hoch wie die Taufe Christi, das erste Bild an der Wand.",
+        "Das Abendmahl. 460 × 880 cm. Museo del Cenacolo Vinciano, Santa Maria delle Grazie, Mailand. Ein Wandbild, darum nicht im Bildersaal. Eine Reproduktion füllt eine Wand im Hof."
+      ],
+      "go": "Im Flügel ansehen"
+    },
+    {
+      "type": "table",
+      "id": "table",
+      "nav": "Die Tabelle",
+      "h": "Die Tabelle",
+      "caption": "Dieselben Zahlen wie im Diagramm, in der Reihenfolge, in der die Werke hängen.",
+      "unit": "Angaben in Zentimetern.",
+      "cols": {
+        "work": "Werk",
+        "height": "Höhe",
+        "width": "Breite",
+        "holder": "Bewahrt von",
+        "place": "Ort",
+        "walk": "Im Rundgang"
+      },
+      "go": "Im Flügel ansehen"
+    },
+    {
+      "type": "sources",
+      "id": "sources",
+      "nav": "Quellen",
+      "h": "Quellen",
+      "intro": "Die Größen sind die Maße, die die Häuser für die Originale angeben, so wie die Beschriftungen im Flügel sie tragen. Das Museum nennt diese Museen und Sammlungen, weil sie die Originale bewahren, und ist von jedem von ihnen unabhängig.",
+      "notes": [],
+      "contact": "Ist eine Größe oder ein Haus falsch angegeben, schreib uns, und wir korrigieren es.",
+      "contact_link": "Zum Impressum",
+      "what_link": "Was dieses Museum ist"
+    },
+    {
+      "type": "close",
+      "id": "enter",
+      "nav": "",
+      "h": "Die Bilder im Rundgang ansehen",
+      "p": "Die Tür führt in den Leonardo-Flügel, in den Bildersaal, wo der Rundgang beginnt. Dort hängt die Mona Lisa unter 25 Bildern, und an jedes kannst du herantreten.",
+      "door": {
+        "text": "Ins Museum",
+        "note": "Eintritt frei, kein Konto."
+      }
+    }
+  ]
+}

@@ -1,0 +1,69 @@
+/* A page that shows its wing's works at one scale (chart.py): set inline after page.css, on those pages only.
+   Colours: only the site's roles. */
+
+/* A page of running text in parts */
+.sp-prose .sp-does{margin-top:12px;max-width:38rem}
+
+/* ---------- Works at one scale: the first screen's drawing, the panels, the list and the table ----------
+   A shape is an SVG sized in em, one em a metre. A panel sets that em from the chart's own width, so every shape
+   of a panel stands at one scale on every screen; the second panel draws three times larger. The frames are the
+   site's frame line, the one work the page is about is drawn in the chalk mark, the person in the quiet ink. */
+/* A door that names a work runs longer than the site's own: on a narrow phone it takes a second line. */
+.sp-way .door{max-width:100%;white-space:normal;text-align:left;padding-block:10px}
+.sz-top{background:var(--ground-wall)}
+.sz-top .sz-p{fill:var(--ink-quiet)}
+.sz-top .sz-m{fill:color-mix(in srgb,var(--ground-lit) 70%,var(--ground-wall));stroke:var(--mark);stroke-width:2.5}
+.sz-top .sz-floor{fill:none;stroke:var(--hair-strong);stroke-width:1}
+.sz-top .sz-d{fill:none;stroke:var(--mark);stroke-width:1}
+.sz-top .sz-t{fill:var(--ink);font-family:var(--sans);font-size:150px;letter-spacing:.02em}
+
+.sz-chart{container-type:inline-size;margin-top:24px}
+.sz-row{display:flex;flex-wrap:wrap;align-items:flex-end;row-gap:22px}
+.sz-i{display:flex;flex-direction:column;align-items:center}
+.sz-s,.sz-bar{margin-inline:5px}
+.sz-s{display:block;max-width:none;overflow:visible;font-size:38px;font-size:calc(100cqw / 9.2)}
+.sz-panel--zoom{margin-top:40px}
+.sz-panel--zoom .sz-s,.sz-panel--zoom .sz-bar{font-size:114px;font-size:calc(100cqw / 9.2 * 3)}
+.sz-s rect{fill:color-mix(in srgb,var(--ground-lit) 72%,var(--ground));stroke:var(--frame-line);stroke-width:1.5}
+.sz-s--mark rect{stroke:var(--mark);stroke-width:2.5}
+.sz-s--field rect{fill:var(--ground-wall)}
+.sz-s--person path{fill:var(--ink-quiet)}
+/* The labels stand under one floor line: each label's top edge is a piece of it. */
+.sz-n{align-self:stretch;padding:6px 5px 0;border-top:1px solid var(--hair-strong);font-family:var(--sans);font-size:.75rem;line-height:1.3;letter-spacing:.02em;color:var(--ink-soft);text-align:center;white-space:nowrap}
+.sz-name{color:var(--ink)}
+.sz-bar{display:block;width:1em;height:9px;font-size:38px;font-size:calc(100cqw / 9.2);border:1px solid var(--ink-soft);border-top:0}
+.sz-i--bar{margin-left:auto}
+.sz-cap{margin-top:14px;font-family:var(--sans);font-size:.875rem;line-height:1.5;color:var(--ink-soft);max-width:38rem}
+.sz-still{margin-top:22px}
+.sz-licence{font-family:var(--sans);font-size:.8125rem;line-height:1.45;color:var(--ink-quiet)}
+
+.sz-list{margin-top:24px;border-top:1px solid var(--hair);max-width:42rem}
+.sz-list>li{display:grid;grid-template-columns:2rem minmax(0,1fr);column-gap:8px;padding:13px 0 4px;border-bottom:1px solid var(--hair)}
+.sz-k{font-family:var(--sans);font-size:.875rem;line-height:1.9;color:var(--ink-quiet)}
+.sz-e p{font-size:1rem;line-height:1.55;color:var(--ink-body)}
+.sz-title{display:block;margin-bottom:3px;font-size:1.1875rem;line-height:1.3;color:var(--ink)}
+.sz-go{font-size:.9375rem}
+
+/* The table's own width never widens the page's column: it scrolls inside it. */
+.sp-body__main{min-width:0}
+/* The scroller holds the links' hidden words too: without a position they would widen the phone's page. */
+.sz-scroll{position:relative;margin-top:20px;overflow-x:auto;overscroll-behavior-x:contain;contain:inline-size}
+.sz-scroll:focus-visible{outline-offset:2px}
+.sz-table{width:100%;min-width:40rem;border-collapse:collapse;font-family:var(--sans);font-size:.875rem;line-height:1.4}
+/* The caption keeps to the screen's width while the table under it is wider. */
+.sz-table caption{caption-side:top;max-width:min(38rem,calc(100vw - 2 * var(--pad)));padding-bottom:12px;text-align:left;font-family:var(--serif);font-size:1rem;line-height:1.5;color:var(--ink-body)}
+.sz-unit{color:var(--ink-soft)}
+.sz-table th,.sz-table td{padding:10px 12px 10px 0;text-align:left;vertical-align:top;font-weight:400;border-bottom:1px solid var(--hair)}
+.sz-table thead th{font-size:.75rem;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-soft);border-bottom-color:var(--hair-strong);white-space:nowrap}
+.sz-table td:nth-child(2),.sz-table td:nth-child(3),.sz-table thead th:nth-child(2),.sz-table thead th:nth-child(3){text-align:right;white-space:nowrap}
+.sz-table td{color:var(--ink-soft)}
+/* The work's column stays while the others scroll by. */
+.sz-table tbody th{position:sticky;left:0;z-index:1;min-width:10rem;max-width:14rem;background:var(--ground);color:var(--ink)}
+.sz-table .sz-k{margin-right:.3em;font-size:.8125rem;line-height:inherit}
+.sz-table a{display:inline-flex;align-items:center;min-height:44px;margin:-12px 0;white-space:nowrap}
+
+@media (min-width:960px){
+  .sz-top .sz-t{font-size:110px}
+  /* The table's six columns take the page's last column too; the running text keeps its own measure. */
+  .sp-body__main{grid-column:5/13}
+}

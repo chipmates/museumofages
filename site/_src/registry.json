@@ -1,5 +1,5 @@
 {
-  "_note": "THE REGISTRY: every collection and every wing of the site, read by every page. One key per wing (the museum app's own slug), in the order the wings opened: the last open one is the newest and hangs largest. Keys that start with an underscore are not wings. state: open, making or planned. An open wing needs every key below, its two data files in wings/ and its pictures: the build stops otherwise. name, page, door, about, never_say and claim_phrase are the six keys the topic pages' build reads (pages/build.py, WINGS_FILE). note: the wing's one colour, written here because a wing is data: the build checks its lightness and chroma against the palette's bounds. wall: deep, wall or lifted. pictures: hero is the first picture of the wing's own page, card its plate on the wall of wings, share its link preview. landing is optional: another first picture for the landing's place when this wing is the newest, with its words under landing.piece in the wing's data. Without it the landing hangs hero. A first screen takes only a frame of the museum's own build in which no reproduction can be seen. counts: only for a wing without a facts file (wings/<wing>.facts.json), which otherwise holds every number. out: optional, the wing's one way to another site of the organisation ({lang} is the page's language, or English where the other site does not speak it: speaks). Its line of words is out.line in the wing's data, and both stand on the page about the museum. when: the year the wing shows, a number, negative before the year one: the menu lists the wings in the order of time. count: optional, the name of the wing's page in the museum's own count (the build writes it into ../functions/_count/lists.js); without it the wing's key.",
+  "_note": "THE REGISTRY: every collection and every wing of the site, read by every page. One key per wing (the museum app's own slug), in the order the wings opened: the last open one is the newest and hangs largest. Keys that start with an underscore are not wings. state: open, making or planned. An open wing needs every key below, its two data files in wings/ and its pictures: the build stops otherwise. name, page, door, about, never_say and claim_phrase are the six keys the topic pages' build reads (pages/build.py, WINGS_FILE). note: the wing's one colour, written here because a wing is data: the build checks its lightness and chroma against the palette's bounds. wall: deep, wall or lifted. pictures: hero is the first picture of the wing's own page, card its plate on the wall of wings, share its link preview. landing is optional: another first picture for the landing's place when this wing is the newest, with its words under landing.piece in the wing's data. Without it the landing hangs hero. A first screen takes only a frame of the museum's own build in which no reproduction can be seen. counts: only for a wing without a facts file (wings/<wing>.facts.json), which otherwise holds every number. out: optional, the wing's one way to another site of the organisation ({lang} is the page's language, or English where the other site does not speak it: speaks). Its line of words is out.line in the wing's data, and both stand on the page about the museum. when: the year the wing shows, a number, negative before the year one: the menu lists the wings in the order of time. count: optional, the name of the wing's page in the museum's own count (the build writes it into ../functions/_count/lists.js); without it the wing's key. topics: the wing's topic pages (pages/<name>.<lang>.json), each with its slug, name and line per language; langs, optional, the languages it is written in (always English; a language without it links the English page), else every built language; count, optional, its name in the count, which then never changes with its address; from, optional, the group of the wing's page whose works the page shows and under whose list the wing's page links it.",
   "_collections": [
     {
       "slug": "lives",
@@ -174,6 +174,23 @@
           "en": "What Leonardo da Vinci drew, what was ever built and what was older than he was.",
           "de": "Was Leonardo da Vinci zeichnete, was je gebaut wurde und was älter war als er."
         }
+      },
+      {
+        "slug": {
+          "en": "sizes",
+          "de": "groessen"
+        },
+        "name": {
+          "en": "How big is the Mona Lisa?",
+          "de": "Wie groß ist die Mona Lisa?"
+        },
+        "line": {
+          "en": "Leonardo's works and the Last Supper to one scale beside a person.",
+          "de": "Leonardos Werke und das Abendmahl in einem Maßstab neben einem Menschen."
+        },
+        "langs": ["en", "de"],
+        "count": "sizes",
+        "from": "paintings"
       }
     ],
     "out": {
