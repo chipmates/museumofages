@@ -100,6 +100,13 @@ MUSEUM_TEXTS = SRC / "museum-texts.json"
 # host forwards (_redirects).
 SOURCE = "/source"
 SOURCE_TO = "https://github.com/chipmates/museumofages"
+# The museum's own count (../functions/): every page that has a kind carries the count's script with that kind,
+# every way into the walk names its place, and the function checks each row against lists written here from the
+# registry, so the function and the site cannot name different pages, wings or stops.
+COUNT_SCRIPT = "count.js"
+COUNT_LISTS = ROOT / "functions" / "_count" / "lists.js"
+COUNT_KINDS = {"home": "home", "what": "statement", "privacy": "privacy", "imprint": "imprint"}
+DOOR_PLACES = ("top", "item", "end")
 # The licence of the museum's own texts and pictures, named in the footer once the code is open.
 CC_BY_SA = "https://creativecommons.org/licenses/by-sa/4.0/"
 # The address a visitor writes to, on every page that names one. No built file may carry any other address.
@@ -1467,7 +1474,8 @@ def build(out, registry, wing_dirs, mark=None, topics=True, quiet=False, more_pi
         w["head"] = fill(t["head"], w)
         w["header"] = fill(t["header"], w)
         w["footer"] = fill(t["footer"], w)
-        built.append((out / path, with_policy(fill(template, w)), kind, c.lang))
+        counted = wing_count_kind(site.wings[w["wing.slug"]]) if kind == "wing" else COUNT_KINDS[kind]
+        built.append((out / path, with_policy(with_count(fill(template, w), c.static, counted)), kind, c.lang))
 
     for lang in LANGS:
         # the museum's page
@@ -1607,7 +1615,7 @@ def build(out, registry, wing_dirs, mark=None, topics=True, quiet=False, more_pi
     (static_dir / "sign").mkdir(exist_ok=True)
     for _, _, name, _ in ICONS:
         shutil.copyfile(SIGN / name, static_dir / "sign" / name)
-    scripts = {"site.js", R.FILM["script"], R.FILM["music_script"]} | {
+    scripts = {"site.js", COUNT_SCRIPT, R.FILM["script"], R.FILM["music_script"]} | {
         p for d in site.data_raw.values() for p in re.findall(r'"script": "([^"]+)"', json.dumps(d))}
     for name in sorted(scripts):
         shutil.copyfile(SRC / "js" / name, static_dir / name)
@@ -1638,13 +1646,13 @@ def build(out, registry, wing_dirs, mark=None, topics=True, quiet=False, more_pi
 
     listed = [(k, l, p) for p, _, k, l in built if k in ("home", "wing", "what", "imprint", "privacy")]
     if topics and PAGES_BUILD.exists() and not mark:
-        listed += [("topic", l, p) for l, p in build_topics(out)]
+        listed += [("topic", l, p) for l, p in build_topics(out, site)]
     # a built language that is not listed stands in no sitemap
     write_sitemap(out, site, [x for x in listed if x[1] in LISTED])
 
-    problems = []
+    lists, problems = count_lists(site)
     for path, text, kind, lang in built:
-        problems += check_built(out, path, text, kind, site)
+        problems += check_built(out, path, text, kind, site) + check_doors(path.relative_to(out), text)
     for name in ["site.css"] + sorted(scripts):
         if "assets/" in (static_dir / name).read_text(encoding="utf-8"):
             problems.append(f"{STATIC}/{name}: something still points at assets/")
@@ -1654,7 +1662,13 @@ def build(out, registry, wing_dirs, mark=None, topics=True, quiet=False, more_pi
         problems.append("_redirects does not agree with the switch for the link to the code")
     if problems:
         raise SystemExit("\n".join(problems))
+    # the count's lists follow the real registry only, never a test registry
+    rewritten = out == SITE and (not COUNT_LISTS.is_file() or COUNT_LISTS.read_text(encoding="utf-8") != lists)
+    if rewritten:
+        COUNT_LISTS.write_text(lists, encoding="utf-8")
     if not quiet:
+        if rewritten:
+            print(f"The count's lists changed with the registry and are written anew: {COUNT_LISTS.relative_to(REPO)}")
         for path, text, kind, lang in built:
             print(f"{str(path.relative_to(out)):46} {len(text.encode('utf-8')):6} bytes")
         print(f"{STATIC + '/site.css':46} {(static_dir / 'site.css').stat().st_size:6} bytes")
@@ -1725,7 +1739,7 @@ def legal_body(lang, w, to_german):
     return "\n".join(out)
 
 
-def build_topics(out):
+def build_topics(out, site):
     """The topic pages, built by their own build into the same folder. That build reads this registry and takes
     its header and footer from the statement page, by its own two settings, so they carry the sign. What it wrote
     stays as written, with two exceptions: the switch that closes the whole site adds its line (no outside address
@@ -1753,6 +1767,8 @@ def build_topics(out):
     # every address with a scheme, in the order it stands on the page
     outside = lambda page: re.findall(r'="([a-z][a-z0-9+.-]*:[^"]*)"', page)
     found, problems = [], []
+    topic_kinds = {f'{e["page"][l].strip("/")}/{t["slug"][l]}': topic_count_kind(t) for e in site.wings.values() if e.get("state") == "open" for t in e.get("topics", [])
+                   for l in LANGS}
     for path in paths:
         text = path.read_text(encoding="utf-8")
         name = path.relative_to(out)
@@ -1772,6 +1788,14 @@ def build_topics(out):
             problems.append(f"{name}: the page's head does not carry its one empty icon ({EMPTY_ICON}) for the site's icons to replace")
         else:
             new = new.replace(EMPTY_ICON, icon_links("../" * (len(name.parts) - 1) + f"{STATIC}/"))
+        # the count: the page's script with its kind, and a policy that lets it send to its own address
+        kind = topic_kinds.get(str(name.parent))
+        policy = "content=\"default-src 'none';"
+        if not kind or new.count(policy) != 1 or "</body>" not in new:
+            problems.append(f"{name}: the count's script could not be set (kind {kind!r}, its policy or its body not found)")
+        else:
+            new = with_count(new, "../" * (len(name.parts) - 1) + f"{STATIC}/", kind).replace(policy, policy + " connect-src 'self';")
+        problems += check_doors(name, new)
         if new != text:
             path.write_text(new, encoding="utf-8")
         lang = next((c for c in LANGS if c != "en" and name.parts[0] + "/" == L.folder(c)), "en")
@@ -1779,6 +1803,53 @@ def build_topics(out):
     if problems:
         raise SystemExit("\n".join(problems))
     return found
+
+
+def wing_count_kind(entry):
+    """A wing's page in the count: the first word of its English address, up to its first hyphen."""
+    return entry["page"]["en"].strip("/").split("/")[-1].split("-")[0]
+
+
+def topic_count_kind(topic):
+    return topic["slug"]["en"].replace("-", "_")
+
+
+def count_lists(site):
+    """The count's closed lists as the function's module: each open wing with the number of its stops, every page
+    kind, every language built. Returns (text, problems)."""
+    wings = {s: site.count(s, "stops") for s in site.open}
+    kinds = list(COUNT_KINDS.values())
+    for s in site.open:
+        kinds.append(wing_count_kind(site.wings[s]))
+        kinds += [topic_count_kind(t) for t in site.wings[s].get("topics", [])]
+    problems = [f"the count's page kind {k!r} stands twice" for k in sorted({k for k in kinds if kinds.count(k) > 1})]
+    problems += [f"the count's page kind {k!r} is not a plain word" for k in kinds if not re.fullmatch(r"[a-z][a-z0-9_]{0,23}", k)]
+    problems += [f"the wing {s!r} has no whole number of stops for the count" for s, n in wings.items() if not isinstance(n, int) or n < 1]
+    text = ("// Written by site/_src/build.py from the site's registry, its wings' facts and its languages. Not edited by hand.\n"
+            f"export const WING_STOPS = Object.freeze({json.dumps(wings, separators=(', ', ': '))})\n"
+            f"export const PAGE_KINDS = Object.freeze({json.dumps(kinds, separators=(', ', ': '))})\n"
+            f"export const LANGUAGES = Object.freeze({json.dumps(list(LANGS), separators=(', ', ': '))})\n")
+    return text, problems
+
+
+def count_tag(static, kind):
+    """The count's script on a page of this kind. Its one attribute names the kind; the policy then allows the page
+    to send to its own address (with_policy)."""
+    return f'<script src="{static}{COUNT_SCRIPT}" data-count="{kind}" defer></script>\n'
+
+
+def with_count(text, static, kind):
+    return text.replace("</body>", count_tag(static, kind) + "</body>", 1) if kind else text
+
+
+def check_doors(name, text):
+    """Every way into the walk names its place among the count's doors."""
+    problems = []
+    for a in re.findall(r'<a\b[^>]*\bhref="/w/[^"]*"[^>]*>', text):
+        place = re.search(r'\sdata-door="([^"]*)"', a)
+        if not place or place.group(1) not in DOOR_PLACES:
+            problems.append(f"{name}: a way into the walk names no place of the count ({a})")
+    return problems
 
 
 def film_data(site):
@@ -2273,7 +2344,7 @@ def run():
         PROJECT_LINE, PROJECT_LINE_AT, SOURCE_LINK = keep
         return
     # what an earlier build left behind and no page asks for any more
-    asked = {"site.js", R.FILM["script"], R.FILM["music_script"]} | set(re.findall(r'"script": "([^"]+)"', "".join(p.read_text(encoding="utf-8") for p in (SRC / "wings").glob("*.json"))))
+    asked = {"site.js", COUNT_SCRIPT, R.FILM["script"], R.FILM["music_script"]} | set(re.findall(r'"script": "([^"]+)"', "".join(p.read_text(encoding="utf-8") for p in (SRC / "wings").glob("*.json"))))
     for old in [(SITE / WHAT_DIR["en"]).with_suffix(".html"), (SITE / "de" / WHAT_DIR["de"]).with_suffix(".html")] + [
             p for p in (SITE / STATIC).glob("*.js") if p.name not in asked and (SRC / "js" / p.name).is_file()]:
         if old.exists():

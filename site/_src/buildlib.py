@@ -265,9 +265,11 @@ def with_policy(text):
 
     # only a page whose place names a clip or music may load media, and only this site's own
     media = " media-src 'self';" if " data-clip=" in text or " data-music=" in text else ""
+    # only a page that carries the count's script may send, and only to its own address
+    connect = " connect-src 'self';" if " data-count=" in text else ""
     policy = (
         f"default-src 'none'; script-src 'self' {hashes('script')}; style-src 'self' {hashes('style')}; "
-        f"img-src 'self' data:;{media} font-src 'self'; base-uri 'none'; form-action 'none'"
+        f"img-src 'self' data:;{media}{connect} font-src 'self'; base-uri 'none'; form-action 'none'"
     )
     return text.replace(CSP_MARK, f'<meta http-equiv="Content-Security-Policy" content="{policy}">\n')
 

@@ -16,7 +16,7 @@
       <a href="{{href.what}}"{{attr.what_current}}>{{nav.what}}</a>
     </nav>
 {{html.lang_bar}}    <!-- The one way in: the door of the page's wing, or of the newest open wing. -->
-    <a class="door door--small top__door" href="{{href.enter}}"><span>{{nav.enter}}</span>{{svg.arrow}}</a>
+    <a class="door door--small top__door" href="{{href.enter}}" data-door="top"><span>{{nav.enter}}</span>{{svg.arrow}}</a>
     <!-- The same menu on a narrow screen, behind three lines of rising weight: layers of earth. Its name is spoken,
          not shown. It opens without a script. -->
     <details class="menu" data-menu>
@@ -28,7 +28,7 @@
             <li><a href="{{href.what}}"{{attr.what_current}}>{{nav.what}}</a></li>
 {{html.lang_menu}}          </ul>{{html.lang_menu_list}}
         </nav>
-        <a class="door menu__door" href="{{href.enter}}"><span>{{nav.enter}}</span>{{svg.arrow}}</a>
+        <a class="door menu__door" href="{{href.enter}}" data-door="top"><span>{{nav.enter}}</span>{{svg.arrow}}</a>
       </div>
     </details>
   </div>

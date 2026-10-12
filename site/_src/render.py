@@ -103,9 +103,10 @@ def label(title, kind=None, what=None, src=None, quote=None, cls="", extra="", s
     return "".join(out) + extra + "</figcaption>"
 
 
-def door(c, href, words, small=False, watch=False):
+def door(c, href, words, place, small=False, watch=False):
+    """A way into the walk. place is where it stands on the page, as the count names it: top, item or end."""
     k = "door door--small" if small else "door"
-    return f'<a class="{k}" href="{href}"><span>{words}</span>{ARROW}</a>'
+    return f'<a class="{k}" href="{href}" data-door="{place}"><span>{words}</span>{ARROW}</a>'
 
 
 # ---------- the place of a showpiece: on the first screen, or lower on a page ----------
@@ -215,7 +216,7 @@ def first(c, kind, slug):
     w, reg, d = c.w, c.wings[slug], c.wd[slug]
     plate, sets = place(c, slug, "landing" if kind == "home" else "wing")
     note = f'<p class="hero__note">{w["hero.entry_note"]} <a href="{c.to(c.addr("what"))}">{w["hero.what_link"]}</a></p>'
-    go = f'<div class="hero__go" data-door-watch>{door(c, esc(reg["door"][c.lang]), w["hero.enter"])}{note}</div>'
+    go = f'<div class="hero__go" data-door-watch>{door(c, esc(reg["door"][c.lang]), w["hero.enter"], "top")}{note}</div>'
     if kind == "home":
         head = (
             f'<h1 class="hero__title" id="hero-title"><span class="hero__name">{w["hero.name"]}</span></h1>'
@@ -267,7 +268,7 @@ def card(c, slug, size, level):
             f'{esc(reg["shows"]["place"][lang])}, {esc(reg["shows"]["day"][lang])}</span>'
             f'<span class="label__what"><span class="tag">{d["card"]["kind"]}</span><span class="vh">:</span> {d["card"]["what"]}</span>'
             + (f'<span class="label__src">{d["card"]["src"]}</span>' if d["card"].get("src") else "")
-            + f'<span class="wcard__go">{door(c, esc(reg["door"][lang]), w["nav.enter"], small=True)} '
+            + f'<span class="wcard__go">{door(c, esc(reg["door"][lang]), w["nav.enter"], "item", small=True)} '
             f'<a class="more" href="{page}"><span>{w["wings.to_page"]}</span>{ARROW}</a></span>'
         )
     return (
@@ -567,7 +568,7 @@ def closing(c):
     w, reg = c.w, c.wings[c.newest]
     words = (w["closing.p"].replace("{name}", esc(reg["name"][c.lang]).replace(" ", NBSP)).replace("{place}", esc(reg["shows"]["place"][c.lang]))
              .replace("{day}", esc(reg["shows"]["day"][c.lang])))
-    go = (f'<div class="close__go" data-door-watch>{door(c, esc(reg["door"][c.lang]), w["hero.enter"])}'
+    go = (f'<div class="close__go" data-door-watch>{door(c, esc(reg["door"][c.lang]), w["hero.enter"], "end")}'
           f'<p class="hero__note">{w["hero.entry_note"]}</p></div>')
     p = c.wd[c.newest].get("landing", {}).get("close")
     plate = ""
@@ -598,7 +599,7 @@ def see_it(c, slug, stop):
     facts = c.facts[slug]
     if not facts.get("links", {}).get("wing") or not stop:
         return ""
-    return f' <a class="seeit" href="{esc(c.wings[slug]["door"][c.lang])}#s={stop}">{c.w["wingpage.seeit"]}</a>'
+    return f' <a class="seeit" href="{esc(c.wings[slug]["door"][c.lang])}#s={stop}" data-door="item">{c.w["wingpage.seeit"]}</a>'
 
 
 def named(c, slug, item, words):
@@ -804,7 +805,7 @@ def facts(c, slug):
 
 def go_in(c, slug):
     """The door at a page's end, with the entry note under it."""
-    return (f'<div class="close__go" data-door-watch>{door(c, esc(c.wings[slug]["door"][c.lang]), c.w["hero.enter"])}'
+    return (f'<div class="close__go" data-door-watch>{door(c, esc(c.wings[slug]["door"][c.lang]), c.w["hero.enter"], "end")}'
             f'<p class="hero__note">{c.w["hero.entry_note"]}</p></div>')
 
 
