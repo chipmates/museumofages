@@ -360,7 +360,7 @@
         ],
         "field": {
           "h": "Das Abendmahl",
-          "p": "Es ist ein Wandbild, darum hängt es nicht im Bildersaal. Es füllt eine Wand im Hof: {count:supper_w_m} mal {count:supper_h_m} Meter, so groß wie das Original in Mailand.",
+          "p": "Es ist ein Wandbild, darum hängt es nicht im Bildersaal. Es füllt eine Wand im Hof: {count:supper_h_m} mal {count:supper_w_m} Meter, so groß wie das Original in Mailand.",
           "holder": "cenacolo",
           "stop": "supper-wall"
         }

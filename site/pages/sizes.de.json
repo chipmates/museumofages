@@ -1,5 +1,5 @@
 {
-  "_note": "THE WORDS of the sizes page, German. Poured from the writer's WORDS file of round 2 word for word; every size, holder and stop the page shows comes from the wing's facts file, and the build checks each line of works.lines against it. A plate with credit \"wing\" carries the wing page's own source line for its still. The two files hold the same structure. No em dash, no en dash, no semicolon.",
+  "_note": "THE WORDS of the sizes page, German. Poured from the writer's WORDS file of round 3 word for word; every size, holder and stop the page shows comes from the wing's facts file, and the build checks each line of works.lines against it. A plate's src is its source line as the wing's record names it, and the build checks each file it links against that record. The two files hold the same structure. No em dash, no en dash, no semicolon.",
   "page": {
     "id": "vinci-sizes",
     "wing": "vinci",
@@ -34,7 +34,7 @@
   },
   "meta": {
     "title": "Wie groß ist die Mona Lisa? 79,4 × 53,4 cm | Museum of Ages",
-    "description": "Die Mona Lisa misst 79,4 mal 53,4 cm. Die 24 Werke aus dem Bildersaal und das Abendmahl im selben Maßstab neben einem Menschen, zu jedem eine Tür.",
+    "description": "Größe der Mona Lisa: 79,4 mal 53,4 cm. Die 24 Werke aus dem Bildersaal und das Abendmahl im selben Maßstab, jedes mit Link zu seiner Station im Rundgang.",
     "og_title": "Wie groß ist die Mona Lisa? 79,4 × 53,4 cm",
     "og_image_alt": "Die Mona Lisa und das Abendmahl im selben Maßstab neben einem Menschen von 1,70 Metern: das Gemälde mit 79,4 mal 53,4 Zentimetern, das Wandbild mit 4,6 mal 8,8 Metern. Ein Diagramm, für diese Seite gemacht."
   },
@@ -49,7 +49,8 @@
   },
   "top": {
     "h1": "Wie groß ist die Mona Lisa?",
-    "answer": "Die Mona Lisa misst 79,4 mal 53,4 Zentimeter. Neben einem Menschen von 1,70 Metern ist sie nicht einmal halb so hoch und etwas mehr als einen halben Meter breit. Das Abendmahl ist 8,8 Meter breit: Sechzehn Mona Lisas passen nebeneinander in seine Breite.",
+    "answer": "Die Mona Lisa misst 79,4 mal 53,4 Zentimeter. Neben einem Menschen von 1,70 Metern ist sie nicht einmal halb so hoch und etwas mehr als einen halben Meter breit. Das Abendmahl ist 8,8 Meter breit: Sechzehn Mona Lisas hätten nebeneinander darauf Platz.",
+    "order": "Alle Maße: Höhe mal Breite.",
     "figure": {
       "work": "mona-lisa",
       "tag": "tag_chart",
@@ -71,7 +72,7 @@
       "lead": "Hier ist jedes Werk des Bildersaals, dazu das Abendmahl, im selben Maßstab gezeichnet.",
       "caption": "Alle 24 Werke des Bildersaals und das Abendmahl im selben Maßstab, neben einem Menschen von 1,70 Metern. Die Größen sind die der Originale.",
       "alt": "Ein Diagramm mit 24 Werken und dem Abendmahl im selben Maßstab neben einem Menschen von 1,70 Metern: Das Abendmahl ist 4,6 Meter hoch und 8,8 Meter breit, die größte Tafel, die Anbetung der Könige aus dem Morgenland, ist 2,4 Meter hoch, die Mona Lisa 79,4 Zentimeter, und die niedrigste, die Predella der Verkündigung, 16 Zentimeter.",
-      "zoom": "Die Werke unter einem Meter noch einmal, dreimal so groß, damit auch die kleinen gut zu erkennen sind.",
+      "zoom": "Die Werke unter einem Meter Höhe noch einmal, dreimal so groß, damit auch die kleinen gut zu erkennen sind.",
       "key_h": "Die Formen nach Nummern",
       "still_caption": "Alle 24 Werke und das Abendmahl im selben Maßstab, neben einem Menschen von 1,70 Metern.",
       "licence": "Das Diagramm ist eine eigene Arbeit des Museums, CC BY-SA 4.0.",
@@ -83,15 +84,22 @@
       "nav": "Das Abendmahl",
       "h": "Das Abendmahl",
       "paras": [
-        "Das Abendmahl, oft das Letzte Abendmahl genannt, ist 4,6 Meter hoch und 8,8 Meter breit. Es ist ein Wandbild im Refektorium, dem Speisesaal des Klosters Santa Maria delle Grazie in Mailand, und kann darum in keinem Bildersaal hängen. Im Flügel füllt eine Reproduktion davon eine Wand im Hof, mit denselben 4,6 mal 8,8 Metern. Was eine Reproduktion nicht zeigen kann: die Wand, zu der das Bild gehört, die Oberfläche seines Putzes und den Raum, für den es gemalt wurde."
+        "Das Abendmahl, oft das Letzte Abendmahl genannt, ist 4,6 Meter hoch und 8,8 Meter breit. Es ist ein Wandbild im Refektorium, dem Speisesaal des Klosters Santa Maria delle Grazie in Mailand, und kann darum in keinem Bildersaal hängen. Im Flügel füllt eine Reproduktion davon eine Wand im Hof, genauso groß wie das Original, 4,6 mal 8,8 Meter. Was eine Reproduktion nicht zeigen kann: die Wand, zu der das Bild gehört, die Oberfläche seines Putzes und den Raum, für den es gemalt wurde."
       ],
       "pic": {
         "pic": "supper",
         "title": "Das Abendmahl im Hof",
         "tag": "tag_still",
-        "what": "ein Standbild aus dem Film des Flügels. Die Reproduktion an ihrer Wand im Hof, 4,6 mal 8,8 Meter. Die Wand ist in Code gebaut.",
+        "what": "ein Standbild aus dem Film des Flügels. Die Reproduktion an ihrer Wand im Hof, 4,6 mal 8,8 Meter. Die Wand ist in Code gebaut. Das Original befindet sich im Refektorium von Santa Maria delle Grazie in Mailand.",
         "alt": "Eine Reproduktion des Abendmahls füllt eine helle Wand in einem Hof: eine Reihe von Figuren an einem langen Tisch in einem gemalten Raum. Ein Standbild aus dem Film des Flügels.",
-        "credit": "wing"
+        "src": [
+          "Foto: Paris Orlando, 2019, gemeinfrei (PD-Art), über ",
+          {
+            "text": "Wikimedia Commons",
+            "href": "https://commons.wikimedia.org/wiki/File:Last_Supper_by_Leonardo_da_Vinci.jpg"
+          },
+          ". {museum:it108}"
+        ]
       }
     },
     {
@@ -100,15 +108,22 @@
       "nav": "Annähernd in Originalgröße",
       "h": "Annähernd in Originalgröße",
       "paras": [
-        "Im Flügel hängen Reproduktionen. Jede ist annähernd in Originalgröße zu sehen, mit Quelle und Lizenz auf ihrer Beschriftung, und die Originale liegen in den Museen und Sammlungen, die diese Seite nennt. Die Größen hier sind die der Originale, wie ihre Häuser sie angeben."
+        "Im Flügel hängen Reproduktionen. Jede ist annähernd in Originalgröße zu sehen, mit Quelle und Lizenz auf ihrer Beschriftung, und die Originale befinden sich in den Museen und Sammlungen, die diese Seite nennt. Die Größen hier sind die der Originale, wie ihre Häuser sie angeben."
       ],
       "pic": {
         "pic": "lisa",
         "title": "Die Mona Lisa an der Bilderwand",
         "tag": "tag_still",
-        "what": "ein Standbild aus dem Film des Flügels. Die Reproduktion hängt annähernd in Originalgröße zwischen den anderen Bildern, die Wand läuft links von ihr weiter. Aus der Sammlung des Louvre in Paris.",
+        "what": "ein Standbild aus dem Film des Flügels. Die Reproduktion hängt annähernd in Originalgröße zwischen den anderen Bildern, die Wand läuft links von ihr weiter. Das Original befindet sich im Louvre in Paris.",
         "alt": "Eine lange dunkelblaue Wand mit gerahmten Reproduktionen unter Strahlern. Die Mona Lisa hängt dazwischen, annähernd in Originalgröße, und links von ihr folgen weitere Rahmen. Ein Standbild aus dem Film des Flügels.",
-        "credit": "wing"
+        "src": [
+          "Reproduktion: Tafel 43 aus Corrado Riccis Tesori della pittura italiana, digitalisiert von der Polnischen Nationalbibliothek, gemeinfrei, über ",
+          {
+            "text": "Wikimedia Commons",
+            "href": "https://commons.wikimedia.org/wiki/File:Tesori_della_pittura_italiana_1910_(146775587).jpg"
+          },
+          ". Auch die anderen Rahmen tragen Reproduktionen, jede mit Quelle und Lizenz auf ihrer Beschriftung im Flügel."
+        ]
       }
     },
     {
@@ -116,7 +131,7 @@
       "id": "works",
       "nav": "Jedes Werk",
       "h": "Jedes Werk",
-      "intro": "Jedes Werk in der Reihenfolge, in der es hängt, mit der Größe, die sein Haus angibt. Ein Zusatz nach dem Haus, etwa umstritten oder Werkstatt, sagt, wie sicher die Zuschreibung an Leonardo ist. Eine Predella ist eine kleine Tafel vom Sockel eines Altarbilds.",
+      "intro": "Jedes Werk in der Reihenfolge, in der es hängt, mit der Größe, die sein Haus angibt. Zwei sind Zeichnungen und sagen das nach ihrem Titel. Ein Zusatz nach dem Haus, etwa umstritten, Werkstatt oder Zuschreibung mit Vorbehalt, sagt, wie sicher die Zuschreibung an Leonardo ist. Kein Zusatz heißt: belegt. Eine Predella ist eine kleine Tafel vom Sockel eines Altarbilds.",
       "lines": [
         "Taufe Christi. 177 × 151 cm. Gallerie degli Uffizi, Florenz. Von Verrocchio und Leonardo. Höher als ein Mensch von 1,70 Metern.",
         "Die Verkündigung. 98 × 217 cm. Gallerie degli Uffizi, Florenz. Über zwei Meter breit und keinen Meter hoch.",
@@ -132,10 +147,10 @@
         "Dame mit dem Hermelin. 54,8 × 40,3 cm. Muzeum Narodowe w Krakowie, Muzeum Książąt Czartoryskich, Krakau. Niedriger und schmaler als die Mona Lisa.",
         "Bildnis einer Dame, genannt La Belle Ferronnière. 63 × 45 cm. Musée du Louvre, Paris.",
         "Madonna Litta. 42 × 33 cm. Staatliche Eremitage, Sankt Petersburg. Umstritten.",
-        "Die Jungfrau mit dem Kind, der heiligen Anna und Johannes dem Täufer. 141,5 × 104,6 cm. National Gallery, London. Zeichnung. Die größere der zwei Zeichnungen an der Wand.",
+        "Die Jungfrau mit dem Kind, der heiligen Anna und Johannes dem Täufer. Zeichnung. 141,5 × 104,6 cm. National Gallery, London. Die größere der zwei Zeichnungen an der Wand.",
         "Madonna mit der Spindel, Buccleuch-Fassung. 48,3 × 36,9 cm. Sammlung Buccleuch, Leihgabe an die National Galleries of Scotland. Zuschreibung mit Vorbehalt. Zwei Fassungen eines Bildes hängen hier nebeneinander, fast gleich groß.",
         "Madonna mit der Spindel, Lansdowne-Fassung. 49,5 × 37,1 cm. Kenneth C. Griffin Collection, Leihgabe an das Metropolitan Museum of Art. Zuschreibung mit Vorbehalt. Gut einen Zentimeter höher als die Buccleuch-Fassung.",
-        "Der Kampf um die Standarte, nach der Schlacht von Anghiari. 45,3 × 63,6 cm. Musée du Louvre, Paris. Zeichnung. Eine spätere Kopie von fremder Hand und die zweite Zeichnung an der Wand.",
+        "Der Kampf um die Standarte, nach der Schlacht von Anghiari. Zeichnung. 45,3 × 63,6 cm. Musée du Louvre, Paris. Eine spätere Kopie von fremder Hand und die zweite Zeichnung an der Wand.",
         "Mona Lisa. 79,4 × 53,4 cm. Musée du Louvre, Paris. Hat im Flügel ihre eigene Station. Von den anderen 23 Werken sind vierzehn niedriger als sie und neun höher.",
         "Felsgrottenmadonna, Londoner Fassung. 189,5 × 120 cm. National Gallery, London. Zuschreibung mit Vorbehalt. Zehn Zentimeter niedriger als die Louvre-Fassung und zwei schmaler.",
         "Die Jungfrau mit dem Kind und der heiligen Anna. 168 × 113 cm. Musée du Louvre, Paris. Zwei Zentimeter kleiner als ein Mensch von 1,70 Metern.",
@@ -145,7 +160,6 @@
         "Bacchus, ehemals Johannes der Täufer. 177 × 115 cm. Musée du Louvre, Paris. Werkstatt. Genauso hoch wie die Taufe Christi, das erste Bild an der Wand.",
         "Das Abendmahl. 460 × 880 cm. Museo del Cenacolo Vinciano, Santa Maria delle Grazie, Mailand. Ein Wandbild, darum nicht im Bildersaal. Eine Reproduktion füllt eine Wand im Hof."
       ],
-      "note": "Maße: Höhe mal Breite.",
       "go": "Im Flügel ansehen"
     },
     {
@@ -160,7 +174,7 @@
         "work": "Werk",
         "height": "Höhe",
         "width": "Breite",
-        "holder": "Bewahrt von",
+        "holder": "Haus",
         "place": "Ort",
         "walk": "Im Flügel"
       },

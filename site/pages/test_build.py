@@ -427,7 +427,7 @@ class Case(unittest.TestCase):
         wing, topic, facts = self.works_facts()
         for lang in ("en", "de"):
             own = self.own_part((out / f'{wing["page"][lang].strip("/")}/{topic["slug"][lang]}/index.html').read_text(encoding="utf-8"))
-            panel = re.search(r'<div class="sz-panel" role="img".*?<div class="sz-keys"', own, flags=re.S).group(0)
+            panel = re.search(r'<div class="sz-panel" role="img".*?<details class="sz-keys"', own, flags=re.S).group(0)
             bands = re.split(r'<div class="sz-rows sz-rows--\w">', panel)[1:]
             self.assertEqual(len(bands), 3)
             works = len({p["id"] for p in facts["paintings"]}) + 1
@@ -439,6 +439,23 @@ class Case(unittest.TestCase):
                 # every work once in each band
                 self.assertEqual(len(re.findall(r'<svg class="sz-s(?: sz-s--mark| sz-s--field)?" width', band)), works)
 
+    def test_a_medium_stands_beside_its_title_and_names_no_work(self):
+        if not self.works_page:
+            self.skipTest("no page shows a wing's works")
+        out, written = self.build()
+        wing, topic, facts = self.works_facts()
+        for lang in ("en", "de"):
+            data = self.data(lang, self.works_page)
+            lines = next(b["lines"] for b in data["blocks"] if b["type"] == "works")
+            media = {m.group(1) for m in (re.fullmatch(r".*?\.\s+(\w+\.)\s+\d.*", line) for line in lines) if m}
+            own = self.own_part((out / f'{wing["page"][lang].strip("/")}/{topic["slug"][lang]}/index.html').read_text(encoding="utf-8"))
+            slots = re.findall(r'<span class="sz-medium">(.*?)</span>', own)
+            self.assertTrue(slots and set(slots) <= media, (lang, slots, media))
+            # the key, the table and every link's name carry the title alone
+            rest = re.sub(r' <span class="sz-medium">.*?</span>', "", own)
+            for medium in media:
+                self.assertNotIn(f". {medium.rstrip('.')}", rest, lang)
+
     def test_a_still_of_the_second_rights_tier_needs_its_source_line(self):
         if not self.works_page:
             self.skipTest("no page shows a wing's works")
@@ -448,12 +465,28 @@ class Case(unittest.TestCase):
             data = self.data(lang, self.works_page)
             for b in data["blocks"]:
                 if b.get("pic"):
-                    b["pic"].pop("credit", None)
+                    b["pic"].pop("src", None)
             self.save(lang, data, self.works_page)
         # a built page's checks read the written files, so this failure comes after the writing
         with self.assertRaises(SystemExit) as caught:
             self.build()
         self.assertRegex(str(caught.exception), r"second rights tier, and its label has no source line")
+
+    def test_a_source_line_names_a_file_of_the_wings_record(self):
+        if not self.works_page:
+            self.skipTest("no page shows a wing's works")
+        links = [part for b in self.data("en", self.works_page)["blocks"] if b.get("pic")
+                 for part in b["pic"].get("src", []) if isinstance(part, dict) and "/wiki/File:" in part["href"]]
+        if not links or not (SITE_SRC.parent.parent / "museum").is_dir():
+            self.skipTest("no source line links a Commons file, or the repository holds no record")
+        for lang in ("en", "de"):
+            data = self.data(lang, self.works_page)
+            for b in data["blocks"]:
+                for part in (b.get("pic") or {}).get("src", []):
+                    if isinstance(part, dict) and "/wiki/File:" in part["href"]:
+                        part["href"] = "https://commons.wikimedia.org/wiki/File:Not_in_the_record.jpg"
+            self.save(lang, data, self.works_page)
+        self.fails(r"File:Not in the record\.jpg, which .* does not name")
 
     def test_the_chart_picture_is_described_by_its_own_caption(self):
         if not self.works_page:

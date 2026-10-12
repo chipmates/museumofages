@@ -31,7 +31,8 @@
 .sz-i{display:flex;flex-direction:column;align-items:center}
 .sz-s,.sz-bar{margin-inline:5px}
 .sz-s{display:block;max-width:none;overflow:visible;font-size:35px;font-size:calc(100cqw / 10)}
-.sz-panel--zoom{margin-top:40px}
+.sz-cap--zoom{margin-top:40px}
+.sz-panel--zoom{margin-top:18px}
 .sz-panel--zoom .sz-s,.sz-panel--zoom .sz-bar{font-size:105px;font-size:calc(100cqw / 10 * 3)}
 .sz-s rect{fill:color-mix(in srgb,var(--ground-lit) 72%,var(--ground));stroke:var(--frame-line);stroke-width:1.5}
 .sz-s--mark rect{stroke:var(--mark);stroke-width:2.5}
@@ -42,15 +43,31 @@
 .sz-name{color:var(--ink)}
 .sz-bar{display:block;width:1em;height:9px;font-size:35px;font-size:calc(100cqw / 10);border:1px solid var(--ink-soft);border-top:0}
 .sz-i--bar{margin-left:auto}
-/* The key: one column on a phone, two where the chart is wide. */
+/* The key: folded on a phone, where the list further down names the same works; open and in two columns where the
+   chart is wide (a browser without ::details-content keeps it folded there too). */
 .sz-keys{margin-top:22px}
-.sz-key__h{margin-bottom:8px}
+.sz-keys summary{display:flex;align-items:center;justify-content:space-between;gap:16px;min-height:46px;border-bottom:1px solid var(--hair-strong);cursor:pointer;list-style:none}
+.sz-keys summary::-webkit-details-marker{display:none}
+.sz-keys summary::after{content:"";flex:none;width:13px;height:13px;background:linear-gradient(var(--ink),var(--ink)) center/100% 1px no-repeat,linear-gradient(var(--ink),var(--ink)) center/1px 100% no-repeat}
+.sz-keys[open] summary::after{background:linear-gradient(var(--ink),var(--ink)) center/100% 1px no-repeat}
+.sz-keys summary:hover .key{color:var(--ink)}
+.sz-keys .sz-key{margin-top:12px}
+@container (min-width:600px){
+  .sz-keys summary{min-height:0;border-bottom:0;cursor:default;pointer-events:none}
+  .sz-keys summary::after{content:none}
+  .sz-keys::details-content{content-visibility:visible;display:block}
+  .sz-keys .sz-key{margin-top:8px}
+}
 .sz-key{font-family:var(--sans);font-size:.8125rem;line-height:1.5;color:var(--ink-soft)}
 .sz-key li{break-inside:avoid;padding-left:2.6em;text-indent:-2.6em}
 .sz-key__n{display:inline-block;min-width:2.6em;text-indent:0;color:var(--ink-quiet)}
 .sz-key__mark{color:var(--ink)}
 .sz-key__mark .sz-key__n{color:var(--mark-ink)}
 @container (min-width:600px){.sz-key{columns:2;column-gap:32px}}
+/* The answer's first line holds its size, which never breaks: at 18 px the German run misses a 390 px phone's
+   line by a few pixels, and text-wrap (pretty on every p, base.css) cannot move a run that does not fit. */
+@media (min-width:360px) and (max-width:599px){.sp-answer{font-size:1.0625rem}}
+.sz-order{margin-top:10px;font-family:var(--sans);font-size:.875rem;line-height:1.5;color:var(--ink-soft)}
 .sz-cap{margin-top:14px;font-family:var(--sans);font-size:.875rem;line-height:1.5;color:var(--ink-soft);max-width:38rem}
 .sz-still{margin-top:22px}
 .sz-licence{font-family:var(--sans);font-size:.8125rem;line-height:1.45;color:var(--ink-quiet)}
@@ -60,8 +77,8 @@
 .sz-k{font-family:var(--sans);font-size:.875rem;line-height:1.9;color:var(--ink-quiet)}
 .sz-e p{font-size:1rem;line-height:1.55;color:var(--ink-body)}
 .sz-title{display:block;margin-bottom:3px;font-size:1.1875rem;line-height:1.3;color:var(--ink)}
+.sz-medium{font-family:var(--sans);font-size:.875rem;color:var(--ink-soft)}
 .sz-go{font-size:.9375rem}
-.sz-note{margin-top:14px;font-family:var(--sans);font-size:.875rem;line-height:1.5;color:var(--ink-soft)}
 /* Where the table is wider than its column, a touch screen is told it moves sideways. */
 .sz-tab{container-type:inline-size}
 .sz-hint{display:none;margin-top:14px;font-family:var(--sans);font-size:.875rem;line-height:1.5;color:var(--ink-soft)}
@@ -84,6 +101,11 @@
 .sz-table tbody th{position:sticky;left:0;z-index:1;min-width:10rem;max-width:14rem;background:var(--ground);color:var(--ink)}
 .sz-table .sz-k{margin-right:.3em;font-size:.8125rem;line-height:inherit}
 .sz-table a{display:inline-flex;align-items:center;min-height:44px;margin:-12px 0;white-space:nowrap}
+/* Where the table scrolls, the columns out of sight are wide enough that no row grows taller than its title. */
+@container (max-width:639.98px){
+  .sz-table td:nth-child(4){min-width:15rem}
+  .sz-table td:nth-child(5){white-space:nowrap}
+}
 
 @media (min-width:960px){
   .sz-top .sz-t{font-size:110px}

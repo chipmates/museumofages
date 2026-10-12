@@ -360,7 +360,7 @@
         ],
         "field": {
           "h": "The Last Supper",
-          "p": "It is a wall painting, so it is not in the picture room. It fills a wall in the court: {count:supper_w_m} by {count:supper_h_m} metres, as large as the original in Milan.",
+          "p": "It is a wall painting, so it is not in the picture room. It fills a wall in the court: {count:supper_h_m} by {count:supper_w_m} metres, as large as the original in Milan.",
           "holder": "cenacolo",
           "stop": "supper-wall"
         }

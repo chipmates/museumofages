@@ -101,10 +101,19 @@ def check_lines(works, lines, num, lang):
     return problems
 
 
-def split_line(line, it, num, lang):
-    """A line's title (what stands before its size, with its full stop) and the rest."""
+def line_parts(line, it, num, lang):
+    """A line's title (with its full stop), its medium and the rest from its size on. The medium is one word after
+    the title ("Drawing."), where the line names one, else ""."""
     at = line.replace(NBSP, " ").index(size_text(it, num, lang))
-    return line[:at].rstrip(), line[at:]
+    head, rest = line[:at].rstrip(), line[at:]
+    m = re.fullmatch(r"(.*\.)\s+(\w+\.)", head)
+    return (m.group(1), m.group(2), rest) if m else (head, "", rest)
+
+
+def split_line(line, it, num, lang):
+    """A line's title (with its full stop, without its medium) and the rest from its size on."""
+    title, _, rest = line_parts(line, it, num, lang)
+    return title, rest
 
 
 # ---------- the page ----------
@@ -210,14 +219,15 @@ def panel(works, mark, labels, num, lang, zoom=True, rich=esc):
 
 
 def key_list(works, titles, mark, rich, heading):
-    """The chart's key under its heading: each shape's numbers and the title of its work, as the still has it. It
-    repeats the list further down, so it is for the eyes only."""
+    """The chart's key under its heading: each shape's numbers and the title of its work, as the still has it. It is
+    folded shut, and chart.css shows it open where the chart is wide: on a phone the list further down names the
+    same works."""
     out = []
     for it in works.shapes():
         key = ", ".join(str(n) for n in it["ns"])
         cls = ' class="sz-key__mark"' if it["id"] == mark else ""
         out.append(f'<li{cls}><span class="sz-key__n">{key}</span>{rich(titles[it["n"]])}</li>')
-    return f'<div class="sz-keys" aria-hidden="true"><p class="key sz-key__h">{heading}</p><ul class="sz-key">{"".join(out)}</ul></div>'
+    return f'<details class="sz-keys"><summary><span class="key">{heading}</span></summary><ul class="sz-key">{"".join(out)}</ul></details>'
 
 
 def top_figure(works, mark, labels, num, lang):
@@ -244,14 +254,16 @@ def door_href(door, stop):
 
 
 def works_list(works, lines, door, go, arrow, rich, num, lang):
-    """Every work's line in the order it hangs, its number first, its title set apart, its own way into the wing."""
+    """Every work's line in the order it hangs, its number first, its title set apart with its medium beside it,
+    its own way into the wing."""
     out = []
     for it, line in zip(works.items, lines):
-        title, rest = split_line(line, it, num, lang)
+        title, medium, rest = line_parts(line, it, num, lang)
+        medium = f' <span class="sz-medium">{rich(medium)}</span>' if medium else ""
         link = (f'<a class="more sz-go" href="{esc(door_href(door, it["stop"]))}" data-door="item"><span>{esc(go)}'
                 f'<span class="vh">: {rich(title.rstrip("."))}</span></span>{arrow}</a>') if it["stop"] else ""
         out.append(f'<li id="w{it["n"]}"><span class="sz-k" aria-hidden="true">{it["n"]}</span><div class="sz-e">'
-                   f'<p><span class="sz-title">{rich(title)}</span> {rich(rest)}</p>{link}</div></li>')
+                   f'<p><span class="sz-title">{rich(title)}{medium}</span> {rich(rest)}</p>{link}</div></li>')
     return "\n".join(out)
 
 
@@ -268,7 +280,7 @@ def table_rows(works, lines, door, go, rich, num, lang):
         size = (lambda v: f'{num(v, lang)} ({inches(v)})') if lang == "en" else (lambda v: num(v, lang))
         link = (f'<a href="{esc(door_href(door, it["stop"]))}" data-door="item">{esc(go)}'
                 f'<span class="vh">: {rich(title)}</span></a>') if it["stop"] else ""
-        rows.append(f'<tr><th scope="row"><span class="sz-k">{it["n"]}</span> {rich(title)}</th>'
+        rows.append(f'<tr><th scope="row"><span class="sz-k">{it["n"]}</span>&#160;{rich(title)}</th>'
                     f'<td>{size(it["h"])}</td><td>{size(it["w"])}</td><td>{holder_name(it["holder"], lang)}</td>'
                     f'<td>{rich(it["holder"]["note"][lang])}</td><td>{link}</td></tr>')
     return "\n".join(rows)
@@ -373,6 +385,7 @@ def still_svg(works, mark, words, num, lang, colours, kind):
         if field:
             shelves.append([("person", None, pw), ("work", dict(field, ns=[field["n"]]), field["w"] * u)])
         keys = [(", ".join(str(n) for n in it["ns"]), words["titles"][it["n"]]) for it in works.shapes()]
+        ends = []
         for s, shelf in enumerate(shelves):
             tall = max((works.person_cm if k == "person" else it["h"]) * u for k, it, _ in shelf)
             floor = y + tall
@@ -395,7 +408,17 @@ def still_svg(works, mark, words, num, lang, colours, kind):
                     parts.append(_text(x + w / 2, floor + 30, key, 19, ink if is_mark else soft, "middle"))
                 x += w + gap
             parts.append(_floor(m, floor, W - 2 * m, line))
+            ends.append((x, floor))
             y = floor + 64
+        # a metre for scale at the end of the second shelf (or the first after it with room), as the page has one
+        metre = 100 * u
+        at = next(((x, f) for x, f in ends[1:] + ends[:1] if x + 40 + metre <= W - m), None)
+        if at:
+            x1, f = W - m - metre, at[1]
+            parts.append(f'<rect x="{x1:g}" y="{f - 1.5:g}" width="{metre:g}" height="3" fill="{soft}"/>')
+            parts.append(f'<rect x="{x1:g}" y="{f - 11:g}" width="2" height="11" fill="{soft}"/>')
+            parts.append(f'<rect x="{x1 + metre - 2:g}" y="{f - 11:g}" width="2" height="11" fill="{soft}"/>')
+            parts.append(_text(x1 + metre / 2, f + 30, f"{num(1, lang)} m", 19, soft, "middle"))
         # the key under the shelves: every number with its title, in two columns, a line and a third apart
         half = -(-len(keys) // 2)
         col, size, step = (W - 2 * m) / 2, 18, 25

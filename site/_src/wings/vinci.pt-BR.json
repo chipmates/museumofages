@@ -360,7 +360,7 @@
     ],
     "field": {
      "h": "A Última Ceia",
-     "p": "É uma pintura mural, por isso não fica na sala dos quadros. Ela ocupa uma parede do pátio: {count:supper_w_m} por {count:supper_h_m} metros, do tamanho do original em Milão.",
+     "p": "É uma pintura mural, por isso não fica na sala dos quadros. Ela ocupa uma parede do pátio: {count:supper_h_m} por {count:supper_w_m} metros, do tamanho do original em Milão.",
      "holder": "cenacolo",
      "stop": "supper-wall"
     }

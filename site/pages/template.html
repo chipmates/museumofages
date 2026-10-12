@@ -40,7 +40,7 @@
     <header class="sp-top">
       <div class="sp-top__text">
         <h1{{attr.h1}}>{{top.h1}}</h1>
-        <p class="sp-answer">{{top.answer}}</p>
+        <p class="sp-answer">{{top.answer}}</p>{{html.order}}
       </div>
 {{html.frame}}
       <!-- The one way in. No script is wired to the hooks: the site's measurement is not decided. -->
@@ -228,10 +228,11 @@
     </div>
 {{html.key}}
     <figcaption class="sz-cap">{{caption}}</figcaption>
+    <!-- The larger panel is named before it is shown. -->
+    <p class="sz-cap sz-cap--zoom">{{zoom}}</p>
     <div class="sz-panel sz-panel--zoom" aria-hidden="true">
 {{html.zoom}}
     </div>
-    <p class="sz-cap">{{zoom}}</p>
   </figure>
   <p class="sz-still"><a class="more" href="{{href.still}}"><span>{{still_link}}</span>{{svg.arrow}}</a></p>
   <p class="sz-licence">{{licence}}</p>
@@ -243,7 +244,6 @@
   <ol class="sz-list">
 {{html.items}}
   </ol>
-  <p class="sz-note">{{note}}</p>
 </section>
 <!--@ block:table -->
 <section class="sp-sec sz-sec sz-tab" id="{{id}}">

@@ -32,6 +32,7 @@ import re
 import shutil
 import struct
 import sys
+import urllib.parse
 from pathlib import Path
 
 HERE = Path(__file__).resolve().parent
@@ -513,36 +514,37 @@ def focus_rule(frame):
     return "@media (max-width:599px){.sp-frame img{object-position:%s}}" % frame["focus"]
 
 
-# ---------- a still the wing shows too ----------
+# ---------- the source line of a still the wing shows too ----------
 
-_WING_PLATES = {}
+# The museum's record of every reproduction its walk shows, by wing (relative to the repository): a plate's source line
+# that names a Commons file must name one the record names for that wing.
+RECORD = "museum/src/wings/{wing}/pictures/data/store-audit.json"
 
 
-def wing_plate(wing, stem, lang):
-    """The wing page's own plate (or stop picture) for a still of its film, by the still's stem: its source line with
-    the museum's words filled in. A still of the second rights tier carries its source line wherever
-    it hangs, so a search page takes the wing's line as it stands and writes none of its own."""
-    key = (wing, stem, lang)
-    if key not in _WING_PLATES:
-        words = json.loads((LANG.HERE / "wings" / f"{wing}.{lang}.json").read_text(encoding="utf-8"))
-        museum = json.loads((LANG.HERE / "museum-texts.json").read_text(encoding="utf-8"))[lang]
+def museum_words(text, lang):
+    """A sentence with the museum's own words ({museum:key}) filled in."""
+    museum = json.loads((LANG.HERE / "museum-texts.json").read_text(encoding="utf-8"))[lang]
+    return re.sub(r"\{museum:(\w+)\}", lambda m: museum[m.group(1)], text)
 
-        def find(node):
-            if isinstance(node, dict):
-                pic = node.get("pic")
-                if isinstance(pic, dict) and stem in (pic.get("stem"), (pic.get("wide") or {}).get("stem")) and node.get("src"):
-                    return node
-                node = list(node.values())
-            if isinstance(node, list):
-                return next((x for x in map(find, node) if x), None)
-            return None
 
-        entry = find(words)
-        if not entry:
-            raise SystemExit(f"{wing}.{lang}: no plate of the wing shows {stem} with a source line, so a page cannot take it")
-        src = re.sub(r"\{museum:(\w+)\}", lambda m: museum[m.group(1)], entry["src"])
-        _WING_PLATES[key] = {"src": src}
-    return _WING_PLATES[key]
+def source_line(parts, wing, lang, rich):
+    """A plate's source line: its words with the museum's own filled in, and a link where a part gives one. A link to
+    a Commons file is checked against the wing's record, where the repository holds it."""
+    record = LANG.HERE.parent.parent / RECORD.format(wing=wing)
+    out = []
+    for part in parts:
+        if isinstance(part, str):
+            out.append(rich(museum_words(part, lang)))
+            continue
+        name = re.search(r"/wiki/File:(.+)$", part["href"])
+        if name and record.is_file():
+            listed = urllib.parse.unquote(name.group(1)).replace("_", " ")
+            if f"File:{listed}" not in record.read_text(encoding="utf-8"):
+                raise SystemExit(f"a plate names File:{listed}, which {RECORD.format(wing=wing)} does not name")
+        out.append(f'<a href="{esc(part["href"])}">{rich(part["text"])}</a>')
+    # the site's source link is an inline block (its touch target), which would let a line break before the
+    # stop that follows it: the link and that stop stay together
+    return re.sub(r'(<a href="[^"]*">(?:(?!</a>).)*</a>)([.,:)]+)', r'<span class="nw">\1\2</span>', "".join(out))
 
 
 # ---------- structured data ----------
@@ -685,16 +687,16 @@ def render(page, lang, data, shared, out_root):
         return "\n".join(fill(parts["term_row"], {"term": rich(r["term"]), "text": rich(r["text"])}) for r in rows)
 
     def figure(pic):
-        """A plate with its label. A plate that says nothing of its own carries the page's usual line. A still of the
-        wing's film that the wing shows too (credit: "wing") carries the wing's own source line."""
+        """A plate with its label. A plate that says nothing of its own carries the page's usual line, and one that
+        shows a reproduction carries its source line (src)."""
         if not pic:
             return ""
         values = dict(base)
-        src = wing_plate(data["page"]["wing"], pics.defs[pic["pic"]]["stem"], lang)["src"] if pic.get("credit") == "wing" else ""
+        src = source_line(pic["src"], data["page"]["wing"], lang, rich) if pic.get("src") else ""
         values.update({"html.picture": pics.picture(pic["pic"], esc(pic["alt"])),
                        "tag": rich(labels[pic["tag"]]), "what": rich(pic.get("what") or labels["plate_what"]),
                        "html.title": f'<span class="label__title">{rich(pic["title"])}</span>' if pic.get("title") else "",
-                       "html.src": f'<span class="label__src">{rich(src)}</span>' if src else ""})
+                       "html.src": f'<span class="label__src">{src}</span>' if src else ""})
         return fill(parts["figure"], values)
 
     def place(text):
@@ -841,6 +843,8 @@ def render(page, lang, data, shared, out_root):
         "attr.h1": h1_class,
         "top.h1": names.mark(h1, wrap_wing=run > KEEP_SMALL),
         "top.answer": rich(data["top"]["answer"]),
+        # the one place a sizes page says in which order its sizes stand
+        "html.order": f'<p class="sz-order">{rich(data["top"]["order"])}</p>' if data["top"].get("order") else "",
         "html.frame": frame_html,
         "top.door.text": rich(data["top"]["door"]["text"]),
         "top.door.note": rich(data["top"]["door"]["note"]),

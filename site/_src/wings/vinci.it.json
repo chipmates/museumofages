@@ -360,7 +360,7 @@
     ],
     "field": {
      "h": "Ultima Cena",
-     "p": "È una pittura murale, quindi non è nella sala dei quadri. Riempie una parete del cortile: {count:supper_w_m} per {count:supper_h_m} metri, grande come l’originale a Milano.",
+     "p": "È una pittura murale, quindi non è nella sala dei quadri. Riempie una parete del cortile: {count:supper_h_m} per {count:supper_w_m} metri, grande come l’originale a Milano.",
      "holder": "cenacolo",
      "stop": "supper-wall"
     }

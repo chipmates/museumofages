@@ -59,6 +59,9 @@
     { "text": "Mona Lisa" },
     { "text": "Buccleuch" },
     { "text": "Lansdowne" },
-    { "text": "Anghiari", "lang": "it" }
+    { "text": "Anghiari", "lang": "it" },
+    { "text": "Tesori della pittura italiana", "lang": "it" },
+    { "text": "Corrado Ricci", "lang": "it", "person": true },
+    { "text": "Paris Orlando", "person": true }
   ]
 }
