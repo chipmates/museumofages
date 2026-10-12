@@ -44,6 +44,7 @@
   "imprint": "Note legali",
   "imprint_elsewhere": "Le note legali sono pubblicate in inglese e in tedesco.",
   "licence_a": "I nostri testi e le nostre immagini sono sotto licenza",
+  "use": "Usare le nostre immagini",
   "links_h": "Questo sito",
   "mission": "Ricostruiamo ciò che è stato, un luogo alla volta, e lo rendiamo accessibile quanto possiamo, perché tutti possano imparare qualcosa. Ingresso libero, senza account.",
   "motion_pause": "Ferma il movimento",
@@ -57,6 +58,10 @@
   "rights": "© ChipMates gemeinnützige GmbH",
   "source": "Codice sorgente",
   "what": "Che cos’è questo museo"
+ },
+ "pictures": {
+  "credit_text": "Museum of Ages, ChipMates gemeinnützige GmbH e contributori, CC BY-SA 4.0",
+  "copyright_notice": "© ChipMates gemeinnützige GmbH e contributori"
  },
  "glance": {
   "f1_term": "Un’ala",
@@ -196,6 +201,16 @@
   "s5_p2": "Il museo è indipendente. Non ha partnership con altri musei. Solo ChipMates decide che cosa mostra e che cosa dice. Il sito non ha pubblicità e non vende nulla.",
   "s5_pays": "ChipMates gemeinnützige GmbH paga le spese del museo.",
   "s6_before": "Il codice del museo non è ancora pubblico. Lo pubblicheremo con una licenza open source, la AGPL-3.0 o una versione successiva. Allora chiunque potrà leggerlo, usarlo e modificarlo secondo quella licenza. I diritti sui testi e sulle immagini che il museo crea da sé appartengono a ChipMates gemeinnützige GmbH.",
+  "use_h": "Usare le nostre immagini",
+  "use_p1": "Molto di ciò che vedi qui l’abbiamo fatto noi: le macchine ricostruite in codice, le sale progettate dal museo, il modello in vetro del cuore, i diagrammi e le immagini di tutto questo che il sito mostra. Puoi usare queste immagini, modificarle e diffonderle, per qualsiasi scopo, anche commerciale.",
+  "use_p1b": "Sono sotto la licenza Creative Commons CC BY-SA 4.0. Un’immagine che mostra un quadro, un disegno o una pagina di quaderno non ne fa parte: vedi sotto.",
+  "use_p2": "La licenza chiede tre cose: citarci, mettere il link alla licenza e dire se hai modificato l’immagine. Share alike, in italiano condividi allo stesso modo, chiede una cosa in più: se modifichi un’immagine e diffondi il risultato, deve uscire con la stessa licenza.",
+  "use_credit_lead": "La riga da copiare:",
+  "use_credit": "Museum of Ages, © ChipMates gemeinnützige GmbH e contributori, CC BY-SA 4.0",
+  "use_p3": "Metti su Museum of Ages il link alla pagina da cui hai preso l’immagine, e su CC BY-SA 4.0 il link alla licenza, all’indirizzo creativecommons.org/licenses/by-sa/4.0. Se l’hai ritagliata, aggiungi la parola ritagliata.",
+  "use_p4": "La nostra licenza non vale per le riproduzioni di quadri, disegni e pagine di quaderni. Gli originali restano presso chi li conserva, e ogni riproduzione mantiene la propria indicazione di licenza, nella didascalia e nella scheda. Una nostra immagine che ne mostra una riporta anche quell’indicazione.",
+  "use_p4b": "I film restano sul sito: mostrano opere di altri, perciò non li diffondiamo con la nostra licenza. Un’immagine della casa o del suo terreno indica anche i dati cartografici con cui sono costruiti, come fa il nostro piè di pagina.",
+  "use_p5": "Se hai un dubbio, o ti serve un’immagine in un formato più grande, scrivi a contact@museumofages.org.",
   "s6_h": "Codice e diritti",
   "s6_p": "Il codice del museo è open source con licenza AGPL-3.0 o successiva. I testi e le immagini del museo sono sotto licenza CC BY-SA 4.0: chiunque può condividerli e modificarli, anche a scopo commerciale, se cita il museo, mette il link alla licenza, indica le modifiche e condivide i lavori derivati con la stessa licenza. Sono esclusi le opere e i dati di altri, come riproduzioni, musica, citazioni e dati cartografici, e il nome e il logo del museo.",
   "s7_h": "Accessibilità e privacy",

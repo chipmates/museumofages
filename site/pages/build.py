@@ -96,6 +96,7 @@ KEEP_SMALL = 24
 
 # The addresses, kept here and nowhere else. A wing's own addresses stand in its entry in WINGS_FILE.
 ORIGIN = "https://museumofages.org"
+USE_PICTURES = "use-our-pictures"
 WINGS_FILE = SITE_SRC / "registry.json"
 WING_KEYS = ("name", "page", "door", "about", "never_say", "claim_phrase")
 # A door leads to a wing's own opening: no fragment, no parameter but the language.
@@ -352,12 +353,15 @@ def site_chrome(site_built, lang, root, twins, door):
         raise SystemExit(f"{source}: the door's arrow was not found")
     out["arrow"] = arrow.group(0)
     # the licence of the site's own pictures: the footer's licence link once it carries one, before that the
-    # statement page's section on rights, which says whose they are; that section also tells how to use them
+    # statement page's section on rights, which says whose they are
     rights = f"{ORIGIN}/{name}#open"
     if 'id="open"' not in page:
         raise SystemExit(f"{source}: the section on rights (#open) was not found")
     licence = re.search(r'<a\b(?=[^>]*\brel="license")[^>]*\bhref="(https://[^"]+)"', page)
-    out["licence"], out["rights"] = (licence.group(1) if licence else rights), rights
+    out["licence"] = licence.group(1) if licence else rights
+    # the section that tells how to reuse the museum's own pictures, while the site states their licence: each of
+    # them names it in the page's structured data
+    out["use_pictures"] = f"{ORIGIN}/{name}#{USE_PICTURES}" if f'id="{USE_PICTURES}"' in page else None
     # the language menu and the line on how the words were made take the site's language rules, with the bar's
     # height as the site's page sets it for them
     by = re.search(r":root\{--by:[^}]*\}", page)
@@ -549,7 +553,7 @@ def source_line(parts, wing, lang, rich):
 
 # ---------- structured data ----------
 
-def jsonld(lang, data, urls, pics, site, wing, alternate_name, licence, rights, frame, folders):
+def jsonld(lang, data, urls, pics, site, wing, alternate_name, frame, folders):
     self_url = urls[lang]
     pub = {"@id": f"{ORIGIN}/#publisher"}
     publisher = site or {
@@ -597,11 +601,7 @@ def jsonld(lang, data, urls, pics, site, wing, alternate_name, licence, rights, 
             "@type": "ImageObject", "@id": f"{self_url}#frame", "url": image_url, "contentUrl": image_url,
             "width": w, "height": h, "caption": frame.get("caption") or f"{frame['title']}, {frame['what']}",
             "description": frame.get("description") or frame["alt"],
-            "representativeOfPage": True, "creditText": "Museum of Ages",
-            "copyrightNotice": "© ChipMates gemeinnützige GmbH",
-            # Google's image metadata takes a Person or an Organization here, not the publisher's subtype
-            "creator": {"@type": "Organization", "name": publisher["name"], "url": f"{ORIGIN}/"},
-            "license": licence, "acquireLicensePage": rights,
+            "representativeOfPage": True,
         },
     ]
     if data["page"].get("published"):
@@ -851,10 +851,12 @@ def render(page, lang, data, shared, out_root):
         "top.door.leads": rich(data["top"]["door"]["leads"]),
         "html.toc": toc,
         "html.blocks": blocks,
-        "jsonld": jsonld(lang, data, urls, pics, chrome["publisher"], wing, chrome["alternate_name"], chrome["licence"], chrome["rights"],
+        "jsonld": jsonld(lang, data, urls, pics, chrome["publisher"], wing, chrome["alternate_name"],
                          frame, shared["pic_folders"]),
     })
     text = with_policy(fill(parts["page"], values))
+    if chrome["use_pictures"]:
+        text = LIB.with_picture_rights(text, urls[lang], LIB.picture_terms(lang, chrome["use_pictures"]))
     files = {f"img/{f}": pics.find(f) for name in sorted(pics.used) for f in pics.files(name)}
     files[f"img/{og['file']}"] = pics.find(og["file"])
     if frame.get("still"):

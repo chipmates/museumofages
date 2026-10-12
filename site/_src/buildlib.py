@@ -5,6 +5,7 @@ import hashlib
 import html
 import json
 import re
+import urllib.parse
 from pathlib import Path
 
 SRC = Path(__file__).resolve().parent
@@ -203,6 +204,84 @@ def number_word(value, lang):
 def dump(graph):
     text = json.dumps({"@context": "https://schema.org", "@graph": graph}, ensure_ascii=False, separators=(",", ":"))
     return text.replace("</", "<\\/")
+
+
+# ---------- the licence of the museum's own pictures, in a form image search reads ----------
+
+FREE_PICTURES = frozenset(json.loads((SRC / "free-pictures.json").read_text(encoding="utf-8"))["stems"])
+PICTURE_FILE = re.compile(r"^(.+?)-\d+(?:x\d+)?\.(?:webp|avif|jpg|png)$")
+LICENCE_FIELDS = ("license", "acquireLicensePage", "creditText", "copyrightNotice", "creator")
+LD_BLOCK = re.compile(r'(<script type="application/ld\+json">)(.*?)(</script>)', flags=re.S)
+
+
+def picture_stem(url):
+    found = PICTURE_FILE.match(url.split("?", 1)[0].rsplit("/", 1)[-1])
+    return found.group(1) if found else None
+
+
+def image_objects(node):
+    """Every ImageObject in a graph, nested ones too."""
+    if isinstance(node, dict):
+        if node.get("@type") == "ImageObject":
+            yield node
+        for value in node.values():
+            yield from image_objects(value)
+    elif isinstance(node, list):
+        for value in node:
+            yield from image_objects(value)
+
+
+def licence_problems(text, name):
+    """Licence data on a picture that is not the museum's own to give away."""
+    problems = []
+    for block in LD_BLOCK.findall(text):
+        for image in image_objects(json.loads(block[1].replace("<\\/", "</"))):
+            url = image.get("contentUrl") or image.get("url") or ""
+            if any(k in image for k in LICENCE_FIELDS) and picture_stem(url) not in FREE_PICTURES:
+                problems.append(f"{name}: {url or 'an image'} carries licence data, and free-pictures.json does not name it")
+    return problems
+
+
+def picture_terms(lang, note_url):
+    """The licence data of each of the museum's own pictures, in a page's language: the licence, the page that tells
+    how to use them, and the credit and the notice from the site's words (pictures)."""
+    words = json.loads((SRC / f"words.{lang}.json").read_text(encoding="utf-8"))["pictures"]
+    return {"license": "https://creativecommons.org/licenses/by-sa/4.0/", "acquireLicensePage": note_url,
+            "creditText": words["credit_text"], "copyrightNotice": words["copyright_notice"],
+            # Google's image metadata takes a Person or an Organization here, not the publisher's subtype
+            "creator": {"@type": "Organization", "name": "ChipMates gemeinnützige GmbH", "url": "https://museumofages.org/"}}
+
+
+def with_picture_rights(text, page_url, terms):
+    """Gives each of the museum's own pictures that the page shows (an img) or shares (og:image) its licence data,
+    once per picture: an ImageObject the page already describes takes the data, any other gets one of its own.
+    terms holds license, acquireLicensePage, creditText, copyrightNotice and creator. A page without structured
+    data stays as it is."""
+    block = LD_BLOCK.search(text)
+    if not block:
+        return text
+    urls = []
+    for src in re.findall(r'<img\b[^>]*?\bsrc="([^"]+)"', text) + re.findall(r'<meta property="og:image" content="([^"]+)"', text):
+        url = urllib.parse.urljoin(page_url, html.unescape(src))
+        if picture_stem(url) in FREE_PICTURES and url not in urls:
+            urls.append(url)
+    if not urls:
+        return text
+    data = json.loads(block.group(2).replace("<\\/", "</"))
+    known = {}
+    for image in image_objects(data):
+        for key in ("contentUrl", "url"):
+            if image.get(key):
+                known.setdefault(image[key], image)
+    for url in urls:
+        image = known.get(url)
+        if image is None:
+            image = {"@type": "ImageObject", "@id": f"{page_url}#picture-{url.rsplit('/', 1)[-1].rsplit('.', 1)[0]}"}
+            data["@graph"].append(image)
+        image.setdefault("contentUrl", url)
+        image.update(terms)
+    body = json.dumps(data, ensure_ascii=False, separators=(",", ":")).replace("</", "<\\/")
+    return text[:block.start(2)] + body + text[block.end(2):]
 
 
 def css(*names):

@@ -23,6 +23,8 @@
 .foot__nav a:hover{color:var(--ink)}
 .foot__fine{padding-top:18px;border-top:1px solid var(--hair);font-size:.8125rem;display:grid;gap:4px;color:var(--ink-quiet)}
 .foot__fine p>span{display:block}
+/* The way to the note on our pictures: a taller target without moving the line. */
+.foot__use{padding:15px 0}
 .foot__tools{margin-top:10px}
 .motion{min-height:44px;padding:0 16px;background:transparent;border:1px solid var(--hair-strong);border-radius:2px;font-family:var(--sans);font-size:.875rem;letter-spacing:.03em;color:var(--ink-soft);cursor:pointer}
 .motion:hover{border-color:var(--ink);color:var(--ink)}

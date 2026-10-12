@@ -14,12 +14,14 @@ picture or a word. Standard library only.
 """
 import copy
 import hashlib
+import html
 import importlib.util
 import json
 import math
 import re
 import shutil
 import sys
+import urllib.parse
 from pathlib import Path
 
 import buildlib
@@ -28,7 +30,8 @@ import placed
 import render as R
 from buildlib import (ARROW, BANNED, CSP_MARK, FACES_SCRIPT, LANG_FACES, LOOSE_PAIR, NBSP, NNBSP, REST_SCRIPT, WORDS, bind, css,
                       dump, esc, faces, fill, flatten, grain, keep_whole, number, number_word, shown_text, space, tail,
-                      whole_names, with_policy)
+                      whole_names, with_policy, FREE_PICTURES, LD_BLOCK, image_objects, licence_problems, picture_stem,
+                      picture_terms, with_picture_rights)
 
 SRC = Path(__file__).resolve().parent
 ROOT = SRC.parent
@@ -117,6 +120,9 @@ ROUTES = {"version": 1, "include": ["/*"], "exclude": [f"/{STATIC}/*", "/assets/
                                                        "/third-party-licenses.md"]}
 # The licence of the museum's own texts and pictures, named in the footer once the code is open.
 CC_BY_SA = "https://creativecommons.org/licenses/by-sa/4.0/"
+# The statement page's section on reusing the museum's own pictures: the footer's licence line links it, and each of
+# those pictures names it in the page's structured data as the page that tells how to license it.
+USE_PICTURES = "use-our-pictures"
 # The address a visitor writes to, on every page that names one. No built file may carry any other address.
 MAIL = "contact@museumofages.org"
 MAIL_SHAPE = r"[A-Za-z0-9._%+-]+@[A-Za-z0-9-]+(?:\.[A-Za-z0-9-]+)*\.[A-Za-z]{2,}"
@@ -1400,6 +1406,53 @@ def wing_rules(site, slugs, first):
     return "".join(out)
 
 
+def use_pictures(c, w):
+    """The statement page's section on reusing the museum's own pictures, and its line in the page's contents. The
+    credit line stands apart, so it can be copied whole, and the licence's address and the mail address are links."""
+    deed = f"{CC_BY_SA}{L.entries[c.lang]['deed']}"
+    address, cc = "creativecommons.org/licenses/by-sa/4.0", "CC BY-SA 4.0"
+    linked = lambda key, text, plain, link: text.replace(plain, link, 1) if plain in text else sys.exit(
+        f"words.{c.lang}.json: page_what.{key} does not name {plain} as written")
+    # the address is copied as written: never broken or hyphenated (on a phone it takes a line of its own)
+    p3 = linked("use_p3", w["page_what.use_p3"], address, f'<a class="nw" href="{deed}">{address}</a>')
+    p5 = linked("use_p5", w["page_what.use_p5"], MAIL, w["html.mail"])
+    # the line to copy keeps plain spaces: only the licence's name is held on one line, by style
+    credit = linked("use_credit", esc(c.raw["page_what.use_credit"]), cc, f'<span class="nw">{cc}</span>')
+    # in the running text a no-break space holds the licence's name, but not its hyphen
+    hold = lambda html: re.sub("CC\u00a0BY-SA\u00a04\\.0", lambda m: f'<span class="nw">{m.group(0)}</span>', html)
+    body = "".join(f"\n        <p>{hold(w[f'page_what.{k}'])}</p>" for k in ("use_p1", "use_p1b", "use_p2", "use_credit_lead"))
+    section = (f'\n      <section id="{USE_PICTURES}">\n        <h2>{w["page_what.use_h"]}</h2>{body}'
+               f'\n        <p class="credit">{credit}</p>\n        <p>{hold(p3)}</p>\n        <p>{w["page_what.use_p4"]}</p>'
+               f'\n        <p>{w["page_what.use_p4b"]}</p>\n        <p>{p5}</p>\n      </section>\n')
+    return f'\n        <li><a href="#{USE_PICTURES}">{w["page_what.use_h"]}</a></li>', section
+
+
+def check_picture_licences(out):
+    """Licence data only on the museum's own pictures (free-pictures.json), and, while the site states its licence,
+    on each of them that a page with structured data shows or shares, naming a page that tells how to use them."""
+    problems = []
+    for path in sorted(out.rglob("*.html")):
+        text, name = path.read_text(encoding="utf-8"), path.relative_to(out)
+        problems += licence_problems(text, name)
+        block = LD_BLOCK.search(text)
+        if not block or not SOURCE_LINK:
+            continue
+        page_url = f"{ORIGIN}/{str(name).removesuffix('index.html')}"
+        given = {i.get("contentUrl"): i for i in image_objects(json.loads(block.group(2).replace("<\\/", "</")))}
+        shown = re.findall(r'<img\b[^>]*?\bsrc="([^"]+)"', text) + re.findall(r'<meta property="og:image" content="([^"]+)"', text)
+        for url in {urllib.parse.urljoin(page_url, html.unescape(s)) for s in shown}:
+            if picture_stem(url) in FREE_PICTURES and "license" not in given.get(url, {}):
+                problems.append(f"{name}: {url} is the museum's own and carries no licence data")
+        for image in given.values():
+            target = image.get("acquireLicensePage")
+            if target:
+                page, _, anchor = target.removeprefix(f"{ORIGIN}/").partition("#")
+                found = out / page / "index.html"
+                if not found.is_file() or f'id="{anchor}"' not in found.read_text(encoding="utf-8"):
+                    problems.append(f"{name}: the licence page {target} is not in the build")
+    return problems
+
+
 def publisher():
     return {"@type": "NGO", "@id": f"{ORIGIN}/#publisher", "name": "ChipMates gemeinnützige GmbH",
             "legalName": "ChipMates gemeinnützige GmbH"}
@@ -1473,7 +1526,8 @@ def build(out, registry, wing_dirs, mark=None, topics=True, quiet=False, more_pi
             "html.lang_foot": foot_item, "html.lang_foot_list": foot_list,
             "html.imprint_elsewhere": "" if L.has_imprint(c.lang) else f'<p class="foot__else">{w["footer.imprint_elsewhere"]}</p>',
             "html.source_item": f'<li><a href="{SOURCE}">{w["footer.source"]}</a></li>' if SOURCE_LINK else "",
-            "html.licence": f' <span>{w["footer.licence_a"]} <a rel="license" href="{CC_BY_SA}{L.entries[c.lang]["deed"]}">CC\u00a0BY-SA\u00a04.0</a>.</span>' if SOURCE_LINK else "",
+            "html.licence": (f' <span>{w["footer.licence_a"]} <a rel="license" href="{CC_BY_SA}{L.entries[c.lang]["deed"]}">CC\u00a0BY-SA\u00a04.0</a>.'
+                             f' <a class="foot__use" href="{c.to(c.addr("what"))}#{USE_PICTURES}">{w["footer.use"]}</a></span>') if SOURCE_LINK else "",
             "lang": L.html(c.lang), "og_locale": L.entries[c.lang]["og"], "theme_color": theme,
             "static": c.static, "svg.arrow": ARROW, "script.faces": FACES_SCRIPT,
             "href.home": c.to(c.addr("home")), "href.what": c.to(c.addr("what")), "href.imprint": c.to(c.addr("imprint")),
@@ -1490,7 +1544,10 @@ def build(out, registry, wing_dirs, mark=None, topics=True, quiet=False, more_pi
         w["header"] = fill(t["header"], w)
         w["footer"] = fill(t["footer"], w)
         counted = wing_count_kind(w["wing.slug"], site.wings[w["wing.slug"]]) if kind == "wing" else COUNT_KINDS[kind]
-        built.append((out / path, with_policy(with_count(fill(template, w), c.static, counted)), kind, c.lang))
+        text = with_count(fill(template, w), c.static, counted)
+        if SOURCE_LINK:
+            text = with_picture_rights(text, f"{ORIGIN}/{str(path).removesuffix('index.html')}", picture_terms(c.lang, f"{ORIGIN}/{L.page(c.lang, 'what')}#{USE_PICTURES}"))
+        built.append((out / path, with_policy(text), kind, c.lang))
 
     for lang in LANGS:
         # the museum's page
@@ -1592,6 +1649,7 @@ def build(out, registry, wing_dirs, mark=None, topics=True, quiet=False, more_pi
                 # who answers for the museum, in one line, with the legal notice behind the name
                 w["html.who"] = (f'<p class="who"><a href="{c.to(c.addr("imprint"))}"{imprint_lang(c)}>{w["imprint.rep_name"]}</a> {w["page_what.who_role"]}</p>')
                 w["html.mail"] = f'<a href="mailto:{MAIL}">{MAIL}</a>'
+                w["html.use_toc"], w["html.use"] = use_pictures(c, w) if SOURCE_LINK else ("", "")
                 card = newest["pictures"]["card"]
                 w["html.plate"] = (
                     '<figure class="plate statement__plate wallband"><div class="hang">'
@@ -1674,7 +1732,7 @@ def build(out, registry, wing_dirs, mark=None, topics=True, quiet=False, more_pi
             problems.append(f"{STATIC}/{name}: something still points at assets/")
     problems += check_menu(out, built, site) + crawl(out, site) + check_gone(out, site) + check_mail(out) + check_switches(out, site) + check_fonts(site)
     problems += check_sign(out, signs) + check_pictures(out, built, site) + check_colours(out, built, site)
-    problems += placed.finish(out, STATIC, ORIGIN)
+    problems += check_picture_licences(out) + placed.finish(out, STATIC, ORIGIN)
     if (out / "_redirects").read_text(encoding="utf-8").split() != ([SOURCE, SOURCE_TO, "302"] if SOURCE_LINK else []):
         problems.append("_redirects does not agree with the switch for the link to the code")
     if problems:

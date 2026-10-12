@@ -583,5 +583,95 @@ class Built(unittest.TestCase):
                     self.assertNotIn(f'/{topic["slug"]["en"]}/"', (folder / "index.html").read_text(encoding="utf-8"))
 
 
+def _buildlib():
+    spec = importlib.util.spec_from_file_location("site_buildlib_test", SITE_SRC / "buildlib.py")
+    module = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(module)
+    return module
+
+
+class PictureLicences(unittest.TestCase):
+    """Licence data in a form image search reads, only on the pictures the museum may give away (free-pictures.json)."""
+
+    # The rights list's verdicts 2 to 4: pictures that show a reproduction, the house or its grounds (map data), the
+    # sky, or the start page's view through the glass. None of them may ever carry our licence.
+    NOT_OURS_ALONE = {
+        "v-lisa", "v-lisa-m", "v-picture-room", "v-supper", "v-body", "v-valve", "start", "start-m", "sky",
+        "house", "v-house", "v-court", "v-court-m", "court", "stair", "v-hall", "v-hall-m", "v-lion",
+        "vinci-stop-hall", "vinci-view-anemometer", "vinci-view-parachute", "m-parachute", "v-codex", "v-table",
+        "v-table-m", "vinci-stop-reading-table", "v-page-en", "v-page-de", "v-page-m", "grave-court",
+        "v-scale-en", "v-scale-de", "v-scale-m"}
+
+    @classmethod
+    def setUpClass(cls):
+        cls.lib = _buildlib()
+        cls.pages = sorted(SITE_BUILT.rglob("*.html"))
+
+    def graph(self, text):
+        block = re.search(r'<script type="application/ld\+json">(.*?)</script>', text, flags=re.S)
+        return json.loads(block.group(1).replace("<\\/", "</")) if block else None
+
+    def test_the_list_names_no_picture_the_rights_list_rules_out(self):
+        self.assertFalse(self.lib.FREE_PICTURES & self.NOT_OURS_ALONE)
+
+    def test_only_the_museums_own_pictures_carry_licence_data(self):
+        licensed = 0
+        for path in self.pages:
+            text = path.read_text(encoding="utf-8")
+            self.assertEqual(self.lib.licence_problems(text, path.name), [], path)
+            for image in self.lib.image_objects(self.graph(text) or {}):
+                stem = self.lib.picture_stem(image.get("contentUrl") or image.get("url"))
+                if "license" in image:
+                    self.assertIn(stem, self.lib.FREE_PICTURES, path)
+                    self.assertNotIn(stem, self.NOT_OURS_ALONE, path)
+                    licensed += 1
+        self.assertGreater(licensed, 50)
+
+    def test_licence_data_on_another_picture_is_found(self):
+        image = {"@type": "ImageObject", "contentUrl": "https://museumofages.org/static/img/v-lisa-1600.webp",
+                 "license": "https://creativecommons.org/licenses/by-sa/4.0/"}
+        page = f'<script type="application/ld+json">{json.dumps({"@graph": [{"@type": "WebPage", "image": image}]})}</script>'
+        self.assertRegex(" ".join(self.lib.licence_problems(page, "page")), r"v-lisa-1600\.webp carries licence data")
+
+    def test_each_picture_of_ours_gets_one_object_and_another_none(self):
+        origin = "https://museumofages.org"
+        share = f"{origin}/static/img/og-1200x630.jpg"
+        graph = {"@context": "https://schema.org", "@graph": [
+            {"@type": "WebPage", "@id": f"{origin}/x/#page", "primaryImageOfPage": {"@type": "ImageObject", "url": share}}]}
+        page = (f'<meta property="og:image" content="{share}">'
+                f'<img src="../static/img/v-works-1600.webp"><img src="../static/img/v-works-1600.webp">'
+                f'<img src="../static/img/v-lisa-1600.webp">'
+                f'<script type="application/ld+json">{json.dumps(graph)}</script>')
+        terms = self.lib.picture_terms("en", f"{origin}/what-this-museum-is/#use-our-pictures")
+        images = list(self.lib.image_objects(self.graph(self.lib.with_picture_rights(page, f"{origin}/x/", terms))))
+        urls = [i["contentUrl"] for i in images]
+        self.assertEqual(sorted(urls), [share, f"{origin}/static/img/v-works-1600.webp"])
+        self.assertTrue(all(i["license"] == terms["license"] and i["creditText"] for i in images))
+        # the share picture the page already described took the data: no second object for it
+        self.assertEqual(self.graph(self.lib.with_picture_rights(page, f"{origin}/x/", terms))["@graph"][0]
+                         ["primaryImageOfPage"]["license"], terms["license"])
+
+    def test_each_licence_page_is_the_note_in_the_pages_language(self):
+        langs = {e["html"]: e for e in json.loads((SITE_SRC / "languages.json").read_text(encoding="utf-8"))["languages"]}
+        seen = set()
+        for path in self.pages:
+            text = path.read_text(encoding="utf-8")
+            lang = re.search(r'<html lang="([\w-]+)"', text).group(1)
+            for image in self.lib.image_objects(self.graph(text) or {}):
+                if "acquireLicensePage" not in image:
+                    continue
+                page, _, anchor = image["acquireLicensePage"].removeprefix("https://museumofages.org/").partition("#")
+                self.assertEqual(anchor, "use-our-pictures")
+                self.assertEqual(page, f'{langs[lang]["folder"]}{langs[lang]["slugs"]["what"]}/', path)
+                note = (SITE_BUILT / page / "index.html").read_text(encoding="utf-8")
+                self.assertIn('<section id="use-our-pictures">', note)
+                self.assertIn(self.lib.picture_terms(langs[lang]["code"], "")["creditText"], image["creditText"])
+                seen.add(lang)
+            # the footer's licence line leads to the note on every page
+            if '<footer class="foot"' in text:
+                self.assertRegex(text, r'<a class="foot__use" href="[^"]*#use-our-pictures">', path)
+        self.assertGreaterEqual(len(seen), 7)
+
+
 if __name__ == "__main__":
     unittest.main(verbosity=1)

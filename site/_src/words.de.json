@@ -164,7 +164,12 @@
     "data_osm": "©\u00a0OpenStreetMap-Mitwirkende",
     "data_b": "(ODbL 1.0) und Höhendaten des IGN gebaut (RGE ALTI®, abgerufen am 8. September 2026, Licence Ouverte 2.0).",
     "motion_pause": "Bewegung anhalten",
-    "motion_play": "Bewegung fortsetzen"
+    "motion_play": "Bewegung fortsetzen",
+    "use": "Unsere Bilder nutzen"
+  },
+  "pictures": {
+    "credit_text": "Museum of Ages, ChipMates gemeinnützige GmbH und Mitwirkende, CC BY-SA 4.0",
+    "copyright_notice": "© ChipMates gemeinnützige GmbH und Mitwirkende"
   },
   "page_what": {
     "title": "Was dieses Museum ist | Museum of Ages, ein digitales Museum",
@@ -249,6 +254,16 @@
     "s6_h": "Code und Rechte",
     "s6_p": "Der Code des Museums ist Open Source unter der AGPL-3.0 oder einer späteren Version. Eigene Texte und Bilder des Museums stehen unter CC BY-SA 4.0: Jeder darf sie teilen und bearbeiten, auch kommerziell, mit Nennung des Museums, Link zur Lizenz, Angabe von Änderungen und Weitergabe von Bearbeitungen unter derselben Lizenz. Ausgenommen sind fremde Werke und Daten wie Reproduktionen, Musik, Zitate und Geodaten sowie Name und Logo des Museums.",
     "s6_before": "Der Code des Museums ist noch nicht öffentlich. Wir werden ihn unter einer Open-Source-Lizenz veröffentlichen, der AGPL-3.0 oder einer späteren Version. Dann darf ihn jeder lesen, nutzen und unter dieser Lizenz verändern. Inhaberin der Rechte an den Texten und Bildern, die das Museum selbst herstellt, ist die ChipMates gemeinnützige GmbH.",
+    "use_h": "Unsere Bilder nutzen",
+    "use_p1": "Vieles, was du hier siehst, haben wir selbst gemacht: die Maschinen, in Code nachgebaut, die eigenen Hallen des Museums, das Glasmodell des Herzens, die Diagramme und die Standbilder davon, die die Website zeigt. Diese Bilder darfst du nutzen, verändern und weitergeben, für jeden Zweck, auch kommerziell.",
+    "use_p1b": "Sie stehen unter der Creative-Commons-Lizenz CC BY-SA 4.0. Ein Standbild, auf dem ein Gemälde, eine Zeichnung oder eine Notizbuchseite zu sehen ist, gehört nicht dazu: siehe unten.",
+    "use_p2": "Die Lizenz verlangt drei Dinge: Nenn uns, verlinke die Lizenz und sag, ob du das Bild verändert hast. Share alike, auf Deutsch Weitergabe unter gleichen Bedingungen, heißt eines mehr: Veränderst du ein Bild und gibst das Ergebnis weiter, dann unter derselben Lizenz.",
+    "use_credit_lead": "Die Zeile zum Kopieren:",
+    "use_credit": "Museum of Ages, © ChipMates gemeinnützige GmbH und Mitwirkende, CC BY-SA 4.0",
+    "use_p3": "Verlinke Museum of Ages mit der Seite, von der du das Bild hast, und CC BY-SA 4.0 mit der Lizenz unter creativecommons.org/licenses/by-sa/4.0. Hast du es beschnitten, schreib das Wort beschnitten dazu.",
+    "use_p4": "Unsere Lizenz gilt nicht für die Reproduktionen der Gemälde, Zeichnungen und Notizbuchseiten. Die Originale bewahren ihre Häuser, und jede Reproduktion behält ihre eigene Lizenzzeile, auf ihrer Beschriftung und in ihrem Eintrag. Ein Standbild von uns, auf dem eine zu sehen ist, trägt diese Zeile mit.",
+    "use_p4b": "Die Filme bleiben auf der Website: Sie zeigen Werke anderer, darum geben wir sie nicht unter unserer Lizenz heraus. Ein Standbild des Hauses oder seines Geländes nennt dazu die Kartendaten, aus denen es gebaut ist, so wie unsere Fußzeile.",
+    "use_p5": "Bist du unsicher, oder brauchst du ein Bild in größerer Auflösung, schreib an contact@museumofages.org.",
     "s7_h": "Barrierefreiheit und Datenschutz",
     "s7_p": "Das Museum ist einmal für das Handy und einmal für den Computer gebaut, auf Deutsch und Englisch, in einfachen Worten, und mit KI in weitere Sprachen übersetzt. Ziel ist WCAG 2.2 AA, der verbreitete Standard für barrierefreie Websites. Es setzt keine Tracking-Cookies und erstellt keine Profile. Die Einzelheiten stehen auf der Datenschutzseite.",
     "trust": "Gemeinnützig · Open Source · Keine Tracking-Cookies, kein Profiling",
