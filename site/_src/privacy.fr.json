@@ -5,7 +5,7 @@
  "h1": "Confidentialité",
  "lead": "Cette page explique ce que deviennent les données quand vous visitez Museum of Ages. En bref: vous n’avez besoin d’aucun compte, nous ne déposons aucun cookie, et rien de ce que nous gardons ne nous permet de vous reconnaître à votre prochaine visite. Cette page est une traduction, fournie pour votre commodité. La version allemande fait foi.",
  "updated_label": "Dernière mise à jour",
- "updated": "9 octobre 2026",
+ "updated": "12 octobre 2026",
  "sections": [
   {
    "h": "Qui est responsable",
@@ -26,24 +26,49 @@
   {
    "h": "Ce que nous pouvons voir",
    "body": [
-    "Cloudflare nous montre des totaux pour le site: combien de requêtes sont arrivées et combien de données elles ont transférées, à peu près combien de visiteurs différents il y a eu, de quels pays venaient les requêtes, et combien Cloudflare en a bloqué. Ces totaux ne nomment personne.",
+    "Cloudflare nous montre des totaux pour le site: combien de requêtes sont arrivées, pour quelles pages, et combien de données elles ont transférées, à peu près combien de visiteurs différents il y a eu, de quels pays venaient les requêtes, et combien Cloudflare en a bloqué. Ces totaux ne nomment personne.",
     "Cloudflare nous montre aussi un échantillon de requêtes individuelles des 31 derniers jours. Chacune porte son adresse IP, l’adresse de la page, le pays et le nom du navigateur. L’échantillon contient des requêtes que Cloudflare a laissé passer, et d’autres que Cloudflare a bloquées ou vérifiées. Nous nous en servons pour repérer les attaques et les erreurs.",
-    "Nous ne faisons aucun comptage nous-mêmes. Ce site n’a aucun outil de mesure d’audience, n’affiche aucune publicité et ne charge aucun pixel de comptage ni aucun script d’autres entreprises."
+    "Ce site n’affiche aucune publicité et ne charge aucun outil de mesure d’audience, pixel de comptage ou script provenant d’autres entreprises. Ce que nous comptons nous-mêmes figure dans la section suivante."
+   ]
+  },
+  {
+   "h": "Ce que nous comptons nous-mêmes",
+   "body": [
+    "Nous comptons nous-mêmes comment le musée est utilisé, sans cookies et sans reconnaître personne. Quand l’un des événements ci-dessous se produit, la page envoie un court message de comptage à une adresse propre à ce site, chez le même hébergeur, vers notre propre base de données. Cloudflare la gère pour notre compte, dans le cadre du contrat de sous-traitance. Chaque message y devient une ligne. Rien ne part vers un autre prestataire. La page ne lit pas ce que le serveur répond.",
+    "Dans l’aile, il y a quatre événements. L’arrivée: une aile est ouverte. Une étape: vous en atteignez une. Une vue rapprochée: vous regardez une œuvre de plus près. L’utilisation: une visite a été plus qu’un coup d’œil, c’est-à-dire que vous atteignez la deuxième étape ou ouvrez la première vue rapprochée. Chaque ligne indique de quelle aile il s’agissait, quelle langue l’aile affiche à ce moment-là, et comment se présentait l’écran: vertical, horizontal ou large. Pour une étape s’ajoute son numéro (de 1 à 17), pour une vue rapprochée le type d’œuvre: tableau, machine, feuille, livre, film ou lieu, jamais de quelle œuvre il s’agit. L’arrivée et l’utilisation portent aussi le mot de provenance qu’explique la section suivante.",
+    "Sur les pages du site, il y a trois événements: une page est ouverte. Le milieu de son texte devient visible. Un lien vers l’aile est activé. Chaque ligne indique de quelle page il s’agit, d’après une liste fixe (la page d’accueil, la page sur Léonard, les inventions, «Ce qu’est ce musée», la confidentialité, les mentions légales et chaque page qui s’y ajoute), et quelle langue la page affiche. À l’ouverture s’ajoute si la visite a commencé sur cette page et, si oui, le mot de provenance. Pour le lien s’ajoute l’endroit où il se trouvait sur la page: en haut, dans une entrée de liste ou à la fin.",
+    "Le serveur ajoute deux informations à chaque ligne: le pays, sous forme de code à deux lettres que Cloudflare déduit de la connexion, et une catégorie d’appareil, smartphone, tablette ou ordinateur, déduite de ce que votre navigateur dit de lui-même. Il ne garde ni votre adresse IP ni les informations de votre navigateur. Le moment où une ligne a été écrite, la base de données le note d’elle-même.",
+    "Chaque événement compte au plus une fois par chargement de page: une aile une fois, chaque étape une fois, chaque œuvre une fois, une page une fois. La page ne s’en souvient que tant qu’elle est ouverte, et n’écrit rien pour cela dans votre navigateur. Si vous la rechargez, elle compte de nouveau. Aucune ligne ne porte d’identifiant ni d’adresse IP. Nous ne combinons les lignes ni entre elles ni avec d’autres données, et nous n’analysons que des totaux. Si une information ne figure pas dans sa liste fixe, cette information ou la ligne entière est écartée. La base de données efface les lignes d’elle-même au bout de trois mois. Les totaux que nous en tirons ne contiennent aucune ligne individuelle.",
+    "Pour le comptage, rien n’est enregistré sur votre appareil et rien de ce qui y est enregistré n’est lu. La seule exception est un marqueur destiné à nos propres navigateurs de test, décrit sous «Cookies et stockage dans votre navigateur». C’est pourquoi nous ne demandons pas de consentement pour le comptage (§ 25 du TDDDG, la loi allemande sur la protection des données dans les services numériques). La base légale est l’article 6, paragraphe 1, point f), du RGPD. Notre intérêt légitime est de savoir si le musée est utilisé et qui il atteint."
+   ]
+  },
+  {
+   "h": "D’où vient une visite",
+   "body": [
+    "Quand une visite commence, le comptage note, par un mot sommaire, de quel genre d’endroit elle vient. Ce mot est tiré d’une liste fixe de quinze mots, et toutes les visites du même genre reçoivent le même mot: «direct» (aucune page qui renvoie ici), «recherche» (un moteur de recherche), «annonce via le programme de Google pour les organisations à but non lucratif», «annonce payante», «annonce payante dans un forum», «forum», «plateforme de code», «établissement d’enseignement», «wiki», «site d’actualités», «e-mail», «récompense» (le site d’un prix ou d’une galerie), «assistant d’IA», «réseau social ou messagerie» et «autre site web» (toute autre page qui renvoie ici). Il figure sur la ligne de la page où la visite a commencé et, dans l’aile, sur les lignes de l’arrivée et de l’utilisation. Seul ce mot est conservé.",
+    "Il est déterminé une seule fois, au début de la visite, dans cet ordre:",
+    [
+     "Les liens que nous plaçons nous-mêmes, par exemple dans une annonce ou sous l’un de nos propres messages dans un forum, ont leur propre adresse sur ce site. C’est ainsi que le comptage reconnaît qu’une annonce ou un message a amené la visite.",
+     "Si vous passez de l’une de nos pages dans l’aile et que la visite a commencé sur cette page, la page transmet son mot avec le lien, à la fin de l’adresse, après le signe dièse. L’aile le lit une fois et n’enregistre rien.",
+     "Pour toutes les autres visites, le mot est déterminé dès l’envoi de la page, sur le serveur, à partir de l’information indiquant de quelle page vous venez. Votre navigateur l’envoie de lui-même avec sa requête, comme décrit plus haut sous «Quand vous ouvrez une page». La page vous parvient avec ce seul mot. Aucun script ne cherche dans votre navigateur d’où vous venez. Si l’information manque, le mot est «direct». Si vous venez d’une autre page de ce site, la visite n’a pas commencé ici, et la ligne ne reçoit aucun mot."
+    ],
+    "Pour le comptage, on ne lit, n’enregistre ni n’envoie jamais ce qui figure dans une adresse après le point d’interrogation, la partie où des services ajoutent des compléments à un lien. Les exceptions sont le complément probe=1 pour nos navigateurs de test et la langue que l’aile reprend de sa propre adresse. Si une plateforme publicitaire ajoute un numéro de clic à son lien, le comptage ne le recueille jamais. Le comptage ne garde ni l’adresse complète de la page qui renvoie ici, ni le nom de son hôte, ni aucun mot de recherche."
    ]
   },
   {
    "h": "Cookies et stockage dans votre navigateur",
    "body": [
-    "Nous ne déposons aucun cookie, et les pages de ce site n’enregistrent rien dans votre navigateur. Un cas relève de l’hébergeur: si la protection de Cloudflare vérifie votre navigateur avant de laisser passer une requête, Cloudflare dépose un cookie nommé cf_clearance, pour ne pas vous vérifier de nouveau tout de suite. Ce cookie ne sert qu’à cela.",
-    "L’aile que vous parcourez garde quelques courtes notes dans le stockage de votre navigateur, pour fonctionner comme vous l’avez laissée:",
+    "Nous ne déposons aucun cookie. Les pages de ce site n’enregistrent rien dans votre navigateur, à une exception près, destinée à nos propres navigateurs de test et indiquée dans la liste ci-dessous. Un cas relève de l’hébergeur: si la protection de Cloudflare vérifie votre navigateur avant de laisser passer une requête, Cloudflare dépose un cookie nommé cf_clearance, pour ne pas vous vérifier de nouveau tout de suite. Ce cookie ne sert qu’à cela.",
+    "L’aile que vous parcourez garde quelques courtes notes dans le stockage de votre navigateur, pour fonctionner comme vous l’avez laissée. S’y ajoute le marqueur de nos navigateurs de test:",
     [
      "Votre réglage du son, activé ou coupé, et votre vitesse de marche si vous en avez choisi une.",
      "Votre langue, si vous en avez choisi une dans l’aile.",
      "Une marque qui indique que votre appareil reçoit une scène sous forme de film. Elle est posée une seule fois si l’appareil est trop lent pour la scène calculée en direct.",
-     "Pour l’onglet ouvert seulement: le fait que l’ouverture et une indication ont déjà été montrées, et une heure notée si l’aile a dû se recharger une fois après une erreur graphique."
+     "Pour l’onglet ouvert seulement: le fait que l’ouverture et une indication ont déjà été montrées, et une heure notée si l’aile a dû se recharger une fois après une erreur graphique.",
+     "Un marqueur destiné uniquement à nos propres navigateurs de test. Il est posé quand une adresse de ce site est ouverte avec le complément ?probe=1. Le comptage ne lit que ce seul marqueur dans le stockage et note sur ses lignes qu’il est présent, pour que nous puissions exclure nos propres visites. Si vous le posez vous-même, nous excluons vos visites comme les nôtres."
     ],
-    "Ces notes restent sur votre appareil tant que vous ne les effacez pas. Les notes de l’onglet ouvert disparaissent quand vous le fermez. Aucune n’est envoyée, ni à nous ni à personne d’autre. Pour les supprimer, effacez les données de ce site dans votre navigateur.",
-    "Nous ne demandons pas votre consentement pour ces notes, car elles sont nécessaires à une fonction que vous utilisez (§ 25, alinéa 2, numéro 2, du TDDDG, la loi allemande sur la protection des données dans les services numériques). La même règle couvre le cookie de l’hébergeur: sans lui, un navigateur déjà vérifié serait vérifié de nouveau sur chaque page."
+    "Ces notes restent sur votre appareil tant que vous ne les effacez pas. Les notes de l’onglet ouvert disparaissent quand vous le fermez. Aucune des notes de l’aile n’est envoyée, ni à nous ni à personne d’autre. Du marqueur des navigateurs de test, seule sa présence est notée. Pour tout supprimer, effacez les données de ce site dans votre navigateur.",
+    "Nous ne demandons pas votre consentement pour ces notes, car elles sont nécessaires à une fonction que vous utilisez (§ 25, alinéa 2, numéro 2, du TDDDG). La même règle couvre le cookie de l’hébergeur: sans lui, un navigateur déjà vérifié serait vérifié de nouveau sur chaque page. Le marqueur des navigateurs de test n’est destiné qu’à nos propres appareils. Sur le vôtre, le comptage ne trouve rien, tant que vous ne l’avez pas posé vous-même."
    ]
   },
   {
@@ -75,7 +100,7 @@
    "body": [
     "Le RGPD vous donne le droit de savoir quelles données vous concernant nous traitons (article 15), de faire rectifier des données fausses (article 16), de faire effacer des données (article 17), de faire limiter leur traitement (article 18) et, quand la loi le prévoit, de recevoir dans un format courant les données que vous nous avez fournies (article 20).",
     "Vous pouvez aussi adresser une réclamation à une autorité de protection des données (article 77). L’autorité compétente pour nous est celle du Bade-Wurtemberg: Der Landesbeauftragte für den Datenschutz und die Informationsfreiheit Baden-Württemberg, Heilbronner Straße 35, 70191 Stuttgart, [www.baden-wuerttemberg.datenschutz.de](https://www.baden-wuerttemberg.datenschutz.de).",
-    "Pour le dire franchement: nous ne détenons presque rien que nous pourrions rechercher pour vous. Il n’y a pas de comptes, et les notes de l’aile sont sur votre appareil, pas chez nous.",
+    "Pour le dire franchement: nous ne détenons presque rien que nous pourrions rechercher pour vous. Il n’y a pas de comptes, les notes de l’aile sont sur votre appareil, pas chez nous, et le comptage ne porte aucun identifiant qui nous permettrait de retrouver vos lignes.",
     "Nous ne prenons aucune décision automatisée vous concernant et ne créons aucun profil."
    ]
   },
@@ -88,7 +113,7 @@
   {
    "h": "Quand cette page change",
    "body": [
-    "Cette page décrit le site tel qu’il est aujourd’hui. Si quelque chose change, par exemple si nous commençons à compter nous-mêmes les visites, nous modifions d’abord cette page."
+    "Cette page décrit le site tel qu’il est aujourd’hui. Si quelque chose change, nous modifions d’abord cette page."
    ]
   }
  ]

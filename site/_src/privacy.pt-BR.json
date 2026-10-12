@@ -5,7 +5,7 @@
  "h1": "Privacidade",
  "lead": "Esta página diz o que acontece com os dados quando você visita o Museum of Ages. Em resumo: você não precisa de cadastro, não instalamos cookies, e não guardamos nada que nos permita reconhecer você na próxima visita. Esta página é uma tradução para sua conveniência. A versão juridicamente vinculante é a alemã.",
  "updated_label": "Atualizado em",
- "updated": "9 de outubro de 2026",
+ "updated": "12 de outubro de 2026",
  "sections": [
   {
    "h": "Quem é o responsável",
@@ -26,24 +26,49 @@
   {
    "h": "O que nós podemos ver",
    "body": [
-    "A Cloudflare nos mostra totais do site: quantas solicitações chegaram e que volume de dados elas movimentaram, quantos visitantes diferentes houve, aproximadamente, de quais países vieram as solicitações e quantas a Cloudflare bloqueou. Esses totais não nomeiam ninguém.",
+    "A Cloudflare nos mostra totais do site: quantas solicitações chegaram, para quais páginas, e que volume de dados elas movimentaram, quantos visitantes diferentes houve, aproximadamente, de quais países vieram as solicitações e quantas a Cloudflare bloqueou. Esses totais não nomeiam ninguém.",
     "A Cloudflare também nos mostra uma amostra de solicitações individuais dos últimos 31 dias. Cada uma traz o endereço IP, o endereço da página, o país e o nome do navegador. A amostra inclui tanto solicitações que a Cloudflare deixou passar quanto as que ela bloqueou ou verificou. Nós a usamos para encontrar ataques e falhas.",
-    "Nós mesmos não contamos nada. Este site não tem ferramenta de análise, não mostra publicidade e não carrega pixels de contagem ou scripts de outras empresas."
+    "Este site não mostra publicidade e não carrega ferramentas de análise, pixels de contagem ou scripts de outras empresas. O que nós mesmos contamos está na próxima seção."
+   ]
+  },
+  {
+   "h": "O que nós mesmos contamos",
+   "body": [
+    "Nós mesmos contamos como o museu é usado, sem cookies e sem reconhecer ninguém. Quando acontece um dos passos abaixo, a página envia uma breve mensagem de contagem para um endereço próprio deste site, no mesmo provedor de hospedagem, com destino a um banco de dados nosso. Quem o opera é a Cloudflare, em nosso nome, no âmbito do contrato de tratamento de dados. Lá, cada mensagem vira uma linha. Nada vai para nenhum outro provedor. A página não lê o que o servidor responde.",
+    "Na ala são quatro passos. A chegada: uma ala é aberta. Uma parada: você chega a uma. Uma vista de perto: você olha uma obra mais de perto. O uso: uma visita foi mais do que uma olhada, ou seja, você chega à segunda parada ou abre a primeira vista de perto. Cada linha registra qual ala era, que idioma a ala está mostrando e como estava a tela: na vertical, na horizontal ou larga. Numa parada, entra também o número dela (de 1 a 17), numa vista de perto, o tipo de obra: quadro, máquina, folha, livro, filme ou lugar, nunca qual obra. A chegada e o uso levam ainda a palavra de origem que a próxima seção explica.",
+    "Nas páginas do site são três passos: uma página é aberta. O meio do texto dela aparece na tela. Um link que leva à ala é acionado. Cada linha registra de qual página se trata, a partir de uma lista fixa (a página inicial, a página sobre Leonardo, as invenções, “O que é este museu”, privacidade, informações legais e cada página que for acrescentada), e que idioma a página mostra. Na abertura, entra também se a visita começou nesta página e, se sim, a palavra de origem. No link, entra também onde ele estava na página: no topo, em um item ou no final.",
+    "O servidor acrescenta duas informações a cada linha: o país, como código de duas letras que a Cloudflare deduz da conexão, e uma classe de aparelho, celular, tablet ou computador, deduzida do que o seu navegador informa sobre si mesmo. Ele não guarda nem o seu endereço IP nem as informações do seu navegador. O momento em que uma linha foi gravada é registrado pelo próprio banco de dados.",
+    "Cada passo conta no máximo uma vez por carregamento de página: uma ala uma vez, cada parada uma vez, cada obra uma vez, uma página uma vez. A página só se lembra disso enquanto está aberta e não grava nada no seu navegador para isso. Se você recarregar a página, ela conta de novo. Nenhuma linha traz um identificador ou um endereço IP. Não cruzamos as linhas nem entre si nem com outros dados, e só analisamos totais. Se uma informação não constar da lista fixa a que pertence, essa informação ou a linha inteira é descartada. O banco de dados apaga as linhas sozinho depois de três meses. Os totais que montamos a partir delas não contêm nenhuma linha individual.",
+    "Para a contagem, nada é gravado no seu aparelho e nada do que está gravado nele é lido. A única exceção é um marcador pensado para os nossos próprios navegadores de teste, descrito em “Cookies e armazenamento no seu navegador”. Por isso não pedimos consentimento para a contagem (§ 25 da TDDDG, a lei alemã de proteção de dados nos serviços digitais). O fundamento jurídico é o art. 6º, nº 1, alínea f), do GDPR. Nosso interesse legítimo é saber se o museu é usado e quem ele alcança."
+   ]
+  },
+  {
+   "h": "De onde veio uma visita",
+   "body": [
+    "Quando uma visita começa, a contagem registra, com uma palavra genérica, de que tipo de lugar ela veio. A palavra vem de uma lista fixa de quinze, e todas as visitas do mesmo tipo recebem a mesma palavra: “direto” (nenhuma página com link para cá), “busca” (um mecanismo de busca), “anúncio pelo programa do Google para organizações sem fins lucrativos”, “anúncio pago”, “anúncio pago em um fórum”, “fórum”, “plataforma de código”, “instituição de ensino”, “wiki”, “site de notícias”, “e-mail”, “premiação” (o site de um prêmio ou de uma galeria), “assistente de IA”, “rede social ou aplicativo de mensagens” e “outro site” (qualquer outra página com link para cá). Ela aparece na linha da página em que a visita começou e, na ala, nas linhas da chegada e do uso. Só essa palavra é guardada.",
+    "Ela é definida uma única vez, quando a visita começa, nesta ordem:",
+    [
+     "Os links que nós mesmos colocamos, por exemplo em um anúncio ou embaixo de uma postagem nossa em um fórum, têm um endereço próprio neste site. É assim que a contagem reconhece que um anúncio ou uma postagem trouxe a visita.",
+     "Se você passa de uma das nossas páginas para a ala e a visita começou nessa página, a página passa a palavra dela junto com o link, no fim do endereço, depois do símbolo #. A ala lê a palavra uma vez e não guarda nada.",
+     "Em todas as outras visitas, a palavra é definida já na entrega da página, no servidor, a partir da informação de qual página você veio. O seu navegador envia essa informação por conta própria com a solicitação, como descrito acima em “Quando você abre uma página”. A página chega até você com essa única palavra. Nenhum script consulta no seu navegador de onde você veio. Se a informação faltar, a palavra é “direto”. Se você vier de outra página deste site, a visita não começou aqui, e a linha não recebe nenhuma palavra."
+    ],
+    "Para a contagem, nunca é lido, guardado ou enviado o que fica depois do ponto de interrogação de um endereço, a parte em que serviços acrescentam extras a um link. As exceções são o extra probe=1 para os nossos navegadores de teste e o idioma que a ala tira do próprio endereço. Se uma plataforma de anúncios acrescentar ao link dela um número de clique, a contagem nunca o coleta. A contagem não guarda o endereço completo da página de origem do link, nem o nome do host dela, nem palavras de busca."
    ]
   },
   {
    "h": "Cookies e armazenamento no seu navegador",
    "body": [
-    "Não instalamos cookies, e as páginas deste site não guardam nada no seu navegador. Há um caso que é do provedor de hospedagem: se a proteção da Cloudflare verificar o seu navegador antes de deixar passar uma solicitação, a Cloudflare instala um cookie chamado cf_clearance, para não verificar você de novo logo em seguida. O cookie serve só para isso.",
-    "A ala que você percorre guarda algumas anotações curtas no armazenamento do seu navegador, para funcionar do jeito que você a deixou:",
+    "Não instalamos cookies. As páginas deste site não guardam nada no seu navegador, com uma exceção pensada para os nossos próprios navegadores de teste, que aparece na lista abaixo. Há um caso que é do provedor de hospedagem: se a proteção da Cloudflare verificar o seu navegador antes de deixar passar uma solicitação, a Cloudflare instala um cookie chamado cf_clearance, para não verificar você de novo logo em seguida. O cookie serve só para isso.",
+    "A ala que você percorre guarda algumas anotações curtas no armazenamento do seu navegador, para funcionar do jeito que você a deixou. A elas se soma o marcador dos nossos navegadores de teste:",
     [
      "A sua configuração de som, ligado ou desligado, e o seu ritmo de caminhada, se você escolheu um.",
      "O seu idioma, se você escolheu um na ala.",
      "Uma marca indicando que o seu aparelho recebe uma cena como filme. Ela é gravada uma vez, caso o aparelho seja lento demais para a cena calculada ao vivo.",
-     "Só para a aba aberta: a informação de que a abertura e uma dica já foram mostradas, e uma marca de horário, caso a ala tenha precisado recarregar uma vez depois de um erro gráfico."
+     "Só para a aba aberta: a informação de que a abertura e uma dica já foram mostradas, e uma marca de horário, caso a ala tenha precisado recarregar uma vez depois de um erro gráfico.",
+     "Um marcador pensado só para os nossos próprios navegadores de teste. Ele é gravado quando um endereço deste site é aberto com o extra ?probe=1. A contagem lê do armazenamento só esse marcador e registra nas linhas dela que ele está presente, para que possamos tirar as nossas próprias visitas da conta. Se você o gravar por conta própria, tiramos as suas visitas da conta como as nossas."
     ],
-    "Essas anotações ficam no seu aparelho até você apagá-las. As anotações da aba aberta somem quando você fecha a aba. Nenhuma delas é enviada para nós nem para mais ninguém. Você as remove apagando os dados deste site no seu navegador.",
-    "Não pedimos consentimento para essas anotações, porque elas são necessárias para uma função que você usa (§ 25 (2), nº 2, da TDDDG, a lei alemã de proteção de dados nos serviços digitais). A mesma regra cobre o cookie do provedor de hospedagem: sem ele, um navegador já verificado seria verificado de novo em cada página."
+    "Essas anotações ficam no seu aparelho até você apagá-las. As anotações da aba aberta somem quando você fecha a aba. Nenhuma das anotações da ala é enviada para nós nem para mais ninguém. Do marcador dos navegadores de teste, só se registra que ele está presente. Você remove tudo apagando os dados deste site no seu navegador.",
+    "Não pedimos consentimento para essas anotações, porque elas são necessárias para uma função que você usa (§ 25 (2), nº 2, da TDDDG). A mesma regra cobre o cookie do provedor de hospedagem: sem ele, um navegador já verificado seria verificado de novo em cada página. O marcador dos navegadores de teste é pensado só para os nossos próprios aparelhos. No seu, a contagem não encontra nada, enquanto você não o tiver gravado por conta própria."
    ]
   },
   {
@@ -75,7 +100,7 @@
    "body": [
     "Pelo GDPR, você tem o direito de saber quais dados sobre você nós tratamos (art. 15), de pedir que dados errados sejam corrigidos (art. 16), que dados sejam apagados (art. 17) e que o tratamento deles seja limitado (art. 18) e, nos casos em que a lei prevê, de receber num formato de uso corrente os dados que você nos forneceu (art. 20).",
     "Você também pode apresentar uma reclamação a uma autoridade de controle de proteção de dados (art. 77). A autoridade competente no nosso caso é o Landesbeauftragte für den Datenschutz und die Informationsfreiheit Baden-Württemberg, Heilbronner Straße 35, 70191 Stuttgart, [www.baden-wuerttemberg.datenschutz.de](https://www.baden-wuerttemberg.datenschutz.de).",
-    "Falando com franqueza: não temos quase nada que possamos consultar para você. Não há contas de usuário, e as anotações da ala ficam no seu aparelho, não conosco.",
+    "Falando com franqueza: não temos quase nada que possamos consultar para você. Não há contas de usuário, as anotações da ala ficam no seu aparelho, não conosco, e a contagem não traz nenhum identificador com o qual pudéssemos encontrar as suas linhas.",
     "Não tomamos decisões automatizadas sobre você e não criamos perfis."
    ]
   },
@@ -88,7 +113,7 @@
   {
    "h": "Quando esta página muda",
    "body": [
-    "Esta página descreve o site como ele é hoje. Se algo mudar, por exemplo, se começarmos a contar as visitas nós mesmos, primeiro mudamos esta página."
+    "Esta página descreve o site como ele é hoje. Se algo mudar, primeiro mudamos esta página."
    ]
   }
  ]
