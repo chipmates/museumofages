@@ -1,7 +1,7 @@
 {
  "_note": "The privacy page's words, English. A section is a heading and a body. A body block is a string (one paragraph) or a list of strings (a bullet list). A link is written [label](target): the target is a full https address, a mailto address, or page:imprint for the legal notice of the same language. Every sentence describes what the site does: a change to its hosts, its storage or its scripts changes this page, in both languages.",
  "title": "Privacidad | Museum of Ages, un museo digital",
- "description": "Cómo trata los datos Museum of Ages, un museo digital: sin cuenta, sin cookies propias, lo que contamos nosotros mismos y lo que hace el proveedor de alojamiento.",
+ "description": "Cómo trata los datos Museum of Ages, un museo digital: sin cuenta, sin cookies propias, lo que contamos nosotros y lo que hace el proveedor de alojamiento.",
  "h1": "Privacidad",
  "lead": "Esta página explica qué pasa con los datos cuando visitas Museum of Ages. En resumen: no necesitas cuenta, no instalamos cookies y no guardamos nada que nos permita reconocerte en tu próxima visita. Esta página es una traducción para tu comodidad. La versión jurídicamente vinculante es la alemana.",
  "updated_label": "Última actualización",
@@ -34,7 +34,7 @@
   {
    "h": "Lo que contamos nosotros mismos",
    "body": [
-    "Contamos nosotros mismos cómo se usa el museo, sin cookies y sin reconocer a nadie. Cuando ocurre uno de los pasos de abajo, la página envía un breve aviso de recuento a una dirección propia de este sitio, en el mismo proveedor de alojamiento, con destino a una base de datos nuestra. La gestiona Cloudflare por cuenta nuestra, en el marco del contrato de encargo del tratamiento. Allí cada aviso se convierte en una fila. Nada va a ningún otro proveedor. La página no lee lo que responde el servidor.",
+    "Contamos nosotros mismos cómo se usa el museo, sin cookies y sin reconocer a nadie. Cuando ocurre uno de los pasos de abajo, la página envía un breve aviso de recuento a una dirección propia de este sitio, en el mismo proveedor de alojamiento, con destino a una base de datos nuestra. La gestiona Cloudflare por cuenta nuestra, en el marco del contrato de encargo del tratamiento. Allí cada aviso se convierte como máximo en una fila. Nada va a ningún otro proveedor. La página no lee lo que responde el servidor.",
     "En el ala hay cuatro pasos. La llegada: se abre un ala. Una parada: llegas a una. Una vista de cerca: miras una obra más de cerca. El uso: una visita fue más que un vistazo, es decir, llegas a la segunda parada o abres la primera vista de cerca. Cada fila registra qué ala era, qué idioma muestra el ala en ese momento y cómo estaba la pantalla: vertical, horizontal o ancha. En una parada se añade su número (del 1 al 17), en una vista de cerca el tipo de obra: cuadro, máquina, hoja, libro, película o lugar, nunca qué obra. La llegada y el uso llevan además la palabra de procedencia que explica la sección siguiente.",
     "En las páginas del sitio hay tres pasos: se abre una página. El centro de su texto aparece en pantalla. Se sigue un enlace que lleva al ala. Cada fila registra de qué página se trata, según una lista fija (la página de inicio, la página sobre Leonardo, los inventos, «Qué es este museo», privacidad, el aviso legal y cada página que se añada), y qué idioma muestra la página. Al abrirla se añade si la visita empezó en esta página y, en ese caso, la palabra de procedencia. En el enlace se añade dónde estaba en la página: arriba, en una entrada de la lista o al final.",
     "El servidor añade dos datos a cada fila: el país, como código de dos letras que Cloudflare deduce de la conexión, y un tipo de dispositivo, smartphone, tableta o equipo de escritorio, deducido de lo que tu navegador dice de sí mismo. No guarda ni tu dirección IP ni los datos de tu navegador. El momento en que se escribió una fila lo anota la base de datos por sí misma.",
@@ -108,7 +108,7 @@
    "h": "Tu derecho de oposición",
    "body": [
     "Puedes oponerte en cualquier momento, por motivos relacionados con tu situación particular, a un tratamiento basado en nuestro interés legítimo (artículo 21 del RGPD). Para ello, escribe a la dirección que aparece al principio de esta página.",
-    "También puedes oponerte al recuento sin escribirnos: si tu navegador envía la señal Global Privacy Control, el recuento no escribe ninguna fila para él. Algunos navegadores la envían por sí solos, en otros se puede activar en los ajustes o con una extensión."
+    "También puedes oponerte al recuento sin escribirnos: si tu navegador envía la señal Global Privacy Control, el recuento no escribe ninguna fila para él. Algunos navegadores la envían por sí solos, en otros se puede activar en los ajustes o con una extensión. Incluso entonces la página envía el aviso de recuento, pero el servidor lo descarta."
    ]
   },
   {

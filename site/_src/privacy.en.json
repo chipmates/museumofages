@@ -34,7 +34,7 @@
     {
       "h": "What we count ourselves",
       "body": [
-        "We count how the museum is used ourselves, without cookies and without recognising anyone. When one of the steps below happens, the page sends a short count to an address of this site's own, at the same host, into a datastore of our own. Cloudflare runs it for us, under the data processing agreement. Each count becomes one row there. Nothing goes to any other provider. The page does not read what the server answers.",
+        "We count how the museum is used ourselves, without cookies and without recognising anyone. When one of the steps below happens, the page sends a short count to an address of this site's own, at the same host, into a datastore of our own. Cloudflare runs it for us, under the data processing agreement. Each count becomes at most one row there. Nothing goes to any other provider. The page does not read what the server answers.",
         "In the wing there are four steps. The arrival: a wing is opened. A stop: you reach one. A close look: you look closer at a work. The use: a visit was more than a glance, that is, you reach the second stop or open the first close look. Each row holds which wing it was, which language the wing is showing, and how the screen stood: upright, sideways or wide. A stop adds its number (1 to 17), a close look adds the kind of work: painting, machine, sheet, book, film or place, never which work. The arrival and the use also carry the source word that the next section explains.",
         "On the site's pages there are three steps: a page is opened. The middle of its text comes into view. A link into the wing is pressed. Each row holds which page it is, from a fixed list (the home page, the page on Leonardo, the inventions, \"What this museum is\", privacy, the legal notice, and each page that is added), and which language the page is showing. Opening adds whether the visit began on this page, and if so, the source word. The link adds where it stood on the page: at the top, at an entry or at the end.",
         "The server adds two details to each row: the country as a two-letter code that Cloudflare derives from the connection, and a device class, phone, tablet or desktop, worked out from what your browser says about itself. It keeps neither your IP address nor what your browser said. The moment a row was written is stamped by the datastore itself.",
@@ -108,7 +108,7 @@
       "h": "Your right to object",
       "body": [
         "You can object at any time, for reasons that arise from your particular situation, to processing that rests on our legitimate interest (Art. 21 GDPR). Write to the address at the top of this page.",
-        "You can also object to the count without writing to us: if your browser sends the Global Privacy Control signal, the count writes no row for it. Some browsers send it on their own, others let you turn it on in their settings or with an extension."
+        "You can also object to the count without writing to us: if your browser sends the Global Privacy Control signal, the count writes no row for it. Some browsers send it on their own, others let you turn it on in their settings or with an extension. Even then the page sends its count, but the server drops it."
       ]
     },
     {

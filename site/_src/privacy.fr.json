@@ -1,7 +1,7 @@
 {
  "_note": "The privacy page's words, English. A section is a heading and a body. A body block is a string (one paragraph) or a list of strings (a bullet list). A link is written [label](target): the target is a full https address, a mailto address, or page:imprint for the legal notice of the same language. Every sentence describes what the site does: a change to its hosts, its storage or its scripts changes this page, in both languages.",
  "title": "Confidentialité | Museum of Ages, un musée numérique",
- "description": "Comment Museum of Ages, un musée numérique, traite les données: pas de compte, aucun cookie de notre part, ce que nous comptons nous-mêmes et ce que fait l’hébergeur.",
+ "description": "Comment Museum of Ages, un musée numérique, traite les données: pas de compte, aucun cookie de notre part, ce que nous comptons et ce que fait l’hébergeur.",
  "h1": "Confidentialité",
  "lead": "Cette page explique ce que deviennent les données quand vous visitez Museum of Ages. En bref: vous n’avez besoin d’aucun compte, nous ne déposons aucun cookie, et rien de ce que nous gardons ne nous permet de vous reconnaître à votre prochaine visite. Cette page est une traduction, fournie pour votre commodité. La version allemande fait foi.",
  "updated_label": "Dernière mise à jour",
@@ -34,7 +34,7 @@
   {
    "h": "Ce que nous comptons nous-mêmes",
    "body": [
-    "Nous comptons nous-mêmes comment le musée est utilisé, sans cookies et sans reconnaître personne. Quand l’un des événements ci-dessous se produit, la page envoie un court message de comptage à une adresse propre à ce site, chez le même hébergeur, vers notre propre base de données. Cloudflare la gère pour notre compte, dans le cadre du contrat de sous-traitance. Chaque message y devient une ligne. Rien ne part vers un autre prestataire. La page ne lit pas ce que le serveur répond.",
+    "Nous comptons nous-mêmes comment le musée est utilisé, sans cookies et sans reconnaître personne. Quand l’un des événements ci-dessous se produit, la page envoie un court message de comptage à une adresse propre à ce site, chez le même hébergeur, vers notre propre base de données. Cloudflare la gère pour notre compte, dans le cadre du contrat de sous-traitance. Chaque message y devient au plus une ligne. Rien ne part vers un autre prestataire. La page ne lit pas ce que le serveur répond.",
     "Dans l’aile, il y a quatre événements. L’arrivée: une aile est ouverte. Une étape: vous en atteignez une. Une vue rapprochée: vous regardez une œuvre de plus près. L’utilisation: une visite a été plus qu’un coup d’œil, c’est-à-dire que vous atteignez la deuxième étape ou ouvrez la première vue rapprochée. Chaque ligne indique de quelle aile il s’agissait, quelle langue l’aile affiche à ce moment-là, et comment se présentait l’écran: vertical, horizontal ou large. Pour une étape s’ajoute son numéro (de 1 à 17), pour une vue rapprochée le type d’œuvre: tableau, machine, feuille, livre, film ou lieu, jamais de quelle œuvre il s’agit. L’arrivée et l’utilisation portent aussi le mot de provenance qu’explique la section suivante.",
     "Sur les pages du site, il y a trois événements: une page est ouverte. Le milieu de son texte devient visible. Un lien vers l’aile est activé. Chaque ligne indique de quelle page il s’agit, d’après une liste fixe (la page d’accueil, la page sur Léonard, les inventions, «Ce qu’est ce musée», la confidentialité, les mentions légales et chaque page qui s’y ajoute), et quelle langue la page affiche. À l’ouverture s’ajoute si la visite a commencé sur cette page et, si oui, le mot de provenance. Pour le lien s’ajoute l’endroit où il se trouvait sur la page: en haut, dans une entrée de liste ou à la fin.",
     "Le serveur ajoute deux informations à chaque ligne: le pays, sous forme de code à deux lettres que Cloudflare déduit de la connexion, et une catégorie d’appareil, smartphone, tablette ou ordinateur, déduite de ce que votre navigateur dit de lui-même. Il ne garde ni votre adresse IP ni les informations de votre navigateur. Le moment où une ligne a été écrite, la base de données le note d’elle-même.",
@@ -108,7 +108,7 @@
    "h": "Votre droit d’opposition",
    "body": [
     "Vous pouvez à tout moment vous opposer, pour des raisons liées à votre situation particulière, à un traitement fondé sur notre intérêt légitime (article 21 du RGPD). Écrivez pour cela à l’adresse indiquée en haut de cette page.",
-    "Vous pouvez aussi vous opposer au comptage sans nous écrire: si votre navigateur envoie le signal Global Privacy Control, le comptage n’écrit aucune ligne pour lui. Certains navigateurs l’envoient d’eux-mêmes, d’autres permettent de l’activer dans leurs réglages ou avec une extension."
+    "Vous pouvez aussi vous opposer au comptage sans nous écrire: si votre navigateur envoie le signal Global Privacy Control, le comptage n’écrit aucune ligne pour lui. Certains navigateurs l’envoient d’eux-mêmes, d’autres permettent de l’activer dans leurs réglages ou avec une extension. Même dans ce cas, la page envoie son message de comptage, mais le serveur l’écarte."
    ]
   },
   {

@@ -1,7 +1,7 @@
 {
  "_note": "The privacy page's words, English. A section is a heading and a body. A body block is a string (one paragraph) or a list of strings (a bullet list). A link is written [label](target): the target is a full https address, a mailto address, or page:imprint for the legal notice of the same language. Every sentence describes what the site does: a change to its hosts, its storage or its scripts changes this page, in both languages.",
  "title": "Privacy | Museum of Ages, un museo digitale",
- "description": "Come Museum of Ages, un museo digitale, tratta i dati: nessun account, nessun cookie nostro, che cosa contiamo noi stessi e che cosa fa il fornitore di hosting.",
+ "description": "Come Museum of Ages, un museo digitale, tratta i dati: nessun account, nessun cookie nostro, che cosa contiamo noi e che cosa fa il fornitore di hosting.",
  "h1": "Privacy",
  "lead": "Questa pagina dice che cosa succede ai dati quando visiti Museum of Ages. In breve: non ti serve un account, non installiamo cookie e non conserviamo niente che ci permetta di riconoscerti alla tua prossima visita. Questa pagina è una traduzione per tua comodità. Fa fede la versione in tedesco.",
  "updated_label": "Ultimo aggiornamento:",
@@ -34,7 +34,7 @@
   {
    "h": "Che cosa contiamo noi stessi",
    "body": [
-    "Contiamo noi stessi come viene usato il museo, senza cookie e senza riconoscere nessuno. Quando avviene uno dei passi descritti sotto, la pagina invia un breve messaggio di conteggio a un indirizzo proprio di questo sito, presso lo stesso fornitore di hosting, in una nostra banca dati. La gestisce Cloudflare per nostro conto, nell’ambito del contratto sul trattamento dei dati. Lì ogni messaggio diventa una riga. A nessun altro fornitore arriva nulla. La pagina non legge che cosa risponde il server.",
+    "Contiamo noi stessi come viene usato il museo, senza cookie e senza riconoscere nessuno. Quando avviene uno dei passi descritti sotto, la pagina invia un breve messaggio di conteggio a un indirizzo proprio di questo sito, presso lo stesso fornitore di hosting, in una nostra banca dati. La gestisce Cloudflare per nostro conto, nell’ambito del contratto sul trattamento dei dati. Lì ogni messaggio diventa al massimo una riga. A nessun altro fornitore arriva nulla. La pagina non legge che cosa risponde il server.",
     "Nell’ala i passi sono quattro. L’arrivo: viene aperta un’ala. Una tappa: ne raggiungi una. Una vista ravvicinata: guardi un’opera più da vicino. L’uso: una visita è stata più di un’occhiata, cioè raggiungi la seconda tappa o apri la prima vista ravvicinata. Ogni riga registra di quale ala si trattava, quale lingua mostra l’ala in quel momento e com’era lo schermo: verticale, orizzontale o largo. Per una tappa si aggiunge il suo numero (da 1 a 17), per una vista ravvicinata il tipo di opera: dipinto, macchina, foglio, libro, film o luogo, mai quale opera. L’arrivo e l’uso portano inoltre la parola sulla provenienza, spiegata nella sezione successiva.",
     "Sulle pagine del sito i passi sono tre: viene aperta una pagina. La parte centrale del suo testo diventa visibile. Viene premuto un link che porta nell’ala. Ogni riga registra di quale pagina si tratta, da un elenco fisso (la pagina iniziale, la pagina su Leonardo, le invenzioni, «Che cos’è questo museo», la privacy, le note legali e ogni pagina che si aggiunge), e quale lingua mostra la pagina. All’apertura si aggiunge se la visita è cominciata su questa pagina e, in caso affermativo, la parola sulla provenienza. Per il link si aggiunge dove si trovava nella pagina: in alto, presso una voce o alla fine.",
     "Il server aggiunge a ogni riga due informazioni: il Paese, come sigla di due lettere che Cloudflare ricava dalla connessione, e una categoria di dispositivo, smartphone, tablet o desktop, ricavata da ciò che il tuo browser dice di sé. Non conserva né il tuo indirizzo IP né le informazioni del tuo browser. Il momento in cui una riga è stata scritta lo registra la banca dati da sé.",
@@ -108,7 +108,7 @@
    "h": "Il tuo diritto di opposizione",
    "body": [
     "Puoi opporti in qualsiasi momento, per motivi connessi alla tua situazione particolare, a un trattamento che si basa sul nostro legittimo interesse (articolo 21 del GDPR). Per farlo, scrivi all’indirizzo indicato in alto in questa pagina.",
-    "Puoi opporti al conteggio anche senza scriverci: se il tuo browser invia il segnale Global Privacy Control, il conteggio non scrive alcuna riga per lui. Alcuni browser lo inviano da sé, in altri si può attivare nelle impostazioni o con un’estensione."
+    "Puoi opporti al conteggio anche senza scriverci: se il tuo browser invia il segnale Global Privacy Control, il conteggio non scrive alcuna riga. Alcuni browser lo inviano da sé, in altri si può attivare nelle impostazioni o con un’estensione. Anche in quel caso la pagina invia il messaggio di conteggio, ma il server lo scarta."
    ]
   },
   {
