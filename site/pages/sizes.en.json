@@ -100,7 +100,13 @@
           },
           ". {museum:it108}"
         ]
-      }
+      },
+      "links": [
+        {
+          "text": "The Last Supper, and what is left of it",
+          "page": "supper"
+        }
+      ]
     },
     {
       "type": "text",

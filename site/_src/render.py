@@ -827,7 +827,8 @@ def more(c, slug):
     w, reg, lang = c.w, c.wings[slug], c.lang
     entry = lambda href, name, line: (
         f'<li><a class="more" href="{href}"><span>{name}</span>{ARROW}</a><span class="topics__line">{line}</span></li>')
-    items = [entry(topic_href(c, slug, t), esc(t["name"][lang]), esc(t["line"][lang])) for t in topics_here(c, slug)]
+    # a topic's line may give a size, which never breaks
+    items = [entry(topic_href(c, slug, t), esc(t["name"][lang]), esc(bind(t["line"][lang], lang))) for t in topics_here(c, slug)]
     if c.wd[slug].get("holders"):
         items.append(entry("#originals", w["wingpage.more_originals"], w["wingpage.more_originals_line"]))
     items.append(entry(c.to(c.addr("what")), w["nav.what"], w["wingpage.more_what_line"]))

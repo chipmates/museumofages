@@ -1,0 +1,215 @@
+{
+  "_note": "THE WORDS of the Last Supper page, English. Poured from the writer's WORDS file of round 1 word for word. The wall's size, the person and the stop come from the wing's facts file, and the build draws the first screen's drawing and its share picture from them. The plate's src is its source line as the wing's record names it, as on the sizes page. The two files hold the same structure, but for a source marked only for one language. No em dash, no en dash, no semicolon.",
+  "page": {
+    "id": "vinci-supper",
+    "wing": "vinci",
+    "topic": "supper",
+    "stop": "supper-wall",
+    "published": null,
+    "og_image": {
+      "file": "vinci-supper-og-{lang}-1200x630.png",
+      "width": 1200,
+      "height": 630
+    }
+  },
+  "pics": {
+    "supper": {
+      "stem": "v-supper",
+      "widths": [
+        800,
+        1600
+      ],
+      "sizes": "(min-width: 960px) 640px, calc(100vw - 40px)"
+    }
+  },
+  "meta": {
+    "title": "Leonardo da Vinci's Last Supper in Milan | Museum of Ages",
+    "description": "Leonardo da Vinci's Last Supper: a wall painting of 4.6 by 8.8 metres in a refectory in Milan, about 1494 to 1498. How it decayed, and what is left.",
+    "og_title": "Leonardo da Vinci's Last Supper in Milan",
+    "og_image_alt": "The Last Supper drawn to one scale beside a person 1.7 metres tall: the wall painting is 4.6 by 8.8 metres. A drawing made for this page."
+  },
+  "labels": {
+    "crumbs": "You are here",
+    "crumb_home": "Museum",
+    "crumb_here": "The Last Supper",
+    "toc": "On this page",
+    "tag_chart": "Made for this page",
+    "tag_still": "Reproduction",
+    "person": "1.7 m"
+  },
+  "top": {
+    "h1": "Leonardo da Vinci's Last Supper",
+    "answer": "The Last Supper is a wall painting by Leonardo da Vinci in the refectory, the dining hall, of the Dominican convent of Santa Maria delle Grazie in Milan. He painted it for Ludovico Sforza, Duke of Milan, in about 1494 to 1498, and it is still on the wall he painted it on: 4.6 by 8.8 metres, height by width. Look under the table: Christ has no feet. In the seventeenth century the friars enlarged a door to the kitchens through the bottom of the wall, and the feet went with it.",
+    "drawing": {
+      "wall": "supper",
+      "tag": "tag_chart",
+      "title": "The Last Supper",
+      "what": "beside a person 1.7 metres tall",
+      "alt": "The Last Supper, 4.6 by 8.8 metres, beside a person 1.7 metres tall, drawn to one scale."
+    },
+    "door": {
+      "text": "See the Last Supper in the wing",
+      "note": "Free entry, no account.",
+      "leads": "The door opens the Leonardo wing at the wall in the court."
+    }
+  },
+  "blocks": [
+    {
+      "type": "text",
+      "id": "painted",
+      "nav": "How he painted it",
+      "h": "How he painted it, and why it began to fail",
+      "paras": [
+        "A wall painting of his time was usually a fresco: the painter works fast on wet plaster, and the colour is taken up by the wall as it dries. Leonardo did not want to work fast. The museum explains that he wanted to go slowly and change things as he went, so he painted on dry plaster instead, over a white ground, with tempera, the way he would paint a wooden panel. Lab studies find oil in the mix too. The paint sat on the wall instead of in it, and the room was damp. By 1517, within about twenty years, the painting was already flaking. In 1568 Vasari wrote that little could be made out beyond “a glowing stain”, as the museum's site quotes him."
+      ]
+    },
+    {
+      "type": "text",
+      "id": "centuries",
+      "nav": "Five centuries on a wall",
+      "h": "Five centuries on a wall",
+      "paras": [
+        "The damage came in waves. In the seventeenth century the friars enlarged the door under the table (a catalogue dates it to 1652), and Christ's feet were lost. In the 1720s a restorer took the picture for an oil painting, the catalogue says, scrubbed it with caustic soda, varnished it with oil and repainted much of it. In the 1770s it was repainted again. In 1821 another restorer tried to peel parts of it off the wall. Under Napoleon the room was used by troops, as a stable by one account. Then the war. In August 1943 a bomb fell in the cloister beside the refectory and brought down its vault and its east wall. The painted wall stood. Since 1940 it had been shielded by a steel frame packed with sandbags, and that is what saved it. The room was rebuilt from 1945."
+      ]
+    },
+    {
+      "type": "text",
+      "id": "restoration",
+      "nav": "The long restoration",
+      "h": "The long restoration",
+      "paras": [
+        "Restorers have been at the wall since the early 1700s, about nine times by the museum's count, and for most of that time restoring meant repainting what was missing. In the early 1900s Luigi Cavenaghi restored it, and in the 1950s Mauro Pellicioli secured the flaking surface without taking the old overpaint off. The last restoration was different. From the late 1970s to 1999, more than twenty years, Pinin Brambilla Barcilon worked across the whole wall, with the Milan Soprintendenza and the central restoration institute in Rome behind her, as the press reported at the time. Her team took off the overpaint of the earlier centuries, cleaned Leonardo's surviving paint flake by flake under magnification, as she described it, and toned the gaps in watercolour that can be washed off again. Earlier restorers, she reported, had moved eyes, closed mouths and added beards he never painted. What came back is thin. Experts' estimates of how much of the paint is Leonardo's own run from about a fifth to about a half. It is an estimate, and no single figure is agreed."
+      ]
+    },
+    {
+      "type": "text",
+      "id": "milan",
+      "nav": "In Milan today",
+      "h": "Seeing it in Milan today",
+      "paras": [
+        [
+          "The painting is still in its room, which has been a World Heritage Site with the church and the convent since 1980. The air in the refectory is filtered and its climate is controlled, so you enter through a chain of small rooms whose doors open one after the other, and the visits are short, timed and in small groups. Booking is required. On the wall opposite is a Crucifixion by Giovanni Donato Montorfano, signed and dated 1495 and painted in true fresco. It has kept its colour far better than Leonardo's wall. Kneeling figures of the duke's family were added onto it, probably by Leonardo, the museum says, and of them almost nothing is left. For a visit, the museum's own site: ",
+          {
+            "text": "cenacolovinciano.org",
+            "href": "https://cenacolovinciano.org/en/"
+          },
+          "."
+        ]
+      ]
+    },
+    {
+      "type": "text",
+      "id": "wing",
+      "nav": "In the wing",
+      "h": "What our copy shows, and what it cannot",
+      "paras": [
+        "In the museum's Leonardo wing a reproduction of the Last Supper fills a wall in the court, at the same 4.6 by 8.8 metres. It shows you two things a book cannot: the size, with you standing in front of it, and the whole composition at once, Christ in the middle and the apostles in four groups of three. It cannot show the wall itself: the surface of the plaster, the flakes and the toned gaps, the state the painting is really in. And it cannot show the room's light. In Milan the painted light falls from the left, like the daylight from the refectory's real windows. On any other wall that pairing is lost.",
+        [
+          "How big it is beside the Mona Lisa and the other works: ",
+          {
+            "text": "the sizes page",
+            "page": "sizes"
+          },
+          "."
+        ]
+      ],
+      "pic": {
+        "pic": "supper",
+        "title": "The Last Supper in the court",
+        "tag": "tag_still",
+        "what": "a still from the wing's film. The reproduction on its wall in the museum's court, 4.6 by 8.8 metres. The wall is built in code. The original is in the refectory of Santa Maria delle Grazie, Milan.",
+        "alt": "A reproduction of the Last Supper fills a pale wall in a court: a row of figures at a long table in a painted room. A still from the wing's film.",
+        "src": [
+          "Photograph by Paris Orlando, 2019, public domain (PD-Art), via ",
+          {
+            "text": "Wikimedia Commons",
+            "href": "https://commons.wikimedia.org/wiki/File:Last_Supper_by_Leonardo_da_Vinci.jpg"
+          },
+          ". {museum:it108}"
+        ]
+      },
+      "links": [
+        {
+          "text": "See the Last Supper in the wing",
+          "stop": "supper-wall"
+        }
+      ]
+    },
+    {
+      "type": "sources",
+      "id": "sources",
+      "nav": "Sources",
+      "h": "Sources",
+      "intro": "The page relies on these, all read on 12 October 2026:",
+      "read": [
+        {
+          "text": "Museo del Cenacolo Vinciano, the work",
+          "href": "https://cenacolovinciano.org/en/museum/the-works/the-last-supper-leonardo-da-vinci-1452-1519/"
+        },
+        {
+          "text": "Museo del Cenacolo Vinciano, technique, conservation and restorations",
+          "href": "https://cenacolovinciano.org/en/museum/backstage/"
+        },
+        {
+          "text": "Museo del Cenacolo Vinciano, the history",
+          "href": "https://cenacolovinciano.org/en/museum/history/"
+        },
+        {
+          "text": "Museo del Cenacolo Vinciano, the Crucifixion by Montorfano",
+          "href": "https://cenacolovinciano.org/en/museum/the-works/the-crucifixion-donato-montorfano-1460-ca-1502-ca/"
+        },
+        {
+          "text": "Museo del Cenacolo Vinciano, the verbal description of the painting (PDF)",
+          "href": "https://cenacolovinciano.org/wp-content/uploads/2019/07/DescriVedendo-Cenacolo.pdf"
+        },
+        {
+          "text": "Museo del Cenacolo Vinciano, the museum sheet of 2023 (PDF)",
+          "href": "https://cenacolovinciano.org/wp-content/uploads/2023/07/Museo-del-Cenacolo-Vinciano.pdf"
+        },
+        {
+          "text": "Ministero della Cultura, the venue",
+          "href": "https://cultura.gov.it/luogo/museo-del-cenacolo-vinciano"
+        },
+        {
+          "text": "Regione Lombardia, catalogue record of the painting",
+          "href": "https://lombardiabeniculturali.it/opere-arte/schede-complete/3o210-01279"
+        },
+        {
+          "text": "Regione Lombardia, catalogue record of the refectory",
+          "href": "https://www.lombardiabeniculturali.it/architetture/schede/LMD80-00084/"
+        },
+        {
+          "text": "ICCD, national catalogue record (1975)",
+          "href": "https://sigecweb.beniculturali.it/sigec/item/print/ICCD3288350"
+        },
+        {
+          "text": "The Art Newspaper, 1 November 1998, on the restoration",
+          "href": "https://www.theartnewspaper.com/1998/11/01/leonardos-last-supper-restored-a-wreck-but-an-authentic-wreck"
+        },
+        {
+          "text": "The Art Newspaper, 30 April 1999, on how much is Leonardo's",
+          "href": "https://www.theartnewspaper.com/1999/05/01/the-director-of-one-of-italys-top-restoration-laboratories-responds-to-denunciations-of-work-carried-out-on-leonardos-last-supper"
+        },
+        {
+          "text": "University of Amsterdam, 2023, on oil in the paint",
+          "href": "https://hims.uva.nl/content/news/2023/10/shedding-light-on-leonardos-painting-methods.html"
+        }
+      ],
+      "notes": [],
+      "contact": "If a date, a name or a sentence is wrong, tell us and we will correct it.",
+      "contact_link": "To the legal notice",
+      "what_link": "What this museum is"
+    },
+    {
+      "type": "close",
+      "id": "enter",
+      "nav": "",
+      "h": "See the Last Supper in the wing",
+      "p": "The door opens the Leonardo wing at the wall in the court. The picture room with the Mona Lisa comes first on the walk.",
+      "door": {
+        "text": "Enter the museum",
+        "note": "Free entry, no account."
+      }
+    }
+  ]
+}

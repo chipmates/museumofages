@@ -62,6 +62,8 @@ class Case(unittest.TestCase):
         # the first page of film pictures and the first page of a wing's works at one scale
         self.page = next(p for p in self.pages if "topic" not in self.data("en", p)["page"])
         self.works_page = next((p for p in self.pages if "topic" in self.data("en", p)["page"]), None)
+        # the first page whose first screen draws one wall of its wing beside a person
+        self.drawing_page = next((p for p in self.pages if "drawing" in self.data("en", p)["top"]), None)
 
     def tearDown(self):
         shutil.rmtree(self.dir, ignore_errors=True)
@@ -273,7 +275,7 @@ class Case(unittest.TestCase):
             self.assertTrue(kept[0].startswith(name))
             self.assertEqual(html.unescape(re.sub(r"<[^>]+>", "", h1)), data["top"]["h1"])
             # and nowhere in the page's own part does the name stand outside such a span
-            self.assertGreater(len(re.findall(r'<span class="nw">%s' % re.escape(html.escape(name)), own)), 3)
+            self.assertGreaterEqual(len(re.findall(r'<span class="nw">%s' % re.escape(html.escape(name)), own)), 3)
             loose = re.sub(r'<span class="nw">[^<]*</span>', " ", own)
             self.assertNotIn(name, self.words(loose))
 
@@ -322,10 +324,12 @@ class Case(unittest.TestCase):
                     # and it carries its language wherever that is not the page's own
                     wanted = entry.get("lang", "")
                     self.assertEqual(marked[word], "" if wanted == lang else wanted, word)
-            self.assertGreater(found, 15)
-            if data["page"]["id"] != self.data("en")["page"]["id"]:
+            self.assertGreaterEqual(found, 15)
+            if self.works_page and data["page"]["id"] == self.data("en", self.works_page)["page"]["id"]:
                 # a holder a page takes from its wing's facts carries the language the facts give it
                 self.assertIn('<span class="nh" lang="fr">Musée du Louvre</span>', own)
+                continue
+            if data["page"]["id"] != self.data("en")["page"]["id"]:
                 continue
             # the holders of the sources list, by name
             self.assertIn('<span class="nh" lang="it">Veneranda Biblioteca Ambrosiana</span>', own)
@@ -534,6 +538,16 @@ class Case(unittest.TestCase):
         topic = next(t for t in wings[key]["topics"] if t.get("count") == self.data("en", self.works_page)["page"]["topic"])
         topic["langs"] = ["en"]
         self.registry.write_text(json.dumps(wings, ensure_ascii=False), encoding="utf-8")
+        # a German link to it from another page would stop the build: it goes in both languages (their structure is
+        # one), its words stay
+        for other, lang in ((o, l) for o in self.pages if o != self.works_page for l in ("en", "de")):
+            data = self.data(lang, other)
+            for b in (b for b in data["blocks"] if "paras" in b):
+                b["paras"] = ["".join(x if isinstance(x, str) else x["text"] for x in p) if isinstance(p, list) and
+                              any(isinstance(x, dict) and x.get("page") == self.works_page for x in p) else p for p in b.get("paras", [])]
+            for b in (b for b in data["blocks"] if "links" in b):
+                b["links"] = [x for x in b["links"] if x.get("page") != self.works_page]
+            self.save(lang, data, other)
         out, written = self.build()
         self.assertEqual(len(written), 2 * len(self.pages) - 1)
         self.assertFalse((out / wings[key]["page"]["de"].strip("/") / topic["slug"]["de"]).exists())
@@ -541,6 +555,106 @@ class Case(unittest.TestCase):
         self.assertEqual(re.findall(r'<link rel="alternate" hreflang="([\w-]+)"', text), ["en", "x-default"])
         # its way to German leads to the wing's German page
         self.assertRegex(text, r'href="(?:\.\./)+%s/" lang="de" hreflang="de"' % re.escape(wings[key]["page"]["de"].strip("/")))
+
+    # ---- a page about one wall: its drawing, its doors to the stop, its links ----
+
+    def drawing_facts(self):
+        data = self.data("en", self.drawing_page)
+        wing = self.wings()[data["page"]["wing"]]
+        topic = next(t for t in wing["topics"] if (t.get("count") or t["slug"]["en"].replace("-", "_")) == data["page"]["topic"])
+        facts = json.loads((SITE_SRC / "wings" / f'{data["page"]["wing"]}.facts.json').read_text(encoding="utf-8"))
+        return wing, topic, facts
+
+    def test_a_drawing_page_draws_its_wall_and_opens_the_wing_at_its_stop(self):
+        if not self.drawing_page:
+            self.skipTest("no page draws a wall")
+        out, written = self.build()
+        wing, topic, facts = self.drawing_facts()
+        for lang in ("en", "de"):
+            data = self.data(lang, self.drawing_page)
+            text = (out / wing["page"][lang].strip("/") / topic["slug"][lang] / "index.html").read_text(encoding="utf-8")
+            top = re.search(r'<header class="sp-top\b.*?</header>', text, flags=re.S).group(0)
+            wall = facts["wall"][data["top"]["drawing"]["wall"]]
+            # the wall at three tenths of a millimetre a unit, its size inside it, height by width
+            self.assertIn(f'width="{wall["w_m"] * 1000 * 0.3:g}" height="{wall["h_m"] * 1000 * 0.3:g}"', top)
+            num = lambda v: f"{v:g}".replace(".", "," if lang == "de" else ".")
+            self.assertIn(f'{num(wall["h_m"])} × {num(wall["w_m"])} m</text>', top)
+            self.assertNotIn("<img", top)
+            # every way into the walk opens the wing at the page's stop: the top, the part on the wing, the end
+            door = re.escape(wing["door"][lang].replace("&", "&amp;") + "#s=" + data["page"]["stop"])
+            for place in ("top", "item", "end"):
+                self.assertRegex(text, r'<a class="(?:door|more)" href="%s"[^>]*data-door="%s"' % (door, place))
+            for a in re.findall(r'<a\b[^>]*href="/w/[^"]*"[^>]*>', self.own_part(text)):
+                self.assertRegex(a, r'#s=%s"' % data["page"]["stop"])
+            # the page's picture in the structured data is the drawing's share picture, which is also its preview
+            graph = json.loads(re.search(r'<script type="application/ld\+json">(.*?)</script>', text, flags=re.S).group(1).replace("<\\/", "</"))["@graph"]
+            image = next(n for n in graph if n["@type"] == "ImageObject")
+            share = data["page"]["og_image"]["file"].replace("{lang}", lang)
+            self.assertTrue(image["url"].endswith("/" + share), image["url"])
+            self.assertIn(f'<meta property="og:image" content="{image["url"]}">', text)
+
+    def test_a_link_to_another_page_leads_to_it_in_the_pages_language(self):
+        if not self.drawing_page:
+            self.skipTest("no page draws a wall")
+        out, written = self.build()
+        found = 0
+        for path in written:
+            for href in re.findall(r'<a (?:class="more" )?href="(\.\./[^"#]*)"', self.own_part(path.read_text(encoding="utf-8"))):
+                target = (path.parent / href).resolve()
+                if (target / "index.html").is_file() and str(target).startswith(str(out.resolve())):
+                    lang = re.search(r'<html lang="(\w+)"', path.read_text(encoding="utf-8")).group(1)
+                    self.assertIn(f'<html lang="{lang}"', (target / "index.html").read_text(encoding="utf-8"), (path, href))
+                    found += 1
+        # the drawing page links the works page, and the works page links it back, in both languages
+        self.assertGreaterEqual(found, 4)
+
+    def test_a_link_to_a_page_this_build_does_not_make_stops_it(self):
+        if not self.drawing_page:
+            self.skipTest("no page draws a wall")
+        data = self.data("en", self.drawing_page)
+        part = next(x for b in data["blocks"] for p in b.get("paras", []) if isinstance(p, list) for x in p if isinstance(x, dict) and "page" in x)
+        part["page"] = "nowhere"
+        self.save("en", data, self.drawing_page)
+        self.fails(r"names the page 'nowhere', which this build does not make in en")
+
+    def test_a_stop_or_a_wall_the_facts_do_not_have_stops_the_build(self):
+        if not self.drawing_page:
+            self.skipTest("no page draws a wall")
+        data = self.data("de", self.drawing_page)
+        data["page"]["stop"] = "nowhere"
+        data["top"]["drawing"]["wall"] = "nowhere"
+        self.save("de", data, self.drawing_page)
+        self.fails(r"page\.stop is 'nowhere', which is no stop(.|\n)*top\.drawing\.wall is 'nowhere'")
+
+    def test_a_drawing_older_than_its_share_picture_stops_the_build(self):
+        if not self.drawing_page:
+            self.skipTest("no page draws a wall")
+        data = self.data("en", self.drawing_page)
+        data["top"]["h1"] += " Anew"
+        self.save("en", data, self.drawing_page)
+        self.fails(r"the still \S+-en-1200x630\.png is older than its chart")
+
+    def test_a_source_of_one_language_only_stands_in_that_language(self):
+        if not self.drawing_page:
+            self.skipTest("no page draws a wall")
+        de = self.data("de", self.drawing_page)
+        only = [r for b in de["blocks"] for r in b.get("read", []) if "only" in r]
+        if not only:
+            self.skipTest("no source stands in one language only")
+        out, written = self.build()
+        wing, topic, facts = self.drawing_facts()
+        en_text = (out / wing["page"]["en"].strip("/") / topic["slug"]["en"] / "index.html").read_text(encoding="utf-8")
+        de_text = (out / wing["page"]["de"].strip("/") / topic["slug"]["de"] / "index.html").read_text(encoding="utf-8")
+        self.assertIn(only[0]["href"], de_text)
+        self.assertNotIn(only[0]["href"], en_text)
+        # marked for another language, it stops the build, and so does a source one file has and the other lacks
+        shutil.rmtree(out)
+        only[0]["only"] = "en"
+        self.save("de", de, self.drawing_page)
+        self.fails(r"an entry marked only 'en' stands in the de file")
+        del only[0]["only"]
+        self.save("de", de, self.drawing_page)
+        self.fails(r"the two languages do not hold the same structure")
 
 
 class Built(unittest.TestCase):

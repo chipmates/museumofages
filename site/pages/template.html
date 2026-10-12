@@ -157,7 +157,7 @@
   <p class="sp-intro">{{intro}}</p>
 {{html.holders_part}}
 {{html.notes}}
-{{html.editions_part}}
+{{html.editions_part}}{{html.read_part}}
   <p class="sp-contact">{{contact}} <a href="{{href.imprint}}"{{attr.imprint_lang}}>{{contact_link}}</a></p>
   <p class="sp-more"><a class="more" href="{{href.what}}"><span>{{what_link}}</span>{{svg.arrow}}</a></p>
 </section>
@@ -185,6 +185,12 @@
   <ul class="sp-holders">
 {{html.holders}}
   </ul>
+<!--@ sources_read -->
+  <ul class="sp-holders sp-read">
+{{html.read}}
+  </ul>
+<!--@ read -->
+<li><a href="{{href}}">{{text}}</a></li>
 <!--@ sources_editions -->
   <h3 class="key">{{editions_h}}</h3>
   <ul class="sp-holders sp-editions">
@@ -213,7 +219,7 @@
 <section class="sp-sec sp-prose" id="{{id}}">
   <h2>{{h}}</h2>
 {{html.paras}}
-{{html.pic}}
+{{html.pic}}{{html.links}}
 </section>
 <!--@ block:chart -->
 <section class="sp-sec sz-sec" id="{{id}}">

@@ -62,6 +62,16 @@
     { "text": "Anghiari", "lang": "it" },
     { "text": "Tesori della pittura italiana", "lang": "it" },
     { "text": "Corrado Ricci", "lang": "it", "person": true },
-    { "text": "Paris Orlando", "person": true }
+    { "text": "Paris Orlando", "person": true },
+    { "text": "Ludovico Sforza", "lang": "it", "person": true },
+    { "text": "Giovanni Donato Montorfano", "lang": "it", "person": true },
+    { "text": "Montorfano", "lang": "it" },
+    { "text": "Pinin Brambilla Barcilon", "lang": "it", "person": true },
+    { "text": "Luigi Cavenaghi", "lang": "it", "person": true },
+    { "text": "Mauro Pellicioli", "lang": "it", "person": true },
+    { "text": "Soprintendenza", "lang": "it" },
+    { "text": "Regione Lombardia", "lang": "it" },
+    { "text": "Ministero della Cultura", "lang": "it" },
+    { "text": "The Art Newspaper", "lang": "en" }
   ]
 }

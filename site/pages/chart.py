@@ -249,6 +249,25 @@ def top_figure(works, mark, labels, num, lang):
             f'<path class="sz-floor" d="M200 {floor}H3800" vector-effect="non-scaling-stroke"/>{person}{work}{marks}</svg>')
 
 
+def wall_figure(h_cm, w_cm, person_cm, labels, num, lang):
+    """The first screen's drawing of one wall painting: the person and the wall on one floor, at three tenths of a
+    millimetre a unit, in one SVG of 4000 by 1520, the wall nearly its height (a phone's first screen is short). The
+    wall's size stands inside it: a mark beside it would leave the drawing."""
+    s = 0.3
+    k = person_cm / 170
+    ph, pw, w, h = person_cm * 10 * s, PERSON_W * k * s, w_cm * 10 * s, h_cm * 10 * s
+    px, floor = 820, 1450
+    wx = px + pw + 160
+    person = f'<g transform="translate({px:g} {floor - ph:g}) scale({k * s:g})"><path class="sz-p" d="{PERSON_PATH}"/></g>'
+    wall = f'<rect class="sz-m" x="{wx:g}" y="{floor - h:g}" width="{w:g}" height="{h:g}" vector-effect="non-scaling-stroke"/>'
+    tick = (f'<path class="sz-d" d="M{px - 120:g} {floor}V{floor - ph:g}M{px - 160:g} {floor - ph:g}H{px - 80:g}" vector-effect="non-scaling-stroke"/>'
+            f'<text class="sz-t" x="{px - 190:g}" y="{floor - ph + 60:g}" text-anchor="end">{esc(labels["person"])}</text>')
+    size = (f'<text class="sz-t" x="{wx + w / 2:g}" y="{floor - h / 2 + 50:g}" text-anchor="middle">'
+            f'{esc(size_text({"h": h_cm / 100, "w": w_cm / 100}, num, lang, unit="m"))}</text>')
+    return (f'<svg class="sz-top" viewBox="0 0 4000 1520" role="img" aria-label="{esc(labels["alt"])}">'
+            f'<path class="sz-floor" d="M200 {floor}H3800" vector-effect="non-scaling-stroke"/>{person}{wall}{tick}{size}</svg>')
+
+
 def door_href(door, stop):
     return f"{door}#s={stop}" if stop else door
 
@@ -435,6 +454,28 @@ def still_svg(works, mark, words, num, lang, colours, kind):
     body = "".join(parts)
     return (f'<svg xmlns="http://www.w3.org/2000/svg" width="{W}" height="{H}" viewBox="0 0 {W} {H}">'
             f'<rect width="{W}" height="{H}" fill="{ground}"/>{body}</svg>\n')
+
+
+def wall_still_svg(h_cm, w_cm, person_cm, words, num, lang, colours):
+    """One wall painting as the page's share picture, 1200 by 630: the page's heading, the wall's size, and the person
+    and the wall on one floor, the wall at the right edge and the person just before it."""
+    c = colours
+    W, H, m = 1200, 630, 60
+    floor = H - 64
+    u = (floor - 206) / h_cm
+    parts = [_text(m, 104, words["h1"], 54, c["linen"]),
+             _text(m, 164, size_text({"h": h_cm / 100, "w": w_cm / 100}, num, lang, unit="m"), 36, c["chalk-text"])]
+    ww, wh = w_cm * u, h_cm * u
+    wx = W - m - ww
+    ph = person_cm * u
+    px = wx - 40 - PERSON_W * ph / 1700
+    parts.append(_person(px, floor, ph, c["text-3"]))
+    parts.append(_text(px + PERSON_W * ph / 1700 / 2, floor - ph - 14, words["person"], 20, c["text-2"], "middle"))
+    parts.append(_rect(wx, floor - wh, ww, wh, c["wall-lit"], c["chalk"], 3))
+    parts.append(_floor(m, floor, W - 2 * m, c["line-strong"]))
+    parts.append(_text(m, floor + 34, words["site"], 20, c["text-3"]))
+    return (f'<svg xmlns="http://www.w3.org/2000/svg" width="{W}" height="{H}" viewBox="0 0 {W} {H}">'
+            f'<rect width="{W}" height="{H}" fill="{c["page"]}"/>{"".join(parts)}</svg>\n')
 
 
 def source_mark(svg):

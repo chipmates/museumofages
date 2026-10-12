@@ -6,6 +6,15 @@
 /* A plate under a part's text, in the page's plate frame */
 .sp-prose .sp-plate{margin-top:22px;max-width:40rem}
 .sp-prose .label__src{display:block;margin-top:6px}
+/* A link in the running text is as tall as a thumb without moving its line. */
+.sp-prose .sp-does a{display:inline-block;padding:11px 0;margin:-11px 0}
+/* A part's ways on: into the wing at its stop, or to another page */
+.sp-prose .sp-more{margin-top:16px}
+.sp-prose .sp-more+.sp-more{margin-top:4px}
+/* What a page was written from: one link a line, each a thumb's height (a block: a flex box would drop the spaces
+   around a name's span) */
+.sp-read li{display:block;padding:0}
+.sp-read a{display:block;padding:11px 0 12px;color:var(--ink)}
 
 /* ---------- Works at one scale: the first screen's drawing, the panels, the list and the table ----------
    A shape is an SVG sized in em, one em a metre. A panel sets that em from the chart's own width, so every shape

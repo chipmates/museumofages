@@ -100,7 +100,13 @@
           },
           ". {museum:it108}"
         ]
-      }
+      },
+      "links": [
+        {
+          "text": "Das Abendmahl, und was davon übrig ist",
+          "page": "supper"
+        }
+      ]
     },
     {
       "type": "text",

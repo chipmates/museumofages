@@ -1,0 +1,220 @@
+{
+  "_note": "DIE TEXTE der Abendmahl-Seite, Deutsch. Wort für Wort aus der WORDS-Datei des Schreibers, Runde 1. Die Größe der Wand, der Mensch und die Station kommen aus der Faktendatei des Flügels. Gleicher Aufbau wie die englische Datei, bis auf eine Quelle, die nur hier steht (only). Kein Geviertstrich, kein Halbgeviertstrich, kein Semikolon.",
+  "page": {
+    "id": "vinci-supper",
+    "wing": "vinci",
+    "topic": "supper",
+    "stop": "supper-wall",
+    "published": null,
+    "og_image": {
+      "file": "vinci-supper-og-{lang}-1200x630.png",
+      "width": 1200,
+      "height": 630
+    }
+  },
+  "pics": {
+    "supper": {
+      "stem": "v-supper",
+      "widths": [
+        800,
+        1600
+      ],
+      "sizes": "(min-width: 960px) 640px, calc(100vw - 40px)"
+    }
+  },
+  "meta": {
+    "title": "Das letzte Abendmahl von Leonardo da Vinci | Museum of Ages",
+    "description": "Das letzte Abendmahl von Leonardo da Vinci: ein Wandgemälde, 4,6 mal 8,8 Meter, in einem Refektorium in Mailand, etwa 1494 bis 1498. Was davon übrig ist.",
+    "og_title": "Das letzte Abendmahl von Leonardo da Vinci",
+    "og_image_alt": "Das Abendmahl im selben Maßstab neben einem Menschen von 1,70 Metern: das Wandbild mit 4,6 mal 8,8 Metern. Eine Zeichnung, für diese Seite gemacht."
+  },
+  "labels": {
+    "crumbs": "Du bist hier",
+    "crumb_home": "Museum",
+    "crumb_here": "Das Abendmahl",
+    "toc": "Auf dieser Seite",
+    "tag_chart": "Für diese Seite gemacht",
+    "tag_still": "Reproduktion",
+    "person": "1,70 m"
+  },
+  "top": {
+    "h1": "Leonardo da Vincis Abendmahl in Mailand",
+    "answer": "Das letzte Abendmahl ist ein Wandgemälde von Leonardo da Vinci im Refektorium, dem Speisesaal, des Dominikanerklosters Santa Maria delle Grazie in Mailand. Er malte es für Ludovico Sforza, den Herzog von Mailand, etwa von 1494 bis 1498, und es ist noch immer auf der Wand, auf die er es gemalt hat: 4,6 mal 8,8 Meter, Höhe mal Breite. Schau unter den Tisch: Christus hat keine Füße. Im 17. Jahrhundert vergrößerten die Dominikaner eine Tür zur Küche unten durch die Wand, und die Füße gingen mit ihr verloren.",
+    "drawing": {
+      "wall": "supper",
+      "tag": "tag_chart",
+      "title": "Das Abendmahl",
+      "what": "neben einem Menschen von 1,70 Metern",
+      "alt": "Das Abendmahl, 4,6 mal 8,8 Meter, neben einem Menschen von 1,70 Metern, im selben Maßstab gezeichnet."
+    },
+    "door": {
+      "text": "Das Abendmahl im Flügel ansehen",
+      "note": "Eintritt frei, kein Konto.",
+      "leads": "Die Tür führt in den Leonardo-Flügel, an die Wand im Hof."
+    }
+  },
+  "blocks": [
+    {
+      "type": "text",
+      "id": "painted",
+      "nav": "Wie er es malte",
+      "h": "Wie er es malte, und warum es zu zerfallen begann",
+      "paras": [
+        "Ein Wandgemälde seiner Zeit war meist ein Fresko: Der Maler arbeitet schnell auf nassem Putz, und die Farbe zieht beim Trocknen in die Wand ein. Leonardo wollte nicht schnell arbeiten. Das Museum erklärt, er wollte langsam vorgehen und unterwegs noch ändern können. Darum wählte er die Trockenmalerei: auf trockenem Putz, über einem weißen Grund, mit Tempera, so wie er eine Holztafel gemalt hätte. Laboruntersuchungen finden auch Öl in der Mischung. Die Farbe lag auf der Wand statt in ihr, und der Raum war feucht. Schon 1517, nach kaum zwanzig Jahren, blätterte das Bild ab. 1568 schrieb Vasari, es sei kaum noch etwas zu erkennen, so zitiert ihn das Museum."
+      ]
+    },
+    {
+      "type": "text",
+      "id": "centuries",
+      "nav": "Fünf Jahrhunderte auf einer Wand",
+      "h": "Fünf Jahrhunderte auf einer Wand",
+      "paras": [
+        "Der Schaden kam in Wellen. Im 17. Jahrhundert vergrößerten die Dominikaner die Tür unter dem Tisch (ein Katalog nennt das Jahr 1652), und die Füße Christi gingen verloren. In den 1720er Jahren hielt ein Restaurator das Bild für ein Ölgemälde, so der Katalog, schrubbte es mit Natronlauge, überzog es mit Ölfirnis und übermalte große Teile. In den 1770er Jahren wurde es noch einmal übermalt. 1821 versuchte ein anderer Restaurator, Teile davon von der Wand abzulösen. Unter Napoleon nutzten Truppen den Raum, nach einem Bericht als Stall. Dann der Krieg. Im August 1943 fiel eine Bombe in den Kreuzgang neben dem Refektorium und riss sein Gewölbe und seine Ostwand ein. Die bemalte Wand stand. Seit 1940 schützte sie ein Stahlgerüst voller Sandsäcke, und das hat sie gerettet. Ab 1945 wurde der Raum wieder aufgebaut."
+      ]
+    },
+    {
+      "type": "text",
+      "id": "restoration",
+      "nav": "Die lange Restaurierung",
+      "h": "Die lange Restaurierung",
+      "paras": [
+        "Restauratoren sind seit dem frühen 18. Jahrhundert an der Wand, nach Zählung des Museums etwa neunmal, und die meiste Zeit hieß Restaurieren: nachmalen, was fehlte. In den ersten Jahren des 20. Jahrhunderts restaurierte es Luigi Cavenaghi, in den 1950er Jahren sicherte Mauro Pellicioli die abblätternde Oberfläche, ohne die alten Übermalungen abzunehmen. Die letzte Restaurierung war anders. Von Ende der 1970er Jahre bis 1999, mehr als zwanzig Jahre lang, arbeitete Pinin Brambilla Barcilon über die ganze Wand, mit der Mailänder Denkmalbehörde und dem Zentralinstitut für Restaurierung in Rom im Rücken, wie die Presse damals berichtete. Ihr Team nahm die Übermalungen der früheren Jahrhunderte ab, reinigte Leonardos erhaltene Farbe Schuppe für Schuppe unter der Lupe, so beschrieb sie es, und tönte die Lücken mit Aquarell, das sich wieder abwaschen lässt. Frühere Restauratoren, berichtete sie, hatten Augen versetzt, Münder geschlossen und Bärte hinzugefügt, die er nie gemalt hatte. Was zurückkam, ist dünn. Die Schätzungen der Fachleute, wie viel der Farbe von Leonardo selbst stammt, reichen von etwa einem Fünftel bis etwa zur Hälfte. Es sind Schätzungen, und auf eine Zahl einigt sich niemand."
+      ]
+    },
+    {
+      "type": "text",
+      "id": "milan",
+      "nav": "In Mailand heute",
+      "h": "Das Bild in Mailand sehen",
+      "paras": [
+        [
+          "Das Bild ist noch in seinem Raum, der mit Kirche und Kloster seit 1980 Welterbe ist. Die Luft im Refektorium wird gefiltert und das Klima geregelt. Darum gehst du durch eine Folge kleiner Räume hinein, deren Türen sich nacheinander öffnen, und die Besuche sind kurz, zeitlich festgelegt und in kleinen Gruppen. Eine Buchung ist Pflicht. Die Wand gegenüber trägt die Kreuzigung von Giovanni Donato Montorfano, signiert und datiert 1495 und als echtes Fresko gemalt. Sie hat ihre Farbe viel besser behalten als Leonardos Wand. Kniende Figuren der Herzogsfamilie wurden darauf gesetzt, wahrscheinlich von Leonardo, sagt das Museum, und von ihnen ist fast nichts übrig. Für den Besuch: die Website des Museums, ",
+          {
+            "text": "cenacolovinciano.org",
+            "href": "https://cenacolovinciano.org/en/"
+          },
+          "."
+        ]
+      ]
+    },
+    {
+      "type": "text",
+      "id": "wing",
+      "nav": "Im Flügel",
+      "h": "Was unsere Kopie zeigt, und was sie nicht kann",
+      "paras": [
+        "Im Leonardo-Flügel des Museums füllt eine Reproduktion des Abendmahls eine Wand im Hof, in denselben 4,6 mal 8,8 Metern. Sie zeigt dir zwei Dinge, die ein Buch nicht zeigen kann: die Größe, mit dir davor, und die ganze Komposition auf einmal, Christus in der Mitte und die Apostel in vier Dreiergruppen. Die Wand selbst kann sie nicht zeigen: die Oberfläche des Putzes, die Schuppen und die getönten Lücken, den Zustand, in dem das Bild wirklich ist. Und sie kann das Licht des Raums nicht zeigen. In Mailand fällt das gemalte Licht von links, wie das Tageslicht aus den echten Fenstern des Refektoriums. An jeder anderen Wand geht dieses Zusammenspiel verloren.",
+        [
+          "Wie groß es neben der Mona Lisa und den anderen Werken ist: ",
+          {
+            "text": "die Größenseite",
+            "page": "sizes"
+          },
+          "."
+        ]
+      ],
+      "pic": {
+        "pic": "supper",
+        "title": "Das Abendmahl im Hof",
+        "tag": "tag_still",
+        "what": "ein Standbild aus dem Film des Flügels. Die Reproduktion an ihrer Wand im Hof des Museums, 4,6 mal 8,8 Meter. Die Wand ist in Code gebaut. Das Original befindet sich im Refektorium von Santa Maria delle Grazie in Mailand.",
+        "alt": "Eine Reproduktion des Abendmahls füllt eine helle Wand in einem Hof: eine Reihe von Figuren an einem langen Tisch in einem gemalten Raum. Ein Standbild aus dem Film des Flügels.",
+        "src": [
+          "Foto: Paris Orlando, 2019, gemeinfrei (PD-Art), über ",
+          {
+            "text": "Wikimedia Commons",
+            "href": "https://commons.wikimedia.org/wiki/File:Last_Supper_by_Leonardo_da_Vinci.jpg"
+          },
+          ". {museum:it108}"
+        ]
+      },
+      "links": [
+        {
+          "text": "Das Abendmahl im Flügel ansehen",
+          "stop": "supper-wall"
+        }
+      ]
+    },
+    {
+      "type": "sources",
+      "id": "sources",
+      "nav": "Quellen",
+      "h": "Quellen",
+      "intro": "Die Seite stützt sich auf diese Quellen, alle gelesen am 12. Oktober 2026:",
+      "read": [
+        {
+          "text": "Museo del Cenacolo Vinciano, das Werk",
+          "href": "https://cenacolovinciano.org/en/museum/the-works/the-last-supper-leonardo-da-vinci-1452-1519/"
+        },
+        {
+          "text": "Museo del Cenacolo Vinciano, Technik, Erhaltung und Restaurierungen",
+          "href": "https://cenacolovinciano.org/en/museum/backstage/"
+        },
+        {
+          "text": "Museo del Cenacolo Vinciano, die Geschichte",
+          "href": "https://cenacolovinciano.org/en/museum/history/"
+        },
+        {
+          "text": "Museo del Cenacolo Vinciano, die Kreuzigung von Montorfano",
+          "href": "https://cenacolovinciano.org/en/museum/the-works/the-crucifixion-donato-montorfano-1460-ca-1502-ca/"
+        },
+        {
+          "text": "Museo del Cenacolo Vinciano, das deutsche Faltblatt (PDF)",
+          "href": "https://cenacolovinciano.org/wp-content/uploads/2024/11/Depliant-Cenacolo-TED.pdf",
+          "only": "de"
+        },
+        {
+          "text": "Museo del Cenacolo Vinciano, die Bildbeschreibung (PDF, italienisch)",
+          "href": "https://cenacolovinciano.org/wp-content/uploads/2019/07/DescriVedendo-Cenacolo.pdf"
+        },
+        {
+          "text": "Museo del Cenacolo Vinciano, das Museumsblatt von 2023 (PDF, italienisch)",
+          "href": "https://cenacolovinciano.org/wp-content/uploads/2023/07/Museo-del-Cenacolo-Vinciano.pdf"
+        },
+        {
+          "text": "Ministero della Cultura, der Ort",
+          "href": "https://cultura.gov.it/luogo/museo-del-cenacolo-vinciano"
+        },
+        {
+          "text": "Regione Lombardia, Katalogeintrag des Gemäldes",
+          "href": "https://lombardiabeniculturali.it/opere-arte/schede-complete/3o210-01279"
+        },
+        {
+          "text": "Regione Lombardia, Katalogeintrag des Refektoriums",
+          "href": "https://www.lombardiabeniculturali.it/architetture/schede/LMD80-00084/"
+        },
+        {
+          "text": "ICCD, nationaler Katalogeintrag (1975)",
+          "href": "https://sigecweb.beniculturali.it/sigec/item/print/ICCD3288350"
+        },
+        {
+          "text": "The Art Newspaper, 1. November 1998, zur Restaurierung",
+          "href": "https://www.theartnewspaper.com/1998/11/01/leonardos-last-supper-restored-a-wreck-but-an-authentic-wreck"
+        },
+        {
+          "text": "The Art Newspaper, 30. April 1999, dazu, wie viel von Leonardo ist",
+          "href": "https://www.theartnewspaper.com/1999/05/01/the-director-of-one-of-italys-top-restoration-laboratories-responds-to-denunciations-of-work-carried-out-on-leonardos-last-supper"
+        },
+        {
+          "text": "Universität Amsterdam, 2023, zum Öl in der Farbe",
+          "href": "https://hims.uva.nl/content/news/2023/10/shedding-light-on-leonardos-painting-methods.html"
+        }
+      ],
+      "notes": [],
+      "contact": "Ist ein Datum, ein Name oder ein Satz falsch, schreib uns, und wir korrigieren es.",
+      "contact_link": "Zum Impressum",
+      "what_link": "Was dieses Museum ist"
+    },
+    {
+      "type": "close",
+      "id": "enter",
+      "nav": "",
+      "h": "Das Abendmahl im Flügel ansehen",
+      "p": "Die Tür führt in den Leonardo-Flügel, an die Wand im Hof. Der Bildersaal mit der Mona Lisa kommt auf dem Rundgang zuerst.",
+      "door": {
+        "text": "Ins Museum",
+        "note": "Eintritt frei, kein Konto."
+      }
+    }
+  ]
+}

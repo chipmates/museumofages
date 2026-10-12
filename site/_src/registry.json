@@ -191,6 +191,22 @@
         "langs": ["en", "de"],
         "count": "sizes",
         "from": "paintings"
+      },
+      {
+        "slug": {
+          "en": "last-supper",
+          "de": "abendmahl"
+        },
+        "name": {
+          "en": "The Last Supper",
+          "de": "Das Abendmahl"
+        },
+        "line": {
+          "en": "The wall in Milan, 4.6 by 8.8 metres: how he painted it, what five centuries did to it, and what is left.",
+          "de": "Die Wand in Mailand, 4,6 mal 8,8 Meter: wie er es malte, was fünf Jahrhunderte damit machten, und was übrig ist."
+        },
+        "langs": ["en", "de"],
+        "count": "supper"
       }
     ],
     "out": {
