@@ -1,6 +1,6 @@
-/* THE MUSEUM'S OWN COUNTS: keyless totals on the app's funnel route, in the
-   app's beacon pattern and under the same rules (docs/MEASUREMENT.md). Four
-   steps, each a plain total with no key between them:
+/* THE MUSEUM'S OWN COUNTS: keyless totals sent to the site's own function
+   (site/functions/v1/funnel.js), which checks every field against a closed
+   list. Four steps, each a plain total with no key between them:
      museum_arrival  a wing opened, once per wing per page load (reach)
      museum_stop     a stop of its walk reached, by its number, once per stop
      museum_look     a close look opened, by the kind of work, once per work
@@ -8,23 +8,32 @@
                      a look opened, whichever comes first, once per wing
    Every row says how the screen stood at that moment (upright, sideways,
    wide), read from the wing's own form test, and nothing else about it.
-   Sent from the production host only; nothing is stored, the dedup lives in
-   this module's memory, and the one thing read from storage is the probe
-   flag our own test browsers carry. */
+   Arrival and use say where the visit came from, as one word worked out once
+   (sourceWord). Sent from the museum's own hosts only; nothing is stored, the
+   dedup lives in this module's memory, and the one thing read from storage is
+   the probe flag our own test browsers carry. */
 
-import { lang } from '../wings/content'
+import { pageLang } from '../wings/content'
 import { filmForm } from '../wings/vinci/film-cinema'
 
 type MuseumStep = 'museum_arrival' | 'museum_stop' | 'museum_look' | 'museum_use'
 export type MuseumHold = 'upright' | 'sideways' | 'wide'
 export type MuseumLook = 'painting' | 'machine' | 'sheet' | 'book' | 'film' | 'place'
 
-const PRODUCTION_HOSTS: ReadonlySet<string> = new Set(['agoracosmica.org', 'www.agoracosmica.org'])
-const ENDPOINT = 'https://llm.agoracosmica.org/v1/funnel'
-/** the dev flag: `?na-count=http://localhost:8789` sends to a worker on this
-    machine, from any host but the production one, and nowhere else */
+const PRODUCTION_HOSTS: ReadonlySet<string> = new Set(['museumofages.org', 'www.museumofages.org'])
+/** the function of the page's own origin */
+const ENDPOINT = '/v1/funnel'
+/** the dev flag: `?na-count=http://localhost:8789` sends to a server on this
+    machine, from any host but the production ones, and nowhere else */
 const DEV_FLAG = 'na-count'
-const PROBE_KEY = 'agc_probe'
+const PROBE_KEY = 'moa_probe'
+/** the closed list of source words the function takes (site/functions/_count/source.js) */
+const SOURCES: ReadonlySet<string> = new Set([
+  'direct', 'search', 'ad_grant', 'ad_paid', 'ad_forum', 'forum', 'code', 'edu', 'wiki', 'news', 'mail', 'award',
+  'assistant', 'social', 'referral',
+])
+/** the addresses of links the museum places itself: a prefix in front of the real path */
+const PREFIXES: Readonly<Record<string, string>> = { g: 'ad_grant', p: 'ad_paid', f: 'ad_forum', o: 'forum' }
 
 /** the wing's form test, named as the server's list names it */
 const HOLD: Readonly<Record<ReturnType<typeof filmForm>, MuseumHold>> = { upright: 'upright', cinema: 'sideways', desk: 'wide' }
@@ -39,6 +48,28 @@ const LOOK: ReadonlyMap<string, MuseumLook> = new Map([
 try {
   if (new URLSearchParams(location.search).get('probe') === '1') localStorage.setItem(PROBE_KEY, '1')
 } catch { /* storage or address unavailable: the browser stays unmarked */ }
+
+/** Where the visit came from, worked out once from the address's path, then
+    the door's word in the fragment (`#s=7&via=search`), then the word the edge
+    set on the page: '' when none says (the walk opened from the site itself). */
+export function sourceWord(path: string, hash: string, edge: string | null): string {
+  const prefix = /^\/a\/([a-z])\//.exec(path)?.[1]
+  const placed = prefix && Object.hasOwn(PREFIXES, prefix) ? PREFIXES[prefix] : undefined
+  if (placed) return placed
+  const via = /(?:^|[#&])via=([a-z_]+)(?:&|$)/.exec(hash)?.[1]
+  if (via && SOURCES.has(via)) return via
+  return edge && SOURCES.has(edge) ? edge : ''
+}
+
+let source: string | null = null
+function sourceField(): string | undefined {
+  if (source === null) {
+    try { source = sourceWord(location.pathname, location.hash, document.documentElement.getAttribute('data-source')) } catch { source = '' }
+  }
+  return source || undefined
+}
+// read before the walk writes its own fragment
+sourceField()
 
 let probe: 1 | undefined | null = null
 function probeField(): 1 | undefined {
@@ -66,7 +97,8 @@ function send(step: MuseumStep, fields: { stop?: number; look?: MuseumLook }): v
   try {
     const url = endpoint()
     if (!url) return
-    const body = JSON.stringify({ step, wing, stop: fields.stop, look: fields.look, hold: HOLD[filmForm()], language: lang(), probe: probeField() })
+    const from = step === 'museum_arrival' || step === 'museum_use' ? sourceField() : undefined
+    const body = JSON.stringify({ step, wing, stop: fields.stop, look: fields.look, hold: HOLD[filmForm()], language: pageLang(), source: from, probe: probeField() })
     // text/plain keeps both transports a simple request: no preflight, no answer read
     if (typeof navigator.sendBeacon === 'function' && navigator.sendBeacon(url, new Blob([body], { type: 'text/plain' }))) return
     void fetch(url, { method: 'POST', body, keepalive: true, mode: 'no-cors', headers: { 'Content-Type': 'text/plain' } }).catch(() => undefined)
