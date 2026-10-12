@@ -1478,7 +1478,7 @@ def build(out, registry, wing_dirs, mark=None, topics=True, quiet=False, more_pi
         w["head"] = fill(t["head"], w)
         w["header"] = fill(t["header"], w)
         w["footer"] = fill(t["footer"], w)
-        counted = wing_count_kind(site.wings[w["wing.slug"]]) if kind == "wing" else COUNT_KINDS[kind]
+        counted = wing_count_kind(w["wing.slug"], site.wings[w["wing.slug"]]) if kind == "wing" else COUNT_KINDS[kind]
         built.append((out / path, with_policy(with_count(fill(template, w), c.static, counted)), kind, c.lang))
 
     for lang in LANGS:
@@ -1810,9 +1810,10 @@ def build_topics(out, site):
     return found
 
 
-def wing_count_kind(entry):
-    """A wing's page in the count: the first word of its English address, up to its first hyphen."""
-    return entry["page"]["en"].strip("/").split("/")[-1].split("-")[0]
+def wing_count_kind(slug, entry):
+    """A wing's page in the count: its count key in the registry, else the wing's own key. Never derived from an
+    address, so a new wing never renames an old one's rows."""
+    return entry.get("count") or slug
 
 
 def topic_count_kind(topic):
@@ -1825,10 +1826,10 @@ def count_lists(site):
     wings = {s: site.count(s, "stops") for s in site.open}
     kinds = list(COUNT_KINDS.values())
     for s in site.open:
-        kinds.append(wing_count_kind(site.wings[s]))
+        kinds.append(wing_count_kind(s, site.wings[s]))
         kinds += [topic_count_kind(t) for t in site.wings[s].get("topics", [])]
     problems = [f"the count's page kind {k!r} stands twice" for k in sorted({k for k in kinds if kinds.count(k) > 1})]
-    problems += [f"the count's page kind {k!r} is not a plain word" for k in kinds if not re.fullmatch(r"[a-z][a-z0-9_]{0,23}", k)]
+    problems += [f"the count's page kind {k!r} is not a plain word" for k in kinds if not re.fullmatch(r"[a-z][a-z0-9_-]{0,47}", k)]
     problems += [f"the wing {s!r} has no whole number of stops for the count" for s, n in wings.items() if not isinstance(n, int) or n < 1]
     text = ("// Written by site/_src/build.py from the site's registry, its wings' facts and its languages. Not edited by hand.\n"
             f"export const WING_STOPS = Object.freeze({json.dumps(wings, separators=(', ', ': '))})\n"
