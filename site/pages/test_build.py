@@ -420,6 +420,54 @@ class Case(unittest.TestCase):
             for a in re.findall(r'<a\b[^>]*href="/w/[^"]*"[^>]*>', text):
                 self.assertRegex(a, r'data-door="(top|item|end)"')
 
+    def test_every_row_of_the_chart_opens_with_the_person(self):
+        if not self.works_page:
+            self.skipTest("no page shows a wing's works")
+        out, written = self.build()
+        wing, topic, facts = self.works_facts()
+        for lang in ("en", "de"):
+            own = self.own_part((out / f'{wing["page"][lang].strip("/")}/{topic["slug"][lang]}/index.html').read_text(encoding="utf-8"))
+            panel = re.search(r'<div class="sz-panel" role="img".*?<div class="sz-keys"', own, flags=re.S).group(0)
+            bands = re.split(r'<div class="sz-rows sz-rows--\w">', panel)[1:]
+            self.assertEqual(len(bands), 3)
+            works = len({p["id"] for p in facts["paintings"]}) + 1
+            for band in bands:
+                rows = [r for r in re.findall(r'<div class="sz-row">(.*?)</div>', band, flags=re.S) if "<svg" in r]
+                self.assertGreater(len(rows), 1)
+                for row in rows:
+                    self.assertTrue(row.startswith('<span class="sz-i"><svg class="sz-s sz-s--person"'), row[:80])
+                # every work once in each band
+                self.assertEqual(len(re.findall(r'<svg class="sz-s(?: sz-s--mark| sz-s--field)?" width', band)), works)
+
+    def test_a_still_of_the_second_rights_tier_needs_its_source_line(self):
+        if not self.works_page:
+            self.skipTest("no page shows a wing's works")
+        if not any(b.get("pic") for b in self.data("en", self.works_page)["blocks"]):
+            self.skipTest("the works page hangs no still of the wing")
+        for lang in ("en", "de"):
+            data = self.data(lang, self.works_page)
+            for b in data["blocks"]:
+                if b.get("pic"):
+                    b["pic"].pop("credit", None)
+            self.save(lang, data, self.works_page)
+        # a built page's checks read the written files, so this failure comes after the writing
+        with self.assertRaises(SystemExit) as caught:
+            self.build()
+        self.assertRegex(str(caught.exception), r"second rights tier, and its label has no source line")
+
+    def test_the_chart_picture_is_described_by_its_own_caption(self):
+        if not self.works_page:
+            self.skipTest("no page shows a wing's works")
+        out, written = self.build()
+        wing, topic, facts = self.works_facts()
+        for lang in ("en", "de"):
+            text = (out / f'{wing["page"][lang].strip("/")}/{topic["slug"][lang]}/index.html').read_text(encoding="utf-8")
+            graph = json.loads(re.search(r'<script type="application/ld\+json">(.*?)</script>', text, flags=re.S).group(1).replace("<\\/", "</"))["@graph"]
+            image = next(n for n in graph if n["@type"] == "ImageObject")
+            chart = next(b for b in self.data(lang, self.works_page)["blocks"] if b["type"] == "chart")
+            self.assertTrue(image["url"].endswith(".png"))
+            self.assertEqual(image["caption"].replace(" ", " "), chart["still_caption"])
+
     def test_a_line_with_another_size_stops_the_build(self):
         if not self.works_page:
             self.skipTest("no page shows a wing's works")
@@ -433,7 +481,7 @@ class Case(unittest.TestCase):
         if not self.works_page:
             self.skipTest("no page shows a wing's works")
         data = self.data("de", self.works_page)
-        next(b for b in data["blocks"] if b["type"] == "chart")["caption"] += " Neu."
+        next(b for b in data["blocks"] if b["type"] == "chart")["still_caption"] += " Neu."
         self.save("de", data, self.works_page)
         self.fails(r"older than its chart")
 

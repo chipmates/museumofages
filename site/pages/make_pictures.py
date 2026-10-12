@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """Cuts the film's stills into the sizes the search pages serve (AVIF first, WebP as the fallback), and renders the
-stills of a page's chart (PNG).
+stills of a page's chart (8-bit palette PNG).
 
     python3 pages/make_pictures.py [name ...]      all pictures, or only the named ones (a chart's still by its file)
     python3 pages/make_pictures.py --list          the names
@@ -78,9 +78,11 @@ def charts(only):
             continue
         drawing = WORK / "stills" / (out.stem + ".svg")
         drawing.write_text(job["svg"], encoding="utf-8")
-        # no strip: it would drop the mark too. The chunks that would change from run to run stay out.
-        run(["magick", f"msvg:{drawing}", "-set", "comment", mark, "-define", "png:exclude-chunks=date,time,bKGD,pHYs",
-             "-define", "png:compression-level=9", f"png:{out}"], env=env)
+        # A palette of 256 colours, no dithering: the flat colours stay exact, an edge's smoothing moves by a level or
+        # two, and the file is a quarter of the full-colour one. No strip: it would drop the mark too. The chunks that
+        # would change from run to run stay out.
+        run(["magick", f"msvg:{drawing}", "-alpha", "off", "-dither", "None", "-colors", "256", "-set", "comment", mark,
+             "-define", "png:exclude-chunks=date,time,bKGD,pHYs", "-define", "png:compression-level=9", f"png8:{out}"], env=env)
         made(out)
 
 

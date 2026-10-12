@@ -1,5 +1,5 @@
 {
-  "_note": "THE WORDS of the sizes page, English. Poured from the writer's WORDS file of round 1 word for word; every size, holder and stop the page shows comes from the wing's facts file, and the build checks each line of works.lines against it. The two files hold the same structure. No em dash, no en dash, no semicolon.",
+  "_note": "THE WORDS of the sizes page, English. Poured from the writer's WORDS file of round 2 word for word; every size, holder and stop the page shows comes from the wing's facts file, and the build checks each line of works.lines against it. A plate with credit \"wing\" carries the wing page's own source line for its still. The two files hold the same structure. No em dash, no en dash, no semicolon.",
   "page": {
     "id": "vinci-sizes",
     "wing": "vinci",
@@ -14,12 +14,29 @@
       "file": "vinci-sizes-chart-{lang}-1600.png"
     }
   },
-  "pics": {},
+  "pics": {
+    "supper": {
+      "stem": "v-supper",
+      "widths": [
+        800,
+        1600
+      ],
+      "sizes": "(min-width: 960px) 640px, calc(100vw - 40px)"
+    },
+    "lisa": {
+      "stem": "v-lisa",
+      "widths": [
+        800,
+        1280
+      ],
+      "sizes": "(min-width: 960px) 640px, calc(100vw - 40px)"
+    }
+  },
   "meta": {
     "title": "How big is the Mona Lisa? 79.4 × 53.4 cm | Museum of Ages",
-    "description": "How big is the Mona Lisa? 79.4 by 53.4 cm, 31 by 21 inches. Leonardo's works and the Last Supper to one scale beside a person, with a door to each one.",
-    "og_title": "How big is the Mona Lisa? 79.4 × 53.4 cm",
-    "og_image_alt": "A person 1.7 metres tall, the Mona Lisa at 79.4 by 53.4 centimetres and the Last Supper at 4.6 by 8.8 metres, drawn to one scale."
+    "description": "The Mona Lisa is 79.4 by 53.4 cm, 31 by 21 inches. The 24 works of the picture room and the Last Supper to one scale beside a person, a door to each.",
+    "og_title": "How big is the Mona Lisa? Her size, and the 24 works of the wing's picture room with the Last Supper to one scale",
+    "og_image_alt": "The Mona Lisa and the Last Supper drawn to one scale beside a person 1.7 metres tall: the painting 79.4 by 53.4 centimetres, the wall painting 4.6 by 8.8 metres. A chart made for this page."
   },
   "labels": {
     "crumbs": "You are here",
@@ -27,6 +44,7 @@
     "crumb_here": "Sizes",
     "toc": "On this page",
     "tag_chart": "Made for this page",
+    "tag_still": "Reproduction",
     "person": "1.7 m"
   },
   "top": {
@@ -39,9 +57,9 @@
       "alt": "The Mona Lisa, 79.4 by 53.4 centimetres, beside a person 1.7 metres tall, drawn to one scale."
     },
     "door": {
-      "text": "See the Mona Lisa in the walk",
+      "text": "See the Mona Lisa in the wing",
       "note": "Free entry, no account.",
-      "leads": "The door opens the Leonardo wing at the Mona Lisa's stop. Every work below has its own door to its stop."
+      "leads": "The door opens the Leonardo wing at the Mona Lisa's stop. Every work further down has its own door to its stop."
     }
   },
   "blocks": [
@@ -52,8 +70,10 @@
       "h": "The chart",
       "lead": "Here is every work of the picture room, and the Last Supper, drawn to one scale.",
       "caption": "All 24 works of the picture room and the Last Supper at one scale, beside a person 1.7 metres tall. The sizes are those of the originals.",
-      "alt": "A chart of 24 works and the Last Supper at one scale beside a person 1.7 metres tall: the Last Supper is 8.8 metres wide and 4.6 metres high, the largest panel, the Adoration of the Magi, is 2.4 metres tall, the Mona Lisa is 79.4 centimetres tall, and the smallest, the predella panel of the Annunciation, is 16 centimetres tall.",
-      "zoom": "The works under one metre again, {n} times larger, so the small ones can be read.",
+      "alt": "A chart of 24 works and the Last Supper at one scale beside a person 1.7 metres tall: the Last Supper is 4.6 metres high and 8.8 metres wide, the largest panel, the Adoration of the Magi, is 2.4 metres tall, the Mona Lisa is 79.4 centimetres tall, and the shortest, the predella panel of the Annunciation, is 16 centimetres tall.",
+      "zoom": "The works under one metre again, three times as large, so the small ones can be read.",
+      "key_h": "The shapes by number",
+      "still_caption": "All 24 works and the Last Supper at one scale, beside a person 1.7 metres tall.",
       "licence": "The chart is the museum's own work, CC BY-SA 4.0.",
       "still_link": "The chart as a picture, 1600 pixels wide"
     },
@@ -63,8 +83,16 @@
       "nav": "The Last Supper",
       "h": "The Last Supper",
       "paras": [
-        "The Last Supper is 8.8 metres wide and 4.6 metres high. It is a wall painting in the refectory, the dining hall of the monastery of Santa Maria delle Grazie in Milan, so it cannot hang in a picture room. In the walk a reproduction of it fills a wall in the court, at the same 8.8 by 4.6 metres. What a reproduction cannot show is the wall the painting is part of, the surface of its plaster, and the room it was painted for."
-      ]
+        "The Last Supper is 4.6 metres high and 8.8 metres wide. It is a wall painting in the refectory, the dining hall of the monastery of Santa Maria delle Grazie in Milan, so it cannot hang in a picture room. In the wing a reproduction of it fills a wall in the court, at the same 4.6 by 8.8 metres. What a reproduction cannot show is the wall the painting is part of, the surface of its plaster, and the room it was painted for."
+      ],
+      "pic": {
+        "pic": "supper",
+        "title": "The Last Supper in the court",
+        "tag": "tag_still",
+        "what": "a still from the wing's film. The reproduction on its wall in the court, 4.6 by 8.8 metres. The wall is built in code.",
+        "alt": "A reproduction of the Last Supper fills a pale wall in a court: a row of figures at a long table in a painted room. A still from the wing's film.",
+        "credit": "wing"
+      }
     },
     {
       "type": "text",
@@ -72,25 +100,33 @@
       "nav": "Near real size",
       "h": "Near real size",
       "paras": [
-        "What hangs in the walk are reproductions. Each is shown close to its real size, with its source and its licence on its label, and the originals are in the museums and collections named on this page. The sizes here are the originals' own, as their holders give them."
-      ]
+        "What hangs in the wing are reproductions. Each is shown close to its real size, with its source and its licence on its label, and the originals are in the museums and collections named on this page. The sizes here are the originals' own, as their holders give them."
+      ],
+      "pic": {
+        "pic": "lisa",
+        "title": "The Mona Lisa on the picture wall",
+        "tag": "tag_still",
+        "what": "a still from the wing's film. The reproduction hangs close to its real size among the other pictures, the wall running on to her left. From the Louvre collection, Paris.",
+        "alt": "A long dark blue wall hung with framed reproductions under spotlights. The Mona Lisa hangs among them, close to her real size, and more frames run on to her left. A still from the wing's film.",
+        "credit": "wing"
+      }
     },
     {
       "type": "works",
       "id": "works",
       "nav": "Every work",
       "h": "Every work",
-      "intro": "Every work in the order it hangs, with the size its holder gives. A word after the holder, such as disputed or workshop, says who is thought to have made it. A predella is a small panel from the foot of an altarpiece.",
+      "intro": "Every work in the order it hangs, with the size its holder gives. A word after the holder, such as disputed or workshop, says how sure the attribution to Leonardo is. A predella is a small panel from the foot of an altarpiece.",
       "lines": [
         "The Baptism of Christ. 177 × 151 cm (70 × 59 in). Gallerie degli Uffizi, Florence. By Verrocchio and Leonardo. Taller than a person of 1.7 metres.",
         "Annunciation. 98 × 217 cm (39 × 85 in). Gallerie degli Uffizi, Florence. Over two metres wide and under a metre tall.",
-        "Ginevra de' Benci. 38.1 × 37 cm (15 × 15 in). National Gallery of Art, Washington. Almost square. The walk shows both sides of the panel.",
+        "Ginevra de' Benci. 38.1 × 37 cm (15 × 15 in). National Gallery of Art, Washington. Almost square. The wing shows both sides of the panel.",
         "Ginevra de' Benci, the back of the panel. 38.1 × 37 cm (15 × 15 in). National Gallery of Art, Washington. The painted back of the same panel: one work that hangs twice.",
         "Madonna of the Carnation. 62 × 48.5 cm (24 × 19 in). Bayerische Staatsgemäldesammlungen, Alte Pinakothek, Munich.",
         "Benois Madonna. 49.5 × 33 cm (19 × 13 in). State Hermitage Museum, Saint Petersburg.",
         "Saint Jerome in the Wilderness. 103 × 75 cm (41 × 30 in). Pinacoteca Vaticana, Vatican City. Just over a metre tall.",
         "Adoration of the Magi. 240 × 244 cm (94 × 96 in). Gallerie degli Uffizi, Florence. The largest work on the wall: almost square, and 70 centimetres taller than a person of 1.7 metres.",
-        "Annunciation, predella panel. 16 × 60 cm (6 × 24 in). Musée du Louvre, Paris. Disputed. The lowest panel on the wall at 16 centimetres, and almost four times as wide as it is tall.",
+        "Annunciation, predella panel. 16 × 60 cm (6 × 24 in). Musée du Louvre, Paris. Disputed. The shortest picture on the wall, 16 centimetres tall, and almost four times as wide.",
         "Virgin of the Rocks, Louvre version. 199.5 × 122 cm (79 × 48 in). Musée du Louvre, Paris. Just under two metres tall. The London version is ten centimetres shorter.",
         "Portrait of a Musician. 44.7 × 32 cm (18 × 13 in). Veneranda Biblioteca Ambrosiana, Milan. Disputed.",
         "Lady with an Ermine. 54.8 × 40.3 cm (22 × 16 in). Muzeum Narodowe w Krakowie, Muzeum Książąt Czartoryskich, Kraków. Shorter and narrower than the Mona Lisa.",
@@ -99,8 +135,8 @@
         "The Burlington House Cartoon. 141.5 × 104.6 cm (56 × 41 in). National Gallery, London. Drawing. The larger of the two drawings on the wall.",
         "Madonna of the Yarnwinder, Buccleuch version. 48.3 × 36.9 cm (19 × 15 in). Buccleuch collection, on loan to National Galleries of Scotland. Qualified attribution. Two versions of one picture hang next to each other here, almost the same size.",
         "Madonna of the Yarnwinder, Lansdowne version. 49.5 × 37.1 cm (19 × 15 in). Kenneth C. Griffin Collection, on loan to The Metropolitan Museum of Art. Qualified attribution. A little over a centimetre taller than the Buccleuch version.",
-        "The Fight for the Standard, after the Battle of Anghiari. 45.3 × 63.6 cm (18 × 25 in). Musée du Louvre, Paris. Later copy. Drawing. A copy by other hands, and the second drawing on the wall.",
-        "Mona Lisa. 79.4 × 53.4 cm (31 × 21 in). Musée du Louvre, Paris. Has its own stop in the walk. Of the other 23 works, fourteen are shorter than it and nine are taller.",
+        "The Fight for the Standard, after the Battle of Anghiari. 45.3 × 63.6 cm (18 × 25 in). Musée du Louvre, Paris. Drawing. A later copy by other hands, and the second drawing on the wall.",
+        "Mona Lisa. 79.4 × 53.4 cm (31 × 21 in). Musée du Louvre, Paris. Has its own stop in the wing. Of the other 23 works, fourteen are shorter than it and nine are taller.",
         "Virgin of the Rocks, London version. 189.5 × 120 cm (75 × 47 in). National Gallery, London. Qualified attribution. Ten centimetres shorter than the Louvre version, and two narrower.",
         "The Virgin and Child with Saint Anne. 168 × 113 cm (66 × 44 in). Musée du Louvre, Paris. Two centimetres short of a person of 1.7 metres.",
         "Salvator Mundi. 65.7 × 45.7 cm (26 × 18 in). Private collection, present location unconfirmed. Disputed.",
@@ -109,6 +145,7 @@
         "Bacchus, formerly Saint John the Baptist. 177 × 115 cm (70 × 45 in). Musée du Louvre, Paris. Workshop. The same height as the Baptism of Christ, the first picture on the wall.",
         "The Last Supper. 460 × 880 cm (181 × 346 in). Museo del Cenacolo Vinciano, Santa Maria delle Grazie, Milan. A wall painting, so it is not in the picture room. A reproduction fills a wall in the court."
       ],
+      "note": "Sizes are height by width.",
       "go": "See it in the wing"
     },
     {
@@ -118,13 +155,14 @@
       "h": "The table",
       "caption": "The same numbers as the chart, in the order the works hang.",
       "unit": "Centimetres, with inches in brackets.",
+      "hint": "Swipe the table for holder and place.",
       "cols": {
         "work": "Work",
         "height": "Height",
         "width": "Width",
         "holder": "Holder",
         "place": "Place",
-        "walk": "In the walk"
+        "walk": "In the wing"
       },
       "go": "See it in the wing"
     },
@@ -143,7 +181,7 @@
       "type": "close",
       "id": "enter",
       "nav": "",
-      "h": "See the pictures in the walk",
+      "h": "See the pictures in the wing",
       "p": "The door opens the Leonardo wing at the picture room, where the walk begins. The Mona Lisa hangs there among 25 pictures, and you can step up to each one.",
       "door": {
         "text": "Enter the museum",

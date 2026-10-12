@@ -181,12 +181,12 @@
           "de": "groessen"
         },
         "name": {
-          "en": "How big is the Mona Lisa?",
-          "de": "Wie groß ist die Mona Lisa?"
+          "en": "How big is the Mona Lisa",
+          "de": "Wie groß ist die Mona Lisa"
         },
         "line": {
-          "en": "Leonardo's works and the Last Supper to one scale beside a person.",
-          "de": "Leonardos Werke und das Abendmahl in einem Maßstab neben einem Menschen."
+          "en": "The 24 works of the wing's picture room and the Last Supper to one scale beside a person, each with its size and its holder.",
+          "de": "Die 24 Werke aus dem Bildersaal des Flügels und das Abendmahl im selben Maßstab neben einem Menschen, jedes mit seiner Größe und seinem Haus."
         },
         "langs": ["en", "de"],
         "count": "sizes",

@@ -6,15 +6,18 @@ build checks that each line carries its work's size as the facts give it.
 
 A shape on the page is an inline SVG whose width and height are set in em, one em being one metre: a panel sets the
 font size of its shapes from its own width (container query units), so every shape of a panel stands at one scale,
-whatever the screen. The stills are one SVG each, at a fixed size, rendered by make_pictures.py.
+whatever the screen. The first panel's rows are set here, each opening with the person, once for each band of chart
+widths (BANDS); the page shows the band its chart is in. The stills are one SVG each, at a fixed size, rendered by
+make_pictures.py.
 Standard library only. This file names no wing and no work.
 """
 import hashlib
 import html
 import re
 
-# One em of a shape is one metre. A panel is this many metres wide, so a wall of 8.8 metres keeps its padding.
-PANEL_M = 9.2
+# One em of a shape is one metre. A panel is this many metres wide, so the person and a wall of 8.8 metres share a row
+# (chart.css divides the chart's width by the same number).
+PANEL_M = 10
 # The second panel draws the works under one metre again, this many times larger.
 ZOOM = 3
 # The works the second panel draws again: those less tall than this, in centimetres.
@@ -107,36 +110,114 @@ def split_line(line, it, num, lang):
 # ---------- the page ----------
 
 def shape_svg(it, cls=""):
-    """A work as a frame of its own size: width and height in metres as em, the drawing in millimetres."""
-    w, h = round(it["w"] * 10), round(it["h"] * 10)
-    return (f'<svg class="sz-s{cls}" width="{it["w"] / 100:g}em" height="{it["h"] / 100:g}em" viewBox="0 0 {w} {h}" '
-            f'aria-hidden="true" focusable="false"><rect width="{w}" height="{h}" vector-effect="non-scaling-stroke"/></svg>')
+    """A work as a frame of its own size: width and height in metres as em, the frame filling it."""
+    return (f'<svg class="sz-s{cls}" width="{it["w"] / 100:g}em" height="{it["h"] / 100:g}em" aria-hidden="true">'
+            f'<rect width="100%" height="100%"/></svg>')
+
+
+PERSON_ID = "sz-person"
+
+
+def person_defs():
+    """The person drawn once: every row's person is a use of it."""
+    return (f'<svg class="sz-defs" width="0" height="0" aria-hidden="true" focusable="false"><symbol id="{PERSON_ID}" '
+            f'viewBox="0 0 {PERSON_W} 1700" preserveAspectRatio="none"><path d="{PERSON_PATH}"/></symbol></svg>')
 
 
 def person_svg(height_cm):
     k = height_cm / 170
     return (f'<svg class="sz-s sz-s--person" width="{PERSON_W * k / 1000:g}em" height="{height_cm / 100:g}em" '
-            f'viewBox="0 0 {PERSON_W} 1700" preserveAspectRatio="none" aria-hidden="true" focusable="false">'
-            f'<path d="{PERSON_PATH}"/></svg>')
+            f'aria-hidden="true"><use href="#{PERSON_ID}"/></svg>')
 
 
-def panel(works, mark, labels, num, lang, zoom=False, rich=esc):
-    """One panel: the person (in the first), every shape in the order they hang, and a metre for scale. Under each
-    shape its numbers, and under the marked one and the field its name too."""
-    cells = []
-    if not zoom:
-        cells.append(f'<li class="sz-i">{person_svg(works.person_cm)}<span class="sz-n">{esc(labels["person"])}</span></li>')
+# The bands of the chart's width, each with its own rows: (the least width of the band, the width its rows are filled
+# to, its least). A label is wider than a small shape, and it does not grow with the chart: a label's width is
+# reckoned at chart.css's .sz-n (12 px Marcellus, 5 px on each side), a little generous.
+BANDS = ((0, 320), (480, 480), (720, 720))
+LABEL_CH, LABEL_PAD, SHAPE_PAD = 7.6, 10, 10
+
+
+def cell_key(it, mark, labels):
+    key = ", ".join(str(n) for n in it["ns"])
+    if it["id"] == mark:
+        return key, labels["mark"]
+    return key, labels["field"] if it.get("field") else ""
+
+
+def cell(it, mark, labels, rich):
+    cls = " sz-s--mark" if it["id"] == mark else " sz-s--field" if it.get("field") else ""
+    key, name = cell_key(it, mark, labels)
+    name = f' <span class="sz-name">{rich(name)}</span>' if name else ""
+    return f'<span class="sz-i">{shape_svg(it, cls)}<span class="sz-n">{key}{name}</span></span>'
+
+
+def label_px(text):
+    return len(text) * LABEL_CH + LABEL_PAD if text else 0
+
+
+def rows_for(works, mark, labels, num, lang, width):
+    """The first panel's rows at a chart this wide: each row opens with the person (named in the first), the works
+    follow in the order they hang, the field has a row of its own, and the metre ends the last row it fits in."""
+    em = width / PANEL_M
+    person_w = PERSON_W * works.person_cm / 170 / 1000 * em + SHAPE_PAD
+    span = lambda it: max(it["w"] / 100 * em + SHAPE_PAD, label_px(" ".join(x for x in cell_key(it, mark, labels) if x)))
+    rows, row, used = [], [("person", True)], max(person_w, label_px(labels["person"]))
+    field = None
     for it in works.shapes():
-        if zoom and (it.get("field") or it["h"] >= ZOOM_UNDER_CM):
+        if it.get("field"):
+            field = it
             continue
-        cls = " sz-s--mark" if it["id"] == mark else " sz-s--field" if it.get("field") else ""
+        w = span(it)
+        if used + w > width and len(row) > 1:
+            rows.append((row, used))
+            row, used = [("person", False)], person_w
+        row.append(("work", it))
+        used += w
+    rows.append((row, used))
+    bar = (("bar", None), max(1 * em + SHAPE_PAD, label_px(f"{num(1, lang)} m")))
+    if rows[-1][1] + bar[1] <= width:
+        rows[-1][0].append(bar[0])
+        bar = None
+    if field:
+        rows.append(([("person", False), ("work", field)], person_w + span(field)))
+    if bar:
+        rows.append(([bar[0]], bar[1]))
+    return [r for r, _ in rows]
+
+
+def panel_rows(works, mark, labels, num, lang, rich=esc):
+    """The first panel, once per band. Under each shape its numbers, and under the marked one and the field its name."""
+    def html(kind, it):
+        if kind == "person":
+            name = esc(labels["person"]) if it else "&#160;"
+            return f'<span class="sz-i">{person_svg(works.person_cm)}<span class="sz-n">{name}</span></span>'
+        if kind == "bar":
+            return f'<span class="sz-i sz-i--bar"><span class="sz-bar"></span><span class="sz-n">{num(1, lang)} m</span></span>'
+        return cell(it, mark, labels, rich)
+    out = []
+    for i, (_, width) in enumerate(BANDS):
+        rows = "".join(f'<div class="sz-row">{"".join(html(k, it) for k, it in row)}</div>'
+                       for row in rows_for(works, mark, labels, num, lang, width))
+        out.append(f'<div class="sz-rows sz-rows--{"abc"[i]}">{rows}</div>')
+    return "".join(out)
+
+
+def panel(works, mark, labels, num, lang, zoom=True, rich=esc):
+    """The second panel: the works under a metre, larger, in the order they hang, and its own metre."""
+    cells = [cell(it, mark, labels, rich) for it in works.shapes() if not it.get("field") and it["h"] < ZOOM_UNDER_CM]
+    cells.append(f'<span class="sz-i sz-i--bar"><span class="sz-bar"></span><span class="sz-n">{num(1, lang)} m</span></span>')
+    return f'<div class="sz-row">{"".join(cells)}</div>'
+
+
+def key_list(works, titles, mark, rich, heading):
+    """The chart's key under its heading: each shape's numbers and the title of its work, as the still has it. It
+    repeats the list further down, so it is for the eyes only."""
+    out = []
+    for it in works.shapes():
         key = ", ".join(str(n) for n in it["ns"])
-        name = f' <span class="sz-name">{rich(labels["mark"] if it["id"] == mark else labels["field"])}</span>' \
-            if it["id"] == mark or it.get("field") else ""
-        cells.append(f'<li class="sz-i{" sz-i--wide" if it.get("field") else ""}">{shape_svg(it, cls)}'
-                     f'<span class="sz-n">{key}{name}</span></li>')
-    cells.append(f'<li class="sz-i sz-i--bar"><span class="sz-bar"></span><span class="sz-n">{num(1, lang)} m</span></li>')
-    return f'<ol class="sz-row">{"".join(cells)}</ol>'
+        cls = ' class="sz-key__mark"' if it["id"] == mark else ""
+        out.append(f'<li{cls}><span class="sz-key__n">{key}</span>{rich(titles[it["n"]])}</li>')
+    return f'<div class="sz-keys" aria-hidden="true"><p class="key sz-key__h">{heading}</p><ul class="sz-key">{"".join(out)}</ul></div>'
 
 
 def top_figure(works, mark, labels, num, lang):
@@ -275,28 +356,32 @@ def still_svg(works, mark, words, num, lang, colours, kind):
             y += 40
             parts.append(_text(m, y, row, 25, soft))
         y += 46
-        # the person and the works on shelves, in the order they hang, at one scale; the field on a shelf of its own
-        items = [("person", None)] + [("work", it) for it in works.shapes() if not it.get("field")]
-        shelves, shelf, used = [], [], 0
-        for kind_, it in items:
-            w = person_w(works.person_cm * u) if kind_ == "person" else it["w"] * u
-            if shelf and used + w > W - 2 * m:
+        # the works on shelves, in the order they hang, at one scale, each shelf opening with the person; the field on
+        # a shelf of its own, the person in front of it too
+        pw = person_w(works.person_cm * u)
+        shelves, shelf, used = [], [("person", None, pw)], pw + gap
+        for it in works.shapes():
+            if it.get("field"):
+                continue
+            w = it["w"] * u
+            if used + w > W - 2 * m and len(shelf) > 1:
                 shelves.append(shelf)
-                shelf, used = [], 0
-            shelf.append((kind_, it, w))
+                shelf, used = [("person", None, pw)], pw + gap
+            shelf.append(("work", it, w))
             used += w + gap
         shelves.append(shelf)
         if field:
-            shelves.append([("work", dict(field, ns=[field["n"]]), field["w"] * u)])
+            shelves.append([("person", None, pw), ("work", dict(field, ns=[field["n"]]), field["w"] * u)])
         keys = [(", ".join(str(n) for n in it["ns"]), words["titles"][it["n"]]) for it in works.shapes()]
-        for shelf in shelves:
+        for s, shelf in enumerate(shelves):
             tall = max((works.person_cm if k == "person" else it["h"]) * u for k, it, _ in shelf)
             floor = y + tall
             x = m
             for k, it, w in shelf:
                 if k == "person":
                     parts.append(_person(x, floor, works.person_cm * u, quiet))
-                    parts.append(_text(x + w / 2, floor + 30, words["person"], 19, soft, "middle"))
+                    if s == 0:
+                        parts.append(_text(x + w / 2, floor + 30, words["person"], 19, soft, "middle"))
                 else:
                     h = it["h"] * u
                     is_mark = it["id"] == mark
@@ -310,26 +395,16 @@ def still_svg(works, mark, words, num, lang, colours, kind):
                     parts.append(_text(x + w / 2, floor + 30, key, 19, ink if is_mark else soft, "middle"))
                 x += w + gap
             parts.append(_floor(m, floor, W - 2 * m, line))
-            last = (x, y, floor)
             y = floor + 64
-        # the key: every number with its title, beside the last shelf where it fits, else under it in two columns
-        x0, top, floor = last
-        room, rows = W - m - (x0 + 18), floor - top
-        step = rows / len(keys)
-        size = min(17, step - 2, (room - 48) / (max(len(tt) for _, tt in keys) * 0.45))
-        if size >= 14.5:
-            for i, (n, title) in enumerate(keys):
-                cy = top + size + i * step
-                parts.append(_text(x0 + 18, cy, n, f"{size:.1f}", chalk_text if n == str(mark_it["n"]) else quiet))
-                parts.append(_text(x0 + 66, cy, title, f"{size:.1f}", soft))
-        else:
-            half = -(-len(keys) // 2)
-            col = (W - 2 * m) / 2
-            for i, (n, title) in enumerate(keys):
-                cx, cy = m + (i // half) * col, y + (i % half) * 27
-                parts.append(_text(cx, cy, n, 18, chalk_text if n == str(mark_it["n"]) else quiet))
-                parts.append(_text(cx + 52, cy, title, 18, soft))
-            y += half * 27 + 10
+        # the key under the shelves: every number with its title, in two columns, a line and a third apart
+        half = -(-len(keys) // 2)
+        col, size, step = (W - 2 * m) / 2, 18, 25
+        y += 6
+        for i, (n, title) in enumerate(keys):
+            cx, cy = m + (i // half) * col, y + (i % half) * step
+            parts.append(_text(cx, cy, n, size, chalk_text if n == str(mark_it["n"]) else quiet))
+            parts.append(_text(cx + 52, cy, title, size, soft))
+        y += half * step + 22
         for row in words["credit"]:
             parts.append(_text(m, y, row, 18, quiet))
             y += 27

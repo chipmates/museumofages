@@ -256,6 +256,9 @@
 .topics{margin-top:10px;border-top:1px solid var(--hair-strong)}
 .topics li{padding:8px 0 16px;border-bottom:1px solid var(--hair)}
 .topics .more{font-family:var(--serif);font-size:1.25rem;letter-spacing:0;line-height:1.25;min-height:48px}
+/* A title that takes two lines starts on the row's shared top and keeps its arrow after its last word. */
+.topics .more{display:block;padding:11px 0 12px}
+.topics .more .arrow{display:inline-block;margin-left:10px;vertical-align:-1px}
 .topics__line{display:block;font-family:var(--sans);font-size:.9375rem;line-height:1.45;color:var(--ink-body);max-width:34rem}
 /* ---------- The end of a wing's walk ---------- */
 .close{position:relative;margin-top:var(--band);padding-block:0}

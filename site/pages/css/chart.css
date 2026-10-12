@@ -3,6 +3,9 @@
 
 /* A page of running text in parts */
 .sp-prose .sp-does{margin-top:12px;max-width:38rem}
+/* A plate under a part's text, in the page's plate frame */
+.sp-prose .sp-plate{margin-top:22px;max-width:40rem}
+.sp-prose .label__src{display:block;margin-top:6px}
 
 /* ---------- Works at one scale: the first screen's drawing, the panels, the list and the table ----------
    A shape is an SVG sized in em, one em a metre. A panel sets that em from the chart's own width, so every shape
@@ -17,22 +20,37 @@
 .sz-top .sz-d{fill:none;stroke:var(--mark);stroke-width:1}
 .sz-top .sz-t{fill:var(--ink);font-family:var(--sans);font-size:150px;letter-spacing:.02em}
 
-.sz-chart{container-type:inline-size;margin-top:24px}
+.sz-chart{position:relative;container-type:inline-size;margin-top:24px}
+.sz-defs{position:absolute}
+/* The build sets the rows for three bands of the chart's width (chart.py BANDS): each band shows its own. */
+.sz-rows--b,.sz-rows--c{display:none}
+@container (min-width:480px){.sz-rows--a{display:none}.sz-rows--b{display:block}}
+@container (min-width:720px){.sz-rows--b{display:none}.sz-rows--c{display:block}}
 .sz-row{display:flex;flex-wrap:wrap;align-items:flex-end;row-gap:22px}
+.sz-row+.sz-row{margin-top:22px}
 .sz-i{display:flex;flex-direction:column;align-items:center}
 .sz-s,.sz-bar{margin-inline:5px}
-.sz-s{display:block;max-width:none;overflow:visible;font-size:38px;font-size:calc(100cqw / 9.2)}
+.sz-s{display:block;max-width:none;overflow:visible;font-size:35px;font-size:calc(100cqw / 10)}
 .sz-panel--zoom{margin-top:40px}
-.sz-panel--zoom .sz-s,.sz-panel--zoom .sz-bar{font-size:114px;font-size:calc(100cqw / 9.2 * 3)}
+.sz-panel--zoom .sz-s,.sz-panel--zoom .sz-bar{font-size:105px;font-size:calc(100cqw / 10 * 3)}
 .sz-s rect{fill:color-mix(in srgb,var(--ground-lit) 72%,var(--ground));stroke:var(--frame-line);stroke-width:1.5}
 .sz-s--mark rect{stroke:var(--mark);stroke-width:2.5}
 .sz-s--field rect{fill:var(--ground-wall)}
-.sz-s--person path{fill:var(--ink-quiet)}
+.sz-s--person{fill:var(--ink-quiet)}
 /* The labels stand under one floor line: each label's top edge is a piece of it. */
 .sz-n{align-self:stretch;padding:6px 5px 0;border-top:1px solid var(--hair-strong);font-family:var(--sans);font-size:.75rem;line-height:1.3;letter-spacing:.02em;color:var(--ink-soft);text-align:center;white-space:nowrap}
 .sz-name{color:var(--ink)}
-.sz-bar{display:block;width:1em;height:9px;font-size:38px;font-size:calc(100cqw / 9.2);border:1px solid var(--ink-soft);border-top:0}
+.sz-bar{display:block;width:1em;height:9px;font-size:35px;font-size:calc(100cqw / 10);border:1px solid var(--ink-soft);border-top:0}
 .sz-i--bar{margin-left:auto}
+/* The key: one column on a phone, two where the chart is wide. */
+.sz-keys{margin-top:22px}
+.sz-key__h{margin-bottom:8px}
+.sz-key{font-family:var(--sans);font-size:.8125rem;line-height:1.5;color:var(--ink-soft)}
+.sz-key li{break-inside:avoid;padding-left:2.6em;text-indent:-2.6em}
+.sz-key__n{display:inline-block;min-width:2.6em;text-indent:0;color:var(--ink-quiet)}
+.sz-key__mark{color:var(--ink)}
+.sz-key__mark .sz-key__n{color:var(--mark-ink)}
+@container (min-width:600px){.sz-key{columns:2;column-gap:32px}}
 .sz-cap{margin-top:14px;font-family:var(--sans);font-size:.875rem;line-height:1.5;color:var(--ink-soft);max-width:38rem}
 .sz-still{margin-top:22px}
 .sz-licence{font-family:var(--sans);font-size:.8125rem;line-height:1.45;color:var(--ink-quiet)}
@@ -43,6 +61,11 @@
 .sz-e p{font-size:1rem;line-height:1.55;color:var(--ink-body)}
 .sz-title{display:block;margin-bottom:3px;font-size:1.1875rem;line-height:1.3;color:var(--ink)}
 .sz-go{font-size:.9375rem}
+.sz-note{margin-top:14px;font-family:var(--sans);font-size:.875rem;line-height:1.5;color:var(--ink-soft)}
+/* Where the table is wider than its column, a touch screen is told it moves sideways. */
+.sz-tab{container-type:inline-size}
+.sz-hint{display:none;margin-top:14px;font-family:var(--sans);font-size:.875rem;line-height:1.5;color:var(--ink-soft)}
+@media (pointer:coarse){@container (max-width:639.98px){.sz-hint{display:block}}}
 
 /* The table's own width never widens the page's column: it scrolls inside it. */
 .sp-body__main{min-width:0}

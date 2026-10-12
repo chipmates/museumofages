@@ -513,6 +513,38 @@ def focus_rule(frame):
     return "@media (max-width:599px){.sp-frame img{object-position:%s}}" % frame["focus"]
 
 
+# ---------- a still the wing shows too ----------
+
+_WING_PLATES = {}
+
+
+def wing_plate(wing, stem, lang):
+    """The wing page's own plate (or stop picture) for a still of its film, by the still's stem: its source line with
+    the museum's words filled in. A still of the second rights tier carries its source line wherever
+    it hangs, so a search page takes the wing's line as it stands and writes none of its own."""
+    key = (wing, stem, lang)
+    if key not in _WING_PLATES:
+        words = json.loads((LANG.HERE / "wings" / f"{wing}.{lang}.json").read_text(encoding="utf-8"))
+        museum = json.loads((LANG.HERE / "museum-texts.json").read_text(encoding="utf-8"))[lang]
+
+        def find(node):
+            if isinstance(node, dict):
+                pic = node.get("pic")
+                if isinstance(pic, dict) and stem in (pic.get("stem"), (pic.get("wide") or {}).get("stem")) and node.get("src"):
+                    return node
+                node = list(node.values())
+            if isinstance(node, list):
+                return next((x for x in map(find, node) if x), None)
+            return None
+
+        entry = find(words)
+        if not entry:
+            raise SystemExit(f"{wing}.{lang}: no plate of the wing shows {stem} with a source line, so a page cannot take it")
+        src = re.sub(r"\{museum:(\w+)\}", lambda m: museum[m.group(1)], entry["src"])
+        _WING_PLATES[key] = {"src": src}
+    return _WING_PLATES[key]
+
+
 # ---------- structured data ----------
 
 def jsonld(lang, data, urls, pics, site, wing, alternate_name, licence, rights, frame, folders):
@@ -561,7 +593,8 @@ def jsonld(lang, data, urls, pics, site, wing, alternate_name, licence, rights, 
         },
         {
             "@type": "ImageObject", "@id": f"{self_url}#frame", "url": image_url, "contentUrl": image_url,
-            "width": w, "height": h, "caption": f"{frame['title']}, {frame['what']}", "description": frame["alt"],
+            "width": w, "height": h, "caption": frame.get("caption") or f"{frame['title']}, {frame['what']}",
+            "description": frame.get("description") or frame["alt"],
             "representativeOfPage": True, "creditText": "Museum of Ages",
             "copyrightNotice": "© ChipMates gemeinnützige GmbH",
             # Google's image metadata takes a Person or an Organization here, not the publisher's subtype
@@ -652,12 +685,16 @@ def render(page, lang, data, shared, out_root):
         return "\n".join(fill(parts["term_row"], {"term": rich(r["term"]), "text": rich(r["text"])}) for r in rows)
 
     def figure(pic):
-        """A plate with its label. A plate that says nothing of its own carries the page's usual line."""
+        """A plate with its label. A plate that says nothing of its own carries the page's usual line. A still of the
+        wing's film that the wing shows too (credit: "wing") carries the wing's own source line."""
         if not pic:
             return ""
         values = dict(base)
+        src = wing_plate(data["page"]["wing"], pics.defs[pic["pic"]]["stem"], lang)["src"] if pic.get("credit") == "wing" else ""
         values.update({"html.picture": pics.picture(pic["pic"], esc(pic["alt"])),
-                       "tag": rich(labels[pic["tag"]]), "what": rich(pic.get("what") or labels["plate_what"])})
+                       "tag": rich(labels[pic["tag"]]), "what": rich(pic.get("what") or labels["plate_what"]),
+                       "html.title": f'<span class="label__title">{rich(pic["title"])}</span>' if pic.get("title") else "",
+                       "html.src": f'<span class="label__src">{rich(src)}</span>' if src else ""})
         return fill(parts["figure"], values)
 
     def place(text):
@@ -719,13 +756,16 @@ def render(page, lang, data, shared, out_root):
             values.update({"door.text": rich(block["door"]["text"]), "door.note": rich(block["door"]["note"])})
         elif kind == "text":
             values["html.paras"] = "\n".join(fill(parts["text_para"], {"text": rich(p)}) for p in block["paras"])
+            values["html.pic"] = figure(block.get("pic"))
         elif kind == "chart":
             values.update({
                 "zoom": rich(block["zoom"].replace("{n}", LIB.number(CHART.ZOOM, lang))),
                 # the panel's text alternative is an attribute: plain text, no name's span
                 "alt": esc(block["alt"]),
-                "html.all": CHART.panel(works, mark, chart_words, LIB.number, lang, rich=rich),
-                "html.zoom": CHART.panel(works, mark, chart_words, LIB.number, lang, zoom=True, rich=rich),
+                "html.defs": CHART.person_defs(),
+                "html.all": CHART.panel_rows(works, mark, chart_words, LIB.number, lang, rich=rich),
+                "html.key": CHART.key_list(works, chart_words["titles"], mark, rich, rich(block["key_h"])),
+                "html.zoom": CHART.panel(works, mark, chart_words, LIB.number, lang, rich=rich),
                 "href.still": f"{root}{STATIC}/img/{shared['stills'][page][lang]['chart']}",
                 "href.licence": esc(chrome["licence"]),
             })
@@ -747,7 +787,8 @@ def render(page, lang, data, shared, out_root):
         titles = {it["n"]: CHART.split_line(line, it, LIB.number, lang)[0].rstrip(".") for it, line in zip(works.items, lines)}
         field = next((it for it in works.items if it.get("field")), None)
         chart_words = {"person": labels["person"], "mark": titles[works.by_id(mark)["n"]] if mark else "",
-                       "field": titles[field["n"]] if field else "", "alt": data["top"].get("figure", {}).get("alt", "")}
+                       "field": titles[field["n"]] if field else "", "alt": data["top"].get("figure", {}).get("alt", ""),
+                       "titles": titles}
     blocks = "\n\n".join(block_html(b) for b in data["blocks"])
     toc = "\n".join(fill(parts["toc_item"], {"id": esc(b["id"]), "nav": rich(b["nav"])})
                     for b in data["blocks"] if b.get("nav"))
@@ -761,8 +802,11 @@ def render(page, lang, data, shared, out_root):
     if "figure" in data["top"]:
         fig = data["top"]["figure"]
         it = works.by_id(fig["work"])
+        chart = next(b for b in data["blocks"] if b["type"] == "chart")
+        # the page's picture in the structured data is the whole chart (the still), so its words are the chart's
         frame = {"title": chart_words["mark"], "what": f'{CHART.size_text(it, LIB.number, lang, space=LIB.NBSP)}, {fig["what"]}', "alt": fig["alt"],
-                 "tag": fig["tag"], "still": shared["stills"][page][lang]["chart"]}
+                 "tag": fig["tag"], "still": shared["stills"][page][lang]["chart"],
+                 "caption": chart["still_caption"], "description": chart["still_caption"]}
         frame_html = fill(parts["frame:chart"], {"html.figure": CHART.top_figure(works, mark, chart_words, LIB.number, lang),
                                                  "title": rich(frame["title"]), "tag": rich(labels[frame["tag"]]),
                                                  "what": rich(frame["what"])})
@@ -883,6 +927,35 @@ def check_built(path, text, out_root, names=None):
             problems.append(f"{name}: a door carries a slot without the page label")
     if len(re.findall(r'data-slot="door-', text)) < 1:
         problems.append(f"{name}: no door carries its hook")
+    problems += [f"{name}: {x}" for x in check_tier(text)]
+    return problems
+
+
+_TIER = {}
+
+
+def check_tier(text):
+    """As on the site's own pages: a frame of the second rights tier never stands in the page's first part, and below
+    it only in a plate whose label carries a source line (make_images.py names the frames)."""
+    if not _TIER:
+        spec = importlib.util.spec_from_file_location("image_jobs", LANG.HERE / "tools" / "make_images.py")
+        mod = importlib.util.module_from_spec(spec)
+        keep, sys.dont_write_bytecode = sys.dont_write_bytecode, True
+        try:
+            spec.loader.exec_module(mod)
+        finally:
+            sys.dont_write_bytecode = keep
+        _TIER.update(frame=mod.frames(), second=set(mod.SECOND_TIER))
+    frame, second = _TIER["frame"], _TIER["second"]
+    shows = lambda part: {frame.get(s, s) for s in re.findall(r"img/([a-z0-9-]+?)-\d+\.(?:avif|webp)\b", part)} & second
+    body = text[text.index("<main"):text.index("</main>")]
+    problems = []
+    top = re.search(r'<header class="sp-top\b.*?</header>', body, flags=re.S)
+    if top and shows(top.group(0)):
+        problems.append(f"the first part shows {sorted(shows(top.group(0)))}, a frame of the second rights tier")
+    for fig in re.findall(r"<figure\b.*?</figure>", body, flags=re.S):
+        if shows(fig) and not re.search(r'<span class="label__src">[^<]*\S', fig):
+            problems.append(f"a plate shows {sorted(shows(fig))}, a frame of the second rights tier, and its label has no source line")
     return problems
 
 
@@ -1024,7 +1097,7 @@ def still_jobs(pages=PAGES, loaded=None):
             mark = d["top"]["figure"]["work"]
             field = next((it for it in works.items if it.get("field")), None)
             address = f"{ORIGIN}/{page_path(d, wings[d['page']['wing']], lang)}/".split("://", 1)[1]
-            words = {"h1": unbound(d["top"]["h1"]), "caption": unbound(chart["caption"]), "person": unbound(d["labels"]["person"]),
+            words = {"h1": unbound(d["top"]["h1"]), "caption": unbound(chart["still_caption"]), "person": unbound(d["labels"]["person"]),
                      "mark": titles[works.by_id(mark)["n"]], "field": titles[field["n"]] if field else "", "titles": titles,
                      "site": ORIGIN.split("://", 1)[1], "credit": [f"Museum of Ages, {address}", unbound(chart["licence"])]}
             for kind, name in (("chart", d["page"]["still"]["file"]), ("share", d["page"]["og_image"]["file"])):
@@ -1105,7 +1178,8 @@ def build_pages(out_dir, site_src=SITE_SRC, site_built=SITE_BUILT, pages=PAGES, 
                        *[site["css"] / f"{n}.css" for n in CSS_AFTER]),
         "css_chart": css_min(*[site["css"] / f"{n}.css" for n in CSS_BEFORE], *[HERE / "css" / f"{n}.css" for n in OWN_CSS + CHART_CSS],
                              *[site["css"] / f"{n}.css" for n in CSS_AFTER]),
-        "pic_folders": [PICS, site_built / STATIC / "img"],
+        # the pages' own cuts, then the site's pictures (a still the wing shows too): built, else their source folder
+        "pic_folders": [PICS, site_built / STATIC / "img", LANG.HERE / "img"],
         "langs_css": css_min(site["css"] / "langs.css") if (site["css"] / "langs.css").is_file() else "",
     }
 

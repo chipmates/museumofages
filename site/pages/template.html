@@ -76,7 +76,7 @@
 <figure class="plate sp-plate">
   <div class="hang">{{html.picture}}</div>
   <!-- The heading above the plate is its title: the label says what kind of thing the picture shows. -->
-  <figcaption class="label sp-plate__label"><span class="label__what"><span class="tag">{{tag}}<span class="vh">:</span></span> {{what}}</span></figcaption>
+  <figcaption class="label sp-plate__label">{{html.title}}<span class="label__what"><span class="tag">{{tag}}<span class="vh">:</span></span> {{what}}</span>{{html.src}}</figcaption>
 </figure>
 <!--@ row -->
 <div><dt class="key">{{label}}</dt><dd>{{v}}</dd></div>
@@ -213,6 +213,7 @@
 <section class="sp-sec sp-prose" id="{{id}}">
   <h2>{{h}}</h2>
 {{html.paras}}
+{{html.pic}}
 </section>
 <!--@ block:chart -->
 <section class="sp-sec sz-sec" id="{{id}}">
@@ -220,9 +221,12 @@
   <p class="sp-intro">{{lead}}</p>
   <!-- One figure is the query container: both panels take their scale from its width, the second three times the first. -->
   <figure class="sz-chart">
+    {{html.defs}}
+    <!-- The rows are set by the build, once per band of the chart's width: the chart shows its own band's. -->
     <div class="sz-panel" role="img" aria-label="{{alt}}">
 {{html.all}}
     </div>
+{{html.key}}
     <figcaption class="sz-cap">{{caption}}</figcaption>
     <div class="sz-panel sz-panel--zoom" aria-hidden="true">
 {{html.zoom}}
@@ -239,11 +243,13 @@
   <ol class="sz-list">
 {{html.items}}
   </ol>
+  <p class="sz-note">{{note}}</p>
 </section>
 <!--@ block:table -->
-<section class="sp-sec sz-sec" id="{{id}}">
+<section class="sp-sec sz-sec sz-tab" id="{{id}}">
   <h2>{{h}}</h2>
   <!-- On a phone the table keeps its columns and scrolls sideways; the work's column stays in place. -->
+  <p class="sz-hint" aria-hidden="true">{{hint}}</p>
   <div class="sz-scroll" role="region" aria-labelledby="{{id}}-cap" tabindex="0">
     <table class="sz-table">
       <caption id="{{id}}-cap">{{caption}} <span class="sz-unit">{{unit}}</span></caption>
