@@ -94,7 +94,7 @@ NAMES_FILE = HERE / "names.json"
 KEEP_WHOLE = 19
 KEEP_SMALL = 24
 # An answer longer than this, in characters, takes the small phone's type on a phone up to 389 px wide, so the first
-# door still stands on a 360 by 780 screen.
+# door still shows on a 360 by 780 screen.
 LONG_ANSWER = 400
 # A German ordinal before a century or a month never ends a line: "Im 17." there reads as a sentence's end.
 ORDINAL_DE = re.compile(r"\b(\d{1,2})\. (?=(?:Jahrhunderts?|Januar|Februar|März|April|Mai|Juni|Juli|August|September|Oktober|"
@@ -862,7 +862,7 @@ def render(page, lang, data, shared, out_root):
                  "caption": chart["still_caption"], "description": chart["still_caption"]}
         frame_html = fill(parts["frame:chart"], {"html.figure": CHART.top_figure(works, mark, chart_words, LIB.number, lang),
                                                  "title": rich(frame["title"]), "tag": rich(labels[frame["tag"]]),
-                                                 "what": rich(frame["what"])})
+                                                 "what": rich(frame["what"]), "html.note": ""})
         preload, focus = "", ""
     elif "drawing" in data["top"]:
         dr, facts = data["top"]["drawing"], shared["facts"][page]
@@ -876,7 +876,9 @@ def render(page, lang, data, shared, out_root):
         frame_html = fill(parts["frame:chart"], {"html.figure": CHART.wall_figure(h_cm, w_cm, person_cm, {"person": labels["person"], "alt": dr["alt"],
                                                                                     "arch": dr.get("arch_label")},
                                                                                    LIB.number, lang, dr.get("inside")),
-                                                 "title": rich(dr["title"]), "tag": rich(labels[dr["tag"]]), "what": rich(what)})
+                                                 "title": rich(dr["title"]), "tag": rich(labels[dr["tag"]]), "what": rich(what),
+                                                 # what the drawing reconstructs stands under it at every width
+                                                 "html.note": f'<span class="sp-frame__note">{rich(dr["note"])}</span>' if dr.get("note") else ""})
         preload, focus = "", ""
     else:
         frame = data["top"]["frame"]
@@ -1186,6 +1188,8 @@ def check_wing_facts(d, facts):
             problems += CHART.check_inside(drawing["inside"], size["h_m"], size["w_m"])
         if drawing.get("arch_label") and not (drawing.get("inside") or {}).get("arch"):
             problems.append("top.drawing.arch_label labels an arch the drawing does not draw")
+        if drawing.get("inside") and not drawing.get("note", "").strip():
+            problems.append("top.drawing.inside draws a reconstruction, and top.drawing.note, which says so under the drawing, is missing")
     return problems
 
 
@@ -1206,7 +1210,8 @@ def still_jobs(pages=PAGES, loaded=None):
                 size = facts["wall"][wall]
                 words = {"h1": d["top"]["h1"].replace(LIB.NBSP, " "), "person": d["labels"]["person"].replace(LIB.NBSP, " "),
                          "site": ORIGIN.split("://", 1)[1],
-                         "arch": " ".join(d["top"]["drawing"].get("arch_label") or []).replace(LIB.NBSP, " ")}
+                         "arch": " ".join(d["top"]["drawing"].get("arch_label") or []).replace(LIB.NBSP, " "),
+                         "note": d["top"]["drawing"].get("note", "").replace(LIB.NBSP, " ")}
                 jobs.append({"file": d["page"]["og_image"]["file"].replace("{lang}", code), "page": page, "lang": lang, "kind": "share",
                              "svg": CHART.wall_still_svg(CHART.cm_of(size["h_m"]), CHART.cm_of(size["w_m"]), CHART.cm_of(facts["set"]["person_m"]),
                                                          words, LIB.number, lang, colours, d["top"]["drawing"].get("inside"))})

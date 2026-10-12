@@ -250,36 +250,44 @@ def top_figure(works, mark, labels, num, lang):
 
 
 def check_inside(inside, h_m, w_m):
-    """The table and the door's arch a drawing shows inside its wall: each within the wall, the arch's crown above
-    its spring. Returns the problems."""
+    """The table and the crown of the door's arch a drawing shows inside its wall: the table within the wall, the
+    arch within the table's length, springing at or above the table's hem and cresting below its top (no source
+    gives the door below it, so the drawing shows only the part a photograph of the wall shows). Returns the
+    problems."""
     problems = []
     t, a = (inside or {}).get("table"), (inside or {}).get("arch")
     if t and not (0 <= t["from_m"] < t["to_m"] <= w_m and 0 <= t["hem_m"] < t["top_m"] <= h_m):
         problems.append("top.drawing.inside.table does not lie inside the wall")
-    if a and not (0 <= a["from_m"] < a["to_m"] <= w_m and 0 < a["spring_m"] < a["crown_m"] <= h_m):
-        problems.append("top.drawing.inside.arch does not lie inside the wall, or its crown is not above its spring")
+    if a and not t:
+        problems.append("top.drawing.inside.arch has no table to cut into")
+    elif a and not (t["from_m"] < a["from_m"] < a["to_m"] < t["to_m"] and t["hem_m"] <= a["spring_m"] < a["crown_m"] <= t["top_m"]):
+        problems.append("top.drawing.inside.arch does not cut into the table from its hem: it must lie within the table's "
+                        "length, spring at or above its hem and crest below its top")
     return problems
 
 
-def _arch(x0, x1, spring, crown):
-    """A segmental arch from the floor line up, as one path: its two sides, then the arc through the crown."""
+def _arc(x0, x1, spring, crown):
+    """The crown of a segmental arch, from one spring to the other, as a path's arc command."""
     half, rise = (x1 - x0) / 2, spring - crown
     r = (half * half + rise * rise) / (2 * rise)
-    return f"V{spring:g}A{r:g} {r:g} 0 0 1 {x1:g} {spring:g}", r
+    return f"A{r:g} {r:g} 0 0 1 {x1:g} {spring:g}"
 
 
 def wall_figure(h_cm, w_cm, person_cm, labels, num, lang, inside=None):
-    """The first screen's drawing of one wall painting: the person and the wall on one floor, at three tenths of a
+    """The first screen's drawing of one wall painting: the person and the wall at one scale, three tenths of a
     millimetre a unit, in one SVG of 4000 by 1520, the wall nearly its height (a phone's first screen is short). The
-    wall's size stands inside it: a mark beside it would leave the drawing. inside may draw the table and the door's
-    arch in metres from the wall's lower left corner, the arch labelled in labels["arch"] (its lines)."""
+    person stands on a floor line of its own, which stops before the wall: where the wall's lower edge sits above a
+    floor is not drawn. The wall's size stands inside it: a mark beside it would leave the drawing. inside may draw
+    the table and the crown of the door's arch in metres from the wall's lower left corner, the arch labelled in
+    labels["arch"] (its lines): the hem breaks where the arch cuts it, and nothing of the door below is drawn."""
     s = 0.3
     k = person_cm / 170
     ph, pw, w, h = person_cm * 10 * s, PERSON_W * k * s, w_cm * 10 * s, h_cm * 10 * s
-    px, floor = 820, 1450
-    wx = px + pw + 160
+    px, floor = 720, 1450
+    wx = px + pw + 260
     m = 1000 * s
     person = f'<g transform="translate({px:g} {floor - ph:g}) scale({k * s:g})"><path class="sz-p" d="{PERSON_PATH}"/></g>'
+    ground = f'<path class="sz-floor" d="M{px - 220:g} {floor}H{px + pw + 60:g}" vector-effect="non-scaling-stroke"/>'
     wall = f'<rect class="sz-m" x="{wx:g}" y="{floor - h:g}" width="{w:g}" height="{h:g}" vector-effect="non-scaling-stroke"/>'
     tick = (f'<path class="sz-d" d="M{px - 120:g} {floor}V{floor - ph:g}M{px - 160:g} {floor - ph:g}H{px - 80:g}" vector-effect="non-scaling-stroke"/>'
             f'<text class="sz-t" x="{px - 190:g}" y="{floor - ph + 60:g}" text-anchor="end">{esc(labels["person"])}</text>')
@@ -287,25 +295,28 @@ def wall_figure(h_cm, w_cm, person_cm, labels, num, lang, inside=None):
     drawn = ""
     if inside:
         t, a = inside["table"], inside["arch"]
-        ty = floor - t["top_m"] * m
-        drawn += (f'<rect class="sz-d" x="{wx + t["from_m"] * m:g}" y="{ty:g}" width="{(t["to_m"] - t["from_m"]) * m:g}" '
-                  f'height="{(t["top_m"] - t["hem_m"]) * m:g}" vector-effect="non-scaling-stroke"/>')
+        tx0, tx1 = wx + t["from_m"] * m, wx + t["to_m"] * m
+        top, hem = floor - t["top_m"] * m, floor - t["hem_m"] * m
         x0, x1 = wx + a["from_m"] * m, wx + a["to_m"] * m
-        arc, _ = _arch(x0, x1, floor - a["spring_m"] * m, floor - a["crown_m"] * m)
-        drawn += f'<path class="sz-a" d="M{x0:g} {floor}{arc}V{floor}" vector-effect="non-scaling-stroke"/>'
+        spring, crown = floor - a["spring_m"] * m, floor - a["crown_m"] * m
+        # the cloth, its hem broken where the arch comes up through it
+        drawn += (f'<path class="sz-d" d="M{x0:g} {hem:g}H{tx0:g}V{top:g}H{tx1:g}V{hem:g}H{x1:g}" '
+                  f'vector-effect="non-scaling-stroke"/>')
+        drawn += (f'<path class="sz-a" d="M{x0:g} {hem:g}V{spring:g}{_arc(x0, x1, spring, crown)}V{hem:g}" '
+                  f'vector-effect="non-scaling-stroke"/>')
         lines = labels.get("arch") or []
         if lines:
             # the label above the table, its leader down through the cloth to the arch's crown
             cx, step = (x0 + x1) / 2, 170
-            last = ty - 130
+            last = top - 130
             drawn += "".join(f'<text class="sz-t" x="{cx:g}" y="{last - (len(lines) - 1 - i) * step:g}" text-anchor="middle">{esc(line)}</text>'
                              for i, line in enumerate(lines))
-            drawn += (f'<path class="sz-d" d="M{cx:g} {last + 50:g}V{floor - a["crown_m"] * m:g}" vector-effect="non-scaling-stroke"/>')
+            drawn += f'<path class="sz-d" d="M{cx:g} {last + 50:g}V{crown:g}" vector-effect="non-scaling-stroke"/>'
             size_y = floor - h + 330
     size = (f'<text class="sz-t" x="{wx + w / 2:g}" y="{size_y:g}" text-anchor="middle">'
             f'{esc(size_text({"h": h_cm / 100, "w": w_cm / 100}, num, lang, unit="m"))}</text>')
     return (f'<svg class="sz-top" viewBox="0 0 4000 1520" role="img" aria-label="{esc(labels["alt"])}">'
-            f'<path class="sz-floor" d="M200 {floor}H3800" vector-effect="non-scaling-stroke"/>{person}{wall}{drawn}{tick}{size}</svg>')
+            f'{ground}{person}{wall}{drawn}{tick}{size}</svg>')
 
 
 def door_href(door, stop):
@@ -498,8 +509,9 @@ def still_svg(works, mark, words, num, lang, colours, kind):
 
 def wall_still_svg(h_cm, w_cm, person_cm, words, num, lang, colours, inside=None):
     """One wall painting as the page's share picture, 1200 by 630: the page's heading, the wall's size, and the person
-    and the wall on one floor, the wall at the right edge and the person just before it. inside draws the table and
-    the door's arch as the page's drawing does, the arch labelled in one line (words["arch"])."""
+    on its own floor line just before the wall, the wall at the right edge. inside draws the table and the crown of
+    the door's arch as the page's drawing does, the arch labelled in one line (words["arch"]) and the drawing's note
+    (words["note"]) under the wall."""
     c = colours
     W, H, m = 1200, 630, 60
     floor = H - 64
@@ -509,27 +521,36 @@ def wall_still_svg(h_cm, w_cm, person_cm, words, num, lang, colours, inside=None
     ww, wh = w_cm * u, h_cm * u
     wx = W - m - ww
     ph = person_cm * u
-    px = wx - 40 - PERSON_W * ph / 1700
+    pw = PERSON_W * ph / 1700
+    px = wx - 56 - pw
     parts.append(_person(px, floor, ph, c["text-3"]))
-    parts.append(_text(px + PERSON_W * ph / 1700 / 2, floor - ph - 14, words["person"], 20, c["text-2"], "middle"))
+    parts.append(_text(px + pw / 2, floor - ph - 14, words["person"], 20, c["text-2"], "middle"))
+    parts.append(_floor(px - 24, floor, pw + 48, c["line-strong"]))
     parts.append(_rect(wx, floor - wh, ww, wh, c["wall-lit"], c["chalk"], 3))
     if inside:
         mu = 100 * u
         t, a = inside["table"], inside["arch"]
-        ty = floor - t["top_m"] * mu
-        parts.append(_rect(wx + t["from_m"] * mu, ty, (t["to_m"] - t["from_m"]) * mu, (t["top_m"] - t["hem_m"]) * mu,
-                           c["wall-lit"], c["chalk"], 1.5))
-        # the arch as two filled shapes, the outline and the opening inside it: ImageMagick leaves strokes out
+        tx0, tx1 = wx + t["from_m"] * mu, wx + t["to_m"] * mu
+        top, hem = floor - t["top_m"] * mu, floor - t["hem_m"] * mu
         x0, x1 = wx + a["from_m"] * mu, wx + a["to_m"] * mu
         spring, crown = floor - a["spring_m"] * mu, floor - a["crown_m"] * mu
-        for d, fill in ((0, c["chalk"]), (2, c["page"])):
-            arc, _ = _arch(x0 + d, x1 - d, spring, crown + d)
-            parts.append(f'<path d="M{x0 + d:g} {floor - 3:g}{arc}V{floor - 3:g}Z" fill="{fill}"/>')
+        line, ink = 1.5, c["chalk"]
+        # the cloth as filled bars, its hem broken at the arch: ImageMagick leaves strokes out
+        parts += [f'<rect x="{tx0:g}" y="{top:g}" width="{tx1 - tx0:g}" height="{line:g}" fill="{ink}"/>',
+                  f'<rect x="{tx0:g}" y="{top:g}" width="{line:g}" height="{hem - top + line:g}" fill="{ink}"/>',
+                  f'<rect x="{tx1 - line:g}" y="{top:g}" width="{line:g}" height="{hem - top + line:g}" fill="{ink}"/>',
+                  f'<rect x="{tx0:g}" y="{hem:g}" width="{x0 - tx0:g}" height="{line:g}" fill="{ink}"/>',
+                  f'<rect x="{x1:g}" y="{hem:g}" width="{tx1 - x1:g}" height="{line:g}" fill="{ink}"/>']
+        # the crown as a thin filled band: the arch's shape in the mark, the same shape a line lower in the wall's own
+        for d, fill in ((0, ink), (2, c["wall-lit"])):
+            parts.append(f'<path d="M{x0 + d:g} {hem + line:g}V{spring:g}{_arc(x0 + d, x1 - d, spring, crown + d)}'
+                         f'V{hem + line:g}Z" fill="{fill}"/>')
         if words.get("arch"):
             cx = (x0 + x1) / 2
-            parts.append(_text(cx, ty - 22, words["arch"], 20, c["text-2"], "middle"))
-            parts.append(f'<rect x="{cx - 0.75:g}" y="{ty - 14:g}" width="1.5" height="{crown - ty + 14:g}" fill="{c["text-2"]}"/>')
-    parts.append(_floor(m, floor, W - 2 * m, c["line-strong"]))
+            parts.append(_text(cx, top - 22, words["arch"], 20, c["text-2"], "middle"))
+            parts.append(f'<rect x="{cx - 0.75:g}" y="{top - 14:g}" width="1.5" height="{crown - top + 14:g}" fill="{c["text-2"]}"/>')
+        if words.get("note"):
+            parts.append(_text(W - m, floor + 34, words["note"], 18, c["text-3"], "end"))
     parts.append(_text(m, floor + 34, words["site"], 20, c["text-3"]))
     return (f'<svg xmlns="http://www.w3.org/2000/svg" width="{W}" height="{H}" viewBox="0 0 {W} {H}">'
             f'<rect width="{W}" height="{H}" fill="{c["page"]}"/>{"".join(parts)}</svg>\n')

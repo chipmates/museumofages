@@ -1,5 +1,5 @@
 {
-  "_note": "DIE TEXTE der Abendmahl-Seite, Deutsch. Wort für Wort aus der WORDS-Datei des Schreibers, Runde 2. Die Größe der Wand, der Mensch und die Station kommen aus der Faktendatei des Flügels. Der Tisch und der Türbogen in der Zeichnung (top.drawing.inside, Meter von der linken unteren Ecke der Wand) sind eine Rekonstruktion nach einem Foto der Wand: keine Quelle nennt ihre Maße, und der Alt-Text sagt es. Gleicher Aufbau wie die englische Datei, bis auf eine Quelle, die nur hier steht (only). Kein Geviertstrich, kein Halbgeviertstrich, kein Semikolon.",
+  "_note": "DIE TEXTE der Abendmahl-Seite, Deutsch. Wort für Wort aus der WORDS-Datei des Schreibers, Runde 3. Die Größe der Wand, der Mensch und die Station kommen aus der Faktendatei des Flügels. Der Tisch und der Scheitel des Türbogens in der Zeichnung (top.drawing.inside, Meter von der linken unteren Ecke der Wand) sind eine Rekonstruktion nach einem Foto der Wand: keine Quelle nennt ihre Maße, noch die Tür darunter oder den Boden, die nicht gezeichnet sind. Die Notiz unter der Zeichnung (top.drawing.note) sagt es bei jeder Breite. Gleicher Aufbau wie die englische Datei, bis auf eine Quelle, die nur hier steht (only). Kein Geviertstrich, kein Halbgeviertstrich, kein Semikolon.",
   "page": {
     "id": "vinci-supper",
     "wing": "vinci",
@@ -26,7 +26,7 @@
     "title": "Das letzte Abendmahl von Leonardo da Vinci | Museum of Ages",
     "description": "Das letzte Abendmahl von Leonardo da Vinci: ein Wandgemälde, 4,6 mal 8,8 Meter, in einem Refektorium in Mailand, etwa 1494 bis 1498. Was davon übrig ist.",
     "og_title": "Das letzte Abendmahl von Leonardo da Vinci",
-    "og_image_alt": "Das Abendmahl im selben Maßstab neben einem Menschen von 1,70 Metern: das Wandbild mit 4,6 mal 8,8 Metern. Darin der Tisch und darunter der Türbogen, wo die Füße Christi waren. Eine Zeichnung, für diese Seite gemacht, Tisch und Bogen nach einem Foto."
+    "og_image_alt": "Das Abendmahl im selben Maßstab neben einem Menschen von 1,70 Metern: das Wandbild mit 4,6 mal 8,8 Metern. Darin der Tisch und darunter der Scheitel des Türbogens, wo die Füße Christi waren. Eine Zeichnung, für diese Seite gemacht, Tisch und Bogen nach einem Foto."
   },
   "labels": {
     "crumbs": "Du bist hier",
@@ -39,13 +39,14 @@
   },
   "top": {
     "h1": "Leonardo da Vincis Abendmahl in Mailand",
-    "answer": "Das letzte Abendmahl ist ein Wandgemälde von Leonardo da Vinci. Es ist in Mailand, im Refektorium von Santa Maria delle Grazie, dem Speisesaal eines Dominikanerklosters. Er malte es für Ludovico Sforza, den Herzog von Mailand, etwa von 1494 bis 1498, und es ist noch immer an der Wand, auf die er es gemalt hat: 4,6 mal 8,8 Meter, Höhe mal Breite. Schau unter den Tisch: Christus hat keine Füße. Im 17. Jahrhundert wollten die Dominikaner eine größere Tür in ihre Küche, und die Tür, die sie unten in der Wand vergrößerten, sitzt genau dort, wo seine Füße waren.",
+    "answer": "Das letzte Abendmahl ist ein Wandgemälde von Leonardo da Vinci. Es ist in Mailand, im Refektorium von Santa Maria delle Grazie, dem Speisesaal eines Dominikanerklosters. Er malte es für Ludovico Sforza, den Herzog von Mailand, etwa von 1494 bis 1498, und es ist noch immer an der Wand, auf die er es gemalt hat: laut Museum 4,6 mal 8,8 Meter, Höhe mal Breite. Schau unter den Tisch: Christus hat keine Füße. Im 17. Jahrhundert wollten die Dominikaner eine größere Tür in ihre Küche, und die Tür, die sie unten in der Wand vergrößerten, sitzt genau dort, wo seine Füße waren.",
     "drawing": {
       "wall": "supper",
       "tag": "tag_chart",
       "title": "Das Abendmahl",
-      "what": "neben einem Menschen von 1,70 Metern. Tisch und Bogen sind eine Rekonstruktion nach einem Foto.",
-      "alt": "Das Abendmahl, 4,6 mal 8,8 Meter, neben einem Menschen von 1,70 Metern, im selben Maßstab gezeichnet. Darin der Tisch und unter dem Tisch der Bogen der Tür, wo die Füße Christi waren. Tisch und Bogen sind eine Rekonstruktion nach einem Foto, denn keine Quelle nennt ihre Maße.",
+      "what": "neben einem Menschen von 1,70 Metern",
+      "alt": "Das Abendmahl, 4,6 mal 8,8 Meter, neben einem Menschen von 1,70 Metern, im selben Maßstab gezeichnet. Darin der Tisch und unter dem Tisch der Scheitel des Türbogens, wo die Füße Christi waren. Tisch und Bogen sind eine Rekonstruktion nach einem Foto. Die Tür darunter und der Boden sind nicht gezeichnet.",
+      "note": "Tisch und Bogen: Rekonstruktion nach einem Foto. Tür und Boden: nicht gezeichnet.",
       "inside": {
         "table": {
           "from_m": 0.57,
@@ -76,10 +77,10 @@
       "type": "text",
       "id": "painted",
       "nav": "Wie er es malte",
-      "h": "Wie er es malte, und warum es zu zerfallen begann",
+      "h": "Wie er es malte und warum es zu zerfallen begann",
       "paras": [
-        "Ein Wandgemälde seiner Zeit war meist ein Fresko. Der Maler arbeitet schnell auf nassem Putz, und beim Trocknen nimmt der Putz die Farbe in sich auf. Leonardo wollte nicht schnell arbeiten. Das Museum erklärt, er habe langsam arbeiten und während der Arbeit noch ändern wollen. Also ließ er den Putz trocknen und malte in Trockenmalerei: über einem weißen Grund, mit Tempera, so wie er auf einer Holztafel gemalt hätte. Eine Laborstudie von 2023 fand auch Öl in der Mischung.",
-        "Darum begann es zu zerfallen. Nichts band die Farbe an die Wand. Sie lag obenauf wie eine Haut, und der Raum war feucht. Nach kaum zwanzig Jahren löste sie sich: Schon 1517 sah ein Besucher den Verfall. 1568 schrieb Vasari, es sei kaum noch etwas zu erkennen, so gibt ihn das Museum wieder."
+        "Ein Wandgemälde seiner Zeit war meist ein Fresko. Der Maler arbeitet schnell auf nassem Putz und beim Trocknen nimmt der Putz die Farbe in sich auf. Leonardo wollte nicht schnell arbeiten. Das Museum erklärt, er habe langsam arbeiten und während der Arbeit noch etwas ändern wollen. Also ließ er den Putz trocknen und malte in Trockenmalerei: über einem weißen Grund, mit Tempera, als wäre die Wand eine seiner Holztafeln. Eine Laborstudie von 2023 deutet darauf hin, dass auch Öl in der Mischung war.",
+        "Darum begann es zu zerfallen. Nichts band die Farbe an die Wand. Sie lag obenauf wie eine Haut und der Raum war feucht. Nach kaum zwanzig Jahren löste sie sich: Schon 1517 sah ein Besucher den Verfall. 1568 schrieb Vasari, es sei kaum noch etwas zu erkennen, so gibt ihn das Museum wieder."
       ]
     },
     {
@@ -88,7 +89,7 @@
       "nav": "Fünf Jahrhunderte auf einer Wand",
       "h": "Fünf Jahrhunderte auf einer Wand",
       "paras": [
-        "Der Schaden kam in Wellen. Im 17. Jahrhundert vergrößerten die Dominikaner die Tür unter dem Tisch (ein Katalog nennt das Jahr 1652), und die Füße Christi gingen verloren. In den 1720er Jahren hielt ein Restaurator das Bild für ein Ölgemälde, so ein nationaler Katalog. Er wusch die Wand mit Natronlauge ab, gab ihr einen Ölfirnis und malte große Teile neu. In den 1770er Jahren wurde es noch einmal übermalt. 1821 versuchte ein anderer Restaurator, Stücke davon von der Wand abzulösen, und scheiterte. Unter Napoleon nutzten Truppen den Raum, nach einem Bericht als Stall.",
+        "Der Schaden kam in Wellen. Im 17. Jahrhundert vergrößerten die Dominikaner die Tür unter dem Tisch (ein Katalog nennt das Jahr 1652) und die Füße Christi gingen verloren. In den 1720er Jahren hielt ein Restaurator das Bild für ein Ölgemälde, so ein nationaler Katalog. Er wusch die Wand mit Natronlauge ab, gab ihr einen Ölfirnis und malte große Teile neu. In den 1770er Jahren wurde es noch einmal übermalt. 1821 versuchte ein anderer Restaurator, Stücke davon von der Wand abzulösen, und scheiterte. Unter Napoleon nutzten Truppen den Raum, nach einem Bericht als Stall.",
         "Dann der Krieg. Im August 1943 explodierte eine Bombe im Kreuzgang nebenan. Das Refektorium verlor sein Gewölbe und die Wand an seinem Ostende. Die bemalte Wand blieb stehen. Seit 1940 stand sie hinter einem Stahlgerüst und einer dicken Lage Sandsäcke, und dieser Schutz hat sie gerettet. Ab 1945 wurde der Raum wieder aufgebaut."
       ]
     },
@@ -99,8 +100,8 @@
       "h": "Die lange Restaurierung",
       "paras": [
         "Seit dem frühen 18. Jahrhundert haben Restauratoren etwa neunmal an der Wand gearbeitet, so zählt das Museum. Die meiste Zeit hieß Restaurieren: nachmalen, was fehlte. In den ersten Jahren des 20. Jahrhunderts restaurierte es Luigi Cavenaghi, in den 1950er Jahren sicherte Mauro Pellicioli die abblätternde Oberfläche, ohne die alten Übermalungen abzunehmen.",
-        "Die letzte Restaurierung war anders. Pinin Brambilla Barcilon bearbeitete die ganze Wand: Sie begann Ende der 1970er Jahre und wurde 1999 fertig, nach mehr als zwanzig Jahren. Hinter ihr standen die Mailänder Denkmalbehörde und das Zentralinstitut für Restaurierung in Rom, wie die Presse berichtete. Ihr Team nahm die Übermalungen der früheren Jahrhunderte ab. Unter der Lupe reinigte es, was von Leonardos Farbe übrig war, Schuppe für Schuppe, und tönte die Lücken mit Aquarell, das sich wieder abwaschen lässt. Frühere Restauratoren, berichtete sie, hatten Augen versetzt, Münder geschlossen und Bärte hinzugefügt, die er nie gemalt hatte.",
-        "Was zum Vorschein kam, ist wenig. Die Schätzungen der Fachleute, wie viel der Farbe von Leonardo selbst stammt, reichen von etwa einem Fünftel bis etwa zur Hälfte. Es sind Schätzungen, und auf eine Zahl einigt sich niemand."
+        "Die letzte Restaurierung war anders. Pinin Brambilla Barcilon begann Ende der 1970er Jahre und wurde 1999 fertig, nach mehr als zwanzig Jahren. Hinter ihr standen die Mailänder Denkmalbehörde und das Zentralinstitut für Restaurierung in Rom, wie die Presse berichtete. Ihr Team nahm die Übermalungen der früheren Jahrhunderte ab. Unter der Lupe reinigte es, was von Leonardos Farbe übrig war, Schuppe für Schuppe, und füllte die Lücken mit einem Aquarellton, den Wasser wieder ablöst. Frühere Restauratoren, berichtete sie, hatten Augen versetzt, Münder geschlossen und Bärte auf Gesichter gemalt, die keine hatten.",
+        "Was zum Vorschein kam, ist wenig. Die Schätzungen der Fachleute, wie viel der Farbe von Leonardo selbst stammt, reichen von etwa einem Fünftel bis etwa zur Hälfte. Auf eine Zahl einigt sich niemand."
       ]
     },
     {
@@ -109,7 +110,7 @@
       "nav": "In Mailand heute",
       "h": "Das Bild in Mailand sehen",
       "paras": [
-        "Das Bild ist noch in seinem Raum, der mit Kirche und Kloster seit 1980 Welterbe ist. Die Luft im Refektorium wird gefiltert und das Klima geregelt. Darum gehst du durch eine Folge kleiner Räume hinein, deren Türen sich nacheinander öffnen, und die Besuche sind kurz, zeitlich festgelegt und in kleinen Gruppen. Eine Buchung ist Pflicht.",
+        "Das Bild ist noch in seinem Raum. Mit Kirche und Kloster ist es seit 1980 Welterbe der UNESCO. Die Luft im Refektorium wird gefiltert und das Klima geregelt. Darum gehst du durch eine Folge kleiner Räume hinein, deren Türen sich nacheinander öffnen, und die Besuche sind kurz, zeitlich festgelegt und in kleinen Gruppen. Eine Buchung ist Pflicht.",
         [
           "Die Wand gegenüber trägt die Kreuzigung von Giovanni Donato Montorfano, signiert und datiert 1495 und als Fresko gemalt. Sie hat ihre Farbe viel besser behalten als Leonardos Wand. Kniende Figuren der Herzogsfamilie wurden nachträglich darauf gemalt, wahrscheinlich von Leonardo, sagt das Museum, und von ihnen ist fast nichts übrig. Für den Besuch: die Website des Museums, ",
           {
@@ -124,10 +125,10 @@
       "type": "text",
       "id": "wing",
       "nav": "Im Flügel",
-      "h": "Was unsere Kopie zeigt, und was sie nicht kann",
+      "h": "Was unsere Kopie zeigt und was sie nicht zeigen kann",
       "paras": [
-        "Im Leonardo-Flügel des Museums trägt eine Wand im Hof eine Kopie des Abendmahls. Sie ist eine Reproduktion, und sie hat die Höhe und die Breite des Originals, 4,6 mal 8,8 Meter. Sie zeigt dir zwei Dinge, die ein Buch nicht zeigen kann: die Größe, mit dir davor, und die ganze Komposition auf einmal, Christus in der Mitte und die Apostel in vier Dreiergruppen.",
-        "Was eine flache Kopie nicht zeigen kann, ist die Wand selbst: das Relief der Schuppen und des Putzes, den Zustand, in dem das Bild wirklich ist. Und sie kann das Licht des Raums nicht zeigen. In Mailand kommt das gemalte Licht von links, von derselben Seite wie das Licht aus den echten Fenstern des Saals. Nimm das Bild von dieser Wand, und das Zusammenspiel ist weg.",
+        "Im Leonardo-Flügel des Museums trägt eine Wand im Hof eine Kopie des Abendmahls. Sie ist eine Reproduktion und hat die Höhe und die Breite des Originals, 4,6 mal 8,8 Meter. Sie zeigt dir, was ein Buch nicht zeigen kann: die ganze Komposition in ihrer wirklichen Größe, mit dir davor, Christus in der Mitte und die Apostel in vier Dreiergruppen.",
+        "Was eine flache Kopie nicht zeigen kann, ist die Wand selbst: wie die Farbschuppen vom Putz abstehen und wie zerbrechlich das alles ist. Und sie kann das Licht des Raums nicht zeigen. In Mailand kommt das gemalte Licht von links, von derselben Seite wie das Licht aus den echten Fenstern des Saals. Nimm das Bild von dieser Wand, und das Zusammenspiel ist weg.",
         [
           "Wie groß es neben der Mona Lisa und den anderen Werken ist: ",
           {

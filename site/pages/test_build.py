@@ -580,16 +580,29 @@ class Case(unittest.TestCase):
             num = lambda v: f"{v:g}".replace(".", "," if lang == "de" else ".")
             self.assertIn(f'{num(wall["h_m"])} × {num(wall["w_m"])} m</text>', top)
             self.assertNotIn("<img", top)
-            # the table and the door's arch at the wall's scale, the arch with its label, as the page reads them
+            # the person's floor line stops before the wall: where the wall's lower edge sits above a floor is not drawn
+            wall_x = float(re.search(r'<rect class="sz-m" x="([\d.]+)"', top).group(1))
+            floors = re.findall(r'<path class="sz-floor" d="M([\d.]+) [\d.]+H([\d.]+)"', top)
+            self.assertEqual(len(floors), 1)
+            self.assertLess(float(floors[0][1]), wall_x)
+            # the table and the crown of the door's arch at the wall's scale, the hem broken where the arch comes up
+            # through it, nothing of the door below the hem, the arch with its label, as the page reads them
             inside = data["top"]["drawing"].get("inside")
             if inside:
                 t, a = inside["table"], inside["arch"]
-                self.assertRegex(top, r'<rect class="sz-d" x="[\d.]+" y="[\d.]+" width="%g" height="%g"'
-                                 % ((t["to_m"] - t["from_m"]) * 300, (t["top_m"] - t["hem_m"]) * 300))
-                self.assertRegex(top, r'<path class="sz-a" d="M[\d.]+ 1450V%gA[\d.]+ [\d.]+ 0 0 1 [\d.]+ %gV1450"'
-                                 % (1450 - a["spring_m"] * 300, 1450 - a["spring_m"] * 300))
+                at = lambda v: f"{wall_x + v * 300:g}"
+                hem, spring = f'{1450 - t["hem_m"] * 300:g}', f'{1450 - a["spring_m"] * 300:g}'
+                self.assertIn(f'<path class="sz-d" d="M{at(a["from_m"])} {hem}H{at(t["from_m"])}V{1450 - t["top_m"] * 300:g}'
+                              f'H{at(t["to_m"])}V{hem}H{at(a["to_m"])}"', top)
+                self.assertRegex(top, r'<path class="sz-a" d="M%s %sV%sA[\d.]+ [\d.]+ 0 0 1 %s %sV%s"'
+                                 % (at(a["from_m"]), hem, spring, at(a["to_m"]), spring, hem))
                 for line in data["top"]["drawing"].get("arch_label", []):
                     self.assertIn(f">{html.escape(line)}</text>", top)
+                # what is reconstructed is said under the drawing in words a phone shows too
+                note = re.search(r'<span class="sp-frame__note">(.*?)</span>', top)
+                self.assertIsNotNone(note)
+                self.assertEqual(self.words(note.group(1)).strip(), data["top"]["drawing"]["note"])
+                self.assertNotRegex(text, r"\.sp-frame__note\{[^}]*display:none")
             # every way into the walk opens the wing at the page's stop: the top, the part on the wing, the end
             door = re.escape(wing["door"][lang].replace("&", "&amp;") + "#s=" + data["page"]["stop"])
             for place in ("top", "item", "end"):
@@ -647,15 +660,28 @@ class Case(unittest.TestCase):
     def test_a_table_or_an_arch_outside_the_wall_or_one_language_apart_stops_the_build(self):
         if not self.drawing_page or "inside" not in self.data("en", self.drawing_page)["top"]["drawing"]:
             self.skipTest("no drawing shows a table and an arch")
+        kept = {lang: self.data(lang, self.drawing_page) for lang in ("en", "de")}
         for lang in ("en", "de"):
             data = self.data(lang, self.drawing_page)
-            data["top"]["drawing"]["inside"]["arch"]["to_m"] = 99
+            data["top"]["drawing"]["inside"]["table"]["to_m"] = 99
+            data["top"]["drawing"]["inside"]["arch"]["spring_m"] = 0.2
             self.save(lang, data, self.drawing_page)
-        self.fails(r"top\.drawing\.inside\.arch does not lie inside the wall")
-        data = self.data("en", self.drawing_page)
-        data["top"]["drawing"]["inside"]["arch"]["to_m"] = 5
-        self.save("en", data, self.drawing_page)
+        self.fails(r"top\.drawing\.inside\.table does not lie inside the wall(.|\n)*"
+                   r"top\.drawing\.inside\.arch does not cut into the table from its hem")
+        # each sound alone, but the English draws its arch narrower than the German
+        kept["en"]["top"]["drawing"]["inside"]["arch"]["to_m"] -= 0.3
+        for lang in ("en", "de"):
+            self.save(lang, kept[lang], self.drawing_page)
         self.fails(r"top\.drawing\.inside differs from the en file's")
+
+    def test_a_reconstruction_without_its_note_stops_the_build(self):
+        if not self.drawing_page or "inside" not in self.data("en", self.drawing_page)["top"]["drawing"]:
+            self.skipTest("no drawing shows a table and an arch")
+        for lang in ("en", "de"):
+            data = self.data(lang, self.drawing_page)
+            data["top"]["drawing"]["note"] = " "
+            self.save(lang, data, self.drawing_page)
+        self.fails(r"top\.drawing\.note, which says so under the drawing, is missing")
 
     def test_a_german_ordinal_keeps_its_noun_and_a_long_answer_its_door(self):
         if not self.drawing_page:

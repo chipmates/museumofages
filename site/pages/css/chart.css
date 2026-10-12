@@ -27,11 +27,13 @@
 .sz-top .sz-m{fill:color-mix(in srgb,var(--ground-lit) 70%,var(--ground-wall));stroke:var(--mark);stroke-width:2.5}
 .sz-top .sz-floor{fill:none;stroke:var(--hair-strong);stroke-width:1}
 .sz-top .sz-d{fill:none;stroke:var(--mark);stroke-width:1}
-.sz-top .sz-a{fill:var(--ground-wall);stroke:var(--mark);stroke-width:1.5}
+.sz-top .sz-a{fill:none;stroke:var(--mark);stroke-width:1.5}
 .sz-top .sz-t{fill:var(--ink);font-family:var(--sans);font-size:150px;letter-spacing:.02em}
+/* What a drawing reconstructs is said under it at every width, the phone's too. */
+.sp-frame__note{flex-basis:100%;font-family:var(--sans);font-size:.8125rem;line-height:1.45;color:var(--ink-soft);text-wrap:pretty}
 /* A contents label that wraps keeps air above and below it, so two short rows never read as one. */
 .sp-toc a{display:flex;padding:6px 0;line-height:1.3}
-/* A long answer takes the small phone's type a step early, so the first door stays on a 360 by 780 screen. */
+/* A long answer takes the small phone's type a step early, so the first door still shows on a 360 by 780 screen. */
 @media (min-width:360px) and (max-width:389px){
   .sp-top--long{gap:12px}
   .sp-top--long .sp-answer{margin-top:6px;font-size:1rem}

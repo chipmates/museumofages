@@ -1,5 +1,5 @@
 {
-  "_note": "THE WORDS of the Last Supper page, English. Poured from the writer's WORDS file of round 2 word for word. The wall's size, the person and the stop come from the wing's facts file, and the build draws the first screen's drawing and its share picture from them. The table and the door's arch inside the drawing (top.drawing.inside, metres from the wall's lower left corner) are a reconstruction read off a photograph of the wall: no source gives their sizes, and the alt text says so. The plate's src is its source line as the wing's record names it, as on the sizes page. The two files hold the same structure, but for a source marked only for one language. No em dash, no en dash, no semicolon.",
+  "_note": "THE WORDS of the Last Supper page, English. Poured from the writer's WORDS file of round 3 word for word. The wall's size, the person and the stop come from the wing's facts file, and the build draws the first screen's drawing and its share picture from them. The table and the crown of the door's arch inside the drawing (top.drawing.inside, metres from the wall's lower left corner) are a reconstruction read off a photograph of the wall: no source gives their sizes, nor the door below nor the floor, which are not drawn. The note under the drawing (top.drawing.note) says so at every width. The plate's src is its source line as the wing's record names it, as on the sizes page. The two files hold the same structure, but for a source marked only for one language. No em dash, no en dash, no semicolon.",
   "page": {
     "id": "vinci-supper",
     "wing": "vinci",
@@ -26,7 +26,7 @@
     "title": "Leonardo da Vinci's Last Supper in Milan | Museum of Ages",
     "description": "Leonardo da Vinci's Last Supper: a wall painting of 4.6 by 8.8 metres in a refectory in Milan, about 1494 to 1498. How it decayed, and what is left.",
     "og_title": "Leonardo da Vinci's Last Supper in Milan",
-    "og_image_alt": "The Last Supper drawn to one scale beside a person 1.7 metres tall: the wall painting is 4.6 by 8.8 metres. In it the table and, under it, the door's arch where Christ's feet were. A drawing made for this page, the table and the arch after a photograph."
+    "og_image_alt": "The Last Supper drawn to one scale beside a person 1.7 metres tall: the wall painting is 4.6 by 8.8 metres. In it the table and, under it, the top of the door's arch where Christ's feet were. A drawing made for this page, the table and the arch after a photograph."
   },
   "labels": {
     "crumbs": "You are here",
@@ -39,13 +39,14 @@
   },
   "top": {
     "h1": "Leonardo da Vinci's Last Supper",
-    "answer": "The Last Supper is a wall painting. Leonardo da Vinci painted it in Milan, in the refectory of Santa Maria delle Grazie, the dining hall of a Dominican convent. He painted it for Ludovico Sforza, Duke of Milan, in about 1494 to 1498, and it is still on the wall he painted it on: 4.6 by 8.8 metres, height by width. Look under the table: Christ has no feet. In the seventeenth century the friars wanted a bigger doorway into their kitchens. The one they widened sits in the middle of that wall, right where his feet had been.",
+    "answer": "The Last Supper is a wall painting. Leonardo da Vinci painted it in Milan, in the refectory of Santa Maria delle Grazie, the dining hall of a Dominican convent. He painted it for Ludovico Sforza, Duke of Milan, in about 1494 to 1498, and it is still on the wall he painted it on: the museum gives 4.6 by 8.8 metres, height by width. Look under the table: Christ has no feet. In the seventeenth century the friars wanted a bigger doorway into their kitchens. The one they widened sits in the middle of that wall, right where his feet had been.",
     "drawing": {
       "wall": "supper",
       "tag": "tag_chart",
       "title": "The Last Supper",
-      "what": "beside a person 1.7 metres tall. The table and the arch are a reconstruction, drawn after a photograph.",
-      "alt": "The Last Supper, 4.6 by 8.8 metres, beside a person 1.7 metres tall, drawn to one scale. Inside it the table, and under the table the arch of the door, where Christ's feet were. The table and the arch are a reconstruction drawn after a photograph, as no source gives their sizes.",
+      "what": "beside a person 1.7 metres tall",
+      "alt": "The Last Supper, 4.6 by 8.8 metres, beside a person 1.7 metres tall, drawn to one scale. Inside it the table, and under the table the top of the door's arch, where Christ's feet were. Table and arch are a reconstruction after a photograph. The door below and the floor are not drawn.",
+      "note": "Table and arch: a reconstruction after a photograph. Door and floor: not drawn.",
       "inside": {
         "table": {
           "from_m": 0.57,
@@ -78,7 +79,7 @@
       "nav": "How he painted it",
       "h": "How he painted it, and why it began to fail",
       "paras": [
-        "A wall painting of his time was usually a fresco. The painter works fast on wet plaster, and as the plaster dries it takes the colour in. Leonardo did not want to work fast. The museum explains that he wanted to go slowly and change things as he went. So he let the plaster dry, laid a white ground on it and painted with tempera, much as he would on a wooden panel. A lab study of 2023 found oil in the mix too.",
+        "A wall painting of his time was usually a fresco. The painter works fast on wet plaster, and as the plaster dries it takes the colour in. Leonardo did not want to work fast. The museum explains that he wanted to go slowly and change things as he went. So he let the plaster dry, laid a white ground on it and painted with tempera, treating the wall like one of his wooden panels. A lab study of 2023 points to oil in the mix too.",
         "That is why it began to fail. Nothing bound the colour to the wall. It lay on top like a skin, and the room was damp. Within about twenty years it was coming off: in 1517 a visitor already saw the decay. In 1568 Vasari wrote that little could be made out beyond “a glowing stain”, as the museum's site quotes him."
       ]
     },
@@ -99,8 +100,8 @@
       "h": "The long restoration",
       "paras": [
         "Restorers have been at the wall since the early 1700s, about nine times by the museum's count. For most of that time restoring meant repainting what was missing. In the early 1900s Luigi Cavenaghi restored it, and in the 1950s Mauro Pellicioli secured the flaking surface without taking the old overpaint off.",
-        "The last restoration was different. Pinin Brambilla Barcilon began in the late 1970s and finished in 1999, more than twenty years later, and she worked her way across the whole wall. Behind her stood the Milan Soprintendenza and the central restoration institute in Rome, as the press reported. Her team took off the overpaint of the earlier centuries. Under magnification they cleaned what was left of Leonardo's paint, flake by flake, and toned the gaps in watercolour that can be washed off again. Earlier restorers, she reported, had moved eyes, closed mouths and added beards he never painted.",
-        "What came back is thin. How much of the paint is still Leonardo's own? The experts' estimates lie between a fifth and a half. No single figure is agreed, and every one of them is an estimate."
+        "The last restoration was different. Pinin Brambilla Barcilon began in the late 1970s and finished in 1999, more than twenty years later. Behind her stood the Milan Soprintendenza and the central restoration institute in Rome, as the press reported. Her team took off the overpaint of the earlier centuries. Under magnification they cleaned what was left of Leonardo's paint, flake by flake, and toned the gaps with watercolour, which water will lift off again. Earlier restorers, she reported, had shifted eyes, shut mouths and put beards on faces that had none.",
+        "What came back is thin. How much of the paint is still Leonardo's own? The experts' estimates lie between a fifth and a half. No single figure is agreed."
       ]
     },
     {
@@ -109,7 +110,7 @@
       "nav": "In Milan today",
       "h": "Seeing it in Milan today",
       "paras": [
-        "The painting is still in its room, which has been a World Heritage Site with the church and the convent since 1980. The air in the refectory is filtered and its climate is controlled. So you enter through a chain of small rooms whose doors open one after the other, and the visits are short, timed and in small groups. Booking is required.",
+        "The painting is still in its room. With the church and the convent, it has been a UNESCO World Heritage Site since 1980. The air in the refectory is filtered and its climate is controlled. So you enter through a chain of small rooms whose doors open one after the other, and the visits are short, timed and in small groups. Booking is required.",
         [
           "On the wall opposite is a Crucifixion by Giovanni Donato Montorfano. He signed it, dated it 1495 and painted it in fresco. It has kept its colour far better than Leonardo's wall. Kneeling figures of the duke's family were painted onto it later, probably by Leonardo, the museum says, and of them almost nothing is left. For a visit, the museum's own site: ",
           {
@@ -126,8 +127,8 @@
       "nav": "In the wing",
       "h": "What our copy shows, and what it cannot",
       "paras": [
-        "The museum's Leonardo wing has a copy of the Last Supper on a wall of its court. It is a reproduction, and it has the original's height and width, 4.6 by 8.8 metres. It shows you two things a book cannot: the size, with you standing in front of it, and the whole composition at once, Christ in the middle and the apostles in four groups of three.",
-        "What a flat copy cannot show is the wall itself: the relief of the flakes and the plaster, the state the painting is really in. And it cannot show the room's light. In Milan the painted light comes in from the left, the same side as the real windows of the hall. Take the painting off that wall and the pairing is gone.",
+        "The museum's Leonardo wing has a copy of the Last Supper on a wall of its court. It is a reproduction, and it has the original's height and width, 4.6 by 8.8 metres. It shows you what a book cannot: the whole composition at its real size, with you standing in front of it, Christ in the middle and the apostles in four groups of three.",
+        "What a flat copy cannot show is the wall itself: how the flakes of paint stand up from the plaster, and how fragile it all is. And it cannot show the room's light. In Milan the painted light comes in from the left, the same side as the real windows of the hall. Take the painting off that wall and the pairing is gone.",
         [
           "How big it is beside the Mona Lisa and the other works: ",
           {
