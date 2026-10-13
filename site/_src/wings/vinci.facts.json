@@ -108,8 +108,8 @@
     "en": "Annunciation",
     "de": "Die Verkündigung"
    },
-   "h_cm": 98,
-   "w_cm": 217,
+   "h_cm": 90,
+   "w_cm": 222,
    "slot_cm": 217,
    "date": "About 1472",
    "class": "documented",
@@ -210,8 +210,8 @@
     "en": "Adoration of the Magi",
     "de": "Anbetung der Könige aus dem Morgenland"
    },
-   "h_cm": 240,
-   "w_cm": 244,
+   "h_cm": 244,
+   "w_cm": 240,
    "slot_cm": 240.0,
    "date": "About 1481 to 1482",
    "class": "documented",

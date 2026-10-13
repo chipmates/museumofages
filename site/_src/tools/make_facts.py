@@ -66,6 +66,9 @@ HOLDERS = [
 DRAWINGS = ("burlington-house-cartoon", "anghiari-copy")
 # Two frames keep the place on the wall of an earlier record of their size (the wing's hang says why).
 SLOTS = {"adoration-of-the-magi": 240.0, "yarnwinder-lansdowne": 36.4}
+# Two works whose holder measures them otherwise than the wing's hang: the page shows the holder's height and
+# width, the hang keeps its own until the wing's next film render takes the holder's.
+HELD = {"annunciation": (90, 222), "adoration-of-the-magi": (244, 240)}
 # The stop a painting is seen from, where it is not the room's first.
 PAINTING_STOP = {"mona-lisa": "picture-room-lisa"}
 ROOM_OF = (("The court", "court"), ("The mechanism hall", "hall"), ("The house", "house"))
@@ -206,6 +209,14 @@ def volume_sides(data):
     return {"all": len(sides), "b": sum("manuscript B" in r["name_en"] for r in sides), "d": sum("manuscript D" in r["name_en"] for r in sides)}
 
 
+def held(paintings):
+    """The page's sizes: the holder's where HELD names one, the hang's otherwise."""
+    for p in paintings:
+        if p["id"] in HELD:
+            p["h_cm"], p["w_cm"] = HELD[p["id"]]
+    return paintings
+
+
 def wall():
     """The wall's own measures, from the wing's hang and layout when they can be read."""
     if not (HANG.exists() and LAYOUT.exists()):
@@ -234,6 +245,7 @@ def make(old=None):
         for p, (work, width, height, slot) in zip(d["paintings"], hung):
             if (p["id"], p["w_cm"], p["h_cm"], p["slot_cm"]) != (work, num(str(width)), num(str(height)), num(str(slot))):
                 raise SystemExit(f"make_facts: hang number {p['n']} differs between the inventory and the wing's hang: {p} / {(work, width, height, slot)}")
+    held(d["paintings"])
     keep = old or {}
     pages = {(k, x["id"], x.get("face")): x.get("page") for k in ("paintings", "machines") for x in keep.get(k, [])}
     for k in ("paintings", "machines"):
@@ -280,6 +292,7 @@ def compare(facts):
     if not os.environ.get("MOA_INVENTORY") or not INVENTORY.is_file():
         return []
     d, out = derive(), []
+    held(d["paintings"])
     for key, value in d["counts"].items():
         if facts.get("counts", {}).get(key) != value:
             out.append(f"counts.{key} is {facts.get('counts', {}).get(key)!r}, the inventory gives {value!r}")
