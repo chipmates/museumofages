@@ -176,13 +176,18 @@ BLOCK_TYPES = ("places", "group", "feature", "notes", "faq", "sources", "close",
 # The pictures of the search pages (make_pictures.py cuts them). Its plates are the reproductions a wing hangs, each
 # with the record the build checks its source line against.
 PICTURES_FILE = HERE / "pictures.json"
-# What a plate's source line must say, by the plate's tier (RIGHTS-POLICY): the second tier's line, the line of a
-# plate the wing hung before its tiers, and the licence of a plate open at its source.
+# What a plate's source line must say, by the plate's tier (RIGHTS-POLICY): the second tier's line word for word, also
+# for a record without a tier (the wing hung those before its tiers, and its rights list reads them as the second), and
+# the licence's words for a plate open at its source. The bare line such records once carried is no tier's line.
 TIER_LINE = {
-    "TIER2": {"en": "The museum labels the reproduction, not the painting.", "de": "Das Museum kennzeichnet die Reproduktion, nicht das Gemälde."},
-    None: {"en": "public domain reproduction", "de": "gemeinfreie reproduktion"},
-    "TIER1": {"en": "public domain", "de": "gemeinfrei"},
+    "TIER2": {"en": ("Public domain work.", "Reproduction from ", "The museum labels the reproduction, not the painting.",
+                     "Non-profit cultural use."),
+              "de": ("Gemeinfreies Werk.", "Reproduktion aus ", "Das Museum kennzeichnet die Reproduktion, nicht das Gemälde.",
+                     "Kulturelle Nutzung ohne Gewinnabsicht.")},
+    "TIER1": {"en": ("public domain",), "de": ("gemeinfrei",)},
 }
+BARE_LINE = {"en": re.compile(r"\bpublic domain reproductions? from\b", re.I),
+             "de": re.compile(r"\bgemeinfreie reproduktion(?:en)? aus\b", re.I)}
 # The wing's dates are written in English: the German page writes them by these rules.
 DATE_DE = {"Sixteenth century, reworked in the early seventeenth century": "16. Jahrhundert, überarbeitet im frühen 17. Jahrhundert"}
 
@@ -597,9 +602,10 @@ def source_line(parts, wing, lang, rich):
     return re.sub(r'(<a href="[^"]*">(?:(?!</a>).)*</a>)([.,:)]+)', r'<span class="nw">\1\2</span>', "".join(out))
 
 
-def plate_problems(src, names, lang):
+def plate_problems(src, names, lang, still_open=None):
     """What a source line lacks for the plates it stands under (names): the link to each plate's source, its tier's
-    line, the link to its licence and the Italian code's line where its record asks for them. Returns the problems."""
+    line, the link to its licence and the Italian code's line where its record asks for them, and for a plate shown
+    through the film's still, the opening that says so (still_open). Returns the problems."""
     known, problems = plates(), []
     links = {part["href"] for part in src if isinstance(part, dict)}
     words = " ".join(part if isinstance(part, str) else part["text"] for part in src).replace(LIB.NBSP, " ")
@@ -614,9 +620,15 @@ def plate_problems(src, names, lang):
             problems.append(f"{name}: the source line does not link the plate's licence {plate['licence_url']}")
         if plate["it108"] and "{museum:it108}" not in words:
             problems.append(f"{name}: the plate's record asks for the Italian code's line ({{museum:it108}})")
-        line = TIER_LINE.get(plate["tier"], TIER_LINE[None])[lang]
-        if line.lower() not in words.lower():
-            problems.append(f"{name}: a plate of tier {plate['tier'] or 'none'} carries {line!r} in its source line")
+        tier = plate["tier"] if plate["tier"] in TIER_LINE else "TIER2"
+        for line in TIER_LINE[tier][lang]:
+            if (line.lower() not in words.lower()) if tier == "TIER1" else (line not in words):
+                problems.append(f"{name}: a plate of tier {plate['tier'] or 'none'} carries {line!r} in its source line")
+        bare = BARE_LINE[lang].search(words)
+        if bare:
+            problems.append(f"{name}: {bare.group(0)!r} is the bare line of a plate without a tier, which carries the second tier's line")
+        if plate.get("still") and not (still_open and words.startswith(still_open)):
+            problems.append(f"{name}: the plate is shown through the film's still, and its label opens with labels.still_open")
     return problems
 
 
@@ -708,7 +720,8 @@ def check_periods(d, lang, works, facts, field_title, pics):
                     plate = plates().get(stem)
                     if plate and plate["work"] != x["work"] and not it.get("field"):
                         problems.append(f"{where}: the plate {stem} is of {plate['work']}")
-                problems += [f"{where}: {p}" for p in plate_problems(x["src"], [s for s in stems if s in plates()], lang)]
+                problems += [f"{where}: {p}" for p in plate_problems(x["src"], [s for s in stems if s in plates()], lang,
+                                                                       d["labels"].get("still_open"))]
     missing = sorted(set(first) - set(seen))
     twice = sorted({w for w in seen if seen.count(w) > 1})
     if missing:
@@ -717,7 +730,7 @@ def check_periods(d, lang, works, facts, field_title, pics):
         problems.append(f"the list names {', '.join(twice)} twice")
     for name, pic in pics.items():
         plate = plates().get(pic["stem"])
-        if plate and pic["widths"] != plate["widths"]:
+        if plate and plate.get("widths") and pic["widths"] != plate["widths"]:
             problems.append(f"pics.{name}: its widths are not its plate's {plate['widths']}")
     return problems
 
@@ -1136,9 +1149,11 @@ def render(page, lang, data, shared, out_root):
         "html.header": chrome["header"],
         "html.footer": chrome["footer"],
         "attr.h1": h1_class,
-        "attr.top": " sp-top--long" if len(answer_text(data["top"]["answer"])) > LONG_ANSWER else "",
+        "attr.top": " sp-top--long" if answer_length(data["top"]) > LONG_ANSWER else "",
         "top.h1": names.mark(h1, wrap_wing=run > KEEP_SMALL),
         "top.answer": linked(data["top"]["answer"]),
+        # an answer in two paragraphs: the second, with its links, under the first
+        "html.answer_more": f'<p class="sp-answer">{linked(data["top"]["answer_more"])}</p>' if data["top"].get("answer_more") else "",
         # the one place a sizes page says in which order its sizes stand
         "html.order": f'<p class="sz-order">{rich(data["top"]["order"])}</p>' if data["top"].get("order") else "",
         "html.frame": frame_html,
@@ -1164,6 +1179,11 @@ def render(page, lang, data, shared, out_root):
 def answer_text(answer):
     """The first screen's answer as plain words: a string, or parts where a part is a link."""
     return answer if isinstance(answer, str) else "".join(p if isinstance(p, str) else p["text"] for p in answer)
+
+
+def answer_length(top):
+    """The first screen's answer in characters, both its paragraphs where it has two (answer_more)."""
+    return len(answer_text(top["answer"])) + len(answer_text(top.get("answer_more", "")))
 
 
 # ---------- checks on a built page ----------
@@ -1633,7 +1653,7 @@ def facts(pages=PAGES):
             print(f"  title       {len(data['meta']['title']):3}  {data['meta']['title']}")
             print(f"  description {len(data['meta']['description']):3}  {data['meta']['description']}")
             print(f"  h1          {len(data['top']['h1']):3}  {data['top']['h1']}")
-            print(f"  answer      {len(answer_text(data['top']['answer'])):3}")
+            print(f"  answer      {answer_length(data['top']):3}")
             for block in data["blocks"]:
                 print(f"  h2  {block['h']}")
                 for item in block.get("items", []):

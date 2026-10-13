@@ -704,7 +704,7 @@ class Case(unittest.TestCase):
         for path in written:
             text = path.read_text(encoding="utf-8")
             data, lang = self.page_of(path)
-            long = len(module.answer_text(data["top"]["answer"])) > module.LONG_ANSWER
+            long = module.answer_length(data["top"]) > module.LONG_ANSWER
             self.assertEqual('<header class="sp-top sp-top--long">' in text, long, path)
 
     def test_a_source_of_one_language_only_stands_in_that_language(self):
@@ -820,7 +820,14 @@ class Case(unittest.TestCase):
                  r"a plate of tier TIER2 carries"),
                 (lambda p: p["licence_url"], lambda src: [x["text"] if isinstance(x, dict) and "creativecommons" in x["href"] else x for x in src], r"does not link the plate's licence"),
                 (lambda p: True, lambda src: [x["text"] if isinstance(x, dict) else x for x in src], r"does not link the plate's source"),
-                (lambda p: True, lambda src: [], r"without its source line")]
+                (lambda p: True, lambda src: [], r"without its source line"),
+                # a record without a tier carries the second tier's line, never the bare line
+                (lambda p: p["tier"] is None, lambda src: [x.replace("Non-profit cultural use.", "") if isinstance(x, str) else x for x in src],
+                 r"a plate of tier none carries"),
+                (lambda p: p["tier"] is None, lambda src: ["Public domain reproduction from ", next(x for x in src if isinstance(x, dict)), "."],
+                 r"bare line of a plate without a tier"),
+                # a plate shown through the film's still says so first
+                (lambda p: p.get("still"), lambda src: [src[0].split(". ", 1)[1]] + src[1:], r"labels\.still_open")]
         for test, cut, words in cuts:
             with self.subTest(words=words):
                 data = self.data("en", self.list_page)

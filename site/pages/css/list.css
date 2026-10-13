@@ -1,6 +1,9 @@
 /* A page that lists its wing's works one by one, by period: set inline after chart.css, on those pages only.
-   Each entry takes its shape from its work: an upright panel stands beside its label, a wide one runs across.
-   Colours: only the site's roles. The mark stays a line, never a fill. */
+   Each entry takes its shape from its work: on a phone every plate takes the column with its label under it; wider,
+   an upright panel stands beside the entry's words, a wide one runs across. Colours: only the site's roles. */
+
+/* The answer in two paragraphs */
+.sp-answer+.sp-answer{margin-top:12px}
 
 /* ---------- The count on the first screen ---------- */
 .pt-tally{padding-top:4px}
@@ -36,24 +39,23 @@
 .pt-works{margin-top:18px}
 
 /* One work: its title and its date and holder, its plate with the plate's own label, the three sentences, its door.
-   On a phone an upright plate stands at the left of its label; a wide one, and a work's two faces, run across. */
+   On a phone the picture is the larger part: an upright plate up to 20rem, a wide one and a work's two faces across. */
 .pt-work{display:grid;grid-template-columns:minmax(0,1fr);padding:22px 0 18px;border-top:1px solid var(--hair)}
 .pt-work__title{font-size:1.3125rem;line-height:1.25}
 .pt-work__meta{margin-top:6px;font-family:var(--sans);font-size:.875rem;line-height:1.45;color:var(--ink-soft)}
 .pt-when,.pt-where{display:block}
 .pt-when{color:var(--ink)}
-.pt-plate{margin-top:14px;display:grid;grid-template-columns:7.5rem minmax(0,1fr);column-gap:16px;align-items:start}
-.pt-plate .hang{--pool-up:20px;--pool-side:10%;--pool-down:-40%}
+.pt-plate{margin-top:14px}
+.pt-plate .hang{--pool-up:20px;--pool-side:10%;--pool-down:-40%;max-width:20rem}
 .pt-plate .hang>picture{display:block}
-.pt-plate__label{margin:0;padding:0;max-width:none;font-size:.75rem;line-height:1.5}
+.pt-plate__label{margin:10px 0 0;padding:0;max-width:36rem;font-size:.75rem;line-height:1.5}
 .pt-plate__label::before{content:none}
 .pt-plate .label__what{display:block}
 .pt-plate .label__src{display:block;margin-top:4px;color:var(--ink-soft);overflow-wrap:anywhere}
 .pt-plate .label__src .nw{overflow-wrap:normal}
-.pt-work--wide .pt-plate,.pt-work--pair .pt-plate{grid-template-columns:minmax(0,1fr);row-gap:2px}
 .pt-work--wide .pt-plate .hang{max-width:36rem}
-.pt-work--pair .hang{display:flex;gap:12px;align-items:flex-start;width:max-content;max-width:100%}
-.pt-work--pair .hang>picture{width:7.5rem}
+.pt-work--pair .hang{display:flex;gap:12px;align-items:flex-start}
+.pt-work--pair .hang>picture{flex:1 1 0;min-width:0}
 .pt-work__text{margin-top:14px}
 .pt-work__text p{color:var(--ink-body);max-width:38rem}
 .pt-work__text p+p{margin-top:8px}
@@ -82,7 +84,8 @@
   /* A wide work and a work's two faces run across the entry, the words under them. */
   .pt-work--wide,.pt-work--pair{grid-template-columns:minmax(0,1fr);grid-template-rows:none;
     grid-template-areas:"title" "meta" "pic" "text" "go" "more"}
-  .pt-work--pair .hang>picture{width:12rem}
+  .pt-work--pair .hang{width:max-content;max-width:100%}
+  .pt-work--pair .hang>picture{flex:none;width:12rem}
   .pt-work--wide .pt-plate__label,.pt-work--pair .pt-plate__label{max-width:36rem}
 }
 @media (min-width:960px){

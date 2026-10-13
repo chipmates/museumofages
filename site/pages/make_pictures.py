@@ -19,7 +19,8 @@ with them as TrueType files (cardo-400.ttf and marcellus-400.ttf, the site's wof
 reads through a font map written into pages/_work/fonts/.
 A plate (pictures.json, plates) is cut from the file the wing hangs, found in the museum's asset store (MOA_ASSET_STORE
 names it; it is read, never written): only when the store's record of it still names that file, hash, tier, source,
-licence and Italian line, and no other record supersedes it or was chosen over it.
+licence and Italian line, and no other record supersedes it or was chosen over it. A plate the pages show only through
+the film's still of its wall (still) is checked the same way and not cut.
 """
 import hashlib
 import importlib.util
@@ -78,7 +79,8 @@ def plates(jobs, only):
         if found:
             continue
         OUT.mkdir(parents=True, exist_ok=True)
-        for width in plate["widths"]:
+        # a plate shown only through the film's still (still) is checked here, and cut by the site's own tool
+        for width in plate.get("widths", []):
             base = ["magick", str(Path(store) / plate["file"]), "-colorspace", "sRGB", "-filter", "Lanczos", "-resize", f"{width}x", "-strip"]
             for ext, extra in KINDS:
                 out = OUT / f"{plate['name']}-{width}.{ext}"
@@ -147,7 +149,7 @@ def charts(only):
 def main():
     jobs = json.loads((HERE / "pictures.json").read_text(encoding="utf-8"))
     if "--list" in sys.argv:
-        print("\n".join(job["name"] for job in jobs["pictures"] + jobs["share"] + jobs.get("plates", [])))
+        print("\n".join(job["name"] for job in jobs["pictures"] + jobs["share"] + [p for p in jobs.get("plates", []) if p.get("widths")]))
         print("\n".join(job["file"] for job in pages_build().still_jobs()))
         return
     only = [a for a in sys.argv[1:] if not a.startswith("-")]
