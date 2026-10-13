@@ -1757,26 +1757,26 @@
   {
    "path": "pages/pics/img/vinci-plate-salvator-mundi-320.avif",
    "url": "/static/img/vinci-plate-salvator-mundi-320.avif",
-   "bytes": 10757,
-   "sha256": "63c22b4067fa16722f40f44cfb40cd9e286bcc3becc39c924cd486298e257c65"
+   "bytes": 8483,
+   "sha256": "7acb3c3547866273fa4aea2f1e8d9eef7ebe1b152ef8453792d418c3e92532ea"
   },
   {
    "path": "pages/pics/img/vinci-plate-salvator-mundi-320.webp",
    "url": "/static/img/vinci-plate-salvator-mundi-320.webp",
-   "bytes": 17414,
-   "sha256": "ada2c36e5a13099404aae48211bcd52301079c2fc14487f07e900c3e71d44458"
+   "bytes": 10186,
+   "sha256": "d8cb474b4814eed0d04faa00dfcd5c5e012ba5856fc3e7facf2993e9236aa2f9"
   },
   {
    "path": "pages/pics/img/vinci-plate-salvator-mundi-640.avif",
    "url": "/static/img/vinci-plate-salvator-mundi-640.avif",
-   "bytes": 40846,
-   "sha256": "8144f016e4a4a4f94b56a135a62b1b295004255b67186599a6ddb84eb27b182e"
+   "bytes": 33231,
+   "sha256": "098a4a865837f45764766544c92d525a55e127cfd5f3f5723186650bd119b716"
   },
   {
    "path": "pages/pics/img/vinci-plate-salvator-mundi-640.webp",
    "url": "/static/img/vinci-plate-salvator-mundi-640.webp",
-   "bytes": 63728,
-   "sha256": "fc1cef26806ab5b1115cab2a8e0b0a9171c9eac7e08824cf236f5c1deef8c53f"
+   "bytes": 37952,
+   "sha256": "d5e6e77fb1b39dfac5ba6873a839dfdc164325e621df81908152226d300852ad"
   },
   {
    "path": "pages/pics/img/vinci-plate-virgin-and-child-with-st-anne-320.avif",

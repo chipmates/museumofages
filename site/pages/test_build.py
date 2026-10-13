@@ -827,7 +827,10 @@ class Case(unittest.TestCase):
                 (lambda p: p["tier"] is None, lambda src: ["Public domain reproduction from ", next(x for x in src if isinstance(x, dict)), "."],
                  r"bare line of a plate without a tier"),
                 # a plate shown through the film's still says so first
-                (lambda p: p.get("still"), lambda src: [src[0].split(". ", 1)[1]] + src[1:], r"labels\.still_open")]
+                (lambda p: p.get("still"), lambda src: [src[0].split(". ", 1)[1]] + src[1:], r"labels\.still_open"),
+                # a plate cut to the painting says so
+                (lambda p: p.get("crop"), lambda src: [x.replace(" Cropped to the painting.", "") if isinstance(x, str) else x for x in src],
+                 r"labels\.cropped")]
         for test, cut, words in cuts:
             with self.subTest(words=words):
                 data = self.data("en", self.list_page)

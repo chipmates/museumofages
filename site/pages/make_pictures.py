@@ -20,7 +20,8 @@ reads through a font map written into pages/_work/fonts/.
 A plate (pictures.json, plates) is cut from the file the wing hangs, found in the museum's asset store (MOA_ASSET_STORE
 names it; it is read, never written): only when the store's record of it still names that file, hash, tier, source,
 licence and Italian line, and no other record supersedes it or was chosen over it. A plate the pages show only through
-the film's still of its wall (still) is checked the same way and not cut.
+the film's still of its wall (still) is checked the same way and not cut. A plate's crop cuts the store's file to
+the painting first.
 """
 import hashlib
 import importlib.util
@@ -81,7 +82,8 @@ def plates(jobs, only):
         OUT.mkdir(parents=True, exist_ok=True)
         # a plate shown only through the film's still (still) is checked here, and cut by the site's own tool
         for width in plate.get("widths", []):
-            base = ["magick", str(Path(store) / plate["file"]), "-colorspace", "sRGB", "-filter", "Lanczos", "-resize", f"{width}x", "-strip"]
+            crop = ["-crop", plate["crop"], "+repage"] if plate.get("crop") else []
+            base = ["magick", str(Path(store) / plate["file"])] + crop + ["-colorspace", "sRGB", "-filter", "Lanczos", "-resize", f"{width}x", "-strip"]
             for ext, extra in KINDS:
                 out = OUT / f"{plate['name']}-{width}.{ext}"
                 if not out.exists():

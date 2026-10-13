@@ -236,6 +236,7 @@
   "crumb_here": "Gemälde",
   "tag_still": "Reproduktion",
   "still_open": "Ein Standbild aus dem Film des Flügels. Die Wand trägt",
+  "cropped": "Auf das Gemälde zugeschnitten.",
   "class_documented": "Belegt",
   "class_disputed": "Umstritten",
   "class_qualified": "Zuschreibung mit Vorbehalt",
@@ -865,7 +866,7 @@
          "text": "Wikimedia Commons",
          "href": "https://commons.wikimedia.org/wiki/File:Leonardo_da_Vinci_or_Boltraffio_(attrib)_Salvator_Mundi_circa_1500.jpg"
         },
-        ". Das Museum kennzeichnet die Reproduktion, nicht das Gemälde. Kulturelle Nutzung ohne Gewinnabsicht. Das Foto, 2017 nach der Restaurierung für Christie's aufgenommen, zeigt auch den Rahmen."
+        ". Das Museum kennzeichnet die Reproduktion, nicht das Gemälde. Kulturelle Nutzung ohne Gewinnabsicht. Das Foto, 2017 nach der Restaurierung für Christie's aufgenommen, zeigt auch den Rahmen. Auf das Gemälde zugeschnitten."
        ]
       }
      ],

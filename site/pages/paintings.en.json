@@ -236,6 +236,7 @@
   "crumb_here": "Paintings",
   "tag_still": "Reproduction",
   "still_open": "A still from the wing's film. The wall carries",
+  "cropped": "Cropped to the painting.",
   "class_documented": "Documented",
   "class_disputed": "Disputed",
   "class_qualified": "Qualified attribution",
@@ -865,7 +866,7 @@
          "text": "Wikimedia Commons",
          "href": "https://commons.wikimedia.org/wiki/File:Leonardo_da_Vinci_or_Boltraffio_(attrib)_Salvator_Mundi_circa_1500.jpg"
         },
-        ". The museum labels the reproduction, not the painting. Non-profit cultural use. The photograph, taken for Christie's in 2017 after the restoration, includes its frame."
+        ". The museum labels the reproduction, not the painting. Non-profit cultural use. The photograph, taken for Christie's in 2017 after the restoration, includes its frame. Cropped to the painting."
        ]
       }
      ],

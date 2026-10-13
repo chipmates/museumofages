@@ -602,10 +602,13 @@ def source_line(parts, wing, lang, rich):
     return re.sub(r'(<a href="[^"]*">(?:(?!</a>).)*</a>)([.,:)]+)', r'<span class="nw">\1\2</span>', "".join(out))
 
 
-def plate_problems(src, names, lang, still_open=None):
+def plate_problems(src, names, lang, labels=None):
     """What a source line lacks for the plates it stands under (names): the link to each plate's source, its tier's
-    line, the link to its licence and the Italian code's line where its record asks for them, and for a plate shown
-    through the film's still, the opening that says so (still_open). Returns the problems."""
+    line, the link to its licence and the Italian code's line where its record asks for them, for a plate shown
+    through the film's still the opening that says so (labels.still_open), and for a plate cut to the painting the
+    words that say so (labels.cropped). Returns the problems."""
+    labels = labels or {}
+    still_open = labels.get("still_open")
     known, problems = plates(), []
     links = {part["href"] for part in src if isinstance(part, dict)}
     words = " ".join(part if isinstance(part, str) else part["text"] for part in src).replace(LIB.NBSP, " ")
@@ -629,6 +632,8 @@ def plate_problems(src, names, lang, still_open=None):
             problems.append(f"{name}: {bare.group(0)!r} is the bare line of a plate without a tier, which carries the second tier's line")
         if plate.get("still") and not (still_open and words.startswith(still_open)):
             problems.append(f"{name}: the plate is shown through the film's still, and its label opens with labels.still_open")
+        if plate.get("crop") and not (labels.get("cropped") and labels["cropped"] in words):
+            problems.append(f"{name}: the plate is cut to the painting ({plate['crop']}), and its label says so with labels.cropped")
     return problems
 
 
@@ -721,7 +726,7 @@ def check_periods(d, lang, works, facts, field_title, pics):
                     if plate and plate["work"] != x["work"] and not it.get("field"):
                         problems.append(f"{where}: the plate {stem} is of {plate['work']}")
                 problems += [f"{where}: {p}" for p in plate_problems(x["src"], [s for s in stems if s in plates()], lang,
-                                                                       d["labels"].get("still_open"))]
+                                                                       d["labels"])]
     missing = sorted(set(first) - set(seen))
     twice = sorted({w for w in seen if seen.count(w) > 1})
     if missing:
