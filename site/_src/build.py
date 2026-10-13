@@ -1549,7 +1549,9 @@ def build(out, registry, wing_dirs, mark=None, topics=True, quiet=False, more_pi
         counted = wing_count_kind(w["wing.slug"], site.wings[w["wing.slug"]]) if kind == "wing" else COUNT_KINDS[kind]
         text = with_count(fill(template, w), c.static, counted)
         if SOURCE_LINK:
-            text = with_picture_rights(text, f"{ORIGIN}/{str(path).removesuffix('index.html')}", picture_terms(c.lang, f"{ORIGIN}/{L.page(c.lang, 'what')}#{USE_PICTURES}"))
+            note = f"{ORIGIN}/{L.page(c.lang, 'what')}#{USE_PICTURES}"
+            text = with_picture_rights(text, f"{ORIGIN}/{str(path).removesuffix('index.html')}", picture_terms(c.lang, note),
+                                       picture_terms(c.lang, note, map_data=True))
         built.append((out / path, with_policy(text), kind, c.lang))
 
     for lang in LANGS:

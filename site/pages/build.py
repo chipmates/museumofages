@@ -1258,7 +1258,8 @@ def render(page, lang, data, shared, out_root):
     })
     text = with_policy(fill(parts["page"], values))
     if chrome["use_pictures"]:
-        text = LIB.with_picture_rights(text, urls[lang], LIB.picture_terms(lang, chrome["use_pictures"]))
+        text = LIB.with_picture_rights(text, urls[lang], LIB.picture_terms(lang, chrome["use_pictures"]),
+                                       LIB.picture_terms(lang, chrome["use_pictures"], map_data=True))
     files = {f"img/{f}": pics.find(f) for name in sorted(pics.used) for f in pics.files(name)}
     files[f"img/{og['file']}"] = pics.find(og["file"])
     if frame.get("still"):

@@ -1,5 +1,5 @@
 {
-  "_note": "The pictures the museum made itself that may leave under CC BY-SA 4.0 alone: verdict 1 of the rights list (section B, and the share images and charts made for the topic pages). A picture is named by the stem of its files: a file is its stem, then -<width> or -<width>x<height>, then its type. Only these carry licence data in a page's structured data, and the build stops on licence data for any other picture. A picture joins this list only after its rights reading: a still that shows a reproduction, the house or its grounds (map data), the sky, or a film never does.",
+  "_note": "The pictures the museum made itself that may leave under CC BY-SA 4.0 alone: verdict 1 of the rights list (section B, and the share images and charts made for the topic pages). A picture is named by the stem of its files: a file is its stem, then -<width> or -<width>x<height>, then its type. Only these carry licence data in a page's structured data, and the build stops on licence data for any other picture. A picture joins this list only after its rights reading: a still that shows a reproduction, the house or its grounds (map data), the sky, or a film never does. with_map_credit names the stills of the house or its grounds (verdict 2 of the rights list, OpenStreetMap and IGN): they carry licence data only where a page's structured data already describes them, and only with the map data's credit in their creditText.",
   "stems": [
     "hall",
     "v-works", "v-works-m",
@@ -21,5 +21,9 @@
     "vinci-sizes-chart-en", "vinci-sizes-chart-de",
     "vinci-sizes-og-en", "vinci-sizes-og-de",
     "vinci-supper-og-en", "vinci-supper-og-de", "vinci-paintings-og-en", "vinci-paintings-og-de"
+  ],
+  "with_map_credit": [
+    "house", "v-house", "v-court", "v-court-m", "court", "stair", "v-hall", "v-hall-m", "v-lion", "vinci-stop-hall",
+    "vinci-view-anemometer", "vinci-view-parachute", "m-parachute"
   ]
 }

@@ -209,6 +209,8 @@ def dump(graph):
 # ---------- the licence of the museum's own pictures, in a form image search reads ----------
 
 FREE_PICTURES = frozenset(json.loads((SRC / "free-pictures.json").read_text(encoding="utf-8"))["stems"])
+# Stills of the house or its grounds: ours under CC BY-SA 4.0 only together with the credit of the map data they rest on.
+MAP_PICTURES = frozenset(json.loads((SRC / "free-pictures.json").read_text(encoding="utf-8"))["with_map_credit"])
 PICTURE_FILE = re.compile(r"^(.+?)-\d+(?:x\d+)?\.(?:webp|avif|jpg|png)$")
 LICENCE_FIELDS = ("license", "acquireLicensePage", "creditText", "copyrightNotice", "creator")
 LD_BLOCK = re.compile(r'(<script type="application/ld\+json">)(.*?)(</script>)', flags=re.S)
@@ -232,22 +234,35 @@ def image_objects(node):
 
 
 def licence_problems(text, name):
-    """Licence data on a picture that is not the museum's own to give away."""
+    """Licence data on a picture that is not the museum's own to give away, or on a still of the house without the
+    credit of its map data."""
     problems = []
     for block in LD_BLOCK.findall(text):
         for image in image_objects(json.loads(block[1].replace("<\\/", "</"))):
             url = image.get("contentUrl") or image.get("url") or ""
-            if any(k in image for k in LICENCE_FIELDS) and picture_stem(url) not in FREE_PICTURES:
+            stem = picture_stem(url)
+            if not any(k in image for k in LICENCE_FIELDS) or stem in FREE_PICTURES:
+                continue
+            if stem not in MAP_PICTURES:
                 problems.append(f"{name}: {url or 'an image'} carries licence data, and free-pictures.json does not name it")
+            elif map_line() not in image.get("creditText", ""):
+                problems.append(f"{name}: {url} rests on map data, and its creditText does not name it")
     return problems
 
 
-def picture_terms(lang, note_url):
+def map_line():
+    """The credit of the map data, as the note on our pictures gives it to copy (the same English in every language)."""
+    return json.loads((SRC / "words.en.json").read_text(encoding="utf-8"))["page_what"]["use_map"]
+
+
+def picture_terms(lang, note_url, map_data=False):
     """The licence data of each of the museum's own pictures, in a page's language: the licence, the page that tells
-    how to use them, and the credit and the notice from the site's words (pictures)."""
+    how to use them, and the credit and the notice from the site's words (pictures). A still of the house or its
+    grounds (map_data) adds the map data's credit to its own."""
     words = json.loads((SRC / f"words.{lang}.json").read_text(encoding="utf-8"))["pictures"]
     return {"license": "https://creativecommons.org/licenses/by-sa/4.0/", "acquireLicensePage": note_url,
-            "creditText": words["credit_text"], "copyrightNotice": words["copyright_notice"],
+            "creditText": words["credit_text"] + (f". {map_line()}" if map_data else ""),
+            "copyrightNotice": words["copyright_notice"],
             # Google's image metadata takes a Person or an Organization here, not the publisher's subtype
             "creator": {"@type": "Organization", "name": "ChipMates gemeinnützige GmbH", "url": "https://museumofages.org/"}}
 
@@ -263,17 +278,20 @@ def free_pictures_of(text, page_url, data):
     return list(dict.fromkeys(u for u in found if picture_stem(u) in FREE_PICTURES))
 
 
-def with_picture_rights(text, page_url, terms):
+def with_picture_rights(text, page_url, terms, map_terms=None):
     """Gives each of the museum's own pictures that the page holds (free_pictures_of) its licence data, once per
     picture: an ImageObject the page already describes takes the data, any other gets one of its own. terms holds
-    license, acquireLicensePage, creditText, copyrightNotice and creator. A page without structured data stays as
-    it is."""
+    license, acquireLicensePage, creditText, copyrightNotice and creator. A still of the house that the page already
+    describes takes map_terms, the same with the map data's credit. A page without structured data stays as it is."""
     block = LD_BLOCK.search(text)
     if not block:
         return text
     data = json.loads(block.group(2).replace("<\\/", "</"))
     urls = free_pictures_of(text, page_url, data)
-    if not urls:
+    houses = [i for i in image_objects(data) if map_terms and picture_stem(i.get("contentUrl") or i.get("url") or "") in MAP_PICTURES]
+    for image in houses:
+        image.update(map_terms)
+    if not urls and not houses:
         return text
     known = {}
     for image in image_objects(data):

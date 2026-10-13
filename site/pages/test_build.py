@@ -1036,22 +1036,20 @@ class LastYears(unittest.TestCase):
     }
     # Dates the page shows and the wing does not state, each with where it comes from.
     PAGE_ONLY = {
-        ("24 June 1518", "24. Juni 1518"): "a sheet of geometry dated at Cloux, as Treccani gives it",
         ("20 August", "20. August"): "the day of the dig in 1863, in Houssaye's own account",
-        ("January 2026", "Januar 2026"): "when Smithsonian magazine reported on the search for his DNA",
         ("8 September 2026", "8. September 2026"): "the day the map data was consulted, the site's own credit line",
         ("13 October 2026", "13. Oktober 2026"): "the day the page's sources were read",
     }
     PAGE_ONLY_YEARS = {
         "1490": "the house's own date for the purchase by Charles VIII",
-        "1518": "the château's feasts, the Louvre on Salaì and on the three pictures, Treccani's sheet, the will's own "
-                "date by the old reckoning",
+        "1518": "the château's feasts, the Louvre on Salaì and on the three pictures, the will's own date by the old "
+                "reckoning",
         "1854": "the house's owners since then", "1862": "the state's listing of the house",
         "1954": "the house's restoration", "1869": "the château's bust in the gardens",
         "1930": "the château's word for the slab remade", "2010": "the Louvre's restoration of the Saint Anne",
         "2012": "the Louvre's restoration of the Saint Anne", "2019": "a medical paper on his hand",
-        "2016": "the DNA project, as Smithsonian magazine reports it", "2026": "Smithsonian magazine, the read date, "
-                "the map data", "1804": "the printing of Melzi's letter",
+        "2016": "the DNA project, as Smithsonian magazine reports it", "2026": "the sources' read date, the map data",
+        "1804": "the printing of Melzi's letter",
     }
     # What a number of days reads as on the page.
     DAYS = {"en": {9: "nine days later"}, "de": {9: "Neun Tage später"}}
@@ -1109,47 +1107,47 @@ class LastYears(unittest.TestCase):
                 "de": self.said(self.story, r"Die Kirche stand bis (Anfang des \d+\. Jahrhunderts)", "when the church came down")}
         from datetime import date
         days = (date.fromisoformat(self.stud["life-41"]["date"]) - date.fromisoformat(self.stud["life-40"]["date"])).days
-        en = [("the years in Rome", "had lived in Rome since", [rome["en"].split()[1]]),
-              ("Rome left", "He left Rome in", [rome["en"].split()[-1]]),
+        en = [("Rome left", "He left Rome in", [rome["en"].split()[-1]]),
               ("the arrival", "came to Amboise, most likely", [self.label("life-37", "en")]),
               ("the visit", "a cardinal came to see him", [self.label("life-39", "en")]),
+              ("the visit, in the wing", "on the day of the cardinal's visit", [self.label("life-39", "en")]),
               ("his age at the visit", "over seventy he guessed", [visit_age["en"]]),
               ("the will", "he made his will at Cloux", [self.label("life-40", "en")]),
               ("the death", "Leonardo da Vinci died on", [self.label("life-41", "en"), died]),
-              ("the will to the death", "He died nine days later", [self.label("life-41", "en"), self.DAYS["en"][days]]),
-              ("Melzi's letter", "Melzi wrote to Leonardo's brothers", [letter["en"]]),
-              ("Melzi's letter, the sources", "Melzi's letter of", [f'{letter["en"]} {self.stud["life-41"]["date"][:4]}']),
+              ("the will to the death", "He died nine days later", [self.label("life-41", "en"), died, self.DAYS["en"][days]]),
+              ("Melzi's letter", "Melzi's letter of", [letter["en"]]),
+              ("Melzi's letter, the sources", "as printed in", [f'{letter["en"]} {self.stud["life-41"]["date"][:4]}']),
               ("Vasari's age", "gave Leonardo's age as", [told]),
               ("the royal act", "are dated at Saint-Germain-en-Laye", [act["en"]]),
               ("the painter of 1781", "Paris Salon of", [salon]),
               ("Ingres", "Ingres painted the scene again", [ingres]),
-              ("Ingres, the label", "a reproduction of the painting of", [ingres]),
-              ("the dig", "a writer with the emperor's backing", [dig]),
+              ("Ingres, the label", "as the wing hangs it", [ingres]),
+              ("Ingres, the description", "A reproduction of the painting of", [ingres]),
+              ("the dig", "Houssaye dug on the site", [dig]),
               ("the dig, the answer", "dug up on the site in", [dig]),
-              ("the move to Saint-Hubert", "reburied in the chapel of Saint-Hubert", [self.label("life-49", "en")]),
-              ("the model's light", "its model of the low sun of", [light["en"]]),
-              ("the fireplace", "a fireplace in the style of", [f'about {self.facts["set"]["chimney_year"]}']),
+              ("the move to Saint-Hubert", "were reburied in the château's chapel of Saint-Hubert", [self.label("life-49", "en")]),
+              ("the model's light", "model of the low sun of", [light["en"]]),
               ("the church pulled down", "church was pulled down", [down["en"]])]
-        de = [("the years in Rome", "Leonardo lebte seit", [rome["de"].split()[1]]),
-              ("Rome left", "Er verließ Rom", [rome["de"].split()[-1]]),
+        de = [("Rome left", "Er verließ Rom", [rome["de"].split()[-1]]),
               ("the arrival", "kam nach Amboise, am ehesten", [self.label("life-37", "de")]),
               ("the visit", "kam ein Kardinal zu Besuch", [self.label("life-39", "de")]),
+              ("the visit, in the wing", "am Tag des Kardinalsbesuchs", [self.label("life-39", "de")]),
               ("his age at the visit", "über siebzig, schätzte er", [visit_age["de"]]),
               ("the will", "machte er in Cloux sein Testament", [self.label("life-40", "de")]),
               ("the death", "Leonardo da Vinci starb am", [self.label("life-41", "de"), died]),
-              ("the will to the death", "Neun Tage später", [self.label("life-41", "de"), self.DAYS["de"][days]]),
-              ("Melzi's letter", "schrieb Melzi an Leonardos Brüder", [letter["de"]]),
-              ("Melzi's letter, the sources", "Melzis Brief vom", [f'{letter["de"]} {self.stud["life-41"]["date"][:4]}']),
-              ("Vasari's age", "gab er Leonardos Alter mit", [told]),
+              ("the will to the death", "Neun Tage später", [self.label("life-41", "de"), died, self.DAYS["de"][days]]),
+              ("Melzi's letter", "Melzis Brief vom", [letter["de"]]),
+              ("Melzi's letter, the sources", "im Druck von", [f'{letter["de"]} {self.stud["life-41"]["date"][:4]}']),
+              ("Vasari's age", "gab Leonardos Alter mit", [told]),
               ("the royal act", "in Saint-Germain-en-Laye bei Paris ausgestellt", [act["de"]]),
               ("the painter of 1781", "im Pariser Salon", [salon]),
               ("Ingres", "Ingres malte die Szene", [ingres]),
-              ("Ingres, the label", "Reproduktion des Gemäldes von", [ingres]),
+              ("Ingres, the label", "so wie der Flügel es", [ingres]),
+              ("Ingres, the description", "Reproduktion des Gemäldes von", [ingres]),
               ("the dig", "grub Houssaye dort", [dig]),
               ("the dig, the answer", "auf dem Gelände ausgegraben", [dig]),
-              ("the move to Saint-Hubert", "in der Kapelle Saint-Hubert beigesetzt", [self.label("life-49", "de")]),
-              ("the model's light", "sein Modell der tiefen Sonne vom", [light["de"]]),
-              ("the fireplace", "mit einem Kamin im Stil der Zeit", [f'um {self.facts["set"]["chimney_year"]}']),
+              ("the move to Saint-Hubert", "in der Schlosskapelle Saint-Hubert beigesetzt", [self.label("life-49", "de")]),
+              ("the model's light", "Modell der tiefen Sonne vom", [light["de"]]),
               ("the church pulled down", "wurde die Kirche abgerissen", [down["de"]])]
         return {"en": en, "de": de}
 
@@ -1179,6 +1177,16 @@ class LastYears(unittest.TestCase):
                 self.assertTrue(any(h.endswith(f'/{supper["slug"][lang]}/') for h in hrefs), "the Last Supper page")
                 for host in ("https://www.vinci-closluce.com/", "https://www.chateau-amboise.com/"):
                     self.assertEqual(sum(h.startswith(host) for h in hrefs), 1, host)
+
+    def test_the_grave_court_wears_the_wing_pages_tag_and_line(self):
+        for lang, own in self.own.items():
+            with self.subTest(lang=lang):
+                plate = json.loads((SITE_SRC / "wings" / f"vinci.{lang}.json").read_text(encoding="utf-8"))["end"]["plate"]
+                figure = own[own.index("/grave-court-"):]
+                figure = figure[:figure.index("</figure>")]
+                self.assertEqual(html.unescape(re.search(r'<span class="tag">(.*?)<span class="vh">', figure).group(1)), plate["kind"])
+                line = html.unescape(re.sub(r"<[^>]+>", "", re.search(r'<span class="label__src">(.*?)</figcaption>', figure, flags=re.S).group(1)))
+                self.assertEqual(" ".join(line.replace("\u00a0", " ").split()), " ".join(plate["src"].replace("\u00a0", " ").split()))
 
     def test_every_date_the_wing_also_states_is_the_wings(self):
         for lang, rows in self.agreements().items():
@@ -1233,6 +1241,10 @@ class LastYears(unittest.TestCase):
             for year in sorted(set(re.findall(r"\b1[4-9]\d\d\b|\b20\d\d\b", text))):
                 with self.subTest(lang=lang, year=year):
                     self.assertIn(year, known_years, f"{lang}: the year {year} is neither the wing's, settled, nor listed with its source")
+            # and the lists name nothing the page no longer shows
+            for listed in [k[lang == "de"] for k in self.PAGE_ONLY] + list(self.PAGE_ONLY_YEARS):
+                with self.subTest(lang=lang, listed=listed):
+                    self.assertIn(listed, text, f"{lang}: {listed} is listed as the page's own, and the page no longer shows it")
 
 
 def _buildlib():
@@ -1253,6 +1265,10 @@ class PictureLicences(unittest.TestCase):
         "vinci-stop-hall", "vinci-view-anemometer", "vinci-view-parachute", "m-parachute", "v-codex", "v-table",
         "v-table-m", "vinci-stop-reading-table", "v-page-en", "v-page-de", "v-page-m", "grave-court",
         "v-scale-en", "v-scale-de", "v-scale-m"}
+    # Of those, the rights list's verdict 2 for the house and its grounds: ours with the map data's credit.
+    WITH_MAP_CREDIT = {
+        "house", "v-house", "v-court", "v-court-m", "court", "stair", "v-hall", "v-hall-m", "v-lion",
+        "vinci-stop-hall", "vinci-view-anemometer", "vinci-view-parachute", "m-parachute"}
 
     @classmethod
     def setUpClass(cls):
@@ -1265,6 +1281,9 @@ class PictureLicences(unittest.TestCase):
 
     def test_the_list_names_no_picture_the_rights_list_rules_out(self):
         self.assertFalse(self.lib.FREE_PICTURES & self.NOT_OURS_ALONE)
+        # a still that shows a reproduction never goes, not even with the map's credit
+        self.assertLessEqual(self.lib.MAP_PICTURES, self.WITH_MAP_CREDIT)
+        self.assertFalse(self.lib.MAP_PICTURES & self.lib.FREE_PICTURES)
 
     def test_only_the_museums_own_pictures_carry_licence_data(self):
         licensed = 0
@@ -1273,11 +1292,41 @@ class PictureLicences(unittest.TestCase):
             self.assertEqual(self.lib.licence_problems(text, path.name), [], path)
             for image in self.lib.image_objects(self.graph(text) or {}):
                 stem = self.lib.picture_stem(image.get("contentUrl") or image.get("url"))
-                if "license" in image:
+                if "license" in image and stem in self.lib.MAP_PICTURES:
+                    self.assertIn(self.lib.map_line(), image["creditText"], path)
+                elif "license" in image:
                     self.assertIn(stem, self.lib.FREE_PICTURES, path)
                     self.assertNotIn(stem, self.NOT_OURS_ALONE, path)
                     licensed += 1
         self.assertGreater(licensed, 50)
+
+    def test_a_still_of_the_house_goes_only_with_the_maps_credit(self):
+        origin = "https://museumofages.org"
+        court = f"{origin}/static/img/v-court-1600.webp"
+        graph = {"@context": "https://schema.org", "@graph": [{"@type": "ImageObject", "@id": f"{origin}/x/#frame", "url": court, "contentUrl": court}]}
+        page = (f'<img src="../static/img/v-house-800.webp"><img src="../static/img/v-lisa-1600.webp">'
+                f'<script type="application/ld+json">{json.dumps(graph)}</script>')
+        note = f"{origin}/what-this-museum-is/#use-our-pictures"
+        given = self.lib.with_picture_rights(page, f"{origin}/x/", self.lib.picture_terms("de", note), self.lib.picture_terms("de", note, map_data=True))
+        images = list(self.lib.image_objects(self.graph(given)))
+        # the still the page describes takes the licence with the map's credit; a house still it only shows gets no object
+        self.assertEqual([i["contentUrl"] for i in images], [court])
+        self.assertEqual({k: images[0][k] for k in self.lib.LICENCE_FIELDS}, self.lib.picture_terms("de", note, map_data=True))
+        self.assertTrue(images[0]["creditText"].endswith(self.lib.map_line()))
+        self.assertEqual(self.lib.licence_problems(given, "page"), [])
+        # without the map's credit it is found
+        bare = given.replace(json.dumps(self.lib.map_line(), ensure_ascii=False)[1:-1], "")
+        self.assertRegex(" ".join(self.lib.licence_problems(bare, "page")), r"v-court-1600\.webp rests on map data")
+        # and with no map terms given, a page stays as it was
+        self.assertEqual(self.lib.with_picture_rights(page, f"{origin}/x/", self.lib.picture_terms("de", note)), page)
+
+    def test_the_last_years_pages_describe_their_first_picture_with_its_licence(self):
+        for path in ("leonardo-da-vinci/death-and-grave", "de/leonardo-da-vinci/tod-und-grab"):
+            text = (SITE_BUILT / path / "index.html").read_text(encoding="utf-8")
+            frame = next(i for i in self.lib.image_objects(self.graph(text)) if i.get("@id", "").endswith("#frame"))
+            self.assertIn(self.lib.picture_stem(frame["contentUrl"]), self.lib.MAP_PICTURES, path)
+            self.assertTrue(all(k in frame for k in self.lib.LICENCE_FIELDS), path)
+            self.assertTrue(frame["creditText"].endswith(self.lib.map_line()), path)
 
     def test_each_picture_of_ours_a_page_holds_carries_licence_data(self):
         # shown, linked, shared or already described: the sizes chart is linked, and its own ImageObject holds it
