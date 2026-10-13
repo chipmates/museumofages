@@ -167,9 +167,9 @@ CLAIM_ALLOWED = (r"^meta\.", r"^top\.h1$", r"\.q$")
 # How the words are made is said once, on the page about the museum. A page here carries no line on it.
 
 # What is no sentence in a data file: its page, its pictures, addresses and keys.
-NOT_SPACED = r"^(_|page\.|pics\.)|\.(href|focus|pic|pic_back|tag|k|type|id|stem|sizes|work|wall|stop|page|only|at|wing|shape)$"
+NOT_SPACED = r"^(_|page\.|pics\.)|\.(href|focus|pic|pic_back|tag|k|type|id|stem|sizes|work|wall|stop|page|only|at|wing|shape|src_from)$"
 # The keys of a data file that hold no displayed words (lint() passes them by).
-NOT_WORDS = r"\.(pic|pic_back|tag|k|type|id|stem|sizes|work|wall|stop|page|only|at|wing|shape)$"
+NOT_WORDS = r"\.(pic|pic_back|tag|k|type|id|stem|sizes|work|wall|stop|page|only|at|wing|shape|src_from)$"
 
 BLOCK_TYPES = ("places", "group", "feature", "notes", "faq", "sources", "close", "chart", "works", "table", "text", "periods")
 
@@ -207,7 +207,7 @@ class Names:
 
     The wing's own name comes from its entry and never breaks across lines. A name of names.json is
     never hyphenated and carries its language where it differs from the page's, so a screen reader
-    says it right. A person's name of that list never breaks either."""
+    says it right. A person's name of that list never breaks either, nor a short place name marked whole."""
 
     def __init__(self, entries, wing_name, lang):
         self.lang, self.wing_name = lang, wing_name
@@ -229,7 +229,7 @@ class Names:
                 kind = "nh" if wrap_wing else "nw"
                 out.append(f'<span class="{kind}">{esc(m.group(1) + ending)}</span>')
                 continue
-            kind = "nw nh" if entry.get("person") else "nh"
+            kind = "nw nh" if entry.get("person") or entry.get("whole") else "nh"
             code = entry.get("lang")
             if code and code != self.lang:
                 # the ending is the page's own language and stays outside
@@ -659,6 +659,52 @@ def plate_problems(src, names, lang, labels=None):
     return problems
 
 
+# The licence page of the map data the house and its grounds are built from, as the site's footer links it.
+MAP_LINK = "https://www.openstreetmap.org/copyright"
+
+
+def borrowed_line(spec, lang, wing_key):
+    """A label's line taken word for word from where the site already says it (a picture's src_from): the wing page's
+    own words at a key (wing:<key>, the museum's own texts filled in) or the footer's credit for the map data
+    (site:map). Returns the line's parts as a data file writes them."""
+    kind, _, key = spec.partition(":")
+    if kind == "wing" and key:
+        value = json.loads((LANG.HERE / "wings" / f"{wing_key}.{lang}.json").read_text(encoding="utf-8"))
+        for part in key.split("."):
+            if isinstance(value, list) and part.isdigit() and int(part) < len(value):
+                value = value[int(part)]
+            elif isinstance(value, dict) and part in value:
+                value = value[part]
+            else:
+                raise SystemExit(f"src_from {spec!r}: the wing's {lang} page has no line at {key}")
+        if not isinstance(value, str) or re.search(r"\{(?!museum:)\w+:\w+\}", value):
+            raise SystemExit(f"src_from {spec!r}: the wing's {lang} page holds no plain line at {key}")
+        parts = [value]
+    elif spec == "site:map":
+        foot = json.loads((LANG.HERE / f"words.{lang}.json").read_text(encoding="utf-8"))["footer"]
+        parts = [foot["data_a"] + " ", {"text": foot["data_osm"], "href": MAP_LINK}, " " + foot["data_b"]]
+    else:
+        raise SystemExit(f"src_from {spec!r} is neither wing:<key> nor site:map")
+    if lang == "de":
+        parts = [ORDINAL_DE.sub("\\1." + LIB.NBSP, p) if isinstance(p, str) else p for p in parts]
+    return parts
+
+
+def line_problems(pic, pic_def):
+    """A plate of pictures.json that the wing's page already labels (wing_line) carries that line, taken from the wing's
+    page (src_from), and is shown at the widths it was cut at."""
+    stem = pic_def["stem"]
+    plate = plates().get(stem)
+    if not plate or not plate.get("wing_line"):
+        return []
+    problems = []
+    if pic.get("src_from") != f"wing:{plate['wing_line']}" or pic.get("src"):
+        problems.append(f"{stem}: the plate carries the wing page's own line, src_from wing:{plate['wing_line']}")
+    if pic_def["widths"] != plate.get("widths"):
+        problems.append(f"{stem}: its widths are not its plate's {plate.get('widths')}")
+    return problems
+
+
 TALLY_KINDS = ("documented", "disputed", "qualified", "workshop", "copy", "field")
 
 
@@ -950,13 +996,26 @@ def render(page, lang, data, shared, out_root):
         shows a reproduction carries its source line (src)."""
         if not pic:
             return ""
+        found = line_problems(pic, data["pics"][pic["pic"]])
+        if found:
+            raise SystemExit("\n".join(f"{page}.{lang}: {x}" for x in found))
         values = dict(base)
-        src = source_line(pic["src"], data["page"]["wing"], lang, rich) if pic.get("src") else ""
+        src = label_src(pic)
         values.update({"html.picture": pics.picture(pic["pic"], esc(pic["alt"])),
                        "tag": rich(labels[pic["tag"]]), "what": rich(pic.get("what") or labels["plate_what"]),
                        "html.title": f'<span class="label__title">{rich(pic["title"])}</span>' if pic.get("title") else "",
-                       "html.src": f'<span class="label__src">{src}</span>' if src else ""})
+                       "html.src": f'<span class="label__src">{src}</span>' if src else "",
+                       # a painting shown whole, never cut to the plate's frame
+                       "attr.plate": " sp-plate--whole" if pic.get("shape") == "whole" else ""})
         return fill(parts["figure"], values)
+
+    def label_src(pic):
+        """A picture's source line: its own (src), or one the site already says (src_from)."""
+        if pic.get("src"):
+            return source_line(pic["src"], data["page"]["wing"], lang, rich)
+        if pic.get("src_from"):
+            return source_line(borrowed_line(pic["src_from"], lang, wing.get("_data", data["page"]["wing"])), data["page"]["wing"], lang, rich)
+        return ""
 
     def place(text):
         values = dict(base)
@@ -1150,9 +1209,11 @@ def render(page, lang, data, shared, out_root):
         frame_html, preload, focus = "", "", ""
     else:
         frame = data["top"]["frame"]
+        src = label_src(frame)
         frame_html = fill(parts["frame:picture"], {"html.picture": pics.picture(frame["pic"], esc(frame["alt"]), first=True),
                                                    "title": rich(frame["title"]), "tag": rich(labels[frame["tag"]]),
-                                                   "what": rich(frame["what"])})
+                                                   "what": rich(frame["what"]),
+                                                   "html.src": f'<span class="label__src sp-frame__src">{src}</span>' if src else ""})
         preload, focus = pics.preload(frame["pic"]), focus_rule(frame)
     values = dict(base)
     values.update({
@@ -1396,9 +1457,10 @@ def load_pages(pages=PAGES):
             # the wing's facts: its stops, and the sizes a page's drawing or chart shows
             if (LANG.HERE / "wings" / f"{key}.facts.json").is_file():
                 facts = json.loads((LANG.HERE / "wings" / f"{key}.facts.json").read_text(encoding="utf-8"))
-            if topic.get("from"):
-                wing_words = json.loads((LANG.HERE / "wings" / f"{key}.en.json").read_text(encoding="utf-8"))
-                group = next(g for g in wing_words["holds"]["groups"] if g["id"] == topic["from"])
+            wing_words = json.loads((LANG.HERE / "wings" / f"{key}.en.json").read_text(encoding="utf-8")) if topic.get("from") else {}
+            group = next((g for g in wing_words.get("holds", {}).get("groups", []) if g["id"] == topic.get("from")), {})
+            # a group of works (its own from) gives the page its works; a group of text only links the page
+            if group.get("from"):
                 works = CHART.Works(facts, group)
                 # the title of the work that hangs elsewhere, as the wing's page writes it in each language
                 for code in LANG.topic_langs(topic, LANGS):

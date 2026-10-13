@@ -8,9 +8,18 @@
 .sp-prose .label__src{display:block;margin-top:6px}
 /* A link in the running text is as tall as a thumb without moving its line. */
 .sp-prose .sp-does a{display:inline-block;padding:11px 0;margin:-11px 0}
-/* A part's ways on: into the wing at its stop, or to another page */
-.sp-prose .sp-more{margin-top:16px}
+/* A painting keeps its own shape: the plate is never cut to the frame's 16 by 9 */
+.sp-prose .sp-plate--whole{max-width:35rem}
+.sp-plate--whole img{aspect-ratio:auto;object-fit:contain}
+/* The first picture's source line: under its words from the desktop up; on a phone the label stays one line */
+.sp-frame__src{display:none}
+@media (min-width:960px){.sp-frame .sp-frame__src{display:block;margin-top:3px}}
+/* A part's ways on: into the wing at its stop, or to another page. A long one runs as a sentence, its arrow after
+   the last word, never at the far edge of a wrapped box. */
+.sp-prose .sp-more{margin-top:16px;max-width:36rem}
 .sp-prose .sp-more+.sp-more{margin-top:4px}
+.sp-prose .sp-more .more{display:inline;padding:12px 0;line-height:1.6}
+.sp-prose .sp-more .more .arrow{display:inline-block;margin-left:8px;vertical-align:-2px}
 /* What a page was written from: one link a line, each a thumb's height (a block: a flex box would drop the spaces
    around a name's span) */
 .sp-read li{display:block;padding:0}

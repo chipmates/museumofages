@@ -73,7 +73,7 @@
 <!--@ toc_item -->
           <li><a href="#{{id}}">{{nav}}</a></li>
 <!--@ figure -->
-<figure class="plate sp-plate">
+<figure class="plate sp-plate{{attr.plate}}">
   <div class="hang">{{html.picture}}</div>
   <!-- The heading above the plate is its title: the label says what kind of thing the picture shows. -->
   <figcaption class="label sp-plate__label">{{html.title}}<span class="label__what"><span class="tag">{{tag}}<span class="vh">:</span></span> {{what}}</span>{{html.src}}</figcaption>
@@ -202,7 +202,7 @@
         <!-- On a phone the label is one line, so the door stands on the first screen. -->
         <figcaption class="label sp-frame__label">
           <span class="label__title">{{title}}</span>
-          <span class="label__what"><span class="tag">{{tag}}<span class="vh">:</span></span> <span class="sp-frame__what">{{what}}</span></span>
+          <span class="label__what"><span class="tag">{{tag}}<span class="vh">:</span></span> <span class="sp-frame__what">{{what}}</span></span>{{html.src}}
         </figcaption>
       </figure>
 <!--@ frame:chart -->

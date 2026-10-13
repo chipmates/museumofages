@@ -881,6 +881,68 @@ class Case(unittest.TestCase):
         changed = dict(plates[0], tier="TIER1" if plates[0]["tier"] != "TIER1" else "TIER2")
         self.assertRegex(" ".join(module.plate_problems(changed, manifests[changed["file"].split("/", 1)[0]], store)), r"tier is")
 
+    def borrowing_page(self):
+        """The first page whose pictures take their line from where the site already says it (src_from)."""
+        return next((p for p in self.pages if any(isinstance(b.get("pic"), dict) and b["pic"].get("src_from")
+                                                  for b in self.data("en", p)["blocks"])), None)
+
+    def test_a_borrowed_line_is_the_wings_or_the_footers_own_words(self):
+        page = self.borrowing_page()
+        if not page:
+            self.skipTest("no page borrows a picture's line")
+        out, _ = self.build()
+        for lang in ("en", "de"):
+            data = self.data(lang, page)
+            text = next(t for t in (p.read_text(encoding="utf-8") for p in out.rglob("index.html"))
+                        if f'data-page="{data["page"]["id"]}"' in t and f'<html lang="{lang}"' in t)
+            foot = json.loads((SITE_SRC / f"words.{lang}.json").read_text(encoding="utf-8"))["footer"]
+            wing = json.loads((SITE_SRC / "wings" / f'{data["page"]["wing"]}.{lang}.json').read_text(encoding="utf-8"))
+            pics = [data["top"]["frame"]] + [b["pic"] for b in data["blocks"] if isinstance(b.get("pic"), dict)]
+            for pic in (p for p in pics if p.get("src_from")):
+                with self.subTest(lang=lang, pic=pic["pic"]):
+                    stem = data["pics"][pic["pic"]]["stem"]
+                    at = text.index(f"/{stem}-")
+                    label = text[text.index('<span class="label__src', at):text.index("</figcaption>", at)]
+                    shown = " ".join(html.unescape(re.sub(r"<[^>]+>", "", label)).replace(" ", " ").split())
+                    if pic["src_from"] == "site:map":
+                        said = f'{foot["data_a"]} {foot["data_osm"]} {foot["data_b"]}'
+                        self.assertIn('href="https://www.openstreetmap.org/copyright"', label)
+                    else:
+                        said = wing
+                        for key in pic["src_from"].split(":", 1)[1].split("."):
+                            said = said[int(key)] if isinstance(said, list) else said[key]
+                    self.assertEqual(shown, " ".join(said.replace(" ", " ").split()))
+
+    def test_a_plate_the_wing_labels_is_shown_only_with_the_wings_line(self):
+        page = self.borrowing_page()
+        plates = {p["name"]: p for p in json.loads((self.dir / "pictures.json").read_text(encoding="utf-8"))["plates"] if p.get("wing_line")}
+        data = {lang: self.data(lang, page) for lang in ("en", "de")} if page else {}
+        en = data.get("en", {})
+        plate = next((b["id"] for b in en.get("blocks", []) if isinstance(b.get("pic"), dict) and en["pics"][b["pic"]["pic"]]["stem"] in plates), None)
+        other = next((b["id"] for b in en.get("blocks", []) if isinstance(b.get("pic"), dict) and b["pic"].get("src_from", "").startswith("wing:")
+                      and en["pics"][b["pic"]["pic"]]["stem"] not in plates), None)
+        if not plate:
+            self.skipTest("no page shows a plate the wing's page labels")
+        line = plates[en["pics"][next(b for b in en["blocks"] if b.get("id") == plate)["pic"]["pic"]]["stem"]]["wing_line"]
+        cuts = [(plate, lambda p, d: p.update(src_from="site:map"), rf"src_from wing:{re.escape(line)}"),
+                (plate, lambda p, d: p.update(src=["A line of the page's own."]), r"carries the wing page's own line"),
+                (plate, lambda p, d: p.pop("src_from"), r"carries the wing page's own line"),
+                (plate, lambda p, d: d["pics"][p["pic"]].update(widths=[640]), r"its widths are not its plate's"),
+                # a line borrowed from a key the wing's page does not have, or from nowhere the build knows
+                (other, lambda p, d: p.update(src_from="wing:end.nothing"), r"no line at end\.nothing"),
+                (other, lambda p, d: p.update(src_from="site:elsewhere"), r"neither wing:<key> nor site:map")]
+        for block, cut, words in cuts:
+            if not block:
+                continue
+            with self.subTest(words=words):
+                shutil.rmtree(self.dir / "out", ignore_errors=True)
+                for lang in ("en", "de"):
+                    changed = json.loads(json.dumps(data[lang]))
+                    cut(next(b for b in changed["blocks"] if b.get("id") == block)["pic"], changed)
+                    self.save(lang, changed, page)
+                self.fails(words)
+                for lang in ("en", "de"):
+                    self.save(lang, data[lang], page)
 
 class Built(unittest.TestCase):
     """The site as its own build wrote it (python3 _src/build.py): the topic pages with their count."""
@@ -933,6 +995,244 @@ class Built(unittest.TestCase):
                     for sub in folder.iterdir():
                         self.assertFalse(sub.is_dir() and topic["slug"]["en"] in sub.name and sub.name not in entry["slugs"].get("topics", {}).values(), sub)
                     self.assertNotIn(f'/{topic["slug"]["en"]}/"', (folder / "index.html").read_text(encoding="utf-8"))
+
+
+
+MUSEUM_WING = HERE.parent.parent / "museum" / "src" / "wings" / "vinci"
+
+
+def sentences(chunk):
+    """A paragraph's sentences. A German ordinal before its month or century (2. Mai, 19. Jahrhunderts) and a king's
+    number (Franz I.) end none."""
+    out, start = [], 0
+    for m in re.finditer(r"[.?!]\s+(?=([A-ZÄÖÜÉ0-9][\wäöüß]*))", chunk):
+        word = re.search(r"(\S*)$", chunk[start:m.start()]).group(1)
+        if re.fullmatch(r"[IVX]+", word) or (re.fullmatch(r"\d{1,2}", word) and re.match(r"Jahrhundert|" + "|".join(LastYears.MONTHS["de"]), m.group(1))):
+            continue
+        out.append(chunk[start:m.start() + 1])
+        start = m.end()
+    return out + [chunk[start:]]
+
+
+class LastYears(unittest.TestCase):
+    """The page on his last years and his grave as the site's build wrote it, read against the wing's own files.
+    Every date the page shows that the wing also states is the wing's. Where the page follows a stronger source than
+    the wing, the difference was settled on the page's facts sheet and is listed in SETTLED by name with its reason:
+    the wing's files stay as they are until the museum's own lane revises them."""
+
+    PATHS = {"en": "leonardo-da-vinci/death-and-grave", "de": "de/leonardo-da-vinci/tod-und-grab"}
+    MONTHS = {"en": "January February March April May June July August September October November December".split(),
+              "de": "Januar Februar März April Mai Juni Juli August September Oktober November Dezember".split()}
+    SETTLED = {
+        "Vasari's 1550": "Vasari first told the deathbed story in the Lives of 1550 and told it again in 1568. "
+                         "The wing names 1568 only.",
+        "the burial date as a doubted record": "12 August 1519 is known only from a copy of a register entry that "
+                                               "surfaced after 1863, which Houssaye printed with the greatest reserve. "
+                                               "The wing calls the entry documented.",
+        "the medallion's 2000s": "The château dates the bronze medallion only to the 2000s. No source for the wing's "
+                                 "single year was found.",
+        "May 1517 without a day": "The first dated note at Cloux is given as the 21st and as the 22nd of May. "
+                                  "The wing gives one day.",
+    }
+    # Dates the page shows and the wing does not state, each with where it comes from.
+    PAGE_ONLY = {
+        ("24 June 1518", "24. Juni 1518"): "a sheet of geometry dated at Cloux, as Treccani gives it",
+        ("20 August", "20. August"): "the day of the dig in 1863, in Houssaye's own account",
+        ("January 2026", "Januar 2026"): "when Smithsonian magazine reported on the search for his DNA",
+        ("8 September 2026", "8. September 2026"): "the day the map data was consulted, the site's own credit line",
+        ("13 October 2026", "13. Oktober 2026"): "the day the page's sources were read",
+    }
+    PAGE_ONLY_YEARS = {
+        "1490": "the house's own date for the purchase by Charles VIII",
+        "1518": "the château's feasts, the Louvre on Salaì and on the three pictures, Treccani's sheet, the will's own "
+                "date by the old reckoning",
+        "1854": "the house's owners since then", "1862": "the state's listing of the house",
+        "1954": "the house's restoration", "1869": "the château's bust in the gardens",
+        "1930": "the château's word for the slab remade", "2010": "the Louvre's restoration of the Saint Anne",
+        "2012": "the Louvre's restoration of the Saint Anne", "2019": "a medical paper on his hand",
+        "2016": "the DNA project, as Smithsonian magazine reports it", "2026": "Smithsonian magazine, the read date, "
+                "the map data", "1804": "the printing of Melzi's letter",
+    }
+    # What a number of days reads as on the page.
+    DAYS = {"en": {9: "nine days later"}, "de": {9: "Neun Tage später"}}
+
+    @classmethod
+    def setUpClass(cls):
+        cls.chunks, cls.own = {}, {}
+        for lang, path in cls.PATHS.items():
+            text = (SITE_BUILT / path / "index.html").read_text(encoding="utf-8")
+            own = re.sub(r"<(script|style)\b.*?</\1>", " ", text[text.index("<main"):text.index("</main>")], flags=re.S)
+            cls.own[lang] = own
+            # a reader's text: one chunk a paragraph, a heading, a part of a label or a picture's description
+            alts = [html.unescape(a) for a in re.findall(r'\salt="([^"]*)"', own)]
+            own = re.sub(r"</(?:p|h[1-6]|li|figcaption|dt|dd|div|section)>|<br\b[^>]*>|<span class=\"label__", "\n\\g<0>", own)
+            plain = html.unescape(re.sub(r"<[^>]+>", "", own)).split("\n") + alts
+            cls.chunks[lang] = [" ".join(c.replace(" ", " ").split()) for c in plain if c.strip()]
+        read = lambda *parts: (MUSEUM_WING.joinpath(*parts)).read_text(encoding="utf-8")
+        cls.stud = {s["id"]: s for s in json.loads(read("line", "data", "timeline.json"))["studs"]}
+        cls.deathbed = json.loads(read("line", "data", "never-said.json"))["deathbed_label"]
+        cls.lettering = read("grave", "lettering.ts")
+        cls.story = read("story.ts")
+        cls.facts = json.loads((SITE_SRC / "wings" / "vinci.facts.json").read_text(encoding="utf-8"))
+
+    def said(self, text, pattern, what):
+        """A value the wing states, read from its own words. A wing that no longer says it fails the test by name."""
+        found = re.search(pattern, text)
+        self.assertIsNotNone(found, f"the wing no longer says {what} ({pattern})")
+        return found.groups() if len(found.groups()) > 1 else found.group(1)
+
+    def where(self, lang, anchor):
+        """Every sentence of the page that holds the anchor; at least one."""
+        found = [s for c in self.chunks[lang] for s in sentences(c) if anchor in s]
+        self.assertTrue(found, f"{lang}: the page has no sentence with {anchor!r}")
+        return found
+
+    def label(self, stud, lang):
+        return self.stud[stud][f"date_label_{lang}"]
+
+    def agreements(self):
+        """For each language: (what, the anchor of the page's sentence, what the wing says it holds)."""
+        rome = next(p for p in self.facts["periods"] if p["en"].startswith("Rome"))
+        visit_age = {"en": self.said(self.story, r"a man over seventy\. He was (\d+)\.", "his age at the visit"),
+                     "de": self.said(self.story, r"Mann über siebzig\. Er war (\d+)\.", "his age at the visit")}
+        told, died = self.said(self.story, r"giving his age as (\d+)\. He was (\d+)\.", "Vasari's age and his")
+        letter = {"en": self.said(self.stud["life-41"]["line_en"], r"letter dated (\d+ \w+)", "the letter's day"),
+                  "de": self.said(self.stud["life-41"]["line_de"], r"Brief vom (\d+\. \w+)", "the letter's day")}
+        act = {"en": self.said(self.deathbed["record_en"], r"on (\d+ \w+ \d{4}), the day after the death", "the royal act"),
+               "de": self.said(self.deathbed["record_de"], r"Am (\d+\. \w+ \d{4}), dem Tag nach dem Tod", "the royal act")}
+        salon = self.said(self.deathbed["record_en"], r"a subject in (\d{4})", "the painter of 1781")
+        ingres = self.said(self.lettering, r"painter: 'INGRES · (\d{4})'", "the Ingres painting's year")
+        dig = self.said(self.lettering, r"dig: '(\d{4})'", "the dig's year")
+        light = self.said(self.lettering, r"diagramDate: \{ en: '([^'·]+?) ·.*?de: '([^'·]+?) ·", "the day of the model's light")
+        light = dict(zip(("en", "de"), (" ".join(w.capitalize() for w in d.split()) for d in light)))
+        down = {"en": {"early 1800s": "Early in the 19th century"}[self.said(self.story, r"church came down in the (early \d{4}s)", "when the church came down")],
+                "de": self.said(self.story, r"Die Kirche stand bis (Anfang des \d+\. Jahrhunderts)", "when the church came down")}
+        from datetime import date
+        days = (date.fromisoformat(self.stud["life-41"]["date"]) - date.fromisoformat(self.stud["life-40"]["date"])).days
+        en = [("the years in Rome", "had lived in Rome since", [rome["en"].split()[1]]),
+              ("Rome left", "He left Rome in", [rome["en"].split()[-1]]),
+              ("the arrival", "came to Amboise, most likely", [self.label("life-37", "en")]),
+              ("the visit", "a cardinal came to see him", [self.label("life-39", "en")]),
+              ("his age at the visit", "over seventy he guessed", [visit_age["en"]]),
+              ("the will", "he made his will at Cloux", [self.label("life-40", "en")]),
+              ("the death", "Leonardo da Vinci died on", [self.label("life-41", "en"), died]),
+              ("the will to the death", "He died nine days later", [self.label("life-41", "en"), self.DAYS["en"][days]]),
+              ("Melzi's letter", "Melzi wrote to Leonardo's brothers", [letter["en"]]),
+              ("Melzi's letter, the sources", "Melzi's letter of", [f'{letter["en"]} {self.stud["life-41"]["date"][:4]}']),
+              ("Vasari's age", "gave Leonardo's age as", [told]),
+              ("the royal act", "are dated at Saint-Germain-en-Laye", [act["en"]]),
+              ("the painter of 1781", "Paris Salon of", [salon]),
+              ("Ingres", "Ingres painted the scene again", [ingres]),
+              ("Ingres, the label", "a reproduction of the painting of", [ingres]),
+              ("the dig", "a writer with the emperor's backing", [dig]),
+              ("the dig, the answer", "dug up on the site in", [dig]),
+              ("the move to Saint-Hubert", "reburied in the chapel of Saint-Hubert", [self.label("life-49", "en")]),
+              ("the model's light", "its model of the low sun of", [light["en"]]),
+              ("the fireplace", "a fireplace in the style of", [f'about {self.facts["set"]["chimney_year"]}']),
+              ("the church pulled down", "church was pulled down", [down["en"]])]
+        de = [("the years in Rome", "Leonardo lebte seit", [rome["de"].split()[1]]),
+              ("Rome left", "Er verließ Rom", [rome["de"].split()[-1]]),
+              ("the arrival", "kam nach Amboise, am ehesten", [self.label("life-37", "de")]),
+              ("the visit", "kam ein Kardinal zu Besuch", [self.label("life-39", "de")]),
+              ("his age at the visit", "über siebzig, schätzte er", [visit_age["de"]]),
+              ("the will", "machte er in Cloux sein Testament", [self.label("life-40", "de")]),
+              ("the death", "Leonardo da Vinci starb am", [self.label("life-41", "de"), died]),
+              ("the will to the death", "Neun Tage später", [self.label("life-41", "de"), self.DAYS["de"][days]]),
+              ("Melzi's letter", "schrieb Melzi an Leonardos Brüder", [letter["de"]]),
+              ("Melzi's letter, the sources", "Melzis Brief vom", [f'{letter["de"]} {self.stud["life-41"]["date"][:4]}']),
+              ("Vasari's age", "gab er Leonardos Alter mit", [told]),
+              ("the royal act", "in Saint-Germain-en-Laye bei Paris ausgestellt", [act["de"]]),
+              ("the painter of 1781", "im Pariser Salon", [salon]),
+              ("Ingres", "Ingres malte die Szene", [ingres]),
+              ("Ingres, the label", "Reproduktion des Gemäldes von", [ingres]),
+              ("the dig", "grub Houssaye dort", [dig]),
+              ("the dig, the answer", "auf dem Gelände ausgegraben", [dig]),
+              ("the move to Saint-Hubert", "in der Kapelle Saint-Hubert beigesetzt", [self.label("life-49", "de")]),
+              ("the model's light", "sein Modell der tiefen Sonne vom", [light["de"]]),
+              ("the fireplace", "mit einem Kamin im Stil der Zeit", [f'um {self.facts["set"]["chimney_year"]}']),
+              ("the church pulled down", "wurde die Kirche abgerissen", [down["de"]])]
+        return {"en": en, "de": de}
+
+    def test_the_page_reaches_the_count_and_opens_the_wing_at_the_house(self):
+        lists = (HERE.parent / "functions" / "_count" / "lists.js").read_text(encoding="utf-8")
+        self.assertIn("last-years", json.loads(re.search(r"PAGE_KINDS = Object\.freeze\((\[.*?\])\)", lists).group(1)))
+        stops = set(self.facts["stops"])
+        for lang, own in self.own.items():
+            with self.subTest(lang=lang):
+                self.assertIn('data-count="last-years"', (SITE_BUILT / self.PATHS[lang] / "index.html").read_text(encoding="utf-8"))
+                doors = re.findall(r'<a class="[^"]*" href="([^"]*)"[^>]*data-door="(\w+)"', own)
+                self.assertEqual(sorted(kind for _, kind in doors), ["end", "item", "top"])
+                for href, _ in doors:
+                    self.assertIn(re.search(r"#s=([\w-]+)$", href).group(1), stops, href)
+
+    def test_the_page_and_the_leonardo_page_link_each_other(self):
+        for lang, path in self.PATHS.items():
+            with self.subTest(lang=lang):
+                wing = (SITE_BUILT / path.rsplit("/", 1)[0] / "index.html").read_text(encoding="utf-8")
+                part = wing[wing.index('id="last-house"'):]
+                part = part[:part.index("</section>")]
+                self.assertIn(f'/{path.rsplit("/", 1)[1]}/"', part, "the section on the house and the grave links the page")
+                own = self.own[lang]
+                hrefs = re.findall(r'href="([^"]+)"', own)
+                self.assertTrue(any(h.rstrip("/").endswith(("leonardo-da-vinci/#wing", "../#wing")) or h == "../#wing" for h in hrefs), "the Leonardo page")
+                supper = next(t for t in json.loads(REGISTRY.read_text(encoding="utf-8"))["vinci"]["topics"] if t.get("count") == "supper")
+                self.assertTrue(any(h.endswith(f'/{supper["slug"][lang]}/') for h in hrefs), "the Last Supper page")
+                for host in ("https://www.vinci-closluce.com/", "https://www.chateau-amboise.com/"):
+                    self.assertEqual(sum(h.startswith(host) for h in hrefs), 1, host)
+
+    def test_every_date_the_wing_also_states_is_the_wings(self):
+        for lang, rows in self.agreements().items():
+            for what, anchor, held in rows:
+                with self.subTest(lang=lang, what=what):
+                    for sentence in self.where(lang, anchor):
+                        for value in held:
+                            self.assertIn(value, sentence)
+
+    def test_the_settled_differences_stand_as_settled(self):
+        self.assertEqual(len(self.SETTLED), 4)
+        death = int(self.stud["life-41"]["date"][:4])
+        wing_vasari = self.said(self.deathbed["record_en"], r"Vasari told the story in (\d{4})", "Vasari's year")
+        medallion = self.said(self.lettering, r"medallion with his profile was set into the slab in (\d{4})", "the medallion's year")
+        page_text = {lang: " ".join(self.chunks[lang]) for lang in self.PATHS}
+        for lang in self.PATHS:
+            with self.subTest(lang=lang, settled="Vasari's 1550"):
+                for sentence in self.where(lang, {"en": "Vasari told it first", "de": "Vasari erzählte sie zuerst"}[lang]):
+                    # the first telling, how long after the death, and the wing's own year as the second
+                    for value in ("1550", str(1550 - death), wing_vasari, "1568"):
+                        self.assertIn(value, sentence)
+            with self.subTest(lang=lang, settled="the burial date as a doubted record"):
+                burial = self.label("life-42", lang)
+                doubt = {"en": ("copy", "reserve"), "de": ("Abschrift", "Zurückhaltung")}[lang]
+                holding = [s for c in self.chunks[lang] for s in sentences(c) if burial in s]
+                self.assertEqual(len(holding), 1, f"{burial} stands once on the page, as a doubted record")
+                for word in doubt:
+                    self.assertIn(word, holding[0])
+            with self.subTest(lang=lang, settled="the medallion's 2000s"):
+                for sentence in self.where(lang, {"en": "bronze medallion", "de": "Bronzemedaillon"}[lang]):
+                    self.assertIn({"en": "2000s", "de": "2000er"}[lang], sentence)
+                self.assertNotIn(medallion, page_text[lang])
+            with self.subTest(lang=lang, settled="May 1517 without a day"):
+                month_year = self.label("life-38", lang).split(" ", 1)[1]
+                for sentence in self.where(lang, {"en": "The first note in his hand", "de": "Die erste Notiz von seiner Hand"}[lang]):
+                    self.assertIn(month_year, sentence)
+                    self.assertNotRegex(sentence, rf"\b\d{{1,2}}\.? {re.escape(month_year)}")
+                self.assertNotIn(self.label("life-38", lang), page_text[lang])
+
+    def test_every_dated_day_month_and_year_on_the_page_is_accounted_for(self):
+        vasari = self.said(self.deathbed["record_en"], r"Vasari told the story in (\d{4})", "Vasari's year")
+        settled = {lang: ["1550", vasari, self.label("life-42", lang), self.label("life-38", lang).split(" ", 1)[1]] for lang in self.PATHS}
+        for lang, rows in self.agreements().items():
+            months = "|".join(self.MONTHS[lang])
+            known = [v for _, _, held in rows for v in held] + settled[lang] + [k[lang == "de"] for k in self.PAGE_ONLY]
+            known_years = {y for v in known for y in re.findall(r"\b1[4-9]\d\d\b|\b20\d\d\b", v)} | set(self.PAGE_ONLY_YEARS)
+            text = " ".join(self.chunks[lang])
+            for found in sorted(set(re.findall(rf"\b\d{{1,2}}\.? (?:{months})(?: \d{{4}})?|\b(?:{months}) \d{{4}}", text))):
+                with self.subTest(lang=lang, date=found):
+                    self.assertTrue(any(k == found or k.startswith(found + " ") or k.endswith(" " + found) for k in known),
+                                    f"{lang}: {found} is neither the wing's, settled, nor listed with its source")
+            for year in sorted(set(re.findall(r"\b1[4-9]\d\d\b|\b20\d\d\b", text))):
+                with self.subTest(lang=lang, year=year):
+                    self.assertIn(year, known_years, f"{lang}: the year {year} is neither the wing's, settled, nor listed with its source")
 
 
 def _buildlib():

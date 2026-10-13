@@ -1,0 +1,268 @@
+{
+  "_note": "THE WORDS of the page on his last years, his death and his grave, German. Poured from the writer's WORDS file word for word. The stills are the site's own (the wing's film); a label's line named by src_from is taken by the build word for word from where the site already says it: site:map the footer's map credit, wing:<key> the wing page's own line (the Ingres plate's record line). The doors open the wing at the yard (page.stop) and, in the wing's part, at the great hall. The two files hold the same structure. No em dash, no en dash, no semicolon.",
+  "page": {
+    "id": "vinci-last-years",
+    "wing": "vinci",
+    "topic": "last-years",
+    "stop": "courtyard",
+    "published": null,
+    "og_image": {
+      "file": "vinci-last-years-og-1200x630.jpg",
+      "width": 1200,
+      "height": 630
+    }
+  },
+  "pics": {
+    "court": {
+      "stem": "v-court",
+      "widths": [
+        960,
+        1600
+      ],
+      "sizes": "(min-width: 1280px) 588px, (min-width: 960px) 46vw, calc(100vw - 40px)"
+    },
+    "house": {
+      "stem": "v-house",
+      "widths": [
+        480,
+        800,
+        1600
+      ],
+      "sizes": "(min-width: 960px) 640px, calc(100vw - 40px)"
+    },
+    "hall": {
+      "stem": "v-hall",
+      "widths": [
+        960,
+        1600
+      ],
+      "sizes": "(min-width: 960px) 640px, calc(100vw - 40px)"
+    },
+    "ingres": {
+      "stem": "vinci-plate-deathbed-painting",
+      "widths": [
+        640,
+        960
+      ],
+      "sizes": "(min-width: 960px) 560px, calc(100vw - 40px)"
+    },
+    "grave": {
+      "stem": "grave-court",
+      "widths": [
+        560,
+        960,
+        1600
+      ],
+      "sizes": "(min-width: 960px) 640px, calc(100vw - 40px)"
+    }
+  },
+  "meta": {
+    "title": "Wo ist Leonardo da Vinci begraben? Amboise | Museum of Ages",
+    "description": "Leonardo da Vinci starb am 2. Mai 1519 in Amboise. Seine Grabkirche wurde abgerissen. Was heute in der Kapelle Saint-Hubert liegt, und wie sicher das ist.",
+    "og_title": "Wo ist Leonardo da Vinci begraben? Amboise",
+    "og_image_alt": "Backsteinmauern mit steinernen Ecken fassen einen schmalen Hof in tief stehender Sonne ein, und eine kurze Treppe steigt zur Tür des Hauses hinauf, daneben ein kleiner Turm. Ein Standbild aus dem Film des Flügels, der das Haus in Code nachgebaut hat."
+  },
+  "labels": {
+    "crumbs": "Du bist hier",
+    "crumb_home": "Museum",
+    "crumb_here": "Tod und Grab",
+    "toc": "Auf dieser Seite",
+    "tag_still": "Rekonstruktion",
+    "tag_repro": "Reproduktion"
+  },
+  "top": {
+    "h1": "Wo ist Leonardo da Vinci begraben?",
+    "answer": "Leonardo da Vinci starb am 2. Mai 1519 im Herrenhaus Cloux in Amboise an der Loire, mit 67 Jahren. Er hatte sich ein Grab in der Kirche Saint-Florentin im Königsschloss gewünscht und bekam es. Anfang des 19. Jahrhunderts wurde die Kirche abgerissen, und die Gräber darin gingen zu Bruch. Gebeine, die 1863 auf dem Gelände ausgegraben wurden, liegen heute unter einer Platte in der Schlosskapelle Saint-Hubert, und niemand konnte bisher beweisen, dass es seine sind.",
+    "frame": {
+      "pic": "court",
+      "focus": "50% 58%",
+      "title": "Der Hof von Clos Lucé",
+      "tag": "tag_still",
+      "what": "ein Standbild aus dem Film des Flügels. Der schmale Hof zwischen den Backsteinmauern und die Stufen hinauf zur Tür. Das Haus ist eine Rekonstruktion, in Code gebaut nach Plänen und Fotografien.",
+      "alt": "Backsteinmauern mit steinernen Ecken fassen einen schmalen Hof in tief stehender Sonne ein, und eine kurze Treppe steigt zur Tür des Hauses hinauf, daneben ein kleiner Turm. Ein Standbild aus dem Film des Flügels, der das Haus in Code nachgebaut hat.",
+      "src_from": "site:map"
+    },
+    "door": {
+      "text": "Das Haus im Flügel ansehen",
+      "note": "Eintritt frei, kein Konto.",
+      "leads": "Die Tür führt in den Leonardo-Flügel, zu seinem letzten Haus, in den Hof von Clos Lucé. Der Grabhof ist die letzte Station des Rundgangs."
+    }
+  },
+  "blocks": [
+    {
+      "type": "text",
+      "id": "why-france",
+      "nav": "Warum Frankreich",
+      "h": "Warum er nach Frankreich ging",
+      "paras": [
+        "Franz I., der König von Frankreich, lud ihn ein. Leonardo lebte seit 1513 in Rom, und sein Gönner dort, Giuliano de' Medici, starb 1516. In Amboise liest man diesen Tod als den Grund, warum er annahm. Er verließ Rom 1516 und kam nach Amboise, am ehesten im Herbst. Die erste Notiz von seiner Hand mit einem Datum aus Cloux stammt vom Mai 1517.",
+        "Er war 64. Er brachte seine Notizbücher mit, seine anatomischen Blätter und drei Gemälde, die ein Besucher ein Jahr später im Haus sah und die heute im Louvre hängen. Mit ihm kamen Francesco Melzi, ein junger Adliger aus Mailand und sein Schüler, und sein Diener Battista de Vilanis. Salaì, sein Gefährte seit vielen Jahren, war eine Zeit lang ebenfalls in Frankreich, doch 1518, so der Louvre, lebte er schon wieder in Mailand.",
+        "Der König überließ ihm das Herrenhaus Cloux zum Wohnen, einen kurzen Fußweg vom Königsschloss entfernt, und zahlte ihm eine Pension. Die meisten Quellen nennen tausend Écus im Jahr, die Website des Schlosses 700. Das Testament von 1519 nennt seinen Titel in drei Worten: Maler des Königs."
+      ]
+    },
+    {
+      "type": "text",
+      "id": "house",
+      "nav": "Das Haus",
+      "h": "Das Herrenhaus Cloux, heute Clos Lucé",
+      "paras": [
+        "Das Haus wurde nicht für ihn gebaut. Étienne le Loup, ein Diener Ludwigs XI., der in den Adel erhoben worden war, baute es in der zweiten Hälfte des 15. Jahrhunderts aus Backstein und hellem Tuffstein. Karl VIII. kaufte es, 1490 laut dem Haus, und ließ eine kleine Kapelle anbauen. Luise von Savoyen zog dort ihre Kinder groß, so erzählt es das Haus ebenfalls, darunter den späteren Franz I. Zu Leonardos Zeit hieß es Cloux. Der Name Clos Lucé kam später.",
+        "Es steht noch, seit 1862 als Denkmal geschützt. Die Familie, der es seit 1854 gehört, hat es ab 1954 restauriert, um es so zu zeigen, wie er es gekannt haben könnte. Die Mauern und der Taubenturm sind alt. Was du drinnen siehst, ist eine Inszenierung: Die Möbel und das Zimmer, das als sein Schlafzimmer gezeigt wird, sind Entscheidungen des Hauses, denn kein Dokument nennt sein Zimmer. Die gemalte Verkündigung in der Kapelle schreibt das Haus Schülern aus seiner Werkstatt zu. Das ist die Sicht des Hauses, kein Beleg."
+      ],
+      "pic": {
+        "pic": "house",
+        "title": "Das Haus von außen",
+        "tag": "tag_still",
+        "what": "ein Standbild aus dem Film des Flügels. Das Haus über seine Terrasse hinweg, in tief stehender Sonne. Eine Rekonstruktion, in Code gebaut nach Plänen und Fotografien des echten Hauses.",
+        "alt": "Über eine gepflasterte Terrasse hinweg in tief stehender Sonne: ein hohes Haus aus Backstein mit steinernen Ecken und steilem Giebel, an seinen Seiten Bäume in Herbstfarben. Ein Standbild aus dem Film des Flügels, der das Haus in Code nachgebaut hat.",
+        "src_from": "site:map"
+      }
+    },
+    {
+      "type": "text",
+      "id": "october-1517",
+      "nav": "Oktober 1517",
+      "h": "Ein Tag im Oktober 1517",
+      "paras": [
+        "Am 10. Oktober 1517 kam ein Kardinal zu Besuch. Luigi d'Aragona reiste mit seinem Sekretär Antonio de Beatis durch Frankreich, und nach dem Mittagessen in Tours ritten sie weiter nach Amboise. De Beatis führte ein Tagebuch. Sein Eintrag zu diesem Tag ist der Grund, warum der Flügel von allen Tagen gerade diesen zeigt.",
+        "Was er aufschrieb, kurz gefasst. Leonardo war alt, über siebzig, schätzte er, dabei war er 65. Er zeigte dem Kardinal drei Bilder: das Porträt einer Florentinerin, gemalt für Giuliano de' Medici, einen jungen Johannes den Täufer und die Jungfrau mit dem Kind und der heiligen Anna. Heute gelten sie als die Mona Lisa, der Johannes und die Anna des Louvre, auch wenn das Tagebuch keine Mona Lisa nennt. Seine rechte Hand war teilweise gelähmt, gute Malerei war von ihm nicht mehr zu erwarten. Aber er zeichnete noch, und er lehrte, und ein Mailänder Schüler von ihm arbeitete gut. Er sagte, er habe mehr als dreißig Körper seziert, Männer und Frauen jeden Alters, und er zeigte Bände seiner Schriften über Anatomie, über Wasser und über Maschinen, alle auf Italienisch."
+      ],
+      "pic": {
+        "pic": "hall",
+        "title": "Der Große Saal",
+        "tag": "tag_still",
+        "what": "ein Standbild aus dem Film des Flügels. Der Saal in der Nachmittagssonne, mit dem langen Tisch und dem mechanischen Löwen am Fenster. Der Raum ist eine Rekonstruktion, in Code gebaut nach Plänen und Fotografien. Die Möbel sind aus der Zeit, nicht seine.",
+        "alt": "Nachmittagssonne fällt durch Rautenfenster in einen Saal mit Balkendecke und roten Fliesen, über einen langen Tisch auf Böcken, und links am Fenster steht ein Löwe aus Holz und Metall. Ein Standbild aus dem Film des Flügels, der den Saal in Code nachgebaut hat."
+      }
+    },
+    {
+      "type": "text",
+      "id": "last-work",
+      "nav": "Seine letzte Arbeit",
+      "h": "Woran er in Frankreich arbeitete",
+      "paras": [
+        "Er hörte nicht auf zu arbeiten. Seine Notizen zeigen ihn in Romorantin, südlich von Orléans, wo er für den König einen Palast entwarf, mit Kanälen bis zur Loire. Gebaut wurde er nie. Franz I. baute stattdessen Chambord. Er richtete Feste für den Hof aus, und das Schloss sieht ihn im Zentrum der Feiern in Amboise im Frühjahr 1518, sagt aber selbst, dass die Archive dazu dünn sind. Das Haus zählt vier Feste, eines davon vor Cloux. Das ist die Darstellung des Hauses.",
+        "Er zeichnete weiter. Die Sintflut-Zeichnungen in Windsor werden auf etwa 1517 bis 1518 datiert, und eine davon kannst du im Flügel öffnen, unter dem Fenster des Studierzimmers. Ein Blatt mit Geometrie trägt, so Treccani, das Datum 24. Juni 1518 und den Vermerk, dass es im Palast von Cloux entstand. Das Museo Galileo sagt, er habe wieder begonnen, seine Notizen zu ordnen, wohl mit einem Buch im Sinn. Und er war noch an der heiligen Anna: Die letzten Pinselstriche auf ihrem Kleid kamen bei der Restaurierung von 2010 bis 2012 ans Licht, berichtet der Louvre."
+      ]
+    },
+    {
+      "type": "text",
+      "id": "will-and-death",
+      "nav": "Testament und Tod",
+      "h": "Sein Testament und der Tag seines Todes",
+      "paras": [
+        "Am 23. April 1519 machte er in Cloux sein Testament, vor einem königlichen Notar aus Amboise. Das Original ist verloren, der Text ist in Abschriften erhalten. Das Datum darauf lautet 1518, vor Ostern: Das Jahr wechselte damals zu Ostern, nach unserer Zählung ist es 1519. Er wollte in der Kirche Saint-Florentin in Amboise begraben werden, getragen von ihren Kaplänen, mit sechzig Armen, die sechzig Kerzen tragen, mit Messen in den Kirchen der Stadt und Almosen für die Armen ihrer zwei Spitäler.",
+        "Francesco Melzi, sein einziger Testamentsvollstrecker, bekam alle seine Bücher, die Instrumente und Bilder seines Handwerks, seine Kleider in Cloux und den Rest seiner Pension. Battista de Vilanis bekam die Hälfte eines Gartens, den Leonardo vor den Mauern Mailands besaß, ein Wasserrecht dort und den Hausrat in Cloux. Salaì bekam die andere Hälfte des Gartens, auf der er sich schon ein Haus gebaut hatte. Die Magd Maturina bekam einen guten schwarzen Mantel mit Pelzfutter, ein Stück Tuch und zwei Dukaten. Seine Halbbrüder in Florenz bekamen das Geld, das er dort hinterlegt hatte. Kein Gemälde wird genannt. Die drei Bilder, die der Kardinal gesehen hatte, kommen im Testament nicht vor, und der Louvre liest das so, dass der König sie sehr wahrscheinlich schon 1518 gekauft hatte, über eine Zahlung an Salaì.",
+        "Neun Tage später, am 2. Mai 1519, starb er in Cloux. Er war 67. Der Beleg ist ein Brief: Am 1. Juni schrieb Melzi an Leonardos Brüder in Florenz, er sei am 2. Mai gestorben, mit allen Sakramenten der Kirche. Woran er starb, hat niemand aufgeschrieben. Vasari, Jahrzehnte später, sagt, er sei viele Monate krank gewesen. Die gelähmte Hand von 1517 wird oft auf einen Schlaganfall zurückgeführt, und eine medizinische Arbeit von 2019 hielt stattdessen eine Nervenschädigung für wahrscheinlich. Beides sind Deutungen. Einen Beleg gibt es nicht."
+      ]
+    },
+    {
+      "type": "text",
+      "id": "famous-scene",
+      "nav": "Die berühmte Szene",
+      "h": "Der König an seinem Sterbebett",
+      "paras": [
+        "Die Geschichte, die jeder kennt, geht so: Der König, der ihn oft besuchte, kam herein. Leonardo richtete sich im Bett auf, um von seiner Krankheit zu sprechen, ein letzter Anfall ergriff ihn, und er starb in den Armen des Königs. Vasari erzählte sie zuerst 1550, in der ersten Ausgabe seiner Viten, 31 Jahre nach dem Tod, und noch einmal 1568. Im selben Atemzug gab er Leonardos Alter mit 75 an. Er war 67.",
+        "Die meisten Historiker bezweifeln die Szene, aus zwei Gründen. Königliche Urkunden vom 1. und 3. Mai 1519 sind in Saint-Germain-en-Laye bei Paris ausgestellt, wo der Hof die Geburt des zweiten Sohnes des Königs feierte. Und Melzis Brief, einen Monat nach dem Tod in Amboise geschrieben, sagt kein Wort über den König. Der Zweifel ist nicht neu, Gelehrte äußerten ihn schon Anfang des 19. Jahrhunderts. Ein Beweis ist er auch nicht. Eine Urkunde trägt den Ort der Kanzlei und konnte ohne die Hand des Königs ausgestellt werden, die Urkunden machen seine Anwesenheit bei Paris also sehr wahrscheinlich, mehr nicht. Ausschließen lässt sich die Szene nicht. Nur stellt keine Quelle den König in das Zimmer.",
+        "Berühmt gemacht haben die Szene die Maler. François-Guillaume Ménageot zeigte 1781 im Pariser Salon ein großes Gemälde davon, und dieses Bild, sagt die Bibliothèque nationale de France, hat die Geschichte im Gedächtnis der Leute verankert. Es hängt heute im Schlafzimmer des Königs im Schloss von Amboise, demselben Schloss, in dem das Grab liegt. Ingres malte die Szene 1818 noch einmal, in Rom, auf einer kleinen Leinwand von etwa 40 mal 50 Zentimetern, heute im Petit Palais in Paris. Das Petit Palais hält die Episode in seinem eigenen Eintrag für wahrscheinlich erfunden und merkt an, dass Ingres das Gesicht des Königs von einem Porträt Tizians nahm, gemalt zwanzig Jahre nach dem Tod. Der Flügel hängt eine Reproduktion des Ingres in seinen Grabhof, vergrößert, und seine Beschriftung sagt, was das Bild ist: eine Szene, drei Jahrhunderte später erdacht."
+      ],
+      "pic": {
+        "pic": "ingres",
+        "title": "Der König am Sterbebett, wie Ingres ihn sich vorstellte",
+        "tag": "tag_repro",
+        "what": "eine Reproduktion des Gemäldes von Jean-Auguste-Dominique Ingres aus dem Jahr 1818, so wie der Flügel es im Grabhof hängt, vergrößert. Die Szene ist Vasaris Geschichte, gemalt drei Jahrhunderte nach dem Tod.",
+        "alt": "Ein sterbender alter Mann mit langem weißem Bart liegt in einem Bett, gestützt von einem jungen König in prächtiger Kleidung, um sie herum Höflinge in einem dunklen Raum. Eine Reproduktion des Gemäldes von Ingres aus dem Jahr 1818.",
+        "src_from": "wing:end.plate.src",
+        "shape": "whole"
+      }
+    },
+    {
+      "type": "text",
+      "id": "grave",
+      "nav": "Das Grab",
+      "h": "Das Grab",
+      "paras": [
+        "Er wurde in Saint-Florentin begraben, wie er es gewünscht hatte. Die Kirche stand innerhalb der Mauern des Königsschlosses von Amboise. An welchem Tag, weiß niemand sicher. Das oft genannte Datum, der 12. August 1519, beruht auf einem Registereintrag, der nur aus einer Abschrift bekannt ist, die nach 1863 auftauchte, und Arsène Houssaye, der ihn abdruckte, schrieb selbst, man müsse ihn mit größter Zurückhaltung aufnehmen.",
+        "Anfang des 19. Jahrhunderts wurde die Kirche abgerissen. Das Schloss gehörte damals einem Senator Napoleons. Die Grabsteine wurden verkauft und die Bleisärge eingeschmolzen, schrieb Houssaye etwa fünfundfünfzig Jahre danach, und die Gebeine lagen herum, bis der Gärtner des Schlosses sie einsammelte und ungefähr dort vergrub, wo der Chor gewesen war. Das Gelände wurde um zwei bis drei Meter aufgeschüttet und bepflanzt. Die Gräber waren also schon zerstört, bevor jemand nach seinem suchte.",
+        "1863 grub Houssaye dort, ein Schriftsteller mit der Rückendeckung des Kaisers. Am 20. August öffneten seine Arbeiter im Chor, an der Mauer, unter groben Steinen vom Abriss ein altes Grab. Darin lag ein Skelett, den Kopf auf eine Hand gestützt, dazu eine Silbermünze des jungen Franz I., Reste brauner Wolle und Reste von Sandalen. Im Schutt daneben, der mehr als einmal umgewühlt worden war, fanden sie Steinstücke mit eingehauenen Buchstaben: INC, LEO und drei, die zusammen EO DUS VINC ergeben. Ärzte sagten ihm, der Schädel sei der eines Mannes von etwa siebzig Jahren. Houssaye verglich den Schädel mit einem Porträt, maß das Skelett und glaubte, Leonardo gefunden zu haben. Er schrieb auch, dass in diesem Moment niemand es auszusprechen wagte.",
+        "Die Gebeine, die er dafür hielt, wurden in der Kapelle Saint-Hubert beigesetzt, der kleinen spätgotischen Kapelle auf der Schlossmauer, im Jahr 1874, sagt das Schloss. Eine Marmorbüste, 1869 in den Gärten aufgestellt, markiert das erste Grab. In der Kapelle trägt eine Bodenplatte seinen Namen. Die Platte wurde 1930 erneuert, sagt das Schloss, und in den 2000er Jahren kam ein Bronzemedaillon mit seinem Profil hinzu, vom Bildhauer Jean Cardot.",
+        "Wie sicher kann man sein? Nicht sehr. Die Zuordnung beruht auf dem, was ein Mann 1863 herauslas: ein Grab an der richtigen Stelle, eine Münze aus der richtigen Regierungszeit, ein Schädel, der zu passen schien, und Buchstaben, lose im Schutt gefunden, denen er selbst nur eine Nebenrolle gab. Das Denkmalregister des französischen Staates schreibt es im Konditional, contiendrait: Die Kapelle soll seine sterblichen Überreste enthalten. Das Tourismusbüro von Amboise nennt sie mutmaßliche Überreste. Ein Forschungsprojekt sucht seit 2016 nach DNA zum Vergleich, berichtete das Smithsonian Magazine im Januar 2026, und hat bisher nichts Sicheres. Die ehrliche Antwort auf die Frage, wo er begraben ist, lautet also: in der Kapelle Saint-Hubert in Amboise, höchstwahrscheinlich, und beweisen kann es niemand."
+      ]
+    },
+    {
+      "type": "text",
+      "id": "in-the-wing",
+      "nav": "Im Flügel",
+      "h": "Das Haus in unserem Flügel",
+      "paras": [
+        "Unser Leonardo-Flügel baut das Haus in Cloux in Code nach, nach Plänen und Fotografien, am Tag des Kardinalsbesuchs, dem 10. Oktober 1517. Die Uhrzeit ist unsere Wahl. Du gehst in einen einzigen Raum, den Großen Saal, mit einem Kamin im Stil der Zeit um 1500 und Möbeln, wie ein solches Haus sie damals hatte, keines davon seines. Die kleine Kapelle, das Studierzimmer und das Nordzimmer bleiben Außenansichten. Der Flügel legt den Besuch hinter das Fenster des Studierzimmers, eine Vermutung, denn das Tagebuch nennt keinen Raum. Welches Zimmer sein Schlafzimmer war, ist eine Annahme des echten Hauses, kein Beleg.",
+        "Der Grabhof am Ende des Rundgangs ist ein Ort des Museums, nicht die Kapelle in Amboise. Seine Platte mit seinem Namen, sein Modell der tiefen Sonne vom 2. Mai 1519 zu einer Minute, die wir gewählt haben, und sein Stein mit dem Jahr der Grabung sind für die Ausstellung gemacht. Die Station heißt Vermutlich, aus dem Grund, den diese Seite nennt. Dann wird es dunkel, und die Sterne stehen so, wie sie an jenem Abend im Oktober 1517 über Cloux standen."
+      ],
+      "pic": {
+        "pic": "grave",
+        "title": "Der Grabhof",
+        "tag": "tag_still",
+        "what": "ein Standbild aus dem Film des Flügels. Der Hof des Museums, nicht die Kapelle in Amboise: eine Platte mit seinem Namen, das Modell der tiefen Sonne vom 2. Mai 1519, der Stein mit dem Jahr der Grabung. Links eine Reproduktion des Ingres-Gemäldes. In Code gebaut.",
+        "alt": "Tiefe Sonne in einem ummauerten Hof mit einem einzelnen jungen Baum. Ins Pflaster eingelassen eine helle Steinplatte mit dem eingeschnittenen Namen Leonardo da Vinci, dahinter ein kleines Modell auf zwei Pfosten, das einen langen Schatten wirft, und daneben ein Markstein. An der linken Wand hängt ein gerahmtes Gemälde. Ein Standbild aus dem Film des Flügels, der den Hof in Code gebaut hat.",
+        "src_from": "wing:end.plate.src"
+      },
+      "links": [
+        {
+          "text": "Ins Haus gehen",
+          "stop": "hall"
+        },
+        {
+          "text": "Der ganze Flügel, Raum für Raum: Leonardo da Vinci",
+          "wing": "wing"
+        },
+        {
+          "text": "Das Abendmahl und was fünf Jahrhunderte ihm antaten",
+          "page": "supper"
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "id": "visiting",
+      "nav": "Besuch",
+      "h": "Amboise besuchen",
+      "paras": [
+        [
+          "Das Haus ist als Château du Clos Lucé zu besichtigen, ",
+          {
+            "text": "vinci-closluce.com",
+            "href": "https://www.vinci-closluce.com/"
+          },
+          ". Die Kapelle mit dem Grab, die Büste in den Gärten und das Gemälde von Ménageot gehören zum Château royal d'Amboise, ",
+          {
+            "text": "chateau-amboise.com",
+            "href": "https://www.chateau-amboise.com/"
+          },
+          ", beide Websites auf Französisch und Englisch."
+        ]
+      ]
+    },
+    {
+      "type": "sources",
+      "id": "sources",
+      "nav": "Quellen",
+      "h": "Quellen",
+      "intro": "Die Seite stützt sich auf Leonardos Testament von 1519 und das Tagebuch des Antonio de Beatis von 1517 in ihren gedruckten Ausgaben, auf Vasaris Viten von 1550 und 1568, den Katalog der Urkunden Franz' I., Melzis Brief vom 1. Juni 1519 im Druck von 1804 und Arsène Houssayes Bericht über seine Grabung von 1863, dazu auf die Einträge und Seiten des Louvre, des biografischen Lexikons der Treccani, des Château du Clos Lucé, des Château royal d'Amboise, der Bibliothèque nationale de France, der Denkmalregister des französischen Kulturministeriums, des Petit Palais, des Museo Galileo und des Smithsonian Magazine, alle gelesen am 13. Oktober 2026.",
+      "notes": [],
+      "contact": "Ist ein Datum, ein Name oder ein Satz hier falsch, schreib uns, und wir korrigieren es.",
+      "contact_link": "Zum Impressum",
+      "what_link": "Was dieses Museum ist"
+    },
+    {
+      "type": "close",
+      "id": "enter",
+      "nav": "",
+      "h": "Das Haus im Flügel ansehen",
+      "p": "Diese Tür öffnet den Rundgang an seinem letzten Haus. Er führt durch den Hof in den Großen Saal, an der Kapelle und dem Fenster des Studierzimmers vorbei und endet im Grabhof, unter den Sternen jenes Abends.",
+      "door": {
+        "text": "Ins Museum",
+        "note": "Eintritt frei, kein Konto."
+      }
+    }
+  ]
+}

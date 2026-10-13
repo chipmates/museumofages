@@ -227,6 +227,23 @@
         },
         "langs": ["en", "de"],
         "count": "supper"
+      },
+      {
+        "slug": {
+          "en": "death-and-grave",
+          "de": "tod-und-grab"
+        },
+        "name": {
+          "en": "Leonardo da Vinci's death and grave",
+          "de": "Leonardo da Vincis Tod und Grab"
+        },
+        "line": {
+          "en": "The church he was buried in is gone. What the chapel of Saint-Hubert holds, and how sure that is.",
+          "de": "Seine Grabkirche wurde abgerissen. Was heute in der Kapelle Saint-Hubert liegt, und wie sicher das ist."
+        },
+        "langs": ["en", "de"],
+        "count": "last-years",
+        "from": "last-house"
       }
     ],
     "out": {

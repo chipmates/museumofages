@@ -1287,6 +1287,12 @@
    "sha256": "6b7b8e0bc53f2795ff3a15fbdb27cd3c5b91f24531c6d3358d11e478e8556533"
   },
   {
+   "path": "pages/pics/img/vinci-last-years-og-1200x630.jpg",
+   "url": "/static/img/vinci-last-years-og-1200x630.jpg",
+   "bytes": 108057,
+   "sha256": "a288f2cd90722fd440a78e0815c74349b6105a756c6d374eeecb2540d62ae8e0"
+  },
+  {
    "path": "pages/pics/img/vinci-paintings-og-de-1200x630.png",
    "url": "/static/img/vinci-paintings-og-de-1200x630.png",
    "bytes": 23509,
@@ -1489,6 +1495,30 @@
    "url": "/static/img/vinci-plate-burlington-house-cartoon-640.webp",
    "bytes": 98676,
    "sha256": "5871551ec5da6b55c0d5c9e9aa128a532f86e167310daa1d1844159d8e632af2"
+  },
+  {
+   "path": "pages/pics/img/vinci-plate-deathbed-painting-640.avif",
+   "url": "/static/img/vinci-plate-deathbed-painting-640.avif",
+   "bytes": 31883,
+   "sha256": "5e7f2e8d9839f2611942282208e5486b7eb2a5087e98866a8b5cb2c397301c4f"
+  },
+  {
+   "path": "pages/pics/img/vinci-plate-deathbed-painting-640.webp",
+   "url": "/static/img/vinci-plate-deathbed-painting-640.webp",
+   "bytes": 48110,
+   "sha256": "471b35e8ed97d4d0d971f0bf00d7d9382bec8b793b3c0938f49c501d27a6dec1"
+  },
+  {
+   "path": "pages/pics/img/vinci-plate-deathbed-painting-960.avif",
+   "url": "/static/img/vinci-plate-deathbed-painting-960.avif",
+   "bytes": 64838,
+   "sha256": "f4c5d1e27f493b920ac6323f65a426d1f78c278a5e34cbf6b659c10169467b05"
+  },
+  {
+   "path": "pages/pics/img/vinci-plate-deathbed-painting-960.webp",
+   "url": "/static/img/vinci-plate-deathbed-painting-960.webp",
+   "bytes": 95032,
+   "sha256": "7c9638c46a93de696b1a73649525c4847ae7bef64320b58ed0daf5b63dd79641"
   },
   {
    "path": "pages/pics/img/vinci-plate-ginevra-de-benci-240.avif",

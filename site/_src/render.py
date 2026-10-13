@@ -730,6 +730,9 @@ def text_group(c, slug, g, side):
     link = see_it(c, slug, g.get("stop"))
     if link:
         more += f'<p class="hgroup__go">{link.strip()}</p>'
+    # a topic page that names this group (from) is linked under it, in the languages it is written in
+    more += "".join(f'<p class="wl__more"><a class="more" href="{topic_href(c, slug, t)}"><span>{esc(t["name"][c.lang])}</span>{ARROW}</a></p>'
+                    for t in topics_here(c, slug) if t.get("from") == g["id"])
     html, side = hung(c, g, side, more=f'<div class="hgroup__more">{more}</div>' if more else "")
     return html.replace('<article class="place ', '<article class="hgroup hgroup--text place ', 1), side
 

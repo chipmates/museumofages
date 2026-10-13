@@ -144,7 +144,7 @@ test('every language, hold, kind of work, page kind and door on its list writes;
 })
 
 test('the lists the build writes hold the sheet\'s pages and languages', () => {
-  for (const kind of ['home', 'leonardo', 'inventions', 'paintings', 'sizes', 'supper', 'statement', 'privacy', 'imprint']) assert.ok(PAGE_KINDS.includes(kind), kind)
+  for (const kind of ['home', 'leonardo', 'inventions', 'paintings', 'sizes', 'supper', 'last-years', 'statement', 'privacy', 'imprint']) assert.ok(PAGE_KINDS.includes(kind), kind)
   assert.deepEqual([...LANGUAGES].sort(), ['bg', 'de', 'en', 'es', 'fr', 'it', 'pt-BR'])
   assert.deepEqual(WING_STOPS, { vinci: 17 })
 })
