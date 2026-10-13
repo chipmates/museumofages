@@ -4,6 +4,8 @@
 
 /* The answer in two paragraphs */
 .sp-answer+.sp-answer{margin-top:12px}
+/* Where to see them, by city: a row's words follow its place, so they open with a capital */
+.sp-notes dd::first-letter{text-transform:uppercase}
 
 /* ---------- The count on the first screen ---------- */
 .pt-tally{padding-top:4px}
@@ -53,6 +55,8 @@
 .pt-plate .label__what{display:block}
 .pt-plate .label__src{display:block;margin-top:4px;color:var(--ink-soft);overflow-wrap:anywhere}
 .pt-plate .label__src .nw{overflow-wrap:normal}
+/* On a phone the label stands one step back from the picture and the words: the same words, a quieter ink */
+@media (max-width:599px){.pt-plate .label__src{color:var(--ink-quiet)}.pt-plate .label__what .tag{color:var(--ink-soft)}}
 .pt-work--wide .pt-plate .hang{max-width:36rem}
 .pt-work--pair .hang{display:flex;gap:12px;align-items:flex-start}
 .pt-work--pair .hang>picture{flex:1 1 0;min-width:0}

@@ -818,19 +818,24 @@ class Case(unittest.TestCase):
         cuts = [(lambda p: p["it108"], lambda src: [x.replace(" {museum:it108}", "") if isinstance(x, str) else x for x in src], r"Italian code"),
                 (lambda p: p["tier"] == "TIER2", lambda src: [x.replace("The museum labels the reproduction, not the painting.", "") if isinstance(x, str) else x for x in src],
                  r"a plate of tier TIER2 carries"),
-                (lambda p: p["licence_url"], lambda src: [x["text"] if isinstance(x, dict) and "creativecommons" in x["href"] else x for x in src], r"does not link the plate's licence"),
+                (lambda p: p["licence_url"], lambda src: [x["text"] if isinstance(x, dict) and "creativecommons" in x.get("href", "") else x for x in src], r"does not link the plate's licence"),
+                # a record the page reads as open at its source links the licence it reads
+                (lambda p: p.get("read_as"), lambda src: [x["text"] if isinstance(x, dict) and "creativecommons" in x.get("href", "") else x for x in src], r"does not link the plate's licence"),
                 (lambda p: True, lambda src: [x["text"] if isinstance(x, dict) else x for x in src], r"does not link the plate's source"),
                 (lambda p: True, lambda src: [], r"without its source line"),
                 # a record without a tier carries the second tier's line, never the bare line
-                (lambda p: p["tier"] is None, lambda src: [x.replace("Non-profit cultural use.", "") if isinstance(x, str) else x for x in src],
+                (lambda p: p["tier"] is None and not p.get("read_as"), lambda src: [x.replace("Non-profit cultural use.", "") if isinstance(x, str) else x for x in src],
                  r"a plate of tier none carries"),
-                (lambda p: p["tier"] is None, lambda src: ["Public domain reproduction from ", next(x for x in src if isinstance(x, dict)), "."],
+                (lambda p: p["tier"] is None and not p.get("read_as"), lambda src: ["Public domain reproduction from ", next(x for x in src if isinstance(x, dict)), "."],
                  r"bare line of a plate without a tier"),
+                # a drawing's plate carries the page's sentence for a drawing, not the painting's
+                (lambda p: p.get("tier_line"), lambda src: [x.replace("not the drawing", "not the painting") if isinstance(x, str) else x for x in src],
+                 r"not the drawing"),
                 # a plate shown through the film's still says so first
                 (lambda p: p.get("still"), lambda src: [src[0].split(". ", 1)[1]] + src[1:], r"labels\.still_open"),
                 # a plate cut to the painting says so
-                (lambda p: p.get("crop"), lambda src: [x.replace(" Cropped to the painting.", "") if isinstance(x, str) else x for x in src],
-                 r"labels\.cropped")]
+                (lambda p: p.get("crop"), lambda src: [x.replace(" Here it is cropped to the painting.", "") if isinstance(x, str) else x for x in src],
+                 r"carries labels\.salvator_line")]
         for test, cut, words in cuts:
             with self.subTest(words=words):
                 data = self.data("en", self.list_page)

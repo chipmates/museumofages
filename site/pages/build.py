@@ -591,6 +591,9 @@ def source_line(parts, wing, lang, rich):
         if isinstance(part, str):
             out.append(rich(museum_words(part, lang)))
             continue
+        if part.get("br"):
+            out.append("<br>")
+            continue
         name = re.search(r"/wiki/File:(.+)$", part["href"])
         if name and record.is_file() and part["href"] not in sources:
             listed = urllib.parse.unquote(name.group(1)).replace("_", " ")
@@ -604,36 +607,45 @@ def source_line(parts, wing, lang, rich):
 
 def plate_problems(src, names, lang, labels=None):
     """What a source line lacks for the plates it stands under (names): the link to each plate's source, its tier's
-    line, the link to its licence and the Italian code's line where its record asks for them, for a plate shown
-    through the film's still the opening that says so (labels.still_open), and for a plate cut to the painting the
-    words that say so (labels.cropped). Returns the problems."""
+    line (the tier its record holds, or the one the page reads it as, read_as), the link to its licence, the Italian
+    code's line where its record asks for it, and the page's labels the plate names: the line it carries word for word
+    (line, which a cropped plate needs), the sentence that stands for the second tier's 'not the painting' (tier_line),
+    and for a plate shown through the film's still the opening that says so (still_open). Returns the problems."""
     labels = labels or {}
     still_open = labels.get("still_open")
     known, problems = plates(), []
-    links = {part["href"] for part in src if isinstance(part, dict)}
-    words = " ".join(part if isinstance(part, str) else part["text"] for part in src).replace(LIB.NBSP, " ")
+    links = {part["href"] for part in src if isinstance(part, dict) and "href" in part}
+    words = "".join(part if isinstance(part, str) else part.get("text", " ") for part in src).replace(LIB.NBSP, " ")
     for name in names:
         plate = known.get(name)
         if plate is None:
             problems.append(f"{name} is no plate of {PICTURES_FILE.name}")
             continue
+        read = plate.get("read_as") or {}
         if plate["source"] not in links:
             problems.append(f"{name}: the source line does not link the plate's source {plate['source']}")
-        if plate["licence_url"] and plate["licence_url"] not in links:
-            problems.append(f"{name}: the source line does not link the plate's licence {plate['licence_url']}")
+        for url in (plate["licence_url"], read.get("licence_url")):
+            if url and url not in links:
+                problems.append(f"{name}: the source line does not link the plate's licence {url}")
         if plate["it108"] and "{museum:it108}" not in words:
             problems.append(f"{name}: the plate's record asks for the Italian code's line ({{museum:it108}})")
-        tier = plate["tier"] if plate["tier"] in TIER_LINE else "TIER2"
-        for line in TIER_LINE[tier][lang]:
+        tier = read.get("tier") or plate["tier"]
+        tier = tier if tier in TIER_LINE else "TIER2"
+        want = list(TIER_LINE[tier][lang])
+        if tier == "TIER2" and plate.get("tier_line"):
+            want[2] = labels.get(plate["tier_line"]) or f"labels.{plate['tier_line']}"
+        for line in want:
             if (line.lower() not in words.lower()) if tier == "TIER1" else (line not in words):
                 problems.append(f"{name}: a plate of tier {plate['tier'] or 'none'} carries {line!r} in its source line")
         bare = BARE_LINE[lang].search(words)
-        if bare:
+        if bare and tier == "TIER2":
             problems.append(f"{name}: {bare.group(0)!r} is the bare line of a plate without a tier, which carries the second tier's line")
+        if plate.get("line") and not (labels.get(plate["line"]) and labels[plate["line"]] in words):
+            problems.append(f"{name}: the plate's source line carries labels.{plate['line']} word for word")
+        if plate.get("crop") and not plate.get("line"):
+            problems.append(f"{name}: the plate is cut to the painting ({plate['crop']}), and names the label that says so (line)")
         if plate.get("still") and not (still_open and words.startswith(still_open)):
             problems.append(f"{name}: the plate is shown through the film's still, and its label opens with labels.still_open")
-        if plate.get("crop") and not (labels.get("cropped") and labels["cropped"] in words):
-            problems.append(f"{name}: the plate is cut to the painting ({plate['crop']}), and its label says so with labels.cropped")
     return problems
 
 
@@ -982,6 +994,8 @@ def render(page, lang, data, shared, out_root):
                 "html.figure": plate_html(item),
                 # the class word, as the facts give it, stands apart at the head of its sentence
                 "html.who": f'<span class="pt-class">{rich(word)}</span>{rich(who[len(word):])}',
+                # a tightened entry says it all in two paragraphs
+                "html.worth": f'\n    <p>{rich(item["worth_knowing"])}</p>' if item.get("worth_knowing") else "",
                 "href.go": esc(CHART.door_href(door, it["stop"])),
                 # the door's line names the work, and a line begins with a capital in every language
                 "go": rich(go[:1].upper() + go[1:]),
@@ -1281,7 +1295,8 @@ def check_tier(text):
         finally:
             sys.dont_write_bytecode = keep
         known = plates()
-        _TIER.update(frame=mod.frames(), second=set(mod.SECOND_TIER) | {n for n, p in known.items() if p["tier"] != "TIER1"},
+        read = lambda p: (p.get("read_as") or {}).get("tier") or p["tier"]
+        _TIER.update(frame=mod.frames(), second=set(mod.SECOND_TIER) | {n for n, p in known.items() if read(p) != "TIER1"},
                      plates=set(known))
     frame, second = _TIER["frame"], _TIER["second"]
     stems = lambda part: {frame.get(s, s) for s in re.findall(r"img/([a-z0-9-]+?)-\d+\.(?:avif|webp)\b", part)}
