@@ -130,7 +130,13 @@
           },
           ". The other frames hold reproductions as well, each with its source and licence on its label in the wing."
         ]
-      }
+      },
+      "links": [
+        {
+          "text": "Leonardo da Vinci's paintings",
+          "page": "paintings"
+        }
+      ]
     },
     {
       "type": "works",

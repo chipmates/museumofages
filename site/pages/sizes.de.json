@@ -130,7 +130,13 @@
           },
           ". Auch die anderen Rahmen tragen Reproduktionen, jede mit Quelle und Lizenz auf ihrer Beschriftung im Flügel."
         ]
-      }
+      },
+      "links": [
+        {
+          "text": "Leonardo da Vincis Gemälde",
+          "page": "paintings"
+        }
+      ]
     },
     {
       "type": "works",

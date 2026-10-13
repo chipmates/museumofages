@@ -21,7 +21,7 @@ HERE = Path(__file__).resolve().parent
 SITE_SRC = HERE.parent / "_src"
 SITE_BUILT = HERE.parent / "dist"
 WORK = HERE / "_work" / "test"
-SOURCES = ["build.py", "chart.py", "template.html", "names.json", "css"]
+SOURCES = ["build.py", "chart.py", "template.html", "names.json", "pictures.json", "css"]
 REGISTRY = SITE_SRC / "registry.json"
 LINKED = ["pics", "last-good"]
 # The two built pages whose header and footer the topic pages wear.
@@ -61,7 +61,9 @@ class Case(unittest.TestCase):
         self.pages = sorted(p.name[:-len(".en.json")] for p in self.dir.glob("*.en.json"))
         # the first page of film pictures and the first page of a wing's works at one scale
         self.page = next(p for p in self.pages if "topic" not in self.data("en", p)["page"])
-        self.works_page = next((p for p in self.pages if "topic" in self.data("en", p)["page"]), None)
+        self.works_page = next((p for p in self.pages if {b["type"] for b in self.data("en", p)["blocks"]} & {"chart", "works", "table"}), None)
+        # the first page that lists its wing's works one by one, by period
+        self.list_page = next((p for p in self.pages if any(b["type"] == "periods" for b in self.data("en", p)["blocks"])), None)
         # the first page whose first screen draws one wall of its wing beside a person
         self.drawing_page = next((p for p in self.pages if "drawing" in self.data("en", p)["top"]), None)
 
@@ -151,7 +153,7 @@ class Case(unittest.TestCase):
                 continue
             names.add(key)
             names |= {part.lower() for name in wing["name"].values() for part in name.split() if len(part) > 3}
-        for name in ("template.html", "build.py", "chart.py", "make_pictures.py", "css/page.css", "css/chart.css"):
+        for name in ("template.html", "build.py", "chart.py", "make_pictures.py", "css/page.css", "css/chart.css", "css/list.css"):
             text = (HERE / name).read_text(encoding="utf-8").lower()
             for word in names:
                 self.assertNotIn(word, text, f"{name} names a wing: {word}")
@@ -702,7 +704,7 @@ class Case(unittest.TestCase):
         for path in written:
             text = path.read_text(encoding="utf-8")
             data, lang = self.page_of(path)
-            long = len(data["top"]["answer"]) > module.LONG_ANSWER
+            long = len(module.answer_text(data["top"]["answer"])) > module.LONG_ANSWER
             self.assertEqual('<header class="sp-top sp-top--long">' in text, long, path)
 
     def test_a_source_of_one_language_only_stands_in_that_language(self):
@@ -727,6 +729,143 @@ class Case(unittest.TestCase):
         self.save("de", de, self.drawing_page)
         self.fails(r"the two languages do not hold the same structure")
 
+    # ---- a page that lists its wing's works one by one, by period ----
+
+    def list_facts(self):
+        data = self.data("en", self.list_page)
+        wing = self.wings()[data["page"]["wing"]]
+        topic = next(t for t in wing["topics"] if (t.get("count") or t["slug"]["en"].replace("-", "_")) == data["page"]["topic"])
+        facts = json.loads((SITE_SRC / "wings" / f'{data["page"]["wing"]}.facts.json').read_text(encoding="utf-8"))
+        return wing, topic, facts
+
+    def list_entries(self, lang):
+        return [x for b in self.data(lang, self.list_page)["blocks"] if b["type"] == "periods" for p in b["periods"] for x in p["items"]]
+
+    def test_a_list_page_shows_each_work_as_the_facts_give_it(self):
+        if not self.list_page:
+            self.skipTest("no page lists its wing's works by period")
+        out, written = self.build()
+        wing, topic, facts = self.list_facts()
+        works = {p["id"]: p for p in facts["paintings"]}
+        holders = {h["id"]: h for h in facts["holders"]}
+        german = {"About 1470 to 1475": "Etwa 1470 bis 1475", "About 1472": "Etwa 1472",
+                  "Sixteenth century, reworked in the early seventeenth century": "16. Jahrhundert, überarbeitet im frühen 17. Jahrhundert"}
+        classes = {"en": {"documented": "Documented", "disputed": "Disputed", "qualified": "Qualified attribution", "workshop": "Workshop", "copy": "Copy"},
+                   "de": {"documented": "Belegt", "disputed": "Umstritten", "qualified": "Zuschreibung mit Vorbehalt", "workshop": "Werkstatt", "copy": "Kopie"}}
+        for lang in ("en", "de"):
+            text = (out / wing["page"][lang].strip("/") / topic["slug"][lang] / "index.html").read_text(encoding="utf-8")
+            entries = re.findall(r'<li class="pt-work pt-work--\w+" id="([\w-]+)">(.*?)</li>\n(?=<li class="pt-work|  </ol>)', text, flags=re.S)
+            shown = {i for i, _ in entries}
+            # every work of the facts once, Ginevra's two faces in one entry, the Last Supper last
+            self.assertEqual(shown - {"last-supper"}, set(works))
+            self.assertEqual(entries[-1][0], "last-supper")
+            for key, body in entries:
+                if key == "last-supper":
+                    continue
+                fact, plain = works[key], lambda m: html.unescape(re.sub(r"<[^>]+>", "", m)).replace("\u00a0", " ")
+                self.assertEqual(plain(re.search(r'<h4 class="pt-work__title">(.*?)</h4>', body).group(1)), fact["title"][lang], key)
+                when = plain(re.search(r'<span class="pt-when">(.*?)</span><span class="pt-where">', body).group(1))
+                want = fact["date"] if lang == "en" else german.get(fact["date"]) or re.sub(r"^About (\d+)(?: to (\d+))?$",
+                                                                                                lambda m: "Etwa " + m.group(1) + (" bis " + m.group(2) if m.group(2) else ""), fact["date"])
+                self.assertEqual(when, want, key)
+                where = plain(re.search(r'<span class="pt-where">(.*?)</span></p>', body, flags=re.S).group(1))
+                holder = holders[fact["holder"]]
+                self.assertTrue(where.startswith(f'{holder["name"][lang]}, {holder["note"][lang]}'), (key, where))
+                self.assertEqual(plain(re.search(r'<span class="pt-class">(.*?)</span>', body).group(1)), classes[lang][fact["class"]], key)
+                # its door opens the wing at its stop, tagged for the count
+                door = wing["door"][lang].replace("&", "&amp;")
+                self.assertIn(f'href="{door}#s={fact["stop"]}" data-door="item"', body, key)
+            own = self.own_part(text)
+            self.assertEqual(len(re.findall(r'data-door="top"', own)), 1)
+            self.assertEqual(len(re.findall(r'data-door="end"', own)), 1)
+            # the works are its structured data's list, in the page's order
+            graph = json.loads(re.search(r'<script type="application/ld\+json">(.*?)</script>', text, flags=re.S).group(1).replace("<\\/", "</"))["@graph"]
+            items = next(n for n in graph if n.get("@type") == "ItemList")["itemListElement"]
+            self.assertEqual([i["url"].rsplit("#", 1)[1] for i in items], [i for i, _ in entries])
+
+    def test_a_list_entry_off_the_facts_stops_the_build(self):
+        if not self.list_page:
+            self.skipTest("no page lists its wing's works by period")
+        cases = [("de", "when", "Etwa 1471 bis 1475", r"the date"), ("en", "title", "The Baptism", r"the title"),
+                 ("de", "where", "Musée du Louvre, Paris", r"where does not begin with the facts' holder"),
+                 ("en", "who", "Disputed. " , r"who does not begin with the class word")]
+        for lang, key, value, words in cases:
+            with self.subTest(key=key):
+                data = self.data(lang, self.list_page)
+                entry = next(x for b in data["blocks"] if b["type"] == "periods" for p in b["periods"] for x in p["items"])
+                keep = entry[key]
+                entry[key] = value
+                self.save(lang, data, self.list_page)
+                self.fails(words)
+                entry[key] = keep
+                self.save(lang, data, self.list_page)
+        data = self.data("en", self.list_page)
+        period = next(b for b in data["blocks"] if b["type"] == "periods")["periods"][0]
+        period["items"] = period["items"][1:]
+        self.save("en", data, self.list_page)
+        self.fails(r"the list lacks")
+
+    def test_a_plate_without_the_line_its_record_asks_for_stops_the_build(self):
+        if not self.list_page:
+            self.skipTest("no page lists its wing's works by period")
+        plates = {p["name"]: p for p in json.loads((self.dir / "pictures.json").read_text(encoding="utf-8"))["plates"]}
+
+        def entry_of(data, test):
+            pics = data["pics"]
+            return next(x for b in data["blocks"] if b["type"] == "periods" for p in b["periods"] for x in p["items"]
+                        if x.get("pic") and pics[x["pic"]]["stem"] in plates and test(plates[pics[x["pic"]]["stem"]]))
+
+        cuts = [(lambda p: p["it108"], lambda src: [x.replace(" {museum:it108}", "") if isinstance(x, str) else x for x in src], r"Italian code"),
+                (lambda p: p["tier"] == "TIER2", lambda src: [x.replace("The museum labels the reproduction, not the painting.", "") if isinstance(x, str) else x for x in src],
+                 r"a plate of tier TIER2 carries"),
+                (lambda p: p["licence_url"], lambda src: [x["text"] if isinstance(x, dict) and "creativecommons" in x["href"] else x for x in src], r"does not link the plate's licence"),
+                (lambda p: True, lambda src: [x["text"] if isinstance(x, dict) else x for x in src], r"does not link the plate's source"),
+                (lambda p: True, lambda src: [], r"without its source line")]
+        for test, cut, words in cuts:
+            with self.subTest(words=words):
+                data = self.data("en", self.list_page)
+                entry = entry_of(data, test)
+                keep = entry["src"]
+                entry["src"] = cut(keep)
+                self.save("en", data, self.list_page)
+                self.fails(words)
+                entry["src"] = keep
+                self.save("en", data, self.list_page)
+
+    def test_a_reproduction_never_stands_in_the_first_part_or_without_its_line(self):
+        spec = importlib.util.spec_from_file_location("build_tier", self.dir / "build.py")
+        module = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(module)
+        plates = json.loads((self.dir / "pictures.json").read_text(encoding="utf-8"))["plates"]
+        second = next(p["name"] for p in plates if p["tier"] == "TIER2")
+        first = next(p["name"] for p in plates if p["tier"] == "TIER1")
+        pic = lambda name: f'<picture><img src="../static/img/{name}-240.webp" alt="x" width="1" height="1"></picture>'
+        top = f'<main><header class="sp-top"><figure>{pic(second)}<span class="label__src">a line</span></figure></header></main>'
+        self.assertRegex(" ".join(module.check_tier(top)), r"first part shows")
+        bare = f'<main><figure class="plate">{pic(first)}<figcaption class="label"></figcaption></figure></main>'
+        self.assertRegex(" ".join(module.check_tier(bare)), r"a reproduction, and its label has no source line")
+        loose = f'<main><p>{pic(first)}</p></main>'
+        self.assertRegex(" ".join(module.check_tier(loose)), r"stands outside a plate")
+        lined = f'<main><figure class="plate">{pic(second)}<figcaption><span class="label__src">Public domain work.</span></figcaption></figure></main>'
+        self.assertEqual(module.check_tier(lined), [])
+
+    def test_each_plate_agrees_with_the_museums_store_where_it_is_at_hand(self):
+        store = os.environ.get("MOA_ASSET_STORE")
+        if not store or not Path(store).is_dir():
+            self.skipTest("MOA_ASSET_STORE does not name the museum's asset store on this machine")
+        spec = importlib.util.spec_from_file_location("pictures_tool", HERE / "make_pictures.py")
+        module = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(module)
+        plates = json.loads((HERE / "pictures.json").read_text(encoding="utf-8"))["plates"]
+        manifests = {}
+        for plate in plates:
+            wing = plate["file"].split("/", 1)[0]
+            manifests.setdefault(wing, json.loads((Path(store) / wing / "manifest.json").read_text(encoding="utf-8")))
+            self.assertEqual(module.plate_problems(plate, manifests[wing], store), [], plate["name"])
+        # and a record that changed in the store stops the cut
+        changed = dict(plates[0], tier="TIER1" if plates[0]["tier"] != "TIER1" else "TIER2")
+        self.assertRegex(" ".join(module.plate_problems(changed, manifests[changed["file"].split("/", 1)[0]], store)), r"tier is")
+
 
 class Built(unittest.TestCase):
     """The site as its own build wrote it (python3 _src/build.py): the topic pages with their count."""
@@ -747,6 +886,19 @@ class Built(unittest.TestCase):
                     self.assertIn(f'data-count="{kind}"', page.read_text(encoding="utf-8"), page)
                     found += 1
         self.assertGreater(found, 2)
+
+    def test_the_paintings_page_reaches_the_count_by_its_kind(self):
+        lists = (HERE.parent / "functions" / "_count" / "lists.js").read_text(encoding="utf-8")
+        kinds = json.loads(re.search(r"PAGE_KINDS = Object\.freeze\((\[.*?\])\)", lists).group(1))
+        self.assertIn("paintings", kinds)
+        for path in ("leonardo-da-vinci/paintings", "de/leonardo-da-vinci/gemaelde"):
+            text = (SITE_BUILT / path / "index.html").read_text(encoding="utf-8")
+            self.assertIn('data-count="paintings"', text)
+            # the count reads its doors by their tags: in the page's own part one at the top, one at the end, one a work
+            own = text[text.index("<main"):text.index("</main>")]
+            self.assertEqual(own.count('data-door="top"'), 1)
+            self.assertEqual(own.count('data-door="end"'), 1)
+            self.assertEqual(own.count('data-door="item"'), 25)
 
     def test_a_topic_page_stands_only_in_its_languages(self):
         wings = json.loads(REGISTRY.read_text(encoding="utf-8"))

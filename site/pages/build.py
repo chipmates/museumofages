@@ -137,6 +137,8 @@ CSS_BEFORE = ["tokens", "base"]
 OWN_CSS = ["page"]
 # and on a page that shows its wing's works at one scale, the sheet of its chart, list and table
 CHART_CSS = ["chart"]
+# and on a page that lists its wing's works one by one, by period, the sheet of that list after the chart's
+LIST_CSS = ["list"]
 CSS_AFTER = ["foot", "motion"]
 CSP_MARK = "<!--csp-->"
 
@@ -165,9 +167,24 @@ CLAIM_ALLOWED = (r"^meta\.", r"^top\.h1$", r"\.q$")
 # How the words are made is said once, on the page about the museum. A page here carries no line on it.
 
 # What is no sentence in a data file: its page, its pictures, addresses and keys.
-NOT_SPACED = r"^(_|page\.|pics\.)|\.(href|focus|pic|tag|k|type|id|stem|sizes|work|wall|stop|page|only)$"
+NOT_SPACED = r"^(_|page\.|pics\.)|\.(href|focus|pic|pic_back|tag|k|type|id|stem|sizes|work|wall|stop|page|only|at|wing|shape)$"
+# The keys of a data file that hold no displayed words (lint() passes them by).
+NOT_WORDS = r"\.(pic|pic_back|tag|k|type|id|stem|sizes|work|wall|stop|page|only|at|wing|shape)$"
 
-BLOCK_TYPES = ("places", "group", "feature", "notes", "faq", "sources", "close", "chart", "works", "table", "text")
+BLOCK_TYPES = ("places", "group", "feature", "notes", "faq", "sources", "close", "chart", "works", "table", "text", "periods")
+
+# The pictures of the search pages (make_pictures.py cuts them). Its plates are the reproductions a wing hangs, each
+# with the record the build checks its source line against.
+PICTURES_FILE = HERE / "pictures.json"
+# What a plate's source line must say, by the plate's tier (RIGHTS-POLICY): the second tier's line, the line of a
+# plate the wing hung before its tiers, and the licence of a plate open at its source.
+TIER_LINE = {
+    "TIER2": {"en": "The museum labels the reproduction, not the painting.", "de": "Das Museum kennzeichnet die Reproduktion, nicht das Gemälde."},
+    None: {"en": "public domain reproduction", "de": "gemeinfreie reproduktion"},
+    "TIER1": {"en": "public domain", "de": "gemeinfrei"},
+}
+# The wing's dates are written in English: the German page writes them by these rules.
+DATE_DE = {"Sixteenth century, reworked in the early seventeenth century": "16. Jahrhundert, überarbeitet im frühen 17. Jahrhundert"}
 
 
 # ---------- small tools ----------
@@ -430,7 +447,7 @@ def lint(page, lang, data, wing, names):
             if not re.fullmatch(r"\d{1,3}% \d{1,3}%", text):
                 problems.append(f"{where} is not a place in a picture, as in 50% 80%")
             continue
-        if re.search(r"\.(pic|tag|k|type|id|stem|sizes|work|wall|stop|page|only)$", key):
+        if re.search(NOT_WORDS, key):
             continue
         if not text.strip() and not key.endswith(".nav"):
             problems.append(f"{where} is empty")
@@ -452,7 +469,8 @@ def lint(page, lang, data, wing, names):
     for kind in kinds:
         if kind not in BLOCK_TYPES:
             problems.append(f"{page}.{lang}: unknown block type {kind!r}")
-    ids = [b["id"] for b in data["blocks"]] + [i["id"] for b in data["blocks"] for i in b.get("items", []) if "id" in i]
+    ids = ([b["id"] for b in data["blocks"]] + [i["id"] for b in data["blocks"] for i in b.get("items", []) if "id" in i]
+           + [x["id"] for b in data["blocks"] for p in b.get("periods", []) for x in [p] + p["items"]])
     if len(ids) != len(set(ids)):
         problems.append(f"{page}.{lang}: an id stands twice in {ids}")
     for block in data["blocks"]:
@@ -550,17 +568,26 @@ def museum_words(text, lang):
     return re.sub(r"\{museum:(\w+)\}", lambda m: museum[m.group(1)], text)
 
 
+def plates():
+    """The plates of pictures.json by name: the reproductions a wing hangs, each with its record."""
+    if not PICTURES_FILE.is_file():
+        return {}
+    return {p["name"]: p for p in json.loads(PICTURES_FILE.read_text(encoding="utf-8")).get("plates", [])}
+
+
 def source_line(parts, wing, lang, rich):
     """A plate's source line: its words with the museum's own filled in, and a link where a part gives one. A link to
-    a Commons file is checked against the wing's record, where the repository holds it."""
+    a Commons file is checked against the wing's record, where the repository holds it, or against a plate's record
+    (pictures.json, plates), which make_pictures.py checked against the museum's store when it cut the plate."""
     record = LANG.HERE.parent.parent / RECORD.format(wing=wing)
+    sources = {p["source"] for p in plates().values()}
     out = []
     for part in parts:
         if isinstance(part, str):
             out.append(rich(museum_words(part, lang)))
             continue
         name = re.search(r"/wiki/File:(.+)$", part["href"])
-        if name and record.is_file():
+        if name and record.is_file() and part["href"] not in sources:
             listed = urllib.parse.unquote(name.group(1)).replace("_", " ")
             if f"File:{listed}" not in record.read_text(encoding="utf-8"):
                 raise SystemExit(f"a plate names File:{listed}, which {RECORD.format(wing=wing)} does not name")
@@ -568,6 +595,131 @@ def source_line(parts, wing, lang, rich):
     # the site's source link is an inline block (its touch target), which would let a line break before the
     # stop that follows it: the link and that stop stay together
     return re.sub(r'(<a href="[^"]*">(?:(?!</a>).)*</a>)([.,:)]+)', r'<span class="nw">\1\2</span>', "".join(out))
+
+
+def plate_problems(src, names, lang):
+    """What a source line lacks for the plates it stands under (names): the link to each plate's source, its tier's
+    line, the link to its licence and the Italian code's line where its record asks for them. Returns the problems."""
+    known, problems = plates(), []
+    links = {part["href"] for part in src if isinstance(part, dict)}
+    words = " ".join(part if isinstance(part, str) else part["text"] for part in src).replace(LIB.NBSP, " ")
+    for name in names:
+        plate = known.get(name)
+        if plate is None:
+            problems.append(f"{name} is no plate of {PICTURES_FILE.name}")
+            continue
+        if plate["source"] not in links:
+            problems.append(f"{name}: the source line does not link the plate's source {plate['source']}")
+        if plate["licence_url"] and plate["licence_url"] not in links:
+            problems.append(f"{name}: the source line does not link the plate's licence {plate['licence_url']}")
+        if plate["it108"] and "{museum:it108}" not in words:
+            problems.append(f"{name}: the plate's record asks for the Italian code's line ({{museum:it108}})")
+        line = TIER_LINE.get(plate["tier"], TIER_LINE[None])[lang]
+        if line.lower() not in words.lower():
+            problems.append(f"{name}: a plate of tier {plate['tier'] or 'none'} carries {line!r} in its source line")
+    return problems
+
+
+TALLY_KINDS = ("documented", "disputed", "qualified", "workshop", "copy", "field")
+
+
+def tally_rows(d, works, ids=False):
+    """Per period of a page's list of works: its heading and the class of each of its works (field: one that hangs
+    elsewhere), and with ids its id first."""
+    block = next(b for b in d["blocks"] if b["type"] == "periods")
+    kind = {}
+    for it in works.items:
+        kind.setdefault(it["id"], it["class"] or "field")
+    return [((period["id"],) if ids else ()) + (period["h"], [kind[x["work"]] for x in period["items"]]) for period in block["periods"]]
+
+
+def check_tally(d, works, facts):
+    """The first screen's count of the list: each key names the number of its class as the facts count it."""
+    problems = []
+    counts = {k: sum(kinds.count(k) for _, kinds in tally_rows(d, works)) for k in TALLY_KINDS}
+    for kind in TALLY_KINDS:
+        text = d["top"]["tally"]["key"].get(kind, "")
+        want = (facts.get("counts") or {}).get(f"class_{kind}", counts[kind])
+        if counts[kind] != want:
+            problems.append(f"the list holds {counts[kind]} works of the class {kind}, the facts count {want}")
+        if kind != "field" and counts[kind] and not re.match(rf"{counts[kind]}\b", text.replace(LIB.NBSP, " ")):
+            problems.append(f"top.tally.key.{kind} {text!r} does not begin with its number, {counts[kind]}")
+    return problems
+
+
+def date_in(lang, date):
+    """The wing's date (English) as a page in lang writes it, or None where no rule knows it."""
+    if lang == "en":
+        return date
+    if lang != "de":
+        return None
+    if date in DATE_DE:
+        return DATE_DE[date]
+    m = re.fullmatch(r"About (\d{4})(?: to (\d{4}))?", date)
+    return f"Etwa {m.group(1)}" + (f" bis {m.group(2)}" if m.group(2) else "") if m else None
+
+
+def check_periods(d, lang, works, facts, field_title, pics):
+    """A list of works by period: every work of the facts once, in a period of the facts, each with its title, date,
+    holder and class as the facts give them, and each plate under the source line its record asks for."""
+    problems = []
+    plain = lambda t: t.replace(LIB.NBSP, " ")
+    dates = {p["id"]: p["date"] for p in facts["paintings"]}
+    periods = {x[lang] for x in facts.get("periods", [])}
+    first = {}
+    for it in works.items:
+        first.setdefault(it["id"], it)
+    seen = []
+    for block in (b for b in d["blocks"] if b["type"] == "periods"):
+        for period in block["periods"]:
+            fields = [x for x in period["items"] if x["work"] == "field"]
+            if plain(period["h"]) not in periods and not fields:
+                problems.append(f"{period['id']}: {period['h']!r} is no period of the wing's facts")
+            for x in period["items"]:
+                where = f"{period['id']}.{x['id']}"
+                seen.append(x["work"])
+                it = first.get(x["work"])
+                if it is None:
+                    problems.append(f"{where}: {x['work']!r} is no work of the facts")
+                    continue
+                title = field_title if it.get("field") else it["title"][lang]
+                if plain(x["title"]) != title:
+                    problems.append(f"{where}: the title {x['title']!r} is not the facts' {title!r}")
+                if not it.get("field"):
+                    want = date_in(lang, dates[x["work"]])
+                    if want is None or plain(x["when"]) != want:
+                        problems.append(f"{where}: the date {x['when']!r} is not the facts' {want or dates[x['work']]!r}")
+                holder = f'{it["holder"]["name"][lang]}, {it["holder"]["note"][lang]}'
+                if not plain(x["where"]).startswith(holder):
+                    problems.append(f"{where}: where does not begin with the facts' holder {holder!r}")
+                word = d["labels"].get(f"class_{it['class'] or 'field'}")
+                if not word or not plain(x["who"]).startswith(word):
+                    problems.append(f"{where}: who does not begin with the class word of the facts' class {it['class'] or 'field'!r}")
+                shown = [x[k] for k in ("pic", "pic_back") if x.get(k)]
+                stems = [pics[n]["stem"] for n in shown if n in pics]
+                if len(stems) != len(shown):
+                    problems.append(f"{where}: a picture is not in the page's pics")
+                if not shown:
+                    continue
+                if not x.get("src"):
+                    problems.append(f"{where}: a reproduction stands without its source line (src)")
+                    continue
+                for stem in stems:
+                    plate = plates().get(stem)
+                    if plate and plate["work"] != x["work"] and not it.get("field"):
+                        problems.append(f"{where}: the plate {stem} is of {plate['work']}")
+                problems += [f"{where}: {p}" for p in plate_problems(x["src"], [s for s in stems if s in plates()], lang)]
+    missing = sorted(set(first) - set(seen))
+    twice = sorted({w for w in seen if seen.count(w) > 1})
+    if missing:
+        problems.append(f"the list lacks {', '.join(missing)}")
+    if twice:
+        problems.append(f"the list names {', '.join(twice)} twice")
+    for name, pic in pics.items():
+        plate = plates().get(pic["stem"])
+        if plate and pic["widths"] != plate["widths"]:
+            problems.append(f"pics.{name}: its widths are not its plate's {plate['widths']}")
+    return problems
 
 
 # ---------- structured data ----------
@@ -626,6 +778,16 @@ def jsonld(lang, data, urls, pics, site, wing, alternate_name, frame, folders):
     if data["page"].get("published"):
         graph[3]["datePublished"] = data["page"]["published"]
     for block in data["blocks"]:
+        if block["type"] == "periods":
+            # the works the page lists, each by its entry on the page
+            items = [x for period in block["periods"] for x in period["items"]]
+            graph.append({
+                "@type": "ItemList", "@id": f"{self_url}#{block['id']}", "name": block["h"], "inLanguage": L.html(lang),
+                "numberOfItems": len(items), "itemListOrder": "https://schema.org/ItemListOrderAscending",
+                "itemListElement": [{"@type": "ListItem", "position": n, "name": x["title"], "url": f"{self_url}#{x['id']}"}
+                                    for n, x in enumerate(items, 1)],
+            })
+            graph[3]["mainEntity"] = {"@id": f"{self_url}#{block['id']}"}
         if block["type"] == "faq":
             graph.append({
                 "@type": "FAQPage", "@id": f"{self_url}#faq", "inLanguage": L.html(lang),
@@ -706,13 +868,23 @@ def render(page, lang, data, shared, out_root):
             raise SystemExit(f"{page}.{lang}: a link names the page {name!r}, which this build does not make in {lang}")
         return f'{root}{page_path(shared["data"][name][lang], wing, lang)}/'
 
+    def part_href(part):
+        """A link's address: outside (href), another page (page), an entry of this page (at), a part of the wing's page (wing)."""
+        if "href" in part:
+            return part["href"]
+        if "at" in part:
+            return f'#{part["at"]}'
+        if "wing" in part:
+            return f'{href["href.wing"]}#{part["wing"]}'
+        return page_href(part["page"])
+
     def linked(para):
         """A paragraph: its words, or its parts, where a part is a link to an address (href) or to another page (page).
         A link and the stop after it stay on one line."""
         if isinstance(para, str):
             return rich(para)
         out = "".join(rich(part) if isinstance(part, str) else
-                      f'<a href="{esc(part["href"] if "href" in part else page_href(part["page"]))}">{rich(part["text"])}</a>'
+                      f'<a href="{esc(part_href(part))}">{rich(part["text"])}</a>'
                       for part in para)
         return re.sub(r'(<a href="[^"]*">(?:(?!</a>).)*</a>)([.,:)]+)', r'<span class="nw">\1\2</span>', out)
 
@@ -723,7 +895,7 @@ def render(page, lang, data, shared, out_root):
             if "stop" in link:
                 href, attr = CHART.door_href(door, link["stop"]), ' data-door="item"'
             else:
-                href, attr = page_href(link["page"]), ""
+                href, attr = part_href(link), ""
             out.append(f'\n<p class="sp-more"><a class="more" href="{esc(href)}"{attr}><span>{rich(link["text"])}</span>{chrome["arrow"]}</a></p>')
         return "".join(out)
 
@@ -767,6 +939,42 @@ def render(page, lang, data, shared, out_root):
             out.append(fill(parts["edition"], {"name": rich(entry["name"]), "text": rich(entry["text"]),
                                                "html.links": links}))
         return "\n".join(out)
+
+    def plate_html(item):
+        """A work's plate, or its two faces, with the label every reproduction carries: the tag and its source line."""
+        shown = [(item[k], item[a]) for k, a in (("pic", "alt"), ("pic_back", "alt_back")) if item.get(k)]
+        if not shown:
+            return ""
+        values = dict(base)
+        values.update({"html.picture": "".join(pics.picture(name, esc(alt)) for name, alt in shown),
+                       "tag": rich(labels["tag_still"]), "html.src": source_line(item["src"], data["page"]["wing"], lang, rich)})
+        return fill(parts["plate"], values)
+
+    def period_html(block, period):
+        items = []
+        for item in period["items"]:
+            it = next(x for x in works.items if x["id"] == item["work"])
+            word = labels[f"class_{it['class'] or 'field'}"]
+            who = item["who"]
+            values = dict(base)
+            values.update(words(item))
+            go = block["go"].replace("{work}", item["door"])
+            values.update({
+                "shape": esc(item["shape"]),
+                "html.figure": plate_html(item),
+                # the class word, as the facts give it, stands apart at the head of its sentence
+                "html.who": f'<span class="pt-class">{rich(word)}</span>{rich(who[len(word):])}',
+                "href.go": esc(CHART.door_href(door, it["stop"])),
+                # the door's line names the work, and a line begins with a capital in every language
+                "go": rich(go[:1].upper() + go[1:]),
+                "html.more": ways(item.get("links", [])),
+            })
+            items.append(fill(parts["work"], values))
+        values = dict(base)
+        values.update(words(period))
+        values["html.p"] = f'<p class="pt-period__p">{rich(period["p"])}</p>' if period.get("p") else ""
+        values["html.items"] = "\n".join(items)
+        return fill(parts["period"], values)
 
     def block_html(block):
         kind = block["type"]
@@ -821,6 +1029,9 @@ def render(page, lang, data, shared, out_root):
             })
         elif kind == "works":
             values["html.items"] = CHART.works_list(works, block["lines"], door, block["go"], chrome["arrow"], rich, LIB.number, lang)
+        elif kind == "periods":
+            values["html.periods"] = "\n".join(period_html(block, period) for period in block["periods"])
+            values["html.links"] = ways(block.get("links", []))
         elif kind == "table":
             values.update({f"cols.{k}": rich(v) for k, v in block["cols"].items()})
             values["html.rows"] = CHART.table_rows(works, lines, door, block["go"], rich, LIB.number, lang)
@@ -836,7 +1047,7 @@ def render(page, lang, data, shared, out_root):
     lines = next((b["lines"] for b in data["blocks"] if b["type"] == "works"), None)
     mark = data["top"].get("figure", {}).get("work")
     chart_words = {}
-    if works:
+    if works and lines:
         titles = {it["n"]: CHART.split_line(line, it, LIB.number, lang)[0].rstrip(".") for it, line in zip(works.items, lines)}
         field = next((it for it in works.items if it.get("field")), None)
         chart_words = {"person": labels["person"], "mark": titles[works.by_id(mark)["n"]] if mark else "",
@@ -848,6 +1059,7 @@ def render(page, lang, data, shared, out_root):
 
     # The wing's name stays on one line in the h1. Where it is long the h1 is set smaller on a
     # phone, and a name too long for any line may wrap between its words.
+    after_html = ""
     h1, run = data["top"]["h1"], names.wing_run(data["top"]["h1"])
     h1_class = "" if run <= KEEP_WHOLE else ' class="sp-h1--long"' if run <= KEEP_SMALL else ' class="sp-h1--wrap"'
 
@@ -880,6 +1092,20 @@ def render(page, lang, data, shared, out_root):
                                                  # what the drawing reconstructs stands under it at every width
                                                  "html.note": f'<span class="sp-frame__note">{rich(dr["note"])}</span>' if dr.get("note") else ""})
         preload, focus = "", ""
+    elif "tally" in data["top"]:
+        ta = data["top"]["tally"]
+        mark = lambda kind: f'<span class="pt-m pt-m--{kind}"></span>'
+        rows = "\n".join(fill(parts["tally_row"], {"id": esc(key), "period": rich(h), "n": str(len(kinds)),
+                                                     "html.marks": "".join(mark(k) for k in kinds)})
+                         for key, h, kinds in tally_rows(data, works, ids=True))
+        key = "\n".join(fill(parts["tally_key"], {"kind": kind, "text": rich(ta["key"][kind])}) for kind in TALLY_KINDS if ta["key"].get(kind))
+        # the page's picture in the structured data is the count as its share picture
+        frame = {"title": ta["title"], "what": "", "alt": data["meta"]["og_image_alt"], "tag": ta["tag"], "still": og["file"],
+                 "caption": data["meta"]["og_title"], "description": data["meta"]["og_image_alt"]}
+        # after the door: on a phone the answer and the way in come first
+        after_html = "\n" + fill(parts["frame:tally"], {"html.rows": rows, "html.key": key, "title": rich(ta["title"]),
+                                                       "tag": rich(labels[ta["tag"]])})
+        frame_html, preload, focus = "", "", ""
     else:
         frame = data["top"]["frame"]
         frame_html = fill(parts["frame:picture"], {"html.picture": pics.picture(frame["pic"], esc(frame["alt"]), first=True),
@@ -901,7 +1127,8 @@ def render(page, lang, data, shared, out_root):
         "url.self": urls[lang],
         "url.og_image": f"{ORIGIN}/{STATIC}/img/{og['file']}",
         "og.width": str(og["width"]), "og.height": str(og["height"]),
-        "css.inline": shared["css_chart" if works or "drawing" in data["top"] or any(b["type"] == "text" for b in data["blocks"]) else "css"]
+        "css.inline": shared["css_list" if any(b["type"] == "periods" for b in data["blocks"]) else
+                             "css_chart" if works or "drawing" in data["top"] or any(b["type"] == "text" for b in data["blocks"]) else "css"]
                       + (shared["langs_css"] + chrome["by"] if chrome["langs"] else ""),
         "css.faces": faces(root, lang) + focus,
         "html.preload": preload,
@@ -909,12 +1136,13 @@ def render(page, lang, data, shared, out_root):
         "html.header": chrome["header"],
         "html.footer": chrome["footer"],
         "attr.h1": h1_class,
-        "attr.top": " sp-top--long" if len(data["top"]["answer"]) > LONG_ANSWER else "",
+        "attr.top": " sp-top--long" if len(answer_text(data["top"]["answer"])) > LONG_ANSWER else "",
         "top.h1": names.mark(h1, wrap_wing=run > KEEP_SMALL),
-        "top.answer": rich(data["top"]["answer"]),
+        "top.answer": linked(data["top"]["answer"]),
         # the one place a sizes page says in which order its sizes stand
         "html.order": f'<p class="sz-order">{rich(data["top"]["order"])}</p>' if data["top"].get("order") else "",
         "html.frame": frame_html,
+        "html.after": after_html,
         "top.door.text": rich(data["top"]["door"]["text"]),
         "top.door.note": rich(data["top"]["door"]["note"]),
         "top.door.leads": rich(data["top"]["door"]["leads"]),
@@ -931,6 +1159,11 @@ def render(page, lang, data, shared, out_root):
     if frame.get("still"):
         files[f"img/{frame['still']}"] = pics.find(frame["still"])
     return out_root / path / "index.html", text, files
+
+
+def answer_text(answer):
+    """The first screen's answer as plain words: a string, or parts where a part is a link."""
+    return answer if isinstance(answer, str) else "".join(p if isinstance(p, str) else p["text"] for p in answer)
 
 
 # ---------- checks on a built page ----------
@@ -1011,7 +1244,9 @@ _TIER = {}
 
 def check_tier(text):
     """As on the site's own pages: a frame of the second rights tier never stands in the page's first part, and below
-    it only in a plate whose label carries a source line (make_images.py names the frames)."""
+    it only in a plate whose label carries a source line (make_images.py names the frames). A plate of pictures.json
+    is a reproduction: every one carries its source line, and one that is not open at its source (its tier is not the
+    first) counts as a frame of the second tier."""
     if not _TIER:
         spec = importlib.util.spec_from_file_location("image_jobs", LANG.HERE / "tools" / "make_images.py")
         mod = importlib.util.module_from_spec(spec)
@@ -1020,9 +1255,12 @@ def check_tier(text):
             spec.loader.exec_module(mod)
         finally:
             sys.dont_write_bytecode = keep
-        _TIER.update(frame=mod.frames(), second=set(mod.SECOND_TIER))
+        known = plates()
+        _TIER.update(frame=mod.frames(), second=set(mod.SECOND_TIER) | {n for n, p in known.items() if p["tier"] != "TIER1"},
+                     plates=set(known))
     frame, second = _TIER["frame"], _TIER["second"]
-    shows = lambda part: {frame.get(s, s) for s in re.findall(r"img/([a-z0-9-]+?)-\d+\.(?:avif|webp)\b", part)} & second
+    stems = lambda part: {frame.get(s, s) for s in re.findall(r"img/([a-z0-9-]+?)-\d+\.(?:avif|webp)\b", part)}
+    shows = lambda part: stems(part) & second
     body = text[text.index("<main"):text.index("</main>")]
     problems = []
     top = re.search(r'<header class="sp-top\b.*?</header>', body, flags=re.S)
@@ -1031,6 +1269,12 @@ def check_tier(text):
     for fig in re.findall(r"<figure\b.*?</figure>", body, flags=re.S):
         if shows(fig) and not re.search(r'<span class="label__src">[^<]*\S', fig):
             problems.append(f"a plate shows {sorted(shows(fig))}, a frame of the second rights tier, and its label has no source line")
+        elif stems(fig) & _TIER["plates"] and not re.search(r'<span class="label__src">[^<]*\S', fig):
+            problems.append(f"a plate shows {sorted(stems(fig) & _TIER['plates'])}, a reproduction, and its label has no source line")
+    # a reproduction never stands outside its plate, where no label could carry its line
+    loose = re.sub(r"<figure\b.*?</figure>", " ", body, flags=re.S)
+    if stems(loose) & (second | _TIER["plates"]):
+        problems.append(f"{sorted(stems(loose) & (second | _TIER['plates']))} stands outside a plate with a label")
     return problems
 
 
@@ -1092,7 +1336,7 @@ def load_pages(pages=PAGES):
     for p in pages:
         english = json.loads((HERE / f"{p}.en.json").read_text(encoding="utf-8"))
         head = english["page"]
-        topic, works, facts = None, None, None
+        topic, works, facts, field = None, None, None, {}
         if head.get("topic"):
             entry = wings.get(head.get("wing")) or {}
             topic = next((t for t in entry.get("topics", []) if topic_key(t) == head["topic"]), None)
@@ -1106,7 +1350,13 @@ def load_pages(pages=PAGES):
                 wing_words = json.loads((LANG.HERE / "wings" / f"{key}.en.json").read_text(encoding="utf-8"))
                 group = next(g for g in wing_words["holds"]["groups"] if g["id"] == topic["from"])
                 works = CHART.Works(facts, group)
-        info[p] = {"topic": topic, "langs": LANG.topic_langs(topic, LANGS) if topic else LANGS, "works": works, "facts": facts,
+                # the title of the work that hangs elsewhere, as the wing's page writes it in each language
+                for code in LANG.topic_langs(topic, LANGS):
+                    own = LANG.HERE / "wings" / f"{key}.{code}.json"
+                    if own.is_file():
+                        g = next(g for g in json.loads(own.read_text(encoding="utf-8"))["holds"]["groups"] if g["id"] == topic["from"])
+                        field[code] = (g.get("field") or {}).get("h")
+        info[p] = {"topic": topic, "langs": LANG.topic_langs(topic, LANGS) if topic else LANGS, "works": works, "facts": facts, "field": field,
                    "drawing": "drawing" in english["top"]}
     missing = [f"{p}.{lang}.json" for p in pages for lang in info[p]["langs"] if not (HERE / f"{p}.{lang}.json").is_file()]
     if missing:
@@ -1144,11 +1394,17 @@ def load_pages(pages=PAGES):
             if info[p]["drawing"] and d["top"]["drawing"].get("inside") != data[p][info[p]["langs"][0]]["top"]["drawing"].get("inside"):
                 problems.append(f"{p}.{lang}: top.drawing.inside differs from the {info[p]['langs'][0]} file's: the drawing is one")
             blocks = {b["type"] for b in d["blocks"]}
-            wants = blocks & {"chart", "works", "table"} or ("figure" in d["top"])
+            wants = blocks & {"chart", "works", "table", "periods"} or ("figure" in d["top"]) or ("tally" in d["top"])
             if wants and not works:
                 problems.append(f"{p}.{lang}: a chart, a list of works or a table needs a topic that names a group of its wing (from)")
                 continue
             if not works:
+                continue
+            if "periods" in blocks:
+                # a list of the works one by one: its entries are checked against the facts, it draws no sizes
+                problems += [f"{p}.{lang}: {x}" for x in check_periods(d, lang, works, info[p]["facts"], info[p]["field"].get(lang), d["pics"])]
+                if "tally" in d["top"]:
+                    problems += [f"{p}.{lang}: {x}" for x in check_tally(d, works, info[p]["facts"])]
                 continue
             if "works" not in blocks:
                 problems.append(f"{p}.{lang}: a page with works has a works block: its lines name every work")
@@ -1195,7 +1451,8 @@ def check_wing_facts(d, facts):
 
 def still_jobs(pages=PAGES, loaded=None):
     """Every still of every page with a chart, by language: the chart (1600 wide) and the share picture
-    (1200 by 630), each as {file, svg}; and of every page with a drawing of a wall, its share picture.
+    (1200 by 630), each as {file, svg}; of every page with a drawing of a wall, its share picture; and of every page
+    that lists its wing's works by period, its count as its share picture.
     make_pictures.py renders them, and the build checks each against its drawing."""
     data, wings, info, _ = loaded or load_pages(pages)
     colours = CHART.tokens((LANG.HERE / "css" / "tokens.css").read_text(encoding="utf-8"))
@@ -1216,9 +1473,17 @@ def still_jobs(pages=PAGES, loaded=None):
                              "svg": CHART.wall_still_svg(CHART.cm_of(size["h_m"]), CHART.cm_of(size["w_m"]), CHART.cm_of(facts["set"]["person_m"]),
                                                          words, LIB.number, lang, colours, d["top"]["drawing"].get("inside"))})
                 continue
+            unbound = lambda s: s.replace(LIB.NBSP, " ")
+            if "tally" in d["top"] and works:
+                ta = d["top"]["tally"]
+                words = {"h1": unbound(d["top"]["h1"]), "site": ORIGIN.split("://", 1)[1],
+                         "key": [(k, unbound(ta["key"][k])) for k in TALLY_KINDS if ta["key"].get(k)]}
+                rows = [(unbound(h), kinds) for h, kinds in tally_rows(d, works)]
+                jobs.append({"file": d["page"]["og_image"]["file"].replace("{lang}", code), "page": page, "lang": lang, "kind": "share",
+                             "svg": CHART.tally_still_svg(rows, words, colours)})
+                continue
             if not d["page"].get("still") or not works:
                 continue
-            unbound = lambda s: s.replace(LIB.NBSP, " ")
             lines = [unbound(x) for b in d["blocks"] if b["type"] == "works" for x in b["lines"]]
             chart = next(b for b in d["blocks"] if b["type"] == "chart")
             titles = {it["n"]: CHART.split_line(line, it, LIB.number, lang)[0].rstrip(".") for it, line in zip(works.items, lines)}
@@ -1269,7 +1534,7 @@ def build_pages(out_dir, site_src=SITE_SRC, site_built=SITE_BUILT, pages=PAGES, 
             for x, y in zip(a["blocks"], b["blocks"]):
                 if x["type"] != y["type"] or x["id"] != y["id"]:
                     problems.append(f"{page}: block {x['id']} and {y['id']} do not match")
-    for name in OWN_CSS + CHART_CSS:
+    for name in OWN_CSS + CHART_CSS + LIST_CSS:
         body = re.sub(r"/\*.*?\*/", "", (HERE / "css" / f"{name}.css").read_text(encoding="utf-8"), flags=re.S)
         if re.search(r"#[0-9a-fA-F]{3,8}\b|rgba?\(|hsla?\(", body):
             problems.append(f"css/{name}.css: a colour is written outside the site's token file")
@@ -1306,6 +1571,9 @@ def build_pages(out_dir, site_src=SITE_SRC, site_built=SITE_BUILT, pages=PAGES, 
                        *[site["css"] / f"{n}.css" for n in CSS_AFTER]),
         "css_chart": css_min(*[site["css"] / f"{n}.css" for n in CSS_BEFORE], *[HERE / "css" / f"{n}.css" for n in OWN_CSS + CHART_CSS],
                              *[site["css"] / f"{n}.css" for n in CSS_AFTER]),
+        "css_list": css_min(*[site["css"] / f"{n}.css" for n in CSS_BEFORE],
+                            *[HERE / "css" / f"{n}.css" for n in OWN_CSS + CHART_CSS + LIST_CSS],
+                            *[site["css"] / f"{n}.css" for n in CSS_AFTER]),
         # the pages' own cuts, then the site's pictures (a still the wing shows too): built, else their source folder
         "pic_folders": [PICS, site_built / STATIC / "img", LANG.HERE / "img"],
         "langs_css": css_min(site["css"] / "langs.css") if (site["css"] / "langs.css").is_file() else "",
@@ -1365,7 +1633,7 @@ def facts(pages=PAGES):
             print(f"  title       {len(data['meta']['title']):3}  {data['meta']['title']}")
             print(f"  description {len(data['meta']['description']):3}  {data['meta']['description']}")
             print(f"  h1          {len(data['top']['h1']):3}  {data['top']['h1']}")
-            print(f"  answer      {len(data['top']['answer']):3}")
+            print(f"  answer      {len(answer_text(data['top']['answer'])):3}")
             for block in data["blocks"]:
                 print(f"  h2  {block['h']}")
                 for item in block.get("items", []):

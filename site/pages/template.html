@@ -48,7 +48,7 @@
         <a class="door" href="{{href.top}}" data-page="{{page.id}}" data-slot="door-answer" data-door="top"><span>{{top.door.text}}</span>{{svg.arrow}}</a>
         <p class="sp-way__note">{{top.door.note}}</p>
         <p class="sp-way__leads">{{top.door.leads}}</p>
-      </div>
+      </div>{{html.after}}
     </header>
 
     <div class="sp-grid">
@@ -266,3 +266,57 @@
     </table>
   </div>
 </section>
+<!--@ frame:tally -->
+      <figure class="plate sp-frame pt-frame" data-slot="frame">
+        <!-- The count of the list below: one mark per work, its shape the class word of its entry. It stands after the
+             door, so a phone reads the answer, the way in, then the count; a desktop sets it beside the answer. -->
+        <div class="pt-tally">
+          <ol class="pt-rows">
+{{html.rows}}
+          </ol>
+          <ul class="pt-key">
+{{html.key}}
+          </ul>
+        </div>
+        <figcaption class="label sp-frame__label">
+          <span class="label__title">{{title}}</span>
+          <span class="label__what"><span class="tag">{{tag}}</span></span>
+        </figcaption>
+      </figure>
+<!--@ tally_row -->
+            <li><a class="pt-rows__p" href="#{{id}}">{{period}}</a><span class="pt-marks" aria-hidden="true">{{html.marks}}</span><span class="pt-rows__n">{{n}}</span></li>
+<!--@ tally_key -->
+            <li><span class="pt-m pt-m--{{kind}}" aria-hidden="true"></span><span class="pt-key__t">{{text}}</span></li>
+<!--@ block:periods -->
+<section class="sp-sec pt-sec" id="{{id}}">
+  <h2>{{h}}</h2>
+  <p class="sp-intro">{{intro}}</p>
+{{html.periods}}
+<div class="pt-ways">{{html.links}}
+</div>
+</section>
+<!--@ period -->
+<section class="pt-period" id="{{id}}" aria-labelledby="{{id}}-h">
+  <h3 id="{{id}}-h">{{h}}</h3>
+  {{html.p}}
+  <ol class="pt-works">
+{{html.items}}
+  </ol>
+</section>
+<!--@ work -->
+<li class="pt-work pt-work--{{shape}}" id="{{id}}">
+  <h4 class="pt-work__title">{{title}}</h4>
+  <p class="pt-work__meta"><span class="pt-when">{{when}}</span><span class="pt-where">{{where}}</span></p>
+  {{html.figure}}
+  <div class="pt-work__text">
+    <p class="pt-who">{{html.who}}</p>
+    <p>{{shows}}</p>
+    <p>{{worth_knowing}}</p>
+  </div>
+  <p class="sp-more pt-go"><a class="more" href="{{href.go}}" data-door="item"><span>{{go}}</span>{{svg.arrow}}</a></p>{{html.more}}
+</li>
+<!--@ plate -->
+<figure class="plate pt-plate">
+  <div class="hang">{{html.picture}}</div>
+  <figcaption class="label pt-plate__label"><span class="label__what"><span class="tag">{{tag}}<span class="vh">:</span></span></span> <span class="label__src">{{html.src}}</span></figcaption>
+</figure>

@@ -1,0 +1,979 @@
+{
+ "_note": "THE WORDS of the paintings page, German. Poured from the writer's WORDS file of round 1 word for word; every title, date, holder and class word is checked by the build against the wing's facts file (the German dates by the build's rule for the wing's English ones), and every plate's source line against the plate's record in pictures.json. The two files hold the same structure. No em dash, no en dash, no semicolon.",
+ "page": {
+  "id": "vinci-paintings",
+  "wing": "vinci",
+  "topic": "paintings",
+  "stop": "picture-room",
+  "published": null,
+  "og_image": {
+   "file": "vinci-paintings-og-{lang}-1200x630.png",
+   "width": 1200,
+   "height": 630
+  }
+ },
+ "pics": {
+  "baptism-of-christ": {
+   "stem": "vinci-plate-baptism-of-christ",
+   "widths": [
+    240,
+    480
+   ],
+   "sizes": "(min-width: 960px) 224px, (min-width: 600px) 192px, 120px"
+  },
+  "annunciation": {
+   "stem": "vinci-plate-annunciation",
+   "widths": [
+    480,
+    960
+   ],
+   "sizes": "(min-width: 600px) 576px, calc(100vw - 40px)"
+  },
+  "ginevra-de-benci": {
+   "stem": "vinci-plate-ginevra-de-benci",
+   "widths": [
+    240,
+    480
+   ],
+   "sizes": "(min-width: 960px) 224px, (min-width: 600px) 192px, 120px"
+  },
+  "ginevra-de-benci-back": {
+   "stem": "vinci-plate-ginevra-de-benci-back",
+   "widths": [
+    240,
+    480
+   ],
+   "sizes": "(min-width: 960px) 224px, (min-width: 600px) 192px, 120px"
+  },
+  "madonna-of-the-carnation": {
+   "stem": "vinci-plate-madonna-of-the-carnation",
+   "widths": [
+    240,
+    480
+   ],
+   "sizes": "(min-width: 960px) 224px, (min-width: 600px) 192px, 120px"
+  },
+  "benois-madonna": {
+   "stem": "vinci-plate-benois-madonna",
+   "widths": [
+    240,
+    480
+   ],
+   "sizes": "(min-width: 960px) 224px, (min-width: 600px) 192px, 120px"
+  },
+  "saint-jerome": {
+   "stem": "vinci-plate-saint-jerome",
+   "widths": [
+    240,
+    480
+   ],
+   "sizes": "(min-width: 960px) 224px, (min-width: 600px) 192px, 120px"
+  },
+  "adoration-of-the-magi": {
+   "stem": "vinci-plate-adoration-of-the-magi",
+   "widths": [
+    240,
+    480
+   ],
+   "sizes": "(min-width: 960px) 224px, (min-width: 600px) 192px, 120px"
+  },
+  "annunciation-predella": {
+   "stem": "vinci-plate-annunciation-predella",
+   "widths": [
+    480,
+    960
+   ],
+   "sizes": "(min-width: 600px) 576px, calc(100vw - 40px)"
+  },
+  "virgin-of-the-rocks-louvre": {
+   "stem": "vinci-plate-virgin-of-the-rocks-louvre",
+   "widths": [
+    240,
+    480
+   ],
+   "sizes": "(min-width: 960px) 224px, (min-width: 600px) 192px, 120px"
+  },
+  "portrait-of-a-musician": {
+   "stem": "vinci-plate-portrait-of-a-musician",
+   "widths": [
+    240,
+    480
+   ],
+   "sizes": "(min-width: 960px) 224px, (min-width: 600px) 192px, 120px"
+  },
+  "lady-with-an-ermine": {
+   "stem": "vinci-plate-lady-with-an-ermine",
+   "widths": [
+    240,
+    480
+   ],
+   "sizes": "(min-width: 960px) 224px, (min-width: 600px) 192px, 120px"
+  },
+  "la-belle-ferronniere": {
+   "stem": "vinci-plate-la-belle-ferronniere",
+   "widths": [
+    240,
+    480
+   ],
+   "sizes": "(min-width: 960px) 224px, (min-width: 600px) 192px, 120px"
+  },
+  "madonna-litta": {
+   "stem": "vinci-plate-madonna-litta",
+   "widths": [
+    240,
+    480
+   ],
+   "sizes": "(min-width: 960px) 224px, (min-width: 600px) 192px, 120px"
+  },
+  "burlington-house-cartoon": {
+   "stem": "vinci-plate-burlington-house-cartoon",
+   "widths": [
+    240,
+    480
+   ],
+   "sizes": "(min-width: 960px) 224px, (min-width: 600px) 192px, 120px"
+  },
+  "yarnwinder-buccleuch": {
+   "stem": "vinci-plate-yarnwinder-buccleuch",
+   "widths": [
+    240,
+    480
+   ],
+   "sizes": "(min-width: 960px) 224px, (min-width: 600px) 192px, 120px"
+  },
+  "yarnwinder-lansdowne": {
+   "stem": "vinci-plate-yarnwinder-lansdowne",
+   "widths": [
+    240,
+    480
+   ],
+   "sizes": "(min-width: 960px) 224px, (min-width: 600px) 192px, 120px"
+  },
+  "anghiari-copy": {
+   "stem": "vinci-plate-anghiari-copy",
+   "widths": [
+    480,
+    960
+   ],
+   "sizes": "(min-width: 600px) 576px, calc(100vw - 40px)"
+  },
+  "mona-lisa": {
+   "stem": "vinci-plate-mona-lisa",
+   "widths": [
+    240,
+    480
+   ],
+   "sizes": "(min-width: 960px) 224px, (min-width: 600px) 192px, 120px"
+  },
+  "virgin-of-the-rocks-london": {
+   "stem": "vinci-plate-virgin-of-the-rocks-london",
+   "widths": [
+    240,
+    480
+   ],
+   "sizes": "(min-width: 960px) 224px, (min-width: 600px) 192px, 120px"
+  },
+  "virgin-and-child-with-st-anne": {
+   "stem": "vinci-plate-virgin-and-child-with-st-anne",
+   "widths": [
+    240,
+    480
+   ],
+   "sizes": "(min-width: 960px) 224px, (min-width: 600px) 192px, 120px"
+  },
+  "salvator-mundi": {
+   "stem": "vinci-plate-salvator-mundi",
+   "widths": [
+    240,
+    480
+   ],
+   "sizes": "(min-width: 960px) 224px, (min-width: 600px) 192px, 120px"
+  },
+  "saint-john-the-baptist": {
+   "stem": "vinci-plate-saint-john-the-baptist",
+   "widths": [
+    240,
+    480
+   ],
+   "sizes": "(min-width: 960px) 224px, (min-width: 600px) 192px, 120px"
+  },
+  "la-scapigliata": {
+   "stem": "vinci-plate-la-scapigliata",
+   "widths": [
+    240,
+    480
+   ],
+   "sizes": "(min-width: 960px) 224px, (min-width: 600px) 192px, 120px"
+  },
+  "bacchus": {
+   "stem": "vinci-plate-bacchus",
+   "widths": [
+    240,
+    480
+   ],
+   "sizes": "(min-width: 960px) 224px, (min-width: 600px) 192px, 120px"
+  },
+  "supper": {
+   "stem": "v-supper",
+   "widths": [
+    800,
+    1600
+   ],
+   "sizes": "(min-width: 600px) 576px, calc(100vw - 40px)"
+  }
+ },
+ "meta": {
+  "title": "Leonardo da Vincis Gemälde, Werk für Werk | Museum of Ages",
+  "description": "Leonardo da Vincis Gemälde, Werk für Werk: was jedes zeigt, wann er es malte, wo es hängt und wie sicher es ihm zugeschrieben wird. Eine Tür zu jedem.",
+  "og_title": "Leonardo da Vincis Gemälde, Werk für Werk",
+  "og_image_alt": "Leonardo da Vincis Gemälde: die 24 Werke des Flügels nach Zeit, jedes ein Zeichen dafür, wie sicher die Zuschreibung ist, 14 belegt, 4 umstritten, 4 mit Vorbehalt, 1 aus seiner Werkstatt und 1 Kopie, dazu das Abendmahl auf einer eigenen Wand. Ein Diagramm, für diese Seite gemacht."
+ },
+ "labels": {
+  "crumbs": "Du bist hier",
+  "crumb_home": "Museum",
+  "toc": "Auf dieser Seite",
+  "tag_chart": "Für diese Seite gemacht",
+  "crumb_here": "Gemälde",
+  "tag_still": "Reproduktion",
+  "class_documented": "Belegt",
+  "class_disputed": "Umstritten",
+  "class_qualified": "Zuschreibung mit Vorbehalt",
+  "class_workshop": "Werkstatt",
+  "class_copy": "Kopie",
+  "class_field": "Nicht im Bildersaal"
+ },
+ "top": {
+  "h1": "Leonardo da Vincis Gemälde",
+  "answer": [
+   "Eine feste Zahl gibt es nicht. Je nachdem, wessen Liste man liest, sind etwa 15 bis 20 erhaltene Gemälde Leonardo da Vincis eigene Arbeit: Die Eremitage spricht von wenig mehr als einem Dutzend, der Leonardo-Forscher Martin Kemp zählte 2025 etwa 16, dazu vier oder fünf, an denen er mit anderen arbeitete, und das Auktionshaus, das den Salvator Mundi verkaufte, sprach von weniger als 20. In unserem Leonardo-Flügel hängen 24 Werke, jedes mit einem Wort dazu, wie sicher die Zuschreibung ist: 14 belegt, 4 umstritten, 4 mit Vorbehalt, 1 aus seiner Werkstatt und 1 Kopie, dazu ",
+   {
+    "text": "das Abendmahl",
+    "at": "last-supper"
+   },
+   " auf einer eigenen Wand. ",
+   {
+    "text": "Die Mona Lisa",
+    "at": "mona-lisa"
+   },
+   ", ",
+   {
+    "text": "die Dame mit dem Hermelin",
+    "at": "lady-with-an-ermine"
+   },
+   ", ",
+   {
+    "text": "beide Fassungen der Felsgrottenmadonna",
+    "at": "virgin-of-the-rocks-louvre"
+   },
+   " und ",
+   {
+    "text": "der Salvator Mundi",
+    "at": "salvator-mundi"
+   },
+   " sind alle da, jedes Werk mit einer Tür zu seinem Platz im Rundgang."
+  ],
+  "tally": {
+   "title": "Die Werke, nach Zeit",
+   "tag": "tag_chart",
+   "key": {
+    "documented": "14 belegt",
+    "disputed": "4 umstritten",
+    "qualified": "4 mit Vorbehalt",
+    "workshop": "1 aus seiner Werkstatt",
+    "copy": "1 Kopie",
+    "field": "das Abendmahl auf einer eigenen Wand"
+   }
+  },
+  "door": {
+   "text": "Die Gemälde im Flügel ansehen",
+   "note": "Eintritt frei, kein Konto.",
+   "leads": "Die Tür öffnet den Bildersaal des Leonardo-Flügels, wo sie alle hängen. Weiter unten hat jedes Werk eine Tür für sich."
+  }
+ },
+ "blocks": [
+  {
+   "type": "text",
+   "id": "how-sure",
+   "nav": "Wie sicher",
+   "h": "Wie sicher sie von ihm sind",
+   "paras": [
+    "Belegt heißt: Seine Hand in dem Werk ist überliefert, und das Museum, das es bewahrt, sieht es genauso. Umstritten heißt: Die Forschung ist sich uneins, oder das Haus selbst nennt einen anderen Maler. Mit Vorbehalt heißt: Er steckt darin, aber ein Teil ist nicht von ihm, oder es ist kein fertiges Gemälde. Werkstatt heißt: Ein Schüler malte es neben ihm nach seinem Entwurf, und Kopie heißt: ein späteres Werk von fremder Hand nach etwas von ihm, das verloren ist. Die Zahl wandert, weil er Werke unvollendet ließ, weil seine Schüler nach seinen Entwürfen so gut malten, dass ihre Bilder als seine durchgingen, weil alte Kopien als Originale verkauft wurden und weil neue Funde selten sind: Seit die Madonna Benois um 1900 auftauchte, ist genau ein Gemälde zur Liste hinzugekommen, der Salvator Mundi."
+   ]
+  },
+  {
+   "type": "periods",
+   "id": "works",
+   "nav": "Die Werke",
+   "h": "Die Werke, nach Zeit",
+   "intro": "Die Werke sind nach den Zeiten des Flügels gruppiert, nach dem Jahr, in dem jedes begonnen wurde. Zwei Zeiten des Flügels haben keinen Eintrag (Rom, 1513 bis 1516, und Nach 1519): Kein Werk hier wurde in ihnen begonnen, und der Satz zu Amboise sagt, was er durch Rom mit sich trug.",
+   "go": "{work} im Flügel ansehen",
+   "periods": [
+    {
+     "id": "florence-1452",
+     "h": "Vinci und Florenz, 1452 bis 1481",
+     "items": [
+      {
+       "id": "baptism-of-christ",
+       "work": "baptism-of-christ",
+       "title": "Taufe Christi",
+       "when": "Etwa 1470 bis 1475",
+       "where": "Gallerie degli Uffizi, Florenz",
+       "who": "Belegt, mit einer Einschränkung: Das ist Verrocchios Bild. Die Uffizien nennen ihn zuerst und Leonardo an zweiter Stelle, und Vasari hat den Anteil des jungen Schülers festgehalten, den Engel links. Heutige Untersuchungen geben ihm mehr: den Fluss dahinter, das Leuchten des Lichts und Christus selbst.",
+       "shows": "Johannes gießt Christus im Jordan Wasser über den Kopf, links knien zwei Engel. Der linke Engel, von hinten gesehen und mit dem Kopf über die Schulter zurückgewandt, ist Leonardos.",
+       "worth_knowing": "Vasari schrieb, der Schüler habe seinen Engel so gut gemalt, dass es den Meister traf, und wahrscheinlich hat noch ein dritter, älterer Maler mitgearbeitet: Die Hände Gottes und die Taube oben stammen von einer schwächeren Hand.",
+       "door": "die Taufe Christi",
+       "shape": "tall",
+       "pic": "baptism-of-christ",
+       "alt": "Taufe Christi: Johannes der Täufer gießt Wasser über Christus, der in einem Fluss steht, links knien zwei Engel, oben eine Taube. Eine Reproduktion.",
+       "src": [
+        "Gemeinfreies Werk. Reproduktion aus ",
+        {
+         "text": "Wikimedia Commons",
+         "href": "https://commons.wikimedia.org/wiki/File:Verrocchio_and_Leonardo,_Baptism_of_Christ,_c1470-75,_Uffizi.jpg"
+        },
+        ". Das Museum kennzeichnet die Reproduktion, nicht das Gemälde. Kulturelle Nutzung ohne Gewinnabsicht. {museum:it108}"
+       ]
+      },
+      {
+       "id": "annunciation",
+       "work": "annunciation",
+       "title": "Die Verkündigung",
+       "when": "Etwa 1472",
+       "where": "Gallerie degli Uffizi, Florenz",
+       "who": "Belegt. Ein frühes Werk, gemalt, als er noch in Verrocchios Werkstatt war. Wer es bestellte und wo es zuerst hing, weiß niemand: Die Uffizien übernahmen es 1867 aus einer Kirche vor den Toren von Florenz.",
+       "shows": "Gabriel kniet im Gras eines ummauerten Gartens und reicht Maria eine Lilie. Sie sitzt vor einem Palast an einem Lesepult, das Buch aufgeschlagen.",
+       "worth_knowing": "Die Flügel des Engels sind denen eines echten Greifvogels nachgebildet, und Marias rechter Arm wirkt zu lang: Die Uffizien vermuten, er habe das Bild für einen Betrachter rechts davon angelegt, dort, wo man vor einem Seitenaltar steht.",
+       "door": "die Verkündigung",
+       "shape": "wide",
+       "pic": "annunciation",
+       "alt": "Die Verkündigung: eine breite Tafel, links der Engel Gabriel, kniend im Garten mit einer Lilie, rechts Maria am Lesepult vor einer Palastwand. Eine Reproduktion.",
+       "src": [
+        "Aufnahme vom September 2023. Gemeinfreies Werk. Reproduktion aus ",
+        {
+         "text": "Wikimedia Commons",
+         "href": "https://commons.wikimedia.org/wiki/File:Annunciation_(Leonardo_c._1472%E2%80%931476).jpg"
+        },
+        ". Das Museum kennzeichnet die Reproduktion, nicht das Gemälde. Kulturelle Nutzung ohne Gewinnabsicht. {museum:it108}"
+       ]
+      },
+      {
+       "id": "ginevra-de-benci",
+       "work": "ginevra-de-benci",
+       "title": "Bildnis der Ginevra de' Benci",
+       "when": "Etwa 1474 bis 1478",
+       "where": "National Gallery of Art, Washington",
+       "who": "Belegt. Wer sie ist, steht fest. Wer das Bildnis bestellte, nicht: Es kann ihre Heirat mit 16 festhalten, oder der venezianische Gesandte Bernardo Bembo, der sie verehrte, gab es in Auftrag. Lorbeer und Palme waren sein Emblem, und unter ihrem Wahlspruch liegt in Infrarotaufnahmen sein eigener, die Rückseite war also wahrscheinlich seine Idee.",
+       "shows": "Die Vorderseite: Ginevra de' Benci, eine junge Frau aus einer Florentiner Bankiersfamilie, vor einem Wacholderbusch, dahinter ein ferner, dunstiger Ausblick. Wacholder heißt auf Italienisch ginepro, ein Wortspiel mit ihrem Namen, und stand für Keuschheit. Die Rückseite derselben Tafel, die im Flügel neben der Vorderseite hängt: Lorbeer- und Palmzweige, zu einem Kranz um einen Wacholderzweig gelegt, und ein Band mit einem lateinischen Spruch, Schönheit schmückt die Tugend.",
+       "worth_knowing": "Unten wurde ein Streifen der Tafel abgeschnitten, wahrscheinlich wegen eines Schadens, und mit ihm gingen ihre Hände verloren: Eine Zeichnung Leonardos lässt ahnen, wie sie aussahen.",
+       "door": "Ginevra de' Benci",
+       "shape": "pair",
+       "pic": "ginevra-de-benci",
+       "alt": "Bildnis der Ginevra de' Benci: Eine junge Frau blickt uns an, hinter ihr ein dunkler Wacholderbusch, rechts ein dunstiger Ausblick. Eine Reproduktion.",
+       "pic_back": "ginevra-de-benci-back",
+       "alt_back": "Die Rückseite der Tafel: ein Kranz aus Lorbeer und Palme um Wacholder, mit einem Schriftband. Eine Reproduktion.",
+       "src": [
+        "Gemeinfreie Reproduktionen aus Wikimedia Commons, ",
+        {
+         "text": "Vorderseite",
+         "href": "https://commons.wikimedia.org/wiki/File:Ginevra_de%27_Benci_-_National_Gallery_of_Art.jpg"
+        },
+        " und ",
+        {
+         "text": "Rückseite",
+         "href": "https://commons.wikimedia.org/wiki/File:Leonardo_da_Vinci_-_Wreath_of_Laurel,_Palm,_and_Juniper_with_a_Scroll_inscribed_Virtutem_Forum_Decorat_(reverse)_-_Google_Art_Project.jpg"
+        },
+        ". Creative Commons Zero (CC0). Courtesy National Gallery of Art, Washington, die Rückseite über Google Arts & Culture."
+       ]
+      },
+      {
+       "id": "madonna-of-the-carnation",
+       "work": "madonna-of-the-carnation",
+       "title": "Madonna mit der Nelke",
+       "when": "Etwa 1475",
+       "where": "Bayerische Staatsgemäldesammlungen, Alte Pinakothek, München",
+       "who": "Belegt. Eine seiner frühesten Tafeln, entstanden in seinen Jahren bei Verrocchio, und ein früher Versuch mit Ölfarbe.",
+       "shows": "Maria hält in einem Raum mit Fenstern dem Kind, das vor ihr auf einem Kissen sitzt, eine rote Nelke hin. Durch die Fenster sieht man Berge.",
+       "worth_knowing": "Es sind die ersten blauen, fernen Berge, die wir von seiner Hand kennen, und die Tafel gehörte einst Giulio de' Medici, dem späteren Papst Clemens VII.",
+       "door": "die Madonna mit der Nelke",
+       "shape": "tall",
+       "pic": "madonna-of-the-carnation",
+       "alt": "Madonna mit der Nelke: Maria sitzt, vor ihr das Kind auf einem Kissen, sie hält eine rote Nelke hin, dahinter Fenster mit Bergen. Eine Reproduktion.",
+       "src": [
+        "Gemeinfreies Werk. Reproduktion aus ",
+        {
+         "text": "Wikimedia Commons",
+         "href": "https://commons.wikimedia.org/wiki/File:LEONARDO-DA-VINCI_-_MADONNA-MIT-DER-NELKE-7779_917154_BSTGS.jpg"
+        },
+        ". Das Museum kennzeichnet die Reproduktion, nicht das Gemälde. Kulturelle Nutzung ohne Gewinnabsicht."
+       ]
+      },
+      {
+       "id": "annunciation-predella",
+       "work": "annunciation-predella",
+       "title": "Die Verkündigung, Predella",
+       "when": "Etwa 1475 bis 1478",
+       "where": "Musée du Louvre, Paris",
+       "who": "Umstritten, und hier steht das Haus selbst auf der anderen Seite: Der Louvre schreibt die Tafel Lorenzo di Credi zu, der neben Leonardo bei Verrocchio lernte, Leonardo führt er als frühere Zuschreibung. Die Forschung teilt sich heute dreifach, Lorenzo, Leonardo oder beide zusammen, und der Louvre sieht in den großen Augen, den schlichteren Gesichtern und den flacheren Falten eher Lorenzo.",
+       "shows": "Eine kleine, breite Tafel: Der Engel kniet vor Maria in einem Garten. Sie gehört zur Predella, dem Streifen kleiner Szenen unter einem Altarbild, und zwar zu dem Altar, den Verrocchios Werkstatt für den Dom von Pistoia malte, wo die Haupttafel noch steht.",
+       "worth_knowing": "In den Louvre kam sie 1863 aus der Sammlung des Marchese Campana in Rom, die nach seinem Bankrott verkauft wurde, und der Louvre führte sie noch im selben Jahr unter Lorenzo di Credi.",
+       "door": "die Predella",
+       "shape": "wide",
+       "pic": "annunciation-predella",
+       "alt": "Die Verkündigung, Predella: eine lange, niedrige Tafel, links der kniende Engel, rechts Maria, in einem Garten. Eine Reproduktion.",
+       "src": [
+        "Gemeinfreies Werk. Reproduktion aus ",
+        {
+         "text": "Wikimedia Commons",
+         "href": "https://commons.wikimedia.org/wiki/File:L%27Annonciation,_by_Leonardo_da_Vinci,_from_C2RMF_retouched.jpg"
+        },
+        ". Das Museum kennzeichnet die Reproduktion, nicht das Gemälde. Kulturelle Nutzung ohne Gewinnabsicht."
+       ]
+      },
+      {
+       "id": "benois-madonna",
+       "work": "benois-madonna",
+       "title": "Madonna Benois",
+       "when": "Etwa 1478 bis 1480",
+       "where": "Staatliche Eremitage, Sankt Petersburg. Die eigene Seite der Eremitage führt das Bild als nicht in der Dauerausstellung, also vor einem Besuch nachsehen.",
+       "who": "Belegt. Die Farbe wurde von der Holztafel auf Leinwand übertragen.",
+       "shows": "Maria ist hier sehr jung, Kleid und Haar nach Florentiner Art ihrer Zeit. Sie hält dem Kind eine kleine Blume hin, es greift danach und hält ihre Hand fest. Die Blütenblätter bilden ein Kreuz, ein Zeichen für das, was kommt.",
+       "worth_knowing": "Ihr Gesicht stammt von einem lebenden Modell, sagt die Eremitage, kein Ideal, und nimmt man die goldenen Heiligenscheine weg, bleibt eine Mutter, die mit ihrem Sohn spielt.",
+       "door": "die Madonna Benois",
+       "shape": "tall",
+       "pic": "benois-madonna",
+       "alt": "Madonna Benois: Eine junge Maria sitzt und hält dem Kind auf ihrem Schoß eine kleine Blume hin, es greift danach, in einem dunklen Raum mit einem kleinen Fenster. Eine Reproduktion.",
+       "src": [
+        "Gemeinfreies Werk. Reproduktion aus ",
+        {
+         "text": "Wikimedia Commons",
+         "href": "https://commons.wikimedia.org/wiki/File:Leonardo_Da_Vinci_-_Madonna_Benois.jpg"
+        },
+        ". Das Museum kennzeichnet die Reproduktion, nicht das Gemälde. Kulturelle Nutzung ohne Gewinnabsicht."
+       ]
+      },
+      {
+       "id": "saint-jerome",
+       "work": "saint-jerome",
+       "title": "Der heilige Hieronymus",
+       "when": "Etwa 1480 bis 1490",
+       "where": "Pinacoteca Vaticana, Vatikanstadt",
+       "who": "Belegt. Der Vatikan sagt, die Zuschreibung sei nie angezweifelt worden. Er datiert die Tafel auf etwa 1482, weil sie der Anbetung der Könige im Stil so nahe steht, während manche Historiker sie näher an die 1490er Jahre rücken.",
+       "shows": "Der Gelehrte und Kirchenvater als Büßer in der Wüste, mager, bartlos und in Lumpen, kniend, einen Stein in der Faust, erhoben, um sich an die Brust zu schlagen, vor ihm ein liegender Löwe. Über die braune Untermalung kam das Bild auf dem größten Teil der Tafel nie hinaus, ein roter Fleck steht für seinen Kardinalshut.",
+       "worth_knowing": "Irgendwann wurde die Tafel in fünf Stücke zerteilt. Napoleons Onkel, Kardinal Joseph Fesch, spürte sie auf und ließ sie wieder zusammensetzen, und Papst Pius IX. kaufte das Bild 1856.",
+       "door": "den heiligen Hieronymus",
+       "shape": "tall",
+       "pic": "saint-jerome",
+       "alt": "Der heilige Hieronymus: Ein hagerer alter Mann kniet in Lumpen zwischen Felsen, einen Stein in der rechten Hand, vor ihm liegt ein Löwe, das meiste braune Untermalung. Eine Reproduktion.",
+       "src": [
+        "Gemeinfreies Werk. Reproduktion aus ",
+        {
+         "text": "Wikimedia Commons",
+         "href": "https://commons.wikimedia.org/wiki/File:Leonardo_da_Vinci_%E2%80%94_Jerome.jpg"
+        },
+        ", ",
+        {
+         "text": "CC0",
+         "href": "https://creativecommons.org/publicdomain/zero/1.0/deed.en"
+        },
+        ". Das Museum kennzeichnet die Reproduktion, nicht das Gemälde. Kulturelle Nutzung ohne Gewinnabsicht."
+       ]
+      },
+      {
+       "id": "adoration-of-the-magi",
+       "work": "adoration-of-the-magi",
+       "title": "Anbetung der Könige aus dem Morgenland",
+       "when": "Etwa 1481 bis 1482",
+       "where": "Gallerie degli Uffizi, Florenz",
+       "who": "Belegt. Die Mönche von San Donato a Scopeto, ein Augustinerkloster direkt vor Florenz, bestellten das Bild im Juli 1481 für ihren Hochaltar und gaben ihm 30 Monate. Er ging unvollendet damit nach Mailand, und am Ende malte Filippino Lippi das Altarbild für sie.",
+       "shows": "Die drei Könige knien mit ihren Gaben vor Maria und dem Kind, eine Menge im Bogen um sie, dahinter Ruinen, ein halb gebauter Bau mit Treppen und Reiter im Kampf. Das meiste kam über die Zeichnung nicht hinaus: Manche Figuren sind nur Umrisse, andere fast durchmodelliert.",
+       "worth_knowing": "Die Restaurierung von 2012 bis 2017 zeigte, dass er die Komposition direkt auf der Tafel entwickelte, ohne vorher auf Papier zu zeichnen, selbst für ihn selten, und sie nahm einen getönten Firnis ab, der das Bild fast einfarbig hatte wirken lassen.",
+       "door": "die Anbetung der Könige",
+       "shape": "square",
+       "pic": "adoration-of-the-magi",
+       "alt": "Anbetung der Könige aus dem Morgenland: Maria und das Kind in der Mitte einer Menge knieender und stehender Figuren, das meiste braune Untermalung, dahinter Ruinen, eine Treppe und Pferde. Eine Reproduktion.",
+       "src": [
+        "Einfarbiges Druckfaksimile von 1901, Tafel 10. Es hält Zustand und Tonwerte jenes Jahres fest, nicht die heutige Farbe. Gemeinfrei, über ",
+        {
+         "text": "Wikimedia Commons",
+         "href": "https://commons.wikimedia.org/wiki/File:Da_Vinci_-_masters_of_art_1901_-_Plate_10.png"
+        },
+        "."
+       ]
+      }
+     ],
+     "p": "Malen lernte er in Verrocchios Werkstatt in Florenz, und von dort stammen seine ersten Werke: ein gemeinsam gemaltes Bild, eine Verkündigung, ein Bildnis, zwei kleine Madonnen, eine Predella, die der Louvre heute einem Mitschüler zuschreibt, und zwei Tafeln, die er nie vollendete."
+    },
+    {
+     "id": "milan-1482",
+     "h": "Mailand, 1482 bis 1499",
+     "items": [
+      {
+       "id": "virgin-of-the-rocks-louvre",
+       "work": "virgin-of-the-rocks-louvre",
+       "title": "Felsgrottenmadonna, Louvre-Fassung",
+       "when": "Etwa 1483 bis 1494",
+       "where": "Musée du Louvre, Paris",
+       "who": "Belegt. Der Vertrag trägt das Datum 25. April 1483: Leonardo und zwei Mailänder Maler, die Brüder de Predis, sollten das Altarbild der Kapelle einer Bruderschaft in Mailand malen und vergolden. Es folgte ein langer Streit ums Geld. Dies ist die frühere der beiden Fassungen, und wie sie nach Frankreich kam, weiß niemand: Die erste Nachricht von ihr stammt aus Fontainebleau, 1625.",
+       "shows": "Maria kniet in einer Felsgrotte, eine Hand über dem Jesuskind, mit der anderen zieht sie den kleinen Johannes den Täufer näher. Ein Engel stützt Jesus und zeigt mit dem Finger auf Johannes, und Jesus segnet ihn. Dahinter Berge und Wasser.",
+       "worth_knowing": "Infrarotaufnahmen von 2009 zeigen, dass der Engel zuerst ohne die zeigende Hand gemalt war, wie auf der Londoner Tafel, und dass Leonardo die Geste erst gegen Ende hinzufügte.",
+       "door": "die Felsgrottenmadonna aus dem Louvre",
+       "shape": "tall",
+       "pic": "virgin-of-the-rocks-louvre",
+       "alt": "Felsgrottenmadonna, Louvre-Fassung: Maria kniet in einer dunklen Grotte zwischen zwei Kindern, rechts ein Engel, der quer durchs Bild zeigt, zwischen den Felsen Berge und Wasser. Eine Reproduktion.",
+       "src": [
+        "Gemeinfreie Reproduktion aus ",
+        {
+         "text": "Wikimedia Commons",
+         "href": "https://commons.wikimedia.org/wiki/File:Leonardo_Da_Vinci_-_Vergine_delle_Rocce_(Louvre).jpg"
+        },
+        "."
+       ]
+      },
+      {
+       "id": "portrait-of-a-musician",
+       "work": "portrait-of-a-musician",
+       "title": "Bildnis eines Musikers",
+       "when": "Etwa 1485",
+       "where": "Veneranda Biblioteca Ambrosiana, Mailand",
+       "who": "Umstritten, allerdings meist von älteren Stimmen. Die Ambrosiana schreibt das Bild ohne Zweifel Leonardo zu, und die meisten Forscher sehen das heute genauso. Der Zweifel begann 1890, als stattdessen Ambrogio de Predis vorgeschlagen wurde, und manche meinen noch heute, Leonardo habe den Kopf gemalt und eine andere Hand die Hand mit den Noten hinzugefügt.",
+       "shows": "Ein junger Mann bis zu den Schultern, leicht von uns abgewandt und nach rechts blickend, ein gefaltetes Notenblatt in der Hand. Wer er ist, weiß niemand: Er galt als der Herzog von Mailand, bis eine Reinigung 1905 die Hand und das Blatt freilegte, und seither wurden unter anderem der Domkapellmeister Franchino Gaffurio und Leonardos Musikerfreund Atalante Migliorotti vorgeschlagen.",
+       "worth_knowing": "Seine Pupillen sind nicht gleich groß, die linke eine Spur kleiner, als wäre genau der Moment getroffen, in dem sich das Auge bei schwindendem Licht weitet, eine Sache, die Leonardo in seinen Notizen beschrieb.",
+       "door": "den Musiker",
+       "shape": "tall",
+       "pic": "portrait-of-a-musician",
+       "alt": "Bildnis eines Musikers: Ein junger Mann, Kopf und Schultern, nach rechts gewandt, hält ein gefaltetes Notenblatt hoch. Eine Reproduktion.",
+       "src": [
+        "Gemeinfreies Werk. Reproduktion aus ",
+        {
+         "text": "Wikimedia Commons",
+         "href": "https://commons.wikimedia.org/wiki/File:Leonardo_da_Vinci_-_Portrait_of_a_Musician_-_Pinacoteca_Ambrosiana.jpg"
+        },
+        ". Das Museum kennzeichnet die Reproduktion, nicht das Gemälde. Kulturelle Nutzung ohne Gewinnabsicht. {museum:it108}"
+       ]
+      },
+      {
+       "id": "lady-with-an-ermine",
+       "work": "lady-with-an-ermine",
+       "title": "Dame mit dem Hermelin",
+       "when": "Etwa 1489 bis 1491",
+       "where": "Muzeum Narodowe w Krakowie, Muzeum Książąt Czartoryskich, Krakau",
+       "who": "Belegt. Bestellt von Ludovico Sforza, sagt das Museum, als die Dargestellte etwa 16 war, und das einzige Gemälde Leonardos in Polen.",
+       "shows": "Cecilia Gallerani, eine junge Dame am Mailänder Hof und Geliebte des Herzogs, im Dreiviertelprofil, an uns vorbeiblickend, ein weißes Hermelin im Arm. Ihr Name wurde um 1900 vorgeschlagen und gilt heute als gesichert, denn ein Hofdichter schrieb ein Gedicht auf Leonardos Bildnis von ihr. Das Hermelin steht für den Herzog, der nach einem Orden von 1488 der Weiße Hermelin genannt wurde, und so liest das Museum das Bild als Doppelbildnis.",
+       "worth_knowing": "In eine obere Ecke schrieb jemand um 1800, das Bild zeige La Belle Ferronnière, den Namen des nächsten Bildnisses auf dieser Seite, und so tauschten die beiden eine Zeit lang die Namen.",
+       "door": "die Dame mit dem Hermelin",
+       "shape": "tall",
+       "pic": "lady-with-an-ermine",
+       "alt": "Dame mit dem Hermelin: Eine junge Frau in rotem Kleid und blauem Umhang, nach links gewandt, hält ein weißes Hermelin an die Brust, vor dunklem Grund. Eine Reproduktion.",
+       "src": [
+        "Sammlungsbild des Nationalmuseums in Krakau. Gemeinfrei, über ",
+        {
+         "text": "Wikimedia Commons",
+         "href": "https://commons.wikimedia.org/wiki/File:Leonardo_da_Vinci_(1452-1519)_-_Lady_with_an_Ermine_%E2%80%93_Portrait_of_Cecilia_Gallerani_(ca._1473%E2%80%931536)_-_MNK_XII-209_-_National_Museum_Krak%C3%B3w.jpg"
+        },
+        "."
+       ]
+      },
+      {
+       "id": "la-belle-ferronniere",
+       "work": "la-belle-ferronniere",
+       "title": "Bildnis einer Dame, genannt La Belle Ferronnière",
+       "when": "Etwa 1490 bis 1497",
+       "where": "Musée du Louvre, Paris. Der Louvre führte das Bild als nicht ausgestellt, als wir nachsahen.",
+       "who": "Belegt. Wer sie ist, bleibt offen: Der älteste Vorschlag ist Lucrezia Crivelli, ab etwa 1495 Geliebte des Herzogs, genannt in einem lateinischen Gedicht, das in Leonardos Codex Atlanticus abgeschrieben wurde, andere schlagen Beatrice d'Este vor, die Frau des Herzogs, oder Isabella von Aragon.",
+       "shows": "Eine junge Frau an einer Steinbrüstung, der Körper in die eine, der Kopf in die andere Richtung gewandt, in einem roten Kleid nach Mailänder Mode mit Ärmeln, die mit Bändern geschnürt sind, über der Stirn eine dünne Schnur mit einem roten Stein. Ihr Blick geht knapp an dir vorbei.",
+       "worth_knowing": "Der Name ist ein Irrtum, und der Titel des Louvre sagt es selbst: Er gehörte einem anderen Bildnis der französischen Königssammlung, ein Druck nach diesem Bild trug ihn aus Versehen, und ein Inventar von 1784 hielt sie sogar für Anne Boleyn.",
+       "door": "La Belle Ferronnière",
+       "shape": "tall",
+       "pic": "la-belle-ferronniere",
+       "alt": "La Belle Ferronnière: Eine junge Frau in rotem Kleid, bis zur Hüfte hinter einer Steinbrüstung, über der Stirn ein dünnes Band mit einem Schmuckstein, vor dunklem Grund. Eine Reproduktion.",
+       "src": [
+        "Einfarbiges Druckfaksimile von 1901, Tafel 7. Es hält Zustand und Tonwerte jenes Jahres fest, nicht die heutige Farbe. Gemeinfrei, über ",
+        {
+         "text": "Wikimedia Commons",
+         "href": "https://commons.wikimedia.org/wiki/File:Da_Vinci_-_masters_of_art_1901_-_Plate_7.png"
+        },
+        "."
+       ]
+      },
+      {
+       "id": "madonna-litta",
+       "work": "madonna-litta",
+       "title": "Madonna Litta",
+       "when": "Etwa 1490",
+       "where": "Staatliche Eremitage, Sankt Petersburg",
+       "who": "Umstritten. Die Eremitage führt das Bild ohne Einschränkung als Leonardos und datiert es in die Mitte der 1490er Jahre. Viele Forscher meinen, sein Schüler Giovanni Antonio Boltraffio habe es nach Leonardos Entwurf gemalt, und Martin Kemp hat gesagt, fast alle Fachleute sähen es so.",
+       "shows": "Maria stillt das Kind in einem dunklen Raum mit zwei gleichen Fenstern, jedes mit Blick auf weite Berge. Der Louvre besitzt eine Studie dazu, sagt die Eremitage, und der Name kommt vom Mailänder Herzog Antonio Litta: Von seiner Familie kaufte die Eremitage das Bild 1865.",
+       "worth_knowing": "Als die Londoner National Gallery es 2011 auslieh, hing das Gemälde als Leonardo, während eine Gewandstudie dazu in derselben Ausstellung als Boltraffio beschriftet war.",
+       "door": "die Madonna Litta",
+       "shape": "tall",
+       "pic": "madonna-litta",
+       "alt": "Madonna Litta: Maria stillt das Kind in einem dunklen Raum, links und rechts je ein Fenster mit Blick auf Berge. Eine Reproduktion.",
+       "src": [
+        "Gemeinfreie Reproduktion aus ",
+        {
+         "text": "Wikimedia Commons",
+         "href": "https://commons.wikimedia.org/wiki/File:Leonardo_da_Vinci_-_The_Madonna_and_Child_(The_Litta_Madonna).jpg"
+        },
+        "."
+       ]
+      },
+      {
+       "id": "virgin-of-the-rocks-london",
+       "work": "virgin-of-the-rocks-london",
+       "title": "Felsgrottenmadonna, Londoner Fassung",
+       "when": "Etwa 1491 bis 1508",
+       "where": "National Gallery, London",
+       "who": "Zuschreibung mit Vorbehalt. Die National Gallery schreibt das Bild Leonardo allein zu. Der Kurator des Louvre sieht in Teilen die Arbeit von Schülern, den kleinen Johannes nahe bei Boltraffio, und hält es für weitgehend ein Werk der Werkstatt unter Leonardos Aufsicht, mit seiner eigenen Hand an einigen Stellen.",
+       "shows": "Dieselbe Szene wie auf der Pariser Tafel, mit Unterschieden: Der Engel zeigt nicht mehr, die Figuren tragen dünne goldene Heiligenscheine, und der kleine Johannes hält ein Rohrkreuz. Gemalt wurde es für die Mailänder Kapelle aus dem Vertrag von 1483, und die Galerie fand drei Arbeitsphasen: begonnen in den frühen 1490er Jahren, Christi Kopf einige Jahre später ins Profil gedreht und der blaue Himmel erst hinzugefügt, nachdem Leonardo 1506 zurückgerufen worden war.",
+       "worth_knowing": "Die Pflanzen in der Grotte sind keine echten Arten: Die Galerie sagt, sie seien aus mehreren verschiedenen Pflanzen zusammengesetzt.",
+       "door": "die Londoner Felsgrottenmadonna",
+       "shape": "tall",
+       "pic": "virgin-of-the-rocks-london",
+       "alt": "Felsgrottenmadonna, Londoner Fassung: Maria kniet in einer Grotte zwischen den beiden Kindern, rechts ein Engel, alle mit dünnen goldenen Heiligenscheinen, der kleine Johannes mit einem Rohrkreuz. Eine Reproduktion.",
+       "src": [
+        "Gemeinfreies Werk. Reproduktion aus ",
+        {
+         "text": "Wikimedia Commons",
+         "href": "https://commons.wikimedia.org/wiki/File:Leonardo_da_vinci,_vergine_delle_rocce,_1491-92_poi_1506-08,_01.jpg"
+        },
+        ". Das Museum kennzeichnet die Reproduktion, nicht das Gemälde. Kulturelle Nutzung ohne Gewinnabsicht. Der Rahmen ist mit abgebildet. Foto: Sailko, ",
+        {
+         "text": "CC BY 3.0",
+         "href": "https://creativecommons.org/licenses/by/3.0/"
+        },
+        "."
+       ]
+      }
+     ],
+     "p": "Am Hof von Ludovico Sforza malte er ein Altarbild, das in zwei Fassungen existiert, drei Bildnisse, eine stillende Madonna, die nach Ansicht vieler ein Schüler nach seinem Entwurf malte, und an die Wand eines Speisesaals das Abendmahl, mit dem diese Seite endet."
+    },
+    {
+     "id": "florence-1500",
+     "h": "Venedig, Florenz und die Romagna, 1500 bis 1506",
+     "items": [
+      {
+       "id": "yarnwinder-buccleuch",
+       "work": "yarnwinder-buccleuch",
+       "title": "Madonna mit der Spindel, Buccleuch-Fassung",
+       "when": "Etwa 1501",
+       "where": "Sammlung Buccleuch, Leihgabe an die National Galleries of Scotland, Edinburgh",
+       "who": "Zuschreibung mit Vorbehalt. Von diesem Bild gibt es zwei Fassungen, und hier hängen sie nebeneinander. Untersuchungen fanden unter der Farbe beider dieselben Überarbeitungen, entstanden, als sie Seite an Seite in der Werkstatt wuchsen, und jede hat Partien von hoher Qualität. Leonardo scheint also einen Auftrag genutzt zu haben, um ein zweites Bild für den Verkauf zu malen, und manche Forscher fragen, wie viel an jedem von ihm ist.",
+       "shows": "Maria sitzt zwischen Felsen und greift nach dem Kind, das sich quer über ihre Knie dreht und nach einer Spindel langt, dem kreuzförmigen Gerät zum Garnwickeln, hier ein Zeichen für das Kreuz, das kommt. Im April 1501 schrieb ein Mönch an Isabella d'Este, Leonardo arbeite an einer kleinen Madonna mit Spindel für Florimond Robertet, den Sekretär des französischen Königs.",
+       "worth_knowing": "Im August 2003 nahmen zwei Männer, die als Touristen gekommen waren, das Bild in Drumlanrig Castle in Schottland von der Wand, und vier Jahre später fand es die Polizei in einer Anwaltskanzlei in Glasgow.",
+       "door": "die Buccleuch-Madonna mit der Spindel",
+       "shape": "tall",
+       "pic": "yarnwinder-buccleuch",
+       "alt": "Madonna mit der Spindel, Buccleuch-Fassung: Maria sitzt zwischen Felsen, das Kind quer auf ihrem Schoß hält eine kreuzförmige Spindel. Eine Reproduktion.",
+       "src": [
+        "Gemeinfreie Reproduktion aus ",
+        {
+         "text": "Wikimedia Commons",
+         "href": "https://commons.wikimedia.org/wiki/File:Leonardo_da_Vinci_-_Madonna_of_the_Yarnwinder,_Buccleuch_version.jpg"
+        },
+        "."
+       ]
+      },
+      {
+       "id": "yarnwinder-lansdowne",
+       "work": "yarnwinder-lansdowne",
+       "title": "Madonna mit der Spindel, Lansdowne-Fassung",
+       "when": "Etwa 1501",
+       "where": "Kenneth C. Griffin Collection, Leihgabe an das Metropolitan Museum of Art, New York",
+       "who": "Zuschreibung mit Vorbehalt. Auf dem Schild im Met steht Leonardo da Vinci and Studio, Leonardo und Werkstatt. Die beiden Fassungen wuchsen Seite an Seite, und nach Martin Kemp ging die eine an einen französischen Beamten und die andere, so meint er, an den König selbst.",
+       "shows": "Dieselbe Szene wie auf der Buccleuch-Tafel: das Kind mit der Spindel, Maria, die nach ihm greift, Felsen dahinter. Seit dem Frühjahr 2026 hängt das Bild als Dauerleihgabe in den Sälen für europäische Malerei des Met, ohne jede Ankündigung.",
+       "worth_knowing": "Im Mai 2025 schrieb Martin Kemp noch, der Verbleib des Bildes sei nicht mehr festzustellen, und ein Jahr später hing es an einer Wand des Met.",
+       "door": "die Lansdowne-Madonna mit der Spindel",
+       "shape": "tall",
+       "pic": "yarnwinder-lansdowne",
+       "alt": "Madonna mit der Spindel, Lansdowne-Fassung: Maria sitzt, das Kind quer auf ihrem Schoß hält eine kreuzförmige Spindel, dahinter Felsen. Eine Reproduktion.",
+       "src": [
+        "Aufgenommen in der Louvre-Ausstellung von 2019 bis 2020. Gemeinfreies Werk. Reproduktion aus ",
+        {
+         "text": "Wikimedia Commons",
+         "href": "https://commons.wikimedia.org/wiki/File:Madonne_aux_fuseaux_(Lansdowne).jpg"
+        },
+        ". Das Museum kennzeichnet die Reproduktion, nicht das Gemälde. Kulturelle Nutzung ohne Gewinnabsicht."
+       ]
+      },
+      {
+       "id": "mona-lisa",
+       "work": "mona-lisa",
+       "title": "Mona Lisa",
+       "when": "Etwa 1503 bis 1519",
+       "where": "Musée du Louvre, Paris",
+       "who": "Belegt. Begonnen in Florenz um 1503, wahrscheinlich für ihren Mann, den Seidenhändler Francesco del Giocondo, doch Leonardo gab das Bild nie ab: Es reiste mit ihm nach Mailand, nach Rom und nach Frankreich, er arbeitete unterwegs weiter daran und behielt es bis zu seinem Tod. Der französische König kaufte es sehr wahrscheinlich 1518.",
+       "shows": "Lisa Gherardini, die Frau von Francesco del Giocondo, sitzt auf einem Stuhl und wendet sich uns zu, eine Hand über die andere gelegt, hinter ihr eine niedrige Brüstung und dahinter Berge, Wasser, ein gewundener Weg und eine Brücke. Andere Namen für die Dargestellte sind für den Louvre keine Frage: Es ist Lisa.",
+       "worth_knowing": "2005 tauchte am Rand eines Buchs in der Universitätsbibliothek Heidelberg eine Notiz auf: Ein Florentiner Kanzleischreiber hielt im Oktober 1503 fest, Leonardo arbeite am Kopf der Lisa del Giocondo, und damit standen die Dargestellte und das Datum fest.",
+       "door": "die Mona Lisa",
+       "shape": "tall",
+       "pic": "mona-lisa",
+       "alt": "Mona Lisa: Eine Frau sitzt mit gefalteten Händen, uns zugewandt, ein dünner Schleier über dem Haar, hinter ihr Berge und gewundenes Wasser. Eine Reproduktion.",
+       "src": [
+        "Reproduktion: C2RMF (Centre de recherche et de restauration des musées de France), eine hochauflösende Aufnahme, seit 2011 auf Wikimedia Commons, dort beschnitten und mit angepassten Tonwerten. Gemeinfreies Werk. Reproduktion aus ",
+        {
+         "text": "Wikimedia Commons",
+         "href": "https://commons.wikimedia.org/wiki/File:Mona_Lisa,_by_Leonardo_da_Vinci,_from_C2RMF_retouched.jpg"
+        },
+        ". Das Museum kennzeichnet die Reproduktion, nicht das Gemälde. Kulturelle Nutzung ohne Gewinnabsicht."
+       ]
+      },
+      {
+       "id": "virgin-and-child-with-st-anne",
+       "work": "virgin-and-child-with-st-anne",
+       "title": "Die Jungfrau mit dem Kind und der heiligen Anna",
+       "when": "Etwa 1503 bis 1519",
+       "where": "Musée du Louvre, Paris",
+       "who": "Belegt. Ein Auftraggeber ist nicht überliefert. Der Louvre meint, er habe das Bild ohne Auftrag begonnen, in Florenz zwischen etwa 1500 und 1503, als Probe seines Könnens, und er behielt es bis zu seinem Tod. Der französische König erwarb es sehr wahrscheinlich 1518.",
+       "shows": "Anna sitzt, auf ihrem Schoß ihre erwachsene Tochter Maria, und Maria beugt sich vor, um das Kind zu halten, das ein Lamm gepackt hat, das Zeichen seines Opfers. Hinter ihnen Berge und Seen, vorn geschichteter Fels und Wasser.",
+       "worth_knowing": "Er starb, ohne es vollendet zu haben: Die Restaurierung von 2010 bis 2012 fand seine letzten Pinselstriche auf Annas Gewand, und Marias Gesicht bekam nie seine letzte, feinste Modellierung.",
+       "door": "die heilige Anna",
+       "shape": "tall",
+       "pic": "virgin-and-child-with-st-anne",
+       "alt": "Die Jungfrau mit dem Kind und der heiligen Anna: Zwei Frauen, die eine auf dem Schoß der anderen, beugen sich zu einem Kind, das ein Lamm hält, dahinter blasse Berge. Eine Reproduktion.",
+       "src": [
+        "Gemeinfreies Werk. Reproduktion aus ",
+        {
+         "text": "Wikimedia Commons",
+         "href": "https://commons.wikimedia.org/wiki/File:Leonardo_da_vinci,_sant%27anna,_madonna_col_bambino_e_agnellino,_1503-1519_ca._01.jpg"
+        },
+        ". Das Museum kennzeichnet die Reproduktion, nicht das Gemälde. Kulturelle Nutzung ohne Gewinnabsicht. Foto: Francesco Bini, ",
+        {
+         "text": "CC BY-SA 4.0",
+         "href": "https://creativecommons.org/licenses/by-sa/4.0/"
+        },
+        "."
+       ]
+      },
+      {
+       "id": "anghiari-copy",
+       "work": "anghiari-copy",
+       "title": "Der Kampf um die Standarte, nach der Schlacht von Anghiari",
+       "when": "16. Jahrhundert, überarbeitet im frühen 17. Jahrhundert",
+       "where": "Musée du Louvre, Paris, Graphische Sammlung. Nur nach Anmeldung zu sehen, im Studiensaal.",
+       "who": "Kopie. Eine Zeichnung, kein Gemälde, und von fremder Hand: Als Künstler nennt der Louvre Rubens. Ein unbekannter Italiener kopierte im 16. Jahrhundert Leonardos riesigen Karton, andere überarbeiteten das Blatt im frühen 17. Jahrhundert, und Rubens, dem es gehörte, ging mit Feder und Wasserfarbe kräftig darüber und vergrößerte es mit angesetzten Streifen. Rubens hat Leonardos Original nie gesehen.",
+       "shows": "Reiter, ineinander verkeilt im Kampf um eine Standarte, Pferde und Männer zu einem Knäuel verschlungen: die Mitte der Schlacht von Anghiari, des Wandbilds, das Leonardo 1504 bis 1505 für den Ratssaal des Palazzo della Signoria in Florenz begann, des heutigen Palazzo Vecchio. Was er an die Wand gebracht hatte, wurde um 1560 zerstört.",
+       "worth_knowing": "Auf der Rückseite der Anna-Tafel im Louvre fanden Infrarotaufnahmen drei Skizzen, darunter einen Pferdekopf, der dem rechten Pferd dieser Schlacht sehr nahe kommt.",
+       "door": "die Kopie nach der Schlacht von Anghiari",
+       "shape": "wide",
+       "pic": "anghiari-copy",
+       "alt": "Der Kampf um die Standarte: ein Gewirr aus Pferden und Reitern, die um eine Fahne ringen, in Feder, Tusche und Lavierung mit weißen Höhungen. Eine Reproduktion.",
+       "src": [
+        "Ein Bibliotheksdia, auf die Zeichnung beschnitten, KU Leuven Libraries, über ",
+        {
+         "text": "Europeana",
+         "href": "https://www.europeana.eu/en/item/2024903/photography_ProvidedCHO_KU_Leuven_9991113610101488"
+        },
+        ". Gemeinfrei."
+       ]
+      }
+     ],
+     "p": "Zurück in Florenz begann er die Mona Lisa und die heilige Anna, die er beide bis an sein Lebensende behielt, malte für den Sekretär des französischen Königs eine kleine Madonna in zwei Fassungen und fing an einer Wand des Ratssaals eine Schlacht an, die verloren ist und hier durch eine Kopie vertreten wird."
+    },
+    {
+     "id": "milan-1506",
+     "h": "Wieder Mailand, 1506 bis 1513",
+     "items": [
+      {
+       "id": "burlington-house-cartoon",
+       "work": "burlington-house-cartoon",
+       "title": "Die Jungfrau mit dem Kind, der heiligen Anna und Johannes dem Täufer",
+       "when": "Etwa 1506 bis 1508",
+       "where": "National Gallery, London",
+       "who": "Belegt. Kein Gemälde, sondern eine Zeichnung, Kohle und weiße Kreide auf Papier, und die einzige große Zeichnung von seiner Hand, die erhalten ist. In London heißt sie Burlington House Cartoon, nach dem Haus der Royal Academy, in dem sie hing. Ihr Datum ist umstritten: Die Galerie sagt etwa 1506 bis 1508, der Kurator des Louvre etwa 1500, als seine erste Idee zur heiligen Anna.",
+       "shows": "Maria sitzt auf dem Schoß ihrer Mutter Anna und hält das Kind, das sich dem kleinen Johannes zuwendet, während Anna nach oben zeigt. Es ist eine Zeichnung in voller Größe für ein Gemälde, das nie danach gemalt wurde, denn das Blatt wurde nie durchgestochen, um den Entwurf zu übertragen, und so vermutet die Galerie, es sei gemacht worden, um es einem Auftraggeber zu zeigen.",
+       "worth_knowing": "Papier gab es zu seiner Zeit nicht in Bögen dieser Größe, also klebte er viele zusammen, und aus der Nähe sieht man die Nähte.",
+       "door": "den Londoner Karton",
+       "shape": "tall",
+       "pic": "burlington-house-cartoon",
+       "alt": "Die Jungfrau mit dem Kind, der heiligen Anna und Johannes dem Täufer: eine große Kohlezeichnung von zwei eng beieinander sitzenden Frauen, die eine hält ein Kind, das sich einem zweiten Kind zuwendet, manches schattiert, manches nur in Umrissen. Eine Reproduktion.",
+       "src": [
+        "Fotogravüre von 1898 aus Eugène Müntz, Leonardo da Vinci, Bd. II, auf die gedruckte Tafel beschnitten. Gemeinfreies Werk. Reproduktion aus dem ",
+        {
+         "text": "Internet Archive",
+         "href": "https://archive.org/details/gri_33125000944922/page/n160/mode/1up"
+        },
+        ". Das Museum kennzeichnet die Reproduktion, nicht das Gemälde. Kulturelle Nutzung ohne Gewinnabsicht."
+       ]
+      },
+      {
+       "id": "la-scapigliata",
+       "work": "la-scapigliata",
+       "title": "Scapigliata",
+       "when": "Etwa 1506 bis 1508",
+       "where": "Galleria Nazionale di Parma, Complesso della Pilotta, Parma",
+       "who": "Zuschreibung mit Vorbehalt. Die Galerie schreibt das Bild Leonardo zu, nennt die italienische Forschung fast einstimmig und datiert es auf etwa 1492 bis 1501, früher als der Flügel, der einem Vorschlag von etwa 1508 folgt. Der Vorbehalt des Flügels liegt an dem, was es ist: eine einfarbige Skizze in Farbe auf einer Holztafel, weder Zeichnung noch fertiges Gemälde, die der eigene Direktor der Galerie 1896 anzweifelte, weil sie aus dem Atelier eines Malers kam.",
+       "shows": "Der Kopf einer jungen Frau, die nach unten blickt, das Haar offen und zerzaust. Scapigliata ist Italienisch für zerzaust. Wofür es gemacht wurde, ist unbekannt: eine Studie für ein Bild der Leda, für die heilige Anna, für die Londoner Felsgrottenmadonna oder etwas um seiner selbst willen.",
+       "worth_knowing": "Die Galerie kaufte es 1839 von den Erben eines Malers, und das Verzeichnis, das mitkam, nannte es schlicht einen Madonnenkopf in Helldunkel.",
+       "door": "die Scapigliata",
+       "shape": "tall",
+       "pic": "la-scapigliata",
+       "alt": "Scapigliata: der Kopf einer jungen Frau, die nach unten blickt, das Haar offen und wirr, in braunem Monochrom auf einer kleinen Tafel. Eine Reproduktion.",
+       "src": [
+        "Gemeinfreies Werk. Reproduktion aus ",
+        {
+         "text": "Wikimedia Commons",
+         "href": "https://commons.wikimedia.org/wiki/File:Head_of_a_Young_Woman,_called_%22Scapiliata%22.jpg"
+        },
+        ". Das Museum kennzeichnet die Reproduktion, nicht das Gemälde. Kulturelle Nutzung ohne Gewinnabsicht. {museum:it108}"
+       ]
+      },
+      {
+       "id": "saint-john-the-baptist",
+       "work": "saint-john-the-baptist",
+       "title": "Johannes der Täufer",
+       "when": "Etwa 1508 bis 1519",
+       "where": "Musée du Louvre, Paris",
+       "who": "Belegt. Ein Auftraggeber ist nicht bekannt. Er behielt das Bild bis zuletzt, und nachdem der französische König es sehr wahrscheinlich 1518 gekauft hatte, ging es auf Wanderschaft: Ein französischer Herzog schenkte es Karl I. von England, nach dessen Hinrichtung wurde es verkauft, und Ludwig XIV. holte es 1662 nach Frankreich zurück.",
+       "shows": "Ein junger Johannes der Täufer tritt aus dem Dunkel, lächelnd, die rechte Hand nach oben zeigend, ein dünnes Rohrkreuz in der linken, ein geflecktes Tierfell über dem Körper.",
+       "worth_knowing": "Das Fell ist gefleckt wie das eines Leoparden, nicht das Kamelhaar der Bibel, was der Louvre für seine Zeit einzigartig nennt, und Aufnahmen zeigen, dass er den Umriss des Körpers mindestens dreimal verschob.",
+       "door": "Johannes den Täufer",
+       "shape": "tall",
+       "pic": "saint-john-the-baptist",
+       "alt": "Johannes der Täufer: Ein lächelnder junger Mann tritt aus dunklem Grund hervor, die rechte Hand erhoben, ein Finger zeigt nach oben, in der linken ein dünnes Kreuz. Eine Reproduktion.",
+       "src": [
+        "Gemeinfreies Werk. Reproduktion aus ",
+        {
+         "text": "Wikimedia Commons",
+         "href": "https://commons.wikimedia.org/wiki/File:Leonardo_da_vinci,_san_giovanni_battista_indicante_verso_l%27alto,_1508-1519_ca._(louvre)_02.jpg"
+        },
+        ". Das Museum kennzeichnet die Reproduktion, nicht das Gemälde. Kulturelle Nutzung ohne Gewinnabsicht. Foto: Francesco Bini, ",
+        {
+         "text": "CC BY-SA 4.0",
+         "href": "https://creativecommons.org/licenses/by-sa/4.0/"
+        },
+        "."
+       ]
+      },
+      {
+       "id": "salvator-mundi",
+       "work": "salvator-mundi",
+       "title": "Salvator Mundi",
+       "when": "Etwa 1499 bis 1510",
+       "where": "Privatsammlung, heutiger Aufenthaltsort unbestätigt",
+       "who": "Umstritten, und zwar am heftigsten von allen. Für Leonardo: Martin Kemp, die Restauratorin, die von 2005 bis 2017 daran arbeitete, die Londoner National Gallery, die es 2011 als sein Werk zeigte, und das Auktionshaus, das es verkaufte. Dagegen oder unsicher: mehrere Forscher, darunter Carmen Bambach, die das meiste seinem Schüler Boltraffio gibt, und Frank Zöllner, der ein gutes Werkstattbild sieht, an dem Leonardo wahrscheinlich mitgearbeitet hat, aber so beschädigt und so stark restauriert, dass kein sicheres Urteil möglich ist. Das Labor des Louvre untersuchte es 2018, und ein unveröffentlichtes Büchlein des Louvre stützt die Zuschreibung, doch das Bild kam nie in die Louvre-Ausstellung von 2019, und das Museum sagt, das Büchlein existiere offiziell nicht.",
+       "shows": "Christus als Erlöser der Welt, das heißt der Titel, uns zugewandt, die rechte Hand zum Segen erhoben, in der linken eine klare Kristallkugel, in Blau gekleidet mit bestickten Borten. Wer es bestellte, ist unbekannt, und wo es ist, ebenso: Seit dem Verkauf 2017, als es für den Louvre Abu Dhabi bestimmt sein sollte, war es nicht mehr öffentlich zu sehen, und ein Bericht von 2024 sagt, es liege womöglich in einem Depot in Genf.",
+       "worth_knowing": "1958 wurde es bei einer Auktion für 45 Pfund als Schulwerk verkauft, und im November 2017 bei Christie's in New York für etwa 450 Millionen Dollar, der höchste Preis, der je bei einer Auktion für ein Kunstwerk gezahlt wurde.",
+       "door": "den Salvator Mundi",
+       "shape": "tall",
+       "pic": "salvator-mundi",
+       "alt": "Salvator Mundi: Christus blickt uns an, in blauem Gewand, die rechte Hand zum Segen erhoben, in der linken eine klare Kristallkugel. Eine Reproduktion.",
+       "src": [
+        "Für Christie’s 2017 fotografierter restaurierter Zustand. Gemeinfreies Werk. Reproduktion aus ",
+        {
+         "text": "Wikimedia Commons",
+         "href": "https://commons.wikimedia.org/wiki/File:Leonardo_da_Vinci_or_Boltraffio_(attrib)_Salvator_Mundi_circa_1500.jpg"
+        },
+        ". Das Museum kennzeichnet die Reproduktion, nicht das Gemälde. Kulturelle Nutzung ohne Gewinnabsicht."
+       ]
+      }
+     ],
+     "p": "Wieder in Mailand vollendete er die Londoner Felsgrottenmadonna, zeichnete den großen Karton, der heute in London ist, malte den Kopf eines Mädchens mit offenem Haar und begann den lächelnden Johannes, und auch der Salvator Mundi, dessen Datum so offen ist wie sein Maler, steht hier."
+    },
+    {
+     "id": "amboise-1516",
+     "h": "Amboise, 1516 bis 1519",
+     "items": [
+      {
+       "id": "bacchus",
+       "work": "bacchus",
+       "title": "Bacchus, ehemals Johannes der Täufer",
+       "when": "Etwa 1517 bis 1520",
+       "where": "Musée du Louvre, Paris",
+       "who": "Werkstatt. Der Louvre führt das Bild als Werkstatt Leonardos und schreibt es Francesco Melzi zu, dem Schüler, der ab 1516 mit ihm in Frankreich lebte. Nach Vermutung des Louvre malte Melzi es dort für den französischen König, nach Leonardos kleinem Johannes.",
+       "shows": "Ein junger Mann sitzt im Freien, lächelnd und zeigend, Efeu im Haar, Trauben und einen Stab in den Händen, ein geflecktes Fell um den Körper. Gemalt wurde er als Johannes der Täufer.",
+       "worth_knowing": "1625 vermerkte ein Besucher in Fontainebleau, das Bild stimme nicht zur Andacht, und Ende jenes Jahrhunderts wurde es in den heidnischen Gott Bacchus umgewandelt: Trauben und Efeu kamen hinzu, und aus dem Kreuz des Johannes wurde ein Stab, wie die Restaurierung von 2017 bis 2019 bestätigte.",
+       "door": "den Bacchus",
+       "shape": "tall",
+       "pic": "bacchus",
+       "alt": "Bacchus: Ein junger Mann sitzt im Freien, Efeu im Haar, mit einer Hand zeigend, ein geflecktes Fell um den Körper, Trauben neben ihm. Eine Reproduktion.",
+       "src": [
+        "Gemeinfreie Reproduktion aus ",
+        {
+         "text": "Wikimedia Commons",
+         "href": "https://commons.wikimedia.org/wiki/File:Bacchus_-_Leonardo_da_Vinci_workshop_-_Louvre_INV_780.jpg"
+        },
+        "."
+       ]
+      }
+     ],
+     "p": "Nach drei Jahren in Rom ging er nach Frankreich, die Mona Lisa, die heilige Anna und den Johannes noch bei sich, und das eine Bild aus diesen Jahren im Flügel stammt aus seiner Werkstatt, nicht von ihm."
+    },
+    {
+     "id": "own-wall",
+     "h": "Auf einer eigenen Wand",
+     "items": [
+      {
+       "id": "last-supper",
+       "work": "field",
+       "title": "Das Abendmahl",
+       "when": "Etwa 1494 bis 1498",
+       "where": "Museo del Cenacolo Vinciano, Santa Maria delle Grazie, Mailand",
+       "who": "Nicht im Bildersaal. Ein Wandbild, noch an der Wand, auf die es gemalt wurde, im Speisesaal eines Dominikanerklosters, und der Flügel zeigt eine Reproduktion davon an einer Wand im Hof, so groß wie das Original.",
+       "shows": "Christus in der Mitte und die Apostel um ihn an einem langen Tisch, gemalt für Ludovico Sforza, den Herzog von Mailand, in Tempera auf trockenem Putz und nicht als Fresko.",
+       "worth_knowing": "Weil die Farbe auf der Wand lag statt in ihr, begann sie nach etwa zwanzig Jahren abzublättern, und der Rest der Geschichte, die Tür dort, wo Christi Füße waren, die Bombe von 1943 und die zwanzigjährige Restaurierung, steht auf der eigenen Seite des Bildes.",
+       "door": "das Abendmahl",
+       "shape": "wide",
+       "pic": "supper",
+       "alt": "Das Abendmahl: Christus in der Mitte von dreizehn Figuren hinter einem langen Tisch, in einem gemalten Saal, als Reproduktion an einer Wand im Hof des Flügels. Eine Reproduktion.",
+       "src": [
+        "Foto: Paris Orlando, 2019, gemeinfrei (PD-Art), über ",
+        {
+         "text": "Wikimedia Commons",
+         "href": "https://commons.wikimedia.org/wiki/File:Last_Supper_by_Leonardo_da_Vinci.jpg"
+        },
+        ". {museum:it108}"
+       ],
+       "links": [
+        {
+         "text": "Das Abendmahl hat eine eigene Seite: warum es nach zwanzig Jahren abzublättern begann und wie man es in Mailand sieht.",
+         "page": "supper"
+        }
+       ]
+      }
+     ]
+    }
+   ],
+   "links": [
+    {
+     "text": "Jede Größe, vom kleinsten Kopf bis zum Abendmahl, steht auf der Größenseite, im selben Maßstab gezeichnet.",
+     "page": "sizes"
+    },
+    {
+     "text": "Die Gemälde auf der Seite zu Leonardo da Vinci",
+     "wing": "paintings"
+    }
+   ]
+  },
+  {
+   "type": "text",
+   "id": "where",
+   "nav": "Wo sie hängen",
+   "h": "Wo man sie sehen kann",
+   "paras": [
+    "Der Louvre in Paris hat die meisten: fünf seiner Gemälde, die Felsgrottenmadonna, La Belle Ferronnière, die Mona Lisa, den Johannes und die heilige Anna, dazu drei verwandte Werke, die Predella, den Bacchus und die Anghiari-Zeichnung. Florenz hat drei in einem Saal der Uffizien, London zwei in der National Gallery, Sankt Petersburg zwei in der Eremitage, und je eines hängt in Mailand, Washington, München, im Vatikan, in Krakau, Edinburgh, New York und Parma. Das Abendmahl ist in Mailand an seiner Wand, nur mit Buchung. Drei sind schwer zu sehen: Der Louvre führte La Belle Ferronnière als nicht ausgestellt, als wir nachsahen, die Anghiari-Zeichnung wird nur nach Anmeldung gezeigt, und die Seite der Eremitage sagt, die Madonna Benois sei nicht in der Dauerausstellung. Der Salvator Mundi war seit 2017 nicht mehr öffentlich zu sehen."
+   ]
+  },
+  {
+   "type": "sources",
+   "id": "sources",
+   "nav": "Quellen",
+   "h": "Quellen",
+   "intro": "Titel, Daten, Häuser und Zuschreibungen folgen den eigenen Seiten und Verzeichnissen der Häuser, gelesen im Oktober 2026: Uffizien, National Gallery of Art in Washington, Alte Pinakothek, Eremitage, Vatikanische Museen, Louvre, Ambrosiana, Nationalmuseum Krakau, National Gallery in London, Pilotta in Parma und Cenacolo Vinciano. Für die Zahl und die Streitfragen: die veröffentlichten Ansichten der Forscher Martin Kemp und Frank Zöllner und die in der Recherche genannten Presseberichte. Wo die Ansicht eines Hauses vom Wort des Flügels abweicht, sagt es der Eintrag.",
+   "notes": [],
+   "contact": "Stimmt ein Datum, ein Name oder ein Satz nicht, schreib uns, und wir bessern es aus.",
+   "contact_link": "Zum Impressum",
+   "what_link": "Was dieses Museum ist"
+  },
+  {
+   "type": "close",
+   "id": "enter",
+   "nav": "",
+   "h": "Die Gemälde im Flügel ansehen",
+   "p": "Diese Tür führt in den Bildersaal des Leonardo-Flügels, wo sie alle als Reproduktionen hängen, annähernd in Originalgröße. Von dort geht der Rundgang weiter zur Maschinenhalle, zum Lesetisch und zu seinem letzten Haus.",
+   "door": {
+    "text": "Ins Museum",
+    "note": "Eintritt frei, kein Konto."
+   }
+  }
+ ]
+}

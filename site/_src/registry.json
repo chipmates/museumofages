@@ -177,6 +177,26 @@
       },
       {
         "slug": {
+          "en": "paintings",
+          "de": "gemaelde"
+        },
+        "name": {
+          "en": "Leonardo da Vinci's paintings",
+          "de": "Leonardo da Vincis Gemälde"
+        },
+        "line": {
+          "en": "Work by work: what each shows, when he painted it, where it hangs and how sure scholars are that it is his.",
+          "de": "Werk für Werk: was jedes zeigt, wann er es malte, wo es hängt und wie sicher es ihm zugeschrieben wird."
+        },
+        "langs": [
+          "en",
+          "de"
+        ],
+        "count": "paintings",
+        "from": "paintings"
+      },
+      {
+        "slug": {
           "en": "sizes",
           "de": "groessen"
         },

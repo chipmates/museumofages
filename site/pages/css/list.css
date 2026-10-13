@@ -1,0 +1,96 @@
+/* A page that lists its wing's works one by one, by period: set inline after chart.css, on those pages only.
+   Each entry takes its shape from its work: an upright panel stands beside its label, a wide one runs across.
+   Colours: only the site's roles. The mark stays a line, never a fill. */
+
+/* ---------- The count on the first screen ---------- */
+.pt-tally{padding-top:4px}
+.pt-rows{border-top:1px solid var(--hair-strong)}
+.pt-rows li{display:grid;grid-template-columns:minmax(0,1fr) auto 1.75rem;align-items:center;column-gap:14px;min-height:44px;
+  padding:0;border-bottom:1px solid var(--hair);font-family:var(--sans);font-size:.875rem;line-height:1.35;color:var(--ink-soft)}
+.pt-marks{display:flex;flex-wrap:wrap;justify-content:flex-end;gap:5px}
+.pt-rows__n{text-align:right;color:var(--ink-quiet)}
+/* A mark is a small upright frame: its fill or its line says the class, never its colour alone. */
+.pt-m{display:inline-block;flex:none;width:12px;height:16px;border:1.5px solid var(--ink-soft)}
+.pt-m--documented{background:var(--ink-soft)}
+.pt-m--qualified{background:linear-gradient(to top,var(--ink-soft) 50%,transparent 50%)}
+.pt-m--workshop{border-radius:50%;width:14px;height:14px}
+.pt-m--copy{border-style:dashed;border-color:var(--ink-quiet)}
+.pt-m--field{width:30px;background:var(--ink-soft)}
+.pt-key{display:flex;flex-wrap:wrap;column-gap:18px;row-gap:6px;margin-top:14px;font-family:var(--sans);font-size:.8125rem;line-height:1.4;color:var(--ink-soft)}
+.pt-key li{display:flex;align-items:center;gap:8px}
+.pt-key__t{display:inline-block}
+.pt-key__t::first-letter{text-transform:uppercase}
+.pt-frame .sp-frame__label{margin-top:16px}
+/* Each period's row leads to its part of the list: a quiet underline, a whole row's height for a thumb. */
+.pt-rows__p{display:flex;align-items:center;align-self:stretch;color:var(--ink-soft);text-decoration:underline;
+  text-decoration-color:var(--hair-strong);text-underline-offset:3px}
+.pt-rows__p:hover{color:var(--ink);text-decoration-color:var(--mark)}
+@media (max-width:959px){.pt-frame{margin-top:12px}}
+
+/* ---------- The works, by period ---------- */
+.pt-period{margin-top:44px}
+/* A period opens with a short chalk rule over its heading: the list's one landmark between its entries. */
+.pt-period>h3{position:relative;padding-top:18px;font-size:1.5rem;line-height:1.2}
+.pt-period>h3::before{content:"";position:absolute;top:0;left:0;width:48px;border-top:2px solid var(--mark)}
+.pt-period__p{margin-top:10px;color:var(--ink-body);max-width:38rem}
+.pt-works{margin-top:18px}
+
+/* One work: its title and its date and holder, its plate with the plate's own label, the three sentences, its door.
+   On a phone an upright plate stands at the left of its label; a wide one, and a work's two faces, run across. */
+.pt-work{display:grid;grid-template-columns:minmax(0,1fr);padding:22px 0 18px;border-top:1px solid var(--hair)}
+.pt-work__title{font-size:1.3125rem;line-height:1.25}
+.pt-work__meta{margin-top:6px;font-family:var(--sans);font-size:.875rem;line-height:1.45;color:var(--ink-soft)}
+.pt-when,.pt-where{display:block}
+.pt-when{color:var(--ink)}
+.pt-plate{margin-top:14px;display:grid;grid-template-columns:7.5rem minmax(0,1fr);column-gap:16px;align-items:start}
+.pt-plate .hang{--pool-up:20px;--pool-side:10%;--pool-down:-40%}
+.pt-plate .hang>picture{display:block}
+.pt-plate__label{margin:0;padding:0;max-width:none;font-size:.75rem;line-height:1.5}
+.pt-plate__label::before{content:none}
+.pt-plate .label__what{display:block}
+.pt-plate .label__src{display:block;margin-top:4px;color:var(--ink-soft);overflow-wrap:anywhere}
+.pt-plate .label__src .nw{overflow-wrap:normal}
+.pt-work--wide .pt-plate,.pt-work--pair .pt-plate{grid-template-columns:minmax(0,1fr);row-gap:2px}
+.pt-work--wide .pt-plate .hang{max-width:36rem}
+.pt-work--pair .hang{display:flex;gap:12px;align-items:flex-start;width:max-content;max-width:100%}
+.pt-work--pair .hang>picture{width:7.5rem}
+.pt-work__text{margin-top:14px}
+.pt-work__text p{color:var(--ink-body);max-width:38rem}
+.pt-work__text p+p{margin-top:8px}
+/* The class word as the wing's label gives it, at the head of the sentence that explains it. */
+.pt-class{font-family:var(--sans);letter-spacing:.02em;color:var(--mark-ink)}
+.sp-more.pt-go{margin-top:10px}
+.pt-work .sp-more+.sp-more{margin-top:2px}
+.pt-ways{margin-top:28px}
+/* A way on that is a whole sentence runs as a sentence, its arrow after its last word. */
+.pt-ways .more,.pt-work .sp-more:not(.pt-go) .more{display:inline;padding:10px 0;line-height:1.6}
+.pt-ways .more .arrow,.pt-work .sp-more:not(.pt-go) .more .arrow{display:inline-block;margin-left:8px;vertical-align:-2px}
+.pt-ways .sp-more,.pt-work .sp-more:not(.pt-go){max-width:36rem}
+.pt-ways .sp-more+.sp-more{margin-top:4px}
+
+@media (min-width:600px){
+  /* The plate hangs at the left of its entry, the title, the words and the door beside it. */
+  .pt-work:not(.pt-work--wide):not(.pt-work--pair){grid-template-columns:12rem minmax(0,1fr);column-gap:24px;grid-template-rows:auto auto 1fr auto auto;
+    grid-template-areas:"pic title" "pic meta" "pic text" "pic go" "pic more"}
+  .pt-work__title{grid-area:title}
+  .pt-work__meta{grid-area:meta}
+  .pt-work>.pt-plate{grid-area:pic;display:block;margin-top:4px}
+  .pt-plate__label{margin-top:10px}
+  .pt-work__text{grid-area:text}
+  .pt-work>.pt-go{grid-area:go}
+  .pt-work>.sp-more:not(.pt-go){grid-area:more}
+  /* A wide work and a work's two faces run across the entry, the words under them. */
+  .pt-work--wide,.pt-work--pair{grid-template-columns:minmax(0,1fr);grid-template-rows:none;
+    grid-template-areas:"title" "meta" "pic" "text" "go" "more"}
+  .pt-work--pair .hang>picture{width:12rem}
+  .pt-work--wide .pt-plate__label,.pt-work--pair .pt-plate__label{max-width:36rem}
+}
+@media (min-width:960px){
+  .pt-tally{padding-top:10px}
+  .pt-work{padding:28px 0 24px}
+  .pt-work:not(.pt-work--wide):not(.pt-work--pair){grid-template-columns:14rem minmax(0,1fr);column-gap:32px}
+  .pt-work__title{font-size:1.4375rem}
+  .pt-work--pair .hang>picture{width:14rem}
+  .pt-period{margin-top:56px}
+  .pt-period>h3{font-size:1.6875rem}
+}

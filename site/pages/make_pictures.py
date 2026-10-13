@@ -5,6 +5,7 @@ stills of a page's chart (8-bit palette PNG).
     python3 pages/make_pictures.py [name ...]      all pictures, or only the named ones (a chart's still by its file)
     python3 pages/make_pictures.py --list          the names
     python3 pages/make_pictures.py --charts        only the charts' stills, made anew where their drawing changed
+    python3 pages/make_pictures.py --plates        only the plates, from the museum's asset store (MOA_ASSET_STORE)
 
 What is cut, and from which frame, stands in pictures.json: this file names no picture and no wing. A chart's stills
 are drawn by the pages' build (build.py, still_jobs) from the same facts and words as the page's own chart; this file
@@ -16,7 +17,11 @@ settings as the site's own pictures. A file that exists is kept: delete it to ma
 made again whenever its drawing changed. The charts' text is set in the site's two faces: MOA_FONT_TTF names a folder
 with them as TrueType files (cardo-400.ttf and marcellus-400.ttf, the site's woff2 cuts unpacked), which ImageMagick
 reads through a font map written into pages/_work/fonts/.
+A plate (pictures.json, plates) is cut from the file the wing hangs, found in the museum's asset store (MOA_ASSET_STORE
+names it; it is read, never written): only when the store's record of it still names that file, hash, tier, source,
+licence and Italian line, and no other record supersedes it or was chosen over it.
 """
+import hashlib
 import importlib.util
 import json
 import os
@@ -29,6 +34,59 @@ OUT = HERE / "pics" / "img"
 WORK = HERE / "_work"
 KINDS = (("avif", ["-quality", "58", "-define", "heic:speed=2"]), ("webp", ["-quality", "80", "-define", "webp:method=6"]))
 FACES = {"Cardo": "cardo-400.ttf", "Marcellus": "marcellus-400.ttf"}
+
+
+def plate_problems(plate, records, store):
+    """What keeps a plate from being cut: its record in the store's manifest differs from pictures.json, or another
+    record replaced it. records is the manifest's list. Returns the problems."""
+    wing, _, rel = plate["file"].partition("/")
+    rec = next((r for r in records if r.get("id") == plate["record"]), None)
+    if rec is None:
+        return [f"{plate['name']}: the store has no record {plate['record']}"]
+    https = lambda url: "https://" + url[7:] if url and url.startswith("http://") else url
+    problems = []
+    for key, want, have in (("path", rel, rec.get("path")), ("sha256", plate["sha256"], rec.get("sha256")),
+                            ("tier", plate["tier"], rec.get("tier")), ("source", plate["source"], rec.get("source_url")),
+                            ("licence_url", plate["licence_url"], https(rec.get("licence_url"))),
+                            ("it108", plate["it108"], "art. 108" in (rec.get("honesty_en") or ""))):
+        if want != have:
+            problems.append(f"{plate['name']}: {key} is {want!r} here and {have!r} in the store's record")
+    for other in records:
+        if plate["record"] in (other.get("supersedes") or []) or plate["record"] in (other.get("chosen_over") or []):
+            problems.append(f"{plate['name']}: {other['id']} replaces {plate['record']} in the store")
+    path = Path(store) / plate["file"]
+    if not path.is_file():
+        problems.append(f"{plate['name']}: {path} is missing")
+    elif hashlib.sha256(path.read_bytes()).hexdigest() != plate["sha256"]:
+        problems.append(f"{plate['name']}: {path} does not agree with its hash")
+    return problems
+
+
+def plates(jobs, only):
+    store = os.environ.get("MOA_ASSET_STORE")
+    if not store or not Path(store).is_dir():
+        raise SystemExit("make_pictures: set MOA_ASSET_STORE to the museum's asset store (it is not part of the repository)")
+    manifests, problems = {}, []
+    for plate in jobs:
+        if only and plate["name"] not in only:
+            continue
+        wing = plate["file"].split("/", 1)[0]
+        if wing not in manifests:
+            manifests[wing] = json.loads((Path(store) / wing / "manifest.json").read_text(encoding="utf-8"))
+        found = plate_problems(plate, manifests[wing], store)
+        problems += found
+        if found:
+            continue
+        OUT.mkdir(parents=True, exist_ok=True)
+        for width in plate["widths"]:
+            base = ["magick", str(Path(store) / plate["file"]), "-colorspace", "sRGB", "-filter", "Lanczos", "-resize", f"{width}x", "-strip"]
+            for ext, extra in KINDS:
+                out = OUT / f"{plate['name']}-{width}.{ext}"
+                if not out.exists():
+                    run(base + extra + [str(out)])
+                    made(out)
+    if problems:
+        raise SystemExit("\n".join(problems))
 
 
 def run(args, env=None):
@@ -89,10 +147,13 @@ def charts(only):
 def main():
     jobs = json.loads((HERE / "pictures.json").read_text(encoding="utf-8"))
     if "--list" in sys.argv:
-        print("\n".join(job["name"] for job in jobs["pictures"] + jobs["share"]))
+        print("\n".join(job["name"] for job in jobs["pictures"] + jobs["share"] + jobs.get("plates", [])))
         print("\n".join(job["file"] for job in pages_build().still_jobs()))
         return
     only = [a for a in sys.argv[1:] if not a.startswith("-")]
+    if "--plates" in sys.argv or (only and all(a in {p["name"] for p in jobs.get("plates", [])} for a in only)):
+        plates(jobs.get("plates", []), only)
+        return
     if "--charts" in sys.argv or (only and all(a.endswith(".png") for a in only)):
         charts([a for a in only if a.endswith(".png")])
         return

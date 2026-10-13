@@ -1287,6 +1287,618 @@
    "sha256": "6b7b8e0bc53f2795ff3a15fbdb27cd3c5b91f24531c6d3358d11e478e8556533"
   },
   {
+   "path": "pages/pics/img/vinci-paintings-og-de-1200x630.png",
+   "url": "/static/img/vinci-paintings-og-de-1200x630.png",
+   "bytes": 23509,
+   "sha256": "5364584fd1a8bde15b0694c384edbb3de5cffc0ce43738546665d6ada438b908"
+  },
+  {
+   "path": "pages/pics/img/vinci-paintings-og-en-1200x630.png",
+   "url": "/static/img/vinci-paintings-og-en-1200x630.png",
+   "bytes": 21466,
+   "sha256": "4c4963ac054f446614dfefb6a720bf9c62e1bfab0fc014a975ed00690021fa7c"
+  },
+  {
+   "path": "pages/pics/img/vinci-plate-adoration-of-the-magi-240.avif",
+   "url": "/static/img/vinci-plate-adoration-of-the-magi-240.avif",
+   "bytes": 9616,
+   "sha256": "e720e7449ddff33ee402ce83a4bad3fb51fdfbe035634e8806df40eac93d3dfa"
+  },
+  {
+   "path": "pages/pics/img/vinci-plate-adoration-of-the-magi-240.webp",
+   "url": "/static/img/vinci-plate-adoration-of-the-magi-240.webp",
+   "bytes": 14440,
+   "sha256": "96eb75f4b541636ee9f93d5c9e2d7a3164b140fde4abbc21e8fa27f6a6bc7a48"
+  },
+  {
+   "path": "pages/pics/img/vinci-plate-adoration-of-the-magi-480.avif",
+   "url": "/static/img/vinci-plate-adoration-of-the-magi-480.avif",
+   "bytes": 33512,
+   "sha256": "591dcfd7b0a6efdb36d0b40a803a88818d6f6368fae76954068a7c6e2eda6d5b"
+  },
+  {
+   "path": "pages/pics/img/vinci-plate-adoration-of-the-magi-480.webp",
+   "url": "/static/img/vinci-plate-adoration-of-the-magi-480.webp",
+   "bytes": 53144,
+   "sha256": "1ab1e0974e1c69c16b3bb7de0a6b9f7f4e45f21a27ac955ff4ec1510c2af87d5"
+  },
+  {
+   "path": "pages/pics/img/vinci-plate-anghiari-copy-480.avif",
+   "url": "/static/img/vinci-plate-anghiari-copy-480.avif",
+   "bytes": 23082,
+   "sha256": "e0a9910668d166e07ee1f8418168459ca119fdf14f67561b1e8c63df6fdbb616"
+  },
+  {
+   "path": "pages/pics/img/vinci-plate-anghiari-copy-480.webp",
+   "url": "/static/img/vinci-plate-anghiari-copy-480.webp",
+   "bytes": 34536,
+   "sha256": "c8b9b85107ae74396ae80504956b4102dd8688dc789bbd3d00cbb788c5924e9a"
+  },
+  {
+   "path": "pages/pics/img/vinci-plate-anghiari-copy-960.avif",
+   "url": "/static/img/vinci-plate-anghiari-copy-960.avif",
+   "bytes": 92461,
+   "sha256": "73ca6b826c75a297545ede6f91fe6302bcb1c8bc5c0eb315d3b98aaaf6400f57"
+  },
+  {
+   "path": "pages/pics/img/vinci-plate-anghiari-copy-960.webp",
+   "url": "/static/img/vinci-plate-anghiari-copy-960.webp",
+   "bytes": 137210,
+   "sha256": "1a98143f4e1a627a2df7bad23611324733d411ea1ebb1e4f16084a21c3e40ac3"
+  },
+  {
+   "path": "pages/pics/img/vinci-plate-annunciation-480.avif",
+   "url": "/static/img/vinci-plate-annunciation-480.avif",
+   "bytes": 14157,
+   "sha256": "3f8840b3f9d7946a9d05c881e868377614aacfad27e4dc9deb75bda4bf5bbb7c"
+  },
+  {
+   "path": "pages/pics/img/vinci-plate-annunciation-480.webp",
+   "url": "/static/img/vinci-plate-annunciation-480.webp",
+   "bytes": 21530,
+   "sha256": "22771838fbb0180546246eaa5788571b46bdc47c121646cb4244f9246956506a"
+  },
+  {
+   "path": "pages/pics/img/vinci-plate-annunciation-960.avif",
+   "url": "/static/img/vinci-plate-annunciation-960.avif",
+   "bytes": 50189,
+   "sha256": "2885eb4af764f504cc456ab718093e1dfaede95ce68e5b041798eb543f7e1156"
+  },
+  {
+   "path": "pages/pics/img/vinci-plate-annunciation-960.webp",
+   "url": "/static/img/vinci-plate-annunciation-960.webp",
+   "bytes": 76114,
+   "sha256": "30cf62772c204e4c807103a828aa059fb9237e7970fe7fcff433c2a5c3e54d38"
+  },
+  {
+   "path": "pages/pics/img/vinci-plate-annunciation-predella-480.avif",
+   "url": "/static/img/vinci-plate-annunciation-predella-480.avif",
+   "bytes": 7329,
+   "sha256": "749a26af3b35c6d99ebeeeb63b34632418a0007032ac5c563b90585ecc9878f6"
+  },
+  {
+   "path": "pages/pics/img/vinci-plate-annunciation-predella-480.webp",
+   "url": "/static/img/vinci-plate-annunciation-predella-480.webp",
+   "bytes": 10574,
+   "sha256": "dbfaca4c01ad7cf7b7c603713f87b158dd7c3bb091c39b856ae5a375e65453b2"
+  },
+  {
+   "path": "pages/pics/img/vinci-plate-annunciation-predella-960.avif",
+   "url": "/static/img/vinci-plate-annunciation-predella-960.avif",
+   "bytes": 28679,
+   "sha256": "b5f93772dbed367c67a28ee166fcacb4e56f5523336a4eb7b0956e793c1eb223"
+  },
+  {
+   "path": "pages/pics/img/vinci-plate-annunciation-predella-960.webp",
+   "url": "/static/img/vinci-plate-annunciation-predella-960.webp",
+   "bytes": 42464,
+   "sha256": "f3133f878c9a31a41b610e0c18e4b563bbb19fa1169e40fad9aab8eff4f2fef2"
+  },
+  {
+   "path": "pages/pics/img/vinci-plate-bacchus-240.avif",
+   "url": "/static/img/vinci-plate-bacchus-240.avif",
+   "bytes": 10379,
+   "sha256": "0a6350a9d4b8708675ba6e5e67e7f5dc98e547b35e9b363617c8b30cd8f67081"
+  },
+  {
+   "path": "pages/pics/img/vinci-plate-bacchus-240.webp",
+   "url": "/static/img/vinci-plate-bacchus-240.webp",
+   "bytes": 13898,
+   "sha256": "29f0b597c69e7fcd3aa84f419ce8fc5f7a51535bae925cbcae5cbf8872bfaa31"
+  },
+  {
+   "path": "pages/pics/img/vinci-plate-bacchus-480.avif",
+   "url": "/static/img/vinci-plate-bacchus-480.avif",
+   "bytes": 35759,
+   "sha256": "633a08018a7218f269c33d4f0da517d58b50e65bc45a6e06c39609ce26eec5ce"
+  },
+  {
+   "path": "pages/pics/img/vinci-plate-bacchus-480.webp",
+   "url": "/static/img/vinci-plate-bacchus-480.webp",
+   "bytes": 46790,
+   "sha256": "d43e7655b662292c0fc32f997d8d93b80ccf8c82b77711f27610f4b89de9917a"
+  },
+  {
+   "path": "pages/pics/img/vinci-plate-baptism-of-christ-240.avif",
+   "url": "/static/img/vinci-plate-baptism-of-christ-240.avif",
+   "bytes": 9633,
+   "sha256": "89c5d1c8858b035eb1ba52fe6c33c24be4e3ecea0f2138ee9f31cd4a59f0d898"
+  },
+  {
+   "path": "pages/pics/img/vinci-plate-baptism-of-christ-240.webp",
+   "url": "/static/img/vinci-plate-baptism-of-christ-240.webp",
+   "bytes": 14388,
+   "sha256": "12ad9fd9d46387db696caeb5997d623f3f2bfe2f3aa29aed937bafb1dae1d5d6"
+  },
+  {
+   "path": "pages/pics/img/vinci-plate-baptism-of-christ-480.avif",
+   "url": "/static/img/vinci-plate-baptism-of-christ-480.avif",
+   "bytes": 29149,
+   "sha256": "5e70f6e9adb7937a7a92ea62d7f7d522c8c5bfe8edded2e0433a01d173dc9c1e"
+  },
+  {
+   "path": "pages/pics/img/vinci-plate-baptism-of-christ-480.webp",
+   "url": "/static/img/vinci-plate-baptism-of-christ-480.webp",
+   "bytes": 42524,
+   "sha256": "00ab80354e1a19425b45af2ac990728133178de0bd2d0af5d6719ffb4f0a1030"
+  },
+  {
+   "path": "pages/pics/img/vinci-plate-benois-madonna-240.avif",
+   "url": "/static/img/vinci-plate-benois-madonna-240.avif",
+   "bytes": 7091,
+   "sha256": "4472251534dec1f5028a38ed830239f8b2e2d15f879bfdeb68bf11c502d0d960"
+  },
+  {
+   "path": "pages/pics/img/vinci-plate-benois-madonna-240.webp",
+   "url": "/static/img/vinci-plate-benois-madonna-240.webp",
+   "bytes": 9440,
+   "sha256": "9fc00b91de4ba8f59dc620051f06615f6827a17d6221d922eec73ddef6a3319c"
+  },
+  {
+   "path": "pages/pics/img/vinci-plate-benois-madonna-480.avif",
+   "url": "/static/img/vinci-plate-benois-madonna-480.avif",
+   "bytes": 23215,
+   "sha256": "0b6bb55d1a0586cbccc93b25022cc01c93d07e7cff91581ee72e544850307398"
+  },
+  {
+   "path": "pages/pics/img/vinci-plate-benois-madonna-480.webp",
+   "url": "/static/img/vinci-plate-benois-madonna-480.webp",
+   "bytes": 28738,
+   "sha256": "b72d593324b85e608e78dc28967c0d5e85335fc47824fbdcf7f9c0e813fa3ac8"
+  },
+  {
+   "path": "pages/pics/img/vinci-plate-burlington-house-cartoon-240.avif",
+   "url": "/static/img/vinci-plate-burlington-house-cartoon-240.avif",
+   "bytes": 11914,
+   "sha256": "96d7da878329aeb8ee7f9adaabecdd18230874e6a9774d705c8ea1a964e1ace4"
+  },
+  {
+   "path": "pages/pics/img/vinci-plate-burlington-house-cartoon-240.webp",
+   "url": "/static/img/vinci-plate-burlington-house-cartoon-240.webp",
+   "bytes": 16180,
+   "sha256": "af5742b4ce48b2710e848c32b71ad741b6e5c6f5682bd9349ca7f0d89d372104"
+  },
+  {
+   "path": "pages/pics/img/vinci-plate-burlington-house-cartoon-480.avif",
+   "url": "/static/img/vinci-plate-burlington-house-cartoon-480.avif",
+   "bytes": 44500,
+   "sha256": "271750339e331bb013b02218588d99655f264fad758d1404d0de1223415117c6"
+  },
+  {
+   "path": "pages/pics/img/vinci-plate-burlington-house-cartoon-480.webp",
+   "url": "/static/img/vinci-plate-burlington-house-cartoon-480.webp",
+   "bytes": 62326,
+   "sha256": "d90564c61e73245c5a2b0e402523b02d13f6a7e3403fbf5662f5f20e4c04b3c4"
+  },
+  {
+   "path": "pages/pics/img/vinci-plate-ginevra-de-benci-240.avif",
+   "url": "/static/img/vinci-plate-ginevra-de-benci-240.avif",
+   "bytes": 7059,
+   "sha256": "6094cf4fe99ec879b5aea1be97f2db31430918e9591cb7a843a7c1303166eba8"
+  },
+  {
+   "path": "pages/pics/img/vinci-plate-ginevra-de-benci-240.webp",
+   "url": "/static/img/vinci-plate-ginevra-de-benci-240.webp",
+   "bytes": 9300,
+   "sha256": "ea41f22cfb2484c45d6210d09ec33c0a80593e573db849d22ce3516ec4c3d6d9"
+  },
+  {
+   "path": "pages/pics/img/vinci-plate-ginevra-de-benci-480.avif",
+   "url": "/static/img/vinci-plate-ginevra-de-benci-480.avif",
+   "bytes": 25362,
+   "sha256": "138c2181c132eb69db59d48ff0887de1c88b65b3d5b93428c2a7604d25771243"
+  },
+  {
+   "path": "pages/pics/img/vinci-plate-ginevra-de-benci-480.webp",
+   "url": "/static/img/vinci-plate-ginevra-de-benci-480.webp",
+   "bytes": 34618,
+   "sha256": "dde94f63cb66e219402044c7c3b937c950c6f0426aa227467c90c5b3ed671897"
+  },
+  {
+   "path": "pages/pics/img/vinci-plate-ginevra-de-benci-back-240.avif",
+   "url": "/static/img/vinci-plate-ginevra-de-benci-back-240.avif",
+   "bytes": 8033,
+   "sha256": "aa70c0de4db3f47dc2174592750ded3652ea56ebfb4b5f41d69094cef0712f7d"
+  },
+  {
+   "path": "pages/pics/img/vinci-plate-ginevra-de-benci-back-240.webp",
+   "url": "/static/img/vinci-plate-ginevra-de-benci-back-240.webp",
+   "bytes": 10268,
+   "sha256": "b648a00728be169842fb89dbeb7f1f3e373e44e4ca929e75ebb8af6e6bb9c32f"
+  },
+  {
+   "path": "pages/pics/img/vinci-plate-ginevra-de-benci-back-480.avif",
+   "url": "/static/img/vinci-plate-ginevra-de-benci-back-480.avif",
+   "bytes": 33296,
+   "sha256": "1157922c841782d23ac14fd1bffe8191be75a497daa3c1c0d7f9ab370720819a"
+  },
+  {
+   "path": "pages/pics/img/vinci-plate-ginevra-de-benci-back-480.webp",
+   "url": "/static/img/vinci-plate-ginevra-de-benci-back-480.webp",
+   "bytes": 42844,
+   "sha256": "e7c10a2002e42174fb24cd37468f6113da8b51a112190807a4a20740885578db"
+  },
+  {
+   "path": "pages/pics/img/vinci-plate-la-belle-ferronniere-240.avif",
+   "url": "/static/img/vinci-plate-la-belle-ferronniere-240.avif",
+   "bytes": 6418,
+   "sha256": "7821f8f75ad0202d9b35cd3e7579beb482e33f76837d3a8ca96f7f2830292087"
+  },
+  {
+   "path": "pages/pics/img/vinci-plate-la-belle-ferronniere-240.webp",
+   "url": "/static/img/vinci-plate-la-belle-ferronniere-240.webp",
+   "bytes": 7502,
+   "sha256": "1358e00fc33561d335ab13ea25cb3160d29119fff4e7dbc35d131d8926ab6c8e"
+  },
+  {
+   "path": "pages/pics/img/vinci-plate-la-belle-ferronniere-480.avif",
+   "url": "/static/img/vinci-plate-la-belle-ferronniere-480.avif",
+   "bytes": 27336,
+   "sha256": "21a87181a717714c46c08f319061ba2305ad2d284a846d7dc6b548bdb822c747"
+  },
+  {
+   "path": "pages/pics/img/vinci-plate-la-belle-ferronniere-480.webp",
+   "url": "/static/img/vinci-plate-la-belle-ferronniere-480.webp",
+   "bytes": 32122,
+   "sha256": "9b10e8ed39ccca83f00e7928da98c0481da72b4f1239ac4462f945aa114ed772"
+  },
+  {
+   "path": "pages/pics/img/vinci-plate-la-scapigliata-240.avif",
+   "url": "/static/img/vinci-plate-la-scapigliata-240.avif",
+   "bytes": 6483,
+   "sha256": "7c4cd91eba1f378078cfab145ee81ec3450634552cddd1e5ceb26bf637d55378"
+  },
+  {
+   "path": "pages/pics/img/vinci-plate-la-scapigliata-240.webp",
+   "url": "/static/img/vinci-plate-la-scapigliata-240.webp",
+   "bytes": 7842,
+   "sha256": "cee643b508d668ec242c35d29bfa873e1d43686c226d240640965be22bdf4770"
+  },
+  {
+   "path": "pages/pics/img/vinci-plate-la-scapigliata-480.avif",
+   "url": "/static/img/vinci-plate-la-scapigliata-480.avif",
+   "bytes": 29791,
+   "sha256": "6f70de59ac679af70093edf4034dd9b09953cee4b6272c0dfe225b780a063ef8"
+  },
+  {
+   "path": "pages/pics/img/vinci-plate-la-scapigliata-480.webp",
+   "url": "/static/img/vinci-plate-la-scapigliata-480.webp",
+   "bytes": 38616,
+   "sha256": "3c6174c486059499c90eb0b42d0a5837006f4e6124dd198cb0efc7a558d98fc9"
+  },
+  {
+   "path": "pages/pics/img/vinci-plate-lady-with-an-ermine-240.avif",
+   "url": "/static/img/vinci-plate-lady-with-an-ermine-240.avif",
+   "bytes": 4640,
+   "sha256": "0171941b480d74d8fb0de7900caacb615b7336ed0e39edc8da33c8e53661a362"
+  },
+  {
+   "path": "pages/pics/img/vinci-plate-lady-with-an-ermine-240.webp",
+   "url": "/static/img/vinci-plate-lady-with-an-ermine-240.webp",
+   "bytes": 5862,
+   "sha256": "6c9b723a76b187a55013d5ecc3be9d780ed7df43db26fa268b6f0c2eafceb7b5"
+  },
+  {
+   "path": "pages/pics/img/vinci-plate-lady-with-an-ermine-480.avif",
+   "url": "/static/img/vinci-plate-lady-with-an-ermine-480.avif",
+   "bytes": 13931,
+   "sha256": "cbb8239553b29d65751b9e9a9923dd8c2d4042d0b8f05ed8e849f0123948ae40"
+  },
+  {
+   "path": "pages/pics/img/vinci-plate-lady-with-an-ermine-480.webp",
+   "url": "/static/img/vinci-plate-lady-with-an-ermine-480.webp",
+   "bytes": 16860,
+   "sha256": "028ddd379c4ba3c480d1e71cbc775cbeb91b79e8ef5e0dc7fc73c01973c8c94e"
+  },
+  {
+   "path": "pages/pics/img/vinci-plate-madonna-litta-240.avif",
+   "url": "/static/img/vinci-plate-madonna-litta-240.avif",
+   "bytes": 8470,
+   "sha256": "08e017c8d3dff99bd3722f070072e1b4aa74f5106aec1803846ed0278eb32287"
+  },
+  {
+   "path": "pages/pics/img/vinci-plate-madonna-litta-240.webp",
+   "url": "/static/img/vinci-plate-madonna-litta-240.webp",
+   "bytes": 12290,
+   "sha256": "0e237763f078e4d4e8da07fc3e6bbc558b7eda957ad190f3d58f24be29ef4172"
+  },
+  {
+   "path": "pages/pics/img/vinci-plate-madonna-litta-480.avif",
+   "url": "/static/img/vinci-plate-madonna-litta-480.avif",
+   "bytes": 30453,
+   "sha256": "4f2ff7bcaf8b23fbe08099b4f8f8b08d51aeca8dfa2ba81f3324d783be4ec11f"
+  },
+  {
+   "path": "pages/pics/img/vinci-plate-madonna-litta-480.webp",
+   "url": "/static/img/vinci-plate-madonna-litta-480.webp",
+   "bytes": 41922,
+   "sha256": "1297f335768a56780c0a5cbaa0e4cb5a87d3b940ed1f583ad01b8917e77c9c78"
+  },
+  {
+   "path": "pages/pics/img/vinci-plate-madonna-of-the-carnation-240.avif",
+   "url": "/static/img/vinci-plate-madonna-of-the-carnation-240.avif",
+   "bytes": 8353,
+   "sha256": "fc69f3b72145603873027945782a2d7a3426d9d7930f987f2d93321643ec0e99"
+  },
+  {
+   "path": "pages/pics/img/vinci-plate-madonna-of-the-carnation-240.webp",
+   "url": "/static/img/vinci-plate-madonna-of-the-carnation-240.webp",
+   "bytes": 10864,
+   "sha256": "0f375222953dfe877c01733e4ca056a969585c9b82113e0ae4361712e8ed8936"
+  },
+  {
+   "path": "pages/pics/img/vinci-plate-madonna-of-the-carnation-480.avif",
+   "url": "/static/img/vinci-plate-madonna-of-the-carnation-480.avif",
+   "bytes": 28951,
+   "sha256": "0e780ff276b4545e0c4b7d9dd8390dc780532c3b62b918940d09e0fb11ab8b8d"
+  },
+  {
+   "path": "pages/pics/img/vinci-plate-madonna-of-the-carnation-480.webp",
+   "url": "/static/img/vinci-plate-madonna-of-the-carnation-480.webp",
+   "bytes": 37418,
+   "sha256": "81c0665e14fca44f07d34811bd29850db8edb2051e12f6ba739938c2a3f97a87"
+  },
+  {
+   "path": "pages/pics/img/vinci-plate-mona-lisa-240.avif",
+   "url": "/static/img/vinci-plate-mona-lisa-240.avif",
+   "bytes": 7516,
+   "sha256": "2515591062aa7605183ca02b3acac8223742db43bb71dbc7f02df3ac7e1867bb"
+  },
+  {
+   "path": "pages/pics/img/vinci-plate-mona-lisa-240.webp",
+   "url": "/static/img/vinci-plate-mona-lisa-240.webp",
+   "bytes": 9412,
+   "sha256": "90794360baf9e649fda19b44d799453b8e214d875d3dfcc4737697b3ea49c69d"
+  },
+  {
+   "path": "pages/pics/img/vinci-plate-mona-lisa-480.avif",
+   "url": "/static/img/vinci-plate-mona-lisa-480.avif",
+   "bytes": 33001,
+   "sha256": "fc8f8f7adc132904cf757c3e541d5c515329844ace8e6ccb462e716be1fb8068"
+  },
+  {
+   "path": "pages/pics/img/vinci-plate-mona-lisa-480.webp",
+   "url": "/static/img/vinci-plate-mona-lisa-480.webp",
+   "bytes": 43606,
+   "sha256": "1b5291ffc3ade8108c47a55f859e599f7e00eab292bc74ec0f017d0c376d288c"
+  },
+  {
+   "path": "pages/pics/img/vinci-plate-portrait-of-a-musician-240.avif",
+   "url": "/static/img/vinci-plate-portrait-of-a-musician-240.avif",
+   "bytes": 5607,
+   "sha256": "ddbfa029c98b712bfc406705628c40cabf5b2bd0bd0c8218080ebd51e3e1298a"
+  },
+  {
+   "path": "pages/pics/img/vinci-plate-portrait-of-a-musician-240.webp",
+   "url": "/static/img/vinci-plate-portrait-of-a-musician-240.webp",
+   "bytes": 6786,
+   "sha256": "53c0efe98bfd889a232acf14ded507c6598be056315afcbc2eb03f7191465a19"
+  },
+  {
+   "path": "pages/pics/img/vinci-plate-portrait-of-a-musician-480.avif",
+   "url": "/static/img/vinci-plate-portrait-of-a-musician-480.avif",
+   "bytes": 21927,
+   "sha256": "e9145af880806d59a165d7f879726135dbc80e59806fd55d43ef023d057b8b11"
+  },
+  {
+   "path": "pages/pics/img/vinci-plate-portrait-of-a-musician-480.webp",
+   "url": "/static/img/vinci-plate-portrait-of-a-musician-480.webp",
+   "bytes": 26612,
+   "sha256": "11f2aa8840beb66a83415b8991167d5a526ae6a050f14fad118b187da6d319fe"
+  },
+  {
+   "path": "pages/pics/img/vinci-plate-saint-jerome-240.avif",
+   "url": "/static/img/vinci-plate-saint-jerome-240.avif",
+   "bytes": 8624,
+   "sha256": "262774aaf011b54799186871ca67a284ba782258290e2d7e1d9678ecece86e57"
+  },
+  {
+   "path": "pages/pics/img/vinci-plate-saint-jerome-240.webp",
+   "url": "/static/img/vinci-plate-saint-jerome-240.webp",
+   "bytes": 10988,
+   "sha256": "e7e951f448e66127922af78c06f23de7070e2b31271216049e9b8249d0310247"
+  },
+  {
+   "path": "pages/pics/img/vinci-plate-saint-jerome-480.avif",
+   "url": "/static/img/vinci-plate-saint-jerome-480.avif",
+   "bytes": 33052,
+   "sha256": "98cb0cf57c2385d3273185802e347e8bb104f9bbe56b3d0af3b0254e3f3a6aa2"
+  },
+  {
+   "path": "pages/pics/img/vinci-plate-saint-jerome-480.webp",
+   "url": "/static/img/vinci-plate-saint-jerome-480.webp",
+   "bytes": 44166,
+   "sha256": "f103bd78529786d7bdcd5d99507593760a375edede38281cb15df3e4787f0468"
+  },
+  {
+   "path": "pages/pics/img/vinci-plate-saint-john-the-baptist-240.avif",
+   "url": "/static/img/vinci-plate-saint-john-the-baptist-240.avif",
+   "bytes": 3465,
+   "sha256": "a99e4fa2ac94c453f2d0ba8594edc95e667de41b1e61a53739154c1c0e719db2"
+  },
+  {
+   "path": "pages/pics/img/vinci-plate-saint-john-the-baptist-240.webp",
+   "url": "/static/img/vinci-plate-saint-john-the-baptist-240.webp",
+   "bytes": 4242,
+   "sha256": "daed9414b098b466d7b08daa60dcae2c5f83400f7a524952164714fd1c2582f8"
+  },
+  {
+   "path": "pages/pics/img/vinci-plate-saint-john-the-baptist-480.avif",
+   "url": "/static/img/vinci-plate-saint-john-the-baptist-480.avif",
+   "bytes": 9242,
+   "sha256": "92709b06206f8a909be24bffa3e449de9c83d3272a9962cca578ed0837bfcff3"
+  },
+  {
+   "path": "pages/pics/img/vinci-plate-saint-john-the-baptist-480.webp",
+   "url": "/static/img/vinci-plate-saint-john-the-baptist-480.webp",
+   "bytes": 11304,
+   "sha256": "05d675143310e5e5240a40ae273a385cfb610c54babd72d3cb7ea79a6689a4f4"
+  },
+  {
+   "path": "pages/pics/img/vinci-plate-salvator-mundi-240.avif",
+   "url": "/static/img/vinci-plate-salvator-mundi-240.avif",
+   "bytes": 6271,
+   "sha256": "891c62cd7794fe26870137917a8aa6ffc163bdf809d99c8592bae61919203070"
+  },
+  {
+   "path": "pages/pics/img/vinci-plate-salvator-mundi-240.webp",
+   "url": "/static/img/vinci-plate-salvator-mundi-240.webp",
+   "bytes": 10190,
+   "sha256": "4a1a6955c0246017e9a5ed3d4fa83a5e86edaa48d6ae2e30e64b91af7faf828a"
+  },
+  {
+   "path": "pages/pics/img/vinci-plate-salvator-mundi-480.avif",
+   "url": "/static/img/vinci-plate-salvator-mundi-480.avif",
+   "bytes": 23347,
+   "sha256": "02591f6c67ff4fc4891343588bd0813230104f38cc36dabec5097e2069387b34"
+  },
+  {
+   "path": "pages/pics/img/vinci-plate-salvator-mundi-480.webp",
+   "url": "/static/img/vinci-plate-salvator-mundi-480.webp",
+   "bytes": 37668,
+   "sha256": "304b2bc73c872aeb7947e4799450bd68c43988a0a6edd02e7ae64eb82f9be894"
+  },
+  {
+   "path": "pages/pics/img/vinci-plate-virgin-and-child-with-st-anne-240.avif",
+   "url": "/static/img/vinci-plate-virgin-and-child-with-st-anne-240.avif",
+   "bytes": 11943,
+   "sha256": "1661badee12bea49b26127282522bdbcebaeb77acf5dfa0779441fba816b2530"
+  },
+  {
+   "path": "pages/pics/img/vinci-plate-virgin-and-child-with-st-anne-240.webp",
+   "url": "/static/img/vinci-plate-virgin-and-child-with-st-anne-240.webp",
+   "bytes": 19074,
+   "sha256": "29ba3936cf9fae5ac475095b26d946503996cf8714f18ffd84d1908e6bd8b9a0"
+  },
+  {
+   "path": "pages/pics/img/vinci-plate-virgin-and-child-with-st-anne-480.avif",
+   "url": "/static/img/vinci-plate-virgin-and-child-with-st-anne-480.avif",
+   "bytes": 38104,
+   "sha256": "d03cef04f1f532dacffbbad9bbca3e0380db6d660e366f6fea5ef877e4c2d021"
+  },
+  {
+   "path": "pages/pics/img/vinci-plate-virgin-and-child-with-st-anne-480.webp",
+   "url": "/static/img/vinci-plate-virgin-and-child-with-st-anne-480.webp",
+   "bytes": 59844,
+   "sha256": "c9c33907b3386af64a03118de329f6dfb64a663eadeb33ac5dd24a2791bbc5d5"
+  },
+  {
+   "path": "pages/pics/img/vinci-plate-virgin-of-the-rocks-london-240.avif",
+   "url": "/static/img/vinci-plate-virgin-of-the-rocks-london-240.avif",
+   "bytes": 10807,
+   "sha256": "b94a6afdc8684df5867527514a670b4d7f9ec5b13127cf98311f380b3d832a13"
+  },
+  {
+   "path": "pages/pics/img/vinci-plate-virgin-of-the-rocks-london-240.webp",
+   "url": "/static/img/vinci-plate-virgin-of-the-rocks-london-240.webp",
+   "bytes": 16594,
+   "sha256": "79c35d4aa18b9739f188d9a69110d00709d5bbb3036242f99e120f26837e629b"
+  },
+  {
+   "path": "pages/pics/img/vinci-plate-virgin-of-the-rocks-london-480.avif",
+   "url": "/static/img/vinci-plate-virgin-of-the-rocks-london-480.avif",
+   "bytes": 36399,
+   "sha256": "1a8e5d618abaeec04ba6b51350fe177e83cf7b2619350fdf3f11b73d39170c71"
+  },
+  {
+   "path": "pages/pics/img/vinci-plate-virgin-of-the-rocks-london-480.webp",
+   "url": "/static/img/vinci-plate-virgin-of-the-rocks-london-480.webp",
+   "bytes": 55928,
+   "sha256": "64c80187eafe0068aa7a2bd98393c765c09edee255202ef1813709f1d3a5d047"
+  },
+  {
+   "path": "pages/pics/img/vinci-plate-virgin-of-the-rocks-louvre-240.avif",
+   "url": "/static/img/vinci-plate-virgin-of-the-rocks-louvre-240.avif",
+   "bytes": 12111,
+   "sha256": "71a558043c50f9fc1af05c10c042558a1886a1c54879c45f2be755a08bfcb9da"
+  },
+  {
+   "path": "pages/pics/img/vinci-plate-virgin-of-the-rocks-louvre-240.webp",
+   "url": "/static/img/vinci-plate-virgin-of-the-rocks-louvre-240.webp",
+   "bytes": 16770,
+   "sha256": "c44509eced6ebc8394c2f301f7edd389bb7b2aceef4d6ac594053495c1bf06e9"
+  },
+  {
+   "path": "pages/pics/img/vinci-plate-virgin-of-the-rocks-louvre-480.avif",
+   "url": "/static/img/vinci-plate-virgin-of-the-rocks-louvre-480.avif",
+   "bytes": 40641,
+   "sha256": "e6cdb20438633ec915c2c3b7335f34c76c32c5da4f7c08202e5f91e335e306cb"
+  },
+  {
+   "path": "pages/pics/img/vinci-plate-virgin-of-the-rocks-louvre-480.webp",
+   "url": "/static/img/vinci-plate-virgin-of-the-rocks-louvre-480.webp",
+   "bytes": 53154,
+   "sha256": "d4def3f94605c71835abafb642618b1cfbe5ea390fb61da92cde490c99d147f6"
+  },
+  {
+   "path": "pages/pics/img/vinci-plate-yarnwinder-buccleuch-240.avif",
+   "url": "/static/img/vinci-plate-yarnwinder-buccleuch-240.avif",
+   "bytes": 4989,
+   "sha256": "2f18f6ad6bd3a9545f39723b7efcff2212c211521a772694d8b76319ee89dc22"
+  },
+  {
+   "path": "pages/pics/img/vinci-plate-yarnwinder-buccleuch-240.webp",
+   "url": "/static/img/vinci-plate-yarnwinder-buccleuch-240.webp",
+   "bytes": 5958,
+   "sha256": "90a21fd099a21255abb6122f7aed26396d808bf209e3220b6d3f29a5af3941c4"
+  },
+  {
+   "path": "pages/pics/img/vinci-plate-yarnwinder-buccleuch-480.avif",
+   "url": "/static/img/vinci-plate-yarnwinder-buccleuch-480.avif",
+   "bytes": 17204,
+   "sha256": "4ddde9c684c4c8e2b956f72bc93e58cb280205dec73867ea3817fb5273412eb2"
+  },
+  {
+   "path": "pages/pics/img/vinci-plate-yarnwinder-buccleuch-480.webp",
+   "url": "/static/img/vinci-plate-yarnwinder-buccleuch-480.webp",
+   "bytes": 20290,
+   "sha256": "671fb74122d5bcd49011dae74547abb72f8caa92591d2a9adcc695fb4e164219"
+  },
+  {
+   "path": "pages/pics/img/vinci-plate-yarnwinder-lansdowne-240.avif",
+   "url": "/static/img/vinci-plate-yarnwinder-lansdowne-240.avif",
+   "bytes": 8048,
+   "sha256": "2316fa2ae118245b7bf9a094a4240432d46487bff621bacf0b933d7b3216bef6"
+  },
+  {
+   "path": "pages/pics/img/vinci-plate-yarnwinder-lansdowne-240.webp",
+   "url": "/static/img/vinci-plate-yarnwinder-lansdowne-240.webp",
+   "bytes": 12206,
+   "sha256": "fb3b24089548fa3d97d650e869a43544a04ba83be707f851be3a792c1b5963cb"
+  },
+  {
+   "path": "pages/pics/img/vinci-plate-yarnwinder-lansdowne-480.avif",
+   "url": "/static/img/vinci-plate-yarnwinder-lansdowne-480.avif",
+   "bytes": 26044,
+   "sha256": "be38e14d5bc45b7c46a0d5e8e5078da5f4a259ab086df4265a3a589509a5c344"
+  },
+  {
+   "path": "pages/pics/img/vinci-plate-yarnwinder-lansdowne-480.webp",
+   "url": "/static/img/vinci-plate-yarnwinder-lansdowne-480.webp",
+   "bytes": 38824,
+   "sha256": "6cbab47a25b4004d9ed302846a111e22ea6c4c3b8ef18b280e80d40cd2e9f889"
+  },
+  {
    "path": "pages/pics/img/vinci-poster-anemometer-1440.avif",
    "url": "/static/img/vinci-poster-anemometer-1440.avif",
    "bytes": 13853,

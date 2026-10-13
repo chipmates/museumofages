@@ -556,6 +556,57 @@ def wall_still_svg(h_cm, w_cm, person_cm, words, num, lang, colours, inside=None
             f'<rect width="{W}" height="{H}" fill="{c["page"]}"/>{"".join(parts)}</svg>\n')
 
 
+def _mark(x, y, kind, c):
+    """One work of a count: a small upright frame, filled, outlined, half filled, round or broken by its class."""
+    ink, ground = c["text-2"], c["page"]
+    if kind == "field":
+        return _rect(x, y, 56, 30, ink, ink)
+    if kind == "workshop":
+        return (f'<circle cx="{x + 11:g}" cy="{y + 15:g}" r="11" fill="{ink}"/>'
+                f'<circle cx="{x + 11:g}" cy="{y + 15:g}" r="8.5" fill="{ground}"/>')
+    if kind == "copy":
+        # a broken line: ImageMagick's renderer draws no dashes, so the frame is four short bars a side
+        bars = "".join(f'<rect x="{x:g}" y="{y + i * 8:g}" width="2.5" height="5" fill="{c["text-3"]}"/>'
+                       f'<rect x="{x + 19.5:g}" y="{y + i * 8:g}" width="2.5" height="5" fill="{c["text-3"]}"/>' for i in range(4))
+        return bars + "".join(f'<rect x="{x + i * 8:g}" y="{y:g}" width="5" height="2.5" fill="{c["text-3"]}"/>'
+                              f'<rect x="{x + i * 8:g}" y="{y + 27.5:g}" width="5" height="2.5" fill="{c["text-3"]}"/>' for i in range(3))
+    out = _rect(x, y, 22, 30, ink if kind == "documented" else ground, ink, 2.5)
+    if kind == "qualified":
+        out += f'<rect x="{x:g}" y="{y + 15:g}" width="22" height="15" fill="{ink}"/>'
+    return out
+
+
+def tally_still_svg(rows, words, c):
+    """The share picture of a page that lists its wing's works by period, 1200 by 630: the page's heading, one row per
+    period with a mark for each of its works, and the key of the marks."""
+    W, H, m = 1200, 630, 60
+    parts = [_text(m, 104, words["h1"], 54, c["linen"])]
+    y, step = 138, 50
+    for label, kinds in rows:
+        parts.append(_rect(m, y, W - 2 * m, 1.5, c["line-strong"], c["line-strong"], 0))
+        parts.append(_text(m, y + 33, label, 24, c["text-2"]))
+        x = W - m - 40 - sum(66 if k == "field" else 32 for k in kinds)
+        for kind in kinds:
+            parts.append(_mark(x, y + 10, kind, c))
+            x += 66 if kind == "field" else 32
+        parts.append(_text(W - m, y + 33, str(len(kinds)), 24, c["text-3"], "end"))
+        y += step
+    parts.append(_rect(m, y, W - 2 * m, 1.5, c["line-strong"], c["line-strong"], 0))
+    x, ky = m, y + 48
+    for kind, text in words["key"]:
+        text = text[:1].upper() + text[1:]
+        width = 56 if kind == "field" else 22
+        if x + width + 12 + len(text) * 20 * 0.5 > W - m:
+            x, ky = m, ky + 42
+        parts.append(_mark(x, ky - 23, kind, c))
+        parts.append(_text(x + width + 12, ky, text, 20, c["text-2"]))
+        x += width + 12 + len(text) * 20 * 0.5 + 30
+    parts.append(_rect(m, H - 62, 48, 2, c["chalk"], c["chalk"], 0))
+    parts.append(_text(m, H - 30, words["site"], 20, c["text-3"]))
+    return (f'<svg xmlns="http://www.w3.org/2000/svg" width="{W}" height="{H}" viewBox="0 0 {W} {H}">'
+            f'<rect width="{W}" height="{H}" fill="{c["page"]}"/>{"".join(parts)}</svg>\n')
+
+
 def source_mark(svg):
     """The mark a still carries of the drawing it was made from: a still with another mark is older than its chart."""
     return "moa-chart:" + hashlib.sha256(svg.encode("utf-8")).hexdigest()[:24]

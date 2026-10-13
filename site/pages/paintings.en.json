@@ -1,0 +1,979 @@
+{
+ "_note": "THE WORDS of the paintings page, English. Poured from the writer's WORDS file of round 1 word for word; every title, date, holder and class word is checked by the build against the wing's facts file (the German dates by the build's rule for the wing's English ones), and every plate's source line against the plate's record in pictures.json. The two files hold the same structure. No em dash, no en dash, no semicolon.",
+ "page": {
+  "id": "vinci-paintings",
+  "wing": "vinci",
+  "topic": "paintings",
+  "stop": "picture-room",
+  "published": null,
+  "og_image": {
+   "file": "vinci-paintings-og-{lang}-1200x630.png",
+   "width": 1200,
+   "height": 630
+  }
+ },
+ "pics": {
+  "baptism-of-christ": {
+   "stem": "vinci-plate-baptism-of-christ",
+   "widths": [
+    240,
+    480
+   ],
+   "sizes": "(min-width: 960px) 224px, (min-width: 600px) 192px, 120px"
+  },
+  "annunciation": {
+   "stem": "vinci-plate-annunciation",
+   "widths": [
+    480,
+    960
+   ],
+   "sizes": "(min-width: 600px) 576px, calc(100vw - 40px)"
+  },
+  "ginevra-de-benci": {
+   "stem": "vinci-plate-ginevra-de-benci",
+   "widths": [
+    240,
+    480
+   ],
+   "sizes": "(min-width: 960px) 224px, (min-width: 600px) 192px, 120px"
+  },
+  "ginevra-de-benci-back": {
+   "stem": "vinci-plate-ginevra-de-benci-back",
+   "widths": [
+    240,
+    480
+   ],
+   "sizes": "(min-width: 960px) 224px, (min-width: 600px) 192px, 120px"
+  },
+  "madonna-of-the-carnation": {
+   "stem": "vinci-plate-madonna-of-the-carnation",
+   "widths": [
+    240,
+    480
+   ],
+   "sizes": "(min-width: 960px) 224px, (min-width: 600px) 192px, 120px"
+  },
+  "benois-madonna": {
+   "stem": "vinci-plate-benois-madonna",
+   "widths": [
+    240,
+    480
+   ],
+   "sizes": "(min-width: 960px) 224px, (min-width: 600px) 192px, 120px"
+  },
+  "saint-jerome": {
+   "stem": "vinci-plate-saint-jerome",
+   "widths": [
+    240,
+    480
+   ],
+   "sizes": "(min-width: 960px) 224px, (min-width: 600px) 192px, 120px"
+  },
+  "adoration-of-the-magi": {
+   "stem": "vinci-plate-adoration-of-the-magi",
+   "widths": [
+    240,
+    480
+   ],
+   "sizes": "(min-width: 960px) 224px, (min-width: 600px) 192px, 120px"
+  },
+  "annunciation-predella": {
+   "stem": "vinci-plate-annunciation-predella",
+   "widths": [
+    480,
+    960
+   ],
+   "sizes": "(min-width: 600px) 576px, calc(100vw - 40px)"
+  },
+  "virgin-of-the-rocks-louvre": {
+   "stem": "vinci-plate-virgin-of-the-rocks-louvre",
+   "widths": [
+    240,
+    480
+   ],
+   "sizes": "(min-width: 960px) 224px, (min-width: 600px) 192px, 120px"
+  },
+  "portrait-of-a-musician": {
+   "stem": "vinci-plate-portrait-of-a-musician",
+   "widths": [
+    240,
+    480
+   ],
+   "sizes": "(min-width: 960px) 224px, (min-width: 600px) 192px, 120px"
+  },
+  "lady-with-an-ermine": {
+   "stem": "vinci-plate-lady-with-an-ermine",
+   "widths": [
+    240,
+    480
+   ],
+   "sizes": "(min-width: 960px) 224px, (min-width: 600px) 192px, 120px"
+  },
+  "la-belle-ferronniere": {
+   "stem": "vinci-plate-la-belle-ferronniere",
+   "widths": [
+    240,
+    480
+   ],
+   "sizes": "(min-width: 960px) 224px, (min-width: 600px) 192px, 120px"
+  },
+  "madonna-litta": {
+   "stem": "vinci-plate-madonna-litta",
+   "widths": [
+    240,
+    480
+   ],
+   "sizes": "(min-width: 960px) 224px, (min-width: 600px) 192px, 120px"
+  },
+  "burlington-house-cartoon": {
+   "stem": "vinci-plate-burlington-house-cartoon",
+   "widths": [
+    240,
+    480
+   ],
+   "sizes": "(min-width: 960px) 224px, (min-width: 600px) 192px, 120px"
+  },
+  "yarnwinder-buccleuch": {
+   "stem": "vinci-plate-yarnwinder-buccleuch",
+   "widths": [
+    240,
+    480
+   ],
+   "sizes": "(min-width: 960px) 224px, (min-width: 600px) 192px, 120px"
+  },
+  "yarnwinder-lansdowne": {
+   "stem": "vinci-plate-yarnwinder-lansdowne",
+   "widths": [
+    240,
+    480
+   ],
+   "sizes": "(min-width: 960px) 224px, (min-width: 600px) 192px, 120px"
+  },
+  "anghiari-copy": {
+   "stem": "vinci-plate-anghiari-copy",
+   "widths": [
+    480,
+    960
+   ],
+   "sizes": "(min-width: 600px) 576px, calc(100vw - 40px)"
+  },
+  "mona-lisa": {
+   "stem": "vinci-plate-mona-lisa",
+   "widths": [
+    240,
+    480
+   ],
+   "sizes": "(min-width: 960px) 224px, (min-width: 600px) 192px, 120px"
+  },
+  "virgin-of-the-rocks-london": {
+   "stem": "vinci-plate-virgin-of-the-rocks-london",
+   "widths": [
+    240,
+    480
+   ],
+   "sizes": "(min-width: 960px) 224px, (min-width: 600px) 192px, 120px"
+  },
+  "virgin-and-child-with-st-anne": {
+   "stem": "vinci-plate-virgin-and-child-with-st-anne",
+   "widths": [
+    240,
+    480
+   ],
+   "sizes": "(min-width: 960px) 224px, (min-width: 600px) 192px, 120px"
+  },
+  "salvator-mundi": {
+   "stem": "vinci-plate-salvator-mundi",
+   "widths": [
+    240,
+    480
+   ],
+   "sizes": "(min-width: 960px) 224px, (min-width: 600px) 192px, 120px"
+  },
+  "saint-john-the-baptist": {
+   "stem": "vinci-plate-saint-john-the-baptist",
+   "widths": [
+    240,
+    480
+   ],
+   "sizes": "(min-width: 960px) 224px, (min-width: 600px) 192px, 120px"
+  },
+  "la-scapigliata": {
+   "stem": "vinci-plate-la-scapigliata",
+   "widths": [
+    240,
+    480
+   ],
+   "sizes": "(min-width: 960px) 224px, (min-width: 600px) 192px, 120px"
+  },
+  "bacchus": {
+   "stem": "vinci-plate-bacchus",
+   "widths": [
+    240,
+    480
+   ],
+   "sizes": "(min-width: 960px) 224px, (min-width: 600px) 192px, 120px"
+  },
+  "supper": {
+   "stem": "v-supper",
+   "widths": [
+    800,
+    1600
+   ],
+   "sizes": "(min-width: 600px) 576px, calc(100vw - 40px)"
+  }
+ },
+ "meta": {
+  "title": "Leonardo da Vinci's paintings, work by work | Museum of Ages",
+  "description": "Leonardo da Vinci's paintings, work by work: what each shows, when he painted it, where it hangs and how sure scholars are that it is his. A door to each.",
+  "og_title": "Leonardo da Vinci's paintings, work by work",
+  "og_image_alt": "Leonardo da Vinci's paintings: the 24 works of the wing by period, each a mark for how sure its attribution is, 14 documented, 4 disputed, 4 qualified, 1 from his workshop and 1 copy, and the Last Supper on its own wall. A chart made for this page."
+ },
+ "labels": {
+  "crumbs": "You are here",
+  "crumb_home": "Museum",
+  "toc": "On this page",
+  "tag_chart": "Made for this page",
+  "crumb_here": "Paintings",
+  "tag_still": "Reproduction",
+  "class_documented": "Documented",
+  "class_disputed": "Disputed",
+  "class_qualified": "Qualified attribution",
+  "class_workshop": "Workshop",
+  "class_copy": "Copy",
+  "class_field": "Not in the picture room"
+ },
+ "top": {
+  "h1": "Leonardo da Vinci's paintings",
+  "answer": [
+   "Nobody agrees on a number. Depending on whose list you read, about 15 to 20 surviving paintings are Leonardo da Vinci's own work: the Hermitage speaks of little more than a dozen, the Leonardo scholar Martin Kemp counted about 16 in 2025, and four or five more that he worked on with others, and the auction house that sold the Salvator Mundi said fewer than 20. Our Leonardo wing hangs 24 works, each with a word that says how sure the attribution is: 14 documented, 4 disputed, 4 qualified, 1 from his workshop and 1 copy, and ",
+   {
+    "text": "the Last Supper",
+    "at": "last-supper"
+   },
+   " on its own wall. ",
+   {
+    "text": "The Mona Lisa",
+    "at": "mona-lisa"
+   },
+   ", ",
+   {
+    "text": "the Lady with an Ermine",
+    "at": "lady-with-an-ermine"
+   },
+   ", ",
+   {
+    "text": "both versions of the Virgin of the Rocks",
+    "at": "virgin-of-the-rocks-louvre"
+   },
+   " and ",
+   {
+    "text": "the Salvator Mundi",
+    "at": "salvator-mundi"
+   },
+   " are all here, each with a door to its place in the walk."
+  ],
+  "tally": {
+   "title": "The works, by period",
+   "tag": "tag_chart",
+   "key": {
+    "documented": "14 documented",
+    "disputed": "4 disputed",
+    "qualified": "4 qualified",
+    "workshop": "1 from his workshop",
+    "copy": "1 copy",
+    "field": "the Last Supper on its own wall"
+   }
+  },
+  "door": {
+   "text": "See the paintings in the wing",
+   "note": "Free entry, no account.",
+   "leads": "The door opens the Leonardo wing in the picture room, where they all hang. Each work below has a door of its own."
+  }
+ },
+ "blocks": [
+  {
+   "type": "text",
+   "id": "how-sure",
+   "nav": "How sure",
+   "h": "How sure we are that they are his",
+   "paras": [
+    "Documented means his hand in the work is on record and the museum that holds it agrees. Disputed means scholars disagree, or the holder itself names another painter. Qualified means he is in it, but part of it is not his, or it is not a finished painting. Workshop means a pupil painted it beside him, from his design, and copy means a later work by other hands after something of his that is lost. The number moves because he left works unfinished, because his pupils painted from his designs well enough to pass as his, because old copies were sold as originals, and because new finds are rare: since the Benois Madonna turned up around 1900, exactly one painting has joined the list, the Salvator Mundi."
+   ]
+  },
+  {
+   "type": "periods",
+   "id": "works",
+   "nav": "The works",
+   "h": "The works, by period",
+   "intro": "The works are grouped by the wing's periods, by the year each was begun. Two periods of the wing have no entry (Rome, 1513 to 1516, and After 1519): no work here was begun in them, and the Amboise sentence says what he carried through Rome.",
+   "go": "See {work} in the wing",
+   "periods": [
+    {
+     "id": "florence-1452",
+     "h": "Vinci and Florence, 1452 to 1481",
+     "items": [
+      {
+       "id": "baptism-of-christ",
+       "work": "baptism-of-christ",
+       "title": "The Baptism of Christ",
+       "when": "About 1470 to 1475",
+       "where": "Gallerie degli Uffizi, Florence",
+       "who": "Documented, with a caution: this is Verrocchio's painting. The Uffizi names him first and Leonardo second, and Vasari recorded the young pupil's share, the angel on the left. Current studies give him more, the river behind, the glow of the light and Christ himself.",
+       "shows": "John pours water over Christ's head in the river Jordan, and two angels kneel at the left. The angel on the left, seen from behind and turning to look back over its shoulder, is Leonardo's.",
+       "worth_knowing": "Vasari wrote that the pupil painted his angel so well that it troubled his master, and a third, older painter probably worked on the panel too: God's hands and the dove at the top come from a weaker hand.",
+       "door": "the Baptism of Christ",
+       "shape": "tall",
+       "pic": "baptism-of-christ",
+       "alt": "The Baptism of Christ: John the Baptist pours water over Christ, who stands in a river, two angels kneeling at the left and a dove above. A reproduction.",
+       "src": [
+        "Public domain work. Reproduction from ",
+        {
+         "text": "Wikimedia Commons",
+         "href": "https://commons.wikimedia.org/wiki/File:Verrocchio_and_Leonardo,_Baptism_of_Christ,_c1470-75,_Uffizi.jpg"
+        },
+        ". The museum labels the reproduction, not the painting. Non-profit cultural use. {museum:it108}"
+       ]
+      },
+      {
+       "id": "annunciation",
+       "work": "annunciation",
+       "title": "Annunciation",
+       "when": "About 1472",
+       "where": "Gallerie degli Uffizi, Florence",
+       "who": "Documented. An early work, painted while he was still in Verrocchio's workshop. Nobody knows who ordered it or where it first hung: the Uffizi took it in from a church outside Florence in 1867.",
+       "shows": "Gabriel kneels on the grass of a walled garden and offers Mary a lily. She sits at a reading stand in front of a palace, her book open.",
+       "worth_knowing": "The angel's wings are modelled on those of a real bird of prey, and Mary's right arm looks too long: the Uffizi thinks he drew it for a viewer off to the right, where a side altar would put you.",
+       "door": "the Annunciation",
+       "shape": "wide",
+       "pic": "annunciation",
+       "alt": "Annunciation: a wide panel, the angel Gabriel kneeling in a garden at the left with a lily, Mary at the right seated at a reading stand before a palace wall. A reproduction.",
+       "src": [
+        "Photographed in September 2023. Public domain work. Reproduction from ",
+        {
+         "text": "Wikimedia Commons",
+         "href": "https://commons.wikimedia.org/wiki/File:Annunciation_(Leonardo_c._1472%E2%80%931476).jpg"
+        },
+        ". The museum labels the reproduction, not the painting. Non-profit cultural use. {museum:it108}"
+       ]
+      },
+      {
+       "id": "ginevra-de-benci",
+       "work": "ginevra-de-benci",
+       "title": "Ginevra de' Benci",
+       "when": "About 1474 to 1478",
+       "where": "National Gallery of Art, Washington",
+       "who": "Documented. Her identity is firm. Who ordered the portrait is not: it may mark her marriage, at 16, or the Venetian ambassador Bernardo Bembo, who admired her, ordered it. Laurel and palm were his emblem, and his own motto lies under hers in infrared images, so the back at least was probably his idea.",
+       "shows": "The front: Ginevra de' Benci, a young woman of a Florentine banking family, before a juniper bush, with a far, hazy view behind her. Juniper is ginepro in Italian, a pun on her name, and it stood for chastity. The back of the same panel, which the wing hangs beside the front: laurel and palm branches wreathed around a juniper sprig, and a ribbon with a Latin motto, beauty adorns virtue.",
+       "worth_knowing": "A strip was cut off the bottom of the panel, probably because of damage, and her hands were on it: a drawing by Leonardo hints at how they looked.",
+       "door": "Ginevra de' Benci",
+       "shape": "pair",
+       "pic": "ginevra-de-benci",
+       "alt": "Ginevra de' Benci: a young woman faces us before a dark juniper bush, a hazy view at the right. A reproduction.",
+       "pic_back": "ginevra-de-benci-back",
+       "alt_back": "The back of the panel: a wreath of laurel and palm around juniper, with a ribbon. A reproduction.",
+       "src": [
+        "Public domain reproductions from Wikimedia Commons, ",
+        {
+         "text": "the front",
+         "href": "https://commons.wikimedia.org/wiki/File:Ginevra_de%27_Benci_-_National_Gallery_of_Art.jpg"
+        },
+        " and ",
+        {
+         "text": "the back",
+         "href": "https://commons.wikimedia.org/wiki/File:Leonardo_da_Vinci_-_Wreath_of_Laurel,_Palm,_and_Juniper_with_a_Scroll_inscribed_Virtutem_Forum_Decorat_(reverse)_-_Google_Art_Project.jpg"
+        },
+        ". Creative Commons Zero (CC0). Courtesy National Gallery of Art, Washington, the back via Google Arts & Culture."
+       ]
+      },
+      {
+       "id": "madonna-of-the-carnation",
+       "work": "madonna-of-the-carnation",
+       "title": "Madonna of the Carnation",
+       "when": "About 1475",
+       "where": "Bayerische Staatsgemäldesammlungen, Alte Pinakothek, Munich",
+       "who": "Documented. One of his earliest panels, made in his years with Verrocchio, and an early trial of oil paint.",
+       "shows": "Mary, in a room with windows, holds a red carnation out to the child, who sits on a cushion in front of her. Mountains show through the windows.",
+       "worth_knowing": "Those are the first of the blue, far-off mountains we know from his hand, and the panel once belonged to Giulio de' Medici, who became Pope Clement VII.",
+       "door": "the Madonna of the Carnation",
+       "shape": "tall",
+       "pic": "madonna-of-the-carnation",
+       "alt": "Madonna of the Carnation: Mary seated with the child on a cushion in front of her, holding out a red carnation, windows with mountains behind. A reproduction.",
+       "src": [
+        "Public domain work. Reproduction from ",
+        {
+         "text": "Wikimedia Commons",
+         "href": "https://commons.wikimedia.org/wiki/File:LEONARDO-DA-VINCI_-_MADONNA-MIT-DER-NELKE-7779_917154_BSTGS.jpg"
+        },
+        ". The museum labels the reproduction, not the painting. Non-profit cultural use."
+       ]
+      },
+      {
+       "id": "annunciation-predella",
+       "work": "annunciation-predella",
+       "title": "Annunciation, predella panel",
+       "when": "About 1475 to 1478",
+       "where": "Musée du Louvre, Paris",
+       "who": "Disputed, and here the holder itself takes the other side: the Louvre labels it Lorenzo di Credi, who trained beside Leonardo under Verrocchio, with Leonardo as a former attribution. Scholars today split three ways, Lorenzo, Leonardo, or the two together, and the Louvre finds the large eyes, plainer faces and flatter folds closer to Lorenzo.",
+       "shows": "A small, wide panel: the angel kneels before Mary in a garden. It comes from the predella, the strip of small scenes under an altarpiece, of the altarpiece Verrocchio's workshop painted for Pistoia Cathedral, where the main panel still stands.",
+       "worth_knowing": "It reached the Louvre in 1863 from the collection of the Marquis Campana in Rome, sold off after his bankruptcy, and the Louvre filed it under Lorenzo di Credi that same year.",
+       "door": "the predella panel",
+       "shape": "wide",
+       "pic": "annunciation-predella",
+       "alt": "Annunciation, predella panel: a long, low panel with the angel kneeling at the left and Mary at the right, in a garden. A reproduction.",
+       "src": [
+        "Public domain work. Reproduction from ",
+        {
+         "text": "Wikimedia Commons",
+         "href": "https://commons.wikimedia.org/wiki/File:L%27Annonciation,_by_Leonardo_da_Vinci,_from_C2RMF_retouched.jpg"
+        },
+        ". The museum labels the reproduction, not the painting. Non-profit cultural use."
+       ]
+      },
+      {
+       "id": "benois-madonna",
+       "work": "benois-madonna",
+       "title": "Benois Madonna",
+       "when": "About 1478 to 1480",
+       "where": "State Hermitage Museum, Saint Petersburg. The Hermitage's own page lists it as not in the permanent display, so check before a visit.",
+       "who": "Documented. The paint was moved from its wooden panel onto canvas.",
+       "shows": "Mary is very young here, her dress and hair in the Florentine style of her day. She holds a small flower up to the baby, who grabs at it and steadies her hand. The petals form a cross, a sign of what is to come.",
+       "worth_knowing": "The Hermitage says her face comes from a living model, not an ideal, and take away the gold haloes and you have a mother playing with her son.",
+       "door": "the Benois Madonna",
+       "shape": "tall",
+       "pic": "benois-madonna",
+       "alt": "Benois Madonna: a young Mary, seated, holds a small flower out to the baby on her lap, who reaches for it, in a dark room with a small window. A reproduction.",
+       "src": [
+        "Public domain work. Reproduction from ",
+        {
+         "text": "Wikimedia Commons",
+         "href": "https://commons.wikimedia.org/wiki/File:Leonardo_Da_Vinci_-_Madonna_Benois.jpg"
+        },
+        ". The museum labels the reproduction, not the painting. Non-profit cultural use."
+       ]
+      },
+      {
+       "id": "saint-jerome",
+       "work": "saint-jerome",
+       "title": "Saint Jerome in the Wilderness",
+       "when": "About 1480 to 1490",
+       "where": "Pinacoteca Vaticana, Vatican City",
+       "who": "Documented. The Vatican says the attribution has never been doubted. It dates the panel about 1482, because it is so close in style to the Adoration of the Magi, while some historians put it nearer the 1490s.",
+       "shows": "The scholar saint as a penitent in the desert, thin, beardless and in rags, kneeling with a stone in his fist, raised to strike his chest, and a lion lying before him. It never got past the brown underdrawing on most of the panel, and a red patch stands for his cardinal's hat.",
+       "worth_knowing": "The panel was split into five pieces at some point. Napoleon's uncle, Cardinal Joseph Fesch, tracked them down and had them joined, and Pope Pius IX bought it in 1856.",
+       "door": "Saint Jerome",
+       "shape": "tall",
+       "pic": "saint-jerome",
+       "alt": "Saint Jerome in the Wilderness: a gaunt old man kneels in rags among rocks, a stone in his right hand, a lion lying in front of him, most of it brown underdrawing. A reproduction.",
+       "src": [
+        "Public domain work. Reproduction from ",
+        {
+         "text": "Wikimedia Commons",
+         "href": "https://commons.wikimedia.org/wiki/File:Leonardo_da_Vinci_%E2%80%94_Jerome.jpg"
+        },
+        ", ",
+        {
+         "text": "CC0",
+         "href": "https://creativecommons.org/publicdomain/zero/1.0/deed.en"
+        },
+        ". The museum labels the reproduction, not the painting. Non-profit cultural use."
+       ]
+      },
+      {
+       "id": "adoration-of-the-magi",
+       "work": "adoration-of-the-magi",
+       "title": "Adoration of the Magi",
+       "when": "About 1481 to 1482",
+       "where": "Gallerie degli Uffizi, Florence",
+       "who": "Documented. The monks of San Donato a Scopeto, an Augustinian house just outside Florence, ordered it in July 1481 for their high altar and gave him 30 months. He left for Milan with it unfinished, and in the end Filippino Lippi painted the altarpiece for them.",
+       "shows": "The three kings kneel with their gifts before Mary and the child, a crowd curving around them, and behind them ruins, a half-built structure with stairs, and horsemen in a fight. Most of it never got beyond drawing: some figures are only outlines, others nearly modelled.",
+       "worth_knowing": "The restoration of 2012 to 2017 showed that he worked the composition out on the panel itself, with no drawing on paper first, a rare thing even for him, and it took off a tinted varnish that had made the picture look nearly monochrome.",
+       "door": "the Adoration of the Magi",
+       "shape": "square",
+       "pic": "adoration-of-the-magi",
+       "alt": "Adoration of the Magi: Mary and the child at the centre of a crowd of kneeling and standing figures, mostly in brown underdrawing, with ruins, a staircase and horses behind. A reproduction.",
+       "src": [
+        "Monochrome 1901 printed facsimile, plate 10. It records the state and the tones of that year, not present colour. Public domain, via ",
+        {
+         "text": "Wikimedia Commons",
+         "href": "https://commons.wikimedia.org/wiki/File:Da_Vinci_-_masters_of_art_1901_-_Plate_10.png"
+        },
+        "."
+       ]
+      }
+     ],
+     "p": "He learned to paint in Verrocchio's workshop in Florence, and his first works come from there: a shared painting, an Annunciation, a portrait, two small Madonnas, a predella panel the Louvre now gives to a fellow pupil, and two panels he never finished."
+    },
+    {
+     "id": "milan-1482",
+     "h": "Milan, 1482 to 1499",
+     "items": [
+      {
+       "id": "virgin-of-the-rocks-louvre",
+       "work": "virgin-of-the-rocks-louvre",
+       "title": "Virgin of the Rocks, Louvre version",
+       "when": "About 1483 to 1494",
+       "where": "Musée du Louvre, Paris",
+       "who": "Documented. The contract is dated 25 April 1483: Leonardo and two Milanese painters, the brothers de Predis, would paint and gild the altarpiece of a confraternity's chapel in Milan. A long dispute over money followed. This is the earlier of the two versions, and how it reached France nobody knows: the first record of it is at Fontainebleau in 1625.",
+       "shows": "Mary kneels in a rocky grotto, one hand over the child Jesus, and with the other she draws the small John the Baptist closer. An angel supports Jesus and points a finger at John, and Jesus blesses him. Behind them, mountains and water.",
+       "worth_knowing": "Infrared images taken in 2009 show that the angel was first painted without the pointing hand, as in the London panel, and that Leonardo added the gesture near the end.",
+       "door": "the Virgin of the Rocks from the Louvre",
+       "shape": "tall",
+       "pic": "virgin-of-the-rocks-louvre",
+       "alt": "Virgin of the Rocks, Louvre version: Mary kneels in a dark grotto between two infants, an angel at the right points across the picture, mountains and water seen through the rocks. A reproduction.",
+       "src": [
+        "Public domain reproduction from ",
+        {
+         "text": "Wikimedia Commons",
+         "href": "https://commons.wikimedia.org/wiki/File:Leonardo_Da_Vinci_-_Vergine_delle_Rocce_(Louvre).jpg"
+        },
+        "."
+       ]
+      },
+      {
+       "id": "portrait-of-a-musician",
+       "work": "portrait-of-a-musician",
+       "title": "Portrait of a Musician",
+       "when": "About 1485",
+       "where": "Veneranda Biblioteca Ambrosiana, Milan",
+       "who": "Disputed, though mostly by older voices. The Ambrosiana gives it to Leonardo without a doubt, and most scholars today agree. The doubt began in 1890, when Ambrogio de Predis was proposed instead, and some still think Leonardo painted the head and another hand added the one holding the music.",
+       "shows": "A young man seen to the shoulders, turned a little away from us and looking to his right, with a folded sheet of music in his hand. Who he is, nobody knows: he passed for the Duke of Milan until a cleaning in 1905 uncovered the hand and the sheet, and the names proposed since include the cathedral's choirmaster Franchino Gaffurio and Leonardo's musician friend Atalante Migliorotti.",
+       "worth_knowing": "His two pupils are not the same size, the left one a touch smaller, as though caught just as the eye opens wider in fading light, a thing Leonardo described in his notes.",
+       "door": "the Musician",
+       "shape": "tall",
+       "pic": "portrait-of-a-musician",
+       "alt": "Portrait of a Musician: a young man, head and shoulders, turned to the right, holding up a folded sheet of music. A reproduction.",
+       "src": [
+        "Public domain work. Reproduction from ",
+        {
+         "text": "Wikimedia Commons",
+         "href": "https://commons.wikimedia.org/wiki/File:Leonardo_da_Vinci_-_Portrait_of_a_Musician_-_Pinacoteca_Ambrosiana.jpg"
+        },
+        ". The museum labels the reproduction, not the painting. Non-profit cultural use. {museum:it108}"
+       ]
+      },
+      {
+       "id": "lady-with-an-ermine",
+       "work": "lady-with-an-ermine",
+       "title": "Lady with an Ermine",
+       "when": "About 1489 to 1491",
+       "where": "Muzeum Narodowe w Krakowie, Muzeum Książąt Czartoryskich, Kraków",
+       "who": "Documented. Ordered by Ludovico Sforza, the museum says, when the sitter was about 16, and Poland's one painting by Leonardo.",
+       "shows": "Cecilia Gallerani, a young lady at the Milan court and the duke's mistress, turned three-quarters and looking past us, with a white ermine in her arms. Her name was proposed around 1900 and is accepted now, since a court poet wrote a poem on Leonardo's portrait of her. The ermine stands for the duke, who was called the White Ermine after an order he received in 1488, so the museum reads the picture as a double portrait.",
+       "worth_knowing": "In an upper corner someone wrote, around 1800, that the picture shows La Belle Ferronnière, the name of the next portrait on this page, so for a time the two traded names.",
+       "door": "the Lady with an Ermine",
+       "shape": "tall",
+       "pic": "lady-with-an-ermine",
+       "alt": "Lady with an Ermine: a young woman in a red dress and blue cloak, turned to the left, holds a white ermine against her chest, on a dark ground. A reproduction.",
+       "src": [
+        "National Museum in Kraków collection image. Public domain, via ",
+        {
+         "text": "Wikimedia Commons",
+         "href": "https://commons.wikimedia.org/wiki/File:Leonardo_da_Vinci_(1452-1519)_-_Lady_with_an_Ermine_%E2%80%93_Portrait_of_Cecilia_Gallerani_(ca._1473%E2%80%931536)_-_MNK_XII-209_-_National_Museum_Krak%C3%B3w.jpg"
+        },
+        "."
+       ]
+      },
+      {
+       "id": "la-belle-ferronniere",
+       "work": "la-belle-ferronniere",
+       "title": "La Belle Ferronnière",
+       "when": "About 1490 to 1497",
+       "where": "Musée du Louvre, Paris. The Louvre listed it as not on display when we checked.",
+       "who": "Documented. Who she is remains open: the oldest candidate is Lucrezia Crivelli, the duke's mistress from around 1495, named in a Latin poem that was copied into Leonardo's Codex Atlanticus, and others propose Beatrice d'Este, the duke's wife, or Isabella of Aragon.",
+       "shows": "A young woman at a stone parapet, her body turned one way and her head the other, in a red dress in the Milanese fashion with sleeves tied by ribbons, a thin cord across her forehead with a red stone. Her gaze slides just past you.",
+       "worth_knowing": "The name is a mistake, and the Louvre's own title says so: it was another portrait's name in the French royal collection, a print of this picture carried it by error, and in 1784 an inventory even called her Anne Boleyn.",
+       "door": "La Belle Ferronnière",
+       "shape": "tall",
+       "pic": "la-belle-ferronniere",
+       "alt": "La Belle Ferronnière: a young woman in a red dress, seen to the waist behind a stone parapet, a thin band with a jewel across her forehead, against a dark ground. A reproduction.",
+       "src": [
+        "Monochrome 1901 printed facsimile, plate 7. It records the state and the tones of that year, not present colour. Public domain, via ",
+        {
+         "text": "Wikimedia Commons",
+         "href": "https://commons.wikimedia.org/wiki/File:Da_Vinci_-_masters_of_art_1901_-_Plate_7.png"
+        },
+        "."
+       ]
+      },
+      {
+       "id": "madonna-litta",
+       "work": "madonna-litta",
+       "title": "Madonna Litta",
+       "when": "About 1490",
+       "where": "State Hermitage Museum, Saint Petersburg",
+       "who": "Disputed. The Hermitage lists it as Leonardo's, without a qualifier, and dates it to the mid-1490s. Many scholars think his pupil Giovanni Antonio Boltraffio painted it from Leonardo's design, and Martin Kemp has said that nearly all specialists see it that way.",
+       "shows": "Mary nurses the child in a dark room with two matching windows, each opening onto wide mountains. The Louvre has a study for it, the Hermitage says, and the name comes from the Milanese Duke Antonio Litta: the Hermitage bought it from his family in 1865.",
+       "worth_knowing": "When London's National Gallery borrowed it in 2011, the painting hung as a Leonardo while a drapery study for it in the same show was labelled Boltraffio.",
+       "door": "the Madonna Litta",
+       "shape": "tall",
+       "pic": "madonna-litta",
+       "alt": "Madonna Litta: Mary nurses the child in a dark room, a window on each side opening onto mountains. A reproduction.",
+       "src": [
+        "Public domain reproduction from ",
+        {
+         "text": "Wikimedia Commons",
+         "href": "https://commons.wikimedia.org/wiki/File:Leonardo_da_Vinci_-_The_Madonna_and_Child_(The_Litta_Madonna).jpg"
+        },
+        "."
+       ]
+      },
+      {
+       "id": "virgin-of-the-rocks-london",
+       "work": "virgin-of-the-rocks-london",
+       "title": "Virgin of the Rocks, London version",
+       "when": "About 1491 to 1508",
+       "where": "National Gallery, London",
+       "who": "Qualified attribution. The National Gallery gives it to Leonardo alone. The Louvre's curator sees pupils' work in parts, the infant John close to Boltraffio, and reads it as largely painted by the workshop under Leonardo's eye and with his own hand in places.",
+       "shows": "The same scene as the Paris panel, with differences: the angel no longer points, the figures wear thin gold haloes, and the infant John holds a reed cross. It was painted for the Milan chapel named in the 1483 contract, and the gallery found three phases of work: begun in the early 1490s, Christ's head turned to profile a few years on, and the blue sky added after Leonardo was called back in 1506.",
+       "worth_knowing": "The plants in the grotto are not real species: the gallery says they are mixtures of several different plants.",
+       "door": "the Virgin of the Rocks from London",
+       "shape": "tall",
+       "pic": "virgin-of-the-rocks-london",
+       "alt": "Virgin of the Rocks, London version: Mary kneels in a grotto between the two infants, an angel at the right, all with thin gold haloes, the infant John holding a reed cross. A reproduction.",
+       "src": [
+        "Public domain work. Reproduction from ",
+        {
+         "text": "Wikimedia Commons",
+         "href": "https://commons.wikimedia.org/wiki/File:Leonardo_da_vinci,_vergine_delle_rocce,_1491-92_poi_1506-08,_01.jpg"
+        },
+        ". The museum labels the reproduction, not the painting. Non-profit cultural use. The photograph includes its frame. Photo: Sailko, ",
+        {
+         "text": "CC BY 3.0",
+         "href": "https://creativecommons.org/licenses/by/3.0/"
+        },
+        "."
+       ]
+      }
+     ],
+     "p": "At the court of Ludovico Sforza he painted an altarpiece that exists in two versions, three portraits, a nursing Madonna that many think a pupil painted from his design, and, on the wall of a dining hall, the Last Supper, which closes this page."
+    },
+    {
+     "id": "florence-1500",
+     "h": "Venice, Florence and the Romagna, 1500 to 1506",
+     "items": [
+      {
+       "id": "yarnwinder-buccleuch",
+       "work": "yarnwinder-buccleuch",
+       "title": "Madonna of the Yarnwinder, Buccleuch version",
+       "when": "About 1501",
+       "where": "Buccleuch collection, on loan to National Galleries of Scotland, Edinburgh",
+       "who": "Qualified attribution. Two versions of this picture exist, and they hang side by side here. Scientific study found the same reworkings under the paint of both, made as they grew side by side in the studio, and each has passages of high quality, so Leonardo seems to have used one order to make a second picture for sale, and some scholars question how much of each is his.",
+       "shows": "Mary sits among rocks and reaches out as the child, twisting across her knees, grabs at a yarnwinder, the cross-shaped tool for winding yarn, here a sign of the cross to come. In April 1501 a friar wrote to Isabella d'Este that Leonardo was at work on a small Madonna with a yarnwinder for Florimond Robertet, secretary to the King of France.",
+       "worth_knowing": "In August 2003 two men who had come in as tourists took it off the wall at Drumlanrig Castle in Scotland, and the police found it four years later in a Glasgow law office.",
+       "door": "the Buccleuch Madonna of the Yarnwinder",
+       "shape": "tall",
+       "pic": "yarnwinder-buccleuch",
+       "alt": "Madonna of the Yarnwinder, Buccleuch version: Mary seated among rocks, the child across her lap holding a cross-shaped yarnwinder. A reproduction.",
+       "src": [
+        "Public domain reproduction from ",
+        {
+         "text": "Wikimedia Commons",
+         "href": "https://commons.wikimedia.org/wiki/File:Leonardo_da_Vinci_-_Madonna_of_the_Yarnwinder,_Buccleuch_version.jpg"
+        },
+        "."
+       ]
+      },
+      {
+       "id": "yarnwinder-lansdowne",
+       "work": "yarnwinder-lansdowne",
+       "title": "Madonna of the Yarnwinder, Lansdowne version",
+       "when": "About 1501",
+       "where": "Kenneth C. Griffin Collection, on loan to The Metropolitan Museum of Art, New York",
+       "who": "Qualified attribution. The Met's label reads Leonardo da Vinci and Studio. The two versions grew side by side, and by Martin Kemp's account one went to a French official and the other, he thinks, to the king himself.",
+       "shows": "The same scene as the Buccleuch panel: the child with the yarnwinder, Mary reaching toward him, rocks behind. It has hung in the Met's European paintings galleries since spring 2026, on long-term loan and without an announcement.",
+       "worth_knowing": "In May 2025 Martin Kemp wrote that the picture could no longer be traced, and a year later it was on a wall at the Met.",
+       "door": "the Lansdowne Madonna of the Yarnwinder",
+       "shape": "tall",
+       "pic": "yarnwinder-lansdowne",
+       "alt": "Madonna of the Yarnwinder, Lansdowne version: Mary seated with the child across her lap holding a cross-shaped yarnwinder, rocks behind. A reproduction.",
+       "src": [
+        "Photographed at the Louvre’s exhibition of 2019 to 2020. Public domain work. Reproduction from ",
+        {
+         "text": "Wikimedia Commons",
+         "href": "https://commons.wikimedia.org/wiki/File:Madonne_aux_fuseaux_(Lansdowne).jpg"
+        },
+        ". The museum labels the reproduction, not the painting. Non-profit cultural use."
+       ]
+      },
+      {
+       "id": "mona-lisa",
+       "work": "mona-lisa",
+       "title": "Mona Lisa",
+       "when": "About 1503 to 1519",
+       "where": "Musée du Louvre, Paris",
+       "who": "Documented. Begun in Florence around 1503, probably for her husband, the silk merchant Francesco del Giocondo, but Leonardo never handed it over: it travelled with him to Milan, to Rome and to France, he worked on it all the way, and he kept it until he died. The French king very probably bought it in 1518.",
+       "shows": "Lisa Gherardini, wife of Francesco del Giocondo, seated in a chair and turned toward us, one hand laid over the other, a low balustrade behind her and beyond it mountains, water, a winding road and a bridge. The Louvre treats other names for the sitter as a non-question: it is Lisa.",
+       "worth_knowing": "In 2005 a note turned up in the margin of a book in the university library at Heidelberg: a Florentine clerk wrote in October 1503 that Leonardo was working on Lisa del Giocondo's head, and that settled both the sitter and the date.",
+       "door": "the Mona Lisa",
+       "shape": "tall",
+       "pic": "mona-lisa",
+       "alt": "Mona Lisa: a woman seated with her hands folded, turned toward us, a thin veil over her hair, mountains and winding water behind her. A reproduction.",
+       "src": [
+        "Reproduction: C2RMF (Centre de recherche et de restauration des musées de France), a high-definition capture on Wikimedia Commons since 2011, cropped and relevelled there. Public domain work. Reproduction from ",
+        {
+         "text": "Wikimedia Commons",
+         "href": "https://commons.wikimedia.org/wiki/File:Mona_Lisa,_by_Leonardo_da_Vinci,_from_C2RMF_retouched.jpg"
+        },
+        ". The museum labels the reproduction, not the painting. Non-profit cultural use."
+       ]
+      },
+      {
+       "id": "virgin-and-child-with-st-anne",
+       "work": "virgin-and-child-with-st-anne",
+       "title": "The Virgin and Child with Saint Anne",
+       "when": "About 1503 to 1519",
+       "where": "Musée du Louvre, Paris",
+       "who": "Documented. No patron is on record. The Louvre thinks he began it without a commission, in Florence between about 1500 and 1503, as a showpiece of what he could do, and he kept it until his death. The French king very probably acquired it in 1518.",
+       "shows": "Anne sits with her grown daughter Mary on her lap, and Mary leans forward to hold the child, who has got hold of a lamb, the sign of his sacrifice. Behind them mountains and lakes, in front layered rock and water.",
+       "worth_knowing": "He died with it unfinished: the restoration of 2010 to 2012 found his last brushstrokes on Anne's robe, and Mary's face never received its final, finest modelling.",
+       "door": "the Saint Anne",
+       "shape": "tall",
+       "pic": "virgin-and-child-with-st-anne",
+       "alt": "The Virgin and Child with Saint Anne: two women, one seated on the other's lap, lean toward a child who holds a lamb, pale mountains behind. A reproduction.",
+       "src": [
+        "Public domain work. Reproduction from ",
+        {
+         "text": "Wikimedia Commons",
+         "href": "https://commons.wikimedia.org/wiki/File:Leonardo_da_vinci,_sant%27anna,_madonna_col_bambino_e_agnellino,_1503-1519_ca._01.jpg"
+        },
+        ". The museum labels the reproduction, not the painting. Non-profit cultural use. Photo: Francesco Bini, ",
+        {
+         "text": "CC BY-SA 4.0",
+         "href": "https://creativecommons.org/licenses/by-sa/4.0/"
+        },
+        "."
+       ]
+      },
+      {
+       "id": "anghiari-copy",
+       "work": "anghiari-copy",
+       "title": "The Fight for the Standard, after the Battle of Anghiari",
+       "when": "Sixteenth century, reworked in the early seventeenth century",
+       "where": "Musée du Louvre, Paris, Department of Prints and Drawings. Seen by appointment only, in the study room.",
+       "who": "Copy. A drawing, not a painting, and by other hands: the Louvre's artist line reads Rubens. An unknown Italian copied Leonardo's huge preparatory cartoon in the sixteenth century, others reworked it early in the seventeenth, and Rubens, who owned it, went over it heavily with pen and watercolour and added strips to make the sheet bigger. Rubens never set eyes on Leonardo's original.",
+       "shows": "Horsemen locked in a fight over a battle standard, horses and riders knotted into one mass: the centre of the Battle of Anghiari, the wall painting Leonardo began in 1504 to 1505 for the council hall of Florence's Palazzo della Signoria, now the Palazzo Vecchio. What he put on the wall was destroyed around 1560.",
+       "worth_knowing": "On the back of the Saint Anne panel in the Louvre, infrared imaging found three sketches, one of them a horse's head very like the right-hand horse of this battle.",
+       "door": "the Battle of Anghiari copy",
+       "shape": "wide",
+       "pic": "anghiari-copy",
+       "alt": "The Fight for the Standard: a tangle of horses and riders grappling for a flag, in pen, ink and wash with white highlights. A reproduction.",
+       "src": [
+        "A library slide cropped to the drawing, KU Leuven Libraries, via ",
+        {
+         "text": "Europeana",
+         "href": "https://www.europeana.eu/en/item/2024903/photography_ProvidedCHO_KU_Leuven_9991113610101488"
+        },
+        ". Public domain."
+       ]
+      }
+     ],
+     "p": "Back in Florence he began the Mona Lisa and the Saint Anne, both of which he kept for the rest of his life, painted a small Madonna for the French king's secretary in two versions, and started a battle on a wall of the council hall that is lost and known here through a copy."
+    },
+    {
+     "id": "milan-1506",
+     "h": "Milan again, 1506 to 1513",
+     "items": [
+      {
+       "id": "burlington-house-cartoon",
+       "work": "burlington-house-cartoon",
+       "title": "The Burlington House Cartoon",
+       "when": "About 1506 to 1508",
+       "where": "National Gallery, London",
+       "who": "Documented. Not a painting but a drawing, in charcoal and white chalk on paper, and the only large drawing by his hand that survives. Its date is argued over, the gallery saying about 1506 to 1508 and the Louvre's curator about 1500, as his first idea for the Saint Anne.",
+       "shows": "Mary sits on her mother Anne's lap and holds the child, who reaches toward the infant John, while Anne points upward. It is a full-size drawing for a painting that was never painted from it, since the sheet was never pricked through to transfer the design, so the gallery thinks it was made to show a patron.",
+       "worth_knowing": "Paper did not come in sheets this size in his day, so he glued many together, and the joins show up close.",
+       "door": "the Burlington House Cartoon",
+       "shape": "tall",
+       "pic": "burlington-house-cartoon",
+       "alt": "The Burlington House Cartoon: a large charcoal drawing of two women seated close together, one holding a child who reaches toward a second child, parts shaded and parts only outlined. A reproduction.",
+       "src": [
+        "Photogravure of 1898 in Eugène Müntz, Leonardo da Vinci, vol. II, cropped to the printed plate. Public domain work. Reproduction from the ",
+        {
+         "text": "Internet Archive",
+         "href": "https://archive.org/details/gri_33125000944922/page/n160/mode/1up"
+        },
+        ". The museum labels the reproduction, not the painting. Non-profit cultural use."
+       ]
+      },
+      {
+       "id": "la-scapigliata",
+       "work": "la-scapigliata",
+       "title": "La Scapigliata",
+       "when": "About 1506 to 1508",
+       "where": "Galleria Nazionale di Parma, Complesso della Pilotta, Parma",
+       "who": "Qualified attribution. The gallery gives it to Leonardo, calls Italian opinion almost unanimous, and dates it about 1492 to 1501, earlier than the wing, which follows a proposal of about 1508. The wing's reserve rests on what it is: a monochrome sketch in paint on a wood panel, neither drawing nor finished painting, which the gallery's own director doubted in 1896 because it had come from a painter's studio.",
+       "shows": "The head of a young woman looking down, her hair loose and blown about. Scapigliata is Italian for dishevelled. What it was for is unknown: a study for a painting of Leda, for the Saint Anne, for the Virgin of the Rocks in London, or something made for its own sake.",
+       "worth_knowing": "The gallery bought it in 1839 from the heirs of a painter, and the inventory that came with it called it simply a Madonna's head in chiaroscuro.",
+       "door": "La Scapigliata",
+       "shape": "tall",
+       "pic": "la-scapigliata",
+       "alt": "La Scapigliata: the head of a young woman looking down, her hair loose and tumbling, painted in brown monochrome on a small panel. A reproduction.",
+       "src": [
+        "Public domain work. Reproduction from ",
+        {
+         "text": "Wikimedia Commons",
+         "href": "https://commons.wikimedia.org/wiki/File:Head_of_a_Young_Woman,_called_%22Scapiliata%22.jpg"
+        },
+        ". The museum labels the reproduction, not the painting. Non-profit cultural use. {museum:it108}"
+       ]
+      },
+      {
+       "id": "saint-john-the-baptist",
+       "work": "saint-john-the-baptist",
+       "title": "Saint John the Baptist",
+       "when": "About 1508 to 1519",
+       "where": "Musée du Louvre, Paris",
+       "who": "Documented. No patron is known. He kept it to the end, and after the French king very probably bought it in 1518 it wandered: a French duke gave it to Charles I of England, it was sold after that king's execution, and Louis XIV bought it back for France in 1662.",
+       "shows": "A young John the Baptist comes out of the dark, smiling, his right hand pointing upward, a thin reed cross in his left, a spotted animal pelt over his body.",
+       "worth_knowing": "The pelt is spotted like a leopard's, not the camel hair of the Bible, which the Louvre calls unique for its time, and scans show he shifted the body's outline three times or more.",
+       "door": "Saint John the Baptist",
+       "shape": "tall",
+       "pic": "saint-john-the-baptist",
+       "alt": "Saint John the Baptist: a smiling young man emerges from a dark ground, his right hand raised with one finger pointing up, a thin cross in his left hand. A reproduction.",
+       "src": [
+        "Public domain work. Reproduction from ",
+        {
+         "text": "Wikimedia Commons",
+         "href": "https://commons.wikimedia.org/wiki/File:Leonardo_da_vinci,_san_giovanni_battista_indicante_verso_l%27alto,_1508-1519_ca._(louvre)_02.jpg"
+        },
+        ". The museum labels the reproduction, not the painting. Non-profit cultural use. Photo: Francesco Bini, ",
+        {
+         "text": "CC BY-SA 4.0",
+         "href": "https://creativecommons.org/licenses/by-sa/4.0/"
+        },
+        "."
+       ]
+      },
+      {
+       "id": "salvator-mundi",
+       "work": "salvator-mundi",
+       "title": "Salvator Mundi",
+       "when": "About 1499 to 1510",
+       "where": "Private collection, present location unconfirmed",
+       "who": "Disputed, and the most fought over of all. For Leonardo: Martin Kemp, the restorer who worked on it from 2005 to 2017, the National Gallery in London, which showed it as his in 2011, and the auction house that sold it. Against or unsure: several scholars, among them Carmen Bambach, who gives most of it to his pupil Boltraffio, and Frank Zöllner, who sees a fine workshop picture with Leonardo's hand probably in it, but so damaged and so heavily restored that no firm call is possible. The Louvre's laboratory studied it in 2018, and an unpublished Louvre booklet backs the attribution, but the painting never came to the Louvre's 2019 exhibition and the museum says the booklet does not officially exist.",
+       "shows": "Christ as saviour of the world, which is what the title means, facing us, his right hand raised in blessing, a clear crystal sphere in his left, dressed in blue with embroidered bands. Who ordered it is unknown, and so is where it is: it has not been shown in public since its sale in 2017, when it was said to be bound for the Louvre Abu Dhabi, and a report from 2024 says it may be in storage in Geneva.",
+       "worth_knowing": "In 1958 it sold at auction for 45 pounds as a school work, and in November 2017 it sold at Christie's in New York for about 450 million dollars, the highest price ever paid at auction for a work of art.",
+       "door": "the Salvator Mundi",
+       "shape": "tall",
+       "pic": "salvator-mundi",
+       "alt": "Salvator Mundi: Christ faces us in a blue robe, his right hand raised in blessing, a clear crystal sphere in his left hand. A reproduction.",
+       "src": [
+        "Restored painting photographed for Christie’s in 2017. Public domain work. Reproduction from ",
+        {
+         "text": "Wikimedia Commons",
+         "href": "https://commons.wikimedia.org/wiki/File:Leonardo_da_Vinci_or_Boltraffio_(attrib)_Salvator_Mundi_circa_1500.jpg"
+        },
+        ". The museum labels the reproduction, not the painting. Non-profit cultural use."
+       ]
+      }
+     ],
+     "p": "Back in Milan he finished the London Virgin of the Rocks, drew the large cartoon now in London, painted a head of a girl with loose hair and began the smiling Saint John, and the Salvator Mundi, its date as unsettled as its maker, stands here too."
+    },
+    {
+     "id": "amboise-1516",
+     "h": "Amboise, 1516 to 1519",
+     "items": [
+      {
+       "id": "bacchus",
+       "work": "bacchus",
+       "title": "Bacchus, formerly Saint John the Baptist",
+       "when": "About 1517 to 1520",
+       "where": "Musée du Louvre, Paris",
+       "who": "Workshop. The Louvre labels it workshop of Leonardo and attributes it to Francesco Melzi, the pupil who lived with him in France from 1516. The Louvre's suggestion is that Melzi painted it there for the French king, after Leonardo's small Saint John.",
+       "shows": "A young man sits in open country, smiling and pointing, ivy on his head, grapes and a staff in his hands, a spotted pelt around him. He was painted as John the Baptist.",
+       "worth_knowing": "In 1625 a visitor to Fontainebleau noted that the picture did not move one to devotion, and late in that century it was made over into the pagan god Bacchus: the grapes and the ivy were added and John's cross became a staff, as the restoration of 2017 to 2019 confirmed.",
+       "door": "the Bacchus",
+       "shape": "tall",
+       "pic": "bacchus",
+       "alt": "Bacchus: a young man sits in open country, crowned with ivy, pointing with one hand, a spotted pelt around him and grapes beside him. A reproduction.",
+       "src": [
+        "Public domain reproduction from ",
+        {
+         "text": "Wikimedia Commons",
+         "href": "https://commons.wikimedia.org/wiki/File:Bacchus_-_Leonardo_da_Vinci_workshop_-_Louvre_INV_780.jpg"
+        },
+        "."
+       ]
+      }
+     ],
+     "p": "After three years in Rome he went to France with the Mona Lisa, the Saint Anne and the Saint John still in his hands, and the one picture from these years in the wing is from his workshop, not from him."
+    },
+    {
+     "id": "own-wall",
+     "h": "On its own wall",
+     "items": [
+      {
+       "id": "last-supper",
+       "work": "field",
+       "title": "The Last Supper",
+       "when": "About 1494 to 1498",
+       "where": "Museo del Cenacolo Vinciano, Santa Maria delle Grazie, Milan",
+       "who": "Not in the picture room. A wall painting, still on the wall it was painted on, in the dining hall of a Dominican convent, and the wing shows a reproduction of it on a wall in the court at the original's size.",
+       "shows": "Christ in the middle and the apostles around him at a long table, painted for Ludovico Sforza, Duke of Milan, in tempera on dry plaster rather than as a fresco.",
+       "worth_knowing": "Because the paint sat on the wall instead of in it, it began to flake within about twenty years, and the rest of the story, the door cut where Christ's feet were, the bomb of 1943 and the twenty-year restoration, is on its own page.",
+       "door": "the Last Supper",
+       "shape": "wide",
+       "pic": "supper",
+       "alt": "The Last Supper: Christ in the middle of thirteen figures behind a long table, in a painted hall, as reproduced on a wall of the wing's court. A reproduction.",
+       "src": [
+        "Photograph by Paris Orlando, 2019, public domain (PD-Art), via ",
+        {
+         "text": "Wikimedia Commons",
+         "href": "https://commons.wikimedia.org/wiki/File:Last_Supper_by_Leonardo_da_Vinci.jpg"
+        },
+        ". {museum:it108}"
+       ],
+       "links": [
+        {
+         "text": "The Last Supper has a page of its own: why it began to flake within twenty years, and how to see it in Milan.",
+         "page": "supper"
+        }
+       ]
+      }
+     ]
+    }
+   ],
+   "links": [
+    {
+     "text": "Every size, from the smallest head to the Last Supper, is on the sizes page, drawn to one scale.",
+     "page": "sizes"
+    },
+    {
+     "text": "The paintings on the Leonardo da Vinci page",
+     "wing": "paintings"
+    }
+   ]
+  },
+  {
+   "type": "text",
+   "id": "where",
+   "nav": "Where to see them",
+   "h": "Where to see them",
+   "paras": [
+    "The Louvre in Paris holds the most: five of his paintings, the Virgin of the Rocks, La Belle Ferronnière, the Mona Lisa, the Saint John and the Saint Anne, and three related works, the predella panel, the Bacchus and the Anghiari drawing. Florence has three in one room of the Uffizi, London two in the National Gallery, Saint Petersburg two in the Hermitage, and one each hangs in Milan, Washington, Munich, the Vatican, Kraków, Edinburgh, New York and Parma. The Last Supper is in Milan on its own wall, by booking only. Three are hard to see: the Louvre listed La Belle Ferronnière as not on display when we checked, the Anghiari drawing is shown by appointment, and the Hermitage's page says the Benois Madonna is not in its permanent display. The Salvator Mundi has not been on public view since 2017."
+   ]
+  },
+  {
+   "type": "sources",
+   "id": "sources",
+   "nav": "Sources",
+   "h": "Sources",
+   "intro": "The titles, dates, holders and attributions follow the holders' own pages and records, read in October 2026: the Uffizi, the National Gallery of Art in Washington, the Alte Pinakothek, the Hermitage, the Vatican Museums, the Louvre, the Ambrosiana, the National Museum in Kraków, the National Gallery in London, the Pilotta in Parma and the Cenacolo Vinciano. For the count and the debates: the published views of the scholars Martin Kemp and Frank Zöllner, and the press reports named in the research. Where a holder's view differs from the wing's label, the entry says so.",
+   "notes": [],
+   "contact": "If you find a wrong date, name or sentence here, tell us and we will put it right.",
+   "contact_link": "To the legal notice",
+   "what_link": "What this museum is"
+  },
+  {
+   "type": "close",
+   "id": "enter",
+   "nav": "",
+   "h": "See the paintings in the wing",
+   "p": "This door leads into the picture room of the Leonardo wing, where all of them hang as reproductions close to their real size. From there the walk goes on to the mechanism hall, the reading table and his last house.",
+   "door": {
+    "text": "Enter the museum",
+    "note": "Free entry, no account."
+   }
+  }
+ ]
+}
