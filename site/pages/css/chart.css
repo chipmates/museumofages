@@ -42,9 +42,11 @@
 .sp-frame__note{flex-basis:100%;font-family:var(--sans);font-size:.8125rem;line-height:1.45;color:var(--ink-soft);text-wrap:pretty}
 /* A contents label that wraps keeps air above and below it, so two short rows never read as one. */
 .sp-toc a{display:flex;padding:6px 0;line-height:1.3}
-/* A long answer takes the small phone's type a step early, so the first door still shows on a 360 by 780 screen. */
+/* A long answer takes the small phone's type a step early, so the first door still shows on a 360 by 780 screen. Its
+   heading sets a hair tighter: a first line that misses the column by a pixel would cost a whole line. */
 @media (min-width:360px) and (max-width:389px){
   .sp-top--long{gap:12px}
+  .sp-top--long h1{letter-spacing:-.02em}
   .sp-top--long .sp-answer{margin-top:6px;font-size:1rem}
   .sp-top--long .sp-frame .sp-frame__label{margin-top:8px;padding-top:7px}
 }
