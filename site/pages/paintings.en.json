@@ -239,7 +239,7 @@
   "burlington_line": "The museum labels the reproduction, not the drawing.",
   "salvator_line": "The photograph, taken for Christie's in 2017 after the restoration, showed the frame. Here it is cropped to the painting.",
   "ginevra_front_line": "The front: a public domain reproduction from Wikimedia Commons, courtesy of the National Gallery of Art, Washington, under CC0.",
-  "ginevra_back_line": "The back: a public domain reproduction from Wikimedia Commons, via Google Arts & Culture, courtesy of the National Gallery of Art, Washington, under CC0.",
+  "ginevra_back_line": "The back: via Google Arts & Culture, courtesy of the National Gallery of Art, Washington. Public domain work. Reproduction from Wikimedia Commons. The museum labels the reproduction, not the painting. Non-profit cultural use.",
   "class_documented": "Documented",
   "class_disputed": "Disputed",
   "class_qualified": "Qualified attribution",
@@ -391,17 +391,12 @@
         {
          "br": true
         },
-        "The back: a public domain reproduction from ",
+        "The back: via Google Arts & Culture, courtesy of the National Gallery of Art, Washington. Public domain work. Reproduction from ",
         {
          "text": "Wikimedia Commons",
          "href": "https://commons.wikimedia.org/wiki/File:Leonardo_da_Vinci_-_Wreath_of_Laurel,_Palm,_and_Juniper_with_a_Scroll_inscribed_Virtutem_Forum_Decorat_(reverse)_-_Google_Art_Project.jpg"
         },
-        ", via Google Arts & Culture, courtesy of the National Gallery of Art, Washington, under ",
-        {
-         "text": "CC0",
-         "href": "https://creativecommons.org/publicdomain/zero/1.0/deed.en"
-        },
-        "."
+        ". The museum labels the reproduction, not the painting. Non-profit cultural use."
        ]
       },
       {

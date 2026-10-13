@@ -616,6 +616,14 @@ def plate_problems(src, names, lang, labels=None):
     known, problems = plates(), []
     links = {part["href"] for part in src if isinstance(part, dict) and "href" in part}
     words = "".join(part if isinstance(part, str) else part.get("text", " ") for part in src).replace(LIB.NBSP, " ")
+    # a source line broken in two (a work's two faces) holds one line per plate: each plate's tier is read in its own
+    segments, cur = [], ""
+    for part in src + [{"br": True}]:
+        if isinstance(part, dict) and part.get("br"):
+            segments.append(cur.replace(LIB.NBSP, " "))
+            cur = ""
+        else:
+            cur += part if isinstance(part, str) else part["text"]
     for name in names:
         plate = known.get(name)
         if plate is None:
@@ -631,13 +639,15 @@ def plate_problems(src, names, lang, labels=None):
             problems.append(f"{name}: the plate's record asks for the Italian code's line ({{museum:it108}})")
         tier = read.get("tier") or plate["tier"]
         tier = tier if tier in TIER_LINE else "TIER2"
+        mine = labels.get(plate.get("line") or "")
+        own = next((s for s in segments if mine and mine in s), words) if len(segments) > 1 else words
         want = list(TIER_LINE[tier][lang])
         if tier == "TIER2" and plate.get("tier_line"):
             want[2] = labels.get(plate["tier_line"]) or f"labels.{plate['tier_line']}"
         for line in want:
-            if (line.lower() not in words.lower()) if tier == "TIER1" else (line not in words):
+            if (line.lower() not in own.lower()) if tier == "TIER1" else (line not in own):
                 problems.append(f"{name}: a plate of tier {plate['tier'] or 'none'} carries {line!r} in its source line")
-        bare = BARE_LINE[lang].search(words)
+        bare = BARE_LINE[lang].search(own)
         if bare and tier == "TIER2":
             problems.append(f"{name}: {bare.group(0)!r} is the bare line of a plate without a tier, which carries the second tier's line")
         if plate.get("line") and not (labels.get(plate["line"]) and labels[plate["line"]] in words):

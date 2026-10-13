@@ -236,10 +236,10 @@
   "crumb_here": "Gemälde",
   "tag_still": "Reproduktion",
   "still_open": "Ein Standbild aus dem Film des Flügels. Die Wand trägt",
-  "burlington_line": "Das Museum beschriftet die Reproduktion, nicht die Zeichnung.",
+  "burlington_line": "Das Museum kennzeichnet die Reproduktion, nicht die Zeichnung.",
   "salvator_line": "Das Foto, 2017 nach der Restaurierung für Christie's aufgenommen, zeigte den Rahmen. Hier ist es auf das Gemälde beschnitten.",
-  "ginevra_front_line": "Die Vorderseite: eine gemeinfreie Reproduktion von Wikimedia Commons, mit Dank an die National Gallery of Art, Washington, unter CC0.",
-  "ginevra_back_line": "Die Rückseite: eine gemeinfreie Reproduktion von Wikimedia Commons, über Google Arts & Culture, mit Dank an die National Gallery of Art, Washington, unter CC0.",
+  "ginevra_front_line": "Die Vorderseite: eine gemeinfreie Reproduktion aus Wikimedia Commons, mit Dank an die National Gallery of Art, Washington, unter CC0.",
+  "ginevra_back_line": "Die Rückseite: über Google Arts & Culture, mit Dank an die National Gallery of Art, Washington. Gemeinfreies Werk. Reproduktion aus Wikimedia Commons. Das Museum kennzeichnet die Reproduktion, nicht das Gemälde. Kulturelle Nutzung ohne Gewinnabsicht.",
   "class_documented": "Belegt",
   "class_disputed": "Umstritten",
   "class_qualified": "Zuschreibung mit Vorbehalt",
@@ -377,7 +377,7 @@
        "pic_back": "ginevra-de-benci-back",
        "alt_back": "Die Rückseite der Tafel: ein Kranz aus Lorbeer und Palme um einen Wacholderzweig, mit einem Schriftband, auf bräunlichem Grund. Eine Reproduktion.",
        "src": [
-        "Die Vorderseite: eine gemeinfreie Reproduktion von ",
+        "Die Vorderseite: eine gemeinfreie Reproduktion aus ",
         {
          "text": "Wikimedia Commons",
          "href": "https://commons.wikimedia.org/wiki/File:Ginevra_de%27_Benci_-_National_Gallery_of_Art.jpg"
@@ -391,17 +391,12 @@
         {
          "br": true
         },
-        "Die Rückseite: eine gemeinfreie Reproduktion von ",
+        "Die Rückseite: über Google Arts & Culture, mit Dank an die National Gallery of Art, Washington. Gemeinfreies Werk. Reproduktion aus ",
         {
          "text": "Wikimedia Commons",
          "href": "https://commons.wikimedia.org/wiki/File:Leonardo_da_Vinci_-_Wreath_of_Laurel,_Palm,_and_Juniper_with_a_Scroll_inscribed_Virtutem_Forum_Decorat_(reverse)_-_Google_Art_Project.jpg"
         },
-        ", über Google Arts & Culture, mit Dank an die National Gallery of Art, Washington, unter ",
-        {
-         "text": "CC0",
-         "href": "https://creativecommons.org/publicdomain/zero/1.0/deed.en"
-        },
-        "."
+        ". Das Museum kennzeichnet die Reproduktion, nicht das Gemälde. Kulturelle Nutzung ohne Gewinnabsicht."
        ]
       },
       {
@@ -810,7 +805,7 @@
          "text": "Internet Archive",
          "href": "https://archive.org/details/gri_33125000944922/page/n160/mode/1up"
         },
-        ". Das Museum beschriftet die Reproduktion, nicht die Zeichnung. Kulturelle Nutzung ohne Gewinnabsicht."
+        ". Das Museum kennzeichnet die Reproduktion, nicht die Zeichnung. Kulturelle Nutzung ohne Gewinnabsicht."
        ]
       },
       {
