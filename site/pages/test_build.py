@@ -468,6 +468,20 @@ class Case(unittest.TestCase):
         self.assertTrue(kept)
         shutil.rmtree(out)
 
+    def test_a_link_of_the_contents_holds_its_words_in_one_box(self):
+        """A link of the page's contents is a flex box: words with a name's span in them stand in one span."""
+        self.topic_page("t_rex")
+        out, written = self.build()
+        wrapped = 0
+        for path in written:
+            nav = re.search(r'<nav class="sp-toc".*?</nav>', path.read_text(encoding="utf-8"), re.S)
+            for words in re.findall(r'<a href="#[\w-]+">(.*?)</a>', nav.group(0) if nav else ""):
+                if "<" in words:
+                    self.assertRegex(words, r"^<span>(?:[^<]|<(span|i) class=\"[\w ]+\">[^<]*</\1>)*</span>$")
+                    wrapped += 1
+        self.assertGreaterEqual(wrapped, 4)
+        shutil.rmtree(out)
+
     def test_a_t_rex_number_stands_only_with_the_words_that_say_whose_it_is(self):
         """The page names our pose's 11.4 m, the 15 tonnes of a model, the 90 percent by bone volume, the 13 m of the news,
         the 9 of a range and the lips as most likely on purpose: without those words the same fields stop the build."""

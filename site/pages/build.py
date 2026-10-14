@@ -1509,7 +1509,12 @@ def render(page, lang, data, shared, out_root):
                        "field": titles[field["n"]] if field else "", "alt": data["top"].get("figure", {}).get("alt", ""),
                        "titles": titles}
     blocks = "\n\n".join(block_html(b) for b in data["blocks"])
-    toc = "\n".join(fill(parts["toc_item"], {"id": esc(b["id"]), "nav": rich(b["nav"])})
+    def toc_words(nav):
+        # a link of the list is a flex box, where a name's span would stand as an item of its own: one span holds them all
+        words = rich(nav)
+        return f"<span>{words}</span>" if "<" in words else words
+
+    toc = "\n".join(fill(parts["toc_item"], {"id": esc(b["id"]), "nav": toc_words(b["nav"])})
                     for b in data["blocks"] if b.get("nav"))
 
     # The wing's name stays on one line in the h1. Where it is long the h1 is set smaller on a
