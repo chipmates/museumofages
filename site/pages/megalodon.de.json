@@ -1,5 +1,5 @@
 {
- "_note": "DIE WORTE der Megalodon-Seite, Deutsch. Wort für Wort aus der WORDS-Datei des Schreibers; der Titel ist die erste Option, die Zeile in der Liste der Tierseiten ist die Beschreibung nach ihren ersten Worten. Unter der Antwort steht eine kurze Zeile zum Flügel und der Link zum offenen Flügel, wo sonst die Tür steht; der Abschnitt Im Museum trägt den Rest. Jede Zahl wie geschrieben. Die leeren Zellen der Tabelle sind die des Schreibers: es gibt keine belegte Zahl.",
+ "_note": "DIE WORTE der Megalodon-Seite, Deutsch. Wort für Wort aus der WORDS-Datei des Schreibers; der Titel ist die erste Option, die Zeile in der Liste der Tierseiten ist die Beschreibung nach ihren ersten Worten. Unter der Antwort steht eine kurze Zeile zum Flügel und der Link zum offenen Flügel, wo sonst die Tür steht; der Abschnitt Im Museum trägt den Rest. Jede Zahl wie geschrieben. Die leeren Zellen der Tabelle sind die des Schreibers: es gibt keine belegte Zahl. meta.credit: der Nachweis, den jedes Bild der Seite in seinen strukturierten Daten trägt (creditText), wie der Schreiber ihn gibt.",
  "page": {
   "id": "animals-megalodon",
   "wing": "animals",
@@ -56,10 +56,11 @@
   }
  },
  "meta": {
-  "title": "Megalodon Größe: etwa 16 m, bis etwa 20 m | Museum of Ages",
+  "title": "Megalodon-Größe: etwa 16 m, vielleicht 20 m | Museum of Ages",
   "description": "Größe des Megalodons: etwa 16 m nach der einen langen Wirbelsäule, die größten vielleicht etwa 20 m. Größenvergleich mit Mensch, Weißem Hai und Blauwal.",
-  "og_title": "Megalodon Größe: etwa 16 m, bis etwa 20 m",
-  "og_image_alt": "Ein Hai mit offenem Maul von der Seite, oben dunkel, unten hell, neben einem grauen Menschen, der winzig daneben steht."
+  "og_title": "Megalodon-Größe: etwa 16 m, vielleicht 20 m",
+  "og_image_alt": "Ein Hai mit offenem Maul von der Seite, oben dunkel, unten hell, neben einem grauen Menschen, der winzig daneben steht.",
+  "credit": "Museum of Ages, Körperform nach Shimada und anderen 2025 (CC BY 4.0)"
  },
  "labels": {
   "crumbs": "Du bist hier",
@@ -137,7 +138,15 @@
       "Unser Megalodon",
       "etwa 16 m",
       "etwa 30 t (Modell 2025), etwa 61 t (Modell 2022)",
-      "zwei Modelle zu einer Wirbelsäule"
+      "zwei Modelle zu einer Wirbelsäule, Gewicht umstritten"
+     ]
+    },
+    {
+     "cells": [
+      "Die gefundene Wirbelsäule, Brüssel",
+      "etwa 11 m in einer Reihe, 141 Wirbel",
+      "",
+      "gemessen, die Wirbel aneinandergelegt"
      ]
     },
     {
@@ -182,6 +191,14 @@
     },
     {
      "cells": [
+      "Die Zähne in unserem Modell",
+      "vorne etwa 10 cm hoch",
+      "",
+      "nach einem echten Gebiss aus einem anderen Fund gebaut"
+     ]
+    },
+    {
+     "cells": [
       "Der Mensch",
       "1,70 m",
       "",
@@ -203,12 +220,13 @@
     "tag": "tag_built",
     "what": "Dasselbe Tier als Skelett. Wirbel und Zähne sind nach Fossilien gebaut, alles andere ist ergänzt und als Ergänzung erkennbar.",
     "alt": "Das Skelett von der Seite, eine lange Reihe von Wirbeln und ein Gebiss nach Fossilien, Kopf, Flossen und Schwanz als erkennbar ergänzte Formen.",
-    "key": "Dunkelbraun: die fossilen Wirbel. Gold: die Zähne. Hell: das Ergänzte.",
+    "key": "Dunkelbraun: die fossilen Wirbel. Gold: die Zähne. Hell: das Ergänzte, auch die Stücke, die zerbrochene Wirbel vervollständigen.",
     "close": {
      "pic": "skeleton_head",
      "tag": "tag_built",
      "what": "Schädel und vorderer Teil der Wirbelsäule aus der Nähe, mit dem Menschen. Die Wirbel sind nach den Fossilien gebaut, Schädel und Kiefer sind ergänzt, die Zähne sind nach einem anderen Fund gebaut, einem echten Gebiss in seiner eigenen Größe.",
-     "alt": "Der vordere Teil des Skeletts von der Seite, ein heller, ergänzter Schädel mit Kiefer und goldenen Zähnen, dann eine Reihe dunkler Wirbel, daneben der graue Mensch."
+     "alt": "Der vordere Teil des Skeletts von der Seite, ein heller, ergänzter Schädel mit Kiefer und goldenen Zähnen, dann eine Reihe dunkler Wirbel, daneben der graue Mensch.",
+     "key": "Dunkelbraun: die fossilen Wirbel. Gold: die Zähne. Hell: das Ergänzte, auch die Stücke, die zerbrochene Wirbel vervollständigen."
     }
    }
   },
@@ -228,7 +246,7 @@
    "h": "Was gefunden wurde",
    "paras": [
     "In Brüssel, im Royal Belgian Institute of Natural Sciences, liegen 141 lose Wirbel eines einzigen Hais, Inventarnummer IRSNB P 9893, gefunden bei Antwerpen in den 1860er Jahren. Der größte misst 15,5 cm, in einer Reihe ergeben sie etwa 11 m. Sie verraten die Länge des Rumpfs, aber nichts über den Kopf und nichts über die Dicke des Körpers. Zähne lagen nicht dabei, darum ist selbst der Name Megalodon für dieses Tier nur erschlossen, nicht belegt.",
-    "In Dänemark wurden 1978 bei Gram Reste von etwa 20 Wirbeln ausgegraben, 1989 bei einem Umzug des Lagers beschädigt und lange für verloren gehalten. Geblieben sind zwei angebrochene Wirbel und viele Splitter. Der größere misst 23 cm, und auf ihm beruht die größte Schätzung in der Liste weiter unten.",
+    "In Dänemark wurden 1978 bei Gram Reste von etwa 20 Wirbeln ausgegraben, 1989 bei einem Umzug des Lagers beschädigt und lange für verloren gehalten. Geblieben sind zwei zerbrochene Wirbel und viele Splitter. Der größere misst 23 cm, und auf ihm beruht die größte Schätzung in der Liste weiter unten.",
     "Ein Skelett des Megalodons hat niemand gefunden, und auch kein Gebiss, in dem die Zähne noch an ihrem Platz sitzen. Jede Zahnreihe, die du je gesehen hast, ist eine Anordnung, auch unsere."
    ]
   },
@@ -240,7 +258,7 @@
    "intro": "Zu jeder Zahl: woher sie kommt und was die Forschung heute von ihr hält.",
    "rows": [
     {
-     "term": "15 bis 18 m",
+     "term": "14 bis 18 m",
      "text": "Die Zahnmethode. Die Krone eines Zahns, mit dem Verhältnis beim Weißen Hai auf den Körper hochgerechnet. So kamen Studien von 1996 bis 2019 auf 14 bis 18 m, und das American Museum of Natural History nennt bis heute rund 15 m. Nach der Studie von 2025 liefern solche Zahnregeln zu kurze oder unzuverlässige Längen."
     },
     {
@@ -249,7 +267,7 @@
     },
     {
      "term": "24 bis 25 m und etwa 94 t",
-     "text": "Shimada und andere, 2025 und 2026. Das Modell aus Brüssel, hochgerechnet auf einen dänischen Wirbel von 23 cm: 24,3 m, mit dem schlanken Körper etwa 94 t. Die Autoren nennen das hypothetisch. Es beruht auf dem größeren von zwei angebrochenen dänischen Wirbeln und einem einzigen Rechenschritt."
+     "text": "Shimada und andere, 2025 und 2026. Das Modell aus Brüssel, hochgerechnet auf einen dänischen Wirbel von 23 cm: 24,3 m, mit dem schlanken Körper etwa 94 t. Die Autoren nennen das hypothetisch. Es beruht auf dem größeren von zwei zerbrochenen dänischen Wirbeln und einem einzigen Rechenschritt."
     },
     {
      "term": "50 bis 60 oder mehr Tonnen",
@@ -257,7 +275,7 @@
     },
     {
      "term": "Der Kiefer von 1909",
-     "text": "Im American Museum of Natural History wurden 1909 fossile Zähne in einen nachgebauten Kiefer gesetzt, nach dem Weißen Hai vergrößert, so groß, dass Menschen darin Platz hatten. Das Museum selbst sagt heute, der Nachbau habe die Größe weit überschätzt. Wie Fachleute später feststellten, war jeder Zahn den größten Vorderzähnen nachgebildet, auch wo im Kiefer kleine sitzen."
+     "text": "Im American Museum of Natural History wurden 1909 fossile Zähne in einen nachgebauten Kiefer gesetzt, nach dem Weißen Hai vergrößert. Das Museum selbst sagt heute, der Nachbau habe die Größe weit überschätzt. Wie Fachleute später feststellten, saßen Zähne von der Größe der Vorderzähne im ganzen Kiefer, auch dort, wo kleine hingehören."
     }
    ]
   },
@@ -283,6 +301,10 @@
     {
      "q": "Megalodon gegen den Blauwal: Wer war größer?",
      "a": "Der Blauwal. Die meisten ausgewachsenen Blauwale sind 23 bis 27 m lang, die größten etwa 30 m, und die US-Meeresbehörde NOAA nennt ihn das größte Tier, das je gelebt hat, soweit man weiß. Unser Megalodon käme auf gut die Hälfte des größten. Selbst der größte vermessene Walhai war mit 18,8 m länger und mit etwa 34 t ungefähr so schwer wie das schlanke Modell des Megalodons."
+    },
+    {
+     "q": "Wie groß waren die Zähne des Megalodons?",
+     "a": "Die größten gefundenen sind mindestens 16 cm hoch, Museen nennen fast 18 cm, etwa dreimal so hoch wie ein Zahn des Weißen Hais mit etwa 5 cm. Die Zähne in unserem Modell sind nach einem echten Gebiss aus einem anderen Fund gebaut, UF-VP-311000, vorne etwa 10 cm hoch und zu den Mundwinkeln hin kleiner."
     },
     {
      "q": "Wann und warum starb der Megalodon aus?",

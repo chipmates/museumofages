@@ -1264,8 +1264,10 @@ def render(page, lang, data, shared, out_root):
                 topic = shared["topics"].get(item["page"])
                 if not topic or lang not in shared["data"][item["page"]]:
                     raise SystemExit(f"{page}.{lang}: the list names {item['page']!r}, which is no topic page of this wing in {lang}")
+                # the registry's line binds a number to its unit as the page's own words do
+                line = re.sub(rf"(\d) (?={MORE_UNITS}\b)", "\\1" + LIB.NBSP, topic["line"][lang])
                 items.append(fill(parts["page_item"], {"href": page_href(item["page"]), "name": rich(topic["name"][lang]),
-                                                       "line": rich(topic["line"][lang]),
+                                                       "line": rich(LIB.bind(line, lang)),
                                                        "html.pic": pics.picture(item["pic"], esc(item["alt"])) if item.get("pic") else ""}))
             values["html.items"] = "\n".join(items)
         elif kind == "chart":
@@ -1442,7 +1444,7 @@ def render(page, lang, data, shared, out_root):
     text = with_policy(fill(parts["page"], values))
     if chrome["use_pictures"]:
         text = LIB.with_picture_rights(text, urls[lang], LIB.picture_terms(lang, chrome["use_pictures"]),
-                                       LIB.picture_terms(lang, chrome["use_pictures"], map_data=True))
+                                       LIB.picture_terms(lang, chrome["use_pictures"], map_data=True), data["meta"].get("credit"))
     files = {f"img/{f}": pics.find(f) for name in sorted(pics.used) for f in pics.files(name)}
     files[f"img/{og['file']}"] = pics.find(og["file"])
     if frame.get("still"):

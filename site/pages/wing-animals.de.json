@@ -1,5 +1,5 @@
 {
- "_note": "DIE WORTE der Liste der Tierseiten, Deutsch. Wort für Wort aus dem Abschnitt zum Hub in der WORDS-Datei des Schreibers. Jede Seite der Liste steht mit Namen und Zeile aus dem Register.",
+ "_note": "DIE WORTE der Liste der Tierseiten, Deutsch. Wort für Wort aus dem Abschnitt zum Hub in der WORDS-Datei des Schreibers. Jede Seite der Liste steht mit Namen und Zeile aus dem Register. meta.credit: der Nachweis der Megalodon-Seite für dieselben Bilder, die auch die Liste zeigt.",
  "page": {
   "id": "animals",
   "wing": "animals",
@@ -27,7 +27,8 @@
   "title": "Tiere: wie groß sie waren | Museum of Ages",
   "description": "Wie groß die Tiere des Museums waren, jedes neben einem Menschen von 1,70 m im selben Maßstab, in eigenen Bildern. Die erste Seite: der Megalodon.",
   "og_title": "Tiere: wie groß sie waren",
-  "og_image_alt": "Ein Hai mit offenem Maul von der Seite, oben dunkel, unten hell, neben einem grauen Menschen, der winzig daneben steht."
+  "og_image_alt": "Ein Hai mit offenem Maul von der Seite, oben dunkel, unten hell, neben einem grauen Menschen, der winzig daneben steht.",
+  "credit": "Museum of Ages, Körperform nach Shimada und anderen 2025 (CC BY 4.0)"
  },
  "labels": {
   "crumbs": "Du bist hier",

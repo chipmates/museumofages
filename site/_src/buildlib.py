@@ -281,12 +281,13 @@ def free_pictures_of(text, page_url, data):
     return list(dict.fromkeys(u for u in found if picture_stem(u) in FREE_PICTURES))
 
 
-def with_picture_rights(text, page_url, terms, map_terms=None):
+def with_picture_rights(text, page_url, terms, map_terms=None, credit=None):
     """Gives each of the museum's own pictures that the page holds (free_pictures_of) its licence data, once per
     picture: an ImageObject the page already describes takes the data, any other gets one of its own. terms holds
     license, acquireLicensePage, creditText, copyrightNotice and creator. A still of the house that the page already
     describes takes map_terms, the same with the map data's credit. A picture that rests on another's work (credits in
-    free-pictures.json) adds that work's credit to its own. A page without structured data stays as it is."""
+    free-pictures.json) adds that work's credit to its own, in the page's own words and language where the page gives
+    them (credit). A page without structured data stays as it is."""
     block = LD_BLOCK.search(text)
     if not block:
         return text
@@ -310,9 +311,15 @@ def with_picture_rights(text, page_url, terms, map_terms=None):
         image.setdefault("contentUrl", url)
         image.update(terms)
     for image in image_objects(data):
-        credit = PICTURE_CREDITS.get(picture_stem(image.get("contentUrl") or image.get("url") or ""))
-        if credit and "creditText" in image and credit not in image["creditText"]:
-            image["creditText"] += f", {credit}"
+        owed = PICTURE_CREDITS.get(picture_stem(image.get("contentUrl") or image.get("url") or ""))
+        if not owed or "creditText" not in image:
+            continue
+        # the page's own line for that credit, in its language, after the museum's full credit; a line that starts
+        # with the museum's name does not repeat it
+        head = image["creditText"].split(", ", 1)[0] + ", "
+        own = credit[len(head):] if credit and credit.startswith(head) else credit
+        if (own or owed) not in image["creditText"]:
+            image["creditText"] += f", {own or owed}"
     body = json.dumps(data, ensure_ascii=False, separators=(",", ":")).replace("</", "<\\/")
     return text[:block.start(2)] + body + text[block.end(2):]
 

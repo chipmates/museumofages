@@ -1,5 +1,5 @@
 {
- "_note": "THE WORDS of the megalodon page, English. Poured word for word from the writer's WORDS file; the title is its first option, the list's line on the animals' page is the description after its first words. Under the answer stands one short line on the wing and the link to the open wing, where a door would stand; the section In the museum carries the rest. Every number as written. Empty cells of the table are the writer's: no sourced figure exists. pics.side.spans: where the length bar's spans start and end in the side view, as shares of the picture's width (the animal's measured pixels and the found discs' place in the model).",
+ "_note": "THE WORDS of the megalodon page, English. Poured word for word from the writer's WORDS file; the title is its first option, the list's line on the animals' page is the description after its first words. Under the answer stands one short line on the wing and the link to the open wing, where a door would stand; the section In the museum carries the rest. Every number as written. Empty cells of the table are the writer's: no sourced figure exists. pics.side.spans: where the length bar's spans start and end in the side view, as shares of the picture's width (the animal's measured pixels and the found discs' place in the model). meta.credit: the credit line every picture of the page carries in its structured data (creditText), as the writer gives it.",
  "page": {
   "id": "animals-megalodon",
   "wing": "animals",
@@ -57,9 +57,10 @@
  },
  "meta": {
   "title": "Megalodon size: about 16 m by one backbone | Museum of Ages",
-  "description": "Megalodon size and dimensions: about 16 m (52 ft) by the one long backbone ever found, the largest perhaps about 20 m. Beside a person and a blue whale.",
+  "description": "Megalodon size and dimensions: about 16 m (52 ft) by the one long backbone found, the largest perhaps about 20 m. Compared with a person and a blue whale.",
   "og_title": "Megalodon size: about 16 m by one backbone",
-  "og_image_alt": "A shark with its mouth open, seen from the side, dark above and pale below, beside a grey person who looks tiny next to it."
+  "og_image_alt": "A shark with its mouth open, seen from the side, dark above and pale below, beside a grey person who looks tiny next to it.",
+  "credit": "Museum of Ages, body shape after Shimada and others 2025 (CC BY 4.0)"
  },
  "labels": {
   "crumbs": "You are here",
@@ -137,7 +138,15 @@
       "Our megalodon",
       "about 16 m (52 ft)",
       "roughly 30 t (model of 2025), about 61 t (model of 2022)",
-      "two models on one backbone"
+      "two models on one backbone, weight disputed"
+     ]
+    },
+    {
+     "cells": [
+      "The found backbone, Brussels",
+      "about 11 m (36 ft) in a row, 141 discs",
+      "",
+      "measured, the discs laid in a row"
      ]
     },
     {
@@ -182,6 +191,14 @@
     },
     {
      "cells": [
+      "The teeth in our model",
+      "about 10 cm (4 in) tall in front",
+      "",
+      "built after a real set from another find"
+     ]
+    },
+    {
+     "cells": [
       "The person",
       "1.70 m (5 ft 7 in)",
       "",
@@ -203,12 +220,13 @@
     "tag": "tag_built",
     "what": "The same animal as a skeleton. The backbone discs and the teeth follow fossils, everything else is restored and is meant to look it.",
     "alt": "The skeleton from the side, a long row of backbone discs and a jaw of teeth after fossils, with the head, fins and tail as plainly restored shapes.",
-    "key": "Dark brown: the fossil discs. Gold: the teeth. Pale: what is restored.",
+    "key": "Dark brown: the fossil discs. Gold: the teeth. Pale: what is restored, including the pieces that complete broken discs.",
     "close": {
      "pic": "skeleton_head",
      "tag": "tag_built",
      "what": "The skull and the front of the backbone, closer up, with the person. The discs are built after the fossils, the skull and the jaw are restored, the teeth are built after another find, a real set, at its own size.",
-     "alt": "The front of the skeleton from the side, a pale restored skull and jaw with gold teeth, then a row of dark discs, beside the grey person."
+     "alt": "The front of the skeleton from the side, a pale restored skull and jaw with gold teeth, then a row of dark discs, beside the grey person.",
+     "key": "Dark brown: the fossil discs. Gold: the teeth. Pale: what is restored, including the pieces that complete broken discs."
     }
    }
   },
@@ -240,7 +258,7 @@
    "intro": "For each number: where it came from, and what the field makes of it now.",
    "rows": [
     {
-     "term": "15 to 18 m (50 to 60 feet)",
+     "term": "14 to 18 m (46 to 59 feet)",
      "text": "The tooth method. A tooth's crown, scaled up to a body with the great white's proportions. Studies from 1996 to 2019 got 14 to 18 m that way, and the American Museum of Natural History still says roughly 15 m. By the study of 2025, such tooth rules give lengths that are too short or unreliable."
     },
     {
@@ -257,7 +275,7 @@
     },
     {
      "term": "The jaws of 1909",
-     "text": "At the American Museum of Natural History, fossil teeth were set in 1909 into a restored jaw scaled up from a great white, big enough for people to sit inside. The museum itself says today that the restoration overestimated the size by far. As later experts found, every tooth was copied from the largest front teeth, even where the jaw holds small ones."
+     "text": "At the American Museum of Natural History, fossil teeth were set in 1909 into a restored jaw scaled up from a great white. The museum itself says today that the restoration overestimated the size by far. As later experts found, teeth as large as the front ones ran all along the jaw, even where it holds small ones."
     }
    ]
   },
@@ -283,6 +301,10 @@
     {
      "q": "Megalodon vs blue whale: which was bigger?",
      "a": "The blue whale. Most grown blue whales are 23 to 27 m long, the largest about 30 m (98 ft), and NOAA, the US ocean agency, calls it the largest animal known to have lived. Our megalodon would come to a little over half of the largest. Even the largest whale shark ever measured was longer, at 18.8 m, and at about 34 tonnes about as heavy as the slim model of megalodon."
+    },
+    {
+     "q": "How big were megalodon's teeth?",
+     "a": "The biggest found are at least 16 cm (6.3 in) tall, and museums give almost 18 cm (7 in), about three times a great white's tooth of about 5 cm. The teeth in our model are built after a real set from another find, UF-VP-311000, about 10 cm (4 in) tall in front and smaller toward the corners."
     },
     {
      "q": "When and why did megalodon die out?",

@@ -323,7 +323,7 @@
           "de": "Wie groß war der Megalodon?"
         },
         "line": {
-          "en": "About 16 m (52 ft) by the one long backbone ever found, the largest perhaps about 20 m. Beside a person, a great white and a blue whale.",
+          "en": "About 16 m (52 ft) by the one long backbone found, the largest perhaps about 20 m. Compared with a person and a blue whale.",
           "de": "Etwa 16 m nach der einen langen Wirbelsäule, die größten vielleicht etwa 20 m. Größenvergleich mit Mensch, Weißem Hai und Blauwal."
         },
         "langs": ["en", "de"],
@@ -349,7 +349,7 @@
             "60 tonnes is never the answer: the weight is disputed, roughly 30 t slim, about 61 t stout"
           ],
           [
-            "(?s)^(?!.*(?:two broken (?:\\w+ )?discs|zwei angebrochenen?\\s+(?:\\w+\\s+)?wirbel)).*\\b24[.,]3\\b",
+            "(?s)^(?!.*(?:two broken (?:\\w+ )?discs|zwei (?:an|zer)brochenen?\\s+(?:\\w+\\s+)?wirbel)).*\\b24[.,]3\\b",
             "24.3 m only with its condition, the two broken discs"
           ],
           [

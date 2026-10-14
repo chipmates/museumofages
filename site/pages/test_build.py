@@ -311,7 +311,7 @@ class Case(unittest.TestCase):
 
     def test_its_large_number_stands_only_with_its_condition(self):
         page = self.scale_page()
-        for lang, condition in (("en", r"two broken (?:\w+ )?discs"), ("de", r"zwei angebrochenen? (?:\w+ )?Wirbel")):
+        for lang, condition in (("en", r"two broken (?:\w+ )?discs"), ("de", r"zwei (?:an|zer)brochenen? (?:\w+ )?Wirbel")):
             data = self.data(lang, page)
             text = json.dumps(data, ensure_ascii=False)
             if not re.search(r"\b24[.,]3\b", text):
@@ -531,6 +531,15 @@ class Case(unittest.TestCase):
                     self.assertRegex(cell, r"^<span>.*</span>$", path)
                     self.assertNotRegex(re.sub(r"<span[^>]*>[^<]*</span>", "", cell[6:-7]), r"<", path)
         self.assertGreater(cells, 0)
+
+    def test_a_list_of_pages_binds_each_number_to_its_unit(self):
+        out, written = self.build()
+        lines = 0
+        for path in written:
+            for line in re.findall(r'<p class="sc-item__line">(.*?)</p>', path.read_text(encoding="utf-8"), flags=re.S):
+                lines += 1
+                self.assertNotRegex(line, r"\d (?:m|cm|ft|t|kg)\b", path)
+        self.assertGreater(lines, 0)
 
     def test_the_guess_follows_the_answer_and_opens_without_a_script(self):
         page = self.scale_page()
@@ -1603,9 +1612,14 @@ class PictureLicences(unittest.TestCase):
                 credit = self.lib.PICTURE_CREDITS.get(self.lib.picture_stem(image.get("contentUrl") or image.get("url")))
                 if credit and "license" in image:
                     found += 1
-                    # the other work's credit follows the museum's own, once, and the licence stays the museum's
-                    self.assertTrue(image["creditText"].endswith(f", {credit}"), path)
-                    self.assertEqual(image["creditText"].count(credit), 1, path)
+                    # the other work's credit stands once, the list's own after the museum's or the page's own line in
+                    # the page's language, and the licence stays the museum's
+                    text = image["creditText"]
+                    self.assertTrue(text.startswith(self.lib.picture_terms("en", "")["creditText"] + ", "), path)
+                    self.assertEqual(text.count("Shimada"), 1, path)
+                    self.assertTrue(text.endswith("(CC BY 4.0)"), path)
+                    if '<html lang="de"' in path.read_text(encoding="utf-8")[:200]:
+                        self.assertIn("Körperform", text, path)
                     self.assertEqual(image["license"], "https://creativecommons.org/licenses/by-sa/4.0/", path)
         self.assertGreater(found, 0)
 

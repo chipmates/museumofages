@@ -1,5 +1,5 @@
 {
- "_note": "THE WORDS of the animals' list of pages, English. Poured word for word from the hub's section of the writer's WORDS file. Each listed page stands with its name and line from the registry.",
+ "_note": "THE WORDS of the animals' list of pages, English. Poured word for word from the hub's section of the writer's WORDS file. Each listed page stands with its name and line from the registry. meta.credit: the megalodon page's credit line for the same pictures, which the list shows too.",
  "page": {
   "id": "animals",
   "wing": "animals",
@@ -27,7 +27,8 @@
   "title": "Animals: how big they were | Museum of Ages",
   "description": "How big the museum's animals were, each beside a person 1.70 m tall to one scale, in our own pictures with their sources. The first page: megalodon.",
   "og_title": "Animals: how big they were",
-  "og_image_alt": "A shark with its mouth open, seen from the side, dark above and pale below, beside a grey person who looks tiny next to it."
+  "og_image_alt": "A shark with its mouth open, seen from the side, dark above and pale below, beside a grey person who looks tiny next to it.",
+  "credit": "Museum of Ages, body shape after Shimada and others 2025 (CC BY 4.0)"
  },
  "labels": {
   "crumbs": "You are here",
