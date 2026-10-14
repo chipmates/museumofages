@@ -1,0 +1,504 @@
+{
+ "_note": "THE WORDS of the woolly mammoth page. Poured word for word from the writer's WORDS file; the title, the description and the heading are its first options. The two lists of what was found stand under their field names in the writer's file. The person's height stands over the person in each picture (labels.person), and the labels at the side view name the person too. pics.<name>.marks: the mammoth's, the shoulder mark's and the person's start and end as shares of the picture's width, measured on the frame; pics.<name>.person: the person's centre and the top of its head. The shoulder's label stands over the picture (pics.side.behind), over the level line drawn at our model's withers. Empty cells of the table are the writer's: no sourced figure exists.",
+ "page": {
+  "id": "animals-woolly-mammoth",
+  "wing": "animals",
+  "topic": "woolly_mammoth",
+  "published": null,
+  "join_names": true,
+  "og_image": {
+   "file": "animals-woolly-mammoth-og-{lang}-1200x630.png",
+   "width": 1200,
+   "height": 630,
+   "layout": "beside"
+  }
+ },
+ "pics": {
+  "side": {
+   "stem": "animals-woolly-mammoth-side",
+   "widths": [
+    800,
+    1600,
+    2400
+   ],
+   "sizes": "(min-width: 1280px) 1200px, (min-width: 960px) calc(100vw - 80px), (min-width: 600px) calc(100vw - 64px), calc(100vw - 40px)",
+   "person": "91.9% 40.85%",
+   "marks": {
+    "mammoth": "4.64% 83.58%",
+    "person": "89.13% 94.66%",
+    "shoulder": "37.74% 49.06%"
+   },
+   "behind": [
+    "shoulder"
+   ]
+  },
+  "close": {
+   "stem": "animals-woolly-mammoth-close",
+   "widths": [
+    800,
+    1600
+   ],
+   "sizes": "(min-width: 1280px) 690px, (min-width: 960px) 54vw, (min-width: 600px) calc(100vw - 64px), calc(100vw - 40px)",
+   "person": "85.87% 40.85%"
+  },
+  "megalodon": {
+   "stem": "animals-megalodon-side",
+   "widths": [
+    800,
+    1600,
+    2400
+   ],
+   "sizes": "(min-width: 1280px) 690px, (min-width: 960px) 54vw, (min-width: 600px) calc(100vw - 64px), calc(100vw - 40px)"
+  },
+  "dinosaurs": {
+   "stem": "animals-biggest-dinosaurs-row",
+   "widths": [
+    800,
+    1600
+   ],
+   "sizes": "(min-width: 1280px) 690px, (min-width: 960px) 54vw, (min-width: 600px) calc(100vw - 64px), calc(100vw - 40px)"
+  },
+  "trex": {
+   "stem": "animals-t-rex-side",
+   "widths": [
+    800,
+    1600,
+    2400
+   ],
+   "sizes": "(min-width: 1280px) 690px, (min-width: 960px) 54vw, (min-width: 600px) calc(100vw - 64px), calc(100vw - 40px)"
+  }
+ },
+ "meta": {
+  "title": "Wollhaarmammut-Größe: etwa 2,7 bis 3,3 m | Museum of Ages",
+  "description": "Wollhaarmammut-Größe: Ein sibirischer Bulle maß an der Schulter etwa 2,7 bis 2,9 m und wog 4 bis 5 t. Unseres ist ein echter Bulle, neben einem Menschen.",
+  "og_title": "Wollhaarmammut-Größe: etwa 2,7 bis 3,3 m",
+  "og_image_alt": "Ein Wollhaarmammut von der Seite im dunkelbraunen Fell, mit hoch gewölbtem Kopf, abfallendem Rücken, zwei gebogenen Stoßzähnen und einer Marke an der Schulter. Der graue Mensch daneben steht niedriger als die Spitzen der Stoßzähne."
+ },
+ "labels": {
+  "crumbs": "Du bist hier",
+  "crumb_home": "Museum",
+  "crumb_here": "Wollhaarmammut",
+  "toc": "Auf dieser Seite",
+  "tag_made": "Für diese Seite gemacht",
+  "tag_built": "Rekonstruktion",
+  "person": "1,70 m",
+  "to_table": "Die Zahlen als Tabelle",
+  "og_answer": "Ein sibirischer Bulle maß an der Schulter etwa 2,7 bis 2,9 m"
+ },
+ "top": {
+  "h1": "Wie groß war ein Mammut?",
+  "answer": "Ein ausgewachsener sibirischer Bulle des Wollhaarmammuts maß an der Schulter etwa 2,7 bis 2,9 m und wog etwa 4 bis 5 t. Die größeren Bullen aus Europa kamen auf etwa 3 bis 3,3 m und etwa 5 bis 7 t. Unseres ist ein einzelner echter Bulle, 1900 im Permafrost Sibiriens gefunden: 2,71 m an der Schulter, etwa 4,2 t, aus seinen Knochen rekonstruiert. Neben dem Menschen von 1,70 m ist seine Schulter etwa anderthalb Menschen hoch, und sein Körper ist etwa zwei Menschen lang.",
+  "answer_more": "Ein sibirischer Mammutbulle war also etwa so hoch wie ein Bulle des Asiatischen Elefanten und für seine Höhe etwas schwerer. Ein großer Bulle des Afrikanischen Elefanten steht etwa einen halben Meter höher und wiegt mehr.",
+  "scale": {
+   "pic": "side",
+   "tag": "tag_made",
+   "what": "Unser Wollhaarmammut neben einem Menschen von 1,70 m, im selben Maßstab. Es ist nach einem einzigen echten Tier gebaut, dem Beresowka-Bullen, 1900 im Permafrost im Nordosten Sibiriens gefunden. Die Marke an seiner Schulter zeigt seine eigene Schulterhöhe am lebenden Tier, 271 cm, aus seinen Knochen rekonstruiert. Als er starb, hatte er noch einen Stoßzahn, den linken. Der rechte war lange vorher ausgefallen, und die Jäger, die ihn fanden, trennten den linken ab und verkauften ihn. Unseres trägt beide, der rechte ist das Spiegelbild des linken, eine Rekonstruktion.",
+   "alt": "Ein Wollhaarmammut von der Seite im dunkelbraunen Fell, mit hoch gewölbtem Kopf, abfallendem Rücken, zwei gebogenen Stoßzähnen und einer Marke an der Schulter. Der graue Mensch daneben steht niedriger als die Spitzen der Stoßzähne.",
+   "note": "Unsere eigene Rekonstruktion, nach veröffentlichten Maßen in Code gebaut und in unserer Engine gerendert. Keine Fotos.",
+   "marks": [
+    {
+     "span": "mammoth",
+     "text": "Unser Mammut, der Beresowka-Bulle"
+    },
+    {
+     "span": "shoulder",
+     "text": "Seine Schulter, 271 cm am lebenden Tier, rekonstruiert"
+    },
+    {
+     "span": "person",
+     "text": "Der Mensch, 1,70 m"
+    }
+   ],
+   "close": {
+    "pic": "close",
+    "tag": "tag_made",
+    "what": "Der Kopf aus der Nähe, mit dem Menschen: das kleine Ohr, das Auge im langen Haar, die Rüsselspitze mit ihrem Finger und die Stoßzähne. Beide Stoßzähne sind Rekonstruktionen, der linke nach dem Gewicht seines einen Stoßzahns, der rechte als dessen Spiegelbild.",
+    "alt": "Der Kopf des Wollhaarmammuts aus der Nähe: ein kleines Ohr, das Auge im langen Haar, die Rüsselspitze mit Finger am Boden, zwei gebogene Stoßzähne. Daneben steht der graue Mensch."
+   }
+  },
+  "guess": {
+   "h": "Zum Raten",
+   "q": "Wie alt war der Beresowka-Bulle, als er starb?",
+   "button": "Antwort zeigen",
+   "a": "Etwa 45 bis 50 Jahre, nach dem Museum, das ihn bewahrt. Er war ein ausgewachsener Bulle, seine Größe ist also die eines erwachsenen Tiers, nicht die eines jungen.",
+   "button_open": "Antwort verbergen"
+  },
+  "out": {
+   "text": "Der Flügel für dieses Tier wird noch gebaut. Der Flügel von Leonardo da Vinci ist heute schon offen.",
+   "link": "Zum Leonardo-Flügel"
+  }
+ },
+ "blocks": [
+  {
+   "type": "numbers",
+   "id": "numbers",
+   "nav": "Die Zahlen",
+   "h": "Die Zahlen",
+   "unit": "In Metern und Tonnen. Schulterhöhe am lebenden Tier, ausgewachsene Bullen, wo die Zeile nichts anderes sagt. Eine leere Zelle hat keine belegte Zahl.",
+   "cols": [
+    "Tier",
+    "Schulterhöhe, am lebenden Tier",
+    "Gewicht",
+    "Wie sicher"
+   ],
+   "rows": [
+    {
+     "cells": [
+      "Unser Mammut, der Beresowka-Bulle",
+      "271 cm",
+      "etwa 4,2 t mit Fell",
+      "aus seinen eigenen Knochen rekonstruiert, in der Studie von 2016"
+     ]
+    },
+    {
+     "cells": [
+      "Ein typischer sibirischer Bulle",
+      "etwa 2,7 bis 2,9 m",
+      "etwa 4 bis 5 t",
+      "eine Studie von 2016, viele Skelette, eine Methode"
+     ]
+    },
+    {
+     "cells": [
+      "Ein großer europäischer Bulle",
+      "etwa 3 bis 3,3 m",
+      "etwa 5 bis 7 t, die allergrößten über 8 t",
+      "dieselbe Studie und Methode"
+     ]
+    },
+    {
+     "cells": [
+      "Eine Kuh",
+      "etwa 2,3 bis 2,6 m",
+      "etwa 2,8 bis 4,2 t",
+      "fünf Skelette in derselben Studie"
+     ]
+    },
+    {
+     "cells": [
+      "Ein Bulle des Asiatischen Elefanten",
+      "etwa 2,6 bis 2,9 m",
+      "etwa 3,5 bis 4,6 t",
+      "dieselbe Studie und Methode"
+     ]
+    },
+    {
+     "cells": [
+      "Ein Bulle des Afrikanischen Elefanten",
+      "etwa 3 bis 3,4 m",
+      "etwa 5,2 bis 6,9 t",
+      "dieselbe Studie und Methode"
+     ]
+    },
+    {
+     "cells": [
+      "Der Mensch",
+      "1,70 m",
+      "",
+      "unsere Vergleichsfigur"
+     ]
+    }
+   ]
+  },
+  {
+   "type": "text",
+   "id": "elephants",
+   "nav": "Mammut gegen Elefant",
+   "h": "Mammut gegen Elefant",
+   "paras": [
+    "Das Wollhaarmammut, Mammuthus primigenius, war ein naher Verwandter der heutigen Elefanten, nach seinen Genen dem Asiatischen Elefanten am nächsten, und nicht ihr Vorfahr. Ein typischer sibirischer Bulle war etwa so hoch wie ein Bulle des Asiatischen Elefanten und dafür etwas schwerer. Sein Becken war breiter, seine Oberarm- und Oberschenkelknochen waren länger. Ein Bulle des Afrikanischen Elefanten, des größten lebenden Landtiers, steht etwa einen halben Meter höher und wiegt etwa 5 bis 7 t. Die großen europäischen Mammutbullen kamen ihm gleich. Anders als jeder Elefant hatte das Mammut ein dichtes Fell, kleine Ohren und einen kurzen Schwanz."
+   ]
+  },
+  {
+   "type": "text",
+   "id": "looks",
+   "nav": "Wie es aussah",
+   "h": "Wie es aussah",
+   "subs": [
+    {
+     "h": "Das Fell",
+     "paras": [
+      "Drei Schichten: lange dunkle Deckhaare, eine hellere mittlere Schicht und eine blasse Unterwolle. Im Leben war das Fell wahrscheinlich dunkelbraun und nicht einfarbig. Das Rotblond der Haare in Museen entstand erst im gefrorenen Boden: Dort verliert Haar seine eigene Farbe und nimmt die des Bodens an. Das längste an unserem Bullen gemessene Haar, an Kinn und Brust, war etwa 50 cm lang."
+     ]
+    },
+    {
+     "h": "Die Stoßzähne",
+     "paras": [
+      "Sie bogen sich nach außen und unten, dann nach oben und innen, wie eine lockere Spirale, und an der Außenseite der Spitze waren sie abgenutzt. Bei alten Bullen wurden sie bis zu 4 m lang und etwa 100 kg schwer, so das Museum, das unseren Bullen bewahrt. Die der Kühe waren kleiner und fast gerade, etwa 2 bis 2,2 m."
+     ]
+    },
+    {
+     "h": "Rüssel und Ohren",
+     "paras": [
+      "Der Rüssel endete in einem langen oberen Finger und einem kurzen unteren Lappen, wie gefrorene Rüssel zeigen. Weiter unten war er zwischen zwei Hautfalten verbreitert, was kein lebender Elefant hat, und wozu das diente, ist umstritten. Die Ohren waren klein, etwa 30 cm hoch bei einem gefrorenen Bullen. Der Schwanz war kurz, bei unserem Bullen 36 cm, mit einer Quaste aus langem Haar."
+     ]
+    },
+    {
+     "h": "Buckel und Rücken",
+     "paras": [
+      "Der Scheitel war der höchste Punkt. Dahinter eine Senke, dann ein Buckel über den Schultern auf den hohen Dornfortsätzen der Rückenwirbel, dann ein Rücken, der zu niedrigen Hüften abfiel. Alte Bullen zeigten zwischen Buckel und Kopf eine Einschnürung."
+     ]
+    }
+   ]
+  },
+  {
+   "type": "text",
+   "id": "found",
+   "nav": "Was gefunden wurde",
+   "h": "Was gefunden wurde",
+   "subs": [
+    {
+     "h": "Der Beresowka-Bulle",
+     "paras": [
+      "Im August 1900 fand ihn ein Jäger aus der Gegend in der Uferböschung der Beresowka, eines Nebenflusses der Kolyma im Nordosten Sibiriens. 1901 grub ihn eine Expedition aus St. Petersburg unter Otto Herz aus und brachte ihn in die Stadt. Seit 1903 steht er dort im Zoologischen Museum. Das Skelett ist montiert. Der Körper ist in der Lage wiederhergestellt, in der er gefunden wurde, auf dem Bauch mit den Vorderbeinen nach vorn, Kopf und Rüssel modelliert. Vollständig war er längst nicht mehr. Die Oberseite des Kopfes, ein großer Teil des Rückens und der größte Teil des Rüssels waren lange vorher aufgetaut und gefressen worden. Zwischen den Zähnen hatte er Gras. Wahrscheinlich stürzte er in eine Rinne oder von einem Steilufer, brach sich das Becken und ein Vorderbein und kam nicht mehr heraus. Samen an den Pflanzen, die er gefressen hatte, deuten auf den Spätsommer."
+     ]
+    },
+    {
+     "h": "An ihm gemessen",
+     "paras": [
+      {
+       "points": [
+        "Die Längen seiner langen Knochen und die Breite seines Beckens, und daraus seine Höhe und sein Gewicht.",
+        "Die Breite seines Schädels und seines Kiefers.",
+        "Sein Schwanz, 36 cm, und seine Haut, 19 bis 23 mm dick.",
+        "Sein Haar an Beinen, Kinn und Brust.",
+        "Das Gewicht seines einen Stoßzahns, etwa 29 kg."
+       ]
+      }
+     ]
+    },
+    {
+     "h": "Von anderen Mammuten oder ergänzt",
+     "paras": [
+      {
+       "points": [
+        "Kopf, Ohr, Auge und Vorderfuß: nach einem anderen gefrorenen sibirischen Bullen.",
+        "Der Umriss von der Seite: nach der Rekonstruktion eines dritten Bullen.",
+        "Der Rüssel: nach anderen gefrorenen Mammuten.",
+        "Die Form jedes Knochens: nach anderen Montagen. Nur die Längen sind seine.",
+        "Der rechte Stoßzahn: das Spiegelbild des linken.",
+        "Die Farbe des Fells: unsere Wahl."
+       ]
+      }
+     ]
+    }
+   ],
+   "end": [
+    "So ist unser Mammut in Größe und Gerüst ein Tier, in seiner Gestalt mehrere."
+   ]
+  },
+  {
+   "type": "text",
+   "id": "last-ones",
+   "nav": "Wann die letzten Wollhaarmammute lebten",
+   "h": "Wann die letzten Wollhaarmammute lebten",
+   "paras": [
+    "Wollhaarmammute lebten Hunderttausende von Jahren, in der letzten Eiszeit von Spanien bis Alaska. Auf dem Festland lebten die letzten bis vor etwa 10.000 Jahren in Nordsibirien, auf der Insel St. Paul vor Alaska bis vor etwa 5.600 Jahren. Die letzte bekannte Population lebte auf der Wrangelinsel im Nordpolarmeer vor Sibirien bis vor etwa 4.000 Jahren, und Zwerge waren diese Tiere nicht. Warum sie endeten, ist umstritten: auf dem Festland die Erwärmung am Ende der Eiszeit und die Jagd durch Menschen, in Anteilen, die niemand geklärt hat. Auf St. Paul schrumpfte die Insel, und das Süßwasser wurde knapp, Menschen gab es dort keine. Auf der Wrangelinsel kam das Ende wohl rasch, und niemand weiß, warum: Eine Eisschicht nach Regen auf Schnee ist eine Idee, und Menschen lassen sich nicht ausschließen."
+   ]
+  },
+  {
+   "type": "text",
+   "id": "how-sure",
+   "nav": "Wie sicher das ist",
+   "h": "Wie sicher das ist",
+   "paras": [
+    "Drei Dinge entscheiden über jede Zahl auf dieser Seite.",
+    {
+     "points": [
+      [
+       "Woher die Höhen und Gewichte kommen:",
+       "Eine Studie von 2016 hat viele Mammut- und Elefantenskelette vermessen und Höhe und Gewicht für alle auf dieselbe Weise berechnet. Die Höhe ist die des Skeletts plus etwa 5,5 Prozent für das Fleisch, das Gewicht das Volumen eines um die Knochen gezeichneten Körpers. Nichts Neueres hat sie abgelöst."
+      ],
+      [
+       "Unseres ist ein Tier, nicht die Art:",
+       "ein einzelner sibirischer Bulle, etwas unter dem sibirischen Durchschnitt. Darum stehen hier drei Zahlen getrennt: unser Bulle, der typische sibirische Bulle und die großen europäischen Bullen."
+      ],
+      [
+       "Was seines ist und was geliehen:",
+       "Seine Knochenlängen, sein Becken, sein Schwanz, seine Haut und sein Haar wurden gemessen. Kopf, Rüssel, Umriss und die Form jedes Knochens folgen anderen Mammuten, und die Farbe des Fells ist eine Wahl."
+      ]
+     ]
+    }
+   ]
+  },
+  {
+   "type": "notes",
+   "id": "numbers-read",
+   "nav": "Zahlen, die du vielleicht gelesen hast",
+   "h": "Zahlen, die du vielleicht gelesen hast",
+   "intro": "Zu jeder Zahl: woher sie kommt und was sie bedeutet.",
+   "rows": [
+    {
+     "term": "3,4 m",
+     "text": "Eine Handbuchzahl von 2007 für einen großen Bullen, verbreitet durch eine viel genutzte Größentafel. Sie passt zu einem großen europäischen Bullen, nicht zu einem typischen sibirischen, und nicht zu unserem."
+    },
+    {
+     "term": "3,5 m und 4 m lange Stoßzähne",
+     "text": "Höchstwerte des Museums in St. Petersburg. Bullen bis 3,5 m, Stoßzähne alter Bullen bis 4 m und etwa 100 kg, keine Durchschnitte."
+    },
+    {
+     "term": "6 und 8 t",
+     "text": "6 t ist der Durchschnitt der großen europäischen Bullen, und auch der Bullen des Afrikanischen Elefanten. 8 t erreichten nur die allergrößten, etwa ein Bulle aus Siegsdorf in Bayern mit etwa 8,2 t."
+    },
+    {
+     "term": "Rotes Fell",
+     "text": "Die Farbe von Haar, das Jahrtausende im gefrorenen Boden lag und dort seine eigene Farbe verlor und die des Bodens annahm. Im Leben war das Fell wahrscheinlich dunkelbraun und gemischt."
+    },
+    {
+     "term": "Ein Behang aus 80 bis 90 cm langen Haaren",
+     "text": "Diese Zahl nennt das Museum, das unseren Bullen bewahrt, an anderer Stelle derselben Seite auch 70 bis 80 cm. Ein so lang gemessenes Haar nennt es nicht. An ihm war das längste gemessene Haar etwa 50 cm lang. In einer Studie gefrorener Mammute waren es 70 cm, an einem Schwanz."
+    },
+    {
+     "term": "Mammute starben vor 4.000 Jahren aus",
+     "text": "Das gilt nur für die letzte bekannte Population, auf der Wrangelinsel. Auf dem Festland lebten die letzten bis vor etwa 10.000 Jahren."
+    },
+    {
+     "term": "Mit Futter im Maul eingefroren",
+     "text": "Unser Bulle hatte Gras zwischen den Zähnen. Daraus wuchs das Bild eines Mammuts, das beim Fressen auf der Stelle einfror. Der Leiter der Grabung las einen Sturz, gebrochene Knochen und einen kurzen Todeskampf."
+    }
+   ]
+  },
+  {
+   "type": "text",
+   "id": "why",
+   "nav": "Warum unser Wollhaarmammut so aussieht",
+   "h": "Warum unser Wollhaarmammut so aussieht",
+   "paras": [
+    "Es ist nach den Maßen der Knochen des Beresowka-Bullen gebaut, und daraus folgen seine Höhe und sein Gewicht. Die Farbe des Fells ist unsere Wahl innerhalb des Dunkelbrauns, auf das die Belege deuten, und der rechte Stoßzahn spiegelt den linken. Es steht im Schritt, die Rüsselspitze auf dem Boden."
+   ]
+  },
+  {
+   "type": "faq",
+   "id": "questions",
+   "nav": "Weitere Fragen",
+   "h": "Weitere Fragen",
+   "items": [
+    {
+     "q": "Gibt es noch andere gefrorene Mammute?",
+     "a": "Ja. Das Museum in St. Petersburg nennt mehrere weitere. Darunter: das Adams-Mammut von 1799, das erste vollständige Skelett, das die Wissenschaft besaß, und das Taimyr-Mammut von 1948 mit Muskeln, Haut und Haar. Gefrorene Körper sind der Grund, warum Rüssel, Ohren und Fell dieser Art überhaupt bekannt sind."
+    },
+    {
+     "q": "Wie lange ist es her, dass der Beresowka-Bulle lebte?",
+     "a": "Etwa 44.000 Jahre, nach der Radiokarbondatierung des Museums, das ihn bewahrt. Der gefrorene Boden hat seine Haut, sein Haar und das Gras zwischen seinen Zähnen all die Zeit erhalten."
+    }
+   ]
+  },
+  {
+   "type": "text",
+   "id": "museum",
+   "nav": "Im Museum",
+   "h": "Im Museum",
+   "paras": [
+    "Museum of Ages ist ein digitales Museum. Es baut gerade einen Flügel, in dem dieses Tier und andere wie dieses im selben Maßstab stehen werden. Offen ist heute der Flügel von Leonardo da Vinci. Eintritt frei, kein Konto."
+   ],
+   "links": [
+    {
+     "out": true,
+     "text": "Zum Leonardo-Flügel"
+    }
+   ]
+  },
+  {
+   "type": "pages",
+   "id": "next",
+   "items": [
+    {
+     "page": "megalodon",
+     "pic": "megalodon",
+     "alt": "Ein Hai mit offenem Maul von der Seite, dunkelgrau mit einem helleren Band an der Flanke, neben einem grauen Menschen, der winzig daneben steht.",
+     "line": "Der Megalodon, dessen Wirbelsäule in Brüssel liegt, war etwa 16 m lang, die größten seiner Art vielleicht etwa 20 m. Unser Megalodon neben einem Menschen, im selben Maßstab."
+    },
+    {
+     "page": "biggest-dinosaurs",
+     "pic": "dinosaurs",
+     "alt": "Sieben Dinosaurier in einer Reihe von der Seite, zwei mit langen Hälsen hoch über den anderen, und ein grauer Mensch, der daneben winzig wirkt.",
+     "line": "Sieben von unseren neben einem Menschen, im selben Maßstab: der schwerste höchstwahrscheinlich ein Titanosaurier aus Patagonien, der höchste vermutlich Sauroposeidon, und warum der längste noch offen ist."
+    },
+    {
+     "page": "t-rex",
+     "pic": "trex",
+     "alt": "Ein T. rex von der Seite auf zwei Beinen, das Maul offen, der Kopf erhoben, neben einem grauen Menschen, der ihm nicht bis zum Knie reicht.",
+     "line": "Ein großer erwachsener T. rex war etwa 12 m lang und wog grob 8 bis 9 t, nach den Knochen von SUE. Unser T. rex neben einem Menschen, mit dem, was von SUE gefunden wurde."
+    }
+   ]
+  },
+  {
+   "type": "sources",
+   "id": "sources",
+   "nav": "Quellen",
+   "h": "Quellen",
+   "intro": "Die Zahlen stammen aus diesen Studien und von den Museen, die die Funde bewahren. Das Museum ist von allen unabhängig.",
+   "read": [
+    {
+     "text": "Larramendi, 2016, Acta Palaeontologica Polonica, mit dem Ergänzungsband.",
+     "href": "https://doi.org/10.4202/app.00136.2014"
+    },
+    {
+     "text": "Herz, 1903, Annual Report of the Smithsonian Institution, der Bericht der Grabung in englischen Auszügen.",
+     "href": "https://archive.org/details/annual-report-board-of-regents-smithsonian_1903"
+    },
+    {
+     "text": "Chernova und andere, 2015, Proceedings of the Zoological Institute RAS.",
+     "href": "https://zin.ru/journals/trudyzin/doc/vol_319_3/TZ_319_3_Chernova_2.pdf"
+    },
+    {
+     "text": "Tridico und andere, 2014, Quaternary Science Reviews, wie Chernova 2015 sie wiedergibt.",
+     "href": "https://doi.org/10.1016/j.quascirev.2013.10.032"
+    },
+    {
+     "text": "Belyaev und andere, 2025, Journal of Anatomy, die Kurzfassung."
+    },
+    {
+     "text": "Díez-del-Molino und andere, 2023, Current Biology, die Kurzfassung.",
+     "href": "https://doi.org/10.1016/j.cub.2023.03.084"
+    },
+    {
+     "text": "Nogués-Bravo und andere, 2008, PLoS Biology, die Kurzfassung.",
+     "href": "https://doi.org/10.1371/journal.pbio.0060079"
+    },
+    {
+     "text": "Graham und andere, 2016, PNAS, die Kurzfassung.",
+     "href": "https://doi.org/10.1073/pnas.1604903113"
+    },
+    {
+     "text": "Arppe und andere, 2019, Quaternary Science Reviews, die Kurzfassung.",
+     "href": "https://doi.org/10.1016/j.quascirev.2019.105884"
+    },
+    {
+     "text": "Dehasque und andere, 2024, Cell, die Kurzfassung.",
+     "href": "https://doi.org/10.1016/j.cell.2024.05.033"
+    },
+    {
+     "text": "Lister und Bahn, 2007, Mammoths: Giants of the Ice Age, wie die Quellenzeile einer verbreiteten Größentafel es nennt."
+    },
+    {
+     "text": "Zoologisches Institut der Russischen Akademie der Wissenschaften, St. Petersburg: das Beresowka-Mammut und der Mammutsaal seines Zoologischen Museums.",
+     "href": "https://www.zin.ru/museum/expositions/mammoth_fauna.html"
+    },
+    {
+     "text": "Universität Helsinki: ihre Nachricht von 2019 zur Studie über die Wrangelinsel.",
+     "href": "https://www.helsinki.fi/en/luomus/news/last-mammoths-died-remote-island"
+    }
+   ],
+   "contact": "Ist eine Zahl oder ein Museum falsch angegeben, schreib uns, und wir korrigieren es.",
+   "contact_link": "Zum Impressum",
+   "what_link": "Was dieses Museum ist"
+  },
+  {
+   "type": "text",
+   "id": "pictures",
+   "nav": "Unsere Bilder nutzen",
+   "h": "Unsere Bilder nutzen",
+   "paras": [
+    [
+     "Die Bilder des Wollhaarmammuts auf dieser Seite sind unsere eigene Arbeit unter ",
+     {
+      "text": "CC BY-SA 4.0",
+      "href": "https://creativecommons.org/licenses/by-sa/4.0/deed.de"
+     },
+     ", Nachweis: Museum of Ages. Sie zeigen eine Rekonstruktion, in Code gebaut und in unserer Engine gerendert, kein Foto. Die Bilder unter „Im Museum“ nennen ihren Nachweis auf ihren eigenen Seiten."
+    ]
+   ]
+  }
+ ]
+}

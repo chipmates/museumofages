@@ -1725,6 +1725,78 @@
    "sha256": "0125470e5ea3e01f6a8740c41c1635cf7793746bec2658ff15ab33b28a3a5cf4"
   },
   {
+   "path": "pages/pics/img/animals-woolly-mammoth-close-1600.avif",
+   "url": "/static/img/animals-woolly-mammoth-close-1600.avif",
+   "bytes": 87821,
+   "sha256": "c6b3bdb742ad992b09dac5d69fa494cb2ea8a5fa0dfc53cd0e86b6afc8b315e4"
+  },
+  {
+   "path": "pages/pics/img/animals-woolly-mammoth-close-1600.webp",
+   "url": "/static/img/animals-woolly-mammoth-close-1600.webp",
+   "bytes": 126748,
+   "sha256": "d9b027f3ebb81afe18894bc259dd39e96089e4c8151e06b99698b25ea03397ff"
+  },
+  {
+   "path": "pages/pics/img/animals-woolly-mammoth-close-800.avif",
+   "url": "/static/img/animals-woolly-mammoth-close-800.avif",
+   "bytes": 30981,
+   "sha256": "c7d6e69a4c2d164bcea1bd04fa52e9db5f31b6ae9e528e99b1b3c7c25d8a630c"
+  },
+  {
+   "path": "pages/pics/img/animals-woolly-mammoth-close-800.webp",
+   "url": "/static/img/animals-woolly-mammoth-close-800.webp",
+   "bytes": 42778,
+   "sha256": "8ad22ef9b174973c68ab2a25e64f9a5ae6c53b05e9076cd8bd034bdf696c2032"
+  },
+  {
+   "path": "pages/pics/img/animals-woolly-mammoth-og-de-1200x630.png",
+   "url": "/static/img/animals-woolly-mammoth-og-de-1200x630.png",
+   "bytes": 244975,
+   "sha256": "3a3a5befba25cefa27758ddfd2711b57637a7c5a8001bf6b0780628e5ed3c8ca"
+  },
+  {
+   "path": "pages/pics/img/animals-woolly-mammoth-og-en-1200x630.png",
+   "url": "/static/img/animals-woolly-mammoth-og-en-1200x630.png",
+   "bytes": 244898,
+   "sha256": "4d2f37d9d9397bdb5a9a95bca86bcf7aa826445e9c7803ccb6086a438412ad51"
+  },
+  {
+   "path": "pages/pics/img/animals-woolly-mammoth-side-1600.avif",
+   "url": "/static/img/animals-woolly-mammoth-side-1600.avif",
+   "bytes": 71619,
+   "sha256": "fb2b34c23bee66ac2d3577606c5b7a0b4b7dbc6a29657ab3a9a0dbf328eba124"
+  },
+  {
+   "path": "pages/pics/img/animals-woolly-mammoth-side-1600.webp",
+   "url": "/static/img/animals-woolly-mammoth-side-1600.webp",
+   "bytes": 104690,
+   "sha256": "b642dc85d3092ab4386df1b32a43d38dae83d653e220d5f0d9751fa1038fea21"
+  },
+  {
+   "path": "pages/pics/img/animals-woolly-mammoth-side-2400.avif",
+   "url": "/static/img/animals-woolly-mammoth-side-2400.avif",
+   "bytes": 132263,
+   "sha256": "b6ea97eed90fa1a5708628cda008b543e5c56b63df10aca95145aedbb5de6992"
+  },
+  {
+   "path": "pages/pics/img/animals-woolly-mammoth-side-2400.webp",
+   "url": "/static/img/animals-woolly-mammoth-side-2400.webp",
+   "bytes": 199392,
+   "sha256": "4b52245badb14d9bca97530741f406addc200b98dc5c1fcf8c9f79f3f7ed82f4"
+  },
+  {
+   "path": "pages/pics/img/animals-woolly-mammoth-side-800.avif",
+   "url": "/static/img/animals-woolly-mammoth-side-800.avif",
+   "bytes": 23916,
+   "sha256": "76c4b0bb058dd730b57bd23a7f63a66f7c75691d154ea59ea1593acd1e0236e4"
+  },
+  {
+   "path": "pages/pics/img/animals-woolly-mammoth-side-800.webp",
+   "url": "/static/img/animals-woolly-mammoth-side-800.webp",
+   "bytes": 33932,
+   "sha256": "c0bcc177c3005e2c8d2b12e0fb1c6a2f447ef109157fa49f0694935acccf7ccb"
+  },
+  {
    "path": "pages/pics/img/vinci-inventions-og-1200x630.jpg",
    "url": "/static/img/vinci-inventions-og-1200x630.jpg",
    "bytes": 64444,

@@ -1,0 +1,504 @@
+{
+ "_note": "THE WORDS of the woolly mammoth page. Poured word for word from the writer's WORDS file; the title, the description and the heading are its first options. The two lists of what was found stand under their field names in the writer's file. The person's height stands over the person in each picture (labels.person), and the labels at the side view name the person too. pics.<name>.marks: the mammoth's, the shoulder mark's and the person's start and end as shares of the picture's width, measured on the frame; pics.<name>.person: the person's centre and the top of its head. The shoulder's label stands over the picture (pics.side.behind), over the level line drawn at our model's withers. Empty cells of the table are the writer's: no sourced figure exists.",
+ "page": {
+  "id": "animals-woolly-mammoth",
+  "wing": "animals",
+  "topic": "woolly_mammoth",
+  "published": null,
+  "join_names": true,
+  "og_image": {
+   "file": "animals-woolly-mammoth-og-{lang}-1200x630.png",
+   "width": 1200,
+   "height": 630,
+   "layout": "beside"
+  }
+ },
+ "pics": {
+  "side": {
+   "stem": "animals-woolly-mammoth-side",
+   "widths": [
+    800,
+    1600,
+    2400
+   ],
+   "sizes": "(min-width: 1280px) 1200px, (min-width: 960px) calc(100vw - 80px), (min-width: 600px) calc(100vw - 64px), calc(100vw - 40px)",
+   "person": "91.9% 40.85%",
+   "marks": {
+    "mammoth": "4.64% 83.58%",
+    "person": "89.13% 94.66%",
+    "shoulder": "37.74% 49.06%"
+   },
+   "behind": [
+    "shoulder"
+   ]
+  },
+  "close": {
+   "stem": "animals-woolly-mammoth-close",
+   "widths": [
+    800,
+    1600
+   ],
+   "sizes": "(min-width: 1280px) 690px, (min-width: 960px) 54vw, (min-width: 600px) calc(100vw - 64px), calc(100vw - 40px)",
+   "person": "85.87% 40.85%"
+  },
+  "megalodon": {
+   "stem": "animals-megalodon-side",
+   "widths": [
+    800,
+    1600,
+    2400
+   ],
+   "sizes": "(min-width: 1280px) 690px, (min-width: 960px) 54vw, (min-width: 600px) calc(100vw - 64px), calc(100vw - 40px)"
+  },
+  "dinosaurs": {
+   "stem": "animals-biggest-dinosaurs-row",
+   "widths": [
+    800,
+    1600
+   ],
+   "sizes": "(min-width: 1280px) 690px, (min-width: 960px) 54vw, (min-width: 600px) calc(100vw - 64px), calc(100vw - 40px)"
+  },
+  "trex": {
+   "stem": "animals-t-rex-side",
+   "widths": [
+    800,
+    1600,
+    2400
+   ],
+   "sizes": "(min-width: 1280px) 690px, (min-width: 960px) 54vw, (min-width: 600px) calc(100vw - 64px), calc(100vw - 40px)"
+  }
+ },
+ "meta": {
+  "title": "Woolly mammoth size: about 2.7 to 3.3 m | Museum of Ages",
+  "description": "Woolly mammoth size: a Siberian bull stood about 2.7 to 2.9 m (9 ft) at the shoulder and weighed 4 to 5 tonnes. Ours is one real bull, beside a person.",
+  "og_title": "Woolly mammoth size: about 2.7 to 3.3 m",
+  "og_image_alt": "A woolly mammoth from the side in a dark brown coat: high domed head, sloping back, two curved tusks, a mark at the shoulder. The grey person beside him stands lower than the tusk tips."
+ },
+ "labels": {
+  "crumbs": "You are here",
+  "crumb_home": "Museum",
+  "crumb_here": "Woolly mammoth",
+  "toc": "On this page",
+  "tag_made": "Made for this page",
+  "tag_built": "Reconstruction",
+  "person": "1.70 m",
+  "to_table": "The numbers as a table",
+  "og_answer": "A Siberian bull stood about 2.7 to 2.9 m (9 ft) at the shoulder"
+ },
+ "top": {
+  "h1": "How big was the woolly mammoth?",
+  "answer": "A full-grown Siberian woolly mammoth bull stood about 2.7 to 2.9 m (9 ft) at the shoulder and weighed about 4 to 5 tonnes. The bigger bulls of Europe stood about 3 to 3.3 m (10 to 11 ft) and weighed about 5 to 7 tonnes. Ours is one real Siberian bull found frozen in 1900: 2.71 m (8.9 ft) at the shoulder, about 4.2 tonnes, reconstructed from his bones. Beside the person of 1.70 m, his shoulders stand about one and a half people high and his body is about two people long.",
+  "answer_more": "So a Siberian mammoth bull was about as tall as an Asian elephant bull, and a little heavier for his height. A big African bush elephant bull stands about half a metre taller and weighs more.",
+  "scale": {
+   "pic": "side",
+   "tag": "tag_made",
+   "what": "Our woolly mammoth beside a person 1.70 m tall, to one scale. He is built from one real animal, the Berezovka bull, found frozen in north-east Siberia in 1900. The mark at his shoulder is his own height in the flesh, 271 cm (8.9 ft), reconstructed from his bones. When he died he had one tusk left, the left. The right had fallen out long before, and the hunters who found him cut off the left and sold it. Ours carries both, the right as a mirror of the left, a reconstruction.",
+   "alt": "A woolly mammoth from the side in a dark brown coat: high domed head, sloping back, two curved tusks, a mark at the shoulder. The grey person beside him stands lower than the tusk tips.",
+   "note": "Our own reconstruction, built in code from published measurements and rendered in our own engine. Not photographs.",
+   "marks": [
+    {
+     "span": "mammoth",
+     "text": "Our mammoth, the Berezovka bull"
+    },
+    {
+     "span": "shoulder",
+     "text": "His shoulder, 271 cm in the flesh, by a reconstruction"
+    },
+    {
+     "span": "person",
+     "text": "The person, 1.70 m"
+    }
+   ],
+   "close": {
+    "pic": "close",
+    "tag": "tag_made",
+    "what": "The head, closer up, with the person: the small ear, the eye in the long hair, the trunk's fingered tip and the tusks. Both tusks are reconstructions, the left from the weight of his one tusk, the right as its mirror.",
+    "alt": "The woolly mammoth's head closer up: a small ear, the eye in long hair, the trunk's fingered tip on the ground, two curved tusks. The grey person stands beside it."
+   }
+  },
+  "guess": {
+   "h": "A guess",
+   "q": "How old was the Berezovka bull when he died?",
+   "button": "Show the answer",
+   "a": "About 45 to 50 years, by the museum that holds him. He was a full-grown bull, so his size is an adult's, not a young animal's.",
+   "button_open": "Hide the answer"
+  },
+  "out": {
+   "text": "The wing for this animal is still being built. The Leonardo da Vinci wing is open today.",
+   "link": "To the Leonardo wing"
+  }
+ },
+ "blocks": [
+  {
+   "type": "numbers",
+   "id": "numbers",
+   "nav": "The numbers",
+   "h": "The numbers",
+   "unit": "Metres and feet, tonnes. Shoulder height in the flesh, full-grown bulls unless the row says so. An empty cell has no sourced figure.",
+   "cols": [
+    "Animal",
+    "Shoulder height, in the flesh",
+    "Weight",
+    "How sure"
+   ],
+   "rows": [
+    {
+     "cells": [
+      "Our mammoth, the Berezovka bull",
+      "271 cm (8.9 ft)",
+      "about 4.2 t with his coat",
+      "reconstructed from his own bones, in the study of 2016"
+     ]
+    },
+    {
+     "cells": [
+      "A typical Siberian bull",
+      "about 2.7 to 2.9 m (8.7 to 9.6 ft)",
+      "about 4 to 5 t",
+      "one study of 2016, many skeletons, one method"
+     ]
+    },
+    {
+     "cells": [
+      "A big European bull",
+      "about 3 to 3.3 m (9.8 to 10.9 ft)",
+      "about 5 to 7 t, the very largest over 8 t",
+      "the same study and method"
+     ]
+    },
+    {
+     "cells": [
+      "A cow",
+      "about 2.3 to 2.6 m (7.5 to 8.5 ft)",
+      "about 2.8 to 4.2 t",
+      "five skeletons in the same study"
+     ]
+    },
+    {
+     "cells": [
+      "An Asian elephant bull",
+      "about 2.6 to 2.9 m (8.6 to 9.5 ft)",
+      "about 3.5 to 4.6 t",
+      "the same study and method"
+     ]
+    },
+    {
+     "cells": [
+      "An African bush elephant bull",
+      "about 3 to 3.4 m (10 to 11 ft)",
+      "about 5.2 to 6.9 t",
+      "the same study and method"
+     ]
+    },
+    {
+     "cells": [
+      "The person",
+      "1.70 m (5 ft 7 in)",
+      "",
+      "our scale figure"
+     ]
+    }
+   ]
+  },
+  {
+   "type": "text",
+   "id": "elephants",
+   "nav": "Woolly mammoth vs elephant",
+   "h": "Woolly mammoth vs elephant",
+   "paras": [
+    "The woolly mammoth, Mammuthus primigenius, was a close relative of today's elephants, nearest to the Asian elephant by its genes, and not their ancestor. A typical Siberian bull was about the height of an Asian elephant bull and a little heavier for that height. Its pelvis was broader and its upper leg bones longer. An African bush elephant bull, the biggest land animal alive, stands about half a metre taller and weighs about 5 to 7 tonnes. The big European mammoth bulls matched it. Unlike any elephant, the mammoth had a thick coat, small ears and a short tail."
+   ]
+  },
+  {
+   "type": "text",
+   "id": "looks",
+   "nav": "What it looked like",
+   "h": "What it looked like",
+   "subs": [
+    {
+     "h": "The coat",
+     "paras": [
+      "Three tiers: long dark outer hairs, a lighter middle tier and a pale underwool. In life the coat was probably dark brown and not one flat colour. The ginger of museum hair is a burial colour: in frozen ground hair loses its own colour and takes up the soil's. Our bull's longest measured hair, on the chin and chest, was about 50 cm."
+     ]
+    },
+    {
+     "h": "The tusks",
+     "paras": [
+      "They curved out and down, then up and in, like a loose spiral, and were worn on the outer side of the tip. Old bulls' tusks reached up to 4 m and about 100 kg, by the museum that holds our bull. Cows' were smaller and nearly straight, about 2 to 2.2 m."
+     ]
+    },
+    {
+     "h": "The trunk and the ears",
+     "paras": [
+      "The trunk ended in a long upper finger and a short lower lobe, as frozen trunks show. Lower down it widened between two skin folds, which no living elephant has, for a purpose still debated. The ears were small, about 30 cm high on a frozen bull. The tail was short, on our bull 36 cm, with a tuft of long hair."
+     ]
+    },
+    {
+     "h": "The hump and the back",
+     "paras": [
+      "The top of the head was the highest point. Behind it a dip, then a hump over the shoulders on the tall spines of the back bones, then a back sloping to low hips. Old bulls showed a waist between hump and head."
+     ]
+    }
+   ]
+  },
+  {
+   "type": "text",
+   "id": "found",
+   "nav": "What was found",
+   "h": "What was found",
+   "subs": [
+    {
+     "h": "The Berezovka bull",
+     "paras": [
+      "In August 1900 a local hunter found him in the bank of the Berezovka River, a tributary of the Kolyma in north-east Siberia. In 1901 an expedition from St Petersburg under Otto Herz dug him out and brought him to the city. Since 1903 he has been on show in the Zoological Museum there. The skeleton is mounted. The body is restored in the pose he was found in, on his belly with the front legs forward, the head and trunk modelled. He was far from complete: the top of the head, much of the back and most of the trunk had thawed and been eaten long before. He had grass between his teeth. He most likely fell into a gully or off a bank, broke his pelvis and a front leg and could not get out. Seeds on the plants he had eaten point to late summer."
+     ]
+    },
+    {
+     "h": "Measured on him",
+     "paras": [
+      {
+       "points": [
+        "The lengths of his long bones and the breadth of his pelvis, and from them his height and weight.",
+        "The width of his skull and jaw.",
+        "His tail, 36 cm, and his skin, 19 to 23 mm thick.",
+        "His hair on the legs, chin and chest.",
+        "The weight of his one tusk, about 29 kg."
+       ]
+      }
+     ]
+    },
+    {
+     "h": "From other mammoths, or restored",
+     "paras": [
+      {
+       "points": [
+        "Head, ear, eye and forefoot: after another frozen Siberian bull.",
+        "The side outline: after a third bull's restoration.",
+        "The trunk: after other frozen mammoths.",
+        "The shape of every bone: after other mounts. Only the lengths are his.",
+        "The right tusk: a mirror of the left.",
+        "The coat's colour: our choice."
+       ]
+      }
+     ]
+    }
+   ],
+   "end": [
+    "So our mammoth is one animal in its size and frame, and several in its form."
+   ]
+  },
+  {
+   "type": "text",
+   "id": "last-ones",
+   "nav": "When the last woolly mammoths lived",
+   "h": "When the last woolly mammoths lived",
+   "paras": [
+    "Woolly mammoths lived for hundreds of thousands of years, in the last ice age from Spain to Alaska. On the mainland the last ones lived in northern Siberia until about 10,000 years ago, on St Paul Island off Alaska until about 5,600 years ago. The last known population lived on Wrangel Island, in the Arctic Ocean off Siberia, until about 4,000 years ago, and they were not dwarfs. Why they ended is argued: on the mainland the warming at the end of the ice age and hunting by people, in shares nobody has settled. On St Paul the island shrank and fresh water ran short, with no people there. On Wrangel the end seems to have come fast, and nobody knows why: an icing from rain on snow is one idea, and people cannot be ruled out."
+   ]
+  },
+  {
+   "type": "text",
+   "id": "how-sure",
+   "nav": "How sure this is",
+   "h": "How sure this is",
+   "paras": [
+    "Three things decide every number on this page.",
+    {
+     "points": [
+      [
+       "Where the heights and weights come from:",
+       "one study of 2016 measured many mammoth and elephant skeletons and did the sums the same way for all. The height is the skeleton's plus about 5.5 percent for flesh, the weight the volume of a body drawn around the bones. Nothing newer has replaced it."
+      ],
+      [
+       "Ours is one animal, not the species:",
+       "one Siberian bull, a little under the Siberian average. So three numbers stand apart here: our bull, the typical Siberian bull and the big European bulls."
+      ],
+      [
+       "What is his and what is borrowed:",
+       "his bone lengths, pelvis, tail, skin and hair were measured. Head, trunk, outline and every bone's shape follow other mammoths, and the coat's colour is a choice."
+      ]
+     ]
+    }
+   ]
+  },
+  {
+   "type": "notes",
+   "id": "numbers-read",
+   "nav": "Numbers you may have read",
+   "h": "Numbers you may have read",
+   "intro": "For each number: where it came from, and what it means.",
+   "rows": [
+    {
+     "term": "3.4 m",
+     "text": "A handbook figure of 2007 for a large bull, spread by a widely used size chart. It fits a large European bull, not a typical Siberian one, and not ours."
+    },
+    {
+     "term": "3.5 m, and 4 m tusks",
+     "text": "Maxima from the museum in St Petersburg. Bulls up to 3.5 m, old bulls' tusks up to 4 m and about 100 kg, not averages."
+    },
+    {
+     "term": "6 and 8 tonnes",
+     "text": "6 tonnes is the average of the big European bulls, and of African bush elephant bulls. Only the very largest reached 8 tonnes, such as a bull from Siegsdorf in Bavaria at about 8.2 tonnes."
+    },
+    {
+     "term": "Ginger fur",
+     "text": "The colour of hair that lay thousands of years in frozen ground, losing its own pigment and taking up the soil's. In life the coat was probably dark brown and mixed."
+    },
+    {
+     "term": "A skirt of hair 80 to 90 cm long",
+     "text": "The museum that holds our bull gives this figure, and 70 to 80 cm elsewhere on the same page. It names no hair measured that long. On him the longest measured hair was about 50 cm. In a study of frozen mammoths it was 70 cm, on a tail."
+    },
+    {
+     "term": "Mammoths died out 4,000 years ago",
+     "text": "True only of the last known population, on Wrangel Island. On the mainland the last ones lived until about 10,000 years ago."
+    },
+    {
+     "term": "Frozen with food in the mouth",
+     "text": "Our bull had grass between his teeth. From that grew the picture of a mammoth frozen on the spot while eating. The leader of the dig read a fall, broken bones and a short death struggle."
+    }
+   ]
+  },
+  {
+   "type": "text",
+   "id": "why",
+   "nav": "Why our woolly mammoth looks like this",
+   "h": "Why our woolly mammoth looks like this",
+   "paras": [
+    "It is built to the measurements of the Berezovka bull's bones, and his height and weight follow from them. The coat's colour is our choice within the dark brown the evidence points to, and the right tusk mirrors the left. He stands in a walking stride, the trunk's tip on the ground."
+   ]
+  },
+  {
+   "type": "faq",
+   "id": "questions",
+   "nav": "More questions",
+   "h": "More questions",
+   "items": [
+    {
+     "q": "Are there other frozen mammoths?",
+     "a": "Yes. The museum in St Petersburg names several more. Among them: the Adams mammoth of 1799, the first full skeleton science had, and the Taymyr mammoth of 1948 with muscle, skin and hair. Frozen bodies are why the trunk, ears and coat of this species are known at all."
+    },
+    {
+     "q": "How long ago did the Berezovka bull live?",
+     "a": "About 44,000 years, by the radiocarbon date of the museum that holds him. The frozen ground kept his skin, his hair and the grass between his teeth all that time."
+    }
+   ]
+  },
+  {
+   "type": "text",
+   "id": "museum",
+   "nav": "In the museum",
+   "h": "In the museum",
+   "paras": [
+    "Museum of Ages is a digital museum. It is building a wing where this animal and others like it will stand, to one scale. Open today is the Leonardo da Vinci wing. Free entry, no account."
+   ],
+   "links": [
+    {
+     "out": true,
+     "text": "To the Leonardo wing"
+    }
+   ]
+  },
+  {
+   "type": "pages",
+   "id": "next",
+   "items": [
+    {
+     "page": "megalodon",
+     "pic": "megalodon",
+     "alt": "A shark with its mouth open, seen from the side, dark grey with a paler band along the flank, beside a grey person who looks tiny next to it.",
+     "line": "The megalodon whose backbone lies in Brussels was about 16 m (52 ft) long, the largest of its kind perhaps about 20 m. Our megalodon beside a person, to one scale."
+    },
+    {
+     "page": "biggest-dinosaurs",
+     "pic": "dinosaurs",
+     "alt": "Seven dinosaurs in a row from the side, two with long necks towering over the rest, and a grey person who looks tiny beside them.",
+     "line": "Seven of ours beside a person, to one scale: the heaviest most likely a titanosaur from Patagonia, the tallest probably Sauroposeidon, and why the longest is still open."
+    },
+    {
+     "page": "t-rex",
+     "pic": "trex",
+     "alt": "A T. rex from the side on two legs, mouth open and head raised, beside a grey person who does not reach its knee.",
+     "line": "A large adult T. rex was about 12 m (39 ft) long and roughly 8 to 9 tonnes, by the bones of SUE. Our T. rex beside a person, with what was found of SUE."
+    }
+   ]
+  },
+  {
+   "type": "sources",
+   "id": "sources",
+   "nav": "Sources",
+   "h": "Sources",
+   "intro": "The numbers come from these studies and from the museums that keep the finds. The museum is independent of all of them.",
+   "read": [
+    {
+     "text": "Larramendi, 2016, Acta Palaeontologica Polonica, with its supplement.",
+     "href": "https://doi.org/10.4202/app.00136.2014"
+    },
+    {
+     "text": "Herz, 1903, Annual Report of the Smithsonian Institution, the report of the dig in English extracts.",
+     "href": "https://archive.org/details/annual-report-board-of-regents-smithsonian_1903"
+    },
+    {
+     "text": "Chernova and others, 2015, Proceedings of the Zoological Institute RAS.",
+     "href": "https://zin.ru/journals/trudyzin/doc/vol_319_3/TZ_319_3_Chernova_2.pdf"
+    },
+    {
+     "text": "Tridico and others, 2014, Quaternary Science Reviews, as Chernova 2015 reports it.",
+     "href": "https://doi.org/10.1016/j.quascirev.2013.10.032"
+    },
+    {
+     "text": "Belyaev and others, 2025, Journal of Anatomy, the study's summary."
+    },
+    {
+     "text": "Díez-del-Molino and others, 2023, Current Biology, the study's summary.",
+     "href": "https://doi.org/10.1016/j.cub.2023.03.084"
+    },
+    {
+     "text": "Nogués-Bravo and others, 2008, PLoS Biology, the study's summary.",
+     "href": "https://doi.org/10.1371/journal.pbio.0060079"
+    },
+    {
+     "text": "Graham and others, 2016, PNAS, the study's summary.",
+     "href": "https://doi.org/10.1073/pnas.1604903113"
+    },
+    {
+     "text": "Arppe and others, 2019, Quaternary Science Reviews, the study's summary.",
+     "href": "https://doi.org/10.1016/j.quascirev.2019.105884"
+    },
+    {
+     "text": "Dehasque and others, 2024, Cell, the study's summary.",
+     "href": "https://doi.org/10.1016/j.cell.2024.05.033"
+    },
+    {
+     "text": "Lister and Bahn, 2007, Mammoths: Giants of the Ice Age, as the source line of a widely used size chart names it."
+    },
+    {
+     "text": "Zoological Institute of the Russian Academy of Sciences, St Petersburg: the Berezovka mammoth and the mammoth hall of its Zoological Museum.",
+     "href": "https://www.zin.ru/museum/expositions/mammoth_fauna.html"
+    },
+    {
+     "text": "University of Helsinki: its news of 2019 on the Wrangel Island study.",
+     "href": "https://www.helsinki.fi/en/luomus/news/last-mammoths-died-remote-island"
+    }
+   ],
+   "contact": "If a number or a museum is wrong, tell us and we will correct it.",
+   "contact_link": "To the legal notice",
+   "what_link": "What this museum is"
+  },
+  {
+   "type": "text",
+   "id": "pictures",
+   "nav": "Use our pictures",
+   "h": "Use our pictures",
+   "paras": [
+    [
+     "The pictures of the woolly mammoth on this page are our own work under ",
+     {
+      "text": "CC BY-SA 4.0",
+      "href": "https://creativecommons.org/licenses/by-sa/4.0/"
+     },
+     ", credit: Museum of Ages. They show a reconstruction, built in code and rendered in our own engine, not a photograph. The pictures under “In the museum” give their credits on their own pages."
+    ]
+   ]
+  }
+ ]
+}

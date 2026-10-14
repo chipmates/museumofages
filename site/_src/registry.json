@@ -829,6 +829,178 @@
             ]
           ]
         ]
+      },
+      {
+        "slug": {
+          "en": "woolly-mammoth",
+          "de": "wollhaarmammut"
+        },
+        "name": {
+          "en": "How big was the woolly mammoth?",
+          "de": "Wie groß war ein Mammut?"
+        },
+        "line": {
+          "en": "A typical Siberian bull stood about 2.7 to 2.9 m at the shoulder and weighed about 4 to 5 tonnes. Our woolly mammoth is one real bull found frozen in 1900, 2.71 m at the shoulder by a reconstruction, beside a person to one scale.",
+          "de": "Ein typischer sibirischer Bulle maß an der Schulter etwa 2,7 bis 2,9 m und wog etwa 4 bis 5 t. Unser Wollhaarmammut ist ein einzelner echter Bulle, 1900 im Permafrost gefunden, 2,71 m an der Schulter nach einer Rekonstruktion, neben einem Menschen im selben Maßstab."
+        },
+        "langs": ["en", "de"],
+        "count": "woolly_mammoth",
+        "about": {
+          "@type": "Taxon",
+          "name": "Mammuthus primigenius",
+          "alternateName": [
+            "Woolly mammoth",
+            "Wollhaarmammut"
+          ],
+          "taxonRank": "species",
+          "sameAs": "https://www.wikidata.org/wiki/Q3699044"
+        },
+        "never_say": [
+          [
+            "(?s)^(?!.*(?:\\babout\\b|\\betwa\\b)).*\\b4[,.]?000\\s(?:years|jahr)",
+            "4,000 years only with about: the last known population, about 4,000 years ago"
+          ],
+          [
+            "(?s)^(?!.*(?:last\\sknown|letzte[rn]?\\sbekannte|island|insel)).*\\b4[,.]?000\\s(?:years|jahr)",
+            "4,000 years only for the last known population, on its island"
+          ],
+          [
+            "the\\slast\\s(?:woolly\\s)?mammoth\\s(?:died|lived|was)|das\\sletzte\\s(?:woll(?:haar)?)?mammut\\s(?:starb|lebte|war)",
+            "never a year for the last mammoth: the last ones we know of"
+          ],
+          [
+            "(?s)^(?!.*(?:\\babout\\b|\\betwa\\b)).*\\b10[,.]?000\\s(?:years|jahr)",
+            "the mainland's 10,000 years only with about"
+          ],
+          [
+            "(?s)^(?!.*(?:\\babout\\b|\\betwa\\b)).*\\b5[,.]?600\\b",
+            "St Paul's 5,600 years only with about"
+          ],
+          [
+            "\\b3[,.]?900\\b",
+            "no mainland mammoths 3,900 years ago: that DNA date is disputed"
+          ],
+          [
+            "pyramid",
+            "nothing about the pyramids: their date was not checked"
+          ],
+          [
+            "(?s)^(?!.*(?:handbook|handbuch|european|europäisch|record|rekord|largest|größten|up\\sto|bis\\szu|maxim|höchst)).*(?<!to\\s)(?<!bis\\s)(?<![\\d.,])3[.,]4\\s?m\\b",
+            "3.4 m only as the handbook's figure for a large bull, never a Siberian bull's or ours"
+          ],
+          [
+            "(?s)^(?!.*(?:maxim|höchst|up\\sto|bis\\szu|bis\\s3)).*(?<![\\d.,])3[.,]5\\s?m\\b",
+            "3.5 m only as the museum's maximum for bulls"
+          ],
+          [
+            "(?<![\\d.,])4\\s?m\\s(?:tall|high|hoch|at\\sthe\\sshoulder|an\\sder\\sschulter)",
+            "4 m tall is the southern mammoth on the size chart, another species"
+          ],
+          [
+            "(?s)^(?!.*(?:tusk|stoßz|maxim|höchst|up\\sto|bis\\szu)).*(?<![\\d.,])4\\s?m\\b",
+            "4 m only for old bulls' tusks, as a maximum"
+          ],
+          [
+            "(?s)^(?!.*(?:european|europäisch|largest|größten|record|rekord|african|afrikanisch|siegsdorf|average|durchschnitt)).*(?<![\\d.,])[68]\\s?(?:t|tonnes?|tons?|tonnen)\\b",
+            "6 and 8 tonnes only for the big European bulls, the African bush elephant or the very largest"
+          ],
+          [
+            "(?:our\\smammoth|our\\sbull|our\\swoolly\\smammoth|\\bours\\b|unser(?:e[rs]?)?\\s(?:mammut|bulle|wollhaarmammut)|\\bunseres\\b)[^.]{0,60}(?:\\b2[.,]7\\s(?:to|bis)\\s2[.,]9|(?<![\\d.,])3[.,][45]\\s?m|(?<![\\d.,])4\\s?m\\b|\\b4[.,][45]\\s?t|(?<![\\d.,])[68]\\s?(?:t|tonnes?|tonnen)\\b)",
+            "ours is one bull of 2.71 m and about 4.2 t: never the species' range or the big bulls' numbers"
+          ],
+          [
+            "(?s)^(?!.*(?:\\babout\\b|\\betwa\\b)).*(?<!to\\s)(?<!bis\\s)\\b4[.,]2\\s?(?:t|tonnes?|tonnen)\\b",
+            "4.2 tonnes only with about: a reconstruction"
+          ],
+          [
+            "(?s)^(?!.*(?:reconstruct|rekonstru|with\\shis\\scoat|mit\\sfell)).*(?<!to\\s)(?<!bis\\s)\\b4[.,]2\\s?(?:t|tonnes?|tonnen)\\b",
+            "4.2 tonnes only as a reconstruction, with his coat"
+          ],
+          [
+            "\\b4[.,][45]\\s?(?:t|tonnes?|tonnen)\\b",
+            "4.4 tonnes is our model's volume, never his weight"
+          ],
+          [
+            "(?<!to\\s)(?<!bis\\s)(?<![\\d.,])2[.,]8\\s?m\\b",
+            "2.8 m is our model's crown hair, never his height"
+          ],
+          [
+            "(?:woolly\\smammoths?|the\\smammoth|the\\sspecies|wollhaarmammute?s?|das\\smammut|die\\sart)\\s(?:\\w+\\s){0,3}(?:stood|was|were|reached|maß|war|waren|stand|erreichte)\\s(?:about\\s|etwa\\s)?(?:2[.,]71|271)",
+            "2.71 m is our one bull's, never the species'"
+          ],
+          [
+            "(?:largest|biggest)\\s(?:woolly\\s)?mammoth|größte[sn]?\\s(?:woll(?:haar)?)?mammut",
+            "not the largest mammoth: one large Siberian bull"
+          ],
+          [
+            "\\b\\d{1,2}(?:st|nd|rd|th)?\\s(?:august|september|may|mai)\\b|\\b(?:august|september|may)\\s\\d{1,2}\\b|\\b\\d{1,2}\\.\\s(?:august|september|mai)\\b",
+            "months and years only: the report's days are old style"
+          ],
+          [
+            "whole\\sfrozen\\smammoth|complete\\sfrozen\\smammoth|ganze[sn]?\\sgefrorene[sn]?\\smammut|vollständige[sn]?\\sgefrorene[sn]?\\smammut",
+            "not a whole frozen mammoth: an incomplete carcass"
+          ],
+          [
+            "shows?\\shim\\sas\\s(?:he\\swas\\s)?found|on\\sshow\\sas\\she\\swas\\sfound|zeigt\\sihn(?:,)?\\swie\\ser\\sgefunden|ausgestellt,\\swie\\ser\\sgefunden",
+            "not on show as found: the body restored in the pose he was found in, head and trunk modelled"
+          ],
+          [
+            "(?s)^(?!.*(?:picture\\sof|bild\\seines|read\\sa\\sfall|las\\seinen\\ssturz)).*(?:flash.frozen|frozen\\sin\\san\\sinstant|frozen\\son\\sthe\\sspot|frozen\\s(?:while|whilst)\\seating|while\\seating|frozen\\swith\\sfood|schockgefror|auf\\sder\\sstelle\\seinfror|beim\\sfressen|mit\\sfutter\\sim\\smaul)",
+            "not frozen in an instant or while eating: the dig read a fall"
+          ],
+          [
+            "unchewed|\\bchewed\\b|unzerkaut|zerkaut|gekaut",
+            "grass between his teeth: whether it was chewed, the sources disagree"
+          ],
+          [
+            "\\b(?:his|seine)\\s(?:ears?|ohren?)\\b[^.]{0,30}\\b30\\s?cm",
+            "30 cm is another bull's ear, never his"
+          ],
+          [
+            "both\\stusks\\sare\\shis|his\\stwo\\stusks|\\bhis\\stusks\\b|seine\\s(?:beiden|zwei)\\sstoßzähne|beide\\sstoßzähne\\ssind\\sseine",
+            "he had one tusk when he died: ours carries the right as a reconstruction"
+          ],
+          [
+            "\\bhis\\sskeleton\\b|\\bsein\\sskelett\\b",
+            "our skeleton is not his: only the bone lengths are his"
+          ],
+          [
+            "(?s)^(?!.*(?:burial|frozen\\sground|gefrorenen\\sboden|soil|museum\\shair|haare\\sin\\smuseen)).*(?:ginger|red(?:dish)?\\sfur|red(?:-|\\s)haired|rotes\\sfell|rotblond|rothaarig)",
+            "ginger or red only as a colour of burial"
+          ],
+          [
+            "(?s)^(?!.*(?:museum\\sthat\\sholds|museum,\\sdas\\sunseren\\sbullen\\sbewahrt|names\\sno|nennt\\ses\\snicht)).*\\b80\\s(?:to|bis)\\s90\\s?cm",
+            "no skirt of hair 80 to 90 cm: only as the museum's figure, with no hair measured that long"
+          ],
+          [
+            "(?:lighter|paler)\\swinter\\scoat|winter\\scoat\\s(?:was\\s)?lighter|hellere[rns]?\\swinterfell|winterfell\\s(?:war\\s)?heller",
+            "a lighter winter coat is a suggestion, not a finding"
+          ],
+          [
+            "(?s)^(?!.*(?:not\\stheir\\sancestor|not\\sthe\\sancestor|nicht\\sihr\\svorfahr)).*(?:ancestor|vorfahr)",
+            "mammoths were not the elephants' ancestors"
+          ],
+          [
+            "hunted\\s(?:them\\s)?out|ausgerottet|wiped\\s(?:them\\s)?out|(?:the\\s)?(?:climate|warming)\\skilled|(?:klima|erwärmung)\\s(?:hat\\ssie\\s|)(?:getötet|ausgelöscht|tötete)|inbreeding\\s(?:killed|doomed)|inzucht\\s(?:tötete|hat\\ssie)|humans\\skilled|menschen\\stöteten",
+            "why they ended is argued: no cause as settled"
+          ],
+          [
+            "(?s)^(?!.*(?:not\\sdwarfs|keine\\szwerge|zwerge\\swaren\\s(?:diese\\stiere\\s)?nicht)).*(?:dwarf|zwerg)",
+            "the last herd on Wrangel were not dwarfs"
+          ],
+          [
+            "\\bclon|\\bklon|de.?extinct|bring(?:ing)?\\s(?:it|them|the\\smammoth|mammoths)\\sback|zurückbring|wiederbeleb|zurückhol",
+            "nothing about bringing it back"
+          ],
+          [
+            "(?s)^(?!.*(?:\\babout\\b|\\betwa\\b)).*\\b45\\s(?:to|bis)\\s50\\b",
+            "45 to 50 years only with about"
+          ],
+          [
+            "(?s)^(?!.*(?:radiocarbon|radiokarbon)).*\\b44[,.]?000\\b",
+            "about 44,000 years only by the museum's radiocarbon date"
+          ]
+        ]
       }
     ],
     "never_say": [

@@ -35,7 +35,9 @@
     { "name": "animals-spinosaurus-side", "file": "spinosaurus-side.png", "widths": [800, 1600, 2400] },
     { "name": "animals-spinosaurus-close", "file": "spinosaurus-close.png", "widths": [800, 1600] },
     { "name": "animals-spinosaurus-beside-t-rex", "file": "spinosaurus-vs.png", "widths": [800, 1600, 2400] },
-    { "name": "animals-spinosaurus-skeleton", "file": "spinosaurus-skeleton.png", "widths": [800, 1600] }
+    { "name": "animals-spinosaurus-skeleton", "file": "spinosaurus-skeleton.png", "widths": [800, 1600] },
+    { "name": "animals-woolly-mammoth-side", "file": "mammoth-side.png", "widths": [800, 1600, 2400] },
+    { "name": "animals-woolly-mammoth-close", "file": "mammoth-close.png", "widths": [800, 1600] }
   ],
   "share": [
     { "name": "vinci-inventions-og-1200x630", "file": "stop-works.webp", "crop": "1920x1008+0+60" },

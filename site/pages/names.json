@@ -206,6 +206,17 @@
     { "text": "Journal of Paleontology", "lang": "en" },
     { "text": "ACS Central Science", "lang": "en" },
     { "text": "SNSB-BSPG 1993 IX 308", "whole": true },
-    { "text": "MSNM V4047", "whole": true }
+    { "text": "MSNM V4047", "whole": true },
+    { "text": "Mammuthus primigenius", "whole": true, "taxon": true },
+    { "text": "Proceedings of the Zoological Institute RAS", "lang": "en" },
+    { "text": "Quaternary Science Reviews", "lang": "en" },
+    { "text": "Current Biology", "lang": "en" },
+    { "text": "PLoS Biology", "lang": "en" },
+    { "text": "Journal of Anatomy", "lang": "en" },
+    { "text": "Annual Report of the Smithsonian Institution", "lang": "en" },
+    { "text": "Mammoths: Giants of the Ice Age", "lang": "en" },
+    { "text": "Otto Herz", "person": true },
+    { "text": "St Petersburg", "whole": true },
+    { "text": "St. Petersburg", "whole": true }
   ]
 }
