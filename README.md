@@ -14,7 +14,7 @@
 <p align="center">
   <a href="https://github.com/chipmates/museumofages/actions/workflows/ci.yml"><img src="https://img.shields.io/github/actions/workflow/status/chipmates/museumofages/ci.yml?branch=main&style=flat-square&label=CI&labelColor=2b3044" alt="CI" /></a>
   <a href="LICENSE"><img src="https://img.shields.io/badge/code-AGPL--3.0--or--later-cb8561?style=flat-square&labelColor=2b3044" alt="Code: AGPL-3.0-or-later" /></a>
-  <a href="CONTENT-LICENSE.md"><img src="https://img.shields.io/badge/texts%20and%20pictures-CC%20BY--SA%204.0-cb8561?style=flat-square&labelColor=2b3044" alt="Texts and pictures: CC BY-SA 4.0" /></a>
+  <a href="CONTENT-LICENSE.md"><img src="https://img.shields.io/badge/texts%20and%20own%20stills-CC%20BY--SA%204.0-cb8561?style=flat-square&labelColor=2b3044" alt="Texts and own stills: CC BY-SA 4.0" /></a>
   <a href="#how-it-is-built"><img src="https://img.shields.io/badge/drawn%20with-WebGPU%20%C2%B7%20WebGL2-ece7de?style=flat-square&labelColor=2b3044" alt="Drawn with WebGPU or WebGL2" /></a>
 </p>
 

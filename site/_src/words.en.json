@@ -252,7 +252,7 @@
     "register_value": "[Register court and number]",
     "contact_term": "Contact",
     "s6_h": "Code and rights",
-    "s6_p": "The museum's code is open source under the AGPL-3.0 or later. The museum's own texts and pictures are under CC BY-SA 4.0: anyone may share and adapt them, commercially too, if they credit the museum, link the licence, mark changes and share adaptations under the same licence. Excluded are works and data of others, such as reproductions, music, quotations and map data, and the museum's name and logo.",
+    "s6_p": "The museum's code is open source under the AGPL-3.0 or later. Its own texts and the stills of what it built are under CC BY-SA 4.0: anyone may share and adapt them, commercially too, if they credit the museum, link the licence, mark changes and share adaptations alike. Not covered: the films, stills that show a painting, drawing or notebook page, works and data of others, and the museum's name and logo.",
     "s6_before": "The museum's code is not public yet. It will be published under an open source licence, the AGPL-3.0 or any later version. Anyone may then read it, use it and change it under that licence. The rights in the texts and pictures the museum makes itself lie with ChipMates gemeinnützige GmbH.",
     "use_h": "Use our pictures",
     "use_p1": "Much of what you see here we made ourselves: the machines rebuilt in code, the museum's own halls, the glass model of the heart, the charts, and the site's stills of these. Those pictures are under CC BY-SA 4.0: use them, and share what you make from them under the same licence, which is what share alike means. A still that shows a painting, a drawing or a notebook page is not among them.",

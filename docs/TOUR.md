@@ -75,7 +75,7 @@ A stop has a line you read first, a drawer with a few more lines, and a record t
 
 ## Credits
 
-The pictures on this page and the moving picture in the README are the museum's own, under [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/), © ChipMates gemeinnützige GmbH and contributors. The rooms, the machines, the house and the sky in them are built in code. The works of others inside them keep their own terms, as [CONTENT-LICENSE.md](../CONTENT-LICENSE.md) says. Here is each one, with its holder and its licence line as its record gives it. Where the label of a work held in Italy adds a note on the Italian heritage code, the note follows the line.
+The pictures on this page and the moving picture in the README show the museum as it stands, © ChipMates gemeinnützige GmbH and contributors. They are not under CC BY-SA: most of them show works of others, which keep their own terms, as [CONTENT-LICENSE.md](../CONTENT-LICENSE.md) says. To show one elsewhere, link to this page or to museumofages.org. Here is each one, with its holder and its licence line as its record gives it. Where the label of a work held in Italy adds a note on the Italian heritage code, the note follows the line.
 
 The note for those works reads: "Italian Codice dei beni culturali, art. 108 comma 3-bis: exemption for non-profit study, research and promotion of knowledge of the cultural heritage."
 
