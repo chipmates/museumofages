@@ -293,5 +293,90 @@
       ]
     ],
     "claim_phrase": "his machines|seine maschinen|his invention|seine erfindung|da vinci's inventions|da vincis erfindungen"
+  },
+  "animals": {
+    "_note": "A wing in the making that already has pages of its own: pages_only keeps it off the landing's wall, its film and the menu until it opens, so it needs no collection, door, dates or pictures yet. Its pages stand in its own languages only (langs), and every page of it shows a plain link to the newest open wing where a door would stand. A topic page may carry its own about and never_say: those rules hold for that page alone, the wing's for all of them.",
+    "state": "making",
+    "pages_only": true,
+    "langs": ["en", "de"],
+    "count": "animals",
+    "name": {
+      "en": "Animals",
+      "de": "Tiere"
+    },
+    "page": {
+      "en": "animals",
+      "de": "de/tiere"
+    },
+    "about": {
+      "@type": "Thing",
+      "name": "Animals"
+    },
+    "topics": [
+      {
+        "slug": {
+          "en": "megalodon",
+          "de": "megalodon"
+        },
+        "name": {
+          "en": "How big was megalodon?",
+          "de": "Wie groß war der Megalodon?"
+        },
+        "line": {
+          "en": "About 16 m (52 ft) by the one backbone ever found, the largest perhaps 20 m. Compared with a person, a great white and a blue whale.",
+          "de": "Etwa 16 m nach der einen Wirbelsäule in Brüssel, die größten vielleicht 20 m. Verglichen mit Mensch, Weißem Hai und Blauwal."
+        },
+        "langs": ["en", "de"],
+        "count": "megalodon",
+        "about": {
+          "@type": "Taxon",
+          "name": "Otodus megalodon",
+          "alternateName": "Megalodon",
+          "taxonRank": "species",
+          "sameAs": "https://www.wikidata.org/wiki/Q163873"
+        },
+        "never_say": [
+          [
+            "giant great white|riesige[rn]?\\s+wei(?:ß|ss)e[rn]?\\s+hai|riesenhai",
+            "it was not a giant great white, and the Riesenhai is the basking shark"
+          ],
+          [
+            "great white'?s ancestor|ancestor of the great white|vorfahr\\w*\\s+des\\s+wei(?:ß|ss)en\\s+hais?",
+            "it was not the great white's ancestor"
+          ],
+          [
+            "\\b60\\s*(?:t|tonnes?|tons?|tonnen)\\b",
+            "60 tonnes is never the answer: the weight is disputed, roughly 30 t slim, about 61 t stout"
+          ],
+          [
+            "(?s)^(?!.*(?:two broken discs|zwei angebrochenen?\\s+wirbel)).*\\b24[.,]3\\b",
+            "24.3 m only with its condition, the two broken discs"
+          ],
+          [
+            "\\bits\\s+(?:own\\s+)?teeth\\b|\\bseine[n]?\\s+(?:eigenen\\s+)?zähne",
+            "the teeth in our model are another find's"
+          ],
+          [
+            "top speed|swimming speed|höchstgeschwindigkeit|schwimmgeschwindigkeit|\\bkm/h\\b|\\bmph\\b",
+            "no swimming speed: the 2025 study calls one too speculative"
+          ],
+          [
+            "still (?:alive|lives|living)|may still live|lebt (?:heute )?noch|noch (?:heute )?(?:am )?leben",
+            "it died out about 3.6 million years ago"
+          ]
+        ]
+      }
+    ],
+    "never_say": [
+      [
+        "\\bsoon\\b|\\bbald\\b|\\bdemnächst\\b|\\bin kürze\\b|\\bopens? (?:in|on|this|next)\\b|\\böffnet (?:im|am|in|diese|nächste)",
+        "the wing has no date: it is being built"
+      ],
+      [
+        "enter the (?:museum|wing)|walk in\\b|ins museum|den flügel betreten|\\bbetritt\\b|geh(?:e|st)? hinein",
+        "the wing has no way in yet: a plain link leads to an open wing"
+      ]
+    ],
+    "claim_phrase": "biggest ever|largest ever|größte[rns]? aller zeiten"
   }
 }

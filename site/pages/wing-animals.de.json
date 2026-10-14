@@ -1,0 +1,60 @@
+{
+ "_note": "DIE WORTE der Liste der Tierseiten, Deutsch. Die Worte des Schreibers geben dieser Seite keine eigenen: Titel und Überschrift sind der Name des Flügels, die Zeile entstand beim Bauen, damit der Schreiber sie ersetzt, die Museumszeile ist die der Megalodon-Seite, gekürzt auf die Sätze, die nicht von einem Tier sprechen. Jede Seite der Liste steht mit Namen und Zeile aus dem Register.",
+ "page": {
+  "id": "animals",
+  "wing": "animals",
+  "hub": true,
+  "published": null,
+  "og_image": {
+   "file": "animals-og-{lang}-1200x630.png",
+   "width": 1200,
+   "height": 630
+  }
+ },
+ "pics": {
+  "side": {
+   "stem": "animals-megalodon-side",
+   "widths": [
+    800,
+    1600,
+    2400
+   ],
+   "sizes": "(min-width: 1280px) 690px, (min-width: 960px) 54vw, (min-width: 600px) calc(100vw - 64px), calc(100vw - 40px)",
+   "person": "91.86% 55.88%"
+  }
+ },
+ "meta": {
+  "title": "Tiere | Museum of Ages",
+  "description": "Wie groß Tiere der Vorzeit waren, jedes neben einem Menschen von 1,70 m im selben Maßstab, in eigenen Bildern des Museums. Die erste Seite: Megalodon.",
+  "og_title": "Tiere",
+  "og_image_alt": "Ein Hai mit offenem Maul von der Seite, oben dunkel, unten hell, neben einem grauen Menschen, der winzig daneben steht."
+ },
+ "labels": {
+  "crumbs": "Du bist hier",
+  "crumb_home": "Museum",
+  "crumb_here": "Tiere",
+  "toc": "Auf dieser Seite",
+  "person": "1,70 m"
+ },
+ "top": {
+  "h1": "Tiere",
+  "answer": "Das Museum baut einen Flügel für Tiere, die vor langer Zeit lebten. Bis er öffnet, sagt hier jede Seite, wie groß eines von ihnen war, neben einem Menschen, in eigenen Bildern.",
+  "out": {
+   "text": "Museum of Ages ist ein digitales Museum. Offen ist heute der Flügel von Leonardo da Vinci, Eintritt frei, kein Konto.",
+   "link": "Zum Leonardo-Flügel"
+  }
+ },
+ "blocks": [
+  {
+   "type": "pages",
+   "id": "pages",
+   "items": [
+    {
+     "page": "megalodon",
+     "pic": "side",
+     "alt": "Ein Hai mit offenem Maul von der Seite, oben dunkel, unten hell, neben einem grauen Menschen, der winzig daneben steht."
+    }
+   ]
+  }
+ ]
+}

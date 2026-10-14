@@ -1281,6 +1281,126 @@
    "sha256": "a816686f92138cbcf78b174d23dc883de31650869d802a7727cb2d9fac36272d"
   },
   {
+   "path": "pages/pics/img/animals-megalodon-head-1600.avif",
+   "url": "/static/img/animals-megalodon-head-1600.avif",
+   "bytes": 9945,
+   "sha256": "a188a6d17f6261c607eb356729a4fb89c5afa5f86d69d9b2ca123b126223e4d6"
+  },
+  {
+   "path": "pages/pics/img/animals-megalodon-head-1600.webp",
+   "url": "/static/img/animals-megalodon-head-1600.webp",
+   "bytes": 15128,
+   "sha256": "5de90609482f9e262575a66e12bb9588f175cf7f8fc41a88c5608aa527e1def9"
+  },
+  {
+   "path": "pages/pics/img/animals-megalodon-head-800.avif",
+   "url": "/static/img/animals-megalodon-head-800.avif",
+   "bytes": 4875,
+   "sha256": "01f7c663d14032637ea05407365028a1532a78205a2e14bfcf16b0e2d20b6aa4"
+  },
+  {
+   "path": "pages/pics/img/animals-megalodon-head-800.webp",
+   "url": "/static/img/animals-megalodon-head-800.webp",
+   "bytes": 6654,
+   "sha256": "bdc7f4c7859136f6209906c6b5cac0499db424ba71f91585b6c34ad7523be1ef"
+  },
+  {
+   "path": "pages/pics/img/animals-megalodon-og-de-1200x630.png",
+   "url": "/static/img/animals-megalodon-og-de-1200x630.png",
+   "bytes": 113356,
+   "sha256": "95a0b6db9235b9bf6b78b678fa2612568b778d68dc998383322aa926faeb91da"
+  },
+  {
+   "path": "pages/pics/img/animals-megalodon-og-en-1200x630.png",
+   "url": "/static/img/animals-megalodon-og-en-1200x630.png",
+   "bytes": 113322,
+   "sha256": "c884721b2c1f8edfb6524944155de9bb7a26b03cf637800fcb9d75f6c2c6ca01"
+  },
+  {
+   "path": "pages/pics/img/animals-megalodon-side-1600.avif",
+   "url": "/static/img/animals-megalodon-side-1600.avif",
+   "bytes": 7467,
+   "sha256": "84245d4e5776f0c610a1bc54182184ebeca0cfac3d02320b2b4f6cf8c01a5d84"
+  },
+  {
+   "path": "pages/pics/img/animals-megalodon-side-1600.webp",
+   "url": "/static/img/animals-megalodon-side-1600.webp",
+   "bytes": 10316,
+   "sha256": "461b9288357fff54741af1f4d3588b293b2967bb7227f48386a5a1bf038dc22d"
+  },
+  {
+   "path": "pages/pics/img/animals-megalodon-side-2400.avif",
+   "url": "/static/img/animals-megalodon-side-2400.avif",
+   "bytes": 10959,
+   "sha256": "2cf6a2770fab38b172d0939d09bfc377636eb100d124f605dcb587e0265b016d"
+  },
+  {
+   "path": "pages/pics/img/animals-megalodon-side-2400.webp",
+   "url": "/static/img/animals-megalodon-side-2400.webp",
+   "bytes": 16922,
+   "sha256": "5616a9af6e1a3ca2553df598751949a5a13016ec585742f665ed6a992ec0af4b"
+  },
+  {
+   "path": "pages/pics/img/animals-megalodon-side-800.avif",
+   "url": "/static/img/animals-megalodon-side-800.avif",
+   "bytes": 3771,
+   "sha256": "7cd46fb17c88e467f9e7ede154abc1e43e49ebd91a2792f13111da50f62bbeef"
+  },
+  {
+   "path": "pages/pics/img/animals-megalodon-side-800.webp",
+   "url": "/static/img/animals-megalodon-side-800.webp",
+   "bytes": 4912,
+   "sha256": "ba9e08abd314d0670bbd2a5a239851823cc44279a411cfbef315edeff7fbfcae"
+  },
+  {
+   "path": "pages/pics/img/animals-megalodon-skeleton-1600.avif",
+   "url": "/static/img/animals-megalodon-skeleton-1600.avif",
+   "bytes": 9933,
+   "sha256": "4966ea282f5c461f61bbae000d1460551d180f15ba8745ebfba67af96da2c9f3"
+  },
+  {
+   "path": "pages/pics/img/animals-megalodon-skeleton-1600.webp",
+   "url": "/static/img/animals-megalodon-skeleton-1600.webp",
+   "bytes": 13684,
+   "sha256": "eb6339c15118813d3bc0bee0c657819423abd39aab28c9c5d22e9dc8defc6d7f"
+  },
+  {
+   "path": "pages/pics/img/animals-megalodon-skeleton-2400.avif",
+   "url": "/static/img/animals-megalodon-skeleton-2400.avif",
+   "bytes": 15201,
+   "sha256": "fd878f571474cfd25b01c6af28bf21823cd004137baa9411ec824585d14a5796"
+  },
+  {
+   "path": "pages/pics/img/animals-megalodon-skeleton-2400.webp",
+   "url": "/static/img/animals-megalodon-skeleton-2400.webp",
+   "bytes": 22472,
+   "sha256": "b7c5558e50f2b20a8f49785d3179086b051fcfc6893d3be4f05fe617d3963b8e"
+  },
+  {
+   "path": "pages/pics/img/animals-megalodon-skeleton-800.avif",
+   "url": "/static/img/animals-megalodon-skeleton-800.avif",
+   "bytes": 4519,
+   "sha256": "a61d6d4320f40c8205be9c7574cfdc90b404936328117e2ecd87f6ba09d54272"
+  },
+  {
+   "path": "pages/pics/img/animals-megalodon-skeleton-800.webp",
+   "url": "/static/img/animals-megalodon-skeleton-800.webp",
+   "bytes": 5318,
+   "sha256": "c73b8205bd1bf37a4588a0e7517be2d8ac7739e8c3f114a162ae0c0cb59f8521"
+  },
+  {
+   "path": "pages/pics/img/animals-og-de-1200x630.png",
+   "url": "/static/img/animals-og-de-1200x630.png",
+   "bytes": 98361,
+   "sha256": "68a6e3af40038f9a93151537e5b18094d8a930b40904f6790bd74022489fbff5"
+  },
+  {
+   "path": "pages/pics/img/animals-og-en-1200x630.png",
+   "url": "/static/img/animals-og-en-1200x630.png",
+   "bytes": 101034,
+   "sha256": "b7404754959a8ba11f518e490d48e9d7e4fcc83c482864acec6978dc7e47de90"
+  },
+  {
    "path": "pages/pics/img/vinci-inventions-og-1200x630.jpg",
    "url": "/static/img/vinci-inventions-og-1200x630.jpg",
    "bytes": 64444,

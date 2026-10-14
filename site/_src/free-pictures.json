@@ -20,7 +20,9 @@
     "vinci-inventions-og",
     "vinci-sizes-chart-en", "vinci-sizes-chart-de",
     "vinci-sizes-og-en", "vinci-sizes-og-de",
-    "vinci-supper-og-en", "vinci-supper-og-de", "vinci-paintings-og-en", "vinci-paintings-og-de"
+    "vinci-supper-og-en", "vinci-supper-og-de", "vinci-paintings-og-en", "vinci-paintings-og-de",
+    "animals-megalodon-side", "animals-megalodon-head", "animals-megalodon-skeleton",
+    "animals-megalodon-og-en", "animals-megalodon-og-de", "animals-og-en", "animals-og-de"
   ],
   "with_map_credit": [
     "house", "v-house", "v-court", "v-court-m", "court", "stair", "v-hall", "v-hall-m", "v-lion", "vinci-stop-hall",
