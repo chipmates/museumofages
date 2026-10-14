@@ -227,6 +227,12 @@
       </figure>
 <!--@ text_para -->
   <p class="sp-does">{{text}}</p>
+<!--@ text_points -->
+  <ul class="sp-points">
+{{html.items}}
+  </ul>
+<!--@ text_point -->
+    <li><span class="sp-points__lead">{{lead}}</span> {{text}}</li>
 <!--@ text_sub -->
   <div class="sp-q">
     <h3>{{h}}</h3>
@@ -343,7 +349,7 @@
 <!--@ frame:scale -->
       <!-- The animal whole at one scale beside the person: never cut, so its length can be read off the picture. -->
       <figure class="plate sc-fig sc-fig--first" data-slot="frame">
-        <div class="hang">{{html.picture}}{{html.person}}</div>{{html.bars}}
+        {{html.above}}<div class="hang">{{html.picture}}{{html.person}}</div>{{html.bars}}
         <figcaption class="label sc-label">
           <span class="label__what"><span class="tag">{{tag}}<span class="vh">:</span></span> {{what}}</span>
           <span class="label__src">{{note}}</span>{{html.totable}}
@@ -354,7 +360,7 @@
       </div>
 <!--@ scale_fig -->
 <figure class="plate sc-fig">
-  <div class="hang">{{html.picture}}{{html.person}}</div>
+  {{html.above}}<div class="hang">{{html.picture}}{{html.person}}</div>{{html.below}}
   <figcaption class="label sc-label"><span class="label__what"><span class="tag">{{tag}}<span class="vh">:</span></span> {{what}}</span>{{html.key}}{{html.totable}}</figcaption>
 </figure>
 <!--@ scale_key -->
@@ -367,10 +373,11 @@
 <!--@ scale_bar -->
 <p class="sc-bar sc-bar--{{key}} sc-bar--{{kind}}"><span class="sc-bar__t">{{text}}</span></p>
 <!--@ scale_marks -->
-<!-- Each animal's name and length over a bracket at its place in the picture above, at the picture's scale. -->
-<ul class="sc-marks">{{html.items}}</ul>
+<!-- Each animal's name and length at a bracket over its place in the picture, at the picture's scale: those that
+     stand behind are named over the picture, the rest under it. -->
+<ul class="sc-marks sc-marks--{{side}}">{{html.items}}</ul>
 <!--@ scale_mark -->
-<li class="sc-mark sc-mark--{{key}} sc-mark--{{side}}">{{text}}</li>
+<li class="sc-mark sc-mark--{{key}}"><span class="sc-mark__t"><span class="sc-mark__n">{{html.name}}<span class="sc-mark__c">,</span></span> <span class="sc-mark__v">{{html.value}}</span></span></li>
 <!--@ person -->
 <span class="sc-person sc-person--{{key}}" aria-hidden="true">{{text}}</span>
 <!--@ guess -->

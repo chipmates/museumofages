@@ -1,11 +1,34 @@
-/* A page of several subjects at one scale: under its picture each one's name and length over a bracket at its
-   place, and the wider table of their numbers. Only a page whose picture carries such labels takes these rules
-   (build.py, css_several); each bracket's own place is a rule of the page (mark_rules). */
-.sc-marks{display:grid;gap:6px;margin:14px 0 0;padding:0;list-style:none}
-.sc-mark{position:relative;padding-bottom:9px;font-family:var(--sans);font-size:.75rem;line-height:1.3;letter-spacing:.02em;
-  color:var(--ink-soft)}
-.sc-mark::after{content:"";position:absolute;bottom:0;min-width:3px;height:7px;border:1px solid currentColor;border-top:0}
-.sc-mark--end{text-align:right}
+/* A page of several subjects at one scale: at its picture each one's name and length at a bracket over its place,
+   those behind named over the picture and the rest under it, the wider table of their numbers, and a short
+   list in a section. Only a page with such labels or such a list takes these rules (build.py, css_several); each
+   label's place, lane and side are rules of the page (mark_rules), the labels of one lane overlaid in one cell. */
+.sc-marks{display:grid;grid-template-columns:minmax(0,1fr);row-gap:6px;margin:0;padding:0;list-style:none}
+.sc-marks--under{margin-top:4px}
+.sc-marks--over{margin-bottom:4px}
+.sc-mark{position:relative;grid-column:1;display:flex;font-family:var(--sans);font-size:.75rem;line-height:1.3;
+  letter-spacing:.02em;color:var(--ink-soft)}
+.sc-marks--under .sc-mark{padding-top:10px}
+.sc-marks--over .sc-mark{padding-bottom:10px}
+/* The bracket opens towards the picture */
+.sc-mark::after{content:"";position:absolute;min-width:3px;height:7px;border:1px solid currentColor}
+.sc-marks--under .sc-mark::after{top:0;border-top:0}
+.sc-marks--over .sc-mark::after{bottom:0;border-bottom:0}
+.sc-mark__t{display:block}
+.sc-mark__n{display:block;color:var(--ink)}
+.sc-mark__c{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%)}
+/* From 960px (build.py, MARK_ONE_LINE) a label stands on one line, its name and length joined by the comma */
+@media (min-width:960px){
+  .sc-mark__n{display:inline}
+  .sc-mark__c{position:static;width:auto;height:auto;overflow:visible;clip-path:none}
+}
+
+/* A short list in a section: each point a paragraph that leads with its own words, a short rule at its start */
+.sp-points{max-width:38rem;margin:12px 0 0;padding:0;list-style:none;color:var(--ink-body)}
+.sp-points li{position:relative;padding-left:20px}
+.sp-points li+li{margin-top:10px}
+.sp-points li::before{content:"";position:absolute;left:0;top:.8em;width:10px;border-top:1px solid var(--hair-strong)}
+.sp-points__lead{color:var(--ink)}
+.sp-points+.sp-does{margin-top:12px}
 
 /* Five columns: the first holds a name and its scientific name, which may wrap between its words in a cell */
 .sc-table i.nw{white-space:normal}

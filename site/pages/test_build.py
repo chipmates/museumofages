@@ -399,7 +399,6 @@ class Case(unittest.TestCase):
     def test_each_label_stands_at_its_animal(self):
         page = self.scale_page("marks")
         out, written = self.build()
-        pic = self.data("en", page)["top"]["scale"]["pic"]
         seen = 0
         for path in written:
             data, lang = self.page_of(path)
@@ -408,22 +407,52 @@ class Case(unittest.TestCase):
             seen += 1
             text = path.read_text(encoding="utf-8")
             own = self.own_part(text)
-            for mark in data["top"]["scale"]["marks"]:
-                a, b = (float(x) / 100 for x in data["pics"][pic]["marks"][mark["span"]].rstrip("%").split("% "))
-                # the bracket spans the animal's place in the picture, the words start or end at it
-                self.assertIn(".sc-mark--%s-%s::after{left:calc(2px + (100%% - 4px) * %g);width:calc((100%% - 4px) * %g)}"
-                              % (pic, mark["span"], round(a, 4), round(b - a, 4)), text)
-                side = "start" if (a + b) / 2 < 0.5 else "end"
-                self.assertRegex(own, r'<li class="sc-mark sc-mark--%s-%s sc-mark--%s">' % (pic, mark["span"], side))
-                self.assertIn(mark["text"], re.sub(r" ([,.:)])", r"\1", " ".join(self.words(own).replace("\u00a0", " ").split())))
+            for fig in filter(lambda f: f and f.get("marks"), (data["top"]["scale"], data["top"]["scale"].get("close"))):
+                pic = data["pics"][fig["pic"]]
+                figure = next(f for f in re.findall(r'<figure class="plate sc-fig.*?</figure>', own, flags=re.S)
+                              if f'sc-mark--{fig["pic"]}-' in f)
+                over, _, under = figure.partition('<div class="hang">')
+                for mark in fig["marks"]:
+                    a, b = (float(x) / 100 for x in pic["marks"][mark["span"]].split("%")[:2])
+                    # the bracket spans the animal's place in the picture
+                    self.assertIn(".sc-mark--%s-%s::after{left:calc(2px + (100%% - 4px) * %g);width:calc((100%% - 4px) * %g)}"
+                                  % (fig["pic"], mark["span"], round(a, 4), round(b - a, 4)), text)
+                    # an animal that stands behind another is named over the picture, the rest under it
+                    li = '<li class="sc-mark sc-mark--%s-%s">' % (fig["pic"], mark["span"])
+                    self.assertIn(li, over if mark["span"] in (pic.get("behind") or []) else under)
+                    self.assertNotIn(li, under if mark["span"] in (pic.get("behind") or []) else over)
+                    self.assertIn(mark["text"], re.sub(r" ([,.:)])", r"\1", " ".join(self.words(figure).replace("\u00a0", " ").split())))
+                    # and each label has its lane on every screen
+                    self.assertRegex(text, r"\.sc-mark--%s-%s\{grid-row:\d" % (fig["pic"], re.escape(mark["span"])))
         self.assertEqual(seen, 2)
         # a label the picture does not place stops the build
         shutil.rmtree(out)
+        pic = self.data("en", page)["top"]["scale"]["pic"]
         for lang in ("en", "de"):
             data = self.data(lang, page)
             del data["pics"][pic]["marks"][data["top"]["scale"]["marks"][0]["span"]]
             self.save(lang, data, page)
         self.fails(r"the label '\w[\w-]*' needs pics")
+
+    def test_labels_in_one_lane_keep_apart_and_animals_at_one_place_never_share_one(self):
+        spec = importlib.util.spec_from_file_location("build_lanes", self.dir / "build.py")
+        lib = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(lib)
+        # two animals at one place, a third far off: the first two in two lanes, the third beside one of them
+        items = [("a", 0.05, 0.40, None, "Argentinosaurus", "about 30.6 m"), ("b", 0.10, 0.35, None, "Triceratops", "about 6.9 m"),
+                 ("c", 0.80, 0.95, None, "Spinosaurus", "about 10 m")]
+        for width, one_line in ((320, False), (1200, True)):
+            laid, lanes = lib.mark_lanes(items, width, one_line)
+            self.assertEqual(lanes, 2)
+            self.assertNotEqual(laid["a"][0], laid["b"][0])
+            # the words end at the animal's end in the picture's right half, start at its start in the left half
+            self.assertEqual((laid["a"][1], laid["c"][1]), ("start", "end"))
+        # a label that keeps its side keeps it
+        laid, _ = lib.mark_lanes([("c", 0.80, 0.95, "start", "Spinosaurus", "about 10 m")], 1200, True)
+        self.assertEqual(laid["c"][1], "start")
+        # the widths the labels are laid for: the narrowest phones and every width the picture's sizes name
+        self.assertEqual(lib.size_bands("(min-width: 1280px) 690px, (min-width: 960px) 54vw, calc(100vw - 40px)"),
+                         [(360, 320), (390, 350), (960, 518.4), (1280, 690)])
 
     def test_a_picture_in_the_body_follows_the_paragraph_it_shows(self):
         page = self.scale_page("marks")

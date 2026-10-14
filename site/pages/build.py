@@ -27,11 +27,13 @@ import hashlib
 import html
 import importlib.util
 import json
+import math
 import posixpath
 import re
 import shutil
 import struct
 import sys
+import unicodedata
 import urllib.parse
 from pathlib import Path
 
@@ -629,28 +631,137 @@ def span_rules(defs):
     return "".join(rules)
 
 
-def mark_rules(defs):
-    """Where each label under a picture at one scale stands (pics.<name>.marks, each animal's start and end as shares of
-    the picture's width): its bracket at the animal's place, its words from the bracket's start when the animal stands
-    in the picture's left half, else ending at the bracket's end, so a long label wraps inside the page."""
+MARK_AT = r"(\d{1,3}(?:\.\d+)?)% (\d{1,3}(?:\.\d+)?)%(?: (start|end))?"
+# The phones the labels are laid for besides the widths a picture's sizes name: from the first up, no words touch
+MARK_SCREENS = (360, 390)
+# From this screen width a label stands on one line, its name and length joined by a comma (several.css says the same)
+MARK_ONE_LINE = 960
+# The label face's widths in thousandths of its size: the letters of Marcellus, the figures of Cardo at 108%; any
+# other letter counts as wide, an accented one as its letter. Then its size, its spacing and a margin.
+MARK_FACE = {**dict(zip("abcdefghijklmnopqrstuvwxyz", (517, 584, 505, 604, 542, 320, 584, 568, 241, 237, 486, 241, 884,
+                                                        568, 601, 584, 584, 392, 354, 384, 568, 476, 751, 523, 501, 466))),
+             **dict(zip("ABCDEFGHIJKLMNOPQRSTUVWXYZ", (678, 561, 677, 714, 490, 466, 742, 727, 265, 249, 646, 460, 1018,
+                                                        739, 806, 512, 806, 591, 455, 597, 710, 658, 1014, 698, 621, 642))),
+             **dict(zip(" \u00a0.,;:()-'\u2019/\u00df", (300, 300, 205, 205, 235, 235, 301, 301, 410, 178, 174, 436, 513))),
+             **dict.fromkeys("0123456789", 553)}
+MARK_WIDE, MARK_PX, MARK_SPACING, MARK_SAFE = 900, 12, 20, 1.04
+# The least room between two labels in one lane, and the least width a label's words may wrap to
+MARK_GAP, MARK_LEAST = 8, 64
+
+
+def mark_at(at):
+    """A label's place (pics.<name>.marks.<span>): the animal's start and end as shares of the picture's width, and
+    the side its words must keep to (start or end) when the place names one, else None."""
+    found = re.fullmatch(MARK_AT, at or "")
+    if not found:
+        return None
+    return float(found.group(1)) / 100, float(found.group(2)) / 100, found.group(3)
+
+
+def mark_split(text):
+    """A label's name and its length: the words before its first comma, and the rest."""
+    name, _, rest = text.partition(", ")
+    return name, rest
+
+
+def size_bands(sizes):
+    """The picture's width at each screen width its labels are laid for: the narrowest phones (MARK_SCREENS) and each
+    width from which its sizes give another rule, read as a browser reads them, the first rule that holds."""
     rules = []
-    for name, d in defs.items():
-        for key, at in (d.get("marks") or {}).items():
-            found = re.fullmatch(r"(\d{1,3}(?:\.\d+)?)% (\d{1,3}(?:\.\d+)?)%", at)
-            if not found:
-                continue
-            a, b = float(found.group(1)) / 100, float(found.group(2)) / 100
-            pad = ("padding-left:calc(2px + (100%% - 4px) * %g)" % round(a, 4) if mark_start(at) else
-                   "padding-right:calc(2px + (100%% - 4px) * %g)" % round(1 - b, 4))
-            rules.append(".sc-mark--%s-%s{%s}.sc-mark--%s-%s::after{left:calc(2px + (100%% - 4px) * %g);width:calc((100%% - 4px) * %g)}"
-                         % (name, key, pad, name, key, round(a, 4), round(b - a, 4)))
+    for part in re.split(r",\s*(?![^()]*\))", sizes):
+        found = re.fullmatch(r"\s*(?:\(min-width:\s*(\d+)px\)\s*)?(.+?)\s*", part)
+        rules.append((int(found.group(1) or 0), found.group(2)))
+
+    def width(screen):
+        value = next(v for least, v in rules if screen >= least)
+        calc = re.fullmatch(r"calc\((\d+(?:\.\d+)?)vw - (\d+)px\)", value)
+        if calc:
+            return float(calc.group(1)) * screen / 100 - int(calc.group(2))
+        return float(value[:-2]) * screen / 100 if value.endswith("vw") else float(value.removesuffix("px"))
+
+    screens = sorted(set(MARK_SCREENS) | {least for least, _ in rules if least > MARK_SCREENS[0]})
+    return [(screen, width(screen)) for screen in screens]
+
+
+def mark_lanes(items, width, one_line):
+    """Several labels laid into lanes for a picture this wide: each label's words start at its animal's start or end
+    at its end, and no two in one lane come near each other's words or brackets. Returns each label's lane (0 the one
+    nearest the picture), side and the width its words may take, and the number of lanes."""
+    est = lambda t: MARK_PX * MARK_SAFE * sum(MARK_FACE.get(unicodedata.normalize("NFD", c)[0], MARK_WIDE) + MARK_SPACING for c in t) / 1000
+    apart = lambda p, q, gap: p[1] + gap <= q[0] or q[1] + gap <= p[0]
+    inner = width - 4
+    lanes, out = [], {}
+    for key, a, b, keep, name, value in sorted(items, key=lambda it: (it[1], it[2])):
+        want = est(f"{name}, {value}") if one_line else max(est(name), est(value))
+        bracket = 2 + inner * a, 2 + inner * b
+        first = keep or ("start" if a + b < 1 else "end")
+        sides = [first] if keep else [first, "end" if first == "start" else "start"]
+        # a side the words fit at: the name whole on its line, the rest on two lines at most
+        least = min(want, max(MARK_LEAST, est(name), 0.6 * (est(f"{name}, {value}") if one_line else est(value))))
+        room = lambda side: min(want, width / 2, width - bracket[0] if side == "start" else bracket[1])
+        words = lambda side: (bracket[0], bracket[0] + room(side)) if side == "start" else (bracket[1] - room(side), bracket[1])
+        # words keep a gap from words and brackets from brackets; a bracket stands above the words of its lane, so
+        # it may come nearer to another label's words
+        fits = lambda side, lane: room(side) >= least and all(
+            apart(words(side), w, MARK_GAP) and apart(bracket, k, MARK_GAP) and apart(words(side), k, MARK_GAP / 2)
+            and apart(bracket, w, MARK_GAP / 2) for w, k in lanes[lane])
+        placed = next(((lane, side) for lane in range(len(lanes)) for side in sides if fits(side, lane)), None)
+        if not placed:
+            lanes.append([])
+            placed = len(lanes) - 1, max(sides, key=lambda side: room(side) >= least)
+        lane, side = placed
+        lanes[lane].append((words(side), bracket))
+        out[key] = (lane, side, math.ceil(room(side)))
+    return out, len(lanes)
+
+
+def has_points(data):
+    """Whether a text block of the page sets a short list of points."""
+    return any(isinstance(p, dict) for b in data["blocks"] if b["type"] == "text" for p in b.get("paras", []))
+
+
+def marked_figures(data):
+    """Every picture of a page that carries a label at each of its subjects, the first picture's closer panel included."""
+    top = data["top"].get("scale")
+    figs = [top, (top or {}).get("close")] + [b["scale"] for b in data["blocks"] if b.get("scale")]
+    figs += [f.get("close") for f in figs[2:] if f]
+    return [f for f in figs if f and f.get("marks")]
+
+
+def mark_rules(data):
+    """Where each label at a picture of several subjects stands, for each band of screens the picture's sizes name:
+    its bracket over or under the animal's place (pics.<name>.marks), its lane, and its words from the bracket's
+    start or ending at its end. An animal that stands behind another (pics.<name>.behind) is named over the
+    picture, the rest under it, so two at one place are never named on one side."""
+    rules = []
+    for fig in marked_figures(data):
+        pic = data["pics"][fig["pic"]]
+        behind = set(pic.get("behind") or [])
+        groups = {}
+        for m in fig["marks"]:
+            at = mark_at(pic["marks"][m["span"]])
+            groups.setdefault(m["span"] in behind, []).append((m["span"], *at, *mark_split(m["text"])))
+        for key, (a, b, _) in ((k, mark_at(v)) for k, v in pic["marks"].items()):
+            rules.append(".sc-mark--%s-%s::after{left:calc(2px + (100%% - 4px) * %g);width:calc((100%% - 4px) * %g)}"
+                         % (fig["pic"], key, round(a, 4), round(b - a, 4)))
+        last = {}
+        for screen, width in size_bands(pic["sizes"]):
+            band = []
+            for over, items in groups.items():
+                laid, n = mark_lanes(items, width, screen >= MARK_ONE_LINE)
+                for key, (lane, side, w) in laid.items():
+                    a, b, _ = mark_at(pic["marks"][key])
+                    pad = ("padding-left:calc(2px + (100%% - 4px) * %g);padding-right:0;justify-content:flex-start" % round(a, 4)
+                           if side == "start" else
+                           "padding-left:0;padding-right:calc(2px + (100%% - 4px) * %g);justify-content:flex-end" % round(1 - b, 4))
+                    rule = ".sc-mark--%s-%s{grid-row:%d;%s}.sc-mark--%s-%s>span{max-width:%dpx;text-align:%s}" % (
+                        fig["pic"], key, n - lane if over else lane + 1, pad, fig["pic"], key, w, "left" if side == "start" else "right")
+                    if last.get(key) != rule:
+                        band.append(rule)
+                        last[key] = rule
+            if band:
+                rules.append("".join(band) if screen <= MARK_SCREENS[0] else "@media (min-width:%dpx){%s}" % (screen, "".join(band)))
     return "".join(rules)
-
-
-def mark_start(at):
-    """Whether a label's words start at its bracket (the animal in the picture's left half) or end at it."""
-    a, b = (float(x) / 100 for x in at.rstrip("%").split("% "))
-    return (a + b) / 2 < 0.5
 
 
 def focus_rule(frame):
@@ -1134,6 +1245,7 @@ def render(page, lang, data, shared, out_root):
         """A picture at one scale, whole and never cut, with the person's height and its label; a closer panel of
         it follows at its own scale."""
         out = fill(parts["scale_fig"], {"html.picture": pics.picture(fig["pic"], esc(fig["alt"]), first=first),
+                                        "html.above": marks_html(fig, True), "html.below": marks_html(fig, False),
                                         "html.person": person_html(fig["pic"]), "tag": rich(labels[fig["tag"]]),
                                         "what": rich(fig["what"]), "html.totable": to_table(),
                                         "html.key": fill(parts["scale_key"], {"text": rich(fig["key"])}) if fig.get("key") else ""})
@@ -1147,16 +1259,16 @@ def render(page, lang, data, shared, out_root):
             fill(parts["scale_bar"], {"key": esc(f'{fig["pic"]}-{b["span"]}'), "kind": esc(b["span"]), "text": rich(b["text"])})
             for b in fig["bars"])})
 
-    def marks_html(fig):
-        """The labels under a picture of several subjects at one scale: each its name and length over a bracket at the
-        animal's place in the picture."""
+    def marks_html(fig, over):
+        """The labels at a picture of several subjects, those over the picture (over) or those under it: each the
+        animal's name and length at a bracket over its place in the picture."""
         if not fig.get("marks"):
             return ""
-        at = data["pics"][fig["pic"]]["marks"]
-        return fill(parts["scale_marks"], {"html.items": "".join(
-            fill(parts["scale_mark"], {"key": esc(f'{fig["pic"]}-{m["span"]}'), "side": "start" if mark_start(at[m["span"]]) else "end",
-                                       "text": rich(m["text"])})
-            for m in fig["marks"])})
+        behind = set(data["pics"][fig["pic"]].get("behind") or [])
+        items = "".join(fill(parts["scale_mark"], {"key": esc(f'{fig["pic"]}-{m["span"]}'), "html.name": rich(mark_split(m["text"])[0]),
+                                                   "html.value": rich(mark_split(m["text"])[1])})
+                        for m in fig["marks"] if (m["span"] in behind) == over)
+        return fill(parts["scale_marks"], {"side": "over" if over else "under", "html.items": items}) if items else ""
 
     def rows_html(rows):
         return "\n".join(fill(parts["row"], {"label": rich(labels[r["k"]]), "v": rich(r["v"])}) for r in rows)
@@ -1286,7 +1398,10 @@ def render(page, lang, data, shared, out_root):
         elif kind == "close":
             values.update({"door.text": rich(block["door"]["text"]), "door.note": rich(block["door"]["note"])})
         elif kind == "text":
-            paras = [fill(parts["text_para"], {"text": linked(p)}) for p in block.get("paras", [])]
+            # a paragraph, or a short list whose points each lead with their own words (points: [lead, text])
+            paras = [fill(parts["text_points"], {"html.items": "\n".join(
+                         fill(parts["text_point"], {"lead": rich(lead), "text": linked(text)}) for lead, text in p["points"])})
+                     if isinstance(p, dict) else fill(parts["text_para"], {"text": linked(p)}) for p in block.get("paras", [])]
             # answers under their own small headings, each a paragraph or more
             paras += [fill(parts["text_sub"], {"h": rich(sub["h"]), "html.paras": "\n".join(
                 fill(parts["sub_para"], {"text": linked(p)}) for p in sub["paras"])}) for sub in block.get("subs", [])]
@@ -1423,7 +1538,7 @@ def render(page, lang, data, shared, out_root):
         frame_html = fill(parts["frame:scale"], {
             "html.picture": pics.picture(sc["pic"], esc(sc["alt"]), first=True), "html.person": person_html(sc["pic"]),
             "tag": rich(labels[sc["tag"]]), "what": rich(sc["what"]), "note": linked(sc["note"]),
-            "html.bars": bars_html(sc) + marks_html(sc), "html.totable": to_table(),
+            "html.above": marks_html(sc, True), "html.bars": bars_html(sc) + marks_html(sc, False), "html.totable": to_table(),
             "html.close": scale_fig(sc["close"]) if sc.get("close") else "",
             "html.guess": fill(parts["guess"], {**{k: rich(guess[k]) for k in ("h", "q", "button", "a")},
                                                 "button_open": rich(guess.get("button_open") or guess["button"])}) if guess else ""})
@@ -1462,7 +1577,7 @@ def render(page, lang, data, shared, out_root):
                              "css_chart" if works or "drawing" in data["top"] or any(b["type"] == "text" for b in data["blocks"]) else "css"]
                       + (shared["langs_css"] + chrome["by"] if chrome["langs"] else ""),
         "css.faces": faces(root, lang) + focus + person_rules(data["pics"]) + span_rules(data["pics"])
-                     + (shared["css_several"] + mark_rules(data["pics"]) if any(d.get("marks") for d in data["pics"].values()) else ""),
+                     + (shared["css_several"] + mark_rules(data) if marked_figures(data) or has_points(data) else ""),
         "html.preload": preload,
         "html.theme": f'<meta name="theme-color" content="{chrome["theme"]}">\n' if chrome["theme"] else "",
         "html.header": chrome["header"],
@@ -1811,9 +1926,15 @@ def making_problems(d, wing, data):
             if not at or not re.fullmatch(r"\d{1,3}(?:\.\d+)?% \d{1,3}(?:\.\d+)?%", at):
                 problems.append(f"the length bar's span {bar.get('span')!r} needs pics.{fig.get('pic')}.spans.<span>, its start and end in the picture")
         for mark in fig.get("marks", []):
-            at = ((pic or {}).get("marks") or {}).get(mark.get("span"))
-            if not at or not re.fullmatch(r"\d{1,3}(?:\.\d+)?% \d{1,3}(?:\.\d+)?%", at):
+            if not mark_at(((pic or {}).get("marks") or {}).get(mark.get("span"))):
                 problems.append(f"the label {mark.get('span')!r} needs pics.{fig.get('pic')}.marks.<span>, the animal's start and end in the picture")
+            if not mark_split(mark.get("text", ""))[1]:
+                problems.append(f"the label {mark.get('span')!r} gives the animal's name, a comma and its length")
+        for name in (pic or {}).get("behind") or []:
+            if name not in {m.get("span") for m in fig.get("marks", [])}:
+                problems.append(f"pics.{fig.get('pic')}.behind names {name!r}, which no label of the picture is")
+        if fig.get("marks") and not (pic or {}).get("sizes"):
+            problems.append(f"the picture {fig.get('pic')!r} with labels needs its sizes: the labels are laid for its widths")
         if "after" in fig and not (isinstance(fig["after"], int) and fig is not top.get("scale")):
             problems.append(f"the picture {fig.get('pic')!r}: after names the paragraph a picture in the page's body follows")
         if not re.search(r"\d", d["labels"].get("person", "")):
