@@ -637,7 +637,8 @@ def span_rules(defs):
 MARK_AT = r"(\d{1,3}(?:\.\d+)?)% (\d{1,3}(?:\.\d+)?)%(?: (start|end))?"
 # The phones the labels are laid for besides the widths a picture's sizes name: from the first up, no words touch
 MARK_SCREENS = (360, 390)
-# From this screen width a label stands on one line, its name and length joined by a comma (several.css says the same)
+# From this screen width a label under a picture stands on one line, its name and length joined by a comma, as one
+# over it always does (several.css says the same)
 MARK_ONE_LINE = 960
 # The label face's widths in thousandths of its size: the letters of Marcellus, the figures of Cardo at 108%; any
 # other letter counts as wide, an accented one as its letter. Then its size, its spacing and a margin.
@@ -701,7 +702,7 @@ def mark_lanes(items, width, one_line):
         sides = [first] if keep else [first, "end" if first == "start" else "start"]
         # a side the words fit at: the name whole on its line, the rest on two lines at most
         least = min(want, max(MARK_LEAST, est(name), 0.6 * (est(f"{name}, {value}") if one_line else est(value))))
-        room = lambda side: min(want, width / 2, width - bracket[0] if side == "start" else bracket[1])
+        room = lambda side: min(want, width - bracket[0] if side == "start" else bracket[1])
         words = lambda side, w: (bracket[0], bracket[0] + w) if side == "start" else (bracket[1] - w, bracket[1])
         # words keep a gap from words and brackets from brackets; a bracket stands above the words of its lane, so
         # it may come nearer to another label's words
@@ -756,7 +757,8 @@ def mark_rules(data):
         for screen, width in size_bands(pic["sizes"]):
             band = []
             for over, items in groups.items():
-                laid, n = mark_lanes(items, width, screen >= MARK_ONE_LINE)
+                # those over the picture are the few long ones behind: their words on one line on every screen
+                laid, n = mark_lanes(items, width, over or screen >= MARK_ONE_LINE)
                 for key, (lane, side, w) in laid.items():
                     a, b, _ = mark_at(pic["marks"][key])
                     pad = ("padding-left:calc(2px + (100%% - 4px) * %g);padding-right:0;justify-content:flex-start" % round(a, 4)

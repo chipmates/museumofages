@@ -16,7 +16,10 @@
 .sc-mark__t{display:block}
 .sc-mark__n{display:block;color:var(--ink)}
 .sc-mark__c{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%)}
-/* From 960px (build.py, MARK_ONE_LINE) a label stands on one line, its name and length joined by the comma */
+/* A label over the picture, and from 960px (build.py, MARK_ONE_LINE) every label, stands on one line, its name and
+   length joined by the comma */
+.sc-marks--over .sc-mark__n{display:inline}
+.sc-marks--over .sc-mark__c{position:static;width:auto;height:auto;overflow:visible;clip-path:none}
 @media (min-width:960px){
   .sc-mark__n{display:inline}
   .sc-mark__c{position:static;width:auto;height:auto;overflow:visible;clip-path:none}
