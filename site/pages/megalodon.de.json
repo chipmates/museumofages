@@ -5,6 +5,7 @@
   "wing": "animals",
   "topic": "megalodon",
   "published": null,
+  "join_names": true,
   "og_image": {
    "file": "animals-megalodon-og-{lang}-1200x630.png",
    "width": 1200,

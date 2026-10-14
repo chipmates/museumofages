@@ -5,6 +5,7 @@
   "wing": "animals",
   "topic": "biggest_dinosaurs",
   "published": null,
+  "join_names": true,
   "og_image": {
    "file": "animals-biggest-dinosaurs-og-{lang}-1200x630.png",
    "width": 1200,

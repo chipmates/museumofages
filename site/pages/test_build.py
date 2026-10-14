@@ -464,7 +464,7 @@ class Case(unittest.TestCase):
             for item in items:
                 self.assertIn('<span class="nh">T.\u00a0rex</span>', item)
         # a page without the flag keeps the nowrap span in its own sentences
-        kept = [own for (pid, code), (d, own) in by_id.items() if not d["page"].get("join_names") and 'class="nw nh">T. rex' in own]
+        kept = [own for (pid, code), (d, own) in by_id.items() if not d["page"].get("join_names") and re.search(r'class="nw nh">[^<\u00a0]+ [^<]*<', own)]
         self.assertTrue(kept)
         shutil.rmtree(out)
 
@@ -843,11 +843,16 @@ class Case(unittest.TestCase):
         out, written = self.build()
         found = 0
         for path in written:
+            data, _ = self.page_of(path)
             own = self.own_part(path.read_text(encoding="utf-8"))
             for name in taxa:
-                if name in self.words(own):
+                if name in self.words(own).replace("\u00a0", " "):
                     found += 1
-                    self.assertIn(f'<i class="nw nh">{html.escape(name, quote=False)}</i>', own)
+                    if data["page"].get("join_names"):
+                        joined = html.escape(name, quote=False).replace(" ", "\u00a0")
+                        self.assertIn(f'<i class="nh">{joined}</i>', own)
+                    else:
+                        self.assertIn(f'<i class="nw nh">{html.escape(name, quote=False)}</i>', own)
         self.assertGreaterEqual(found, 2)
 
     def test_the_map_credit_stands_only_where_a_picture_uses_the_map(self):
