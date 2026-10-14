@@ -1307,50 +1307,38 @@
   {
    "path": "pages/pics/img/animals-biggest-dinosaurs-og-de-1200x630.png",
    "url": "/static/img/animals-biggest-dinosaurs-og-de-1200x630.png",
-   "bytes": 199060,
-   "sha256": "913ccd8ea58569ffa427c6bf840ee1049c6735e4ce5cb2a67ce80d014bc77fac"
+   "bytes": 178486,
+   "sha256": "6a24a437a375eb907c558bcc92866e7d58f573e3e013f12d1706dda1731c1ee6"
   },
   {
    "path": "pages/pics/img/animals-biggest-dinosaurs-og-en-1200x630.png",
    "url": "/static/img/animals-biggest-dinosaurs-og-en-1200x630.png",
-   "bytes": 199627,
-   "sha256": "d615176e9f5712554eadc235a9ace5c34859717f3e322a03deff9bfbc146e7fd"
+   "bytes": 179036,
+   "sha256": "3ec35f25832fbd614502d459cac5c6fa32034322afb6526b32a704841742cdc0"
   },
   {
    "path": "pages/pics/img/animals-biggest-dinosaurs-row-1600.avif",
    "url": "/static/img/animals-biggest-dinosaurs-row-1600.avif",
-   "bytes": 16429,
-   "sha256": "aace6dedcc574cd65502bafed2197e93ce0b2f11f9fe2d0771d5f8145f40af6a"
+   "bytes": 15209,
+   "sha256": "a4b8dc96a696c65c5271322371d774fedc5cc07b44b83cd1fcc548ffe70b376c"
   },
   {
    "path": "pages/pics/img/animals-biggest-dinosaurs-row-1600.webp",
    "url": "/static/img/animals-biggest-dinosaurs-row-1600.webp",
-   "bytes": 24784,
-   "sha256": "c0901f65ceb0900b423eb8d71f85b58d247b131606267d7fa001eb6617928359"
-  },
-  {
-   "path": "pages/pics/img/animals-biggest-dinosaurs-row-2400.avif",
-   "url": "/static/img/animals-biggest-dinosaurs-row-2400.avif",
-   "bytes": 28652,
-   "sha256": "13db0ccfe76046421b44392be29b9c7536dcfb3f4c2365c1e50855c00088c250"
-  },
-  {
-   "path": "pages/pics/img/animals-biggest-dinosaurs-row-2400.webp",
-   "url": "/static/img/animals-biggest-dinosaurs-row-2400.webp",
-   "bytes": 42974,
-   "sha256": "1b27ecdad18cc1f9368edb9725f054da93c39bdb9cccb133304354e07b6c7842"
+   "bytes": 22750,
+   "sha256": "c096754a0ec65da38f9c671ed32a94afbe307bab6ca407262d49b169b43c64b3"
   },
   {
    "path": "pages/pics/img/animals-biggest-dinosaurs-row-800.avif",
    "url": "/static/img/animals-biggest-dinosaurs-row-800.avif",
-   "bytes": 7659,
-   "sha256": "22148e56e9e6b99567d843f43b2ab3fe6566df37bd72fd56843b785caf3595cb"
+   "bytes": 6276,
+   "sha256": "1cd473aa8440dd15805f7f1670af3a8c4e2b1c7a921f11b8c60a4d2e5eb31c11"
   },
   {
    "path": "pages/pics/img/animals-biggest-dinosaurs-row-800.webp",
    "url": "/static/img/animals-biggest-dinosaurs-row-800.webp",
-   "bytes": 10520,
-   "sha256": "fffa07d2ee8cb0c0aae7175830f8cdff40812adc697422058704c9501c40d618"
+   "bytes": 9460,
+   "sha256": "2aa538242aaeecd6dd7cb1a9e52533def84829e03d745b1bb78b033591eacfdf"
   },
   {
    "path": "pages/pics/img/animals-biggest-dinosaurs-skeleton-1600.avif",

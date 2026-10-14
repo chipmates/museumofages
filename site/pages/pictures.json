@@ -27,7 +27,7 @@
     { "name": "animals-megalodon-head", "file": "megalodon-head.png", "widths": [800, 1600] },
     { "name": "animals-megalodon-skeleton", "file": "megalodon-skeleton.png", "widths": [800, 1600, 2400] },
     { "name": "animals-megalodon-skeleton-head", "file": "megalodon-skeleton-head.png", "widths": [800, 1600] },
-    { "name": "animals-biggest-dinosaurs-row", "file": "dinosaurs-row.png", "widths": [800, 1600, 2400] },
+    { "name": "animals-biggest-dinosaurs-row", "file": "dinosaurs-row.png", "widths": [800, 1600] },
     { "name": "animals-biggest-dinosaurs-close", "file": "dinosaurs-close.png", "widths": [800, 1600] },
     { "name": "animals-biggest-dinosaurs-skeleton", "file": "dinosaurs-skeleton.png", "widths": [800, 1600, 2400] }
   ],

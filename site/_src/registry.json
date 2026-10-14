@@ -372,12 +372,12 @@
           "de": "groesste-dinosaurier"
         },
         "name": {
-          "en": "Biggest dinosaurs",
-          "de": "Größte Dinosaurier"
+          "en": "What was the biggest dinosaur?",
+          "de": "Was war der größte Dinosaurier?"
         },
         "line": {
-          "en": "The biggest dinosaurs: seven of ours beside a person, to one scale, and which was the heaviest, the longest and the tallest.",
-          "de": "Die größten Dinosaurier: sieben von unseren neben einem Menschen, im selben Maßstab, und welcher der schwerste, der längste und der höchste war."
+          "en": "Seven of ours beside a person, to one scale: the heaviest most likely a titanosaur from Patagonia, the tallest probably Sauroposeidon, and why the longest is still open.",
+          "de": "Sieben von unseren neben einem Menschen, im selben Maßstab: der schwerste höchstwahrscheinlich ein Titanosaurier aus Patagonien, der höchste vermutlich Sauroposeidon, und warum der längste noch offen ist."
         },
         "langs": ["en", "de"],
         "count": "biggest_dinosaurs",
@@ -431,7 +431,7 @@
             "39.7 m and 40 m are the mount's, a sculpture's length, never the animal's"
           ],
           [
-            "(?s)^(?!.*(?:sculpture|skulptur|mount|montage|montiert|\\bcast\\b|abguss)).*\\b83\\s*(?:t|tonnes?|tons?|tonnen)\\b",
+            "(?s)^(?!.*(?:sculpture|skulptur|mount|montage|montiert|\\bcast\\b|abguss)).*(?<![\\d.,])\\b83\\b(?![.,]\\d)",
             "83 tonnes is the scanned mount's model, never the animal's weight"
           ],
           [

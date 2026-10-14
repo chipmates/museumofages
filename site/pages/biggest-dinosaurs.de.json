@@ -1,5 +1,5 @@
 {
- "_note": "THE WORDS of the biggest dinosaurs page. Poured word for word from the writer's WORDS file; the title, the description and the heading are its first options. The skeleton's caption is the writer's caption (d): its first sentence stands as the caption, the three that name the colours as the picture's key line under it. pics.<name>.marks: each animal's start and end in the row as shares of the picture's width, measured on the composition; pics.<name>.person: the person's centre and the top of its head. Empty cells of the table are the writer's: no sourced figure exists.",
+ "_note": "THE WORDS of the biggest dinosaurs page. Poured word for word from the writer's WORDS file; the title, the description and the heading are its first options. The skeleton's caption is the writer's caption (d): its first sentence stands as the caption, the three that name the colours as the picture's key line under it. The row's and the closer panel's labels name the animals; the person's height stands over the person in the picture (labels.person), so the writer's person label is not a bracket of its own. pics.<name>.marks: each animal's start and end in the row as shares of the picture's width, measured on the composition; pics.<name>.person: the person's centre and the top of its head. Empty cells of the table are the writer's: no sourced figure exists.",
  "page": {
   "id": "animals-biggest-dinosaurs",
   "wing": "animals",
@@ -16,21 +16,23 @@
    "stem": "animals-biggest-dinosaurs-row",
    "widths": [
     800,
-    1600,
-    2400
+    1600
    ],
    "sizes": "(min-width: 1280px) 1200px, (min-width: 960px) calc(100vw - 80px), (min-width: 600px) calc(100vw - 64px), calc(100vw - 40px)",
-   "person": "29.33% 84.25%",
+   "person": "32.82% 84.25%",
    "marks": {
-    "argentinosaurus": "3.59% 72.17%",
-    "brachiosaurus": "49.55% 97.84%",
-    "t-rex": "54.26% 79.74%",
-    "spinosaurus": "76.01% 98.37%",
-    "triceratops": "39.24% 55.24%",
-    "ankylosaurus": "13.45% 27.86%",
-    "stegosaurus": "0.48% 13.03%",
-    "person": "29.01% 29.65%"
-   }
+    "argentinosaurus": "9.39% 71.81%",
+    "brachiosaurus": "51.22% 95.18%",
+    "stegosaurus": "0.41% 11.84%",
+    "ankylosaurus": "12.45% 25.56%",
+    "triceratops": "34.69% 49.26%",
+    "t-rex": "55.51% 78.7%",
+    "spinosaurus": "78.98% 99.34%"
+   },
+   "behind": [
+    "argentinosaurus",
+    "brachiosaurus"
+   ]
   },
   "close": {
    "stem": "animals-biggest-dinosaurs-close",
@@ -39,7 +41,18 @@
     1600
    ],
    "sizes": "(min-width: 1280px) 690px, (min-width: 960px) 54vw, (min-width: 600px) calc(100vw - 64px), calc(100vw - 40px)",
-   "person": "58.34% 62.26%"
+   "person": "58.34% 62.26%",
+   "marks": {
+    "t-rex": "1.07% 41.5%",
+    "spinosaurus": "62.99% 98.49%",
+    "stegosaurus": "0.75% 20.68%",
+    "triceratops": "28.11% 53.51%",
+    "ankylosaurus": "59.79% 82.65%"
+   },
+   "behind": [
+    "t-rex",
+    "spinosaurus"
+   ]
   },
   "skeleton": {
    "stem": "animals-biggest-dinosaurs-skeleton",
@@ -63,9 +76,9 @@
  },
  "meta": {
   "title": "Größter Dinosaurier: wohl Argentinosaurus | Museum of Ages",
-  "description": "Größter Dinosaurier: wohl Argentinosaurus, etwa 30 bis 35 m lang, nach Modellen grob 65 bis 80 t. Sieben Dinosaurier und ein Mensch im selben Maßstab.",
+  "description": "Größter Dinosaurier: wohl Argentinosaurus, etwa 30 bis 35 m lang, grob 65 bis 80 t. Größenvergleich: sieben Dinosaurier und ein Mensch im selben Maßstab.",
   "og_title": "Größter Dinosaurier: wohl Argentinosaurus",
-  "og_image_alt": "Sieben Dinosaurier in einer Reihe von der Seite, zwei mit langen Hälsen hoch über den anderen, daneben ein grauer Mensch, der den drei kleinsten höchstens bis zur Hüfte reicht."
+  "og_image_alt": "Sieben Dinosaurier in einer Reihe von der Seite, zwei mit langen Hälsen hoch über den anderen, und ein grauer Mensch, der daneben winzig wirkt."
  },
  "labels": {
   "crumbs": "Du bist hier",
@@ -80,13 +93,37 @@
  },
  "top": {
   "h1": "Was war der größte Dinosaurier?",
-  "answer": "Wahrscheinlich der Argentinosaurus, ein Langhalsdinosaurier aus Argentinien: etwa 30 bis 35 m lang und grob 65 bis 80 t, nach Modellen, die um wenige Knochen herum gebaut sind. Sicher ist das nicht, denn von keiner der ganz großen Arten wurde je ein vollständiges Skelett gefunden, und sein Verwandter Patagotitan kommt ihm nahe. Und der größte heißt eigentlich dreierlei: Der schwerste war sehr wahrscheinlich Argentinosaurus oder Patagotitan, der längste ist nicht geklärt, und der höchste war vermutlich Sauroposeidon, den Kopf etwa 17 m über dem Boden, nach vier Halswirbeln. Unser Argentinosaurus im Bild ist 30,6 m lang, so lang wie 18 Menschen von 1,70 m, der Länge nach hintereinandergelegt.",
+  "answer": "Wahrscheinlich der Argentinosaurus, ein Langhalsdinosaurier aus Argentinien: etwa 30 bis 35 m lang und grob 65 bis 80 t, nach Modellen aus wenigen Knochen. Sicher ist das nicht. Von keiner der ganz großen Arten wurde je ein vollständiges Skelett gefunden, und sein Verwandter Patagotitan kommt ihm nahe. Unser Argentinosaurus im Bild ist 30,6 m lang, so lang wie 18 Menschen von 1,70 m, der Länge nach hintereinandergelegt.",
+  "answer_more": "Und „der größte“ kann dreierlei heißen. Der schwerste war höchstwahrscheinlich ein Titanosaurier aus Patagonien, Argentinosaurus oder Patagotitan. Der längste ist nicht geklärt. Der höchste war vermutlich Sauroposeidon, den Kopf etwa 17 m über dem Boden, nach vier Halswirbeln.",
   "scale": {
    "pic": "row",
    "tag": "tag_made",
-   "what": "Unsere sieben neben einem Menschen von 1,70 m, im selben Maßstab, jedes Tier so, wie unser Modell gebaut ist: Argentinosaurus, Brachiosaurus, T. rex, Spinosaurus, Triceratops, Ankylosaurus und Stegosaurus. Unser Spinosaurus ist ein junges Tier von etwa 10 m, etwa drei Viertel so lang wie ein erwachsenes, darum ist er hier kürzer als unser T. rex. Ein erwachsener Spinosaurus war länger als jeder T. rex und sehr wahrscheinlich leichter.",
-   "alt": "Sieben Dinosaurier in einer Reihe von der Seite, zwei mit langen Hälsen hoch über den anderen, daneben ein grauer Mensch, der den drei kleinsten höchstens bis zur Hüfte reicht.",
-   "note": "Eigene Rekonstruktionen des Museums, nach den genannten Maßen in Code gebaut und in unserer Engine gerendert. Keine Fotos.",
+   "what": "Unsere sieben neben einem Menschen von 1,70 m, im selben Maßstab, jedes Tier so, wie unser Modell gebaut ist. Unser Spinosaurus ist ein junges Tier von etwa 10 m, etwa drei Viertel so lang wie ein erwachsenes, darum ist er hier kürzer als unser T. rex. Ein erwachsener Spinosaurus war länger als jeder T. rex und sehr wahrscheinlich leichter.",
+   "alt": "Sieben Dinosaurier in einer Reihe von der Seite, zwei mit langen Hälsen hoch über den anderen, und ein grauer Mensch, der daneben winzig wirkt.",
+   "note": [
+    "Eigene Rekonstruktionen des Museums, nach veröffentlichten Maßen und Zeichnungen in Code gebaut und in unserer Engine gerendert. Keine Fotos. ",
+    "Der Umriss unseres Triceratops folgt dem Körpermodell von ",
+    {
+     "text": "Dempsey und anderen 2025",
+     "href": "https://doi.org/10.6084/m9.figshare.27283401"
+    },
+    " (",
+    {
+     "text": "CC BY 4.0",
+     "href": "https://creativecommons.org/licenses/by/4.0/"
+    },
+    "). Der Panzer unseres Ankylosaurus folgt dem Plan von ",
+    {
+     "text": "Arbour und Mallon 2017",
+     "href": "https://doi.org/10.1139/facets-2017-0063"
+    },
+    " (",
+    {
+     "text": "CC BY 4.0",
+     "href": "https://creativecommons.org/licenses/by/4.0/"
+    },
+    "). Beide haben wir vermessen und verändert."
+   ],
    "marks": [
     {
      "span": "argentinosaurus",
@@ -97,39 +134,57 @@
      "text": "Brachiosaurus, etwa 24,4 m entlang der Wirbelsäule (21,5 m gerade, mit erhobenem Hals)"
     },
     {
-     "span": "t-rex",
-     "text": "T. rex, etwa 11,4 m"
-    },
-    {
-     "span": "spinosaurus",
-     "text": "Spinosaurus, etwa 10 m, ein junges Tier"
-    },
-    {
-     "span": "triceratops",
-     "text": "Triceratops, etwa 6,9 m"
+     "span": "stegosaurus",
+     "text": "Stegosaurus, etwa 5,6 m"
     },
     {
      "span": "ankylosaurus",
      "text": "Ankylosaurus, etwa 6,4 m"
     },
     {
-     "span": "stegosaurus",
-     "text": "Stegosaurus, etwa 5,6 m"
+     "span": "triceratops",
+     "text": "Triceratops, etwa 6,9 m"
     },
     {
-     "span": "person",
-     "text": "Der Mensch, 1,70 m"
+     "span": "t-rex",
+     "text": "T. rex, etwa 11,4 m"
+    },
+    {
+     "span": "spinosaurus",
+     "text": "Spinosaurus, etwa 10 m, ein junges Tier"
     }
    ],
    "close": {
     "pic": "close",
     "tag": "tag_made",
-    "what": "Derselbe Maßstab, aus der Nähe: der Mensch zwischen den kleineren Tieren. Unser T. rex trägt den Kopf etwa 4,6 m hoch, das Segel unseres Spinosaurus endet bei 3,5 m, und die anderen drei sind an der Hüfte 1,7 bis 2,5 m hoch.",
-    "alt": "Der graue Mensch zwischen den kleineren Dinosauriern, aus der Nähe, die beiden Fleischfresser auf zwei Beinen und die drei mit Hörnern, Panzer und Platten auf vier."
+    "what": "Derselbe Maßstab, aus der Nähe: der Mensch zwischen den fünf kleineren Tieren. Unser T. rex trägt den Kopf etwa 4,6 m hoch, das Segel unseres Spinosaurus endet bei 3,5 m.",
+    "alt": "Der graue Mensch zwischen den fünf kleineren Dinosauriern, aus der Nähe: zwei Fleischfresser auf zwei Beinen, drei mit Hörnern, Panzer und Platten auf vier.",
+    "marks": [
+     {
+      "span": "t-rex",
+      "text": "T. rex, etwa 11,4 m"
+     },
+     {
+      "span": "spinosaurus",
+      "text": "Spinosaurus, etwa 10 m, ein junges Tier"
+     },
+     {
+      "span": "stegosaurus",
+      "text": "Stegosaurus, etwa 5,6 m"
+     },
+     {
+      "span": "triceratops",
+      "text": "Triceratops, etwa 6,9 m"
+     },
+     {
+      "span": "ankylosaurus",
+      "text": "Ankylosaurus, etwa 6,4 m"
+     }
+    ]
    }
   },
   "guess": {
-   "h": "Erst raten",
+   "h": "Zum Raten",
    "q": "Welches unserer sieben Tiere ist an der Hüfte genau so hoch wie der Mensch, 1,70 m?",
    "button": "Antwort zeigen",
    "a": "Unser Ankylosaurus. Seine Hüfte ist 1,70 m hoch, genau die Größe des Menschen, und er ist 6,4 m lang, fast vier Menschen der Länge nach hintereinandergelegt.",
@@ -238,57 +293,28 @@
     {
      "h": "Der schwerste",
      "paras": [
-      "Sehr wahrscheinlich einer der Titanosaurier Patagoniens. Argentinosaurus ist der am besten gestützte Kandidat, grob 65 bis 80 t nach mehreren Modellen, die sich überschneiden, alle um wenige Knochen herum gebaut. Patagotitan, bekannt von mindestens sechs Tieren, kam 2017 auf 69 t, und sein eigenes Team korrigierte das 2020 auf etwa 57 t, Spanne 42 bis 71. Die beiden Forschergruppen sind sich nicht einig, welcher der beiden größer war, denn die zwei Tiere haben kaum gemeinsame Knochen zum Vergleich, und Dreadnoughtus, einst mit 59 t angegeben, liegt nach späteren Modellen bei etwa 22 bis 30 t."
+      "Höchstwahrscheinlich ein Titanosaurier aus Patagonien, Argentinosaurus oder Patagotitan. Argentinosaurus ist der am besten gestützte Kandidat, grob 65 bis 80 t nach mehreren Modellen, alle aus wenigen Knochen. Patagotitan, bekannt von mindestens sechs Tieren, kam 2017 auf 69 t, und sein eigenes Team korrigierte das 2020 auf etwa 57 t. Welcher der beiden größer war, ist offen: Sie haben kaum gemeinsame Knochen zum Vergleich. Dreadnoughtus, einst mit 59 t angegeben, liegt heute bei etwa 22 bis 30 t."
      ]
     },
     {
      "h": "Der längste",
      "paras": [
-      "Nicht bekannt. Die am besten bekannten Titanosaurier erreichen nach ihren Knochen und ihren Abgüssen etwa 30 bis 37 m. Supersaurus, ein langschwänziger Vetter des Diplodocus aus Colorado und Wyoming, wurde 2021 in einem Tagungsvortrag mit 39 bis 42 m angegeben, je nachdem, wo man einen Halswirbel einordnet, aber in einer Fachzeitschrift ist das bisher nicht erschienen. Der längste bleibt also offen."
+      "Nicht bekannt. Die am besten bekannten Titanosaurier kommen nach Knochen und Abgüssen auf etwa 30 bis 37 m. Supersaurus, ein langschwänziger Vetter des Diplodocus, wurde 2021 in einem Tagungsvortrag mit 39 bis 42 m angegeben, bisher in keiner Fachzeitschrift."
      ]
     },
     {
      "h": "Der höchste",
      "paras": [
-      "Vermutlich Sauroposeidon aus Oklahoma, den Kopf etwa 17 m über dem Boden. Das beruht auf vier Halswirbeln, gefunden 1994, und einem Hals, der nach den Proportionen des Brachiosaurus hochgerechnet wurde, und das Natural History Museum in London merkt an, dass das Tier wohl näher bei den Titanosauriern steht, die Rechnung also nicht ganz stimmen mag. Schwach, aber Besseres gibt es nicht. Das höchste Skelett, das man sehen kann, ist der Giraffatitan in Berlin, der Schädel in etwa 13 m Höhe."
+      "Vermutlich Sauroposeidon aus Oklahoma, den Kopf etwa 17 m über dem Boden. Das beruht auf vier Halswirbeln, gefunden 1994, hochgerechnet nach den Proportionen des Brachiosaurus. Nach dem Natural History Museum in London steht das Tier wohl näher bei den Titanosauriern. Schwach, aber Besseres gibt es nicht. Das höchste Skelett, das man besuchen kann, ist der Giraffatitan in Berlin, der Schädel in etwa 13 m Höhe."
      ]
     },
     {
      "h": "Der größte Fleischfresser",
      "paras": [
-      "Zwei Antworten. Nach der Länge Spinosaurus: Ein erwachsenes Tier war im aktuellen Modell von 2022 knapp unter 14 m lang, hochgerechnet aus einem jungen Tier und der losen Schnauze eines erwachsenen. Nach dem Gewicht T. rex: Der schwerste bekannte, genannt Scotty, kommt auf etwa 8,9 t, und ein großer erwachsener T. rex war etwa 12 m lang. Giganotosaurus wird oft genannt, aber seine Reste sind bruchstückhaft, und die Schätzungen reichen von etwa 6,5 bis 14 t, darum bleibt er ein Vielleicht."
+      "Zwei Antworten. Nach der Länge Spinosaurus: Ein erwachsenes Tier war im Modell von 2022 knapp unter 14 m lang, hochgerechnet aus einem jungen Skelett und der losen Schnauze eines erwachsenen. Nach dem Gewicht T. rex: Der schwerste bekannte, genannt Scotty, kommt auf etwa 8,9 t, und ein großer erwachsener T. rex war etwa 12 m lang. Giganotosaurus wird oft genannt, aber seine Reste sind Bruchstücke, die Schätzungen reichen von etwa 6,5 bis 14 t."
      ]
     }
    ]
-  },
-  {
-   "type": "text",
-   "id": "how-sure",
-   "nav": "Wie sicher das ist",
-   "h": "Wie sicher das ist",
-   "paras": [
-    "Niemand hat je einen Dinosaurier auf eine Waage gestellt: Übrig sind nur die Knochen, und der größte Teil eines Körpers ist Fleisch, darum ist jedes Gewicht auf dieser Seite eine Rechnung, auf einem von drei Wegen. Der erste misst den Umfang von Oberschenkelknochen und Oberarmknochen und wendet die Regel an, die bei lebenden Vierbeinern diesen Umfang mit dem Körpergewicht verknüpft, eine Regel, die umso wackliger wird, je weiter ein Tier von allem Lebenden entfernt ist, und Argentinosaurus hat gar keinen Armknochen. Der zweite baut einen Körper um das Skelett, nimmt sein Volumen und multipliziert es mit einer Dichte, und weil der Umriss eine Wahl ist, kommt ein erwachsener T. rex je nach Umriss auf alles zwischen unter 6 und über 18 t. Der dritte leiht sich einen besser bekannten Vetter, unterstellt dessen Proportionen und streckt sie auf die wenigen gefundenen Knochen, und so entstand jede Länge für Argentinosaurus. Ein Maßband am montierten Skelett liefert eine genaue Zahl, aber für die Montage, und eine Montage ist zum Teil Skulptur."
-   ]
-  },
-  {
-   "type": "text",
-   "id": "found",
-   "nav": "Was gefunden wurde",
-   "h": "Was gefunden wurde",
-   "paras": [
-    "Argentinosaurus huinculensis ist von einem einzigen Tier bekannt, MCF-PVPH-1, gefunden Ende der 1980er Jahre in Argentinien, etwa 8 km östlich von Plaza Huincul in der Provinz Neuquén. Erhalten sind sechs oder sieben unvollständige Rückenwirbel, die Unterseite des Kreuzbeins, ein Rippenstück und ein 1,55 m langes Wadenbein. Kein Kopf, kein Hals, kein Schwanz, keine Schulter, kein Arm, kein Fuß. Die Knochen liegen im Museo Municipal Carmen Funes in Plaza Huincul, und zwei riesige Oberschenkelknochen von anderen Fundstellen gehören vielleicht dazu, vielleicht nicht.",
-    "Patagotitan mayorum ist der am besten bekannte der ganz großen Arten: mindestens sechs junge erwachsene Tiere aus einer einzigen Grabungsstelle auf einer Farm in Chubut, Argentinien, mehr als hundert Knochen, der erste 2012 gefunden. Sie liegen im Museo Paleontológico Egidio Feruglio in Trelew, wo neben dem Abguss ein 2,38 m langer Oberschenkelknochen steht. Abgüsse stehen in Chicago und New York.",
-    "Brachiosaurus altithorax beruht auf einem einzigen Teilskelett, FMNH P 25107, 1900 im Tal des Grand River im Westen Colorados ausgegraben und im Field Museum in Chicago aufbewahrt: sieben Rückenwirbel, das Kreuzbein, die ersten zwei Schwanzwirbel, ein Schulterknochen, der rechte Oberarmknochen, der rechte Oberschenkelknochen, beide Beckenschaufeln und einige Rippen. Kein Kopf, kein Hals, keine Unterschenkel, keine Füße, fast kein Schwanz, von einem noch nicht ausgewachsenen Tier. Von der Art kennt man etwa zehn Funde, keiner annähernd vollständig.",
-    "Das hohe Skelett im Museum für Naturkunde in Berlin ist kein Brachiosaurus. Es ist Giraffatitan brancai, ein naher Verwandter aus Afrika, zwischen 1909 und 1913 am Tendaguru im heutigen Tansania ausgegraben, in der Kolonialzeit, die das Museum selbst benennt. 2009 wurden die beiden in getrennte Gattungen gestellt, wegen mindestens 26 Unterschieden in den Knochen, und fast jedes Bild eines Brachiosaurus, das du je gesehen hast, zeigt das afrikanische Tier. Die Berliner Montage vereint mehrere Tiere, der Schädel in etwa 13 m Höhe, und das Museum nennt sie das größte montierte Dinosaurierskelett der Welt."
-   ],
-   "scale": {
-    "pic": "skeleton",
-    "tag": "tag_built",
-    "what": "Unser Argentinosaurus als Skelett.",
-    "alt": "Das Skelett unseres Argentinosaurus von der Seite, wenige dunkelrote Rückenwirbel, Hüftknochen und ein Beinknochen zwischen hellen ergänzten und übernommenen Knochen, daneben der graue Mensch.",
-    "key": "Die dunkelroten Knochen sind alles, was von diesem Tier je gefunden wurde: sechs oder sieben Rückenwirbel, der untere Teil der Hüfte, ein Rippenstück und ein 1,55 m langes Wadenbein. Blaue Knochen sind seine eigenen, ergänzt oder gespiegelt. Cremefarbene Knochen sind von Verwandten übernommen, vor allem von Patagotitan.",
-    "after": 1
-   }
   },
   {
    "type": "notes",
@@ -299,37 +325,83 @@
    "rows": [
     {
      "term": "39,7 m und 40 m",
-     "text": "Das montierte Skelett des Argentinosaurus im Museo Carmen Funes in Plaza Huincul, Argentinien, das das Museum in den 1990er Jahren selbst um die wenigen echten Knochen herum gebaut hat. Ein Team hat es 2013 mit einem Laser gescannt und 39,7 m gemessen, dazu 7,3 m an der Schulter. Das ist die Länge einer Skulptur, 5 bis 10 m mehr als jede Schätzung aus den Knochen, und die runden 40 m sind sehr wahrscheinlich dieselbe Zahl gerundet. Der Abguss in Atlanta, von derselben Art, ist nach dem Museum dort mehr als 37 m lang."
+     "text": "Das montierte Skelett im Museo Carmen Funes in Plaza Huincul, in den 1990er Jahren nach den wenigen echten Knochen als Vorlage gebaut. Ein Laserscan von 2013 maß es mit 39,7 m. Das ist die Länge einer Skulptur, 5 bis 10 m mehr als jede Schätzung aus den Knochen, und 40 m ist dieselbe Zahl gerundet. Der Abguss in Atlanta ist von derselben Art, nach dem Museum dort mehr als 37 m lang."
     },
     {
      "term": "100 t und 83 t",
-     "text": "Die 100 stammen aus Schätzungen der 1990er Jahre, kurz nach dem Fund, und ein frühes Volumenmodell gab 80 bis 100. Die 83 t sind die 2013 gescannte Montage, in eine enge digitale Haut gehüllt und als Modell berechnet, sie gehören also zur Skulptur. Heutige Modelle des Tiers geben grob 65 bis 80 t."
+     "text": "Die 100 stammen aus Schätzungen der 1990er Jahre und einem frühen Volumenmodell von 80 bis 100. Die 83 t sind die 2013 gescannte Montage in einer digitalen Haut, sie gehören also zur Skulptur. Heutige Modelle geben grob 65 bis 80 t."
     },
     {
      "term": "Patagotitans 37 m und 69 t",
-     "text": "Die 37 m sind die Länge seines Abgusses, gebaut aus mindestens sechs Tieren mit ergänzten Knochen, so wie er in Chicago steht. Die Erstbeschreibung von 2017 nennt gar keine Länge. Die 69 t kamen in dieser Studie aus dem Umfang von Oberschenkel- und Oberarmknochen, und dasselbe Team korrigierte sie 2020 auf etwa 57 t, Spanne 42 bis 71. Eine Volumenstudie von 2025 setzt ihn wieder über 60 t, das Gewicht ist also noch in Bewegung."
+     "text": "Die 37 m sind sein Abguss in Chicago, gebaut aus mindestens sechs Tieren mit ergänzten Knochen, keine Zahl aus der Erstbeschreibung von 2017. Die 69 t kamen in dieser Studie aus dem Knochenumfang, dasselbe Team korrigierte sie 2020 auf etwa 57 t. Eine Volumenstudie von 2025 setzt ihn wieder über 60 t."
     },
     {
      "term": "Bruhathkayosaurus mit 175 t oder mehr",
-     "text": "Ein Fund aus Indien, dessen Knochen zerfielen, bevor sie eine Sammlung erreichten, bekannt also nur aus Zeichnungen und Fotos von der Fundstelle. Die 175 bis 220 t waren Internetbeiträge von 2001, später von ihrem Autor zurückgezogen. Die einzige begutachtete Zahl, von 2023, lautet möglicherweise 110 bis 170 t, wahrscheinlicher 110 bis 130, und ohne Knochen lässt sich nichts davon prüfen."
+     "text": "Ein Fund aus Indien, dessen Knochen zerfielen, bevor sie eine Sammlung erreichten. Die 175 bis 220 t gehen nach späteren Darstellungen auf Internetbeiträge von 2001 zurück, die ihr Autor zurückzog. Die einzige begutachtete Zahl, von 2023, lautet möglicherweise 110 bis 170 t, wahrscheinlicher 110 bis 130, und ohne Knochen lässt sich nichts davon prüfen."
     },
     {
      "term": "Amphicoelias mit 58 m",
-     "text": "Ein einziger Rückenwirbel, 1878 beschrieben und gezeichnet, dann verloren. 2006 wurde er nach dem Diplodocus auf 58 m und etwa 122 t hochgerechnet. 2018 las derselbe Autor die alte Zeichnung als Mitglied einer anderen Sauropodenfamilie, benannte das Tier in Maraapunisaurus um und kam auf etwa 30 bis 32 m, und andere nennen die alte Zahl eine extreme Überschätzung."
+     "text": "Ein einziger Rückenwirbel, 1878 beschrieben und gezeichnet, dann verloren. Eine Studie von 2006 rechnete ihn nach dem Diplodocus auf 58 m und etwa 122 t hoch, so berichten es spätere Darstellungen. 2018 las derselbe Autor die Zeichnung als eine andere Sauropodenfamilie und kam auf etwa 30 bis 32 m, unter dem neuen Namen Maraapunisaurus. Andere nennen die alte Zahl eine extreme Überschätzung."
     },
     {
      "term": "Spinosaurus mit 18 m",
-     "text": "Eine Zahl von 2005, aus einer großen losen Schnauze in Mailand, mit den Proportionen eines Verwandten hochgerechnet: 16 bis 18 m lang und 7 bis 9 t. Ein Skelettmodell von 2014 gab über 15 m. Das aktuelle Modell von 2022, gebaut auf dem jungen Tier aus Marokko und der erwachsenen Schnauze, kommt auf knapp unter 14 m und etwa 7,4 t."
+     "text": "Nach späteren Darstellungen eine Zahl von 2005, aus einer losen Schnauze in Mailand mit den Proportionen eines Verwandten hochgerechnet: 16 bis 18 m. Ein Skelettmodell von 2014 gab über 15 m. Das Modell von 2022, gebaut auf dem jungen Tier aus Marokko und der erwachsenen Schnauze, kommt auf knapp unter 14 m und etwa 7,4 t."
     },
     {
      "term": "Brachiosaurus 13 m hoch",
-     "text": "Das Berliner Skelett, das ein Giraffatitan ist. Sein Schädel sitzt seit der Neumontage von 2007 in etwa 13 m Höhe, beim ersten Aufbau 1937 waren es 11,87 m, und der Unterschied ist allein die Haltung des Halses. Für den amerikanischen Brachiosaurus wurde nie eine Höhe gemessen, und die veröffentlichten Kopfhöhen reichen je nach gewähltem Halswinkel von 9,4 bis 13 m."
+     "text": "Das Berliner Skelett, das ein Giraffatitan ist. Sein Schädel sitzt seit der Neumontage von 2007 in etwa 13 m Höhe, beim ersten Aufbau 1937 waren es 11,87 m: Der Unterschied ist die Haltung des Halses. Für den amerikanischen Brachiosaurus wurde nie eine Höhe gemessen, und die veröffentlichten Kopfhöhen reichen je nach Halswinkel von 9,4 bis 13 m."
     },
     {
      "term": "So hoch wie ein sechsstöckiges Haus",
-     "text": "Das Bild einer Zeitschrift für Sauroposeidon, von etwa 2002, nach der Schätzung von etwa 17 m. Sechs Stockwerke heißt etwa 3 m für jedes, und die 17 m selbst beruhen auf vier Halswirbeln. Der Satz wandert oft zu Brachiosaurus oder Argentinosaurus, wo er nie hingehörte."
+     "text": "Das Bild einer Zeitschrift für Sauroposeidon, von etwa 2002, nach der Schätzung von etwa 17 m. Die 17 m selbst beruhen auf vier Halswirbeln. Der Satz gehört zu Sauroposeidon, nicht zu Brachiosaurus oder Argentinosaurus."
     }
    ]
+  },
+  {
+   "type": "text",
+   "id": "how-sure",
+   "nav": "Wie sicher das ist",
+   "h": "Wie sicher das ist",
+   "paras": [
+    "Niemand hat je einen Dinosaurier auf eine Waage gestellt. Übrig sind nur Knochen, und der größte Teil eines Körpers ist Fleisch. Jedes Gewicht hier ist eine Rechnung, auf einem von drei Wegen.",
+    {
+     "points": [
+      [
+       "Knochenumfang:",
+       "Man misst den Umfang von Oberschenkel- und Oberarmknochen und nimmt die Regel, die bei heute lebenden Tieren Umfang und Gewicht verbindet. Je weiter weg von allem Lebenden, desto wackliger. Argentinosaurus hat gar keinen Armknochen."
+      ],
+      [
+       "Volumenmodell:",
+       "Man baut einen Körper um das Skelett, misst sein Volumen und rechnet mit einer Dichte. Der Umriss ist eine Wahl: Ein erwachsener T. rex kommt so auf alles von unter 6 bis über 18 t."
+      ],
+      [
+       "Hochrechnen vom Verwandten:",
+       "Man nimmt einen besser bekannten Vetter, unterstellt seine Proportionen und streckt sie auf die wenigen gefundenen Knochen. So entstand jede Länge für Argentinosaurus."
+      ]
+     ]
+    },
+    "Ein Maßband an der Museumsmontage liefert eine genaue Zahl, aber für die Montage, und die ist zum Teil Skulptur."
+   ]
+  },
+  {
+   "type": "text",
+   "id": "found",
+   "nav": "Was gefunden wurde",
+   "h": "Was gefunden wurde",
+   "paras": [
+    "Argentinosaurus huinculensis ist von einem einzigen Tier bekannt, MCF-PVPH-1, gefunden Ende der 1980er Jahre etwa 8 km östlich von Plaza Huincul in Neuquén, Argentinien. Erhalten sind sechs oder sieben unvollständige Rückenwirbel, die Unterseite des Kreuzbeins, ein Rippenstück und ein 1,55 m langes Wadenbein. Kein Kopf, kein Hals, kein Schwanz, keine Schulter, kein Arm, kein Fuß. Die Knochen liegen im Museo Municipal Carmen Funes in Plaza Huincul. Zwei riesige Oberschenkelknochen gehören vielleicht dazu, vielleicht nicht.",
+    "Patagotitan mayorum ist der am besten bekannte der ganz großen Arten. Mindestens sechs junge erwachsene Tiere kamen aus einer einzigen Grabungsstelle auf einer Farm in Chubut, Argentinien: der erste Knochen 2012, mehr als hundert Knochen insgesamt. Sie liegen im Museo Paleontológico Egidio Feruglio in Trelew, wo neben dem Abguss ein echter Oberschenkelknochen von über 2 m steht.",
+    "Brachiosaurus altithorax beruht auf einem einzigen Teilskelett, FMNH P 25107, 1900 im Westen Colorados ausgegraben und heute im Field Museum in Chicago. Gefunden wurden sieben Rückenwirbel, das Kreuzbein, zwei Schwanzwirbel, ein Schulterknochen, der rechte Oberarmknochen, der rechte Oberschenkelknochen, beide Beckenschaufeln und einige Rippen. Kein Kopf, kein Hals, keine Unterarme, keine Unterschenkel, keine Füße, fast kein Schwanz, von einem noch nicht ausgewachsenen Tier. Von der Art kennt man etwa zehn Funde, keiner annähernd vollständig.",
+    "Das hohe Skelett im Berliner Museum für Naturkunde ist kein Brachiosaurus, sondern Giraffatitan brancai, ein naher Verwandter aus Afrika. Ausgegraben wurde es zwischen 1909 und 1913 am Tendaguru im heutigen Tansania, in der Kolonialzeit, die das Museum selbst benennt. 2009 wurden die beiden in getrennte Gattungen gestellt, wegen mindestens 26 Unterschieden in den Knochen, und fast jedes Bild eines Brachiosaurus zeigt das afrikanische Tier. Die Berliner Montage vereint mehrere Tiere und ist nach den Worten des Museums das größte montierte Dinosaurierskelett der Welt."
+   ],
+   "scale": {
+    "pic": "skeleton",
+    "tag": "tag_built",
+    "what": "Unser Argentinosaurus als Skelett.",
+    "alt": "Unser Argentinosaurus als Skelett von der Seite: wenige dunkelrote Rücken-, Hüft- und Beinknochen zwischen hellen ergänzten und übernommenen, daneben der graue Mensch.",
+    "key": "Dunkelrot: alles, was von diesem Tier je gefunden wurde. Sechs oder sieben Rückenwirbel, der untere Teil der Hüfte, ein Rippenstück und ein 1,55 m langes Wadenbein. Blau: nie gefunden, die fehlenden Rückenwirbel und Rippen, das zweite Wadenbein als Spiegelbild des ersten, die fehlenden Teile der gefundenen Knochen, passend zu seinen eigenen ergänzt. Cremefarben: von Verwandten übernommen, vor allem von Patagotitan.",
+    "after": 1
+   }
   },
   {
    "type": "text",
@@ -337,7 +409,7 @@
    "nav": "Warum unsere so aussehen",
    "h": "Warum unsere so aussehen",
    "paras": [
-    "Jedes der sieben ist nach einem einzelnen benannten Fund in dessen echter Größe gebaut: Argentinosaurus nach den Knochen aus Plaza Huincul mit einem Körper vor allem nach Patagotitan, Brachiosaurus nach dem Skelett in Chicago mit Hals und Kopf nach seinen Verwandten, T. rex nach SUE, Spinosaurus nach dem jungen Tier aus Marokko, Triceratops nach der Montage des Smithsonian-Museums in Washington aus etwa zehn Tieren, Ankylosaurus nach dem kleinsten der drei bekannten Skelette, Stegosaurus nach Sophie in London. Von keinem ist eine Farbe bekannt, die Farben sind also unsere, und Tiere, die nebeneinander stehen, unterscheiden sich dort, wo nichts bekannt ist. Die Halswinkel der beiden Langhälse sind unsere Wahl, denn von Argentinosaurus ist kein Halswirbel bekannt und von diesem Brachiosaurus auch keiner, und darum stehen ihre Köpfe fast gleich hoch, obwohl unser Argentinosaurus neun Meter länger ist. Unser Spinosaurus ist jung, etwa drei Viertel so lang wie ein erwachsenes Tier. Unser T. rex zeigt das Maul offen, den Zustand, der unsere Gesichtsprüfung bestanden hat, und bei geschlossenem Maul lagen seine Lippen sehr wahrscheinlich über den Zähnen."
+    "Jedes ist nach einem benannten Fund oder einer Montage in deren Größe gebaut. Argentinosaurus nach den Knochen aus Plaza Huincul, mit einem Körper vor allem nach Patagotitan. Brachiosaurus nach dem Skelett in Chicago, mit Hals und Kopf nach seinen Verwandten. T. rex nach SUE, Spinosaurus nach dem jungen Tier aus Marokko. Triceratops nach der Montage des Smithsonian-Museums in Washington aus etwa zehn Tieren, deren Schädel beim Umbau vergrößert wurde. Ankylosaurus nach dem kleinsten der drei bekannten Skelette, Stegosaurus nach Sophie in London. Von keinem ist eine Farbe bekannt, die Farben sind also unsere, und Nachbarn unterscheiden sich dort, wo nichts bekannt ist. Die Halswinkel der beiden Langhälse sind unsere Wahl, denn von keinem der beiden Tiere ist ein Halswirbel bekannt. Darum stehen ihre Köpfe fast gleich hoch, obwohl unser Argentinosaurus neun Meter länger ist. Unser T. rex zeigt das Maul offen. Geschlossen lagen seine Lippen sehr wahrscheinlich über den Zähnen."
    ]
   },
   {
@@ -348,11 +420,11 @@
    "items": [
     {
      "q": "War der Spinosaurus größer als der T. rex?",
-     "a": "Länger, und sehr wahrscheinlich leichter. Ein erwachsener Spinosaurus war im aktuellen Modell knapp unter 14 m lang und etwa 7,4 t schwer, gegen etwa 12 m und 8 bis 9 t bei einem großen erwachsenen T. rex. Unserer im Bild ist ein junger Spinosaurus von etwa 10 m, dort ist er also der kürzere."
+     "a": "Länger, und sehr wahrscheinlich leichter. Ein erwachsener Spinosaurus war im aktuellen Modell knapp unter 14 m lang und etwa 7,4 t schwer. Ein großer erwachsener T. rex war etwa 12 m lang und 8 bis 9 t schwer. Unserer im Bild ist ein junger Spinosaurus von etwa 10 m, dort ist er also der kürzere."
     },
     {
      "q": "War ein Dinosaurier größer als der Blauwal?",
-     "a": "Nein, soweit man weiß. Die US-Meeresbehörde NOAA nennt den Blauwal das größte Tier, von dem man weiß: Die meisten ausgewachsenen sind 23 bis 27 m lang, die größten etwa 30 m. Argentinosaurus mit etwa 30 bis 35 m war ungefähr so lang. Nur ein einziger Fund an Land wurde je in die Nähe des Gewichts der größten Wale gerückt, der verlorene aus Indien, und seine Knochen sind weg."
+     "a": "Nein, soweit man weiß. Die US-Meeresbehörde NOAA nennt den Blauwal das größte Tier, das je auf unserem Planeten gelebt hat. Die meisten ausgewachsenen sind 23 bis 27 m lang, die größten etwa 30 m. Argentinosaurus mit etwa 30 bis 35 m war ungefähr so lang. Nur ein einziger Fund an Land wurde je in die Nähe des Gewichts der größten Wale gerückt, der verlorene aus Indien, und seine Knochen sind weg."
     }
    ]
   },
@@ -470,11 +542,18 @@
      "href": "https://doi.org/10.1002/ece3.11658"
     },
     {
-     "text": "Brassey und andere, 2015, das Gewichtsmodell der Stegosaurus Sophie."
+     "text": "Brassey und andere, 2015, das Gewichtsmodell des Stegosaurus Sophie."
+    },
+    {
+     "text": "Arbour und Mallon, 2017, FACETS.",
+     "href": "https://doi.org/10.1139/facets-2017-0063"
     },
     {
      "text": "Curtice, 2021, ein Vortrag auf der Tagung der Society of Vertebrate Paleontology, berichtet von Live Science.",
      "href": "https://www.livescience.com/supersaurus-longest-dinosaur-on-record"
+    },
+    {
+     "text": "Skelettzeichnungen von Scott Hartman, skeletaldrawing.com, zum Vergleich für Argentinosaurus und Spinosaurus."
     },
     {
      "text": "Museo Municipal Carmen Funes, Plaza Huincul: die Argentinosaurus-Knochen MCF-PVPH-1."
@@ -533,7 +612,7 @@
       "text": "CC BY-SA 4.0",
       "href": "https://creativecommons.org/licenses/by-sa/4.0/deed.de"
      },
-     ", Nachweis: Museum of Ages. Sie zeigen Rekonstruktionen, in Code gebaut und in unserer Engine gerendert, keine Fotos."
+     ", Nachweis: Museum of Ages, und wo eine Beschriftung eine Vorlage nennt, auch diese. Sie zeigen Rekonstruktionen, in Code gebaut und in unserer Engine gerendert, keine Fotos."
     ]
    ]
   }
