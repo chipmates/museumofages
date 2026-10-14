@@ -195,8 +195,9 @@ TIER_LINE = {
 }
 BARE_LINE = {"en": re.compile(r"\bpublic domain reproductions? from\b", re.I),
              "de": re.compile(r"\bgemeinfreie reproduktion(?:en)? aus\b", re.I)}
-# Units an animal's numbers carry beside the site's own (buildlib.UNIT): a number keeps them on its line.
-MORE_UNITS = r"(?:ft|in|t|feet|tonnes|Tonnen|kg|million|Millionen)"
+# Units an animal's numbers carry beside the site's own (buildlib.UNIT), and the things they count: a number keeps
+# them on its line.
+MORE_UNITS = r"(?:ft|in|t|feet|tonnes|Tonnen|kg|million|Millionen|discs|Wirbeln?)"
 # The wing's dates are written in English: the German page writes them by these rules.
 DATE_DE = {"Sixteenth century, reworked in the early seventeenth century": "16. Jahrhundert, überarbeitet im frühen 17. Jahrhundert"}
 
