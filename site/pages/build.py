@@ -1975,9 +1975,13 @@ def making_problems(d, wing, data):
     would stand (top.out), its pictures at one scale with the person's place, its table's rows as long as its columns,
     and its list of pages. Returns the problems."""
     problems, top = [], d["top"]
+    layout = d["page"].get("og_image", {}).get("layout")
     if not making(wing):
         found = [k for k in ("out", "scale", "guess") if k in top] + [b["id"] for b in d["blocks"] if b["type"] in ("numbers", "pages")]
+        found += ["page.og_image.layout"] if layout else []
         return [f"{', '.join(found)} stand only on a page of a wing in the making"] if found else []
+    if layout not in (None, "beside"):
+        problems.append(f"page.og_image.layout is {layout!r}: the share picture's one other form is 'beside'")
     if "door" in top or any(b["type"] == "close" for b in d["blocks"]):
         problems.append("a page of a wing in the making has no door: its line and link stand in top.out")
     if not (top.get("out") or {}).get("text") or not (top.get("out") or {}).get("link"):
@@ -2137,7 +2141,8 @@ def scale_share(d, data, lang, colours):
              "person": plain(d["labels"]["person"]),
              "site": ORIGIN.split("://", 1)[1]}
     return {"svg": CHART.picture_still_svg(words, colours, name, webp_size(found),
-                                           (float(place.group(1)) / 100, float(place.group(2)) / 100) if place else None)}
+                                           (float(place.group(1)) / 100, float(place.group(2)) / 100) if place else None,
+                                           beside=source["page"]["og_image"].get("layout") == "beside")}
 
 
 def build_pages(out_dir, site_src=SITE_SRC, site_built=SITE_BUILT, pages=PAGES, quiet=False):

@@ -368,10 +368,11 @@ def _text(x, y, words, size, fill, anchor="start", face="Cardo"):
             f'text-anchor="{anchor}">{esc(words)}</text>')
 
 
-def _wrap(words, size, width):
-    """Lines of a sentence at a face's average letter width: the stills' own measure, a little generous."""
+def _wrap(words, size, width, sep=None):
+    """Lines of a sentence at a face's average letter width: the stills' own measure, a little generous. sep: the one
+    character the words are parted at (any space when not given)."""
     lines, line = [], ""
-    for word in words.split():
+    for word in words.split(sep):
         test = f"{line} {word}".strip()
         if len(test) * size * 0.47 > width and line:
             lines.append(line)
@@ -612,12 +613,16 @@ def tally_still_svg(rows, words, c):
 PICS_MARK = "@pics@"
 
 
-def picture_still_svg(words, colours, picture, size, person):
+def picture_still_svg(words, colours, picture, size, person, beside=False):
     """A page's share picture of one picture at one scale, 1200 by 630: the page's heading and its one line, the
     picture whole on the stone sheet it was made on, framed, the person's height over the person (person: the place of
-    the person's centre and the top of its head as shares of the picture), the site's address."""
+    the person's centre and the top of its head as shares of the picture), the site's address. beside: the heading
+    and the line stand in a column at the left and the picture at the right, for a picture that would leave much
+    of the card empty under the words."""
     c = colours
     W, H, m = 1200, 630, 60
+    if beside:
+        return _picture_beside_svg(words, c, picture, size, person, W, H, m)
     parts = [_text(m, 104, words["h1"], 54, c["linen"])]
     if words.get("line"):
         parts.append(_text(m, 164, words["line"], 36, c["chalk-text"]))
@@ -633,6 +638,41 @@ def picture_still_svg(words, colours, picture, size, person):
     if person:
         px, top = person
         parts.append(_text(m + iw * px, iy + ih * top - 12, words["person"], 20, c["stone-text-2"], "middle"))
+    parts.append(_rect(m, H - 62, 48, 2, c["chalk"], c["chalk"], 0))
+    parts.append(_text(m, H - 30, words["site"], 20, c["text-3"]))
+    return (f'<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="{W}" height="{H}" '
+            f'viewBox="0 0 {W} {H}"><rect width="{W}" height="{H}" fill="{c["page"]}"/>{"".join(parts)}</svg>\n')
+
+
+def _picture_beside_svg(words, c, picture, size, person, W, H, m):
+    gap, most = 50, 600
+    iw = most
+    ih = iw * size[1] / size[0]
+    if ih > H - 2 * m:
+        ih = H - 2 * m
+        iw = ih * size[0] / size[1]
+    ix, iy = W - m - iw, (H - ih) / 2
+    column = ix - gap - m
+    # a number keeps its unit on its line: the words are wrapped at their plain spaces only
+    keep = lambda s: re.sub(r"(\d) (?=(?:m|ft|cm|kg|t)\b)", "\\1\u00a0", s)
+    # Cardo's letters run wider than the stills' average measure at these sizes: the column is measured short
+    rows = lambda s, size: [r.replace("\u00a0", " ") for r in _wrap(keep(s).replace(" ", "\n"), size, column * 0.87, "\n")]
+    head, line = rows(words["h1"], 50), rows(words["line"], 34) if words.get("line") else []
+    # the words start level with the picture's top unless their last row would then reach the address's rule
+    last = 58 * (len(head) - 1) + (14 + 44 * len(line) if line else 0)
+    parts, y = [], max(m + 44, min(iy + 44, H - 62 - 36 - last))
+    for row in head:
+        parts.append(_text(m, y, row, 50, c["linen"]))
+        y += 58
+    y += 14
+    for row in line:
+        parts.append(_text(m, y, row, 34, c["chalk-text"]))
+        y += 44
+    parts.append(_rect(ix - 3, iy - 3, iw + 6, ih + 6, c["stone"], c["frame"], 3))
+    parts.append(f'<image x="{ix:g}" y="{iy:g}" width="{iw:g}" height="{ih:g}" xlink:href="{PICS_MARK}/{esc(picture)}"/>')
+    if person:
+        px, top = person
+        parts.append(_text(ix + iw * px, iy + ih * top - 12, words["person"], 20, c["stone-text-2"], "middle"))
     parts.append(_rect(m, H - 62, 48, 2, c["chalk"], c["chalk"], 0))
     parts.append(_text(m, H - 30, words["site"], 20, c["text-3"]))
     return (f'<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="{W}" height="{H}" '

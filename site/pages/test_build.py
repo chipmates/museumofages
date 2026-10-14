@@ -595,6 +595,39 @@ class Case(unittest.TestCase):
                     self.fails(re.escape(rule))
                     self.save(lang, original, page)
 
+    def test_a_share_picture_may_set_its_words_beside_the_picture(self):
+        """A page whose picture would leave much of the share card empty under its words sets them in a column at the
+        left and the picture at the right (page.og_image.layout beside): the picture whole, the words wrapped in their
+        column, a number never parted from its unit. Any other form, or the form on an open wing's page, stops the build."""
+        spec = importlib.util.spec_from_file_location("chart_beside", self.dir / "chart.py")
+        chart = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(chart)
+        colours = {k: "#000000" for k in ("linen", "chalk-text", "stone", "frame", "stone-text-2", "chalk", "text-3", "page")}
+        words = {"h1": "How big was the woolly mammoth?", "line": "A Siberian bull stood about 2.7 to 2.9 m (9 ft) at the shoulder",
+                 "person": "1.70 m", "site": "museumofages.org"}
+        for size in ((2438, 1403), (1600, 1600), (3200, 600)):
+            svg = chart.picture_still_svg(words, colours, "x.png", size, (0.9, 0.4), beside=True)
+            x, y, w, h = (float(v) for v in re.search(r'<image x="([\d.]+)" y="([\d.]+)" width="([\d.]+)" height="([\d.]+)"', svg).groups())
+            self.assertAlmostEqual(w / h, size[0] / size[1], places=3)
+            self.assertAlmostEqual(x + w, 1140, places=3)
+            self.assertTrue(60 <= y and y + h <= 570, (y, h))
+            rows = [html.unescape(r) for r in re.findall(r'<text x="60" y="[\d.]+"[^>]*>([^<]*)</text>', svg)][:-1]
+            self.assertEqual(" ".join(rows), words["h1"] + " " + words["line"])
+            self.assertTrue(all(len(r) * 0.54 * (50 if i < 2 else 34) < x - 60 for i, r in enumerate(rows)), rows)
+            self.assertFalse(any(r.endswith(("(9", "2.9")) for r in rows), rows)
+            # the last row stands clear of the rule over the address
+            self.assertLess(max(float(v) for v in re.findall(r'<text x="60" y="([\d.]+)"', svg)[:-1]), 630 - 62 - 30)
+        self.assertEqual(chart.picture_still_svg(words, colours, "x.png", (2438, 1403), None),
+                         chart.picture_still_svg(words, colours, "x.png", (2438, 1403), None, beside=False))
+        page = next((p for p in self.scale_pages() if self.data("en", p)["page"]["og_image"].get("layout")), None)
+        if not page:
+            self.skipTest("no page sets its share picture's words beside it")
+        for lang in ("en", "de"):
+            data = self.data(lang, page)
+            data["page"]["og_image"]["layout"] = "below"
+            self.save(lang, data, page)
+        self.fails(r"page\.og_image\.layout is 'below'")
+
     def test_a_key_leads_each_colour_with_a_swatch_of_the_pictures_colour(self):
         """A skeleton coloured by where its bones come from names each colour with a swatch in the colour the picture
         prints (pics.<name>.swatches): the key's square and the bones agree. A page without swatches carries no swatch
@@ -1016,7 +1049,9 @@ class Case(unittest.TestCase):
                 line = self.data(job["lang"], page)["labels"].get("og_answer")
                 if line:
                     lines += 1
-                    self.assertIn(html.escape(line.replace("\u00a0", " "), quote=False), job["svg"])
+                    # a card that sets its words beside its picture wraps the line over several rows
+                    said = " ".join(re.findall(r"<text [^>]*>([^<]*)</text>", job["svg"]))
+                    self.assertIn(html.escape(line.replace("\u00a0", " "), quote=False), said)
         if not lines:
             self.skipTest("no page gives an answer line for its share picture")
 
