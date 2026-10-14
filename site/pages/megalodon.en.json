@@ -53,6 +53,16 @@
    ],
    "sizes": "(min-width: 1280px) 690px, (min-width: 960px) 54vw, (min-width: 600px) calc(100vw - 64px), calc(100vw - 40px)",
    "person": "83.58% 45.52%"
+  },
+  "dinosaurs": {
+   "stem": "animals-biggest-dinosaurs-row",
+   "widths": [
+    800,
+    1600,
+    2400
+   ],
+   "sizes": "(min-width: 1280px) 690px, (min-width: 960px) 54vw, (min-width: 600px) calc(100vw - 64px), calc(100vw - 40px)",
+   "person": "29.33% 84.25%"
   }
  },
  "meta": {
@@ -324,6 +334,17 @@
     {
      "out": true,
      "text": "To the Leonardo wing"
+    }
+   ]
+  },
+  {
+   "type": "pages",
+   "id": "next",
+   "items": [
+    {
+     "page": "biggest-dinosaurs",
+     "pic": "dinosaurs",
+     "alt": "Seven dinosaurs in a row from the side, two with long necks towering over the rest, beside a grey person who stands no higher than the hips of the smallest three."
     }
    ]
   },

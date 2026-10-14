@@ -21,6 +21,16 @@
    ],
    "sizes": "(min-width: 1280px) 690px, (min-width: 960px) 54vw, (min-width: 600px) calc(100vw - 64px), calc(100vw - 40px)",
    "person": "91.86% 55.88%"
+  },
+  "dinosaurs": {
+   "stem": "animals-biggest-dinosaurs-row",
+   "widths": [
+    800,
+    1600,
+    2400
+   ],
+   "sizes": "(min-width: 1280px) 690px, (min-width: 960px) 54vw, (min-width: 600px) calc(100vw - 64px), calc(100vw - 40px)",
+   "person": "29.33% 84.25%"
   }
  },
  "meta": {
@@ -54,6 +64,11 @@
      "page": "megalodon",
      "pic": "side",
      "alt": "A shark with its mouth open, seen from the side, dark above and pale below, beside a grey person who looks tiny next to it."
+    },
+    {
+     "page": "biggest-dinosaurs",
+     "pic": "dinosaurs",
+     "alt": "Seven dinosaurs in a row from the side, two with long necks towering over the rest, beside a grey person who stands no higher than the hips of the smallest three."
     }
    ]
   }
