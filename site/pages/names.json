@@ -200,6 +200,12 @@
     { "text": "Royal Saskatchewan Museum", "lang": "en" },
     { "text": "Houston Museum of Natural Science", "lang": "en" },
     { "text": "RSM P2523.8", "whole": true },
-    { "text": "HMNS 2006.1743.01", "whole": true }
+    { "text": "HMNS 2006.1743.01", "whole": true },
+    { "text": "Bayerische Staatssammlung für Paläontologie und Geologie", "lang": "de" },
+    { "text": "Museo di Storia Naturale di Milano", "lang": "it" },
+    { "text": "Journal of Paleontology", "lang": "en" },
+    { "text": "ACS Central Science", "lang": "en" },
+    { "text": "SNSB-BSPG 1993 IX 308", "whole": true },
+    { "text": "MSNM V4047", "whole": true }
   ]
 }

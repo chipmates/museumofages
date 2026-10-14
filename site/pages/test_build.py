@@ -471,7 +471,8 @@ class Case(unittest.TestCase):
             # a list of pages joins its names wherever it stands: the hub and both neighbours
             items = [m.group(1) for (pid, code), (other, text) in by_id.items() if code == lang
                      for m in re.finditer(r'<h2 class="sc-item__h"><a href="[^"]*t-rex/">(.*?)</a>', text)]
-            self.assertEqual(len(items), 3)
+            # the hub and the three pages that name it
+            self.assertEqual(len(items), 4)
             for item in items:
                 self.assertIn('<span class="nh">T.\u00a0rex</span>', item)
         # a page without the flag keeps the nowrap span in its own sentences
@@ -518,6 +519,114 @@ class Case(unittest.TestCase):
                     self.fails(re.escape(rule))
                     self.save(lang, original, page)
 
+    # Each claim the Spinosaurus page must never make, by its topic's rules: the canon's NEVER SAY and the facts sheet's.
+    NEVER_SPINO = {
+        "en": ["Our Spinosaurus is 14 m long", "Spinosaurus came to 14 m", "It is 14 m long", "Our Spinosaurus comes to 7 tonnes",
+               "Spinosaurus weighed 7.4 t", "Spinosaurus was 10 m long", "Spinosaurus came to 3 to 4 tonnes",
+               "Spinosaurus was 18 m long", "It reached 15 m", "It was 50 feet long", "It weighed 20 tonnes",
+               "Spinosaurus was bigger than T. rex", "Spinosaurus was heavier than T. rex", "It was taller than T. rex",
+               "Spinosaurus could kill a T. rex", "Who would win", "Spinosaurus met T. rex", "As in Jurassic Park III",
+               "The film's 13 m animal", "Found in the Taouz region", "A full grown Spinosaurus", "The Spinosaurus skeleton",
+               "A nearly complete skeleton", "The largest predator of all time", "The largest predatory dinosaur",
+               "The last ones lived 94 million years ago", "An M-shaped sail", "It swam like a crocodile",
+               "It hunted under water", "The first swimming dinosaur", "It walked on four legs",
+               "Destroyed on 24 April 1944", "The original bones are in Munich", "The sail was 1.65 m tall",
+               "Our model's hip height of 3.51 m", "It had webbed feet", "It had lips", "Like Spinosaurus mirabilis",
+               "Eight times faster", "The largest T. rex", "It died out 66 million years ago", "Our T. rex weighs 9 tonnes",
+               "SUE and her skull"],
+        "de": ["Unser Spinosaurus ist 14 m lang", "Unser Spinosaurus kommt auf 7 t", "Spinosaurus wog 7,4 t",
+               "Spinosaurus war 10 m lang", "Er kam auf 3 bis 4 t", "Spinosaurus war 18 m lang", "Er erreichte 15 m",
+               "Er wog 20 t", "Der Spinosaurus war größer als der T. rex", "Er war schwerer als ein T. rex",
+               "Er war höher als ein T. rex", "Er konnte einen T. rex töten", "Der Kampf der Giganten",
+               "Er traf auf einen T. rex", "Wie in Jurassic Park", "Gefunden bei Taouz", "Ein ausgewachsener Spinosaurus",
+               "Das Spinosaurus-Skelett", "Ein fast vollständiges Skelett", "Der größte Raubsaurier",
+               "Die letzten lebten vor 94 Millionen Jahren", "Ein M-förmiges Segel", "Er schwamm wie ein Krokodil",
+               "Er jagte unter Wasser", "Der erste schwimmende Dinosaurier", "Er ging auf vier Beinen",
+               "Zerstört am 24. April 1944", "Die Originalknochen sind in München", "Das Segel war 1,65 m hoch",
+               "Eine Hüfthöhe von 3,51 m", "Er hatte Schwimmhäute", "Er hatte Lippen", "Wie Spinosaurus mirabilis",
+               "Achtmal schneller", "Der größte T. rex", "Er starb vor 66 Millionen Jahren aus", "Unser T. rex wiegt 9 t"],
+    }
+
+    def test_the_spinosaurus_page_refuses_each_never_say_phrase(self):
+        page = self.topic_page("spinosaurus")
+        topic = next(t for w in self.wings().values() if isinstance(w, dict) for t in w.get("topics", []) if t.get("count") == "spinosaurus")
+        # every rule of the topic is met by a phrase of the list in a language it holds for, so a rule added without
+        # its phrase is seen
+        for pattern, _, *only in topic["never_say"]:
+            self.assertTrue(any(re.search(pattern, x.lower()) for lang, xs in self.NEVER_SPINO.items() if not only or lang in only[0]
+                                for x in xs), pattern)
+        for lang, phrases in self.NEVER_SPINO.items():
+            original = self.data(lang, page)
+            for phrase in phrases:
+                with self.subTest(lang=lang, phrase=phrase):
+                    # the line under the answer carries none of the words a rule lets a number stand with
+                    shutil.rmtree(self.dir / "out", ignore_errors=True)
+                    data = json.loads(json.dumps(original))
+                    data["top"]["out"]["text"] += f" {phrase}."
+                    self.save(lang, data, page)
+                    self.fails(r"top\.out\.text matches")
+                    self.save(lang, original, page)
+
+    def test_a_spinosaurus_number_stands_only_with_the_words_that_say_whose_it_is(self):
+        """The page names the adults' 14 m and the model's tonnes, our young animal's 10 m and 3 to 4 tonnes, the four
+        legs of 2014, the swimming headline and the largest predator on purpose: without the words that say whose the
+        number is, or what the claim was, the same fields stop the build."""
+        page = self.topic_page("spinosaurus")
+        cases = [
+            ({"en": (r"just under 14", "14"), "de": (r"knapp unter 14", "14")}, "14 m is the largest adults' length"),
+            ({"en": (r" in its pose", ""), "de": (r" in seiner Haltung", "")}, "about 10 m is our young animal's length"),
+            ({"en": (r"3 to 4 t, by a model", "3 to 4 t"), "de": (r"3 bis 4 t, nach einem Modell", "3 bis 4 t")},
+             "3 to 4 tonnes is our young animal's weight"),
+            ({"en": (r"A headline of 2020", "A finding of 2020"), "de": (r"Eine Schlagzeile von 2020", "Ein Befund von 2020")},
+             "the first swimming dinosaur only as a headline"),
+            ({"en": (r"the longest meat-eating dinosaur known", "the longest"),
+              "de": (r"der längste bekannte Fleischfresser", "der längste")}, "the longest meat-eating dinosaur known, never"),
+            ({"en": (r"The study of 2014", "The study"), "de": (r"Die Studie von 2014", "Die Studie")}, "it walked on two legs"),
+        ]
+        out, _ = self.build()
+        shutil.rmtree(out)
+        for subs, rule in cases:
+            for lang, (condition, instead) in subs.items():
+                with self.subTest(lang=lang, rule=rule):
+                    original = self.data(lang, page)
+                    text = json.dumps(original, ensure_ascii=False)
+                    self.assertRegex(text, condition)
+                    self.save(lang, json.loads(re.sub(condition, instead, text)), page)
+                    self.fails(re.escape(rule))
+                    self.save(lang, original, page)
+
+    def test_a_key_leads_each_colour_with_a_swatch_of_the_pictures_colour(self):
+        """A skeleton coloured by where its bones come from names each colour with a swatch in the colour the picture
+        prints (pics.<name>.swatches): the key's square and the bones agree. A page without swatches carries no swatch
+        rules, and a swatch without its colour stops the build."""
+        page = self.topic_page("spinosaurus")
+        out, written = self.build()
+        seen = 0
+        for path in written:
+            data, lang = self.page_of(path)
+            text = path.read_text(encoding="utf-8")
+            figs = [b["scale"] for b in data["blocks"] if isinstance(b.get("scale", {}).get("key"), list)]
+            if not figs:
+                self.assertNotIn(".sc-swatch", text)
+                continue
+            seen += 1
+            for fig in figs:
+                colours = data["pics"][fig["pic"]]["swatches"]
+                keys = [k for k in fig["key"] if isinstance(k, dict)]
+                self.assertEqual({k["swatch"] for k in keys}, set(colours))
+                for k in keys:
+                    self.assertIn(".sc-swatch--%s-%s{background:%s}" % (fig["pic"], k["swatch"], colours[k["swatch"]]), text)
+                    self.assertRegex(text, r'<li class="sc-keys__i"><span class="sc-swatch sc-swatch--%s-%s" aria-hidden="true"></span><span>%s'
+                                     % (fig["pic"], k["swatch"], re.escape(html.escape(k["text"].split(":")[0], quote=False))))
+        self.assertEqual(seen, 2)
+        shutil.rmtree(out)
+        for lang in ("en", "de"):
+            data = self.data(lang, page)
+            fig = next(b["scale"] for b in data["blocks"] if isinstance(b.get("scale", {}).get("key"), list))
+            data["pics"][fig["pic"]]["swatches"].pop(next(k["swatch"] for k in fig["key"] if isinstance(k, dict)))
+            self.save(lang, data, page)
+        self.fails(r"the key's swatch")
+
     def test_an_answer_leads_on_and_the_lists_of_a_section_stand_under_their_headings(self):
         page = self.topic_page("t_rex")
         out, written = self.build()
@@ -536,11 +645,11 @@ class Case(unittest.TestCase):
             for item, markup in zip(faq["items"], answers):
                 ways = re.findall(r'<p class="sp-more"><a class="more" href="([^"]+)"><span>(.*?)</span>', markup)
                 self.assertEqual([w[1] for w in ways], [x["text"] for x in item.get("links", [])])
-                for href, _ in ways:
+                for (href, _), link in zip(ways, item.get("links", [])):
                     target = (path.parent / href / "index.html").resolve()
                     self.assertTrue(target.is_file(), href)
                     other, other_lang = self.page_of(target)
-                    self.assertEqual((other["page"]["id"], other_lang), (self.data("en", item["links"][0]["page"])["page"]["id"], lang))
+                    self.assertEqual((other["page"]["id"], other_lang), (self.data("en", link["page"])["page"]["id"], lang))
             # each list under its own small heading, its points without a lead, the closing line after the lists
             block = next(b for b in data["blocks"] if b.get("subs") and b.get("end"))
             section = re.search(r'<section [^>]*id="%s"[^>]*>(.*?)</section>' % block["id"], own, flags=re.S).group(1)
@@ -571,8 +680,8 @@ class Case(unittest.TestCase):
                      if plain(re.search(r"<h2[^>]*>(.*?)</h2>", x, flags=re.S).group(1)) == topic["name"][lang]]
             self.assertEqual(len(found), 1, path)
             self.assertEqual(plain(found[0]), item.get("line") or topic["line"][lang])
-        # the hub and the two neighbours, in both languages
-        self.assertEqual(seen, 6)
+        # the hub and the three neighbours, in both languages
+        self.assertEqual(seen, 8)
 
     def test_a_picture_too_tall_for_the_share_card_stands_whole_above_the_address(self):
         spec = importlib.util.spec_from_file_location("chart_share", self.dir / "chart.py")
@@ -825,7 +934,8 @@ class Case(unittest.TestCase):
             for fig in figures:
                 self.assertIn(f'<a class="sc-totable" href="#{table}">', fig)
             keys = [b["scale"]["key"] for b in data["blocks"] if b.get("scale", {}).get("key")]
-            for key in keys:
+            # a key is one line, or lines each leading with its swatch
+            for key in [k if isinstance(k, str) else k["text"] for key in keys for k in ([key] if isinstance(key, str) else key)]:
                 self.assertIn(html.escape(key, quote=False)[:12], own)
             # a closer panel of a figure in the page's body follows it
             closes = [b["scale"]["close"] for b in data["blocks"] if b.get("scale", {}).get("close")]

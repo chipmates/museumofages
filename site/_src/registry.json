@@ -681,6 +681,154 @@
             "the lips most likely covered the teeth: never as certain"
           ]
         ]
+      },
+      {
+        "slug": {
+          "en": "spinosaurus",
+          "de": "spinosaurus"
+        },
+        "name": {
+          "en": "How big was Spinosaurus?",
+          "de": "Wie groß war der Spinosaurus?"
+        },
+        "line": {
+          "en": "The largest adult Spinosaurus were just under 14 m long and about 7.4 tonnes, by a model. Our Spinosaurus is a young one of about 10 m and stands to one scale beside a person and beside our T. rex.",
+          "de": "Die größten erwachsenen Spinosaurus waren knapp unter 14 m lang und etwa 7,4 t schwer, nach einem Modell. Unser Spinosaurus ist ein junges Tier von etwa 10 m und steht im selben Maßstab neben einem Menschen und neben unserem T. rex."
+        },
+        "langs": ["en", "de"],
+        "count": "spinosaurus",
+        "about": {
+          "@type": "Taxon",
+          "name": "Spinosaurus aegyptiacus",
+          "alternateName": "Spinosaurus",
+          "taxonRank": "species",
+          "sameAs": "https://www.wikidata.org/wiki/Q3966781"
+        },
+        "never_say": [
+          [
+            "(?s)^(?!.*(?:adults?|model|erwachsen|modell|largest|größten|up\\sto|bis\\setwa|just\\sunder|knapp\\sunter|7[.,]4\\s(?:to|bis)\\s8)).*\\b14\\s*(?:m|metres?|meters?|metern?)\\b",
+            "14 m is the largest adults' length by a model: never without adult or model"
+          ],
+          [
+            "(?s)^(?!.*(?:adults?|model|erwachsen|modell|largest|größten|up\\sto|bis\\setwa|just\\sunder|knapp\\sunter|7[.,]4\\s(?:to|bis)\\s8)).*\\b7(?:[.,]4)?\\s*(?:t|tonnes?|tons?|tonnen)\\b",
+            "7.4 tonnes is the largest adults' weight by a model: never without adult or model"
+          ],
+          [
+            "(?s)^(?!.*(?:\\bours?\\b|\\bour\\s(?:model|spinosaurus|young)|young|unser|junge[sn]?\\b|in\\s(?:its|this)\\spose|in\\s(?:seiner|dieser)\\shaltung)).*\\b10\\s*(?:m|metres?|meters?|metern?)\\b",
+            "about 10 m is our young animal's length, never the species'"
+          ],
+          [
+            "(?s)^(?!.*(?:(?:\\bours?\\b|\\bour\\s(?:model|spinosaurus|young)|young|unser|junge[sn]?\\b|in\\s(?:its|this)\\spose|in\\s(?:seiner|dieser)\\shaltung)|by\\sa\\smodel|nach\\seinem\\smodell)).*\\b3\\s(?:to|bis)\\s4\\s*(?:t|tonnes?|tonnen)\\b",
+            "3 to 4 tonnes is our young animal's weight by a model, never the species'"
+          ],
+          [
+            "(?:\\bours?\\b|our\\sspinosaurus|unser(?:e[rs]?)?\\sspinosaurus|unser(?:e[rs]?)?\\s(?:junges\\s)?tier)\\s(?:\\w+\\s){0,3}(?:is|was|measures|weighs|ist|war|misst|wiegt|kommt\\sauf)\\s(?:about\\s|etwa\\s)?(?:14|13[.,]\\d)\\s*m|(?:\\bours?\\b|our\\sspinosaurus|unser(?:e[rs]?)?\\sspinosaurus)\\s(?:\\w+\\s){0,3}(?:comes\\sto|weighs|kommt\\sauf|wiegt)\\s(?:about\\s|etwa\\s)?7",
+            "ours is a young one of about 10 m: never the adults' 14 m or 7 tonnes"
+          ],
+          [
+            "(?s)^(?!.*\\b(?:19|20)\\d\\d\\b).*(?:(?<!to\\s)(?<!bis\\s)\\b(?:18|15)\\s*(?:m|metres?|meters?|metern?)\\b|\\b50\\s*(?:feet|ft)\\b|\\b20\\s*(?:t|tonnes?|tons?|tonnen)\\b)",
+            "18 m, 15 m, 50 feet or 20 tonnes only as older estimates, with their year"
+          ],
+          [
+            "(?:bigger|larger)\\sthan\\s(?:any\\s|a\\s|the\\s)?t(?:\\.\\s?|-)rex|größer\\sals\\s(?:jeder\\s|ein\\s|der\\s)?t(?:\\.\\s?|-)rex",
+            "never bigger than T. rex: longer, and most likely lighter"
+          ],
+          [
+            "heavier\\sthan\\s(?:any\\s|a\\s|the\\s)?t(?:\\.\\s?|-)rex|schwerer\\sals\\s(?:jeder\\s|ein\\s|der\\s)?t(?:\\.\\s?|-)rex|taller\\sthan\\s(?:any\\s|a\\s|the\\s)?t(?:\\.\\s?|-)rex|höher\\sals\\s(?:jeder\\s|ein\\s|der\\s)?t(?:\\.\\s?|-)rex",
+            "never heavier or taller than T. rex: most likely lighter, and much lower at the hips"
+          ],
+          [
+            "\\bfight|\\bfought|\\bbattle|\\bkampf|\\bkämpf|\\bduell|\\bkill|\\btöte|who\\swould\\swin|wer\\s(?:würde\\s)?gewinn",
+            "no fight and no kill: a comparison of size, nothing more"
+          ],
+          [
+            "(?:spinosaurus|it|they|er)\\s(?:met|meets|faced|hunted|hunts)\\s(?:a\\s|the\\s)?t(?:\\.\\s?|-)rex|t(?:\\.\\s?|-)rex\\s(?:met|faced)\\s(?:a\\s|the\\s)?spinosaurus|(?:traf|trafen|begegnete)\\s(?:auf\\s)?(?:einen\\s|den\\s|einem\\s|dem\\s)?t(?:\\.\\s?|-)rex",
+            "they never met: about 30 million years and two continents apart"
+          ],
+          [
+            "jurassic|\\bthe\\sfilm\\b|\\bthe\\smovie\\b|\\bim\\sfilm\\b|\\bder\\sfilm\\b|\\b13\\s*(?:m|metres?|meters?|metern?)\\b",
+            "not the film's animal, not its 13 m"
+          ],
+          [
+            "taouz|begaa",
+            "the Taouz and Begaa words belong to another fossil"
+          ],
+          [
+            "full[-\\s]grown\\sspinosaurus|ausgewachsene[rn]?\\sspinosaurus|the\\sspinosaurus\\sskeleton|das\\sspinosaurus-skelett|das\\sskelett\\sdes\\sspinosaurus|nearly\\scomplete\\sskeleton|(?:fast|nahezu)\\svollständige[sn]?\\sskelett|complete\\sskeleton\\sof\\sspinosaurus",
+            "no full grown or nearly complete skeleton is known"
+          ],
+          [
+            "(?s)^(?!.*(?:longest\\smeat-eating|längste\\sbekannte\\sfleischfresser)).*(?:(?:largest|biggest)\\s(?:predator|predatory\\sdinosaur|meat-eater|carnivore)|größte[rn]?\\s(?:raubsaurier|räuber|fleischfresser))",
+            "the longest meat-eating dinosaur known, never the largest predator"
+          ],
+          [
+            "\\b94\\s*(?:million|millionen)",
+            "not the last ones 94 million years ago"
+          ],
+          [
+            "m-shaped|m-förmig",
+            "the sail's shape is not known"
+          ],
+          [
+            "swam\\slike\\sa\\scrocodile|schwamm\\swie\\sein\\skrokodil|hunted\\sunder\\s?water|jagte\\sunter\\swasser",
+            "swimming is argued, not settled"
+          ],
+          [
+            "(?s)^(?!.*(?:headline|schlagzeile)).*(?:first\\sswimming\\sdinosaur|erste[rn]?\\sschwimmende[rn]?\\sdinosaurier)",
+            "the first swimming dinosaur only as a headline of 2020"
+          ],
+          [
+            "(?s)^(?!.*\\b2014\\b).*(?:walked\\son\\s(?:all\\s)?four\\slegs|went\\son\\sfour\\slegs|ging\\sauf\\svier\\sbeinen|vierbeinig|four-legged)",
+            "it walked on two legs: four legs only as the study of 2014"
+          ],
+          [
+            "(?:21|24|25)\\.?\\s(?:april|july|juli)|(?:april|july)\\s(?:21|24|25)\\b",
+            "the day of the 1944 loss is in conflict: in 1944"
+          ],
+          [
+            "original\\sbones|originalknochen|(?:skeleton|bones)\\scan\\sbe\\sseen|(?:skelett|knochen)\\s(?:ist|sind|kann\\sman)\\s(?:in\\smünchen\\s)?(?:zu\\ssehen|ausgestellt)",
+            "Stromer's bones were destroyed: Munich holds a tooth"
+          ],
+          [
+            "sail\\s(?:was|is|stood|reached)\\s(?:about\\s)?1[.,]65|segel\\s(?:war|ist|reichte)\\s(?:etwa\\s)?1[.,]65",
+            "1.65 m is the tallest spine bone of a young animal, not the sail's height"
+          ],
+          [
+            "\\b3[.,]51\\b|hip\\sheight\\sof\\s(?:about\\s)?\\d|hüfthöhe\\svon\\s(?:etwa\\s)?\\d",
+            "3.51 m is the sail's ridge over the hips: no hip height"
+          ],
+          [
+            "webbed|schwimmhäut|schwimmhaut|(?:had|has|with)\\s(?:no\\s)?lips\\b|(?:hatte|mit|ohne)\\slippen\\b",
+            "webbed feet and lips are not findings"
+          ],
+          [
+            "mirabilis",
+            "not the crest or pictures of Spinosaurus mirabilis"
+          ],
+          [
+            "eight\\stimes|achtmal|acht\\smal",
+            "the 2020 test measured flat tail shapes, not the animal"
+          ],
+          [
+            "(?:largest|biggest|heaviest)\\st(?:\\.\\s?|-)rex(?!\\sthat\\sever\\slived)|größte[rn]?\\st(?:\\.\\s?|-)rex",
+            "the largest known T. rex, never the largest T. rex"
+          ],
+          [
+            "(?<!about\\s)(?<!etwa\\s)(?<!about\\s68\\sto\\s)(?<!etwa\\s68\\sbis\\s)\\b66\\s+(?:million|millionen)",
+            "66 million years only inside about 68 to 66"
+          ],
+          [
+            "(?:our\\st(?:\\.\\s?|-)rex|unser\\st(?:\\.\\s?|-)rex)\\s(?:\\w+\\s){0,3}(?:weighs|weighed|wiegt|wog)|\\bweighed\\b|\\bgewogen\\b|\\bwog\\b",
+            "no weight for our T. rex, and no animal here was ever weighed"
+          ],
+          [
+            "(?s)\\bsue\\b.*\\b(?:she|her|hers|herself)\\b|\\b(?:she|her|hers|herself)\\b.*\\bsue\\b",
+            "SUE is never she: its sex is not known",
+            [
+              "en"
+            ]
+          ]
+        ]
       }
     ],
     "never_say": [

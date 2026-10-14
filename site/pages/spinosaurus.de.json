@@ -1,0 +1,605 @@
+{
+ "_note": "THE WORDS of the Spinosaurus page. Poured word for word from the writer's WORDS file; the title, the description and the heading are its first options. The two lists of what was found stand under their field names in the writer's file. The person's height stands over the person in each picture (labels.person), and the labels under the first two pictures name the person too. pics.<name>.marks: each animal's, the outline's and the person's start and end as shares of the picture's width, measured on the frame; pics.<name>.person: the person's centre and the top of its head. pics.skeleton.swatches: each colour of the key as the picture prints it (the median of the bones of that colour). Empty cells of the table are the writer's: no sourced figure exists.",
+ "page": {
+  "id": "animals-spinosaurus",
+  "wing": "animals",
+  "topic": "spinosaurus",
+  "published": null,
+  "join_names": true,
+  "og_image": {
+   "file": "animals-spinosaurus-og-{lang}-1200x630.png",
+   "width": 1200,
+   "height": 630
+  }
+ },
+ "pics": {
+  "side": {
+   "stem": "animals-spinosaurus-side",
+   "widths": [
+    800,
+    1600,
+    2400
+   ],
+   "sizes": "(min-width: 1280px) 1200px, (min-width: 960px) calc(100vw - 80px), (min-width: 600px) calc(100vw - 64px), calc(100vw - 40px)",
+   "person": "92.84% 63.16%",
+   "marks": {
+    "outline": "1.81% 97.95%",
+    "spinosaurus": "15.85% 88.7%",
+    "person": "91.76% 93.92%"
+   },
+   "behind": [
+    "outline"
+   ]
+  },
+  "close": {
+   "stem": "animals-spinosaurus-close",
+   "widths": [
+    800,
+    1600
+   ],
+   "sizes": "(min-width: 1280px) 690px, (min-width: 960px) 54vw, (min-width: 600px) calc(100vw - 64px), calc(100vw - 40px)",
+   "person": "89.32% 51.53%"
+  },
+  "vs": {
+   "stem": "animals-spinosaurus-beside-t-rex",
+   "widths": [
+    800,
+    1600,
+    2400
+   ],
+   "sizes": "(min-width: 1280px) 690px, (min-width: 960px) 54vw, (min-width: 600px) calc(100vw - 64px), calc(100vw - 40px)",
+   "person": "49% 63.12%",
+   "person_from": 960,
+   "marks": {
+    "spinosaurus": "1.11% 45.17%",
+    "person": "48.35% 49.64%",
+    "t-rex": "48.68% 98.86%"
+   },
+   "behind": [
+    "t-rex"
+   ]
+  },
+  "skeleton": {
+   "stem": "animals-spinosaurus-skeleton",
+   "widths": [
+    800,
+    1600
+   ],
+   "sizes": "(min-width: 1280px) 690px, (min-width: 960px) 54vw, (min-width: 600px) calc(100vw - 64px), calc(100vw - 40px)",
+   "person": "91.67% 51.95%",
+   "swatches": {
+    "own": "#772c0a",
+    "stromer": "#4f7d9d",
+    "pale": "#b79e6c"
+   }
+  },
+  "trex": {
+   "stem": "animals-t-rex-side",
+   "widths": [
+    800,
+    1600,
+    2400
+   ],
+   "sizes": "(min-width: 1280px) 690px, (min-width: 960px) 54vw, (min-width: 600px) calc(100vw - 64px), calc(100vw - 40px)"
+  },
+  "dinosaurs": {
+   "stem": "animals-biggest-dinosaurs-row",
+   "widths": [
+    800,
+    1600
+   ],
+   "sizes": "(min-width: 1280px) 690px, (min-width: 960px) 54vw, (min-width: 600px) calc(100vw - 64px), calc(100vw - 40px)"
+  },
+  "megalodon": {
+   "stem": "animals-megalodon-side",
+   "widths": [
+    800,
+    1600,
+    2400
+   ],
+   "sizes": "(min-width: 1280px) 690px, (min-width: 960px) 54vw, (min-width: 600px) calc(100vw - 64px), calc(100vw - 40px)"
+  }
+ },
+ "meta": {
+  "title": "Spinosaurus-Größe: bis etwa 14 m lang | Museum of Ages",
+  "description": "Spinosaurus-Größe: die größten Tiere knapp unter 14 m lang, etwa 7,4 t, nach einem Modell. Unserer ist ein junges Tier von etwa 10 m neben einem Menschen.",
+  "og_title": "Spinosaurus-Größe: bis etwa 14 m lang",
+  "og_image_alt": "Ein Spinosaurus von der Seite, mit hohem Rückensegel und tiefem Schwanz, dahinter der helle Umriss eines größeren erwachsenen Tiers, daneben ein grauer Mensch, der ihm bis zur Hüfte reicht."
+ },
+ "labels": {
+  "crumbs": "Du bist hier",
+  "crumb_home": "Museum",
+  "crumb_here": "Spinosaurus",
+  "toc": "Auf dieser Seite",
+  "tag_made": "Für diese Seite gemacht",
+  "tag_built": "Rekonstruktion",
+  "person": "1,70 m",
+  "to_table": "Die Zahlen als Tabelle",
+  "og_answer": "Die größten knapp unter 14 m lang, nach einem Modell"
+ },
+ "top": {
+  "h1": "Wie groß war der Spinosaurus?",
+  "answer": "Die größten erwachsenen Spinosaurus aegyptiacus waren knapp unter 14 m lang und etwa 7,4 t schwer, nach einem Modell von 2022. Ein ganzes Skelett hat niemand gefunden. Unser Spinosaurus ist ein junges Tier von etwa 10 m, drei Viertel der vollen Größe, nach einem Modell etwa 3 bis 4 t. Neben dem Menschen von 1,70 m liegt sein Hüftgelenk etwa auf Höhe des Scheitels, und er ist fast sechs Menschen lang.",
+  "answer_more": "Gegen T. rex: Der größte Spinosaurus war länger, aber sehr wahrscheinlich leichter und an der Hüfte viel niedriger. Begegnet sind sich die beiden nie, etwa 30 Millionen Jahre und zwei Kontinente lagen dazwischen.",
+  "scale": {
+   "pic": "side",
+   "tag": "tag_made",
+   "what": "Unser Spinosaurus neben einem Menschen von 1,70 m, im selben Maßstab: ein junges Tier von etwa 10 m, nach dem Skelett aus Marokko gebaut. Der helle Umriss dahinter ist die Größe der größten erwachsenen Tiere nach dem Modell von 2022, knapp unter 14 m, unser Modell um etwa ein Drittel vergrößert. Der Umriss ist eine Schätzung, kein gefundenes Tier.",
+   "alt": "Ein Spinosaurus von der Seite, mit hohem Rückensegel und tiefem Schwanz, dahinter der helle Umriss eines größeren erwachsenen Tiers, daneben ein grauer Mensch, der ihm bis zur Hüfte reicht.",
+   "note": "Unsere eigene Rekonstruktion, nach veröffentlichten Maßen in Code gebaut und in unserer Engine gerendert. Keine Fotos.",
+   "marks": [
+    {
+     "span": "spinosaurus",
+     "text": "Unser Spinosaurus, ein junges Tier, etwa 10 m"
+    },
+    {
+     "span": "outline",
+     "text": "Umriss: die größten erwachsenen Tiere, knapp unter 14 m, nach einem Modell"
+    },
+    {
+     "span": "person",
+     "text": "Der Mensch, 1,70 m"
+    }
+   ],
+   "close": {
+    "pic": "close",
+    "tag": "tag_made",
+    "what": "Kopf und Vorderkörper aus der Nähe, mit dem Menschen. Die Schnauze ist lang und schmal, die Zähne sind Kegel ohne Sägekante, die Nasenlöcher sitzen weit hinten. Der niedrige Kamm vor den Augen ist sicher, seine Höhe nicht: Seine Oberkante ist an jedem gefundenen Stück abgebrochen. Die Lippen sind eine Wahl, kein Fund.",
+    "alt": "Kopf und Vorderkörper des Spinosaurus aus der Nähe, die lange schmale Schnauze mit Kegelzähnen, ein niedriger Kamm vor dem Auge, daneben der graue Mensch."
+   }
+  },
+  "guess": {
+   "h": "Zum Raten",
+   "q": "Wie alt war das junge Tier aus Marokko, als es starb?",
+   "button": "Antwort zeigen",
+   "a": "Etwa 17 Jahre, nach den Wachstumsringen in seinem Oberschenkelknochen, mit zwei Jahren Spielraum nach oben und unten. Ausgewachsen war es noch nicht, es hatte etwa drei Viertel der Größe der größten erwachsenen Tiere.",
+   "button_open": "Antwort verbergen"
+  },
+  "out": {
+   "text": "Der Flügel für dieses Tier wird noch gebaut. Der Flügel von Leonardo da Vinci ist heute schon offen.",
+   "link": "Zum Leonardo-Flügel"
+  }
+ },
+ "blocks": [
+  {
+   "type": "numbers",
+   "id": "numbers",
+   "nav": "Die Zahlen",
+   "h": "Die Zahlen",
+   "unit": "In Metern und Tonnen. Ohne belegte Zahl bleibt die Zelle leer. Unser T. rex bekommt kein Gewicht, sein Gewicht steht auf seiner eigenen Seite nach den Studien zu SUE.",
+   "cols": [
+    "Tier",
+    "Länge",
+    "Höhe, mit dem Messpunkt",
+    "Gewicht",
+    "Wie sicher"
+   ],
+   "rows": [
+    {
+     "cells": [
+      "Unser Spinosaurus, ein junges Tier",
+      "etwa 10 m in seiner Haltung",
+      "Segelspitze etwa 3,5 m, Hüftgelenk etwa 1,6 m",
+      "etwa 3 bis 4 t, nach einem Modell",
+      "an unseren Dateien gemessen, nach dem Skelett aus Marokko gebaut"
+     ]
+    },
+    {
+     "cells": [
+      "Die größten erwachsenen Tiere, das Modell von 2022",
+      "knapp unter 14 m",
+      "",
+      "etwa 7,4 t, je nach Luftanteil 7,4 bis 8 t",
+      "ein Modell einer Forschergruppe, das junge Skelett auf die größte Schnauze hochgerechnet"
+     ]
+    },
+    {
+     "cells": [
+      "Stromers Skelett, Ägypten, 1944 zerstört",
+      "etwa so groß wie unseres, Stromer selbst schätzte 12 bis 15 m",
+      "der höchste Dornfortsatz etwa 1,65 m Knochen, keine Körperhöhe",
+      "",
+      "nach Stromers Beschreibung und wenigen Fotos"
+     ]
+    },
+    {
+     "cells": [
+      "Unser T. rex, nach SUE",
+      "etwa 11,4 m in seiner Haltung",
+      "Hüfte 3,96 m, erhobener Kopf etwa 4,6 m",
+      "nicht angegeben",
+      "an unseren Dateien gemessen"
+     ]
+    },
+    {
+     "cells": [
+      "Der Mensch",
+      "1,70 m",
+      "",
+      "",
+      "unsere Vergleichsfigur"
+     ]
+    }
+   ]
+  },
+  {
+   "type": "text",
+   "id": "t-rex",
+   "nav": "Spinosaurus gegen T. rex, nur die Größe",
+   "h": "Spinosaurus gegen T. rex, nur die Größe",
+   "paras": [
+    "Der größte Spinosaurus war länger als jeder T. rex: knapp unter 14 m nach einem Modell, gegen etwa 12 m für das Skelett von SUE. Schwerer war er sehr wahrscheinlich nicht, etwa 7,4 bis 8 t im Modell gegen etwa 8 bis 9 t bei den größten bekannten T. rex. An der Hüfte stand er viel niedriger: Der Oberschenkelknochen des jungen Tiers aus Marokko misst 61 cm, der von SUE 1,32 m. Begegnet sind sich die beiden nie, Spinosaurus lebte vor etwa 95 Millionen Jahren in Nordafrika, T. rex vor etwa 68 bis 66 Millionen Jahren in Nordamerika. Ein Vergleich der Größe, mehr nicht."
+   ],
+   "scale": {
+    "pic": "vs",
+    "tag": "tag_made",
+    "what": "Unser Spinosaurus und unser T. rex, im selben Maßstab auf einer Standlinie. Unser Spinosaurus ist ein junges Tier von etwa 10 m, unser T. rex nach SUE ein großes erwachsenes Tier von etwa 11,4 m, darum ist er hier der längere. Ein erwachsener Spinosaurus war länger als jeder T. rex, sehr wahrscheinlich leichter und an der Hüfte viel niedriger.",
+    "alt": "Ein Spinosaurus mit Rückensegel und ein etwas längerer T. rex mit erhobenem Kopf, beide von der Seite auf einer Standlinie, der T. rex an der Hüfte etwa doppelt so hoch, daneben der graue Mensch.",
+    "marks": [
+     {
+      "span": "spinosaurus",
+      "text": "Unser Spinosaurus, ein junges Tier, etwa 10 m"
+     },
+     {
+      "span": "t-rex",
+      "text": "Unser T. rex, nach SUE, etwa 11,4 m"
+     },
+     {
+      "span": "person",
+      "text": "Der Mensch, 1,70 m"
+     }
+    ]
+   },
+   "links": [
+    {
+     "page": "t-rex",
+     "text": "Wie groß war ein T. rex?"
+    }
+   ]
+  },
+  {
+   "type": "text",
+   "id": "looks",
+   "nav": "Wie er aussah",
+   "h": "Wie er aussah",
+   "subs": [
+    {
+     "h": "Zwei Beine",
+     "paras": [
+      "Er stand und ging auf zwei Beinen, der Schwerpunkt lag über den Hinterfüßen, die Arme trugen kein Gewicht. Das vierbeinige Tier von 2014 beruhte auf einer Rechnung, die die Luft im Körper hinzuzählte, statt sie abzuziehen. Das berichtete 2024 einer der Autoren selbst."
+     ]
+    },
+    {
+     "h": "Der Schwanz",
+     "paras": [
+      "Der Schwanz war tief und von der Seite flach, wie ein Blatt: hohe Dornfortsätze oben, lange Knochen unten. Das wissen wir von den eigenen Schwanzknochen des Tiers aus Marokko, etwa vier Fünftel des Schwanzes wurden gefunden. Wozu er diente, ist umstritten: zum Schwimmen oder zur Schau."
+     ]
+    },
+    {
+     "h": "Das Segel",
+     "paras": [
+      "Die Dornfortsätze sind bekannt, der höchste an Stromers Skelett etwa 1,65 m Knochen. Die Form des Segels darüber kennt niemand, unser schlichter Bogen ist unsere Wahl. Eine dünne Haut über den Dornen gilt als wahrscheinlichste Lesart, und die meisten Fachleute lesen das Segel als Schaustück."
+     ]
+    },
+    {
+     "h": "Der Kopf",
+     "paras": [
+      "Die Schnauze war lang und schmal, vorne löffelförmig verbreitert, mit Kegelzähnen ohne Sägekante und kleinen Nasenlöchern weit hinten. Vor den Augen saß ein niedriger Kamm, dessen Oberkante an jedem gefundenen Stück abgebrochen ist. Haut, Lippen und Farbe kennt man von keinem Spinosaurier, unsere Farben sind unsere."
+     ]
+    }
+   ]
+  },
+  {
+   "type": "text",
+   "id": "water",
+   "nav": "Spinosaurus und das Wasser",
+   "h": "Spinosaurus und das Wasser",
+   "paras": [
+    "Er lebte am Wasser und fraß Fisch, das zeigen seine Zähne und die Isotope darin. Ob er den Fischen schwimmend nachjagte oder ihnen watend im Flachwasser auflauerte, ist umstritten. Für das Schwimmen sprechen der tiefe Schwanz von 2020 und die dichten Knochen in einer Studie von 2022. Für das Waten sprechen die meisten Arbeiten seit 2021. Modelle finden ihn zu auftriebsstark zum Tauchen, die Schädelform passt zu Lauerjägern, und die Knochendichte-Methode wurde 2024 als unzuverlässig kritisiert. Die Museen halten die Frage offen, wir auch."
+   ]
+  },
+  {
+   "type": "text",
+   "id": "found",
+   "nav": "Was gefunden wurde",
+   "h": "Was gefunden wurde",
+   "subs": [
+    {
+     "h": "Stromers Skelett",
+     "paras": [
+      "Im Herbst 1912 kamen in der Bahariya-Oase in Ägypten die ersten Knochen zutage. Es waren die vordere Hälfte des Unterkiefers, 72 cm lang, und Rücken-, Hüft- und Schwanzwirbel mit den hohen Dornfortsätzen des Segels. Stromer beschrieb sie 1915 und nannte das Tier nach diesen Dornen Spinosaurus. Es war ein junges Tier, etwa so groß wie unseres. Das Skelett stand in München und wurde 1944 bei einem Bombenangriff zerstört. Geblieben sind Stromers Notizen, Zeichnungen und ein paar Fotos. In München liegt heute ein Spinosaurus-Zahn, kein Skelett."
+     ]
+    },
+    {
+     "h": "Das junge Tier aus Marokko",
+     "paras": [
+      "2008 fand ein Sammler bei Zrigat im Südosten Marokkos die ersten Knochen, in den Kem-Kem-Schichten. Die Fundstelle wurde 2013 ausgegraben, der Schwanz von 2015 bis 2019. Seit 2014 ist dieses Skelett der neue Typus der Art, weil Stromers Knochen verloren sind. Es liegt in Casablanca, an der Faculté des Sciences Aïn Chock."
+     ]
+    },
+    {
+     "h": "Seine eigenen Knochen",
+     "paras": [
+      {
+       "points": [
+        "Die Hüfte auf beiden Seiten, beide Beine, ein Fußgelenkknochen und ein fast vollständiger Fuß.",
+        "Der Schwanz, mehr als 30 Wirbel, etwa vier Fünftel seiner Länge.",
+        "Teile von Hals-, Rücken- und Hüftwirbeln, Rippenstücke, Stücke des Schädels und ein Fingerknochen."
+       ]
+      }
+     ]
+    },
+    {
+     "h": "Was jede Rekonstruktion leiht",
+     "paras": [
+      {
+       "points": [
+        "Die Dornfortsätze des Segels und der Unterkiefer: nach Stromers verlorenem Skelett.",
+        "Die Schnauze: nach der erwachsenen Schnauze in Mailand, verkleinert.",
+        "Der hintere Schädel, die Arme und die Hände: nach den Verwandten Irritator, Suchomimus und Baryonyx.",
+        "Der Hals, der größte Teil des Rückens, die Rippen, die Schulter und das Schwanzende: nach anderen Funden oder ergänzt."
+       ]
+      }
+     ]
+    }
+   ],
+   "end": [
+    "So ist jede Rekonstruktion ein Tier aus mehreren, unsere auch."
+   ],
+   "scale": {
+    "pic": "skeleton",
+    "tag": "tag_built",
+    "what": "Unser Spinosaurus als Skelett, nach Herkunft gefärbt.",
+    "alt": "Das Skelett unseres Spinosaurus von der Seite: Hüfte, Beine und Schwanz dunkelrot, die Dornen des Segels und der Unterkiefer blau, Schädel, Hals, Rippen und Arme hell, daneben der Mensch.",
+    "key": [
+     {
+      "swatch": "own",
+      "text": "Dunkelrot: die eigenen Knochen des jungen Tiers aus Marokko, die Hüfte, beide Beine, der Fuß und der Schwanz bis zum 41. Wirbel."
+     },
+     {
+      "swatch": "stromer",
+      "text": "Blau: nach Stromers verlorenem Skelett aus Ägypten, die Dornfortsätze des Segels und der Unterkiefer."
+     },
+     {
+      "swatch": "pale",
+      "text": "Hell: nach anderen Funden oder ergänzt, die Schnauze, der hintere Schädel, der Hals, die Rippen, die Schulter, die Arme und das Schwanzende."
+     },
+     "Drei Teile mischen zwei Quellen und tragen die Farbe des Geliehenen: der Schädel, das Kreuzbein und die Rückenwirbel mit den hohen Dornen."
+    ]
+   }
+  },
+  {
+   "type": "text",
+   "id": "how-sure",
+   "nav": "Wie sicher das ist",
+   "h": "Wie sicher das ist",
+   "paras": [
+    "Drei Dinge entscheiden über jede Zahl auf dieser Seite.",
+    {
+     "points": [
+      [
+       "Jede Länge eines erwachsenen Tiers ist ein Modell:",
+       "Niemand hat ein erwachsenes Skelett. Die Forscher nahmen das junge Skelett aus Marokko und vergrößerten es um etwa ein Drittel, bis es zur größten gefundenen Schnauze passte. Die Schnauze ist ein echter Fund, der Körper darum herum ist gerechnet."
+      ],
+      [
+       "Das Gewicht kommt aus einem Körpermodell:",
+       "Man baut Fleisch um das Skelett, misst das Volumen und rechnet mit einer Dichte. Bei Spinosaurus ändern allein die Luftsäcke in Hals und Rumpf das Ergebnis um 600 kg, 7,4 bis 8 t im selben Modell."
+      ],
+      [
+       "Unseres ist nicht die Art:",
+       "Unser Tier ist ein junges von etwa 10 m. Seine Zahlen sind seine, nie die der Art. Darum stehen hier drei Zahlen getrennt: unser Tier, die größten erwachsenen Tiere nach dem Modell und Stromers Skelett."
+      ]
+     ]
+    }
+   ]
+  },
+  {
+   "type": "notes",
+   "id": "numbers-read",
+   "nav": "Zahlen, die du vielleicht gelesen hast",
+   "h": "Zahlen, die du vielleicht gelesen hast",
+   "intro": "Zu jeder Zahl: woher sie kommt und was sie bedeutet.",
+   "rows": [
+    {
+     "term": "18 m",
+     "text": "Eine Zahl von 2005: Um die große Schnauze aus Mailand wurde ein ganzer Körper gezeichnet, mit dem Körperbau eines langbeinigen Verwandten. Später zeigte sich, dass Spinosaurus kurze Beine hatte, der Körper war also zu lang geraten. Das Modell von 2022 kommt auf knapp unter 14 m, auch wenn manche Museumstexte bis heute 18 m angeben."
+    },
+    {
+     "term": "15 m",
+     "text": "Das digitale Skelett von 2014, auf die Größe eines erwachsenen Tiers hochgerechnet. Dieselbe Forschergruppe kam 2022 mit einem besseren Modell auf mehr als einen Meter weniger."
+    },
+    {
+     "term": "20 t",
+     "text": "Eine Rechnung von 2007, die von der Schädellänge auf den Körper schloss, mit einer Formel aus anderen Raubsauriern: ein kürzeres und viel schwereres Tier. Die genaue Spanne der Studie haben wir nicht selbst gelesen, und das Körpermodell von 2022 kommt für die größten erwachsenen Tiere auf 7,4 bis 8 t."
+    },
+    {
+     "term": "7 t",
+     "text": "Das heutige Modell, etwa 7,4 t für die größten erwachsenen Tiere, 7,4 bis 8 t je nach Luftanteil. Für unser junges Tier gilt die Zahl nicht, es kommt auf etwa 3 bis 4 t."
+    },
+    {
+     "term": "Der größte Raubsaurier aller Zeiten",
+     "text": "Nach der Länge ja, Spinosaurus ist der längste bekannte Fleischfresser unter den Dinosauriern. Schwerer war sehr wahrscheinlich T. rex, und an der Hüfte stand er sicher höher."
+    },
+    {
+     "term": "Er ging auf vier Beinen",
+     "text": "Die Studie von 2014, nach einer Rechnung zum Schwerpunkt. Die Rechnung zählte die Luft im Körper hinzu, statt sie abzuziehen, wie einer ihrer Autoren 2024 selbst berichtete."
+    },
+    {
+     "term": "Der erste schwimmende Dinosaurier",
+     "text": "Eine Schlagzeile von 2020 zum neu gefundenen Schwanz. Die Studie selbst nennt den Schwanz ein Antriebsorgan, und die meiste Arbeit seither liest das Tier als Lauerjäger im Flachwasser. Umstritten, nicht entschieden."
+    }
+   ]
+  },
+  {
+   "type": "text",
+   "id": "why",
+   "nav": "Warum unser Spinosaurus so aussieht",
+   "h": "Warum unser Spinosaurus so aussieht",
+   "paras": [
+    "Er ist nach den Maßen der Knochen des jungen Tiers aus Marokko gebaut, Hüfte, Beine, Fuß und Schwanz in ihren Größen. Wo seine eigenen Knochen fehlen, folgt er Stromers Skelett und Verwandten. Der Bogen des Segels und die Farben sind unsere Wahl, denn weder die Form des Segels noch eine Farbe ist bekannt. Er steht auf zwei Beinen, die Arme angehoben, der Hals leicht geschwungen, und misst in dieser Haltung etwa 10 m."
+   ]
+  },
+  {
+   "type": "faq",
+   "id": "questions",
+   "nav": "Weitere Fragen",
+   "h": "Weitere Fragen",
+   "items": [
+    {
+     "q": "Wie hoch war der Spinosaurus?",
+     "a": "Unser junges Tier: die Segelspitze etwa 3,5 m, der Kopf in seiner Haltung etwa 3 m, das Hüftgelenk etwa 1,6 m. Für erwachsene Tiere ist keine Hüfthöhe veröffentlicht, nur dass T. rex an der Hüfte höher stand."
+    },
+    {
+     "q": "War der Spinosaurus der größte Dinosaurier?",
+     "a": "Nein. Er war der längste bekannte Fleischfresser unter den Dinosauriern, aber die Langhalsdinosaurier waren viel größer: Argentinosaurus etwa 30 bis 35 m lang und grob 65 bis 80 t schwer. Mehr dazu auf der Seite der größten Dinosaurier.",
+     "links": [
+      {
+       "page": "biggest-dinosaurs",
+       "text": "Die größten Dinosaurier im Größenvergleich"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "type": "text",
+   "id": "museum",
+   "nav": "Im Museum",
+   "h": "Im Museum",
+   "paras": [
+    "Museum of Ages ist ein digitales Museum. Es baut gerade einen Flügel, in dem dieses Tier und andere wie dieses im selben Maßstab stehen werden. Offen ist heute der Flügel von Leonardo da Vinci. Eintritt frei, kein Konto."
+   ],
+   "links": [
+    {
+     "out": true,
+     "text": "Zum Leonardo-Flügel"
+    }
+   ]
+  },
+  {
+   "type": "pages",
+   "id": "next",
+   "items": [
+    {
+     "page": "t-rex",
+     "pic": "trex",
+     "alt": "Ein T. rex von der Seite auf zwei Beinen, das Maul offen, der Kopf erhoben, neben einem grauen Menschen, der ihm nicht bis zum Knie reicht."
+    },
+    {
+     "page": "biggest-dinosaurs",
+     "pic": "dinosaurs",
+     "alt": "Sieben Dinosaurier in einer Reihe von der Seite, zwei mit langen Hälsen hoch über den anderen, und ein grauer Mensch, der daneben winzig wirkt."
+    },
+    {
+     "page": "megalodon",
+     "pic": "megalodon",
+     "alt": "Ein Hai mit offenem Maul von der Seite, dunkelgrau mit einem helleren Band an der Flanke, neben einem grauen Menschen, der winzig daneben steht."
+    }
+   ]
+  },
+  {
+   "type": "sources",
+   "id": "sources",
+   "nav": "Quellen",
+   "h": "Quellen",
+   "intro": "Die Zahlen stammen aus diesen Studien und von den Museen, die die Fossilien bewahren. Das Museum ist von allen unabhängig.",
+   "read": [
+    {
+     "text": "Sereno und andere, 2022, eLife.",
+     "href": "https://doi.org/10.7554/eLife.80092"
+    },
+    {
+     "text": "Sereno und andere, 2026, Science.",
+     "href": "https://doi.org/10.1126/science.adx5486"
+    },
+    {
+     "text": "Ibrahim und andere, 2014, Science, mit dem Ergänzungsband.",
+     "href": "https://doi.org/10.1126/science.1258750"
+    },
+    {
+     "text": "Ibrahim und andere, 2020, Nature.",
+     "href": "https://doi.org/10.1038/s41586-020-2190-3"
+    },
+    {
+     "text": "Myhrvold und andere, 2024, PLOS ONE.",
+     "href": "https://doi.org/10.1371/journal.pone.0298957"
+    },
+    {
+     "text": "Fabbri und andere, 2022, Nature, die Kurzfassung.",
+     "href": "https://doi.org/10.1038/s41586-022-04528-0"
+    },
+    {
+     "text": "Dal Sasso und andere, 2005, Journal of Vertebrate Paleontology, die Kurzfassung.",
+     "href": "https://doi.org/10.1671/0272-4634(2005)025%5B0888:NIOTSO%5D2.0.CO;2"
+    },
+    {
+     "text": "Therrien und Henderson, 2007, Journal of Vertebrate Paleontology, die Kurzfassung."
+    },
+    {
+     "text": "Smith und andere, 2006, Journal of Paleontology.",
+     "href": "https://doi.org/10.1666/0022-3360(2006)080%5B0400:NIRTHO%5D2.0.CO;2"
+    },
+    {
+     "text": "Henderson, 2018, PeerJ.",
+     "href": "https://doi.org/10.7717/peerj.5409"
+    },
+    {
+     "text": "Hone und Holtz, 2021, Palaeontologia Electronica.",
+     "href": "https://doi.org/10.26879/1110"
+    },
+    {
+     "text": "Gimsa und Gimsa, 2021, Life.",
+     "href": "https://doi.org/10.3390/life11090889"
+    },
+    {
+     "text": "Smart und Sakamoto, 2024, PeerJ.",
+     "href": "https://doi.org/10.7717/peerj.17544"
+    },
+    {
+     "text": "Cau und andere, 2026, Historical Biology.",
+     "href": "https://doi.org/10.1080/08912963.2026.2669954"
+    },
+    {
+     "text": "Brazil, 2026, ACS Central Science, ein Nachrichtenbeitrag.",
+     "href": "https://doi.org/10.1021/acscentsci.6c00222"
+    },
+    {
+     "text": "Bayerische Staatssammlung für Paläontologie und Geologie, München: Stromers Skelett, 1944 zerstört, und der Zahn SNSB-BSPG 1993 IX 308.",
+     "href": "https://bspg.snsb.de/ueber-uns/geschichte/"
+    },
+    {
+     "text": "Faculté des Sciences Aïn Chock, Casablanca: das Skelett FSAC-KK 11888."
+    },
+    {
+     "text": "Museo di Storia Naturale di Milano: die Schnauze MSNM V4047."
+    },
+    {
+     "text": "Natural History Museum, London: seine Dinosaurierseiten.",
+     "href": "https://www.nhm.ac.uk/discover/dino-directory/spinosaurus.html"
+    },
+    {
+     "text": "Field Museum, Chicago: SUE, FMNH PR 2081.",
+     "href": "https://www.fieldmuseum.org/blog/sue-t-rex"
+    }
+   ],
+   "contact": "Ist eine Zahl oder ein Museum falsch angegeben, schreib uns, und wir korrigieren es.",
+   "contact_link": "Zum Impressum",
+   "what_link": "Was dieses Museum ist"
+  },
+  {
+   "type": "text",
+   "id": "pictures",
+   "nav": "Unsere Bilder nutzen",
+   "h": "Unsere Bilder nutzen",
+   "paras": [
+    [
+     "Die Bilder des Spinosaurus auf dieser Seite sind unsere eigene Arbeit unter ",
+     {
+      "text": "CC BY-SA 4.0",
+      "href": "https://creativecommons.org/licenses/by-sa/4.0/deed.de"
+     },
+     ", Nachweis: Museum of Ages. Sie zeigen eine Rekonstruktion, in Code gebaut und in unserer Engine gerendert, kein Foto. Die Bilder unter „Im Museum“ nennen ihren Nachweis auf ihren eigenen Seiten."
+    ]
+   ]
+  }
+ ]
+}

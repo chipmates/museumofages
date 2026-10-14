@@ -1,0 +1,605 @@
+{
+ "_note": "THE WORDS of the Spinosaurus page. Poured word for word from the writer's WORDS file; the title, the description and the heading are its first options. The two lists of what was found stand under their field names in the writer's file. The person's height stands over the person in each picture (labels.person), and the labels under the first two pictures name the person too. pics.<name>.marks: each animal's, the outline's and the person's start and end as shares of the picture's width, measured on the frame; pics.<name>.person: the person's centre and the top of its head. pics.skeleton.swatches: each colour of the key as the picture prints it (the median of the bones of that colour). Empty cells of the table are the writer's: no sourced figure exists.",
+ "page": {
+  "id": "animals-spinosaurus",
+  "wing": "animals",
+  "topic": "spinosaurus",
+  "published": null,
+  "join_names": true,
+  "og_image": {
+   "file": "animals-spinosaurus-og-{lang}-1200x630.png",
+   "width": 1200,
+   "height": 630
+  }
+ },
+ "pics": {
+  "side": {
+   "stem": "animals-spinosaurus-side",
+   "widths": [
+    800,
+    1600,
+    2400
+   ],
+   "sizes": "(min-width: 1280px) 1200px, (min-width: 960px) calc(100vw - 80px), (min-width: 600px) calc(100vw - 64px), calc(100vw - 40px)",
+   "person": "92.84% 63.16%",
+   "marks": {
+    "outline": "1.81% 97.95%",
+    "spinosaurus": "15.85% 88.7%",
+    "person": "91.76% 93.92%"
+   },
+   "behind": [
+    "outline"
+   ]
+  },
+  "close": {
+   "stem": "animals-spinosaurus-close",
+   "widths": [
+    800,
+    1600
+   ],
+   "sizes": "(min-width: 1280px) 690px, (min-width: 960px) 54vw, (min-width: 600px) calc(100vw - 64px), calc(100vw - 40px)",
+   "person": "89.32% 51.53%"
+  },
+  "vs": {
+   "stem": "animals-spinosaurus-beside-t-rex",
+   "widths": [
+    800,
+    1600,
+    2400
+   ],
+   "sizes": "(min-width: 1280px) 690px, (min-width: 960px) 54vw, (min-width: 600px) calc(100vw - 64px), calc(100vw - 40px)",
+   "person": "49% 63.12%",
+   "person_from": 960,
+   "marks": {
+    "spinosaurus": "1.11% 45.17%",
+    "person": "48.35% 49.64%",
+    "t-rex": "48.68% 98.86%"
+   },
+   "behind": [
+    "t-rex"
+   ]
+  },
+  "skeleton": {
+   "stem": "animals-spinosaurus-skeleton",
+   "widths": [
+    800,
+    1600
+   ],
+   "sizes": "(min-width: 1280px) 690px, (min-width: 960px) 54vw, (min-width: 600px) calc(100vw - 64px), calc(100vw - 40px)",
+   "person": "91.67% 51.95%",
+   "swatches": {
+    "own": "#772c0a",
+    "stromer": "#4f7d9d",
+    "pale": "#b79e6c"
+   }
+  },
+  "trex": {
+   "stem": "animals-t-rex-side",
+   "widths": [
+    800,
+    1600,
+    2400
+   ],
+   "sizes": "(min-width: 1280px) 690px, (min-width: 960px) 54vw, (min-width: 600px) calc(100vw - 64px), calc(100vw - 40px)"
+  },
+  "dinosaurs": {
+   "stem": "animals-biggest-dinosaurs-row",
+   "widths": [
+    800,
+    1600
+   ],
+   "sizes": "(min-width: 1280px) 690px, (min-width: 960px) 54vw, (min-width: 600px) calc(100vw - 64px), calc(100vw - 40px)"
+  },
+  "megalodon": {
+   "stem": "animals-megalodon-side",
+   "widths": [
+    800,
+    1600,
+    2400
+   ],
+   "sizes": "(min-width: 1280px) 690px, (min-width: 960px) 54vw, (min-width: 600px) calc(100vw - 64px), calc(100vw - 40px)"
+  }
+ },
+ "meta": {
+  "title": "Spinosaurus size: up to about 14 m (46 ft) | Museum of Ages",
+  "description": "Spinosaurus size: the largest adults just under 14 m (46 ft) and about 7.4 tonnes, by a model. Ours is a young one of about 10 m, beside a person.",
+  "og_title": "Spinosaurus size: up to about 14 m (46 ft)",
+  "og_image_alt": "A Spinosaurus with a tall sail and a deep tail, the pale outline of a larger adult behind it, beside a grey person who reaches its hip."
+ },
+ "labels": {
+  "crumbs": "You are here",
+  "crumb_home": "Museum",
+  "crumb_here": "Spinosaurus",
+  "toc": "On this page",
+  "tag_made": "Made for this page",
+  "tag_built": "Reconstruction",
+  "person": "1.70 m",
+  "to_table": "The numbers as a table",
+  "og_answer": "The largest just under 14 m (46 ft), by a model"
+ },
+ "top": {
+  "h1": "How big was Spinosaurus?",
+  "answer": "The largest adults of Spinosaurus aegyptiacus were just under 14 m (46 ft) long and about 7.4 tonnes, by a model of 2022. Nobody has found a whole skeleton. Ours is a young one, about 10 m (33 ft), about three quarters of full size, about 3 to 4 tonnes, a model's figure. Beside the person of 1.70 m, its hip joint sits at about head height, and it is almost six people long.",
+  "answer_more": "Against T. rex: the largest Spinosaurus was longer, most likely lighter and much lower at the hips. The two never met, about 30 million years and two continents apart.",
+  "scale": {
+   "pic": "side",
+   "tag": "tag_made",
+   "what": "Our Spinosaurus beside a person 1.70 m tall, to one scale: a young one of about 10 m (33 ft), built on the skeleton from Morocco. The pale outline behind it is the largest adults' size by the model of 2022, just under 14 m (46 ft): our model enlarged by about a third. The outline is an estimate, not an animal anyone found.",
+   "alt": "A Spinosaurus with a tall sail and a deep tail, the pale outline of a larger adult behind it, beside a grey person who reaches its hip.",
+   "note": "Our own reconstruction, built in code from published measurements and rendered in our own engine. Not photographs.",
+   "marks": [
+    {
+     "span": "spinosaurus",
+     "text": "Our Spinosaurus, a young one, about 10 m"
+    },
+    {
+     "span": "outline",
+     "text": "Outline: the largest adults, just under 14 m, by a model"
+    },
+    {
+     "span": "person",
+     "text": "The person, 1.70 m"
+    }
+   ],
+   "close": {
+    "pic": "close",
+    "tag": "tag_made",
+    "what": "The head and the front of the body, closer up, with the person. The snout is long and narrow, the teeth are cones without a saw edge, the nostrils sit far back. The low crest in front of the eyes is certain, its height is not: its top edge is broken on every piece found. The lips are a choice, not a find.",
+    "alt": "The head and front of the Spinosaurus, closer up, the long narrow snout with cone-shaped teeth, a low crest in front of the eye, beside the grey person."
+   }
+  },
+  "guess": {
+   "h": "A guess",
+   "q": "How old was the young animal from Morocco when it died?",
+   "button": "Show the answer",
+   "a": "About 17 years, by the growth rings in its thigh bone, give or take two years. It was not full grown, at about three quarters of the size of the largest adults.",
+   "button_open": "Hide the answer"
+  },
+  "out": {
+   "text": "The wing for this animal is still being built. The Leonardo da Vinci wing is open today.",
+   "link": "To the Leonardo wing"
+  }
+ },
+ "blocks": [
+  {
+   "type": "numbers",
+   "id": "numbers",
+   "nav": "The numbers",
+   "h": "The numbers",
+   "unit": "Metres and feet, tonnes. Where no sourced figure exists, the cell stays empty. Our T. rex gets no weight here: its weight stands on its own page, from the studies of SUE.",
+   "cols": [
+    "Animal",
+    "Length",
+    "Height, with the point measured",
+    "Weight",
+    "How sure"
+   ],
+   "rows": [
+    {
+     "cells": [
+      "Our Spinosaurus, a young one",
+      "about 10 m (33 ft) in its pose",
+      "top of the sail about 3.5 m (11.5 ft), hip joint about 1.6 m (5.2 ft)",
+      "about 3 to 4 t, by a model",
+      "measured on our files, built on the skeleton from Morocco"
+     ]
+    },
+    {
+     "cells": [
+      "The largest adults, the model of 2022",
+      "just under 14 m (46 ft)",
+      "",
+      "about 7.4 t, 7.4 to 8 t by the air spaces chosen",
+      "one team's model, the young skeleton scaled up to the largest snout"
+     ]
+    },
+    {
+     "cells": [
+      "Stromer's skeleton, Egypt, destroyed in 1944",
+      "about the size of ours, 12 to 15 m (39 to 49 ft) by Stromer's own reckoning",
+      "the tallest spine about 1.65 m (5.4 ft) of bone, no body height",
+      "",
+      "Stromer's description and a few photographs"
+     ]
+    },
+    {
+     "cells": [
+      "Our T. rex, after SUE",
+      "about 11.4 m (37 ft) in its pose",
+      "hips 3.96 m (13 ft), raised head about 4.6 m (15 ft)",
+      "not given",
+      "measured on our files"
+     ]
+    },
+    {
+     "cells": [
+      "The person",
+      "1.70 m (5 ft 7 in)",
+      "",
+      "",
+      "our scale figure"
+     ]
+    }
+   ]
+  },
+  {
+   "type": "text",
+   "id": "t-rex",
+   "nav": "Spinosaurus vs T. rex, size only",
+   "h": "Spinosaurus vs T. rex, size only",
+   "paras": [
+    "The largest Spinosaurus was longer than any T. rex: just under 14 m (46 ft) by a model, against about 12 m (39 ft) for SUE's skeleton. It was most likely not heavier: about 7.4 to 8 tonnes in the model, against about 8 to 9 tonnes for the largest known T. rex. At the hips it stood much lower: the thigh bone of the young animal from Morocco is 61 cm, SUE's is 1.32 m. The two never met, Spinosaurus lived about 95 million years ago in North Africa, T. rex about 68 to 66 million years ago in North America. A comparison of size, nothing more."
+   ],
+   "scale": {
+    "pic": "vs",
+    "tag": "tag_made",
+    "what": "Our Spinosaurus and our T. rex, to one scale on one ground line. Our Spinosaurus is a young one of about 10 m (33 ft), our T. rex after SUE a large adult of about 11.4 m (37 ft), so the T. rex is the longer one here. An adult Spinosaurus was longer than any T. rex, most likely lighter and much lower at the hips.",
+    "alt": "A Spinosaurus with a sail on its back and a slightly longer T. rex with its head raised, both from the side on one ground line, the T. rex about twice as high at the hips, beside the grey person.",
+    "marks": [
+     {
+      "span": "spinosaurus",
+      "text": "Our Spinosaurus, a young one, about 10 m"
+     },
+     {
+      "span": "t-rex",
+      "text": "Our T. rex, after SUE, about 11.4 m"
+     },
+     {
+      "span": "person",
+      "text": "The person, 1.70 m"
+     }
+    ]
+   },
+   "links": [
+    {
+     "page": "t-rex",
+     "text": "How big was T. rex?"
+    }
+   ]
+  },
+  {
+   "type": "text",
+   "id": "looks",
+   "nav": "What it looked like",
+   "h": "What it looked like",
+   "subs": [
+    {
+     "h": "Two legs",
+     "paras": [
+      "It stood and walked on two legs, its weight over the hind feet, its arms carrying none of it. The four-legged animal of 2014 rested on a sum that added the air inside the body instead of taking it away. One of its own authors reported that in 2024."
+     ]
+    },
+    {
+     "h": "The tail",
+     "paras": [
+      "The tail was deep and flat from side to side, like a blade: tall spines above, long bones below. We know that from the own tail bones of the animal from Morocco, about four fifths of the tail was found. What it was for is argued: swimming or display."
+     ]
+    },
+    {
+     "h": "The sail",
+     "paras": [
+      "The spines are known, the tallest on Stromer's skeleton about 1.65 m (5.4 ft) of bone. The shape of the sail above them nobody knows, so our plain arc is our choice. A thin skin over the spines is the most likely reading, and most specialists read the sail as display."
+     ]
+    },
+    {
+     "h": "The head",
+     "paras": [
+      "The snout was long and narrow, widened at the tip like a spoon, with cone-shaped teeth without a saw edge and small nostrils far back. In front of the eyes sat a low crest, its top edge broken on every piece found. Skin, lips and colour are known from no spinosaur, so our colours are ours."
+     ]
+    }
+   ]
+  },
+  {
+   "type": "text",
+   "id": "water",
+   "nav": "Spinosaurus and the water",
+   "h": "Spinosaurus and the water",
+   "paras": [
+    "It lived by the water and ate fish, as its teeth and the isotopes in them show. Whether it chased the fish swimming, or waded and waited for them in the shallows, is argued. The case for swimming rests on the deep tail of 2020 and the dense bones in a study of 2022. Most of the work since 2021 points to wading. Models find it too buoyant to dive, its skull shape fits an ambush hunter, and the bone-density method was criticised as unreliable in 2024. The museums keep the question open, and so do we."
+   ]
+  },
+  {
+   "type": "text",
+   "id": "found",
+   "nav": "What was found",
+   "h": "What was found",
+   "subs": [
+    {
+     "h": "Stromer's skeleton",
+     "paras": [
+      "In the autumn of 1912 the first bones came to light in the Bahariya Oasis in Egypt. They were the lower jaw's front half, 72 cm long, and back, hip and tail bones with the tall spines of the sail. Stromer described them in 1915 and named the animal Spinosaurus after those spines. It was a young one, about the size of ours. The skeleton stood in Munich and was destroyed in a bombing raid in 1944. Only Stromer's notes, drawings and a few photographs survive. Munich holds a Spinosaurus tooth today, not a skeleton."
+     ]
+    },
+    {
+     "h": "The young animal from Morocco",
+     "paras": [
+      "In 2008 a collector found the first bones near Zrigat in south-eastern Morocco, in the Kem Kem beds. The site was dug out in 2013, the tail from 2015 to 2019. Since 2014 this skeleton has been the species' new type, because Stromer's bones are gone. It is kept in Casablanca, at the Faculté des Sciences Aïn Chock."
+     ]
+    },
+    {
+     "h": "Its own bones",
+     "paras": [
+      {
+       "points": [
+        "The hips on both sides, both legs, an ankle bone and a nearly complete foot.",
+        "The tail, more than 30 bones, about four fifths of its length.",
+        "Parts of neck, back and hip bones, pieces of rib, pieces of the skull and one finger bone."
+       ]
+      }
+     ]
+    },
+    {
+     "h": "What every reconstruction borrows",
+     "paras": [
+      {
+       "points": [
+        "The spines of the sail and the lower jaw: after Stromer's lost skeleton.",
+        "The snout: after the adult snout in Milan, scaled down.",
+        "The back of the skull, the arms and the hands: after the relatives Irritator, Suchomimus and Baryonyx.",
+        "The neck, most of the back, the ribs, the shoulder and the end of the tail: after other finds, or restored."
+       ]
+      }
+     ]
+    }
+   ],
+   "end": [
+    "So every reconstruction is one animal made of several, ours too."
+   ],
+   "scale": {
+    "pic": "skeleton",
+    "tag": "tag_built",
+    "what": "Our Spinosaurus as a skeleton, coloured by where each part comes from.",
+    "alt": "Our Spinosaurus as a skeleton: hips, legs and tail dark red, the sail's spines and the lower jaw blue, skull, neck, ribs and arms pale, beside the person.",
+    "key": [
+     {
+      "swatch": "own",
+      "text": "Dark red: the own bones of the young animal from Morocco, the hips, both legs, the foot and the tail to its 41st bone."
+     },
+     {
+      "swatch": "stromer",
+      "text": "Blue: after Stromer's lost skeleton from Egypt, the spines of the sail and the lower jaw."
+     },
+     {
+      "swatch": "pale",
+      "text": "Pale: after other finds or restored, the snout, the back of the skull, the neck, the ribs, the shoulder, the arms and the end of the tail."
+     },
+     "Three parts mix two sources and carry the borrowed colour: the skull, the sacrum and the back bones with the tall spines."
+    ]
+   }
+  },
+  {
+   "type": "text",
+   "id": "how-sure",
+   "nav": "How sure this is",
+   "h": "How sure this is",
+   "paras": [
+    "Three things decide every number on this page.",
+    {
+     "points": [
+      [
+       "Every adult length is a model:",
+       "nobody has an adult skeleton. The researchers took the young skeleton from Morocco and enlarged it by about a third, until it fitted the largest snout found. The snout is a real fossil, the body around it is a sum."
+      ],
+      [
+       "The weight comes from a body model:",
+       "build flesh around the skeleton, measure the volume, multiply by a density. For Spinosaurus the air spaces in the neck and body alone move the answer by 600 kg, 7.4 to 8 tonnes in one and the same model."
+      ],
+      [
+       "Ours is not the species:",
+       "our animal is a young one of about 10 m. Its numbers are its own, never the species'. That is why three numbers stand apart here: our animal, the largest adults by the model, and Stromer's skeleton."
+      ]
+     ]
+    }
+   ]
+  },
+  {
+   "type": "notes",
+   "id": "numbers-read",
+   "nav": "Numbers you may have read",
+   "h": "Numbers you may have read",
+   "intro": "For each number: where it came from, and what it means.",
+   "rows": [
+    {
+     "term": "18 m (59 ft)",
+     "text": "A figure of 2005: a whole body was drawn around the big snout in Milan, with the build of a long-legged relative. Spinosaurus turned out to have short legs, so that body came out too long. The model of 2022 gives just under 14 m, though some museum texts still give 18 m."
+    },
+    {
+     "term": "15 m and 50 feet",
+     "text": "The digital skeleton of 2014, scaled up to adult size. The same team's better model of 2022 came out more than a metre shorter."
+    },
+    {
+     "term": "20 tonnes",
+     "text": "A sum of 2007 that went from the skull's length to the body, with a formula built on other meat-eating dinosaurs: a shorter and much heavier animal. We have not read the study's exact range ourselves, and the body model of 2022 gives the largest adults 7.4 to 8 tonnes."
+    },
+    {
+     "term": "7 tonnes",
+     "text": "The current model, about 7.4 tonnes for the largest adults, 7.4 to 8 by the air spaces chosen. It does not apply to our young one, which comes to about 3 to 4 tonnes."
+    },
+    {
+     "term": "The largest predator ever",
+     "text": "No. Spinosaurus is the longest meat-eating dinosaur known. In the sea, megalodon was longer, at about 16 m (52 ft). T. rex was most likely heavier, and it certainly stood higher at the hips."
+    },
+    {
+     "term": "It walked on four legs",
+     "text": "The study of 2014, by a sum of where the body's weight sat. The sum added the air inside the body instead of taking it away, as one of its own authors reported in 2024."
+    },
+    {
+     "term": "The first swimming dinosaur",
+     "text": "A headline of 2020 about the newly found tail. The study itself calls the tail an organ of propulsion, and most work since reads the animal as an ambush hunter in the shallows. Argued, not settled."
+    }
+   ]
+  },
+  {
+   "type": "text",
+   "id": "why",
+   "nav": "Why our Spinosaurus looks like this",
+   "h": "Why our Spinosaurus looks like this",
+   "paras": [
+    "It is built to the measurements of the bones of the young animal from Morocco, hips, legs, foot and tail at their sizes. Where its own bones are missing, it follows Stromer's skeleton and relatives. The arc of the sail and the colours are our choice, because neither the sail's shape nor any colour is known. It stands on two legs, arms raised, neck in a gentle curve, and runs about 10 m (33 ft) in this pose."
+   ]
+  },
+  {
+   "type": "faq",
+   "id": "questions",
+   "nav": "More questions",
+   "h": "More questions",
+   "items": [
+    {
+     "q": "How tall was Spinosaurus?",
+     "a": "Our young one: the top of the sail about 3.5 m (11.5 ft), the head about 3 m (9.7 ft) in its pose. Its hip joint sits about 1.6 m (5.2 ft) up. For adults no hip height is published, only that T. rex stood higher at the hips."
+    },
+    {
+     "q": "Was Spinosaurus the biggest dinosaur?",
+     "a": "No, it was the longest known meat-eater among the dinosaurs. The long-necked dinosaurs were far bigger: Argentinosaurus about 30 to 35 m (98 to 115 ft) long and roughly 65 to 80 tonnes. More on the biggest dinosaurs page.",
+     "links": [
+      {
+       "page": "biggest-dinosaurs",
+       "text": "The biggest dinosaurs, to one scale"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "type": "text",
+   "id": "museum",
+   "nav": "In the museum",
+   "h": "In the museum",
+   "paras": [
+    "Museum of Ages is a digital museum. It is building a wing where this animal and others like it will stand, to one scale. Open today is the Leonardo da Vinci wing. Free entry, no account."
+   ],
+   "links": [
+    {
+     "out": true,
+     "text": "To the Leonardo wing"
+    }
+   ]
+  },
+  {
+   "type": "pages",
+   "id": "next",
+   "items": [
+    {
+     "page": "t-rex",
+     "pic": "trex",
+     "alt": "A T. rex from the side on two legs, mouth open and head raised, beside a grey person who does not reach its knee."
+    },
+    {
+     "page": "biggest-dinosaurs",
+     "pic": "dinosaurs",
+     "alt": "Seven dinosaurs in a row from the side, two with long necks towering over the rest, and a grey person who looks tiny beside them."
+    },
+    {
+     "page": "megalodon",
+     "pic": "megalodon",
+     "alt": "A shark with its mouth open, seen from the side, dark grey with a paler band along the flank, beside a grey person who looks tiny next to it."
+    }
+   ]
+  },
+  {
+   "type": "sources",
+   "id": "sources",
+   "nav": "Sources",
+   "h": "Sources",
+   "intro": "The numbers come from these studies and from the museums that keep the fossils. The museum is independent of all of them.",
+   "read": [
+    {
+     "text": "Sereno and others, 2022, eLife.",
+     "href": "https://doi.org/10.7554/eLife.80092"
+    },
+    {
+     "text": "Sereno and others, 2026, Science.",
+     "href": "https://doi.org/10.1126/science.adx5486"
+    },
+    {
+     "text": "Ibrahim and others, 2014, Science, with its supplement.",
+     "href": "https://doi.org/10.1126/science.1258750"
+    },
+    {
+     "text": "Ibrahim and others, 2020, Nature.",
+     "href": "https://doi.org/10.1038/s41586-020-2190-3"
+    },
+    {
+     "text": "Myhrvold and others, 2024, PLOS ONE.",
+     "href": "https://doi.org/10.1371/journal.pone.0298957"
+    },
+    {
+     "text": "Fabbri and others, 2022, Nature, the study's summary.",
+     "href": "https://doi.org/10.1038/s41586-022-04528-0"
+    },
+    {
+     "text": "Dal Sasso and others, 2005, Journal of Vertebrate Paleontology, the study's summary.",
+     "href": "https://doi.org/10.1671/0272-4634(2005)025%5B0888:NIOTSO%5D2.0.CO;2"
+    },
+    {
+     "text": "Therrien and Henderson, 2007, Journal of Vertebrate Paleontology, the study's summary."
+    },
+    {
+     "text": "Smith and others, 2006, Journal of Paleontology.",
+     "href": "https://doi.org/10.1666/0022-3360(2006)080%5B0400:NIRTHO%5D2.0.CO;2"
+    },
+    {
+     "text": "Henderson, 2018, PeerJ.",
+     "href": "https://doi.org/10.7717/peerj.5409"
+    },
+    {
+     "text": "Hone and Holtz, 2021, Palaeontologia Electronica.",
+     "href": "https://doi.org/10.26879/1110"
+    },
+    {
+     "text": "Gimsa and Gimsa, 2021, Life.",
+     "href": "https://doi.org/10.3390/life11090889"
+    },
+    {
+     "text": "Smart and Sakamoto, 2024, PeerJ.",
+     "href": "https://doi.org/10.7717/peerj.17544"
+    },
+    {
+     "text": "Cau and others, 2026, Historical Biology.",
+     "href": "https://doi.org/10.1080/08912963.2026.2669954"
+    },
+    {
+     "text": "Brazil, 2026, ACS Central Science, a news feature.",
+     "href": "https://doi.org/10.1021/acscentsci.6c00222"
+    },
+    {
+     "text": "Bayerische Staatssammlung für Paläontologie und Geologie, Munich: Stromer's skeleton, destroyed in 1944, and the tooth SNSB-BSPG 1993 IX 308.",
+     "href": "https://bspg.snsb.de/ueber-uns/geschichte/"
+    },
+    {
+     "text": "Faculté des Sciences Aïn Chock, Casablanca: the skeleton FSAC-KK 11888."
+    },
+    {
+     "text": "Museo di Storia Naturale di Milano: the snout MSNM V4047."
+    },
+    {
+     "text": "Natural History Museum, London: its dinosaur pages.",
+     "href": "https://www.nhm.ac.uk/discover/dino-directory/spinosaurus.html"
+    },
+    {
+     "text": "Field Museum, Chicago: SUE, FMNH PR 2081.",
+     "href": "https://www.fieldmuseum.org/blog/sue-t-rex"
+    }
+   ],
+   "contact": "If a number or a museum is wrong, tell us and we will correct it.",
+   "contact_link": "To the legal notice",
+   "what_link": "What this museum is"
+  },
+  {
+   "type": "text",
+   "id": "pictures",
+   "nav": "Use our pictures",
+   "h": "Use our pictures",
+   "paras": [
+    [
+     "The pictures of the Spinosaurus on this page are our own work under ",
+     {
+      "text": "CC BY-SA 4.0",
+      "href": "https://creativecommons.org/licenses/by-sa/4.0/"
+     },
+     ", credit: Museum of Ages. They show a reconstruction, built in code and rendered in our own engine, not a photograph. The pictures under “In the museum” give their credits on their own pages."
+    ]
+   ]
+  }
+ ]
+}
