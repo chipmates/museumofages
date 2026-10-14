@@ -22,6 +22,14 @@
   .sc-mark__c{position:static;width:auto;height:auto;overflow:visible;clip-path:none}
 }
 
+/* On a wide screen an answer of two paragraphs stands in two columns, so the picture below rises into the first screen */
+@media (min-width:1280px){
+  .sc-top .sp-top__text:has(>.sp-answer+.sp-answer){grid-column:1/13;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));
+    column-gap:48px;align-items:start}
+  .sc-top .sp-top__text:has(>.sp-answer+.sp-answer)>h1{grid-column:1/-1}
+  .sc-top .sp-top__text>.sp-answer+.sp-answer{margin-top:22px}
+}
+
 /* A short list in a section: each point a paragraph that leads with its own words, a short rule at its start */
 .sp-points{max-width:38rem;margin:12px 0 0;padding:0;list-style:none;color:var(--ink-body)}
 .sp-points li{position:relative;padding-left:20px}
