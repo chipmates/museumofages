@@ -36,7 +36,7 @@
   "title": "Tiere: wie groß sie waren | Museum of Ages",
   "description": "Wie groß die Tiere des Museums waren, jedes neben einem Menschen von 1,70 m im selben Maßstab, in eigenen Bildern. Die erste Seite: der Megalodon.",
   "og_title": "Tiere: wie groß sie waren",
-  "og_image_alt": "Ein Hai mit offenem Maul von der Seite, oben dunkel, unten hell, neben einem grauen Menschen, der winzig daneben steht.",
+  "og_image_alt": "Ein Hai mit offenem Maul von der Seite, dunkelgrau mit einem helleren Band an der Flanke, neben einem grauen Menschen, der winzig daneben steht.",
   "credit": "Museum of Ages, Körperform nach Shimada und anderen 2025 (CC BY 4.0)"
  },
  "labels": {
@@ -62,7 +62,7 @@
     {
      "page": "megalodon",
      "pic": "side",
-     "alt": "Ein Hai mit offenem Maul von der Seite, oben dunkel, unten hell, neben einem grauen Menschen, der winzig daneben steht."
+     "alt": "Ein Hai mit offenem Maul von der Seite, dunkelgrau mit einem helleren Band an der Flanke, neben einem grauen Menschen, der winzig daneben steht."
     },
     {
      "page": "biggest-dinosaurs",

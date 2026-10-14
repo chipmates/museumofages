@@ -68,7 +68,7 @@
   "title": "Megalodon size: about 16 m by one backbone | Museum of Ages",
   "description": "Megalodon size and dimensions: about 16 m (52 ft) by the one long backbone found, the largest perhaps about 20 m. Compared with a person and a blue whale.",
   "og_title": "Megalodon size: about 16 m by one backbone",
-  "og_image_alt": "A shark with its mouth open, seen from the side, dark above and pale below, beside a grey person who looks tiny next to it.",
+  "og_image_alt": "A shark with its mouth open, seen from the side, dark grey with a paler band along the flank, beside a grey person who looks tiny next to it.",
   "credit": "Museum of Ages, body shape after Shimada and others 2025 (CC BY 4.0)"
  },
  "labels": {
@@ -84,13 +84,13 @@
  },
  "top": {
   "h1": "How big was megalodon?",
-  "answer": "About 16 m, or 52 feet. That is the megalodon whose backbone lies in Brussels, the only long one ever found. The largest of its kind were perhaps about 20 m (66 feet), by their teeth. Beside a person of 1.70 m that is a little over nine people laid head to foot.",
+  "answer": "About 16 m, or 52 feet. That is the megalodon whose backbone lies in Brussels, the only long one ever found. Our 16 m is a little over nine people of 1.70 m laid head to foot. The largest of its kind were perhaps about 20 m (66 feet), by their teeth.",
   "answer_more": "Its weight is disputed: roughly 30 tonnes in the slim model of 2025, about twice that in the thicker model of 2022, because nobody knows the shape of its body.",
   "scale": {
    "pic": "side",
    "tag": "tag_made",
    "what": "Our megalodon beside a person 1.70 m tall, to one scale: about 16 m (52 ft) long, the length the backbone in Brussels gives it.",
-   "alt": "A shark with its mouth open, seen from the side, dark above and pale below, beside a grey person who looks tiny next to it.",
+   "alt": "A shark with its mouth open, seen from the side, dark grey with a paler band along the flank, beside a grey person who looks tiny next to it.",
    "note": [
     "The museum's own reconstruction, built in code from the cited measurements and rendered in our own engine. Not a photograph. The body shape follows the model of Shimada and others 2025 (",
     {
@@ -137,7 +137,7 @@
    "unit": "Metres and feet, tonnes, the teeth in centimetres. Where no sourced figure exists, the cell stays empty.",
    "cols": [
     "Animal",
-    "Length",
+    "Size",
     "Weight",
     "How sure"
    ],
@@ -155,7 +155,7 @@
       "The found backbone, Brussels",
       "about 11 m (36 ft) in a row, 141 discs",
       "",
-      "measured, the discs laid in a row"
+      "discs measured, gaps between them estimated"
      ]
     },
     {
@@ -245,7 +245,7 @@
    "nav": "How sure this is",
    "h": "How sure this is",
    "paras": [
-    "The 16 m figure rests on the backbone in Brussels: 141 discs, about 11 m (36 ft) in a row, plus a head and a tail in the proportions of living mackerel sharks. Two research groups got 15.9 m and 16.4 m with different models, which is why we say about 16 m. The 20 m figure rests on a single tooth, scaled up through whole tooth sets. The weight rests on a body model, and that needs a body shape nobody knows: slim like the largest living sharks gives about 30 tonnes, stout like a great white about 61. That is why the length says about and the weight says disputed."
+    "The 16 m figure rests on the backbone in Brussels: 141 discs, about 11 m (36 ft) in a row, plus a head and a tail in the proportions of living mackerel sharks. Two research groups got 15.9 m and 16.4 m with different models, which is why we say about 16 m. The 20 m figure rests on a single tooth, scaled up through whole tooth sets. The weight rests on a body model, and that needs a body shape nobody knows: slim like the largest living sharks gives about 30 tonnes, stout like a great white about 61. That is why the length says “about” and the weight says “disputed”."
    ]
   },
   {
@@ -275,16 +275,16 @@
      "text": "Perez, Leder and Badaut, 2021. The summed width of a tooth set's crowns, set against body length and applied to the widest tooth known: a mean of 20.0 m, a range of 17.4 to 23.5 m. The authors of the 2022 model accept 20 m as the maximum."
     },
     {
-     "term": "24 to 25 m (80 feet) and about 94 tonnes",
+     "term": "24 to 25 m (79 to 82 feet) and about 94 tonnes",
      "text": "Shimada and others, 2025 and 2026. The Brussels model scaled up to a Danish disc of 23 cm: 24.3 m, and with the slim body about 94 tonnes. The authors call it hypothetical. It rests on the larger of two broken Danish discs and a single step of arithmetic."
     },
     {
      "term": "50 to 60 or more tonnes",
-     "text": "Cooper and others, 2022. A 3D body of a great white stretched over the Belgian backbone came to 61,560 kg. The heaviest published estimate of our animal. The slim model of 2025 gets about 30 tonnes for the same backbone, and the two count the body differently: a slimmer shape, the fins other than the tail left out, another density. The weight stays disputed."
+     "text": "Cooper and others, 2022. A 3D body of a great white, adjusted with five living mackerel sharks and stretched over the Belgian backbone, came to 61,560 kg. The heaviest published estimate of our animal. The slim model of 2025 gets about 30 tonnes for the same backbone, and the two count the body differently: a slimmer shape, the fins other than the tail left out, another density. The weight stays disputed."
     },
     {
      "term": "The jaws of 1909",
-     "text": "At the American Museum of Natural History, fossil teeth were set in 1909 into a restored jaw scaled up from a great white. The museum itself says today that the restoration overestimated the size by far. As later experts found, teeth as large as the front ones ran all along the jaw, even where it holds small ones."
+     "text": "At the American Museum of Natural History, fossil teeth were set in 1909 into a restored jaw scaled up from a great white. The museum itself says today that the restoration overestimated the size by far. As later experts found, teeth as large as the front ones ran all along the jaw, even where a real jaw holds small ones."
     }
    ]
   },
@@ -294,7 +294,7 @@
    "nav": "Why our megalodon looks like this",
    "h": "Why our megalodon looks like this",
    "paras": [
-    "It is slim, after the model of 2025: a stout body like a great white's might have cost it too much effort to swim, its authors say, and the largest living sharks are slim. The colour is borrowed from living open-water sharks, dark above and pale below, because the real one is unknown. The teeth are built after another find, UF-VP-311000, a real set, at its own size. The head, the fins and the tail are borrowed from living mackerel sharks, because no megalodon head has ever been found. It is not a great white scaled up: it belonged to its own family, now extinct, and by the newest work it was slimmer and more drawn out than the monster in the film."
+    "It is slim, after the model of 2025: a stout body like a great white's might have cost it too much effort to swim, its authors say, and the largest living sharks are slim. It is painted dark above and pale below, as living open-water sharks are, because the real colour is unknown. The teeth are built after another find, UF-VP-311000, a real set, at its own size. The head, the fins and the tail are borrowed from living mackerel sharks, because no megalodon head has ever been found. It is not a great white scaled up: it belonged to its own family, now extinct, and by the newest work it was slimmer and more drawn out than the monster in the film."
    ]
   },
   {
@@ -309,7 +309,7 @@
     },
     {
      "q": "Megalodon vs blue whale: which was bigger?",
-     "a": "The blue whale. Most grown blue whales are 23 to 27 m long, the largest about 30 m (98 ft), and NOAA, the US ocean agency, calls it the largest animal known to have lived. Our megalodon would come to a little over half of the largest. Even the largest whale shark ever measured was longer, at 18.8 m, and at about 34 tonnes about as heavy as the slim model of megalodon."
+     "a": "The blue whale. Most grown blue whales are 23 to 27 m long, the largest about 30 m (98 ft), and NOAA, the US ocean agency, calls it the largest animal known to have lived. Our megalodon would come to a little over half of the largest. Even the largest whale shark ever measured, 18.8 m, was longer than our megalodon, and at about 34 tonnes about as heavy as the slim model of it."
     },
     {
      "q": "How big were megalodon's teeth?",
