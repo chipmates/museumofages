@@ -1307,14 +1307,14 @@
   {
    "path": "pages/pics/img/animals-megalodon-og-de-1200x630.png",
    "url": "/static/img/animals-megalodon-og-de-1200x630.png",
-   "bytes": 113356,
-   "sha256": "95a0b6db9235b9bf6b78b678fa2612568b778d68dc998383322aa926faeb91da"
+   "bytes": 110257,
+   "sha256": "ba61345c5d94ff73338a03e09c6f8fa82eec670072ad55bc3b2d0870baa2ad96"
   },
   {
    "path": "pages/pics/img/animals-megalodon-og-en-1200x630.png",
    "url": "/static/img/animals-megalodon-og-en-1200x630.png",
-   "bytes": 113322,
-   "sha256": "c884721b2c1f8edfb6524944155de9bb7a26b03cf637800fcb9d75f6c2c6ca01"
+   "bytes": 107511,
+   "sha256": "e19656ed5b0af30567f39893f64e394076b5426d829ed5d512197d9ecb6b8395"
   },
   {
    "path": "pages/pics/img/animals-megalodon-side-1600.avif",
@@ -1355,50 +1355,74 @@
   {
    "path": "pages/pics/img/animals-megalodon-skeleton-1600.avif",
    "url": "/static/img/animals-megalodon-skeleton-1600.avif",
-   "bytes": 9933,
-   "sha256": "4966ea282f5c461f61bbae000d1460551d180f15ba8745ebfba67af96da2c9f3"
+   "bytes": 11615,
+   "sha256": "7418ed187dcaadbf7f62b2aac5759a771cc771f1c3b02c9093821723c6070dd2"
   },
   {
    "path": "pages/pics/img/animals-megalodon-skeleton-1600.webp",
    "url": "/static/img/animals-megalodon-skeleton-1600.webp",
-   "bytes": 13684,
-   "sha256": "eb6339c15118813d3bc0bee0c657819423abd39aab28c9c5d22e9dc8defc6d7f"
+   "bytes": 15970,
+   "sha256": "af8aa6968f3997892f2140a80e22d535e4320a0d9c61205cb2364d772ce14a05"
   },
   {
    "path": "pages/pics/img/animals-megalodon-skeleton-2400.avif",
    "url": "/static/img/animals-megalodon-skeleton-2400.avif",
-   "bytes": 15201,
-   "sha256": "fd878f571474cfd25b01c6af28bf21823cd004137baa9411ec824585d14a5796"
+   "bytes": 18800,
+   "sha256": "67936fe3d1eeda741673f4de2a67171af9ccd15cbe2df1a308d418dfd287c397"
   },
   {
    "path": "pages/pics/img/animals-megalodon-skeleton-2400.webp",
    "url": "/static/img/animals-megalodon-skeleton-2400.webp",
-   "bytes": 22472,
-   "sha256": "b7c5558e50f2b20a8f49785d3179086b051fcfc6893d3be4f05fe617d3963b8e"
+   "bytes": 26220,
+   "sha256": "a0afaf7c9f40d23cadface0beb604fd56185089e522720e328865d15d3410c19"
   },
   {
    "path": "pages/pics/img/animals-megalodon-skeleton-800.avif",
    "url": "/static/img/animals-megalodon-skeleton-800.avif",
-   "bytes": 4519,
-   "sha256": "a61d6d4320f40c8205be9c7574cfdc90b404936328117e2ecd87f6ba09d54272"
+   "bytes": 4904,
+   "sha256": "4cddae78852a87936970b8b43a824369052416190bb620521da860a7d409a108"
   },
   {
    "path": "pages/pics/img/animals-megalodon-skeleton-800.webp",
    "url": "/static/img/animals-megalodon-skeleton-800.webp",
-   "bytes": 5318,
-   "sha256": "c73b8205bd1bf37a4588a0e7517be2d8ac7739e8c3f114a162ae0c0cb59f8521"
+   "bytes": 6384,
+   "sha256": "4e3d672c90056b411c7727a199e0c78f6ed9477751994f5dfa19ba95b036b0bd"
+  },
+  {
+   "path": "pages/pics/img/animals-megalodon-skeleton-head-1600.avif",
+   "url": "/static/img/animals-megalodon-skeleton-head-1600.avif",
+   "bytes": 16484,
+   "sha256": "17b052d4f0d9899ac92cbf19f12b7c388675e1f65a4f6f63f2433048d51cc37d"
+  },
+  {
+   "path": "pages/pics/img/animals-megalodon-skeleton-head-1600.webp",
+   "url": "/static/img/animals-megalodon-skeleton-head-1600.webp",
+   "bytes": 22470,
+   "sha256": "fec46589d3edfebf1e49c16117f6ff9cf346f436b8d66c8b52673cc7d0fcea29"
+  },
+  {
+   "path": "pages/pics/img/animals-megalodon-skeleton-head-800.avif",
+   "url": "/static/img/animals-megalodon-skeleton-head-800.avif",
+   "bytes": 6983,
+   "sha256": "6bb886ad40abdf9a094dc05e14a879984884298152ac2301e49998f84cc5284a"
+  },
+  {
+   "path": "pages/pics/img/animals-megalodon-skeleton-head-800.webp",
+   "url": "/static/img/animals-megalodon-skeleton-head-800.webp",
+   "bytes": 9920,
+   "sha256": "1d501287c11f64b04aa93d6ded647482d09628df2cabd0052b9ca9fe61d801a3"
   },
   {
    "path": "pages/pics/img/animals-og-de-1200x630.png",
    "url": "/static/img/animals-og-de-1200x630.png",
-   "bytes": 98361,
-   "sha256": "68a6e3af40038f9a93151537e5b18094d8a930b40904f6790bd74022489fbff5"
+   "bytes": 103781,
+   "sha256": "9be87d03639ba4e6662a743348a6a6d6912dd3165e2f1d784d9acb6de9c49953"
   },
   {
    "path": "pages/pics/img/animals-og-en-1200x630.png",
    "url": "/static/img/animals-og-en-1200x630.png",
-   "bytes": 101034,
-   "sha256": "b7404754959a8ba11f518e490d48e9d7e4fcc83c482864acec6978dc7e47de90"
+   "bytes": 106162,
+   "sha256": "ef397d40fb717b10c6b0516d4f829550e79a93a1afe01697ea409dbbebdd5ce6"
   },
   {
    "path": "pages/pics/img/vinci-inventions-og-1200x630.jpg",

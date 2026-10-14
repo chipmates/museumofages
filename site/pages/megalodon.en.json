@@ -1,5 +1,5 @@
 {
- "_note": "THE WORDS of the megalodon page, English. Poured word for word from the writer's WORDS file; the title is its first option. One cut where a slot breaks a rule of the build, the nearest the writer's text allows: the museum line drops its last words, free, no account (the pages never say Free alone). The museum line stands twice, where a door would stand under the answer and as its own section at the end. Every number as written. Empty cells of the table are the writer's: no sourced figure exists.",
+ "_note": "THE WORDS of the megalodon page, English. Poured word for word from the writer's WORDS file; the title is its first option, the list's line on the animals' page is the description after its first words. Under the answer stands one short line on the wing and the link to the open wing, where a door would stand; the section In the museum carries the rest. Every number as written. Empty cells of the table are the writer's: no sourced figure exists. pics.side.spans: where the length bar's spans start and end in the side view, as shares of the picture's width (the animal's measured pixels and the found discs' place in the model).",
  "page": {
   "id": "animals-megalodon",
   "wing": "animals",
@@ -20,7 +20,11 @@
     2400
    ],
    "sizes": "(min-width: 1280px) 1200px, (min-width: 960px) calc(100vw - 80px), (min-width: 600px) calc(100vw - 64px), calc(100vw - 40px)",
-   "person": "91.86% 55.88%"
+   "person": "91.86% 55.88%",
+   "spans": {
+    "whole": "5.03% 87%",
+    "found": "22.87% 77.87%"
+   }
   },
   "head": {
    "stem": "animals-megalodon-head",
@@ -40,12 +44,21 @@
    ],
    "sizes": "(min-width: 1280px) 690px, (min-width: 960px) 54vw, (min-width: 600px) calc(100vw - 64px), calc(100vw - 40px)",
    "person": "91.86% 55.88%"
+  },
+  "skeleton_head": {
+   "stem": "animals-megalodon-skeleton-head",
+   "widths": [
+    800,
+    1600
+   ],
+   "sizes": "(min-width: 1280px) 690px, (min-width: 960px) 54vw, (min-width: 600px) calc(100vw - 64px), calc(100vw - 40px)",
+   "person": "83.58% 45.52%"
   }
  },
  "meta": {
-  "title": "How big was megalodon? About 16 m (52 ft) | Museum of Ages",
-  "description": "How big was megalodon? About 16 m (52 ft) by the one backbone ever found, the largest perhaps 20 m. Compared with a person, a great white and a blue whale.",
-  "og_title": "How big was megalodon? About 16 m (52 ft)",
+  "title": "Megalodon size: about 16 m (52 ft) long | Museum of Ages",
+  "description": "Megalodon size: about 16 m (52 ft) by the one long backbone ever found, the largest perhaps about 20 m. Beside a person, a great white and a blue whale.",
+  "og_title": "Megalodon size: about 16 m (52 ft) long",
   "og_image_alt": "A shark with its mouth open, seen from the side, dark above and pale below, beside a grey person who looks tiny next to it."
  },
  "labels": {
@@ -55,7 +68,8 @@
   "toc": "On this page",
   "tag_made": "Made for this page",
   "tag_built": "Reconstruction",
-  "person": "1.70 m"
+  "person": "1.70 m",
+  "to_table": "The numbers as a table"
  },
  "top": {
   "h1": "How big was megalodon?",
@@ -66,22 +80,40 @@
    "tag": "tag_made",
    "what": "Our megalodon beside a person 1.70 m tall, to one scale: about 16 m (52 ft) long, the length the backbone in Brussels gives it.",
    "alt": "A shark with its mouth open, seen from the side, dark above and pale below, beside a grey person who looks tiny next to it.",
-   "note": "The museum's own reconstruction, built in code from the cited measurements and rendered in our own engine. Not a photograph.",
+   "note": [
+    "The museum's own reconstruction, built in code from the cited measurements and rendered in our own engine. Not a photograph. The body shape follows the model of Shimada and others 2025 (",
+    {
+     "text": "CC BY 4.0",
+     "href": "https://creativecommons.org/licenses/by/4.0/"
+    },
+    "), measured and changed by us."
+   ],
    "close": {
     "pic": "head",
     "tag": "tag_made",
-    "what": "The head in its bite, closer up. The teeth in the model come from another find, a real set at their own size, about 10 cm (4 in) tall in front.",
+    "what": "The head in its bite, closer up. The teeth in the model are built after another find, a real set, at its own size, about 10 cm (4 in) tall in front.",
     "alt": "The shark's head with the upper jaw pushed forward and broad triangular teeth, beside the grey person, who is shorter than the head is long."
-   }
+   },
+   "bars": [
+    {
+     "span": "whole",
+     "text": "about 16 m"
+    },
+    {
+     "span": "found",
+     "text": "the found backbone, about 11 m"
+    }
+   ]
   },
   "guess": {
    "h": "Guess first",
    "q": "How tall is the tallest megalodon tooth ever found?",
    "button": "Show the answer",
-   "a": "At least 16 cm (6.3 in), and museums give almost 18 cm (7 in) for the biggest. A great white's tooth is usually about 5 cm long, so the biggest megalodon teeth are about three times as tall."
+   "a": "At least 16 cm (6.3 in), and museums give almost 18 cm (7 in) for the biggest. A great white's tooth is usually about 5 cm long, so the biggest megalodon teeth are about three times as tall.",
+   "button_open": "Hide the answer"
   },
   "out": {
-   "text": "Museum of Ages is a digital museum. It is building a wing where this animal and others like it will stand. Open today is the Leonardo da Vinci wing.",
+   "text": "The wing for this animal is still being built, and the Leonardo da Vinci wing is open today.",
    "link": "To the Leonardo wing"
   }
  },
@@ -117,18 +149,18 @@
     },
     {
      "cells": [
-      "A large great white",
+      "The largest great white",
       "about 6 m (20 ft)",
       "",
-      "a living species, the maximum from modelling"
+      "a living species, from modelling"
      ]
     },
     {
      "cells": [
-      "A large whale shark",
+      "The largest whale shark measured",
       "18.8 m (62 ft)",
       "close to 34 t",
-      "the largest one measured"
+      "measured, a living species"
      ]
     },
     {
@@ -161,7 +193,14 @@
     "pic": "skeleton",
     "tag": "tag_built",
     "what": "The same animal as a skeleton. The backbone discs and the teeth follow fossils, everything else is restored and is meant to look it.",
-    "alt": "The skeleton from the side, a long row of backbone discs and a jaw of teeth after fossils, with the head, fins and tail as plainly restored shapes."
+    "alt": "The skeleton from the side, a long row of backbone discs and a jaw of teeth after fossils, with the head, fins and tail as plainly restored shapes.",
+    "key": "Dark brown: the fossil discs. Gold: the teeth. Pale: what is restored.",
+    "close": {
+     "pic": "skeleton_head",
+     "tag": "tag_built",
+     "what": "The skull and the front of the backbone, closer up, with the person. The discs are the fossils, the skull and the jaw are restored, the teeth are built after another find, a real set, at its own size.",
+     "alt": "The front of the skeleton from the side, a pale restored skull and jaw with gold teeth, then a row of dark discs, beside the grey person."
+    }
    }
   },
   {
@@ -180,7 +219,7 @@
    "h": "What was found",
    "paras": [
     "In Brussels, at the Royal Belgian Institute of Natural Sciences, lie 141 loose backbone discs of a single shark, IRSNB P 9893, found near Antwerp in the 1860s. The largest is 15.5 cm across, and in a row they run about 11 m. They give the trunk's length, not the head and not the body's girth. No teeth were found with them, so even the name megalodon for this animal is an inference.",
-    "In Denmark, remains of about 20 discs were dug up at Gram in 1978, then damaged in storage in 1989 and long thought lost. Two broken discs and many fragments survive. The largest is 23 cm (9 in) across, and the figure of 24 m rests on it alone.",
+    "In Denmark, remains of about 20 discs were dug up at Gram in 1978, then damaged in storage in 1989 and long thought lost. Two broken discs and many fragments survive. The largest is 23 cm (9 in) across, and the largest estimate in the list below rests on it alone.",
     "Nobody has found a megalodon skeleton, and nobody has found a set of teeth still in place in the jaw. Every row of teeth you have ever seen is an arrangement, ours too."
    ]
   },
@@ -201,11 +240,11 @@
     },
     {
      "term": "24 to 25 m (80 feet) and about 94 tonnes",
-     "text": "Shimada and others, 2025 and 2026. The Brussels model scaled up to a Danish disc of 23 cm: 24.3 m, and with the slim body about 94 tonnes. The authors themselves call it hypothetical, because it rests on two broken discs and a single step of arithmetic."
+     "text": "Shimada and others, 2025 and 2026. The Brussels model scaled up to a Danish disc of 23 cm: 24.3 m, and with the slim body about 94 tonnes. The authors call it hypothetical. It rests on two broken discs and a single step of arithmetic."
     },
     {
      "term": "50 to 60 or more tonnes",
-     "text": "Cooper and others, 2022. A 3D body of a great white stretched over the Belgian backbone came to 61,560 kg. The heaviest published reading of our animal, and the slim model of 2025 halves it. Disputed."
+     "text": "Cooper and others, 2022. A 3D body of a great white stretched over the Belgian backbone came to 61,560 kg. The heaviest published estimate of our animal. The slim model of 2025 gets about 30 tonnes for the same backbone, and the two count the body differently: a slimmer shape, the fins other than the tail left out, another density. The weight stays disputed."
     },
     {
      "term": "The jaws of 1909",
@@ -219,7 +258,7 @@
    "nav": "Why our megalodon looks like this",
    "h": "Why our megalodon looks like this",
    "paras": [
-    "It is slim, after the model of 2025: a stout body like a great white's would have cost it too much effort to swim, its authors say, and the largest living sharks are slim. The colour is borrowed from living open-water sharks, dark above and pale below, because the real one is unknown. The teeth come from another find, UF-VP-311000, a real set at its own size. The head, the fins and the tail are borrowed from living mackerel sharks, because no megalodon head has ever been found. It is not a great white scaled up: it belonged to its own family, now extinct, and by the newest work it was longer and slimmer than the monster in the film."
+    "It is slim, after the model of 2025: a stout body like a great white's would have cost it too much effort to swim, its authors say, and the largest living sharks are slim. The colour is borrowed from living open-water sharks, dark above and pale below, because the real one is unknown. The teeth are built after another find, UF-VP-311000, a real set, at its own size. The head, the fins and the tail are borrowed from living mackerel sharks, because no megalodon head has ever been found. It is not a great white scaled up: it belonged to its own family, now extinct, and by the newest work it was slimmer and more drawn out than the monster in the film."
    ]
   },
   {
@@ -233,7 +272,7 @@
      "a": "The largest great whites reach about 6 m (20 ft), and a grown one is usually 4 to 5 m. So our megalodon of about 16 m was roughly two and a half to three times as long as the largest great white."
     },
     {
-     "q": "Megalodon vs blue whale: who wins?",
+     "q": "Megalodon vs blue whale: which was bigger?",
      "a": "The blue whale. Most grown blue whales are 23 to 27 m long, the largest about 30 m (98 ft), and NOAA, the US ocean agency, calls it the largest animal known to have lived. Our megalodon would come to a little over half of the largest. Even the largest whale shark ever measured was longer, at 18.8 m, and at about 34 tonnes about as heavy as the slim model of megalodon."
     },
     {
@@ -248,7 +287,7 @@
    "nav": "In the museum",
    "h": "In the museum",
    "paras": [
-    "Museum of Ages is a digital museum. It is building a wing where this animal and others like it will stand. Open today is the Leonardo da Vinci wing."
+    "Museum of Ages is a digital museum. It is building a wing where this animal and others like it will stand. Open today is the Leonardo da Vinci wing. Free entry, no account."
    ],
    "links": [
     {
@@ -315,7 +354,8 @@
      "href": "https://tumblr.amnh.org/tagged/megalodon"
     },
     {
-     "text": "Florida Museum."
+     "text": "Florida Museum.",
+     "href": "https://www.floridamuseum.ufl.edu/discover-fish/species-profiles/white-shark/"
     },
     {
      "text": "NOAA Fisheries.",

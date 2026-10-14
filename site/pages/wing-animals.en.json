@@ -1,5 +1,5 @@
 {
- "_note": "THE WORDS of the animals' list of pages, English. The writer's words gave this page none of its own: its title and its heading are the wing's name, its line was written at the build for the writer to replace, and its museum line is the megalodon page's, cut to the sentences that are not about one animal. Each listed page stands with its name and line from the registry.",
+ "_note": "THE WORDS of the animals' list of pages, English. Poured word for word from the hub's section of the writer's WORDS file. Each listed page stands with its name and line from the registry.",
  "page": {
   "id": "animals",
   "wing": "animals",
@@ -24,9 +24,9 @@
   }
  },
  "meta": {
-  "title": "Animals | Museum of Ages",
-  "description": "How big animals of the past were, each beside a person 1.70 m tall to one scale, in the museum's own pictures. The first page is megalodon.",
-  "og_title": "Animals",
+  "title": "Animals: how big they were | Museum of Ages",
+  "description": "How big the museum's animals were, each beside a person 1.70 m tall to one scale, in our own pictures with their sources. The first page: megalodon.",
+  "og_title": "Animals: how big they were",
   "og_image_alt": "A shark with its mouth open, seen from the side, dark above and pale below, beside a grey person who looks tiny next to it."
  },
  "labels": {
@@ -38,9 +38,9 @@
  },
  "top": {
   "h1": "Animals",
-  "answer": "The museum is building a wing of animals that lived long ago. Until it opens, each page here says how big one of them was, beside a person, in our own pictures.",
+  "answer": "The museum is building a wing of animals, from the giants of long ago to the last of their kind. Until it opens, each page here answers one question: how big was this animal? Our own picture puts it beside a person of 1.70 m, to one scale, with the numbers and what they rest on.",
   "out": {
-   "text": "Museum of Ages is a digital museum. Open today is the Leonardo da Vinci wing.",
+   "text": "Museum of Ages is a digital museum. Open today is the Leonardo da Vinci wing. Free entry, no account.",
    "link": "To the Leonardo wing"
   }
  },

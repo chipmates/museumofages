@@ -1,5 +1,5 @@
 {
- "_note": "DIE WORTE der Liste der Tierseiten, Deutsch. Die Worte des Schreibers geben dieser Seite keine eigenen: Titel und Überschrift sind der Name des Flügels, die Zeile entstand beim Bauen, damit der Schreiber sie ersetzt, die Museumszeile ist die der Megalodon-Seite, gekürzt auf die Sätze, die nicht von einem Tier sprechen. Jede Seite der Liste steht mit Namen und Zeile aus dem Register.",
+ "_note": "DIE WORTE der Liste der Tierseiten, Deutsch. Wort für Wort aus dem Abschnitt zum Hub in der WORDS-Datei des Schreibers. Jede Seite der Liste steht mit Namen und Zeile aus dem Register.",
  "page": {
   "id": "animals",
   "wing": "animals",
@@ -24,9 +24,9 @@
   }
  },
  "meta": {
-  "title": "Tiere | Museum of Ages",
-  "description": "Wie groß Tiere der Vorzeit waren, jedes neben einem Menschen von 1,70 m im selben Maßstab, in eigenen Bildern des Museums. Die erste Seite: Megalodon.",
-  "og_title": "Tiere",
+  "title": "Tiere: wie groß sie waren | Museum of Ages",
+  "description": "Wie groß die Tiere des Museums waren, jedes neben einem Menschen von 1,70 m im selben Maßstab, in eigenen Bildern. Die erste Seite: der Megalodon.",
+  "og_title": "Tiere: wie groß sie waren",
   "og_image_alt": "Ein Hai mit offenem Maul von der Seite, oben dunkel, unten hell, neben einem grauen Menschen, der winzig daneben steht."
  },
  "labels": {
@@ -38,9 +38,9 @@
  },
  "top": {
   "h1": "Tiere",
-  "answer": "Das Museum baut einen Flügel für Tiere, die vor langer Zeit lebten. Bis er öffnet, sagt hier jede Seite, wie groß eines von ihnen war, neben einem Menschen, in eigenen Bildern.",
+  "answer": "Das Museum baut einen Flügel für Tiere, von den Riesen der Vorzeit bis zu den letzten ihrer Art. Bis er öffnet, beantwortet hier jede Seite eine Frage: Wie groß war dieses Tier? Unser eigenes Bild stellt es neben einen Menschen von 1,70 m, im selben Maßstab, mit den Zahlen und dem, worauf sie beruhen.",
   "out": {
-   "text": "Museum of Ages ist ein digitales Museum. Offen ist heute der Flügel von Leonardo da Vinci, Eintritt frei, kein Konto.",
+   "text": "Museum of Ages ist ein digitales Museum. Offen ist heute der Flügel von Leonardo da Vinci. Eintritt frei, kein Konto.",
    "link": "Zum Leonardo-Flügel"
   }
  },

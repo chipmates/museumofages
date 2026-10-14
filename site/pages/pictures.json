@@ -25,7 +25,8 @@
     { "name": "vinci-view-water-lifting-screw", "file": "view-water-lifting-screw.webp", "widths": [800, 1600] },
     { "name": "animals-megalodon-side", "file": "megalodon-side.png", "widths": [800, 1600, 2400] },
     { "name": "animals-megalodon-head", "file": "megalodon-head.png", "widths": [800, 1600] },
-    { "name": "animals-megalodon-skeleton", "file": "megalodon-skeleton.png", "widths": [800, 1600, 2400] }
+    { "name": "animals-megalodon-skeleton", "file": "megalodon-skeleton.png", "widths": [800, 1600, 2400] },
+    { "name": "animals-megalodon-skeleton-head", "file": "megalodon-skeleton-head.png", "widths": [800, 1600] }
   ],
   "share": [
     { "name": "vinci-inventions-og-1200x630", "file": "stop-works.webp", "crop": "1920x1008+0+60" },

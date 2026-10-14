@@ -12,7 +12,23 @@
 .sc-fig .sc-label{margin-top:12px;max-width:44rem}
 .sc-fig .label__src{margin-top:2px}
 .sp-sec .sc-fig{margin-top:22px}
+.sp-sec .sc-fig+.sc-fig{margin-top:30px}
 .sc-pair{display:grid;gap:30px;margin-top:6px}
+/* The skeleton's key: which tone is found and which is restored */
+.sc-key{margin-top:4px}
+/* From each picture to the table that holds its numbers in words, a line of its own, tall enough for a thumb */
+.sc-totable{display:block;width:max-content;max-width:100%;padding:12px 0;margin:-4px 0 -12px;font-family:var(--sans);
+  font-size:.875rem;line-height:1.25;color:var(--ink);text-decoration:underline;text-decoration-color:var(--mark);text-underline-offset:.18em}
+.sc-totable:hover{color:var(--mark-ink)}
+
+/* ---------- The length bar under the whole animal: each span a bracket at the picture's scale, its label over it ---------- */
+.sc-bars{display:grid;gap:8px;margin-top:14px}
+/* A label longer than its span stands centred over it, reaching out evenly on both sides. */
+.sc-bar{position:relative;display:flex;justify-content:center;margin:0;padding-bottom:9px;font-family:var(--sans);font-size:.75rem;
+  line-height:1.25;letter-spacing:.02em;color:var(--ink-soft);white-space:nowrap}
+.sc-bar::after{content:"";position:absolute;left:0;right:0;bottom:0;height:7px;border:1px solid currentColor;border-top:0}
+.sc-bar--found{color:var(--ink)}
+.sc-bar--found::after{border-width:2px}
 
 /* ---------- The guess: one question after the answer, opened in place ---------- */
 .sc-guess{padding-top:14px;border-top:1px solid var(--hair)}
@@ -28,6 +44,8 @@
 .sc-guess__btn:hover{border-color:var(--ink-soft)}
 .sc-guess__btn:focus-visible{outline:2px solid var(--mark);outline-offset:3px}
 .sc-guess__a{margin-top:14px;color:var(--ink-body);max-width:34rem}
+/* The button names what it does: show the answer, or hide it again */
+.sc-guess__d[open] .sc-guess__show,.sc-guess__d:not([open]) .sc-guess__hide{display:none}
 
 /* ---------- Where a door would stand: one line on the wing in the making, a plain link to an open wing ---------- */
 .sc-out{gap:2px}

@@ -171,9 +171,9 @@ CLAIM_ALLOWED = (r"^meta\.", r"^top\.h1$", r"\.q$")
 # How the words are made is said once, on the page about the museum. A page here carries no line on it.
 
 # What is no sentence in a data file: its page, its pictures, addresses and keys.
-NOT_SPACED = r"^(_|page\.|pics\.)|\.(href|focus|pic|pic_back|tag|k|type|id|stem|sizes|work|wall|stop|page|only|at|wing|shape|src_from)$"
+NOT_SPACED = r"^(_|page\.|pics\.)|\.(href|focus|pic|pic_back|tag|k|type|id|stem|sizes|work|wall|stop|page|only|at|wing|shape|src_from|span)$"
 # The keys of a data file that hold no displayed words (lint() passes them by).
-NOT_WORDS = r"\.(pic|pic_back|tag|k|type|id|stem|sizes|work|wall|stop|page|only|at|wing|shape|src_from)$"
+NOT_WORDS = r"\.(pic|pic_back|tag|k|type|id|stem|sizes|work|wall|stop|page|only|at|wing|shape|src_from|span)$"
 # A cell of a table of numbers may stand empty where no sourced figure exists (its unit line says so), never its first.
 MAY_BE_EMPTY = r"\.rows\.\d+\.cells\.[1-9]\d*$"
 
@@ -239,12 +239,14 @@ class Names:
                 out.append(f'<span class="{kind}">{esc(m.group(1) + ending)}</span>')
                 continue
             kind = "nw nh" if entry.get("person") or entry.get("whole") else "nh"
+            # a scientific name (taxon) is set in italics, as biology writes it
+            tag = "i" if entry.get("taxon") else "span"
             code = entry.get("lang")
             if code and code != self.lang:
                 # the ending is the page's own language and stays outside
-                out.append(f'<span class="{kind}" lang="{code}">{esc(m.group(1))}</span>{esc(ending)}')
+                out.append(f'<{tag} class="{kind}" lang="{code}">{esc(m.group(1))}</{tag}>{esc(ending)}')
             else:
-                out.append(f'<span class="{kind}">{esc(m.group(1) + ending)}</span>')
+                out.append(f'<{tag} class="{kind}">{esc(m.group(1) + ending)}</{tag}>')
         out.append(esc(text[last:]))
         return "".join(out)
 
@@ -404,6 +406,8 @@ def site_chrome(site_built, lang, root, twins, door):
             text = re.sub(rf'[ \t]*<li><a href="(?:{DOOR_SHAPE}|{OLD_DOOR})"[^>]*>[^<]*</a></li>\n?', "", text)
             text = re.sub(r'<li><a href="[^"]*" lang="([\w-]+)" hreflang="\1"[^>]*>[^<]*</a></li>',
                           lambda m: m.group(0) if m.group(1) in twins else "", text)
+            # the credit for the map data the open wing's house is built from: no picture of a wing in the making uses it
+            text = re.sub(r'[ \t]*<p>(?:(?!</p>).)*href="%s"(?:(?!</p>).)*</p>\n?' % re.escape(MAP_LINK), "", text, flags=re.S)
         out[key] = text
     arrow = re.search(r'<svg class="arrow".*?</svg>', page, flags=re.S)
     if not arrow:
@@ -601,6 +605,20 @@ def person_rules(defs):
         if found:
             x, top = float(found.group(1)), float(found.group(2))
             rules.append(".sc-person--%s{left:%g%%;bottom:calc(%g%% + 4px)}" % (name, x, round(100 - top, 3)))
+    return "".join(rules)
+
+
+def span_rules(defs):
+    """Where each span of a picture's length bar starts and ends (pics.<name>.spans, shares of the picture's width).
+    The bar stands under the picture, whose frame is two pixels each side, so the shares are of the width inside it."""
+    rules = []
+    for name, d in defs.items():
+        for key, at in (d.get("spans") or {}).items():
+            found = re.fullmatch(r"(\d{1,3}(?:\.\d+)?)% (\d{1,3}(?:\.\d+)?)%", at)
+            if found:
+                a, b = float(found.group(1)) / 100, float(found.group(2)) / 100
+                rules.append(".sc-bar--%s-%s{margin-left:calc(2px + (100%% - 4px) * %g);width:calc((100%% - 4px) * %g)}"
+                             % (name, key, round(a, 4), round(b - a, 4)))
     return "".join(rules)
 
 
@@ -1039,13 +1057,14 @@ def render(page, lang, data, shared, out_root):
 
     def linked(para):
         """A paragraph: its words, or its parts, where a part is a link to an address (href) or to another page (page).
-        A link and the stop after it stay on one line."""
+        A link, an opening bracket before it and the stop after it stay on one line."""
         if isinstance(para, str):
             return rich(para)
         out = "".join(rich(part) if isinstance(part, str) else
                       f'<a href="{esc(part_href(part))}">{rich(part["text"])}</a>'
                       for part in para)
-        return re.sub(r'(<a href="[^"]*">(?:(?!</a>).)*</a>)([.,:)]+)', r'<span class="nw">\1\2</span>', out)
+        out = re.sub(r'\((<a href="[^"]*">(?:(?!</a>).)*</a>[.,:)]*)', r'<span class="nw">(\1</span>', out)
+        return re.sub(r'(?<!\()(<a href="[^"]*">(?:(?!</a>).)*</a>)([.,:)]+)', r'<span class="nw">\1\2</span>', out)
 
     def ways(links):
         """A block's ways on, each a line of its own: into the wing at a stop (stop), or to another page (page)."""
@@ -1072,11 +1091,30 @@ def render(page, lang, data, shared, out_root):
             return ""
         return fill(parts["person"], {"key": esc(name), "text": rich(labels["person"])})
 
+    table = next((b["id"] for b in data["blocks"] if b["type"] == "numbers"), None)
+
+    def to_table():
+        """The way from a picture's caption to the table that holds its numbers in words."""
+        if not table or not labels.get("to_table"):
+            return ""
+        return fill(parts["to_table"], {"id": esc(table), "text": rich(labels["to_table"])})
+
     def scale_fig(fig, first=False):
-        """A picture at one scale, whole and never cut, with the person's height and its label."""
-        return fill(parts["scale_fig"], {"html.picture": pics.picture(fig["pic"], esc(fig["alt"]), first=first),
-                                         "html.person": person_html(fig["pic"]), "tag": rich(labels[fig["tag"]]),
-                                         "what": rich(fig["what"])})
+        """A picture at one scale, whole and never cut, with the person's height and its label; a closer panel of
+        it follows at its own scale."""
+        out = fill(parts["scale_fig"], {"html.picture": pics.picture(fig["pic"], esc(fig["alt"]), first=first),
+                                        "html.person": person_html(fig["pic"]), "tag": rich(labels[fig["tag"]]),
+                                        "what": rich(fig["what"]), "html.totable": to_table(),
+                                        "html.key": fill(parts["scale_key"], {"text": rich(fig["key"])}) if fig.get("key") else ""})
+        return out + (scale_fig(fig["close"]) if fig.get("close") else "")
+
+    def bars_html(fig):
+        """The length bar under a picture at one scale: each span where the picture's own places put it."""
+        if not fig.get("bars"):
+            return ""
+        return fill(parts["scale_bars"], {"html.spans": "".join(
+            fill(parts["scale_bar"], {"key": esc(f'{fig["pic"]}-{b["span"]}'), "kind": esc(b["span"]), "text": rich(b["text"])})
+            for b in fig["bars"])})
 
     def rows_html(rows):
         return "\n".join(fill(parts["row"], {"label": rich(labels[r["k"]]), "v": rich(r["v"])}) for r in rows)
@@ -1327,9 +1365,11 @@ def render(page, lang, data, shared, out_root):
         guess = data["top"].get("guess")
         frame_html = fill(parts["frame:scale"], {
             "html.picture": pics.picture(sc["pic"], esc(sc["alt"]), first=True), "html.person": person_html(sc["pic"]),
-            "tag": rich(labels[sc["tag"]]), "what": rich(sc["what"]), "note": rich(sc["note"]),
+            "tag": rich(labels[sc["tag"]]), "what": rich(sc["what"]), "note": linked(sc["note"]),
+            "html.bars": bars_html(sc), "html.totable": to_table(),
             "html.close": scale_fig(sc["close"]) if sc.get("close") else "",
-            "html.guess": fill(parts["guess"], {k: rich(guess[k]) for k in ("h", "q", "button", "a")}) if guess else ""})
+            "html.guess": fill(parts["guess"], {**{k: rich(guess[k]) for k in ("h", "q", "button", "a")},
+                                                "button_open": rich(guess.get("button_open") or guess["button"])}) if guess else ""})
         preload, focus = pics.preload(sc["pic"]), ""
     elif hub:
         # a wing in the making's list of its pages: its picture in the structured data is its share picture
@@ -1362,7 +1402,7 @@ def render(page, lang, data, shared, out_root):
         "css.inline": shared["css_scale" if making(wing) else "css_list" if any(b["type"] == "periods" for b in data["blocks"]) else
                              "css_chart" if works or "drawing" in data["top"] or any(b["type"] == "text" for b in data["blocks"]) else "css"]
                       + (shared["langs_css"] + chrome["by"] if chrome["langs"] else ""),
-        "css.faces": faces(root, lang) + focus + person_rules(data["pics"]),
+        "css.faces": faces(root, lang) + focus + person_rules(data["pics"]) + span_rules(data["pics"]),
         "html.preload": preload,
         "html.theme": f'<meta name="theme-color" content="{chrome["theme"]}">\n' if chrome["theme"] else "",
         "html.header": chrome["header"],
@@ -1429,7 +1469,7 @@ def check_built(path, text, out_root, names=None):
     if names:
         # a name of the wing or of the names list that stands outside a span could break or be hyphenated
         own = text[text.index("<main"):text.index("</main>")]
-        loose = shown_text(re.sub(r'<span class="(?:nw|nh|nw nh)"[^>]*>[^<]*</span>', " ", own))
+        loose = shown_text(re.sub(r'<(span|i) class="(?:nw|nh|nw nh)"[^>]*>[^<]*</\1>', " ", own))
         for found in sorted({m.group(1) for m in names.find.finditer(loose)}):
             problems.append(f"{name}: the name {found!r} stands in the page without its span")
         for span in re.findall(r'<span class="nh">([^<]*)</span>', own):
@@ -1701,10 +1741,15 @@ def making_problems(d, wing, data):
         problems.append("top.out needs its line and its link's words")
     figs = [top["scale"], top["scale"].get("close")] if "scale" in top else []
     figs += [b["scale"] for b in d["blocks"] if b.get("scale")]
+    figs += [f.get("close") for f in figs if f and f is not top.get("scale")]
     for fig in filter(None, figs):
         pic = d["pics"].get(fig.get("pic"))
         if not pic or not re.fullmatch(r"\d{1,3}(?:\.\d+)?% \d{1,3}(?:\.\d+)?%", pic.get("person") or ""):
             problems.append(f"the picture {fig.get('pic')!r} at one scale needs pics.<name>.person, the person's place in it")
+        for bar in fig.get("bars", []):
+            at = ((pic or {}).get("spans") or {}).get(bar.get("span"))
+            if not at or not re.fullmatch(r"\d{1,3}(?:\.\d+)?% \d{1,3}(?:\.\d+)?%", at):
+                problems.append(f"the length bar's span {bar.get('span')!r} needs pics.{fig.get('pic')}.spans.<span>, its start and end in the picture")
         if not re.search(r"\d", d["labels"].get("person", "")):
             problems.append("labels.person gives the person's height")
     for b in d["blocks"]:

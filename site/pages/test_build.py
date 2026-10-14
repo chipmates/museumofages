@@ -403,6 +403,100 @@ class Case(unittest.TestCase):
             self.save(lang, data, page)
         self.fails(r"row 0 has \d+ cells and the table \d+ columns")
 
+    def test_a_length_bar_stands_where_its_picture_puts_it(self):
+        page = self.scale_page()
+        bars = self.data("en", page)["top"]["scale"].get("bars")
+        if not bars:
+            self.skipTest("no picture carries a length bar")
+        out, written = self.build()
+        pic = self.data("en", page)["top"]["scale"]["pic"]
+        for path in written:
+            data, lang = self.page_of(path)
+            if data["page"]["id"] != self.data("en", page)["page"]["id"]:
+                continue
+            text = path.read_text(encoding="utf-8")
+            for bar in data["top"]["scale"]["bars"]:
+                # each span is a rule of the page's own sheet, at the shares the picture's data give it
+                a, b = (float(x) / 100 for x in data["pics"][pic]["spans"][bar["span"]].rstrip("%").split("% "))
+                self.assertIn(".sc-bar--%s-%s{margin-left:calc(2px + (100%% - 4px) * %g);width:calc((100%% - 4px) * %g)}"
+                              % (pic, bar["span"], round(a, 4), round(b - a, 4)), text)
+                self.assertIn(bar["text"], self.words(self.own_part(text)).replace("\u00a0", " "))
+        # a span the picture does not place stops the build
+        for lang in ("en", "de"):
+            data = self.data(lang, page)
+            del data["pics"][pic]["spans"][bars[0]["span"]]
+            self.save(lang, data, page)
+        shutil.rmtree(out)
+        self.fails(r"length bar's span")
+
+    def test_each_picture_at_one_scale_leads_to_its_table_and_a_skeleton_has_its_key(self):
+        page = self.scale_page()
+        out, written = self.build()
+        for path in written:
+            data, lang = self.page_of(path)
+            if data["page"]["id"] != self.data("en", page)["page"]["id"]:
+                continue
+            own = self.own_part(path.read_text(encoding="utf-8"))
+            table = next(b["id"] for b in data["blocks"] if b["type"] == "numbers")
+            self.assertIn(f'<table', own)
+            self.assertIn(f'id="{table}"', own)
+            figures = re.findall(r'<figure class="plate sc-fig[^"]*"[^>]*>.*?</figure>', own, flags=re.S)
+            self.assertGreaterEqual(len(figures), 4)
+            for fig in figures:
+                self.assertIn(f'<a class="sc-totable" href="#{table}">', fig)
+            keys = [b["scale"]["key"] for b in data["blocks"] if b.get("scale", {}).get("key")]
+            for key in keys:
+                self.assertIn(html.escape(key, quote=False)[:12], own)
+            # a closer panel of a figure in the page's body follows it
+            closes = [b["scale"]["close"] for b in data["blocks"] if b.get("scale", {}).get("close")]
+            for close in closes:
+                self.assertIn(data["pics"][close["pic"]]["stem"], own)
+
+    def test_the_guess_says_what_its_button_does(self):
+        page = self.scale_page()
+        out, written = self.build()
+        for path in written:
+            data, lang = self.page_of(path)
+            if data["page"]["id"] != self.data("en", page)["page"]["id"]:
+                continue
+            g = data["top"]["guess"]
+            summary = re.search(r'<summary class="sc-guess__btn">(.*?)</summary>', path.read_text(encoding="utf-8"), flags=re.S).group(1)
+            self.assertIn(f'<span class="sc-guess__show">{html.escape(g["button"], quote=False)}</span>', summary)
+            self.assertIn(f'<span class="sc-guess__hide">{html.escape(g.get("button_open", g["button"]), quote=False)}</span>', summary)
+            self.assertIn(".sc-guess__d[open] .sc-guess__show", path.read_text(encoding="utf-8"))
+
+    def test_a_scientific_name_is_set_in_italics(self):
+        names = json.loads((self.dir / "names.json").read_text(encoding="utf-8"))["names"]
+        taxa = [n["text"] for n in names if n.get("taxon")]
+        if not taxa:
+            self.skipTest("no scientific name on the list")
+        out, written = self.build()
+        found = 0
+        for path in written:
+            own = self.own_part(path.read_text(encoding="utf-8"))
+            for name in taxa:
+                if name in self.words(own):
+                    found += 1
+                    self.assertIn(f'<i class="nw nh">{html.escape(name, quote=False)}</i>', own)
+        self.assertGreaterEqual(found, 2)
+
+    def test_the_map_credit_stands_only_where_a_picture_uses_the_map(self):
+        out, written = self.build()
+        for path in written:
+            data, lang = self.page_of(path)
+            text = path.read_text(encoding="utf-8")
+            foot = re.search(r'<footer class="foot".*?</footer>', text, flags=re.S).group(0)
+            if self.making(data):
+                self.assertNotIn("openstreetmap.org/copyright", foot)
+            elif "openstreetmap.org/copyright" in (SITE_BUILT / CHROME[0] / "index.html").read_text(encoding="utf-8"):
+                self.assertIn("openstreetmap.org/copyright", foot)
+
+    def test_an_opening_bracket_stays_on_the_line_of_its_link(self):
+        out, written = self.build()
+        for path in written:
+            own = self.own_part(path.read_text(encoding="utf-8"))
+            self.assertNotRegex(own, r'(?<!<span class="nw">)\(<a href=')
+
     def test_the_guess_follows_the_answer_and_opens_without_a_script(self):
         page = self.scale_page()
         out, written = self.build()
@@ -485,9 +579,9 @@ class Case(unittest.TestCase):
             data, lang = self.page_of(path)
             own = self.own_part(text)
             self.assertIn(".nh{hyphens:none", text)
-            spans = re.findall(r'<span class="(?:nw nh|nh)"(?: lang="(\w+)")?>([^<]*)</span>', own)
+            spans = re.findall(r'<(?:span|i) class="(?:nw nh|nh)"(?: lang="(\w+)")?>([^<]*)</(?:span|i)>', own)
             marked = {html.unescape(word): code for code, word in spans}
-            loose = self.words(re.sub(r'<span class="(?:nw|nh|nw nh)"[^>]*>[^<]*</span>', " ", own))
+            loose = self.words(re.sub(r'<(span|i) class="(?:nw|nh|nw nh)"[^>]*>[^<]*</\1>', " ", own))
             found = 0
             for entry in names:
                 name = entry["text"]

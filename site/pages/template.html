@@ -336,10 +336,10 @@
 <!--@ frame:scale -->
       <!-- The animal whole at one scale beside the person: never cut, so its length can be read off the picture. -->
       <figure class="plate sc-fig sc-fig--first" data-slot="frame">
-        <div class="hang">{{html.picture}}{{html.person}}</div>
+        <div class="hang">{{html.picture}}{{html.person}}</div>{{html.bars}}
         <figcaption class="label sc-label">
           <span class="label__what"><span class="tag">{{tag}}<span class="vh">:</span></span> {{what}}</span>
-          <span class="label__src">{{note}}</span>
+          <span class="label__src">{{note}}</span>{{html.totable}}
         </figcaption>
       </figure>
       <div class="sc-pair">
@@ -348,8 +348,17 @@
 <!--@ scale_fig -->
 <figure class="plate sc-fig">
   <div class="hang">{{html.picture}}{{html.person}}</div>
-  <figcaption class="label sc-label"><span class="label__what"><span class="tag">{{tag}}<span class="vh">:</span></span> {{what}}</span></figcaption>
+  <figcaption class="label sc-label"><span class="label__what"><span class="tag">{{tag}}<span class="vh">:</span></span> {{what}}</span>{{html.key}}{{html.totable}}</figcaption>
 </figure>
+<!--@ scale_key -->
+<span class="label__src sc-key">{{text}}</span>
+<!--@ to_table -->
+<a class="sc-totable" href="#{{id}}">{{text}}</a>
+<!--@ scale_bars -->
+<!-- The length bar: each span set under the picture where the picture's own places put it, at the picture's scale. -->
+<div class="sc-bars">{{html.spans}}</div>
+<!--@ scale_bar -->
+<p class="sc-bar sc-bar--{{key}} sc-bar--{{kind}}"><span class="sc-bar__t">{{text}}</span></p>
 <!--@ person -->
 <span class="sc-person sc-person--{{key}}" aria-hidden="true">{{text}}</span>
 <!--@ guess -->
@@ -359,7 +368,7 @@
   <h2 class="key sc-guess__h" id="guess-h">{{h}}</h2>
   <p class="sc-guess__q">{{q}}</p>
   <details class="sc-guess__d" data-guess>
-    <summary class="sc-guess__btn">{{button}}</summary>
+    <summary class="sc-guess__btn"><span class="sc-guess__show">{{button}}</span><span class="sc-guess__hide">{{button_open}}</span></summary>
     <p class="sc-guess__a">{{a}}</p>
   </details>
 </section>
