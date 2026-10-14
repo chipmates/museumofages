@@ -10,7 +10,7 @@ import { fileURLToPath } from 'node:url'
 import { ASK_SCRIPT, CLICK, ENTRY_KEY, GRANT_PREFIX, WALK_PREFIX, YES_MAX_AGE_MS, asks, unasked } from '../functions/_entry/rules.js'
 import * as entryModule from '../functions/v1/entry.js'
 import { API_VERSION, MAX_BODY, SETTINGS, YES_SKEW_MS, dateTimeOf, forgetToken, onRequestPost, orderIdOf, redact, uploadBody } from '../functions/v1/entry.js'
-import { onRequest as middleware } from '../functions/_middleware.js'
+import { onRequest as middleware, WING_STYLE, wingPage } from '../functions/_middleware.js'
 import { UNASKED, WING_STOPS } from '../functions/_count/lists.js'
 
 const at = (rel) => fileURLToPath(new URL(rel, import.meta.url))
@@ -186,10 +186,27 @@ test('the edge puts the question\'s script on every grant page, click id or not,
     [`/de/?gclid=${GCLID}`, {}], [`/a/g/w/vinci?gclid=${GCLID}`, {}], [`/a/f/?gclid=${GCLID}`, {}], ['/', {}]]) {
     await withRewriter(async (seen) => {
       await page(path, headers)
-      assert.deepEqual(seen.filter((x) => x.append), [], path)
+      assert.deepEqual(seen.filter((x) => x.append && x.selector === 'body'), [], path)
       assert.equal(seen.filter((x) => x.set).length, 1, path)
     })
   }
+})
+
+test('the edge puts the wing\'s first-look style into the head of a wing\'s address and of no other page', async () => {
+  for (const path of ['/w/vinci', '/w/vinci/', '/w/vinci?lang=de', `/a/g/w/vinci?gclid=${GCLID}`, '/a/o/w/vinci', '/w/animals']) {
+    await withRewriter(async (seen) => {
+      await page(path)
+      assert.deepEqual(seen.filter((x) => x.selector === 'head'), [{ selector: 'head', append: WING_STYLE, options: { html: true } }], path)
+    })
+  }
+  for (const path of ['/', '/de/', '/leonardo-da-vinci/', '/w/', '/w/vinci/stop', '/a/x/w/vinci', '/x/w/vinci', '/w/Vinci']) {
+    assert.equal(wingPage(path), false, path)
+    await withRewriter(async (seen) => {
+      await page(path)
+      assert.deepEqual(seen.filter((x) => x.selector === 'head'), [], path)
+    })
+  }
+  assert.match(WING_STYLE, /^<style>[^<]*<\/style>$/)
 })
 
 /* ---- the pages of a wing in the making: never asked, whatever the address carries ---- */

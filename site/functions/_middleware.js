@@ -4,10 +4,26 @@
 // A page under the grant's prefix (the walk excepted), asked for without the Global Privacy Control header, also
 // gets the question's script (_entry/rules.js). The script tests the address for a click id itself: the part of an
 // address after the question mark is never read here.
+// A wing's own address also gets WING_STYLE in its head (wingPage below).
 // Everything that is not a page (pictures, scripts, the film, the count's own route) passes untouched.
 
 import { sourceWord } from './_count/source.js'
 import { ASK_SCRIPT, asks } from './_entry/rules.js'
+
+// A wing's address, also under a placed link's prefix. The path alone, never what follows the question mark.
+const WING_PAGE = /^(?:\/a\/[gpfo])?\/w\/[a-z0-9-]{1,64}\/?$/
+export const wingPage = (path) => WING_PAGE.test(path)
+
+// Kept out of the wing's bundle, whose files are part of the film's key. The shell's first frame (the lobby's
+// opening screen) stays dark until the wing takes over, and on the desktop the welcome card lets the museum show
+// through behind it. The upright glass and the sideways form keep the card as it was.
+export const WING_STYLE = '<style>' +
+  "body[data-phase='transit'] #veil{visibility:hidden}" +
+  '@media not all and (max-aspect-ratio:9/10){' +
+  ".arno-card:not([data-form='cinema']){background:radial-gradient(120% 85% at 50% 38%," +
+  'color-mix(in srgb,var(--na-lapis) 55%,transparent) 0%,color-mix(in srgb,var(--na-abyss) 62%,transparent) 100%)!important}' +
+  ".arno-card:not([data-form='cinema'])::backdrop{background:transparent!important}}" +
+  '</style>'
 
 export async function onRequest(context) {
   const { request } = context
@@ -24,6 +40,7 @@ export async function onRequest(context) {
   if (asks(url.pathname, request.headers)) {
     rewriter = rewriter.on('body', { element: (el) => el.append(`<script src="${ASK_SCRIPT}" defer></script>`, { html: true }) })
   }
+  if (wingPage(url.pathname)) rewriter = rewriter.on('head', { element: (el) => el.append(WING_STYLE, { html: true }) })
   const page = rewriter.transform(response)
   const out = new Response(page.body, page)
   out.headers.delete('ETag')
