@@ -26,8 +26,8 @@ export const RECAP_WORDS = {
   },
   another: { en: 'Another life', de: 'Ein anderes Leben' },
   privacy: {
-    en: 'This list stays on your device. The museum keeps no account and sends nothing away.',
-    de: 'Diese Liste bleibt auf deinem Gerät. Das Museum führt kein Konto und schickt nichts weg.',
+    en: 'This list stays on your device and is never sent anywhere. The museum keeps no account.',
+    de: 'Diese Liste bleibt auf deinem Gerät und wird nirgendwohin geschickt. Das Museum führt kein Konto.',
   },
   forget: { en: 'Forget tonight', de: 'Heute Abend vergessen' },
 } satisfies Record<string, Bi>

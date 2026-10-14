@@ -15,9 +15,11 @@ export const YES_MAX_AGE_MS = 6 * 60 * 60 * 1000
 /** The question's script, which the edge puts on an asked page. */
 export const ASK_SCRIPT = '/static/ask.js'
 
-/** Whether a page request is asked: under the grant's prefix, not the walk, with a click id, without GPC. */
-export function asks(url, headers) {
-  if (!url.pathname.startsWith(GRANT_PREFIX) || url.pathname.startsWith(WALK_PREFIX)) return false
-  if (headers.get('Sec-GPC') === '1') return false
-  return CLICK.test(url.searchParams.get('gclid') ?? '')
+/**
+ * Whether a page gets the question's script: under the grant's prefix and not the walk, by the path alone. The
+ * script itself tests the address for a click id and the browser for Global Privacy Control, so no server code
+ * reads the query.
+ */
+export function asks(pathname) {
+  return pathname.startsWith(GRANT_PREFIX) && !pathname.startsWith(WALK_PREFIX)
 }

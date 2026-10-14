@@ -18,7 +18,8 @@ RULES = SRC.parent / "functions" / "_entry" / "rules.js"
 WALK_SENDER = SRC.parent.parent / "museum" / "src" / "core" / "museum-entry.ts"
 # The privacy section the card links to, and the place of its button.
 SECTION = "question"
-KEYS = ("kicker", "q", "why", "what", "yes", "no", "more", "newtab", "close", "dismiss", "thanks", "undo", "undone", "held", "none")
+KEYS = ("kicker", "q", "why", "what", "whom", "age", "yes", "no", "more", "google", "newtab", "close", "dismiss", "thanks",
+        "undo", "undone", "held", "none")
 
 
 def section_extra(section):

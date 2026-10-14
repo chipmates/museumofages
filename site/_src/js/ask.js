@@ -1,8 +1,8 @@
 /* Museum of Ages, the question for visitors from our Google Ad Grants ads, and the privacy page's button that takes
-   a yes back. The edge puts this script on a page under the grant's prefix (/a/g/) whose address carries the ad's
-   click id (gclid), for a browser that sends no Global Privacy Control signal (functions/_entry/rules.js). The
-   privacy page carries it for its button. On any other page it does nothing, and it reads nothing after the
-   question mark unless the page stands under the grant's prefix.
+   a yes back. The edge puts this script on every page under the grant's prefix (/a/g/) but the walk, by the path
+   alone (functions/_entry/rules.js): this script, not the server, tests the address for the ad's click id (gclid)
+   and the browser for Global Privacy Control. The privacy page carries it for its button. On any other page it
+   does nothing, and it reads nothing after the question mark unless the page stands under the grant's prefix.
    Before the answer the click id lives in this page's memory only, and it leaves the address bar at once. A yes
    keeps one entry for this tab (sessionStorage, moa_entry: the click id and the time of the yes), which the walk
    sends once when a wing opens and then deletes (museum/src/core/museum-entry.ts). A no, or closing the card,
@@ -19,6 +19,8 @@
   var ENTRY_KEY = 'moa_entry';
   var YES_MAX_AGE_MS = 6 * 60 * 60 * 1000;
   var SECTION = 'question';
+  /* Google's own page on how it uses data from sites like ours */
+  var GOOGLE = 'https://business.safety.google/privacy';
   var WORDS = {/*words*/};
   if (HOSTS.indexOf(loc.hostname) < 0) return;
   var t = WORDS[root.getAttribute('lang')];
@@ -130,19 +132,27 @@
     var body = el('div', 'ask__body');
     body.appendChild(el('p', 'ask__why', t.why));
     body.appendChild(el('p', 'ask__what', t.what));
+    body.appendChild(el('p', 'ask__what', t.whom));
+    body.appendChild(el('p', 'ask__age', t.age));
     var act = el('div', 'ask__act');
     var answers = el('div', 'ask__answers');
     var yes = button('ask__btn', t.yes), no = button('ask__btn', t.no);
     answers.appendChild(yes);
     answers.appendChild(no);
-    var more = el('a', 'ask__more', t.more);
-    more.href = t.privacy + '#' + SECTION;
-    /* a new tab, so the question waits here while the details are read */
-    more.target = '_blank';
-    more.rel = 'noopener';
-    more.appendChild(el('span', 'vh', ' (' + t.newtab + ')'));
+    /* both open a new tab, so the question waits here while the details are read */
+    function newTab(cls, text, href) {
+      var a = el('a', 'ask__more ' + cls, text);
+      a.href = href;
+      a.target = '_blank';
+      a.rel = 'noopener';
+      a.appendChild(el('span', 'vh', ' (' + t.newtab + ')'));
+      return a;
+    }
+    var links = el('div', 'ask__links');
+    links.appendChild(newTab('ask__ours', t.more, t.privacy + '#' + SECTION));
+    links.appendChild(newTab('ask__google', t.google, GOOGLE));
     act.appendChild(answers);
-    act.appendChild(more);
+    act.appendChild(links);
     [close, head, body, act].forEach(function (n) { inner.appendChild(n); });
 
     function away() {

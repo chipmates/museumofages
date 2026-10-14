@@ -14,7 +14,7 @@
   text-transform:uppercase;color:var(--ink-soft)}
 .ask__kicker::before{content:"";position:absolute;left:0;top:0;width:28px;height:1px;background:var(--mark)}
 .ask__q{margin:7px 36px 0 0;font-size:1.1875rem;line-height:1.28;letter-spacing:0;color:var(--ink);text-wrap:balance}
-.ask__why,.ask__what,.ask__thanks{margin-top:7px;font-family:var(--sans);font-size:.875rem;line-height:1.5;letter-spacing:.01em;color:var(--ink-soft);text-wrap:pretty}
+.ask__why,.ask__what,.ask__age,.ask__thanks{margin-top:7px;font-family:var(--sans);font-size:.875rem;line-height:1.5;letter-spacing:.01em;color:var(--ink-soft);text-wrap:pretty}
 .ask__why{color:var(--ink-body)}
 .ask__act{margin-top:13px}
 .ask__answers{display:grid;grid-template-columns:1fr 1fr;gap:10px}
@@ -23,7 +23,8 @@
 .ask__btn:hover{box-shadow:inset 0 0 0 1px var(--ink)}
 .ask__btn:active{background:var(--ground-raised)}
 .ask__btn:focus-visible{box-shadow:inset 0 0 0 1px var(--ink),0 0 0 3px var(--ground-edge)}
-.ask__more{display:inline-flex;align-items:center;min-height:44px;margin:2px 0 -10px;font-family:var(--sans);font-size:.875rem;letter-spacing:.02em;color:var(--ink-soft)}
+.ask__links{display:flex;flex-wrap:wrap;column-gap:22px;margin:2px 0 -10px}
+.ask__more{display:inline-flex;align-items:center;min-height:44px;font-family:var(--sans);font-size:.875rem;letter-spacing:.02em;color:var(--ink-soft)}
 .ask__more:hover{color:var(--mark-ink)}
 /* After a yes: one line of thanks, and the button that takes it back. */
 .ask--said .ask__in{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:10px 24px;padding-right:calc(var(--pad) + 40px)}
@@ -32,15 +33,19 @@
 @media (min-width:700px){
   .ask__in{display:grid;grid-template-columns:minmax(0,1fr) 16rem;column-gap:40px;padding-top:22px;padding-bottom:20px}
   .ask__head,.ask__body{grid-column:1;max-width:40rem}
-  .ask__act{grid-column:2;grid-row:1/span 2;align-self:end;margin-top:0}
+  /* on a wide screen the answers stand beside the words and the two links under them */
+  .ask__act{display:contents}
+  .ask__answers{grid-column:2;grid-row:1/span 2;align-self:end}
+  .ask__links{grid-column:1;grid-row:3}
   .ask__q{font-size:1.3125rem}
   .ask--said .ask__in{display:flex;padding-top:14px;padding-bottom:14px}
 }
 @media (min-width:1100px){
   .ask__in{grid-template-columns:minmax(0,22rem) minmax(0,34rem) 16rem;justify-content:space-between;column-gap:48px}
-  .ask__head{grid-column:1}
+  .ask__head{grid-column:1;grid-row:1/span 2}
   .ask__body{grid-column:2;grid-row:1;padding-top:11px}
-  .ask__act{grid-column:3;grid-row:1;padding-top:52px}
+  .ask__answers{grid-column:3;grid-row:1}
+  .ask__links{grid-column:2;grid-row:2}
 }
 @media (prefers-reduced-motion:no-preference){
   .ask{animation:ask-in .4s var(--ease)}
