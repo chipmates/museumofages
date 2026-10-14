@@ -135,9 +135,10 @@
     head.appendChild(q);
     /* the words scroll here when the screen is short; the answers below them never do */
     var body = el('div', 'ask__body');
-    body.appendChild(el('p', 'ask__why', t.why));
+    /* the facts first: on a small screen the fade falls after them, not after the reason for asking */
     body.appendChild(el('p', 'ask__what', t.what));
     body.appendChild(el('p', 'ask__what', t.whom));
+    body.appendChild(el('p', 'ask__why', t.why));
     body.appendChild(el('p', 'ask__age', t.age));
     var act = el('div', 'ask__act');
     var answers = el('div', 'ask__answers');

@@ -31,7 +31,8 @@
 /* the X stands beside the kicker, so the question may run the card's full width */
 .ask__q{margin:4px 0 0;font-size:1.15rem;line-height:1.2;letter-spacing:0;color:var(--ink);text-wrap:balance}
 .ask__why,.ask__what,.ask__age,.ask__thanks{margin-top:4px;font-family:var(--sans);font-size:.8125rem;line-height:1.4;letter-spacing:.01em;color:var(--ink-soft);text-wrap:pretty}
-.ask__why{color:var(--ink-body)}
+/* the opening paragraph reads a step brighter */
+.ask__body>:first-child{color:var(--ink-body)}
 .ask__answers{display:grid;grid-template-columns:1fr 1fr;gap:8px}
 .ask__btn{min-height:44px;padding:6px 12px;border:0;border-radius:2px;background:transparent;color:var(--ink);box-shadow:inset 0 0 0 1px var(--hair-strong);
   font-family:var(--sans);font-size:.875rem;line-height:1.2;letter-spacing:.03em;cursor:pointer}
@@ -82,7 +83,9 @@ html.is-asking .dock{visibility:hidden;transform:translateY(110%)}
   .ask__in{padding:8px 12px 2px}
   .ask__kicker{display:none}
   .ask__q{margin:6px 36px 0 0;font-size:1.02rem;line-height:1.18}
-  .ask__why,.ask__what,.ask__age{margin-top:4px;font-size:.78rem;line-height:1.36}
+  .ask__why,.ask__what,.ask__age{margin-top:4px;font-size:.75rem;line-height:1.33}
+  .ask__body[tabindex]:not(.is-end){-webkit-mask-image:linear-gradient(to bottom,var(--ink) calc(100% - 18px),transparent);
+    mask-image:linear-gradient(to bottom,var(--ink) calc(100% - 18px),transparent)}
   .ask__act{margin-top:8px}
   .ask__body[tabindex]+.ask__act{padding-top:8px}
   .ask__btn{font-size:.8125rem}
