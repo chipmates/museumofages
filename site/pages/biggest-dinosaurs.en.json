@@ -75,6 +75,16 @@
     2400
    ],
    "sizes": "(min-width: 1280px) 690px, (min-width: 960px) 54vw, (min-width: 600px) calc(100vw - 64px), calc(100vw - 40px)"
+  },
+  "trex": {
+   "stem": "animals-t-rex-side",
+   "widths": [
+    800,
+    1600,
+    2400
+   ],
+   "sizes": "(min-width: 1280px) 690px, (min-width: 960px) 54vw, (min-width: 600px) calc(100vw - 64px), calc(100vw - 40px)",
+   "person": "86.42% 63.92%"
   }
  },
  "meta": {
@@ -322,7 +332,14 @@
     {
      "h": "The biggest meat-eater",
      "paras": [
-      "Two answers. By length, Spinosaurus: a grown one was just under 14 m (46 ft) in the model of 2022, scaled up from a young skeleton and a loose adult snout. By weight, T. rex: the heaviest known, called Scotty, comes to about 8.9 tonnes, and a big adult was about 12 m (39 ft) long. Giganotosaurus is often named too, but its remains are fragments and its estimates run from about 6.5 to 14 tonnes."
+      [
+       "Two answers. By length, Spinosaurus: a grown one was just under 14 m (46 ft) in the model of 2022, scaled up from a young skeleton and a loose adult snout. By weight, ",
+       {
+        "text": "T. rex",
+        "page": "t-rex"
+       },
+       ": the heaviest known, called Scotty, comes to about 8.9 tonnes, and a big adult was about 12 m (39 ft) long. Giganotosaurus is often named too, but its remains are fragments and its estimates run from about 6.5 to 14 tonnes."
+      ]
      ]
     }
    ]
@@ -458,6 +475,12 @@
    "type": "pages",
    "id": "next",
    "items": [
+    {
+     "page": "t-rex",
+     "pic": "trex",
+     "alt": "A T. rex from the side on two legs, mouth open and head raised, beside a grey person who does not reach its knee.",
+     "line": "The T. rex from the row, on its own and closer up: length, hip height, weight, and why no one animal measures the whole species."
+    },
     {
      "page": "megalodon",
      "pic": "megalodon",

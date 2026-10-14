@@ -75,6 +75,16 @@
     2400
    ],
    "sizes": "(min-width: 1280px) 690px, (min-width: 960px) 54vw, (min-width: 600px) calc(100vw - 64px), calc(100vw - 40px)"
+  },
+  "trex": {
+   "stem": "animals-t-rex-side",
+   "widths": [
+    800,
+    1600,
+    2400
+   ],
+   "sizes": "(min-width: 1280px) 690px, (min-width: 960px) 54vw, (min-width: 600px) calc(100vw - 64px), calc(100vw - 40px)",
+   "person": "86.42% 63.92%"
   }
  },
  "meta": {
@@ -322,7 +332,14 @@
     {
      "h": "Der größte Fleischfresser",
      "paras": [
-      "Zwei Antworten. Nach der Länge Spinosaurus: Ein erwachsenes Tier war im Modell von 2022 knapp unter 14 m lang, hochgerechnet aus einem jungen Skelett und der losen Schnauze eines erwachsenen. Nach dem Gewicht T. rex: Der schwerste bekannte, genannt Scotty, kommt auf etwa 8,9 t, und ein großer erwachsener T. rex war etwa 12 m lang. Giganotosaurus wird oft genannt, aber seine Reste sind Bruchstücke, die Schätzungen reichen von etwa 6,5 bis 14 t."
+      [
+       "Zwei Antworten. Nach der Länge Spinosaurus: Ein erwachsenes Tier war im Modell von 2022 knapp unter 14 m lang, hochgerechnet aus einem jungen Skelett und der losen Schnauze eines erwachsenen. Nach dem Gewicht ",
+       {
+        "text": "T. rex",
+        "page": "t-rex"
+       },
+       ": Der schwerste bekannte, genannt Scotty, kommt auf etwa 8,9 t, und ein großer erwachsener T. rex war etwa 12 m lang. Giganotosaurus wird oft genannt, aber seine Reste sind Bruchstücke, die Schätzungen reichen von etwa 6,5 bis 14 t."
+      ]
      ]
     }
    ]
@@ -458,6 +475,12 @@
    "type": "pages",
    "id": "next",
    "items": [
+    {
+     "page": "t-rex",
+     "pic": "trex",
+     "alt": "Ein T. rex von der Seite auf zwei Beinen, das Maul offen, der Kopf erhoben, neben einem grauen Menschen, der ihm nicht bis zum Knie reicht.",
+     "line": "Der T. rex aus der Reihe, allein und aus der Nähe: Länge, Hüfthöhe, Gewicht, und warum kein Tier die ganze Art misst."
+    },
     {
      "page": "megalodon",
      "pic": "megalodon",
