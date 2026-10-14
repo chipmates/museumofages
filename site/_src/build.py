@@ -22,6 +22,7 @@ import shutil
 import sys
 from pathlib import Path
 
+import ask
 import buildlib
 import languages
 import placed
@@ -1697,6 +1698,9 @@ def build(out, registry, wing_dirs, mark=None, topics=True, quiet=False, more_pi
         p for d in site.data_raw.values() for p in re.findall(r'"script": "([^"]+)"', json.dumps(d))}
     for name in sorted(scripts):
         shutil.copyfile(SRC / "js" / name, static_dir / name)
+    # the question for visitors from our grant ads: its script carries every built language's words
+    ask_problems = ask.write(out, STATIC, {L.html(l): {k[4:]: v for k, v in site.words[l].items() if k.startswith("ask.")} for l in LANGS},
+                             {L.html(l): L.page(l, "privacy") for l in LANGS})
     (static_dir / R.FILM["data"]).write_text(film_data(site), encoding="utf-8")
     clips = {p for d in site.data_raw.values() for p in re.findall(r'"clip": "([^"]+)"', json.dumps(d))}
     for name in sorted(clips | {R.FILM["music"]}):
@@ -1730,6 +1734,7 @@ def build(out, registry, wing_dirs, mark=None, topics=True, quiet=False, more_pi
     write_sitemap(out, site, [x for x in listed if x[1] in LISTED])
 
     lists, problems = count_lists(site)
+    problems += ask_problems
     for path, text, kind, lang in built:
         problems += check_built(out, path, text, kind, site) + check_doors(path.relative_to(out), text)
     for name in ["site.css"] + sorted(scripts):
@@ -1738,6 +1743,7 @@ def build(out, registry, wing_dirs, mark=None, topics=True, quiet=False, more_pi
     problems += check_menu(out, built, site) + crawl(out, site) + check_gone(out, site) + check_mail(out) + check_switches(out, site) + check_fonts(site)
     problems += check_sign(out, signs) + check_pictures(out, built, site) + check_colours(out, built, site)
     problems += check_picture_licences(out) + placed.finish(out, STATIC, ORIGIN)
+    problems += ask.check(out, STATIC, {L.html(l): L.page(l, "privacy") for l in LANGS})
     if (out / "_redirects").read_text(encoding="utf-8").split() != ([SOURCE, SOURCE_TO, "302"] if SOURCE_LINK else []):
         problems.append("_redirects does not agree with the switch for the link to the code")
     if problems:
@@ -2429,7 +2435,7 @@ def run():
         PROJECT_LINE, PROJECT_LINE_AT, SOURCE_LINK = keep
         return
     # what an earlier build left behind and no page asks for any more
-    asked = {"site.js", COUNT_SCRIPT, R.FILM["script"], R.FILM["music_script"]} | set(re.findall(r'"script": "([^"]+)"', "".join(p.read_text(encoding="utf-8") for p in (SRC / "wings").glob("*.json"))))
+    asked = {"site.js", COUNT_SCRIPT, ask.SCRIPT, R.FILM["script"], R.FILM["music_script"]} | set(re.findall(r'"script": "([^"]+)"', "".join(p.read_text(encoding="utf-8") for p in (SRC / "wings").glob("*.json"))))
     for old in [(SITE / WHAT_DIR["en"]).with_suffix(".html"), (SITE / "de" / WHAT_DIR["de"]).with_suffix(".html")] + [
             p for p in (SITE / STATIC).glob("*.js") if p.name not in asked and (SRC / "js" / p.name).is_file()]:
         if old.exists():

@@ -187,7 +187,7 @@ If your institution holds a work shown here, write to [contact@museumofages.org]
 
 ## Who runs it
 
-Museum of Ages is a project of ChipMates gemeinnützige GmbH, a small German nonprofit in Freiburg. Its purpose is education. ChipMates pays for the museum. The site carries no advertising and sells nothing. The museum has no partnership with any museum, and ChipMates alone decides what it shows and says. A label names a holder because it keeps the original, and for no other reason. The [privacy page](https://museumofages.org/privacy/) lists the few notes the wing keeps in your browser, and they stay on your device. ChipMates' other project is [Agora Cosmica](https://github.com/chipmates/agoracosmica).
+Museum of Ages is a project of ChipMates gemeinnützige GmbH, a small German nonprofit in Freiburg. Its purpose is education. ChipMates pays for the museum. The site carries no advertising and sells nothing. The museum has no partnership with any museum, and ChipMates alone decides what it shows and says. A label names a holder because it keeps the original, and for no other reason. The [privacy page](https://museumofages.org/privacy/) lists the few notes the wing keeps in your browser, and they stay on your device. It also explains the one exception: if you come from one of our ads and say yes to our question, we tell Google once, when a wing opens, that the ad's click led to a visit. ChipMates' other project is [Agora Cosmica](https://github.com/chipmates/agoracosmica).
 
 ## Rights and licences
 

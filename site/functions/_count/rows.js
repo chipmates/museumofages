@@ -5,7 +5,7 @@
 // The dataset's row (blobs in order, the step as the index, no number of our own):
 //   1 step      2 wing or page kind      3 stop number, kind of work or door's place, else ''
 //   4 language  5 hold (walk rows), else ''  6 source word, else ''  7 'start' or 'inside' (page_arrival), else ''
-//   8 device class  9 country  10 'probe' or ''
+//   8 device class  9 country (both '' on the answer's rows)  10 'probe' or ''
 
 import { SOURCES } from './source.js'
 import { LANGUAGES, PAGE_KINDS, WING_STOPS } from './lists.js'
@@ -24,6 +24,10 @@ export const STEPS = Object.freeze({
   page_arrival: { needs: ['page', 'language'], start: true },
   page_read: { needs: ['page', 'language'] },
   door_press: { needs: ['page', 'door', 'language'] },
+  // the answer to the question for visitors from our grant ads (site/_src/js/ask.js), once per landing: the page
+  // and its language only, without the country and device class the other rows carry
+  ask_yes: { needs: ['page', 'language'], bare: true },
+  ask_no: { needs: ['page', 'language'], bare: true },
 })
 
 const has = (list, value) => typeof value === 'string' && list.includes(value)
@@ -80,6 +84,7 @@ export function rowOf(payload, edge) {
   if (!edge || !has(DEVICES, edge.device) || typeof edge.country !== 'string' || !/^[A-Z0-9]{2}$/.test(edge.country)) return null
 
   const walk = step.startsWith('museum_')
+  const bare = spec.bare === true
   return [
     step,
     walk ? payload.wing : payload.page,
@@ -88,8 +93,8 @@ export function rowOf(payload, edge) {
     walk ? payload.hold : '',
     source,
     start,
-    edge.device,
-    edge.country,
+    bare ? '' : edge.device,
+    bare ? '' : edge.country,
     payload.probe === 1 ? 'probe' : '',
   ]
 }

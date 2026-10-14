@@ -305,5 +305,22 @@
     "p": "There is no page at this address.",
     "back": "Back to the start page",
     "enter": "Enter the museum"
+  },
+  "ask": {
+    "kicker": "A question about our ad",
+    "q": "May we tell Google that our ad brought you in?",
+    "why": "Google gives nonprofits like us free ads. It shows ours more often when it sees that they lead to visits.",
+    "what": "With a yes, we send Google the click number of your ad once, when you enter the museum. Nothing else about you, no cookie, no profile. Until then you can take it back. The museum is open either way.",
+    "yes": "Yes",
+    "no": "No",
+    "more": "How this works",
+    "newtab": "opens in a new tab",
+    "close": "Close. This counts as no.",
+    "dismiss": "Close",
+    "thanks": "Thank you. We tell Google once, when you enter the museum.",
+    "undo": "Take it back",
+    "undone": "Taken back. Nothing will be sent.",
+    "held": "Your yes is kept in this tab. We tell Google once, when a wing of the museum opens.",
+    "none": "No yes is kept in this tab. Nothing goes to Google from here."
   }
 }

@@ -291,5 +291,22 @@
   "now": "Un’ala è aperta. Ne stiamo preparando altre, una alla volta.",
   "planned_h": "In programma",
   "to_page": "Di più su quest’ala"
+ },
+ "ask": {
+  "kicker": "Una domanda sul nostro annuncio",
+  "q": "Possiamo dire a Google che il nostro annuncio ti ha portato al museo?",
+  "why": "Google regala annunci alle organizzazioni non profit come la nostra. Mostra i nostri più spesso quando vede che portano a delle visite.",
+  "what": "Con un sì inviamo a Google una sola volta il numero di clic del tuo annuncio, quando entri nel museo. Nient’altro su di te, nessun cookie, nessun profilo. Fino ad allora puoi ritirare il tuo sì. Il museo è aperto in ogni caso.",
+  "yes": "Sì",
+  "no": "No",
+  "more": "Come funziona",
+  "newtab": "si apre in una nuova scheda",
+  "close": "Chiudi. Vale come un no.",
+  "dismiss": "Chiudi",
+  "thanks": "Grazie. Lo diciamo a Google una sola volta, quando entri nel museo.",
+  "undo": "Ritira il sì",
+  "undone": "Ritirato. Non verrà inviato nulla.",
+  "held": "Il tuo sì è conservato in questa scheda. Lo diciamo a Google una sola volta, quando si apre un’ala del museo.",
+  "none": "In questa scheda non è conservato nessun sì. Da qui non va nulla a Google."
  }
 }

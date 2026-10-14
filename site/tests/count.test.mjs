@@ -60,6 +60,8 @@ const GOOD = {
   page_arrival: { step: 'page_arrival', page: 'leonardo', language: 'it', start: 1, source: 'forum', probe: 1 },
   page_read: { step: 'page_read', page: 'inventions', language: 'es' },
   door_press: { step: 'door_press', page: 'home', door: 'item', language: 'en', probe: 1 },
+  ask_yes: { step: 'ask_yes', page: 'inventions', language: 'de', probe: 1 },
+  ask_no: { step: 'ask_no', page: 'home', language: 'bg' },
 }
 const ROWS = {
   museum_arrival: ['museum_arrival', 'vinci', '', 'de', 'upright', 'search', '', 'desktop', 'DE', 'probe'],
@@ -69,12 +71,14 @@ const ROWS = {
   page_arrival: ['page_arrival', 'leonardo', '', 'it', '', 'forum', 'start', 'desktop', 'DE', 'probe'],
   page_read: ['page_read', 'inventions', '', 'es', '', '', '', 'desktop', 'DE', ''],
   door_press: ['door_press', 'home', 'item', 'en', '', '', '', 'desktop', 'DE', 'probe'],
+  ask_yes: ['ask_yes', 'inventions', '', 'de', '', '', '', '', '', 'probe'],
+  ask_no: ['ask_no', 'home', '', 'bg', '', '', '', '', '', ''],
 }
 
 const OTHER = { stop: 9, look: 'film', door: 'end', page: 'privacy', wing: 'vinci', hold: 'wide', source: 'search', start: 1 }
 const NOISE = { path: '/de/?gclid=abc', gclid: 'abc', utm_source: 'x', referrer: 'https://www.google.com/?q=leonardo', id: 'abc', time: 1234 }
 
-test('the seven steps are the sheet\'s seven', () => {
+test('the nine steps are the sheet\'s nine', () => {
   assert.deepEqual(Object.keys(STEPS).sort(), Object.keys(GOOD).sort())
 })
 
@@ -256,4 +260,39 @@ test('the pages\' script and the walk name the same source words, doors and prob
 test('the walk names the holds and kinds of work the function takes', () => {
   assert.deepEqual(quoted(/export type MuseumHold = ([^\n]*)/.exec(walkModule)[1]), [...HOLDS])
   assert.deepEqual(quoted(/export type MuseumLook = ([^\n]*)/.exec(walkModule)[1]), [...LOOKS])
+})
+
+test('the answer to the question: a word and the page, never the click id, the time, the country or the device', async () => {
+  for (const step of ['ask_yes', 'ask_no']) {
+    assert.deepEqual(STEPS[step], { needs: ['page', 'language'], bare: true })
+    const row = await one({ ...GOOD[step], gclid: 'Cj0KCQjwTEST_click-id_0123456789', yes: Date.now(), wing: 'vinci', source: 'ad_grant', start: 1 })
+    assert.deepEqual(row, ROWS[step])
+  }
+  await none({ step: 'ask_maybe', page: 'home', language: 'en' })
+  await none({ step: 'ask_yes', language: 'en' })
+})
+
+// the pages' script, run against a stand-in page: the answer event becomes one beacon with the page's kind
+test('the pages\' script sends the answer it hears once, as a word, and nothing it was not told', async () => {
+  const vm = await import('node:vm')
+  const sent = []
+  const listeners = {}
+  const document = {
+    documentElement: { getAttribute: (n) => ({ lang: 'de', 'data-source': '' })[n] ?? null },
+    currentScript: { getAttribute: (n) => (n === 'data-count' ? 'inventions' : null) },
+    querySelectorAll: () => [], querySelector: () => null, getElementById: () => null, prerendering: false,
+    addEventListener: (type, fn) => { (listeners[type] ||= []).push(fn) },
+  }
+  const window = { location: { hostname: 'museumofages.org', search: '' }, localStorage: { getItem: () => null, setItem() {} },
+    addEventListener() {}, removeEventListener() {}, requestAnimationFrame() {}, innerHeight: 800 }
+  const navigator = { sendBeacon: (to, body) => { sent.push([to, JSON.parse(body)]); return true } }
+  vm.runInNewContext(pageScript, { document, window, navigator })
+  const fire = (detail) => (listeners['moa:answer'] || []).forEach((fn) => fn({ detail }))
+  sent.length = 0
+  fire({ gclid: 'x' })
+  fire('maybe')
+  fire('yes')
+  fire('no')
+  fire('yes')
+  assert.deepEqual(sent, [['/v1/funnel', { step: 'ask_yes', page: 'inventions', language: 'de' }]])
 })

@@ -1,0 +1,58 @@
+/* The question for visitors from our grant ads (js/ask.js), loaded by the script alone, and the privacy page's
+   button that takes a yes back. The card is a band between the header and the page's content: it covers no text,
+   does not follow the reader, dims nothing and traps no focus. The two answers are the same in every property but
+   their word. */
+.ask{background:var(--ground-edge);color:var(--ink);box-shadow:inset 0 -1px 0 var(--hair);font-family:var(--serif);text-align:left}
+.ask__in{position:relative;padding-top:16px;padding-bottom:16px}
+.ask__close{position:absolute;top:6px;right:calc(var(--pad) - 13px);width:44px;height:44px;padding:0;border:0;background:transparent;
+  color:var(--ink-soft);cursor:pointer;border-radius:2px}
+.ask__close::before,.ask__close::after{content:"";position:absolute;left:14px;right:14px;top:50%;height:1.5px;background:currentColor;transform:rotate(45deg)}
+.ask__close::after{transform:rotate(-45deg)}
+.ask__close:hover{color:var(--ink)}
+/* The kicker carries the museum's one mark, a chalk line, as a wall label does. */
+.ask__kicker{position:relative;margin-right:40px;padding-top:11px;font-family:var(--sans);font-size:.75rem;line-height:1.3;letter-spacing:.1em;
+  text-transform:uppercase;color:var(--ink-soft)}
+.ask__kicker::before{content:"";position:absolute;left:0;top:0;width:28px;height:1px;background:var(--mark)}
+.ask__q{margin:7px 36px 0 0;font-size:1.1875rem;line-height:1.28;letter-spacing:0;color:var(--ink);text-wrap:balance}
+.ask__why,.ask__what,.ask__thanks{margin-top:7px;font-family:var(--sans);font-size:.875rem;line-height:1.5;letter-spacing:.01em;color:var(--ink-soft);text-wrap:pretty}
+.ask__why{color:var(--ink-body)}
+.ask__act{margin-top:13px}
+.ask__answers{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.ask__btn{min-height:44px;padding:6px 14px;border:0;border-radius:2px;background:transparent;color:var(--ink);box-shadow:inset 0 0 0 1px var(--hair-strong);
+  font-family:var(--sans);font-size:.9375rem;line-height:1.2;letter-spacing:.03em;cursor:pointer}
+.ask__btn:hover{box-shadow:inset 0 0 0 1px var(--ink)}
+.ask__btn:active{background:var(--ground-raised)}
+.ask__btn:focus-visible{box-shadow:inset 0 0 0 1px var(--ink),0 0 0 3px var(--ground-edge)}
+.ask__more{display:inline-flex;align-items:center;min-height:44px;margin:2px 0 -10px;font-family:var(--sans);font-size:.875rem;letter-spacing:.02em;color:var(--ink-soft)}
+.ask__more:hover{color:var(--mark-ink)}
+/* After a yes: one line of thanks, and the button that takes it back. */
+.ask--said .ask__in{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:10px 24px;padding-right:calc(var(--pad) + 40px)}
+.ask--said .ask__thanks{margin:0;color:var(--ink-body)}
+.ask__back{min-width:12rem}
+@media (min-width:700px){
+  .ask__in{display:grid;grid-template-columns:minmax(0,1fr) 16rem;column-gap:40px;padding-top:22px;padding-bottom:20px}
+  .ask__head,.ask__body{grid-column:1;max-width:40rem}
+  .ask__act{grid-column:2;grid-row:1/span 2;align-self:end;margin-top:0}
+  .ask__q{font-size:1.3125rem}
+  .ask--said .ask__in{display:flex;padding-top:14px;padding-bottom:14px}
+}
+@media (min-width:1100px){
+  .ask__in{grid-template-columns:minmax(0,22rem) minmax(0,34rem) 16rem;justify-content:space-between;column-gap:48px}
+  .ask__head{grid-column:1}
+  .ask__body{grid-column:2;grid-row:1;padding-top:11px}
+  .ask__act{grid-column:3;grid-row:1;padding-top:52px}
+}
+@media (prefers-reduced-motion:no-preference){
+  .ask{animation:ask-in .4s var(--ease)}
+  @keyframes ask-in{from{opacity:0}}
+}
+@media (forced-colors:active){
+  .ask{border-bottom:1px solid CanvasText}
+  .ask__btn{border:1px solid ButtonText}
+}
+@media print{.ask{display:none}}
+
+/* The privacy page: what this tab holds, and the button. */
+.undo{margin-top:22px;padding:16px 18px 18px;border-radius:2px;box-shadow:inset 0 0 0 1px var(--hair)}
+.undo__state{font-family:var(--sans);font-size:.9375rem;line-height:1.5;color:var(--ink-body)}
+.undo__btn{margin-top:12px;min-width:12rem}

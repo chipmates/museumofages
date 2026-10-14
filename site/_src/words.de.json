@@ -310,5 +310,22 @@
     "p": "Unter dieser Adresse gibt es keine Seite.",
     "back": "Zurück zur Startseite",
     "enter": "Ins Museum"
+  },
+  "ask": {
+    "kicker": "Eine Frage zu unserer Anzeige",
+    "q": "Dürfen wir Google sagen, dass dich unsere Anzeige ins Museum gebracht hat?",
+    "why": "Google schenkt gemeinnützigen Organisationen wie uns Anzeigen. Es zeigt unsere öfter, wenn es sieht, dass sie zu Besuchen führen.",
+    "what": "Mit einem Ja schicken wir Google einmal die Klicknummer deiner Anzeige, wenn du das Museum betrittst. Sonst nichts über dich, kein Cookie, kein Profil. Bis dahin kannst du es zurücknehmen. Das Museum ist so oder so offen.",
+    "yes": "Ja",
+    "no": "Nein",
+    "more": "So funktioniert es",
+    "newtab": "öffnet sich in einem neuen Tab",
+    "close": "Schließen. Das zählt als Nein.",
+    "dismiss": "Schließen",
+    "thanks": "Danke. Wir sagen es Google einmal, wenn du das Museum betrittst.",
+    "undo": "Zurücknehmen",
+    "undone": "Zurückgenommen. Es wird nichts gesendet.",
+    "held": "In diesem Tab ist dein Ja gespeichert. Wir sagen es Google einmal, wenn sich ein Flügel des Museums öffnet.",
+    "none": "In diesem Tab ist kein Ja gespeichert. Von hier geht nichts an Google."
   }
 }

@@ -4,6 +4,7 @@ a wing or assumes one: every word comes from the registry, a wing's data file, i
 Standard library only."""
 import re
 
+import ask
 from buildlib import ARROW, LAYERS_SCRIPT, NBSP, bind, esc, number, sign_whole
 
 # The sizes of the plates on the wall after the largest, in the order they hang: never a row of equal boxes.
@@ -954,9 +955,12 @@ def prose(c, text):
 def reading_sections(c, sections):
     toc, body = [], []
     for i, s in enumerate(sections, 1):
-        toc.append(f'<li><a href="#s{i}">{esc(s["h"])}</a></li>')
+        # a section a page links to by name keeps that name whatever its place
+        own, extra = ask.section_extra(s)
+        sid = own or f"s{i}"
+        toc.append(f'<li><a href="#{sid}">{esc(s["h"])}</a></li>')
         blocks = "".join(
             f"<p>{prose(c, b)}</p>" if isinstance(b, str) else '<ul class="bullets">' + "".join(f"<li>{prose(c, x)}</li>" for x in b) + "</ul>"
             for b in s["body"])
-        body.append(f'      <section id="s{i}">\n        <h2>{esc(s["h"])}</h2>\n        {blocks}\n      </section>')
+        body.append(f'      <section id="{sid}">\n        <h2>{esc(s["h"])}</h2>\n        {blocks}{extra}\n      </section>')
     return "".join(toc), "\n".join(body)

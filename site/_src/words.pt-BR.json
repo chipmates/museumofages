@@ -291,5 +291,22 @@
   "now": "Uma ala está aberta. Estamos fazendo outras, uma de cada vez.",
   "planned_h": "Planejadas",
   "to_page": "Mais sobre esta ala"
+ },
+ "ask": {
+  "kicker": "Uma pergunta sobre o nosso anúncio",
+  "q": "Podemos contar ao Google que o nosso anúncio trouxe você ao museu?",
+  "why": "O Google dá anúncios gratuitos a organizações sem fins lucrativos como a nossa. Ele mostra os nossos com mais frequência quando vê que levam a visitas.",
+  "what": "Com um sim, enviamos ao Google uma única vez o número de clique do seu anúncio, quando você entra no museu. Nada mais sobre você, nenhum cookie, nenhum perfil. Até lá, você pode retirar o seu sim. O museu está aberto de qualquer forma.",
+  "yes": "Sim",
+  "no": "Não",
+  "more": "Como funciona",
+  "newtab": "abre em uma nova aba",
+  "close": "Fechar. Isso conta como não.",
+  "dismiss": "Fechar",
+  "thanks": "Obrigado. Contamos ao Google uma única vez, quando você entrar no museu.",
+  "undo": "Retirar o sim",
+  "undone": "Retirado. Nada será enviado.",
+  "held": "O seu sim está guardado nesta aba. Contamos ao Google uma única vez, quando uma ala do museu se abrir.",
+  "none": "Nenhum sim está guardado nesta aba. Daqui não vai nada para o Google."
  }
 }

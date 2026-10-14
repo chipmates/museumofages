@@ -9,12 +9,16 @@
    Every row says how the screen stood at that moment (upright, sideways,
    wide), read from the wing's own form test, and nothing else about it.
    Arrival and use say where the visit came from, as one word worked out once
-   (sourceWord). Sent from the museum's own hosts only; nothing is stored, the
-   dedup lives in this module's memory, and the one thing read from storage is
-   the probe flag our own test browsers carry. */
+   (sourceWord). Sent from the museum's own hosts only. For the count nothing
+   is stored, the dedup lives in this module's memory, and the one thing read
+   from storage is the probe flag our own test browsers carry. The arrival
+   also hands the wing to museum-entry.ts, which reports the entry only for a
+   tab that holds a yes to the question for visitors from our grant ads; the
+   count itself never reads that entry. */
 
 import { pageLang } from '../wings/content'
 import { filmForm } from '../wings/vinci/film-cinema'
+import { sendEntry } from './museum-entry'
 
 type MuseumStep = 'museum_arrival' | 'museum_stop' | 'museum_look' | 'museum_use'
 export type MuseumHold = 'upright' | 'sideways' | 'wide'
@@ -126,6 +130,7 @@ export function countArrival(slug: string): void {
     if (arrived.has(slug)) return
     arrived.add(slug)
     send('museum_arrival', {})
+    sendEntry(slug)
   } catch { /* a count never stands in the museum's way */ }
 }
 

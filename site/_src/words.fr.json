@@ -291,5 +291,22 @@
   "now": "Une aile est ouverte. D’autres sont en préparation, une à la fois.",
   "planned_h": "Prévues",
   "to_page": "À propos de cette aile"
+ },
+ "ask": {
+  "kicker": "Une question sur notre annonce",
+  "q": "Pouvons-nous dire à Google que notre annonce a mené à votre visite?",
+  "why": "Google offre des annonces gratuites aux organisations à but non lucratif comme la nôtre. Il montre les nôtres plus souvent quand il voit qu’elles mènent à des visites.",
+  "what": "Si vous dites oui, nous envoyons une seule fois à Google le numéro de clic de votre annonce, quand vous entrez dans le musée. Rien d’autre sur vous, aucun cookie, aucun profil. D’ici là, vous pouvez retirer votre oui. Le musée est ouvert dans tous les cas.",
+  "yes": "Oui",
+  "no": "Non",
+  "more": "Comment cela fonctionne",
+  "newtab": "s’ouvre dans un nouvel onglet",
+  "close": "Fermer. Cela vaut un non.",
+  "dismiss": "Fermer",
+  "thanks": "Merci. Nous le disons une seule fois à Google, quand vous entrez dans le musée.",
+  "undo": "Retirer mon oui",
+  "undone": "Retiré. Rien ne sera envoyé.",
+  "held": "Votre oui est gardé dans cet onglet. Nous le disons une seule fois à Google, quand une aile du musée s’ouvre.",
+  "none": "Aucun oui n’est gardé dans cet onglet. Rien ne part d’ici vers Google."
  }
 }

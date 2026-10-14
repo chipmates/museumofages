@@ -1,9 +1,11 @@
-/* Museum of Ages, the pages' count. Three plain totals with no key between them, each at most once per page
-   load: page_arrival (the page opened), page_read (the middle of the page's text came into view), door_press
-   (a way into the walk was pressed, by its place). Each beacon carries the page's kind, its language and,
-   on arrival, whether the visit began here with the source word the edge set on the page (data-source).
-   Nothing is stored and nothing is read from storage, except the mark our own test browsers carry. Nothing
-   after the question mark is read, except probe=1. The answer is never read. */
+/* Museum of Ages, the pages' count. Plain totals with no key between them, each at most once per page load:
+   page_arrival (the page opened), page_read (the middle of the page's text came into view), door_press (a way
+   into the walk was pressed, by its place), and ask_yes or ask_no (the answer to the question for visitors from
+   our grant ads, which ask.js announces with the moa:answer event). Each beacon carries the page's kind, its
+   language and, on arrival, whether the visit began here with the source word the edge set on the page
+   (data-source). For the count nothing is stored and nothing is read from storage, except the mark our own test
+   browsers carry. Nothing after the question mark is read, except probe=1. The server's answer is never read.
+   The click id a yes keeps in the tab is ask.js's alone: the count never reads it and never sends it. */
 (function () {
   'use strict';
   var doc = document, win = window, root = doc.documentElement, loc = win.location;
@@ -79,6 +81,15 @@
   }
   doc.addEventListener('click', press, true);
   doc.addEventListener('auxclick', press, true);
+
+  /* the answer to the question, as a word: never the click id, never the time */
+  var answered = false;
+  doc.addEventListener('moa:answer', function (e) {
+    var said = e && e.detail;
+    if (answered || (said !== 'yes' && said !== 'no')) return;
+    answered = true;
+    send('ask_' + said, {});
+  });
 
   /* a page the browser renders ahead counts once it is shown */
   if (doc.prerendering) doc.addEventListener('prerenderingchange', arrive, { once: true });
