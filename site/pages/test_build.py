@@ -311,13 +311,13 @@ class Case(unittest.TestCase):
 
     def test_its_large_number_stands_only_with_its_condition(self):
         page = self.scale_page()
-        for lang, condition in (("en", "two broken discs"), ("de", "zwei angebrochenen Wirbel")):
+        for lang, condition in (("en", r"two broken (?:\w+ )?discs"), ("de", r"zwei angebrochenen? (?:\w+ )?Wirbel")):
             data = self.data(lang, page)
             text = json.dumps(data, ensure_ascii=False)
             if not re.search(r"\b24[.,]3\b", text):
                 self.skipTest("the page names no number with a condition")
-            self.assertIn(condition, text)
-            self.save(lang, json.loads(text.replace(condition, "zwei Wirbel" if lang == "de" else "two discs")), page)
+            self.assertRegex(text, condition)
+            self.save(lang, json.loads(re.sub(condition, "zwei Wirbel" if lang == "de" else "two discs", text)), page)
             self.fails(r"24\[\.,\]3")
             self.save(lang, json.loads(text), page)
 
@@ -496,6 +496,29 @@ class Case(unittest.TestCase):
         for path in written:
             own = self.own_part(path.read_text(encoding="utf-8"))
             self.assertNotRegex(own, r'(?<!<span class="nw">)\(<a href=')
+
+    def test_a_page_of_a_wing_in_the_making_sends_other_sites_only_its_origin(self):
+        out, written = self.build()
+        tag = '<meta name="referrer" content="strict-origin-when-cross-origin">'
+        for path in written:
+            data, lang = self.page_of(path)
+            text = path.read_text(encoding="utf-8")
+            self.assertEqual(text[:text.index("</head>")].count(tag), 1 if self.making(data) else 0, path)
+
+    def test_the_share_picture_of_a_scale_page_carries_its_answer_line(self):
+        page = self.scale_page()
+        spec = importlib.util.spec_from_file_location("build_share", self.dir / "build.py")
+        module = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(module)
+        module.WINGS_FILE = self.registry
+        module.LANGS = tuple(c for c in module.LANGS if c in ("en", "de"))
+        jobs = [j for j in module.still_jobs() if j.get("page") == page and j["kind"] == "share"]
+        self.assertEqual({j["lang"] for j in jobs}, {"en", "de"})
+        for job in jobs:
+            line = self.data(job["lang"], page)["labels"].get("og_answer")
+            if not line:
+                self.skipTest("the page gives no answer line for its share picture")
+            self.assertIn(html.escape(line.replace("\u00a0", " "), quote=False), job["svg"])
 
     def test_the_guess_follows_the_answer_and_opens_without_a_script(self):
         page = self.scale_page()
@@ -1557,6 +1580,22 @@ class PictureLicences(unittest.TestCase):
         # a still that shows a reproduction never goes, not even with the map's credit
         self.assertLessEqual(self.lib.MAP_PICTURES, self.WITH_MAP_CREDIT)
         self.assertFalse(self.lib.MAP_PICTURES & self.lib.FREE_PICTURES)
+
+    def test_a_picture_that_rests_on_anothers_work_carries_its_credit(self):
+        if not self.lib.PICTURE_CREDITS:
+            self.skipTest("no picture rests on another's work")
+        self.assertLessEqual(set(self.lib.PICTURE_CREDITS), self.lib.FREE_PICTURES)
+        found = 0
+        for path in self.pages:
+            for image in self.lib.image_objects(self.graph(path.read_text(encoding="utf-8")) or {}):
+                credit = self.lib.PICTURE_CREDITS.get(self.lib.picture_stem(image.get("contentUrl") or image.get("url")))
+                if credit and "license" in image:
+                    found += 1
+                    # the other work's credit follows the museum's own, once, and the licence stays the museum's
+                    self.assertTrue(image["creditText"].endswith(f", {credit}"), path)
+                    self.assertEqual(image["creditText"].count(credit), 1, path)
+                    self.assertEqual(image["license"], "https://creativecommons.org/licenses/by-sa/4.0/", path)
+        self.assertGreater(found, 0)
 
     def test_only_the_museums_own_pictures_carry_licence_data(self):
         licensed = 0

@@ -349,7 +349,7 @@
             "60 tonnes is never the answer: the weight is disputed, roughly 30 t slim, about 61 t stout"
           ],
           [
-            "(?s)^(?!.*(?:two broken discs|zwei angebrochenen?\\s+wirbel)).*\\b24[.,]3\\b",
+            "(?s)^(?!.*(?:two broken (?:\\w+ )?discs|zwei angebrochenen?\\s+(?:\\w+\\s+)?wirbel)).*\\b24[.,]3\\b",
             "24.3 m only with its condition, the two broken discs"
           ],
           [

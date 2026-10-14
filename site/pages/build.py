@@ -1391,6 +1391,8 @@ def render(page, lang, data, shared, out_root):
         "html.og_alternates": "".join(f'<meta property="og:locale:alternate" content="{L.entries[x]["og"]}">\n'
                                       for x in LISTED if x != lang and x in own) if len(LISTED) > 2 else "",
         "html.robots": "" if lang in LISTED else '<meta name="robots" content="noindex">\n',
+        # a page of a wing in the making leaves a click number in its address, so its links send only the site's origin
+        "html.referrer": '<meta name="referrer" content="strict-origin-when-cross-origin">\n' if making(wing) else "",
         "html.alternates": alternates(lang, urls),
         "meta.title": esc(data["meta"]["title"]),
         "meta.description": esc(data["meta"]["description"]),
@@ -1849,8 +1851,9 @@ def still_jobs(pages=PAGES, loaded=None):
 
 
 def scale_share(d, data, lang, colours):
-    """The share picture of a page of a wing in the making: its heading, the line its share title adds to it, and its
-    first picture at one scale (a list of pages: the first listed page's). Returns {svg}."""
+    """The share picture of a page of a wing in the making: its heading, under it the page's answer line for the link
+    preview (labels.og_answer) or else the line its share title adds to it, and its first picture at one scale (a list
+    of pages: the first listed page's). Returns {svg}."""
     plain = lambda t: t.replace(LIB.NBSP, " ")
     source = d
     if d["page"].get("hub"):
@@ -1864,7 +1867,9 @@ def scale_share(d, data, lang, colours):
         raise SystemExit(f"the picture {name} is not cut: python3 pages/make_pictures.py {pic['stem']} (needs MOA_FILM_STILLS)")
     place = re.fullmatch(r"([\d.]+)% ([\d.]+)%", pic.get("person") or "")
     h1, og = plain(d["top"]["h1"]), plain(d["meta"]["og_title"])
-    words = {"h1": h1, "line": og[len(h1):].strip() if og.startswith(h1) else "", "person": plain(d["labels"]["person"]),
+    answer = d["labels"].get("og_answer")
+    words = {"h1": h1, "line": plain(answer) if answer else og[len(h1):].strip() if og.startswith(h1) else "",
+             "person": plain(d["labels"]["person"]),
              "site": ORIGIN.split("://", 1)[1]}
     return {"svg": CHART.picture_still_svg(words, colours, name, webp_size(found),
                                            (float(place.group(1)) / 100, float(place.group(2)) / 100) if place else None)}

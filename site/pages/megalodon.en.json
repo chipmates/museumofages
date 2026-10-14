@@ -56,9 +56,9 @@
   }
  },
  "meta": {
-  "title": "Megalodon size: about 16 m (52 ft) long | Museum of Ages",
-  "description": "Megalodon size: about 16 m (52 ft) by the one long backbone ever found, the largest perhaps about 20 m. Beside a person, a great white and a blue whale.",
-  "og_title": "Megalodon size: about 16 m (52 ft) long",
+  "title": "Megalodon size: about 16 m by one backbone | Museum of Ages",
+  "description": "Megalodon size and dimensions: about 16 m (52 ft) by the one long backbone ever found, the largest perhaps about 20 m. Beside a person and a blue whale.",
+  "og_title": "Megalodon size: about 16 m by one backbone",
   "og_image_alt": "A shark with its mouth open, seen from the side, dark above and pale below, beside a grey person who looks tiny next to it."
  },
  "labels": {
@@ -69,7 +69,8 @@
   "tag_made": "Made for this page",
   "tag_built": "Reconstruction",
   "person": "1.70 m",
-  "to_table": "The numbers as a table"
+  "to_table": "The numbers as a table",
+  "og_answer": "About 16 m (52 ft) long"
  },
  "top": {
   "h1": "How big was megalodon?",
@@ -107,9 +108,9 @@
   },
   "guess": {
    "h": "Guess first",
-   "q": "How tall is the tallest megalodon tooth ever found?",
+   "q": "How long was a megalodon at birth?",
    "button": "Show the answer",
-   "a": "At least 16 cm (6.3 in), and museums give almost 18 cm (7 in) for the biggest. A great white's tooth is usually about 5 cm long, so the biggest megalodon teeth are about three times as tall.",
+   "a": "About 3.6 to 3.9 m (12 to 13 ft), by a growth model of 2025, more than twice the person of 1.70 m. That is a model, not a measured newborn, so take it as an estimate.",
    "button_open": "Hide the answer"
   },
   "out": {
@@ -123,7 +124,7 @@
    "id": "numbers",
    "nav": "The numbers",
    "h": "The numbers",
-   "unit": "Metres and feet, tonnes. Where no sourced figure exists, the cell stays empty.",
+   "unit": "Metres and feet, tonnes, the teeth in centimetres. Where no sourced figure exists, the cell stays empty.",
    "cols": [
     "Animal",
     "Length",
@@ -160,7 +161,7 @@
       "The largest whale shark measured",
       "18.8 m (62 ft)",
       "close to 34 t",
-      "measured, a living species"
+      "length measured, weight estimated"
      ]
     },
     {
@@ -169,6 +170,14 @@
       "about 30 m (98 ft)",
       "",
       "a living species, the maximum disputed"
+     ]
+    },
+    {
+     "cells": [
+      "The tallest megalodon teeth found",
+      "at least 16 cm (6.3 in) tall, museums give almost 18 cm (7 in)",
+      "",
+      "measured, about three times a great white's tooth"
      ]
     },
     {
@@ -198,7 +207,7 @@
     "close": {
      "pic": "skeleton_head",
      "tag": "tag_built",
-     "what": "The skull and the front of the backbone, closer up, with the person. The discs are the fossils, the skull and the jaw are restored, the teeth are built after another find, a real set, at its own size.",
+     "what": "The skull and the front of the backbone, closer up, with the person. The discs are built after the fossils, the skull and the jaw are restored, the teeth are built after another find, a real set, at its own size.",
      "alt": "The front of the skeleton from the side, a pale restored skull and jaw with gold teeth, then a row of dark discs, beside the grey person."
     }
    }
@@ -209,7 +218,7 @@
    "nav": "How sure this is",
    "h": "How sure this is",
    "paras": [
-    "The 16 m rest on the backbone in Brussels: 141 discs, about 11 m (36 ft) in a row, plus a head and a tail in the proportions of living mackerel sharks. Two research groups got 15.9 m and 16.4 m with different models, which is why we say about 16 m. The 20 m rest on a single tooth, scaled up through whole tooth sets. The weight rests on a body model, and that needs a body shape nobody knows: slim like the largest living sharks gives about 30 tonnes, stout like a great white about 61. That is why the length says about and the weight says disputed."
+    "The 16 m figure rests on the backbone in Brussels: 141 discs, about 11 m (36 ft) in a row, plus a head and a tail in the proportions of living mackerel sharks. Two research groups got 15.9 m and 16.4 m with different models, which is why we say about 16 m. The 20 m figure rests on a single tooth, scaled up through whole tooth sets. The weight rests on a body model, and that needs a body shape nobody knows: slim like the largest living sharks gives about 30 tonnes, stout like a great white about 61. That is why the length says about and the weight says disputed."
    ]
   },
   {
@@ -219,7 +228,7 @@
    "h": "What was found",
    "paras": [
     "In Brussels, at the Royal Belgian Institute of Natural Sciences, lie 141 loose backbone discs of a single shark, IRSNB P 9893, found near Antwerp in the 1860s. The largest is 15.5 cm across, and in a row they run about 11 m. They give the trunk's length, not the head and not the body's girth. No teeth were found with them, so even the name megalodon for this animal is an inference.",
-    "In Denmark, remains of about 20 discs were dug up at Gram in 1978, then damaged in storage in 1989 and long thought lost. Two broken discs and many fragments survive. The largest is 23 cm (9 in) across, and the largest estimate in the list below rests on it alone.",
+    "In Denmark, remains of about 20 discs were dug up at Gram in 1978, then damaged in storage in 1989 and long thought lost. Two broken discs and many fragments survive. The larger disc is 23 cm (9 in) across, and the largest estimate in the list below rests on it.",
     "Nobody has found a megalodon skeleton, and nobody has found a set of teeth still in place in the jaw. Every row of teeth you have ever seen is an arrangement, ours too."
    ]
   },
@@ -240,7 +249,7 @@
     },
     {
      "term": "24 to 25 m (80 feet) and about 94 tonnes",
-     "text": "Shimada and others, 2025 and 2026. The Brussels model scaled up to a Danish disc of 23 cm: 24.3 m, and with the slim body about 94 tonnes. The authors call it hypothetical. It rests on two broken discs and a single step of arithmetic."
+     "text": "Shimada and others, 2025 and 2026. The Brussels model scaled up to a Danish disc of 23 cm: 24.3 m, and with the slim body about 94 tonnes. The authors call it hypothetical. It rests on the larger of two broken Danish discs and a single step of arithmetic."
     },
     {
      "term": "50 to 60 or more tonnes",
@@ -258,7 +267,7 @@
    "nav": "Why our megalodon looks like this",
    "h": "Why our megalodon looks like this",
    "paras": [
-    "It is slim, after the model of 2025: a stout body like a great white's would have cost it too much effort to swim, its authors say, and the largest living sharks are slim. The colour is borrowed from living open-water sharks, dark above and pale below, because the real one is unknown. The teeth are built after another find, UF-VP-311000, a real set, at its own size. The head, the fins and the tail are borrowed from living mackerel sharks, because no megalodon head has ever been found. It is not a great white scaled up: it belonged to its own family, now extinct, and by the newest work it was slimmer and more drawn out than the monster in the film."
+    "It is slim, after the model of 2025: a stout body like a great white's might have cost it too much effort to swim, its authors say, and the largest living sharks are slim. The colour is borrowed from living open-water sharks, dark above and pale below, because the real one is unknown. The teeth are built after another find, UF-VP-311000, a real set, at its own size. The head, the fins and the tail are borrowed from living mackerel sharks, because no megalodon head has ever been found. It is not a great white scaled up: it belonged to its own family, now extinct, and by the newest work it was slimmer and more drawn out than the monster in the film."
    ]
   },
   {
@@ -382,7 +391,12 @@
       "text": "CC BY-SA 4.0",
       "href": "https://creativecommons.org/licenses/by-sa/4.0/"
      },
-     ", credit: Museum of Ages. They show a reconstruction, built in code and rendered in our own engine, not a photograph."
+     ", credit: Museum of Ages, body shape after Shimada and others 2025 (",
+     {
+      "text": "CC BY 4.0",
+      "href": "https://creativecommons.org/licenses/by/4.0/"
+     },
+     "). They show a reconstruction, built in code and rendered in our own engine, not a photograph."
     ]
    ]
   }

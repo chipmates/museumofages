@@ -1307,14 +1307,14 @@
   {
    "path": "pages/pics/img/animals-megalodon-og-de-1200x630.png",
    "url": "/static/img/animals-megalodon-og-de-1200x630.png",
-   "bytes": 110257,
-   "sha256": "ba61345c5d94ff73338a03e09c6f8fa82eec670072ad55bc3b2d0870baa2ad96"
+   "bytes": 114721,
+   "sha256": "af8eca11e2f59a80ef0f12be97763c4a71b9b84645d3a26be74e9790cd512944"
   },
   {
    "path": "pages/pics/img/animals-megalodon-og-en-1200x630.png",
    "url": "/static/img/animals-megalodon-og-en-1200x630.png",
-   "bytes": 107511,
-   "sha256": "e19656ed5b0af30567f39893f64e394076b5426d829ed5d512197d9ecb6b8395"
+   "bytes": 114668,
+   "sha256": "7bd946146e19ce2df2686bf8cd98374c9b5c6b180741a52792cabb8f617ee0e1"
   },
   {
    "path": "pages/pics/img/animals-megalodon-side-1600.avif",
@@ -1355,62 +1355,62 @@
   {
    "path": "pages/pics/img/animals-megalodon-skeleton-1600.avif",
    "url": "/static/img/animals-megalodon-skeleton-1600.avif",
-   "bytes": 11615,
-   "sha256": "7418ed187dcaadbf7f62b2aac5759a771cc771f1c3b02c9093821723c6070dd2"
+   "bytes": 10897,
+   "sha256": "34c8f00b33b3f41a15821dcf88792851f47b377a9a78b08e51c4e796f70d5977"
   },
   {
    "path": "pages/pics/img/animals-megalodon-skeleton-1600.webp",
    "url": "/static/img/animals-megalodon-skeleton-1600.webp",
-   "bytes": 15970,
-   "sha256": "af8aa6968f3997892f2140a80e22d535e4320a0d9c61205cb2364d772ce14a05"
+   "bytes": 15926,
+   "sha256": "336e0c5c91d12773395584f6b92a3c8627f9c69e4972beaffd49174f95522eaa"
   },
   {
    "path": "pages/pics/img/animals-megalodon-skeleton-2400.avif",
    "url": "/static/img/animals-megalodon-skeleton-2400.avif",
-   "bytes": 18800,
-   "sha256": "67936fe3d1eeda741673f4de2a67171af9ccd15cbe2df1a308d418dfd287c397"
+   "bytes": 18299,
+   "sha256": "4aa6f59c6c177bf1efb280fc2f29a17f59fd58262bd1f4872018e37a92341c8d"
   },
   {
    "path": "pages/pics/img/animals-megalodon-skeleton-2400.webp",
    "url": "/static/img/animals-megalodon-skeleton-2400.webp",
-   "bytes": 26220,
-   "sha256": "a0afaf7c9f40d23cadface0beb604fd56185089e522720e328865d15d3410c19"
+   "bytes": 26044,
+   "sha256": "32ac44b969c6c480c8c9ac761e1b2a0985ff1176a72ff6a000c8f9be01ff6a30"
   },
   {
    "path": "pages/pics/img/animals-megalodon-skeleton-800.avif",
    "url": "/static/img/animals-megalodon-skeleton-800.avif",
-   "bytes": 4904,
-   "sha256": "4cddae78852a87936970b8b43a824369052416190bb620521da860a7d409a108"
+   "bytes": 4852,
+   "sha256": "389996cbb4c37c91992f3f84f236699d0064882d1d19a71c563d90023b20ff39"
   },
   {
    "path": "pages/pics/img/animals-megalodon-skeleton-800.webp",
    "url": "/static/img/animals-megalodon-skeleton-800.webp",
-   "bytes": 6384,
-   "sha256": "4e3d672c90056b411c7727a199e0c78f6ed9477751994f5dfa19ba95b036b0bd"
+   "bytes": 6544,
+   "sha256": "f15e10099a29f0b27ff32696ba453db114fb68f1cb6f10fddbb0ab79d6306631"
   },
   {
    "path": "pages/pics/img/animals-megalodon-skeleton-head-1600.avif",
    "url": "/static/img/animals-megalodon-skeleton-head-1600.avif",
-   "bytes": 16484,
-   "sha256": "17b052d4f0d9899ac92cbf19f12b7c388675e1f65a4f6f63f2433048d51cc37d"
+   "bytes": 16262,
+   "sha256": "743266f717d4b33743cc720aafe2b88994eadffc497c45b2e450eeca701c53f8"
   },
   {
    "path": "pages/pics/img/animals-megalodon-skeleton-head-1600.webp",
    "url": "/static/img/animals-megalodon-skeleton-head-1600.webp",
-   "bytes": 22470,
-   "sha256": "fec46589d3edfebf1e49c16117f6ff9cf346f436b8d66c8b52673cc7d0fcea29"
+   "bytes": 22852,
+   "sha256": "bc3ce390d6b1c4a7a3a2fc11a0a6913b907528336d4a33f828767f51323b3140"
   },
   {
    "path": "pages/pics/img/animals-megalodon-skeleton-head-800.avif",
    "url": "/static/img/animals-megalodon-skeleton-head-800.avif",
-   "bytes": 6983,
-   "sha256": "6bb886ad40abdf9a094dc05e14a879984884298152ac2301e49998f84cc5284a"
+   "bytes": 6850,
+   "sha256": "c8845582e15374da818b2f7c2775f5eac06b873ddb1399a472858f03d54ec807"
   },
   {
    "path": "pages/pics/img/animals-megalodon-skeleton-head-800.webp",
    "url": "/static/img/animals-megalodon-skeleton-head-800.webp",
-   "bytes": 9920,
-   "sha256": "1d501287c11f64b04aa93d6ded647482d09628df2cabd0052b9ca9fe61d801a3"
+   "bytes": 9976,
+   "sha256": "90148e29841de4652e4f15c1a36764f4277d5825b93704c4c4488cf1aa3dba0f"
   },
   {
    "path": "pages/pics/img/animals-og-de-1200x630.png",
