@@ -80,7 +80,7 @@
    "tag": "tag_made",
    "what": "Unser T. rex neben einem Menschen von 1,70 m, im selben Maßstab, nach den Maßen von SUE gebaut. In dieser Haltung, Kopf erhoben und gedreht, Schwanz geschwungen, misst er etwa 11,4 m. Gerade ausgelegt wäre dasselbe Skelett etwa 11,8 m lang. SUEs Montage in Chicago misst etwa 12 m.",
    "alt": "Ein T. rex von der Seite auf zwei Beinen, das Maul offen, der Kopf erhoben, neben einem grauen Menschen, der ihm nicht bis zum Knie reicht.",
-   "note": "Eine eigene Rekonstruktion des Museums, nach veröffentlichten Maßen in Code gebaut und in unserer Engine gerendert. Kein Foto.",
+   "note": "Unsere eigene Rekonstruktion, nach veröffentlichten Maßen in Code gebaut und in unserer Engine gerendert. Kein Foto.",
    "marks": [
     {
      "span": "t-rex",
@@ -167,7 +167,7 @@
       "1,70 m",
       "",
       "",
-      "die Vergleichsfigur des Museums"
+      "unsere Vergleichsfigur"
      ]
     }
    ]
@@ -431,12 +431,12 @@
    "h": "Unsere Bilder nutzen",
    "paras": [
     [
-     "Die Bilder auf dieser Seite sind eigene Arbeiten des Museums unter ",
+     "Die Bilder des T. rex auf dieser Seite sind unsere eigene Arbeit unter ",
      {
       "text": "CC BY-SA 4.0",
       "href": "https://creativecommons.org/licenses/by-sa/4.0/deed.de"
      },
-     ", Nachweis: Museum of Ages. Sie zeigen eine Rekonstruktion, in Code gebaut und in unserer Engine gerendert, kein Foto."
+     ", Nachweis: Museum of Ages. Sie zeigen eine Rekonstruktion, in Code gebaut und in unserer Engine gerendert, kein Foto. Die Bilder unter „Im Museum“ nennen ihren Nachweis auf ihren eigenen Seiten."
     ]
    ]
   }

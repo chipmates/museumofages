@@ -56,7 +56,7 @@
  },
  "meta": {
   "title": "T. rex size: about 12 m (39 ft), 8 to 9 t | Museum of Ages",
-  "description": "T. rex size: a large adult about 12 m (39 ft) long, about 4 m (13 ft) at the hips, 8 to 9 tonnes. Ours is built from SUE and stands beside a person.",
+  "description": "T. rex size: a large adult about 12 m (39 ft) long, about 4 m (13 ft) at the hips, 8 to 9 tonnes. Ours is built to SUE's measurements, beside a person.",
   "og_title": "T. rex size: about 12 m (39 ft), 8 to 9 t",
   "og_image_alt": "A T. rex from the side on two legs, mouth open and head raised, beside a grey person who does not reach its knee."
  },
@@ -80,7 +80,7 @@
    "tag": "tag_made",
    "what": "Our T. rex beside a person 1.70 m tall, to one scale, built to SUE's measurements. In this pose, head raised and turned, tail swung, it runs about 11.4 m (37 ft). Laid out straight the same skeleton would be about 11.8 m (39 ft). SUE's mount in Chicago is about 12 m.",
    "alt": "A T. rex from the side on two legs, mouth open and head raised, beside a grey person who does not reach its knee.",
-   "note": "The museum's own reconstruction, built in code from published measurements and rendered in our own engine. Not a photograph.",
+   "note": "Our own reconstruction, built in code from published measurements and rendered in our own engine. Not a photograph.",
    "marks": [
     {
      "span": "t-rex",
@@ -167,7 +167,7 @@
       "1.70 m (5 ft 7 in)",
       "",
       "",
-      "the museum's scale figure"
+      "our scale figure"
      ]
     }
    ]
@@ -431,12 +431,12 @@
    "h": "Use our pictures",
    "paras": [
     [
-     "The pictures on this page are the museum's own work under ",
+     "The pictures of the T. rex on this page are our own work under ",
      {
       "text": "CC BY-SA 4.0",
       "href": "https://creativecommons.org/licenses/by-sa/4.0/"
      },
-     ", credit: Museum of Ages. They show a reconstruction, built in code and rendered in our own engine, not a photograph."
+     ", credit: Museum of Ages. They show a reconstruction, built in code and rendered in our own engine, not a photograph. The pictures under “In the museum” give their credits on their own pages."
     ]
    ]
   }
