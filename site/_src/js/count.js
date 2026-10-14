@@ -1,7 +1,8 @@
 /* Museum of Ages, the pages' count. Plain totals with no key between them, each at most once per page load:
    page_arrival (the page opened), page_read (the middle of the page's text came into view), door_press (a way
-   into the walk was pressed, by its place), and ask_yes or ask_no (the answer to the question for visitors from
-   our grant ads, which ask.js announces with the moa:answer event). Each beacon carries the page's kind, its
+   into the walk was pressed, by its place), ask_shown (the question for visitors from our grant ads was seen,
+   which ask.js announces with the moa:shown event) and ask_yes, ask_no or ask_close (its answer, announced with
+   the moa:answer event; close is the X, which also means no). Each beacon carries the page's kind, its
    language and, on arrival, whether the visit began here with the source word the edge set on the page
    (data-source). For the count nothing is stored and nothing is read from storage, except the mark our own test
    browsers carry. Nothing after the question mark is read, except probe=1. The server's answer is never read.
@@ -82,11 +83,17 @@
   doc.addEventListener('click', press, true);
   doc.addEventListener('auxclick', press, true);
 
-  /* the answer to the question, as a word: never the click id, never the time */
-  var answered = false;
+  /* the question seen, and its answer as a word: never the click id, never the time */
+  var ANSWERS = ['yes', 'no', 'close'];
+  var seen = false, answered = false;
+  doc.addEventListener('moa:shown', function () {
+    if (seen) return;
+    seen = true;
+    send('ask_shown', {});
+  });
   doc.addEventListener('moa:answer', function (e) {
     var said = e && e.detail;
-    if (answered || (said !== 'yes' && said !== 'no')) return;
+    if (answered || ANSWERS.indexOf(said) < 0) return;
     answered = true;
     send('ask_' + said, {});
   });

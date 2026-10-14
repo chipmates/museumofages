@@ -7,8 +7,9 @@
    Before the answer the click id lives in this page's memory only, and it leaves the address bar at once. A yes
    keeps one entry for this tab (sessionStorage, moa_entry: the click id and the time of the yes), which the walk
    sends once when a wing opens and then deletes (museum/src/core/museum-entry.ts). A no, or closing the card,
-   keeps nothing. No cookie, nothing in localStorage. The count hears the answer as a word (the moa:answer event,
-   count.js), never the click id. The build puts every built language's words in WORDS. */
+   keeps nothing. No cookie, nothing in localStorage. The count hears the answer as a word (the moa:answer event:
+   yes, no, or close for the X, which also means no) and that the card was seen (moa:shown), never the click id
+   (count.js). The build puts every built language's words in WORDS. */
 (function () {
   'use strict';
   var doc = document, win = window, root = doc.documentElement, loc = win.location;
@@ -117,11 +118,13 @@
     return CLICK.test(found) ? found : '';
   }
 
-  /* the question: a band in the page's flow under the header, so it covers nothing and does not follow the reader */
+  /* the question: a card fixed to the foot of the screen, over the page but never in its way. It dims nothing,
+     locks no scroll and traps no focus. While it stands the page gets room at its end and keeps a focused element
+     clear of it (scroll-padding), and the phone's own door at the foot waits (ask.css). */
   function ask(gclid) {
-    var card = el('aside', 'ask');
+    var card = el('section', 'ask');
     card.setAttribute('aria-labelledby', 'ask-q');
-    var inner = el('div', 'wrap ask__in');
+    var inner = el('div', 'ask__in');
     card.appendChild(inner);
     var close = button('ask__close');
     close.setAttribute('aria-label', t.close);
@@ -130,6 +133,7 @@
     var q = el('h2', 'ask__q', t.q);
     q.id = 'ask-q';
     head.appendChild(q);
+    /* the words scroll here when the screen is short; the answers below them never do */
     var body = el('div', 'ask__body');
     body.appendChild(el('p', 'ask__why', t.why));
     body.appendChild(el('p', 'ask__what', t.what));
@@ -156,9 +160,45 @@
     act.appendChild(links);
     [close, head, body, act].forEach(function (n) { inner.appendChild(n); });
 
+    /* the room the card takes from the foot of the screen, given to the page's end and to focus scrolling */
+    var sized = 0;
+    function room() {
+      sized = 0;
+      if (!card.isConnected) return;
+      /* from the layout, not the drawn box, which the arrival's rise still moves */
+      var gap = parseFloat(win.getComputedStyle(card).bottom) || 0;
+      root.style.setProperty('--ask-room', Math.ceil(card.offsetHeight + gap) + 'px');
+      /* a body that scrolls is reached by the keyboard too */
+      if (body.isConnected && body.scrollHeight > body.clientHeight + 1) body.setAttribute('tabindex', '0');
+      else body.removeAttribute('tabindex');
+      end();
+    }
+    function end() { body.classList.toggle('is-end', body.scrollTop + body.clientHeight >= body.scrollHeight - 2); }
+    body.addEventListener('scroll', end, { passive: true });
+    function queue() { if (!sized) sized = win.requestAnimationFrame(room); }
+    var watch = typeof ResizeObserver === 'function' ? new ResizeObserver(queue) : null;
+
+    /* shown: at least half the card in view for one second, once; without an observer, once it is placed */
+    var seen = null, timer = 0, told = false;
+    function shown() {
+      if (told) return;
+      told = true;
+      try { doc.dispatchEvent(new CustomEvent('moa:shown')); } catch (e) { /* the count is not told */ }
+    }
+    function unseen() {
+      if (timer) { win.clearTimeout(timer); timer = 0; }
+      if (seen) { seen.disconnect(); seen = null; }
+    }
+
     function away() {
       var had = card.contains(doc.activeElement);
+      unseen();
+      if (watch) watch.disconnect();
+      win.removeEventListener('resize', queue);
+      if (sized) win.cancelAnimationFrame(sized);
       card.remove();
+      root.classList.remove('is-asking');
+      root.style.removeProperty('--ask-room');
       var main = doc.getElementById('main');
       if (had && main) {
         if (!main.hasAttribute('tabindex')) main.setAttribute('tabindex', '-1');
@@ -167,14 +207,16 @@
     }
     function said(word) {
       gclid = '';
+      unseen();
       tell(word);
       away();
     }
     no.addEventListener('click', function () { said('no'); });
-    close.addEventListener('click', function () { said('no'); });
+    close.addEventListener('click', function () { said('close'); });
     yes.addEventListener('click', function () {
       if (!keep(gclid)) { said('no'); return; }
       gclid = '';
+      unseen();
       tell('yes');
       /* the same place takes the yes back, as long as the walk has not opened */
       inner.textContent = '';
@@ -199,14 +241,22 @@
       back.focus();
     });
 
-    /* between the header and the page's content, which keeps its own space above it */
+    /* before the page's content in reading order, as before; on the screen it stands at the foot */
     var main = doc.getElementById('main') || doc.querySelector('main');
-    if (!main || !main.parentNode) { doc.body.appendChild(card); return; }
-    /* a reader already scrolled down keeps the line being read where it was */
-    var scrolled = (win.scrollY || 0) > 0, before = main.getBoundingClientRect().top;
-    main.parentNode.insertBefore(card, main);
-    var moved = main.getBoundingClientRect().top - before;
-    if (scrolled && moved > 0.5) win.scrollBy(0, moved);
+    if (main && main.parentNode) main.parentNode.insertBefore(card, main);
+    else doc.body.appendChild(card);
+    root.classList.add('is-asking');
+    room();
+    if (watch) watch.observe(card);
+    win.addEventListener('resize', queue, { passive: true });
+
+    if (typeof IntersectionObserver !== 'function') { shown(); return; }
+    seen = new IntersectionObserver(function (entries) {
+      var half = entries.some(function (en) { return en.intersectionRatio >= 0.5; });
+      if (half && !timer) timer = win.setTimeout(function () { timer = 0; shown(); unseen(); }, 1000);
+      else if (!half && timer) { win.clearTimeout(timer); timer = 0; }
+    }, { threshold: 0.5 });
+    seen.observe(card);
   }
 
   function start() {

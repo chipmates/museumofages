@@ -60,8 +60,10 @@ const GOOD = {
   page_arrival: { step: 'page_arrival', page: 'leonardo', language: 'it', start: 1, source: 'forum', probe: 1 },
   page_read: { step: 'page_read', page: 'inventions', language: 'es' },
   door_press: { step: 'door_press', page: 'home', door: 'item', language: 'en', probe: 1 },
+  ask_shown: { step: 'ask_shown', page: 'leonardo', language: 'fr', probe: 1 },
   ask_yes: { step: 'ask_yes', page: 'inventions', language: 'de', probe: 1 },
   ask_no: { step: 'ask_no', page: 'home', language: 'bg' },
+  ask_close: { step: 'ask_close', page: 'paintings', language: 'pt-BR' },
 }
 const ROWS = {
   museum_arrival: ['museum_arrival', 'vinci', '', 'de', 'upright', 'search', '', 'desktop', 'DE', 'probe'],
@@ -71,14 +73,16 @@ const ROWS = {
   page_arrival: ['page_arrival', 'leonardo', '', 'it', '', 'forum', 'start', 'desktop', 'DE', 'probe'],
   page_read: ['page_read', 'inventions', '', 'es', '', '', '', 'desktop', 'DE', ''],
   door_press: ['door_press', 'home', 'item', 'en', '', '', '', 'desktop', 'DE', 'probe'],
+  ask_shown: ['ask_shown', 'leonardo', '', 'fr', '', '', '', '', '', 'probe'],
   ask_yes: ['ask_yes', 'inventions', '', 'de', '', '', '', '', '', 'probe'],
   ask_no: ['ask_no', 'home', '', 'bg', '', '', '', '', '', ''],
+  ask_close: ['ask_close', 'paintings', '', 'pt-BR', '', '', '', '', '', ''],
 }
 
 const OTHER = { stop: 9, look: 'film', door: 'end', page: 'privacy', wing: 'vinci', hold: 'wide', source: 'search', start: 1 }
 const NOISE = { path: '/de/?gclid=abc', gclid: 'abc', utm_source: 'x', referrer: 'https://www.google.com/?q=leonardo', id: 'abc', time: 1234 }
 
-test('the nine steps are the sheet\'s nine', () => {
+test('the eleven steps are the sheet\'s eleven', () => {
   assert.deepEqual(Object.keys(STEPS).sort(), Object.keys(GOOD).sort())
 })
 
@@ -262,8 +266,8 @@ test('the walk names the holds and kinds of work the function takes', () => {
   assert.deepEqual(quoted(/export type MuseumLook = ([^\n]*)/.exec(walkModule)[1]), [...LOOKS])
 })
 
-test('the answer to the question: a word and the page, never the click id, the time, the country or the device', async () => {
-  for (const step of ['ask_yes', 'ask_no']) {
+test('the question seen and its answer: a word and the page, never the click id, the time, the country or the device', async () => {
+  for (const step of ['ask_shown', 'ask_yes', 'ask_no', 'ask_close']) {
     assert.deepEqual(STEPS[step], { needs: ['page', 'language'], bare: true })
     const row = await one({ ...GOOD[step], gclid: 'Cj0KCQjwTEST_click-id_0123456789', yes: Date.now(), wing: 'vinci', source: 'ad_grant', start: 1 })
     assert.deepEqual(row, ROWS[step])
@@ -272,7 +276,30 @@ test('the answer to the question: a word and the page, never the click id, the t
   await none({ step: 'ask_yes', language: 'en' })
 })
 
-// the pages' script, run against a stand-in page: the answer event becomes one beacon with the page's kind
+test('ask_shown and ask_close carry nothing beyond the page, its language and the probe mark', async () => {
+  const edge = { country: 'DE', device: 'phone' }
+  const ride = { gclid: 'Cj0KCQjwTEST_click-id_0123456789', yes: Date.now(), seen: 1000, ms: 1234, ratio: 0.5, wing: 'vinci', stop: 3,
+    look: 'film', hold: 'wide', door: 'top', source: 'ad_grant', start: 1, time: 1, bucket: 2, id: 'abc', path: '/a/g/de/?gclid=abc' }
+  for (const step of ['ask_shown', 'ask_close']) {
+    for (const [page, language] of [['home', 'de'], ['inventions', 'en'], ['privacy', 'bg']]) {
+      const row = rowOf({ step, page, language, ...ride }, edge)
+      assert.deepEqual(row, [step, page, '', language, '', '', '', '', '', ''])
+      // only the step, the page and the language are filled: no country, no device class, no source, no label
+      assert.deepEqual(row.map((v, i) => (v ? i : -1)).filter((i) => i >= 0), [0, 1, 3])
+    }
+    assert.deepEqual(rowOf({ step, page: 'home', language: 'de', probe: 1 }, edge)[9], 'probe')
+    assert.equal(rowOf({ step, page: 'home' }, edge), null)
+    assert.equal(rowOf({ step, language: 'de' }, edge), null)
+    assert.equal(rowOf({ step, page: 'nowhere', language: 'de' }, edge), null)
+    assert.equal(rowOf({ step, page: 'home', language: 'de', probe: 2 }, edge), null)
+    const row = await one({ step, page: 'home', language: 'de', ...ride })
+    assert.deepEqual(row, [step, 'home', '', 'de', '', '', '', '', '', ''])
+  }
+  await none({ step: 'ask_seen', page: 'home', language: 'de' })
+  await none({ step: 'ask_x', page: 'home', language: 'de' })
+})
+
+// the pages' script, run against a stand-in page: the question's events become beacons with the page's kind
 test('the pages\' script sends the answer it hears once, as a word, and nothing it was not told', async () => {
   const vm = await import('node:vm')
   const sent = []
@@ -288,11 +315,57 @@ test('the pages\' script sends the answer it hears once, as a word, and nothing 
   const navigator = { sendBeacon: (to, body) => { sent.push([to, JSON.parse(body)]); return true } }
   vm.runInNewContext(pageScript, { document, window, navigator })
   const fire = (detail) => (listeners['moa:answer'] || []).forEach((fn) => fn({ detail }))
+  const seen = (detail) => (listeners['moa:shown'] || []).forEach((fn) => fn({ detail }))
   sent.length = 0
   fire({ gclid: 'x' })
   fire('maybe')
+  fire('shown')
   fire('yes')
   fire('no')
+  fire('close')
   fire('yes')
   assert.deepEqual(sent, [['/v1/funnel', { step: 'ask_yes', page: 'inventions', language: 'de' }]])
+  sent.length = 0
+  seen({ gclid: 'x' })
+  seen()
+  seen('yes')
+  assert.deepEqual(sent, [['/v1/funnel', { step: 'ask_shown', page: 'inventions', language: 'de' }]])
+})
+
+// one page load at a time: the X is its own answer, and seen and answered count once each, in either order
+async function pageRun() {
+  const vm = await import('node:vm')
+  const sent = []
+  const listeners = {}
+  const document = {
+    documentElement: { getAttribute: (n) => ({ lang: 'bg', 'data-source': '' })[n] ?? null },
+    currentScript: { getAttribute: (n) => (n === 'data-count' ? 'home' : null) },
+    querySelectorAll: () => [], querySelector: () => null, getElementById: () => null, prerendering: false,
+    addEventListener: (type, fn) => { (listeners[type] ||= []).push(fn) },
+  }
+  const window = { location: { hostname: 'museumofages.org', search: '' }, localStorage: { getItem: () => null, setItem() {} },
+    addEventListener() {}, removeEventListener() {}, requestAnimationFrame() {}, innerHeight: 800 }
+  const navigator = { sendBeacon: (to, body) => { sent.push(JSON.parse(body)); return true } }
+  vm.runInNewContext(pageScript, { document, window, navigator })
+  sent.length = 0
+  return {
+    sent,
+    answer: (detail) => (listeners['moa:answer'] || []).forEach((fn) => fn({ detail })),
+    shown: () => (listeners['moa:shown'] || []).forEach((fn) => fn({})),
+  }
+}
+
+test('the pages\' script: the X counts as ask_close, never as ask_no, and No stays ask_no', async () => {
+  const x = await pageRun()
+  x.shown()
+  x.answer('close')
+  x.answer('no')
+  x.shown()
+  assert.deepEqual(x.sent, [{ step: 'ask_shown', page: 'home', language: 'bg' }, { step: 'ask_close', page: 'home', language: 'bg' }])
+  const no = await pageRun()
+  no.answer('no')
+  no.answer('close')
+  no.shown()
+  assert.deepEqual(no.sent, [{ step: 'ask_no', page: 'home', language: 'bg' }, { step: 'ask_shown', page: 'home', language: 'bg' }])
+  for (const b of [...x.sent, ...no.sent]) assert.deepEqual(Object.keys(b).sort(), ['language', 'page', 'step'])
 })

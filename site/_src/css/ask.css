@@ -1,58 +1,99 @@
 /* The question for visitors from our grant ads (js/ask.js), loaded by the script alone, and the privacy page's
-   button that takes a yes back. The card is a band between the header and the page's content: it covers no text,
-   does not follow the reader, dims nothing and traps no focus. The two answers are the same in every property but
-   their word. */
-.ask{background:var(--ground-edge);color:var(--ink);box-shadow:inset 0 -1px 0 var(--hair);font-family:var(--serif);text-align:left}
-.ask__in{position:relative;padding-top:16px;padding-bottom:16px}
-.ask__close{position:absolute;top:6px;right:calc(var(--pad) - 13px);width:44px;height:44px;padding:0;border:0;background:transparent;
+   button that takes a yes back. The card stands fixed at the foot of the screen, a plate flush with the edge on a
+   phone and a floating card from 481 px. It takes at most about 55% of the screen's height: the words scroll inside
+   it, the answers never do. It dims nothing, locks no scroll and traps no focus. The two answers are the same in
+   every property but their word. */
+/* The card keeps the wall's roles on a stone sheet too, as the bar, the footer and the dock do. */
+.ask{--ground:var(--page);--ground-edge:var(--edge);--ground-raised:var(--raised);--ink:var(--linen);
+  --ink-body:color-mix(in srgb,var(--linen) 86%,var(--text-2));--ink-soft:var(--text-2);--mark:var(--chalk);--mark-ink:var(--chalk-text);
+  --hair:var(--line);--hair-strong:var(--line-strong);--focus:var(--linen);--shade:var(--edge)}
+.ask{position:fixed;z-index:18;left:0;right:0;bottom:0;display:flex;flex-direction:column;max-height:55vh;max-height:55svh;
+  padding-bottom:env(safe-area-inset-bottom);background:var(--ground-edge);color:var(--ink);
+  box-shadow:0 -1px 0 var(--hair-strong),0 -26px 40px -30px var(--shade);font-family:var(--serif);text-align:left}
+.ask__in{position:relative;display:flex;flex-direction:column;flex:0 1 auto;min-height:0;padding:11px 16px 2px}
+.ask__head{flex:none}
+.ask__body{flex:0 1 auto;min-height:0;overflow-y:auto;overscroll-behavior:contain}
+.ask__act{flex:none;margin-top:9px}
+/* a body that scrolls: its last visible line fades until the end is reached, and a hairline over the answers says
+   the words go on above them */
+.ask__body[tabindex]:not(.is-end){-webkit-mask-image:linear-gradient(to bottom,var(--ink) calc(100% - 26px),transparent);
+  mask-image:linear-gradient(to bottom,var(--ink) calc(100% - 26px),transparent)}
+.ask__body[tabindex]+.ask__act{padding-top:9px;box-shadow:0 -1px 0 var(--hair)}
+.ask__close{position:absolute;top:0;right:4px;width:44px;height:44px;padding:0;border:0;background:transparent;
   color:var(--ink-soft);cursor:pointer;border-radius:2px}
 .ask__close::before,.ask__close::after{content:"";position:absolute;left:14px;right:14px;top:50%;height:1.5px;background:currentColor;transform:rotate(45deg)}
 .ask__close::after{transform:rotate(-45deg)}
 .ask__close:hover{color:var(--ink)}
 /* The kicker carries the museum's one mark, a chalk line, as a wall label does. */
-.ask__kicker{position:relative;margin-right:40px;padding-top:11px;font-family:var(--sans);font-size:.75rem;line-height:1.3;letter-spacing:.1em;
+.ask__kicker{position:relative;margin-right:40px;padding-top:8px;font-family:var(--sans);font-size:.6875rem;line-height:1.3;letter-spacing:.1em;
   text-transform:uppercase;color:var(--ink-soft)}
-.ask__kicker::before{content:"";position:absolute;left:0;top:0;width:28px;height:1px;background:var(--mark)}
-.ask__q{margin:7px 36px 0 0;font-size:1.1875rem;line-height:1.28;letter-spacing:0;color:var(--ink);text-wrap:balance}
-.ask__why,.ask__what,.ask__age,.ask__thanks{margin-top:7px;font-family:var(--sans);font-size:.875rem;line-height:1.5;letter-spacing:.01em;color:var(--ink-soft);text-wrap:pretty}
+.ask__kicker::before{content:"";position:absolute;left:0;top:0;width:24px;height:1px;background:var(--mark)}
+/* the X stands beside the kicker, so the question may run the card's full width */
+.ask__q{margin:4px 0 0;font-size:1.15rem;line-height:1.2;letter-spacing:0;color:var(--ink);text-wrap:balance}
+.ask__why,.ask__what,.ask__age,.ask__thanks{margin-top:4px;font-family:var(--sans);font-size:.8125rem;line-height:1.4;letter-spacing:.01em;color:var(--ink-soft);text-wrap:pretty}
 .ask__why{color:var(--ink-body)}
-.ask__act{margin-top:13px}
-.ask__answers{display:grid;grid-template-columns:1fr 1fr;gap:10px}
-.ask__btn{min-height:44px;padding:6px 14px;border:0;border-radius:2px;background:transparent;color:var(--ink);box-shadow:inset 0 0 0 1px var(--hair-strong);
-  font-family:var(--sans);font-size:.9375rem;line-height:1.2;letter-spacing:.03em;cursor:pointer}
+.ask__answers{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.ask__btn{min-height:44px;padding:6px 12px;border:0;border-radius:2px;background:transparent;color:var(--ink);box-shadow:inset 0 0 0 1px var(--hair-strong);
+  font-family:var(--sans);font-size:.875rem;line-height:1.2;letter-spacing:.03em;cursor:pointer}
 .ask__btn:hover{box-shadow:inset 0 0 0 1px var(--ink)}
 .ask__btn:active{background:var(--ground-raised)}
 .ask__btn:focus-visible{box-shadow:inset 0 0 0 1px var(--ink),0 0 0 3px var(--ground-edge)}
-.ask__links{display:flex;flex-wrap:wrap;column-gap:22px;margin:2px 0 -10px}
-.ask__more{display:inline-flex;align-items:center;min-height:44px;font-family:var(--sans);font-size:.875rem;letter-spacing:.02em;color:var(--ink-soft)}
+/* on a phone the two links stand under the two answers, one to a column, and a long one wraps inside its own 44 px */
+.ask__links{display:grid;grid-template-columns:1fr 1fr;column-gap:8px}
+.ask__more{display:inline-flex;align-items:center;min-height:44px;padding-block:4px;font-family:var(--sans);font-size:.8125rem;line-height:1.25;letter-spacing:.02em;color:var(--ink-soft);text-wrap:balance}
 .ask__more:hover{color:var(--mark-ink)}
 /* After a yes: one line of thanks, and the button that takes it back. */
-.ask--said .ask__in{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:10px 24px;padding-right:calc(var(--pad) + 40px)}
-.ask--said .ask__thanks{margin:0;color:var(--ink-body)}
-.ask__back{min-width:12rem}
-@media (min-width:700px){
-  .ask__in{display:grid;grid-template-columns:minmax(0,1fr) 16rem;column-gap:40px;padding-top:22px;padding-bottom:20px}
-  .ask__head,.ask__body{grid-column:1;max-width:40rem}
-  /* on a wide screen the answers stand beside the words and the two links under them */
-  .ask__act{display:contents}
-  .ask__answers{grid-column:2;grid-row:1/span 2;align-self:end}
-  .ask__links{grid-column:1;grid-row:3}
-  .ask__q{font-size:1.3125rem}
-  .ask--said .ask__in{display:flex;padding-top:14px;padding-bottom:14px}
+.ask--said .ask__in{flex-direction:row;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:10px 20px;padding:12px 56px 12px 16px}
+.ask--said .ask__thanks{flex:1 1 14rem;margin:0;color:var(--ink-body)}
+.ask__back{min-width:11rem}
+/* While the card stands, the page's end and focus scrolling keep clear of it, and the phone's door waits. */
+html.is-asking{scroll-padding-bottom:var(--ask-room,0px)}
+html.is-asking .foot{padding-bottom:calc(var(--ask-room,0px) + 24px)}
+html.is-asking .dock{visibility:hidden;transform:translateY(110%)}
+
+/* From 481 px: a card floating at the foot's centre. */
+@media (min-width:481px){
+  .ask{left:0;right:0;bottom:16px;width:min(640px,calc(100% - 32px));margin-inline:auto;max-height:calc(55vh - 16px);max-height:calc(55svh - 16px);
+    padding-bottom:0;border-radius:3px;box-shadow:inset 0 0 0 1px var(--hair-strong),0 24px 56px -12px var(--shade)}
+  .ask__in{padding:16px 22px 6px}
+  .ask__links{display:flex;flex-wrap:wrap;column-gap:20px}
+  .ask__close{top:4px;right:8px}
+  .ask__kicker{font-size:.71875rem}
+  .ask__q{margin:6px 24px 0 0;font-size:1.25rem}
+  .ask__why,.ask__what,.ask__age,.ask__thanks{margin-top:6px;font-size:.84375rem;line-height:1.5}
+  .ask--said .ask__in{padding:14px 60px 14px 22px}
 }
-@media (min-width:1100px){
-  .ask__in{grid-template-columns:minmax(0,22rem) minmax(0,34rem) 16rem;justify-content:space-between;column-gap:48px}
-  .ask__head{grid-column:1;grid-row:1/span 2}
-  .ask__body{grid-column:2;grid-row:1;padding-top:11px}
-  .ask__answers{grid-column:3;grid-row:1}
-  .ask__links{grid-column:2;grid-row:2}
+/* A phone held sideways: little height, so the kicker goes and the links stand beside the answers. */
+@media (min-width:481px) and (max-height:480px){
+  .ask{bottom:8px;max-height:calc(55vh - 8px);max-height:calc(55svh - 8px)}
+  .ask__in{padding:8px 18px 2px}
+  .ask__close{top:0;right:4px}
+  .ask__kicker{display:none}
+  .ask__q{margin:2px 40px 0 0;font-size:1.05rem;line-height:1.18}
+  .ask__why,.ask__what,.ask__age{margin-top:3px;font-size:.78rem;line-height:1.36}
+  .ask__act{display:flex;align-items:center;gap:0 16px;margin-top:6px}
+  .ask__body[tabindex]+.ask__act{padding-top:6px}
+  .ask__answers{flex:0 0 14rem}
+  .ask__links{flex:1 1 0;column-gap:14px}
+  .ask__more{font-size:.75rem}
+}
+/* The make-or-break: 320 px wide, German, a short screen. */
+@media (max-width:360px){
+  .ask__in{padding:8px 12px 2px}
+  .ask__kicker{display:none}
+  .ask__q{margin:6px 36px 0 0;font-size:1.02rem;line-height:1.18}
+  .ask__why,.ask__what,.ask__age{margin-top:4px;font-size:.78rem;line-height:1.36}
+  .ask__act{margin-top:8px}
+  .ask__body[tabindex]+.ask__act{padding-top:8px}
+  .ask__btn{font-size:.8125rem}
+  .ask__more{font-size:.75rem}
 }
 @media (prefers-reduced-motion:no-preference){
   .ask{animation:ask-in .4s var(--ease)}
-  @keyframes ask-in{from{opacity:0}}
+  @keyframes ask-in{from{opacity:0;transform:translateY(12px)}}
 }
 @media (forced-colors:active){
-  .ask{border-bottom:1px solid CanvasText}
+  .ask{border:1px solid CanvasText}
   .ask__btn{border:1px solid ButtonText}
 }
 @media print{.ask{display:none}}
