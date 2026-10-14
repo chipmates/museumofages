@@ -2,9 +2,9 @@
 
 The code in this repository is under the AGPL-3.0 or later, in [LICENSE](LICENSE). This note is about what the museum shows. Almost everything shown is one of three things: a reproduction, a reconstruction, or a place the museum designed itself. A few props are CC0 models from an open library. Each kind has its own terms.
 
-## The museum's own texts and pictures
+## The museum's own texts and stills
 
-The texts and pictures the museum makes itself are under the [Creative Commons Attribution-ShareAlike 4.0 International licence](https://creativecommons.org/licenses/by-sa/4.0/) (CC BY-SA 4.0). ChipMates gemeinnützige GmbH holds the rights in what the museum made and grants this licence for it. A contributor keeps the rights in what they sent and grants the same licence for it.
+The texts the museum writes and the stills it renders of what it made itself are under the [Creative Commons Attribution-ShareAlike 4.0 International licence](https://creativecommons.org/licenses/by-sa/4.0/) (CC BY-SA 4.0). ChipMates gemeinnützige GmbH holds the rights in what the museum made and grants this licence for it. A contributor keeps the rights in what they sent and grants the same licence for it.
 
 You may copy, share and adapt them for any purpose, commercial ones too. When you share them, credit them as shown below, link to the licence and say if you changed them. Keep any earlier note of changes. If you change them or build on them and share the result, share it under CC BY-SA 4.0, a later version of it, or a licence Creative Commons lists as compatible. You may not add terms or technical locks that stop others from doing what the licence allows.
 
@@ -22,7 +22,7 @@ Not covered:
 
 The CC0 textures and props carry no conditions, so they need no exception.
 
-Until 14 October 2026 this note also named the films and every still. A copy taken then keeps that licence for the museum's own part only: works of others inside it were never covered.
+Until 14 October 2026 this note and the legal notice of museumofages.org also named the films and every still. A copy taken then keeps that licence for the museum's own part only: works of others inside it were never covered.
 
 ## Map and relief data
 
@@ -57,7 +57,7 @@ To reuse a reproduction, follow the licence line on its record. The CC BY-SA abo
 
 ## The records
 
-Every reproduction and every built thing has a record, and every record carries a licence line. A built thing's line says that its source code is under the repository's licence. Pictures of it are under CC BY-SA 4.0, as above. A reproduction's record also names its holder, its source and a hash of its file. The records live in two places, in this repository under `museum/assets/` and beside the files in the asset store outside it. The museum's build checks the records and stops when something the museum shows has none. It writes them all into one file, `na-manifest.json`, which ships with the museum.
+Every reproduction and every built thing has a record, and every record carries a licence line. A built thing's line says that its source code is under the repository's licence. Stills of it are under CC BY-SA 4.0, as above. A reproduction's record also names its holder, its source and a hash of its file. The records live in two places, in this repository under `museum/assets/` and beside the files in the asset store outside it. The museum's build checks the records and stops when something the museum shows has none. It writes them all into one file, `na-manifest.json`, which ships with the museum.
 
 ## Contributions
 
