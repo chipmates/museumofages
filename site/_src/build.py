@@ -306,7 +306,7 @@ LIMITS = [
     (r"wing:.*places\.\w+$|wing:.*lists\.\d+\.h$", 28), (r"wing:holds\..*\.(after|unit)$", 14), (r"wing:.*\.(still|no_sheet)$", 60),
     (r"wing:numbers\.\d+\.term$", 22), (r"wing:numbers\.\d+\.text$", 110), (r"wing:out\.line$", 130), (r"page_what\.s6_p$", 460),
     # the note on our pictures keeps its first and third paragraphs whole, as written (German runs to 461)
-    (r"page_what\.use_p[13]$", 470), (r"", 420),
+    (r"page_what\.use_p[13]$", 480), (r"", 420),
 ]
 # A showpiece's one clip is fetched after the page has loaded, on a phone's connection too.
 CLIP_MAX = 1_500_000
