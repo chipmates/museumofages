@@ -161,7 +161,7 @@
 <!--@ faq_item -->
 <div class="sp-q">
   <h3>{{q}}</h3>
-  <p>{{a}}</p>
+  <p>{{a}}</p>{{html.links}}
 </div>
 <!--@ block:sources -->
 <section class="sp-sec sp-sources" id="{{id}}">
@@ -233,6 +233,8 @@
   </ul>
 <!--@ text_point -->
     <li><span class="sp-points__lead">{{lead}}</span> {{text}}</li>
+<!--@ text_point_plain -->
+    <li>{{text}}</li>
 <!--@ text_sub -->
   <div class="sp-q">
     <h3>{{h}}</h3>

@@ -726,7 +726,8 @@ def mark_lanes(items, width, one_line):
 
 def has_points(data):
     """Whether a text block of the page sets a short list of points."""
-    return any(isinstance(p, dict) for b in data["blocks"] if b["type"] == "text" for p in b.get("paras", []))
+    return any(isinstance(p, dict) for b in data["blocks"] if b["type"] == "text"
+               for p in b.get("paras", []) + [q for sub in b.get("subs", []) for q in sub["paras"]])
 
 
 def marked_figures(data):
@@ -1403,8 +1404,10 @@ def render(page, lang, data, shared, out_root):
                 "html.pic": figure(block.get("pic")),
             })
         elif kind == "faq":
+            # an answer may close with a way on to another page (links), as a block's own ways
             values["html.items"] = "\n".join(
-                fill(parts["faq_item"], {"q": rich(i["q"]), "a": rich(i["a"])}) for i in block["items"])
+                fill(parts["faq_item"], {"q": rich(i["q"]), "a": rich(i["a"]), "html.links": ways(i.get("links", []))})
+                for i in block["items"])
         elif kind == "sources":
             values["html.holders"] = "\n".join(
                 fill(parts["holder"], {"name": rich(h["name"]), "place": rich(h["place"]), "text": rich(h["text"])})
@@ -1414,13 +1417,18 @@ def render(page, lang, data, shared, out_root):
         elif kind == "close":
             values.update({"door.text": rich(block["door"]["text"]), "door.note": rich(block["door"]["note"])})
         elif kind == "text":
-            # a paragraph, or a short list whose points each lead with their own words (points: [lead, text])
-            paras = [fill(parts["text_points"], {"html.items": "\n".join(
-                         fill(parts["text_point"], {"lead": rich(lead), "text": linked(text)}) for lead, text in p["points"])})
-                     if isinstance(p, dict) else fill(parts["text_para"], {"text": linked(p)}) for p in block.get("paras", [])]
-            # answers under their own small headings, each a paragraph or more
+            def points(p):
+                """A short list: a point leads with its own words ([lead, text]) or is its words alone."""
+                return fill(parts["text_points"], {"html.items": "\n".join(
+                    fill(parts["text_point"], {"lead": rich(x[0]), "text": linked(x[1])}) if isinstance(x, list)
+                    else fill(parts["text_point_plain"], {"text": linked(x)}) for x in p["points"])})
+            paras = [points(p) if isinstance(p, dict) else fill(parts["text_para"], {"text": linked(p)})
+                     for p in block.get("paras", [])]
+            # answers or lists under their own small headings, then the section's closing lines (end)
             paras += [fill(parts["text_sub"], {"h": rich(sub["h"]), "html.paras": "\n".join(
-                fill(parts["sub_para"], {"text": linked(p)}) for p in sub["paras"])}) for sub in block.get("subs", [])]
+                points(p) if isinstance(p, dict) else fill(parts["sub_para"], {"text": linked(p)}) for p in sub["paras"])})
+                for sub in block.get("subs", [])]
+            paras += [fill(parts["text_para"], {"text": linked(p)}) for p in block.get("end", [])]
             sc = block.get("scale")
             if sc and "after" in sc:
                 # the picture after the paragraph it shows, not after the whole section
@@ -1446,7 +1454,8 @@ def render(page, lang, data, shared, out_root):
                 if not topic or lang not in shared["data"][item["page"]]:
                     raise SystemExit(f"{page}.{lang}: the list names {item['page']!r}, which is no topic page of this wing in {lang}")
                 # the registry's line binds a number to its unit as the page's own words do
-                line = re.sub(rf"(\d) (?={MORE_UNITS}\b)", "\\1" + LIB.NBSP, topic["line"][lang])
+                # a page may name a neighbour with a line of its own (line), else the list's line
+                line = re.sub(rf"(\d) (?={MORE_UNITS}\b)", "\\1" + LIB.NBSP, item.get("line") or topic["line"][lang])
                 items.append(fill(parts["page_item"], {"href": page_href(item["page"]), "name": rich(topic["name"][lang]),
                                                        "line": rich(LIB.bind(line, lang)),
                                                        "html.pic": pics.picture(item["pic"], esc(item["alt"])) if item.get("pic") else ""}))
