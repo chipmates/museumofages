@@ -17,7 +17,7 @@
 /* The skeleton's key: which tone is found and which is restored */
 .sc-key{margin-top:4px}
 /* From each picture to the table that holds its numbers in words, a line of its own, tall enough for a thumb */
-.sc-totable{display:block;width:max-content;max-width:100%;padding:12px 0;margin:-4px 0 -12px;font-family:var(--sans);
+.sc-totable{display:flex;align-items:center;width:max-content;max-width:100%;min-height:44px;margin:-4px 0 -12px;font-family:var(--sans);
   font-size:.875rem;line-height:1.25;color:var(--ink);text-decoration:underline;text-decoration-color:var(--mark);text-underline-offset:.18em}
 .sc-totable:hover{color:var(--mark-ink)}
 
