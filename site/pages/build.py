@@ -1252,7 +1252,10 @@ def render(page, lang, data, shared, out_root):
             values["html.head"] = "".join(f'<th scope="col">{rich(c)}</th>' for c in block["cols"])
             values["html.rows"] = "\n".join(
                 f'      <tr><th scope="row">{rich(row["cells"][0])}</th>'
-                + "".join(f'<td data-k="{esc(block["cols"][i])}">{rich(c)}</td>' for i, c in enumerate(row["cells"][1:], 1)) + "</tr>"
+                # a cell's words in one span: on a phone the cell is a grid of its label and its words, and a name's
+                # own span would otherwise take a grid place of its own
+                + "".join(f'<td data-k="{esc(block["cols"][i])}">{f"<span>{rich(c)}</span>" if c else ""}</td>'
+                          for i, c in enumerate(row["cells"][1:], 1)) + "</tr>"
                 for row in block["rows"])
         elif kind == "pages":
             # a wing in the making's list of its pages: each by its topic's name and line in the registry

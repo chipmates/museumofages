@@ -520,6 +520,18 @@ class Case(unittest.TestCase):
                 self.skipTest("the page gives no answer line for its share picture")
             self.assertIn(html.escape(line.replace("\u00a0", " "), quote=False), job["svg"])
 
+    def test_each_cell_of_the_numbers_holds_its_words_in_one_element(self):
+        out, written = self.build()
+        cells = 0
+        for path in written:
+            for cell in re.findall(r'<td data-k="[^"]*">(.*?)</td>', path.read_text(encoding="utf-8")):
+                cells += 1
+                # empty, or one span around the words, so a name's span never takes a grid place of its own
+                if cell:
+                    self.assertRegex(cell, r"^<span>.*</span>$", path)
+                    self.assertNotRegex(re.sub(r"<span[^>]*>[^<]*</span>", "", cell[6:-7]), r"<", path)
+        self.assertGreater(cells, 0)
+
     def test_the_guess_follows_the_answer_and_opens_without_a_script(self):
         page = self.scale_page()
         out, written = self.build()
