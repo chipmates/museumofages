@@ -125,7 +125,7 @@
   "scale": {
    "pic": "side",
    "tag": "tag_made",
-   "what": "Unser Spinosaurus neben einem Menschen von 1,70 m, im selben Maßstab: ein junges Tier von etwa 10 m, nach dem Skelett aus Marokko gebaut. Der helle Umriss dahinter ist die Größe der größten erwachsenen Tiere nach dem Modell von 2022, knapp unter 14 m, unser Modell um etwa ein Drittel vergrößert. Der Umriss ist eine Schätzung, kein gefundenes Tier.",
+   "what": "Unser Spinosaurus neben einem Menschen von 1,70 m, im selben Maßstab: ein junges Tier von etwa 10 m, nach dem Skelett aus Marokko gebaut. Der helle Umriss dahinter ist die Größe der größten erwachsenen Tiere nach dem Modell von 2022, knapp unter 14 m, unser Modell um etwa ein Drittel vergrößert. Der Umriss ist eine Schätzung, kein gefundenes Tier. In der Haltung unseres Modells misst der Umriss etwa 13,2 m.",
    "alt": "Ein Spinosaurus von der Seite, mit hohem Rückensegel und tiefem Schwanz, dahinter der helle Umriss eines größeren erwachsenen Tiers, daneben ein grauer Mensch, der ihm bis zur Hüfte reicht.",
    "note": "Unsere eigene Rekonstruktion, nach veröffentlichten Maßen in Code gebaut und in unserer Engine gerendert. Keine Fotos.",
    "marks": [
@@ -364,7 +364,7 @@
       "swatch": "pale",
       "text": "Hell: nach anderen Funden oder ergänzt, die Schnauze, der hintere Schädel, der Hals, die Rippen, die Schulter, die Arme und das Schwanzende."
      },
-     "Drei Teile mischen zwei Quellen und tragen die Farbe des Geliehenen: der Schädel, das Kreuzbein und die Rückenwirbel mit den hohen Dornen."
+     "Drei Teile mischen zwei Quellen und tragen die Farbe des Geliehenen: der Schädel, das Kreuzbein und die Rückenwirbel mit den hohen Dornen. Die kleinen eigenen Stücke von Hals, Rippen und Hand sind nicht eigens gefärbt."
     ]
    }
   },
@@ -436,7 +436,7 @@
    "nav": "Warum unser Spinosaurus so aussieht",
    "h": "Warum unser Spinosaurus so aussieht",
    "paras": [
-    "Er ist nach den Maßen der Knochen des jungen Tiers aus Marokko gebaut, Hüfte, Beine, Fuß und Schwanz in ihren Größen. Wo seine eigenen Knochen fehlen, folgt er Stromers Skelett und Verwandten. Der Bogen des Segels und die Farben sind unsere Wahl, denn weder die Form des Segels noch eine Farbe ist bekannt. Er steht auf zwei Beinen, die Arme angehoben, der Hals leicht geschwungen, und misst in dieser Haltung etwa 10 m."
+    "Er ist nach den Maßen der Knochen des jungen Tiers aus Marokko gebaut, Hüfte, Beine, Fuß und Schwanz in ihren Größen. Wo seine eigenen Knochen fehlen, folgt er Stromers Skelett, anderen Funden und Verwandten. Der Bogen des Segels und die Farben sind unsere Wahl, denn weder die Form des Segels noch eine Farbe ist bekannt. Er steht auf zwei Beinen, die Arme angehoben, der Hals leicht geschwungen, und misst in dieser Haltung etwa 10 m."
    ]
   },
   {
@@ -557,7 +557,7 @@
     },
     {
      "text": "Bayerische Staatssammlung für Paläontologie und Geologie, München: Stromers Skelett, 1944 zerstört, und der Zahn SNSB-BSPG 1993 IX 308.",
-     "href": "https://bspg.snsb.de/ueber-uns/geschichte/"
+     "href": "https://bspg.snsb.de/wp-content/uploads/sites/7/2023/01/c55ae1a9.pdf"
     },
     {
      "text": "Faculté des Sciences Aïn Chock, Casablanca: das Skelett FSAC-KK 11888."

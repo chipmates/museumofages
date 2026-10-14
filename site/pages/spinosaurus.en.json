@@ -125,7 +125,7 @@
   "scale": {
    "pic": "side",
    "tag": "tag_made",
-   "what": "Our Spinosaurus beside a person 1.70 m tall, to one scale: a young one of about 10 m (33 ft), built on the skeleton from Morocco. The pale outline behind it is the largest adults' size by the model of 2022, just under 14 m (46 ft): our model enlarged by about a third. The outline is an estimate, not an animal anyone found.",
+   "what": "Our Spinosaurus beside a person 1.70 m tall, to one scale: a young one of about 10 m (33 ft), built on the skeleton from Morocco. The pale outline behind it is the largest adults' size by the model of 2022, just under 14 m (46 ft): our model enlarged by about a third. The outline is an estimate, not an animal anyone found. In the pose of our model, the outline measures about 13.2 m end to end.",
    "alt": "A Spinosaurus with a tall sail and a deep tail, the pale outline of a larger adult behind it, beside a grey person who reaches its hip.",
    "note": "Our own reconstruction, built in code from published measurements and rendered in our own engine. Not photographs.",
    "marks": [
@@ -364,7 +364,7 @@
       "swatch": "pale",
       "text": "Pale: after other finds or restored, the snout, the back of the skull, the neck, the ribs, the shoulder, the arms and the end of the tail."
      },
-     "Three parts mix two sources and carry the borrowed colour: the skull, the sacrum and the back bones with the tall spines."
+     "Three parts mix two sources and carry the borrowed colour: the skull, the sacrum and the back bones with the tall spines. The small pieces of its own neck, ribs and hand are not coloured apart."
     ]
    }
   },
@@ -436,7 +436,7 @@
    "nav": "Why our Spinosaurus looks like this",
    "h": "Why our Spinosaurus looks like this",
    "paras": [
-    "It is built to the measurements of the bones of the young animal from Morocco, hips, legs, foot and tail at their sizes. Where its own bones are missing, it follows Stromer's skeleton and relatives. The arc of the sail and the colours are our choice, because neither the sail's shape nor any colour is known. It stands on two legs, arms raised, neck in a gentle curve, and runs about 10 m (33 ft) in this pose."
+    "It is built to the measurements of the bones of the young animal from Morocco, hips, legs, foot and tail at their sizes. Where its own bones are missing, it follows Stromer's skeleton, other finds and relatives. The arc of the sail and the colours are our choice, because neither the sail's shape nor any colour is known. It stands on two legs, arms raised, neck in a gentle curve, and runs about 10 m (33 ft) in this pose."
    ]
   },
   {
@@ -557,7 +557,7 @@
     },
     {
      "text": "Bayerische Staatssammlung für Paläontologie und Geologie, Munich: Stromer's skeleton, destroyed in 1944, and the tooth SNSB-BSPG 1993 IX 308.",
-     "href": "https://bspg.snsb.de/ueber-uns/geschichte/"
+     "href": "https://bspg.snsb.de/wp-content/uploads/sites/7/2023/01/c55ae1a9.pdf"
     },
     {
      "text": "Faculté des Sciences Aïn Chock, Casablanca: the skeleton FSAC-KK 11888."
