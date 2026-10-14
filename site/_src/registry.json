@@ -365,11 +365,185 @@
             "it died out about 3.6 million years ago"
           ]
         ]
+      },
+      {
+        "slug": {
+          "en": "biggest-dinosaurs",
+          "de": "groesste-dinosaurier"
+        },
+        "name": {
+          "en": "Biggest dinosaurs",
+          "de": "Größte Dinosaurier"
+        },
+        "line": {
+          "en": "The biggest dinosaurs: seven of ours beside a person, to one scale, and which was the heaviest, the longest and the tallest.",
+          "de": "Die größten Dinosaurier: sieben von unseren neben einem Menschen, im selben Maßstab, und welcher der schwerste, der längste und der höchste war."
+        },
+        "langs": ["en", "de"],
+        "count": "biggest_dinosaurs",
+        "about": [
+          {
+            "@type": "Taxon",
+            "name": "Argentinosaurus huinculensis",
+            "taxonRank": "species",
+            "sameAs": "https://www.wikidata.org/wiki/Q21355653"
+          },
+          {
+            "@type": "Taxon",
+            "name": "Brachiosaurus altithorax",
+            "taxonRank": "species",
+            "sameAs": "https://www.wikidata.org/wiki/Q22105849"
+          },
+          {
+            "@type": "Taxon",
+            "name": "Tyrannosaurus rex",
+            "taxonRank": "species",
+            "sameAs": "https://www.wikidata.org/wiki/Q13098211"
+          },
+          {
+            "@type": "Taxon",
+            "name": "Spinosaurus aegyptiacus",
+            "taxonRank": "species",
+            "sameAs": "https://www.wikidata.org/wiki/Q3966781"
+          },
+          {
+            "@type": "Taxon",
+            "name": "Triceratops horridus",
+            "taxonRank": "species",
+            "sameAs": "https://www.wikidata.org/wiki/Q3998678"
+          },
+          {
+            "@type": "Taxon",
+            "name": "Ankylosaurus magniventris",
+            "taxonRank": "species",
+            "sameAs": "https://www.wikidata.org/wiki/Q22103730"
+          },
+          {
+            "@type": "Taxon",
+            "name": "Stegosaurus stenops",
+            "taxonRank": "species",
+            "sameAs": "https://www.wikidata.org/wiki/Q20719356"
+          }
+        ],
+        "never_say": [
+          [
+            "(?s)^(?!.*(?:sculpture|skulptur|mount|montage|montiert|\\bcast\\b|abguss)).*\\b(?:39[.,]7|40)\\s*(?:m|metres?|meters?|metern?)\\b",
+            "39.7 m and 40 m are the mount's, a sculpture's length, never the animal's"
+          ],
+          [
+            "(?s)^(?!.*(?:sculpture|skulptur|mount|montage|montiert|\\bcast\\b|abguss)).*\\b83\\s*(?:t|tonnes?|tons?|tonnen)\\b",
+            "83 tonnes is the scanned mount's model, never the animal's weight"
+          ],
+          [
+            "(?s)^(?!.*(?:1990s|1990er)).*\\b100\\s*(?:t|tonnes?|tons?|tonnen)\\b",
+            "100 tonnes only as the guesses of the 1990s"
+          ],
+          [
+            "largest land animal|biggest land animal|größte[sn]? landtier",
+            "never the largest land animal ever: the record is not settled"
+          ],
+          [
+            "skeleton (?:was|has been) (?:laser.)?scanned|skelett (?:wurde|ist) (?:\\w+ )*?gescannt",
+            "the mount was scanned, never the skeleton"
+          ],
+          [
+            "\\b\\d+\\s*(?:°|degrees?|grad)\\b",
+            "no neck angle as a finding: the neck angles are our choice"
+          ],
+          [
+            "(?s)^(?!.*giraffatitan).*(?:berlin.*brachiosaurus|brachiosaurus.*berlin)",
+            "the skeleton in Berlin is Giraffatitan: name it wherever Berlin and Brachiosaurus meet"
+          ],
+          [
+            "(?<!\\d to )(?<!\\d bis )\\b80\\s*(?:t|tonnes?|tons?|tonnen)\\b",
+            "80 tonnes only as the end of a range (65 to 80 t, 80 to 100), never one animal's weight"
+          ],
+          [
+            "nostrils? (?:\\w+ )?(?:on|at) (?:the )?top|nasenlöcher? (?:\\w+ )?(?:oben )?auf dem kopf|nasenlöcher? oben",
+            "the nostrils were not on top of the head"
+          ],
+          [
+            "largest known dinosaur|biggest known dinosaur|größte[rns]? bekannte[rns]? dinosaurier",
+            "never the largest known dinosaur"
+          ],
+          [
+            "(?s)^(?!.*(?:adult|grown|just under|erwachsen|knapp unter)).*\\b14\\s*(?:m|metres?|meters?|metern?)\\b",
+            "14 m only for a grown Spinosaurus, never our young one"
+          ],
+          [
+            "(?<![\\d.,])\\b7\\s*(?:t|tonnes?|tons?|tonnen)\\b",
+            "7 tonnes is no weight on this page: a grown Spinosaurus about 7.4 t, ours about 3 to 4 t"
+          ],
+          [
+            "(?s)^(?!.*(?:longer, and most likely lighter|länger, und sehr wahrscheinlich leichter)).*(?:bigger|larger|größer) (?:than|als) (?:a |the |every |der |ein |jeder )?t\\. rex",
+            "Spinosaurus against T. rex: longer, and most likely lighter"
+          ],
+          [
+            "\\bkill|\\btöte|\\bbesieg|\\bdefeat",
+            "no animal kills or defeats another here"
+          ],
+          [
+            "(?:largest|biggest|heaviest) t\\. rex|größte[rn]? t\\. rex|(?:largest|biggest) tyrannosaur",
+            "SUE is one of the largest and most complete, never the largest T. rex"
+          ],
+          [
+            "(?s)\\bsue\\b.*\\b(?:she|her|hers)\\b|\\b(?:she|her|hers)\\b.*\\bsue\\b",
+            "SUE is never she: the sex is not known"
+          ],
+          [
+            "(?<!about )(?<!etwa )(?<!around )\\b66\\s+(?:million|millionen)",
+            "66 million years only with about"
+          ],
+          [
+            "top speed|running speed|höchstgeschwindigkeit|laufgeschwindigkeit|\\bkm/h\\b|\\bmph\\b|\\bran at\\b|\\brannte\\b",
+            "no running or top speed"
+          ],
+          [
+            "\\bfight|\\bfought|\\bbattle|\\bkampf|\\bkämpf|\\bduell",
+            "no fight with Triceratops or anyone"
+          ],
+          [
+            "(?<![\\d.,])\\b9\\s*(?:m|metres?|meters?|metern?)\\b",
+            "9 m is no length on this page: Triceratops about 6.9 m, Stegosaurus 5.6 m"
+          ],
+          [
+            "(?<![\\d.,])\\b10\\s*(?:t|tonnes?|tons?|tonnen)\\b",
+            "10 tonnes is no Triceratops weight: about 6.5 to 8.5 t by two models"
+          ],
+          [
+            "long nose horn|lange[sn]? nasenhorn",
+            "Triceratops had a short nose horn"
+          ],
+          [
+            "(?<![\\d.,])(?<!\\d to )(?<!\\d bis )\\b8\\s*(?:m|metres?|meters?|metern?)\\b",
+            "8 m only as the end of a range: Ankylosaurus about 6.4 m"
+          ],
+          [
+            "ankylosaurus\\W+(?:\\w+\\W+){0,4}?10\\s*(?:m|metres?|meters?|metern?)\\b",
+            "Ankylosaurus was never 10 m"
+          ],
+          [
+            "(?<![\\d.,])(?<!\\d to )(?<!\\d bis )\\b8\\s*(?:t|tonnes?|tons?|tonnen)\\b",
+            "8 tonnes is no Ankylosaurus weight: about 4.8 t by its leg bones"
+          ],
+          [
+            "\\bweighed\\b|\\bweighs\\b|\\bgewogen\\b|\\bwog\\b|\\bwiegt\\b",
+            "no dinosaur was ever weighed: a weight here is a model"
+          ],
+          [
+            "schienbein|shin.?bone|\\btibia",
+            "the found leg bone is a calf bone (fibula), Wadenbein"
+          ],
+          [
+            "\\bmonster|\\briese[n]?\\b|\\bgiants\\b",
+            "no monster, no giant as a noun"
+          ]
+        ]
       }
     ],
     "never_say": [
       [
-        "\\bsoon\\b|\\bbald\\b|\\bdemnächst\\b|\\bin kürze\\b|\\bopens? (?:in|on|this|next)\\b|\\böffnet (?:im|am|in|diese|nächste)",
+        "\\bsoon\\b(?! after)|\\bbald\\b|\\bdemnächst\\b|\\bin kürze\\b|\\bopens? (?:in|on|this|next)\\b|\\böffnet (?:im|am|in|diese|nächste)",
         "the wing has no date: it is being built"
       ],
       [

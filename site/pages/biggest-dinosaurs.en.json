@@ -1,0 +1,541 @@
+{
+ "_note": "THE WORDS of the biggest dinosaurs page. Poured word for word from the writer's WORDS file; the title, the description and the heading are its first options. The skeleton's caption is the writer's caption (d): its first sentence stands as the caption, the three that name the colours as the picture's key line under it. pics.<name>.marks: each animal's start and end in the row as shares of the picture's width, measured on the composition; pics.<name>.person: the person's centre and the top of its head. Empty cells of the table are the writer's: no sourced figure exists.",
+ "page": {
+  "id": "animals-biggest-dinosaurs",
+  "wing": "animals",
+  "topic": "biggest_dinosaurs",
+  "published": null,
+  "og_image": {
+   "file": "animals-biggest-dinosaurs-og-{lang}-1200x630.png",
+   "width": 1200,
+   "height": 630
+  }
+ },
+ "pics": {
+  "row": {
+   "stem": "animals-biggest-dinosaurs-row",
+   "widths": [
+    800,
+    1600,
+    2400
+   ],
+   "sizes": "(min-width: 1280px) 1200px, (min-width: 960px) calc(100vw - 80px), (min-width: 600px) calc(100vw - 64px), calc(100vw - 40px)",
+   "person": "29.33% 84.25%",
+   "marks": {
+    "argentinosaurus": "3.59% 72.17%",
+    "brachiosaurus": "49.55% 97.84%",
+    "t-rex": "54.26% 79.74%",
+    "spinosaurus": "76.01% 98.37%",
+    "triceratops": "39.24% 55.24%",
+    "ankylosaurus": "13.45% 27.86%",
+    "stegosaurus": "0.48% 13.03%",
+    "person": "29.01% 29.65%"
+   }
+  },
+  "close": {
+   "stem": "animals-biggest-dinosaurs-close",
+   "widths": [
+    800,
+    1600
+   ],
+   "sizes": "(min-width: 1280px) 690px, (min-width: 960px) 54vw, (min-width: 600px) calc(100vw - 64px), calc(100vw - 40px)",
+   "person": "58.34% 62.26%"
+  },
+  "skeleton": {
+   "stem": "animals-biggest-dinosaurs-skeleton",
+   "widths": [
+    800,
+    1600,
+    2400
+   ],
+   "sizes": "(min-width: 1280px) 690px, (min-width: 960px) 54vw, (min-width: 600px) calc(100vw - 64px), calc(100vw - 40px)",
+   "person": "38.58% 84.29%"
+  },
+  "megalodon": {
+   "stem": "animals-megalodon-side",
+   "widths": [
+    800,
+    1600,
+    2400
+   ],
+   "sizes": "(min-width: 1280px) 690px, (min-width: 960px) 54vw, (min-width: 600px) calc(100vw - 64px), calc(100vw - 40px)"
+  }
+ },
+ "meta": {
+  "title": "Biggest dinosaur: probably Argentinosaurus | Museum of Ages",
+  "description": "Biggest dinosaur: probably Argentinosaurus, about 30 to 35 m (98 to 115 ft), roughly 65 to 80 t by models. Seven dinosaurs and a person to one scale.",
+  "og_title": "Biggest dinosaur: probably Argentinosaurus",
+  "og_image_alt": "Seven dinosaurs in a row from the side, two with long necks towering over the rest, beside a grey person who stands no higher than the hips of the smallest three."
+ },
+ "labels": {
+  "crumbs": "You are here",
+  "crumb_home": "Museum",
+  "crumb_here": "Biggest dinosaurs",
+  "toc": "On this page",
+  "tag_made": "Made for this page",
+  "tag_built": "Reconstruction",
+  "person": "1.70 m",
+  "to_table": "The numbers as a table",
+  "og_answer": "Probably Argentinosaurus, about 30 to 35 m (98 to 115 ft)"
+ },
+ "top": {
+  "h1": "What was the biggest dinosaur?",
+  "answer": "Probably Argentinosaurus, a long-necked titanosaur from Argentina: about 30 to 35 m (98 to 115 ft) long and roughly 65 to 80 tonnes, by models built around a few bones. Nobody can be sure, because no complete skeleton of any of the largest kinds has ever been found, and its relative Patagotitan comes close. And biggest means three things: the heaviest was most likely Argentinosaurus or Patagotitan, the longest is not settled, and the tallest was probably Sauroposeidon, its head about 17 m (56 ft) up, by four neck bones. Our Argentinosaurus in the picture is 30.6 m (100 ft) long, as long as 18 people, each 1.70 m, laid end to end.",
+  "scale": {
+   "pic": "row",
+   "tag": "tag_made",
+   "what": "Our seven beside a person 1.70 m tall, to one scale, each as our model is built: Argentinosaurus, Brachiosaurus, T. rex, Spinosaurus, Triceratops, Ankylosaurus and Stegosaurus. Our Spinosaurus is a young animal of about 10 m, about three quarters as long as a grown one, so here it is shorter than our T. rex. A grown Spinosaurus was longer than every T. rex, and most likely lighter.",
+   "alt": "Seven dinosaurs in a row from the side, two with long necks towering over the rest, beside a grey person who stands no higher than the hips of the smallest three.",
+   "note": "The museum's own reconstructions, built in code from the cited measurements and rendered in our own engine. Not photographs.",
+   "marks": [
+    {
+     "span": "argentinosaurus",
+     "text": "Argentinosaurus, about 30.6 m"
+    },
+    {
+     "span": "brachiosaurus",
+     "text": "Brachiosaurus, about 24.4 m along the backbone (21.5 m straight, neck raised)"
+    },
+    {
+     "span": "t-rex",
+     "text": "T. rex, about 11.4 m"
+    },
+    {
+     "span": "spinosaurus",
+     "text": "Spinosaurus, about 10 m, a young animal"
+    },
+    {
+     "span": "triceratops",
+     "text": "Triceratops, about 6.9 m"
+    },
+    {
+     "span": "ankylosaurus",
+     "text": "Ankylosaurus, about 6.4 m"
+    },
+    {
+     "span": "stegosaurus",
+     "text": "Stegosaurus, about 5.6 m"
+    },
+    {
+     "span": "person",
+     "text": "The person, 1.70 m"
+    }
+   ],
+   "close": {
+    "pic": "close",
+    "tag": "tag_made",
+    "what": "The same scale, closer up: the person among the smaller animals. Our T. rex carries its head about 4.6 m up, the sail of our Spinosaurus tops out at 3.5 m, and the other three stand 1.7 to 2.5 m high at the hips.",
+    "alt": "The grey person among the smaller dinosaurs, closer up, with the two meat-eaters on two legs and the three with horns, armour and plates on four."
+   }
+  },
+  "guess": {
+   "h": "Guess first",
+   "q": "Which of our seven stands exactly as high at the hips as the person, 1.70 m?",
+   "button": "Show the answer",
+   "a": "Our Ankylosaurus. Its hips are 1.70 m high, the person's own height, and it is 6.4 m long, almost four people laid end to end.",
+   "button_open": "Hide the answer"
+  },
+  "out": {
+   "text": "The wing for these animals is still being built, and the Leonardo da Vinci wing is open today.",
+   "link": "To the Leonardo wing"
+  }
+ },
+ "blocks": [
+  {
+   "type": "numbers",
+   "id": "numbers",
+   "nav": "The numbers",
+   "h": "The numbers",
+   "unit": "Metres and feet, tonnes. The first column is measured on our model as it stands. The next two are what the bones support for the species or the skeleton. Where no sourced figure exists, the cell stays empty.",
+   "cols": [
+    "Animal",
+    "Our model, length",
+    "The species or the skeleton",
+    "Weight",
+    "How sure"
+   ],
+   "rows": [
+    {
+     "cells": [
+      "Argentinosaurus, Argentinosaurus huinculensis",
+      "about 30.6 m (100 ft), 32.1 m (105 ft) along the backbone",
+      "about 30 to 35 m (98 to 115 ft), rebuilt, never measured",
+      "roughly 65 to 80 t, a model",
+      "one partial skeleton, the body borrowed from relatives"
+     ]
+    },
+    {
+     "cells": [
+      "Brachiosaurus, Brachiosaurus altithorax",
+      "about 24.4 m (80 ft) along the backbone, 21.5 m (71 ft) straight with the neck raised",
+      "about 22 to 25 m (72 to 82 ft), rebuilt",
+      "roughly 30 to 45 t, rebuilt",
+      "one partial skeleton, neck and head borrowed"
+     ]
+    },
+    {
+     "cells": [
+      "T. rex, Tyrannosaurus rex",
+      "about 11.4 m (37 ft)",
+      "SUE's skeleton about 12 m (39 ft)",
+      "about 8 to 9 t",
+      "one of the largest and most complete skeletons, several models"
+     ]
+    },
+    {
+     "cells": [
+      "Spinosaurus, Spinosaurus aegyptiacus",
+      "about 10 m (33 ft), a young animal",
+      "this animal about 10 to 11 m (33 to 36 ft), adults about 13 to 14 m (43 to 46 ft)",
+      "this animal about 3 to 4 t, adults about 7.4 t, by models",
+      "one young partial skeleton, the adult scaled up"
+     ]
+    },
+    {
+     "cells": [
+      "Triceratops, Triceratops horridus",
+      "about 6.9 m (23 ft)",
+      "large skeletons 6.7 to 8 m (22 to 26 ft)",
+      "about 6.5 to 8.5 t, by two models",
+      "a mount of about ten animals"
+     ]
+    },
+    {
+     "cells": [
+      "Ankylosaurus, Ankylosaurus magniventris",
+      "about 6.4 m (21 ft)",
+      "this skeleton 6.02 to 7.95 m (20 to 26 ft), by relatives' tails",
+      "about 4.8 t, by its leg bones",
+      "three partial skeletons, none complete"
+     ]
+    },
+    {
+     "cells": [
+      "Stegosaurus, Stegosaurus stenops",
+      "about 5.6 m (18 ft)",
+      "Sophie's mount 5.6 m (18 ft), the paper 5.5 to 6 m",
+      "about 1.6 t, a model of her own skeleton",
+      "one almost complete animal"
+     ]
+    },
+    {
+     "cells": [
+      "The person",
+      "1.70 m (5 ft 7 in)",
+      "",
+      "",
+      "the museum's scale figure"
+     ]
+    }
+   ]
+  },
+  {
+   "type": "text",
+   "id": "three",
+   "nav": "Three answers, and the biggest meat-eater",
+   "h": "Three answers, and the biggest meat-eater",
+   "subs": [
+    {
+     "h": "The heaviest",
+     "paras": [
+      "Most likely one of the titanosaurs of Patagonia. Argentinosaurus is the best-supported candidate at roughly 65 to 80 tonnes, by several models that overlap, all built around a few bones. Patagotitan, known from at least six animals, came out at 69 tonnes in 2017, and its own team corrected that to about 57 in 2020, a range of 42 to 71. The two research teams disagree about which was bigger, since the two animals share so few bones to compare, and Dreadnoughtus, once put at 59 tonnes, now comes to about 22 to 30 by later models."
+     ]
+    },
+    {
+     "h": "The longest",
+     "paras": [
+      "Nobody knows. The best-known titanosaurs come to about 30 to 37 m (98 to 121 ft) by their bones and their casts. Supersaurus, a long-tailed cousin of Diplodocus from Colorado and Wyoming, was put at 39 to 42 m (128 to 138 ft) in a conference talk of 2021, depending on where one neck bone is placed, but no journal has published that yet. So the longest stays open."
+     ]
+    },
+    {
+     "h": "The tallest",
+     "paras": [
+      "Probably Sauroposeidon, from Oklahoma, its head about 17 m (56 ft) above the ground. That rests on four neck bones found in 1994 and a neck scaled up on the proportions of Brachiosaurus, and the Natural History Museum in London notes that the animal may be closer to the titanosaurs, so the sum may be off. Weak, but nothing better is known. The tallest skeleton you can actually see is Giraffatitan in Berlin, its skull about 13 m (43 ft) up."
+     ]
+    },
+    {
+     "h": "The biggest meat-eater",
+     "paras": [
+      "Two answers. By length, Spinosaurus: a grown one was just under 14 m (46 ft) in the current model of 2022, built by scaling up a young skeleton and a loose adult snout. By weight, T. rex: the heaviest known, called Scotty, comes to about 8.9 tonnes, and a big adult was about 12 m (39 ft) long. Giganotosaurus is often named too, but its remains are fragmentary and its estimates run from about 6.5 to 14 tonnes, so it stays a maybe."
+     ]
+    }
+   ]
+  },
+  {
+   "type": "text",
+   "id": "how-sure",
+   "nav": "How sure this is",
+   "h": "How sure this is",
+   "paras": [
+    "Nobody has ever put a dinosaur on a scale: only the bones are left, and most of a body is flesh, so every weight on this page is a sum made one of three ways. The first measures the girth of the thigh bone and the upper arm bone and applies the rule that ties those girths to weight in living animals that walk on four legs, a rule that grows shakier the further the animal is from anything alive, and Argentinosaurus has no arm bone at all. The second builds a body around the skeleton, takes its volume and multiplies by a density, and since the outline is a choice, an adult T. rex comes out anywhere between under 6 and over 18 tonnes, depending on the outline picked. The third borrows a better-known cousin, assumes its proportions and stretches them to the few bones found, which is how every length for Argentinosaurus was made. Measuring a mounted skeleton with a tape gives an exact number, but for the mount, and a mount is partly sculpture."
+   ]
+  },
+  {
+   "type": "text",
+   "id": "found",
+   "nav": "What was found",
+   "h": "What was found",
+   "paras": [
+    "Argentinosaurus huinculensis is known from one animal, MCF-PVPH-1, found in Argentina in the late 1980s about 8 km east of Plaza Huincul in Neuquén. What survives: six or seven incomplete back vertebrae, the lower part of the hips, one piece of rib and one calf bone 1.55 m long. No head, no neck, no tail, no shoulder, no arm, no foot. The bones are kept in the Museo Municipal Carmen Funes in Plaza Huincul, and two huge thigh bones found elsewhere might belong to it, or might not.",
+    "Patagotitan mayorum is the best known of the largest kinds: at least six young adults dug from a single quarry on a ranch in Chubut, Argentina, more than a hundred bones, the first found in 2012. They are kept at the Museo Paleontológico Egidio Feruglio in Trelew, where a thigh bone 2.38 m long stands beside the cast. Casts of it stand in Chicago and New York.",
+    "Brachiosaurus altithorax rests on one partial skeleton, FMNH P 25107, dug up in 1900 in the valley of the Grand River in western Colorado and kept at the Field Museum in Chicago: seven back vertebrae, the sacrum, the first two tail vertebrae, a shoulder bone, the right upper arm bone, the right thigh bone, both hip blades and some ribs. No head, no neck, no lower legs, no feet and almost no tail, from an animal not yet full grown. About ten finds of the kind are known, none close to complete.",
+    "The tall skeleton in the Museum für Naturkunde in Berlin is not Brachiosaurus. It is Giraffatitan brancai, a close African relative, dug up at Tendaguru in what is now Tanzania between 1909 and 1913, in the colonial period the museum itself names. The two were split into separate genera in 2009, on at least 26 differences in the bones, and almost every picture of Brachiosaurus you have ever seen shows the African animal. The Berlin mount combines several animals, its skull about 13 m (43 ft) up, and the museum calls it the largest mounted dinosaur skeleton in the world."
+   ],
+   "scale": {
+    "pic": "skeleton",
+    "tag": "tag_built",
+    "what": "Our Argentinosaurus as a skeleton.",
+    "alt": "The skeleton of our Argentinosaurus from the side, a few dark red back bones, hip bones and one leg bone among pale restored and borrowed bones, beside the grey person.",
+    "key": "The dark red bones are all that was ever found of this animal: six or seven back vertebrae, the lower part of the hips, one piece of rib and one calf bone 1.55 m long. Blue bones are its own, completed or mirrored. Cream bones are borrowed from relatives, above all Patagotitan.",
+    "after": 1
+   }
+  },
+  {
+   "type": "notes",
+   "id": "numbers-read",
+   "nav": "Numbers you may have read",
+   "h": "Numbers you may have read",
+   "intro": "For each number: where it came from, and what the field makes of it now.",
+   "rows": [
+    {
+     "term": "39.7 m (130 ft), and 40 m",
+     "text": "The mounted skeleton of Argentinosaurus in the Museo Carmen Funes in Plaza Huincul, Argentina, which the museum built itself in the 1990s around the few real bones. A team laser-scanned it in 2013 and measured 39.7 m, and 7.3 m at the shoulder. That is a sculpture's length, 5 to 10 m longer than any estimate from the bones, and the round 40 m is most likely that figure rounded. The cast in Atlanta, of the same kind, is given by its museum as over 123 feet, about 37.5 m."
+    },
+    {
+     "term": "100 tonnes, and 83",
+     "text": "The 100 came from guesses of the 1990s, soon after the find, and an early volume model gave 80 to 100. The 83 tonnes is the scanned mount of 2013, wrapped in a tight digital skin and given a weight as a model, so it belongs to the sculpture. Today's models of the animal give roughly 65 to 80 tonnes."
+    },
+    {
+     "term": "Patagotitan's 37 m (122 ft) and 69 tonnes",
+     "text": "The 37 m is the length of its cast, built from at least six animals with the missing bones sculpted, as it stands in Chicago. The describing paper of 2017 gives no length at all. Its 69 tonnes came from the girth of the thigh and upper arm bones in that paper, and the same team corrected it to about 57 tonnes in 2020, a range of 42 to 71. A volume study of 2025 puts it over 60 again, so the weight still moves."
+    },
+    {
+     "term": "Bruhathkayosaurus at 175 tonnes or more",
+     "text": "An Indian find whose bones crumbled before they reached a collection, so it is known only from drawings and photographs taken in the field. The 175 to 220 tonnes were internet posts of 2001, later withdrawn by their author. The only peer-reviewed figure, from 2023, is possibly 110 to 170 tonnes, more probably 110 to 130, and with the bones gone nothing can be checked."
+    },
+    {
+     "term": "Amphicoelias at 58 m (190 ft)",
+     "text": "One back vertebra, described and drawn in 1878, then lost. In 2006 it was scaled on Diplodocus to 58 m and about 122 tonnes. In 2018 the same author re-read the old drawing as a member of another sauropod family, renamed the animal Maraapunisaurus and brought it down to about 30 to 32 m, and others call the old figure an extreme overestimate."
+    },
+    {
+     "term": "Spinosaurus at 18 m (59 ft)",
+     "text": "A figure of 2005, from a large loose snout in Milan scaled up with a relative's proportions: 16 to 18 m long and 7 to 9 tonnes. A skeleton model of 2014 gave over 15 m. The current model of 2022, built on the young animal from Morocco and the adult snout, comes out just under 14 m, at about 7.4 tonnes."
+    },
+    {
+     "term": "Brachiosaurus 13 m (43 ft) tall",
+     "text": "The Berlin skeleton, which is Giraffatitan. Its skull sits about 13 m up since the remount of 2007, and sat 11.87 m up as first built in 1937: the difference is the pose of the neck. For the American Brachiosaurus no height was ever measured, and the head heights in print run from 9.4 to 13 m by the neck angle chosen."
+    },
+    {
+     "term": "As tall as a six-storey building",
+     "text": "A magazine's picture of Sauroposeidon from about 2002, after the estimate of about 17 m. Six storeys means about 3 m for each one, and the 17 m itself rests on four neck bones. The line is often moved to Brachiosaurus or Argentinosaurus, where it never belonged."
+    }
+   ]
+  },
+  {
+   "type": "text",
+   "id": "why",
+   "nav": "Why ours look like this",
+   "h": "Why ours look like this",
+   "paras": [
+    "Each of the seven is built from one named find at its real size: Argentinosaurus on the Plaza Huincul bones with a body borrowed mainly from Patagotitan, Brachiosaurus on the Chicago skeleton with neck and head after its relatives, T. rex on SUE, Spinosaurus on the young animal from Morocco, Triceratops on the Smithsonian's mount of about ten animals, Ankylosaurus on the smallest of the three known skeletons, Stegosaurus on Sophie in London. No colour is known for any of them, so the colours are ours, and animals that stand near each other differ where nothing is known. The neck angles of the two long necks are our choice, since no neck bone of Argentinosaurus exists and none of this Brachiosaurus, which is why their heads stand at almost the same height though our Argentinosaurus is nine metres longer. Our Spinosaurus is young, about three quarters as long as a grown one. Our T. rex shows its mouth open, the state that passed our face check, and with the mouth shut its lips most likely covered the teeth."
+   ]
+  },
+  {
+   "type": "faq",
+   "id": "questions",
+   "nav": "More questions",
+   "h": "More questions",
+   "items": [
+    {
+     "q": "Was Spinosaurus bigger than T. rex?",
+     "a": "Longer, and most likely lighter. A grown Spinosaurus was just under 14 m (46 ft) in the current model and about 7.4 tonnes, against about 12 m (39 ft) and 8 to 9 tonnes for a big adult T. rex. Ours in the picture is a young Spinosaurus of about 10 m, so there it is the shorter one."
+    },
+    {
+     "q": "Was any dinosaur bigger than a blue whale?",
+     "a": "No, by what is known. NOAA, the US ocean agency, calls the blue whale the largest animal known to have lived: most grown ones are 23 to 27 m long, the largest about 30 m (98 ft). Argentinosaurus at about 30 to 35 m was about as long. Only one land claim has ever been put near the weight of the largest whales, the lost Indian find, and its bones are gone."
+    }
+   ]
+  },
+  {
+   "type": "text",
+   "id": "museum",
+   "nav": "In the museum",
+   "h": "In the museum",
+   "paras": [
+    "Museum of Ages is a digital museum. It is building a wing where these seven and other animals will stand, to one scale. Open today is the Leonardo da Vinci wing. Free entry, no account."
+   ],
+   "links": [
+    {
+     "out": true,
+     "text": "To the Leonardo wing"
+    }
+   ]
+  },
+  {
+   "type": "pages",
+   "id": "next",
+   "items": [
+    {
+     "page": "megalodon",
+     "pic": "megalodon",
+     "alt": "A shark with its mouth open, seen from the side, dark above and pale below, beside a grey person who looks tiny next to it."
+    }
+   ]
+  },
+  {
+   "type": "sources",
+   "id": "sources",
+   "nav": "Sources",
+   "h": "Sources",
+   "intro": "The numbers come from these studies and from the institutions that keep the fossils. The museum is independent of all of them.",
+   "read": [
+    {
+     "text": "Bonaparte and Coria, 1993, Ameghiniana."
+    },
+    {
+     "text": "Mazzetta, Christiansen and Fariña, 2004, Historical Biology."
+    },
+    {
+     "text": "Sellers, Margetts, Coria and Manning, 2013, PLOS ONE.",
+     "href": "https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0078733"
+    },
+    {
+     "text": "Paul, 2019, Annals of Carnegie Museum.",
+     "href": "https://doi.org/10.2992/007.085.0403"
+    },
+    {
+     "text": "Paul and Larramendi, 2023, Lethaia.",
+     "href": "https://doi.org/10.18261/let.56.2.5"
+    },
+    {
+     "text": "Carballido and others, 2017, Proceedings of the Royal Society B.",
+     "href": "https://staff.mef.org.ar/images/investigadores/jose_luis_carballido/Papers/Carballido_et_al._2017_Patagotitan.pdf"
+    },
+    {
+     "text": "Otero, Carballido and Pérez Moreno, 2020, Journal of Vertebrate Paleontology.",
+     "href": "https://doi.org/10.1080/02724634.2020.1793158"
+    },
+    {
+     "text": "Dempsey and others, 2025, Biological Reviews.",
+     "href": "https://doi.org/10.1111/brv.70026"
+    },
+    {
+     "text": "Lacovara and others, 2014, Scientific Reports.",
+     "href": "https://doi.org/10.1038/srep06196"
+    },
+    {
+     "text": "Bates and others, 2015, Biology Letters.",
+     "href": "https://doi.org/10.1098/rsbl.2015.0215"
+    },
+    {
+     "text": "Pal and Ayyasami, 2022, Geology Today.",
+     "href": "https://doi.org/10.1111/gto.12390"
+    },
+    {
+     "text": "Carpenter, 2018, Geology of the Intermountain West.",
+     "href": "https://doi.org/10.31711/giw.v5.pp227-244"
+    },
+    {
+     "text": "Woodruff and Foster, 2015, PeerJ Preprints.",
+     "href": "https://doi.org/10.7287/peerj.preprints.838v1"
+    },
+    {
+     "text": "Wedel, Cifelli and Sanders, 2000, Acta Palaeontologica Polonica.",
+     "href": "https://www.app.pan.pl/archive/published/app45/app45-343.pdf"
+    },
+    {
+     "text": "Taylor, 2009, Journal of Vertebrate Paleontology.",
+     "href": "https://www.miketaylor.org.uk/dino/pubs/taylor2009/Taylor2009-brachiosaurus-and-giraffatitan.pdf"
+    },
+    {
+     "text": "Sereno and others, 2022, eLife.",
+     "href": "https://pmc.ncbi.nlm.nih.gov/articles/PMC9711522/"
+    },
+    {
+     "text": "dal Sasso and others, 2005, Journal of Vertebrate Paleontology."
+    },
+    {
+     "text": "Therrien and Henderson, 2007, Journal of Vertebrate Paleontology."
+    },
+    {
+     "text": "Hutchinson and others, 2011, PLOS ONE.",
+     "href": "https://doi.org/10.1371/journal.pone.0026037"
+    },
+    {
+     "text": "Persons, Currie and Erickson, 2019, Anatomical Record.",
+     "href": "https://doi.org/10.1002/ar.24118"
+    },
+    {
+     "text": "Mallon and Hone, 2024, Ecology and Evolution.",
+     "href": "https://doi.org/10.1002/ece3.11658"
+    },
+    {
+     "text": "Brassey and others, 2015, the mass model of the Stegosaurus Sophie."
+    },
+    {
+     "text": "Curtice, 2021, a talk at the meeting of the Society of Vertebrate Paleontology, as reported by Live Science.",
+     "href": "https://www.livescience.com/supersaurus-longest-dinosaur-on-record"
+    },
+    {
+     "text": "Museo Municipal Carmen Funes, Plaza Huincul: the Argentinosaurus bones MCF-PVPH-1."
+    },
+    {
+     "text": "Museo Paleontológico Egidio Feruglio, Trelew: Patagotitan.",
+     "href": "https://mef.org.ar/"
+    },
+    {
+     "text": "Field Museum, Chicago: Brachiosaurus FMNH P 25107 and SUE, FMNH PR 2081.",
+     "href": "https://www.fieldmuseum.org/blog/sue-t-rex"
+    },
+    {
+     "text": "Museum für Naturkunde Berlin: Giraffatitan brancai.",
+     "href": "https://www.museumfuernaturkunde.berlin/besuch-planen/die-ausstellung/saurierwelt/"
+    },
+    {
+     "text": "Natural History Museum, London: Sophie, NHMUK PV R36730, and its dinosaur pages.",
+     "href": "https://www.nhm.ac.uk/discover/what-is-the-biggest-dinosaur.html"
+    },
+    {
+     "text": "American Museum of Natural History, New York: Ankylosaurus AMNH 5214."
+    },
+    {
+     "text": "Smithsonian National Museum of Natural History, Washington: the Triceratops mount."
+    },
+    {
+     "text": "Faculté des Sciences Aïn Chock, Casablanca: Spinosaurus FSAC-KK 11888."
+    },
+    {
+     "text": "Fernbank Museum of Natural History, Atlanta.",
+     "href": "https://www.fernbankmuseum.org/experiences/exhibits/indoor-exhibits/giants-of-the-mesozoic/"
+    },
+    {
+     "text": "Sooner Magazine, University of Oklahoma, 2002.",
+     "href": "https://journals.shareok.org/soonermagazine/article/download/11614/11613/11245"
+    },
+    {
+     "text": "NOAA Fisheries.",
+     "href": "https://www.fisheries.noaa.gov/species/blue-whale"
+    }
+   ],
+   "contact": "If a number or a holder is wrong, tell us and we will correct it.",
+   "contact_link": "To the legal notice",
+   "what_link": "What this museum is"
+  },
+  {
+   "type": "text",
+   "id": "pictures",
+   "nav": "Use our pictures",
+   "h": "Use our pictures",
+   "paras": [
+    [
+     "The pictures on this page are the museum's own work under ",
+     {
+      "text": "CC BY-SA 4.0",
+      "href": "https://creativecommons.org/licenses/by-sa/4.0/"
+     },
+     ", credit: Museum of Ages. They show reconstructions, built in code and rendered in our own engine, not photographs."
+    ]
+   ]
+  }
+ ]
+}

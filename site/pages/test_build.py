@@ -167,7 +167,7 @@ class Case(unittest.TestCase):
             names.add(key)
             names |= {part.lower() for name in wing["name"].values() for part in name.split() if len(part) > 3}
         for name in ("template.html", "build.py", "chart.py", "make_pictures.py", "css/page.css", "css/chart.css", "css/list.css",
-                     "css/scale.css"):
+                     "css/scale.css", "css/marks.css"):
             text = (HERE / name).read_text(encoding="utf-8").lower()
             for word in names:
                 self.assertNotIn(word, text, f"{name} names a wing: {word}")
@@ -270,12 +270,16 @@ class Case(unittest.TestCase):
 
     # ---- a page of a wing in the making ----
 
-    def scale_page(self):
-        """The first page that shows an animal at one scale beside the person, or a skip."""
-        found = next((p for p in self.pages if "scale" in self.data("en", p)["top"]), None)
+    def scale_page(self, kind="bars"):
+        """The first page that shows an animal at one scale beside the person, with a length bar (kind bars) or with a
+        label at each of several animals (kind marks), or a skip."""
+        found = next((p for p in self.pages if kind in self.data("en", p)["top"].get("scale", {})), None)
         if not found:
-            self.skipTest("no page shows a thing at one scale")
+            self.skipTest(f"no page shows a thing at one scale with {kind}")
         return found
+
+    def scale_pages(self):
+        return [p for p in self.pages if "scale" in self.data("en", p)["top"]]
 
     # Each phrase a page of its wing must never carry, by its rule: the wing's, the topic's and the claim.
     NEVER = {
@@ -320,6 +324,152 @@ class Case(unittest.TestCase):
             self.save(lang, json.loads(re.sub(condition, "zwei Wirbel" if lang == "de" else "two discs", text)), page)
             self.fails(r"24\[\.,\]3")
             self.save(lang, json.loads(text), page)
+
+    # Each claim the page of several animals must never make, by its topic's rules: a famous number stands only where
+    # the page says whose it is, a fact rule only where the sources carry it.
+    NEVER_MARKS = {
+        "en": ["Argentinosaurus was 39.7 m long", "Argentinosaurus was 40 m long", "Argentinosaurus came to 83 tonnes",
+               "Argentinosaurus reached 100 tonnes", "It was the largest land animal", "The skeleton was laser-scanned in 2013",
+               "Its neck rose at 60 degrees", "The Brachiosaurus in Berlin stands 13 m tall", "Brachiosaurus came to 80 tonnes",
+               "Its nostrils sat on top of its head", "Brachiosaurus, the largest known dinosaur", "Our Spinosaurus is 14 m long",
+               "Our Spinosaurus comes to 7 tonnes", "Spinosaurus was bigger than T. rex", "Spinosaurus could kill a T. rex",
+               "SUE, the largest T. rex ever found", "SUE and her skull", "It died out 66 million years ago",
+               "T. rex had a top speed of 20 km/h", "T. rex fought Triceratops", "Triceratops was 9 m long",
+               "Triceratops came to 10 tonnes", "Triceratops had a long nose horn", "Ankylosaurus was 8 m long",
+               "Ankylosaurus was about 10 m long", "Ankylosaurus came to 8 tonnes", "Argentinosaurus weighed 70 tonnes",
+               "One shin bone was found", "The giants of Patagonia", "A monster of its time"],
+        "de": ["Argentinosaurus war 39,7 m lang", "Argentinosaurus war 40 m lang", "Argentinosaurus kam auf 83 t",
+               "Argentinosaurus erreichte 100 Tonnen", "Das größte Landtier", "Das Skelett wurde 2013 gescannt",
+               "Der Hals stand im Winkel von 45 Grad", "Der Berliner Brachiosaurus ist 13 m hoch", "Brachiosaurus kam auf 80 t",
+               "Seine Nasenlöcher lagen oben auf dem Kopf", "Der größte bekannte Dinosaurier", "Unser Spinosaurus ist 14 m lang",
+               "Unser Spinosaurus kommt auf 7 t", "Der Spinosaurus war größer als der T. rex", "Er konnte einen T. rex töten",
+               "SUE, der größte T. rex", "Er starb vor 66 Millionen Jahren aus", "Seine Höchstgeschwindigkeit lag bei 25 km/h",
+               "Der Kampf mit dem Triceratops", "Triceratops war 9 m lang", "Triceratops kam auf 10 t", "Ein langes Nasenhorn",
+               "Ankylosaurus war 8 m lang", "Ankylosaurus war etwa 10 m lang", "Ankylosaurus kam auf 8 t", "Er wog 70 t",
+               "Ein Schienbein wurde gefunden", "Die Riesen Patagoniens", "Ein Monster seiner Zeit"],
+    }
+
+    def test_the_page_of_several_animals_refuses_each_never_say_phrase(self):
+        page = self.scale_page("marks")
+        topic = next(t for w in self.wings().values() if isinstance(w, dict) for t in w.get("topics", [])
+                     if t.get("count") == self.data("en", page)["page"]["topic"])
+        # every rule of the topic is met by a phrase of the list, so a rule added without its phrase is seen
+        for pattern, _ in topic["never_say"]:
+            self.assertTrue(any(re.search(pattern, x.lower()) for xs in self.NEVER_MARKS.values() for x in xs), pattern)
+        for lang, phrases in self.NEVER_MARKS.items():
+            original = self.data(lang, page)
+            for phrase in phrases:
+                with self.subTest(lang=lang, phrase=phrase):
+                    # each phrase on its own: a phrase let through must not fail the next one
+                    shutil.rmtree(self.dir / "out", ignore_errors=True)
+                    self.save(lang, original, page)
+                    data = json.loads(json.dumps(original))
+                    data["top"]["answer"] += f" {phrase}."
+                    self.save(lang, data, page)
+                    self.fails(r"top\.answer matches")
+                    self.save(lang, original, page)
+
+    def test_a_famous_number_stands_where_the_page_says_whose_it_is(self):
+        """The page names the mount's 39.7 m, the old 100 tonnes and a grown animal's 14 m on purpose: each stands
+        with the words that say whose number it is. Without them, the same field stops the build."""
+        page = self.scale_page("marks")
+        cases = [
+            (r"(?i)mounted|mount|sculpture|\bcast\b|montierte[ns]?|montage|skulptur|abguss", "thing",
+             "39.7 m and 40 m are the mount's"),
+            (r"(?i)mounted|mount|sculpture|\bcast\b|montierte[ns]?|montage|skulptur|abguss", "thing",
+             "83 tonnes is the scanned mount's"),
+            (r"1990s|1990er", "past", "100 tonnes only as the guesses of the 1990s"),
+            (r"(?i)adults?|grown|just under|erwachsene[rns]?|knapp unter", "some", "14 m only for a grown Spinosaurus"),
+            (r"Giraffatitan", "Brachiosaurus", "the skeleton in Berlin is Giraffatitan"),
+            (r"65 (?:to|bis) 80 t", "80 t", "80 tonnes only as the end of a range"),
+            (r"Longer, and most likely lighter\.|Länger, und sehr wahrscheinlich leichter\.", "Yes.", "Spinosaurus against T. rex"),
+        ]
+        out, _ = self.build()
+        shutil.rmtree(out)
+        for lang in ("en", "de"):
+            original = self.data(lang, page)
+            text = json.dumps(original, ensure_ascii=False)
+            for condition, instead, rule in cases:
+                with self.subTest(lang=lang, rule=rule):
+                    self.assertRegex(text, condition)
+                    self.save(lang, json.loads(re.sub(condition, instead, text)), page)
+                    self.fails(re.escape(rule))
+                    self.save(lang, original, page)
+
+    def test_each_label_stands_at_its_animal(self):
+        page = self.scale_page("marks")
+        out, written = self.build()
+        pic = self.data("en", page)["top"]["scale"]["pic"]
+        seen = 0
+        for path in written:
+            data, lang = self.page_of(path)
+            if data["page"]["id"] != self.data("en", page)["page"]["id"]:
+                continue
+            seen += 1
+            text = path.read_text(encoding="utf-8")
+            own = self.own_part(text)
+            for mark in data["top"]["scale"]["marks"]:
+                a, b = (float(x) / 100 for x in data["pics"][pic]["marks"][mark["span"]].rstrip("%").split("% "))
+                # the bracket spans the animal's place in the picture, the words start or end at it
+                self.assertIn(".sc-mark--%s-%s::after{left:calc(2px + (100%% - 4px) * %g);width:calc((100%% - 4px) * %g)}"
+                              % (pic, mark["span"], round(a, 4), round(b - a, 4)), text)
+                side = "start" if (a + b) / 2 < 0.5 else "end"
+                self.assertRegex(own, r'<li class="sc-mark sc-mark--%s-%s sc-mark--%s">' % (pic, mark["span"], side))
+                self.assertIn(mark["text"], re.sub(r" ([,.:)])", r"\1", " ".join(self.words(own).replace("\u00a0", " ").split())))
+        self.assertEqual(seen, 2)
+        # a label the picture does not place stops the build
+        shutil.rmtree(out)
+        for lang in ("en", "de"):
+            data = self.data(lang, page)
+            del data["pics"][pic]["marks"][data["top"]["scale"]["marks"][0]["span"]]
+            self.save(lang, data, page)
+        self.fails(r"the label '\w[\w-]*' needs pics")
+
+    def test_a_picture_in_the_body_follows_the_paragraph_it_shows(self):
+        page = self.scale_page("marks")
+        out, written = self.build()
+        for path in written:
+            data, lang = self.page_of(path)
+            if data["page"]["id"] != self.data("en", page)["page"]["id"]:
+                continue
+            own = self.own_part(path.read_text(encoding="utf-8"))
+            for block in data["blocks"]:
+                section = re.search(r'<section[^>]*id="%s">(.*?)</section>' % block["id"], own, flags=re.S)
+                if block.get("scale", {}).get("after") is not None:
+                    before = section.group(1).split("<figure", 1)[0]
+                    self.assertEqual(before.count('<p class="sp-does">'), block["scale"]["after"])
+                    self.assertEqual(section.group(1).count('<p class="sp-does">'), len(block["paras"]))
+                # an answer of several stands under its own small heading
+                for sub in block.get("subs", []):
+                    self.assertRegex(section.group(1), r"<h3>%s</h3>" % re.escape(html.escape(sub["h"], quote=False)))
+        shutil.rmtree(out)
+        for lang in ("en", "de"):
+            data = self.data(lang, page)
+            next(b for b in data["blocks"] if b.get("scale", {}).get("after") is not None)["scale"]["after"] = "1"
+            self.save(lang, data, page)
+        self.fails(r"after names the paragraph")
+
+    def test_the_pages_of_a_wing_in_the_making_name_each_other(self):
+        pages = self.scale_pages()
+        if len(pages) < 2:
+            self.skipTest("one page at one scale")
+        out, written = self.build()
+        ids = {self.data("en", p)["page"]["id"]: p for p in pages}
+        links = {}
+        for path in written:
+            data, lang = self.page_of(path)
+            if data["page"]["id"] not in ids:
+                continue
+            own = self.own_part(path.read_text(encoding="utf-8"))
+            listed = re.search(r'<section class="sp-sec sc-pages sc-pages--next"[^>]*>(.*?)</section>', own, flags=re.S)
+            self.assertIsNotNone(listed, path)
+            rel = path.relative_to(out).parent
+            links[(ids[data["page"]["id"]], lang)] = {os.path.normpath((rel / h).as_posix()) for h in re.findall(r'href="([^"#]+)"', listed.group(1))}
+        for (page, lang), targets in links.items():
+            others = {p for p in pages if p != page}
+            built = {os.path.normpath(path.relative_to(out).parent.as_posix()) for path in written
+                     if self.page_of(path)[0]["page"]["id"] in {self.data("en", o)["page"]["id"] for o in others} and self.page_of(path)[1] == lang}
+            self.assertEqual(targets, built, (page, lang))
 
     def test_a_page_of_a_wing_in_the_making_has_no_door_and_its_link_out(self):
         page = self.scale_page()
@@ -430,18 +580,21 @@ class Case(unittest.TestCase):
         self.fails(r"length bar's span")
 
     def test_each_picture_at_one_scale_leads_to_its_table_and_a_skeleton_has_its_key(self):
-        page = self.scale_page()
+        ids = {self.data("en", p)["page"]["id"] for p in self.scale_pages()}
         out, written = self.build()
+        seen = 0
         for path in written:
             data, lang = self.page_of(path)
-            if data["page"]["id"] != self.data("en", page)["page"]["id"]:
+            if data["page"]["id"] not in ids:
                 continue
+            seen += 1
             own = self.own_part(path.read_text(encoding="utf-8"))
             table = next(b["id"] for b in data["blocks"] if b["type"] == "numbers")
             self.assertIn(f'<table', own)
             self.assertIn(f'id="{table}"', own)
             figures = re.findall(r'<figure class="plate sc-fig[^"]*"[^>]*>.*?</figure>', own, flags=re.S)
-            self.assertGreaterEqual(len(figures), 4)
+            scales = [data["top"]["scale"]] + [b["scale"] for b in data["blocks"] if b.get("scale")]
+            self.assertEqual(len(figures), len(scales) + sum(1 for sc in scales if sc.get("close")))
             for fig in figures:
                 self.assertIn(f'<a class="sc-totable" href="#{table}">', fig)
             keys = [b["scale"]["key"] for b in data["blocks"] if b.get("scale", {}).get("key")]
@@ -451,13 +604,14 @@ class Case(unittest.TestCase):
             closes = [b["scale"]["close"] for b in data["blocks"] if b.get("scale", {}).get("close")]
             for close in closes:
                 self.assertIn(data["pics"][close["pic"]]["stem"], own)
+        self.assertEqual(seen, 2 * len(ids))
 
     def test_the_guess_says_what_its_button_does(self):
-        page = self.scale_page()
+        ids = {self.data("en", p)["page"]["id"] for p in self.scale_pages()}
         out, written = self.build()
         for path in written:
             data, lang = self.page_of(path)
-            if data["page"]["id"] != self.data("en", page)["page"]["id"]:
+            if data["page"]["id"] not in ids:
                 continue
             g = data["top"]["guess"]
             summary = re.search(r'<summary class="sc-guess__btn">(.*?)</summary>', path.read_text(encoding="utf-8"), flags=re.S).group(1)
@@ -506,19 +660,23 @@ class Case(unittest.TestCase):
             self.assertEqual(text[:text.index("</head>")].count(tag), 1 if self.making(data) else 0, path)
 
     def test_the_share_picture_of_a_scale_page_carries_its_answer_line(self):
-        page = self.scale_page()
         spec = importlib.util.spec_from_file_location("build_share", self.dir / "build.py")
         module = importlib.util.module_from_spec(spec)
         spec.loader.exec_module(module)
         module.WINGS_FILE = self.registry
         module.LANGS = tuple(c for c in module.LANGS if c in ("en", "de"))
-        jobs = [j for j in module.still_jobs() if j.get("page") == page and j["kind"] == "share"]
-        self.assertEqual({j["lang"] for j in jobs}, {"en", "de"})
-        for job in jobs:
-            line = self.data(job["lang"], page)["labels"].get("og_answer")
-            if not line:
-                self.skipTest("the page gives no answer line for its share picture")
-            self.assertIn(html.escape(line.replace("\u00a0", " "), quote=False), job["svg"])
+        every = module.still_jobs()
+        lines = 0
+        for page in self.scale_pages():
+            jobs = [j for j in every if j.get("page") == page and j["kind"] == "share"]
+            self.assertEqual({j["lang"] for j in jobs}, {"en", "de"})
+            for job in jobs:
+                line = self.data(job["lang"], page)["labels"].get("og_answer")
+                if line:
+                    lines += 1
+                    self.assertIn(html.escape(line.replace("\u00a0", " "), quote=False), job["svg"])
+        if not lines:
+            self.skipTest("no page gives an answer line for its share picture")
 
     def test_each_cell_of_the_numbers_holds_its_words_in_one_element(self):
         out, written = self.build()
@@ -542,11 +700,11 @@ class Case(unittest.TestCase):
         self.assertGreater(lines, 0)
 
     def test_the_guess_follows_the_answer_and_opens_without_a_script(self):
-        page = self.scale_page()
+        ids = {self.data("en", p)["page"]["id"] for p in self.scale_pages()}
         out, written = self.build()
         for path in written:
             data, lang = self.page_of(path)
-            if data["page"]["id"] != self.data("en", page)["page"]["id"]:
+            if data["page"]["id"] not in ids:
                 continue
             own = self.own_part(path.read_text(encoding="utf-8"))
             guess = data["top"]["guess"]
@@ -577,7 +735,9 @@ class Case(unittest.TestCase):
             self.assertIn(".nw{white-space:nowrap}", text)
             if name not in data["top"]["h1"]:
                 # a page whose heading does not name the wing keeps the name whole wherever it stands
-                self.assertNotIn(name, self.words(re.sub(r'<span class="nw">[^<]*</span>', " ", own)))
+                # whole words: a longer word that only starts with the name (Tieren) is not the name
+                self.assertNotRegex(self.words(re.sub(r'<span class="nw">[^<]*</span>', " ", own)),
+                                    r"(?<!\w)%s(?:'s|’s|s)?(?!\w)" % re.escape(name))
                 continue
             # in the h1 the name stands with its ending in one span that cannot wrap
             h1 = re.search(r"<h1[^>]*>(.*?)</h1>", own, flags=re.S).group(1)
