@@ -53,12 +53,27 @@ def write(out, static, words, privacy_pages):
     return problems
 
 
-def check(out, static, privacy_pages):
-    """The built folder against what the entry depends on. Returns the problems found, as a list of lines."""
+# The script's guard: a page of a wing in the making (its main element marked) is never asked.
+UNASKED_GUARD = "if (doc.querySelector('main[data-unasked]')) return;"
+
+
+def check(out, static, privacy_pages, unasked=()):
+    """The built folder against what the entry depends on. unasked: the addresses (from the site's root) of the
+    pages that are never asked, as the count's lists name them for the edge. Returns the problems found, as a list
+    of lines."""
     out = Path(out)
     problems = []
     source = (SRC / "js" / SCRIPT).read_text(encoding="utf-8")
     rules = RULES.read_text(encoding="utf-8")
+    if UNASKED_GUARD not in source:
+        problems.append(f"js/{SCRIPT}: does not hold its guard for the pages that are never asked ({UNASKED_GUARD})")
+    if "import { UNASKED } from '../_count/lists.js'" not in rules or "!unasked(pathname)" not in rules:
+        problems.append(f"{RULES.name}: the edge does not leave out the pages the count's lists name as never asked")
+    for path in sorted(out.rglob("index.html")):
+        page = "/" + str(path.parent.relative_to(out)).replace(".", "", 1).strip("/") + "/"
+        if re.search(r"<main\b[^>]*\sdata-unasked[\s>]", path.read_text(encoding="utf-8")) and not any(
+                page.replace("//", "/").startswith(u) for u in unasked):
+            problems.append(f"{page}: the page is marked never to be asked, and the edge would ask it (UNASKED in the count's lists)")
     shared = {"CLICK": _rule(rules, "CLICK"), "ENTRY_KEY": _rule(rules, "ENTRY_KEY"), "GRANT_PREFIX": _rule(rules, "GRANT_PREFIX"),
               "WALK_PREFIX": _rule(rules, "WALK_PREFIX"), "YES_MAX_AGE_MS": _rule(rules, "YES_MAX_AGE_MS")}
     if None in shared.values():

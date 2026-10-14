@@ -7,11 +7,11 @@ import { createHash } from 'node:crypto'
 import { existsSync, readFileSync } from 'node:fs'
 import { createRequire } from 'node:module'
 import { fileURLToPath } from 'node:url'
-import { ASK_SCRIPT, CLICK, ENTRY_KEY, GRANT_PREFIX, WALK_PREFIX, YES_MAX_AGE_MS, asks } from '../functions/_entry/rules.js'
+import { ASK_SCRIPT, CLICK, ENTRY_KEY, GRANT_PREFIX, WALK_PREFIX, YES_MAX_AGE_MS, asks, unasked } from '../functions/_entry/rules.js'
 import * as entryModule from '../functions/v1/entry.js'
 import { API_VERSION, MAX_BODY, SETTINGS, YES_SKEW_MS, dateTimeOf, forgetToken, onRequestPost, orderIdOf, redact, uploadBody } from '../functions/v1/entry.js'
 import { onRequest as middleware } from '../functions/_middleware.js'
-import { WING_STOPS } from '../functions/_count/lists.js'
+import { UNASKED, WING_STOPS } from '../functions/_count/lists.js'
 
 const at = (rel) => fileURLToPath(new URL(rel, import.meta.url))
 const ORIGIN = 'https://museumofages.org'
@@ -189,6 +189,78 @@ test('the edge puts the question\'s script on every grant page, click id or not,
       assert.deepEqual(seen.filter((x) => x.append), [], path)
       assert.equal(seen.filter((x) => x.set).length, 1, path)
     })
+  }
+})
+
+/* ---- the pages of a wing in the making: never asked, whatever the address carries ---- */
+
+const MAKING = ['/a/g/animals/', '/a/g/animals/megalodon/', `/a/g/animals/megalodon/?gclid=${GCLID}`, '/a/g/de/tiere/',
+  '/a/g/de/tiere/megalodon/', '/a/g/animals', '/a/g/de/tiere', '/a/g//animals/megalodon/', '/a/g/Animals/Megalodon/',
+  '/a/g/%61nimals/megalodon/', '/a/g/de//tiere/', '/a/g/animals/megalodon/index.html', '/a/g/de/TIERE/megalodon/']
+
+test('the edge never gives the question\'s script to a page of a wing in the making, by any spelling of its address', () => {
+  assert.deepEqual([...UNASKED].sort(), ['/animals/', '/de/tiere/'])
+  const none = new Headers()
+  for (const path of MAKING) {
+    assert.equal(unasked(path), true, path)
+    assert.equal(asks(path, none), false, path)
+    assert.equal(asks(path, new Headers({ 'Sec-GPC': '0' })), false, path)
+  }
+  // a page whose name only begins like theirs is asked as before, and so is every other page under the prefix
+  for (const path of ['/a/g/animalsx/', '/a/g/de/tierex/', '/a/g/de/', '/a/g/leonardo-da-vinci/', '/a/g/de/leonardo-da-vinci/groessen/']) {
+    assert.equal(unasked(path), false, path)
+    assert.equal(asks(path, none), true, path)
+  }
+  // a broken escape is read as written and asks as any page would
+  assert.equal(asks('/a/g/%E0%A4%A/', none), true)
+})
+
+test('the edge puts no question\'s script on a page of a wing in the making, click id or not', async () => {
+  for (const path of [`/a/g/animals/megalodon/?gclid=${GCLID}`, `/a/g/de/tiere/?gclid=${GCLID}`, '/a/g/animals/', `/a/g//de/tiere/megalodon/?gclid=${GCLID}`]) {
+    await withRewriter(async (seen) => {
+      await page(path, { Referer: 'https://www.google.com/' })
+      assert.deepEqual(seen.filter((x) => x.append), [], path)
+      // the visit's source word is still set: the count knows the visit came from the grant
+      assert.deepEqual(seen.find((x) => x.set).set, ['data-source', 'ad_grant'], path)
+    })
+  }
+})
+
+test('the question\'s script does nothing at all on a page of a wing in the making, whatever its address carries', async () => {
+  const vm = await import('node:vm')
+  const source = readFileSync(at('../_src/js/ask.js'), 'utf8').replace('{/*words*/}', JSON.stringify({ en: { privacy: '/privacy/' } }))
+  const run = (marked) => {
+    const done = []
+    const document = {
+      documentElement: { getAttribute: (n) => (n === 'lang' ? 'en' : null), hasAttribute: () => false,
+        setAttribute: (n) => done.push(`set ${n}`), classList: { add: (c) => done.push(`class ${c}`) } },
+      querySelector: (sel) => { done.push(`query ${sel}`); return sel === 'main[data-unasked]' && marked ? {} : null },
+      createElement: (t) => { done.push(`create ${t}`); return {} }, currentScript: null, prerendering: false,
+      head: { appendChild: () => done.push('sheet') },
+      addEventListener: (t) => done.push(`listen ${t}`),
+    }
+    const window = {
+      location: { hostname: 'museumofages.org', pathname: '/a/g/animals/megalodon/', search: `?gclid=${GCLID}`, hash: '' },
+      history: { state: null, replaceState: () => done.push('replaceState') },
+      sessionStorage: { getItem: () => null, setItem: () => done.push('store'), removeItem() {} },
+    }
+    vm.runInNewContext(source, { document, window, navigator: {}, CustomEvent: class {}, JSON, Date })
+    return done
+  }
+  // marked: it reads one thing, the mark, and leaves the address, the tab and the page as they are
+  assert.deepEqual(run(true), ['query main[data-unasked]'])
+  // the same page unmarked would take the click id out of the address bar at once: the mark is what stops it
+  assert.ok(run(false).includes('replaceState'))
+})
+
+test('every built page of a wing in the making carries the mark, and stands at an address the edge never asks', () => {
+  const dist = at('../dist/')
+  if (!existsSync(dist)) return
+  for (const rel of ['animals/index.html', 'animals/megalodon/index.html', 'de/tiere/index.html', 'de/tiere/megalodon/index.html']) {
+    const text = readFileSync(dist + rel, 'utf8')
+    assert.match(text, /<main\b[^>]*\sdata-unasked[\s>]/, rel)
+    assert.ok(!text.includes('/static/ask.js'), rel)
+    assert.equal(asks(`/a/g/${rel.replace(/index\.html$/, '')}`, new Headers()), false, rel)
   }
 })
 

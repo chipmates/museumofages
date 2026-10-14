@@ -1,6 +1,7 @@
 /* Museum of Ages, the question for visitors from our Google Ad Grants ads, and the privacy page's button that takes
-   a yes back. The edge puts this script on every page under the grant's prefix (/a/g/) but the walk, unless the
-   request carries the Global Privacy Control header (functions/_entry/rules.js): this script, not the server, tests
+   a yes back. The edge puts this script on every page under the grant's prefix (/a/g/) but the walk and the pages
+   of a wing in the making, unless the request carries the Global Privacy Control header (functions/_entry/rules.js):
+   this script, not the server, tests
    the address for the ad's click id (gclid), and tests the browser for Global Privacy Control once more. The privacy
    page carries it for its button. On any other page it does nothing, and it reads nothing after the question mark
    unless the page stands under the grant's prefix.
@@ -13,6 +14,9 @@
 (function () {
   'use strict';
   var doc = document, win = window, root = doc.documentElement, loc = win.location;
+  /* a page of a wing in the making is never asked, whatever its address carries: the edge never sends this script
+     there, and should it arrive anyway it does nothing at all */
+  if (doc.querySelector('main[data-unasked]')) return;
   if (root.hasAttribute('data-ask')) return;
   root.setAttribute('data-ask', '');
   var HOSTS = ['museumofages.org', 'www.museumofages.org', '127.0.0.1', 'localhost'];

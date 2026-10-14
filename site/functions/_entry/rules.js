@@ -1,3 +1,5 @@
+import { UNASKED } from '../_count/lists.js'
+
 // The museum entry's shared rules: who is asked, what a yes leaves in the tab, and how long it holds. The edge
 // (_middleware.js), the question's script (site/_src/js/ask.js), the walk's sender (museum/src/core/museum-entry.ts)
 // and the function (v1/entry.js) each hold these values; site/tests/entry.test.mjs holds them equal.
@@ -16,10 +18,26 @@ export const YES_MAX_AGE_MS = 6 * 60 * 60 * 1000
 export const ASK_SCRIPT = '/static/ask.js'
 
 /**
- * Whether a page gets the question's script: under the grant's prefix and not the walk, for a request without
- * the Global Privacy Control header. The script itself tests the address for a click id and the browser for
- * Global Privacy Control once more, so no server code reads the query.
+ * Whether an address under the grant's prefix shows a page of a wing in the making, which is never asked: the
+ * count's lists name those pages from the registry. The path is read as the host could serve it, decoded, its
+ * repeated slashes as one and its letters in lower case, so no spelling of the same page is asked.
+ */
+export function unasked(pathname) {
+  let rest = pathname.slice(GRANT_PREFIX.length - 1)
+  try {
+    rest = decodeURIComponent(rest)
+  } catch {
+    // a broken escape is read as written
+  }
+  rest = rest.replace(/\/{2,}/g, '/').toLowerCase()
+  return UNASKED.some((page) => rest === page.slice(0, -1) || rest.startsWith(page))
+}
+
+/**
+ * Whether a page gets the question's script: under the grant's prefix and not the walk nor a page of a wing in the
+ * making, for a request without the Global Privacy Control header. The script itself tests the address for a click
+ * id and the browser for Global Privacy Control once more, so no server code reads the query.
  */
 export function asks(pathname, headers) {
-  return pathname.startsWith(GRANT_PREFIX) && !pathname.startsWith(WALK_PREFIX) && headers.get('Sec-GPC') !== '1'
+  return pathname.startsWith(GRANT_PREFIX) && !pathname.startsWith(WALK_PREFIX) && !unasked(pathname) && headers.get('Sec-GPC') !== '1'
 }
