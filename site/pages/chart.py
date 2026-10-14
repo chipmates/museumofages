@@ -624,6 +624,10 @@ def picture_still_svg(words, colours, picture, size, person):
     iw = W - 2 * m
     ih = iw * size[1] / size[0]
     iy = 214 if words.get("line") else 170
+    # a picture too tall for the card's width stands whole and narrower, above the address
+    if ih > H - 84 - iy:
+        ih = H - 84 - iy
+        iw = ih * size[0] / size[1]
     parts.append(_rect(m - 3, iy - 3, iw + 6, ih + 6, c["stone"], c["frame"], 3))
     parts.append(f'<image x="{m:g}" y="{iy:g}" width="{iw:g}" height="{ih:g}" xlink:href="{PICS_MARK}/{esc(picture)}"/>')
     if person:
