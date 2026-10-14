@@ -1,5 +1,5 @@
 {
-  "_note": "The pictures the museum made itself that may leave under CC BY-SA 4.0 alone: verdict 1 of the rights list (section B, and the share images and charts made for the topic pages). A picture is named by the stem of its files: a file is its stem, then -<width> or -<width>x<height>, then its type. Only these carry licence data in a page's structured data, and the build stops on licence data for any other picture. A picture joins this list only after its rights reading: a still that shows a reproduction, the house or its grounds (map data), the sky, or a film never does. with_map_credit names the stills of the house or its grounds (verdict 2 of the rights list, OpenStreetMap and IGN): they carry licence data only where a page's structured data already describes them, and only with the map data's credit in their creditText. credits names, for each credit another's work asks for, the pictures that rest on that work: the credit follows the museum's own in their creditText, and their licence stays the museum's.",
+  "_note": "The pictures the museum made itself that may leave under CC BY-SA 4.0 alone: verdict 1 of the rights list (section B, and the share images and charts made for the topic pages). A picture is named by the stem of its files: a file is its stem, then -<width> or -<width>x<height>, then its type. Only these carry licence data in a page's structured data, and the build stops on licence data for any other picture. A picture joins this list only after its rights reading: a still that shows a reproduction, the house or its grounds (map data), the sky, or a film never does. with_map_credit names the stills of the house or its grounds (verdict 2 of the rights list, OpenStreetMap and IGN): they carry licence data only where a page's structured data already describes them, and only with the map data's credit in their creditText. credits names, for each credit another's work asks for, the pictures that rest on that work: the credits follow the museum's own in their creditText in this list's order, and their licence stays the museum's.",
   "stems": [
     "hall",
     "v-works", "v-works-m",
@@ -29,6 +29,14 @@
     "body shape after Shimada and others 2025 (CC BY 4.0)": [
       "animals-megalodon-side", "animals-megalodon-head", "animals-megalodon-skeleton", "animals-megalodon-skeleton-head",
       "animals-megalodon-og-en", "animals-megalodon-og-de", "animals-og-en", "animals-og-de"
+    ],
+    "Triceratops outline after Dempsey and others 2025 (CC BY 4.0)": [
+      "animals-biggest-dinosaurs-row", "animals-biggest-dinosaurs-close", "animals-biggest-dinosaurs-og-en",
+      "animals-biggest-dinosaurs-og-de"
+    ],
+    "Ankylosaurus armour after Arbour and Mallon 2017 (CC BY 4.0)": [
+      "animals-biggest-dinosaurs-row", "animals-biggest-dinosaurs-close", "animals-biggest-dinosaurs-og-en",
+      "animals-biggest-dinosaurs-og-de"
     ]
   },
   "with_map_credit": [

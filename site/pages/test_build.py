@@ -1798,16 +1798,23 @@ class PictureLicences(unittest.TestCase):
         found = 0
         for path in self.pages:
             for image in self.lib.image_objects(self.graph(path.read_text(encoding="utf-8")) or {}):
-                credit = self.lib.PICTURE_CREDITS.get(self.lib.picture_stem(image.get("contentUrl") or image.get("url")))
-                if credit and "license" in image:
+                owed = self.lib.PICTURE_CREDITS.get(self.lib.picture_stem(image.get("contentUrl") or image.get("url")))
+                if owed and "license" in image:
                     found += 1
-                    # the other work's credit stands once, the list's own after the museum's or the page's own line in
-                    # the page's language, and the licence stays the museum's
+                    # each other work's credit stands once and in the list's order, after the museum's, as the list
+                    # gives it or as the page's own line in the page's language; the licence stays the museum's
                     text = image["creditText"]
                     self.assertTrue(text.startswith(self.lib.picture_terms("en", "")["creditText"] + ", "), path)
-                    self.assertEqual(text.count("Shimada"), 1, path)
+                    at = [text.find(re.search(r" (?:after|nach) (\w+)", credit).group(1)) for credit in owed]
+                    self.assertNotIn(-1, at, (path, owed))
+                    self.assertEqual(at, sorted(at), path)
+                    for credit in owed:
+                        self.assertEqual(text.count(re.search(r" after (\w+)", credit).group(1)), 1, path)
                     self.assertTrue(text.endswith("(CC BY 4.0)"), path)
-                    if '<html lang="de"' in path.read_text(encoding="utf-8")[:200]:
+                    page = path.read_text(encoding="utf-8")
+                    shared = re.search(r'<meta property="og:image" content="([^"]+)"', page)
+                    if ('<html lang="de"' in page[:200] and owed == self.lib.PICTURE_CREDITS.get(self.lib.picture_stem(shared.group(1)))
+                            and "Shimada" in owed[0]):
                         self.assertIn("Körperform", text, path)
                     self.assertEqual(image["license"], "https://creativecommons.org/licenses/by-sa/4.0/", path)
         self.assertGreater(found, 0)
@@ -1846,6 +1853,26 @@ class PictureLicences(unittest.TestCase):
         self.assertRegex(" ".join(self.lib.licence_problems(bare, "page")), r"v-court-1600\.webp rests on map data")
         # and with no map terms given, a page stays as it was
         self.assertEqual(self.lib.with_picture_rights(page, f"{origin}/x/", self.lib.picture_terms("de", note)), page)
+
+    def test_the_pages_own_credit_line_stands_only_for_what_its_share_picture_owes(self):
+        owing = {}
+        for stem, owed in self.lib.PICTURE_CREDITS.items():
+            owing.setdefault(tuple(owed), stem)
+        if len(owing) < 2 or not any(len(owed) > 1 for owed in owing):
+            self.skipTest("no two pictures owe different credits, or none owes two")
+        (_, own_stem), (two, other_stem) = sorted(owing.items(), key=lambda kv: len(kv[0]))[:1] + [
+            next((k, v) for k, v in owing.items() if len(k) > 1)]
+        origin = "https://museumofages.org"
+        mine, theirs = f"{origin}/static/img/{own_stem}-1600.webp", f"{origin}/static/img/{other_stem}-1600.webp"
+        page = (f'<meta property="og:image" content="{mine}"><img src="{mine}"><img src="{theirs}">'
+                f'<script type="application/ld+json">{json.dumps({"@context": "https://schema.org", "@graph": []})}</script>')
+        terms = self.lib.picture_terms("de", f"{origin}/x/")
+        line = terms["creditText"].split(", ", 1)[0] + ", eine Zeile der Seite"
+        images = {i["contentUrl"]: i["creditText"] for i in self.lib.image_objects(self.graph(
+            self.lib.with_picture_rights(page, f"{origin}/x/", terms, credit=line)))}
+        # the page's own line for its own picture; the other picture's credits as the list gives them, in its order
+        self.assertEqual(images[mine], terms["creditText"] + ", eine Zeile der Seite")
+        self.assertEqual(images[theirs], terms["creditText"] + ", " + ", ".join(two))
 
     def test_the_last_years_pages_describe_their_first_picture_with_its_licence(self):
         for path in ("leonardo-da-vinci/death-and-grave", "de/leonardo-da-vinci/tod-und-grab"):
