@@ -424,6 +424,11 @@ class Case(unittest.TestCase):
                     self.assertIn(mark["text"], re.sub(r" ([,.:)])", r"\1", " ".join(self.words(figure).replace("\u00a0", " ").split())))
                     # and each label has its lane on every screen
                     self.assertRegex(text, r"\.sc-mark--%s-%s\{grid-row:\d" % (fig["pic"], re.escape(mark["span"])))
+                # where the person's height has no open stone over the person on a narrow screen, it leaves the
+                # picture there, and a label names the person
+                if pic.get("person_from"):
+                    self.assertIn("@media (max-width:%dpx){.sc-person--%s{display:none}}" % (pic["person_from"] - 1, fig["pic"]), text)
+                    self.assertIn("person", [m["span"] for m in fig["marks"]])
         self.assertEqual(seen, 2)
         # a label the picture does not place stops the build
         shutil.rmtree(out)

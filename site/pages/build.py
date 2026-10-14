@@ -607,13 +607,16 @@ def faces(root, lang=None):
 
 def person_rules(defs):
     """Where the person's height stands over the person in each picture at one scale: centred over the person, just
-    above the head (pics.<name>.person, the person's centre and the top of the head as shares of the picture)."""
+    above the head (pics.<name>.person, the person's centre and the top of the head as shares of the picture). Where
+    the picture leaves it open stone only from a screen width (pics.<name>.person_from), it stands from there on."""
     rules = []
     for name, d in defs.items():
         found = re.fullmatch(r"(\d{1,3}(?:\.\d+)?)% (\d{1,3}(?:\.\d+)?)%", d.get("person") or "")
         if found:
             x, top = float(found.group(1)), float(found.group(2))
             rules.append(".sc-person--%s{left:%g%%;bottom:calc(%g%% + 4px)}" % (name, x, round(100 - top, 3)))
+            if d.get("person_from"):
+                rules.append("@media (max-width:%dpx){.sc-person--%s{display:none}}" % (d["person_from"] - 1, name))
     return "".join(rules)
 
 
@@ -699,19 +702,24 @@ def mark_lanes(items, width, one_line):
         # a side the words fit at: the name whole on its line, the rest on two lines at most
         least = min(want, max(MARK_LEAST, est(name), 0.6 * (est(f"{name}, {value}") if one_line else est(value))))
         room = lambda side: min(want, width / 2, width - bracket[0] if side == "start" else bracket[1])
-        words = lambda side: (bracket[0], bracket[0] + room(side)) if side == "start" else (bracket[1] - room(side), bracket[1])
+        words = lambda side, w: (bracket[0], bracket[0] + w) if side == "start" else (bracket[1] - w, bracket[1])
         # words keep a gap from words and brackets from brackets; a bracket stands above the words of its lane, so
         # it may come nearer to another label's words
-        fits = lambda side, lane: room(side) >= least and all(
-            apart(words(side), w, MARK_GAP) and apart(bracket, k, MARK_GAP) and apart(words(side), k, MARK_GAP / 2)
-            and apart(bracket, w, MARK_GAP / 2) for w, k in lanes[lane])
-        placed = next(((lane, side) for lane in range(len(lanes)) for side in sides if fits(side, lane)), None)
+        fits = lambda side, w, lane: all(
+            apart(words(side, w), o, MARK_GAP) and apart(bracket, k, MARK_GAP) and apart(words(side, w), k, MARK_GAP / 2)
+            and apart(bracket, o, MARK_GAP / 2) for o, k in lanes[lane])
+        # the widest the words may take in a lane, wrapping no narrower than least
+        widest = lambda side, lane: next((w for w in [room(side)] + list(range(math.floor(room(side)), math.ceil(least) - 1, -4))
+                                          if w >= least and fits(side, w, lane)), None)
+        placed = next(((lane, side, widest(side, lane)) for lane in range(len(lanes)) for side in sides
+                       if widest(side, lane)), None)
         if not placed:
             lanes.append([])
-            placed = len(lanes) - 1, max(sides, key=lambda side: room(side) >= least)
-        lane, side = placed
-        lanes[lane].append((words(side), bracket))
-        out[key] = (lane, side, math.ceil(room(side)))
+            side = max(sides, key=lambda side: room(side) >= least)
+            placed = len(lanes) - 1, side, room(side)
+        lane, side, w = placed
+        lanes[lane].append((words(side, w), bracket))
+        out[key] = (lane, side, math.ceil(w))
     return out, len(lanes)
 
 
@@ -1933,6 +1941,11 @@ def making_problems(d, wing, data):
         for name in (pic or {}).get("behind") or []:
             if name not in {m.get("span") for m in fig.get("marks", [])}:
                 problems.append(f"pics.{fig.get('pic')}.behind names {name!r}, which no label of the picture is")
+        if (pic or {}).get("person_from") is not None and not (
+                isinstance(pic["person_from"], int) and pic["person_from"] > MARK_SCREENS[0]
+                and "person" in {m.get("span") for m in fig.get("marks", [])}):
+            problems.append(f"pics.{fig.get('pic')}.person_from is a screen width, and where the person's height leaves the "
+                            "picture on a narrower screen, a label of the picture names the person")
         if fig.get("marks") and not (pic or {}).get("sizes"):
             problems.append(f"the picture {fig.get('pic')!r} with labels needs its sizes: the labels are laid for its widths")
         if "after" in fig and not (isinstance(fig["after"], int) and fig is not top.get("scale")):
