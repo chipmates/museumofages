@@ -173,9 +173,9 @@ CLAIM_ALLOWED = (r"^meta\.", r"^top\.h1$", r"\.q$")
 # How the words are made is said once, on the page about the museum. A page here carries no line on it.
 
 # What is no sentence in a data file: its page, its pictures, addresses and keys.
-NOT_SPACED = r"^(_|page\.|pics\.)|\.(href|focus|pic|pic_back|tag|k|type|id|stem|sizes|work|wall|stop|page|only|at|wing|shape|src_from|span)$"
+NOT_SPACED = r"^(_|page\.|pics\.)|\.(href|focus|pic|pic_back|tag|k|type|id|stem|sizes|work|wall|stop|page|only|at|wing|shape|src_from|span|swatch)$"
 # The keys of a data file that hold no displayed words (lint() passes them by).
-NOT_WORDS = r"\.(pic|pic_back|tag|k|type|id|stem|sizes|work|wall|stop|page|only|at|wing|shape|src_from|span)$"
+NOT_WORDS = r"\.(pic|pic_back|tag|k|type|id|stem|sizes|work|wall|stop|page|only|at|wing|shape|src_from|span|swatch)$"
 # The two halves of a pair a fact rule reads together (lint): a number named in a row's term is explained in its text.
 PAIRS = {"term": "text", "text": "term", "q": "a", "a": "q"}
 # A cell of a table of numbers may stand empty where no sourced figure exists (its unit line says so), never its first.
@@ -640,6 +640,23 @@ def span_rules(defs):
                 rules.append(".sc-bar--%s-%s{margin-left:calc(2px + (100%% - 4px) * %g);width:calc((100%% - 4px) * %g)}"
                              % (name, key, round(a, 4), round(b - a, 4)))
     return "".join(rules)
+
+
+# A key's swatch: its square, and the line it leads, on a page whose key has swatches only
+SWATCH = (".sc-keys{display:grid;gap:4px;margin:4px 0 0;padding:0;list-style:none}"
+          ".sc-keys__i{display:flex;align-items:baseline;gap:8px}"
+          ".sc-swatch{flex:none;width:.8em;height:.8em;transform:translateY(.1em);box-shadow:inset 0 0 0 1px var(--hair-strong)}")
+
+
+def swatch_rules(defs):
+    """The colour of each swatch in a picture's key (pics.<name>.swatches, the colour as the picture prints it, so the
+    key's words and the picture agree), with the swatch's own rules, only where a key has swatches."""
+    rules = []
+    for name, d in defs.items():
+        for key, colour in (d.get("swatches") or {}).items():
+            if re.fullmatch(r"#[0-9a-f]{6}", colour):
+                rules.append(".sc-swatch--%s-%s{background:%s}" % (name, key, colour))
+    return SWATCH + "".join(rules) if rules else ""
 
 
 MARK_AT = r"(\d{1,3}(?:\.\d+)?)% (\d{1,3}(?:\.\d+)?)%(?: (start|end))?"
@@ -1275,8 +1292,19 @@ def render(page, lang, data, shared, out_root):
                                         "html.above": marks_html(fig, True), "html.below": marks_html(fig, False),
                                         "html.person": person_html(fig["pic"]), "tag": rich(labels[fig["tag"]]),
                                         "what": rich(fig["what"]), "html.totable": to_table(),
-                                        "html.key": fill(parts["scale_key"], {"text": rich(fig["key"])}) if fig.get("key") else ""})
+                                        "html.key": key_html(fig)})
         return out + (scale_fig(fig["close"]) if fig.get("close") else "")
+
+    def key_html(fig):
+        """A picture's key: one line, or a list whose lines each lead with the swatch of the colour they name."""
+        key = fig.get("key")
+        if not key:
+            return ""
+        if isinstance(key, str):
+            return fill(parts["scale_key"], {"text": rich(key)})
+        return fill(parts["scale_keys"], {"html.items": "".join(
+            fill(parts["scale_key_item"], {"key": esc(f'{fig["pic"]}-{k["swatch"]}'), "text": rich(k["text"])}) if isinstance(k, dict)
+            else fill(parts["scale_key_line"], {"text": rich(k)}) for k in key)})
 
     def bars_html(fig):
         """The length bar under a picture at one scale: each span where the picture's own places put it."""
@@ -1616,7 +1644,7 @@ def render(page, lang, data, shared, out_root):
         "css.inline": shared["css_scale" if making(wing) else "css_list" if any(b["type"] == "periods" for b in data["blocks"]) else
                              "css_chart" if works or "drawing" in data["top"] or any(b["type"] == "text" for b in data["blocks"]) else "css"]
                       + (shared["langs_css"] + chrome["by"] if chrome["langs"] else ""),
-        "css.faces": faces(root, lang) + focus + person_rules(data["pics"]) + span_rules(data["pics"])
+        "css.faces": faces(root, lang) + focus + person_rules(data["pics"]) + span_rules(data["pics"]) + swatch_rules(data["pics"])
                      + (shared["css_several"] + mark_rules(data) if marked_figures(data) or has_points(data) else ""),
         "html.preload": preload,
         "html.theme": f'<meta name="theme-color" content="{chrome["theme"]}">\n' if chrome["theme"] else "",
@@ -1978,6 +2006,11 @@ def making_problems(d, wing, data):
                 and "person" in {m.get("span") for m in fig.get("marks", [])}):
             problems.append(f"pics.{fig.get('pic')}.person_from is a screen width, and where the person's height leaves the "
                             "picture on a narrower screen, a label of the picture names the person")
+        for k in fig.get("key") if isinstance(fig.get("key"), list) else []:
+            colour = ((pic or {}).get("swatches") or {}).get(k.get("swatch")) if isinstance(k, dict) else ""
+            if colour is None or (isinstance(k, dict) and not re.fullmatch(r"#[0-9a-f]{6}", colour)):
+                problems.append(f"the key's swatch {k.get('swatch')!r} needs pics.{fig.get('pic')}.swatches.<swatch>, "
+                                "the colour as the picture prints it (#rrggbb)")
         if fig.get("marks") and not (pic or {}).get("sizes"):
             problems.append(f"the picture {fig.get('pic')!r} with labels needs its sizes: the labels are laid for its widths")
         if "after" in fig and not (isinstance(fig["after"], int) and fig is not top.get("scale")):

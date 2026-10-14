@@ -367,6 +367,12 @@
 </figure>
 <!--@ scale_key -->
 <span class="label__src sc-key">{{text}}</span>
+<!--@ scale_keys -->
+<ul class="label__src sc-key sc-keys">{{html.items}}</ul>
+<!--@ scale_key_item -->
+<li class="sc-keys__i"><span class="sc-swatch sc-swatch--{{key}}" aria-hidden="true"></span><span>{{text}}</span></li>
+<!--@ scale_key_line -->
+<li class="sc-keys__i"><span>{{text}}</span></li>
 <!--@ to_table -->
 <a class="sc-totable" href="#{{id}}">{{text}}</a>
 <!--@ scale_bars -->
