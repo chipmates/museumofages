@@ -96,6 +96,16 @@
    ],
    "sizes": "(min-width: 1280px) 690px, (min-width: 960px) 54vw, (min-width: 600px) calc(100vw - 64px), calc(100vw - 40px)",
    "person": "92.84% 63.16%"
+  },
+  "mammoth": {
+   "stem": "animals-woolly-mammoth-side",
+   "widths": [
+    800,
+    1600,
+    2400
+   ],
+   "sizes": "(min-width: 1280px) 690px, (min-width: 960px) 54vw, (min-width: 600px) calc(100vw - 64px), calc(100vw - 40px)",
+   "person": "91.9% 40.85%"
   }
  },
  "meta": {
@@ -507,6 +517,12 @@
      "pic": "spino",
      "alt": "A Spinosaurus with a tall sail and a deep tail, the pale outline of a larger adult behind it, beside a grey person who reaches its hip.",
      "line": "The Spinosaurus from the row, on its own: the sail, the tail, the water, and why an adult was longer than ours."
+    },
+    {
+     "page": "woolly-mammoth",
+     "pic": "mammoth",
+     "alt": "A woolly mammoth from the side in a dark brown coat: high domed head, sloping back, two curved tusks, a mark at the shoulder. The grey person beside him stands lower than the tusk tips.",
+     "line": "Not a dinosaur but an ice age relative of the elephants: a Siberian bull stood about 2.7 to 2.9 m at the shoulder. Ours is one real bull found frozen in 1900, beside a person."
     }
    ]
   },

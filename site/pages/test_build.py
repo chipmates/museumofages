@@ -938,13 +938,19 @@ class Case(unittest.TestCase):
             rel = path.relative_to(out).parent
             links[(ids[data["page"]["id"]], lang)] = {os.path.normpath((rel / h).as_posix()) for h in re.findall(r'href="([^"#]+)"', listed.group(1))}
         # a wing grows a page at a time and a page names the ones it was written to sit beside, so not every page
-        # names every other: each names only built pages of the wing in its language, two at least
+        # names every other: each names only built pages of the wing in its language, two at least, and none is unnamed
+        named = set()
         for (page, lang), targets in links.items():
             others = {p for p in pages if p != page}
             built = {os.path.normpath(path.relative_to(out).parent.as_posix()) for path in written
                      if self.page_of(path)[0]["page"]["id"] in {self.data("en", o)["page"]["id"] for o in others} and self.page_of(path)[1] == lang}
             self.assertLessEqual(targets, built, (page, lang))
             self.assertGreaterEqual(len(targets), 2, (page, lang))
+            named |= {(t, lang) for t in targets}
+        for path in written:
+            data, lang = self.page_of(path)
+            if data["page"]["id"] in ids:
+                self.assertIn((os.path.normpath(path.relative_to(out).parent.as_posix()), lang), named, path)
 
     def test_a_page_of_a_wing_in_the_making_has_no_door_and_its_link_out(self):
         page = self.scale_page()

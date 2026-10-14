@@ -50,6 +50,16 @@
    ],
    "sizes": "(min-width: 1280px) 690px, (min-width: 960px) 54vw, (min-width: 600px) calc(100vw - 64px), calc(100vw - 40px)",
    "person": "92.84% 63.16%"
+  },
+  "mammoth": {
+   "stem": "animals-woolly-mammoth-side",
+   "widths": [
+    800,
+    1600,
+    2400
+   ],
+   "sizes": "(min-width: 1280px) 690px, (min-width: 960px) 54vw, (min-width: 600px) calc(100vw - 64px), calc(100vw - 40px)",
+   "person": "91.9% 40.85%"
   }
  },
  "meta": {
@@ -98,6 +108,11 @@
      "page": "spinosaurus",
      "pic": "spino",
      "alt": "Ein Spinosaurus von der Seite, mit hohem Rückensegel und tiefem Schwanz, dahinter der helle Umriss eines größeren erwachsenen Tiers, daneben ein grauer Mensch, der ihm bis zur Hüfte reicht."
+    },
+    {
+     "page": "woolly-mammoth",
+     "pic": "mammoth",
+     "alt": "Ein Wollhaarmammut von der Seite im dunkelbraunen Fell, mit hoch gewölbtem Kopf, abfallendem Rücken, zwei gebogenen Stoßzähnen und einer Marke an der Schulter. Der graue Mensch daneben steht niedriger als die Spitzen der Stoßzähne."
     }
    ]
   }
