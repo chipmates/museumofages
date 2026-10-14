@@ -223,8 +223,8 @@ class Names:
     never hyphenated and carries its language where it differs from the page's, so a screen reader
     says it right. A person's name of that list never breaks either, nor a short place name marked whole."""
 
-    def __init__(self, entries, wing_name, lang):
-        self.lang, self.wing_name = lang, wing_name
+    def __init__(self, entries, wing_name, lang, join=False):
+        self.lang, self.wing_name, self.join = lang, wing_name, join
         # a name is found whichever apostrophe a language's typography sets in it (l'Institut, l’Institut)
         self.table = {straight(e["text"]): e for e in entries}
         self.table[straight(wing_name)] = {"text": wing_name, "wing": True}
@@ -244,14 +244,19 @@ class Names:
                 out.append(f'<span class="{kind}">{esc(m.group(1) + ending)}</span>')
                 continue
             kind = "nw nh" if entry.get("person") or entry.get("whole") else "nh"
+            name = m.group(1)
+            if self.join and kind == "nw nh" and not entry.get("person") and re.fullmatch(r"[^\s-]+(?: [^\s-]+)+", name):
+                # WebKit lets a line run past its column by the mark that follows a nowrap name; a name whose
+                # only breaks are spaces is held whole by no-break spaces instead
+                kind, name = "nh", name.replace(" ", LIB.NBSP)
             # a scientific name (taxon) is set in italics, as biology writes it
             tag = "i" if entry.get("taxon") else "span"
             code = entry.get("lang")
             if code and code != self.lang:
                 # the ending is the page's own language and stays outside
-                out.append(f'<{tag} class="{kind}" lang="{code}">{esc(m.group(1))}</{tag}>{esc(ending)}')
+                out.append(f'<{tag} class="{kind}" lang="{code}">{esc(name)}</{tag}>{esc(ending)}')
             else:
-                out.append(f'<{tag} class="{kind}">{esc(m.group(1) + ending)}</{tag}>')
+                out.append(f'<{tag} class="{kind}">{esc(name + ending)}</{tag}>')
         out.append(esc(text[last:]))
         return "".join(out)
 
@@ -1161,8 +1166,10 @@ def render(page, lang, data, shared, out_root):
     door = None if making(wing) else wing["door"][lang]
     chrome = site_chrome(shared["chrome_pages"], lang, root, twins, door)
     hub = data["page"].get("hub")
-    names = Names(shared["names"] + shared["own_names"][lang], wing["name"][lang], lang)
+    names = Names(shared["names"] + shared["own_names"][lang], wing["name"][lang], lang, join=data["page"].get("join_names", False))
     rich = names.mark
+    # the list of pages is new on every page that carries one, so its names are held by no-break spaces
+    joined = Names(shared["names"] + shared["own_names"][lang], wing["name"][lang], lang, join=True).mark
 
     def site_page(name, code=lang):
         options = SITE_PAGES[name][code]
@@ -1456,8 +1463,8 @@ def render(page, lang, data, shared, out_root):
                 # the registry's line binds a number to its unit as the page's own words do
                 # a page may name a neighbour with a line of its own (line), else the list's line
                 line = re.sub(rf"(\d) (?={MORE_UNITS}\b)", "\\1" + LIB.NBSP, item.get("line") or topic["line"][lang])
-                items.append(fill(parts["page_item"], {"href": page_href(item["page"]), "name": rich(topic["name"][lang]),
-                                                       "line": rich(LIB.bind(line, lang)),
+                items.append(fill(parts["page_item"], {"href": page_href(item["page"]), "name": joined(topic["name"][lang]),
+                                                       "line": joined(LIB.bind(line, lang)),
                                                        "html.pic": pics.picture(item["pic"], esc(item["alt"])) if item.get("pic") else ""}))
             values["html.items"] = "\n".join(items)
             # on a topic page the list names its neighbours after the page's own sections; the wing's list is the page

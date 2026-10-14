@@ -442,6 +442,32 @@ class Case(unittest.TestCase):
                     self.fails(r"top\.out\.text matches")
                     self.save(lang, original, page)
 
+    def test_a_page_that_asks_holds_its_names_by_no_break_spaces(self):
+        """WebKit lets a line overflow by the mark after a nowrap name: a page with join_names, and every list of pages,
+        hold a name whose only breaks are spaces by no-break spaces; a page without the flag keeps its nowrap spans."""
+        page = self.topic_page("t_rex")
+        out, written = self.build()
+        by_id = {}
+        for path in written:
+            data, lang = self.page_of(path)
+            by_id[(data["page"]["id"], lang)] = (data, self.own_part(path.read_text(encoding="utf-8")))
+        for lang in ("en", "de"):
+            data, own = by_id[(self.data(lang, page)["page"]["id"], lang)]
+            self.assertTrue(data["page"].get("join_names"))
+            self.assertIn('<span class="nh">T.\u00a0rex</span>', own)
+            self.assertNotIn('class="nw nh">T. rex', own)
+            self.assertIn('<i class="nh">Tyrannosaurus\u00a0rex</i>', own)
+            # a list of pages joins its names wherever it stands: the hub and both neighbours
+            items = [m.group(1) for (pid, code), (other, text) in by_id.items() if code == lang
+                     for m in re.finditer(r'<h2 class="sc-item__h"><a href="[^"]*t-rex/">(.*?)</a>', text)]
+            self.assertEqual(len(items), 3)
+            for item in items:
+                self.assertIn('<span class="nh">T.\u00a0rex</span>', item)
+        # a page without the flag keeps the nowrap span in its own sentences
+        kept = [own for (pid, code), (d, own) in by_id.items() if not d["page"].get("join_names") and 'class="nw nh">T. rex' in own]
+        self.assertTrue(kept)
+        shutil.rmtree(out)
+
     def test_a_t_rex_number_stands_only_with_the_words_that_say_whose_it_is(self):
         """The page names our pose's 11.4 m, the 15 tonnes of a model, the 90 percent by bone volume, the 13 m of the news,
         the 9 of a range and the lips as most likely on purpose: without those words the same fields stop the build."""
@@ -960,7 +986,8 @@ class Case(unittest.TestCase):
             own = self.own_part(text)
             self.assertIn(".nh{hyphens:none", text)
             spans = re.findall(r'<(?:span|i) class="(?:nw nh|nh)"(?: lang="(\w+)")?>([^<]*)</(?:span|i)>', own)
-            marked = {html.unescape(word): code for code, word in spans}
+            # a name held whole by no-break spaces is the same name
+            marked = {html.unescape(word).replace("\u00a0", " "): code for code, word in spans}
             loose = self.words(re.sub(r'<(span|i) class="(?:nw|nh|nw nh)"[^>]*>[^<]*</\1>', " ", own))
             found = 0
             for entry in names:
