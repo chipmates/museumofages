@@ -56,7 +56,7 @@
  },
  "meta": {
   "title": "Wie groß war ein T. rex? Etwa 12 m lang | Museum of Ages",
-  "description": "Größe des T. rex: ein großer erwachsener etwa 12 m lang, an der Hüfte etwa 4 m hoch, grob 8 bis 9 t. Unserer nach SUE, neben einem Menschen im Maßstab.",
+  "description": "Größe des T. rex: ein großes erwachsenes Tier etwa 12 m lang, an der Hüfte etwa 4 m hoch, grob 8 bis 9 t. Unserer ist nach SUE gebaut.",
   "og_title": "Wie groß war ein T. rex? Etwa 12 m lang",
   "og_image_alt": "Ein T. rex von der Seite auf zwei Beinen, das Maul offen, der Kopf erhoben, neben einem grauen Menschen, der ihm nicht bis zum Knie reicht."
  },
@@ -73,7 +73,7 @@
  },
  "top": {
   "h1": "Wie groß war ein T. rex?",
-  "answer": "Ein großer erwachsener Tyrannosaurus rex war etwa 12 m lang, und die meisten waren kleiner. An der Hüfte stand er etwa 3,5 bis 4 m hoch. Mit erhobenem Kopf reicht unserer bis etwa 4,6 m, und das hängt von der Haltung ab. Ein großer erwachsener kam auf grob 8 bis 9 t, nach Knochen und Körpermodellen, ein gewöhnlicher auf weniger. Unser T. rex ist nach SUE gebaut und misst in dieser Haltung etwa 11,4 m, mehr als sechseinhalb Menschen von 1,70 m hintereinander. Sein Knie liegt etwa 2 m hoch, über dem Kopf des Menschen.",
+  "answer": "Ein großer erwachsener Tyrannosaurus rex war etwa 12 m lang, und die meisten waren kleiner. An der Hüfte stand er etwa 3,5 bis 4 m hoch. Mit erhobenem Kopf reicht unserer bis etwa 4,6 m, und das hängt von der Haltung ab. Ein großer erwachsener kam auf grob 8 bis 9 t, nach Knochen und Körpermodellen, ein gewöhnlicher auf weniger. Unser T. rex ist nach SUE gebaut und misst in dieser Haltung etwa 11,4 m, mehr als sechseinhalb Menschen von 1,70 m, der Länge nach aneinandergelegt. Sein Knie liegt etwa 2 m hoch, über dem Kopf des Menschen.",
   "answer_more": "Die beiden größten bekannten T. rex heißen SUE und Scotty. SUE, 1990 in South Dakota gefunden und heute in Chicago, ist das längere und vollständigere Skelett, als Montage etwa 12 m. Scotty gilt nach seinem Oberschenkelknochen als der schwerere, etwa 8,9 t.",
   "scale": {
    "pic": "side",
@@ -102,7 +102,7 @@
    "h": "Zum Raten",
    "q": "Wie lang war der Schädel von SUE?",
    "button": "Antwort zeigen",
-   "a": "Etwa 1,4 m von der Schnauze bis zum hinteren Rand der Wange, in der Erde zusammengedrückt, also ein wenig kürzer als der Mensch von 1,70 m. Der echte Schädel in Chicago wiegt etwa 270 kg und steht in einer eigenen Vitrine, auf dem Skelett sitzt ein Abguss.",
+   "a": "Etwa 1,4 m von der Schnauze bis zum hinteren Rand der Wange, in der Erde zusammengedrückt. Das ist ein wenig kürzer als der Mensch von 1,70 m. Der echte Schädel in Chicago wiegt etwa 270 kg und steht in einer eigenen Vitrine, auf dem Skelett sitzt ein Abguss.",
    "button_open": "Antwort verbergen"
   },
   "out": {
@@ -154,10 +154,10 @@
     },
     {
      "cells": [
-      "Die Art, ein großer erwachsener",
+      "Die Art, ein großes erwachsenes Tier",
       "etwa 12 m, die meisten kleiner",
       "etwa 3,5 bis 4 m",
-      "grob 8 bis 9 t, gewöhnliche erwachsene weniger",
+      "grob 8 bis 9 t, gewöhnliche Tiere weniger",
       "Museen und Studien stimmen überein"
      ]
     },
@@ -178,7 +178,7 @@
    "nav": "Welcher T. rex war der größte?",
    "h": "Welcher T. rex war der größte?",
    "paras": [
-    "SUE und Scotty sind die beiden größten bekannten T. rex, und beide Museen nennen ihr Tier das größte, jedes nach einem anderen Maß. SUE ist das längere und das weit vollständigere Skelett: etwa 12 m als Montage, rund 90 Prozent nach Knochenvolumen erhalten. Scotty gilt nach seinem dickeren Oberschenkelknochen als der schwerere, etwa 8,9 t nach einer Studie von 2019, die eine zweite stützt. Die Schätzungen überschneiden sich, denn für SUE reichen sie von etwa 8,2 bis 9,5 t. Wie groß der größte je lebende T. rex war, weiß niemand: Ein Modell von 2024 rät auf etwa 15 t und über 15 m, gefunden wurde so ein Tier nie."
+    "SUE und Scotty sind die beiden größten bekannten T. rex, und beide Museen nennen ihr Tier das größte, jedes nach einem anderen Maß. SUE ist das längere und das weit vollständigere Skelett: etwa 12 m als Montage, rund 90 Prozent nach Knochenvolumen erhalten. Scotty gilt nach seinem dickeren Oberschenkelknochen als der schwerere, etwa 8,9 t nach einer Studie von 2019, die eine zweite stützt. Die Schätzungen überschneiden sich, denn für SUE reichen sie von etwa 8,2 bis 9,5 t. Wie groß der größte je lebende T. rex war, weiß niemand: Ein Modell von 2024 schätzt etwa 15 t und über 15 m, gefunden wurde so ein Tier nie."
    ]
   },
   {
@@ -192,7 +192,7 @@
      "points": [
       [
        "Die Länge einer Montage:",
-       "Man legt ein Maßband oder ein Computermodell an das aufgestellte Skelett, von der Schnauze bis zur Schwanzspitze. Bei SUE ist das Schwanzende ergänzt, und jede Haltung ändert die Zahl. Darum heißt es etwa 12 m."
+       "Man misst das aufgestellte Skelett mit einem Maßband oder einem Computermodell, von der Schnauze bis zur Schwanzspitze. Bei SUE ist das Schwanzende ergänzt, und jede Haltung ändert die Zahl. Darum heißt es etwa 12 m."
       ],
       [
        "Das Gewicht aus Knochen oder Körper:",
@@ -212,7 +212,7 @@
    "nav": "Was von SUE gefunden wurde",
    "h": "Was von SUE gefunden wurde",
    "paras": [
-    "SUE gehört zu den vollständigsten großen T. rex-Skeletten. Die Liste folgt der Beschreibung des Skeletts von 2003 und ist gut belegt, außer wo es dasteht."
+    "SUE gehört zu den vollständigsten großen T. rex-Skeletten. Die Liste folgt der Beschreibung des Skeletts von 2003 und ist gut belegt, außer wo vermerkt."
    ],
    "subs": [
     {
@@ -225,8 +225,8 @@
         "Der rechte Arm: Oberarm, beide Unterarmknochen und Teile der Hand.",
         "Kreuzbein und Hüfte, die linke Beckenschaufel zerbrochen und wieder zusammengesetzt.",
         "Beide Schulterblätter, das rechte mit einer verheilten Verletzung.",
-        "Teile aller Rückenrippen, 26 von etwa 60 Bauchrippen, dazu das Gabelbein und ein Ohrknochen.",
-        "36 Schwanzwirbel, der vollständigste T. rex-Schwanz, der je geborgen wurde."
+        "Teile aller Rückenrippen, 26 von etwa 60 Bauchrippen (nach der Zählung des Museums), dazu das Gabelbein und ein Ohrknochen.",
+        "36 Schwanzwirbel: 2003 war kein bekannter T. rex-Schwanz vollständiger."
        ]
       }
      ]
@@ -240,8 +240,7 @@
         "Fast der ganze linke Fuß, von dem ein einziger Zehenknochen vorliegt (weniger sicher: Die Beschreibung widerspricht sich an einer Stelle, welcher Fuß gemeint ist).",
         "Etwa 11 der 47 Schwanzwirbel der Montage, also das Schwanzende (unsere Rechnung).",
         "Etwa 34 der rund 60 Bauchrippen, nach der Zählung des Museums.",
-        "Haut: keine.",
-        "Nicht geprüft: der linke Arm und der Hals."
+        "Haut: keine."
        ]
       }
      ]
@@ -260,11 +259,11 @@
    "rows": [
     {
      "term": "12,3 m",
-     "text": "SUEs Montage in Chicago, mit Maßband und Computermodell gemessen. Das Schwanzende ist ergänzt, 36 von 47 Schwanzwirbeln wurden gefunden. Darum sagen wir etwa 12 m."
+     "text": "SUEs Montage in Chicago, mit Maßband und Computermodell gemessen. Das Schwanzende ist ergänzt, 36 der 47 Schwanzwirbel der Montage wurden gefunden. Darum sagen wir etwa 12 m."
     },
     {
      "term": "13 m",
-     "text": "Scotty, in Nachrichten von 2019 so genannt. Die Studie selbst nennt keine Länge, und das Museum gab ihn früher mit knapp 12 m an. Das Natural History Museum in London schreibt „fast 13 m“ für SUE und Scotty zusammen, ohne eine Methode zu nennen."
+     "text": "Scotty, in Nachrichten von 2019 so genannt. Die Kurzfassung der Studie nennt keine Länge, und das Museum gab ihn früher mit knapp 12 m an. Das Natural History Museum in London schreibt „fast 13 m“ für SUE und Scotty zusammen, ohne eine Methode zu nennen."
     },
     {
      "term": "8,8 oder 9 t",
@@ -286,7 +285,7 @@
    "nav": "Haut, Federn und Lippen",
    "h": "Haut, Federn und Lippen",
    "paras": [
-    "Jedes Stück T. rex-Haut, das je gefunden wurde, ist schuppig. Es sind drei kleine Flecken eines einzigen Tiers, Wyrex in Houston, vom Hals, von der Hüfte und vom Schwanzansatz, mit Schuppen unter einem Millimeter. Eine Feder wurde an einem T. rex nie gefunden, und an keinem anderen großen Tyrannosaurier. Kleinere, frühere Verwandte trugen fadenartige Federn: der kleine Dilong, und Yutyrannus mit etwa 1,4 t, rund ein Sechstel von SUE, etwa 60 Millionen Jahre vor T. rex. Von der Oberseite des Rückens ist keine Haut bekannt, ein dünner Flaum dort lässt sich weder zeigen noch ausschließen. Und Lippen: Nach einer Studie von 2023 bedeckten Lippe und Zahnfleisch bei geschlossenem Maul sehr wahrscheinlich alle Zähne. Eine Minderheit hält an einem krokodilartigen Gesicht fest, und gefunden wurde nie eine Lippe."
+    "Jedes Stück T. rex-Haut, das je gefunden wurde, ist schuppig. Es sind drei kleine Flecken eines einzigen Tiers, Wyrex in Houston, vom Hals, von der Hüfte und vom Schwanzansatz, mit Schuppen unter einem Millimeter. Eine Feder wurde an einem T. rex nie gefunden, und an keinem anderen großen Tyrannosaurier. Kleinere, frühere Verwandte trugen fadenartige Federn: der kleine Dilong und Yutyrannus mit etwa 1,4 t, rund ein Sechstel von SUE, etwa 60 Millionen Jahre vor T. rex. Von der Oberseite des Rückens ist keine Haut bekannt, ein dünner Flaum dort lässt sich weder zeigen noch ausschließen. Und Lippen: Nach einer Studie von 2023 bedeckten Lippe und Zahnfleisch bei geschlossenem Maul sehr wahrscheinlich alle Zähne. Eine Minderheit hält an einem krokodilartigen Gesicht fest, und gefunden wurde nie eine Lippe."
    ]
   },
   {
@@ -295,7 +294,7 @@
    "nav": "Warum unser T. rex so aussieht",
    "h": "Warum unser T. rex so aussieht",
    "paras": [
-    "Er ist nach den vermessenen Knochen von SUE gebaut: Oberschenkel, Oberarm, Beckenschaufel und Schädel in ihren Maßen, der Rest nach Verwandten und Regeln. Die Farben sind unsere, denn von keinem T. rex ist eine Farbe bekannt. Das Maul zeigen wir offen, mit dem Band aus Lippe und Zahnfleisch über den oberen Zähnen. Weil der Kopf erhoben und gedreht ist und der Schwanz schwingt, misst er in dieser Haltung etwa 11,4 m, weniger als gerade ausgelegt."
+    "Er ist nach den Maßen von SUEs Knochen gebaut: Oberschenkel, Oberarm, Beckenschaufel und Schädel in ihren Maßen, der Rest nach Verwandten und Regeln. Die Farben sind unsere, denn von keinem T. rex ist eine Farbe bekannt. Das Maul zeigen wir offen, mit dem Band aus Lippe und Zahnfleisch über den oberen Zähnen. Weil der Kopf erhoben und gedreht ist und der Schwanz schwingt, misst er in dieser Haltung etwa 11,4 m, weniger als gerade ausgelegt."
    ]
   },
   {

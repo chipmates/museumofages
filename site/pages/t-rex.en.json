@@ -73,7 +73,7 @@
  },
  "top": {
   "h1": "How big was T. rex?",
-  "answer": "A large adult Tyrannosaurus rex was about 12 m (39 ft) long, and most were smaller. At the hips it stood about 3.5 to 4 m (11.5 to 13 ft) high. With its head raised, ours reaches about 4.6 m (15 ft), and that depends on the pose. A large adult came to roughly 8 to 9 tonnes, by bones and body models, an ordinary one to less. Ours is built to SUE's measurements and runs about 11.4 m (37 ft) in this pose. That is more than six and a half people of 1.70 m laid end to end. Its knee is about 2 m (6.6 ft) up, above the person's head.",
+  "answer": "A large adult Tyrannosaurus rex was about 12 m (39 ft) long, and most were smaller. At the hips it stood about 3.5 to 4 m (11.5 to 13 ft) high. With its head raised, ours reaches about 4.6 m (15 ft), and that depends on the pose. A large adult came to roughly 8 to 9 tonnes, by bones and body models, an ordinary adult less. Ours is built to SUE's measurements and runs about 11.4 m (37 ft) in this pose. That is more than six and a half people of 1.70 m laid end to end. Its knee is about 2 m (6.6 ft) up, above the person's head.",
   "answer_more": "The two largest known T. rex are SUE and Scotty. SUE, found in 1990 in South Dakota and kept in Chicago, is the longer and more complete skeleton, about 12 m as mounted. Scotty is probably the heavier, about 8.9 tonnes by its thigh bone.",
   "scale": {
    "pic": "side",
@@ -102,7 +102,7 @@
    "h": "A guess",
    "q": "How long was SUE's skull?",
    "button": "Show the answer",
-   "a": "About 1.4 m (4.6 ft) from the snout to the back of the cheek, crushed in the ground, so a little shorter than the person of 1.70 m. The real skull in Chicago weighs about 270 kg (600 lb) and stands in its own case, and the skeleton carries a cast.",
+   "a": "About 1.4 m (4.6 ft) from the snout to the back of the cheek, crushed in the ground. That is a little shorter than the person of 1.70 m. The real skull in Chicago weighs about 270 kg (600 lb) and stands in its own case, and the skeleton carries a cast.",
    "button_open": "Hide the answer"
   },
   "out": {
@@ -225,8 +225,8 @@
         "The right arm: upper arm, both forearm bones and parts of the hand.",
         "The sacrum and the hips, the left hip blade broken and pieced together.",
         "Both shoulder blades, the right one with a healed injury.",
-        "Parts of every back rib, 26 of about 60 belly ribs, plus the wishbone and an ear bone.",
-        "36 tail bones, the most complete T. rex tail ever collected."
+        "Parts of every back rib, 26 of about 60 belly ribs (the museum's count), plus the wishbone and an ear bone.",
+        "36 tail bones: in 2003, no known T. rex tail was more complete."
        ]
       }
      ]
@@ -240,8 +240,7 @@
         "Almost all of the left foot, of which a single toe bone exists (less sure: the description contradicts itself in one place about which foot is meant).",
         "About 11 of the mount's 47 tail bones, the end of the tail (our sum).",
         "About 34 of some 60 belly ribs, by the museum's count.",
-        "Skin: none.",
-        "Not checked: the left arm and the neck."
+        "Skin: none."
        ]
       }
      ]
@@ -260,11 +259,11 @@
    "rows": [
     {
      "term": "12.3 m (40.5 ft)",
-     "text": "SUE's mount in Chicago, measured with a tape and a computer model. The tail end is restored, since 36 of its 47 tail bones were found. So we say about 12 m."
+     "text": "SUE's mount in Chicago, measured with a tape and a computer model. The tail end is restored, since 36 of the mount's 47 tail bones were found. So we say about 12 m."
     },
     {
      "term": "13 m (43 ft)",
-     "text": "Scotty, as the news of 2019 put it. The study itself gives no length, and the museum used to give nearly 12 m. The Natural History Museum in London writes almost 13 m for SUE and Scotty together, with no method named."
+     "text": "Scotty, as the news of 2019 put it. The study's summary gives no length, and the museum used to give nearly 12 m. The Natural History Museum in London writes almost 13 m for SUE and Scotty together, with no method named."
     },
     {
      "term": "8.8 or 9 tonnes",
@@ -295,7 +294,7 @@
    "nav": "Why our T. rex looks like this",
    "h": "Why our T. rex looks like this",
    "paras": [
-    "It is built to SUE's measured bones: thigh bone, upper arm bone, hip blade and skull at their sizes, the rest after relatives and rules. The colours are ours, because no colour is known for any T. rex. We show the mouth open, with the band of lip and gum above the upper teeth. Because the head is raised and turned and the tail swings, it runs about 11.4 m (37 ft) in this pose, less than laid out straight."
+    "It is built to the measurements of SUE's bones: thigh bone, upper arm bone, hip blade and skull at their sizes, the rest after relatives and rules. The colours are ours, because no colour is known for any T. rex. We show the mouth open, with the band of lip and gum above the upper teeth. Because the head is raised and turned and the tail swings, it runs about 11.4 m (37 ft) in this pose, less than laid out straight."
    ]
   },
   {
