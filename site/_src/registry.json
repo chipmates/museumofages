@@ -539,6 +539,146 @@
             "no monster, no giant as a noun"
           ]
         ]
+      },
+      {
+        "slug": {
+          "en": "t-rex",
+          "de": "t-rex"
+        },
+        "name": {
+          "en": "How big was T. rex?",
+          "de": "Wie groß war ein T. rex?"
+        },
+        "line": {
+          "en": "Our T. rex, built from SUE, beside a person to one scale. About 12 m long, about 4 m at the hips, roughly 8 to 9 tonnes, and what was found of SUE.",
+          "de": "Unser T. rex nach SUE neben einem Menschen, im selben Maßstab. Etwa 12 m lang, etwa 4 m hoch an der Hüfte, grob 8 bis 9 t, und was von SUE gefunden wurde."
+        },
+        "langs": [
+          "en",
+          "de"
+        ],
+        "count": "t_rex",
+        "about": {
+          "@type": "Taxon",
+          "name": "Tyrannosaurus rex",
+          "alternateName": "T. rex",
+          "taxonRank": "species",
+          "sameAs": "https://www.wikidata.org/wiki/Q13098211"
+        },
+        "never_say": [
+          [
+            "(?:largest|biggest|heaviest) t(?:\\. ?|-)rex(?! that ever lived)|größte[rn]? t(?:\\. ?|-)rex|(?:largest|biggest) tyrannosaur",
+            "SUE and Scotty are the two largest known, each by its own measure: never the largest T. rex"
+          ],
+          [
+            "(?s)\\bsue\\b.*\\b(?:she|her|hers|herself)\\b|\\b(?:she|her|hers|herself)\\b.*\\bsue\\b",
+            "SUE is never she: its sex is not known"
+          ],
+          [
+            "(?<!about )(?<!etwa )(?<!around )\\b66\\s+(?:million|millionen)",
+            "66 million years only with about, and never as SUE's time"
+          ],
+          [
+            "\\bfight|\\bfought|\\bbattle|\\bkampf|\\bkämpf|\\bduell|\\bkill|\\btöte|beside our triceratops|neben unserem triceratops",
+            "no fight, no kill: T. rex and Triceratops shared a rock, nothing more is checked"
+          ],
+          [
+            "\\b1902\\b",
+            "not discovered on 12 August 1902: that is a collector's letter"
+          ],
+          [
+            "\\b(?:it|t\\. rex|sue) (?:was|were) (?:\\w+ ){0,2}(?:brown|green|grey|gray|red|black|striped|spotted)\\b|\\b(?:er|sue|der t\\. rex) war (?:\\w+ ){0,2}(?:braun|grün|grau|rot|schwarz|gestreift|gefleckt)\\b",
+            "no colour is known: our colours are ours"
+          ],
+          [
+            "top speed|running speed|höchstgeschwindigkeit|laufgeschwindigkeit|\\bkm/h\\b|\\bmph\\b|miles per hour|\\bm/s\\b|stundenkilometer|\\bran at\\b|\\bcould run\\b|\\brannte\\b|\\bsprint",
+            "no run and no speed: most likely it could not run"
+          ],
+          [
+            "(?s)^(?!.*(?:this pose|dieser haltung|\\bours\\b|\\bunserer\\b|our (?:model|t\\. rex)|unser(?:em|en)? (?:modell|t\\. rex))).*\\b11[.,]4\\s*m\\b",
+            "11.4 m is our model's length in its pose, never SUE's"
+          ],
+          [
+            "\\bweighed\\b|\\bgewogen\\b|\\bwog\\b",
+            "no T. rex was ever weighed: a weight here is a study's estimate"
+          ],
+          [
+            "(?<![\\d.,])(?<!\\d to )(?<!\\d bis )(?<!\\d or )(?<!\\d oder )\\b9\\s*(?:t|tonnes?|tons?|tonnen)\\b",
+            "never 9 tonnes flat: about 8 to 9 tonnes"
+          ],
+          [
+            "(?s)^(?!.*(?:model|modell)).*\\b15\\s*(?:t|tonnes?|tons?|tonnen)\\b",
+            "15 tonnes only as a model's guess for the largest ever"
+          ],
+          [
+            "\\bsue'?s skin|\\bhaut von sue|\\bsues haut",
+            "no skin of SUE is known"
+          ],
+          [
+            "(?s)^(?!.*(?:bone volume|knochenvolumen)).*\\b90\\s*(?:%|percent|per cent|prozent)",
+            "90 percent only by bone volume"
+          ],
+          [
+            "t(?:\\. ?|-)rex (?:had|wore|was covered in) feathers|t(?:\\. ?|-)rex (?:hatte|trug) federn|had no feathers|hatte keine federn|no feathers anywhere|nirgend(?:s|wo) federn",
+            "no feather has been found on a T. rex; that it had none anywhere is not known either"
+          ],
+          [
+            "asteroid|meteorit|killed by|ausgelöscht",
+            "its end is not witnessed"
+          ],
+          [
+            "\\b(?:our (?:model|t\\. rex)|ours) (?:\\w+ ){0,3}(?:weighs|weighed|would weigh)\\b|\\bunser(?:e[rm]?)? (?:modell|t\\. rex) (?:\\w+ ){0,3}wiegt\\b|\\bunserer (?:\\w+ ){0,3}wiegt\\b",
+            "our model gets no weight: its volume would give 10 t or more"
+          ],
+          [
+            "(?s)^(?!.*(?:news|nachrichten)).*\\b13\\s*(?:m|metres?|meters?|metern?)\\b",
+            "13 m only as the news of 2019, never as Scotty's measured length"
+          ],
+          [
+            "\\b12[.,]4\\b",
+            "12.4 m is traced to no source"
+          ],
+          [
+            "giraffe",
+            "no giraffe: no source makes the comparison"
+          ],
+          [
+            "died at (?:the age of )?28|(?:starb|gestorben) mit 28|mit 28 (?:jahren )?gestorben|full[- ]grown at 20|mit 20 (?:jahren )?ausgewachsen",
+            "SUE's age is about 28 years or more, never a flat 28"
+          ],
+          [
+            "(?:made|built|cast) (?:from|of) sue'?s bones|aus (?:den )?knochen von sue|aus sues knochen",
+            "our model is built to SUE's measurements, not from its bones"
+          ],
+          [
+            "skull on the (?:skeleton|mount) is (?:real|the real|original)|schädel (?:auf|an) (?:dem skelett|der montage) ist (?:echt|der echte|das original)",
+            "the skull on the mount is a cast"
+          ],
+          [
+            "infection|bite marks?|bissspur|infektion|entzündung",
+            "the holes in SUE's jaw are not explained here"
+          ],
+          [
+            "imperator|regina|(?:bigger|larger) species|größere art",
+            "one species: the 2022 proposal is rejected by most specialists"
+          ],
+          [
+            "teenage|teenager|jugendliche[rn]? t",
+            "a slender skeleton is Nanotyrannus, not a young T. rex"
+          ],
+          [
+            "guinness",
+            "a record listing is no measurement"
+          ],
+          [
+            "\\broar|\\bbrüll",
+            "no roar is known"
+          ],
+          [
+            "(?s)^(?!.*(?:most likely|sehr wahrscheinlich|wahrscheinlich|probably)).*\\b(?:lips?|lippen?)\\b.*\\b(?:covered|bedeckt|verdeckt)",
+            "the lips most likely covered the teeth: never as certain"
+          ]
+        ]
       }
     ],
     "never_say": [

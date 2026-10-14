@@ -396,13 +396,155 @@ class Case(unittest.TestCase):
                     self.fails(re.escape(rule))
                     self.save(lang, original, page)
 
-    def test_each_label_stands_at_its_animal(self):
-        page = self.scale_page("marks")
+    def topic_page(self, count):
+        """The topic page that reaches the count by this key, or a skip."""
+        found = next((p for p in self.pages if self.data("en", p)["page"].get("topic") == count), None)
+        if not found:
+            self.skipTest(f"no page of the topic {count}")
+        return found
+
+    # Each claim the T. rex page must never make, by its topic's rules: the canon's NEVER SAY and the facts sheet's.
+    NEVER_TREX = {
+        "en": ["SUE, the largest T. rex ever found", "the biggest T. rex", "SUE and her skull", "It died out 66 million years ago",
+               "T. rex fought Triceratops", "SUE lived beside our Triceratops", "T. rex was discovered on 12 August 1902",
+               "T. rex was dark brown with stripes", "T. rex had a top speed of 20 km/h", "It could run at 25 mph",
+               "SUE was 11.4 m long", "SUE weighed 9 tonnes", "It came to 9 tonnes", "It reached 15 tonnes",
+               "SUE's skin was scaly", "SUE is 90 percent complete", "T. rex had feathers", "T. rex had no feathers anywhere",
+               "It was killed by the asteroid", "Our model weighs about 10 tonnes", "Scotty was 13 m long", "SUE was 12.4 m long",
+               "As tall as a giraffe", "SUE died at 28", "Our model is built from SUE's bones", "The skull on the mount is real",
+               "The holes in its jaw were an infection", "SUE is a Tyrannosaurus imperator", "A teenage T. rex",
+               "It holds a Guinness record", "Its roar shook the ground", "Its lips covered the teeth"],
+        "de": ["SUE, der größte T. rex", "Er starb vor 66 Millionen Jahren aus", "Der Kampf mit dem Triceratops",
+               "SUE lebte neben unserem Triceratops", "Entdeckt am 12. August 1902", "Der T. rex war braun gestreift",
+               "Seine Höchstgeschwindigkeit lag bei 25 km/h", "SUE war 11,4 m lang", "SUE wog 9 Tonnen", "Er kam auf 9 t",
+               "Er erreichte 15 t", "Die Haut von SUE war schuppig", "SUE ist zu 90 Prozent vollständig", "Der T. rex hatte Federn",
+               "Er hatte keine Federn", "Ein Asteroid löschte ihn aus", "Unser Modell wiegt etwa 10 t", "Scotty war 13 m lang",
+               "SUE war 12,4 m lang", "So hoch wie eine Giraffe", "SUE starb mit 28", "Unser Modell ist aus den Knochen von SUE gebaut",
+               "Der Schädel auf der Montage ist echt", "Die Löcher im Kiefer waren eine Infektion", "Eine größere Art des T. rex",
+               "Ein jugendlicher T. rex", "Ein Guinness-Rekord", "Sein Brüllen", "Die Lippen bedeckten die Zähne"],
+    }
+
+    def test_the_t_rex_page_refuses_each_never_say_phrase(self):
+        page = self.topic_page("t_rex")
+        topic = next(t for w in self.wings().values() if isinstance(w, dict) for t in w.get("topics", []) if t.get("count") == "t_rex")
+        # every rule of the topic is met by a phrase of the list, so a rule added without its phrase is seen
+        for pattern, _ in topic["never_say"]:
+            self.assertTrue(any(re.search(pattern, x.lower()) for xs in self.NEVER_TREX.values() for x in xs), pattern)
+        for lang, phrases in self.NEVER_TREX.items():
+            original = self.data(lang, page)
+            for phrase in phrases:
+                with self.subTest(lang=lang, phrase=phrase):
+                    # the line under the answer carries none of the words a rule lets a number stand with
+                    shutil.rmtree(self.dir / "out", ignore_errors=True)
+                    data = json.loads(json.dumps(original))
+                    data["top"]["out"]["text"] += f" {phrase}."
+                    self.save(lang, data, page)
+                    self.fails(r"top\.out\.text matches")
+                    self.save(lang, original, page)
+
+    def test_a_t_rex_number_stands_only_with_the_words_that_say_whose_it_is(self):
+        """The page names our pose's 11.4 m, the 15 tonnes of a model, the 90 percent by bone volume, the 13 m of the news,
+        the 9 of a range and the lips as most likely on purpose: without those words the same fields stop the build."""
+        page = self.topic_page("t_rex")
+        cases = [
+            ({"en": (r" in this pose", ""), "de": (r" in dieser Haltung", "")}, "11.4 m is our model's length"),
+            ({"en": (r"\b[Mm]odel\b", "study"), "de": (r"\bModell\b", "Studie")}, "15 tonnes only as a model's guess"),
+            ({"en": (r"bone volume", "count"), "de": (r"Knochenvolumen", "Zählung")}, "90 percent only by bone volume"),
+            ({"en": (r"\bnews\b", "reports"), "de": (r"Nachrichten", "Berichten")}, "13 m only as the news of 2019"),
+            ({"en": (r"8\.8 or ", ""), "de": (r"8,8 oder ", "")}, "never 9 tonnes flat"),
+            ({"en": (r"most likely ", ""), "de": (r"sehr wahrscheinlich ", "")}, "the lips most likely covered the teeth"),
+            ({"en": (r" that ever lived", "")}, "never the largest T. rex"),
+        ]
+        out, _ = self.build()
+        shutil.rmtree(out)
+        for subs, rule in cases:
+            for lang, (condition, instead) in subs.items():
+                with self.subTest(lang=lang, rule=rule):
+                    original = self.data(lang, page)
+                    text = json.dumps(original, ensure_ascii=False)
+                    self.assertRegex(text, condition)
+                    self.save(lang, json.loads(re.sub(condition, instead, text)), page)
+                    self.fails(re.escape(rule))
+                    self.save(lang, original, page)
+
+    def test_an_answer_leads_on_and_the_lists_of_a_section_stand_under_their_headings(self):
+        page = self.topic_page("t_rex")
         out, written = self.build()
         seen = 0
         for path in written:
             data, lang = self.page_of(path)
-            if data["page"]["id"] != self.data("en", page)["page"]["id"]:
+            if data["page"].get("topic") != "t_rex":
+                continue
+            seen += 1
+            own = self.own_part(path.read_text(encoding="utf-8"))
+            # a question's answer closes with its way on, which leads to that page in the page's language
+            faq = next(b for b in data["blocks"] if b["type"] == "faq")
+            section = re.search(r'<section class="sp-sec sp-faq" id="%s">(.*?)</section>' % faq["id"], own, flags=re.S).group(1)
+            answers = re.findall(r'<div class="sp-q">(.*?)</div>', section, flags=re.S)
+            self.assertEqual(len(answers), len(faq["items"]))
+            for item, markup in zip(faq["items"], answers):
+                ways = re.findall(r'<p class="sp-more"><a class="more" href="([^"]+)"><span>(.*?)</span>', markup)
+                self.assertEqual([w[1] for w in ways], [x["text"] for x in item.get("links", [])])
+                for href, _ in ways:
+                    target = (path.parent / href / "index.html").resolve()
+                    self.assertTrue(target.is_file(), href)
+                    other, other_lang = self.page_of(target)
+                    self.assertEqual((other["page"]["id"], other_lang), (self.data("en", item["links"][0]["page"])["page"]["id"], lang))
+            # each list under its own small heading, its points without a lead, the closing line after the lists
+            block = next(b for b in data["blocks"] if b.get("subs") and b.get("end"))
+            section = re.search(r'<section [^>]*id="%s"[^>]*>(.*?)</section>' % block["id"], own, flags=re.S).group(1)
+            heads = re.findall(r"<h3>(.*?)</h3>", section)
+            self.assertEqual(heads, [s["h"] for s in block["subs"]])
+            lists = re.findall(r'<ul class="sp-points">(.*?)</ul>', section, flags=re.S)
+            self.assertEqual([len(re.findall(r"<li>", x)) for x in lists], [len(s["paras"][0]["points"]) for s in block["subs"]])
+            self.assertNotIn("sp-points__lead", "".join(lists))
+            self.assertIn(self.words(block["end"][0]).strip()[:40], self.words(section[section.rindex("</ul>"):]))
+        self.assertEqual(seen, 2)
+
+    def test_a_neighbour_names_a_page_in_its_own_line_and_the_hub_in_the_lists(self):
+        page = self.topic_page("t_rex")
+        topic = next(t for w in self.wings().values() if isinstance(w, dict) for t in w.get("topics", []) if t.get("count") == "t_rex")
+        out, written = self.build()
+        seen = 0
+        for path in written:
+            data, lang = self.page_of(path)
+            pages = next((b for b in data["blocks"] if b["type"] == "pages"), None)
+            item = next((x for x in (pages or {}).get("items", []) if x["page"] == page), None)
+            if not item:
+                continue
+            seen += 1
+            own = self.own_part(path.read_text(encoding="utf-8"))
+            plain = lambda markup: " ".join(html.unescape(re.sub(r"<[^>]+>", "", markup)).replace("\u00a0", " ").split())
+            found = [re.search(r'<p class="sc-item__line">(.*?)</p>', x, flags=re.S).group(1)
+                     for x in re.findall(r'<li class="sc-item">(.*?)</li>', own, flags=re.S)
+                     if plain(re.search(r"<h2[^>]*>(.*?)</h2>", x, flags=re.S).group(1)) == topic["name"][lang]]
+            self.assertEqual(len(found), 1, path)
+            self.assertEqual(plain(found[0]), item.get("line") or topic["line"][lang])
+        # the hub and the two neighbours, in both languages
+        self.assertEqual(seen, 6)
+
+    def test_a_picture_too_tall_for_the_share_card_stands_whole_above_the_address(self):
+        spec = importlib.util.spec_from_file_location("chart_share", self.dir / "chart.py")
+        chart = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(chart)
+        colours = {k: "#000000" for k in ("linen", "chalk-text", "stone", "frame", "stone-text-2", "chalk", "text-3", "page")}
+        words = {"h1": "How big?", "line": "About this", "person": "1.70 m", "site": "museumofages.org"}
+        for size, whole in (((3200, 800), True), ((2880, 1200), False)):
+            svg = chart.picture_still_svg(words, colours, "x.png", size, (0.5, 0.5))
+            x, y, w, h = (float(v) for v in re.search(r'<image x="([\d.]+)" y="([\d.]+)" width="([\d.]+)" height="([\d.]+)"', svg).groups())
+            self.assertAlmostEqual(w / h, size[0] / size[1], places=3)
+            self.assertLessEqual(y + h, 630 - 84 + 0.01)
+            self.assertEqual(w == 1080, whole)
+
+    def test_each_label_stands_at_its_animal(self):
+        page = self.scale_page("marks")
+        # every page with labels at its subjects, each in both languages
+        marked = {self.data("en", p)["page"]["id"] for p in self.pages if "marks" in self.data("en", p)["top"].get("scale", {})}
+        out, written = self.build()
+        seen = 0
+        for path in written:
+            data, lang = self.page_of(path)
+            if data["page"]["id"] not in marked:
                 continue
             seen += 1
             text = path.read_text(encoding="utf-8")
@@ -429,7 +571,7 @@ class Case(unittest.TestCase):
                 if pic.get("person_from"):
                     self.assertIn("@media (max-width:%dpx){.sc-person--%s{display:none}}" % (pic["person_from"] - 1, fig["pic"]), text)
                     self.assertIn("person", [m["span"] for m in fig["marks"]])
-        self.assertEqual(seen, 2)
+        self.assertEqual(seen, 2 * len(marked))
         # a label the picture does not place stops the build
         shutil.rmtree(out)
         pic = self.data("en", page)["top"]["scale"]["pic"]

@@ -1,0 +1,444 @@
+{
+ "_note": "THE WORDS of the T. rex page. Poured word for word from the writer's WORDS file; the title, the description and the heading are its first options. The two lists of what was found stand under their field names in the writer's file (Found, Not found). The person's height stands over the person in each picture (labels.person), and the side view's labels name the person too. pics.<name>.marks: the animal's and the person's start and end as shares of the picture's width, measured on the frame; pics.<name>.person: the person's centre and the top of its head. Empty cells of the table are the writer's: no sourced figure exists.",
+ "page": {
+  "id": "animals-t-rex",
+  "wing": "animals",
+  "topic": "t_rex",
+  "published": null,
+  "og_image": {
+   "file": "animals-t-rex-og-{lang}-1200x630.png",
+   "width": 1200,
+   "height": 630
+  }
+ },
+ "pics": {
+  "side": {
+   "stem": "animals-t-rex-side",
+   "widths": [
+    800,
+    1600,
+    2400
+   ],
+   "sizes": "(min-width: 1280px) 1200px, (min-width: 960px) calc(100vw - 80px), (min-width: 600px) calc(100vw - 64px), calc(100vw - 40px)",
+   "person": "86.42% 63.92%",
+   "marks": {
+    "t-rex": "2.47% 97.22%",
+    "person": "85.21% 87.64%"
+   }
+  },
+  "close": {
+   "stem": "animals-t-rex-close",
+   "widths": [
+    800,
+    1600
+   ],
+   "sizes": "(min-width: 1280px) 690px, (min-width: 960px) 54vw, (min-width: 600px) calc(100vw - 64px), calc(100vw - 40px)",
+   "person": "68.55% 63.2%"
+  },
+  "dinosaurs": {
+   "stem": "animals-biggest-dinosaurs-row",
+   "widths": [
+    800,
+    1600
+   ],
+   "sizes": "(min-width: 1280px) 690px, (min-width: 960px) 54vw, (min-width: 600px) calc(100vw - 64px), calc(100vw - 40px)"
+  },
+  "megalodon": {
+   "stem": "animals-megalodon-side",
+   "widths": [
+    800,
+    1600,
+    2400
+   ],
+   "sizes": "(min-width: 1280px) 690px, (min-width: 960px) 54vw, (min-width: 600px) calc(100vw - 64px), calc(100vw - 40px)"
+  }
+ },
+ "meta": {
+  "title": "T. rex size: about 12 m (39 ft), 8 to 9 t | Museum of Ages",
+  "description": "T. rex size: a large adult about 12 m (39 ft) long, about 4 m (13 ft) at the hips, 8 to 9 tonnes. Ours is built from SUE and stands beside a person.",
+  "og_title": "T. rex size: about 12 m (39 ft), 8 to 9 t",
+  "og_image_alt": "A T. rex from the side on two legs, mouth open and head raised, beside a grey person who does not reach its knee."
+ },
+ "labels": {
+  "crumbs": "You are here",
+  "crumb_home": "Museum",
+  "crumb_here": "T. rex",
+  "toc": "On this page",
+  "tag_made": "Made for this page",
+  "tag_built": "Reconstruction",
+  "person": "1.70 m",
+  "to_table": "The numbers as a table",
+  "og_answer": "About 12 m (39 ft) long, roughly 8 to 9 tonnes"
+ },
+ "top": {
+  "h1": "How big was T. rex?",
+  "answer": "A large adult Tyrannosaurus rex was about 12 m (39 ft) long, and most were smaller. At the hips it stood about 3.5 to 4 m (11.5 to 13 ft) high. With its head raised, ours reaches about 4.6 m (15 ft), and that depends on the pose. A large adult came to roughly 8 to 9 tonnes, by bones and body models, an ordinary one to less. Ours is built to SUE's measurements and runs about 11.4 m (37 ft) in this pose. That is more than six and a half people of 1.70 m laid end to end. Its knee is about 2 m (6.6 ft) up, above the person's head.",
+  "answer_more": "The two largest known T. rex are SUE and Scotty. SUE, found in 1990 in South Dakota and kept in Chicago, is the longer and more complete skeleton, about 12 m as mounted. Scotty is probably the heavier, about 8.9 tonnes by its thigh bone.",
+  "scale": {
+   "pic": "side",
+   "tag": "tag_made",
+   "what": "Our T. rex beside a person 1.70 m tall, to one scale, built to SUE's measurements. In this pose, head raised and turned, tail swung, it runs about 11.4 m (37 ft). Laid out straight the same skeleton would be about 11.8 m (39 ft). SUE's mount in Chicago is about 12 m.",
+   "alt": "A T. rex from the side on two legs, mouth open and head raised, beside a grey person who does not reach its knee.",
+   "note": "The museum's own reconstruction, built in code from published measurements and rendered in our own engine. Not a photograph.",
+   "marks": [
+    {
+     "span": "t-rex",
+     "text": "T. rex, about 11.4 m in this pose"
+    },
+    {
+     "span": "person",
+     "text": "The person, 1.70 m"
+    }
+   ],
+   "close": {
+    "pic": "close",
+    "tag": "tag_made",
+    "what": "The head and the front of the body, closer up, with the person. The mouth is open, and a band of lip and gum sits above the upper teeth. With the mouth shut, the lips most likely covered the teeth.",
+    "alt": "The head and front of the T. rex, closer up, mouth open, the upper teeth under a band of lip, beside the grey person."
+   }
+  },
+  "guess": {
+   "h": "A guess",
+   "q": "How long was SUE's skull?",
+   "button": "Show the answer",
+   "a": "About 1.4 m (4.6 ft) from the snout to the back of the cheek, crushed in the ground, so a little shorter than the person of 1.70 m. The real skull in Chicago weighs about 270 kg (600 lb) and stands in its own case, and the skeleton carries a cast.",
+   "button_open": "Hide the answer"
+  },
+  "out": {
+   "text": "The wing for this animal is still being built. The Leonardo da Vinci wing is open today.",
+   "link": "To the Leonardo wing"
+  }
+ },
+ "blocks": [
+  {
+   "type": "numbers",
+   "id": "numbers",
+   "nav": "The numbers",
+   "h": "The numbers",
+   "unit": "Metres and feet, tonnes. Where no sourced figure exists, the cell stays empty. Our model gets no weight: the weight comes from the studies of SUE, not from our file.",
+   "cols": [
+    "Animal",
+    "Length",
+    "Height at the hips",
+    "Weight",
+    "How sure"
+   ],
+   "rows": [
+    {
+     "cells": [
+      "Our model, after SUE",
+      "about 11.4 m (37 ft) in this pose, about 11.8 m (39 ft) straight",
+      "3.96 m (13 ft) over the hips, the raised head about 4.6 m (15 ft)",
+      "not given",
+      "measured on our files"
+     ]
+    },
+    {
+     "cells": [
+      "SUE, Field Museum, Chicago",
+      "about 12 m, the mount 12.3 m (40.5 ft), the tail end restored",
+      "about 4 m (13 ft), by the museum",
+      "about 8 to 9 t, by a bone and three models",
+      "the museum and two studies agree"
+     ]
+    },
+    {
+     "cells": [
+      "Scotty, Royal Saskatchewan Museum",
+      "nearly 12 m by the museum, 13 m in news only",
+      "about 4 m (13 ft) by the museum, the point not named",
+      "about 8.9 t by its thigh bone, a wide margin",
+      "one study, backed by a second"
+     ]
+    },
+    {
+     "cells": [
+      "The species, a large adult",
+      "about 12 m (39 ft), most smaller",
+      "about 3.5 to 4 m (11.5 to 13 ft)",
+      "roughly 8 to 9 t, ordinary adults less",
+      "museums and studies agree"
+     ]
+    },
+    {
+     "cells": [
+      "The person",
+      "1.70 m (5 ft 7 in)",
+      "",
+      "",
+      "the museum's scale figure"
+     ]
+    }
+   ]
+  },
+  {
+   "type": "text",
+   "id": "biggest",
+   "nav": "Which T. rex was the biggest?",
+   "h": "Which T. rex was the biggest?",
+   "paras": [
+    "SUE and Scotty are the two largest known T. rex, and each museum calls its animal the largest, each by a different measure. SUE is the longer and by far the more complete skeleton: about 12 m as mounted, about 90 percent by bone volume. Scotty, with the stouter thigh bone, is thought to be the heavier, about 8.9 tonnes by a study of 2019 that a second one backs. The estimates overlap, since SUE's run from about 8.2 to 9.5 tonnes. Nobody knows how big the biggest T. rex that ever lived was: a model of 2024 guesses about 15 tonnes and over 15 m (49 ft), and no such animal has been found."
+   ]
+  },
+  {
+   "type": "text",
+   "id": "how-sure",
+   "nav": "How sure this is",
+   "h": "How sure this is",
+   "paras": [
+    "Three things decide every number on this page.",
+    {
+     "points": [
+      [
+       "The length of a mount:",
+       "a tape or a computer model runs along the standing skeleton, from the snout to the tip of the tail. SUE's tail end is restored, and every pose changes the number. So we say about 12 m."
+      ],
+      [
+       "The weight from a bone or a body:",
+       "with the bone, measure around the thigh bone and apply the rule that links girth to weight in living animals. No living animal on two legs comes near this size, which is the weak point. With a body model, build flesh around the skeleton and multiply volume by density: by the outline chosen, an adult T. rex has come out anywhere from under 6 to over 18 tonnes."
+      ],
+      [
+       "One animal is not the species:",
+       "SUE was an old, unusually large animal. Most T. rex stayed smaller, and an ordinary adult sits nearer 5 to 8 tonnes by studies and museums. That is why three numbers stand apart here: our model, SUE and the species."
+      ]
+     ]
+    }
+   ]
+  },
+  {
+   "type": "text",
+   "id": "found",
+   "nav": "What was found of SUE",
+   "h": "What was found of SUE",
+   "paras": [
+    "SUE is among the most complete big T. rex skeletons. The list follows the skeleton's description of 2003 and is well founded except where marked."
+   ],
+   "subs": [
+    {
+     "h": "Found",
+     "paras": [
+      {
+       "points": [
+        "The skull, nearly complete, crushed toward the left in the ground.",
+        "Both legs, complete down to the ankle, and the right foot nearly whole.",
+        "The right arm: upper arm, both forearm bones and parts of the hand.",
+        "The sacrum and the hips, the left hip blade broken and pieced together.",
+        "Both shoulder blades, the right one with a healed injury.",
+        "Parts of every back rib, 26 of about 60 belly ribs, plus the wishbone and an ear bone.",
+        "36 tail bones, the most complete T. rex tail ever collected."
+       ]
+      }
+     ]
+    },
+    {
+     "h": "Not found",
+     "paras": [
+      {
+       "points": [
+        "The wrist, restored on the mount after other tyrannosaurs.",
+        "Almost all of the left foot, of which a single toe bone exists (less sure: the description contradicts itself in one place about which foot is meant).",
+        "About 11 of the mount's 47 tail bones, the end of the tail (our sum).",
+        "About 34 of some 60 belly ribs, by the museum's count.",
+        "Skin: none.",
+        "Not checked: the left arm and the neck."
+       ]
+      }
+     ]
+    }
+   ],
+   "end": [
+    "The skull on the mount is a corrected cast, and the real one stands beside it in its own case."
+   ]
+  },
+  {
+   "type": "notes",
+   "id": "numbers-read",
+   "nav": "Numbers you may have read",
+   "h": "Numbers you may have read",
+   "intro": "For each number: where it came from, and what it means.",
+   "rows": [
+    {
+     "term": "12.3 m (40.5 ft)",
+     "text": "SUE's mount in Chicago, measured with a tape and a computer model. The tail end is restored, since 36 of its 47 tail bones were found. So we say about 12 m."
+    },
+    {
+     "term": "13 m (43 ft)",
+     "text": "Scotty, as the news of 2019 put it. The study itself gives no length, and the museum used to give nearly 12 m. The Natural History Museum in London writes almost 13 m for SUE and Scotty together, with no method named."
+    },
+    {
+     "term": "8.8 or 9 tonnes",
+     "text": "The 8.8 is Scotty, 8,870 kg from the girth of its thigh bone, with a wide margin. The 9 is SUE by the Field Museum's 3D model, in US tons, so roughly 8.2 tonnes. Both sit inside about 8 to 9 tonnes."
+    },
+    {
+     "term": "15 tonnes",
+     "text": "A model of 2024 works out, from the number of T. rex that lived and how they grew, how big the biggest might have been: perhaps about 15 tonnes and over 15 m. Nothing of that size has been found, and the authors call such a find extremely unlikely."
+    },
+    {
+     "term": "90 percent",
+     "text": "That much of SUE was found, but by bone volume, since the missing bones are mostly small. By count it is 250 of about 380, about two thirds."
+    }
+   ]
+  },
+  {
+   "type": "text",
+   "id": "skin",
+   "nav": "Skin, feathers and lips",
+   "h": "Skin, feathers and lips",
+   "paras": [
+    "Every piece of T. rex skin ever found is scaly. It is three small patches from a single animal, Wyrex in Houston, from the neck, the hips and the base of the tail, with scales under a millimetre across. Not one feather has been found on any T. rex, nor on any other large tyrannosaur. Smaller, earlier relatives had thread-like feathers: little Dilong, and Yutyrannus at about 1.4 tonnes, roughly a sixth of SUE, some 60 million years before T. rex. No skin is known from the top of the back, so a thin cover there can be neither shown nor ruled out. And lips: by a study of 2023, lip and gum most likely covered all the teeth when the mouth was shut. A minority still argues for a crocodile-like face, and no lip has ever been found."
+   ]
+  },
+  {
+   "type": "text",
+   "id": "why",
+   "nav": "Why our T. rex looks like this",
+   "h": "Why our T. rex looks like this",
+   "paras": [
+    "It is built to SUE's measured bones: thigh bone, upper arm bone, hip blade and skull at their sizes, the rest after relatives and rules. The colours are ours, because no colour is known for any T. rex. We show the mouth open, with the band of lip and gum above the upper teeth. Because the head is raised and turned and the tail swings, it runs about 11.4 m (37 ft) in this pose, less than laid out straight."
+   ]
+  },
+  {
+   "type": "faq",
+   "id": "questions",
+   "nav": "More questions",
+   "h": "More questions",
+   "items": [
+    {
+     "q": "Was Spinosaurus bigger than T. rex?",
+     "a": "Longer, and most likely lighter. A grown Spinosaurus was just under 14 m (46 ft) and about 7.4 tonnes in the model of 2022, a big T. rex about 12 m (39 ft) and 8 to 9 tonnes. Both stand to one scale on the biggest dinosaurs page.",
+     "links": [
+      {
+       "page": "biggest-dinosaurs",
+       "text": "The biggest dinosaurs, to one scale"
+      }
+     ]
+    },
+    {
+     "q": "How old was SUE?",
+     "a": "About 28 years or more, by the growth rings in its bones, as the museum gives it. A study of 2026 puts a T. rex's full size at about 35 to 40 years, so SUE may have been older. It was old in any case, with healed injuries."
+    }
+   ]
+  },
+  {
+   "type": "text",
+   "id": "museum",
+   "nav": "In the museum",
+   "h": "In the museum",
+   "paras": [
+    "Museum of Ages is a digital museum. It is building a wing where this animal and others like it will stand, to one scale. Open today is the Leonardo da Vinci wing. Free entry, no account."
+   ],
+   "links": [
+    {
+     "out": true,
+     "text": "To the Leonardo wing"
+    }
+   ]
+  },
+  {
+   "type": "pages",
+   "id": "next",
+   "items": [
+    {
+     "page": "biggest-dinosaurs",
+     "pic": "dinosaurs",
+     "alt": "Seven dinosaurs in a row from the side, two with long necks towering over the rest, and a grey person who looks tiny beside them."
+    },
+    {
+     "page": "megalodon",
+     "pic": "megalodon",
+     "alt": "A shark with its mouth open, seen from the side, dark grey with a paler band along the flank, beside a grey person who looks tiny next to it."
+    }
+   ]
+  },
+  {
+   "type": "sources",
+   "id": "sources",
+   "nav": "Sources",
+   "h": "Sources",
+   "intro": "The numbers come from these studies and from the museums that keep the fossils. The museum is independent of all of them.",
+   "read": [
+    {
+     "text": "Brochu, 2003, Society of Vertebrate Paleontology Memoir 7, the description of SUE.",
+     "href": "https://zenodo.org/records/5224644"
+    },
+    {
+     "text": "Hutchinson and others, 2011, PLOS ONE.",
+     "href": "https://doi.org/10.1371/journal.pone.0026037"
+    },
+    {
+     "text": "Snively and others, 2019."
+    },
+    {
+     "text": "Persons, Currie and Erickson, 2019, Anatomical Record.",
+     "href": "https://doi.org/10.1002/ar.24118"
+    },
+    {
+     "text": "Mallon and Hone, 2024, Ecology and Evolution.",
+     "href": "https://doi.org/10.1002/ece3.11658"
+    },
+    {
+     "text": "Dempsey and others, 2025, Biological Reviews.",
+     "href": "https://doi.org/10.1111/brv.70026"
+    },
+    {
+     "text": "Woodward, Myhrvold and Horner, 2026, PeerJ.",
+     "href": "https://doi.org/10.7717/peerj.20469"
+    },
+    {
+     "text": "Erickson and others, 2004, Nature.",
+     "href": "https://doi.org/10.1038/nature02699"
+    },
+    {
+     "text": "Bell and others, 2017, Biology Letters.",
+     "href": "https://doi.org/10.1098/rsbl.2017.0092"
+    },
+    {
+     "text": "Xu and others, 2004, Nature, on Dilong.",
+     "href": "https://doi.org/10.1038/nature02855"
+    },
+    {
+     "text": "Xu and others, 2012, Nature, on Yutyrannus.",
+     "href": "https://doi.org/10.1038/nature10906"
+    },
+    {
+     "text": "Cullen and others, 2023, Science.",
+     "href": "https://doi.org/10.1126/science.abo7877"
+    },
+    {
+     "text": "Field Museum, Chicago: SUE, FMNH PR 2081.",
+     "href": "https://www.fieldmuseum.org/blog/sue-t-rex"
+    },
+    {
+     "text": "Royal Saskatchewan Museum: Scotty, RSM P2523.8.",
+     "href": "https://royalsaskmuseum.ca/trex/unearthing-scotty"
+    },
+    {
+     "text": "Natural History Museum, London: its dinosaur pages.",
+     "href": "https://www.nhm.ac.uk/discover/dino-directory/tyrannosaurus.html"
+    },
+    {
+     "text": "Houston Museum of Natural Science: the skin patches of the T. rex Wyrex, HMNS 2006.1743.01."
+    }
+   ],
+   "contact": "If a number or a museum is wrong, tell us and we will correct it.",
+   "contact_link": "To the legal notice",
+   "what_link": "What this museum is"
+  },
+  {
+   "type": "text",
+   "id": "pictures",
+   "nav": "Use our pictures",
+   "h": "Use our pictures",
+   "paras": [
+    [
+     "The pictures on this page are the museum's own work under ",
+     {
+      "text": "CC BY-SA 4.0",
+      "href": "https://creativecommons.org/licenses/by-sa/4.0/"
+     },
+     ", credit: Museum of Ages. They show a reconstruction, built in code and rendered in our own engine, not a photograph."
+    ]
+   ]
+  }
+ ]
+}

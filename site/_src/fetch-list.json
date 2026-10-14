@@ -1521,6 +1521,78 @@
    "sha256": "226682d79829ea014a6cf36df2cdce6af16ff4db1fd541b26aa4d94dc919c64e"
   },
   {
+   "path": "pages/pics/img/animals-t-rex-close-1600.avif",
+   "url": "/static/img/animals-t-rex-close-1600.avif",
+   "bytes": 39621,
+   "sha256": "b07806cc8fea495814096611099519457286c8e8580c8d180165dbfa515d7c93"
+  },
+  {
+   "path": "pages/pics/img/animals-t-rex-close-1600.webp",
+   "url": "/static/img/animals-t-rex-close-1600.webp",
+   "bytes": 50488,
+   "sha256": "023fc5c2c20221fafb3edb8ada5801335172f02efe02936992f6dc5c3dc3c748"
+  },
+  {
+   "path": "pages/pics/img/animals-t-rex-close-800.avif",
+   "url": "/static/img/animals-t-rex-close-800.avif",
+   "bytes": 15727,
+   "sha256": "63b9da3d91d0424ec21fed8f864f9d2c0e7e84106dabf41e487197441283c11e"
+  },
+  {
+   "path": "pages/pics/img/animals-t-rex-close-800.webp",
+   "url": "/static/img/animals-t-rex-close-800.webp",
+   "bytes": 19944,
+   "sha256": "0935386d3f7e7e1dd54e72f0444e44ca754d1828b7b57ab9d465d821c90d802b"
+  },
+  {
+   "path": "pages/pics/img/animals-t-rex-og-de-1200x630.png",
+   "url": "/static/img/animals-t-rex-og-de-1200x630.png",
+   "bytes": 154076,
+   "sha256": "f11f46c6885d30fe20a9a9608d72ad0aa35511809d047afed29b927542a623f1"
+  },
+  {
+   "path": "pages/pics/img/animals-t-rex-og-en-1200x630.png",
+   "url": "/static/img/animals-t-rex-og-en-1200x630.png",
+   "bytes": 154674,
+   "sha256": "c96ad602602a1658713f9105188a5d5c50b7e18a67e928e15509204e3ee6d4d9"
+  },
+  {
+   "path": "pages/pics/img/animals-t-rex-side-1600.avif",
+   "url": "/static/img/animals-t-rex-side-1600.avif",
+   "bytes": 20730,
+   "sha256": "e768e0a16bc3f8073c5242619864b4ff1896f8e6440f8178ba6966c0293cd58c"
+  },
+  {
+   "path": "pages/pics/img/animals-t-rex-side-1600.webp",
+   "url": "/static/img/animals-t-rex-side-1600.webp",
+   "bytes": 26270,
+   "sha256": "3cfd2b7c2b2cfab701dd0080a83d94ec2e45df72953f7027485f921119bedba1"
+  },
+  {
+   "path": "pages/pics/img/animals-t-rex-side-2400.avif",
+   "url": "/static/img/animals-t-rex-side-2400.avif",
+   "bytes": 36144,
+   "sha256": "4ce844984638743b365ba19581acff826b6c4a2d72a42df469e69f0b9416f297"
+  },
+  {
+   "path": "pages/pics/img/animals-t-rex-side-2400.webp",
+   "url": "/static/img/animals-t-rex-side-2400.webp",
+   "bytes": 46314,
+   "sha256": "d8303dec262c59efdf8a73c7436d83cd12f3a14bcd8e0135d5bd3fbae3401fae"
+  },
+  {
+   "path": "pages/pics/img/animals-t-rex-side-800.avif",
+   "url": "/static/img/animals-t-rex-side-800.avif",
+   "bytes": 8054,
+   "sha256": "2f8c25970feb5565c9b45e9b8dc52e725f3e9a397c06c99949fc532e7963f66b"
+  },
+  {
+   "path": "pages/pics/img/animals-t-rex-side-800.webp",
+   "url": "/static/img/animals-t-rex-side-800.webp",
+   "bytes": 9988,
+   "sha256": "0125470e5ea3e01f6a8740c41c1635cf7793746bec2658ff15ab33b28a3a5cf4"
+  },
+  {
    "path": "pages/pics/img/vinci-inventions-og-1200x630.jpg",
    "url": "/static/img/vinci-inventions-og-1200x630.jpg",
    "bytes": 64444,

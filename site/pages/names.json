@@ -196,6 +196,10 @@
     { "text": "FMNH PR 2081", "whole": true },
     { "text": "NHMUK PV R36730", "whole": true },
     { "text": "AMNH 5214", "whole": true },
-    { "text": "FSAC-KK 11888", "whole": true }
+    { "text": "FSAC-KK 11888", "whole": true },
+    { "text": "Royal Saskatchewan Museum", "lang": "en" },
+    { "text": "Houston Museum of Natural Science", "lang": "en" },
+    { "text": "RSM P2523.8", "whole": true },
+    { "text": "HMNS 2006.1743.01", "whole": true }
   ]
 }
