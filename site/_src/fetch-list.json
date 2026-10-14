@@ -1511,14 +1511,14 @@
   {
    "path": "pages/pics/img/animals-og-de-1200x630.png",
    "url": "/static/img/animals-og-de-1200x630.png",
-   "bytes": 103781,
-   "sha256": "9be87d03639ba4e6662a743348a6a6d6912dd3165e2f1d784d9acb6de9c49953"
+   "bytes": 104980,
+   "sha256": "9267a78080b83b0b72d54a959958f61bfacf2033945599152023f2098e0ee003"
   },
   {
    "path": "pages/pics/img/animals-og-en-1200x630.png",
    "url": "/static/img/animals-og-en-1200x630.png",
-   "bytes": 106162,
-   "sha256": "ef397d40fb717b10c6b0516d4f829550e79a93a1afe01697ea409dbbebdd5ce6"
+   "bytes": 106367,
+   "sha256": "226682d79829ea014a6cf36df2cdce6af16ff4db1fd541b26aa4d94dc919c64e"
   },
   {
    "path": "pages/pics/img/vinci-inventions-og-1200x630.jpg",
