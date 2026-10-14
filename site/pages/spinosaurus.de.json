@@ -116,12 +116,12 @@
   "tag_built": "Rekonstruktion",
   "person": "1,70 m",
   "to_table": "Die Zahlen als Tabelle",
-  "og_answer": "Die größten knapp unter 14 m lang, nach einem Modell"
+  "og_answer": "Die größten erwachsenen Tiere knapp unter 14 m, nach einem Modell"
  },
  "top": {
   "h1": "Wie groß war der Spinosaurus?",
-  "answer": "Die größten erwachsenen Spinosaurus aegyptiacus waren knapp unter 14 m lang und etwa 7,4 t schwer, nach einem Modell von 2022. Ein ganzes Skelett hat niemand gefunden. Unser Spinosaurus ist ein junges Tier von etwa 10 m, drei Viertel der vollen Größe, nach einem Modell etwa 3 bis 4 t. Neben dem Menschen von 1,70 m liegt sein Hüftgelenk etwa auf Höhe des Scheitels, und er ist fast sechs Menschen lang.",
-  "answer_more": "Gegen T. rex: Der größte Spinosaurus war länger, aber sehr wahrscheinlich leichter und an der Hüfte viel niedriger. Begegnet sind sich die beiden nie, etwa 30 Millionen Jahre und zwei Kontinente lagen dazwischen.",
+  "answer": "Die größten erwachsenen Exemplare von Spinosaurus aegyptiacus waren knapp unter 14 m lang und etwa 7,4 t schwer, nach einem Modell von 2022. Ein ganzes Skelett hat niemand gefunden. Unser Spinosaurus ist ein junges Tier von etwa 10 m, etwa drei Viertel der vollen Größe, nach einem Modell etwa 3 bis 4 t. Neben dem Menschen von 1,70 m liegt sein Hüftgelenk etwa auf Höhe des Scheitels, und er ist fast sechs Menschen lang.",
+  "answer_more": "Verglichen mit T. rex war der größte Spinosaurus länger, aber sehr wahrscheinlich leichter und an der Hüfte viel niedriger. Begegnet sind sich die beiden nie, etwa 30 Millionen Jahre und zwei Kontinente lagen dazwischen.",
   "scale": {
    "pic": "side",
    "tag": "tag_made",
@@ -197,7 +197,7 @@
     {
      "cells": [
       "Stromers Skelett, Ägypten, 1944 zerstört",
-      "etwa so groß wie unseres, Stromer selbst schätzte 12 bis 15 m",
+      "etwa so groß wie unseres, Stromers alte Schätzung von 12 bis 15 m gilt heute als zu lang",
       "der höchste Dornfortsatz etwa 1,65 m Knochen, keine Körperhöhe",
       "",
       "nach Stromers Beschreibung und wenigen Fotos"
@@ -207,7 +207,7 @@
      "cells": [
       "Unser T. rex, nach SUE",
       "etwa 11,4 m in seiner Haltung",
-      "Hüfte 3,96 m, erhobener Kopf etwa 4,6 m",
+      "Hüftgelenk etwa 3,2 m, Rücken über der Hüfte 3,96 m, erhobener Kopf etwa 4,6 m",
       "nicht angegeben",
       "an unseren Dateien gemessen"
      ]
@@ -215,8 +215,8 @@
     {
      "cells": [
       "Der Mensch",
-      "1,70 m",
       "",
+      "1,70 m",
       "",
       "unsere Vergleichsfigur"
      ]
@@ -229,12 +229,12 @@
    "nav": "Spinosaurus gegen T. rex, nur die Größe",
    "h": "Spinosaurus gegen T. rex, nur die Größe",
    "paras": [
-    "Der größte Spinosaurus war länger als jeder T. rex: knapp unter 14 m nach einem Modell, gegen etwa 12 m für das Skelett von SUE. Schwerer war er sehr wahrscheinlich nicht, etwa 7,4 bis 8 t im Modell gegen etwa 8 bis 9 t bei den größten bekannten T. rex. An der Hüfte stand er viel niedriger: Der Oberschenkelknochen des jungen Tiers aus Marokko misst 61 cm, der von SUE 1,32 m. Begegnet sind sich die beiden nie, Spinosaurus lebte vor etwa 95 Millionen Jahren in Nordafrika, T. rex vor etwa 68 bis 66 Millionen Jahren in Nordamerika. Ein Vergleich der Größe, mehr nicht."
+    "Der größte Spinosaurus war länger als jeder T. rex: knapp unter 14 m nach einem Modell, gegen etwa 12 m für das Skelett von SUE. Schwerer war er sehr wahrscheinlich nicht, etwa 7,4 bis 8 t im Modell gegen etwa 8 bis 9 t bei den größten bekannten T. rex. An der Hüfte stand er viel niedriger: Der Oberschenkelknochen des jungen Tiers aus Marokko misst 61 cm, der von SUE 1,32 m, und selbst der eines erwachsenen Tiers wäre hochgerechnet nur etwa 80 cm lang. Begegnet sind sich die beiden nie, Spinosaurus lebte vor etwa 95 Millionen Jahren in Nordafrika, T. rex vor etwa 68 bis 66 Millionen Jahren in Nordamerika. Ein Vergleich der Größe, mehr nicht."
    ],
    "scale": {
     "pic": "vs",
     "tag": "tag_made",
-    "what": "Unser Spinosaurus und unser T. rex, im selben Maßstab auf einer Standlinie. Unser Spinosaurus ist ein junges Tier von etwa 10 m, unser T. rex nach SUE ein großes erwachsenes Tier von etwa 11,4 m, darum ist er hier der längere. Ein erwachsener Spinosaurus war länger als jeder T. rex, sehr wahrscheinlich leichter und an der Hüfte viel niedriger.",
+    "what": "Unser Spinosaurus und unser T. rex, im selben Maßstab auf einer Standlinie. Unser Spinosaurus ist ein junges Tier von etwa 10 m, unser T. rex nach SUE ein großes erwachsenes Tier von etwa 11,4 m, darum ist hier der T. rex der längere. Ein erwachsener Spinosaurus war länger als jeder T. rex, sehr wahrscheinlich leichter und an der Hüfte viel niedriger.",
     "alt": "Ein Spinosaurus mit Rückensegel und ein etwas längerer T. rex mit erhobenem Kopf, beide von der Seite auf einer Standlinie, der T. rex an der Hüfte etwa doppelt so hoch, daneben der graue Mensch.",
     "marks": [
      {
@@ -273,13 +273,13 @@
     {
      "h": "Der Schwanz",
      "paras": [
-      "Der Schwanz war tief und von der Seite flach, wie ein Blatt: hohe Dornfortsätze oben, lange Knochen unten. Das wissen wir von den eigenen Schwanzknochen des Tiers aus Marokko, etwa vier Fünftel des Schwanzes wurden gefunden. Wozu er diente, ist umstritten: zum Schwimmen oder zur Schau."
+      "Der Schwanz war tief und seitlich abgeflacht, wie ein Blatt: hohe Dornfortsätze oben, lange Knochen unten. Das wissen wir von den eigenen Schwanzknochen des Tiers aus Marokko, etwa vier Fünftel des Schwanzes wurden gefunden. Wozu er diente, ist umstritten: zum Schwimmen oder zur Schau."
      ]
     },
     {
      "h": "Das Segel",
      "paras": [
-      "Die Dornfortsätze sind bekannt, der höchste an Stromers Skelett etwa 1,65 m Knochen. Die Form des Segels darüber kennt niemand, unser schlichter Bogen ist unsere Wahl. Eine dünne Haut über den Dornen gilt als wahrscheinlichste Lesart, und die meisten Fachleute lesen das Segel als Schaustück."
+      "Die Dornfortsätze sind bekannt, der höchste an Stromers Skelett etwa 1,65 m Knochen. Die Form des Segels darüber kennt niemand, unser schlichter Bogen ist unsere Wahl. Am wahrscheinlichsten spannte sich eine dünne Haut über die Dornen, und die führende Deutung sieht im Segel ein Schauorgan."
      ]
     },
     {
@@ -296,7 +296,7 @@
    "nav": "Spinosaurus und das Wasser",
    "h": "Spinosaurus und das Wasser",
    "paras": [
-    "Er lebte am Wasser und fraß Fisch, das zeigen seine Zähne und die Isotope darin. Ob er den Fischen schwimmend nachjagte oder ihnen watend im Flachwasser auflauerte, ist umstritten. Für das Schwimmen sprechen der tiefe Schwanz von 2020 und die dichten Knochen in einer Studie von 2022. Für das Waten sprechen die meisten Arbeiten seit 2021. Modelle finden ihn zu auftriebsstark zum Tauchen, die Schädelform passt zu Lauerjägern, und die Knochendichte-Methode wurde 2024 als unzuverlässig kritisiert. Die Museen halten die Frage offen, wir auch."
+    "Er lebte am Wasser und fraß Fisch, das zeigen seine Zähne und die Isotope darin. Ob er den Fischen schwimmend nachjagte oder ihnen watend im Flachwasser auflauerte, ist umstritten. Für das Schwimmen sprechen der tiefe Schwanz von 2020 und die dichten Knochen in einer Studie von 2022. Für das Waten sprechen die meisten Arbeiten seit 2021. Nach Modellrechnungen hatte er zu viel Auftrieb, um zu tauchen, die Schädelform passt zu Lauerjägern, und die Knochendichte-Methode wurde 2024 als unzuverlässig kritisiert. Die Museen halten die Frage offen, wir auch."
    ]
   },
   {
@@ -330,7 +330,7 @@
      ]
     },
     {
-     "h": "Was jede Rekonstruktion leiht",
+     "h": "Was sich jede Rekonstruktion leiht",
      "paras": [
       {
        "points": [
@@ -354,11 +354,11 @@
     "key": [
      {
       "swatch": "own",
-      "text": "Dunkelrot: die eigenen Knochen des jungen Tiers aus Marokko, die Hüfte, beide Beine, der Fuß und der Schwanz bis zum 41. Wirbel."
+      "text": "Dunkelrot: die eigenen Knochen des jungen Tiers aus Marokko, die Hüfte, beide Beine, der Fuß und der Schwanz bis zum 41. Wirbel, davon mehr als 30 Wirbel gefunden."
      },
      {
       "swatch": "stromer",
-      "text": "Blau: nach Stromers verlorenem Skelett aus Ägypten, die Dornfortsätze des Segels und der Unterkiefer."
+      "text": "Blau: nach Stromers verlorenem Skelett aus Ägypten, die Dornfortsätze des Segels und der Unterkiefer, dessen hintere Hälfte ergänzt ist."
      },
      {
       "swatch": "pale",
@@ -383,7 +383,7 @@
       ],
       [
        "Das Gewicht kommt aus einem Körpermodell:",
-       "Man baut Fleisch um das Skelett, misst das Volumen und rechnet mit einer Dichte. Bei Spinosaurus ändern allein die Luftsäcke in Hals und Rumpf das Ergebnis um 600 kg, 7,4 bis 8 t im selben Modell."
+       "Man baut Fleisch um das Skelett, misst das Volumen und rechnet mit einer Dichte. Bei Spinosaurus ändert allein die angenommene Luft in Hals und Rumpf das Ergebnis um etwa 600 kg, 7,4 bis 8 t im selben Modell."
       ],
       [
        "Unseres ist nicht die Art:",
@@ -402,7 +402,7 @@
    "rows": [
     {
      "term": "18 m",
-     "text": "Eine Zahl von 2005: Um die große Schnauze aus Mailand wurde ein ganzer Körper gezeichnet, mit dem Körperbau eines langbeinigen Verwandten. Später zeigte sich, dass Spinosaurus kurze Beine hatte, der Körper war also zu lang geraten. Das Modell von 2022 kommt auf knapp unter 14 m, auch wenn manche Museumstexte bis heute 18 m angeben."
+     "text": "Das obere Ende einer Spanne von 2005, 16 bis 18 m: Um die große Schnauze aus Mailand wurde ein ganzer Körper gezeichnet, mit dem Körperbau eines langbeinigen Verwandten. Später zeigte sich, dass Spinosaurus kurze Beine hatte, der Körper war also zu lang geraten. Das Modell von 2022 kommt auf knapp unter 14 m, auch wenn manche Museumstexte bis heute 18 m angeben."
     },
     {
      "term": "15 m",
@@ -418,7 +418,7 @@
     },
     {
      "term": "Der größte Raubsaurier aller Zeiten",
-     "text": "Nach der Länge ja, Spinosaurus ist der längste bekannte Fleischfresser unter den Dinosauriern. Schwerer war sehr wahrscheinlich T. rex, und an der Hüfte stand er sicher höher."
+     "text": "Nein. Spinosaurus ist der längste bekannte Fleischfresser unter den Dinosauriern. Im Meer war der Megalodon mit etwa 16 m länger. Schwerer war sehr wahrscheinlich T. rex, und an der Hüfte stand er sicher höher."
     },
     {
      "term": "Er ging auf vier Beinen",
@@ -426,7 +426,7 @@
     },
     {
      "term": "Der erste schwimmende Dinosaurier",
-     "text": "Eine Schlagzeile von 2020 zum neu gefundenen Schwanz. Die Studie selbst nennt den Schwanz ein Antriebsorgan, und die meiste Arbeit seither liest das Tier als Lauerjäger im Flachwasser. Umstritten, nicht entschieden."
+     "text": "Eine Schlagzeile von 2020 zum neu gefundenen Schwanz. Die Studie selbst nennt den Schwanz ein Antriebsorgan, und die meisten Arbeiten seither deuten das Tier als Lauerjäger im Flachwasser. Umstritten, nicht entschieden."
     }
    ]
   },
@@ -536,28 +536,20 @@
      "text": "Therrien und Henderson, 2007, Journal of Vertebrate Paleontology, die Kurzfassung."
     },
     {
-     "text": "Smith und andere, 2006, Journal of Paleontology.",
+     "text": "Smith und andere, 2006, Journal of Paleontology, die Kurzfassung.",
      "href": "https://doi.org/10.1666/0022-3360(2006)080%5B0400:NIRTHO%5D2.0.CO;2"
     },
     {
-     "text": "Henderson, 2018, PeerJ.",
+     "text": "Henderson, 2018, PeerJ, die Kurzfassung.",
      "href": "https://doi.org/10.7717/peerj.5409"
     },
     {
-     "text": "Hone und Holtz, 2021, Palaeontologia Electronica.",
+     "text": "Hone und Holtz, 2021, Palaeontologia Electronica, die Kurzfassung.",
      "href": "https://doi.org/10.26879/1110"
     },
     {
-     "text": "Gimsa und Gimsa, 2021, Life.",
-     "href": "https://doi.org/10.3390/life11090889"
-    },
-    {
-     "text": "Smart und Sakamoto, 2024, PeerJ.",
+     "text": "Smart und Sakamoto, 2024, PeerJ, die Kurzfassung.",
      "href": "https://doi.org/10.7717/peerj.17544"
-    },
-    {
-     "text": "Cau und andere, 2026, Historical Biology.",
-     "href": "https://doi.org/10.1080/08912963.2026.2669954"
     },
     {
      "text": "Brazil, 2026, ACS Central Science, ein Nachrichtenbeitrag.",

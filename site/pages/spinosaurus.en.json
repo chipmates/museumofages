@@ -116,12 +116,12 @@
   "tag_built": "Reconstruction",
   "person": "1.70 m",
   "to_table": "The numbers as a table",
-  "og_answer": "The largest just under 14 m (46 ft), by a model"
+  "og_answer": "The largest adults just under 14 m (46 ft), by a model"
  },
  "top": {
   "h1": "How big was Spinosaurus?",
   "answer": "The largest adults of Spinosaurus aegyptiacus were just under 14 m (46 ft) long and about 7.4 tonnes, by a model of 2022. Nobody has found a whole skeleton. Ours is a young one, about 10 m (33 ft), about three quarters of full size, about 3 to 4 tonnes, a model's figure. Beside the person of 1.70 m, its hip joint sits at about head height, and it is almost six people long.",
-  "answer_more": "Against T. rex: the largest Spinosaurus was longer, most likely lighter and much lower at the hips. The two never met, about 30 million years and two continents apart.",
+  "answer_more": "Compared with T. rex, the largest Spinosaurus was longer, most likely lighter and much lower at the hips. The two never met, about 30 million years and two continents apart.",
   "scale": {
    "pic": "side",
    "tag": "tag_made",
@@ -197,7 +197,7 @@
     {
      "cells": [
       "Stromer's skeleton, Egypt, destroyed in 1944",
-      "about the size of ours, 12 to 15 m (39 to 49 ft) by Stromer's own reckoning",
+      "about the size of ours, Stromer's old estimate of 12 to 15 m (39 to 49 ft) now read as too long",
       "the tallest spine about 1.65 m (5.4 ft) of bone, no body height",
       "",
       "Stromer's description and a few photographs"
@@ -207,7 +207,7 @@
      "cells": [
       "Our T. rex, after SUE",
       "about 11.4 m (37 ft) in its pose",
-      "hips 3.96 m (13 ft), raised head about 4.6 m (15 ft)",
+      "hip joint about 3.2 m (10.5 ft), back over the hips 3.96 m (13 ft), raised head about 4.6 m (15 ft)",
       "not given",
       "measured on our files"
      ]
@@ -215,8 +215,8 @@
     {
      "cells": [
       "The person",
-      "1.70 m (5 ft 7 in)",
       "",
+      "1.70 m (5 ft 7 in)",
       "",
       "our scale figure"
      ]
@@ -229,7 +229,7 @@
    "nav": "Spinosaurus vs T. rex, size only",
    "h": "Spinosaurus vs T. rex, size only",
    "paras": [
-    "The largest Spinosaurus was longer than any T. rex: just under 14 m (46 ft) by a model, against about 12 m (39 ft) for SUE's skeleton. It was most likely not heavier: about 7.4 to 8 tonnes in the model, against about 8 to 9 tonnes for the largest known T. rex. At the hips it stood much lower: the thigh bone of the young animal from Morocco is 61 cm, SUE's is 1.32 m. The two never met, Spinosaurus lived about 95 million years ago in North Africa, T. rex about 68 to 66 million years ago in North America. A comparison of size, nothing more."
+    "The largest Spinosaurus was longer than any T. rex: just under 14 m (46 ft) by a model, against about 12 m (39 ft) for SUE's skeleton. It was most likely not heavier: about 7.4 to 8 tonnes in the model, against about 8 to 9 tonnes for the largest known T. rex. At the hips it stood much lower: the thigh bone of the young animal from Morocco is 61 cm, SUE's is 1.32 m, and even an adult's, scaled up, would be only about 80 cm. The two never met, Spinosaurus lived about 95 million years ago in North Africa, T. rex about 68 to 66 million years ago in North America. A comparison of size, nothing more."
    ],
    "scale": {
     "pic": "vs",
@@ -267,19 +267,19 @@
     {
      "h": "Two legs",
      "paras": [
-      "It stood and walked on two legs, its weight over the hind feet, its arms carrying none of it. The four-legged animal of 2014 rested on a sum that added the air inside the body instead of taking it away. One of its own authors reported that in 2024."
+      "It stood and walked on two legs, its weight over the hind feet, its arms carrying none of it. The four-legged animal of 2014 rested on a calculation that added the air inside the body instead of taking it away. One of its own authors reported that in 2024."
      ]
     },
     {
      "h": "The tail",
      "paras": [
-      "The tail was deep and flat from side to side, like a blade: tall spines above, long bones below. We know that from the own tail bones of the animal from Morocco, about four fifths of the tail was found. What it was for is argued: swimming or display."
+      "The tail was deep and flat from side to side, like a blade: tall spines above, long bones below. We know that from the Moroccan animal's own tail bones, about four fifths of the tail was found. What it was for is argued: swimming or display."
      ]
     },
     {
      "h": "The sail",
      "paras": [
-      "The spines are known, the tallest on Stromer's skeleton about 1.65 m (5.4 ft) of bone. The shape of the sail above them nobody knows, so our plain arc is our choice. A thin skin over the spines is the most likely reading, and most specialists read the sail as display."
+      "The spines are known, the tallest on Stromer's skeleton about 1.65 m (5.4 ft) of bone. The shape of the sail above them nobody knows, so our plain arc is our choice. A thin skin over the spines is the most likely reading, and display is the leading idea of what the sail was for."
      ]
     },
     {
@@ -354,11 +354,11 @@
     "key": [
      {
       "swatch": "own",
-      "text": "Dark red: the own bones of the young animal from Morocco, the hips, both legs, the foot and the tail to its 41st bone."
+      "text": "Dark red: the young Moroccan animal's own bones, the hips, both legs, the foot and the tail to its 41st bone, more than 30 of them found."
      },
      {
       "swatch": "stromer",
-      "text": "Blue: after Stromer's lost skeleton from Egypt, the spines of the sail and the lower jaw."
+      "text": "Blue: after Stromer's lost skeleton from Egypt, the spines of the sail and the lower jaw, its rear half restored."
      },
      {
       "swatch": "pale",
@@ -379,11 +379,11 @@
      "points": [
       [
        "Every adult length is a model:",
-       "nobody has an adult skeleton. The researchers took the young skeleton from Morocco and enlarged it by about a third, until it fitted the largest snout found. The snout is a real fossil, the body around it is a sum."
+       "nobody has an adult skeleton. The researchers took the young skeleton from Morocco and enlarged it by about a third, until it fitted the largest snout found. The snout is a real fossil, the body around it is a calculation."
       ],
       [
        "The weight comes from a body model:",
-       "build flesh around the skeleton, measure the volume, multiply by a density. For Spinosaurus the air spaces in the neck and body alone move the answer by 600 kg, 7.4 to 8 tonnes in one and the same model."
+       "build flesh around the skeleton, measure the volume, multiply by a density. For Spinosaurus the air spaces in the neck and body alone move the answer by about 600 kg, 7.4 to 8 tonnes in one and the same model."
       ],
       [
        "Ours is not the species:",
@@ -402,7 +402,7 @@
    "rows": [
     {
      "term": "18 m (59 ft)",
-     "text": "A figure of 2005: a whole body was drawn around the big snout in Milan, with the build of a long-legged relative. Spinosaurus turned out to have short legs, so that body came out too long. The model of 2022 gives just under 14 m, though some museum texts still give 18 m."
+     "text": "The top of a range of 2005, 16 to 18 m: a whole body was drawn around the big snout in Milan, with the build of a long-legged relative. Spinosaurus turned out to have short legs, so that body came out too long. The model of 2022 gives just under 14 m, though some museum texts still give 18 m."
     },
     {
      "term": "15 m and 50 feet",
@@ -410,7 +410,7 @@
     },
     {
      "term": "20 tonnes",
-     "text": "A sum of 2007 that went from the skull's length to the body, with a formula built on other meat-eating dinosaurs: a shorter and much heavier animal. We have not read the study's exact range ourselves, and the body model of 2022 gives the largest adults 7.4 to 8 tonnes."
+     "text": "A calculation of 2007 that went from the skull's length to the body, with a formula built on other meat-eating dinosaurs: a shorter and much heavier animal. We have not read the study's exact range ourselves, and the body model of 2022 gives the largest adults 7.4 to 8 tonnes."
     },
     {
      "term": "7 tonnes",
@@ -422,7 +422,7 @@
     },
     {
      "term": "It walked on four legs",
-     "text": "The study of 2014, by a sum of where the body's weight sat. The sum added the air inside the body instead of taking it away, as one of its own authors reported in 2024."
+     "text": "The study of 2014, by a calculation of where the body's weight sat. That calculation added the air inside the body instead of taking it away, as one of its own authors reported in 2024."
     },
     {
      "term": "The first swimming dinosaur",
@@ -536,28 +536,20 @@
      "text": "Therrien and Henderson, 2007, Journal of Vertebrate Paleontology, the study's summary."
     },
     {
-     "text": "Smith and others, 2006, Journal of Paleontology.",
+     "text": "Smith and others, 2006, Journal of Paleontology, the study's summary.",
      "href": "https://doi.org/10.1666/0022-3360(2006)080%5B0400:NIRTHO%5D2.0.CO;2"
     },
     {
-     "text": "Henderson, 2018, PeerJ.",
+     "text": "Henderson, 2018, PeerJ, the study's summary.",
      "href": "https://doi.org/10.7717/peerj.5409"
     },
     {
-     "text": "Hone and Holtz, 2021, Palaeontologia Electronica.",
+     "text": "Hone and Holtz, 2021, Palaeontologia Electronica, the study's summary.",
      "href": "https://doi.org/10.26879/1110"
     },
     {
-     "text": "Gimsa and Gimsa, 2021, Life.",
-     "href": "https://doi.org/10.3390/life11090889"
-    },
-    {
-     "text": "Smart and Sakamoto, 2024, PeerJ.",
+     "text": "Smart and Sakamoto, 2024, PeerJ, the study's summary.",
      "href": "https://doi.org/10.7717/peerj.17544"
-    },
-    {
-     "text": "Cau and others, 2026, Historical Biology.",
-     "href": "https://doi.org/10.1080/08912963.2026.2669954"
     },
     {
      "text": "Brazil, 2026, ACS Central Science, a news feature.",
