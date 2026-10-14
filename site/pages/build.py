@@ -2074,7 +2074,9 @@ def scale_share(d, data, lang, colours):
     place = re.fullmatch(r"([\d.]+)% ([\d.]+)%", pic.get("person") or "")
     h1, og = plain(d["top"]["h1"]), plain(d["meta"]["og_title"])
     answer = d["labels"].get("og_answer")
-    words = {"h1": h1, "line": plain(answer) if answer else og[len(h1):].strip() if og.startswith(h1) else "",
+    # a title that repeats the heading gives the rest as the line, without the colon that joined them
+    rest = og[len(h1):].lstrip(" :").strip() if og.startswith(h1) else ""
+    words = {"h1": h1, "line": plain(answer) if answer else rest[:1].upper() + rest[1:],
              "person": plain(d["labels"]["person"]),
              "site": ORIGIN.split("://", 1)[1]}
     return {"svg": CHART.picture_still_svg(words, colours, name, webp_size(found),
