@@ -27,12 +27,11 @@
 <body class="sp-body">
 {{html.header}}
 
-<main id="main" class="sp" data-page="{{page.id}}" data-lang="{{lang}}">
+<main id="main" class="sp" data-page="{{page.id}}" data-lang="{{lang}}"{{attr.main}}>
   <div class="wrap">
     <nav class="sp-crumbs" aria-label="{{labels.crumbs}}">
       <ol>
-        <li><a href="{{href.home}}">{{labels.crumb_home}}</a></li>
-        <li><a href="{{href.wing}}">{{wing.name}}</a></li>
+        <li><a href="{{href.home}}">{{labels.crumb_home}}</a></li>{{html.crumb_wing}}
         <li aria-current="page">{{labels.crumb_here}}</li>
       </ol>
     </nav>
@@ -43,21 +42,10 @@
         <p class="sp-answer">{{top.answer}}</p>{{html.answer_more}}{{html.order}}
       </div>
 {{html.frame}}
-      <!-- The one way in. No script is wired to the hooks: the site's measurement is not decided. -->
-      <div class="sp-way">
-        <a class="door" href="{{href.top}}" data-page="{{page.id}}" data-slot="door-answer" data-door="top"><span>{{top.door.text}}</span>{{svg.arrow}}</a>
-        <p class="sp-way__note">{{top.door.note}}</p>
-        <p class="sp-way__leads">{{top.door.leads}}</p>
-      </div>{{html.after}}
+{{html.way}}{{html.after}}
     </header>
 
-    <div class="sp-grid">
-      <nav class="sp-toc" aria-label="{{labels.toc}}">
-        <h2 class="key sp-toc__h">{{labels.toc}}</h2>
-        <ol>
-{{html.toc}}
-        </ol>
-      </nav>
+    <div class="sp-grid{{attr.grid}}">{{html.toc_part}}
 
       <div class="sp-body__main">
 {{html.blocks}}
@@ -70,6 +58,30 @@
 <script type="application/ld+json">{{jsonld}}</script>
 </body>
 </html>
+<!--@ crumb_wing -->
+
+        <li><a href="{{href.wing}}">{{wing.name}}</a></li>
+<!--@ way:door -->
+      <!-- The one way in. No script is wired to the hooks: the site's measurement is not decided. -->
+      <div class="sp-way">
+        <a class="door" href="{{href.top}}" data-page="{{page.id}}" data-slot="door-answer" data-door="top"><span>{{top.door.text}}</span>{{svg.arrow}}</a>
+        <p class="sp-way__note">{{top.door.note}}</p>
+        <p class="sp-way__leads">{{top.door.leads}}</p>
+      </div>
+<!--@ way:out -->
+      <!-- A wing in the making has no way in yet: one line on it, and a plain link to the newest open wing's page. -->
+      <div class="sp-way sc-out">
+        <p class="sc-out__p">{{text}}</p>
+        <p class="sp-more"><a class="more" href="{{href.out}}" data-out="wing"><span>{{link}}</span>{{svg.arrow}}</a></p>
+      </div>
+<!--@ toc -->
+
+      <nav class="sp-toc" aria-label="{{labels.toc}}">
+        <h2 class="key sp-toc__h">{{labels.toc}}</h2>
+        <ol>
+{{html.toc}}
+        </ol>
+      </nav>
 <!--@ toc_item -->
           <li><a href="#{{id}}">{{nav}}</a></li>
 <!--@ figure -->
@@ -319,3 +331,59 @@
   <div class="hang">{{html.picture}}</div>
   <figcaption class="label pt-plate__label"><span class="label__what"><span class="tag">{{tag}}<span class="vh">:</span></span></span> <span class="label__src">{{html.src}}</span></figcaption>
 </figure>
+<!--@ read_plain -->
+<li class="sp-read__plain">{{text}}</li>
+<!--@ frame:scale -->
+      <!-- The animal whole at one scale beside the person: never cut, so its length can be read off the picture. -->
+      <figure class="plate sc-fig sc-fig--first" data-slot="frame">
+        <div class="hang">{{html.picture}}{{html.person}}</div>
+        <figcaption class="label sc-label">
+          <span class="label__what"><span class="tag">{{tag}}<span class="vh">:</span></span> {{what}}</span>
+          <span class="label__src">{{note}}</span>
+        </figcaption>
+      </figure>
+      <div class="sc-pair">
+{{html.close}}{{html.guess}}
+      </div>
+<!--@ scale_fig -->
+<figure class="plate sc-fig">
+  <div class="hang">{{html.picture}}{{html.person}}</div>
+  <figcaption class="label sc-label"><span class="label__what"><span class="tag">{{tag}}<span class="vh">:</span></span> {{what}}</span></figcaption>
+</figure>
+<!--@ person -->
+<span class="sc-person sc-person--{{key}}" aria-hidden="true">{{text}}</span>
+<!--@ guess -->
+
+<!-- One question on a second fact, after the answer. It opens without a script and keeps no score. -->
+<section class="sc-guess" aria-labelledby="guess-h">
+  <h2 class="key sc-guess__h" id="guess-h">{{h}}</h2>
+  <p class="sc-guess__q">{{q}}</p>
+  <details class="sc-guess__d" data-guess>
+    <summary class="sc-guess__btn">{{button}}</summary>
+    <p class="sc-guess__a">{{a}}</p>
+  </details>
+</section>
+<!--@ block:numbers -->
+<section class="sp-sec sc-sec" id="{{id}}">
+  <h2>{{h}}</h2>
+  <!-- The pictures' numbers as text. On a phone each row stands as a card, each number under its column's name. -->
+  <table class="sc-table">
+    <caption>{{unit}}</caption>
+    <thead><tr>{{html.head}}</tr></thead>
+    <tbody>
+{{html.rows}}
+    </tbody>
+  </table>
+</section>
+<!--@ block:pages -->
+<section class="sp-sec sc-pages" id="{{id}}">
+  <ul class="sc-list">
+{{html.items}}
+  </ul>
+</section>
+<!--@ page_item -->
+<li class="sc-item">
+  <h2 class="sc-item__h"><a href="{{href}}">{{name}}</a></h2>
+  <p class="sc-item__line">{{line}}</p>
+  <div class="sc-item__pic" aria-hidden="true">{{html.pic}}</div>
+</li>

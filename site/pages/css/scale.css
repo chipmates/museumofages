@@ -1,0 +1,92 @@
+/* The pages of a wing in the making: its animal whole at one scale beside the person, a closer panel with the guess
+   beside it, the table of the pictures' numbers, and the wing's list of its pages. Set after the page's and the
+   chart's sheets. Phone first; the desktop build starts at 960px. Colours: the site's roles, and the stone sheet the
+   pictures were made on. */
+
+/* ---------- The pictures at one scale: whole, never cut, the person's height over the person ---------- */
+.sc-fig .hang{--pool-up:36px;--pool-side:14%;--pool-down:-34%}
+.sc-fig .hang>picture{background:var(--stone)}
+.sc-fig img{display:block;height:auto}
+.sc-person{position:absolute;transform:translateX(-50%);font-family:var(--sans);font-size:.6875rem;line-height:1;
+  letter-spacing:.02em;color:var(--stone-text-2);white-space:nowrap;pointer-events:none}
+.sc-fig .sc-label{margin-top:12px;max-width:44rem}
+.sc-fig .label__src{margin-top:2px}
+.sp-sec .sc-fig{margin-top:22px}
+.sc-pair{display:grid;gap:30px;margin-top:6px}
+
+/* ---------- The guess: one question after the answer, opened in place ---------- */
+.sc-guess{padding-top:14px;border-top:1px solid var(--hair)}
+.sc-guess__q{margin-top:8px;font-size:1.125rem;line-height:1.45;color:var(--ink);max-width:30rem}
+/* The way to the answer is a plain control with square corners, never the door's colour: it opens no wing. */
+.sc-guess__btn{display:inline-flex;align-items:center;gap:10px;min-height:44px;margin-top:12px;padding:0 16px;
+  border:1px solid var(--hair-strong);font-family:var(--sans);font-size:.9375rem;letter-spacing:.02em;color:var(--ink);
+  cursor:pointer;list-style:none}
+.sc-guess__btn::-webkit-details-marker{display:none}
+.sc-guess__btn::after{content:"";width:7px;height:7px;margin-top:-4px;border-right:1.5px solid currentColor;
+  border-bottom:1.5px solid currentColor;transform:rotate(45deg)}
+.sc-guess__d[open]>.sc-guess__btn::after{margin-top:4px;transform:rotate(225deg)}
+.sc-guess__btn:hover{border-color:var(--ink-soft)}
+.sc-guess__btn:focus-visible{outline:2px solid var(--mark);outline-offset:3px}
+.sc-guess__a{margin-top:14px;color:var(--ink-body);max-width:34rem}
+
+/* ---------- Where a door would stand: one line on the wing in the making, a plain link to an open wing ---------- */
+.sc-out{gap:2px}
+.sc-out__p{font-family:var(--sans);font-size:.9375rem;line-height:1.5;color:var(--ink-soft);max-width:36rem}
+:lang(de) .sc-out__p{hyphens:manual;-webkit-hyphens:manual}
+
+/* ---------- The pictures' numbers: a table, and on a phone one card a row ---------- */
+.sc-table{width:100%;margin-top:18px;border-collapse:collapse;font-family:var(--sans);font-size:.9375rem;line-height:1.45}
+.sc-table caption{caption-side:top;padding-bottom:12px;text-align:left;font-size:.875rem;line-height:1.5;color:var(--ink-soft)}
+.sc-table th,.sc-table td{padding:10px 14px 11px 0;text-align:left;vertical-align:top;font-weight:400;border-bottom:1px solid var(--hair)}
+.sc-table thead th{font-size:.75rem;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-soft);border-bottom-color:var(--hair-strong)}
+.sc-table tbody th{color:var(--ink)}
+.sc-table td{color:var(--ink-soft)}
+/* From a tablet up, the columns share the width by what they hold, not by the longest cell */
+@media (min-width:600px){
+  .sc-table{table-layout:fixed}
+  .sc-table thead th:nth-child(1){width:23%}
+  .sc-table thead th:nth-child(2){width:21%}
+  .sc-table thead th:nth-child(3){width:25%}
+}
+@media (max-width:599px){
+  .sc-table thead{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%)}
+  .sc-table tbody{display:block;border-top:1px solid var(--hair-strong)}
+  .sc-table tr{display:block;padding:12px 0 13px;border-bottom:1px solid var(--hair)}
+  .sc-table th,.sc-table td{display:block;padding:0;border:0}
+  .sc-table tbody th{margin-bottom:6px;font-size:1rem}
+  .sc-table td{display:grid;grid-template-columns:6.5rem minmax(0,1fr);column-gap:12px;padding:3px 0}
+  .sc-table td::before{content:attr(data-k);padding-top:2px;font-size:.6875rem;letter-spacing:.09em;text-transform:uppercase;color:var(--ink-quiet)}
+  .sc-table td:empty{display:none}
+}
+
+/* ---------- A source without an address of its own: the same line as a linked one ---------- */
+.sp-read .sp-read__plain{padding:11px 0 12px;color:var(--ink)}
+
+/* ---------- The wing's list of its pages ---------- */
+.sp-grid--solo{margin-top:28px}
+.sc-pages{margin-top:0;padding-top:0;border-top:0}
+.sc-list{display:grid;gap:40px}
+.sc-item{display:grid;gap:10px;padding-top:22px;border-top:1px solid var(--hair-strong)}
+.sc-item__h{font-size:1.5rem;line-height:1.2}
+.sc-item__h a{display:inline-block;padding-block:8px;margin-block:-8px;color:var(--ink);text-decoration:underline;
+  text-decoration-color:var(--mark);text-underline-offset:.18em}
+.sc-item__h a:hover{color:var(--mark-ink)}
+.sc-item__line{color:var(--ink-body);max-width:38rem}
+.sc-item__pic picture{display:block;margin-top:4px;background:var(--stone)}
+.sc-item__pic img{display:block;width:100%;height:auto}
+
+@media (min-width:960px){
+  .sc-top .sp-top__text{grid-column:1/9}
+  .sc-top .sc-fig--first{grid-column:1/13}
+  .sc-top .sc-pair{grid-column:1/13;grid-template-columns:repeat(12,1fr);column-gap:24px;margin-top:10px}
+  .sc-top .sc-pair>.sc-fig{grid-column:1/8}
+  .sc-top .sc-guess{grid-column:8/13;align-self:start}
+  .sc-top .sc-out{grid-column:1/8}
+  .sc-guess__q{font-size:1.25rem}
+  .sp-grid--solo .sp-body__main{grid-column:1/10}
+  .sp-grid--solo{margin-top:48px}
+  .sc-item{grid-template-columns:minmax(0,5fr) minmax(0,7fr);column-gap:32px;grid-template-areas:"h pic" "line pic"}
+  .sc-item__h{grid-area:h;font-size:1.75rem}
+  .sc-item__line{grid-area:line}
+  .sc-item__pic{grid-area:pic}
+}

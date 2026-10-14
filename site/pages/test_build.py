@@ -80,6 +80,10 @@ class Case(unittest.TestCase):
         lang = re.search(r'<html lang="(\w+)"', text).group(1)
         return next(self.data(lang, p) for p in self.pages if self.data("en", p)["page"]["id"] == label), lang
 
+    def making(self, data):
+        """Whether a page's wing is still being built: its pages show a link out where a door would stand."""
+        return self.wings()[data["page"]["wing"]].get("state") == "making"
+
     def save(self, lang, data, page=None):
         (self.dir / f"{page or self.page}.{lang}.json").write_text(json.dumps(data, ensure_ascii=False), encoding="utf-8")
 
@@ -138,6 +142,15 @@ class Case(unittest.TestCase):
             self.assertNotRegex(text, r"<[^>]+\sstyle=")
             self.assertNotRegex(text, r'"@type":\s*"[^"]*Museum')
             doors = re.findall(r'<a class="door"[^>]*>', text)
+            if self.making(self.page_of(path)[0]):
+                # a wing in the making has no door: one plain link to an open wing stands where it would
+                self.assertEqual(doors, [])
+                self.assertNotIn('href="/w/', text)
+                outs = re.findall(r'<a class="more" href="([^"]*)" data-out="wing">', text)
+                self.assertGreaterEqual(len(outs), 1)
+                self.assertEqual(len(set(outs)), 1, outs)
+                self.assertRegex(text, r'<main[^>]*data-page="[\w-]+"')
+                continue
             self.assertEqual(len(doors), 2)
             for door in doors:
                 self.assertRegex(door, r'data-page="[\w-]+"')
@@ -153,7 +166,8 @@ class Case(unittest.TestCase):
                 continue
             names.add(key)
             names |= {part.lower() for name in wing["name"].values() for part in name.split() if len(part) > 3}
-        for name in ("template.html", "build.py", "chart.py", "make_pictures.py", "css/page.css", "css/chart.css", "css/list.css"):
+        for name in ("template.html", "build.py", "chart.py", "make_pictures.py", "css/page.css", "css/chart.css", "css/list.css",
+                     "css/scale.css"):
             text = (HERE / name).read_text(encoding="utf-8").lower()
             for word in names:
                 self.assertNotIn(word, text, f"{name} names a wing: {word}")
@@ -254,6 +268,163 @@ class Case(unittest.TestCase):
             self.assertEqual(article["about"], STAND_IN["about"])
             self.assertIn(f'<link rel="canonical" href="https://museumofages.org/{rel[:-len("index.html")]}">', text)
 
+    # ---- a page of a wing in the making ----
+
+    def scale_page(self):
+        """The first page that shows an animal at one scale beside the person, or a skip."""
+        found = next((p for p in self.pages if "scale" in self.data("en", p)["top"]), None)
+        if not found:
+            self.skipTest("no page shows a thing at one scale")
+        return found
+
+    # Each phrase a page of its wing must never carry, by its rule: the wing's, the topic's and the claim.
+    NEVER = {
+        "en": ["a giant great white", "the great white's ancestor", "an ancestor of the great white", "about 60 tonnes",
+               "60 t", "24.3 m long", "its teeth", "its own teeth", "a top speed", "40 km/h", "25 mph",
+               "it may still live", "it is still alive", "opens soon", "opens in spring", "enter the museum",
+               "walk in here", "the biggest ever", "the largest ever"],
+        "de": ["ein riesiger weißer Hai", "der Riesenhai", "der Vorfahr des Weißen Hais", "60 Tonnen", "24,3 m lang",
+               "seine Zähne", "seine eigenen Zähne", "seine Höchstgeschwindigkeit", "40 km/h", "er lebt noch",
+               "er lebt heute noch", "bald", "demnächst", "öffnet im Frühling", "ins Museum", "den Flügel betreten",
+               "der größte aller Zeiten"],
+    }
+
+    def test_a_page_of_a_wing_in_the_making_refuses_each_never_say_phrase(self):
+        page = self.scale_page()
+        for lang, phrases in self.NEVER.items():
+            original = self.data(lang, page)
+            for phrase in phrases:
+                with self.subTest(lang=lang, phrase=phrase):
+                    sentence = f" {phrase[0].upper()}{phrase[1:]}."
+                    for key in ("answer", "answer_more"):
+                        data = json.loads(json.dumps(original))
+                        data["top"][key] += sentence
+                        self.save(lang, data, page)
+                        self.fails(r"top\.%s (matches|carries the wing's claim phrase)" % key)
+                    # and in a paragraph of the page's body the same
+                    data = json.loads(json.dumps(original))
+                    at = next(i for i, b in enumerate(data["blocks"]) if b.get("paras"))
+                    data["blocks"][at]["paras"][0] += sentence
+                    self.save(lang, data, page)
+                    self.fails(r"blocks\.%d\.paras\.0 (matches|carries)" % at)
+                    self.save(lang, original, page)
+
+    def test_its_large_number_stands_only_with_its_condition(self):
+        page = self.scale_page()
+        for lang, condition in (("en", "two broken discs"), ("de", "zwei angebrochenen Wirbel")):
+            data = self.data(lang, page)
+            text = json.dumps(data, ensure_ascii=False)
+            if not re.search(r"\b24[.,]3\b", text):
+                self.skipTest("the page names no number with a condition")
+            self.assertIn(condition, text)
+            self.save(lang, json.loads(text.replace(condition, "zwei Wirbel" if lang == "de" else "two discs")), page)
+            self.fails(r"24\[\.,\]3")
+            self.save(lang, json.loads(text), page)
+
+    def test_a_page_of_a_wing_in_the_making_has_no_door_and_its_link_out(self):
+        page = self.scale_page()
+        out, written = self.build()
+        wings = self.wings()
+        wing = wings[self.data("en", page)["page"]["wing"]]
+        opened = [w for k, w in wings.items() if not k.startswith("_") and w.get("state", "open") == "open" and "door" in w]
+        for path in written:
+            data, lang = self.page_of(path)
+            if not self.making(data):
+                continue
+            text = path.read_text(encoding="utf-8")
+            # no door anywhere, the header's and the footer's included, and no address of a wing's walk
+            self.assertNotIn('class="door"', text)
+            self.assertNotRegex(text, r'href="[^"]*/w/')
+            # the plain link leads to the page of an open wing, in the page's language
+            outs = re.findall(r'<a class="more" href="([^"]*)" data-out="wing">', text)
+            rel = path.relative_to(out).parent
+            targets = {(rel / href).as_posix() for href in outs}
+            self.assertEqual(len(targets), 1, targets)
+            target = os.path.normpath(targets.pop())
+            self.assertIn(target, {w["page"][lang] for w in opened}, path)
+            # never asked: the edge and the question's script both read the mark
+            self.assertRegex(text, r'<main[^>]*\sdata-unasked[\s>]')
+            # only its own languages: no alternate, no menu entry and no link to a language it lacks
+            for code in re.findall(r'hreflang="([\w-]+)"', text):
+                self.assertIn(code, wing["langs"] + ["x-default"])
+            self.assertNotRegex(text, r'href="[^"]*/(fr|it|es|pt-br|bg)/')
+
+    def test_a_door_on_a_page_of_a_wing_in_the_making_stops_the_build(self):
+        page = self.scale_page()
+        other = self.data("en", self.page)
+        for lang in ("en", "de"):
+            data = self.data(lang, page)
+            data["top"]["door"] = self.data(lang)["top"]["door"]
+            self.save(lang, data, page)
+        self.fails(r"has no door")
+        del other
+
+    def test_a_page_of_a_wing_in_the_making_needs_its_line_and_link(self):
+        page = self.scale_page()
+        for lang in ("en", "de"):
+            data = self.data(lang, page)
+            del data["top"]["out"]["link"]
+            self.save(lang, data, page)
+        self.fails(r"top\.out needs its line and its link")
+
+    def test_the_parts_of_a_page_in_the_making_stand_nowhere_else(self):
+        page = self.scale_page()
+        for lang in ("en", "de"):
+            data = self.data(lang)
+            data["top"]["guess"] = self.data(lang, page)["top"]["guess"]
+            self.save(lang, data)
+        self.fails(r"guess stand only on a page of a wing in the making")
+
+    def test_a_picture_at_one_scale_needs_its_person(self):
+        page = self.scale_page()
+        for lang in ("en", "de"):
+            data = self.data(lang, page)
+            del data["pics"][data["top"]["scale"]["pic"]]["person"]
+            self.save(lang, data, page)
+        self.fails(r"needs pics\.<name>\.person")
+
+    def test_a_table_cell_may_stand_empty_but_never_its_first(self):
+        page = self.scale_page()
+        out, _ = self.build()
+        shutil.rmtree(out)
+        for lang in ("en", "de"):
+            data = self.data(lang, page)
+            block = next(b for b in data["blocks"] if b["type"] == "numbers")
+            block["rows"][0]["cells"][0] = " "
+            self.save(lang, data, page)
+        self.fails(r"rows\.0\.cells\.0 is empty")
+
+    def test_a_row_shorter_than_its_columns_stops_the_build(self):
+        page = self.scale_page()
+        for lang in ("en", "de"):
+            data = self.data(lang, page)
+            block = next(b for b in data["blocks"] if b["type"] == "numbers")
+            block["rows"][0]["cells"].pop()
+            self.save(lang, data, page)
+        self.fails(r"row 0 has \d+ cells and the table \d+ columns")
+
+    def test_the_guess_follows_the_answer_and_opens_without_a_script(self):
+        page = self.scale_page()
+        out, written = self.build()
+        for path in written:
+            data, lang = self.page_of(path)
+            if data["page"]["id"] != self.data("en", page)["page"]["id"]:
+                continue
+            own = self.own_part(path.read_text(encoding="utf-8"))
+            guess = data["top"]["guess"]
+            answer = html.escape(data["top"]["answer"].split(".")[0], quote=False)
+            self.assertLess(self.words(own).index(data["top"]["answer"].split(" ")[0]), own.index("<details"))
+            details = re.search(r"<details[^>]*data-guess[^>]*>(.*?)</details>", own, flags=re.S)
+            self.assertIsNotNone(details, path)
+            self.assertIn(html.escape(guess["button"], quote=False), details.group(1))
+            self.assertRegex(details.group(1), r"<summary[^>]*>")
+            self.assertIn(guess["a"][:40], self.words(details.group(1)).replace("\u00a0", " "))
+            self.assertNotIn("<script", own.replace('<script type="application/ld+json">', ""))
+            # the person's height stands over the person in every picture at one scale
+            self.assertGreaterEqual(own.count('class="sc-person '), 2)
+            self.assertIn(html.escape(data["labels"]["person"]).replace(" ", "\u00a0"), own.replace("&nbsp;", "\u00a0"))
+            del answer
+
     # ---- a name never breaks ----
 
     def test_a_name_never_breaks(self):
@@ -277,7 +448,9 @@ class Case(unittest.TestCase):
             self.assertTrue(kept[0].startswith(name))
             self.assertEqual(html.unescape(re.sub(r"<[^>]+>", "", h1)), data["top"]["h1"])
             # and nowhere in the page's own part does the name stand outside such a span
-            self.assertGreaterEqual(len(re.findall(r'<span class="nw">%s' % re.escape(html.escape(name)), own)), 3)
+            # (a wing in the making has no door, whose line names it: its heading and its crumb do)
+            least = 2 if self.making(data) else 3
+            self.assertGreaterEqual(len(re.findall(r'<span class="nw">%s' % re.escape(html.escape(name)), own)), least)
             loose = re.sub(r'<span class="nw">[^<]*</span>', " ", own)
             self.assertNotIn(name, self.words(loose))
 
@@ -326,6 +499,11 @@ class Case(unittest.TestCase):
                     # and it carries its language wherever that is not the page's own
                     wanted = entry.get("lang", "")
                     self.assertEqual(marked[word], "" if wanted == lang else wanted, word)
+            if self.making(data):
+                # a page of a wing in the making names its holders and journals in their own language
+                if "scale" in data["top"]:
+                    self.assertGreaterEqual(found, 8)
+                continue
             self.assertGreaterEqual(found, 15)
             if self.works_page and data["page"]["id"] == self.data("en", self.works_page)["page"]["id"]:
                 # a holder a page takes from its wing's facts carries the language the facts give it
@@ -705,7 +883,8 @@ class Case(unittest.TestCase):
             text = path.read_text(encoding="utf-8")
             data, lang = self.page_of(path)
             long = module.answer_length(data["top"]) > module.LONG_ANSWER
-            self.assertEqual('<header class="sp-top sp-top--long">' in text, long, path)
+            top = re.search(r'<header class="(sp-top[^"]*)">', text).group(1).split()
+            self.assertEqual("sp-top--long" in top, long, path)
 
     def test_a_source_of_one_language_only_stands_in_that_language(self):
         if not self.drawing_page:

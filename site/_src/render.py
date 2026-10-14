@@ -285,7 +285,8 @@ def wall(c):
     level = 4 if many else 3
     groups = []
     for coll in c.collections:
-        mine = [s for s, e in c.wings.items() if e["collection"] == coll["slug"]]
+        # a wing with pages only stands on no wall before it opens
+        mine = [s for s, e in c.wings.items() if e.get("collection") == coll["slug"] and not e.get("pages_only")]
         opened = [s for s in mine if c.wings[s]["state"] == "open"]
         if not mine:
             continue

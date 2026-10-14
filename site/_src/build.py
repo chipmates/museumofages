@@ -732,6 +732,11 @@ def check_registry(site):
         where = f"registry: the wing {slug!r}"
         if e.get("state") not in STATES:
             problems.append(f"{where} has the state {e.get('state')!r}, not one of {STATES}")
+        if "langs" in e and (not isinstance(e["langs"], list) or "en" not in e["langs"] or set(e["langs"]) - set(L.order)):
+            problems.append(f"{where}: its langs {e['langs']!r} is not a list of the table's languages with English")
+        if e.get("pages_only"):
+            problems += check_pages_only(site, slug, e, pages)
+            continue
         if e.get("collection") not in slugs:
             problems.append(f"{where} names the collection {e.get('collection')!r}, which is not listed")
         if not set(LANGS) <= set(e.get("name", {})):
@@ -797,6 +802,43 @@ def check_registry(site):
         if slug not in site.facts and "counts" not in e:
             problems.append(f"{where} has neither a facts file nor counts in the registry")
         problems += check_wing_data(site, slug)
+    return problems
+
+
+def check_pages_only(site, slug, e, pages):
+    """A wing in the making with pages of its own (pages_only): its name, its page and its topic pages in each of its
+    languages, a free folder for each, and no key of an open wing's first screen. It stands on no wall and in no film,
+    so it names no collection. Its pages are built by the topic pages' build."""
+    where, problems = f"registry: the wing {slug!r}", []
+    if e.get("state") != "making":
+        problems.append(f"{where} has pages only and is {e.get('state')!r}: only a wing in the making stands without its own first screen")
+    own = languages.wing_langs(e, LANGS)
+    for key in ("door", "pictures", "collection"):
+        if key in e:
+            problems.append(f"{where} has pages only and names {key}: it has no door, no wall and no film before it opens")
+    for key in ("name", "page", "about", "never_say", "claim_phrase", "topics"):
+        if key not in e:
+            problems.append(f"{where} has pages only and lacks {key}")
+    if problems:
+        return problems
+    if not re.fullmatch(r"[a-z][a-z0-9_-]{0,47}", wing_count_kind(slug, e)):
+        problems.append(f"{where}: its page's kind in the count {wing_count_kind(slug, e)!r} is not a plain word")
+    for lang in own:
+        page = e["page"].get(lang, "")
+        if not e["name"].get(lang):
+            problems.append(f"{where} lacks its name in {lang}")
+        if not page.startswith(L.folder(lang)) or not re.fullmatch(r"[a-z0-9-]+", page[len(L.folder(lang)):]) or page in pages:
+            problems.append(f"{where}: its {lang} page address {page!r} is not a free folder of that language")
+        pages.add(page)
+        for t in e["topics"]:
+            if lang in languages.topic_langs(t, own) and not all(t.get(k, {}).get(lang) for k in ("slug", "name", "line")):
+                problems.append(f"{where}: a topic page lacks its slug, name or line in {lang}")
+    for t in e["topics"]:
+        if set(t.get("langs") or own) - set(own):
+            problems.append(f"{where}: a topic page names a language its wing is not written in")
+        for rule in t.get("never_say", []):
+            if not (isinstance(rule, list) and len(rule) == 2):
+                problems.append(f"{where}: a topic page's never_say holds a rule that is not [pattern, what to say instead]")
     return problems
 
 
@@ -1743,7 +1785,7 @@ def build(out, registry, wing_dirs, mark=None, topics=True, quiet=False, more_pi
     problems += check_menu(out, built, site) + crawl(out, site) + check_gone(out, site) + check_mail(out) + check_switches(out, site) + check_fonts(site)
     problems += check_sign(out, signs) + check_pictures(out, built, site) + check_colours(out, built, site)
     problems += check_picture_licences(out) + placed.finish(out, STATIC, ORIGIN)
-    problems += ask.check(out, STATIC, {L.html(l): L.page(l, "privacy") for l in LANGS})
+    problems += ask.check(out, STATIC, {L.html(l): L.page(l, "privacy") for l in LANGS}, unasked_pages(site))
     if (out / "_redirects").read_text(encoding="utf-8").split() != ([SOURCE, SOURCE_TO, "302"] if SOURCE_LINK else []):
         problems.append("_redirects does not agree with the switch for the link to the code")
     if problems:
@@ -1855,6 +1897,12 @@ def build_topics(out, site):
     found, problems = [], []
     topic_kinds = {f'{e["page"][l].strip("/")}/{t["slug"][l]}': topic_count_kind(t) for e in site.wings.values() if e.get("state") == "open" for t in e.get("topics", [])
                    for l in languages.topic_langs(t, LANGS)}
+    # a wing with pages only: its own page is the list of its topic pages, and every page of it is one of the count's
+    for s in paged(site):
+        e = site.wings[s]
+        topic_kinds.update({e["page"][l].strip("/"): wing_count_kind(s, e) for l in languages.wing_langs(e, LANGS)})
+        topic_kinds.update({f'{e["page"][l].strip("/")}/{t["slug"][l]}': topic_count_kind(t) for t in e["topics"]
+                            for l in languages.topic_langs(t, languages.wing_langs(e, LANGS))})
     for path in paths:
         text = path.read_text(encoding="utf-8")
         name = path.relative_to(out)
@@ -1891,6 +1939,17 @@ def build_topics(out, site):
     return found
 
 
+def paged(site):
+    """The wings in the making with pages of their own (pages_only): the topic pages' build makes their pages."""
+    return [s for s, e in site.wings.items() if e.get("pages_only") and e.get("state") == "making"]
+
+
+def unasked_pages(site):
+    """The pages never asked the ads' question, whatever their address carries (_entry/rules.js reads them from the
+    count's lists): every page of a wing in the making, by the address of its own page."""
+    return [f'/{site.wings[s]["page"][l].strip("/")}/' for s in paged(site) for l in languages.wing_langs(site.wings[s], LANGS)]
+
+
 def wing_count_kind(slug, entry):
     """A wing's page in the count: its count key in the registry, else the wing's own key. Never derived from an
     address, so a new wing never renames an old one's rows."""
@@ -1905,19 +1964,21 @@ def topic_count_kind(topic):
 
 def count_lists(site):
     """The count's closed lists as the function's module: each open wing with the number of its stops, every page
-    kind, every language built. Returns (text, problems)."""
+    kind, every language built, and the pages the edge never asks. Returns (text, problems)."""
     wings = {s: site.count(s, "stops") for s in site.open}
     kinds = list(COUNT_KINDS.values())
-    for s in site.open:
+    for s in site.open + paged(site):
         kinds.append(wing_count_kind(s, site.wings[s]))
         kinds += [topic_count_kind(t) for t in site.wings[s].get("topics", [])]
     problems = [f"the count's page kind {k!r} stands twice" for k in sorted({k for k in kinds if kinds.count(k) > 1})]
     problems += [f"the count's page kind {k!r} is not a plain word" for k in kinds if not re.fullmatch(r"[a-z][a-z0-9_-]{0,47}", k)]
     problems += [f"the wing {s!r} has no whole number of stops for the count" for s, n in wings.items() if not isinstance(n, int) or n < 1]
+    unasked = unasked_pages(site)
     text = ("// Written by site/_src/build.py from the site's registry, its wings' facts and its languages. Not edited by hand.\n"
             f"export const WING_STOPS = Object.freeze({json.dumps(wings, separators=(', ', ': '))})\n"
             f"export const PAGE_KINDS = Object.freeze({json.dumps(kinds, separators=(', ', ': '))})\n"
-            f"export const LANGUAGES = Object.freeze({json.dumps(list(LANGS), separators=(', ', ': '))})\n")
+            f"export const LANGUAGES = Object.freeze({json.dumps(list(LANGS), separators=(', ', ': '))})\n"
+            f"export const UNASKED = Object.freeze({json.dumps(unasked, separators=(', ', ': '))})\n")
     return text, problems
 
 
@@ -1967,7 +2028,8 @@ def film_data(site):
 
     wings = []
     for slug, e in site.wings.items():
-        if e.get("state") not in ("open", "making"):
+        # a wing with pages only is in no film before it opens
+        if e.get("state") not in ("open", "making") or e.get("pages_only"):
             continue
         w = {"slug": slug, "state": e["state"], "name": e["name"], "year": year(e)}
         if e["state"] == "open":

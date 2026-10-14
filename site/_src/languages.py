@@ -122,6 +122,13 @@ def at(obj, path):
     return obj
 
 
+def wing_langs(wing, codes):
+    """The languages of codes a wing is written in: its own list (langs), or all of them. A wing in the making whose
+    pages stand in fewer languages names them; an open wing stands in every built language."""
+    own = wing.get("langs")
+    return tuple(c for c in codes if own is None or c in own)
+
+
 def topic_langs(topic, codes):
     """The languages of codes a wing's topic page is written in: its own list (langs), or all of them."""
     own = topic.get("langs")
@@ -179,6 +186,10 @@ def merge_registry(registry, folder, langs, codes=None):
         slugs = langs.entries[code]["slugs"]
 
         def derived(path, leaf, code=code, slugs=slugs):
+            # a wing written in fewer languages (langs) has no leaf at all in the others
+            entry = registry.get(path.split(".", 1)[0])
+            if isinstance(entry, dict) and code not in wing_langs(entry, (code,)):
+                return NOT_HERE
             # a topic page written in fewer languages has no words, no name and no slug in the others
             topic = re.match(r"^([^.]+)\.topics\.(\d+)\.", path)
             if topic:
