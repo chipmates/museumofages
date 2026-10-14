@@ -761,14 +761,20 @@ def mark_rules(data):
                 laid, n = mark_lanes(items, width, over or screen >= MARK_ONE_LINE)
                 for key, (lane, side, w) in laid.items():
                     a, b, _ = mark_at(pic["marks"][key])
-                    pad = ("padding-left:calc(2px + (100%% - 4px) * %g);padding-right:0;justify-content:flex-start" % round(a, 4)
-                           if side == "start" else
-                           "padding-left:0;padding-right:calc(2px + (100%% - 4px) * %g);justify-content:flex-end" % round(1 - b, 4))
-                    rule = ".sc-mark--%s-%s{grid-row:%d;%s}.sc-mark--%s-%s>span{max-width:%dpx;text-align:%s}" % (
-                        fig["pic"], key, n - lane if over else lane + 1, pad, fig["pic"], key, w, "left" if side == "start" else "right")
-                    if last.get(key) != rule:
-                        band.append(rule)
-                        last[key] = rule
+                    parts = {
+                        "lane": ("grid-row:%d" % (n - lane if over else lane + 1), ""),
+                        "side": ("padding-left:calc(2px + (100%% - 4px) * %g);padding-right:0;justify-content:flex-start" % round(a, 4),
+                                 "text-align:left") if side == "start" else
+                                ("padding-left:0;padding-right:calc(2px + (100%% - 4px) * %g);justify-content:flex-end" % round(1 - b, 4),
+                                 "text-align:right"),
+                        "width": ("", "max-width:%dpx" % w)}
+                    # a band says only what changed since the narrower one
+                    changed = [part for name, part in parts.items() if last.get((key, name)) != part]
+                    last.update(((key, name), part) for name, part in parts.items())
+                    for at, i in (("", 0), (">span", 1)):
+                        said = ";".join(part[i] for part in changed if part[i])
+                        if said:
+                            band.append(".sc-mark--%s-%s%s{%s}" % (fig["pic"], key, at, said))
             if band:
                 rules.append("".join(band) if screen <= MARK_SCREENS[0] else "@media (min-width:%dpx){%s}" % (screen, "".join(band)))
     return "".join(rules)
