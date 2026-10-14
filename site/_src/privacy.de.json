@@ -82,6 +82,7 @@
           "Deine Sprache, falls du im Flügel eine gewählt hast.",
           "Ein Vermerk, dass dein Gerät eine Szene als Film bekommt. Er wird einmal gesetzt, wenn das Gerät für die live berechnete Szene zu langsam ist.",
           "Nur für den offenen Tab: dass der Auftakt und ein Hinweis schon gezeigt wurden, und ein Zeitvermerk, falls der Flügel nach einem Grafikfehler einmal neu laden musste.",
+          "Nur für den offenen Tab: welche Werke und Stationen du geöffnet hast, damit der Flügel sie dir in einer Liste zeigen kann. Die Liste wird nirgendwohin geschickt.",
           "Eine Marke, gedacht nur für unsere eigenen Testbrowser. Sie wird gesetzt, wenn eine Adresse dieser Website mit dem Zusatz ?probe=1 geöffnet wird. Die Zählung liest nur diese eine Marke aus dem Speicher und vermerkt auf ihren Zeilen, dass sie da ist, damit wir unsere eigenen Besuche herausrechnen können. Setzt du sie selbst, rechnen wir deine Besuche heraus wie unsere.",
           "Nur nach einem Ja auf die Frage zu unserer Anzeige, und nur für den offenen Tab: die Klicknummer der Anzeige und der Zeitpunkt deines Ja. Öffnet sich ein Flügel, nimmt er den Eintrag aus dem Tab und sendet ihn einmal. Schließt du den Tab, ist er ebenfalls gelöscht."
         ],

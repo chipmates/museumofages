@@ -82,6 +82,7 @@
           "Your language, if you chose one in the wing.",
           "A mark that your device gets one scene as a film. It is set once if the device is too slow for the live scene.",
           "For the open tab only: that the opening and a hint have already been shown, and a time mark if the wing had to reload once after a graphics error.",
+          "For the open tab only: which works and stops you opened, so the wing can show them to you in a list. The list is never sent anywhere.",
           "A mark meant only for our own test browsers. It is set when an address of this site is opened with the extra ?probe=1. The count reads only this one mark from storage and notes on its rows that it is there, so that we can take our own visits out. If you set it yourself, we take your visits out like ours.",
           "Only after a yes to the question for visitors from our ads, and only for the open tab: the click number of the ad and the time of your yes. When a wing opens, it takes the entry out of the tab and sends it once. Closing the tab deletes it too."
         ],

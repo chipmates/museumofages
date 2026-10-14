@@ -82,6 +82,7 @@
      "O seu idioma, se você escolheu um na ala.",
      "Uma marca indicando que o seu aparelho recebe uma cena como filme. Ela é gravada uma vez, caso o aparelho seja lento demais para a cena calculada ao vivo.",
      "Só para a aba aberta: a informação de que a abertura e uma dica já foram mostradas, e uma marca de horário, caso a ala tenha precisado recarregar uma vez depois de um erro gráfico.",
+     "Só para a aba aberta: quais obras e quais paradas você abriu, para que a ala possa mostrá-las a você numa lista. A lista não é enviada a lugar nenhum.",
      "Um marcador pensado só para os nossos próprios navegadores de teste. Ele é gravado quando um endereço deste site é aberto com o extra ?probe=1. A contagem lê do armazenamento só esse marcador e registra nas linhas dela que ele está presente, para que possamos tirar as nossas próprias visitas da conta. Se você o gravar por conta própria, tiramos as suas visitas da conta como as nossas.",
      "Só depois de um sim à pergunta sobre os nossos anúncios, e só para a aba aberta: o número de clique do anúncio e o momento do seu sim. Quando uma ala se abre, ela tira a entrada da aba e a envia uma única vez. Fechar a aba também a apaga."
     ],

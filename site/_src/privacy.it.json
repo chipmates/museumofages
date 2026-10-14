@@ -82,6 +82,7 @@
      "La tua lingua, se ne hai scelta una nell’ala.",
      "Un’annotazione del fatto che il tuo dispositivo riceve una scena come film. L’ala la salva una sola volta, se il dispositivo è troppo lento per la scena calcolata in tempo reale.",
      "Solo per la scheda del browser aperta: il fatto che l’introduzione e un suggerimento sono già stati mostrati, e un’annotazione dell’ora se l’ala ha dovuto ricaricarsi una volta dopo un errore grafico.",
+     "Solo per la scheda del browser aperta: quali opere e quali tappe hai aperto, perché l’ala possa mostrartele in un elenco. L’elenco non viene inviato da nessuna parte.",
      "Un contrassegno pensato solo per i nostri browser di prova. Viene impostato quando un indirizzo di questo sito viene aperto con l’aggiunta ?probe=1. Il conteggio legge dalla memoria solo questo contrassegno e annota sulle sue righe che è presente, così possiamo escludere dai calcoli le nostre visite. Se lo imposti tu, escludiamo le tue visite come le nostre.",
      "Solo dopo un sì alla domanda legata ai nostri annunci, e solo per la scheda aperta: il numero di clic dell’annuncio e il momento del tuo sì. Quando si apre un’ala, toglie la voce dalla scheda e la invia una sola volta. Anche chiudere la scheda la cancella."
     ],

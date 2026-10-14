@@ -82,6 +82,7 @@
      "Tu idioma, si elegiste uno en el ala.",
      "Una marca de que tu dispositivo recibe una escena como película. Se guarda una sola vez si el dispositivo es demasiado lento para la escena calculada en tiempo real.",
      "Solo para la pestaña abierta: que ya se mostraron la introducción y una indicación, y una marca de tiempo si el ala tuvo que recargarse una vez tras un error gráfico.",
+     "Solo para la pestaña abierta: qué obras y qué paradas abriste, para que el ala pueda mostrártelas en una lista. La lista no se envía a ningún sitio.",
      "Un marcador pensado solo para nuestros propios navegadores de prueba. Se pone cuando se abre una dirección de este sitio con el añadido ?probe=1. El recuento solo lee del almacenamiento este marcador y anota en sus filas que está presente, para que podamos descontar nuestras propias visitas. Si lo pones tú, descontamos tus visitas como las nuestras.",
      "Solo después de un sí a la pregunta sobre nuestros anuncios, y solo para la pestaña abierta: el número de clic del anuncio y el momento de tu sí. Cuando se abre un ala, saca la entrada de la pestaña y la envía una sola vez. Cerrar la pestaña también la borra."
     ],

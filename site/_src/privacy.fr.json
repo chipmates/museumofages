@@ -82,6 +82,7 @@
      "Votre langue, si vous en avez choisi une dans l’aile.",
      "Une marque qui indique que votre appareil reçoit une scène sous forme de film. Elle est posée une seule fois si l’appareil est trop lent pour la scène calculée en direct.",
      "Pour l’onglet ouvert seulement: le fait que l’ouverture et une indication ont déjà été montrées, et une heure notée si l’aile a dû se recharger une fois après une erreur graphique.",
+     "Pour l’onglet ouvert seulement: les œuvres et les étapes que vous avez ouvertes, pour que l’aile puisse vous les montrer dans une liste. Cette liste n’est envoyée nulle part.",
      "Un marqueur destiné uniquement à nos propres navigateurs de test. Il est posé quand une adresse de ce site est ouverte avec le complément ?probe=1. Le comptage ne lit que ce seul marqueur dans le stockage et note sur ses lignes qu’il est présent, pour que nous puissions exclure nos propres visites. Si vous le posez vous-même, nous excluons vos visites comme les nôtres.",
      "Seulement après un oui à la question liée à nos annonces, et seulement pour l’onglet ouvert: le numéro de clic de l’annonce et le moment de votre oui. Quand une aile s’ouvre, elle retire l’entrée de l’onglet et l’envoie une seule fois. Fermer l’onglet l’efface aussi."
     ],
