@@ -1,5 +1,5 @@
 {
- "_note": "THE WORDS of the biggest dinosaurs page. Poured word for word from the writer's WORDS file; the title, the description and the heading are its first options. The skeleton's caption is the writer's caption (d): its first sentence stands as the caption, the three that name the colours as the picture's key line under it. The person's height stands over the person in each picture (labels.person); in the row it has open stone there only from a screen 680 px wide (pics.row.person_from), so the row's labels name the person too and the closer panel's do not. pics.<name>.marks: each animal's start and end in the row as shares of the picture's width, measured on the composition; pics.<name>.person: the person's centre and the top of its head. Empty cells of the table are the writer's: no sourced figure exists.",
+ "_note": "THE WORDS of the biggest dinosaurs page. Poured word for word from the writer's WORDS file; the title, the description and the heading are its first options. The skeleton's caption is the writer's caption (d): its first sentence stands as the caption, the three that name the colours as the picture's key line under it. The person's height stands over the person in each picture (labels.person); in the row it has open stone there only from a screen 680 px wide (pics.row.person_from). Each picture's labels name the person too. pics.<name>.marks: each animal's start and end in the row as shares of the picture's width, measured on the composition; pics.<name>.person: the person's centre and the top of its head. Empty cells of the table are the writer's: no sourced figure exists.",
  "page": {
   "id": "animals-biggest-dinosaurs",
   "wing": "animals",
@@ -49,6 +49,7 @@
     "spinosaurus": "62.99% 98.49%",
     "stegosaurus": "0.75% 20.68%",
     "triceratops": "28.11% 53.51%",
+    "person": "57.83% 58.85%",
     "ankylosaurus": "59.79% 82.65%"
    },
    "behind": [
@@ -181,6 +182,10 @@
      {
       "span": "triceratops",
       "text": "Triceratops, about 6.9 m"
+     },
+     {
+      "span": "person",
+      "text": "The person, 1.70 m"
      },
      {
       "span": "ankylosaurus",
