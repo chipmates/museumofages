@@ -7,7 +7,7 @@ import { fileURLToPath } from 'node:url'
 import { onRequestPost } from '../functions/v1/funnel.js'
 import { DEVICES, DOORS, HOLDS, LOOKS, STEPS, deviceOf, rowOf } from '../functions/_count/rows.js'
 import { HOST_LISTS, SOURCES, prefixWord, sourceWord } from '../functions/_count/source.js'
-import { LANGUAGES, PAGE_KINDS, WING_STOPS } from '../functions/_count/lists.js'
+import { LANGUAGES, PAGE_KINDS, UNASKED, WING_STOPS } from '../functions/_count/lists.js'
 
 const at = (rel) => fileURLToPath(new URL(rel, import.meta.url))
 const DESK = 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/18.0 Safari/605.1.15'
@@ -64,6 +64,8 @@ const GOOD = {
   ask_yes: { step: 'ask_yes', page: 'inventions', language: 'de', probe: 1 },
   ask_no: { step: 'ask_no', page: 'home', language: 'bg' },
   ask_close: { step: 'ask_close', page: 'paintings', language: 'pt-BR' },
+  guess_open: { step: 'guess_open', page: 'megalodon', language: 'de', probe: 1 },
+  out_wing: { step: 'out_wing', page: 'animals', language: 'en' },
 }
 const ROWS = {
   museum_arrival: ['museum_arrival', 'vinci', '', 'de', 'upright', 'search', '', 'desktop', 'DE', 'probe'],
@@ -77,12 +79,14 @@ const ROWS = {
   ask_yes: ['ask_yes', 'inventions', '', 'de', '', '', '', '', '', 'probe'],
   ask_no: ['ask_no', 'home', '', 'bg', '', '', '', '', '', ''],
   ask_close: ['ask_close', 'paintings', '', 'pt-BR', '', '', '', '', '', ''],
+  guess_open: ['guess_open', 'megalodon', '', 'de', '', '', '', '', '', 'probe'],
+  out_wing: ['out_wing', 'animals', '', 'en', '', '', '', '', '', ''],
 }
 
 const OTHER = { stop: 9, look: 'film', door: 'end', page: 'privacy', wing: 'vinci', hold: 'wide', source: 'search', start: 1 }
 const NOISE = { path: '/de/?gclid=abc', gclid: 'abc', utm_source: 'x', referrer: 'https://www.google.com/?q=leonardo', id: 'abc', time: 1234 }
 
-test('the eleven steps are the sheet\'s eleven', () => {
+test('the thirteen steps are the sheet\'s thirteen', () => {
   assert.deepEqual(Object.keys(STEPS).sort(), Object.keys(GOOD).sort())
 })
 
@@ -152,7 +156,10 @@ test('every language, hold, kind of work, page kind and door on its list writes;
 })
 
 test('the lists the build writes hold the sheet\'s pages and languages', () => {
-  for (const kind of ['home', 'leonardo', 'inventions', 'paintings', 'sizes', 'supper', 'last-years', 'statement', 'privacy', 'imprint']) assert.ok(PAGE_KINDS.includes(kind), kind)
+  for (const kind of ['home', 'leonardo', 'inventions', 'paintings', 'sizes', 'supper', 'last-years', 'statement', 'privacy', 'imprint',
+    'animals', 'megalodon']) assert.ok(PAGE_KINDS.includes(kind), kind)
+  // the pages of the wing in the making, which the edge never asks the ads' question
+  assert.deepEqual([...UNASKED].sort(), ['/animals/', '/de/tiere/'])
   assert.deepEqual([...LANGUAGES].sort(), ['bg', 'de', 'en', 'es', 'fr', 'it', 'pt-BR'])
   assert.deepEqual(WING_STOPS, { vinci: 17 })
 })
@@ -368,4 +375,66 @@ test('the pages\' script: the X counts as ask_close, never as ask_no, and No sta
   no.shown()
   assert.deepEqual(no.sent, [{ step: 'ask_no', page: 'home', language: 'bg' }, { step: 'ask_shown', page: 'home', language: 'bg' }])
   for (const b of [...x.sent, ...no.sent]) assert.deepEqual(Object.keys(b).sort(), ['language', 'page', 'step'])
+})
+
+test('a page of a wing in the making: the guess opened and the link out, a word and the page, nothing else', async () => {
+  const edge = { country: 'DE', device: 'phone' }
+  const ride = { gclid: 'Cj0KCQjwTEST_click-id_0123456789', wing: 'vinci', stop: 3, look: 'film', hold: 'wide', door: 'top',
+    source: 'ad_grant', start: 1, answer: '16 cm', guess: 18, href: '/leonardo-da-vinci/', time: 1, id: 'abc' }
+  for (const step of ['guess_open', 'out_wing']) {
+    assert.deepEqual(STEPS[step], { needs: ['page', 'language'], bare: true })
+    for (const [page, language] of [['megalodon', 'de'], ['animals', 'en']]) {
+      const row = rowOf({ step, page, language, ...ride }, edge)
+      assert.deepEqual(row, [step, page, '', language, '', '', '', '', '', ''])
+    }
+    assert.equal(rowOf({ step, page: 'megalodon' }, edge), null)
+    assert.equal(rowOf({ step, page: 'shark', language: 'en' }, edge), null)
+    assert.deepEqual(await one({ step, page: 'megalodon', language: 'en', ...ride }), [step, 'megalodon', '', 'en', '', '', '', '', '', ''])
+  }
+  await none({ step: 'guess_right', page: 'megalodon', language: 'en' })
+  await none({ step: 'guess_close', page: 'megalodon', language: 'en' })
+})
+
+// the pages' script on a page of a wing in the making: the guess's toggle and the link out, each once per page load
+async function makingRun() {
+  const vm = await import('node:vm')
+  const sent = []
+  const listeners = {}
+  const document = {
+    documentElement: { getAttribute: (n) => ({ lang: 'de', 'data-source': '' })[n] ?? null },
+    currentScript: { getAttribute: (n) => (n === 'data-count' ? 'megalodon' : null) },
+    querySelectorAll: () => [], querySelector: () => null, getElementById: () => null, prerendering: false,
+    addEventListener: (type, fn, capture) => { (listeners[type] ||= []).push([fn, capture]) },
+  }
+  const window = { location: { hostname: 'museumofages.org', search: '' }, localStorage: { getItem: () => null, setItem() {} },
+    addEventListener() {}, removeEventListener() {}, requestAnimationFrame() {}, innerHeight: 800 }
+  const navigator = { sendBeacon: (to, body) => { sent.push(JSON.parse(body)); return true } }
+  vm.runInNewContext(pageScript, { document, window, navigator })
+  sent.length = 0
+  const fire = (type, event) => (listeners[type] || []).forEach(([fn]) => fn({ type, button: 0, ...event }))
+  const details = (open, guess = true) => ({ open, matches: (sel) => guess && sel === 'details[data-guess]' })
+  const link = (out) => ({ closest: (sel) => (sel === 'a[data-out]' && out ? { getAttribute: () => out } : null) })
+  return { sent, listeners, fire, details, link }
+}
+
+test('the pages\' script: the guess counts when it opens, once, and the link out once, as words alone', async () => {
+  const r = await makingRun()
+  // a toggle does not bubble: the script hears it on its way down
+  assert.ok(r.listeners.toggle.every(([, capture]) => capture === true))
+  r.fire('toggle', { target: r.details(false) })
+  r.fire('toggle', { target: r.details(true, false) })
+  r.fire('toggle', { target: r.details(true) })
+  r.fire('toggle', { target: r.details(false) })
+  r.fire('toggle', { target: r.details(true) })
+  r.fire('click', { target: r.link(null) })
+  r.fire('click', { target: r.link('elsewhere') })
+  r.fire('click', { target: r.link('wing') })
+  r.fire('auxclick', { target: r.link('wing'), button: 1 })
+  r.fire('click', { target: r.link('wing') })
+  assert.deepEqual(r.sent, [{ step: 'guess_open', page: 'megalodon', language: 'de' }, { step: 'out_wing', page: 'megalodon', language: 'de' }])
+  // a middle click counts as following the link; a right click does not
+  const m = await makingRun()
+  m.fire('auxclick', { target: m.link('wing'), button: 2 })
+  m.fire('auxclick', { target: m.link('wing'), button: 1 })
+  assert.deepEqual(m.sent, [{ step: 'out_wing', page: 'megalodon', language: 'de' }])
 })

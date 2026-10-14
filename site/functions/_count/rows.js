@@ -31,6 +31,10 @@ export const STEPS = Object.freeze({
   ask_yes: { needs: ['page', 'language'], bare: true },
   ask_no: { needs: ['page', 'language'], bare: true },
   ask_close: { needs: ['page', 'language'], bare: true },
+  // on a page of a wing in the making, each at most once per page load: the guess's answer opened, and the plain link
+  // to an open wing's page followed. The page and its language only, as the question's rows
+  guess_open: { needs: ['page', 'language'], bare: true },
+  out_wing: { needs: ['page', 'language'], bare: true },
 })
 
 const has = (list, value) => typeof value === 'string' && list.includes(value)

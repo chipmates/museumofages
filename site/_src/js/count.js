@@ -2,9 +2,10 @@
    page_arrival (the page opened), page_read (the middle of the page's text came into view), door_press (a way
    into the walk was pressed, by its place), ask_shown (the question for visitors from our grant ads was seen,
    which ask.js announces with the moa:shown event) and ask_yes, ask_no or ask_close (its answer, announced with
-   the moa:answer event; close is the X, which also means no). Each beacon carries the page's kind, its
-   language and, on arrival, whether the visit began here with the source word the edge set on the page
-   (data-source). For the count nothing is stored and nothing is read from storage, except the mark our own test
+   the moa:answer event; close is the X, which also means no), and on a page of a wing in the making guess_open
+   (the guess's answer was opened) and out_wing (the plain link to an open wing's page was followed). Each beacon
+   carries the page's kind, its language and, on arrival, whether the visit began here with the source word the edge
+   set on the page (data-source). For the count nothing is stored and nothing is read from storage, except the mark our own test
    browsers carry. Nothing after the question mark is read, except probe=1. The server's answer is never read.
    The click id a yes keeps in the tab is ask.js's alone: the count never reads it and never sends it. */
 (function () {
@@ -97,6 +98,25 @@
     answered = true;
     send('ask_' + said, {});
   });
+
+  /* a page of a wing in the making: the guess's answer opened, and the link to an open wing followed, each a step
+     alone. A details element's toggle does not bubble, so it is heard on its way down. */
+  var guessed = false, left = false;
+  doc.addEventListener('toggle', function (e) {
+    var d = e.target;
+    if (guessed || !d || !d.matches || !d.matches('details[data-guess]') || !d.open) return;
+    guessed = true;
+    send('guess_open', {});
+  }, true);
+  function leave(e) {
+    if (left || (e.type === 'auxclick' && e.button !== 1)) return;
+    var a = e.target && e.target.closest ? e.target.closest('a[data-out]') : null;
+    if (!a || a.getAttribute('data-out') !== 'wing') return;
+    left = true;
+    send('out_wing', {});
+  }
+  doc.addEventListener('click', leave, true);
+  doc.addEventListener('auxclick', leave, true);
 
   /* a page the browser renders ahead counts once it is shown */
   if (doc.prerendering) doc.addEventListener('prerenderingchange', arrive, { once: true });
