@@ -395,7 +395,7 @@ def site_chrome(site_built, lang, root, twins, door):
     rights = f"{ORIGIN}/{name}#open"
     if 'id="open"' not in page:
         raise SystemExit(f"{source}: the section on rights (#open) was not found")
-    licence = re.search(r'<a\b(?=[^>]*\brel="license")[^>]*\bhref="(https://[^"]+)"', page)
+    licence = re.search(r'<a\b(?=[^>]*\bdata-licence\b)[^>]*\bhref="(https://[^"]+)"', page)
     out["licence"] = licence.group(1) if licence else rights
     # the section that tells how to reuse the museum's own pictures, while the site states their licence: each of
     # them names it in the page's structured data

@@ -1530,7 +1530,7 @@ def build(out, registry, wing_dirs, mark=None, topics=True, quiet=False, more_pi
             "html.lang_foot": foot_item, "html.lang_foot_list": foot_list,
             "html.imprint_elsewhere": "" if L.has_imprint(c.lang) else f'<p class="foot__else">{w["footer.imprint_elsewhere"]}</p>',
             "html.source_item": f'<li><a href="{SOURCE}">{w["footer.source"]}</a></li>' if SOURCE_LINK else "",
-            "html.licence": (f' <span>{w["footer.licence_a"]} <a rel="license" href="{CC_BY_SA}{L.entries[c.lang]["deed"]}">CC\u00a0BY-SA\u00a04.0</a>.'
+            "html.licence": (f' <span>{w["footer.licence_a"]} <a data-licence href="{CC_BY_SA}{L.entries[c.lang]["deed"]}">CC\u00a0BY-SA\u00a04.0</a>.'
                              f' <a class="foot__use" href="{c.to(c.addr("what"))}#{USE_PICTURES}">{w["footer.use"]}</a></span>') if SOURCE_LINK else "",
             "lang": L.html(c.lang), "og_locale": L.entries[c.lang]["og"], "theme_color": theme,
             "static": c.static, "svg.arrow": ARROW, "script.faces": FACES_SCRIPT,
