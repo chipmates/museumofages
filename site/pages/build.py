@@ -174,6 +174,8 @@ CLAIM_ALLOWED = (r"^meta\.", r"^top\.h1$", r"\.q$")
 NOT_SPACED = r"^(_|page\.|pics\.)|\.(href|focus|pic|pic_back|tag|k|type|id|stem|sizes|work|wall|stop|page|only|at|wing|shape|src_from|span)$"
 # The keys of a data file that hold no displayed words (lint() passes them by).
 NOT_WORDS = r"\.(pic|pic_back|tag|k|type|id|stem|sizes|work|wall|stop|page|only|at|wing|shape|src_from|span)$"
+# The two halves of a pair a fact rule reads together (lint): a number named in a row's term is explained in its text.
+PAIRS = {"term": "text", "text": "term", "q": "a", "a": "q"}
 # A cell of a table of numbers may stand empty where no sourced figure exists (its unit line says so), never its first.
 MAY_BE_EMPTY = r"\.rows\.\d+\.cells\.[1-9]\d*$"
 
@@ -487,6 +489,10 @@ def lint(page, lang, data, wing, names, topic=None):
              + [tuple(x) for x in rows.get("never", [])])
     banned = BANNED + rows.get("banned", [])
     for key, text in words.items():
+        # a rule that refuses a number unless its field says where it came from also reads the other half of the
+        # field's pair: a row's term with its text, a question with its answer
+        head, _, last = key.rpartition(".")
+        pair = words.get(f"{head}.{PAIRS[last]}") if last in PAIRS else None
         where = f"{page}.{lang}: {key}"
         if key.endswith(".href"):
             if not re.fullmatch(r"https://[^\s\"<>]+", text):
@@ -505,7 +511,7 @@ def lint(page, lang, data, wing, names, topic=None):
             if bad in low:
                 problems.append(f"{where} contains {bad!r}")
         for pattern, instead in never:
-            if re.search(pattern, low):
+            if re.search(pattern, low) and (pair is None or re.search(pattern, f"{low}\n{pair.lower()}")):
                 problems.append(f"{where} matches /{pattern}/ ({instead})")
         if wing["claim_phrase"] and re.search(wing["claim_phrase"], low) and not any(re.search(ok, key) for ok in CLAIM_ALLOWED):
             problems.append(f"{where} carries the wing's claim phrase outside a heading people search for")
@@ -621,6 +627,30 @@ def span_rules(defs):
                 rules.append(".sc-bar--%s-%s{margin-left:calc(2px + (100%% - 4px) * %g);width:calc((100%% - 4px) * %g)}"
                              % (name, key, round(a, 4), round(b - a, 4)))
     return "".join(rules)
+
+
+def mark_rules(defs):
+    """Where each label under a picture at one scale stands (pics.<name>.marks, each animal's start and end as shares of
+    the picture's width): its bracket at the animal's place, its words from the bracket's start when the animal stands
+    in the picture's left half, else ending at the bracket's end, so a long label wraps inside the page."""
+    rules = []
+    for name, d in defs.items():
+        for key, at in (d.get("marks") or {}).items():
+            found = re.fullmatch(r"(\d{1,3}(?:\.\d+)?)% (\d{1,3}(?:\.\d+)?)%", at)
+            if not found:
+                continue
+            a, b = float(found.group(1)) / 100, float(found.group(2)) / 100
+            pad = ("padding-left:calc(2px + (100%% - 4px) * %g)" % round(a, 4) if mark_start(at) else
+                   "padding-right:calc(2px + (100%% - 4px) * %g)" % round(1 - b, 4))
+            rules.append(".sc-mark--%s-%s{%s}.sc-mark--%s-%s::after{left:calc(2px + (100%% - 4px) * %g);width:calc((100%% - 4px) * %g)}"
+                         % (name, key, pad, name, key, round(a, 4), round(b - a, 4)))
+    return "".join(rules)
+
+
+def mark_start(at):
+    """Whether a label's words start at its bracket (the animal in the picture's left half) or end at it."""
+    a, b = (float(x) / 100 for x in at.rstrip("%").split("% "))
+    return (a + b) / 2 < 0.5
 
 
 def focus_rule(frame):
@@ -1117,6 +1147,17 @@ def render(page, lang, data, shared, out_root):
             fill(parts["scale_bar"], {"key": esc(f'{fig["pic"]}-{b["span"]}'), "kind": esc(b["span"]), "text": rich(b["text"])})
             for b in fig["bars"])})
 
+    def marks_html(fig):
+        """The labels under a picture of several subjects at one scale: each its name and length over a bracket at the
+        animal's place in the picture."""
+        if not fig.get("marks"):
+            return ""
+        at = data["pics"][fig["pic"]]["marks"]
+        return fill(parts["scale_marks"], {"html.items": "".join(
+            fill(parts["scale_mark"], {"key": esc(f'{fig["pic"]}-{m["span"]}'), "side": "start" if mark_start(at[m["span"]]) else "end",
+                                       "text": rich(m["text"])})
+            for m in fig["marks"])})
+
     def rows_html(rows):
         return "\n".join(fill(parts["row"], {"label": rich(labels[r["k"]]), "v": rich(r["v"])}) for r in rows)
 
@@ -1245,8 +1286,16 @@ def render(page, lang, data, shared, out_root):
         elif kind == "close":
             values.update({"door.text": rich(block["door"]["text"]), "door.note": rich(block["door"]["note"])})
         elif kind == "text":
-            values["html.paras"] = "\n".join(fill(parts["text_para"], {"text": linked(p)}) for p in block["paras"])
-            values["html.pic"] = figure(block.get("pic")) + (scale_fig(block["scale"]) if block.get("scale") else "")
+            paras = [fill(parts["text_para"], {"text": linked(p)}) for p in block.get("paras", [])]
+            # answers under their own small headings, each a paragraph or more
+            paras += [fill(parts["text_sub"], {"h": rich(sub["h"]), "html.paras": "\n".join(
+                fill(parts["sub_para"], {"text": linked(p)}) for p in sub["paras"])}) for sub in block.get("subs", [])]
+            sc = block.get("scale")
+            if sc and "after" in sc:
+                # the picture after the paragraph it shows, not after the whole section
+                paras.insert(sc["after"], scale_fig(sc).rstrip("\n"))
+            values["html.paras"] = "\n".join(paras)
+            values["html.pic"] = figure(block.get("pic")) + (scale_fig(sc) if sc and "after" not in sc else "")
             values["html.links"] = ways(block.get("links", []))
         elif kind == "numbers":
             # the pictures' numbers as a table: a row's first cell names it, an empty cell has no sourced figure
@@ -1271,6 +1320,8 @@ def render(page, lang, data, shared, out_root):
                                                        "line": rich(LIB.bind(line, lang)),
                                                        "html.pic": pics.picture(item["pic"], esc(item["alt"])) if item.get("pic") else ""}))
             values["html.items"] = "\n".join(items)
+            # on a topic page the list names its neighbours after the page's own sections; the wing's list is the page
+            values["attr.pages"] = "" if hub else " sc-pages--next"
         elif kind == "chart":
             values.update({
                 "zoom": rich(block["zoom"].replace("{n}", LIB.number(CHART.ZOOM, lang))),
@@ -1372,7 +1423,7 @@ def render(page, lang, data, shared, out_root):
         frame_html = fill(parts["frame:scale"], {
             "html.picture": pics.picture(sc["pic"], esc(sc["alt"]), first=True), "html.person": person_html(sc["pic"]),
             "tag": rich(labels[sc["tag"]]), "what": rich(sc["what"]), "note": linked(sc["note"]),
-            "html.bars": bars_html(sc), "html.totable": to_table(),
+            "html.bars": bars_html(sc) + marks_html(sc), "html.totable": to_table(),
             "html.close": scale_fig(sc["close"]) if sc.get("close") else "",
             "html.guess": fill(parts["guess"], {**{k: rich(guess[k]) for k in ("h", "q", "button", "a")},
                                                 "button_open": rich(guess.get("button_open") or guess["button"])}) if guess else ""})
@@ -1410,7 +1461,8 @@ def render(page, lang, data, shared, out_root):
         "css.inline": shared["css_scale" if making(wing) else "css_list" if any(b["type"] == "periods" for b in data["blocks"]) else
                              "css_chart" if works or "drawing" in data["top"] or any(b["type"] == "text" for b in data["blocks"]) else "css"]
                       + (shared["langs_css"] + chrome["by"] if chrome["langs"] else ""),
-        "css.faces": faces(root, lang) + focus + person_rules(data["pics"]) + span_rules(data["pics"]),
+        "css.faces": faces(root, lang) + focus + person_rules(data["pics"]) + span_rules(data["pics"])
+                     + (shared["css_marks"] + mark_rules(data["pics"]) if any(d.get("marks") for d in data["pics"].values()) else ""),
         "html.preload": preload,
         "html.theme": f'<meta name="theme-color" content="{chrome["theme"]}">\n' if chrome["theme"] else "",
         "html.header": chrome["header"],
@@ -1758,6 +1810,12 @@ def making_problems(d, wing, data):
             at = ((pic or {}).get("spans") or {}).get(bar.get("span"))
             if not at or not re.fullmatch(r"\d{1,3}(?:\.\d+)?% \d{1,3}(?:\.\d+)?%", at):
                 problems.append(f"the length bar's span {bar.get('span')!r} needs pics.{fig.get('pic')}.spans.<span>, its start and end in the picture")
+        for mark in fig.get("marks", []):
+            at = ((pic or {}).get("marks") or {}).get(mark.get("span"))
+            if not at or not re.fullmatch(r"\d{1,3}(?:\.\d+)?% \d{1,3}(?:\.\d+)?%", at):
+                problems.append(f"the label {mark.get('span')!r} needs pics.{fig.get('pic')}.marks.<span>, the animal's start and end in the picture")
+        if "after" in fig and not (isinstance(fig["after"], int) and fig is not top.get("scale")):
+            problems.append(f"the picture {fig.get('pic')!r}: after names the paragraph a picture in the page's body follows")
         if not re.search(r"\d", d["labels"].get("person", "")):
             problems.append("labels.person gives the person's height")
     for b in d["blocks"]:
@@ -1961,6 +2019,8 @@ def build_pages(out_dir, site_src=SITE_SRC, site_built=SITE_BUILT, pages=PAGES, 
         "pic_folders": [PICS, site_built / STATIC / "img", LANG.HERE / "img"],
         "css_scale": css_min(*[site["css"] / f"{n}.css" for n in CSS_BEFORE], *[HERE / "css" / f"{n}.css" for n in OWN_CSS + CHART_CSS + SCALE_CSS],
                              *[site["css"] / f"{n}.css" for n in CSS_AFTER]),
+        # the labels under a picture of several subjects: only the pages that carry them take their rules
+        "css_marks": css_min(HERE / "css" / "marks.css"),
         # a page of a wing in the making links the newest open wing's own page, in its language
         "out": {code: wings[newest_open(wings)]["page"][code].strip("/") + "/" for code in LANGS} if any(making(w) for w in wing.values()) else {},
         "topics": {p: info[p]["topic"] for p in pages},

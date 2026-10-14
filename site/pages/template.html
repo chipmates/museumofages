@@ -227,6 +227,13 @@
       </figure>
 <!--@ text_para -->
   <p class="sp-does">{{text}}</p>
+<!--@ text_sub -->
+  <div class="sp-q">
+    <h3>{{h}}</h3>
+{{html.paras}}
+  </div>
+<!--@ sub_para -->
+    <p>{{text}}</p>
 <!--@ block:text -->
 <section class="sp-sec sp-prose" id="{{id}}">
   <h2>{{h}}</h2>
@@ -359,6 +366,11 @@
 <div class="sc-bars">{{html.spans}}</div>
 <!--@ scale_bar -->
 <p class="sc-bar sc-bar--{{key}} sc-bar--{{kind}}"><span class="sc-bar__t">{{text}}</span></p>
+<!--@ scale_marks -->
+<!-- Each animal's name and length over a bracket at its place in the picture above, at the picture's scale. -->
+<ul class="sc-marks">{{html.items}}</ul>
+<!--@ scale_mark -->
+<li class="sc-mark sc-mark--{{key}} sc-mark--{{side}}">{{text}}</li>
 <!--@ person -->
 <span class="sc-person sc-person--{{key}}" aria-hidden="true">{{text}}</span>
 <!--@ guess -->
@@ -385,7 +397,7 @@
   </table>
 </section>
 <!--@ block:pages -->
-<section class="sp-sec sc-pages" id="{{id}}">
+<section class="sp-sec sc-pages{{attr.pages}}" id="{{id}}">
   <ul class="sc-list">
 {{html.items}}
   </ul>

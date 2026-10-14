@@ -1,0 +1,8 @@
+/* Under a picture of several subjects at one scale: each one's name and length over a bracket at its place.
+   Only a page whose picture carries such labels takes these rules (build.py, css_marks); each bracket's own place
+   is a rule of the page (mark_rules). */
+.sc-marks{display:grid;gap:6px;margin:14px 0 0;padding:0;list-style:none}
+.sc-mark{position:relative;padding-bottom:9px;font-family:var(--sans);font-size:.75rem;line-height:1.3;letter-spacing:.02em;
+  color:var(--ink-soft)}
+.sc-mark::after{content:"";position:absolute;bottom:0;min-width:3px;height:7px;border:1px solid currentColor;border-top:0}
+.sc-mark--end{text-align:right}

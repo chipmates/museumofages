@@ -83,6 +83,8 @@
 /* ---------- The wing's list of its pages ---------- */
 .sp-grid--solo{margin-top:28px}
 .sc-pages{margin-top:0;padding-top:0;border-top:0}
+/* On a topic page the list of its neighbours follows the page's own sections */
+.sc-pages--next{margin-top:40px}
 .sc-list{display:grid;gap:40px}
 .sc-item{display:grid;gap:10px;padding-top:22px;border-top:1px solid var(--hair-strong)}
 .sc-item__h{font-size:1.5rem;line-height:1.2}
@@ -103,6 +105,7 @@
   .sc-guess__q{font-size:1.25rem}
   .sp-grid--solo .sp-body__main{grid-column:1/10}
   .sp-grid--solo{margin-top:48px}
+  .sc-pages--next{margin-top:56px}
   .sc-item{grid-template-columns:minmax(0,5fr) minmax(0,7fr);column-gap:32px;grid-template-areas:"h pic" "line pic"}
   .sc-item__h{grid-area:h;font-size:1.75rem}
   .sc-item__line{grid-area:line}
