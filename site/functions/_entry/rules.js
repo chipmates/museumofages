@@ -16,10 +16,10 @@ export const YES_MAX_AGE_MS = 6 * 60 * 60 * 1000
 export const ASK_SCRIPT = '/static/ask.js'
 
 /**
- * Whether a page gets the question's script: under the grant's prefix and not the walk, by the path alone. The
- * script itself tests the address for a click id and the browser for Global Privacy Control, so no server code
- * reads the query.
+ * Whether a page gets the question's script: under the grant's prefix and not the walk, for a request without
+ * the Global Privacy Control header. The script itself tests the address for a click id and the browser for
+ * Global Privacy Control once more, so no server code reads the query.
  */
-export function asks(pathname) {
-  return pathname.startsWith(GRANT_PREFIX) && !pathname.startsWith(WALK_PREFIX)
+export function asks(pathname, headers) {
+  return pathname.startsWith(GRANT_PREFIX) && !pathname.startsWith(WALK_PREFIX) && headers.get('Sec-GPC') !== '1'
 }

@@ -1,9 +1,9 @@
 // Every page request: the visit's source word is set on the page's root element as data-source, worked out
 // here from the request's own path and Referer header (_count/source.js). An empty value says the visit came
 // from this site itself. The page's scripts read only that one word, never the referrer.
-// A page under the grant's prefix (the walk excepted) also gets the question's script, by its path alone
-// (_entry/rules.js). The script tests the address for a click id itself: the part of an address after the
-// question mark is never read here.
+// A page under the grant's prefix (the walk excepted), asked for without the Global Privacy Control header, also
+// gets the question's script (_entry/rules.js). The script tests the address for a click id itself: the part of an
+// address after the question mark is never read here.
 // Everything that is not a page (pictures, scripts, the film, the count's own route) passes untouched.
 
 import { sourceWord } from './_count/source.js'
@@ -21,7 +21,7 @@ export async function onRequest(context) {
   const url = new URL(request.url)
   const word = sourceWord(url, request.headers.get('Referer'))
   let rewriter = new HTMLRewriter().on('html', { element: (el) => el.setAttribute('data-source', word) })
-  if (asks(url.pathname)) {
+  if (asks(url.pathname, request.headers)) {
     rewriter = rewriter.on('body', { element: (el) => el.append(`<script src="${ASK_SCRIPT}" defer></script>`, { html: true }) })
   }
   const page = rewriter.transform(response)

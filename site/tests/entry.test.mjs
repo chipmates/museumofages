@@ -116,12 +116,15 @@ test('the click id\'s shape: 20 to 200 letters, digits, _ and -', () => {
 
 /* ---- who is asked, at the edge ---- */
 
-test('the edge gives the question\'s script to every page under the grant\'s prefix by its path alone, never the walk', () => {
+test('the edge gives the question\'s script to every page under the grant\'s prefix, never the walk, never with GPC', () => {
+  const none = new Headers()
   for (const path of ['/a/g/', '/a/g/de/', '/a/g/de/leonardo-da-vinci/erfindungen/', '/a/g/what-this-museum-is/']) {
-    assert.equal(asks(path), true, path)
+    assert.equal(asks(path, none), true, path)
+    assert.equal(asks(path, new Headers({ 'Sec-GPC': '0' })), true, path)
+    assert.equal(asks(path, new Headers({ 'Sec-GPC': '1' })), false, path)
   }
   for (const path of ['/a/p/', '/a/f/x', '/a/o/de/', '/', '/de/', '/a/g/w/vinci', '/a/g/w/', '/a/gg/', '/b/a/g/', '/a/g', '/w/vinci']) {
-    assert.equal(asks(path), false, path)
+    assert.equal(asks(path, none), false, path)
   }
 })
 
@@ -137,6 +140,7 @@ test('the edge never reads the address after the question mark', async () => {
     await withRewriter(async () => {
       for (const path of [`/a/g/de/?gclid=${GCLID}`, `/a/g/?x=1&gclid=${GCLID}`, `/a/p/?gclid=${GCLID}`, `/de/?gclid=${GCLID}`, `/a/g/w/vinci?gclid=${GCLID}`]) {
         await page(path, { Referer: 'https://www.google.com/' })
+        await page(path, { Referer: 'https://www.google.com/', 'Sec-GPC': '1' })
       }
     })
   } finally {
@@ -169,8 +173,8 @@ async function page(path, headers = {}) {
   return middleware({ request, next: async () => new Response('<html><body></body></html>', { headers: { 'Content-Type': 'text/html; charset=utf-8' } }) })
 }
 
-test('the edge puts the question\'s script on every grant page, click id or not, GPC or not, and on no other', async () => {
-  for (const [path, headers] of [[`/a/g/de/?gclid=${GCLID}`, {}], [`/a/g/de/?gclid=${GCLID}`, { 'Sec-GPC': '1' }], ['/a/g/de/', {}],
+test('the edge puts the question\'s script on every grant page, click id or not, and on no other, nor with the GPC header', async () => {
+  for (const [path, headers] of [[`/a/g/de/?gclid=${GCLID}`, {}], [`/a/g/de/?gclid=${GCLID}`, { 'Sec-GPC': '0' }], ['/a/g/de/', {}],
     ['/a/g/de/leonardo-da-vinci/?utm_source=x', {}]]) {
     await withRewriter(async (seen) => {
       await page(path, headers)
@@ -178,9 +182,10 @@ test('the edge puts the question\'s script on every grant page, click id or not,
       assert.deepEqual(seen.find((x) => x.set).set, ['data-source', 'ad_grant'], path)
     })
   }
-  for (const path of [`/a/p/de/?gclid=${GCLID}`, `/de/?gclid=${GCLID}`, `/a/g/w/vinci?gclid=${GCLID}`, `/a/f/?gclid=${GCLID}`, '/']) {
+  for (const [path, headers] of [[`/a/g/de/?gclid=${GCLID}`, { 'Sec-GPC': '1' }], ['/a/g/de/', { 'Sec-GPC': '1' }], [`/a/p/de/?gclid=${GCLID}`, {}],
+    [`/de/?gclid=${GCLID}`, {}], [`/a/g/w/vinci?gclid=${GCLID}`, {}], [`/a/f/?gclid=${GCLID}`, {}], ['/', {}]]) {
     await withRewriter(async (seen) => {
-      await page(path)
+      await page(path, headers)
       assert.deepEqual(seen.filter((x) => x.append), [], path)
       assert.equal(seen.filter((x) => x.set).length, 1, path)
     })

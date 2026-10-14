@@ -1,8 +1,9 @@
 /* Museum of Ages, the question for visitors from our Google Ad Grants ads, and the privacy page's button that takes
-   a yes back. The edge puts this script on every page under the grant's prefix (/a/g/) but the walk, by the path
-   alone (functions/_entry/rules.js): this script, not the server, tests the address for the ad's click id (gclid)
-   and the browser for Global Privacy Control. The privacy page carries it for its button. On any other page it
-   does nothing, and it reads nothing after the question mark unless the page stands under the grant's prefix.
+   a yes back. The edge puts this script on every page under the grant's prefix (/a/g/) but the walk, unless the
+   request carries the Global Privacy Control header (functions/_entry/rules.js): this script, not the server, tests
+   the address for the ad's click id (gclid), and tests the browser for Global Privacy Control once more. The privacy
+   page carries it for its button. On any other page it does nothing, and it reads nothing after the question mark
+   unless the page stands under the grant's prefix.
    Before the answer the click id lives in this page's memory only, and it leaves the address bar at once. A yes
    keeps one entry for this tab (sessionStorage, moa_entry: the click id and the time of the yes), which the walk
    sends once when a wing opens and then deletes (museum/src/core/museum-entry.ts). A no, or closing the card,
