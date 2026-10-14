@@ -52,6 +52,16 @@
     2400
    ],
    "sizes": "(min-width: 1280px) 690px, (min-width: 960px) 54vw, (min-width: 600px) calc(100vw - 64px), calc(100vw - 40px)"
+  },
+  "spino": {
+   "stem": "animals-spinosaurus-side",
+   "widths": [
+    800,
+    1600,
+    2400
+   ],
+   "sizes": "(min-width: 1280px) 690px, (min-width: 960px) 54vw, (min-width: 600px) calc(100vw - 64px), calc(100vw - 40px)",
+   "person": "92.84% 63.16%"
   }
  },
  "meta": {
@@ -310,6 +320,10 @@
       {
        "page": "biggest-dinosaurs",
        "text": "Die größten Dinosaurier im Größenvergleich"
+      },
+      {
+       "page": "spinosaurus",
+       "text": "Wie groß war der Spinosaurus?"
       }
      ]
     },
@@ -347,6 +361,12 @@
      "page": "megalodon",
      "pic": "megalodon",
      "alt": "Ein Hai mit offenem Maul von der Seite, dunkelgrau mit einem helleren Band an der Flanke, neben einem grauen Menschen, der winzig daneben steht."
+    },
+    {
+     "page": "spinosaurus",
+     "pic": "spino",
+     "alt": "Ein Spinosaurus von der Seite, mit hohem Rückensegel und tiefem Schwanz, dahinter der helle Umriss eines größeren erwachsenen Tiers, daneben ein grauer Mensch, der ihm bis zur Hüfte reicht.",
+     "line": "Länger als jeder T. rex, sehr wahrscheinlich leichter und an der Hüfte viel niedriger: unser junger Spinosaurus neben unserem T. rex, im selben Maßstab."
     }
    ]
   },

@@ -73,6 +73,16 @@
    ],
    "sizes": "(min-width: 1280px) 690px, (min-width: 960px) 54vw, (min-width: 600px) calc(100vw - 64px), calc(100vw - 40px)",
    "person": "86.42% 63.92%"
+  },
+  "spino": {
+   "stem": "animals-spinosaurus-side",
+   "widths": [
+    800,
+    1600,
+    2400
+   ],
+   "sizes": "(min-width: 1280px) 690px, (min-width: 960px) 54vw, (min-width: 600px) calc(100vw - 64px), calc(100vw - 40px)",
+   "person": "92.84% 63.16%"
   }
  },
  "meta": {
@@ -361,6 +371,12 @@
      "pic": "trex",
      "alt": "Ein T. rex von der Seite auf zwei Beinen, das Maul offen, der Kopf erhoben, neben einem grauen Menschen, der ihm nicht bis zum Knie reicht.",
      "line": "Etwa 12 m lang und grob 8 bis 9 t, nach den Knochen von SUE. Unser T. rex neben einem Menschen, mit dem, was von SUE gefunden wurde."
+    },
+    {
+     "page": "spinosaurus",
+     "pic": "spino",
+     "alt": "Ein Spinosaurus von der Seite, mit hohem Rückensegel und tiefem Schwanz, dahinter der helle Umriss eines größeren erwachsenen Tiers, daneben ein grauer Mensch, der ihm bis zur Hüfte reicht.",
+     "line": "Die größten erwachsenen Tiere knapp unter 14 m nach einem Modell, unserer ein junges Tier von etwa 10 m, am Wasser und auf zwei Beinen."
     }
    ]
   },

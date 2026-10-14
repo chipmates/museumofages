@@ -86,6 +86,16 @@
    ],
    "sizes": "(min-width: 1280px) 690px, (min-width: 960px) 54vw, (min-width: 600px) calc(100vw - 64px), calc(100vw - 40px)",
    "person": "86.42% 63.92%"
+  },
+  "spino": {
+   "stem": "animals-spinosaurus-side",
+   "widths": [
+    800,
+    1600,
+    2400
+   ],
+   "sizes": "(min-width: 1280px) 690px, (min-width: 960px) 54vw, (min-width: 600px) calc(100vw - 64px), calc(100vw - 40px)",
+   "person": "92.84% 63.16%"
   }
  },
  "meta": {
@@ -334,7 +344,12 @@
      "h": "The biggest meat-eater",
      "paras": [
       [
-       "Two answers. By length, Spinosaurus: a grown one was just under 14 m (46 ft) in the model of 2022, scaled up from a young skeleton and a loose adult snout. By weight, ",
+       "Two answers. By length, ",
+       {
+        "text": "Spinosaurus",
+        "page": "spinosaurus"
+       },
+       ": a grown one was just under 14 m (46 ft) in the model of 2022, scaled up from a young skeleton and a loose adult snout. By weight, ",
        {
         "text": "T. rex",
         "page": "t-rex"
@@ -486,6 +501,12 @@
      "page": "megalodon",
      "pic": "megalodon",
      "alt": "A shark with its mouth open, seen from the side, dark grey with a paler band along the flank, beside a grey person who looks tiny next to it."
+    },
+    {
+     "page": "spinosaurus",
+     "pic": "spino",
+     "alt": "A Spinosaurus with a tall sail and a deep tail, the pale outline of a larger adult behind it, beside a grey person who reaches its hip.",
+     "line": "The Spinosaurus from the row, on its own: the sail, the tail, the water, and why an adult was longer than ours."
     }
    ]
   },

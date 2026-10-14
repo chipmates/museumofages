@@ -40,6 +40,16 @@
    ],
    "sizes": "(min-width: 1280px) 690px, (min-width: 960px) 54vw, (min-width: 600px) calc(100vw - 64px), calc(100vw - 40px)",
    "person": "86.42% 63.92%"
+  },
+  "spino": {
+   "stem": "animals-spinosaurus-side",
+   "widths": [
+    800,
+    1600,
+    2400
+   ],
+   "sizes": "(min-width: 1280px) 690px, (min-width: 960px) 54vw, (min-width: 600px) calc(100vw - 64px), calc(100vw - 40px)",
+   "person": "92.84% 63.16%"
   }
  },
  "meta": {
@@ -83,6 +93,11 @@
      "page": "t-rex",
      "pic": "trex",
      "alt": "A T. rex from the side on two legs, mouth open and head raised, beside a grey person who does not reach its knee."
+    },
+    {
+     "page": "spinosaurus",
+     "pic": "spino",
+     "alt": "A Spinosaurus with a tall sail and a deep tail, the pale outline of a larger adult behind it, beside a grey person who reaches its hip."
     }
    ]
   }
