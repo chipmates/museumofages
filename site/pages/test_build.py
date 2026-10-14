@@ -167,7 +167,7 @@ class Case(unittest.TestCase):
             names.add(key)
             names |= {part.lower() for name in wing["name"].values() for part in name.split() if len(part) > 3}
         for name in ("template.html", "build.py", "chart.py", "make_pictures.py", "css/page.css", "css/chart.css", "css/list.css",
-                     "css/scale.css", "css/marks.css"):
+                     "css/scale.css", "css/several.css"):
             text = (HERE / name).read_text(encoding="utf-8").lower()
             for word in names:
                 self.assertNotIn(word, text, f"{name} names a wing: {word}")

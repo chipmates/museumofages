@@ -1462,7 +1462,7 @@ def render(page, lang, data, shared, out_root):
                              "css_chart" if works or "drawing" in data["top"] or any(b["type"] == "text" for b in data["blocks"]) else "css"]
                       + (shared["langs_css"] + chrome["by"] if chrome["langs"] else ""),
         "css.faces": faces(root, lang) + focus + person_rules(data["pics"]) + span_rules(data["pics"])
-                     + (shared["css_marks"] + mark_rules(data["pics"]) if any(d.get("marks") for d in data["pics"].values()) else ""),
+                     + (shared["css_several"] + mark_rules(data["pics"]) if any(d.get("marks") for d in data["pics"].values()) else ""),
         "html.preload": preload,
         "html.theme": f'<meta name="theme-color" content="{chrome["theme"]}">\n' if chrome["theme"] else "",
         "html.header": chrome["header"],
@@ -2019,8 +2019,8 @@ def build_pages(out_dir, site_src=SITE_SRC, site_built=SITE_BUILT, pages=PAGES, 
         "pic_folders": [PICS, site_built / STATIC / "img", LANG.HERE / "img"],
         "css_scale": css_min(*[site["css"] / f"{n}.css" for n in CSS_BEFORE], *[HERE / "css" / f"{n}.css" for n in OWN_CSS + CHART_CSS + SCALE_CSS],
                              *[site["css"] / f"{n}.css" for n in CSS_AFTER]),
-        # the labels under a picture of several subjects: only the pages that carry them take their rules
-        "css_marks": css_min(HERE / "css" / "marks.css"),
+        # a page of several subjects at one scale: only the pages whose picture carries labels take its rules
+        "css_several": css_min(HERE / "css" / "several.css"),
         # a page of a wing in the making links the newest open wing's own page, in its language
         "out": {code: wings[newest_open(wings)]["page"][code].strip("/") + "/" for code in LANGS} if any(making(w) for w in wing.values()) else {},
         "topics": {p: info[p]["topic"] for p in pages},
