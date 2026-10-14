@@ -837,8 +837,10 @@ def check_pages_only(site, slug, e, pages):
         if set(t.get("langs") or own) - set(own):
             problems.append(f"{where}: a topic page names a language its wing is not written in")
         for rule in t.get("never_say", []):
-            if not (isinstance(rule, list) and len(rule) == 2):
-                problems.append(f"{where}: a topic page's never_say holds a rule that is not [pattern, what to say instead]")
+            if not (isinstance(rule, list) and (len(rule) == 2 or (len(rule) == 3 and isinstance(rule[2], list)
+                                                                   and set(rule[2]) <= set(own)))):
+                problems.append(f"{where}: a topic page's never_say holds a rule that is not [pattern, what to say instead]"
+                                " with at most a list of its wing's languages")
     return problems
 
 

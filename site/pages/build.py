@@ -517,7 +517,10 @@ def lint(page, lang, data, wing, names, topic=None):
         for bad in banned:
             if bad in low:
                 problems.append(f"{where} contains {bad!r}")
-        for pattern, instead in never:
+        for pattern, instead, *only in never:
+            # a rule may name the languages it holds for: German "her" is not the English pronoun
+            if only and lang not in only[0]:
+                continue
             if re.search(pattern, low) and (pair is None or re.search(pattern, f"{low}\n{pair.lower()}")):
                 problems.append(f"{where} matches /{pattern}/ ({instead})")
         if wing["claim_phrase"] and re.search(wing["claim_phrase"], low) and not any(re.search(ok, key) for ok in CLAIM_ALLOWED):

@@ -488,7 +488,8 @@
           ],
           [
             "(?s)\\bsue\\b.*\\b(?:she|her|hers)\\b|\\b(?:she|her|hers)\\b.*\\bsue\\b",
-            "SUE is never she: the sex is not known"
+            "SUE is never she: the sex is not known",
+            ["en"]
           ],
           [
             "(?<!about )(?<!etwa )(?<!around )\\b66\\s+(?:million|millionen)",
@@ -572,7 +573,8 @@
           ],
           [
             "(?s)\\bsue\\b.*\\b(?:she|her|hers|herself)\\b|\\b(?:she|her|hers|herself)\\b.*\\bsue\\b",
-            "SUE is never she: its sex is not known"
+            "SUE is never she: its sex is not known",
+            ["en"]
           ],
           [
             "(?<!about )(?<!etwa )(?<!around )\\b66\\s+(?:million|millionen)",

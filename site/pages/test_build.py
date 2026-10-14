@@ -354,7 +354,7 @@ class Case(unittest.TestCase):
         topic = next(t for w in self.wings().values() if isinstance(w, dict) for t in w.get("topics", [])
                      if t.get("count") == self.data("en", page)["page"]["topic"])
         # every rule of the topic is met by a phrase of the list, so a rule added without its phrase is seen
-        for pattern, _ in topic["never_say"]:
+        for pattern, *_ in topic["never_say"]:
             self.assertTrue(any(re.search(pattern, x.lower()) for xs in self.NEVER_MARKS.values() for x in xs), pattern)
         for lang, phrases in self.NEVER_MARKS.items():
             original = self.data(lang, page)
@@ -396,6 +396,17 @@ class Case(unittest.TestCase):
                     self.fails(re.escape(rule))
                     self.save(lang, original, page)
 
+    def test_a_rule_that_names_its_languages_holds_only_there(self):
+        """SUE is never she in English, and German "her" (von der Hüfte her) is no pronoun."""
+        page = self.topic_page("t_rex")
+        original = self.data("de", page)
+        data = json.loads(json.dumps(original))
+        data["top"]["out"]["text"] += " SUE, von der Hüfte her gemessen."
+        self.save("de", data, page)
+        out, _ = self.build()
+        shutil.rmtree(out)
+        self.save("de", original, page)
+
     def topic_page(self, count):
         """The topic page that reaches the count by this key, or a skip."""
         found = next((p for p in self.pages if self.data("en", p)["page"].get("topic") == count), None)
@@ -428,7 +439,7 @@ class Case(unittest.TestCase):
         page = self.topic_page("t_rex")
         topic = next(t for w in self.wings().values() if isinstance(w, dict) for t in w.get("topics", []) if t.get("count") == "t_rex")
         # every rule of the topic is met by a phrase of the list, so a rule added without its phrase is seen
-        for pattern, _ in topic["never_say"]:
+        for pattern, *_ in topic["never_say"]:
             self.assertTrue(any(re.search(pattern, x.lower()) for xs in self.NEVER_TREX.values() for x in xs), pattern)
         for lang, phrases in self.NEVER_TREX.items():
             original = self.data(lang, page)
