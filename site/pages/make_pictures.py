@@ -139,12 +139,14 @@ def charts(only):
         if out.exists() and build.CHART.png_info(out)[1].get("comment") == mark:
             continue
         drawing = WORK / "stills" / (out.stem + ".svg")
-        drawing.write_text(job["svg"], encoding="utf-8")
+        # a drawing that shows a picture of this folder names it by its place here, written in only now
+        drawing.write_text(job["svg"].replace(build.CHART.PICS_MARK, str(OUT.resolve())), encoding="utf-8")
         # A palette of 256 colours, no dithering: the flat colours stay exact, an edge's smoothing moves by a level or
-        # two, and the file is a quarter of the full-colour one. No strip: it would drop the mark too. The chunks that
-        # would change from run to run stay out.
-        run(["magick", f"msvg:{drawing}", "-alpha", "off", "-dither", "None", "-colors", "256", "-set", "comment", mark,
-             "-define", "png:exclude-chunks=date,time,bKGD,pHYs", "-define", "png:compression-level=9", f"png8:{out}"], env=env)
+        # two, and the file is a quarter of the full-colour one. A drawing that holds a rendered picture (raster) keeps
+        # every colour. No strip: it would drop the mark too. The chunks that would change from run to run stay out.
+        colours = ["png24"] if job.get("raster") else ["-dither", "None", "-colors", "256", "png8"]
+        run(["magick", f"msvg:{drawing}", "-alpha", "off", *colours[:-1], "-set", "comment", mark,
+             "-define", "png:exclude-chunks=date,time,bKGD,pHYs", "-define", "png:compression-level=9", f"{colours[-1]}:{out}"], env=env)
         made(out)
 
 

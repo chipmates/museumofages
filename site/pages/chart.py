@@ -607,6 +607,34 @@ def tally_still_svg(rows, words, c):
             f'<rect width="{W}" height="{H}" fill="{c["page"]}"/>{"".join(parts)}</svg>\n')
 
 
+# Where a share picture's drawing names a picture of the pages' own folder: the tool that renders the drawing writes
+# the folder in (make_pictures.py), so the drawing, and the mark made from it, are the same on every machine.
+PICS_MARK = "@pics@"
+
+
+def picture_still_svg(words, colours, picture, size, person):
+    """A page's share picture of one picture at one scale, 1200 by 630: the page's heading and its one line, the
+    picture whole on the stone sheet it was made on, framed, the person's height over the person (person: the place of
+    the person's centre and the top of its head as shares of the picture), the site's address."""
+    c = colours
+    W, H, m = 1200, 630, 60
+    parts = [_text(m, 104, words["h1"], 54, c["linen"])]
+    if words.get("line"):
+        parts.append(_text(m, 164, words["line"], 36, c["chalk-text"]))
+    iw = W - 2 * m
+    ih = iw * size[1] / size[0]
+    iy = 214 if words.get("line") else 170
+    parts.append(_rect(m - 3, iy - 3, iw + 6, ih + 6, c["stone"], c["frame"], 3))
+    parts.append(f'<image x="{m:g}" y="{iy:g}" width="{iw:g}" height="{ih:g}" xlink:href="{PICS_MARK}/{esc(picture)}"/>')
+    if person:
+        px, top = person
+        parts.append(_text(m + iw * px, iy + ih * top - 12, words["person"], 20, c["stone-text-2"], "middle"))
+    parts.append(_rect(m, H - 62, 48, 2, c["chalk"], c["chalk"], 0))
+    parts.append(_text(m, H - 30, words["site"], 20, c["text-3"]))
+    return (f'<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="{W}" height="{H}" '
+            f'viewBox="0 0 {W} {H}"><rect width="{W}" height="{H}" fill="{c["page"]}"/>{"".join(parts)}</svg>\n')
+
+
 def source_mark(svg):
     """The mark a still carries of the drawing it was made from: a still with another mark is older than its chart."""
     return "moa-chart:" + hashlib.sha256(svg.encode("utf-8")).hexdigest()[:24]
