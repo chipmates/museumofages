@@ -22,6 +22,7 @@
    ],
    "sizes": "(min-width: 1280px) 1200px, (min-width: 960px) calc(100vw - 80px), (min-width: 600px) calc(100vw - 64px), calc(100vw - 40px)",
    "person": "92.84% 63.16%",
+   "person_from": 600,
    "marks": {
     "outline": "1.81% 97.95%",
     "spinosaurus": "15.85% 88.7%",
