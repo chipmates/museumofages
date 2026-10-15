@@ -76,9 +76,9 @@
  },
  "meta": {
   "title": "Wie groß war ein T. rex? Etwa 12 m lang | Museum of Ages",
-  "description": "Größe des T. rex: ein großes erwachsenes Tier etwa 12 m lang, an der Hüfte etwa 4 m hoch, grob 8 bis 9 t. Unserer ist nach SUE gebaut.",
+  "description": "Größe des T. rex: ein großes erwachsenes Tier etwa 12 m lang, an der Hüfte etwa 4 m hoch, grob 8 bis 9 t. Unser T. rex ist nach SUE gebaut.",
   "og_title": "Wie groß war ein T. rex? Etwa 12 m lang",
-  "og_image_alt": "Ein T. rex von der Seite auf zwei Beinen, das Maul offen, der Kopf erhoben, neben einem grauen Menschen, der ihm nicht bis zum Knie reicht."
+  "og_image_alt": "Ein T. rex von der Seite auf zwei Beinen, das Maul offen, der Kopf erhoben, neben einem grauen Menschen, der weit unter seiner Hüfte steht."
  },
  "labels": {
   "crumbs": "Du bist hier",
@@ -93,13 +93,13 @@
  },
  "top": {
   "h1": "Wie groß war ein T. rex?",
-  "answer": "Ein großer erwachsener Tyrannosaurus rex war etwa 12 m lang, und die meisten waren kleiner. An der Hüfte stand er etwa 3,5 bis 4 m hoch. Mit erhobenem Kopf reicht unserer bis etwa 4,6 m, und das hängt von der Haltung ab. Ein großer erwachsener kam auf grob 8 bis 9 t, nach Knochen und Körpermodellen, ein gewöhnlicher auf weniger. Unser T. rex ist nach SUE gebaut und misst in dieser Haltung etwa 11,4 m, mehr als sechseinhalb Menschen von 1,70 m, der Länge nach aneinandergelegt. Sein Knie liegt etwa 2 m hoch, über dem Kopf des Menschen.",
-  "answer_more": "Die beiden größten bekannten T. rex heißen SUE und Scotty. SUE, 1990 in South Dakota gefunden und heute in Chicago, ist das längere und vollständigere Skelett, als Montage etwa 12 m. Scotty gilt nach seinem Oberschenkelknochen als der schwerere, etwa 8,9 t.",
+  "answer": "Ein großer erwachsener Tyrannosaurus rex war etwa 12 m lang, und die meisten waren kleiner. An der Hüfte stand er etwa 3,5 bis 4 m hoch. Ein großes erwachsenes Tier kam auf grob 8 bis 9 t, nach Knochen und Körpermodellen, ein gewöhnliches auf weniger. Unser T. rex, nach den Maßen von SUE gebaut, misst in dieser Haltung etwa 11,4 m und steht hier neben einem Menschen von 1,70 m.",
+  "answer_more": "Die beiden größten bekannten T. rex sind SUE in Chicago, das längere und vollständigere Skelett, und Scotty, wahrscheinlich der schwerere.",
   "scale": {
    "pic": "side",
    "tag": "tag_made",
-   "what": "Unser T. rex neben einem Menschen von 1,70 m, im selben Maßstab, nach den Maßen von SUE gebaut. In dieser Haltung, Kopf erhoben und gedreht, Schwanz geschwungen, misst er etwa 11,4 m. Gerade ausgelegt wäre dasselbe Skelett etwa 11,8 m lang. SUEs Montage in Chicago misst etwa 12 m.",
-   "alt": "Ein T. rex von der Seite auf zwei Beinen, das Maul offen, der Kopf erhoben, neben einem grauen Menschen, der ihm nicht bis zum Knie reicht.",
+   "what": "Unser T. rex neben einem Menschen von 1,70 m, im selben Maßstab, nach den Maßen von SUE gebaut. In dieser Haltung, Kopf erhoben und gedreht, Schwanz geschwungen, misst er etwa 11,4 m. Das sind mehr als sechseinhalb Menschen, der Länge nach aneinandergelegt. Der erhobene Kopf reicht bis etwa 4,6 m, und das hängt von der Haltung ab. Gerade ausgelegt wäre dasselbe Skelett etwa 11,8 m lang. SUEs Montage in Chicago misst etwa 12 m.",
+   "alt": "Ein T. rex von der Seite auf zwei Beinen, das Maul offen, der Kopf erhoben, neben einem grauen Menschen, der weit unter seiner Hüfte steht.",
    "note": "Unsere eigene Rekonstruktion, nach veröffentlichten Maßen in Code gebaut und in unserer Engine gerendert. Kein Foto.",
    "marks": [
     {
@@ -140,7 +140,7 @@
    "cols": [
     "Tier",
     "Länge",
-    "Höhe an der Hüfte",
+    "Höhe, mit dem Messpunkt",
     "Gewicht",
     "Wie sicher"
    ],
@@ -149,7 +149,7 @@
      "cells": [
       "Unser Modell, nach SUE",
       "etwa 11,4 m in dieser Haltung, gerade etwa 11,8 m",
-      "3,96 m über der Hüfte, der erhobene Kopf etwa 4,6 m",
+      "über der Hüfte 3,96 m, erhobener Kopf etwa 4,6 m",
       "nicht angegeben",
       "an unseren Dateien gemessen"
      ]
@@ -158,7 +158,7 @@
      "cells": [
       "SUE, Field Museum, Chicago",
       "etwa 12 m, die Montage 12,3 m, das Schwanzende ergänzt",
-      "etwa 4 m, nach dem Museum",
+      "an der Hüfte etwa 4 m, nach dem Museum",
       "etwa 8 bis 9 t, nach einem Knochen und drei Modellen",
       "das Museum und zwei Studien stimmen überein"
      ]
@@ -167,7 +167,7 @@
      "cells": [
       "Scotty, Royal Saskatchewan Museum",
       "knapp 12 m nach dem Museum, 13 m nur in Nachrichten",
-      "etwa 4 m nach dem Museum, ohne Messpunkt",
+      "4 m nach dem Museum, ohne Messpunkt",
       "etwa 8,9 t nach dem Ober­schenkel­knochen, mit großer Spanne",
       "eine Studie, von einer zweiten gestützt"
      ]
@@ -176,16 +176,16 @@
      "cells": [
       "Die Art, ein großes erwachsenes Tier",
       "etwa 12 m, die meisten kleiner",
-      "etwa 3,5 bis 4 m",
+      "an der Hüfte etwa 3,5 bis 4 m",
       "grob 8 bis 9 t, gewöhnliche Tiere weniger",
-      "Museen und Studien stimmen überein"
+      "ein Museum und Studien"
      ]
     },
     {
      "cells": [
       "Der Mensch",
-      "1,70 m",
       "",
+      "1,70 m groß, vom Scheitel bis zur Sohle",
       "",
       "unsere Vergleichsfigur"
      ]
@@ -198,7 +198,7 @@
    "nav": "Welcher T. rex war der größte?",
    "h": "Welcher T. rex war der größte?",
    "paras": [
-    "SUE und Scotty sind die beiden größten bekannten T. rex, und beide Museen nennen ihr Tier das größte, jedes nach einem anderen Maß. SUE ist das längere und das weit vollständigere Skelett: etwa 12 m als Montage, rund 90 Prozent nach Knochenvolumen erhalten. Scotty gilt nach seinem dickeren Oberschenkelknochen als der schwerere, etwa 8,9 t nach einer Studie von 2019, die eine zweite stützt. Die Schätzungen überschneiden sich, denn für SUE reichen sie von etwa 8,2 bis 9,5 t. Wie groß der größte je lebende T. rex war, weiß niemand: Ein Modell von 2024 schätzt etwa 15 t und über 15 m, gefunden wurde so ein Tier nie."
+    "SUE und Scotty sind die beiden größten bekannten T. rex, und beide Museen nennen ihr Tier das größte, jedes nach einem anderen Maß. SUE ist das längere und das weit vollständigere Skelett: etwa 12 m als Montage, rund 90 Prozent nach Knochenvolumen erhalten. Scotty gilt nach seinem dickeren Oberschenkelknochen als der schwerere, etwa 8,9 t nach einer Studie von 2019, die eine zweite stützt. Die Schätzungen überschneiden sich, denn für SUE reichen sie von etwa 8,2 bis 9,5 t. Wie groß der größte je lebende T. rex war, weiß niemand. Ein Modell von 2024 schätzt etwa 15 t und über 15 m, gefunden wurde so ein Tier nie."
    ]
   },
   {
@@ -216,7 +216,7 @@
       ],
       [
        "Das Gewicht aus Knochen oder Körper:",
-       "Beim Knochen misst man den Umfang des Oberschenkelknochens und nimmt die Regel, die bei lebenden Tieren Umfang und Gewicht verbindet. Kein lebendes Tier auf zwei Beinen ist annähernd so groß, das ist die Schwäche. Beim Körpermodell baut man Fleisch um das Skelett und rechnet Volumen mal Dichte: Je nach Umriss kam ein erwachsener T. rex auf unter 6 bis über 18 t."
+       "Beim Knochen misst man den Umfang des Oberschenkelknochens und nimmt die Regel, die bei lebenden Tieren Umfang und Gewicht verbindet. Kein lebendes Tier auf zwei Beinen ist annähernd so groß, das ist die Schwäche. Beim Körpermodell baut man Fleisch um das Skelett und rechnet Volumen mal Dichte. Je nach Umriss kam ein erwachsener T. rex auf unter 6 bis über 18 t."
       ],
       [
        "Ein Tier ist nicht die Art:",
@@ -232,7 +232,7 @@
    "nav": "Was von SUE gefunden wurde",
    "h": "Was von SUE gefunden wurde",
    "paras": [
-    "SUE gehört zu den vollständigsten großen T. rex-Skeletten. Die Liste folgt der Beschreibung des Skeletts von 2003 und ist gut belegt, außer wo vermerkt."
+    "SUE, 1990 in South Dakota gefunden und heute in Chicago, gehört zu den vollständigsten großen T. rex-Skeletten. Die Liste folgt der Beschreibung des Skeletts von 2003 und ist gut belegt, außer wo vermerkt."
    ],
    "subs": [
     {
@@ -291,7 +291,7 @@
     },
     {
      "term": "15 t",
-     "text": "Ein Modell von 2024 schätzt aus Zahl und Wachstum der T. rex, wie groß das größte je lebende Tier gewesen sein könnte: vielleicht etwa 15 t und über 15 m. Gefunden wurde nie etwas in dieser Größe, und die Autoren halten einen solchen Fund für äußerst unwahrscheinlich."
+     "text": "Ein Modell von 2024 geht von der Zahl der T. rex und ihrem Wachstum aus. Daraus schätzt es, wie groß das größte je lebende Tier gewesen sein könnte: vielleicht etwa 15 t und über 15 m. Gefunden wurde nie etwas in dieser Größe, und die Autoren halten einen solchen Fund für äußerst unwahrscheinlich."
     },
     {
      "term": "90 Prozent",
@@ -305,7 +305,7 @@
    "nav": "Haut, Federn und Lippen",
    "h": "Haut, Federn und Lippen",
    "paras": [
-    "Jedes Stück T. rex-Haut, das je gefunden wurde, ist schuppig. Es sind drei kleine Flecken eines einzigen Tiers, Wyrex in Houston, vom Hals, von der Hüfte und vom Schwanzansatz, mit Schuppen unter einem Millimeter. Eine Feder wurde an einem T. rex nie gefunden, und an keinem anderen großen Tyrannosaurier. Kleinere, frühere Verwandte trugen fadenartige Federn: der kleine Dilong und Yutyrannus mit etwa 1,4 t, rund ein Sechstel von SUE, etwa 60 Millionen Jahre vor T. rex. Von der Oberseite des Rückens ist keine Haut bekannt, ein dünner Flaum dort lässt sich weder zeigen noch ausschließen. Und Lippen: Nach einer Studie von 2023 bedeckten Lippe und Zahnfleisch bei geschlossenem Maul sehr wahrscheinlich alle Zähne. Eine Minderheit hält an einem krokodilartigen Gesicht fest, und gefunden wurde nie eine Lippe."
+    "Jedes Stück T. rex-Haut, das je gefunden wurde, ist schuppig. Alles stammt von einem einzigen Tier, Wyrex in Houston: drei kleine Hautstücke vom Hals, von der Hüfte und vom Schwanzansatz. Die Schuppen sind kleiner als ein Millimeter. Eine Feder wurde an einem T. rex nie gefunden, und an keinem anderen großen Tyrannosaurier. Kleinere, frühere Verwandte trugen fadenartige Federn: der kleine Dilong und Yutyrannus mit etwa 1,4 t, rund ein Sechstel von SUE. Yutyrannus lebte etwa 60 Millionen Jahre vor T. rex. Von der Oberseite des Rückens ist keine Haut bekannt, ein dünner Flaum dort lässt sich weder zeigen noch ausschließen. Und Lippen: Nach einer Studie von 2023 bedeckten Lippe und Zahnfleisch bei geschlossenem Maul sehr wahrscheinlich alle Zähne. Eine Minderheit hält an einem krokodilartigen Gesicht fest, und gefunden wurde nie eine Lippe."
    ]
   },
   {
@@ -314,7 +314,7 @@
    "nav": "Warum unser T. rex so aussieht",
    "h": "Warum unser T. rex so aussieht",
    "paras": [
-    "Er ist nach den Maßen von SUEs Knochen gebaut: Oberschenkel, Oberarm, Beckenschaufel und Schädel in ihren Maßen, der Rest nach Verwandten und Regeln. Die Farben sind unsere, denn von keinem T. rex ist eine Farbe bekannt. Das Maul zeigen wir offen, mit dem Band aus Lippe und Zahnfleisch über den oberen Zähnen. Weil der Kopf erhoben und gedreht ist und der Schwanz schwingt, misst er in dieser Haltung etwa 11,4 m, weniger als gerade ausgelegt."
+    "Er ist nach den Maßen von SUEs Knochen gebaut: Oberschenkel, Oberarm, Beckenschaufel und Schädel in ihren Maßen, der Rest nach Verwandten und Regeln. Die Farben sind unsere, denn von keinem T. rex ist eine Farbe bekannt. Das Maul zeigen wir offen, mit dem Band aus Lippe und Zahnfleisch über den oberen Zähnen."
    ]
   },
   {
@@ -325,12 +325,8 @@
    "items": [
     {
      "q": "War der Spinosaurus größer als der T. rex?",
-     "a": "Länger, und sehr wahrscheinlich leichter. Ein erwachsener Spinosaurus war im Modell von 2022 knapp unter 14 m lang und etwa 7,4 t schwer, ein großer T. rex etwa 12 m und 8 bis 9 t. Beide stehen im selben Maßstab auf der Seite der größten Dinosaurier.",
+     "a": "Länger, und sehr wahrscheinlich leichter. Die größten erwachsenen Tiere waren knapp unter 14 m lang und etwa 7,4 t schwer, nach einem Modell von 2022. Das Modell rechnet ein junges Skelett auf die Größe der größten gefundenen Schnauze hoch. Ein großer T. rex war etwa 12 m lang und 8 bis 9 t schwer. Mehr auf der Spinosaurus-Seite, wo beide im selben Maßstab stehen.",
      "links": [
-      {
-       "page": "biggest-dinosaurs",
-       "text": "Die größten Dinosaurier im Größenvergleich"
-      },
       {
        "page": "spinosaurus",
        "text": "Wie groß war der Spinosaurus?"
@@ -349,7 +345,7 @@
    "nav": "Im Museum",
    "h": "Im Museum",
    "paras": [
-    "Museum of Ages ist ein digitales Museum. Es baut gerade einen Flügel, in dem dieses Tier und andere wie dieses im selben Maßstab stehen werden. Offen ist heute der Flügel von Leonardo da Vinci. Eintritt frei, kein Konto."
+    "Museum of Ages ist ein digitales Museum, gemacht von einer gemeinnützigen Organisation. Der Eintritt ist frei, ein Konto brauchst du nicht. Im Flügel der Tiere wird dieses Tier unter den anderen stehen, von den Riesen der Vorzeit bis zu den letzten ihrer Art. Wie ein fertiger Flügel aussieht, zeigt der Flügel von Leonardo da Vinci."
    ],
    "links": [
     {
@@ -472,7 +468,7 @@
       "text": "CC BY-SA 4.0",
       "href": "https://creativecommons.org/licenses/by-sa/4.0/deed.de"
      },
-     ", Nachweis: Museum of Ages. Sie zeigen eine Rekonstruktion, in Code gebaut und in unserer Engine gerendert, kein Foto. Die Bilder unter „Im Museum“ nennen ihren Nachweis auf ihren eigenen Seiten."
+     ", Nachweis: Museum of Ages. Sie zeigen eine Rekonstruktion, in Code gebaut und in unserer Engine gerendert, kein Foto. Die Bilder der anderen Seiten, die hier aufgeführt sind, nennen ihren Nachweis auf der jeweiligen Seite."
     ]
    ]
   }

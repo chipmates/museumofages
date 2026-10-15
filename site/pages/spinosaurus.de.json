@@ -153,7 +153,7 @@
    "h": "Zum Raten",
    "q": "Wie alt war das junge Tier aus Marokko, als es starb?",
    "button": "Antwort zeigen",
-   "a": "Etwa 17 Jahre, nach den Wachstumsringen in seinem Oberschenkelknochen, mit zwei Jahren Spielraum nach oben und unten. Ausgewachsen war es noch nicht, es hatte etwa drei Viertel der Größe der größten erwachsenen Tiere.",
+   "a": "Etwa 17 Jahre, nach den Wachstumsringen in seinem Oberschenkelknochen, mit zwei Jahren Spielraum nach oben und unten. Ausgewachsen war es noch nicht.",
    "button_open": "Antwort verbergen"
   },
   "out": {
@@ -167,7 +167,7 @@
    "id": "numbers",
    "nav": "Die Zahlen",
    "h": "Die Zahlen",
-   "unit": "In Metern und Tonnen. Ohne belegte Zahl bleibt die Zelle leer. Unser T. rex bekommt kein Gewicht, sein Gewicht steht auf seiner eigenen Seite nach den Studien zu SUE.",
+   "unit": "In Metern und Tonnen. Eine leere Zelle hat keine belegte Zahl. Unser T. rex bekommt kein Gewicht, es steht auf seiner eigenen Seite nach den Studien zu SUE.",
    "cols": [
     "Tier",
     "Länge",
@@ -229,7 +229,7 @@
    "nav": "Spinosaurus gegen T. rex, nur die Größe",
    "h": "Spinosaurus gegen T. rex, nur die Größe",
    "paras": [
-    "Der größte Spinosaurus war länger als jeder T. rex: knapp unter 14 m nach einem Modell, gegen etwa 12 m für das Skelett von SUE. Schwerer war er sehr wahrscheinlich nicht, etwa 7,4 bis 8 t im Modell gegen etwa 8 bis 9 t bei den größten bekannten T. rex. An der Hüfte stand er viel niedriger: Der Oberschenkelknochen des jungen Tiers aus Marokko misst 61 cm, der von SUE 1,32 m, und selbst der eines erwachsenen Tiers wäre hochgerechnet nur etwa 80 cm lang. Begegnet sind sich die beiden nie, Spinosaurus lebte vor etwa 95 Millionen Jahren in Nordafrika, T. rex vor etwa 68 bis 66 Millionen Jahren in Nordamerika. Ein Vergleich der Größe, mehr nicht."
+    "Der größte Spinosaurus war länger als jeder T. rex: knapp unter 14 m nach einem Modell, gegen etwa 12 m für das Skelett von SUE. Schwerer war er sehr wahrscheinlich nicht, etwa 7,4 bis 8 t im Modell gegen etwa 8 bis 9 t bei den größten bekannten T. rex. An der Hüfte stand er viel niedriger. Der Oberschenkelknochen des jungen Tiers aus Marokko misst 61 cm, der von SUE 1,32 m, und selbst der eines erwachsenen Tiers wäre hochgerechnet nur etwa 80 cm lang. Begegnet sind sich die beiden nie, Spinosaurus lebte vor etwa 95 Millionen Jahren in Nordafrika, T. rex vor etwa 68 bis 66 Millionen Jahren in Nordamerika."
    ],
    "scale": {
     "pic": "vs",
@@ -267,25 +267,25 @@
     {
      "h": "Zwei Beine",
      "paras": [
-      "Er stand und ging auf zwei Beinen, der Schwerpunkt lag über den Hinterfüßen, die Arme trugen kein Gewicht. Das vierbeinige Tier von 2014 beruhte auf einer Rechnung, die die Luft im Körper hinzuzählte, statt sie abzuziehen. Das berichtete 2024 einer der Autoren selbst."
+      "Er stand und ging auf zwei Beinen, der Schwerpunkt lag über den Hinterfüßen. Das vierbeinige Tier von 2014 beruhte auf einem Rechenfehler, der 2024 bekannt wurde."
      ]
     },
     {
      "h": "Der Schwanz",
      "paras": [
-      "Der Schwanz war tief und seitlich abgeflacht, wie ein Blatt: hohe Dornfortsätze oben, lange Knochen unten. Das wissen wir von den eigenen Schwanzknochen des Tiers aus Marokko, etwa vier Fünftel des Schwanzes wurden gefunden. Wozu er diente, ist umstritten: zum Schwimmen oder zur Schau."
+      "Der Schwanz war tief und seitlich abgeflacht, wie ein Blatt: hohe Dornfortsätze oben, lange Knochen unten. Das wissen wir von den eigenen Schwanzknochen des Tiers aus Marokko. Wozu er diente, ist umstritten: zum Schwimmen oder zur Schau."
      ]
     },
     {
      "h": "Das Segel",
      "paras": [
-      "Die Dornfortsätze sind bekannt, der höchste an Stromers Skelett etwa 1,65 m Knochen. Die Form des Segels darüber kennt niemand, unser schlichter Bogen ist unsere Wahl. Am wahrscheinlichsten spannte sich eine dünne Haut über die Dornen, und die führende Deutung sieht im Segel ein Schauorgan."
+      "Die Dornfortsätze sind bekannt, der höchste an Stromers Skelett etwa 1,65 m Knochen. Die Form des Segels darüber kennt niemand. Am wahrscheinlichsten spannte sich eine dünne Haut über die Dornen, und die führende Deutung sieht im Segel ein Schauorgan."
      ]
     },
     {
      "h": "Der Kopf",
      "paras": [
-      "Die Schnauze war lang und schmal, vorne löffelförmig verbreitert, mit Kegelzähnen ohne Sägekante und kleinen Nasenlöchern weit hinten. Vor den Augen saß ein niedriger Kamm, dessen Oberkante an jedem gefundenen Stück abgebrochen ist. Haut, Lippen und Farbe kennt man von keinem Spinosaurier, unsere Farben sind unsere."
+      "Die Schnauze war vorne löffelförmig verbreitert. Haut, Lippen und Farbe kennt man von keinem Spinosaurier."
      ]
     }
    ]
@@ -308,13 +308,13 @@
     {
      "h": "Stromers Skelett",
      "paras": [
-      "Im Herbst 1912 kamen in der Bahariya-Oase in Ägypten die ersten Knochen zutage. Es waren die vordere Hälfte des Unterkiefers, 72 cm lang, und Rücken-, Hüft- und Schwanzwirbel mit den hohen Dornfortsätzen des Segels. Stromer beschrieb sie 1915 und nannte das Tier nach diesen Dornen Spinosaurus. Es war ein junges Tier, etwa so groß wie unseres. Das Skelett stand in München und wurde 1944 bei einem Bombenangriff zerstört. Geblieben sind Stromers Notizen, Zeichnungen und ein paar Fotos. In München liegt heute ein Spinosaurus-Zahn, kein Skelett."
+      "Im Herbst 1912 kamen in der Bahariya-Oase in Ägypten die ersten Knochen zutage. Es waren die vordere Hälfte des Unterkiefers, 72 cm lang, und Rücken-, Hüft- und Schwanzwirbel mit den hohen Dornfortsätzen des Segels. Stromer beschrieb sie 1915 und nannte das Tier nach diesen Dornen Spinosaurus. Das Skelett stand in München und wurde 1944 bei einem Bombenangriff zerstört. Geblieben sind Stromers Notizen, Zeichnungen und ein paar Fotos. In München liegt heute ein Spinosaurus-Zahn, kein Skelett."
      ]
     },
     {
      "h": "Das junge Tier aus Marokko",
      "paras": [
-      "2008 fand ein Sammler bei Zrigat im Südosten Marokkos die ersten Knochen, in den Kem-Kem-Schichten. Die Fundstelle wurde 2013 ausgegraben, der Schwanz von 2015 bis 2019. Seit 2014 ist dieses Skelett der neue Typus der Art, weil Stromers Knochen verloren sind. Es liegt in Casablanca, an der Faculté des Sciences Aïn Chock."
+      "2008 fand ein Sammler bei Zrigat im Südosten Marokkos die ersten Knochen, in den Kem-Kem-Schichten. Die Fundstelle wurde 2013 ausgegraben, der Schwanz von 2015 bis 2019. Seit 2014 ist dieses Skelett der neue Typus der Art, weil Stromers Knochen verloren sind. Es liegt in Casablanca."
      ]
     },
     {
@@ -336,8 +336,8 @@
        "points": [
         "Die Dornfortsätze des Segels und der Unterkiefer: nach Stromers verlorenem Skelett.",
         "Die Schnauze: nach der erwachsenen Schnauze in Mailand, verkleinert.",
-        "Der hintere Schädel, die Arme und die Hände: nach den Verwandten Irritator, Suchomimus und Baryonyx.",
-        "Der Hals, der größte Teil des Rückens, die Rippen, die Schulter und das Schwanzende: nach anderen Funden oder ergänzt."
+        "Der hintere Schädel, die Arme und die Hände: nach Verwandten.",
+        "Der Hals, der größte Teil des Rückens, die Rippen, die Schulter und das Schwanzende: andere Funde oder ergänzt."
        ]
       }
      ]
@@ -379,15 +379,15 @@
      "points": [
       [
        "Jede Länge eines erwachsenen Tiers ist ein Modell:",
-       "Niemand hat ein erwachsenes Skelett. Die Forscher nahmen das junge Skelett aus Marokko und vergrößerten es um etwa ein Drittel, bis es zur größten gefundenen Schnauze passte. Die Schnauze ist ein echter Fund, der Körper darum herum ist gerechnet."
+       "Niemand hat ein erwachsenes Skelett. Die Forscher vergrößerten das junge Skelett aus Marokko um etwa ein Drittel, bis es zur größten gefundenen Schnauze passte. Die Schnauze ist echt, der Körper darum herum ist gerechnet."
       ],
       [
        "Das Gewicht kommt aus einem Körpermodell:",
-       "Man baut Fleisch um das Skelett, misst das Volumen und rechnet mit einer Dichte. Bei Spinosaurus ändert allein die angenommene Luft in Hals und Rumpf das Ergebnis um etwa 600 kg, 7,4 bis 8 t im selben Modell."
+       "Man baut Fleisch um das Skelett, misst das Volumen und rechnet mit einer Dichte. Bei Spinosaurus ändert allein die angenommene Luft in Hals und Rumpf das Ergebnis um etwa 600 kg."
       ],
       [
-       "Unseres ist nicht die Art:",
-       "Unser Tier ist ein junges von etwa 10 m. Seine Zahlen sind seine, nie die der Art. Darum stehen hier drei Zahlen getrennt: unser Tier, die größten erwachsenen Tiere nach dem Modell und Stromers Skelett."
+       "Unser Tier ist nicht die Art:",
+       "Es ist ein junges Tier, und seine Zahlen sind seine. Darum stehen hier drei Zahlen getrennt: unser Tier, die größten erwachsenen Tiere nach dem Modell und Stromers Skelett."
       ]
      ]
     }
@@ -402,7 +402,7 @@
    "rows": [
     {
      "term": "18 m",
-     "text": "Das obere Ende einer Spanne von 2005, 16 bis 18 m: Um die große Schnauze aus Mailand wurde ein ganzer Körper gezeichnet, mit dem Körperbau eines langbeinigen Verwandten. Später zeigte sich, dass Spinosaurus kurze Beine hatte, der Körper war also zu lang geraten. Das Modell von 2022 kommt auf knapp unter 14 m, auch wenn manche Museumstexte bis heute 18 m angeben."
+     "text": "Das obere Ende einer Spanne von 2005, 16 bis 18 m: ein ganzer Körper, um die große Schnauze aus Mailand gezeichnet, mit dem Körperbau eines langbeinigen Verwandten. Spinosaurus hatte aber kurze Beine, der Körper war also zu lang geraten. Das Modell von 2022 kommt auf knapp unter 14 m, auch wenn manche Museumstexte bis heute 18 m angeben."
     },
     {
      "term": "15 m",
@@ -410,11 +410,11 @@
     },
     {
      "term": "20 t",
-     "text": "Eine Rechnung von 2007, die von der Schädellänge auf den Körper schloss, mit einer Formel aus anderen Raubsauriern: ein kürzeres und viel schwereres Tier. Die genaue Spanne der Studie haben wir nicht selbst gelesen, und das Körpermodell von 2022 kommt für die größten erwachsenen Tiere auf 7,4 bis 8 t."
+     "text": "Eine Rechnung von 2007 aus der Schädellänge, mit einer Formel aus anderen Raubsauriern: ein kürzeres, viel schwereres Tier. Die genaue Spanne der Studie haben wir nicht selbst gelesen. Das Körpermodell von 2022 kommt für die größten erwachsenen Tiere auf 7,4 bis 8 t."
     },
     {
      "term": "7 t",
-     "text": "Das heutige Modell, etwa 7,4 t für die größten erwachsenen Tiere, 7,4 bis 8 t je nach Luftanteil. Für unser junges Tier gilt die Zahl nicht, es kommt auf etwa 3 bis 4 t."
+     "text": "Die Zahl des heutigen Modells für die größten erwachsenen Tiere, etwa 7,4 t. Für unser junges Tier gilt sie nicht, es kommt auf etwa 3 bis 4 t."
     },
     {
      "term": "Der größte Raubsaurier aller Zeiten",
@@ -422,11 +422,11 @@
     },
     {
      "term": "Er ging auf vier Beinen",
-     "text": "Die Studie von 2014, nach einer Rechnung zum Schwerpunkt. Die Rechnung zählte die Luft im Körper hinzu, statt sie abzuziehen, wie einer ihrer Autoren 2024 selbst berichtete."
+     "text": "Aus der Studie von 2014. Ihre Rechnung zum Schwerpunkt zählte die Luft im Körper hinzu, statt sie abzuziehen, wie einer ihrer Autoren 2024 selbst berichtete."
     },
     {
      "term": "Der erste schwimmende Dinosaurier",
-     "text": "Eine Schlagzeile von 2020 zum neu gefundenen Schwanz. Die Studie selbst nennt den Schwanz ein Antriebsorgan, und die meisten Arbeiten seither deuten das Tier als Lauerjäger im Flachwasser. Umstritten, nicht entschieden."
+     "text": "Eine Schlagzeile von 2020 zum neu gefundenen Schwanz. Die Studie selbst nennt den Schwanz ein Antriebsorgan, und ob das Tier seinen Fischen schwimmend nachjagte, ist umstritten, nicht entschieden."
     }
    ]
   },
@@ -436,7 +436,7 @@
    "nav": "Warum unser Spinosaurus so aussieht",
    "h": "Warum unser Spinosaurus so aussieht",
    "paras": [
-    "Er ist nach den Maßen der Knochen des jungen Tiers aus Marokko gebaut, Hüfte, Beine, Fuß und Schwanz in ihren Größen. Wo seine eigenen Knochen fehlen, folgt er Stromers Skelett, anderen Funden und Verwandten. Der Bogen des Segels und die Farben sind unsere Wahl, denn weder die Form des Segels noch eine Farbe ist bekannt. Er steht auf zwei Beinen, die Arme angehoben, der Hals leicht geschwungen, und misst in dieser Haltung etwa 10 m."
+    "Er ist nach den Maßen der eigenen Knochen des jungen Tiers aus Marokko gebaut, der Rest nach Stromers Skelett, anderen Funden und Verwandten. Der Bogen des Segels und die Farben sind unsere Wahl, denn beides ist unbekannt."
    ]
   },
   {
@@ -451,7 +451,7 @@
     },
     {
      "q": "War der Spinosaurus der größte Dinosaurier?",
-     "a": "Nein. Er war der längste bekannte Fleischfresser unter den Dinosauriern, aber die Langhalsdinosaurier waren viel größer: Argentinosaurus etwa 30 bis 35 m lang und grob 65 bis 80 t schwer. Mehr dazu auf der Seite der größten Dinosaurier.",
+     "a": "Nein. Die Langhalsdinosaurier waren viel größer: Argentinosaurus etwa 30 bis 35 m lang und grob 65 bis 80 t schwer. Mehr dazu auf der Seite der größten Dinosaurier.",
      "links": [
       {
        "page": "biggest-dinosaurs",
@@ -467,7 +467,7 @@
    "nav": "Im Museum",
    "h": "Im Museum",
    "paras": [
-    "Museum of Ages ist ein digitales Museum. Es baut gerade einen Flügel, in dem dieses Tier und andere wie dieses im selben Maßstab stehen werden. Offen ist heute der Flügel von Leonardo da Vinci. Eintritt frei, kein Konto."
+    "Museum of Ages ist ein digitales Museum, gemacht von einer gemeinnützigen Organisation. Der Eintritt ist frei, ein Konto brauchst du nicht. Im Flügel der Tiere wird dieses Tier unter den anderen stehen, von den Riesen der Vorzeit bis zu den letzten ihrer Art. Wie ein fertiger Flügel aussieht, zeigt der Flügel von Leonardo da Vinci."
    ],
    "links": [
     {
@@ -483,7 +483,7 @@
     {
      "page": "t-rex",
      "pic": "trex",
-     "alt": "Ein T. rex von der Seite auf zwei Beinen, das Maul offen, der Kopf erhoben, neben einem grauen Menschen, der ihm nicht bis zum Knie reicht."
+     "alt": "Ein T. rex von der Seite auf zwei Beinen, das Maul offen, der Kopf erhoben, neben einem grauen Menschen, der weit unter seiner Hüfte steht."
     },
     {
      "page": "biggest-dinosaurs",
@@ -590,7 +590,7 @@
       "text": "CC BY-SA 4.0",
       "href": "https://creativecommons.org/licenses/by-sa/4.0/deed.de"
      },
-     ", Nachweis: Museum of Ages. Sie zeigen eine Rekonstruktion, in Code gebaut und in unserer Engine gerendert, kein Foto. Die Bilder unter „Im Museum“ nennen ihren Nachweis auf ihren eigenen Seiten."
+     ", Nachweis: Museum of Ages. Sie zeigen eine Rekonstruktion, in Code gebaut und in unserer Engine gerendert, kein Foto. Die Bilder der anderen Seiten, die hier aufgeführt sind, nennen ihren Nachweis auf der jeweiligen Seite."
     ]
    ]
   }

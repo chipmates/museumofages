@@ -427,7 +427,7 @@
    "nav": "Im Museum",
    "h": "Im Museum",
    "paras": [
-    "Museum of Ages ist ein digitales Museum. Unser Brachiosaurus wird in seinem Flügel in dieser Größe stehen, neben den anderen Tieren, im selben Maßstab. Eintritt frei, kein Konto."
+    "Museum of Ages ist ein digitales Museum, gemacht von einer gemeinnützigen Organisation. Der Eintritt ist frei, ein Konto brauchst du nicht. Im Flügel der Tiere wird dieses Tier unter den anderen stehen, von den Riesen der Vorzeit bis zu den letzten ihrer Art. Wie ein fertiger Flügel aussieht, zeigt der Flügel von Leonardo da Vinci."
    ],
    "links": [
     {
@@ -449,7 +449,7 @@
     {
      "page": "t-rex",
      "pic": "trex",
-     "alt": "Ein T. rex von der Seite auf zwei Beinen, das Maul offen, der Kopf erhoben, neben einem grauen Menschen, der ihm nicht bis zum Knie reicht.",
+     "alt": "Ein T. rex von der Seite auf zwei Beinen, das Maul offen, der Kopf erhoben, neben einem grauen Menschen, der weit unter seiner Hüfte steht.",
      "line": "Ein großer erwachsener T. rex war etwa 12 m lang, an der Hüfte etwa 4 m hoch und kam auf grob 8 bis 9 t. Unser T. rex ist nach den Maßen von SUE gebaut und steht im selben Maßstab neben einem Menschen, dazu eine Liste dessen, was von SUE gefunden wurde."
     },
     {
@@ -555,7 +555,7 @@
       "text": "CC BY-SA 4.0",
       "href": "https://creativecommons.org/licenses/by-sa/4.0/deed.de"
      },
-     ", Nachweis: Museum of Ages. Sie zeigen eine Rekonstruktion, in Code gebaut und in unserer Engine gerendert, kein Foto. Die Bilder unter „Im Museum“ nennen ihren Nachweis auf ihren eigenen Seiten."
+     ", Nachweis: Museum of Ages. Sie zeigen eine Rekonstruktion, in Code gebaut und in unserer Engine gerendert, kein Foto. Die Bilder der anderen Seiten, die hier aufgeführt sind, nennen ihren Nachweis auf der jeweiligen Seite."
     ]
    ]
   }

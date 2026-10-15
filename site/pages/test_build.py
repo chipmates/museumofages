@@ -581,7 +581,7 @@ class Case(unittest.TestCase):
              "the first swimming dinosaur only as a headline"),
             ({"en": (r"the longest meat-eating dinosaur known", "the longest"),
               "de": (r"der längste bekannte Fleischfresser", "der längste")}, "the longest meat-eating dinosaur known, never"),
-            ({"en": (r"The study of 2014", "The study"), "de": (r"Die Studie von 2014", "Die Studie")}, "it walked on two legs"),
+            ({"en": (r"the study of 2014", "the study"), "de": (r"der Studie von 2014", "der Studie")}, "it walked on two legs"),
         ]
         out, _ = self.build()
         shutil.rmtree(out)

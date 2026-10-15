@@ -422,7 +422,7 @@
    "nav": "In the museum",
    "h": "In the museum",
    "paras": [
-    "Museum of Ages is a digital museum. Our Brachiosaurus will stand in its wing at this size, beside the other animals, to one scale. Free entry, no account."
+    "Museum of Ages is a digital museum, made by a nonprofit. Free entry, no account. In the animal wing this animal will stand among the others, from the giants of long ago to the last of their kind. The Leonardo da Vinci wing shows what a finished wing looks like."
    ],
    "links": [
     {
@@ -444,7 +444,7 @@
     {
      "page": "t-rex",
      "pic": "trex",
-     "alt": "A T. rex from the side on two legs, mouth open and head raised, beside a grey person who does not reach its knee.",
+     "alt": "A T. rex from the side on two legs, mouth open and head raised, beside a grey person who stands far below its hips.",
      "line": "A large adult T. rex was about 12 m long, about 4 m at the hips and roughly 8 to 9 tonnes. Our T. rex is built to SUE's measurements and stands beside a person to one scale, with a list of what was found of SUE."
     },
     {
@@ -550,7 +550,7 @@
       "text": "CC BY-SA 4.0",
       "href": "https://creativecommons.org/licenses/by-sa/4.0/"
      },
-     ", credit: Museum of Ages. They show a reconstruction, built in code and rendered in our own engine, not a photograph. The pictures under “In the museum” give their credits on their own pages."
+     ", credit: Museum of Ages. They show a reconstruction, built in code and rendered in our own engine, not a photograph. The pictures of the other pages listed here give their credits on those pages."
     ]
    ]
   }
