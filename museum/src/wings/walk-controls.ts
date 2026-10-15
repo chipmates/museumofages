@@ -74,6 +74,11 @@ function markTip(tip: WalkTip): void {
   tipsThisLoad = [...new Set([...tipsShown(), tip])]
   try { sessionStorage.setItem(TIPS_FLAG, tipsThisLoad.join(',')) } catch { /* the page load's own list holds it */ }
 }
+/** a tip the hint took the place of before it was read is kept for a later walk */
+function unmarkTip(tip: WalkTip): void {
+  tipsThisLoad = tipsShown().filter(shown => shown !== tip)
+  try { sessionStorage.setItem(TIPS_FLAG, tipsThisLoad.join(',')) } catch { /* the page load's own list holds it */ }
+}
 function hintShown(): boolean {
   if (hintThisLoad) return true
   try { return sessionStorage.getItem(HINT_FLAG) === '1' } catch { return false }
@@ -81,6 +86,18 @@ function hintShown(): boolean {
 function markHint(): void {
   hintThisLoad = true
   try { sessionStorage.setItem(HINT_FLAG, '1') } catch { /* the page load's own flag holds it */ }
+}
+
+/** a key's sign never ends a row apart from the word it goes with */
+const bindKeys = (text: string): string => text.replace(/([←→‖]) /g, '$1\u00a0')
+
+/** the element whose ground the line stands on: itself or the nearest box under it that paints one */
+function groundOf(line: HTMLElement): HTMLElement | null {
+  for (let at: HTMLElement | null = line; at; at = at.parentElement) {
+    const paint = getComputedStyle(at).backgroundColor
+    if (paint && paint !== 'transparent' && !/(,\s*0\)|\/\s*0\))$/.test(paint)) return at
+  }
+  return null
 }
 
 function icon(path: string, cls: string): SVGSVGElement {
@@ -131,8 +148,8 @@ export function createWalkPanel(host: WalkPanelHost, signal: AbortSignal): WalkP
   let restHint: { line: HTMLElement; words: HTMLElement } | null = null
 
   function tipWords(which: WalkTip | 'hint'): string {
-    if (which === 'hint') return say(WALK_WORDS.hint)
-    if (which === 'keys') return say(host.form() === 'desk' ? WALK_WORDS.tipKeys : WALK_WORDS.tipKeysTouch)
+    if (which === 'hint') return bindKeys(say(WALK_WORDS.hint))
+    if (which === 'keys') return bindKeys(say(host.form() === 'desk' ? WALK_WORDS.tipKeys : WALK_WORDS.tipKeysTouch))
     if (which === 'plan') return say(WALK_WORDS.tipPlan)
     if (which === 'look') return say(WALK_WORDS.tipLook)
     return host.sideways() ?? ''
@@ -216,17 +233,26 @@ export function createWalkPanel(host: WalkPanelHost, signal: AbortSignal): WalkP
       markHint()
       clearTimeout(hintTimer)
       if (walking || !line) {
+        if (tipNow && tipNow !== 'hint') unmarkTip(tipNow)
         tipNow = 'hint'
         paintTip()
         hintTimer = window.setTimeout(() => { if (tipNow === 'hint') fadeTip() }, HINT_MS)
         return
       }
-      // AT REST THE HINT STANDS IN THE LINE'S PLACE for its few seconds, so one text stands at a time
+      /* AT REST THE HINT STANDS IN THE LINE'S PLACE for its few seconds, so one
+         text stands at a time: on the line's own ground, at its own inset */
       const box = line.getBoundingClientRect()
-      const words = make('p', 'walk-hint-rest', say(WALK_WORDS.hint))
+      const words = make('p', 'walk-hint-rest', bindKeys(say(WALK_WORDS.hint)))
       words.lang = langTag(lang())
       words.setAttribute('role', 'status')
-      Object.assign(words.style, { left: `${Math.round(box.left)}px`, top: `${Math.round(box.top)}px`, width: `${Math.round(box.width)}px` })
+      const own = getComputedStyle(line)
+      const ground = groundOf(line)
+      const seen = ground ? getComputedStyle(ground) : null
+      Object.assign(words.style, {
+        left: `${Math.round(box.left)}px`, top: `${Math.round(box.top)}px`, width: `${Math.round(box.width)}px`, minHeight: `${Math.round(box.height)}px`,
+        padding: own.padding, borderRadius: ground === line ? own.borderRadius : '',
+        backgroundColor: seen?.backgroundColor ?? '', backdropFilter: seen?.backdropFilter ?? '',
+      })
       line.dataset['walkHinted'] = ''
       line.after(words)
       restHint = { line, words }

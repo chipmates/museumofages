@@ -48,6 +48,7 @@
 .desk-cap .walk-hint-rest { font-size: 1.125rem; }
 .walk-hint-rest {
   position: fixed;
+  box-sizing: border-box;
   z-index: 5;
   margin: 0;
   font: 400 1rem/1.45 var(--sans);
