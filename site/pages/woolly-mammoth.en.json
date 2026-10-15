@@ -70,7 +70,7 @@
  },
  "meta": {
   "title": "Woolly mammoth size: about 2.7 to 3.3 m | Museum of Ages",
-  "description": "Woolly mammoth size: a Siberian bull stood about 2.7 to 2.9 m (9 ft) at the shoulder and weighed 4 to 5 tonnes. Ours is one real bull, beside a person.",
+  "description": "Woolly mammoth size: a Siberian bull stood about 2.7 to 2.9 m (9 ft) at the shoulder and weighed about 4 to 5 tonnes. Ours is one real bull, to scale.",
   "og_title": "Woolly mammoth size: about 2.7 to 3.3 m",
   "og_image_alt": "A woolly mammoth from the side in a dark brown coat: high domed head, sloping back, two curved tusks, a mark at the shoulder. The grey person beside him stands lower than the tusk tips."
  },
@@ -87,7 +87,7 @@
  },
  "top": {
   "h1": "How big was the woolly mammoth?",
-  "answer": "A full-grown Siberian woolly mammoth bull stood about 2.7 to 2.9 m (9 ft) at the shoulder and weighed about 4 to 5 tonnes. The bigger bulls of Europe stood about 3 to 3.3 m (10 to 11 ft) and weighed about 5 to 7 tonnes. Ours is one real Siberian bull found frozen in 1900: 2.71 m (8.9 ft) at the shoulder, about 4.2 tonnes, reconstructed from his bones. Beside the person of 1.70 m, his shoulders stand about one and a half people high and his body is about two people long.",
+  "answer": "A full-grown Siberian woolly mammoth bull stood about 2.7 to 2.9 m (9 ft) at the shoulder and weighed about 4 to 5 tonnes. Bigger European bulls reached about 3 to 3.3 m (10 to 11 ft) and about 5 to 7 tonnes. Ours is one real Siberian bull found frozen in 1900: 2.71 m (8.9 ft) at the shoulder, about 4.2 tonnes, reconstructed from his bones. Beside the person of 1.70 m, his shoulder is about one and a half people high.",
   "answer_more": "So a Siberian mammoth bull was about as tall as an Asian elephant bull, and a little heavier for his height. A big African bush elephant bull stands about half a metre taller and weighs more.",
   "scale": {
    "pic": "side",
@@ -112,8 +112,8 @@
    "close": {
     "pic": "close",
     "tag": "tag_made",
-    "what": "The head, closer up, with the person: the small ear, the eye in the long hair, the trunk's fingered tip and the tusks. Both tusks are reconstructions, the left from the weight of his one tusk, the right as its mirror.",
-    "alt": "The woolly mammoth's head closer up: a small ear, the eye in long hair, the trunk's fingered tip on the ground, two curved tusks. The grey person stands beside it."
+    "what": "The head, closer up, with the person: the eye in the long hair, the trunk's fingered tip and the tusks. Both tusks are reconstructions, the left from the weight of his one tusk, the right as its mirror.",
+    "alt": "The woolly mammoth's head closer up: the eye in long hair, the trunk's fingered tip on the ground, two curved tusks. The grey person stands beside it."
    }
   },
   "guess": {
@@ -193,7 +193,7 @@
     {
      "cells": [
       "The person",
-      "1.70 m (5 ft 7 in)",
+      "1.70 m (5 ft 7 in) tall, head to foot",
       "",
       "our scale figure"
      ]
@@ -206,7 +206,7 @@
    "nav": "Woolly mammoth vs elephant",
    "h": "Woolly mammoth vs elephant",
    "paras": [
-    "The woolly mammoth, Mammuthus primigenius, was a close relative of today's elephants, nearest to the Asian elephant by its genes, and not their ancestor. A typical Siberian bull was about the height of an Asian elephant bull and a little heavier for that height. Its pelvis was broader and its upper leg bones longer. An African bush elephant bull, the biggest land animal alive, stands about half a metre taller and weighs about 5 to 7 tonnes. The big European mammoth bulls matched it. Unlike any elephant, the mammoth had a thick coat, small ears and a short tail."
+    "The woolly mammoth, Mammuthus primigenius, was a close relative of today's elephants, and not their ancestor. A typical Siberian bull was about the height of an Asian elephant bull and a little heavier for that height. Its pelvis was broader and its upper leg bones longer. An African bush elephant bull, the biggest land animal alive, stands up to about half a metre taller and weighs about 5 to 7 tonnes. The big European mammoth bulls matched it. Unlike any elephant, the mammoth had a thick coat, small ears and a short tail."
    ]
   },
   {
@@ -250,7 +250,7 @@
     {
      "h": "The Berezovka bull",
      "paras": [
-      "In August 1900 a local hunter found him in the bank of the Berezovka River, a tributary of the Kolyma in north-east Siberia. In 1901 an expedition from St Petersburg under Otto Herz dug him out and brought him to the city. Since 1903 he has been on show in the Zoological Museum there. The skeleton is mounted. The body is restored in the pose he was found in, on his belly with the front legs forward, the head and trunk modelled. He was far from complete: the top of the head, much of the back and most of the trunk had thawed and been eaten long before. He had grass between his teeth. He most likely fell into a gully or off a bank, broke his pelvis and a front leg and could not get out. Seeds on the plants he had eaten point to late summer."
+      "In August 1900 a local hunter found him in the bank of the Berezovka River, a tributary of the Kolyma in north-east Siberia. In 1901 an expedition from St Petersburg under Otto Herz dug him out, and in 1902 he reached the city. Since 1903 he has been on show in the Zoological Museum there. The skeleton is mounted. The body is restored in the pose he was found in, on his belly with the front legs forward, the head and trunk modelled. He was far from complete: the top of the head and much of the back had thawed and been eaten long before, and most of the trunk was gone. He had grass between his teeth. He most likely fell into a gully or off a bank, broke his pelvis and a front leg and could not get out. Seeds on the plants he had eaten point to late summer."
      ]
     },
     {
@@ -290,10 +290,10 @@
   {
    "type": "text",
    "id": "last-ones",
-   "nav": "When the last woolly mammoths lived",
-   "h": "When the last woolly mammoths lived",
+   "nav": "When did woolly mammoths go extinct?",
+   "h": "When did woolly mammoths go extinct?",
    "paras": [
-    "Woolly mammoths lived for hundreds of thousands of years, in the last ice age from Spain to Alaska. On the mainland the last ones lived in northern Siberia until about 10,000 years ago, on St Paul Island off Alaska until about 5,600 years ago. The last known population lived on Wrangel Island, in the Arctic Ocean off Siberia, until about 4,000 years ago, and they were not dwarfs. Why they ended is argued: on the mainland the warming at the end of the ice age and hunting by people, in shares nobody has settled. On St Paul the island shrank and fresh water ran short, with no people there. On Wrangel the end seems to have come fast, and nobody knows why: an icing from rain on snow is one idea, and people cannot be ruled out."
+    "Woolly mammoths lived for hundreds of thousands of years, in the last ice age from Spain to Alaska, and they died out in steps, not all at once. On the mainland the last ones lived in northern Siberia until about 10,000 years ago, on St Paul Island off Alaska until about 5,600 years ago. The last known population lived on Wrangel Island, in the Arctic Ocean off Siberia, until about 4,000 years ago, and they were not dwarfs. Why they died out is argued: on the mainland the warming at the end of the ice age and hunting by people, in shares nobody has settled. On St Paul the island shrank and fresh water ran short, with no people there. On Wrangel the end seems to have come fast, and nobody knows why: an icing from rain on snow is one idea, and people cannot be ruled out."
    ]
   },
   {
@@ -302,20 +302,16 @@
    "nav": "How sure this is",
    "h": "How sure this is",
    "paras": [
-    "Three things decide every number on this page.",
+    "Two things decide every number on this page.",
     {
      "points": [
       [
        "Where the heights and weights come from:",
-       "one study of 2016 measured many mammoth and elephant skeletons and did the sums the same way for all. The height is the skeleton's plus about 5.5 percent for flesh, the weight the volume of a body drawn around the bones. Nothing newer has replaced it."
+       "one study of 2016 brought together the measurements of many mammoth and elephant skeletons and did the calculations the same way for all. The height is the skeleton's plus about 5.5 percent for flesh, the weight the volume of a body drawn around the bones. We found nothing newer."
       ],
       [
        "Ours is one animal, not the species:",
        "one Siberian bull, a little under the Siberian average. So three numbers stand apart here: our bull, the typical Siberian bull and the big European bulls."
-      ],
-      [
-       "What is his and what is borrowed:",
-       "his bone lengths, pelvis, tail, skin and hair were measured. Head, trunk, outline and every bone's shape follow other mammoths, and the coat's colour is a choice."
       ]
      ]
     }
@@ -337,6 +333,10 @@
      "text": "Maxima from the museum in St Petersburg. Bulls up to 3.5 m, old bulls' tusks up to 4 m and about 100 kg, not averages."
     },
     {
+     "term": "4 m tall",
+     "text": "On the common size chart the 4 m animal is the southern mammoth, another species. Even record European woolly mammoth bulls stayed under 4 m."
+    },
+    {
      "term": "6 and 8 tonnes",
      "text": "6 tonnes is the average of the big European bulls, and of African bush elephant bulls. Only the very largest reached 8 tonnes, such as a bull from Siegsdorf in Bavaria at about 8.2 tonnes."
     },
@@ -350,11 +350,11 @@
     },
     {
      "term": "Mammoths died out 4,000 years ago",
-     "text": "True only of the last known population, on Wrangel Island. On the mainland the last ones lived until about 10,000 years ago."
+     "text": "Roughly true, and only of the last known population, on Wrangel Island, about 4,000 years ago. On the mainland the last ones lived until about 10,000 years ago."
     },
     {
      "term": "Frozen with food in the mouth",
-     "text": "Our bull had grass between his teeth. From that grew the picture of a mammoth frozen on the spot while eating. The leader of the dig read a fall, broken bones and a short death struggle."
+     "text": "Our bull had grass between his teeth. From that grew the picture of a mammoth frozen on the spot while eating. The leader of the dig read the find as a fall, with broken bones and a short death struggle."
     }
    ]
   },
@@ -364,7 +364,7 @@
    "nav": "Why our woolly mammoth looks like this",
    "h": "Why our woolly mammoth looks like this",
    "paras": [
-    "It is built to the measurements of the Berezovka bull's bones, and his height and weight follow from them. The coat's colour is our choice within the dark brown the evidence points to, and the right tusk mirrors the left. He stands in a walking stride, the trunk's tip on the ground."
+    "It is built to the measurements of the Berezovka bull's bones and stands in a walking stride, the trunk's tip on the ground."
    ]
   },
   {

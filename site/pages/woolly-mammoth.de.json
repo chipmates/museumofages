@@ -70,7 +70,7 @@
  },
  "meta": {
   "title": "Wollhaarmammut-Größe: etwa 2,7 bis 3,3 m | Museum of Ages",
-  "description": "Wollhaarmammut-Größe: Ein sibirischer Bulle maß an der Schulter etwa 2,7 bis 2,9 m und wog 4 bis 5 t. Unseres ist ein echter Bulle, neben einem Menschen.",
+  "description": "Wollhaarmammut-Größe: Ein sibirischer Bulle maß an der Schulter etwa 2,7 bis 2,9 m und wog etwa 4 bis 5 t. Unser Mammut ist ein echter Bulle, im Maßstab.",
   "og_title": "Wollhaarmammut-Größe: etwa 2,7 bis 3,3 m",
   "og_image_alt": "Ein Wollhaarmammut von der Seite im dunkelbraunen Fell, mit hoch gewölbtem Kopf, abfallendem Rücken, zwei gebogenen Stoßzähnen und einer Marke an der Schulter. Der graue Mensch daneben steht niedriger als die Spitzen der Stoßzähne."
  },
@@ -87,12 +87,12 @@
  },
  "top": {
   "h1": "Wie groß war ein Mammut?",
-  "answer": "Ein ausgewachsener sibirischer Bulle des Wollhaarmammuts maß an der Schulter etwa 2,7 bis 2,9 m und wog etwa 4 bis 5 t. Die größeren Bullen aus Europa kamen auf etwa 3 bis 3,3 m und etwa 5 bis 7 t. Unseres ist ein einzelner echter Bulle, 1900 im Permafrost Sibiriens gefunden: 2,71 m an der Schulter, etwa 4,2 t, aus seinen Knochen rekonstruiert. Neben dem Menschen von 1,70 m ist seine Schulter etwa anderthalb Menschen hoch, und sein Körper ist etwa zwei Menschen lang.",
+  "answer": "Ein ausgewachsener sibirischer Bulle des Wollhaarmammuts maß an der Schulter etwa 2,7 bis 2,9 m und wog etwa 4 bis 5 t. Die größeren Bullen aus Europa kamen auf etwa 3 bis 3,3 m und etwa 5 bis 7 t. Unser Mammut ist ein einzelner echter Bulle, 1900 im Permafrost Sibiriens gefunden: 2,71 m an der Schulter, etwa 4,2 t, aus seinen Knochen rekonstruiert. Neben dem Menschen von 1,70 m ist seine Schulter etwa anderthalb Menschen hoch.",
   "answer_more": "Ein sibirischer Mammutbulle war also etwa so hoch wie ein Bulle des Asiatischen Elefanten und für seine Höhe etwas schwerer. Ein großer Bulle des Afrikanischen Elefanten steht etwa einen halben Meter höher und wiegt mehr.",
   "scale": {
    "pic": "side",
    "tag": "tag_made",
-   "what": "Unser Wollhaarmammut neben einem Menschen von 1,70 m, im selben Maßstab. Es ist nach einem einzigen echten Tier gebaut, dem Beresowka-Bullen, 1900 im Permafrost im Nordosten Sibiriens gefunden. Die Marke an seiner Schulter zeigt seine eigene Schulterhöhe am lebenden Tier, 271 cm, aus seinen Knochen rekonstruiert. Als er starb, hatte er noch einen Stoßzahn, den linken. Der rechte war lange vorher ausgefallen, und die Jäger, die ihn fanden, trennten den linken ab und verkauften ihn. Unseres trägt beide, der rechte ist das Spiegelbild des linken, eine Rekonstruktion.",
+   "what": "Unser Wollhaarmammut neben einem Menschen von 1,70 m, im selben Maßstab. Es ist nach einem einzigen echten Tier gebaut, dem Beresowka-Bullen, 1900 im Permafrost im Nordosten Sibiriens gefunden. Die Marke an seiner Schulter zeigt seine eigene Schulterhöhe am lebenden Tier, 271 cm, aus seinen Knochen rekonstruiert. Als er starb, hatte er noch einen Stoßzahn, den linken. Der rechte war lange vorher ausgefallen, und die Jäger, die ihn fanden, trennten den linken ab und verkauften ihn. Unser Mammut trägt beide, der rechte ist das Spiegelbild des linken, eine Rekonstruktion.",
    "alt": "Ein Wollhaarmammut von der Seite im dunkelbraunen Fell, mit hoch gewölbtem Kopf, abfallendem Rücken, zwei gebogenen Stoßzähnen und einer Marke an der Schulter. Der graue Mensch daneben steht niedriger als die Spitzen der Stoßzähne.",
    "note": "Unsere eigene Rekonstruktion, nach veröffentlichten Maßen in Code gebaut und in unserer Engine gerendert. Keine Fotos.",
    "marks": [
@@ -112,8 +112,8 @@
    "close": {
     "pic": "close",
     "tag": "tag_made",
-    "what": "Der Kopf aus der Nähe, mit dem Menschen: das kleine Ohr, das Auge im langen Haar, die Rüsselspitze mit ihrem Finger und die Stoßzähne. Beide Stoßzähne sind Rekonstruktionen, der linke nach dem Gewicht seines einen Stoßzahns, der rechte als dessen Spiegelbild.",
-    "alt": "Der Kopf des Wollhaarmammuts aus der Nähe: ein kleines Ohr, das Auge im langen Haar, die Rüsselspitze mit Finger am Boden, zwei gebogene Stoßzähne. Daneben steht der graue Mensch."
+    "what": "Der Kopf aus der Nähe, mit dem Menschen: das Auge im langen Haar, die Rüsselspitze mit ihrem Finger und die Stoßzähne. Beide Stoßzähne sind Rekonstruktionen, der linke nach dem Gewicht seines einen Stoßzahns, der rechte als dessen Spiegelbild.",
+    "alt": "Der Kopf des Wollhaarmammuts aus der Nähe: das Auge im langen Haar, die Rüsselspitze mit Finger am Boden, zwei gebogene Stoßzähne. Daneben steht der graue Mensch."
    }
   },
   "guess": {
@@ -193,7 +193,7 @@
     {
      "cells": [
       "Der Mensch",
-      "1,70 m",
+      "1,70 m groß, vom Scheitel bis zur Sohle",
       "",
       "unsere Vergleichsfigur"
      ]
@@ -206,7 +206,7 @@
    "nav": "Mammut gegen Elefant",
    "h": "Mammut gegen Elefant",
    "paras": [
-    "Das Wollhaarmammut, Mammuthus primigenius, war ein naher Verwandter der heutigen Elefanten, nach seinen Genen dem Asiatischen Elefanten am nächsten, und nicht ihr Vorfahr. Ein typischer sibirischer Bulle war etwa so hoch wie ein Bulle des Asiatischen Elefanten und dafür etwas schwerer. Sein Becken war breiter, seine Oberarm- und Oberschenkelknochen waren länger. Ein Bulle des Afrikanischen Elefanten, des größten lebenden Landtiers, steht etwa einen halben Meter höher und wiegt etwa 5 bis 7 t. Die großen europäischen Mammutbullen kamen ihm gleich. Anders als jeder Elefant hatte das Mammut ein dichtes Fell, kleine Ohren und einen kurzen Schwanz."
+    "Das Wollhaarmammut, Mammuthus primigenius, war ein naher Verwandter der heutigen Elefanten, und nicht ihr Vorfahr. Ein typischer sibirischer Bulle war etwa so hoch wie ein Bulle des Asiatischen Elefanten und dafür etwas schwerer. Sein Becken war breiter, seine Oberarm- und Oberschenkelknochen waren länger. Ein Bulle des Afrikanischen Elefanten, des größten lebenden Landtiers, steht bis zu etwa einen halben Meter höher und wiegt etwa 5 bis 7 t. Die großen europäischen Mammutbullen kamen ihm gleich. Anders als jeder Elefant hatte das Mammut ein dichtes Fell, kleine Ohren und einen kurzen Schwanz."
    ]
   },
   {
@@ -250,7 +250,7 @@
     {
      "h": "Der Beresowka-Bulle",
      "paras": [
-      "Im August 1900 fand ihn ein Jäger aus der Gegend in der Uferböschung der Beresowka, eines Nebenflusses der Kolyma im Nordosten Sibiriens. 1901 grub ihn eine Expedition aus St. Petersburg unter Otto Herz aus und brachte ihn in die Stadt. Seit 1903 steht er dort im Zoologischen Museum. Das Skelett ist montiert. Der Körper ist in der Lage wiederhergestellt, in der er gefunden wurde, auf dem Bauch mit den Vorderbeinen nach vorn, Kopf und Rüssel modelliert. Vollständig war er längst nicht mehr. Die Oberseite des Kopfes, ein großer Teil des Rückens und der größte Teil des Rüssels waren lange vorher aufgetaut und gefressen worden. Zwischen den Zähnen hatte er Gras. Wahrscheinlich stürzte er in eine Rinne oder von einem Steilufer, brach sich das Becken und ein Vorderbein und kam nicht mehr heraus. Samen an den Pflanzen, die er gefressen hatte, deuten auf den Spätsommer."
+      "Im August 1900 fand ihn ein Jäger aus der Gegend in der Uferböschung der Beresowka, eines Nebenflusses der Kolyma im Nordosten Sibiriens. 1901 grub ihn eine Expedition aus St. Petersburg unter Otto Herz aus, 1902 kam er in der Stadt an. Seit 1903 ist er dort im Zoologischen Museum ausgestellt. Das Skelett ist montiert. Der Körper ist in der Lage wiederhergestellt, in der er gefunden wurde, auf dem Bauch mit den Vorderbeinen nach vorn, Kopf und Rüssel modelliert. Vollständig war er längst nicht mehr. Die Oberseite des Kopfes und ein großer Teil des Rückens waren lange vorher aufgetaut und gefressen worden, und der Rüssel fehlte größtenteils. Zwischen den Zähnen hatte er Gras. Wahrscheinlich stürzte er in eine Rinne oder von einem Steilufer, brach sich das Becken und ein Vorderbein und kam nicht mehr heraus. Samen an den Pflanzen, die er gefressen hatte, deuten auf den Spätsommer."
      ]
     },
     {
@@ -275,7 +275,7 @@
         "Kopf, Ohr, Auge und Vorderfuß: nach einem anderen gefrorenen sibirischen Bullen.",
         "Der Umriss von der Seite: nach der Rekonstruktion eines dritten Bullen.",
         "Der Rüssel: nach anderen gefrorenen Mammuten.",
-        "Die Form jedes Knochens: nach anderen Montagen. Nur die Längen sind seine.",
+        "Die Form jedes Knochens: nach anderen montierten Skeletten. Nur die Längen sind seine.",
         "Der rechte Stoßzahn: das Spiegelbild des linken.",
         "Die Farbe des Fells: unsere Wahl."
        ]
@@ -290,10 +290,10 @@
   {
    "type": "text",
    "id": "last-ones",
-   "nav": "Wann die letzten Wollhaarmammute lebten",
-   "h": "Wann die letzten Wollhaarmammute lebten",
+   "nav": "Wann starben die Wollhaarmammute aus?",
+   "h": "Wann starben die Wollhaarmammute aus?",
    "paras": [
-    "Wollhaarmammute lebten Hunderttausende von Jahren, in der letzten Eiszeit von Spanien bis Alaska. Auf dem Festland lebten die letzten bis vor etwa 10.000 Jahren in Nordsibirien, auf der Insel St. Paul vor Alaska bis vor etwa 5.600 Jahren. Die letzte bekannte Population lebte auf der Wrangelinsel im Nordpolarmeer vor Sibirien bis vor etwa 4.000 Jahren, und Zwerge waren diese Tiere nicht. Warum sie endeten, ist umstritten: auf dem Festland die Erwärmung am Ende der Eiszeit und die Jagd durch Menschen, in Anteilen, die niemand geklärt hat. Auf St. Paul schrumpfte die Insel, und das Süßwasser wurde knapp, Menschen gab es dort keine. Auf der Wrangelinsel kam das Ende wohl rasch, und niemand weiß, warum: Eine Eisschicht nach Regen auf Schnee ist eine Idee, und Menschen lassen sich nicht ausschließen."
+    "Wollhaarmammute lebten Hunderttausende von Jahren, in der letzten Eiszeit von Spanien bis Alaska, und sie starben nicht auf einmal aus, sondern nach und nach. Auf dem Festland lebten die letzten bis vor etwa 10.000 Jahren in Nordsibirien, auf der Insel St. Paul vor Alaska bis vor etwa 5.600 Jahren. Die letzte bekannte Population lebte auf der Wrangelinsel im Nordpolarmeer vor Sibirien bis vor etwa 4.000 Jahren, und Zwerge waren diese Tiere nicht. Warum sie ausstarben, ist umstritten: auf dem Festland die Erwärmung am Ende der Eiszeit und die Jagd durch Menschen, in Anteilen, die niemand geklärt hat. Auf St. Paul schrumpfte die Insel, und das Süßwasser wurde knapp, Menschen gab es dort keine. Auf der Wrangelinsel kam das Ende wohl rasch, und niemand weiß, warum: Eine Eisschicht nach Regen auf Schnee ist eine Idee, und Menschen lassen sich nicht ausschließen."
    ]
   },
   {
@@ -302,20 +302,16 @@
    "nav": "Wie sicher das ist",
    "h": "Wie sicher das ist",
    "paras": [
-    "Drei Dinge entscheiden über jede Zahl auf dieser Seite.",
+    "Zwei Dinge entscheiden über jede Zahl auf dieser Seite.",
     {
      "points": [
       [
        "Woher die Höhen und Gewichte kommen:",
-       "Eine Studie von 2016 hat viele Mammut- und Elefantenskelette vermessen und Höhe und Gewicht für alle auf dieselbe Weise berechnet. Die Höhe ist die des Skeletts plus etwa 5,5 Prozent für das Fleisch, das Gewicht das Volumen eines um die Knochen gezeichneten Körpers. Nichts Neueres hat sie abgelöst."
+       "Eine Studie von 2016 hat die Maße vieler Mammut- und Elefantenskelette zusammengetragen und Höhe und Gewicht für alle auf dieselbe Weise berechnet. Die Höhe ist die des Skeletts plus etwa 5,5 Prozent für das Fleisch, das Gewicht das Volumen eines um die Knochen gezeichneten Körpers. Neueres haben wir nicht gefunden."
       ],
       [
-       "Unseres ist ein Tier, nicht die Art:",
+       "Unser Mammut ist ein Tier, nicht die Art:",
        "ein einzelner sibirischer Bulle, etwas unter dem sibirischen Durchschnitt. Darum stehen hier drei Zahlen getrennt: unser Bulle, der typische sibirische Bulle und die großen europäischen Bullen."
-      ],
-      [
-       "Was seines ist und was geliehen:",
-       "Seine Knochenlängen, sein Becken, sein Schwanz, seine Haut und sein Haar wurden gemessen. Kopf, Rüssel, Umriss und die Form jedes Knochens folgen anderen Mammuten, und die Farbe des Fells ist eine Wahl."
       ]
      ]
     }
@@ -337,11 +333,15 @@
      "text": "Höchstwerte des Museums in St. Petersburg. Bullen bis 3,5 m, Stoßzähne alter Bullen bis 4 m und etwa 100 kg, keine Durchschnitte."
     },
     {
-     "term": "6 und 8 t",
-     "text": "6 t ist der Durchschnitt der großen europäischen Bullen, und auch der Bullen des Afrikanischen Elefanten. 8 t erreichten nur die allergrößten, etwa ein Bulle aus Siegsdorf in Bayern mit etwa 8,2 t."
+     "term": "4 m hoch",
+     "text": "Auf der verbreiteten Größentafel ist das Tier mit 4 m das Südmammut, eine andere Art. Selbst die europäischen Rekordbullen des Wollhaarmammuts blieben unter 4 m."
     },
     {
-     "term": "Rotes Fell",
+     "term": "6 und 8 t",
+     "text": "6 t ist der Durchschnitt der großen europäischen Bullen, und auch der Bullen des Afrikanischen Elefanten. 8 t erreichten nur die allergrößten, zum Beispiel ein Bulle aus Siegsdorf in Bayern mit etwa 8,2 t."
+    },
+    {
+     "term": "Rotblondes Fell",
      "text": "Die Farbe von Haar, das Jahrtausende im gefrorenen Boden lag und dort seine eigene Farbe verlor und die des Bodens annahm. Im Leben war das Fell wahrscheinlich dunkelbraun und gemischt."
     },
     {
@@ -350,11 +350,11 @@
     },
     {
      "term": "Mammute starben vor 4.000 Jahren aus",
-     "text": "Das gilt nur für die letzte bekannte Population, auf der Wrangelinsel. Auf dem Festland lebten die letzten bis vor etwa 10.000 Jahren."
+     "text": "Ungefähr, und nur für die letzte bekannte Population, auf der Wrangelinsel, vor etwa 4.000 Jahren. Auf dem Festland lebten die letzten bis vor etwa 10.000 Jahren."
     },
     {
      "term": "Mit Futter im Maul eingefroren",
-     "text": "Unser Bulle hatte Gras zwischen den Zähnen. Daraus wuchs das Bild eines Mammuts, das beim Fressen auf der Stelle einfror. Der Leiter der Grabung las einen Sturz, gebrochene Knochen und einen kurzen Todeskampf."
+     "text": "Unser Bulle hatte Gras zwischen den Zähnen. Daraus wuchs das Bild eines Mammuts, das beim Fressen auf der Stelle einfror. Der Leiter der Grabung deutete die Funde als Sturz, mit gebrochenen Knochen und einem kurzen Todeskampf."
     }
    ]
   },
@@ -364,7 +364,7 @@
    "nav": "Warum unser Wollhaarmammut so aussieht",
    "h": "Warum unser Wollhaarmammut so aussieht",
    "paras": [
-    "Es ist nach den Maßen der Knochen des Beresowka-Bullen gebaut, und daraus folgen seine Höhe und sein Gewicht. Die Farbe des Fells ist unsere Wahl innerhalb des Dunkelbrauns, auf das die Belege deuten, und der rechte Stoßzahn spiegelt den linken. Es steht im Schritt, die Rüsselspitze auf dem Boden."
+    "Es ist nach den Maßen der Knochen des Beresowka-Bullen gebaut und steht im Schritt, die Rüsselspitze auf dem Boden."
    ]
   },
   {

@@ -893,11 +893,11 @@
             "3.5 m only as the museum's maximum for bulls"
           ],
           [
-            "(?<![\\d.,])4\\s?m\\s(?:tall|high|hoch|at\\sthe\\sshoulder|an\\sder\\sschulter)",
+            "(?s)^(?!.*(?:southern\\smammoth|südmammut)).*(?<![\\d.,])4\\s?m\\s(?:tall|high|hoch|at\\sthe\\sshoulder|an\\sder\\sschulter)",
             "4 m tall is the southern mammoth on the size chart, another species"
           ],
           [
-            "(?s)^(?!.*(?:tusk|stoßz|maxim|höchst|up\\sto|bis\\szu)).*(?<![\\d.,])4\\s?m\\b",
+            "(?s)^(?!.*(?:tusk|stoßz|maxim|höchst|up\\sto|bis\\szu|southern\\smammoth|südmammut)).*(?<![\\d.,])4\\s?m\\b",
             "4 m only for old bulls' tusks, as a maximum"
           ],
           [
