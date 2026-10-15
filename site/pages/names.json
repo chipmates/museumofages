@@ -219,7 +219,7 @@
     { "text": "St Petersburg", "whole": true },
     { "text": "St. Petersburg", "whole": true },
     { "text": "Brachiosaurus brancai", "whole": true, "taxon": true },
-    { "text": "Elmer Riggs", "person": true },
+    { "text": "Elmer Riggs", "whole": true },
     { "text": "Field Columbian Museum", "lang": "en" },
     { "text": "Grand Junction", "lang": "en", "whole": true },
     { "text": "American Journal of Science", "lang": "en" },
