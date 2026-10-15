@@ -928,10 +928,12 @@ export function createWing(): WingModule {
     earlier.type = 'button'
     earlier.append(icon(STEP_BACK))
     earlier.addEventListener('click', () => look?.ways()?.step(-1))
-    foot.append(back, book, ...(walk ? [walk.hold] : []), earlier, talk, gold)
+    foot.append(back, ...(walk ? [walk.plan] : []), book, ...(walk ? [walk.hold] : []), earlier, talk, gold)
     root.append(name, line, drawer, keys, ...(walk ? [walk.element] : []), foot)
     // the hold takes the book's seat while the eye walks, where the book stands down
     walk?.hold.classList.add('film-hold')
+    // the Plan's square stands in the seat after the way back, in every state of the walk
+    walk?.plan.classList.add('film-plan')
     // over the close look's layer, as the live phone form stands it, so its foot row stays lit under a look
     h.labels.append(root)
     // whether the age had to drop under a long heading, read wherever the row's size changes;
@@ -1373,6 +1375,8 @@ export function createWing(): WingModule {
       // the turn is offered to a hand that can turn the glass, as the welcome's line is
       sideways: () => (form === 'upright' && matchMedia('(pointer: coarse)').matches ? turnWords() || null : null),
       looked: () => lookedHere || (readVisit('vinci')?.opened.length ?? 0) > 0,
+      // the wing's own Plan (film-ways), the one the panel's row and the key open
+      plan: () => dispatchEvent(new Event('na-wing-plan')),
     }, signal)
     if (form === 'desk' && (deskOn('words') || deskOn('ways'))) desk = createDeskChrome({
       stage: h.stage, wing, lang,

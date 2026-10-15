@@ -202,7 +202,10 @@ export function mountFilmWays(host: FilmWaysHost): void {
     // what is typed inside a field or an open close look stays there
     if (target.closest('input,textarea,select,[contenteditable="true"],.vitrine')) return
     event.preventDefault()
-    if (key === 'p') openPlan()
+    // the key is the Plan's square's own: a moving walk holds first, as a press on the square does
+    const square = key === 'p' ? wing.querySelector<HTMLElement>('.walk-plan') : null
+    if (square) square.click()
+    else if (key === 'p') openPlan()
     else openLife()
   }, { signal })
   // the museum's panel opens the plan of the wing standing

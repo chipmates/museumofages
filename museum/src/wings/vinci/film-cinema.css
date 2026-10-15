@@ -49,7 +49,7 @@ html:has(#wing[data-film='upright']) #rail { display: none !important; }
   pointer-events: none;
 }
 #wing[data-film='cinema'] .film-foot > * { pointer-events: auto; }
-#wing[data-film='cinema'] .film-foot > :is(.film-back, .film-book, .film-hold, .film-gold, .film-talk) {
+#wing[data-film='cinema'] .film-foot > :is(.film-back, .film-plan, .film-book, .film-hold, .film-gold, .film-talk) {
   position: relative;
   top: auto;
   left: auto;
@@ -760,6 +760,6 @@ html:has(#wing[data-film='cinema']) :is(#inst-sound, #inst-plan) { display: none
 /* the seats stand over the picture on the card's own solid ground, so a grey
    arrow keeps its contrast over a bright painting; a disabled one dims its
    sign, never its ground */
-#wing[data-film='cinema'] .film-foot > :is(.film-back, .film-book, .film-hold) { background: var(--plate); }
+#wing[data-film='cinema'] .film-foot > :is(.film-back, .film-plan, .film-book, .film-hold) { background: var(--plate); }
 #wing[data-film='cinema'] .film-foot > .film-back:disabled { opacity: 1; }
 #wing[data-film='cinema'] .film-foot > .film-back:disabled > .film-ic { opacity: .45; }

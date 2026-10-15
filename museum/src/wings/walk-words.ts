@@ -15,6 +15,8 @@ export const WALK_WORDS = {
   walkOn: { en: 'Walk on', de: 'Weitergehen' },
   /** the held walk's state, in the tip's row */
   paused: { en: 'Paused', de: 'Angehalten' },
+  /** the square beside the ways that opens the Plan: the Plan's own pair, filed in every catalog */
+  planButton: { en: 'Plan', de: 'Plan' },
   /** the walk ends at once at the place it goes to */
   skip: { en: 'Skip to the stop', de: 'Direkt zur Station' },
   /** a key, a mouse drag or the wheel a guided walk does not answer */
@@ -24,6 +26,7 @@ export const WALK_WORDS = {
   /** the tips while the eye walks (walk-rules.mjs nextTip); the first names the hold, whose skip stands right above it */
   tipKeys: { en: 'The space bar pauses the walk.', de: 'Mit der Leertaste hältst du an.' },
   tipKeysTouch: { en: 'Tap ‖ to pause the walk.', de: 'Tippe auf ‖, um anzuhalten.' },
-  tipPlan: { en: 'At a stop, the Plan in Instruments takes you to any other.', de: 'An jeder Station führt der Plan in „Instrumente“ überallhin.' },
+  /** names the Plan's square by the sign it shows, on every form */
+  tipPlan: { en: 'The map sign opens the Plan. It takes you to any stop.', de: 'Das Kartensymbol öffnet den Plan. Er führt zu jeder Station.' },
   tipLook: { en: 'Press the gold ring under a work to look closer.', de: 'Drück auf den Ring unter einem Werk, um es näher anzusehen.' },
 } as const satisfies Record<string, Bilingual>

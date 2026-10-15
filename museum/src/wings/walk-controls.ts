@@ -11,7 +11,10 @@
      not answer is told what it does instead, in the tip's place while the eye
      walks, over the line at rest, gone after a few seconds or on a press.
    · ONCE A VISIT is a flag for the open tab; a store that refuses counts by
-     the page load. */
+     the page load.
+   · THE PLAN'S SQUARE stands in the ways at rest, walking and held, so every
+     stop is one press away from the same place: a moving walk holds first,
+     and closing the Plan leaves it held. */
 
 import { langTag, lang, say } from './content'
 import { WALK_WORDS } from './walk-words'
@@ -35,6 +38,8 @@ export interface WalkPanelHost {
   sideways(): string | null
   /** a close look has been opened this visit */
   looked(): boolean
+  /** the wing's own Plan, opened over whatever stands */
+  plan(): void
 }
 
 export interface WalkPanel {
@@ -42,6 +47,8 @@ export interface WalkPanel {
   readonly element: HTMLElement
   /** the hold, which the form stands beside its gold (a phone's form shows it while the walk moves) */
   readonly hold: HTMLButtonElement
+  /** the square that opens the Plan, which the form stands after its way back in every state */
+  readonly plan: HTMLButtonElement
   /** a walk began; `toStop` a walk between stops, which may carry a tip */
   began(toStop: boolean): void
   /** the walk arrived, or was cut short */
@@ -57,6 +64,8 @@ export interface WalkPanel {
 const SVG = 'http://www.w3.org/2000/svg'
 const HOLD_ICON = 'M5.5 3.5v9M10.5 3.5v9'
 const ON_ICON = 'M5 3.2l7.6 4.8L5 12.8z'
+/** a folded map: three panels and their two folds */
+const MAP_ICON = 'M1.8 4.2l3.8-1.8 4.8 1.8 3.8-1.8v9.4l-3.8 1.8-4.8-1.8-3.8 1.8zM5.6 2.4v9.4M10.4 4.2v9.4'
 const TURN_ICON = 'M5.2 2.8h5.6c.6 0 1 .4 1 1v8.4c0 .6-.4 1-1 1H5.2c-.6 0-1-.4-1-1V3.8c0-.6.4-1 1-1zM13.8 7.2a5.6 5.6 0 0 0-2-3.6M2.2 8.8a5.6 5.6 0 0 0 2 3.6'
 /** how long the keys' hint stands without a press */
 const HINT_MS = 6000
@@ -156,6 +165,20 @@ export function createWalkPanel(host: WalkPanelHost, signal: AbortSignal): WalkP
   hold.append(holdIcon, holdWord)
   hold.addEventListener('click', () => { if (host.held()) host.goOn(); else host.hold() })
 
+  const plan = make('button', 'walk-plan')
+  plan.type = 'button'
+  plan.setAttribute('aria-haspopup', 'dialog')
+  plan.setAttribute('aria-keyshortcuts', 'p')
+  const planWord = make('span', 'walk-plan-word')
+  const planSign = make('span', 'walk-plan-sign')
+  planSign.append(icon(MAP_ICON, 'walk-ic'))
+  plan.append(planSign, planWord)
+  plan.addEventListener('click', () => {
+    // a moving walk holds at its frame first, so the Plan's close leaves it held
+    if (walking && !host.held()) host.hold()
+    host.plan()
+  })
+
   let walking = false
   let tipNow: WalkTip | 'hint' | null = null
   let hintTimer = 0
@@ -224,6 +247,12 @@ export function createWalkPanel(host: WalkPanelHost, signal: AbortSignal): WalkP
   addEventListener('pointerdown', pressed, { capture: true, signal })
   addEventListener('keydown', e => { if (!/^[wasd]$/i.test(e.key)) pressed() }, { capture: true, signal })
 
+  function paintPlan(): void {
+    const planName = say(WALK_WORDS.planButton)
+    plan.setAttribute('aria-label', planName)
+    if (planWord.textContent !== planName) planWord.textContent = planName
+    plan.lang = langTag(lang())
+  }
   function paint(): void {
     kicker.textContent = say(WALK_WORDS.walkingTo)
     name.textContent = host.to()
@@ -235,14 +264,17 @@ export function createWalkPanel(host: WalkPanelHost, signal: AbortSignal): WalkP
     holdWord.textContent = say(held ? WALK_WORDS.walkOn : WALK_WORDS.pause)
     holdIcon.querySelector('path')?.setAttribute('d', held ? ON_ICON : HOLD_ICON)
     hold.dataset['held'] = String(held)
+    paintPlan()
     element.dataset['held'] = String(held)
     element.lang = langTag(lang())
     paintTip()
   }
 
+  paintPlan()
   return {
     element,
     hold,
+    plan,
     began(toStop) {
       clearRestHint()
       walking = true
@@ -297,6 +329,7 @@ export function createWalkPanel(host: WalkPanelHost, signal: AbortSignal): WalkP
       clearRestHint()
       element.remove()
       hold.remove()
+      plan.remove()
     },
   }
 }

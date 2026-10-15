@@ -134,7 +134,7 @@
   padding-bottom: env(safe-area-inset-bottom);
   box-sizing: content-box;
 }
-.film-back, .film-book, .film-hold {
+.film-back, .film-plan, .film-book, .film-hold {
   position: absolute;
   top: 14px;
   width: 44px;
@@ -152,7 +152,7 @@
 }
 /* the seats stand over the film: a short halo of the wall keeps the ring 3 to 1 on a sunlit floor.
    It is cut to the seat's own corner: a spread shadow would round its corner by the halo's width. */
-.film-back::before, .film-book::before, .film-hold::before {
+.film-back::before, .film-plan::before, .film-book::before, .film-hold::before {
   content: ''; position: absolute; inset: 0; border-radius: inherit; pointer-events: none;
   box-shadow: 0 0 0 6px color-mix(in srgb, var(--ui-ground) 60%, transparent);
   clip-path: inset(-3px round var(--ui-r-seat-phone));
@@ -161,9 +161,16 @@
    book at its widest (the gold's max-width below) */
 .film-back { left: 16px; }
 .film-book, .film-hold { left: 68px; }
-/* the corner target runs into the corner: back 0 to 64, the book 64 to 116 */
+/* THE FILM'S UPRIGHT ROW HAS FOUR SEATS: the Plan's square after the way
+   back, the book (or the hold) beside gold. In a close look the Plan stands
+   down and the work before keeps the second seat. */
+.film-plan { left: 68px; }
+:where(#wing[data-film='upright']) .film-foot > :is(.film-book:not(.vinci-phone-earlier), .film-hold) { left: 120px; }
+.film-plan .walk-ic { width: 18px; height: 18px; }
+.film-box[data-look='true'] .film-plan { display: none; }
+/* the corner target runs into the corner: back 0 to 64, the next seats 52 wide each */
 .film-back::after { content: ''; position: absolute; left: -16px; right: -4px; top: -2px; bottom: -10px; }
-.film-book::after, .film-hold::after { content: ''; position: absolute; left: -4px; right: -4px; top: -2px; bottom: -2px; }
+.film-plan::after, .film-book::after, .film-hold::after { content: ''; position: absolute; left: -4px; right: -4px; top: -2px; bottom: -2px; }
 .film-back:disabled { opacity: .45; cursor: default; }
 .film-ic { width: 16px; height: 16px; fill: none; stroke: currentColor; stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; }
 .film-ic.film-ic-fill { fill: currentColor; stroke-width: 1; width: 14px; height: 14px; }
@@ -189,6 +196,8 @@
   cursor: pointer;
 }
 .film-gold::after { content: ''; position: absolute; left: -8px; right: -12px; top: -4px; bottom: -4px; }
+/* gold keeps 16 px clear of the fourth seat; a close look's row has two seats and keeps the old room */
+:where(#wing[data-film='upright']) .film-box:not([data-look='true']) .film-gold { max-width: calc(100% - 192px); }
 .film-gold:disabled { opacity: .55; cursor: default; }
 /* the name keeps one line where the pill has the room, and wraps whole words where it has not;
    its last two words stay together, so no word stands alone on the last row */
@@ -285,6 +294,9 @@
 .film-box[data-end='true'] .film-foot { display: flex; align-items: flex-start; gap: 8px; height: 68px; padding: 12px 12px env(safe-area-inset-bottom) 16px; }
 .film-box[data-end='true'] .film-back { position: relative; top: 2px; left: auto; flex: 0 0 44px; }
 .film-box[data-end='true'] .film-book { display: none; }
+/* the endings take the row on a phone: the Plan's square stands down there, as the book does upright,
+   and the Plan stays one press away in the panel (a 360 phone's German and Bulgarian endings ran off the glass) */
+.film-box[data-end='true'] .film-plan { display: none; }
 .film-box[data-end='true'] .film-talk,
 .film-box[data-end='true'] .film-gold { position: relative; top: auto; right: auto; box-sizing: border-box; min-width: auto; max-width: none; height: 48px; }
 .film-box[data-end='true'] .film-talk { flex: 0 1 auto; }

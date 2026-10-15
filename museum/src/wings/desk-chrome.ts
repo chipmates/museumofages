@@ -280,7 +280,9 @@ export function createDeskChrome(host: DeskChromeHost): DeskChrome {
   ring.append(ringLine)
   onArrow.append(ring, icon(ARROW_ON))
   on.append(onWords, onArrow)
-  waysRow.append(back, ...(host.walk ? [host.walk.hold] : []), on)
+  /* the Plan's square stands after the way back, left of the hold and gold,
+     as on the phone: the way out's word beside the way back never moves it */
+  waysRow.append(back, ...(host.walk ? [host.walk.plan, host.walk.hold] : []), on)
 
   /* THE THREAD. One segment a stop, in the order the walk takes them: the
      quiet stops short, the chapter cuts as uprights, the count in digits for
