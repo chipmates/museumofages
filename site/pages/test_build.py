@@ -1332,6 +1332,25 @@ class Case(unittest.TestCase):
             self.save(lang, data, page)
         self.fails(r"an empty cell needs labels\.no_figure")
 
+    def test_a_table_of_six_columns_stands_as_cards_on_a_wide_screen_too(self):
+        """Six columns are too narrow for their words on any screen: a page with such a table carries the wide screen's
+        cards, and a page whose tables have fewer columns carries no such rule."""
+        six = {self.data("en", p)["page"]["id"] for p in self.scale_pages()
+               if any(b["type"] == "numbers" and len(b["cols"]) >= 6 for b in self.data("en", p)["blocks"])}
+        if not six:
+            self.skipTest("no table has six columns")
+        out, written = self.build()
+        for path in written:
+            data, lang = self.page_of(path)
+            text = path.read_text(encoding="utf-8")
+            with self.subTest(page=data["page"]["id"], lang=lang):
+                if data["page"]["id"] in six:
+                    self.assertIn("@media (min-width:1200px){.sc-table:has(thead th:nth-child(6)) thead{position:absolute", text)
+                    self.assertIn(".sc-table:has(thead th:nth-child(6)) td:empty::after{content:attr(data-none)", text)
+                else:
+                    self.assertNotIn("nth-child(6)", text)
+        shutil.rmtree(out)
+
     def test_a_row_shorter_than_its_columns_stops_the_build(self):
         page = self.scale_page()
         for lang in ("en", "de"):

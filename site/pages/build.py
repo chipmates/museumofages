@@ -714,6 +714,26 @@ def swatch_rules(defs):
     return SWATCH + "".join(rules) if rules else ""
 
 
+# Six columns are too narrow for their words even on a wide screen: one card a row there too, as several.css lays
+# five below it. Only a page with such a table carries the rules, so no other page's style changes.
+SIX = ".sc-table:has(thead th:nth-child(6))"
+WIDE_CARDS = "@media (min-width:1200px){%s}" % "".join(f"{SIX}{part}" for part in (
+    " thead{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%)}",
+    " tbody{display:block;border-top:1px solid var(--hair-strong)}",
+    " tr{display:block;padding:12px 0 13px;border-bottom:1px solid var(--hair)}",
+    f" th,{SIX} td{{display:block;padding:0;border:0}}",
+    " tbody th{margin-bottom:6px;font-size:1rem}",
+    " td{display:grid;grid-template-columns:10rem minmax(0,1fr);column-gap:16px;padding:3px 0}",
+    " td::before{content:attr(data-k);padding-top:2px;font-size:.6875rem;letter-spacing:.09em;text-transform:uppercase;"
+    "color:var(--ink-quiet)}",
+    " td:empty::after{content:attr(data-none);color:var(--ink-quiet)}"))
+
+
+def table_rules(data):
+    """The wide screen's cards for a table of numbers with six columns or more, only on a page that has one."""
+    return WIDE_CARDS if any(b["type"] == "numbers" and len(b["cols"]) >= 6 for b in data["blocks"]) else ""
+
+
 MARK_AT = r"(\d{1,3}(?:\.\d+)?)% (\d{1,3}(?:\.\d+)?)%(?: (start|end))?"
 # The phones the labels are laid for besides the widths a picture's sizes name: from the first up, no words touch
 MARK_SCREENS = (360, 390)
@@ -1754,7 +1774,7 @@ def render(page, lang, data, shared, out_root):
                              "css_chart" if works or "drawing" in data["top"] or any(b["type"] == "text" for b in data["blocks"]) else "css"]
                       + (shared["langs_css"] + chrome["by"] if chrome["langs"] else ""),
         "css.faces": faces(root, lang) + focus + person_rules(data["pics"]) + span_rules(data["pics"]) + swatch_rules(data["pics"]) + top_rules(data["pics"])
-                     + (shared["css_several"] + mark_rules(data) if marked_figures(data) or has_points(data) else ""),
+                     + table_rules(data) + (shared["css_several"] + mark_rules(data) if marked_figures(data) or has_points(data) else ""),
         "html.preload": preload,
         "html.theme": f'<meta name="theme-color" content="{chrome["theme"]}">\n' if chrome["theme"] else "",
         "html.header": chrome["header"],
