@@ -1403,14 +1403,14 @@
   {
    "path": "pages/pics/img/animals-brachiosaurus-og-de-1200x630.png",
    "url": "/static/img/animals-brachiosaurus-og-de-1200x630.png",
-   "bytes": 99186,
-   "sha256": "3e62d752fe4119f1eb0dc5119867fdc9aed60da749c9f169edb6c4736cc7a90c"
+   "bytes": 99054,
+   "sha256": "9f45f5eb3b3672efd6918bc8dc28701d05916e2c04ba13f08d7c5a86627c71d2"
   },
   {
    "path": "pages/pics/img/animals-brachiosaurus-og-en-1200x630.png",
    "url": "/static/img/animals-brachiosaurus-og-en-1200x630.png",
-   "bytes": 95212,
-   "sha256": "ceb0c56f53467a1256b14e34dec1472a03775a0454588608bab3d2e7abfb32c5"
+   "bytes": 95210,
+   "sha256": "ead4135c4a2c01649805707731b3d7fae27f602d7a22c75ddd5b3b970a7a2053"
   },
   {
    "path": "pages/pics/img/animals-brachiosaurus-side-1600.avif",
@@ -1679,14 +1679,14 @@
   {
    "path": "pages/pics/img/animals-spinosaurus-og-de-1200x630.png",
    "url": "/static/img/animals-spinosaurus-og-de-1200x630.png",
-   "bytes": 163624,
-   "sha256": "df5e72a0c29dcf85ed85b46b2c4b550865d5fb7d9efde740e9e099c2bcf898c6"
+   "bytes": 105788,
+   "sha256": "2c1f001540251192b8f38c0cd1e558db63444a5d68460f69fe63085d6daf4452"
   },
   {
    "path": "pages/pics/img/animals-spinosaurus-og-en-1200x630.png",
    "url": "/static/img/animals-spinosaurus-og-en-1200x630.png",
-   "bytes": 158535,
-   "sha256": "0bf08a8e8ef2e30810ad3bd3483daa1e3fc816bc851b66f5c5cabf9143c4f18e"
+   "bytes": 99163,
+   "sha256": "fc8611a421942f230128c243036a30964bc8446b71b4d15b3b93cba0aa6748eb"
   },
   {
    "path": "pages/pics/img/animals-spinosaurus-side-1600.avif",
@@ -1775,14 +1775,14 @@
   {
    "path": "pages/pics/img/animals-t-rex-og-de-1200x630.png",
    "url": "/static/img/animals-t-rex-og-de-1200x630.png",
-   "bytes": 154076,
-   "sha256": "f11f46c6885d30fe20a9a9608d72ad0aa35511809d047afed29b927542a623f1"
+   "bytes": 111368,
+   "sha256": "9042cd4fae405fbe2cad9f36b94570802608dce69382b237778da18029294537"
   },
   {
    "path": "pages/pics/img/animals-t-rex-og-en-1200x630.png",
    "url": "/static/img/animals-t-rex-og-en-1200x630.png",
-   "bytes": 154674,
-   "sha256": "c96ad602602a1658713f9105188a5d5c50b7e18a67e928e15509204e3ee6d4d9"
+   "bytes": 112810,
+   "sha256": "9f89c6fbf705156e41fcfb019c7ac4198bde223888994d9e2531ce37205509dd"
   },
   {
    "path": "pages/pics/img/animals-t-rex-side-1600.avif",

@@ -861,6 +861,16 @@ class Case(unittest.TestCase):
             self.assertFalse(any(r.endswith(("(9", "2.9")) for r in rows), rows)
             # the last row stands clear of the rule over the address
             self.assertLess(max(float(v) for v in re.findall(r'<text x="60" y="([\d.]+)"', svg)[:-1]), 630 - 62 - 30)
+        # a range keeps its two ends, a short name its two parts and a German article its noun
+        for short in ({"h1": "How big was T. rex?", "line": "About 12 m (39 ft) long, roughly 8 to 9 tonnes"},
+                      {"h1": "Wie groß war ein T. rex?", "line": "Etwa 12 m lang, grob 8 bis 9 t"},
+                      {"h1": "Wie groß war der Spinosaurus?", "line": "Etwa 14 m lang und 7 bis 8 Tonnen schwer"}):
+            svg = chart.picture_still_svg({**short, "person": "1.70 m", "site": "museumofages.org"}, colours, "x.png",
+                                          (1600, 1425), None, beside=True)
+            rows = [html.unescape(r) for r in re.findall(r'<text x="60" y="[\d.]+"[^>]*>([^<]*)</text>', svg)][:-1]
+            self.assertEqual(" ".join(rows), short["h1"] + " " + short["line"])
+            self.assertFalse(any(r.endswith((" T.", " ein", " der", " 8", " to", " bis")) or r.startswith(("rex", "to ", "bis "))
+                                 for r in rows), rows)
         self.assertEqual(chart.picture_still_svg(words, colours, "x.png", (2438, 1403), None),
                          chart.picture_still_svg(words, colours, "x.png", (2438, 1403), None, beside=False))
         page = next((p for p in self.scale_pages() if self.data("en", p)["page"]["og_image"].get("layout")), None)
@@ -1306,6 +1316,13 @@ class Case(unittest.TestCase):
                     # a card that sets its words beside its picture wraps the line over several rows
                     said = " ".join(re.findall(r"<text [^>]*>([^<]*)</text>", job["svg"]))
                     self.assertIn(html.escape(line.replace("\u00a0", " "), quote=False), said)
+            # beside its words a picture whose person stands clear only on wider screens shows no height over it
+            d = self.data("en", page)
+            pic = {} if d["page"].get("hub") else d["pics"][d["top"]["scale"]["pic"]]
+            if d["page"]["og_image"].get("layout") == "beside" and pic.get("person_from"):
+                for job in jobs:
+                    person = self.data(job["lang"], page)["labels"]["person"].replace("\u00a0", " ")
+                    self.assertNotIn(f">{html.escape(person, quote=False)}</text>", job["svg"], (page, job["lang"]))
         if not lines:
             self.skipTest("no page gives an answer line for its share picture")
 

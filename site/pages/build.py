@@ -2155,9 +2155,14 @@ def scale_share(d, data, lang, colours):
     words = {"h1": h1, "line": plain(answer) if answer else rest[:1].upper() + rest[1:],
              "person": plain(d["labels"]["person"]),
              "site": ORIGIN.split("://", 1)[1]}
+    beside = source["page"]["og_image"].get("layout") == "beside"
+    # beside its words the picture is narrow: a person whose picture leaves open stone over it only on wider screens
+    # (pics.<name>.person_from) has no height there either
+    if beside and pic.get("person_from"):
+        place = None
     return {"svg": CHART.picture_still_svg(words, colours, name, webp_size(found),
                                            (float(place.group(1)) / 100, float(place.group(2)) / 100) if place else None,
-                                           beside=source["page"]["og_image"].get("layout") == "beside")}
+                                           beside=beside)}
 
 
 def build_pages(out_dir, site_src=SITE_SRC, site_built=SITE_BUILT, pages=PAGES, quiet=False):

@@ -653,8 +653,12 @@ def _picture_beside_svg(words, c, picture, size, person, W, H, m):
         iw = ih * size[0] / size[1]
     ix, iy = W - m - iw, (H - ih) / 2
     column = ix - gap - m
-    # a number keeps its unit on its line: the words are wrapped at their plain spaces only
-    keep = lambda s: re.sub(r"(\d) (?=(?:m|ft|cm|kg|t)\b)", "\\1\u00a0", s)
+    # a number keeps its unit on its line, a range its two ends, a short name its two parts (T. rex) and a German
+    # article its noun: the words are wrapped at their plain spaces only
+    keep = lambda s: re.sub(r"(\d) (?=(?:m|ft|cm|kg|t|tonnes|Tonnen)\b)|(\d) (to|bis) (?=\d)|\b([A-Z]\.) (?=[a-z])"
+                            r"|\b(der|die|das|ein|eine) (?=\w)",
+                            lambda m: (m.group(1) or "") + (f"{m.group(2)}\u00a0{m.group(3)}" if m.group(2) else "")
+                            + (m.group(4) or m.group(5) or "") + "\u00a0", s)
     # Cardo's letters run wider than the stills' average measure at these sizes: the column is measured short
     rows = lambda s, size: [r.replace("\u00a0", " ") for r in _wrap(keep(s).replace(" ", "\n"), size, column * 0.87, "\n")]
     head, line = rows(words["h1"], 50), rows(words["line"], 34) if words.get("line") else []
