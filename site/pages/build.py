@@ -1726,6 +1726,12 @@ def render(page, lang, data, shared, out_root):
                                                    "what": rich(frame["what"]),
                                                    "html.src": f'<span class="label__src sp-frame__src">{src}</span>' if src else ""})
         preload, focus = pics.preload(frame["pic"]), focus_rule(frame)
+        if data["page"].get("primary"):
+            # the page names a picture further down as its own: the structured data describes it in the words of its
+            # place on the page, and the first screen keeps its picture
+            shown = primary_words(data)
+            frame = {"pic": shown["pic"], "alt": shown["alt"], "description": shown["alt"],
+                     "caption": shown["what"][:1].upper() + shown["what"][1:]}
     values = dict(base)
     values.update({
         "lang": L.html(lang),
@@ -1792,6 +1798,25 @@ def render(page, lang, data, shared, out_root):
         # the chart's still, which its block links, whichever picture the page names
         files[f"img/{shared['stills'][page][lang]['chart']}"] = pics.find(shared["stills"][page][lang]["chart"])
     return out_root / path / "index.html", text, files
+
+
+def primary_words(data):
+    """The words of the picture a page names as its own (page.primary): the first place in its blocks that shows that
+    picture with its words (what, alt)."""
+    key = data["page"]["primary"]
+
+    def find(node):
+        if isinstance(node, dict):
+            if isinstance(node.get("pic"), dict) and node["pic"].get("pic") == key and node["pic"].get("what") and node["pic"].get("alt"):
+                return node["pic"]
+            node = list(node.values())
+        if isinstance(node, list):
+            return next((x for x in map(find, node) if x), None)
+        return None
+    found = find(data["blocks"])
+    if found is None or key not in data["pics"]:
+        raise SystemExit(f"{data['page']['id']}: page.primary {key!r} names no picture the page's blocks show with its words")
+    return found
 
 
 def answer_text(answer):
@@ -2367,7 +2392,7 @@ def build_pages(out_dir, site_src=SITE_SRC, site_built=SITE_BUILT, pages=PAGES, 
                 problems.append(f"{page}: {lang} does not hold the same structure as English" if lang != "de" else
                                 f"{page}: the two languages do not hold the same structure")
             if (a["pics"] != b["pics"] or a["page"]["id"] != b["page"]["id"] or a["page"]["og_image"] != b["page"]["og_image"]
-                    or a["page"].get("still") != b["page"].get("still")):
+                    or a["page"].get("still") != b["page"].get("still") or a["page"].get("primary") != b["page"].get("primary")):
                 problems.append(f"{page}: {lang} differs from English in pictures or in the page label" if lang != "de" else
                                 f"{page}: the two languages differ in pictures or in the page label")
             for x, y in zip(a["blocks"], b["blocks"]):

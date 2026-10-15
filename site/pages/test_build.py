@@ -1551,6 +1551,37 @@ class Case(unittest.TestCase):
                 return {"id": key, "h": 50.0, "w": 50.0}
         self.assertRegex(" ".join(module.share_plate_problems(stem, Square(), work)), r"not the shape of the work's 50 by 50 cm")
 
+    def test_a_page_names_a_picture_further_down_as_its_own(self):
+        page = next((p for p in self.pages if self.data("en", p)["page"].get("primary")), None)
+        if not page:
+            self.skipTest("no page names a picture of its blocks as its own")
+        out, written = self.build()
+        found = 0
+        for path in written:
+            data, lang = self.page_of(path)
+            if data["page"]["id"] != self.data("en", page)["page"]["id"]:
+                continue
+            found += 1
+            text = path.read_text(encoding="utf-8")
+            graph = json.loads(re.search(r'<script type="application/ld\+json">(.*?)</script>', text, flags=re.S).group(1).replace("<\\/", "</"))["@graph"]
+            frame = next(n for n in graph if n.get("@id", "").endswith("#frame"))
+            stem = data["pics"][data["page"]["primary"]]["stem"]
+            self.assertRegex(frame["contentUrl"], r"/%s-\d+\.webp$" % re.escape(stem))
+            # the page and its article both name it, and it is a picture the page shows
+            self.assertEqual(next(n for n in graph if n["@type"] == "WebPage")["primaryImageOfPage"]["@id"], frame["@id"])
+            self.assertEqual(next(n for n in graph if n["@type"] == "Article")["image"]["@id"], frame["@id"])
+            self.assertIn(frame["contentUrl"].rsplit("/", 1)[1], self.own_part(text))
+            # the first screen keeps its own picture
+            first = re.search(r'<img src="[^"]*/([\w-]+)-\d+\.webp"', self.own_part(text)).group(1)
+            self.assertEqual(first, data["pics"][data["top"]["frame"]["pic"]]["stem"])
+        self.assertEqual(found, 2)
+        shutil.rmtree(out)
+        for lang in ("en", "de"):
+            data = self.data(lang, page)
+            data["page"]["primary"] = "nowhere"
+            self.save(lang, data, page)
+        self.fails(r"page\.primary 'nowhere' names no picture the page's blocks show with its words")
+
     def test_a_second_share_line_stands_only_under_a_picture_beside_its_words(self):
         page = next((p for p in self.scale_pages() if self.data("en", p)["page"]["og_image"].get("layout") != "beside"
                      and not self.data("en", p)["page"].get("hub")), None)
@@ -2823,6 +2854,18 @@ class PictureLicences(unittest.TestCase):
             self.assertIn(f'<meta property="og:image" content="{frame["contentUrl"]}">', text)
             self.assertTrue((SITE_BUILT / "static" / "img" / f"vinci-sizes-og-{lang}-1200x630.png").is_file())
             self.assertIn("C2RMF", frame["creditText"])
+
+    def test_the_inventions_pages_name_the_aerial_screw(self):
+        langs = json.loads((SITE_SRC / "languages.json").read_text(encoding="utf-8"))["languages"]
+        pages = sorted(p for p in self.pages if re.search(r"/(inventions|erfindungen|inventos|invenzioni|invencoes|izobreteniya)/index\.html$", str(p)))
+        self.assertEqual(len(pages), len([e for e in langs if e["code"] in ("en", "de", "fr", "it", "es", "pt-BR", "bg")]))
+        for path in pages:
+            graph = self.graph(path.read_text(encoding="utf-8"))
+            page = next(n for n in graph["@graph"] if n.get("@type") == "WebPage")
+            frame = next(i for i in self.lib.image_objects(graph) if i["@id"] == page["primaryImageOfPage"]["@id"])
+            self.assertEqual(frame["contentUrl"], "https://museumofages.org/static/img/vinci-stop-flight-1600.webp", path)
+            self.assertEqual(frame["license"], "https://creativecommons.org/licenses/by-sa/4.0/", path)
+            self.assertTrue((SITE_BUILT / "static" / "img" / "vinci-stop-flight-1600.webp").is_file())
 
     def test_licence_data_on_another_picture_is_found(self):
         image = {"@type": "ImageObject", "contentUrl": "https://museumofages.org/static/img/v-lisa-1600.webp",
