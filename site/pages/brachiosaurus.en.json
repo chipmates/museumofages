@@ -1,0 +1,549 @@
+{
+ "_note": "THE WORDS of the Brachiosaurus page. Poured word for word from the writer's WORDS file; the title, the description and the heading are its first options. The two lists of what was found stand under their field names in the writer's file. The person's height stands over the person in each picture (labels.person), and the labels at the side view name the person too. pics.<name>.marks: the animal's, the head mark's and the person's start and end as shares of the picture's width, measured on the frame; pics.<name>.person: the person's centre and the top of its head. The head's label stands over the picture (pics.side.behind), over the level line drawn at our model's head top. pics.skeleton.swatches: each colour of the found bones' key as the picture prints it, measured on the final picture. The found bones' picture follows the find's paragraph, so its key stands before the lists. Empty cells of the table are the writer's: no sourced figure exists.",
+ "page": {
+  "id": "animals-brachiosaurus",
+  "wing": "animals",
+  "topic": "brachiosaurus",
+  "published": null,
+  "join_names": true,
+  "og_image": {
+   "file": "animals-brachiosaurus-og-{lang}-1200x630.png",
+   "width": 1200,
+   "height": 630,
+   "layout": "beside"
+  }
+ },
+ "pics": {
+  "side": {
+   "stem": "animals-brachiosaurus-side",
+   "widths": [
+    800,
+    1600,
+    2400
+   ],
+   "sizes": "(min-width: 1280px) 1200px, (min-width: 960px) calc(100vw - 80px), (min-width: 600px) calc(100vw - 64px), calc(100vw - 40px)",
+   "person": "77.8% 84.8%",
+   "marks": {
+    "brachiosaurus": "1.23% 98.16%",
+    "person": "77.15% 78.46%",
+    "head": "92.12% 97.52%"
+   },
+   "behind": [
+    "head"
+   ]
+  },
+  "close": {
+   "stem": "animals-brachiosaurus-close",
+   "widths": [
+    800,
+    1600
+   ],
+   "sizes": "(min-width: 1280px) 690px, (min-width: 960px) 54vw, (min-width: 600px) calc(100vw - 64px), calc(100vw - 40px)",
+   "person": "46.41% 75.62%"
+  },
+  "skeleton": {
+   "stem": "animals-brachiosaurus-skeleton",
+   "widths": [
+    800,
+    1600
+   ],
+   "sizes": "(min-width: 1280px) 690px, (min-width: 960px) 54vw, (min-width: 600px) calc(100vw - 64px), calc(100vw - 40px)",
+   "person": "77.8% 84.8%",
+   "swatches": {
+    "own": "#c5b48f",
+    "blue": "#597382",
+    "orange": "#ab6e22",
+    "brown": "#493624"
+   }
+  },
+  "dinosaurs": {
+   "stem": "animals-biggest-dinosaurs-row",
+   "widths": [
+    800,
+    1600
+   ],
+   "sizes": "(min-width: 1280px) 690px, (min-width: 960px) 54vw, (min-width: 600px) calc(100vw - 64px), calc(100vw - 40px)"
+  },
+  "trex": {
+   "stem": "animals-t-rex-side",
+   "widths": [
+    800,
+    1600,
+    2400
+   ],
+   "sizes": "(min-width: 1280px) 690px, (min-width: 960px) 54vw, (min-width: 600px) calc(100vw - 64px), calc(100vw - 40px)"
+  },
+  "mammoth": {
+   "stem": "animals-woolly-mammoth-side",
+   "widths": [
+    800,
+    1600,
+    2400
+   ],
+   "sizes": "(min-width: 1280px) 690px, (min-width: 960px) 54vw, (min-width: 600px) calc(100vw - 64px), calc(100vw - 40px)"
+  }
+ },
+ "meta": {
+  "title": "Brachiosaurus size: about 22 to 25 m long | Museum of Ages",
+  "description": "Brachiosaurus was about 22 to 25 m long and roughly 30 to 45 t, rebuilt from one partial skeleton. The famous skeleton in Berlin is Giraffatitan.",
+  "og_title": "Brachiosaurus size: about 22 to 25 m long",
+  "og_image_alt": "A Brachiosaurus from the side, its long neck raised in a gentle curve, the front legs longer than the hind legs, the tail off the ground, beside a grey person who could walk under its belly."
+ },
+ "labels": {
+  "crumbs": "You are here",
+  "crumb_home": "Museum",
+  "crumb_here": "Brachiosaurus",
+  "toc": "On this page",
+  "tag_made": "Made for this page",
+  "tag_built": "Reconstruction",
+  "person": "1.70 m",
+  "to_table": "The numbers as a table",
+  "og_answer": "Brachiosaurus was about 22 to 25 m (72 to 82 ft) long, by a reconstruction"
+ },
+ "top": {
+  "h1": "How big was Brachiosaurus?",
+  "answer": "Brachiosaurus was about 22 to 25 m (72 to 82 ft) long and roughly 30 to 45 tonnes, both rebuilt from one partial skeleton. That skeleton has no neck, so its height was never measured: it depends on how the animal held its neck. Our model is built at the size of that one skeleton, kept in Chicago, from an animal probably still growing. With the neck raised as we chose it, the head stands about seven people up and the shoulders about four.",
+  "answer_more": "Berlin's famous skeleton, its skull about 13 m (43 ft) up, is its African relative Giraffatitan in a show pose. Most pictures of Brachiosaurus show that relative too.",
+  "scale": {
+   "pic": "side",
+   "tag": "tag_made",
+   "what": "Our Brachiosaurus beside a person 1.70 m tall, to one scale, at the size of the one skeleton the name rests on, dug up in Colorado in 1900. Neck, head, lower legs and most of the tail follow Giraffatitan and other finds. The head stands 11.8 m (39 ft) up only by the neck angle we chose: that height is ours, not a finding.",
+   "alt": "A Brachiosaurus from the side, its long neck raised in a gentle curve, the front legs longer than the hind legs, the tail off the ground, beside a grey person who could walk under its belly.",
+   "note": "Our own reconstruction, built in code from published measurements and rendered in our own engine. Not photographs.",
+   "marks": [
+    {
+     "span": "brachiosaurus",
+     "text": "Our Brachiosaurus, at the Chicago skeleton's size"
+    },
+    {
+     "span": "head",
+     "text": "Head top, 11.8 m, the neck angle is our choice"
+    },
+    {
+     "span": "person",
+     "text": "The person, 1.70 m"
+    }
+   ],
+   "close": {
+    "pic": "close",
+    "tag": "tag_made",
+    "what": "Closer up: the person beside the front foot, under the belly, which hangs about 2.1 m (7 ft) up in our model.",
+    "alt": "The front leg and the belly of the Brachiosaurus closer up, the grey person beside the front foot with room above the head."
+   }
+  },
+  "guess": {
+   "h": "A guess",
+   "q": "What did Riggs's team first take its upper arm bone for?",
+   "button": "Show the answer",
+   "a": "A crushed thigh bone of a long-necked dinosaur they already knew, and the find was nearly passed over. Only the ribs beside it, far too big for that animal, kept them digging, and the real thigh bone, almost as long, turned up soon after.",
+   "button_open": "Hide the answer"
+  },
+  "out": {
+   "text": "The wing for this animal is still being built. The Leonardo da Vinci wing is open today.",
+   "link": "To the Leonardo wing"
+  }
+ },
+ "blocks": [
+  {
+   "type": "numbers",
+   "id": "numbers",
+   "nav": "The numbers",
+   "h": "The numbers",
+   "unit": "Metres and feet, tonnes. Each height cell names the point it measures. An empty cell has no sourced figure.",
+   "cols": [
+    "Animal",
+    "Length",
+    "Height, with the point named",
+    "Weight",
+    "How sure"
+   ],
+   "rows": [
+    {
+     "cells": [
+      "Brachiosaurus altithorax, the Chicago animal",
+      "about 22 to 25 m (72 to 82 ft), rebuilt",
+      "not measured: the skeleton has no neck",
+      "roughly 30 to 45 t, by models",
+      "one partial skeleton, probably still growing, the rest on Giraffatitan's frame"
+     ]
+    },
+    {
+     "cells": [
+      "Our model",
+      "24.4 m (80 ft) along the backbone, 21.5 m (71 ft) straight with the neck raised",
+      "head top 11.8 m (39 ft) in our pose, shoulders 6.8 m (22 ft), hips 5.0 m (16 ft)",
+      "",
+      "measured on our files, built at the Chicago skeleton's size"
+     ]
+    },
+    {
+     "cells": [
+      "The Berlin mount, Giraffatitan brancai",
+      "about 23 m (75 ft)",
+      "skull about 13 m (43 ft) since 2007, 11.87 m (39 ft) as built in 1937",
+      "up to 50 t on its label, about 23 to 38 t by newer models",
+      "a mount of several animals, neck and skull in plaster, by its builders' figures"
+     ]
+    },
+    {
+     "cells": [
+      "Argentinosaurus huinculensis",
+      "about 30 to 35 m (98 to 115 ft), rebuilt",
+      "",
+      "roughly 65 to 80 t, by models",
+      "one partial skeleton, the body borrowed from relatives"
+     ]
+    },
+    {
+     "cells": [
+      "A giraffe bull",
+      "",
+      "up to about 5.5 m (18 ft) to the top of the head",
+      "up to about 1.4 t",
+      "a zoo's maxima for the living animal"
+     ]
+    },
+    {
+     "cells": [
+      "The person",
+      "",
+      "1.70 m (5 ft 7 in) tall, head to foot",
+      "",
+      "our scale figure"
+     ]
+    }
+   ]
+  },
+  {
+   "type": "text",
+   "id": "how-tall",
+   "nav": "How tall was Brachiosaurus?",
+   "h": "How tall was Brachiosaurus?",
+   "paras": [
+    "Nobody can say to the metre: the Chicago skeleton has no neck, and the two neck bones found elsewhere may not even be Brachiosaurus. So every head height in print was drawn on Giraffatitan's neck, none measured. How it held that neck is argued, and the middle view is raised, neither level nor straight up. Our model's neck rises at about 42 degrees, its head top 11.8 m (39 ft) up. The same body would hold its head about 7 m (23 ft) up with a level neck, over 14 m (46 ft) with it straight up. The tallest mounted dinosaur skeleton is that Berlin Giraffatitan, and which dinosaur stood tallest in life is not known for sure: the biggest dinosaurs page takes that question."
+   ],
+   "links": [
+    {
+     "page": "biggest-dinosaurs",
+     "text": "What was the biggest dinosaur?"
+    }
+   ]
+  },
+  {
+   "type": "text",
+   "id": "found",
+   "nav": "The Brachiosaurus skeleton: what was found",
+   "h": "The Brachiosaurus skeleton: what was found",
+   "paras": [
+    "In 1900 a team from the Field Columbian Museum led by Elmer Riggs dug the skeleton out near Grand Junction in western Colorado. After the body was partly buried, a stream carried off its front part. In 1903 Riggs named it Brachiosaurus altithorax, arm lizard with a high chest, for its long upper arm bone and deep trunk. One shoulder bone had not finished growing, so the animal was probably still growing too. The Field Museum in Chicago keeps the bones, and the big skeletons people photograph there are casts, partly sculpted after Giraffatitan."
+   ],
+   "subs": [
+    {
+     "h": "Found in Colorado",
+     "paras": [
+      {
+       "points": [
+        "Seven back vertebrae, the sacrum and the first two tail vertebrae.",
+        "The right upper arm bone, 2.04 m (6.7 ft) as preserved, its lower end lost, and the right thigh bone, 2.03 m (6.7 ft).",
+        "The right hip blade and a piece of the left, the left coracoid (a shoulder bone) and five ribs, none complete."
+       ]
+      }
+     ]
+    },
+    {
+     "h": "From other finds, or borrowed",
+     "paras": [
+      {
+       "points": [
+        "The head: after a skull found in Colorado in 1883, only tentatively this species, with the nose arch after Giraffatitan.",
+        "Neck, front of the back, shoulder blades, forearms, hands, shins, feet and the tail behind its first two bones: mostly after Giraffatitan.",
+        "The left arm and leg bones: mirrors of the right."
+       ]
+      }
+     ]
+    }
+   ],
+   "end": [
+    "So our Brachiosaurus has the size of one animal and the parts of several."
+   ],
+   "scale": {
+    "pic": "skeleton",
+    "tag": "tag_built",
+    "what": "Our Brachiosaurus as a skeleton from the right, coloured by where each bone comes from.",
+    "alt": "Our Brachiosaurus as a skeleton from the right, a few cream bones in the back, hips, one thigh and one upper arm among blue, orange and brown ones, beside the grey person.",
+    "key": [
+     {
+      "swatch": "own",
+      "text": "Cream: its own bones, found in Colorado in 1900: seven back vertebrae, the sacrum, two tail vertebrae, the right hip blade, thigh bone and upper arm bone, and three ribs in view."
+     },
+     {
+      "swatch": "blue",
+      "text": "Blue: its own bones mirrored or completed: the left arm and leg bones as mirrors of the right, the upper arm bone's lost end, the ribs' lower parts. The shoulder bone in view is a mirror too: the one found is the left, behind it."
+     },
+     {
+      "swatch": "orange",
+      "text": "Orange: after other American finds, above all a skull found in Colorado in 1883, only tentatively this species, and one forearm bone."
+     },
+     {
+      "swatch": "brown",
+      "text": "Brown: after Giraffatitan, all the rest: neck, front of the back, shoulder blades, most of the lower legs, ribs and tail."
+     }
+    ],
+    "after": 1
+   }
+  },
+  {
+   "type": "text",
+   "id": "giraffatitan",
+   "nav": "Giraffatitan, the famous one in Berlin",
+   "h": "Giraffatitan, the famous one in Berlin",
+   "paras": [
+    "Giraffatitan brancai is the tall skeleton in Berlin's Museum für Naturkunde. Its bones were dug at Tendaguru in what is now Tanzania from 1909 to 1913, under German colonial rule, as the museum itself says. Named Brachiosaurus brancai in 1914, it got its own genus in 2009, when a study counted at least 26 differences from the American animal. The mount combines several animals, its neck and skull are plaster, and most of its real bone is in the legs, hips and ribs. It is about 23 m (75 ft) long, its skull about 13 m (43 ft) up since the remount of 2007, 12 m as built in 1937, the neck now nearly upright for show. Most pictures of Brachiosaurus follow this better-known relative."
+   ]
+  },
+  {
+   "type": "text",
+   "id": "looks",
+   "nav": "What it looked like",
+   "h": "What it looked like",
+   "subs": [
+    {
+     "h": "The body and legs",
+     "paras": [
+      "The front legs were longer than the hind legs, so the back sloped up to the shoulders: true of all brachiosaurids, and the reason for the name. The trunk was deep and about a quarter longer than Giraffatitan's, by its own back bones. The tail was tall at its base, probably long, and carried off the ground like other sauropods'."
+     ]
+    },
+    {
+     "h": "The neck and head",
+     "paras": [
+      "The neck is borrowed from Giraffatitan, raised in ours in a gentle curve, though the angle is argued. The head follows the Colorado skull of 1883 and Giraffatitan's nose arch, the fleshy nostrils low and far forward on the snout."
+     ]
+    },
+    {
+     "h": "The skin and colour",
+     "paras": [
+      "No brachiosaurid skin has been found. Ours shows small flat scales like other sauropods, and its colour is a choice, because none is known."
+     ]
+    }
+   ]
+  },
+  {
+   "type": "text",
+   "id": "giraffe",
+   "nav": "Brachiosaurus vs a giraffe, and vs Argentinosaurus",
+   "h": "Brachiosaurus vs a giraffe, and vs Argentinosaurus",
+   "paras": [
+    "A giraffe bull stands up to about 5.5 m (18 ft) and weighs up to about 1.4 tonnes. Our model's head is about twice as high, its shoulders alone rise above a tall giraffe's head, and roughly 30 to 45 tonnes is about 22 to 33 giraffe bulls. Argentinosaurus was bigger: about 30 to 35 m (98 to 115 ft) long and roughly 65 to 80 tonnes, both rebuilt, against about 22 to 25 m and 30 to 45 tonnes. The two never met, tens of millions of years and a continent apart, and our two models hold their heads at almost the same height only because of the necks we chose."
+   ]
+  },
+  {
+   "type": "text",
+   "id": "when-where",
+   "nav": "When and where Brachiosaurus lived",
+   "h": "When and where Brachiosaurus lived",
+   "paras": [
+    "Brachiosaurus lived in the Late Jurassic of western North America, about 150 million years ago, in the rocks now called the Morrison Formation. It lived on land: Riggs argued that in 1904 from its legs and feet, against the old picture of a swamp animal. The range a museum gives for the genus stops at about 145 million years ago."
+   ]
+  },
+  {
+   "type": "text",
+   "id": "how-sure",
+   "nav": "How sure this is",
+   "h": "How sure this is",
+   "paras": [
+    "Two things decide every number on this page.",
+    {
+     "points": [
+      [
+       "The length and the weight are rebuilt:",
+       "no whole skeleton exists, so both rest on Giraffatitan's frame and a chosen density."
+      ],
+      [
+       "Ours is one model, not the species:",
+       "its 24.4 m along the backbone and its head at 11.8 m are the model's own numbers, the head's from the neck we chose, never the animal's."
+      ]
+     ]
+    }
+   ]
+  },
+  {
+   "type": "notes",
+   "id": "numbers-read",
+   "nav": "Numbers you may have read",
+   "h": "Numbers you may have read",
+   "intro": "For each number: where it came from, and what it means.",
+   "rows": [
+    {
+     "term": "80 tonnes",
+     "text": "A figure of 1962 from a small model dipped in water, and the model showed the Berlin species, not this one. Later work set it aside as an outlier."
+    },
+    {
+     "term": "50 tonnes",
+     "text": "The Berlin exhibition's label of 2007, for Giraffatitan. Those who remounted it put the true figure well below, and newer models of the mount give about 23 to 38 tonnes."
+    },
+    {
+     "term": "13 m tall, and 12 m",
+     "text": "Both are the Berlin mount, a Giraffatitan. Its skull stood 11.87 m up as built in 1937, with the neck leaning forward, and about 13 m since the remount of 2007, with the neck nearly upright, a pose chosen for its effect on visitors. The American animal's height was never measured."
+    },
+    {
+     "term": "The largest dinosaur",
+     "text": "Riggs's own title for it, in 1901 and 1903, and true then. The far heavier titanosaurs, Argentinosaurus among them, were found later."
+    },
+    {
+     "term": "A swamp animal, held up by the water",
+     "text": "The old picture of all long-necked dinosaurs. Riggs argued against it in 1904 from the legs and feet, and it has been out since."
+    },
+    {
+     "term": "Nostrils on top of the head",
+     "text": "Old restorations put the fleshy nostril at the top of the big bony opening in the skull. A study of 2001 found it sat low and far forward on the snout."
+    }
+   ]
+  },
+  {
+   "type": "faq",
+   "id": "questions",
+   "nav": "More questions",
+   "h": "More questions",
+   "items": [
+    {
+     "q": "What did Brachiosaurus eat?",
+     "a": "Leaves of tall trees, conifers and tree ferns among them, by the Natural History Museum in London. It did not chew: the leaves were broken down in its gut, as in other sauropods."
+    }
+   ]
+  },
+  {
+   "type": "text",
+   "id": "museum",
+   "nav": "In the museum",
+   "h": "In the museum",
+   "paras": [
+    "Museum of Ages is a digital museum. Our Brachiosaurus will stand in its wing at this size, beside the other animals, to one scale. Free entry, no account."
+   ],
+   "links": [
+    {
+     "out": true,
+     "text": "To the Leonardo wing"
+    }
+   ]
+  },
+  {
+   "type": "pages",
+   "id": "next",
+   "items": [
+    {
+     "page": "biggest-dinosaurs",
+     "pic": "dinosaurs",
+     "alt": "Seven dinosaurs in a row from the side, two with long necks towering over the rest, and a grey person who looks tiny beside them.",
+     "line": "Seven of ours beside a person, to one scale: the heaviest most likely a titanosaur from Patagonia, the tallest probably Sauroposeidon, and why the longest is still open."
+    },
+    {
+     "page": "t-rex",
+     "pic": "trex",
+     "alt": "A T. rex from the side on two legs, mouth open and head raised, beside a grey person who does not reach its knee.",
+     "line": "A large adult T. rex was about 12 m long, about 4 m at the hips and roughly 8 to 9 tonnes. Our T. rex is built to SUE's measurements and stands beside a person to one scale, with a list of what was found of SUE."
+    },
+    {
+     "page": "woolly-mammoth",
+     "pic": "mammoth",
+     "alt": "A woolly mammoth from the side in a dark brown coat: high domed head, sloping back, two curved tusks, a mark at the shoulder. The grey person beside him stands lower than the tusk tips.",
+     "line": "A typical Siberian bull stood about 2.7 to 2.9 m at the shoulder and weighed about 4 to 5 tonnes. Our woolly mammoth is one real bull found frozen in 1900, 2.71 m at the shoulder by a reconstruction, beside a person to one scale."
+    }
+   ]
+  },
+  {
+   "type": "sources",
+   "id": "sources",
+   "nav": "Sources",
+   "h": "Sources",
+   "intro": "The numbers come from these studies and from the museums that keep the bones. The museum is independent of all of them.",
+   "read": [
+    {
+     "text": "Taylor, 2009, Journal of Vertebrate Paleontology.",
+     "href": "https://www.miketaylor.org.uk/dino/pubs/taylor2009/Taylor2009-brachiosaurus-and-giraffatitan.pdf"
+    },
+    {
+     "text": "Taylor and Wedel, 2023, Acta Palaeontologica Polonica.",
+     "href": "https://app.pan.pl/archive/published/app68/app011052023.pdf"
+    },
+    {
+     "text": "Taylor, Wedel and Naish, 2009, Acta Palaeontologica Polonica.",
+     "href": "https://app.pan.pl/archive/published/app54/app54-213.pdf"
+    },
+    {
+     "text": "Wedel, Cifelli and Sanders, 2000, Acta Palaeontologica Polonica.",
+     "href": "https://www.app.pan.pl/archive/published/app45/app45-343.pdf"
+    },
+    {
+     "text": "Colbert, 1962, as Wedel and others 2000 report it."
+    },
+    {
+     "text": "Riggs, 1904, Field Columbian Museum, Geological Series.",
+     "href": "https://archive.org/details/riggs1904-brachiosaurus-altithorax-good-scan"
+    },
+    {
+     "text": "Riggs, 1901, Science, and 1903, American Journal of Science, their titles as Taylor 2009 lists them."
+    },
+    {
+     "text": "Paul, 1988, Hunteria."
+    },
+    {
+     "text": "Janensch, 1950, the skeleton reconstruction of the Berlin animal, read in its English translation."
+    },
+    {
+     "text": "Remes and others, 2011, in Biology of the Sauropod Dinosaurs."
+    },
+    {
+     "text": "D'Emic and Carrano, 2020, Anatomical Record, the study's summary.",
+     "href": "https://doi.org/10.1002/ar.24198"
+    },
+    {
+     "text": "Witmer, 2001, Science, the study's summary.",
+     "href": "https://doi.org/10.1126/science.1062681"
+    },
+    {
+     "text": "Gunga and others, 2008, Fossil Record, the study's summary.",
+     "href": "https://doi.org/10.1002/mmng.200700011"
+    },
+    {
+     "text": "Sellers and others, 2012, Biology Letters, the study's summary.",
+     "href": "https://doi.org/10.1098/rsbl.2012.0263"
+    },
+    {
+     "text": "Field Museum, Chicago: Brachiosaurus FMNH P 25107, and its blog on the casts.",
+     "href": "https://www.fieldmuseum.org/blog/why-we-dont-dress-sue-or-any-other-real-skeletons"
+    },
+    {
+     "text": "Museum für Naturkunde Berlin: Giraffatitan brancai, its dinosaur hall pages and its Digital Tendaguru project.",
+     "href": "https://www.museumfuernaturkunde.berlin/en/plan-your-visit/exhibition/the-world-of-dinosaurs/"
+    },
+    {
+     "text": "Natural History Museum, London: its Brachiosaurus page.",
+     "href": "https://www.nhm.ac.uk/discover/dino-directory/brachiosaurus.html"
+    },
+    {
+     "text": "San Diego Zoo Wildlife Alliance: its giraffe page.",
+     "href": "https://animals.sandiegozoo.org/animals/giraffe"
+    }
+   ],
+   "contact": "If a number or a museum is wrong, tell us and we will correct it.",
+   "contact_link": "To the legal notice",
+   "what_link": "What this museum is"
+  },
+  {
+   "type": "text",
+   "id": "pictures",
+   "nav": "Use our pictures",
+   "h": "Use our pictures",
+   "paras": [
+    [
+     "The pictures of the Brachiosaurus on this page are our own work under ",
+     {
+      "text": "CC BY-SA 4.0",
+      "href": "https://creativecommons.org/licenses/by-sa/4.0/"
+     },
+     ", credit: Museum of Ages. They show a reconstruction, built in code and rendered in our own engine, not a photograph. The pictures under “In the museum” give their credits on their own pages."
+    ]
+   ]
+  }
+ ]
+}

@@ -106,6 +106,16 @@
    ],
    "sizes": "(min-width: 1280px) 690px, (min-width: 960px) 54vw, (min-width: 600px) calc(100vw - 64px), calc(100vw - 40px)",
    "person": "91.9% 40.85%"
+  },
+  "brachio": {
+   "stem": "animals-brachiosaurus-side",
+   "widths": [
+    800,
+    1600,
+    2400
+   ],
+   "sizes": "(min-width: 1280px) 690px, (min-width: 960px) 54vw, (min-width: 600px) calc(100vw - 64px), calc(100vw - 40px)",
+   "person": "77.8% 84.8%"
   }
  },
  "meta": {
@@ -523,6 +533,12 @@
      "pic": "mammoth",
      "alt": "Ein Wollhaarmammut von der Seite im dunkelbraunen Fell, mit hoch gewölbtem Kopf, abfallendem Rücken, zwei gebogenen Stoßzähnen und einer Marke an der Schulter. Der graue Mensch daneben steht niedriger als die Spitzen der Stoßzähne.",
      "line": "Kein Dinosaurier, sondern ein Verwandter der Elefanten aus der Eiszeit: Ein sibirischer Bulle maß an der Schulter etwa 2,7 bis 2,9 m. Unser Mammut ist ein einzelner echter Bulle, 1900 im Permafrost gefunden, neben einem Menschen."
+    },
+    {
+     "page": "brachiosaurus",
+     "pic": "brachio",
+     "alt": "Ein Brachiosaurus von der Seite, den langen Hals in sanftem Bogen erhoben, die Vorderbeine länger als die Hinterbeine, der Schwanz frei über dem Boden, daneben ein grauer Mensch, der unter seinem Bauch hindurchgehen könnte.",
+     "line": "Der Brachiosaurus aus der Reihe, allein: etwa 22 bis 25 m lang nach einer Rekonstruktion, eine Höhe, die niemand gemessen hat, und warum das berühmte Berliner Skelett sein Verwandter Giraffatitan ist."
     }
    ]
   },

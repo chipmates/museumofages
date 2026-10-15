@@ -217,6 +217,16 @@
     { "text": "Mammoths: Giants of the Ice Age", "lang": "en" },
     { "text": "Otto Herz", "person": true },
     { "text": "St Petersburg", "whole": true },
-    { "text": "St. Petersburg", "whole": true }
+    { "text": "St. Petersburg", "whole": true },
+    { "text": "Brachiosaurus brancai", "whole": true, "taxon": true },
+    { "text": "Elmer Riggs", "person": true },
+    { "text": "Field Columbian Museum", "lang": "en" },
+    { "text": "Grand Junction", "lang": "en", "whole": true },
+    { "text": "American Journal of Science", "lang": "en" },
+    { "text": "Biology of the Sauropod Dinosaurs", "lang": "en" },
+    { "text": "Fossil Record", "lang": "en" },
+    { "text": "San Diego Zoo Wildlife Alliance", "lang": "en" },
+    { "text": "Digital Tendaguru", "whole": true },
+    { "text": "Morrison Formation", "lang": "en" }
   ]
 }

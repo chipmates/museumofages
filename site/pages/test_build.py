@@ -471,8 +471,8 @@ class Case(unittest.TestCase):
             # a list of pages joins its names wherever it stands: the hub and both neighbours
             items = [m.group(1) for (pid, code), (other, text) in by_id.items() if code == lang
                      for m in re.finditer(r'<h2 class="sc-item__h"><a href="[^"]*t-rex/">(.*?)</a>', text)]
-            # the hub and the four pages that name it
-            self.assertEqual(len(items), 5)
+            # the hub and the five pages that name it
+            self.assertEqual(len(items), 6)
             for item in items:
                 self.assertIn('<span class="nh">T.\u00a0rex</span>', item)
         # a page without the flag keeps the nowrap span in its own sentences
@@ -702,6 +702,124 @@ class Case(unittest.TestCase):
                     self.fails(re.escape(rule))
                     self.save(lang, original, page)
 
+    # Each claim the Brachiosaurus page must never make, by its topic's rules: the canon's NEVER SAY and the facts sheet's.
+    NEVER_BRACHIO = {
+        "en": ["The Berlin Brachiosaurus", "The Brachiosaurus skeleton in Berlin",
+               "Brachiosaurus brancai stands in Berlin", "Brachiosaurus stood 13 m tall", "Its head was 12 m up",
+               "It was 13.27 m tall", "Brachiosaurus held its head 11.8 m up", "Our Brachiosaurus is 11.8 m tall",
+               "It was 16 m tall", "It stood 14 m high", "It was 23 metres tall", "Brachiosaurus was 21.5 m long",
+               "It was 24.4 m long", "Brachiosaurus held its neck at 42 degrees", "No neck of it was ever found",
+               "No neck bone of Brachiosaurus has been found", "Brachiosaurus came to 80 tonnes", "It came to 78 tonnes",
+               "Brachiosaurus reached up to 50 tonnes", "It was about 23 to 38 tonnes", "It came to 38 tonnes",
+               "It was 22.46 m long", "It had a 9 m neck", "Its neck was about 9 m long",
+               "Brachiosaurus weighed 35 tonnes", "Our Brachiosaurus weighs 44 tonnes", "Our model weighs about 40 t",
+               "Ultrasaurus was a bigger Brachiosaurus", "It reached over 100 tonnes",
+               "The upper arm bone is 2.04 m long", "A nearly complete skeleton was found",
+               "Its measured length is 25 m", "The Chicago animal was full-grown", "It was an adult",
+               "Both hip blades were found complete", "Its right coracoid was found",
+               "Its skeleton is on show in Chicago", "Its real bones are on show", "Our Brachiosaurus skeleton",
+               "Its bones were dug up at Tendaguru by the museum", "Brachiosaurus was the largest known dinosaur",
+               "It was the biggest dinosaur", "Brachiosaurus was the tallest dinosaur",
+               "Its nostrils were on top of its head", "It had a hand like an elephant's", "Sauropods were brown",
+               "It was green", "It lived in water", "It snorkelled", "It reared up on its hind legs to feed",
+               "Its front legs were sprawling", "It had 14 neck vertebrae", "It had a second brain",
+               "The film's Brachiosaurus is Giraffatitan", "It lived 150 million years ago",
+               "It lived 155.6 million years ago", "It lived 154 to 153 million years ago",
+               "It died out 145 million years ago", "Its last fossils are 145 million years old"],
+        "de": ["Der Berliner Brachiosaurus", "Das Brachiosaurus-Skelett in Berlin",
+               "Brachiosaurus brancai steht in Berlin", "Der Brachiosaurus war 13 m hoch", "Sein Kopf stand 12 m hoch",
+               "Er war 13,27 m hoch", "Der Brachiosaurus trug den Kopf 11,8 m hoch",
+               "Unser Brachiosaurus ist 11,8 m hoch", "Er war 16 m hoch", "Der Brachiosaurus war 14 m hoch",
+               "Er war 23 Meter hoch", "Der Brachiosaurus war 21,5 m lang", "Er war 24,4 m lang",
+               "Der Brachiosaurus trug den Hals in 42 Grad", "Von ihm wurde nie ein Hals gefunden",
+               "Kein Halswirbel wurde je gefunden", "Der Brachiosaurus kam auf 80 t", "Er kam auf 78 Tonnen",
+               "Ein Brachiosaurus kam auf bis zu 50 t", "Er kam auf etwa 23 bis 38 t", "Er kam auf 38 t",
+               "Er war 22,46 m lang", "Er hatte einen 9 m langen Hals", "Sein Hals war etwa 9 m lang",
+               "Der Brachiosaurus wog 35 t", "Unser Brachiosaurus wiegt 44 t", "Unser Modell wiegt etwa 40 t",
+               "Ultrasaurus war ein größerer Brachiosaurus", "Er kam auf über 100 t",
+               "Der Oberarmknochen ist 2,04 m lang", "Ein fast vollständiges Skelett",
+               "Seine gemessene Länge beträgt 25 m", "Das Tier aus Chicago war ausgewachsen",
+               "Es war ein erwachsenes Tier", "Beide Darmbeine wurden vollständig gefunden",
+               "Das rechte Rabenbein wurde gefunden", "Sein Skelett ist in Chicago zu sehen",
+               "Seine echten Knochen werden ausgestellt", "Unser Brachiosaurus-Skelett",
+               "Die Knochen wurden am Tendaguru von Forschern des Museums ausgegraben",
+               "Der Brachiosaurus war der größte bekannte Dinosaurier", "Er war der größte Dinosaurier",
+               "Der Brachiosaurus war der höchste Dinosaurier", "Die Nasenlöcher saßen oben auf dem Kopf",
+               "Eine Hand wie die eines Elefanten", "Sauropoden waren braun", "Er war grün", "Er lebte im Wasser",
+               "Er schnorchelte", "Er stellte sich auf die Hinterbeine, um zu fressen",
+               "Er hatte gespreizte Vorderbeine", "Er hatte 14 Halswirbel", "Er hatte ein zweites Gehirn",
+               "Der Brachiosaurus im Film ist ein Giraffatitan", "Er lebte vor 150 Millionen Jahren",
+               "Er lebte vor 155,6 Millionen Jahren", "Er lebte vor 154 bis 153 Millionen Jahren",
+               "Er starb vor 145 Millionen Jahren aus", "Seine letzten Fossilien sind 145 Millionen Jahre alt"],
+    }
+
+    def test_the_brachiosaurus_page_refuses_each_never_say_phrase(self):
+        page = self.topic_page("brachiosaurus")
+        topic = next(t for w in self.wings().values() if isinstance(w, dict) for t in w.get("topics", []) if t.get("count") == "brachiosaurus")
+        # every rule of the topic is met by a phrase of the list in a language it holds for, so a rule added without
+        # its phrase is seen
+        for pattern, _, *only in topic["never_say"]:
+            self.assertTrue(any(re.search(pattern, x.lower()) for lang, xs in self.NEVER_BRACHIO.items() if not only or lang in only[0]
+                                for x in xs), pattern)
+        for lang, phrases in self.NEVER_BRACHIO.items():
+            original = self.data(lang, page)
+            for phrase in phrases:
+                with self.subTest(lang=lang, phrase=phrase):
+                    # the line under the answer carries none of the words a rule lets a number stand with
+                    shutil.rmtree(self.dir / "out", ignore_errors=True)
+                    data = json.loads(json.dumps(original))
+                    data["top"]["out"]["text"] += f" {phrase}."
+                    self.save(lang, data, page)
+                    self.fails(r"top\.out\.text matches")
+                    self.save(lang, original, page)
+
+    def test_a_brachiosaurus_number_stands_only_with_the_words_that_say_whose_it_is(self):
+        """The page names our model's 11.8 m head and its 21.5 and 24.4 m, the 80 and 50 tonnes, Berlin's 13 and 12 m, the
+        arm bone's 2.04 m, the old name, the nostrils, the swamp, the largest dinosaur and the Tendaguru dig on purpose:
+        without the words that say whose the number is or what the claim was, the same fields stop the build."""
+        page = self.topic_page("brachiosaurus")
+        cases = [
+            ({"en": (r"Our model's neck rises", "The neck rises"), "de": (r"Der Hals unseres Modells steigt", "Der Hals steigt")},
+             "11.8 m only as ours"),
+            ({"en": (r"\(80 ft\) along the backbone, 21\.5 m \(71 ft\) straight with the neck raised", "(80 ft), 21.5 m (71 ft)"),
+              "de": (r"24,4 m entlang der Wirbelsäule, 21,5 m gerade mit erhobenem Hals", "24,4 m, 21,5 m")},
+             "21.5 m and 24.4 m only as ours"),
+            ({"en": (r"A figure of 1962 from[^\"]*", "A figure."), "de": (r"Eine Zahl von 1962 aus[^\"]*", "Eine Zahl.")},
+             "80 tonnes only as Colbert's outlier of 1962"),
+            ({"en": (r"The Berlin exhibition's label of 2007[^\"]*", "A figure."),
+              "de": (r"Das Schild der Berliner Ausstellung von 2007[^\"]*", "Eine Zahl.")},
+             "50 tonnes only as the Berlin label"),
+            ({"en": (r"Both are the Berlin mount, a Giraffatitan\.[^\"]*", "Both are common."),
+              "de": (r"Beides ist die Berliner Montage, ein Giraffatitan\.[^\"]*", "Beides ist häufig.")},
+             "13 m and 12 m tall only with the Berlin mount"),
+            ({"en": (r" as preserved", ""), "de": (r", wie er erhalten ist", "")}, "2.04 m only as preserved"),
+            ({"en": (r"Named Brachiosaurus brancai in 1914, it got", "Brachiosaurus brancai got"),
+              "de": (r"1914 Brachiosaurus brancai genannt, bekam das Tier", "Als Brachiosaurus brancai bekam das Tier")},
+             "Brachiosaurus brancai only as the Berlin animal's old name"),
+            ({"en": (r"Old restorations put[^\"]*", "They did."), "de": (r"Alte Darstellungen setzten[^\"]*", "So war es.")},
+             "the nostrils were not on top of the head"),
+            ({"en": (r"The old picture of all long-necked dinosaurs\.[^\"]*", "It was."),
+              "de": (r"Das alte Bild aller Langhalsdinosaurier\.[^\"]*", "So war es.")},
+             "it lived on land: a swamp animal only as the old picture"),
+            ({"en": (r"Riggs's own title for it[^\"]*", "It was the largest dinosaur."),
+              "de": (r"Riggs' eigener Titel für das Tier[^\"]*", "Er war der größte Dinosaurier.")},
+             "the largest known dinosaur only as Riggs's title"),
+            ({"en": (r", under German colonial rule, as the museum itself says", ""),
+              "de": (r", unter deutscher Kolonialherrschaft, wie das Museum selbst sagt", "")},
+             "the Tendaguru dig only with German colonial rule"),
+        ]
+        out, _ = self.build()
+        shutil.rmtree(out)
+        for subs, rule in cases:
+            for lang, (condition, instead) in subs.items():
+                with self.subTest(lang=lang, rule=rule):
+                    original = self.data(lang, page)
+                    text = json.dumps(original, ensure_ascii=False)
+                    self.assertRegex(text, condition)
+                    self.save(lang, json.loads(re.sub(condition, instead, text)), page)
+                    self.fails(re.escape(rule))
+                    self.save(lang, original, page)
+
     def test_a_share_picture_may_set_its_words_beside_the_picture(self):
         """A page whose picture would leave much of the share card empty under its words sets them in a column at the
         left and the picture at the right (page.og_image.layout beside): the picture whole, the words wrapped in their
@@ -758,7 +876,8 @@ class Case(unittest.TestCase):
                     self.assertIn(".sc-swatch--%s-%s{background:%s}" % (fig["pic"], k["swatch"], colours[k["swatch"]]), text)
                     self.assertRegex(text, r'<li class="sc-keys__i"><span class="sc-swatch sc-swatch--%s-%s" aria-hidden="true"></span><span>%s'
                                      % (fig["pic"], k["swatch"], re.escape(html.escape(k["text"].split(":")[0], quote=False))))
-        self.assertEqual(seen, 2)
+        # the Spinosaurus and the Brachiosaurus pages, in both languages
+        self.assertEqual(seen, 4)
         shutil.rmtree(out)
         for lang in ("en", "de"):
             data = self.data(lang, page)
@@ -820,8 +939,8 @@ class Case(unittest.TestCase):
                      if plain(re.search(r"<h2[^>]*>(.*?)</h2>", x, flags=re.S).group(1)) == topic["name"][lang]]
             self.assertEqual(len(found), 1, path)
             self.assertEqual(plain(found[0]), item.get("line") or topic["line"][lang])
-        # the hub and the four neighbours, in both languages
-        self.assertEqual(seen, 10)
+        # the hub and the five neighbours, in both languages
+        self.assertEqual(seen, 12)
 
     def test_a_picture_too_tall_for_the_share_card_stands_whole_above_the_address(self):
         spec = importlib.util.spec_from_file_location("chart_share", self.dir / "chart.py")

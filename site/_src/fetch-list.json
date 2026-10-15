@@ -1377,6 +1377,102 @@
    "sha256": "b3a8c045a496c8daeb378bbcc25730d9041611e00115d05d380f00e643050177"
   },
   {
+   "path": "pages/pics/img/animals-brachiosaurus-close-1600.avif",
+   "url": "/static/img/animals-brachiosaurus-close-1600.avif",
+   "bytes": 79073,
+   "sha256": "afa2e8da58eb80e2aa3037a6671b2095baab5f86a4fed8f8955e931fe45d78f1"
+  },
+  {
+   "path": "pages/pics/img/animals-brachiosaurus-close-1600.webp",
+   "url": "/static/img/animals-brachiosaurus-close-1600.webp",
+   "bytes": 83176,
+   "sha256": "bc43ac9c9334a79483caa466392afae4badedb375f7ee9dbdeb75e5644a3ec78"
+  },
+  {
+   "path": "pages/pics/img/animals-brachiosaurus-close-800.avif",
+   "url": "/static/img/animals-brachiosaurus-close-800.avif",
+   "bytes": 14521,
+   "sha256": "bff42a5233bbd07d8d3fd48e2959f475ef54345043c4a8bc70af6e97b6791f8d"
+  },
+  {
+   "path": "pages/pics/img/animals-brachiosaurus-close-800.webp",
+   "url": "/static/img/animals-brachiosaurus-close-800.webp",
+   "bytes": 19266,
+   "sha256": "05b17f7fa56ce28c986372e10497375af29ff121e72b6cb0ccc0653d45aa04a8"
+  },
+  {
+   "path": "pages/pics/img/animals-brachiosaurus-og-de-1200x630.png",
+   "url": "/static/img/animals-brachiosaurus-og-de-1200x630.png",
+   "bytes": 99186,
+   "sha256": "3e62d752fe4119f1eb0dc5119867fdc9aed60da749c9f169edb6c4736cc7a90c"
+  },
+  {
+   "path": "pages/pics/img/animals-brachiosaurus-og-en-1200x630.png",
+   "url": "/static/img/animals-brachiosaurus-og-en-1200x630.png",
+   "bytes": 95212,
+   "sha256": "ceb0c56f53467a1256b14e34dec1472a03775a0454588608bab3d2e7abfb32c5"
+  },
+  {
+   "path": "pages/pics/img/animals-brachiosaurus-side-1600.avif",
+   "url": "/static/img/animals-brachiosaurus-side-1600.avif",
+   "bytes": 11093,
+   "sha256": "a199f4f068b4497f7eba0d2bf86c2c6b8a4bf825369ad6ae8c878a32c7d4b3e1"
+  },
+  {
+   "path": "pages/pics/img/animals-brachiosaurus-side-1600.webp",
+   "url": "/static/img/animals-brachiosaurus-side-1600.webp",
+   "bytes": 16380,
+   "sha256": "a8f9b7b73868fb31d76e9fd793edc30802d7808514a37005d34462f250c5e398"
+  },
+  {
+   "path": "pages/pics/img/animals-brachiosaurus-side-2400.avif",
+   "url": "/static/img/animals-brachiosaurus-side-2400.avif",
+   "bytes": 20056,
+   "sha256": "22b02323c2fafa535abafd8e5be8588109f0f7c1e4a607f3b7be80864d6d58ea"
+  },
+  {
+   "path": "pages/pics/img/animals-brachiosaurus-side-2400.webp",
+   "url": "/static/img/animals-brachiosaurus-side-2400.webp",
+   "bytes": 29280,
+   "sha256": "e510df27dc581aa45414460652c4e94a83192b6644c41790bd9d83dbec916ce1"
+  },
+  {
+   "path": "pages/pics/img/animals-brachiosaurus-side-800.avif",
+   "url": "/static/img/animals-brachiosaurus-side-800.avif",
+   "bytes": 4679,
+   "sha256": "903a2e309cb7a3d4cd36a98fdf4173e948fbf490b5a606fbb3f950265024cd8e"
+  },
+  {
+   "path": "pages/pics/img/animals-brachiosaurus-side-800.webp",
+   "url": "/static/img/animals-brachiosaurus-side-800.webp",
+   "bytes": 6618,
+   "sha256": "0badae17eb224ee2b6ea0a80cff0a457eae08a1ac3866aa0264e80d2e5a9acd7"
+  },
+  {
+   "path": "pages/pics/img/animals-brachiosaurus-skeleton-1600.avif",
+   "url": "/static/img/animals-brachiosaurus-skeleton-1600.avif",
+   "bytes": 21604,
+   "sha256": "18580bcd793ec9c861a6d1e9bd84dbb07d1ae967b14deed24f558483045f8831"
+  },
+  {
+   "path": "pages/pics/img/animals-brachiosaurus-skeleton-1600.webp",
+   "url": "/static/img/animals-brachiosaurus-skeleton-1600.webp",
+   "bytes": 35870,
+   "sha256": "5f7b8d8b002d6391d9502963fb3abba757cf7a4bae112e15e0fd60b62e6d4ef9"
+  },
+  {
+   "path": "pages/pics/img/animals-brachiosaurus-skeleton-800.avif",
+   "url": "/static/img/animals-brachiosaurus-skeleton-800.avif",
+   "bytes": 9343,
+   "sha256": "9c789f5bc7e222d620b735169dbfe096578c3431b6cd8b2e4604271695df99e8"
+  },
+  {
+   "path": "pages/pics/img/animals-brachiosaurus-skeleton-800.webp",
+   "url": "/static/img/animals-brachiosaurus-skeleton-800.webp",
+   "bytes": 14200,
+   "sha256": "6a113afed5fd3fbba89e9bd203fe1cfa91fd95a38f3f846d25719cf99b0199b5"
+  },
+  {
    "path": "pages/pics/img/animals-megalodon-head-1600.avif",
    "url": "/static/img/animals-megalodon-head-1600.avif",
    "bytes": 9945,

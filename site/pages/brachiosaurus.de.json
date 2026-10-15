@@ -1,0 +1,549 @@
+{
+ "_note": "THE WORDS of the Brachiosaurus page. Poured word for word from the writer's WORDS file; the title, the description and the heading are its first options. The two lists of what was found stand under their field names in the writer's file. The person's height stands over the person in each picture (labels.person), and the labels at the side view name the person too. pics.<name>.marks: the animal's, the head mark's and the person's start and end as shares of the picture's width, measured on the frame; pics.<name>.person: the person's centre and the top of its head. The head's label stands over the picture (pics.side.behind), over the level line drawn at our model's head top. pics.skeleton.swatches: each colour of the found bones' key as the picture prints it, measured on the final picture. The found bones' picture follows the find's paragraph, so its key stands before the lists. Empty cells of the table are the writer's: no sourced figure exists.",
+ "page": {
+  "id": "animals-brachiosaurus",
+  "wing": "animals",
+  "topic": "brachiosaurus",
+  "published": null,
+  "join_names": true,
+  "og_image": {
+   "file": "animals-brachiosaurus-og-{lang}-1200x630.png",
+   "width": 1200,
+   "height": 630,
+   "layout": "beside"
+  }
+ },
+ "pics": {
+  "side": {
+   "stem": "animals-brachiosaurus-side",
+   "widths": [
+    800,
+    1600,
+    2400
+   ],
+   "sizes": "(min-width: 1280px) 1200px, (min-width: 960px) calc(100vw - 80px), (min-width: 600px) calc(100vw - 64px), calc(100vw - 40px)",
+   "person": "77.8% 84.8%",
+   "marks": {
+    "brachiosaurus": "1.23% 98.16%",
+    "person": "77.15% 78.46%",
+    "head": "92.12% 97.52%"
+   },
+   "behind": [
+    "head"
+   ]
+  },
+  "close": {
+   "stem": "animals-brachiosaurus-close",
+   "widths": [
+    800,
+    1600
+   ],
+   "sizes": "(min-width: 1280px) 690px, (min-width: 960px) 54vw, (min-width: 600px) calc(100vw - 64px), calc(100vw - 40px)",
+   "person": "46.41% 75.62%"
+  },
+  "skeleton": {
+   "stem": "animals-brachiosaurus-skeleton",
+   "widths": [
+    800,
+    1600
+   ],
+   "sizes": "(min-width: 1280px) 690px, (min-width: 960px) 54vw, (min-width: 600px) calc(100vw - 64px), calc(100vw - 40px)",
+   "person": "77.8% 84.8%",
+   "swatches": {
+    "own": "#c5b48f",
+    "blue": "#597382",
+    "orange": "#ab6e22",
+    "brown": "#493624"
+   }
+  },
+  "dinosaurs": {
+   "stem": "animals-biggest-dinosaurs-row",
+   "widths": [
+    800,
+    1600
+   ],
+   "sizes": "(min-width: 1280px) 690px, (min-width: 960px) 54vw, (min-width: 600px) calc(100vw - 64px), calc(100vw - 40px)"
+  },
+  "trex": {
+   "stem": "animals-t-rex-side",
+   "widths": [
+    800,
+    1600,
+    2400
+   ],
+   "sizes": "(min-width: 1280px) 690px, (min-width: 960px) 54vw, (min-width: 600px) calc(100vw - 64px), calc(100vw - 40px)"
+  },
+  "mammoth": {
+   "stem": "animals-woolly-mammoth-side",
+   "widths": [
+    800,
+    1600,
+    2400
+   ],
+   "sizes": "(min-width: 1280px) 690px, (min-width: 960px) 54vw, (min-width: 600px) calc(100vw - 64px), calc(100vw - 40px)"
+  }
+ },
+ "meta": {
+  "title": "Brachiosaurus-Größe: etwa 22 bis 25 m lang | Museum of Ages",
+  "description": "Der Brachiosaurus war etwa 22 bis 25 m lang und grob 30 bis 45 t schwer, nach einem Teilskelett rekonstruiert. Das Berliner Skelett ist ein Giraffatitan.",
+  "og_title": "Brachiosaurus-Größe: etwa 22 bis 25 m lang",
+  "og_image_alt": "Ein Brachiosaurus von der Seite, den langen Hals in sanftem Bogen erhoben, die Vorderbeine länger als die Hinterbeine, der Schwanz frei über dem Boden, daneben ein grauer Mensch, der unter seinem Bauch hindurchgehen könnte."
+ },
+ "labels": {
+  "crumbs": "Du bist hier",
+  "crumb_home": "Museum",
+  "crumb_here": "Brachiosaurus",
+  "toc": "Auf dieser Seite",
+  "tag_made": "Für diese Seite gemacht",
+  "tag_built": "Rekonstruktion",
+  "person": "1,70 m",
+  "to_table": "Die Zahlen als Tabelle",
+  "og_answer": "Der Brachiosaurus war etwa 22 bis 25 m lang, nach einer Rekonstruktion"
+ },
+ "top": {
+  "h1": "Wie groß war ein Brachiosaurus?",
+  "answer": "Der Brachiosaurus war etwa 22 bis 25 m lang und grob 30 bis 45 t schwer, beides nach einem einzigen Teilskelett rekonstruiert. Diesem Skelett fehlt der Hals, seine Höhe wurde also nie gemessen: Sie hängt davon ab, wie das Tier den Hals hielt. Unser Modell ist in der Größe dieses einen Skeletts gebaut, das in Chicago liegt und von einem wohl noch wachsenden Tier stammt. Mit dem Hals so erhoben, wie wir ihn gewählt haben, steht der Kopf etwa sieben Menschen hoch, die Schultern etwa vier.",
+  "answer_more": "Das berühmte Berliner Skelett, der Schädel in etwa 13 m Höhe, ist sein afrikanischer Verwandter Giraffatitan in einer Pose für die Ausstellung. Auch die meisten Bilder eines Brachiosaurus zeigen diesen Verwandten.",
+  "scale": {
+   "pic": "side",
+   "tag": "tag_made",
+   "what": "Unser Brachiosaurus neben einem Menschen von 1,70 m, im selben Maßstab, in der Größe des einen Skeletts, auf dem der Name beruht, 1900 in Colorado ausgegraben. Hals, Kopf, die unteren Beinteile und der größte Teil des Schwanzes folgen Giraffatitan und anderen Funden. Seine 11,8 m Kopfhöhe ergeben sich nur aus dem Halswinkel, den wir gewählt haben: Diese Höhe ist unsere Wahl, kein Befund.",
+   "alt": "Ein Brachiosaurus von der Seite, den langen Hals in sanftem Bogen erhoben, die Vorderbeine länger als die Hinterbeine, der Schwanz frei über dem Boden, daneben ein grauer Mensch, der unter seinem Bauch hindurchgehen könnte.",
+   "note": "Unsere eigene Rekonstruktion, nach veröffentlichten Maßen in Code gebaut und in unserer Engine gerendert. Keine Fotos.",
+   "marks": [
+    {
+     "span": "brachiosaurus",
+     "text": "Unser Brachiosaurus, in der Größe des Skeletts aus Chicago"
+    },
+    {
+     "span": "head",
+     "text": "Kopfhöhe 11,8 m, der Halswinkel ist unsere Wahl"
+    },
+    {
+     "span": "person",
+     "text": "Der Mensch, 1,70 m"
+    }
+   ],
+   "close": {
+    "pic": "close",
+    "tag": "tag_made",
+    "what": "Aus der Nähe: der Mensch neben dem Vorderfuß, unter dem Bauch, der bei unserem Modell etwa 2,1 m über dem Boden hängt.",
+    "alt": "Vorderbein und Bauch des Brachiosaurus aus der Nähe, der graue Mensch neben dem Vorderfuß, über seinem Kopf bleibt Platz."
+   }
+  },
+  "guess": {
+   "h": "Zum Raten",
+   "q": "Wofür hielt Riggs' Team seinen Oberarmknochen zuerst?",
+   "button": "Antwort zeigen",
+   "a": "Für einen zerdrückten Oberschenkelknochen eines Langhalsdinosauriers, den man schon kannte, und der Fund wäre beinahe liegen geblieben. Nur die Rippen daneben, viel zu groß für dieses Tier, ließen das Team weitergraben, und der echte Oberschenkelknochen, fast genauso lang, kam bald darauf zum Vorschein.",
+   "button_open": "Antwort verbergen"
+  },
+  "out": {
+   "text": "Der Flügel für dieses Tier wird noch gebaut. Der Flügel von Leonardo da Vinci ist heute schon offen.",
+   "link": "Zum Leonardo-Flügel"
+  }
+ },
+ "blocks": [
+  {
+   "type": "numbers",
+   "id": "numbers",
+   "nav": "Die Zahlen",
+   "h": "Die Zahlen",
+   "unit": "In Metern und Tonnen. Jede Höhenzelle nennt den Punkt, den sie misst. Eine leere Zelle hat keine belegte Zahl.",
+   "cols": [
+    "Tier",
+    "Länge",
+    "Höhe, mit dem Messpunkt",
+    "Gewicht",
+    "Wie sicher"
+   ],
+   "rows": [
+    {
+     "cells": [
+      "Brachiosaurus altithorax, das Tier aus Chicago",
+      "etwa 22 bis 25 m, rekonstruiert",
+      "nicht gemessen: dem Skelett fehlt der Hals",
+      "grob 30 bis 45 t, nach Modellen",
+      "ein Teilskelett, wohl noch im Wachstum, der Rest nach dem Gerüst des Giraffatitan"
+     ]
+    },
+    {
+     "cells": [
+      "Unser Modell",
+      "24,4 m entlang der Wirbelsäule, 21,5 m gerade mit erhobenem Hals",
+      "Scheitel 11,8 m in unserer Haltung, Schultern 6,8 m, Hüfte 5,0 m",
+      "",
+      "an unseren Dateien gemessen, in der Größe des Skeletts aus Chicago gebaut"
+     ]
+    },
+    {
+     "cells": [
+      "Die Berliner Montage, Giraffatitan brancai",
+      "etwa 23 m",
+      "Schädel in etwa 13 m Höhe seit 2007, 11,87 m beim Aufbau von 1937",
+      "bis zu 50 t auf dem Schild, etwa 23 bis 38 t nach neueren Modellen",
+      "eine Montage aus mehreren Tieren, Hals und Schädel aus Gips, nach den Zahlen ihrer Erbauer"
+     ]
+    },
+    {
+     "cells": [
+      "Argentinosaurus huinculensis",
+      "etwa 30 bis 35 m, rekonstruiert",
+      "",
+      "grob 65 bis 80 t, nach Modellen",
+      "ein Teilskelett, der Körper von Verwandten übernommen"
+     ]
+    },
+    {
+     "cells": [
+      "Ein Giraffenbulle",
+      "",
+      "bis zu etwa 5,5 m bis zum Scheitel",
+      "bis zu etwa 1,4 t",
+      "Höchstwerte eines Zoos für das lebende Tier"
+     ]
+    },
+    {
+     "cells": [
+      "Der Mensch",
+      "",
+      "1,70 m groß, vom Scheitel bis zur Sohle",
+      "",
+      "unsere Vergleichsfigur"
+     ]
+    }
+   ]
+  },
+  {
+   "type": "text",
+   "id": "how-tall",
+   "nav": "Wie hoch war ein Brachiosaurus?",
+   "h": "Wie hoch war ein Brachiosaurus?",
+   "paras": [
+    "Auf den Meter genau weiß das niemand: Dem Skelett in Chicago fehlt der Hals, und die zwei Halswirbel, die anderswo gefunden wurden, stammen vielleicht nicht einmal von einem Brachiosaurus. Darum ist jede gedruckte Kopfhöhe auf den Hals des Giraffatitan gezeichnet, keine gemessen. Wie er diesen Hals hielt, ist umstritten. Die Sicht in der Mitte: erhoben, aber weder waagerecht noch senkrecht. Der Hals unseres Modells steigt mit etwa 42 Grad an, der Kopf steht 11,8 m hoch. Mit waagerechtem Hals stünde der Kopf desselben Körpers etwa 7 m hoch, mit senkrechtem Hals über 14 m. Das höchste montierte Dinosaurierskelett ist dieser Berliner Giraffatitan, und welcher Dinosaurier im Leben am höchsten stand, weiß niemand sicher: Die Seite der größten Dinosaurier geht dieser Frage nach."
+   ],
+   "links": [
+    {
+     "page": "biggest-dinosaurs",
+     "text": "Was war der größte Dinosaurier?"
+    }
+   ]
+  },
+  {
+   "type": "text",
+   "id": "found",
+   "nav": "Das Brachiosaurus-Skelett: was gefunden wurde",
+   "h": "Das Brachiosaurus-Skelett: was gefunden wurde",
+   "paras": [
+    "1900 grub ein Team des Field Columbian Museum unter Elmer Riggs das Skelett bei Grand Junction im Westen Colorados aus. Als das Tier schon teils im Boden lag, riss ein Wasserlauf seinen vorderen Teil fort. 1903 nannte Riggs es Brachiosaurus altithorax, Armechse mit hohem Brustkorb, nach dem langen Oberarmknochen und dem tiefen Rumpf. Ein Schulterknochen war noch nicht fertig gewachsen, das Tier wuchs also wohl selbst noch. Das Field Museum in Chicago bewahrt die Knochen, und die großen Skelette, die Besucher dort fotografieren, sind Abgüsse, zum Teil nach Giraffatitan modelliert."
+   ],
+   "subs": [
+    {
+     "h": "In Colorado gefunden",
+     "paras": [
+      {
+       "points": [
+        "Sieben Rückenwirbel, das Kreuzbein und die ersten beiden Schwanzwirbel.",
+        "Der rechte Oberarmknochen, 2,04 m, wie er erhalten ist, das untere Ende fehlt, und der rechte Oberschenkelknochen, 2,03 m.",
+        "Das rechte Darmbein und ein Stück des linken, der linke Schulterknochen und fünf Rippen, keine vollständig."
+       ]
+      }
+     ]
+    },
+    {
+     "h": "Von anderen Funden oder übernommen",
+     "paras": [
+      {
+       "points": [
+        "Der Kopf: nach einem 1883 in Colorado gefundenen Schädel, der nur unter Vorbehalt zu dieser Art zählt, mit dem Nasenbogen nach Giraffatitan.",
+        "Hals, vorderer Rücken, Schulterblätter, Unterarme, Hände, Unterschenkel, Füße und der Schwanz hinter seinen ersten beiden Wirbeln: meist nach Giraffatitan.",
+        "Die linken Arm- und Beinknochen: Spiegelbilder der rechten."
+       ]
+      }
+     ]
+    }
+   ],
+   "end": [
+    "So hat unser Brachiosaurus die Größe eines Tiers und die Teile mehrerer."
+   ],
+   "scale": {
+    "pic": "skeleton",
+    "tag": "tag_built",
+    "what": "Unser Brachiosaurus als Skelett von rechts, nach Herkunft gefärbt.",
+    "alt": "Unser Brachiosaurus als Skelett von rechts, wenige cremefarbene Knochen in Rücken, Hüfte, einem Oberschenkel und einem Oberarm zwischen blauen, orangen und braunen, daneben der graue Mensch.",
+    "key": [
+     {
+      "swatch": "own",
+      "text": "Cremefarben: seine eigenen Knochen, 1900 in Colorado gefunden: sieben Rückenwirbel, das Kreuzbein, zwei Schwanzwirbel, das rechte Darmbein (eine Beckenschaufel), der rechte Oberschenkel- und Oberarmknochen und drei Rippen im Bild."
+     },
+     {
+      "swatch": "blue",
+      "text": "Blau: seine eigenen Knochen, gespiegelt oder ergänzt: die linken Arm- und Beinknochen als Spiegelbilder der rechten, das verlorene Ende des Oberarmknochens, die unteren Teile der Rippen. Auch der Schulterknochen im Bild, das Rabenbein, ist ein Spiegelbild: Gefunden wurde der linke, dahinter."
+     },
+     {
+      "swatch": "orange",
+      "text": "Orange: nach anderen Funden aus Amerika, vor allem einem 1883 in Colorado gefundenen Schädel, der nur unter Vorbehalt zu dieser Art zählt, und einem Unterarmknochen."
+     },
+     {
+      "swatch": "brown",
+      "text": "Braun: nach Giraffatitan, alles Übrige: Hals, vorderer Rücken, Schulterblätter, fast alles unterhalb von Ellbogen und Knie, Rippen und Schwanz."
+     }
+    ],
+    "after": 1
+   }
+  },
+  {
+   "type": "text",
+   "id": "giraffatitan",
+   "nav": "Giraffatitan, der berühmte in Berlin",
+   "h": "Giraffatitan, der berühmte in Berlin",
+   "paras": [
+    "Giraffatitan brancai ist das hohe Skelett im Berliner Museum für Naturkunde. Seine Knochen wurden von 1909 bis 1913 am Tendaguru im heutigen Tansania ausgegraben, unter deutscher Kolonialherrschaft, wie das Museum selbst sagt. 1914 Brachiosaurus brancai genannt, bekam das Tier 2009 eine eigene Gattung, als eine Studie mindestens 26 Unterschiede zum amerikanischen Tier zählte. Die Montage vereint mehrere Tiere, Hals und Schädel sind aus Gips, und der größte Teil des echten Knochens steckt in Beinen, Becken und Rippen. Sie ist etwa 23 m lang, der Schädel seit der Neumontage von 2007 in etwa 13 m Höhe, 12 m beim Aufbau von 1937, der Hals heute für die Ausstellung fast senkrecht. Die meisten Bilder eines Brachiosaurus folgen diesem bekannteren Verwandten."
+   ]
+  },
+  {
+   "type": "text",
+   "id": "looks",
+   "nav": "Wie er aussah",
+   "h": "Wie er aussah",
+   "subs": [
+    {
+     "h": "Körper und Beine",
+     "paras": [
+      "Die Vorderbeine waren länger als die Hinterbeine, der Rücken stieg also zu den Schultern an: Das gilt für alle Brachiosauriden und gab dem Tier seinen Namen. Der Rumpf war tief und etwa ein Viertel länger als der des Giraffatitan, nach seinen eigenen Rückenwirbeln. Der Schwanz war an der Wurzel hoch, wahrscheinlich lang und wurde frei über dem Boden getragen, wie bei anderen Sauropoden."
+     ]
+    },
+    {
+     "h": "Hals und Kopf",
+     "paras": [
+      "Der Hals ist von Giraffatitan übernommen, bei uns in sanftem Bogen erhoben, auch wenn der Winkel umstritten ist. Der Kopf folgt dem Schädel aus Colorado von 1883 und dem Nasenbogen des Giraffatitan, die fleischigen Nasenlöcher tief und weit vorn an der Schnauze."
+     ]
+    },
+    {
+     "h": "Haut und Farbe",
+     "paras": [
+      "Von keinem Brachiosauriden ist Haut gefunden worden. Unser Tier zeigt kleine flache Schuppen wie andere Sauropoden, und seine Farbe ist eine Wahl, denn bekannt ist keine."
+     ]
+    }
+   ]
+  },
+  {
+   "type": "text",
+   "id": "giraffe",
+   "nav": "Brachiosaurus gegen Giraffe, und gegen Argentinosaurus",
+   "h": "Brachiosaurus gegen Giraffe, und gegen Argentinosaurus",
+   "paras": [
+    "Ein Giraffenbulle wird bis zu etwa 5,5 m hoch und bis zu etwa 1,4 t schwer. Der Kopf unseres Modells steht etwa doppelt so hoch, schon seine Schultern ragen über den Kopf einer großen Giraffe, und grob 30 bis 45 t sind etwa 22 bis 33 Giraffenbullen. Argentinosaurus war größer: etwa 30 bis 35 m lang und grob 65 bis 80 t, beides rekonstruiert, gegen etwa 22 bis 25 m und 30 bis 45 t. Begegnet sind sich die beiden nie, Dutzende Millionen Jahre und ein Kontinent lagen dazwischen, und unsere beiden Modelle tragen den Kopf nur deshalb fast gleich hoch, weil wir die Hälse so gewählt haben."
+   ]
+  },
+  {
+   "type": "text",
+   "id": "when-where",
+   "nav": "Wann und wo der Brachiosaurus lebte",
+   "h": "Wann und wo der Brachiosaurus lebte",
+   "paras": [
+    "Der Brachiosaurus lebte im Oberen Jura im Westen Nordamerikas, vor etwa 150 Millionen Jahren, in den Gesteinen, die heute Morrison-Formation heißen. Er lebte an Land: Das legte Riggs schon 1904 an Beinen und Füßen dar, gegen das alte Bild vom Sumpftier. Die Spanne, die ein Museum für die Gattung angibt, endet vor etwa 145 Millionen Jahren."
+   ]
+  },
+  {
+   "type": "text",
+   "id": "how-sure",
+   "nav": "Wie sicher das ist",
+   "h": "Wie sicher das ist",
+   "paras": [
+    "Zwei Dinge entscheiden über jede Zahl auf dieser Seite.",
+    {
+     "points": [
+      [
+       "Länge und Gewicht sind rekonstruiert:",
+       "Ein ganzes Skelett gibt es nicht, beide beruhen also auf dem Gerüst des Giraffatitan und einer angenommenen Dichte."
+      ],
+      [
+       "Unser Brachiosaurus ist ein Modell, nicht die Art:",
+       "Seine 24,4 m entlang der Wirbelsäule und der Kopf in 11,8 m Höhe sind Zahlen des Modells, die Kopfhöhe nach dem Hals, den wir gewählt haben, nie Zahlen des Tiers."
+      ]
+     ]
+    }
+   ]
+  },
+  {
+   "type": "notes",
+   "id": "numbers-read",
+   "nav": "Zahlen, die du vielleicht gelesen hast",
+   "h": "Zahlen, die du vielleicht gelesen hast",
+   "intro": "Zu jeder Zahl: woher sie kommt und was sie bedeutet.",
+   "rows": [
+    {
+     "term": "80 t",
+     "text": "Eine Zahl von 1962 aus einem kleinen Modell, das man ins Wasser tauchte, und das Modell zeigte die Berliner Art, nicht diese. Spätere Arbeiten legten sie als Ausreißer beiseite."
+    },
+    {
+     "term": "50 t",
+     "text": "Das Schild der Berliner Ausstellung von 2007, für Giraffatitan. Ihre Erbauer von 2007 setzen den wahren Wert deutlich darunter an, und neuere Modelle der Montage geben etwa 23 bis 38 t."
+    },
+    {
+     "term": "13 m hoch, und 12 m",
+     "text": "Beides ist die Berliner Montage, ein Giraffatitan. Ihr Schädel stand beim Aufbau von 1937 11,87 m hoch, mit nach vorn geneigtem Hals, und seit der Neumontage von 2007 etwa 13 m hoch, mit fast senkrechtem Hals, eine Haltung, gewählt wegen der Wirkung auf die Besucher. Die Höhe des amerikanischen Tiers wurde nie gemessen."
+    },
+    {
+     "term": "Der größte Dinosaurier",
+     "text": "Riggs' eigener Titel für das Tier, 1901 und 1903, und damals richtig. Die viel schwereren Titanosaurier, Argentinosaurus darunter, wurden später gefunden."
+    },
+    {
+     "term": "Ein Sumpftier, vom Wasser getragen",
+     "text": "Das alte Bild aller Langhalsdinosaurier. Riggs hielt schon 1904 mit Beinen und Füßen dagegen, und seither gilt es als überholt."
+    },
+    {
+     "term": "Nasenlöcher oben auf dem Kopf",
+     "text": "Alte Darstellungen setzten das fleischige Nasenloch an den oberen Rand der großen knöchernen Öffnung im Schädel. Eine Studie von 2001 fand, dass es tief und weit vorn an der Schnauze saß."
+    }
+   ]
+  },
+  {
+   "type": "faq",
+   "id": "questions",
+   "nav": "Weitere Fragen",
+   "h": "Weitere Fragen",
+   "items": [
+    {
+     "q": "Was fraß der Brachiosaurus?",
+     "a": "Blätter hoher Bäume, Nadelbäume und Baumfarne darunter, so das Natural History Museum in London. Gekaut hat er nicht: Die Blätter wurden im Darm zersetzt, wie bei anderen Sauropoden."
+    }
+   ]
+  },
+  {
+   "type": "text",
+   "id": "museum",
+   "nav": "Im Museum",
+   "h": "Im Museum",
+   "paras": [
+    "Museum of Ages ist ein digitales Museum. Unser Brachiosaurus wird in seinem Flügel in dieser Größe stehen, neben den anderen Tieren, im selben Maßstab. Eintritt frei, kein Konto."
+   ],
+   "links": [
+    {
+     "out": true,
+     "text": "Zum Leonardo-Flügel"
+    }
+   ]
+  },
+  {
+   "type": "pages",
+   "id": "next",
+   "items": [
+    {
+     "page": "biggest-dinosaurs",
+     "pic": "dinosaurs",
+     "alt": "Sieben Dinosaurier in einer Reihe von der Seite, zwei mit langen Hälsen hoch über den anderen, und ein grauer Mensch, der daneben winzig wirkt.",
+     "line": "Sieben von unseren neben einem Menschen, im selben Maßstab: der schwerste höchstwahrscheinlich ein Titanosaurier aus Patagonien, der höchste vermutlich Sauroposeidon, und warum der längste noch offen ist."
+    },
+    {
+     "page": "t-rex",
+     "pic": "trex",
+     "alt": "Ein T. rex von der Seite auf zwei Beinen, das Maul offen, der Kopf erhoben, neben einem grauen Menschen, der ihm nicht bis zum Knie reicht.",
+     "line": "Ein großer erwachsener T. rex war etwa 12 m lang, an der Hüfte etwa 4 m hoch und kam auf grob 8 bis 9 t. Unser T. rex ist nach den Maßen von SUE gebaut und steht im selben Maßstab neben einem Menschen, dazu eine Liste dessen, was von SUE gefunden wurde."
+    },
+    {
+     "page": "woolly-mammoth",
+     "pic": "mammoth",
+     "alt": "Ein Wollhaarmammut von der Seite im dunkelbraunen Fell, mit hoch gewölbtem Kopf, abfallendem Rücken, zwei gebogenen Stoßzähnen und einer Marke an der Schulter. Der graue Mensch daneben steht niedriger als die Spitzen der Stoßzähne.",
+     "line": "Ein typischer sibirischer Bulle maß an der Schulter etwa 2,7 bis 2,9 m und wog etwa 4 bis 5 t. Unser Wollhaarmammut ist ein einzelner echter Bulle, 1900 im Permafrost gefunden, 2,71 m an der Schulter nach einer Rekonstruktion, neben einem Menschen im selben Maßstab."
+    }
+   ]
+  },
+  {
+   "type": "sources",
+   "id": "sources",
+   "nav": "Quellen",
+   "h": "Quellen",
+   "intro": "Die Zahlen stammen aus diesen Studien und von den Museen, die die Knochen bewahren. Das Museum ist von allen unabhängig.",
+   "read": [
+    {
+     "text": "Taylor, 2009, Journal of Vertebrate Paleontology.",
+     "href": "https://www.miketaylor.org.uk/dino/pubs/taylor2009/Taylor2009-brachiosaurus-and-giraffatitan.pdf"
+    },
+    {
+     "text": "Taylor und Wedel, 2023, Acta Palaeontologica Polonica.",
+     "href": "https://app.pan.pl/archive/published/app68/app011052023.pdf"
+    },
+    {
+     "text": "Taylor, Wedel und Naish, 2009, Acta Palaeontologica Polonica.",
+     "href": "https://app.pan.pl/archive/published/app54/app54-213.pdf"
+    },
+    {
+     "text": "Wedel, Cifelli und Sanders, 2000, Acta Palaeontologica Polonica.",
+     "href": "https://www.app.pan.pl/archive/published/app45/app45-343.pdf"
+    },
+    {
+     "text": "Colbert, 1962, wie Wedel und andere 2000 es wiedergeben."
+    },
+    {
+     "text": "Riggs, 1904, Field Columbian Museum, Geological Series.",
+     "href": "https://archive.org/details/riggs1904-brachiosaurus-altithorax-good-scan"
+    },
+    {
+     "text": "Riggs, 1901, Science, und 1903, American Journal of Science, die Titel, wie Taylor 2009 sie nennt."
+    },
+    {
+     "text": "Paul, 1988, Hunteria."
+    },
+    {
+     "text": "Janensch, 1950, die Skelettrekonstruktion des Berliner Tiers, gelesen in der englischen Übersetzung."
+    },
+    {
+     "text": "Remes und andere, 2011, in Biology of the Sauropod Dinosaurs."
+    },
+    {
+     "text": "D'Emic und Carrano, 2020, Anatomical Record, die Kurzfassung.",
+     "href": "https://doi.org/10.1002/ar.24198"
+    },
+    {
+     "text": "Witmer, 2001, Science, die Kurzfassung.",
+     "href": "https://doi.org/10.1126/science.1062681"
+    },
+    {
+     "text": "Gunga und andere, 2008, Fossil Record, die Kurzfassung.",
+     "href": "https://doi.org/10.1002/mmng.200700011"
+    },
+    {
+     "text": "Sellers und andere, 2012, Biology Letters, die Kurzfassung.",
+     "href": "https://doi.org/10.1098/rsbl.2012.0263"
+    },
+    {
+     "text": "Field Museum, Chicago: Brachiosaurus FMNH P 25107 und sein Blog zu den Abgüssen.",
+     "href": "https://www.fieldmuseum.org/blog/why-we-dont-dress-sue-or-any-other-real-skeletons"
+    },
+    {
+     "text": "Museum für Naturkunde Berlin: Giraffatitan brancai, seine Seiten zur Saurierwelt und sein Projekt Digital Tendaguru.",
+     "href": "https://www.museumfuernaturkunde.berlin/besuch-planen/die-ausstellung/saurierwelt/"
+    },
+    {
+     "text": "Natural History Museum, London: seine Brachiosaurus-Seite.",
+     "href": "https://www.nhm.ac.uk/discover/dino-directory/brachiosaurus.html"
+    },
+    {
+     "text": "San Diego Zoo Wildlife Alliance: seine Giraffen-Seite.",
+     "href": "https://animals.sandiegozoo.org/animals/giraffe"
+    }
+   ],
+   "contact": "Ist eine Zahl oder ein Museum falsch angegeben, schreib uns, und wir korrigieren es.",
+   "contact_link": "Zum Impressum",
+   "what_link": "Was dieses Museum ist"
+  },
+  {
+   "type": "text",
+   "id": "pictures",
+   "nav": "Unsere Bilder nutzen",
+   "h": "Unsere Bilder nutzen",
+   "paras": [
+    [
+     "Die Bilder des Brachiosaurus auf dieser Seite sind unsere eigene Arbeit unter ",
+     {
+      "text": "CC BY-SA 4.0",
+      "href": "https://creativecommons.org/licenses/by-sa/4.0/deed.de"
+     },
+     ", Nachweis: Museum of Ages. Sie zeigen eine Rekonstruktion, in Code gebaut und in unserer Engine gerendert, kein Foto. Die Bilder unter „Im Museum“ nennen ihren Nachweis auf ihren eigenen Seiten."
+    ]
+   ]
+  }
+ ]
+}

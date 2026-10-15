@@ -1001,11 +1001,192 @@
             "about 44,000 years only by the museum's radiocarbon date"
           ]
         ]
+      },
+      {
+        "slug": {
+          "en": "brachiosaurus",
+          "de": "brachiosaurus"
+        },
+        "name": {
+          "en": "How big was Brachiosaurus?",
+          "de": "Wie groß war ein Brachiosaurus?"
+        },
+        "line": {
+          "en": "Brachiosaurus was about 22 to 25 m long and roughly 30 to 45 tonnes, both figures rebuilt from one partial skeleton, and because that skeleton has no neck, its height was never measured. Our Brachiosaurus stands at that skeleton's size beside a person, with what was found and what is borrowed.",
+          "de": "Der Brachiosaurus war etwa 22 bis 25 m lang und grob 30 bis 45 t schwer, beides nach einem einzigen Teilskelett rekonstruiert, und weil diesem Skelett der Hals fehlt, ist seine Höhe nie gemessen worden. Unser Brachiosaurus steht in der Größe dieses Skeletts neben einem Menschen, mit dem, was gefunden wurde und was übernommen ist."
+        },
+        "langs": ["en", "de"],
+        "count": "brachiosaurus",
+        "about": {
+          "@type": "Taxon",
+          "name": "Brachiosaurus altithorax",
+          "alternateName": "Brachiosaurus",
+          "taxonRank": "species",
+          "sameAs": "https://www.wikidata.org/wiki/Q22105849"
+        },
+        "never_say": [
+          [
+            "(?:the\\sberlin|berliner)\\sbrachiosaurus|brachiosaurus(?:-skelett|\\sskeleton)?\\s(?:in|im)\\sberlin",
+            "the skeleton in Berlin is Giraffatitan brancai, never Brachiosaurus"
+          ],
+          [
+            "(?s)^(?!.*(?:named|genannt|1914|old\\sname|alten\\snamen)).*brachiosaurus\\sbrancai",
+            "Brachiosaurus brancai only as the Berlin animal's old name of 1914"
+          ],
+          [
+            "(?s)^(?!.*(?:berlin|giraffatitan|\\bmount\\b|montage|since\\s2007|seit\\s2007|1937)).*(?<![\\d.,])1[23](?:[.,]\\d+)?\\s?m\\b(?!\\s(?:\\(\\d+\\sft\\)\\s)?(?:long|lang))",
+            "13 m and 12 m tall only with the Berlin mount or Giraffatitan"
+          ],
+          [
+            "(?s)^(?!.*(?:(?:\\bour\\b|\\bours\\b|\\bunser\\w*)|model|modell)).*\\b11[.,]8\\s?m\\b",
+            "11.8 m only as ours, our model's"
+          ],
+          [
+            "(?s)^(?!.*(?:neck|hals|pose|haltung|chose|choice|gewählt|wahl)).*\\b11[.,]8\\s?m\\b",
+            "11.8 m only with the neck we chose"
+          ],
+          [
+            "(?<![\\d.,])(?:23|1[46])\\s?(?:m|metres?|meters?|metern?)\\b\\s(?:\\(\\d+\\sft\\)\\s)?(?:tall|high|hoch)",
+            "never 23 m, 16 m or 14 m tall: no height of Brachiosaurus was measured"
+          ],
+          [
+            "(?s)^(?!.*(?:(?:\\bour\\b|\\bours\\b|\\bunser\\w*)|model|modell|along\\sthe\\sbackbone|entlang\\sder\\swirbelsäule|neck\\sraised|erhobenem\\shals)).*\\b(?:21[.,]5|24[.,]4)\\s?m\\b",
+            "21.5 m and 24.4 m only as ours: Brachiosaurus was about 22 to 25 m"
+          ],
+          [
+            "(?s)^(?!.*(?:\\bour\\b|\\bours\\b|\\bunser\\w*)).*\\b\\d+\\s?(?:°|degrees?|grad)\\b",
+            "a neck angle only as ours, the one we chose"
+          ],
+          [
+            "no\\sneck\\s(?:bone\\s)?(?:of\\s(?:it|brachiosaurus)\\s)?(?:was\\s|has\\sbeen\\s)?(?:ever\\s)?found|(?:nie|kein(?:en)?)\\s(?:\\w+\\s){0,2}hals(?:wirbel|knochen)?\\s(?:\\w+\\s){0,3}gefunden",
+            "two neck bones from other finds are referred to it with doubt: the Chicago skeleton has no neck"
+          ],
+          [
+            "(?s)^(?!.*(?:1962|colbert|outlier|ausreißer)).*(?<![\\d.,])(?<!65\\sto\\s)(?<!65\\sbis\\s)(?:80|78)\\s?(?:t|tonnes?|tons?|tonnen)\\b",
+            "80 tonnes only as Colbert's outlier of 1962"
+          ],
+          [
+            "(?s)^(?!.*(?:berlin|giraffatitan|label|schild)).*(?<![\\d.,])50\\s?(?:t|tonnes?|tons?|tonnen)\\b",
+            "50 tonnes only as the Berlin label, for Giraffatitan"
+          ],
+          [
+            "(?s)^(?!.*(?:berlin|giraffatitan|\\bmount\\b|montage|label|schild)).*(?<![\\d.,])(?:23|38)(?:\\s(?:to|bis)\\s38)?\\s?(?:t|tonnes?|tons?|tonnen)\\b",
+            "23 to 38 tonnes are the Berlin mount's, by newer models"
+          ],
+          [
+            "(?s)^(?!.*(?:berlin|giraffatitan|\\bmount\\b|montage)).*\\b22[.,]46\\b",
+            "22.46 m is the Berlin mount's length"
+          ],
+          [
+            "(?<![\\d.,])(?:9|8[.,]8)\\s?m\\s(?:\\(\\d+\\sft\\)\\s)?(?:long\\s)?neck|(?<![\\d.,])9\\s?m\\slange[rn]?\\shals|(?:neck|hals)\\s(?:\\w+\\s){0,4}(?:about\\s|etwa\\s)?9\\s?m\\b",
+            "a 9 m neck is Giraffatitan's: the Chicago skeleton has no neck"
+          ],
+          [
+            "(?s)^(?!.*(?:mammoth|mammut|\\bbull\\b|bulle)).*(?:\\bweighed\\b|\\bgewogen\\b|\\bwog\\b)",
+            "no Brachiosaurus was weighed: its weight is rebuilt by models"
+          ],
+          [
+            "(?:\\bour\\b|\\bours\\b|\\bunser\\w*)\\s(?:\\w+\\s){0,3}(?:weighs|weighed|would\\sweigh|comes?\\sto|wiegt|wog|wöge|käme)|(?:model|modell)\\s(?:\\w+\\s){0,3}(?:weighs|wiegt)|(?<![\\d.,])44\\s?(?:t|tonnes?|tons?|tonnen)\\b",
+            "never a weight from our model"
+          ],
+          [
+            "ultrasaur|(?:over|more\\sthan|über|mehr\\sals)\\s100\\s?(?:t|tonnes?|tons?|tonnen)\\b",
+            "no Ultrasaurus as a bigger Brachiosaurus, no 100 tonnes"
+          ],
+          [
+            "(?s)^(?!.*(?:as\\spreserved|erhalten)).*\\b2[.,]04\\s?m\\b",
+            "2.04 m only as preserved: the arm bone's lower end is lost"
+          ],
+          [
+            "nearly\\scomplete|almost\\scomplete|fast\\svollständig|nahezu\\svollständig|complete\\sskeleton|vollständige[sn]?\\sskelett",
+            "not a nearly complete skeleton: one partial skeleton"
+          ],
+          [
+            "(?:measured|gemessene[rn]?)\\s(?:length|länge)|length\\swas\\smeasured|länge\\s(?:\\w+\\s)?gemessen",
+            "no measured length: about 22 to 25 m, rebuilt"
+          ],
+          [
+            "(?s)^(?!.*(?:t\\.\\srex|not\\s(?:yet\\s)?full|nicht\\s(?:ganz\\s)?ausgewachsen|noch\\snicht\\saus)).*(?:full.grown|fully\\sgrown|ausgewachsen|\\badult|erwachsen)",
+            "never full-grown or adult at the Chicago animal: it was probably still growing"
+          ],
+          [
+            "both\\ship\\sblades|beide\\s(?:darmbeine|beckenschaufeln)|right\\scoracoid|rechte[sn]?\\srabenbein",
+            "one hip blade and a piece of the other; the coracoid found is the left"
+          ],
+          [
+            "(?:skeleton|skelett)\\s(?:\\w+\\s){0,4}(?:on\\s(?:show|display)\\sin\\schicago|in\\schicago\\s(?:\\w+\\s)?(?:on\\s(?:show|display)|ausgestellt|zu\\ssehen))|real\\sbones\\sare\\son\\s(?:show|display)|echten\\sknochen\\s(?:sind|werden)\\s(?:\\w+\\s)?(?:ausgestellt|gezeigt)",
+            "the skeletons on show in Chicago are casts, partly sculpted after Giraffatitan"
+          ],
+          [
+            "(?:our|unser\\w*)\\s(?:\\w+\\s){0,2}brachiosaurus(?:\\s|-)(?:skeleton|skelett)",
+            "our skeleton is a composite, never a Brachiosaurus skeleton"
+          ],
+          [
+            "(?s)^(?!.*(?:colonial|kolonial)).*(?:(?:dug|excavated|ausgegraben|gegraben)\\s(?:\\w+\\s){0,6}(?:at|am|in)\\stendaguru|tendaguru\\s(?:\\w+\\s){0,6}(?:dug|excavated|ausgegraben))",
+            "the Tendaguru dig only with German colonial rule, as the holder says"
+          ],
+          [
+            "(?s)^(?!.*(?:riggs|title|titel|1901|1903)).*(?:(?:largest|biggest)\\sknown\\sdinosaur|größte[rns]?\\sbekannte[rns]?\\sdinosaurier|(?:brachiosaurus|it)\\swas\\sthe\\s(?:largest|biggest)\\sdinosaur|(?:brachiosaurus|er)\\swar\\sder\\sgrößte\\sdinosaurier)",
+            "the largest known dinosaur only as Riggs's title of 1901 and 1903"
+          ],
+          [
+            "(?s)^(?!.*(?:mounted|montierte|skeleton|skelett|not\\sknown|nicht\\s(?:sicher\\s)?bekannt|weiß\\sniemand|nobody|niemand)).*(?:tallest\\sdinosaur|höchste[rns]?\\sdinosaurier)",
+            "the tallest dinosaur only for the mounted Giraffatitan, or as not known"
+          ],
+          [
+            "(?s)^(?!.*(?:2001|low\\sand\\sfar\\sforward|tief\\sund\\sweit\\svorn|old\\srestorations|alte\\sdarstellungen)).*(?:nostrils?\\s(?:\\w+\\s)?(?:on|at)\\s(?:the\\s)?top|nasenlöcher?\\s(?:\\w+\\s)?(?:oben\\s)?auf\\sdem\\skopf|nasenl\\w*\\soben)",
+            "the nostrils were not on top of the head: low and far forward on the snout"
+          ],
+          [
+            "hand\\s(?:\\w+\\s)?like\\san\\selephant|elefantenhand|hand\\s(?:\\w+\\s)?wie\\s(?:die\\s)?(?:eines\\s)?elefanten",
+            "no hand like an elephant's: the comparison is not in the cited paper"
+          ],
+          [
+            "(?:brachiosaurus|\\bit|sauropods?|\\ber|sauropoden)\\s(?:was|were|war|waren)\\s(?:\\w+\\s){0,2}(?:brown|green|grey|gray|speckled|spotted|striped|braun|grün|grau|gesprenkelt|gefleckt|gestreift)\\b",
+            "no colour is known: ours is a choice"
+          ],
+          [
+            "(?s)^(?!.*(?:old\\spicture|alte[ns]?\\sbild|1904|against|dagegen)).*(?:lived\\sin\\s(?:the\\s)?water|swamp\\sanimal|held\\sup\\sby\\s(?:the\\s)?water|snorkel|im\\swasser\\slebte|lebte\\sim\\swasser|sumpftier|vom\\swasser\\sgetragen|schnorchel)",
+            "it lived on land: a swamp animal only as the old picture"
+          ],
+          [
+            "reared\\sup|rear(?:ed|s)?\\son\\s(?:its\\s)?hind|hind\\slegs\\sto\\sfeed|(?:richtete|stellte)\\ssich\\sauf\\s(?:die\\s)?hinterbeine|bäumte\\ssich|aufbäum",
+            "no rearing to feed as a fact"
+          ],
+          [
+            "sprawl|gespreizte[n]?\\svorderbeine|seitlich\\sabgespreizt",
+            "no sprawling front legs as a finding"
+          ],
+          [
+            "\\b1[3-5]\\s(?:neck\\svertebrae|halswirbel)",
+            "no count of neck vertebrae"
+          ],
+          [
+            "second\\sbrain|zweites\\s(?:ge)?hirn",
+            "no second brain"
+          ],
+          [
+            "jurassic\\spark|the\\sfilm|im\\sfilm|der\\sfilm|des\\sfilms",
+            "no film: which skeleton a film followed has no source"
+          ],
+          [
+            "(?<!about\\s)(?<!etwa\\s)\\b1(?:45|50)\\s(?:million|millionen)",
+            "150 and 145 million years only with about"
+          ],
+          [
+            "(?<![\\d.,])1[45]\\d[.,]\\d+\\s(?:million|millionen)|\\b15\\d\\s(?:to|bis)\\s1[45]\\d\\b",
+            "no exact age: about 150 million years ago"
+          ],
+          [
+            "died\\sout|became\\sextinct|starb\\s(?:\\w+\\s)?aus|ausgestorben|last\\sfossils?|letzte[ns]?\\sfossil|asteroid|meteorit|vulkan|volcan",
+            "no end and no cause: a museum's range for the genus stops at about 145 million years ago"
+          ]
+        ]
       }
     ],
     "never_say": [
       [
-        "\\bsoon\\b(?! after)|\\bbald\\b|\\bdemnächst\\b|\\bin kürze\\b|\\bopens? (?:in|on|this|next)\\b|\\böffnet (?:im|am|in|diese|nächste)",
+        "\\bsoon\\b(?! after)|\\bbald\\b(?! darauf)|\\bdemnächst\\b|\\bin kürze\\b|\\bopens? (?:in|on|this|next)\\b|\\böffnet (?:im|am|in|diese|nächste)",
         "the wing has no date: it is being built"
       ],
       [

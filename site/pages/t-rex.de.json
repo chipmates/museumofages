@@ -62,6 +62,16 @@
    ],
    "sizes": "(min-width: 1280px) 690px, (min-width: 960px) 54vw, (min-width: 600px) calc(100vw - 64px), calc(100vw - 40px)",
    "person": "92.84% 63.16%"
+  },
+  "brachio": {
+   "stem": "animals-brachiosaurus-side",
+   "widths": [
+    800,
+    1600,
+    2400
+   ],
+   "sizes": "(min-width: 1280px) 690px, (min-width: 960px) 54vw, (min-width: 600px) calc(100vw - 64px), calc(100vw - 40px)",
+   "person": "77.8% 84.8%"
   }
  },
  "meta": {
@@ -367,6 +377,12 @@
      "pic": "spino",
      "alt": "Ein Spinosaurus von der Seite, mit hohem Rückensegel und tiefem Schwanz, dahinter der helle Umriss eines größeren erwachsenen Tiers, daneben ein grauer Mensch, der ihm bis zur Hüfte reicht.",
      "line": "Ein erwachsener Spinosaurus war länger als jeder T. rex, sehr wahrscheinlich leichter und an der Hüfte viel niedriger. Hier steht unser junger Spinosaurus neben unserem T. rex, im selben Maßstab."
+    },
+    {
+     "page": "brachiosaurus",
+     "pic": "brachio",
+     "alt": "Ein Brachiosaurus von der Seite, den langen Hals in sanftem Bogen erhoben, die Vorderbeine länger als die Hinterbeine, der Schwanz frei über dem Boden, daneben ein grauer Mensch, der unter seinem Bauch hindurchgehen könnte.",
+     "line": "Der Brachiosaurus, ein Langhalsdinosaurier und Pflanzenfresser aus dem Oberen Jura, war etwa 22 bis 25 m lang und grob 30 bis 45 t schwer, beides nach einem einzigen Teilskelett rekonstruiert. Unser Brachiosaurus steht neben einem Menschen, der Kopf in der Haltung, die wir gewählt haben, etwa sieben Menschen hoch."
     }
    ]
   },
