@@ -1415,6 +1415,35 @@ class Case(unittest.TestCase):
             self.save(lang, data, page)
         self.fails(r"needs pics\.<name>\.person")
 
+    def test_a_picture_may_leave_the_persons_height_to_the_label_that_names_the_person(self):
+        # a null place: no height over the person's head, the label under the picture names it (a closer panel: the
+        # first picture's place also draws the share card)
+        page = next((p for p in self.pages if "person" in [m["span"] for m in
+                     ((self.data("en", p)["top"].get("scale") or {}).get("close") or {}).get("marks", [])]), None)
+        if not page:
+            self.skipTest("no closer panel names the person in a label")
+        for lang in ("en", "de"):
+            data = self.data(lang, page)
+            fig = data["top"]["scale"]["close"]
+            data["pics"][fig["pic"]]["person"] = None
+            data["pics"][fig["pic"]].pop("person_from", None)
+            self.save(lang, data, page)
+        out, written = self.build()
+        mine = [path for path in written if self.page_of(path)[0]["page"]["id"] == data["page"]["id"]]
+        self.assertEqual(len(mine), 2)
+        for path in mine:
+            text = path.read_text(encoding="utf-8")
+            self.assertNotIn("sc-person--%s" % fig["pic"], text)
+            self.assertIn('<li class="sc-mark sc-mark--%s-person">' % fig["pic"], text)
+        # a picture that names no person keeps its place
+        shutil.rmtree(out)
+        page = self.scale_page()
+        for lang in ("en", "de"):
+            data = self.data(lang, page)
+            data["pics"][data["top"]["scale"]["pic"]]["person"] = None
+            self.save(lang, data, page)
+        self.fails(r"needs pics\.<name>\.person")
+
     def test_a_table_cell_may_stand_empty_but_never_its_first(self):
         page = self.scale_page()
         out, _ = self.build()

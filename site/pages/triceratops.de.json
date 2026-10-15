@@ -45,8 +45,7 @@
     1600
    ],
    "sizes": "(min-width: 1280px) 690px, (min-width: 960px) 54vw, (min-width: 600px) calc(100vw - 64px), calc(100vw - 40px)",
-   "person": "85.81% 36.63%",
-   "person_from": 1280,
+   "person": null,
    "marks": {
     "skull": "35.68% 38.08% end",
     "horns": "73.02% 78.23%",

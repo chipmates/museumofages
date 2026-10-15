@@ -642,7 +642,8 @@ def person_rules(defs):
     """Where the person's height stands over the person in each picture at one scale: centred over the person, just
     above the head (pics.<name>.person, the person's centre and the top of the head as shares of the picture). Where
     the picture leaves it open stone only from a screen width (pics.<name>.person_from), it stands from there on. A
-    version for narrow screens (pics.<name>.narrow) has the person at its own place there, or no height if it has none."""
+    version for narrow screens (pics.<name>.narrow) has the person at its own place there, or no height if it has none.
+    A null place has no height over the person (its label names it)."""
     rules = []
     place = lambda at: re.fullmatch(r"(\d{1,3}(?:\.\d+)?)% (\d{1,3}(?:\.\d+)?)%", at or "")
     for name, d in defs.items():
@@ -2195,8 +2196,13 @@ def making_problems(d, wing, data):
     figs += [f.get("close") for f in figs if f and f is not top.get("scale")]
     for fig in filter(None, figs):
         pic = d["pics"].get(fig.get("pic"))
-        if not pic or not re.fullmatch(r"\d{1,3}(?:\.\d+)?% \d{1,3}(?:\.\d+)?%", pic.get("person") or ""):
-            problems.append(f"the picture {fig.get('pic')!r} at one scale needs pics.<name>.person, the person's place in it")
+        # a null place: the person's height stands only in the label that names the person, where over the head it
+        # would stand level with another label's line
+        bare = bool(pic) and "person" in pic and pic["person"] is None and not pic.get("person_from") and (
+            "person" in {m.get("span") for m in fig.get("marks", [])})
+        if not bare and (not pic or not re.fullmatch(r"\d{1,3}(?:\.\d+)?% \d{1,3}(?:\.\d+)?%", pic.get("person") or "")):
+            problems.append(f"the picture {fig.get('pic')!r} at one scale needs pics.<name>.person, the person's place in it "
+                            "(null only where a label of the picture names the person)")
         for bar in fig.get("bars", []):
             at = ((pic or {}).get("spans") or {}).get(bar.get("span"))
             if not at or not re.fullmatch(r"\d{1,3}(?:\.\d+)?% \d{1,3}(?:\.\d+)?%", at):
