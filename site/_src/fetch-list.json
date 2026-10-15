@@ -1679,26 +1679,26 @@
   {
    "path": "pages/pics/img/animals-spinosaurus-beside-t-rex-narrow-1600.avif",
    "url": "/static/img/animals-spinosaurus-beside-t-rex-narrow-1600.avif",
-   "bytes": 31035,
-   "sha256": "573ac3e7ed55893f38794b1f4fd2b13bc73a78016ca776e64344686a7a168379"
+   "bytes": 32090,
+   "sha256": "22654b9b36f96c3e10e540597beab7ff40aae199e43a8929eebd87d09407cd83"
   },
   {
    "path": "pages/pics/img/animals-spinosaurus-beside-t-rex-narrow-1600.webp",
    "url": "/static/img/animals-spinosaurus-beside-t-rex-narrow-1600.webp",
-   "bytes": 39162,
-   "sha256": "279c7df5b192abb91fb8307f7fffed13214e3bc481be4f28a2d8e8ac368730a0"
+   "bytes": 39990,
+   "sha256": "10155093f4a1bb448ca7efdba6259993a6fa0d9e2b84c7a10696df2e8f50b941"
   },
   {
    "path": "pages/pics/img/animals-spinosaurus-beside-t-rex-narrow-800.avif",
    "url": "/static/img/animals-spinosaurus-beside-t-rex-narrow-800.avif",
-   "bytes": 11461,
-   "sha256": "624d702e55f42032e200548c5629a026c2859c16846171ab8995e4200bc082ce"
+   "bytes": 11841,
+   "sha256": "589296687da403684152a7f22c26a29e872fd5a556e1f89afaf7cde5cc881433"
   },
   {
    "path": "pages/pics/img/animals-spinosaurus-beside-t-rex-narrow-800.webp",
    "url": "/static/img/animals-spinosaurus-beside-t-rex-narrow-800.webp",
-   "bytes": 14514,
-   "sha256": "02ed15bf4661010dd3c334d9eb2994df7d2928a4d4f247a6d94c83c321485bc4"
+   "bytes": 14926,
+   "sha256": "10da46c45ef1a4f123404762cec2ce26646219d5236041ef6f557bb07fb9600d"
   },
   {
    "path": "pages/pics/img/animals-spinosaurus-close-1600.avif",
@@ -1795,30 +1795,6 @@
    "url": "/static/img/animals-spinosaurus-skeleton-800.webp",
    "bytes": 18764,
    "sha256": "ad4ed327af8a2114ea2342361fd8e398bd01e89eaf94874d05ba03711a6967a1"
-  },
-  {
-   "path": "pages/pics/img/animals-spinosaurus-skeleton-narrow-1600.avif",
-   "url": "/static/img/animals-spinosaurus-skeleton-narrow-1600.avif",
-   "bytes": 28248,
-   "sha256": "337bddfde4ad37c9d25e1a8b7d9d738160aac4bba9d3a32027188a6873c91fa4"
-  },
-  {
-   "path": "pages/pics/img/animals-spinosaurus-skeleton-narrow-1600.webp",
-   "url": "/static/img/animals-spinosaurus-skeleton-narrow-1600.webp",
-   "bytes": 54008,
-   "sha256": "addb035a20e6ac72b0bd09010881b85786888c4d497bfd68509159108c9125f2"
-  },
-  {
-   "path": "pages/pics/img/animals-spinosaurus-skeleton-narrow-800.avif",
-   "url": "/static/img/animals-spinosaurus-skeleton-narrow-800.avif",
-   "bytes": 12037,
-   "sha256": "2d70560eae07ed527234fc56d4147f6c56950ec261d119e7bce6b856ae7fcad2"
-  },
-  {
-   "path": "pages/pics/img/animals-spinosaurus-skeleton-narrow-800.webp",
-   "url": "/static/img/animals-spinosaurus-skeleton-narrow-800.webp",
-   "bytes": 22540,
-   "sha256": "003859e9bb3d733bf682595769f9d12f5bf79320c8c3bfd3fcb093626dc0b2ae"
   },
   {
    "path": "pages/pics/img/animals-t-rex-close-1600.avif",

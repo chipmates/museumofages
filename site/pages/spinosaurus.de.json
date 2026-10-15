@@ -86,15 +86,6 @@
     "own": "#772c0a",
     "stromer": "#4f7d9d",
     "pale": "#b79e6c"
-   },
-   "narrow": {
-    "stem": "animals-spinosaurus-skeleton-narrow",
-    "widths": [
-     800,
-     1600
-    ],
-    "below": 600,
-    "person": "91.22% 51.95%"
    }
   },
   "trex": {

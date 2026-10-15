@@ -37,7 +37,6 @@
     { "name": "animals-spinosaurus-beside-t-rex", "file": "spinosaurus-vs.png", "widths": [800, 1600, 2400] },
     { "name": "animals-spinosaurus-beside-t-rex-narrow", "file": "spinosaurus-vs-narrow.png", "widths": [800, 1600] },
     { "name": "animals-spinosaurus-skeleton", "file": "spinosaurus-skeleton.png", "widths": [800, 1600] },
-    { "name": "animals-spinosaurus-skeleton-narrow", "file": "spinosaurus-skeleton-narrow.png", "widths": [800, 1600] },
     { "name": "animals-woolly-mammoth-side", "file": "mammoth-side.png", "widths": [800, 1600, 2400] },
     { "name": "animals-woolly-mammoth-close", "file": "mammoth-close.png", "widths": [800, 1600] },
     { "name": "animals-brachiosaurus-side", "file": "brachiosaurus-side.png", "widths": [800, 1600, 2400] },
