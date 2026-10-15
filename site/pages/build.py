@@ -582,23 +582,33 @@ class Pictures:
 
     def files(self, name):
         d = self.defs[name]
-        return [f"{d['stem']}-{n}.{ext}" for n in d["widths"] for ext in ("avif", "webp")]
+        return [f"{c['stem']}-{n}.{ext}" for c in (d, d.get("narrow")) if c for n in c["widths"] for ext in ("avif", "webp")]
 
-    def size(self, name):
-        d = self.defs[name]
+    def cut(self, name, narrow=False):
+        """The picture's cuts, or those of its version for narrow screens (pics.<name>.narrow)."""
+        return self.defs[name]["narrow"] if narrow else self.defs[name]
+
+    def size(self, name, narrow=False):
+        d = self.cut(name, narrow)
         return webp_size(self.find(f"{d['stem']}-{max(d['widths'])}.webp"))
 
-    def srcset(self, name, ext):
-        d = self.defs[name]
+    def srcset(self, name, ext, narrow=False):
+        d = self.cut(name, narrow)
         return ", ".join(f"{self.root}{STATIC}/img/{d['stem']}-{n}.{ext} {n}w" for n in d["widths"])
 
     def picture(self, name, alt, first=False):
-        """AVIF with a WebP fallback. Width and height keep the box, so nothing moves when it arrives."""
+        """AVIF with a WebP fallback. Width and height keep the box, so nothing moves when it arrives. A picture with
+        a version for narrow screens (pics.<name>.narrow, a closer cut of the same render) gives it to them first."""
         d = self.defs[name]
         self.used.add(name)
         w, h = self.size(name)
         how = 'fetchpriority="high"' if first else 'loading="lazy" decoding="async"'
         out = ["<picture>"]
+        if d.get("narrow"):
+            nw, nh = self.size(name, True)
+            for ext in ("avif", "webp"):
+                out.append(f'<source media="(max-width: {d["narrow"]["below"] - 1}px)" type="image/{ext}" '
+                           f'srcset="{self.srcset(name, ext, True)}" sizes="{d["sizes"]}" width="{nw}" height="{nh}">')
         for ext in ("avif", "webp"):
             out.append(f'<source type="image/{ext}" srcset="{self.srcset(name, ext)}" sizes="{d["sizes"]}" '
                        f'width="{w}" height="{h}">')
@@ -609,8 +619,12 @@ class Pictures:
 
     def preload(self, name):
         d = self.defs[name]
-        return (f'<link rel="preload" as="image" type="image/avif" imagesrcset="{self.srcset(name, "avif")}" '
-                f'imagesizes="{d["sizes"]}" fetchpriority="high">\n')
+        link = lambda narrow, media: (f'<link rel="preload" as="image" type="image/avif" imagesrcset="{self.srcset(name, "avif", narrow)}" '
+                                      f'imagesizes="{d["sizes"]}"{media} fetchpriority="high">\n')
+        if d.get("narrow"):
+            below = d["narrow"]["below"]
+            return link(True, f' media="(max-width: {below - 1}px)"') + link(False, f' media="(min-width: {below}px)"')
+        return link(False, "")
 
 
 def faces(root, lang=None):
@@ -627,15 +641,28 @@ def faces(root, lang=None):
 def person_rules(defs):
     """Where the person's height stands over the person in each picture at one scale: centred over the person, just
     above the head (pics.<name>.person, the person's centre and the top of the head as shares of the picture). Where
-    the picture leaves it open stone only from a screen width (pics.<name>.person_from), it stands from there on."""
+    the picture leaves it open stone only from a screen width (pics.<name>.person_from), it stands from there on. A
+    version for narrow screens (pics.<name>.narrow) has the person at its own place there, or no height if it has none."""
     rules = []
+    place = lambda at: re.fullmatch(r"(\d{1,3}(?:\.\d+)?)% (\d{1,3}(?:\.\d+)?)%", at or "")
     for name, d in defs.items():
-        found = re.fullmatch(r"(\d{1,3}(?:\.\d+)?)% (\d{1,3}(?:\.\d+)?)%", d.get("person") or "")
-        if found:
-            x, top = float(found.group(1)), float(found.group(2))
-            rules.append(".sc-person--%s{left:%g%%;bottom:calc(%g%% + 4px)}" % (name, x, round(100 - top, 3)))
-            if d.get("person_from"):
-                rules.append("@media (max-width:%dpx){.sc-person--%s{display:none}}" % (d["person_from"] - 1, name))
+        found = place(d.get("person"))
+        if not found:
+            continue
+        rule = lambda f: ".sc-person--%s{left:%g%%;bottom:calc(%g%% + 4px)}" % (name, float(f.group(1)), round(100 - float(f.group(2)), 3))
+        narrow, start = d.get("narrow"), d.get("person_from") or 0
+        if not narrow:
+            rules.append(rule(found))
+            if start:
+                rules.append("@media (max-width:%dpx){.sc-person--%s{display:none}}" % (start - 1, name))
+            continue
+        below, near = narrow["below"], place(narrow.get("person"))
+        if near:
+            rules.append(rule(near) + "@media (min-width:%dpx){%s}" % (below, rule(found)))
+            if start > below:
+                rules.append("@media (min-width:%dpx) and (max-width:%dpx){.sc-person--%s{display:none}}" % (below, start - 1, name))
+        else:
+            rules.append(rule(found) + "@media (max-width:%dpx){.sc-person--%s{display:none}}" % (max(below, start) - 1, name))
     return "".join(rules)
 
 
@@ -780,24 +807,39 @@ def mark_rules(data):
     start or ending at its end. An animal that stands behind another (pics.<name>.behind) is named over the
     picture, the rest under it, so two at one place are never named on one side."""
     rules = []
+    bracket = lambda name, key, a, b: (".sc-mark--%s-%s::after{left:calc(2px + (100%% - 4px) * %g);width:calc((100%% - 4px) * %g)}"
+                                        % (name, key, round(a, 4), round(b - a, 4)))
     for fig in marked_figures(data):
         pic = data["pics"][fig["pic"]]
         behind = set(pic.get("behind") or [])
-        groups = {}
-        for m in fig["marks"]:
-            at = mark_at(pic["marks"][m["span"]])
-            groups.setdefault(m["span"] in behind, []).append((m["span"], *at, *mark_split(m["text"])))
+        # a version for narrow screens (pics.<name>.narrow) places its own labels below its width and leaves out
+        # those it does not place
+        narrow = pic.get("narrow") or {}
+        near, below = narrow.get("marks") or {}, narrow.get("below", 0)
+
+        def grouped(places):
+            groups = {}
+            for m in fig["marks"]:
+                if m["span"] in places:
+                    groups.setdefault(m["span"] in behind, []).append((m["span"], *mark_at(places[m["span"]]), *mark_split(m["text"])))
+            return groups
         for key, (a, b, _) in ((k, mark_at(v)) for k, v in pic["marks"].items()):
-            rules.append(".sc-mark--%s-%s::after{left:calc(2px + (100%% - 4px) * %g);width:calc((100%% - 4px) * %g)}"
-                         % (fig["pic"], key, round(a, 4), round(b - a, 4)))
+            rules.append(bracket(fig["pic"], key, a, b))
+        if narrow:
+            rules.append("@media (max-width:%dpx){%s}" % (below - 1, "".join(
+                bracket(fig["pic"], key, *mark_at(near[key])[:2]) if key in near else ".sc-mark--%s-%s{display:none}" % (fig["pic"], key)
+                for key in pic["marks"])))
         last = {}
         for screen, width in size_bands(pic["sizes"]):
             band = []
-            for over, items in groups.items():
+            if screen == below:
+                # the full picture's labels restate every part over the narrow version's
+                last = {}
+            for over, items in grouped(near if screen < below else pic["marks"]).items():
                 # those over the picture are the few long ones behind: their words on one line on every screen
                 laid, n = mark_lanes(items, width, over or screen >= MARK_ONE_LINE)
                 for key, (lane, side, w) in laid.items():
-                    a, b, _ = mark_at(pic["marks"][key])
+                    a, b, _ = mark_at((near if screen < below else pic["marks"])[key])
                     parts = {
                         "lane": ("grid-row:%d" % (n - lane if over else lane + 1), ""),
                         "side": ("padding-left:calc(2px + (100%% - 4px) * %g);padding-right:0;justify-content:flex-start" % round(a, 4),
@@ -1985,6 +2027,34 @@ def load_pages(pages=PAGES):
     return data, wings, info, problems
 
 
+def narrow_problems(fig, pic):
+    """A picture's version for narrow screens (pics.<name>.narrow): a closer cut of the same render under its own
+    stem and widths, the screen width from which the whole picture stands instead (below, a width its sizes name),
+    the person's place in it if it shows the person, and a place for each label it keeps. A label it leaves out is
+    the person's, whose height then stands on the picture. Returns the problems."""
+    where, narrow = f"pics.{fig.get('pic')}.narrow", pic["narrow"]
+    if not isinstance(narrow, dict) or not isinstance(narrow.get("stem"), str) or narrow["stem"] == pic.get("stem"):
+        return [f"{where} is a closer cut under its own stem, with its widths, below and the person's place"]
+    problems = []
+    if not (isinstance(narrow.get("widths"), list) and narrow["widths"] and all(type(w) is int for w in narrow["widths"])):
+        problems.append(f"{where}.widths lists the widths it is cut to")
+    named = {int(w) for w in re.findall(r"\(min-width:\s*(\d+)px\)", pic.get("sizes") or "")}
+    if not (type(narrow.get("below")) is int and narrow["below"] > max(MARK_SCREENS) and narrow["below"] in named):
+        problems.append(f"{where}.below is the screen width from which the whole picture stands, one its sizes name "
+                        f"and wider than the phones ({', '.join(map(str, MARK_SCREENS))})")
+    if "person" in narrow and not re.fullmatch(r"\d{1,3}(?:\.\d+)?% \d{1,3}(?:\.\d+)?%", narrow["person"] or ""):
+        problems.append(f"{where}.person is the person's place in it")
+    near = narrow.get("marks") or {}
+    for key, at in near.items() if isinstance(near, dict) else []:
+        if key not in (pic.get("marks") or {}) or not mark_at(at):
+            problems.append(f"{where}.marks.{key} places a label of the picture: the animal's start and end in the narrow version")
+    for mark in fig.get("marks", []):
+        if mark.get("span") not in near and not (mark.get("span") == "person" and narrow.get("person")):
+            problems.append(f"the label {mark.get('span')!r} has no place in {where}.marks: only the person's label may "
+                            "leave the narrow version, whose person then carries its height")
+    return problems
+
+
 def making_problems(d, wing, data):
     """What a page of a wing in the making needs, and what no other page may carry: its line and link where the door
     would stand (top.out), its pictures at one scale with the person's place, its table's rows as long as its columns,
@@ -2025,6 +2095,8 @@ def making_problems(d, wing, data):
                 and "person" in {m.get("span") for m in fig.get("marks", [])}):
             problems.append(f"pics.{fig.get('pic')}.person_from is a screen width, and where the person's height leaves the "
                             "picture on a narrower screen, a label of the picture names the person")
+        if (pic or {}).get("narrow") is not None:
+            problems += narrow_problems(fig, pic)
         for k in fig.get("key") if isinstance(fig.get("key"), list) else []:
             colour = ((pic or {}).get("swatches") or {}).get(k.get("swatch")) if isinstance(k, dict) else ""
             if colour is None or (isinstance(k, dict) and not re.fullmatch(r"#[0-9a-f]{6}", colour)):

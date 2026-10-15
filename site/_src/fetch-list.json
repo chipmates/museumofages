@@ -1473,6 +1473,30 @@
    "sha256": "5b8b2da1fec2ebfec80e8de1e73a3345389391e9d34e1c8172eb7a06721de093"
   },
   {
+   "path": "pages/pics/img/animals-brachiosaurus-skeleton-narrow-1000.avif",
+   "url": "/static/img/animals-brachiosaurus-skeleton-narrow-1000.avif",
+   "bytes": 19634,
+   "sha256": "4471772687ca32358e01f6fb950883eb266b4aec3aabc9853368d94d2ead7a36"
+  },
+  {
+   "path": "pages/pics/img/animals-brachiosaurus-skeleton-narrow-1000.webp",
+   "url": "/static/img/animals-brachiosaurus-skeleton-narrow-1000.webp",
+   "bytes": 30608,
+   "sha256": "6b64fb9861dbfdef3b90cdbbaeeeeac29c63f5f4bf441bd897a6213fad30c9f6"
+  },
+  {
+   "path": "pages/pics/img/animals-brachiosaurus-skeleton-narrow-800.avif",
+   "url": "/static/img/animals-brachiosaurus-skeleton-narrow-800.avif",
+   "bytes": 14734,
+   "sha256": "bf440598513b84d2b3cdc3813b70c213032c95fa60293aaa22dcc869273baffb"
+  },
+  {
+   "path": "pages/pics/img/animals-brachiosaurus-skeleton-narrow-800.webp",
+   "url": "/static/img/animals-brachiosaurus-skeleton-narrow-800.webp",
+   "bytes": 23836,
+   "sha256": "86ded18c5346a3726a5e3287837c2ca802bc6f58e01d02f6fdf9363f44d1f4f8"
+  },
+  {
    "path": "pages/pics/img/animals-megalodon-head-1600.avif",
    "url": "/static/img/animals-megalodon-head-1600.avif",
    "bytes": 9945,
@@ -1653,6 +1677,30 @@
    "sha256": "b62985b6a774fdf46945123721b364941c95388cac8b6c8fbf91ee7165b5219e"
   },
   {
+   "path": "pages/pics/img/animals-spinosaurus-beside-t-rex-narrow-1600.avif",
+   "url": "/static/img/animals-spinosaurus-beside-t-rex-narrow-1600.avif",
+   "bytes": 31035,
+   "sha256": "573ac3e7ed55893f38794b1f4fd2b13bc73a78016ca776e64344686a7a168379"
+  },
+  {
+   "path": "pages/pics/img/animals-spinosaurus-beside-t-rex-narrow-1600.webp",
+   "url": "/static/img/animals-spinosaurus-beside-t-rex-narrow-1600.webp",
+   "bytes": 39162,
+   "sha256": "279c7df5b192abb91fb8307f7fffed13214e3bc481be4f28a2d8e8ac368730a0"
+  },
+  {
+   "path": "pages/pics/img/animals-spinosaurus-beside-t-rex-narrow-800.avif",
+   "url": "/static/img/animals-spinosaurus-beside-t-rex-narrow-800.avif",
+   "bytes": 11461,
+   "sha256": "624d702e55f42032e200548c5629a026c2859c16846171ab8995e4200bc082ce"
+  },
+  {
+   "path": "pages/pics/img/animals-spinosaurus-beside-t-rex-narrow-800.webp",
+   "url": "/static/img/animals-spinosaurus-beside-t-rex-narrow-800.webp",
+   "bytes": 14514,
+   "sha256": "02ed15bf4661010dd3c334d9eb2994df7d2928a4d4f247a6d94c83c321485bc4"
+  },
+  {
    "path": "pages/pics/img/animals-spinosaurus-close-1600.avif",
    "url": "/static/img/animals-spinosaurus-close-1600.avif",
    "bytes": 59415,
@@ -1747,6 +1795,30 @@
    "url": "/static/img/animals-spinosaurus-skeleton-800.webp",
    "bytes": 18764,
    "sha256": "ad4ed327af8a2114ea2342361fd8e398bd01e89eaf94874d05ba03711a6967a1"
+  },
+  {
+   "path": "pages/pics/img/animals-spinosaurus-skeleton-narrow-1600.avif",
+   "url": "/static/img/animals-spinosaurus-skeleton-narrow-1600.avif",
+   "bytes": 28248,
+   "sha256": "337bddfde4ad37c9d25e1a8b7d9d738160aac4bba9d3a32027188a6873c91fa4"
+  },
+  {
+   "path": "pages/pics/img/animals-spinosaurus-skeleton-narrow-1600.webp",
+   "url": "/static/img/animals-spinosaurus-skeleton-narrow-1600.webp",
+   "bytes": 54008,
+   "sha256": "addb035a20e6ac72b0bd09010881b85786888c4d497bfd68509159108c9125f2"
+  },
+  {
+   "path": "pages/pics/img/animals-spinosaurus-skeleton-narrow-800.avif",
+   "url": "/static/img/animals-spinosaurus-skeleton-narrow-800.avif",
+   "bytes": 12037,
+   "sha256": "2d70560eae07ed527234fc56d4147f6c56950ec261d119e7bce6b856ae7fcad2"
+  },
+  {
+   "path": "pages/pics/img/animals-spinosaurus-skeleton-narrow-800.webp",
+   "url": "/static/img/animals-spinosaurus-skeleton-narrow-800.webp",
+   "bytes": 22540,
+   "sha256": "003859e9bb3d733bf682595769f9d12f5bf79320c8c3bfd3fcb093626dc0b2ae"
   },
   {
    "path": "pages/pics/img/animals-t-rex-close-1600.avif",

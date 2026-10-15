@@ -59,7 +59,20 @@
    },
    "behind": [
     "t-rex"
-   ]
+   ],
+   "narrow": {
+    "stem": "animals-spinosaurus-beside-t-rex-narrow",
+    "widths": [
+     800,
+     1600
+    ],
+    "below": 600,
+    "person": "9.18% 33.72%",
+    "marks": {
+     "t-rex": "8.62% 97.95%",
+     "spinosaurus": "8.62% 87.07%"
+    }
+   }
   },
   "skeleton": {
    "stem": "animals-spinosaurus-skeleton",
@@ -73,6 +86,15 @@
     "own": "#772c0a",
     "stromer": "#4f7d9d",
     "pale": "#b79e6c"
+   },
+   "narrow": {
+    "stem": "animals-spinosaurus-skeleton-narrow",
+    "widths": [
+     800,
+     1600
+    ],
+    "below": 600,
+    "person": "91.22% 51.95%"
    }
   },
   "trex": {
@@ -235,8 +257,8 @@
    "scale": {
     "pic": "vs",
     "tag": "tag_made",
-    "what": "Our Spinosaurus and our T. rex, to one scale on one ground line. Our Spinosaurus is a young one of about 10 m (33 ft), our T. rex after SUE a large adult of about 11.4 m (37 ft), so the T. rex is the longer one here. An adult Spinosaurus was longer than any T. rex, most likely lighter and much lower at the hips.",
-    "alt": "A Spinosaurus with a sail on its back and a slightly longer T. rex with its head raised, both from the side on one ground line, the T. rex about twice as high at the hips, beside the grey person.",
+    "what": "Our Spinosaurus and our T. rex, to one scale. Our Spinosaurus is a young one of about 10 m (33 ft), our T. rex after SUE a large adult of about 11.4 m (37 ft), so the T. rex is the longer one here. An adult Spinosaurus was longer than any T. rex, most likely lighter and much lower at the hips.",
+    "alt": "A Spinosaurus with a sail on its back and a slightly longer T. rex with its head raised, both from the side, the T. rex about twice as high at the hips, beside the grey person.",
     "marks": [
      {
       "span": "spinosaurus",

@@ -54,6 +54,15 @@
     "blue": "#597382",
     "orange": "#ac6f23",
     "brown": "#493624"
+   },
+   "narrow": {
+    "stem": "animals-brachiosaurus-skeleton-narrow",
+    "widths": [
+     800,
+     1000
+    ],
+    "below": 600,
+    "person": "91.47% 72.52%"
    }
   },
   "dinosaurs": {

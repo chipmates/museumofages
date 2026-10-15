@@ -59,7 +59,20 @@
    },
    "behind": [
     "t-rex"
-   ]
+   ],
+   "narrow": {
+    "stem": "animals-spinosaurus-beside-t-rex-narrow",
+    "widths": [
+     800,
+     1600
+    ],
+    "below": 600,
+    "person": "9.18% 33.72%",
+    "marks": {
+     "t-rex": "8.62% 97.95%",
+     "spinosaurus": "8.62% 87.07%"
+    }
+   }
   },
   "skeleton": {
    "stem": "animals-spinosaurus-skeleton",
@@ -73,6 +86,15 @@
     "own": "#772c0a",
     "stromer": "#4f7d9d",
     "pale": "#b79e6c"
+   },
+   "narrow": {
+    "stem": "animals-spinosaurus-skeleton-narrow",
+    "widths": [
+     800,
+     1600
+    ],
+    "below": 600,
+    "person": "91.22% 51.95%"
    }
   },
   "trex": {
@@ -235,8 +257,8 @@
    "scale": {
     "pic": "vs",
     "tag": "tag_made",
-    "what": "Unser Spinosaurus und unser T. rex, im selben Maßstab auf einer Standlinie. Unser Spinosaurus ist ein junges Tier von etwa 10 m, unser T. rex nach SUE ein großes erwachsenes Tier von etwa 11,4 m, darum ist hier der T. rex der längere. Ein erwachsener Spinosaurus war länger als jeder T. rex, sehr wahrscheinlich leichter und an der Hüfte viel niedriger.",
-    "alt": "Ein Spinosaurus mit Rückensegel und ein etwas längerer T. rex mit erhobenem Kopf, beide von der Seite auf einer Standlinie, der T. rex an der Hüfte etwa doppelt so hoch, daneben der graue Mensch.",
+    "what": "Unser Spinosaurus und unser T. rex, im selben Maßstab. Unser Spinosaurus ist ein junges Tier von etwa 10 m, unser T. rex nach SUE ein großes erwachsenes Tier von etwa 11,4 m, darum ist hier der T. rex der längere. Ein erwachsener Spinosaurus war länger als jeder T. rex, sehr wahrscheinlich leichter und an der Hüfte viel niedriger.",
+    "alt": "Ein Spinosaurus mit Rückensegel und ein etwas längerer T. rex mit erhobenem Kopf, beide von der Seite, der T. rex an der Hüfte etwa doppelt so hoch, daneben der graue Mensch.",
     "marks": [
      {
       "span": "spinosaurus",

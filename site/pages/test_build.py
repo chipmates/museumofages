@@ -1029,6 +1029,65 @@ class Case(unittest.TestCase):
             self.save(lang, data, page)
         self.fails(r"the label '\w[\w-]*' needs pics")
 
+    def test_a_picture_may_give_narrow_screens_a_closer_cut_of_the_same_render(self):
+        """A picture at one scale may give narrow screens a closer cut of its render (pics.<name>.narrow): its own
+        source first in the picture below its width, the person's height and the labels at their places in it there,
+        a label it leaves out hidden there, and the whole picture with its own places from that width up."""
+        pages = [p for p in self.scale_pages() if any(pic.get("narrow") for pic in self.data("en", p)["pics"].values())]
+        if not pages:
+            self.skipTest("no page gives a picture a version for narrow screens")
+        ids = {self.data("en", p)["page"]["id"] for p in pages}
+        out, written = self.build()
+        seen = 0
+        place = lambda at: [float(v) for v in at.replace("%", "").split()]
+        for path in written:
+            data, lang = self.page_of(path)
+            if data["page"]["id"] not in ids:
+                continue
+            text = path.read_text(encoding="utf-8")
+            for name, pic in data["pics"].items():
+                narrow = pic.get("narrow")
+                if not narrow or f'{pic["stem"]}-' not in self.own_part(text):
+                    continue
+                seen += 1
+                picture = re.search(r'<picture><source media="\(max-width: %dpx\)" type="image/avif" srcset="[^"]*%s-%d\.avif %dw[^>]*>'
+                                    r'<source media="[^"]*" type="image/webp"[^>]*><source type="image/avif" srcset="[^"]*%s-%d\.avif'
+                                    % (narrow["below"] - 1, re.escape(narrow["stem"]), narrow["widths"][0], narrow["widths"][0],
+                                       re.escape(pic["stem"]), pic["widths"][0]), text)
+                self.assertTrue(picture, (name, lang))
+                x, top = place(narrow["person"])
+                fx, ftop = place(pic["person"])
+                self.assertIn(".sc-person--%s{left:%g%%;bottom:calc(%g%% + 4px)}@media (min-width:%dpx){.sc-person--%s{left:%g%%;"
+                              % (name, x, round(100 - top, 3), narrow["below"], name, fx), text)
+                if (pic.get("person_from") or 0) > narrow["below"]:
+                    self.assertIn("@media (min-width:%dpx) and (max-width:%dpx){.sc-person--%s{display:none}}"
+                                  % (narrow["below"], pic["person_from"] - 1, name), text)
+                left_out = set(pic.get("marks") or {}) - set(narrow.get("marks") or {})
+                for key, at in (narrow.get("marks") or {}).items():
+                    a, b = (v / 100 for v in place(at))
+                    self.assertRegex(text, r"@media \(max-width:%dpx\)\{[^@]*\.sc-mark--%s-%s::after\{left:calc\(2px \+ \(100%% - 4px\) \* %g\)"
+                                     % (narrow["below"] - 1, name, re.escape(key), round(a, 4)))
+                for key in left_out:
+                    self.assertRegex(text, r"@media \(max-width:%dpx\)\{[^@]*\.sc-mark--%s-%s\{display:none\}" % (narrow["below"] - 1, name, re.escape(key)))
+        self.assertGreaterEqual(seen, 2 * len(pages))
+        shutil.rmtree(out)
+        # a narrow version that places a label the picture has not, leaves out another than the person's, takes over
+        # at a width the sizes do not name, or has no stem of its own stops the build
+        changes = [(lambda n: n.update(below=500), r"narrow\.below is the screen width"),
+                   (lambda n: n.update(stem=None), r"narrow is a closer cut under its own stem")]
+        page, name = next(((p, n) for p in pages for n, pic in self.data("en", p)["pics"].items() if (pic.get("narrow") or {}).get("marks")),
+                          (pages[0], next(n for n, pic in self.data("en", pages[0])["pics"].items() if pic.get("narrow"))))
+        if self.data("en", page)["pics"][name]["narrow"].get("marks"):
+            changes += [(lambda n: n["marks"].update(nobody="1% 2%"), r"narrow\.marks\.nobody places a label"),
+                        (lambda n: n["marks"].pop(next(k for k in n["marks"] if k != "person")), r"has no place in pics\.\w+\.narrow\.marks")]
+        original = {lang: self.data(lang, page) for lang in ("en", "de")}
+        for change, words in changes:
+            for lang in ("en", "de"):
+                data = json.loads(json.dumps(original[lang]))
+                change(data["pics"][name]["narrow"])
+                self.save(lang, data, page)
+            self.fails(words)
+
     def test_labels_in_one_lane_keep_apart_and_animals_at_one_place_never_share_one(self):
         spec = importlib.util.spec_from_file_location("build_lanes", self.dir / "build.py")
         lib = importlib.util.module_from_spec(spec)
