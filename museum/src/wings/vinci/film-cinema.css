@@ -49,7 +49,7 @@ html:has(#wing[data-film='upright']) #rail { display: none !important; }
   pointer-events: none;
 }
 #wing[data-film='cinema'] .film-foot > * { pointer-events: auto; }
-#wing[data-film='cinema'] .film-foot > :is(.film-back, .film-book, .film-gold, .film-talk) {
+#wing[data-film='cinema'] .film-foot > :is(.film-back, .film-book, .film-hold, .film-gold, .film-talk) {
   position: relative;
   top: auto;
   left: auto;
@@ -737,3 +737,16 @@ html:has(#wing[data-film='cinema']) :is(#inst-sound, #inst-plan) { display: none
 #wing[data-film='cinema'] .wing-plan .wing-plan-entry { padding-left: 10px; }
 /* the list ends over the foot, on a whole row at rest: film-cinema.ts shortens it by --cinema-cut */
 #wing[data-film='cinema'] .wing-plan .wing-plan-reading { margin-bottom: calc(var(--plan-foot) - 10px + var(--cinema-cut, 0px)); }
+
+/* ---- the walk's own controls sideways: the hold in the book's seat, the
+   panel a strip over the foot row's left, clear of gold ---- */
+#wing[data-film='cinema'][data-walk] .film-box:not([data-look='true']) .film-foot > .film-book { display: none; }
+#wing[data-film='cinema'] .film-box > .walk-panel {
+  left: var(--cinema-l, 16px);
+  right: auto;
+  bottom: calc(var(--cinema-row, 60px) + var(--cinema-b, 0px) - 2px);
+  max-width: min(520px, calc(100vw - var(--cinema-l, 16px) - var(--cinema-r, 16px) - 220px));
+  padding: 6px 12px 4px;
+  border-radius: var(--ui-r-box-side);
+  pointer-events: auto;
+}

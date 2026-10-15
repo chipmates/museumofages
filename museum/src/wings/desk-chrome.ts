@@ -19,6 +19,8 @@ import { sayAs } from './content'
 import { LOBBY_TEXT } from '../content/lobby'
 import type { VinciCertainty, VinciText } from './vinci/content'
 import { lobbyWord } from './vinci/ending-talk'
+import { WALK_WORDS } from './walk-words'
+import type { WalkPanel } from './walk-controls'
 
 import { createDeskPanel } from './desk-panel'
 
@@ -74,6 +76,12 @@ export interface DeskChromeHost {
   leg: () => number | null
   /** a second press on the gold control while a leg runs */
   hurry: () => void
+  /** THE WALK'S OWN CONTROLS (walk-controls.ts): its words take the words'
+      place while the eye walks, its hold stands beside the gold */
+  walk?: WalkPanel
+  /** the walk holds at its frame: the gold reads "Walk on" and goes on */
+  held?: () => boolean
+  goOn?: () => void
 
   // desk.panel: the host fields its step needs stand here
 
@@ -272,7 +280,7 @@ export function createDeskChrome(host: DeskChromeHost): DeskChrome {
   ring.append(ringLine)
   onArrow.append(ring, icon(ARROW_ON))
   on.append(onWords, onArrow)
-  waysRow.append(back, on)
+  waysRow.append(back, ...(host.walk ? [host.walk.hold] : []), on)
 
   /* THE THREAD. One segment a stop, in the order the walk takes them: the
      quiet stops short, the chapter cuts as uprights, the count in digits for
@@ -350,6 +358,7 @@ export function createDeskChrome(host: DeskChromeHost): DeskChrome {
   if (words) band.append(cap)
   else band.append(make('span', 'desk-nothing'))
   if (ways) band.append(waysRow)
+  if (host.walk) band.append(host.walk.element)
   /* The top dusk goes in first, so the bar stands on it. */
   const top = make('div', 'desk-top')
   host.stage.append(top, thread, band)
@@ -469,6 +478,7 @@ export function createDeskChrome(host: DeskChromeHost): DeskChrome {
   on.addEventListener('click', () => pressOn())
 
   function pressOn(): void {
+    if (host.held?.()) { host.goOn?.(); return }
     if (host.leg() !== null) { host.hurry(); return }
     const to = host.next()
     if (to) host.go(to.index)
@@ -639,17 +649,21 @@ export function createDeskChrome(host: DeskChromeHost): DeskChrome {
     if ((host.upward?.() ?? false) !== upPainted) paintBack()
     const share = host.leg()
     const running = share !== null
-    if (on.dataset['leg'] !== String(running)) {
-      on.dataset['leg'] = String(running)
+    const held = running && (host.held?.() ?? false)
+    const leg = held ? 'held' : String(running)
+    if (on.dataset['leg'] !== leg) {
+      on.dataset['leg'] = leg
       // a drawer that stood folds before the first metre
       if (running) openDrawer(false, on)
       /* ONE CONTROL, ONE MEANING: while a leg runs it says where the walker
-         is and what a second press does, and the ring is the leg itself. */
+         is and what a second press does, and the ring is the leg itself;
+         while the walk holds it says the one thing a press does, walk on. */
       const to = host.next()
-      onKicker.textContent = say(running ? WORD.walking() : to ? host.words.next : WORD.end())
-      onTitle.textContent = running ? say(WORD.faster()) : to ? say(titleOf(to.id)) : ''
+      onKicker.textContent = held ? '' : say(running ? WORD.walking() : to ? host.words.next : WORD.end())
+      onKicker.hidden = held
+      onTitle.textContent = held ? say(WALK_WORDS.walkOn) : running ? say(WORD.faster()) : to ? say(titleOf(to.id)) : ''
       onTitle.hidden = !running && !to
-      on.setAttribute('aria-label', `${onKicker.textContent}${onTitle.hidden ? '' : ` · ${onTitle.textContent}`}`)
+      on.setAttribute('aria-label', `${onKicker.textContent}${onTitle.hidden ? '' : `${onKicker.textContent ? ' · ' : ''}${onTitle.textContent}`}`)
     }
     const at = running ? Math.max(0, Math.min(1, share)) : 0
     if (Math.abs(at - walked) < 0.01) return

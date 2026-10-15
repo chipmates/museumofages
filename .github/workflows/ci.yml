@@ -75,7 +75,7 @@ jobs:
       - name: Film tests
         run: |
           shopt -s extglob
-          node --test forge/film/!(film-check|global-key|library|motion|evening).test.mjs forge/best-of-rights.test.mjs forge/night/real-sky.test.mjs
+          node --test forge/film/!(film-check|global-key|library|motion|evening).test.mjs forge/best-of-rights.test.mjs forge/night/real-sky.test.mjs forge/walk-rules.test.mjs
 
       # The site's own count: every row its function can write and every one it must not, and the same closed
       # lists in the function, the pages' script and the walk.

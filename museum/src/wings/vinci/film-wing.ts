@@ -45,8 +45,12 @@ import filmWingCss from './film-wing.css?inline'
 import { fitGoldName, watchGoldName } from './gold-fit'
 import { setWalkingLeg, walkingRing } from './labels'
 import { createFilmCinema, crowded, filmForm, whenFraming, FILM_CINEMA_CSS, MARK_TARGET, type FilmCinema, type FilmForm } from './film-cinema'
-import { createTurnLine, TURN_LINE_CSS } from './turn-line'
-import { countArrival, countStop } from '../../core/museum-count'
+import { createTurnLine, turnWords, TURN_LINE_CSS } from './turn-line'
+import { countArrival, countSkip, countStop, countWelcome } from '../../core/museum-count'
+import { createWalkPanel, WALK_CONTROLS_CSS, type WalkPanel } from '../walk-controls'
+import { walkKey } from '../walk-rules.mjs'
+import { WALK_WORDS } from '../walk-words'
+import { readVisit } from '../visit'
 import { FILM_RELEASE } from '../film-release'
 
 const text = (value: VinciText): string => say(value)
@@ -213,6 +217,14 @@ export function createWing(): WingModule {
   let cinema: FilmCinema | undefined
   /** both phone forms stand the phone's own controls, close looks and list */
   const narrow = (): boolean => form !== 'desk'
+  /* THE WALK'S OWN CONTROLS (walk-controls.ts): a walk is under way from its
+     first frame to its rest; it knows where it goes and where it left from */
+  let walk: WalkPanel | undefined
+  let walkActive = false
+  let walkTarget: PictureNode | null = null
+  let walkFrom: PictureNode | null = null
+  /** a close look opened in this page load; the visit's own list says the rest */
+  let lookedHere = false
 
   const carried = (index: number): boolean => Boolean(release?.nodes[stopNode(LIFE[index]?.id ?? '')])
   const deskStation = (index: number): DeskStation => ({ id: LIFE[index]!.id, index, count: LIFE.length })
@@ -290,6 +302,73 @@ export function createWing(): WingModule {
   }
   /** a close look shut because the walk goes on elsewhere, not by the visitor */
   let lookLeaving = false
+  /** a close look shut by Escape stays at its work: no way up follows */
+  let lookStaying = false
+
+  /* ---- the walk under way: where it goes, its hold and its skip ---- */
+  /** the place a walk goes to, by the name the visitor reads there */
+  function placeName(node: PictureNode | null): string {
+    if (!node) return ''
+    const at = LIFE.findIndex(s => stopNode(s.id) === node)
+    if (at >= 0) return text(deskStoryStop(LIFE[at]!.id)?.chapter ?? LIFE[at]!.name)
+    const exhibit = release?.nodes[node]?.exhibit
+    // a work is named by its own mark where the walk left from
+    return exhibit && picture ? picture.marks(walkFrom ?? here(), lang(), true).find(m => m.id === exhibit)?.label ?? '' : ''
+  }
+  const walkMotion = (): 'rest' | 'moving' | 'held' => !walkActive ? 'rest' : picture?.paused() ? 'held' : 'moving'
+  function holdWalk(): void {
+    if (walkActive && picture?.pause()) paintWalk()
+  }
+  function goOnWalk(): void {
+    picture?.resume()
+    paintWalk()
+  }
+  function skipWalk(): void {
+    const to = walkTarget
+    if (!walkActive || !picture?.skip()) return
+    const at = to ? LIFE.findIndex(s => stopNode(s.id) === to) : -1
+    // the walk's number is the stop it arrives at less one: the walk-in is walk 0
+    if (at >= 0) countSkip(at)
+  }
+  /** held, the way back returns to where the walk left from; the walk-in has no such place */
+  const backHeld = (): boolean => Boolean(walkActive && picture?.paused() && walkFrom && walkFrom !== release?.start)
+  function backFromHold(): boolean {
+    if (!backHeld()) return false
+    picture!.skip(walkFrom!)
+    return true
+  }
+  /** THE WALK'S EDGES: its first frame shows the panel, its rest takes it away */
+  function walkState(s: PictureState): void {
+    if (s.kind === 'walk' && !walkActive) {
+      walkActive = true
+      walkFrom = s.from
+      walkTarget = s.target
+      walk?.began(LIFE.some(l => stopNode(l.id) === s.target))
+    } else if (s.kind === 'walk' || s.kind === 'wait') walkTarget = s.target
+    else if (s.kind === 'rest' && walkActive) {
+      walkActive = false
+      walkFrom = walkTarget = null
+      walk?.ended()
+    }
+    paintWalk()
+  }
+  function paintWalk(): void {
+    const wing = hosts?.stage.parentElement
+    if (!wing) return
+    const motion = walkMotion()
+    if (motion === 'rest') delete wing.dataset['walk']
+    else if (wing.dataset['walk'] !== motion) wing.dataset['walk'] = motion
+    walk?.paint()
+    desk?.update()
+    if (phone) phone.back.disabled = backIndex() === null && !upward() && !backHeld() && phone.root.dataset['look'] !== 'true'
+    paintGold()
+  }
+  /** the line the keys' hint stands in at rest, where one stands */
+  function restLine(): HTMLElement | null {
+    const line = form === 'desk' ? hosts?.stage.querySelector<HTMLElement>('.desk-cap .desk-line')
+      : form === 'cinema' ? hosts?.stage.parentElement?.querySelector<HTMLElement>('.cinema-caption') : phone?.line
+    return line && !line.hidden && line.getClientRects().length ? line : null
+  }
 
   /* ---- the picture's box ---- */
   /** the phone's picture is sized once, to the large viewport */
@@ -597,7 +676,7 @@ export function createWing(): WingModule {
         station: () => stationOf(LIFE[card]!.station).id,
         stack: h.world.stack, scene: h.world.scene, camera: h.world.camera,
         standDown, veil: hidden => { picture?.veil(hidden); veiled = hidden; wordsAt = '' }, standing, openRecord,
-        onClose: () => { marksAt = ''; if (!lookLeaving) outOfLook() }, above: wallAbove,
+        onClose: () => { marksAt = ''; if (!lookLeaving && !lookStaying) outOfLook() }, above: wallAbove,
         cycle: id => { const cycle = release?.cycles?.[id]; return cycle ? { cycle, base: filmReleaseBase() } : null },
         cycleLayer: () => cycleLayer!,
         box, framing: () => (wide ? 'wide' : 'upright'),
@@ -685,6 +764,7 @@ export function createWing(): WingModule {
   }
   function openExhibit(id: string, from: HTMLElement | null): void {
     if (!hosts) return
+    lookedHere = true
     void lookNow().then(l => l.open(id, from))
   }
   function openRecord(id: string, title: VinciText, certainty: VinciCertainty, render: (host: HTMLElement) => void): void {
@@ -844,8 +924,10 @@ export function createWing(): WingModule {
     earlier.type = 'button'
     earlier.append(icon(STEP_BACK))
     earlier.addEventListener('click', () => look?.ways()?.step(-1))
-    foot.append(back, book, earlier, talk, gold)
-    root.append(name, line, drawer, keys, foot)
+    foot.append(back, book, ...(walk ? [walk.hold] : []), earlier, talk, gold)
+    root.append(name, line, drawer, keys, ...(walk ? [walk.element] : []), foot)
+    // the hold takes the book's seat while the eye walks, where the book stands down
+    walk?.hold.classList.add('film-hold')
     // over the close look's layer, as the live phone form stands it, so its foot row stays lit under a look
     h.labels.append(root)
     // whether the age had to drop under a long heading, read wherever the row's size changes;
@@ -860,7 +942,7 @@ export function createWing(): WingModule {
     more.addEventListener('click', () => setDrawer(!drawerOpen))
     from.addEventListener('click', () => { paintSources(null); sources?.select('station'); sources?.setOpen(true) })
     count.addEventListener('click', () => dispatchEvent(new Event('na-wing-plan')))
-    back.addEventListener('click', () => { if (look?.id) { look.back(); return } if (up()) return; const to = backIndex(); if (to !== null) h.navigate(to) })
+    back.addEventListener('click', () => { if (look?.id) { look.back(); return } if (backFromHold() || up()) return; const to = backIndex(); if (to !== null) h.navigate(to) })
     book.addEventListener('click', () => document.getElementById('rail-instruments')?.click())
     talk.addEventListener('click', () => { endWith('talk') })
     gold.addEventListener('click', () => pressOn())
@@ -917,7 +999,7 @@ export function createWing(): WingModule {
     phone.count.textContent = `${String(card + 1).padStart(2, '0')} / ${LIFE.length}`
     phone.count.setAttribute('aria-label', `${text(deskControl('ways', 'chapters'))} ${card + 1} / ${LIFE.length}`)
     const back = backIndex()
-    phone.back.disabled = back === null && !upward() && phone.root.dataset['look'] !== 'true'
+    phone.back.disabled = back === null && !upward() && !backHeld() && phone.root.dataset['look'] !== 'true'
     paintBackSeat()
     // the book opens the instruments, and is named as their control is: by its own word, which carries no aria-label
     const instruments = document.getElementById('rail-instruments')
@@ -941,16 +1023,22 @@ export function createWing(): WingModule {
     const s = picture?.state()
     const walking = s?.kind === 'walk' || s?.kind === 'dip'
     goldWalking = walking
+    // HELD, gold is the one way on again and says so: it reads "Walk on"
+    const held = walking && walkMotion() === 'held'
+    phone.gold.dataset['held'] = String(held)
     // WAITING, the words stay and the gold keeps its name; its ring counts the bytes
     phone.gold.dataset['wait'] = String(s?.kind === 'wait')
     const to = nextIndex()
     const ways = look?.id ? look.ways() : null
     phone.root.dataset['walking'] = String(walking)
-    phone.gold.dataset['leg'] = String(walking)
+    phone.gold.dataset['leg'] = String(walking && !held)
     phone.earlier.disabled = !ways?.previous
     phone.earlier.setAttribute('aria-label', ways?.previous ?? text(CARDS.controls.date.previous))
     lookWays = waysKey(ways)
-    if (ways?.next && !walking) {
+    if (held) {
+      phone.goldName.textContent = text(WALK_WORDS.walkOn)
+      phone.gold.setAttribute('aria-label', text(WALK_WORDS.walkOn))
+    } else if (ways?.next && !walking) {
       // the set's next work by name, or the word alone where a page turns in the same book
       keepLast(phone.goldName, ways.next.title || text(ways.next.word))
       phone.gold.setAttribute('aria-label', ways.next.title ? `${text(ways.next.word)} · ${ways.next.title}` : text(ways.next.word))
@@ -982,6 +1070,7 @@ export function createWing(): WingModule {
   }
   function pressOn(): void {
     const s = picture?.state()
+    if (walkMotion() === 'held') { goOnWalk(); return }
     if (s && s.kind !== 'rest') { picture?.hurry(); return }
     const ways = look?.id ? look.ways() : null
     if (ways?.next) { ways.step(1); return }
@@ -1123,7 +1212,7 @@ export function createWing(): WingModule {
   /** THE DESCENT: the walk's start to the first stop, after the opening and the door */
   async function descend(): Promise<void> {
     if (!above || !hosts) return
-    await awaitOpening(hosts.labels, { under: way => turnLine.under(way) })
+    if (await awaitOpening(hosts.labels, { under: way => turnLine.under(way) })) countWelcome()
     // the opening is met: a reload of this visit stands at its stop and opens nothing again
     markVinciWelcomeSeen()
     if (doorStanding) await new Promise<void>(resolve => { doorDone = resolve })
@@ -1150,6 +1239,7 @@ export function createWing(): WingModule {
   }
   function leaveDoor(route: 'house' | 'collection' | 'life'): void {
     doorStanding = false
+    countWelcome()
     doorDone?.(); doorDone = null
     delete document.documentElement.dataset['naDoor']
     releaseFirstStill()
@@ -1207,7 +1297,7 @@ export function createWing(): WingModule {
     if (form === 'desk') applyDeskSteps(wing)
     else delete wing.dataset['desk']
     const style = make('style', '')
-    style.textContent = [wingCss, deskTypeCss, deskCss, deskCloseLookCss, deskPanelCss, deskMarksCss, deskOverviewCss, filmWingCss, FILM_CINEMA_CSS, TURN_LINE_CSS].join('\n')
+    style.textContent = [wingCss, deskTypeCss, deskCss, deskCloseLookCss, deskPanelCss, deskMarksCss, deskOverviewCss, filmWingCss, FILM_CINEMA_CSS, TURN_LINE_CSS, WALK_CONTROLS_CSS].join('\n')
     h.stage.append(style)
     tall = make('div', 'film-tall')
     h.stage.append(tall)
@@ -1252,7 +1342,7 @@ export function createWing(): WingModule {
     picture.element.after(cycleLayer)
     words?.dispose()
     words = createPictureWords(layer => cycleLayer!.after(layer))
-    picture.on('state', state => { paintDip(state); if (state.kind === 'rest') marksAt = ''; else h.stage.style.cursor = '' })
+    picture.on('state', state => { paintDip(state); if (state.kind === 'rest') marksAt = ''; else h.stage.style.cursor = ''; walkState(state) })
     picture.on('rest', state => {
       if (state.kind !== 'rest') return
       // a work of a wall belongs to the story stop before it along the wall
@@ -1268,6 +1358,17 @@ export function createWing(): WingModule {
       paintGold()
       ahead()
     })
+    walk = createWalkPanel({
+      form: () => form,
+      to: () => placeName(walkTarget),
+      held: () => walkMotion() === 'held',
+      hold: holdWalk,
+      goOn: goOnWalk,
+      skip: skipWalk,
+      // the turn is offered to a hand that can turn the glass, as the welcome's line is
+      sideways: () => (form === 'upright' && matchMedia('(pointer: coarse)').matches ? turnWords() || null : null),
+      looked: () => lookedHere || (readVisit('vinci')?.opened.length ?? 0) > 0,
+    }, signal)
     if (form === 'desk' && (deskOn('words') || deskOn('ways'))) desk = createDeskChrome({
       stage: h.stage, wing, lang,
       standing: () => deskStation(card),
@@ -1278,11 +1379,16 @@ export function createWing(): WingModule {
       sources: () => sourceButton ?? null,
       words: { next: CARDS.controls.date.next, back: CARDS.controls.date.previous, rail: WING_TEXT.rail },
       go: index => { if (carried(index)) h.navigate(index) },
-      up, upward,
+      // held, the way back returns to where the walk left from, before any way up
+      up: () => backFromHold() || up(),
+      upward: () => upward() || backHeld(),
       // a wait is not a walk: the words and the way on stand until the clip can play through
       leg: () => { const s = picture?.state(); return s?.kind === 'walk' ? s.share : null },
       hurry: () => picture?.hurry(),
       overview: listHost(),
+      walk,
+      held: () => walkMotion() === 'held',
+      goOn: goOnWalk,
     })
     if (form !== 'desk') {
       buildPhone(h)
@@ -1334,17 +1440,42 @@ export function createWing(): WingModule {
       const target = e.target instanceof Element ? e.target : document.body
       if (target.closest('input,textarea,select')) return
       if (look?.id && look.key(e)) { e.preventDefault(); return }
-      if (look?.id && e.key === 'Escape') { e.preventDefault(); look.close(); return }
+      /* ESCAPE BACKS OUT ONE LEVEL AND NEVER MOVES THE EYE ON OR UP; while the
+         eye walks, Escape and Space hold it where it is (walk-rules.mjs) */
+      const layer = look?.id ? 'look' : wing.dataset['drawer'] === 'open' || drawerOpen ? 'drawer' : 'none'
+      const action = walkKey({ key: e.key, repeat: e.repeat, layer, walk: walkMotion(), onControl: Boolean(target.closest('button,a,[role="button"]')) })
+      if (action !== 'pass' && action !== 'hint') e.preventDefault()
+      if (action === 'look-back') {
+        lookStaying = true
+        try { look?.close() } finally { lookStaying = false }
+        return
+      }
+      if (action === 'drawer-close') { if (!desk?.key(e)) setDrawer(false); return }
+      if (action === 'pause') { holdWalk(); return }
+      if (action === 'resume') { goOnWalk(); return }
+      if (action === 'hurry') { picture?.hurry(); return }
+      if (action === 'back') { backFromHold(); return }
+      if (action === 'hint') { walk?.hint(restLine()); return }
+      if (action === 'none') return
       if (look?.id) return
-      if (e.key === 'Escape' && desk?.key(e)) { e.preventDefault(); return }
-      if (e.key === 'Escape' && drawerOpen) { e.preventDefault(); setDrawer(false); return }
-      // Escape at a work of a wall is the way up, as the live wing's
-      if (e.key === 'Escape' && up()) { e.preventDefault(); return }
       if (desk?.key(e)) { e.preventDefault(); return }
       if (!desk && (e.key === ' ' || e.key === 'Spacebar') && !target.closest('button,a')) { e.preventDefault(); pressOn(); return }
       if (e.key === 'ArrowRight' || e.key === 'ArrowDown') { e.preventDefault(); pressOn() }
       if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') { e.preventDefault(); if (up()) return; const to = backIndex(); if (to !== null) h.navigate(to) }
     }, { signal })
+    /* A DRAG OR THE WHEEL OVER THE PICTURE moves nothing in a guided walk: the
+       first one this visit is told what does (the keys' hint) */
+    let dragFrom: { x: number; y: number } | null = null
+    // the picture only: the band stands in the stage too, and a hand on it is a hand on the wall
+    const onPicture = (e: Event): boolean => !look?.id && !doorStanding && !eveningOn && (e.target === h.stage || Boolean(picture?.element.contains(e.target as Node)))
+    h.stage.addEventListener('pointerdown', e => { dragFrom = onPicture(e) ? { x: e.clientX, y: e.clientY } : null }, { signal })
+    addEventListener('pointerup', () => { dragFrom = null }, { signal })
+    h.stage.addEventListener('pointermove', e => {
+      if (!dragFrom || Math.hypot(e.clientX - dragFrom.x, e.clientY - dragFrom.y) < 24) return
+      dragFrom = null
+      walk?.hint(restLine())
+    }, { signal })
+    h.stage.addEventListener('wheel', e => { if (onPicture(e)) walk?.hint(restLine()) }, { passive: true, signal })
     /* THE DESKTOP'S GOLD AT A SET'S END carries the stop's own way on, as the
        phone's gold does there: the next stop by its chapter, or the look up at
        the last. Asked by the close look's band (vitrine's VITRINE_ONWARD, named
@@ -1438,6 +1569,7 @@ export function createWing(): WingModule {
       module.stations = LIFE.map(s => ({ id: s.id, name: text(s.name), question: text(stationOf(s.station).door), door: stationOf(s.station).door.station }))
       if (sourceButton) sourceButton.textContent = say(SOURCES_WORD)
       paint()
+      walk?.paint()
     },
     // nothing draws but the machine's live island: the film is DOM over a held canvas
     held: () => look?.surface !== 'own',
@@ -1485,6 +1617,8 @@ export function createWing(): WingModule {
       picture?.dispose(); picture = undefined
       clearMarks(); chip?.remove(); marksGlass?.remove(); answering?.dot.remove(); answering = null
       words?.dispose(); words = undefined; wordsAt = ''
+      walk?.dispose(); walk = undefined; walkActive = false
+      delete hosts?.stage.parentElement?.dataset['walk']
       cutCard?.remove()
       evening = undefined; eveningOn = eveningFull = eveningAsked = false
       welcome?.dispose(); welcome = undefined

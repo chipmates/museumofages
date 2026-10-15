@@ -134,7 +134,7 @@
   padding-bottom: env(safe-area-inset-bottom);
   box-sizing: content-box;
 }
-.film-back, .film-book {
+.film-back, .film-book, .film-hold {
   position: absolute;
   top: 14px;
   width: 44px;
@@ -152,7 +152,7 @@
 }
 /* the seats stand over the film: a short halo of the wall keeps the ring 3 to 1 on a sunlit floor.
    It is cut to the seat's own corner: a spread shadow would round its corner by the halo's width. */
-.film-back::before, .film-book::before {
+.film-back::before, .film-book::before, .film-hold::before {
   content: ''; position: absolute; inset: 0; border-radius: inherit; pointer-events: none;
   box-shadow: 0 0 0 6px color-mix(in srgb, var(--ui-ground) 60%, transparent);
   clip-path: inset(-3px round var(--ui-r-seat-phone));
@@ -160,10 +160,10 @@
 /* the two glass seats stand as a pair, and gold keeps 16 px clear of the
    book at its widest (the gold's max-width below) */
 .film-back { left: 16px; }
-.film-book { left: 68px; }
+.film-book, .film-hold { left: 68px; }
 /* the corner target runs into the corner: back 0 to 64, the book 64 to 116 */
 .film-back::after { content: ''; position: absolute; left: -16px; right: -4px; top: -2px; bottom: -10px; }
-.film-book::after { content: ''; position: absolute; left: -4px; right: -4px; top: -2px; bottom: -2px; }
+.film-book::after, .film-hold::after { content: ''; position: absolute; left: -4px; right: -4px; top: -2px; bottom: -2px; }
 .film-back:disabled { opacity: .45; cursor: default; }
 .film-ic { width: 16px; height: 16px; fill: none; stroke: currentColor; stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; }
 .film-ic.film-ic-fill { fill: currentColor; stroke-width: 1; width: 14px; height: 14px; }
@@ -750,3 +750,32 @@ html:has(#wing[data-film='upright']) #instruments .inst-pace small { position: a
 }
 #wing[data-film='cinema'] .vitrine[data-narrow='true'] .vitrine-payload-controls .reader-page { width: 44px; height: 44px; min-width: 44px; }
 #wing[data-film='cinema'] .vitrine[data-narrow='true'] .vitrine-payload-controls :is(.reader-absence, .reader-part) { height: 44px; }
+
+/* ---- THE WALK'S OWN CONTROLS on the phone (walk-controls.ts) ----
+   While the eye walks the words' rows stand empty: where to, the skip and one
+   tip stand on the box's plate just over the foot row, and the hold takes the
+   book's seat, which the book leaves while the eye walks. */
+.film-hold { display: none; }
+#wing[data-walk] .film-box:not([data-look='true']) .film-hold { display: flex; }
+.film-hold .walk-ic { width: 16px; height: 16px; }
+.film-box > .walk-panel {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: calc(80px + env(safe-area-inset-bottom));
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  grid-template-areas: 'to ways' 'tip tip';
+  align-items: end;
+  column-gap: 16px;
+  padding: 10px 16px 6px;
+  background: var(--plate);
+}
+.film-box > .walk-panel .walk-to { grid-area: to; }
+.film-box > .walk-panel .walk-ways { grid-area: ways; }
+.film-box > .walk-panel .walk-tip { grid-area: tip; margin-top: 4px; font-size: .875rem; line-height: 1.35; }
+.film-box > .walk-panel .walk-to-kicker { font-size: .75rem; line-height: 1rem; }
+.film-box > .walk-panel .walk-to-name { font: 400 1rem/1.375rem var(--serif); }
+.film-box > .walk-panel .walk-skip { font: 400 .9375rem/1 var(--sans); min-height: 44px; }
+/* held, gold is the way on again: its name and its arrow, as at rest */
+.film-gold[data-held='true'] .film-gold-ring { opacity: 1; }

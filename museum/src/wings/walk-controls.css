@@ -1,0 +1,94 @@
+/* THE WALK'S OWN CONTROLS (walk-controls.ts). The parts and their type here;
+   the desktop's band places them below, and a phone's form places them in its
+   own sheet. Nothing here is gold: the one gold control stays the way on. */
+
+/* a form's own placement never brings back a part the walk took away */
+.walk-panel[hidden], .walk-tip[hidden], .walk-to-name[hidden] { display: none !important; }
+.walk-to { margin: 0; }
+.walk-to-kicker {
+  display: block;
+  font: 600 .8125rem/1.125rem var(--sans);
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  color: var(--ui-text-quiet);
+}
+.walk-to-name { display: block; font: 400 1.25rem/1.625rem var(--serif); color: var(--ui-text); }
+.walk-tip {
+  margin: 0;
+  font: 400 .9375rem/1.4 var(--sans);
+  color: var(--ui-text-quiet);
+  text-wrap: pretty;
+}
+.walk-tip { transition: opacity 160ms ease; }
+.walk-tip[data-gone] { opacity: 0; visibility: hidden; }
+.walk-ic { width: 16px; height: 16px; display: block; fill: none; stroke: currentColor; stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; }
+.walk-hold[data-held='true'] .walk-ic { fill: currentColor; stroke-width: 1.2; }
+.walk-tip .walk-turn { display: inline-block; width: 18px; height: 18px; margin: 0 .4em -3px 0; color: var(--na-gold); }
+.walk-skip {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  padding: 0;
+  border: 0;
+  background: none;
+  font: 500 .9375rem/1 var(--sans);
+  color: var(--ui-text);
+  white-space: nowrap;
+  cursor: pointer;
+}
+.walk-skip::after { content: ''; position: absolute; left: 0; right: 0; bottom: 10px; height: 1px; background: var(--ui-line-strong); }
+.walk-skip:is(:hover, :focus-visible)::after { height: 1.5px; background: var(--ui-text); }
+.walk-skip:focus-visible, .walk-hold:focus-visible { outline: 2px solid var(--na-gold); outline-offset: 3px; }
+.walk-hold { cursor: pointer; }
+.walk-hold-word { display: none; }
+
+/* AT REST the keys' hint stands in the line's own place for a few seconds */
+[data-walk-hinted] { visibility: hidden; }
+.desk-cap .walk-hint-rest { font-size: 1.125rem; }
+.walk-hint-rest {
+  position: fixed;
+  z-index: 5;
+  margin: 0;
+  font: 400 1rem/1.45 var(--sans);
+  color: var(--ui-text);
+  pointer-events: none;
+}
+
+/* ---- the desktop's band: the words' place while the eye walks, the hold beside the gold ---- */
+.desk-low > .walk-panel {
+  position: absolute;
+  left: var(--desk-g);
+  bottom: calc(var(--desk-band-foot, 9px) + 1px);
+  /* clear of the ways at their widest: the way out's word, back, the hold and gold */
+  width: min(var(--desk-read, 560px), calc(100vw - var(--desk-g) * 2 - 640px));
+  min-width: 240px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  pointer-events: auto;
+}
+.desk-low > .walk-panel .walk-to-name { font-size: 1.375rem; line-height: 1.75rem; }
+.desk-low > .walk-panel .walk-tip { margin-top: 4px; }
+.desk-low > .walk-panel .walk-ways { margin-top: 2px; }
+#wing[data-walk] .desk-cap { opacity: 0; pointer-events: none; }
+.desk-ways > .walk-hold {
+  width: 56px;
+  height: 56px;
+  padding: 0;
+  border: 0;
+  border-radius: var(--ui-r-seat);
+  background: var(--desk-glass, var(--ui-ground-raised));
+  box-shadow: inset 0 0 0 1px var(--desk-edge, var(--ui-line-strong));
+  display: none;
+  place-items: center;
+  color: var(--na-starlight);
+}
+#wing[data-walk] .desk-ways > .walk-hold { display: grid; }
+.desk-ways > .walk-hold:hover { box-shadow: inset 0 0 0 1px var(--ui-text); }
+/* held, the way back answers at full strength: it returns to the stop the walk left */
+#wing[data-walk='held'] .desk-back { opacity: 1; }
+@media (prefers-reduced-motion: reduce) {
+  .walk-tip, .walk-hint-rest { transition: none; }
+}
+.desk-on-kicker[hidden] { display: none; }

@@ -45,12 +45,14 @@ export interface TurnLine {
   fade(): void
 }
 
+/** the turn's words, which stand with the opening's own; none, no line */
+export function turnWords(): string {
+  try { return openingWord('opening.turn.line') } catch { return '' }
+}
+
 export function createTurnLine(signal: AbortSignal): TurnLine {
   let line: HTMLParagraphElement | null = null
-  /** the words stand with the opening's own; none, no line */
-  const words = (): string => {
-    try { return openingWord('opening.turn.line') } catch { return '' }
-  }
+  const words = turnWords
 
   /** out of the flow at once: the turned glass lays its controls out without it */
   function remove(): void {
