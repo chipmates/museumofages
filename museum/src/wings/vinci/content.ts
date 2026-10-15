@@ -1194,8 +1194,8 @@ export const vinciLifePeople: readonly {
   {
     id: 'francis', name: { en: 'Francis I', de: 'Franz I.' },
     role: {
-      en: 'The king whose service he entered when he came to Cloux.',
-      de: 'Der König, in dessen Dienst er trat, als er nach Cloux kam.',
+      en: 'The king whose service Leonardo entered when he came to Cloux.',
+      de: 'Der König, in dessen Dienst Leonardo trat, als er nach Cloux kam.',
     },
     events: ['life-37'],
   },
