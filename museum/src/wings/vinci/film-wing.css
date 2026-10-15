@@ -476,7 +476,7 @@ html:has(#wing[data-film='upright']) #instruments:not([hidden])::after {
 #wing[data-film='wide'] .wing-plan .wing-plan-foot { order: -1; border-top: 0; border-bottom: 1px solid var(--ui-line); }
 /* the life: the close at the head's right, on its first line; the foot it stood in alone folds to nothing */
 #wing[data-film='wide'] .wing-life .wing-life-close { position: absolute; z-index: 3; top: 8px; right: 20px; }
-#wing[data-film='wide'] .wing-life .wing-life-head { padding-right: 160px; }
+#wing[data-film='wide'] .wing-life .wing-life-head { padding-right: 160px; min-height: calc(8px + 44px); }
 /* the box never scrolls as a whole, so its head and close stay at its top: a landing on a period scrolled a short
    box's head out of view. Where the box is short its body scrolls under the head, the columns keeping a height to read in,
    and comes to rest on the ribbon or on the columns, never on a line cut at the head's foot */
@@ -491,8 +491,24 @@ html:has(#wing[data-film='upright']) #instruments:not([hidden])::after {
 /* the two columns keep the air the foot gave them, and a line passing out at their foot fades, never cut in half */
 #wing[data-film='wide'] .wing-life .wing-life-reading { padding-bottom: 14px; }
 #wing[data-film='wide'] .wing-life .wing-life-reading > :is(.wing-life-spine, .wing-life-period-body) {
-  padding-bottom: 20px;
+  padding-bottom: 20px; scroll-padding-bottom: 20px;
   -webkit-mask-image: linear-gradient(to bottom, black calc(100% - 20px), transparent); mask-image: linear-gradient(to bottom, black calc(100% - 20px), transparent);
+}
+/* a landed period rests above the foot's fade; once a column or the short body scrolls, a line passing out at its head
+   fades too (snapping the list to whole rows put the landed period into the fade) */
+@property --life-head-fade { syntax: '<length>'; inherits: false; initial-value: 0px; }
+@keyframes life-head-fade { to { --life-head-fade: 18px; } }
+@supports (animation-timeline: scroll()) {
+  #wing[data-film='wide'] .wing-life .wing-life-reading > :is(.wing-life-spine, .wing-life-period-body) {
+    animation: life-head-fade linear both; animation-timeline: scroll(self); animation-range: 0px 18px;
+    -webkit-mask-image: linear-gradient(to bottom, transparent, black var(--life-head-fade), black calc(100% - 20px), transparent);
+    mask-image: linear-gradient(to bottom, transparent, black var(--life-head-fade), black calc(100% - 20px), transparent);
+  }
+  #wing[data-film='wide'] .wing-life .wing-life-body {
+    animation: life-head-fade linear both; animation-timeline: scroll(self); animation-range: 0px 18px;
+    -webkit-mask-image: linear-gradient(to bottom, transparent, black var(--life-head-fade));
+    mask-image: linear-gradient(to bottom, transparent, black var(--life-head-fade));
+  }
 }
 
 /* THE DOOR LEAVES: the picture gives the band its row in one soft move */
