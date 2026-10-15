@@ -1130,8 +1130,8 @@
             "the largest known dinosaur only as Riggs's title of 1901 and 1903"
           ],
           [
-            "(?s)^(?!.*(?:mounted|montierte|skeleton|skelett|not\\sknown|nicht\\s(?:sicher\\s)?bekannt|weiß\\sniemand|nobody|niemand)).*(?:tallest\\sdinosaur|höchste[rns]?\\sdinosaurier)",
-            "the tallest dinosaur only for the mounted Giraffatitan, or as not known"
+            "(?s)^(?!.*(?:mounted|montierte|skeleton|skelett|not\\sknown|nicht\\s(?:sicher\\s)?bekannt|weiß\\sniemand|nobody|niemand)).*(?:tallest\\sdinosaur|höchste[rns]?\\sdinosaurier)(?!\\?)",
+            "the tallest dinosaur only for the mounted Giraffatitan, or as not known, or asked as a question"
           ],
           [
             "(?s)^(?!.*(?:2001|low\\sand\\sfar\\sforward|tief\\sund\\sweit\\svorn|old\\srestorations|alte\\sdarstellungen)).*(?:nostrils?\\s(?:\\w+\\s)?(?:on|at)\\s(?:the\\s)?top|nasenlöcher?\\s(?:\\w+\\s)?(?:oben\\s)?auf\\sdem\\skopf|nasenl\\w*\\soben)",

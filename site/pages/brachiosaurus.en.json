@@ -52,7 +52,7 @@
    "swatches": {
     "own": "#c5b48f",
     "blue": "#597382",
-    "orange": "#ab6e22",
+    "orange": "#ac6f23",
     "brown": "#493624"
    }
   },
@@ -87,7 +87,7 @@
   "title": "Brachiosaurus size: about 22 to 25 m long | Museum of Ages",
   "description": "Brachiosaurus was about 22 to 25 m long and roughly 30 to 45 t, rebuilt from one partial skeleton. The famous skeleton in Berlin is Giraffatitan.",
   "og_title": "Brachiosaurus size: about 22 to 25 m long",
-  "og_image_alt": "A Brachiosaurus from the side, its long neck raised in a gentle curve, the front legs longer than the hind legs, the tail off the ground, beside a grey person who could walk under its belly."
+  "og_image_alt": "A Brachiosaurus from the side, its long neck raised in a gentle curve, the front legs longer than the hind legs, the tail off the ground, beside a grey person who could walk under its belly, a short bar marking the head's top."
  },
  "labels": {
   "crumbs": "You are here",
@@ -108,7 +108,7 @@
    "pic": "side",
    "tag": "tag_made",
    "what": "Our Brachiosaurus beside a person 1.70 m tall, to one scale, at the size of the one skeleton the name rests on, dug up in Colorado in 1900. Neck, head, lower legs and most of the tail follow Giraffatitan and other finds. The head stands 11.8 m (39 ft) up only by the neck angle we chose: that height is ours, not a finding.",
-   "alt": "A Brachiosaurus from the side, its long neck raised in a gentle curve, the front legs longer than the hind legs, the tail off the ground, beside a grey person who could walk under its belly.",
+   "alt": "A Brachiosaurus from the side, its long neck raised in a gentle curve, the front legs longer than the hind legs, the tail off the ground, beside a grey person who could walk under its belly, a short bar marking the head's top.",
    "note": "Our own reconstruction, built in code from published measurements and rendered in our own engine. Not photographs.",
    "marks": [
     {
@@ -217,10 +217,11 @@
   {
    "type": "text",
    "id": "how-tall",
-   "nav": "How tall was Brachiosaurus?",
-   "h": "How tall was Brachiosaurus?",
+   "nav": "How tall was Brachiosaurus, and was it the tallest dinosaur?",
+   "h": "How tall was Brachiosaurus, and was it the tallest dinosaur?",
    "paras": [
-    "Nobody can say to the metre: the Chicago skeleton has no neck, and the two neck bones found elsewhere may not even be Brachiosaurus. So every head height in print was drawn on Giraffatitan's neck, none measured. How it held that neck is argued, and the middle view is raised, neither level nor straight up. Our model's neck rises at about 42 degrees, its head top 11.8 m (39 ft) up. The same body would hold its head about 7 m (23 ft) up with a level neck, over 14 m (46 ft) with it straight up. The tallest mounted dinosaur skeleton is that Berlin Giraffatitan, and which dinosaur stood tallest in life is not known for sure: the biggest dinosaurs page takes that question."
+    "Nobody can say to the metre: the Chicago skeleton has no neck, and the two neck bones found elsewhere may not even be Brachiosaurus. So every head height in print was drawn on Giraffatitan's neck, none measured.",
+    "How it held that neck is argued, and the middle view is raised, neither level nor straight up. Our model's neck rises at about 42 degrees, its head top 11.8 m (39 ft) up. The same body would hold its head about 7 m (23 ft) up with a level neck, over 14 m (46 ft) with it straight up. The tallest mounted dinosaur skeleton is that Berlin Giraffatitan, and which dinosaur stood tallest in life is not known for sure: the biggest dinosaurs page takes up that question."
    ],
    "links": [
     {
@@ -235,7 +236,7 @@
    "nav": "The Brachiosaurus skeleton: what was found",
    "h": "The Brachiosaurus skeleton: what was found",
    "paras": [
-    "In 1900 a team from the Field Columbian Museum led by Elmer Riggs dug the skeleton out near Grand Junction in western Colorado. After the body was partly buried, a stream carried off its front part. In 1903 Riggs named it Brachiosaurus altithorax, arm lizard with a high chest, for its long upper arm bone and deep trunk. One shoulder bone had not finished growing, so the animal was probably still growing too. The Field Museum in Chicago keeps the bones, and the big skeletons people photograph there are casts, partly sculpted after Giraffatitan."
+    "In 1900 a team from the Field Columbian Museum led by Elmer Riggs dug the skeleton out near Grand Junction in western Colorado. After the body was partly buried, a stream carried off its front part. In 1903 Riggs named it Brachiosaurus altithorax, arm lizard with a high chest, for its long upper arm bone and deep trunk. One shoulder bone had not finished growing, so the animal was probably still growing too. The Field Museum in Chicago keeps the bones, and the big skeletons made for its halls are casts, partly sculpted after Giraffatitan."
    ],
    "subs": [
     {
@@ -255,9 +256,9 @@
      "paras": [
       {
        "points": [
-        "The head: after a skull found in Colorado in 1883, only tentatively this species, with the nose arch after Giraffatitan.",
+        "The head: after a skull found in Colorado in 1883, only tentatively this species, its missing nose arch restored.",
         "Neck, front of the back, shoulder blades, forearms, hands, shins, feet and the tail behind its first two bones: mostly after Giraffatitan.",
-        "The left arm and leg bones: mirrors of the right."
+        "The left upper arm and thigh bones: mirrors of the right."
        ]
       }
      ]
@@ -278,11 +279,11 @@
      },
      {
       "swatch": "blue",
-      "text": "Blue: its own bones mirrored or completed: the left arm and leg bones as mirrors of the right, the upper arm bone's lost end, the ribs' lower parts. The shoulder bone in view is a mirror too: the one found is the left, behind it."
+      "text": "Blue: its own bones mirrored or completed: the left upper arm and thigh bones as mirrors of the right, the upper arm bone's lost end, the ribs' lower parts. The shoulder bone in view is a mirror too: the one found is the left, behind it."
      },
      {
       "swatch": "orange",
-      "text": "Orange: after other American finds, above all a skull found in Colorado in 1883, only tentatively this species, and one forearm bone."
+      "text": "Orange: after other American finds, above all a skull found in Colorado in 1883, only tentatively this species, its missing nose arch restored, and one forearm bone."
      },
      {
       "swatch": "brown",
@@ -310,13 +311,13 @@
     {
      "h": "The body and legs",
      "paras": [
-      "The front legs were longer than the hind legs, so the back sloped up to the shoulders: true of all brachiosaurids, and the reason for the name. The trunk was deep and about a quarter longer than Giraffatitan's, by its own back bones. The tail was tall at its base, probably long, and carried off the ground like other sauropods'."
+      "The front legs were longer than the hind legs, so the back sloped up to the shoulders, as in its relatives, and the long arms gave it its name. The trunk was deep and about a quarter longer than Giraffatitan's, by its own back bones. The tail was tall at its base, probably long, and carried off the ground like other sauropods'."
      ]
     },
     {
      "h": "The neck and head",
      "paras": [
-      "The neck is borrowed from Giraffatitan, raised in ours in a gentle curve, though the angle is argued. The head follows the Colorado skull of 1883 and Giraffatitan's nose arch, the fleshy nostrils low and far forward on the snout."
+      "The neck is borrowed from Giraffatitan, raised in ours in a gentle curve, though the angle is argued. The head follows the Colorado skull of 1883, its missing nose arch restored low, the fleshy nostrils low and far forward on the snout."
      ]
     },
     {
@@ -342,7 +343,7 @@
    "nav": "When and where Brachiosaurus lived",
    "h": "When and where Brachiosaurus lived",
    "paras": [
-    "Brachiosaurus lived in the Late Jurassic of western North America, about 150 million years ago, in the rocks now called the Morrison Formation. It lived on land: Riggs argued that in 1904 from its legs and feet, against the old picture of a swamp animal. The range a museum gives for the genus stops at about 145 million years ago."
+    "Brachiosaurus lived in the Late Jurassic of western North America, about 150 million years ago, where the rocks of the Morrison Formation now lie. It lived on land: Riggs argued that in 1904 from its legs and feet, against the old picture of a swamp animal. The range a museum gives for the genus stops at about 145 million years ago."
    ]
   },
   {
@@ -391,11 +392,11 @@
     },
     {
      "term": "A swamp animal, held up by the water",
-     "text": "The old picture of all long-necked dinosaurs. Riggs argued against it in 1904 from the legs and feet, and it has been out since."
+     "text": "The old picture of all long-necked dinosaurs. Riggs argued against it in 1904 from the legs and feet. Today it is set aside."
     },
     {
      "term": "Nostrils on top of the head",
-     "text": "Old restorations put the fleshy nostril at the top of the big bony opening in the skull. A study of 2001 found it sat low and far forward on the snout."
+     "text": "Old restorations put the fleshy nostril at the top of the big bony opening in the skull. A study of 2001 found it sat far forward on the snout."
     }
    ]
   },
@@ -407,7 +408,11 @@
    "items": [
     {
      "q": "What did Brachiosaurus eat?",
-     "a": "Leaves of tall trees, conifers and tree ferns among them, by the Natural History Museum in London. It did not chew: the leaves were broken down in its gut, as in other sauropods."
+     "a": "Leaves of tall trees, conifers and tree ferns among them, says the Natural History Museum in London. It did not chew: the leaves were broken down in its gut, as in other sauropods."
+    },
+    {
+     "q": "Was Brachiosaurus the biggest dinosaur?",
+     "a": "No. Argentinosaurus was longer and much heavier: about 30 to 35 m (98 to 115 ft) and roughly 65 to 80 tonnes, both rebuilt. Which dinosaur was the biggest of all is still open, and the biggest dinosaurs page takes up that question."
     }
    ]
   },
@@ -523,6 +528,10 @@
     {
      "text": "San Diego Zoo Wildlife Alliance: its giraffe page.",
      "href": "https://animals.sandiegozoo.org/animals/giraffe"
+    },
+    {
+     "text": "Argentinosaurus: the numbers and sources of our biggest dinosaurs page.",
+     "href": "https://museumofages.org/animals/biggest-dinosaurs/"
     }
    ],
    "contact": "If a number or a museum is wrong, tell us and we will correct it.",

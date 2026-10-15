@@ -1451,26 +1451,26 @@
   {
    "path": "pages/pics/img/animals-brachiosaurus-skeleton-1600.avif",
    "url": "/static/img/animals-brachiosaurus-skeleton-1600.avif",
-   "bytes": 21604,
-   "sha256": "18580bcd793ec9c861a6d1e9bd84dbb07d1ae967b14deed24f558483045f8831"
+   "bytes": 21607,
+   "sha256": "ba32b7dc080c25038cdf60f49fcf0d6ccb09cd357c9a2a9cc9859abe2631bdcd"
   },
   {
    "path": "pages/pics/img/animals-brachiosaurus-skeleton-1600.webp",
    "url": "/static/img/animals-brachiosaurus-skeleton-1600.webp",
-   "bytes": 35870,
-   "sha256": "5f7b8d8b002d6391d9502963fb3abba757cf7a4bae112e15e0fd60b62e6d4ef9"
+   "bytes": 35546,
+   "sha256": "d43e90ad60e2891d6cd5d48ce6f950ed5796e962903c63cb102e494089f57e03"
   },
   {
    "path": "pages/pics/img/animals-brachiosaurus-skeleton-800.avif",
    "url": "/static/img/animals-brachiosaurus-skeleton-800.avif",
-   "bytes": 9343,
-   "sha256": "9c789f5bc7e222d620b735169dbfe096578c3431b6cd8b2e4604271695df99e8"
+   "bytes": 9255,
+   "sha256": "959050f268a9479ccfc5d8ca063c179b1789ec75476b3d3949e19253390c8f67"
   },
   {
    "path": "pages/pics/img/animals-brachiosaurus-skeleton-800.webp",
    "url": "/static/img/animals-brachiosaurus-skeleton-800.webp",
-   "bytes": 14200,
-   "sha256": "6a113afed5fd3fbba89e9bd203fe1cfa91fd95a38f3f846d25719cf99b0199b5"
+   "bytes": 14240,
+   "sha256": "5b8b2da1fec2ebfec80e8de1e73a3345389391e9d34e1c8172eb7a06721de093"
   },
   {
    "path": "pages/pics/img/animals-megalodon-head-1600.avif",

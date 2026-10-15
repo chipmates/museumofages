@@ -720,6 +720,7 @@ class Case(unittest.TestCase):
                "Its skeleton is on show in Chicago", "Its real bones are on show", "Our Brachiosaurus skeleton",
                "Its bones were dug up at Tendaguru by the museum", "Brachiosaurus was the largest known dinosaur",
                "It was the biggest dinosaur", "Brachiosaurus was the tallest dinosaur",
+               "Brachiosaurus was the tallest dinosaur, wasn't it?",
                "Its nostrils were on top of its head", "It had a hand like an elephant's", "Sauropods were brown",
                "It was green", "It lived in water", "It snorkelled", "It reared up on its hind legs to feed",
                "Its front legs were sprawling", "It had 14 neck vertebrae", "It had a second brain",
@@ -744,7 +745,8 @@ class Case(unittest.TestCase):
                "Seine echten Knochen werden ausgestellt", "Unser Brachiosaurus-Skelett",
                "Die Knochen wurden am Tendaguru von Forschern des Museums ausgegraben",
                "Der Brachiosaurus war der größte bekannte Dinosaurier", "Er war der größte Dinosaurier",
-               "Der Brachiosaurus war der höchste Dinosaurier", "Die Nasenlöcher saßen oben auf dem Kopf",
+               "Der Brachiosaurus war der höchste Dinosaurier", "Der Brachiosaurus war der höchste Dinosaurier, oder?",
+               "Die Nasenlöcher saßen oben auf dem Kopf",
                "Eine Hand wie die eines Elefanten", "Sauropoden waren braun", "Er war grün", "Er lebte im Wasser",
                "Er schnorchelte", "Er stellte sich auf die Hinterbeine, um zu fressen",
                "Er hatte gespreizte Vorderbeine", "Er hatte 14 Halswirbel", "Er hatte ein zweites Gehirn",
@@ -772,6 +774,23 @@ class Case(unittest.TestCase):
                     self.save(lang, data, page)
                     self.fails(r"top\.out\.text matches")
                     self.save(lang, original, page)
+
+    def test_the_brachiosaurus_page_asks_about_the_tallest_dinosaur_but_never_says_it(self):
+        """The How tall heading asks whether Brachiosaurus was the tallest dinosaur. Asked, it builds; said as a claim,
+        the same heading stops the build."""
+        page = self.topic_page("brachiosaurus")
+        self.build()
+        for lang in ("en", "de"):
+            original = self.data(lang, page)
+            n, block = next((n, b) for n, b in enumerate(original["blocks"]) if b["id"] == "how-tall")
+            self.assertRegex(block["h"].lower(), r"(?:tallest dinosaur|höchste dinosaurier)\?$")
+            with self.subTest(lang=lang):
+                shutil.rmtree(self.dir / "out", ignore_errors=True)
+                data = json.loads(json.dumps(original))
+                data["blocks"][n]["h"] = data["blocks"][n]["h"][:-1] + "."
+                self.save(lang, data, page)
+                self.fails(r"blocks\.%d\.h matches" % n)
+                self.save(lang, original, page)
 
     def test_a_brachiosaurus_number_stands_only_with_the_words_that_say_whose_it_is(self):
         """The page names our model's 11.8 m head and its 21.5 and 24.4 m, the 80 and 50 tonnes, Berlin's 13 and 12 m, the
