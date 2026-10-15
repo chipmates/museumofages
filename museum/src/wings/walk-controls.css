@@ -20,6 +20,7 @@
   text-wrap: pretty;
 }
 .walk-tip { transition: opacity 160ms ease; }
+.walk-tip-part { display: inline-block; }
 .walk-tip[data-gone] { opacity: 0; visibility: hidden; }
 .walk-ic { width: 16px; height: 16px; display: block; fill: none; stroke: currentColor; stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; }
 .walk-hold[data-held='true'] .walk-ic { fill: currentColor; stroke-width: 1.2; }

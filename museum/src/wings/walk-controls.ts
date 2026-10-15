@@ -92,6 +92,17 @@ function markHint(): void {
 /** a key's sign never ends a row apart from the word it goes with */
 const bindKeys = (text: string): string => text.replace(/([←→‖]) /g, '$1\u00a0')
 
+/* A TIP OR HINT THAT WRAPS BREAKS BETWEEN ITS SENTENCES: each sentence is a
+   box of its own, so a narrow place never ends a row on "Or" */
+function sentences(into: HTMLElement, text: string, sign?: SVGSVGElement): void {
+  text.split(/(?<=[.?!…])\s+(?=\S)/u).forEach((sentence, i) => {
+    const part = make('span', 'walk-tip-part', sentence)
+    if (i === 0 && sign) part.prepend(sign)
+    if (i) into.append(' ')
+    into.append(part)
+  })
+}
+
 /** the element whose ground the line stands on: itself or the nearest box under it that paints one */
 function groundOf(line: HTMLElement): HTMLElement | null {
   for (let at: HTMLElement | null = line; at; at = at.parentElement) {
@@ -162,9 +173,8 @@ export function createWalkPanel(host: WalkPanelHost, signal: AbortSignal): WalkP
     tip.textContent = ''
     if (!tipNow) { tip.hidden = true; return }
     delete tip.dataset['gone']
-    // the turn's tip carries the turning phone before its words
-    if (tipNow === 'sideways') tip.append(icon(TURN_ICON, 'walk-ic walk-turn'))
-    tip.append(document.createTextNode(tipWords(tipNow)))
+    // the turn's tip carries the turning phone before its words, in their first box
+    sentences(tip, tipWords(tipNow), tipNow === 'sideways' ? icon(TURN_ICON, 'walk-ic walk-turn') : undefined)
     tip.lang = langTag(lang())
     tip.dataset['tip'] = tipNow
     tip.hidden = false
@@ -245,7 +255,8 @@ export function createWalkPanel(host: WalkPanelHost, signal: AbortSignal): WalkP
       /* AT REST THE HINT STANDS IN THE LINE'S PLACE for its few seconds, so one
          text stands at a time: on the line's own ground, at its own inset */
       const box = line.getBoundingClientRect()
-      const words = make('p', 'walk-hint-rest', tipWords('hint'))
+      const words = make('p', 'walk-hint-rest')
+      sentences(words, tipWords('hint'))
       words.lang = langTag(lang())
       words.setAttribute('role', 'status')
       const own = getComputedStyle(line)
