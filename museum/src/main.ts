@@ -1227,6 +1227,18 @@ function rowMark(): SVGSVGElement {
   return svg
 }
 
+/** a row that opens a surface of the wing, marked as the language row is */
+function openMark(): SVGSVGElement {
+  const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg')
+  svg.setAttribute('viewBox', '0 0 16 16')
+  svg.setAttribute('class', 'inst-row-open')
+  svg.setAttribute('aria-hidden', 'true')
+  const line = document.createElementNS('http://www.w3.org/2000/svg', 'path')
+  line.setAttribute('d', 'M6 4l4 4-4 4')
+  svg.append(line)
+  return svg
+}
+
 function paintWingRows(): void {
   if (!instWing) return
   instWing.textContent = ''
@@ -1243,6 +1255,7 @@ function paintWingRows(): void {
       count.textContent = row.count
       control.append(count)
     }
+    if (row.mark !== 'back' && !row.disabled) control.append(openMark())
     // a row whose own surface is not built names itself and refuses
     if (row.disabled) control.setAttribute('aria-disabled', 'true')
     control.addEventListener('click', () => {

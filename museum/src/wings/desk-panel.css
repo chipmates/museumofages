@@ -222,6 +222,19 @@
   color: var(--press-muted);
 }
 .inst-row-mark { flex: none; width: 15px; height: 15px; }
+.inst-row-open {
+  flex: none;
+  width: 14px;
+  height: 14px;
+  margin-left: auto;
+  fill: none;
+  stroke: var(--na-gold);
+  stroke-width: 1.6;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+/* beside the count, the language row's own spacing */
+.inst-row-count + .inst-row-open { margin-left: -8px; }
 
 /* ---- while the panel stands ---- */
 /* the band stays as quiet wall at the left of the sheet, and the words and
