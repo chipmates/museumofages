@@ -118,9 +118,10 @@ export function createDeskPanel(host: DeskPanelHost): void {
   function leave(): void {
     host.wing.querySelector<HTMLElement>('.wing-lobby')?.click()
   }
-  // the wing's own step up, taken by the chrome's listener before this one, keeps the visitor in
+  // leaves only while the way out's word stands: the chrome's listener runs first, and a step up
+  // or a held walk's way back it takes there has already changed what upward() reads
   host.back.addEventListener('click', () => {
-    if (host.standing().index === 0 && !host.upward?.()) leave()
+    if (!out.hidden && host.standing().index === 0 && !host.upward?.()) leave()
   }, { signal })
   /** An ending the wing answers for itself; unanswered, the walk goes home. */
   function endWith(ending: 'lookup' | 'talk'): boolean {

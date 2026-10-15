@@ -956,7 +956,10 @@ export function createFilmSource(options: FilmOptions): PictureSource & { readou
   async function landCut(): Promise<void> {
     const to = cutTo
     cutTo = null
-    if (to !== null && to !== here) await dip(to, null, true)
+    if (to === null) return
+    // a walk cut back to where it left from still has its frame on screen: the dark takes that away too
+    if (to !== here || playing?.shown) await dip(to, null, true)
+    else dropPlaying()
   }
   async function goNow(node: PictureNode, fade = false): Promise<PictureNode> {
     goingTo = node
