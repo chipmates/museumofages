@@ -91,8 +91,8 @@ export const LOBBY_TEXT = {
   paceWalk: { en: 'Walk', de: 'Gehen' },
   paceBrisk: { en: 'Brisk', de: 'Zügig' },
   paceCost: {
-    en: 'How fast you walk between stations. It stays on this device.',
-    de: 'Wie schnell du zwischen den Stationen gehst. Es bleibt auf diesem Gerät.',
+    en: 'How fast you walk between stations. Your choice stays on this device.',
+    de: 'Wie schnell du zwischen den Stationen gehst. Die Wahl bleibt auf diesem Gerät.',
   },
   plan: { en: 'The plan', de: 'Der Plan' },
   labelsTitle: {
