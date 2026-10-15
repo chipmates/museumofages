@@ -174,8 +174,8 @@ export function createWalkPanel(host: WalkPanelHost, signal: AbortSignal): WalkP
        meanwhile stands there for its seconds. After the hold the row keeps its
        room unseen, so nothing moves when the walk goes on. */
     if (walking && host.held() && tipNow !== 'hint') {
-      // the row keeps the height the tip had, so nothing over it moves
-      if (!tip.hidden && tip.dataset['held'] === undefined) tip.style.minHeight = `${tip.offsetHeight}px`
+      // the row keeps the room the tip had, so nothing over it or beside it moves (a card sideways is as wide as its widest row)
+      if (!tip.hidden && tip.dataset['held'] === undefined) Object.assign(tip.style, { minHeight: `${tip.offsetHeight}px`, minWidth: `${tip.offsetWidth}px` })
       tip.textContent = say(WALK_WORDS.paused)
       tip.lang = langTag(lang())
       tip.dataset['tip'] = 'paused'
@@ -188,7 +188,7 @@ export function createWalkPanel(host: WalkPanelHost, signal: AbortSignal): WalkP
     // a tip a press took away keeps its room, unseen, until the walk ends
     if (!tipNow && tip.dataset['gone'] !== undefined) return
     tip.textContent = ''
-    tip.style.minHeight = ''
+    Object.assign(tip.style, { minHeight: '', minWidth: '' })
     if (!tipNow) { tip.hidden = true; return }
     delete tip.dataset['gone']
     // the turn's tip carries the turning phone before its words
