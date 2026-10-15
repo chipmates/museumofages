@@ -1194,6 +1194,28 @@ class Case(unittest.TestCase):
                 self.assertIn(code, wing["langs"] + ["x-default"])
             self.assertNotRegex(text, r'href="[^"]*/(fr|it|es|pt-br|bg)/')
 
+    def test_a_page_of_a_wing_in_the_making_names_its_crumb_as_shown(self):
+        """The structured data's third crumb is the crumb the page shows, not its heading."""
+        self.scale_page()
+        out, written = self.build()
+        seen = 0
+        for path in written:
+            data, lang = self.page_of(path)
+            if not self.making(data) or data["page"].get("hub"):
+                continue
+            text = path.read_text(encoding="utf-8")
+            shown = re.search(r'<li aria-current="page">(.*?)</li>', text).group(1)
+            graph = json.loads(re.search(r'<script type="application/ld\+json">(.*?)</script>', text, flags=re.S)
+                               .group(1).replace("<\\/", "</"))["@graph"]
+            crumbs = next(n for n in graph if n["@type"] == "BreadcrumbList")["itemListElement"]
+            # the page keeps a short name whole with a no-break space; the data names it plainly
+            shown = html.unescape(re.sub(r"<[^>]+>", "", shown)).replace("\u00a0", " ").replace("\u00ad", "")
+            self.assertEqual(crumbs[2]["name"], shown, path)
+            self.assertNotEqual(crumbs[2]["name"], data["top"]["h1"], path)
+            seen += 1
+        self.assertGreater(seen, 0)
+        shutil.rmtree(out)
+
     def test_a_door_on_a_page_of_a_wing_in_the_making_stops_the_build(self):
         page = self.scale_page()
         other = self.data("en", self.page)

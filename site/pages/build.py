@@ -1159,7 +1159,10 @@ def jsonld(lang, data, urls, pics, site, wing, alternate_name, frame, folders, t
                 {"@type": "ListItem", "position": 1, "name": "Museum of Ages", "item": home},
                 {"@type": "ListItem", "position": 2, "name": wing["name"][lang],
                  "item": f"{ORIGIN}/{wing['page'][lang].strip('/')}/"},
-                {"@type": "ListItem", "position": 3, "name": data["top"]["h1"], "item": self_url},
+                # the third crumb as the page shows it; the open wing's pages keep their heading here until their
+                # own pass, so their files stay as they are
+                {"@type": "ListItem", "position": 3,
+                 "name": data["labels"]["crumb_here"] if making(wing) else data["top"]["h1"], "item": self_url},
             ],
         },
         {
