@@ -2405,7 +2405,7 @@ class LastYears(unittest.TestCase):
         """For each language: (what, the anchor of the page's sentence, what the wing says it holds)."""
         rome = next(p for p in self.facts["periods"] if p["en"].startswith("Rome"))
         visit_age = {"en": self.said(self.story, r"a man over seventy\. He was (\d+)\.", "his age at the visit"),
-                     "de": self.said(self.story, r"Mann über siebzig\. Er war (\d+)\.", "his age at the visit")}
+                     "de": self.said(self.story, r"Mann über siebzig, dabei war Leonardo (\d+)\.", "his age at the visit")}
         told, died = self.said(self.story, r"giving his age as (\d+)\. He was (\d+)\.", "Vasari's age and his")
         letter = {"en": self.said(self.stud["life-41"]["line_en"], r"letter dated (\d+ \w+)", "the letter's day"),
                   "de": self.said(self.stud["life-41"]["line_de"], r"Brief vom (\d+\. \w+)", "the letter's day")}
