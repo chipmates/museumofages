@@ -5,8 +5,9 @@
    the moa:answer event; close is the X, which also means no), and on a page of a wing in the making guess_open
    (the guess's answer was opened) and out_wing (the plain link to an open wing's page was followed). Each beacon
    carries the page's kind, its language and, on arrival, whether the visit began here with the source word the edge
-   set on the page (data-source). For the count nothing is stored and nothing is read from storage, except the mark our own test
-   browsers carry. Nothing after the question mark is read, except probe=1. The server's answer is never read.
+   set on the page (data-source). The read, the guess and the link out carry those same two fields again, from the
+   same attribute, nothing more. For the count nothing is stored and nothing is read from storage, except the mark our
+   own test browsers carry. Nothing after the question mark is read, except probe=1. The server's answer is never read.
    The click id a yes keeps in the tab is ask.js's alone: the count never reads it and never sends it. */
 (function () {
   'use strict';
@@ -41,6 +42,13 @@
   var arrival = {};
   if (from === '') arrival.start = 0;
   else if (SOURCES.indexOf(from) >= 0) { arrival.start = 1; arrival.source = from; }
+  /* a fresh copy for each beacon that carries them, since send() writes into the object it is given */
+  function begun() {
+    var f = {};
+    if (arrival.start !== undefined) f.start = arrival.start;
+    if (arrival.source !== undefined) f.source = arrival.source;
+    return f;
+  }
 
   /* a visit that began here hands its word to the walk, in the door's fragment */
   if (arrival.start === 1) {
@@ -50,7 +58,7 @@
     });
   }
 
-  function arrive() { send('page_arrival', arrival); watchRead(); }
+  function arrive() { send('page_arrival', begun()); watchRead(); }
 
   function watchRead() {
     var main = doc.getElementById('main') || doc.querySelector('main');
@@ -64,7 +72,7 @@
       done = true;
       win.removeEventListener('scroll', queue);
       win.removeEventListener('resize', queue);
-      send('page_read', {});
+      send('page_read', begun());
     }
     function queue() { if (!ticking) { ticking = true; win.requestAnimationFrame(check); } }
     win.addEventListener('scroll', queue, { passive: true });
@@ -106,14 +114,14 @@
     var d = e.target;
     if (guessed || !d || !d.matches || !d.matches('details[data-guess]') || !d.open) return;
     guessed = true;
-    send('guess_open', {});
+    send('guess_open', begun());
   }, true);
   function leave(e) {
     if (left || (e.type === 'auxclick' && e.button !== 1)) return;
     var a = e.target && e.target.closest ? e.target.closest('a[data-out]') : null;
     if (!a || a.getAttribute('data-out') !== 'wing') return;
     left = true;
-    send('out_wing', {});
+    send('out_wing', begun());
   }
   doc.addEventListener('click', leave, true);
   doc.addEventListener('auxclick', leave, true);

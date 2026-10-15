@@ -60,14 +60,14 @@ const GOOD = {
   museum_look: { step: 'museum_look', wing: 'vinci', look: 'machine', language: 'pt-BR', hold: 'wide' },
   museum_use: { step: 'museum_use', wing: 'vinci', language: 'bg', hold: 'upright', source: 'ad_grant' },
   page_arrival: { step: 'page_arrival', page: 'leonardo', language: 'it', start: 1, source: 'forum', probe: 1 },
-  page_read: { step: 'page_read', page: 'inventions', language: 'es' },
+  page_read: { step: 'page_read', page: 'inventions', language: 'es', start: 1, source: 'ad_grant' },
   door_press: { step: 'door_press', page: 'home', door: 'item', language: 'en', probe: 1 },
   ask_shown: { step: 'ask_shown', page: 'leonardo', language: 'fr', probe: 1 },
   ask_yes: { step: 'ask_yes', page: 'inventions', language: 'de', probe: 1 },
   ask_no: { step: 'ask_no', page: 'home', language: 'bg' },
   ask_close: { step: 'ask_close', page: 'paintings', language: 'pt-BR' },
-  guess_open: { step: 'guess_open', page: 'megalodon', language: 'de', probe: 1 },
-  out_wing: { step: 'out_wing', page: 'animals', language: 'en' },
+  guess_open: { step: 'guess_open', page: 'megalodon', language: 'de', start: 1, source: 'search', probe: 1 },
+  out_wing: { step: 'out_wing', page: 'animals', language: 'en', start: 0 },
 }
 const ROWS = {
   museum_arrival: ['museum_arrival', 'vinci', '', 'de', 'upright', 'search', '', 'desktop', 'DE', 'probe'],
@@ -77,14 +77,14 @@ const ROWS = {
   museum_look: ['museum_look', 'vinci', 'machine', 'pt-BR', 'wide', '', '', 'desktop', 'DE', ''],
   museum_use: ['museum_use', 'vinci', '', 'bg', 'upright', 'ad_grant', '', 'desktop', 'DE', ''],
   page_arrival: ['page_arrival', 'leonardo', '', 'it', '', 'forum', 'start', 'desktop', 'DE', 'probe'],
-  page_read: ['page_read', 'inventions', '', 'es', '', '', '', 'desktop', 'DE', ''],
+  page_read: ['page_read', 'inventions', '', 'es', '', 'ad_grant', 'start', 'desktop', 'DE', ''],
   door_press: ['door_press', 'home', 'item', 'en', '', '', '', 'desktop', 'DE', 'probe'],
   ask_shown: ['ask_shown', 'leonardo', '', 'fr', '', '', '', '', '', 'probe'],
   ask_yes: ['ask_yes', 'inventions', '', 'de', '', '', '', '', '', 'probe'],
   ask_no: ['ask_no', 'home', '', 'bg', '', '', '', '', '', ''],
   ask_close: ['ask_close', 'paintings', '', 'pt-BR', '', '', '', '', '', ''],
-  guess_open: ['guess_open', 'megalodon', '', 'de', '', '', '', '', '', 'probe'],
-  out_wing: ['out_wing', 'animals', '', 'en', '', '', '', '', '', ''],
+  guess_open: ['guess_open', 'megalodon', '', 'de', '', 'search', 'start', '', '', 'probe'],
+  out_wing: ['out_wing', 'animals', '', 'en', '', '', 'inside', '', '', ''],
 }
 
 const OTHER = { stop: 9, walk: 5, look: 'film', door: 'end', page: 'privacy', wing: 'vinci', hold: 'wide', source: 'search', start: 1 }
@@ -210,8 +210,8 @@ test('without its dataset the route still answers 204 and writes nowhere', async
 
 test('rowOf reads no field a step does not name', () => {
   const edge = { country: 'DE', device: 'desktop' }
-  const row = rowOf({ ...GOOD.page_read, source: 'search', start: 1, hold: 'wide', wing: 'vinci' }, edge)
-  assert.deepEqual(row, ROWS.page_read)
+  assert.deepEqual(rowOf({ ...GOOD.door_press, source: 'search', start: 1, hold: 'wide', wing: 'vinci' }, edge), ROWS.door_press)
+  assert.deepEqual(rowOf({ ...GOOD.page_read, hold: 'wide', wing: 'vinci', door: 'top', look: 'film', stop: 3 }, edge), ROWS.page_read)
 })
 
 // the source word at the edge
@@ -390,19 +390,21 @@ test('the pages\' script: the X counts as ask_close, never as ask_no, and No sta
   for (const b of [...x.sent, ...no.sent]) assert.deepEqual(Object.keys(b).sort(), ['language', 'page', 'step'])
 })
 
-test('a page of a wing in the making: the guess opened and the link out, a word and the page, nothing else', async () => {
+test('a page of a wing in the making: the guess opened and the link out, the page, its language and the start rule, nothing else', async () => {
   const edge = { country: 'DE', device: 'phone' }
   const ride = { gclid: 'Cj0KCQjwTEST_click-id_0123456789', wing: 'vinci', stop: 3, look: 'film', hold: 'wide', door: 'top',
     source: 'ad_grant', start: 1, answer: '16 cm', guess: 18, href: '/leonardo-da-vinci/', time: 1, id: 'abc' }
   for (const step of ['guess_open', 'out_wing']) {
-    assert.deepEqual(STEPS[step], { needs: ['page', 'language'], bare: true })
+    assert.deepEqual(STEPS[step], { needs: ['page', 'language'], bare: true, start: true })
     for (const [page, language] of [['megalodon', 'de'], ['animals', 'en']]) {
       const row = rowOf({ step, page, language, ...ride }, edge)
-      assert.deepEqual(row, [step, page, '', language, '', '', '', '', '', ''])
+      assert.deepEqual(row, [step, page, '', language, '', 'ad_grant', 'start', '', '', ''])
+      // filled: the step, the page, the language, the word and the start mark; never a country or a device class
+      assert.deepEqual(row.map((v, i) => (v ? i : -1)).filter((i) => i >= 0), [0, 1, 3, 5, 6])
     }
     assert.equal(rowOf({ step, page: 'megalodon' }, edge), null)
     assert.equal(rowOf({ step, page: 'shark', language: 'en' }, edge), null)
-    assert.deepEqual(await one({ step, page: 'megalodon', language: 'en', ...ride }), [step, 'megalodon', '', 'en', '', '', '', '', '', ''])
+    assert.deepEqual(await one({ step, page: 'megalodon', language: 'en', ...ride }), [step, 'megalodon', '', 'en', '', 'ad_grant', 'start', '', '', ''])
   }
   await none({ step: 'guess_right', page: 'megalodon', language: 'en' })
   await none({ step: 'guess_close', page: 'megalodon', language: 'en' })
@@ -430,7 +432,7 @@ async function makingRun() {
   return { sent, listeners, fire, details, link }
 }
 
-test('the pages\' script: the guess counts when it opens, once, and the link out once, as words alone', async () => {
+test('the pages\' script: the guess counts when it opens, once, and the link out once, with the start rule alone', async () => {
   const r = await makingRun()
   // a toggle does not bubble: the script hears it on its way down
   assert.ok(r.listeners.toggle.every(([, capture]) => capture === true))
@@ -444,10 +446,137 @@ test('the pages\' script: the guess counts when it opens, once, and the link out
   r.fire('click', { target: r.link('wing') })
   r.fire('auxclick', { target: r.link('wing'), button: 1 })
   r.fire('click', { target: r.link('wing') })
-  assert.deepEqual(r.sent, [{ step: 'guess_open', page: 'megalodon', language: 'de' }, { step: 'out_wing', page: 'megalodon', language: 'de' }])
+  assert.deepEqual(r.sent, [{ step: 'guess_open', page: 'megalodon', language: 'de', start: 0 }, { step: 'out_wing', page: 'megalodon', language: 'de', start: 0 }])
   // a middle click counts as following the link; a right click does not
   const m = await makingRun()
   m.fire('auxclick', { target: m.link('wing'), button: 2 })
   m.fire('auxclick', { target: m.link('wing'), button: 1 })
-  assert.deepEqual(m.sent, [{ step: 'out_wing', page: 'megalodon', language: 'de' }])
+  assert.deepEqual(m.sent, [{ step: 'out_wing', page: 'megalodon', language: 'de', start: 0 }])
+})
+
+// the arrival's start rule on the read, the guess and the link out: the same branch the arrival takes
+const STARTED = ['page_arrival', 'page_read', 'guess_open', 'out_wing']
+
+test('the start rule stands on the arrival, the read, the guess and the link out, and on no other step', () => {
+  assert.deepEqual(Object.keys(STEPS).filter((s) => STEPS[s].start === true).sort(), [...STARTED].sort())
+  // the read keeps its country and device class, the guess and the link out stay without them
+  assert.equal(STEPS.page_read.bare, undefined)
+  for (const step of ['guess_open', 'out_wing']) assert.equal(STEPS[step].bare, true)
+})
+
+test('read, guess and link out: began here with any word on the list, came from the site, or unknown', async () => {
+  const base = { page_read: 'leonardo', guess_open: 'megalodon', out_wing: 'brachiosaurus' }
+  for (const [step, page] of Object.entries(base)) {
+    const at = { step, page, language: 'de' }
+    const bare = STEPS[step].bare === true
+    const tail = bare ? ['', ''] : ['desktop', 'DE']
+    for (const source of SOURCES) assert.deepEqual(await one({ ...at, start: 1, source }), [step, page, '', 'de', '', source, 'start', ...tail, ''])
+    assert.deepEqual(await one({ ...at, start: 0 }), [step, page, '', 'de', '', '', 'inside', ...tail, ''])
+    assert.deepEqual(await one(at), [step, page, '', 'de', '', '', '', ...tail, ''])
+    assert.deepEqual(await one({ ...at, start: 1, source: 'search', probe: 1 }), [step, page, '', 'de', '', 'search', 'start', ...tail, 'probe'])
+  }
+})
+
+test('read, guess and link out: a word without start 1, start 1 without a word, a word off the list or an odd start writes nothing', async () => {
+  for (const step of ['page_read', 'guess_open', 'out_wing']) {
+    const at = { step, page: 'megalodon', language: 'en' }
+    // a source word without start 1
+    await none({ ...at, source: 'search' })
+    await none({ ...at, start: 0, source: 'search' })
+    await none({ ...at, start: 0, source: '' })
+    // start 1 without a word on the list
+    await none({ ...at, start: 1 })
+    for (const source of ['google', 'Search', 'search ', '', 'inside', 'start', 'probe', null, 1, ['search'], { search: 1 }, 'toString', '__proto__']) {
+      await none({ ...at, start: 1, source })
+    }
+    // a start that is neither 1 nor 0
+    for (const start of [2, -1, '1', '0', true, false, null, 1.5, NaN, ['1']]) await none({ ...at, start, source: 'search' })
+    for (const start of ['1', true, null]) await none({ ...at, start })
+  }
+})
+
+test('a source word on a row of a step that takes none never reaches the row', async () => {
+  const ride = { start: 1, source: 'ad_grant' }
+  for (const step of Object.keys(GOOD)) {
+    const spec = STEPS[step]
+    if (spec.start) continue
+    const row = await one({ ...GOOD[step], ...ride })
+    // no step but the page's four carries a start mark
+    assert.equal(row[6], '', step)
+    // the walk's arrival and use carry their own word; every other step carries none
+    assert.equal(row[5], spec.source ? 'ad_grant' : '', step)
+  }
+  // the question's rows stay bare: the word, the start mark, the country and the device class never reach them
+  for (const step of ['ask_shown', 'ask_yes', 'ask_no', 'ask_close']) {
+    const row = await one({ step, page: 'home', language: 'de', ...ride })
+    assert.deepEqual(row, [step, 'home', '', 'de', '', '', '', '', '', ''])
+  }
+  // and on the other steps a word off the list or a stray start is not read either
+  assert.deepEqual(await one({ ...GOOD.door_press, source: 'google', start: 2 }), ROWS.door_press)
+  assert.deepEqual(await one({ ...GOOD.ask_yes, source: 'google', start: 2 }), ROWS.ask_yes)
+})
+
+test('the guess and the link out never carry a country or a device class, the read always does', async () => {
+  const phone = { headers: { 'User-Agent': PHONE, 'CF-IPCountry': 'BG' } }
+  for (const step of ['guess_open', 'out_wing']) {
+    const row = await one({ step, page: 't_rex', language: 'en', start: 1, source: 'ad_grant' }, phone)
+    assert.deepEqual(row.slice(7, 9), ['', ''])
+    // no more filled fields than the arrival of the same visit, and two fewer
+    const arrival = await one({ step: 'page_arrival', page: 't_rex', language: 'en', start: 1, source: 'ad_grant' }, phone)
+    assert.equal(row.filter(Boolean).length, arrival.filter(Boolean).length - 2)
+  }
+  assert.deepEqual((await one({ ...GOOD.page_read }, phone)).slice(5, 9), ['ad_grant', 'start', 'phone', 'BG'])
+})
+
+// the pages' script on an animal page whose visit began with a given edge word: four beacons, the same two fields
+async function startRun(source) {
+  const vm = await import('node:vm')
+  const sent = []
+  const listeners = {}
+  const attrs = { lang: 'en' }
+  if (source !== undefined) attrs['data-source'] = source
+  const doors = [{ href: '/w/vinci', getAttribute: function (n) { return n === 'href' ? this.href : null }, setAttribute: function (n, v) { if (n === 'href') this.href = v } }]
+  const main = { getBoundingClientRect: () => ({ top: 0, height: 400 }) }
+  const document = {
+    documentElement: { getAttribute: (n) => attrs[n] ?? null },
+    currentScript: { getAttribute: (n) => (n === 'data-count' ? 'brachiosaurus' : null) },
+    querySelectorAll: (sel) => (sel === 'a[data-door]' ? doors : []), querySelector: () => null,
+    getElementById: (id) => (id === 'main' ? main : null), prerendering: false,
+    addEventListener: (type, fn) => { (listeners[type] ||= []).push(fn) },
+  }
+  const window = { location: { hostname: 'museumofages.org', search: '' }, localStorage: { getItem: () => null, setItem() {} },
+    addEventListener() {}, removeEventListener() {}, requestAnimationFrame: (fn) => fn(), innerHeight: 800 }
+  const navigator = { sendBeacon: (to, body) => { sent.push(JSON.parse(body)); return true } }
+  vm.runInNewContext(pageScript, { document, window, navigator })
+  const fire = (type, event) => (listeners[type] || []).forEach((fn) => fn({ type, button: 0, ...event }))
+  fire('toggle', { target: { open: true, matches: (sel) => sel === 'details[data-guess]' } })
+  fire('click', { target: { closest: (sel) => (sel === 'a[data-out]' ? { getAttribute: () => 'wing' } : null) } })
+  return { sent, doors }
+}
+
+test('the pages\' script: the read, the guess and the link out carry the arrival\'s start and word, and nothing more', async () => {
+  const steps = ['page_arrival', 'page_read', 'guess_open', 'out_wing']
+  const at = { page: 'brachiosaurus', language: 'en' }
+  for (const word of ['search', 'ad_grant', 'direct']) {
+    const r = await startRun(word)
+    assert.deepEqual(r.sent, steps.map((step) => ({ ...at, step, start: 1, source: word })))
+    // each beacon its own object: the arrival's fields are never the read's step or page
+    for (const b of r.sent) assert.deepEqual(Object.keys(b).sort(), ['language', 'page', 'source', 'start', 'step'])
+    // the door still hands the word to the walk, once
+    assert.equal(r.doors[0].href, '/w/vinci#via=' + word)
+  }
+  // a visit that came from this site: start 0 on all four, no word
+  const inside = await startRun('')
+  assert.deepEqual(inside.sent, steps.map((step) => ({ ...at, step, start: 0 })))
+  assert.equal(inside.doors[0].href, '/w/vinci')
+  // no edge stood (no attribute), or a word off the list: neither field on any beacon
+  for (const odd of [undefined, 'google', 'Search', 'start']) {
+    const r = await startRun(odd)
+    assert.deepEqual(r.sent, steps.map((step) => ({ ...at, step })))
+  }
+  // every beacon the script sends makes a row through the real route, with the same word
+  for (const b of (await startRun('forum')).sent) {
+    const row = await one(b)
+    assert.deepEqual(row.slice(5, 7), ['forum', 'start'])
+  }
 })

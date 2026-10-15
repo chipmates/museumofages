@@ -4,8 +4,9 @@
 //
 // The dataset's row (blobs in order, the step as the index, no number of our own):
 //   1 step      2 wing or page kind      3 stop number, walk number, kind of work or door's place, else ''
-//   4 language  5 hold (walk rows), else ''  6 source word, else ''  7 'start' or 'inside' (page_arrival), else ''
-//   8 device class  9 country (both '' on the question's rows)  10 'probe' or ''
+//   4 language  5 hold (walk rows), else ''  6 source word, else ''  7 'start' or 'inside' (a page's arrival, read,
+//   guess and wing link), else ''
+//   8 device class  9 country (both '' on the bare rows: the question's, the guess and the wing link)  10 'probe' or ''
 
 import { SOURCES } from './source.js'
 import { LANGUAGES, PAGE_KINDS, WING_STOPS } from './lists.js'
@@ -26,7 +27,8 @@ export const STEPS = Object.freeze({
   museum_look: { needs: ['wing', 'look', 'language', 'hold'] },
   museum_use: { needs: ['wing', 'language', 'hold'], source: true },
   page_arrival: { needs: ['page', 'language'], start: true },
-  page_read: { needs: ['page', 'language'] },
+  // the middle of the text in view, with the arrival's start rule from the same page load
+  page_read: { needs: ['page', 'language'], start: true },
   door_press: { needs: ['page', 'door', 'language'] },
   // the question for visitors from our grant ads (site/_src/js/ask.js), each at most once per page load: seen (half
   // the card in view for a second), and the answer, yes, no or the X. The page and its language only, without the
@@ -36,9 +38,10 @@ export const STEPS = Object.freeze({
   ask_no: { needs: ['page', 'language'], bare: true },
   ask_close: { needs: ['page', 'language'], bare: true },
   // on a page of a wing in the making, each at most once per page load: the guess's answer opened, and the plain link
-  // to an open wing's page followed. The page and its language only, as the question's rows
-  guess_open: { needs: ['page', 'language'], bare: true },
-  out_wing: { needs: ['page', 'language'], bare: true },
+  // to an open wing's page followed. The page, its language and the arrival's start rule, without the country and
+  // device class the arrival carries
+  guess_open: { needs: ['page', 'language'], bare: true, start: true },
+  out_wing: { needs: ['page', 'language'], bare: true, start: true },
 })
 
 const has = (list, value) => typeof value === 'string' && list.includes(value)
