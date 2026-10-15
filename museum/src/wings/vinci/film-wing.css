@@ -477,6 +477,16 @@ html:has(#wing[data-film='upright']) #instruments:not([hidden])::after {
 /* the life: the close at the head's right, on its first line; the foot it stood in alone folds to nothing */
 #wing[data-film='wide'] .wing-life .wing-life-close { position: absolute; z-index: 3; top: 8px; right: 20px; }
 #wing[data-film='wide'] .wing-life .wing-life-head { padding-right: 160px; }
+/* the box never scrolls as a whole, so its head and close stay at its top: a landing on a period scrolled a short
+   box's head out of view. Where the box is short its body scrolls under the head, the columns keeping a height to read in,
+   and comes to rest on the ribbon or on the columns, never on a line cut at the head's foot */
+#wing[data-film='wide'] .wing-life[open] { overflow: clip; }
+#wing[data-film='wide'] .wing-life .wing-life-body {
+  overflow-y: auto; overscroll-behavior: contain; scrollbar-width: thin; scroll-snap-type: y proximity;
+}
+#wing[data-film='wide'] .wing-life .wing-life-body > :first-child,
+#wing[data-film='wide'] .wing-life .wing-life-reading { scroll-snap-align: start; }
+#wing[data-film='wide'] .wing-life .wing-life-reading { min-height: min(160px, 100%); }
 #wing[data-film='wide'] .wing-life .wing-life-foot { position: static; height: 0; min-height: 0; padding: 0; border: 0; }
 /* the two columns keep the air the foot gave them, and a line passing out at their foot fades, never cut in half */
 #wing[data-film='wide'] .wing-life .wing-life-reading { padding-bottom: 14px; }
