@@ -59,6 +59,11 @@ export function createLivePicture(hook: FilmHook, walk: VinciWalk): PictureSourc
       return here
     },
     hurry() {},
+    // the live rail places the eye at once: there is no walk to hold or cut
+    pause: () => false,
+    resume() {},
+    paused: () => false,
+    skip: () => false,
     ahead() {},
     lean() {},
     reach: node => (resolveNode(walk, node) ? 'walk' : 'none'),

@@ -69,6 +69,15 @@ export interface PictureSource {
   go(node: PictureNode, how?: PictureGo): Promise<PictureNode>
   /** a second press of the way on while a clip plays: the walk goes faster */
   hurry(): void
+  /** A WALK UNDER WAY STOPS WHERE IT STANDS, its frame held, until it goes
+      on or is cut short; false where nothing walks */
+  pause(): boolean
+  /** a held walk goes on from the frame it stopped at */
+  resume(): void
+  paused(): boolean
+  /** THE SKIP: the walk under way ends at once at `to`, or where it was
+      going, through the quiet dark; false where nothing walks */
+  skip(to?: PictureNode): boolean
   /** the ways the chrome offers from here, the likeliest first: a source may
       fetch them while the visitor reads */
   ahead(nodes: readonly PictureNode[]): void

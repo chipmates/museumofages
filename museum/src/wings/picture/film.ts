@@ -229,6 +229,8 @@ interface Playing {
   watch: ((video: HTMLVideoElement) => void) | null
   /** ends the leg now: it lands at the arrival's still by the dissolve */
   land: (() => void) | null
+  /** stops watching the end while the walk holds; `watch` starts it again */
+  unwatch: (() => void) | null
 }
 
 export function createFilmSource(options: FilmOptions): PictureSource & { readout(): Record<string, unknown>[]; evening: FilmEvening } {
@@ -287,6 +289,24 @@ export function createFilmSource(options: FilmOptions): PictureSource & { readou
   let disposed = false
   let playing: Playing | null = null
   let dipSkip: (() => void) | null = null
+  /* THE VISITOR'S HOLD: the clip on screen stops at its frame, and every other
+     step of the walk waits at its next boundary until the walk goes on */
+  let holding = false
+  let holdWaiters: (() => void)[] = []
+  const holdGate = (): Promise<void> => (holding && cutTo === null ? new Promise(resolve => holdWaiters.push(resolve)) : Promise.resolve())
+  function letGo(): void {
+    holding = false
+    const waiting = holdWaiters
+    holdWaiters = []
+    for (const resolve of waiting) resolve()
+  }
+  /** the node the walk under way was asked for; null at rest and in the evening */
+  let goingTo: PictureNode | null = null
+  /* THE SKIP: where a walk cut short lands, and what wakes the steps it waits on */
+  let cutTo: PictureNode | null = null
+  let wakeCut: () => void = () => undefined
+  let cutWake: Promise<null> = new Promise<null>(() => undefined)
+  function armCut(): void { cutWake = new Promise<null>(resolve => { wakeCut = () => resolve(null) }) }
   /** every hand-over as it happened, for the rigs: how long a press waited for its first
       frame, which frame was on screen when the clip was shown, how the end was handed back */
   const readouts: Record<string, unknown>[] = []
@@ -543,10 +563,11 @@ export function createFilmSource(options: FilmOptions): PictureSource & { readou
         const through = await Promise.race([
           new Promise<boolean>(resolve => video.addEventListener('canplaythrough', () => resolve(true), { once: true })),
           sleep(WAIT_MOST_MS).then(() => false),
+          cutWake.then(() => false),
         ])
         return through ? file.url : null
       }
-      const blob = await Promise.race([fetchWhole(file.url, file.bytes), sleep(WAIT_MOST_MS).then(() => null)])
+      const blob = await Promise.race([fetchWhole(file.url, file.bytes), sleep(WAIT_MOST_MS).then(() => null), cutWake])
       if (!blob) { held.get(file.url)?.abort?.abort(); return null }
       return URL.createObjectURL(blob)
     } finally {
@@ -554,6 +575,20 @@ export function createFilmSource(options: FilmOptions): PictureSource & { readou
       wait.classList.remove('shown')
       waitFill.style.transform = 'scaleX(0)'
     }
+  }
+  /** the bytes a walk asked for and will not play: their element and address let go */
+  function drop(src: string | null): void {
+    if (!src) return
+    for (const v of videos) if (v.dataset['src'] === src) tearDown(v)
+    if (src.startsWith('blob:')) URL.revokeObjectURL(src)
+  }
+  /** a clip a skip left on screen, taken away under the dark */
+  function dropPlaying(): void {
+    const p = playing
+    if (!p) return
+    playing = null
+    tearDown(p.video)
+    if (p.src.startsWith('blob:')) URL.revokeObjectURL(p.src)
   }
 
   /** ONE CLIP FROM PRESS TO REST. False when it could not play: the caller
@@ -565,6 +600,9 @@ export function createFilmSource(options: FilmOptions): PictureSource & { readou
     let arrival = stillFile(edge.to, f)
     let arrived = arrival ? decode(arrival) : Promise.resolve()
     let src = await bytesInTime(edge, f, target)
+    // A HOLD ASKED WHILE THE BYTES CAME keeps the departure's still until the walk goes on
+    await holdGate()
+    if (cutTo !== null) { drop(src); return false }
     // A PHONE TURNED WHILE THE BYTES CAME waits once more, for its own framing's
     if (src && !disposed && framingOf() !== f) {
       for (const v of videos) if (v.dataset['src'] === src) tearDown(v)
@@ -574,6 +612,7 @@ export function createFilmSource(options: FilmOptions): PictureSource & { readou
       arrival = stillFile(edge.to, f)
       arrived = arrival ? decode(arrival) : Promise.resolve()
       src = await bytesInTime(edge, f, target)
+      if (cutTo !== null) { drop(src); return false }
     }
     if (!src || disposed) return false
     /* THE PRESS IS ANSWERED AT ONCE: the walk begins for the chrome now, and the
@@ -594,11 +633,15 @@ export function createFilmSource(options: FilmOptions): PictureSource & { readou
       if (src.startsWith('blob:')) URL.revokeObjectURL(src)
       return false
     }
-    const p: Playing = { video, edge, track: null, frame: 0, framing: f, src, shown: false, laid: false, turned: false, crossing: false, turning: 0, watch: null, land: null }
+    const p: Playing = { video, edge, track: null, frame: 0, framing: f, src, shown: false, laid: false, turned: false, crossing: false, turning: 0, watch: null, land: null, unwatch: null }
     playing = p
+    // a hold asked while the clip was being started holds it at its first frame
+    if (holding) video.pause()
     void track.then(list => { if (playing === p && p.framing === f) p.track = list })
     watchFrames(video)
-    await firstFrame(video)
+    // a clip held before its first frame is shown never presents one: a skip lands from the still under it
+    await Promise.race([firstFrame(video), cutWake])
+    if (cutTo !== null) return true
     video.classList.add('shown')
     p.shown = true
     set({ kind: 'walk', from: edge.from, to: edge.to, target, clip: edge.id, share: 0 })
@@ -618,9 +661,12 @@ export function createFilmSource(options: FilmOptions): PictureSource & { readou
         off = () => { clearTimeout(bound); v.removeEventListener('ended', done) }
       }
       p.land = () => { off(); resolve() }
+      p.unwatch = () => off()
       p.watch(video)
     })
-    p.watch = p.land = null
+    p.watch = p.land = p.unwatch = null
+    // A WALK CUT SHORT keeps its frame on screen: the quiet dark comes down over it
+    if (cutTo !== null) return true
     const shown = p.video
     /* THE CUT AT THE STOP IS INVISIBLE: the arrival's still is decoded and
        swapped in under the clip's last frame, and the clip only leaves on the
@@ -830,6 +876,12 @@ export function createFilmSource(options: FilmOptions): PictureSource & { readou
     const p = playing
     if (p) {
       if (!p.shown || !p.watch || p.crossing) return
+      // A HELD WALK only lays its clip into the turned glass; the leg then lands in the new framing
+      if (holding) {
+        if (!p.laid && want !== p.framing) { p.turning++; p.laid = true; p.video.dataset['laid'] = LAID }
+        else if (p.laid && want === p.framing) unlay(p)
+        return
+      }
       if (p.laid && want === p.framing) unlay(p)
       else if (!p.laid && want !== p.framing) void turnWalk(p, want)
       return
@@ -845,6 +897,7 @@ export function createFilmSource(options: FilmOptions): PictureSource & { readou
     let f = framingOf()
     let url = stillFile(node, f)
     await Promise.all([sleep(reduced() ? 0 : DIP_MS), url ? decode(url) : Promise.resolve()])
+    dropPlaying()
     // A PHONE TURNED IN THE DARK comes up in the framing it holds now
     if (framingOf() !== f) {
       f = framingOf()
@@ -856,6 +909,9 @@ export function createFilmSource(options: FilmOptions): PictureSource & { readou
     here = node
     await Promise.race([sleep(quiet ? QUIET_HOLD_MS : options.hold(title)), new Promise<void>(resolve => { dipSkip = resolve })])
     dipSkip = null
+    // a hold keeps the dark and its title; a skip to elsewhere lands from this same dark
+    await holdGate()
+    if (cutTo !== null && cutTo !== node) return
     // and one turned while the title stood, under the dark still
     if (framingOf() !== shownFraming) await showStill(node)
     dark.classList.remove('shown')
@@ -874,12 +930,15 @@ export function createFilmSource(options: FilmOptions): PictureSource & { readou
       return
     }
     for (const step of plan.steps) {
-      if (disposed) return
+      if (disposed || cutTo !== null) return
+      // every step of a held walk waits at its boundary
+      await holdGate()
+      if (cutTo !== null) return
       // THROUGH A DOOR: the dark between the walk up to it and the walk on
       if ('dip' in step) { await dip(step.dip, step.title ?? null, step.quiet === true); continue }
       if ('wait' in step) {
         // A MOMENT AT THE MIDDLE NODE, as a walker stops: still a walk, so no mark comes and goes
-        await sleep((step.wait * 1000) / rate())
+        await Promise.race([sleep((step.wait * 1000) / rate()), cutWake])
         continue
       }
       if (!('clip' in step)) continue
@@ -887,16 +946,36 @@ export function createFilmSource(options: FilmOptions): PictureSource & { readou
       if (!edge) continue
       // the next clip of a chain is fetched while this one plays
       const ok = await playClip(edge, target)
-      if (!ok) await dissolveTo(edge.to)
+      if (cutTo !== null) return
+      if (!ok) { await holdGate(); if (cutTo !== null) return; await dissolveTo(edge.to) }
     }
   }
 
+  /** A WALK CUT SHORT lands where the skip asked: the quiet dark comes down over
+      the frame it stopped at, and comes up at the place */
+  async function landCut(): Promise<void> {
+    const to = cutTo
+    cutTo = null
+    if (to !== null && to !== here) await dip(to, null, true)
+  }
   async function goNow(node: PictureNode, fade = false): Promise<PictureNode> {
+    goingTo = node
+    armCut()
+    try {
+      return await goPlan(node, fade)
+    } finally {
+      goingTo = null
+      cutTo = null
+      letGo()
+    }
+  }
+  async function goPlan(node: PictureNode, fade: boolean): Promise<PictureNode> {
     const f = framingOf()
     // A FADE WALKS NOTHING: down to the dark, the place stood, up again
     if (fade && node !== here) {
       if (!release.nodes[node]?.stills[f]) return here
       await dip(node, null, true)
+      await landCut()
       set({ kind: 'rest', node: here }, 'rest')
       return here
     }
@@ -928,6 +1007,7 @@ export function createFilmSource(options: FilmOptions): PictureSource & { readou
       }
       await walkPlan(plan, node)
     }
+    await landCut()
     set({ kind: 'rest', node: here }, 'rest')
     return here
   }
@@ -943,6 +1023,9 @@ export function createFilmSource(options: FilmOptions): PictureSource & { readou
           for (const r of queued?.resolve ?? []) r(here)
           queued = { node, fade, resolve: [resolve] }
         }
+        // A PRESS WHILE THE WALK HOLDS leaves the hold: the walk is cut short
+        // where the press asked, and the queued press finds the eye there
+        if (holding) { skip(node); return }
         // only a press while the picture moves carries its pace: one that
         // lands while the bytes are still on their way hurries nothing
         if (state.kind !== 'wait') carried = 1
@@ -985,6 +1068,39 @@ export function createFilmSource(options: FilmOptions): PictureSource & { readou
   }
 
   firstPicture = showStill(here).then(() => { fit(); set({ kind: 'rest', node: here }, 'rest') })
+
+  /** THE HOLD, asked while a walk is under way: the clip on screen stops at its frame */
+  function pause(): boolean {
+    if (disposed || holding || goingTo === null || cutTo !== null || state.kind === 'rest') return false
+    holding = true
+    const p = playing
+    if (p) { p.unwatch?.(); p.video.pause() }
+    emit('state')
+    return true
+  }
+  function resume(): void {
+    if (!holding) return
+    letGo()
+    const p = playing
+    if (p) {
+      p.video.playbackRate = rate()
+      void p.video.play().catch(() => p.land?.())
+      p.watch?.(p.video)
+    }
+    emit('state')
+  }
+  /** THE SKIP: the walk under way ends at `to`, or where it was going */
+  function skip(to?: PictureNode): boolean {
+    if (disposed || goingTo === null) return false
+    const was = holding
+    cutTo = to ?? goingTo
+    letGo()
+    wakeCut()
+    dipSkip?.()
+    playing?.land?.()
+    if (was) emit('state')
+    return true
+  }
 
   /* ---- the grave's look up ---- */
   function eveningFile(): { url: string; bytes: number } | null {
@@ -1172,6 +1288,10 @@ export function createFilmSource(options: FilmOptions): PictureSource & { readou
     readout: () => readouts.slice(),
     evening,
     go,
+    pause,
+    resume,
+    paused: () => holding,
+    skip,
     hurry() {
       if (dipSkip) { dipSkip(); return }
       if (!playing) return
@@ -1263,6 +1383,9 @@ export function createFilmSource(options: FilmOptions): PictureSource & { readou
     },
     dispose() {
       disposed = true
+      // a held or cut walk unwinds and finds the source gone
+      letGo()
+      wakeCut()
       disarm()
       for (const video of [...videos, nightfall]) tearDown(video)
       if (eveningSrc) URL.revokeObjectURL(eveningSrc)
