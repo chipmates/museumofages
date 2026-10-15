@@ -1406,6 +1406,29 @@ class Case(unittest.TestCase):
 
     # ---- a foreign name is never hyphenated ----
 
+    def test_a_page_may_give_a_long_word_its_one_break_point(self):
+        """German hyphenates running text on a phone and may break a long name where it reads wrong (Giraf-fatitan). A
+        page may give such words their one break point (page.breaks, "Giraffa|titan"): in running text the word is two
+        halves never hyphenated, joined by a soft hyphen; in display text (a heading, the answer, a table's cell) it is
+        only kept whole. A page without breaks sets no such word."""
+        out, written = self.build()
+        seen = 0
+        for path in written:
+            data, lang = self.page_of(path)
+            own = self.own_part(path.read_text(encoding="utf-8"))
+            breaks = data["page"].get("breaks", [])
+            if not breaks:
+                self.assertNotIn('</span>&shy;<span class="nh">', own)
+                continue
+            display = re.findall(r'<h[1-6][\s>].*?</h[1-6]>|<p class="sp-answer">.*?</p>|<td[\s>].*?</td>', own, flags=re.S)
+            for word in breaks:
+                head, tail = word.split("|")
+                self.assertIn(f'<span class="nh">{head}</span>&shy;<span class="nh">{tail}', own)
+                seen += 1
+                for part in display:
+                    self.assertNotIn("&shy;", part)
+        self.assertGreater(seen, 0, "no page gives a word its break point")
+
     def test_a_foreign_name_is_never_hyphenated(self):
         names = json.loads((self.dir / "names.json").read_text(encoding="utf-8"))["names"]
         out, written = self.build()

@@ -11,7 +11,12 @@
    "width": 1200,
    "height": 630,
    "layout": "beside"
-  }
+  },
+  "breaks": [
+   "Brachio|saurus",
+   "Giraffa|titan",
+   "Argentino|saurus"
+  ]
  },
  "pics": {
   "side": {

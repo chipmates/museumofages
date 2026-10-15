@@ -223,17 +223,21 @@ class Names:
     never hyphenated and carries its language where it differs from the page's, so a screen reader
     says it right. A person's name of that list never breaks either, nor a short place name marked whole."""
 
-    def __init__(self, entries, wing_name, lang, join=False):
+    def __init__(self, entries, wing_name, lang, join=False, breaks=()):
         self.lang, self.wing_name, self.join = lang, wing_name, join
         # a name is found whichever apostrophe a language's typography sets in it (l'Institut, l’Institut)
         self.table = {straight(e["text"]): e for e in entries}
+        # a page's long word with its one break point ("Giraffa|titan"), for a language that hyphenates on its own
+        for word in breaks:
+            self.table.setdefault(straight(word.replace("|", "")), {"text": word.replace("|", ""), "split": word.split("|")})
         self.table[straight(wing_name)] = {"text": wing_name, "wing": True}
         # the longest name first, so a full name wins over its last word
         ordered = sorted(self.table, key=len, reverse=True)
         self.find = re.compile(r"(?<!\w)(%s)('s|’s|s)?(?!\w)" % "|".join(re.escape(n).replace("'", "['’]") for n in ordered))
 
-    def mark(self, text, wrap_wing=False):
-        """The sentence as HTML. wrap_wing lets the wing's name wrap where it is too long for a line."""
+    def mark(self, text, wrap_wing=False, split=False):
+        """The sentence as HTML. wrap_wing lets the wing's name wrap where it is too long for a line. split sets a page's
+        long words (breaks) with their one break point, for running text that hyphenates; elsewhere they stay whole."""
         out, last = [], 0
         for m in self.find.finditer(text):
             entry, ending = self.table[straight(m.group(1))], m.group(2) or ""
@@ -242,6 +246,13 @@ class Names:
             if entry.get("wing"):
                 kind = "nh" if wrap_wing else "nw"
                 out.append(f'<span class="{kind}">{esc(m.group(1) + ending)}</span>')
+                continue
+            if entry.get("split"):
+                # two halves never hyphenated, joined by a soft hyphen: the word breaks there or nowhere; display text
+                # (a heading, the answer, a label) never hyphenates, so there the word is only kept whole
+                head, tail = entry["split"]
+                out.append(f'<span class="nh">{esc(head)}</span>&shy;<span class="nh">{esc(tail + ending)}</span>' if split
+                           else f'<span class="nh">{esc(m.group(1) + ending)}</span>')
                 continue
             kind = "nw nh" if entry.get("person") or entry.get("whole") else "nh"
             name = m.group(1)
@@ -1186,8 +1197,11 @@ def render(page, lang, data, shared, out_root):
     door = None if making(wing) else wing["door"][lang]
     chrome = site_chrome(shared["chrome_pages"], lang, root, twins, door)
     hub = data["page"].get("hub")
-    names = Names(shared["names"] + shared["own_names"][lang], wing["name"][lang], lang, join=data["page"].get("join_names", False))
+    names = Names(shared["names"] + shared["own_names"][lang], wing["name"][lang], lang, join=data["page"].get("join_names", False),
+                  breaks=data["page"].get("breaks", ()))
     rich = names.mark
+    # running text that hyphenates (a paragraph, a list's point, a note's text, an answer to a question)
+    prose = lambda text: names.mark(text, split=True)
     # the list of pages is new on every page that carries one, so its names are held by no-break spaces
     joined = Names(shared["names"] + shared["own_names"][lang], wing["name"][lang], lang, join=True).mark
 
@@ -1241,13 +1255,14 @@ def render(page, lang, data, shared, out_root):
             return f'{href["href.wing"]}#{part["wing"]}'
         return page_href(part["page"])
 
-    def linked(para):
+    def linked(para, words=None):
         """A paragraph: its words, or its parts, where a part is a link to an address (href) or to another page (page).
-        A link, an opening bracket before it and the stop after it stay on one line."""
+        A link, an opening bracket before it and the stop after it stay on one line. words marks the text (rich)."""
+        words = words or rich
         if isinstance(para, str):
-            return rich(para)
-        out = "".join(rich(part) if isinstance(part, str) else
-                      f'<a href="{esc(part_href(part))}">{rich(part["text"])}</a>'
+            return words(para)
+        out = "".join(words(part) if isinstance(part, str) else
+                      f'<a href="{esc(part_href(part))}">{words(part["text"])}</a>'
                       for part in para)
         out = re.sub(r'\((<a href="[^"]*">(?:(?!</a>).)*</a>[.,:)]*)', r'<span class="nw">(\1</span>', out)
         return re.sub(r'(?<!\()(<a href="[^"]*">(?:(?!</a>).)*</a>)([.,:)]+)', r'<span class="nw">\1\2</span>', out)
@@ -1303,7 +1318,7 @@ def render(page, lang, data, shared, out_root):
         if isinstance(key, str):
             return fill(parts["scale_key"], {"text": rich(key)})
         return fill(parts["scale_keys"], {"html.items": "".join(
-            fill(parts["scale_key_item"], {"key": esc(f'{fig["pic"]}-{k["swatch"]}'), "text": rich(k["text"])}) if isinstance(k, dict)
+            fill(parts["scale_key_item"], {"key": esc(f'{fig["pic"]}-{k["swatch"]}'), "text": prose(k["text"])}) if isinstance(k, dict)
             else fill(parts["scale_key_line"], {"text": rich(k)}) for k in key)})
 
     def bars_html(fig):
@@ -1329,7 +1344,7 @@ def render(page, lang, data, shared, out_root):
         return "\n".join(fill(parts["row"], {"label": rich(labels[r["k"]]), "v": rich(r["v"])}) for r in rows)
 
     def term_rows(rows):
-        return "\n".join(fill(parts["term_row"], {"term": rich(r["term"]), "text": rich(r["text"])}) for r in rows)
+        return "\n".join(fill(parts["term_row"], {"term": rich(r["term"]), "text": prose(r["text"])}) for r in rows)
 
     def figure(pic):
         """A plate with its label. A plate that says nothing of its own carries the page's usual line, and one that
@@ -1444,7 +1459,7 @@ def render(page, lang, data, shared, out_root):
         elif kind == "faq":
             # an answer may close with a way on to another page (links), as a block's own ways
             values["html.items"] = "\n".join(
-                fill(parts["faq_item"], {"q": rich(i["q"]), "a": rich(i["a"]), "html.links": ways(i.get("links", []))})
+                fill(parts["faq_item"], {"q": rich(i["q"]), "a": prose(i["a"]), "html.links": ways(i.get("links", []))})
                 for i in block["items"])
         elif kind == "sources":
             values["html.holders"] = "\n".join(
@@ -1458,15 +1473,15 @@ def render(page, lang, data, shared, out_root):
             def points(p):
                 """A short list: a point leads with its own words ([lead, text]) or is its words alone."""
                 return fill(parts["text_points"], {"html.items": "\n".join(
-                    fill(parts["text_point"], {"lead": rich(x[0]), "text": linked(x[1])}) if isinstance(x, list)
-                    else fill(parts["text_point_plain"], {"text": linked(x)}) for x in p["points"])})
-            paras = [points(p) if isinstance(p, dict) else fill(parts["text_para"], {"text": linked(p)})
+                    fill(parts["text_point"], {"lead": rich(x[0]), "text": linked(x[1], prose)}) if isinstance(x, list)
+                    else fill(parts["text_point_plain"], {"text": linked(x, prose)}) for x in p["points"])})
+            paras = [points(p) if isinstance(p, dict) else fill(parts["text_para"], {"text": linked(p, prose)})
                      for p in block.get("paras", [])]
             # answers or lists under their own small headings, then the section's closing lines (end)
             paras += [fill(parts["text_sub"], {"h": rich(sub["h"]), "html.paras": "\n".join(
-                points(p) if isinstance(p, dict) else fill(parts["sub_para"], {"text": linked(p)}) for p in sub["paras"])})
+                points(p) if isinstance(p, dict) else fill(parts["sub_para"], {"text": linked(p, prose)}) for p in sub["paras"])})
                 for sub in block.get("subs", [])]
-            paras += [fill(parts["text_para"], {"text": linked(p)}) for p in block.get("end", [])]
+            paras += [fill(parts["text_para"], {"text": linked(p, prose)}) for p in block.get("end", [])]
             sc = block.get("scale")
             if sc and "after" in sc:
                 # the picture after the paragraph it shows, not after the whole section
@@ -1525,8 +1540,8 @@ def render(page, lang, data, shared, out_root):
             values["html.editions_part"] = fill(parts["sources_editions"], values) if block.get("editions") else ""
             # what the page was written from, each a link of its own, or a plain line where no one address carries it
             values["html.read_part"] = ("\n" + fill(parts["sources_read"], {"html.read": "\n".join(
-                fill(parts["read"], {"href": esc(r["href"]), "text": rich(r["text"])}) if r.get("href") else
-                fill(parts["read_plain"], {"text": rich(r["text"])}) for r in block["read"])})) if block.get("read") else ""
+                fill(parts["read"], {"href": esc(r["href"]), "text": prose(r["text"])}) if r.get("href") else
+                fill(parts["read_plain"], {"text": prose(r["text"])}) for r in block["read"])})) if block.get("read") else ""
         return fill(parts[f"block:{kind}"], values)
 
     # the works' lines name each work: its title is what stands before its size
