@@ -111,3 +111,9 @@
   .sc-item__line{grid-area:line}
   .sc-item__pic{grid-area:pic}
 }
+/* From a wide screen the first picture stands beside the answer, so the whole animal and its person are on the first
+   screen. The picture's sizes in the page's data name the same six columns. */
+@media (min-width:1280px){
+  .sc-top:has(>.sc-fig--first) .sp-top__text{grid-column:1/7;grid-row:1}
+  .sc-top .sc-fig--first{grid-column:7/13;grid-row:1}
+}

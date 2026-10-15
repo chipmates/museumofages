@@ -26,7 +26,7 @@
     1600,
     2400
    ],
-   "sizes": "(min-width: 1280px) 1200px, (min-width: 960px) calc(100vw - 80px), (min-width: 600px) calc(100vw - 64px), calc(100vw - 40px)",
+   "sizes": "(min-width: 1280px) 588px, (min-width: 960px) calc(100vw - 80px), (min-width: 600px) calc(100vw - 64px), calc(100vw - 40px)",
    "person": "77.8% 84.8%",
    "marks": {
     "brachiosaurus": "1.23% 98.16%",
