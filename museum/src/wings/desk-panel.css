@@ -42,6 +42,14 @@
   border-color: var(--ui-line-strong);
 }
 :root[data-na-panel] #rail-instruments:is(:hover, :focus-visible, [aria-expanded='true'])::after { border-color: var(--ui-way); }
+/* closed, its glass carries the menu sign the phone's Menu seat draws: three short lines (risen, the cross below) */
+:root[data-na-panel] #rail-instruments:not([data-shut])::after {
+  background:
+    linear-gradient(var(--press-muted), var(--press-muted)) center calc(50% - 4px) / 11px 1px no-repeat,
+    linear-gradient(var(--press-muted), var(--press-muted)) center / 11px 1px no-repeat,
+    linear-gradient(var(--press-muted), var(--press-muted)) center calc(50% + 4px) / 11px 1px no-repeat,
+    radial-gradient(ellipse at 35% 20%, color-mix(in srgb, var(--na-starlight) 12%, transparent), transparent 68%);
+}
 /* IN A CLOSE LOOK THE CONTROL STANDS ON THE BAND'S FIRST ROW, at the right of
    the step back and in its box: the kind's instruments own the row under it,
    so each has one place at every height the band takes */

@@ -167,6 +167,8 @@
 .film-plan { left: 68px; }
 :where(#wing[data-film='upright']) .film-foot > :is(.film-book:not(.vinci-phone-earlier), .film-hold) { left: 120px; }
 .film-plan .walk-ic { width: 18px; height: 18px; }
+/* the Menu's sign stands at the map sign's size beside it, so both draw their lines at one weight */
+.film-book .film-ic-menu { width: 18px; height: 18px; }
 .film-box[data-look='true'] .film-plan { display: none; }
 /* the corner target runs into the corner: back 0 to 64, the next seats 52 wide each */
 .film-back::after { content: ''; position: absolute; left: -16px; right: -4px; top: -2px; bottom: -10px; }

@@ -86,7 +86,8 @@ function keepLast(node: HTMLElement, said: string, least = 3): void {
 /** the story's clock at his birth repeats what its heading already says */
 const atBirth = (age: VinciText): boolean => text(age) === text(deskControl('date', 'age_birth'))
 const ARROW_ON = 'M3 8h10M9 4l4 4-4 4', ARROW_UP = 'M8 13V3M4 7l4-4 4 4', ARROW_DOWN = 'M8 3v10M4 9l4 4 4-4'
-const BOOK = 'M8 3.2a4.8 4.8 0 1 0 0 9.6a4.8 4.8 0 1 0 0-9.6M8 6.2v3.6M6.2 8h3.6'
+/** the Menu's sign: three short lines, read as a menu where a circled plus read as add or zoom */
+const MENU = 'M3 3.5h10M3 8h10M3 12.5h10'
 const TRIANGLE_BACK = 'M11 3.5L4.5 8 11 12.5z'
 const STEP_BACK = 'M10 3L5 8l5 5'
 const RING = 2 * Math.PI * 20.5
@@ -905,7 +906,7 @@ export function createWing(): WingModule {
     back.append(make('span', 'film-cross'))
     const book = make('button', 'film-book')
     book.type = 'button'
-    book.append(icon(BOOK))
+    book.append(icon(MENU, 'film-ic film-ic-menu'))
     // the walk's other ending, standing in the book's seat at the last stop only
     const talk = make('button', 'film-talk')
     talk.type = 'button'
