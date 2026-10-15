@@ -108,7 +108,7 @@ export const LOBBY_TEXT = {
   legalNotice: { en: 'Legal notice', de: 'Impressum' },
   privacy: { en: 'Privacy', de: 'Datenschutz' },
   close: { en: 'Close', de: 'Schließen' },
-  /** the panel's foot: the site's own address, which forwards to the repository (DRAFT, the words round decides) */
+  /** the panel's foot: the site's own address, which forwards to the repository; the site's footer says the same */
   sourceCode: { en: 'Source code', de: 'Quellcode' },
   paneEnter: { en: 'Enter the museum', de: 'Das Museum betreten' },
   /* WHAT THE GOLD FIELD SAYS WHILE A WING IS BEING BUILT. One line per stage
