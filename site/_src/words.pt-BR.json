@@ -296,7 +296,7 @@
   "kicker": "Uma pergunta sobre o nosso anúncio",
   "q": "Podemos contar a sua visita para o Google?",
   "why": "Somos uma pequena organização sem fins lucrativos, e o Google nos dá estes anúncios de graça. Visitas contadas ajudam esses anúncios a alcançar mais pessoas que procuram a mesma coisa.",
-  "what": "O Google deu ao seu clique no nosso anúncio um número de clique. Um sim o devolve ao Google a cada passo que você dá aqui: este sim e, se você continuar, a entrada no museu. Até lá ele fica só nesta aba, e você ainda pode cancelar o segundo passo.",
+  "what": "O Google deu ao seu clique no nosso anúncio um número de clique. Um sim o devolve ao Google a cada passo que você dá aqui: este sim e, se você continuar, a entrada no museu. Para o segundo passo, ele fica guardado só nesta aba até você entrar, e você ainda pode cancelar esse passo.",
   "whom": "Se você tinha uma sessão aberta no Google, o Google pode associá-lo à sua conta. O Google pode tratá-lo também nos Estados Unidos. Não permitimos o uso dele para publicidade personalizada. Nada mais sobre você, nenhum cookie. O museu está aberto de qualquer forma.",
   "age": "Se você tem menos de 16 anos, por favor diga não.",
   "yes": "Sim, contar",
@@ -311,7 +311,7 @@
   "undone": "Retirado. Nada mais será enviado.",
   "held": "O seu sim está guardado nesta aba para mais um passo. Contamos ao Google mais uma vez quando uma ala do museu se abrir.",
   "none": "Nenhum sim está guardado nesta aba. Daqui não vai nada para o Google.",
-  "visit_what": "O Google deu ao seu clique no nosso anúncio um número de clique. Um sim o devolve ao Google uma única vez, agora mesmo, só por este sim. Nada fica no seu navegador. Você pode retirar o seu sim a qualquer momento, mas o que ele já enviou continua enviado.",
+  "visit_what": "O Google deu ao seu clique no nosso anúncio um número de clique. Um sim o devolve ao Google uma única vez, agora mesmo, só por este sim. Não guardamos nada no seu navegador. Você pode retirar o seu sim a qualquer momento, mas o que ele já enviou continua enviado.",
   "visit_whom": "Se você tinha uma sessão aberta no Google, o Google pode associá-lo à sua conta. O Google pode tratá-lo também nos Estados Unidos. Não permitimos o uso dele para publicidade personalizada. Nada mais sobre você, nenhum cookie. Você pode continuar lendo de qualquer forma.",
   "visit_thanks": "Obrigado. O seu sim está contado, uma única vez."
  }

@@ -310,7 +310,7 @@
     "kicker": "A question about our ad",
     "q": "May we count your visit for Google?",
     "why": "We are a small nonprofit, and Google gives us these ads for free. Counted visits help them reach more people searching for the same thing.",
-    "what": "Google gave your click on our ad a click number. A yes sends it back to Google with each step you take here: this yes and, if you go on, entering the museum. Until you enter, it stays in this tab only, and you can still take back the second step.",
+    "what": "Google gave your click on our ad a click number. A yes sends it back to Google with each step you take here: this yes and, if you go on, entering the museum. For the second step it is kept in this tab only until you enter, and you can still take that step back.",
     "whom": "If you were signed in to Google, Google can link it to your account. Google may process it in the USA. We do not allow its use for personalised ads. Nothing else about you, no cookie. The museum is open either way.",
     "age": "If you are under 16, please say no.",
     "yes": "Yes, count it",
@@ -325,7 +325,7 @@
     "undone": "Taken back. Nothing more will be sent.",
     "held": "Your yes is kept in this tab for one more step. We tell Google once more when a wing of the museum opens.",
     "none": "No yes is kept in this tab. Nothing goes to Google from here.",
-    "visit_what": "Google gave your click on our ad a click number. A yes sends it back to Google once, right away, for this yes alone. Nothing is kept in your browser. You can withdraw your yes at any time, but what it sent at once stays sent.",
+    "visit_what": "Google gave your click on our ad a click number. A yes sends it back to Google once, right away, for this yes alone. We store nothing in your browser. You can withdraw your yes at any time, but what it sent at once stays sent.",
     "visit_whom": "If you were signed in to Google, Google can link it to your account. Google may process it in the USA. We do not allow its use for personalised ads. Nothing else about you, no cookie. You can read on either way.",
     "visit_thanks": "Thank you. Your yes is counted, once."
   }

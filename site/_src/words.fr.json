@@ -296,7 +296,7 @@
   "kicker": "Une question sur notre annonce",
   "q": "Pouvons-nous compter votre visite pour Google?",
   "why": "Nous sommes une petite organisation à but non lucratif, et Google nous offre ces annonces. Les visites comptées les aident à toucher plus de personnes qui cherchent la même chose.",
-  "what": "Google a donné à votre clic sur notre annonce un numéro de clic. Un oui le renvoie à Google à chaque étape que vous faites ici: ce oui et, si vous continuez, l’entrée dans le musée. D’ici là, il reste uniquement dans cet onglet, et vous pouvez encore annuler la deuxième étape.",
+  "what": "Google a donné à votre clic sur notre annonce un numéro de clic. Un oui le renvoie à Google à chaque étape que vous faites ici: ce oui et, si vous continuez, l’entrée dans le musée. Pour la deuxième étape, il reste enregistré uniquement dans cet onglet jusqu’à votre entrée, et vous pouvez encore annuler cette étape.",
   "whom": "Si vous aviez une session Google ouverte, Google peut le relier à votre compte. Google peut aussi le traiter aux États-Unis. Nous n’autorisons pas son usage pour la publicité personnalisée. Rien d’autre sur vous, aucun cookie. Le musée est ouvert dans tous les cas.",
   "age": "Si vous avez moins de 16 ans, merci de dire non.",
   "yes": "Oui, compter",
@@ -311,7 +311,7 @@
   "undone": "Retiré. Rien de plus ne sera envoyé.",
   "held": "Votre oui est gardé dans cet onglet pour une étape de plus. Nous le disons encore une fois à Google quand une aile du musée s’ouvre.",
   "none": "Aucun oui n’est gardé dans cet onglet. Rien ne part d’ici vers Google.",
-  "visit_what": "Google a donné à votre clic sur notre annonce un numéro de clic. Un oui le renvoie une seule fois à Google, tout de suite, pour ce oui seulement. Rien n’est gardé dans votre navigateur. Vous pouvez retirer votre oui à tout moment, mais ce qu’il a déjà envoyé reste envoyé.",
+  "visit_what": "Google a donné à votre clic sur notre annonce un numéro de clic. Un oui le renvoie une seule fois à Google, tout de suite, pour ce oui seulement. Nous n’enregistrons rien dans votre navigateur. Vous pouvez retirer votre oui à tout moment, mais ce qu’il a déjà envoyé reste envoyé.",
   "visit_whom": "Si vous aviez une session Google ouverte, Google peut le relier à votre compte. Google peut aussi le traiter aux États-Unis. Nous n’autorisons pas son usage pour la publicité personnalisée. Rien d’autre sur vous, aucun cookie. Vous pouvez continuer à lire dans tous les cas.",
   "visit_thanks": "Merci. Votre oui est compté, une seule fois."
  }

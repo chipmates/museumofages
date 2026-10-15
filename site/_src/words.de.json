@@ -315,7 +315,7 @@
     "kicker": "Eine Frage zu unserer Anzeige",
     "q": "Dürfen wir deinen Besuch für Google zählen?",
     "why": "Wir sind klein und gemeinnützig, und Google schenkt uns diese Anzeigen. Gezählte Besuche helfen ihnen, mehr Menschen zu erreichen, die dasselbe suchen.",
-    "what": "Google hat deinem Klick auf unsere Anzeige eine Klicknummer gegeben. Ein Ja schickt sie Google bei jedem Schritt zurück, den du hier machst: bei diesem Ja und, wenn du weitergehst, beim Betreten des Museums. Bis dahin bleibt sie nur in diesem Tab, und den zweiten Schritt kannst du noch zurücknehmen.",
+    "what": "Google hat deinem Klick auf unsere Anzeige eine Klicknummer gegeben. Ein Ja schickt sie Google bei jedem Schritt zurück, den du hier machst: bei diesem Ja und, wenn du weitergehst, beim Betreten des Museums. Für den zweiten Schritt bleibt sie bis dahin nur in diesem Tab gespeichert, und diesen Schritt kannst du noch zurücknehmen.",
     "whom": "Warst du bei Google angemeldet, kann Google sie deinem Konto zuordnen. Google kann sie auch in den USA verarbeiten. Für personalisierte Werbung geben wir sie nicht frei. Sonst nichts über dich, kein Cookie. Das Museum ist so oder so offen.",
     "age": "Bist du unter 16, sag bitte Nein.",
     "yes": "Ja, zählen",
@@ -330,7 +330,7 @@
     "undone": "Zurückgenommen. Es wird nichts mehr gesendet.",
     "held": "In diesem Tab ist dein Ja für einen weiteren Schritt gespeichert. Wir sagen es Google noch einmal, wenn sich ein Flügel des Museums öffnet.",
     "none": "In diesem Tab ist kein Ja gespeichert. Von hier geht nichts an Google.",
-    "visit_what": "Google hat deinem Klick auf unsere Anzeige eine Klicknummer gegeben. Ein Ja schickt sie Google einmal zurück, sofort und nur für dieses Ja. In deinem Browser bleibt nichts. Du kannst dein Ja jederzeit widerrufen, doch was es sofort gesendet hat, bleibt gesendet.",
+    "visit_what": "Google hat deinem Klick auf unsere Anzeige eine Klicknummer gegeben. Ein Ja schickt sie Google einmal zurück, sofort und nur für dieses Ja. Wir legen in deinem Browser nichts ab. Du kannst dein Ja jederzeit widerrufen, doch was es sofort gesendet hat, bleibt gesendet.",
     "visit_whom": "Warst du bei Google angemeldet, kann Google sie deinem Konto zuordnen. Google kann sie auch in den USA verarbeiten. Für personalisierte Werbung geben wir sie nicht frei. Sonst nichts über dich, kein Cookie. Lesen kannst du so oder so weiter.",
     "visit_thanks": "Danke. Dein Ja ist einmal gezählt."
   }

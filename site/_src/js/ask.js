@@ -158,8 +158,9 @@
     body.appendChild(el('p', 'ask__what', visitOnly ? t.visit_what : t.what));
     body.appendChild(el('p', 'ask__what', visitOnly ? t.visit_whom : t.whom));
     body.appendChild(el('p', 'ask__why', t.why));
-    body.appendChild(el('p', 'ask__age', t.age));
     var act = el('div', 'ask__act');
+    /* the age line stands right above the answers on every card and never scrolls out of sight */
+    act.appendChild(el('p', 'ask__age', t.age));
     var answers = el('div', 'ask__answers');
     var yes = button('ask__btn', t.yes), no = button('ask__btn', t.no);
     answers.appendChild(yes);

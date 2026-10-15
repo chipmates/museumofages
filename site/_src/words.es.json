@@ -296,7 +296,7 @@
   "kicker": "Una pregunta sobre nuestro anuncio",
   "q": "¿Podemos contar tu visita para Google?",
   "why": "Somos una pequeña organización sin fines de lucro, y Google nos regala estos anuncios. Las visitas contadas les ayudan a llegar a más personas que buscan lo mismo.",
-  "what": "Google dio a tu clic en nuestro anuncio un número de clic. Un sí se lo devuelve a Google en cada paso que das aquí: este sí y, si sigues, la entrada al museo. Hasta entonces se queda solo en esta pestaña, y todavía puedes anular el segundo paso.",
+  "what": "Google dio a tu clic en nuestro anuncio un número de clic. Un sí se lo devuelve a Google en cada paso que das aquí: este sí y, si sigues, la entrada al museo. Para el segundo paso se guarda solo en esta pestaña hasta que entres, y todavía puedes anular ese paso.",
   "whom": "Si tenías la sesión iniciada en Google, Google puede vincularlo a tu cuenta. Google puede tratarlo también en Estados Unidos. No permitimos su uso para publicidad personalizada. Nada más sobre ti, ninguna cookie. El museo está abierto de todos modos.",
   "age": "Si tienes menos de 16 años, por favor, di que no.",
   "yes": "Sí, contarla",
@@ -311,7 +311,7 @@
   "undone": "Retirado. No se enviará nada más.",
   "held": "Tu sí está guardado en esta pestaña para un paso más. Se lo decimos a Google una vez más cuando se abra un ala del museo.",
   "none": "En esta pestaña no hay ningún sí guardado. Desde aquí no va nada a Google.",
-  "visit_what": "Google dio a tu clic en nuestro anuncio un número de clic. Un sí se lo devuelve a Google una sola vez, ahora mismo, solo por este sí. En tu navegador no queda nada. Puedes retirar tu sí en cualquier momento, pero lo que ya envió queda enviado.",
+  "visit_what": "Google dio a tu clic en nuestro anuncio un número de clic. Un sí se lo devuelve a Google una sola vez, ahora mismo, solo por este sí. No guardamos nada en tu navegador. Puedes retirar tu sí en cualquier momento, pero lo que ya envió queda enviado.",
   "visit_whom": "Si tenías la sesión iniciada en Google, Google puede vincularlo a tu cuenta. Google puede tratarlo también en Estados Unidos. No permitimos su uso para publicidad personalizada. Nada más sobre ti, ninguna cookie. Puedes seguir leyendo de todos modos.",
   "visit_thanks": "Gracias. Tu sí está contado, una sola vez."
  }

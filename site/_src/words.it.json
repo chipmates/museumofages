@@ -296,7 +296,7 @@
   "kicker": "Una domanda sul nostro annuncio",
   "q": "Possiamo contare la tua visita per Google?",
   "why": "Siamo una piccola organizzazione non profit, e Google ci regala questi annunci. Le visite contate li aiutano a raggiungere più persone che cercano la stessa cosa.",
-  "what": "Google ha dato al tuo clic sul nostro annuncio un numero di clic. Un sì lo rimanda a Google a ogni passo che fai qui: questo sì e, se vai avanti, l’ingresso nel museo. Fino ad allora resta solo in questa scheda, e puoi ancora annullare il secondo passo.",
+  "what": "Google ha dato al tuo clic sul nostro annuncio un numero di clic. Un sì lo rimanda a Google a ogni passo che fai qui: questo sì e, se vai avanti, l’ingresso nel museo. Per il secondo passo resta salvato solo in questa scheda finché non entri, e puoi ancora annullare questo passo.",
   "whom": "Se avevi fatto l’accesso a Google, Google può collegarlo al tuo account. Google può trattarlo anche negli Stati Uniti. Non ne consentiamo l’uso per la pubblicità personalizzata. Nient’altro su di te, nessun cookie. Il museo è aperto in ogni caso.",
   "age": "Se hai meno di 16 anni, per favore di’ di no.",
   "yes": "Sì, contala",
@@ -311,7 +311,7 @@
   "undone": "Ritirato. Non verrà inviato nient’altro.",
   "held": "Il tuo sì è conservato in questa scheda per un altro passo. Lo diciamo a Google ancora una volta quando si apre un’ala del museo.",
   "none": "In questa scheda non è conservato nessun sì. Da qui non va nulla a Google.",
-  "visit_what": "Google ha dato al tuo clic sul nostro annuncio un numero di clic. Un sì lo rimanda a Google una sola volta, subito, solo per questo sì. Nel tuo browser non resta nulla. Puoi ritirare il tuo sì in qualsiasi momento, ma ciò che ha già inviato resta inviato.",
+  "visit_what": "Google ha dato al tuo clic sul nostro annuncio un numero di clic. Un sì lo rimanda a Google una sola volta, subito, solo per questo sì. Non salviamo nulla nel tuo browser. Puoi ritirare il tuo sì in qualsiasi momento, ma ciò che ha già inviato resta inviato.",
   "visit_whom": "Se avevi fatto l’accesso a Google, Google può collegarlo al tuo account. Google può trattarlo anche negli Stati Uniti. Non ne consentiamo l’uso per la pubblicità personalizzata. Nient’altro su di te, nessun cookie. Puoi continuare a leggere in ogni caso.",
   "visit_thanks": "Grazie. Il tuo sì è contato, una sola volta."
  }
