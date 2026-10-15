@@ -67,6 +67,9 @@
   .sc-table thead th:nth-child(3){width:25%}
 }
 @media (max-width:599px){
+  /* The answer opens the page: pretty, as the site's first screens; balance, which Chromium gives only a paragraph of
+     up to six lines, set a short second paragraph narrower than a long first */
+  .sp-top .sp-answer{text-wrap:pretty}
   .sc-table thead{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%)}
   .sc-table tbody{display:block;border-top:1px solid var(--hair-strong)}
   .sc-table tr{display:block;padding:12px 0 13px;border-bottom:1px solid var(--hair)}
