@@ -382,7 +382,7 @@ class Case(unittest.TestCase):
             (r"(?i)adults?|grown|just under|erwachsene[rns]?|knapp unter", "some", "14 m only for a grown Spinosaurus"),
             (r"Giraffatitan", "Brachiosaurus", "the skeleton in Berlin is Giraffatitan"),
             (r"65 (?:to|bis) 80 t", "80 t", "80 tonnes only as the end of a range"),
-            (r"Longer, and most likely lighter\.|Länger, und sehr wahrscheinlich leichter\.", "Yes.", "Spinosaurus against T. rex"),
+            (r"Longer, and most likely lighter\.|Länger, und wahrscheinlich leichter\.", "Yes.", "Spinosaurus against T. rex"),
         ]
         out, _ = self.build()
         shutil.rmtree(out)

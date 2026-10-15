@@ -143,7 +143,7 @@
   "scale": {
    "pic": "row",
    "tag": "tag_made",
-   "what": "Unsere sieben neben einem Menschen von 1,70 m, im selben Maßstab, jedes Tier so, wie unser Modell gebaut ist. Unser Spinosaurus ist ein junges Tier von etwa 10 m, etwa drei Viertel so lang wie ein erwachsenes, darum ist er hier kürzer als unser T. rex. Ein erwachsener Spinosaurus war länger als jeder T. rex und sehr wahrscheinlich leichter.",
+   "what": "Unsere sieben neben einem Menschen von 1,70 m, im selben Maßstab, jedes Tier so, wie unser Modell gebaut ist. Unser Spinosaurus ist ein junges Tier von etwa 10 m, etwa drei Viertel so lang wie ein erwachsenes, darum ist er hier kürzer als unser T. rex. Ein erwachsener Spinosaurus war länger als jeder T. rex und wahrscheinlich leichter.",
    "alt": "Sieben Dinosaurier in einer Reihe von der Seite, zwei mit langen Hälsen hoch über den anderen, und ein grauer Mensch, der daneben winzig wirkt.",
    "note": [
     "Eigene Rekonstruktionen des Museums, nach veröffentlichten Maßen und Zeichnungen in Code gebaut und in unserer Engine gerendert. Keine Fotos. ",
@@ -485,7 +485,7 @@
    "items": [
     {
      "q": "War der Spinosaurus größer als der T. rex?",
-     "a": "Länger, und sehr wahrscheinlich leichter. Ein erwachsener Spinosaurus war im aktuellen Modell knapp unter 14 m lang und etwa 7,4 t schwer. Ein großer erwachsener T. rex war etwa 12 m lang und 8 bis 9 t schwer. Unserer im Bild ist ein junger Spinosaurus von etwa 10 m, dort ist er also der kürzere."
+     "a": "Länger, und wahrscheinlich leichter. Ein erwachsener Spinosaurus war im aktuellen Modell knapp unter 14 m lang und etwa 7,4 t schwer. Ein großer erwachsener T. rex war etwa 12 m lang und 8 bis 9 t schwer. Unserer im Bild ist ein junger Spinosaurus von etwa 10 m, dort ist er also der kürzere."
     },
     {
      "q": "War ein Dinosaurier größer als der Blauwal?",

@@ -475,7 +475,7 @@
             "7 tonnes is no weight on this page: a grown Spinosaurus about 7.4 t, ours about 3 to 4 t"
           ],
           [
-            "(?s)^(?!.*(?:longer, and most likely lighter|länger, und sehr wahrscheinlich leichter)).*(?:bigger|larger|größer) (?:than|als) (?:a |the |every |der |ein |jeder )?t\\. rex",
+            "(?s)^(?!.*(?:longer, and most likely lighter|länger, und wahrscheinlich leichter)).*(?:bigger|larger|größer) (?:than|als) (?:a |the |every |der |ein |jeder )?t\\. rex",
             "Spinosaurus against T. rex: longer, and most likely lighter"
           ],
           [
