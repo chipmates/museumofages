@@ -43,8 +43,9 @@
    ],
    "sizes": "(min-width: 1280px) 690px, (min-width: 960px) 54vw, (min-width: 600px) calc(100vw - 64px), calc(100vw - 40px)",
    "person": "85.81% 36.63%",
+   "person_from": 1280,
    "marks": {
-    "skull": "36.88% 67.46%",
+    "skull": "35.68% 38.08% end",
     "horns": "73.02% 78.23%",
     "person": "82.75% 88.88%"
    },
@@ -115,7 +116,7 @@
  },
  "meta": {
   "title": "Triceratops size: about 7 to 8 m, 2 m skull | Museum of Ages",
-  "description": "Triceratops was about 7 to 8 m long and about 6.5 to 8.5 t by two models of one skeleton, its skull about 2 m. Ours stands beside a person to scale.",
+  "description": "Triceratops: big adults were about 7 to 8 m long, the skull about 2 m. Two models of the Washington skeleton give about 6.5 to 8.5 t. Ours beside a person.",
   "og_title": "Triceratops size: about 7 to 8 m, 2 m skull",
   "og_image_alt": "A Triceratops from the side: a wide frill behind the head, two long horns over the eyes, a short one on the nose, four legs. Beside it a grey person who reaches about two thirds of the way up its back."
  },
@@ -176,11 +177,11 @@
     "marks": [
      {
       "span": "skull",
-      "text": "Skull, 2.2 m with skin, ours"
+      "text": "Skull along the white line, 2.2 m with skin, ours"
      },
      {
       "span": "horns",
-      "text": "Brow horn tips, about 1.8 m up"
+      "text": "Brow horn tips, about 1.8 m up, ours"
      },
      {
       "span": "person",
@@ -240,11 +241,11 @@
     {
      "cells": [
       "The Washington skeleton, Hatcher",
-      "about 6.9 m (23 ft), by the body model built on its scan",
-      "about 2.5 m (8 ft) at the top of the back over the hips, our reading, not published",
+      "not published",
+      "about 2.3 to 2.5 m (7.5 to 8 ft) at the top of the back over the hips, our reading of photographs, not published",
       "2.12 m (7 ft) in bone, enlarged in the rebuild",
       "about 6.5 to 8.5 t, two computer models",
-      "a mount of bones from about ten animals, the weights models, never weighings"
+      "a mount of bones from about ten animals, the weights from models, never weighed"
      ]
     },
     {
@@ -296,7 +297,8 @@
    "nav": "Triceratops vs T. rex",
    "h": "Triceratops vs T. rex",
    "paras": [
-    "In one count of the large dinosaurs of Montana's Hell Creek Formation, where both lived at the same time, Triceratops was the most common of all. T. rex did bite Triceratops: a Triceratops hip bone found in 1991 carries 58 definite tooth marks that only a T. rex could have made, says a university's report of 1996. One brow horn, bitten off, healed afterwards, so at least one Triceratops survived a T. rex bite. Whether T. rex hunted live Triceratops or ate the dead, the bones do not say, and no find shows a fight between the two. The famous \"Dueling Dinosaurs\" from Montana, a Triceratops and a tyrannosaur found together, are not that fight either. Since 2025 their tyrannosaur is counted as Nanotyrannus, a smaller kind, not T. rex, and that is still argued.",
+    "In one count of the large dinosaurs of Montana's Hell Creek Formation, where both lived at the same time, Triceratops was the most common of all. T. rex did bite Triceratops: a Triceratops hip bone found in 1991 carries 58 definite tooth marks that only a T. rex could have made, says a university's report of 1996. One brow horn, bitten off, healed afterwards, so at least one Triceratops survived a T. rex bite.",
+    "Whether T. rex mostly hunted them or mostly ate the dead, the bones do not say, and no find shows a fight between the two. The famous \"Dueling Dinosaurs\" from Montana, a Triceratops and a tyrannosaur found together, do not show one either. Since 2025 their tyrannosaur is counted as Nanotyrannus, a smaller kind, not T. rex, and that is still argued.",
     "Our two at one scale, for size only: our T. rex is about 1.6 times as long as our Triceratops."
    ],
    "scale": {
@@ -335,14 +337,14 @@
    "nav": "The Triceratops skeleton in Washington",
    "h": "The Triceratops skeleton in Washington",
    "paras": [
-    "The skeleton in the Smithsonian's natural history museum in Washington is called Hatcher, after the fossil hunter John Bell Hatcher, and its bones came from Wyoming. It went on show in 1905, low and sprawling like a crocodile, and for over twenty years no other Triceratops was on show anywhere. No complete skeleton was known, so the museum pieced it together from about ten animals. Its skull was too small, its front legs of different lengths, and its hind feet, with the wrong number of toes, came from another dinosaur.",
-    "In 1996 a piece of hip bone fell off: minerals growing inside the bones were breaking them up, and in 1998 the skeleton came down. Then, for the first time, a whole dinosaur skeleton was scanned in 3D, the skull enlarged by about 15 percent on the computer and the right side mirrored to make the left. After that the mount stood upright, and since 2019 Hatcher has lain in the fossil hall, being eaten by a T. rex: a museum's scene, not a find. Our Triceratops is built after that scan."
+    "The skeleton in the Smithsonian's natural history museum in Washington is called Hatcher, after the fossil hunter John Bell Hatcher, and its bones came from Wyoming. It went on show in 1905, low and sprawling like a crocodile, and for over twenty years no other Triceratops was on show anywhere. No complete skeleton was known, so the museum pieced it together from about ten animals. Its skull was too small, its front legs of different lengths, and its hind feet, which came from another dinosaur, had the wrong count of toes.",
+    "In 1996 a piece of hip bone fell off: minerals growing inside the bones were breaking them up, and in 1998 the skeleton came down. Then, for the first time, a whole dinosaur skeleton was scanned in 3D, the skull enlarged by about 15 percent on the computer and the right side mirrored to make the left. After that the mount stood upright, and since 2019 Hatcher has lain in the fossil hall while a T. rex feeds on it: a museum's scene, not a find. Our Triceratops is built after that scan."
    ],
    "scale": {
     "pic": "skeleton",
     "tag": "tag_built",
-    "what": "Our Triceratops as a skeleton, with the person, after the Washington mount of about ten animals and the museum's scan of it. Which bone came from which animal is not published, so none is coloured by its find. The horns are bone cores only: in life a cover of horn made them longer.",
-    "alt": "The skeleton of the Triceratops from the side, the big skull with its frill and horn cores, the ribs and four legs, beside the grey person."
+    "what": "Our Triceratops as a skeleton, with the person, after the Washington mount of about ten animals and the museum's scan of it. The pale shape behind it is our animal's outline. No bone-by-bone map is published: the skull is from one animal, most of the body from another, so no bone is coloured by its find. The horns are bone cores only: in life a cover of horn made them longer.",
+    "alt": "The skeleton of the Triceratops from the side, the big skull with its frill and horn cores, the ribs and four legs, beside the grey person, with the pale outline of its body behind the bones."
    }
   },
   {
@@ -354,7 +356,7 @@
     {
      "h": "Skin and scales",
      "paras": [
-      "Big scales up to 9 cm wide on the trunk, the biggest of any dinosaur known, with a slightly bigger bumped scale every 15 to 20 cm. That comes from a clay cast of the skin's surface on another big Triceratops. Feathers or quills are unlikely."
+      "Scales up to 9 cm wide on the trunk, the largest ordinary scales known on any dinosaur, with a slightly bigger bumped scale every 15 to 20 cm. That comes from a clay cast of the skin's surface on another big Triceratops. Feathers or quills are unlikely."
      ]
     },
     {
@@ -377,28 +379,7 @@
    "nav": "When and where Triceratops lived",
    "h": "When and where Triceratops lived",
    "paras": [
-    "Triceratops lived in western North America in the Late Cretaceous, between about 68 and 66 million years ago. Two species followed each other: the older T. horridus, ours, slowly changed into the later T. prorsus. Its last fossils reach the close of the Cretaceous, about 66 million years ago, when an impact in the Yucatán, most scientists think, set off the collapse."
-   ]
-  },
-  {
-   "type": "text",
-   "id": "how-sure",
-   "nav": "How sure this is",
-   "h": "How sure this is",
-   "paras": [
-    "Two things decide every number here.",
-    {
-     "points": [
-      [
-       "Nothing was measured on a living animal:",
-       "the lengths come from skeletons, the weight from computer bodies built on the Washington scan."
-      ],
-      [
-       "Ours is one model after a mount of about ten animals:",
-       "its 6.9 m and 2.5 m are the model's numbers, never the species'."
-      ]
-     ]
-    }
+    "Triceratops lived in western North America in the Late Cretaceous, between about 68 and 66 million years ago. Two species followed each other: the older T. horridus, ours, slowly changed into the later T. prorsus. Its last fossils reach the close of the Cretaceous, about 66 million years ago, when an impact in the Yucatán is thought to have set off the collapse."
    ]
   },
   {
@@ -414,7 +395,7 @@
     },
     {
      "term": "10 tonnes",
-     "text": "Beside the 9 m, again with no method. The newest models of the Washington skeleton give about 6.5 to 8.5 tonnes."
+     "text": "Printed beside the 9 m, again with no method. The newest models of the Washington skeleton give about 6.5 to 8.5 tonnes."
     },
     {
      "term": "13 tonnes",
@@ -422,7 +403,7 @@
     },
     {
      "term": "The largest head of any land animal",
-     "text": "A big museum writes one of the largest, not the largest. Big adult skulls are about 2 m long."
+     "text": "One big museum says \"one of the largest\", not \"the largest\". Big adult skulls are about 2 m long."
     },
     {
      "term": "A long nose horn",
@@ -430,7 +411,7 @@
     },
     {
      "term": "Torosaurus was the grown-up Triceratops",
-     "text": "An idea of 2010. Most studies since found young Torosaurus and old Triceratops, and keep the two apart."
+     "text": "An idea of 2010. Later studies found young Torosaurus, and most keep the two apart."
     }
    ]
   },

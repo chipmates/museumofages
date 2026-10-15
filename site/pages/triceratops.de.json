@@ -46,8 +46,9 @@
    ],
    "sizes": "(min-width: 1280px) 690px, (min-width: 960px) 54vw, (min-width: 600px) calc(100vw - 64px), calc(100vw - 40px)",
    "person": "85.81% 36.63%",
+   "person_from": 1280,
    "marks": {
-    "skull": "36.88% 67.46%",
+    "skull": "35.68% 38.08% end",
     "horns": "73.02% 78.23%",
     "person": "82.75% 88.88%"
    },
@@ -118,7 +119,7 @@
  },
  "meta": {
   "title": "Triceratops-Größe: etwa 7 bis 8 m lang | Museum of Ages",
-  "description": "Triceratops: etwa 7 bis 8 m lang, nach zwei Modellen eines Skeletts etwa 6,5 bis 8,5 t, der Schädel etwa 2 m. Unser Modell steht neben einem Menschen.",
+  "description": "Triceratops: Große Tiere waren etwa 7 bis 8 m lang, der Schädel etwa 2 m. Zwei Modelle des Skeletts in Washington ergeben etwa 6,5 bis 8,5 t.",
   "og_title": "Triceratops-Größe: etwa 7 bis 8 m lang",
   "og_image_alt": "Ein Triceratops von der Seite: ein breiter Nackenschild hinter dem Kopf, zwei lange Hörner über den Augen, ein kurzes auf der Nase, vier Beine. Daneben ein grauer Mensch, der etwa bis zu zwei Dritteln der Rückenhöhe reicht."
  },
@@ -179,11 +180,11 @@
     "marks": [
      {
       "span": "skull",
-      "text": "Schädel, 2,2 m mit Haut, unser Modell"
+      "text": "Schädel entlang der weißen Linie, 2,2 m mit Haut, unser Modell"
      },
      {
       "span": "horns",
-      "text": "Hornspitzen, etwa 1,8 m hoch"
+      "text": "Hornspitzen, etwa 1,8 m hoch, unser Modell"
      },
      {
       "span": "person",
@@ -194,7 +195,7 @@
   },
   "guess": {
    "h": "Zum Raten",
-   "q": "Von welchem Tier, dachte der erste Forscher, stammten seine Hörner?",
+   "q": "Von welchem Tier, dachte der erste Forscher, stammten die Hörner des Triceratops?",
    "button": "Antwort zeigen",
    "a": "Von einem Riesenbison: 1887 nannte der amerikanische Forscher Othniel Marsh die beiden Knochenkerne der Hörner Bison alticornis. Nach weiteren Funden gab er dem Tier 1889 den Namen Triceratops.",
    "button_open": "Antwort verbergen"
@@ -243,11 +244,11 @@
     {
      "cells": [
       "Das Skelett in Washington, Hatcher",
-      "etwa 6,9 m, nach dem Körpermodell auf seinem Scan",
-      "etwa 2,5 m an der Oberkante des Rückens über der Hüfte, unsere Ablesung, nicht veröffentlicht",
+      "nicht veröffentlicht",
+      "etwa 2,3 bis 2,5 m an der Oberkante des Rückens über der Hüfte, von uns an Fotos abgelesen, nicht veröffentlicht",
       "2,12 m in Knochen, beim Umbau vergrößert",
       "etwa 6,5 bis 8,5 t, zwei Computermodelle",
-      "eine Montage aus den Knochen von etwa zehn Tieren, die Gewichte Modelle, nie gewogen"
+      "eine Montage aus den Knochen von etwa zehn Tieren, die Gewichte aus Modellen, nie gewogen"
      ]
     },
     {
@@ -267,7 +268,7 @@
       "an der Hüfte etwa 4 m, nach dem Museum",
       "etwa 1,4 m, von der Schnauze bis zum hinteren Rand der Wange",
       "etwa 8 bis 9 t, nach einem Knochen und drei Modellen",
-      "wie auf unserer T. rex-Seite"
+      "wie auf unserer T.-rex-Seite"
      ]
     },
     {
@@ -299,7 +300,8 @@
    "nav": "Triceratops und T. rex",
    "h": "Triceratops und T. rex",
    "paras": [
-    "In einer Zählung der großen Dinosaurier der Hell-Creek-Formation in Montana, wo beide zur selben Zeit lebten, war der Triceratops der häufigste von allen. Der T. rex hat Triceratops gebissen: Ein 1991 gefundener Beckenknochen eines Triceratops trägt 58 sichere Zahnspuren, die nur ein T. rex hinterlassen haben kann, so der Bericht einer Universität von 1996. Ein abgebissenes Horn über dem Auge verheilte danach, mindestens ein Triceratops hat einen Biss des T. rex also überlebt. Ob der T. rex lebende Triceratops jagte oder tote fraß, sagen die Knochen nicht, und kein Fund zeigt einen Kampf zwischen den beiden. Auch die berühmten „Dueling Dinosaurs“ aus Montana, ein Triceratops und ein Tyrannosaurier, die zusammen gefunden wurden, sind dieser Kampf nicht. Seit 2025 gilt ihr Tyrannosaurier als Nanotyrannus, eine kleinere Art, nicht als T. rex, und darüber wird noch gestritten.",
+    "In einer Zählung der großen Dinosaurier der Hell-Creek-Formation in Montana, wo beide zur selben Zeit lebten, war der Triceratops der häufigste von allen. Der T. rex hat Triceratops gebissen: Ein 1991 gefundener Beckenknochen eines Triceratops trägt 58 sichere Zahnspuren, die nur ein T. rex hinterlassen haben kann, so der Bericht einer Universität von 1996. Ein abgebissenes Horn über dem Auge verheilte danach, mindestens ein Triceratops hat einen Biss des T. rex also überlebt.",
+    "Ob der T. rex sie meist jagte oder vor allem tote fraß, sagen die Knochen nicht, und kein Fund zeigt einen Kampf zwischen den beiden. Auch die berühmten „Dueling Dinosaurs“ aus Montana, ein Triceratops und ein Tyrannosaurier, die zusammen gefunden wurden, zeigen keinen solchen Kampf. Seit 2025 gilt ihr Tyrannosaurier als Nanotyrannus, eine kleinere Art, nicht als T. rex, und darüber wird noch gestritten.",
     "Unsere beiden im selben Maßstab, nur zum Größenvergleich: Unser T. rex ist etwa 1,6-mal so lang wie unser Triceratops."
    ],
    "scale": {
@@ -339,13 +341,13 @@
    "h": "Das Triceratops-Skelett in Washington",
    "paras": [
     "Das Skelett im Naturkundemuseum der Smithsonian Institution in Washington heißt Hatcher, nach dem Fossiliensammler John Bell Hatcher, und seine Knochen stammen aus Wyoming. 1905 kam es in die Ausstellung, niedrig und breitbeinig wie ein Krokodil, und über zwanzig Jahre lang war nirgends ein anderer Triceratops zu sehen. Ein vollständiges Skelett kannte man nicht, darum setzte das Museum es aus etwa zehn Tieren zusammen. Sein Schädel war zu klein, die Vorderbeine waren verschieden lang, und die Hinterfüße, mit der falschen Zahl an Zehen, stammten von einem anderen Dinosaurier.",
-    "1996 fiel ein Stück Beckenknochen ab: Mineralien, die in den Knochen wuchsen, sprengten sie, und 1998 wurde das Skelett abgebaut. Dann wurde zum ersten Mal ein ganzes Dinosaurierskelett in 3D gescannt, der Schädel am Computer um etwa 15 Prozent vergrößert und die rechte Seite gespiegelt, um die linke zu ergänzen. Danach stand die Montage aufrecht, und seit 2019 liegt Hatcher in der Fossilienhalle und wird von einem T. rex gefressen: eine Szene des Museums, kein Fund. Unser Triceratops ist nach diesem Scan gebaut."
+    "1996 fiel ein Stück Beckenknochen ab: Mineralien, die in den Knochen wuchsen, sprengten sie, und 1998 wurde das Skelett abgebaut. Dann wurde zum ersten Mal ein ganzes Dinosaurierskelett in 3D gescannt, der Schädel am Computer um etwa 15 Prozent vergrößert und die rechte Seite gespiegelt, um die linke zu ergänzen. Danach stand die Montage aufrecht, und seit 2019 liegt Hatcher in der Fossilienhalle, und ein T. rex frisst an ihm: eine Szene des Museums, kein Fund. Unser Triceratops ist nach diesem Scan gebaut."
    ],
    "scale": {
     "pic": "skeleton",
     "tag": "tag_built",
-    "what": "Unser Triceratops als Skelett, mit dem Menschen, nach der Montage in Washington aus etwa zehn Tieren und dem Scan, den das Museum von ihr gemacht hat. Welcher Knochen von welchem Tier stammt, ist nicht veröffentlicht, darum ist hier keiner nach seinem Fund gefärbt. Die Hörner sind nur Knochenkerne: Im Leben machte eine Hornscheide sie länger.",
-    "alt": "Das Skelett des Triceratops von der Seite, der große Schädel mit Nackenschild und den Knochenkernen der Hörner, die Rippen und vier Beine, daneben der graue Mensch."
+    "what": "Unser Triceratops als Skelett, mit dem Menschen, nach der Montage in Washington aus etwa zehn Tieren und dem Scan, den das Museum von ihr gemacht hat. Die helle Fläche dahinter ist der Umriss unseres Tiers. Eine Karte, welcher Knochen von welchem Tier stammt, ist nicht veröffentlicht: Der Schädel stammt von einem Tier, der größte Teil des Körpers von einem anderen, darum ist hier kein Knochen nach seinem Fund gefärbt. Die Hörner sind nur Knochenkerne: Im Leben machte eine Hornscheide sie länger.",
+    "alt": "Das Skelett des Triceratops von der Seite, der große Schädel mit Nackenschild und den Knochenkernen der Hörner, die Rippen und vier Beine, daneben der graue Mensch, hinter den Knochen der helle Umriss des Körpers."
    }
   },
   {
@@ -357,7 +359,7 @@
     {
      "h": "Haut und Schuppen",
      "paras": [
-      "Große Schuppen bis zu 9 cm breit am Rumpf, die größten, die von einem Dinosaurier bekannt sind, und alle 15 bis 20 cm eine etwas größere Schuppe mit einer Beule. Das zeigt ein Abguss der Hautoberfläche aus Ton an einem anderen großen Triceratops. Federn oder Borsten sind unwahrscheinlich."
+      "Schuppen bis zu 9 cm breit am Rumpf, die größten gewöhnlichen Schuppen, die von einem Dinosaurier bekannt sind, und alle 15 bis 20 cm eine etwas größere Schuppe mit einer Beule. Das zeigt ein Abguss der Hautoberfläche aus Ton an einem anderen großen Triceratops. Federn oder Borsten sind unwahrscheinlich."
      ]
     },
     {
@@ -380,28 +382,7 @@
    "nav": "Wann und wo der Triceratops lebte",
    "h": "Wann und wo der Triceratops lebte",
    "paras": [
-    "Der Triceratops lebte im Westen Nordamerikas in der Oberkreide, vor etwa 68 bis 66 Millionen Jahren. Zwei Arten folgten aufeinander: Der ältere T. horridus, unser Tier, wandelte sich langsam zum späteren T. prorsus. Seine letzten Fossilien reichen bis zum Ende der Kreidezeit vor etwa 66 Millionen Jahren, als nach Ansicht der meisten Forscher ein Einschlag auf der Halbinsel Yucatán den Zusammenbruch auslöste."
-   ]
-  },
-  {
-   "type": "text",
-   "id": "how-sure",
-   "nav": "Wie sicher das ist",
-   "h": "Wie sicher das ist",
-   "paras": [
-    "Zwei Dinge entscheiden über jede Zahl hier.",
-    {
-     "points": [
-      [
-       "Nichts wurde am lebenden Tier gemessen:",
-       "Die Längen stammen von Skeletten, das Gewicht von Computerkörpern, die um den Scan aus Washington gebaut wurden."
-      ],
-      [
-       "Unser Triceratops ist ein Modell nach einer Montage aus etwa zehn Tieren:",
-       "Seine 6,9 m und 2,5 m sind Zahlen des Modells, nie Zahlen der Art."
-      ]
-     ]
-    }
+    "Der Triceratops lebte im Westen Nordamerikas in der Oberkreide, vor etwa 68 bis 66 Millionen Jahren. Zwei Arten folgten aufeinander: Der ältere T. horridus, unser Tier, wandelte sich langsam zum späteren T. prorsus. Seine letzten Fossilien reichen bis zum Ende der Kreidezeit vor etwa 66 Millionen Jahren, als vermutlich ein Einschlag auf der Halbinsel Yucatán den Zusammenbruch auslöste."
    ]
   },
   {
@@ -417,7 +398,7 @@
     },
     {
      "term": "10 t",
-     "text": "Neben den 9 m, wieder ohne Methode. Die neuesten Modelle des Skeletts in Washington ergeben etwa 6,5 bis 8,5 t."
+     "text": "Im selben Verzeichnis neben den 9 m, wieder ohne Methode. Die neuesten Modelle des Skeletts in Washington ergeben etwa 6,5 bis 8,5 t."
     },
     {
      "term": "13 t",
@@ -433,7 +414,7 @@
     },
     {
      "term": "Torosaurus war der erwachsene Triceratops",
-     "text": "Eine Idee von 2010. Die meisten Studien seither fanden junge Torosaurus und alte Triceratops und halten die beiden auseinander."
+     "text": "Eine Idee von 2010. Spätere Studien fanden junge Torosaurus, und die meisten halten die beiden auseinander."
     }
    ]
   },
@@ -573,7 +554,7 @@
      "href": "https://www.naturalsciences.org/calendar/news/meet-the-dueling-dinosaurs-murphy-and-manteo/"
     },
     {
-     "text": "T. rex: die Zahlen und Quellen unserer T. rex-Seite.",
+     "text": "T. rex: die Zahlen und Quellen unserer T.-rex-Seite.",
      "href": "https://museumofages.org/de/tiere/t-rex/"
     }
    ],
