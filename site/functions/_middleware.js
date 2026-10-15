@@ -16,16 +16,13 @@ export const wingPage = (path) => WING_PAGE.test(path)
 
 // Kept out of the wing's bundle, whose files are part of the film's key. The shell's first frame (the lobby's
 // opening screen) stays dark until the wing takes over, and on the desktop the welcome card lets the museum show
-// through behind it. The upright glass and the sideways form keep the card as it was. Held upright, the line
-// under the welcome's button that suggests turning the phone reads brighter, with a turning sign before it.
+// through behind it. The upright glass and the sideways form keep the card as it was.
 export const WING_STYLE = '<style>' +
   "body[data-phase='transit'] #veil{visibility:hidden}" +
   '@media not all and (max-aspect-ratio:9/10){' +
   ".arno-card:not([data-form='cinema']){background:radial-gradient(120% 85% at 50% 38%," +
   'color-mix(in srgb,var(--na-lapis) 55%,transparent) 0%,color-mix(in srgb,var(--na-abyss) 62%,transparent) 100%)!important}' +
   ".arno-card:not([data-form='cinema'])::backdrop{background:transparent!important}}" +
-  '@media (max-aspect-ratio:9/10){.turn-line{color:var(--na-starlight)!important}' +
-  ".turn-line::before{content:'\\21BB';color:var(--na-gold);margin-right:.35em;font-size:1.1em;line-height:0}}" +
   '</style>'
 
 export async function onRequest(context) {
