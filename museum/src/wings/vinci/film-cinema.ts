@@ -3,8 +3,9 @@
    wide glass by film-cinema.css: the stop's line as a caption strip, the three
    seats in the bottom row. This module adds what a stylesheet cannot do: the
    caption cut to two rows with the phone's own "read more" key at its end, the
-   opened caption's one scrolling column, the close look's card standing whole
-   beside the work, and the panel's rows where no other part publishes them. */
+   walk's words in that same strip while the eye walks, the opened caption's
+   one scrolling column, the close look's card standing whole beside the work,
+   and the panel's rows where no other part publishes them. */
 
 import { lang, langTag, say as sayPair, WING_TEXT } from '../content'
 import { deskMark } from '../desk-chrome'
@@ -142,6 +143,10 @@ export function createFilmCinema(host: FilmCinemaHost): FilmCinema {
   /* the panel shows the stop's line beside an open drawer, so it never keeps
      the upright form's hidden mark there, which a screen reader obeys */
   const lineShown = (): void => { const line = part('film-line'); if (line?.hidden) line.hidden = false }
+  /* THE WALK'S WORDS take the caption's strip while the eye walks (walk-controls.ts
+     builds them, film-cinema.css sets them in the strip's box); upright they
+     stand over the foot row again */
+  const walkWords = box.querySelector<HTMLElement>(':scope > .walk-panel')
   let on = false
   function set(want: boolean): void {
     if (want === on) return
@@ -152,7 +157,9 @@ export function createFilmCinema(host: FilmCinemaHost): FilmCinema {
       lineShown()
       box.insertBefore(panel, foot)
       if (foot && gold) foot.insertBefore(caption, gold)
+      if (foot && gold && walkWords) foot.insertBefore(walkWords, gold)
       paint()
+      requestAnimationFrame(fitWalk)
     } else {
       for (const node of [...panel.children]) box.insertBefore(node, panel)
       panel.remove()
@@ -160,6 +167,7 @@ export function createFilmCinema(host: FilmCinemaHost): FilmCinema {
       const line = part('film-line')
       if (line) line.hidden = part('film-drawer')?.hidden === false
       caption.remove()
+      if (walkWords && foot) { box.insertBefore(walkWords, foot); unfitWalk() }
       for (const scroller of cut) scroller.style.removeProperty('--cinema-cut')
       cut.clear()
       recordLines()
@@ -227,6 +235,44 @@ export function createFilmCinema(host: FilmCinemaHost): FilmCinema {
     words.textContent = `${all.slice(0, best).join(' ').replace(/[,;:.]$/, '')}…`
     caption.dataset['cut'] = 'true'
   }
+  /* ---- the walk's words in the strip: two rows at most, as the caption ----
+     The first row says where the walk goes, the skip at its end; the second
+     row the tip or the held word. What the strip cannot hold gives way in
+     this order: the tip's other sentence, the tip, the kicker, then the
+     name's end (an ellipsis). Where the row leaves the strip too narrow for
+     the caption's words, the walk's words give way as the caption does: only
+     the skip stays. The attributes are this form's alone (film-cinema.css). */
+  const STRIP_FLAGS = ['strip', 'stripKicker', 'stripTip'] as const
+  function unfitWalk(): void {
+    if (!walkWords) return
+    for (const flag of STRIP_FLAGS) delete walkWords.dataset[flag]
+    for (const off of walkWords.querySelectorAll<HTMLElement>('[data-strip-off]')) delete off.dataset['stripOff']
+  }
+  function fitWalk(): void {
+    if (!on || !walkWords || walkWords.hidden || walkWords.parentElement !== foot) return
+    unfitWalk()
+    walkWords.dataset['strip'] = 'measure'
+    const free = walkWords.clientWidth
+    walkWords.dataset['strip'] = free > 0 && free < CAPTION_LEAST ? 'squeezed' : 'rows'
+    if (walkWords.dataset['strip'] === 'squeezed') return
+    const to = walkWords.querySelector<HTMLElement>('.walk-to')
+    if (to && to.scrollWidth > to.clientWidth + 1) walkWords.dataset['stripKicker'] = 'off'
+    const tip = walkWords.querySelector<HTMLElement>('.walk-tip')
+    if (!tip || tip.hidden || tip.dataset['held'] !== undefined) return
+    const row = parseFloat(getComputedStyle(tip).lineHeight) || 20
+    const rows = (): number => Math.round(tip.getBoundingClientRect().height / row)
+    if (rows() <= 1) return
+    // the hint's way on is its last sentence; every other tip says its point first
+    const parts = [...tip.querySelectorAll<HTMLElement>('.walk-tip-part')]
+    const keep = tip.dataset['tip'] === 'hint' ? parts.at(-1) : parts[0]
+    for (const sentence of parts) if (sentence !== keep) sentence.dataset['stripOff'] = ''
+    if (parts.length > 1 && rows() <= 1) return
+    walkWords.dataset['stripTip'] = 'off'
+  }
+  const walkWatch = new MutationObserver(() => requestAnimationFrame(fitWalk))
+  if (walkWords) walkWatch.observe(walkWords, { subtree: true, childList: true, characterData: true, attributes: true, attributeFilter: ['hidden', 'data-held', 'data-tip', 'data-gone'] })
+  signal.addEventListener('abort', () => walkWatch.disconnect())
+
   /** the opened caption stands over the strip's own place, as wide as the strip */
   function room(): void {
     const r = caption.getBoundingClientRect(), b = box.getBoundingClientRect(), g = gold?.getBoundingClientRect()
@@ -260,7 +306,7 @@ export function createFilmCinema(host: FilmCinemaHost): FilmCinema {
     }
   }
   const watch = new MutationObserver(() => { if (on) paint() })
-  watch.observe(wing, { subtree: true, attributes: true, attributeFilter: ['data-peek', 'data-drawer', 'hidden'] })
+  watch.observe(wing, { subtree: true, attributes: true, attributeFilter: ['data-peek', 'data-drawer', 'hidden', 'data-walk'] })
   const lineWatch = new MutationObserver(() => paint())
   const phoneLine = part('film-line')
   if (phoneLine) lineWatch.observe(phoneLine, { childList: true, characterData: true, subtree: true })
@@ -280,9 +326,9 @@ export function createFilmCinema(host: FilmCinemaHost): FilmCinema {
     }
   })
   lifeWatch.observe(wing, { subtree: true, attributes: true, attributeFilter: ['open'] })
-  addEventListener('resize', () => { said = ''; requestAnimationFrame(() => { paint(); panelLines() }) }, { signal })
-  // gold's name settles its own width a frame late, and the row its own at a turn: the caption and an open look take what is left
-  const goldWatch = new ResizeObserver(() => requestAnimationFrame(() => { paint(); if (on) host.relayout?.() }))
+  addEventListener('resize', () => { said = ''; requestAnimationFrame(() => { paint(); fitWalk(); panelLines() }) }, { signal })
+  // gold's name settles its own width a frame late, and the row its own at a turn: the caption, the walk's words and an open look take what is left
+  const goldWatch = new ResizeObserver(() => requestAnimationFrame(() => { paint(); fitWalk(); if (on) host.relayout?.() }))
   if (gold) goldWatch.observe(gold)
   if (foot) goldWatch.observe(foot)
   signal.addEventListener('abort', () => { watch.disconnect(); lineWatch.disconnect(); lifeWatch.disconnect(); goldWatch.disconnect(); probe.remove(); set(false) })

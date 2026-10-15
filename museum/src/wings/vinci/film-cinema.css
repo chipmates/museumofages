@@ -745,17 +745,63 @@ html:has(#wing[data-film='cinema']) :is(#inst-sound, #inst-plan) { display: none
 #wing[data-film='cinema'] .wing-plan .wing-plan-reading { margin-bottom: calc(var(--plan-foot) - 10px + var(--cinema-cut, 0px)); }
 
 /* ---- the walk's own controls sideways: the hold in the book's seat while
-   the walk moves (held, the book is back), the panel a card over the foot
-   row's left, clear of gold and 10 px clear of the seats under it ---- */
+   the walk moves (held, the book is back) ---- */
 #wing[data-film='cinema'][data-walk='moving'] .film-box:not([data-look='true']) .film-foot > .film-book { display: none; }
-#wing[data-film='cinema'] .film-box > .walk-panel {
-  left: var(--cinema-l, 16px);
-  right: auto;
-  bottom: calc(var(--cinema-row, 60px) + var(--cinema-b, 0px) + 6px);
-  max-width: min(520px, calc(100vw - var(--cinema-l, 16px) - var(--cinema-r, 16px) - 220px));
-  padding: 6px 20px 4px 12px;
+/* THE WALK'S WORDS STAND IN THE CAPTION'S STRIP, between the seats and gold:
+   its box, place, ground, padding and 20 px rows, two rows at most. Where to
+   and the skip on the first row, the tip or the held word on the second;
+   film-cinema.ts takes away what the strip cannot hold */
+#wing[data-film='cinema'][data-walk] .cinema-caption { display: none; }
+#wing[data-film='cinema'] .film-foot > .walk-panel {
+  position: relative;
+  flex: 0 1 auto;
+  min-width: 0;
+  margin: 0 8px;
+  padding: 6px 12px;
   border-radius: var(--ui-r-box-side);
-  pointer-events: auto;
+  background: var(--ui-ground);
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  grid-template-areas: 'to ways' 'tip tip';
+  align-items: center;
+  column-gap: 16px;
+  font: 400 .9375rem/20px var(--serif);
+  color: var(--ink);
+}
+#wing[data-film='cinema'] .film-foot > .walk-panel[data-strip='measure'] { flex: 1 1 0 !important; }
+#wing[data-film='cinema'] .film-foot > .walk-panel .walk-to { grid-area: to; min-width: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+#wing[data-film='cinema'] .film-foot > .walk-panel .walk-to-kicker {
+  display: inline; margin-right: 10px; font: 600 .75rem/20px var(--sans); letter-spacing: .12em; vertical-align: 1px;
+}
+#wing[data-film='cinema'] .film-foot > .walk-panel .walk-to-name { display: inline; font: inherit; color: inherit; }
+#wing[data-film='cinema'] .film-foot > .walk-panel .walk-ways { grid-area: ways; justify-self: end; display: flex; }
+#wing[data-film='cinema'] .film-foot > .walk-panel .walk-tip {
+  grid-area: tip; margin: 0; font: 400 .875rem/20px var(--sans); color: var(--ui-text-quiet); white-space: normal;
+}
+/* the skip is the strip's key, as "read more" is the caption's: a word on its 20 px row, 44 px to the hand */
+#wing[data-film='cinema'] .film-foot > .walk-panel .walk-skip {
+  min-height: 0; font: 400 .875rem/20px var(--sans); color: var(--key);
+  text-decoration: underline; text-decoration-color: var(--ui-line-strong); text-underline-offset: 4px; text-decoration-thickness: 1px;
+}
+#wing[data-film='cinema'] .film-foot > .walk-panel .walk-skip::after,
+#wing[data-film='cinema'] .film-foot > .walk-panel .walk-skip:is(:hover, :focus-visible)::after {
+  left: -6px; right: -8px; top: -12px; bottom: -12px; height: auto; background: none;
+}
+#wing[data-film='cinema'] .film-foot > .walk-panel .walk-skip:is(:hover, :focus-visible) { text-decoration-color: var(--ui-text); }
+#wing[data-film='cinema'] .film-foot > .walk-panel .walk-skip:focus-visible { outline: 1px solid var(--gold); outline-offset: 3px; }
+/* what the strip gives way: a sentence, the tip, the kicker; squeezed, only the skip stays.
+   The words leave the view, never the screen reader's reading of where the walk goes */
+#wing[data-film='cinema'] .film-foot > .walk-panel [data-strip-off],
+#wing[data-film='cinema'] .film-foot > .walk-panel:is([data-strip-tip='off'], [data-strip='squeezed']) .walk-tip { display: none; }
+#wing[data-film='cinema'] .film-foot > .walk-panel[data-strip-kicker='off'] .walk-to-kicker,
+#wing[data-film='cinema'] .film-foot > .walk-panel[data-strip='squeezed'] .walk-to {
+  position: absolute; width: 1px; height: 1px; margin: 0; padding: 0; overflow: hidden; clip-path: inset(50%); white-space: nowrap;
+}
+#wing[data-film='cinema'] .film-foot > .walk-panel[data-strip='squeezed'] { grid-template-columns: auto; grid-template-areas: 'ways'; }
+/* UNDER 700 PX WIDE THE PLAN'S SEAT STANDS DOWN, so the strip keeps the room
+   for the caption's words: the book's Menu holds the Plan */
+@media (max-width: 699.98px) {
+  #wing[data-film='cinema'] .film-foot > .film-plan { display: none; }
 }
 /* the seats stand over the picture on the card's own solid ground, so a grey
    arrow keeps its contrast over a bright painting; a disabled one dims its

@@ -6,4 +6,4 @@ export function walkKey(at: { key: string; repeat?: boolean; layer: WalkLayer; w
 export type WalkTip = 'keys' | 'sideways' | 'plan' | 'look'
 export const TIPS: readonly WalkTip[]
 export const TIPS_MOST: number
-export function nextTip(at: { shown: readonly string[]; upright: boolean; looked: boolean }): WalkTip | null
+export function nextTip(at: { shown: readonly string[]; upright: boolean; looked: boolean; plan?: boolean }): WalkTip | null

@@ -280,7 +280,8 @@ export function createWalkPanel(host: WalkPanelHost, signal: AbortSignal): WalkP
       walking = true
       element.hidden = false
       if (toStop && tipNow !== 'hint') {
-        const next = nextTip({ shown: tipsShown(), upright: host.sideways() !== null, looked: host.looked() })
+        // the plan's tip names the square: where the form stands it down, the tip waits
+        const next = nextTip({ shown: tipsShown(), upright: host.sideways() !== null, looked: host.looked(), plan: plan.isConnected && plan.getClientRects().length > 0 })
         // a tip whose words the wing cannot say is passed over and kept for no later walk
         if (next) { markTip(next); tipNow = tipWords(next) ? next : null }
       }

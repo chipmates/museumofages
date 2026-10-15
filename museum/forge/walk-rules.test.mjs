@@ -100,3 +100,10 @@ test('each tip once a visit and four at most, carried over a reload', () => {
   assert.equal(nextTip({ shown: ['keys'], upright: false, looked: false }), 'plan')
   assert.equal(nextTip({ shown: ['keys', 'plan'], upright: true, looked: true }), 'sideways')
 })
+
+test('the plan tip waits while the glass shows no Plan square, and comes once it does', () => {
+  assert.equal(nextTip({ shown: ['keys'], upright: false, looked: false, plan: false }), 'look')
+  assert.equal(nextTip({ shown: ['keys', 'look'], upright: false, looked: false, plan: false }), null)
+  assert.equal(nextTip({ shown: ['keys', 'look'], upright: false, looked: false, plan: true }), 'plan')
+  assert.equal(nextTip({ shown: ['keys'], upright: false, looked: false }), 'plan')
+})

@@ -49,16 +49,17 @@ export const TIPS_MOST = 4
  * The tip a walk to a stop carries, or null. One a walk, each once a visit,
  * four at most: the keys on the visit's first walk; on an upright phone, the
  * turn sideways on the next; then the plan; later, while no close look has
- * been opened, how to open one.
- * @param {{ shown: readonly string[], upright: boolean, looked: boolean }} at
+ * been opened, how to open one. The plan's tip names the Plan's square, so it
+ * waits while the glass shows no square (`plan` false).
+ * @param {{ shown: readonly string[], upright: boolean, looked: boolean, plan?: boolean }} at
  * @returns {'keys' | 'sideways' | 'plan' | 'look' | null}
  */
-export function nextTip({ shown, upright, looked }) {
+export function nextTip({ shown, upright, looked, plan = true }) {
   if (shown.length >= TIPS_MOST) return null
   const seen = new Set(shown)
   if (!seen.has('keys')) return 'keys'
   if (upright && !seen.has('sideways')) return 'sideways'
-  if (!seen.has('plan')) return 'plan'
+  if (plan && !seen.has('plan')) return 'plan'
   if (!looked && !seen.has('look')) return 'look'
   return null
 }
