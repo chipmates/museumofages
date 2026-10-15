@@ -7,11 +7,12 @@ import { createHash } from 'node:crypto'
 import { existsSync, readFileSync } from 'node:fs'
 import { createRequire } from 'node:module'
 import { fileURLToPath } from 'node:url'
-import { ASK_SCRIPT, CLICK, ENTRY_KEY, GRANT_PREFIX, WALK_PREFIX, YES_MAX_AGE_MS, asks, unasked } from '../functions/_entry/rules.js'
+import vm from 'node:vm'
+import { ASK_SCRIPT, CLICK, ENTRY_ACTION_NAME, ENTRY_ACTION_SETTING, ENTRY_KEY, GRANT_PREFIX, VISIT_ACTION_NAME, VISIT_ACTION_SETTING, VISIT_KIND, WALK_PREFIX, YES_MAX_AGE_MS, askedMaking, asks, unasked } from '../functions/_entry/rules.js'
 import * as entryModule from '../functions/v1/entry.js'
-import { API_VERSION, MAX_BODY, SETTINGS, YES_SKEW_MS, dateTimeOf, forgetToken, onRequestPost, orderIdOf, redact, uploadBody } from '../functions/v1/entry.js'
+import { API_VERSION, MAX_BODY, SETTINGS, VISIT_SETTINGS, YES_SKEW_MS, actionOf, dateTimeOf, entryOf, forgetToken, onRequestPost, orderIdOf, redact, uploadBody } from '../functions/v1/entry.js'
 import { onRequest as middleware, WING_STYLE, wingPage } from '../functions/_middleware.js'
-import { UNASKED, WING_STOPS } from '../functions/_count/lists.js'
+import { ASKED_MAKING, UNASKED, WING_STOPS } from '../functions/_count/lists.js'
 
 const at = (rel) => fileURLToPath(new URL(rel, import.meta.url))
 const ORIGIN = 'https://museumofages.org'
@@ -100,6 +101,8 @@ test('the page\'s script and the walk\'s sender hold the same rules as the funct
   assert.ok(walk.includes(`const ENTRY_KEY = '${ENTRY_KEY}'`))
   assert.ok(walk.includes('const YES_MAX_AGE_MS = 6 * 60 * 60 * 1000'))
   assert.ok(walk.includes("const ENDPOINT = '/v1/entry'"))
+  // the page sends the yes itself to the same function, by its own word
+  assert.ok(page.includes(`var ENDPOINT = '/v1/entry', VISIT_KIND = '${VISIT_KIND}';`))
   // the count's own script never reads the tab's entry
   assert.ok(!readFileSync(at('../_src/js/count.js'), 'utf8').includes(ENTRY_KEY))
   assert.ok(!readFileSync(at('../../museum/src/core/museum-count.ts'), 'utf8').includes(ENTRY_KEY))
@@ -209,21 +212,34 @@ test('the edge puts the wing\'s first-look style into the head of a wing\'s addr
   assert.match(WING_STYLE, /^<style>[^<]*<\/style>$/)
 })
 
-/* ---- the pages of a wing in the making: never asked, whatever the address carries ---- */
+/* ---- a wing in the making: its own page never asked, its topic pages asked, a yes there the visit alone ---- */
 
-const MAKING = ['/a/g/animals/', '/a/g/animals/megalodon/', `/a/g/animals/megalodon/?gclid=${GCLID}`, '/a/g/de/tiere/',
-  '/a/g/de/tiere/megalodon/', '/a/g/animals', '/a/g/de/tiere', '/a/g//animals/megalodon/', '/a/g/Animals/Megalodon/',
-  '/a/g/%61nimals/megalodon/', '/a/g/de//tiere/', '/a/g/animals/megalodon/index.html', '/a/g/de/TIERE/megalodon/']
+const HUB = ['/a/g/animals/', `/a/g/animals/?gclid=${GCLID}`, '/a/g/de/tiere/', '/a/g/animals', '/a/g/de/tiere', '/a/g//animals/',
+  '/a/g/Animals/', '/a/g/%61nimals/', '/a/g/de//tiere/', '/a/g/animals/index.html', '/a/g/de/TIERE/',
+  // a path that only begins like a topic page's stays under the wing's own and is not asked
+  '/a/g/animals/megalodonx/', '/a/g/animals/megalodon/x/', '/a/g/de/tiere/megalodon-x/']
+const TOPICS = Object.values(ASKED_MAKING).flat()
+const spellings = (page) => [`/a/g${page}`, `/a/g${page}?gclid=${GCLID}`, `/a/g${page.slice(0, -1)}`, `/a/g${page}index.html`,
+  `/a/g${page.toUpperCase()}`, `/a/g/${page}`, `/a/g${page.replace(/a/, '%61')}`]
 
-test('the edge never gives the question\'s script to a page of a wing in the making, by any spelling of its address', () => {
+test('the count\'s lists name the six animal pages in English and German as the topic pages that ask', () => {
   assert.deepEqual([...UNASKED].sort(), ['/animals/', '/de/tiere/'])
+  assert.deepEqual(Object.keys(ASKED_MAKING), ['megalodon', 'biggest_dinosaurs', 't_rex', 'spinosaurus', 'woolly_mammoth', 'brachiosaurus'])
+  for (const pages of Object.values(ASKED_MAKING)) {
+    assert.equal(pages.length, 2)
+    assert.match(pages[0], /^\/animals\/[a-z-]+\/$/)
+    assert.match(pages[1], /^\/de\/tiere\/[a-z-]+\/$/)
+  }
+})
+
+test('the edge never asks on the own page of a wing in the making, by any spelling of its address', () => {
   const none = new Headers()
-  for (const path of MAKING) {
+  for (const path of HUB) {
     assert.equal(unasked(path), true, path)
     assert.equal(asks(path, none), false, path)
     assert.equal(asks(path, new Headers({ 'Sec-GPC': '0' })), false, path)
   }
-  // a page whose name only begins like theirs is asked as before, and so is every other page under the prefix
+  // a page whose name only begins like the wing's is asked as before, and so is every other page under the prefix
   for (const path of ['/a/g/animalsx/', '/a/g/de/tierex/', '/a/g/de/', '/a/g/leonardo-da-vinci/', '/a/g/de/leonardo-da-vinci/groessen/']) {
     assert.equal(unasked(path), false, path)
     assert.equal(asks(path, none), true, path)
@@ -232,10 +248,34 @@ test('the edge never gives the question\'s script to a page of a wing in the mak
   assert.equal(asks('/a/g/%E0%A4%A/', none), true)
 })
 
-test('the edge puts no question\'s script on a page of a wing in the making, click id or not', async () => {
-  for (const path of [`/a/g/animals/megalodon/?gclid=${GCLID}`, `/a/g/de/tiere/?gclid=${GCLID}`, '/a/g/animals/', `/a/g//de/tiere/megalodon/?gclid=${GCLID}`]) {
+test('the edge asks on every topic page of a wing in the making, by any spelling of its address, never with GPC', () => {
+  assert.equal(TOPICS.length, 12)
+  for (const page of TOPICS) {
+    assert.equal(askedMaking(page), true, page)
+    for (const path of spellings(page)) {
+      const bare = path.split('?')[0]
+      assert.equal(unasked(bare), false, path)
+      assert.equal(asks(bare, new Headers()), true, path)
+      assert.equal(asks(bare, new Headers({ 'Sec-GPC': '1' })), false, path)
+    }
+    // the same page outside the grant's prefix is never asked
+    assert.equal(asks(page, new Headers()), false, page)
+    assert.equal(asks(`/a/p${page}`, new Headers()), false, page)
+  }
+})
+
+test('the edge puts the script on a topic page of a wing in the making, never on the wing\'s own page', async () => {
+  for (const path of [`/a/g/animals/megalodon/?gclid=${GCLID}`, `/a/g/de/tiere/wollhaarmammut/?gclid=${GCLID}`, '/a/g/animals/t-rex/']) {
     await withRewriter(async (seen) => {
       await page(path, { Referer: 'https://www.google.com/' })
+      assert.deepEqual(seen.filter((x) => x.append), [{ selector: 'body', append: '<script src="/static/ask.js" defer></script>', options: { html: true } }], path)
+      assert.deepEqual(seen.find((x) => x.set).set, ['data-source', 'ad_grant'], path)
+    })
+  }
+  for (const path of [`/a/g/animals/?gclid=${GCLID}`, `/a/g/de/tiere/?gclid=${GCLID}`, `/a/g//de/tiere/?gclid=${GCLID}`,
+    `/a/g/animals/megalodon/?gclid=${GCLID}`]) {
+    await withRewriter(async (seen) => {
+      await page(path, path.includes('megalodon') ? { 'Sec-GPC': '1' } : { Referer: 'https://www.google.com/' })
       assert.deepEqual(seen.filter((x) => x.append), [], path)
       // the visit's source word is still set: the count knows the visit came from the grant
       assert.deepEqual(seen.find((x) => x.set).set, ['data-source', 'ad_grant'], path)
@@ -243,8 +283,7 @@ test('the edge puts no question\'s script on a page of a wing in the making, cli
   }
 })
 
-test('the question\'s script does nothing at all on a page of a wing in the making, whatever its address carries', async () => {
-  const vm = await import('node:vm')
+test('the question\'s script does nothing at all on the own page of a wing in the making, whatever its address carries', async () => {
   const source = readFileSync(at('../_src/js/ask.js'), 'utf8').replace('{/*words*/}', JSON.stringify({ en: { privacy: '/privacy/' } }))
   const run = (marked) => {
     const done = []
@@ -257,7 +296,7 @@ test('the question\'s script does nothing at all on a page of a wing in the maki
       addEventListener: (t) => done.push(`listen ${t}`),
     }
     const window = {
-      location: { hostname: 'museumofages.org', pathname: '/a/g/animals/megalodon/', search: `?gclid=${GCLID}`, hash: '' },
+      location: { hostname: 'museumofages.org', pathname: '/a/g/animals/', search: `?gclid=${GCLID}`, hash: '' },
       history: { state: null, replaceState: () => done.push('replaceState') },
       sessionStorage: { getItem: () => null, setItem: () => done.push('store'), removeItem() {} },
     }
@@ -270,15 +309,183 @@ test('the question\'s script does nothing at all on a page of a wing in the maki
   assert.ok(run(false).includes('replaceState'))
 })
 
-test('every built page of a wing in the making carries the mark, and stands at an address the edge never asks', () => {
+test('every built page of a wing in the making carries its mark: the wing\'s own page never asked, each topic page a visit alone', () => {
   const dist = at('../dist/')
   if (!existsSync(dist)) return
-  for (const rel of ['animals/index.html', 'animals/megalodon/index.html', 'de/tiere/index.html', 'de/tiere/megalodon/index.html']) {
+  for (const rel of ['animals/index.html', 'de/tiere/index.html']) {
     const text = readFileSync(dist + rel, 'utf8')
     assert.match(text, /<main\b[^>]*\sdata-unasked[\s>]/, rel)
     assert.ok(!text.includes('/static/ask.js'), rel)
     assert.equal(asks(`/a/g/${rel.replace(/index\.html$/, '')}`, new Headers()), false, rel)
   }
+  for (const pagePath of TOPICS) {
+    const text = readFileSync(dist + pagePath.slice(1) + 'index.html', 'utf8')
+    assert.match(text, /<main\b[^>]*\sdata-asks="visit"/, pagePath)
+    assert.ok(!/<main\b[^>]*\sdata-unasked/.test(text), pagePath)
+    // no way into a walk from here: a yes can count nothing but the visit
+    assert.ok(!/\sdata-door=|href="[^"]*\/w\//.test(text), pagePath)
+    assert.equal(asks(`/a/g${pagePath}`, new Headers()), true, pagePath)
+  }
+})
+
+/* ---- the page's script, run in a stand-in page: what a yes, a no and the X send and keep ---- */
+
+const ASK_KEYS = ['kicker', 'q', 'what', 'whom', 'why', 'age', 'yes', 'no', 'more', 'google', 'newtab', 'close', 'dismiss', 'thanks',
+  'undo', 'undone', 'held', 'none', 'visit_what', 'visit_whom', 'visit_thanks']
+const ASK_WORDS = { en: { ...Object.fromEntries(ASK_KEYS.map((k) => [k, `<${k}>`])), privacy: '/privacy/' } }
+const ASK_SOURCE = readFileSync(at('../_src/js/ask.js'), 'utf8').replace('{/*words*/}', JSON.stringify(ASK_WORDS))
+
+/** Runs ask.js once in a small stand-in page. The tab's storage is passed in, so two runs can share one tab. */
+function askPage({ path, visit = false, gpc = false, tab = new Map(), storage = true } = {}) {
+  const [pathname, search = ''] = path.split('?')
+  const made = [], posts = [], events = [], addresses = []
+  const doc = { activeElement: null }
+  class El {
+    constructor(tag) { Object.assign(this, { tag, children: [], attrs: {}, on: {}, className: '', _text: '', isConnected: true,
+      offsetHeight: 300, scrollHeight: 0, clientHeight: 0, scrollTop: 0, style: { setProperty() {}, removeProperty() {} },
+      classList: { add() {}, remove() {}, toggle() {} } }); made.push(this) }
+    get textContent() { return this._text }
+    set textContent(v) { this._text = String(v); if (v === '') this.children = [] }
+    setAttribute(n, v) { this.attrs[n] = String(v) }
+    getAttribute(n) { return n in this.attrs ? this.attrs[n] : null }
+    hasAttribute(n) { return n in this.attrs }
+    removeAttribute(n) { delete this.attrs[n] }
+    appendChild(c) { this.children.push(c); c.parentNode = this; if (typeof c.onload === 'function') c.onload(); return c }
+    insertBefore(c) { return this.appendChild(c) }
+    addEventListener(type, fn) { (this.on[type] ||= []).push(fn) }
+    click() { for (const fn of this.on.click || []) fn() }
+    remove() { this.isConnected = false; this.removed = true }
+    focus() { doc.activeElement = this }
+    contains() { return false }
+  }
+  const body = new El('body'), main = new El('main'), head = new El('head')
+  body.appendChild(main)
+  const html = new El('html')
+  html.attrs.lang = 'en'
+  Object.assign(doc, {
+    documentElement: html, head, body, currentScript: null, prerendering: false,
+    createElement: (tag) => new El(tag),
+    getElementById: (id) => (id === 'main' ? main : null),
+    querySelector: (sel) => (sel === 'main[data-asks="visit"]' ? (visit ? main : null) : sel === 'main' ? main : null),
+    addEventListener() {},
+    dispatchEvent: (e) => { events.push(e.detail === undefined ? e.type : `${e.type} ${e.detail}`); return true },
+  })
+  const session = {
+    getItem: (k) => (tab.has(k) ? tab.get(k) : null),
+    setItem: (k, v) => { tab.set(k, String(v)) },
+    removeItem: (k) => { tab.delete(k) },
+  }
+  const window = {
+    location: { hostname: 'museumofages.org', pathname, search: search ? `?${search}` : '', hash: '' },
+    history: { state: null, replaceState: (s, _, url) => addresses.push(url) },
+    fetch: (url, init) => { posts.push({ url, init, body: JSON.parse(init.body) }); return Promise.resolve(new Response(null, { status: 204 })) },
+    getComputedStyle: () => ({ bottom: '0px' }),
+    addEventListener() {}, removeEventListener() {}, requestAnimationFrame: () => 1, cancelAnimationFrame() {},
+    setTimeout, clearTimeout,
+  }
+  Object.defineProperty(window, 'sessionStorage', { get() { if (!storage) throw new Error('blocked'); return session } })
+  class CustomEvent { constructor(type, init = {}) { this.type = type; this.detail = init.detail } }
+  vm.runInNewContext(ASK_SOURCE, { document: doc, window, navigator: { globalPrivacyControl: gpc }, CustomEvent, JSON, Date })
+  const find = (text) => made.find((n) => n.tag === 'button' && n._text === text)
+  const card = made.find((n) => n.tag === 'section' && n.className.startsWith('ask'))
+  const words = () => made.filter((n) => n._text && !n.removed).map((n) => n._text)
+  return { tab, posts, events, addresses, card, find, words, yes: () => find('<yes>').click(), no: () => find('<no>').click(),
+    x: () => made.find((n) => n.className === 'ask__close').click() }
+}
+const LEO = `/a/g/leonardo-da-vinci/?gclid=${GCLID}`
+const ANIMAL = `/a/g/animals/megalodon/?gclid=${GCLID}`
+
+test('the page\'s script: a yes on a Leonardo page sends one visit at once and keeps the entry for the walk', () => {
+  const before = Date.now()
+  const p = askPage({ path: LEO })
+  assert.ok(p.card, 'the card stands')
+  assert.deepEqual(p.addresses, ['/a/g/leonardo-da-vinci/'])
+  assert.equal(p.posts.length, 0)
+  p.yes()
+  assert.equal(p.posts.length, 1)
+  const [{ url, init, body }] = p.posts
+  assert.equal(url, '/v1/entry')
+  assert.deepEqual(Object.keys(body), ['gclid', 'yes', 'kind'])
+  assert.equal(body.gclid, GCLID)
+  assert.equal(body.kind, VISIT_KIND)
+  assert.ok(body.yes >= before && body.yes <= Date.now())
+  assert.equal(init.method, 'POST')
+  assert.equal(init.keepalive, true)
+  assert.equal(init.credentials, 'omit')
+  assert.equal(init.mode, 'same-origin')
+  const kept = JSON.parse(p.tab.get(ENTRY_KEY))
+  assert.deepEqual(Object.keys(kept), ['gclid', 'yes'])
+  assert.equal(kept.gclid, GCLID)
+  assert.ok(p.words().includes('<thanks>'))
+  assert.ok(p.find('<undo>'), 'the yes can be taken back for the entry')
+  // a second press, from any button left in the page, sends nothing more
+  p.yes()
+  assert.equal(p.posts.length, 1)
+  assert.deepEqual(p.events, ['moa:shown', 'moa:answer yes'])
+  // taking it back stops the entry, the visit has gone
+  p.find('<undo>').click()
+  assert.equal(p.tab.has(ENTRY_KEY), false)
+})
+
+test('the page\'s script: a second yes in the same tab for the same click sends nothing new, a new click counts once', () => {
+  const tab = new Map()
+  assert.equal(askPage({ path: LEO, tab }).yes() ?? 1, 1)
+  const first = JSON.parse(tab.get(ENTRY_KEY))
+  const again = askPage({ path: `/a/g/de/leonardo-da-vinci/?gclid=${GCLID}`, tab })
+  again.yes()
+  assert.equal(again.posts.length, 0, 'the same click was counted at its first yes')
+  assert.equal(JSON.parse(tab.get(ENTRY_KEY)).gclid, first.gclid)
+  const other = GCLID.replace('TEST', 'NEXT')
+  const fresh = askPage({ path: `/a/g/leonardo-da-vinci/?gclid=${other}`, tab })
+  fresh.yes()
+  assert.equal(fresh.posts.length, 1)
+  assert.equal(fresh.posts[0].body.gclid, other)
+  assert.equal(JSON.parse(tab.get(ENTRY_KEY)).gclid, other)
+})
+
+test('the page\'s script: a yes on an animal page sends the visit once and keeps nothing, with nothing to take back', () => {
+  const p = askPage({ path: ANIMAL, visit: true })
+  assert.ok(p.words().includes('<visit_what>') && p.words().includes('<visit_whom>'))
+  assert.ok(!p.words().includes('<what>') && !p.words().includes('<whom>'))
+  p.yes()
+  p.yes()
+  assert.equal(p.posts.length, 1)
+  assert.deepEqual(p.posts[0].body.kind, 'visit')
+  assert.equal(p.posts[0].body.gclid, GCLID)
+  assert.equal(p.tab.size, 0, 'nothing in the tab')
+  assert.ok(p.words().includes('<visit_thanks>'))
+  assert.equal(p.find('<undo>'), undefined)
+  // a tab whose storage is blocked is still asked here, since nothing is kept
+  const blocked = askPage({ path: ANIMAL, visit: true, storage: false })
+  assert.ok(blocked.card)
+  blocked.yes()
+  assert.equal(blocked.posts.length, 1)
+  // a Leonardo page in such a tab is not asked: its yes could not reach the walk
+  assert.equal(askPage({ path: LEO, storage: false }).card, undefined)
+})
+
+test('the page\'s script: a no, the X, no click id, a broken one, Global Privacy Control or another prefix send and keep nothing', () => {
+  for (const visit of [false, true]) {
+    const path = visit ? ANIMAL : LEO
+    const no = askPage({ path, visit })
+    no.no()
+    const x = askPage({ path, visit })
+    x.x()
+    for (const p of [no, x]) {
+      assert.equal(p.posts.length, 0)
+      assert.equal(p.tab.size, 0)
+    }
+    assert.deepEqual(no.events, ['moa:shown', 'moa:answer no'])
+    assert.deepEqual(x.events, ['moa:shown', 'moa:answer close'])
+    for (const quiet of [askPage({ path: path.split('?')[0], visit }), askPage({ path: path.replace(GCLID, 'short'), visit }),
+      askPage({ path, visit, gpc: true }), askPage({ path: path.replace('/a/g/', '/a/p/'), visit }), askPage({ path: path.replace('/a/g/', '/'), visit })]) {
+      assert.equal(quiet.card, undefined)
+      assert.equal(quiet.posts.length, 0)
+      assert.equal(quiet.tab.size, 0)
+    }
+  }
+  // with Global Privacy Control the click id is not even read from the address
+  assert.deepEqual(askPage({ path: ANIMAL, visit: true, gpc: true }).addresses, [])
 })
 
 /* ---- the function: every check, one by one ---- */
@@ -443,6 +650,116 @@ test('the access token is kept in memory: a second entry asks Google once', asyn
 test('the route hands the upload to waitUntil and answers before it ends', async () => {
   const { waits } = await post(good())
   assert.equal(waits.length, 1)
+})
+
+/* ---- the yes itself: a Museum Visit, at once, on every page that asks ---- */
+
+const VISIT_ACTION = 'customers/4445556666/conversionActions/123123123'
+const ENV_BOTH = Object.freeze({ ...ENV, MOA_VISIT_ACTION: VISIT_ACTION })
+const visit = (over = {}) => ({ gclid: GCLID, yes: Date.now() - 1_000, kind: 'visit', ...over })
+
+test('the two actions and their settings: the visit and the entry, each a name and a setting of its own', () => {
+  assert.equal(VISIT_ACTION_NAME, 'Museum Visit')
+  assert.equal(VISIT_ACTION_SETTING, 'MOA_VISIT_ACTION')
+  assert.equal(ENTRY_ACTION_NAME, 'Museum Entry')
+  assert.equal(ENTRY_ACTION_SETTING, 'MOA_ENTRY_ACTION')
+  assert.equal(VISIT_KIND, 'visit')
+  assert.deepEqual([...VISIT_SETTINGS], [...SETTINGS.slice(0, -1), 'MOA_VISIT_ACTION'])
+  assert.equal(SETTINGS.at(-1), 'MOA_ENTRY_ACTION')
+  assert.deepEqual(actionOf({ gclid: GCLID, kind: 'visit' }).name, 'Museum Visit')
+  assert.deepEqual(actionOf({ gclid: GCLID, wing: 'vinci' }).name, 'Museum Entry')
+})
+
+test('a yes is reported as a Museum Visit to its own action, with an order id of the click and the word visit', async () => {
+  const calls = await sent(visit(), { env: ENV_BOTH })
+  const body = JSON.parse(calls[1].init.body)
+  const order = 'moa-' + createHash('sha256').update(`${GCLID}:visit`).digest('hex').slice(0, 32)
+  assert.deepEqual(body, {
+    conversions: [{
+      gclid: GCLID,
+      conversionAction: VISIT_ACTION,
+      conversionDateTime: body.conversions[0].conversionDateTime,
+      orderId: order,
+      consent: { adUserData: 'GRANTED', adPersonalization: 'DENIED' },
+    }],
+    partialFailure: true,
+  })
+  for (const s of ['203.0.113.9', 'Mozilla', 'museumofages', 'visit"', 'yes']) assert.ok(!calls[1].init.body.includes(s), s)
+  // the entry still goes to its own action, with its own order id
+  const entry = JSON.parse((await sent(good(), { env: ENV_BOTH }))[1].init.body).conversions[0]
+  assert.equal(entry.conversionAction, ENV.MOA_ENTRY_ACTION)
+  assert.notEqual(entry.orderId, order)
+})
+
+test('one click counts once per action: the same visit twice carries the same order id, the entry another', async () => {
+  const a = JSON.parse((await sent(visit(), { env: ENV_BOTH }))[1].init.body).conversions[0].orderId
+  const b = JSON.parse((await sent(visit({ yes: Date.now() - 5_000 }), { env: ENV_BOTH }))[1].init.body).conversions[0].orderId
+  assert.equal(a, b)
+  assert.equal(a, await orderIdOf(GCLID, 'visit'))
+  assert.notEqual(a, await orderIdOf(GCLID, 'vinci'))
+  assert.notEqual(a, await orderIdOf(GCLID.replace('T', 'U'), 'visit'))
+})
+
+test('the visit needs the account\'s settings and its own action, never the entry\'s, and the entry never the visit\'s', async () => {
+  const env = { ...ENV_BOTH }
+  delete env.MOA_ENTRY_ACTION
+  await sent(visit(), { env })
+  await silent(good(), { env })
+  // the entry stands as it was: its seven settings and no more
+  await sent(good(), { env: ENV })
+  for (const name of VISIT_SETTINGS) {
+    const without = { ...ENV_BOTH }
+    delete without[name]
+    await silent(visit(), { env: without })
+  }
+  await silent(visit(), { env: { ...ENV_BOTH, MOA_VISIT_ACTION: 'customers/9999999999/conversionActions/1' } })
+  const bare = await sent(visit(), { env: { ...ENV_BOTH, MOA_VISIT_ACTION: '123123123' } })
+  assert.equal(JSON.parse(bare[1].init.body).conversions[0].conversionAction, VISIT_ACTION)
+})
+
+test('until its action is set, a visit sends nothing and its log line says so, without the click id', async () => {
+  const from = lines.length
+  await silent(visit(), { env: ENV })
+  await silent(visit(), { env: { ...ENV, MOA_VISIT_ACTION: '   ' } })
+  await silent(visit(), { env: { ...ENV_BOTH, GADS_CUSTOMER_ID: '' } })
+  const said = lines.slice(from)
+  assert.deepEqual(said, ['[entry] Museum Visit not sent: MOA_VISIT_ACTION is not set', '[entry] Museum Visit not sent: MOA_VISIT_ACTION is not set',
+    '[entry] Museum Visit not sent: a setting is missing or off its shape'])
+  // the entry without its settings stays silent, as it was
+  const quiet = lines.length
+  await silent(good(), { env: {} })
+  assert.equal(lines.length, quiet)
+})
+
+test('a body names one kind: a wing or the visit, never both, never another word', async () => {
+  const now = Date.now()
+  assert.deepEqual(entryOf(JSON.stringify(visit()), now), { gclid: GCLID, kind: 'visit' })
+  assert.deepEqual(entryOf(JSON.stringify(good()), now), { gclid: GCLID, wing: 'vinci' })
+  for (const body of [visit({ wing: 'vinci' }), visit({ kind: 'Visit' }), visit({ kind: 'entry' }), visit({ kind: 1 }), visit({ kind: null }),
+    visit({ kind: ['visit'] }), visit({ gclid: 'short' }), visit({ yes: now - YES_MAX_AGE_MS - 1 }), visit({ yes: now + YES_SKEW_MS + 60_000 }),
+    { gclid: GCLID, yes: now }]) {
+    assert.equal(entryOf(JSON.stringify(body), now), null, JSON.stringify(body))
+    await silent(body, { env: ENV_BOTH })
+  }
+})
+
+test('a visit: its own origin only, never with Global Privacy Control, a small body only', async () => {
+  await silent(visit(), { env: ENV_BOTH, headers: { Origin: 'https://example.com' } })
+  await silent(visit(), { env: ENV_BOTH, headers: { Origin: '' } })
+  await silent(visit(), { env: ENV_BOTH, headers: { 'Sec-GPC': '1' } })
+  await silent(visit({ pad: 'x'.repeat(MAX_BODY) }), { env: ENV_BOTH })
+})
+
+test('a visit\'s errors from Google are logged under its name, without the click id', async () => {
+  const from = lines.length
+  await post(visit(), { env: ENV_BOTH, answer: { upload: () => new Response(`bad ${GCLID}`, { status: 400 }) } })
+  await post(visit(), { env: ENV_BOTH, answer: { upload: () => Response.json({ partialFailureError: { message: `exists ${GCLID}` } }) } })
+  await post(visit(), { env: ENV_BOTH })
+  const said = lines.slice(from)
+  assert.match(said[0], /^\[entry\] Museum Visit upload http 400: bad \[redacted\]$/)
+  assert.match(said[1], /^\[entry\] Museum Visit not counted: exists \[redacted\]$/)
+  assert.equal(said[2], '[entry] Museum Visit counted')
+  assert.ok(said.every((l) => !l.includes(GCLID)))
 })
 
 /* ---- the click id in no log line ---- */

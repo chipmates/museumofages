@@ -1,18 +1,23 @@
-// POST /v1/entry: a museum entry, sent by the walk once when a wing opens in a tab that holds a yes to the question
-// for visitors from our Google Ad Grants ads (site/_src/js/ask.js, museum/src/core/museum-entry.ts). The function
-// checks the request and its three fields, then reports one conversion to the Google Ads API, server to server: the
-// click id, the conversion action, the time now, an order id made from the click id and the wing, and the consent
-// signal. Nothing else about the visitor goes out, and nothing is kept here. It answers 204 whatever happens.
-// The click id is never logged, stored or echoed: every line it could reach is redacted first.
-// Every setting comes from the environment. Without all of them nothing is sent, so the code can stand live dark.
+// POST /v1/entry: a yes to the question for visitors from our Google Ad Grants ads, reported as one of two
+// conversions (site/_src/js/ask.js, museum/src/core/museum-entry.ts). The visit: the page sends it at once on a yes,
+// with the word visit. The entry: the walk sends it once when a wing opens in a tab that holds a yes, with the wing.
+// The function checks the request and its three fields, then reports one conversion to the Google Ads API, server to
+// server: the click id, the action of its kind, the time now, an order id made from the click id and the kind (the
+// wing for an entry), and the consent signal. Nothing else about the visitor goes out, and nothing is kept here. It
+// answers 204 whatever happens. The click id is never logged, stored or echoed: every line it could reach is
+// redacted first. Every setting comes from the environment. Without all of a kind's settings nothing of that kind
+// is sent, so the code can stand live dark.
 
-import { CLICK, YES_MAX_AGE_MS } from '../_entry/rules.js'
+import { CLICK, ENTRY_ACTION_NAME, ENTRY_ACTION_SETTING, VISIT_ACTION_NAME, VISIT_ACTION_SETTING, VISIT_KIND, YES_MAX_AGE_MS } from '../_entry/rules.js'
 import { WING_STOPS } from '../_count/lists.js'
 
 /** The Google Ads API version Agora Cosmica's worker uploads with. */
 export const API_VERSION = 'v24'
+/** The account's settings, and the entry's action: the settings an entry needs. */
 export const SETTINGS = Object.freeze(['GADS_DEVELOPER_TOKEN', 'GADS_CLIENT_ID', 'GADS_CLIENT_SECRET', 'GADS_REFRESH_TOKEN',
-  'GADS_LOGIN_CUSTOMER_ID', 'GADS_CUSTOMER_ID', 'MOA_ENTRY_ACTION'])
+  'GADS_LOGIN_CUSTOMER_ID', 'GADS_CUSTOMER_ID', ENTRY_ACTION_SETTING])
+/** The settings a visit needs: the account's and the visit's own action. */
+export const VISIT_SETTINGS = Object.freeze([...SETTINGS.slice(0, -1), VISIT_ACTION_SETTING])
 // three short fields: anything much larger is not ours
 export const MAX_BODY = 512
 // a browser's clock may run a little ahead of the server's
@@ -22,7 +27,8 @@ const TIMEOUT_MS = 10_000
 
 const quiet = () => new Response(null, { status: 204, headers: { 'Cache-Control': 'no-store' } })
 
-/** The entry a body names ({ gclid, wing }), or null when any field is off its rule. */
+/** What a body names: an entry ({ gclid, wing }), a visit ({ gclid, kind: 'visit' }), or null when any field is off
+ *  its rule or it names both. */
 export function entryOf(text, now) {
   let body
   try {
@@ -31,23 +37,33 @@ export function entryOf(text, now) {
     return null
   }
   if (!body || typeof body !== 'object' || Array.isArray(body)) return null
-  const { gclid, yes, wing } = body
+  const { gclid, yes, wing, kind } = body
   if (typeof gclid !== 'string' || !CLICK.test(gclid)) return null
-  if (typeof wing !== 'string' || !Object.hasOwn(WING_STOPS, wing)) return null
   if (!Number.isFinite(yes) || yes < now - YES_MAX_AGE_MS || yes > now + YES_SKEW_MS) return null
+  if (wing !== undefined && kind !== undefined) return null
+  if (kind === VISIT_KIND) return { gclid, kind }
+  if (typeof wing !== 'string' || !Object.hasOwn(WING_STOPS, wing)) return null
   return { gclid, wing }
+}
+
+/** The conversion a checked body reports: its name, its setting, and what its order id is made of besides the click. */
+export function actionOf(entry) {
+  return entry.kind === VISIT_KIND
+    ? { name: VISIT_ACTION_NAME, setting: VISIT_ACTION_SETTING, settings: VISIT_SETTINGS, label: VISIT_KIND }
+    : { name: ENTRY_ACTION_NAME, setting: ENTRY_ACTION_SETTING, settings: SETTINGS, label: entry.wing }
 }
 
 const digits = (value) => (typeof value === 'string' ? value.replace(/-/g, '') : '')
 
-/** The settings from the environment, or null when one is missing or off its shape. */
-export function settingsOf(env) {
-  if (!env || SETTINGS.some((name) => typeof env[name] !== 'string' || !env[name].trim())) return null
+/** The settings from the environment for an action (the entry's by default), or null when one is missing or off
+ *  its shape. */
+export function settingsOf(env, names = SETTINGS) {
+  if (!env || names.some((name) => typeof env[name] !== 'string' || !env[name].trim())) return null
   const customer = digits(env.GADS_CUSTOMER_ID.trim())
   const login = digits(env.GADS_LOGIN_CUSTOMER_ID.trim())
   if (!/^\d{10}$/.test(customer) || !/^\d{10}$/.test(login)) return null
   // the action as its resource name in the customer's own account, or its bare number there
-  const raw = env.MOA_ENTRY_ACTION.trim()
+  const raw = env[names[names.length - 1]].trim()
   const named = /^customers\/(\d{10})\/conversionActions\/(\d+)$/.exec(raw)
   const id = /^\d+$/.test(raw) ? raw : named && named[1] === customer ? named[2] : ''
   if (!id) return null
@@ -58,9 +74,10 @@ export function settingsOf(env) {
   }
 }
 
-/** The order id: the click id and the wing, hashed, so one click counts once per wing and the id stays short. */
-export async function orderIdOf(gclid, wing) {
-  const hash = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(`${gclid}:${wing}`))
+/** The order id: the click id and the wing (the word visit for a visit), hashed, so one click counts once per
+ *  action and wing, and the id stays short. */
+export async function orderIdOf(gclid, label) {
+  const hash = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(`${gclid}:${label}`))
   return 'moa-' + [...new Uint8Array(hash)].map((b) => b.toString(16).padStart(2, '0')).join('').slice(0, 32)
 }
 
@@ -121,8 +138,11 @@ async function accessToken(settings, now, fetcher) {
  */
 export async function report(entry, settings, now, fetcher = fetch) {
   let orderId = ''
+  const action = actionOf(entry)
+  // the entry's lines stay as they were; the visit's name their action
+  const tag = entry.kind === VISIT_KIND ? `[entry] ${action.name}` : '[entry]'
   try {
-    orderId = await orderIdOf(entry.gclid, entry.wing)
+    orderId = await orderIdOf(entry.gclid, action.label)
     const bearer = await accessToken(settings, now, fetcher)
     const res = await fetcher(`https://googleads.googleapis.com/${API_VERSION}/customers/${settings.customerId}:uploadClickConversions`, {
       method: 'POST',
@@ -137,20 +157,20 @@ export async function report(entry, settings, now, fetcher = fetch) {
     })
     if (!res.ok) {
       const text = await res.text().catch(() => '')
-      console.error(`[entry] upload http ${res.status}: ${redact(text, entry.gclid, orderId).slice(0, 400)}`)
+      console.error(`${tag} upload http ${res.status}: ${redact(text, entry.gclid, orderId).slice(0, 400)}`)
       return 'http'
     }
     const answer = await res.json().catch(() => null)
     const failure = answer?.partialFailureError?.message
     if (failure) {
       // a click the account did not issue, or one counted before, lands here
-      console.log(`[entry] not counted: ${redact(failure, entry.gclid, orderId).slice(0, 300)}`)
+      console.log(`${tag} not counted: ${redact(failure, entry.gclid, orderId).slice(0, 300)}`)
       return 'partial'
     }
-    console.log('[entry] counted')
+    console.log(`${tag} counted`)
     return 'ok'
   } catch (err) {
-    console.error(`[entry] failed: ${redact(String(err?.message ?? err), entry.gclid, orderId).slice(0, 200)}`)
+    console.error(`${tag} failed: ${redact(String(err?.message ?? err), entry.gclid, orderId).slice(0, 200)}`)
     return 'error'
   }
 }
@@ -168,8 +188,16 @@ export async function onRequestPost(context) {
     const now = Date.now()
     const entry = entryOf(text, now)
     if (!entry) return quiet()
-    const settings = settingsOf(env)
-    if (!settings) return quiet()
+    const action = actionOf(entry)
+    const settings = settingsOf(env, action.settings)
+    if (!settings) {
+      // the visit says why it went nowhere: its action is the one set last; the entry stays silent, as it was
+      if (entry.kind === VISIT_KIND) {
+        const why = typeof env?.[action.setting] === 'string' && env[action.setting].trim() ? 'a setting is missing or off its shape' : `${action.setting} is not set`
+        console.log(`[entry] ${action.name} not sent: ${why}`)
+      }
+      return quiet()
+    }
     const job = report(entry, settings, now)
     if (typeof context.waitUntil === 'function') context.waitUntil(job)
     else await job

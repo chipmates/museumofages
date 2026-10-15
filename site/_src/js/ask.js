@@ -1,22 +1,26 @@
 /* Museum of Ages, the question for visitors from our Google Ad Grants ads, and the privacy page's button that takes
-   a yes back. The edge puts this script on every page under the grant's prefix (/a/g/) but the walk and the pages
+   a yes back. The edge puts this script on every page under the grant's prefix (/a/g/) but the walk and the own page
    of a wing in the making, unless the request carries the Global Privacy Control header (functions/_entry/rules.js):
-   this script, not the server, tests
-   the address for the ad's click id (gclid), and tests the browser for Global Privacy Control once more. The privacy
-   page carries it for its button. On any other page it does nothing, and it reads nothing after the question mark
-   unless the page stands under the grant's prefix.
-   Before the answer the click id lives in this page's memory only, and it leaves the address bar at once. A yes
-   keeps one entry for this tab (sessionStorage, moa_entry: the click id and the time of the yes), which the walk
-   sends once when a wing opens and then deletes (museum/src/core/museum-entry.ts). A no, or closing the card,
-   keeps nothing. No cookie, nothing in localStorage. The count hears the answer as a word (the moa:answer event:
-   yes, no, or close for the X, which also means no) and that the card was seen (moa:shown), never the click id
-   (count.js). The build puts every built language's words in WORDS. */
+   this script, not the server, tests the address for the ad's click id (gclid), and tests the browser for Global
+   Privacy Control once more. The privacy page carries it for its button. On any other page it does nothing, and it
+   reads nothing after the question mark unless the page stands under the grant's prefix.
+   Before the answer the click id lives in this page's memory only, and it leaves the address bar at once. A yes sends
+   the visit at once, one POST to the site's own function (functions/v1/entry.js, the click id, the time of the yes and
+   the word visit). On a page from which a wing can be entered it also keeps one entry for this tab (sessionStorage,
+   moa_entry: the click id and the time of the yes), which the walk sends once when a wing opens and then deletes
+   (museum/src/core/museum-entry.ts). A topic page of a wing in the making (main[data-asks="visit"]) has no way into a
+   walk: a yes there sends the visit and keeps nothing. A no, or closing the card, keeps and sends nothing. No cookie,
+   nothing in localStorage. The count hears the answer as a word (the moa:answer event: yes, no, or close for the X,
+   which also means no) and that the card was seen (moa:shown), never the click id (count.js). The build puts every
+   built language's words in WORDS. */
 (function () {
   'use strict';
   var doc = document, win = window, root = doc.documentElement, loc = win.location;
   /* a page of a wing in the making is never asked, whatever its address carries: the edge never sends this script
      there, and should it arrive anyway it does nothing at all */
   if (doc.querySelector('main[data-unasked]')) return;
+  /* a topic page of a wing in the making: a yes counts the visit alone, since no wing can be entered from it */
+  var visitOnly = !!doc.querySelector('main[data-asks="visit"]');
   if (root.hasAttribute('data-ask')) return;
   root.setAttribute('data-ask', '');
   var HOSTS = ['museumofages.org', 'www.museumofages.org', '127.0.0.1', 'localhost'];
@@ -24,13 +28,14 @@
   var CLICK = /^[A-Za-z0-9_-]{20,200}$/;
   var ENTRY_KEY = 'moa_entry';
   var YES_MAX_AGE_MS = 6 * 60 * 60 * 1000;
+  var ENDPOINT = '/v1/entry', VISIT_KIND = 'visit';
   var SECTION = 'question';
   /* Google's own page on how it uses data from sites like ours */
   var GOOGLE = 'https://business.safety.google/privacy';
   var WORDS = {/*words*/};
   if (HOSTS.indexOf(loc.hostname) < 0) return;
   var t = WORDS[root.getAttribute('lang')];
-  if (!t) return;
+  if (!t || (visitOnly && !(t.visit_what && t.visit_whom && t.visit_thanks))) return;
   var me = doc.currentScript;
   var base = me && me.src ? me.src.replace(/ask\.js(?:[?#].*)?$/, '') : '/static/';
 
@@ -59,6 +64,16 @@
     var s = store();
     if (!s) return false;
     try { s.setItem(ENTRY_KEY, JSON.stringify({ gclid: gclid, yes: Date.now() })); return true; } catch (e) { return false; }
+  }
+  /* the yes itself, once per page load, the click id and the time of the yes only; never with Global Privacy Control */
+  var visitSent = false;
+  function sendVisit(gclid, yes) {
+    if (visitSent || navigator.globalPrivacyControl === true || !CLICK.test(gclid)) return;
+    visitSent = true;
+    try {
+      win.fetch(ENDPOINT, { method: 'POST', body: JSON.stringify({ gclid: gclid, yes: yes, kind: VISIT_KIND }), keepalive: true,
+        mode: 'same-origin', credentials: 'omit', headers: { 'Content-Type': 'text/plain' } }).catch(function () {});
+    } catch (e) { /* a visit never stands in the page's way */ }
   }
   function tell(word) {
     try { doc.dispatchEvent(new CustomEvent('moa:answer', { detail: word })); } catch (e) { /* the count is not told */ }
@@ -140,8 +155,8 @@
     /* the words scroll here when the screen is short; the answers below them never do */
     var body = el('div', 'ask__body');
     /* the facts first: on a small screen the fade falls after them, not after the reason for asking */
-    body.appendChild(el('p', 'ask__what', t.what));
-    body.appendChild(el('p', 'ask__what', t.whom));
+    body.appendChild(el('p', 'ask__what', visitOnly ? t.visit_what : t.what));
+    body.appendChild(el('p', 'ask__what', visitOnly ? t.visit_whom : t.whom));
     body.appendChild(el('p', 'ask__why', t.why));
     body.appendChild(el('p', 'ask__age', t.age));
     var act = el('div', 'ask__act');
@@ -219,10 +234,15 @@
     no.addEventListener('click', function () { said('no'); });
     close.addEventListener('click', function () { said('close'); });
     yes.addEventListener('click', function () {
-      if (!keep(gclid)) { said('no'); return; }
+      /* one answer per card: the click id is gone once it is given */
+      if (!gclid) return;
+      var at = Date.now(), click = gclid, before = visitOnly ? null : held();
+      if (!visitOnly && !keep(click)) { said('no'); return; }
       gclid = '';
       unseen();
       tell('yes');
+      /* a yes this tab already holds for the same click was counted when it was given */
+      if (!before || before.gclid !== click) sendVisit(click, at);
       /* the same place takes the yes back, as long as the walk has not opened */
       inner.textContent = '';
       card.className = 'ask ask--said';
@@ -230,11 +250,18 @@
       card.setAttribute('aria-label', t.kicker);
       var hide = button('ask__close');
       hide.setAttribute('aria-label', t.dismiss);
-      var thanks = el('p', 'ask__thanks', t.thanks);
+      var thanks = el('p', 'ask__thanks', visitOnly ? t.visit_thanks : t.thanks);
       thanks.id = 'ask-thanks';
+      hide.addEventListener('click', away);
+      /* nothing is kept where the yes counts the visit alone, so there is nothing to take back */
+      if (visitOnly) {
+        [hide, thanks].forEach(function (n) { inner.appendChild(n); });
+        thanks.setAttribute('role', 'status');
+        hide.focus();
+        return;
+      }
       var back = button('ask__btn ask__back', t.undo);
       back.setAttribute('aria-describedby', 'ask-thanks');
-      hide.addEventListener('click', away);
       back.addEventListener('click', function () {
         drop();
         thanks.textContent = t.undone;
@@ -268,7 +295,7 @@
     var mount = doc.querySelector('[data-undo]');
     if (mount) withSheet(function () { control(mount); });
     var gclid = clickId();
-    if (gclid && store()) withSheet(function () { ask(gclid); });
+    if (gclid && (visitOnly || store())) withSheet(function () { ask(gclid); });
   }
   if (doc.prerendering) doc.addEventListener('prerenderingchange', start, { once: true });
   else start();

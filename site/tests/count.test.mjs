@@ -7,7 +7,7 @@ import { fileURLToPath } from 'node:url'
 import { onRequestPost } from '../functions/v1/funnel.js'
 import { DEVICES, DOORS, HOLDS, LOOKS, STEPS, deviceOf, rowOf } from '../functions/_count/rows.js'
 import { HOST_LISTS, SOURCES, prefixWord, sourceWord } from '../functions/_count/source.js'
-import { LANGUAGES, PAGE_KINDS, UNASKED, WING_STOPS } from '../functions/_count/lists.js'
+import { ASKED_MAKING, LANGUAGES, PAGE_KINDS, UNASKED, WING_STOPS } from '../functions/_count/lists.js'
 
 const at = (rel) => fileURLToPath(new URL(rel, import.meta.url))
 const DESK = 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/18.0 Safari/605.1.15'
@@ -294,6 +294,16 @@ test('the question seen and its answer: a word and the page, never the click id,
   }
   await none({ step: 'ask_maybe', page: 'home', language: 'en' })
   await none({ step: 'ask_yes', language: 'en' })
+})
+
+test('the question on the six animal pages: its rows carry the animal\'s page kind and the language, nothing more', async () => {
+  for (const page of Object.keys(ASKED_MAKING)) {
+    assert.ok(PAGE_KINDS.includes(page), page)
+    for (const [step, language] of [['ask_shown', 'en'], ['ask_yes', 'de'], ['ask_no', 'en'], ['ask_close', 'de']]) {
+      const row = await one({ step, page, language, gclid: 'Cj0KCQjwTEST_click-id_0123456789', kind: 'visit', source: 'ad_grant', start: 1 })
+      assert.deepEqual(row, [step, page, '', language, '', '', '', '', '', ''])
+    }
+  }
 })
 
 test('ask_shown and ask_close carry nothing beyond the page, its language and the probe mark', async () => {

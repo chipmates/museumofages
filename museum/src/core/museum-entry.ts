@@ -4,7 +4,8 @@
    time of the yes. When a wing opens (museum-count.ts, with museum_arrival),
    the entry is taken out of the tab first and then sent once, with the wing,
    to the site's own function (site/functions/v1/entry.js), which reports it to
-   Google. So one ad click counts once. A tab without the entry sends nothing.
+   Google. So one ad click counts once as an entry (the yes itself was sent
+   as a visit by the page). A tab without the entry sends nothing.
    A browser that sends Global Privacy Control sends nothing and its entry is
    dropped. The rules match site/functions/_entry/rules.js. */
 

@@ -1746,7 +1746,8 @@ def build(out, registry, wing_dirs, mark=None, topics=True, quiet=False, more_pi
         shutil.copyfile(SRC / "js" / name, static_dir / name)
     # the question for visitors from our grant ads: its script carries every built language's words
     ask_problems = ask.write(out, STATIC, {L.html(l): {k[4:]: v for k, v in site.words[l].items() if k.startswith("ask.")} for l in LANGS},
-                             {L.html(l): L.page(l, "privacy") for l in LANGS})
+                             {L.html(l): L.page(l, "privacy") for l in LANGS},
+                             {L.html(l) for s in paged(site) for l in languages.wing_langs(site.wings[s], LANGS)})
     (static_dir / R.FILM["data"]).write_text(film_data(site), encoding="utf-8")
     clips = {p for d in site.data_raw.values() for p in re.findall(r'"clip": "([^"]+)"', json.dumps(d))}
     for name in sorted(clips | {R.FILM["music"]}):
@@ -1789,7 +1790,8 @@ def build(out, registry, wing_dirs, mark=None, topics=True, quiet=False, more_pi
     problems += check_menu(out, built, site) + crawl(out, site) + check_gone(out, site) + check_mail(out) + check_switches(out, site) + check_fonts(site)
     problems += check_sign(out, signs) + check_pictures(out, built, site) + check_colours(out, built, site)
     problems += check_picture_licences(out) + placed.finish(out, STATIC, ORIGIN)
-    problems += ask.check(out, STATIC, {L.html(l): L.page(l, "privacy") for l in LANGS}, unasked_pages(site))
+    problems += ask.check(out, STATIC, {L.html(l): L.page(l, "privacy") for l in LANGS}, unasked_pages(site), asked_making(site),
+                          topics_built=bool(topics and PAGES_BUILD.exists() and not mark))
     if (out / "_redirects").read_text(encoding="utf-8").split() != ([SOURCE, SOURCE_TO, "302"] if SOURCE_LINK else []):
         problems.append("_redirects does not agree with the switch for the link to the code")
     if problems:
@@ -1950,8 +1952,21 @@ def paged(site):
 
 def unasked_pages(site):
     """The pages never asked the ads' question, whatever their address carries (_entry/rules.js reads them from the
-    count's lists): every page of a wing in the making, by the address of its own page."""
+    count's lists): every page of a wing in the making, by the address of its own page, but those asked_making names."""
     return [f'/{site.wings[s]["page"][l].strip("/")}/' for s in paged(site) for l in languages.wing_langs(site.wings[s], LANGS)]
+
+
+def asked_making(site):
+    """The topic pages of a wing in the making, which ask the ads' question though their wing's own page does not. A
+    yes there counts the visit alone: such a wing has no way in, so no entry follows. Returns {kind: [address, ...]},
+    each address in every language the page stands in."""
+    found = {}
+    for s in paged(site):
+        e = site.wings[s]
+        for t in e.get("topics", []):
+            found[topic_count_kind(t)] = [f'/{e["page"][l].strip("/")}/{t["slug"][l]}/'
+                                          for l in languages.topic_langs(t, languages.wing_langs(e, LANGS))]
+    return found
 
 
 def wing_count_kind(slug, entry):
@@ -1978,11 +1993,13 @@ def count_lists(site):
     problems += [f"the count's page kind {k!r} is not a plain word" for k in kinds if not re.fullmatch(r"[a-z][a-z0-9_-]{0,47}", k)]
     problems += [f"the wing {s!r} has no whole number of stops for the count" for s, n in wings.items() if not isinstance(n, int) or n < 1]
     unasked = unasked_pages(site)
+    asked = asked_making(site)
     text = ("// Written by site/_src/build.py from the site's registry, its wings' facts and its languages. Not edited by hand.\n"
             f"export const WING_STOPS = Object.freeze({json.dumps(wings, separators=(', ', ': '))})\n"
             f"export const PAGE_KINDS = Object.freeze({json.dumps(kinds, separators=(', ', ': '))})\n"
             f"export const LANGUAGES = Object.freeze({json.dumps(list(LANGS), separators=(', ', ': '))})\n"
-            f"export const UNASKED = Object.freeze({json.dumps(unasked, separators=(', ', ': '))})\n")
+            f"export const UNASKED = Object.freeze({json.dumps(unasked, separators=(', ', ': '))})\n"
+            f"export const ASKED_MAKING = Object.freeze({json.dumps(asked, ensure_ascii=False, separators=(', ', ': '))})\n")
     return text, problems
 
 

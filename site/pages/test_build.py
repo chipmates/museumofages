@@ -1227,8 +1227,14 @@ class Case(unittest.TestCase):
             self.assertEqual(len(targets), 1, targets)
             target = os.path.normpath(targets.pop())
             self.assertIn(target, {w["page"][lang] for w in opened}, path)
-            # never asked: the edge and the question's script both read the mark
-            self.assertRegex(text, r'<main[^>]*\sdata-unasked[\s>]')
+            # the edge and the question's script both read the mark: the wing's own page is never asked, a topic page
+            # asks, and a yes there counts the visit alone
+            if data["page"].get("hub"):
+                self.assertRegex(text, r'<main[^>]*\sdata-unasked[\s>]')
+                self.assertNotIn('data-asks=', text)
+            else:
+                self.assertRegex(text, r'<main[^>]*\sdata-asks="visit"')
+                self.assertNotRegex(text, r'<main[^>]*\sdata-unasked[\s>]')
             # only its own languages: no alternate, no menu entry and no link to a language it lacks
             for code in re.findall(r'hreflang="([\w-]+)"', text):
                 self.assertIn(code, wing["langs"] + ["x-default"])

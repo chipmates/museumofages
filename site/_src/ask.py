@@ -20,6 +20,9 @@ WALK_SENDER = SRC.parent.parent / "museum" / "src" / "core" / "museum-entry.ts"
 SECTION = "question"
 KEYS = ("kicker", "q", "why", "what", "whom", "age", "yes", "no", "more", "google", "newtab", "close", "dismiss", "thanks",
         "undo", "undone", "held", "none")
+# The card on a page of a wing in the making, where a yes counts the visit alone: its own words for what a yes sends,
+# for the rest of the fine print and for the line after a yes. Needed in the languages those pages stand in.
+VISIT_KEYS = ("visit_what", "visit_whom", "visit_thanks")
 
 
 def section_extra(section):
@@ -32,10 +35,10 @@ def _rule(text, name):
     return m.group(1).strip() if m else None
 
 
-def write(out, static, words, privacy_pages):
+def write(out, static, words, privacy_pages, visit_langs=()):
     """Writes the script, with every built language's words, and its sheet into the built folder. Returns the
     problems found, as a list of lines. words: {html lang: {key: text}}; privacy_pages: {html lang: the privacy
-    page's address from the site's root}."""
+    page's address from the site's root}; visit_langs: the html langs of the pages where a yes counts the visit alone."""
     out = Path(out)
     problems = []
     source = (SRC / "js" / SCRIPT).read_text(encoding="utf-8")
@@ -44,7 +47,11 @@ def write(out, static, words, privacy_pages):
         missing = [k for k in KEYS if not (w.get(k) or "").strip()]
         if missing:
             problems.append(f"words ({lang}): the question lacks ask.{', ask.'.join(missing)}")
-        table[lang] = {k: w.get(k, "") for k in KEYS} | {"privacy": "/" + privacy_pages[lang]}
+        if lang in visit_langs:
+            missing = [k for k in VISIT_KEYS if not (w.get(k) or "").strip()]
+            if missing:
+                problems.append(f"words ({lang}): the question on the pages of a wing in the making lacks ask.{', ask.'.join(missing)}")
+        table[lang] = {k: w.get(k, "") for k in KEYS + VISIT_KEYS if w.get(k) is not None} | {"privacy": "/" + privacy_pages[lang]}
     if source.count(WORDS_MARK) != 1:
         problems.append(f"js/{SCRIPT}: the place of the words ({WORDS_MARK}) stands {source.count(WORDS_MARK)} times, not once")
     text = source.replace(WORDS_MARK, json.dumps(table, ensure_ascii=False, separators=(",", ":")), 1)
@@ -55,25 +62,42 @@ def write(out, static, words, privacy_pages):
 
 # The script's guard: a page of a wing in the making (its main element marked) is never asked.
 UNASKED_GUARD = "if (doc.querySelector('main[data-unasked]')) return;"
+# Where the script learns that a yes on this page counts the visit alone.
+VISIT_GUARD = "doc.querySelector('main[data-asks=\"visit\"]')"
 
 
-def check(out, static, privacy_pages, unasked=()):
-    """The built folder against what the entry depends on. unasked: the addresses (from the site's root) of the
-    pages that are never asked, as the count's lists name them for the edge. Returns the problems found, as a list
-    of lines."""
+def check(out, static, privacy_pages, unasked=(), asked=None, topics_built=True):
+    """The built folder against what the entry depends on. unasked: the addresses (from the site's root) under
+    which pages are never asked, as the count's lists name them for the edge; asked: {kind: [address, ...]}, the
+    pages among them that ask all the same, a yes there counting the visit alone; topics_built: whether this build made
+    the topic pages (a test registry and --no-topics do not). Returns the problems found, as a list of lines."""
     out = Path(out)
     problems = []
     source = (SRC / "js" / SCRIPT).read_text(encoding="utf-8")
     rules = RULES.read_text(encoding="utf-8")
     if UNASKED_GUARD not in source:
         problems.append(f"js/{SCRIPT}: does not hold its guard for the pages that are never asked ({UNASKED_GUARD})")
-    if "import { UNASKED } from '../_count/lists.js'" not in rules or "!unasked(pathname)" not in rules:
-        problems.append(f"{RULES.name}: the edge does not leave out the pages the count's lists name as never asked")
+    if "import { ASKED_MAKING, UNASKED } from '../_count/lists.js'" not in rules or "!unasked(pathname)" not in rules \
+            or "if (askedMaking(rest)) return false" not in rules:
+        problems.append(f"{RULES.name}: the edge does not leave out the pages the count's lists name as never asked, "
+                        "or does not ask the topic pages of a wing in the making")
+    if VISIT_GUARD not in source:
+        problems.append(f"js/{SCRIPT}: does not tell the pages where a yes counts the visit alone ({VISIT_GUARD})")
+    asking = {a for pages in (asked or {}).values() for a in pages}
     for path in sorted(out.rglob("index.html")):
-        page = "/" + str(path.parent.relative_to(out)).replace(".", "", 1).strip("/") + "/"
-        if re.search(r"<main\b[^>]*\sdata-unasked[\s>]", path.read_text(encoding="utf-8")) and not any(
-                page.replace("//", "/").startswith(u) for u in unasked):
+        page = ("/" + str(path.parent.relative_to(out)).replace(".", "", 1).strip("/") + "/").replace("//", "/")
+        text = path.read_text(encoding="utf-8")
+        if re.search(r"<main\b[^>]*\sdata-unasked[\s>]", text) and (not any(page.startswith(u) for u in unasked) or page in asking):
             problems.append(f"{page}: the page is marked never to be asked, and the edge would ask it (UNASKED in the count's lists)")
+        marked = bool(re.search(r'<main\b[^>]*\sdata-asks="visit"', text))
+        if marked != (page in asking):
+            problems.append(f"{page}: the page is {'' if marked else 'not '}marked to count a yes as the visit alone, and the "
+                            f"count's lists {'do not name it' if marked else 'name it'} (ASKED_MAKING)")
+        if marked and re.search(r'\sdata-door=|href="[^"]*/w/', text):
+            problems.append(f"{page}: a yes there counts the visit alone, and the page has a way into the walk")
+    for page in sorted(asking) if topics_built else ():
+        if not (out / page.strip("/") / "index.html").is_file():
+            problems.append(f"{page}: the count's lists name a page that asks, and it is not built")
     shared = {"CLICK": _rule(rules, "CLICK"), "ENTRY_KEY": _rule(rules, "ENTRY_KEY"), "GRANT_PREFIX": _rule(rules, "GRANT_PREFIX"),
               "WALK_PREFIX": _rule(rules, "WALK_PREFIX"), "YES_MAX_AGE_MS": _rule(rules, "YES_MAX_AGE_MS")}
     if None in shared.values():

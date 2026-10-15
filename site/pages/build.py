@@ -1773,8 +1773,9 @@ def render(page, lang, data, shared, out_root):
         "html.crumb_wing": "" if hub else fill(parts["crumb_wing"], base),
         "html.toc_part": fill(parts["toc"], dict(base, **{"html.toc": toc})) if toc else "",
         "attr.grid": "" if toc else " sp-grid--solo",
-        # the question for the ads' visitors is never asked on a page of a wing in the making (_src/js/ask.js)
-        "attr.main": " data-unasked" if making(wing) else "",
+        # a wing in the making: its own page never asks the question for the ads' visitors, its topic pages ask it, and a
+        # yes there counts the visit alone, since no way into a walk follows (_src/js/ask.js)
+        "attr.main": (" data-unasked" if hub else ' data-asks="visit"') if making(wing) else "",
         "html.blocks": blocks,
         "jsonld": jsonld(lang, data, urls, pics, chrome["publisher"], wing, chrome["alternate_name"],
                          frame, shared["pic_folders"], shared["topics"].get(page), shared),
@@ -1896,7 +1897,7 @@ def check_built(path, text, out_root, names=None):
     for door in re.findall(r'<a class="door[^>]*>', text):
         if "data-slot=" in door and "data-page=" not in door:
             problems.append(f"{name}: a door carries a slot without the page label")
-    if re.search(r'<main\b[^>]*\sdata-unasked[\s>]', text):
+    if re.search(r'<main\b[^>]*\sdata-(?:unasked[\s>]|asks="visit")', text):
         # a wing in the making: no door and no way into any walk, a plain link to an open wing's page where the door
         # would stand, and the same at the page's end where the page has an end
         if re.search(r'class="door\b', text) or re.search(r'href="/w/', text):
