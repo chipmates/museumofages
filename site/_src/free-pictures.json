@@ -1,5 +1,5 @@
 {
-  "_note": "The pictures the museum made itself that may leave under CC BY-SA 4.0 alone: verdict 1 of the rights list (section B, and the share images and charts made for the topic pages). A picture is named by the stem of its files: a file is its stem, then -<width> or -<width>x<height>, then its type. Only these carry licence data in a page's structured data, and the build stops on licence data for any other picture. A picture joins this list only after its rights reading: a still that shows a reproduction, the house or its grounds (map data), the sky, or a film never does. with_map_credit names the stills of the house or its grounds (verdict 2 of the rights list, OpenStreetMap and IGN): they carry licence data only where a page's structured data already describes them, and only with the map data's credit in their creditText. credits names, for each credit another's work asks for, the pictures that rest on that work: the credits follow the museum's own in their creditText in this list's order, and their licence stays the museum's. reproductions names, for a public-domain reproduction that a drawing of ours holds whole and apart (a sizes page's share picture, the painting at the person's scale), the drawings that hold it: our licence covers our own part, the reproduction's source and status follow the museum's credit in their creditText (in the page's own words, meta.credit, where the page shares that drawing), and the reproduction is never offered under our licence. A still or a film frame that shows a reproduction never carries licence data.",
+  "_note": "The pictures the museum made itself that may leave under CC BY-SA 4.0 alone: verdict 1 of the rights list (section B, and the share images and charts made for the topic pages). A picture is named by the stem of its files: a file is its stem, then -<width> or -<width>x<height>, then its type. Only these carry licence data in a page's structured data, and the build stops on licence data for any other picture. A picture joins this list only after its rights reading: a still that shows a reproduction, the house or its grounds (map data), the sky, or a film never does, nor does a drawing of ours that holds a reproduction (the sizes pages' share pictures, with the Mona Lisa at the person's scale). with_map_credit names the stills of the house or its grounds (verdict 2 of the rights list, OpenStreetMap and IGN): they carry licence data only where a page's structured data already describes them, and only with the map data's credit in their creditText. credits names, for each credit another's work asks for, the pictures that rest on that work: the credits follow the museum's own in their creditText in this list's order, and their licence stays the museum's.",
   "stems": [
     "hall",
     "v-works", "v-works-m",
@@ -19,7 +19,6 @@
     "og",
     "vinci-inventions-og",
     "vinci-sizes-chart-en", "vinci-sizes-chart-de",
-    "vinci-sizes-og-en", "vinci-sizes-og-de",
     "vinci-supper-og-en", "vinci-supper-og-de", "vinci-paintings-og-en", "vinci-paintings-og-de",
     "animals-megalodon-side", "animals-megalodon-head", "animals-megalodon-skeleton", "animals-megalodon-skeleton-head",
     "animals-megalodon-og-en", "animals-megalodon-og-de", "animals-og-en", "animals-og-de",
@@ -41,11 +40,6 @@
     "Ankylosaurus armour after Arbour and Mallon 2017 (CC BY 4.0)": [
       "animals-biggest-dinosaurs-row", "animals-biggest-dinosaurs-close", "animals-biggest-dinosaurs-og-en",
       "animals-biggest-dinosaurs-og-de"
-    ]
-  },
-  "reproductions": {
-    "Mona Lisa by Leonardo da Vinci: public domain work, reproduction from Wikimedia Commons (a C2RMF capture)": [
-      "vinci-sizes-og-en", "vinci-sizes-og-de"
     ]
   },
   "with_map_credit": [

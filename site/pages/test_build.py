@@ -2683,7 +2683,9 @@ class PictureLicences(unittest.TestCase):
         "house", "v-house", "v-court", "v-court-m", "court", "stair", "v-hall", "v-hall-m", "v-lion",
         "vinci-stop-hall", "vinci-view-anemometer", "vinci-view-parachute", "m-parachute", "v-codex", "v-table",
         "v-table-m", "vinci-stop-reading-table", "v-page-en", "v-page-de", "v-page-m", "grave-court",
-        "v-scale-en", "v-scale-de", "v-scale-m"}
+        "v-scale-en", "v-scale-de", "v-scale-m",
+        # the sizes pages' share pictures hold the Mona Lisa's reproduction
+        "vinci-sizes-og-en", "vinci-sizes-og-de"}
     # Of those, the rights list's verdict 2 for the house and its grounds: ours with the map data's credit.
     WITH_MAP_CREDIT = {
         "house", "v-house", "v-court", "v-court-m", "court", "stair", "v-hall", "v-hall-m", "v-lion",
@@ -2807,8 +2809,8 @@ class PictureLicences(unittest.TestCase):
             for url in self.lib.free_pictures_of(text, page_url, data):
                 self.assertIn("license", given.get(url, {}), (path, url))
         sizes = (SITE_BUILT / "leonardo-da-vinci" / "sizes" / "index.html").read_text(encoding="utf-8")
-        frame = next(i for i in self.lib.image_objects(self.graph(sizes)) if i.get("@id", "").endswith("#frame"))
-        self.assertTrue(frame["contentUrl"].endswith(".png") and "license" in frame)
+        chart = next(i for i in self.lib.image_objects(self.graph(sizes)) if i.get("@id", "").endswith("#chart"))
+        self.assertTrue(chart["contentUrl"].endswith(".png") and "license" in chart)
 
     def test_the_lines_to_copy_are_one_form_in_every_language(self):
         # the credit is the image data's creditText, the map line the English as written (no French spacing)
@@ -2821,39 +2823,30 @@ class PictureLicences(unittest.TestCase):
             self.assertEqual(credit, self.lib.picture_terms(code, "")["creditText"], code)
             self.assertEqual(maps, written, code)
 
-    def test_a_drawing_that_holds_a_reproduction_names_its_source_and_status(self):
-        # a drawing of ours with a public-domain reproduction in it: our licence and credit, then the reproduction's
-        # line, in the page's language where the page shares the drawing; never a still the rights list rules out
-        self.assertLessEqual(set(self.lib.PICTURE_REPRODUCTIONS), self.lib.FREE_PICTURES)
-        self.assertFalse(set(self.lib.PICTURE_REPRODUCTIONS) & self.NOT_OURS_ALONE)
-        self.assertFalse(set(self.lib.PICTURE_REPRODUCTIONS) & set(self.lib.PICTURE_CREDITS))
-        status = {"en": "public domain work, reproduction from Wikimedia Commons", "de": "gemeinfreies Werk, Reproduktion aus Wikimedia Commons"}
-        found = 0
-        for path in self.pages:
-            text = path.read_text(encoding="utf-8")
-            lang = re.search(r'<html lang="([\w-]+)"', text).group(1)
-            for image in self.lib.image_objects(self.graph(text) or {}):
-                stem = self.lib.picture_stem(image.get("contentUrl") or image.get("url"))
-                if stem not in self.lib.PICTURE_REPRODUCTIONS:
-                    continue
-                found += 1
-                self.assertEqual(image["license"], "https://creativecommons.org/licenses/by-sa/4.0/", path)
-                head = self.lib.picture_terms("en", "")["creditText"] + ", "
-                self.assertTrue(image["creditText"].startswith(head), path)
-                self.assertIn(status[lang], image["creditText"], path)
-                self.assertTrue(image["creditText"].endswith(")"), path)
-        self.assertGreaterEqual(found, 2)
-
-    def test_the_sizes_pages_name_their_share_picture_of_the_painting(self):
+    def test_the_sizes_pages_name_their_share_picture_of_the_painting_without_a_licence(self):
+        # the card holds the Mona Lisa's reproduction: described, never licensed; the chart keeps its own licence
         for path, lang in (("leonardo-da-vinci/sizes", "en"), ("de/leonardo-da-vinci/groessen", "de")):
             text = (SITE_BUILT / path / "index.html").read_text(encoding="utf-8")
             graph = self.graph(text)
             page = next(n for n in graph["@graph"] if n.get("@type") == "WebPage")
             frame = next(i for i in self.lib.image_objects(graph) if i["@id"] == page["primaryImageOfPage"]["@id"])
-            self.assertEqual(frame["contentUrl"], f"https://museumofages.org/static/img/vinci-sizes-og-{lang}-1200x630.png")
-            self.assertIn(f'<meta property="og:image" content="{frame["contentUrl"]}">', text)
+            card = f"https://museumofages.org/static/img/vinci-sizes-og-{lang}-1200x630.png"
+            self.assertEqual(frame["contentUrl"], card)
+            self.assertIn(f'<meta property="og:image" content="{card}">', text)
             self.assertTrue((SITE_BUILT / "static" / "img" / f"vinci-sizes-og-{lang}-1200x630.png").is_file())
-            self.assertIn("C2RMF", frame["creditText"])
+            self.assertTrue(frame["caption"] and frame["description"], path)
+            self.assertFalse([k for k in self.lib.LICENCE_FIELDS if k in frame], path)
+            self.assertEqual([i for i in self.lib.image_objects(graph) if i.get("contentUrl") == card], [frame], path)
+            chart = next(i for i in self.lib.image_objects(graph) if i["@id"].endswith("#chart"))
+            self.assertEqual(chart["contentUrl"], f"https://museumofages.org/static/img/vinci-sizes-chart-{lang}-1600.png")
+            self.assertEqual(chart["license"], "https://creativecommons.org/licenses/by-sa/4.0/", path)
+            self.assertEqual(chart["creditText"], self.lib.picture_terms("en", "")["creditText"], path)
+            # a licence field put on the card is found, and the site's build stops on it
+            for key in self.lib.LICENCE_FIELDS:
+                given = text.replace(f'"contentUrl":"{card}"', f'"contentUrl":"{card}","{key}":"x"', 1)
+                self.assertNotEqual(given, text)
+                self.assertRegex(" ".join(self.lib.licence_problems(given, "page")),
+                                 r"vinci-sizes-og-%s-1200x630\.png carries licence data" % lang)
 
     def test_the_inventions_pages_name_the_aerial_screw(self):
         langs = json.loads((SITE_SRC / "languages.json").read_text(encoding="utf-8"))["languages"]

@@ -217,17 +217,6 @@ PICTURE_CREDITS = {}
 for _credit, _stems in json.loads((SRC / "free-pictures.json").read_text(encoding="utf-8")).get("credits", {}).items():
     for _stem in _stems:
         PICTURE_CREDITS.setdefault(_stem, []).append(_credit)
-# Drawings of ours that hold a public-domain reproduction whole: the reproduction's source and status by the drawing's
-# stem. They follow the museum's credit as the credits do; our licence does not reach the reproduction.
-PICTURE_REPRODUCTIONS = {}
-for _line, _stems in json.loads((SRC / "free-pictures.json").read_text(encoding="utf-8")).get("reproductions", {}).items():
-    for _stem in _stems:
-        PICTURE_REPRODUCTIONS.setdefault(_stem, []).append(_line)
-
-
-def owed_lines(stem):
-    """What a picture's creditText owes after the museum's own: others' credits, then a reproduction's line."""
-    return PICTURE_CREDITS.get(stem, []) + PICTURE_REPRODUCTIONS.get(stem, [])
 PICTURE_FILE = re.compile(r"^(.+?)-\d+(?:x\d+)?\.(?:webp|avif|jpg|png)$")
 LICENCE_FIELDS = ("license", "acquireLicensePage", "creditText", "copyrightNotice", "creator")
 LD_BLOCK = re.compile(r'(<script type="application/ld\+json">)(.*?)(</script>)', flags=re.S)
@@ -300,9 +289,8 @@ def with_picture_rights(text, page_url, terms, map_terms=None, credit=None):
     picture: an ImageObject the page already describes takes the data, any other gets one of its own. terms holds
     license, acquireLicensePage, creditText, copyrightNotice and creator. A still of the house that the page already
     describes takes map_terms, the same with the map data's credit. A picture that rests on others' works (credits in
-    free-pictures.json) adds their credits to its own in the list's order, and a drawing that holds a public-domain
-    reproduction (reproductions) the reproduction's source and status after them; the page's own line (credit) stands
-    in their place for the pictures that owe what the page's share picture owes, in the page's words and language. A
+    free-pictures.json) adds their credits to its own in the list's order; the page's own line (credit) stands in
+    their place for the pictures that owe what the page's share picture owes, in the page's words and language. A
     page without structured data stays as it is."""
     block = LD_BLOCK.search(text)
     if not block:
@@ -327,9 +315,9 @@ def with_picture_rights(text, page_url, terms, map_terms=None, credit=None):
         image.setdefault("contentUrl", url)
         image.update(terms)
     shared = re.search(r'<meta property="og:image" content="([^"]+)"', text)
-    page_owes = owed_lines(picture_stem(html.unescape(shared.group(1)))) if shared else None
+    page_owes = PICTURE_CREDITS.get(picture_stem(html.unescape(shared.group(1)))) if shared else None
     for image in image_objects(data):
-        owed = owed_lines(picture_stem(image.get("contentUrl") or image.get("url") or ""))
+        owed = PICTURE_CREDITS.get(picture_stem(image.get("contentUrl") or image.get("url") or ""))
         if not owed or "creditText" not in image:
             continue
         # the page's own line, in its language, after the museum's full credit; a line that starts with the museum's
