@@ -442,7 +442,9 @@ body:has(#wing[data-film][data-evening]) .brand { opacity: 0; transition: opacit
    in gold (the key's ::after is its target, so the plates are its ::before) */
 .film-keys .desk-ov-open {
   height: auto; min-width: 0; padding: 0; border: 0; border-radius: 0; background: none; box-shadow: none;
-  font: 400 .9375rem/1 var(--sans); color: var(--key);
+  font: 400 .9375rem/1 var(--sans);
+  /* the thing to press next at a stop: the word and its line in the wing's gold */
+  color: var(--na-gold); text-decoration-color: var(--na-gold);
 }
 .film-keys .desk-ov-open::before {
   content: ''; order: 2; flex: 0 0 14px; width: 14px; height: 14px;

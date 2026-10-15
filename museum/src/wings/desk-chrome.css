@@ -677,6 +677,13 @@ body.forge .desk-cap, body.forge .desk-on { transition: none !important; }
   background: var(--na-starlight);
 }
 #wing[data-desk~='stage'] .desk-foot { gap: 30px; }
+/* THE ROOM'S COUNT IS THE THING TO PRESS NEXT at a stop: the word and its
+   line in the wing's gold, its size, place and target the row's own */
+#wing[data-desk~='stage'] .desk-foot .desk-ov-open { color: var(--na-gold); }
+#wing[data-desk~='stage'] .desk-foot .desk-ov-open::after { background: var(--na-gold); }
+/* a hand on it lights the word as the door's gold links do; the line stays gold and thickens */
+#wing[data-desk~='stage'] .desk-foot .desk-ov-open:is(:hover, :focus-visible) { color: var(--na-starlight); }
+#wing[data-desk~='stage'] .desk-foot .desk-ov-open:is(:hover, :focus-visible)::after { background: var(--na-gold); }
 
 /* THE WAYS THROUGH THIS WING KEEP THE BAND'S TOP RIGHT until the museum's
    own control takes them into its panel. Off the picture, on the wall, and
