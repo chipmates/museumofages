@@ -50,11 +50,13 @@
 }
 /* NOTHING CALLS A VISITOR OUT OF THE WALK. The museum's control leaves with
    the words and comes back with them, so a leg has the gold control and the
-   way back and nothing else. */
-:root:has(#wing[data-walking][data-desk~='panel']) #rail-instruments {
+   way back and nothing else; it leaves the tab order too, so no key opens
+   it unseen. Risen into an open sheet it is that sheet's close and stays. */
+:root:has(#wing[data-walking][data-desk~='panel']) #rail > #rail-instruments {
   opacity: 0;
+  visibility: hidden;
   pointer-events: none;
-  transition: opacity 160ms cubic-bezier(.22, .61, .36, 1);
+  transition: opacity 160ms cubic-bezier(.22, .61, .36, 1), visibility 0s linear 160ms;
 }
 /* THE CONTROL STANDS WHERE THE MUSEUM'S OWN LABEL STANDS, and stands down
    while a surface grows over that label: the drawer and the door's plate. */

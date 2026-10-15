@@ -1513,13 +1513,16 @@ export function createWing(): WingModule {
        or from the desktop's band (a turned tablet, a narrowed desktop window)
        loads the film again at the stop its address names. */
     let crossing = 0
-    addEventListener('resize', () => {
+    const crossed = (): void => {
       clearTimeout(crossing)
       const next = filmForm()
       if (!hosts || next === form || new URLSearchParams(location.search).has('export')) return
       if (next !== 'desk' && form !== 'desk') { turn(next); return }
       crossing = window.setTimeout(() => { if (filmForm() !== form) location.reload() }, 400)
-    }, { signal })
+    }
+    addEventListener('resize', crossed, { signal })
+    // a window that changed while the release was fetched has no resize left to tell: the form is read once more now
+    crossed()
     stood.add(LIFE[card]!.id)
     paint()
     await picture.ready()

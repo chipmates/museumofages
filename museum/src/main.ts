@@ -1110,10 +1110,12 @@ instSound?.addEventListener('click', toggleSound)
 /** THE PANEL IS A SHEET INSIDE A WING. The museum's own control stands on the
     wing's band, the panel it opens takes the frame's whole height, and the
     picture beside it stays visible, so a press on it gives the room back. */
-const panelIsSheet = (): boolean => phase === 'wing' && deskPanel()
+const panelIsSheet = (): boolean => phase === 'wing' && deskPanel() && !document.querySelector("#wing[data-film='upright'], #wing[data-phone-form]")
 
 /** The instruments stand on the desktop's band only where that band stands:
-    a narrow stage keeps the phone's own way to them. */
+    a narrow stage keeps the phone's own way to them, and so does a wing that
+    still stands in the phone's form while its window has grown (it reloads
+    into the band's form; the panel opened meanwhile is the phone's). */
 function deskPanel(): boolean {
   return deskOn('panel') && innerWidth / innerHeight > 0.9
 }
