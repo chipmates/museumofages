@@ -74,7 +74,8 @@
   .sc-table tbody th{margin-bottom:6px;font-size:1rem}
   .sc-table td{display:grid;grid-template-columns:6.5rem minmax(0,1fr);column-gap:12px;padding:3px 0}
   .sc-table td::before{content:attr(data-k);padding-top:2px;font-size:.6875rem;letter-spacing:.09em;text-transform:uppercase;color:var(--ink-quiet)}
-  .sc-table td:empty{display:none}
+  /* an empty cell keeps its label and says it has no sourced figure (the words stand in the cell's data-none) */
+  .sc-table td:empty::after{content:attr(data-none);color:var(--ink-quiet)}
 }
 
 /* ---------- A source without an address of its own: the same line as a linked one ---------- */

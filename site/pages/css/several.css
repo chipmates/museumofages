@@ -44,7 +44,7 @@
   .sc-table:has(thead th:nth-child(5)) tbody th{margin-bottom:6px;font-size:1rem}
   .sc-table:has(thead th:nth-child(5)) td{display:grid;grid-template-columns:10rem minmax(0,1fr);column-gap:16px;padding:3px 0}
   .sc-table:has(thead th:nth-child(5)) td::before{content:attr(data-k);padding-top:2px;font-size:.6875rem;letter-spacing:.09em;text-transform:uppercase;color:var(--ink-quiet)}
-  .sc-table:has(thead th:nth-child(5)) td:empty{display:none}
+  .sc-table:has(thead th:nth-child(5)) td:empty::after{content:attr(data-none);color:var(--ink-quiet)}
 }
 @media (min-width:1200px){
   .sc-table:has(thead th:nth-child(5)) thead th:nth-child(1){width:29%}

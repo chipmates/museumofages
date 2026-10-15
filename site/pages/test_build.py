@@ -1261,6 +1261,31 @@ class Case(unittest.TestCase):
             self.save(lang, data, page)
         self.fails(r"rows\.0\.cells\.0 is empty")
 
+    def test_an_empty_cell_says_on_a_phone_that_it_has_no_sourced_figure(self):
+        """On a phone a row is a card without the column heads, so an empty cell carries its words: the page's
+        labels.no_figure, shown by the sheet after the cell's label. A table with an empty cell and no such words stops."""
+        page = next((p for p in self.scale_pages() for b in self.data("en", p)["blocks"]
+                     if b["type"] == "numbers" and any(not c for r in b["rows"] for c in r["cells"])), None)
+        if not page:
+            self.skipTest("no table has an empty cell")
+        out, written = self.build()
+        for path in written:
+            data, lang = self.page_of(path)
+            if data["page"]["id"] != self.data("en", page)["page"]["id"]:
+                continue
+            text = path.read_text(encoding="utf-8")
+            empty = re.findall(r'<td data-k="[^"]*"([^>]*)></td>', text)
+            self.assertTrue(empty)
+            self.assertEqual(set(empty), {f' data-none="{data["labels"]["no_figure"]}"'})
+            self.assertRegex(text, r"\.sc-table td:empty::after\{content:attr\(data-none\)")
+            self.assertNotIn("td:empty{display:none}", text)
+        shutil.rmtree(out)
+        for lang in ("en", "de"):
+            data = self.data(lang, page)
+            del data["labels"]["no_figure"]
+            self.save(lang, data, page)
+        self.fails(r"an empty cell needs labels\.no_figure")
+
     def test_a_row_shorter_than_its_columns_stops_the_build(self):
         page = self.scale_page()
         for lang in ("en", "de"):

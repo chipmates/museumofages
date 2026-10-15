@@ -1537,11 +1537,13 @@ def render(page, lang, data, shared, out_root):
         elif kind == "numbers":
             # the pictures' numbers as a table: a row's first cell names it, an empty cell has no sourced figure
             values["html.head"] = "".join(f'<th scope="col">{rich(c)}</th>' for c in block["cols"])
+            # on a phone a row is a card without the column heads: an empty cell says in words that it is empty
+            none = f' data-none="{esc(labels["no_figure"])}"' if any(not c for r in block["rows"] for c in r["cells"]) else ""
             values["html.rows"] = "\n".join(
                 f'      <tr><th scope="row">{rich(row["cells"][0])}</th>'
                 # a cell's words in one span: on a phone the cell is a grid of its label and its words, and a name's
                 # own span would otherwise take a grid place of its own
-                + "".join(f'<td data-k="{esc(block["cols"][i])}">{f"<span>{rich(c)}</span>" if c else ""}</td>'
+                + "".join(f'<td data-k="{esc(block["cols"][i])}"{"" if c else none}>{f"<span>{rich(c)}</span>" if c else ""}</td>'
                           for i, c in enumerate(row["cells"][1:], 1)) + "</tr>"
                 for row in block["rows"])
         elif kind == "pages":
@@ -2116,6 +2118,8 @@ def making_problems(d, wing, data):
             for i, row in enumerate(b["rows"]):
                 if len(row["cells"]) != len(b["cols"]):
                     problems.append(f"{b['id']}: row {i} has {len(row['cells'])} cells and the table {len(b['cols'])} columns")
+            if any(not c for r in b["rows"] for c in r["cells"]) and not d["labels"].get("no_figure"):
+                problems.append(f"{b['id']}: an empty cell needs labels.no_figure, the words a phone shows for it")
         if b["type"] == "pages":
             for item in b["items"]:
                 if item["page"] not in data:
