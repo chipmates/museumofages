@@ -173,10 +173,9 @@ html:has(#wing[data-film='upright']) #rail { display: none !important; }
   box-shadow: 0 -16px 12px -4px var(--ui-ground);
 }
 
-/* ---- walking, a dip, a close look: the foot row alone ---- */
-#wing[data-film='cinema'][data-walking] :is(.cinema-caption, .film-book),
-#wing[data-film='cinema'][data-cut] :is(.cinema-caption, .film-book) { visibility: hidden; }
-#wing[data-film='cinema'][data-walking] .film-back { opacity: .45; }
+/* ---- walking, a dip, a close look: the foot row alone (a held walk keeps the book) ---- */
+#wing[data-film='cinema']:is([data-walking], [data-cut]) .cinema-caption,
+#wing[data-film='cinema']:is([data-walking], [data-cut]):not([data-walk='held']) .film-book { visibility: hidden; }
 #wing[data-film='cinema'] .film-box[data-look='true'] .cinema-caption { display: none; }
 /* while the words are raised the marks stand down: one text at a time */
 #wing[data-film='cinema']:has(.film-box[data-drawer='true']) .film-dot { visibility: hidden; }
@@ -745,15 +744,22 @@ html:has(#wing[data-film='cinema']) :is(#inst-sound, #inst-plan) { display: none
 /* the list ends over the foot, on a whole row at rest: film-cinema.ts shortens it by --cinema-cut */
 #wing[data-film='cinema'] .wing-plan .wing-plan-reading { margin-bottom: calc(var(--plan-foot) - 10px + var(--cinema-cut, 0px)); }
 
-/* ---- the walk's own controls sideways: the hold in the book's seat, the
-   panel a strip over the foot row's left, clear of gold ---- */
-#wing[data-film='cinema'][data-walk] .film-box:not([data-look='true']) .film-foot > .film-book { display: none; }
+/* ---- the walk's own controls sideways: the hold in the book's seat while
+   the walk moves (held, the book is back), the panel a card over the foot
+   row's left, clear of gold and 10 px clear of the seats under it ---- */
+#wing[data-film='cinema'][data-walk='moving'] .film-box:not([data-look='true']) .film-foot > .film-book { display: none; }
 #wing[data-film='cinema'] .film-box > .walk-panel {
   left: var(--cinema-l, 16px);
   right: auto;
-  bottom: calc(var(--cinema-row, 60px) + var(--cinema-b, 0px) - 2px);
+  bottom: calc(var(--cinema-row, 60px) + var(--cinema-b, 0px) + 6px);
   max-width: min(520px, calc(100vw - var(--cinema-l, 16px) - var(--cinema-r, 16px) - 220px));
-  padding: 6px 12px 4px;
+  padding: 6px 20px 4px 12px;
   border-radius: var(--ui-r-box-side);
   pointer-events: auto;
 }
+/* the seats stand over the picture on the card's own solid ground, so a grey
+   arrow keeps its contrast over a bright painting; a disabled one dims its
+   sign, never its ground */
+#wing[data-film='cinema'] .film-foot > :is(.film-back, .film-book, .film-hold) { background: var(--plate); }
+#wing[data-film='cinema'] .film-foot > .film-back:disabled { opacity: 1; }
+#wing[data-film='cinema'] .film-foot > .film-back:disabled > .film-ic { opacity: .45; }

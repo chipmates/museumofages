@@ -215,17 +215,17 @@
 .film-gold-ring { position: absolute; inset: -4px; width: 44px; height: 44px; transform: rotate(-90deg); opacity: 0; }
 .film-gold-ring circle { fill: none; stroke: var(--gold); stroke-width: 2; stroke-dasharray: 0 129; }
 
-/* WALKING: nothing but the dim way back and gold as a ring that is the leg */
+/* WALKING: nothing but the way back and gold as a ring that is the leg; a
+   held walk has the book back in its seat, the way to the plan */
 #wing[data-film='upright'][data-walking] .film-name,
 #wing[data-film='upright'][data-walking] .film-line,
 #wing[data-film='upright'][data-walking] .film-drawer,
 #wing[data-film='upright'][data-walking] .film-keys,
-#wing[data-film='upright'][data-walking] .film-book { visibility: hidden; }
+#wing[data-film='upright'][data-walking]:not([data-walk='held']) .film-book { visibility: hidden; }
 #wing[data-film='upright'][data-walking] .film-box > .film-name,
 #wing[data-film='upright'][data-walking] .film-box > .film-line,
 #wing[data-film='upright'][data-walking] .film-box > .film-drawer,
 #wing[data-film='upright'][data-walking] .film-box > .film-keys { background: none; }
-#wing[data-film='upright'][data-walking] .film-back { opacity: .45; }
 /* while a leg runs gold is the leg's ring, a circle in every corner language */
 .film-gold[data-leg='true'] {
   left: auto;
@@ -246,7 +246,7 @@
 #wing[data-film='upright'][data-cut] .film-line,
 #wing[data-film='upright'][data-cut] .film-drawer,
 #wing[data-film='upright'][data-cut] .film-keys,
-#wing[data-film='upright'][data-cut] .film-book { visibility: hidden; }
+#wing[data-film='upright'][data-cut]:not([data-walk='held']) .film-book { visibility: hidden; }
 
 /* the marks of the film stand where the live marks stand, and go with the walk */
 /* the glass a phone's marks keep to: inside the notch and the home indicator */
@@ -758,9 +758,10 @@ html:has(#wing[data-film='upright']) #instruments .inst-source {
 /* ---- THE WALK'S OWN CONTROLS on the phone (walk-controls.ts) ----
    While the eye walks the words' rows stand empty: where to, the skip and one
    tip stand on the box's plate just over the foot row, and the hold takes the
-   book's seat, which the book leaves while the eye walks. */
+   book's seat while the walk moves. Held, gold says "Walk on" and the book
+   is back in its seat, so the foot row stays back, the book and gold. */
 .film-hold { display: none; }
-#wing[data-walk] .film-box:not([data-look='true']) .film-hold { display: flex; }
+#wing[data-walk='moving'] .film-box:not([data-look='true']) .film-hold { display: flex; }
 .film-hold .walk-ic { width: 16px; height: 16px; }
 .film-box > .walk-panel {
   position: absolute;

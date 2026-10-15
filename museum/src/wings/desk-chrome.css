@@ -426,7 +426,8 @@
 
 /* ---- WHAT EVERY CONTROL DOES WHILE THE CAMERA MOVES ----
    Nothing is told while walking: the words and their two controls go, the
-   ways stay. The way back stays at half strength and still answers. */
+   ways stay. The way back answers at full strength, and is dimmed only
+   where it is disabled. */
 .desk-cap { transition: opacity 240ms cubic-bezier(.22,.61,.36,1) 500ms, transform 240ms cubic-bezier(.22,.61,.36,1) 500ms; }
 #wing[data-walking] .desk-cap {
   opacity: 0;
@@ -435,7 +436,6 @@
   transition-duration: 160ms;
   transition-delay: 0ms;
 }
-#wing[data-walking] .desk-back { opacity: 0.45; }
 
 @media (prefers-reduced-motion: reduce) {
   /* THE EYE IS PLACED, so there is no leg to be quiet during: the words

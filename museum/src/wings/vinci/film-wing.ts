@@ -317,7 +317,11 @@ export function createWing(): WingModule {
   }
   const walkMotion = (): 'rest' | 'moving' | 'held' => !walkActive ? 'rest' : picture?.paused() ? 'held' : 'moving'
   function holdWalk(): void {
-    if (walkActive && picture?.pause()) paintWalk()
+    if (!walkActive || !picture?.pause()) return
+    // a phone's hold gives its seat back to the book while held: a hand on it moves to gold, the way on
+    const onHold = Boolean(phone) && document.activeElement === walk?.hold
+    paintWalk()
+    if (onHold) phone?.gold.focus({ preventScroll: true })
   }
   function goOnWalk(): void {
     picture?.resume()
