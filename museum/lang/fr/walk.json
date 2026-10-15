@@ -39,7 +39,6 @@
  "dfd144a9594c473b": "Commencer",
  "20586588519070ad": "À propos de l’aile",
  "9c4d87427049daca": "Né le 15 avril 1452 à Vinci. À 21 ans, il dessine la vallée de l’Arno près de sa ville natale : son plus ancien dessin daté, le 5 août 1473.",
- "8b22cdbf1e23df6b": "En mode paysage, vous voyez davantage de chaque salle.",
  "49c289e63cbed10f": "Léonard de Vinci, 1473. Uffizi, Florence, inventaire 8 P. Photo : Tangopaso, domaine public.",
  "d515d428eab9828c": "Parcourir sa vie",
  "47e6adf36b92be88": "La photo a été prise à main levée dans la galerie. Nous avons corrigé sa légère déformation en trapèze par une seule transformation projective, calculée à partir des quatre coins de la feuille visible.",
@@ -523,5 +522,16 @@
  "5a71ae89309ec60e": "Le sas de l’écluse et son eau ne sont pas représentés",
  "96d37fa849b2e8ca": "L’eau n’est pas représentée",
  "f318279fac8956cc": "Moins",
- "2050828b19f41b86": "À voir maintenant : {0}"
+ "2050828b19f41b86": "À voir maintenant : {0}",
+ "4039a44669e97e8f": "Prochaine étape",
+ "3bd7be47d87a63a3": "Pause",
+ "697b7adee89382dd": "Continuer",
+ "7959834d37798a2f": "Passer à l’étape",
+ "493e90a1c9c715af": "C’est une visite guidée. Utilisez → pour avancer, ← pour revenir.",
+ "a1b11aed0f755c3e": "La barre d’espace met en pause. Ou passez à l’étape.",
+ "2ea72b852d1ca1a3": "Touchez ‖ pour mettre en pause. Ou passez à l’étape.",
+ "b55df3064c82243b": "Le plan vous mène à n’importe quelle étape.",
+ "a08085012edc1c0e": "Appuyez sur le cercle sous une œuvre pour la voir de près.",
+ "a0a908791e026d6a": "Basculez en mode paysage pour voir plus de chaque salle.",
+ "0e839ee6811c01d8": "Code source"
 }

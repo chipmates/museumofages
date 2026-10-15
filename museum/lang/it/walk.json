@@ -39,7 +39,6 @@
  "dfd144a9594c473b": "Inizia",
  "20586588519070ad": "Informazioni sull’ala",
  "9c4d87427049daca": "Nato il 15 aprile 1452 a Vinci. A 21 anni disegna la valle dell’Arno vicino al suo paese: è il suo disegno datato più antico, del 5 agosto 1473.",
- "8b22cdbf1e23df6b": "Con il telefono in orizzontale vedi di più di ogni stanza.",
  "49c289e63cbed10f": "Leonardo da Vinci, 1473. Uffizi, Firenze, inventario 8 P. Foto: Tangopaso, pubblico dominio.",
  "d515d428eab9828c": "Segui la sua vita",
  "47e6adf36b92be88": "La foto è stata scattata a mano libera in galleria ed era un po’ deformata a trapezio. L’abbiamo raddrizzata con una sola correzione prospettica, dai quattro angoli del foglio visibile.",
@@ -525,5 +524,16 @@
  "5a71ae89309ec60e": "La camera della chiusa e la sua acqua non sono mostrate",
  "96d37fa849b2e8ca": "L’acqua non è mostrata",
  "f318279fac8956cc": "Meno",
- "2050828b19f41b86": "Ora in mostra: {0}"
+ "2050828b19f41b86": "Ora in mostra: {0}",
+ "4039a44669e97e8f": "Prossima tappa",
+ "3bd7be47d87a63a3": "Pausa",
+ "697b7adee89382dd": "Continua",
+ "7959834d37798a2f": "Salta alla tappa",
+ "493e90a1c9c715af": "È una visita guidata. Usa → per avanzare, ← per tornare indietro.",
+ "a1b11aed0f755c3e": "Pausa con la barra spaziatrice. O salta alla tappa.",
+ "2ea72b852d1ca1a3": "Tocca ‖ per mettere in pausa. O salta alla tappa.",
+ "b55df3064c82243b": "La pianta ti porta a qualsiasi tappa.",
+ "a08085012edc1c0e": "Premi il cerchio sotto un’opera per vederla da vicino.",
+ "a0a908791e026d6a": "Gira il telefono di lato per vedere di più di ogni stanza.",
+ "0e839ee6811c01d8": "Codice sorgente"
 }

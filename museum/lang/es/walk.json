@@ -39,7 +39,6 @@
  "dfd144a9594c473b": "Empezar",
  "20586588519070ad": "Sobre el ala",
  "9c4d87427049daca": "Nació el 15 de abril de 1452 en Vinci. A los 21 años dibujó el valle del Arno, cerca de su pueblo: es su primer dibujo con fecha, del 5 de agosto de 1473.",
- "8b22cdbf1e23df6b": "En horizontal, ves más de cada sala.",
  "49c289e63cbed10f": "Leonardo da Vinci, 1473. Uffizi, Florencia, inventario 8 P. Foto: Tangopaso, dominio público.",
  "d515d428eab9828c": "Recorrer su vida",
  "47e6adf36b92be88": "La foto se hizo en el museo con la cámara en la mano y tenía una ligera deformación en trapecio. La quitamos con una sola corrección de perspectiva, a partir de las cuatro esquinas de la hoja visible.",
@@ -524,5 +523,16 @@
  "5a71ae89309ec60e": "No se muestran la cámara de la esclusa ni su agua",
  "96d37fa849b2e8ca": "No se muestra el agua",
  "f318279fac8956cc": "Menos",
- "2050828b19f41b86": "Ahora se muestra: {0}"
+ "2050828b19f41b86": "Ahora se muestra: {0}",
+ "4039a44669e97e8f": "Próxima parada",
+ "3bd7be47d87a63a3": "Pausa",
+ "697b7adee89382dd": "Continuar",
+ "7959834d37798a2f": "Saltar a la parada",
+ "493e90a1c9c715af": "Es una visita guiada. Usa → para avanzar, ← para volver.",
+ "a1b11aed0f755c3e": "Pausa con la barra espaciadora. O salta a la parada.",
+ "2ea72b852d1ca1a3": "Toca ‖ para pausar. O salta a la parada.",
+ "b55df3064c82243b": "El plano te lleva a cualquier parada.",
+ "a08085012edc1c0e": "Pulsa el círculo dorado bajo una obra para verla de cerca.",
+ "a0a908791e026d6a": "Gira el teléfono en horizontal para ver más de cada sala.",
+ "0e839ee6811c01d8": "Código fuente"
 }

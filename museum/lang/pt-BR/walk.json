@@ -39,7 +39,6 @@
  "dfd144a9594c473b": "Começar",
  "20586588519070ad": "Sobre a ala",
  "9c4d87427049daca": "Nasceu em 15 de abril de 1452, em Vinci. Aos 21 anos, desenhou o vale do Arno, perto de onde nasceu: é o desenho datado mais antigo de Leonardo que se conhece, de 5 de agosto de 1473.",
- "8b22cdbf1e23df6b": "Com o celular na horizontal, você vê mais de cada sala.",
  "49c289e63cbed10f": "Leonardo da Vinci, 1473. Uffizi, Florença, inventário 8 P. Foto: Tangopaso, domínio público.",
  "d515d428eab9828c": "Conhecer a vida dele",
  "47e6adf36b92be88": "A foto foi tirada à mão na galeria e tinha uma leve distorção trapezoidal. Corrigimos isso com uma única transformação projetiva, a partir dos quatro cantos da folha visível.",
@@ -524,5 +523,16 @@
  "5a71ae89309ec60e": "A câmara da eclusa e a água dela não aparecem",
  "96d37fa849b2e8ca": "A água não aparece",
  "f318279fac8956cc": "Menos",
- "2050828b19f41b86": "Agora em exibição: {0}"
+ "2050828b19f41b86": "Agora em exibição: {0}",
+ "4039a44669e97e8f": "Próxima parada",
+ "3bd7be47d87a63a3": "Pausar",
+ "697b7adee89382dd": "Continuar",
+ "7959834d37798a2f": "Pular para a parada",
+ "493e90a1c9c715af": "Esta é uma visita guiada. Use → para avançar, ← para voltar.",
+ "a1b11aed0f755c3e": "Pause com a barra de espaço. Ou pule para a parada.",
+ "2ea72b852d1ca1a3": "Toque em ‖ para pausar. Ou pule para a parada.",
+ "b55df3064c82243b": "A planta leva você a qualquer parada.",
+ "a08085012edc1c0e": "Aperte o círculo dourado sob uma obra para vê-la de perto.",
+ "a0a908791e026d6a": "Vire o celular na horizontal para ver mais de cada sala.",
+ "0e839ee6811c01d8": "Código-fonte"
 }
