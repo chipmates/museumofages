@@ -2099,6 +2099,9 @@ def making_problems(d, wing, data):
         return [f"{', '.join(found)} stand only on a page of a wing in the making"] if found else []
     if layout not in (None, "beside"):
         problems.append(f"page.og_image.layout is {layout!r}: the share picture's one other form is 'beside'")
+    if d["labels"].get("og_second") and (layout != "beside" or not d["labels"].get("og_answer")):
+        problems.append("labels.og_second, the share picture's line under its picture, stands only with labels.og_answer "
+                        "on a share picture whose words stand beside it (page.og_image.layout 'beside')")
     if "door" in top or any(b["type"] == "close" for b in d["blocks"]):
         problems.append("a page of a wing in the making has no door: its line and link stand in top.out")
     if not (top.get("out") or {}).get("text") or not (top.get("out") or {}).get("link"):
@@ -2246,7 +2249,8 @@ def still_jobs(pages=PAGES, loaded=None):
 def scale_share(d, data, lang, colours):
     """The share picture of a page of a wing in the making: its heading, under it the page's answer line for the link
     preview (labels.og_answer) or else the line its share title adds to it, and its first picture at one scale (a list
-    of pages: the first listed page's). Returns {svg}."""
+    of pages: the first listed page's), with a quieter line under it where the page gives one (labels.og_second).
+    Returns {svg}."""
     plain = lambda t: t.replace(LIB.NBSP, " ")
     source = d
     if d["page"].get("hub"):
@@ -2264,6 +2268,7 @@ def scale_share(d, data, lang, colours):
     # a title that repeats the heading gives the rest as the line, without the colon that joined them
     rest = og[len(h1):].lstrip(" :").strip() if og.startswith(h1) else ""
     words = {"h1": h1, "line": plain(answer) if answer else rest[:1].upper() + rest[1:],
+             "second": plain(d["labels"].get("og_second") or ""),
              "person": plain(d["labels"]["person"]),
              "site": ORIGIN.split("://", 1)[1]}
     beside = source["page"]["og_image"].get("layout") == "beside"

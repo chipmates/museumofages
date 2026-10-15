@@ -1727,14 +1727,14 @@
   {
    "path": "pages/pics/img/animals-spinosaurus-og-de-1200x630.png",
    "url": "/static/img/animals-spinosaurus-og-de-1200x630.png",
-   "bytes": 105788,
-   "sha256": "2c1f001540251192b8f38c0cd1e558db63444a5d68460f69fe63085d6daf4452"
+   "bytes": 112022,
+   "sha256": "04e189f7f0201bff21c1db87a61ba4bce93bf56be7829cef616ce41acf6f6746"
   },
   {
    "path": "pages/pics/img/animals-spinosaurus-og-en-1200x630.png",
    "url": "/static/img/animals-spinosaurus-og-en-1200x630.png",
-   "bytes": 99163,
-   "sha256": "fc8611a421942f230128c243036a30964bc8446b71b4d15b3b93cba0aa6748eb"
+   "bytes": 106988,
+   "sha256": "f092b90dc4a54901fc304ffa6ecc4445f1ea2c10a13a87940d017904334123bb"
   },
   {
    "path": "pages/pics/img/animals-spinosaurus-side-1600.avif",

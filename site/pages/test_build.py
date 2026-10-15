@@ -1465,6 +1465,10 @@ class Case(unittest.TestCase):
                     # a card that sets its words beside its picture wraps the line over several rows
                     said = " ".join(re.findall(r"<text [^>]*>([^<]*)</text>", job["svg"]))
                     self.assertIn(html.escape(line.replace("\u00a0", " "), quote=False), said)
+                    # and a second line, under the picture, where the page gives one
+                    second = self.data(job["lang"], page)["labels"].get("og_second")
+                    if second:
+                        self.assertIn(html.escape(second.replace("\u00a0", " "), quote=False), said)
             # beside its words a picture whose person stands clear only on wider screens shows no height over it
             d = self.data("en", page)
             pic = {} if d["page"].get("hub") else d["pics"][d["top"]["scale"]["pic"]]
@@ -1474,6 +1478,17 @@ class Case(unittest.TestCase):
                     self.assertNotIn(f">{html.escape(person, quote=False)}</text>", job["svg"], (page, job["lang"]))
         if not lines:
             self.skipTest("no page gives an answer line for its share picture")
+
+    def test_a_second_share_line_stands_only_under_a_picture_beside_its_words(self):
+        page = next((p for p in self.scale_pages() if self.data("en", p)["page"]["og_image"].get("layout") != "beside"
+                     and not self.data("en", p)["page"].get("hub")), None)
+        if not page:
+            self.skipTest("every scale page sets its share words beside its picture")
+        for lang in ("en", "de"):
+            data = self.data(lang, page)
+            data["labels"]["og_second"] = "a line under the picture"
+            self.save(lang, data, page)
+        self.fails(r"labels\.og_second, the share picture's line under its picture, stands only with labels\.og_answer")
 
     def test_each_cell_of_the_numbers_holds_its_words_in_one_element(self):
         out, written = self.build()

@@ -677,6 +677,10 @@ def _picture_beside_svg(words, c, picture, size, person, W, H, m):
     if person:
         px, top = person
         parts.append(_text(ix + iw * px, iy + ih * top - 12, words["person"], 20, c["stone-text-2"], "middle"))
+    # a second line, quieter, under the picture: what the picture shows of ours where the answer speaks of others
+    if words.get("second"):
+        for i, row in enumerate(r.replace("\u00a0", " ") for r in _wrap(keep(words["second"]).replace(" ", "\n"), 28, iw * 0.87, "\n")):
+            parts.append(_text(ix, iy + ih + 44 + 36 * i, row, 28, c["text-2"]))
     parts.append(_rect(m, H - 62, 48, 2, c["chalk"], c["chalk"], 0))
     parts.append(_text(m, H - 30, words["site"], 20, c["text-3"]))
     return (f'<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="{W}" height="{H}" '
