@@ -680,6 +680,23 @@ def span_rules(defs):
     return "".join(rules)
 
 
+def top_rules(defs):
+    """Where a label over the picture names a height (pics.<name>.tops, the height's place as a share of the picture's
+    height from its top): a dotted line drops from the label's bracket to that height, and a bar as wide as the
+    bracket marks it, inside the picture's two-pixel frame at the picture's scale; the line's part over the picture
+    runs from the bracket's middle down past the lanes nearer the picture (mark_rules gives their number)."""
+    rules = []
+    for name, d in defs.items():
+        for key, at in (d.get("tops") or {}).items():
+            found, place = re.fullmatch(r"(\d{1,3}(?:\.\d+)?)%", at or ""), mark_at((d.get("marks") or {}).get(key))
+            if found and place:
+                a, b, _ = place
+                rules.append(".sc-height--%s-%s{left:calc(2px + (100%% - 4px) * %g);width:calc((100%% - 4px) * %g);"
+                             "height:calc((100%% - 4px) * %g)}" % (name, key, round(a, 4), round(b - a, 4), round(float(found.group(1)) / 100, 4)))
+                rules.append(".sc-mark--%s-%s::before{left:calc(2px + (100%% - 4px) * %g)}" % (name, key, round((a + b) / 2, 4)))
+    return "".join(rules)
+
+
 # A key's swatch: its square, and the line it leads, on a page whose key has swatches only
 SWATCH = (".sc-keys{display:grid;gap:4px;margin:4px 0 0;padding:0;list-style:none}"
           ".sc-keys__i{display:flex;align-items:baseline;gap:8px}"
@@ -759,12 +776,14 @@ def mark_lanes(items, width, one_line):
     inner = width - 4
     lanes, out = [], {}
     for key, a, b, keep, name, value in sorted(items, key=lambda it: (it[1], it[2])):
-        want = est(f"{name}, {value}") if one_line else max(est(name), est(value))
+        # a height's label has no length to part: its words are its name
+        whole = f"{name}, {value}" if value else name
+        want = est(whole) if one_line else max(est(name), est(value))
         bracket = 2 + inner * a, 2 + inner * b
         first = keep or ("start" if a + b < 1 else "end")
         sides = [first] if keep else [first, "end" if first == "start" else "start"]
         # a side the words fit at: the name whole on its line, the rest on two lines at most
-        least = min(want, max(MARK_LEAST, est(name), 0.6 * (est(f"{name}, {value}") if one_line else est(value))))
+        least = min(want, max(MARK_LEAST, est(name), 0.6 * (est(whole) if one_line else est(value))))
         room = lambda side: min(want, width - bracket[0] if side == "start" else bracket[1])
         words = lambda side, w: (bracket[0], bracket[0] + w) if side == "start" else (bracket[1] - w, bracket[1])
         # words keep a gap from words and brackets from brackets; a bracket stands above the words of its lane, so
@@ -842,6 +861,8 @@ def mark_rules(data):
                     a, b, _ = mark_at((near if screen < below else pic["marks"])[key])
                     parts = {
                         "lane": ("grid-row:%d" % (n - lane if over else lane + 1), ""),
+                        # a height's label: how many lanes its line passes on its way down to the picture
+                        "below": ("--below:%d" % lane if over and key in (pic.get("tops") or {}) else "", ""),
                         "side": ("padding-left:calc(2px + (100%% - 4px) * %g);padding-right:0;justify-content:flex-start" % round(a, 4),
                                  "text-align:left") if side == "start" else
                                 ("padding-left:0;padding-right:calc(2px + (100%% - 4px) * %g);justify-content:flex-end" % round(1 - b, 4),
@@ -1332,10 +1353,12 @@ def render(page, lang, data, shared, out_root):
         return href["href.out"]
 
     def person_html(name):
-        """The person's height over the person in a picture at one scale (its place is the picture's: pics.<name>.person)."""
+        """The person's height over the person in a picture at one scale (its place is the picture's: pics.<name>.person),
+        and the line down to each height a label over the picture names (pics.<name>.tops)."""
+        tops = "".join(fill(parts["scale_top"], {"key": esc(f"{name}-{k}")}) for k in data["pics"][name].get("tops") or {})
         if not data["pics"][name].get("person"):
-            return ""
-        return fill(parts["person"], {"key": esc(name), "text": rich(labels["person"])})
+            return tops
+        return fill(parts["person"], {"key": esc(name), "text": rich(labels["person"])}) + tops
 
     table = next((b["id"] for b in data["blocks"] if b["type"] == "numbers"), None)
 
@@ -1380,7 +1403,11 @@ def render(page, lang, data, shared, out_root):
         if not fig.get("marks"):
             return ""
         behind = set(data["pics"][fig["pic"]].get("behind") or [])
-        items = "".join(fill(parts["scale_mark"], {"key": esc(f'{fig["pic"]}-{m["span"]}'), "html.name": rich(mark_split(m["text"])[0]),
+        tops = data["pics"][fig["pic"]].get("tops") or {}
+        # a height's label (pics.<name>.tops) is its words whole: there is no animal's name and length to part
+        items = "".join(fill(parts["scale_mark_top"], {"key": esc(f'{fig["pic"]}-{m["span"]}'), "html.text": rich(m["text"])})
+                        if m["span"] in tops else
+                        fill(parts["scale_mark"], {"key": esc(f'{fig["pic"]}-{m["span"]}'), "html.name": rich(mark_split(m["text"])[0]),
                                                    "html.value": rich(mark_split(m["text"])[1])})
                         for m in fig["marks"] if (m["span"] in behind) == over)
         return fill(parts["scale_marks"], {"side": "over" if over else "under", "html.items": items}) if items else ""
@@ -1706,7 +1733,7 @@ def render(page, lang, data, shared, out_root):
         "css.inline": shared["css_scale" if making(wing) else "css_list" if any(b["type"] == "periods" for b in data["blocks"]) else
                              "css_chart" if works or "drawing" in data["top"] or any(b["type"] == "text" for b in data["blocks"]) else "css"]
                       + (shared["langs_css"] + chrome["by"] if chrome["langs"] else ""),
-        "css.faces": faces(root, lang) + focus + person_rules(data["pics"]) + span_rules(data["pics"]) + swatch_rules(data["pics"])
+        "css.faces": faces(root, lang) + focus + person_rules(data["pics"]) + span_rules(data["pics"]) + swatch_rules(data["pics"]) + top_rules(data["pics"])
                      + (shared["css_several"] + mark_rules(data) if marked_figures(data) or has_points(data) else ""),
         "html.preload": preload,
         "html.theme": f'<meta name="theme-color" content="{chrome["theme"]}">\n' if chrome["theme"] else "",
@@ -2090,11 +2117,16 @@ def making_problems(d, wing, data):
         for mark in fig.get("marks", []):
             if not mark_at(((pic or {}).get("marks") or {}).get(mark.get("span"))):
                 problems.append(f"the label {mark.get('span')!r} needs pics.{fig.get('pic')}.marks.<span>, the animal's start and end in the picture")
-            if not mark_split(mark.get("text", ""))[1]:
+            if not mark_split(mark.get("text", ""))[1] and mark.get("span") not in ((pic or {}).get("tops") or {}):
                 problems.append(f"the label {mark.get('span')!r} gives the animal's name, a comma and its length")
         for name in (pic or {}).get("behind") or []:
             if name not in {m.get("span") for m in fig.get("marks", [])}:
                 problems.append(f"pics.{fig.get('pic')}.behind names {name!r}, which no label of the picture is")
+        for name, at in ((pic or {}).get("tops") or {}).items():
+            if (name not in {m.get("span") for m in fig.get("marks", [])} or name not in ((pic or {}).get("behind") or [])
+                    or not re.fullmatch(r"\d{1,3}(?:\.\d+)?%", at if isinstance(at, str) else "") or (pic or {}).get("narrow")):
+                problems.append(f"pics.{fig.get('pic')}.tops.{name} is a height a label over the picture names, its place "
+                                "a share of the picture's height (as 18.8%), on a picture without a narrow version")
         if (pic or {}).get("person_from") is not None and not (
                 isinstance(pic["person_from"], int) and pic["person_from"] > MARK_SCREENS[0]
                 and "person" in {m.get("span") for m in fig.get("marks", [])}):

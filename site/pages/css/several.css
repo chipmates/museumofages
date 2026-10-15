@@ -24,6 +24,13 @@
   .sc-mark__n{display:inline}
   .sc-mark__c{position:static;width:auto;height:auto;overflow:visible;clip-path:none}
 }
+/* A label over the picture that names a height: from its bracket's top a dotted line drops past the lanes nearer
+   the picture (each lane .975rem of words, 10px to its bracket, 6px between lanes; then 4px and the frame's 2px)
+   and through the picture to that height, where a bar as wide as the bracket marks it (top_rules) */
+.sc-mark--height::before{content:"";position:absolute;top:calc(100% - 6px);height:calc(var(--below,0) * (.975rem + 16px) + 12px);border-left:1px dotted currentColor}
+.sc-height{position:absolute;top:2px;color:var(--stone-text-2);pointer-events:none}
+.sc-height::before{content:"";position:absolute;left:50%;top:0;bottom:0;border-left:1px dotted currentColor}
+.sc-height::after{content:"";position:absolute;left:0;right:0;bottom:0;border-top:1px solid currentColor}
 
 /* A short list in a section: each point a paragraph that leads with its own words, a short rule at its start */
 .sp-points{max-width:38rem;margin:12px 0 0;padding:0;list-style:none;color:var(--ink-body)}

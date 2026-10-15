@@ -1,5 +1,5 @@
 {
- "_note": "THE WORDS of the T. rex page. Poured word for word from the writer's WORDS file; the title, the description and the heading are its first options. The two lists of what was found stand under their field names in the writer's file (Found, Not found). The person's height stands over the person in each picture (labels.person), and the side view's labels name the person too. pics.<name>.marks: the animal's and the person's start and end as shares of the picture's width, measured on the frame; pics.<name>.person: the person's centre and the top of its head. Empty cells of the table are the writer's: no sourced figure exists.",
+ "_note": "THE WORDS of the T. rex page. Poured word for word from the writer's WORDS file; the title, the description and the heading are its first options. The two lists of what was found stand under their field names in the writer's file (Found, Not found). The person's height stands over the person in each picture (labels.person), and the side view's labels name the person too. pics.<name>.marks: the animal's and the person's start and end as shares of the picture's width, measured on the frame; pics.<name>.person: the person's centre and the top of its head. Empty cells of the table are the writer's: no sourced figure exists. pics.side.tops: the two heights the labels over the side view name, the back over the hips (3.96 m) and the raised head's top (4.57 m), as shares of the picture's height from its top, measured on the render (frame 4.9 m to -0.1 m); their brackets (pics.side.marks.hips, .head) stand over what they measure.",
  "page": {
   "id": "animals-t-rex",
   "wing": "animals",
@@ -25,7 +25,17 @@
    "person": "86.42% 63.92%",
    "marks": {
     "t-rex": "2.47% 97.22%",
-    "person": "85.21% 87.64%"
+    "person": "85.21% 87.64%",
+    "hips": "57.92% 63.75%",
+    "head": "84.58% 90.0%"
+   },
+   "behind": [
+    "hips",
+    "head"
+   ],
+   "tops": {
+    "hips": "18.84%",
+    "head": "6.66%"
    }
   },
   "close": {
@@ -111,6 +121,14 @@
     {
      "span": "person",
      "text": "Der Mensch, 1,70 m"
+    },
+    {
+     "span": "hips",
+     "text": "über der Hüfte 3,96 m"
+    },
+    {
+     "span": "head",
+     "text": "erhobener Kopf etwa 4,6 m"
     }
    ],
    "close": {

@@ -1011,7 +1011,8 @@ class Case(unittest.TestCase):
                     self.assertIn(".sc-mark--%s-%s::after{left:calc(2px + (100%% - 4px) * %g);width:calc((100%% - 4px) * %g)}"
                                   % (fig["pic"], mark["span"], round(a, 4), round(b - a, 4)), text)
                     # an animal that stands behind another is named over the picture, the rest under it
-                    li = '<li class="sc-mark sc-mark--%s-%s">' % (fig["pic"], mark["span"])
+                    li = '<li class="sc-mark sc-mark--%s-%s%s">' % (fig["pic"], mark["span"],
+                                                                      " sc-mark--height" if mark["span"] in (pic.get("tops") or {}) else "")
                     self.assertIn(li, over if mark["span"] in (pic.get("behind") or []) else under)
                     self.assertNotIn(li, under if mark["span"] in (pic.get("behind") or []) else over)
                     self.assertIn(mark["text"], re.sub(r" ([,.:)])", r"\1", " ".join(self.words(figure).replace("\u00a0", " ").split())))
@@ -1031,6 +1032,45 @@ class Case(unittest.TestCase):
             del data["pics"][pic]["marks"][data["top"]["scale"]["marks"][0]["span"]]
             self.save(lang, data, page)
         self.fails(r"the label '\w[\w-]*' needs pics")
+
+    def test_a_label_over_the_picture_may_name_a_height_and_mark_it_in_the_picture(self):
+        """A label over the picture may name a height instead of an animal (pics.<name>.tops): its words whole, a
+        dotted line from its bracket through the lanes nearer the picture, and in the picture a line down to that
+        height with a bar there as wide as the bracket. A height no label over the picture names stops the build."""
+        page = next((p for p in self.scale_pages() if any(pic.get("tops") for pic in self.data("en", p)["pics"].values())), None)
+        if not page:
+            self.skipTest("no picture names a height over it")
+        out, written = self.build()
+        seen = 0
+        for path in written:
+            data, lang = self.page_of(path)
+            if data["page"]["id"] != self.data("en", page)["page"]["id"]:
+                continue
+            text = path.read_text(encoding="utf-8")
+            for fig in filter(None, [data["top"].get("scale")] + [b.get("scale") for b in data["blocks"]]):
+                pic = data["pics"][fig["pic"]]
+                for key, at in (pic.get("tops") or {}).items():
+                    seen += 1
+                    a, b = (float(x) / 100 for x in pic["marks"][key].split("%")[:2])
+                    words = next(m["text"] for m in fig["marks"] if m["span"] == key)
+                    # its words whole: no comma parts a name from a length
+                    li = re.search(r'<li class="sc-mark sc-mark--%s-%s sc-mark--height"><span class="sc-mark__t"><span class="sc-mark__n">(.*?)</span></span></li>'
+                                   % (fig["pic"], key), text)
+                    self.assertTrue(li, (lang, key))
+                    self.assertEqual(html.unescape(li.group(1)).replace("\u00a0", " "), words)
+                    self.assertIn('<span class="sc-height sc-height--%s-%s" aria-hidden="true"></span>' % (fig["pic"], key), text)
+                    self.assertIn(".sc-height--%s-%s{left:calc(2px + (100%% - 4px) * %g);width:calc((100%% - 4px) * %g);height:calc((100%% - 4px) * %g)}"
+                                  % (fig["pic"], key, round(a, 4), round(b - a, 4), round(float(at[:-1]) / 100, 4)), text)
+                    self.assertIn(".sc-mark--%s-%s::before{left:calc(2px + (100%% - 4px) * %g)}" % (fig["pic"], key, round((a + b) / 2, 4)), text)
+                    self.assertRegex(text, r"\.sc-mark--%s-%s\{grid-row:\d+;--below:\d" % (fig["pic"], key))
+        self.assertTrue(seen)
+        shutil.rmtree(out)
+        for lang in ("en", "de"):
+            data = self.data(lang, page)
+            pic = next(pic for pic in data["pics"].values() if pic.get("tops"))
+            pic["behind"] = [k for k in pic["behind"] if k not in pic["tops"]]
+            self.save(lang, data, page)
+        self.fails(r"tops\.\w+ is a height a label over the picture names")
 
     def test_a_picture_may_give_narrow_screens_a_closer_cut_of_the_same_render(self):
         """A picture at one scale may give narrow screens a closer cut of its render (pics.<name>.narrow): its own
