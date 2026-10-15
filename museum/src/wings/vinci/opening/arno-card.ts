@@ -15,6 +15,8 @@
      words: the words in a column at the right, the gold at its foot. The
      words step down a size until they stand whole above the gold, and the
      opened label ends on a whole line.
+   · A PRESS OFF THE DRAWING lets the visitor in on the desktop, as Escape
+     and the gold do.
    · THE ONE THING THE LANGUAGE'S ROW MOVES: sideways it heads the words'
      column, so the words stand about 22 px lower, still whole above the gold. */
 
@@ -292,6 +294,20 @@ export async function openArnoCard(host: HTMLElement, options: ArnoCardOptions =
     })
     // a browser may close a modal on a second Escape without asking: that is a way in too
     card.addEventListener('close', () => leave('started'))
+    /* A PRESS OFF THE DRAWING AND THE WORDS IS A WAY IN as Escape is, on the
+       desktop alone (a hand on a phone's glass is no ask), and like Escape it
+       folds an open list or label first. The list folds itself on the press,
+       so what stood open is read before it. */
+    let folding = false
+    addEventListener('pointerdown', () => {
+      folding = !label.hidden || Boolean(card.querySelector('.arno-lang-list:not([hidden])'))
+    }, { capture: true, signal: watch.signal })
+    card.addEventListener('click', event => {
+      if (filmForm() !== 'desk' || card.dataset['shown'] !== 'true') return
+      if (event.target !== card && event.target !== stage && event.target !== band && event.target !== words) return
+      if (folding) { if (!label.hidden) setLabel(false); return }
+      leave('started')
+    }, { signal: watch.signal })
     options.signal?.addEventListener('abort', () => leave('aborted'), { once: true })
   })
 }
