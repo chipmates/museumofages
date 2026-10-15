@@ -3,7 +3,7 @@
 // no row at all. Fields a step does not name are never read into its row.
 //
 // The dataset's row (blobs in order, the step as the index, no number of our own):
-//   1 step      2 wing or page kind      3 stop number, kind of work or door's place, else ''
+//   1 step      2 wing or page kind      3 stop number, walk number, kind of work or door's place, else ''
 //   4 language  5 hold (walk rows), else ''  6 source word, else ''  7 'start' or 'inside' (page_arrival), else ''
 //   8 device class  9 country (both '' on the question's rows)  10 'probe' or ''
 
@@ -18,7 +18,11 @@ export const DEVICES = Object.freeze(['phone', 'tablet', 'desktop'])
 // Each step's fields: the ones it needs, and the source word where it may carry one.
 export const STEPS = Object.freeze({
   museum_arrival: { needs: ['wing', 'language', 'hold'], source: true },
+  // the welcome passed: its door closed and the walk began, once per wing per page load
+  museum_welcome: { needs: ['wing', 'language', 'hold'] },
   museum_stop: { needs: ['wing', 'stop', 'language', 'hold'] },
+  // a walk skipped, by its number (walk 0 is the walk-in, walk n leads to stop n + 1), once per walk per page load
+  museum_skip: { needs: ['wing', 'walk', 'language', 'hold'] },
   museum_look: { needs: ['wing', 'look', 'language', 'hold'] },
   museum_use: { needs: ['wing', 'language', 'hold'], source: true },
   page_arrival: { needs: ['page', 'language'], start: true },
@@ -59,7 +63,7 @@ export function rowOf(payload, edge) {
   if (typeof step !== 'string' || !Object.hasOwn(STEPS, step)) return null
   const spec = STEPS[step]
   for (const field of spec.needs) {
-    if (field === 'stop') continue
+    if (field === 'stop' || field === 'walk') continue
     if (!FIELDS[field](payload[field])) return null
   }
   let label = ''
@@ -67,6 +71,11 @@ export function rowOf(payload, edge) {
     const stop = payload.stop
     if (!Number.isInteger(stop) || stop < 1 || stop > WING_STOPS[payload.wing]) return null
     label = String(stop)
+  } else if (step === 'museum_skip') {
+    const walk = payload.walk
+    // a wing of n stops has n - 1 walks between them and the walk-in: 0 to n - 1
+    if (!Number.isInteger(walk) || walk < 0 || walk > WING_STOPS[payload.wing] - 1) return null
+    label = String(walk)
   } else if (step === 'museum_look') label = payload.look
   else if (step === 'door_press') label = payload.door
 

@@ -1,8 +1,12 @@
 /* THE MUSEUM'S OWN COUNTS: keyless totals sent to the site's own function
    (site/functions/v1/funnel.js), which checks every field against a closed
-   list. Four steps, each a plain total with no key between them:
+   list. Six steps, each a plain total with no key between them:
      museum_arrival  a wing opened, once per wing per page load (reach)
+     museum_welcome  the welcome passed: its door closed and the walk began,
+                     once per wing per page load
      museum_stop     a stop of its walk reached, by its number, once per stop
+     museum_skip     a walk skipped, by its number (walk 0 is the walk-in, walk
+                     n leads to stop n + 1), once per walk
      museum_look     a close look opened, by the kind of work, once per work
      museum_use      the visit did more than arrive: a second stop reached or
                      a look opened, whichever comes first, once per wing
@@ -20,7 +24,7 @@ import { pageLang } from '../wings/content'
 import { filmForm } from '../wings/vinci/film-cinema'
 import { sendEntry } from './museum-entry'
 
-type MuseumStep = 'museum_arrival' | 'museum_stop' | 'museum_look' | 'museum_use'
+type MuseumStep = 'museum_arrival' | 'museum_welcome' | 'museum_stop' | 'museum_skip' | 'museum_look' | 'museum_use'
 export type MuseumHold = 'upright' | 'sideways' | 'wide'
 export type MuseumLook = 'painting' | 'machine' | 'sheet' | 'book' | 'film' | 'place'
 
@@ -97,12 +101,12 @@ function endpoint(): string | null {
   return target
 }
 
-function send(step: MuseumStep, fields: { stop?: number; look?: MuseumLook }): void {
+function send(step: MuseumStep, fields: { stop?: number; walk?: number; look?: MuseumLook }): void {
   try {
     const url = endpoint()
     if (!url) return
     const from = step === 'museum_arrival' || step === 'museum_use' ? sourceField() : undefined
-    const body = JSON.stringify({ step, wing, stop: fields.stop, look: fields.look, hold: HOLD[filmForm()], language: pageLang(), source: from, probe: probeField() })
+    const body = JSON.stringify({ step, wing, stop: fields.stop, walk: fields.walk, look: fields.look, hold: HOLD[filmForm()], language: pageLang(), source: from, probe: probeField() })
     // text/plain keeps both transports a simple request: no preflight, no answer read
     if (typeof navigator.sendBeacon === 'function' && navigator.sendBeacon(url, new Blob([body], { type: 'text/plain' }))) return
     void fetch(url, { method: 'POST', body, keepalive: true, mode: 'no-cors', headers: { 'Content-Type': 'text/plain' } }).catch(() => undefined)
@@ -112,7 +116,9 @@ function send(step: MuseumStep, fields: { stop?: number; look?: MuseumLook }): v
 /** the wing standing now, whose rows the next steps are */
 let wing = ''
 const arrived = new Set<string>()
+const welcomed = new Set<string>()
 const stood = new Set<string>()
+const skipped = new Set<string>()
 const looked = new Set<string>()
 const used = new Set<string>()
 const stopsIn = new Map<string, number>()
@@ -131,6 +137,25 @@ export function countArrival(slug: string): void {
     arrived.add(slug)
     send('museum_arrival', {})
     sendEntry(slug)
+  } catch { /* a count never stands in the museum's way */ }
+}
+
+/** The welcome passed: its door closed and the walk began. */
+export function countWelcome(): void {
+  try {
+    if (!wing || welcomed.has(wing)) return
+    welcomed.add(wing)
+    send('museum_welcome', {})
+  } catch { /* a count never stands in the museum's way */ }
+}
+
+/** A walk skipped, by its number: the stop it was walking to less one, so the walk-in is 0. */
+export function countSkip(walk: number): void {
+  try {
+    const key = `${wing}|${walk}`
+    if (!wing || !Number.isInteger(walk) || walk < 0 || skipped.has(key)) return
+    skipped.add(key)
+    send('museum_skip', { walk })
   } catch { /* a count never stands in the museum's way */ }
 }
 

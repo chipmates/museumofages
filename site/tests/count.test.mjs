@@ -54,7 +54,9 @@ const none = async (payload, opts) => assert.deepEqual(await post(payload, opts)
 // each row of the sheet, with exactly its fields
 const GOOD = {
   museum_arrival: { step: 'museum_arrival', wing: 'vinci', language: 'de', hold: 'upright', source: 'search', probe: 1 },
+  museum_welcome: { step: 'museum_welcome', wing: 'vinci', language: 'es', hold: 'upright', probe: 1 },
   museum_stop: { step: 'museum_stop', wing: 'vinci', stop: 3, language: 'fr', hold: 'sideways', probe: 1 },
+  museum_skip: { step: 'museum_skip', wing: 'vinci', walk: 0, language: 'it', hold: 'wide' },
   museum_look: { step: 'museum_look', wing: 'vinci', look: 'machine', language: 'pt-BR', hold: 'wide' },
   museum_use: { step: 'museum_use', wing: 'vinci', language: 'bg', hold: 'upright', source: 'ad_grant' },
   page_arrival: { step: 'page_arrival', page: 'leonardo', language: 'it', start: 1, source: 'forum', probe: 1 },
@@ -69,7 +71,9 @@ const GOOD = {
 }
 const ROWS = {
   museum_arrival: ['museum_arrival', 'vinci', '', 'de', 'upright', 'search', '', 'desktop', 'DE', 'probe'],
+  museum_welcome: ['museum_welcome', 'vinci', '', 'es', 'upright', '', '', 'desktop', 'DE', 'probe'],
   museum_stop: ['museum_stop', 'vinci', '3', 'fr', 'sideways', '', '', 'desktop', 'DE', 'probe'],
+  museum_skip: ['museum_skip', 'vinci', '0', 'it', 'wide', '', '', 'desktop', 'DE', ''],
   museum_look: ['museum_look', 'vinci', 'machine', 'pt-BR', 'wide', '', '', 'desktop', 'DE', ''],
   museum_use: ['museum_use', 'vinci', '', 'bg', 'upright', 'ad_grant', '', 'desktop', 'DE', ''],
   page_arrival: ['page_arrival', 'leonardo', '', 'it', '', 'forum', 'start', 'desktop', 'DE', 'probe'],
@@ -83,10 +87,10 @@ const ROWS = {
   out_wing: ['out_wing', 'animals', '', 'en', '', '', '', '', '', ''],
 }
 
-const OTHER = { stop: 9, look: 'film', door: 'end', page: 'privacy', wing: 'vinci', hold: 'wide', source: 'search', start: 1 }
+const OTHER = { stop: 9, walk: 5, look: 'film', door: 'end', page: 'privacy', wing: 'vinci', hold: 'wide', source: 'search', start: 1 }
 const NOISE = { path: '/de/?gclid=abc', gclid: 'abc', utm_source: 'x', referrer: 'https://www.google.com/?q=leonardo', id: 'abc', time: 1234 }
 
-test('the thirteen steps are the sheet\'s thirteen', () => {
+test('the fifteen steps are the sheet\'s fifteen', () => {
   assert.deepEqual(Object.keys(STEPS).sort(), Object.keys(GOOD).sort())
 })
 
@@ -105,9 +109,9 @@ for (const step of Object.keys(GOOD)) {
       const gone = { ...GOOD[step] }
       delete gone[field]
       await none(gone)
-      // 1 is a stop on the list, so the stop's own off-list values stand in the stops test below
+      // 1 is a stop and a walk on the list, so their own off-list values stand in the tests below
       for (const bad of ['nope', '', 1, null, ['x'], { x: 1 }, 'toString', '__proto__']) {
-        if (!(field === 'stop' && bad === 1)) await none({ ...GOOD[step], [field]: bad })
+        if (!((field === 'stop' || field === 'walk') && bad === 1)) await none({ ...GOOD[step], [field]: bad })
       }
     }
     await none({ ...GOOD[step], probe: 2 })
@@ -142,6 +146,11 @@ test('page_arrival: began here with its word, came from the site, or unknown', a
 test('stops: whole numbers from 1 to the wing\'s own number only', async () => {
   for (const stop of [1, WING_STOPS.vinci]) assert.equal((await one({ ...GOOD.museum_stop, stop }))[2], String(stop))
   for (const stop of [0, -1, WING_STOPS.vinci + 1, 3.5, '3', NaN, null]) await none({ ...GOOD.museum_stop, stop })
+})
+
+test('walks: whole numbers from 0, the walk-in, to one less than the wing\'s stops only', async () => {
+  for (const walk of [0, 1, WING_STOPS.vinci - 1]) assert.equal((await one({ ...GOOD.museum_skip, walk }))[2], String(walk))
+  for (const walk of [-1, WING_STOPS.vinci, 2.5, '0', NaN, null, true]) await none({ ...GOOD.museum_skip, walk })
 })
 
 test('every language, hold, kind of work, page kind and door on its list writes; a near miss writes nothing', async () => {
@@ -266,6 +275,10 @@ test('the pages\' script and the walk name the same source words, doors and prob
   assert.equal(prefixWord('/a/p/x'), 'ad_paid')
   assert.equal(prefixWord('/a/f/x'), 'ad_forum')
   assert.equal(prefixWord('/a/o/x'), 'forum')
+})
+
+test('the walk sends exactly the walk steps the function takes', () => {
+  assert.deepEqual(quoted(/type MuseumStep = ([^\n]*)/.exec(walkModule)[1]).sort(), Object.keys(STEPS).filter((s) => s.startsWith('museum_')).sort())
 })
 
 test('the walk names the holds and kinds of work the function takes', () => {
