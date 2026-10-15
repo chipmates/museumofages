@@ -335,7 +335,7 @@
 
 /* THE SHEET'S TALL HEIGHTS on the phone: the record and the panel rise from
    the foot of the glass to 44 px under its top, the full width, one scroll
-   each, and the way out of them stands in the thumb's reach at the foot */
+   each, the way out of them at their top right */
 #wing[data-film='upright'] .vinci-dock {
   left: 0; right: 0; top: 44px; bottom: 0; width: auto; height: auto; transform: none; margin: 0;
   max-width: none; max-height: none;
@@ -351,11 +351,11 @@
   content: ''; display: block; position: sticky; top: 0; z-index: 3; height: 16px; margin: 0 -16px;
   background: linear-gradient(to bottom, var(--ui-ground-sheet) 35%, color-mix(in srgb, var(--ui-ground-sheet) 0%, transparent)); pointer-events: none;
 }
-/* THE RECORD'S THREE TABS STAND AT ITS FOOT, beside its close and in the
-   thumb's reach; the foot is solid, so the reading ends above it */
+/* THE RECORD'S THREE TABS STAND AT ITS FOOT, in the thumb's reach; the foot
+   is solid, so the reading ends above it */
 #wing[data-film='upright'] .vinci-dock .vinci-sources-toolbar {
   position: fixed; left: 0; right: 0; top: auto; bottom: 0; z-index: 4; box-sizing: border-box;
-  height: calc(88px + env(safe-area-inset-bottom)); padding: 0 12px env(safe-area-inset-bottom) 72px; gap: 0;
+  height: calc(88px + env(safe-area-inset-bottom)); padding: 0 12px env(safe-area-inset-bottom); gap: 0;
   align-items: center; background: var(--ui-ground-sheet); border-top: 1px solid var(--ui-line); border-bottom: 0;
 }
 #wing[data-film='upright'] .vinci-dock .vinci-sources-tabs { gap: 0; align-self: center; }
@@ -376,52 +376,114 @@ html:has(#wing[data-film='upright']) #instruments {
   border-radius: var(--ui-r-sheet) var(--ui-r-sheet) 0 0;
 }
 html:has(#wing[data-film='upright']) #instruments:not([hidden]) { display: flex; flex-direction: column; }
-/* the panel's rows scroll above the foot that carries its close */
+/* the panel's rows scroll above the foot that carries the museum's code */
 html:has(#wing[data-film='upright']) #instruments { padding-bottom: calc(88px + env(safe-area-inset-bottom)); overflow-y: auto; }
 
-/* ONE CLOSE ON THE PHONE. Every sheet, window and close look shuts from one
-   glass circle at the far lower left, the seat the foot row's way back holds,
-   one drawn cross in all of them; the word stays the control's name for the
-   screen reader, and a swipe down on the sheet does the same (film-wing.ts) */
-/* sideways too: the foot row's first seat is a look's close there as well */
+/* ONE CLOSE ON EVERY SHEET, at its top right. On the phone it is one glass
+   square with the drawn cross, 10 px under the sheet's top and 12 px inside
+   its right edge, level with the sheet's first row, which keeps clear of it;
+   the word stays the control's name for a screen reader. Escape, the back
+   gesture and a swipe down on the sheet do the same (film-wing.ts). Sideways
+   the glass's safe areas are the edges (film-cinema.css). */
 html:has(#wing:is([data-film='upright'], [data-film='cinema'])) {
   --film-cross:
     linear-gradient(45deg, transparent calc(50% - .625px), currentColor calc(50% - .625px) calc(50% + .625px), transparent calc(50% + .625px)),
     linear-gradient(-45deg, transparent calc(50% - .625px), currentColor calc(50% - .625px) calc(50% + .625px), transparent calc(50% + .625px));
+  --film-shut: 44px;
+  --film-shut-top: 10px;
+  --film-shut-right: 12px;
 }
-html:has(#wing[data-film='upright']) :is(#wing .vinci-sources-toolbar .vinci-sources-close, #wing .desk-ov[data-sheet] .desk-ov-shut,
-  #wing .wing-plan-shut, #wing .wing-life-shut, #instruments .inst-close) {
-  position: fixed; left: 16px; right: auto; top: auto; bottom: calc(22px + env(safe-area-inset-bottom)); z-index: 4;
+html:has(#wing:is([data-film='upright'], [data-film='cinema'])) :is(#wing .vinci-sources-toolbar .vinci-sources-close, #wing .desk-ov[data-sheet] .desk-ov-shut,
+  #wing .wing-plan-shut, #wing .wing-life-shut, #wing .vitrine-shut:not([hidden]), #instruments .inst-close) {
+  left: auto; bottom: auto; z-index: 4;
   display: grid; place-items: center; box-sizing: border-box; flex: none;
-  width: 44px; height: 44px; min-width: 44px; max-width: 44px; min-height: 44px; margin: 0; padding: 0;
+  width: var(--film-shut); height: var(--film-shut); min-width: var(--film-shut); max-width: var(--film-shut); min-height: var(--film-shut); margin: 0; padding: 0;
   border: 0; border-radius: var(--ui-r-seat-phone); background: var(--ui-ground-raised); box-shadow: inset 0 0 0 1px var(--ui-line-strong); color: var(--ui-text);
   font-size: 0; letter-spacing: 0; line-height: 0; text-indent: 0;
 }
-html:has(#wing[data-film='upright']) :is(#wing .vinci-sources-toolbar .vinci-sources-close, #wing .desk-ov[data-sheet] .desk-ov-shut,
-  #wing .wing-plan-shut, #wing .wing-life-shut, #instruments .inst-close) > * { display: none; }
-html:has(#wing[data-film='upright']) :is(#wing .vinci-sources-toolbar .vinci-sources-close, #wing .desk-ov[data-sheet] .desk-ov-shut,
-  #wing .wing-plan-shut, #wing .wing-life-shut, #instruments .inst-close)::before {
+html:has(#wing:is([data-film='upright'], [data-film='cinema'])) :is(#wing .vinci-sources-toolbar .vinci-sources-close, #wing .desk-ov[data-sheet] .desk-ov-shut,
+  #wing .wing-plan-shut, #wing .wing-life-shut, #wing .vitrine-shut, #instruments .inst-close) > * { display: none; }
+html:has(#wing:is([data-film='upright'], [data-film='cinema'])) :is(#wing .vinci-sources-toolbar .vinci-sources-close, #wing .desk-ov[data-sheet] .desk-ov-shut,
+  #wing .wing-plan-shut, #wing .wing-life-shut, #wing .vitrine-shut, #instruments .inst-close)::before {
   /* placed, not flowed: a close that keeps its word as text would push a flowed cross off centre */
   content: ''; position: absolute; left: 50%; top: 50%; width: 10px; height: 10px; translate: -50% -50%; background: var(--film-cross);
 }
-html:has(#wing[data-film='upright']) #wing .vinci-sources-toolbar .vinci-sources-close::after { content: none; }
-html:has(#wing[data-film='upright']) :is(#wing .vinci-sources-toolbar .vinci-sources-close, #wing .desk-ov[data-sheet] .desk-ov-shut,
-  #wing .wing-plan-shut, #wing .wing-life-shut, #instruments .inst-close):focus-visible { outline: 1px solid var(--na-gold, var(--ui-way)); outline-offset: 2px; }
-/* the close look's own mark at the top corner stands down: the foot row's
-   first seat is the look's close while a look stands */
-#wing[data-film='upright'] .vitrine-shut { display: none !important; }
+html:has(#wing:is([data-film='upright'], [data-film='cinema'])) :is(#wing .vinci-sources-toolbar .vinci-sources-close, #wing .vitrine-shut, #instruments .inst-close)::after { content: none; }
+html:has(#wing:is([data-film='upright'], [data-film='cinema'])) :is(#wing .vinci-sources-toolbar .vinci-sources-close, #wing .desk-ov[data-sheet] .desk-ov-shut,
+  #wing .wing-plan-shut, #wing .wing-life-shut, #wing .vitrine-shut, #instruments .inst-close):focus-visible { outline: 1px solid var(--na-gold, var(--ui-way)); outline-offset: 2px; }
+/* the plan and the life keep their close inside their own box, the corner their narrow form keeps clear */
+html:has(#wing:is([data-film='upright'], [data-film='cinema'])) #wing :is(.wing-plan-shut, .wing-life-shut) { position: absolute; top: var(--film-shut-top); right: var(--film-shut-right); }
+html:has(#wing:is([data-film='upright'], [data-film='cinema'])) #wing :is(.wing-plan-close, .wing-life-close) { display: none; }
+
+/* UPRIGHT, EACH SHEET'S CORNER: the panel from a third down the glass, the
+   room's list and the record from 44 px under its top, a close look at the
+   glass's own top right */
+html:has(#wing[data-film='upright']) #instruments .inst-close { position: fixed; top: calc(34dvh + 1px + var(--film-shut-top)); right: var(--film-shut-right); }
+html:has(#wing[data-film='upright']) #wing :is(.desk-ov[data-sheet] .desk-ov-shut, .vinci-sources-toolbar .vinci-sources-close) {
+  position: fixed; top: calc(44px + var(--film-shut-top)); right: var(--film-shut-right);
+}
+#wing[data-film='upright'] .vitrine-shut:not([hidden]) {
+  position: absolute; left: auto !important; right: var(--film-shut-right) !important;
+  top: calc(var(--na-safe-top, env(safe-area-inset-top, 0px)) + var(--film-shut-top)) !important;
+}
+/* the close look's one close is at the top: the foot row's first seat stands down while a look stands, as sideways */
+#wing[data-film='upright'] .film-box[data-look='true'] .film-foot > .film-back { display: none; }
+#wing[data-film='upright'] .film-box[data-look='true']:not([data-end='true']) .film-foot > .vinci-phone-earlier { left: 16px; }
 .film-cross { display: none; width: 10px; height: 10px; background: var(--film-cross); }
 .film-box[data-look='true'] .film-back .film-ic-fill { display: none; }
 .film-box[data-look='true'] .film-back .film-cross { display: block; }
-/* THE FOOT UNDER THE CLOSE on every tall sheet: what scrolls fades into it and
-   never runs under the circle */
-html:has(#wing[data-film='upright']) :is(#instruments:not([hidden]), #wing .wing-life[open])::after {
-  content: ''; position: fixed; left: 0; right: 0; bottom: 0; z-index: 3; height: calc(106px + env(safe-area-inset-bottom));
-  background: linear-gradient(to bottom, color-mix(in srgb, var(--ui-ground-sheet) 0%, transparent), var(--ui-ground-sheet) 26px); pointer-events: none;
+/* the first rows keep clear of the close and stand level with it */
+html:has(#wing[data-film='upright']) #instruments .inst-kicker { padding-right: calc(var(--film-shut) + var(--film-shut-right) + 8px - 24px); }
+#wing[data-film='upright'] .desk-ov[data-sheet] :is(.desk-ov-title, .desk-ov-sub) { padding-right: calc(var(--film-shut) + var(--film-shut-right) + 8px - 16px); }
+#wing[data-film='upright'] .desk-ov[data-sheet] .desk-ov-title { margin-top: -4px; }
+#wing[data-film='upright'] .wing-life[data-narrow='true'] .wing-life-head { padding-top: 22px; }
+#wing[data-film='upright'] .vinci-dock :is(.vinci-certainty, h2) { padding-right: calc(var(--film-shut) + var(--film-shut-right) + 8px - 16px); }
+.wing-life[data-narrow='true'] .wing-life-through::before { height: 44px; }
+/* THE FOOT ON every tall sheet keeps the museum's code where the panel shows it: what scrolls fades into it */
+html:has(#wing[data-film='upright']) #instruments:not([hidden])::after {
+  content: ''; position: fixed; left: 0; right: 0; bottom: 0; z-index: 3; height: calc(84px + env(safe-area-inset-bottom));
+  background: linear-gradient(to bottom, color-mix(in srgb, var(--ui-ground) 0%, transparent), var(--ui-ground) 26px); pointer-events: none;
 }
-html:has(#wing[data-film='upright']) #instruments:not([hidden])::after { background: linear-gradient(to bottom, color-mix(in srgb, var(--ui-ground) 0%, transparent), var(--ui-ground) 26px); }
-#wing[data-film='upright'] .wing-life[data-narrow='true'] .wing-life-reading { padding-bottom: calc(110px + env(safe-area-inset-bottom)); }
-#wing[data-film='upright'] .wing-plan[data-narrow='true'] .wing-plan-foot { padding-left: 72px; min-height: calc(64px + env(safe-area-inset-bottom)); box-sizing: border-box; }
+#wing[data-film='upright'] .wing-life[data-narrow='true'] .wing-life-reading { padding-bottom: calc(12px + env(safe-area-inset-bottom)); }
+
+/* ON THE DESKTOP EVERY SHEET'S CLOSE IS THE MENU'S OWN (desk-panel.css): its
+   word and its glass square with the drawn cross, at the sheet's top right on
+   its first row, 44 px to the hand */
+#wing[data-film='wide'] :is(.desk-ov .desk-ov-shut, .wing-plan .wing-plan-close, .wing-life .wing-life-close, .vinci-dock .vinci-sources-close) {
+  display: inline-flex; align-items: center; gap: 12px; box-sizing: border-box; flex: none;
+  width: auto; min-width: 0; max-width: none; height: 44px; min-height: 44px; margin: 0; padding: 0;
+  border: 0; border-radius: 0; background: none; box-shadow: none;
+  font: 15px/1 var(--press-ui); letter-spacing: .065em; text-transform: none; text-indent: 0; white-space: nowrap;
+  color: var(--press-white); cursor: pointer;
+}
+/* the list's close carried its cross alone: its name is its word */
+#wing[data-film='wide'] .desk-ov .desk-ov-shut::before { content: attr(aria-label); }
+#wing[data-film='wide'] .desk-ov .desk-ov-shut > svg { display: none; }
+#wing[data-film='wide'] :is(.desk-ov .desk-ov-shut, .wing-plan .wing-plan-close, .wing-life .wing-life-close, .vinci-dock .vinci-sources-close)::after {
+  content: ''; flex: none; width: 26px; height: 26px; box-sizing: border-box;
+  border: 1px solid var(--ui-line-strong); border-radius: 2px;
+  background:
+    linear-gradient(45deg, transparent calc(50% - .625px), var(--press-white) calc(50% - .625px) calc(50% + .625px), transparent calc(50% + .625px)) center / 10px 10px no-repeat,
+    linear-gradient(-45deg, transparent calc(50% - .625px), var(--press-white) calc(50% - .625px) calc(50% + .625px), transparent calc(50% + .625px)) center / 10px 10px no-repeat,
+    radial-gradient(ellipse at 35% 20%, color-mix(in srgb, var(--na-starlight) 12%, transparent), transparent 68%);
+}
+#wing[data-film='wide'] :is(.desk-ov .desk-ov-shut, .wing-plan .wing-plan-close, .wing-life .wing-life-close, .vinci-dock .vinci-sources-close):is(:hover, :focus-visible) { color: var(--na-starlight); }
+#wing[data-film='wide'] :is(.desk-ov .desk-ov-shut, .wing-plan .wing-plan-close, .wing-life .wing-life-close, .vinci-dock .vinci-sources-close):is(:hover, :focus-visible)::after { border-color: var(--ui-way); }
+#wing[data-film='wide'] :is(.desk-ov .desk-ov-shut, .wing-plan .wing-plan-close, .wing-life .wing-life-close, .vinci-dock .vinci-sources-close):focus-visible { outline: 2px solid var(--na-gold); outline-offset: 3px; }
+/* the room's list: on its head row, level with the step back, at the margin's edge */
+#wing[data-film='wide'] .desk-ov .desk-ov-shut { top: 16px; right: var(--desk-g); }
+/* the plan: its foot becomes its head, the way into the life at its left and the close at its right */
+#wing[data-film='wide'] .wing-plan .wing-plan-foot { order: -1; border-top: 0; border-bottom: 1px solid var(--ui-line); }
+/* the life: the close at the head's right, on its first line; the foot it stood in alone folds to nothing */
+#wing[data-film='wide'] .wing-life .wing-life-close { position: absolute; z-index: 3; top: 8px; right: 20px; }
+#wing[data-film='wide'] .wing-life .wing-life-head { padding-right: 160px; }
+#wing[data-film='wide'] .wing-life .wing-life-foot { position: static; height: 0; min-height: 0; padding: 0; border: 0; }
+/* the two columns keep the air the foot gave them, and a line passing out at their foot fades, never cut in half */
+#wing[data-film='wide'] .wing-life .wing-life-reading { padding-bottom: 14px; }
+#wing[data-film='wide'] .wing-life .wing-life-reading > :is(.wing-life-spine, .wing-life-period-body) {
+  padding-bottom: 20px;
+  -webkit-mask-image: linear-gradient(to bottom, black calc(100% - 20px), transparent); mask-image: linear-gradient(to bottom, black calc(100% - 20px), transparent);
+}
 
 /* THE DOOR LEAVES: the picture gives the band its row in one soft move */
 #wing[data-door-leaving] .na-film { transition: height 420ms cubic-bezier(.22,.61,.36,1); }
@@ -515,16 +577,16 @@ html:has(#wing[data-film='upright']) #instruments :is(legend, small) { font-size
 #wing[data-film='upright'] .desk-ov[data-sheet] .desk-ov-cellname .desk-mark { width: 15px; height: 15px; vertical-align: -2px; }
 #wing[data-film='upright'] .desk-ov[data-sheet] .desk-mark :is(.desk-mark-ring, .desk-mark-open, .desk-mark-broken) { stroke-width: 2.6; }
 
-/* ---- THE SHEETS' FEET AND HEADS, upright: the close stands on solid ground ---- */
-/* the room's list: its foot solid under the whole close and the last row
-   scrolls clear of it; its head fades the scrolled cells (the band above) */
+/* ---- THE SHEETS' HEADS, upright ---- */
+/* the room's list: its head fades the scrolled cells (the band above), and
+   its last row scrolls clear of the glass's foot */
 #wing[data-film='upright'] .desk-ov[data-sheet] {
-  padding-top: 0; padding-bottom: calc(124px + env(safe-area-inset-bottom));
+  padding-top: 0; padding-bottom: calc(32px + env(safe-area-inset-bottom));
   border-top: 6px solid var(--ui-ground-sheet); box-shadow: 0 -1px 0 var(--ui-line-strong);
 }
 #wing[data-film='upright'] .desk-ov[data-sheet]::after {
-  height: calc(106px + env(safe-area-inset-bottom));
-  background: linear-gradient(to bottom, color-mix(in srgb, var(--ui-ground-sheet) 0%, transparent), var(--ui-ground-sheet) 26px);
+  height: calc(20px + env(safe-area-inset-bottom));
+  background: linear-gradient(to bottom, color-mix(in srgb, var(--ui-ground-sheet) 0%, transparent), var(--ui-ground-sheet) 14px);
 }
 
 /* ---- THE RECORD ON BOTH PHONE FORMS ---- */
@@ -586,8 +648,8 @@ html:has(#wing[data-film='upright']) #instruments :is(legend, small) { font-size
 /* ---- THE PANEL, upright: a sheet whose every control is in the thumb's reach ----
    The sheet starts a third of the way down, so its first control stands under
    40 % of the glass and every row it shows is in the lower 60 %; it scrolls
-   inside. At rest it reads the language and the pace, then the wing's own rows
-   nearest the close; the museum's legend and links follow under the fold. */
+   inside. At rest it reads the language and the pace, then the wing's own
+   rows; the museum's legend and links follow under the fold. */
 html:has(#wing[data-film='upright']) #instruments { top: 34dvh; padding-top: 16px; }
 html:has(#wing[data-film='upright']) #instruments .inst-links { display: flex; flex-direction: column; }
 html:has(#wing[data-film='upright']) #instruments .inst-links > * { order: 4; }
@@ -606,7 +668,7 @@ html:has(#wing[data-film='upright']) #instruments .inst-pace button {
   position: static; display: inline-flex; flex: 1 1 0; width: auto; min-width: 0; justify-content: center; padding: 0 4px;
 }
 html:has(#wing[data-film='upright']) #instruments .inst-pace small { position: absolute; left: 0; right: 0; bottom: 6px; margin: 0; }
-/* the museum's code, quiet, in the foot beside the close: in the thumb's reach and never in the rows' way */
+/* the museum's code, quiet, in the foot: in the thumb's reach and never in the rows' way */
 html:has(#wing[data-film='upright']) #instruments .inst-source {
   position: fixed; right: 24px; bottom: calc(22px + env(safe-area-inset-bottom)); z-index: 4; font-size: .875rem;
 }

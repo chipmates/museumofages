@@ -4,7 +4,7 @@
    right, each on its own ground and nothing between them. Every control keeps
    clear of the notch and the home indicator. A sheet the upright phone stands
    at its tall height opens here over the whole glass, its one close at the
-   lower left, where back stands. */
+   top right, inside the safe areas. */
 
 html:has(#wing[data-film='cinema']) {
   --cinema-t: var(--na-safe-top, env(safe-area-inset-top, 0px));
@@ -13,10 +13,6 @@ html:has(#wing[data-film='cinema']) {
   --cinema-b: calc(var(--na-safe-bottom, env(safe-area-inset-bottom, 0px)) + 8px);
   /* the foot row's height, which the close looks and the sheets keep clear of */
   --cinema-row: 52px;
-  /* the one close's drawn cross, the upright phone's own */
-  --film-cross:
-    linear-gradient(45deg, transparent calc(50% - .625px), currentColor calc(50% - .625px) calc(50% + .625px), transparent calc(50% + .625px)),
-    linear-gradient(-45deg, transparent calc(50% - .625px), currentColor calc(50% - .625px) calc(50% + .625px), transparent calc(50% + .625px));
 }
 
 /* the frame's bar, the door block and the museum's own rail stand down: the box carries their ways */
@@ -204,15 +200,10 @@ html:has(#wing[data-film='upright']) #rail { display: none !important; }
   visibility: hidden; pointer-events: none; }
 #wing[data-film='cinema'] .vitrine[data-form='cinema'] .vitrine-sheet,
 #wing[data-film='cinema'] .vitrine[data-form='cinema'] .vitrine-grab { display: none; }
-/* ONE CLOSE FOR A LOOK, the mark at the glass's upper right, where the label column's head is: the seat the foot
-   row's close has, on its own ground wherever it stands (index.ts places it; it never moves with the card).
+/* ONE CLOSE FOR A LOOK, at the glass's upper right, where the label column's head is: every sheet's own square
+   (film-wing.css), on its ground wherever it stands (index.ts places it; it never moves with the card).
    The row's first seat, which closed a look from the lower left, stands down */
-#wing[data-film='cinema'] .vitrine-shut {
-  display: flex; min-width: 44px; min-height: 44px; border: 0; border-radius: var(--ui-r-seat-phone);
-  background: color-mix(in srgb, var(--ui-ground-raised) 90%, transparent); box-shadow: inset 0 0 0 1px var(--ui-line-strong);
-}
 #wing[data-film='cinema'] .vitrine-shut[hidden] { display: none; }
-#wing[data-film='cinema'] .vitrine-shut svg { width: 14px; height: 14px; }
 #wing[data-film='cinema'] .film-box[data-look='true'] .film-foot > .film-back { display: none; }
 /* THE LOOK'S WAYS STAND TOGETHER at the row's right, under the column: the work before, a page's other way, gold */
 #wing[data-film='cinema'] .film-box[data-look='true'] .film-foot > .vinci-phone-earlier { margin-left: auto; margin-right: 2px; }
@@ -481,7 +472,7 @@ html:has(#wing[data-film='upright']) #rail { display: none !important; }
    stand down; a film without that list keeps its line along its foot, so its moment stays named */
 #wing[data-film='cinema'] .vitrine[data-look-open][data-look-film]:has(.vitrine-steps) .vitrine-caption { display: none; }
 
-/* ---- THE SHEETS OVER THE WHOLE GLASS, one close at the lower left ---- */
+/* ---- THE SHEETS OVER THE WHOLE GLASS, one close at the top right ---- */
 /* the record */
 #wing[data-film='cinema'] .vinci-dock {
   left: 0; right: 0; top: 0; bottom: 0; width: auto; height: auto; transform: none; margin: 0;
@@ -493,20 +484,11 @@ html:has(#wing[data-film='upright']) #rail { display: none !important; }
   background: var(--ui-ground-sheet);
 }
 #wing[data-film='cinema'] .vinci-dock::backdrop { background: color-mix(in srgb, var(--ui-ground-deep) 70%, transparent); }
-/* EVERY SHEET'S ONE CLOSE is the same glass circle with the drawn cross, at
-   the lower left where back stands; its word stays its name for a screen reader */
-html:has(#wing[data-film='cinema']) :is(#wing .vinci-sources-toolbar .vinci-sources-close, #instruments .inst-close) {
-  position: fixed; left: var(--cinema-l); right: auto; top: auto; bottom: var(--cinema-b); z-index: 4;
-  display: grid; place-items: center; box-sizing: border-box; flex: none;
-  width: 48px; height: 48px; max-width: 48px; min-width: 48px; min-height: 48px; margin: 0; padding: 0; border: 0; border-radius: var(--ui-r-seat-phone);
-  font-size: 0; letter-spacing: 0; text-indent: 0; color: var(--ui-text);
-  background: var(--ui-ground-raised); box-shadow: inset 0 0 0 1px var(--ui-line-strong);
-}
-html:has(#wing[data-film='cinema']) :is(#wing .vinci-sources-toolbar .vinci-sources-close, #instruments .inst-close)::after {
-  content: ''; position: absolute; left: 50%; top: 50%; width: 10px; height: 10px; translate: -50% -50%; background: var(--film-cross);
-}
-html:has(#wing[data-film='cinema']) :is(#wing .vinci-sources-toolbar .vinci-sources-close, #instruments .inst-close):focus-visible {
-  outline: 1px solid var(--na-gold, var(--ui-way)); outline-offset: 2px;
+/* EVERY SHEET'S ONE CLOSE is the phone's glass square (film-wing.css), at the
+   glass's top right inside its safe areas, as a close look's own; the plan
+   keeps its inside its own inset box */
+html:has(#wing[data-film='cinema']) :is(#wing .vinci-sources-toolbar .vinci-sources-close, #wing .desk-ov[data-sheet] .desk-ov-shut, #wing .wing-life-shut, #instruments .inst-close) {
+  position: fixed; top: calc(var(--cinema-t) + var(--film-shut-top)); right: var(--cinema-r);
 }
 #wing[data-film='cinema'] .vinci-dock .vinci-sources-tabs button { font-size: .875rem; }
 #wing[data-film='cinema'] .vinci-dock :is(.vinci-certainty, .vinci-certainty-word) { font-size: .8125rem; letter-spacing: .08em; }
@@ -516,15 +498,16 @@ html:has(#wing[data-film='cinema']) :is(#wing .vinci-sources-toolbar .vinci-sour
 /* the room's list */
 #wing[data-film='cinema'] .desk-ov[data-sheet] {
   inset: 0;
-  padding: calc(var(--cinema-t) + 16px) var(--cinema-r) calc(var(--cinema-b) + 64px) var(--cinema-l);
+  padding: calc(var(--cinema-t) + 16px) var(--cinema-r) calc(var(--cinema-b) + 24px) var(--cinema-l);
   border: 0;
   border-radius: 0;
 }
 #wing[data-film='cinema'] .desk-ov[data-sheet] .desk-ov-grid { grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); }
-#wing[data-film='cinema'] .desk-ov[data-sheet] .desk-ov-shut { left: var(--cinema-l); bottom: var(--cinema-b); }
-/* the foot is solid from above the close, so no thumbnail runs under it */
-#wing[data-film='cinema'] .desk-ov[data-sheet]::after { height: calc(var(--cinema-b) + 72px);
-  background: linear-gradient(to bottom, color-mix(in srgb, var(--ui-ground-sheet) 0%, transparent), var(--ui-ground-sheet) 14px); }
+/* the head keeps clear of the close at its right */
+#wing[data-film='cinema'] .desk-ov[data-sheet] :is(.desk-ov-title, .desk-ov-sub) { padding-right: calc(var(--film-shut) + 8px); }
+/* the last row scrolls clear of the glass's foot */
+#wing[data-film='cinema'] .desk-ov[data-sheet]::after { height: calc(var(--cinema-b) + 12px);
+  background: linear-gradient(to bottom, color-mix(in srgb, var(--ui-ground-sheet) 0%, transparent), var(--ui-ground-sheet) 10px); }
 /* a short glass shows a row and the head of the next: every work stands in the middle of its plate, so none
    waits at a plate's foot under the fold and reads as an empty place */
 #wing[data-film='cinema'] .desk-ov[data-sheet] .desk-ov-plate { height: 120px; align-items: center; }
@@ -537,7 +520,8 @@ html:has(#wing[data-film='cinema'])[data-na-panel='open'] #instruments {
 }
 html:has(#wing[data-film='cinema'])[data-na-panel='open'] #instruments .inst-kicker {
   left: max(var(--cinema-l), calc((100vw - 720px) / 2));
-  right: max(var(--cinema-r), calc((100vw - 720px) / 2));
+  /* clear of the close at the glass's top right */
+  right: max(calc(var(--cinema-r) + var(--film-shut) + 8px), calc((100vw - 720px) / 2));
   top: calc(var(--cinema-t) + 14px);
   padding-bottom: 12px;
   font-size: 22px;
@@ -567,14 +551,14 @@ html:has(#wing[data-film='cinema'])[data-na-panel='open'] #instruments .inst-set
    faded as if it could not be pressed: film-cinema.ts moves its foot by
    --cinema-cut, down into the free glass under it where that holds the row */
 html:has(#wing[data-film='cinema'])[data-na-panel='open'] #instruments .inst-links {
-  bottom: calc(var(--cinema-b) + 60px + var(--cinema-cut, 0px));
+  bottom: calc(var(--cinema-b) + 52px + var(--cinema-cut, 0px));
   padding-bottom: 16px;
 }
 
-/* the museum's code, quiet, under the wing's column on the title's edge and over the close: the
+/* the museum's code, quiet, under the wing's column on the title's edge at the glass's foot: the
    museum's column runs down to the foot and a link at its right would read as part of a row */
 html:has(#wing[data-film='cinema'])[data-na-panel='open'] #instruments .inst-source {
-  position: fixed; left: max(var(--cinema-l), calc((100vw - 720px) / 2)); right: auto; bottom: calc(var(--cinema-b) + 56px);
+  position: fixed; left: max(var(--cinema-l), calc((100vw - 720px) / 2)); right: auto; bottom: var(--cinema-b);
   min-height: 44px; z-index: 4; font-size: .875rem;
 }
 
@@ -583,11 +567,10 @@ html:has(#wing[data-film='cinema']) :is(#inst-sound, #inst-plan) { display: none
 
 /* the record's words scroll into a foot of their own, which ends the scroll:
    solid from between two lines down (film-cinema.ts sets --record-foot), so no
-   line runs under the close or stands cut; under the toolbar's layer, which
-   carries the close */
+   line stands cut at the glass's foot */
 #wing[data-film='cinema'] .vinci-dock::after {
   content: ''; display: block; position: sticky; bottom: 0; z-index: 0;
-  height: var(--record-foot, calc(var(--cinema-b) + 48px + 8px + 24px));
+  height: var(--record-foot, calc(var(--cinema-b) + 8px));
   background: var(--ui-ground-sheet);
   pointer-events: none;
 }
@@ -688,14 +671,14 @@ html:has(#wing[data-film='cinema']) :is(#inst-sound, #inst-plan) { display: none
   --life-form: side;
   --life-side-l: calc(var(--cinema-l) + 8px);
   --life-side-r: calc(var(--cinema-r) + 8px);
-  /* the foot: its padding, the close's 44 px and its rule */
-  --life-foot: calc(51px + max(6px, var(--cinema-b) - 2px));
+  /* the foot's room at the glass's foot: its close stands at the top now, so the foot stands down */
+  --life-foot: max(6px, calc(var(--cinema-b) - 2px));
   left: 0 !important; top: 0 !important; width: 100vw !important; height: 100dvh !important;
   border: 0; border-radius: 0;
   overflow-y: auto; overscroll-behavior: contain; scrollbar-width: none;
 }
 #wing[data-film='cinema'] .wing-life[open]::-webkit-scrollbar { display: none; }
-#wing[data-film='cinema'] .wing-life-head { flex: 0 0 auto; padding: calc(var(--cinema-t) + 10px) var(--life-side-r) 4px var(--life-side-l); }
+#wing[data-film='cinema'] .wing-life-head { flex: 0 0 auto; padding: calc(var(--cinema-t) + 10px) calc(var(--cinema-r) + var(--film-shut) + 12px) 4px var(--life-side-l); }
 #wing[data-film='cinema'] .wing-life-body { flex: 0 0 auto; padding: 0 var(--life-side-r) 0 var(--life-side-l); }
 /* no padding: the presses over the blocks are placed from the drawing's own corner */
 #wing[data-film='cinema'] .wing-life-drawing { padding: 0; }
@@ -705,22 +688,18 @@ html:has(#wing[data-film='cinema']) :is(#inst-sound, #inst-plan) { display: none
   padding-bottom: 20px;
   -webkit-mask-image: linear-gradient(to bottom, #000 calc(100% - 20px), transparent); mask-image: linear-gradient(to bottom, #000 calc(100% - 20px), transparent);
 }
-#wing[data-film='cinema'] .wing-life-foot {
-  position: sticky; bottom: 0; z-index: 2; padding: 6px var(--life-side-r) max(6px, calc(var(--cinema-b) - 2px)) var(--life-side-l);
-  /* a line passing under the foot fades into it, it never breaks off at its edge; the fade stays inside the
-     12 px the first screen keeps clear over the foot (LIFE_SIDE.air) */
-  background: var(--ui-ground-sheet); box-shadow: 0 -12px 10px -6px var(--ui-ground-sheet);
-}
+/* the foot carried the close alone, which stands at the top right now */
+#wing[data-film='cinema'] .wing-life-foot { display: none; }
 /* THE PLAN KEEPS ITS INSET BOX OVER THE GLASS, 6 px inside the safe areas on every side. Its drawing takes the
-   box's whole height (plan/index.ts reads --plan-form and the sheet's padding and gap), so the foot with its two
-   ways stands under the list alone, from the list's left edge to the box's right */
+   box's whole height (plan/index.ts reads --plan-form and the sheet's padding and gap), so the row with the way
+   into the life stands over the list alone, from the list's left edge, its close at the box's top right */
 #wing[data-film='cinema'] .wing-plan[open] {
   --plan-form: side;
   --plan-pad: 12px;
   --plan-gap: 16px;
-  /* the foot: its rule, its padding and a way's 44 px */
+  /* the head: its padding, a way's 44 px and its rule */
   --plan-foot: 57px;
-  /* the list and the foot under it take the box's width beside the drawing, up to this */
+  /* the list and the row over it take the box's width beside the drawing, up to this */
   --plan-list: 520px;
   left: calc(var(--cinema-l) - 6px) !important;
   width: calc(100vw - var(--cinema-l) - var(--cinema-r) + 12px) !important;
@@ -729,9 +708,10 @@ html:has(#wing[data-film='cinema']) :is(#inst-sound, #inst-plan) { display: none
 }
 #wing[data-film='cinema'] .wing-plan .wing-plan-sheet { gap: var(--plan-gap); padding: 10px var(--plan-pad); }
 #wing[data-film='cinema'] .wing-plan .wing-plan-foot {
-  position: absolute; left: calc(var(--plan-pad) + var(--plan-plate, 0px) + var(--plan-gap)); bottom: 0;
+  position: absolute; left: calc(var(--plan-pad) + var(--plan-plate, 0px) + var(--plan-gap)); top: 0; bottom: auto;
   width: min(var(--plan-list), calc(100% - var(--plan-pad) * 2 - var(--plan-plate, 0px) - var(--plan-gap)));
-  box-sizing: border-box; height: var(--plan-foot); padding: 6px 0;
+  box-sizing: border-box; height: var(--plan-foot); padding: var(--film-shut-top) 0 0; justify-content: flex-start;
+  border-top: 0; border-bottom: 1px solid var(--ui-line);
 }
 #wing[data-film='cinema'] .wing-plan .wing-plan-reading { max-width: var(--plan-list); }
 #wing[data-film='cinema'] .wing-plan :is(.wing-plan-number, .wing-plan-entry-number) { font-size: .8125rem; }
@@ -741,8 +721,8 @@ html:has(#wing[data-film='cinema']) :is(#inst-sound, #inst-plan) { display: none
 #wing[data-film='cinema'] .wing-plan[open] { background: var(--ui-ground-sheet); }
 /* the chosen row's ring stands clear of its number */
 #wing[data-film='cinema'] .wing-plan .wing-plan-entry { padding-left: 10px; }
-/* the list ends over the foot, on a whole row at rest: film-cinema.ts shortens it by --cinema-cut */
-#wing[data-film='cinema'] .wing-plan .wing-plan-reading { margin-bottom: calc(var(--plan-foot) - 10px + var(--cinema-cut, 0px)); }
+/* the list starts under the head row and ends on a whole row at rest: film-cinema.ts shortens it by --cinema-cut */
+#wing[data-film='cinema'] .wing-plan .wing-plan-reading { margin-top: calc(var(--plan-foot) - 10px + 6px); margin-bottom: var(--cinema-cut, 0px); }
 
 /* ---- the walk's own controls sideways: the hold in the book's seat while
    the walk moves (held, the book is back) ---- */

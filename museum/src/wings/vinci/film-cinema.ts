@@ -89,7 +89,7 @@ const SVG = 'http://www.w3.org/2000/svg'
 const CAPTION_LEAST = 300
 /** the air a whole line keeps above or below a box's foot */
 const LINE_AIR = 2
-/** the air between the record's last whole line and its close */
+/** the air between the record's last whole line and the glass's foot */
 const RECORD_AIR = 8
 /** what a box's foot keeps whole besides its lines of words */
 const CONTROLS = 'button, a[href], input, select, summary, [role="button"]'
@@ -385,16 +385,16 @@ export function createFilmCinema(host: FilmCinemaHost): FilmCinema {
       box.style.setProperty('--cinema-cut', `${Math.round(move)}px`)
     }
   }
-  /** the museum's panel: its column may reach down to its close's top, so its
-      last row ends clear of the glass's foot. Its rows abut, so the foot keeps
-      no air: air would cut the row above the one it clears. */
+  /** the museum's panel: its column may reach down to the code's link at its
+      foot, so its last row ends clear of the glass's foot. Its rows abut, so
+      the foot keeps no air: air would cut the row above the one it clears. */
   function panelLines(): void {
     if (!on || document.documentElement.dataset['naPanel'] !== 'open') return
     const links = document.querySelector<HTMLElement>('#instruments .inst-links')
-    const close = document.querySelector<HTMLElement>('#instruments .inst-close')
+    const code = document.querySelector<HTMLElement>('#instruments .inst-source')
     if (!links) return
     links.style.setProperty('--cinema-cut', '0px')
-    const room = close ? close.getBoundingClientRect().top + 2 - links.getBoundingClientRect().bottom : 0
+    const room = code ? code.getBoundingClientRect().top + 2 - links.getBoundingClientRect().bottom : 0
     wholeLines(links, Math.max(0, room), 0)
   }
   const panelWatch = new MutationObserver(() => requestAnimationFrame(() => requestAnimationFrame(panelLines)))
@@ -415,9 +415,9 @@ export function createFilmCinema(host: FilmCinemaHost): FilmCinema {
       if (!on || !dock.matches('[open]')) { dock.style.removeProperty('--record-head'); dock.style.removeProperty('--record-foot'); continue }
       const edge = dock.getBoundingClientRect().top + dock.clientTop
       const bar = dock.querySelector<HTMLElement>('.vinci-sources-toolbar')?.getBoundingClientRect()
-      const close = dock.querySelector<HTMLElement>('.vinci-sources-close')?.getBoundingClientRect()
       const from = bar ? bar.bottom + 1 - edge : 0
-      const reach = close && close.height ? close.top - RECORD_AIR - edge : dock.clientHeight
+      // the close stands at the top right: the words reach down to the glass's own foot
+      const reach = dock.clientHeight - RECORD_AIR
       const at = lineCut(dock, { from, reach })
       dock.style.setProperty('--record-head', `${Math.max(0, Math.ceil(at.top - from))}px`)
       dock.style.setProperty('--record-foot', `${Math.max(0, Math.ceil(dock.clientHeight - at.foot))}px`)
