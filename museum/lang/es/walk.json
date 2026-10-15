@@ -469,8 +469,6 @@
  "89d95b208113dd7d": "Museum of Ages: un museo digital del pasado, reconstruido en 3D",
  "66f8db0c01f9e38c": "es_ES",
  "d77907f6986452e5": "El cielo",
- "6a0449c9637a8474": "Instrumentos",
- "72c4180eefc554fa": "Los instrumentos del museo",
  "e4f317c80564b5de": "Idioma",
  "17f1adc30e83e6e9": "Nivel de detalle",
  "1728a119a398e8dc": "Tranquilo",
@@ -537,6 +535,7 @@
  "c43cf2f8c1d0b731": "En pausa",
  "75c0b0c4b42c06f9": "La barra espaciadora pausa la visita.",
  "fbc4ea0c471f496a": "Toca ‖ para pausar la visita.",
- "28e6f7fedc49f554": "En una parada, el plano en Instrumentos te lleva a otra.",
- "09cb8967594b1e2c": "Leonardo da Vinci vivía en la casa que está sobre ti. Este día, un visitante vino a verlo. Lo que anotó el secretario del visitante te espera dentro. Detrás de ti hay un museo de lo que dejó Leonardo."
+ "09cb8967594b1e2c": "Leonardo da Vinci vivía en la casa que está sobre ti. Este día, un visitante vino a verlo. Lo que anotó el secretario del visitante te espera dentro. Detrás de ti hay un museo de lo que dejó Leonardo.",
+ "78b319af4f4765d0": "Menú",
+ "4da0fd05d3b4d6d8": "El icono del mapa abre el plano. Te lleva a cada parada."
 }

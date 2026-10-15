@@ -65,8 +65,9 @@ export const LOBBY_TEXT = {
   skipDescent: { en: 'Skip to the fire', de: 'Direkt zum Feuer' },
   sky: { en: 'The Sky', de: 'Der Himmel' },
   skyReturn: { en: 'The Fire · return', de: 'Zurück zum Feuer' },
-  instruments: { en: 'Instruments', de: 'Instrumente' },
-  instrumentsTitle: { en: 'The instruments of the museum', de: 'Die Instrumente des Museums' },
+  /** the panel's handle and its title: the way out, the Plan, the life, the language, the pace and the site's links */
+  instruments: { en: 'Menu', de: 'Menü' },
+  instrumentsTitle: { en: 'Menu', de: 'Menü' },
   soundOn: { en: 'Sound · On', de: 'Ton · An' },
   soundOff: { en: 'Sound · Off', de: 'Ton · Aus' },
   language: { en: 'Language', de: 'Sprache' },

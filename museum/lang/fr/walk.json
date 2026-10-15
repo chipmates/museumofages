@@ -468,8 +468,6 @@
  "89d95b208113dd7d": "Museum of Ages : un musée numérique du passé, reconstitué en 3D",
  "66f8db0c01f9e38c": "fr_FR",
  "d77907f6986452e5": "Le ciel",
- "6a0449c9637a8474": "Instruments",
- "72c4180eefc554fa": "Les instruments du musée",
  "e4f317c80564b5de": "Langue",
  "17f1adc30e83e6e9": "Niveau de détail",
  "1728a119a398e8dc": "Calme",
@@ -536,6 +534,7 @@
  "c43cf2f8c1d0b731": "En pause",
  "75c0b0c4b42c06f9": "La barre d’espace met la visite en pause.",
  "fbc4ea0c471f496a": "Touchez ‖ pour mettre la visite en pause.",
- "28e6f7fedc49f554": "À chaque étape, le plan dans Instruments vous mène partout.",
- "09cb8967594b1e2c": "Léonard de Vinci a vécu dans la maison au-dessus de vous. Ce jour-là, un visiteur vient le voir. Ce que le secrétaire du visiteur a noté vous attend à l’intérieur. Derrière vous se trouve un musée de ce que Léonard a laissé."
+ "09cb8967594b1e2c": "Léonard de Vinci a vécu dans la maison au-dessus de vous. Ce jour-là, un visiteur vient le voir. Ce que le secrétaire du visiteur a noté vous attend à l’intérieur. Derrière vous se trouve un musée de ce que Léonard a laissé.",
+ "78b319af4f4765d0": "Menu",
+ "4da0fd05d3b4d6d8": "L’icône de carte ouvre le plan. Il vous mène à chaque étape."
 }
