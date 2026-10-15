@@ -1479,6 +1479,78 @@ class Case(unittest.TestCase):
         if not lines:
             self.skipTest("no page gives an answer line for its share picture")
 
+    def plate_page(self):
+        """The first page whose share picture shows its marked work itself (page.og_image.plate)."""
+        return next((p for p in self.pages if self.data("en", p)["page"]["og_image"].get("plate")), None)
+
+    def test_a_sizes_share_picture_shows_its_marked_work_and_is_the_pages_picture(self):
+        page = self.plate_page()
+        if not page:
+            self.skipTest("no share picture shows a plate")
+        spec = importlib.util.spec_from_file_location("build_plate", self.dir / "build.py")
+        module = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(module)
+        module.WINGS_FILE = self.registry
+        module.LANGS = tuple(c for c in module.LANGS if c in ("en", "de"))
+        jobs = [j for j in module.still_jobs() if j.get("page") == page and j["kind"] == "share"]
+        self.assertEqual({j["lang"] for j in jobs}, {"en", "de"})
+        stem = self.data("en", page)["page"]["og_image"]["plate"]
+        for job in jobs:
+            data = self.data(job["lang"], page)
+            # the plate's largest cut, kept in full colour, under the page's heading and the work's size
+            self.assertTrue(job.get("raster"))
+            self.assertRegex(job["svg"], r'xlink:href="@pics@/%s-\d+\.webp"' % re.escape(stem))
+            said = " ".join(re.findall(r"<text [^>]*>([^<]*)</text>", job["svg"]))
+            self.assertIn(html.escape(data["meta"]["og_title"].split("? ")[-1].replace(" ", " "), quote=False), said)
+            self.assertIn(data["labels"]["person"].replace(" ", " "), said)
+            # drawn at the person's scale: the work's height to the person's is the facts' own ratio
+            tall = lambda tag: float(re.search(tag + r'[^>]*?height="([\d.]+)"', job["svg"]).group(1))
+            person = re.search(r'<path transform="translate\([\d.]+ [\d.]+\) scale\(([\d.]+)\)', job["svg"])
+            work = tall(r"<image ")
+            self.assertAlmostEqual(work / (float(person.group(1)) * 1700), 79.4 / 170, places=3)
+        out, written = self.build()
+        for path in written:
+            data, lang = self.page_of(path)
+            if data["page"]["id"] != self.data("en", page)["page"]["id"]:
+                continue
+            text = path.read_text(encoding="utf-8")
+            graph = json.loads(re.search(r'<script type="application/ld\+json">(.*?)</script>', text, flags=re.S).group(1).replace("<\\/", "</"))["@graph"]
+            frame = next(n for n in graph if n.get("@id", "").endswith("#frame"))
+            share = data["page"]["og_image"]["file"].replace("{lang}", lang)
+            self.assertTrue(frame["url"].endswith("/" + share), frame["url"])
+            plain = lambda s: s.replace("\u00a0", " ")
+            self.assertEqual((frame["caption"], frame["description"]), (plain(data["meta"]["og_title"]), plain(data["meta"]["og_image_alt"])))
+            self.assertIn(f'<meta property="og:image" content="{frame["url"]}">', text)
+            # the chart's still, which the page links, still ships beside it
+            chart = data["page"]["still"]["file"].replace("{lang}", lang)
+            self.assertIn(f"static/img/{chart}", text)
+            self.assertTrue((out / "static" / "img" / chart).is_file())
+
+    def test_a_share_plate_of_another_work_stops_the_build(self):
+        page = self.plate_page()
+        if not page:
+            self.skipTest("no share picture shows a plate")
+        for lang in ("en", "de"):
+            data = self.data(lang, page)
+            data["page"]["og_image"]["plate"] = "vinci-plate-lady-with-an-ermine"
+            self.save(lang, data, page)
+        self.fails(r"page\.og_image\.plate 'vinci-plate-lady-with-an-ermine' is of 'lady-with-an-ermine'")
+
+    def test_a_share_plate_keeps_the_works_shape(self):
+        page = self.plate_page()
+        if not page:
+            self.skipTest("no share picture shows a plate")
+        spec = importlib.util.spec_from_file_location("build_shape", self.dir / "build.py")
+        module = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(module)
+        stem = self.data("en", page)["page"]["og_image"]["plate"]
+        work = module.plates()[stem]["work"]
+
+        class Square:
+            def by_id(self, key):
+                return {"id": key, "h": 50.0, "w": 50.0}
+        self.assertRegex(" ".join(module.share_plate_problems(stem, Square(), work)), r"not the shape of the work's 50 by 50 cm")
+
     def test_a_second_share_line_stands_only_under_a_picture_beside_its_words(self):
         page = next((p for p in self.scale_pages() if self.data("en", p)["page"]["og_image"].get("layout") != "beside"
                      and not self.data("en", p)["page"].get("hub")), None)
@@ -1814,9 +1886,12 @@ class Case(unittest.TestCase):
         for lang in ("en", "de"):
             text = (out / f'{wing["page"][lang].strip("/")}/{topic["slug"][lang]}/index.html').read_text(encoding="utf-8")
             graph = json.loads(re.search(r'<script type="application/ld\+json">(.*?)</script>', text, flags=re.S).group(1).replace("<\\/", "</"))["@graph"]
-            image = next(n for n in graph if n["@type"] == "ImageObject")
-            chart = next(b for b in self.data(lang, self.works_page)["blocks"] if b["type"] == "chart")
-            self.assertTrue(image["url"].endswith(".png"))
+            # the chart is the page's picture, or, where its share picture shows the work itself, described beside it
+            data = self.data(lang, self.works_page)
+            still = data["page"]["still"]["file"].replace("{lang}", lang)
+            image = next(n for n in graph if n["@type"] == "ImageObject" and n.get("url", "").endswith("/" + still))
+            chart = next(b for b in data["blocks"] if b["type"] == "chart")
+            self.assertTrue(image["@id"].endswith("#chart" if data["page"]["og_image"].get("plate") else "#frame"))
             self.assertEqual(image["caption"].replace(" ", " "), chart["still_caption"])
 
     def test_a_line_with_another_size_stops_the_build(self):
@@ -2714,6 +2789,40 @@ class PictureLicences(unittest.TestCase):
             credit, maps = (html.unescape(re.sub(r"<[^>]+>", "", line)) for line in re.findall(r'<p class="credit"[^>]*>(.*?)</p>', section))
             self.assertEqual(credit, self.lib.picture_terms(code, "")["creditText"], code)
             self.assertEqual(maps, written, code)
+
+    def test_a_drawing_that_holds_a_reproduction_names_its_source_and_status(self):
+        # a drawing of ours with a public-domain reproduction in it: our licence and credit, then the reproduction's
+        # line, in the page's language where the page shares the drawing; never a still the rights list rules out
+        self.assertLessEqual(set(self.lib.PICTURE_REPRODUCTIONS), self.lib.FREE_PICTURES)
+        self.assertFalse(set(self.lib.PICTURE_REPRODUCTIONS) & self.NOT_OURS_ALONE)
+        self.assertFalse(set(self.lib.PICTURE_REPRODUCTIONS) & set(self.lib.PICTURE_CREDITS))
+        status = {"en": "public domain work, reproduction from Wikimedia Commons", "de": "gemeinfreies Werk, Reproduktion aus Wikimedia Commons"}
+        found = 0
+        for path in self.pages:
+            text = path.read_text(encoding="utf-8")
+            lang = re.search(r'<html lang="([\w-]+)"', text).group(1)
+            for image in self.lib.image_objects(self.graph(text) or {}):
+                stem = self.lib.picture_stem(image.get("contentUrl") or image.get("url"))
+                if stem not in self.lib.PICTURE_REPRODUCTIONS:
+                    continue
+                found += 1
+                self.assertEqual(image["license"], "https://creativecommons.org/licenses/by-sa/4.0/", path)
+                head = self.lib.picture_terms("en", "")["creditText"] + ", "
+                self.assertTrue(image["creditText"].startswith(head), path)
+                self.assertIn(status[lang], image["creditText"], path)
+                self.assertTrue(image["creditText"].endswith(")"), path)
+        self.assertGreaterEqual(found, 2)
+
+    def test_the_sizes_pages_name_their_share_picture_of_the_painting(self):
+        for path, lang in (("leonardo-da-vinci/sizes", "en"), ("de/leonardo-da-vinci/groessen", "de")):
+            text = (SITE_BUILT / path / "index.html").read_text(encoding="utf-8")
+            graph = self.graph(text)
+            page = next(n for n in graph["@graph"] if n.get("@type") == "WebPage")
+            frame = next(i for i in self.lib.image_objects(graph) if i["@id"] == page["primaryImageOfPage"]["@id"])
+            self.assertEqual(frame["contentUrl"], f"https://museumofages.org/static/img/vinci-sizes-og-{lang}-1200x630.png")
+            self.assertIn(f'<meta property="og:image" content="{frame["contentUrl"]}">', text)
+            self.assertTrue((SITE_BUILT / "static" / "img" / f"vinci-sizes-og-{lang}-1200x630.png").is_file())
+            self.assertIn("C2RMF", frame["creditText"])
 
     def test_licence_data_on_another_picture_is_found(self):
         image = {"@type": "ImageObject", "contentUrl": "https://museumofages.org/static/img/v-lisa-1600.webp",

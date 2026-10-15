@@ -8,7 +8,8 @@
     "og_image": {
       "file": "vinci-sizes-og-{lang}-1200x630.png",
       "width": 1200,
-      "height": 630
+      "height": 630,
+      "plate": "vinci-plate-mona-lisa"
     },
     "still": {
       "file": "vinci-sizes-chart-{lang}-1600.png"
@@ -36,7 +37,8 @@
     "title": "Wie groß ist die Mona Lisa? 79,4 × 53,4 cm | Museum of Ages",
     "description": "Größe der Mona Lisa: 79,4 mal 53,4 cm. Die 24 Werke aus dem Bildersaal und das Abendmahl im selben Maßstab, jedes mit Link zu seiner Station im Rundgang.",
     "og_title": "Wie groß ist die Mona Lisa? 79,4 × 53,4 cm",
-    "og_image_alt": "Die Mona Lisa und das Abendmahl im selben Maßstab neben einem Menschen von 1,70 Metern: das Gemälde mit 79,4 mal 53,4 Zentimetern, das Wandbild mit 4,6 mal 8,8 Metern. Ein Diagramm, für diese Seite gemacht."
+    "og_image_alt": "Die Mona Lisa im selben Maßstab neben einem Menschen von 1,70 Metern, beide auf einer Bodenlinie: Das Gemälde, 79,4 mal 53,4 Zentimeter, ist nicht einmal halb so hoch wie der Mensch. Eine Reproduktion des Gemäldes in einem Diagramm, für diese Seite gemacht.",
+    "credit": "Museum of Ages, Mona Lisa von Leonardo da Vinci: gemeinfreies Werk, Reproduktion aus Wikimedia Commons (eine Aufnahme des C2RMF)"
   },
   "labels": {
     "crumbs": "Du bist hier",

@@ -2915,14 +2915,14 @@
   {
    "path": "pages/pics/img/vinci-sizes-og-de-1200x630.png",
    "url": "/static/img/vinci-sizes-og-de-1200x630.png",
-   "bytes": 13861,
-   "sha256": "54c5fd27ae20939b769f44c63b6f542dcf10a1d8bb9799d438e2149ab1c801bd"
+   "bytes": 85844,
+   "sha256": "a3ad898732eb1079838e5e134be54709aec06d2b3316e143f4a1578d48d01551"
   },
   {
    "path": "pages/pics/img/vinci-sizes-og-en-1200x630.png",
    "url": "/static/img/vinci-sizes-og-en-1200x630.png",
-   "bytes": 13111,
-   "sha256": "efd46d4f7bc912d736dd634470ac8f39a3bc0dc5af38bdb990f2c43210159702"
+   "bytes": 83587,
+   "sha256": "203c6492ceed3806269ba51d1a6597690729301752fd6160a201a089625c7edf"
   },
   {
    "path": "pages/pics/img/vinci-stop-flight-1600.avif",

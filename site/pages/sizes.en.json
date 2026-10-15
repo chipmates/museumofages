@@ -8,7 +8,8 @@
     "og_image": {
       "file": "vinci-sizes-og-{lang}-1200x630.png",
       "width": 1200,
-      "height": 630
+      "height": 630,
+      "plate": "vinci-plate-mona-lisa"
     },
     "still": {
       "file": "vinci-sizes-chart-{lang}-1600.png"
@@ -36,7 +37,8 @@
     "title": "How big is the Mona Lisa? 79.4 × 53.4 cm | Museum of Ages",
     "description": "Mona Lisa size: 79.4 by 53.4 cm, 31 by 21 inches. The 24 works of the picture room and the Last Supper to one scale, each linked to its place in the walk.",
     "og_title": "How big is the Mona Lisa? 79.4 × 53.4 cm",
-    "og_image_alt": "The Mona Lisa and the Last Supper drawn to one scale beside a person 1.7 metres tall: the painting 79.4 by 53.4 centimetres, the wall painting 4.6 by 8.8 metres. A chart made for this page."
+    "og_image_alt": "The Mona Lisa drawn to one scale beside a person 1.7 metres tall, both standing on one floor line: the painting, 79.4 by 53.4 centimetres, is less than half as tall as the person. A reproduction of the painting in a chart made for this page.",
+    "credit": "Museum of Ages, Mona Lisa by Leonardo da Vinci: public domain work, reproduction from Wikimedia Commons (a C2RMF capture)"
   },
   "labels": {
     "crumbs": "You are here",

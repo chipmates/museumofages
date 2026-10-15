@@ -644,23 +644,19 @@ def picture_still_svg(words, colours, picture, size, person, beside=False):
             f'viewBox="0 0 {W} {H}"><rect width="{W}" height="{H}" fill="{c["page"]}"/>{"".join(parts)}</svg>\n')
 
 
-def _picture_beside_svg(words, c, picture, size, person, W, H, m):
-    gap, most = 50, 600
-    iw = most
-    ih = iw * size[1] / size[0]
-    if ih > H - 2 * m:
-        ih = H - 2 * m
-        iw = ih * size[0] / size[1]
-    ix, iy = W - m - iw, (H - ih) / 2
-    column = ix - gap - m
-    # a number keeps its unit on its line, a range its two ends, a short name its two parts (T. rex) and a German
-    # article its noun: the words are wrapped at their plain spaces only
-    keep = lambda s: re.sub(r"(\d) (?=(?:m|ft|cm|kg|t|tonnes|Tonnen)\b)|(\d) (to|bis) (?=\d)|\b([A-Z]\.) (?=[a-z])"
-                            r"|\b(der|die|das|ein|eine) (?=\w)",
-                            lambda m: (m.group(1) or "") + (f"{m.group(2)}\u00a0{m.group(3)}" if m.group(2) else "")
-                            + (m.group(4) or m.group(5) or "") + "\u00a0", s)
+def _keep(s):
+    """A number keeps its unit on its line, a range its two ends, a short name its two parts (T. rex) and a German
+    article its noun: the words are then wrapped at their plain spaces only."""
+    return re.sub(r"(\d) (?=(?:m|ft|cm|kg|t|tonnes|Tonnen)\b)|(\d) (to|bis) (?=\d)|\b([A-Z]\.) (?=[a-z])"
+                  r"|\b(der|die|das|ein|eine) (?=\w)",
+                  lambda m: (m.group(1) or "") + (f"{m.group(2)}\u00a0{m.group(3)}" if m.group(2) else "")
+                  + (m.group(4) or m.group(5) or "") + "\u00a0", s)
+
+
+def _beside_words(words, c, column, iy, m, H):
+    """The heading and its line in a column at the left of a share picture, from level with the picture's top (iy)."""
     # Cardo's letters run wider than the stills' average measure at these sizes: the column is measured short
-    rows = lambda s, size: [r.replace("\u00a0", " ") for r in _wrap(keep(s).replace(" ", "\n"), size, column * 0.87, "\n")]
+    rows = lambda s, size: [r.replace("\u00a0", " ") for r in _wrap(_keep(s).replace(" ", "\n"), size, column * 0.87, "\n")]
     head, line = rows(words["h1"], 50), rows(words["line"], 34) if words.get("line") else []
     # the words start level with the picture's top unless their last row would then reach the address's rule
     last = 58 * (len(head) - 1) + (14 + 44 * len(line) if line else 0)
@@ -672,6 +668,19 @@ def _picture_beside_svg(words, c, picture, size, person, W, H, m):
     for row in line:
         parts.append(_text(m, y, row, 34, c["chalk-text"]))
         y += 44
+    return parts
+
+
+def _picture_beside_svg(words, c, picture, size, person, W, H, m):
+    gap, most = 50, 600
+    iw = most
+    ih = iw * size[1] / size[0]
+    if ih > H - 2 * m:
+        ih = H - 2 * m
+        iw = ih * size[0] / size[1]
+    ix, iy = W - m - iw, (H - ih) / 2
+    keep = _keep
+    parts = _beside_words(words, c, ix - gap - m, iy, m, H)
     parts.append(_rect(ix - 3, iy - 3, iw + 6, ih + 6, c["stone"], c["frame"], 3))
     parts.append(f'<image x="{ix:g}" y="{iy:g}" width="{iw:g}" height="{ih:g}" xlink:href="{PICS_MARK}/{esc(picture)}"/>')
     if person:
@@ -681,6 +690,40 @@ def _picture_beside_svg(words, c, picture, size, person, W, H, m):
     if words.get("second"):
         for i, row in enumerate(r.replace("\u00a0", " ") for r in _wrap(keep(words["second"]).replace(" ", "\n"), 28, iw * 0.87, "\n")):
             parts.append(_text(ix, iy + ih + 44 + 36 * i, row, 28, c["text-2"]))
+    parts.append(_rect(m, H - 62, 48, 2, c["chalk"], c["chalk"], 0))
+    parts.append(_text(m, H - 30, words["site"], 20, c["text-3"]))
+    return (f'<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="{W}" height="{H}" '
+            f'viewBox="0 0 {W} {H}"><rect width="{W}" height="{H}" fill="{c["page"]}"/>{"".join(parts)}</svg>\n')
+
+
+def painting_share_svg(words, colours, picture, work, person_cm):
+    """A sizes page's share picture of its marked work as the work itself, 1200 by 630: the page's heading and the
+    work's size in a column at the left, and at the right, on the stone sheet, the reproduction of the work and the
+    person standing on one floor line at one scale, the person's height over the person, the site's address.
+    picture: a plate of the pages' folder cut to the painted surface (the build checks its shape); work: its h and w
+    in centimetres."""
+    c = colours
+    W, H, m = 1200, 630, 60
+    # the sheet fills the card's height; the person fills the sheet's, under its label and over the floor's margin
+    ih, top, foot = H - 2 * m, 40, 30
+    u = (ih - top - foot) / person_cm
+    ww, wh = work["w"] * u, work["h"] * u
+    pw, ph = PERSON_W * person_cm / 1700 * u, person_cm * u
+    side, gap = 28 * u, 26 * u
+    iw = side + ww + gap + pw + side
+    ix, iy = W - m - iw, m
+    floor = iy + ih - foot
+    parts = _beside_words(words, c, ix - 50 - m, iy, m, H)
+    parts.append(_rect(ix - 3, iy - 3, iw + 6, ih + 6, c["stone"], c["frame"], 3))
+    parts.append(_floor(ix + side / 2, floor, iw - side, c["stone-line-strong"]))
+    wx = ix + side
+    # the panel's edge as a hair of the frame's colour round it: the picture keeps its true size inside
+    parts.append(_rect(wx - 1.5, floor - wh - 1.5, ww + 3, wh + 3, c["frame"], c["frame"], 0))
+    parts.append(f'<image x="{wx:g}" y="{floor - wh:g}" width="{ww:g}" height="{wh:g}" preserveAspectRatio="none" '
+                 f'xlink:href="{PICS_MARK}/{esc(picture)}"/>')
+    px = wx + ww + gap
+    parts.append(_person(px, floor, ph, c["line-strong"]))
+    parts.append(_text(px + pw / 2, floor - ph - 12, words["person"], 20, c["stone-text-2"], "middle"))
     parts.append(_rect(m, H - 62, 48, 2, c["chalk"], c["chalk"], 0))
     parts.append(_text(m, H - 30, words["site"], 20, c["text-3"]))
     return (f'<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="{W}" height="{H}" '

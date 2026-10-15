@@ -1193,6 +1193,12 @@ def jsonld(lang, data, urls, pics, site, wing, alternate_name, frame, folders, t
             "representativeOfPage": True,
         },
     ]
+    for more in frame.get("more", []):
+        found = next(f / more["still"] for f in folders if (f / more["still"]).is_file())
+        w, h = CHART.png_info(found)[0]
+        url = f"{ORIGIN}/{STATIC}/img/{more['still']}"
+        graph.append({"@type": "ImageObject", "@id": f"{self_url}#{more['id']}", "url": url, "contentUrl": url,
+                      "width": w, "height": h, "caption": more["caption"], "description": more["description"]})
     if data["page"].get("hub"):
         # a wing in the making's list of its pages: a collection page with the list, its crumbs the museum and itself
         graph[2]["@type"] = "CollectionPage"
@@ -1652,6 +1658,13 @@ def render(page, lang, data, shared, out_root):
         frame = {"title": chart_words["mark"], "what": f'{CHART.size_text(it, LIB.number, lang, space=LIB.NBSP)}, {fig["what"]}', "alt": fig["alt"],
                  "tag": fig["tag"], "still": shared["stills"][page][lang]["chart"],
                  "caption": chart["still_caption"], "description": chart["still_caption"]}
+        if og.get("plate"):
+            # a share picture that shows the marked work itself is the page's picture, in the share picture's words;
+            # the chart keeps its own description beside it
+            frame.update(still=og["file"], caption=data["meta"]["og_title"].replace(LIB.NBSP, " "),
+                         description=data["meta"]["og_image_alt"].replace(LIB.NBSP, " "),
+                         more=[{"id": "chart", "still": shared["stills"][page][lang]["chart"],
+                                "caption": chart["still_caption"], "description": chart["still_caption"]}])
         frame_html = fill(parts["frame:chart"], {"html.figure": CHART.top_figure(works, mark, chart_words, LIB.number, lang),
                                                  "title": rich(frame["title"]), "tag": rich(labels[frame["tag"]]),
                                                  "what": rich(frame["what"]), "html.note": ""})
@@ -1775,6 +1788,9 @@ def render(page, lang, data, shared, out_root):
     files[f"img/{og['file']}"] = pics.find(og["file"])
     if frame.get("still"):
         files[f"img/{frame['still']}"] = pics.find(frame["still"])
+    if "figure" in data["top"]:
+        # the chart's still, which its block links, whichever picture the page names
+        files[f"img/{shared['stills'][page][lang]['chart']}"] = pics.find(shared["stills"][page][lang]["chart"])
     return out_root / path / "index.html", text, files
 
 
@@ -2057,7 +2073,28 @@ def load_pages(pages=PAGES):
             mark = d["top"].get("figure", {}).get("work")
             if mark and mark not in {it["id"] for it in works.items}:
                 problems.append(f"{p}.{lang}: top.figure.work {mark!r} is no work of the facts")
+            elif d["page"]["og_image"].get("plate"):
+                problems += [f"{p}.{lang}: {x}" for x in share_plate_problems(d["page"]["og_image"]["plate"], works, mark)]
     return data, wings, info, problems
+
+
+def share_plate_problems(stem, works, mark):
+    """The plate a sizes page's share picture shows (page.og_image.plate): a plate of pictures.json that the pages cut,
+    of the work the page marks, and cut to its painted surface, so that drawn at the work's size it keeps its shape
+    (within one percent). Returns the problems."""
+    plate = plates().get(stem)
+    if not plate or not plate.get("widths"):
+        return [f"page.og_image.plate {stem!r} is no plate of {PICTURES_FILE.name} that the pages cut"]
+    if not mark or plate["work"] != mark:
+        return [f"page.og_image.plate {stem!r} is of {plate['work']!r}: the share picture shows the work top.figure marks"]
+    name = f'{stem}-{max(plate["widths"])}.webp'
+    if not (PICS / name).is_file():
+        return [f"the plate {name} is not cut: python3 pages/make_pictures.py --plates (needs MOA_ASSET_STORE)"]
+    (w, h), it = webp_size(PICS / name), works.by_id(mark)
+    if abs(w / h / (it["w"] / it["h"]) - 1) > 0.01:
+        return [f"page.og_image.plate {stem!r} is {w} by {h} pixels, not the shape of the work's {it['h']:g} by {it['w']:g} cm: "
+                "a plate the share picture shows at the work's size is cut to its painted surface"]
+    return []
 
 
 def narrow_problems(fig, pic):
@@ -2242,9 +2279,27 @@ def still_jobs(pages=PAGES, loaded=None):
                      "mark": titles[works.by_id(mark)["n"]], "field": titles[field["n"]] if field else "", "titles": titles,
                      "site": ORIGIN.split("://", 1)[1], "credit": [f"Museum of Ages, {address}", unbound(chart["licence"])]}
             for kind, name in (("chart", d["page"]["still"]["file"]), ("share", d["page"]["og_image"]["file"])):
-                jobs.append({"file": name.replace("{lang}", code), "page": page, "lang": lang, "kind": kind,
-                             "svg": CHART.still_svg(works, mark, words, LIB.number, lang, colours, kind)})
+                job = {"file": name.replace("{lang}", code), "page": page, "lang": lang, "kind": kind,
+                       "svg": CHART.still_svg(works, mark, words, LIB.number, lang, colours, kind)}
+                if kind == "share" and d["page"]["og_image"].get("plate"):
+                    # the share picture shows the marked work itself, its plate at the person's scale
+                    it, title = works.by_id(mark), words["mark"]
+                    # the work's name stays on one line of the heading
+                    h1 = words["h1"].replace(title, title.replace(" ", LIB.NBSP))
+                    job.update(raster=True, svg=CHART.painting_share_svg(
+                        {"h1": h1, "line": CHART.size_text(it, LIB.number, lang), "person": words["person"], "site": words["site"]},
+                        colours, plate_cut(d["page"]["og_image"]["plate"])[0], it, works.person_cm))
+                jobs.append(job)
     return jobs
+
+
+def plate_cut(stem):
+    """A plate's largest cut in the pages' folder and its pixel size."""
+    plate = plates()[stem]
+    name = f'{stem}-{max(plate["widths"])}.webp'
+    if not (PICS / name).is_file():
+        raise SystemExit(f"the plate {name} is not cut: python3 pages/make_pictures.py --plates (needs MOA_ASSET_STORE)")
+    return name, webp_size(PICS / name)
 
 
 def scale_share(d, data, lang, colours):
