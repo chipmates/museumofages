@@ -545,10 +545,13 @@ html:has(#wing[data-film='cinema'])[data-na-panel='open'] #instruments .inst-kic
 /* two columns on the short glass: the wing's rows at the left, the museum's
    language, labels and links at the right, so the language stands unscrolled */
 html:has(#wing[data-film='cinema'])[data-na-panel='open'] #instruments .inst-links {
-  left: max(var(--cinema-l), calc((100vw - 720px) / 2));
+  /* the rows start on the title's edge; the column's padding is the room a focus ring needs inside its clip */
+  left: calc(max(var(--cinema-l), calc((100vw - 720px) / 2)) - 12px);
   right: max(var(--cinema-r), calc((100vw - 720px) / 2));
-  top: calc(var(--cinema-t) + 66px);
+  top: calc(var(--cinema-t) + 60px);
   bottom: calc(var(--cinema-b) + 60px);
+  padding-left: 12px;
+  padding-top: 6px;
 }
 html:has(#wing[data-film='cinema'])[data-na-panel='open'] #instruments .inst-links:has(> .inst-wing:not([hidden])) {
   display: grid;
@@ -560,9 +563,6 @@ html:has(#wing[data-film='cinema'])[data-na-panel='open'] #instruments .inst-lin
 html:has(#wing[data-film='cinema'])[data-na-panel='open'] #instruments .inst-links > .inst-wing { grid-column: 1; grid-row: 1 / span 12; align-self: start; }
 html:has(#wing[data-film='cinema'])[data-na-panel='open'] #instruments .inst-links > :not(.inst-wing) { grid-column: 2; }
 html:has(#wing[data-film='cinema'])[data-na-panel='open'] #instruments .inst-setting { padding-top: 4px; }
-/* the scrolling column would clip a ring drawn outside the row, so the rows keep air inside it for their mark */
-html:has(#wing[data-film='cinema'])[data-na-panel='open'] #instruments .inst-wing button { padding-left: 12px; padding-right: 12px; }
-html:has(#wing[data-film='cinema'])[data-na-panel='open'] #instruments .inst-wing button:focus-visible { outline-offset: -1px; }
 /* the column ends on a whole row at rest, never on a row cut in half or one
    faded as if it could not be pressed: film-cinema.ts moves its foot by
    --cinema-cut, down into the free glass under it where that holds the row */
@@ -571,11 +571,11 @@ html:has(#wing[data-film='cinema'])[data-na-panel='open'] #instruments .inst-lin
   padding-bottom: 16px;
 }
 
-/* the museum's code, quiet, beside the close in the wing's column, which ends above them: the
+/* the museum's code, quiet, under the wing's column on the title's edge and over the close: the
    museum's column runs down to the foot and a link at its right would read as part of a row */
 html:has(#wing[data-film='cinema'])[data-na-panel='open'] #instruments .inst-source {
-  position: fixed; left: calc(var(--cinema-l) + 72px); right: auto; bottom: var(--cinema-b);
-  min-height: 48px; z-index: 4; font-size: .875rem;
+  position: fixed; left: max(var(--cinema-l), calc((100vw - 720px) / 2)); right: auto; bottom: calc(var(--cinema-b) + 56px);
+  min-height: 44px; z-index: 4; font-size: .875rem;
 }
 
 /* the wing plays no sound and its plan has its own row, as on the upright phone */

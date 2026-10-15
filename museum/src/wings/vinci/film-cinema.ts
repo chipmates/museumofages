@@ -295,8 +295,9 @@ export function createFilmCinema(host: FilmCinemaHost): FilmCinema {
       or down past it where the glass has `grow` px free under the box. The
       move is --cinema-cut, which only this form's rules read; the lines are
       read from their own boxes, so a row, a paragraph and a legend are all
-      one case. A move that would take more than a third of the box is left. */
-  function wholeLines(box: HTMLElement, grow = 0): void {
+      one case. A move that would take more than a third of the box is left.
+      `air` is kept between the foot and the line it clears. */
+  function wholeLines(box: HTMLElement, grow = 0, air = LINE_AIR): void {
     if (!on) return
     cut.add(box)
     let move = 0
@@ -311,6 +312,8 @@ export function createFilmCinema(host: FilmCinemaHost): FilmCinema {
       for (let node = walker.nextNode(); node; node = walker.nextNode()) {
         const parent = node.parentElement
         if (!parent || !node.textContent?.trim()) continue
+        // a folded details' words are laid out but never shown: only its summary stands
+        if (parent.closest('details:not([open])') && !parent.closest('summary')) continue
         const held = parent.getBoundingClientRect()
         if (held.bottom <= edge || held.top >= edge || getComputedStyle(parent).visibility === 'hidden') continue
         range.selectNodeContents(node)
@@ -328,23 +331,25 @@ export function createFilmCinema(host: FilmCinemaHost): FilmCinema {
         }
       }
       if (top === Infinity) return
-      const down = bottom + LINE_AIR - edge
+      const down = bottom + air - edge
       // down where it fits on the first passes, else up over the line
-      const next = pass < 2 && down - move <= grow ? move - down : move + edge - (top - LINE_AIR)
+      const next = pass < 2 && down - move <= grow ? move - down : move + edge - (top - air)
       if (next - move > r.height / 3) return
       move = next
       box.style.setProperty('--cinema-cut', `${Math.round(move)}px`)
     }
   }
-  /** the museum's panel: its column may reach down to its close's foot */
+  /** the museum's panel: its column may reach down to its close's top, so its
+      last row ends clear of the glass's foot. Its rows abut, so the foot keeps
+      no air: air would cut the row above the one it clears. */
   function panelLines(): void {
     if (!on || document.documentElement.dataset['naPanel'] !== 'open') return
     const links = document.querySelector<HTMLElement>('#instruments .inst-links')
     const close = document.querySelector<HTMLElement>('#instruments .inst-close')
     if (!links) return
     links.style.setProperty('--cinema-cut', '0px')
-    const room = close ? close.getBoundingClientRect().bottom - links.getBoundingClientRect().bottom : 0
-    wholeLines(links, Math.max(0, room))
+    const room = close ? close.getBoundingClientRect().top + 2 - links.getBoundingClientRect().bottom : 0
+    wholeLines(links, Math.max(0, room), 0)
   }
   const panelWatch = new MutationObserver(() => requestAnimationFrame(() => requestAnimationFrame(panelLines)))
   panelWatch.observe(document.documentElement, { attributes: true, attributeFilter: ['data-na-panel'] })

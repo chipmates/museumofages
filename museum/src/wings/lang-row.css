@@ -15,6 +15,9 @@
    fieldset's legend in its border, so that fieldset's own top line stands under its legend */
 #instruments .inst-languages + fieldset::before, #instruments .inst-languages + fieldset[hidden] + fieldset::before { content: none; }
 #instruments .inst-languages { box-shadow: inset 0 -1px 0 color-mix(in srgb, var(--na-mist) 16%, transparent); }
+/* under the wing's rows, whose own rule ends them, or first in a column under the title's rule, the row
+   draws no second rule a few pixels from the first */
+#instruments .inst-wing:not([hidden]) ~ .inst-languages::before { content: none; }
 #instruments .inst-lang-now {
   display: flex;
   align-items: center;

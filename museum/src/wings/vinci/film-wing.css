@@ -579,8 +579,9 @@ html:has(#wing[data-film='upright']) #instruments .inst-links { display: flex; f
 html:has(#wing[data-film='upright']) #instruments .inst-links > * { order: 4; }
 html:has(#wing[data-film='upright']) #instruments .inst-links > .inst-setting:not(.inst-tiers) { order: 1; }
 html:has(#wing[data-film='upright']) #instruments .inst-links > .inst-pace { order: 2; }
+/* the wing's rows hang from one rule; the row under them carries its own, so no second one stands a few pixels below */
 html:has(#wing[data-film='upright']) #instruments .inst-wing {
-  order: 3; margin: 4px 0 6px; padding: 4px 0; box-shadow: inset 0 1px 0 var(--press-hairline), inset 0 -1px 0 var(--press-hairline);
+  order: 3; margin: 4px 0 6px; padding: 4px 0; box-shadow: inset 0 1px 0 var(--press-hairline);
 }
 /* the pace as the desk has it: three cells in a row, its cost line under them */
 html:has(#wing[data-film='upright']) #instruments .inst-pace {
