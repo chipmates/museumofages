@@ -108,6 +108,8 @@ export const LOBBY_TEXT = {
   legalNotice: { en: 'Legal notice', de: 'Impressum' },
   privacy: { en: 'Privacy', de: 'Datenschutz' },
   close: { en: 'Close', de: 'Schließen' },
+  /** the panel's foot: the site's own address, which forwards to the repository (DRAFT, the words round decides) */
+  sourceCode: { en: 'Source code', de: 'Quellcode' },
   paneEnter: { en: 'Enter the museum', de: 'Das Museum betreten' },
   /* WHAT THE GOLD FIELD SAYS WHILE A WING IS BEING BUILT. One line per stage
      of the entry, and the stage that is really running is the one shown. The

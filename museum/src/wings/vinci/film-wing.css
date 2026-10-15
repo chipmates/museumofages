@@ -591,6 +591,10 @@ html:has(#wing[data-film='upright']) #instruments .inst-pace button {
   position: static; display: inline-flex; flex: 1 1 0; width: auto; min-width: 0; justify-content: center; padding: 0 4px;
 }
 html:has(#wing[data-film='upright']) #instruments .inst-pace small { position: absolute; left: 0; right: 0; bottom: 6px; margin: 0; }
+/* the museum's code, quiet, in the foot beside the close: in the thumb's reach and never in the rows' way */
+html:has(#wing[data-film='upright']) #instruments .inst-source {
+  position: fixed; right: 24px; bottom: calc(22px + env(safe-area-inset-bottom)); z-index: 4; font-size: .875rem;
+}
 
 /* ---- THE PLAN'S PLATE AT A PHONE'S READING SIZE, both forms ---- */
 #wing .wing-plan[data-reading='true'] :is(.wing-plan-number, .wing-plan-north-letter) { font-size: 13px; }

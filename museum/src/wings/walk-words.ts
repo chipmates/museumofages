@@ -1,7 +1,7 @@
 /* THE WALK'S CONTROL WORDS, shared by every wing that walks: the panel while
-   the eye walks, its hold and its skip, the tips and the keys' hint, and the
-   panel's link to the code. English and German stand here; the other five
-   languages file each pair under its own key (`museum/lang/<tag>/walk.json`).
+   the eye walks, its hold and its skip, the tips and the keys' hint. English
+   and German stand here; the other five languages file each pair under its
+   own key (`museum/lang/<tag>/walk.json`).
    DRAFTS: the English is a draft and the German only holds the layout until
    the words round writes both. */
 
@@ -23,6 +23,4 @@ export const WALK_WORDS = {
   tipKeysTouch: { en: 'Tap ‖ to pause. Or skip straight to the stop.', de: 'Tippe auf ‖ zum Anhalten. Oder geh direkt zur Station.' },
   tipPlan: { en: 'The Plan jumps to any room.', de: 'Der Plan bringt dich in jeden Raum.' },
   tipLook: { en: 'Press a ring on a work to look closer.', de: 'Tippe auf einen Ring an einem Werk, um es näher anzusehen.' },
-  /** the panel's quiet link to the repository, through the site's own address */
-  sourceCode: { en: 'Source code', de: 'Quellcode' },
 } as const satisfies Record<string, Bilingual>

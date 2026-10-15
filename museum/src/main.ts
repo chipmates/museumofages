@@ -1155,6 +1155,20 @@ function markLibrary(): void {
   if (libraryLink) libraryLink.style.display = phase === 'wing' ? 'none' : ''
 }
 
+/* RISEN INTO THE SHEET, THE HANDLE IS THE SHEET'S CLOSE, at the top right
+   where a hand looks for one, and says so; back on the band it is the
+   instruments' control again. Its word follows where it stands. */
+function paintHandle(): void {
+  if (!railInstruments) return
+  const risen = railInstruments.parentElement === instrumentsEl
+  const word = say(risen ? LOBBY_TEXT.close : LOBBY_TEXT.instruments)
+  if (railInstruments.textContent !== word) railInstruments.textContent = word
+  railInstruments.toggleAttribute('data-shut', risen)
+}
+const handleMoves = new MutationObserver(paintHandle)
+handleMoves.observe(railEl, { childList: true })
+handleMoves.observe(instrumentsEl, { childList: true })
+
 function setInstruments(open: boolean, focus = true): void {
   const sheet = panelIsSheet()
   if (open) { markTiers(); markLibrary() }
@@ -1275,6 +1289,7 @@ function syncInstruments(): void {
   const library = instrumentsEl.querySelector<HTMLAnchorElement>('.inst-library')
   if (library) library.href = `https://agoracosmica.org/app?lang=${lang()}`
   syncSoundLabel()
+  paintHandle()
 }
 
 function setLobbyLanguage(language: 'en' | 'de'): void {

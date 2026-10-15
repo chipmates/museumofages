@@ -81,8 +81,8 @@
   border: 0;
   box-shadow: inset 0 1px 0 var(--ui-line), inset 1px 0 0 var(--ui-line);
 }
-/* the kicker, the handle and Close do not move: only the rows between them
-   scroll, so the way out is on the screen the whole time */
+/* the kicker, the handle and the foot do not move: only the rows between
+   them scroll, so the way out is on the screen the whole time */
 :root[data-na-panel='open'] #instruments .inst-kicker {
   position: absolute;
   left: 30px;
@@ -111,16 +111,23 @@
   scrollbar-width: thin;
   scrollbar-color: var(--ui-line-strong) transparent;
 }
-:root[data-na-panel='open'] #instruments .inst-close {
+/* RISEN, THE HANDLE IS THE SHEET'S CLOSE (main.ts paintHandle): its word
+   says Close and its glass carries the cross, at the top right where a hand
+   looks for one; the old Close at the foot leaves, the one close is enough */
+:root[data-na-panel='open'] #instruments > #rail-instruments[data-shut]::after {
+  background:
+    linear-gradient(45deg, transparent calc(50% - .625px), var(--press-white) calc(50% - .625px) calc(50% + .625px), transparent calc(50% + .625px)) center / 10px 10px no-repeat,
+    linear-gradient(-45deg, transparent calc(50% - .625px), var(--press-white) calc(50% - .625px) calc(50% + .625px), transparent calc(50% + .625px)) center / 10px 10px no-repeat,
+    radial-gradient(ellipse at 35% 20%, color-mix(in srgb, var(--na-starlight) 12%, transparent), transparent 68%);
+}
+:root[data-na-panel='open']:not(:has(#wing[data-film='cinema'])) #instruments .inst-close { display: none; }
+/* the way to the museum's code, quiet, at the foot and at the words' own x */
+:root[data-na-panel='open'] #instruments .inst-source {
   position: absolute;
-  right: var(--desk-panel-g, 64px);
+  left: 30px;
   bottom: 9px;
   margin: 0;
-  min-height: 44px;
-  display: flex;
-  align-items: center;
   font-size: 14px;
-  letter-spacing: .015em;
 }
 /* the rows read at the museum's own floor inside a wing */
 :root[data-na-panel='open'] #instruments :is(.inst-links button, .inst-links a, .inst-links summary) {

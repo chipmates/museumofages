@@ -193,6 +193,15 @@ body.door .status { animation: none; }
   font-family: var(--press-ui); font-size: 12px; text-transform: none;
   letter-spacing: .035em; text-indent: 0; color: var(--press-muted);
 }
+/* the museum's code, one quiet link at the panel's foot; each form places it */
+.inst-source {
+  display: inline-flex; align-items: center; min-height: 44px;
+  font-family: var(--press-ui); font-size: 12px; letter-spacing: .015em;
+  color: var(--press-muted);
+  text-decoration: underline; text-decoration-color: var(--press-hairline); text-underline-offset: 5px;
+}
+.inst-source:is(:hover, :focus-visible) { color: var(--press-white); text-decoration-color: var(--press-muted); }
+.inst-source:focus-visible { outline: 1px solid var(--na-gold); outline-offset: 4px; }
 
 /* The last page. The dawn is behind the type, never a veil over it. */
 

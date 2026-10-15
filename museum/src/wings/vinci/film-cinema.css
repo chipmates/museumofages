@@ -572,6 +572,13 @@ html:has(#wing[data-film='cinema'])[data-na-panel='open'] #instruments .inst-lin
   padding-bottom: 16px;
 }
 
+/* the museum's code, quiet, beside the close in the wing's column, which ends above them: the
+   museum's column runs down to the foot and a link at its right would read as part of a row */
+html:has(#wing[data-film='cinema'])[data-na-panel='open'] #instruments .inst-source {
+  position: fixed; left: calc(var(--cinema-l) + 72px); right: auto; bottom: var(--cinema-b);
+  min-height: 48px; z-index: 4; font-size: .875rem;
+}
+
 /* the wing plays no sound and its plan has its own row, as on the upright phone */
 html:has(#wing[data-film='cinema']) :is(#inst-sound, #inst-plan) { display: none; }
 
