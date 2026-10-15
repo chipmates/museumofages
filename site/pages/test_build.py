@@ -496,14 +496,16 @@ class Case(unittest.TestCase):
 
     def test_a_t_rex_number_stands_only_with_the_words_that_say_whose_it_is(self):
         """The page names our pose's 11.4 m, the 15 tonnes of a model, the 90 percent by bone volume, the 13 m of the news,
-        the 9 of a range and the lips as most likely on purpose: without those words the same fields stop the build."""
+        the 9 beside the 8.8 or close to it and the lips as most likely on purpose: without those words the same fields
+        stop the build."""
         page = self.topic_page("t_rex")
         cases = [
             ({"en": (r" in this pose", ""), "de": (r" in dieser Haltung", "")}, "11.4 m is our model's length"),
             ({"en": (r"\b[Mm]odel\b", "study"), "de": (r"\bModell\b", "Studie")}, "15 tonnes only as a model's guess"),
             ({"en": (r"bone volume", "count"), "de": (r"Knochenvolumen", "Zählung")}, "90 percent only by bone volume"),
             ({"en": (r"\bnews\b", "reports"), "de": (r"Nachrichten", "Berichten")}, "13 m only as the news of 2019"),
-            ({"en": (r"8\.8 or ", ""), "de": (r"8,8 oder ", "")}, "never 9 tonnes flat"),
+            ({"en": (r"8\.8 tonnes, ", ""), "de": (r"8,8 t, 9 US-Tonnen", "9 t")}, "never 9 tonnes flat"),
+            ({"en": (r"close to (9 tonnes)", r"\1"), "de": (r"knapp (9 t)", r"\1")}, "never 9 tonnes flat"),
             ({"en": (r"most likely ", ""), "de": (r"sehr wahrscheinlich ", "")}, "the lips most likely covered the teeth"),
             ({"en": (r" that ever lived", "")}, "never the largest T. rex"),
         ]
@@ -540,6 +542,7 @@ class Case(unittest.TestCase):
                "Er war höher als ein T. rex", "Er konnte einen T. rex töten", "Der Kampf der Giganten",
                "Er traf auf einen T. rex", "Wie in Jurassic Park", "Gefunden bei Taouz", "Ein ausgewachsener Spinosaurus",
                "Das Spinosaurus-Skelett", "Ein fast vollständiges Skelett", "Der größte Raubsaurier",
+               "Das größte Raubtier aller Zeiten",
                "Die letzten lebten vor 94 Millionen Jahren", "Ein M-förmiges Segel", "Er schwamm wie ein Krokodil",
                "Er jagte unter Wasser", "Der erste schwimmende Dinosaurier", "Er ging auf vier Beinen",
                "Zerstört am 24. April 1944", "Die Originalknochen sind in München", "Das Segel war 1,65 m hoch",

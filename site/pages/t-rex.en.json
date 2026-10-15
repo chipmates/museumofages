@@ -94,12 +94,12 @@
  },
  "top": {
   "h1": "How big was T. rex?",
-  "answer": "A large adult Tyrannosaurus rex was about 12 m (39 ft) long, and most were smaller. At the hips it stood about 3.5 to 4 m (11.5 to 13 ft) high. A large adult came to roughly 8 to 9 tonnes, by bones and body models, an ordinary adult less. Our T. rex, built to SUE's measurements, runs about 11.4 m (37 ft) in this pose, here beside a person of 1.70 m.",
+  "answer": "A large adult Tyrannosaurus rex was about 12 m (39 ft) long, and most were smaller. At the hips it stood about 3.5 to 4 m (11.5 to 13 ft) high. A large adult came to roughly 8 to 9 tonnes, by bones and body models, an ordinary adult less. Our T. rex, built to SUE's measurements, measures about 11.4 m (37 ft) in this pose, its raised head about 4.6 m (15 ft) up.",
   "answer_more": "The two largest known T. rex are SUE in Chicago, the longer and more complete skeleton, and Scotty, probably the heavier.",
   "scale": {
    "pic": "side",
    "tag": "tag_made",
-   "what": "Our T. rex beside a person 1.70 m tall, to one scale, built to SUE's measurements. In this pose, head raised and turned, tail swung, it runs about 11.4 m (37 ft). That is more than six and a half people laid end to end. The top of the raised head is about 4.6 m (15 ft) up, and that depends on the pose. Laid out straight the same skeleton would be about 11.8 m (39 ft). SUE's mount in Chicago is about 12 m.",
+   "what": "Our T. rex beside a person 1.70 m tall, to one scale, built to SUE's measurements. In this pose, head raised and turned, tail swung, it measures about 11.4 m (37 ft). That is more than six and a half people laid end to end. The top of the raised head is about 4.6 m (15 ft) up, and that depends on the pose. Laid out straight the same skeleton would be about 11.8 m (39 ft). SUE's mount in Chicago is about 12 m.",
    "alt": "A T. rex from the side on two legs, mouth open and head raised, beside a grey person who stands far below its hips.",
    "note": "Our own reconstruction, built in code from published measurements and rendered in our own engine. Not a photograph.",
    "marks": [
@@ -123,7 +123,7 @@
    "h": "A guess",
    "q": "How long was SUE's skull?",
    "button": "Show the answer",
-   "a": "About 1.4 m (4.6 ft) from the snout to the back of the cheek, crushed in the ground. That is a little shorter than the person of 1.70 m. The real skull in Chicago weighs about 270 kg (600 lb) and stands in its own case, and the skeleton carries a cast.",
+   "a": "About 1.4 m (4.6 ft) from the snout to the back of the cheek, a little shorter than the person of 1.70 m. The real skull, crushed in the ground, weighs about 270 kg (600 lb) and stands in its own case in Chicago.",
    "button_open": "Hide the answer"
   },
   "out": {
@@ -141,7 +141,7 @@
    "cols": [
     "Animal",
     "Length",
-    "Height, with the point measured",
+    "Height",
     "Weight",
     "How sure"
    ],
@@ -152,7 +152,7 @@
       "about 11.4 m (37 ft) in this pose, about 11.8 m (39 ft) straight",
       "over the hips 3.96 m (13 ft), raised head about 4.6 m (15 ft)",
       "not given",
-      "measured on our files"
+      "exact: measured on our files"
      ]
     },
     {
@@ -161,16 +161,16 @@
       "about 12 m, the mount 12.3 m (40.5 ft), the tail end restored",
       "at the hip about 4 m (13 ft), by the museum",
       "about 8 to 9 t, by a bone and three models",
-      "the museum and two studies agree"
+      "good: the museum and two studies agree"
      ]
     },
     {
      "cells": [
       "Scotty, Royal Saskatchewan Museum",
-      "nearly 12 m by the museum, 13 m in news only",
+      "nearly 12 m by the museum in 2015, 13 m in news only",
       "4 m (13 ft) by the museum, the point not named",
       "about 8.9 t by its thigh bone, a wide margin",
-      "one study, backed by a second"
+      "fair: one study, backed by a second, the length weak"
      ]
     },
     {
@@ -179,7 +179,7 @@
       "about 12 m (39 ft), most smaller",
       "at the hips about 3.5 to 4 m (11.5 to 13 ft)",
       "roughly 8 to 9 t, ordinary adults less",
-      "a museum and studies"
+      "good: a museum and studies, the hips less sure"
      ]
     },
     {
@@ -246,7 +246,7 @@
         "The right arm: upper arm, both forearm bones and parts of the hand.",
         "The sacrum and the hips, the left hip blade broken and pieced together.",
         "Both shoulder blades, the right one with a healed injury.",
-        "Parts of every back rib, 26 of about 60 belly ribs (the museum's count), plus the wishbone and an ear bone.",
+        "Parts of every back rib, 26 of about 60 belly ribs (the museum's count), plus the wishbone and an ear bone (both by the museum).",
         "36 tail bones: in 2003, no known T. rex tail was more complete."
        ]
       }
@@ -259,7 +259,7 @@
        "points": [
         "The wrist, restored on the mount after other tyrannosaurs.",
         "Almost all of the left foot, of which a single toe bone exists (less sure: the description contradicts itself in one place about which foot is meant).",
-        "About 11 of the mount's 47 tail bones, the end of the tail (our sum).",
+        "About 11 of the mount's 47 tail bones, part of them at the tail's end (our sum).",
         "About 34 of some 60 belly ribs, by the museum's count.",
         "Skin: none."
        ]
@@ -280,15 +280,15 @@
    "rows": [
     {
      "term": "12.3 m (40.5 ft)",
-     "text": "SUE's mount in Chicago, measured with a tape and a computer model. The tail end is restored, since 36 of the mount's 47 tail bones were found. So we say about 12 m."
+     "text": "SUE's mount in Chicago, as the museum gives it and as a computer model of 2011 measured it. The tail end is restored, since 36 of the mount's 47 tail bones were found. So we say about 12 m."
     },
     {
      "term": "13 m (43 ft)",
      "text": "Scotty, as the news of 2019 put it. The study's summary gives no length, and the museum used to give nearly 12 m. The Natural History Museum in London writes almost 13 m for SUE and Scotty together, with no method named."
     },
     {
-     "term": "8.8 or 9 tonnes",
-     "text": "The 8.8 is Scotty, 8,870 kg from the girth of its thigh bone, with a wide margin. The 9 is SUE by the Field Museum's 3D model, in US tons, so roughly 8.2 tonnes. Both sit inside about 8 to 9 tonnes."
+     "term": "8.8 tonnes, 9 tons",
+     "text": "The 8.8 is Scotty, 8,870 kg from the girth of its thigh bone, with a wide margin. The 9 is SUE by the Field Museum's 3D model, in US tons, so roughly 8.2 tonnes. The body models of a 2025 study also come close to 9 tonnes. All of them sit inside about 8 to 9 tonnes."
     },
     {
      "term": "15 tonnes",
@@ -306,7 +306,9 @@
    "nav": "Skin, feathers and lips",
    "h": "Skin, feathers and lips",
    "paras": [
-    "Every piece of T. rex skin ever found is scaly. All of it comes from a single animal, Wyrex in Houston: three small patches from the neck, the hips and the base of the tail. The scales are under a millimetre across. Not one feather has been found on any T. rex, nor on any other large tyrannosaur. Smaller, earlier relatives had thread-like feathers: little Dilong, and Yutyrannus at about 1.4 tonnes, roughly a sixth of SUE. Yutyrannus lived some 60 million years before T. rex. No skin is known from the top of the back, so a thin cover there can be neither shown nor ruled out. And lips: by a study of 2023, lip and gum most likely covered all the teeth when the mouth was shut. A minority still argues for a crocodile-like face, and no lip has ever been found."
+    "Every piece of T. rex skin ever found is scaly. All of it comes from a single animal, Wyrex in Houston: three small patches from the neck, the hips and the base of the tail. The scales are under a millimetre across.",
+    "Not one feather has been found on any T. rex, nor on any other large tyrannosaur. Smaller, earlier relatives had thread-like feathers: little Dilong, and Yutyrannus at about 1.4 tonnes, roughly a sixth of SUE. Yutyrannus lived some 60 million years before T. rex. No skin is known from the top of the back, so a thin cover there can be neither shown nor ruled out.",
+    "And lips: by a study of 2023, lip and gum most likely covered all the teeth when the mouth was shut. A minority still argues for a crocodile-like face, and no lip has ever been found."
    ]
   },
   {
@@ -315,7 +317,7 @@
    "nav": "Why our T. rex looks like this",
    "h": "Why our T. rex looks like this",
    "paras": [
-    "It is built to the measurements of SUE's bones: thigh bone, upper arm bone, hip blade and skull at their sizes, the rest after relatives and rules. The colours are ours, because no colour is known for any T. rex. We show the mouth open, with the band of lip and gum above the upper teeth."
+    "It is built to the measurements of SUE's bones: thigh bone, upper arm bone, hip blade and skull at their sizes, the rest after another T. rex, rules and our own reconstruction. The colours are ours, because no colour is known for any T. rex. We show the mouth open, with the band of lip and gum above the upper teeth."
    ]
   },
   {
@@ -326,7 +328,7 @@
    "items": [
     {
      "q": "Was Spinosaurus bigger than T. rex?",
-     "a": "Longer, and most likely lighter. The largest adults were just under 14 m (46 ft) and about 7.4 tonnes, by a model of 2022. That model scales a young skeleton up to the size of the largest snout found. A big T. rex was about 12 m (39 ft) and 8 to 9 tonnes. More on the Spinosaurus page, where both stand to one scale.",
+     "a": "Longer, and most likely lighter. The largest adults were just under 14 m (46 ft) and about 7.4 tonnes, by a model of 2022. That model scales a young skeleton up to the size of the largest snout found. A big T. rex was about 12 m (39 ft) and 8 to 9 tonnes. More on the Spinosaurus page, where both stand to one scale, with its sources.",
      "links": [
       {
        "page": "spinosaurus",
@@ -373,7 +375,7 @@
      "page": "spinosaurus",
      "pic": "spino",
      "alt": "A Spinosaurus with a tall sail and a deep tail, the pale outline of a larger adult behind it, beside a grey person who reaches its hip.",
-     "line": "An adult Spinosaurus was longer than any T. rex, most likely lighter and much lower at the hips. Here our young one stands beside our T. rex, to one scale."
+     "line": "An adult Spinosaurus was longer than any T. rex found so far, most likely lighter and much lower at the hips. Here our young one stands beside our T. rex, to one scale."
     },
     {
      "page": "brachiosaurus",
@@ -422,7 +424,7 @@
      "href": "https://doi.org/10.1038/nature02699"
     },
     {
-     "text": "Bell and others, 2017, Biology Letters.",
+     "text": "Bell and others, 2017, Biology Letters, on the skin of the T. rex Wyrex, HMNS 2006.1743.01.",
      "href": "https://doi.org/10.1098/rsbl.2017.0092"
     },
     {
@@ -448,9 +450,6 @@
     {
      "text": "Natural History Museum, London: its dinosaur pages.",
      "href": "https://www.nhm.ac.uk/discover/dino-directory/tyrannosaurus.html"
-    },
-    {
-     "text": "Houston Museum of Natural Science: the skin patches of the T. rex Wyrex, HMNS 2006.1743.01."
     }
    ],
    "contact": "If a number or a museum is wrong, tell us and we will correct it.",

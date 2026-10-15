@@ -143,8 +143,8 @@
  },
  "top": {
   "h1": "How big was Spinosaurus?",
-  "answer": "The largest adults of Spinosaurus aegyptiacus were just under 14 m (46 ft) long and about 7.4 tonnes, by a model of 2022. Nobody has found a whole skeleton. Ours is a young one, about 10 m (33 ft), about three quarters of full size, about 3 to 4 tonnes, a model's figure. Beside the person of 1.70 m, its hip joint sits at about head height, and it is almost six people long.",
-  "answer_more": "Compared with T. rex, the largest Spinosaurus was longer, most likely lighter and much lower at the hips. The two never met, about 30 million years and two continents apart.",
+  "answer": "The largest adults of Spinosaurus aegyptiacus were just under 14 m (46 ft) long and about 7.4 tonnes, by a model of 2022. Nobody has found a whole skeleton. Ours is a young one of about 10 m (33 ft), about three quarters of full size and about 3 to 4 tonnes by a model. Beside the person of 1.70 m, its hip joint sits at about head height, and it is almost six people long.",
+  "answer_more": "Compared with T. rex, the largest Spinosaurus was longer, most likely lighter and much lower at the hips. The two never met: about 30 million years and two continents lay between them.",
   "scale": {
    "pic": "side",
    "tag": "tag_made",
@@ -252,12 +252,12 @@
    "nav": "Spinosaurus vs T. rex, size only",
    "h": "Spinosaurus vs T. rex, size only",
    "paras": [
-    "The largest Spinosaurus was longer than any T. rex: just under 14 m (46 ft) by a model, against about 12 m (39 ft) for SUE's skeleton. It was most likely not heavier: about 7.4 to 8 tonnes in the model, against about 8 to 9 tonnes for the largest known T. rex. At the hips it stood much lower. The thigh bone of the young animal from Morocco is 61 cm, SUE's is 1.32 m, and even an adult's, scaled up, would be only about 80 cm. The two never met, Spinosaurus lived about 95 million years ago in North Africa, T. rex about 68 to 66 million years ago in North America."
+    "The largest Spinosaurus was longer than any T. rex found so far: just under 14 m (46 ft) by a model, against about 12 m (39 ft) for SUE's skeleton. It was most likely not heavier: about 7.4 to 8 tonnes in the model, against about 8 to 9 tonnes for the largest known T. rex. At the hips it stood much lower. The thigh bone of the young animal from Morocco is 61 cm, SUE's is 1.32 m. The two never met: Spinosaurus lived about 95 million years ago in North Africa, T. rex about 68 to 66 million years ago in North America."
    ],
    "scale": {
     "pic": "vs",
     "tag": "tag_made",
-    "what": "Our Spinosaurus and our T. rex, to one scale. Our Spinosaurus is a young one of about 10 m (33 ft), our T. rex after SUE a large adult of about 11.4 m (37 ft), so the T. rex is the longer one here. An adult Spinosaurus was longer than any T. rex, most likely lighter and much lower at the hips.",
+    "what": "Our Spinosaurus and our T. rex, to one scale. Our Spinosaurus is a young one of about 10 m (33 ft), our T. rex after SUE a large adult of about 11.4 m (37 ft), so the T. rex is the longer one here. An adult Spinosaurus was longer than any T. rex found so far, most likely lighter and much lower at the hips.",
     "alt": "A Spinosaurus with a sail on its back and a slightly longer T. rex with its head raised, both from the side, the T. rex about twice as high at the hips, beside the grey person.",
     "marks": [
      {
@@ -308,7 +308,7 @@
     {
      "h": "The head",
      "paras": [
-      "The snout widened at the tip like a spoon. Skin, lips and colour are known from no spinosaur."
+      "The snout widened at the tip like a spoon. No spinosaur has left us its skin, lips or colour."
      ]
     }
    ]
@@ -319,7 +319,7 @@
    "nav": "Spinosaurus and the water",
    "h": "Spinosaurus and the water",
    "paras": [
-    "It lived by the water and ate fish, as its teeth and the isotopes in them show. Whether it swam after the fish, or waded and waited for them in the shallows, is argued. The case for swimming rests on the deep tail of 2020 and on dense bones in a study of 2022. Most work since 2021 points to wading. Models find it too buoyant to dive, its skull shape fits an ambush hunter, and the bone-density method was called unreliable in 2024. The museums keep the question open, and so do we."
+    "It lived by the water and ate fish, as its teeth and the isotopes in them suggest. Whether it swam after the fish, or waded and waited for them in the shallows, is argued. The case for swimming rests on the deep tail of 2020 and on dense bones in a study of 2022. Most work since 2021 points to wading. Models find it too buoyant to dive, its skull shape fits an ambush hunter, and the bone-density method was called unreliable in 2024. The museums keep the question open, and so do we."
    ]
   },
   {
@@ -331,7 +331,7 @@
     {
      "h": "Stromer's skeleton",
      "paras": [
-      "In the autumn of 1912 the first bones came to light in the Bahariya Oasis in Egypt. They were the lower jaw's front half, 72 cm long, and back, hip and tail bones with the tall spines of the sail. Stromer described them in 1915 and named the animal Spinosaurus after those spines. The skeleton stood in Munich and was destroyed in a bombing raid in 1944. Only Stromer's notes, drawings and a few photographs survive. Munich holds a Spinosaurus tooth today, not a skeleton."
+      "In the autumn of 1912 the first bones came to light in the Bahariya Oasis in Egypt. They were the lower jaw's front half, 72 cm long, and back, hip and tail bones with the tall spines of the sail. Stromer described them in 1915 and named the animal Spinosaurus after those spines. The skeleton was shown in Munich and was destroyed in a bombing raid in 1944. Only Stromer's notes, drawings and a few photographs survive. Munich holds a Spinosaurus tooth today, not a skeleton."
      ]
     },
     {
@@ -377,7 +377,7 @@
     "key": [
      {
       "swatch": "own",
-      "text": "Dark red: the young Moroccan animal's own bones, the hips, both legs, the foot and the tail to its 41st bone, more than 30 of them found."
+      "text": "Dark red: the young Moroccan animal's own bones, the hips, both legs, the foot and the tail to its 41st bone, more than 30 of those bones found, the gaps coloured with them."
      },
      {
       "swatch": "stromer",
@@ -425,7 +425,7 @@
    "rows": [
     {
      "term": "18 m (59 ft)",
-     "text": "The top of a 2005 range of 16 to 18 m: a whole body drawn around the big snout in Milan, with the build of a long-legged relative. Spinosaurus turned out to have short legs, so that body came out too long. The model of 2022 gives just under 14 m, though some museum texts still give 18 m."
+     "text": "The top of a 2005 range of 16 to 18 m: a whole body drawn around the big snout in Milan, with the build of a long-legged relative. We have not read the study's exact range ourselves. Spinosaurus turned out to have short legs, so that body came out too long. The model of 2022 gives just under 14 m, though some museum texts still give 18 m."
     },
     {
      "term": "15 m and 50 feet",
@@ -470,7 +470,7 @@
    "items": [
     {
      "q": "How tall was Spinosaurus?",
-     "a": "Our young one: the top of the sail about 3.5 m (11.5 ft), the head about 3 m (9.7 ft) in its pose. Its hip joint sits about 1.6 m (5.2 ft) up. For adults no hip height is published, only that T. rex stood higher at the hips."
+     "a": "Our young one: the top of the sail about 3.5 m (11.5 ft), the head about 3 m (10 ft) in its pose. Its hip joint sits about 1.6 m (5.2 ft) up. For adults no hip height is published, only that T. rex stood higher at the hips."
     },
     {
      "q": "Was Spinosaurus the biggest dinosaur?",
@@ -536,7 +536,7 @@
      "href": "https://doi.org/10.1126/science.adx5486"
     },
     {
-     "text": "Ibrahim and others, 2014, Science, with its supplement.",
+     "text": "Ibrahim and others, 2014, Science (read in summary), with its supplement.",
      "href": "https://doi.org/10.1126/science.1258750"
     },
     {

@@ -552,7 +552,7 @@
         },
         "line": {
           "en": "A large adult was about 12 m long, about 4 m at the hips and roughly 8 to 9 tonnes. Our T. rex is built to SUE's measurements and stands beside a person to one scale, with a list of what was found of SUE.",
-          "de": "Ein großer erwachsener T. rex war etwa 12 m lang, an der Hüfte etwa 4 m hoch und kam auf grob 8 bis 9 t. Unser T. rex ist nach SUE gebaut und steht im selben Maßstab neben einem Menschen, dazu eine Liste dessen, was von SUE gefunden wurde."
+          "de": "Ein großer erwachsener T. rex war etwa 12 m lang, an der Hüfte etwa 4 m hoch und kam auf rund 8 bis 9 t. Unser T. rex ist nach SUE gebaut und steht im selben Maßstab neben einem Menschen, dazu eine Liste dessen, was von SUE gefunden wurde."
         },
         "langs": [
           "en",
@@ -605,7 +605,7 @@
             "no T. rex was ever weighed: a weight here is a study's estimate"
           ],
           [
-            "(?<![\\d.,])(?<!\\d to )(?<!\\d bis )(?<!\\d or )(?<!\\d oder )\\b9\\s*(?:t|tonnes?|tons?|tonnen)\\b",
+            "(?<![\\d.,])(?<!\\d to )(?<!\\d bis )(?<!\\d or )(?<!\\d oder )(?<!\\d\\stonnes, )(?<!close to )(?<!knapp )\\b9\\s*(?:t|tonnes?|tons?|tonnen)\\b",
             "never 9 tonnes flat: about 8 to 9 tonnes"
           ],
           [
@@ -693,7 +693,7 @@
         },
         "line": {
           "en": "The largest adult Spinosaurus were just under 14 m long and about 7.4 tonnes, by a model. Our Spinosaurus is a young one of about 10 m and stands to one scale beside a person and beside our T. rex.",
-          "de": "Die größten erwachsenen Spinosaurus waren knapp unter 14 m lang und etwa 7,4 t schwer, nach einem Modell. Unser Spinosaurus ist ein junges Tier von etwa 10 m und steht im selben Maßstab neben einem Menschen und neben unserem T. rex."
+          "de": "Die größten erwachsenen Tiere waren knapp unter 14 m lang und etwa 7,4 t schwer, nach einem Modell. Unser Spinosaurus ist ein junges Tier von etwa 10 m und steht im selben Maßstab neben einem Menschen und neben unserem T. rex."
         },
         "langs": ["en", "de"],
         "count": "spinosaurus",
@@ -758,7 +758,7 @@
             "no full grown or nearly complete skeleton is known"
           ],
           [
-            "(?s)^(?!.*(?:longest\\smeat-eating|längste\\sbekannte\\sfleischfresser)).*(?:(?:largest|biggest)\\s(?:predator|predatory\\sdinosaur|meat-eater|carnivore)|größte[rn]?\\s(?:raubsaurier|räuber|fleischfresser))",
+            "(?s)^(?!.*(?:longest\\smeat-eating|längste\\sbekannte\\sfleischfresser)).*(?:(?:largest|biggest)\\s(?:predator|predatory\\sdinosaur|meat-eater|carnivore)|größte[rns]?\\s(?:raubsaurier|raubtier|räuber|fleischfresser))",
             "the longest meat-eating dinosaur known, never the largest predator"
           ],
           [

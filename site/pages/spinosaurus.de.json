@@ -143,8 +143,8 @@
  },
  "top": {
   "h1": "Wie groß war der Spinosaurus?",
-  "answer": "Die größten erwachsenen Exemplare von Spinosaurus aegyptiacus waren knapp unter 14 m lang und etwa 7,4 t schwer, nach einem Modell von 2022. Ein ganzes Skelett hat niemand gefunden. Unser Spinosaurus ist ein junges Tier von etwa 10 m, etwa drei Viertel der vollen Größe, nach einem Modell etwa 3 bis 4 t. Neben dem Menschen von 1,70 m liegt sein Hüftgelenk etwa auf Höhe des Scheitels, und er ist fast sechs Menschen lang.",
-  "answer_more": "Verglichen mit T. rex war der größte Spinosaurus länger, aber sehr wahrscheinlich leichter und an der Hüfte viel niedriger. Begegnet sind sich die beiden nie, etwa 30 Millionen Jahre und zwei Kontinente lagen dazwischen.",
+  "answer": "Die größten erwachsenen Exemplare von Spinosaurus aegyptiacus waren knapp unter 14 m lang und etwa 7,4 t schwer, nach einem Modell von 2022. Ein ganzes Skelett hat niemand gefunden. Unser Spinosaurus ist ein junges Tier von etwa 10 m, etwa drei Viertel der vollen Größe und nach einem Modell etwa 3 bis 4 t schwer. Neben dem Menschen von 1,70 m liegt sein Hüftgelenk etwa auf Höhe des Scheitels, und er ist fast sechs Menschen lang.",
+  "answer_more": "Verglichen mit T. rex war der größte Spinosaurus länger, aber wahrscheinlich leichter und an der Hüfte viel niedriger. Begegnet sind sich die beiden nie: Etwa 30 Millionen Jahre und zwei Kontinente lagen dazwischen.",
   "scale": {
    "pic": "side",
    "tag": "tag_made",
@@ -168,7 +168,7 @@
    "close": {
     "pic": "close",
     "tag": "tag_made",
-    "what": "Kopf und Vorderkörper aus der Nähe, mit dem Menschen. Die Schnauze ist lang und schmal, die Zähne sind Kegel ohne Sägekante, die Nasenlöcher sitzen weit hinten. Der niedrige Kamm vor den Augen ist sicher, seine Höhe nicht: Seine Oberkante ist an jedem gefundenen Stück abgebrochen. Die Lippen sind eine Wahl, kein Fund.",
+    "what": "Kopf und Vorderkörper aus der Nähe, mit dem Menschen. Die Schnauze ist lang und schmal, die Zähne sind Kegel ohne Sägekante, die Nasenlöcher sitzen weit hinten. Der niedrige Kamm vor den Augen ist sicher, seine Höhe nicht: Seine Oberkante ist an jedem gefundenen Stück abgebrochen. Die Lippen sind unsere Annahme, kein Fund.",
     "alt": "Kopf und Vorderkörper des Spinosaurus aus der Nähe, die lange schmale Schnauze mit Kegelzähnen, ein niedriger Kamm vor dem Auge, daneben der graue Mensch."
    }
   },
@@ -252,12 +252,12 @@
    "nav": "Spinosaurus gegen T. rex, nur die Größe",
    "h": "Spinosaurus gegen T. rex, nur die Größe",
    "paras": [
-    "Der größte Spinosaurus war länger als jeder T. rex: knapp unter 14 m nach einem Modell, gegen etwa 12 m für das Skelett von SUE. Schwerer war er sehr wahrscheinlich nicht, etwa 7,4 bis 8 t im Modell gegen etwa 8 bis 9 t bei den größten bekannten T. rex. An der Hüfte stand er viel niedriger. Der Oberschenkelknochen des jungen Tiers aus Marokko misst 61 cm, der von SUE 1,32 m, und selbst der eines erwachsenen Tiers wäre hochgerechnet nur etwa 80 cm lang. Begegnet sind sich die beiden nie, Spinosaurus lebte vor etwa 95 Millionen Jahren in Nordafrika, T. rex vor etwa 68 bis 66 Millionen Jahren in Nordamerika."
+    "Der größte Spinosaurus war länger als jeder bisher gefundene T. rex: knapp unter 14 m nach einem Modell, gegen etwa 12 m für das Skelett von SUE. Schwerer war er wahrscheinlich nicht, etwa 7,4 bis 8 t im Modell gegen etwa 8 bis 9 t bei den größten bekannten T. rex. An der Hüfte stand er viel niedriger. Der Oberschenkelknochen des jungen Tiers aus Marokko misst 61 cm, der von SUE 1,32 m. Begegnet sind sich die beiden nie: Spinosaurus lebte vor etwa 95 Millionen Jahren in Nordafrika, T. rex vor etwa 68 bis 66 Millionen Jahren in Nordamerika."
    ],
    "scale": {
     "pic": "vs",
     "tag": "tag_made",
-    "what": "Unser Spinosaurus und unser T. rex, im selben Maßstab. Unser Spinosaurus ist ein junges Tier von etwa 10 m, unser T. rex nach SUE ein großes erwachsenes Tier von etwa 11,4 m, darum ist hier der T. rex der längere. Ein erwachsener Spinosaurus war länger als jeder T. rex, sehr wahrscheinlich leichter und an der Hüfte viel niedriger.",
+    "what": "Unser Spinosaurus und unser T. rex, im selben Maßstab. Unser Spinosaurus ist ein junges Tier von etwa 10 m, unser T. rex nach SUE ein großes erwachsenes Tier von etwa 11,4 m, darum ist hier der T. rex der längere. Ein erwachsener Spinosaurus war länger als jeder bisher gefundene T. rex, wahrscheinlich leichter und an der Hüfte viel niedriger.",
     "alt": "Ein Spinosaurus mit Rückensegel und ein etwas längerer T. rex mit erhobenem Kopf, beide von der Seite, der T. rex an der Hüfte etwa doppelt so hoch, daneben der graue Mensch.",
     "marks": [
      {
@@ -296,13 +296,13 @@
     {
      "h": "Der Schwanz",
      "paras": [
-      "Der Schwanz war tief und seitlich abgeflacht, wie ein Blatt: hohe Dornfortsätze oben, lange Knochen unten. Das wissen wir von den eigenen Schwanzknochen des Tiers aus Marokko. Wozu er diente, ist umstritten: zum Schwimmen oder zur Schau."
+      "Der Schwanz war tief und seitlich abgeflacht, wie eine Klinge: hohe Dornfortsätze oben, lange Knochen unten. Das wissen wir von den eigenen Schwanzknochen des Tiers aus Marokko. Wozu er diente, ist umstritten: zum Schwimmen oder zum Imponieren."
      ]
     },
     {
      "h": "Das Segel",
      "paras": [
-      "Die Dornfortsätze sind bekannt, der höchste an Stromers Skelett etwa 1,65 m Knochen. Die Form des Segels darüber kennt niemand. Am wahrscheinlichsten spannte sich eine dünne Haut über die Dornen, und die führende Deutung sieht im Segel ein Schauorgan."
+      "Die Dornfortsätze sind bekannt, der höchste an Stromers Skelett etwa 1,65 m Knochen. Die Form des Segels darüber kennt niemand. Am wahrscheinlichsten spannte sich eine dünne Haut über die Dornen, und meist wird das Segel als Schauorgan gedeutet."
      ]
     },
     {
@@ -319,7 +319,7 @@
    "nav": "Spinosaurus und das Wasser",
    "h": "Spinosaurus und das Wasser",
    "paras": [
-    "Er lebte am Wasser und fraß Fisch, das zeigen seine Zähne und die Isotope darin. Ob er den Fischen schwimmend nachjagte oder ihnen watend im Flachwasser auflauerte, ist umstritten. Für das Schwimmen sprechen der tiefe Schwanz von 2020 und die dichten Knochen in einer Studie von 2022. Für das Waten sprechen die meisten Arbeiten seit 2021. Nach Modellrechnungen hatte er zu viel Auftrieb, um zu tauchen, die Schädelform passt zu Lauerjägern, und die Knochendichte-Methode wurde 2024 als unzuverlässig kritisiert. Die Museen halten die Frage offen, wir auch."
+    "Er lebte am Wasser und fraß Fisch, darauf weisen seine Zähne und die Isotope darin hin. Ob er den Fischen schwimmend nachjagte oder ihnen watend im Flachwasser auflauerte, ist umstritten. Für das Schwimmen sprechen der tiefe Schwanz von 2020 und die dichten Knochen in einer Studie von 2022. Für das Waten sprechen die meisten Arbeiten seit 2021. Nach Modellrechnungen hatte er zu viel Auftrieb, um zu tauchen, die Schädelform passt zu Lauerjägern, und die Knochendichte-Methode wurde 2024 als unzuverlässig kritisiert. Die Museen halten die Frage offen, wir auch."
    ]
   },
   {
@@ -331,7 +331,7 @@
     {
      "h": "Stromers Skelett",
      "paras": [
-      "Im Herbst 1912 kamen in der Bahariya-Oase in Ägypten die ersten Knochen zutage. Es waren die vordere Hälfte des Unterkiefers, 72 cm lang, und Rücken-, Hüft- und Schwanzwirbel mit den hohen Dornfortsätzen des Segels. Stromer beschrieb sie 1915 und nannte das Tier nach diesen Dornen Spinosaurus. Das Skelett stand in München und wurde 1944 bei einem Bombenangriff zerstört. Geblieben sind Stromers Notizen, Zeichnungen und ein paar Fotos. In München liegt heute ein Spinosaurus-Zahn, kein Skelett."
+      "Im Herbst 1912 kamen in der Bahariya-Oase in Ägypten die ersten Knochen zutage. Es waren die vordere Hälfte des Unterkiefers, 72 cm lang, und Rücken-, Hüft- und Schwanzwirbel mit den hohen Dornfortsätzen des Segels. Stromer beschrieb sie 1915 und nannte das Tier nach diesen Dornen Spinosaurus. Das Skelett war in München ausgestellt und wurde 1944 bei einem Bombenangriff zerstört. Geblieben sind Stromers Notizen, Zeichnungen und ein paar Fotos. In München liegt heute ein Spinosaurus-Zahn, kein Skelett."
      ]
     },
     {
@@ -377,7 +377,7 @@
     "key": [
      {
       "swatch": "own",
-      "text": "Dunkelrot: die eigenen Knochen des jungen Tiers aus Marokko, die Hüfte, beide Beine, der Fuß und der Schwanz bis zum 41. Wirbel, davon mehr als 30 Wirbel gefunden."
+      "text": "Dunkelrot: die eigenen Knochen des jungen Tiers aus Marokko, die Hüfte, beide Beine, der Fuß und der Schwanz bis zum 41. Wirbel, davon mehr als 30 gefunden, die Lücken mitgefärbt."
      },
      {
       "swatch": "stromer",
@@ -406,11 +406,11 @@
       ],
       [
        "Das Gewicht kommt aus einem Körpermodell:",
-       "Man baut Fleisch um das Skelett, misst das Volumen und rechnet mit einer Dichte. Bei Spinosaurus ändert allein die angenommene Luft in Hals und Rumpf das Ergebnis um etwa 600 kg."
+       "Man legt im Rechner Fleisch um das Skelett, misst das Volumen und rechnet mit einer Dichte. Bei Spinosaurus ändert allein die angenommene Luft in Hals und Rumpf das Ergebnis um etwa 600 kg."
       ],
       [
        "Unser Tier ist nicht die Art:",
-       "Es ist ein junges Tier, und seine Zahlen sind seine. Darum stehen hier drei Zahlen getrennt: unser Tier, die größten erwachsenen Tiere nach dem Modell und Stromers Skelett."
+       "Es ist ein junges Tier, und seine Zahlen gelten nur für dieses Tier. Darum stehen hier drei Zahlen getrennt: unser Tier, die größten erwachsenen Tiere nach dem Modell und Stromers Skelett."
       ]
      ]
     }
@@ -425,7 +425,7 @@
    "rows": [
     {
      "term": "18 m",
-     "text": "Das obere Ende einer Spanne von 2005, 16 bis 18 m: ein ganzer Körper, um die große Schnauze aus Mailand gezeichnet, mit dem Körperbau eines langbeinigen Verwandten. Spinosaurus hatte aber kurze Beine, der Körper war also zu lang geraten. Das Modell von 2022 kommt auf knapp unter 14 m, auch wenn manche Museumstexte bis heute 18 m angeben."
+     "text": "Das obere Ende einer Spanne von 2005, 16 bis 18 m: ein ganzer Körper, um die große Schnauze aus Mailand gezeichnet, mit dem Körperbau eines langbeinigen Verwandten. Die genaue Spanne der Studie haben wir nicht selbst gelesen. Spinosaurus hatte aber kurze Beine, der Körper war also zu lang geraten. Das Modell von 2022 kommt auf knapp unter 14 m, auch wenn manche Museumstexte bis heute 18 m angeben."
     },
     {
      "term": "15 m",
@@ -440,8 +440,8 @@
      "text": "Die Zahl des heutigen Modells für die größten erwachsenen Tiere, etwa 7,4 t. Für unser junges Tier gilt sie nicht, es kommt auf etwa 3 bis 4 t."
     },
     {
-     "term": "Der größte Raubsaurier aller Zeiten",
-     "text": "Nein. Spinosaurus ist der längste bekannte Fleischfresser unter den Dinosauriern. Im Meer war der Megalodon mit etwa 16 m länger. Schwerer war sehr wahrscheinlich T. rex, und an der Hüfte stand er sicher höher."
+     "term": "Das größte Raubtier aller Zeiten",
+     "text": "Nein. Spinosaurus ist der längste bekannte Fleischfresser unter den Dinosauriern. Im Meer war der Megalodon mit etwa 16 m länger. Schwerer war wahrscheinlich T. rex, und an der Hüfte stand er sicher höher."
     },
     {
      "term": "Er ging auf vier Beinen",
@@ -536,7 +536,7 @@
      "href": "https://doi.org/10.1126/science.adx5486"
     },
     {
-     "text": "Ibrahim und andere, 2014, Science, mit dem Ergänzungsband.",
+     "text": "Ibrahim und andere, 2014, Science (in der Kurzfassung gelesen), mit dem Ergänzungsband.",
      "href": "https://doi.org/10.1126/science.1258750"
     },
     {
