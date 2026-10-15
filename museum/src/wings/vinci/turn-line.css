@@ -1,5 +1,5 @@
 /* THE TURN LINE: the door's quiet size, no box; it only ever stands on the
-   upright glass, a step brighter than the quiet words, a turning sign before it. */
+   upright glass, in the wing's gold, a turning sign before it. */
 
 .turn-line {
   margin: 8px 0 0;
@@ -12,7 +12,7 @@
 }
 .turn-line[data-gone] { opacity: 0; }
 @media (max-aspect-ratio: 9/10) {
-  .turn-line { color: var(--na-starlight); }
+  .turn-line { color: var(--na-gold); }
   .turn-line::before { content: '\21BB'; color: var(--na-gold); margin-right: .35em; font-size: 1.1em; line-height: 0; }
 }
 @media not all and (max-aspect-ratio: 9/10) { .turn-line { display: none; } }
