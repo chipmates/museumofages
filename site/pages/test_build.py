@@ -1548,6 +1548,8 @@ class Case(unittest.TestCase):
     def test_a_scientific_name_is_set_in_italics(self):
         names = json.loads((self.dir / "names.json").read_text(encoding="utf-8"))["names"]
         taxa = [n["text"] for n in names if n.get("taxon")]
+        # a genus alone is one word: nothing to hold on one line, so it is only never hyphenated, as on a page that joins
+        single = {n["text"] for n in names if n.get("taxon") and not n.get("whole")}
         if not taxa:
             self.skipTest("no scientific name on the list")
         out, written = self.build()
@@ -1558,7 +1560,7 @@ class Case(unittest.TestCase):
             for name in taxa:
                 if name in self.words(own).replace("\u00a0", " "):
                     found += 1
-                    if data["page"].get("join_names"):
+                    if data["page"].get("join_names") or name in single:
                         joined = html.escape(name, quote=False).replace(" ", "\u00a0")
                         self.assertIn(f'<i class="nh">{joined}</i>', own)
                     else:
@@ -1808,7 +1810,7 @@ class Case(unittest.TestCase):
             least = 2 if self.making(data) else 3
             self.assertGreaterEqual(len(re.findall(r'<span class="nw">%s' % re.escape(html.escape(name)), own)), least)
             loose = re.sub(r'<span class="nw">[^<]*</span>', " ", own)
-            self.assertNotIn(name, self.words(loose))
+            self.assertNotRegex(self.words(loose), r"(?<!\w)%s(?:'s|’s|s)?(?!\w)" % re.escape(name))
 
     def test_a_name_never_breaks_for_any_wing(self):
         cases = {
