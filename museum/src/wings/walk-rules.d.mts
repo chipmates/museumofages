@@ -1,6 +1,6 @@
-export type WalkLayer = 'look' | 'drawer' | 'none'
+export type WalkLayer = 'panel' | 'look' | 'drawer' | 'none'
 export type WalkMotion = 'rest' | 'moving' | 'held'
-export type WalkAction = 'look-back' | 'drawer-close' | 'pause' | 'resume' | 'hurry' | 'back' | 'hint' | 'none' | 'pass'
+export type WalkAction = 'panel-close' | 'panel' | 'look-back' | 'drawer-close' | 'pause' | 'resume' | 'hurry' | 'back' | 'hint' | 'none' | 'pass'
 export function walkKey(at: { key: string; repeat?: boolean; layer: WalkLayer; walk: WalkMotion; onControl?: boolean }): WalkAction
 
 export type WalkTip = 'keys' | 'sideways' | 'plan' | 'look'

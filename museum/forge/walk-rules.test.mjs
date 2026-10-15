@@ -1,6 +1,7 @@
 // The walk's key and tip rules (src/wings/walk-rules.mjs): Escape backs out one
 // level and never moves the eye on or up; while the eye walks, Escape and Space
-// hold it where it is; the tips come one a walk, each once, four at most.
+// hold it where it is; the museum's panel, open over a held walk, keeps the
+// hold; the tips come one a walk, each once, four at most.
 import { test } from 'node:test'
 import assert from 'node:assert/strict'
 import { TIPS, TIPS_MOST, nextTip, walkKey } from '../src/wings/walk-rules.mjs'
@@ -58,6 +59,22 @@ test('W, A, S and D are told what the walk answers instead, never over a layer',
     assert.equal(key(k, { layer: 'look' }), 'pass')
   }
   for (const k of ['q', 'x', 'Enter', 'Tab']) assert.equal(key(k), 'pass')
+})
+
+test('the panel stands over every layer: Escape shuts it first, at rest, moving or held', () => {
+  for (const walk of ['rest', 'moving', 'held']) {
+    assert.equal(key('Escape', { layer: 'panel', walk }), 'panel-close')
+    assert.equal(key('Escape', { layer: 'panel', walk, repeat: true }), 'panel-close')
+  }
+})
+
+test('a walk held under the open panel stays held: no key behind the panel frees, hurries or turns it', () => {
+  for (const k of [' ', 'Spacebar', 'ArrowRight', 'ArrowDown', 'ArrowLeft', 'ArrowUp', 'd', 'Enter']) {
+    for (const walk of ['rest', 'moving', 'held']) assert.equal(key(k, { layer: 'panel', walk }), 'panel')
+  }
+  // the panel shut, the next Escape holds nothing more and moves nothing: the hold stands
+  assert.equal(key('Escape', { walk: 'held' }), 'none')
+  assert.equal(key(' ', { walk: 'held' }), 'resume')
 })
 
 test('the tips: the keys first, then sideways on an upright phone, the plan, a close look while none was opened', () => {

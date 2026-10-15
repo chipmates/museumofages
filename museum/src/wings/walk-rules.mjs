@@ -3,16 +3,19 @@
 // the rules are tested without a page (forge/walk-rules.test.mjs).
 
 /**
- * What a key asks of the walk. `layer` is what stands over the picture: a
- * close look, a drawer, or nothing; `walk` is the eye at rest, moving or held.
- * Escape backs out one level and never moves the eye on or up: over a layer it
- * shuts that layer, while the eye moves it holds the walk, and otherwise it
- * does nothing. Space holds and frees a walk as a video's does. 'pass' leaves
- * the key to the handlers that answered it before.
- * @param {{ key: string, repeat?: boolean, layer: 'look' | 'drawer' | 'none', walk: 'rest' | 'moving' | 'held', onControl?: boolean }} at
- * @returns {'look-back' | 'drawer-close' | 'pause' | 'resume' | 'hurry' | 'back' | 'hint' | 'none' | 'pass'}
+ * What a key asks of the walk. `layer` is what stands over the picture: the
+ * museum's panel, a close look, a drawer, or nothing; `walk` is the eye at
+ * rest, moving or held. Escape backs out one level and never moves the eye on
+ * or up: over a layer it shuts that layer, while the eye moves it holds the
+ * walk, and otherwise it does nothing. Space holds and frees a walk as a
+ * video's does. 'pass' leaves the key to the handlers that answered it before;
+ * 'panel' leaves it to the panel, and nothing behind it moves.
+ * @param {{ key: string, repeat?: boolean, layer: 'panel' | 'look' | 'drawer' | 'none', walk: 'rest' | 'moving' | 'held', onControl?: boolean }} at
+ * @returns {'panel-close' | 'panel' | 'look-back' | 'drawer-close' | 'pause' | 'resume' | 'hurry' | 'back' | 'hint' | 'none' | 'pass'}
  */
 export function walkKey({ key, repeat = false, layer, walk, onControl = false }) {
+  // the panel stands over everything, a held walk included: Escape shuts it and the hold stays
+  if (layer === 'panel') return key === 'Escape' ? 'panel-close' : 'panel'
   if (key === 'Escape') {
     if (layer === 'look') return 'look-back'
     if (layer === 'drawer') return 'drawer-close'

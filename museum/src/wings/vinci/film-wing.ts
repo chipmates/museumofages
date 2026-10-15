@@ -1439,12 +1439,16 @@ export function createWing(): WingModule {
       if (document.querySelector('dialog[open]')) return
       const target = e.target instanceof Element ? e.target : document.body
       if (target.closest('input,textarea,select')) return
-      if (look?.id && look.key(e)) { e.preventDefault(); return }
+      // the museum's panel stands over a look too: its keys are its own, wherever the focus fell
+      const panelOpen = document.getElementById('instruments')?.hidden === false
+      if (!panelOpen && look?.id && look.key(e)) { e.preventDefault(); return }
       /* ESCAPE BACKS OUT ONE LEVEL AND NEVER MOVES THE EYE ON OR UP; while the
          eye walks, Escape and Space hold it where it is (walk-rules.mjs) */
-      const layer = look?.id ? 'look' : wing.dataset['drawer'] === 'open' || drawerOpen ? 'drawer' : 'none'
+      const layer = panelOpen ? 'panel' : look?.id ? 'look' : wing.dataset['drawer'] === 'open' || drawerOpen ? 'drawer' : 'none'
       const action = walkKey({ key: e.key, repeat: e.repeat, layer, walk: walkMotion(), onControl: Boolean(target.closest('button,a,[role="button"]')) })
+      if (action === 'panel') return
       if (action !== 'pass' && action !== 'hint') e.preventDefault()
+      if (action === 'panel-close') { document.querySelector<HTMLElement>('#instruments .inst-close')?.click(); return }
       if (action === 'look-back') {
         lookStaying = true
         try { look?.close() } finally { lookStaying = false }

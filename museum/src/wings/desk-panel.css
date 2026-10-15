@@ -48,11 +48,12 @@
 :root[data-na-panel='wing']:has(#wing[data-desk~='closelook'] .desk-clb) #rail-instruments {
   bottom: calc(var(--desk-clb-h, 224px) - 46px);
 }
-/* NOTHING CALLS A VISITOR OUT OF THE WALK. The museum's control leaves with
-   the words and comes back with them, so a leg has the gold control and the
-   way back and nothing else; it leaves the tab order too, so no key opens
-   it unseen. Risen into an open sheet it is that sheet's close and stays. */
-:root:has(#wing[data-walking][data-desk~='panel']) #rail > #rail-instruments {
+/* NOTHING CALLS A VISITOR OUT OF A MOVING WALK. The museum's control leaves
+   while the eye moves, so a leg has the gold control, the hold and the way
+   back and nothing else; it leaves the tab order too, so no key opens it
+   unseen. A held walk has it back: the panel opens over the held frame, and
+   the hold outlasts it. Risen into an open sheet it is that sheet's close. */
+:root:has(#wing[data-walking]:not([data-walk='held'])[data-desk~='panel']) #rail > #rail-instruments {
   opacity: 0;
   visibility: hidden;
   pointer-events: none;
