@@ -40,7 +40,7 @@ export interface WalkPanelHost {
 export interface WalkPanel {
   /** the words' place while the eye walks: where to, the tip, the skip */
   readonly element: HTMLElement
-  /** the hold, which the form stands beside its gold */
+  /** the hold, which the form stands beside its gold (a phone's form shows it while the walk moves) */
   readonly hold: HTMLButtonElement
   /** a walk began; `toStop` a walk between stops, which may carry a tip */
   began(toStop: boolean): void
@@ -93,13 +93,15 @@ function markHint(): void {
 const bindKeys = (text: string): string => text.replace(/([←→‖]) /g, '$1\u00a0')
 
 /* A TIP OR HINT THAT WRAPS BREAKS BETWEEN ITS SENTENCES: each sentence is a
-   box of its own, so a narrow place never ends a row on "Or" */
+   box of its own, so a narrow place never ends a row on "Or". A sign stands
+   in a column of its own before the words, so a wrapped row starts under the
+   words and not under the sign. */
 function sentences(into: HTMLElement, text: string, sign?: SVGSVGElement): void {
+  const words = sign ? make('span', 'walk-tip-words') : into
+  if (sign) into.append(sign, words)
   text.split(/(?<=[.?!…])\s+(?=\S)/u).forEach((sentence, i) => {
-    const part = make('span', 'walk-tip-part', sentence)
-    if (i === 0 && sign) part.prepend(sign)
-    if (i) into.append(' ')
-    into.append(part)
+    if (i) words.append(' ')
+    words.append(make('span', 'walk-tip-part', sentence))
   })
 }
 
@@ -168,12 +170,28 @@ export function createWalkPanel(host: WalkPanelHost, signal: AbortSignal): WalkP
     return host.sideways() ?? ''
   }
   function paintTip(): void {
+    /* HELD, THE TIP'S ROW NAMES THE STATE, so it is no empty gap; a hint asked
+       meanwhile stands there for its seconds. After the hold the row keeps its
+       room unseen, so nothing moves when the walk goes on. */
+    if (walking && host.held() && tipNow !== 'hint') {
+      // the row keeps the height the tip had, so nothing over it moves
+      if (!tip.hidden && tip.dataset['held'] === undefined) tip.style.minHeight = `${tip.offsetHeight}px`
+      tip.textContent = say(WALK_WORDS.paused)
+      tip.lang = langTag(lang())
+      tip.dataset['tip'] = 'paused'
+      tip.dataset['held'] = ''
+      tip.dataset['gone'] = ''
+      tip.hidden = false
+      return
+    }
+    delete tip.dataset['held']
     // a tip a press took away keeps its room, unseen, until the walk ends
     if (!tipNow && tip.dataset['gone'] !== undefined) return
     tip.textContent = ''
+    tip.style.minHeight = ''
     if (!tipNow) { tip.hidden = true; return }
     delete tip.dataset['gone']
-    // the turn's tip carries the turning phone before its words, in their first box
+    // the turn's tip carries the turning phone before its words
     sentences(tip, tipWords(tipNow), tipNow === 'sideways' ? icon(TURN_ICON, 'walk-ic walk-turn') : undefined)
     tip.lang = langTag(lang())
     tip.dataset['tip'] = tipNow
@@ -200,7 +218,7 @@ export function createWalkPanel(host: WalkPanelHost, signal: AbortSignal): WalkP
   }
   /* A PRESS ANYWHERE TAKES THE TIP AND THE HINT AWAY, after the press that
      brought the hint: the next one, not this one */
-  const pressed = (): void => { if (tipNow) fadeTip(); clearRestHint() }
+  const pressed = (): void => { if (tipNow) { fadeTip(); paintTip() } clearRestHint() }
   addEventListener('pointerdown', pressed, { capture: true, signal })
   addEventListener('keydown', e => { if (!/^[wasd]$/i.test(e.key)) pressed() }, { capture: true, signal })
 
@@ -249,7 +267,7 @@ export function createWalkPanel(host: WalkPanelHost, signal: AbortSignal): WalkP
         if (tipNow && tipNow !== 'hint') unmarkTip(tipNow)
         tipNow = 'hint'
         paintTip()
-        hintTimer = window.setTimeout(() => { if (tipNow === 'hint') fadeTip() }, HINT_MS)
+        hintTimer = window.setTimeout(() => { if (tipNow === 'hint') { fadeTip(); paintTip() } }, HINT_MS)
         return
       }
       /* AT REST THE HINT STANDS IN THE LINE'S PLACE for its few seconds, so one

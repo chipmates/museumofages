@@ -22,9 +22,14 @@
 .walk-tip { transition: opacity 160ms ease; }
 .walk-tip-part { display: inline-block; }
 .walk-tip[data-gone] { opacity: 0; visibility: hidden; }
+/* held, the row says so in the tip's own quiet type */
+.walk-tip[data-held] { opacity: 1; visibility: visible; }
 .walk-ic { width: 16px; height: 16px; display: block; fill: none; stroke: currentColor; stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; }
 .walk-hold[data-held='true'] .walk-ic { fill: currentColor; stroke-width: 1.2; }
-.walk-tip .walk-turn { display: inline-block; width: 18px; height: 18px; margin: 0 .4em -3px 0; color: var(--na-gold); }
+/* a sign before the words stands in its own column, in the words' colour: the one gold control stays the way on */
+.walk-tip[data-tip='sideways'] { display: flex; align-items: flex-start; gap: .45em; }
+.walk-tip-words { min-width: 0; }
+.walk-tip .walk-turn { flex: none; width: 18px; height: 18px; margin-top: 1px; color: currentColor; }
 .walk-skip {
   position: relative;
   display: inline-flex;
@@ -73,7 +78,16 @@
 .desk-low > .walk-panel .walk-to-name { font-size: 1.375rem; line-height: 1.75rem; }
 .desk-low > .walk-panel .walk-tip { margin-top: 4px; }
 .desk-low > .walk-panel .walk-ways { margin-top: 2px; }
+/* ON THE BAND THE PANEL KEEPS THE WORDS' LADDER: where to on the first row,
+   where the stop's name stands at rest, the tip in the line's rows, and the
+   skip on the reading row's foot line beside the ways */
+#wing[data-desk~='stage'] .desk-low > .walk-panel { top: var(--desk-band-air, 16px); bottom: var(--desk-band-foot, 9px); }
+#wing[data-desk~='stage'] .desk-low > .walk-panel .walk-ways { margin-top: auto; }
 #wing[data-walk] .desk-cap { opacity: 0; pointer-events: none; }
+/* the hold takes its room from the words' place, empty while the eye walks:
+   the words keep their width there, so the band and the picture keep their
+   height (the hold's 56 px and the ways' 12 px gap) */
+#wing[data-walk] .desk-low > .desk-cap { margin-right: -68px; }
 .desk-ways > .walk-hold {
   width: 56px;
   height: 56px;
@@ -88,8 +102,6 @@
 }
 #wing[data-walk] .desk-ways > .walk-hold { display: grid; }
 .desk-ways > .walk-hold:hover { box-shadow: inset 0 0 0 1px var(--ui-text); }
-/* held, the way back answers at full strength: it returns to the stop the walk left */
-#wing[data-walk='held'] .desk-back { opacity: 1; }
 @media (prefers-reduced-motion: reduce) {
   .walk-tip, .walk-hint-rest { transition: none; }
 }
