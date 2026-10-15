@@ -1352,7 +1352,9 @@ def head_values(c, kind, title, description, canon, twins, og_title, share, shar
     noindex = HIDDEN or c.mark or not index or c.lang not in LISTED
     rest = f'<link rel="stylesheet" href="{c.static}site.css" media="print" id="rest">{REST_SCRIPT}\n' if deferred else ""
     return {
-        "head.csp": CSP_MARK, "head.robots": '<meta name="robots" content="noindex">\n' if noindex else "",
+        # an indexed page lets search show its pictures large in a result
+        "head.csp": CSP_MARK, "head.robots": '<meta name="robots" content="noindex">\n' if noindex
+        else '<meta name="robots" content="max-image-preview:large">\n',
         "head.preload": preload, "head.title": esc(title), "head.description": esc(description),
         "head.rest_noscript": f'<link rel="stylesheet" href="{c.static}site.css">' if deferred else "", "head.rest_link": rest,
         "head.canonical": canon, "head.alternates": alternates(c, kind, twins),

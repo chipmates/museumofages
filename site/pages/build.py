@@ -1719,7 +1719,8 @@ def render(page, lang, data, shared, out_root):
         "og_locale": L.entries[lang]["og"],
         "html.og_alternates": "".join(f'<meta property="og:locale:alternate" content="{L.entries[x]["og"]}">\n'
                                       for x in LISTED if x != lang and x in own) if len(LISTED) > 2 else "",
-        "html.robots": "" if lang in LISTED else '<meta name="robots" content="noindex">\n',
+        # an indexed page lets search show its pictures large in a result
+        "html.robots": '<meta name="robots" content="max-image-preview:large">\n' if lang in LISTED else '<meta name="robots" content="noindex">\n',
         # a page of a wing in the making leaves a click number in its address, so its links send only the site's origin
         "html.referrer": '<meta name="referrer" content="strict-origin-when-cross-origin">\n' if making(wing) else "",
         "html.alternates": alternates(lang, urls),
