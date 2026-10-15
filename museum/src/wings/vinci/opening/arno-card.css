@@ -358,6 +358,9 @@
 .arno-card[data-form='cinema'][data-label='open'] { --arno-col: clamp(320px, 50vw, 460px); }
 .arno-card[data-form='cinema'][data-label='open'][data-room='wider'] { --arno-col: clamp(340px, 56vw, 520px); }
 .arno-card[data-form='cinema'][data-label='open'][data-room='widest'] { --arno-col: clamp(360px, 62vw, 580px); }
+/* closed, the column widens only where the smallest step still runs into the gold */
+.arno-card[data-form='cinema']:not([data-label='open'])[data-room='wider'] { --arno-col: clamp(300px, 38vw, 340px); }
+.arno-card[data-form='cinema']:not([data-label='open'])[data-room='widest'] { --arno-col: clamp(340px, 46vw, 380px); }
 /* the widest room gives up the air over the label and around the credit too */
 .arno-card[data-form='cinema'][data-label='open'][data-room='widest'] .arno-band { padding-top: var(--arno-st); }
 .arno-card[data-form='cinema'][data-label='open'][data-room='widest'] .arno-credit { margin-top: 0; }

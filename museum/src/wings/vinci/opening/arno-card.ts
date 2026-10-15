@@ -213,14 +213,18 @@ export async function openArnoCard(host: HTMLElement, options: ArnoCardOptions =
       return
     }
     if (label.hidden) {
-      delete card.dataset['room']
       const whole = (): boolean => credit.getBoundingClientRect().bottom <= start.getBoundingClientRect().top - SIDE_AIR
       // the words take their step without the language's row; the row then stands only where the column still holds it
       card.dataset['languageRow'] = 'off'
-      for (const step of SIDE_STEPS) {
-        if (step) card.dataset['step'] = step
-        else delete card.dataset['step']
-        if (whole()) break
+      // where no step stands whole on a short glass, the column widens and the steps run again
+      rooms: for (const room of LABEL_ROOMS) {
+        if (room) card.dataset['room'] = room
+        else delete card.dataset['room']
+        for (const step of SIDE_STEPS) {
+          if (step) card.dataset['step'] = step
+          else delete card.dataset['step']
+          if (whole()) break rooms
+        }
       }
       if (languages) {
         delete card.dataset['languageRow']
