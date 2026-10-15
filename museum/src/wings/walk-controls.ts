@@ -185,6 +185,8 @@ export function createWalkPanel(host: WalkPanelHost, signal: AbortSignal): WalkP
       return
     }
     delete tip.dataset['held']
+    // the turn's tip is gone once the phone stands sideways
+    if (tipNow === 'sideways' && !host.sideways()) tipNow = null
     // a tip a press took away keeps its room, unseen, until the walk ends
     if (!tipNow && tip.dataset['gone'] !== undefined) return
     tip.textContent = ''

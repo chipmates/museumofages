@@ -1282,6 +1282,7 @@ export function createWing(): WingModule {
     marksAt = ''; wordsAt = ''
     look?.layout()
     paintPhone()
+    walk?.paint()
     void whenFraming(picture, () => (wide ? 'wide' : 'upright'), signal).then(() => { marksAt = ''; wordsAt = ''; look?.layout() })
   }
 
