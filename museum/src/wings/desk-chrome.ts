@@ -15,7 +15,7 @@ import { deskOn } from './desk-switches'
 import { setDeskBand } from './desk-stage'
 import { deskControl, deskCutBetween, deskStoryStop } from './desk-story'
 import { setRegister } from './frame'
-import { sayAs } from './content'
+import { sayAs, WING_TEXT } from './content'
 import { LOBBY_TEXT } from '../content/lobby'
 import type { VinciCertainty, VinciText } from './vinci/content'
 import { lobbyWord } from './vinci/ending-talk'
@@ -593,6 +593,15 @@ export function createDeskChrome(host: DeskChromeHost): DeskChrome {
     const pLine = copyOf<HTMLElement>('.desk-cap .desk-line')
     const pKicker = copyOf<HTMLElement>('.desk-on-kicker')
     const pTitle = copyOf<HTMLElement>('.desk-on-title')
+    /* the first stop's way back carries the way out's word (desk.panel), so
+       its words have less room than any other stop's: measured with it */
+    const pOut = copyOf<HTMLElement>('.desk-panel-out')
+    const outWord = say(WING_TEXT.firstWayOut)
+    /* the room's count (desk.overview) joins the foot row once its set is
+       read, and on a narrow band takes it to a second row: measured as if
+       every stop showed one, at two digits */
+    const pSet = copyOf<HTMLElement>('.desk-ov-open')
+    if (pSet) { pSet.textContent = say(deskControl('overview', 'things_to_see')).replace('{n}', '29'); pSet.hidden = false }
     host.stage.append(probe)
     let tallest = 0
     ids.forEach((id, index) => {
@@ -601,6 +610,7 @@ export function createDeskChrome(host: DeskChromeHost): DeskChrome {
       if (pClock) { pClock.textContent = stop?.age ? say(stop.age) : ''; pClock.hidden = !stop?.age }
       if (pCount) pCount.textContent = `${index + 1} / ${ids.length}`
       if (pLine) { pLine.textContent = stop ? say(stop.line) : ''; pLine.hidden = !stop }
+      if (pOut) { pOut.textContent = outWord; pOut.hidden = index !== 0 }
       const next = ids[index + 1]
       // the way on names the next stop at rest and the walk while a leg runs
       for (const [kicker, title] of [
