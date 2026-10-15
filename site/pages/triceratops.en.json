@@ -1,0 +1,598 @@
+{
+ "_note": "THE WORDS of the Triceratops page. Poured word for word from the writer's WORDS file; the title, the description and the heading are its first options. The person's height stands over the person in each picture (labels.person), and the labels at the pictures name the person too. pics.<name>.marks: each label's place as the start and end of what it names, shares of the picture's width, measured on the frame; pics.<name>.person: the person's centre and the top of its head. pics.side.tops: the top of the back over the hips (2.53 m), pics.close.tops: the brow horn tips (about 1.8 m), as shares of the picture's height from its top, measured on the render; their brackets stand over the picture. The skull's length is a line drawn on the closer panel between the model's two landmarks, its label's bracket over the line's width. pics.vs: our T. rex's row over our Triceratops's row at one scale, both tails at one left line. Empty cells of the table are the writer's: no sourced figure exists.",
+ "page": {
+  "id": "animals-triceratops",
+  "wing": "animals",
+  "topic": "triceratops",
+  "published": null,
+  "join_names": true,
+  "og_image": {
+   "file": "animals-triceratops-og-{lang}-1200x630.png",
+   "width": 1200,
+   "height": 630,
+   "layout": "beside"
+  }
+ },
+ "pics": {
+  "side": {
+   "stem": "animals-triceratops-side",
+   "widths": [
+    800,
+    1600,
+    2400
+   ],
+   "sizes": "(min-width: 1280px) 588px, (min-width: 960px) calc(100vw - 80px), (min-width: 600px) calc(100vw - 64px), calc(100vw - 40px)",
+   "person": "92.2% 38.85%",
+   "marks": {
+    "triceratops": "3.03% 82.76%",
+    "hips": "31.01% 41.36%",
+    "person": "90.52% 93.89%"
+   },
+   "behind": [
+    "hips"
+   ],
+   "tops": {
+    "hips": "10.78%"
+   }
+  },
+  "close": {
+   "stem": "animals-triceratops-close",
+   "widths": [
+    800,
+    1600
+   ],
+   "sizes": "(min-width: 1280px) 690px, (min-width: 960px) 54vw, (min-width: 600px) calc(100vw - 64px), calc(100vw - 40px)",
+   "person": "85.81% 36.63%",
+   "marks": {
+    "skull": "36.88% 67.46%",
+    "horns": "73.02% 78.23%",
+    "person": "82.75% 88.88%"
+   },
+   "behind": [
+    "skull",
+    "horns"
+   ],
+   "tops": {
+    "horns": "32.81%"
+   }
+  },
+  "vs": {
+   "stem": "animals-triceratops-beside-t-rex",
+   "widths": [
+    800,
+    1600,
+    2400
+   ],
+   "sizes": "(min-width: 1280px) 690px, (min-width: 960px) 54vw, (min-width: 600px) calc(100vw - 64px), calc(100vw - 40px)",
+   "person": "7.11% 36.44%",
+   "marks": {
+    "t-rex": "14.67% 97.78%",
+    "triceratops": "14.63% 65.36%",
+    "person": "6.03% 8.18%"
+   },
+   "behind": [
+    "t-rex"
+   ]
+  },
+  "skeleton": {
+   "stem": "animals-triceratops-skeleton",
+   "widths": [
+    800,
+    1600
+   ],
+   "sizes": "(min-width: 1280px) 690px, (min-width: 960px) 54vw, (min-width: 600px) calc(100vw - 64px), calc(100vw - 40px)",
+   "person": "92.2% 38.85%"
+  },
+  "trex": {
+   "stem": "animals-t-rex-side",
+   "widths": [
+    800,
+    1600,
+    2400
+   ],
+   "sizes": "(min-width: 1280px) 690px, (min-width: 960px) 54vw, (min-width: 600px) calc(100vw - 64px), calc(100vw - 40px)",
+   "person": "86.42% 63.92%"
+  },
+  "dinosaurs": {
+   "stem": "animals-biggest-dinosaurs-row",
+   "widths": [
+    800,
+    1600
+   ],
+   "sizes": "(min-width: 1280px) 690px, (min-width: 960px) 54vw, (min-width: 600px) calc(100vw - 64px), calc(100vw - 40px)",
+   "person": "32.82% 84.25%"
+  },
+  "brachio": {
+   "stem": "animals-brachiosaurus-side",
+   "widths": [
+    800,
+    1600,
+    2400
+   ],
+   "sizes": "(min-width: 1280px) 690px, (min-width: 960px) 54vw, (min-width: 600px) calc(100vw - 64px), calc(100vw - 40px)",
+   "person": "77.8% 84.8%"
+  }
+ },
+ "meta": {
+  "title": "Triceratops size: about 7 to 8 m, 2 m skull | Museum of Ages",
+  "description": "Triceratops was about 7 to 8 m long and about 6.5 to 8.5 t by two models of one skeleton, its skull about 2 m. Ours stands beside a person to scale.",
+  "og_title": "Triceratops size: about 7 to 8 m, 2 m skull",
+  "og_image_alt": "A Triceratops from the side: a wide frill behind the head, two long horns over the eyes, a short one on the nose, four legs. Beside it a grey person who reaches about two thirds of the way up its back."
+ },
+ "labels": {
+  "crumbs": "You are here",
+  "crumb_home": "Museum",
+  "crumb_here": "Triceratops",
+  "toc": "On this page",
+  "tag_made": "Made for this page",
+  "tag_built": "Reconstruction",
+  "person": "1.70 m",
+  "to_table": "The numbers as a table",
+  "no_figure": "no sourced figure",
+  "og_answer": "A big adult Triceratops was about 7 to 8 m (23 to 26 ft) long, with a skull about 2 m"
+ },
+ "top": {
+  "h1": "How big was Triceratops?",
+  "answer": "Big adult Triceratops were about 7 to 8 m (23 to 26 ft) long, and the largest reached about 9 m (30 ft). No Triceratops was ever weighed: two computer models of the famous Washington skeleton give about 6.5 to 8.5 tonnes. Our Triceratops is built after that skeleton, a mount of bones from about ten animals. It is 6.9 m (23 ft) long, about four people end to end, and stands about 2.5 m (8 ft) high over the hips.",
+  "answer_more": "A big adult's skull is about 2 m (6.5 ft) long, beak to the back of the frill: longer than a person is tall. It is one of the largest heads of any land animal.",
+  "scale": {
+   "pic": "side",
+   "tag": "tag_made",
+   "what": "Our Triceratops beside a person 1.70 m tall, to one scale, built after the Washington skeleton of about ten animals. It is 6.9 m (23 ft) from beak to tail, and its back over the hips is about 2.5 m (8 ft) up, about one and a half people high.",
+   "alt": "A Triceratops from the side: a wide frill behind the head, two long horns over the eyes, a short one on the nose, four legs. Beside it a grey person who reaches about two thirds of the way up its back.",
+   "note": [
+    "Our own reconstruction, built in code from published measurements and rendered in our own engine. Not photographs. ",
+    "The outline of our Triceratops follows the body model of ",
+    {
+     "text": "Dempsey 2025",
+     "href": "https://doi.org/10.6084/m9.figshare.27283401"
+    },
+    " (",
+    {
+     "text": "CC BY 4.0",
+     "href": "https://creativecommons.org/licenses/by/4.0/"
+    },
+    "). We measured and changed it."
+   ],
+   "marks": [
+    {
+     "span": "triceratops",
+     "text": "Our Triceratops, 6.9 m from beak to tail"
+    },
+    {
+     "span": "hips",
+     "text": "Top of the back over the hips, 2.5 m, ours"
+    },
+    {
+     "span": "person",
+     "text": "The person, 1.70 m"
+    }
+   ],
+   "close": {
+    "pic": "close",
+    "tag": "tag_made",
+    "what": "Closer up: the head beside the person. Our skull is 2.2 m (7.2 ft) long with its skin, longer than the person is tall. The brow horns, 0.9 m (3 ft) with their horn cover, end about 1.8 m (6 ft) up, level with the person's head.",
+    "alt": "The head of the Triceratops closer up, from the side: the beak, the eye under a long brow horn, the frill rising behind. Beside it the grey person, whose head is level with the horn's tip.",
+    "marks": [
+     {
+      "span": "skull",
+      "text": "Skull, 2.2 m with skin, ours"
+     },
+     {
+      "span": "horns",
+      "text": "Brow horn tips, about 1.8 m up"
+     },
+     {
+      "span": "person",
+      "text": "The person, 1.70 m"
+     }
+    ]
+   }
+  },
+  "guess": {
+   "h": "A guess",
+   "q": "What did the first scientist to study its horns think they came from?",
+   "button": "Show the answer",
+   "a": "A giant bison: in 1887 the American scientist Othniel Marsh named the two horn cores Bison alticornis. After more finds he named Triceratops in 1889.",
+   "button_open": "Hide the answer"
+  },
+  "out": {
+   "text": "The wing for this animal is still being built. The Leonardo da Vinci wing is open today.",
+   "link": "To the Leonardo wing"
+  }
+ },
+ "blocks": [
+  {
+   "type": "numbers",
+   "id": "numbers",
+   "nav": "Triceratops size and weight: the numbers",
+   "h": "Triceratops size and weight: the numbers",
+   "unit": "Metres and feet, tonnes. Each height cell names the point it measures. An empty cell has no sourced figure.",
+   "cols": [
+    "Animal",
+    "Length",
+    "Height, with the point named",
+    "Skull length",
+    "Weight",
+    "How sure"
+   ],
+   "rows": [
+    {
+     "cells": [
+      "Triceratops, big adults",
+      "about 7 to 8 m (23 to 26 ft), by the large skeletons known",
+      "not measured",
+      "about 2 m (6.5 ft), beak to the back of the frill",
+      "",
+      "fair: the lengths from reports of named skeletons, the skull from a study of ten skulls"
+     ]
+    },
+    {
+     "cells": [
+      "The largest Triceratops",
+      "about 9 m (30 ft), a museum's round figure, no method",
+      "not measured",
+      "",
+      "",
+      "weak"
+     ]
+    },
+    {
+     "cells": [
+      "The Washington skeleton, Hatcher",
+      "about 6.9 m (23 ft), by the body model built on its scan",
+      "about 2.5 m (8 ft) at the top of the back over the hips, our reading, not published",
+      "2.12 m (7 ft) in bone, enlarged in the rebuild",
+      "about 6.5 to 8.5 t, two computer models",
+      "a mount of bones from about ten animals, the weights models, never weighings"
+     ]
+    },
+    {
+     "cells": [
+      "Our model",
+      "6.9 m (23 ft) straight, 7.1 m to the brow horn tips",
+      "2.5 m (8 ft) over the hips at the back's top, the frill's top about 2.4 m (7.8 ft)",
+      "2.2 m (7.2 ft) with skin",
+      "",
+      "measured on our files, built after the Washington scan"
+     ]
+    },
+    {
+     "cells": [
+      "T. rex, SUE",
+      "about 12 m (39 ft), the mount",
+      "at the hip about 4 m (13 ft), by the museum",
+      "about 1.4 m (4.6 ft), snout to the back of the cheek",
+      "about 8 to 9 t, by a bone and three models",
+      "as on our T. rex page"
+     ]
+    },
+    {
+     "cells": [
+      "The person",
+      "",
+      "1.70 m (5 ft 7 in) tall, head to foot",
+      "",
+      "",
+      "our scale figure"
+     ]
+    }
+   ]
+  },
+  {
+   "type": "text",
+   "id": "skull",
+   "nav": "Triceratops skull, horns and frill",
+   "h": "Triceratops skull, horns and frill",
+   "paras": [
+    "A big adult's skull was about 2 m (6.5 ft) long, by a study of ten skulls from baby to adult. The rebuilt Washington skull measures 2.12 m (7 ft) in bone.",
+    "Two long horns stand over the eyes and a short, low one on the nose. The long nose horn of many pictures belongs to the later species, Triceratops prorsus, and ours is the older Triceratops horridus. The bone in a museum is only the horn's core: in life a sheath of horn covered it, so the horns were longer, by how much nobody knows. They changed with age too: a young Triceratops's brow horns curved backward, an adult's forward.",
+    "The frill is a wide shield of solid bone behind the head, with no holes in it, under skin. What horns and frill were for, nobody has proved. The best evidence is healed wounds on frills, best explained by the horns of other Triceratops, so they most likely fought each other. Showing off and telling each other apart are likely uses too, and defence against predators is possible."
+   ]
+  },
+  {
+   "type": "text",
+   "id": "t-rex",
+   "nav": "Triceratops vs T. rex",
+   "h": "Triceratops vs T. rex",
+   "paras": [
+    "In one count of the large dinosaurs of Montana's Hell Creek Formation, where both lived at the same time, Triceratops was the most common of all. T. rex did bite Triceratops: a Triceratops hip bone found in 1991 carries 58 definite tooth marks that only a T. rex could have made, says a university's report of 1996. One brow horn, bitten off, healed afterwards, so at least one Triceratops survived a T. rex bite. Whether T. rex hunted live Triceratops or ate the dead, the bones do not say, and no find shows a fight between the two. The famous \"Dueling Dinosaurs\" from Montana, a Triceratops and a tyrannosaur found together, are not that fight either. Since 2025 their tyrannosaur is counted as Nanotyrannus, a smaller kind, not T. rex, and that is still argued.",
+    "Our two at one scale, for size only: our T. rex is about 1.6 times as long as our Triceratops."
+   ],
+   "scale": {
+    "pic": "vs",
+    "tag": "tag_made",
+    "what": "Our Triceratops and our T. rex to one scale, both facing the same way, with the person. Our T. rex, after SUE, is about 11.4 m (37 ft) long, about 1.6 times our Triceratops. Side by side for size only, never as a fight.",
+    "alt": "A Triceratops on four legs and a T. rex on two, both from the side facing the same way, the T. rex longer and much higher at the hips, beside the grey person.",
+    "marks": [
+     {
+      "span": "triceratops",
+      "text": "Our Triceratops, 6.9 m"
+     },
+     {
+      "span": "t-rex",
+      "text": "Our T. rex, after SUE, about 11.4 m"
+     },
+     {
+      "span": "person",
+      "text": "The person, 1.70 m"
+     }
+    ]
+   }
+  },
+  {
+   "type": "text",
+   "id": "torosaurus",
+   "nav": "Torosaurus: a very old Triceratops, or its own animal?",
+   "h": "Torosaurus: a very old Triceratops, or its own animal?",
+   "paras": [
+    "Torosaurus was a horned dinosaur from the same time and the same rocks, with a longer frill that had two big holes in it. In 2010 two scientists proposed that it was no separate animal, only a Triceratops grown very old, whose frill stretched and opened holes late in life. Later studies found young Torosaurus and old Triceratops, and measured skull shapes that grow apart, not together. A Torosaurus that was still young cannot have been an old Triceratops. Most scientists therefore now see Torosaurus as a separate animal, though the question is still argued and neither side counts as proven."
+   ]
+  },
+  {
+   "type": "text",
+   "id": "skeleton",
+   "nav": "The Triceratops skeleton in Washington",
+   "h": "The Triceratops skeleton in Washington",
+   "paras": [
+    "The skeleton in the Smithsonian's natural history museum in Washington is called Hatcher, after the fossil hunter John Bell Hatcher, and its bones came from Wyoming. It went on show in 1905, low and sprawling like a crocodile, and for over twenty years no other Triceratops was on show anywhere. No complete skeleton was known, so the museum pieced it together from about ten animals. Its skull was too small, its front legs of different lengths, and its hind feet, with the wrong number of toes, came from another dinosaur.",
+    "In 1996 a piece of hip bone fell off: minerals growing inside the bones were breaking them up, and in 1998 the skeleton came down. Then, for the first time, a whole dinosaur skeleton was scanned in 3D, the skull enlarged by about 15 percent on the computer and the right side mirrored to make the left. After that the mount stood upright, and since 2019 Hatcher has lain in the fossil hall, being eaten by a T. rex: a museum's scene, not a find. Our Triceratops is built after that scan."
+   ],
+   "scale": {
+    "pic": "skeleton",
+    "tag": "tag_built",
+    "what": "Our Triceratops as a skeleton, with the person, after the Washington mount of about ten animals and the museum's scan of it. Which bone came from which animal is not published, so none is coloured by its find. The horns are bone cores only: in life a cover of horn made them longer.",
+    "alt": "The skeleton of the Triceratops from the side, the big skull with its frill and horn cores, the ribs and four legs, beside the grey person."
+   }
+  },
+  {
+   "type": "text",
+   "id": "looks",
+   "nav": "What a real Triceratops looked like",
+   "h": "What a real Triceratops looked like",
+   "subs": [
+    {
+     "h": "Skin and scales",
+     "paras": [
+      "Big scales up to 9 cm wide on the trunk, the biggest of any dinosaur known, with a slightly bigger bumped scale every 15 to 20 cm. That comes from a clay cast of the skin's surface on another big Triceratops. Feathers or quills are unlikely."
+     ]
+    },
+    {
+     "h": "Beak, teeth and food",
+     "paras": [
+      "A horny beak snipped plants, and rows of teeth at the back of the jaws cut them like shears."
+     ]
+    },
+    {
+     "h": "Legs and colour",
+     "paras": [
+      "The front legs stood upright under the body, elbows a little out, never sprawled like a lizard's, and two methods agree on that. Three of the five fingers and all four toes had hooves. No colour is known, so ours is a choice."
+     ]
+    }
+   ]
+  },
+  {
+   "type": "text",
+   "id": "when-where",
+   "nav": "When and where Triceratops lived",
+   "h": "When and where Triceratops lived",
+   "paras": [
+    "Triceratops lived in western North America in the Late Cretaceous, between about 68 and 66 million years ago. Two species followed each other: the older T. horridus, ours, slowly changed into the later T. prorsus. Its last fossils reach the close of the Cretaceous, about 66 million years ago, when an impact in the Yucatán, most scientists think, set off the collapse."
+   ]
+  },
+  {
+   "type": "text",
+   "id": "how-sure",
+   "nav": "How sure this is",
+   "h": "How sure this is",
+   "paras": [
+    "Two things decide every number here.",
+    {
+     "points": [
+      [
+       "Nothing was measured on a living animal:",
+       "the lengths come from skeletons, the weight from computer bodies built on the Washington scan."
+      ],
+      [
+       "Ours is one model after a mount of about ten animals:",
+       "its 6.9 m and 2.5 m are the model's numbers, never the species'."
+      ]
+     ]
+    }
+   ]
+  },
+  {
+   "type": "notes",
+   "id": "numbers-read",
+   "nav": "Numbers you may have read",
+   "h": "Numbers you may have read",
+   "intro": "For each number: where it came from, and what it means.",
+   "rows": [
+    {
+     "term": "9 m long",
+     "text": "A round top figure for the largest, from a museum's dinosaur directory with no method and no skeleton named. A big adult was about 7 to 8 m, and ours is 6.9 m."
+    },
+    {
+     "term": "10 tonnes",
+     "text": "Beside the 9 m, again with no method. The newest models of the Washington skeleton give about 6.5 to 8.5 tonnes."
+    },
+    {
+     "term": "13 tonnes",
+     "text": "A museum's card of the biggest dinosaurs, with no method, and above every other figure here."
+    },
+    {
+     "term": "The largest head of any land animal",
+     "text": "A big museum writes one of the largest, not the largest. Big adult skulls are about 2 m long."
+    },
+    {
+     "term": "A long nose horn",
+     "text": "It belongs to T. prorsus, the later species. T. horridus, the older one and ours, had a short, low horn on a long snout."
+    },
+    {
+     "term": "Torosaurus was the grown-up Triceratops",
+     "text": "An idea of 2010. Most studies since found young Torosaurus and old Triceratops, and keep the two apart."
+    }
+   ]
+  },
+  {
+   "type": "faq",
+   "id": "questions",
+   "nav": "More questions",
+   "h": "More questions",
+   "items": [
+    {
+     "q": "Was Triceratops bigger than T. rex?",
+     "a": "No. A big adult Triceratops was about 7 to 8 m (23 to 26 ft) long, a large T. rex about 12 m (39 ft) and far higher at the hips. In weight they were closer: about 6.5 to 8.5 tonnes for the Washington Triceratops, about 8 to 9 for a large T. rex. Only the skull was longer: about 2 m against SUE's 1.4 m."
+    },
+    {
+     "q": "What does the name Triceratops mean?",
+     "a": "Three-horned face, from Greek. Marsh gave the name in 1889, and ours is Triceratops horridus, the older of its two species."
+    }
+   ]
+  },
+  {
+   "type": "text",
+   "id": "museum",
+   "nav": "In the museum",
+   "h": "In the museum",
+   "paras": [
+    "Museum of Ages is a digital museum, made by a nonprofit. Free entry, no account. In the animal wing this animal will stand among the others, from the giants of long ago to the last of their kind. The Leonardo da Vinci wing shows what a finished wing looks like."
+   ],
+   "links": [
+    {
+     "out": true,
+     "text": "To the Leonardo wing"
+    }
+   ]
+  },
+  {
+   "type": "pages",
+   "id": "next",
+   "items": [
+    {
+     "page": "t-rex",
+     "pic": "trex",
+     "alt": "A T. rex from the side on two legs, mouth open and head raised, beside a grey person who stands far below its hips.",
+     "line": "A large adult T. rex was about 12 m long, about 4 m at the hips and roughly 8 to 9 tonnes. Our T. rex is built to SUE's measurements and stands beside a person to one scale, with a list of what was found of SUE."
+    },
+    {
+     "page": "biggest-dinosaurs",
+     "pic": "dinosaurs",
+     "alt": "Seven dinosaurs in a row from the side, two with long necks towering over the rest, and a grey person who looks tiny beside them.",
+     "line": "Seven of ours beside a person, to one scale: the heaviest most likely a titanosaur from Patagonia, the tallest probably Sauroposeidon, and why the longest is still open."
+    },
+    {
+     "page": "brachiosaurus",
+     "pic": "brachio",
+     "alt": "A Brachiosaurus from the side, its long neck raised in a gentle curve, the front legs longer than the hind legs, the tail off the ground, beside a grey person who could walk under its belly, a short bar marking the head's top.",
+     "line": "Brachiosaurus, a long-necked plant eater of the Late Jurassic, was about 22 to 25 m long and roughly 30 to 45 tonnes, both figures rebuilt from one partial skeleton. Our Brachiosaurus stands beside a person, its head about seven people up in the pose we chose."
+    }
+   ]
+  },
+  {
+   "type": "sources",
+   "id": "sources",
+   "nav": "Sources",
+   "h": "Sources",
+   "intro": "The numbers come from these studies and from the museums that keep the bones. The museum is independent of all of them.",
+   "read": [
+    {
+     "text": "Dempsey and others, 2025, Biological Reviews, the weight models of the Washington skeleton.",
+     "href": "https://doi.org/10.1111/brv.70026"
+    },
+    {
+     "text": "Horner and Goodwin, 2006, Proceedings of the Royal Society B, the study's summary.",
+     "href": "https://doi.org/10.1098/rspb.2006.3643"
+    },
+    {
+     "text": "Scannella and Horner, 2010, Journal of Vertebrate Paleontology, the study's summary.",
+     "href": "https://doi.org/10.1080/02724634.2010.483632"
+    },
+    {
+     "text": "Longrich and Field, 2012, PLOS ONE, the study's summary.",
+     "href": "https://doi.org/10.1371/journal.pone.0032623"
+    },
+    {
+     "text": "Maiorino and others, 2013, PLOS ONE, the study's summary.",
+     "href": "https://doi.org/10.1371/journal.pone.0081608"
+    },
+    {
+     "text": "Mallon and others, 2022, Zoological Journal of the Linnean Society, the study's summary.",
+     "href": "https://doi.org/10.1093/zoolinnean/zlab120"
+    },
+    {
+     "text": "Scannella and others, 2014, PNAS, the study's summary.",
+     "href": "https://doi.org/10.1073/pnas.1313334111"
+    },
+    {
+     "text": "Farke, Wolff and Tanke, 2009, PLOS ONE."
+    },
+    {
+     "text": "D'Anastasio and others, 2022, Scientific Reports.",
+     "href": "https://doi.org/10.1038/s41598-022-08033-2"
+    },
+    {
+     "text": "Horner, Goodwin and Myhrvold, 2011, PLOS ONE, the count of Hell Creek dinosaurs."
+    },
+    {
+     "text": "Zanno and Napoli, 2025, Nature, the study's summary.",
+     "href": "https://doi.org/10.1038/s41586-025-09801-6"
+    },
+    {
+     "text": "Bell and others, 2022, Communications Biology, on the scales."
+    },
+    {
+     "text": "Sereno and others, 2026, Science, the study's summary, on what the skin casts are."
+    },
+    {
+     "text": "Fujiwara and Hutchinson, 2012, and Dempsey and others, 2023, on the stance of the front legs."
+    },
+    {
+     "text": "Theurer and others, 2026, PLOS ONE, on the feet."
+    },
+    {
+     "text": "Barnosky and others, 2011, Nature, on the end of the Cretaceous."
+    },
+    {
+     "text": "University of California, Berkeley: its report of 1996 on the bitten Triceratops hip bone.",
+     "href": "https://newsarchive.berkeley.edu/news/berkeleyan/1996/0911/chomp.html"
+    },
+    {
+     "text": "Smithsonian National Museum of Natural History, Washington: the Triceratops mount Hatcher and its own account of the mount's history.",
+     "href": "https://artsandculture.google.com/asset/hatcher-the-first-triceratops-ever-put-on-display/sQERDarxJwtSnQ"
+    },
+    {
+     "text": "Natural History Museum, London: its Triceratops page.",
+     "href": "https://www.nhm.ac.uk/discover/dino-directory/triceratops.html"
+    },
+    {
+     "text": "North Carolina Museum of Natural Sciences, Raleigh: the Dueling Dinosaurs.",
+     "href": "https://www.naturalsciences.org/calendar/news/meet-the-dueling-dinosaurs-murphy-and-manteo/"
+    },
+    {
+     "text": "T. rex: the numbers and sources of our T. rex page.",
+     "href": "https://museumofages.org/animals/t-rex/"
+    }
+   ],
+   "contact": "If a number or a museum is wrong, tell us and we will correct it.",
+   "contact_link": "To the legal notice",
+   "what_link": "What this museum is"
+  },
+  {
+   "type": "text",
+   "id": "pictures",
+   "nav": "Use our pictures",
+   "h": "Use our pictures",
+   "paras": [
+    [
+     "The four pictures of the Triceratops on this page, the side view, the head, the pair with our T. rex and the skeleton, are our own work under ",
+     {
+      "text": "CC BY-SA 4.0",
+      "href": "https://creativecommons.org/licenses/by-sa/4.0/"
+     },
+     ", credit: Museum of Ages, Triceratops outline after Dempsey 2025 (CC BY 4.0). They show a reconstruction, built in code and rendered in our own engine, not photographs. The pictures of the other pages listed here give their credits on those pages."
+    ]
+   ]
+  }
+ ]
+}

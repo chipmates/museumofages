@@ -83,6 +83,16 @@
    ],
    "sizes": "(min-width: 1280px) 690px, (min-width: 960px) 54vw, (min-width: 600px) calc(100vw - 64px), calc(100vw - 40px)",
    "person": "77.8% 84.8%"
+  },
+  "tricera": {
+   "stem": "animals-triceratops-side",
+   "widths": [
+    800,
+    1600,
+    2400
+   ],
+   "sizes": "(min-width: 1280px) 690px, (min-width: 960px) 54vw, (min-width: 600px) calc(100vw - 64px), calc(100vw - 40px)",
+   "person": "92.2% 38.85%"
   }
  },
  "meta": {
@@ -401,6 +411,12 @@
      "pic": "brachio",
      "alt": "A Brachiosaurus from the side, its long neck raised in a gentle curve, the front legs longer than the hind legs, the tail off the ground, beside a grey person who could walk under its belly, a short bar marking the head's top.",
      "line": "Brachiosaurus, a long-necked plant eater of the Late Jurassic, was about 22 to 25 m long and roughly 30 to 45 tonnes, both figures rebuilt from one partial skeleton. Our Brachiosaurus stands beside a person, its head about seven people up in the pose we chose."
+    },
+    {
+     "page": "triceratops",
+     "pic": "tricera",
+     "alt": "A Triceratops from the side: a wide frill behind the head, two long horns over the eyes, a short one on the nose, four legs. Beside it a grey person who reaches about two thirds of the way up its back.",
+     "line": "A big adult Triceratops was about 7 to 8 m long, with a skull about 2 m, longer than SUE's. Our Triceratops stands beside our T. rex to one scale, with what the bones show of the two and what they do not."
     }
    ]
   },

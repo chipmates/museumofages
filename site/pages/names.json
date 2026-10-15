@@ -227,6 +227,21 @@
     { "text": "Fossil Record", "lang": "en" },
     { "text": "San Diego Zoo Wildlife Alliance", "lang": "en" },
     { "text": "Digital Tendaguru", "whole": true },
-    { "text": "Morrison Formation", "lang": "en" }
+    { "text": "Morrison Formation", "lang": "en" },
+    { "text": "Triceratops prorsus", "whole": true, "taxon": true },
+    { "text": "T. horridus", "whole": true, "taxon": true },
+    { "text": "T. prorsus", "whole": true, "taxon": true },
+    { "text": "Bison alticornis", "whole": true, "taxon": true },
+    { "text": "Torosaurus", "taxon": true },
+    { "text": "Nanotyrannus", "taxon": true },
+    { "text": "John Bell Hatcher", "whole": true },
+    { "text": "Othniel Marsh", "whole": true },
+    { "text": "Hell Creek Formation", "lang": "en" },
+    { "text": "North Carolina Museum of Natural Sciences", "lang": "en" },
+    { "text": "University of California, Berkeley", "lang": "en" },
+    { "text": "Zoological Journal of the Linnean Society", "lang": "en" },
+    { "text": "Communications Biology", "lang": "en" },
+    { "text": "Dueling Dinosaurs", "lang": "en" },
+    { "text": "Triceratops outline after Dempsey 2025", "lang": "en" }
   ]
 }

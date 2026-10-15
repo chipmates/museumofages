@@ -1182,6 +1182,170 @@
             "no end and no cause: a museum's range for the genus stops at about 145 million years ago"
           ]
         ]
+      },
+      {
+        "slug": {
+          "en": "triceratops",
+          "de": "triceratops"
+        },
+        "name": {
+          "en": "How big was Triceratops?",
+          "de": "Wie groß war ein Triceratops?"
+        },
+        "line": {
+          "en": "A big adult Triceratops was about 7 to 8 m long, and two models give about 6.5 to 8.5 tonnes for the Washington skeleton, a mount of about ten animals. Our Triceratops is built after that skeleton and stands beside a person to one scale, with its skull against the person, Torosaurus, and what the bones say about T. rex.",
+          "de": "Ein großer erwachsener Triceratops war etwa 7 bis 8 m lang, und zwei Modelle ergeben etwa 6,5 bis 8,5 t für das Skelett in Washington, eine Montage aus etwa zehn Tieren. Unser Triceratops ist nach diesem Skelett gebaut und steht im selben Maßstab neben einem Menschen, dazu der Schädel neben dem Menschen, Torosaurus und das, was die Knochen über den T. rex sagen."
+        },
+        "langs": ["en", "de"],
+        "count": "triceratops",
+        "about": {
+          "@type": "Taxon",
+          "name": "Triceratops horridus",
+          "alternateName": "Triceratops",
+          "taxonRank": "species",
+          "sameAs": "https://www.wikidata.org/wiki/Q3998678"
+        },
+        "never_say": [
+          [
+            "(?s)^(?!.*(?:largest|größt|round|runde|no\\smethod|ohne\\smethode)).*(?<![\\d.,])9\\s?(?:m|metres?|meters?|metern?)\\b",
+            "9 m only as the largest Triceratops's round figure, or a number you may have read"
+          ],
+          [
+            "(?:\\bour\\b|\\bours\\b|\\bunser\\w*)\\s(?:\\w+\\s){0,4}(?:is\\s|was\\s|ist\\s|war\\s)?(?:about\\s|etwa\\s)?(?<![\\d.,])9\\s?(?:m|metres?|meters?|metern?)\\b",
+            "never 9 m at our animal: ours is 6.9 m"
+          ],
+          [
+            "(?s)^(?!.*(?:no\\smethod|ohne\\smethode)).*(?<![\\d.,])1[03]\\s?(?:t|tonnes?|tons?|tonnen)\\b",
+            "10 and 13 tonnes only as numbers you may have read, with no method"
+          ],
+          [
+            "(?<![\\d.,])12\\s?(?:t|tonnes?|tons?|tonnen)\\b",
+            "never 12 tonnes: its origin was not found"
+          ],
+          [
+            "(?s)^(?!.*(?:(?:\\bour\\b|\\bours\\b|\\bunser\\w*)|model|modell|straight|gerade)).*(?<![\\d.,])6[.,]9\\s?m\\b",
+            "6.9 m only as ours, our model's, or the body model's of the Washington scan"
+          ],
+          [
+            "(?s)^(?!.*(?:(?:\\bour\\b|\\bours\\b|\\bunser\\w*)|model|modell|straight|gerade)).*(?<![\\d.,])7[.,]1\\s?m\\b",
+            "7.1 m only as ours, to the brow horn tips"
+          ],
+          [
+            "(?s)^(?!.*(?:(?:\\bour\\b|\\bours\\b|\\bunser\\w*)|model|modell|back[’']s\\stop|oberkante\\sdes\\srückens)).*(?<![\\d.,])2[.,][45]\\s?m\\b",
+            "2.5 m and 2.4 m only as ours, at the top of the back over the hips or the frill's top"
+          ],
+          [
+            "(?<![\\d.,])2[.,]44\\b",
+            "never 2.44 m: an upper bound of the hip joint, not a height it stood at"
+          ],
+          [
+            "(?:\\bour\\b|\\bours\\b|\\bunser\\w*)\\s(?:\\w+\\s){0,4}(?:weighs?|weighed|would\\sweigh|comes?\\sto|came\\sto|wiegt|wog|wöge|käme|kam\\sauf)|(?:\\bour\\b|\\bours\\b|\\bunser\\w*)(?:\\W+\\w+){0,5}\\W+(?<![\\d.,])\\d+(?:[.,]\\d+)?(?:\\s(?:to|bis)\\s\\d+(?:[.,]\\d+)?)?\\s?(?:t|tonnes?|tons?|tonnen)\\b|(?<![\\d.,])7[.,]4\\s?(?:t|tonnes?|tons?|tonnen)\\b",
+            "never a weight beside our animal: the weight is the study's, about 6.5 to 8.5 tonnes"
+          ],
+          [
+            "(?<![\\d.,])1[.,]19\\s?m\\b",
+            "our thigh bone is never the real bone"
+          ],
+          [
+            "(?s)^(?!.*(?:one\\sof|einer\\sder|einen\\sder)).*(?:the\\s(?:largest|biggest)\\s(?:skull|head)|(?:der|den|dem|des)\\sgrößten?\\s(?:schädel|kopf))",
+            "never the largest skull or head of any land animal: one of the largest"
+          ],
+          [
+            "(?s)^(?!.*prorsus).*(?:long\\snose\\shorn|lange[sn]?\\snasenhorn)",
+            "a long nose horn only as the later T. prorsus's"
+          ],
+          [
+            "(?:as\\swide\\sas|so\\sbreit\\swie)\\s(?:a\\s|eine\\s)?hand|handbreit|handgroß|hand.sized|size\\sof\\sa\\shand",
+            "never scales as wide as a hand: up to 9 cm across"
+          ],
+          [
+            "cheeks?\\s(?:\\w+\\s)?like\\sa\\smammal|wangen?\\s(?:\\w+\\s)?wie\\s(?:bei\\s)?(?:einem\\s|ein\\s)?säuget",
+            "no cheek like a mammal's"
+          ],
+          [
+            "often\\sreproduced|oft\\s(?:nach)?gedruckt|häufig\\sabgebildet",
+            "never often reproduced, of the skin photograph"
+          ],
+          [
+            "only\\sfor\\s(?:defen[cs]e|display|show)|nur\\s(?:zur|der)\\s(?:abwehr|verteidigung|schau)|nur\\szum\\simponieren",
+            "the horns and frill were never only for one use"
+          ],
+          [
+            "nearly\\s(?:one|a)\\smet(?:re|er)|fast\\s(?:einen|ein)\\smeter",
+            "the frill was not nearly one metre across"
+          ],
+          [
+            "\\bmales?\\b|männchen|männlich",
+            "no Triceratops can be sexed: never males"
+          ],
+          [
+            "(?:largest|biggest)\\shorned\\sdinosaur|größte[rn]?\\shorndinosaurier",
+            "never the largest horned dinosaur: not checked"
+          ],
+          [
+            "fossili[sz]ed\\sskin|mummified\\sskin|skin\\simpression|fossil\\sskin|hautabdruck|versteinerte\\shaut|mumifizierte\\shaut|fossile\\shaut|skin\\s(?:\\w+\\s){0,2}(?:found|preserved)\\son\\s(?:this|the\\swashington|hatcher|our)|haut\\s(?:\\w+\\s){0,3}(?:an|bei)\\s(?:diesem|hatcher|unserem)",
+            "the skin is a clay cast of its surface from another find, never found on this skeleton"
+          ],
+          [
+            "(?:found|gefunden)\\s(?:as\\s)?(?:one|a\\ssingle)\\sskeleton|als\\s(?:ein\\s)?einziges\\sskelett|(?:hatcher|washington\\sskeleton|skelett\\sin\\swashington)\\s(?:\\w+\\s){0,3}(?:one|a\\ssingle|ein|einem)\\s(?:animal|tier)\\b",
+            "Hatcher is a mount of about ten animals, never one animal or one skeleton as found"
+          ],
+          [
+            "\\b1888\\b",
+            "never 1888"
+          ],
+          [
+            "(?:shows?|zeigt)\\s(?:\\w+\\s){0,2}which\\sbones?\\s(?:were|was)\\sfound|welche\\sknochen\\s(?:\\w+\\s)?gefunden\\swurden",
+            "no bone map is published: the skeleton never shows which bones were found"
+          ],
+          [
+            "(?:t\\.\\srex|tyrannosaur\\w*)\\s(?:\\w+\\s){0,3}(?:fought|fights|battled|kämpft\\w*|bekämpft\\w*)|triceratops\\s(?:\\w+\\s){0,3}(?:fought|fights|battled|kämpft\\w*|bekämpft\\w*)\\s(?:\\w+\\s){0,2}(?:t\\.\\srex|tyrannosaur|den\\st\\.\\srex)|(?:fight|battle|kampf|duell)\\s(?:between|zwischen)\\s(?:the\\s|dem\\s|einem\\s)?(?:t\\.\\srex|triceratops)|killed\\seach\\sother|died\\sfighting|töteten\\ssich\\sgegenseitig|starben\\sim\\skampf|im\\skampf\\sstarben",
+            "T. rex and Triceratops never as a fight: the bones show bites, not a fight"
+          ],
+          [
+            "dueling\\sdinosaurs\\W+(?:\\w+\\W+){0,3}(?:are|were|is|sind|waren|ist)\\W+(?:\\w+\\W+){0,2}t\\.\\srex",
+            "the Dueling Dinosaurs are a Triceratops and a Nanotyrannus, never a T. rex"
+          ],
+          [
+            "(?:lived|lebte\\w*)\\s(?:\\w+\\s){0,3}(?:beside|alongside|with|neben|mit)\\s(?:\\w+\\s){0,2}sue\\b|(?:\\bour\\b|\\bours\\b|\\bunser\\w*)\\s(?:two|beiden)\\s(?:\\w+\\s){0,2}(?:met|trafen|begegnet)|(?:\\bour\\b|\\bours\\b|\\bunser\\w*)\\s(?:\\w+\\s){0,4}(?:was\\s|were\\s|wurde\\s)?(?:counted|gezählt)",
+            "our Triceratops never lived beside SUE, and was not among those counted"
+          ],
+          [
+            "(?s)^(?!.*(?:2010|idea|idee|proposed|schlugen|vorschlag)).*torosaurus\\s(?:was|is|ist|war)\\s(?:\\w+\\s){0,2}(?:grown.up|adult|old|erwachsene|alte)",
+            "Torosaurus as the old Triceratops only as the idea of 2010"
+          ],
+          [
+            "torosaurus\\s(?:\\w+\\s){0,5}(?:is|was|ist|gilt\\sals)\\s(?:\\w+\\s){0,3}(?:proven|bewiesen)",
+            "Torosaurus is never proven either way: most scientists now think it its own animal"
+          ],
+          [
+            "km/h|mph|top\\sspeed|höchstgeschwindigkeit|charged\\slike|stürmte\\swie|like\\sa\\srhino|wie\\sein\\snashorn",
+            "no speed and no charging like a rhino"
+          ],
+          [
+            "lived\\s(?:alone|in\\sherds)|in\\sherds|in\\sherden|lebte\\sallein|einzelgänger|hundreds\\sof|hunderte",
+            "neither herds nor living alone as fact, and no count of finds"
+          ],
+          [
+            "jurassic\\s(?:park|world)|\\bfilms?\\b",
+            "no film: nothing of a film was checked"
+          ],
+          [
+            "killed\\sby\\s(?:the\\s|an\\s)?(?:asteroid|impact)|vom\\s(?:asteroiden|einschlag)\\sgetötet|the\\slast\\sday|der\\sletzte\\stag|letzten\\stag",
+            "never killed by the asteroid as a witnessed fact, never the last day"
+          ],
+          [
+            "(?<![\\d.,])65\\s(?:million|millionen)|(?<!about\\s)(?<!etwa\\s)(?<!68\\sand\\s)(?<!68\\sto\\s)(?<!68\\sbis\\s)\\b(?:66|68)\\s(?:million|millionen)",
+            "never 65 million, and 66 or 68 million years only with about"
+          ],
+          [
+            "\\bdreihorn(?!gesicht)",
+            "never Dreihorn as a name: Triceratops",
+            [
+              "de"
+            ]
+          ]
+        ]
       }
     ],
     "never_say": [

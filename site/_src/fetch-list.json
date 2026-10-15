@@ -1869,6 +1869,138 @@
    "sha256": "0125470e5ea3e01f6a8740c41c1635cf7793746bec2658ff15ab33b28a3a5cf4"
   },
   {
+   "path": "pages/pics/img/animals-triceratops-beside-t-rex-1600.avif",
+   "url": "/static/img/animals-triceratops-beside-t-rex-1600.avif",
+   "bytes": 33168,
+   "sha256": "d5a677c9ea275fd6d7d9fb6fc293a4b3b9e1fc628bbd5fb2803687dc61b05e61"
+  },
+  {
+   "path": "pages/pics/img/animals-triceratops-beside-t-rex-1600.webp",
+   "url": "/static/img/animals-triceratops-beside-t-rex-1600.webp",
+   "bytes": 41840,
+   "sha256": "091a680cf362141782b1e7a2dd560aa68aaff95319389ec2f194a4bac9ce390e"
+  },
+  {
+   "path": "pages/pics/img/animals-triceratops-beside-t-rex-2400.avif",
+   "url": "/static/img/animals-triceratops-beside-t-rex-2400.avif",
+   "bytes": 59574,
+   "sha256": "8e4a63a9fcedaac9ed59089b0dc87daa0217b0992ff1caa67cab9d55ebda2595"
+  },
+  {
+   "path": "pages/pics/img/animals-triceratops-beside-t-rex-2400.webp",
+   "url": "/static/img/animals-triceratops-beside-t-rex-2400.webp",
+   "bytes": 74446,
+   "sha256": "3fbadac3a683e1cd96f2d94b3c03bf40cf3f2dc82af5d71f323c2f56757b9cbd"
+  },
+  {
+   "path": "pages/pics/img/animals-triceratops-beside-t-rex-800.avif",
+   "url": "/static/img/animals-triceratops-beside-t-rex-800.avif",
+   "bytes": 11863,
+   "sha256": "cecc345d36c0869e9c6fdc2b8060fa40917ad03e173591833ec5c8820343a3af"
+  },
+  {
+   "path": "pages/pics/img/animals-triceratops-beside-t-rex-800.webp",
+   "url": "/static/img/animals-triceratops-beside-t-rex-800.webp",
+   "bytes": 14292,
+   "sha256": "f4e52c088fc0b732b18e408742749b60179751add0d421136e51750d7dc75e97"
+  },
+  {
+   "path": "pages/pics/img/animals-triceratops-close-1600.avif",
+   "url": "/static/img/animals-triceratops-close-1600.avif",
+   "bytes": 49069,
+   "sha256": "4db9aef9738b953d0918dc4e39758e8ebdcb21a384f6837bb41b1288910c01f7"
+  },
+  {
+   "path": "pages/pics/img/animals-triceratops-close-1600.webp",
+   "url": "/static/img/animals-triceratops-close-1600.webp",
+   "bytes": 62438,
+   "sha256": "5c846dc5bac49fab895be72f1d0e88cc3f4e9eb719ecddd024d40f47c290cc93"
+  },
+  {
+   "path": "pages/pics/img/animals-triceratops-close-800.avif",
+   "url": "/static/img/animals-triceratops-close-800.avif",
+   "bytes": 19786,
+   "sha256": "e61df0da5c5db3c539d0a70092f86b09d0af66ef2db85e54404fab2330ab1aae"
+  },
+  {
+   "path": "pages/pics/img/animals-triceratops-close-800.webp",
+   "url": "/static/img/animals-triceratops-close-800.webp",
+   "bytes": 24894,
+   "sha256": "9c0ec70a4197de54da43daa215d93652030426fdc8f1d1ea3edcce4cfb55bee9"
+  },
+  {
+   "path": "pages/pics/img/animals-triceratops-og-de-1200x630.png",
+   "url": "/static/img/animals-triceratops-og-de-1200x630.png",
+   "bytes": 145301,
+   "sha256": "22f2a24a318158b59e6d3f5eea0ff9613aa8742db800946cd48632c3cffca1bd"
+  },
+  {
+   "path": "pages/pics/img/animals-triceratops-og-en-1200x630.png",
+   "url": "/static/img/animals-triceratops-og-en-1200x630.png",
+   "bytes": 143002,
+   "sha256": "25789a0a3903f221f7480f663b6367733d20117c724a5a35edc05a0038bb9904"
+  },
+  {
+   "path": "pages/pics/img/animals-triceratops-side-1600.avif",
+   "url": "/static/img/animals-triceratops-side-1600.avif",
+   "bytes": 38895,
+   "sha256": "9803f9dfc919b08377369d637205225e3cf99760ddabdd070bd9769c3ce147b6"
+  },
+  {
+   "path": "pages/pics/img/animals-triceratops-side-1600.webp",
+   "url": "/static/img/animals-triceratops-side-1600.webp",
+   "bytes": 45442,
+   "sha256": "e858b984d7d7c3a0e70a3a952ce3e1474441e1a28782886a2c5356d96b5aeb3a"
+  },
+  {
+   "path": "pages/pics/img/animals-triceratops-side-2400.avif",
+   "url": "/static/img/animals-triceratops-side-2400.avif",
+   "bytes": 64962,
+   "sha256": "0816af0daae74bd136fb2642484b2ad188e76bba9643951d354dbd85f04042a4"
+  },
+  {
+   "path": "pages/pics/img/animals-triceratops-side-2400.webp",
+   "url": "/static/img/animals-triceratops-side-2400.webp",
+   "bytes": 74608,
+   "sha256": "79dc50efc7f830a51175f9b3ee31962a9379220d1f66ad03ebadaa5d9c91c44a"
+  },
+  {
+   "path": "pages/pics/img/animals-triceratops-side-800.avif",
+   "url": "/static/img/animals-triceratops-side-800.avif",
+   "bytes": 12574,
+   "sha256": "c469ef573ae448c48e5b2c67cddecaf81bbc7d3d10fb0e941d8c9d3e1bd41154"
+  },
+  {
+   "path": "pages/pics/img/animals-triceratops-side-800.webp",
+   "url": "/static/img/animals-triceratops-side-800.webp",
+   "bytes": 15180,
+   "sha256": "cada973f15b7d936c82c5c2c789e1a406a1a8052c3643991820213eace994f18"
+  },
+  {
+   "path": "pages/pics/img/animals-triceratops-skeleton-1600.avif",
+   "url": "/static/img/animals-triceratops-skeleton-1600.avif",
+   "bytes": 24546,
+   "sha256": "ab2cead9a7f08cf66a1e8796054b64d13c6edded87295141811831f2b0e01b15"
+  },
+  {
+   "path": "pages/pics/img/animals-triceratops-skeleton-1600.webp",
+   "url": "/static/img/animals-triceratops-skeleton-1600.webp",
+   "bytes": 38650,
+   "sha256": "3bf919f019c9fa16c7f4bc594031c42f629fc6b7bd91a078d271c366b241d6e2"
+  },
+  {
+   "path": "pages/pics/img/animals-triceratops-skeleton-800.avif",
+   "url": "/static/img/animals-triceratops-skeleton-800.avif",
+   "bytes": 10431,
+   "sha256": "3042c4beb74743703c7735beb8fb5b5b47586cefee8c2c43fc867b0590d8736c"
+  },
+  {
+   "path": "pages/pics/img/animals-triceratops-skeleton-800.webp",
+   "url": "/static/img/animals-triceratops-skeleton-800.webp",
+   "bytes": 15832,
+   "sha256": "7fe9302490823ad352675def7b247a103b4c4d95083e0891a1ee31ae05d2fcdf"
+  },
+  {
    "path": "pages/pics/img/animals-woolly-mammoth-close-1600.avif",
    "url": "/static/img/animals-woolly-mammoth-close-1600.avif",
    "bytes": 87821,

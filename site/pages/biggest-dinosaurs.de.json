@@ -116,6 +116,16 @@
    ],
    "sizes": "(min-width: 1280px) 690px, (min-width: 960px) 54vw, (min-width: 600px) calc(100vw - 64px), calc(100vw - 40px)",
    "person": "77.8% 84.8%"
+  },
+  "tricera": {
+   "stem": "animals-triceratops-side",
+   "widths": [
+    800,
+    1600,
+    2400
+   ],
+   "sizes": "(min-width: 1280px) 690px, (min-width: 960px) 54vw, (min-width: 600px) calc(100vw - 64px), calc(100vw - 40px)",
+   "person": "92.2% 38.85%"
   }
  },
  "meta": {
@@ -540,6 +550,12 @@
      "pic": "brachio",
      "alt": "Ein Brachiosaurus von der Seite, den langen Hals in sanftem Bogen erhoben, die Vorderbeine länger als die Hinterbeine, der Schwanz frei über dem Boden, daneben ein grauer Mensch, der unter seinem Bauch hindurchgehen könnte. Ein kurzer Strich markiert die Kopfhöhe.",
      "line": "Der Brachiosaurus aus der Reihe, allein: etwa 22 bis 25 m lang nach einer Rekonstruktion, eine Höhe, die niemand gemessen hat, und warum das berühmte Berliner Skelett sein Verwandter Giraffatitan ist."
+    },
+    {
+     "page": "triceratops",
+     "pic": "tricera",
+     "alt": "Ein Triceratops von der Seite: ein breiter Nackenschild hinter dem Kopf, zwei lange Hörner über den Augen, ein kurzes auf der Nase, vier Beine. Daneben ein grauer Mensch, der etwa bis zu zwei Dritteln der Rückenhöhe reicht.",
+     "line": "Der Triceratops aus der Reihe, allein: der Schädel neben einem Menschen, das Skelett in Washington aus etwa zehn Tieren, Torosaurus, und was die Knochen über den T. rex sagen."
     }
    ]
   },

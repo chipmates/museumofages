@@ -471,8 +471,8 @@ class Case(unittest.TestCase):
             # a list of pages joins its names wherever it stands: the hub and both neighbours
             items = [m.group(1) for (pid, code), (other, text) in by_id.items() if code == lang
                      for m in re.finditer(r'<h2 class="sc-item__h"><a href="[^"]*t-rex/">(.*?)</a>', text)]
-            # the hub and the five pages that name it
-            self.assertEqual(len(items), 6)
+            # the hub and the six pages that name it
+            self.assertEqual(len(items), 7)
             for item in items:
                 self.assertIn('<span class="nh">T.\u00a0rex</span>', item)
         # a page without the flag keeps the nowrap span in its own sentences
@@ -842,6 +842,124 @@ class Case(unittest.TestCase):
                     self.fails(re.escape(rule))
                     self.save(lang, original, page)
 
+    # Each claim the Triceratops page must never make, by its topic's rules: the canon's NEVER SAY and the facts sheet's.
+    NEVER_TRICERA = {
+        "en": ["Triceratops was 9 m long", "It reached 9 metres", "Our Triceratops is 9 m long",
+               "Ours is about 9 m", "It weighed 10 tonnes", "It came to 13 t", "Triceratops weighed 12 tonnes",
+               "It came to 12 t", "Triceratops was 6.9 m long", "Triceratops was 7.1 m long",
+               "Triceratops stood 2.5 m tall", "The frill stood 2.4 m high", "Its hip stood 2.44 m up",
+               "Our Triceratops weighs 7 tonnes", "Our model comes to 6.5 to 7.4 t", "It came to 7.4 tonnes",
+               "Our Triceratops, about 7 t", "Its thigh bone is 1.19 m long",
+               "It had the largest skull of any land animal", "The biggest head of any land animal",
+               "Triceratops had a long nose horn", "Its scales were as wide as a hand", "Hand-sized scales",
+               "A cheek like a mammal's", "The often reproduced skin photograph",
+               "The frill was only for display", "It was only for defence",
+               "The frill was nearly one metre across", "Males fought with their horns",
+               "The largest horned dinosaur", "Fossilised skin of Triceratops", "A skin impression",
+               "Skin was found on this skeleton", "Hatcher was found as one skeleton", "Hatcher is one animal",
+               "Hatcher found it in 1888", "The skeleton shows which bones were found",
+               "T. rex fought Triceratops", "Triceratops fought T. rex",
+               "The battle between T. rex and Triceratops", "They killed each other", "They died fighting",
+               "The Dueling Dinosaurs are a T. rex and a Triceratops", "Our Triceratops lived beside SUE",
+               "Our two met", "Our Triceratops was counted", "Torosaurus was the grown-up Triceratops",
+               "Torosaurus is proven to be its own animal", "It ran at 30 km/h", "It charged like a rhino",
+               "Triceratops lived in herds", "It lived alone", "Hundreds of skeletons",
+               "The Jurassic Park Triceratops", "In the film", "It was killed by the asteroid",
+               "On the last day", "It lived 65 million years ago", "It died out 66 million years ago",
+               "It lived 68 million years ago"],
+        "de": ["Der Triceratops war 9 m lang", "Er erreichte 9 Meter", "Unser Triceratops ist 9 m lang",
+               "Unser Modell ist etwa 9 m", "Er wog 10 t", "Er kam auf 13 Tonnen", "Er wog 12 t",
+               "Er kam auf 12 Tonnen", "Der Triceratops war 6,9 m lang", "Der Triceratops war 7,1 m lang",
+               "Der Triceratops war 2,5 m hoch", "Der Nackenschild stand 2,4 m hoch",
+               "Seine Hüfte stand 2,44 m hoch", "Unser Triceratops wiegt 7 t",
+               "Unser Modell käme auf 6,5 bis 7,4 t", "Er kam auf 7,4 t", "Unser Triceratops, etwa 7 t",
+               "Sein Oberschenkelknochen ist 1,19 m lang", "Er hatte den größten Schädel aller Landtiere",
+               "Der größte Kopf aller Landtiere", "Der Triceratops hatte ein langes Nasenhorn",
+               "Seine Schuppen waren so breit wie eine Hand", "Handgroße Schuppen",
+               "Eine Wange wie bei einem Säugetier", "Das oft gedruckte Hautfoto",
+               "Der Nackenschild war nur zur Abwehr", "Er diente nur zum Imponieren",
+               "Der Nackenschild war fast einen Meter breit", "Männchen kämpften mit den Hörnern",
+               "Der größte Horndinosaurier", "Versteinerte Haut des Triceratops", "Ein Hautabdruck",
+               "Haut wurde an diesem Skelett gefunden", "Hatcher wurde als ein einziges Skelett gefunden",
+               "Hatcher ist ein Tier", "Hatcher fand ihn 1888",
+               "Das Skelett zeigt, welche Knochen gefunden wurden", "Der T. rex kämpfte gegen den Triceratops",
+               "Der Triceratops kämpfte gegen den T. rex", "Der Kampf zwischen T. rex und Triceratops",
+               "Sie töteten sich gegenseitig", "Sie starben im Kampf",
+               "Die Dueling Dinosaurs sind ein T. rex und ein Triceratops",
+               "Unser Triceratops lebte neben SUE", "Unsere beiden trafen sich",
+               "Unser Triceratops wurde gezählt", "Torosaurus war der erwachsene Triceratops",
+               "Torosaurus ist als eigenes Tier bewiesen", "Er lief 30 km/h", "Er stürmte wie ein Nashorn",
+               "Der Triceratops lebte in Herden", "Er war ein Einzelgänger", "Hunderte Skelette",
+               "Der Triceratops aus Jurassic Park", "Im Film", "Er wurde vom Asteroiden getötet",
+               "Am letzten Tag", "Er lebte vor 65 Millionen Jahren", "Er starb vor 66 Millionen Jahren aus",
+               "Er lebte vor 68 Millionen Jahren", "Der Dreihorn"],
+    }
+
+    def test_the_triceratops_page_refuses_each_never_say_phrase(self):
+        page = self.topic_page("triceratops")
+        topic = next(t for w in self.wings().values() if isinstance(w, dict) for t in w.get("topics", []) if t.get("count") == "triceratops")
+        # every rule of the topic is met by a phrase of the list in a language it holds for, so a rule added without
+        # its phrase is seen
+        for pattern, _, *only in topic["never_say"]:
+            self.assertTrue(any(re.search(pattern, x.lower()) for lang, xs in self.NEVER_TRICERA.items() if not only or lang in only[0]
+                                for x in xs), pattern)
+        for lang, phrases in self.NEVER_TRICERA.items():
+            original = self.data(lang, page)
+            for phrase in phrases:
+                with self.subTest(lang=lang, phrase=phrase):
+                    # the line under the answer carries none of the words a rule lets a number stand with
+                    shutil.rmtree(self.dir / "out", ignore_errors=True)
+                    data = json.loads(json.dumps(original))
+                    data["top"]["out"]["text"] += f" {phrase}."
+                    self.save(lang, data, page)
+                    self.fails(r"top\.out\.text matches")
+                    self.save(lang, original, page)
+
+    def test_a_triceratops_number_stands_only_with_the_words_that_say_whose_it_is(self):
+        """The page names the largest's 9 m, the 10 and 13 tonnes, our model's 6.9, 7.1 and 2.5 m, the largest head,
+        the long nose horn, Torosaurus as an old Triceratops and 66 million years on purpose: without the words that say
+        whose the number is or what the claim was, the same fields stop the build."""
+        page = self.topic_page("triceratops")
+        cases = [
+            ({"en": (r", and the largest reached about 9\sm", ", and some reached about 9 m"),
+              "de": (r", die größten erreichten etwa 9\sm", ", manche erreichten etwa 9 m")},
+             "9 m only as the largest Triceratops's round figure"),
+            ({"en": (r"Beside the 9\sm, again with no method\. ", ""), "de": (r"Neben den 9\sm, wieder ohne Methode\. ", "")},
+             "10 and 13 tonnes only as numbers you may have read"),
+            ({"en": (r"biggest dinosaurs, with no method,", "biggest dinosaurs,"),
+              "de": (r"größten Dinosauriern, ohne Methode,", "größten Dinosauriern,")},
+             "10 and 13 tonnes only as numbers you may have read"),
+            ({"en": (r"6\.9\sm\s\(23\sft\), by the body model built on its scan", "6.9 m (23 ft)"),
+              "de": (r"6,9\sm, nach dem Körpermodell auf seinem Scan", "6,9 m")},
+             "6.9 m only as ours"),
+            ({"en": (r"\(23\sft\) straight, 7\.1\sm", "(23 ft), 7.1 m"), "de": (r"6,9\sm gerade, 7,1\sm", "6,9 m, 7,1 m")},
+             "7.1 m only as ours"),
+            ({"en": (r"over the hips, 2\.5\sm, ours", "over the hips, 2.5 m"),
+              "de": (r"Rücken über der Hüfte, 2,5\sm, unser Modell", "Rücken über der Hüfte, 2,5 m")},
+             "2.5 m and 2.4 m only as ours"),
+            ({"en": (r"It is one of the largest heads", "It is the largest head"),
+              "de": (r"Das ist einer der größten Köpfe", "Das ist der größte Kopf")},
+             "never the largest skull or head of any land animal"),
+            ({"en": (r"It belongs to T\. prorsus, the later species\. ", ""), "de": (r"Es gehört zu T\. prorsus, der späteren Art\. ", "")},
+             "a long nose horn only as the later T. prorsus's"),
+            ({"en": (r"An idea of 2010\. ", ""), "de": (r"Eine Idee von 2010\. ", "")},
+             "Torosaurus as the old Triceratops only as the idea of 2010"),
+            ({"en": (r"the close of the Cretaceous, about 66", "the close of the Cretaceous, 66"),
+              "de": (r"Ende der Kreidezeit vor etwa 66", "Ende der Kreidezeit vor 66")},
+             "66 or 68 million years only with about"),
+        ]
+        out, _ = self.build()
+        shutil.rmtree(out)
+        for subs, rule in cases:
+            for lang, (condition, instead) in subs.items():
+                with self.subTest(lang=lang, rule=rule):
+                    original = self.data(lang, page)
+                    text = json.dumps(original, ensure_ascii=False)
+                    self.assertRegex(text, condition)
+                    self.save(lang, json.loads(re.sub(condition, instead, text)), page)
+                    self.fails(re.escape(rule))
+                    self.save(lang, original, page)
+
     def test_a_share_picture_may_set_its_words_beside_the_picture(self):
         """A page whose picture would leave much of the share card empty under its words sets them in a column at the
         left and the picture at the right (page.og_image.layout beside): the picture whole, the words wrapped in their
@@ -971,8 +1089,8 @@ class Case(unittest.TestCase):
                      if plain(re.search(r"<h2[^>]*>(.*?)</h2>", x, flags=re.S).group(1)) == topic["name"][lang]]
             self.assertEqual(len(found), 1, path)
             self.assertEqual(plain(found[0]), item.get("line") or topic["line"][lang])
-        # the hub and the five neighbours, in both languages
-        self.assertEqual(seen, 12)
+        # the hub and the six neighbours, in both languages
+        self.assertEqual(seen, 14)
 
     def test_a_picture_too_tall_for_the_share_card_stands_whole_above_the_address(self):
         spec = importlib.util.spec_from_file_location("chart_share", self.dir / "chart.py")

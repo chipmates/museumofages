@@ -296,7 +296,7 @@ test('the question seen and its answer: a word and the page, never the click id,
   await none({ step: 'ask_yes', language: 'en' })
 })
 
-test('the question on the six animal pages: its rows carry the animal\'s page kind and the language, nothing more', async () => {
+test('the question on the seven animal pages: its rows carry the animal\'s page kind and the language, nothing more', async () => {
   for (const page of Object.keys(ASKED_MAKING)) {
     assert.ok(PAGE_KINDS.includes(page), page)
     for (const [step, language] of [['ask_shown', 'en'], ['ask_yes', 'de'], ['ask_no', 'en'], ['ask_close', 'de']]) {
