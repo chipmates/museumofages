@@ -1468,16 +1468,20 @@ export function createWing(): WingModule {
       if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') { e.preventDefault(); if (up()) return; const to = backIndex(); if (to !== null) h.navigate(to) }
     }, { signal })
     /* A DRAG OR THE WHEEL OVER THE PICTURE moves nothing in a guided walk: the
-       first one this visit is told what does (the keys' hint) */
-    let dragFrom: { x: number; y: number } | null = null
+       first one this visit is told what does (the keys' hint; a finger, which
+       has no arrow keys, the way on alone) */
+    let dragFrom: { x: number; y: number; touch: boolean } | null = null
     // the picture only: the band stands in the stage too, and a hand on it is a hand on the wall
     const onPicture = (e: Event): boolean => !look?.id && !doorStanding && !eveningOn && (e.target === h.stage || Boolean(picture?.element.contains(e.target as Node)))
-    h.stage.addEventListener('pointerdown', e => { dragFrom = onPicture(e) ? { x: e.clientX, y: e.clientY } : null }, { signal })
+    h.stage.addEventListener('pointerdown', e => {
+      dragFrom = onPicture(e) ? { x: e.clientX, y: e.clientY, touch: e.pointerType === 'touch' || e.pointerType === 'pen' } : null
+    }, { signal })
     addEventListener('pointerup', () => { dragFrom = null }, { signal })
     h.stage.addEventListener('pointermove', e => {
       if (!dragFrom || Math.hypot(e.clientX - dragFrom.x, e.clientY - dragFrom.y) < 24) return
+      const touch = dragFrom.touch
       dragFrom = null
-      walk?.hint(restLine())
+      walk?.hint(restLine(), touch)
     }, { signal })
     h.stage.addEventListener('wheel', e => { if (onPicture(e)) walk?.hint(restLine()) }, { passive: true, signal })
     /* THE DESKTOP'S GOLD AT A SET'S END carries the stop's own way on, as the

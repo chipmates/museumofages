@@ -48,8 +48,9 @@ export interface WalkPanel {
   ended(): void
   /** the place's name, the hold's state and the words again */
   paint(): void
-  /** the keys' hint, once a visit: over `line` at rest, in the tip's place while the eye walks */
-  hint(line: HTMLElement | null): void
+  /** the keys' hint, once a visit: over `line` at rest, in the tip's place while the eye walks;
+      `touch` a finger's drag, which is told the way on alone */
+  hint(line: HTMLElement | null, touch?: boolean): void
   dispose(): void
 }
 
@@ -145,10 +146,11 @@ export function createWalkPanel(host: WalkPanelHost, signal: AbortSignal): WalkP
   let walking = false
   let tipNow: WalkTip | 'hint' | null = null
   let hintTimer = 0
+  let hintTouch = false
   let restHint: { line: HTMLElement; words: HTMLElement } | null = null
 
   function tipWords(which: WalkTip | 'hint'): string {
-    if (which === 'hint') return bindKeys(say(WALK_WORDS.hint))
+    if (which === 'hint') return bindKeys(say(hintTouch ? WALK_WORDS.hintTouch : WALK_WORDS.hint))
     if (which === 'keys') return bindKeys(say(host.form() === 'desk' ? WALK_WORDS.tipKeys : WALK_WORDS.tipKeysTouch))
     if (which === 'plan') return say(WALK_WORDS.tipPlan)
     if (which === 'look') return say(WALK_WORDS.tipLook)
@@ -228,9 +230,10 @@ export function createWalkPanel(host: WalkPanelHost, signal: AbortSignal): WalkP
       clearTip()
     },
     paint,
-    hint(line) {
+    hint(line, touch = false) {
       if (hintShown() || signal.aborted) return
       markHint()
+      hintTouch = touch
       clearTimeout(hintTimer)
       if (walking || !line) {
         if (tipNow && tipNow !== 'hint') unmarkTip(tipNow)
@@ -242,7 +245,7 @@ export function createWalkPanel(host: WalkPanelHost, signal: AbortSignal): WalkP
       /* AT REST THE HINT STANDS IN THE LINE'S PLACE for its few seconds, so one
          text stands at a time: on the line's own ground, at its own inset */
       const box = line.getBoundingClientRect()
-      const words = make('p', 'walk-hint-rest', bindKeys(say(WALK_WORDS.hint)))
+      const words = make('p', 'walk-hint-rest', tipWords('hint'))
       words.lang = langTag(lang())
       words.setAttribute('role', 'status')
       const own = getComputedStyle(line)
