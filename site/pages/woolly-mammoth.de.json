@@ -92,7 +92,7 @@
   "scale": {
    "pic": "side",
    "tag": "tag_made",
-   "what": "Unser Wollhaarmammut neben einem Menschen von 1,70 m, im selben Maßstab. Es ist nach einem einzigen echten Tier gebaut, dem Beresowka-Bullen, 1900 im Permafrost im Nordosten Sibiriens gefunden. Die Marke an seiner Schulter zeigt seine eigene Schulterhöhe am lebenden Tier, 271 cm, aus seinen Knochen rekonstruiert. Als er starb, hatte er noch einen Stoßzahn, den linken. Der rechte war lange vorher ausgefallen, und die Jäger, die ihn fanden, trennten den linken ab und verkauften ihn. Unser Mammut trägt beide, der rechte ist das Spiegelbild des linken, eine Rekonstruktion.",
+   "what": "Unser Wollhaarmammut neben einem Menschen von 1,70 m, im selben Maßstab. Es ist in Größe und Gerüst nach einem einzigen echten Tier gebaut, dem Beresowka-Bullen, 1900 im Permafrost im Nordosten Sibiriens gefunden. Die Marke an seiner Schulter zeigt seine eigene Schulterhöhe am lebenden Tier, 271 cm, aus seinen Knochen rekonstruiert. Als er starb, hatte er noch einen Stoßzahn, den linken. Der rechte war lange vorher ausgefallen, und die Jäger, die ihn fanden, trennten den linken ab und verkauften ihn. Unser Mammut trägt beide, der rechte ist das Spiegelbild des linken, eine Rekonstruktion.",
    "alt": "Ein Wollhaarmammut von der Seite im dunkelbraunen Fell, mit hoch gewölbtem Kopf, abfallendem Rücken, zwei gebogenen Stoßzähnen und einer Marke an der Schulter. Der graue Mensch daneben steht niedriger als die Spitzen der Stoßzähne.",
    "note": "Unsere eigene Rekonstruktion, nach veröffentlichten Maßen in Code gebaut und in unserer Engine gerendert. Keine Fotos.",
    "marks": [
@@ -112,7 +112,7 @@
    "close": {
     "pic": "close",
     "tag": "tag_made",
-    "what": "Der Kopf aus der Nähe, mit dem Menschen: das Auge im langen Haar, die Rüsselspitze mit ihrem Finger und die Stoßzähne. Beide Stoßzähne sind Rekonstruktionen, der linke nach dem Gewicht seines einen Stoßzahns, der rechte als dessen Spiegelbild.",
+    "what": "Der Kopf aus der Nähe, mit dem Menschen: das Auge im langen Haar, die Rüsselspitze mit ihrem Finger und die Stoßzähne. Beide Stoßzähne sind Rekonstruktionen, der linke in der Größe nach dem Gewicht seines einen Stoßzahns, der rechte als dessen Spiegelbild.",
     "alt": "Der Kopf des Wollhaarmammuts aus der Nähe: das Auge im langen Haar, die Rüsselspitze mit Finger am Boden, zwei gebogene Stoßzähne. Daneben steht der graue Mensch."
    }
   },
@@ -218,7 +218,7 @@
     {
      "h": "Das Fell",
      "paras": [
-      "Drei Schichten: lange dunkle Deckhaare, eine hellere mittlere Schicht und eine blasse Unterwolle. Im Leben war das Fell wahrscheinlich dunkelbraun und nicht einfarbig. Das Rotblond der Haare in Museen entstand erst im gefrorenen Boden: Dort verliert Haar seine eigene Farbe und nimmt die des Bodens an. Das längste an unserem Bullen gemessene Haar, an Kinn und Brust, war etwa 50 cm lang."
+      "Drei Schichten: lange dunkle Deckhaare, eine hellere mittlere Schicht und eine blasse Unterwolle. Im Leben war das Fell wahrscheinlich dunkelbraun und nicht einfarbig. Das Rotblond der Haare in Museen entstand erst im gefrorenen Boden: Dort verliert Haar seine eigene Farbe und nimmt die des Bodens an. Das längste Haar unseres Bullen, an Kinn und Brust, war nach der Schätzung des Grabungsleiters etwa 50 cm lang."
      ]
     },
     {
@@ -273,9 +273,9 @@
       {
        "points": [
         "Kopf, Ohr, Auge und Vorderfuß: nach einem anderen gefrorenen sibirischen Bullen.",
-        "Der Umriss von der Seite: nach der Rekonstruktion eines dritten Bullen.",
+        "Der Umriss von der Seite: nach Larramendis Rekonstruktion eines dritten Bullen, 2016.",
         "Der Rüssel: nach anderen gefrorenen Mammuten.",
-        "Die Form jedes Knochens: nach anderen montierten Skeletten. Nur die Längen sind seine.",
+        "Die Form jedes Knochens: nach anderen montierten Skeletten. Nur Längen und Breiten sind seine.",
         "Der rechte Stoßzahn: das Spiegelbild des linken.",
         "Die Farbe des Fells: unsere Wahl."
        ]
@@ -346,7 +346,7 @@
     },
     {
      "term": "Ein Behang aus 80 bis 90 cm langen Haaren",
-     "text": "Diese Zahl nennt das Museum, das unseren Bullen bewahrt, an anderer Stelle derselben Seite auch 70 bis 80 cm. Ein so lang gemessenes Haar nennt es nicht. An ihm war das längste gemessene Haar etwa 50 cm lang. In einer Studie gefrorener Mammute waren es 70 cm, an einem Schwanz."
+     "text": "Diese Zahl nennt das Museum, das unseren Bullen bewahrt, an anderer Stelle derselben Seite auch 70 bis 80 cm. An unserem Bullen fand die Grabung abgerissene Haarbüschel von 36 cm Länge. Unversehrt wären sie nach der Schätzung des Grabungsleiters etwa 50 cm lang gewesen."
     },
     {
      "term": "Mammute starben vor 4.000 Jahren aus",

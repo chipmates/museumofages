@@ -92,7 +92,7 @@
   "scale": {
    "pic": "side",
    "tag": "tag_made",
-   "what": "Our woolly mammoth beside a person 1.70 m tall, to one scale. He is built from one real animal, the Berezovka bull, found frozen in north-east Siberia in 1900. The mark at his shoulder is his own height in the flesh, 271 cm (8.9 ft), reconstructed from his bones. When he died he had one tusk left, the left. The right had fallen out long before, and the hunters who found him cut off the left and sold it. Ours carries both, the right as a mirror of the left, a reconstruction.",
+   "what": "Our woolly mammoth beside a person 1.70 m tall, to one scale. He is built to the size and frame of one real animal, the Berezovka bull, found frozen in north-east Siberia in 1900. The mark at his shoulder is his own height in the flesh, 271 cm (8.9 ft), reconstructed from his bones. When he died he had one tusk left, the left. The right had fallen out long before, and the hunters who found him cut off the left and sold it. Ours carries both, the right as a mirror of the left, a reconstruction.",
    "alt": "A woolly mammoth from the side in a dark brown coat: high domed head, sloping back, two curved tusks, a mark at the shoulder. The grey person beside him stands lower than the tusk tips.",
    "note": "Our own reconstruction, built in code from published measurements and rendered in our own engine. Not photographs.",
    "marks": [
@@ -112,7 +112,7 @@
    "close": {
     "pic": "close",
     "tag": "tag_made",
-    "what": "The head, closer up, with the person: the eye in the long hair, the trunk's fingered tip and the tusks. Both tusks are reconstructions, the left from the weight of his one tusk, the right as its mirror.",
+    "what": "The head, closer up, with the person: the eye in the long hair, the trunk's fingered tip and the tusks. Both tusks are reconstructions, the left sized from the weight of his one tusk, the right as its mirror.",
     "alt": "The woolly mammoth's head closer up: the eye in long hair, the trunk's fingered tip on the ground, two curved tusks. The grey person stands beside it."
    }
   },
@@ -218,7 +218,7 @@
     {
      "h": "The coat",
      "paras": [
-      "Three tiers: long dark outer hairs, a lighter middle tier and a pale underwool. In life the coat was probably dark brown and not one flat colour. The ginger of museum hair is a burial colour: in frozen ground hair loses its own colour and takes up the soil's. Our bull's longest measured hair, on the chin and chest, was about 50 cm."
+      "Three tiers: long dark outer hairs, a lighter middle tier and a pale underwool. In life the coat was probably dark brown and not one flat colour. The ginger of museum hair is a burial colour: in frozen ground hair loses its own colour and takes up the soil's. Our bull's longest hair, on the chin and chest, was about 50 cm, by the estimate of the leader of the dig."
      ]
     },
     {
@@ -273,9 +273,9 @@
       {
        "points": [
         "Head, ear, eye and forefoot: after another frozen Siberian bull.",
-        "The side outline: after a third bull's restoration.",
+        "The side outline: after Larramendi's restoration of a third bull, 2016.",
         "The trunk: after other frozen mammoths.",
-        "The shape of every bone: after other mounts. Only the lengths are his.",
+        "The shape of every bone: after other mounts. Only the lengths and widths are his.",
         "The right tusk: a mirror of the left.",
         "The coat's colour: our choice."
        ]
@@ -346,7 +346,7 @@
     },
     {
      "term": "A skirt of hair 80 to 90 cm long",
-     "text": "The museum that holds our bull gives this figure, and 70 to 80 cm elsewhere on the same page. It names no hair measured that long. On him the longest measured hair was about 50 cm. In a study of frozen mammoths it was 70 cm, on a tail."
+     "text": "The museum that holds our bull gives this figure, and 70 to 80 cm elsewhere on the same page. On our bull the dig found torn bunches of hair 36 cm long. Whole, they would have been about 50 cm, by the estimate of the dig's leader."
     },
     {
      "term": "Mammoths died out 4,000 years ago",
