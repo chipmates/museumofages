@@ -18,7 +18,7 @@ import { setRegister } from './frame'
 import { sayAs, WING_TEXT } from './content'
 import { LOBBY_TEXT } from '../content/lobby'
 import type { VinciCertainty, VinciText } from './vinci/content'
-import { lobbyWord } from './vinci/ending-talk'
+import { learnWord, lobbyWord } from './vinci/ending-talk'
 import { WALK_WORDS } from './walk-words'
 import type { WalkPanel } from './walk-controls'
 
@@ -602,6 +602,10 @@ export function createDeskChrome(host: DeskChromeHost): DeskChrome {
        every stop showed one, at two digits */
     const pSet = copyOf<HTMLElement>('.desk-ov-open')
     if (pSet) { pSet.textContent = say(deskControl('overview', 'things_to_see')).replace('{n}', '29'); pSet.hidden = false }
+    /* the last stop's two endings (desk.panel) take the row beside gold, so
+       its words have less room again: measured with the talk standing */
+    const pTalk = copyOf<HTMLElement>('.desk-panel-talk')
+    const pTalkWords = copyOf<HTMLElement>('.desk-panel-talk-words')
     host.stage.append(probe)
     let tallest = 0
     ids.forEach((id, index) => {
@@ -612,9 +616,11 @@ export function createDeskChrome(host: DeskChromeHost): DeskChrome {
       if (pLine) { pLine.textContent = stop ? say(stop.line) : ''; pLine.hidden = !stop }
       if (pOut) { pOut.textContent = outWord; pOut.hidden = index !== 0 }
       const next = ids[index + 1]
-      // the way on names the next stop at rest and the walk while a leg runs
+      if (pTalk) pTalk.hidden = Boolean(next)
+      if (pTalkWords && !next) pTalkWords.textContent = say(learnWord())
+      // the way on names the next stop at rest and the walk while a leg runs; at the end it looks up
       for (const [kicker, title] of [
-        [say(next ? host.words.next : WORD.end()), next ? say(titleOf(next)) : ''],
+        [say(next ? host.words.next : WORD.end()), say(next ? titleOf(next) : deskControl('ending', 'lookup'))],
         [say(WORD.walking()), say(WORD.faster())],
       ] as const) {
         if (pKicker) pKicker.textContent = kicker
