@@ -183,22 +183,97 @@ export function createFilmCinema(host: FilmCinemaHost): FilmCinema {
     const stop = deskStoryStop(id)
     const line = stop ? say(stop.line) : ''
     const opens = !box.querySelector<HTMLElement>('.film-more')?.hidden
+    // the row is read with the gold at its own width; the room it gave the line last time goes back on unchanged
+    const given = gold?.style.getPropertyValue('--cinema-gold-room') ?? ''
+    gold?.style.removeProperty('--cinema-gold-room')
     // where the endings leave the strip too narrow for its words, it gives way to them and keeps its key
     const free = opens ? stripRoom() : 0
-    const squeezed = free > 0 && free < CAPTION_LEAST
-    const key = [id, lang(), line, opens, squeezed, innerWidth, innerHeight, Math.round(gold?.getBoundingClientRect().width ?? 0)].join('|')
+    let squeezed = free > 0 && free < CAPTION_LEAST
+    const key = [id, lang(), line, opens, squeezed, innerWidth, innerHeight, Math.round(gold?.getBoundingClientRect().width ?? 0), wing.dataset['walk'] ?? ''].join('|')
     publish()
-    if (key === said) return
+    if (key === said) {
+      if (given) gold?.style.setProperty('--cinema-gold-room', given)
+      return
+    }
     said = key
     caption.lang = langTag(lang())
     mark.replaceChildren(deskMark(stop?.certainty ?? 'reconstructed'))
     moreWord.textContent = say(deskControl('shared', 'read_more'))
     more.hidden = !opens
     more.setAttribute('aria-expanded', box.dataset['drawer'] === 'true' ? 'true' : 'false')
+    const beside = besideTheSeat()
+    const least = beside ? leastGold() : null
+    // a strip that gives way beside the full gold may keep its words beside the least one
+    let held = false
+    if (squeezed && least) {
+      goldAt(least)
+      held = stripRoom() >= CAPTION_LEAST
+      squeezed = !held
+      if (!held) gold?.style.removeProperty('--cinema-gold-room')
+    }
     caption.dataset['squeezed'] = String(squeezed)
+    delete caption.dataset['rows']
     if (squeezed) words.textContent = line
-    else fit(line, opens ? 2 : 3)
+    else {
+      fit(line, opens ? 2 : 3)
+      if (caption.dataset['cut'] === 'true' && least) giveRoom(line, opens ? 2 : 3, least, held)
+      // where the gold cannot give enough, the line takes a third row, grown upward over the picture
+      if (caption.dataset['cut'] === 'true' && beside && opens) {
+        caption.dataset['rows'] = '3'
+        fit(line, 3)
+      }
+    }
     room()
+  }
+  /* THE LINE READS WHOLE BESIDE THE PLAN'S SEAT. The seat took its width from
+     the strip; where the line's rows then cut it, or the strip would give way,
+     the gold gives the width back, its name taking two rows at its own type as
+     it does upright: the widest gold that holds the line whole, never so narrow
+     that the name takes a third or a word stands past its edge. Where that is
+     not enough, the line takes a third row. At rest only, so the walk's words
+     keep their strip. */
+  const goldAt = (width: number): void => gold?.style.setProperty('--cinema-gold-room', `${width}px`)
+  const besideTheSeat = (): boolean => Boolean(gold && foot?.querySelector<HTMLElement>(':scope > .film-plan')?.getClientRects().length && !wing.dataset['walk'])
+  /** the narrowest gold whose name still stands in two rows with no word past its edge; null where it cannot give */
+  function leastGold(): number | null {
+    const name = gold?.querySelector<HTMLElement>('.film-gold-name')
+    if (!gold || !name || name.dataset['rows']) return null
+    const full = Math.floor(gold.getBoundingClientRect().width)
+    const row = parseFloat(getComputedStyle(name).lineHeight) || 18
+    const arrow = gold.querySelector<HTMLElement>('.film-gold-arrow')
+    const edge = parseFloat(getComputedStyle(gold).paddingRight) || 0
+    // a word longer than the name's column pushes the arrow past the pill's edge
+    const holds = (): boolean => Math.round(name.getBoundingClientRect().height / row) <= 2
+      && (!arrow || arrow.getBoundingClientRect().right <= gold.getBoundingClientRect().right - edge + 1)
+    let low = 64, high = full
+    while (high - low > 2) {
+      const mid = (low + high) >> 1
+      goldAt(mid)
+      if (holds()) high = mid
+      else low = mid
+    }
+    gold.style.removeProperty('--cinema-gold-room')
+    return high < full ? high : null
+  }
+  /** the widest gold from least up that holds the line whole; where none does, the gold its own width again,
+      or the least where only that keeps the strip's words (held) */
+  function giveRoom(line: string, rows: number, least: number, held: boolean): void {
+    if (!gold) return
+    gold.style.removeProperty('--cinema-gold-room')
+    const full = Math.floor(gold.getBoundingClientRect().width)
+    const whole = (width: number): boolean => { goldAt(width); fit(line, rows); return caption.dataset['cut'] !== 'true' }
+    if (!whole(least)) {
+      if (!held) gold.style.removeProperty('--cinema-gold-room')
+      fit(line, rows)
+      return
+    }
+    let low = least, high = full
+    while (high - low > 2) {
+      const mid = (low + high) >> 1
+      if (whole(mid)) low = mid
+      else high = mid
+    }
+    whole(low)
   }
   /** the width the row leaves the strip, read with the strip stretched over it, whatever words it holds now */
   function stripRoom(): number {

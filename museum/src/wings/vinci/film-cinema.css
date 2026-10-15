@@ -62,6 +62,12 @@ html:has(#wing[data-film='upright']) #rail { display: none !important; }
   height: 48px;
 }
 #wing[data-film='cinema'] .film-gold::after { left: -6px; right: -6px; top: -4px; bottom: -4px; }
+/* at rest beside the Plan's seat the gold may give the stop's line its width back, and where that is not
+   enough the line takes a third row, grown upward so the seats and the gold keep their line (film-cinema.ts) */
+#wing[data-film='cinema']:not([data-walk]) .film-box:not([data-end='true']) .film-foot > .film-gold {
+  max-width: min(288px, 34vw, var(--cinema-gold-room, 288px));
+}
+#wing[data-film='cinema'] .cinema-caption[data-rows='3'] { margin-top: -20px; }
 
 /* ---- the caption: the line, its mark, and the key to the rest ---- */
 #wing[data-film='cinema'] .cinema-caption {
