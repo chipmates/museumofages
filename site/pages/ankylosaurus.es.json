@@ -117,7 +117,7 @@
  },
  "meta": {
   "title": "Ankylosaurus: tamaño de unos 6 a 8 m, 4,8 t | Museum of Ages",
-  "description": "¿Cuánto medía el anquilosaurio? Unos 6 a 8 m. El Ankylosaurus menor conocido, el de la única maza hallada, pesaba unas 4,8 t según los huesos de sus patas.",
+  "description": "¿Cuánto medía el anquilosaurio? Unos 6 a 8 m. El Ankylosaurus menor conocido, el de la única maza hallada, rondaba las 4,8 t según los huesos de sus patas.",
   "og_title": "Ankylosaurus: tamaño de unos 6 a 8 m, 4,8 t",
   "og_image_alt": "Un Ankylosaurus de lado: un cuerpo bajo y ancho, cubierto de filas de placas de hueso, una cabeza ancha y baja, cuatro patas cortas y una cola recta que termina en una maza plana. A su lado, una persona gris tan alta como lo alto del lomo sobre la cadera."
  },
@@ -193,7 +193,7 @@
   },
   "guess": {
    "h": "Para adivinar",
-   "q": "El cráneo de Ankylosaurus más grande encontrado hasta hoy, ¿tenía los dientes más grandes o más pequeños que el cráneo más pequeño?",
+   "q": "El cráneo de Ankylosaurus más grande encontrado hasta hoy, ¿tenía los dientes más grandes o más pequeños que los del cráneo más pequeño?",
    "button": "Ver la respuesta",
    "a": "Más pequeños: el diente sin desgastar más grande del cráneo grande mide unos 7,5 mm de alto. En el cráneo más pequeño, el que sigue nuestro modelo, el mayor mide unos 9,1 mm.",
    "button_open": "Ocultar la respuesta"
@@ -222,7 +222,7 @@
     {
      "cells": [
       "El animal del cráneo más grande (CMN 8880, Ottawa), conocido solo por el cráneo",
-      "hasta unos 8 m a juicio de su estudio, casi 10 m calculados, pero probablemente demasiado largo según sus propios autores",
+      "hasta unos 8 m a juicio de su estudio, casi 10 m calculados, pero probablemente demasiado largos según sus propios autores",
       "sin medir",
       "unos 67 cm",
       "unas 8 t, un cálculo aproximado a escala del que dudan sus propios autores",
@@ -298,7 +298,7 @@
    "h": "La maza de la cola del Ankylosaurus",
    "paras": [
     "La maza mide 60 cm de largo, 49 cm de ancho y solo 19 cm de alto, medida en el fósil. Es un disco bajo, plano y redondeado, hecho de placas de hueso, sin púas, y curiosamente no es más ancha que las mazas más grandes de sus parientes más pequeños. El mango era la mitad trasera de la cola. Sus vértebras encajaban entre sí, y unos tendones convertidos en hueso las ataban hasta formar una barra rígida.",
-    "Solo la parte delantera de la cola podía doblarse, sobre todo hacia los lados: un estudio de las colas de parientes halló un giro de unos 100 grados. ¿Podía la maza romper huesos? En el modelo de ese estudio, solo las mazas de más de 50 cm de ancho golpeaban con fuerza suficiente, y esta queda justo por debajo de ese límite.",
+    "Solo la parte delantera de la cola podía doblarse, sobre todo hacia los lados: un estudio de las colas de parientes halló un arco de unos 100 grados. ¿Podía la maza romper huesos? En el modelo de ese estudio, solo las mazas de más de 50 cm de ancho golpeaban con fuerza suficiente, y esta queda justo por debajo de ese límite.",
     "La mejor pista sobre su uso es un estudio de un pariente más antiguo, Zuul, que tiene en los costados placas rotas y curadas justo donde golpearía otra maza. Así que las mazas probablemente servían sobre todo en peleas entre animales de la misma especie. El mismo estudio apenas duda de que también pudieran servir para defenderse de un depredador, pero ningún fósil de Ankylosaurus muestra ni lo uno ni lo otro."
    ]
   },
@@ -338,9 +338,9 @@
      },
      {
       "swatch": "rebuilt",
-      "text": "De parientes, o reconstruido"
+      "text": "De parientes o reconstruido"
      },
-     "El fémur derecho, la parte de arriba del isquion derecho (un hueso de la cadera), el peroné izquierdo y un hueso del pie son copias en espejo del otro lado. Las placas tienen las formas del propio Ankylosaurus, y su lugar se supuso en parte a partir de sus parientes."
+     "El fémur derecho, la parte de arriba del isquion derecho (un hueso de la cadera), el peroné izquierdo y un hueso del pie son copias en espejo del otro lado. Las placas tienen las formas del propio Ankylosaurus, y su lugar se supuso a partir de sus parientes."
     ]
    }
   },
@@ -370,7 +370,7 @@
    "nav": "Ankylosaurus vs. T. rex",
    "h": "Ankylosaurus vs. T. rex",
    "paras": [
-    "El Ankylosaurus y el T. rex vivieron en la misma época y en la misma tierra, y sus huesos están en las mismas rocas. Pero ningún fósil conocido muestra un encuentro entre los dos: ningún mordisco de T. rex en un hueso de Ankylosaurus, ninguna herida de maza en un T. rex. Las rocas no dicen quién ganaría.",
+    "El Ankylosaurus y el T. rex vivieron en la misma época y en la misma región, y sus huesos están en las mismas rocas. Pero ningún fósil conocido muestra un encuentro entre los dos: ningún mordisco de T. rex en un hueso de Ankylosaurus, ninguna herida de maza en un T. rex. Las rocas no dicen quién ganaría.",
     "Lo que sí se puede decir: un T. rex grande era más o menos el doble de pesado, unas 8 a 9 toneladas frente a unas 4,8 del animal en el que se basa nuestro modelo. El Ankylosaurus llevaba placas y podía blandir una maza, aunque sus parientes probablemente usaban las suyas sobre todo unos contra otros.",
     "En nuestra imagen, el punto más alto de nuestro Ankylosaurus queda por debajo de la rodilla de nuestro T. rex."
    ],
@@ -405,7 +405,7 @@
    "nav": "Stegosaurus y Ankylosaurus",
    "h": "Stegosaurus y Ankylosaurus",
    "paras": [
-    "Nunca coincidieron: entre ellos hay unos 80 millones de años. El Stegosaurus vivió en el Jurásico Superior, hace unos 150 millones de años, así que el Ankylosaurus vivió más cerca de nosotros en el tiempo que del Stegosaurus. Se suelen nombrar juntos porque los dos eran herbívoros acorazados, emparentados dentro de un árbol familiar más grande."
+    "Nunca coincidieron: entre ellos hay unos 80 millones de años. El Stegosaurus vivió en el Jurásico Superior, hace unos 150 millones de años, así que el Ankylosaurus vivió más cerca de nosotros en el tiempo que del Stegosaurus. Se suelen nombrar juntos porque los dos eran herbívoros acorazados, emparentados dentro de un árbol evolutivo más grande."
    ]
   },
   {
@@ -426,7 +426,7 @@
    "rows": [
     {
      "term": "8 m de largo",
-     "text": "El límite de arriba para los animales más grandes, estimado a partir del cráneo más grande. Lo más probable es que el animal más pequeño en el que se basa el nuestro midiera cerca de 6 m."
+     "text": "El límite superior para los animales más grandes, estimado a partir del cráneo más grande. Lo más probable es que el animal más pequeño en el que se basa el nuestro midiera cerca de 6 m."
     },
     {
      "term": "10 m de largo",
@@ -450,7 +450,7 @@
     },
     {
      "term": "El dinosaurio acorazado más grande",
-     "text": "El estudio de 2017 llama al Ankylosaurus el anquilosáurido más grande conocido, y quizá el anquilosaurio más grande de todos."
+     "text": "El estudio de 2017 llama al Ankylosaurus el anquilosáurido más grande conocido, y quizá el mayor de todos los anquilosaurios."
     },
     {
      "term": "Un tanque viviente",
