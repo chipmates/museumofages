@@ -1078,7 +1078,7 @@ class Case(unittest.TestCase):
               "de": (r"Das Tier, nach dem unser Modell gebaut ist, kommt nach seinen Beinknochen auf etwa 4,8\st",
                      "Unser Modell kommt auf etwa 4,8 t")},
              "never a weight beside our animal, and never its volume: the weight is the study's, about 4.8 tonnes"),
-            ({"en": (r"one study of 2017, never weighed", "one study of 2017, weighed"),
+            ({"en": (r"one 2017 study, never weighed", "one 2017 study, weighed"),
               "de": (r"eine Studie von 2017, nie gewogen", "eine Studie von 2017, gewogen")},
              "never weighed: the weight is worked out from its leg bones"),
             ({"en": (r"Old pictures borrowed them from another family of armoured dinosaurs\.", "Ankylosaurus wore them over its shoulders."),
@@ -1095,16 +1095,16 @@ class Case(unittest.TestCase):
              "never that it killed T. rex: no known T. rex bone carries a club wound"),
             ({"en": (r"19\scm high, with no spikes\.", "19 cm high."), "de": (r"19\scm hoch, ohne Stacheln\.", "19 cm hoch.")},
              "never a spiked ball on the tail: the knob is a low, flat disc"),
-            ({"en": (r"The 2017 study calls Ankylosaurus the biggest known of its club-tailed family, and possibly the biggest "
+            ({"en": (r"The 2017 study calls Ankylosaurus the biggest known ankylosaurid, and possibly the biggest "
                       r"ankylosaur of all\.", "Ankylosaurus was the biggest."),
-              "de": (r"Die Studie von 2017 nennt den Ankylosaurus den größten bekannten seiner Familie mit Schwanzkeule und "
+              "de": (r"Die Studie von 2017 nennt den Ankylosaurus den größten bekannten Ankylosauriden und "
                       r"vielleicht den größten Ankylosaurier überhaupt\.", "Das war der Ankylosaurus.")},
-             "never the largest armoured dinosaur as fact: the biggest known of its club-tailed family, possibly of all"),
+             "never the largest armoured dinosaur as fact: the biggest known ankylosaurid, possibly the biggest ankylosaur of all"),
             ({"en": (r"the biggest is about 9\smm high", "the biggest is about 9.1 mm high"),
-              "de": (r"ist der größte etwa 9\smm hoch", "ist der größte etwa 9,1 mm hoch")},
+              "de": (r"misst der größte Zahn etwa 9\smm", "misst der größte Zahn etwa 9,1 mm")},
              "the teeth of 7.5 and 9.1 mm stand only in the guess's answer"),
-            ({"en": (r"which came about 66 million", "which came 66 million"),
-              "de": (r"die vor etwa 66 Millionen Jahren endete", "die vor 66 Millionen Jahren endete")},
+            ({"en": (r"Cretaceous, about 66 million", "Cretaceous, 66 million"),
+              "de": (r"Kreidezeit vor etwa 66 Millionen", "Kreidezeit vor 66 Millionen")},
              "never 65 million years, and a number of years only with about"),
         ]
         out, _ = self.build()
@@ -1424,6 +1424,11 @@ class Case(unittest.TestCase):
             self.assertNotEqual(laid["a"][0], laid["b"][0])
             # the words end at the animal's end in the picture's right half, start at its start in the left half
             self.assertEqual((laid["a"][1], laid["c"][1]), ("start", "end"))
+        # rows that start on one line (a picture of rows): their labels keep the words' order, the first nearest
+        rows = [("m", 0.15, 0.62, None, "Our Ankylosaurus", "6.4 m"), ("s", 0.15, 0.56, None, "Our Stegosaurus", "about 5.6 m")]
+        for width, one_line in ((350, False), (792, True)):
+            laid, _ = lib.mark_lanes(rows, width, one_line)
+            self.assertEqual((laid["m"][0], laid["s"][0]), (0, 1))
         # a label that keeps its side keeps it
         laid, _ = lib.mark_lanes([("c", 0.80, 0.95, "start", "Spinosaurus", "about 10 m")], 1200, True)
         self.assertEqual(laid["c"][1], "start")

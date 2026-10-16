@@ -1319,26 +1319,26 @@
   {
    "path": "pages/pics/img/animals-ankylosaurus-close-1600.avif",
    "url": "/static/img/animals-ankylosaurus-close-1600.avif",
-   "bytes": 19834,
-   "sha256": "29694b64c51543837ec07403c0e2ba9ccd91c6f0d1f71219dd9d506eceea1233"
+   "bytes": 25218,
+   "sha256": "889dcf096a612e5497835c3223449753b48c4f01a83dddebca5977ded337012a"
   },
   {
    "path": "pages/pics/img/animals-ankylosaurus-close-1600.webp",
    "url": "/static/img/animals-ankylosaurus-close-1600.webp",
-   "bytes": 21620,
-   "sha256": "7dc898b29324584d2b382b4ecbd05eeb0f7a098624d62e2889948c32606a61b6"
+   "bytes": 28190,
+   "sha256": "8c41d019624a8eff54a0e57df05d702ddf3d2352c1813a4ec40e47667bba3380"
   },
   {
    "path": "pages/pics/img/animals-ankylosaurus-close-800.avif",
    "url": "/static/img/animals-ankylosaurus-close-800.avif",
-   "bytes": 5834,
-   "sha256": "9e7c018fdb5c1e805d9b4449be5b9c6596b3f1f84a3d65587e8709b36424513c"
+   "bytes": 5875,
+   "sha256": "10c7089fe499f93ccaea490c4b364ca72203b90b575fce913c631a94be537cfb"
   },
   {
    "path": "pages/pics/img/animals-ankylosaurus-close-800.webp",
    "url": "/static/img/animals-ankylosaurus-close-800.webp",
-   "bytes": 6706,
-   "sha256": "b32b98b904ff32246fb2854bfe0d943e24f4a8c40f0592c548e6cf31f6d2caca"
+   "bytes": 6844,
+   "sha256": "b5c7e87915324bddc8aaf50432d21e259c98ce356ee2a9d6a29b475f8bdaf655"
   },
   {
    "path": "pages/pics/img/animals-ankylosaurus-og-de-1200x630.png",
@@ -1391,26 +1391,26 @@
   {
    "path": "pages/pics/img/animals-ankylosaurus-skeleton-1600.avif",
    "url": "/static/img/animals-ankylosaurus-skeleton-1600.avif",
-   "bytes": 17271,
-   "sha256": "b5642b1e20e77dfad0eace91d89c7345ec0706393fc4364e1c0d99f1527ebaf3"
+   "bytes": 17104,
+   "sha256": "9390ad99320dae495b03861b6ef1d047523ab3e27ce84ecceb9bf577730aa9f5"
   },
   {
    "path": "pages/pics/img/animals-ankylosaurus-skeleton-1600.webp",
    "url": "/static/img/animals-ankylosaurus-skeleton-1600.webp",
-   "bytes": 25242,
-   "sha256": "4a11a0234022802733e1e34ebdf10f35dbe5f42212a2492266e74cd0bb2d5938"
+   "bytes": 25062,
+   "sha256": "13cc5bc60bf67fbbf9dca5a3750692cabcc4db650069f9a91cacf3cdf24f3284"
   },
   {
    "path": "pages/pics/img/animals-ankylosaurus-skeleton-800.avif",
    "url": "/static/img/animals-ankylosaurus-skeleton-800.avif",
-   "bytes": 7328,
-   "sha256": "7ace35568577f4a55e958d0963c387054f3cf02c0f6367be2f168c4c1c25b1f5"
+   "bytes": 7266,
+   "sha256": "1aa81891ef76379286b4f3b984e289440140c2321ef05c9b35183721390a6cb2"
   },
   {
    "path": "pages/pics/img/animals-ankylosaurus-skeleton-800.webp",
    "url": "/static/img/animals-ankylosaurus-skeleton-800.webp",
-   "bytes": 10090,
-   "sha256": "b2f0f740be63f352cecefbf9c137c6be04ef3babf4297db72bd867618c8a6b83"
+   "bytes": 10058,
+   "sha256": "1773622c8fe961780344333e52eadd8067dd1f2320982b969bc7975162c05feb"
   },
   {
    "path": "pages/pics/img/animals-biggest-dinosaurs-close-1600.avif",

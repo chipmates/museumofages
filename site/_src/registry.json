@@ -1356,7 +1356,7 @@
           "de": "Wie groß war ein Ankylosaurus?"
         },
         "line": {
-          "en": "Ankylosaurus was about 6 to 8 m long, by a study of 2017. The animal with the only tail club found came to about 4.8 tonnes, worked out from its leg bones. Our Ankylosaurus is built at that animal's size and stands beside a person to one scale, with its club, its armour, what was found and what the bones say about T. rex.",
+          "en": "Ankylosaurus was about 6 to 8 m long, by a 2017 study. The animal with the only tail club found came to about 4.8 tonnes, worked out from its leg bones. Our Ankylosaurus is built at that animal's size and stands beside a person to one scale, with its club, its armour, what was found and what the bones say about T. rex.",
           "de": "Ein Ankylosaurus war nach einer Studie von 2017 etwa 6 bis 8 m lang. Das Tier mit der einzigen gefundenen Schwanzkeule kommt nach seinen Beinknochen auf etwa 4,8 t. Unser Ankylosaurus ist in der Größe dieses Tiers gebaut und steht im selben Maßstab neben einem Menschen, dazu seine Keule, sein Panzer, was gefunden wurde und was die Knochen über den T. rex sagen."
         },
         "langs": ["en", "de"],
@@ -1487,7 +1487,7 @@
           ],
           [
             "(?s)^(?!.*(?:possibly|vielleicht|calls|nennt)).*(?:(?:largest|biggest)\\s(?:known\\s)?armou?red\\sdinosaur|(?:largest|biggest)\\sankylosaur\\w*\\s(?:of\\sall|ever)|(?:largest|biggest)\\sof\\sall\\sankylosaurs|größte[rn]?\\sgepanzerte[rn]?\\sdinosaurier|größte[rn]?\\sankylosaurier\\süberhaupt)",
-            "never the largest armoured dinosaur as fact: the biggest known of its club-tailed family, possibly of all"
+            "never the largest armoured dinosaur as fact: the biggest known ankylosaurid, possibly the biggest ankylosaur of all"
           ],
           [
             "(?:fought|fights|battled|kämpft\\w*|bekämpft\\w*)\\s(?:\\w+\\s){0,3}(?:t\\.\\srex|tyrannosaur\\w*|den\\st\\.\\srex)|(?:t\\.\\srex|tyrannosaur\\w*)\\s(?:\\w+\\s){0,3}(?:fought|fights|battled|kämpft\\w*)|(?:fight|battle|kampf|duell)\\s(?:between|zwischen)\\s(?:the\\s|dem\\s|einem\\s)?(?:t\\.\\srex|ankylosaurus|tyrannosaur\\w*)|made\\sto\\sfight|zum\\skampf\\sgegen\\s(?:den\\s)?t\\.\\srex",

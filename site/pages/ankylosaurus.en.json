@@ -1,5 +1,5 @@
 {
- "_note": "THE WORDS of the Ankylosaurus page. Poured word for word from the writer's WORDS file; the title, the description and the heading are its first options. The person's height stands over the person in each picture (labels.person), and the labels at the pictures name the person too. pics.<name>.marks: each label's place as the start and end of what it names, shares of the picture's width, measured on the frame; pics.<name>.person: the person's centre and the top of its head. pics.side.tops: the top of the back over the hips (1.70 m) as a share of the picture's height from its top; its bracket over the picture runs from the back's top over the hips to the person, so its bar is one level line at the person's height. pics.close.marks: the knob (the model's knob landmarks) and handle and knob (the knob's end to the first handle bone). pics.skeleton.swatches: each colour of the found-bones key as the picture prints it (the median of the bones of that colour, measured on the final picture). pics.beside: our T. rex's, our Ankylosaurus's and our Stegosaurus's rows at one scale, the tails' ends on one left line. Empty cells of the table are the writer's: no sourced figure exists.",
+ "_note": "THE WORDS of the Ankylosaurus page. Poured word for word from the writer's WORDS file; the title, the description and the heading are its first options. The person's height stands over the person in each picture (labels.person), and the labels at the pictures name the person too. pics.<name>.marks: each label's place as the start and end of what it names, shares of the picture's width, measured on the frame; pics.<name>.person: the person's centre and the top of its head. pics.side.tops: the top of the back over the hips (1.70 m) as a share of the picture's height from its top; its bracket over the picture runs from the back's top over the hips to the person, so its bar is one level line at the person's height. pics.close.marks: the knob (the model's knob landmarks) and handle and knob (the knob's end to the first handle bone). pics.skeleton.swatches: each colour of the found-bones key as the picture prints it (the median of the bones of that colour, measured on the final picture). pics.beside: our T. rex's, our Ankylosaurus's and our Stegosaurus's rows at one scale, the tails' ends on one left line. An empty cell of the table has no sourced figure.",
  "page": {
   "id": "animals-ankylosaurus",
   "wing": "animals",
@@ -42,11 +42,11 @@
     1600
    ],
    "sizes": "(min-width: 1280px) 690px, (min-width: 960px) 54vw, (min-width: 600px) calc(100vw - 64px), calc(100vw - 40px)",
-   "person": "10.06% 19.34%",
+   "person": "8.33% 19.28%",
    "marks": {
-    "knob": "17.3% 27.54%",
-    "club": "17.3% 51.4%",
-    "person": "7.59% 12.53%"
+    "knob": "17.31% 30%",
+    "club": "17.31% 59.56%",
+    "person": "5.27% 11.4%"
    },
    "behind": [
     "knob"
@@ -78,9 +78,9 @@
     1600
    ],
    "sizes": "(min-width: 1280px) 690px, (min-width: 960px) 54vw, (min-width: 600px) calc(100vw - 64px), calc(100vw - 40px)",
-   "person": "91.31% 23.28%",
+   "person": "91.27% 23.15%",
    "swatches": {
-    "found": "#cc8869",
+    "found": "#b07357",
     "other": "#474c5b",
     "rebuilt": "#cacfdf"
    }
@@ -135,7 +135,7 @@
  },
  "top": {
   "h1": "How big was Ankylosaurus?",
-  "answer": "Ankylosaurus was about 6 to 8 m (20 to 26 ft) long, by a study of 2017, and no complete skeleton has been found. The smallest of the known animals came to about 4.8 tonnes, worked out from how thick its leg bones are. Our Ankylosaurus is built at that animal's size: 6.4 m (21 ft) long, almost four people lying head to foot. Its back is highest over the hips, at 1.70 m (5.6 ft), exactly the height of the person beside it.",
+  "answer": "Ankylosaurus was about 6 to 8 m (20 to 26 ft) long, by a 2017 study. The smallest of the known animals came to about 4.8 tonnes (3.6 to 6 by the study's own spread), worked out from how thick its leg bones are. Our Ankylosaurus is built at that animal's size: 6.4 m (21 ft) long, almost four people lying head to foot. Its back is highest over the hips, at 1.70 m (5.6 ft), exactly the height of the person beside it.",
   "answer_more": "Only one Ankylosaurus tail club has been found so far, on that same animal. Its knob is about half a metre (1.6 ft) wide, at the end of a tail whose back half was stiff as a rod.",
   "scale": {
    "pic": "side",
@@ -236,7 +236,7 @@
       "not measured, and none published for today's lengths",
       "about 56 cm (1.8 ft) long, 64 cm (2.1 ft) across the horns",
       "about 4.8 t from its upper arm and thigh bones, the study's spread 3.6 to 6 t",
-      "fair: one study of 2017, never weighed"
+      "fair: one 2017 study, never weighed"
      ]
     },
     {
@@ -251,12 +251,22 @@
     },
     {
      "cells": [
+      "The tail club of AMNH 5214, and ours",
+      "knob 60 cm (2 ft) long and 49 cm (1.6 ft) wide, measured on the fossil. Ours 61 by 51 cm with its horn cover. Handle and knob about 2 m (6.6 ft), in the study and in ours",
+      "knob 19 cm (7.5 in) high, measured on the fossil",
+      "",
+      "",
+      "good for the knob: measured. Fair for the 2 m: the handle completed from a relative. Ours: measured on our files"
+     ]
+    },
+    {
+     "cells": [
       "T. rex, SUE",
       "about 12 m (39 ft), the mount",
       "at the hip about 4 m (13 ft), by the museum",
       "about 1.4 m (4.6 ft), snout to the back of the cheek",
       "about 8 to 9 t, by a bone and three models",
-      "as on our T. rex page"
+      "good: the museum and two studies agree"
      ]
     },
     {
@@ -287,7 +297,7 @@
    "nav": "Ankylosaurus tail club",
    "h": "Ankylosaurus tail club",
    "paras": [
-    "The club's knob is 60 cm (2 ft) long, 49 cm wide and only 19 cm high, measured on the fossil. It is a low, flat, rounded disc of bony plates with no spikes, and oddly no wider than the clubs of smaller relatives. The handle was the back half of the tail, its vertebrae locked together and bound by bony tendons into a stiff rod.",
+    "The club's knob is 60 cm (2 ft) long, 49 cm wide and only 19 cm high, measured on the fossil. It is a low, flat, rounded disc of bony plates with no spikes, and oddly no wider than the biggest clubs of its smaller relatives. The handle was the back half of the tail, its vertebrae locked together and bound by bony tendons into a stiff rod.",
     "Only the front of the tail could bend, mostly sideways: a study of relatives' tails found a swing of about 100 degrees. Could the club break bone? In that study's model only knobs over 50 cm wide hit hard enough, and this one sits just under that line.",
     "The best clue to its use is a study of an older relative, Zuul, with healed, broken plates on its flanks just where another club would land. So clubs seem to have served mostly in fights within their own kind. The same study has little doubt they could also fend off a predator, but no Ankylosaurus fossil shows either."
    ]
@@ -299,7 +309,7 @@
    "h": "Ankylosaurus armour",
    "paras": [
     "Ankylosaurus wore bony plates set in its skin, with skin between them, not a solid shell, and two bony half collars over the neck. Loose plates of its own are known, yet no Ankylosaurus has been found with a plate still in place.",
-    "So the place of each plate is a careful guess from relatives, and ours follows a plan of 2017. The big shoulder spikes of old pictures belong to another armoured family, and in its relatives the belly had no big plates. No colour is known, so ours is a choice."
+    "So the place of each plate is a careful guess from relatives, and ours follows a 2017 plan. The big shoulder spikes of old pictures belong to another armoured family, and in its relatives the belly had no big plates. No colour is known, so ours is a choice."
    ]
   },
   {
@@ -361,8 +371,8 @@
    "h": "Ankylosaurus vs T. rex",
    "paras": [
     "Ankylosaurus and T. rex lived at the same time in the same land, and their bones lie in the same rocks. Yet no known fossil shows the two meeting: no T. rex bite on an Ankylosaurus bone, no club wound on a T. rex. Who would win has no answer in the rocks.",
-    "What can be said: a large T. rex was about twice as heavy, about 8 to 9 tonnes against about 4.8. Ankylosaurus wore plates and could swing a club, though its relatives seem to have used theirs mostly on each other.",
-    "In our picture our T. rex is 1.8 times as long as our Ankylosaurus, whose highest point stays below our T. rex's knee."
+    "What can be said: a large T. rex was about twice as heavy, about 8 to 9 tonnes against about 4.8 for the animal ours is built on. Ankylosaurus wore plates and could swing a club, though its relatives seem to have used theirs mostly on each other.",
+    "In our picture the highest point of our Ankylosaurus stays below our T. rex's knee."
    ],
    "scale": {
     "pic": "beside",
@@ -395,7 +405,7 @@
    "nav": "Stegosaurus and Ankylosaurus",
    "h": "Stegosaurus and Ankylosaurus",
    "paras": [
-    "They never met: about 80 million years lie between them. Stegosaurus lived in the Late Jurassic, about 150 million years ago, so Ankylosaurus lived closer in time to us than to Stegosaurus. People pair them as armoured plant eaters, related within one larger family tree. Our Ankylosaurus is about 0.8 m longer than our Stegosaurus, whose top plate stands about 0.8 m higher."
+    "They never met: about 80 million years lie between them. Stegosaurus lived in the Late Jurassic, about 150 million years ago, so Ankylosaurus lived closer in time to us than to Stegosaurus. People pair them as armoured plant eaters, related within one larger family tree."
    ]
   },
   {
@@ -404,7 +414,7 @@
    "nav": "When and where Ankylosaurus lived",
    "h": "When and where Ankylosaurus lived",
    "paras": [
-    "Ankylosaurus lived in western North America, in what is now Alberta, Saskatchewan, Montana and Wyoming, about 68 to 66 million years ago. It lived until near the end of the Cretaceous, which came about 66 million years ago. The collapse that ended it is thought to have been set off by an impact in the Yucatán."
+    "Ankylosaurus lived in western North America, in what is now Alberta, Saskatchewan, Montana and Wyoming, from about 68 million years ago until near the end of the Cretaceous, about 66 million years ago. The collapse that ended it is thought to have been set off by an impact in the Yucatán."
    ]
   },
   {
@@ -420,7 +430,7 @@
     },
     {
      "term": "10 m long",
-     "text": "Calculated from the biggest skull by the same method, called probably too long by its own authors."
+     "text": "Calculated from the biggest skull with the same method as the smaller animal's length, from relatives' tails, and called probably too long by its own authors."
     },
     {
      "term": "8 tonnes",
@@ -440,7 +450,7 @@
     },
     {
      "term": "The biggest armoured dinosaur",
-     "text": "The 2017 study calls Ankylosaurus the biggest known of its club-tailed family, and possibly the biggest ankylosaur of all."
+     "text": "The 2017 study calls Ankylosaurus the biggest known ankylosaurid, and possibly the biggest ankylosaur of all."
     },
     {
      "term": "A living tank",
@@ -539,10 +549,8 @@
      "href": "https://doi.org/10.1038/nature09678"
     },
     {
-     "text": "American Museum of Natural History, New York: Ankylosaurus AMNH 5214, the first skeleton, AMNH 5895, and its expedition reports of 1910 and 1911."
-    },
-    {
-     "text": "Canadian Museum of Nature, Ottawa: the biggest skull, CMN 8880."
+     "text": "American Museum of Natural History, New York: its expedition reports of 1910 and 1911.",
+     "href": "https://research.amnh.org/paleontology/reports/1910.html"
     },
     {
      "text": "Natural History Museum, London: its Ankylosaurus and Stegosaurus pages.",

@@ -1,5 +1,5 @@
 {
- "_note": "THE WORDS of the Ankylosaurus page. Poured word for word from the writer's WORDS file; the title, the description and the heading are its first options. The person's height stands over the person in each picture (labels.person), and the labels at the pictures name the person too. pics.<name>.marks: each label's place as the start and end of what it names, shares of the picture's width, measured on the frame; pics.<name>.person: the person's centre and the top of its head. pics.side.tops: the top of the back over the hips (1.70 m) as a share of the picture's height from its top; its bracket over the picture runs from the back's top over the hips to the person, so its bar is one level line at the person's height. pics.close.marks: the knob (the model's knob landmarks) and handle and knob (the knob's end to the first handle bone). pics.skeleton.swatches: each colour of the found-bones key as the picture prints it (the median of the bones of that colour, measured on the final picture). pics.beside: our T. rex's, our Ankylosaurus's and our Stegosaurus's rows at one scale, the tails' ends on one left line. Empty cells of the table are the writer's: no sourced figure exists.",
+ "_note": "THE WORDS of the Ankylosaurus page. Poured word for word from the writer's WORDS file; the title, the description and the heading are its first options. The person's height stands over the person in each picture (labels.person), and the labels at the pictures name the person too. pics.<name>.marks: each label's place as the start and end of what it names, shares of the picture's width, measured on the frame; pics.<name>.person: the person's centre and the top of its head. pics.side.tops: the top of the back over the hips (1.70 m) as a share of the picture's height from its top; its bracket over the picture runs from the back's top over the hips to the person, so its bar is one level line at the person's height. pics.close.marks: the knob (the model's knob landmarks) and handle and knob (the knob's end to the first handle bone). pics.skeleton.swatches: each colour of the found-bones key as the picture prints it (the median of the bones of that colour, measured on the final picture). pics.beside: our T. rex's, our Ankylosaurus's and our Stegosaurus's rows at one scale, the tails' ends on one left line. An empty cell of the table has no sourced figure.",
  "page": {
   "id": "animals-ankylosaurus",
   "wing": "animals",
@@ -46,11 +46,11 @@
     1600
    ],
    "sizes": "(min-width: 1280px) 690px, (min-width: 960px) 54vw, (min-width: 600px) calc(100vw - 64px), calc(100vw - 40px)",
-   "person": "10.06% 19.34%",
+   "person": "8.33% 19.28%",
    "marks": {
-    "knob": "17.3% 27.54%",
-    "club": "17.3% 51.4%",
-    "person": "7.59% 12.53%"
+    "knob": "17.31% 30%",
+    "club": "17.31% 59.56%",
+    "person": "5.27% 11.4%"
    },
    "behind": [
     "knob"
@@ -82,9 +82,9 @@
     1600
    ],
    "sizes": "(min-width: 1280px) 690px, (min-width: 960px) 54vw, (min-width: 600px) calc(100vw - 64px), calc(100vw - 40px)",
-   "person": "91.31% 23.28%",
+   "person": "91.27% 23.15%",
    "swatches": {
-    "found": "#cc8869",
+    "found": "#b07357",
     "other": "#474c5b",
     "rebuilt": "#cacfdf"
    }
@@ -139,7 +139,7 @@
  },
  "top": {
   "h1": "Wie groß war ein Ankylosaurus?",
-  "answer": "Ein Ankylosaurus war etwa 6 bis 8 m lang, nach einer Studie von 2017, und ein vollständiges Skelett wurde bisher nicht gefunden. Das kleinste der bekannten Tiere kommt auf etwa 4,8 t, berechnet aus der Dicke seiner Beinknochen. Unser Ankylosaurus ist in der Größe dieses Tiers gebaut: 6,4 m lang, fast vier Menschen der Länge nach hintereinandergelegt. Am höchsten ist sein Rücken über der Hüfte, mit 1,70 m genauso hoch wie der Mensch daneben.",
+  "answer": "Ein Ankylosaurus war etwa 6 bis 8 m lang, nach einer Studie von 2017. Das kleinste der bekannten Tiere kommt auf etwa 4,8 t (3,6 bis 6 t nach der Spanne der Studie selbst), berechnet aus der Dicke seiner Beinknochen. Unser Ankylosaurus ist in der Größe dieses Tiers gebaut: 6,4 m lang, fast vier Menschen der Länge nach hintereinandergelegt. Am höchsten ist sein Rücken über der Hüfte, mit 1,70 m genauso hoch wie der Mensch daneben.",
   "answer_more": "Bisher wurde nur eine Schwanzkeule eines Ankylosaurus gefunden, an eben diesem Tier. Sie ist etwa einen halben Meter breit und saß am Ende eines Schwanzes, dessen hintere Hälfte steif war wie eine Stange.",
   "scale": {
    "pic": "side",
@@ -255,18 +255,28 @@
     },
     {
      "cells": [
+      "Die Schwanzkeule von AMNH 5214 und unsere",
+      "Keule 60 cm lang und 49 cm breit, am Fossil gemessen. Unsere 61 mal 51 cm mit Hornschicht. Stiel und Keule etwa 2 m, in der Studie und bei unserem Modell",
+      "Keule 19 cm hoch, am Fossil gemessen",
+      "",
+      "",
+      "gut belegt für die Keule: gemessen. Mittel für die 2 m: der Stiel nach einem Verwandten ergänzt. Unsere Keule: an unseren Dateien gemessen"
+     ]
+    },
+    {
+     "cells": [
       "T. rex, SUE",
-      "etwa 12 m, die Montage",
+      "etwa 12 m, das montierte Skelett",
       "an der Hüfte etwa 4 m, nach dem Museum",
       "etwa 1,4 m, von der Schnauze bis zum hinteren Rand der Wange",
       "etwa 8 bis 9 t, nach einem Knochen und drei Modellen",
-      "wie auf unserer T.-rex-Seite"
+      "gut belegt: das Museum und zwei Studien stimmen überein"
      ]
     },
     {
      "cells": [
       "Stegosaurus, Sophie, London",
-      "etwa 5,6 m, die Montage",
+      "etwa 5,6 m, das montierte Skelett",
       "an der Hüfte nicht veröffentlicht",
       "",
       "etwa 1,6 t, ein Modell ihres eigenen Skeletts",
@@ -291,9 +301,9 @@
    "nav": "Die Schwanzkeule des Ankylosaurus",
    "h": "Die Schwanzkeule des Ankylosaurus",
    "paras": [
-    "Die Keule ist 60 cm lang, 49 cm breit und nur 19 cm hoch, am Fossil gemessen. Sie bildet eine flache, abgerundete Scheibe aus Knochenplatten, ohne Stacheln, und überraschend nicht breiter als die Keulen kleinerer Verwandter. Der Stiel war die hintere Hälfte des Schwanzes, aus Wirbeln, die fest ineinandergriffen und von verknöcherten Sehnen umschnürt waren: eine steife Stange.",
+    "Die Keule ist 60 cm lang, 49 cm breit und nur 19 cm hoch, am Fossil gemessen. Sie bildet eine flache, abgerundete Scheibe aus Knochenplatten, ohne Stacheln, und ist überraschenderweise nicht breiter als die größten Keulen seiner kleineren Verwandten. Der Stiel war die hintere Hälfte des Schwanzes, aus Wirbeln, die fest ineinandergriffen und von verknöcherten Sehnen umschnürt waren: eine steife Stange.",
     "Biegen ließ sich nur der vordere Teil des Schwanzes, vor allem zur Seite. Eine Studie an den Schwänzen von Verwandten kam auf einen Ausschlag von etwa 100 Grad. Konnte die Keule Knochen brechen? Im Modell dieser Studie schafften das nur Keulen von mehr als 50 cm Breite, und diese liegt knapp darunter.",
-    "Wofür solche Keulen dienten, verrät am besten eine Studie an einem älteren Verwandten, Zuul: An seinen Flanken sitzen verheilte, gebrochene Platten, genau dort, wo eine andere Keule treffen würde. Die Keulen wurden also offenbar vor allem im Kampf unter Artgenossen eingesetzt. Dieselbe Studie zweifelt kaum daran, dass sie auch einen Räuber abwehren konnten, doch kein Fossil eines Ankylosaurus zeigt das eine oder das andere."
+    "Wofür solche Keulen dienten, verrät am besten eine Studie an einem älteren Verwandten, Zuul: An seinen Flanken sitzen verheilte, gebrochene Platten, genau dort, wo eine andere Keule treffen würde. Die Keulen wurden also wohl vor allem im Kampf unter Artgenossen eingesetzt. Dieselbe Studie zweifelt kaum daran, dass sie auch einen Räuber abwehren konnten, doch kein Fossil eines Ankylosaurus zeigt das eine oder das andere."
    ]
   },
   {
@@ -353,7 +363,7 @@
     {
      "h": "Schnabel, Zähne und Nahrung",
      "paras": [
-      "Vorn saß ein Hornschnabel, dahinter Reihen sehr kleiner, blattförmiger Zähne, 34 bis 36 in jedem Oberkiefer. Im Schädel, nach dem unser Modell gebaut ist, ist der größte etwa 9 mm hoch, winzig für ein Tier von fast 5 t. Der Ankylosaurus fraß wohl niedrige Pflanzen, vielleicht Farne und Sträucher, doch was genau, ist nicht bekannt."
+      "Vorn saß ein Hornschnabel, dahinter Reihen sehr kleiner, blattförmiger Zähne, 34 bis 36 in jedem Oberkiefer. Im Schädel, nach dem unser Modell gebaut ist, misst der größte Zahn etwa 9 mm, winzig für ein Tier von fast 5 t. Der Ankylosaurus fraß wohl niedrige Pflanzen, vielleicht Farne und Sträucher, doch was genau, ist nicht bekannt."
      ]
     }
    ]
@@ -365,8 +375,8 @@
    "h": "Ankylosaurus und T. rex",
    "paras": [
     "Ankylosaurus und T. rex lebten zur selben Zeit im selben Land, und ihre Knochen liegen in denselben Gesteinen. Doch kein bekannter Fund zeigt, dass die beiden sich begegnet sind: kein Biss eines T. rex an einem Knochen des Ankylosaurus, keine Keulenwunde an einem T. rex. Wer gewonnen hätte, darauf geben die Gesteine keine Antwort.",
-    "Was sich sagen lässt: Ein großer T. rex war etwa doppelt so schwer, mit etwa 8 bis 9 t gegenüber etwa 4,8 t. Der Ankylosaurus trug Platten und konnte eine Keule schwingen, doch seine Verwandten setzten ihre Keulen offenbar vor allem gegeneinander ein.",
-    "In unserem Bild ist unser T. rex 1,8-mal so lang wie unser Ankylosaurus, und dessen höchster Punkt bleibt unter dem Knie unseres T. rex."
+    "Was sich sagen lässt: Ein großer T. rex war etwa doppelt so schwer, mit etwa 8 bis 9 t gegenüber etwa 4,8 t beim Tier, nach dem unser Modell gebaut ist. Der Ankylosaurus trug Platten und konnte eine Keule schwingen, doch seine Verwandten setzten ihre Keulen wohl vor allem gegeneinander ein.",
+    "In unserem Bild bleibt der höchste Punkt unseres Ankylosaurus unter dem Knie unseres T. rex."
    ],
    "scale": {
     "pic": "beside",
@@ -399,7 +409,7 @@
    "nav": "Stegosaurus und Ankylosaurus",
    "h": "Stegosaurus und Ankylosaurus",
    "paras": [
-    "Die beiden sind sich nie begegnet: Zwischen ihnen liegen etwa 80 Millionen Jahre. Der Stegosaurus lebte im Oberen Jura, vor etwa 150 Millionen Jahren, und so lebte der Ankylosaurus uns zeitlich näher als dem Stegosaurus. Oft werden sie zusammen genannt, weil beide gepanzerte Pflanzenfresser waren, verwandt in einem größeren Stammbaum. Unser Ankylosaurus ist etwa 0,8 m länger als unser Stegosaurus, dessen höchste Platte dafür etwa 0,8 m höher aufragt."
+    "Die beiden sind sich nie begegnet: Zwischen ihnen liegen etwa 80 Millionen Jahre. Der Stegosaurus lebte im Oberen Jura, vor etwa 150 Millionen Jahren, und so lebte der Ankylosaurus uns zeitlich näher als dem Stegosaurus. Oft werden sie zusammen genannt, weil beide gepanzerte Pflanzenfresser waren, verwandt in einem größeren Stammbaum."
    ]
   },
   {
@@ -408,7 +418,7 @@
    "nav": "Wann und wo der Ankylosaurus lebte",
    "h": "Wann und wo der Ankylosaurus lebte",
    "paras": [
-    "Der Ankylosaurus lebte im Westen Nordamerikas, wo heute Alberta, Saskatchewan, Montana und Wyoming liegen, vor etwa 68 bis 66 Millionen Jahren. Er lebte bis gegen Ende der Kreidezeit, die vor etwa 66 Millionen Jahren endete, als vermutlich ein Einschlag auf der Halbinsel Yucatán den Zusammenbruch auslöste."
+    "Der Ankylosaurus lebte im Westen Nordamerikas, wo heute Alberta, Saskatchewan, Montana und Wyoming liegen, von vor etwa 68 Millionen Jahren bis gegen Ende der Kreidezeit vor etwa 66 Millionen Jahren. Den Zusammenbruch der damaligen Tier- und Pflanzenwelt, mit dem sie endete, löste vermutlich ein Einschlag auf der Halbinsel Yucatán aus."
    ]
   },
   {
@@ -424,7 +434,7 @@
     },
     {
      "term": "10 m lang",
-     "text": "Mit derselben Methode aus dem größten Schädel errechnet, und die Autoren selbst halten das für wahrscheinlich zu lang."
+     "text": "Aus dem größten Schädel mit derselben Methode errechnet wie die Länge des kleineren Tiers, nach den Schwänzen von Verwandten, und die Autoren selbst halten das für wahrscheinlich zu lang."
     },
     {
      "term": "8 t",
@@ -444,7 +454,7 @@
     },
     {
      "term": "Der größte gepanzerte Dinosaurier",
-     "text": "Die Studie von 2017 nennt den Ankylosaurus den größten bekannten seiner Familie mit Schwanzkeule und vielleicht den größten Ankylosaurier überhaupt."
+     "text": "Die Studie von 2017 nennt den Ankylosaurus den größten bekannten Ankylosauriden und vielleicht den größten Ankylosaurier überhaupt."
     },
     {
      "term": "Ein lebender Panzer",
@@ -464,7 +474,7 @@
     },
     {
      "q": "Was bedeutet der Name Ankylosaurus?",
-     "a": "Verwachsene Echse: So gibt das Natural History Museum in London die Bedeutung an, nach Knochen, die zusammengewachsen sind. Den vollen Namen, Ankylosaurus magniventris, gab ihm 1908 Barnum Brown, der auch den ersten Fund eines T. rex geleitet hatte."
+     "a": "Etwa „verwachsene Echse“: Das Natural History Museum in London gibt „fused lizard“ an, nach Knochen, die zusammengewachsen sind. Den vollen Namen, Ankylosaurus magniventris, gab ihm 1908 Barnum Brown, der auch den ersten Fund eines T. rex geleitet hatte."
     },
     {
      "q": "Wie hoch war ein Ankylosaurus?",
@@ -543,10 +553,8 @@
      "href": "https://doi.org/10.1038/nature09678"
     },
     {
-     "text": "American Museum of Natural History, New York: Ankylosaurus AMNH 5214, das erste Skelett, AMNH 5895, und seine Grabungsberichte von 1910 und 1911."
-    },
-    {
-     "text": "Canadian Museum of Nature, Ottawa: der größte Schädel, CMN 8880."
+     "text": "American Museum of Natural History, New York: seine Grabungsberichte von 1910 und 1911.",
+     "href": "https://research.amnh.org/paleontology/reports/1910.html"
     },
     {
      "text": "Natural History Museum, London: seine Seiten zu Ankylosaurus und Stegosaurus.",

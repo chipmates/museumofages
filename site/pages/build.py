@@ -796,7 +796,8 @@ def mark_lanes(items, width, one_line):
     apart = lambda p, q, gap: p[1] + gap <= q[0] or q[1] + gap <= p[0]
     inner = width - 4
     lanes, out = [], {}
-    for key, a, b, keep, name, value in sorted(items, key=lambda it: (it[1], it[2])):
+    # from left to right; labels whose subjects start at one place keep the words' order, the order of a picture's rows
+    for key, a, b, keep, name, value in sorted(items, key=lambda it: it[1]):
         # a height's label has no length to part: its words are its name
         whole = f"{name}, {value}" if value else name
         want = est(whole) if one_line else max(est(name), est(value))
