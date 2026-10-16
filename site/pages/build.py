@@ -791,7 +791,7 @@ def size_bands(sizes):
     return [(screen, width(screen)) for screen in screens]
 
 
-def mark_lanes(items, width, one_line):
+def mark_lanes(items, width, one_line, in_order=False):
     """Several labels laid into lanes for a picture this wide: each label's words start at its animal's start or end
     at its end, and no two in one lane come near each other's words or brackets. Returns each label's lane (0 the one
     nearest the picture), side and the width its words may take, and the number of lanes."""
@@ -799,8 +799,11 @@ def mark_lanes(items, width, one_line):
     apart = lambda p, q, gap: p[1] + gap <= q[0] or q[1] + gap <= p[0]
     inner = width - 4
     lanes, out = [], {}
-    # from left to right; labels whose subjects start at one place keep the words' order, the order of a picture's rows
-    for key, a, b, keep, name, value in sorted(items, key=lambda it: it[1]):
+    # from left to right; labels whose subjects start at one place keep the words' order, the order of a picture's rows.
+    # A picture of rows whose subjects start at different places (pics.<name>.in_order) keeps that order whole: no
+    # label stands in a lane nearer the picture than the one before it
+    floor = 0
+    for key, a, b, keep, name, value in (items if in_order else sorted(items, key=lambda it: it[1])):
         # a height's label has no length to part: its words are its name
         whole = f"{name}, {value}" if value else name
         want = est(whole) if one_line else max(est(name), est(value))
@@ -819,13 +822,14 @@ def mark_lanes(items, width, one_line):
         # the widest the words may take in a lane, wrapping no narrower than least
         widest = lambda side, lane: next((w for w in [room(side)] + list(range(math.floor(room(side)), math.ceil(least) - 1, -4))
                                           if w >= least and fits(side, w, lane)), None)
-        placed = next(((lane, side, widest(side, lane)) for lane in range(len(lanes)) for side in sides
+        placed = next(((lane, side, widest(side, lane)) for lane in range(floor, len(lanes)) for side in sides
                        if widest(side, lane)), None)
         if not placed:
             lanes.append([])
             side = max(sides, key=lambda side: room(side) >= least)
             placed = len(lanes) - 1, side, room(side)
         lane, side, w = placed
+        floor = lane if in_order else 0
         lanes[lane].append((words(side, w), bracket))
         out[key] = (lane, side, math.ceil(w))
     return out, len(lanes)
@@ -881,7 +885,7 @@ def mark_rules(data):
                 last = {}
             for over, items in grouped(near if screen < below else pic["marks"]).items():
                 # those over the picture are the few long ones behind: their words on one line on every screen
-                laid, n = mark_lanes(items, width, over or screen >= MARK_ONE_LINE)
+                laid, n = mark_lanes(items, width, over or screen >= MARK_ONE_LINE, bool(pic.get("in_order")))
                 for key, (lane, side, w) in laid.items():
                     a, b, _ = mark_at((near if screen < below else pic["marks"])[key])
                     parts = {

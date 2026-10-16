@@ -1411,8 +1411,8 @@ class Case(unittest.TestCase):
         purpose: without the words that say whose the number is or what the claim was, the same fields stop the build."""
         page = self.topic_page("blue_whale")
         cases = [
-            ({"en": (r", snout tip to tail notch", ""),
-              "de": (r", Schnauzenspitze bis Schwanzkerbe", "")},
+            ({"en": (r", snout tip to tail notch, and 2\.86\sm \(9\.4\sft\) deep at its deepest, ours", ""),
+              "de": (r", Schnauzenspitze bis Schwanzkerbe, größte Körperhöhe 2,86\sm, unser Modell", "")},
              "22.86 m, 22.9 m and 75 ft only as ours or as the recorded length of the male of 1903"),
             ({"en": (r"A disputed whaling record, one female", "A whaling record, one female"),
               "de": (r"Ein umstrittener Rekord aus dem Walfang, ein einzelnes Weibchen", "Ein Rekord aus dem Walfang, ein einzelnes Weibchen")},
@@ -1785,6 +1785,15 @@ class Case(unittest.TestCase):
         for width, one_line in ((350, False), (792, True)):
             laid, _ = lib.mark_lanes(rows, width, one_line)
             self.assertEqual((laid["m"][0], laid["s"][0]), (0, 1))
+        # rows whose subjects start at different places stack by their starts, or in the rows' order where the picture
+        # asks for it (pics.<name>.in_order), where a later label (the person) never stands nearer than an earlier one
+        rows = [("a", 0.06, 0.95, None, "Our Argentinosaurus", "about 30.6 m"), ("w", 0.08, 0.75, None, "Our blue whale", "22.86 m"),
+                ("m", 0.061, 0.55, None, "Our megalodon", "about 16 m"), ("p", 0.81, 0.83, None, "The person", "1.70 m")]
+        for width, one_line in ((350, False), (792, True)):
+            laid, _ = lib.mark_lanes(rows[:3], width, one_line)
+            self.assertEqual([laid[k][0] for k in "awm"], [0, 2, 1])
+            laid, _ = lib.mark_lanes(rows, width, one_line, in_order=True)
+            self.assertEqual([laid[k][0] for k in "awmp"], [0, 1, 2, 2])
         # a label that keeps its side keeps it
         laid, _ = lib.mark_lanes([("c", 0.80, 0.95, "start", "Spinosaurus", "about 10 m")], 1200, True)
         self.assertEqual(laid["c"][1], "start")

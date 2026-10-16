@@ -1,5 +1,5 @@
 {
- "_note": "THE WORDS of the blue whale page. Poured word for word from the writer's WORDS file; the title, the description and the heading are its first options. pics.<name>.marks: each label's place as the start and end of what it names, shares of the picture's width, measured on the frame; pics.<name>.person: the person's centre and the top of its head (null in the side view, where the person stands in front of the whale's flank and its label under the picture names it). pics.side.marks.depth: the station of the body's greatest depth, where a light line in the picture runs from the back to the belly. pics.close: the head rolled 20 degrees about its long axis, so the blowholes on top show; lengths along the body and the person keep the panel's one scale. pics.<name>.parts: labels that name a part, with no length. pics.skeleton.swatches: each colour of the key as the picture prints it. pics.beside: our Argentinosaurus's, our blue whale's and our megalodon's rows at one scale, the tails' ends on one left line, the person at one place in each row. An empty cell of the table has no sourced figure.",
+ "_note": "THE WORDS of the blue whale page. Poured word for word from the writer's WORDS file; the title, the description and the heading are its first options. pics.<name>.marks: each label's place as the start and end of what it names, shares of the picture's width, measured on the frame; pics.<name>.person: the person's centre and the top of its head (null in the side view, where the person stands in front of the whale's flank and its label under the picture names it). pics.side.marks.depth: the station of the body's greatest depth, where a light line in the picture runs from the back to the belly. pics.close: the head rolled 20 degrees about its long axis, so the blowholes on top show; lengths along the body and the person keep the panel's one scale. pics.<name>.parts: labels that name a part, with no length. pics.skeleton.swatches: each colour of the key as the picture prints it. pics.beside: our Argentinosaurus's, our blue whale's and our megalodon's rows at one scale, the tails' ends on one left line, the person at one place in each row; pics.beside.in_order: its labels stack in the rows' order. An empty cell of the table has no sourced figure.",
  "page": {
   "id": "animals-blue-whale",
   "wing": "animals",
@@ -69,7 +69,8 @@
     "blue-whale": "7.88% 77.36%",
     "megalodon": "6.12% 56%",
     "person": "81.04% 82.48%"
-   }
+   },
+   "in_order": true
   },
   "skeleton": {
    "stem": "animals-blue-whale-skeleton",
@@ -128,7 +129,7 @@
  },
  "top": {
   "h1": "How big is a blue whale?",
-  "answer": "Most grown blue whales are about 23 to 27 m (75 to 89 ft) long, the largest reliably measured about 30 m (98 ft). By a 2025 study they weigh roughly 100 to 150 tonnes, though none was ever weighed whole. The blue whale, Balaenoptera musculus, is the heaviest and largest animal known, living or extinct. Our blue whale is 22.9 m (75 ft), the recorded length of one male taken in 1903.",
+  "answer": "Most grown blue whales are about 23 to 27 m (75 to 89 ft) long, the largest reliably measured about 30 m (98 ft). According to a 2025 study, they weigh roughly 100 to 150 tonnes, though none was ever weighed whole. The blue whale, Balaenoptera musculus, is the heaviest and largest animal known, living or extinct. Our blue whale is 22.9 m (75 ft), the recorded length of one male taken in 1903.",
   "answer_more": "Blue whales live today in every ocean except the Arctic. A person standing beside ours reaches a little past halfway up its side.",
   "scale": {
    "pic": "side",
@@ -153,8 +154,8 @@
    "close": {
     "pic": "close",
     "tag": "tag_made",
-    "what": "Closer up: the head of our blue whale beside the person. The two blowholes sit on top behind a raised splash guard, and the blow from them rises tall and slender, 9 m or more.",
-    "alt": "The head of the blue whale closer up, from the side: a long, flat head, the blowholes on top, fine grooves running along the throat, and the grey person beside it.",
+    "what": "Closer up and a little from above: the head of our blue whale beside the person. The two blowholes sit on top behind a raised splash guard, and the blow from them rises tall and slender, 9 m or more.",
+    "alt": "The head of the blue whale closer up, from the side and a little above: a long, flat head, the blowholes on top, fine grooves running along the throat, and the grey person beside it.",
     "marks": [
      {
       "span": "snout",
@@ -193,11 +194,10 @@
    "id": "numbers",
    "nav": "Blue whale facts: the numbers as a table",
    "h": "Blue whale facts: the numbers as a table",
-   "unit": "Metres and feet, tonnes. Each height or depth cell names the point it measures. An empty cell has no sourced figure.",
+   "unit": "Metres and feet, tonnes. An empty cell has no sourced figure.",
    "cols": [
     "Animal",
     "Length",
-    "Height or depth, with the point named",
     "Weight",
     "How sure"
    ],
@@ -206,8 +206,7 @@
      "cells": [
       "Most grown blue whales",
       "about 23 to 27 m (75 to 89 ft), females longer than males",
-      "",
-      "roughly 100 to 150 t, by a 2025 study, never weighed whole",
+      "roughly 100 to 150 t, according to a 2025 study, never weighed whole",
       "good for the length: a field guide and the US ocean agency agree. The weight is a model"
      ]
     },
@@ -215,7 +214,6 @@
      "cells": [
       "The largest blue whales",
       "about 30 m (98 ft), perhaps more",
-      "",
       "perhaps near 200 t, the top of a model",
       "fair: one 2025 study and the review it cites"
      ]
@@ -225,7 +223,6 @@
       "The longest on record, a female",
       "33.27 m (109 ft), a disputed whaling record in a Norwegian list from 1928, measured beside a factory ship",
       "",
-      "",
       "disputed: two recent studies disagree"
      ]
     },
@@ -233,7 +230,6 @@
      "cells": [
       "The heaviest weighing, 1940s",
       "27.6 m (91 ft)",
-      "",
       "190 t for a pregnant female, weighed in pieces, a record we could not read at its source",
       "a record quoted by a 2025 study"
      ]
@@ -242,7 +238,6 @@
      "cells": [
       "The best documented weighing, a female, 1948",
       "27.1 m (89 ft)",
-      "",
       "about 130 t without her blood, about 140 t with an estimate for it, weighed in pieces",
       "good: the weighing report itself"
      ]
@@ -251,7 +246,6 @@
      "cells": [
       "USNM 49757, the male ours follows, Washington",
       "75 ft (22.86 m), as recorded in 1903",
-      "none recorded",
       "not known",
       "the record of 1903. Whether he was full grown is disputed: his describer called him adult, but the ends of his forearm bones had not yet fused"
      ]
@@ -259,17 +253,7 @@
     {
      "cells": [
       "Our model",
-      "22.86 m (75 ft), snout tip to tail notch",
-      "2.86 m (9.4 ft), the body at its deepest, ours",
-      "",
-      "measured on our files"
-     ]
-    },
-    {
-     "cells": [
-      "Our model's head and limbs",
-      "skull 5.81 m (19.0 ft), snout tip to the blowholes 3.64 m (11.9 ft), one flipper 3.19 m (10.5 ft), the flukes 4.44 m (14.6 ft) from tip to tip",
-      "",
+      "22.86 m (75 ft), snout tip to tail notch, and 2.86 m (9.4 ft) deep at its deepest, ours. Skull 5.81 m (19.0 ft), snout tip to the blowholes 3.64 m (11.9 ft), one flipper 3.19 m (10.5 ft), the flukes 4.44 m (14.6 ft) from tip to tip",
       "",
       "measured on our files, the skull sized on the skull of USNM 49757, which is 5.79 m long"
      ]
@@ -278,7 +262,6 @@
      "cells": [
       "Hope, London, a young female",
       "25.2 m (83 ft) as her skeleton is mounted",
-      "",
       "her skeleton 4.5 t",
       "the museum that keeps her"
      ]
@@ -287,7 +270,6 @@
      "cells": [
       "Our megalodon",
       "about 16 m (52 ft)",
-      "",
       "roughly 30 t (model of 2025), about 61 t (model of 2022)",
       "two models on one backbone, weight disputed"
      ]
@@ -297,7 +279,6 @@
       "The largest megalodon",
       "perhaps about 20 m (66 ft)",
       "",
-      "",
       "one tooth, scaled from whole tooth sets"
      ]
     },
@@ -305,7 +286,6 @@
      "cells": [
       "Argentinosaurus",
       "about 30 to 35 m (98 to 115 ft), rebuilt, never measured, ours about 30.6 m (100 ft)",
-      "",
       "roughly 65 to 80 t, a model",
       "one partial skeleton, the body borrowed from relatives"
      ]
@@ -313,7 +293,6 @@
     {
      "cells": [
       "The person",
-      "",
       "1.70 m (5 ft 7 in) tall, head to foot",
       "",
       "our scale figure"
@@ -324,8 +303,8 @@
   {
    "type": "text",
    "id": "biggest-ever",
-   "nav": "Is the blue whale the biggest animal ever?",
-   "h": "Is the blue whale the biggest animal ever?",
+   "nav": "Is the blue whale the largest animal in the world, or ever?",
+   "h": "Is the blue whale the largest animal in the world, or ever?",
    "paras": [
     "Yes, as far as anyone knows. It is the heaviest animal known, and NOAA, the US ocean agency, and a 2017 study call it the largest animal to have lived. A 2025 study is more careful. It calls the largest animal of all uncertain, since a few giant dinosaurs known only from scraps or lost bones may have matched it. Perucetus, a fossil whale put forward in 2023 as possibly heavier, comes out far lighter in two later studies."
    ]
@@ -337,7 +316,7 @@
    "h": "Blue whale length and weight",
    "paras": [
     "Most grown blue whales are 23 to 27 m (75 to 89 ft), females longer than males. The Antarctic ones are the biggest. Those of the North Atlantic and North Pacific reach about 27 m (89 ft), and the pygmy blue whale is shorter.",
-    "Grown blue whales weigh roughly 100 to 150 tonnes by a 2025 study, the largest perhaps close to 200. No whole blue whale has ever been weighed. Every weight comes from whales cut up on whaling ships and weighed piece by piece, and the blood lost on deck makes those sums too low. A model built from 31 whales weighed this way puts a blue whale 23 m long at roughly 75 to 85 tonnes."
+    "Grown blue whales weigh roughly 100 to 150 tonnes according to a 2025 study, the largest perhaps close to 200. No whole blue whale has ever been weighed. Every weight comes from whales cut up on whaling ships and weighed piece by piece, and the blood lost on deck makes those sums too low. A model built from 31 whales weighed this way puts a blue whale 23 m long at roughly 75 to 85 tonnes."
    ]
   },
   {
@@ -346,7 +325,7 @@
    "nav": "The biggest blue whale ever recorded",
    "h": "The biggest blue whale ever recorded",
    "paras": [
-    "The longest in the records is a female of 33.27 m (109 ft) in a Norwegian whaling list from 1928, measured in the water beside a factory ship. This disputed whaling record splits two recent studies: one calls her the longest reliably measured, the other calls the length not credible. Once biologists sailed with the fleets, no whale over 30.5 m turned up in the records, so the largest were about 30 m (98 ft), perhaps more. The heaviest weighing on record is 190 tonnes, for a pregnant, very fat female of 27.6 m (91 ft), weighed in pieces by a Soviet fleet in the 1940s. It is a record we could not read at its source."
+    "The longest in the records is a female of 33.27 m (109 ft) in a Norwegian whaling list from 1928, measured beside a factory ship. This disputed whaling record splits two recent studies: one calls her the longest reliably measured, the other calls the length not credible. A 2025 study notes that once biologists sailed with the fleets, no whale over 30.5 m turned up in the records, so the largest were about 30 m (98 ft), perhaps more. The heaviest weighing on record is 190 tonnes, for a pregnant, very fat female of 27.6 m (91 ft), weighed in pieces by a Soviet fleet in the 1940s. It is a record we could not read at its source."
    ]
   },
   {
@@ -355,7 +334,7 @@
    "nav": "Blue whale heart",
    "h": "Blue whale heart",
    "paras": [
-    "The only preserved blue whale heart weighed about 180 kg and is about 1.5 by 1.2 m. It came from one of the blue whales that died trapped in ice off Newfoundland in 2014, and the Royal Ontario Museum in Toronto keeps it. Hearts weighed on whaling ships in the 1940s came to roughly 180 to 625 kg. One male was tagged off California. On deep dives his heart slowed to as few as 2 beats a minute, and at the surface it rose to 25 to 37."
+    "The only preserved blue whale heart weighed about 180 kg and measured about 1.5 by 1.2 m before it was preserved. It came from one of the blue whales that died trapped in ice off Newfoundland in 2014, and the Royal Ontario Museum in Toronto keeps it. Hearts weighed on whaling ships in the 1940s came to roughly 180 to 625 kg. One male was tagged off California. On deep dives its heart slowed to as few as 2 beats a minute, and at the surface it rose to 25 to 37."
    ]
   },
   {
@@ -373,7 +352,8 @@
    "nav": "Blue whale vs megalodon",
    "h": "Blue whale vs megalodon",
    "paras": [
-    "Going by the fossils, the two never met: the last megalodon lived about 3.6 million years ago, and the oldest known blue whale fossil is about 1.5 to 1.25 million years old. Who would win has no answer. Our megalodon, about 16 m, comes to a little past two thirds of our blue whale's length. Fewer small baleen whales to hunt is one of the causes named for the end of megalodon, though none is settled. Argentinosaurus, about 30 to 35 m and roughly 65 to 80 tonnes by its models, was about as long as the longest blue whales and about half as heavy as a big one. No known dinosaur was heavier.",
+    "Going by the fossils, the two never met: the last megalodon lived about 3.6 million years ago, and the oldest blue whale fossil we know of is about 1.5 to 1.25 million years old. Who would win has no answer.",
+    "Our megalodon, about 16 m, comes to a little past two thirds of our blue whale's length. Fewer small baleen whales to hunt is one of the causes named for the end of megalodon, though none is settled. Argentinosaurus, about 30 to 35 m and roughly 65 to 80 tonnes by its models, was about as long as the longest blue whales and about half as heavy as a big one. No known dinosaur was heavier.",
     "In our picture our blue whale is about three quarters as long as our Argentinosaurus."
    ],
    "scale": {
@@ -420,13 +400,14 @@
    "nav": "Blue whale skeleton",
    "h": "Blue whale skeleton",
    "paras": [
-    "The best known blue whale skeleton is Hope, a young female of about 15 who stranded near Wexford, Ireland, in March 1891. Her skeleton, 25.2 m (83 ft) as mounted, weighs 4.5 tonnes and came to London in 1892. Since 2017 it has hung diving from the ceiling of the Natural History Museum's Hintze Hall. Our model follows another whale, the male USNM 49757, taken in 1903 near Hermitage Bay, Newfoundland, whose skeleton is kept at the Smithsonian in Washington. Whether he was full grown is disputed. In Toronto, the Royal Ontario Museum has shown the skeleton of a 23.3 m whale that washed ashore at Trout River, Newfoundland, in 2014.",
-    "Our skeleton picture shows which bones were sized on his own measurements."
+    "The best known blue whale skeleton is Hope, a young female of about 15 who stranded near Wexford, Ireland, in March 1891. Her skeleton, 25.2 m (83 ft) as mounted, weighs 4.5 tonnes and came to London in 1892. Since 2017 it has hung diving from the ceiling of the Natural History Museum's Hintze Hall.",
+    "Our model follows another whale, the male USNM 49757, taken in 1903 near Hermitage Bay, Newfoundland, whose skeleton is kept at the Smithsonian in Washington. Whether he was full grown is disputed. In Toronto, the Royal Ontario Museum has shown the skeleton of a 23.3 m whale that washed ashore at Trout River, Newfoundland, in 2014.",
+    "Our skeleton picture shows which bones were sized on the measurements of USNM 49757."
    ],
    "scale": {
     "pic": "skeleton",
     "tag": "tag_built",
-    "what": "Our blue whale as a skeleton, to the same scale. Each bone is coloured by how it was sized.",
+    "what": "Our blue whale as a skeleton, with the same person. Each bone is coloured by how it was sized.",
     "alt": "Our blue whale as a skeleton from the side, beside the grey person, its bones in two colours by how they were sized. In the colour of his own measured bones: the skull, the lower jaws, the first neck bones, all the ribs, the breastbone, the shoulder blades, most bones of the flippers and a few single vertebrae. The rest of the backbone is in the other colour.",
     "key": [
      {
@@ -437,7 +418,7 @@
       "swatch": "comparator",
       "text": "Sized after other whales"
      },
-     "“Measured” means sized to the published measurements of his bones, not scanned. The hyoid, a throat bone, is not built."
+     "“Measured” means sized to the published measurements of his bones, not scanned. The wrist bones and the loose ends of the forearm bones are estimated, not measured, and carry the second colour. The hyoid, a throat bone, is not built."
     ],
     "marks": [
      {
@@ -500,7 +481,7 @@
     },
     {
      "term": "A heart the size of a car",
-     "text": "No measurement we found backs it. The only preserved heart is about 1.5 by 1.2 m, far smaller than a car, by our own comparison."
+     "text": "No measurement we found backs it. The only preserved heart measured about 1.5 by 1.2 m before it was preserved, far smaller than a car, by our own comparison."
     },
     {
      "term": "Arteries a person could swim through",
@@ -631,8 +612,12 @@
      "href": "https://www.rom.on.ca/news-releases/blue-whale-heart-arrives-rom"
     },
     {
-     "text": "Megalodon and Argentinosaurus: the numbers and sources of our megalodon and biggest dinosaurs pages.",
+     "text": "Megalodon: the numbers and sources of our megalodon page.",
      "href": "https://museumofages.org/animals/megalodon/"
+    },
+    {
+     "text": "Argentinosaurus: the numbers and sources of our biggest dinosaurs page.",
+     "href": "https://museumofages.org/animals/biggest-dinosaurs/"
     }
    ],
    "contact": "If a number or a holder is wrong, tell us and we will correct it.",
