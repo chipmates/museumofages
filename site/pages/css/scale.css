@@ -107,8 +107,8 @@
   /* A column is about 110 px: a long word breaks only where it may, with its hyphen drawn ("Computer-modelle"), never
      mid-word without one. WebKit reads only its own prefixed limits. */
   .sc-table td{overflow-wrap:normal}
-  :is(:lang(de),:lang(es),:lang(pt)) .sc-table td{hyphens:auto;-webkit-hyphens:auto;hyphenate-limit-chars:10 4 4;
-    -webkit-hyphenate-limit-before:4;-webkit-hyphenate-limit-after:4}
+  :is(:lang(de),:lang(es),:lang(pt)) .sc-table td:not(.sc-sure){hyphens:auto;-webkit-hyphens:auto;hyphenate-limit-chars:10 4 4;
+    -webkit-hyphenate-limit-before:4;-webkit-hyphenate-limit-after:4;-webkit-hyphenate-limit-lines:1}
   .sc-table thead th{padding-block:13px 10px}
   .sc-table thead tr{border-bottom:1px solid var(--ledger-rule)}
   .sc-table thead th:last-child:not(:nth-child(2)){position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%)}
@@ -135,6 +135,8 @@
 .sc-list{display:grid;gap:40px}
 .sc-item{display:grid;gap:10px;padding-top:22px;border-top:1px solid var(--hair-strong)}
 .sc-item__h{font-size:1.5rem;line-height:1.2}
+/* A neighbour page's question is a step under the section's own heading, which would otherwise win (.sp-sec h2). */
+.sp-sec .sc-item__h{font-size:1.75rem;letter-spacing:-.005em}
 .sc-item__h a{display:inline-block;padding-block:8px;margin-block:-8px;color:var(--ink);text-decoration:underline;
   text-decoration-color:var(--mark);text-underline-offset:.18em}
 .sc-item__h a:hover{color:var(--mark-ink)}
@@ -156,6 +158,7 @@
   .sc-pages--next{margin-top:56px}
   .sc-item{grid-template-columns:minmax(0,5fr) minmax(0,7fr);column-gap:32px;grid-template-areas:"h pic" "line pic"}
   .sc-item__h{grid-area:h;font-size:1.75rem}
+  .sp-sec .sc-item__h{font-size:2.125rem}
   .sc-item__line{grid-area:line}
   .sc-item__pic{grid-area:pic}
 }
