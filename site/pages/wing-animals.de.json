@@ -90,6 +90,16 @@
    ],
    "sizes": "(min-width: 1280px) 690px, (min-width: 960px) 54vw, (min-width: 600px) calc(100vw - 64px), calc(100vw - 40px)",
    "person": "91.27% 23.15%"
+  },
+  "stego": {
+   "stem": "animals-stegosaurus-side",
+   "widths": [
+    800,
+    1600,
+    2400
+   ],
+   "sizes": "(min-width: 1280px) 690px, (min-width: 960px) 54vw, (min-width: 600px) calc(100vw - 64px), calc(100vw - 40px)",
+   "person": "93.07% 36.7%"
   }
  },
  "meta": {
@@ -158,6 +168,11 @@
      "page": "ankylosaurus",
      "pic": "anky",
      "alt": "Ein Ankylosaurus von der Seite: ein flacher, breiter Körper unter Reihen von Knochenplatten, ein breiter, tief getragener Kopf, vier kurze Beine und ein gerader Schwanz mit einer flachen Keule am Ende. Daneben ein grauer Mensch, so groß, wie der Rücken über der Hüfte hoch ist."
+    },
+    {
+     "page": "stegosaurus",
+     "pic": "stego",
+     "alt": "Ein Stegosaurus von der Seite: ein kleiner, tief sitzender Kopf, zwei Reihen hoher Platten auf dem gewölbten Rücken, vier Stacheln an der Schwanzspitze, die Vorderbeine kürzer als die Hinterbeine. Daneben ein grauer Mensch, dessen Kopf unter der Oberkante des Rückens bleibt."
     }
    ]
   }
