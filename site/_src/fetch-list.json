@@ -1605,6 +1605,18 @@
    "sha256": "d07ee45cc2efb47def96c861f4a2048253278bfdcf9fdc0a35dc3eb80b046098"
   },
   {
+   "path": "pages/pics/img/animals-blue-whale-og-es-1200x630.png",
+   "url": "/static/img/animals-blue-whale-og-es-1200x630.png",
+   "bytes": 86585,
+   "sha256": "23f9ee08bc4d82b40880c6244138e6f1450717c0458c44e2eccad802f3238814"
+  },
+  {
+   "path": "pages/pics/img/animals-blue-whale-og-pt-br-1200x630.png",
+   "url": "/static/img/animals-blue-whale-og-pt-br-1200x630.png",
+   "bytes": 90445,
+   "sha256": "7d1e88c99a6e7cebc3b663ca43122e7ef10d6bfde0b46d939299cc078371d528"
+  },
+  {
    "path": "pages/pics/img/animals-blue-whale-side-1600.avif",
    "url": "/static/img/animals-blue-whale-side-1600.avif",
    "bytes": 10331,

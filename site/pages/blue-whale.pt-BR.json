@@ -1,0 +1,649 @@
+{
+ "_note": "AS PALAVRAS da página da baleia-azul, em português do Brasil. Reescritas a partir do inglês e do alemão, com os mesmos números, fontes e graus de certeza. Nenhuma baleia-azul inteira jamais foi pesada, a nossa baleia não tem peso, e a baleia-azul e o megalodon nunca coincidiram. Status ai: nenhuma pessoa as revisou ainda.",
+ "page": {
+  "id": "animals-blue-whale",
+  "wing": "animals",
+  "topic": "blue_whale",
+  "published": null,
+  "join_names": true,
+  "og_image": {
+   "file": "animals-blue-whale-og-{lang}-1200x630.png",
+   "width": 1200,
+   "height": 630,
+   "layout": "beside"
+  }
+ },
+ "pics": {
+  "side": {
+   "stem": "animals-blue-whale-side",
+   "widths": [
+    800,
+    1600,
+    2400
+   ],
+   "sizes": "(min-width: 1280px) 588px, (min-width: 960px) calc(100vw - 80px), (min-width: 600px) calc(100vw - 64px), calc(100vw - 40px)",
+   "person": null,
+   "marks": {
+    "whale": "3.6% 98.05%",
+    "depth": "59.67% 61.48%",
+    "person": "54.62% 56.57%"
+   },
+   "behind": [
+    "depth"
+   ]
+  },
+  "close": {
+   "stem": "animals-blue-whale-close",
+   "widths": [
+    800,
+    1600
+   ],
+   "sizes": "(min-width: 1280px) 690px, (min-width: 960px) 54vw, (min-width: 600px) calc(100vw - 64px), calc(100vw - 40px)",
+   "person": "90.3% 42.25%",
+   "marks": {
+    "snout": "24.34% 78.06%",
+    "blowholes": "14.75% 24.34%",
+    "grooves": "0% 64.18%",
+    "person": "86.8% 93.8%"
+   },
+   "behind": [
+    "snout",
+    "blowholes"
+   ],
+   "parts": [
+    "grooves",
+    "blowholes"
+   ]
+  },
+  "beside": {
+   "stem": "animals-blue-whale-beside",
+   "widths": [
+    800,
+    1600,
+    2400
+   ],
+   "sizes": "(min-width: 1280px) 690px, (min-width: 960px) 54vw, (min-width: 600px) calc(100vw - 64px), calc(100vw - 40px)",
+   "person": "81.76% 64.78%",
+   "marks": {
+    "argentinosaurus": "6.08% 99.08%",
+    "blue-whale": "7.88% 77.36%",
+    "megalodon": "6.12% 56%",
+    "person": "81.04% 82.48%"
+   },
+   "in_order": true
+  },
+  "skeleton": {
+   "stem": "animals-blue-whale-skeleton",
+   "widths": [
+    800,
+    1600
+   ],
+   "sizes": "(min-width: 1280px) 690px, (min-width: 960px) 54vw, (min-width: 600px) calc(100vw - 64px), calc(100vw - 40px)",
+   "person": "89.14% 46.34%",
+   "marks": {
+    "skull": "63.94% 85.7%",
+    "person": "88.25% 90.02%"
+   },
+   "swatches": {
+    "measured": "#cc8766",
+    "comparator": "#3e4357"
+   }
+  },
+  "megalodon": {
+   "stem": "animals-megalodon-side",
+   "widths": [
+    800,
+    1600,
+    2400
+   ],
+   "sizes": "(min-width: 1280px) 690px, (min-width: 960px) 54vw, (min-width: 600px) calc(100vw - 64px), calc(100vw - 40px)",
+   "person": "92% 60.62%"
+  },
+  "dinosaurs": {
+   "stem": "animals-biggest-dinosaurs-row",
+   "widths": [
+    800,
+    1600
+   ],
+   "sizes": "(min-width: 1280px) 690px, (min-width: 960px) 54vw, (min-width: 600px) calc(100vw - 64px), calc(100vw - 40px)",
+   "person": "32.88% 84.25%"
+  }
+ },
+ "meta": {
+  "title": "Baleia-azul: tamanho 23 a 27 m, 100 a 150 t | Museum of Ages",
+  "description": "Qual é o tamanho da baleia-azul? A maioria das adultas: 23 a 27 m e mais ou menos 100 a 150 t. As maiores, cerca de 30 m. O animal mais pesado conhecido.",
+  "og_title": "Baleia-azul: tamanho 23 a 27 m, 100 a 150 t",
+  "og_image_alt": "Uma baleia-azul de lado: um corpo longo e esguio, cinza-azulado, com manchas claras, uma cabeça achatada, uma nadadeira peitoral longa de borda clara e uma pequena nadadeira dorsal bem atrás. Ao lado, uma pessoa cinza que chega a pouco mais da metade da altura da baleia."
+ },
+ "labels": {
+  "crumbs": "Você está aqui",
+  "crumb_home": "Museu",
+  "crumb_here": "Baleia-azul",
+  "toc": "Nesta página",
+  "tag_made": "Feito para esta página",
+  "tag_built": "Reconstrução",
+  "person": "1,70 m",
+  "to_table": "Os números numa tabela",
+  "no_figure": "sem número com fonte",
+  "og_answer": "A baleia-azul, o animal mais pesado que se conhece, costuma ter de 23 a 27 m de comprimento"
+ },
+ "top": {
+  "h1": "Qual é o tamanho da baleia-azul?",
+  "answer": "A maioria das baleias-azuis adultas tem cerca de 23 a 27 m de comprimento, e as maiores medidas com segurança, cerca de 30 m. Segundo um estudo de 2025, pesam mais ou menos 100 a 150 toneladas, embora nenhuma inteira jamais tenha sido pesada. A baleia-azul, Balaenoptera musculus, é o animal mais pesado e o maior que se conhece, vivo ou extinto. A nossa baleia-azul tem 22,9 m, o comprimento anotado de um macho caçado em 1903.",
+  "answer_more": "Hoje as baleias-azuis vivem em todos os oceanos, menos no Ártico. Uma pessoa de pé ao lado da nossa chega a pouco mais da metade da altura da baleia.",
+  "scale": {
+   "pic": "side",
+   "tag": "tag_made",
+   "what": "A nossa baleia-azul ao lado de uma pessoa de 1,70 m, na mesma escala: tão comprida quanto cerca de 13 pessoas deitadas em fila, uma depois da outra.",
+   "alt": "Uma baleia-azul de lado: um corpo longo e esguio, cinza-azulado, com manchas claras, uma cabeça achatada, uma nadadeira peitoral longa de borda clara e uma pequena nadadeira dorsal bem atrás. Ao lado, uma pessoa cinza que chega a pouco mais da metade da altura da baleia.",
+   "note": "A nossa própria reconstrução, construída em código a partir de medidas publicadas e renderizada com o nosso próprio motor gráfico. Não são fotografias.",
+   "marks": [
+    {
+     "span": "whale",
+     "text": "A nossa baleia-azul, 22,86 m, da ponta do focinho ao entalhe da cauda"
+    },
+    {
+     "span": "depth",
+     "text": "Maior altura do corpo, 2,86 m, o nosso modelo"
+    },
+    {
+     "span": "person",
+     "text": "A pessoa, 1,70 m"
+    }
+   ],
+   "close": {
+    "pic": "close",
+    "tag": "tag_made",
+    "what": "Mais de perto e um pouco de cima: a cabeça da nossa baleia-azul ao lado da pessoa. Os dois espiráculos ficam no alto, atrás de uma borda elevada que os protege dos respingos, e o borrifo que sai deles sobe alto e estreito, 9 m ou mais.",
+    "alt": "A cabeça da baleia-azul mais de perto, de lado e um pouco de cima: uma cabeça longa e achatada, os espiráculos no alto, sulcos finos ao longo da garganta e a pessoa cinza ao lado.",
+    "marks": [
+     {
+      "span": "snout",
+      "text": "Da ponta do focinho aos espiráculos, 3,6 m, o nosso modelo"
+     },
+     {
+      "span": "grooves",
+      "text": "Sulcos da garganta"
+     },
+     {
+      "span": "blowholes",
+      "text": "Dois espiráculos"
+     },
+     {
+      "span": "person",
+      "text": "A pessoa, 1,70 m"
+     }
+    ]
+   }
+  },
+  "guess": {
+   "h": "Tente adivinhar",
+   "q": "Uma baleia-azul recém-nascida tem cerca de 7 m de comprimento. Pesa mais de uma tonelada ou menos?",
+   "button": "Ver a resposta",
+   "a": "Mais: cerca de 2,7 toneladas, segundo o Natural History Museum de Londres. Com cerca de 7 m, o filhote já é mais comprido do que quatro pessoas deitadas em fila, uma depois da outra.",
+   "button_open": "Esconder a resposta"
+  },
+  "out": {
+   "text": "A ala deste animal ainda está sendo construída. A ala de Leonardo da Vinci já está aberta hoje.",
+   "link": "Ir para a ala de Leonardo"
+  }
+ },
+ "blocks": [
+  {
+   "type": "numbers",
+   "id": "numbers",
+   "nav": "Dados da baleia-azul: os números numa tabela",
+   "h": "Dados da baleia-azul: os números numa tabela",
+   "unit": "Em metros e toneladas. Onde não há um número com fonte, a célula fica vazia.",
+   "cols": [
+    "Animal",
+    "Comprimento",
+    "Peso",
+    "Certeza"
+   ],
+   "rows": [
+    {
+     "cells": [
+      "A maioria das baleias-azuis adultas",
+      "cerca de 23 a 27 m, as fêmeas mais compridas que os machos",
+      "mais ou menos 100 a 150 t, segundo um estudo de 2025, nenhuma pesada inteira",
+      "boa para o comprimento: um guia de campo e a agência dos oceanos dos Estados Unidos concordam. O peso é um modelo"
+     ]
+    },
+    {
+     "cells": [
+      "As maiores baleias-azuis",
+      "cerca de 30 m, talvez mais",
+      "talvez perto de 200 t, o limite superior de um modelo",
+      "média: um estudo de 2025 e a revisão que o estudo cita"
+     ]
+    },
+    {
+     "cells": [
+      "A mais comprida registrada, uma fêmea",
+      "33,27 m, um recorde controverso da caça à baleia, numa lista norueguesa de 1928, medida ao lado de um navio-fábrica",
+      "",
+      "controverso: dois estudos recentes discordam"
+     ]
+    },
+    {
+     "cells": [
+      "A maior pesagem registrada, anos 1940",
+      "27,6 m",
+      "190 t de uma fêmea prenhe, pesada em pedaços, um dado que não conseguimos ler na fonte",
+      "um dado citado por um estudo de 2025"
+     ]
+    },
+    {
+     "cells": [
+      "A pesagem mais bem documentada, uma fêmea, 1948",
+      "27,1 m",
+      "cerca de 130 t sem o sangue, cerca de 140 t com uma estimativa para o sangue, pesada em pedaços",
+      "boa: o próprio relatório da pesagem"
+     ]
+    },
+    {
+     "cells": [
+      "USNM 49757, o macho que tomamos como modelo, Washington",
+      "22,86 m, como anotado em 1903",
+      "desconhecido",
+      "o registro de 1903. É controverso se ele já tinha terminado de crescer: quem o descreveu o chamou de adulto, mas as pontas dos ossos do antebraço dele ainda não tinham se fundido"
+     ]
+    },
+    {
+     "cells": [
+      "O nosso modelo",
+      "22,86 m da ponta do focinho ao entalhe da cauda e 2,86 m de altura máxima do corpo, o nosso modelo. Crânio de 5,81 m, 3,64 m da ponta do focinho aos espiráculos, uma nadadeira peitoral de 3,19 m e a nadadeira caudal de 4,44 m de ponta a ponta",
+      "",
+      "medido nos nossos arquivos, o crânio dimensionado pelo crânio de USNM 49757, que tem 5,79 m de comprimento"
+     ]
+    },
+    {
+     "cells": [
+      "Hope, Londres, uma fêmea jovem",
+      "25,2 m do jeito que o esqueleto dela está montado",
+      "o esqueleto dela, 4,5 t",
+      "o museu que a guarda"
+     ]
+    },
+    {
+     "cells": [
+      "O nosso megalodon",
+      "cerca de 16 m",
+      "mais ou menos 30 t (modelo de 2025), cerca de 61 t (modelo de 2022)",
+      "dois modelos sobre uma mesma coluna, peso controverso"
+     ]
+    },
+    {
+     "cells": [
+      "O maior megalodon",
+      "talvez cerca de 20 m",
+      "",
+      "um dente, calculado a partir de arcadas inteiras"
+     ]
+    },
+    {
+     "cells": [
+      "Argentinosaurus",
+      "cerca de 30 a 35 m, reconstruído, nunca medido, o nosso cerca de 30,6 m",
+      "mais ou menos 65 a 80 t, um modelo",
+      "um único esqueleto parcial, o corpo tirado dos parentes"
+     ]
+    },
+    {
+     "cells": [
+      "A pessoa",
+      "1,70 m de altura, da cabeça aos pés",
+      "",
+      "a nossa figura de escala"
+     ]
+    }
+   ]
+  },
+  {
+   "type": "text",
+   "id": "biggest-ever",
+   "nav": "A baleia-azul é o maior animal do mundo, ou de todos os tempos?",
+   "h": "A baleia-azul é o maior animal do mundo, ou de todos os tempos?",
+   "paras": [
+    "Sim, até onde se sabe. É o animal mais pesado que se conhece, e a NOAA, a agência dos oceanos dos Estados Unidos, e um estudo de 2017 dizem que é o maior animal que já viveu. Um estudo de 2025 é mais cauteloso. Esse estudo considera incerto qual foi o maior animal de todos, porque alguns dinossauros gigantes, conhecidos só por fragmentos ou por ossos perdidos, podem ter chegado ao mesmo tamanho. O Perucetus, uma baleia fóssil apresentada em 2023 como possivelmente mais pesada, sai bem mais leve em dois estudos posteriores."
+   ]
+  },
+  {
+   "type": "text",
+   "id": "length-weight",
+   "nav": "Comprimento e peso da baleia-azul",
+   "h": "Comprimento e peso da baleia-azul",
+   "paras": [
+    "A maioria das baleias-azuis adultas tem de 23 a 27 m, e as fêmeas são mais compridas que os machos. As maiores são as da Antártida. As do Atlântico Norte e do Pacífico Norte chegam a cerca de 27 m, e a baleia-azul-pigmeia é menor.",
+    "Segundo um estudo de 2025, as baleias-azuis adultas pesam mais ou menos 100 a 150 toneladas, e as maiores talvez perto de 200. Nenhuma baleia-azul inteira jamais foi pesada. Todo peso vem de baleias cortadas em navios baleeiros e pesadas pedaço por pedaço, e o sangue perdido no convés deixa essas somas baixas demais. Um modelo feito com 31 baleias pesadas assim dá para uma baleia-azul de 23 m de comprimento mais ou menos 75 a 85 toneladas."
+   ]
+  },
+  {
+   "type": "text",
+   "id": "records",
+   "nav": "A maior baleia-azul já registrada",
+   "h": "A maior baleia-azul já registrada",
+   "paras": [
+    "A mais comprida dos registros é uma fêmea de 33,27 m, numa lista baleeira norueguesa de 1928, medida ao lado de um navio-fábrica. Esse recorde controverso da caça à baleia divide dois estudos recentes: um a considera a mais comprida medida com segurança, o outro diz que esse comprimento não é confiável. Um estudo de 2025 observa que, depois que biólogos passaram a viajar com as frotas, nenhuma baleia com mais de 30,5 m apareceu nos registros, então as maiores tinham cerca de 30 m, talvez mais. A maior pesagem registrada é de 190 toneladas, de uma fêmea prenhe e muito gorda de 27,6 m, pesada em pedaços por uma frota soviética nos anos 1940. É um dado que não conseguimos ler na fonte."
+   ]
+  },
+  {
+   "type": "text",
+   "id": "heart",
+   "nav": "O coração da baleia-azul",
+   "h": "O coração da baleia-azul",
+   "paras": [
+    "O único coração de baleia-azul preservado pesava cerca de 180 kg e, antes de ser preparado, media cerca de 1,5 por 1,2 m. Veio de uma das baleias-azuis que morreram presas no gelo na costa da Terra Nova em 2014, e está guardado no Royal Ontario Museum, em Toronto. Os corações pesados em navios baleeiros nos anos 1940 iam de mais ou menos 180 a 625 kg. Um macho recebeu um sensor na costa da Califórnia. Nos mergulhos profundos, o coração do animal desacelerou até apenas 2 batimentos por minuto, e na superfície subiu para 25 a 37."
+   ]
+  },
+  {
+   "type": "text",
+   "id": "tongue",
+   "nav": "Língua da baleia-azul: quanto pesa?",
+   "h": "Língua da baleia-azul: quanto pesa?",
+   "paras": [
+    "Não achamos nenhum registro de que a língua de uma baleia-azul tenha sido pesada, embora se diga que pesa 4 toneladas, ou 7, ou tanto quanto um elefante. Nenhuma dessas afirmações dá um método, e os dois números não batem. O que se sabe: a língua é enorme, macia e achatada, e depois de um grande gole empurra a água para fora através das barbatanas."
+   ]
+  },
+  {
+   "type": "text",
+   "id": "megalodon",
+   "nav": "Baleia-azul vs. megalodon",
+   "h": "Baleia-azul vs. megalodon",
+   "paras": [
+    "Pelos fósseis, as duas espécies nunca coincidiram: o último megalodon viveu há cerca de 3,6 milhões de anos, e o fóssil de baleia-azul mais antigo que conhecemos tem cerca de 1,5 a 1,25 milhão de anos. Quem venceria é uma pergunta sem resposta.",
+    "O nosso megalodon, com cerca de 16 m, chega a pouco mais de dois terços do comprimento da nossa baleia-azul. Ter menos baleias pequenas com barbatanas para caçar é uma das causas apontadas para o fim do megalodon, embora nenhuma esteja estabelecida. O Argentinosaurus, com cerca de 30 a 35 m e mais ou menos 65 a 80 toneladas pelos modelos, tinha aproximadamente o comprimento das baleias-azuis mais compridas e aproximadamente metade do peso de uma grande. Não se conhece nenhum dinossauro mais pesado.",
+    "Na nossa imagem, a nossa baleia-azul tem cerca de três quartos do comprimento do nosso Argentinosaurus."
+   ],
+   "scale": {
+    "pic": "beside",
+    "tag": "tag_made",
+    "what": "O nosso Argentinosaurus, a nossa baleia-azul e o nosso megalodon na mesma escala com a pessoa, só para comparar tamanhos. Os três nunca viveram na mesma época.",
+    "alt": "Três gigantes de lado, todos virados para o mesmo lado: um dinossauro de pescoço e cauda longos sobre quatro patas, mais comprido que os outros, uma baleia-azul e um tubarão, junto da pessoa cinza.",
+    "note": [
+     "O corpo do nosso megalodon segue o modelo de ",
+     {
+      "text": "Shimada e outros 2025",
+      "href": "https://palaeo-electronica.org/content/2025/5450-biology-of-otodus-megalodon"
+     },
+     " (",
+     {
+      "text": "CC BY 4.0",
+      "href": "https://creativecommons.org/licenses/by/4.0/"
+     },
+     "). Nós o medimos e o modificamos."
+    ],
+    "marks": [
+     {
+      "span": "argentinosaurus",
+      "text": "O nosso Argentinosaurus, cerca de 30,6 m"
+     },
+     {
+      "span": "blue-whale",
+      "text": "A nossa baleia-azul, 22,86 m"
+     },
+     {
+      "span": "megalodon",
+      "text": "O nosso megalodon, cerca de 16 m"
+     },
+     {
+      "span": "person",
+      "text": "A pessoa, 1,70 m"
+     }
+    ]
+   }
+  },
+  {
+   "type": "text",
+   "id": "skeleton",
+   "nav": "Esqueleto da baleia-azul",
+   "h": "Esqueleto da baleia-azul",
+   "paras": [
+    "O esqueleto de baleia-azul mais conhecido é Hope, uma fêmea jovem de cerca de 15 anos que encalhou perto de Wexford, na Irlanda, em março de 1891. O esqueleto dela, com 25,2 m do jeito que está montado, pesa 4,5 toneladas e chegou a Londres em 1892. Desde 2017 está pendurado no teto do Hintze Hall do Natural History Museum, como se mergulhasse.",
+    "O nosso modelo segue outra baleia, o macho USNM 49757, caçado em 1903 perto de Hermitage Bay, na Terra Nova. O esqueleto dele está guardado no Smithsonian, em Washington. É controverso se ele já tinha terminado de crescer. Em Toronto, o Royal Ontario Museum exibiu o esqueleto de uma baleia de 23,3 m que encalhou morta em Trout River, na Terra Nova, em 2014.",
+    "A nossa imagem do esqueleto mostra quais ossos dimensionamos pelas medidas de USNM 49757."
+   ],
+   "scale": {
+    "pic": "skeleton",
+    "tag": "tag_built",
+    "what": "A nossa baleia-azul como esqueleto, com a mesma pessoa. Cada osso está colorido conforme o modo como foi dimensionado.",
+    "alt": "A nossa baleia-azul como esqueleto, vista de lado, junto da pessoa cinza, com os ossos em duas cores conforme o modo como foram dimensionados. Na cor dos ossos medidos de USNM 49757: o crânio, as mandíbulas, as primeiras vértebras do pescoço, todas as costelas, o esterno, as escápulas, a maior parte dos ossos das nadadeiras peitorais e algumas vértebras isoladas. O resto da coluna está na outra cor.",
+    "key": [
+     {
+      "swatch": "measured",
+      "text": "Dimensionado pelos próprios ossos medidos (USNM 49757)"
+     },
+     {
+      "swatch": "comparator",
+      "text": "Dimensionado a partir de outras baleias"
+     },
+     "“Medidos” quer dizer dimensionados pelas medidas publicadas dos ossos dele, não escaneados. Os ossos do punho e as pontas soltas dos ossos do antebraço são estimados, não medidos, e têm a segunda cor. O hioide, um osso da garganta, não foi construído."
+    ],
+    "marks": [
+     {
+      "span": "skull",
+      "text": "Crânio, 5,8 m, o nosso modelo"
+     },
+     {
+      "span": "person",
+      "text": "A pessoa, 1,70 m"
+     }
+    ]
+   }
+  },
+  {
+   "type": "text",
+   "id": "lifespan",
+   "nav": "Quanto tempo vive uma baleia-azul?",
+   "h": "Quanto tempo vive uma baleia-azul?",
+   "paras": [
+    "A NOAA estima que as baleias-azuis vivem em média cerca de 80 a 90 anos. A idade é contada pelas camadas dos tampões de cera dos ouvidos de baleias mortas."
+   ]
+  },
+  {
+   "type": "text",
+   "id": "how-many",
+   "nav": "Quantas baleias-azuis ainda existem?",
+   "h": "Quantas baleias-azuis ainda existem?",
+   "paras": [
+    "Ninguém contou todas: por uma estimativa, dada pelo Royal Ontario Museum em 2016, havia então de 5.000 a 10.000. Por outra, a avaliação da Lista Vermelha de 2018, havia de 5.000 a 15.000 baleias adultas, e a espécie estava em perigo. Só conseguimos ler essa avaliação de segunda mão.",
+    "Os baleeiros relataram cerca de 330.000 baleias-azuis mortas só na Antártida entre 1909 e 1965. As baleias-azuis estão protegidas da caça desde meados dos anos 1960, e uma proibição internacional da caça comercial de baleias começou em 1986. A população volta a crescer, diz a NOAA, e os principais perigos hoje são os navios e os equipamentos de pesca."
+   ]
+  },
+  {
+   "type": "text",
+   "id": "eating",
+   "nav": "Como a baleia-azul se alimenta",
+   "h": "Como a baleia-azul se alimenta",
+   "paras": [
+    "As baleias-azuis comem krill, pequenos animais parecidos com camarões. Uma baleia-azul avança contra um enxame de krill com a boca aberta, e os sulcos sob a garganta se esticam até a boca ficar estufada. A água sai pelas barbatanas, placas córneas que pendem do maxilar superior no lugar de dentes, e o krill fica dentro."
+   ]
+  },
+  {
+   "type": "notes",
+   "id": "numbers-read",
+   "nav": "Números que você talvez tenha lido",
+   "h": "Números que você talvez tenha lido",
+   "intro": "Para cada número: de onde ele vem e o que significa.",
+   "rows": [
+    {
+     "term": "33 m",
+     "text": "Um recorde controverso da caça à baleia, uma única fêmea numa lista de 1928. Os comprimentos acima de 30,5 m sumiram assim que biólogos passaram a medir."
+    },
+    {
+     "term": "190 t e 200 t",
+     "text": "As 190 toneladas vêm de uma fêmea prenhe pesada em pedaços nos anos 1940, um dado que não conseguimos ler na fonte. As 200 toneladas são o limite superior de um modelo."
+    },
+    {
+     "term": "270 t",
+     "text": "Um modelo de 2024 para uma baleia de 33 m, o comprimento do recorde controverso da caça à baleia. Um estudo de 2025 dá a uma de 30,5 m cerca de 195 toneladas."
+    },
+    {
+     "term": "Um coração do tamanho de um carro",
+     "text": "Nenhuma medida que achamos confirma isso. O único coração preservado media cerca de 1,5 por 1,2 m antes de ser preparado, bem menor que um carro, pela nossa própria comparação."
+    },
+    {
+     "term": "Artérias por onde uma pessoa poderia nadar",
+     "text": "Nada do que lemos confirma isso, e não achamos nenhuma medida da largura da artéria principal de uma baleia-azul."
+    },
+    {
+     "term": "Uma língua tão pesada quanto um elefante",
+     "text": "Diz-se que a língua pesa tanto, mas nenhuma pesagem confirma isso."
+    },
+    {
+     "term": "O maior animal que já existiu",
+     "text": "É verdade com uma palavra a mais: o maior animal conhecido."
+    },
+    {
+     "term": "Perucetus com até 340 t",
+     "text": "Dois estudos posteriores reduziram essa baleia fóssil para mais ou menos 60 a 70 toneladas e para 35 a 40."
+    }
+   ]
+  },
+  {
+   "type": "faq",
+   "id": "questions",
+   "nav": "Mais perguntas",
+   "h": "Mais perguntas",
+   "items": [
+    {
+     "q": "Qual é o tamanho da baleia-azul comparada com uma pessoa?",
+     "a": "A nossa baleia-azul é tão comprida quanto cerca de 13 pessoas de 1,70 m deitadas em fila, uma depois da outra. Só o crânio equivale a três pessoas e mais um pouco, e uma nadadeira peitoral a quase duas. São contas nossas, feitas no nosso modelo."
+    },
+    {
+     "q": "Por que se chama baleia-azul?",
+     "a": "A pele é cinza-azulada e manchada, e debaixo d’água parece azul-clara."
+    }
+   ]
+  },
+  {
+   "type": "text",
+   "id": "museum",
+   "nav": "No museu",
+   "h": "No museu",
+   "paras": [
+    "O Museum of Ages é um museu digital, feito por uma organização sem fins lucrativos. Entrada franca, sem cadastro. Na ala dos animais, este animal vai estar entre os outros, dos gigantes de muito tempo atrás aos últimos de sua espécie. A ala de Leonardo da Vinci mostra como é uma ala pronta."
+   ],
+   "links": [
+    {
+     "out": true,
+     "text": "Ir para a ala de Leonardo"
+    }
+   ]
+  },
+  {
+   "type": "pages",
+   "id": "next",
+   "items": [
+    {
+     "page": "megalodon",
+     "pic": "megalodon",
+     "alt": "Um tubarão de boca fechada, visto de lado, cinza-escuro com uma faixa mais clara no flanco, ao lado de uma pessoa cinza que ao lado dele parece minúscula.",
+     "line": "A única coluna longa de megalodon encontrada dá cerca de 16 m, e os maiores talvez tivessem cerca de 20 m, comparados com uma pessoa, um tubarão-branco e uma baleia-azul."
+    },
+    {
+     "page": "biggest-dinosaurs",
+     "pic": "dinosaurs",
+     "alt": "Sete dinossauros em fila, vistos de lado, dois deles com pescoços longos bem acima dos outros, e uma pessoa cinza que ao lado deles parece minúscula.",
+     "line": "Sete dos nossos ao lado de uma pessoa, na mesma escala: o mais pesado, muito provavelmente um titanossauro da Patagônia, o mais alto, provavelmente o Sauroposeidon, e por que ainda não se sabe qual foi o mais longo."
+    }
+   ]
+  },
+  {
+   "type": "sources",
+   "id": "sources",
+   "nav": "Fontes",
+   "h": "Fontes",
+   "intro": "Os números vêm destes estudos e dos museus e órgãos que guardam os ossos e os registros. O museu é independente de todos eles.",
+   "read": [
+    {
+     "text": "Motani e Pyenson, 2024, PeerJ, sobre o peso de uma baleia-azul em cada comprimento, os recordes e o Perucetus.",
+     "href": "https://doi.org/10.7717/peerj.16978"
+    },
+    {
+     "text": "Paul e Larramendi, 2025, Palaeontologia Electronica, sobre as maiores baleias-azuis, os recordes e o Perucetus.",
+     "href": "https://palaeo-electronica.org/content/2025/5431-trimming-down-perucetus"
+    },
+    {
+     "text": "Nishiwaki, 1950, Scientific Reports of the Whales Research Institute, as pesagens em pedaços de 1947 a 1949.",
+     "href": "https://www.icrwhale.org/pdf/SC004184-209.pdf"
+    },
+    {
+     "text": "Goldbogen e outros, 2019, PNAS, sobre os batimentos do coração de uma baleia-azul com sensor.",
+     "href": "https://doi.org/10.1073/pnas.1914273116"
+    },
+    {
+     "text": "Slater, Goldbogen e Pyenson, 2017, Proceedings of the Royal Society B.",
+     "href": "https://doi.org/10.1098/rspb.2017.0546"
+    },
+    {
+     "text": "Bianucci e outros, 2019, Biology Letters, o resumo do estudo, sobre o fóssil de baleia-azul mais antigo que conhecemos.",
+     "href": "https://doi.org/10.1098/rsbl.2019.0175"
+    },
+    {
+     "text": "Boessenecker e outros, 2019, PeerJ, o resumo do estudo, sobre o fim do megalodon.",
+     "href": "https://peerj.com/articles/6088/"
+    },
+    {
+     "text": "Bianucci e outros, 2023, Nature, o resumo do estudo, sobre o Perucetus.",
+     "href": "https://doi.org/10.1038/s41586-023-06381-1"
+    },
+    {
+     "text": "Cooke, 2018, a avaliação da baleia-azul na Lista Vermelha da UICN, lida só por citações."
+    },
+    {
+     "text": "Miller, 1924, a descrição do macho USNM 49757, e uma resenha dessa descrição na Nature, 1925, como a nossa verificação científica as cita."
+    },
+    {
+     "text": "Jefferson, Leatherwood e Webber, 1993, o guia de identificação de espécies da FAO Marine Mammals of the World.",
+     "href": "https://www.fao.org/4/t0725e/t0725e07.pdf"
+    },
+    {
+     "text": "NOAA Fisheries: a página sobre a baleia-azul, atualizada em 2026.",
+     "href": "https://www.fisheries.noaa.gov/species/blue-whale"
+    },
+    {
+     "text": "Natural History Museum, Londres: a página do museu sobre a história de Hope.",
+     "href": "https://www.nhm.ac.uk/discover/hope-the-blue-whale-history.html"
+    },
+    {
+     "text": "Royal Ontario Museum, Toronto: o comunicado à imprensa sobre o coração, 2017, dois textos do blog do museu, 2015 e 2016, e o relatório anual de 2015 a 2016.",
+     "href": "https://www.rom.on.ca/news-releases/blue-whale-heart-arrives-rom"
+    },
+    {
+     "text": "Megalodon: os números e as fontes da nossa página do megalodon.",
+     "href": "https://museumofages.org/pt-br/animais/megalodon/"
+    },
+    {
+     "text": "Argentinosaurus: os números e as fontes da nossa página dos maiores dinossauros.",
+     "href": "https://museumofages.org/pt-br/animais/maior-dinossauro/"
+    }
+   ],
+   "contact": "Se um número ou uma instituição estiver errada, escreva para nós e faremos a correção.",
+   "contact_link": "Ir para as informações legais",
+   "what_link": "O que é este museu"
+  },
+  {
+   "type": "text",
+   "id": "pictures",
+   "nav": "Usar nossas imagens",
+   "h": "Usar nossas imagens",
+   "paras": [
+    [
+     "As quatro imagens da baleia-azul nesta página, a vista de lado, a cabeça, o esqueleto e a fila com o nosso megalodon e o nosso Argentinosaurus, são obra nossa, com licença ",
+     {
+      "text": "CC BY-SA 4.0",
+      "href": "https://creativecommons.org/licenses/by-sa/4.0/deed.pt-br"
+     },
+     ". Crédito: Museum of Ages e, para a fila, forma do corpo do megalodon a partir de Shimada e outros 2025 (",
+     {
+      "text": "CC BY 4.0",
+      "href": "https://creativecommons.org/licenses/by/4.0/"
+     },
+     "). Elas mostram uma reconstrução, construída em código e renderizada com o nosso próprio motor gráfico, não fotografias. As imagens das outras páginas que aparecem aqui dão o crédito nessas páginas."
+    ]
+   ]
+  }
+ ]
+}

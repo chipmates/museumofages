@@ -1764,133 +1764,135 @@
           "en": "Most grown blue whales are about 23 to 27 m long, and the largest about 30 m. Grown ones come to roughly 100 to 150 tonnes by a 2025 study, a model, since none was ever put on a scale whole. Our blue whale has the recorded length of one male, 22.9 m, and stands to one scale beside a person, our megalodon and our Argentinosaurus.",
           "de": "Die meisten ausgewachsenen Blauwale sind etwa 23 bis 27 m lang, die größten erreichen etwa 30 m. Ausgewachsene Tiere kommen nach einer Studie von 2025 auf rund 100 bis 150 t, ein Modell, denn keines kam je im Ganzen auf die Waage. Unser Blauwal hat die notierte Länge eines Männchens, 22,9 m, und steht im selben Maßstab neben einem Menschen, unserem Megalodon und unserem Argentinosaurus."
         },
-        "langs": ["en", "de"],
+        "langs": ["en", "de", "es", "pt-BR"],
         "count": "blue_whale",
         "about": {
           "@type": "Taxon",
           "name": "Balaenoptera musculus",
           "alternateName": [
             "Blue whale",
-            "Blauwal"
+            "Blauwal",
+            "Ballena azul",
+            "Baleia-azul"
           ],
           "taxonRank": "species",
           "sameAs": "https://www.wikidata.org/wiki/Q42196"
         },
         "never_say": [
           [
-            "(?:(?:\\bour\\b|\\bours\\b|\\bunser\\w*)|usnm\\s49757|\\bhim\\b)\\s(?:\\w+\\s){0,4}(?:weighs?|weighed|would\\sweigh|comes?\\sto|came\\sto|wiegt|wog|wöge|käme|kam\\sauf|kommt\\sauf)|(?:(?:\\bour\\b|\\bours\\b|\\bunser\\w*)|usnm\\s49757)(?:\\W+\\w+){0,5}\\W+(?<![\\d.,])\\d+(?:[.,]\\d+)?(?:\\s(?:to|bis)\\s\\d+(?:[.,]\\d+)?)?\\s?(?:t|tonnes?|tons?|tonnen)\\b|m³|cubic\\smet|kubikmeter|\\bvolumen?\\b",
+            "(?:(?:\\bour\\b|\\bours\\b|\\bunser\\w*)|\\bnuestr\\w*|\\bnoss[oa]s?\\b|usnm\\s49757|\\bhim\\b)\\s(?:\\w+\\s){0,4}(?:weighs?|weighed|would\\sweigh|comes?\\sto|came\\sto|wiegt|wog|wöge|käme|kam\\sauf|kommt\\sauf|pesa|pesaba|pesó|pesaría|pesava|pesou|pesaria)|(?:(?:\\bour\\b|\\bours\\b|\\bunser\\w*|\\bnuestr\\w*|\\bnoss[oa]s?\\b)|usnm\\s49757)(?:\\W+\\w+){0,5}\\W+(?<![\\d.,])\\d+(?:[.,]\\d+)?(?:\\s(?:to|bis|a)\\s\\d+(?:[.,]\\d+)?)?\\s?(?:t|tonnes?|tons?|tonnen|toneladas?)\\b|m³|cubic\\smet|kubikmeter|\\bvolumen?\\b",
             "never a weight beside our whale or USNM 49757, and never its volume: no weight is known for him"
           ],
           [
-            "(?s)^(?!.*(?:(?:\\bour\\b|\\bours\\b|\\bunser\\w*)|model|modell|usnm\\s49757|1903|\\bmale\\b|männchen|snout\\stip\\sto\\stail\\snotch|schnauzenspitze\\sbis\\sschwanzkerbe)).*(?:(?<![\\d.,])22[.,](?:86|9)\\s?(?:m|metres?|meters?|metern?)\\b|(?<![\\d.,])75\\s?(?:ft|feet|foot|fuß)\\b)",
+            "(?s)^(?!.*(?:(?:\\bour\\b|\\bours\\b|\\bunser\\w*|\\bnuestr\\w*|\\bnoss[oa]s?\\b)|model|modell|usnm\\s49757|1903|\\bmale\\b|männchen|\\bmacho\\b|hocico|focinho|snout\\stip\\sto\\stail\\snotch|schnauzenspitze\\sbis\\sschwanzkerbe)).*(?:(?<![\\d.,])22[.,](?:86|9)\\s?(?:m|metres?|meters?|metern?|metros?)\\b|(?<![\\d.,])75\\s?(?:ft|feet|foot|fuß)\\b)",
             "22.86 m, 22.9 m and 75 ft only as ours or as the recorded length of the male of 1903"
           ],
           [
-            "(?:\\b(?:the|a)\\sblue\\swhale|\\bblue\\swhales|\\bder\\sblauwal|\\bein\\sblauwal|\\bblauwale)\\s(?:is|are|was|were|grows?|reach\\w*|ist|sind|war|waren|wird|werden|erreich\\w*)\\s(?:\\w+\\s){0,2}(?<![\\d.,])22[.,](?:86|9)\\s?(?:m|metres?|meters?|metern?)\\b",
+            "(?:\\b(?:the|a)\\sblue\\swhale|\\bblue\\swhales|\\bder\\sblauwal|\\bein\\sblauwal|\\bblauwale|\\b(?:la|una)\\sballena\\sazul|\\bballenas\\sazules|\\b(?:a|uma)\\sbaleia-azul|\\bbaleias-azuis)\\s(?:is|are|was|were|grows?|reach\\w*|ist|sind|war|waren|wird|werden|erreich\\w*|es|son|eran|mide|miden|medía|medían|llega\\w*|alcanza\\w*|é|são|eram|tem|têm|tinha|tinham|mede|medem|chega\\w*|alcança\\w*)\\s(?:\\w+\\s){0,2}(?<![\\d.,])22[.,](?:86|9)\\s?(?:m|metres?|meters?|metern?|metros?)\\b",
             "never 22.86 m or 22.9 m as the species' size: it is the recorded length of one male"
           ],
           [
-            "(?s)^(?!.*(?:disputed|umstritten)).*(?:(?<![\\d.,])33(?:[.,]27)?\\s?(?:m|metres?|meters?|metern?)\\b|(?<![\\d.,])(?:109|110)\\s?(?:ft|feet|foot|fuß)\\b)",
+            "(?s)^(?!.*(?:disputed|umstritten|discutid\\w*|controvers\\w*)).*(?:(?<![\\d.,])33(?:[.,]27)?\\s?(?:m|metres?|meters?|metern?|metros?)\\b|(?<![\\d.,])(?:109|110)\\s?(?:ft|feet|foot|fuß)\\b)",
             "33 m, 33.27 m and 110 feet only as the disputed whaling record"
           ],
           [
-            "(?:blue\\swhale|blauwal|\\bwhale|\\bwal)\\w*\\s(?:\\w+\\s){0,5}(?:about\\s|over\\s|up\\sto\\s|more\\sthan\\s|etwa\\s|über\\s|bis\\szu\\s)?(?<![\\d.,])(?:35|40)\\s?(?:m|metres?|meters?|metern?)\\b",
+            "(?:blue\\swhale|blauwal|\\bwhale|\\bwal|\\bballena|\\bbaleias?(?:-azu(?:l|is))?)\\w*\\s(?:\\w+\\s){0,5}(?:about\\s|over\\s|up\\sto\\s|more\\sthan\\s|etwa\\s|über\\s|bis\\szu\\s|unos\\s|unas\\s|cerca\\sde\\s|más\\sde\\s|mais\\sde\\s|hasta\\s|até\\s)?(?<![\\d.,])(?:35|40)\\s?(?:m|metres?|meters?|metern?|metros?)\\b",
             "never 35 m or 40 m for a blue whale"
           ],
           [
-            "(?<![\\d.,])(?:173|177|180)\\s?(?:t|tonnes?|tons?|tonnen)\\b|(?<![\\d.,])136[.,]4",
+            "(?<![\\d.,])(?:173|177|180)\\s?(?:t|tonnes?|tons?|tonnen|toneladas?)\\b|(?<![\\d.,])136[.,]4",
             "never 173, 177 or 180 tonnes, and never 136.4 tonnes as one whale's weight"
           ],
           [
-            "(?s)(?:^(?!.*(?:pieces|stücken))|^(?!.*(?:pregnant|trächtig))|^(?!.*(?:could\\snot\\sread|nicht\\san\\sihrer\\squelle))).*(?<![\\d.,])190\\s?(?:t|tonnes?|tons?|tonnen)\\b",
+            "(?s)(?:^(?!.*(?:pieces|stücken|por\\spartes|pedazos?|em\\spedaços|pedaços?))|^(?!.*(?:pregnant|trächtig|preñada|prenhe))|^(?!.*(?:could\\snot\\sread|nicht\\san\\sihrer\\squelle|no\\spudimos\\sleer|não\\sconseguimos\\sler))).*(?<![\\d.,])190\\s?(?:t|tonnes?|tons?|tonnen|toneladas?)\\b",
             "190 tonnes only as a pregnant female weighed in pieces, a record not read at its source"
           ],
           [
-            "(?s)^(?!.*(?:model|modell|perhaps|vielleicht)).*(?<![\\d.,])200\\s?(?:t|tonnes?|tons?|tonnen)\\b",
+            "(?s)^(?!.*(?:model|modell|perhaps|vielleicht|quizás?|talvez)).*(?<![\\d.,])200\\s?(?:t|tonnes?|tons?|tonnen|toneladas?)\\b",
             "200 tonnes only as perhaps, the top of a model"
           ],
           [
-            "(?s)(?:^(?!.*(?:disputed|umstritten))|^(?!.*(?:model|modell))).*(?<![\\d.,])270\\s?(?:t|tonnes?|tons?|tonnen)\\b",
+            "(?s)(?:^(?!.*(?:disputed|umstritten|discutid\\w*|controvers\\w*))|^(?!.*(?:model|modell))).*(?<![\\d.,])270\\s?(?:t|tonnes?|tons?|tonnen|toneladas?)\\b",
             "270 tonnes only as a model's number for the disputed record"
           ],
           [
-            "(?s)^(?!.*(?:never|\\bnie\\b|\\bno\\b|\\bnone\\b|kein\\w*)).*(?:(?:whole|ganze[rns]?|im\\sganzen)\\s(?:\\w+\\s){0,4}(?:weighed|gewogen|auf\\sdie\\swaage)|(?:weighed|gewogen)\\s(?:\\w+\\s){0,2}(?:whole|im\\sganzen|am\\sstück)|(?:blue\\swhale|blauwal|\\bwhale|\\bwal)\\w*\\s(?:\\w+\\s){0,2}(?:was|were|has\\sbeen|have\\sbeen|wurde|wurden)\\s(?:\\w+\\s){0,2}(?:weighed|gewogen)(?!\\s(?:\\w+\\s){0,2}(?:in\\spieces|piece\\sby|in\\sstücken|stück\\sfür))|(?:blue\\swhale|blauwal|\\bwhale|\\bwal)\\w*\\s(?:\\w+\\s){0,2}(?:weighed|wog)\\s(?:about\\s|etwa\\s|rund\\s)?(?<![\\d.,])\\d+(?:[.,]\\d+)?\\s?(?:t|tonnes?|tons?|tonnen)\\b)",
+            "(?s)^(?!.*(?:never|\\bnie\\b|\\bno\\b|\\bnone\\b|kein\\w*|nunca|jamás|jamais|ningun\\w*|ningún|nenhum\\w*|\\bnão\\b)).*(?:(?:whole|ganze[rns]?|im\\sganzen|enter[oa]s?|inteir[oa]s?)\\s(?:\\w+\\s){0,4}(?:weighed|gewogen|auf\\sdie\\swaage|pesad[oa]s?|báscula|balança)|(?:weighed|gewogen|pesad[oa]s?|pesó|pesaron|pesou|pesaram)\\s(?:\\w+\\s){0,2}(?:whole|im\\sganzen|am\\sstück|enter[oa]s?|inteir[oa]s?)|(?:blue\\swhale|blauwal|\\bwhale|\\bwal|\\bballena|\\bbaleias?(?:-azu(?:l|is))?)\\w*\\s(?:\\w+\\s){0,2}(?:was|were|has\\sbeen|have\\sbeen|wurde|wurden|fue|fueron|ha\\ssido|foi|foram|tenha\\ssido)\\s(?:\\w+\\s){0,2}(?:weighed|gewogen|pesad[oa]s?)(?!\\s(?:\\w+\\s){0,2}(?:in\\spieces|piece\\sby|in\\sstücken|stück\\sfür|por\\spartes|pedazo\\sa|em\\spedaços|pedaço\\spor))|(?:blue\\swhale|blauwal|\\bwhale|\\bwal|\\bballena|\\bbaleias?(?:-azu(?:l|is))?)\\w*\\s(?:\\w+\\s){0,2}(?:weighed|wog|pesó|pesou)\\s(?:about\\s|etwa\\s|rund\\s|unas\\s|cerca\\sde\\s|más\\so\\smenos\\s|mais\\sou\\smenos\\s)?(?<![\\d.,])\\d+(?:[.,]\\d+)?\\s?(?:t|tonnes?|tons?|tonnen|toneladas?)\\b)",
             "never a whole blue whale weighed: every weight comes from whales weighed in pieces"
           ],
           [
-            "(?s)^(?!.*(?:disputed|umstritten)).*(?:(?:(?:\\bour\\b|\\bours\\b|\\bunser\\w*)|usnm\\s49757|\\bhe\\b|\\bhim\\b|männchen)[^.?!]*(?:full.grown|fully\\sgrown|ausgewachsen|\\badult\\b|erwachsen)|(?:full.grown|fully\\sgrown|ausgewachsene[sn]?)\\s(?:male|männchen))",
+            "(?s)^(?!.*(?:disputed|umstritten|discut\\w*|controvers\\w*)).*(?:(?:(?:\\bour\\b|\\bours\\b|\\bunser\\w*|\\bnuestr\\w*|\\bnoss[oa]s?\\b)|usnm\\s49757|\\bhe\\b|\\bhim\\b|männchen|\\bél\\b|\\bele\\b|\\bmacho\\b)[^.?!]*(?:full.grown|fully\\sgrown|ausgewachsen|\\badult\\b|erwachsen|\\badult[oa]s?\\b|terminado\\sde\\scre(?:c|sc)er|totalmente\\screscid[oa])|(?:full.grown|fully\\sgrown|ausgewachsene[sn]?)\\s(?:male|männchen)|\\bmacho\\s(?:ya\\s|já\\s)?adulto)",
             "never full grown for our whale as certain: whether he was is disputed"
           ],
           [
-            "(?:(?:\\bour\\b|\\bours\\b|\\bunser\\w*)\\s(?:blue\\s)?whale|(?:\\bour\\b|\\bours\\b|\\bunser\\w*)\\smodel|unser\\w*\\s(?:blauwal|modell)\\w*)\\s(?:\\w+\\s){0,4}(?:is\\s|was\\s|ist\\s|war\\s)?(?:about\\s|etwa\\s)?(?:(?<![\\d.,])(?:25|30|33)(?:[.,]\\d+)?\\s?(?:m|metres?|meters?|metern?)\\b|hope\\b)",
+            "(?:(?:\\bour\\b|\\bours\\b|\\bunser\\w*)\\s(?:blue\\s)?whale|(?:\\bour\\b|\\bours\\b|\\bunser\\w*)\\smodel|unser\\w*\\s(?:blauwal|modell)\\w*|nuestra\\sballena(?:\\sazul)?|nuestro\\smodelo|noss[oa]\\sbaleia(?:-azul)?|nosso\\smodelo)\\s(?:\\w+\\s){0,4}(?:is\\s|was\\s|ist\\s|war\\s|es\\s|era\\s|mide\\s|medía\\s|é\\s|tem\\s|tinha\\s)?(?:about\\s|etwa\\s|unos\\s|unas\\s|cerca\\sde\\s)?(?:(?<![\\d.,])(?:25|30|33)(?:[.,]\\d+)?\\s?(?:m|metres?|meters?|metern?|metros?)\\b|hope\\b)",
             "never 25 m, 30 m, 33 m or Hope at our whale: ours is the male USNM 49757, 22.86 m"
           ],
           [
-            "(?s)^(?!.*(?:known|bekannt)).*(?:(?:largest|biggest)\\sanimal\\s(?:that\\s(?:has\\s)?ever\\slived|to\\shave\\s(?:ever\\s)?lived|ever(?!\\?))|größte[sn]?\\stier,?\\s(?:das\\s(?:je|jemals)\\s(?:gelebt|lebte)|aller\\szeiten))",
+            "(?s)^(?!.*(?:known|bekannt|conoc\\w*|conhec\\w*)).*(?:(?:largest|biggest)\\sanimal\\s(?:that\\s(?:has\\s)?ever\\slived|to\\shave\\s(?:ever\\s)?lived|ever(?!\\?))|größte[sn]?\\stier,?\\s(?:das\\s(?:je|jemals)\\s(?:gelebt|lebte)|aller\\szeiten)|(?:animal\\smás\\sgrande|mayor\\sanimal)\\s(?:que\\s(?:ha\\s|haya\\s|jamás\\s|nunca\\s)?(?:vivido|existido|vivió|existió)|de\\stodos\\slos\\stiempos(?!\\?))|maior\\sanimal\\s(?:que\\s(?:já\\s)?(?:viveu|existiu)|de\\stodos\\sos\\stempos(?!\\?)))",
             "the largest animal that ever lived only with known: the largest animal known"
           ],
           [
-            "(?s)^(?!.*(?:no\\smeasurement|keine\\smessung|smaller\\sthan\\sa\\scar|kleiner\\sals\\sein\\sauto)).*(?:size\\sof\\sa\\s(?:small\\s)?car|as\\s(?:big|large|heavy)\\sas\\sa\\s(?:small\\s)?car|so\\s(?:groß|schwer)\\swie\\sein\\s(?:kleine[rs]\\s)?(?:auto|pkw))",
+            "(?s)^(?!.*(?:no\\smeasurement|keine\\smessung|smaller\\sthan\\sa\\scar|kleiner\\sals\\sein\\sauto|ninguna\\smedida|nenhuma\\smedida|menos\\sque\\sun\\s(?:coche|auto|carro)|menor\\sque\\sum\\scarro)).*(?:size\\sof\\sa\\s(?:small\\s)?car|as\\s(?:big|large|heavy)\\sas\\sa\\s(?:small\\s)?car|so\\s(?:groß|schwer)\\swie\\sein\\s(?:kleine[rs]\\s)?(?:auto|pkw)|tamaño\\sde\\sun\\s(?:coche|auto|carro|automóvil)|tan\\s(?:grande|pesad[oa])\\scomo\\sun\\s(?:coche|auto|carro)|tamanho\\sde\\sum\\s(?:carro|automóvel)|tão\\s(?:grande|pesad[oa])\\squanto\\sum\\scarro)",
             "a heart the size of a car only with what was measured: far smaller than a car"
           ],
           [
-            "(?s)^(?!.*(?:nothing\\swe\\sread|nichts,\\swas\\swir)).*(?:swim\\sthrough|crawl\\sthrough|durch\\s(?:\\w+\\s){1,6}(?:schwimmen|kriechen)|(?:schwimmen|kriechen)\\skönnte)",
+            "(?s)^(?!.*(?:nothing\\swe\\sread|nichts,\\swas\\swir|nada\\sde\\slo\\sque\\sleímos|nada\\sdo\\sque\\slemos)).*(?:swim\\sthrough|crawl\\sthrough|durch\\s(?:\\w+\\s){1,6}(?:schwimmen|kriechen)|(?:schwimmen|kriechen)\\skönnte|podría\\snadar|poderia\\snadar|nadar\\spor|gatear\\spor|engatinhar\\spor)",
             "arteries to swim or crawl through only as a claim nothing we read supports"
           ],
           [
-            "(?s)^(?!.*(?:said\\sto|\\bsoll\\b)).*(?:tongue|zunge)(?:\\W+\\w+){0,12}\\W+(?:(?<![\\d.,])\\d+(?:[.,]\\d+)?\\s?(?:t|tonnes?|tons?|tonnen)\\b|(?:an?\\s|ein\\s|einen\\s)?(?:elephant|elefant))",
+            "(?s)^(?!.*(?:said\\sto|\\bsoll\\b|se\\sdice|\\bdicen\\b|diz-se|\\bdizem\\b|se\\sdiga)).*(?:tongue|zunge|lengua|língua)(?:\\W+\\w+){0,12}\\W+(?:(?<![\\d.,])\\d+(?:[.,]\\d+)?\\s?(?:t|tonnes?|tons?|tonnen|toneladas?)\\b|(?:an?\\s|ein\\s|einen\\s)?(?:elephant|elefant))",
             "a tongue's weight only as said to: no weighing stands behind it"
           ],
           [
-            "(?s)^(?!.*(?:possibly|lighter|brought\\s(?:\\w+\\s){0,3}down|womöglich|leichter|herab)).*(?:perucetus\\W(?:.*\\W)?(?:heavier|schwerer|outweigh\\w*|340)|(?:heavier|schwerer)\\W(?:.*\\W)?perucetus)",
+            "(?s)^(?!.*(?:possibly|lighter|brought\\s(?:\\w+\\s){0,3}down|womöglich|leichter|herab|posiblemente|possivelmente|quizás?|talvez|ligera|ligero|\\bleve\\b|rebaj\\w*|reduz\\w*)).*(?:perucetus\\W(?:.*\\W)?(?:heavier|schwerer|outweigh\\w*|340|más\\spesad[oa]|mais\\spesad[oa])|(?:heavier|schwerer|más\\spesad[oa]|mais\\spesad[oa])\\W(?:.*\\W)?perucetus)",
             "Perucetus heavier only as possibly, with the later studies that brought it down"
           ],
           [
-            "ichthyosaur\\w*\\s(?:\\w+\\s){0,4}(?:as\\s(?:big|large|long)|so\\s(?:groß|lang)|bigger|larger|longer|größer|länger)",
+            "(?:ichthyosaur|ictiosaur|ictiossaur)\\w*\\s(?:\\w+\\s){0,4}(?:as\\s(?:big|large|long)|so\\s(?:groß|lang)|bigger|larger|longer|größer|länger|tan\\s(?:grande|larg[oa])|más\\s(?:grande|larg[oa])|tão\\s(?:grande|comprid[oa])|maior|mais\\s(?:comprid[oa]|long[oa]))",
             "never an ichthyosaur as big: a length from one jaw bone"
           ],
           [
-            "(?s)^(?!.*(?:never|\\bnie\\b)).*(?:megalodon\\w*\\s(?:\\w+\\s){0,3}(?:hunted|hunting|hunts|ate|attacked|killed|fought|met|jagte\\w*|fraß|griff\\w*|tötete\\w*|kämpfte\\w*|begegnete\\w*)\\s(?:\\w+\\s){0,2}(?:blue\\swhales?|blauwal\\w*)|(?:blue\\swhales?|blauwal\\w*)\\s(?:and|und)\\s(?:the\\s|der\\s|dem\\s)?megalodon\\w*\\s(?:\\w+\\s){0,2}(?:met|fought|lived|begegneten|kämpften|lebten)|(?:fight|battle|kampf|duell)\\s(?:between|zwischen)\\s(?:\\w+\\s){0,2}(?:megalodon|blue\\swhale|blauwal)|(?:lived|existed|lebten)\\s(?:\\w+\\s){0,2}(?:at\\sthe\\ssame\\stime|together|side\\sby\\sside|zur\\sselben\\szeit|gleichzeitig|zusammen))",
+            "(?s)^(?!.*(?:never|\\bnie\\b|nunca|jamás|jamais)).*(?:megalodon\\w*\\s(?:\\w+\\s){0,3}(?:hunted|hunting|hunts|ate|attacked|killed|fought|met|jagte\\w*|fraß|griff\\w*|tötete\\w*|kämpfte\\w*|begegnete\\w*)\\s(?:\\w+\\s){0,2}(?:blue\\swhales?|blauwal\\w*)|(?:blue\\swhales?|blauwal\\w*)\\s(?:and|und)\\s(?:the\\s|der\\s|dem\\s)?megalodon\\w*\\s(?:\\w+\\s){0,2}(?:met|fought|lived|begegneten|kämpften|lebten)|megalod[oó]n\\w*\\s(?:\\w+\\s){0,3}(?:cazaba|cazó|cazaban|atacó|atacaba|mató|luchó|peleó|comía|se\\scruzó|caçava|caçou|atacou|atacava|matou|lutou|comia|se\\sencontrou)\\s(?:\\w+\\s){0,2}(?:ballenas?\\sazul(?:es)?|baleias?-azu(?:l|is))|(?:ballenas?\\sazul(?:es)?)\\sy\\s(?:el\\s)?megalod[oó]n\\w*\\s(?:\\w+\\s){0,2}(?:se\\sencontraron|coincidieron|lucharon|pelearon|vivieron|convivieron)|(?:baleias?-azu(?:l|is))\\se\\s(?:o\\s)?megalod[oó]n\\w*\\s(?:\\w+\\s){0,2}(?:se\\sencontraram|coincidiram|lutaram|viveram|conviveram)|(?:fight|battle|kampf|duell|pelea|lucha|combate|batalla|luta|briga|duelo)\\s(?:between|zwischen|entre)\\s(?:\\w+\\s){0,2}(?:megalodon|blue\\swhale|blauwal|megalodón|ballena|baleia)|(?:lived|existed|lebten|vivieron|existieron|coincidieron|viveram|existiram|coincidiram)\\s(?:\\w+\\s){0,2}(?:at\\sthe\\ssame\\stime|together|side\\sby\\sside|zur\\sselben\\szeit|gleichzeitig|zusammen|al\\smismo\\stiempo|en\\sla\\smisma\\sépoca|juntos|ao\\smesmo\\stempo|na\\smesma\\sépoca))",
             "the megalodon and the blue whale never as meeting, hunting or fighting: they never lived at the same time"
           ],
           [
-            "real\\sbones|actual\\sbones|echten\\sknochen|wirklichen\\sknochen",
+            "real\\sbones|actual\\sbones|echten\\sknochen|wirklichen\\sknochen|huesos\\sreales|verdaderos\\shuesos|ossos\\sreais|ossos\\sverdadeiros",
             "never his real bones: sized on his own measured bones"
           ],
           [
-            "louder\\sthan\\sa\\s(?:jet|jumbo|plane)|loudest\\s(?:animal|creature)|lauter\\sals\\sein\\s(?:düsen)?(?:jet|flugzeug)|lauteste[sn]?\\stier|(?<![\\d.,])188\\s?(?:decibels?|dezibel|db)\\b",
+            "louder\\sthan\\sa\\s(?:jet|jumbo|plane)|loudest\\s(?:animal|creature)|lauter\\sals\\sein\\s(?:düsen)?(?:jet|flugzeug)|lauteste[sn]?\\stier|más\\sruidos[oa]\\sque\\sun\\s(?:avión|jet|reactor)|animal\\smás\\sruidoso|mais\\sbarulhent[oa]\\s(?:do\\sque|que)\\sum\\s(?:avião|jato)|animal\\smais\\sbarulhento|(?<![\\d.,])188\\s?(?:decibels?|dezibel|db|decibelios|decibeles|decibéis)\\b",
             "never louder than a jet, never the loudest animal: among the loudest, by NOAA"
           ],
           [
-            "(?s)^(?!.*(?:more\\sor\\sless|mehr\\soder\\sweniger)).*(?:(?<![\\d.,])2[.,]7\\s?(?:t|tonnes?|tons?|tonnen)\\b|(?<![\\d.,])2[.,]?700\\s?(?:kg|kilo))",
+            "(?s)^(?!.*(?:more\\sor\\sless|mehr\\soder\\sweniger|más\\sde\\suna\\stonelada\\so\\smenos|mais\\sde\\suma\\stonelada\\sou\\smenos)).*(?:(?<![\\d.,])2[.,]7\\s?(?:t|tonnes?|tons?|tonnen|toneladas?)\\b|(?<![\\d.,])2[.,]?700\\s?(?:kg|kilo))",
             "the newborn's 2.7 tonnes stand only in the guess's answer"
           ],
           [
-            "(?s)^(?!.*(?:one\\sestimate|einer\\sschätzung)).*(?:(?:are|were|remain|gibt|leben)\\s(?:\\w+\\s){0,3}(?:about\\s|etwa\\s|only\\s|nur\\s|noch\\s)?(?<![\\d.,])\\d{1,3}[,.]000\\b|(?<![\\d.,])\\d{1,3}[,.]000\\s(?:to|bis)\\s\\d{1,3}[,.]000|(?<![\\d.,])\\d{1,3}[,.]000\\s(?:\\w+\\s){0,3}(?:are\\sleft|left|remain|übrig))",
+            "(?s)^(?!.*(?:one\\sestimate|einer\\sschätzung|una\\sestimación|uma\\sestimativa)).*(?:(?:are|were|remain|gibt|leben|quedan|quedaban|hay|había|viven|existen|restan|há|havia|restam|existem|vivem)\\s(?:\\w+\\s){0,3}(?:about\\s|etwa\\s|only\\s|nur\\s|noch\\s|unas\\s|unos\\s|cerca\\sde\\s|solo\\s|só\\s|apenas\\s|de\\s)?(?<![\\d.,])\\d{1,3}[,.\\u202f\\u00a0]?000\\b|(?<![\\d.,])\\d{1,3}[,.]000\\s(?:to|bis)\\s\\d{1,3}[,.]000|(?<![\\d.,])\\d{1,3}[,.\\u202f\\u00a0]?000\\s(?:a|y|e)\\s\\d{1,3}[,.\\u202f\\u00a0]000|(?<![\\d.,])\\d{1,3}[,.]000\\s(?:\\w+\\s){0,3}(?:are\\sleft|left|remain|übrig|quedan|restan|restam))",
             "how many are left only by one estimate, with who gave it and its year"
           ],
           [
-            "(?:protected|protection|geschützt|unter\\sschutz|\\bban\\b|verbot\\w*)\\s(?:\\w+\\s){0,5}(?:since|from|in|seit|ab)\\s(?:\\w+\\s)?(?!1965\\b|1986\\b)1[89]\\d\\d\\b|(?:since|seit)\\s(?!1965\\b|1986\\b)1[89]\\d\\d\\b\\s(?:\\w+\\s){0,6}(?:protected|geschützt|unter\\sschutz)",
+            "(?:protected|protection|geschützt|unter\\sschutz|\\bban\\b|verbot\\w*|protegid[oa]s?|protección|proteção|prohibición|proibição)\\s(?:\\w+\\s){0,5}(?:since|from|in|seit|ab|desde|en|em)\\s(?:\\w+\\s)?(?!1965\\b|1986\\b)1[89]\\d\\d\\b|(?:since|seit|desde)\\s(?!1965\\b|1986\\b)1[89]\\d\\d\\b\\s(?:\\w+\\s){0,6}(?:protected|geschützt|unter\\sschutz|protegid[oa]s?)",
             "protection only with its sourced years: 1965 and the commercial ban of 1986"
           ],
           [
-            "lives?\\s(?:up\\s)?to\\s\\d|maximum\\sage|höchstalter|(?:up\\sto|bis\\szu)\\s1[01]\\d\\s(?:years|jahre)|(?<![\\d.,])110\\s(?:years|jahre)",
+            "lives?\\s(?:up\\s)?to\\s\\d|maximum\\sage|höchstalter|edad\\smáxima|idade\\smáxima|viven?\\shasta\\s\\d|vivem?\\saté\\s\\d|(?:up\\sto|bis\\szu|hasta|até)\\s1[01]\\d\\s(?:years|jahre|años|anos)|(?<![\\d.,])110\\s(?:years|jahre|años|anos)",
             "never a maximum age: around 80 to 90 years on average, by NOAA's estimate"
           ],
           [
-            "(?s)^(?!.*(?:up\\sto|bis\\szu)).*(?:krill\\s(?:a|per|each)\\sday|(?<![\\d.,])\\d+(?:[.,]\\d+)?\\s?(?:t|tonnes?|tons?|tonnen)\\b\\sof\\skrill|krill\\s(?:pro|am|jeden)\\stag|(?<![\\d.,])\\d+(?:[.,]\\d+)?\\s?(?:t|tonnes?|tons?|tonnen)\\b\\skrill)",
+            "(?s)^(?!.*(?:up\\sto|bis\\szu|hasta|até)).*(?:krill\\s(?:a|per|each)\\sday|(?<![\\d.,])\\d+(?:[.,]\\d+)?\\s?(?:t|tonnes?|tons?|tonnen|toneladas?)\\b\\sof\\skrill|krill\\s(?:pro|am|jeden)\\stag|kril\\w*\\s(?:al|por|cada)\\s(?:día|dia)|krill\\sa\\scada\\sdia|(?<![\\d.,])\\d+(?:[.,]\\d+)?\\s?(?:t|tonnes?|tons?|tonnen|toneladas?)\\b\\s(?:de\\s)?kril\\w*)",
             "never one daily amount of krill as fact"
           ],
           [
-            "(?:on\\sdisplay|ausgestellt|zu\\ssehen)\\s(?:\\w+\\s){0,4}(?:washington|smithsonian)|(?:washington|smithsonian)\\s(?:\\w+\\s){0,6}(?:on\\sdisplay|ausgestellt|zu\\ssehen)|(?<![\\d.,])78\\s?(?:ft|feet|foot|fuß)\\b",
+            "(?:on\\sdisplay|ausgestellt|zu\\ssehen|expuest[oa]|exhibid[oa]|en\\sexposición|expost[oa]|exibid[oa]|em\\sexibição)\\s(?:\\w+\\s){0,4}(?:washington|smithsonian)|(?:washington|smithsonian)\\s(?:\\w+\\s){0,6}(?:on\\sdisplay|ausgestellt|zu\\ssehen|expuest[oa]|exhibid[oa]|en\\sexposición|expost[oa]|exibid[oa]|em\\sexibição)|(?<![\\d.,])78\\s?(?:ft|feet|foot|fuß)\\b",
             "never our whale's skeleton on display in Washington, never 78 feet: it is kept there, 75 ft long"
           ],
           [
-            "bright\\sblue|leuchtend\\sblau|knallblau|yellow\\s(?:belly|underside)|gelbe[rn]?\\sbauch",
+            "bright\\sblue|leuchtend\\sblau|knallblau|yellow\\s(?:belly|underside)|gelbe[rn]?\\sbauch|azul\\s(?:brillante|intenso|vivo|forte|brilhante)|vientre\\samarillo|barriga\\samarela|ventre\\samarelo",
             "never bright blue or a yellow belly: blue-grey, mottled, light blue under water"
           ],
           [
-            "(?<!in\\splace\\sof\\s)(?<!instead\\sof\\s)(?<!\\bno\\s)\\bteeth\\b|(?<!anstelle\\svon\\s)(?<!statt\\s)(?<!keine\\s)zähn(?:e|en)\\b",
+            "(?<!in\\splace\\sof\\s)(?<!instead\\sof\\s)(?<!\\bno\\s)\\bteeth\\b|(?<!anstelle\\svon\\s)(?<!statt\\s)(?<!keine\\s)zähn(?:e|en)\\b|(?<!en\\slugar\\sde\\s)(?<!\\bsin\\s)(?<!\\bno\\stiene\\s)\\bdientes\\b|(?<!no\\slugar\\sde\\s)(?<!em\\svez\\sde\\s)(?<!\\bsem\\s)\\bdentes\\b",
             "never teeth: baleen in place of teeth"
           ],
           [
@@ -1901,36 +1903,42 @@
             ]
           ],
           [
-            "(?:über|more\\sthan|over)\\s35\\s?(?:m|metres?|meters?|metern?)\\b|(?<![\\d.,])91\\s?(?:kilogramm|kg)\\b|(?<![\\d.,])7[.,]?000\\s?(?:kilogramm|kg)\\b|(?<![\\d.,])10[.,]000\\s(?:to|bis)\\s25[.,]000|(?<![\\d.,])65\\s(?:und|and|bis|to)\\s80\\s(?:jahre|years)",
+            "(?:über|more\\sthan|over|más\\sde|mais\\sde)\\s35\\s?(?:m|metres?|meters?|metern?|metros?)\\b|(?<![\\d.,])91\\s?(?:kilogramm|kg)\\b|(?<![\\d.,])7[.,\\u202f\\u00a0]?000\\s?(?:kilogramm|kg|kilos?)\\b|(?<![\\d.,])10[.,\\u202f\\u00a0]000\\s(?:to|bis|a)\\s25[.,\\u202f\\u00a0]000|(?<![\\d.,])65\\s(?:und|and|bis|to|a|y|e)\\s80\\s(?:jahre|years|años|anos)",
             "never the unsourced numbers of a species page: over 35 m, 91 kg a day, 7,000 kg of krill, 10,000 to 25,000, 65 to 80 years"
           ],
           [
-            "giant\\sgreat\\swhite|riesige[rn]?\\sweiße[rn]?\\shai|megalodon\\w*[\\s-](?:skeleton|skelett)|(?:skeleton|skelett)\\s(?:of\\s(?:a\\s|the\\s)?|eines\\s)megalodon|megalodon\\w*\\s(?:\\w+\\s){0,4}(?:about\\s|etwa\\s)?(?<![\\d.,])60\\s?(?:t|tonnes?|tons?|tonnen)\\b",
+            "giant\\sgreat\\swhite|tiburón\\sblanco\\sgigante|tubarão-branco\\sgigante|esqueleto\\sde\\s(?:un\\s|del\\s|uma?\\s|do\\s)?megalod[oó]n|riesige[rn]?\\sweiße[rn]?\\shai|megalodon\\w*[\\s-](?:skeleton|skelett)|(?:skeleton|skelett)\\s(?:of\\s(?:a\\s|the\\s)?|eines\\s)megalodon|megalod[oó]n\\w*\\s(?:\\w+\\s){0,4}(?:about\\s|etwa\\s|unos\\s|cerca\\sde\\s)?(?<![\\d.,])60\\s?(?:t|tonnes?|tons?|tonnen|toneladas?)\\b",
             "for the megalodon: no giant great white, no skeleton, never 60 tonnes as the answer"
           ],
           [
-            "(?<![\\d.,])39[.,]7\\s?(?:m|metres?|meters?|metern?)\\b|largest\\sland\\sanimal\\sever|größte[sn]?\\slandtier\\saller|argentinosaurus\\w*\\s(?:\\w+\\s){0,4}(?:about\\s|etwa\\s|up\\sto\\s|bis\\szu\\s)?(?:(?<![\\d.,])40\\s?(?:m|metres?|meters?|metern?)\\b|(?<![\\d.,])100\\s?(?:t|tonnes?|tons?|tonnen)\\b)",
+            "(?<![\\d.,])39[.,]7\\s?(?:m|metres?|meters?|metern?|metros?)\\b|largest\\sland\\sanimal\\sever|animal\\sterrestre\\smás\\sgrande\\sde\\stodos|mayor\\sanimal\\sterrestre\\sde\\stodos|maior\\sanimal\\sterrestre\\sde\\stodos|größte[sn]?\\slandtier\\saller|argentinosaurus\\w*\\s(?:\\w+\\s){0,4}(?:about\\s|etwa\\s|up\\sto\\s|bis\\szu\\s|unos\\s|cerca\\sde\\s|hasta\\s|até\\s)?(?:(?<![\\d.,])40\\s?(?:m|metres?|meters?|metern?|metros?)\\b|(?<![\\d.,])100\\s?(?:t|tonnes?|tons?|tonnen|toneladas?)\\b)",
             "for Argentinosaurus: never 39.7 m, 40 m or 100 tonnes, never the largest land animal ever"
           ],
           [
-            "\\b(?:hope|females?)\\b[^.?!]*\\b(?:he|his|him)\\b|\\b(?:he|his|him)\\b[^.?!]*\\b(?:hope|females?)\\b",
+            "\\b(?:hope|females?)\\b[^.?!]*\\b(?:he|his|him)\\b|\\b(?:he|his|him)\\b[^.?!]*\\b(?:hope|females?)\\b|\\b(?:hope|hembras?|fêmeas?)\\b[^.?!]*(?:\\bél\\b|\\bele\\b|\\bdele\\b)|(?:\\bél\\b|\\bele\\b|\\bdele\\b)[^.?!]*\\b(?:hope|hembras?|fêmeas?)\\b",
             "never he for Hope or a female",
             [
-              "en"
+              "en",
+              "es",
+              "pt-BR"
             ]
           ],
           [
-            "(?:usnm\\s49757|\\bour\\s(?:blue\\s)?whale|\\bours\\b|\\bour\\smodel)[^.?!]*\\b(?:she|her|hers)\\b|\\b(?:she|her)\\b[^.?!]*(?:usnm\\s49757|\\bour\\s(?:blue\\s)?whale)",
+            "(?:usnm\\s49757|\\bour\\s(?:blue\\s)?whale|\\bours\\b|\\bour\\smodel)[^.?!]*\\b(?:she|her|hers)\\b|\\b(?:she|her)\\b[^.?!]*(?:usnm\\s49757|\\bour\\s(?:blue\\s)?whale)|(?:usnm\\s49757|nuestra\\sballena|nuestro\\smodelo|noss[oa]\\sbaleia|nosso\\smodelo)[^.?!]*\\b(?:ella|ela|dela)\\b|\\b(?:ella|ela|dela)\\b[^.?!]*(?:usnm\\s49757|nuestra\\sballena|noss[oa]\\sbaleia)",
             "never she for USNM 49757 or our whale: the male of 1903",
             [
-              "en"
+              "en",
+              "es",
+              "pt-BR"
             ]
           ],
           [
-            "\\b(?:the|a)\\sblue\\swhale\\b(?!s)(?!')[^.?!]*\\b(?:he|she|his|her|him)\\b",
+            "\\b(?:the|a)\\sblue\\swhale\\b(?!s)(?!')[^.?!]*\\b(?:he|she|his|her|him)\\b|\\b(?:la|una)\\sballena\\sazul\\b(?!\\w)[^.?!]*(?:\\bél\\b|\\bella\\b)|\\b(?:a|uma)\\sbaleia-azul\\b[^.?!]*\\b(?:ele|ela|dele|dela)\\b",
             "never he or she for the blue whale as a kind: it",
             [
-              "en"
+              "en",
+              "es",
+              "pt-BR"
             ]
           ],
           [

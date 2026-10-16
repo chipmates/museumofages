@@ -1,0 +1,649 @@
+{
+ "_note": "LAS PALABRAS de la página de la ballena azul, en español. Reescritas a partir del inglés y del alemán, con las mismas cifras, fuentes y grados de certeza. Nunca se pesó una ballena azul entera, nuestra ballena no tiene peso, y la ballena azul y el megalodón nunca coincidieron. Estado ai: ninguna persona las ha revisado todavía.",
+ "page": {
+  "id": "animals-blue-whale",
+  "wing": "animals",
+  "topic": "blue_whale",
+  "published": null,
+  "join_names": true,
+  "og_image": {
+   "file": "animals-blue-whale-og-{lang}-1200x630.png",
+   "width": 1200,
+   "height": 630,
+   "layout": "beside"
+  }
+ },
+ "pics": {
+  "side": {
+   "stem": "animals-blue-whale-side",
+   "widths": [
+    800,
+    1600,
+    2400
+   ],
+   "sizes": "(min-width: 1280px) 588px, (min-width: 960px) calc(100vw - 80px), (min-width: 600px) calc(100vw - 64px), calc(100vw - 40px)",
+   "person": null,
+   "marks": {
+    "whale": "3.6% 98.05%",
+    "depth": "59.67% 61.48%",
+    "person": "54.62% 56.57%"
+   },
+   "behind": [
+    "depth"
+   ]
+  },
+  "close": {
+   "stem": "animals-blue-whale-close",
+   "widths": [
+    800,
+    1600
+   ],
+   "sizes": "(min-width: 1280px) 690px, (min-width: 960px) 54vw, (min-width: 600px) calc(100vw - 64px), calc(100vw - 40px)",
+   "person": "90.3% 42.25%",
+   "marks": {
+    "snout": "24.34% 78.06%",
+    "blowholes": "14.75% 24.34%",
+    "grooves": "0% 64.18%",
+    "person": "86.8% 93.8%"
+   },
+   "behind": [
+    "snout",
+    "blowholes"
+   ],
+   "parts": [
+    "grooves",
+    "blowholes"
+   ]
+  },
+  "beside": {
+   "stem": "animals-blue-whale-beside",
+   "widths": [
+    800,
+    1600,
+    2400
+   ],
+   "sizes": "(min-width: 1280px) 690px, (min-width: 960px) 54vw, (min-width: 600px) calc(100vw - 64px), calc(100vw - 40px)",
+   "person": "81.76% 64.78%",
+   "marks": {
+    "argentinosaurus": "6.08% 99.08%",
+    "blue-whale": "7.88% 77.36%",
+    "megalodon": "6.12% 56%",
+    "person": "81.04% 82.48%"
+   },
+   "in_order": true
+  },
+  "skeleton": {
+   "stem": "animals-blue-whale-skeleton",
+   "widths": [
+    800,
+    1600
+   ],
+   "sizes": "(min-width: 1280px) 690px, (min-width: 960px) 54vw, (min-width: 600px) calc(100vw - 64px), calc(100vw - 40px)",
+   "person": "89.14% 46.34%",
+   "marks": {
+    "skull": "63.94% 85.7%",
+    "person": "88.25% 90.02%"
+   },
+   "swatches": {
+    "measured": "#cc8766",
+    "comparator": "#3e4357"
+   }
+  },
+  "megalodon": {
+   "stem": "animals-megalodon-side",
+   "widths": [
+    800,
+    1600,
+    2400
+   ],
+   "sizes": "(min-width: 1280px) 690px, (min-width: 960px) 54vw, (min-width: 600px) calc(100vw - 64px), calc(100vw - 40px)",
+   "person": "92% 60.62%"
+  },
+  "dinosaurs": {
+   "stem": "animals-biggest-dinosaurs-row",
+   "widths": [
+    800,
+    1600
+   ],
+   "sizes": "(min-width: 1280px) 690px, (min-width: 960px) 54vw, (min-width: 600px) calc(100vw - 64px), calc(100vw - 40px)",
+   "person": "32.88% 84.25%"
+  }
+ },
+ "meta": {
+  "title": "Ballena azul: tamaño 23 a 27 m, 100 a 150 t | Museum of Ages",
+  "description": "¿Cuánto mide una ballena azul? La mayoría de las adultas, 23 a 27 m, las mayores unos 30 m, y pesan más o menos 100 a 150 t. El animal más pesado conocido.",
+  "og_title": "Ballena azul: tamaño 23 a 27 m, 100 a 150 t",
+  "og_image_alt": "Una ballena azul de lado: un cuerpo largo y esbelto, gris azulado, con manchas claras, una cabeza plana, una aleta pectoral larga de borde claro y una pequeña aleta dorsal muy atrás. A su lado, una persona gris que llega a poco más de media altura de la ballena."
+ },
+ "labels": {
+  "crumbs": "Estás aquí",
+  "crumb_home": "Museo",
+  "crumb_here": "Ballena azul",
+  "toc": "En esta página",
+  "tag_made": "Hecho para esta página",
+  "tag_built": "Reconstrucción",
+  "person": "1,70 m",
+  "to_table": "Las cifras en una tabla",
+  "no_figure": "sin cifra con fuente",
+  "og_answer": "La ballena azul, el animal más pesado conocido, suele medir de 23 a 27 m de largo"
+ },
+ "top": {
+  "h1": "¿Cuánto mide una ballena azul?",
+  "answer": "La mayoría de las ballenas azules adultas miden unos 23 a 27 m de largo, y las más grandes medidas con fiabilidad, unos 30 m. Según un estudio de 2025, pesan más o menos de 100 a 150 toneladas, aunque nunca se pesó una entera. La ballena azul, Balaenoptera musculus, es el animal más pesado y más grande que se conoce, vivo o extinto. Nuestra ballena azul mide 22,9 m, la longitud anotada de un macho cazado en 1903.",
+  "answer_more": "Hoy las ballenas azules viven en todos los océanos menos en el Ártico. Una persona de pie junto a la nuestra llega a poco más de media altura de la ballena.",
+  "scale": {
+   "pic": "side",
+   "tag": "tag_made",
+   "what": "Nuestra ballena azul junto a una persona de 1,70 m, a la misma escala: tan larga como unas 13 personas tumbadas en fila, una tras otra.",
+   "alt": "Una ballena azul de lado: un cuerpo largo y esbelto, gris azulado, con manchas claras, una cabeza plana, una aleta pectoral larga de borde claro y una pequeña aleta dorsal muy atrás. A su lado, una persona gris que llega a poco más de media altura de la ballena.",
+   "note": "Nuestra propia reconstrucción, construida en código a partir de medidas publicadas y renderizada con nuestro propio motor gráfico. No son fotografías.",
+   "marks": [
+    {
+     "span": "whale",
+     "text": "Nuestra ballena azul, 22,86 m, de la punta del hocico a la muesca de la cola"
+    },
+    {
+     "span": "depth",
+     "text": "Mayor altura del cuerpo, 2,86 m, nuestro modelo"
+    },
+    {
+     "span": "person",
+     "text": "La persona, 1,70 m"
+    }
+   ],
+   "close": {
+    "pic": "close",
+    "tag": "tag_made",
+    "what": "Más de cerca y un poco desde arriba: la cabeza de nuestra ballena azul junto a la persona. Los dos espiráculos están arriba, detrás de un reborde elevado que los protege de las salpicaduras, y el soplo que sale de ellos sube alto y estrecho, 9 m o más.",
+    "alt": "La cabeza de la ballena azul más de cerca, de lado y un poco desde arriba: una cabeza larga y plana, los espiráculos encima, finos surcos a lo largo de la garganta y la persona gris al lado.",
+    "marks": [
+     {
+      "span": "snout",
+      "text": "De la punta del hocico a los espiráculos, 3,6 m, nuestro modelo"
+     },
+     {
+      "span": "grooves",
+      "text": "Surcos de la garganta"
+     },
+     {
+      "span": "blowholes",
+      "text": "Dos espiráculos"
+     },
+     {
+      "span": "person",
+      "text": "La persona, 1,70 m"
+     }
+    ]
+   }
+  },
+  "guess": {
+   "h": "Para adivinar",
+   "q": "Una ballena azul recién nacida mide unos 7 m de largo. ¿Pesa más de una tonelada o menos?",
+   "button": "Ver la respuesta",
+   "a": "Más: unas 2,7 toneladas, según el Natural History Museum de Londres. Con unos 7 m, la cría ya es más larga que cuatro personas tumbadas en fila, una tras otra.",
+   "button_open": "Ocultar la respuesta"
+  },
+  "out": {
+   "text": "El ala de este animal todavía se está construyendo. El ala de Leonardo da Vinci ya está abierta hoy.",
+   "link": "Ir al ala de Leonardo"
+  }
+ },
+ "blocks": [
+  {
+   "type": "numbers",
+   "id": "numbers",
+   "nav": "Datos de la ballena azul: las cifras en una tabla",
+   "h": "Datos de la ballena azul: las cifras en una tabla",
+   "unit": "En metros y toneladas. Donde no hay una cifra con fuente, la celda queda vacía.",
+   "cols": [
+    "Animal",
+    "Longitud",
+    "Peso",
+    "Certeza"
+   ],
+   "rows": [
+    {
+     "cells": [
+      "La mayoría de las ballenas azules adultas",
+      "unos 23 a 27 m, las hembras más largas que los machos",
+      "más o menos 100 a 150 t, según un estudio de 2025, nunca se pesó una entera",
+      "buena para la longitud: una guía de campo y la agencia de los océanos de Estados Unidos coinciden. El peso es un modelo"
+     ]
+    },
+    {
+     "cells": [
+      "Las ballenas azules más grandes",
+      "unos 30 m, quizá más",
+      "quizá cerca de 200 t, el límite superior de un modelo",
+      "media: un estudio de 2025 y la revisión que cita"
+     ]
+    },
+    {
+     "cells": [
+      "La más larga registrada, una hembra",
+      "33,27 m, un récord discutido de la caza de ballenas, en una lista noruega de 1928, medida junto a un buque factoría",
+      "",
+      "discutido: dos estudios recientes no están de acuerdo"
+     ]
+    },
+    {
+     "cells": [
+      "El mayor pesaje registrado, década de 1940",
+      "27,6 m",
+      "190 t de una hembra preñada, pesada por partes, un dato que no pudimos leer en su fuente",
+      "un dato que cita un estudio de 2025"
+     ]
+    },
+    {
+     "cells": [
+      "El pesaje mejor documentado, una hembra, 1948",
+      "27,1 m",
+      "unas 130 t sin su sangre, unas 140 t con una estimación de la sangre, pesada por partes",
+      "buena: el propio informe del pesaje"
+     ]
+    },
+    {
+     "cells": [
+      "USNM 49757, el macho que tomamos como modelo, Washington",
+      "22,86 m, como se anotó en 1903",
+      "desconocido",
+      "el registro de 1903. Se discute si había terminado de crecer: quien lo describió lo llamó adulto, pero los extremos de los huesos de su antebrazo aún no se habían fusionado"
+     ]
+    },
+    {
+     "cells": [
+      "Nuestro modelo",
+      "22,86 m de la punta del hocico a la muesca de la cola y 2,86 m de altura máxima del cuerpo, nuestro modelo. Cráneo de 5,81 m, 3,64 m de la punta del hocico a los espiráculos, una aleta pectoral de 3,19 m y la aleta caudal de 4,44 m de punta a punta",
+      "",
+      "medido en nuestros archivos, el cráneo ajustado al cráneo de USNM 49757, que mide 5,79 m de largo"
+     ]
+    },
+    {
+     "cells": [
+      "Hope, Londres, una hembra joven",
+      "25,2 m tal como está montado su esqueleto",
+      "su esqueleto, 4,5 t",
+      "el museo que la conserva"
+     ]
+    },
+    {
+     "cells": [
+      "Nuestro megalodón",
+      "unos 16 m",
+      "más o menos 30 t (modelo de 2025), unas 61 t (modelo de 2022)",
+      "dos modelos sobre una misma columna, peso discutido"
+     ]
+    },
+    {
+     "cells": [
+      "El megalodón más grande",
+      "quizá unos 20 m",
+      "",
+      "un diente, escalado a partir de dentaduras completas"
+     ]
+    },
+    {
+     "cells": [
+      "Argentinosaurus",
+      "unos 30 a 35 m, reconstruido, nunca medido, el nuestro unos 30,6 m",
+      "más o menos 65 a 80 t, un modelo",
+      "un solo esqueleto parcial, el cuerpo tomado de sus parientes"
+     ]
+    },
+    {
+     "cells": [
+      "La persona",
+      "1,70 m de alto, de la cabeza a los pies",
+      "",
+      "nuestra figura de escala"
+     ]
+    }
+   ]
+  },
+  {
+   "type": "text",
+   "id": "biggest-ever",
+   "nav": "¿Es la ballena azul el animal más grande del mundo, o de todos los tiempos?",
+   "h": "¿Es la ballena azul el animal más grande del mundo, o de todos los tiempos?",
+   "paras": [
+    "Sí, por lo que se sabe. Es el animal más pesado que se conoce, y la NOAA, la agencia de los océanos de Estados Unidos, y un estudio de 2017 la llaman el animal más grande que ha vivido. Un estudio de 2025 es más prudente. Considera incierto cuál fue el animal más grande de todos, porque algunos dinosaurios gigantes, conocidos solo por fragmentos o por huesos perdidos, podrían haberla igualado. Perucetus, una ballena fósil presentada en 2023 como posiblemente más pesada, resulta mucho más ligera en dos estudios posteriores."
+   ]
+  },
+  {
+   "type": "text",
+   "id": "length-weight",
+   "nav": "Longitud y peso de la ballena azul",
+   "h": "Longitud y peso de la ballena azul",
+   "paras": [
+    "La mayoría de las ballenas azules adultas miden de 23 a 27 m, y las hembras son más largas que los machos. Las más grandes son las de la Antártida. Las del Atlántico Norte y el Pacífico Norte llegan a unos 27 m, y la ballena azul pigmea es más corta.",
+    "Según un estudio de 2025, las ballenas azules adultas pesan más o menos de 100 a 150 toneladas, y las más grandes quizá cerca de 200. Nunca se pesó una ballena azul entera. Cada peso viene de ballenas despiezadas en barcos balleneros y pesadas pedazo a pedazo, y la sangre que se perdía en cubierta deja esas sumas demasiado bajas. Un modelo hecho con 31 ballenas pesadas así da para una ballena azul de 23 m de largo más o menos de 75 a 85 toneladas."
+   ]
+  },
+  {
+   "type": "text",
+   "id": "records",
+   "nav": "La ballena azul más grande registrada",
+   "h": "La ballena azul más grande registrada",
+   "paras": [
+    "La más larga de los registros es una hembra de 33,27 m, en una lista ballenera noruega de 1928, medida junto a un buque factoría. Este récord discutido de la caza de ballenas divide a dos estudios recientes: uno la considera la más larga medida con fiabilidad, el otro dice que esa longitud no es creíble. Un estudio de 2025 señala que, desde que los biólogos viajaron con las flotas, ninguna ballena de más de 30,5 m apareció en los registros, así que las más grandes medían unos 30 m, quizá más. El mayor pesaje registrado es de 190 toneladas, de una hembra preñada y muy gorda de 27,6 m, pesada por partes por una flota soviética en la década de 1940. Es un dato que no pudimos leer en su fuente."
+   ]
+  },
+  {
+   "type": "text",
+   "id": "heart",
+   "nav": "El corazón de la ballena azul",
+   "h": "El corazón de la ballena azul",
+   "paras": [
+    "El único corazón de ballena azul que se conserva pesaba unos 180 kg y, antes de prepararlo, medía unos 1,5 por 1,2 m. Venía de una de las ballenas azules que murieron atrapadas en el hielo frente a Terranova en 2014, y lo guarda el Royal Ontario Museum de Toronto. Los corazones pesados en barcos balleneros en la década de 1940 iban de más o menos 180 a 625 kg. A un macho le pusieron un sensor frente a California. En las inmersiones profundas, su corazón bajó hasta solo 2 latidos por minuto, y en la superficie subió a entre 25 y 37."
+   ]
+  },
+  {
+   "type": "text",
+   "id": "tongue",
+   "nav": "Lengua de la ballena azul: ¿cuánto pesa?",
+   "h": "Lengua de la ballena azul: ¿cuánto pesa?",
+   "paras": [
+    "No encontramos ningún registro de que se haya pesado la lengua de una ballena azul, aunque se dice que pesa 4 toneladas, o 7, o tanto como un elefante. Ninguna de estas afirmaciones da un método, y las dos cifras no coinciden. Lo que se sabe: la lengua es enorme, blanda y plana, y después de un gran trago empuja el agua hacia fuera a través de las barbas."
+   ]
+  },
+  {
+   "type": "text",
+   "id": "megalodon",
+   "nav": "Ballena azul vs. megalodón",
+   "h": "Ballena azul vs. megalodón",
+   "paras": [
+    "Según los fósiles, los dos nunca coincidieron: el último megalodón vivió hace unos 3,6 millones de años, y el fósil de ballena azul más antiguo que conocemos tiene unos 1,5 a 1,25 millones de años. Quién ganaría es una pregunta sin respuesta.",
+    "Nuestro megalodón, de unos 16 m, llega a poco más de dos tercios de la longitud de nuestra ballena azul. Que hubiera menos ballenas pequeñas con barbas que cazar es una de las causas propuestas para el fin del megalodón, aunque ninguna está establecida. Argentinosaurus, de unos 30 a 35 m y más o menos 65 a 80 toneladas según sus modelos, era aproximadamente tan largo como las ballenas azules más largas y pesaba aproximadamente la mitad que una grande. No se conoce ningún dinosaurio más pesado.",
+    "En nuestra imagen, nuestra ballena azul tiene unas tres cuartas partes de la longitud de nuestro Argentinosaurus."
+   ],
+   "scale": {
+    "pic": "beside",
+    "tag": "tag_made",
+    "what": "Nuestro Argentinosaurus, nuestra ballena azul y nuestro megalodón a la misma escala con la persona, solo para comparar tamaños. Los tres nunca vivieron en la misma época.",
+    "alt": "Tres gigantes de lado, todos mirando en la misma dirección: un dinosaurio de cuello y cola largos sobre cuatro patas, más largo que los otros, una ballena azul y un tiburón, junto a la persona gris.",
+    "note": [
+     "El cuerpo de nuestro megalodón sigue el modelo de ",
+     {
+      "text": "Shimada y otros 2025",
+      "href": "https://palaeo-electronica.org/content/2025/5450-biology-of-otodus-megalodon"
+     },
+     " (",
+     {
+      "text": "CC BY 4.0",
+      "href": "https://creativecommons.org/licenses/by/4.0/"
+     },
+     "). Lo medimos y lo cambiamos."
+    ],
+    "marks": [
+     {
+      "span": "argentinosaurus",
+      "text": "Nuestro Argentinosaurus, unos 30,6 m"
+     },
+     {
+      "span": "blue-whale",
+      "text": "Nuestra ballena azul, 22,86 m"
+     },
+     {
+      "span": "megalodon",
+      "text": "Nuestro megalodón, unos 16 m"
+     },
+     {
+      "span": "person",
+      "text": "La persona, 1,70 m"
+     }
+    ]
+   }
+  },
+  {
+   "type": "text",
+   "id": "skeleton",
+   "nav": "Esqueleto de la ballena azul",
+   "h": "Esqueleto de la ballena azul",
+   "paras": [
+    "El esqueleto de ballena azul más conocido es Hope, una hembra joven de unos 15 años que quedó varada cerca de Wexford, en Irlanda, en marzo de 1891. Su esqueleto, de 25,2 m tal como está montado, pesa 4,5 toneladas y llegó a Londres en 1892. Desde 2017 cuelga del techo de la Hintze Hall del Natural History Museum, como si se sumergiera.",
+    "Nuestro modelo sigue a otra ballena, el macho USNM 49757, cazado en 1903 cerca de Hermitage Bay, en Terranova. Su esqueleto se conserva en la Smithsonian, en Washington. Se discute si había terminado de crecer. En Toronto, el Royal Ontario Museum mostró el esqueleto de una ballena de 23,3 m que apareció varada en Trout River, en Terranova, en 2014.",
+    "Nuestra imagen del esqueleto muestra qué huesos se ajustaron a las medidas de USNM 49757."
+   ],
+   "scale": {
+    "pic": "skeleton",
+    "tag": "tag_built",
+    "what": "Nuestra ballena azul como esqueleto, con la misma persona. Cada hueso está coloreado según cómo se fijó su tamaño.",
+    "alt": "Nuestra ballena azul como esqueleto, de lado, junto a la persona gris, con los huesos en dos colores según cómo se fijó su tamaño. En el color de los huesos medidos de USNM 49757: el cráneo, las mandíbulas, las primeras vértebras del cuello, todas las costillas, el esternón, los omóplatos, la mayor parte de los huesos de las aletas pectorales y unas pocas vértebras sueltas. El resto de la columna está en el otro color.",
+    "key": [
+     {
+      "swatch": "measured",
+      "text": "Ajustado a sus propios huesos medidos (USNM 49757)"
+     },
+     {
+      "swatch": "comparator",
+      "text": "Ajustado según otras ballenas"
+     },
+     "«Medidos» quiere decir ajustados a las medidas publicadas de sus huesos, no escaneados. Los huesos de la muñeca y los extremos sueltos de los huesos del antebrazo son estimados, no medidos, y llevan el segundo color. El hioides, un hueso de la garganta, no está construido."
+    ],
+    "marks": [
+     {
+      "span": "skull",
+      "text": "Cráneo, 5,8 m, nuestro modelo"
+     },
+     {
+      "span": "person",
+      "text": "La persona, 1,70 m"
+     }
+    ]
+   }
+  },
+  {
+   "type": "text",
+   "id": "lifespan",
+   "nav": "¿Cuántos años vive una ballena azul?",
+   "h": "¿Cuántos años vive una ballena azul?",
+   "paras": [
+    "La NOAA calcula que viven de media unos 80 a 90 años. La edad se cuenta por las capas de los tapones de cera de los oídos de ballenas muertas."
+   ]
+  },
+  {
+   "type": "text",
+   "id": "how-many",
+   "nav": "¿Cuántas ballenas azules quedan?",
+   "h": "¿Cuántas ballenas azules quedan?",
+   "paras": [
+    "Nadie las contó todas: según una estimación, que dio el Royal Ontario Museum en 2016, entonces había de 5000 a 10 000. Según otra, la evaluación de la Lista Roja de 2018, había de 5000 a 15 000 ballenas adultas, y la especie estaba en peligro. Esa evaluación solo pudimos leerla de segunda mano.",
+    "Los balleneros informaron de unas 330 000 ballenas azules muertas solo en la Antártida entre 1909 y 1965. Las ballenas azules están protegidas de la caza desde mediados de la década de 1960, y en 1986 empezó una prohibición internacional de la caza comercial de ballenas. Su número vuelve a crecer, dice la NOAA, y los principales peligros hoy son los barcos y los aparejos de pesca."
+   ]
+  },
+  {
+   "type": "text",
+   "id": "eating",
+   "nav": "Cómo come una ballena azul",
+   "h": "Cómo come una ballena azul",
+   "paras": [
+    "Las ballenas azules comen kril, pequeños animales parecidos a camarones. Una ballena azul se lanza contra un banco de kril con la boca abierta, y los surcos de debajo de la garganta se estiran hasta que la boca se hincha. El agua sale a través de las barbas, unas láminas córneas que cuelgan del maxilar superior en lugar de dientes, y el kril se queda dentro."
+   ]
+  },
+  {
+   "type": "notes",
+   "id": "numbers-read",
+   "nav": "Cifras que quizá hayas leído",
+   "h": "Cifras que quizá hayas leído",
+   "intro": "Para cada cifra: de dónde viene y qué significa.",
+   "rows": [
+    {
+     "term": "33 m",
+     "text": "Un récord discutido de la caza de ballenas, una sola hembra en una lista de 1928. Las longitudes de más de 30,5 m desaparecieron en cuanto midieron biólogos."
+    },
+    {
+     "term": "190 t y 200 t",
+     "text": "Las 190 toneladas vienen de una hembra preñada pesada por partes en la década de 1940, un dato que no pudimos leer en su fuente. Las 200 toneladas son el límite superior de un modelo."
+    },
+    {
+     "term": "270 t",
+     "text": "Un modelo de 2024 para una ballena de 33 m, la longitud del récord discutido de la caza de ballenas. Un estudio de 2025 da a una de 30,5 m unas 195 toneladas."
+    },
+    {
+     "term": "Un corazón del tamaño de un coche",
+     "text": "Ninguna medida que encontramos lo respalda. El único corazón conservado medía unos 1,5 por 1,2 m antes de prepararlo, mucho menos que un coche, según nuestra propia comparación."
+    },
+    {
+     "term": "Arterias por las que podría nadar una persona",
+     "text": "Nada de lo que leímos lo respalda, y no encontramos ninguna medida del ancho de la arteria principal de una ballena azul."
+    },
+    {
+     "term": "Una lengua tan pesada como un elefante",
+     "text": "Se dice que la lengua pesa tanto, pero ningún pesaje lo respalda."
+    },
+    {
+     "term": "El animal más grande que ha existido",
+     "text": "Es cierto si se añade una palabra: el animal más grande conocido."
+    },
+    {
+     "term": "Perucetus con hasta 340 t",
+     "text": "Dos estudios posteriores rebajaron a esta ballena fósil a más o menos 60 a 70 toneladas y a 35 a 40."
+    }
+   ]
+  },
+  {
+   "type": "faq",
+   "id": "questions",
+   "nav": "Más preguntas",
+   "h": "Más preguntas",
+   "items": [
+    {
+     "q": "¿Cuánto mide una ballena azul comparada con una persona?",
+     "a": "Nuestra ballena azul es tan larga como unas 13 personas de 1,70 m tumbadas en fila, una tras otra. Solo su cráneo equivale a tres personas y un poco más, y una aleta pectoral, a casi dos. Son nuestras propias cuentas, sobre nuestro modelo."
+    },
+    {
+     "q": "¿Por qué se llama azul?",
+     "a": "Su piel es gris azulada y con manchas, y bajo el agua se ve azul claro."
+    }
+   ]
+  },
+  {
+   "type": "text",
+   "id": "museum",
+   "nav": "En el museo",
+   "h": "En el museo",
+   "paras": [
+    "Museum of Ages es un museo digital, hecho por una organización sin fines de lucro. Entrada libre, sin cuenta. En el ala de los animales, este animal estará entre los demás, desde los gigantes de hace mucho tiempo hasta los últimos de su especie. El ala de Leonardo da Vinci muestra cómo es un ala terminada."
+   ],
+   "links": [
+    {
+     "out": true,
+     "text": "Ir al ala de Leonardo"
+    }
+   ]
+  },
+  {
+   "type": "pages",
+   "id": "next",
+   "items": [
+    {
+     "page": "megalodon",
+     "pic": "megalodon",
+     "alt": "Un tiburón con la boca cerrada, visto de lado, gris oscuro con una franja más clara en el costado, junto a una persona gris que a su lado parece diminuta.",
+     "line": "La única columna larga de megalodón hallada da unos 16 m, y los más grandes medían quizá unos 20 m, comparados con una persona, un tiburón blanco y una ballena azul."
+    },
+    {
+     "page": "biggest-dinosaurs",
+     "pic": "dinosaurs",
+     "alt": "Siete dinosaurios en fila, vistos de lado, dos de ellos con cuellos largos muy por encima de los demás, y una persona gris que a su lado parece diminuta.",
+     "line": "Siete de los nuestros junto a una persona, a la misma escala: el más pesado, muy probablemente un titanosaurio de la Patagonia, el más alto, probablemente Sauroposeidon, y por qué sigue sin saberse cuál fue el más largo."
+    }
+   ]
+  },
+  {
+   "type": "sources",
+   "id": "sources",
+   "nav": "Fuentes",
+   "h": "Fuentes",
+   "intro": "Las cifras vienen de estos estudios y de los museos y organismos que conservan los huesos y los registros. El museo es independiente de todos ellos.",
+   "read": [
+    {
+     "text": "Motani y Pyenson, 2024, PeerJ, sobre el peso de una ballena azul según su longitud, los récords y Perucetus.",
+     "href": "https://doi.org/10.7717/peerj.16978"
+    },
+    {
+     "text": "Paul y Larramendi, 2025, Palaeontologia Electronica, sobre las ballenas azules más grandes, los récords y Perucetus.",
+     "href": "https://palaeo-electronica.org/content/2025/5431-trimming-down-perucetus"
+    },
+    {
+     "text": "Nishiwaki, 1950, Scientific Reports of the Whales Research Institute, los pesajes por partes de 1947 a 1949.",
+     "href": "https://www.icrwhale.org/pdf/SC004184-209.pdf"
+    },
+    {
+     "text": "Goldbogen y otros, 2019, PNAS, sobre el latido del corazón de una ballena azul con sensor.",
+     "href": "https://doi.org/10.1073/pnas.1914273116"
+    },
+    {
+     "text": "Slater, Goldbogen y Pyenson, 2017, Proceedings of the Royal Society B.",
+     "href": "https://doi.org/10.1098/rspb.2017.0546"
+    },
+    {
+     "text": "Bianucci y otros, 2019, Biology Letters, el resumen del estudio, sobre el fósil de ballena azul más antiguo que conocemos.",
+     "href": "https://doi.org/10.1098/rsbl.2019.0175"
+    },
+    {
+     "text": "Boessenecker y otros, 2019, PeerJ, el resumen del estudio, sobre el fin del megalodón.",
+     "href": "https://peerj.com/articles/6088/"
+    },
+    {
+     "text": "Bianucci y otros, 2023, Nature, el resumen del estudio, sobre Perucetus.",
+     "href": "https://doi.org/10.1038/s41586-023-06381-1"
+    },
+    {
+     "text": "Cooke, 2018, la evaluación de la ballena azul en la Lista Roja de la UICN, leída solo a través de citas."
+    },
+    {
+     "text": "Miller, 1924, la descripción del macho USNM 49757, y una reseña de esa descripción en Nature, 1925, tal como las cita nuestra revisión científica."
+    },
+    {
+     "text": "Jefferson, Leatherwood y Webber, 1993, la guía de identificación de especies de la FAO Marine Mammals of the World.",
+     "href": "https://www.fao.org/4/t0725e/t0725e07.pdf"
+    },
+    {
+     "text": "NOAA Fisheries: su página sobre la ballena azul, actualizada en 2026.",
+     "href": "https://www.fisheries.noaa.gov/species/blue-whale"
+    },
+    {
+     "text": "Natural History Museum, Londres: su página sobre la historia de Hope.",
+     "href": "https://www.nhm.ac.uk/discover/hope-the-blue-whale-history.html"
+    },
+    {
+     "text": "Royal Ontario Museum, Toronto: su nota de prensa sobre el corazón, 2017, dos entradas de su blog, 2015 y 2016, y su informe anual de 2015 a 2016.",
+     "href": "https://www.rom.on.ca/news-releases/blue-whale-heart-arrives-rom"
+    },
+    {
+     "text": "Megalodón: las cifras y las fuentes de nuestra página del megalodón.",
+     "href": "https://museumofages.org/es/animales/megalodon/"
+    },
+    {
+     "text": "Argentinosaurus: las cifras y las fuentes de nuestra página de los dinosaurios más grandes.",
+     "href": "https://museumofages.org/es/animales/dinosaurio-mas-grande/"
+    }
+   ],
+   "contact": "Si una cifra o una institución está mal, escríbenos y lo corregiremos.",
+   "contact_link": "Ir al aviso legal",
+   "what_link": "Qué es este museo"
+  },
+  {
+   "type": "text",
+   "id": "pictures",
+   "nav": "Usar nuestras imágenes",
+   "h": "Usar nuestras imágenes",
+   "paras": [
+    [
+     "Las cuatro imágenes de la ballena azul de esta página, la vista de lado, la cabeza, el esqueleto y la fila con nuestro megalodón y nuestro Argentinosaurus, son obra nuestra, con licencia ",
+     {
+      "text": "CC BY-SA 4.0",
+      "href": "https://creativecommons.org/licenses/by-sa/4.0/deed.es"
+     },
+     ". Crédito: Museum of Ages y, para la fila, forma del cuerpo del megalodón según Shimada y otros 2025 (",
+     {
+      "text": "CC BY 4.0",
+      "href": "https://creativecommons.org/licenses/by/4.0/"
+     },
+     "). Muestran una reconstrucción, construida en código y renderizada con nuestro propio motor gráfico, no fotografías. Las imágenes de las otras páginas que aparecen aquí dan su crédito en esas páginas."
+    ]
+   ]
+  }
+ ]
+}

@@ -183,6 +183,11 @@
      "page": "stegosaurus",
      "pic": "stego",
      "alt": "Um estegossauro de lado: uma cabeça pequena e baixa, duas fileiras de placas altas ao longo do dorso arqueado, dois dos quatro espinhos da cauda e as patas da frente mais curtas que as de trás. Ao lado, uma pessoa cinza com a cabeça abaixo do alto do dorso."
+    },
+    {
+     "page": "blue-whale",
+     "pic": "whale",
+     "alt": "Uma baleia-azul de lado: um corpo longo e esguio, cinza-azulado, com manchas claras, uma cabeça achatada, uma nadadeira peitoral longa de borda clara e uma pequena nadadeira dorsal bem atrás. Ao lado, uma pessoa cinza que chega a pouco mais da metade da altura da baleia."
     }
    ]
   }
