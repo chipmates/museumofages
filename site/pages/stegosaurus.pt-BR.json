@@ -1,0 +1,628 @@
+{
+ "_note": "AS PALAVRAS da página do estegossauro, em português do Brasil. Reescritas a partir do inglês e do alemão, com os mesmos números, fontes e graus de certeza. Nenhum estegossauro jamais foi pesado, ninguém sabe se Sophie era macho ou fêmea, e o estegossauro nunca coincidiu com o T. rex nem com o Triceratops. Status ai: nenhuma pessoa as revisou ainda.",
+ "page": {
+  "id": "animals-stegosaurus",
+  "wing": "animals",
+  "topic": "stegosaurus",
+  "published": null,
+  "join_names": true,
+  "og_image": {
+   "file": "animals-stegosaurus-og-{lang}-1200x630.png",
+   "width": 1200,
+   "height": 630,
+   "layout": "beside"
+  },
+  "taxa": [
+   "Diplodocus"
+  ]
+ },
+ "pics": {
+  "side": {
+   "stem": "animals-stegosaurus-side",
+   "widths": [
+    800,
+    1600,
+    2400
+   ],
+   "sizes": "(min-width: 1280px) 588px, (min-width: 960px) calc(100vw - 80px), (min-width: 600px) calc(100vw - 64px), calc(100vw - 40px)",
+   "person": "93.07% 36.7%",
+   "marks": {
+    "stegosaurus": "3.83% 84.03%",
+    "plate": "39.28% 42.45% end",
+    "hips": "44.75% 48.49% start",
+    "person": "90.98% 95.17%"
+   },
+   "behind": [
+    "plate",
+    "hips"
+   ],
+   "tops": {
+    "plate": "8.53%",
+    "hips": "28.28%"
+   }
+  },
+  "close": {
+   "stem": "animals-stegosaurus-close",
+   "widths": [
+    800,
+    1600
+   ],
+   "sizes": "(min-width: 1280px) 690px, (min-width: 960px) 54vw, (min-width: 600px) calc(100vw - 64px), calc(100vw - 40px)",
+   "person": null,
+   "marks": {
+    "plate": "80.23% 85.23% end",
+    "spikes": "22.95% 30.68% end",
+    "person": "7.32% 14.05%"
+   },
+   "behind": [
+    "plate",
+    "spikes"
+   ],
+   "tops": {
+    "plate": "8.49%",
+    "spikes": "48.75%"
+   }
+  },
+  "vs": {
+   "stem": "animals-stegosaurus-beside-triceratops-t-rex",
+   "widths": [
+    800,
+    1600,
+    2400
+   ],
+   "sizes": "(min-width: 1280px) 690px, (min-width: 960px) 54vw, (min-width: 600px) calc(100vw - 64px), calc(100vw - 40px)",
+   "person": "7.11% 84.27%",
+   "marks": {
+    "stegosaurus": "14.67% 55.65%",
+    "triceratops": "14.63% 65.33%",
+    "t-rex": "14.67% 97.78%",
+    "person": "6.03% 8.18%"
+   },
+   "behind": [
+    "stegosaurus"
+   ]
+  },
+  "skeleton": {
+   "stem": "animals-stegosaurus-skeleton",
+   "widths": [
+    800,
+    1600
+   ],
+   "sizes": "(min-width: 1280px) 690px, (min-width: 960px) 54vw, (min-width: 600px) calc(100vw - 64px), calc(100vw - 40px)",
+   "person": "93.07% 36.7%",
+   "swatches": {
+    "own": "#70604e",
+    "rebuilt": "#abb0c3"
+   }
+  },
+  "dinosaurs": {
+   "stem": "animals-biggest-dinosaurs-row",
+   "widths": [
+    800,
+    1600
+   ],
+   "sizes": "(min-width: 1280px) 690px, (min-width: 960px) 54vw, (min-width: 600px) calc(100vw - 64px), calc(100vw - 40px)",
+   "person": "32.82% 84.25%"
+  },
+  "tricera": {
+   "stem": "animals-triceratops-side",
+   "widths": [
+    800,
+    1600,
+    2400
+   ],
+   "sizes": "(min-width: 1280px) 690px, (min-width: 960px) 54vw, (min-width: 600px) calc(100vw - 64px), calc(100vw - 40px)",
+   "person": "92.2% 38.85%"
+  },
+  "trex": {
+   "stem": "animals-t-rex-side",
+   "widths": [
+    800,
+    1600,
+    2400
+   ],
+   "sizes": "(min-width: 1280px) 690px, (min-width: 960px) 54vw, (min-width: 600px) calc(100vw - 64px), calc(100vw - 40px)",
+   "person": "86.42% 63.92%"
+  },
+  "anky": {
+   "stem": "animals-ankylosaurus-side",
+   "widths": [
+    800,
+    1600,
+    2400
+   ],
+   "sizes": "(min-width: 1280px) 690px, (min-width: 960px) 54vw, (min-width: 600px) calc(100vw - 64px), calc(100vw - 40px)",
+   "person": "91.27% 23.15%"
+  }
+ },
+ "meta": {
+  "title": "Estegossauro: tamanho de até cerca de 9 m | Museum of Ages",
+  "description": "Qual era o tamanho do estegossauro? Os maiores, cerca de 9 m. Sophie, em Londres, um animal jovem, tem cerca de 5,6 m e, por um modelo, cerca de 1,6 t.",
+  "og_title": "Estegossauro: tamanho de até cerca de 9 m",
+  "og_image_alt": "Um estegossauro de lado: uma cabeça pequena e baixa, duas fileiras de placas altas ao longo do dorso arqueado, dois dos quatro espinhos da cauda e as patas da frente mais curtas que as de trás. Ao lado, uma pessoa cinza com a cabeça abaixo do alto do dorso."
+ },
+ "labels": {
+  "crumbs": "Você está aqui",
+  "crumb_home": "Museu",
+  "crumb_here": "Estegossauro",
+  "toc": "Nesta página",
+  "tag_made": "Feito para esta página",
+  "tag_built": "Reconstrução",
+  "person": "1,70 m",
+  "to_table": "Os números numa tabela",
+  "no_figure": "sem número com fonte",
+  "og_answer": "Os maiores tinham cerca de 9 m de comprimento, e Sophie, em Londres, tem cerca de 5,6 m"
+ },
+ "top": {
+  "h1": "Qual era o tamanho do estegossauro?",
+  "answer": "Os maiores estegossauros tinham cerca de 9 m de comprimento, um número redondo do Natural History Museum de Londres, sem citar nenhum esqueleto. Sophie, o famoso esqueleto desse museu, tem cerca de 5,6 m e é de um animal jovem que ainda crescia. Um modelo 3D do esqueleto dá cerca de 1,6 toneladas (de 1,1 a 2,3), e até hoje ninguém publicou a altura de um estegossauro vivo.",
+  "answer_more": "No dorso havia duas fileiras de placas altas de osso, alternadas à esquerda e à direita, nunca em pares. A cauda terminava em quatro espinhos que apontavam para os lados, não para cima.",
+  "scale": {
+   "pic": "side",
+   "tag": "tag_made",
+   "what": "O nosso estegossauro, feito a partir de Sophie, ao lado de uma pessoa de 1,70 m, na mesma escala: 5,6 m do bico à ponta da cauda, pouco mais de três pessoas deitadas uma atrás da outra, com a cabeça mais ou menos na altura do ombro da pessoa.",
+   "alt": "Um estegossauro de lado: uma cabeça pequena e baixa, duas fileiras de placas altas ao longo do dorso arqueado, dois dos quatro espinhos da cauda e as patas da frente mais curtas que as de trás. Ao lado, uma pessoa cinza com a cabeça abaixo do alto do dorso.",
+   "note": "A nossa própria reconstrução, construída em código a partir de medidas publicadas e renderizada com o nosso próprio motor gráfico. Não são fotografias.",
+   "marks": [
+    {
+     "span": "stegosaurus",
+     "text": "O nosso estegossauro, 5,6 m do bico à ponta da cauda"
+    },
+    {
+     "span": "hips",
+     "text": "O alto do dorso acima do quadril, 1,9 m, o nosso modelo"
+    },
+    {
+     "span": "plate",
+     "text": "A ponta da placa mais alta, 2,5 m, o nosso modelo"
+    },
+    {
+     "span": "person",
+     "text": "A pessoa, 1,70 m"
+    }
+   ],
+   "close": {
+    "pic": "close",
+    "tag": "tag_made",
+    "what": "Mais de perto, na mesma escala: os nossos espinhos, de até 0,44 m com a bainha córnea, chegam ao peito da pessoa, e a ponta da placa mais alta fica cerca de 0,8 m acima da cabeça da pessoa. Vistos de lado, os espinhos parecem mais levantados do que são: esta vista esconde que eles apontam para os lados.",
+    "alt": "O dorso e a cauda do estegossauro mais de perto: placas altas acima do quadril, que se erguem acima da cabeça da pessoa cinza, e dois dos quatro espinhos da cauda, na altura do peito da pessoa.",
+    "marks": [
+     {
+      "span": "plate",
+      "text": "A ponta da placa mais alta, 2,5 m, o nosso modelo"
+     },
+     {
+      "span": "spikes",
+      "text": "As pontas dos espinhos, de 1,3 a 1,4 m de altura, o nosso modelo"
+     },
+     {
+      "span": "person",
+      "text": "A pessoa, 1,70 m"
+     }
+    ]
+   }
+  },
+  "guess": {
+   "h": "Tente adivinhar",
+   "q": "Como o esqueleto de Sophie foi descoberto?",
+   "button": "Ver a resposta",
+   "a": "Por acaso, em 2003. Um homem que manobrava um trator de esteira num rancho de Wyoming, tarde da noite e no meio de uma ventania, raspou uma encosta, e na manhã seguinte havia ossos à mostra no barranco.",
+   "button_open": "Esconder a resposta"
+  },
+  "out": {
+   "text": "A ala deste animal ainda está sendo construída. A ala de Leonardo da Vinci já está aberta hoje.",
+   "link": "Ir para a ala de Leonardo"
+  }
+ },
+ "blocks": [
+  {
+   "type": "numbers",
+   "id": "numbers",
+   "nav": "Dados do estegossauro: tamanho, altura e peso",
+   "h": "Dados do estegossauro: tamanho, altura e peso",
+   "unit": "Em metros e toneladas. Cada célula de altura diz que ponto ela mede. Onde não há um número com fonte, a célula fica vazia.",
+   "cols": [
+    "Animal",
+    "Comprimento",
+    "Altura, com o ponto medido",
+    "Peso",
+    "Certeza"
+   ],
+   "rows": [
+    {
+     "cells": [
+      "Estegossauro, os maiores",
+      "até cerca de 9 m, um número redondo do Natural History Museum de Londres, sem citar nenhum esqueleto",
+      "não publicada",
+      "",
+      "média: o número de um museu, sem método informado"
+     ]
+    },
+    {
+     "cells": [
+      "Sophie, Natural History Museum, Londres",
+      "cerca de 5,5 a 6 m segundo o estudo que descreve o esqueleto, a montagem 5,6 m",
+      "não publicada para o animal vivo, a montagem 2,9 m no ponto mais alto, com a cauda levantada",
+      "cerca de 1,6 t (de 1,1 a 2,3), por um modelo 3D do esqueleto, nunca foi pesado",
+      "boa para o comprimento, em que o estudo e o museu concordam, e o peso vem do modelo de um animal jovem"
+     ]
+    },
+    {
+     "cells": [
+      "O nosso modelo, feito a partir de Sophie",
+      "5,6 m em linha reta, do bico à ponta da cauda",
+      "o alto do dorso acima do quadril 1,9 m, a ponta da placa mais alta 2,5 m, o alto da cabeça cerca de 1,3 m, tudo do nosso modelo",
+      "",
+      "medido nos nossos arquivos"
+     ]
+    },
+    {
+     "cells": [
+      "T. rex, SUE",
+      "cerca de 12 m, a montagem, o nosso 11,4 m",
+      "até o quadril cerca de 4 m, segundo o museu",
+      "cerca de 8 a 9 t, por um osso e três modelos",
+      "como na nossa página do T. rex"
+     ]
+    },
+    {
+     "cells": [
+      "Triceratops",
+      "adultos grandes cerca de 7 a 8 m, o nosso 6,9 m",
+      "não medida",
+      "o esqueleto de Washington cerca de 6,5 a 8,5 t, por dois modelos de computador",
+      "como na nossa página do Triceratops"
+     ]
+    },
+    {
+     "cells": [
+      "A pessoa",
+      "",
+      "1,70 m de altura, da cabeça aos pés",
+      "",
+      "a nossa figura de escala"
+     ]
+    }
+   ]
+  },
+  {
+   "type": "text",
+   "id": "plates",
+   "nav": "As placas do estegossauro",
+   "h": "As placas do estegossauro",
+   "paras": [
+    "Sophie tem 18 placas, e um vão acima da base da cauda indica que ali havia mais uma, a de número 19. A montagem de Londres mostra 19, e uma delas é uma réplica. As placas ficavam em pé em duas fileiras, alternadas à esquerda e à direita, presas na pele e sem ligação com o esqueleto.",
+    "A maior tem 78,5 cm de osso na parte mais longa, e um pedaço é de gesso. Muito provavelmente, uma camada córnea lisa cobria as placas, mas a única marca dessa camada vem de uma placa de um parente próximo, o Hesperosaurus.",
+    "Para que as placas serviam, ninguém sabe ao certo. A maior parte dos estudos recentes prefere a exibição, um sinal pelo qual os estegossauros podiam reconhecer os da mesma espécie. Perder calor, uma ideia de 1976, foi no máximo um uso secundário. A defesa é a ideia mais fraca: as placas eram finas, e um estudo do tecido delas não achou nada que as deixasse se mover."
+   ]
+  },
+  {
+   "type": "text",
+   "id": "tail-spikes",
+   "nav": "Os espinhos da cauda do estegossauro",
+   "h": "Os espinhos da cauda do estegossauro",
+   "paras": [
+    "Os quatro espinhos da cauda de Sophie, em dois pares, têm de 35 a 38 cm de osso, todos sem a ponta, e a bainha córnea os deixava um pouco mais longos. Eles apontavam para os lados e para trás, quase na horizontal, como sugere outro esqueleto com os ossos da cauda ainda no lugar, embora a montagem de Sophie os mostre levantados.",
+    "Muito provavelmente eram armas. De 51 espinhos de animais do grupo do estegossauro da Formação Morrison, na América do Norte, cerca de um em cada dez tem a ponta quebrada, e alguns cicatrizaram. Uma vértebra da cauda de um Allosaurus tem até um buraco onde a ponta de um espinho se encaixa. Em inglês, os espinhos da cauda costumam ser chamados de “thagomizer”: o apelido surgiu como uma piada num cartum de The Far Side do início da década de 1980, e os cientistas passaram a usá-lo de modo informal."
+   ]
+  },
+  {
+   "type": "text",
+   "id": "brain",
+   "nav": "O cérebro do estegossauro e o “segundo cérebro”",
+   "h": "O cérebro do estegossauro e o “segundo cérebro”",
+   "paras": [
+    "Para um corpo tão grande, o estegossauro tinha um cérebro muito pequeno. Por muito tempo se comparou o espaço para o cérebro dentro do crânio a uma noz, e o museu de Londres o compara a uma ameixa, mas o cérebro de um réptil não preenche esse espaço, então o cérebro era ainda menor.",
+    "Nas décadas de 1880 e 1890, Othniel Marsh encontrou na coluna, acima do quadril, um espaço pelo menos vinte vezes maior que o do cérebro, e o chamou, com cautela, de caixa cerebral traseira. Não havia nenhum “segundo cérebro”. Como nas aves, esse espaço muito provavelmente guardava um volume macio de tecido rico em glicogênio, um açúcar de reserva. Para que ele servia não está estabelecido."
+   ]
+  },
+  {
+   "type": "text",
+   "id": "sophie",
+   "nav": "Sophie, o esqueleto de estegossauro de Londres",
+   "h": "Sophie, o esqueleto de estegossauro de Londres",
+   "paras": [
+    "O esqueleto de Sophie, um Stegosaurus stenops, foi encontrado em 2003 num rancho perto de Shell, em Wyoming, escavado em 2004 e preparado no Sauriermuseum Aathal, na Suíça. Cientistas do Natural History Museum de Londres viram uma réplica dele numa feira em Tucson, em 2012, e o museu comprou o esqueleto com a ajuda de doadores. O museu o expõe desde dezembro de 2014. O nome homenageia a filha de um doador: ninguém sabe se Sophie era macho ou fêmea.",
+    "Com cerca de 360 ossos, Sophie é um dos esqueletos de estegossauro mais completos que se conhecem. Faltam o braço esquerdo, as duas mãos, a maior parte da base da cauda e alguns ossos menores, além da pele e das plaquinhas de osso da garganta. O crânio exposto é uma réplica. Ninguém sabe como Sophie morreu: os ossos não mostram nenhuma mordida nem ferimento, e os cientistas que os descreveram consideram a fome ou uma doença as causas mais prováveis.",
+    "A imagem do esqueleto mostra quais dos nossos ossos são de Sophie."
+   ],
+   "scale": {
+    "pic": "skeleton",
+    "tag": "tag_built",
+    "what": "O nosso estegossauro como esqueleto, na escala da vista de lado, com os ossos de Sophie e os reconstruídos em dois tons.",
+    "alt": "O nosso estegossauro como esqueleto, visto de lado, ao lado da pessoa cinza: a maior parte dos ossos no tom dos de Sophie, e no tom dos reconstruídos os pés da frente, a maior parte dos dedos, um osso do ombro, várias costelas do pescoço, uma placa, a primeira parte da cauda e a maior parte dos ossos pequenos sob a cauda.",
+    "key": [
+     {
+      "swatch": "own",
+      "text": "Ossos de Sophie"
+     },
+     {
+      "swatch": "rebuilt",
+      "text": "Faltam em Sophie, reconstruídos"
+     },
+     "Os ossos reconstruídos são cópias espelhadas do outro lado de Sophie, ou foram modelados a partir dos ossos vizinhos de Sophie e de outros achados. Mostramos os ossos de Sophie sem estarem esmagados, e algumas pontas de costelas e bordas de placas marcadas como de Sophie são de gesso no esqueleto real. As três primeiras vértebras da cauda e a vigésima aparecem como reconstruídas, embora a vigésima e as partes de cima das três primeiras tenham sido encontradas. No crânio, as partes reconstruídas estão marcadas só de forma aproximada."
+    ]
+   }
+  },
+  {
+   "type": "text",
+   "id": "looks",
+   "nav": "Como era um estegossauro de verdade",
+   "h": "Como era um estegossauro de verdade",
+   "subs": [
+    {
+     "h": "Cabeça, bico e comida",
+     "paras": [
+      "Ele tinha uma cabeça pequena e baixa, um bico córneo e dentes pequenos em forma de folha. Um estudo do crânio de Sophie encontrou uma mordida parecida com a de uma vaca ou de uma ovelha."
+     ]
+    },
+    {
+     "h": "Patas e pés",
+     "paras": [
+      "As patas da frente eram mais curtas que as de trás, e ele andava sobre as quatro patas. Cada pé da frente era um pilar curto de ossos da palma, na vertical, com dois cascos pequenos."
+     ]
+    },
+    {
+     "h": "Pele, garganta e cor",
+     "paras": [
+      "A pele só é conhecida de um parente próximo, o Hesperosaurus: escamas pequenas de seis lados. Outros estegossauros tinham pedacinhos de osso na pele da garganta. Não se conhece a cor de nenhum animal do grupo do estegossauro, então a nossa é uma escolha."
+     ]
+    }
+   ]
+  },
+  {
+   "type": "text",
+   "id": "t-rex",
+   "nav": "Estegossauro vs. T. rex e Triceratops",
+   "h": "Estegossauro vs. T. rex e Triceratops",
+   "paras": [
+    "O estegossauro nunca coincidiu com o T. rex nem com o Triceratops. Entre o último estegossauro e os primeiros T. rex ou Triceratops se passaram cerca de 80 milhões de anos, no mínimo cerca de 75. É mais do que os 66 milhões de anos entre o último T. rex e nós, então o T. rex está mais perto de nós no tempo do que do estegossauro. Os filmes que mostram esses animais juntos são ficção. Entre os vizinhos do estegossauro estavam o Diplodocus, de pescoço longo, e o carnívoro Allosaurus.",
+    "Na imagem, o nosso T. rex tem o dobro do comprimento do nosso estegossauro, e a ponta da placa mais alta do estegossauro fica mais ou menos na altura do dorso do nosso Triceratops."
+   ],
+   "scale": {
+    "pic": "vs",
+    "tag": "tag_made",
+    "what": "O nosso estegossauro, o nosso Triceratops e o nosso T. rex na mesma escala, virados para o mesmo lado, só para comparar o tamanho. Entre o estegossauro e os outros dois se passaram cerca de 80 milhões de anos: os três nunca coincidiram.",
+    "alt": "Três dinossauros em três fileiras, todos de lado e virados para o mesmo lado, cada um ao lado da pessoa cinza: um estegossauro com placas e espinhos na cauda, um Triceratops com chifres e babado, e um T. rex sobre duas patas, com o dobro do comprimento do estegossauro.",
+    "note": [
+     "A silhueta do nosso Triceratops segue o modelo do corpo de ",
+     {
+      "text": "Dempsey 2025",
+      "href": "https://doi.org/10.6084/m9.figshare.27283401"
+     },
+     " (",
+     {
+      "text": "CC BY 4.0",
+      "href": "https://creativecommons.org/licenses/by/4.0/"
+     },
+     "). Nós o medimos e o modificamos."
+    ],
+    "marks": [
+     {
+      "span": "stegosaurus",
+      "text": "O nosso estegossauro, 5,6 m"
+     },
+     {
+      "span": "triceratops",
+      "text": "O nosso Triceratops, 6,9 m"
+     },
+     {
+      "span": "t-rex",
+      "text": "O nosso T. rex, a partir de SUE, cerca de 11,4 m"
+     },
+     {
+      "span": "person",
+      "text": "A pessoa, 1,70 m"
+     }
+    ]
+   }
+  },
+  {
+   "type": "text",
+   "id": "when-where",
+   "nav": "Quando e onde o estegossauro viveu",
+   "h": "Quando e onde o estegossauro viveu",
+   "paras": [
+    "O estegossauro viveu no oeste da América do Norte no Jurássico Superior, e um esqueleto vem de Portugal. Os achados americanos estão na Formação Morrison. As camadas datadas da formação têm cerca de 157 a 150 milhões de anos, e a parte de cima é um pouco mais nova. Sophie viveu há cerca de 150 milhões de anos, segundo o número do museu de Londres. Os fósseis do estegossauro terminam antes do Cretáceo, que começou há cerca de 143 milhões de anos, e ninguém sabe por quê."
+   ]
+  },
+  {
+   "type": "notes",
+   "id": "numbers-read",
+   "nav": "Números que você talvez tenha lido",
+   "h": "Números que você talvez tenha lido",
+   "intro": "Para cada número: de onde ele vem e o que significa.",
+   "rows": [
+    {
+     "term": "9 m de comprimento",
+     "text": "É o número dos maiores estegossauros, não de um típico. Segundo notícias, o Apex, em Nova York, é o maior esqueleto exposto, com cerca de 8,2 m."
+    },
+    {
+     "term": "2,9 m de altura",
+     "text": "É a montagem de Sophie no ponto mais alto, com a cauda levantada, não a altura do animal em pé. Até hoje nenhuma foi publicada."
+    },
+    {
+     "term": "4 m de altura e 5 toneladas",
+     "text": "Nenhum estudo que lemos dá qualquer um dos dois números. Nenhum dá uma altura ou um peso para um estegossauro adulto com nome."
+    },
+    {
+     "term": "3,75 toneladas e mais de 7",
+     "text": "Os dois vêm de métodos baseados nos ossos das patas, que para Sophie deram números altos demais: até 3,75 toneladas, um número que o mesmo estudo rejeitou. As mais de 7 toneladas são de um estegossauro muito grande, sem o gênero informado, num resumo de congresso de 2025. Os autores dizem que o número só vale se os métodos deles estiverem certos."
+    },
+    {
+     "term": "“Dois cérebros”",
+     "text": "A caixa cerebral traseira de Marsh no quadril, das décadas de 1880 e 1890. Um estudo de 1990 não achou nenhum sinal de cérebro nesse lugar, nem em répteis vivos nem em fósseis."
+    },
+    {
+     "term": "Placas em pares e oito espinhos",
+     "text": "As duas ideias vêm de reconstruções antigas da década de 1890. Os esqueletos com as placas no lugar, entre eles o de Sophie, mostram as placas alternadas, e os oito espinhos de uma reconstrução vinham de dois animais."
+    }
+   ]
+  },
+  {
+   "type": "faq",
+   "id": "questions",
+   "nav": "Mais perguntas",
+   "h": "Mais perguntas",
+   "items": [
+    {
+     "q": "Quanto pesava o estegossauro?",
+     "a": "Por um modelo 3D do esqueleto, Sophie, um animal jovem, chega a cerca de 1,6 toneladas (de 1,1 a 2,3), o peso de um rinoceronte pequeno, diz o museu de Londres. Fórmulas baseadas nos ossos das patas dão mais, porque um animal jovem tem patas grossas para o próprio peso. Para os maiores estegossauros, nenhum estudo que lemos dá um peso."
+    },
+    {
+     "q": "O que significa o nome Stegosaurus?",
+     "a": "“Lagarto telhado”, do grego, pela primeira ideia de Othniel Marsh, em 1877: ele achava que as placas, encontradas soltas, tinham ficado deitadas sobre o dorso como as telhas de um telhado."
+    }
+   ]
+  },
+  {
+   "type": "text",
+   "id": "museum",
+   "nav": "No museu",
+   "h": "No museu",
+   "paras": [
+    "O Museum of Ages é um museu digital, feito por uma organização sem fins lucrativos. Entrada franca, sem cadastro. Na ala dos animais, este animal vai estar entre os outros, dos gigantes de muito tempo atrás aos últimos de sua espécie. A ala de Leonardo da Vinci mostra como é uma ala pronta."
+   ],
+   "links": [
+    {
+     "out": true,
+     "text": "Ir para a ala de Leonardo"
+    }
+   ]
+  },
+  {
+   "type": "pages",
+   "id": "next",
+   "items": [
+    {
+     "page": "biggest-dinosaurs",
+     "pic": "dinosaurs",
+     "alt": "Sete dinossauros em fila, vistos de lado, dois deles com pescoços longos bem acima dos outros, e uma pessoa cinza que ao lado deles parece minúscula.",
+     "line": "Sete dos nossos ao lado de uma pessoa, na mesma escala: o mais pesado, muito provavelmente um titanossauro da Patagônia, o mais alto, provavelmente o Sauroposeidon, e por que o mais longo ainda está em aberto."
+    },
+    {
+     "page": "triceratops",
+     "pic": "tricera",
+     "alt": "Um Triceratops de lado: um babado largo atrás da cabeça, dois chifres longos acima dos olhos, um curto acima do nariz, quatro patas. Ao lado, uma pessoa cinza que chega a cerca de dois terços da altura do dorso.",
+     "line": "Um Triceratops adulto grande tinha cerca de 7 a 8 m de comprimento, e dois modelos dão cerca de 6,5 a 8,5 toneladas para o esqueleto de Washington, uma montagem de cerca de dez animais. O nosso Triceratops está ao lado de uma pessoa na mesma escala, com o crânio ao lado da pessoa, o Torosaurus e o que os ossos dizem sobre o T. rex."
+    },
+    {
+     "page": "t-rex",
+     "pic": "trex",
+     "alt": "Um T. rex de lado, sobre duas patas, com a boca aberta e a cabeça erguida, ao lado de uma pessoa cinza que fica bem abaixo do quadril dele.",
+     "line": "Um T. rex adulto grande tinha cerca de 12 m de comprimento, cerca de 4 m até o quadril e mais ou menos 8 a 9 toneladas. O nosso T. rex foi feito com as medidas de SUE e está ao lado de uma pessoa na mesma escala, com uma lista do que foi encontrado de SUE."
+    },
+    {
+     "page": "ankylosaurus",
+     "pic": "anky",
+     "alt": "Um anquilossauro de lado: um corpo baixo e largo, coberto de fileiras de placas de osso, uma cabeça larga mantida baixa, quatro patas curtas e uma cauda reta que termina numa clava achatada. Ao lado, uma pessoa cinza da altura do alto do dorso dele acima do quadril.",
+     "line": "O anquilossauro tinha cerca de 6 a 8 m de comprimento, segundo um estudo de 2017. O animal da única clava de cauda achada chega a cerca de 4,8 toneladas, calculadas a partir dos ossos das patas. O nosso anquilossauro foi feito no tamanho desse animal e fica ao lado de uma pessoa na mesma escala, com a clava, a couraça, o que foi encontrado e o que os ossos dizem sobre o T. rex."
+    }
+   ]
+  },
+  {
+   "type": "sources",
+   "id": "sources",
+   "nav": "Fontes",
+   "h": "Fontes",
+   "intro": "Os números vêm destes estudos e dos museus que guardam os ossos. O museu é independente de todos eles.",
+   "read": [
+    {
+     "text": "Maidment, Brassey e Barrett, 2015, PLOS ONE, a descrição de Sophie.",
+     "href": "https://doi.org/10.1371/journal.pone.0138352"
+    },
+    {
+     "text": "Brassey, Maidment e Barrett, 2015, Biology Letters, o modelo de peso de Sophie.",
+     "href": "https://doi.org/10.1098/rsbl.2014.0984"
+    },
+    {
+     "text": "Lautenschlager e outros, 2016, Scientific Reports, sobre a mordida de Sophie, como o Natural History Museum relata."
+    },
+    {
+     "text": "Main, de Ricqlès, Horner e Padian, 2005, Paleobiology, o resumo do estudo."
+    },
+    {
+     "text": "Farlow, Thompson e Rosner, 1976, Science, o resumo do estudo.",
+     "href": "https://doi.org/10.1126/science.192.4244.1123"
+    },
+    {
+     "text": "Farlow, Hayashi e Tattersall, 2010, Swiss Journal of Geosciences, o resumo do estudo.",
+     "href": "https://doi.org/10.1007/s00015-010-0021-5"
+    },
+    {
+     "text": "Christiansen e Tschopp, 2010, Swiss Journal of Geosciences, sobre a pele e a camada córnea das placas do Hesperosaurus.",
+     "href": "https://doi.org/10.1007/s00015-010-0026-0"
+    },
+    {
+     "text": "Buffrénil e outros, 1986, o estudo do tecido das placas, como o Philip J. Currie Dinosaur Museum relata."
+    },
+    {
+     "text": "Mallison, 2011, Palaeontologia Electronica, com os estudos que ele cita sobre a direção dos espinhos, as pontas quebradas e o osso do Allosaurus."
+    },
+    {
+     "text": "Galton, 2010, sobre as reconstruções antigas, como a nossa revisão científica o cita."
+    },
+    {
+     "text": "Marsh, 1896, The Dinosaurs of North America, sobre o cérebro e o espaço no quadril."
+    },
+    {
+     "text": "Morhardt, Ridgely e Witmer, 2011, um resumo de congresso da Geological Society of America, sobre o cérebro."
+    },
+    {
+     "text": "Giffin, 1990, Paleobiology, o resumo do estudo.",
+     "href": "https://doi.org/10.1017/s0094837300010186"
+    },
+    {
+     "text": "Journal of Comparative Neurology, 2024, um estudo sobre quanto do espaço cerebral o cérebro de um réptil preenche, o resumo do estudo.",
+     "href": "https://doi.org/10.1002/cne.25597"
+    },
+    {
+     "text": "Senter, 2010, como a nossa revisão científica o cita, e Senter, 2026, Alcheringa, o resumo do estudo, sobre os pés da frente.",
+     "href": "https://doi.org/10.1080/03115518.2026.2697810"
+    },
+    {
+     "text": "Hunt-Foster, Foster, Woodruff e Sroka, 2025, um resumo de congresso da Geological Society of America.",
+     "href": "https://doi.org/10.1130/abs/2025AM-11169"
+    },
+    {
+     "text": "Trujillo e Kowallis, 2015, Geology of the Intermountain West, as datas da Formação Morrison.",
+     "href": "https://doi.org/10.31711/giw.v2.pp1-8"
+    },
+    {
+     "text": "International Chronostratigraphic Chart, 2024, sobre o fim do Jurássico."
+    },
+    {
+     "text": "Natural History Museum, Londres: Sophie, NHMUK PV R36730, o comunicado de imprensa do museu de 2014, as notícias de 2015 e as páginas dele sobre o estegossauro."
+    },
+    {
+     "text": "American Museum of Natural History, Nova York: o blog do museu de 2017 sobre os espinhos da cauda e o apelido deles, e o Apex, com o comprimento que as notícias de 2024 deram."
+    },
+    {
+     "text": "Philip J. Currie Dinosaur Museum, Drumheller: o artigo do museu sobre o estegossauro, de 2021."
+    },
+    {
+     "text": "T. rex e Triceratops: os números e as fontes das nossas páginas do T. rex e do Triceratops."
+    }
+   ],
+   "contact": "Se um número ou um museu estiver errado, escreva para nós e vamos corrigir.",
+   "contact_link": "Ir para as informações legais",
+   "what_link": "O que é este museu"
+  },
+  {
+   "type": "text",
+   "id": "pictures",
+   "nav": "Usar nossas imagens",
+   "h": "Usar nossas imagens",
+   "paras": [
+    [
+     "As quatro imagens do estegossauro nesta página, a vista de lado, as placas e os espinhos, o esqueleto e a dos três com o nosso Triceratops e o nosso T. rex, são obra nossa, com licença ",
+     {
+      "text": "CC BY-SA 4.0",
+      "href": "https://creativecommons.org/licenses/by-sa/4.0/deed.pt-br"
+     },
+     ". Crédito: Museum of Ages, e, para a imagem dos três, também “Triceratops outline after Dempsey 2025 (CC BY 4.0)”. Elas mostram uma reconstrução, construída em código e renderizada com o nosso próprio motor gráfico, não fotografias. As imagens das outras páginas que aparecem aqui dão o crédito nessas páginas."
+    ]
+   ]
+  }
+ ]
+}

@@ -103,6 +103,16 @@
    ],
    "sizes": "(min-width: 1280px) 690px, (min-width: 960px) 54vw, (min-width: 600px) calc(100vw - 64px), calc(100vw - 40px)",
    "person": "91.27% 23.15%"
+  },
+  "stego": {
+   "stem": "animals-stegosaurus-side",
+   "widths": [
+    800,
+    1600,
+    2400
+   ],
+   "sizes": "(min-width: 1280px) 690px, (min-width: 960px) 54vw, (min-width: 600px) calc(100vw - 64px), calc(100vw - 40px)",
+   "person": "93.07% 36.7%"
   }
  },
  "meta": {
@@ -433,6 +443,12 @@
      "pic": "anky",
      "alt": "Um anquilossauro de lado: um corpo baixo e largo, coberto de fileiras de placas de osso, uma cabeça larga mantida baixa, quatro patas curtas e uma cauda reta que termina numa clava achatada. Ao lado, uma pessoa cinza da altura do alto do dorso dele acima do quadril.",
      "line": "O anquilossauro, um herbívoro com couraça e uma clava na cauda, viveu na mesma época e na mesma região que o T. rex e tinha cerca de 6 a 8 m de comprimento. O nosso anquilossauro está ao lado do nosso T. rex na mesma escala, com o que os ossos mostram dos dois e o que não mostram."
+    },
+    {
+     "page": "stegosaurus",
+     "pic": "stego",
+     "alt": "Um estegossauro de lado: uma cabeça pequena e baixa, duas fileiras de placas altas ao longo do dorso arqueado, dois dos quatro espinhos da cauda e as patas da frente mais curtas que as de trás. Ao lado, uma pessoa cinza com a cabeça abaixo do alto do dorso.",
+     "line": "Os maiores estegossauros tinham cerca de 9 m de comprimento, e Sophie, o esqueleto de Londres, tem cerca de 5,6 m. O nosso estegossauro está ao lado do nosso T. rex na mesma escala, embora o T. rex esteja mais perto de nós no tempo do que do estegossauro."
     }
    ]
   },

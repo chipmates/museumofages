@@ -2073,6 +2073,18 @@
    "sha256": "5cf93613bd06ad79f83b3e29261aafe5ef22cdb05d84a8aead3734e8310a480b"
   },
   {
+   "path": "pages/pics/img/animals-stegosaurus-og-es-1200x630.png",
+   "url": "/static/img/animals-stegosaurus-og-es-1200x630.png",
+   "bytes": 107942,
+   "sha256": "72e413cd2bb86185f913a4ed8b87c561078ac97d358128e3ba3a4e541d4187a1"
+  },
+  {
+   "path": "pages/pics/img/animals-stegosaurus-og-pt-br-1200x630.png",
+   "url": "/static/img/animals-stegosaurus-og-pt-br-1200x630.png",
+   "bytes": 108036,
+   "sha256": "517179bb6eb5b6c879db163e47a82ff8b4c553a7f3c71e6988f2d173bbc3b7e0"
+  },
+  {
    "path": "pages/pics/img/animals-stegosaurus-side-1600.avif",
    "url": "/static/img/animals-stegosaurus-side-1600.avif",
    "bytes": 12296,

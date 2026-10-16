@@ -103,6 +103,16 @@
    ],
    "sizes": "(min-width: 1280px) 690px, (min-width: 960px) 54vw, (min-width: 600px) calc(100vw - 64px), calc(100vw - 40px)",
    "person": "91.27% 23.15%"
+  },
+  "stego": {
+   "stem": "animals-stegosaurus-side",
+   "widths": [
+    800,
+    1600,
+    2400
+   ],
+   "sizes": "(min-width: 1280px) 690px, (min-width: 960px) 54vw, (min-width: 600px) calc(100vw - 64px), calc(100vw - 40px)",
+   "person": "93.07% 36.7%"
   }
  },
  "meta": {
@@ -433,6 +443,12 @@
      "pic": "anky",
      "alt": "Un Ankylosaurus de lado: un cuerpo bajo y ancho, cubierto de filas de placas de hueso, una cabeza ancha y baja, cuatro patas cortas y una cola recta que termina en una maza plana. A su lado, una persona gris tan alta como lo alto del lomo sobre la cadera.",
      "line": "El Ankylosaurus, un herbívoro acorazado con una maza en la cola, vivió en la misma época y en la misma región que el T. rex y medía unos 6 a 8 m de largo. Nuestro Ankylosaurus está junto a nuestro T. rex a la misma escala, con lo que los huesos muestran de los dos y lo que no."
+    },
+    {
+     "page": "stegosaurus",
+     "pic": "stego",
+     "alt": "Un Stegosaurus de lado: una cabeza pequeña y baja, dos filas de placas altas a lo largo del lomo arqueado, dos de sus cuatro púas de la cola y las patas delanteras más cortas que las traseras. A su lado, una persona gris con la cabeza por debajo de lo alto del lomo.",
+     "line": "Los Stegosaurus más grandes medían unos 9 m de largo, y Sophie, el esqueleto de Londres, mide unos 5,6 m. Nuestro Stegosaurus está junto a nuestro T. rex a la misma escala, aunque menos tiempo separa al T. rex de nosotros que del Stegosaurus."
     }
    ]
   },

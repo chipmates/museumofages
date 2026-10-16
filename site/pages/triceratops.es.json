@@ -121,6 +121,16 @@
    ],
    "sizes": "(min-width: 1280px) 690px, (min-width: 960px) 54vw, (min-width: 600px) calc(100vw - 64px), calc(100vw - 40px)",
    "person": "91.27% 23.15%"
+  },
+  "stego": {
+   "stem": "animals-stegosaurus-side",
+   "widths": [
+    800,
+    1600,
+    2400
+   ],
+   "sizes": "(min-width: 1280px) 690px, (min-width: 960px) 54vw, (min-width: 600px) calc(100vw - 64px), calc(100vw - 40px)",
+   "person": "93.07% 36.7%"
   }
  },
  "meta": {
@@ -482,6 +492,12 @@
      "pic": "anky",
      "alt": "Un Ankylosaurus de lado: un cuerpo bajo y ancho, cubierto de filas de placas de hueso, una cabeza ancha y baja, cuatro patas cortas y una cola recta que termina en una maza plana. A su lado, una persona gris tan alta como lo alto del lomo sobre la cadera.",
      "line": "El Ankylosaurus, un herbívoro con una maza en la cola, medía unos 6 a 8 m de largo, y sus huesos están en las mismas rocas que los del Triceratops. Nuestro Ankylosaurus está junto a una persona a la misma escala, con su maza, su coraza y lo que se encontró."
+    },
+    {
+     "page": "stegosaurus",
+     "pic": "stego",
+     "alt": "Un Stegosaurus de lado: una cabeza pequeña y baja, dos filas de placas altas a lo largo del lomo arqueado, dos de sus cuatro púas de la cola y las patas delanteras más cortas que las traseras. A su lado, una persona gris con la cabeza por debajo de lo alto del lomo.",
+     "line": "Los Stegosaurus más grandes medían unos 9 m de largo, y Sophie, el esqueleto de Londres, mide unos 5,6 m. Nuestro Stegosaurus está junto a nuestro Triceratops a la misma escala, con los cerca de 80 millones de años que separaron a los dos."
     }
    ]
   },

@@ -136,6 +136,16 @@
    ],
    "sizes": "(min-width: 1280px) 690px, (min-width: 960px) 54vw, (min-width: 600px) calc(100vw - 64px), calc(100vw - 40px)",
    "person": "91.27% 23.15%"
+  },
+  "stego": {
+   "stem": "animals-stegosaurus-side",
+   "widths": [
+    800,
+    1600,
+    2400
+   ],
+   "sizes": "(min-width: 1280px) 690px, (min-width: 960px) 54vw, (min-width: 600px) calc(100vw - 64px), calc(100vw - 40px)",
+   "person": "93.07% 36.7%"
   }
  },
  "meta": {
@@ -572,6 +582,12 @@
      "pic": "anky",
      "alt": "Um anquilossauro de lado: um corpo baixo e largo, coberto de fileiras de placas de osso, uma cabeça larga mantida baixa, quatro patas curtas e uma cauda reta que termina numa clava achatada. Ao lado, uma pessoa cinza da altura do alto do dorso dele acima do quadril.",
      "line": "O anquilossauro da fila, sozinho: a clava e a couraça ao lado de uma pessoa, o que foi encontrado dele e o que os ossos dizem sobre o T. rex."
+    },
+    {
+     "page": "stegosaurus",
+     "pic": "stego",
+     "alt": "Um estegossauro de lado: uma cabeça pequena e baixa, duas fileiras de placas altas ao longo do dorso arqueado, dois dos quatro espinhos da cauda e as patas da frente mais curtas que as de trás. Ao lado, uma pessoa cinza com a cabeça abaixo do alto do dorso.",
+     "line": "O estegossauro da fila, sozinho: as placas e os espinhos da cauda ao lado de uma pessoa, Sophie em Londres e a história do “segundo cérebro”."
     }
    ]
   },
