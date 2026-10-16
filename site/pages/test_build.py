@@ -1854,6 +1854,42 @@ class Case(unittest.TestCase):
                     self.assertNotIn("nth-child(6)", text)
         shutil.rmtree(out)
 
+    def test_a_part_named_in_a_closer_view_stands_whole_and_only_where_it_is_listed(self):
+        # a part of the animal (pics.<name>.parts) is named without a size; any other bare name still stops the build
+        def close_pic(p):
+            fig = ((self.data("en", p)["top"].get("scale") or {}).get("close")) or {}
+            return fig.get("pic") if (self.data("en", p)["pics"].get(fig.get("pic")) or {}).get("parts") else None
+        page = next((p for p in self.pages if close_pic(p)), None)
+        if not page:
+            self.skipTest("no closer view names a part")
+        pic = close_pic(page)
+        out, written = self.build()
+        data = self.data("en", page)
+        mine = [path for path in written if self.page_of(path)[0]["page"]["id"] == data["page"]["id"]]
+        self.assertEqual(len(mine), 2)
+        for path in mine:
+            text = path.read_text(encoding="utf-8")
+            for span in data["pics"][pic]["parts"]:
+                self.assertRegex(text, r'<li class="sc-mark sc-mark--%s-%s"><span class="sc-mark__t"><span class="sc-mark__n">'
+                                       r'[^<,]+</span></span></li>' % (pic, span))
+        shutil.rmtree(out)
+        originals = {lang: self.data(lang, page) for lang in ("en", "de")}
+        cases = [
+            (lambda d: d["pics"][pic].update(parts=d["pics"][pic]["parts"][1:]), r"gives the animal's name, a comma and its length"),
+            (lambda d: [m.update(text=m["text"] + ", 1 m") for m in d["top"]["scale"]["close"]["marks"]
+                        if m["span"] == d["pics"][pic]["parts"][0]], r"names a part .*: its name only, no comma"),
+            (lambda d: d["pics"][pic]["parts"].append("nothing"), r"parts names 'nothing', which no label of the picture is"),
+        ]
+        for change, words in cases:
+            with self.subTest(words=words):
+                for lang, original in originals.items():
+                    d = json.loads(json.dumps(original))
+                    change(d)
+                    self.save(lang, d, page)
+                self.fails(words)
+                for lang, original in originals.items():
+                    self.save(lang, original, page)
+
     def test_a_row_shorter_than_its_columns_stops_the_build(self):
         page = self.scale_page()
         for lang in ("en", "de"):

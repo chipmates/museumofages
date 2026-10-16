@@ -1440,9 +1440,13 @@ def render(page, lang, data, shared, out_root):
             return ""
         behind = set(data["pics"][fig["pic"]].get("behind") or [])
         tops = data["pics"][fig["pic"]].get("tops") or {}
+        named = data["pics"][fig["pic"]].get("parts") or []
         # a height's label (pics.<name>.tops) is its words whole: there is no animal's name and length to part
         items = "".join(fill(parts["scale_mark_top"], {"key": esc(f'{fig["pic"]}-{m["span"]}'), "html.text": rich(m["text"])})
                         if m["span"] in tops else
+                        # a part of the animal named in a closer view (pics.<name>.parts): its name only, no size
+                        fill(parts["scale_mark_part"], {"key": esc(f'{fig["pic"]}-{m["span"]}'), "html.text": rich(m["text"])})
+                        if m["span"] in named else
                         fill(parts["scale_mark"], {"key": esc(f'{fig["pic"]}-{m["span"]}'), "html.name": rich(mark_split(m["text"])[0]),
                                                    "html.value": rich(mark_split(m["text"])[1])})
                         for m in fig["marks"] if (m["span"] in behind) == over)
@@ -2219,8 +2223,15 @@ def making_problems(d, wing, data):
         for mark in fig.get("marks", []):
             if not mark_at(((pic or {}).get("marks") or {}).get(mark.get("span"))):
                 problems.append(f"the label {mark.get('span')!r} needs pics.{fig.get('pic')}.marks.<span>, the animal's start and end in the picture")
-            if not mark_split(mark.get("text", ""))[1] and mark.get("span") not in ((pic or {}).get("tops") or {}):
+            if (not mark_split(mark.get("text", ""))[1] and mark.get("span") not in ((pic or {}).get("tops") or {})
+                    and mark.get("span") not in ((pic or {}).get("parts") or [])):
                 problems.append(f"the label {mark.get('span')!r} gives the animal's name, a comma and its length")
+            # a part's name stands whole: a comma would read as a name and its size
+            if mark.get("span") in ((pic or {}).get("parts") or []) and mark_split(mark.get("text", ""))[1]:
+                problems.append(f"the label {mark.get('span')!r} names a part (pics.{fig.get('pic')}.parts): its name only, no comma")
+        for name in (pic or {}).get("parts") or []:
+            if name not in {m.get("span") for m in fig.get("marks", [])} or name in ((pic or {}).get("tops") or {}):
+                problems.append(f"pics.{fig.get('pic')}.parts names {name!r}, which no label of the picture is, or a height")
         for name in (pic or {}).get("behind") or []:
             if name not in {m.get("span") for m in fig.get("marks", [])}:
                 problems.append(f"pics.{fig.get('pic')}.behind names {name!r}, which no label of the picture is")
