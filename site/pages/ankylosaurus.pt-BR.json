@@ -1,0 +1,589 @@
+{
+ "_note": "AS PALAVRAS da página do anquilossauro, em português do Brasil. Reescritas a partir do inglês e do alemão, com os mesmos números, fontes e graus de certeza. Nenhum anquilossauro jamais foi pesado, e nenhum fóssil mostra um encontro com o T. rex. Status ai: nenhuma pessoa as revisou ainda.",
+ "page": {
+  "id": "animals-ankylosaurus",
+  "wing": "animals",
+  "topic": "ankylosaurus",
+  "published": null,
+  "join_names": true,
+  "og_image": {
+   "file": "animals-ankylosaurus-og-{lang}-1200x630.png",
+   "width": 1200,
+   "height": 630,
+   "layout": "beside"
+  }
+ },
+ "pics": {
+  "side": {
+   "stem": "animals-ankylosaurus-side",
+   "widths": [
+    800,
+    1600,
+    2400
+   ],
+   "sizes": "(min-width: 1280px) 588px, (min-width: 960px) calc(100vw - 80px), (min-width: 600px) calc(100vw - 64px), calc(100vw - 40px)",
+   "person": "91.27% 23.15%",
+   "marks": {
+    "ankylosaurus": "2.92% 85.26%",
+    "hips": "46.15% 91.27%",
+    "person": "89.38% 93.15%"
+   },
+   "behind": [
+    "hips"
+   ],
+   "tops": {
+    "hips": "23.4%"
+   }
+  },
+  "close": {
+   "stem": "animals-ankylosaurus-close",
+   "widths": [
+    800,
+    1600
+   ],
+   "sizes": "(min-width: 1280px) 690px, (min-width: 960px) 54vw, (min-width: 600px) calc(100vw - 64px), calc(100vw - 40px)",
+   "person": "8.33% 19.28%",
+   "marks": {
+    "knob": "17.31% 30%",
+    "club": "17.31% 59.56%",
+    "person": "5.27% 11.4%"
+   },
+   "behind": [
+    "knob"
+   ]
+  },
+  "beside": {
+   "stem": "animals-ankylosaurus-beside",
+   "widths": [
+    800,
+    1600,
+    2400
+   ],
+   "sizes": "(min-width: 1280px) 690px, (min-width: 960px) 54vw, (min-width: 600px) calc(100vw - 64px), calc(100vw - 40px)",
+   "person": "7.11% 30.75%",
+   "marks": {
+    "t-rex": "14.67% 97.78%",
+    "ankylosaurus": "14.63% 61.59%",
+    "stegosaurus": "14.63% 55.65%",
+    "person": "6.03% 8.18%"
+   },
+   "behind": [
+    "t-rex"
+   ]
+  },
+  "skeleton": {
+   "stem": "animals-ankylosaurus-skeleton",
+   "widths": [
+    800,
+    1600
+   ],
+   "sizes": "(min-width: 1280px) 690px, (min-width: 960px) 54vw, (min-width: 600px) calc(100vw - 64px), calc(100vw - 40px)",
+   "person": "91.27% 23.15%",
+   "swatches": {
+    "found": "#b07357",
+    "other": "#474c5b",
+    "rebuilt": "#cacfdf"
+   }
+  },
+  "trex": {
+   "stem": "animals-t-rex-side",
+   "widths": [
+    800,
+    1600,
+    2400
+   ],
+   "sizes": "(min-width: 1280px) 690px, (min-width: 960px) 54vw, (min-width: 600px) calc(100vw - 64px), calc(100vw - 40px)",
+   "person": "86.42% 63.92%"
+  },
+  "tricera": {
+   "stem": "animals-triceratops-side",
+   "widths": [
+    800,
+    1600,
+    2400
+   ],
+   "sizes": "(min-width: 1280px) 690px, (min-width: 960px) 54vw, (min-width: 600px) calc(100vw - 64px), calc(100vw - 40px)",
+   "person": "92.2% 38.85%"
+  },
+  "dinosaurs": {
+   "stem": "animals-biggest-dinosaurs-row",
+   "widths": [
+    800,
+    1600
+   ],
+   "sizes": "(min-width: 1280px) 690px, (min-width: 960px) 54vw, (min-width: 600px) calc(100vw - 64px), calc(100vw - 40px)",
+   "person": "32.82% 84.25%"
+  }
+ },
+ "meta": {
+  "title": "Anquilossauro: tamanho de cerca de 6 a 8 m | Museum of Ages",
+  "description": "Qual era o tamanho do anquilossauro? Cerca de 6 a 8 m. O menor conhecido, o da única clava achada, chega a cerca de 4,8 t pelos ossos das patas.",
+  "og_title": "Anquilossauro: tamanho de cerca de 6 a 8 m, 4,8 t",
+  "og_image_alt": "Um anquilossauro de lado: um corpo baixo e largo, coberto de fileiras de placas de osso, uma cabeça larga mantida baixa, quatro patas curtas e uma cauda reta que termina numa clava achatada. Ao lado, uma pessoa cinza da altura do alto do dorso dele acima do quadril."
+ },
+ "labels": {
+  "crumbs": "Você está aqui",
+  "crumb_home": "Museu",
+  "crumb_here": "Anquilossauro",
+  "toc": "Nesta página",
+  "tag_made": "Feito para esta página",
+  "tag_built": "Reconstrução",
+  "person": "1,70 m",
+  "to_table": "Os números numa tabela",
+  "no_figure": "sem número com fonte",
+  "og_answer": "Tinha cerca de 6 a 8 m de comprimento. A única clava de cauda achada tem cerca de meio metro de largura"
+ },
+ "top": {
+  "h1": "Qual era o tamanho do anquilossauro?",
+  "answer": "O anquilossauro tinha cerca de 6 a 8 m de comprimento, segundo um estudo de 2017. O menor dos animais conhecidos chega a cerca de 4,8 toneladas (de 3,6 a 6 na margem do próprio estudo), calculadas a partir da circunferência dos ossos das patas. O nosso anquilossauro foi feito no tamanho desse animal: 6,4 m de comprimento, quase quatro pessoas deitadas uma atrás da outra. O ponto mais alto do dorso fica acima do quadril, com 1,70 m, exatamente a altura da pessoa ao lado.",
+  "answer_more": "Até hoje só foi encontrada uma clava de cauda de anquilossauro, nesse mesmo animal. Ela tem cerca de meio metro de largura e ficava na ponta de uma cauda que, na metade de trás, era rígida como uma haste.",
+  "scale": {
+   "pic": "side",
+   "tag": "tag_made",
+   "what": "O nosso anquilossauro ao lado de uma pessoa de 1,70 m, na mesma escala: 6,4 m do bico à clava. Os ombros dele chegam mais ou menos ao queixo da pessoa, e o corpo é quase tão largo quanto a pessoa é alta.",
+   "alt": "Um anquilossauro de lado: um corpo baixo e largo, coberto de fileiras de placas de osso, uma cabeça larga mantida baixa, quatro patas curtas e uma cauda reta que termina numa clava achatada. Ao lado, uma pessoa cinza da altura do alto do dorso dele acima do quadril.",
+   "note": [
+    "A nossa própria reconstrução, construída em código a partir de medidas publicadas e renderizada com o nosso próprio motor gráfico. Não são fotografias. ",
+    "A couraça do nosso anquilossauro segue o desenho de ",
+    {
+     "text": "Arbour e Mallon 2017",
+     "href": "https://doi.org/10.1139/facets-2017-0063"
+    },
+    " (",
+    {
+     "text": "CC BY 4.0",
+     "href": "https://creativecommons.org/licenses/by/4.0/"
+    },
+    "). Nós o medimos e o modificamos."
+   ],
+   "marks": [
+    {
+     "span": "ankylosaurus",
+     "text": "O nosso anquilossauro, 6,4 m do bico à clava"
+    },
+    {
+     "span": "hips",
+     "text": "O alto do dorso acima do quadril, 1,70 m, o nosso modelo"
+    },
+    {
+     "span": "person",
+     "text": "A pessoa, 1,70 m"
+    }
+   ],
+   "close": {
+    "pic": "close",
+    "tag": "tag_made",
+    "what": "Mais de perto: a clava do nosso modelo, de 61 por 51 cm com a camada córnea, fica mais ou menos na altura do peito da pessoa. Cabo e clava juntos têm cerca de 2 m, mais do que a altura da pessoa.",
+    "alt": "A metade de trás do anquilossauro mais de perto, de lado: fileiras de placas ovais no dorso e nos flancos, com pele entre elas, a cauda rígida e a clava baixa e achatada na altura do peito da pessoa cinza.",
+    "marks": [
+     {
+      "span": "knob",
+      "text": "A clava, 61 cm de comprimento com a camada córnea, o nosso modelo"
+     },
+     {
+      "span": "club",
+      "text": "Cabo e clava, cerca de 2 m, o nosso modelo"
+     },
+     {
+      "span": "person",
+      "text": "A pessoa, 1,70 m"
+     }
+    ]
+   }
+  },
+  "guess": {
+   "h": "Tente adivinhar",
+   "q": "O maior crânio de anquilossauro encontrado até hoje tinha dentes maiores ou menores que os do menor crânio?",
+   "button": "Ver a resposta",
+   "a": "Menores: o maior dente sem desgaste do crânio grande tem cerca de 7,5 mm de altura. No menor crânio, o que o nosso modelo segue, o maior tem cerca de 9,1 mm.",
+   "button_open": "Esconder a resposta"
+  },
+  "out": {
+   "text": "A ala deste animal ainda está sendo construída. A ala de Leonardo da Vinci já está aberta hoje.",
+   "link": "Ir para a ala de Leonardo"
+  }
+ },
+ "blocks": [
+  {
+   "type": "numbers",
+   "id": "numbers",
+   "nav": "Dados do anquilossauro: tamanho, altura e peso",
+   "h": "Dados do anquilossauro: tamanho, altura e peso",
+   "unit": "Em metros e toneladas. Cada célula de altura diz que ponto ela mede. Onde não há um número com fonte, a célula fica vazia.",
+   "cols": [
+    "Animal",
+    "Comprimento",
+    "Altura, com o ponto medido",
+    "Comprimento do crânio",
+    "Peso",
+    "Certeza"
+   ],
+   "rows": [
+    {
+     "cells": [
+      "O animal do maior crânio (CMN 8880, Ottawa), conhecido só pelo crânio",
+      "até cerca de 8 m no juízo do estudo, quase 10 m calculados, mas provavelmente longo demais segundo os próprios autores",
+      "não medida",
+      "cerca de 67 cm",
+      "cerca de 8 t, uma estimativa grosseira em escala de que os próprios autores duvidam",
+      "fraca: um crânio, sem corpo"
+     ]
+    },
+    {
+     "cells": [
+      "AMNH 5214, Nova York, o animal em que o nosso se baseia",
+      "cerca de 6 a 8 m, o mais provável perto do limite inferior, calculados a partir das caudas de parentes",
+      "não medida, e nenhuma publicada para os comprimentos atuais",
+      "cerca de 56 cm de comprimento, 64 cm de largura de um chifre ao outro",
+      "cerca de 4,8 t a partir do úmero e do fêmur, com uma margem no estudo de 3,6 a 6 t",
+      "média: um estudo de 2017, nunca foi pesado"
+     ]
+    },
+    {
+     "cells": [
+      "O nosso modelo",
+      "6,4 m em linha reta, do bico à clava",
+      "1,70 m no alto do dorso acima do quadril, 1,5 m acima dos ombros, o nosso modelo",
+      "o crânio do AMNH 5214",
+      "",
+      "medido nos nossos arquivos, a altura obtida ao montar os ossos"
+     ]
+    },
+    {
+     "cells": [
+      "A clava da cauda do AMNH 5214, e a nossa",
+      "clava de 60 cm de comprimento e 49 cm de largura, medida no fóssil. A nossa, 61 por 51 cm com a camada córnea. Cabo e clava, cerca de 2 m, no estudo e no nosso modelo",
+      "clava de 19 cm de altura, medida no fóssil",
+      "",
+      "",
+      "boa para a clava: medida. Média para os 2 m: o cabo completado a partir de um parente. A nossa: medida nos nossos arquivos"
+     ]
+    },
+    {
+     "cells": [
+      "T. rex, SUE",
+      "cerca de 12 m, a montagem",
+      "até o quadril cerca de 4 m, segundo o museu",
+      "cerca de 1,4 m, do focinho até a borda de trás da bochecha",
+      "cerca de 8 a 9 t, por um osso e três modelos",
+      "boa: o museu e dois estudos concordam"
+     ]
+    },
+    {
+     "cells": [
+      "Estegossauro, Sophie, Londres",
+      "cerca de 5,6 m, a montagem",
+      "no quadril, não publicada",
+      "",
+      "cerca de 1,6 t, um modelo do próprio esqueleto dela",
+      "um animal quase completo, como na nossa página dos maiores dinossauros"
+     ]
+    },
+    {
+     "cells": [
+      "A pessoa",
+      "",
+      "1,70 m de altura, da cabeça aos pés",
+      "",
+      "",
+      "a nossa figura de escala"
+     ]
+    }
+   ]
+  },
+  {
+   "type": "text",
+   "id": "tail-club",
+   "nav": "A clava da cauda do anquilossauro",
+   "h": "A clava da cauda do anquilossauro",
+   "paras": [
+    "A clava tem 60 cm de comprimento, 49 cm de largura e só 19 cm de altura, medida no fóssil. É um disco baixo, achatado e arredondado, feito de placas de osso, sem espinhos, e curiosamente não é mais larga que as maiores clavas de parentes menores. O cabo era a metade de trás da cauda. As vértebras se encaixavam umas nas outras, e tendões transformados em osso as amarravam numa haste rígida.",
+    "Só a parte da frente da cauda podia se dobrar, sobretudo para os lados: um estudo das caudas de parentes encontrou um giro de cerca de 100 graus. A clava podia quebrar ossos? No modelo desse estudo, só as clavas com mais de 50 cm de largura batiam com força suficiente, e esta fica logo abaixo desse limite.",
+    "A melhor pista sobre o uso dela é um estudo de um parente mais antigo, Zuul, que tem nos flancos placas quebradas e cicatrizadas bem onde outra clava bateria. Então as clavas provavelmente serviam sobretudo em lutas entre animais da mesma espécie. O mesmo estudo tem pouca dúvida de que também pudessem afastar um predador, mas nenhum fóssil de anquilossauro mostra nem uma coisa nem outra."
+   ]
+  },
+  {
+   "type": "text",
+   "id": "armour",
+   "nav": "A couraça do anquilossauro",
+   "h": "A couraça do anquilossauro",
+   "paras": [
+    "O anquilossauro tinha placas de osso encaixadas na pele, com pele entre elas, não uma carapaça inteiriça, e dois semianéis de osso sobre o pescoço. Placas soltas dele são conhecidas, mas até hoje nenhum anquilossauro foi encontrado com uma placa ainda no lugar.",
+    "Por isso, o lugar de cada placa é uma suposição cuidadosa a partir dos parentes, e o nosso modelo segue um desenho de 2017. Os grandes espinhos nos ombros das imagens antigas são de outra família de dinossauros com couraça, e nos parentes do anquilossauro a barriga não tinha placas grandes. Nenhuma cor é conhecida, então a nossa é uma escolha."
+   ]
+  },
+  {
+   "type": "text",
+   "id": "skeleton",
+   "nav": "Fósseis e esqueleto do anquilossauro: o que foi encontrado",
+   "h": "Fósseis e esqueleto do anquilossauro: o que foi encontrado",
+   "paras": [
+    "O anquilossauro é conhecido por dois esqueletos parciais e um único crânio grande, e nenhum desses achados está completo. O primeiro, o esqueleto em que o nome se baseia, foi encontrado em 1906 em Montana por uma equipe liderada por Barnum Brown. A equipe dele encontrou o segundo em 1910, junto ao rio Red Deer, em Alberta: o AMNH 5214, o da clava. Os dois estão guardados no American Museum of Natural History, em Nova York.",
+    "O maior crânio apareceu em 1947, também em Alberta, e está guardado no Canadian Museum of Nature, em Ottawa. O resto são placas soltas, um pedaço do cabo de uma clava e dentes. O anquilossauro é raro nas rochas: numa contagem dos grandes dinossauros da Formação Hell Creek, em Montana, só 2 de cerca de 180 esqueletos eram de anquilossauro.",
+    "A nossa imagem do esqueleto mostra quais ossos foram encontrados com esse animal."
+   ],
+   "scale": {
+    "pic": "skeleton",
+    "tag": "tag_built",
+    "what": "O nosso anquilossauro como esqueleto, na mesma escala, com cada osso colorido de acordo com a origem.",
+    "alt": "O nosso anquilossauro como esqueleto, visto de lado, junto à pessoa cinza, com os ossos em três cores de acordo com a origem. Na cor dos ossos encontrados com este animal: o crânio, as mandíbulas, os dois úmeros, um fêmur, uma fíbula, um osso do pé, parte de um ísquio, seis costelas e a clava com a parte de trás do cabo.",
+    "key": [
+     {
+      "swatch": "found",
+      "text": "Encontrado com este animal (AMNH 5214)"
+     },
+     {
+      "swatch": "other",
+      "text": "De outros achados de anquilossauro, ajustado ao tamanho dele"
+     },
+     {
+      "swatch": "rebuilt",
+      "text": "De parentes, ou reconstruído"
+     },
+     "O fêmur direito, a parte de cima do ísquio direito (um osso do quadril), a fíbula esquerda e um osso do pé são cópias espelhadas do outro lado. As placas têm as formas do próprio anquilossauro, e o lugar delas foi suposto em parte a partir dos parentes."
+    ]
+   }
+  },
+  {
+   "type": "text",
+   "id": "head-teeth",
+   "nav": "Cabeça e dentes do anquilossauro",
+   "h": "Cabeça e dentes do anquilossauro",
+   "subs": [
+    {
+     "h": "A cabeça e o nariz",
+     "paras": [
+      "A cabeça era baixa e triangular, mais larga que longa, com quatro chifres curtos nos cantos de trás. As narinas ficavam nos lados do focinho e apontavam para baixo, escondidas de quem olha de frente, ao contrário do que se vê nos parentes. Por dentro, o ar provavelmente fazia um caminho em voltas, que em modelos de parentes funciona como um trocador de calor, mas não se sabe para que servia esse nariz estranho."
+     ]
+    },
+    {
+     "h": "O bico, os dentes e a comida",
+     "paras": [
+      "Na frente havia um bico córneo, e atrás, fileiras de dentes muito pequenos em forma de folha, de 34 a 36 em cada maxilar superior. No crânio em que o nosso modelo se baseia, o maior tem cerca de 9 mm de altura, minúsculo para um animal de quase 5 toneladas. Ele provavelmente comia plantas baixas, talvez samambaias e arbustos, mas não se sabe exatamente o que comia."
+     ]
+    }
+   ]
+  },
+  {
+   "type": "text",
+   "id": "t-rex",
+   "nav": "Anquilossauro vs. T. rex",
+   "h": "Anquilossauro vs. T. rex",
+   "paras": [
+    "O anquilossauro e o T. rex viveram na mesma época e na mesma terra, e os ossos deles estão nas mesmas rochas. Mas nenhum fóssil conhecido mostra um encontro entre os dois: nenhuma mordida de T. rex num osso de anquilossauro, nenhum ferimento de clava num T. rex. As rochas não dizem quem venceria.",
+    "O que se pode dizer: um T. rex grande era cerca de duas vezes mais pesado, cerca de 8 a 9 toneladas contra cerca de 4,8 do animal em que o nosso modelo se baseia. O anquilossauro tinha placas e podia brandir uma clava, embora os parentes dele provavelmente usassem as clavas sobretudo uns contra os outros.",
+    "Na nossa imagem, o ponto mais alto do nosso anquilossauro fica abaixo do joelho do nosso T. rex."
+   ],
+   "scale": {
+    "pic": "beside",
+    "tag": "tag_made",
+    "what": "O nosso T. rex, o nosso anquilossauro e o nosso estegossauro na mesma escala, com a pessoa, só para comparar o tamanho. O estegossauro viveu cerca de 80 milhões de anos antes, e nenhum fóssil conhecido mostra um encontro entre o anquilossauro e o T. rex.",
+    "alt": "Três dinossauros de lado, todos virados para o mesmo lado: um T. rex sobre duas patas, bem mais longo e mais alto, o anquilossauro, baixo e com couraça, e um estegossauro com placas altas ao longo do dorso, ao lado da pessoa cinza.",
+    "marks": [
+     {
+      "span": "t-rex",
+      "text": "O nosso T. rex, a partir de SUE, cerca de 11,4 m"
+     },
+     {
+      "span": "ankylosaurus",
+      "text": "O nosso anquilossauro, 6,4 m"
+     },
+     {
+      "span": "stegosaurus",
+      "text": "O nosso estegossauro, a partir de Sophie, cerca de 5,6 m"
+     },
+     {
+      "span": "person",
+      "text": "A pessoa, 1,70 m"
+     }
+    ]
+   }
+  },
+  {
+   "type": "text",
+   "id": "stegosaurus",
+   "nav": "Estegossauro e anquilossauro",
+   "h": "Estegossauro e anquilossauro",
+   "paras": [
+    "Os dois nunca coincidiram: entre eles há cerca de 80 milhões de anos. O estegossauro viveu no Jurássico Superior, há cerca de 150 milhões de anos, então o anquilossauro viveu mais perto de nós no tempo do que do estegossauro. Eles costumam ser citados juntos porque os dois eram herbívoros com couraça, aparentados numa árvore genealógica maior."
+   ]
+  },
+  {
+   "type": "text",
+   "id": "when-where",
+   "nav": "Quando e onde o anquilossauro viveu",
+   "h": "Quando e onde o anquilossauro viveu",
+   "paras": [
+    "O anquilossauro viveu no oeste da América do Norte, onde hoje ficam Alberta, Saskatchewan, Montana e Wyoming, desde cerca de 68 milhões de anos atrás até perto do fim do Cretáceo, cerca de 66 milhões de anos atrás. Pensa-se que um impacto na península de Iucatã desencadeou o colapso com que o Cretáceo terminou."
+   ]
+  },
+  {
+   "type": "notes",
+   "id": "numbers-read",
+   "nav": "Números que você talvez tenha lido",
+   "h": "Números que você talvez tenha lido",
+   "intro": "Para cada número: de onde ele vem e o que significa.",
+   "rows": [
+    {
+     "term": "8 m de comprimento",
+     "text": "O limite de cima para os maiores animais, estimado a partir do maior crânio. O mais provável é que o animal menor em que o nosso se baseia tivesse perto de 6 m."
+    },
+    {
+     "term": "10 m de comprimento",
+     "text": "Calculados para o maior crânio com o mesmo método do comprimento do animal menor, a partir das caudas de parentes, e os próprios autores os consideram provavelmente longos demais."
+    },
+    {
+     "term": "8 toneladas",
+     "text": "Uma estimativa grosseira em escala para o maior crânio, que não tem corpo, e os próprios autores pedem cautela."
+    },
+    {
+     "term": "Uma clava que quebrava ossos e matou um T. rex",
+     "text": "Nenhum osso conhecido de T. rex tem um ferimento de clava, e a única clava de anquilossauro conhecida fica logo abaixo do tamanho que podia quebrar ossos num modelo das clavas de parentes."
+    },
+    {
+     "term": "Espinhos nos ombros",
+     "text": "As imagens antigas os pegaram emprestados de outra família de dinossauros com couraça."
+    },
+    {
+     "term": "Uma bola com espinhos na ponta da cauda",
+     "text": "A única clava achada é um disco baixo e achatado, com 19 cm de altura, sem espinhos."
+    },
+    {
+     "term": "O maior dinossauro com couraça",
+     "text": "O estudo de 2017 chama o anquilossauro de maior anquilossaurídeo conhecido, e talvez o maior de todos os anquilossauros."
+    },
+    {
+     "term": "Um tanque vivo",
+     "text": "Uma imagem, não um resultado. As placas do anquilossauro ficavam separadas numa pele flexível, e nos parentes dele a barriga não tinha placas grandes."
+    }
+   ]
+  },
+  {
+   "type": "faq",
+   "id": "questions",
+   "nav": "Mais perguntas",
+   "h": "Mais perguntas",
+   "items": [
+    {
+     "q": "Quanto pesava o anquilossauro?",
+     "a": "Cerca de 4,8 toneladas para o animal em que o nosso se baseia, calculadas a partir dos ossos das patas. A margem do próprio estudo vai de 3,6 a 6 toneladas."
+    },
+    {
+     "q": "O que significa o nome Ankylosaurus?",
+     "a": "Algo como “lagarto fusionado”: o Natural History Museum, de Londres, dá “fused lizard”, por causa de ossos que cresceram juntos. Barnum Brown, que também liderou o primeiro achado de T. rex, deu o nome completo, Ankylosaurus magniventris, em 1908."
+    },
+    {
+     "q": "Qual era a altura do anquilossauro?",
+     "a": "Até hoje nenhuma altura medida num anquilossauro real foi publicada. O nosso, montado a partir dos ossos, tem 1,70 m no alto do dorso acima do quadril, o ponto mais alto dele."
+    }
+   ]
+  },
+  {
+   "type": "text",
+   "id": "museum",
+   "nav": "No museu",
+   "h": "No museu",
+   "paras": [
+    "O Museum of Ages é um museu digital, feito por uma organização sem fins lucrativos. Entrada franca, sem cadastro. Na ala dos animais, este animal vai estar entre os outros, dos gigantes de muito tempo atrás aos últimos de sua espécie. A ala de Leonardo da Vinci mostra como é uma ala pronta."
+   ],
+   "links": [
+    {
+     "out": true,
+     "text": "Ir para a ala de Leonardo"
+    }
+   ]
+  },
+  {
+   "type": "pages",
+   "id": "next",
+   "items": [
+    {
+     "page": "t-rex",
+     "pic": "trex",
+     "alt": "Um T. rex de lado, sobre duas patas, com a boca aberta e a cabeça erguida, ao lado de uma pessoa cinza que fica bem abaixo do quadril dele.",
+     "line": "Um T. rex adulto grande tinha cerca de 12 m de comprimento, cerca de 4 m até o quadril e mais ou menos 8 a 9 toneladas. O nosso T. rex foi feito com as medidas de SUE e está ao lado de uma pessoa na mesma escala, com uma lista do que foi encontrado de SUE."
+    },
+    {
+     "page": "triceratops",
+     "pic": "tricera",
+     "alt": "Um Triceratops de lado: um babado largo atrás da cabeça, dois chifres longos acima dos olhos, um curto acima do nariz, quatro patas. Ao lado, uma pessoa cinza que chega a cerca de dois terços da altura do dorso.",
+     "line": "Um Triceratops adulto grande tinha cerca de 7 a 8 m de comprimento, com um crânio de cerca de 2 m. O nosso Triceratops foi feito a partir do esqueleto de Washington, uma montagem de cerca de dez animais, e está ao lado de uma pessoa na mesma escala, com o Torosaurus e o que os ossos dizem sobre o T. rex."
+    },
+    {
+     "page": "biggest-dinosaurs",
+     "pic": "dinosaurs",
+     "alt": "Sete dinossauros em fila, vistos de lado, dois deles com pescoços longos bem acima dos outros, e uma pessoa cinza que ao lado deles parece minúscula.",
+     "line": "Sete dos nossos ao lado de uma pessoa, na mesma escala: o mais pesado, muito provavelmente um titanossauro da Patagônia, o mais alto, provavelmente o Sauroposeidon, e por que o mais longo continua em aberto."
+    }
+   ]
+  },
+  {
+   "type": "sources",
+   "id": "sources",
+   "nav": "Fontes",
+   "h": "Fontes",
+   "intro": "Os números vêm destes estudos e dos museus que guardam os ossos. O museu é independente de todos eles.",
+   "read": [
+    {
+     "text": "Arbour e Mallon, 2017, FACETS, sobre tamanho, peso, clava, crânio e couraça.",
+     "href": "https://doi.org/10.1139/facets-2017-0063"
+    },
+    {
+     "text": "Arbour, 2009, PLOS ONE, sobre o giro e a força das clavas de cauda.",
+     "href": "https://doi.org/10.1371/journal.pone.0006738"
+    },
+    {
+     "text": "Arbour, Zanno e Evans, 2022, Biology Letters, sobre as placas cicatrizadas de Zuul.",
+     "href": "https://doi.org/10.1098/rsbl.2022.0404"
+    },
+    {
+     "text": "Bourke, Porter e Witmer, 2018, PLOS ONE, o resumo do estudo, sobre os narizes em voltas de parentes.",
+     "href": "https://doi.org/10.1371/journal.pone.0207381"
+    },
+    {
+     "text": "Horner, Goodwin e Myhrvold, 2011, PLOS ONE, a contagem dos dinossauros de Hell Creek.",
+     "href": "https://doi.org/10.1371/journal.pone.0016574"
+    },
+    {
+     "text": "Barnosky e outros, 2011, Nature, sobre o fim do Cretáceo.",
+     "href": "https://doi.org/10.1038/nature09678"
+    },
+    {
+     "text": "American Museum of Natural History, Nova York: os relatórios de expedição do museu de 1910 e 1911.",
+     "href": "https://research.amnh.org/paleontology/reports/1910.html"
+    },
+    {
+     "text": "Natural History Museum, Londres: as páginas dele sobre o anquilossauro e o estegossauro.",
+     "href": "https://www.nhm.ac.uk/discover/dino-directory/ankylosaurus.html"
+    },
+    {
+     "text": "The Canadian Encyclopedia: o artigo dela sobre o anquilossauro, 2025.",
+     "href": "https://thecanadianencyclopedia.ca/en/article/ankylosaurus"
+    },
+    {
+     "text": "T. rex e estegossauro: os números e as fontes das nossas páginas do T. rex e dos maiores dinossauros.",
+     "href": "https://museumofages.org/pt-br/animais/t-rex/"
+    }
+   ],
+   "contact": "Se um número ou um museu estiver errado, escreva para nós e vamos corrigir.",
+   "contact_link": "Ir para as informações legais",
+   "what_link": "O que é este museu"
+  },
+  {
+   "type": "text",
+   "id": "pictures",
+   "nav": "Usar nossas imagens",
+   "h": "Usar nossas imagens",
+   "paras": [
+    [
+     "As quatro imagens do anquilossauro nesta página, a vista de lado, a clava, o esqueleto e a fileira com o nosso T. rex e o nosso estegossauro, são obra nossa, com licença ",
+     {
+      "text": "CC BY-SA 4.0",
+      "href": "https://creativecommons.org/licenses/by-sa/4.0/deed.pt-br"
+     },
+     ". Crédito: Museum of Ages, e também “Ankylosaurus armour after Arbour and Mallon 2017 (CC BY 4.0)”. Elas mostram uma reconstrução, construída em código e renderizada com o nosso próprio motor gráfico, não fotografias. As imagens das outras páginas que aparecem aqui dão o crédito nessas páginas."
+    ]
+   ]
+  }
+ ]
+}

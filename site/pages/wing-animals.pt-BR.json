@@ -80,6 +80,16 @@
    ],
    "sizes": "(min-width: 1280px) 690px, (min-width: 960px) 54vw, (min-width: 600px) calc(100vw - 64px), calc(100vw - 40px)",
    "person": "92.2% 38.85%"
+  },
+  "anky": {
+   "stem": "animals-ankylosaurus-side",
+   "widths": [
+    800,
+    1600,
+    2400
+   ],
+   "sizes": "(min-width: 1280px) 690px, (min-width: 960px) 54vw, (min-width: 600px) calc(100vw - 64px), calc(100vw - 40px)",
+   "person": "91.27% 23.15%"
   }
  },
  "meta": {
@@ -143,6 +153,11 @@
      "page": "triceratops",
      "pic": "tricera",
      "alt": "Um Triceratops visto de lado: um babado largo atrás da cabeça, dois chifres longos sobre os olhos, um curto no nariz, quatro patas. Ao lado, uma pessoa cinza que chega a cerca de dois terços da altura do dorso."
+    },
+    {
+     "page": "ankylosaurus",
+     "pic": "anky",
+     "alt": "Um anquilossauro de lado: um corpo baixo e largo, coberto de fileiras de placas de osso, uma cabeça larga mantida baixa, quatro patas curtas e uma cauda reta que termina numa clava achatada. Ao lado, uma pessoa cinza da altura do alto do dorso dele acima do quadril."
     }
    ]
   }

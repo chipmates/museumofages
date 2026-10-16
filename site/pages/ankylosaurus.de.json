@@ -330,7 +330,7 @@
     "pic": "skeleton",
     "tag": "tag_built",
     "what": "Unser Ankylosaurus als Skelett, im selben Maßstab, jeder Knochen nach seiner Herkunft gefärbt.",
-    "alt": "Unser Ankylosaurus als Skelett von der Seite, neben dem grauen Menschen, die Knochen in drei Farben nach ihrer Herkunft. In der Farbe der Knochen, die mit diesem Tier gefunden wurden: Schädel, Unterkiefer, beide Oberarmknochen, ein Oberschenkelknochen, ein Wadenbein, sechs Rippen, die Keule und der hintere Teil ihres Stiels.",
+    "alt": "Unser Ankylosaurus als Skelett von der Seite, neben dem grauen Menschen, die Knochen in drei Farben nach ihrer Herkunft. In der Farbe der Knochen, die mit diesem Tier gefunden wurden: Schädel, Unterkiefer, beide Oberarmknochen, ein Oberschenkelknochen, ein Wadenbein, ein Fußknochen, ein Stück des Sitzbeins, sechs Rippen, die Keule und der hintere Teil ihres Stiels.",
     "key": [
      {
       "swatch": "found",
@@ -344,7 +344,7 @@
       "swatch": "rebuilt",
       "text": "Von Verwandten oder ergänzt"
      },
-     "Spiegelbilder der anderen Seite sind der rechte Oberschenkelknochen, das linke Wadenbein und ein Fußknochen. Die Platten haben die Formen echter Ankylosaurus-Platten, ihre Lage ist nach Verwandten geschätzt."
+     "Spiegelbilder der anderen Seite sind der rechte Oberschenkelknochen, das obere Stück des rechten Sitzbeins, das linke Wadenbein und ein Fußknochen. Die Platten haben die Formen echter Ankylosaurus-Platten, ihre Lage ist nach Verwandten geschätzt."
     ]
    }
   },

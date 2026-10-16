@@ -1,0 +1,589 @@
+{
+ "_note": "LAS PALABRAS de la página del Ankylosaurus, en español. Reescritas a partir del inglés y del alemán, con las mismas cifras, fuentes y grados de certeza. Ningún Ankylosaurus se pesó nunca, y ningún fósil muestra un encuentro con el T. rex. Estado ai: ninguna persona las ha revisado todavía.",
+ "page": {
+  "id": "animals-ankylosaurus",
+  "wing": "animals",
+  "topic": "ankylosaurus",
+  "published": null,
+  "join_names": true,
+  "og_image": {
+   "file": "animals-ankylosaurus-og-{lang}-1200x630.png",
+   "width": 1200,
+   "height": 630,
+   "layout": "beside"
+  }
+ },
+ "pics": {
+  "side": {
+   "stem": "animals-ankylosaurus-side",
+   "widths": [
+    800,
+    1600,
+    2400
+   ],
+   "sizes": "(min-width: 1280px) 588px, (min-width: 960px) calc(100vw - 80px), (min-width: 600px) calc(100vw - 64px), calc(100vw - 40px)",
+   "person": "91.27% 23.15%",
+   "marks": {
+    "ankylosaurus": "2.92% 85.26%",
+    "hips": "46.15% 91.27%",
+    "person": "89.38% 93.15%"
+   },
+   "behind": [
+    "hips"
+   ],
+   "tops": {
+    "hips": "23.4%"
+   }
+  },
+  "close": {
+   "stem": "animals-ankylosaurus-close",
+   "widths": [
+    800,
+    1600
+   ],
+   "sizes": "(min-width: 1280px) 690px, (min-width: 960px) 54vw, (min-width: 600px) calc(100vw - 64px), calc(100vw - 40px)",
+   "person": "8.33% 19.28%",
+   "marks": {
+    "knob": "17.31% 30%",
+    "club": "17.31% 59.56%",
+    "person": "5.27% 11.4%"
+   },
+   "behind": [
+    "knob"
+   ]
+  },
+  "beside": {
+   "stem": "animals-ankylosaurus-beside",
+   "widths": [
+    800,
+    1600,
+    2400
+   ],
+   "sizes": "(min-width: 1280px) 690px, (min-width: 960px) 54vw, (min-width: 600px) calc(100vw - 64px), calc(100vw - 40px)",
+   "person": "7.11% 30.75%",
+   "marks": {
+    "t-rex": "14.67% 97.78%",
+    "ankylosaurus": "14.63% 61.59%",
+    "stegosaurus": "14.63% 55.65%",
+    "person": "6.03% 8.18%"
+   },
+   "behind": [
+    "t-rex"
+   ]
+  },
+  "skeleton": {
+   "stem": "animals-ankylosaurus-skeleton",
+   "widths": [
+    800,
+    1600
+   ],
+   "sizes": "(min-width: 1280px) 690px, (min-width: 960px) 54vw, (min-width: 600px) calc(100vw - 64px), calc(100vw - 40px)",
+   "person": "91.27% 23.15%",
+   "swatches": {
+    "found": "#b07357",
+    "other": "#474c5b",
+    "rebuilt": "#cacfdf"
+   }
+  },
+  "trex": {
+   "stem": "animals-t-rex-side",
+   "widths": [
+    800,
+    1600,
+    2400
+   ],
+   "sizes": "(min-width: 1280px) 690px, (min-width: 960px) 54vw, (min-width: 600px) calc(100vw - 64px), calc(100vw - 40px)",
+   "person": "86.42% 63.92%"
+  },
+  "tricera": {
+   "stem": "animals-triceratops-side",
+   "widths": [
+    800,
+    1600,
+    2400
+   ],
+   "sizes": "(min-width: 1280px) 690px, (min-width: 960px) 54vw, (min-width: 600px) calc(100vw - 64px), calc(100vw - 40px)",
+   "person": "92.2% 38.85%"
+  },
+  "dinosaurs": {
+   "stem": "animals-biggest-dinosaurs-row",
+   "widths": [
+    800,
+    1600
+   ],
+   "sizes": "(min-width: 1280px) 690px, (min-width: 960px) 54vw, (min-width: 600px) calc(100vw - 64px), calc(100vw - 40px)",
+   "person": "32.82% 84.25%"
+  }
+ },
+ "meta": {
+  "title": "Ankylosaurus: tamaño de unos 6 a 8 m, 4,8 t | Museum of Ages",
+  "description": "¿Cuánto medía el anquilosaurio? Unos 6 a 8 m. El Ankylosaurus menor conocido, el de la única maza hallada, pesaba unas 4,8 t según los huesos de sus patas.",
+  "og_title": "Ankylosaurus: tamaño de unos 6 a 8 m, 4,8 t",
+  "og_image_alt": "Un Ankylosaurus de lado: un cuerpo bajo y ancho, cubierto de filas de placas de hueso, una cabeza ancha y baja, cuatro patas cortas y una cola recta que termina en una maza plana. A su lado, una persona gris tan alta como lo alto del lomo sobre la cadera."
+ },
+ "labels": {
+  "crumbs": "Estás aquí",
+  "crumb_home": "Museo",
+  "crumb_here": "Ankylosaurus",
+  "toc": "En esta página",
+  "tag_made": "Hecho para esta página",
+  "tag_built": "Reconstrucción",
+  "person": "1,70 m",
+  "to_table": "Las cifras en una tabla",
+  "no_figure": "sin cifra con fuente",
+  "og_answer": "Medía unos 6 a 8 m de largo. La única maza de cola hallada mide más o menos medio metro de ancho"
+ },
+ "top": {
+  "h1": "¿Cuánto medía el Ankylosaurus?",
+  "answer": "El Ankylosaurus, o anquilosaurio, medía unos 6 a 8 m de largo, según un estudio de 2017. El más pequeño de los animales conocidos llega a unas 4,8 toneladas (de 3,6 a 6 según el margen del propio estudio), calculadas a partir del grosor de los huesos de sus patas. Nuestro Ankylosaurus está hecho al tamaño de ese animal: 6,4 m de largo, casi cuatro personas tumbadas una detrás de otra. Lo más alto del lomo está sobre la cadera, a 1,70 m, exactamente la altura de la persona a su lado.",
+  "answer_more": "Hasta hoy solo se encontró una maza de la cola de Ankylosaurus, en ese mismo animal. Mide más o menos medio metro de ancho y estaba al final de la cola, que en su mitad trasera era rígida como una barra.",
+  "scale": {
+   "pic": "side",
+   "tag": "tag_made",
+   "what": "Nuestro Ankylosaurus junto a una persona de 1,70 m, a la misma escala: 6,4 m del pico a la maza. Sus hombros llegan más o menos a la barbilla de la persona, y su cuerpo es casi tan ancho como alta es la persona.",
+   "alt": "Un Ankylosaurus de lado: un cuerpo bajo y ancho, cubierto de filas de placas de hueso, una cabeza ancha y baja, cuatro patas cortas y una cola recta que termina en una maza plana. A su lado, una persona gris tan alta como lo alto del lomo sobre la cadera.",
+   "note": [
+    "Nuestra propia reconstrucción, construida en código a partir de medidas publicadas y renderizada con nuestro propio motor gráfico. No son fotografías. ",
+    "La coraza de nuestro Ankylosaurus sigue el plano de ",
+    {
+     "text": "Arbour y Mallon 2017",
+     "href": "https://doi.org/10.1139/facets-2017-0063"
+    },
+    " (",
+    {
+     "text": "CC BY 4.0",
+     "href": "https://creativecommons.org/licenses/by/4.0/"
+    },
+    "). Lo medimos y lo cambiamos."
+   ],
+   "marks": [
+    {
+     "span": "ankylosaurus",
+     "text": "Nuestro Ankylosaurus, 6,4 m del pico a la maza"
+    },
+    {
+     "span": "hips",
+     "text": "Lo alto del lomo sobre la cadera, 1,70 m, nuestro modelo"
+    },
+    {
+     "span": "person",
+     "text": "La persona, 1,70 m"
+    }
+   ],
+   "close": {
+    "pic": "close",
+    "tag": "tag_made",
+    "what": "Más de cerca: la maza de nuestro modelo, de 61 por 51 cm con su capa córnea, queda más o menos a la altura del pecho de la persona. El mango y la maza juntos miden unos 2 m, más de lo que mide de alto la persona.",
+    "alt": "La mitad trasera del Ankylosaurus más de cerca, de lado: filas de placas ovaladas por el lomo y los costados, con piel entre ellas, la cola rígida y su maza baja y plana a la altura del pecho de la persona gris.",
+    "marks": [
+     {
+      "span": "knob",
+      "text": "La maza, 61 cm de largo con su capa córnea, nuestro modelo"
+     },
+     {
+      "span": "club",
+      "text": "Mango y maza, unos 2 m, nuestro modelo"
+     },
+     {
+      "span": "person",
+      "text": "La persona, 1,70 m"
+     }
+    ]
+   }
+  },
+  "guess": {
+   "h": "Para adivinar",
+   "q": "El cráneo de Ankylosaurus más grande encontrado hasta hoy, ¿tenía los dientes más grandes o más pequeños que el cráneo más pequeño?",
+   "button": "Ver la respuesta",
+   "a": "Más pequeños: el diente sin desgastar más grande del cráneo grande mide unos 7,5 mm de alto. En el cráneo más pequeño, el que sigue nuestro modelo, el mayor mide unos 9,1 mm.",
+   "button_open": "Ocultar la respuesta"
+  },
+  "out": {
+   "text": "El ala de este animal todavía se está construyendo. El ala de Leonardo da Vinci ya está abierta hoy.",
+   "link": "Ir al ala de Leonardo"
+  }
+ },
+ "blocks": [
+  {
+   "type": "numbers",
+   "id": "numbers",
+   "nav": "Datos del Ankylosaurus: tamaño, altura y peso",
+   "h": "Datos del Ankylosaurus: tamaño, altura y peso",
+   "unit": "En metros y toneladas. Cada celda de altura dice qué punto mide. Donde no hay una cifra con fuente, la celda queda vacía.",
+   "cols": [
+    "Animal",
+    "Longitud",
+    "Altura, con el punto medido",
+    "Longitud del cráneo",
+    "Peso",
+    "Certeza"
+   ],
+   "rows": [
+    {
+     "cells": [
+      "El animal del cráneo más grande (CMN 8880, Ottawa), conocido solo por el cráneo",
+      "hasta unos 8 m a juicio de su estudio, casi 10 m calculados, pero probablemente demasiado largo según sus propios autores",
+      "sin medir",
+      "unos 67 cm",
+      "unas 8 t, un cálculo aproximado a escala del que dudan sus propios autores",
+      "débil: un cráneo, sin cuerpo"
+     ]
+    },
+    {
+     "cells": [
+      "AMNH 5214, Nueva York, el animal en el que se basa el nuestro",
+      "unos 6 a 8 m, lo más probable cerca del extremo inferior, calculados a partir de las colas de parientes",
+      "sin medir, y ninguna publicada para las longitudes actuales",
+      "unos 56 cm de largo, 64 cm de ancho de cuerno a cuerno",
+      "unas 4,8 t a partir del húmero y el fémur, con un margen en el estudio de 3,6 a 6 t",
+      "media: un estudio de 2017, nunca se pesó"
+     ]
+    },
+    {
+     "cells": [
+      "Nuestro modelo",
+      "6,4 m en línea recta, del pico a la maza",
+      "1,70 m en lo alto del lomo sobre la cadera, 1,5 m sobre los hombros, nuestro modelo",
+      "el cráneo de AMNH 5214",
+      "",
+      "medido en nuestros archivos, la altura obtenida al montar los huesos"
+     ]
+    },
+    {
+     "cells": [
+      "La maza de la cola de AMNH 5214, y la nuestra",
+      "maza de 60 cm de largo y 49 cm de ancho, medida en el fósil. La nuestra, 61 por 51 cm con su capa córnea. Mango y maza, unos 2 m, en el estudio y en nuestro modelo",
+      "maza de 19 cm de alto, medida en el fósil",
+      "",
+      "",
+      "buena para la maza: medida. Media para los 2 m: el mango, completado según un pariente. La nuestra: medida en nuestros archivos"
+     ]
+    },
+    {
+     "cells": [
+      "T. rex, SUE",
+      "unos 12 m, el montaje",
+      "a la altura de la cadera unos 4 m, según el museo",
+      "unos 1,4 m, del hocico al borde de atrás de la mejilla",
+      "unas 8 a 9 t, según un hueso y tres modelos",
+      "buena: el museo y dos estudios coinciden"
+     ]
+    },
+    {
+     "cells": [
+      "Stegosaurus, Sophie, Londres",
+      "unos 5,6 m, el montaje",
+      "a la altura de la cadera, sin publicar",
+      "",
+      "unas 1,6 t, un modelo de su propio esqueleto",
+      "un animal casi completo, como en nuestra página de los dinosaurios más grandes"
+     ]
+    },
+    {
+     "cells": [
+      "La persona",
+      "",
+      "1,70 m de alto, de la cabeza a los pies",
+      "",
+      "",
+      "nuestra figura de escala"
+     ]
+    }
+   ]
+  },
+  {
+   "type": "text",
+   "id": "tail-club",
+   "nav": "La maza de la cola del Ankylosaurus",
+   "h": "La maza de la cola del Ankylosaurus",
+   "paras": [
+    "La maza mide 60 cm de largo, 49 cm de ancho y solo 19 cm de alto, medida en el fósil. Es un disco bajo, plano y redondeado, hecho de placas de hueso, sin púas, y curiosamente no es más ancha que las mazas más grandes de sus parientes más pequeños. El mango era la mitad trasera de la cola. Sus vértebras encajaban entre sí, y unos tendones convertidos en hueso las ataban hasta formar una barra rígida.",
+    "Solo la parte delantera de la cola podía doblarse, sobre todo hacia los lados: un estudio de las colas de parientes halló un giro de unos 100 grados. ¿Podía la maza romper huesos? En el modelo de ese estudio, solo las mazas de más de 50 cm de ancho golpeaban con fuerza suficiente, y esta queda justo por debajo de ese límite.",
+    "La mejor pista sobre su uso es un estudio de un pariente más antiguo, Zuul, que tiene en los costados placas rotas y curadas justo donde golpearía otra maza. Así que las mazas probablemente servían sobre todo en peleas entre animales de la misma especie. El mismo estudio apenas duda de que también pudieran servir para defenderse de un depredador, pero ningún fósil de Ankylosaurus muestra ni lo uno ni lo otro."
+   ]
+  },
+  {
+   "type": "text",
+   "id": "armour",
+   "nav": "La coraza del Ankylosaurus",
+   "h": "La coraza del Ankylosaurus",
+   "paras": [
+    "El Ankylosaurus llevaba placas de hueso metidas en la piel, con piel entre ellas, no un caparazón de una sola pieza, y dos semianillos de hueso sobre el cuello. Se conocen placas sueltas suyas, pero hasta hoy no se encontró ningún Ankylosaurus con una placa todavía en su sitio.",
+    "Por eso, el lugar de cada placa es una suposición cuidadosa a partir de sus parientes, y nuestro modelo sigue un plano de 2017. Las grandes púas de los hombros de las imágenes antiguas son de otra familia de dinosaurios acorazados, y en sus parientes el vientre no tenía placas grandes. No se conoce ningún color, así que el nuestro es una elección."
+   ]
+  },
+  {
+   "type": "text",
+   "id": "skeleton",
+   "nav": "Fósiles y esqueleto del Ankylosaurus: qué se encontró",
+   "h": "Fósiles y esqueleto del Ankylosaurus: qué se encontró",
+   "paras": [
+    "El Ankylosaurus se conoce por dos esqueletos parciales y un solo cráneo grande, y ninguno de esos hallazgos está completo. El primero, el esqueleto en el que se basa su nombre, lo encontró en 1906 en Montana un equipo dirigido por Barnum Brown. Su equipo encontró el segundo en 1910 junto al río Red Deer, en Alberta: AMNH 5214, el de la maza. Los dos se guardan en el American Museum of Natural History de Nueva York.",
+    "El cráneo más grande apareció en 1947, también en Alberta, y se guarda en el Canadian Museum of Nature de Ottawa. El resto son placas sueltas, un trozo del mango de una maza y dientes. El Ankylosaurus es raro en las rocas: en un recuento de los grandes dinosaurios de la Formación Hell Creek, en Montana, solo 2 de unos 180 esqueletos eran de Ankylosaurus.",
+    "Nuestra imagen del esqueleto muestra qué huesos se encontraron con ese animal."
+   ],
+   "scale": {
+    "pic": "skeleton",
+    "tag": "tag_built",
+    "what": "Nuestro Ankylosaurus como esqueleto, a la misma escala, con cada hueso coloreado según su procedencia.",
+    "alt": "Nuestro Ankylosaurus como esqueleto, visto de lado, junto a la persona gris, con los huesos en tres colores según su procedencia. En el color de los huesos hallados con este animal: el cráneo, las mandíbulas, los dos húmeros, un fémur, un peroné, un hueso del pie, parte de un isquion, seis costillas y la maza con la parte trasera de su mango.",
+    "key": [
+     {
+      "swatch": "found",
+      "text": "Hallado con este animal (AMNH 5214)"
+     },
+     {
+      "swatch": "other",
+      "text": "De otros hallazgos de Ankylosaurus, llevados a su tamaño"
+     },
+     {
+      "swatch": "rebuilt",
+      "text": "De parientes, o reconstruido"
+     },
+     "El fémur derecho, la parte de arriba del isquion derecho (un hueso de la cadera), el peroné izquierdo y un hueso del pie son copias en espejo del otro lado. Las placas tienen las formas del propio Ankylosaurus, y su lugar se supuso en parte a partir de sus parientes."
+    ]
+   }
+  },
+  {
+   "type": "text",
+   "id": "head-teeth",
+   "nav": "Cabeza y dientes del Ankylosaurus",
+   "h": "Cabeza y dientes del Ankylosaurus",
+   "subs": [
+    {
+     "h": "La cabeza y la nariz",
+     "paras": [
+      "La cabeza era baja y triangular, más ancha que larga, con cuatro cuernos cortos en las esquinas de atrás. Las fosas nasales estaban a los lados del hocico y miraban hacia abajo, ocultas desde delante, a diferencia de sus parientes. Por dentro, el aire probablemente seguía un camino en bucles, que en modelos de sus parientes funciona como un intercambiador de calor, pero no se sabe para qué servía esta nariz tan rara."
+     ]
+    },
+    {
+     "h": "El pico, los dientes y la comida",
+     "paras": [
+      "Delante tenía un pico córneo, y detrás, filas de dientes muy pequeños en forma de hoja, de 34 a 36 en cada maxilar superior. En el cráneo en el que se basa nuestro modelo, el mayor mide unos 9 mm de alto, diminuto para un animal de casi 5 toneladas. Probablemente comía plantas bajas, quizá helechos y arbustos, pero no se sabe qué comía exactamente."
+     ]
+    }
+   ]
+  },
+  {
+   "type": "text",
+   "id": "t-rex",
+   "nav": "Ankylosaurus vs. T. rex",
+   "h": "Ankylosaurus vs. T. rex",
+   "paras": [
+    "El Ankylosaurus y el T. rex vivieron en la misma época y en la misma tierra, y sus huesos están en las mismas rocas. Pero ningún fósil conocido muestra un encuentro entre los dos: ningún mordisco de T. rex en un hueso de Ankylosaurus, ninguna herida de maza en un T. rex. Las rocas no dicen quién ganaría.",
+    "Lo que sí se puede decir: un T. rex grande era más o menos el doble de pesado, unas 8 a 9 toneladas frente a unas 4,8 del animal en el que se basa nuestro modelo. El Ankylosaurus llevaba placas y podía blandir una maza, aunque sus parientes probablemente usaban las suyas sobre todo unos contra otros.",
+    "En nuestra imagen, el punto más alto de nuestro Ankylosaurus queda por debajo de la rodilla de nuestro T. rex."
+   ],
+   "scale": {
+    "pic": "beside",
+    "tag": "tag_made",
+    "what": "Nuestros T. rex, Ankylosaurus y Stegosaurus a la misma escala, con la persona, solo para comparar el tamaño. El Stegosaurus vivió unos 80 millones de años antes, y ningún fósil conocido muestra un encuentro entre el Ankylosaurus y el T. rex.",
+    "alt": "Tres dinosaurios de lado, todos mirando hacia el mismo lado: un T. rex sobre dos patas, mucho más largo y más alto, el Ankylosaurus, bajo y acorazado, y un Stegosaurus con placas altas a lo largo del lomo, junto a la persona gris.",
+    "marks": [
+     {
+      "span": "t-rex",
+      "text": "Nuestro T. rex, según SUE, unos 11,4 m"
+     },
+     {
+      "span": "ankylosaurus",
+      "text": "Nuestro Ankylosaurus, 6,4 m"
+     },
+     {
+      "span": "stegosaurus",
+      "text": "Nuestro Stegosaurus, según Sophie, unos 5,6 m"
+     },
+     {
+      "span": "person",
+      "text": "La persona, 1,70 m"
+     }
+    ]
+   }
+  },
+  {
+   "type": "text",
+   "id": "stegosaurus",
+   "nav": "Stegosaurus y Ankylosaurus",
+   "h": "Stegosaurus y Ankylosaurus",
+   "paras": [
+    "Nunca coincidieron: entre ellos hay unos 80 millones de años. El Stegosaurus vivió en el Jurásico Superior, hace unos 150 millones de años, así que el Ankylosaurus vivió más cerca de nosotros en el tiempo que del Stegosaurus. Se suelen nombrar juntos porque los dos eran herbívoros acorazados, emparentados dentro de un árbol familiar más grande."
+   ]
+  },
+  {
+   "type": "text",
+   "id": "when-where",
+   "nav": "Cuándo y dónde vivió el Ankylosaurus",
+   "h": "Cuándo y dónde vivió el Ankylosaurus",
+   "paras": [
+    "El Ankylosaurus vivió en el oeste de América del Norte, donde hoy están Alberta, Saskatchewan, Montana y Wyoming, desde hace unos 68 millones de años hasta cerca del final del Cretácico, hace unos 66 millones de años. Se cree que un impacto en la península de Yucatán desencadenó el colapso con el que terminó el Cretácico."
+   ]
+  },
+  {
+   "type": "notes",
+   "id": "numbers-read",
+   "nav": "Cifras que quizá hayas leído",
+   "h": "Cifras que quizá hayas leído",
+   "intro": "Para cada cifra: de dónde viene y qué significa.",
+   "rows": [
+    {
+     "term": "8 m de largo",
+     "text": "El límite de arriba para los animales más grandes, estimado a partir del cráneo más grande. Lo más probable es que el animal más pequeño en el que se basa el nuestro midiera cerca de 6 m."
+    },
+    {
+     "term": "10 m de largo",
+     "text": "Se calcularon para el cráneo más grande con el mismo método que la longitud del animal más pequeño, a partir de las colas de parientes, y sus propios autores los consideran probablemente demasiado largos."
+    },
+    {
+     "term": "8 toneladas",
+     "text": "Un cálculo aproximado a escala para el cráneo más grande, que no tiene cuerpo, y sus propios autores piden cautela."
+    },
+    {
+     "term": "Una maza que rompía huesos y mató a un T. rex",
+     "text": "Ningún hueso conocido de T. rex tiene una herida de maza, y la única maza de Ankylosaurus conocida queda justo por debajo del tamaño que podía romper huesos en un modelo de las mazas de sus parientes."
+    },
+    {
+     "term": "Púas en los hombros",
+     "text": "Las imágenes antiguas las tomaron de otra familia de dinosaurios acorazados."
+    },
+    {
+     "term": "Una bola con púas al final de la cola",
+     "text": "La única maza hallada es un disco bajo y plano, de 19 cm de alto, sin púas."
+    },
+    {
+     "term": "El dinosaurio acorazado más grande",
+     "text": "El estudio de 2017 llama al Ankylosaurus el anquilosáurido más grande conocido, y quizá el anquilosaurio más grande de todos."
+    },
+    {
+     "term": "Un tanque viviente",
+     "text": "Una imagen, no un resultado. Las placas del Ankylosaurus estaban separadas en una piel flexible, y en sus parientes el vientre no tenía placas grandes."
+    }
+   ]
+  },
+  {
+   "type": "faq",
+   "id": "questions",
+   "nav": "Más preguntas",
+   "h": "Más preguntas",
+   "items": [
+    {
+     "q": "¿Cuánto pesaba el Ankylosaurus?",
+     "a": "Unas 4,8 toneladas para el animal en el que se basa el nuestro, calculadas a partir de los huesos de sus patas. El margen del propio estudio va de 3,6 a 6 toneladas."
+    },
+    {
+     "q": "¿Qué significa el nombre Ankylosaurus?",
+     "a": "Más o menos «lagarto fusionado»: el Natural History Museum de Londres da «fused lizard», por unos huesos que crecieron unidos. Barnum Brown, que también dirigió el primer hallazgo de T. rex, le dio el nombre completo, Ankylosaurus magniventris, en 1908."
+    },
+    {
+     "q": "¿Qué altura tenía el Ankylosaurus?",
+     "a": "Hasta hoy no se publicó ninguna altura medida en un Ankylosaurus real. El nuestro, montado a partir de sus huesos, mide 1,70 m en lo alto del lomo sobre la cadera, su punto más alto."
+    }
+   ]
+  },
+  {
+   "type": "text",
+   "id": "museum",
+   "nav": "En el museo",
+   "h": "En el museo",
+   "paras": [
+    "Museum of Ages es un museo digital, hecho por una organización sin fines de lucro. Entrada libre, sin cuenta. En el ala de los animales, este animal estará entre los demás, desde los gigantes de hace mucho tiempo hasta los últimos de su especie. El ala de Leonardo da Vinci muestra cómo es un ala terminada."
+   ],
+   "links": [
+    {
+     "out": true,
+     "text": "Ir al ala de Leonardo"
+    }
+   ]
+  },
+  {
+   "type": "pages",
+   "id": "next",
+   "items": [
+    {
+     "page": "t-rex",
+     "pic": "trex",
+     "alt": "Un T. rex de lado, sobre dos patas, con la boca abierta y la cabeza levantada, junto a una persona gris que queda muy por debajo de sus caderas.",
+     "line": "Un T. rex adulto grande medía unos 12 m de largo y unos 4 m a la altura de la cadera, y pesaba más o menos de 8 a 9 toneladas. Nuestro T. rex está hecho con las medidas de SUE y está junto a una persona a la misma escala, con una lista de lo que se encontró de SUE."
+    },
+    {
+     "page": "triceratops",
+     "pic": "tricera",
+     "alt": "Un Triceratops de lado: una gola ancha detrás de la cabeza, dos cuernos largos sobre los ojos, uno corto sobre la nariz, cuatro patas. A su lado, una persona gris que le llega a unos dos tercios de la altura del lomo.",
+     "line": "Un Triceratops adulto grande medía unos 7 a 8 m de largo, con un cráneo de unos 2 m. Nuestro Triceratops está hecho según el esqueleto de Washington, un montaje de unos diez animales, y está junto a una persona a la misma escala, con el Torosaurus y lo que dicen los huesos sobre el T. rex."
+    },
+    {
+     "page": "biggest-dinosaurs",
+     "pic": "dinosaurs",
+     "alt": "Siete dinosaurios en fila, vistos de lado, dos de ellos con cuellos largos muy por encima de los demás, y una persona gris que a su lado parece diminuta.",
+     "line": "Siete de los nuestros junto a una persona, a la misma escala: el más pesado, muy probablemente un titanosaurio de la Patagonia, el más alto, probablemente Sauroposeidon, y por qué el más largo sigue sin decidirse."
+    }
+   ]
+  },
+  {
+   "type": "sources",
+   "id": "sources",
+   "nav": "Fuentes",
+   "h": "Fuentes",
+   "intro": "Las cifras vienen de estos estudios y de los museos que conservan los huesos. El museo es independiente de todos ellos.",
+   "read": [
+    {
+     "text": "Arbour y Mallon, 2017, FACETS, sobre su tamaño, peso, maza, cráneo y coraza.",
+     "href": "https://doi.org/10.1139/facets-2017-0063"
+    },
+    {
+     "text": "Arbour, 2009, PLOS ONE, sobre el giro y la fuerza de las mazas de la cola.",
+     "href": "https://doi.org/10.1371/journal.pone.0006738"
+    },
+    {
+     "text": "Arbour, Zanno y Evans, 2022, Biology Letters, sobre las placas curadas de Zuul.",
+     "href": "https://doi.org/10.1098/rsbl.2022.0404"
+    },
+    {
+     "text": "Bourke, Porter y Witmer, 2018, PLOS ONE, el resumen del estudio, sobre las narices en bucle de sus parientes.",
+     "href": "https://doi.org/10.1371/journal.pone.0207381"
+    },
+    {
+     "text": "Horner, Goodwin y Myhrvold, 2011, PLOS ONE, el recuento de los dinosaurios de Hell Creek.",
+     "href": "https://doi.org/10.1371/journal.pone.0016574"
+    },
+    {
+     "text": "Barnosky y otros, 2011, Nature, sobre el final del Cretácico.",
+     "href": "https://doi.org/10.1038/nature09678"
+    },
+    {
+     "text": "American Museum of Natural History, Nueva York: sus informes de expedición de 1910 y 1911.",
+     "href": "https://research.amnh.org/paleontology/reports/1910.html"
+    },
+    {
+     "text": "Natural History Museum, Londres: sus páginas sobre el Ankylosaurus y el Stegosaurus.",
+     "href": "https://www.nhm.ac.uk/discover/dino-directory/ankylosaurus.html"
+    },
+    {
+     "text": "The Canadian Encyclopedia: su artículo sobre el Ankylosaurus, 2025.",
+     "href": "https://thecanadianencyclopedia.ca/en/article/ankylosaurus"
+    },
+    {
+     "text": "T. rex y Stegosaurus: las cifras y las fuentes de nuestras páginas del T. rex y de los dinosaurios más grandes.",
+     "href": "https://museumofages.org/es/animales/t-rex/"
+    }
+   ],
+   "contact": "Si una cifra o un museo está mal, escríbenos y lo corregiremos.",
+   "contact_link": "Ir al aviso legal",
+   "what_link": "Qué es este museo"
+  },
+  {
+   "type": "text",
+   "id": "pictures",
+   "nav": "Usar nuestras imágenes",
+   "h": "Usar nuestras imágenes",
+   "paras": [
+    [
+     "Las cuatro imágenes del Ankylosaurus de esta página, la vista de lado, la maza, el esqueleto y la fila con nuestro T. rex y nuestro Stegosaurus, son obra nuestra, con licencia ",
+     {
+      "text": "CC BY-SA 4.0",
+      "href": "https://creativecommons.org/licenses/by-sa/4.0/deed.es"
+     },
+     ". Crédito: Museum of Ages, y además «Ankylosaurus armour after Arbour and Mallon 2017 (CC BY 4.0)». Muestran una reconstrucción, construida en código y renderizada con nuestro propio motor gráfico, no fotografías. Las imágenes de las otras páginas que aparecen aquí dan su crédito en esas páginas."
+    ]
+   ]
+  }
+ ]
+}

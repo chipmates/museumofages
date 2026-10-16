@@ -326,7 +326,7 @@
     "pic": "skeleton",
     "tag": "tag_built",
     "what": "Our Ankylosaurus as a skeleton, to the same scale, each bone coloured by where it comes from.",
-    "alt": "Our Ankylosaurus as a skeleton from the side, beside the grey person, its bones in three colours by where they come from. In the colour of the bones found with this animal: the skull, jaws, both upper arm bones, a thigh bone, a calf bone, six ribs, and the club's knob with the back of its handle.",
+    "alt": "Our Ankylosaurus as a skeleton from the side, beside the grey person, its bones in three colours by where they come from. In the colour of the bones found with this animal: the skull, jaws, both upper arm bones, a thigh bone, a calf bone, a foot bone, part of an ischium, six ribs, and the club's knob with the back of its handle.",
     "key": [
      {
       "swatch": "found",
@@ -340,7 +340,7 @@
       "swatch": "rebuilt",
       "text": "From relatives or rebuilt"
      },
-     "Mirror copies of the other side are the right thigh bone, the left calf bone and one foot bone. The plates have Ankylosaurus's own shapes, in places guessed from relatives."
+     "Mirror copies of the other side are the right thigh bone, the top of the right ischium (a hip bone), the left calf bone and one foot bone. The plates have Ankylosaurus's own shapes, in places guessed from relatives."
     ]
    }
   },

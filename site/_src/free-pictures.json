@@ -28,7 +28,8 @@
     "animals-woolly-mammoth-side", "animals-woolly-mammoth-close", "animals-woolly-mammoth-og-en", "animals-woolly-mammoth-og-de", "animals-woolly-mammoth-og-es", "animals-woolly-mammoth-og-pt-br",
     "animals-brachiosaurus-side", "animals-brachiosaurus-close", "animals-brachiosaurus-skeleton", "animals-brachiosaurus-og-en", "animals-brachiosaurus-og-de", "animals-brachiosaurus-og-es", "animals-brachiosaurus-og-pt-br",
     "animals-triceratops-side", "animals-triceratops-close", "animals-triceratops-beside-t-rex", "animals-triceratops-skeleton", "animals-triceratops-og-en", "animals-triceratops-og-de", "animals-triceratops-og-es", "animals-triceratops-og-pt-br",
-    "animals-ankylosaurus-side", "animals-ankylosaurus-close", "animals-ankylosaurus-beside", "animals-ankylosaurus-skeleton", "animals-ankylosaurus-og-en", "animals-ankylosaurus-og-de"
+    "animals-ankylosaurus-side", "animals-ankylosaurus-close", "animals-ankylosaurus-beside", "animals-ankylosaurus-skeleton", "animals-ankylosaurus-og-en", "animals-ankylosaurus-og-de",
+    "animals-ankylosaurus-og-es", "animals-ankylosaurus-og-pt-br"
   ],
   "credits": {
     "body shape after Shimada and others 2025 (CC BY 4.0)": [
@@ -45,7 +46,8 @@
       "animals-biggest-dinosaurs-row", "animals-biggest-dinosaurs-close", "animals-biggest-dinosaurs-og-en",
       "animals-biggest-dinosaurs-og-de", "animals-biggest-dinosaurs-og-es", "animals-biggest-dinosaurs-og-pt-br",
       "animals-ankylosaurus-side", "animals-ankylosaurus-close", "animals-ankylosaurus-beside",
-      "animals-ankylosaurus-skeleton", "animals-ankylosaurus-og-en", "animals-ankylosaurus-og-de"
+      "animals-ankylosaurus-skeleton", "animals-ankylosaurus-og-en", "animals-ankylosaurus-og-de",
+      "animals-ankylosaurus-og-es", "animals-ankylosaurus-og-pt-br"
     ]
   },
   "with_map_credit": [

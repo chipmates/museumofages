@@ -93,6 +93,16 @@
    ],
    "sizes": "(min-width: 1280px) 690px, (min-width: 960px) 54vw, (min-width: 600px) calc(100vw - 64px), calc(100vw - 40px)",
    "person": "92.2% 38.85%"
+  },
+  "anky": {
+   "stem": "animals-ankylosaurus-side",
+   "widths": [
+    800,
+    1600,
+    2400
+   ],
+   "sizes": "(min-width: 1280px) 690px, (min-width: 960px) 54vw, (min-width: 600px) calc(100vw - 64px), calc(100vw - 40px)",
+   "person": "91.27% 23.15%"
   }
  },
  "meta": {
@@ -417,6 +427,12 @@
      "pic": "tricera",
      "alt": "Un Triceratops de lado: una gola ancha detrás de la cabeza, dos cuernos largos sobre los ojos, uno corto sobre la nariz, cuatro patas. A su lado, una persona gris que le llega a unos dos tercios de la altura del lomo.",
      "line": "Un Triceratops adulto grande medía unos 7 a 8 m de largo, con un cráneo de unos 2 m, más largo que el de SUE. Nuestro Triceratops está junto a nuestro T. rex a la misma escala, con lo que los huesos muestran de los dos y lo que no."
+    },
+    {
+     "page": "ankylosaurus",
+     "pic": "anky",
+     "alt": "Un Ankylosaurus de lado: un cuerpo bajo y ancho, cubierto de filas de placas de hueso, una cabeza ancha y baja, cuatro patas cortas y una cola recta que termina en una maza plana. A su lado, una persona gris tan alta como lo alto del lomo sobre la cadera.",
+     "line": "El Ankylosaurus, un herbívoro acorazado con una maza en la cola, vivió en la misma época y en la misma tierra que el T. rex y medía unos 6 a 8 m de largo. Nuestro Ankylosaurus está junto a nuestro T. rex a la misma escala, con lo que los huesos muestran de los dos y lo que no."
     }
    ]
   },

@@ -1353,6 +1353,18 @@
    "sha256": "f2697be9a364c5d57312618825468ad3a528e36c7899032bba0ab09afa52d582"
   },
   {
+   "path": "pages/pics/img/animals-ankylosaurus-og-es-1200x630.png",
+   "url": "/static/img/animals-ankylosaurus-og-es-1200x630.png",
+   "bytes": 103705,
+   "sha256": "5d804c34c29e0d0fd72195341f51a6bc386539d65704188382da9f10c6ec2243"
+  },
+  {
+   "path": "pages/pics/img/animals-ankylosaurus-og-pt-br-1200x630.png",
+   "url": "/static/img/animals-ankylosaurus-og-pt-br-1200x630.png",
+   "bytes": 102754,
+   "sha256": "cf6b2b457d524fb4199d67aa96bd00bea88eda5da59bd6e84af731ed968a8893"
+  },
+  {
    "path": "pages/pics/img/animals-ankylosaurus-side-1600.avif",
    "url": "/static/img/animals-ankylosaurus-side-1600.avif",
    "bytes": 16108,

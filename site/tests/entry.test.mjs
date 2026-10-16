@@ -223,17 +223,15 @@ const TOPICS = Object.values(ASKED_MAKING).flat()
 const spellings = (page) => [`/a/g${page}`, `/a/g${page}?gclid=${GCLID}`, `/a/g${page.slice(0, -1)}`, `/a/g${page}index.html`,
   `/a/g${page.toUpperCase()}`, `/a/g/${page}`, `/a/g${page.replace(/a/, '%61')}`]
 
-test('the count\'s lists name the seven animal pages in all four of their languages, and the Ankylosaurus page in English and German, as the topic pages that ask', () => {
+test('the count\'s lists name the eight animal pages in all four of their languages as the topic pages that ask', () => {
   assert.deepEqual([...UNASKED].sort(), ['/animals/', '/de/tiere/', '/es/animales/', '/pt-br/animais/'])
   assert.deepEqual(Object.keys(ASKED_MAKING), ['megalodon', 'biggest_dinosaurs', 't_rex', 'spinosaurus', 'woolly_mammoth', 'brachiosaurus', 'triceratops', 'ankylosaurus'])
-  for (const [topic, pages] of Object.entries(ASKED_MAKING)) {
-    assert.equal(pages.length, topic === 'ankylosaurus' ? 2 : 4)
+  for (const pages of Object.values(ASKED_MAKING)) {
+    assert.equal(pages.length, 4)
     assert.match(pages[0], /^\/animals\/[a-z-]+\/$/)
     assert.match(pages[1], /^\/de\/tiere\/[a-z-]+\/$/)
-    if (pages.length === 4) {
-      assert.match(pages[2], /^\/es\/animales\/[a-z-]+\/$/)
-      assert.match(pages[3], /^\/pt-br\/animais\/[a-z-]+\/$/)
-    }
+    assert.match(pages[2], /^\/es\/animales\/[a-z-]+\/$/)
+    assert.match(pages[3], /^\/pt-br\/animais\/[a-z-]+\/$/)
   }
 })
 
@@ -254,7 +252,7 @@ test('the edge never asks on the own page of a wing in the making, by any spelli
 })
 
 test('the edge asks on every topic page of a wing in the making, by any spelling of its address, never with GPC', () => {
-  assert.equal(TOPICS.length, 30)
+  assert.equal(TOPICS.length, 32)
   for (const page of TOPICS) {
     assert.equal(askedMaking(page), true, page)
     for (const path of spellings(page)) {

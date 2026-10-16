@@ -111,6 +111,16 @@
    ],
    "sizes": "(min-width: 1280px) 690px, (min-width: 960px) 54vw, (min-width: 600px) calc(100vw - 64px), calc(100vw - 40px)",
    "person": "77.8% 84.8%"
+  },
+  "anky": {
+   "stem": "animals-ankylosaurus-side",
+   "widths": [
+    800,
+    1600,
+    2400
+   ],
+   "sizes": "(min-width: 1280px) 690px, (min-width: 960px) 54vw, (min-width: 600px) calc(100vw - 64px), calc(100vw - 40px)",
+   "person": "91.27% 23.15%"
   }
  },
  "meta": {
@@ -466,6 +476,12 @@
      "pic": "brachio",
      "alt": "Um braquiossauro de lado, com o pescoço longo erguido numa curva suave, as patas da frente mais longas que as de trás e a cauda sem tocar o chão, ao lado de uma pessoa cinza que poderia passar por baixo da barriga dele. Uma barra curta marca o alto da cabeça.",
      "line": "O braquiossauro, um herbívoro de pescoço longo do Jurássico Superior, tinha cerca de 22 a 25 m de comprimento e pesava mais ou menos de 30 a 45 toneladas, dois números reconstruídos a partir de um único esqueleto parcial. O nosso braquiossauro está ao lado de uma pessoa, com a cabeça na altura de cerca de sete pessoas, na pose que escolhemos."
+    },
+    {
+     "page": "ankylosaurus",
+     "pic": "anky",
+     "alt": "Um anquilossauro de lado: um corpo baixo e largo, coberto de fileiras de placas de osso, uma cabeça larga mantida baixa, quatro patas curtas e uma cauda reta que termina numa clava achatada. Ao lado, uma pessoa cinza da altura do alto do dorso dele acima do quadril.",
+     "line": "O anquilossauro, um herbívoro com uma clava na cauda, tinha cerca de 6 a 8 m de comprimento, e os ossos dele estão nas mesmas rochas que os do Triceratops. O nosso anquilossauro está ao lado de uma pessoa na mesma escala, com a clava, a couraça e o que foi encontrado."
     }
    ]
   },

@@ -1359,74 +1359,78 @@
           "en": "Ankylosaurus was about 6 to 8 m long, by a 2017 study. The animal with the only tail club found came to about 4.8 tonnes, worked out from its leg bones. Our Ankylosaurus is built at that animal's size and stands beside a person to one scale, with its club, its armour, what was found and what the bones say about T. rex.",
           "de": "Ein Ankylosaurus war nach einer Studie von 2017 etwa 6 bis 8 m lang. Das Tier mit der einzigen gefundenen Schwanzkeule kommt nach seinen Beinknochen auf etwa 4,8 t. Unser Ankylosaurus ist in der Größe dieses Tiers gebaut und steht im selben Maßstab neben einem Menschen, dazu seine Keule, sein Panzer, was gefunden wurde und was die Knochen über den T. rex sagen."
         },
-        "langs": ["en", "de"],
+        "langs": ["en", "de", "es", "pt-BR"],
         "count": "ankylosaurus",
         "about": {
           "@type": "Taxon",
           "name": "Ankylosaurus magniventris",
-          "alternateName": "Ankylosaurus",
+          "alternateName": [
+            "Ankylosaurus",
+            "Anquilosaurio",
+            "Anquilossauro"
+          ],
           "taxonRank": "species",
           "sameAs": "https://www.wikidata.org/wiki/Q22103730"
         },
         "never_say": [
           [
-            "(?s)^(?!.*(?:largest|biggest|größt|up\\sto|bis\\setwa)).*(?<!\\sto\\s)(?<!\\sbis\\s)(?<![\\d.,])8\\s?(?:m|metres?|meters?|metern?)\\b",
+            "(?s)^(?!.*(?:largest|biggest|größt|up\\sto|bis\\setwa|más\\sgrandes?|maior(?:es)?|hasta|até)).*(?<!\\sto\\s)(?<!\\sbis\\s)(?<!\\d\\sa\\s)(?<![\\d.,])8\\s?(?:m|metres?|meters?|metern?|metros?)\\b",
             "8 m only as the end of a range, for the biggest animals, or a number you may have read"
           ],
           [
-            "(?:(?:\\bour\\b|\\bours\\b|\\bunser\\w*)|amnh\\s5214)\\s(?:\\w+\\s){0,4}(?:is\\s|was\\s|ist\\s|war\\s)?(?:about\\s|etwa\\s|up\\sto\\s|bis\\s)?(?<![\\d.,])(?:8|10)\\s?(?:m|metres?|meters?|metern?)\\b",
+            "(?:(?:\\bour\\b|\\bours\\b|\\bunser\\w*|\\bnuestr\\w*|\\bnoss[oa]s?\\b)|amnh\\s5214)\\s(?:\\w+\\s){0,4}(?:is\\s|was\\s|ist\\s|war\\s|es\\s|era\\s|mide\\s|medía\\s|é\\s|tem\\s|tinha\\s)?(?:about\\s|etwa\\s|up\\sto\\s|bis\\s|unos\\s|unas\\s|cerca\\sde\\s|hasta\\s|até\\s)?(?<![\\d.,])(?:8|10)\\s?(?:m|metres?|meters?|metern?|metros?)\\b",
             "never 8 m or 10 m at our animal or at AMNH 5214: ours is 6.4 m, AMNH 5214 about 6 to 8 m"
           ],
           [
-            "(?s)^(?!.*(?:too\\slong|zu\\slang)).*(?<![\\d.,])10\\s?(?:m|metres?|meters?|metern?)\\b",
+            "(?s)^(?!.*(?:too\\slong|zu\\slang|demasiado\\slarg|longos?\\sdemais|compridos?\\sdemais)).*(?<![\\d.,])10\\s?(?:m|metres?|meters?|metern?|metros?)\\b",
             "10 m only with its own authors' doubt: probably too long"
           ],
           [
-            "(?s)^(?!.*(?:doubt|caution|zweifel|vorsicht)).*(?<![\\d.,])8\\s?(?:t|tonnes?|tons?|tonnen)\\b",
+            "(?s)^(?!.*(?:doubt|caution|zweifel|vorsicht|dud|cautela|duvid|dúvida)).*(?<![\\d.,])8\\s?(?:t|tonnes?|tons?|tonnen|toneladas?)\\b",
             "8 tonnes only as the biggest skull's rough scaling, with its authors' doubt"
           ],
           [
-            "(?<![\\d.,])9(?:[.,]99?)?\\s?(?:m|metres?|meters?|metern?)\\b",
+            "(?<![\\d.,])9(?:[.,]99?)?\\s?(?:m|metres?|meters?|metern?|metros?)\\b",
             "never 9 m or 9.99 m as a size"
           ],
           [
-            "(?:club|knob|keule)\\s(?:\\w+\\s){0,2}(?:about\\s|etwa\\s)?(?<![\\d.,])1[.,]2\\s?(?:m|metres?|meters?|metern?)\\b|(?<![\\d.,])1[.,]2.(?:m|metre|meter)\\w*.(?:club|knob|keule)",
+            "(?:club|knob|keule|maza|clava)\\s(?:\\w+\\s){0,2}(?:about\\s|etwa\\s|unos\\s|cerca\\sde\\s|de\\s)?(?<![\\d.,])1[.,]2\\s?(?:m|metres?|meters?|metern?|metros?)\\b|(?<![\\d.,])1[.,]2.(?:m|metre|meter)\\w*.(?:club|knob|keule|maza|clava)",
             "never a 1.2 m club: a what-if sum for a skull without a club"
           ],
           [
-            "(?s)^(?!.*(?:(?:\\bour\\b|\\bours\\b|\\bunser\\w*)|model|modell|straight|gerade)).*(?<![\\d.,])6[.,]4\\s?m\\b",
+            "(?s)^(?!.*(?:(?:\\bour\\b|\\bours\\b|\\bunser\\w*)|model|modell|straight|gerade|\\brecta\\b|\\breta\\b|\\bnuestr\\w*|\\bnoss[oa]s?\\b)).*(?<![\\d.,])6[.,]4\\s?m\\b",
             "6.4 m only as ours, our model's"
           ],
           [
-            "(?s)^(?!\\s*1[.,]70\\s?m\\s*$)(?!.*(?:(?:\\bour\\b|\\bours\\b|\\bunser\\w*)|model|modell|person|mensch|head\\sto\\sfoot|scheitel)).*(?<![\\d.,])1[.,]70?\\s?m\\b",
+            "(?s)^(?!\\s*1[.,]70\\s?m\\s*$)(?!.*(?:(?:\\bour\\b|\\bours\\b|\\bunser\\w*)|model|modell|person|mensch|head\\sto\\sfoot|scheitel|pessoa|cabeza\\sa\\slos\\spies|cabeça\\saos\\spés|\\bnuestr\\w*|\\bnoss[oa]s?\\b)).*(?<![\\d.,])1[.,]70?\\s?m\\b",
             "1.7 m only as ours, at the hips, or the person's height"
           ],
           [
-            "(?s)^(?!.*(?:(?:\\bour\\b|\\bours\\b|\\bunser\\w*)|model|modell)).*(?<![\\d.,])1[.,]5\\s?m\\b",
+            "(?s)^(?!.*(?:(?:\\bour\\b|\\bours\\b|\\bunser\\w*)|model|modell|\\bnuestr\\w*|\\bnoss[oa]s?\\b)).*(?<![\\d.,])1[.,]5\\s?m\\b",
             "1.5 m only as ours, over the shoulders"
           ],
           [
-            "(?:\\bour\\b|\\bours\\b|\\bunser\\w*)\\s(?:\\w+\\s){0,4}(?:weighs?|weighed|would\\sweigh|comes?\\sto|came\\sto|wiegt|wog|wöge|käme|kam\\sauf|kommt\\sauf)|(?:\\bour\\b|\\bours\\b|\\bunser\\w*)(?:\\W+\\w+){0,5}\\W+(?<![\\d.,])\\d+(?:[.,]\\d+)?(?:\\s(?:to|bis)\\s\\d+(?:[.,]\\d+)?)?\\s?(?:t|tonnes?|tons?|tonnen)\\b|(?<![\\d.,])3[.,][3-5]\\d?\\s?(?:t|tonnes?|tons?|tonnen)\\b|m³|cubic\\smet|kubikmeter|\\bvolumen?\\b",
+            "(?:\\bour\\b|\\bours\\b|\\bunser\\w*|\\bnuestr\\w*|\\bnoss[oa]s?\\b)\\s(?:\\w+\\s){0,4}(?:weighs?|weighed|would\\sweigh|comes?\\sto|came\\sto|wiegt|wog|wöge|käme|kam\\sauf|kommt\\sauf|pesa\\b|pesaba|pesaría|llega\\sa|llegaba\\sa|pesava|pesaria|chega\\sa|chegava\\sa)|(?:\\bour\\b|\\bours\\b|\\bunser\\w*|\\bnuestr\\w*|\\bnoss[oa]s?\\b)(?:\\W+\\w+){0,5}\\W+(?<![\\d.,])\\d+(?:[.,]\\d+)?(?:\\s(?:to|bis|a)\\s\\d+(?:[.,]\\d+)?)?\\s?(?:t|tonnes?|tons?|tonnen|toneladas?)\\b|(?<![\\d.,])3[.,][3-5]\\d?\\s?(?:t|tonnes?|tons?|tonnen|toneladas?)\\b|m³|cubic\\smet|kubikmeter|\\bvolumen?\\b",
             "never a weight beside our animal, and never its volume: the weight is the study's, about 4.8 tonnes"
           ],
           [
-            "(?s)^(?!.*(?:never|\\bnie\\b)).*(?:\\bweighed\\b|\\bgewogen\\b|\\bwog\\b)",
+            "(?s)^(?!.*(?:never|\\bnie\\b|nunca|jamás|jamais|ningún|nenhum)).*(?:\\bweighed\\b|\\bgewogen\\b|\\bwog\\b|\\bse\\spesó\\b|\\bfue\\spesad[oa]|\\bfoi\\spesad[oa]|\\bfueron\\spesad|\\bforam\\spesad)",
             "never weighed: the weight is worked out from its leg bones"
           ],
           [
-            "(?:(?:\\bour\\b|\\bours\\b|\\bunser\\w*)|ours)\\s(?:\\w+\\s){0,3}(?:is\\s|was\\s|ist\\s|war\\s)?(?:the\\s|der\\s|das\\s)?(?:largest|biggest|größte)(?!\\w*\\s(?:dinosaur|page|seite))",
+            "(?:(?:\\bour\\b|\\bours\\b|\\bunser\\w*|\\bnuestr\\w*|\\bnoss[oa]s?\\b)|ours)\\s(?:\\w+\\s){0,3}(?:is\\s|was\\s|ist\\s|war\\s|es\\s|era\\s|é\\s)?(?:the\\s|der\\s|das\\s|el\\s|o\\s)?(?:largest|biggest|größte|más\\sgrande|mayor|maior)(?!\\w*\\s(?:dinosaur|page|seite|dinossaur|página))",
             "ours is never the largest Ankylosaurus: it is the smallest of the three"
           ],
           [
-            "(?s)^(?!.*(?:\\bno\\b|\\bnot\\b|\\bnone\\b|\\bkein\\w*|\\bnicht\\b)).*(?:complete\\sskeleton|vollständige[sn]?\\sskelett)",
+            "(?s)^(?!.*(?:\\bno\\b|\\bnot\\b|\\bnone\\b|\\bkein\\w*|\\bnicht\\b|ningún|ninguno|nenhum|\\bnão\\b|nunca)).*(?:complete\\sskeleton|vollständige[sn]?\\sskelett|esqueleto\\scompleto|esqueleto\\sentero|esqueleto\\sinteiro)",
             "never a complete skeleton: none has been found"
           ],
           [
-            "three\\spartial\\sskeletons|drei\\steilskelette",
+            "three\\spartial\\sskeletons|drei\\steilskelette|tres\\sesqueletos\\sparciales|três\\sesqueletos\\sparciais",
             "two partial skeletons and a skull: the biggest find has no body"
           ],
           [
-            "(?:armou?r|plates?)\\s(?:was|were)\\s(?:found|preserved)\\s(?:\\w+\\s){0,2}(?:in\\splace|as\\sit\\slay)|found\\swith\\sits\\sarmou?r\\sin\\splace|(?:panzer|platten)\\s(?:\\w+\\s){0,3}(?:an\\s(?:seiner|ihrer)\\sstelle|in\\s(?:seiner|ihrer)\\slage)\\sgefunden",
+            "(?:armou?r|plates?)\\s(?:was|were)\\s(?:found|preserved)\\s(?:\\w+\\s){0,2}(?:in\\splace|as\\sit\\slay)|found\\swith\\sits\\sarmou?r\\sin\\splace|(?:panzer|platten)\\s(?:\\w+\\s){0,3}(?:an\\s(?:seiner|ihrer)\\sstelle|in\\s(?:seiner|ihrer)\\slage)\\sgefunden|(?:encontr|hall)\\w*\\s(?:\\w+\\s){0,3}con\\ssu\\scoraza\\sen\\ssu\\s(?:sitio|lugar)|encontrad\\w*\\s(?:\\w+\\s){0,3}com\\sa\\scouraça\\sno\\slugar",
             "the armour was never found in place: where each plate sat is a careful guess"
           ],
           [
@@ -1434,95 +1438,95 @@
             "AMNH 5214 was not one of the two in the count"
           ],
           [
-            "(?s)^(?!.*(?:old\\spictures|another\\s(?:\\w+\\s){0,2}family|alte[rn]?\\sbilder|anderen\\sfamilie)).*(?:shoulder\\sspikes?|schulterstachel)",
+            "(?s)^(?!.*(?:old\\spictures|another\\s(?:\\w+\\s){0,2}family|alte[rn]?\\sbilder|anderen\\sfamilie|imágenes\\santiguas|imagens\\santigas|otra\\sfamilia|outra\\sfamília)).*(?:shoulder\\sspikes?|schulterstachel|púas\\s(?:de|en)\\slos\\shombros|espinas\\s(?:de|en)\\slos\\shombros|espinhos\\s(?:dos|nos)\\sombros)",
             "shoulder spikes only as what old pictures borrowed from another family"
           ],
           [
-            "(?s)^(?!.*(?:no\\sspikes|ohne\\sstacheln)).*(?:spiked\\sball|spiky\\sball|ball\\swith\\sspikes|stachelkugel|stachelball|morgenstern)",
+            "(?s)^(?!.*(?:no\\sspikes|ohne\\sstacheln|sin\\spúas|sem\\sespinhos)).*(?:spiked\\sball|spiky\\sball|ball\\swith\\sspikes|stachelkugel|stachelball|morgenstern|bola\\scon\\spúas|bola\\sde\\spinchos|bola\\scom\\sespinhos|bola\\sde\\sespinhos)",
             "never a spiked ball on the tail: the knob is a low, flat disc"
           ],
           [
-            "(?s)^(?!.*(?:not\\sa\\ssolid|keine\\sfeste)).*(?:solid\\sshell|feste\\sschale|geschlossene[rn]?\\spanzer)",
+            "(?s)^(?!.*(?:not\\sa\\ssolid|keine\\sfeste|no\\sun\\scaparazón|não\\suma\\scarapaça)).*(?:solid\\sshell|feste\\sschale|geschlossene[rn]?\\spanzer|caparazón\\s(?:de\\suna\\s(?:sola\\s)?pieza|rígido|macizo|cerrado)|carapaça\\s(?:inteiriça|rígida|maciça|fechada))",
             "never a solid shell: separate plates with skin between"
           ],
           [
-            "(?s)^(?!.*(?:an\\simage|ein\\sbild)).*(?:living\\stank|lebende[rn]?\\spanzer)",
+            "(?s)^(?!.*(?:an\\simage|ein\\sbild|una\\simagen|uma\\simagem)).*(?:living\\stank|lebende[rn]?\\spanzer|tanque\\sviviente|tanque\\svivo)",
             "a living tank only as an image, explained"
           ],
           [
-            "(?s)^(?!.*(?:just\\sunder|knapp\\s(?:unter|darunter))).*(?:bone.breaking|breaks?\\sbones|broke\\sbones|smash\\w*\\sbones|shatter\\w*\\sbones|(?:could|can)\\s(?:\\w+\\s)?(?:break|smash|shatter)\\s(?:\\w+\\s)?bones?|knochenbrechend|knochen\\s(?:brach|zertrümmer\\w*|zerschmetter\\w*)|(?:brach|zertrümmer\\w*|zerschmetter\\w*)\\s(?:\\w+\\s){0,2}knochen|(?:konnte|kann|könnte)\\s(?:\\w+\\s){0,2}knochen\\s(?:brechen|zertrümmern))",
+            "(?s)^(?!.*(?:just\\sunder|knapp\\s(?:unter|darunter)|justo\\spor\\sdebajo|logo\\sabaixo)).*(?:bone.breaking|breaks?\\sbones|broke\\sbones|smash\\w*\\sbones|shatter\\w*\\sbones|(?:could|can)\\s(?:\\w+\\s)?(?:break|smash|shatter)\\s(?:\\w+\\s)?bones?|knochenbrechend|knochen\\s(?:brach|zertrümmer\\w*|zerschmetter\\w*)|(?:brach|zertrümmer\\w*|zerschmetter\\w*)\\s(?:\\w+\\s){0,2}knochen|(?:konnte|kann|könnte)\\s(?:\\w+\\s){0,2}knochen\\s(?:brechen|zertrümmern)|romp\\w*\\s(?:\\w+\\s){0,2}huesos?|rompehuesos|quebr\\w*\\s(?:\\w+\\s){0,2}ossos?)",
             "never that its club could break bones: its knob sits just under the size that could in a model of relatives"
           ],
           [
-            "tail\\s(?:\\w+\\s){0,2}dragg\\w*|dragg\\w*\\s(?:\\w+\\s){0,2}tail|schwanz\\s(?:\\w+\\s){0,3}(?:schleifte|über\\sden\\sboden)|schleifte\\s(?:\\w+\\s){0,2}schwanz",
+            "tail\\s(?:\\w+\\s){0,2}dragg\\w*|dragg\\w*\\s(?:\\w+\\s){0,2}tail|schwanz\\s(?:\\w+\\s){0,3}(?:schleifte|über\\sden\\sboden)|schleifte\\s(?:\\w+\\s){0,2}schwanz|cola\\s(?:\\w+\\s){0,2}arrastr\\w*|arrastr\\w*\\s(?:\\w+\\s){0,2}cola|cauda\\s(?:\\w+\\s){0,2}arrast\\w*|arrast\\w*\\s(?:\\w+\\s){0,2}cauda",
             "the tail never dragged: it was held straight out"
           ],
           [
-            "nostrils?\\s(?:\\w+\\s){0,3}(?:at|on)\\sthe\\s(?:front|tip)|nasenlöcher\\s(?:\\w+\\s){0,3}vorn",
+            "nostrils?\\s(?:\\w+\\s){0,3}(?:at|on)\\sthe\\s(?:front|tip)|nasenlöcher\\s(?:\\w+\\s){0,3}vorn|fosas\\snasales\\s(?:\\w+\\s){0,3}(?:en|a)\\s(?:la\\spunta|el\\sfrente|delante)|narinas\\s(?:\\w+\\s){0,3}(?:na|à)\\s(?:frente|ponta)",
             "never nostrils at the front: on the sides of the snout, facing down"
           ],
           [
-            "grinding|mahlzähne|mahlende|chewed\\slike|kaute\\swie|wie\\seine\\skuh",
+            "grinding|mahlzähne|mahlende|chewed\\slike|kaute\\swie|wie\\seine\\skuh|trituradores|molares|masticaba\\scomo|mastigava\\scomo|como\\suna\\svaca|como\\suma\\svaca|dentes\\sde\\smoer",
             "never grinding teeth: small leaf-shaped teeth"
           ],
           [
-            "(?s)^(?!.*(?:warm.blooded|warmblüt)).*(?<![\\d.,])60\\s?(?:kg|kilo)",
+            "(?s)^(?!.*(?:warm.blooded|warmblüt|sangre\\scaliente|sangue\\squente)).*(?<![\\d.,])60\\s?(?:kg|kilo)",
             "60 kg a day only if it was warm-blooded"
           ],
           [
-            "(?:four|five|vier|fünf)\\s(?:fingers|finger)",
+            "(?:four|five|vier|fünf)\\s(?:fingers|finger)|(?:cuatro|cinco|quatro)\\sdedos\\sde\\sla\\smano|(?:cuatro|cinco|quatro)\\sdedos\\sna\\smão",
             "no hand of Ankylosaurus is known: no count of fingers"
           ],
           [
-            "in\\sherds|in\\sherden|lived\\salone|lebte\\sallein|einzelgänger",
+            "in\\sherds|in\\sherden|lived\\salone|lebte\\sallein|einzelgänger|en\\smanadas|en\\srebaños|vivía\\ssolo|em\\smanadas|em\\sbandos|vivia\\ssozinho",
             "neither herds nor living alone as fact"
           ],
           [
-            "(?<!no\\s)(?<!not\\s)colou?r\\s(?:was|is)\\sknown|(?<!keine\\s)farbe\\s(?:war|ist)\\sbekannt|(?:its|seine)\\s(?:colou?r|farbe)\\s(?:was|war)\\s",
+            "(?<!no\\s)(?<!not\\s)colou?r\\s(?:was|is)\\sknown|(?<!keine\\s)farbe\\s(?:war|ist)\\sbekannt|(?:its|seine)\\s(?:colou?r|farbe)\\s(?:was|war)\\s|(?<!no\\s)se\\sconoce\\ssu\\scolor|(?<!não\\s)se\\sconhece\\sa\\scor|su\\scolor\\sera\\s|a\\scor\\sdele\\sera\\s",
             "no colour is known"
           ],
           [
-            "\\bmales?\\b|\\bfemales?\\b|männchen|weibchen|männlich|weiblich",
+            "\\bmales?\\b|\\bfemales?\\b|männchen|weibchen|männlich|weiblich|\\bmachos?\\b|\\bhembras?\\b|\\bfêmeas?\\b",
             "no Ankylosaurus can be sexed: never male or female"
           ],
           [
-            "(?s)^(?!.*(?:possibly|vielleicht|calls|nennt)).*(?:(?:largest|biggest)\\s(?:known\\s)?armou?red\\sdinosaur|(?:largest|biggest)\\sankylosaur\\w*\\s(?:of\\sall|ever)|(?:largest|biggest)\\sof\\sall\\sankylosaurs|größte[rn]?\\sgepanzerte[rn]?\\sdinosaurier|größte[rn]?\\sankylosaurier\\süberhaupt)",
+            "(?s)^(?!.*(?:possibly|vielleicht|calls|nennt|quizá|llama|talvez|chama)).*(?:(?:largest|biggest)\\s(?:known\\s)?armou?red\\sdinosaur|(?:largest|biggest)\\sankylosaur\\w*\\s(?:of\\sall|ever)|(?:largest|biggest)\\sof\\sall\\sankylosaurs|größte[rn]?\\sgepanzerte[rn]?\\sdinosaurier|größte[rn]?\\sankylosaurier\\süberhaupt|dinosaurio\\sacorazado\\smás\\sgrande|mayor\\sdinosaurio\\sacorazado|maior\\sdinossauro\\s(?:com\\scouraça|encouraçado)|anquilosaurio\\smás\\sgrande\\sde\\stodos|maior\\sde\\stodos\\sos\\sanquilossauros)",
             "never the largest armoured dinosaur as fact: the biggest known ankylosaurid, possibly the biggest ankylosaur of all"
           ],
           [
-            "(?:fought|fights|battled|kämpft\\w*|bekämpft\\w*)\\s(?:\\w+\\s){0,3}(?:t\\.\\srex|tyrannosaur\\w*|den\\st\\.\\srex)|(?:t\\.\\srex|tyrannosaur\\w*)\\s(?:\\w+\\s){0,3}(?:fought|fights|battled|kämpft\\w*)|(?:fight|battle|kampf|duell)\\s(?:between|zwischen)\\s(?:the\\s|dem\\s|einem\\s)?(?:t\\.\\srex|ankylosaurus|tyrannosaur\\w*)|made\\sto\\sfight|zum\\skampf\\sgegen\\s(?:den\\s)?t\\.\\srex",
+            "(?:fought|fights|battled|kämpft\\w*|bekämpft\\w*)\\s(?:\\w+\\s){0,3}(?:t\\.\\srex|tyrannosaur\\w*|den\\st\\.\\srex)|(?:t\\.\\srex|tyrannosaur\\w*)\\s(?:\\w+\\s){0,3}(?:fought|fights|battled|kämpft\\w*)|(?:fight|battle|kampf|duell)\\s(?:between|zwischen)\\s(?:the\\s|dem\\s|einem\\s)?(?:t\\.\\srex|ankylosaurus|tyrannosaur\\w*)|made\\sto\\sfight|zum\\skampf\\sgegen\\s(?:den\\s)?t\\.\\srex|(?:pelea|lucha|combate|luta|briga|duelo)\\sentre\\s(?:el\\s|un\\s|o\\s|um\\s)?(?:t\\.\\srex|ankylosaurus|anquilossauro|tiranosaurio\\w*|tiranossauro\\w*)|(?:luchó|peleó|lutou|brigou|luchaban|lutavam)\\s(?:\\w+\\s){0,3}(?:el\\s|o\\s)?t\\.\\srex",
             "Ankylosaurus and T. rex never as a fight: no fossil shows them meeting"
           ],
           [
-            "(?s)^(?!.*(?:no\\sknown|keinem\\sbekannten)).*(?:killed\\s(?:a\\s|the\\s)?(?:t\\.\\srex|tyrannosaur\\w*)|(?:tötete|erschlug)\\s(?:\\w+\\s){0,2}(?:t\\.\\srex|tyrannosaur\\w*)|(?:t\\.\\srex|tyrannosaur\\w*)\\s(?:\\w+\\s){0,2}(?:tötete|erschlug))",
+            "(?s)^(?!.*(?:no\\sknown|keinem\\sbekannten|ningún\\shueso\\sconocido|nenhum\\sosso\\sconhecido)).*(?:killed\\s(?:a\\s|the\\s)?(?:t\\.\\srex|tyrannosaur\\w*)|(?:tötete|erschlug)\\s(?:\\w+\\s){0,2}(?:t\\.\\srex|tyrannosaur\\w*)|(?:t\\.\\srex|tyrannosaur\\w*)\\s(?:\\w+\\s){0,2}(?:tötete|erschlug)|mat[óa]\\s(?:a\\s)?(?:un\\s|el\\s)?(?:t\\.\\srex|tiranosaurio\\w*)|mat(?:ou|ava)\\s(?:um\\s|o\\s)?(?:t\\.\\srex|tiranossauro\\w*))",
             "never that it killed T. rex: no known T. rex bone carries a club wound"
           ],
           [
-            "not\\s(?:at|against)\\s(?:the\\s)?(?:t\\.\\srex|tyrannosaur\\w*)|nicht\\s(?:gegen|auf)\\s(?:den\\s)?(?:t\\.\\srex|tyrannosaur\\w*)|only\\s(?:at|against)\\s(?:\\w+\\s)?(?:rivals|its\\sown\\skind)|nur\\s(?:gegen|auf)\\s(?:\\w+\\s)?(?:rivalen|artgenossen)|only\\sfor\\sdefen[cs]e|nur\\szur\\s(?:abwehr|verteidigung)",
+            "not\\s(?:at|against)\\s(?:the\\s)?(?:t\\.\\srex|tyrannosaur\\w*)|nicht\\s(?:gegen|auf)\\s(?:den\\s)?(?:t\\.\\srex|tyrannosaur\\w*)|only\\s(?:at|against)\\s(?:\\w+\\s)?(?:rivals|its\\sown\\skind)|nur\\s(?:gegen|auf)\\s(?:\\w+\\s)?(?:rivalen|artgenossen)|only\\sfor\\sdefen[cs]e|nur\\szur\\s(?:abwehr|verteidigung)|no\\scontra\\sel\\st\\.\\srex|não\\scontra\\so\\st\\.\\srex|solo\\scontra\\s(?:\\w+\\s)?(?:rivales|su\\spropia\\sespecie)|só\\scontra\\s(?:\\w+\\s)?(?:rivais|a\\sprópria\\sespécie)|solo\\spara\\s(?:la\\s)?defensa|só\\spara\\s(?:a\\s)?defesa|apenas\\spara\\s(?:a\\s)?defesa",
             "the club's use only as the evidence has it: mostly within its kind, defence possible"
           ],
           [
-            "(?:lived|lebte\\w*)\\s(?:\\w+\\s){0,3}(?:beside|alongside|with|together\\swith|zusammen\\smit|neben)\\s(?:\\w+\\s){0,2}sue\\b|(?:\\bour\\b|\\bours\\b|\\bunser\\w*)\\s(?:\\w+\\s){0,3}(?:lived|lebte\\w*)\\s(?:\\w+\\s){0,3}(?:beside|alongside|with|neben|mit)\\s",
+            "(?:lived|lebte\\w*)\\s(?:\\w+\\s){0,3}(?:beside|alongside|with|together\\swith|zusammen\\smit|neben)\\s(?:\\w+\\s){0,2}sue\\b|(?:\\bour\\b|\\bours\\b|\\bunser\\w*)\\s(?:\\w+\\s){0,3}(?:lived|lebte\\w*)\\s(?:\\w+\\s){0,3}(?:beside|alongside|with|neben|mit)\\s|viv\\w+\\s(?:\\w+\\s){0,3}(?:junto\\sa|con|al\\slado\\sde|ao\\slado\\sde|com)\\s(?:\\w+\\s){0,2}sue\\b|(?:\\bnuestr\\w*|\\bnoss[oa]s?\\b)\\s(?:\\w+\\s){0,3}viv\\w+\\s(?:\\w+\\s){0,3}(?:junto\\sa|con|al\\slado\\sde|ao\\slado\\sde|com)\\s",
             "our Ankylosaurus never lived beside SUE or our Triceratops"
           ],
           [
-            "(?:lived|lebte\\w*|existed)\\s(?:\\w+\\s){0,3}(?:beside|alongside|with|together\\swith|zusammen\\smit|neben|gleichzeitig\\smit|at\\sthe\\ssame\\stime\\sas|zur\\sselben\\szeit\\swie)\\s(?:\\w+\\s){0,2}stegosaur\\w*|stegosaurus\\s(?:and|und)\\s(?:\\w+\\s)?ankylosaurus\\s(?:\\w+\\s){0,2}(?:lived\\s(?:together|side\\sby\\sside)|met\\b|lebten\\szusammen|begegneten)",
+            "(?:lived|lebte\\w*|existed)\\s(?:\\w+\\s){0,3}(?:beside|alongside|with|together\\swith|zusammen\\smit|neben|gleichzeitig\\smit|at\\sthe\\ssame\\stime\\sas|zur\\sselben\\szeit\\swie)\\s(?:\\w+\\s){0,2}stegosaur\\w*|stegosaurus\\s(?:and|und)\\s(?:\\w+\\s)?ankylosaurus\\s(?:\\w+\\s){0,2}(?:lived\\s(?:together|side\\sby\\sside)|met\\b|lebten\\szusammen|begegneten)|viv\\w+\\s(?:\\w+\\s){0,3}(?:junto\\sa|con|al\\slado\\sde|ao\\slado\\sde|com|junto\\scom|en\\sla\\smisma\\sépoca\\sque|na\\smesma\\sépoca\\sque)\\s(?:\\w+\\s){0,2}(?:stegosaur\\w*|estegos\\w*)|(?:stegosaurus|estegossauro)\\s(?:y|e)\\s(?:el\\s|o\\s)?(?:ankylosaurus|anquilossauro)\\s(?:\\w+\\s){0,2}(?:vivieron\\sjuntos|viveram\\sjuntos|conviveron|conviveram|se\\sencontraron|se\\sencontraram)",
             "Stegosaurus and Ankylosaurus never lived together: about 80 million years lie between them"
           ],
           [
-            "killed\\sby\\s(?:the\\s|an\\s)?(?:asteroid|impact)|vom\\s(?:asteroiden|einschlag)\\sgetötet|the\\slast\\sday|der\\sletzte\\stag|letzten\\stag|last\\sfossils?|letzten\\sfossilien|jüngsten\\sfossilien",
+            "killed\\sby\\s(?:the\\s|an\\s)?(?:asteroid|impact)|vom\\s(?:asteroiden|einschlag)\\sgetötet|the\\slast\\sday|der\\sletzte\\stag|letzten\\stag|last\\sfossils?|letzten\\sfossilien|jüngsten\\sfossilien|mató\\sel\\s(?:asteroide|impacto)|muri\\w+\\spor\\sel\\s(?:asteroide|impacto)|mort[oa]s?\\spelo\\s(?:asteroide|impacto)|matou\\so\\sanquilossauro|el\\súltimo\\sdía|o\\súltimo\\sdia|últimos\\sfósiles|últimos\\sfósseis|fósiles\\smás\\srecientes|fósseis\\smais\\srecentes",
             "never killed by the asteroid as a witnessed fact, no last day, no last fossils dated: it lived until near the end"
           ],
           [
-            "(?<![\\d.,])65\\s(?:million|millionen)|(?<!about\\s)(?<!etwa\\s)(?<!\\sto\\s)(?<!\\sbis\\s)(?<!\\sand\\s)(?<!\\sund\\s)(?<![\\d.,])\\d+(?:[.,]\\d+)?\\s(?:million|millionen)",
+            "(?<![\\d.,])65\\s(?:million|millionen|millones|milhões)|(?<!about\\s)(?<!etwa\\s)(?<!\\sto\\s)(?<!\\sbis\\s)(?<!\\sand\\s)(?<!\\sund\\s)(?<!unos\\s)(?<!unas\\s)(?<!cerca\\sde\\s)(?<!\\d\\sa\\s)(?<!\\d\\sy\\s)(?<!\\d\\se\\s)(?<![\\d.,])\\d+(?:[.,]\\d+)?\\s(?:million|millionen|millones|milhões)",
             "never 65 million years, and a number of years only with about"
           ],
           [
-            "(?s)^(?!.*(?:bigger\\sor\\ssmaller|größer\\soder\\skleiner)).*(?:(?<![\\d.,])(?:7[.,]5|9[.,]1)\\s?mm\\b|smaller\\steeth|kleinere\\szähne)",
+            "(?s)^(?!.*(?:bigger\\sor\\ssmaller|größer\\soder\\skleiner|más\\sgrandes\\so\\smás\\spequeños|maiores\\sou\\smenores)).*(?:(?<![\\d.,])(?:7[.,]5|9[.,]1)\\s?mm\\b|smaller\\steeth|kleinere\\szähne|dientes\\smás\\spequeños|dentes\\smenores)",
             "the teeth of 7.5 and 9.1 mm stand only in the guess's answer"
           ],
           [
-            "jurassic\\s(?:park|world)|\\bfilms?\\b|schleich|dinosaur\\strain|\\btoys?\\b|spielzeug",
+            "jurassic\\s(?:park|world)|\\bfilms?\\b|schleich|dinosaur\\strain|\\btoys?\\b|spielzeug|\\bpelículas?\\b|\\bfilmes?\\b|\\bjuguetes?\\b|\\bbrinquedos?\\b",
             "no film or toy: nothing of them was checked"
           ],
           [

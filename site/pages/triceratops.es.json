@@ -111,6 +111,16 @@
    ],
    "sizes": "(min-width: 1280px) 690px, (min-width: 960px) 54vw, (min-width: 600px) calc(100vw - 64px), calc(100vw - 40px)",
    "person": "77.8% 84.8%"
+  },
+  "anky": {
+   "stem": "animals-ankylosaurus-side",
+   "widths": [
+    800,
+    1600,
+    2400
+   ],
+   "sizes": "(min-width: 1280px) 690px, (min-width: 960px) 54vw, (min-width: 600px) calc(100vw - 64px), calc(100vw - 40px)",
+   "person": "91.27% 23.15%"
   }
  },
  "meta": {
@@ -466,6 +476,12 @@
      "pic": "brachio",
      "alt": "Un Brachiosaurus de lado, con el cuello largo levantado en una curva suave, las patas delanteras más largas que las traseras y la cola sin tocar el suelo, junto a una persona gris que podría pasar por debajo de su vientre. Una barra corta marca lo alto de la cabeza.",
      "line": "El Brachiosaurus, un herbívoro de cuello largo del Jurásico Superior, medía unos 22 a 25 m de largo y pesaba más o menos de 30 a 45 toneladas, dos cifras reconstruidas a partir de un solo esqueleto parcial. Nuestro Brachiosaurus está junto a una persona, con la cabeza a la altura de unas siete personas, en la postura que elegimos."
+    },
+    {
+     "page": "ankylosaurus",
+     "pic": "anky",
+     "alt": "Un Ankylosaurus de lado: un cuerpo bajo y ancho, cubierto de filas de placas de hueso, una cabeza ancha y baja, cuatro patas cortas y una cola recta que termina en una maza plana. A su lado, una persona gris tan alta como lo alto del lomo sobre la cadera.",
+     "line": "El Ankylosaurus, un herbívoro con una maza en la cola, medía unos 6 a 8 m de largo, y sus huesos están en las mismas rocas que los del Triceratops. Nuestro Ankylosaurus está junto a una persona a la misma escala, con su maza, su coraza y lo que se encontró."
     }
    ]
   },
