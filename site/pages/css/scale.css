@@ -76,16 +76,19 @@
   .sc-table tr{display:block;padding:0 16px;margin-inline:-6px;background:var(--ledger)}
   .sc-table tr.sc-our{box-shadow:inset 3px 0 0 var(--mark)}
   .sc-table tbody th{display:block;padding:13px 0 10px;font-size:1.1875rem;line-height:1.28;border-bottom:1px solid var(--ledger-rule)}
-  /* the column's name, then its words: beside it where they are short ("Höhe  nicht gemessen", an empty cell's note),
-     over them where they are long, so a short value costs no line of its own */
-  .sc-table td{display:flex;flex-wrap:wrap;align-items:baseline;column-gap:.6em;row-gap:1px;padding:7px 0 8px}
+  /* the column's name over its words in every filled cell, so a figure starts at the card's left edge in every card;
+     read once by a screen reader, which hears the header the cell already has */
+  .sc-table td{display:block;padding:7px 0 8px}
   .sc-table td+td{border-top:1px solid var(--hair)}
-  /* read once by a screen reader, which hears the header the cell already has */
-  .sc-table td::before{content:attr(data-k);content:attr(data-k) / "";font-size:.8125rem;line-height:1.35;letter-spacing:.02em;color:var(--ink-soft)}
+  .sc-table td::before{content:attr(data-k);content:attr(data-k) / "";display:block;margin-bottom:1px;font-size:.8125rem;line-height:1.35;letter-spacing:.02em;color:var(--ink-soft)}
+  /* an empty cell is one line: its name, then the dim note that no figure is on record */
+  .sc-table td:empty{display:flex;flex-wrap:wrap;column-gap:.6em;align-items:baseline}
+  .sc-table td:empty::before{display:inline;margin:0}
   .sc-table td:empty::after{font-size:.875rem}
-  /* how sure: the card's foot, a shade under the card, so it is found in the same place on every card */
+  /* how sure: the card's foot, a shade under the card, so it is found in the same place on every card; its words run
+     on after its name */
   .sc-table td.sc-sure{margin-inline:-16px;padding:10px 16px 11px;border-top:0;background:color-mix(in srgb,var(--ledger) 55%,var(--ground))}
-  .sc-table td.sc-sure::before{color:var(--ink-soft)}
+  .sc-table td.sc-sure::before{display:inline;margin-right:.6em;color:var(--ink-soft)}
   .sc-table td.sc-sure .sc-sure__w{font-size:1rem}
 }
 @media (max-width:359px){

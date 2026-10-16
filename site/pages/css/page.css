@@ -27,11 +27,17 @@
 .sp-answer__lead{display:block;margin-bottom:10px;font-size:1.3125rem;line-height:1.3;letter-spacing:-.003em;color:var(--ink);text-wrap:pretty}
 .sp-answer__lead--long{margin-bottom:8px;font-size:inherit;line-height:inherit;letter-spacing:0}
 /* A short first screen (a small phone) keeps the top of its first picture in view: the answer block sets closer. */
+/* On a phone the first picture's labels sit close to the words above them and to the frame. */
+@media (max-width:599px){
+  .sp-top>.sc-fig--first{margin-top:-6px}
+  .sc-fig--first>.sc-marks--over{margin-bottom:0}
+  .sc-fig--first>.sc-marks--under{margin-top:0}
+}
 @media (max-width:599px) and (max-height:700px){
   .sp-top.sp-top{gap:8px}
   .sp-top h1{font-size:1.75rem}
-  .sp-top .sp-answer{margin-top:4px}
-  .sp-answer__lead{margin-bottom:5px;font-size:1.0625rem;line-height:1.32}
+  .sp-top .sp-answer{margin-top:4px;line-height:1.45}
+  .sp-answer__lead{margin-bottom:5px;font-size:1.0625rem;line-height:1.26}
   .sp-answer__lead--long{font-size:inherit;line-height:inherit}
 }
 /* German display text never hyphenates (the site's rule); the answer is display text. */
