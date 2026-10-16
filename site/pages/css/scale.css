@@ -87,6 +87,7 @@
   /* how sure: the card's foot, a shade under the card, so it is found in the same place on every card */
   .sc-table td.sc-sure{margin-inline:-16px;padding:11px 16px 13px;border-top:0;background:color-mix(in srgb,var(--ledger) 55%,var(--ground))}
   .sc-table td.sc-sure::before{color:var(--ink-soft)}
+  .sc-table td.sc-sure .sc-sure__w{font-size:1rem}
 }
 @media (max-width:359px){
   .sc-table tr{margin-inline:-8px;padding-inline:12px}

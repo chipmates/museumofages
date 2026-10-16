@@ -288,6 +288,9 @@ html.sheet .bead--unknown{--fill:var(--sure-u)}
   :lang(de) .lead,:lang(de) .hero__lede,:lang(de) .glance dd,:lang(de) .layer--1 p,:lang(de) .sure__say,:lang(de) .honesty,:lang(de) .made,:lang(de) .label__quote p,:lang(de) .foot__by{hyphens:manual;-webkit-hyphens:manual}
 }
 .nh{hyphens:none;-webkit-hyphens:none}
+/* A long name's one break point (pages/build.py, Names.mark): Chromium's balanced and pretty wrapping break at that soft
+   hyphen without drawing it, so a paragraph that holds one wraps line by line (measured 320 to 440 px, both engines). */
+:is(p,dd,li,.label__what,.label__src):has(.brk){text-wrap:wrap}
 .nw{white-space:nowrap}
 
 @media (min-width:600px){

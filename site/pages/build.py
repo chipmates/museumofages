@@ -268,7 +268,9 @@ class Names:
                 # two halves never hyphenated, joined by a soft hyphen: the word breaks there or nowhere; display text
                 # (a heading, the answer, a label) never hyphenates, so there the word is only kept whole
                 head, tail = entry["split"]
-                out.append(f'<span class="nh">{esc(head)}</span>&shy;<span class="nh">{esc(tail + ending)}</span>' if split
+                # (the pair stands in one .brk span: its paragraph wraps line by line, base.css, since Chromium's balanced
+                # and pretty wrapping break there without drawing the hyphen)
+                out.append(f'<span class="brk"><span class="nh">{esc(head)}</span>&shy;<span class="nh">{esc(tail + ending)}</span></span>' if split
                            else f'<span class="nh">{esc(m.group(1) + ending)}</span>')
                 continue
             kind = "nw nh" if entry.get("person") or entry.get("whole") else "nh"
