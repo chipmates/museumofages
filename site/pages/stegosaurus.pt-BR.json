@@ -160,7 +160,7 @@
   "scale": {
    "pic": "side",
    "tag": "tag_made",
-   "what": "O nosso estegossauro, feito a partir de Sophie, ao lado de uma pessoa de 1,70 m, na mesma escala: 5,6 m do bico à ponta da cauda, pouco mais de três pessoas deitadas uma atrás da outra, com a cabeça mais ou menos na altura do ombro da pessoa.",
+   "what": "O nosso estegossauro, feito a partir de Sophie, ao lado de uma pessoa de 1,70 m, na mesma escala: 5,6 m do bico à ponta da cauda, pouco mais de três pessoas deitadas uma atrás da outra, com a cabeça dele mais ou menos na altura do ombro da pessoa.",
    "alt": "Um estegossauro de lado: uma cabeça pequena e baixa, duas fileiras de placas altas ao longo do dorso arqueado, dois dos quatro espinhos da cauda e as patas da frente mais curtas que as de trás. Ao lado, uma pessoa cinza com a cabeça abaixo do alto do dorso.",
    "note": "A nossa própria reconstrução, construída em código a partir de medidas publicadas e renderizada com o nosso próprio motor gráfico. Não são fotografias.",
    "marks": [
@@ -291,9 +291,9 @@
    "nav": "As placas do estegossauro",
    "h": "As placas do estegossauro",
    "paras": [
-    "Sophie tem 18 placas, e um vão acima da base da cauda indica que ali havia mais uma, a de número 19. A montagem de Londres mostra 19, e uma delas é uma réplica. As placas ficavam em pé em duas fileiras, alternadas à esquerda e à direita, presas na pele e sem ligação com o esqueleto.",
-    "A maior tem 78,5 cm de osso na parte mais longa, e um pedaço é de gesso. Muito provavelmente, uma camada córnea lisa cobria as placas, mas a única marca dessa camada vem de uma placa de um parente próximo, o Hesperosaurus.",
-    "Para que as placas serviam, ninguém sabe ao certo. A maior parte dos estudos recentes prefere a exibição, um sinal pelo qual os estegossauros podiam reconhecer os da mesma espécie. Perder calor, uma ideia de 1976, foi no máximo um uso secundário. A defesa é a ideia mais fraca: as placas eram finas, e um estudo do tecido delas não achou nada que as deixasse se mover."
+    "Sophie tem 18 placas, e um vão acima da base da cauda sugere que ali havia mais uma, a de número 19. A montagem de Londres mostra 19, e uma delas é uma réplica. As placas ficavam em pé em duas fileiras, alternadas à esquerda e à direita, presas na pele e sem ligação com o esqueleto.",
+    "A maior tem 78,5 cm de osso na parte mais longa, e um pedaço é de gesso. Muito provavelmente, uma camada córnea lisa cobria as placas, mas a única impressão dessa camada vem de uma placa de um parente próximo, o Hesperosaurus.",
+    "Para que as placas serviam, ninguém sabe ao certo. A maior parte dos estudos recentes favorece a exibição, um sinal pelo qual os estegossauros podiam reconhecer os da mesma espécie. Perder calor, uma ideia de 1976, foi no máximo um uso secundário. A defesa é a ideia mais fraca: as placas eram finas, e um estudo do tecido delas não achou nada que as deixasse se mover."
    ]
   },
   {
@@ -313,7 +313,7 @@
    "h": "O cérebro do estegossauro e o “segundo cérebro”",
    "paras": [
     "Para um corpo tão grande, o estegossauro tinha um cérebro muito pequeno. Por muito tempo se comparou o espaço para o cérebro dentro do crânio a uma noz, e o museu de Londres o compara a uma ameixa, mas o cérebro de um réptil não preenche esse espaço, então o cérebro era ainda menor.",
-    "Nas décadas de 1880 e 1890, Othniel Marsh encontrou na coluna, acima do quadril, um espaço pelo menos vinte vezes maior que o do cérebro, e o chamou, com cautela, de caixa cerebral traseira. Não havia nenhum “segundo cérebro”. Como nas aves, esse espaço muito provavelmente guardava um volume macio de tecido rico em glicogênio, um açúcar de reserva. Para que ele servia não está estabelecido."
+    "Nas décadas de 1880 e 1890, Othniel Marsh encontrou na coluna, acima do quadril, um espaço pelo menos vinte vezes maior que o do cérebro, e o chamou, com cautela, de caixa cerebral traseira. Não havia nenhum “segundo cérebro”. Como nas aves, esse espaço muito provavelmente guardava uma massa macia de tecido rico em glicogênio, um açúcar de reserva. Para que ele servia não está estabelecido."
    ]
   },
   {
@@ -322,7 +322,7 @@
    "nav": "Sophie, o esqueleto de estegossauro de Londres",
    "h": "Sophie, o esqueleto de estegossauro de Londres",
    "paras": [
-    "O esqueleto de Sophie, um Stegosaurus stenops, foi encontrado em 2003 num rancho perto de Shell, em Wyoming, escavado em 2004 e preparado no Sauriermuseum Aathal, na Suíça. Cientistas do Natural History Museum de Londres viram uma réplica dele numa feira em Tucson, em 2012, e o museu comprou o esqueleto com a ajuda de doadores. O museu o expõe desde dezembro de 2014. O nome homenageia a filha de um doador: ninguém sabe se Sophie era macho ou fêmea.",
+    "O esqueleto de Sophie, de um Stegosaurus stenops, foi encontrado em 2003 num rancho perto de Shell, em Wyoming, escavado em 2004 e preparado no Sauriermuseum Aathal, na Suíça. Cientistas do Natural History Museum de Londres viram uma réplica dele numa feira em Tucson, em 2012, e o museu comprou o esqueleto com a ajuda de doadores. O museu o expõe desde dezembro de 2014. O nome homenageia a filha de um doador: ninguém sabe se Sophie era macho ou fêmea.",
     "Com cerca de 360 ossos, Sophie é um dos esqueletos de estegossauro mais completos que se conhecem. Faltam o braço esquerdo, as duas mãos, a maior parte da base da cauda e alguns ossos menores, além da pele e das plaquinhas de osso da garganta. O crânio exposto é uma réplica. Ninguém sabe como Sophie morreu: os ossos não mostram nenhuma mordida nem ferimento, e os cientistas que os descreveram consideram a fome ou uma doença as causas mais prováveis.",
     "A imagem do esqueleto mostra quais dos nossos ossos são de Sophie."
    ],
@@ -447,7 +447,7 @@
     },
     {
      "term": "3,75 toneladas e mais de 7",
-     "text": "Os dois vêm de métodos baseados nos ossos das patas, que para Sophie deram números altos demais: até 3,75 toneladas, um número que o mesmo estudo rejeitou. As mais de 7 toneladas são de um estegossauro muito grande, sem o gênero informado, num resumo de congresso de 2025. Os autores dizem que o número só vale se os métodos deles estiverem certos."
+     "text": "Os dois vêm de métodos baseados nos ossos das patas, que para Sophie deram números altos demais: até 3,75 toneladas, um número que o mesmo estudo rejeitou. As mais de 7 toneladas são de um animal muito grande do grupo do estegossauro, sem o gênero informado, num resumo de congresso de 2025. Os autores dizem que o número só vale se os métodos deles estiverem certos."
     },
     {
      "term": "“Dois cérebros”",
@@ -498,7 +498,7 @@
      "page": "biggest-dinosaurs",
      "pic": "dinosaurs",
      "alt": "Sete dinossauros em fila, vistos de lado, dois deles com pescoços longos bem acima dos outros, e uma pessoa cinza que ao lado deles parece minúscula.",
-     "line": "Sete dos nossos ao lado de uma pessoa, na mesma escala: o mais pesado, muito provavelmente um titanossauro da Patagônia, o mais alto, provavelmente o Sauroposeidon, e por que o mais longo ainda está em aberto."
+     "line": "Sete dos nossos ao lado de uma pessoa, na mesma escala: o mais pesado, muito provavelmente um titanossauro da Patagônia, o mais alto, provavelmente o Sauroposeidon, e por que ainda não se sabe qual foi o mais longo."
     },
     {
      "page": "triceratops",

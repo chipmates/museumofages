@@ -160,7 +160,7 @@
   "scale": {
    "pic": "side",
    "tag": "tag_made",
-   "what": "Nuestro Stegosaurus, hecho según Sophie, junto a una persona de 1,70 m, a la misma escala: 5,6 m del pico a la punta de la cola, poco más de tres personas tumbadas una detrás de otra, con la cabeza más o menos a la altura del hombro de la persona.",
+   "what": "Nuestro Stegosaurus, hecho según Sophie, junto a una persona de 1,70 m, a la misma escala: 5,6 m del pico a la punta de la cola, poco más de tres personas tumbadas una detrás de otra, con su cabeza más o menos a la altura del hombro de la persona.",
    "alt": "Un Stegosaurus de lado: una cabeza pequeña y baja, dos filas de placas altas a lo largo del lomo arqueado, dos de sus cuatro púas de la cola y las patas delanteras más cortas que las traseras. A su lado, una persona gris con la cabeza por debajo de lo alto del lomo.",
    "note": "Nuestra propia reconstrucción, construida en código a partir de medidas publicadas y renderizada con nuestro propio motor gráfico. No son fotografías.",
    "marks": [
@@ -291,9 +291,9 @@
    "nav": "Las placas del Stegosaurus",
    "h": "Las placas del Stegosaurus",
    "paras": [
-    "Sophie tiene 18 placas, y un hueco sobre la base de la cola indica que allí había una más, la número 19. El montaje de Londres muestra 19, y una de ellas es una réplica. Estaban de pie en dos filas, alternadas a izquierda y derecha, metidas en la piel y sin unión con el esqueleto.",
+    "Sophie tiene 18 placas, y un hueco sobre la base de la cola sugiere que allí había una más, la número 19. El montaje de Londres muestra 19, y una de ellas es una réplica. Estaban erguidas en dos filas, alternadas a izquierda y derecha, metidas en la piel y sin unión con el esqueleto.",
     "La más grande mide 78,5 cm de hueso en su parte más larga, y una parte es de yeso. Muy probablemente, una capa córnea lisa cubría las placas, pero la única huella de esa capa viene de una placa de un pariente cercano, Hesperosaurus.",
-    "Para qué servían, nadie lo sabe con seguridad. La mayor parte de los estudios recientes se inclina por la exhibición, una señal para que los Stegosaurus reconocieran a los de su especie. Soltar calor, una idea de 1976, fue como mucho un uso secundario. La defensa es la idea más débil: las placas eran delgadas, y un estudio de su tejido no halló nada que les permitiera moverse."
+    "Para qué servían, nadie lo sabe con seguridad. La mayor parte de los estudios recientes se inclina por la exhibición, una señal para que los Stegosaurus reconocieran a los de su especie. Disipar calor, una idea de 1976, fue como mucho un uso secundario. La defensa es la idea más débil: las placas eran delgadas, y un estudio de su tejido no halló nada que les permitiera moverse."
    ]
   },
   {
@@ -313,7 +313,7 @@
    "h": "El cerebro del Stegosaurus y el «segundo cerebro»",
    "paras": [
     "Para un cuerpo tan grande, el Stegosaurus tenía un cerebro muy pequeño. El espacio para el cerebro dentro del cráneo se comparó durante mucho tiempo con una nuez, y el museo de Londres lo compara con una ciruela, pero el cerebro de un reptil no llena ese espacio, así que el cerebro era todavía más pequeño.",
-    "En las décadas de 1880 y 1890, Othniel Marsh encontró en la columna, sobre la cadera, un espacio al menos veinte veces más grande que el del cerebro, y lo llamó, con cautela, una caja cerebral trasera. No había ningún «segundo cerebro». Como en las aves, ese espacio muy probablemente guardaba un bulto blando de tejido rico en glucógeno, un azúcar de reserva. Para qué servía no está establecido."
+    "En las décadas de 1880 y 1890, Othniel Marsh encontró en la columna, sobre la cadera, un espacio al menos veinte veces más grande que el del cerebro, y lo llamó, con cautela, caja cerebral trasera. No había ningún «segundo cerebro». Como en las aves, ese espacio muy probablemente guardaba un bulto blando de tejido rico en glucógeno, un azúcar de reserva. Para qué servía no está establecido."
    ]
   },
   {
@@ -322,7 +322,7 @@
    "nav": "Sophie, el esqueleto de Stegosaurus de Londres",
    "h": "Sophie, el esqueleto de Stegosaurus de Londres",
    "paras": [
-    "Sophie, un Stegosaurus stenops, se encontró en 2003 en un rancho cerca de Shell, en Wyoming, se excavó en 2004 y se preparó en el Sauriermuseum Aathal, en Suiza. Los científicos del Natural History Museum de Londres vieron una réplica del esqueleto en una feria de Tucson en 2012, y el museo lo compró con ayuda de donantes. Lo expone desde diciembre de 2014. El nombre homenajea a la hija de un donante: nadie sabe si Sophie era macho o hembra.",
+    "Sophie, un Stegosaurus stenops, se encontró en 2003 en un rancho cerca de Shell, en Wyoming, se excavó en 2004 y se preparó en el Sauriermuseum Aathal, en Suiza. Científicos del Natural History Museum de Londres vieron una réplica del esqueleto en una feria de Tucson en 2012, y el museo lo compró con ayuda de donantes. Lo expone desde diciembre de 2014. El nombre homenajea a la hija de un donante: nadie sabe si Sophie era macho o hembra.",
     "Con unos 360 huesos, Sophie es uno de los esqueletos de Stegosaurus más completos que se conocen. Faltan el brazo izquierdo, las dos manos, la mayor parte de la base de la cola y algunos huesos más pequeños, además de la piel y las placas de hueso de la garganta. El cráneo expuesto es una réplica. Nadie sabe cómo murió Sophie: los huesos no muestran ningún mordisco ni ninguna herida, y los científicos que los describieron consideran que el hambre o una enfermedad son las causas más probables.",
     "La imagen del esqueleto muestra cuáles de nuestros huesos son de Sophie."
    ],
@@ -359,7 +359,7 @@
     {
      "h": "Patas y pies",
      "paras": [
-      "Las patas delanteras eran más cortas que las traseras, y caminaba a cuatro patas. Cada pie delantero era un pilar corto de huesos de la palma puestos de pie, con dos pezuñas pequeñas."
+      "Las patas delanteras eran más cortas que las traseras, y caminaba a cuatro patas. Cada pie delantero era un pilar corto de huesos de la palma en vertical, con dos pezuñas pequeñas."
      ]
     },
     {
@@ -447,7 +447,7 @@
     },
     {
      "term": "3,75 toneladas y más de 7",
-     "text": "Las dos vienen de métodos basados en los huesos de las patas, que con Sophie dieron cifras demasiado altas: hasta 3,75 toneladas, una cifra que el mismo estudio rechazó. Las más de 7 toneladas son de un estegosaurio muy grande, sin indicar el género, en el resumen de un congreso de 2025. Sus autores dicen que solo vale si sus métodos son correctos."
+     "text": "Las dos vienen de métodos basados en los huesos de las patas, que con Sophie dieron cifras demasiado altas: hasta 3,75 toneladas, una cifra que el mismo estudio rechazó. Las más de 7 toneladas son de un animal muy grande del grupo del Stegosaurus, sin indicar el género, en el resumen de un congreso de 2025. Sus autores dicen que solo vale si sus métodos son correctos."
     },
     {
      "term": "«Dos cerebros»",
@@ -498,7 +498,7 @@
      "page": "biggest-dinosaurs",
      "pic": "dinosaurs",
      "alt": "Siete dinosaurios en fila, vistos de lado, dos de ellos con cuellos largos muy por encima de los demás, y una persona gris que a su lado parece diminuta.",
-     "line": "Siete de los nuestros junto a una persona, a la misma escala: el más pesado, muy probablemente un titanosaurio de la Patagonia, el más alto, probablemente Sauroposeidon, y por qué el más largo sigue abierto."
+     "line": "Siete de los nuestros junto a una persona, a la misma escala: el más pesado, muy probablemente un titanosaurio de la Patagonia, el más alto, probablemente Sauroposeidon, y por qué sigue sin saberse cuál fue el más largo."
     },
     {
      "page": "triceratops",
