@@ -282,9 +282,11 @@ html.sheet .bead--unknown{--fill:var(--sure-u)}
      arrives is a move the reader sees. */
   .hero__lede,.hero__note,.hero__label .label__what,.statement__head .lead{text-wrap:pretty}
 }
-/* German body text may hyphenate on the phone. Display-size text never does, nor does the company's name. */
+/* German body text may hyphenate on the phone. Display-size text never does, nor does the company's name. WebKit reads
+   none of hyphenate-limit-chars: its own prefixed limits keep it from splitting "un-ser" or "ei-nem". */
 @media (max-width:599px){
-  :lang(de) p,:lang(de) dd,:lang(de) li{hyphens:auto;-webkit-hyphens:auto;hyphenate-limit-chars:10 4 4}
+  :lang(de) p,:lang(de) dd,:lang(de) li{hyphens:auto;-webkit-hyphens:auto;hyphenate-limit-chars:10 4 4;
+    -webkit-hyphenate-limit-before:4;-webkit-hyphenate-limit-after:4;-webkit-hyphenate-limit-lines:2}
   :lang(de) .lead,:lang(de) .hero__lede,:lang(de) .glance dd,:lang(de) .layer--1 p,:lang(de) .sure__say,:lang(de) .honesty,:lang(de) .made,:lang(de) .label__quote p,:lang(de) .foot__by{hyphens:manual;-webkit-hyphens:manual}
 }
 .nh{hyphens:none;-webkit-hyphens:none}
