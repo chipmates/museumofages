@@ -1999,7 +1999,7 @@ class Case(unittest.TestCase):
             if data["page"]["id"] != self.data("en", page)["page"]["id"]:
                 continue
             text = path.read_text(encoding="utf-8")
-            empty = re.findall(r'<td data-k="[^"]*"([^>]*)></td>', text)
+            empty = re.findall(r'<td role="cell" data-k="[^"]*"([^>]*)></td>', text)
             self.assertTrue(empty)
             self.assertEqual(set(empty), {f' data-none="{data["labels"]["no_figure"]}"'})
             self.assertRegex(text, r"\.sc-table td:empty::after\{content:attr\(data-none\)")
@@ -2025,16 +2025,16 @@ class Case(unittest.TestCase):
                 with self.subTest(page=data["page"]["id"], lang=lang):
                     sure = block["cols"][-1] in ("How sure", "Wie sicher")
                     figures = len(block["cols"]) - 1 - sure
-                    self.assertIn(f'<table class="sc-table sc-table--v{figures}">', own)
+                    self.assertIn(f'<table class="sc-table sc-table--v{figures}" role="table">', own)
                     table = re.search(r'<table class="sc-table.*?</table>', own, flags=re.S).group(0)
-                    rows = re.findall(r"<tr(?: class=\"sc-our\")?><th scope=\"row\">.*?</tr>", table, flags=re.S)
+                    rows = re.findall(r"<tr role=\"row\"(?: class=\"sc-our\")?><th scope=\"row\" role=\"rowheader\">.*?</tr>", table, flags=re.S)
                     self.assertEqual(len(rows), len(block["rows"]))
                     for row, html_row in zip(block["rows"], rows):
                         cells = re.findall(r"<td[^>]*>(.*?)</td>", html_row, flags=re.S)
                         self.assertEqual([plain(c) for c in cells], [c.replace("\u00a0", " ").replace("\u00ad", "") for c in row["cells"][1:]])
-                        self.assertEqual(html_row.startswith('<tr class="sc-our">'), bool(re.match(r"(?:Unser|Our)\b", row["cells"][0])))
+                        self.assertEqual(html_row.startswith('<tr role="row" class="sc-our">'), bool(re.match(r"(?:Unser|Our)\b", row["cells"][0])))
                         if sure:
-                            self.assertEqual(len(re.findall(r'<td data-k="[^"]*" class="sc-sure"', html_row)), 1)
+                            self.assertEqual(len(re.findall(r'<td role="cell" data-k="[^"]*" class="sc-sure"', html_row)), 1)
                     seen += 1
         self.assertGreater(seen, 0, "no page has a table of numbers")
         shutil.rmtree(out)
@@ -2348,7 +2348,7 @@ class Case(unittest.TestCase):
         out, written = self.build()
         cells = 0
         for path in written:
-            for cell in re.findall(r'<td data-k="[^"]*">(.*?)</td>', path.read_text(encoding="utf-8")):
+            for cell in re.findall(r'<td role="cell" data-k="[^"]*">(.*?)</td>', path.read_text(encoding="utf-8")):
                 cells += 1
                 # empty, or one span around the words, so a name's span never takes a grid place of its own
                 if cell:

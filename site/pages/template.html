@@ -409,10 +409,10 @@
 <section class="sp-sec sc-sec" id="{{id}}">
   <h2>{{h}}</h2>
   <!-- The pictures' numbers as text. On a phone each row stands as a card, each number under its column's name. -->
-  <table class="sc-table sc-table--v{{n.values}}">
+  <table class="sc-table sc-table--v{{n.values}}" role="table">
     <caption>{{unit}}</caption>
-    <thead><tr>{{html.head}}</tr></thead>
-    <tbody>
+    <thead role="rowgroup"><tr role="row">{{html.head}}</tr></thead>
+    <tbody role="rowgroup">
 {{html.rows}}
     </tbody>
   </table>

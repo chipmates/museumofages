@@ -1642,15 +1642,16 @@ def render(page, lang, data, shared, out_root):
             values["html.links"] = ways(block.get("links", []))
         elif kind == "numbers":
             # the pictures' numbers as a table: a row's first cell names it, an empty cell has no sourced figure
-            values["html.head"] = "".join(f'<th scope="col">{rich(c)}</th>' for c in block["cols"])
+            # the roles restate the table's own: a table laid out as cards or a grid keeps them in every screen reader
+            values["html.head"] = "".join(f'<th scope="col" role="columnheader">{rich(c)}</th>' for c in block["cols"])
             # on a phone a row is a card without the column heads: an empty cell says in words that it is empty
             none = f' data-none="{esc(labels["no_figure"])}"' if any(not c for r in block["rows"] for c in r["cells"]) else ""
             sure = len(block["cols"]) - 1 if block["cols"][-1] in SURE_COLS else None
             values["n.values"] = str(len(block["cols"]) - 1 - (sure is not None))
             values["html.rows"] = "\n".join(
-                f'      <tr{OUR_ROW if OUR_RE.match(row["cells"][0]) else ""}><th scope="row">{rich(row["cells"][0])}</th>'
+                f'      <tr role="row"{OUR_ROW if OUR_RE.match(row["cells"][0]) else ""}><th scope="row" role="rowheader">{rich(row["cells"][0])}</th>'
                 # a cell's words in one span: its figure, where it opens with one, in a span of its own
-                + "".join(f'<td data-k="{esc(block["cols"][i])}"{" class=\"sc-sure\"" if i == sure else ""}{"" if c else none}>'
+                + "".join(f'<td role="cell" data-k="{esc(block["cols"][i])}"{" class=\"sc-sure\"" if i == sure else ""}{"" if c else none}>'
                           f'{cell_html(c, i == sure, rich) if c else ""}</td>'
                           for i, c in enumerate(row["cells"][1:], 1)) + "</tr>"
                 for row in block["rows"])
@@ -1919,6 +1920,15 @@ def lead_split(text, lang):
     return None
 
 
+# A range in the lead stays on one line: "7 bis 8 m", "7 to 8 m", "de 7 à 8 m", "от 7 до 8 м" (the lead is display text,
+# balanced, and broke "etwa 7 / bis 8 m" at 1280 px).
+LEAD_RANGE = re.compile(r"(?<![\w.,])\d[\d.,]*[ \u00a0](?:bis|to|à|a|al|до)[ \u00a0]\d[\d.,]*(?:[ \u00a0][^\W\d_]{1,3}\b)?")
+
+
+def bind_ranges(html_text):
+    return LEAD_RANGE.sub(lambda m: f'<span class="nw">{m.group(0)}</span>', html_text)
+
+
 def lead_and_rest(para, lang, linked):
     """An answer's paragraph with its first sentence in a lead span: the same words in the same order."""
     if isinstance(para, list):
@@ -1927,11 +1937,11 @@ def lead_and_rest(para, lang, linked):
         split = lead_split(para[0], lang)
         if not split:
             return linked(para)
-        return f'<span class="sp-answer__lead">{linked(split[0])}</span> ' + linked([split[1]] + para[1:])
+        return f'<span class="sp-answer__lead">{bind_ranges(linked(split[0]))}</span> ' + linked([split[1]] + para[1:])
     split = lead_split(para, lang)
     if not split:
         return linked(para)
-    return f'<span class="sp-answer__lead">{linked(split[0])}</span> {linked(split[1])}'
+    return f'<span class="sp-answer__lead">{bind_ranges(linked(split[0]))}</span> {linked(split[1])}'
 
 
 def answer_length(top):
