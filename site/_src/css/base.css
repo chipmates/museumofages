@@ -15,7 +15,9 @@
   --ground-wall:var(--wall);
   --ground-lit:var(--wall-lit);
   --ink:var(--linen);
-  --ink-body:color-mix(in srgb,var(--linen) 86%,var(--text-2));
+  /* Running text a step under the headings: cooler and a little dimmer than linen, 11.8:1 on the page, so a heading
+     and a key number stand out by light alone and long text glares less. */
+  --ink-body:color-mix(in srgb,var(--linen) 50%,var(--text-2));
   --ink-soft:var(--text-2);
   /* Quiet text is for side notes at 13 px and above, never smaller. */
   --ink-quiet:var(--text-3);
@@ -28,6 +30,15 @@
   --door-down:var(--linen-down);
   --hair:var(--line);
   --hair-strong:var(--line-strong);
+  /* A rule a reader follows (rows, entries, a section's start), and the ledger: the lit wall under the numbers,
+     the key and the list of contents, with its own rule. */
+  --rule:var(--line-row);
+  --ledger:var(--wall);
+  --ledger-rule:var(--line-row-wall);
+  --sure-d:var(--sure-documented);
+  --sure-r:var(--sure-reconstructed);
+  --sure-c:var(--sure-conjectural);
+  --sure-u:var(--sure-unknown);
   --frame-line:var(--frame);
   --shade:var(--edge);
   --focus:var(--linen);
@@ -35,7 +46,7 @@
   --bead-ring:color-mix(in srgb,var(--linen) 92%,transparent);
 }
 /* A band of lit wall under text: its hairlines are the wall's. */
-.wallband{--ground:var(--wall);--hair:var(--line-wall);background:var(--ground);color:var(--ink)}
+.wallband{--ground:var(--wall);--hair:var(--line-wall);--rule:var(--line-row-wall);background:var(--ground);color:var(--ink)}
 /* A reading page follows the device: the stone sheet in the light setting, the wall in the dark one. */
 @media (prefers-color-scheme:light){
   html.sheet{
@@ -56,6 +67,13 @@
     --door-down:var(--edge);
     --hair:var(--stone-line);
     --hair-strong:var(--stone-line-strong);
+    --rule:var(--stone-line-row);
+    --ledger:var(--stone-raised);
+    --ledger-rule:var(--stone-line-row);
+    --sure-d:var(--sure-documented-stone);
+    --sure-r:var(--sure-reconstructed-stone);
+    --sure-c:var(--sure-conjectural-stone);
+    --sure-u:var(--sure-unknown-stone);
     --focus:var(--page);
     /* On the stone a light ring would vanish: the bead keeps its colour inside a ring of the ink. */
     --bead-ring:var(--page);
@@ -63,9 +81,9 @@
 }
 
 :root{
-  --serif:"Cardo","Cardo fallback","Iowan Old Style","Palatino Linotype",Georgia,serif;
+  --serif:"Cardo","Cardo fallback",serif;
   /* "Moa figures" holds the ten digits only (see faces() in build.py): the sans has no true zero. */
-  --sans:"Moa figures","Marcellus","Marcellus fallback","Optima","Candara","Segoe UI",system-ui,sans-serif;
+  --sans:"Moa figures","Marcellus","Marcellus fallback",sans-serif;
 
   --pad:20px;
   --top-h:56px;
@@ -82,8 +100,9 @@
 html.sheet{color-scheme:light dark}
 
 *,*::before,*::after{box-sizing:border-box}
-html{background:var(--ground);color:var(--ink);-webkit-text-size-adjust:100%;text-size-adjust:100%;scroll-padding-top:var(--top-h)}
-body{margin:0;font-family:var(--serif);font-size:1.125rem;line-height:1.6;background:var(--ground);overflow-wrap:break-word;overflow-x:clip;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale}
+html{background:var(--ground);color:var(--ink);-webkit-text-size-adjust:100%;text-size-adjust:100%;scroll-padding-top:calc(var(--top-h) + 18px)}
+/* 19 px running text on the phone too: Cardo's small lowercase reads a size smaller than its number. */
+body{margin:0;font-family:var(--serif);font-size:1.1875rem;line-height:1.6;background:var(--ground);overflow-wrap:break-word;overflow-x:clip;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale}
 img,svg,canvas{display:block;max-width:100%}
 img{height:auto}
 h1,h2,h3,h4,h5,h6,p,dl,dd,ul,ol,figure,blockquote{margin:0}
@@ -172,7 +191,18 @@ main>section,main>.wrap{isolation:isolate;overflow-x:clip}
 .bead--reconstructed{--sure:var(--sure-reconstructed)}
 .bead--conjectural{--sure:var(--sure-conjectural)}
 .bead--unknown{--sure:var(--sure-unknown)}
-@media (forced-colors:active){.bead{background:CanvasText;box-shadow:none}}
+/* Beside the hue, an ordered fill a reader without colour vision still reads: whole, half, a ring, a broken ring.
+   On the stone sheet each colour is its darker twin, so the bead keeps 3:1 there. */
+.bead{--fill:var(--sure)}
+.bead--reconstructed{background:linear-gradient(to top,var(--fill) 50%,transparent 50%);box-shadow:0 0 0 1.5px var(--bead-ring),inset 0 0 0 2px var(--fill)}
+.bead--conjectural{background:transparent;box-shadow:0 0 0 1.5px var(--bead-ring),inset 0 0 0 3px var(--fill)}
+.bead--unknown{background:transparent;box-shadow:none;outline:2px dashed var(--fill);outline-offset:-2px}
+html.sheet .bead--documented{--fill:var(--sure-d)}
+html.sheet .bead--reconstructed{--fill:var(--sure-r)}
+html.sheet .bead--conjectural{--fill:var(--sure-c)}
+html.sheet .bead--unknown{--fill:var(--sure-u)}
+.bead--documented{background:var(--fill)}
+@media (forced-colors:active){.bead{background:CanvasText;box-shadow:none}.bead--reconstructed{background:linear-gradient(to top,CanvasText 50%,Canvas 50%);outline:1px solid CanvasText}.bead--conjectural,.bead--unknown{background:Canvas;outline:2px solid CanvasText;outline-offset:-2px}.bead--unknown{outline-style:dashed}}
 /* A small-caps key: the term of a list, the name of a layer. */
 .key{font-family:var(--sans);font-size:.75rem;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-soft)}
 
@@ -265,7 +295,7 @@ main>section,main>.wrap{isolation:isolate;overflow-x:clip}
 }
 @media (min-width:960px){
   :root{--pad:40px;--top-h:68px;--band:148px}
-  body{font-size:1.1875rem}
+  body{font-size:1.25rem}
   .top__in{gap:6px}
   .top__nav{display:flex;gap:2px;font-family:var(--sans);font-size:.9375rem;letter-spacing:.03em}
   .top__nav a{display:inline-flex;align-items:center;min-height:44px;padding:0 12px;color:var(--ink-soft);text-decoration:none;white-space:nowrap}

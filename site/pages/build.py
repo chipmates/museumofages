@@ -732,24 +732,32 @@ def swatch_rules(defs):
     return SWATCH + "".join(rules) if rules else ""
 
 
-# Six columns are too narrow for their words even on a wide screen: one card a row there too, as several.css lays
-# five below it. Only a page with such a table carries the rules, so no other page's style changes.
-SIX = ".sc-table:has(thead th:nth-child(6))"
-WIDE_CARDS = "@media (min-width:1200px){%s}" % "".join(f"{SIX}{part}" for part in (
-    " thead{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%)}",
-    " tbody{display:block;border-top:1px solid var(--hair-strong)}",
-    " tr{display:block;padding:12px 0 13px;border-bottom:1px solid var(--hair)}",
-    f" th,{SIX} td{{display:block;padding:0;border:0}}",
-    " tbody th{margin-bottom:6px;font-size:1rem}",
-    " td{display:grid;grid-template-columns:10rem minmax(0,1fr);column-gap:16px;padding:3px 0}",
-    " td::before{content:attr(data-k);padding-top:2px;font-size:.6875rem;letter-spacing:.09em;text-transform:uppercase;"
-    "color:var(--ink-quiet)}",
-    " td:empty::after{content:attr(data-none);color:var(--ink-quiet)}"))
+# A table's last column that says how sure each row is, by its heading in each language.
+SURE_COLS = {"How sure", "Wie sicher"}
+# The museum's own figure: a row that opens with "our" carries the chalk bar.
+OUR_RE = re.compile(r"(?:Unser|Our)\b")
+OUR_ROW = ' class="sc-our"'
+# A cell's figure is its words up to the first comma and space, where they hold a number (a decimal comma has no space).
+FIGURE_MAX = 64
 
 
-def table_rules(data):
-    """The wide screen's cards for a table of numbers with six columns or more, only on a page that has one."""
-    return WIDE_CARDS if any(b["type"] == "numbers" and len(b["cols"]) >= 6 for b in data["blocks"]) else ""
+def cell_html(text, sure, rich):
+    """A cell of a table of numbers: its words in one span. A how-sure cell sets its grade word (before the colon, or
+    the whole of a one-word cell) apart; another cell sets its leading figure apart. The words and their order stay."""
+    if sure:
+        m = re.match(r"([^:,]{1,24}):\s", text)
+        if m:
+            return f'<span><span class="sc-sure__w">{rich(m.group(1))}</span>: {rich(text[m.end():])}</span>'
+        if re.fullmatch(r"\w+", text):
+            return f'<span><span class="sc-sure__w">{rich(text)}</span></span>'
+        return f"<span>{rich(text)}</span>"
+    head, sep, rest = text.partition(", ")
+    if sep and re.search(r"\d", head) and len(head) <= FIGURE_MAX:
+        return f'<span><span class="sc-fig">{rich(head)}</span>, {rich(rest)}</span>'
+    if re.search(r"\d", text) and len(text) <= FIGURE_MAX:
+        return f'<span><span class="sc-fig">{rich(text)}</span></span>'
+    return f"<span>{rich(text)}</span>"
+
 
 
 MARK_AT = r"(\d{1,3}(?:\.\d+)?)% (\d{1,3}(?:\.\d+)?)%(?: (start|end))?"
@@ -1558,7 +1566,7 @@ def render(page, lang, data, shared, out_root):
                 "shape": esc(item["shape"]),
                 "html.figure": plate_html(item),
                 # the class word, as the facts give it, stands apart at the head of its sentence
-                "html.who": f'<span class="pt-class">{rich(word)}</span>{rich(who[len(word):])}',
+                "html.who": f'<span class="pt-class pt-class--{it['class'] or "field"}">{rich(word)}</span>{rich(who[len(word):])}',
                 # a tightened entry says it all in two paragraphs
                 "html.worth": f'\n    <p>{rich(item["worth_knowing"])}</p>' if item.get("worth_knowing") else "",
                 "href.go": esc(CHART.door_href(door, it["stop"])),
@@ -1635,11 +1643,13 @@ def render(page, lang, data, shared, out_root):
             values["html.head"] = "".join(f'<th scope="col">{rich(c)}</th>' for c in block["cols"])
             # on a phone a row is a card without the column heads: an empty cell says in words that it is empty
             none = f' data-none="{esc(labels["no_figure"])}"' if any(not c for r in block["rows"] for c in r["cells"]) else ""
+            sure = len(block["cols"]) - 1 if block["cols"][-1] in SURE_COLS else None
+            values["n.values"] = str(len(block["cols"]) - 1 - (sure is not None))
             values["html.rows"] = "\n".join(
-                f'      <tr><th scope="row">{rich(row["cells"][0])}</th>'
-                # a cell's words in one span: on a phone the cell is a grid of its label and its words, and a name's
-                # own span would otherwise take a grid place of its own
-                + "".join(f'<td data-k="{esc(block["cols"][i])}"{"" if c else none}>{f"<span>{rich(c)}</span>" if c else ""}</td>'
+                f'      <tr{OUR_ROW if OUR_RE.match(row["cells"][0]) else ""}><th scope="row">{rich(row["cells"][0])}</th>'
+                # a cell's words in one span: its figure, where it opens with one, in a span of its own
+                + "".join(f'<td data-k="{esc(block["cols"][i])}"{" class=\"sc-sure\"" if i == sure else ""}{"" if c else none}>'
+                          f'{cell_html(c, i == sure, rich) if c else ""}</td>'
                           for i, c in enumerate(row["cells"][1:], 1)) + "</tr>"
                 for row in block["rows"])
         elif kind == "pages":
@@ -1817,7 +1827,7 @@ def render(page, lang, data, shared, out_root):
                              "css_chart" if works or "drawing" in data["top"] or any(b["type"] == "text" for b in data["blocks"]) else "css"]
                       + (shared["langs_css"] + chrome["by"] if chrome["langs"] else ""),
         "css.faces": faces(root, lang) + focus + person_rules(data["pics"]) + span_rules(data["pics"]) + swatch_rules(data["pics"]) + top_rules(data["pics"])
-                     + table_rules(data) + (shared["css_several"] + mark_rules(data) if marked_figures(data) or has_points(data) else ""),
+                     + (shared["css_several"] + mark_rules(data) if marked_figures(data) or has_points(data) else ""),
         "html.preload": preload,
         "html.theme": f'<meta name="theme-color" content="{chrome["theme"]}">\n' if chrome["theme"] else "",
         "html.header": chrome["header"],
@@ -1825,7 +1835,7 @@ def render(page, lang, data, shared, out_root):
         "attr.h1": h1_class,
         "attr.top": (" sp-top--long" if answer_length(data["top"]) > LONG_ANSWER else "") + (" sc-top" if making(wing) else ""),
         "top.h1": names.mark(h1, wrap_wing=run > KEEP_SMALL),
-        "top.answer": linked(data["top"]["answer"]),
+        "top.answer": lead_and_rest(data["top"]["answer"], lang, linked),
         # an answer in two paragraphs: the second, with its links, under the first
         "html.answer_more": f'<p class="sp-answer">{linked(data["top"]["answer_more"])}</p>' if data["top"].get("answer_more") else "",
         # the one place a sizes page says in which order its sizes stand
@@ -1886,6 +1896,40 @@ def primary_words(data):
 def answer_text(answer):
     """The first screen's answer as plain words: a string, or parts where a part is a link."""
     return answer if isinstance(answer, str) else "".join(p if isinstance(p, str) else p["text"] for p in answer)
+
+
+# The answer's first sentence is set as its lead. A stop ends a sentence where a capital follows, never after an initial,
+# a short abbreviation or (German) a number, which there is an ordinal or a date ("am 2. Mai").
+LEAD_END = re.compile(r"(?<=[.!?])\s+(?=[„\"(]?[A-ZÄÖÜÀ-ÞА-Я])")
+LEAD_ABBR = {"ca", "Nr", "St", "Dr", "Mr", "Mrs", "Ms", "vs", "bzw", "usw", "etc", "Chr", "Abb", "inkl", "z", "B", "u", "a", "d", "h"}
+LEAD_MAX = 240
+
+
+def lead_split(text, lang):
+    """(lead, rest) of an answer's words, or None where no sentence ends early enough or nothing follows it."""
+    for m in LEAD_END.finditer(text):
+        lead, rest = text[:m.start()], text[m.end():]
+        word = re.search(r"([^\s.]+)[.!?]$", lead)
+        word = word.group(1) if word else ""
+        if (len(word) == 1 and word.isupper()) or word in LEAD_ABBR or (lang != "en" and word.isdigit()):
+            continue
+        return (lead, rest) if 8 <= len(lead) <= LEAD_MAX and rest.strip() else None
+    return None
+
+
+def lead_and_rest(para, lang, linked):
+    """An answer's paragraph with its first sentence in a lead span: the same words in the same order."""
+    if isinstance(para, list):
+        if not para or not isinstance(para[0], str):
+            return linked(para)
+        split = lead_split(para[0], lang)
+        if not split:
+            return linked(para)
+        return f'<span class="sp-answer__lead">{linked(split[0])}</span> ' + linked([split[1]] + para[1:])
+    split = lead_split(para, lang)
+    if not split:
+        return linked(para)
+    return f'<span class="sp-answer__lead">{linked(split[0])}</span> {linked(split[1])}'
 
 
 def answer_length(top):

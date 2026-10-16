@@ -43,20 +43,3 @@
 
 /* Five columns: the first holds a name and its scientific name, which may wrap between its words in a cell */
 .sc-table i.nw{white-space:normal}
-/* Up to a wide screen the five columns are too narrow for their words: one card a row, as on a phone */
-@media (min-width:600px) and (max-width:1199px){
-  .sc-table:has(thead th:nth-child(5)) thead{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%)}
-  .sc-table:has(thead th:nth-child(5)) tbody{display:block;border-top:1px solid var(--hair-strong)}
-  .sc-table:has(thead th:nth-child(5)) tr{display:block;padding:12px 0 13px;border-bottom:1px solid var(--hair)}
-  .sc-table:has(thead th:nth-child(5)) th,.sc-table:has(thead th:nth-child(5)) td{display:block;padding:0;border:0}
-  .sc-table:has(thead th:nth-child(5)) tbody th{margin-bottom:6px;font-size:1rem}
-  .sc-table:has(thead th:nth-child(5)) td{display:grid;grid-template-columns:10rem minmax(0,1fr);column-gap:16px;padding:3px 0}
-  .sc-table:has(thead th:nth-child(5)) td::before{content:attr(data-k);padding-top:2px;font-size:.6875rem;letter-spacing:.09em;text-transform:uppercase;color:var(--ink-quiet)}
-  .sc-table:has(thead th:nth-child(5)) td:empty::after{content:attr(data-none);color:var(--ink-quiet)}
-}
-@media (min-width:1200px){
-  .sc-table:has(thead th:nth-child(5)) thead th:nth-child(1){width:29%}
-  .sc-table:has(thead th:nth-child(5)) thead th:nth-child(2){width:19%}
-  .sc-table:has(thead th:nth-child(5)) thead th:nth-child(3){width:21%}
-  .sc-table:has(thead th:nth-child(5)) thead th:nth-child(4){width:15%}
-}

@@ -2011,23 +2011,32 @@ class Case(unittest.TestCase):
             self.save(lang, data, page)
         self.fails(r"an empty cell needs labels\.no_figure")
 
-    def test_a_table_of_six_columns_stands_as_cards_on_a_wide_screen_too(self):
-        """Six columns are too narrow for their words on any screen: a page with such a table carries the wide screen's
-        cards, and a page whose tables have fewer columns carries no such rule."""
-        six = {self.data("en", p)["page"]["id"] for p in self.scale_pages()
-               if any(b["type"] == "numbers" and len(b["cols"]) >= 6 for b in self.data("en", p)["blocks"])}
-        if not six:
-            self.skipTest("no table has six columns")
+    def test_a_table_of_numbers_is_one_grid_with_its_how_sure_line(self):
+        """A table of numbers is one table on every screen: its class names how many columns of figures it has (the
+        desktop's grid reads it), the how-sure column is marked in every row, the museum's own row carries its mark, and
+        a cell's words stand whole in it, in their order, whatever spans set its figure or its grade word apart."""
         out, written = self.build()
+        seen = 0
         for path in written:
             data, lang = self.page_of(path)
-            text = path.read_text(encoding="utf-8")
-            with self.subTest(page=data["page"]["id"], lang=lang):
-                if data["page"]["id"] in six:
-                    self.assertIn("@media (min-width:1200px){.sc-table:has(thead th:nth-child(6)) thead{position:absolute", text)
-                    self.assertIn(".sc-table:has(thead th:nth-child(6)) td:empty::after{content:attr(data-none)", text)
-                else:
-                    self.assertNotIn("nth-child(6)", text)
+            own = self.own_part(path.read_text(encoding="utf-8"))
+            plain = lambda m: html.unescape(re.sub(r"<[^>]+>", "", m)).replace("\u00a0", " ").replace("\u00ad", "")
+            for block in (b for b in data["blocks"] if b["type"] == "numbers"):
+                with self.subTest(page=data["page"]["id"], lang=lang):
+                    sure = block["cols"][-1] in ("How sure", "Wie sicher")
+                    figures = len(block["cols"]) - 1 - sure
+                    self.assertIn(f'<table class="sc-table sc-table--v{figures}">', own)
+                    table = re.search(r'<table class="sc-table.*?</table>', own, flags=re.S).group(0)
+                    rows = re.findall(r"<tr(?: class=\"sc-our\")?><th scope=\"row\">.*?</tr>", table, flags=re.S)
+                    self.assertEqual(len(rows), len(block["rows"]))
+                    for row, html_row in zip(block["rows"], rows):
+                        cells = re.findall(r"<td[^>]*>(.*?)</td>", html_row, flags=re.S)
+                        self.assertEqual([plain(c) for c in cells], [c.replace("\u00a0", " ").replace("\u00ad", "") for c in row["cells"][1:]])
+                        self.assertEqual(html_row.startswith('<tr class="sc-our">'), bool(re.match(r"(?:Unser|Our)\b", row["cells"][0])))
+                        if sure:
+                            self.assertEqual(len(re.findall(r'<td data-k="[^"]*" class="sc-sure"', html_row)), 1)
+                    seen += 1
+        self.assertGreater(seen, 0, "no page has a table of numbers")
         shutil.rmtree(out)
 
     def test_a_part_named_in_a_closer_view_stands_whole_and_only_where_it_is_listed(self):
@@ -2933,7 +2942,9 @@ class Case(unittest.TestCase):
                 where = plain(re.search(r'<span class="pt-where">(.*?)</span></p>', body, flags=re.S).group(1))
                 holder = holders[fact["holder"]]
                 self.assertTrue(where.startswith(f'{holder["name"][lang]}, {holder["note"][lang]}'), (key, where))
-                self.assertEqual(plain(re.search(r'<span class="pt-class">(.*?)</span>', body).group(1)), classes[lang][fact["class"]], key)
+                # the class word, with its class for the tally's mark beside it
+                self.assertEqual(plain(re.search(r'<span class="pt-class pt-class--(\w+)">(.*?)</span>', body).group(2)), classes[lang][fact["class"]], key)
+                self.assertEqual(re.search(r'<span class="pt-class pt-class--(\w+)">', body).group(1), fact["class"] or "field", key)
                 # its door opens the wing at its stop, tagged for the count
                 door = wing["door"][lang].replace("&", "&amp;")
                 self.assertIn(f'href="{door}#s={fact["stop"]}" data-door="item"', body, key)

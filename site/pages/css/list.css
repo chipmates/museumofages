@@ -64,7 +64,15 @@
 .pt-work__text p{color:var(--ink-body);max-width:38rem}
 .pt-work__text p+p{margin-top:8px}
 /* The class word as the wing's label gives it, at the head of the sentence that explains it. */
-.pt-class{font-family:var(--sans);letter-spacing:.02em;color:var(--mark-ink)}
+/* The class word carries the tally's own mark before it, so an entry is read by the same shape as the count on the
+   first screen: whole, half, a ring, a broken line. The word is the meaning, the shape repeats it, no colour does. */
+.pt-class{font-family:var(--sans);letter-spacing:.02em;color:var(--ink)}
+.pt-class::before{content:"";display:inline-block;width:10px;height:13px;margin-right:8px;vertical-align:-1px;border:1.5px solid var(--ink-soft)}
+.pt-class--documented::before{background:var(--ink-soft)}
+.pt-class--qualified::before{background:linear-gradient(to top,var(--ink-soft) 50%,transparent 50%)}
+.pt-class--workshop::before{width:12px;height:12px;border-radius:50%}
+.pt-class--copy::before{border-style:dashed;border-color:var(--ink-quiet)}
+.pt-class--field::before{width:22px;height:10px;background:var(--ink-soft)}
 .sp-more.pt-go{margin-top:10px}
 .pt-work .sp-more+.sp-more{margin-top:2px}
 .pt-ways{margin-top:28px}

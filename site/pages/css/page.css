@@ -19,7 +19,9 @@
    the narrowest column, and one too long for any line wraps between its words, the lines kept even. */
 .sp-top h1.sp-h1--long{font-size:clamp(1.5rem,6.6vw,2.375rem)}
 .sp-top h1.sp-h1--wrap{text-wrap:balance}
-.sp-answer{margin-top:10px;font-size:1.125rem;line-height:1.5;color:var(--ink);max-width:36rem}
+.sp-answer{margin-top:10px;font-size:1.125rem;line-height:1.5;color:var(--ink-body);max-width:36rem}
+/* The answer's first sentence is the answer: a size up and in full linen, so it is found before anything else. */
+.sp-answer__lead{display:block;margin-bottom:6px;font-size:1.3125rem;line-height:1.32;letter-spacing:-.003em;color:var(--ink)}
 /* German display text never hyphenates (the site's rule); the answer is display text. */
 :lang(de) .sp-answer{hyphens:manual;-webkit-hyphens:manual}
 .sp-frame .hang{--pool-up:74%;--pool-side:30%;--pool-down:10%}
@@ -35,16 +37,25 @@
 
 /* ---------- The page below the answer ---------- */
 .sp-grid{display:grid;margin-top:40px}
-.sp-toc{font-family:var(--sans);font-size:.9375rem;padding-top:16px;border-top:1px solid var(--hair-strong)}
-.sp-toc ol{margin-top:2px;columns:2;column-gap:20px}
-.sp-toc li{break-inside:avoid}
-.sp-toc a{display:inline-flex;align-items:center;min-height:44px;min-width:44px;color:var(--ink-soft);text-decoration:none}
-.sp-toc a:hover{color:var(--ink);text-decoration:underline}
+/* On this page: the ledger's surface, one entry a line with a rule under it, so a long German heading never rags
+   against its neighbour. Open on every width; on the desktop it stays beside the text and marks where you are. */
+.sp-toc{font-family:var(--sans);font-size:.9375rem;padding:14px 16px 4px;margin-inline:-6px;background:var(--ledger);box-shadow:inset 0 2px 0 var(--mark)}
+.sp-toc__h{color:var(--ink-soft)}
+.sp-toc ol{margin-top:6px}
+.sp-toc li+li{border-top:1px solid var(--ledger-rule)}
+.sp-toc a{display:flex;align-items:center;gap:12px;min-height:44px;min-width:44px;padding:7px 0;line-height:1.3;color:var(--ink);text-decoration:none}
+.sp-toc a:hover{color:var(--mark-ink);text-decoration:underline;text-decoration-color:var(--mark)}
 
-.sp-sec{padding-top:32px;margin-top:40px;border-top:1px solid var(--hair)}
-.sp-body__main>.sp-sec:first-child{border-top-color:var(--hair-strong)}
-.sp-sec h2{font-size:1.75rem;line-height:1.15;letter-spacing:-.005em}
+/* A section starts on a rule the eye can follow (2.2:1), with a short chalk bar on it: the one landmark of a long
+   page, the same at every section, larger than the label's tick and the period's rule under it. More room above
+   than below, so a heading belongs to what follows. */
+.sp-sec{position:relative;padding-top:30px;margin-top:64px;border-top:1px solid var(--rule)}
+.sp-sec::before{content:"";position:absolute;left:0;top:-2px;width:56px;height:3px;background:var(--mark)}
+.sp-sec h2{font-size:clamp(1.75rem,7.6vw,2rem);line-height:1.12;letter-spacing:-.008em;color:var(--ink)}
 .sp-intro,.sp-after{margin-top:12px;color:var(--ink-body);max-width:38rem}
+/* The line under a heading that says what the part holds: one step quieter and a size down. */
+.sp-sec>.sp-intro{font-size:1.0625rem;line-height:1.5;color:var(--ink-soft)}
+[id]{scroll-margin-top:calc(var(--top-h) + 18px)}
 
 /* A plate inside the page: every one the same cut, the same frame, the same place under its heading.
    The heading names it, so its label is one quiet line without the chalk mark, and its pool stays
@@ -62,10 +73,11 @@
 .sp-after{margin-top:28px}
 
 /* A drawing we have not built, with what is known of it */
-.sp-dir{margin-top:20px;border-top:1px solid var(--hair);max-width:42rem}
-.sp-dir>div{padding:13px 0 15px;border-bottom:1px solid var(--hair)}
-.sp-dir dt{font-family:var(--serif);font-size:1.1875rem;line-height:1.25;color:var(--ink)}
-.sp-dir dd{margin-top:5px;color:var(--ink-soft)}
+/* Numbers you may have read: each the figure as a reader met it, set large, then where it comes from. */
+.sp-dir{margin-top:22px;border-top:1px solid var(--rule);max-width:42rem}
+.sp-dir>div{padding:16px 0 18px;border-bottom:1px solid var(--rule)}
+.sp-dir dt{font-family:var(--serif);font-size:1.375rem;line-height:1.22;color:var(--ink)}
+.sp-dir dd{margin-top:6px;font-size:1.0625rem;line-height:1.55;color:var(--ink-body)}
 
 /* One thing: its name, where it stands, its plate, what it does, then the sheet, our part and the record */
 .sp-item{margin-top:48px;max-width:42rem}
@@ -76,19 +88,22 @@
 .sp-does{color:var(--ink-body);max-width:38rem}
 .sp-does+.sp-does{margin-top:10px}
 .sp-feature .sp-item{margin-top:8px}
-.sp-rows{margin-top:16px;border-top:1px solid var(--hair);max-width:42rem}
-.sp-rows>div{display:grid;gap:2px;padding:9px 0 11px;border-bottom:1px solid var(--hair)}
-.sp-rows dd{font-family:var(--sans);font-size:.9375rem;line-height:1.5;color:var(--ink-soft)}
+.sp-rows{margin-top:16px;border-top:1px solid var(--rule);max-width:42rem}
+.sp-rows>div{display:grid;gap:2px;padding:9px 0 11px;border-bottom:1px solid var(--rule)}
+.sp-rows dd{font-family:var(--sans);font-size:.9375rem;line-height:1.5;color:var(--ink-body)}
+/* A value's name: sentence case at 14 px, as every key over a value on the site. */
+.sp-rows dt.key{font-size:.875rem;letter-spacing:.02em;text-transform:none}
 
 /* Questions */
-.sp-q{margin-top:28px;max-width:38rem}
-.sp-q h3{font-size:1.3125rem;line-height:1.25}
+.sp-q{margin-top:26px;max-width:38rem}
+.sp-q+.sp-q{padding-top:24px;border-top:1px solid var(--hair)}
+.sp-q h3{font-size:1.375rem;line-height:1.25;color:var(--ink)}
 .sp-q p{margin-top:8px;color:var(--ink-body)}
 
 /* Sources */
 .sp-sources h3{margin-top:28px}
-.sp-holders{margin-top:8px;max-width:42rem;border-bottom:1px solid var(--hair)}
-.sp-holders li{display:grid;gap:2px;padding:10px 0 11px;border-top:1px solid var(--hair);font-family:var(--sans);font-size:.9375rem;line-height:1.45}
+.sp-holders{margin-top:8px;max-width:42rem;border-bottom:1px solid var(--rule)}
+.sp-holders li{display:grid;gap:2px;padding:10px 0 11px;border-top:1px solid var(--rule);font-family:var(--sans);font-size:.9375rem;line-height:1.45}
 .sp-holders__name{color:var(--ink)}
 .sp-holders__what{color:var(--ink-soft)}
 /* A link out of the museum: a line of its own, tall enough for a thumb. */
@@ -117,7 +132,6 @@
 
 @media (min-width:600px){
   .sp-frame img{aspect-ratio:16/9;object-position:50% 50%}
-  .sp-toc ol{columns:3}
   .sp-stands{grid-template-columns:1fr 1fr;column-gap:24px;row-gap:44px}
   /* The plate hangs at the left of its entry, the name and the words beside it, the rows below both. */
   .sp-item{display:grid;grid-template-columns:15rem minmax(0,1fr);grid-template-rows:auto auto 1fr auto;column-gap:24px;
@@ -144,16 +158,22 @@
   /* The smallest size is the one at which a name of the longest kept length still fits the text column. */
   .sp-top h1{font-size:clamp(2.625rem,4.5vw,3.875rem);line-height:1.04;letter-spacing:-.014em}
   .sp-top h1.sp-h1--long{font-size:clamp(2rem,3.3vw,2.875rem)}
-  .sp-answer{margin-top:22px;font-size:1.3125rem;line-height:1.5}
+  .sp-answer{margin-top:22px;font-size:1.25rem;line-height:1.52}
+  .sp-answer__lead{margin-bottom:10px;font-size:1.75rem;line-height:1.26;letter-spacing:-.006em}
   .sp-grid{grid-template-columns:repeat(12,1fr);column-gap:24px;margin-top:88px}
-  .sp-toc{grid-column:1/4;position:sticky;top:calc(var(--top-h) + 24px);align-self:start}
-  .sp-toc ol{columns:1}
+  .sp-toc{grid-column:1/4;position:sticky;top:calc(var(--top-h) + 24px);align-self:start;margin-inline:0;padding:14px 16px 6px}
+  .sp-toc a{font-size:.875rem;min-height:40px;padding:6px 0 6px 12px;margin-left:-12px;border-left:3px solid transparent;color:var(--ink-soft)}
+  /* Where you are: the entry of the part on the screen in full ink with the chalk bar at its left (browsers that
+     know scroll-target-group; the others keep the plain list). */
+  .sp-toc ol{scroll-target-group:auto}
+  .sp-toc a:target-current{border-left-color:var(--mark);color:var(--ink)}
   .sp-body__main{grid-column:5/12}
   .sp-body__main>.sp-sec:first-child{margin-top:0}
   /* One right edge for the lines, the lists and the plates: the column's own. */
   .sp-dir,.sp-item,.sp-rows,.sp-holders,.sp-stands{max-width:none}
-  .sp-sec{padding-top:40px;margin-top:56px}
-  .sp-sec h2{font-size:2.125rem}
+  .sp-sec{padding-top:36px;margin-top:96px}
+  .sp-sec h2{font-size:2.375rem;line-height:1.1}
+  .sp-sec>.sp-intro{font-size:1.1875rem}
   .sp-item{margin-top:56px;grid-template-columns:18rem minmax(0,1fr);column-gap:28px}
   .sp-item h3{font-size:1.5625rem}
   .sp-rows>div{grid-template-columns:9.5rem 1fr;gap:18px;padding:10px 0 12px}

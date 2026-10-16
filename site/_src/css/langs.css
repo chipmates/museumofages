@@ -51,8 +51,8 @@
 /* Bulgarian is set in its own two faces, which hold its letters and their Bulgarian forms (buildlib.LANG_FACES).
    The museum's name keeps its own face. A style the faces do not have is not faked. */
 :lang(bg){
-  --serif:"Museum Bulgarian Serif","Iowan Old Style","Palatino Linotype",Palatino,Georgia,serif;
-  --sans:"Museum Bulgarian Sans","Segoe UI",system-ui,sans-serif;
+  --serif:"Museum Bulgarian Serif",Georgia,serif;
+  --sans:"Museum Bulgarian Sans",system-ui,sans-serif;
   font-synthesis:none;
 }
-:lang(bg) .brand__name,:lang(bg) .hero__name:not(.hero__name--wing){font-family:"Cardo","Cardo fallback","Iowan Old Style","Palatino Linotype",Georgia,serif}
+:lang(bg) .brand__name,:lang(bg) .hero__name:not(.hero__name--wing){font-family:"Cardo","Cardo fallback",serif}

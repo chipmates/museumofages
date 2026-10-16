@@ -52,33 +52,71 @@
 .sc-out__p{font-family:var(--sans);font-size:.9375rem;line-height:1.5;color:var(--ink-soft);max-width:36rem}
 :lang(de) .sc-out__p{hyphens:manual;-webkit-hyphens:manual}
 
-/* ---------- The pictures' numbers: a table, and on a phone one card a row ---------- */
-.sc-table{width:100%;margin-top:18px;border-collapse:collapse;font-family:var(--sans);font-size:.9375rem;line-height:1.45}
-.sc-table caption{caption-side:top;padding-bottom:12px;text-align:left;font-size:.875rem;line-height:1.5;color:var(--ink-soft)}
-.sc-table th,.sc-table td{padding:10px 14px 11px 0;text-align:left;vertical-align:top;font-weight:400;border-bottom:1px solid var(--hair)}
-.sc-table thead th{font-size:.75rem;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-soft);border-bottom-color:var(--hair-strong)}
-.sc-table tbody th{color:var(--ink)}
+/* ---------- The pictures' numbers: the ledger. A real table; below the desktop each row is a card ----------
+   It lies on the lit wall (the ledger), its rows on rules a reader can follow (2.2:1). In every cell the figure (its
+   words up to the first comma, build.py cell_html) stands in full ink and the words after it a step quieter; the first
+   column of figures, the one the page's question asks for, a size larger. The museum's own row carries the chalk
+   bar, the how-sure cell stands at the foot of its row with its grade word set apart. */
+.sc-table{width:100%;margin-top:20px;border-collapse:collapse;font-family:var(--sans);font-size:.9375rem;line-height:1.45}
+.sc-table caption{caption-side:top;padding-bottom:14px;text-align:left;font-family:var(--serif);font-size:1.0625rem;line-height:1.5;color:var(--ink-soft)}
+.sc-table th,.sc-table td{text-align:left;vertical-align:top;font-weight:400}
+.sc-table thead th{font-size:.8125rem;letter-spacing:.02em;color:var(--ink-soft)}
+.sc-table tbody th{font-family:var(--serif);color:var(--ink)}
 .sc-table td{color:var(--ink-soft)}
-/* From a tablet up, the columns share the width by what they hold, not by the longest cell */
-@media (min-width:600px){
-  .sc-table{table-layout:fixed}
-  .sc-table thead th:nth-child(1){width:23%}
-  .sc-table thead th:nth-child(2){width:21%}
-  .sc-table thead th:nth-child(3){width:25%}
+.sc-table .sc-fig{color:var(--ink)}
+.sc-table td:nth-child(2) .sc-fig{font-size:1.125rem;line-height:1.35}
+.sc-table .sc-sure__w{color:var(--ink)}
+/* German compounds in a narrow cell break at a syllable, never mid-letter */
+:lang(de) .sc-table td{hyphens:auto;-webkit-hyphens:auto;hyphenate-limit-chars:10 4 4}
+/* an empty cell says in words that it has no sourced figure (the words stand in the cell's data-none) */
+.sc-table td:empty::after{content:attr(data-none);color:var(--ink-quiet)}
+@media (max-width:959px){
+  .sc-table,.sc-table caption,.sc-table tbody{display:block}
+  .sc-table thead{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%)}
+  .sc-table tbody{display:grid;gap:10px}
+  .sc-table tr{display:block;padding:0 16px;margin-inline:-6px;background:var(--ledger)}
+  .sc-table tr.sc-our{box-shadow:inset 3px 0 0 var(--mark)}
+  .sc-table tbody th{display:block;padding:14px 0 11px;font-size:1.1875rem;line-height:1.28;border-bottom:1px solid var(--ledger-rule)}
+  .sc-table td{display:block;padding:9px 0 10px}
+  .sc-table td+td{border-top:1px solid var(--hair)}
+  /* the column's name over its words; read once by a screen reader, which hears the header the cell already has */
+  .sc-table td::before{content:attr(data-k);content:attr(data-k) / "";display:block;margin-bottom:1px;font-size:.8125rem;letter-spacing:.02em;color:var(--ink-soft)}
+  .sc-table td:empty{display:flex;flex-wrap:wrap;column-gap:.6em;align-items:baseline}
+  .sc-table td:empty::before{display:inline;margin:0}
+  .sc-table td:empty::after{font-size:.875rem}
+  /* how sure: the card's foot, a shade under the card, so it is found in the same place on every card */
+  .sc-table td.sc-sure{margin-inline:-16px;padding:11px 16px 13px;border-top:0;background:color-mix(in srgb,var(--ledger) 55%,var(--ground))}
+  .sc-table td.sc-sure::before{color:var(--ink-soft)}
+}
+@media (max-width:359px){
+  .sc-table tr{margin-inline:-8px;padding-inline:12px}
+  .sc-table td.sc-sure{margin-inline:-12px;padding-inline:12px}
+}
+/* The desktop: one grid for every row (subgrid), the figures in columns under their names, the how-sure line under
+   each row's figures across their columns, the row's name beside both. */
+@media (min-width:960px){
+  .sc-table{display:grid;grid-template-columns:minmax(8.5rem,1.15fr) repeat(4,minmax(0,1fr))}
+  .sc-table--v1{grid-template-columns:minmax(8.5rem,1fr) minmax(0,2fr)}
+  .sc-table--v2{grid-template-columns:minmax(8.5rem,1.2fr) repeat(2,minmax(0,1fr))}
+  .sc-table--v3{grid-template-columns:minmax(8.5rem,1.15fr) repeat(3,minmax(0,1fr))}
+  .sc-table caption{grid-column:1/-1;display:block}
+  .sc-table thead,.sc-table tbody,.sc-table tr{display:grid;grid-column:1/-1;grid-template-columns:subgrid}
+  .sc-table thead,.sc-table tbody{background:var(--ledger)}
+  .sc-table tr{position:relative;padding-inline:20px}
+  .sc-table th,.sc-table td{display:block;padding:12px 18px 12px 0}
+  .sc-table thead th{padding-block:13px 10px}
+  .sc-table thead tr{border-bottom:1px solid var(--ledger-rule)}
+  .sc-table thead th:last-child:not(:nth-child(2)){position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%)}
+  .sc-table tbody tr+tr{border-top:1px solid var(--ledger-rule)}
+  .sc-table tbody th{grid-row:span 2;font-size:1.1875rem;line-height:1.3}
+  .sc-table tr.sc-our::before{content:"";position:absolute;left:0;top:0;bottom:0;width:3px;background:var(--mark)}
+  .sc-table td.sc-sure{grid-column:2/-1;padding:0 0 15px;font-size:.875rem}
+  .sc-table td.sc-sure::before{content:attr(data-k);content:attr(data-k) / "";margin-right:.6em;color:var(--ink-soft)}
 }
 @media (max-width:599px){
   /* The answer opens the page: pretty, as the site's first screens; balance, which Chromium gives only a paragraph of
      up to six lines, set a short second paragraph narrower than a long first */
   .sp-top .sp-answer{text-wrap:pretty}
-  .sc-table thead{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%)}
-  .sc-table tbody{display:block;border-top:1px solid var(--hair-strong)}
-  .sc-table tr{display:block;padding:12px 0 13px;border-bottom:1px solid var(--hair)}
-  .sc-table th,.sc-table td{display:block;padding:0;border:0}
-  .sc-table tbody th{margin-bottom:6px;font-size:1rem}
-  .sc-table td{display:grid;grid-template-columns:6.5rem minmax(0,1fr);column-gap:12px;padding:3px 0}
-  .sc-table td::before{content:attr(data-k);padding-top:2px;font-size:.6875rem;letter-spacing:.09em;text-transform:uppercase;color:var(--ink-quiet)}
-  /* an empty cell keeps its label and says it has no sourced figure (the words stand in the cell's data-none) */
-  .sc-table td:empty::after{content:attr(data-none);color:var(--ink-quiet)}
 }
 
 /* ---------- A source without an address of its own: the same line as a linked one ---------- */

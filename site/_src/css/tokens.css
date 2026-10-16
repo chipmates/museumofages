@@ -21,6 +21,9 @@
   --line:#343747;
   --line-wall:#41465a;
   --line-strong:#8b92a5;
+  /* A rule a reader follows: rows of a table, entries of a list, a section's start. 2.2:1 on the page, 2.2:1 on the wall. */
+  --line-row:#50556a;
+  --line-row-wall:#5c6278;
   --frame:#70604e;
   /* The stone sheet: a reading page in the device's light setting. */
   --stone:#e8e6df;
@@ -30,6 +33,8 @@
   --stone-text-3:#555a6c;
   --stone-line:#c8c7c4;
   --stone-line-strong:#6b7184;
+  /* The stone's rule a reader follows: 2.2:1 on the sheet. */
+  --stone-line-row:#9c9b97;
   --stone-door-warm:#2e344a;
   --brick:#9f4325;
   --brick-text:#90391e;
@@ -39,4 +44,9 @@
   --sure-reconstructed:#d2a557;
   --sure-conjectural:#df9385;
   --sure-unknown:#a8b3b7;
+  /* The same four on the stone sheet, darkened toward the page in OKLab so a bead keeps 3:1 there. */
+  --sure-documented-stone:color-mix(in oklab,var(--sure-documented) 62%,var(--page));
+  --sure-reconstructed-stone:color-mix(in oklab,var(--sure-reconstructed) 62%,var(--page));
+  --sure-conjectural-stone:color-mix(in oklab,var(--sure-conjectural) 62%,var(--page));
+  --sure-unknown-stone:color-mix(in oklab,var(--sure-unknown) 62%,var(--page));
 }

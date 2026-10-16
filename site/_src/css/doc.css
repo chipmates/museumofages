@@ -7,10 +7,14 @@
 .statement__head{position:relative;padding-top:22px}
 .statement__head::before{content:"";position:absolute;left:0;top:0;width:28px;height:1px;background:var(--mark)}
 .statement h1{font-size:clamp(2.4rem,10vw,3.25rem);line-height:1.05;letter-spacing:-.012em}
-.statement__body section{padding-top:30px;margin-top:30px;border-top:1px solid var(--hair)}
-.statement__body section:first-child{margin-top:0;border-top-color:var(--hair-strong)}
-.statement__body h2{font-size:1.75rem;line-height:1.15}
-.statement__body h3{margin-top:26px;font-family:var(--sans);font-size:.75rem;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-soft)}
+/* A section starts on a rule a reader follows with a short chalk bar on it, as on every page of the site. */
+.statement__body section{position:relative;padding-top:28px;margin-top:56px;border-top:1px solid var(--rule)}
+.statement__body section::before{content:"";position:absolute;left:0;top:-2px;width:56px;height:3px;background:var(--mark)}
+.statement__body section:first-child{margin-top:0}
+.statement__body h2{font-size:clamp(1.75rem,7.6vw,2rem);line-height:1.12;color:var(--ink)}
+/* A part inside a section: a heading of the serif, a step under the section's. */
+.statement__body h3{margin-top:30px;font-size:1.3125rem;line-height:1.25;color:var(--ink)}
+.statement__body [id]{scroll-margin-top:calc(var(--top-h) + 18px)}
 .statement__body p{margin-top:12px;color:var(--ink-body);max-width:38rem}
 /* A link in running text stays in its line: its padding makes the target taller without moving a line. */
 .statement__body p a:not(.more),.statement__body li a,.card dd a{padding:13px 0}
@@ -21,30 +25,32 @@
 /* The list's mark is an upright chalk line beside each entry: a short level line would read as a dash. */
 .bullets li::before{content:"";position:absolute;left:0;top:.42em;bottom:.42em;width:1px;background:var(--mark)}
 .bullets a,.statement__body li a{overflow-wrap:anywhere}
-.toc{font-family:var(--sans);font-size:.9375rem}
+/* On this page: the ledger, one entry a line with a rule under it, as on the question pages. */
+.toc{font-family:var(--sans);font-size:.9375rem;padding:14px 16px 4px;margin-inline:-6px;background:var(--ledger);box-shadow:inset 0 2px 0 var(--mark)}
 .toc__h{font-size:.75rem;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-soft)}
-.toc ol{margin-top:6px;columns:2;column-gap:20px}
-.toc li{break-inside:avoid}
+.toc ol{margin-top:6px}
+.toc li+li{border-top:1px solid var(--ledger-rule)}
 /* A long list of long headings: one column, numbered, so a section is found at a glance. */
 .toc--long ol{columns:1;counter-reset:toc}
 .toc--long li{counter-increment:toc}
 .toc--long a{min-height:44px;padding:5px 0;align-items:baseline;gap:.7em}
 .toc--long a::before{content:counter(toc);flex:none;min-width:1.3em;color:var(--ink-quiet)}
-.toc a{display:flex;align-items:center;min-height:50px;line-height:1.3;color:var(--ink-soft);text-decoration:none}
-.toc a:hover{color:var(--ink);text-decoration:underline}
-.pair{margin-top:18px;display:grid;gap:0;border-top:1px solid var(--hair)}
-.pair>div{padding:16px 0 18px;border-bottom:1px solid var(--hair)}
-.pair dt,.card dt{font-family:var(--sans);font-size:.75rem;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-soft)}
+.toc a{display:flex;align-items:center;min-height:44px;padding:7px 0;line-height:1.3;color:var(--ink);text-decoration:none}
+.toc a:hover{color:var(--mark-ink);text-decoration:underline;text-decoration-color:var(--mark)}
+.pair{margin-top:18px;display:grid;gap:0;border-top:1px solid var(--rule)}
+.pair>div{padding:16px 0 18px;border-bottom:1px solid var(--rule)}
+/* A value's name: sentence case at 14 px in the secondary ink, never small capitals at 12 (the weakest case on dark). */
+.pair dt,.card dt{font-family:var(--sans);font-size:.875rem;letter-spacing:.02em;color:var(--ink-soft)}
 .pair dd{margin-top:6px;color:var(--ink-body);max-width:38rem}
 /* The four grades, each explained: its bead and its word, then what it means. */
-.graded{margin-top:18px;max-width:38rem;border-top:1px solid var(--hair)}
-.graded>div{padding:14px 0 16px;border-bottom:1px solid var(--hair)}
+.graded{margin-top:18px;max-width:38rem;border-top:1px solid var(--rule)}
+.graded>div{padding:14px 0 16px;border-bottom:1px solid var(--rule)}
 .graded dt{display:flex;align-items:center;gap:12px;font-family:var(--sans);font-size:.8125rem;letter-spacing:.1em;text-transform:uppercase;color:var(--ink)}
 .graded dd{margin-top:6px;color:var(--ink-body)}
 /* The honesty line: lettering with the chalk rule beside it. */
 .honesty{margin-top:18px!important;padding:4px 0 4px 20px;border-left:2px solid var(--mark);font-size:clamp(1.5rem,7vw,2.125rem);line-height:1.2;letter-spacing:-.005em;color:var(--ink)!important;text-wrap:balance}
-.kinds{margin-top:10px;max-width:38rem;border-bottom:1px solid var(--hair)}
-.kinds li{padding:9px 0;border-top:1px solid var(--hair);font-family:var(--sans);font-size:.9375rem;line-height:1.45;color:var(--ink-body)}
+.kinds{margin-top:10px;max-width:38rem;border-bottom:1px solid var(--rule)}
+.kinds li{padding:9px 0;border-top:1px solid var(--rule);font-family:var(--sans);font-size:.9375rem;line-height:1.45;color:var(--ink-body)}
 /* The ways from the statement to a wing's own lists, and to the organisation's other site. */
 .ways{margin-top:6px}
 .statement__body h2+.ways{margin-top:12px}
@@ -54,10 +60,10 @@
    ledger of a word and what is true of it today. */
 .mission__one{margin-top:16px!important;font-size:clamp(1.375rem,5.8vw,1.75rem);line-height:1.28;letter-spacing:-.004em;color:var(--ink)!important;text-wrap:balance}
 :lang(de) .mission__one{hyphens:manual;-webkit-hyphens:manual}
-.mission__role{margin-top:10px;max-width:38rem;border-bottom:1px solid var(--hair)}
-.mission__role li{padding:10px 0 11px;border-top:1px solid var(--hair);color:var(--ink-body)}
+.mission__role{margin-top:10px;max-width:38rem;border-bottom:1px solid var(--rule)}
+.mission__role li{padding:10px 0 11px;border-top:1px solid var(--rule);color:var(--ink-body)}
 .mission__bars{margin-top:10px;max-width:38rem}
-.mission__bars>div{display:grid;grid-template-columns:minmax(0,7.6rem) minmax(0,1fr);column-gap:16px;align-items:baseline;padding:11px 0 12px}
+.mission__bars>div{display:grid;grid-template-columns:minmax(0,7.6rem) minmax(0,1fr);column-gap:16px;align-items:baseline;padding:11px 0 12px;border-top:1px solid var(--rule)}
 .mission__bars dd{margin-top:0}
 @media (max-width:359px){.mission__bars>div{grid-template-columns:1fr;row-gap:2px}}
 .mission__close{margin-top:26px!important;padding-top:22px;border-top:1px solid var(--hair)}
@@ -122,8 +128,12 @@
   .toc ol{columns:1}
   .statement__body{grid-column:5/12;grid-row:2}
   .statement__body--alone{grid-column:1/8}
-  .statement__body h2{font-size:2.125rem}
-  .statement__body section{padding-top:38px;margin-top:38px}
+  .statement__body h2{font-size:2.375rem;line-height:1.1}
+  .statement__body section{padding-top:36px;margin-top:80px}
+  .toc{margin-inline:0}
+  .toc a{font-size:.875rem;min-height:40px;padding:6px 0 6px 12px;margin-left:-12px;border-left:3px solid transparent;color:var(--ink-soft)}
+  .toc ol{scroll-target-group:auto}
+  .toc a:target-current{border-left-color:var(--mark);color:var(--ink)}
   .statement__end{grid-auto-flow:column;align-items:center;gap:26px;justify-content:start}
   .card>div{grid-template-columns:11rem 1fr}
   .honesty{padding-left:28px}
