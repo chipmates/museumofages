@@ -28,5 +28,38 @@
     "line": "Qué dibujó Leonardo da Vinci, qué se construyó y qué era anterior a él."
    }
   ]
+ },
+ "animals": {
+  "name": "Animales",
+  "topics": [
+   {
+    "name": "¿Cuánto medía el megalodón?",
+    "line": "Unos 16 m según la única columna vertebral larga hallada, los más grandes quizá unos 20 m. Comparado con una persona, un tiburón blanco y una ballena azul."
+   },
+   {
+    "name": "¿Cuál fue el dinosaurio más grande?",
+    "line": "Siete de los nuestros junto a una persona, a la misma escala: el más pesado, muy probablemente un titanosaurio de la Patagonia, el más alto, probablemente Sauroposeidon, y por qué el más largo sigue abierto."
+   },
+   {
+    "name": "¿Cuánto medía el T. rex?",
+    "line": "Un adulto grande medía unos 12 m de largo y unos 4 m a la altura de la cadera, y pesaba más o menos de 8 a 9 toneladas. Nuestro T. rex está hecho con las medidas de SUE y está junto a una persona a la misma escala, con una lista de lo que se encontró de SUE."
+   },
+   {
+    "name": "¿Cuánto medía el Spinosaurus?",
+    "line": "Los Spinosaurus adultos más grandes medían algo menos de 14 m y unas 7,4 toneladas, según un modelo. Nuestro Spinosaurus es un ejemplar joven de unos 10 m y está a la misma escala junto a una persona y junto a nuestro T. rex."
+   },
+   {
+    "name": "¿Cuánto medía el mamut lanudo?",
+    "line": "Un macho siberiano típico medía unos 2,7 a 2,9 m a la altura del hombro y pesaba unas 4 a 5 toneladas. Nuestro mamut lanudo es un macho real hallado congelado en 1900, de 2,71 m a la altura del hombro según una reconstrucción, junto a una persona a la misma escala."
+   },
+   {
+    "name": "¿Cuánto medía el Brachiosaurus?",
+    "line": "El Brachiosaurus medía unos 22 a 25 m de largo y pesaba más o menos de 30 a 45 toneladas, dos cifras reconstruidas a partir de un solo esqueleto parcial, y como a ese esqueleto le falta el cuello, su altura nunca se ha medido. Nuestro Brachiosaurus tiene el tamaño de ese esqueleto y está junto a una persona, con lo que se encontró y lo que se ha tomado prestado."
+   },
+   {
+    "name": "¿Cuánto medía el Triceratops?",
+    "line": "Un Triceratops adulto grande medía unos 7 a 8 m de largo, y dos modelos dan unas 6,5 a 8,5 toneladas para el esqueleto de Washington, un montaje de unos diez animales. Nuestro Triceratops sigue ese esqueleto y está junto a una persona a la misma escala, con su cráneo al lado de la persona, el Torosaurus y lo que dicen los huesos sobre el T. rex."
+   }
+  ]
  }
 }

@@ -1317,6 +1317,18 @@
    "sha256": "3ec35f25832fbd614502d459cac5c6fa32034322afb6526b32a704841742cdc0"
   },
   {
+   "path": "pages/pics/img/animals-biggest-dinosaurs-og-es-1200x630.png",
+   "url": "/static/img/animals-biggest-dinosaurs-og-es-1200x630.png",
+   "bytes": 175449,
+   "sha256": "ae430984b5092b7c67c3d894a4981692a94eb152c0ac150f221acc5727180549"
+  },
+  {
+   "path": "pages/pics/img/animals-biggest-dinosaurs-og-pt-br-1200x630.png",
+   "url": "/static/img/animals-biggest-dinosaurs-og-pt-br-1200x630.png",
+   "bytes": 173931,
+   "sha256": "a4b686fbc028e0fc8c844cf18f17ea4c25920b71d028ab962b771e484690a020"
+  },
+  {
    "path": "pages/pics/img/animals-biggest-dinosaurs-row-1600.avif",
    "url": "/static/img/animals-biggest-dinosaurs-row-1600.avif",
    "bytes": 15209,
@@ -1411,6 +1423,18 @@
    "url": "/static/img/animals-brachiosaurus-og-en-1200x630.png",
    "bytes": 95210,
    "sha256": "ead4135c4a2c01649805707731b3d7fae27f602d7a22c75ddd5b3b970a7a2053"
+  },
+  {
+   "path": "pages/pics/img/animals-brachiosaurus-og-es-1200x630.png",
+   "url": "/static/img/animals-brachiosaurus-og-es-1200x630.png",
+   "bytes": 97678,
+   "sha256": "bd0a5463b3e1c4993d7160499b4d8afe63ce92a17a01545453c85e39d418a814"
+  },
+  {
+   "path": "pages/pics/img/animals-brachiosaurus-og-pt-br-1200x630.png",
+   "url": "/static/img/animals-brachiosaurus-og-pt-br-1200x630.png",
+   "bytes": 97991,
+   "sha256": "c6320992e5f6cbb2fa8c447f7325592728b27ed91660e5146f430008a7ef65ca"
   },
   {
    "path": "pages/pics/img/animals-brachiosaurus-side-1600.avif",
@@ -1533,6 +1557,18 @@
    "sha256": "7bd946146e19ce2df2686bf8cd98374c9b5c6b180741a52792cabb8f617ee0e1"
   },
   {
+   "path": "pages/pics/img/animals-megalodon-og-es-1200x630.png",
+   "url": "/static/img/animals-megalodon-og-es-1200x630.png",
+   "bytes": 113564,
+   "sha256": "0ffd7e8d68e4ab025056943a286bf62220b011a410474995e335cfa129d51bbb"
+  },
+  {
+   "path": "pages/pics/img/animals-megalodon-og-pt-br-1200x630.png",
+   "url": "/static/img/animals-megalodon-og-pt-br-1200x630.png",
+   "bytes": 114339,
+   "sha256": "44dc07864b2efcdaff4fbdf51f7e98fc1af82f84fd37cba0c9233ca364e7e981"
+  },
+  {
    "path": "pages/pics/img/animals-megalodon-side-1600.avif",
    "url": "/static/img/animals-megalodon-side-1600.avif",
    "bytes": 7467,
@@ -1641,6 +1677,18 @@
    "sha256": "226682d79829ea014a6cf36df2cdce6af16ff4db1fd541b26aa4d94dc919c64e"
   },
   {
+   "path": "pages/pics/img/animals-og-es-1200x630.png",
+   "url": "/static/img/animals-og-es-1200x630.png",
+   "bytes": 106438,
+   "sha256": "a57c25f82710af448658efe23ca94bffe27adb87732757f72dcb704dab5de580"
+  },
+  {
+   "path": "pages/pics/img/animals-og-pt-br-1200x630.png",
+   "url": "/static/img/animals-og-pt-br-1200x630.png",
+   "bytes": 106926,
+   "sha256": "d31953cc2654dc47e1355a5c39f057ce4d2ce9c306c3fd24965c3811d9b29814"
+  },
+  {
    "path": "pages/pics/img/animals-spinosaurus-beside-t-rex-1600.avif",
    "url": "/static/img/animals-spinosaurus-beside-t-rex-1600.avif",
    "bytes": 13671,
@@ -1737,6 +1785,18 @@
    "sha256": "f092b90dc4a54901fc304ffa6ecc4445f1ea2c10a13a87940d017904334123bb"
   },
   {
+   "path": "pages/pics/img/animals-spinosaurus-og-es-1200x630.png",
+   "url": "/static/img/animals-spinosaurus-og-es-1200x630.png",
+   "bytes": 106326,
+   "sha256": "0a6c3cc37c80880348e35a8a847b13d04a4baa2b7ae03fc4700e83e76b0fa809"
+  },
+  {
+   "path": "pages/pics/img/animals-spinosaurus-og-pt-br-1200x630.png",
+   "url": "/static/img/animals-spinosaurus-og-pt-br-1200x630.png",
+   "bytes": 106890,
+   "sha256": "ecfb59edea6b7d43b656e3172e2ab84915f726e7bb12143f619f726a9b319de5"
+  },
+  {
    "path": "pages/pics/img/animals-spinosaurus-side-1600.avif",
    "url": "/static/img/animals-spinosaurus-side-1600.avif",
    "bytes": 17878,
@@ -1831,6 +1891,18 @@
    "url": "/static/img/animals-t-rex-og-en-1200x630.png",
    "bytes": 112810,
    "sha256": "9f89c6fbf705156e41fcfb019c7ac4198bde223888994d9e2531ce37205509dd"
+  },
+  {
+   "path": "pages/pics/img/animals-t-rex-og-es-1200x630.png",
+   "url": "/static/img/animals-t-rex-og-es-1200x630.png",
+   "bytes": 114943,
+   "sha256": "48771b101a76b055eddab570ed1df90432670e412970a425d9ba34bd7aab70c0"
+  },
+  {
+   "path": "pages/pics/img/animals-t-rex-og-pt-br-1200x630.png",
+   "url": "/static/img/animals-t-rex-og-pt-br-1200x630.png",
+   "bytes": 116524,
+   "sha256": "200a5415bdce8f30ae87c56fa17cab98b378f8cc3d1b9f8c11bd56ae5f4374e4"
   },
   {
    "path": "pages/pics/img/animals-t-rex-side-1600.avif",
@@ -1941,6 +2013,18 @@
    "sha256": "25789a0a3903f221f7480f663b6367733d20117c724a5a35edc05a0038bb9904"
   },
   {
+   "path": "pages/pics/img/animals-triceratops-og-es-1200x630.png",
+   "url": "/static/img/animals-triceratops-og-es-1200x630.png",
+   "bytes": 140968,
+   "sha256": "46ba681b6de687cd20d1c3d925a651c39d9026a4ab393002a93de02e8357c42a"
+  },
+  {
+   "path": "pages/pics/img/animals-triceratops-og-pt-br-1200x630.png",
+   "url": "/static/img/animals-triceratops-og-pt-br-1200x630.png",
+   "bytes": 141941,
+   "sha256": "35c1df06a4a0df274b03f5d9867f047fd17f612eb01790a72216a4643df8f464"
+  },
+  {
    "path": "pages/pics/img/animals-triceratops-side-1600.avif",
    "url": "/static/img/animals-triceratops-side-1600.avif",
    "bytes": 38895,
@@ -2035,6 +2119,18 @@
    "url": "/static/img/animals-woolly-mammoth-og-en-1200x630.png",
    "bytes": 244898,
    "sha256": "4d2f37d9d9397bdb5a9a95bca86bcf7aa826445e9c7803ccb6086a438412ad51"
+  },
+  {
+   "path": "pages/pics/img/animals-woolly-mammoth-og-es-1200x630.png",
+   "url": "/static/img/animals-woolly-mammoth-og-es-1200x630.png",
+   "bytes": 245798,
+   "sha256": "0a01d800c3579f09225927a58c07a5a93bcbb25d3d8f5492f2b4c4d22dc28eb7"
+  },
+  {
+   "path": "pages/pics/img/animals-woolly-mammoth-og-pt-br-1200x630.png",
+   "url": "/static/img/animals-woolly-mammoth-og-pt-br-1200x630.png",
+   "bytes": 243864,
+   "sha256": "7de8fd468e33e04c01a301452b7220d4fd0cb23577cb0e244912cdf1a31f1dff"
   },
   {
    "path": "pages/pics/img/animals-woolly-mammoth-side-1600.avif",

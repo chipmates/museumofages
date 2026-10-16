@@ -1,0 +1,505 @@
+{
+ "_note": "LAS PALABRAS de la página del mamut lanudo, en español. Reescritas a partir del inglés y del alemán, con las mismas cifras, fuentes y grados de certeza. Nuestro mamut es un solo macho real: sus cifras nunca son las de la especie. Estado ai: ninguna persona las ha revisado todavía.",
+ "page": {
+  "id": "animals-woolly-mammoth",
+  "wing": "animals",
+  "topic": "woolly_mammoth",
+  "published": null,
+  "join_names": true,
+  "og_image": {
+   "file": "animals-woolly-mammoth-og-{lang}-1200x630.png",
+   "width": 1200,
+   "height": 630,
+   "layout": "beside"
+  }
+ },
+ "pics": {
+  "side": {
+   "stem": "animals-woolly-mammoth-side",
+   "widths": [
+    800,
+    1600,
+    2400
+   ],
+   "sizes": "(min-width: 1280px) 588px, (min-width: 960px) calc(100vw - 80px), (min-width: 600px) calc(100vw - 64px), calc(100vw - 40px)",
+   "person": "91.9% 40.85%",
+   "marks": {
+    "mammoth": "4.64% 83.58%",
+    "person": "89.13% 94.66%",
+    "shoulder": "37.74% 49.06%"
+   },
+   "behind": [
+    "shoulder"
+   ]
+  },
+  "close": {
+   "stem": "animals-woolly-mammoth-close",
+   "widths": [
+    800,
+    1600
+   ],
+   "sizes": "(min-width: 1280px) 690px, (min-width: 960px) 54vw, (min-width: 600px) calc(100vw - 64px), calc(100vw - 40px)",
+   "person": "85.87% 40.85%"
+  },
+  "megalodon": {
+   "stem": "animals-megalodon-side",
+   "widths": [
+    800,
+    1600,
+    2400
+   ],
+   "sizes": "(min-width: 1280px) 690px, (min-width: 960px) 54vw, (min-width: 600px) calc(100vw - 64px), calc(100vw - 40px)"
+  },
+  "dinosaurs": {
+   "stem": "animals-biggest-dinosaurs-row",
+   "widths": [
+    800,
+    1600
+   ],
+   "sizes": "(min-width: 1280px) 690px, (min-width: 960px) 54vw, (min-width: 600px) calc(100vw - 64px), calc(100vw - 40px)"
+  },
+  "trex": {
+   "stem": "animals-t-rex-side",
+   "widths": [
+    800,
+    1600,
+    2400
+   ],
+   "sizes": "(min-width: 1280px) 690px, (min-width: 960px) 54vw, (min-width: 600px) calc(100vw - 64px), calc(100vw - 40px)"
+  }
+ },
+ "meta": {
+  "title": "Tamaño del mamut lanudo: unos 2,7 a 3,3 m | Museum of Ages",
+  "description": "¿Cuánto medía el mamut lanudo? Un macho de Siberia, unos 2,7 a 2,9 m a la altura del hombro y unas 4 a 5 t. El nuestro es un macho real, a escala.",
+  "og_title": "Tamaño del mamut lanudo: unos 2,7 a 3,3 m",
+  "og_image_alt": "Un mamut lanudo de lado, con pelaje marrón oscuro: la cabeza alta y abombada, el lomo en pendiente, dos colmillos curvos y una marca en el hombro. La persona gris de al lado queda más baja que las puntas de los colmillos."
+ },
+ "labels": {
+  "crumbs": "Estás aquí",
+  "crumb_home": "Museo",
+  "crumb_here": "Mamut lanudo",
+  "toc": "En esta página",
+  "tag_made": "Hecho para esta página",
+  "tag_built": "Reconstrucción",
+  "person": "1,70 m",
+  "to_table": "Las cifras en una tabla",
+  "no_figure": "sin cifra con fuente",
+  "og_answer": "Un macho de Siberia medía unos 2,7 a 2,9 m a la altura del hombro"
+ },
+ "top": {
+  "h1": "¿Cuánto medía el mamut lanudo?",
+  "answer": "Un macho adulto de mamut lanudo de Siberia medía unos 2,7 a 2,9 m a la altura del hombro y pesaba unas 4 a 5 toneladas. Los machos más grandes de Europa llegaban a unos 3 a 3,3 m y a unas 5 a 7 toneladas. El nuestro es un solo macho real, encontrado congelado en 1900: 2,71 m a la altura del hombro y unas 4,2 toneladas, reconstruidos a partir de sus huesos. Junto a la persona de 1,70 m, su hombro está a la altura de una persona y media.",
+  "answer_more": "Así que un macho de mamut de Siberia era más o menos igual de alto que un macho de elefante asiático, y un poco más pesado para su altura. Un macho grande de elefante africano de sabana es más o menos medio metro más alto y pesa más.",
+  "scale": {
+   "pic": "side",
+   "tag": "tag_made",
+   "what": "Nuestro mamut lanudo junto a una persona de 1,70 m, a la misma escala. Está hecho con el tamaño y el armazón de un solo animal real, el macho de Berezovka, encontrado congelado en 1900 en el noreste de Siberia. La marca en su hombro es su propia altura en vida, 271 cm, reconstruida a partir de sus huesos. Cuando murió le quedaba un solo colmillo, el izquierdo. El derecho se le había caído mucho antes, y los cazadores que lo encontraron cortaron el izquierdo y lo vendieron. El nuestro lleva los dos: el derecho es el reflejo del izquierdo, una reconstrucción.",
+   "alt": "Un mamut lanudo de lado, con pelaje marrón oscuro: la cabeza alta y abombada, el lomo en pendiente, dos colmillos curvos y una marca en el hombro. La persona gris de al lado queda más baja que las puntas de los colmillos.",
+   "note": "Nuestra propia reconstrucción, construida en código a partir de medidas publicadas y dibujada con nuestro propio motor gráfico. No son fotografías.",
+   "marks": [
+    {
+     "span": "mammoth",
+     "text": "Nuestro mamut, el macho de Berezovka"
+    },
+    {
+     "span": "shoulder",
+     "text": "Su hombro, 271 cm en vida, según una reconstrucción"
+    },
+    {
+     "span": "person",
+     "text": "La persona, 1,70 m"
+    }
+   ],
+   "close": {
+    "pic": "close",
+    "tag": "tag_made",
+    "what": "La cabeza, más de cerca, con la persona: el ojo entre el pelo largo, la punta de la trompa con su dedo y los colmillos. Los dos colmillos son reconstrucciones: el izquierdo, con un tamaño calculado a partir del peso de su único colmillo, y el derecho, como su reflejo.",
+    "alt": "La cabeza del mamut lanudo más de cerca: el ojo entre el pelo largo, la punta de la trompa con su dedo apoyada en el suelo y dos colmillos curvos. Al lado está la persona gris."
+   }
+  },
+  "guess": {
+   "h": "Para adivinar",
+   "q": "¿Qué edad tenía el macho de Berezovka cuando murió?",
+   "button": "Ver la respuesta",
+   "a": "Unos 45 a 50 años, según el museo que lo conserva. Era un macho adulto, así que su tamaño es el de un adulto, no el de un animal joven.",
+   "button_open": "Ocultar la respuesta"
+  },
+  "out": {
+   "text": "El ala de este animal todavía se está construyendo. El ala de Leonardo da Vinci ya está abierta hoy.",
+   "link": "Ir al ala de Leonardo"
+  }
+ },
+ "blocks": [
+  {
+   "type": "numbers",
+   "id": "numbers",
+   "nav": "Las cifras",
+   "h": "Las cifras",
+   "unit": "En metros y toneladas. Altura del hombro en vida, machos adultos si la fila no dice otra cosa. Donde no hay una cifra con fuente, la celda queda vacía.",
+   "cols": [
+    "Animal",
+    "Altura del hombro, en vida",
+    "Peso",
+    "Certeza"
+   ],
+   "rows": [
+    {
+     "cells": [
+      "Nuestro mamut, el macho de Berezovka",
+      "271 cm",
+      "unas 4,2 t con su pelaje",
+      "reconstruido a partir de sus propios huesos, en el estudio de 2016"
+     ]
+    },
+    {
+     "cells": [
+      "Un macho típico de Siberia",
+      "unos 2,7 a 2,9 m",
+      "unas 4 a 5 t",
+      "un estudio de 2016, muchos esqueletos, un solo método"
+     ]
+    },
+    {
+     "cells": [
+      "Un macho grande de Europa",
+      "unos 3 a 3,3 m",
+      "unas 5 a 7 t, los más grandes de todos, más de 8 t",
+      "el mismo estudio y el mismo método"
+     ]
+    },
+    {
+     "cells": [
+      "Una hembra",
+      "unos 2,3 a 2,6 m",
+      "unas 2,8 a 4,2 t",
+      "cinco esqueletos en el mismo estudio"
+     ]
+    },
+    {
+     "cells": [
+      "Un macho de elefante asiático",
+      "unos 2,6 a 2,9 m",
+      "unas 3,5 a 4,6 t",
+      "el mismo estudio y el mismo método"
+     ]
+    },
+    {
+     "cells": [
+      "Un macho de elefante africano de sabana",
+      "unos 3 a 3,4 m",
+      "unas 5,2 a 6,9 t",
+      "el mismo estudio y el mismo método"
+     ]
+    },
+    {
+     "cells": [
+      "La persona",
+      "1,70 m de alto, de la cabeza a los pies",
+      "",
+      "nuestra figura de escala"
+     ]
+    }
+   ]
+  },
+  {
+   "type": "text",
+   "id": "elephants",
+   "nav": "Mamut lanudo vs elefante",
+   "h": "Mamut lanudo vs elefante",
+   "paras": [
+    "El mamut lanudo, Mammuthus primigenius, era un pariente cercano de los elefantes de hoy, y no su antepasado. Un macho típico de Siberia era más o menos igual de alto que un macho de elefante asiático, y un poco más pesado para esa altura. Su pelvis era más ancha, y los huesos de la parte de arriba de sus patas, más largos. Un macho de elefante africano de sabana, el animal terrestre más grande que vive hoy, es hasta medio metro más alto, más o menos, y pesa unas 5 a 7 toneladas. Los grandes machos de mamut de Europa lo igualaban. A diferencia de cualquier elefante, el mamut tenía un pelaje espeso, orejas pequeñas y una cola corta."
+   ]
+  },
+  {
+   "type": "text",
+   "id": "looks",
+   "nav": "Cómo era",
+   "h": "Cómo era",
+   "subs": [
+    {
+     "h": "El pelaje",
+     "paras": [
+      "Tres capas: pelos largos y oscuros por fuera, una capa media más clara y una lana pálida por debajo. En vida, el pelaje probablemente era marrón oscuro, y no de un solo color. El tono pelirrojo del pelo de los museos es un color del entierro: en el suelo helado, el pelo pierde su propio color y toma el de la tierra. El pelo más largo de nuestro macho, en la barbilla y el pecho, medía unos 50 cm, según el cálculo del jefe de la excavación."
+     ]
+    },
+    {
+     "h": "Los colmillos",
+     "paras": [
+      "Se curvaban hacia fuera y hacia abajo, luego hacia arriba y hacia dentro, como una espiral abierta, y estaban gastados en el lado de fuera de la punta. Los colmillos de los machos viejos llegaban a 4 m y a unos 100 kg, según el museo que conserva a nuestro macho. Los de las hembras eran más pequeños y casi rectos, de unos 2 a 2,2 m."
+     ]
+    },
+    {
+     "h": "La trompa y las orejas",
+     "paras": [
+      "La trompa terminaba en un dedo largo arriba y un lóbulo corto abajo, como muestran las trompas congeladas. Más abajo se ensanchaba entre dos pliegues de piel, que ningún elefante vivo tiene, y para qué servían todavía se discute. Las orejas eran pequeñas, de unos 30 cm de alto en un macho congelado. La cola era corta, de 36 cm en nuestro macho, con un mechón de pelo largo."
+     ]
+    },
+    {
+     "h": "La joroba y el lomo",
+     "paras": [
+      "Lo alto de la cabeza era el punto más alto. Detrás venía un hundimiento, luego una joroba sobre los hombros, sostenida por las espinas altas de las vértebras de la espalda, y después un lomo que bajaba hasta unas caderas bajas. Los machos viejos tenían una cintura entre la joroba y la cabeza."
+     ]
+    }
+   ]
+  },
+  {
+   "type": "text",
+   "id": "found",
+   "nav": "Lo que se encontró",
+   "h": "Lo que se encontró",
+   "subs": [
+    {
+     "h": "El macho de Berezovka",
+     "paras": [
+      "En agosto de 1900, un cazador de la zona lo encontró en la orilla del río Berezovka, un afluente del Kolimá en el noreste de Siberia. En 1901, una expedición de San Petersburgo dirigida por Otto Herz lo desenterró, y en 1902 llegó a la ciudad. Desde 1903 se exhibe allí, en el Museo Zoológico. El esqueleto está montado. El cuerpo está restaurado en la postura en que lo encontraron, tumbado sobre el vientre con las patas delanteras hacia delante, y la cabeza y la trompa son modelos. Estaba lejos de estar completo: lo alto de la cabeza y gran parte del lomo se habían descongelado y habían sido comidos mucho antes, y faltaba casi toda la trompa. Tenía hierba entre los dientes. Lo más probable es que cayera en una zanja o desde una orilla alta, se rompiera la pelvis y una pata delantera y no pudiera salir. Las semillas de las plantas que había comido apuntan al final del verano."
+     ]
+    },
+    {
+     "h": "Lo que se midió en él",
+     "paras": [
+      {
+       "points": [
+        "La longitud de sus huesos largos y la anchura de su pelvis, y a partir de ellas su altura y su peso.",
+        "La anchura de su cráneo y de su mandíbula.",
+        "Su cola, de 36 cm, y su piel, de 19 a 23 mm de grosor.",
+        "Su pelo de las patas, la barbilla y el pecho.",
+        "El peso de su único colmillo, unos 29 kg."
+       ]
+      }
+     ]
+    },
+    {
+     "h": "De otros mamuts, o reconstruido",
+     "paras": [
+      {
+       "points": [
+        "La cabeza, la oreja, el ojo y la pata delantera: según otro macho congelado de Siberia.",
+        "La silueta de lado: según la reconstrucción de un tercer macho hecha por Larramendi, 2016.",
+        "La trompa: según otros mamuts congelados.",
+        "La forma de cada hueso: según otros esqueletos montados. Solo las longitudes y las anchuras son suyas.",
+        "El colmillo derecho: el reflejo del izquierdo.",
+        "El color del pelaje: elección nuestra."
+       ]
+      }
+     ]
+    }
+   ],
+   "end": [
+    "Así que nuestro mamut es un solo animal en su tamaño y su armazón, y varios en su forma."
+   ]
+  },
+  {
+   "type": "text",
+   "id": "last-ones",
+   "nav": "¿Cuándo se extinguió el mamut lanudo?",
+   "h": "¿Cuándo se extinguió el mamut lanudo?",
+   "paras": [
+    "Los mamuts lanudos vivieron durante cientos de miles de años, en la última glaciación desde España hasta Alaska, y desaparecieron por etapas, no todos a la vez. En el continente, los últimos vivieron en el norte de Siberia hasta hace unos 10 000 años, y en la isla Saint Paul, frente a Alaska, hasta hace unos 5600 años. La última población que se conoce vivió en la isla de Wrangel, en el océano Ártico frente a Siberia, hasta hace unos 4000 años, y no eran enanos. Por qué se extinguieron se discute: en el continente, el calentamiento del final de la glaciación y la caza por parte de las personas, en proporciones que nadie ha aclarado. En Saint Paul, la isla se encogió y faltó agua dulce, y allí no había personas. En Wrangel, el final parece haber llegado rápido, y nadie sabe por qué: una capa de hielo por la lluvia sobre la nieve es una idea, y no se puede descartar a las personas."
+   ]
+  },
+  {
+   "type": "text",
+   "id": "how-sure",
+   "nav": "Cuán seguro es esto",
+   "h": "Cuán seguro es esto",
+   "paras": [
+    "Dos cosas deciden cada cifra de esta página.",
+    {
+     "points": [
+      [
+       "De dónde vienen las alturas y los pesos:",
+       "un estudio de 2016 reunió las medidas de muchos esqueletos de mamuts y de elefantes e hizo los cálculos de la misma manera para todos. La altura es la del esqueleto más alrededor de un 5,5 por ciento por la carne, y el peso es el volumen de un cuerpo dibujado alrededor de los huesos. No hemos encontrado nada más reciente."
+      ],
+      [
+       "El nuestro es un animal, no la especie:",
+       "un solo macho de Siberia, un poco por debajo de la media de Siberia. Por eso aquí hay tres cifras separadas: nuestro macho, el macho típico de Siberia y los grandes machos de Europa."
+      ]
+     ]
+    }
+   ]
+  },
+  {
+   "type": "notes",
+   "id": "numbers-read",
+   "nav": "Cifras que quizá hayas leído",
+   "h": "Cifras que quizá hayas leído",
+   "intro": "Para cada cifra: de dónde viene y qué significa.",
+   "rows": [
+    {
+     "term": "3,4 m",
+     "text": "Una cifra de un manual de 2007 para un macho grande, que se extendió con una tabla de tamaños muy usada. Encaja con un macho grande de Europa, no con uno típico de Siberia, ni con el nuestro."
+    },
+    {
+     "term": "3,5 m, y colmillos de 4 m",
+     "text": "Máximos del museo de San Petersburgo. Machos de hasta 3,5 m, colmillos de machos viejos de hasta 4 m y unos 100 kg, no medias."
+    },
+    {
+     "term": "4 m de alto",
+     "text": "En la tabla de tamaños más extendida, el animal de 4 m es el mamut meridional, otra especie. Incluso los machos récord de mamut lanudo de Europa se quedaban por debajo de 4 m."
+    },
+    {
+     "term": "6 y 8 toneladas",
+     "text": "6 toneladas es la media de los grandes machos de Europa, y también la de los machos de elefante africano de sabana. Solo los más grandes de todos llegaban a 8 toneladas, como un macho de Siegsdorf, en Baviera, con unas 8,2 toneladas."
+    },
+    {
+     "term": "Pelaje pelirrojo",
+     "text": "El color del pelo que pasó miles de años en el suelo helado, perdiendo su propio pigmento y tomando el de la tierra. En vida, el pelaje probablemente era marrón oscuro y mezclado."
+    },
+    {
+     "term": "Una falda de pelo de 80 a 90 cm",
+     "text": "El museo que conserva a nuestro macho da esta cifra, y en otro lugar de la misma página, de 70 a 80 cm. En nuestro macho, la excavación encontró mechones de pelo arrancados de 36 cm. Enteros, medirían unos 50 cm, según el cálculo del jefe de la excavación."
+    },
+    {
+     "term": "Los mamuts se extinguieron hace 4000 años",
+     "text": "Más o menos cierto, y solo para la última población que se conoce, en la isla de Wrangel, hace unos 4000 años. En el continente, los últimos vivieron hasta hace unos 10 000 años."
+    },
+    {
+     "term": "Congelado con comida en la boca",
+     "text": "Nuestro macho tenía hierba entre los dientes. De ahí nació la imagen de un mamut que se congeló de golpe mientras comía. El jefe de la excavación interpretó el hallazgo como una caída, con huesos rotos y una agonía corta."
+    }
+   ]
+  },
+  {
+   "type": "text",
+   "id": "why",
+   "nav": "Por qué nuestro mamut lanudo se ve así",
+   "h": "Por qué nuestro mamut lanudo se ve así",
+   "paras": [
+    "Está hecho con las medidas de los huesos del macho de Berezovka y está de pie, dando un paso, con la punta de la trompa en el suelo."
+   ]
+  },
+  {
+   "type": "faq",
+   "id": "questions",
+   "nav": "Más preguntas",
+   "h": "Más preguntas",
+   "items": [
+    {
+     "q": "¿Hay otros mamuts congelados?",
+     "a": "Sí. El museo de San Petersburgo nombra varios más. Entre ellos, el mamut de Adams, de 1799, el primer esqueleto completo que tuvo la ciencia, y el mamut de Taimyr, de 1948, con músculo, piel y pelo. Gracias a los cuerpos congelados se conocen la trompa, las orejas y el pelaje de esta especie."
+    },
+    {
+     "q": "¿Hace cuánto vivió el macho de Berezovka?",
+     "a": "Hace unos 44 000 años, según la datación por radiocarbono del museo que lo conserva. El suelo helado guardó su piel, su pelo y la hierba entre sus dientes durante todo ese tiempo."
+    }
+   ]
+  },
+  {
+   "type": "text",
+   "id": "museum",
+   "nav": "En el museo",
+   "h": "En el museo",
+   "paras": [
+    "Museum of Ages es un museo digital, hecho por una organización sin fines de lucro. Entrada libre, sin cuenta. En el ala de los animales, este animal estará entre los demás, desde los gigantes de hace mucho tiempo hasta los últimos de su especie. El ala de Leonardo da Vinci muestra cómo es un ala terminada."
+   ],
+   "links": [
+    {
+     "out": true,
+     "text": "Ir al ala de Leonardo"
+    }
+   ]
+  },
+  {
+   "type": "pages",
+   "id": "next",
+   "items": [
+    {
+     "page": "megalodon",
+     "pic": "megalodon",
+     "alt": "Un tiburón con la boca abierta, visto de lado, gris oscuro con una franja más clara en el costado, junto a una persona gris que a su lado parece diminuta.",
+     "line": "El megalodón de la columna de Bruselas medía unos 16 m de largo, y los más grandes de su especie, quizá unos 20 m. Nuestro megalodón junto a una persona, a la misma escala."
+    },
+    {
+     "page": "biggest-dinosaurs",
+     "pic": "dinosaurs",
+     "alt": "Siete dinosaurios en fila, vistos de lado, dos de ellos con cuellos largos muy por encima de los demás, y una persona gris que a su lado parece diminuta.",
+     "line": "Siete de los nuestros junto a una persona, a la misma escala: el más pesado, muy probablemente un titanosaurio de la Patagonia, el más alto, probablemente Sauroposeidon, y por qué el más largo sigue sin decidirse."
+    },
+    {
+     "page": "t-rex",
+     "pic": "trex",
+     "alt": "Un T. rex de lado, sobre dos patas, con la boca abierta y la cabeza levantada, junto a una persona gris que queda muy por debajo de sus caderas.",
+     "line": "Un T. rex adulto grande medía unos 12 m de largo y pesaba más o menos de 8 a 9 toneladas, según los huesos de SUE. Nuestro T. rex junto a una persona, con lo que se encontró de SUE."
+    }
+   ]
+  },
+  {
+   "type": "sources",
+   "id": "sources",
+   "nav": "Fuentes",
+   "h": "Fuentes",
+   "intro": "Las cifras vienen de estos estudios y de los museos que conservan los hallazgos. El museo es independiente de todos ellos.",
+   "read": [
+    {
+     "text": "Larramendi, 2016, Acta Palaeontologica Polonica, con su material complementario.",
+     "href": "https://doi.org/10.4202/app.00136.2014"
+    },
+    {
+     "text": "Herz, 1903, Annual Report of the Smithsonian Institution, el informe de la excavación en extractos en inglés.",
+     "href": "https://archive.org/details/annual-report-board-of-regents-smithsonian_1903"
+    },
+    {
+     "text": "Chernova y otros, 2015, Proceedings of the Zoological Institute RAS.",
+     "href": "https://zin.ru/journals/trudyzin/doc/vol_319_3/TZ_319_3_Chernova_2.pdf"
+    },
+    {
+     "text": "Tridico y otros, 2014, Quaternary Science Reviews, tal como lo resume Chernova 2015.",
+     "href": "https://doi.org/10.1016/j.quascirev.2013.10.032"
+    },
+    {
+     "text": "Belyaev y otros, 2025, Journal of Anatomy, el resumen del estudio."
+    },
+    {
+     "text": "Díez-del-Molino y otros, 2023, Current Biology, el resumen del estudio.",
+     "href": "https://doi.org/10.1016/j.cub.2023.03.084"
+    },
+    {
+     "text": "Nogués-Bravo y otros, 2008, PLoS Biology, el resumen del estudio.",
+     "href": "https://doi.org/10.1371/journal.pbio.0060079"
+    },
+    {
+     "text": "Graham y otros, 2016, PNAS, el resumen del estudio.",
+     "href": "https://doi.org/10.1073/pnas.1604903113"
+    },
+    {
+     "text": "Arppe y otros, 2019, Quaternary Science Reviews, el resumen del estudio.",
+     "href": "https://doi.org/10.1016/j.quascirev.2019.105884"
+    },
+    {
+     "text": "Dehasque y otros, 2024, Cell, el resumen del estudio.",
+     "href": "https://doi.org/10.1016/j.cell.2024.05.033"
+    },
+    {
+     "text": "Lister y Bahn, 2007, Mammoths: Giants of the Ice Age, tal como lo nombra la línea de fuentes de una tabla de tamaños muy usada."
+    },
+    {
+     "text": "Instituto Zoológico de la Academia de Ciencias de Rusia, San Petersburgo: el mamut de Berezovka y la sala de los mamuts de su Museo Zoológico.",
+     "href": "https://www.zin.ru/museum/expositions/mammoth_fauna.html"
+    },
+    {
+     "text": "Universidad de Helsinki: su noticia de 2019 sobre el estudio de la isla de Wrangel.",
+     "href": "https://www.helsinki.fi/en/luomus/news/last-mammoths-died-remote-island"
+    }
+   ],
+   "contact": "Si una cifra o un museo está mal, escríbenos y lo corregiremos.",
+   "contact_link": "Ir al aviso legal",
+   "what_link": "Qué es este museo"
+  },
+  {
+   "type": "text",
+   "id": "pictures",
+   "nav": "Usa nuestras imágenes",
+   "h": "Usa nuestras imágenes",
+   "paras": [
+    [
+     "Las imágenes del mamut lanudo de esta página son obra nuestra, con licencia ",
+     {
+      "text": "CC BY-SA 4.0",
+      "href": "https://creativecommons.org/licenses/by-sa/4.0/deed.es"
+     },
+     ". Crédito: Museum of Ages. Muestran una reconstrucción, construida en código y dibujada con nuestro propio motor gráfico, no una fotografía. Las imágenes de las otras páginas que aparecen aquí dan su crédito en esas páginas."
+    ]
+   ]
+  }
+ ]
+}

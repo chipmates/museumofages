@@ -298,7 +298,7 @@
     "_note": "A wing in the making that already has pages of its own: pages_only keeps it off the landing's wall, its film and the menu until it opens, so it needs no collection, door, dates or pictures yet. Its pages stand in its own languages only (langs), and every page of it shows a plain link to the newest open wing where a door would stand. A topic page may carry its own about and never_say: those rules hold for that page alone, the wing's for all of them.",
     "state": "making",
     "pages_only": true,
-    "langs": ["en", "de"],
+    "langs": ["en", "de", "es", "pt-BR"],
     "count": "animals",
     "name": {
       "en": "Animals",
@@ -326,7 +326,7 @@
           "en": "About 16 m (52 ft) by the one long backbone found, the largest perhaps about 20 m. Compared with a person, a great white and a blue whale.",
           "de": "Etwa 16 m nach der einen langen Wirbelsäule, die größten vielleicht etwa 20 m. Größenvergleich mit Mensch, Weißem Hai und Blauwal."
         },
-        "langs": ["en", "de"],
+        "langs": ["en", "de", "es", "pt-BR"],
         "count": "megalodon",
         "about": {
           "@type": "Taxon",
@@ -349,7 +349,7 @@
             "60 tonnes is never the answer: the weight is disputed, roughly 30 t slim, about 61 t stout"
           ],
           [
-            "(?s)^(?!.*(?:two broken (?:\\w+ )?discs|zwei (?:an|zer)brochenen?\\s+(?:\\w+\\s+)?wirbel)).*\\b24[.,]3\\b",
+            "(?s)^(?!.*(?:two broken (?:\\w+ )?discs|zwei (?:an|zer)brochenen?\\s+(?:\\w+\\s+)?wirbel|dos\\s+vértebras\\s+(?:\\w+\\s+)?rotas|duas\\s+vértebras\\s+(?:\\w+\\s+)?quebradas)).*\\b24[.,]3\\b",
             "24.3 m only with its condition, the two broken discs"
           ],
           [
@@ -379,7 +379,7 @@
           "en": "Seven of ours beside a person, to one scale: the heaviest most likely a titanosaur from Patagonia, the tallest probably Sauroposeidon, and why the longest is still open.",
           "de": "Sieben von unseren neben einem Menschen, im selben Maßstab: der schwerste höchstwahrscheinlich ein Titanosaurier aus Patagonien, der höchste vermutlich Sauroposeidon, und warum der längste noch offen ist."
         },
-        "langs": ["en", "de"],
+        "langs": ["en", "de", "es", "pt-BR"],
         "count": "biggest_dinosaurs",
         "about": [
           {
@@ -427,11 +427,11 @@
         ],
         "never_say": [
           [
-            "(?s)^(?!.*(?:sculpture|skulptur|mount|montage|montiert|\\bcast\\b|abguss)).*\\b(?:39[.,]7|40)\\s*(?:m|metres?|meters?|metern?)\\b",
+            "(?s)^(?!.*(?:sculpture|skulptur|mount|montage|montiert|\\bcast\\b|abguss|escultura|montaje|réplica)).*\\b(?:39[.,]7|40)\\s*(?:m|metres?|meters?|metern?)\\b",
             "39.7 m and 40 m are the mount's, a sculpture's length, never the animal's"
           ],
           [
-            "(?s)^(?!.*(?:sculpture|skulptur|mount|montage|montiert|\\bcast\\b|abguss)).*(?<![\\d.,])\\b83\\b(?![.,]\\d)",
+            "(?s)^(?!.*(?:sculpture|skulptur|mount|montage|montiert|\\bcast\\b|abguss|escultura|montaje|réplica)).*(?<![\\d.,])\\b83\\b(?![.,]\\d)",
             "83 tonnes is the scanned mount's model, never the animal's weight"
           ],
           [
@@ -455,7 +455,7 @@
             "the skeleton in Berlin is Giraffatitan: name it wherever Berlin and Brachiosaurus meet"
           ],
           [
-            "(?<!\\d to )(?<!\\d bis )\\b80\\s*(?:t|tonnes?|tons?|tonnen)\\b",
+            "(?<!\\d to )(?<!\\d bis )(?<!\\d a )\\b80\\s*(?:t|tonnes?|tons?|tonnen)\\b",
             "80 tonnes only as the end of a range (65 to 80 t, 80 to 100), never one animal's weight"
           ],
           [
@@ -516,7 +516,7 @@
             "Triceratops had a short nose horn"
           ],
           [
-            "(?<![\\d.,])(?<!\\d to )(?<!\\d bis )\\b8\\s*(?:m|metres?|meters?|metern?)\\b",
+            "(?<![\\d.,])(?<!\\d to )(?<!\\d bis )(?<!\\d a )\\b8\\s*(?:m|metres?|meters?|metern?)\\b",
             "8 m only as the end of a range: Ankylosaurus about 6.4 m"
           ],
           [
@@ -554,10 +554,7 @@
           "en": "A large adult was about 12 m long, about 4 m at the hips and roughly 8 to 9 tonnes. Our T. rex is built to SUE's measurements and stands beside a person to one scale, with a list of what was found of SUE.",
           "de": "Ein großer erwachsener T. rex war etwa 12 m lang, an der Hüfte etwa 4 m hoch und kam auf rund 8 bis 9 t. Unser T. rex ist nach SUE gebaut und steht im selben Maßstab neben einem Menschen, dazu eine Liste dessen, was von SUE gefunden wurde."
         },
-        "langs": [
-          "en",
-          "de"
-        ],
+        "langs": ["en", "de", "es", "pt-BR"],
         "count": "t_rex",
         "about": {
           "@type": "Taxon",
@@ -597,7 +594,7 @@
             "no run and no speed: most likely it could not run"
           ],
           [
-            "(?s)^(?!.*(?:this pose|dieser haltung|\\bours\\b|\\bunserer\\b|our (?:model|t\\. rex)|unser(?:em|en)? (?:modell|t\\. rex))).*\\b11[.,]4\\s*m\\b",
+            "(?s)^(?!.*(?:this pose|dieser haltung|\\bours\\b|\\bunserer\\b|our (?:model|t\\. rex)|unser(?:em|en)? (?:modell|t\\. rex)|esta postura|nesta pose|\\bnuestr\\w*|\\bnoss[oa]s?\\b)).*\\b11[.,]4\\s*m\\b",
             "11.4 m is our model's length in its pose, never SUE's"
           ],
           [
@@ -605,7 +602,7 @@
             "no T. rex was ever weighed: a weight here is a study's estimate"
           ],
           [
-            "(?<![\\d.,])(?<!\\d to )(?<!\\d bis )(?<!\\d or )(?<!\\d oder )(?<!\\d\\stonnes, )(?<!close to )(?<!knapp )\\b9\\s*(?:t|tonnes?|tons?|tonnen)\\b",
+            "(?<![\\d.,])(?<!\\d to )(?<!\\d bis )(?<!\\d or )(?<!\\d oder )(?<!\\d\\stonnes, )(?<!close to )(?<!knapp )(?<!\\d a )(?<!\\d\\stoneladas, )(?<!acercan a )(?<!perto de )\\b9\\s*(?:t|tonnes?|tons?|tonnen)\\b",
             "never 9 tonnes flat: about 8 to 9 tonnes"
           ],
           [
@@ -633,7 +630,7 @@
             "our model gets no weight: its volume would give 10 t or more"
           ],
           [
-            "(?s)^(?!.*(?:news|nachrichten)).*\\b13\\s*(?:m|metres?|meters?|metern?)\\b",
+            "(?s)^(?!.*(?:news|nachrichten|noticias|notícias)).*\\b13\\s*(?:m|metres?|meters?|metern?)\\b",
             "13 m only as the news of 2019, never as Scotty's measured length"
           ],
           [
@@ -695,7 +692,7 @@
           "en": "The largest adult Spinosaurus were just under 14 m long and about 7.4 tonnes, by a model. Our Spinosaurus is a young one of about 10 m and stands to one scale beside a person and beside our T. rex.",
           "de": "Die größten erwachsenen Tiere waren knapp unter 14 m lang und etwa 7,4 t schwer, nach einem Modell. Unser Spinosaurus ist ein junges Tier von etwa 10 m und steht im selben Maßstab neben einem Menschen und neben unserem T. rex."
         },
-        "langs": ["en", "de"],
+        "langs": ["en", "de", "es", "pt-BR"],
         "count": "spinosaurus",
         "about": {
           "@type": "Taxon",
@@ -706,19 +703,19 @@
         },
         "never_say": [
           [
-            "(?s)^(?!.*(?:adults?|model|erwachsen|modell|largest|größten|up\\sto|bis\\setwa|just\\sunder|knapp\\sunter|7[.,]4\\s(?:to|bis)\\s8)).*\\b14\\s*(?:m|metres?|meters?|metern?)\\b",
+            "(?s)^(?!.*(?:adults?|model|erwachsen|modell|largest|größten|up\\sto|bis\\setwa|just\\sunder|knapp\\sunter|7[.,]4\\s(?:to|bis|a)\\s8|hasta\\sunos|até\\suns|algo\\smenos\\sde|pouco\\smenos\\sde|casi\\s14|quase\\s14)).*\\b14\\s*(?:m|metres?|meters?|metern?)\\b",
             "14 m is the largest adults' length by a model: never without adult or model"
           ],
           [
-            "(?s)^(?!.*(?:adults?|model|erwachsen|modell|largest|größten|up\\sto|bis\\setwa|just\\sunder|knapp\\sunter|7[.,]4\\s(?:to|bis)\\s8)).*\\b7(?:[.,]4)?\\s*(?:t|tonnes?|tons?|tonnen)\\b",
+            "(?s)^(?!.*(?:adults?|model|erwachsen|modell|largest|größten|up\\sto|bis\\setwa|just\\sunder|knapp\\sunter|7[.,]4\\s(?:to|bis|a)\\s8|hasta\\sunos|até\\suns|algo\\smenos\\sde|pouco\\smenos\\sde|casi\\s14|quase\\s14)).*\\b7(?:[.,]4)?\\s*(?:t|tonnes?|tons?|tonnen)\\b",
             "7.4 tonnes is the largest adults' weight by a model: never without adult or model"
           ],
           [
-            "(?s)^(?!.*(?:\\bours?\\b|\\bour\\s(?:model|spinosaurus|young)|young|unser|junge[sn]?\\b|in\\s(?:its|this)\\spose|in\\s(?:seiner|dieser)\\shaltung)).*\\b10\\s*(?:m|metres?|meters?|metern?)\\b",
+            "(?s)^(?!.*(?:\\bours?\\b|\\bour\\s(?:model|spinosaurus|young)|young|unser|junge[sn]?\\b|in\\s(?:its|this)\\spose|in\\s(?:seiner|dieser)\\shaltung|joven|jovem|en\\ssu\\spostura|na\\spose\\sdele|\\bnuestr\\w*|\\bnoss[oa]s?\\b)).*\\b10\\s*(?:m|metres?|meters?|metern?)\\b",
             "about 10 m is our young animal's length, never the species'"
           ],
           [
-            "(?s)^(?!.*(?:(?:\\bours?\\b|\\bour\\s(?:model|spinosaurus|young)|young|unser|junge[sn]?\\b|in\\s(?:its|this)\\spose|in\\s(?:seiner|dieser)\\shaltung)|by\\sa\\smodel|nach\\seinem\\smodell)).*\\b3\\s(?:to|bis)\\s4\\s*(?:t|tonnes?|tonnen)\\b",
+            "(?s)^(?!.*(?:(?:\\bours?\\b|\\bour\\s(?:model|spinosaurus|young)|young|unser|junge[sn]?\\b|in\\s(?:its|this)\\spose|in\\s(?:seiner|dieser)\\shaltung|joven|jovem|\\bnuestr\\w*|\\bnoss[oa]s?\\b)|by\\sa\\smodel|nach\\seinem\\smodell|según\\sun\\smodelo|por\\sum\\smodelo)).*\\b3\\s(?:to|bis|a)\\s4\\s*(?:t|tonnes?|tonnen)\\b",
             "3 to 4 tonnes is our young animal's weight by a model, never the species'"
           ],
           [
@@ -726,7 +723,7 @@
             "ours is a young one of about 10 m: never the adults' 14 m or 7 tonnes"
           ],
           [
-            "(?s)^(?!.*\\b(?:19|20)\\d\\d\\b).*(?:(?<!to\\s)(?<!bis\\s)\\b(?:18|15)\\s*(?:m|metres?|meters?|metern?)\\b|\\b50\\s*(?:feet|ft)\\b|\\b20\\s*(?:t|tonnes?|tons?|tonnen)\\b)",
+            "(?s)^(?!.*\\b(?:19|20)\\d\\d\\b).*(?:(?<!to\\s)(?<!bis\\s)(?<!\\d\\sa\\s)\\b(?:18|15)\\s*(?:m|metres?|meters?|metern?)\\b|\\b50\\s*(?:feet|ft)\\b|\\b20\\s*(?:t|tonnes?|tons?|tonnen)\\b)",
             "18 m, 15 m, 50 feet or 20 tonnes only as older estimates, with their year"
           ],
           [
@@ -843,7 +840,7 @@
           "en": "A typical Siberian bull stood about 2.7 to 2.9 m at the shoulder and weighed about 4 to 5 tonnes. Our woolly mammoth is one real bull found frozen in 1900, 2.71 m at the shoulder by a reconstruction, beside a person to one scale.",
           "de": "Ein typischer sibirischer Bulle maß an der Schulter etwa 2,7 bis 2,9 m und wog etwa 4 bis 5 t. Unser Wollhaarmammut ist ein einzelner echter Bulle, 1900 im Permafrost gefunden, 2,71 m an der Schulter nach einer Rekonstruktion, neben einem Menschen im selben Maßstab."
         },
-        "langs": ["en", "de"],
+        "langs": ["en", "de", "es", "pt-BR"],
         "count": "woolly_mammoth",
         "about": {
           "@type": "Taxon",
@@ -873,7 +870,7 @@
             "the mainland's 10,000 years only with about"
           ],
           [
-            "(?s)^(?!.*(?:\\babout\\b|\\betwa\\b)).*\\b5[,.]?600\\b",
+            "(?s)^(?!.*(?:\\babout\\b|\\betwa\\b|\\bunos\\b|\\bunas\\b|\\buns\\b|\\bumas\\b|\\bcerca\\sde\\b|\\balrededor\\sde\\b)).*\\b5[,.]?600\\b",
             "St Paul's 5,600 years only with about"
           ],
           [
@@ -885,11 +882,11 @@
             "nothing about the pyramids: their date was not checked"
           ],
           [
-            "(?s)^(?!.*(?:handbook|handbuch|european|europäisch|record|rekord|largest|größten|up\\sto|bis\\szu|maxim|höchst)).*(?<!to\\s)(?<!bis\\s)(?<![\\d.,])3[.,]4\\s?m\\b",
+            "(?s)^(?!.*(?:handbook|handbuch|european|europäisch|record|rekord|largest|größten|up\\sto|bis\\szu|maxim|höchst|manual|europe|r[eé]cord|máxim|hasta|até)).*(?<!to\\s)(?<!bis\\s)(?<!\\d\\sa\\s)(?<![\\d.,])3[.,]4\\s?m\\b",
             "3.4 m only as the handbook's figure for a large bull, never a Siberian bull's or ours"
           ],
           [
-            "(?s)^(?!.*(?:maxim|höchst|up\\sto|bis\\szu|bis\\s3)).*(?<![\\d.,])3[.,]5\\s?m\\b",
+            "(?s)^(?!.*(?:maxim|höchst|up\\sto|bis\\szu|bis\\s3|máxim|hasta|até)).*(?<![\\d.,])3[.,]5\\s?m\\b",
             "3.5 m only as the museum's maximum for bulls"
           ],
           [
@@ -897,11 +894,11 @@
             "4 m tall is the southern mammoth on the size chart, another species"
           ],
           [
-            "(?s)^(?!.*(?:tusk|stoßz|maxim|höchst|up\\sto|bis\\szu|southern\\smammoth|südmammut)).*(?<![\\d.,])4\\s?m\\b",
+            "(?s)^(?!.*(?:tusk|stoßz|maxim|höchst|up\\sto|bis\\szu|southern\\smammoth|südmammut|colmill|presa|máxim|hasta|até|meridional)).*(?<![\\d.,])4\\s?m\\b",
             "4 m only for old bulls' tusks, as a maximum"
           ],
           [
-            "(?s)^(?!.*(?:european|europäisch|largest|größten|record|rekord|african|afrikanisch|siegsdorf|average|durchschnitt)).*(?<![\\d.,])[68]\\s?(?:t|tonnes?|tons?|tonnen)\\b",
+            "(?s)^(?!.*(?:european|europäisch|largest|größten|record|rekord|african|afrikanisch|siegsdorf|average|durchschnitt|europe|afric|promedio|\\bmedia\\b|\\bmédia\\b|más\\sgrandes|maiores)).*(?<![\\d.,])[68]\\s?(?:t|tonnes?|tons?|tonnen)\\b",
             "6 and 8 tonnes only for the big European bulls, the African bush elephant or the very largest"
           ],
           [
@@ -909,11 +906,11 @@
             "ours is one bull of 2.71 m and about 4.2 t: never the species' range or the big bulls' numbers"
           ],
           [
-            "(?s)^(?!.*(?:\\babout\\b|\\betwa\\b)).*(?<!to\\s)(?<!bis\\s)\\b4[.,]2\\s?(?:t|tonnes?|tonnen)\\b",
+            "(?s)^(?!.*(?:\\babout\\b|\\betwa\\b|\\bunos\\b|\\bunas\\b|\\buns\\b|\\bumas\\b|\\bcerca\\sde\\b|\\balrededor\\sde\\b)).*(?<!to\\s)(?<!bis\\s)(?<!\\d\\sa\\s)\\b4[.,]2\\s?(?:t|tonnes?|tonnen)\\b",
             "4.2 tonnes only with about: a reconstruction"
           ],
           [
-            "(?s)^(?!.*(?:reconstruct|rekonstru|with\\shis\\scoat|mit\\sfell)).*(?<!to\\s)(?<!bis\\s)\\b4[.,]2\\s?(?:t|tonnes?|tonnen)\\b",
+            "(?s)^(?!.*(?:reconstruct|rekonstru|with\\shis\\scoat|mit\\sfell|reconstru|con\\ssu\\spelaje|com\\sa\\spelagem)).*(?<!to\\s)(?<!bis\\s)(?<!\\d\\sa\\s)\\b4[.,]2\\s?(?:t|tonnes?|tonnen)\\b",
             "4.2 tonnes only as a reconstruction, with his coat"
           ],
           [
@@ -993,7 +990,7 @@
             "nothing about bringing it back"
           ],
           [
-            "(?s)^(?!.*(?:\\babout\\b|\\betwa\\b)).*\\b45\\s(?:to|bis)\\s50\\b",
+            "(?s)^(?!.*(?:\\babout\\b|\\betwa\\b|\\bunos\\b|\\bunas\\b|\\buns\\b|\\bumas\\b|\\bcerca\\sde\\b|\\balrededor\\sde\\b)).*\\b45\\s(?:to|bis|a)\\s50\\b",
             "45 to 50 years only with about"
           ],
           [
@@ -1015,7 +1012,7 @@
           "en": "Brachiosaurus was about 22 to 25 m long and roughly 30 to 45 tonnes, both figures rebuilt from one partial skeleton, and because that skeleton has no neck, its height was never measured. Our Brachiosaurus stands at that skeleton's size beside a person, with what was found and what is borrowed.",
           "de": "Der Brachiosaurus war etwa 22 bis 25 m lang und grob 30 bis 45 t schwer, beides nach einem einzigen Teilskelett rekonstruiert, und weil diesem Skelett der Hals fehlt, ist seine Höhe nie gemessen worden. Unser Brachiosaurus steht in der Größe dieses Skeletts neben einem Menschen, mit dem, was gefunden wurde und was übernommen ist."
         },
-        "langs": ["en", "de"],
+        "langs": ["en", "de", "es", "pt-BR"],
         "count": "brachiosaurus",
         "about": {
           "@type": "Taxon",
@@ -1034,15 +1031,15 @@
             "Brachiosaurus brancai only as the Berlin animal's old name of 1914"
           ],
           [
-            "(?s)^(?!.*(?:berlin|giraffatitan|\\bmount\\b|montage|since\\s2007|seit\\s2007|1937)).*(?<![\\d.,])1[23](?:[.,]\\d+)?\\s?m\\b(?!\\s(?:\\(\\d+\\sft\\)\\s)?(?:long|lang))",
+            "(?s)^(?!.*(?:berlin|giraffatitan|\\bmount\\b|montage|since\\s2007|seit\\s2007|1937|berlín|berlim|montaje)).*(?<![\\d.,])1[23](?:[.,]\\d+)?\\s?m\\b(?!\\s(?:\\(\\d+\\sft\\)\\s)?(?:long|lang|de\\slargo|de\\scomprimento))",
             "13 m and 12 m tall only with the Berlin mount or Giraffatitan"
           ],
           [
-            "(?s)^(?!.*(?:(?:\\bour\\b|\\bours\\b|\\bunser\\w*)|model|modell)).*\\b11[.,]8\\s?m\\b",
+            "(?s)^(?!.*(?:(?:\\bour\\b|\\bours\\b|\\bunser\\w*)|model|modell|\\bnuestr\\w*|\\bnoss[oa]s?\\b)).*\\b11[.,]8\\s?m\\b",
             "11.8 m only as ours, our model's"
           ],
           [
-            "(?s)^(?!.*(?:neck|hals|pose|haltung|chose|choice|gewählt|wahl)).*\\b11[.,]8\\s?m\\b",
+            "(?s)^(?!.*(?:neck|hals|pose|haltung|chose|choice|gewählt|wahl|cuello|pescoço|postura|elegimos|elegid[oa]|escolh)).*\\b11[.,]8\\s?m\\b",
             "11.8 m only with the neck we chose"
           ],
           [
@@ -1050,7 +1047,7 @@
             "never 23 m, 16 m or 14 m tall: no height of Brachiosaurus was measured"
           ],
           [
-            "(?s)^(?!.*(?:(?:\\bour\\b|\\bours\\b|\\bunser\\w*)|model|modell|along\\sthe\\sbackbone|entlang\\sder\\swirbelsäule|neck\\sraised|erhobenem\\shals)).*\\b(?:21[.,]5|24[.,]4)\\s?m\\b",
+            "(?s)^(?!.*(?:(?:\\bour\\b|\\bours\\b|\\bunser\\w*)|model|modell|along\\sthe\\sbackbone|entlang\\sder\\swirbelsäule|neck\\sraised|erhobenem\\shals|columna|coluna|cuello\\slevantado|pescoço\\serguido|\\bnuestr\\w*|\\bnoss[oa]s?\\b)).*\\b(?:21[.,]5|24[.,]4)\\s?m\\b",
             "21.5 m and 24.4 m only as ours: Brachiosaurus was about 22 to 25 m"
           ],
           [
@@ -1062,15 +1059,15 @@
             "two neck bones from other finds are referred to it with doubt: the Chicago skeleton has no neck"
           ],
           [
-            "(?s)^(?!.*(?:1962|colbert|outlier|ausreißer)).*(?<![\\d.,])(?<!65\\sto\\s)(?<!65\\sbis\\s)(?:80|78)\\s?(?:t|tonnes?|tons?|tonnen)\\b",
+            "(?s)^(?!.*(?:1962|colbert|outlier|ausreißer)).*(?<![\\d.,])(?<!65\\sto\\s)(?<!65\\sbis\\s)(?<!65\\sa\\s)(?:80|78)\\s?(?:t|tonnes?|tons?|tonnen)\\b",
             "80 tonnes only as Colbert's outlier of 1962"
           ],
           [
-            "(?s)^(?!.*(?:berlin|giraffatitan|label|schild)).*(?<![\\d.,])50\\s?(?:t|tonnes?|tons?|tonnen)\\b",
+            "(?s)^(?!.*(?:berlin|giraffatitan|label|schild|berlín|berlim|cartel|placa)).*(?<![\\d.,])50\\s?(?:t|tonnes?|tons?|tonnen)\\b",
             "50 tonnes only as the Berlin label, for Giraffatitan"
           ],
           [
-            "(?s)^(?!.*(?:berlin|giraffatitan|\\bmount\\b|montage|label|schild)).*(?<![\\d.,])(?:23|38)(?:\\s(?:to|bis)\\s38)?\\s?(?:t|tonnes?|tons?|tonnen)\\b",
+            "(?s)^(?!.*(?:berlin|giraffatitan|\\bmount\\b|montage|label|schild|berlín|berlim|montaje|cartel|placa)).*(?<![\\d.,])(?:23|38)(?:\\s(?:to|bis)\\s38)?\\s?(?:t|tonnes?|tons?|tonnen)\\b",
             "23 to 38 tonnes are the Berlin mount's, by newer models"
           ],
           [
@@ -1094,7 +1091,7 @@
             "no Ultrasaurus as a bigger Brachiosaurus, no 100 tonnes"
           ],
           [
-            "(?s)^(?!.*(?:as\\spreserved|erhalten)).*\\b2[.,]04\\s?m\\b",
+            "(?s)^(?!.*(?:as\\spreserved|erhalten|conserv)).*\\b2[.,]04\\s?m\\b",
             "2.04 m only as preserved: the arm bone's lower end is lost"
           ],
           [
@@ -1196,7 +1193,7 @@
           "en": "A big adult Triceratops was about 7 to 8 m long, and two models give about 6.5 to 8.5 tonnes for the Washington skeleton, a mount of about ten animals. Our Triceratops is built after that skeleton and stands beside a person to one scale, with its skull against the person, Torosaurus, and what the bones say about T. rex.",
           "de": "Ein großer erwachsener Triceratops war etwa 7 bis 8 m lang, und zwei Modelle ergeben etwa 6,5 bis 8,5 t für das Skelett in Washington, eine Montage aus etwa zehn Tieren. Unser Triceratops ist nach diesem Skelett gebaut und steht im selben Maßstab neben einem Menschen, dazu der Schädel neben dem Menschen, Torosaurus und das, was die Knochen über den T. rex sagen."
         },
-        "langs": ["en", "de"],
+        "langs": ["en", "de", "es", "pt-BR"],
         "count": "triceratops",
         "about": {
           "@type": "Taxon",
@@ -1207,7 +1204,7 @@
         },
         "never_say": [
           [
-            "(?s)^(?!.*(?:largest|größt|round|runde|no\\smethod|ohne\\smethode)).*(?<![\\d.,])9\\s?(?:m|metres?|meters?|metern?)\\b",
+            "(?s)^(?!.*(?:largest|größt|round|runde|no\\smethod|ohne\\smethode|más\\sgrandes?|maior(?:es)?|redond|sin\\smétodo|sem\\smétodo)).*(?<![\\d.,])9\\s?(?:m|metres?|meters?|metern?)\\b",
             "9 m only as the largest Triceratops's round figure, or a number you may have read"
           ],
           [
@@ -1223,15 +1220,15 @@
             "never 12 tonnes: its origin was not found"
           ],
           [
-            "(?s)^(?!.*(?:(?:\\bour\\b|\\bours\\b|\\bunser\\w*)|model|modell|straight|gerade)).*(?<![\\d.,])6[.,]9\\s?m\\b",
+            "(?s)^(?!.*(?:(?:\\bour\\b|\\bours\\b|\\bunser\\w*)|model|modell|straight|gerade|\\brecta\\b|\\breta\\b|\\bnuestr\\w*|\\bnoss[oa]s?\\b)).*(?<![\\d.,])6[.,]9\\s?m\\b",
             "6.9 m only as ours, our model's, or the body model's of the Washington scan"
           ],
           [
-            "(?s)^(?!.*(?:(?:\\bour\\b|\\bours\\b|\\bunser\\w*)|model|modell|straight|gerade)).*(?<![\\d.,])7[.,]1\\s?m\\b",
+            "(?s)^(?!.*(?:(?:\\bour\\b|\\bours\\b|\\bunser\\w*)|model|modell|straight|gerade|\\brecta\\b|\\breta\\b|\\bnuestr\\w*|\\bnoss[oa]s?\\b)).*(?<![\\d.,])7[.,]1\\s?m\\b",
             "7.1 m only as ours, to the brow horn tips"
           ],
           [
-            "(?s)^(?!.*(?:(?:\\bour\\b|\\bours\\b|\\bunser\\w*)|model|modell|back[’']s\\stop|oberkante\\sdes\\srückens)).*(?<![\\d.,])2[.,][45]\\s?m\\b",
+            "(?s)^(?!.*(?:(?:\\bour\\b|\\bours\\b|\\bunser\\w*)|model|modell|back[’']s\\stop|oberkante\\sdes\\srückens|alto\\sdel\\slomo|alto\\sdo\\sdorso|\\bnuestr\\w*|\\bnoss[oa]s?\\b)).*(?<![\\d.,])2[.,][45]\\s?m\\b",
             "2.5 m and 2.4 m only as ours, at the top of the back over the hips or the frill's top"
           ],
           [

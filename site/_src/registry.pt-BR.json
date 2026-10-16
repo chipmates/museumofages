@@ -28,5 +28,38 @@
     "line": "O que Leonardo da Vinci desenhou, o que foi construído e o que existia antes dele."
    }
   ]
+ },
+ "animals": {
+  "name": "Animais",
+  "topics": [
+   {
+    "name": "Qual era o tamanho do megalodon?",
+    "line": "Cerca de 16 m pela única coluna vertebral longa já achada, os maiores talvez cerca de 20 m. Comparado a uma pessoa, um tubarão-branco e uma baleia-azul."
+   },
+   {
+    "name": "Qual foi o maior dinossauro do mundo?",
+    "line": "Sete dos nossos ao lado de uma pessoa, na mesma escala: o mais pesado, muito provavelmente um titanossauro da Patagônia, o mais alto, provavelmente o Sauroposeidon, e por que o mais longo ainda está em aberto."
+   },
+   {
+    "name": "Qual era o tamanho do T. rex?",
+    "line": "Um adulto grande tinha cerca de 12 m de comprimento, cerca de 4 m de altura no quadril e mais ou menos 8 a 9 toneladas. O nosso T. rex foi feito com as medidas de SUE e fica ao lado de uma pessoa, na mesma escala, com uma lista do que foi encontrado de SUE."
+   },
+   {
+    "name": "Qual era o tamanho do espinossauro?",
+    "line": "Os maiores espinossauros adultos tinham pouco menos de 14 m e cerca de 7,4 toneladas, segundo um modelo. O nosso espinossauro é um jovem de cerca de 10 m e fica na mesma escala ao lado de uma pessoa e do nosso T. rex."
+   },
+   {
+    "name": "Qual era o tamanho do mamute-lanoso?",
+    "line": "Um macho siberiano típico tinha cerca de 2,7 a 2,9 m de altura no ombro e pesava cerca de 4 a 5 toneladas. O nosso mamute-lanoso é um macho real encontrado congelado em 1900, com 2,71 m no ombro segundo uma reconstrução, ao lado de uma pessoa na mesma escala."
+   },
+   {
+    "name": "Qual era o tamanho do braquiossauro?",
+    "line": "O braquiossauro tinha cerca de 22 a 25 m de comprimento e mais ou menos 30 a 45 toneladas, dois números reconstruídos a partir de um único esqueleto parcial, e como falta o pescoço nesse esqueleto, a altura dele nunca foi medida. O nosso braquiossauro tem o tamanho desse esqueleto e fica ao lado de uma pessoa, com o que foi encontrado e o que foi emprestado."
+   },
+   {
+    "name": "Qual era o tamanho do Triceratops?",
+    "line": "Um Triceratops adulto grande tinha cerca de 7 a 8 m de comprimento, e dois modelos dão cerca de 6,5 a 8,5 toneladas para o esqueleto de Washington, uma montagem de cerca de dez animais. O nosso Triceratops segue esse esqueleto e fica ao lado de uma pessoa na mesma escala, com o crânio ao lado da pessoa, o Torosaurus e o que os ossos dizem sobre o T. rex."
+   }
+  ]
  }
 }

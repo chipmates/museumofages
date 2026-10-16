@@ -1,0 +1,496 @@
+{
+ "_note": "LAS PALABRAS de la página del megalodón, en español. Reescritas a partir del inglés y del alemán, con las mismas cifras, fuentes y grados de certeza. Estado ai: ninguna persona las ha revisado todavía.",
+ "page": {
+  "id": "animals-megalodon",
+  "wing": "animals",
+  "topic": "megalodon",
+  "published": null,
+  "join_names": true,
+  "og_image": {
+   "file": "animals-megalodon-og-{lang}-1200x630.png",
+   "width": 1200,
+   "height": 630
+  }
+ },
+ "pics": {
+  "side": {
+   "stem": "animals-megalodon-side",
+   "widths": [
+    800,
+    1600,
+    2400
+   ],
+   "sizes": "(min-width: 1280px) 588px, (min-width: 960px) calc(100vw - 80px), (min-width: 600px) calc(100vw - 64px), calc(100vw - 40px)",
+   "person": "91.86% 55.88%",
+   "spans": {
+    "whole": "5.03% 87%",
+    "found": "22.87% 77.87%"
+   }
+  },
+  "head": {
+   "stem": "animals-megalodon-head",
+   "widths": [
+    800,
+    1600
+   ],
+   "sizes": "(min-width: 1280px) 690px, (min-width: 960px) 54vw, (min-width: 600px) calc(100vw - 64px), calc(100vw - 40px)",
+   "person": "83.58% 45.52%"
+  },
+  "skeleton": {
+   "stem": "animals-megalodon-skeleton",
+   "widths": [
+    800,
+    1600,
+    2400
+   ],
+   "sizes": "(min-width: 1280px) 690px, (min-width: 960px) 54vw, (min-width: 600px) calc(100vw - 64px), calc(100vw - 40px)",
+   "person": "91.86% 55.88%"
+  },
+  "skeleton_head": {
+   "stem": "animals-megalodon-skeleton-head",
+   "widths": [
+    800,
+    1600
+   ],
+   "sizes": "(min-width: 1280px) 690px, (min-width: 960px) 54vw, (min-width: 600px) calc(100vw - 64px), calc(100vw - 40px)",
+   "person": "83.58% 45.52%"
+  },
+  "dinosaurs": {
+   "stem": "animals-biggest-dinosaurs-row",
+   "widths": [
+    800,
+    1600
+   ],
+   "sizes": "(min-width: 1280px) 690px, (min-width: 960px) 54vw, (min-width: 600px) calc(100vw - 64px), calc(100vw - 40px)",
+   "person": "32.82% 84.25%"
+  },
+  "trex": {
+   "stem": "animals-t-rex-side",
+   "widths": [
+    800,
+    1600,
+    2400
+   ],
+   "sizes": "(min-width: 1280px) 690px, (min-width: 960px) 54vw, (min-width: 600px) calc(100vw - 64px), calc(100vw - 40px)",
+   "person": "86.42% 63.92%"
+  },
+  "spino": {
+   "stem": "animals-spinosaurus-side",
+   "widths": [
+    800,
+    1600,
+    2400
+   ],
+   "sizes": "(min-width: 1280px) 690px, (min-width: 960px) 54vw, (min-width: 600px) calc(100vw - 64px), calc(100vw - 40px)",
+   "person": "92.84% 63.16%"
+  },
+  "mammoth": {
+   "stem": "animals-woolly-mammoth-side",
+   "widths": [
+    800,
+    1600,
+    2400
+   ],
+   "sizes": "(min-width: 1280px) 690px, (min-width: 960px) 54vw, (min-width: 600px) calc(100vw - 64px), calc(100vw - 40px)",
+   "person": "91.9% 40.85%"
+  }
+ },
+ "meta": {
+  "title": "Tamaño del megalodón: unos 16 m, quizá 20 m | Museum of Ages",
+  "description": "¿Cuánto medía el megalodón? Unos 16 m por la única columna larga hallada, el mayor quizá 20 m. Junto a una persona, un tiburón blanco y una ballena azul.",
+  "og_title": "Tamaño del megalodón: unos 16 m, quizá 20 m",
+  "og_image_alt": "Un tiburón con la boca abierta, visto de lado, gris oscuro con una franja más clara en el costado, junto a una persona gris que a su lado parece diminuta.",
+  "credit": "Museum of Ages, forma del cuerpo según Shimada y otros 2025 (CC BY 4.0)"
+ },
+ "labels": {
+  "crumbs": "Estás aquí",
+  "crumb_home": "Museo",
+  "crumb_here": "Megalodón",
+  "toc": "En esta página",
+  "tag_made": "Hecho para esta página",
+  "tag_built": "Reconstrucción",
+  "person": "1,70 m",
+  "to_table": "Las cifras en una tabla",
+  "no_figure": "sin cifra con fuente",
+  "og_answer": "Unos 16 m de largo"
+ },
+ "top": {
+  "h1": "¿Cuánto medía el megalodón?",
+  "answer": "Unos 16 m. Es la longitud del megalodón del que viene la única columna vertebral larga que se ha encontrado, y que se guarda en Bruselas. Nuestros 16 m son algo más de nueve personas de 1,70 m tumbadas una detrás de otra. Los más grandes de su especie medían quizá unos 20 m, según sus dientes.",
+  "answer_more": "Su peso es discutido: más o menos 30 toneladas en el modelo delgado de 2025, y alrededor del doble en el modelo más robusto de 2022, porque nadie conoce la forma de su cuerpo.",
+  "scale": {
+   "pic": "side",
+   "tag": "tag_made",
+   "what": "Nuestro megalodón junto a una persona de 1,70 m, a la misma escala: unos 16 m de largo, la longitud que le da la columna de Bruselas.",
+   "alt": "Un tiburón con la boca abierta, visto de lado, gris oscuro con una franja más clara en el costado, junto a una persona gris que a su lado parece diminuta.",
+   "note": [
+    "Reconstrucción propia del museo, construida en código a partir de las medidas citadas y dibujada con nuestro propio motor gráfico. No es una fotografía. La forma del cuerpo sigue el modelo de Shimada y otros 2025 (",
+    {
+     "text": "CC BY 4.0",
+     "href": "https://creativecommons.org/licenses/by/4.0/"
+    },
+    "), que medimos y modificamos nosotros."
+   ],
+   "close": {
+    "pic": "head",
+    "tag": "tag_made",
+    "what": "La cabeza en plena mordida, más de cerca. Los dientes del modelo siguen otro hallazgo, una dentadura real, a su propio tamaño: delante miden unos 10 cm de alto.",
+    "alt": "La cabeza del tiburón, con la mandíbula superior adelantada y dientes anchos y triangulares, junto a la persona gris, que mide menos de lo que mide la cabeza de largo."
+   },
+   "bars": [
+    {
+     "span": "whole",
+     "text": "unos 16 m"
+    },
+    {
+     "span": "found",
+     "text": "la columna hallada, unos 11 m"
+    }
+   ]
+  },
+  "guess": {
+   "h": "Adivina primero",
+   "q": "¿Cuánto medía un megalodón al nacer?",
+   "button": "Ver la respuesta",
+   "a": "Unos 3,6 a 3,9 m, según un modelo de crecimiento de 2025: más del doble que la persona de 1,70 m. Es un modelo, no una cría medida, así que tómalo como una estimación.",
+   "button_open": "Ocultar la respuesta"
+  },
+  "out": {
+   "text": "El ala de este animal todavía se está construyendo, y el ala de Leonardo da Vinci ya está abierta hoy.",
+   "link": "Ir al ala de Leonardo"
+  }
+ },
+ "blocks": [
+  {
+   "type": "numbers",
+   "id": "numbers",
+   "nav": "Las cifras",
+   "h": "Las cifras",
+   "unit": "En metros y toneladas, los dientes en centímetros. Donde no hay una cifra con fuente, la celda queda vacía.",
+   "cols": [
+    "Animal",
+    "Tamaño",
+    "Peso",
+    "Certeza"
+   ],
+   "rows": [
+    {
+     "cells": [
+      "Nuestro megalodón",
+      "unos 16 m",
+      "más o menos 30 t (modelo de 2025), unas 61 t (modelo de 2022)",
+      "dos modelos sobre una misma columna, peso discutido"
+     ]
+    },
+    {
+     "cells": [
+      "La columna hallada, Bruselas",
+      "unos 11 m en fila, 141 vértebras",
+      "",
+      "vértebras medidas, huecos entre ellas estimados"
+     ]
+    },
+    {
+     "cells": [
+      "El megalodón más grande",
+      "quizá unos 20 m",
+      "",
+      "un diente, escalado a partir de dentaduras completas"
+     ]
+    },
+    {
+     "cells": [
+      "El tiburón blanco más grande",
+      "unos 6 m",
+      "",
+      "una especie viva, según modelos"
+     ]
+    },
+    {
+     "cells": [
+      "El tiburón ballena más grande medido",
+      "18,8 m",
+      "cerca de 34 t",
+      "longitud medida, peso estimado"
+     ]
+    },
+    {
+     "cells": [
+      "La ballena azul más grande",
+      "unos 30 m",
+      "",
+      "una especie viva, el máximo es discutido"
+     ]
+    },
+    {
+     "cells": [
+      "Los dientes de megalodón más altos hallados",
+      "al menos 16 cm de alto, los museos dan casi 18 cm",
+      "",
+      "medidos, unas tres veces un diente de tiburón blanco"
+     ]
+    },
+    {
+     "cells": [
+      "Los dientes de nuestro modelo",
+      "unos 10 cm de alto delante",
+      "",
+      "hechos según una dentadura real de otro hallazgo"
+     ]
+    },
+    {
+     "cells": [
+      "La persona",
+      "1,70 m",
+      "",
+      "la figura de escala del museo"
+     ]
+    }
+   ]
+  },
+  {
+   "type": "text",
+   "id": "bones",
+   "nav": "Huesos y cuerpo",
+   "h": "Huesos y cuerpo",
+   "paras": [
+    "El megalodón, Otodus megalodon, era un tiburón, y los tiburones no tienen huesos. Su esqueleto es de cartílago, y el cartílago casi siempre se pudre en la tierra. Lo que queda son los dientes y, a veces, las vértebras, que son más duras que el resto. Por eso el megalodón se conoce por sus dientes, por vértebras sueltas, por trozos de cartílago endurecido y por escamas diminutas de la piel. Nunca se ha encontrado un cuerpo, ni una cabeza, ni una aleta, ni una cola."
+   ],
+   "scale": {
+    "pic": "skeleton",
+    "tag": "tag_built",
+    "what": "El mismo animal como esqueleto. Las vértebras y los dientes siguen a los fósiles, y todo lo demás está reconstruido y se nota a propósito.",
+    "alt": "El esqueleto de lado, una larga fila de vértebras y una mandíbula con dientes según los fósiles, con la cabeza, las aletas y la cola como formas que se ven reconstruidas.",
+    "key": "Marrón oscuro: las vértebras fósiles. Dorado: los dientes. Claro: lo reconstruido, también las piezas que completan vértebras rotas.",
+    "close": {
+     "pic": "skeleton_head",
+     "tag": "tag_built",
+     "what": "El cráneo y la parte delantera de la columna, más de cerca, con la persona. Las vértebras siguen a los fósiles, el cráneo y la mandíbula están reconstruidos, y los dientes siguen otro hallazgo, una dentadura real, a su propio tamaño.",
+     "alt": "La parte delantera del esqueleto de lado: un cráneo y una mandíbula claros y reconstruidos, con dientes dorados, y después una fila de vértebras oscuras, junto a la persona gris.",
+     "key": "Marrón oscuro: las vértebras fósiles. Dorado: los dientes. Claro: lo reconstruido, también las piezas que completan vértebras rotas."
+    }
+   }
+  },
+  {
+   "type": "text",
+   "id": "how-sure",
+   "nav": "Cuán seguro es esto",
+   "h": "Cuán seguro es esto",
+   "paras": [
+    "Los 16 m se apoyan en la columna de Bruselas: 141 vértebras, unos 11 m en fila, más una cabeza y una cola con las proporciones de los lamniformes actuales, el grupo de tiburones al que pertenece el tiburón blanco. Dos equipos de investigación obtuvieron 15,9 m y 16,4 m con modelos distintos, y por eso decimos unos 16 m. Los 20 m se apoyan en un solo diente, escalado a partir de dentaduras completas. El peso se apoya en un modelo del cuerpo, y ese modelo necesita una forma del cuerpo que nadie conoce: delgado como los tiburones vivos más grandes, da unas 30 toneladas, y robusto como un tiburón blanco, unas 61. Por eso la longitud dice «unos» y el peso dice «discutido»."
+   ]
+  },
+  {
+   "type": "text",
+   "id": "found",
+   "nav": "Lo que se encontró",
+   "h": "Lo que se encontró",
+   "paras": [
+    "En Bruselas, en el Real Instituto Belga de Ciencias Naturales, hay 141 vértebras sueltas de un solo tiburón, IRSNB P 9893, halladas cerca de Amberes en la década de 1860. La más grande mide 15,5 cm de ancho, y en fila suman unos 11 m. Dan la longitud del tronco, pero no la de la cabeza ni el grosor del cuerpo. No se encontraron dientes con ellas, así que incluso el nombre de megalodón para este animal es una deducción.",
+    "En Dinamarca, en 1978, se desenterraron en Gram restos de unas 20 vértebras. En 1989 se dañaron en el almacén, y durante mucho tiempo se creyeron perdidas. Quedan dos vértebras rotas y muchos fragmentos. La mayor mide 23 cm de ancho, y en ella se apoya la estimación más grande de la lista de abajo.",
+    "Nadie ha encontrado un esqueleto de megalodón, ni una dentadura con los dientes todavía en su sitio en la mandíbula. Cada fila de dientes que hayas visto es un montaje, también la nuestra."
+   ]
+  },
+  {
+   "type": "notes",
+   "id": "numbers-read",
+   "nav": "Cifras que quizá hayas leído",
+   "h": "Cifras que quizá hayas leído",
+   "intro": "Para cada cifra: de dónde viene y qué piensa hoy de ella la investigación.",
+   "rows": [
+    {
+     "term": "De 14 a 18 m",
+     "text": "El método del diente. La corona de un diente, escalada a un cuerpo con las proporciones del tiburón blanco. Así obtuvieron de 14 a 18 m varios estudios de 1996 a 2019, y el American Museum of Natural History todavía dice más o menos 15 m. Según el estudio de 2025, esas reglas de los dientes dan longitudes demasiado cortas o poco fiables."
+    },
+    {
+     "term": "20 m",
+     "text": "Perez, Leder y Badaut, 2021. El ancho sumado de las coronas de una dentadura, puesto en relación con la longitud del cuerpo y aplicado al diente más ancho que se conoce: una media de 20,0 m, con un margen de 17,4 a 23,5 m. Los autores del modelo de 2022 aceptan 20 m como el máximo."
+    },
+    {
+     "term": "De 24 a 25 m y unas 94 toneladas",
+     "text": "Shimada y otros, 2025 y 2026. El modelo de Bruselas, escalado a una vértebra danesa de 23 cm: 24,3 m, y con el cuerpo delgado, unas 94 toneladas. Los autores lo llaman hipotético. Se apoya en la mayor de dos vértebras danesas rotas y en un solo paso de aritmética."
+    },
+    {
+     "term": "De 50 a 60 o más toneladas",
+     "text": "Cooper y otros, 2022. Un cuerpo en 3D de tiburón blanco, ajustado con cinco lamniformes vivos y estirado sobre la columna belga, dio 61 560 kg. Es la estimación publicada más pesada de nuestro animal. El modelo delgado de 2025 da unas 30 toneladas para la misma columna, y los dos cuentan el cuerpo de forma distinta: una forma más delgada, sin las aletas salvo la cola, otra densidad. El peso sigue siendo discutido."
+    },
+    {
+     "term": "Las mandíbulas de 1909",
+     "text": "En el American Museum of Natural History, en 1909, se colocaron dientes fósiles en una mandíbula reconstruida y agrandada a partir de un tiburón blanco. El propio museo dice hoy que la reconstrucción exageró mucho el tamaño. Como vieron más tarde los expertos, había dientes tan grandes como los delanteros a lo largo de toda la mandíbula, incluso donde una mandíbula real tiene dientes pequeños."
+    }
+   ]
+  },
+  {
+   "type": "text",
+   "id": "why",
+   "nav": "Por qué nuestro megalodón se ve así",
+   "h": "Por qué nuestro megalodón se ve así",
+   "paras": [
+    "Es delgado, según el modelo de 2025: con un cuerpo robusto como el del tiburón blanco, nadar quizá le costaba demasiado esfuerzo, dicen sus autores, y los tiburones vivos más grandes son delgados. Está pintado oscuro por arriba y claro por abajo, como los tiburones vivos de mar abierto, porque su color real no se conoce. Los dientes siguen otro hallazgo, UF-VP-311000, una dentadura real, a su propio tamaño. La cabeza, las aletas y la cola se toman de los lamniformes vivos, porque nunca se ha encontrado una cabeza de megalodón. No es un tiburón blanco agrandado: pertenecía a su propia familia, hoy extinta, y según los trabajos más recientes era más delgado y más alargado que el monstruo de la película."
+   ]
+  },
+  {
+   "type": "faq",
+   "id": "questions",
+   "nav": "Más preguntas",
+   "h": "Más preguntas",
+   "items": [
+    {
+     "q": "Megalodón contra tiburón blanco: ¿cuánto más grande era?",
+     "a": "Los tiburones blancos más grandes llegan a unos 6 m, y uno adulto suele medir de 4 a 5 m. Así que nuestro megalodón de unos 16 m medía más o menos entre dos veces y media y tres veces lo que el tiburón blanco más grande."
+    },
+    {
+     "q": "Megalodón contra ballena azul: ¿cuál era más grande?",
+     "a": "La ballena azul. La mayoría de las ballenas azules adultas miden de 23 a 27 m, las más grandes unos 30 m, y la NOAA, la agencia de los océanos de Estados Unidos, la llama el animal más grande que se sabe que ha existido. Nuestro megalodón llegaría a algo más de la mitad de la más grande. Incluso el tiburón ballena más grande que se ha medido, de 18,8 m, era más largo que nuestro megalodón, y con cerca de 34 toneladas pesaba más o menos lo mismo que su modelo delgado."
+    },
+    {
+     "q": "¿Qué tamaño tenían los dientes del megalodón?",
+     "a": "Los más grandes que se han hallado miden al menos 16 cm de alto, y los museos dan casi 18 cm: unas tres veces un diente de tiburón blanco, que mide unos 5 cm. Los dientes de nuestro modelo siguen una dentadura real de otro hallazgo, UF-VP-311000. Delante miden unos 10 cm de alto, y hacia las comisuras de la boca son más pequeños."
+    },
+    {
+     "q": "¿Cuándo y por qué se extinguió el megalodón?",
+     "a": "Hace unos 3,6 millones de años, según los fósiles fiables más recientes. El porqué no está establecido. Se han propuesto los mares más fríos, que dividieron su área de distribución, el tiburón blanco, recién aparecido, como rival, una caída de las pequeñas ballenas con barbas que cazaba, y el gasto de un cuerpo caliente, porque se mantenía más caliente que el agua que lo rodeaba."
+    }
+   ]
+  },
+  {
+   "type": "text",
+   "id": "museum",
+   "nav": "En el museo",
+   "h": "En el museo",
+   "paras": [
+    "Museum of Ages es un museo digital, hecho por una organización sin fines de lucro. Entrada libre, sin cuenta. En el ala de los animales, este animal estará entre los demás, desde los gigantes de hace mucho tiempo hasta los últimos de su especie. El ala de Leonardo da Vinci muestra cómo es un ala terminada."
+   ],
+   "links": [
+    {
+     "out": true,
+     "text": "Ir al ala de Leonardo"
+    }
+   ]
+  },
+  {
+   "type": "pages",
+   "id": "next",
+   "items": [
+    {
+     "page": "biggest-dinosaurs",
+     "pic": "dinosaurs",
+     "alt": "Siete dinosaurios en fila, vistos de lado, dos de ellos con cuellos largos muy por encima de los demás, y una persona gris que a su lado parece diminuta."
+    },
+    {
+     "page": "t-rex",
+     "pic": "trex",
+     "alt": "Un T. rex de lado, sobre dos patas, con la boca abierta y la cabeza levantada, junto a una persona gris que queda muy por debajo de sus caderas.",
+     "line": "Unos 12 m de largo y más o menos de 8 a 9 toneladas, según los huesos de SUE. Nuestro T. rex junto a una persona, con lo que se encontró de SUE."
+    },
+    {
+     "page": "spinosaurus",
+     "pic": "spino",
+     "alt": "Un Spinosaurus con una vela alta y una cola ancha, con la silueta clara de un adulto más grande detrás, junto a una persona gris que le llega a la cadera.",
+     "line": "Los adultos más grandes, algo menos de 14 m según un modelo, el nuestro un ejemplar joven de unos 10 m, junto al agua y sobre dos patas."
+    },
+    {
+     "page": "woolly-mammoth",
+     "pic": "mammoth",
+     "alt": "Un mamut lanudo de lado, con pelaje marrón oscuro: cabeza alta y abombada, lomo inclinado, dos colmillos curvos y una marca en el hombro. La persona gris a su lado queda por debajo de las puntas de los colmillos.",
+     "line": "Un macho típico de Siberia medía unos 2,7 a 2,9 m a la altura del hombro, más o menos lo que un macho de elefante asiático. El nuestro es un macho real hallado congelado en 1900, con lo que es suyo y lo que está reconstruido."
+    }
+   ]
+  },
+  {
+   "type": "sources",
+   "id": "sources",
+   "nav": "Fuentes",
+   "h": "Fuentes",
+   "intro": "Las cifras vienen de estos estudios y de las instituciones que conservan los fósiles. El museo es independiente de todas ellas.",
+   "read": [
+    {
+     "text": "Shimada y 28 autores más, 2025, Palaeontologia Electronica.",
+     "href": "https://palaeo-electronica.org/content/2025/5450-biology-of-otodus-megalodon"
+    },
+    {
+     "text": "Shimada, Elstrup, Lauridsen, Sørensen y Siversson, 2026, Palaeontologia Electronica.",
+     "href": "https://palaeo-electronica.org/content/2026/5872-otodus-megalodon-vertebrae-from-denmark"
+    },
+    {
+     "text": "Cooper y otros, 2022, Science Advances."
+    },
+    {
+     "text": "Perez, Leder y Badaut, 2021, Palaeontologia Electronica.",
+     "href": "https://palaeo-electronica.org/content/2021/3284-estimating-lamniform-body-size"
+    },
+    {
+     "text": "Boessenecker y otros, 2019, PeerJ.",
+     "href": "https://peerj.com/articles/6088/"
+    },
+    {
+     "text": "Pimiento y Clements, 2014, PLOS ONE.",
+     "href": "https://pmc.ncbi.nlm.nih.gov/articles/PMC4206505/"
+    },
+    {
+     "text": "Collareta y otros, 2017, Palaeogeography, Palaeoclimatology, Palaeoecology.",
+     "href": "https://marineinfo.org/id/publication/282660"
+    },
+    {
+     "text": "Griffiths y otros, 2023, PNAS.",
+     "href": "https://ioes.ucla.edu/publication/endothermic-physiology-of-extinct-megatooth-sharks"
+    },
+    {
+     "text": "Schwenk, Perez, Godfrey y Bowers, 2026, Palaeontologia Electronica.",
+     "href": "https://palaeo-electronica.org/content/2026/5782-selective-zinc-enrichment-in-otodus-megalodon-enameloid"
+    },
+    {
+     "text": "Real Instituto Belga de Ciencias Naturales, Bruselas: la columna IRSNB P 9893.",
+     "href": "https://virtualcollections.naturalsciences.be/virtual-collections/paleontology/Fossil%20Vertebrates/Fossil%20Fishes/carcharocles-megalodon-agassiz-1843"
+    },
+    {
+     "text": "Natural History Museum of Denmark: las vértebras danesas NHMD 157890."
+    },
+    {
+     "text": "Natural History Museum, Londres.",
+     "href": "https://www.nhm.ac.uk/discover/megalodon--the-truth-about-the-largest-shark-that-ever-lived.html"
+    },
+    {
+     "text": "American Museum of Natural History, Nueva York.",
+     "href": "https://tumblr.amnh.org/tagged/megalodon"
+    },
+    {
+     "text": "Florida Museum.",
+     "href": "https://www.floridamuseum.ufl.edu/discover-fish/species-profiles/white-shark/"
+    },
+    {
+     "text": "NOAA Fisheries.",
+     "href": "https://www.fisheries.noaa.gov/species/blue-whale"
+    },
+    {
+     "text": "Staatliches Museum für Naturkunde Karlsruhe.",
+     "href": "https://www.smnk.de/fileadmin/page_content/pressemitteilungen/PM_Megalodon_Naturkundemuseum_Karlsruhe_.pdf"
+    }
+   ],
+   "contact": "Si una cifra o una institución está mal, escríbenos y lo corregiremos.",
+   "contact_link": "Ir al aviso legal",
+   "what_link": "Qué es este museo"
+  },
+  {
+   "type": "text",
+   "id": "pictures",
+   "nav": "Usa nuestras imágenes",
+   "h": "Usa nuestras imágenes",
+   "paras": [
+    [
+     "Las imágenes de esta página son obra propia del museo, con licencia ",
+     {
+      "text": "CC BY-SA 4.0",
+      "href": "https://creativecommons.org/licenses/by-sa/4.0/deed.es"
+     },
+     ". Crédito: Museum of Ages, forma del cuerpo según Shimada y otros 2025 (",
+     {
+      "text": "CC BY 4.0",
+      "href": "https://creativecommons.org/licenses/by/4.0/"
+     },
+     "). Muestran una reconstrucción, construida en código y dibujada con nuestro propio motor gráfico, no una fotografía."
+    ]
+   ]
+  }
+ ]
+}

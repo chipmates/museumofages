@@ -1,0 +1,568 @@
+{
+ "_note": "AS PALAVRAS da página do braquiossauro, em português do Brasil. Reescritas a partir do inglês e do alemão, com os mesmos números, fontes e graus de certeza. O esqueleto de Berlim é um Giraffatitan, e o animal de Chicago provavelmente ainda crescia. Status ai: nenhuma pessoa as revisou ainda.",
+ "page": {
+  "id": "animals-brachiosaurus",
+  "wing": "animals",
+  "topic": "brachiosaurus",
+  "published": null,
+  "join_names": true,
+  "og_image": {
+   "file": "animals-brachiosaurus-og-{lang}-1200x630.png",
+   "width": 1200,
+   "height": 630,
+   "layout": "beside"
+  }
+ },
+ "pics": {
+  "side": {
+   "stem": "animals-brachiosaurus-side",
+   "widths": [
+    800,
+    1600,
+    2400
+   ],
+   "sizes": "(min-width: 1280px) 588px, (min-width: 960px) calc(100vw - 80px), (min-width: 600px) calc(100vw - 64px), calc(100vw - 40px)",
+   "person": "77.8% 84.8%",
+   "marks": {
+    "brachiosaurus": "1.23% 98.16%",
+    "person": "77.15% 78.46%",
+    "head": "92.12% 97.52%"
+   },
+   "behind": [
+    "head"
+   ]
+  },
+  "close": {
+   "stem": "animals-brachiosaurus-close",
+   "widths": [
+    800,
+    1600
+   ],
+   "sizes": "(min-width: 1280px) 690px, (min-width: 960px) 54vw, (min-width: 600px) calc(100vw - 64px), calc(100vw - 40px)",
+   "person": "46.41% 75.62%"
+  },
+  "skeleton": {
+   "stem": "animals-brachiosaurus-skeleton",
+   "widths": [
+    800,
+    1600
+   ],
+   "sizes": "(min-width: 1280px) 690px, (min-width: 960px) 54vw, (min-width: 600px) calc(100vw - 64px), calc(100vw - 40px)",
+   "person": "77.8% 84.8%",
+   "swatches": {
+    "own": "#c5b48f",
+    "blue": "#597382",
+    "orange": "#ac6f23",
+    "brown": "#493624"
+   },
+   "narrow": {
+    "stem": "animals-brachiosaurus-skeleton-narrow",
+    "widths": [
+     800,
+     1000
+    ],
+    "below": 600,
+    "person": "91.47% 72.52%"
+   }
+  },
+  "dinosaurs": {
+   "stem": "animals-biggest-dinosaurs-row",
+   "widths": [
+    800,
+    1600
+   ],
+   "sizes": "(min-width: 1280px) 690px, (min-width: 960px) 54vw, (min-width: 600px) calc(100vw - 64px), calc(100vw - 40px)"
+  },
+  "trex": {
+   "stem": "animals-t-rex-side",
+   "widths": [
+    800,
+    1600,
+    2400
+   ],
+   "sizes": "(min-width: 1280px) 690px, (min-width: 960px) 54vw, (min-width: 600px) calc(100vw - 64px), calc(100vw - 40px)"
+  },
+  "mammoth": {
+   "stem": "animals-woolly-mammoth-side",
+   "widths": [
+    800,
+    1600,
+    2400
+   ],
+   "sizes": "(min-width: 1280px) 690px, (min-width: 960px) 54vw, (min-width: 600px) calc(100vw - 64px), calc(100vw - 40px)"
+  }
+ },
+ "meta": {
+  "title": "Braquiossauro: tamanho de uns 22 a 25 m | Museum of Ages",
+  "description": "Qual o tamanho do braquiossauro? Uns 22 a 25 m de comprimento e mais ou menos 30 a 45 t, por um esqueleto parcial. O famoso de Berlim é um Giraffatitan.",
+  "og_title": "Braquiossauro: tamanho de uns 22 a 25 m de comprimento",
+  "og_image_alt": "Um braquiossauro de lado, com o pescoço longo erguido numa curva suave, as patas da frente mais longas que as de trás e a cauda sem tocar o chão, ao lado de uma pessoa cinza que poderia passar por baixo da barriga dele. Uma barra curta marca o alto da cabeça."
+ },
+ "labels": {
+  "crumbs": "Você está aqui",
+  "crumb_home": "Museu",
+  "crumb_here": "Braquiossauro",
+  "toc": "Nesta página",
+  "tag_made": "Feito para esta página",
+  "tag_built": "Reconstrução",
+  "person": "1,70 m",
+  "to_table": "Os números numa tabela",
+  "no_figure": "sem número com fonte",
+  "og_answer": "O braquiossauro tinha uns 22 a 25 m de comprimento, por uma reconstrução"
+ },
+ "top": {
+  "h1": "Qual era o tamanho do braquiossauro?",
+  "answer": "O braquiossauro, ou Brachiosaurus, tinha uns 22 a 25 m de comprimento e pesava mais ou menos de 30 a 45 toneladas, dois números reconstruídos a partir de um único esqueleto parcial. Esse esqueleto não tem pescoço, então a altura dele nunca foi medida: ela depende de como o animal segurava o pescoço. O nosso modelo foi feito no tamanho desse único esqueleto, guardado em Chicago, de um animal que provavelmente ainda crescia. Com o pescoço erguido como escolhemos, a cabeça fica na altura de umas sete pessoas, e os ombros, de umas quatro.",
+  "answer_more": "O famoso esqueleto de Berlim, com o crânio a uns 13 m de altura, é o parente africano dele, o Giraffatitan, numa pose pensada para a exposição. A maioria das imagens de braquiossauro também mostra esse parente.",
+  "scale": {
+   "pic": "side",
+   "tag": "tag_made",
+   "what": "O nosso braquiossauro ao lado de uma pessoa de 1,70 m, na mesma escala, no tamanho do único esqueleto em que o nome se baseia, desenterrado no Colorado em 1900. O pescoço, a cabeça, a parte de baixo das pernas e quase toda a cauda seguem o Giraffatitan e outros achados. A cabeça fica a 11,8 m de altura só por causa do ângulo do pescoço que escolhemos: essa altura é nossa, não um achado.",
+   "alt": "Um braquiossauro de lado, com o pescoço longo erguido numa curva suave, as patas da frente mais longas que as de trás e a cauda sem tocar o chão, ao lado de uma pessoa cinza que poderia passar por baixo da barriga dele. Uma barra curta marca o alto da cabeça.",
+   "note": "A nossa própria reconstrução, construída em código a partir de medidas publicadas e desenhada com o nosso próprio motor gráfico. Não são fotografias.",
+   "marks": [
+    {
+     "span": "brachiosaurus",
+     "text": "O nosso braquiossauro, no tamanho do esqueleto de Chicago"
+    },
+    {
+     "span": "head",
+     "text": "O alto da cabeça, 11,8 m, o ângulo do pescoço é escolha nossa"
+    },
+    {
+     "span": "person",
+     "text": "A pessoa, 1,70 m"
+    }
+   ],
+   "close": {
+    "pic": "close",
+    "tag": "tag_made",
+    "what": "Mais de perto: a pessoa ao lado da pata da frente, embaixo da barriga, que no nosso modelo fica a uns 2,1 m do chão.",
+    "alt": "A pata da frente e a barriga do braquiossauro, mais de perto, com a pessoa cinza ao lado da pata e espaço livre acima da cabeça dela."
+   }
+  },
+  "guess": {
+   "h": "Tente adivinhar",
+   "q": "Com o que a equipe de Riggs confundiu o úmero dele no começo?",
+   "button": "Ver a resposta",
+   "a": "Com um fêmur esmagado de um dinossauro de pescoço longo que eles já conheciam, e o achado quase foi deixado de lado. Só as costelas ao lado, grandes demais para aquele animal, fizeram a equipe continuar cavando, e o fêmur verdadeiro, quase do mesmo comprimento, apareceu logo depois.",
+   "button_open": "Esconder a resposta"
+  },
+  "out": {
+   "text": "A ala deste animal ainda está sendo construída. A ala de Leonardo da Vinci já está aberta hoje.",
+   "link": "Ir para a ala de Leonardo"
+  }
+ },
+ "blocks": [
+  {
+   "type": "numbers",
+   "id": "numbers",
+   "nav": "Os números",
+   "h": "Os números",
+   "unit": "Em metros e toneladas. Cada célula de altura diz que ponto ela mede. Onde não há um número com fonte, a célula fica vazia.",
+   "cols": [
+    "Animal",
+    "Comprimento",
+    "Altura, com o ponto medido",
+    "Peso",
+    "Certeza"
+   ],
+   "rows": [
+    {
+     "cells": [
+      "Brachiosaurus altithorax, o animal de Chicago",
+      "uns 22 a 25 m, reconstruído",
+      "não medida: o esqueleto não tem pescoço",
+      "mais ou menos 30 a 45 t, por modelos",
+      "um único esqueleto parcial, provavelmente ainda em crescimento, o resto sobre a estrutura do Giraffatitan"
+     ]
+    },
+    {
+     "cells": [
+      "O nosso modelo",
+      "24,4 m ao longo da coluna, 21,5 m em linha reta com o pescoço erguido",
+      "o alto da cabeça 11,8 m na nossa pose, os ombros 6,8 m, o quadril 5,0 m",
+      "",
+      "medido nos nossos arquivos, feito no tamanho do esqueleto de Chicago"
+     ]
+    },
+    {
+     "cells": [
+      "A montagem de Berlim, Giraffatitan brancai",
+      "uns 23 m",
+      "o crânio a uns 13 m desde 2007, a 11,87 m como foi montado em 1937",
+      "até 50 t na placa, umas 23 a 38 t por modelos mais recentes",
+      "uma montagem de vários animais, com o pescoço e o crânio de gesso, pelos números de quem a montou"
+     ]
+    },
+    {
+     "cells": [
+      "Argentinosaurus huinculensis",
+      "uns 30 a 35 m, reconstruído",
+      "",
+      "mais ou menos 65 a 80 t, por modelos",
+      "um único esqueleto parcial, o corpo tirado dos parentes"
+     ]
+    },
+    {
+     "cells": [
+      "Uma girafa macho",
+      "",
+      "até uns 5,5 m até o alto da cabeça",
+      "até umas 1,4 t",
+      "os máximos de um zoológico para o animal vivo"
+     ]
+    },
+    {
+     "cells": [
+      "A pessoa",
+      "",
+      "1,70 m de altura, da cabeça aos pés",
+      "",
+      "a nossa figura de escala"
+     ]
+    }
+   ]
+  },
+  {
+   "type": "text",
+   "id": "how-tall",
+   "nav": "Qual era a altura do braquiossauro, e ele foi o dinossauro mais alto?",
+   "h": "Qual era a altura do braquiossauro, e ele foi o dinossauro mais alto?",
+   "paras": [
+    "Ninguém sabe dizer ao metro: o esqueleto de Chicago não tem pescoço, e as duas vértebras do pescoço achadas em outros lugares talvez nem sejam de braquiossauro. Por isso toda altura da cabeça já publicada foi desenhada sobre o pescoço do Giraffatitan, e nenhuma foi medida.",
+    "Como ele segurava esse pescoço é discutido, e a posição do meio é erguido, nem na horizontal nem na vertical. O pescoço do nosso modelo sobe com uns 42 graus, com o alto da cabeça a 11,8 m. O mesmo corpo teria a cabeça a uns 7 m com o pescoço na horizontal, e a mais de 14 m com o pescoço na vertical. O esqueleto de dinossauro montado mais alto é esse Giraffatitan de Berlim, e qual dinossauro foi o mais alto em vida ninguém sabe ao certo: a página dos maiores dinossauros trata dessa pergunta."
+   ],
+   "links": [
+    {
+     "page": "biggest-dinosaurs",
+     "text": "Qual foi o maior dinossauro do mundo?"
+    }
+   ]
+  },
+  {
+   "type": "text",
+   "id": "found",
+   "nav": "O esqueleto do braquiossauro: o que foi encontrado",
+   "h": "O esqueleto do braquiossauro: o que foi encontrado",
+   "paras": [
+    "Em 1900, uma equipe do Field Columbian Museum chefiada por Elmer Riggs desenterrou o esqueleto perto de Grand Junction, no oeste do Colorado. Quando o corpo já estava em parte enterrado, um riacho levou embora a parte da frente dele. Em 1903, Riggs o chamou de Brachiosaurus altithorax, “lagarto-braço de peito alto”, pelo úmero longo e pelo tronco fundo. Um osso do ombro não tinha terminado de crescer, então o animal provavelmente também ainda crescia. O Field Museum de Chicago guarda os ossos, e os grandes esqueletos que montou para o público são réplicas, em parte modeladas segundo o Giraffatitan."
+   ],
+   "subs": [
+    {
+     "h": "Encontrado no Colorado",
+     "paras": [
+      {
+       "points": [
+        "Sete vértebras das costas, o sacro e as duas primeiras vértebras da cauda.",
+        "O úmero direito, de 2,04 m como se conservou, sem a ponta de baixo, e o fêmur direito, de 2,03 m.",
+        "A lâmina direita do quadril e um pedaço da esquerda, o coracoide esquerdo (um osso do ombro) e cinco costelas, nenhuma completa."
+       ]
+      }
+     ]
+    },
+    {
+     "h": "De outros achados, ou emprestado",
+     "paras": [
+      {
+       "points": [
+        "A cabeça: segundo um crânio achado no Colorado em 1883, atribuído a esta espécie só com dúvidas, com as partes que faltam reconstruídas, entre elas o arco do nariz.",
+        "O pescoço, a parte da frente das costas, as escápulas, os antebraços, as mãos, a parte de baixo das pernas de trás, os pés e a cauda depois dos dois primeiros ossos: quase tudo segundo o Giraffatitan.",
+        "O úmero e o fêmur esquerdos: reflexos dos direitos."
+       ]
+      }
+     ]
+    }
+   ],
+   "end": [
+    "Então o nosso braquiossauro tem o tamanho de um animal e as partes de vários."
+   ],
+   "scale": {
+    "pic": "skeleton",
+    "tag": "tag_built",
+    "what": "O nosso braquiossauro como esqueleto, visto pela direita, colorido conforme a origem de cada osso.",
+    "alt": "O nosso braquiossauro como esqueleto, visto pela direita: poucos ossos cor de creme nas costas, no quadril, num fêmur e num úmero, entre outros azuis, laranja e marrons, ao lado da pessoa cinza.",
+    "key": [
+     {
+      "swatch": "own",
+      "text": "Creme: os ossos dele mesmo, achados no Colorado em 1900: sete vértebras das costas, o sacro, duas vértebras da cauda, a lâmina direita do quadril, o fêmur e o úmero direitos, e três costelas à vista."
+     },
+     {
+      "swatch": "blue",
+      "text": "Azul: os ossos dele mesmo, espelhados ou completados: o úmero e o fêmur esquerdos como reflexos dos direitos, a ponta perdida do úmero e as partes de baixo das costelas. O osso do ombro que aparece também é um reflexo: o que foi encontrado é o esquerdo, que fica atrás."
+     },
+     {
+      "swatch": "orange",
+      "text": "Laranja: segundo outros achados da América, sobretudo um crânio achado no Colorado em 1883, atribuído a esta espécie só com dúvidas, com as partes que faltam reconstruídas, entre elas o arco do nariz, e um osso do antebraço."
+     },
+     {
+      "swatch": "brown",
+      "text": "Marrom: segundo o Giraffatitan, todo o resto: o pescoço, a parte da frente das costas, as escápulas, quase toda a parte de baixo das pernas, as costelas e a cauda."
+     }
+    ],
+    "after": 1
+   }
+  },
+  {
+   "type": "text",
+   "id": "giraffatitan",
+   "nav": "Giraffatitan, o famoso de Berlim",
+   "h": "Giraffatitan, o famoso de Berlim",
+   "paras": [
+    "Giraffatitan brancai é o esqueleto alto do Museum für Naturkunde de Berlim. Os ossos dele foram escavados em Tendaguru, na atual Tanzânia, de 1909 a 1913, sob o domínio colonial alemão, como o próprio museu diz. Chamado de Brachiosaurus brancai em 1914, ele ganhou um gênero próprio em 2009, quando um estudo contou pelo menos 26 diferenças em relação ao animal americano. A montagem junta vários animais, o pescoço e o crânio são de gesso, e quase todo o osso verdadeiro está nas pernas, no quadril e nas costelas. Ela tem uns 23 m de comprimento, e o crânio está a uns 13 m de altura desde a nova montagem de 2007, a 12 m como foi montado em 1937, com o pescoço agora quase vertical para a exposição. A maioria das imagens de braquiossauro segue esse parente mais conhecido."
+   ]
+  },
+  {
+   "type": "text",
+   "id": "looks",
+   "nav": "Como ele era",
+   "h": "Como ele era",
+   "subs": [
+    {
+     "h": "O corpo e as pernas",
+     "paras": [
+      "As patas da frente eram mais longas que as de trás, então as costas subiam em direção aos ombros, como nos parentes, e os braços longos lhe deram o nome. O tronco era fundo e mais ou menos um quarto mais longo que o do Giraffatitan, pelas próprias vértebras das costas. A cauda era alta na base, provavelmente longa, e ficava sem tocar o chão, como a de outros saurópodes."
+     ]
+    },
+    {
+     "h": "O pescoço e a cabeça",
+     "paras": [
+      "O pescoço foi tirado do Giraffatitan, e no nosso está erguido numa curva suave, embora o ângulo seja discutido. A cabeça segue o crânio do Colorado de 1883, com o arco do nariz que falta reconstruído baixo, e as narinas de carne baixas e bem para a frente no focinho."
+     ]
+    },
+    {
+     "h": "A pele e a cor",
+     "paras": [
+      "Não foi encontrada pele de nenhum braquiossaurídeo. O nosso tem escamas pequenas e planas como outros saurópodes, e a cor dele é uma escolha, porque nenhuma é conhecida."
+     ]
+    }
+   ]
+  },
+  {
+   "type": "text",
+   "id": "giraffe",
+   "nav": "Braquiossauro vs uma girafa, e vs Argentinosaurus",
+   "h": "Braquiossauro vs uma girafa, e vs Argentinosaurus",
+   "paras": [
+    "Uma girafa macho chega a uns 5,5 m de altura e pesa até umas 1,4 tonelada. A cabeça do nosso modelo fica mais ou menos duas vezes mais alta, só os ombros dele já passam da cabeça de uma girafa alta, e 30 a 45 toneladas, mais ou menos, são umas 22 a 33 girafas macho. O Argentinosaurus era maior: uns 30 a 35 m de comprimento e mais ou menos 65 a 80 toneladas, dois números reconstruídos, contra uns 22 a 25 m e 30 a 45 toneladas. Os dois nunca se encontraram, separados por dezenas de milhões de anos e um continente, e os nossos dois modelos têm a cabeça quase na mesma altura só por causa dos pescoços que escolhemos."
+   ]
+  },
+  {
+   "type": "text",
+   "id": "when-where",
+   "nav": "Quando e onde o braquiossauro viveu",
+   "h": "Quando e onde o braquiossauro viveu",
+   "paras": [
+    "O braquiossauro viveu no Jurássico Superior do oeste da América do Norte, há uns 150 milhões de anos, onde hoje estão as rochas da Formação Morrison. Ele vivia em terra firme: Riggs defendeu isso em 1904 a partir das pernas e dos pés, contra a velha imagem de um animal de pântano. A faixa que um museu dá para o gênero termina há uns 145 milhões de anos."
+   ]
+  },
+  {
+   "type": "text",
+   "id": "how-sure",
+   "nav": "Quão certo é isso",
+   "h": "Quão certo é isso",
+   "paras": [
+    "Duas coisas decidem cada número desta página.",
+    {
+     "points": [
+      [
+       "O comprimento e o peso são reconstruídos:",
+       "não existe nenhum esqueleto inteiro, então os dois números se apoiam na estrutura do Giraffatitan e numa densidade escolhida."
+      ],
+      [
+       "O nosso é um modelo, não a espécie:",
+       "os 24,4 m dele ao longo da coluna e a cabeça a 11,8 m são números do próprio modelo, o da cabeça pelo pescoço que escolhemos, nunca números do animal."
+      ]
+     ]
+    }
+   ]
+  },
+  {
+   "type": "notes",
+   "id": "numbers-read",
+   "nav": "Números que você talvez tenha lido",
+   "h": "Números que você talvez tenha lido",
+   "intro": "Para cada número: de onde ele vem e o que significa.",
+   "rows": [
+    {
+     "term": "80 toneladas",
+     "text": "Um número de 1962, de um modelo pequeno posto dentro da água, e o modelo mostrava a espécie de Berlim, não esta. Trabalhos posteriores o deixaram de lado como um valor fora da curva."
+    },
+    {
+     "term": "50 toneladas",
+     "text": "A placa da exposição de Berlim de 2007, para o Giraffatitan. Quem refez a montagem põe o número real bem abaixo, e modelos mais recentes da montagem dão umas 23 a 38 toneladas."
+    },
+    {
+     "term": "13 m de altura, e 12 m",
+     "text": "Os dois são a montagem de Berlim, um Giraffatitan. O crânio dela estava a 11,87 m de altura como foi montado em 1937, com o pescoço inclinado para a frente, e está a uns 13 m desde a nova montagem de 2007, com o pescoço quase vertical, uma pose escolhida pelo efeito no público. A altura do animal americano nunca foi medida."
+    },
+    {
+     "term": "O maior dinossauro conhecido",
+     "text": "O título que o próprio Riggs lhe deu, em 1901 e 1903, e que naquela época era verdade. Os titanossauros, muito mais pesados, o Argentinosaurus entre eles, foram encontrados depois."
+    },
+    {
+     "term": "Um animal de pântano, sustentado pela água",
+     "text": "A velha imagem de todos os dinossauros de pescoço longo. Riggs a contestou em 1904 a partir das pernas e dos pés. Hoje ela está descartada."
+    },
+    {
+     "term": "As narinas no alto da cabeça",
+     "text": "As reconstruções antigas punham a narina de carne no alto da grande abertura de osso do crânio. Um estudo de 2001 concluiu que ela ficava bem para a frente no focinho."
+    }
+   ]
+  },
+  {
+   "type": "faq",
+   "id": "questions",
+   "nav": "Mais perguntas",
+   "h": "Mais perguntas",
+   "items": [
+    {
+     "q": "O que o braquiossauro comia?",
+     "a": "Folhas de árvores altas, entre elas coníferas e samambaias arborescentes, segundo o Natural History Museum de Londres. Ele não mastigava: as folhas se desfaziam no intestino, como em outros saurópodes."
+    },
+    {
+     "q": "O braquiossauro foi o maior dinossauro?",
+     "a": "Não. O Argentinosaurus era mais longo e muito mais pesado: uns 30 a 35 m e mais ou menos 65 a 80 toneladas, dois números reconstruídos. Qual dinossauro foi o maior de todos ainda está em aberto, e a página dos maiores dinossauros trata dessa pergunta."
+    }
+   ]
+  },
+  {
+   "type": "text",
+   "id": "museum",
+   "nav": "No museu",
+   "h": "No museu",
+   "paras": [
+    "O Museum of Ages é um museu digital, feito por uma organização sem fins lucrativos. Entrada franca, sem cadastro. Na ala dos animais, este animal vai estar entre os outros, dos gigantes de muito tempo atrás aos últimos da sua espécie. A ala de Leonardo da Vinci mostra como é uma ala pronta."
+   ],
+   "links": [
+    {
+     "out": true,
+     "text": "Ir para a ala de Leonardo"
+    }
+   ]
+  },
+  {
+   "type": "pages",
+   "id": "next",
+   "items": [
+    {
+     "page": "biggest-dinosaurs",
+     "pic": "dinosaurs",
+     "alt": "Sete dinossauros em fila, vistos de lado, dois deles com pescoços longos bem acima dos outros, e uma pessoa cinza que ao lado deles parece minúscula.",
+     "line": "Sete dos nossos ao lado de uma pessoa, na mesma escala: o mais pesado, muito provavelmente um titanossauro da Patagônia, o mais alto, provavelmente o Sauroposeidon, e por que o mais longo continua em aberto."
+    },
+    {
+     "page": "t-rex",
+     "pic": "trex",
+     "alt": "Um T. rex de lado, sobre duas patas, com a boca aberta e a cabeça erguida, ao lado de uma pessoa cinza que fica bem abaixo do quadril dele.",
+     "line": "Um T. rex adulto grande tinha uns 12 m de comprimento, uns 4 m até o quadril e mais ou menos 8 a 9 toneladas. O nosso T. rex foi feito com as medidas de SUE e está ao lado de uma pessoa na mesma escala, com uma lista do que foi encontrado de SUE."
+    },
+    {
+     "page": "woolly-mammoth",
+     "pic": "mammoth",
+     "alt": "Um mamute-lanoso de lado, com pelagem marrom-escura: a cabeça alta e abaulada, o dorso inclinado, duas presas curvas e uma marca no ombro. A pessoa cinza ao lado fica mais baixa que as pontas das presas.",
+     "line": "Um macho típico da Sibéria tinha uns 2,7 a 2,9 m no ombro e pesava umas 4 a 5 toneladas. O nosso mamute-lanoso é um único macho real encontrado congelado em 1900, com 2,71 m no ombro por uma reconstrução, ao lado de uma pessoa na mesma escala."
+    }
+   ]
+  },
+  {
+   "type": "sources",
+   "id": "sources",
+   "nav": "Fontes",
+   "h": "Fontes",
+   "intro": "Os números vêm destes estudos e dos museus que guardam os ossos. O museu é independente de todos eles.",
+   "read": [
+    {
+     "text": "Taylor, 2009, Journal of Vertebrate Paleontology.",
+     "href": "https://www.miketaylor.org.uk/dino/pubs/taylor2009/Taylor2009-brachiosaurus-and-giraffatitan.pdf"
+    },
+    {
+     "text": "Taylor e Wedel, 2023, Acta Palaeontologica Polonica.",
+     "href": "https://app.pan.pl/archive/published/app68/app011052023.pdf"
+    },
+    {
+     "text": "Taylor, Wedel e Naish, 2009, Acta Palaeontologica Polonica.",
+     "href": "https://app.pan.pl/archive/published/app54/app54-213.pdf"
+    },
+    {
+     "text": "Wedel, Cifelli e Sanders, 2000, Acta Palaeontologica Polonica.",
+     "href": "https://www.app.pan.pl/archive/published/app45/app45-343.pdf"
+    },
+    {
+     "text": "Colbert, 1962, como Wedel e outros, 2000, o resumem."
+    },
+    {
+     "text": "Riggs, 1904, Field Columbian Museum, Geological Series.",
+     "href": "https://archive.org/details/riggs1904-brachiosaurus-altithorax-good-scan"
+    },
+    {
+     "text": "Riggs, 1901, Science, e 1903, American Journal of Science, com os títulos como Taylor 2009 os dá."
+    },
+    {
+     "text": "Paul, 1988, Hunteria."
+    },
+    {
+     "text": "Janensch, 1950, a reconstrução do esqueleto do animal de Berlim, lida na tradução para o inglês."
+    },
+    {
+     "text": "Remes e outros, 2011, em Biology of the Sauropod Dinosaurs."
+    },
+    {
+     "text": "D’Emic e Carrano, 2020, Anatomical Record, o resumo do estudo.",
+     "href": "https://doi.org/10.1002/ar.24198"
+    },
+    {
+     "text": "Witmer, 2001, Science, o resumo do estudo.",
+     "href": "https://doi.org/10.1126/science.1062681"
+    },
+    {
+     "text": "Gunga e outros, 2008, Fossil Record, o resumo do estudo.",
+     "href": "https://doi.org/10.1002/mmng.200700011"
+    },
+    {
+     "text": "Sellers e outros, 2012, Biology Letters, o resumo do estudo.",
+     "href": "https://doi.org/10.1098/rsbl.2012.0263"
+    },
+    {
+     "text": "Field Museum, Chicago: Brachiosaurus FMNH P 25107, e o blog dele sobre as réplicas.",
+     "href": "https://www.fieldmuseum.org/blog/why-we-dont-dress-sue-or-any-other-real-skeletons"
+    },
+    {
+     "text": "Museum für Naturkunde Berlin: Giraffatitan brancai, as páginas dele sobre a sala dos dinossauros e o projeto Digital Tendaguru.",
+     "href": "https://www.museumfuernaturkunde.berlin/en/plan-your-visit/exhibition/the-world-of-dinosaurs/"
+    },
+    {
+     "text": "Natural History Museum, Londres: a página dele sobre o braquiossauro.",
+     "href": "https://www.nhm.ac.uk/discover/dino-directory/brachiosaurus.html"
+    },
+    {
+     "text": "San Diego Zoo Wildlife Alliance: a página dele sobre a girafa.",
+     "href": "https://animals.sandiegozoo.org/animals/giraffe"
+    },
+    {
+     "text": "Argentinosaurus: os números e as fontes da nossa página dos maiores dinossauros.",
+     "href": "https://museumofages.org/pt-br/animais/maior-dinossauro/"
+    }
+   ],
+   "contact": "Se um número ou um museu estiver errado, escreva para nós e vamos corrigir.",
+   "contact_link": "Ir para as informações legais",
+   "what_link": "O que é este museu"
+  },
+  {
+   "type": "text",
+   "id": "pictures",
+   "nav": "Use as nossas imagens",
+   "h": "Use as nossas imagens",
+   "paras": [
+    [
+     "As imagens do braquiossauro nesta página são obra nossa, com licença ",
+     {
+      "text": "CC BY-SA 4.0",
+      "href": "https://creativecommons.org/licenses/by-sa/4.0/deed.pt-br"
+     },
+     ". Crédito: Museum of Ages. Elas mostram uma reconstrução, construída em código e desenhada com o nosso próprio motor gráfico, não uma fotografia. As imagens das outras páginas que aparecem aqui dão o crédito nessas páginas."
+    ]
+   ]
+  }
+ ]
+}

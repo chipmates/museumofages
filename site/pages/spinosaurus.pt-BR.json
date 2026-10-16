@@ -1,0 +1,614 @@
+{
+ "_note": "AS PALAVRAS da página do espinossauro, em português do Brasil. Reescritas a partir do inglês e do alemão, com os mesmos números, fontes e graus de certeza. O nosso animal é um jovem: os números dele nunca são os da espécie. Status ai: nenhuma pessoa as revisou ainda.",
+ "page": {
+  "id": "animals-spinosaurus",
+  "wing": "animals",
+  "topic": "spinosaurus",
+  "published": null,
+  "join_names": true,
+  "og_image": {
+   "file": "animals-spinosaurus-og-{lang}-1200x630.png",
+   "width": 1200,
+   "height": 630,
+   "layout": "beside"
+  }
+ },
+ "pics": {
+  "side": {
+   "stem": "animals-spinosaurus-side",
+   "widths": [
+    800,
+    1600,
+    2400
+   ],
+   "sizes": "(min-width: 1280px) 588px, (min-width: 960px) calc(100vw - 80px), (min-width: 600px) calc(100vw - 64px), calc(100vw - 40px)",
+   "person": "92.84% 63.16%",
+   "person_from": 600,
+   "marks": {
+    "outline": "1.81% 97.95%",
+    "spinosaurus": "15.85% 88.7%",
+    "person": "91.76% 93.92%"
+   },
+   "behind": [
+    "outline"
+   ]
+  },
+  "close": {
+   "stem": "animals-spinosaurus-close",
+   "widths": [
+    800,
+    1600
+   ],
+   "sizes": "(min-width: 1280px) 690px, (min-width: 960px) 54vw, (min-width: 600px) calc(100vw - 64px), calc(100vw - 40px)",
+   "person": "89.32% 51.53%"
+  },
+  "vs": {
+   "stem": "animals-spinosaurus-beside-t-rex",
+   "widths": [
+    800,
+    1600,
+    2400
+   ],
+   "sizes": "(min-width: 1280px) 690px, (min-width: 960px) 54vw, (min-width: 600px) calc(100vw - 64px), calc(100vw - 40px)",
+   "person": "49% 63.12%",
+   "person_from": 960,
+   "marks": {
+    "spinosaurus": "1.11% 45.17%",
+    "person": "48.35% 49.64%",
+    "t-rex": "48.68% 98.86%"
+   },
+   "behind": [
+    "t-rex"
+   ],
+   "narrow": {
+    "stem": "animals-spinosaurus-beside-t-rex-narrow",
+    "widths": [
+     800,
+     1600
+    ],
+    "below": 600,
+    "person": "9.18% 33.72%",
+    "marks": {
+     "t-rex": "8.62% 97.95%",
+     "spinosaurus": "8.62% 87.07%"
+    }
+   }
+  },
+  "skeleton": {
+   "stem": "animals-spinosaurus-skeleton",
+   "widths": [
+    800,
+    1600
+   ],
+   "sizes": "(min-width: 1280px) 690px, (min-width: 960px) 54vw, (min-width: 600px) calc(100vw - 64px), calc(100vw - 40px)",
+   "person": "91.67% 51.95%",
+   "swatches": {
+    "own": "#772c0a",
+    "stromer": "#4f7d9d",
+    "pale": "#b79e6c"
+   }
+  },
+  "trex": {
+   "stem": "animals-t-rex-side",
+   "widths": [
+    800,
+    1600,
+    2400
+   ],
+   "sizes": "(min-width: 1280px) 690px, (min-width: 960px) 54vw, (min-width: 600px) calc(100vw - 64px), calc(100vw - 40px)"
+  },
+  "dinosaurs": {
+   "stem": "animals-biggest-dinosaurs-row",
+   "widths": [
+    800,
+    1600
+   ],
+   "sizes": "(min-width: 1280px) 690px, (min-width: 960px) 54vw, (min-width: 600px) calc(100vw - 64px), calc(100vw - 40px)"
+  },
+  "megalodon": {
+   "stem": "animals-megalodon-side",
+   "widths": [
+    800,
+    1600,
+    2400
+   ],
+   "sizes": "(min-width: 1280px) 690px, (min-width: 960px) 54vw, (min-width: 600px) calc(100vw - 64px), calc(100vw - 40px)"
+  }
+ },
+ "meta": {
+  "title": "Espinossauro: tamanho de até uns 14 m | Museum of Ages",
+  "description": "Qual era o tamanho do espinossauro? Os maiores adultos, quase 14 m e umas 7,4 t, por um modelo. O nosso é um jovem de uns 10 m, ao lado de uma pessoa.",
+  "og_title": "Espinossauro: tamanho de até uns 14 m",
+  "og_image_alt": "Um espinossauro de lado, com uma vela alta e uma cauda larga, a silhueta clara de um adulto maior atrás e uma pessoa cinza que chega ao quadril dele."
+ },
+ "labels": {
+  "crumbs": "Você está aqui",
+  "crumb_home": "Museu",
+  "crumb_here": "Espinossauro",
+  "toc": "Nesta página",
+  "tag_made": "Feito para esta página",
+  "tag_built": "Reconstrução",
+  "person": "1,70 m",
+  "to_table": "Os números numa tabela",
+  "no_figure": "sem número com fonte",
+  "og_answer": "Os maiores adultos, pouco menos de 14 m, por um modelo",
+  "og_second": "O nosso, um jovem: uns 10 m"
+ },
+ "top": {
+  "h1": "Qual era o tamanho do espinossauro?",
+  "answer": "Os maiores adultos de Spinosaurus aegyptiacus, o espinossauro, tinham pouco menos de 14 m de comprimento e umas 7,4 toneladas, por um modelo de 2022. Ninguém encontrou um esqueleto inteiro. O nosso é um jovem de uns 10 m, mais ou menos três quartos do tamanho completo e umas 3 a 4 toneladas, por um modelo. Ao lado da pessoa de 1,70 m, a articulação do quadril dele fica mais ou menos na altura da cabeça, e ele tem quase seis pessoas de comprimento.",
+  "answer_more": "Comparado com o T. rex, o maior espinossauro era mais longo, muito provavelmente mais leve e bem mais baixo na altura do quadril. Os dois nunca se encontraram: entre eles havia uns 30 milhões de anos e dois continentes.",
+  "scale": {
+   "pic": "side",
+   "tag": "tag_made",
+   "what": "O nosso espinossauro ao lado de uma pessoa de 1,70 m, na mesma escala: um jovem de uns 10 m, construído a partir do esqueleto do Marrocos. A silhueta clara atrás é o tamanho dos maiores adultos pelo modelo de 2022, pouco menos de 14 m: o nosso modelo aumentado em mais ou menos um terço. A silhueta é uma estimativa, não um animal que alguém tenha encontrado. Na pose do nosso modelo, a silhueta mede uns 13,2 m de ponta a ponta.",
+   "alt": "Um espinossauro de lado, com uma vela alta e uma cauda larga, a silhueta clara de um adulto maior atrás e uma pessoa cinza que chega ao quadril dele.",
+   "note": "A nossa própria reconstrução, construída em código a partir de medidas publicadas e desenhada com o nosso próprio motor gráfico. Não são fotografias.",
+   "marks": [
+    {
+     "span": "spinosaurus",
+     "text": "O nosso espinossauro, um jovem, uns 10 m"
+    },
+    {
+     "span": "outline",
+     "text": "Silhueta: os maiores adultos, pouco menos de 14 m, por um modelo"
+    },
+    {
+     "span": "person",
+     "text": "A pessoa, 1,70 m"
+    }
+   ],
+   "close": {
+    "pic": "close",
+    "tag": "tag_made",
+    "what": "A cabeça e a parte da frente do corpo, mais de perto, com a pessoa. O focinho é longo e estreito, os dentes são cones sem borda de serra e as narinas ficam bem para trás. A crista baixa na frente dos olhos é certa, a altura dela não: a borda de cima está quebrada em todas as peças encontradas. Os lábios são uma escolha nossa, não um achado.",
+    "alt": "A cabeça e a parte da frente do espinossauro, mais de perto, com o focinho longo e estreito, os dentes em forma de cone e uma crista baixa na frente do olho, ao lado da pessoa cinza."
+   }
+  },
+  "guess": {
+   "h": "Tente adivinhar",
+   "q": "Quantos anos tinha o jovem do Marrocos quando morreu?",
+   "button": "Ver a resposta",
+   "a": "Uns 17 anos, pelos anéis de crescimento do fêmur, com uma margem de dois anos para mais ou para menos. Ele ainda não tinha terminado de crescer.",
+   "button_open": "Esconder a resposta"
+  },
+  "out": {
+   "text": "A ala deste animal ainda está sendo construída. A ala de Leonardo da Vinci já está aberta hoje.",
+   "link": "Ir para a ala de Leonardo"
+  }
+ },
+ "blocks": [
+  {
+   "type": "numbers",
+   "id": "numbers",
+   "nav": "Os números",
+   "h": "Os números",
+   "unit": "Em metros e toneladas. Onde não há um número com fonte, a célula fica vazia. O nosso T. rex não recebe um peso aqui: ele está na própria página, pelos estudos sobre SUE.",
+   "cols": [
+    "Animal",
+    "Comprimento",
+    "Altura, com o ponto medido",
+    "Peso",
+    "Certeza"
+   ],
+   "rows": [
+    {
+     "cells": [
+      "O nosso espinossauro, um jovem",
+      "uns 10 m na pose dele",
+      "o alto da vela uns 3,5 m, a articulação do quadril uns 1,6 m",
+      "umas 3 a 4 t, por um modelo",
+      "medido nos nossos arquivos, construído a partir do esqueleto do Marrocos"
+     ]
+    },
+    {
+     "cells": [
+      "Os maiores adultos, o modelo de 2022",
+      "pouco menos de 14 m",
+      "",
+      "umas 7,4 t, de 7,4 a 8 t conforme o ar suposto no corpo",
+      "o modelo de uma equipe, o esqueleto jovem aumentado até o maior focinho"
+     ]
+    },
+    {
+     "cells": [
+      "O esqueleto de Stromer, Egito, destruído em 1944",
+      "mais ou menos do tamanho do nosso, a velha estimativa de Stromer, de 12 a 15 m, hoje é considerada longa demais",
+      "o espinho mais alto, uns 1,65 m de osso, sem altura do corpo",
+      "",
+      "pela descrição de Stromer e por umas poucas fotografias"
+     ]
+    },
+    {
+     "cells": [
+      "O nosso T. rex, segundo SUE",
+      "uns 11,4 m na pose dele",
+      "a articulação do quadril uns 3,2 m, o dorso acima do quadril 3,96 m, a cabeça erguida uns 4,6 m",
+      "não informado",
+      "medido nos nossos arquivos"
+     ]
+    },
+    {
+     "cells": [
+      "A pessoa",
+      "",
+      "1,70 m",
+      "",
+      "a nossa figura de escala"
+     ]
+    }
+   ]
+  },
+  {
+   "type": "text",
+   "id": "t-rex",
+   "nav": "Espinossauro vs T. rex, só o tamanho",
+   "h": "Espinossauro vs T. rex, só o tamanho",
+   "paras": [
+    "O maior espinossauro era mais longo do que qualquer T. rex encontrado até hoje: pouco menos de 14 m por um modelo, contra uns 12 m do esqueleto de SUE. Muito provavelmente ele não era mais pesado: umas 7,4 a 8 toneladas no modelo, contra umas 8 a 9 toneladas dos maiores T. rex conhecidos. Na altura do quadril, ele era bem mais baixo. O fêmur do jovem do Marrocos mede 61 cm, e o de SUE, 1,32 m. Os dois nunca se encontraram: o espinossauro viveu há uns 95 milhões de anos no Norte da África, e o T. rex há uns 68 a 66 milhões de anos na América do Norte."
+   ],
+   "scale": {
+    "pic": "vs",
+    "tag": "tag_made",
+    "what": "O nosso espinossauro e o nosso T. rex, na mesma escala. O nosso espinossauro é um jovem de uns 10 m, e o nosso T. rex, segundo SUE, um adulto grande de uns 11,4 m, então aqui o mais longo é o T. rex. Um espinossauro adulto era mais longo do que qualquer T. rex encontrado até hoje, muito provavelmente mais leve e bem mais baixo na altura do quadril.",
+    "alt": "Um espinossauro com uma vela nas costas e um T. rex um pouco mais longo com a cabeça erguida, os dois de lado, o T. rex mais ou menos duas vezes mais alto no quadril, ao lado da pessoa cinza.",
+    "marks": [
+     {
+      "span": "spinosaurus",
+      "text": "O nosso espinossauro, um jovem, uns 10 m"
+     },
+     {
+      "span": "t-rex",
+      "text": "O nosso T. rex, segundo SUE, uns 11,4 m"
+     },
+     {
+      "span": "person",
+      "text": "A pessoa, 1,70 m"
+     }
+    ]
+   },
+   "links": [
+    {
+     "page": "t-rex",
+     "text": "Qual era o tamanho do T. rex?"
+    }
+   ]
+  },
+  {
+   "type": "text",
+   "id": "looks",
+   "nav": "Como ele era",
+   "h": "Como ele era",
+   "subs": [
+    {
+     "h": "Duas patas",
+     "paras": [
+      "Ele ficava em pé e andava sobre duas patas, com o peso sobre os pés de trás. O animal de quatro patas de 2014 se baseava num erro de cálculo, que veio a público em 2024."
+     ]
+    },
+    {
+     "h": "A cauda",
+     "paras": [
+      "A cauda era alta e achatada dos lados, como uma lâmina: espinhos altos em cima e ossos longos embaixo. Sabemos disso pelos próprios ossos da cauda do animal do Marrocos. Para que ela servia é discutido: para nadar ou para se exibir."
+     ]
+    },
+    {
+     "h": "A vela",
+     "paras": [
+      "Os espinhos são conhecidos, e o mais alto do esqueleto de Stromer tinha uns 1,65 m de osso. A forma da vela sobre eles ninguém conhece. O mais provável é que uma pele fina cobrisse os espinhos, e a ideia principal é que a vela servia para exibição."
+     ]
+    },
+    {
+     "h": "A cabeça",
+     "paras": [
+      "O focinho se alargava na ponta como uma colher. Nenhum espinossaurídeo nos deixou a pele, os lábios ou a cor."
+     ]
+    }
+   ]
+  },
+  {
+   "type": "text",
+   "id": "water",
+   "nav": "O espinossauro e a água",
+   "h": "O espinossauro e a água",
+   "paras": [
+    "Ele vivia perto da água e comia peixes, como indicam os dentes dele e os isótopos que eles contêm. Se ele nadava atrás dos peixes ou os esperava andando na água rasa, isso é discutido. A favor do nado estão a cauda alta de 2020 e os ossos densos de um estudo de 2022. A maioria dos trabalhos desde 2021 indica que ele andava na água rasa. Pelos modelos, ele boiava demais para nadar debaixo da água, a forma do crânio combina com um caçador de tocaia, e em 2024 o método da densidade dos ossos foi chamado de pouco confiável. Os museus deixam a pergunta em aberto, e nós também."
+   ]
+  },
+  {
+   "type": "text",
+   "id": "found",
+   "nav": "O que foi encontrado",
+   "h": "O que foi encontrado",
+   "subs": [
+    {
+     "h": "O esqueleto de Stromer",
+     "paras": [
+      "No outono de 1912, os primeiros ossos apareceram no oásis de Bahariya, no Egito. Eram a metade da frente da mandíbula, com 72 cm de comprimento, e vértebras das costas, do quadril e da cauda com os espinhos altos da vela. Stromer os descreveu em 1915 e deu ao animal o nome Spinosaurus por causa desses espinhos. O esqueleto ficava exposto em Munique e foi destruído num bombardeio em 1944. Restam só as anotações de Stromer, os desenhos e umas poucas fotografias. Hoje Munique guarda um dente de espinossauro, não um esqueleto."
+     ]
+    },
+    {
+     "h": "O jovem do Marrocos",
+     "paras": [
+      "Em 2008, um colecionador encontrou os primeiros ossos perto de Zrigat, no sudeste do Marrocos, nas camadas de Kem Kem. O local foi escavado em 2013, e a cauda, de 2015 a 2019. Desde 2014, este esqueleto é o novo exemplar-tipo da espécie, porque os ossos de Stromer se perderam. Ele é guardado em Casablanca."
+     ]
+    },
+    {
+     "h": "Os ossos dele mesmo",
+     "paras": [
+      {
+       "points": [
+        "O quadril dos dois lados, as duas pernas, um osso do tornozelo e um pé quase completo.",
+        "A cauda, mais de 30 ossos, mais ou menos quatro quintos do comprimento dela.",
+        "Partes de vértebras do pescoço, das costas e do quadril, pedaços de costela, pedaços do crânio e um osso de um dedo da mão."
+       ]
+      }
+     ]
+    },
+    {
+     "h": "O que toda reconstrução pega emprestado",
+     "paras": [
+      {
+       "points": [
+        "Os espinhos da vela e a mandíbula: segundo o esqueleto perdido de Stromer.",
+        "O focinho: segundo o focinho adulto de Milão, reduzido.",
+        "A parte de trás do crânio, os braços e as mãos: segundo os parentes.",
+        "O pescoço, a maior parte das costas, as costelas, o ombro e o fim da cauda: outros achados, ou reconstruídos."
+       ]
+      }
+     ]
+    }
+   ],
+   "end": [
+    "Então toda reconstrução é um animal feito de vários, a nossa também."
+   ],
+   "scale": {
+    "pic": "skeleton",
+    "tag": "tag_built",
+    "what": "O nosso espinossauro como esqueleto, colorido conforme a origem de cada parte.",
+    "alt": "O nosso espinossauro como esqueleto: o quadril, as pernas e a cauda em vermelho-escuro, os espinhos da vela e a mandíbula em azul, o crânio, o pescoço, as costelas e os braços claros, ao lado da pessoa.",
+    "key": [
+     {
+      "swatch": "own",
+      "text": "Vermelho-escuro: os ossos do próprio jovem do Marrocos, o quadril, as duas pernas, o pé e a cauda até o osso número 41. Desses ossos, mais de 30 foram encontrados, e as lacunas levam a mesma cor."
+     },
+     {
+      "swatch": "stromer",
+      "text": "Azul: segundo o esqueleto perdido de Stromer, do Egito, os espinhos da vela e a mandíbula. A metade de trás da mandíbula é reconstruída."
+     },
+     {
+      "swatch": "pale",
+      "text": "Claro: segundo outros achados ou reconstruído, o focinho, a parte de trás do crânio, o pescoço, as costelas, o ombro, os braços e o fim da cauda."
+     },
+     "Três partes misturam duas fontes e levam a cor do que foi emprestado: o crânio, o sacro e as vértebras das costas com os espinhos altos. Os pedacinhos próprios do pescoço, das costelas e da mão não têm uma cor à parte."
+    ]
+   }
+  },
+  {
+   "type": "text",
+   "id": "how-sure",
+   "nav": "Quão certo é isso",
+   "h": "Quão certo é isso",
+   "paras": [
+    "Três coisas decidem cada número desta página.",
+    {
+     "points": [
+      [
+       "Todo comprimento de um adulto é um modelo:",
+       "ninguém tem um esqueleto adulto. Os pesquisadores aumentaram o esqueleto jovem do Marrocos em mais ou menos um terço, até ele combinar com o maior focinho encontrado. O focinho é real, o corpo em volta dele é um cálculo."
+      ],
+      [
+       "O peso vem de um modelo do corpo:",
+       "constrói-se carne em volta do esqueleto, mede-se o volume e multiplica-se por uma densidade. No espinossauro, só o ar suposto no pescoço e no corpo muda a resposta em uns 600 kg."
+      ],
+      [
+       "O nosso não é a espécie:",
+       "o nosso animal é um jovem, e os números dele são só dele. Por isso há aqui três números separados: o nosso animal, os maiores adultos pelo modelo e o esqueleto de Stromer."
+      ]
+     ]
+    }
+   ]
+  },
+  {
+   "type": "notes",
+   "id": "numbers-read",
+   "nav": "Números que você talvez tenha lido",
+   "h": "Números que você talvez tenha lido",
+   "intro": "Para cada número: de onde ele vem e o que significa.",
+   "rows": [
+    {
+     "term": "18 m",
+     "text": "O topo de uma faixa de 2005, de 16 a 18 m: um corpo inteiro desenhado em volta do grande focinho de Milão, com a constituição de um parente de pernas longas. A faixa exata do estudo nós mesmos não lemos. O espinossauro acabou se revelando de pernas curtas, então aquele corpo ficou longo demais. O modelo de 2022 dá pouco menos de 14 m, embora alguns textos de museus ainda deem 18 m."
+    },
+    {
+     "term": "15 m",
+     "text": "O esqueleto digital de 2014, aumentado até o tamanho de um adulto. O modelo melhor da mesma equipe, de 2022, saiu mais de um metro mais curto."
+    },
+    {
+     "term": "20 toneladas",
+     "text": "Um cálculo de 2007 a partir do comprimento do crânio, com uma fórmula feita com outros dinossauros carnívoros: um animal mais curto e muito mais pesado. A faixa exata do estudo nós mesmos não lemos. O modelo do corpo de 2022 dá aos maiores adultos de 7,4 a 8 toneladas."
+    },
+    {
+     "term": "7 toneladas",
+     "text": "O número do modelo atual para os maiores adultos, umas 7,4 toneladas. Ele não vale para o nosso jovem, que tem umas 3 a 4 toneladas."
+    },
+    {
+     "term": "O maior predador de todos os tempos",
+     "text": "Não. O espinossauro é o dinossauro carnívoro mais longo que se conhece. No mar, o megalodon era mais longo, com uns 16 m. O T. rex muito provavelmente era mais pesado, e era mais alto na altura do quadril, isso é certo."
+    },
+    {
+     "term": "Andava sobre quatro patas",
+     "text": "Vem do estudo de 2014. O cálculo dele sobre onde ficava o peso do corpo somava o ar de dentro do corpo em vez de tirá-lo. Um dos próprios autores relatou isso em 2024."
+    },
+    {
+     "term": "O primeiro dinossauro nadador",
+     "text": "Uma manchete de 2020 sobre a cauda recém-encontrada. O próprio estudo chama a cauda de órgão de propulsão, e se o animal nadava atrás dos peixes é discutido, não está decidido."
+    }
+   ]
+  },
+  {
+   "type": "text",
+   "id": "why",
+   "nav": "Por que o nosso espinossauro é assim",
+   "h": "Por que o nosso espinossauro é assim",
+   "paras": [
+    "Ele é feito com as medidas dos ossos do próprio jovem do Marrocos, e o resto segundo o esqueleto de Stromer, outros achados e os parentes. A curva da vela e as cores são nossas, porque nenhuma das duas coisas é conhecida."
+   ]
+  },
+  {
+   "type": "faq",
+   "id": "questions",
+   "nav": "Mais perguntas",
+   "h": "Mais perguntas",
+   "items": [
+    {
+     "q": "Qual era a altura do espinossauro?",
+     "a": "O nosso jovem: o alto da vela, uns 3,5 m, e a cabeça, uns 3 m na pose dele. A articulação do quadril fica a uns 1,6 m. Para os adultos, nenhuma altura do quadril foi publicada, só que o T. rex era mais alto no quadril."
+    },
+    {
+     "q": "O espinossauro foi o maior dinossauro?",
+     "a": "Não. Os dinossauros de pescoço longo eram muito maiores: o Argentinosaurus, uns 30 a 35 m de comprimento e mais ou menos de 65 a 80 toneladas. Há mais na página dos maiores dinossauros.",
+     "links": [
+      {
+       "page": "biggest-dinosaurs",
+       "text": "Os maiores dinossauros, em escala"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "type": "text",
+   "id": "museum",
+   "nav": "No museu",
+   "h": "No museu",
+   "paras": [
+    "O Museum of Ages é um museu digital, feito por uma organização sem fins lucrativos. Entrada franca, sem cadastro. Na ala dos animais, este animal vai estar entre os outros, dos gigantes de muito tempo atrás aos últimos da sua espécie. A ala de Leonardo da Vinci mostra como é uma ala pronta."
+   ],
+   "links": [
+    {
+     "out": true,
+     "text": "Ir para a ala de Leonardo"
+    }
+   ]
+  },
+  {
+   "type": "pages",
+   "id": "next",
+   "items": [
+    {
+     "page": "t-rex",
+     "pic": "trex",
+     "alt": "Um T. rex de lado, sobre duas patas, com a boca aberta e a cabeça erguida, ao lado de uma pessoa cinza que fica bem abaixo do quadril dele."
+    },
+    {
+     "page": "biggest-dinosaurs",
+     "pic": "dinosaurs",
+     "alt": "Sete dinossauros em fila, vistos de lado, dois deles com pescoços longos bem acima dos outros, e uma pessoa cinza que ao lado deles parece minúscula."
+    },
+    {
+     "page": "megalodon",
+     "pic": "megalodon",
+     "alt": "Um tubarão de boca aberta, visto de lado, cinza-escuro com uma faixa mais clara no flanco, ao lado de uma pessoa cinza que ao lado dele parece minúscula."
+    }
+   ]
+  },
+  {
+   "type": "sources",
+   "id": "sources",
+   "nav": "Fontes",
+   "h": "Fontes",
+   "intro": "Os números vêm destes estudos e dos museus que guardam os fósseis. O museu é independente de todos eles.",
+   "read": [
+    {
+     "text": "Sereno e outros, 2022, eLife.",
+     "href": "https://doi.org/10.7554/eLife.80092"
+    },
+    {
+     "text": "Sereno e outros, 2026, Science.",
+     "href": "https://doi.org/10.1126/science.adx5486"
+    },
+    {
+     "text": "Ibrahim e outros, 2014, Science (lido no resumo), com o material suplementar.",
+     "href": "https://doi.org/10.1126/science.1258750"
+    },
+    {
+     "text": "Ibrahim e outros, 2020, Nature.",
+     "href": "https://doi.org/10.1038/s41586-020-2190-3"
+    },
+    {
+     "text": "Myhrvold e outros, 2024, PLOS ONE.",
+     "href": "https://doi.org/10.1371/journal.pone.0298957"
+    },
+    {
+     "text": "Fabbri e outros, 2022, Nature, o resumo do estudo.",
+     "href": "https://doi.org/10.1038/s41586-022-04528-0"
+    },
+    {
+     "text": "Dal Sasso e outros, 2005, Journal of Vertebrate Paleontology, o resumo do estudo.",
+     "href": "https://doi.org/10.1671/0272-4634(2005)025%5B0888:NIOTSO%5D2.0.CO;2"
+    },
+    {
+     "text": "Therrien e Henderson, 2007, Journal of Vertebrate Paleontology, o resumo do estudo."
+    },
+    {
+     "text": "Smith e outros, 2006, Journal of Paleontology, o resumo do estudo.",
+     "href": "https://doi.org/10.1666/0022-3360(2006)080%5B0400:NIRTHO%5D2.0.CO;2"
+    },
+    {
+     "text": "Henderson, 2018, PeerJ, o resumo do estudo.",
+     "href": "https://doi.org/10.7717/peerj.5409"
+    },
+    {
+     "text": "Hone e Holtz, 2021, Palaeontologia Electronica, o resumo do estudo.",
+     "href": "https://doi.org/10.26879/1110"
+    },
+    {
+     "text": "Smart e Sakamoto, 2024, PeerJ, o resumo do estudo.",
+     "href": "https://doi.org/10.7717/peerj.17544"
+    },
+    {
+     "text": "Brazil, 2026, ACS Central Science, uma reportagem.",
+     "href": "https://doi.org/10.1021/acscentsci.6c00222"
+    },
+    {
+     "text": "Bayerische Staatssammlung für Paläontologie und Geologie, Munique: o esqueleto de Stromer, destruído em 1944, e o dente SNSB-BSPG 1993 IX 308.",
+     "href": "https://bspg.snsb.de/wp-content/uploads/sites/7/2023/01/c55ae1a9.pdf"
+    },
+    {
+     "text": "Faculté des Sciences Aïn Chock, Casablanca: o esqueleto FSAC-KK 11888."
+    },
+    {
+     "text": "Museo di Storia Naturale di Milano: o focinho MSNM V4047."
+    },
+    {
+     "text": "Natural History Museum, Londres: as páginas dele sobre dinossauros.",
+     "href": "https://www.nhm.ac.uk/discover/dino-directory/spinosaurus.html"
+    },
+    {
+     "text": "Field Museum, Chicago: SUE, FMNH PR 2081.",
+     "href": "https://www.fieldmuseum.org/blog/sue-t-rex"
+    }
+   ],
+   "contact": "Se um número ou um museu estiver errado, escreva para nós e vamos corrigir.",
+   "contact_link": "Ir para as informações legais",
+   "what_link": "O que é este museu"
+  },
+  {
+   "type": "text",
+   "id": "pictures",
+   "nav": "Use as nossas imagens",
+   "h": "Use as nossas imagens",
+   "paras": [
+    [
+     "As imagens do espinossauro nesta página são obra nossa, com licença ",
+     {
+      "text": "CC BY-SA 4.0",
+      "href": "https://creativecommons.org/licenses/by-sa/4.0/deed.pt-br"
+     },
+     ". Crédito: Museum of Ages. Elas mostram uma reconstrução, construída em código e desenhada com o nosso próprio motor gráfico, não uma fotografia. As imagens das outras páginas que aparecem aqui dão o crédito nessas páginas."
+    ]
+   ]
+  }
+ ]
+}

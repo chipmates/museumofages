@@ -1,0 +1,578 @@
+{
+ "_note": "AS PALAVRAS da página do Triceratops, em português do Brasil. Reescritas a partir do inglês e do alemão, com os mesmos números, fontes e graus de certeza. Nenhum Triceratops jamais foi pesado, e nenhum achado mostra uma luta com o T. rex. Status ai: nenhuma pessoa as revisou ainda.",
+ "page": {
+  "id": "animals-triceratops",
+  "wing": "animals",
+  "topic": "triceratops",
+  "published": null,
+  "join_names": true,
+  "og_image": {
+   "file": "animals-triceratops-og-{lang}-1200x630.png",
+   "width": 1200,
+   "height": 630,
+   "layout": "beside"
+  }
+ },
+ "pics": {
+  "side": {
+   "stem": "animals-triceratops-side",
+   "widths": [
+    800,
+    1600,
+    2400
+   ],
+   "sizes": "(min-width: 1280px) 588px, (min-width: 960px) calc(100vw - 80px), (min-width: 600px) calc(100vw - 64px), calc(100vw - 40px)",
+   "person": "92.2% 38.85%",
+   "marks": {
+    "triceratops": "3.03% 82.76%",
+    "hips": "31.01% 41.36%",
+    "person": "90.52% 93.89%"
+   },
+   "behind": [
+    "hips"
+   ],
+   "tops": {
+    "hips": "10.78%"
+   }
+  },
+  "close": {
+   "stem": "animals-triceratops-close",
+   "widths": [
+    800,
+    1600
+   ],
+   "sizes": "(min-width: 1280px) 690px, (min-width: 960px) 54vw, (min-width: 600px) calc(100vw - 64px), calc(100vw - 40px)",
+   "person": null,
+   "marks": {
+    "skull": "35.68% 38.08% end",
+    "horns": "73.02% 78.23%",
+    "person": "82.75% 88.88%"
+   },
+   "behind": [
+    "skull",
+    "horns"
+   ],
+   "tops": {
+    "horns": "32.81%"
+   }
+  },
+  "vs": {
+   "stem": "animals-triceratops-beside-t-rex",
+   "widths": [
+    800,
+    1600,
+    2400
+   ],
+   "sizes": "(min-width: 1280px) 690px, (min-width: 960px) 54vw, (min-width: 600px) calc(100vw - 64px), calc(100vw - 40px)",
+   "person": "7.11% 36.44%",
+   "marks": {
+    "t-rex": "14.67% 97.78%",
+    "triceratops": "14.63% 65.36%",
+    "person": "6.03% 8.18%"
+   },
+   "behind": [
+    "t-rex"
+   ]
+  },
+  "skeleton": {
+   "stem": "animals-triceratops-skeleton",
+   "widths": [
+    800,
+    1600
+   ],
+   "sizes": "(min-width: 1280px) 690px, (min-width: 960px) 54vw, (min-width: 600px) calc(100vw - 64px), calc(100vw - 40px)",
+   "person": "92.2% 38.85%"
+  },
+  "trex": {
+   "stem": "animals-t-rex-side",
+   "widths": [
+    800,
+    1600,
+    2400
+   ],
+   "sizes": "(min-width: 1280px) 690px, (min-width: 960px) 54vw, (min-width: 600px) calc(100vw - 64px), calc(100vw - 40px)",
+   "person": "86.42% 63.92%"
+  },
+  "dinosaurs": {
+   "stem": "animals-biggest-dinosaurs-row",
+   "widths": [
+    800,
+    1600
+   ],
+   "sizes": "(min-width: 1280px) 690px, (min-width: 960px) 54vw, (min-width: 600px) calc(100vw - 64px), calc(100vw - 40px)",
+   "person": "32.82% 84.25%"
+  },
+  "brachio": {
+   "stem": "animals-brachiosaurus-side",
+   "widths": [
+    800,
+    1600,
+    2400
+   ],
+   "sizes": "(min-width: 1280px) 690px, (min-width: 960px) 54vw, (min-width: 600px) calc(100vw - 64px), calc(100vw - 40px)",
+   "person": "77.8% 84.8%"
+  }
+ },
+ "meta": {
+  "title": "Triceratops: tamanho de uns 7 a 8 m | Museum of Ages",
+  "description": "Qual era o tamanho do Triceratops? Os adultos grandes, uns 7 a 8 m, e o crânio uns 2 m. Dois modelos do esqueleto de Washington dão umas 6,5 a 8,5 t.",
+  "og_title": "Triceratops: tamanho de uns 7 a 8 m, crânio de 2 m",
+  "og_image_alt": "Um Triceratops de lado: um babado largo atrás da cabeça, dois chifres longos acima dos olhos, um curto acima do nariz, quatro patas. Ao lado, uma pessoa cinza que chega a uns dois terços da altura do dorso."
+ },
+ "labels": {
+  "crumbs": "Você está aqui",
+  "crumb_home": "Museu",
+  "crumb_here": "Triceratops",
+  "toc": "Nesta página",
+  "tag_made": "Feito para esta página",
+  "tag_built": "Reconstrução",
+  "person": "1,70 m",
+  "to_table": "Os números numa tabela",
+  "no_figure": "sem número com fonte",
+  "og_answer": "Um Triceratops adulto grande tinha uns 7 a 8 m, com um crânio de uns 2 m"
+ },
+ "top": {
+  "h1": "Qual era o tamanho do Triceratops?",
+  "answer": "Os Triceratops adultos grandes tinham uns 7 a 8 m de comprimento, e os maiores chegavam a uns 9 m. Nenhum Triceratops jamais foi pesado: dois modelos de computador do famoso esqueleto de Washington dão umas 6,5 a 8,5 toneladas. O nosso Triceratops foi feito segundo esse esqueleto, uma montagem com ossos de uns dez animais. Ele tem 6,9 m de comprimento, umas quatro pessoas em fila, e uns 2,5 m de altura acima do quadril.",
+  "answer_more": "O crânio de um adulto grande tem uns 2 m de comprimento, do bico até a borda de trás do babado: mais do que a altura de uma pessoa. É uma das maiores cabeças de todos os animais terrestres.",
+  "scale": {
+   "pic": "side",
+   "tag": "tag_made",
+   "what": "O nosso Triceratops ao lado de uma pessoa de 1,70 m, na mesma escala, feito segundo o esqueleto de Washington, formado por uns dez animais. Ele mede 6,9 m do bico à cauda, e o dorso dele fica a uns 2,5 m de altura acima do quadril, como uma pessoa e meia.",
+   "alt": "Um Triceratops de lado: um babado largo atrás da cabeça, dois chifres longos acima dos olhos, um curto acima do nariz, quatro patas. Ao lado, uma pessoa cinza que chega a uns dois terços da altura do dorso.",
+   "note": [
+    "A nossa própria reconstrução, construída em código a partir de medidas publicadas e desenhada com o nosso próprio motor gráfico. Não são fotografias. ",
+    "A silhueta do nosso Triceratops segue o modelo do corpo de ",
+    {
+     "text": "Dempsey 2025",
+     "href": "https://doi.org/10.6084/m9.figshare.27283401"
+    },
+    " (",
+    {
+     "text": "CC BY 4.0",
+     "href": "https://creativecommons.org/licenses/by/4.0/"
+    },
+    "). Nós o medimos e o modificamos."
+   ],
+   "marks": [
+    {
+     "span": "triceratops",
+     "text": "O nosso Triceratops, 6,9 m do bico à cauda"
+    },
+    {
+     "span": "hips",
+     "text": "O alto do dorso acima do quadril, 2,5 m, o nosso modelo"
+    },
+    {
+     "span": "person",
+     "text": "A pessoa, 1,70 m"
+    }
+   ],
+   "close": {
+    "pic": "close",
+    "tag": "tag_made",
+    "what": "Mais de perto: a cabeça ao lado da pessoa. O nosso crânio tem 2,2 m de comprimento com a pele, mais do que a altura da pessoa. Os chifres acima dos olhos, de 0,9 m com a bainha de chifre, terminam a uns 1,8 m de altura, na altura da cabeça da pessoa.",
+    "alt": "A cabeça do Triceratops mais de perto, de lado: o bico, o olho embaixo de um chifre longo e o babado que se ergue atrás. Ao lado, a pessoa cinza, com a cabeça na altura da ponta do chifre.",
+    "marks": [
+     {
+      "span": "skull",
+      "text": "O crânio ao longo da linha branca, 2,2 m com pele, o nosso modelo"
+     },
+     {
+      "span": "horns",
+      "text": "As pontas dos chifres, a uns 1,8 m, o nosso modelo"
+     },
+     {
+      "span": "person",
+      "text": "A pessoa, 1,70 m"
+     }
+    ]
+   }
+  },
+  "guess": {
+   "h": "Tente adivinhar",
+   "q": "De que animal o primeiro cientista a estudar esses chifres achou que eles vinham?",
+   "button": "Ver a resposta",
+   "a": "De um bisão gigante: em 1887, o cientista americano Othniel Marsh chamou os dois núcleos de osso dos chifres de Bison alticornis. Depois de mais achados, em 1889 ele deu ao animal o nome de Triceratops.",
+   "button_open": "Esconder a resposta"
+  },
+  "out": {
+   "text": "A ala deste animal ainda está sendo construída. A ala de Leonardo da Vinci já está aberta hoje.",
+   "link": "Ir para a ala de Leonardo"
+  }
+ },
+ "blocks": [
+  {
+   "type": "numbers",
+   "id": "numbers",
+   "nav": "Tamanho e peso do Triceratops: os números",
+   "h": "Tamanho e peso do Triceratops: os números",
+   "unit": "Em metros e toneladas. Cada célula de altura diz que ponto ela mede. Onde não há um número com fonte, a célula fica vazia.",
+   "cols": [
+    "Animal",
+    "Comprimento",
+    "Altura, com o ponto medido",
+    "Comprimento do crânio",
+    "Peso",
+    "Certeza"
+   ],
+   "rows": [
+    {
+     "cells": [
+      "Triceratops, adultos grandes",
+      "uns 7 a 8 m, pelos grandes esqueletos conhecidos",
+      "não medida",
+      "uns 2 m, do bico até a borda de trás do babado",
+      "",
+      "média: os comprimentos, de relatos sobre esqueletos com nome, o crânio, de um estudo de dez crânios"
+     ]
+    },
+    {
+     "cells": [
+      "O maior Triceratops",
+      "uns 9 m, o número redondo de um museu, sem método",
+      "não medida",
+      "",
+      "",
+      "fraca"
+     ]
+    },
+    {
+     "cells": [
+      "O esqueleto de Washington, Hatcher",
+      "não publicado",
+      "uns 2,3 a 2,5 m no alto do dorso acima do quadril, lido por nós em fotografias, não publicado",
+      "2,12 m de osso, medido por nós no escaneamento dele, aumentado na reconstrução",
+      "umas 6,5 a 8,5 t, dois modelos de computador",
+      "uma montagem com ossos de uns dez animais, os pesos vêm de modelos, nunca foi pesado"
+     ]
+    },
+    {
+     "cells": [
+      "O nosso modelo",
+      "6,9 m em linha reta, 7,1 m até as pontas dos chifres",
+      "2,5 m acima do quadril no alto do dorso, o alto do babado uns 2,4 m",
+      "2,2 m com pele",
+      "",
+      "medido nos nossos arquivos, feito segundo o escaneamento de Washington"
+     ]
+    },
+    {
+     "cells": [
+      "T. rex, SUE",
+      "uns 12 m, a montagem",
+      "até o quadril uns 4 m, segundo o museu",
+      "uns 1,4 m, do focinho até a borda de trás da bochecha",
+      "umas 8 a 9 t, por um osso e três modelos",
+      "como na nossa página do T. rex"
+     ]
+    },
+    {
+     "cells": [
+      "A pessoa",
+      "",
+      "1,70 m de altura, da cabeça aos pés",
+      "",
+      "",
+      "a nossa figura de escala"
+     ]
+    }
+   ]
+  },
+  {
+   "type": "text",
+   "id": "skull",
+   "nav": "Crânio, chifres e babado do Triceratops",
+   "h": "Crânio, chifres e babado do Triceratops",
+   "paras": [
+    "O crânio de um adulto grande tinha uns 2 m de comprimento, segundo um estudo de dez crânios, de filhotes a adultos. No escaneamento do crânio reconstruído de Washington, medimos 2,12 m de osso.",
+    "Acima dos olhos ficam dois chifres longos, e acima do nariz, um curto e baixo. O chifre longo no nariz de muitas imagens é da espécie posterior, Triceratops prorsus, e o nosso é o Triceratops horridus, mais antigo. O osso que se vê num museu é só o núcleo do chifre: em vida, uma bainha de chifre o cobria, então os chifres eram mais longos, e quanto, ninguém sabe. Eles também mudavam com a idade: num Triceratops jovem, os chifres acima dos olhos se curvavam para trás, e num adulto, para a frente.",
+    "O babado é um escudo largo de osso maciço atrás da cabeça, sem buracos, coberto de pele. Para que serviam os chifres e o babado, ninguém provou. A melhor evidência são ferimentos curados nos babados, que se explicam melhor pelos chifres de outros Triceratops, então muito provavelmente eles lutavam entre si. Exibir-se e reconhecer uns aos outros também são usos prováveis, e defender-se de predadores é possível."
+   ]
+  },
+  {
+   "type": "text",
+   "id": "t-rex",
+   "nav": "Triceratops vs T. rex",
+   "h": "Triceratops vs T. rex",
+   "paras": [
+    "Numa contagem dos grandes dinossauros da Formação Hell Creek, em Montana, onde os dois viveram na mesma época, o Triceratops era o mais comum de todos. O T. rex mordia, sim, os Triceratops: um osso do quadril de Triceratops achado em 1991 tem 58 marcas de dentes certas que só um T. rex poderia ter feito, segundo o relatório de uma universidade de 1996. Um chifre acima do olho, arrancado por uma mordida, sarou depois, então pelo menos um Triceratops sobreviveu a uma mordida de T. rex.",
+    "Se o T. rex caçava os Triceratops na maior parte das vezes ou comia sobretudo animais mortos, os ossos não dizem, e nenhum achado mostra uma luta entre os dois. Os famosos “Dueling Dinosaurs” de Montana, um Triceratops e um tiranossauro encontrados juntos, também não provam uma luta. Desde 2025, o tiranossauro deles é considerado um Nanotyrannus, um tipo menor, não um T. rex, e isso ainda é discutido.",
+    "Os nossos dois na mesma escala, só para comparar o tamanho: o nosso T. rex tem cerca de 1,6 vez o comprimento do nosso Triceratops."
+   ],
+   "scale": {
+    "pic": "vs",
+    "tag": "tag_made",
+    "what": "O nosso Triceratops e o nosso T. rex na mesma escala, os dois virados para o mesmo lado, com a pessoa. O nosso T. rex, feito segundo SUE, tem uns 11,4 m de comprimento, cerca de 1,6 vez o nosso Triceratops. Um ao lado do outro só para comparar o tamanho, nunca como uma luta.",
+    "alt": "Um Triceratops sobre quatro patas e um T. rex sobre duas, os dois de lado e virados para o mesmo lado, o T. rex mais longo e bem mais alto no quadril, ao lado da pessoa cinza.",
+    "marks": [
+     {
+      "span": "triceratops",
+      "text": "O nosso Triceratops, 6,9 m"
+     },
+     {
+      "span": "t-rex",
+      "text": "O nosso T. rex, segundo SUE, uns 11,4 m"
+     },
+     {
+      "span": "person",
+      "text": "A pessoa, 1,70 m"
+     }
+    ]
+   }
+  },
+  {
+   "type": "text",
+   "id": "torosaurus",
+   "nav": "Torosaurus: um Triceratops muito velho, ou outro animal?",
+   "h": "Torosaurus: um Triceratops muito velho, ou outro animal?",
+   "paras": [
+    "O Torosaurus era um dinossauro com chifres da mesma época e das mesmas rochas, com um babado mais longo que tinha dois buracos grandes. Em 2010, dois cientistas propuseram que ele não era um animal à parte, mas só um Triceratops que tinha ficado muito velho, cujo babado tinha se esticado e aberto buracos no fim da vida. Estudos posteriores encontraram Torosaurus jovens e Triceratops velhos, e mediram formas de crânio que se afastam ao crescer, em vez de se aproximar. Um Torosaurus que ainda era jovem não pode ter sido um Triceratops velho. Por isso a maioria dos cientistas hoje vê o Torosaurus como um animal à parte, embora a pergunta ainda seja discutida e nenhum dos lados seja considerado provado."
+   ]
+  },
+  {
+   "type": "text",
+   "id": "skeleton",
+   "nav": "O esqueleto de Triceratops de Washington",
+   "h": "O esqueleto de Triceratops de Washington",
+   "paras": [
+    "O esqueleto do museu de história natural do Smithsonian, em Washington, se chama Hatcher, por causa do caçador de fósseis John Bell Hatcher, e os ossos dele vêm do Wyoming. Ele foi exposto a partir de 1905, baixo e com as pernas abertas como um crocodilo, e por mais de vinte anos não houve outro Triceratops exposto em lugar nenhum. Não se conhecia nenhum esqueleto completo, então o museu o montou com uns dez animais. O crânio era pequeno demais, as patas da frente tinham comprimentos diferentes, e os pés de trás, que vinham de outro dinossauro, tinham o número errado de dedos.",
+    "Em 1996, um pedaço de osso do quadril caiu: minerais que cresciam dentro dos ossos os estavam quebrando, e em 1998 o esqueleto foi desmontado. Então, pela primeira vez, um esqueleto inteiro de dinossauro foi escaneado em 3D, o crânio foi aumentado no computador em cerca de 15 por cento e o lado direito foi espelhado para fazer o esquerdo. Depois disso, a montagem ficou ereta, e desde 2019 o Hatcher está deitado na sala dos fósseis enquanto um T. rex se alimenta dele: uma cena do museu, não um achado. O nosso Triceratops foi feito segundo esse escaneamento."
+   ],
+   "scale": {
+    "pic": "skeleton",
+    "tag": "tag_built",
+    "what": "O nosso Triceratops como esqueleto, com a pessoa, segundo a montagem de Washington, formada por uns dez animais, e o escaneamento que o museu fez dela. A forma clara atrás é a silhueta do nosso animal. Nenhum mapa osso por osso foi publicado: o crânio é de um animal e a maior parte do corpo de outro, então nenhum osso está colorido pelo seu achado. Os chifres são só núcleos de osso: em vida, uma bainha de chifre os deixava mais longos.",
+    "alt": "O esqueleto do Triceratops de lado, o grande crânio com o babado e os núcleos dos chifres, as costelas e quatro patas, ao lado da pessoa cinza, com a silhueta clara do corpo atrás dos ossos."
+   }
+  },
+  {
+   "type": "text",
+   "id": "looks",
+   "nav": "Como era um Triceratops de verdade",
+   "h": "Como era um Triceratops de verdade",
+   "subs": [
+    {
+     "h": "Pele e escamas",
+     "paras": [
+      "Escamas de até 9 cm de largura no tronco, as maiores escamas comuns conhecidas em qualquer dinossauro, com uma escama um pouco maior e saliente a cada 15 a 20 cm. Isso vem de um molde de argila da superfície da pele de outro Triceratops grande. Penas ou espinhos são improváveis."
+     ]
+    },
+    {
+     "h": "Bico, dentes e comida",
+     "paras": [
+      "Um bico córneo cortava as plantas, e fileiras de dentes no fundo das mandíbulas as picavam como tesouras."
+     ]
+    },
+    {
+     "h": "Patas e cor",
+     "paras": [
+      "As patas da frente ficavam retas embaixo do corpo, com os cotovelos um pouco para fora, nunca abertas como as de um lagarto, e dois métodos concordam nisso. Três dos cinco dedos das mãos e os quatro dedos dos pés tinham cascos. Nenhuma cor é conhecida, então a nossa é uma escolha."
+     ]
+    }
+   ]
+  },
+  {
+   "type": "text",
+   "id": "when-where",
+   "nav": "Quando e onde o Triceratops viveu",
+   "h": "Quando e onde o Triceratops viveu",
+   "paras": [
+    "O Triceratops viveu no oeste da América do Norte no Cretáceo Superior, entre uns 68 e 66 milhões de anos atrás. Duas espécies vieram uma depois da outra: o T. horridus, mais antigo, o nosso, foi mudando aos poucos até virar o T. prorsus, posterior. Os últimos fósseis dele chegam ao fim do Cretáceo, uns 66 milhões de anos atrás, quando se pensa que um impacto na península de Iucatã desencadeou o colapso."
+   ]
+  },
+  {
+   "type": "notes",
+   "id": "numbers-read",
+   "nav": "Números que você talvez tenha lido",
+   "h": "Números que você talvez tenha lido",
+   "intro": "Para cada número: de onde ele vem e o que significa.",
+   "rows": [
+    {
+     "term": "9 m de comprimento",
+     "text": "Um número redondo de máximo para os maiores, do diretório de dinossauros de um museu, sem método e sem citar nenhum esqueleto. Um adulto grande tinha uns 7 a 8 m, e o nosso tem 6,9 m."
+    },
+    {
+     "term": "10 toneladas",
+     "text": "Aparece ao lado dos 9 m, também sem método. Os modelos mais novos do esqueleto de Washington dão umas 6,5 a 8,5 toneladas."
+    },
+    {
+     "term": "13 toneladas",
+     "text": "A ficha de um museu sobre os maiores dinossauros, sem método, e acima de todos os outros números daqui."
+    },
+    {
+     "term": "A maior cabeça de todos os animais terrestres",
+     "text": "Um grande museu diz “uma das maiores”, não “a maior”. Os crânios dos adultos grandes têm uns 2 m de comprimento."
+    },
+    {
+     "term": "Um chifre longo no nariz",
+     "text": "É do T. prorsus, a espécie posterior. O T. horridus, o mais antigo e o nosso, tinha um chifre curto e baixo sobre um focinho longo."
+    },
+    {
+     "term": "O Torosaurus era o Triceratops adulto",
+     "text": "Uma ideia de 2010. Estudos posteriores encontraram Torosaurus jovens, e a maioria considera os dois animais diferentes."
+    }
+   ]
+  },
+  {
+   "type": "faq",
+   "id": "questions",
+   "nav": "Mais perguntas",
+   "h": "Mais perguntas",
+   "items": [
+    {
+     "q": "O Triceratops era maior que o T. rex?",
+     "a": "Não. Um Triceratops adulto grande tinha uns 7 a 8 m de comprimento, e um T. rex grande, uns 12 m, e era bem mais alto no quadril. No peso eles ficavam mais perto: umas 6,5 a 8,5 toneladas o Triceratops de Washington, e umas 8 a 9 um T. rex grande. Só o crânio era mais longo: uns 2 m contra os 1,4 m de SUE."
+    },
+    {
+     "q": "O que significa o nome Triceratops?",
+     "a": "“Cara de três chifres”, do grego. Marsh deu o nome em 1889, e o nosso é um Triceratops horridus, a mais antiga das duas espécies."
+    }
+   ]
+  },
+  {
+   "type": "text",
+   "id": "museum",
+   "nav": "No museu",
+   "h": "No museu",
+   "paras": [
+    "O Museum of Ages é um museu digital, feito por uma organização sem fins lucrativos. Entrada franca, sem cadastro. Na ala dos animais, este animal vai estar entre os outros, dos gigantes de muito tempo atrás aos últimos da sua espécie. A ala de Leonardo da Vinci mostra como é uma ala pronta."
+   ],
+   "links": [
+    {
+     "out": true,
+     "text": "Ir para a ala de Leonardo"
+    }
+   ]
+  },
+  {
+   "type": "pages",
+   "id": "next",
+   "items": [
+    {
+     "page": "t-rex",
+     "pic": "trex",
+     "alt": "Um T. rex de lado, sobre duas patas, com a boca aberta e a cabeça erguida, ao lado de uma pessoa cinza que fica bem abaixo do quadril dele.",
+     "line": "Um T. rex adulto grande tinha uns 12 m de comprimento, uns 4 m até o quadril e mais ou menos 8 a 9 toneladas. O nosso T. rex foi feito com as medidas de SUE e está ao lado de uma pessoa na mesma escala, com uma lista do que foi encontrado de SUE."
+    },
+    {
+     "page": "biggest-dinosaurs",
+     "pic": "dinosaurs",
+     "alt": "Sete dinossauros em fila, vistos de lado, dois deles com pescoços longos bem acima dos outros, e uma pessoa cinza que ao lado deles parece minúscula.",
+     "line": "Sete dos nossos ao lado de uma pessoa, na mesma escala: o mais pesado, muito provavelmente um titanossauro da Patagônia, o mais alto, provavelmente o Sauroposeidon, e por que o mais longo continua em aberto."
+    },
+    {
+     "page": "brachiosaurus",
+     "pic": "brachio",
+     "alt": "Um braquiossauro de lado, com o pescoço longo erguido numa curva suave, as patas da frente mais longas que as de trás e a cauda sem tocar o chão, ao lado de uma pessoa cinza que poderia passar por baixo da barriga dele. Uma barra curta marca o alto da cabeça.",
+     "line": "O braquiossauro, um herbívoro de pescoço longo do Jurássico Superior, tinha uns 22 a 25 m de comprimento e pesava mais ou menos de 30 a 45 toneladas, dois números reconstruídos a partir de um único esqueleto parcial. O nosso braquiossauro está ao lado de uma pessoa, com a cabeça na altura de umas sete pessoas, na pose que escolhemos."
+    }
+   ]
+  },
+  {
+   "type": "sources",
+   "id": "sources",
+   "nav": "Fontes",
+   "h": "Fontes",
+   "intro": "Os números vêm destes estudos e dos museus que guardam os ossos. O museu é independente de todos eles.",
+   "read": [
+    {
+     "text": "Dempsey e outros, 2025, Biological Reviews, os modelos de peso do esqueleto de Washington.",
+     "href": "https://doi.org/10.1111/brv.70026"
+    },
+    {
+     "text": "Horner e Goodwin, 2006, Proceedings of the Royal Society B, o resumo do estudo.",
+     "href": "https://doi.org/10.1098/rspb.2006.3643"
+    },
+    {
+     "text": "Scannella e Horner, 2010, Journal of Vertebrate Paleontology, o resumo do estudo.",
+     "href": "https://doi.org/10.1080/02724634.2010.483632"
+    },
+    {
+     "text": "Longrich e Field, 2012, PLOS ONE, o resumo do estudo.",
+     "href": "https://doi.org/10.1371/journal.pone.0032623"
+    },
+    {
+     "text": "Maiorino e outros, 2013, PLOS ONE, o resumo do estudo.",
+     "href": "https://doi.org/10.1371/journal.pone.0081608"
+    },
+    {
+     "text": "Mallon e outros, 2022, Zoological Journal of the Linnean Society, o resumo do estudo.",
+     "href": "https://doi.org/10.1093/zoolinnean/zlab120"
+    },
+    {
+     "text": "Scannella e outros, 2014, PNAS, o resumo do estudo.",
+     "href": "https://doi.org/10.1073/pnas.1313334111"
+    },
+    {
+     "text": "Farke, Wolff e Tanke, 2009, PLOS ONE."
+    },
+    {
+     "text": "D’Anastasio e outros, 2022, Scientific Reports.",
+     "href": "https://doi.org/10.1038/s41598-022-08033-2"
+    },
+    {
+     "text": "Horner, Goodwin e Myhrvold, 2011, PLOS ONE, a contagem dos dinossauros de Hell Creek."
+    },
+    {
+     "text": "Zanno e Napoli, 2025, Nature, o resumo do estudo.",
+     "href": "https://doi.org/10.1038/s41586-025-09801-6"
+    },
+    {
+     "text": "Bell e outros, 2022, Communications Biology, sobre as escamas."
+    },
+    {
+     "text": "Sereno e outros, 2026, Science, o resumo do estudo, sobre o que são os moldes de pele."
+    },
+    {
+     "text": "Fujiwara e Hutchinson, 2012, e Dempsey e outros, 2023, sobre a postura das patas da frente."
+    },
+    {
+     "text": "Theurer e outros, 2026, PLOS ONE, sobre os pés."
+    },
+    {
+     "text": "Barnosky e outros, 2011, Nature, sobre o fim do Cretáceo."
+    },
+    {
+     "text": "University of California, Berkeley: o relatório dela de 1996 sobre o osso do quadril de Triceratops mordido.",
+     "href": "https://newsarchive.berkeley.edu/news/berkeleyan/1996/0911/chomp.html"
+    },
+    {
+     "text": "Smithsonian National Museum of Natural History, Washington: a montagem de Triceratops Hatcher e o relato do próprio museu sobre a história da montagem.",
+     "href": "https://artsandculture.google.com/asset/hatcher-the-first-triceratops-ever-put-on-display/sQERDarxJwtSnQ"
+    },
+    {
+     "text": "Natural History Museum, Londres: a página dele sobre o Triceratops.",
+     "href": "https://www.nhm.ac.uk/discover/dino-directory/triceratops.html"
+    },
+    {
+     "text": "North Carolina Museum of Natural Sciences, Raleigh: os Dueling Dinosaurs.",
+     "href": "https://www.naturalsciences.org/calendar/news/meet-the-dueling-dinosaurs-murphy-and-manteo/"
+    },
+    {
+     "text": "T. rex: os números e as fontes da nossa página do T. rex.",
+     "href": "https://museumofages.org/pt-br/animais/t-rex/"
+    }
+   ],
+   "contact": "Se um número ou um museu estiver errado, escreva para nós e vamos corrigir.",
+   "contact_link": "Ir para as informações legais",
+   "what_link": "O que é este museu"
+  },
+  {
+   "type": "text",
+   "id": "pictures",
+   "nav": "Use as nossas imagens",
+   "h": "Use as nossas imagens",
+   "paras": [
+    [
+     "As quatro imagens do Triceratops nesta página, a vista de lado, a cabeça, a dupla com o nosso T. rex e o esqueleto, são obra nossa, com licença ",
+     {
+      "text": "CC BY-SA 4.0",
+      "href": "https://creativecommons.org/licenses/by-sa/4.0/deed.pt-br"
+     },
+     ". Crédito: Museum of Ages, e também “Triceratops outline after Dempsey 2025 (CC BY 4.0)”. Elas mostram uma reconstrução, construída em código e desenhada com o nosso próprio motor gráfico, não fotografias. As imagens das outras páginas que aparecem aqui dão o crédito nessas páginas."
+    ]
+   ]
+  }
+ ]
+}
