@@ -1407,6 +1407,8 @@ def render(page, lang, data, shared, out_root):
                                         "html.above": marks_html(fig, True), "html.below": marks_html(fig, False),
                                         "html.person": person_html(fig["pic"]), "tag": rich(labels[fig["tag"]]),
                                         "what": rich(fig["what"]), "html.totable": to_table(),
+                                        # a source line under the caption, with its links: a credit the picture owes
+                                        "html.note": f'<span class="label__src">{linked(fig["note"])}</span>' if fig.get("note") else "",
                                         "html.key": key_html(fig)})
         return out + (scale_fig(fig["close"]) if fig.get("close") else "")
 

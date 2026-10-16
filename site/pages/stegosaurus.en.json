@@ -1,5 +1,5 @@
 {
- "_note": "THE WORDS of the Stegosaurus page. Poured word for word from the writer's WORDS file; the title, the description and the heading are its first options. The person's height stands over the person in the side view, the skeleton and the three rows (labels.person), and the labels at the pictures name the person too; in the closer panel only its label under the feet does (pics.close.person null). pics.<name>.marks: each label's place as the start and end of what it names, shares of the picture's width, measured on the frame; pics.<name>.person: the person's centre and the top of its head. pics.side.tops: the tallest plate's tip (2.51 m) and the top of the back over the hips (1.94 m); pics.close.tops: the tallest plate's tip and the four spike tips' mean (1.36 m), as shares of the picture's height from its top, measured on the render; their brackets stand over the picture, the plate's words ending at its bracket. pics.skeleton.swatches: the two tones of the found-bones key, the site's --frame and --text-3, as the skeleton prints them. pics.vs: our Stegosaurus's row over our Triceratops's over our T. rex's at one scale, each one's rearmost point on one left line. Empty cells of the table are the writer's: no sourced figure exists.",
+ "_note": "THE WORDS of the Stegosaurus page. Poured word for word from the writer's WORDS file; the title, the description and the heading are its first options. The person's height stands over the person in the side view, the skeleton and the three rows (labels.person), and the labels at the pictures name the person too; in the closer panel only its label under the feet does (pics.close.person null). pics.<name>.marks: each label's place as the start and end of what it names, shares of the picture's width, measured on the frame; pics.<name>.person: the person's centre and the top of its head. pics.side.tops: the tallest plate's tip (2.51 m) and the top of the back over the hips (1.94 m); pics.close.tops: the tallest plate's tip and the four spike tips' mean (1.36 m), as shares of the picture's height from its top, measured on the render; their brackets stand over the picture, the plate's words ending at its bracket. pics.skeleton.swatches: the two tones of the found-bones key, the site's --frame and --text-3, as the skeleton prints them. pics.vs: our Stegosaurus's row over our Triceratops's over our T. rex's at one scale, each one's rearmost point on one left line; its note is the Triceratops outline's credit, the one picture that shows our Triceratops. Empty cells of the table are the writer's: no sourced figure exists.",
  "page": {
   "id": "animals-stegosaurus",
   "wing": "animals",
@@ -129,7 +129,7 @@
   "title": "Stegosaurus size: up to about 9 m (30 ft) | Museum of Ages",
   "description": "Stegosaurus: the largest were about 9 m (30 ft) long. Sophie in London, a young animal, is about 5.6 m (18 ft) long and about 1.6 t by a model.",
   "og_title": "Stegosaurus size: up to about 9 m (30 ft)",
-  "og_image_alt": "A Stegosaurus from the side: a small low head, two rows of tall plates along the arched back, four spikes at the tip of the tail, the front legs shorter than the hind legs. Beside it a grey person whose head stays below the top of its back."
+  "og_image_alt": "A Stegosaurus from the side: a small low head, two rows of tall plates along the arched back, two of its four tail spikes, the front legs shorter than the hind legs. Beside it a grey person whose head stays below the top of its back."
  },
  "labels": {
   "crumbs": "You are here",
@@ -141,7 +141,7 @@
   "person": "1.70 m",
   "to_table": "The numbers as a table",
   "no_figure": "no sourced figure",
-  "og_answer": "The largest Stegosaurus were about 9 m (30 ft) long, the skeleton Sophie in London about 5.6 m"
+  "og_answer": "The largest Stegosaurus were about 9 m (30 ft) long, and Sophie in London is about 5.6 m"
  },
  "top": {
   "h1": "How big was Stegosaurus?",
@@ -151,21 +151,8 @@
    "pic": "side",
    "tag": "tag_made",
    "what": "Our Stegosaurus, built after Sophie, beside a person 1.70 m tall, to one scale: 5.6 m (18 ft) from beak to tail tip, a little over three people lying head to foot, its head about at the person's shoulder.",
-   "alt": "A Stegosaurus from the side: a small low head, two rows of tall plates along the arched back, four spikes at the tip of the tail, the front legs shorter than the hind legs. Beside it a grey person whose head stays below the top of its back.",
-   "note": [
-    "Our own reconstruction, built in code from published measurements and rendered in our own engine. Not photographs. ",
-    "The outline of our Triceratops follows the body model of ",
-    {
-     "text": "Dempsey 2025",
-     "href": "https://doi.org/10.6084/m9.figshare.27283401"
-    },
-    " (",
-    {
-     "text": "CC BY 4.0",
-     "href": "https://creativecommons.org/licenses/by/4.0/"
-    },
-    "). We measured and changed it."
-   ],
+   "alt": "A Stegosaurus from the side: a small low head, two rows of tall plates along the arched back, two of its four tail spikes, the front legs shorter than the hind legs. Beside it a grey person whose head stays below the top of its back.",
+   "note": "Our own reconstruction, built in code from published measurements and rendered in our own engine. Not photographs.",
    "marks": [
     {
      "span": "stegosaurus",
@@ -187,8 +174,8 @@
    "close": {
     "pic": "close",
     "tag": "tag_made",
-    "what": "Closer up, to one scale: the spikes, up to 0.44 m (1.4 ft) with their horn sheaths, reach the person's chest, and the tallest plate tip stands about 0.8 m over the person's head.",
-    "alt": "The back and tail of the Stegosaurus closer up: tall plates over the hips rising above the grey person's head, and four spikes at the tip of the tail, as high as the person's chest.",
+    "what": "Closer up, to one scale: our spikes, up to 0.44 m (1.4 ft) with their horn sheaths, reach the person's chest, and the tallest plate tip stands about 0.8 m over the person's head. Seen from the side, the spikes look steeper than they are: this view hides that they point out to the sides.",
+    "alt": "The back and tail of the Stegosaurus closer up: tall plates over the hips rising above the grey person's head, and two of its four tail spikes, as high as the person's chest.",
     "marks": [
      {
       "span": "plate",
@@ -247,7 +234,7 @@
       "about 5.5 to 6 m (18 to 20 ft) by the paper that describes the skeleton, the mount 5.6 m (18 ft)",
       "not published for the living animal, the mount 2.9 m (9.5 ft) at its highest point, with the tail raised",
       "about 1.6 t (1.1 to 2.3), by a 3D model of the skeleton, never weighed",
-      "good for the length, where the paper and the museum agree, the weight a model of a young animal"
+      "good for the length, where the paper and the museum agree, the weight from a model of a young animal"
      ]
     },
     {
@@ -262,7 +249,7 @@
     {
      "cells": [
       "T. rex, SUE",
-      "about 12 m (39 ft), the mount",
+      "about 12 m (39 ft), the mount, ours 11.4 m (37 ft)",
       "at the hip about 4 m (13 ft), by the museum",
       "about 8 to 9 t, by a bone and three models",
       "as on our T. rex page"
@@ -271,7 +258,7 @@
     {
      "cells": [
       "Triceratops",
-      "big adults about 7 to 8 m (23 to 26 ft)",
+      "big adults about 7 to 8 m (23 to 26 ft), ours 6.9 m (23 ft)",
       "not measured",
       "the Washington skeleton about 6.5 to 8.5 t, by two computer models",
       "as on our Triceratops page"
@@ -387,6 +374,19 @@
     "tag": "tag_made",
     "what": "Our Stegosaurus, Triceratops and T. rex to one scale, facing the same way, for size only. About 80 million years lay between Stegosaurus and the other two: the three never met.",
     "alt": "Three dinosaurs in three rows, all from the side and facing the same way, each beside the grey person: a Stegosaurus with plates and tail spikes, a Triceratops with horns and a frill, and a T. rex on two legs, twice as long as the Stegosaurus.",
+    "note": [
+     "The outline of our Triceratops follows the body model of ",
+     {
+      "text": "Dempsey 2025",
+      "href": "https://doi.org/10.6084/m9.figshare.27283401"
+     },
+     " (",
+     {
+      "text": "CC BY 4.0",
+      "href": "https://creativecommons.org/licenses/by/4.0/"
+     },
+     "). We measured and changed it."
+    ],
     "marks": [
      {
       "span": "stegosaurus",
@@ -425,7 +425,7 @@
    "rows": [
     {
      "term": "9 m (30 ft) long",
-     "text": "The largest Stegosaurus, not a typical one. Apex in New York, the biggest skeleton on show, is reported at about 8.2 m (27 ft)."
+     "text": "The largest Stegosaurus, not a typical one. Apex in New York is reported as the biggest skeleton on show, at about 8.2 m (27 ft)."
     },
     {
      "term": "2.9 m (9.5 ft) tall",
@@ -534,14 +534,17 @@
      "href": "https://doi.org/10.1007/s00015-010-0021-5"
     },
     {
-     "text": "Christiansen and Tschopp, 2010, Swiss Journal of Geosciences, on the skin and the plate cover of Hesperosaurus and the tissue study of the plates it reports.",
+     "text": "Christiansen and Tschopp, 2010, Swiss Journal of Geosciences, on the skin and the plate cover of Hesperosaurus.",
      "href": "https://doi.org/10.1007/s00015-010-0026-0"
+    },
+    {
+     "text": "Buffrénil and others, 1986, the tissue study of the plates, as the Philip J. Currie Dinosaur Museum reports it."
     },
     {
      "text": "Mallison, 2011, Palaeontologia Electronica, with the studies it reports on the spikes' direction, the broken tips and the Allosaurus bone."
     },
     {
-     "text": "Galton, 2010, Swiss Journal of Geosciences, on the old reconstructions."
+     "text": "Galton, 2010, on the old reconstructions, as our science check cites it."
     },
     {
      "text": "Marsh, 1896, The Dinosaurs of North America, on the brain and the space in the hips."
@@ -558,7 +561,7 @@
      "href": "https://doi.org/10.1002/cne.25597"
     },
     {
-     "text": "Senter, 2010, Acta Palaeontologica Polonica, and Senter, 2026, Alcheringa, the study's summary, on the front feet.",
+     "text": "Senter, 2010, as our science check cites it, and Senter, 2026, Alcheringa, the study's summary, on the front feet.",
      "href": "https://doi.org/10.1080/03115518.2026.2697810"
     },
     {

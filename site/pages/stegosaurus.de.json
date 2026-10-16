@@ -1,5 +1,5 @@
 {
- "_note": "THE WORDS of the Stegosaurus page. Poured word for word from the writer's WORDS file; the title, the description and the heading are its first options. The person's height stands over the person in the side view, the skeleton and the three rows (labels.person), and the labels at the pictures name the person too; in the closer panel only its label under the feet does (pics.close.person null). pics.<name>.marks: each label's place as the start and end of what it names, shares of the picture's width, measured on the frame; pics.<name>.person: the person's centre and the top of its head. pics.side.tops: the tallest plate's tip (2.51 m) and the top of the back over the hips (1.94 m); pics.close.tops: the tallest plate's tip and the four spike tips' mean (1.36 m), as shares of the picture's height from its top, measured on the render; their brackets stand over the picture, the plate's words ending at its bracket. pics.skeleton.swatches: the two tones of the found-bones key, the site's --frame and --text-3, as the skeleton prints them. pics.vs: our Stegosaurus's row over our Triceratops's over our T. rex's at one scale, each one's rearmost point on one left line. Empty cells of the table are the writer's: no sourced figure exists.",
+ "_note": "THE WORDS of the Stegosaurus page. Poured word for word from the writer's WORDS file; the title, the description and the heading are its first options. The person's height stands over the person in the side view, the skeleton and the three rows (labels.person), and the labels at the pictures name the person too; in the closer panel only its label under the feet does (pics.close.person null). pics.<name>.marks: each label's place as the start and end of what it names, shares of the picture's width, measured on the frame; pics.<name>.person: the person's centre and the top of its head. pics.side.tops: the tallest plate's tip (2.51 m) and the top of the back over the hips (1.94 m); pics.close.tops: the tallest plate's tip and the four spike tips' mean (1.36 m), as shares of the picture's height from its top, measured on the render; their brackets stand over the picture, the plate's words ending at its bracket. pics.skeleton.swatches: the two tones of the found-bones key, the site's --frame and --text-3, as the skeleton prints them. pics.vs: our Stegosaurus's row over our Triceratops's over our T. rex's at one scale, each one's rearmost point on one left line; its note is the Triceratops outline's credit, the one picture that shows our Triceratops. Empty cells of the table are the writer's: no sourced figure exists.",
  "page": {
   "id": "animals-stegosaurus",
   "wing": "animals",
@@ -134,7 +134,7 @@
   "title": "Stegosaurus-Größe: bis zu etwa 9 m lang | Museum of Ages",
   "description": "Stegosaurus: Die größten Tiere wurden etwa 9 m lang. Sophie in London, ein junges Tier, ist etwa 5,6 m lang und nach einem Modell etwa 1,6 t schwer.",
   "og_title": "Stegosaurus-Größe: bis zu etwa 9 m lang",
-  "og_image_alt": "Ein Stegosaurus von der Seite: ein kleiner, tief sitzender Kopf, zwei Reihen hoher Platten auf dem gewölbten Rücken, vier Stacheln an der Schwanzspitze, die Vorderbeine kürzer als die Hinterbeine. Daneben ein grauer Mensch, dessen Kopf unter der Oberkante des Rückens bleibt."
+  "og_image_alt": "Ein Stegosaurus von der Seite: ein kleiner, tief sitzender Kopf, zwei Reihen hoher Platten auf dem gewölbten Rücken, zwei seiner vier Schwanzstacheln, die Vorderbeine kürzer als die Hinterbeine. Daneben ein grauer Mensch, dessen Kopf unter der Oberkante des Rückens bleibt."
  },
  "labels": {
   "crumbs": "Du bist hier",
@@ -150,27 +150,14 @@
  },
  "top": {
   "h1": "Wie groß war ein Stegosaurus?",
-  "answer": "Ein Stegosaurus wurde bis zu etwa 9 m lang, so die runde Zahl des Natural History Museum in London, das dazu kein Skelett nennt. Sophie, das berühmte Skelett dort, ist etwa 5,6 m lang und stammt von einem jungen Tier, das noch wuchs. Ein 3D-Modell des Skeletts ergibt etwa 1,6 t (1,1 bis 2,3 t), und wie hoch ein lebender Stegosaurus war, ist nicht veröffentlicht. Unser Stegosaurus, nach Sophie gebaut, ist 5,6 m lang, und sein Rücken ist über der Hüfte 1,9 m hoch, höher als ein Mensch.",
+  "answer": "Ein Stegosaurus wurde bis zu etwa 9 m lang, eine runde Zahl des Londoner Natural History Museum, ohne ein benanntes Skelett. Sophie, das berühmte Skelett dort, ist etwa 5,6 m lang und stammt von einem jungen Tier, das noch wuchs. Ein 3D-Modell des Skeletts ergibt etwa 1,6 t (1,1 bis 2,3 t), und wie hoch ein lebender Stegosaurus war, ist nicht veröffentlicht. Unser Stegosaurus, nach Sophie gebaut, ist 5,6 m lang, und sein Rücken ist über der Hüfte 1,9 m hoch, höher als ein Mensch.",
   "answer_more": "Über den Rücken liefen zwei Reihen hoher Knochenplatten, abwechselnd links und rechts, nie paarweise. Am Schwanzende saßen vier Stacheln, die zur Seite zeigten, nicht nach oben.",
   "scale": {
    "pic": "side",
    "tag": "tag_made",
    "what": "Unser Stegosaurus, nach Sophie gebaut, neben einem Menschen von 1,70 m, im selben Maßstab: 5,6 m vom Schnabel bis zur Schwanzspitze, so lang wie gut drei Menschen, die hintereinander liegen, der Kopf etwa auf Schulterhöhe des Menschen.",
-   "alt": "Ein Stegosaurus von der Seite: ein kleiner, tief sitzender Kopf, zwei Reihen hoher Platten auf dem gewölbten Rücken, vier Stacheln an der Schwanzspitze, die Vorderbeine kürzer als die Hinterbeine. Daneben ein grauer Mensch, dessen Kopf unter der Oberkante des Rückens bleibt.",
-   "note": [
-    "Unsere eigene Rekonstruktion, nach veröffentlichten Maßen in Code gebaut und in unserer Engine gerendert. Keine Fotos. ",
-    "Der Umriss unseres Triceratops folgt dem Körpermodell von ",
-    {
-     "text": "Dempsey 2025",
-     "href": "https://doi.org/10.6084/m9.figshare.27283401"
-    },
-    " (",
-    {
-     "text": "CC BY 4.0",
-     "href": "https://creativecommons.org/licenses/by/4.0/"
-    },
-    "). Wir haben es vermessen und verändert."
-   ],
+   "alt": "Ein Stegosaurus von der Seite: ein kleiner, tief sitzender Kopf, zwei Reihen hoher Platten auf dem gewölbten Rücken, zwei seiner vier Schwanzstacheln, die Vorderbeine kürzer als die Hinterbeine. Daneben ein grauer Mensch, dessen Kopf unter der Oberkante des Rückens bleibt.",
+   "note": "Unsere eigene Rekonstruktion, nach veröffentlichten Maßen in Code gebaut und in unserer Engine gerendert. Keine Fotos.",
    "marks": [
     {
      "span": "stegosaurus",
@@ -182,7 +169,7 @@
     },
     {
      "span": "plate",
-     "text": "Spitze der höchsten Platte, 2,5 m, unser Modell"
+     "text": "Höchste Plattenspitze, 2,5 m, unser Modell"
     },
     {
      "span": "person",
@@ -192,12 +179,12 @@
    "close": {
     "pic": "close",
     "tag": "tag_made",
-    "what": "Aus der Nähe, im selben Maßstab: Die Stacheln, mit Hornscheide bis zu 0,44 m lang, reichen bis zur Brust des Menschen, und die Spitze der höchsten Platte steht etwa 0,8 m über seinem Kopf.",
-    "alt": "Rücken und Schwanz des Stegosaurus aus der Nähe: hohe Platten über der Hüfte, die über den Kopf des grauen Menschen ragen, und vier Stacheln an der Schwanzspitze, so hoch wie die Brust des Menschen.",
+    "what": "Aus der Nähe, im selben Maßstab: Unsere Stacheln, mit Hornscheide bis zu 0,44 m lang, reichen bis zur Brust des Menschen, und die Spitze der höchsten Platte steht etwa 0,8 m über seinem Kopf. Von der Seite wirken die Stacheln steiler, als sie sind: Diese Ansicht verbirgt, dass sie zur Seite zeigen.",
+    "alt": "Rücken und Schwanz des Stegosaurus aus der Nähe: hohe Platten über der Hüfte, die über den Kopf des grauen Menschen ragen, und zwei seiner vier Schwanzstacheln, so hoch wie die Brust des Menschen.",
     "marks": [
      {
       "span": "plate",
-      "text": "Spitze der höchsten Platte, 2,5 m, unser Modell"
+      "text": "Höchste Plattenspitze, 2,5 m, unser Modell"
      },
      {
       "span": "spikes",
@@ -252,7 +239,7 @@
       "etwa 5,5 bis 6 m nach der Studie, die das Skelett beschreibt, die Montage 5,6 m",
       "für das lebende Tier nicht veröffentlicht, die Montage an der höchsten Stelle 2,9 m, mit erhobenem Schwanz",
       "etwa 1,6 t (1,1 bis 2,3 t), nach einem 3D-Modell des Skeletts, nie gewogen",
-      "gut belegt für die Länge, dort stimmen Studie und Museum überein, das Gewicht ist das Modell eines jungen Tiers"
+      "gut belegt für die Länge, dort stimmen Studie und Museum überein, das Gewicht stammt aus dem Modell eines jungen Tiers"
      ]
     },
     {
@@ -267,7 +254,7 @@
     {
      "cells": [
       "T. rex, SUE",
-      "etwa 12 m, die Montage",
+      "etwa 12 m, die Montage, unser T. rex 11,4 m",
       "an der Hüfte etwa 4 m, nach dem Museum",
       "etwa 8 bis 9 t, nach einem Knochen und drei Modellen",
       "wie auf unserer T.-rex-Seite"
@@ -276,7 +263,7 @@
     {
      "cells": [
       "Triceratops",
-      "große erwachsene Tiere etwa 7 bis 8 m",
+      "große erwachsene Tiere etwa 7 bis 8 m, unser Triceratops 6,9 m",
       "nicht gemessen",
       "das Skelett in Washington etwa 6,5 bis 8,5 t, nach zwei Computermodellen",
       "wie auf unserer Triceratops-Seite"
@@ -310,7 +297,7 @@
    "nav": "Die Schwanzstacheln des Stegosaurus",
    "h": "Die Schwanzstacheln des Stegosaurus",
    "paras": [
-    "Sophies vier Schwanzstacheln, zwei Paare, sind als Knochen 35 bis 38 cm lang, an allen fehlt die Spitze, und mit Hornscheide war jeder Stachel noch etwas länger. Die Stacheln zeigten fast waagrecht zur Seite und nach hinten, wie ein anderes Skelett nahelegt, dessen Schwanzknochen noch an Ort und Stelle lagen, auch wenn die vier an Sophies Montage schräg nach oben stehen.",
+    "Sophies vier Schwanzstacheln, zwei Paare, sind als Knochen 35 bis 38 cm lang, an allen fehlt die Spitze, und mit Hornscheide war jeder Stachel noch etwas länger. Die Stacheln zeigten fast waagrecht zur Seite und nach hinten. Das legt ein anderes Skelett nahe, dessen Schwanzknochen noch an Ort und Stelle lagen. An Sophies Montage stehen die vier dagegen schräg nach oben.",
     "Höchstwahrscheinlich waren es Waffen. Von 51 untersuchten Stegosaurier-Stacheln aus der Morrison-Formation in Nordamerika hat etwa jeder zehnte eine abgebrochene Spitze, bei manchen ist der Bruch verheilt. Ein Schwanzwirbel eines Allosaurus hat sogar ein Loch, in das eine Stachelspitze passt. Im Englischen heißen die Schwanzstacheln oft „Thagomizer“: Der Spitzname stammt aus einem Witz in einem Far-Side-Cartoon der frühen 1980er-Jahre, und Forscher übernahmen ihn, aber nur inoffiziell."
    ]
   },
@@ -392,6 +379,19 @@
     "tag": "tag_made",
     "what": "Unser Stegosaurus, unser Triceratops und unser T. rex im selben Maßstab, in dieselbe Richtung gewandt, nur zum Größenvergleich. Zwischen dem Stegosaurus und den beiden anderen lagen etwa 80 Millionen Jahre: Begegnet sind sich die drei nie.",
     "alt": "Drei Dinosaurier in drei Reihen, alle von der Seite und in dieselbe Richtung gewandt, jeder neben dem grauen Menschen: ein Stegosaurus mit Platten und Schwanzstacheln, ein Triceratops mit Hörnern und Nackenschild und ein T. rex auf zwei Beinen, doppelt so lang wie der Stegosaurus.",
+    "note": [
+     "Der Umriss unseres Triceratops folgt dem Körpermodell von ",
+     {
+      "text": "Dempsey 2025",
+      "href": "https://doi.org/10.6084/m9.figshare.27283401"
+     },
+     " (",
+     {
+      "text": "CC BY 4.0",
+      "href": "https://creativecommons.org/licenses/by/4.0/"
+     },
+     "). Wir haben es vermessen und verändert."
+    ],
     "marks": [
      {
       "span": "stegosaurus",
@@ -430,7 +430,7 @@
    "rows": [
     {
      "term": "9 m lang",
-     "text": "Das gilt für die größten Tiere, nicht für ein gewöhnliches. Apex in New York, das größte ausgestellte Skelett, soll etwa 8,2 m lang sein."
+     "text": "Das gilt für die größten Tiere, nicht für ein gewöhnliches. Apex in New York soll mit etwa 8,2 m Länge das größte ausgestellte Skelett sein."
     },
     {
      "term": "2,9 m hoch",
@@ -438,7 +438,7 @@
     },
     {
      "term": "4 m hoch und 5 t",
-     "text": "Keine Studie, die wir gelesen haben, nennt eine dieser Zahlen. Keine nennt eine Höhe oder ein Gewicht für ein benanntes ausgewachsenes Tier."
+     "text": "Keine Studie, die wir gelesen haben, nennt eine dieser Zahlen. Keine nennt eine Höhe oder ein Gewicht für einen benannten, ausgewachsenen Stegosaurus."
     },
     {
      "term": "3,75 t und über 7 t",
@@ -539,14 +539,17 @@
      "href": "https://doi.org/10.1007/s00015-010-0021-5"
     },
     {
-     "text": "Christiansen und Tschopp, 2010, Swiss Journal of Geosciences, zur Haut und zur Hornschicht der Platten des Hesperosaurus und zu der darin berichteten Gewebestudie der Platten.",
+     "text": "Christiansen und Tschopp, 2010, Swiss Journal of Geosciences, zur Haut und zur Hornschicht der Platten des Hesperosaurus.",
      "href": "https://doi.org/10.1007/s00015-010-0026-0"
+    },
+    {
+     "text": "Buffrénil und andere, 1986, die Gewebestudie der Platten, nach dem Bericht des Philip J. Currie Dinosaur Museum."
     },
     {
      "text": "Mallison, 2011, Palaeontologia Electronica, mit den Studien, über die er berichtet: zur Richtung der Stacheln, zu den abgebrochenen Spitzen und zum Knochen des Allosaurus."
     },
     {
-     "text": "Galton, 2010, Swiss Journal of Geosciences, zu den alten Rekonstruktionen."
+     "text": "Galton, 2010, zu den alten Rekonstruktionen, zitiert nach unserer wissenschaftlichen Prüfung."
     },
     {
      "text": "Marsh, 1896, The Dinosaurs of North America, zum Gehirn und zum Hohlraum in der Hüfte."
@@ -563,7 +566,7 @@
      "href": "https://doi.org/10.1002/cne.25597"
     },
     {
-     "text": "Senter, 2010, Acta Palaeontologica Polonica, und Senter, 2026, Alcheringa, die Kurzfassung, zu den Vorderfüßen.",
+     "text": "Senter, 2010, zitiert nach unserer wissenschaftlichen Prüfung, und Senter, 2026, Alcheringa, die Kurzfassung, zu den Vorderfüßen.",
      "href": "https://doi.org/10.1080/03115518.2026.2697810"
     },
     {

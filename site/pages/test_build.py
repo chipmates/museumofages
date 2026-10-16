@@ -1217,7 +1217,7 @@ class Case(unittest.TestCase):
               "de": (r"Rücken über der Hüfte, 1,9\sm, unser Modell", "Rücken über der Hüfte, 1,9 m")},
              "1.9 m only as ours"),
             ({"en": (r"Tallest plate tip, 2\.5\sm, ours", "Tallest plate tip, 2.5 m"),
-              "de": (r"Spitze der höchsten Platte, 2,5\sm, unser Modell", "Spitze der höchsten Platte, 2,5 m")},
+              "de": (r"Höchste Plattenspitze, 2,5\sm, unser Modell", "Höchste Plattenspitze, 2,5 m")},
              "2.5 m only as ours"),
             ({"en": (r"animal, the mount 2\.9\sm", "animal, 2.9 m"), "de": (r"die Montage an der höchsten Stelle 2,9\sm", "an der höchsten Stelle 2,9 m")},
              "2.9 m only as the mount's highest point"),
@@ -1258,6 +1258,32 @@ class Case(unittest.TestCase):
                     self.save(lang, json.loads(re.sub(condition, instead, text)), page)
                     self.fails(re.escape(rule))
                     self.save(lang, original, page)
+
+    def test_a_credit_a_picture_owes_stands_under_that_picture(self):
+        """A picture lower on a page may carry a source line under its caption (scale.note), with its links: the
+        Stegosaurus page sets the Triceratops outline's credit under the picture of the three rows, the one that shows
+        our Triceratops, and under no other of its pictures."""
+        out, written = self.build()
+        seen = set()
+        for path in written:
+            data, lang = self.page_of(path)
+            if data["page"].get("topic") != "stegosaurus":
+                continue
+            own = self.own_part(path.read_text(encoding="utf-8"))
+            figures = re.findall(r'<figure class="plate sc-fig[^"]*".*?</figure>', own, flags=re.S)
+            self.assertEqual(len(figures), 4, lang)
+            for figure in figures:
+                stem = re.search(r"/(animals-stegosaurus-[a-z-]+?)-\d+\.", figure).group(1)
+                caption = figure[figure.index("<figcaption"):]
+                if stem.endswith("-beside-triceratops-t-rex"):
+                    line = re.search(r'</span><span class="label__src">(.*?)</span>(?:<a class="sc-totable"|</figcaption>)', caption, flags=re.S)
+                    self.assertIsNotNone(line, lang)
+                    self.assertIn('href="https://doi.org/10.6084/m9.figshare.27283401"', line.group(1))
+                    self.assertIn('href="https://creativecommons.org/licenses/by/4.0/"', line.group(1))
+                else:
+                    self.assertNotIn("Dempsey", caption, (lang, stem))
+            seen.add(lang)
+        self.assertEqual(seen, {"en", "de"})
 
     def test_a_page_may_set_a_genus_in_italics_that_other_pages_name_upright(self):
         """The Stegosaurus page names Diplodocus beside Allosaurus as genera (page.taxa): there both are italic, while
