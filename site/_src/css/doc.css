@@ -65,7 +65,8 @@
 .mission__bars{margin-top:10px;max-width:38rem}
 .mission__bars>div{display:grid;grid-template-columns:minmax(0,7.6rem) minmax(0,1fr);column-gap:16px;align-items:baseline;padding:11px 0 12px;border-top:1px solid var(--rule)}
 .mission__bars dd{margin-top:0}
-@media (max-width:359px){.mission__bars>div{grid-template-columns:1fr;row-gap:2px}}
+/* Under 600 px a value beside its name would run at about 22 characters a line: the name stands over it instead. */
+@media (max-width:599px){.mission__bars>div{grid-template-columns:1fr;row-gap:4px}}
 .mission__close{margin-top:26px!important;padding-top:22px;border-top:1px solid var(--hair)}
 .mission__em{color:var(--ink)}
 /* How the words are made, said once: larger than the text around it. */

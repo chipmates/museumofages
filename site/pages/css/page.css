@@ -82,6 +82,9 @@
 .sp-notes .sp-dir{padding:0 16px;margin-inline:-6px;border-top:0;background:var(--ledger)}
 .sp-notes .sp-dir>div{border-bottom-color:var(--ledger-rule)}
 .sp-notes .sp-dir>div:last-child{border-bottom:0}
+/* Inside a panel a balanced paragraph leaves a gap at the panel's edge: fill the lines (kept as weak as base.css's
+   phone rule, so a held name's line-by-line wrap still wins). */
+@media (max-width:599px){:where(.sp-notes .sp-dir) dd{text-wrap:pretty}}
 
 /* One thing: its name, where it stands, its plate, what it does, then the sheet, our part and the record */
 .sp-item{margin-top:48px;max-width:42rem}

@@ -66,8 +66,6 @@
 .sc-table .sc-fig{color:var(--ink)}
 .sc-table td:nth-child(2) .sc-fig{font-size:1.125rem;line-height:1.35}
 .sc-table .sc-sure__w{color:var(--ink)}
-/* German compounds in a narrow cell break at a syllable, never mid-letter */
-:lang(de) .sc-table td{hyphens:auto;-webkit-hyphens:auto;hyphenate-limit-chars:10 4 4}
 /* an empty cell says in words that it has no sourced figure (the words stand in the cell's data-none) */
 .sc-table td:empty::after{content:attr(data-none);color:var(--ink-quiet)}
 @media (max-width:959px){
