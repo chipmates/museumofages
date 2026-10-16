@@ -121,6 +121,16 @@
    ],
    "sizes": "(min-width: 1280px) 690px, (min-width: 960px) 54vw, (min-width: 600px) calc(100vw - 64px), calc(100vw - 40px)",
    "person": "91.27% 23.15%"
+  },
+  "stego": {
+   "stem": "animals-stegosaurus-side",
+   "widths": [
+    800,
+    1600,
+    2400
+   ],
+   "sizes": "(min-width: 1280px) 690px, (min-width: 960px) 54vw, (min-width: 600px) calc(100vw - 64px), calc(100vw - 40px)",
+   "person": "93.07% 36.7%"
   }
  },
  "meta": {
@@ -482,6 +492,12 @@
      "pic": "anky",
      "alt": "An Ankylosaurus from the side: a low, wide body under rows of bony plates, a broad head carried low, four short legs and a straight tail ending in a flat club. Beside it a grey person, as tall as the top of its back over the hips.",
      "line": "Ankylosaurus, a club-tailed plant eater whose bones lie in the same rocks as those of Triceratops, was about 6 to 8 m long. Our Ankylosaurus stands beside a person to one scale, with its club, its armour and what was found."
+    },
+    {
+     "page": "stegosaurus",
+     "pic": "stego",
+     "alt": "A Stegosaurus from the side: a small low head, two rows of tall plates along the arched back, four spikes at the tip of the tail, the front legs shorter than the hind legs. Beside it a grey person whose head stays below the top of its back.",
+     "line": "The largest Stegosaurus were about 9 m long, and Sophie, the skeleton in London, is about 5.6 m. Our Stegosaurus stands beside our Triceratops to one scale, with the roughly 80 million years that kept the two apart."
     }
    ]
   },

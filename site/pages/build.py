@@ -223,10 +223,13 @@ class Names:
     never hyphenated and carries its language where it differs from the page's, so a screen reader
     says it right. A person's name of that list never breaks either, nor a short place name marked whole."""
 
-    def __init__(self, entries, wing_name, lang, join=False, breaks=()):
+    def __init__(self, entries, wing_name, lang, join=False, breaks=(), taxa=()):
         self.lang, self.wing_name, self.join = lang, wing_name, join
         # a name is found whichever apostrophe a language's typography sets in it (l'Institut, l’Institut)
         self.table = {straight(e["text"]): e for e in entries}
+        # a genus a page sets in italics where another page names it upright, so no other page changes
+        for word in taxa:
+            self.table[straight(word)] = dict(self.table.get(straight(word), {"text": word}), taxon=True)
         # a page's long word with its one break point ("Giraffa|titan"), for a language that hyphenates on its own
         for word in breaks:
             self.table.setdefault(straight(word.replace("|", "")), {"text": word.replace("|", ""), "split": word.split("|")})
@@ -1291,13 +1294,14 @@ def render(page, lang, data, shared, out_root):
     door = None if making(wing) else wing["door"][lang]
     chrome = site_chrome(shared["chrome_pages"], lang, root, twins, door)
     hub = data["page"].get("hub")
+    taxa = data["page"].get("taxa", ())
     names = Names(shared["names"] + shared["own_names"][lang], wing["name"][lang], lang, join=data["page"].get("join_names", False),
-                  breaks=data["page"].get("breaks", ()))
+                  breaks=data["page"].get("breaks", ()), taxa=taxa)
     rich = names.mark
     # running text that hyphenates (a paragraph, a list's point, a note's text, an answer to a question)
     prose = lambda text: names.mark(text, split=True)
     # the list of pages is new on every page that carries one, so its names are held by no-break spaces
-    joined = Names(shared["names"] + shared["own_names"][lang], wing["name"][lang], lang, join=True).mark
+    joined = Names(shared["names"] + shared["own_names"][lang], wing["name"][lang], lang, join=True, taxa=taxa).mark
 
     def site_page(name, code=lang):
         options = SITE_PAGES[name][code]
@@ -2402,7 +2406,7 @@ def build_pages(out_dir, site_src=SITE_SRC, site_built=SITE_BUILT, pages=PAGES, 
                  if (HERE / f"names.{lang}.json").is_file() else [] for lang in LANGS}
 
     def kept(page, lang):
-        return Names(names + own_names[lang], wing[page]["name"][lang], lang)
+        return Names(names + own_names[lang], wing[page]["name"][lang], lang, taxa=data[page][lang]["page"].get("taxa", ()))
 
     wing = {}
     for page, every in data.items():

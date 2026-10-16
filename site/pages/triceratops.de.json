@@ -124,6 +124,16 @@
    ],
    "sizes": "(min-width: 1280px) 690px, (min-width: 960px) 54vw, (min-width: 600px) calc(100vw - 64px), calc(100vw - 40px)",
    "person": "91.27% 23.15%"
+  },
+  "stego": {
+   "stem": "animals-stegosaurus-side",
+   "widths": [
+    800,
+    1600,
+    2400
+   ],
+   "sizes": "(min-width: 1280px) 690px, (min-width: 960px) 54vw, (min-width: 600px) calc(100vw - 64px), calc(100vw - 40px)",
+   "person": "93.07% 36.7%"
   }
  },
  "meta": {
@@ -485,6 +495,12 @@
      "pic": "anky",
      "alt": "Ein Ankylosaurus von der Seite: ein flacher, breiter Körper unter Reihen von Knochenplatten, ein breiter, tief getragener Kopf, vier kurze Beine und ein gerader Schwanz mit einer flachen Keule am Ende. Daneben ein grauer Mensch, so groß, wie der Rücken über der Hüfte hoch ist.",
      "line": "Der Ankylosaurus, ein Pflanzenfresser mit Schwanzkeule, dessen Knochen in denselben Gesteinen liegen wie die des Triceratops, war etwa 6 bis 8 m lang. Unser Ankylosaurus steht im selben Maßstab neben einem Menschen, dazu seine Keule, sein Panzer und was gefunden wurde."
+    },
+    {
+     "page": "stegosaurus",
+     "pic": "stego",
+     "alt": "Ein Stegosaurus von der Seite: ein kleiner, tief sitzender Kopf, zwei Reihen hoher Platten auf dem gewölbten Rücken, vier Stacheln an der Schwanzspitze, die Vorderbeine kürzer als die Hinterbeine. Daneben ein grauer Mensch, dessen Kopf unter der Oberkante des Rückens bleibt.",
+     "line": "Die größten Tiere wurden etwa 9 m lang, und Sophie, das Skelett in London, misst etwa 5,6 m. Unser Stegosaurus steht im selben Maßstab neben unserem Triceratops, dazu die rund 80 Millionen Jahre, die zwischen den beiden lagen."
     }
    ]
   },

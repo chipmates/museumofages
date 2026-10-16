@@ -103,6 +103,16 @@
    ],
    "sizes": "(min-width: 1280px) 690px, (min-width: 960px) 54vw, (min-width: 600px) calc(100vw - 64px), calc(100vw - 40px)",
    "person": "91.27% 23.15%"
+  },
+  "stego": {
+   "stem": "animals-stegosaurus-side",
+   "widths": [
+    800,
+    1600,
+    2400
+   ],
+   "sizes": "(min-width: 1280px) 690px, (min-width: 960px) 54vw, (min-width: 600px) calc(100vw - 64px), calc(100vw - 40px)",
+   "person": "93.07% 36.7%"
   }
  },
  "meta": {
@@ -433,6 +443,12 @@
      "pic": "anky",
      "alt": "An Ankylosaurus from the side: a low, wide body under rows of bony plates, a broad head carried low, four short legs and a straight tail ending in a flat club. Beside it a grey person, as tall as the top of its back over the hips.",
      "line": "Ankylosaurus, an armoured plant eater with a tail club, lived at the same time and in the same land as T. rex and was about 6 to 8 m long. Our Ankylosaurus stands beside our T. rex to one scale, with what the bones show of the two and what they do not."
+    },
+    {
+     "page": "stegosaurus",
+     "pic": "stego",
+     "alt": "A Stegosaurus from the side: a small low head, two rows of tall plates along the arched back, four spikes at the tip of the tail, the front legs shorter than the hind legs. Beside it a grey person whose head stays below the top of its back.",
+     "line": "The largest Stegosaurus were about 9 m long, and Sophie, the skeleton in London, is about 5.6 m. Our Stegosaurus stands beside our T. rex to one scale, though less time separates T. rex from us than from Stegosaurus."
     }
    ]
   },

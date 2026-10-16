@@ -1537,6 +1537,213 @@
             ]
           ]
         ]
+      },
+      {
+        "slug": {
+          "en": "stegosaurus",
+          "de": "stegosaurus"
+        },
+        "name": {
+          "en": "How big was Stegosaurus?",
+          "de": "Wie groß war ein Stegosaurus?"
+        },
+        "line": {
+          "en": "The largest Stegosaurus were about 9 m long, and Sophie, the skeleton in London, is about 5.6 m long and, by a model, about 1.6 tonnes. Our Stegosaurus is built after Sophie and stands beside a person to one scale, with its plates, its tail spikes and which bones are Sophie's own.",
+          "de": "Ein Stegosaurus wurde bis zu etwa 9 m lang, und Sophie, das Skelett in London, ist etwa 5,6 m lang und nach einem Modell etwa 1,6 t schwer. Unser Stegosaurus ist nach Sophie gebaut und steht im selben Maßstab neben einem Menschen, dazu die Platten, die Schwanzstacheln und welche Knochen Sophies eigene sind."
+        },
+        "langs": ["en", "de"],
+        "count": "stegosaurus",
+        "about": {
+          "@type": "Taxon",
+          "name": "Stegosaurus stenops",
+          "alternateName": "Stegosaurus",
+          "taxonRank": "species",
+          "sameAs": "https://www.wikidata.org/wiki/Q20719356"
+        },
+        "never_say": [
+          [
+            "(?s)^(?!.*(?:largest|biggest|größt|up\\sto|bis\\szu)).*(?<![\\d.,])9\\s?(?:m|metres?|meters?|metern?)\\b",
+            "9 m only as the largest Stegosaurus's round figure, or a number you may have read"
+          ],
+          [
+            "(?:(?:\\bour\\b|\\bours\\b|\\bunser\\w*)|\\bsophie\\b)[^.:]{0,60}?(?<![\\d.,])9\\s?(?:m|metres?|meters?|metern?)\\b",
+            "never 9 m at Sophie or at our animal: Sophie is about 5.6 m"
+          ],
+          [
+            "(?s)^(?!.*(?:(?:\\bour\\b|\\bours\\b|\\bunser\\w*)|sophie|mount|montage|model|modell|straight|gerade)).*(?<![\\d.,])5[.,]6\\s?(?:m|metres?|meters?|metern?)\\b",
+            "5.6 m only as Sophie's, her mount's or ours"
+          ],
+          [
+            "(?s)^(?!.*(?:(?:\\bour\\b|\\bours\\b|\\bunser\\w*)|model|modell)).*(?<![\\d.,])1[.,]9\\s?(?:m|metres?|meters?|metern?)\\b",
+            "1.9 m only as ours, the top of our model's back over the hips"
+          ],
+          [
+            "(?s)^(?!.*(?:(?:\\bour\\b|\\bours\\b|\\bunser\\w*)|model|modell)).*(?<![\\d.,])2[.,]5\\s?(?:m|metres?|meters?|metern?)\\b",
+            "2.5 m only as ours, the tip of our model's tallest plate"
+          ],
+          [
+            "(?s)^(?!.*(?:mount|montage)).*(?<![\\d.,])2[.,]9\\s?(?:m|metres?|meters?|metern?)\\b",
+            "2.9 m only as the mount's highest point, never a height it stood at"
+          ],
+          [
+            "(?s)^(?!.*(?:no\\sstudy|keine\\sstudie|t\\.\\srex|hips?\\b|hüfte)).*(?<![\\d.,])4\\s?(?:m|metres?|meters?|metern?)\\b\\s?(?:\\(\\d+\\sft\\)\\s)?(?:tall|high|hoch)",
+            "never 4 m tall: no study gives it"
+          ],
+          [
+            "(?s)^(?!.*(?:no\\sstudy|keine\\sstudie)).*(?<![\\d.,])5\\s?(?:t|tonnes?|tons?|tonnen)\\b",
+            "never 5 tonnes: no study gives it"
+          ],
+          [
+            "(?s)^(?!.*(?:meeting\\sabstract|tagungsbeitrag)).*(?:(?<![\\d.,])7\\s?(?:t|tonnes?|tons?|tonnen)\\b|(?:over|more\\sthan|über)\\s7\\b)",
+            "over 7 tonnes only as one stegosaur of a meeting abstract, its genus not given"
+          ],
+          [
+            "(?s)^(?!.*(?:rejected|verwarf)).*(?<![\\d.,])3[.,]75\\s?(?:t|tonnes?|tons?|tonnen)\\b",
+            "3.75 tonnes only as the leg-bone figure its study rejected"
+          ],
+          [
+            "(?:\\bour\\b|\\bours\\b|\\bunser\\w*)\\s(?:\\w+\\s){0,4}(?:weighs?|weighed|would\\sweigh|comes?\\sto|came\\sto|wiegt|wog|wöge|käme|kam\\sauf)|(?:\\bour\\b|\\bours\\b|\\bunser\\w*)(?:\\W+\\w+){0,5}\\W+(?<![\\d.,])\\d+(?:[.,]\\d+)?(?:\\s(?:to|bis)\\s\\d+(?:[.,]\\d+)?)?\\s?(?:t|tonnes?|tons?|tonnen)\\b|(?<![\\d.,])(?:1[.,]98|2[.,]20?)\\s?(?:t|tonnes?|tons?|tonnen)\\b",
+            "never a weight beside our animal: the weight is the study's model of Sophie, about 1.6 tonnes"
+          ],
+          [
+            "(?<!never\\s)\\bweigh(?:ed|s)\\b|(?<!nie\\s)\\bgewogen\\b|\\bwog\\b|\\bwiegt\\b",
+            "no Stegosaurus was ever weighed: every weight is a model's"
+          ],
+          [
+            "size\\sof\\sa\\sbus|bus.sized|so\\sgroß\\swie\\sein\\sbus|busgroß",
+            "never the size of a bus"
+          ],
+          [
+            "\\b(?:she|her|hers|herself)\\b",
+            "never she or her for Sophie: nobody knows if Sophie was male or female",
+            [
+              "en"
+            ]
+          ],
+          [
+            "\\bsophie\\b[^.:!?]*?\\b(?:sie|ihr\\w*)\\b|\\bsophie\\b[^.!?]*[.:!?]\\s+(?:sie|ihr\\w*)\\b",
+            "never sie or ihr for Sophie: nobody knows if Sophie was male or female",
+            [
+              "de"
+            ]
+          ],
+          [
+            "(?s)^(?!.*(?:nobody\\sknows|weiß\\sniemand|unknown|unbekannt)).*(?:\\bfemale\\b|\\bmale\\b|weiblich|männlich|weibchen|männchen)",
+            "Sophie's sex is unknown: never female or male"
+          ],
+          [
+            "\\bsophie\\b[^.:]*\\b(?:full.grown|fully\\sgrown|an\\sadult|ausgewachsen\\w*|erwachsen\\w*)",
+            "Sophie was young and still growing: never full-grown or an adult"
+          ],
+          [
+            "\\bstarved\\b|\\bstarved\\sto\\sdeath\\b|\\bverhungerte\\b|\\bverhungert\\b(?!\\s)|(?:sophie|stegosaurus)\\s(?:\\w+\\s){0,2}(?:was\\skilled|wurde\\s(?:\\w+\\s)?getötet)",
+            "nobody knows how Sophie died: never starved or killed as fact"
+          ],
+          [
+            "(?:19\\splates\\s(?:were\\s|was\\s)?(?:found|recovered|preserved)|sophie\\s(?:had|has)\\s19\\b|19\\splatten\\s(?:\\w+\\s)?(?:gefunden|erhalten)|sophie\\shat(?:te)?\\s19\\b)",
+            "18 plates were found on Sophie, most likely 19 in life: never 19 found"
+          ],
+          [
+            "(?:shows?|zeigt)\\sall\\s(?:of\\s)?(?:\\w+\\s)?bones|all\\s(?:of\\s)?(?:her|its|sophie[’']s)\\sbones\\s(?:were\\s)?found|zeigt\\salle\\s(?:\\w+\\s)?knochen|alle\\s(?:ihre\\s|seine\\s)?knochen\\s(?:\\w+\\s)?gefunden",
+            "the skeleton lacks the left arm, both hands and most of the tail's base: never all its bones"
+          ],
+          [
+            "(?s)^(?!.*(?:one\\sof|eines\\sder|einer\\sder)).*(?:the\\smost\\scomplete|das\\svollständigste|vollständigste[sn]?\\s(?:bekannte\\s)?(?:stegosaurus|skelett))",
+            "never the most complete without one of"
+          ],
+          [
+            "\\bvictoria\\b",
+            "Victoria is a Hesperosaurus, never a Stegosaurus"
+          ],
+          [
+            "(?s)^(?!.*(?:never\\sin\\spairs|not\\sin\\spairs|nie\\spaarweise|alternat|abwechselnd|in\\sturn|staggered)).*(?:plates?\\s(?:\\w+\\s){0,2}in\\s(?:matched\\s)?pairs|paired\\splates|platten\\s(?:\\w+\\s)?paarweise|paarweise\\s(?:\\w+\\s)?platten|platten\\sin\\spaaren)",
+            "the plates stood in two rows, left and right in turn: never in pairs"
+          ],
+          [
+            "plates?\\s(?:\\w+\\s){0,2}in\\s(?:a\\s)?(?:single|one)\\srow|platten\\s(?:\\w+\\s){0,2}in\\seiner\\s(?:einzigen\\s)?reihe",
+            "never in one row: two rows"
+          ],
+          [
+            "(?s)^(?!.*(?:not\\sup|nicht\\snach\\soben|mount|montage)).*(?:spikes?\\s(?:\\w+\\s){0,2}(?:pointing|pointed|points?|stood|standing|stuck|sticking)\\s(?:straight\\s)?up\\b|upright\\sspikes|stacheln,?\\s(?:\\w+\\s){0,3}(?:nach\\soben|senkrecht|aufrecht))",
+            "the spikes pointed out to the sides and back: never up"
+          ],
+          [
+            "(?s)^(?!.*(?:two\\sanimals|zwei\\stieren)).*(?:\\beight\\s(?:tail\\s)?spikes|\\bacht\\s(?:schwanz)?stacheln)",
+            "four spikes: eight only as one old reconstruction's, from two animals"
+          ],
+          [
+            "flush\\w*\\s(?:\\w+\\s)?red|blush\\w*|turned\\sred|chang\\w*\\s(?:their\\s|its\\s)?colou?r|errötet\\w*|rot\\s(?:an)?l(?:auf|ief)\\w*|farbe\\s(?:\\w+\\s)?(?:wechsel|änder)\\w*",
+            "no colour is known: never plates that flushed red"
+          ],
+          [
+            "plates\\s(?:were|served)\\s(?:\\w+\\s)?(?:for\\s(?:heat|cooling)|radiators?)|platten\\s(?:dienten|waren)\\s(?:\\w+\\s)?(?:zur\\s)?(?:kühlung|wärmeabgabe)|plates\\swere\\s(?:\\w+\\s)?armou?r|platten\\swaren\\s(?:\\w+\\s)?panzer|plates\\s(?:could|were\\sable\\sto)\\s(?:\\w+\\s)?(?:move|tilt|flap)|platten\\s(?:\\w+\\s){0,3}(?:bewegen|beweglich)(?!keit)",
+            "nobody knows what the plates were for: never heat, armour or moving plates as fact"
+          ],
+          [
+            "corrected\\sby\\sgilmore|gilmore\\s(?:\\w+\\s){0,2}corrected|von\\sgilmore\\s(?:\\w+\\s)?korrigiert",
+            "never corrected by Gilmore: slight modifications"
+          ],
+          [
+            "(?:scientific|official|formal|wissenschaftlich\\w*|offiziell\\w*)\\s(?:\\w+\\s){0,2}(?:name|term|begriff)\\s(?:\\w+\\s){0,2}thagomizer|thagomizer\\s(?:is|ist)\\s(?:the|der)\\s(?:scientific|official|wissenschaftliche|offizielle)",
+            "thagomizer is a nickname, never the scientific name"
+          ],
+          [
+            "(?<!about\\s)(?<!etwa\\s)\\b1982\\b",
+            "the cartoon's year only with about"
+          ],
+          [
+            "skin\\s(?:\\w+\\s){0,3}(?:was|were)\\s(?:found|preserved)|haut\\s(?:\\w+\\s){0,3}(?:wurde|ist)\\s(?:\\w+\\s)?(?:gefunden|erhalten)|(?:fossil|fossilised|fossilized)\\sskin\\sof\\s(?:stegosaurus|sophie)",
+            "the skin is known only from a close relative: never found on Stegosaurus"
+          ],
+          [
+            "(?<![“„\\\"‚‘'])\\b(?:second|two)\\sbrains?\\b|(?<![“„\\\"‚‘'])\\bzwei(?:te[snm]?)?\\sgehirne?\\b|(?<![“„\\\"‚‘'])\\b(?:a\\s)?brain\\sin\\s(?:its|the)\\s(?:hips?|rump)|(?<![“„\\\"‚‘'])\\bgehirn\\sin\\sder\\shüfte",
+            "a second brain only as the old idea, in quotation marks"
+          ],
+          [
+            "brain\\s(?:\\w+\\s){0,4}(?<![\\d.,])\\d+\\s?(?:g|grams?)\\b|(?<![\\d.,])\\d+\\s?(?:g|grams?|gramm)\\s(?:\\w+\\s){0,3}(?:brain|gehirn)|gehirn\\s(?:\\w+\\s){0,4}(?<![\\d.,])\\d+\\s?(?:g|gramm)\\b|size\\sof\\sa\\sdog|dog[’']s\\sbrain|hundegehirn|hundehirn|gehirn\\s(?:\\w+\\s){0,3}eines\\shundes",
+            "no brain weight in grams, never a dog's brain"
+          ],
+          [
+            "(?s)^(?!.*(?:likened|compared|verglich)).*(?:size\\sof\\sa\\s(?:walnut|plum)|walnussgroß|so\\sgroß\\swie\\seine\\s(?:walnuss|pflaume))",
+            "the brain's space was likened to a walnut, never measured as one"
+          ],
+          [
+            "stored\\sfood|store\\sof\\sfood|food\\sstore|nahrungsspeicher|speicherte\\s(?:\\w+\\s)?nahrung",
+            "the hips' space most likely held a soft body like birds have: never a food store as fact"
+          ],
+          [
+            "(?s)^(?=.*(?:t\\.\\srex|triceratops|tyrannosaur))(?!.*(?:never|\\bnie\\b|fiction|erfunden)).*(?:lived\\s(?:\\w+\\s){0,2}together|lebten\\s(?:\\w+\\s){0,2}(?:zusammen|gemeinsam)|\\bmet\\b|\\bmeet(?:s|ing)?\\b|begegne\\w*|\\btraf(?:en)?\\b|fought|fights?\\b|battle\\w*|kämpf\\w*|\\bkampf\\b|duell)",
+            "Stegosaurus never met T. rex or Triceratops: about 80 million years lay between them"
+          ],
+          [
+            "(?<![\\d.,])1[45]5\\s(?:million|millionen)|(?<![\\d.,])145\\s?ma\\b|152.145",
+            "never 145 million for the Jurassic's end: about 143"
+          ],
+          [
+            "died\\sout\\sbecause|wiped\\sout|starb\\s(?:\\w+\\s){0,3}aus,\\sweil|ausgelöscht|ausgerottet|stupid|\\bdumm\\b",
+            "no cause of its end is known"
+          ],
+          [
+            "portug\\w*.{0,80}?(?:ungulatus|stenops)|(?:ungulatus|stenops).{0,80}?portug",
+            "the Portuguese skeleton's species is disputed: never named"
+          ],
+          [
+            "km/h|mph|miles\\san\\shour|top\\sspeed|höchstgeschwindigkeit|meilen\\spro\\sstunde|stundenkilometer",
+            "no speed: no study gives one"
+          ],
+          [
+            "lived\\s(?:alone|in\\sherds)|in\\sherds|in\\sherden|lebte\\s(?:\\w+\\s)?allein|einzelgänger|solitary",
+            "neither herds nor living alone as fact"
+          ],
+          [
+            "jurassic\\s(?:park|world)",
+            "no film by name: nothing of a film was checked"
+          ],
+          [
+            "(?s)^(?!.*(?:by\\saccident|durch\\szufall)).*(?:bulldozer|planierraupe|windstorm|stürmisch)",
+            "the bulldozer only in the guess's answer"
+          ]
+        ]
       }
     ],
     "never_say": [

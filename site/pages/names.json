@@ -250,6 +250,18 @@
     { "text": "Red Deer River", "lang": "en" },
     { "text": "Canadian Museum of Nature", "lang": "en" },
     { "text": "The Canadian Encyclopedia", "lang": "en" },
-    { "text": "Ankylosaurus armour after Arbour and Mallon 2017", "lang": "en" }
+    { "text": "Ankylosaurus armour after Arbour and Mallon 2017", "lang": "en" },
+    { "text": "Hesperosaurus", "taxon": true },
+    { "text": "Allosaurus", "taxon": true },
+    { "text": "Sauriermuseum Aathal", "lang": "de" },
+    { "text": "Philip J. Currie Dinosaur Museum", "lang": "en" },
+    { "text": "Geological Society of America", "lang": "en" },
+    { "text": "International Chronostratigraphic Chart", "lang": "en" },
+    { "text": "The Dinosaurs of North America", "lang": "en" },
+    { "text": "Journal of Comparative Neurology", "lang": "en" },
+    { "text": "Swiss Journal of Geosciences", "lang": "en" },
+    { "text": "Paleobiology", "lang": "en" },
+    { "text": "Far Side", "whole": true, "lang": "en" },
+    { "text": "Thagomizer", "lang": "en" }
   ]
 }

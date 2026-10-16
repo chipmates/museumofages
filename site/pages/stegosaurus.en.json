@@ -1,0 +1,609 @@
+{
+ "_note": "THE WORDS of the Stegosaurus page. Poured word for word from the writer's WORDS file; the title, the description and the heading are its first options. The person's height stands over the person in the side view, the skeleton and the three rows (labels.person), and the labels at the pictures name the person too; in the closer panel only its label under the feet does (pics.close.person null). pics.<name>.marks: each label's place as the start and end of what it names, shares of the picture's width, measured on the frame; pics.<name>.person: the person's centre and the top of its head. pics.side.tops: the tallest plate's tip (2.51 m) and the top of the back over the hips (1.94 m); pics.close.tops: the tallest plate's tip and the four spike tips' mean (1.36 m), as shares of the picture's height from its top, measured on the render; their brackets stand over the picture, the plate's words ending at its bracket. pics.skeleton.swatches: the two tones of the found-bones key, the site's --frame and --text-3, as the skeleton prints them. pics.vs: our Stegosaurus's row over our Triceratops's over our T. rex's at one scale, each one's rearmost point on one left line. Empty cells of the table are the writer's: no sourced figure exists.",
+ "page": {
+  "id": "animals-stegosaurus",
+  "wing": "animals",
+  "topic": "stegosaurus",
+  "published": null,
+  "join_names": true,
+  "og_image": {
+   "file": "animals-stegosaurus-og-{lang}-1200x630.png",
+   "width": 1200,
+   "height": 630,
+   "layout": "beside"
+  },
+  "taxa": [
+   "Diplodocus"
+  ]
+ },
+ "pics": {
+  "side": {
+   "stem": "animals-stegosaurus-side",
+   "widths": [
+    800,
+    1600,
+    2400
+   ],
+   "sizes": "(min-width: 1280px) 588px, (min-width: 960px) calc(100vw - 80px), (min-width: 600px) calc(100vw - 64px), calc(100vw - 40px)",
+   "person": "93.07% 36.7%",
+   "marks": {
+    "stegosaurus": "3.83% 84.03%",
+    "plate": "39.28% 42.45% end",
+    "hips": "44.75% 48.49% start",
+    "person": "90.98% 95.17%"
+   },
+   "behind": [
+    "plate",
+    "hips"
+   ],
+   "tops": {
+    "plate": "8.53%",
+    "hips": "28.28%"
+   }
+  },
+  "close": {
+   "stem": "animals-stegosaurus-close",
+   "widths": [
+    800,
+    1600
+   ],
+   "sizes": "(min-width: 1280px) 690px, (min-width: 960px) 54vw, (min-width: 600px) calc(100vw - 64px), calc(100vw - 40px)",
+   "person": null,
+   "marks": {
+    "plate": "80.23% 85.23% end",
+    "spikes": "22.95% 30.68% end",
+    "person": "7.32% 14.05%"
+   },
+   "behind": [
+    "plate",
+    "spikes"
+   ],
+   "tops": {
+    "plate": "8.49%",
+    "spikes": "48.75%"
+   }
+  },
+  "vs": {
+   "stem": "animals-stegosaurus-beside-triceratops-t-rex",
+   "widths": [
+    800,
+    1600,
+    2400
+   ],
+   "sizes": "(min-width: 1280px) 690px, (min-width: 960px) 54vw, (min-width: 600px) calc(100vw - 64px), calc(100vw - 40px)",
+   "person": "7.11% 84.27%",
+   "marks": {
+    "stegosaurus": "14.67% 55.65%",
+    "triceratops": "14.63% 65.33%",
+    "t-rex": "14.67% 97.78%",
+    "person": "6.03% 8.18%"
+   },
+   "behind": [
+    "stegosaurus"
+   ]
+  },
+  "skeleton": {
+   "stem": "animals-stegosaurus-skeleton",
+   "widths": [
+    800,
+    1600
+   ],
+   "sizes": "(min-width: 1280px) 690px, (min-width: 960px) 54vw, (min-width: 600px) calc(100vw - 64px), calc(100vw - 40px)",
+   "person": "93.07% 36.7%",
+   "swatches": {
+    "own": "#70604e",
+    "rebuilt": "#abb0c3"
+   }
+  },
+  "dinosaurs": {
+   "stem": "animals-biggest-dinosaurs-row",
+   "widths": [
+    800,
+    1600
+   ],
+   "sizes": "(min-width: 1280px) 690px, (min-width: 960px) 54vw, (min-width: 600px) calc(100vw - 64px), calc(100vw - 40px)",
+   "person": "32.82% 84.25%"
+  },
+  "tricera": {
+   "stem": "animals-triceratops-side",
+   "widths": [
+    800,
+    1600,
+    2400
+   ],
+   "sizes": "(min-width: 1280px) 690px, (min-width: 960px) 54vw, (min-width: 600px) calc(100vw - 64px), calc(100vw - 40px)",
+   "person": "92.2% 38.85%"
+  },
+  "trex": {
+   "stem": "animals-t-rex-side",
+   "widths": [
+    800,
+    1600,
+    2400
+   ],
+   "sizes": "(min-width: 1280px) 690px, (min-width: 960px) 54vw, (min-width: 600px) calc(100vw - 64px), calc(100vw - 40px)",
+   "person": "86.42% 63.92%"
+  }
+ },
+ "meta": {
+  "title": "Stegosaurus size: up to about 9 m (30 ft) | Museum of Ages",
+  "description": "Stegosaurus: the largest were about 9 m (30 ft) long. Sophie in London, a young animal, is about 5.6 m (18 ft) long and about 1.6 t by a model.",
+  "og_title": "Stegosaurus size: up to about 9 m (30 ft)",
+  "og_image_alt": "A Stegosaurus from the side: a small low head, two rows of tall plates along the arched back, four spikes at the tip of the tail, the front legs shorter than the hind legs. Beside it a grey person whose head stays below the top of its back."
+ },
+ "labels": {
+  "crumbs": "You are here",
+  "crumb_home": "Museum",
+  "crumb_here": "Stegosaurus",
+  "toc": "On this page",
+  "tag_made": "Made for this page",
+  "tag_built": "Reconstruction",
+  "person": "1.70 m",
+  "to_table": "The numbers as a table",
+  "no_figure": "no sourced figure",
+  "og_answer": "The largest Stegosaurus were about 9 m (30 ft) long, the skeleton Sophie in London about 5.6 m"
+ },
+ "top": {
+  "h1": "How big was Stegosaurus?",
+  "answer": "The largest Stegosaurus were about 9 m (30 ft) long, a round figure of London's Natural History Museum, with no skeleton named. Sophie, the famous skeleton in that museum, is about 5.6 m (18 ft) long, from a young animal that was still growing. A 3D model of the skeleton gives about 1.6 tonnes (1.1 to 2.3), and no height of a living Stegosaurus has been published. Ours, built after Sophie, is 5.6 m (18 ft) long, its back 1.9 m (6.4 ft) high over the hips, above a person's head.",
+  "answer_more": "Along its back stood two rows of tall bony plates, left and right in turn, never in pairs. Its tail ended in four spikes that pointed out to the sides, not up.",
+  "scale": {
+   "pic": "side",
+   "tag": "tag_made",
+   "what": "Our Stegosaurus, built after Sophie, beside a person 1.70 m tall, to one scale: 5.6 m (18 ft) from beak to tail tip, a little over three people lying head to foot, its head about at the person's shoulder.",
+   "alt": "A Stegosaurus from the side: a small low head, two rows of tall plates along the arched back, four spikes at the tip of the tail, the front legs shorter than the hind legs. Beside it a grey person whose head stays below the top of its back.",
+   "note": [
+    "Our own reconstruction, built in code from published measurements and rendered in our own engine. Not photographs. ",
+    "The outline of our Triceratops follows the body model of ",
+    {
+     "text": "Dempsey 2025",
+     "href": "https://doi.org/10.6084/m9.figshare.27283401"
+    },
+    " (",
+    {
+     "text": "CC BY 4.0",
+     "href": "https://creativecommons.org/licenses/by/4.0/"
+    },
+    "). We measured and changed it."
+   ],
+   "marks": [
+    {
+     "span": "stegosaurus",
+     "text": "Our Stegosaurus, 5.6 m from beak to tail tip"
+    },
+    {
+     "span": "hips",
+     "text": "Top of the back over the hips, 1.9 m, ours"
+    },
+    {
+     "span": "plate",
+     "text": "Tallest plate tip, 2.5 m, ours"
+    },
+    {
+     "span": "person",
+     "text": "The person, 1.70 m"
+    }
+   ],
+   "close": {
+    "pic": "close",
+    "tag": "tag_made",
+    "what": "Closer up, to one scale: the spikes, up to 0.44 m (1.4 ft) with their horn sheaths, reach the person's chest, and the tallest plate tip stands about 0.8 m over the person's head.",
+    "alt": "The back and tail of the Stegosaurus closer up: tall plates over the hips rising above the grey person's head, and four spikes at the tip of the tail, as high as the person's chest.",
+    "marks": [
+     {
+      "span": "plate",
+      "text": "Tallest plate tip, 2.5 m, ours"
+     },
+     {
+      "span": "spikes",
+      "text": "Spike tips, 1.3 to 1.4 m up, ours"
+     },
+     {
+      "span": "person",
+      "text": "The person, 1.70 m"
+     }
+    ]
+   }
+  },
+  "guess": {
+   "h": "A guess",
+   "q": "How did Sophie's skeleton first come to light?",
+   "button": "Show the answer",
+   "a": "By accident, in 2003. A man moving a bulldozer on a Wyoming ranch late one evening in a windstorm grazed a hillside, and the next morning bones showed in the slope.",
+   "button_open": "Hide the answer"
+  },
+  "out": {
+   "text": "The wing for this animal is still being built. The Leonardo da Vinci wing is open today.",
+   "link": "To the Leonardo wing"
+  }
+ },
+ "blocks": [
+  {
+   "type": "numbers",
+   "id": "numbers",
+   "nav": "Stegosaurus size, height and weight: the numbers",
+   "h": "Stegosaurus size, height and weight: the numbers",
+   "unit": "Metres and feet, tonnes. Each height cell names the point it measures. An empty cell has no sourced figure.",
+   "cols": [
+    "Animal",
+    "Length",
+    "Height, with the point named",
+    "Weight",
+    "How sure"
+   ],
+   "rows": [
+    {
+     "cells": [
+      "Stegosaurus, the largest",
+      "up to about 9 m (30 ft), a round figure of London's Natural History Museum, no skeleton named",
+      "not published",
+      "",
+      "fair: one museum's figure, no method given"
+     ]
+    },
+    {
+     "cells": [
+      "Sophie, Natural History Museum, London",
+      "about 5.5 to 6 m (18 to 20 ft) by the paper that describes the skeleton, the mount 5.6 m (18 ft)",
+      "not published for the living animal, the mount 2.9 m (9.5 ft) at its highest point, with the tail raised",
+      "about 1.6 t (1.1 to 2.3), by a 3D model of the skeleton, never weighed",
+      "good for the length, where the paper and the museum agree, the weight a model of a young animal"
+     ]
+    },
+    {
+     "cells": [
+      "Our model, built after Sophie",
+      "5.6 m (18 ft) straight, beak to tail tip",
+      "top of the back over the hips 1.9 m (6.4 ft), tallest plate tip 2.5 m (8.2 ft), top of the head about 1.3 m (4.3 ft), all ours",
+      "",
+      "measured on our files"
+     ]
+    },
+    {
+     "cells": [
+      "T. rex, SUE",
+      "about 12 m (39 ft), the mount",
+      "at the hip about 4 m (13 ft), by the museum",
+      "about 8 to 9 t, by a bone and three models",
+      "as on our T. rex page"
+     ]
+    },
+    {
+     "cells": [
+      "Triceratops",
+      "big adults about 7 to 8 m (23 to 26 ft)",
+      "not measured",
+      "the Washington skeleton about 6.5 to 8.5 t, by two computer models",
+      "as on our Triceratops page"
+     ]
+    },
+    {
+     "cells": [
+      "The person",
+      "",
+      "1.70 m (5 ft 7 in) tall, head to foot",
+      "",
+      "our scale figure"
+     ]
+    }
+   ]
+  },
+  {
+   "type": "text",
+   "id": "plates",
+   "nav": "Stegosaurus plates",
+   "h": "Stegosaurus plates",
+   "paras": [
+    "Sophie has 18 plates, and a gap over the tail's base suggests a 19th stood there. The London mount shows 19, one a cast. They stood upright in two rows, left and right in turn, set in the skin, not joined to the skeleton.",
+    "The largest is 78.5 cm (2.6 ft) at its longest, in bone, part of it plaster. A smooth layer of horn most likely covered the plates, but its only print comes from one plate of a close relative, Hesperosaurus.",
+    "What they were for, nobody knows for sure. Most recent studies favour showing off, a sign by which Stegosaurus could recognise their own kind. Shedding heat, an idea of 1976, was at most a side use. Defence is the weakest idea: the plates were thin, and a tissue study found nothing that would let them move."
+   ]
+  },
+  {
+   "type": "text",
+   "id": "tail-spikes",
+   "nav": "Stegosaurus tail spikes: the thagomizer",
+   "h": "Stegosaurus tail spikes: the thagomizer",
+   "paras": [
+    "Sophie's four tail spikes, in two pairs, are 35 to 38 cm (14 to 15 in) of bone, their tips missing, and horn sheaths made them a little longer. They pointed out to the sides and back, close to level, as another skeleton with its tail bones in place suggests, though Sophie's mount holds them raised.",
+    "Most likely they were weapons. Of 51 stegosaur spikes from North America's Morrison Formation, about one in ten has a broken tip, some healed. One Allosaurus tail bone even has a hole that a spike tip fits. The nickname thagomizer began as a joke in a Far Side cartoon of the early 1980s, and scientists took it up informally."
+   ]
+  },
+  {
+   "type": "text",
+   "id": "brain",
+   "nav": "Stegosaurus brain, and the “second brain”",
+   "h": "Stegosaurus brain, and the “second brain”",
+   "paras": [
+    "For so big a body, Stegosaurus had a very small brain. The space for it in the skull has long been likened to a walnut, by the London museum to a plum, but a reptile's brain does not fill it, so the brain was smaller still.",
+    "In the 1880s and 1890s Othniel Marsh found a space in the backbone over the hips at least twenty times as big as the brain's, and called it, carefully, a rear brain case. There was no “second brain”. As in birds, the space most likely held a soft lump of tissue rich in glycogen, a stored sugar. What it did is not settled."
+   ]
+  },
+  {
+   "type": "text",
+   "id": "sophie",
+   "nav": "Sophie, the Stegosaurus skeleton in London",
+   "h": "Sophie, the Stegosaurus skeleton in London",
+   "paras": [
+    "Sophie, a Stegosaurus stenops, was found in 2003 on a ranch near Shell, Wyoming, dug up in 2004 and prepared at the Sauriermuseum Aathal in Switzerland. London's Natural History Museum, whose scientists had seen a cast of it at a fair in Tucson in 2012, bought the skeleton with donors' help and has shown it since December 2014. The name honours a donor's daughter: whether Sophie was male or female, nobody knows.",
+    "With about 360 bones, Sophie is one of the most complete skeletons of Stegosaurus known. Missing are the left arm, both hands, most of the tail's base and some smaller bones, as well as skin and throat armour. The skull on show is a cast. How Sophie died, nobody knows: the bones show no bite or wound, and the scientists who described them consider starvation or an illness the likeliest causes.",
+    "The skeleton picture shows which of our bones are Sophie's own."
+   ],
+   "scale": {
+    "pic": "skeleton",
+    "tag": "tag_built",
+    "what": "Our Stegosaurus as a skeleton, at the side view's scale, with Sophie's own bones and the rebuilt ones in two tones.",
+    "alt": "Our Stegosaurus as a skeleton from the side, beside the grey person: most bones in the tone of Sophie's own, with the front feet, one plate and the first part of the tail in the rebuilt tone.",
+    "key": [
+     {
+      "swatch": "own",
+      "text": "Sophie's own bones"
+     },
+     {
+      "swatch": "rebuilt",
+      "text": "Missing on Sophie, rebuilt"
+     },
+     "Rebuilt bones are mirrored from Sophie's other side or modelled on other finds. Sophie's bones are shown uncrushed, and a few rib ends marked as Sophie's are plaster on the real skeleton. The first three tail bones show as rebuilt, though their upper parts were found, and the skull's rebuilt patches are approximate."
+    ]
+   }
+  },
+  {
+   "type": "text",
+   "id": "looks",
+   "nav": "What a real Stegosaurus looked like",
+   "h": "What a real Stegosaurus looked like",
+   "subs": [
+    {
+     "h": "Head, beak and food",
+     "paras": [
+      "It had a small, low head, a horny beak and small leaf-shaped teeth. One study of Sophie's skull found a bite like a cow's or a sheep's."
+     ]
+    },
+    {
+     "h": "Legs and feet",
+     "paras": [
+      "The front legs were shorter than the hind legs, and it walked on all four. Each front foot was a stump of upright palm bones with two small hooves."
+     ]
+    },
+    {
+     "h": "Skin, throat and colour",
+     "paras": [
+      "Skin is known only from a close relative, Hesperosaurus: small six-sided scales. Other Stegosaurus had small bony bits in the throat skin. No stegosaur's colour is known, so ours is a choice."
+     ]
+    }
+   ]
+  },
+  {
+   "type": "text",
+   "id": "t-rex",
+   "nav": "Stegosaurus vs T. rex and Triceratops",
+   "h": "Stegosaurus vs T. rex and Triceratops",
+   "paras": [
+    "Stegosaurus never met T. rex or Triceratops. About 80 million years lay between the last Stegosaurus and the first T. rex or Triceratops, at least about 75. That is more than the 66 million years between the last T. rex and us, so T. rex is nearer to us in time than to Stegosaurus. Films that show them meeting are fiction. Stegosaurus's own neighbours included the long-necked Diplodocus and the meat-eater Allosaurus.",
+    "In the picture, our T. rex is twice as long as our Stegosaurus, whose tallest plate tip stands about as high as our Triceratops's back."
+   ],
+   "scale": {
+    "pic": "vs",
+    "tag": "tag_made",
+    "what": "Our Stegosaurus, Triceratops and T. rex to one scale, facing the same way, for size only. About 80 million years lay between Stegosaurus and the other two: the three never met.",
+    "alt": "Three dinosaurs in three rows, all from the side and facing the same way, each beside the grey person: a Stegosaurus with plates and tail spikes, a Triceratops with horns and a frill, and a T. rex on two legs, twice as long as the Stegosaurus.",
+    "marks": [
+     {
+      "span": "stegosaurus",
+      "text": "Our Stegosaurus, 5.6 m"
+     },
+     {
+      "span": "triceratops",
+      "text": "Our Triceratops, 6.9 m"
+     },
+     {
+      "span": "t-rex",
+      "text": "Our T. rex, after SUE, about 11.4 m"
+     },
+     {
+      "span": "person",
+      "text": "The person, 1.70 m"
+     }
+    ]
+   }
+  },
+  {
+   "type": "text",
+   "id": "when-where",
+   "nav": "When and where Stegosaurus lived",
+   "h": "When and where Stegosaurus lived",
+   "paras": [
+    "Stegosaurus lived in western North America late in the Jurassic, and one skeleton comes from Portugal. The American finds lie in the Morrison Formation, whose dated layers are about 157 to 150 million years old, the top a little younger. Sophie lived about 150 million years ago, by the London museum's figure. Its fossils end before the Cretaceous, which began about 143 million years ago, and nobody knows why."
+   ]
+  },
+  {
+   "type": "notes",
+   "id": "numbers-read",
+   "nav": "Numbers you may have read",
+   "h": "Numbers you may have read",
+   "intro": "For each number: where it came from, and what it means.",
+   "rows": [
+    {
+     "term": "9 m (30 ft) long",
+     "text": "The largest Stegosaurus, not a typical one. Apex in New York, the biggest skeleton on show, is reported at about 8.2 m (27 ft)."
+    },
+    {
+     "term": "2.9 m (9.5 ft) tall",
+     "text": "Sophie's mount at its highest point, with the tail raised, not a height the animal stood at. None has been published."
+    },
+    {
+     "term": "4 m tall, and 5 tonnes",
+     "text": "No study we read gives either. None gives a height or a weight for a named full-grown Stegosaurus."
+    },
+    {
+     "term": "3.75 tonnes, and over 7",
+     "text": "Both come from leg-bone methods, which ran high for Sophie: up to 3.75 tonnes, a figure the same study rejected. The over 7 tonnes is one very large stegosaur, genus not given, from a meeting abstract of 2025 whose authors say it holds only if their methods are right."
+    },
+    {
+     "term": "“Two brains”",
+     "text": "Marsh's rear brain case in the hips, of the 1880s and 1890s. A study of 1990 found no sign of a brain there in living or fossil reptiles."
+    },
+    {
+     "term": "Plates in pairs, and eight spikes",
+     "text": "Both come from old reconstructions of the 1890s. Skeletons with their plates in place, Sophie among them, show them alternating, and one reconstruction's eight spikes came from two animals."
+    }
+   ]
+  },
+  {
+   "type": "faq",
+   "id": "questions",
+   "nav": "More questions",
+   "h": "More questions",
+   "items": [
+    {
+     "q": "How heavy was Stegosaurus?",
+     "a": "By a 3D model of the skeleton, Sophie, a young animal, comes to about 1.6 tonnes (1.1 to 2.3), a small rhino's weight, says the London museum. Leg-bone rules give more, since a young animal's legs are thick for its weight. For the biggest Stegosaurus, no study we read gives a weight."
+    },
+    {
+     "q": "What does the name Stegosaurus mean?",
+     "a": "Roof lizard, from Greek, after Othniel Marsh's first idea in 1877 that the scattered plates had lain flat over the back like roof tiles."
+    }
+   ]
+  },
+  {
+   "type": "text",
+   "id": "museum",
+   "nav": "In the museum",
+   "h": "In the museum",
+   "paras": [
+    "Museum of Ages is a digital museum, made by a nonprofit. Free entry, no account. In the animal wing this animal will stand among the others, from the giants of long ago to the last of their kind. The Leonardo da Vinci wing shows what a finished wing looks like."
+   ],
+   "links": [
+    {
+     "out": true,
+     "text": "To the Leonardo wing"
+    }
+   ]
+  },
+  {
+   "type": "pages",
+   "id": "next",
+   "items": [
+    {
+     "page": "biggest-dinosaurs",
+     "pic": "dinosaurs",
+     "alt": "Seven dinosaurs in a row from the side, two with long necks towering over the rest, and a grey person who looks tiny beside them.",
+     "line": "Seven of ours beside a person, to one scale: the heaviest most likely a titanosaur from Patagonia, the tallest probably Sauroposeidon, and why the longest is still open."
+    },
+    {
+     "page": "triceratops",
+     "pic": "tricera",
+     "alt": "A Triceratops from the side: a wide frill behind the head, two long horns over the eyes, a short one on the nose, four legs. Beside it a grey person who reaches about two thirds of the way up its back.",
+     "line": "A big adult Triceratops was about 7 to 8 m long, and two models give about 6.5 to 8.5 tonnes for the Washington skeleton, a mount of about ten animals. Our Triceratops stands beside a person to one scale, with its skull against the person, Torosaurus and what the bones say about T. rex."
+    },
+    {
+     "page": "t-rex",
+     "pic": "trex",
+     "alt": "A T. rex from the side on two legs, mouth open and head raised, beside a grey person who stands far below its hips.",
+     "line": "A large adult T. rex was about 12 m long, about 4 m at the hips and roughly 8 to 9 tonnes. Our T. rex is built to SUE's measurements and stands beside a person to one scale, with a list of what was found of SUE."
+    }
+   ]
+  },
+  {
+   "type": "sources",
+   "id": "sources",
+   "nav": "Sources",
+   "h": "Sources",
+   "intro": "The numbers come from these studies and from the museums that keep the bones. The museum is independent of all of them.",
+   "read": [
+    {
+     "text": "Maidment, Brassey and Barrett, 2015, PLOS ONE, the description of Sophie.",
+     "href": "https://doi.org/10.1371/journal.pone.0138352"
+    },
+    {
+     "text": "Brassey, Maidment and Barrett, 2015, Biology Letters, the weight model of Sophie.",
+     "href": "https://doi.org/10.1098/rsbl.2014.0984"
+    },
+    {
+     "text": "Lautenschlager and others, 2016, Scientific Reports, on Sophie's bite, as the Natural History Museum reports it."
+    },
+    {
+     "text": "Main, de Ricqlès, Horner and Padian, 2005, Paleobiology, the study's summary."
+    },
+    {
+     "text": "Farlow, Thompson and Rosner, 1976, Science, the study's summary.",
+     "href": "https://doi.org/10.1126/science.192.4244.1123"
+    },
+    {
+     "text": "Farlow, Hayashi and Tattersall, 2010, Swiss Journal of Geosciences, the study's summary.",
+     "href": "https://doi.org/10.1007/s00015-010-0021-5"
+    },
+    {
+     "text": "Christiansen and Tschopp, 2010, Swiss Journal of Geosciences, on the skin and the plate cover of Hesperosaurus and the tissue study of the plates it reports.",
+     "href": "https://doi.org/10.1007/s00015-010-0026-0"
+    },
+    {
+     "text": "Mallison, 2011, Palaeontologia Electronica, with the studies it reports on the spikes' direction, the broken tips and the Allosaurus bone."
+    },
+    {
+     "text": "Galton, 2010, Swiss Journal of Geosciences, on the old reconstructions."
+    },
+    {
+     "text": "Marsh, 1896, The Dinosaurs of North America, on the brain and the space in the hips."
+    },
+    {
+     "text": "Morhardt, Ridgely and Witmer, 2011, a meeting abstract of the Geological Society of America, on the brain."
+    },
+    {
+     "text": "Giffin, 1990, Paleobiology, the study's summary.",
+     "href": "https://doi.org/10.1017/s0094837300010186"
+    },
+    {
+     "text": "Journal of Comparative Neurology, 2024, a study of how much of the brain space a reptile's brain fills, the study's summary.",
+     "href": "https://doi.org/10.1002/cne.25597"
+    },
+    {
+     "text": "Senter, 2010, Acta Palaeontologica Polonica, and Senter, 2026, Alcheringa, the study's summary, on the front feet.",
+     "href": "https://doi.org/10.1080/03115518.2026.2697810"
+    },
+    {
+     "text": "Hunt-Foster, Foster, Woodruff and Sroka, 2025, a meeting abstract of the Geological Society of America.",
+     "href": "https://doi.org/10.1130/abs/2025AM-11169"
+    },
+    {
+     "text": "Trujillo and Kowallis, 2015, Geology of the Intermountain West, the dates of the Morrison Formation.",
+     "href": "https://doi.org/10.31711/giw.v2.pp1-8"
+    },
+    {
+     "text": "International Chronostratigraphic Chart, 2024, for the end of the Jurassic."
+    },
+    {
+     "text": "Natural History Museum, London: Sophie, NHMUK PV R36730, its press release of 2014, its news of 2015 and its Stegosaurus pages."
+    },
+    {
+     "text": "American Museum of Natural History, New York: its blog of 2017 on the tail spikes and their nickname, and Apex, whose length is given here as news reports of 2024 gave it."
+    },
+    {
+     "text": "Philip J. Currie Dinosaur Museum, Drumheller: its article on Stegosaurus, 2021."
+    },
+    {
+     "text": "T. rex and Triceratops: the numbers and sources of our T. rex and Triceratops pages."
+    }
+   ],
+   "contact": "If a number or a museum is wrong, tell us and we will correct it.",
+   "contact_link": "To the legal notice",
+   "what_link": "What this museum is"
+  },
+  {
+   "type": "text",
+   "id": "pictures",
+   "nav": "Use our pictures",
+   "h": "Use our pictures",
+   "paras": [
+    [
+     "The four pictures of the Stegosaurus on this page, the side view, the plates and spikes, the skeleton and the three with our Triceratops and our T. rex, are our own work under ",
+     {
+      "text": "CC BY-SA 4.0",
+      "href": "https://creativecommons.org/licenses/by-sa/4.0/"
+     },
+     ", credit: Museum of Ages, and for the picture of all three also Triceratops outline after Dempsey 2025 (CC BY 4.0). They show a reconstruction, built in code and rendered in our own engine, not photographs. The pictures of the other pages listed here give their credits on those pages."
+    ]
+   ]
+  }
+ ]
+}

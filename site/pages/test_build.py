@@ -471,8 +471,8 @@ class Case(unittest.TestCase):
             # a list of pages joins its names wherever it stands: the hub and both neighbours
             items = [m.group(1) for (pid, code), (other, text) in by_id.items() if code == lang
                      for m in re.finditer(r'<h2 class="sc-item__h"><a href="[^"]*t-rex/">(.*?)</a>', text)]
-            # the hub and the seven pages that name it
-            self.assertEqual(len(items), 8)
+            # the hub and the eight pages that name it
+            self.assertEqual(len(items), 9)
             for item in items:
                 self.assertIn('<span class="nh">T.\u00a0rex</span>', item)
         # a page without the flag keeps the nowrap span in its own sentences
@@ -1049,6 +1049,87 @@ class Case(unittest.TestCase):
                     self.fails(r"top\.out\.text matches")
                     self.save(lang, original, page)
 
+    # Each claim the Stegosaurus page must never make, by its topic's rules: the canon's NEVER SAY and the facts sheet's.
+    NEVER_STEGO = {
+        "en": ["Stegosaurus was 9 m long", "It reached 9 metres", "Sophie is 9 m long",
+               "Our Stegosaurus is about 9 m long", "Stegosaurus was 5.6 m long",
+               "Stegosaurus stood 1.9 m at the hips", "Its plates reached 2.5 m",
+               "Stegosaurus stood 2.9 m tall", "Stegosaurus stood 4 m tall", "It weighed 5 tonnes",
+               "It came to 7 tonnes", "Some were over 7", "Sophie came to 3.75 tonnes",
+               "Our Stegosaurus weighs 2 tonnes", "Our model comes to 1.98 to 2.2 t", "It came to 2.2 tonnes",
+               "Our Stegosaurus, about 2 t", "Sophie was weighed", "Stegosaurus weighs about 1.6 tonnes",
+               "It was the size of a bus", "She was a young animal", "Her skeleton is in London",
+               "Sophie was a female", "A male Stegosaurus", "Sophie was a full-grown Stegosaurus",
+               "Sophie was an adult", "Sophie starved", "Sophie was killed", "19 plates were found",
+               "Sophie had 19 plates", "The skeleton shows all of its bones",
+               "All of Sophie's bones were found", "The most complete Stegosaurus ever found",
+               "Victoria the Stegosaurus", "The plates stood in pairs", "Paired plates ran down its back",
+               "The plates stood in one row", "Its spikes pointed up", "Spikes standing straight up",
+               "Upright spikes", "It had eight spikes", "Eight tail spikes", "Plates that flushed red",
+               "The plates changed colour", "The plates were for cooling", "The plates were armour",
+               "The plates could move", "The plates were corrected by Gilmore",
+               "Thagomizer is the scientific name", "The cartoon of 1982", "Its skin was found",
+               "Fossilised skin of Stegosaurus", "Stegosaurus had two brains", "It had a second brain",
+               "A brain in its hips", "Its brain weighed 80 g", "A brain the size of a dog's",
+               "It had a brain the size of a walnut", "Its hips stored food", "Stegosaurus met T. rex",
+               "T. rex fought Stegosaurus", "Stegosaurus and Triceratops lived together",
+               "Triceratops met Stegosaurus", "It died out 145 million years ago",
+               "The Jurassic ended 145 million years ago", "It lived 152 to 145 million years ago",
+               "It died out because it was stupid", "It was wiped out",
+               "The Stegosaurus ungulatus from Portugal", "The Portuguese skeleton is S. stenops",
+               "It walked at 6 km/h", "It walked a few miles an hour", "It lived in herds", "It lived alone",
+               "The Stegosaurus of Jurassic Park", "A bulldozer found it", "In a windstorm"],
+        "de": ["Der Stegosaurus war 9 m lang", "Er erreichte 9 Meter", "Sophie ist 9 m lang",
+               "Unser Stegosaurus ist etwa 9 m lang", "Der Stegosaurus war 5,6 m lang",
+               "Der Rücken stand 1,9 m hoch", "Die Platten reichten 2,5 m hoch",
+               "Der Stegosaurus war 2,9 m hoch", "Er war 4 m hoch", "Er wog 5 t", "Er kam auf 7 Tonnen",
+               "Manche wogen über 7", "Sophie kam auf 3,75 t", "Unser Stegosaurus wiegt 2 t",
+               "Unser Modell käme auf 1,98 bis 2,2 t", "Er kam auf 2,2 t", "Unser Stegosaurus, etwa 2 t",
+               "Sophie wurde gewogen", "Der Stegosaurus wiegt 1,6 t", "So groß wie ein Bus",
+               "Sophie war jung, als sie starb", "Sophie lebt in London. Ihr Skelett steht dort",
+               "Sophie war weiblich", "Ein männlicher Stegosaurus", "Sophie war ausgewachsen",
+               "Sophie war erwachsen", "Sophie verhungerte", "Sophie wurde getötet",
+               "19 Platten wurden gefunden", "Sophie hatte 19 Platten", "Das Skelett zeigt alle Knochen",
+               "Alle Knochen wurden gefunden", "Das vollständigste Skelett", "Victoria, ein Stegosaurus",
+               "Die Platten standen paarweise", "Paarweise Platten auf dem Rücken",
+               "Die Platten standen in einer Reihe", "Die Stacheln zeigten nach oben",
+               "Stacheln standen senkrecht", "Vier Stacheln, die nach oben zeigten", "Er hatte acht Stacheln",
+               "Acht Schwanzstacheln", "Platten, die rot anliefen", "Die Platten errötete",
+               "Die Platten dienten zur Kühlung", "Die Platten waren ein Panzer",
+               "Die Platten konnten sich bewegen", "Die Platten wurden von Gilmore korrigiert",
+               "Thagomizer ist der wissenschaftliche Begriff", "Der Cartoon von 1982",
+               "Seine Haut wurde gefunden", "Der Stegosaurus hatte zwei Gehirne",
+               "Er hatte ein zweites Gehirn", "Ein Gehirn in der Hüfte", "Sein Gehirn wog 80 g",
+               "Ein Gehirn wie das eines Hundes", "Ein Gehirn so groß wie eine Walnuss",
+               "Die Hüfte war ein Nahrungsspeicher", "Der Stegosaurus traf den T. rex",
+               "Der T. rex kämpfte gegen den Stegosaurus", "Stegosaurus und Triceratops lebten zusammen",
+               "Der Triceratops begegnete dem Stegosaurus", "Er starb vor 145 Millionen Jahren aus",
+               "Der Jura endete vor 145 Millionen Jahren", "Er wurde ausgelöscht",
+               "Er starb aus, weil er dumm war", "Der Stegosaurus ungulatus aus Portugal", "Er lief 6 km/h",
+               "Er lebte in Herden", "Er war ein Einzelgänger", "Der Stegosaurus aus Jurassic Park",
+               "Eine Planierraupe fand ihn", "An einem stürmischen Abend"],
+    }
+
+    def test_the_stegosaurus_page_refuses_each_never_say_phrase(self):
+        page = self.topic_page("stegosaurus")
+        topic = next(t for w in self.wings().values() if isinstance(w, dict) for t in w.get("topics", []) if t.get("count") == "stegosaurus")
+        # every rule of the topic is met by a phrase of the list in a language it holds for, so a rule added without
+        # its phrase is seen
+        for pattern, _, *only in topic["never_say"]:
+            self.assertTrue(any(re.search(pattern, x.lower()) for lang, xs in self.NEVER_STEGO.items() if not only or lang in only[0]
+                                for x in xs), pattern)
+        for lang, phrases in self.NEVER_STEGO.items():
+            original = self.data(lang, page)
+            for phrase in phrases:
+                with self.subTest(lang=lang, phrase=phrase):
+                    # the line under the answer carries none of the words a rule lets a number stand with
+                    shutil.rmtree(self.dir / "out", ignore_errors=True)
+                    data = json.loads(json.dumps(original))
+                    data["top"]["out"]["text"] += f" {phrase}."
+                    self.save(lang, data, page)
+                    self.fails(r"top\.out\.text matches")
+                    self.save(lang, original, page)
+
     def test_an_ankylosaurus_number_stands_only_with_the_words_that_say_whose_it_is(self):
         """The page names the biggest animals' 8 m, the 10 m and 8 tonnes its authors doubt, our model's 6.4, 1.70 and
         1.5 m, the study's weight, the shoulder spikes, the living tank, the bone-breaking club, the spiked ball, the
@@ -1119,6 +1200,88 @@ class Case(unittest.TestCase):
                     self.fails(re.escape(rule))
                     self.save(lang, original, page)
 
+    def test_a_stegosaurus_number_stands_only_with_the_words_that_say_whose_it_is(self):
+        """The page names the largest's 9 m, Sophie's mount at 5.6 and 2.9 m, our model's 1.9 and 2.5 m, the rejected
+        3.75 tonnes, the abstract's over 7, a weight never weighed, the old second brain, the walnut, Sophie's unknown
+        sex, one of the most complete skeletons, the old eight spikes, spikes that point out and the bulldozer of the
+        guess on purpose: without the words that say whose the number is or what the claim was, the same fields stop
+        the build."""
+        page = self.topic_page("stegosaurus")
+        cases = [
+            ({"en": (r"The largest Stegosaurus were about 9\sm", "Stegosaurus were about 9 m"),
+              "de": (r"Ein Stegosaurus wurde bis zu etwa 9\sm", "Ein Stegosaurus wurde etwa 9 m")},
+             "9 m only as the largest Stegosaurus's round figure"),
+            ({"en": (r"skeleton, the mount 5\.6\sm", "skeleton, 5.6 m"), "de": (r"beschreibt, die Montage 5,6\sm", "beschreibt, 5,6 m")},
+             "5.6 m only as Sophie's, her mount's or ours"),
+            ({"en": (r"over the hips, 1\.9\sm, ours", "over the hips, 1.9 m"),
+              "de": (r"Rücken über der Hüfte, 1,9\sm, unser Modell", "Rücken über der Hüfte, 1,9 m")},
+             "1.9 m only as ours"),
+            ({"en": (r"Tallest plate tip, 2\.5\sm, ours", "Tallest plate tip, 2.5 m"),
+              "de": (r"Spitze der höchsten Platte, 2,5\sm, unser Modell", "Spitze der höchsten Platte, 2,5 m")},
+             "2.5 m only as ours"),
+            ({"en": (r"animal, the mount 2\.9\sm", "animal, 2.9 m"), "de": (r"die Montage an der höchsten Stelle 2,9\sm", "an der höchsten Stelle 2,9 m")},
+             "2.9 m only as the mount's highest point"),
+            ({"en": (r", a figure the same study rejected\.", "."), "de": (r", was dieselbe Studie verwarf\.", ".")},
+             "3.75 tonnes only as the leg-bone figure its study rejected"),
+            ({"en": (r"from a meeting abstract of 2025", "from a study of 2025"), "de": (r"aus einem Tagungsbeitrag von 2025", "aus einer Studie von 2025")},
+             "over 7 tonnes only as one stegosaur of a meeting abstract"),
+            ({"en": (r"skeleton, never weighed", "skeleton, weighed"), "de": (r"Skeletts, nie gewogen", "Skeletts, gewogen")},
+             "no Stegosaurus was ever weighed"),
+            ({"en": (r"There was no “second brain”\.", "There was no second brain."),
+              "de": (r"Ein „zweites Gehirn“ gab es nicht\.", "Ein zweites Gehirn gab es nicht.")},
+             "a second brain only as the old idea, in quotation marks"),
+            ({"en": (r"has long been likened to a walnut", "has long been the size of a walnut"),
+              "de": (r"verglich man lange mit einer Walnuss", "war lange so groß wie eine Walnuss")},
+             "the brain's space was likened to a walnut, never measured as one"),
+            ({"en": (r"male or female, nobody knows\.", "male or female."), "de": (r"oder weiblich war, weiß niemand\.", "oder weiblich war.")},
+             "Sophie's sex is unknown"),
+            ({"en": (r"one of the most complete skeletons", "the most complete skeleton"),
+              "de": (r"eines der vollständigsten bekannten Skelette", "das vollständigste bekannte Skelett")},
+             "never the most complete without one of"),
+            ({"en": (r", and one reconstruction's eight spikes came from two animals", ""),
+              "de": (r", und die acht Stacheln einer Rekonstruktion stammten von zwei Tieren", "")},
+             "four spikes: eight only as one old reconstruction's, from two animals"),
+            ({"en": (r"spikes that pointed out to the sides, not up", "spikes that pointed up"),
+              "de": (r"Stacheln, die zur Seite zeigten, nicht nach oben", "Stacheln, die nach oben zeigten")},
+             "the spikes pointed out to the sides and back"),
+            ({"en": (r"By accident, in 2003\. ", "In 2003. "), "de": (r"Durch Zufall, 2003\. ", "2003. ")},
+             "the bulldozer only in the guess's answer"),
+        ]
+        out, _ = self.build()
+        shutil.rmtree(out)
+        for subs, rule in cases:
+            for lang, (condition, instead) in subs.items():
+                with self.subTest(lang=lang, rule=rule):
+                    original = self.data(lang, page)
+                    text = json.dumps(original, ensure_ascii=False)
+                    self.assertRegex(text, condition)
+                    self.save(lang, json.loads(re.sub(condition, instead, text)), page)
+                    self.fails(re.escape(rule))
+                    self.save(lang, original, page)
+
+    def test_a_page_may_set_a_genus_in_italics_that_other_pages_name_upright(self):
+        """The Stegosaurus page names Diplodocus beside Allosaurus as genera (page.taxa): there both are italic, while
+        the biggest dinosaurs page, which names Diplodocus as an animal of its row, keeps it upright."""
+        out, written = self.build()
+        seen = {}
+        for path in written:
+            data, lang = self.page_of(path)
+            own = self.own_part(path.read_text(encoding="utf-8"))
+            topic = data["page"].get("topic")
+            if topic == "stegosaurus":
+                self.assertEqual(data["page"]["taxa"], ["Diplodocus"])
+                self.assertIn('<i class="nh">Diplodocus</i>', own)
+                self.assertIn('<i class="nh">Allosaurus</i>', own)
+                self.assertNotRegex(re.sub(r"<i [^>]*>[^<]*</i>", "", own), r"(?<![\w-])Diplodocus")
+                seen[topic, lang] = True
+            elif topic == "biggest_dinosaurs" or data["page"]["id"] == "animals-biggest-dinosaurs":
+                self.assertIn("Diplodocus", own)
+                self.assertNotIn(">Diplodocus</i>", own)
+                seen["dinosaurs", lang] = True
+            else:
+                self.assertNotIn("taxa", data["page"])
+        self.assertEqual(len(seen), 4, seen)
+
     def test_a_share_picture_may_set_its_words_beside_the_picture(self):
         """A page whose picture would leave much of the share card empty under its words sets them in a column at the
         left and the picture at the right (page.og_image.layout beside): the picture whole, the words wrapped in their
@@ -1187,9 +1350,9 @@ class Case(unittest.TestCase):
                 for k in keys:
                     self.assertIn(".sc-swatch--%s-%s{background:%s}" % (fig["pic"], k["swatch"], colours[k["swatch"]]), text)
                     self.assertRegex(text, r'<li class="sc-keys__i"><span class="sc-swatch sc-swatch--%s-%s" aria-hidden="true"></span><span>%s'
-                                     % (fig["pic"], k["swatch"], re.escape(html.escape(k["text"].split(":")[0], quote=False))))
-        # the Spinosaurus, the Brachiosaurus and the Ankylosaurus pages, in both languages
-        self.assertEqual(seen, 6)
+                                     % (fig["pic"], k["swatch"], re.escape(html.escape(k["text"].split(":")[0], quote=True))))
+        # the Spinosaurus, the Brachiosaurus, the Ankylosaurus and the Stegosaurus pages, in both languages
+        self.assertEqual(seen, 8)
         shutil.rmtree(out)
         for lang in ("en", "de"):
             data = self.data(lang, page)
@@ -1251,8 +1414,8 @@ class Case(unittest.TestCase):
                      if plain(re.search(r"<h2[^>]*>(.*?)</h2>", x, flags=re.S).group(1)) == topic["name"][lang]]
             self.assertEqual(len(found), 1, path)
             self.assertEqual(plain(found[0]), item.get("line") or topic["line"][lang])
-        # the hub and the seven neighbours, in both languages
-        self.assertEqual(seen, 16)
+        # the hub and the eight neighbours, in both languages
+        self.assertEqual(seen, 18)
 
     def test_a_picture_too_tall_for_the_share_card_stands_whole_above_the_address(self):
         spec = importlib.util.spec_from_file_location("chart_share", self.dir / "chart.py")
@@ -1721,7 +1884,7 @@ class Case(unittest.TestCase):
             keys = [b["scale"]["key"] for b in data["blocks"] if b.get("scale", {}).get("key")]
             # a key is one line, or lines each leading with its swatch
             for key in [k if isinstance(k, str) else k["text"] for key in keys for k in ([key] if isinstance(key, str) else key)]:
-                self.assertIn(html.escape(key, quote=False)[:12], own)
+                self.assertIn(html.escape(key, quote=True)[:12], own)
             # a closer panel of a figure in the page's body follows it
             closes = [b["scale"]["close"] for b in data["blocks"] if b.get("scale", {}).get("close")]
             for close in closes:

@@ -136,6 +136,16 @@
    ],
    "sizes": "(min-width: 1280px) 690px, (min-width: 960px) 54vw, (min-width: 600px) calc(100vw - 64px), calc(100vw - 40px)",
    "person": "91.27% 23.15%"
+  },
+  "stego": {
+   "stem": "animals-stegosaurus-side",
+   "widths": [
+    800,
+    1600,
+    2400
+   ],
+   "sizes": "(min-width: 1280px) 690px, (min-width: 960px) 54vw, (min-width: 600px) calc(100vw - 64px), calc(100vw - 40px)",
+   "person": "93.07% 36.7%"
   }
  },
  "meta": {
@@ -572,6 +582,12 @@
      "pic": "anky",
      "alt": "An Ankylosaurus from the side: a low, wide body under rows of bony plates, a broad head carried low, four short legs and a straight tail ending in a flat club. Beside it a grey person, as tall as the top of its back over the hips.",
      "line": "The Ankylosaurus from the row, on its own: its club and armour against a person, what was found of it, and what the bones say about T. rex."
+    },
+    {
+     "page": "stegosaurus",
+     "pic": "stego",
+     "alt": "A Stegosaurus from the side: a small low head, two rows of tall plates along the arched back, four spikes at the tip of the tail, the front legs shorter than the hind legs. Beside it a grey person whose head stays below the top of its back.",
+     "line": "The Stegosaurus from the row, on its own: its plates and tail spikes against a person, Sophie in London, and the “second brain” story."
     }
    ]
   },
