@@ -744,6 +744,13 @@ OUR_ROW = ' class="sc-our"'
 FIGURE_MAX = 64
 
 
+def row_name(html_text):
+    """A table row's name: a scientific name held whole elsewhere may wrap between its two words here, where a desktop
+    column is narrower than "Argentinosaurus huinculensis"."""
+    return re.sub(r'(<i class="nh"[^>]*>)([^<]*)(</i>)', lambda m: m.group(1) + m.group(2).replace("\u00a0", " ") + m.group(3),
+                  html_text)
+
+
 def cell_html(text, sure, rich):
     """A cell of a table of numbers: its words in one span. A how-sure cell sets its grade word (before the colon, or
     the whole of a one-word cell) apart; another cell sets its leading figure apart. The words and their order stay."""
@@ -1655,7 +1662,7 @@ def render(page, lang, data, shared, out_root):
             sure = len(block["cols"]) - 1 if block["cols"][-1] in SURE_COLS else None
             values["n.values"] = str(len(block["cols"]) - 1 - (sure is not None))
             values["html.rows"] = "\n".join(
-                f'      <tr role="row"{OUR_ROW if OUR_RE.match(row["cells"][0]) else ""}><th scope="row" role="rowheader">{rich(row["cells"][0])}</th>'
+                f'      <tr role="row"{OUR_ROW if OUR_RE.match(row["cells"][0]) else ""}><th scope="row" role="rowheader">{row_name(rich(row["cells"][0]))}</th>'
                 # a cell's words in one span: its figure, where it opens with one, in a span of its own
                 + "".join(f'<td role="cell" data-k="{esc(block["cols"][i])}"{SURE_CELL if i == sure else ""}{"" if c else none}>'
                           f'{cell_html(c, i == sure, rich) if c else ""}</td>'
