@@ -2170,7 +2170,10 @@ class Case(unittest.TestCase):
                     found += 1
                     if data["page"].get("join_names") or name in single:
                         joined = html.escape(name, quote=False).replace(" ", "\u00a0")
-                        self.assertIn(f'<i class="nh">{joined}</i>', own)
+                        # in a table's row name the two words may wrap (build.py row_name): held there by its class only
+                        plain = html.escape(name, quote=False)
+                        self.assertRegex(own, f'<i class="nh">{re.escape(joined)}</i>'
+                                              f'|role="rowheader">(?:(?!</th>).)*<i class="nh">{re.escape(plain)}</i>')
                     else:
                         self.assertIn(f'<i class="nw nh">{html.escape(name, quote=False)}</i>', own)
         self.assertGreaterEqual(found, 2)
