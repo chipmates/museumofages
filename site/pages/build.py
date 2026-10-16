@@ -736,6 +736,7 @@ def swatch_rules(defs):
 
 # A table's last column that says how sure each row is, by its heading in each language.
 SURE_COLS = {"How sure", "Wie sicher"}
+SURE_CELL = ' class="sc-sure"'
 # The museum's own figure: a row that opens with "our" carries the chalk bar.
 OUR_RE = re.compile(r"(?:Unser|Our)\b")
 OUR_ROW = ' class="sc-our"'
@@ -1568,7 +1569,7 @@ def render(page, lang, data, shared, out_root):
                 "shape": esc(item["shape"]),
                 "html.figure": plate_html(item),
                 # the class word, as the facts give it, stands apart at the head of its sentence
-                "html.who": f'<span class="pt-class pt-class--{it['class'] or "field"}">{rich(word)}</span>{rich(who[len(word):])}',
+                "html.who": f'<span class="pt-class pt-class--{it["class"] or "field"}">{rich(word)}</span>{rich(who[len(word):])}',
                 # a tightened entry says it all in two paragraphs
                 "html.worth": f'\n    <p>{rich(item["worth_knowing"])}</p>' if item.get("worth_knowing") else "",
                 "href.go": esc(CHART.door_href(door, it["stop"])),
@@ -1651,7 +1652,7 @@ def render(page, lang, data, shared, out_root):
             values["html.rows"] = "\n".join(
                 f'      <tr role="row"{OUR_ROW if OUR_RE.match(row["cells"][0]) else ""}><th scope="row" role="rowheader">{rich(row["cells"][0])}</th>'
                 # a cell's words in one span: its figure, where it opens with one, in a span of its own
-                + "".join(f'<td role="cell" data-k="{esc(block["cols"][i])}"{" class=\"sc-sure\"" if i == sure else ""}{"" if c else none}>'
+                + "".join(f'<td role="cell" data-k="{esc(block["cols"][i])}"{SURE_CELL if i == sure else ""}{"" if c else none}>'
                           f'{cell_html(c, i == sure, rich) if c else ""}</td>'
                           for i, c in enumerate(row["cells"][1:], 1)) + "</tr>"
                 for row in block["rows"])
