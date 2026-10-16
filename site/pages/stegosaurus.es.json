@@ -460,6 +460,35 @@
    ]
   },
   {
+   "type": "notes",
+   "id": "pictures-seen",
+   "nav": "Imágenes que quizá hayas visto",
+   "h": "Imágenes que quizá hayas visto",
+   "intro": "Para cada imagen: de dónde viene y qué sabemos hoy.",
+   "rows": [
+    {
+     "term": "Placas tumbadas sobre el lomo, como el caparazón de una tortuga",
+     "text": "Fue la primera idea, y de ahí viene el nombre, «lagarto con tejado». Hoy sabemos que las placas estaban erguidas: lo muestran los esqueletos hallados con las placas aún en su sitio, entre ellos Sophie."
+    },
+    {
+     "term": "Una sola fila de placas en el centro del lomo",
+     "text": "Viene de un dibujo del esqueleto de 1891. Las placas de Sophie se hallaron casi donde habían quedado, en dos filas, y otros esqueletos coinciden, así que sabemos que eran dos."
+    },
+    {
+     "term": "Una cola que se arrastra por el suelo",
+     "text": "Así se dibujó y se montó el Stegosaurus durante décadas del siglo XX. Según sus huesos, la cola probablemente iba levantada del suelo, rígida en unos pocos tramos largos."
+    },
+    {
+     "term": "Una joroba, un cuello diminuto y patas traseras muy largas",
+     "text": "Muchos esqueletos antiguos de los museos se armaron con huesos de varios animales. Sophie, un solo animal casi completo, tiene el cuello más largo, el cuerpo más corto y la espalda menos encorvada, y probablemente es la mejor guía."
+    },
+    {
+     "term": "De pie sobre las patas traseras, con la cola como tercera pata",
+     "text": "Es una idea de la década de 1890. Algunos científicos lo dudan porque la cola era muy rígida, otros lo creen posible, y todavía nadie lo sabe."
+    }
+   ]
+  },
+  {
    "type": "faq",
    "id": "questions",
    "nav": "Más preguntas",

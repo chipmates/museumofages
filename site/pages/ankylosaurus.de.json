@@ -473,6 +473,35 @@
    ]
   },
   {
+   "type": "notes",
+   "id": "pictures-seen",
+   "nav": "Bilder, die du vielleicht gesehen hast",
+   "h": "Bilder, die du vielleicht gesehen hast",
+   "intro": "Zu jedem Bild: woher es kommt und was wir heute wissen.",
+   "rows": [
+    {
+     "term": "Ein Schwanz, der auf dem Boden liegt",
+     "text": "So zeigten ihn Bilder und Modelle in der ersten Hälfte und der Mitte des 20. Jahrhunderts. Die fest ineinandergreifenden Wirbel und die verknöcherten Sehnen sprechen dafür, dass der Schwanz sehr wahrscheinlich gerade nach hinten gestreckt war, frei über dem Boden."
+    },
+    {
+     "term": "Hohe Stacheln entlang der Flanken",
+     "text": "Die bekannten Platten von seinen Flanken sind eher viereckig, mit nur einem niedrigen Grat, und keine davon ist ein hoher Stachel. Ihre Form kennen wir, aber nicht genau, wo jede saß."
+    },
+    {
+     "term": "Ein hoher, gewölbter Rücken",
+     "text": "Das gehörte zur alten Vorstellung einer Schale. Die Krümmung seiner Rippen und das Skelett eines Verwandten aus der Mongolei sprechen für einen breiten, niedrigen, flachen Körper, sehr wahrscheinlich breiter als hoch."
+    },
+    {
+     "term": "Beine, seitlich abgespreizt wie bei einer Eidechse",
+     "text": "So standen alte Skelettmontagen. Beinknochen von Verwandten und Fußspuren seiner Familie sprechen dafür, dass die Beine sehr wahrscheinlich unter dem Körper standen, die Ellbogen nur leicht nach außen gestellt."
+    },
+    {
+     "term": "Knochenringe um Hüfte und Schwanz",
+     "text": "Die erste Rekonstruktion von 1908 setzte seine knöchernen Halbringe dorthin, zum Teil nach dem Vorbild der beringten Schwänze von Glyptodonten, ausgestorbenen riesigen Verwandten der Gürteltiere. Verwandte, deren Panzer noch an seinem Platz lag, zeigen, dass sie über Hals und Schultern gehören."
+    }
+   ]
+  },
+  {
    "type": "faq",
    "id": "questions",
    "nav": "Weitere Fragen",

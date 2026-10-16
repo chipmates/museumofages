@@ -350,6 +350,31 @@
    ]
   },
   {
+   "type": "notes",
+   "id": "pictures-seen",
+   "nav": "Pictures you may have seen",
+   "h": "Pictures you may have seen",
+   "intro": "For each picture: where it came from, and what we know now.",
+   "rows": [
+    {
+     "term": "Standing upright like a kangaroo, the tail on the ground",
+     "text": "The pose of an early skeleton mounted in New York, copied in pictures for decades. We know now that T. rex held its back nearly level and its tail off the ground: the bones of the back were stiff, and the tracks of meat-eating dinosaurs rarely show a dragged tail."
+    },
+    {
+     "term": "Running fast enough to catch a car",
+     "text": "A fast run is out: its legs would have needed far more muscle than they could hold, and running would have overloaded its bones. Most likely it only walked, and a trackway that probably comes from an adult shows just that."
+    },
+    {
+     "term": "Hands turned palms down, with three fingers",
+     "text": "Each hand had two fingers, and the palms faced each other. By the arm bones, no known meat-eating dinosaur could turn its hands palms down, says London's Natural History Museum."
+    },
+    {
+     "term": "T. rex attacking a Stegosaurus",
+     "text": "The two never met. About 80 million years lay between the last Stegosaurus and the first T. rex, more than lie between the last T. rex and us."
+    }
+   ]
+  },
+  {
    "type": "text",
    "id": "skin",
    "nav": "Skin, feathers and lips",

@@ -465,6 +465,35 @@
    ]
   },
   {
+   "type": "notes",
+   "id": "pictures-seen",
+   "nav": "Bilder, die du vielleicht gesehen hast",
+   "h": "Bilder, die du vielleicht gesehen hast",
+   "intro": "Zu jedem Bild: woher es kommt und was wir heute wissen.",
+   "rows": [
+    {
+     "term": "Platten flach auf dem Rücken, wie ein Schildkrötenpanzer",
+     "text": "Der allererste Gedanke, von dem auch der Name Dachechse kommt. Wir wissen heute, dass die Platten aufrecht standen: Skelette, bei denen die Platten noch an ihrem Platz lagen, zeigen es, Sophie darunter."
+    },
+    {
+     "term": "Eine einzige Reihe Platten in der Mitte des Rückens",
+     "text": "Das stammt aus einer Zeichnung des Skeletts von 1891. Bei Sophie und anderen Skeletten fand man die Platten fast an Ort und Stelle, in zwei Reihen, und so wissen wir: Es waren zwei."
+    },
+    {
+     "term": "Ein Schwanz, der über den Boden schleift",
+     "text": "So zeigten Bilder und Skelette den Stegosaurus im 20. Jahrhundert jahrzehntelang. Nach den Knochen des Schwanzes hielt er ihn sehr wahrscheinlich über dem Boden, steif in einigen langen Abschnitten."
+    },
+    {
+     "term": "Ein Buckel, ein winziger Hals und sehr lange Hinterbeine",
+     "text": "Viele ältere Skelette in Museen wurden aus den Knochen mehrerer Tiere zusammengesetzt. Sophie, ein einziges, fast vollständiges Tier, hat einen längeren Hals, einen kürzeren Rumpf und einen weniger gewölbten Rücken, und das ist sehr wahrscheinlich das bessere Vorbild."
+    },
+    {
+     "term": "Aufgerichtet auf den Hinterbeinen, der Schwanz als drittes Bein",
+     "text": "Eine Idee seit den 1890er-Jahren. Manche Forscher bezweifeln es, weil der Schwanz so steif war, andere halten es für möglich, und sicher weiß es bis heute niemand."
+    }
+   ]
+  },
+  {
    "type": "faq",
    "id": "questions",
    "nav": "Weitere Fragen",

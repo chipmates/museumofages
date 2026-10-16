@@ -447,6 +447,27 @@
    ]
   },
   {
+   "type": "notes",
+   "id": "pictures-seen",
+   "nav": "Pictures you may have seen",
+   "h": "Pictures you may have seen",
+   "intro": "For each picture: where it came from, and what we know now.",
+   "rows": [
+    {
+     "term": "A T. rex with a sail, on long, strong legs",
+     "text": "Until 2014 no leg of Spinosaurus was known, so pictures gave it the long legs of other big meat-eaters. The skeleton from Morocco, the first with legs, has short hind legs for its size, though whether it is the same species as Stromer's Egyptian one is still argued."
+    },
+    {
+     "term": "A neat sail, a smooth half circle or a curve with a dip",
+     "text": "Nobody knows its outline. The skeleton from Morocco has no complete spine from the back, and Stromer's spines were lost in 1944, so every curve you see is a choice."
+    },
+    {
+     "term": "Feet with webs between the toes, like a duck's",
+     "text": "No such web has been found. Even with webs between all its toes, a model of 2022 finds, the feet would have been far too small to push so big an animal through the water."
+    }
+   ]
+  },
+  {
    "type": "text",
    "id": "why",
    "nav": "Why our Spinosaurus looks like this",

@@ -416,6 +416,31 @@
    ]
   },
   {
+   "type": "notes",
+   "id": "pictures-seen",
+   "nav": "Bilder, die du vielleicht gesehen hast",
+   "h": "Bilder, die du vielleicht gesehen hast",
+   "intro": "Zu jedem Bild: woher es kommt und was wir heute wissen.",
+   "rows": [
+    {
+     "term": "Ein Schwanz, der auf dem Boden liegt",
+     "text": "So wurde 1937 das berühmte Berliner Skelett aufgebaut, ein Giraffatitan, und seit der Neumontage von 2007 hängt sein Schwanz in der Luft. Sauropoden trugen den Schwanz frei über dem Boden, und so zeigen Museen sie heute."
+    },
+    {
+     "term": "Auf den Hinterbeinen aufgerichtet, um an die Baumkronen zu kommen",
+     "text": "Sehr wahrscheinlich nicht. Seine Vorderbeine waren länger als die Hinterbeine, und ein Modell seines afrikanischen Verwandten legt das Gewicht des Körpers weit nach vorn."
+    },
+    {
+     "term": "Runde Vorderfüße wie bei einem Elefanten",
+     "text": "Nach den Händen seiner Verwandten und nach Fußspuren war jeder Vorderfuß sehr wahrscheinlich eine hohe Halbröhre aus fünf langen Knochen mit einer kleinen Daumenkralle, die einen hufeisenförmigen Abdruck hinterließ."
+    },
+    {
+     "term": "Braune, graue oder gesprenkelte Haut, als wäre sie bekannt",
+     "text": "Eine Studie von 2025 wollte Farbe in der Haut eines jungen Diplodocus gefunden haben, eines anderen Sauropoden, und eine Antwort von 2026 fand das von den Daten nicht gedeckt. Die Farbe des Brachiosaurus kennt also weiterhin niemand."
+    }
+   ]
+  },
+  {
    "type": "faq",
    "id": "questions",
    "nav": "Weitere Fragen",

@@ -411,6 +411,31 @@
    ]
   },
   {
+   "type": "notes",
+   "id": "pictures-seen",
+   "nav": "Imagens que você talvez tenha visto",
+   "h": "Imagens que você talvez tenha visto",
+   "intro": "Para cada imagem: de onde ela vem e o que sabemos hoje.",
+   "rows": [
+    {
+     "term": "Uma cauda apoiada no chão",
+     "text": "Foi assim que montaram em 1937 o famoso esqueleto de Berlim, um Giraffatitan, e desde a nova montagem de 2007 a cauda dele fica suspensa no ar. Os saurópodes levavam a cauda sem tocar o chão, e é assim que os museus os mostram hoje."
+    },
+    {
+     "term": "Em pé sobre as patas traseiras para alcançar as copas das árvores",
+     "text": "Provavelmente não. As patas da frente dele eram mais longas que as de trás, e um modelo do parente africano dele põe o peso do corpo bem para a frente."
+    },
+    {
+     "term": "Patas da frente redondas, como as de um elefante",
+     "text": "Pelas mãos dos parentes e pelas pegadas, cada pé da frente provavelmente era um meio tubo alto de cinco ossos longos, com uma pequena garra no polegar, que deixava uma pegada em forma de ferradura."
+    },
+    {
+     "term": "Pele marrom, cinza ou pintada, como se fosse conhecida",
+     "text": "Um estudo de 2025 disse ter achado cor na pele de um Diplodocus jovem, outro saurópode, e uma resposta de 2026 concluiu que os dados não sustentam isso. Então ainda não se conhece a cor do braquiossauro."
+    }
+   ]
+  },
+  {
    "type": "faq",
    "id": "questions",
    "nav": "Mais perguntas",

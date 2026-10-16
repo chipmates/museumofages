@@ -435,6 +435,31 @@
    ]
   },
   {
+   "type": "notes",
+   "id": "pictures-seen",
+   "nav": "Pictures you may have seen",
+   "h": "Pictures you may have seen",
+   "intro": "For each picture: where it came from, and what we know now.",
+   "rows": [
+    {
+     "term": "Small spikes all round the edge of the frill",
+     "text": "That fits a young Triceratops, whose frill had a scalloped edge ringed with 17 to 19 small bony points. In old adults the points had merged into the edge, which by then was wavy or smooth: the ten skulls from baby to adult show it."
+    },
+    {
+     "term": "Quills or bristles along the back",
+     "text": "They were borrowed from Psittacosaurus, a small relative from much older rocks with bristles on its tail. Going by the shape of a big Triceratops's scales, one study finds such bristles unlikely."
+    },
+    {
+     "term": "Clawed fingers and splayed toes",
+     "text": "Hooves, not claws, and the palms turned partly inward, going by one hand found with its bones in place. In horned dinosaurs found with whole feet the long foot bones lie close together, so most likely Triceratops had a compact foot, not a splayed one."
+    },
+    {
+     "term": "A bright frill with a red patch",
+     "text": "No pigment has ever been found in a Triceratops. The only horned dinosaur whose colours are known is the small Psittacosaurus, dark above and light below, and it says little about a giant from much later rocks."
+    }
+   ]
+  },
+  {
    "type": "faq",
    "id": "questions",
    "nav": "More questions",

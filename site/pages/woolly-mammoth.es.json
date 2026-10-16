@@ -360,6 +360,27 @@
    ]
   },
   {
+   "type": "notes",
+   "id": "pictures-seen",
+   "nav": "Imágenes que quizá hayas visto",
+   "h": "Imágenes que quizá hayas visto",
+   "intro": "Para cada imagen: de dónde viene y qué sabemos hoy.",
+   "rows": [
+    {
+     "term": "Un pelaje que cuelga hasta el suelo y tapa las patas",
+     "text": "El arte de la Edad de Hielo muestra una larga falda de pelo en los costados, y el pelo de los cuerpos congelados coincide. Se discute hasta dónde colgaba, y ninguna fuente que leímos dice que llegara al suelo."
+    },
+    {
+     "term": "Orejas grandes que se agitan como las de un elefante",
+     "text": "Eran pequeñas y gruesas: unos 30 cm de alto y hasta 4 cm de grosor, mientras que la oreja de un elefante africano de sabana mide unos 133 cm de alto. Lo sabemos por los cuerpos congelados."
+    },
+    {
+     "term": "Un mechón alto de pelo erguido sobre la cabeza",
+     "text": "Según el museo que conserva a nuestro macho, los cuerpos congelados muestran en la cabeza un gorro de pelo grueso de 15 a 20 cm, que apuntaba hacia delante, no hacia arriba."
+    }
+   ]
+  },
+  {
    "type": "text",
    "id": "why",
    "nav": "Por qué nuestro mamut lanudo se ve así",

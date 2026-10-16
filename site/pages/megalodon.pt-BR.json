@@ -321,6 +321,27 @@
    ]
   },
   {
+   "type": "notes",
+   "id": "pictures-seen",
+   "nav": "Imagens que você talvez tenha visto",
+   "h": "Imagens que você talvez tenha visto",
+   "intro": "Para cada imagem: de onde ela vem e o que sabemos hoje.",
+   "rows": [
+    {
+     "term": "Um tubarão-branco, só que muito maior",
+     "text": "Não era um tubarão-branco: o megalodon foi o último da própria linhagem de tubarões, uma linhagem que, pelos dentes, remonta a cerca de 55 milhões de anos. O tubarão-branco vem de outra linhagem, e os primeiros membros dela já viviam ao lado do megalodon, então ele também não descende do megalodon."
+    },
+    {
+     "term": "Vivo hoje, escondido no fundo do mar",
+     "text": "Ele desapareceu há cerca de 3,6 milhões de anos. Um gigante vivo deixaria marcas de mordida frescas e dentes às dezenas de milhares, e um tubarão de mares quentes não sobreviveria no frio do fundo do mar, como explica o Natural History Museum de Londres."
+    },
+    {
+     "term": "Um megalodon atacando uma baleia do tamanho de uma baleia-azul",
+     "text": "As marcas de mordida dele, achadas no Peru, estão em pequenas baleias com barbatanas e em focas, e não se sabe se ele as caçava ou comia animais já mortos. Provavelmente ele nunca encontrou uma baleia-azul: entre o último megalodon e o fóssil mais antigo conhecido de baleia-azul há cerca de dois milhões de anos."
+    }
+   ]
+  },
+  {
    "type": "text",
    "id": "why",
    "nav": "Por que o nosso megalodon é assim",

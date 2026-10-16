@@ -411,6 +411,31 @@
    ]
   },
   {
+   "type": "notes",
+   "id": "pictures-seen",
+   "nav": "Imágenes que quizá hayas visto",
+   "h": "Imágenes que quizá hayas visto",
+   "intro": "Para cada imagen: de dónde viene y qué sabemos hoy.",
+   "rows": [
+    {
+     "term": "Una cola apoyada en el suelo",
+     "text": "Así se montó en 1937 el famoso esqueleto de Berlín, un Giraffatitan, y desde el nuevo montaje de 2007 su cola cuelga en el aire. Los saurópodos llevaban la cola sin tocar el suelo, y así los muestran hoy los museos."
+    },
+    {
+     "term": "De pie sobre las patas traseras para llegar a las copas de los árboles",
+     "text": "Probablemente no. Sus patas delanteras eran más largas que las traseras, y un modelo de su pariente africano pone el peso del cuerpo muy adelante."
+    },
+    {
+     "term": "Patas delanteras redondas, como las de un elefante",
+     "text": "Según las manos de sus parientes y las huellas, cada pie delantero probablemente era un medio tubo alto de cinco huesos largos, con una pequeña garra en el pulgar, que dejaba una huella en forma de herradura."
+    },
+    {
+     "term": "Piel marrón, gris o moteada, como si se conociera",
+     "text": "Un estudio de 2025 dijo haber hallado color en la piel de un Diplodocus joven, otro saurópodo, y una respuesta de 2026 concluyó que los datos no lo respaldan. Así que el color del Brachiosaurus todavía no se conoce."
+    }
+   ]
+  },
+  {
    "type": "faq",
    "id": "questions",
    "nav": "Más preguntas",

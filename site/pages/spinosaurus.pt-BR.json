@@ -447,6 +447,27 @@
    ]
   },
   {
+   "type": "notes",
+   "id": "pictures-seen",
+   "nav": "Imagens que você talvez tenha visto",
+   "h": "Imagens que você talvez tenha visto",
+   "intro": "Para cada imagem: de onde ela vem e o que sabemos hoje.",
+   "rows": [
+    {
+     "term": "Um T. rex com vela, sobre patas longas e fortes",
+     "text": "Até 2014 não se conhecia nenhuma pata do espinossauro, então os desenhos davam a ele as patas longas de outros grandes carnívoros. O esqueleto do Marrocos, o primeiro com patas, tem patas traseiras curtas para o tamanho dele, mas ainda se discute se ele é da mesma espécie que o esqueleto egípcio de Stromer."
+    },
+    {
+     "term": "Uma vela perfeita: um semicírculo liso ou uma curva com uma depressão",
+     "text": "Ninguém conhece o contorno dela. O esqueleto do Marrocos não tem nenhum espinho completo do dorso, e os espinhos de Stromer se perderam em 1944, então cada curva que você vê é uma escolha."
+    },
+    {
+     "term": "Pés com membranas entre os dedos, como os de um pato",
+     "text": "Nunca se encontrou uma membrana assim. Segundo um modelo de 2022, mesmo com membranas entre todos os dedos, os pés dele seriam pequenos demais para empurrar um animal tão grande pela água."
+    }
+   ]
+  },
+  {
    "type": "text",
    "id": "why",
    "nav": "Por que o nosso espinossauro é assim",

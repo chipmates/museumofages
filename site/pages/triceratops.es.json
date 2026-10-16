@@ -435,6 +435,31 @@
    ]
   },
   {
+   "type": "notes",
+   "id": "pictures-seen",
+   "nav": "Imágenes que quizá hayas visto",
+   "h": "Imágenes que quizá hayas visto",
+   "intro": "Para cada imagen: de dónde viene y qué sabemos hoy.",
+   "rows": [
+    {
+     "term": "Pequeñas púas alrededor de todo el borde de la gola",
+     "text": "Eso corresponde a un Triceratops joven: su gola tenía el borde lleno de curvas profundas y un anillo de 17 a 19 puntas pequeñas de hueso. En los adultos viejos las puntas se habían fundido con el borde, que ya era ondulado o liso, como muestran los diez cráneos, desde crías hasta adultos."
+    },
+    {
+     "term": "Púas o cerdas a lo largo del lomo",
+     "text": "Se tomaron de Psittacosaurus, un pariente pequeño de rocas mucho más antiguas, con cerdas en la cola. Por la forma de las escamas de un Triceratops grande, un estudio considera poco probables esas cerdas."
+    },
+    {
+     "term": "Garras en las manos y dedos abiertos en los pies",
+     "text": "Pezuñas, no garras, y las palmas giradas en parte hacia dentro, según una mano hallada con los huesos en su sitio. En los dinosaurios con cuernos hallados con los pies enteros, los huesos largos del pie están muy juntos, así que probablemente el Triceratops también tenía un pie compacto, no abierto."
+    },
+    {
+     "term": "Una gola de colores vivos con una mancha roja",
+     "text": "Nunca se halló pigmento en un Triceratops. El único dinosaurio con cuernos del que se conocen los colores es el pequeño Psittacosaurus, oscuro por arriba y claro por abajo, y dice poco de un gigante de rocas mucho más recientes."
+    }
+   ]
+  },
+  {
    "type": "faq",
    "id": "questions",
    "nav": "Más preguntas",

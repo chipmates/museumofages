@@ -435,6 +435,31 @@
    ]
   },
   {
+   "type": "notes",
+   "id": "pictures-seen",
+   "nav": "Imagens que você talvez tenha visto",
+   "h": "Imagens que você talvez tenha visto",
+   "intro": "Para cada imagem: de onde ela vem e o que sabemos hoje.",
+   "rows": [
+    {
+     "term": "Pequenos espinhos em toda a borda do babado",
+     "text": "Isso combina com um Triceratops jovem: o babado dele tinha a borda cheia de curvas fundas e um anel de 17 a 19 pontas pequenas de osso. Nos adultos velhos, as pontas tinham se fundido à borda, que já era ondulada ou lisa, como mostram os dez crânios, de filhotes a adultos."
+    },
+    {
+     "term": "Espinhos ou cerdas ao longo do dorso",
+     "text": "Eles vieram do Psittacosaurus, um parente pequeno de rochas muito mais antigas, com cerdas na cauda. Pela forma das escamas de um Triceratops grande, um estudo considera essas cerdas improváveis."
+    },
+    {
+     "term": "Garras nas mãos e dedos dos pés abertos",
+     "text": "Cascos, não garras, e as palmas viradas em parte para dentro, segundo uma mão achada com os ossos no lugar. Em dinossauros com chifres achados com os pés inteiros, os ossos longos do pé ficam bem juntos, então provavelmente o Triceratops também tinha um pé compacto, não aberto."
+    },
+    {
+     "term": "Um babado colorido com uma mancha vermelha",
+     "text": "Nunca se achou pigmento em um Triceratops. O único dinossauro com chifres de que se conhecem as cores é o pequeno Psittacosaurus, escuro em cima e claro embaixo, e ele diz pouco sobre um gigante de rochas muito mais recentes."
+    }
+   ]
+  },
+  {
    "type": "faq",
    "id": "questions",
    "nav": "Mais perguntas",

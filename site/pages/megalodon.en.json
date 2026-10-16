@@ -321,6 +321,27 @@
    ]
   },
   {
+   "type": "notes",
+   "id": "pictures-seen",
+   "nav": "Pictures you may have seen",
+   "h": "Pictures you may have seen",
+   "intro": "For each picture: where it came from, and what we know now.",
+   "rows": [
+    {
+     "term": "A great white shark, only far bigger",
+     "text": "Not a great white at all: megalodon was the last of its own line of sharks, a line whose teeth go back about 55 million years. The great white comes from another line, whose early members lived alongside megalodon, so it is not megalodon's descendant either."
+    },
+    {
+     "term": "Alive today, hiding in the deep sea",
+     "text": "Gone for about 3.6 million years. A living giant would leave fresh bite marks and teeth by the tens of thousands, and a shark of warm seas would not survive the cold deep, as London's Natural History Museum points out."
+    },
+    {
+     "term": "Megalodon attacking a whale as big as a blue whale",
+     "text": "Its bite marks, found in Peru, are on small baleen whales and seals, and whether it hunted them or ate them dead, nobody can tell. Most likely it never met a blue whale: about two million years lie between the last megalodon and the oldest blue whale fossil we know of."
+    }
+   ]
+  },
+  {
    "type": "text",
    "id": "why",
    "nav": "Why our megalodon looks like this",

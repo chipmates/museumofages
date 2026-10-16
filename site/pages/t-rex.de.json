@@ -353,6 +353,31 @@
    ]
   },
   {
+   "type": "notes",
+   "id": "pictures-seen",
+   "nav": "Bilder, die du vielleicht gesehen hast",
+   "h": "Bilder, die du vielleicht gesehen hast",
+   "intro": "Zu jedem Bild: woher es kommt und was wir heute wissen.",
+   "rows": [
+    {
+     "term": "Aufrecht wie ein Känguru, der Schwanz auf dem Boden",
+     "text": "So stand ein frühes Skelett in New York, und Bilder haben die Haltung jahrzehntelang übernommen. Heute wissen wir, dass der T. rex den Rücken fast waagrecht und den Schwanz frei über dem Boden trug: Die Rückenwirbel waren steif, und Fährten von Raubsauriern zeigen kaum je einen schleifenden Schwanz."
+    },
+    {
+     "term": "So schnell, dass er ein Auto einholt",
+     "text": "Schnelles Rennen ist ausgeschlossen: Die Beine hätten weit mehr Muskeln gebraucht, als sie tragen konnten, und die Knochen wären überlastet worden. Sehr wahrscheinlich bewegte er sich nur im Schritt, und eine Fährte, die wohl von einem erwachsenen Tier stammt, zeigt genau das."
+    },
+    {
+     "term": "Handflächen nach unten und drei Finger",
+     "text": "Jede Hand hatte zwei Finger, und die Handflächen zeigten zueinander. Nach den Armknochen konnte kein bekannter Raubsaurier die Hände nach unten drehen, sagt das Londoner Natural History Museum."
+    },
+    {
+     "term": "Ein T. rex greift einen Stegosaurus an",
+     "text": "Die beiden sind sich nie begegnet. Zwischen dem letzten Stegosaurus und dem ersten T. rex lagen etwa 80 Millionen Jahre, mehr als zwischen dem letzten T. rex und uns."
+    }
+   ]
+  },
+  {
    "type": "text",
    "id": "skin",
    "nav": "Haut, Federn und Lippen",

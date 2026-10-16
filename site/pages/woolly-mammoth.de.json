@@ -360,6 +360,27 @@
    ]
   },
   {
+   "type": "notes",
+   "id": "pictures-seen",
+   "nav": "Bilder, die du vielleicht gesehen hast",
+   "h": "Bilder, die du vielleicht gesehen hast",
+   "intro": "Zu jedem Bild: woher es kommt und was wir heute wissen.",
+   "rows": [
+    {
+     "term": "Ein Fell, das bis zum Boden hängt und die Füße verdeckt",
+     "text": "Kunst aus der Eiszeit zeigt einen langen Behang aus Haaren an den Flanken, und die Haare an gefrorenen Körpern passen dazu. Wie weit er herabhing, ist umstritten, und keine Quelle, die wir gelesen haben, sagt, dass er bis zum Boden reichte."
+    },
+    {
+     "term": "Große Ohren, die wie bei einem Elefanten flattern",
+     "text": "Sie waren klein und dick: etwa 30 cm hoch und bis zu 4 cm dick, das Ohr eines Afrikanischen Elefanten dagegen etwa 133 cm hoch. Das wissen wir von gefrorenen Körpern."
+    },
+    {
+     "term": "Ein hoher Haarschopf, der auf dem Kopf nach oben steht",
+     "text": "Nach dem Museum, das unseren Bullen bewahrt, zeigen gefrorene Körper auf dem Kopf eine Kappe aus groben Haaren, 15 bis 20 cm lang und nach vorn gerichtet, nicht nach oben."
+    }
+   ]
+  },
+  {
    "type": "text",
    "id": "why",
    "nav": "Warum unser Wollhaarmammut so aussieht",

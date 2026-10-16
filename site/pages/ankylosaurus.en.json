@@ -469,6 +469,35 @@
    ]
   },
   {
+   "type": "notes",
+   "id": "pictures-seen",
+   "nav": "Pictures you may have seen",
+   "h": "Pictures you may have seen",
+   "intro": "For each picture: where it came from, and what we know now.",
+   "rows": [
+    {
+     "term": "A tail lying on the ground",
+     "text": "Pictures and models of the early and middle 1900s showed it so. The locked bones and bony tendons of its tail say it was most likely held straight out, clear of the ground."
+    },
+    {
+     "term": "Tall spikes along its sides",
+     "text": "The plates known from its flanks are squarish, with only a low ridge, and none is a tall spike. We know their shapes, but not exactly where each one sat."
+    },
+    {
+     "term": "A high, domed back",
+     "text": "That came with the old idea of a shell. The curve of its ribs and a relative's skeleton from Mongolia point to a body most likely wide, low and flat, wider than it was deep."
+    },
+    {
+     "term": "Legs sprawled out to the sides, like a lizard's",
+     "text": "Old skeleton mounts stood it that way. Relatives' leg bones and the tracks of its family say the legs most likely stood under the body, the elbows bent only a little outward."
+    },
+    {
+     "term": "Bony rings around the hips and tail",
+     "text": "The first restoration, in 1908, put its bony half collars there, partly after the ringed tails of glyptodonts, giant extinct relatives of armadillos. Relatives found with their armour in place show that they belong over the neck and shoulders."
+    }
+   ]
+  },
+  {
    "type": "faq",
    "id": "questions",
    "nav": "More questions",

@@ -447,6 +447,27 @@
    ]
   },
   {
+   "type": "notes",
+   "id": "pictures-seen",
+   "nav": "Bilder, die du vielleicht gesehen hast",
+   "h": "Bilder, die du vielleicht gesehen hast",
+   "intro": "Zu jedem Bild: woher es kommt und was wir heute wissen.",
+   "rows": [
+    {
+     "term": "Ein T. rex mit Segel, auf langen, kräftigen Beinen",
+     "text": "Bis 2014 kannte man kein Bein des Spinosaurus, also gaben ihm Bilder die langen Beine anderer großer Raubsaurier. Das Skelett aus Marokko, das erste mit Beinen, hat für seine Größe kurze Hinterbeine, doch ob es zur selben Art gehört wie Stromers ägyptisches, ist noch umstritten."
+    },
+    {
+     "term": "Ein sauber geformtes Segel, ein glatter Halbkreis oder ein Bogen mit einer Senke",
+     "text": "Seinen Umriss kennt niemand. Am Skelett aus Marokko ist kein Dornfortsatz des Rückens vollständig, und Stromers Dornen gingen 1944 verloren, also ist jede Kurve, die du siehst, eine Wahl."
+    },
+    {
+     "term": "Füße mit Häuten zwischen den Zehen, wie bei einer Ente",
+     "text": "Eine solche Haut wurde nie gefunden. Nach einem Modell von 2022 wären die Füße selbst mit Häuten zwischen allen Zehen viel zu klein gewesen, um ein so großes Tier durchs Wasser zu treiben."
+    }
+   ]
+  },
+  {
    "type": "text",
    "id": "why",
    "nav": "Warum unser Spinosaurus so aussieht",

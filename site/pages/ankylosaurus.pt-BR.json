@@ -469,6 +469,35 @@
    ]
   },
   {
+   "type": "notes",
+   "id": "pictures-seen",
+   "nav": "Imagens que você talvez tenha visto",
+   "h": "Imagens que você talvez tenha visto",
+   "intro": "Para cada imagem: de onde ela vem e o que sabemos hoje.",
+   "rows": [
+    {
+     "term": "Uma cauda apoiada no chão",
+     "text": "Era assim que desenhos e modelos a mostravam na primeira metade e em meados do século XX. As vértebras travadas e os tendões de osso da cauda indicam que ela provavelmente ficava reta para trás, sem tocar o chão."
+    },
+    {
+     "term": "Espinhos altos ao longo dos flancos",
+     "text": "As placas conhecidas dos flancos dele são mais ou menos quadradas, com só uma crista baixa, e nenhuma é um espinho alto. Conhecemos a forma delas, mas não o lugar exato de cada uma."
+    },
+    {
+     "term": "Um dorso alto e abaulado",
+     "text": "Isso vinha da velha ideia de uma carapaça. A curva das costelas dele e o esqueleto de um parente da Mongólia indicam um corpo largo, baixo e achatado, provavelmente mais largo que alto."
+    },
+    {
+     "term": "Patas abertas para os lados, como as de um lagarto",
+     "text": "Era assim que os museus montavam esqueletos antigos. Os ossos das patas de parentes e as pegadas da família dele indicam que as patas provavelmente ficavam sob o corpo, com os cotovelos só um pouco para fora."
+    },
+    {
+     "term": "Anéis de osso em volta do quadril e da cauda",
+     "text": "A primeira reconstrução, de 1908, pôs ali os semianéis de osso dele, em parte pelas caudas aneladas dos gliptodontes, parentes gigantes e extintos dos tatus. Parentes achados com a couraça ainda no lugar mostram que esses semianéis ficam sobre o pescoço e os ombros."
+    }
+   ]
+  },
+  {
    "type": "faq",
    "id": "questions",
    "nav": "Mais perguntas",

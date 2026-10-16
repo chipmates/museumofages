@@ -460,6 +460,35 @@
    ]
   },
   {
+   "type": "notes",
+   "id": "pictures-seen",
+   "nav": "Pictures you may have seen",
+   "h": "Pictures you may have seen",
+   "intro": "For each picture: where it came from, and what we know now.",
+   "rows": [
+    {
+     "term": "Plates lying flat, like a turtle's shell",
+     "text": "The very first idea, and the reason for the name roof lizard. We know the plates stood upright: skeletons found with their plates still in place, Sophie among them, show it."
+    },
+    {
+     "term": "One row of plates down the middle of the back",
+     "text": "That comes from a drawing of the skeleton made in 1891. Sophie's plates were found mostly where they had lain, in two rows, and other skeletons agree, so we know there were two."
+    },
+    {
+     "term": "A tail dragging on the ground",
+     "text": "For decades of the 1900s, Stegosaurus was drawn and mounted that way. Going by its bones, the tail was most likely held off the ground, stiff in a few long sections."
+    },
+    {
+     "term": "A hunched back, a tiny neck and very long hind legs",
+     "text": "Many older skeletons on show were put together from several animals. Sophie, one animal and nearly complete, has a longer neck, a shorter body and a less hunched back, which is most likely the better guide."
+    },
+    {
+     "term": "Rearing up on the hind legs, the tail as a third leg",
+     "text": "An idea since the 1890s. Some scientists doubt it because the tail was so stiff, others find it possible, and nobody knows yet."
+    }
+   ]
+  },
+  {
    "type": "faq",
    "id": "questions",
    "nav": "More questions",

@@ -321,6 +321,27 @@
    ]
   },
   {
+   "type": "notes",
+   "id": "pictures-seen",
+   "nav": "Bilder, die du vielleicht gesehen hast",
+   "h": "Bilder, die du vielleicht gesehen hast",
+   "intro": "Zu jedem Bild: woher es kommt und was wir heute wissen.",
+   "rows": [
+    {
+     "term": "Ein Weißer Hai, nur viel größer",
+     "text": "Gar kein Weißer Hai: Der Megalodon war der letzte seiner eigenen Hailinie, einer Linie, deren Zähne etwa 55 Millionen Jahre zurückreichen. Der Weiße Hai stammt aus einer anderen Linie, deren frühe Vertreter schon neben dem Megalodon lebten, er ist also auch nicht der Nachfahre des Megalodons."
+    },
+    {
+     "term": "Bis heute lebendig, versteckt in der Tiefsee",
+     "text": "Seit etwa 3,6 Millionen Jahren ist er verschwunden. Ein lebender Riese würde frische Bissspuren und Zähne zu Zehntausenden hinterlassen, und ein Hai warmer Meere würde die kalte Tiefsee nicht überleben, wie das Londoner Natural History Museum erklärt."
+    },
+    {
+     "term": "Ein Megalodon greift einen Wal so groß wie einen Blauwal an",
+     "text": "Seine Bissspuren, gefunden in Peru, sitzen an kleinen Bartenwalen und an Robben, und ob er sie jagte oder als Aas fraß, kann niemand sagen. Einem Blauwal ist er wohl nie begegnet: Zwischen dem letzten Megalodon und dem ältesten bekannten Fossil eines Blauwals liegen etwa zwei Millionen Jahre."
+    }
+   ]
+  },
+  {
    "type": "text",
    "id": "why",
    "nav": "Warum unser Megalodon so aussieht",

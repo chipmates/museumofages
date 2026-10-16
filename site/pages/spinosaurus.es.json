@@ -447,6 +447,27 @@
    ]
   },
   {
+   "type": "notes",
+   "id": "pictures-seen",
+   "nav": "Imágenes que quizá hayas visto",
+   "h": "Imágenes que quizá hayas visto",
+   "intro": "Para cada imagen: de dónde viene y qué sabemos hoy.",
+   "rows": [
+    {
+     "term": "Un T. rex con vela, sobre patas largas y fuertes",
+     "text": "Hasta 2014 no se conocía ninguna pata de Spinosaurus, así que los dibujos le daban las patas largas de otros grandes carnívoros. El esqueleto de Marruecos, el primero con patas, tiene patas traseras cortas para su tamaño, aunque se discute si es de la misma especie que el esqueleto egipcio de Stromer."
+    },
+    {
+     "term": "Una vela perfecta: un semicírculo liso o una curva con un hueco",
+     "text": "Nadie conoce su contorno. El esqueleto de Marruecos no tiene ninguna espina completa del lomo, y las espinas de Stromer se perdieron en 1944, así que cada curva que ves es una elección."
+    },
+    {
+     "term": "Pies con membranas entre los dedos, como los de un pato",
+     "text": "Nunca se encontró una membrana así. Según un modelo de 2022, aunque hubiera tenido membranas entre todos los dedos, sus pies habrían sido demasiado pequeños para impulsar en el agua a un animal tan grande."
+    }
+   ]
+  },
+  {
    "type": "text",
    "id": "why",
    "nav": "Por qué nuestro Spinosaurus se ve así",

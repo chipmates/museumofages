@@ -440,6 +440,31 @@
    ]
   },
   {
+   "type": "notes",
+   "id": "pictures-seen",
+   "nav": "Bilder, die du vielleicht gesehen hast",
+   "h": "Bilder, die du vielleicht gesehen hast",
+   "intro": "Zu jedem Bild: woher es kommt und was wir heute wissen.",
+   "rows": [
+    {
+     "term": "Kleine Stacheln rings um den Rand des Nackenschilds",
+     "text": "Das passt zu einem jungen Triceratops: Der Rand seines Nackenschilds hatte tiefe Bögen und einen Kranz aus 17 bis 19 kleinen Knochenspitzen. Bei alten Tieren waren die Spitzen mit dem Rand verwachsen, der nun wellig oder glatt war, das zeigen die zehn Schädel vom Jungtier bis zum erwachsenen Tier."
+    },
+    {
+     "term": "Stacheln oder Borsten auf dem Rücken",
+     "text": "Sie stammen von Psittacosaurus, einem kleinen Verwandten aus viel älteren Gesteinsschichten, der Borsten am Schwanz trug. Nach der Form der Schuppen eines großen Triceratops hält eine Studie solche Borsten für unwahrscheinlich."
+    },
+    {
+     "term": "Krallen an den Fingern und gespreizte Zehen",
+     "text": "Hufe statt Krallen, und die Handfläche halb nach innen gedreht, nach einer Hand, deren Knochen noch an ihrem Platz lagen. Bei Horndinosauriern mit ganz erhaltenen Füßen liegen die langen Fußknochen dicht beieinander, also hatte sehr wahrscheinlich auch der Triceratops einen kompakten Fuß, keinen gespreizten."
+    },
+    {
+     "term": "Ein bunter Nackenschild mit rotem Fleck",
+     "text": "Bei keinem Triceratops wurde je Farbstoff gefunden. Der einzige Horndinosaurier, dessen Farben bekannt sind, ist der kleine Psittacosaurus, oben dunkel und unten hell, und der sagt wenig über einen Riesen aus viel jüngeren Schichten."
+    }
+   ]
+  },
+  {
    "type": "faq",
    "id": "questions",
    "nav": "Weitere Fragen",

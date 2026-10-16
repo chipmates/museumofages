@@ -360,6 +360,27 @@
    ]
   },
   {
+   "type": "notes",
+   "id": "pictures-seen",
+   "nav": "Pictures you may have seen",
+   "h": "Pictures you may have seen",
+   "intro": "For each picture: where it came from, and what we know now.",
+   "rows": [
+    {
+     "term": "A coat that hangs to the ground and hides the feet",
+     "text": "Ice Age art shows a long skirt of hair on the flanks, and hair kept on frozen bodies agrees. How far down it hung is argued, and no source we read says it reached the ground."
+    },
+    {
+     "term": "Big ears that flap like an elephant's",
+     "text": "Small and thick instead: about 30 cm high and up to 4 cm thick, where an African bush elephant's ear is about 133 cm high. We know it from frozen bodies."
+    },
+    {
+     "term": "A tall tuft of hair standing up on the head",
+     "text": "By the museum that holds our bull, frozen bodies show a cap of coarse hair on the head, 15 to 20 cm long and pointing forward, not up."
+    }
+   ]
+  },
+  {
    "type": "text",
    "id": "why",
    "nav": "Why our woolly mammoth looks like this",

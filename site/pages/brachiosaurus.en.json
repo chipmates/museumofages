@@ -411,6 +411,31 @@
    ]
   },
   {
+   "type": "notes",
+   "id": "pictures-seen",
+   "nav": "Pictures you may have seen",
+   "h": "Pictures you may have seen",
+   "intro": "For each picture: where it came from, and what we know now.",
+   "rows": [
+    {
+     "term": "A tail lying on the ground",
+     "text": "Berlin's famous skeleton, a Giraffatitan, was mounted that way in 1937, and its tail has hung in the air since the remount of 2007. Sauropods carried their tails off the ground, and museums show them so today."
+    },
+    {
+     "term": "Rearing up on its hind legs to reach the treetops",
+     "text": "Most likely not. Its front legs were longer than its hind legs, and a model of its African relative puts the body's weight far forward."
+    },
+    {
+     "term": "Round front feet, like an elephant's",
+     "text": "Going by its relatives' hands and by tracks, each front foot was most likely a tall half tube of five long bones with one small thumb claw, leaving a horseshoe-shaped print."
+    },
+    {
+     "term": "Brown, grey or speckled skin, shown as if known",
+     "text": "A 2025 study claimed to find colour in the skin of a young Diplodocus, another sauropod, and a reply in 2026 found the claim not backed by the data. So the colour of Brachiosaurus is still unknown."
+    }
+   ]
+  },
+  {
    "type": "faq",
    "id": "questions",
    "nav": "More questions",
