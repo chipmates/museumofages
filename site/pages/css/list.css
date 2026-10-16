@@ -8,10 +8,11 @@
 .sp-notes dd::first-letter{text-transform:uppercase}
 
 /* ---------- The count on the first screen ---------- */
-.pt-tally{padding-top:4px}
-.pt-rows{border-top:1px solid var(--hair-strong)}
+/* The count lies on the ledger, as every count and table of the site. */
+.pt-tally{padding:6px 16px 14px;margin-inline:-6px;background:var(--ledger)}
+.pt-rows{border-top:0}
 .pt-rows li{display:grid;grid-template-columns:minmax(0,1fr) auto 1.75rem;align-items:center;column-gap:14px;min-height:44px;
-  padding:0;border-bottom:1px solid var(--hair);font-family:var(--sans);font-size:.875rem;line-height:1.35;color:var(--ink-soft)}
+  padding:0;border-bottom:1px solid var(--ledger-rule);font-family:var(--sans);font-size:.875rem;line-height:1.35;color:var(--ink-soft)}
 .pt-marks{display:flex;flex-wrap:wrap;justify-content:flex-end;gap:5px}
 .pt-rows__n{text-align:right;color:var(--ink-quiet)}
 /* A mark is a small upright frame: its fill or its line says the class, never its colour alone. */
@@ -101,7 +102,7 @@
   .pt-work--wide .pt-plate__label,.pt-work--pair .pt-plate__label{max-width:36rem}
 }
 @media (min-width:960px){
-  .pt-tally{padding-top:10px}
+  .pt-tally{margin-inline:0;padding:8px 20px 16px}
   .pt-work{padding:28px 0 24px}
   .pt-work:not(.pt-work--wide):not(.pt-work--pair){grid-template-columns:14rem minmax(0,1fr);column-gap:32px}
   .pt-work__title{font-size:1.4375rem}

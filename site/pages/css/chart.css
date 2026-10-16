@@ -118,18 +118,21 @@
 /* The table's own width never widens the page's column: it scrolls inside it. */
 .sp-body__main{min-width:0}
 /* The scroller holds the links' hidden words too: without a position they would widen the phone's page. */
-.sz-scroll{position:relative;margin-top:20px;overflow-x:auto;overscroll-behavior-x:contain;contain:inline-size}
+/* The table lies on the ledger, as every table of numbers on the site. */
+.sz-scroll{position:relative;margin-top:20px;overflow-x:auto;overscroll-behavior-x:contain;contain:inline-size;background:var(--ledger)}
 .sz-scroll:focus-visible{outline-offset:2px}
 .sz-table{width:100%;min-width:40rem;border-collapse:collapse;font-family:var(--sans);font-size:.875rem;line-height:1.4}
 /* The caption keeps to the screen's width while the table under it is wider. */
-.sz-table caption{caption-side:top;max-width:min(38rem,calc(100vw - 2 * var(--pad)));padding-bottom:12px;text-align:left;font-family:var(--serif);font-size:1rem;line-height:1.5;color:var(--ink-body)}
+.sz-table caption{caption-side:top;max-width:min(38rem,calc(100vw - 2 * var(--pad)));padding:14px 16px 12px;text-align:left;font-family:var(--serif);font-size:1rem;line-height:1.5;color:var(--ink-body)}
 .sz-unit{color:var(--ink-soft)}
-.sz-table th,.sz-table td{padding:10px 12px 10px 0;text-align:left;vertical-align:top;font-weight:400;border-bottom:1px solid var(--hair)}
-.sz-table thead th{font-size:.75rem;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-soft);border-bottom-color:var(--hair-strong);white-space:nowrap}
+.sz-table th,.sz-table td{padding:10px 12px 10px 0;text-align:left;vertical-align:top;font-weight:400;border-bottom:1px solid var(--ledger-rule)}
+.sz-table th:first-child{padding-left:16px}
+.sz-table thead th{font-size:.8125rem;letter-spacing:.02em;color:var(--ink-soft);white-space:nowrap}
+.sz-table tbody tr:last-child>*{border-bottom:0}
 .sz-table td:nth-child(2),.sz-table td:nth-child(3),.sz-table thead th:nth-child(2),.sz-table thead th:nth-child(3){text-align:right;white-space:nowrap}
-.sz-table td{color:var(--ink-soft)}
 /* The work's column stays while the others scroll by. */
-.sz-table tbody th{position:sticky;left:0;z-index:1;min-width:10rem;max-width:14rem;background:var(--ground);color:var(--ink)}
+.sz-table tbody th{position:sticky;left:0;z-index:1;min-width:10rem;max-width:14rem;background:var(--ledger);color:var(--ink)}
+.sz-table td{color:var(--ink-body)}
 .sz-table .sz-k{margin-right:.3em;font-size:.8125rem;line-height:inherit}
 .sz-table a{display:inline-flex;align-items:center;min-height:44px;margin:-12px 0;white-space:nowrap}
 /* Where the table scrolls, the columns out of sight are wide enough that no row grows taller than its title. */

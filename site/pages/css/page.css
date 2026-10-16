@@ -21,7 +21,7 @@
 .sp-top h1.sp-h1--wrap{text-wrap:balance}
 .sp-answer{margin-top:10px;font-size:1.125rem;line-height:1.5;color:var(--ink-body);max-width:36rem}
 /* The answer's first sentence is the answer: a size up and in full linen, so it is found before anything else. */
-.sp-answer__lead{display:block;margin-bottom:6px;font-size:1.3125rem;line-height:1.32;letter-spacing:-.003em;color:var(--ink)}
+.sp-answer__lead{display:block;margin-bottom:6px;font-size:1.3125rem;line-height:1.32;letter-spacing:-.003em;color:var(--ink);text-wrap:balance}
 /* German display text never hyphenates (the site's rule); the answer is display text. */
 :lang(de) .sp-answer{hyphens:manual;-webkit-hyphens:manual}
 .sp-frame .hang{--pool-up:74%;--pool-side:30%;--pool-down:10%}
@@ -49,7 +49,7 @@
 /* A section starts on a rule the eye can follow (2.2:1), with a short chalk bar on it: the one landmark of a long
    page, the same at every section, larger than the label's tick and the period's rule under it. More room above
    than below, so a heading belongs to what follows. */
-.sp-sec{position:relative;padding-top:30px;margin-top:64px;border-top:1px solid var(--rule)}
+.sp-sec{position:relative;padding-top:28px;margin-top:56px;border-top:1px solid var(--rule)}
 .sp-sec::before{content:"";position:absolute;left:0;top:-2px;width:56px;height:3px;background:var(--mark)}
 .sp-sec h2{font-size:clamp(1.75rem,7.6vw,2rem);line-height:1.12;letter-spacing:-.008em;color:var(--ink)}
 .sp-intro,.sp-after{margin-top:12px;color:var(--ink-body);max-width:38rem}
