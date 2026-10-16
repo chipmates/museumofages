@@ -111,7 +111,7 @@
      mid-word without one. WebKit reads only its own prefixed limits. */
   .sc-table td{overflow-wrap:normal}
   :is(:lang(de),:lang(es),:lang(pt)) .sc-table td:not(.sc-sure){hyphens:auto;-webkit-hyphens:auto;hyphenate-limit-chars:10 4 4;
-    -webkit-hyphenate-limit-before:4;-webkit-hyphenate-limit-after:4;-webkit-hyphenate-limit-lines:1}
+    -webkit-hyphenate-limit-before:4;-webkit-hyphenate-limit-after:4}
   .sc-table thead th{padding-block:13px 10px}
   .sc-table thead tr{border-bottom:1px solid var(--ledger-rule)}
   .sc-table thead th:last-child:not(:nth-child(2)){position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%)}
