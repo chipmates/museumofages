@@ -22,10 +22,10 @@
     2400
    ],
    "sizes": "(min-width: 1280px) 588px, (min-width: 960px) calc(100vw - 80px), (min-width: 600px) calc(100vw - 64px), calc(100vw - 40px)",
-   "person": "91.9% 40.85%",
+   "person": "92.45% 40.98%",
    "marks": {
     "mammoth": "4.64% 83.58%",
-    "person": "89.13% 94.66%",
+    "person": "87.98% 96.92%",
     "shoulder": "37.74% 49.06%"
    },
    "behind": [
@@ -39,7 +39,7 @@
     1600
    ],
    "sizes": "(min-width: 1280px) 690px, (min-width: 960px) 54vw, (min-width: 600px) calc(100vw - 64px), calc(100vw - 40px)",
-   "person": "85.87% 40.85%"
+   "person": "86.87% 40.98%"
   },
   "megalodon": {
    "stem": "animals-megalodon-side",
@@ -406,7 +406,7 @@
     {
      "page": "megalodon",
      "pic": "megalodon",
-     "alt": "Un tiburón con la boca abierta, visto de lado, gris oscuro con una franja más clara en el costado, junto a una persona gris que a su lado parece diminuta.",
+     "alt": "Un tiburón con la boca cerrada, visto de lado, gris oscuro con una franja más clara en el costado, junto a una persona gris que a su lado parece diminuta.",
      "line": "El megalodón de la columna de Bruselas medía unos 16 m de largo, y los más grandes de su especie, quizá unos 20 m. Nuestro megalodón junto a una persona, a la misma escala."
     },
     {
@@ -418,7 +418,7 @@
     {
      "page": "t-rex",
      "pic": "trex",
-     "alt": "Un T. rex de lado, sobre dos patas, con la boca abierta y la cabeza levantada, junto a una persona gris que queda muy por debajo de sus caderas.",
+     "alt": "Un T. rex de lado, sobre dos patas, con la boca cerrada y la cabeza levantada, junto a una persona gris que queda muy por debajo de sus caderas.",
      "line": "Un T. rex adulto grande medía unos 12 m de largo y pesaba más o menos de 8 a 9 toneladas, según los huesos de SUE. Nuestro T. rex junto a una persona, con lo que se encontró de SUE."
     }
    ]

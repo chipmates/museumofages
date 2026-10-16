@@ -21,10 +21,10 @@
     2400
    ],
    "sizes": "(min-width: 1280px) 588px, (min-width: 960px) calc(100vw - 80px), (min-width: 600px) calc(100vw - 64px), calc(100vw - 40px)",
-   "person": "91.86% 55.88%",
+   "person": "92% 60.62%",
    "spans": {
-    "whole": "5.03% 87%",
-    "found": "22.87% 77.87%"
+    "whole": "4.91% 87%",
+    "found": "22.98% 77.87%"
    }
   },
   "head": {
@@ -34,7 +34,7 @@
     1600
    ],
    "sizes": "(min-width: 1280px) 690px, (min-width: 960px) 54vw, (min-width: 600px) calc(100vw - 64px), calc(100vw - 40px)",
-   "person": "83.58% 45.52%"
+   "person": "84% 45.6%"
   },
   "skeleton": {
    "stem": "animals-megalodon-skeleton",
@@ -44,7 +44,7 @@
     2400
    ],
    "sizes": "(min-width: 1280px) 690px, (min-width: 960px) 54vw, (min-width: 600px) calc(100vw - 64px), calc(100vw - 40px)",
-   "person": "91.86% 55.88%"
+   "person": "92% 56%"
   },
   "skeleton_head": {
    "stem": "animals-megalodon-skeleton-head",
@@ -53,7 +53,7 @@
     1600
    ],
    "sizes": "(min-width: 1280px) 690px, (min-width: 960px) 54vw, (min-width: 600px) calc(100vw - 64px), calc(100vw - 40px)",
-   "person": "83.58% 45.52%"
+   "person": "84% 45.6%"
   },
   "dinosaurs": {
    "stem": "animals-biggest-dinosaurs-row",
@@ -62,7 +62,7 @@
     1600
    ],
    "sizes": "(min-width: 1280px) 690px, (min-width: 960px) 54vw, (min-width: 600px) calc(100vw - 64px), calc(100vw - 40px)",
-   "person": "32.82% 84.25%"
+   "person": "32.88% 84.25%"
   },
   "trex": {
    "stem": "animals-t-rex-side",
@@ -72,7 +72,7 @@
     2400
    ],
    "sizes": "(min-width: 1280px) 690px, (min-width: 960px) 54vw, (min-width: 600px) calc(100vw - 64px), calc(100vw - 40px)",
-   "person": "86.42% 63.92%"
+   "person": "86.67% 64%"
   },
   "spino": {
    "stem": "animals-spinosaurus-side",
@@ -82,7 +82,7 @@
     2400
    ],
    "sizes": "(min-width: 1280px) 690px, (min-width: 960px) 54vw, (min-width: 600px) calc(100vw - 64px), calc(100vw - 40px)",
-   "person": "92.84% 63.16%"
+   "person": "93.07% 63.27%"
   },
   "mammoth": {
    "stem": "animals-woolly-mammoth-side",
@@ -92,14 +92,14 @@
     2400
    ],
    "sizes": "(min-width: 1280px) 690px, (min-width: 960px) 54vw, (min-width: 600px) calc(100vw - 64px), calc(100vw - 40px)",
-   "person": "91.9% 40.85%"
+   "person": "92.45% 40.98%"
   }
  },
  "meta": {
   "title": "Megalodón: tamaño de unos 16 m, quizá 20 m | Museum of Ages",
   "description": "¿Cuánto medía el megalodón? Unos 16 m según la única columna larga, los mayores quizá unos 20 m. Junto a una persona, un tiburón blanco y una ballena azul.",
   "og_title": "Megalodón: tamaño de unos 16 m, quizá 20 m",
-  "og_image_alt": "Un tiburón con la boca abierta, visto de lado, gris oscuro con una franja más clara en el costado, junto a una persona gris que a su lado parece diminuta.",
+  "og_image_alt": "Un tiburón con la boca cerrada, visto de lado, gris oscuro con una franja más clara en el costado, junto a una persona gris que a su lado parece diminuta.",
   "credit": "Museum of Ages, forma del cuerpo según Shimada y otros 2025 (CC BY 4.0)"
  },
  "labels": {
@@ -122,7 +122,7 @@
    "pic": "side",
    "tag": "tag_made",
    "what": "Nuestro megalodón junto a una persona de 1,70 m, a la misma escala: unos 16 m de largo, la longitud que le da la columna de Bruselas.",
-   "alt": "Un tiburón con la boca abierta, visto de lado, gris oscuro con una franja más clara en el costado, junto a una persona gris que a su lado parece diminuta.",
+   "alt": "Un tiburón con la boca cerrada, visto de lado, gris oscuro con una franja más clara en el costado, junto a una persona gris que a su lado parece diminuta.",
    "note": [
     "Reconstrucción propia del museo, construida en código a partir de las medidas citadas y renderizada con nuestro propio motor gráfico. No es una fotografía. La forma del cuerpo sigue el modelo de Shimada y otros 2025 (",
     {
@@ -380,7 +380,7 @@
     {
      "page": "t-rex",
      "pic": "trex",
-     "alt": "Un T. rex de lado, sobre dos patas, con la boca abierta y la cabeza levantada, junto a una persona gris que queda muy por debajo de sus caderas.",
+     "alt": "Un T. rex de lado, sobre dos patas, con la boca cerrada y la cabeza levantada, junto a una persona gris que queda muy por debajo de sus caderas.",
      "line": "Unos 12 m de largo y más o menos de 8 a 9 toneladas, según los huesos de SUE. Nuestro T. rex junto a una persona, con lo que se encontró de SUE."
     },
     {

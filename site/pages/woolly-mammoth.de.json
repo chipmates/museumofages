@@ -22,10 +22,10 @@
     2400
    ],
    "sizes": "(min-width: 1280px) 588px, (min-width: 960px) calc(100vw - 80px), (min-width: 600px) calc(100vw - 64px), calc(100vw - 40px)",
-   "person": "91.9% 40.85%",
+   "person": "92.45% 40.98%",
    "marks": {
     "mammoth": "4.64% 83.58%",
-    "person": "89.13% 94.66%",
+    "person": "87.98% 96.92%",
     "shoulder": "37.74% 49.06%"
    },
    "behind": [
@@ -39,7 +39,7 @@
     1600
    ],
    "sizes": "(min-width: 1280px) 690px, (min-width: 960px) 54vw, (min-width: 600px) calc(100vw - 64px), calc(100vw - 40px)",
-   "person": "85.87% 40.85%"
+   "person": "86.87% 40.98%"
   },
   "megalodon": {
    "stem": "animals-megalodon-side",
@@ -406,7 +406,7 @@
     {
      "page": "megalodon",
      "pic": "megalodon",
-     "alt": "Ein Hai mit offenem Maul von der Seite, dunkelgrau mit einem helleren Band an der Flanke, neben einem grauen Menschen, der winzig daneben steht.",
+     "alt": "Ein Hai mit geschlossenem Maul von der Seite, dunkelgrau mit einem helleren Band an der Flanke, neben einem grauen Menschen, der winzig daneben steht.",
      "line": "Der Megalodon, dessen Wirbelsäule in Brüssel liegt, war etwa 16 m lang, die größten seiner Art vielleicht etwa 20 m. Unser Megalodon neben einem Menschen, im selben Maßstab."
     },
     {
@@ -418,7 +418,7 @@
     {
      "page": "t-rex",
      "pic": "trex",
-     "alt": "Ein T. rex von der Seite auf zwei Beinen, das Maul offen, der Kopf erhoben, neben einem grauen Menschen, der weit unter seiner Hüfte steht.",
+     "alt": "Ein T. rex von der Seite auf zwei Beinen, das Maul geschlossen, der Kopf erhoben, neben einem grauen Menschen, der weit unter seiner Hüfte steht.",
      "line": "Ein großer erwachsener T. rex war etwa 12 m lang und wog rund 8 bis 9 t, nach den Knochen von SUE. Unser T. rex neben einem Menschen, mit dem, was von SUE gefunden wurde."
     }
    ]

@@ -22,11 +22,11 @@
     2400
    ],
    "sizes": "(min-width: 1280px) 588px, (min-width: 960px) calc(100vw - 80px), (min-width: 600px) calc(100vw - 64px), calc(100vw - 40px)",
-   "person": "92.2% 38.85%",
+   "person": "92.53% 38.98%",
    "marks": {
     "triceratops": "3.03% 82.76%",
     "hips": "31.01% 41.36%",
-    "person": "90.52% 93.89%"
+    "person": "89.82% 95.24%"
    },
    "behind": [
     "hips"
@@ -46,7 +46,7 @@
    "marks": {
     "skull": "35.68% 38.08% end",
     "horns": "73.02% 78.23%",
-    "person": "82.75% 88.88%"
+    "person": "81.56% 91.38%"
    },
    "behind": [
     "skull",
@@ -64,11 +64,11 @@
     2400
    ],
    "sizes": "(min-width: 1280px) 690px, (min-width: 960px) 54vw, (min-width: 600px) calc(100vw - 64px), calc(100vw - 40px)",
-   "person": "7.11% 36.44%",
+   "person": "7.31% 36.44%",
    "marks": {
     "t-rex": "14.67% 97.78%",
     "triceratops": "14.63% 65.36%",
-    "person": "6.03% 8.18%"
+    "person": "5.57% 9.06%"
    },
    "behind": [
     "t-rex"
@@ -81,7 +81,7 @@
     1600
    ],
    "sizes": "(min-width: 1280px) 690px, (min-width: 960px) 54vw, (min-width: 600px) calc(100vw - 64px), calc(100vw - 40px)",
-   "person": "92.2% 38.85%"
+   "person": "92.53% 38.98%"
   },
   "trex": {
    "stem": "animals-t-rex-side",
@@ -91,7 +91,7 @@
     2400
    ],
    "sizes": "(min-width: 1280px) 690px, (min-width: 960px) 54vw, (min-width: 600px) calc(100vw - 64px), calc(100vw - 40px)",
-   "person": "86.42% 63.92%"
+   "person": "86.67% 64%"
   },
   "dinosaurs": {
    "stem": "animals-biggest-dinosaurs-row",
@@ -100,7 +100,7 @@
     1600
    ],
    "sizes": "(min-width: 1280px) 690px, (min-width: 960px) 54vw, (min-width: 600px) calc(100vw - 64px), calc(100vw - 40px)",
-   "person": "32.82% 84.25%"
+   "person": "32.88% 84.25%"
   },
   "brachio": {
    "stem": "animals-brachiosaurus-side",
@@ -110,7 +110,7 @@
     2400
    ],
    "sizes": "(min-width: 1280px) 690px, (min-width: 960px) 54vw, (min-width: 600px) calc(100vw - 64px), calc(100vw - 40px)",
-   "person": "77.8% 84.8%"
+   "person": "77.93% 84.88%"
   },
   "anky": {
    "stem": "animals-ankylosaurus-side",
@@ -120,7 +120,7 @@
     2400
    ],
    "sizes": "(min-width: 1280px) 690px, (min-width: 960px) 54vw, (min-width: 600px) calc(100vw - 64px), calc(100vw - 40px)",
-   "person": "91.27% 23.15%"
+   "person": "91.69% 23.4%"
   },
   "stego": {
    "stem": "animals-stegosaurus-side",
@@ -472,7 +472,7 @@
     {
      "page": "t-rex",
      "pic": "trex",
-     "alt": "Un T. rex de lado, sobre dos patas, con la boca abierta y la cabeza levantada, junto a una persona gris que queda muy por debajo de sus caderas.",
+     "alt": "Un T. rex de lado, sobre dos patas, con la boca cerrada y la cabeza levantada, junto a una persona gris que queda muy por debajo de sus caderas.",
      "line": "Un T. rex adulto grande medía unos 12 m de largo y unos 4 m a la altura de la cadera, y pesaba más o menos de 8 a 9 toneladas. Nuestro T. rex está hecho con las medidas de SUE y está junto a una persona a la misma escala, con una lista de lo que se encontró de SUE."
     },
     {

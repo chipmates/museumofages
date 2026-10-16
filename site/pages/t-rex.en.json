@@ -22,10 +22,10 @@
     2400
    ],
    "sizes": "(min-width: 1280px) 588px, (min-width: 960px) calc(100vw - 80px), (min-width: 600px) calc(100vw - 64px), calc(100vw - 40px)",
-   "person": "86.42% 63.92%",
+   "person": "86.67% 64%",
    "marks": {
-    "t-rex": "2.47% 97.22%",
-    "person": "85.21% 87.64%",
+    "t-rex": "2.5% 97.19%",
+    "person": "84.69% 88.65%",
     "hips": "57.92% 63.75%",
     "head": "84.58% 90.0%"
    },
@@ -35,7 +35,7 @@
    ],
    "tops": {
     "hips": "18.84%",
-    "head": "6.66%"
+    "head": "6.58%"
    }
   },
   "close": {
@@ -45,7 +45,7 @@
     1600
    ],
    "sizes": "(min-width: 1280px) 690px, (min-width: 960px) 54vw, (min-width: 600px) calc(100vw - 64px), calc(100vw - 40px)",
-   "person": "68.55% 63.2%"
+   "person": "69.09% 63.27%"
   },
   "dinosaurs": {
    "stem": "animals-biggest-dinosaurs-row",
@@ -72,7 +72,7 @@
     2400
    ],
    "sizes": "(min-width: 1280px) 690px, (min-width: 960px) 54vw, (min-width: 600px) calc(100vw - 64px), calc(100vw - 40px)",
-   "person": "92.84% 63.16%"
+   "person": "93.07% 63.27%"
   },
   "brachio": {
    "stem": "animals-brachiosaurus-side",
@@ -82,7 +82,7 @@
     2400
    ],
    "sizes": "(min-width: 1280px) 690px, (min-width: 960px) 54vw, (min-width: 600px) calc(100vw - 64px), calc(100vw - 40px)",
-   "person": "77.8% 84.8%"
+   "person": "77.93% 84.88%"
   },
   "tricera": {
    "stem": "animals-triceratops-side",
@@ -92,7 +92,7 @@
     2400
    ],
    "sizes": "(min-width: 1280px) 690px, (min-width: 960px) 54vw, (min-width: 600px) calc(100vw - 64px), calc(100vw - 40px)",
-   "person": "92.2% 38.85%"
+   "person": "92.53% 38.98%"
   },
   "anky": {
    "stem": "animals-ankylosaurus-side",
@@ -102,7 +102,7 @@
     2400
    ],
    "sizes": "(min-width: 1280px) 690px, (min-width: 960px) 54vw, (min-width: 600px) calc(100vw - 64px), calc(100vw - 40px)",
-   "person": "91.27% 23.15%"
+   "person": "91.69% 23.4%"
   },
   "stego": {
    "stem": "animals-stegosaurus-side",
@@ -119,7 +119,7 @@
   "title": "T. rex size: about 12 m (39 ft), 8 to 9 t | Museum of Ages",
   "description": "T. rex size: a large adult about 12 m (39 ft) long, about 4 m (13 ft) at the hips, 8 to 9 tonnes. Ours is built to SUE's measurements, beside a person.",
   "og_title": "T. rex size: about 12 m (39 ft), 8 to 9 t",
-  "og_image_alt": "A T. rex from the side on two legs, mouth open and head raised, beside a grey person who stands far below its hips."
+  "og_image_alt": "A T. rex from the side on two legs, mouth closed and head raised, beside a grey person who stands far below its hips."
  },
  "labels": {
   "crumbs": "You are here",
@@ -141,7 +141,7 @@
    "pic": "side",
    "tag": "tag_made",
    "what": "Our T. rex beside a person 1.70 m tall, to one scale, built to SUE's measurements. In this pose, head raised and turned, tail swung, it measures about 11.4 m (37 ft). That is more than six and a half people laid end to end. The top of the raised head is about 4.6 m (15 ft) up, and that depends on the pose. Laid out straight the same skeleton would be about 11.8 m (39 ft). SUE's mount in Chicago is about 12 m.",
-   "alt": "A T. rex from the side on two legs, mouth open and head raised, beside a grey person who stands far below its hips.",
+   "alt": "A T. rex from the side on two legs, mouth closed and head raised, beside a grey person who stands far below its hips.",
    "note": "Our own reconstruction, built in code from published measurements and rendered in our own engine. Not a photograph.",
    "marks": [
     {
@@ -418,7 +418,7 @@
     {
      "page": "megalodon",
      "pic": "megalodon",
-     "alt": "A shark with its mouth open, seen from the side, dark grey with a paler band along the flank, beside a grey person who looks tiny next to it."
+     "alt": "A shark with its mouth closed, seen from the side, dark grey with a paler band along the flank, beside a grey person who looks tiny next to it."
     },
     {
      "page": "spinosaurus",

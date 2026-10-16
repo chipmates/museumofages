@@ -25,10 +25,10 @@
     2400
    ],
    "sizes": "(min-width: 1280px) 588px, (min-width: 960px) calc(100vw - 80px), (min-width: 600px) calc(100vw - 64px), calc(100vw - 40px)",
-   "person": "86.42% 63.92%",
+   "person": "86.67% 64%",
    "marks": {
-    "t-rex": "2.47% 97.22%",
-    "person": "85.21% 87.64%",
+    "t-rex": "2.5% 97.19%",
+    "person": "84.69% 88.65%",
     "hips": "57.92% 63.75%",
     "head": "84.58% 90.0%"
    },
@@ -38,7 +38,7 @@
    ],
    "tops": {
     "hips": "18.84%",
-    "head": "6.66%"
+    "head": "6.58%"
    }
   },
   "close": {
@@ -48,7 +48,7 @@
     1600
    ],
    "sizes": "(min-width: 1280px) 690px, (min-width: 960px) 54vw, (min-width: 600px) calc(100vw - 64px), calc(100vw - 40px)",
-   "person": "68.55% 63.2%"
+   "person": "69.09% 63.27%"
   },
   "dinosaurs": {
    "stem": "animals-biggest-dinosaurs-row",
@@ -75,7 +75,7 @@
     2400
    ],
    "sizes": "(min-width: 1280px) 690px, (min-width: 960px) 54vw, (min-width: 600px) calc(100vw - 64px), calc(100vw - 40px)",
-   "person": "92.84% 63.16%"
+   "person": "93.07% 63.27%"
   },
   "brachio": {
    "stem": "animals-brachiosaurus-side",
@@ -85,7 +85,7 @@
     2400
    ],
    "sizes": "(min-width: 1280px) 690px, (min-width: 960px) 54vw, (min-width: 600px) calc(100vw - 64px), calc(100vw - 40px)",
-   "person": "77.8% 84.8%"
+   "person": "77.93% 84.88%"
   },
   "tricera": {
    "stem": "animals-triceratops-side",
@@ -95,7 +95,7 @@
     2400
    ],
    "sizes": "(min-width: 1280px) 690px, (min-width: 960px) 54vw, (min-width: 600px) calc(100vw - 64px), calc(100vw - 40px)",
-   "person": "92.2% 38.85%"
+   "person": "92.53% 38.98%"
   },
   "anky": {
    "stem": "animals-ankylosaurus-side",
@@ -105,7 +105,7 @@
     2400
    ],
    "sizes": "(min-width: 1280px) 690px, (min-width: 960px) 54vw, (min-width: 600px) calc(100vw - 64px), calc(100vw - 40px)",
-   "person": "91.27% 23.15%"
+   "person": "91.69% 23.4%"
   },
   "stego": {
    "stem": "animals-stegosaurus-side",
@@ -122,7 +122,7 @@
   "title": "T-Rex-Größe: etwa 12 m lang, 8 bis 9 t | Museum of Ages",
   "description": "Größe des T. rex: ein großes erwachsenes Tier etwa 12 m lang, an der Hüfte etwa 4 m hoch, rund 8 bis 9 t. Unser T. rex ist nach den Maßen von SUE gebaut.",
   "og_title": "T-Rex-Größe: etwa 12 m lang, 8 bis 9 t",
-  "og_image_alt": "Ein T. rex von der Seite auf zwei Beinen, das Maul offen, der Kopf erhoben, neben einem grauen Menschen, der weit unter seiner Hüfte steht."
+  "og_image_alt": "Ein T. rex von der Seite auf zwei Beinen, das Maul geschlossen, der Kopf erhoben, neben einem grauen Menschen, der weit unter seiner Hüfte steht."
  },
  "labels": {
   "crumbs": "Du bist hier",
@@ -144,7 +144,7 @@
    "pic": "side",
    "tag": "tag_made",
    "what": "Unser T. rex neben einem Menschen von 1,70 m, im selben Maßstab, nach den Maßen von SUE gebaut. In dieser Haltung, Kopf erhoben und gedreht, Schwanz geschwungen, misst er etwa 11,4 m. Das sind mehr als sechseinhalb Menschen, der Länge nach aneinandergelegt. Der erhobene Kopf reicht bis etwa 4,6 m, und das hängt von der Haltung ab. Gerade ausgelegt wäre dasselbe Skelett etwa 11,8 m lang. SUEs aufgestelltes Skelett in Chicago misst etwa 12 m.",
-   "alt": "Ein T. rex von der Seite auf zwei Beinen, das Maul offen, der Kopf erhoben, neben einem grauen Menschen, der weit unter seiner Hüfte steht.",
+   "alt": "Ein T. rex von der Seite auf zwei Beinen, das Maul geschlossen, der Kopf erhoben, neben einem grauen Menschen, der weit unter seiner Hüfte steht.",
    "note": "Unsere eigene Rekonstruktion, nach veröffentlichten Maßen in Code gebaut und in unserer Engine gerendert. Kein Foto.",
    "marks": [
     {
@@ -421,7 +421,7 @@
     {
      "page": "megalodon",
      "pic": "megalodon",
-     "alt": "Ein Hai mit offenem Maul von der Seite, dunkelgrau mit einem helleren Band an der Flanke, neben einem grauen Menschen, der winzig daneben steht."
+     "alt": "Ein Hai mit geschlossenem Maul von der Seite, dunkelgrau mit einem helleren Band an der Flanke, neben einem grauen Menschen, der winzig daneben steht."
     },
     {
      "page": "spinosaurus",

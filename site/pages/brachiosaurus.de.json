@@ -27,10 +27,10 @@
     2400
    ],
    "sizes": "(min-width: 1280px) 588px, (min-width: 960px) calc(100vw - 80px), (min-width: 600px) calc(100vw - 64px), calc(100vw - 40px)",
-   "person": "77.8% 84.8%",
+   "person": "77.93% 84.88%",
    "marks": {
     "brachiosaurus": "1.23% 98.16%",
-    "person": "77.15% 78.46%",
+    "person": "76.86% 78.99%",
     "head": "92.12% 97.52%"
    },
    "behind": [
@@ -44,7 +44,7 @@
     1600
    ],
    "sizes": "(min-width: 1280px) 690px, (min-width: 960px) 54vw, (min-width: 600px) calc(100vw - 64px), calc(100vw - 40px)",
-   "person": "46.41% 75.62%"
+   "person": "46.87% 75.68%"
   },
   "skeleton": {
    "stem": "animals-brachiosaurus-skeleton",
@@ -53,7 +53,7 @@
     1600
    ],
    "sizes": "(min-width: 1280px) 690px, (min-width: 960px) 54vw, (min-width: 600px) calc(100vw - 64px), calc(100vw - 40px)",
-   "person": "77.8% 84.8%",
+   "person": "77.93% 84.88%",
    "swatches": {
     "own": "#c5b48f",
     "blue": "#597382",
@@ -67,7 +67,7 @@
      1000
     ],
     "below": 600,
-    "person": "91.47% 72.52%"
+    "person": "91.75% 72.67%"
    }
   },
   "dinosaurs": {
@@ -459,7 +459,7 @@
     {
      "page": "t-rex",
      "pic": "trex",
-     "alt": "Ein T. rex von der Seite auf zwei Beinen, das Maul offen, der Kopf erhoben, neben einem grauen Menschen, der weit unter seiner Hüfte steht.",
+     "alt": "Ein T. rex von der Seite auf zwei Beinen, das Maul geschlossen, der Kopf erhoben, neben einem grauen Menschen, der weit unter seiner Hüfte steht.",
      "line": "Ein großer erwachsener T. rex war etwa 12 m lang, an der Hüfte etwa 4 m hoch und kam auf rund 8 bis 9 t. Unser T. rex ist nach den Maßen von SUE gebaut und steht im selben Maßstab neben einem Menschen, dazu eine Liste dessen, was von SUE gefunden wurde."
     },
     {

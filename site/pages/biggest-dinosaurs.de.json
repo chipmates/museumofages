@@ -23,14 +23,14 @@
     1600
    ],
    "sizes": "(min-width: 1280px) 588px, (min-width: 960px) calc(100vw - 80px), (min-width: 600px) calc(100vw - 64px), calc(100vw - 40px)",
-   "person": "32.82% 84.25%",
+   "person": "32.88% 84.25%",
    "person_from": 680,
    "marks": {
     "argentinosaurus": "9.39% 71.81%",
     "brachiosaurus": "51.22% 95.18%",
     "stegosaurus": "0.41% 11.84%",
     "ankylosaurus": "12.45% 25.56%",
-    "person": "32.53% 33.11%",
+    "person": "32.4% 33.37%",
     "triceratops": "34.69% 49.26%",
     "t-rex": "55.51% 78.7%",
     "spinosaurus": "78.98% 99.34%"
@@ -47,13 +47,13 @@
     1600
    ],
    "sizes": "(min-width: 1280px) 690px, (min-width: 960px) 54vw, (min-width: 600px) calc(100vw - 64px), calc(100vw - 40px)",
-   "person": "58.34% 62.26%",
+   "person": "58.45% 62.26%",
    "marks": {
     "t-rex": "1.07% 41.5%",
     "spinosaurus": "62.99% 98.49%",
     "stegosaurus": "0.75% 20.68%",
     "triceratops": "28.11% 53.51%",
-    "person": "57.83% 58.85%",
+    "person": "57.61% 59.3%",
     "ankylosaurus": "59.79% 82.65%"
    },
    "behind": [
@@ -69,7 +69,7 @@
     2400
    ],
    "sizes": "(min-width: 1280px) 690px, (min-width: 960px) 54vw, (min-width: 600px) calc(100vw - 64px), calc(100vw - 40px)",
-   "person": "38.58% 84.29%"
+   "person": "38.68% 84.35%"
   },
   "megalodon": {
    "stem": "animals-megalodon-side",
@@ -88,7 +88,7 @@
     2400
    ],
    "sizes": "(min-width: 1280px) 690px, (min-width: 960px) 54vw, (min-width: 600px) calc(100vw - 64px), calc(100vw - 40px)",
-   "person": "86.42% 63.92%"
+   "person": "86.67% 64%"
   },
   "spino": {
    "stem": "animals-spinosaurus-side",
@@ -98,7 +98,7 @@
     2400
    ],
    "sizes": "(min-width: 1280px) 690px, (min-width: 960px) 54vw, (min-width: 600px) calc(100vw - 64px), calc(100vw - 40px)",
-   "person": "92.84% 63.16%"
+   "person": "93.07% 63.27%"
   },
   "mammoth": {
    "stem": "animals-woolly-mammoth-side",
@@ -108,7 +108,7 @@
     2400
    ],
    "sizes": "(min-width: 1280px) 690px, (min-width: 960px) 54vw, (min-width: 600px) calc(100vw - 64px), calc(100vw - 40px)",
-   "person": "91.9% 40.85%"
+   "person": "92.45% 40.98%"
   },
   "brachio": {
    "stem": "animals-brachiosaurus-side",
@@ -118,7 +118,7 @@
     2400
    ],
    "sizes": "(min-width: 1280px) 690px, (min-width: 960px) 54vw, (min-width: 600px) calc(100vw - 64px), calc(100vw - 40px)",
-   "person": "77.8% 84.8%"
+   "person": "77.93% 84.88%"
   },
   "tricera": {
    "stem": "animals-triceratops-side",
@@ -128,7 +128,7 @@
     2400
    ],
    "sizes": "(min-width: 1280px) 690px, (min-width: 960px) 54vw, (min-width: 600px) calc(100vw - 64px), calc(100vw - 40px)",
-   "person": "92.2% 38.85%"
+   "person": "92.53% 38.98%"
   },
   "anky": {
    "stem": "animals-ankylosaurus-side",
@@ -138,7 +138,7 @@
     2400
    ],
    "sizes": "(min-width: 1280px) 690px, (min-width: 960px) 54vw, (min-width: 600px) calc(100vw - 64px), calc(100vw - 40px)",
-   "person": "91.27% 23.15%"
+   "person": "91.69% 23.4%"
   },
   "stego": {
    "stem": "animals-stegosaurus-side",
@@ -548,13 +548,13 @@
     {
      "page": "t-rex",
      "pic": "trex",
-     "alt": "Ein T. rex von der Seite auf zwei Beinen, das Maul offen, der Kopf erhoben, neben einem grauen Menschen, der weit unter seiner Hüfte steht.",
+     "alt": "Ein T. rex von der Seite auf zwei Beinen, das Maul geschlossen, der Kopf erhoben, neben einem grauen Menschen, der weit unter seiner Hüfte steht.",
      "line": "Der T. rex aus der Reihe, allein und aus der Nähe: Länge, Hüfthöhe, Gewicht, und warum kein Tier die ganze Art misst."
     },
     {
      "page": "megalodon",
      "pic": "megalodon",
-     "alt": "Ein Hai mit offenem Maul von der Seite, dunkelgrau mit einem helleren Band an der Flanke, neben einem grauen Menschen, der winzig daneben steht."
+     "alt": "Ein Hai mit geschlossenem Maul von der Seite, dunkelgrau mit einem helleren Band an der Flanke, neben einem grauen Menschen, der winzig daneben steht."
     },
     {
      "page": "spinosaurus",

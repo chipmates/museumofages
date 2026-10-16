@@ -22,10 +22,10 @@
     2400
    ],
    "sizes": "(min-width: 1280px) 588px, (min-width: 960px) calc(100vw - 80px), (min-width: 600px) calc(100vw - 64px), calc(100vw - 40px)",
-   "person": "77.8% 84.8%",
+   "person": "77.93% 84.88%",
    "marks": {
     "brachiosaurus": "1.23% 98.16%",
-    "person": "77.15% 78.46%",
+    "person": "76.86% 78.99%",
     "head": "92.12% 97.52%"
    },
    "behind": [
@@ -39,7 +39,7 @@
     1600
    ],
    "sizes": "(min-width: 1280px) 690px, (min-width: 960px) 54vw, (min-width: 600px) calc(100vw - 64px), calc(100vw - 40px)",
-   "person": "46.41% 75.62%"
+   "person": "46.87% 75.68%"
   },
   "skeleton": {
    "stem": "animals-brachiosaurus-skeleton",
@@ -48,7 +48,7 @@
     1600
    ],
    "sizes": "(min-width: 1280px) 690px, (min-width: 960px) 54vw, (min-width: 600px) calc(100vw - 64px), calc(100vw - 40px)",
-   "person": "77.8% 84.8%",
+   "person": "77.93% 84.88%",
    "swatches": {
     "own": "#c5b48f",
     "blue": "#597382",
@@ -62,7 +62,7 @@
      1000
     ],
     "below": 600,
-    "person": "91.47% 72.52%"
+    "person": "91.75% 72.67%"
    }
   },
   "dinosaurs": {
@@ -454,7 +454,7 @@
     {
      "page": "t-rex",
      "pic": "trex",
-     "alt": "Un T. rex de lado, sobre dos patas, con la boca abierta y la cabeza levantada, junto a una persona gris que queda muy por debajo de sus caderas.",
+     "alt": "Un T. rex de lado, sobre dos patas, con la boca cerrada y la cabeza levantada, junto a una persona gris que queda muy por debajo de sus caderas.",
      "line": "Un T. rex adulto grande medía unos 12 m de largo y unos 4 m a la altura de la cadera, y pesaba más o menos de 8 a 9 toneladas. Nuestro T. rex está hecho con las medidas de SUE y está junto a una persona a la misma escala, con una lista de lo que se encontró de SUE."
     },
     {

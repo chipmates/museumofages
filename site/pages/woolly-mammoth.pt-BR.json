@@ -22,10 +22,10 @@
     2400
    ],
    "sizes": "(min-width: 1280px) 588px, (min-width: 960px) calc(100vw - 80px), (min-width: 600px) calc(100vw - 64px), calc(100vw - 40px)",
-   "person": "91.9% 40.85%",
+   "person": "92.45% 40.98%",
    "marks": {
     "mammoth": "4.64% 83.58%",
-    "person": "89.13% 94.66%",
+    "person": "87.98% 96.92%",
     "shoulder": "37.74% 49.06%"
    },
    "behind": [
@@ -39,7 +39,7 @@
     1600
    ],
    "sizes": "(min-width: 1280px) 690px, (min-width: 960px) 54vw, (min-width: 600px) calc(100vw - 64px), calc(100vw - 40px)",
-   "person": "85.87% 40.85%"
+   "person": "86.87% 40.98%"
   },
   "megalodon": {
    "stem": "animals-megalodon-side",
@@ -406,7 +406,7 @@
     {
      "page": "megalodon",
      "pic": "megalodon",
-     "alt": "Um tubarão de boca aberta, visto de lado, cinza-escuro com uma faixa mais clara no flanco, ao lado de uma pessoa cinza que ao lado dele parece minúscula.",
+     "alt": "Um tubarão de boca fechada, visto de lado, cinza-escuro com uma faixa mais clara no flanco, ao lado de uma pessoa cinza que ao lado dele parece minúscula.",
      "line": "O megalodon da coluna de Bruxelas tinha cerca de 16 m de comprimento, e os maiores da espécie, talvez cerca de 20 m. O nosso megalodon ao lado de uma pessoa, na mesma escala."
     },
     {
@@ -418,7 +418,7 @@
     {
      "page": "t-rex",
      "pic": "trex",
-     "alt": "Um T. rex de lado, sobre duas patas, com a boca aberta e a cabeça erguida, ao lado de uma pessoa cinza que fica bem abaixo do quadril dele.",
+     "alt": "Um T. rex de lado, sobre duas patas, com a boca fechada e a cabeça erguida, ao lado de uma pessoa cinza que fica bem abaixo do quadril dele.",
      "line": "Um T. rex adulto grande tinha cerca de 12 m de comprimento e mais ou menos 8 a 9 toneladas, pelos ossos de SUE. O nosso T. rex ao lado de uma pessoa, com o que foi encontrado de SUE."
     }
    ]

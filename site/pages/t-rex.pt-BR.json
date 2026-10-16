@@ -22,10 +22,10 @@
     2400
    ],
    "sizes": "(min-width: 1280px) 588px, (min-width: 960px) calc(100vw - 80px), (min-width: 600px) calc(100vw - 64px), calc(100vw - 40px)",
-   "person": "86.42% 63.92%",
+   "person": "86.67% 64%",
    "marks": {
-    "t-rex": "2.47% 97.22%",
-    "person": "85.21% 87.64%",
+    "t-rex": "2.5% 97.19%",
+    "person": "84.69% 88.65%",
     "hips": "57.92% 63.75%",
     "head": "84.58% 90.0%"
    },
@@ -35,7 +35,7 @@
    ],
    "tops": {
     "hips": "18.84%",
-    "head": "6.66%"
+    "head": "6.58%"
    }
   },
   "close": {
@@ -45,7 +45,7 @@
     1600
    ],
    "sizes": "(min-width: 1280px) 690px, (min-width: 960px) 54vw, (min-width: 600px) calc(100vw - 64px), calc(100vw - 40px)",
-   "person": "68.55% 63.2%"
+   "person": "69.09% 63.27%"
   },
   "dinosaurs": {
    "stem": "animals-biggest-dinosaurs-row",
@@ -72,7 +72,7 @@
     2400
    ],
    "sizes": "(min-width: 1280px) 690px, (min-width: 960px) 54vw, (min-width: 600px) calc(100vw - 64px), calc(100vw - 40px)",
-   "person": "92.84% 63.16%"
+   "person": "93.07% 63.27%"
   },
   "brachio": {
    "stem": "animals-brachiosaurus-side",
@@ -82,7 +82,7 @@
     2400
    ],
    "sizes": "(min-width: 1280px) 690px, (min-width: 960px) 54vw, (min-width: 600px) calc(100vw - 64px), calc(100vw - 40px)",
-   "person": "77.8% 84.8%"
+   "person": "77.93% 84.88%"
   },
   "tricera": {
    "stem": "animals-triceratops-side",
@@ -92,7 +92,7 @@
     2400
    ],
    "sizes": "(min-width: 1280px) 690px, (min-width: 960px) 54vw, (min-width: 600px) calc(100vw - 64px), calc(100vw - 40px)",
-   "person": "92.2% 38.85%"
+   "person": "92.53% 38.98%"
   },
   "anky": {
    "stem": "animals-ankylosaurus-side",
@@ -102,7 +102,7 @@
     2400
    ],
    "sizes": "(min-width: 1280px) 690px, (min-width: 960px) 54vw, (min-width: 600px) calc(100vw - 64px), calc(100vw - 40px)",
-   "person": "91.27% 23.15%"
+   "person": "91.69% 23.4%"
   },
   "stego": {
    "stem": "animals-stegosaurus-side",
@@ -119,7 +119,7 @@
   "title": "T. rex: tamanho de cerca de 12 m e 8 a 9 t | Museum of Ages",
   "description": "Tamanho do T. rex: um tiranossauro rex adulto grande tinha cerca de 12 m de comprimento, cerca de 4 m até o quadril e 8 a 9 t. O nosso, nas medidas de SUE.",
   "og_title": "T. rex: tamanho de cerca de 12 m e de 8 a 9 t",
-  "og_image_alt": "Um T. rex de lado, sobre duas patas, com a boca aberta e a cabeça erguida, ao lado de uma pessoa cinza que fica bem abaixo do quadril dele."
+  "og_image_alt": "Um T. rex de lado, sobre duas patas, com a boca fechada e a cabeça erguida, ao lado de uma pessoa cinza que fica bem abaixo do quadril dele."
  },
  "labels": {
   "crumbs": "Você está aqui",
@@ -141,7 +141,7 @@
    "pic": "side",
    "tag": "tag_made",
    "what": "O nosso T. rex ao lado de uma pessoa de 1,70 m, na mesma escala, feito com as medidas de SUE. Nesta pose, com a cabeça erguida e virada e a cauda curvada, ele mede cerca de 11,4 m. É mais do que seis pessoas e meia deitadas uma atrás da outra. O alto da cabeça erguida fica a cerca de 4,6 m do chão, e isso depende da pose. Esticado em linha reta, o mesmo esqueleto mediria cerca de 11,8 m. A montagem de SUE em Chicago mede cerca de 12 m.",
-   "alt": "Um T. rex de lado, sobre duas patas, com a boca aberta e a cabeça erguida, ao lado de uma pessoa cinza que fica bem abaixo do quadril dele.",
+   "alt": "Um T. rex de lado, sobre duas patas, com a boca fechada e a cabeça erguida, ao lado de uma pessoa cinza que fica bem abaixo do quadril dele.",
    "note": "A nossa própria reconstrução, construída em código a partir de medidas publicadas e renderizada com o nosso próprio motor gráfico. Não é uma fotografia.",
    "marks": [
     {
@@ -418,7 +418,7 @@
     {
      "page": "megalodon",
      "pic": "megalodon",
-     "alt": "Um tubarão de boca aberta, visto de lado, cinza-escuro com uma faixa mais clara no flanco, ao lado de uma pessoa cinza que ao lado dele parece minúscula."
+     "alt": "Um tubarão de boca fechada, visto de lado, cinza-escuro com uma faixa mais clara no flanco, ao lado de uma pessoa cinza que ao lado dele parece minúscula."
     },
     {
      "page": "spinosaurus",

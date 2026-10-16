@@ -21,10 +21,10 @@
     2400
    ],
    "sizes": "(min-width: 1280px) 588px, (min-width: 960px) calc(100vw - 80px), (min-width: 600px) calc(100vw - 64px), calc(100vw - 40px)",
-   "person": "91.86% 55.88%",
+   "person": "92% 60.62%",
    "spans": {
-    "whole": "5.03% 87%",
-    "found": "22.87% 77.87%"
+    "whole": "4.91% 87%",
+    "found": "22.98% 77.87%"
    }
   },
   "head": {
@@ -34,7 +34,7 @@
     1600
    ],
    "sizes": "(min-width: 1280px) 690px, (min-width: 960px) 54vw, (min-width: 600px) calc(100vw - 64px), calc(100vw - 40px)",
-   "person": "83.58% 45.52%"
+   "person": "84% 45.6%"
   },
   "skeleton": {
    "stem": "animals-megalodon-skeleton",
@@ -44,7 +44,7 @@
     2400
    ],
    "sizes": "(min-width: 1280px) 690px, (min-width: 960px) 54vw, (min-width: 600px) calc(100vw - 64px), calc(100vw - 40px)",
-   "person": "91.86% 55.88%"
+   "person": "92% 56%"
   },
   "skeleton_head": {
    "stem": "animals-megalodon-skeleton-head",
@@ -53,7 +53,7 @@
     1600
    ],
    "sizes": "(min-width: 1280px) 690px, (min-width: 960px) 54vw, (min-width: 600px) calc(100vw - 64px), calc(100vw - 40px)",
-   "person": "83.58% 45.52%"
+   "person": "84% 45.6%"
   },
   "dinosaurs": {
    "stem": "animals-biggest-dinosaurs-row",
@@ -62,7 +62,7 @@
     1600
    ],
    "sizes": "(min-width: 1280px) 690px, (min-width: 960px) 54vw, (min-width: 600px) calc(100vw - 64px), calc(100vw - 40px)",
-   "person": "32.82% 84.25%"
+   "person": "32.88% 84.25%"
   },
   "trex": {
    "stem": "animals-t-rex-side",
@@ -72,7 +72,7 @@
     2400
    ],
    "sizes": "(min-width: 1280px) 690px, (min-width: 960px) 54vw, (min-width: 600px) calc(100vw - 64px), calc(100vw - 40px)",
-   "person": "86.42% 63.92%"
+   "person": "86.67% 64%"
   },
   "spino": {
    "stem": "animals-spinosaurus-side",
@@ -82,7 +82,7 @@
     2400
    ],
    "sizes": "(min-width: 1280px) 690px, (min-width: 960px) 54vw, (min-width: 600px) calc(100vw - 64px), calc(100vw - 40px)",
-   "person": "92.84% 63.16%"
+   "person": "93.07% 63.27%"
   },
   "mammoth": {
    "stem": "animals-woolly-mammoth-side",
@@ -92,14 +92,14 @@
     2400
    ],
    "sizes": "(min-width: 1280px) 690px, (min-width: 960px) 54vw, (min-width: 600px) calc(100vw - 64px), calc(100vw - 40px)",
-   "person": "91.9% 40.85%"
+   "person": "92.45% 40.98%"
   }
  },
  "meta": {
   "title": "Megalodon-Größe: etwa 16 m, vielleicht 20 m | Museum of Ages",
   "description": "Größe des Megalodons: etwa 16 m nach der einen langen Wirbelsäule, die größten vielleicht etwa 20 m. Größenvergleich mit Mensch, Weißem Hai und Blauwal.",
   "og_title": "Megalodon-Größe: etwa 16 m, vielleicht 20 m",
-  "og_image_alt": "Ein Hai mit offenem Maul von der Seite, dunkelgrau mit einem helleren Band an der Flanke, neben einem grauen Menschen, der winzig daneben steht.",
+  "og_image_alt": "Ein Hai mit geschlossenem Maul von der Seite, dunkelgrau mit einem helleren Band an der Flanke, neben einem grauen Menschen, der winzig daneben steht.",
   "credit": "Museum of Ages, Körperform nach Shimada und anderen 2025 (CC BY 4.0)"
  },
  "labels": {
@@ -122,7 +122,7 @@
    "pic": "side",
    "tag": "tag_made",
    "what": "Unser Megalodon neben einem Menschen von 1,70 m, im selben Maßstab: etwa 16 m lang, die Länge, die sich aus der Wirbelsäule in Brüssel ergibt.",
-   "alt": "Ein Hai mit offenem Maul von der Seite, dunkelgrau mit einem helleren Band an der Flanke, neben einem grauen Menschen, der winzig daneben steht.",
+   "alt": "Ein Hai mit geschlossenem Maul von der Seite, dunkelgrau mit einem helleren Band an der Flanke, neben einem grauen Menschen, der winzig daneben steht.",
    "note": [
     "Eine eigene Rekonstruktion des Museums, nach den genannten Maßen in Code gebaut und in unserer Engine gerendert. Kein Foto. Die Körperform folgt dem Modell von Shimada und anderen 2025 (",
     {
@@ -380,7 +380,7 @@
     {
      "page": "t-rex",
      "pic": "trex",
-     "alt": "Ein T. rex von der Seite auf zwei Beinen, das Maul offen, der Kopf erhoben, neben einem grauen Menschen, der weit unter seiner Hüfte steht.",
+     "alt": "Ein T. rex von der Seite auf zwei Beinen, das Maul geschlossen, der Kopf erhoben, neben einem grauen Menschen, der weit unter seiner Hüfte steht.",
      "line": "Etwa 12 m lang und rund 8 bis 9 t, nach den Knochen von SUE. Unser T. rex neben einem Menschen, mit dem, was von SUE gefunden wurde."
     },
     {

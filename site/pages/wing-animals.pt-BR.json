@@ -20,7 +20,7 @@
     2400
    ],
    "sizes": "(min-width: 1280px) 690px, (min-width: 960px) 54vw, (min-width: 600px) calc(100vw - 64px), calc(100vw - 40px)",
-   "person": "91.86% 55.88%"
+   "person": "92% 60.62%"
   },
   "dinosaurs": {
    "stem": "animals-biggest-dinosaurs-row",
@@ -29,7 +29,7 @@
     1600
    ],
    "sizes": "(min-width: 1280px) 690px, (min-width: 960px) 54vw, (min-width: 600px) calc(100vw - 64px), calc(100vw - 40px)",
-   "person": "32.82% 84.25%"
+   "person": "32.88% 84.25%"
   },
   "trex": {
    "stem": "animals-t-rex-side",
@@ -39,7 +39,7 @@
     2400
    ],
    "sizes": "(min-width: 1280px) 690px, (min-width: 960px) 54vw, (min-width: 600px) calc(100vw - 64px), calc(100vw - 40px)",
-   "person": "86.42% 63.92%"
+   "person": "86.67% 64%"
   },
   "spino": {
    "stem": "animals-spinosaurus-side",
@@ -49,7 +49,7 @@
     2400
    ],
    "sizes": "(min-width: 1280px) 690px, (min-width: 960px) 54vw, (min-width: 600px) calc(100vw - 64px), calc(100vw - 40px)",
-   "person": "92.84% 63.16%"
+   "person": "93.07% 63.27%"
   },
   "mammoth": {
    "stem": "animals-woolly-mammoth-side",
@@ -59,7 +59,7 @@
     2400
    ],
    "sizes": "(min-width: 1280px) 690px, (min-width: 960px) 54vw, (min-width: 600px) calc(100vw - 64px), calc(100vw - 40px)",
-   "person": "91.9% 40.85%"
+   "person": "92.45% 40.98%"
   },
   "brachio": {
    "stem": "animals-brachiosaurus-side",
@@ -69,7 +69,7 @@
     2400
    ],
    "sizes": "(min-width: 1280px) 690px, (min-width: 960px) 54vw, (min-width: 600px) calc(100vw - 64px), calc(100vw - 40px)",
-   "person": "77.8% 84.8%"
+   "person": "77.93% 84.88%"
   },
   "tricera": {
    "stem": "animals-triceratops-side",
@@ -79,7 +79,7 @@
     2400
    ],
    "sizes": "(min-width: 1280px) 690px, (min-width: 960px) 54vw, (min-width: 600px) calc(100vw - 64px), calc(100vw - 40px)",
-   "person": "92.2% 38.85%"
+   "person": "92.53% 38.98%"
   },
   "anky": {
    "stem": "animals-ankylosaurus-side",
@@ -89,7 +89,7 @@
     2400
    ],
    "sizes": "(min-width: 1280px) 690px, (min-width: 960px) 54vw, (min-width: 600px) calc(100vw - 64px), calc(100vw - 40px)",
-   "person": "91.27% 23.15%"
+   "person": "91.69% 23.4%"
   },
   "stego": {
    "stem": "animals-stegosaurus-side",
@@ -106,7 +106,7 @@
   "title": "Animais: qual era o tamanho deles | Museum of Ages",
   "description": "Qual era o tamanho dos animais do museu, cada um ao lado de uma pessoa de 1,70 m na mesma escala, em imagens nossas e com as fontes.",
   "og_title": "Animais: qual era o tamanho deles",
-  "og_image_alt": "Um tubarão de boca aberta, visto de lado, cinza-escuro com uma faixa mais clara no flanco, ao lado de uma pessoa cinza que parece minúscula perto dele.",
+  "og_image_alt": "Um tubarão de boca fechada, visto de lado, cinza-escuro com uma faixa mais clara no flanco, ao lado de uma pessoa cinza que parece minúscula perto dele.",
   "credit": "Museum of Ages, forma do corpo a partir de Shimada e outros 2025 (CC BY 4.0)"
  },
  "labels": {
@@ -132,7 +132,7 @@
     {
      "page": "megalodon",
      "pic": "side",
-     "alt": "Um tubarão de boca aberta, visto de lado, cinza-escuro com uma faixa mais clara no flanco, ao lado de uma pessoa cinza que parece minúscula perto dele."
+     "alt": "Um tubarão de boca fechada, visto de lado, cinza-escuro com uma faixa mais clara no flanco, ao lado de uma pessoa cinza que parece minúscula perto dele."
     },
     {
      "page": "biggest-dinosaurs",
@@ -142,7 +142,7 @@
     {
      "page": "t-rex",
      "pic": "trex",
-     "alt": "Um T. rex visto de lado, sobre duas patas, de boca aberta e cabeça erguida, ao lado de uma pessoa cinza que fica muito abaixo do quadril dele."
+     "alt": "Um T. rex visto de lado, sobre duas patas, de boca fechada e cabeça erguida, ao lado de uma pessoa cinza que fica muito abaixo do quadril dele."
     },
     {
      "page": "spinosaurus",
