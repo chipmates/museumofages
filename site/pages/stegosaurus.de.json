@@ -128,6 +128,16 @@
    ],
    "sizes": "(min-width: 1280px) 690px, (min-width: 960px) 54vw, (min-width: 600px) calc(100vw - 64px), calc(100vw - 40px)",
    "person": "86.42% 63.92%"
+  },
+  "anky": {
+   "stem": "animals-ankylosaurus-side",
+   "widths": [
+    800,
+    1600,
+    2400
+   ],
+   "sizes": "(min-width: 1280px) 690px, (min-width: 960px) 54vw, (min-width: 600px) calc(100vw - 64px), calc(100vw - 40px)",
+   "person": "91.27% 23.15%"
   }
  },
  "meta": {
@@ -506,6 +516,12 @@
      "pic": "trex",
      "alt": "Ein T. rex von der Seite auf zwei Beinen, das Maul offen, der Kopf erhoben, neben einem grauen Menschen, der weit unter seiner Hüfte steht.",
      "line": "Ein großer erwachsener T. rex war etwa 12 m lang, an der Hüfte etwa 4 m hoch und kam auf rund 8 bis 9 t. Unser T. rex ist nach den Maßen von SUE gebaut und steht im selben Maßstab neben einem Menschen, dazu eine Liste dessen, was von SUE gefunden wurde."
+    },
+    {
+     "page": "ankylosaurus",
+     "pic": "anky",
+     "alt": "Ein Ankylosaurus von der Seite: ein flacher, breiter Körper unter Reihen von Knochenplatten, ein breiter, tief getragener Kopf, vier kurze Beine und ein gerader Schwanz mit einer flachen Keule am Ende. Daneben ein grauer Mensch, so groß, wie der Rücken über der Hüfte hoch ist.",
+     "line": "Ein Ankylosaurus war nach einer Studie von 2017 etwa 6 bis 8 m lang. Das Tier mit der einzigen gefundenen Schwanzkeule kommt nach seinen Beinknochen auf etwa 4,8 t. Unser Ankylosaurus ist in der Größe dieses Tiers gebaut und steht im selben Maßstab neben einem Menschen, dazu seine Keule, sein Panzer, was gefunden wurde und was die Knochen über den T. rex sagen."
     }
    ]
   },

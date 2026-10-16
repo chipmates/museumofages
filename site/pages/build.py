@@ -1300,8 +1300,10 @@ def render(page, lang, data, shared, out_root):
     rich = names.mark
     # running text that hyphenates (a paragraph, a list's point, a note's text, an answer to a question)
     prose = lambda text: names.mark(text, split=True)
-    # the list of pages is new on every page that carries one, so its names are held by no-break spaces
-    joined = Names(shared["names"] + shared["own_names"][lang], wing["name"][lang], lang, join=True, taxa=taxa).mark
+    # the list of pages is new on every page that carries one, so its names are held by no-break spaces; the page's
+    # long words keep their one break point there too, since a list's line hyphenates like running text
+    joined = Names(shared["names"] + shared["own_names"][lang], wing["name"][lang], lang, join=True,
+                   breaks=data["page"].get("breaks", ()), taxa=taxa).mark
 
     def site_page(name, code=lang):
         options = SITE_PAGES[name][code]
@@ -1618,7 +1620,7 @@ def render(page, lang, data, shared, out_root):
                 # a page may name a neighbour with a line of its own (line), else the list's line
                 line = re.sub(rf"(\d) (?={MORE_UNITS}\b)", "\\1" + LIB.NBSP, item.get("line") or topic["line"][lang])
                 items.append(fill(parts["page_item"], {"href": page_href(item["page"]), "name": joined(topic["name"][lang]),
-                                                       "line": joined(LIB.bind(line, lang)),
+                                                       "line": joined(LIB.bind(line, lang), split=True),
                                                        "html.pic": pics.picture(item["pic"], esc(item["alt"])) if item.get("pic") else ""}))
             values["html.items"] = "\n".join(items)
             # on a topic page the list names its neighbours after the page's own sections; the wing's list is the page

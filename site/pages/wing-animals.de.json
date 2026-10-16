@@ -9,7 +9,10 @@
    "file": "animals-og-{lang}-1200x630.png",
    "width": 1200,
    "height": 630
-  }
+  },
+  "breaks": [
+   "Stego|saurus"
+  ]
  },
  "pics": {
   "side": {

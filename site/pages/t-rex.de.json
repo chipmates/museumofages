@@ -11,7 +11,10 @@
    "width": 1200,
    "height": 630,
    "layout": "beside"
-  }
+  },
+  "breaks": [
+   "Stego|saurus"
+  ]
  },
  "pics": {
   "side": {
