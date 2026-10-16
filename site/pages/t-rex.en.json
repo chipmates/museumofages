@@ -93,6 +93,16 @@
    ],
    "sizes": "(min-width: 1280px) 690px, (min-width: 960px) 54vw, (min-width: 600px) calc(100vw - 64px), calc(100vw - 40px)",
    "person": "92.2% 38.85%"
+  },
+  "anky": {
+   "stem": "animals-ankylosaurus-side",
+   "widths": [
+    800,
+    1600,
+    2400
+   ],
+   "sizes": "(min-width: 1280px) 690px, (min-width: 960px) 54vw, (min-width: 600px) calc(100vw - 64px), calc(100vw - 40px)",
+   "person": "93.67% 17.91%"
   }
  },
  "meta": {
@@ -417,6 +427,12 @@
      "pic": "tricera",
      "alt": "A Triceratops from the side: a wide frill behind the head, two long horns over the eyes, a short one on the nose, four legs. Beside it a grey person who reaches about two thirds of the way up its back.",
      "line": "A big adult Triceratops was about 7 to 8 m long, with a skull about 2 m, longer than SUE's. Our Triceratops stands beside our T. rex to one scale, with what the bones show of the two and what they do not."
+    },
+    {
+     "page": "ankylosaurus",
+     "pic": "anky",
+     "alt": "An Ankylosaurus from the side: a low, wide body under rows of bony plates, a broad head carried low, four short legs and a straight tail ending in a flat club. Beside it a grey person, as tall as the top of its back over the hips.",
+     "line": "Ankylosaurus, an armoured plant eater with a tail club, lived at the same time and in the same land as T. rex and was about 6 to 8 m long. Our Ankylosaurus stands beside our T. rex to one scale, with what the bones show of the two and what they do not."
     }
    ]
   },

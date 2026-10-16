@@ -1,0 +1,581 @@
+{
+ "_note": "THE WORDS of the Ankylosaurus page. Poured word for word from the writer's WORDS file; the title, the description and the heading are its first options. The person's height stands over the person in each picture (labels.person), and the labels at the pictures name the person too. pics.<name>.marks: each label's place as the start and end of what it names, shares of the picture's width, measured on the frame; pics.<name>.person: the person's centre and the top of its head. pics.side.tops: the top of the back over the hips (1.70 m) as a share of the picture's height from its top; its bracket over the picture runs from the back's top over the hips to the person, so its bar is one level line at the person's height. pics.close.marks: the knob (the model's knob landmarks) and handle and knob (the knob's end to the first handle bone). pics.skeleton.swatches: each colour of the found-bones key as the picture prints it (the median of the bones of that colour, measured on the final picture). pics.beside: our T. rex's, our Ankylosaurus's and our Stegosaurus's rows at one scale, the tails' ends on one left line. Empty cells of the table are the writer's: no sourced figure exists.",
+ "page": {
+  "id": "animals-ankylosaurus",
+  "wing": "animals",
+  "topic": "ankylosaurus",
+  "published": null,
+  "join_names": true,
+  "og_image": {
+   "file": "animals-ankylosaurus-og-{lang}-1200x630.png",
+   "width": 1200,
+   "height": 630,
+   "layout": "beside"
+  }
+ },
+ "pics": {
+  "side": {
+   "stem": "animals-ankylosaurus-side",
+   "widths": [
+    800,
+    1600,
+    2400
+   ],
+   "sizes": "(min-width: 1280px) 588px, (min-width: 960px) calc(100vw - 80px), (min-width: 600px) calc(100vw - 64px), calc(100vw - 40px)",
+   "person": "93.67% 17.91%",
+   "marks": {
+    "ankylosaurus": "3% 87.5%",
+    "hips": "47.37% 93.67%",
+    "person": "91.74% 95.61%"
+   },
+   "behind": [
+    "hips"
+   ],
+   "tops": {
+    "hips": "18.18%"
+   }
+  },
+  "close": {
+   "stem": "animals-ankylosaurus-close",
+   "widths": [
+    800,
+    1600
+   ],
+   "sizes": "(min-width: 1280px) 690px, (min-width: 960px) 54vw, (min-width: 600px) calc(100vw - 64px), calc(100vw - 40px)",
+   "person": "6.14% 13.4%",
+   "marks": {
+    "knob": "13.7% 24.39%",
+    "club": "13.7% 49.28%",
+    "person": "3.56% 8.72%"
+   },
+   "behind": [
+    "knob"
+   ]
+  },
+  "beside": {
+   "stem": "animals-ankylosaurus-beside",
+   "widths": [
+    800,
+    1600,
+    2400
+   ],
+   "sizes": "(min-width: 1280px) 690px, (min-width: 960px) 54vw, (min-width: 600px) calc(100vw - 64px), calc(100vw - 40px)",
+   "person": "7.11% 30.75%",
+   "marks": {
+    "t-rex": "14.67% 97.78%",
+    "ankylosaurus": "14.63% 61.59%",
+    "stegosaurus": "14.63% 55.65%",
+    "person": "6.03% 8.18%"
+   },
+   "behind": [
+    "t-rex"
+   ]
+  },
+  "skeleton": {
+   "stem": "animals-ankylosaurus-skeleton",
+   "widths": [
+    800,
+    1600
+   ],
+   "sizes": "(min-width: 1280px) 690px, (min-width: 960px) 54vw, (min-width: 600px) calc(100vw - 64px), calc(100vw - 40px)",
+   "person": "93.71% 18.05%",
+   "swatches": {
+    "found": "#cc8869",
+    "other": "#474c5b",
+    "rebuilt": "#cacfdf"
+   }
+  },
+  "trex": {
+   "stem": "animals-t-rex-side",
+   "widths": [
+    800,
+    1600,
+    2400
+   ],
+   "sizes": "(min-width: 1280px) 690px, (min-width: 960px) 54vw, (min-width: 600px) calc(100vw - 64px), calc(100vw - 40px)",
+   "person": "86.42% 63.92%"
+  },
+  "tricera": {
+   "stem": "animals-triceratops-side",
+   "widths": [
+    800,
+    1600,
+    2400
+   ],
+   "sizes": "(min-width: 1280px) 690px, (min-width: 960px) 54vw, (min-width: 600px) calc(100vw - 64px), calc(100vw - 40px)",
+   "person": "92.2% 38.85%"
+  },
+  "dinosaurs": {
+   "stem": "animals-biggest-dinosaurs-row",
+   "widths": [
+    800,
+    1600
+   ],
+   "sizes": "(min-width: 1280px) 690px, (min-width: 960px) 54vw, (min-width: 600px) calc(100vw - 64px), calc(100vw - 40px)",
+   "person": "32.82% 84.25%"
+  }
+ },
+ "meta": {
+  "title": "Ankylosaurus size: about 6 to 8 m, 4.8 t | Museum of Ages",
+  "description": "Ankylosaurus was about 6 to 8 m (20 to 26 ft) long. The smallest known animal, with the only tail club found, came to about 4.8 t by its leg bones.",
+  "og_title": "Ankylosaurus size: about 6 to 8 m, 4.8 t",
+  "og_image_alt": "An Ankylosaurus from the side: a low, wide body under rows of bony plates, a broad head carried low, four short legs and a straight tail ending in a flat club. Beside it a grey person, as tall as the top of its back over the hips."
+ },
+ "labels": {
+  "crumbs": "You are here",
+  "crumb_home": "Museum",
+  "crumb_here": "Ankylosaurus",
+  "toc": "On this page",
+  "tag_made": "Made for this page",
+  "tag_built": "Reconstruction",
+  "person": "1.70 m",
+  "to_table": "The numbers as a table",
+  "no_figure": "no sourced figure",
+  "og_answer": "Ankylosaurus was about 6 to 8 m (20 to 26 ft) long, and the one tail club found is about half a metre wide"
+ },
+ "top": {
+  "h1": "How big was Ankylosaurus?",
+  "answer": "Ankylosaurus was about 6 to 8 m (20 to 26 ft) long, by a study of 2017, and no complete skeleton has been found. The smallest of the known animals came to about 4.8 tonnes, worked out from how thick its leg bones are. Our Ankylosaurus is built at that animal's size: 6.4 m (21 ft) long, almost four people lying head to foot. Its back is highest over the hips, at 1.70 m (5.6 ft), exactly the height of the person beside it.",
+  "answer_more": "Only one Ankylosaurus tail club has been found so far, on that same animal. Its knob is about half a metre (1.6 ft) wide, at the end of a tail whose back half was stiff as a rod.",
+  "scale": {
+   "pic": "side",
+   "tag": "tag_made",
+   "what": "Our Ankylosaurus beside a person 1.70 m tall, to one scale: 6.4 m (21 ft) from beak to club. Its shoulders reach about the person's chin, and its body is nearly as wide as the person is tall.",
+   "alt": "An Ankylosaurus from the side: a low, wide body under rows of bony plates, a broad head carried low, four short legs and a straight tail ending in a flat club. Beside it a grey person, as tall as the top of its back over the hips.",
+   "note": [
+    "Our own reconstruction, built in code from published measurements and rendered in our own engine. Not photographs. ",
+    "The armour of our Ankylosaurus follows the plan of ",
+    {
+     "text": "Arbour and Mallon 2017",
+     "href": "https://doi.org/10.1139/facets-2017-0063"
+    },
+    " (",
+    {
+     "text": "CC BY 4.0",
+     "href": "https://creativecommons.org/licenses/by/4.0/"
+    },
+    "). We measured and changed it."
+   ],
+   "marks": [
+    {
+     "span": "ankylosaurus",
+     "text": "Our Ankylosaurus, 6.4 m from beak to club"
+    },
+    {
+     "span": "hips",
+     "text": "Top of the back over the hips, 1.70 m, ours"
+    },
+    {
+     "span": "person",
+     "text": "The person, 1.70 m"
+    }
+   ],
+   "close": {
+    "pic": "close",
+    "tag": "tag_made",
+    "what": "Closer up: our club's knob, 61 by 51 cm with its horn cover, sits at about the person's chest. Handle and knob together are about 2 m (6.6 ft), longer than the person is tall.",
+    "alt": "The back half of the Ankylosaurus closer up, from the side: rows of oval plates along the back and flanks with skin between them, the stiff tail and its low, flat club at the height of the grey person's chest.",
+    "marks": [
+     {
+      "span": "knob",
+      "text": "Knob of the club, 61 cm long with its horn cover, ours"
+     },
+     {
+      "span": "club",
+      "text": "Handle and knob, about 2 m, ours"
+     },
+     {
+      "span": "person",
+      "text": "The person, 1.70 m"
+     }
+    ]
+   }
+  },
+  "guess": {
+   "h": "A guess",
+   "q": "The biggest Ankylosaurus skull found so far: were its teeth bigger or smaller than in the smallest skull?",
+   "button": "Show the answer",
+   "a": "Smaller: the big skull's largest unworn tooth is about 7.5 mm high. In the smallest skull, the one ours is built on, the biggest is about 9.1 mm.",
+   "button_open": "Hide the answer"
+  },
+  "out": {
+   "text": "The wing for this animal is still being built. The Leonardo da Vinci wing is open today.",
+   "link": "To the Leonardo wing"
+  }
+ },
+ "blocks": [
+  {
+   "type": "numbers",
+   "id": "numbers",
+   "nav": "Ankylosaurus facts: size, height and weight",
+   "h": "Ankylosaurus facts: size, height and weight",
+   "unit": "Metres and feet, tonnes. Each height cell names the point it measures. An empty cell has no sourced figure.",
+   "cols": [
+    "Animal",
+    "Length",
+    "Height, with the point named",
+    "Skull length",
+    "Weight",
+    "How sure"
+   ],
+   "rows": [
+    {
+     "cells": [
+      "The animal with the biggest skull (CMN 8880, Ottawa), known from the skull alone",
+      "up to about 8 m (26 ft) as its study judges it, nearly 10 m (33 ft) calculated but called probably too long by its authors",
+      "not measured",
+      "about 67 cm (2.2 ft)",
+      "about 8 t, a rough scaling its own authors doubt",
+      "weak: one skull, no body"
+     ]
+    },
+    {
+     "cells": [
+      "AMNH 5214, New York, the animal ours is built on",
+      "about 6 to 8 m (20 to 26 ft), most likely near the low end, worked out from relatives' tails",
+      "not measured, and none published for today's lengths",
+      "about 56 cm (1.8 ft) long, 64 cm (2.1 ft) across the horns",
+      "about 4.8 t from its upper arm and thigh bones, the study's spread 3.6 to 6 t",
+      "fair: one study of 2017, never weighed"
+     ]
+    },
+    {
+     "cells": [
+      "Our model",
+      "6.4 m (21 ft) straight, beak to club",
+      "1.70 m (5.6 ft) at the top of the back over the hips, 1.5 m (4.9 ft) over the shoulders, ours",
+      "the skull of AMNH 5214",
+      "",
+      "measured on our files, the height built up from the bones"
+     ]
+    },
+    {
+     "cells": [
+      "T. rex, SUE",
+      "about 12 m (39 ft), the mount",
+      "at the hip about 4 m (13 ft), by the museum",
+      "about 1.4 m (4.6 ft), snout to the back of the cheek",
+      "about 8 to 9 t, by a bone and three models",
+      "as on our T. rex page"
+     ]
+    },
+    {
+     "cells": [
+      "Stegosaurus, Sophie, London",
+      "about 5.6 m (18 ft), the mount",
+      "at the hips not published",
+      "",
+      "about 1.6 t, a model of her own skeleton",
+      "one almost complete animal, as on our biggest dinosaurs page"
+     ]
+    },
+    {
+     "cells": [
+      "The person",
+      "",
+      "1.70 m (5 ft 7 in) tall, head to foot",
+      "",
+      "",
+      "our scale figure"
+     ]
+    }
+   ]
+  },
+  {
+   "type": "text",
+   "id": "tail-club",
+   "nav": "Ankylosaurus tail club",
+   "h": "Ankylosaurus tail club",
+   "paras": [
+    "The club's knob is 60 cm (2 ft) long, 49 cm wide and only 19 cm high, measured on the fossil. It is a low, flat, rounded disc of bony plates with no spikes, and oddly no wider than the clubs of smaller relatives. The handle was the back half of the tail, its vertebrae locked together and bound by bony tendons into a stiff rod.",
+    "Only the front of the tail could bend, mostly sideways: a study of relatives' tails found a swing of about 100 degrees. Could the club break bone? In that study's model only knobs over 50 cm wide hit hard enough, and this one sits just under that line.",
+    "The best clue to its use is a study of an older relative, Zuul, with healed, broken plates on its flanks just where another club would land. So clubs seem to have served mostly in fights within their own kind. The same study has little doubt they could also fend off a predator, but no Ankylosaurus fossil shows either."
+   ]
+  },
+  {
+   "type": "text",
+   "id": "armour",
+   "nav": "Ankylosaurus armour",
+   "h": "Ankylosaurus armour",
+   "paras": [
+    "Ankylosaurus wore bony plates set in its skin, with skin between them, not a solid shell, and two bony half collars over the neck. Loose plates of its own are known, yet no Ankylosaurus has been found with a plate still in place.",
+    "So the place of each plate is a careful guess from relatives, and ours follows a plan of 2017. The big shoulder spikes of old pictures belong to another armoured family, and in its relatives the belly had no big plates. No colour is known, so ours is a choice."
+   ]
+  },
+  {
+   "type": "text",
+   "id": "skeleton",
+   "nav": "Ankylosaurus fossils and skeleton: what was found",
+   "h": "Ankylosaurus fossils and skeleton: what was found",
+   "paras": [
+    "Ankylosaurus is known from two partial skeletons and a single big skull, none complete. The first, the skeleton its name rests on, was found in 1906 in Montana by a team under Barnum Brown. His team found the second in 1910 on the Red Deer River in Alberta: AMNH 5214, the one with the club. Both are kept at the American Museum of Natural History in New York.",
+    "The biggest skull came to light in 1947, also in Alberta, and is kept at the Canadian Museum of Nature in Ottawa. The rest is loose plates, a piece of a club handle and teeth. Ankylosaurus is rare in the rocks: in one count of big dinosaurs in Montana's Hell Creek Formation, only 2 of about 180 skeletons were Ankylosaurus.",
+    "Our skeleton picture shows which bones were found with that animal."
+   ],
+   "scale": {
+    "pic": "skeleton",
+    "tag": "tag_built",
+    "what": "Our Ankylosaurus as a skeleton, to the same scale, each bone coloured by where it comes from.",
+    "alt": "Our Ankylosaurus as a skeleton from the side, beside the grey person, its bones in three colours by where they come from. In the colour of the bones found with this animal: the skull, jaws, both upper arm bones, a thigh bone, a calf bone, six ribs, and the club's knob with the back of its handle.",
+    "key": [
+     {
+      "swatch": "found",
+      "text": "Found with this animal (AMNH 5214)"
+     },
+     {
+      "swatch": "other",
+      "text": "From other Ankylosaurus finds, scaled to its size"
+     },
+     {
+      "swatch": "rebuilt",
+      "text": "From relatives or rebuilt"
+     },
+     "Mirror copies of the other side are the right thigh bone, the left calf bone and one foot bone. The plates have Ankylosaurus's own shapes, in places guessed from relatives."
+    ]
+   }
+  },
+  {
+   "type": "text",
+   "id": "head-teeth",
+   "nav": "Ankylosaurus head and teeth",
+   "h": "Ankylosaurus head and teeth",
+   "subs": [
+    {
+     "h": "The head and the nose",
+     "paras": [
+      "The head was low and triangular, wider than long, with four short horns at its back corners. Its nostrils sat on the sides of the snout and faced down, hidden from the front, unlike in its relatives. Inside, the air probably took a looping path, a heat exchanger in models of its relatives, but what this odd nose was for is not known."
+     ]
+    },
+    {
+     "h": "The beak, the teeth and the food",
+     "paras": [
+      "In front was a horny beak, then rows of very small, leaf-shaped teeth, 34 to 36 in each upper jaw. In the skull ours is built on, the biggest is about 9 mm high, tiny for an animal of nearly 5 tonnes. It probably ate low plants, perhaps ferns and shrubs, but its exact food is not known."
+     ]
+    }
+   ]
+  },
+  {
+   "type": "text",
+   "id": "t-rex",
+   "nav": "Ankylosaurus vs T. rex",
+   "h": "Ankylosaurus vs T. rex",
+   "paras": [
+    "Ankylosaurus and T. rex lived at the same time in the same land, and their bones lie in the same rocks. Yet no known fossil shows the two meeting: no T. rex bite on an Ankylosaurus bone, no club wound on a T. rex. Who would win has no answer in the rocks.",
+    "What can be said: a large T. rex was about twice as heavy, about 8 to 9 tonnes against about 4.8. Ankylosaurus wore plates and could swing a club, though its relatives seem to have used theirs mostly on each other.",
+    "In our picture our T. rex is 1.8 times as long as our Ankylosaurus, whose highest point stays below our T. rex's knee."
+   ],
+   "scale": {
+    "pic": "beside",
+    "tag": "tag_made",
+    "what": "Our T. rex, Ankylosaurus and Stegosaurus to one scale with the person, for size only. Stegosaurus lived about 80 million years earlier, and no known fossil shows Ankylosaurus and T. rex meeting.",
+    "alt": "Three dinosaurs from the side, all facing the same way: a T. rex on two legs, much longer and higher, the low, armoured Ankylosaurus, and a Stegosaurus with tall plates along its back, beside the grey person.",
+    "marks": [
+     {
+      "span": "t-rex",
+      "text": "Our T. rex, after SUE, about 11.4 m"
+     },
+     {
+      "span": "ankylosaurus",
+      "text": "Our Ankylosaurus, 6.4 m"
+     },
+     {
+      "span": "stegosaurus",
+      "text": "Our Stegosaurus, after Sophie, about 5.6 m"
+     },
+     {
+      "span": "person",
+      "text": "The person, 1.70 m"
+     }
+    ]
+   }
+  },
+  {
+   "type": "text",
+   "id": "stegosaurus",
+   "nav": "Stegosaurus and Ankylosaurus",
+   "h": "Stegosaurus and Ankylosaurus",
+   "paras": [
+    "They never met: about 80 million years lie between them. Stegosaurus lived in the Late Jurassic, about 150 million years ago, so Ankylosaurus lived closer in time to us than to Stegosaurus. People pair them as armoured plant eaters, related within one larger family tree. Our Ankylosaurus is about 0.8 m longer than our Stegosaurus, whose top plate stands about 0.8 m higher."
+   ]
+  },
+  {
+   "type": "text",
+   "id": "when-where",
+   "nav": "When and where Ankylosaurus lived",
+   "h": "When and where Ankylosaurus lived",
+   "paras": [
+    "Ankylosaurus lived in western North America, in what is now Alberta, Saskatchewan, Montana and Wyoming, about 68 to 66 million years ago. It lived until near the end of the Cretaceous, which came about 66 million years ago. The collapse that ended it is thought to have been set off by an impact in the Yucatán."
+   ]
+  },
+  {
+   "type": "notes",
+   "id": "numbers-read",
+   "nav": "Numbers you may have read",
+   "h": "Numbers you may have read",
+   "intro": "For each number: where it came from, and what it means.",
+   "rows": [
+    {
+     "term": "8 m long",
+     "text": "The upper end for the biggest animals, judged from the biggest skull. The smaller animal ours is built on was most likely near 6 m."
+    },
+    {
+     "term": "10 m long",
+     "text": "Calculated from the biggest skull by the same method, called probably too long by its own authors."
+    },
+    {
+     "term": "8 tonnes",
+     "text": "A rough scaling for the biggest skull, which has no body, and its own authors ask for caution."
+    },
+    {
+     "term": "A bone-breaking club that killed T. rex",
+     "text": "No known T. rex bone carries a club wound, and the one Ankylosaurus knob known sits just under the size that could break bone in a model of relatives' clubs."
+    },
+    {
+     "term": "Shoulder spikes",
+     "text": "Old pictures borrowed them from another family of armoured dinosaurs."
+    },
+    {
+     "term": "A spiked ball at the tail's end",
+     "text": "The only knob found is a low, flat disc, 19 cm high, with no spikes."
+    },
+    {
+     "term": "The biggest armoured dinosaur",
+     "text": "The 2017 study calls Ankylosaurus the biggest known of its club-tailed family, and possibly the biggest ankylosaur of all."
+    },
+    {
+     "term": "A living tank",
+     "text": "An image, not a finding. Ankylosaurus's plates sat apart in flexible skin, and in its relatives the belly had no big plates."
+    }
+   ]
+  },
+  {
+   "type": "faq",
+   "id": "questions",
+   "nav": "More questions",
+   "h": "More questions",
+   "items": [
+    {
+     "q": "How heavy was Ankylosaurus?",
+     "a": "About 4.8 tonnes for the animal ours is built on, worked out from its leg bones. The study's own spread runs from 3.6 to 6 tonnes."
+    },
+    {
+     "q": "What does the name Ankylosaurus mean?",
+     "a": "Fused lizard, says the Natural History Museum in London, after bones that grew together. Barnum Brown, who also led the first find of T. rex, gave the full name, Ankylosaurus magniventris, in 1908."
+    },
+    {
+     "q": "How tall was Ankylosaurus?",
+     "a": "No height measured on a real Ankylosaurus has been published. Ours, built up from its bones, is 1.70 m (5.6 ft) at the top of the back over the hips, its highest point."
+    }
+   ]
+  },
+  {
+   "type": "text",
+   "id": "museum",
+   "nav": "In the museum",
+   "h": "In the museum",
+   "paras": [
+    "Museum of Ages is a digital museum, made by a nonprofit. Free entry, no account. In the animal wing this animal will stand among the others, from the giants of long ago to the last of their kind. The Leonardo da Vinci wing shows what a finished wing looks like."
+   ],
+   "links": [
+    {
+     "out": true,
+     "text": "To the Leonardo wing"
+    }
+   ]
+  },
+  {
+   "type": "pages",
+   "id": "next",
+   "items": [
+    {
+     "page": "t-rex",
+     "pic": "trex",
+     "alt": "A T. rex from the side on two legs, mouth open and head raised, beside a grey person who stands far below its hips.",
+     "line": "A large adult T. rex was about 12 m long, about 4 m at the hips and roughly 8 to 9 tonnes. Our T. rex is built to SUE's measurements and stands beside a person to one scale, with a list of what was found of SUE."
+    },
+    {
+     "page": "triceratops",
+     "pic": "tricera",
+     "alt": "A Triceratops from the side: a wide frill behind the head, two long horns over the eyes, a short one on the nose, four legs. Beside it a grey person who reaches about two thirds of the way up its back.",
+     "line": "A big adult Triceratops was about 7 to 8 m long, with a skull about 2 m. Our Triceratops is built after the Washington skeleton, a mount of about ten animals, and stands beside a person to one scale, with Torosaurus and what the bones say about T. rex."
+    },
+    {
+     "page": "biggest-dinosaurs",
+     "pic": "dinosaurs",
+     "alt": "Seven dinosaurs in a row from the side, two with long necks towering over the rest, and a grey person who looks tiny beside them.",
+     "line": "Seven of ours beside a person, to one scale: the heaviest most likely a titanosaur from Patagonia, the tallest probably Sauroposeidon, and why the longest is still open."
+    }
+   ]
+  },
+  {
+   "type": "sources",
+   "id": "sources",
+   "nav": "Sources",
+   "h": "Sources",
+   "intro": "The numbers come from these studies and from the museums that keep the bones. The museum is independent of all of them.",
+   "read": [
+    {
+     "text": "Arbour and Mallon, 2017, FACETS, on its size, weight, club, skull and armour.",
+     "href": "https://doi.org/10.1139/facets-2017-0063"
+    },
+    {
+     "text": "Arbour, 2009, PLOS ONE, on the swing and force of tail clubs.",
+     "href": "https://doi.org/10.1371/journal.pone.0006738"
+    },
+    {
+     "text": "Arbour, Zanno and Evans, 2022, Biology Letters, on the healed plates of Zuul.",
+     "href": "https://doi.org/10.1098/rsbl.2022.0404"
+    },
+    {
+     "text": "Bourke, Porter and Witmer, 2018, PLOS ONE, the study's summary, on the looping noses of relatives.",
+     "href": "https://doi.org/10.1371/journal.pone.0207381"
+    },
+    {
+     "text": "Horner, Goodwin and Myhrvold, 2011, PLOS ONE, the count of Hell Creek dinosaurs.",
+     "href": "https://doi.org/10.1371/journal.pone.0016574"
+    },
+    {
+     "text": "Barnosky and others, 2011, Nature, on the end of the Cretaceous.",
+     "href": "https://doi.org/10.1038/nature09678"
+    },
+    {
+     "text": "American Museum of Natural History, New York: Ankylosaurus AMNH 5214, the first skeleton, AMNH 5895, and its expedition reports of 1910 and 1911."
+    },
+    {
+     "text": "Canadian Museum of Nature, Ottawa: the biggest skull, CMN 8880."
+    },
+    {
+     "text": "Natural History Museum, London: its Ankylosaurus and Stegosaurus pages.",
+     "href": "https://www.nhm.ac.uk/discover/dino-directory/ankylosaurus.html"
+    },
+    {
+     "text": "The Canadian Encyclopedia: its article on Ankylosaurus, 2025.",
+     "href": "https://thecanadianencyclopedia.ca/en/article/ankylosaurus"
+    },
+    {
+     "text": "T. rex and Stegosaurus: the numbers and sources of our T. rex and biggest dinosaurs pages.",
+     "href": "https://museumofages.org/animals/t-rex/"
+    }
+   ],
+   "contact": "If a number or a museum is wrong, tell us and we will correct it.",
+   "contact_link": "To the legal notice",
+   "what_link": "What this museum is"
+  },
+  {
+   "type": "text",
+   "id": "pictures",
+   "nav": "Use our pictures",
+   "h": "Use our pictures",
+   "paras": [
+    [
+     "The four pictures of the Ankylosaurus on this page, the side view, the club, the skeleton and the row with our T. rex and our Stegosaurus, are our own work under ",
+     {
+      "text": "CC BY-SA 4.0",
+      "href": "https://creativecommons.org/licenses/by-sa/4.0/"
+     },
+     ", credit: Museum of Ages, Ankylosaurus armour after Arbour and Mallon 2017 (CC BY 4.0). They show a reconstruction, built in code and rendered in our own engine, not photographs. The pictures of the other pages listed here give their credits on those pages."
+    ]
+   ]
+  }
+ ]
+}

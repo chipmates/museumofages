@@ -242,6 +242,14 @@
     { "text": "Zoological Journal of the Linnean Society", "lang": "en" },
     { "text": "Communications Biology", "lang": "en" },
     { "text": "Dueling Dinosaurs", "lang": "en" },
-    { "text": "Triceratops outline after Dempsey 2025", "lang": "en" }
+    { "text": "Triceratops outline after Dempsey 2025", "lang": "en" },
+    { "text": "Zuul", "taxon": true },
+    { "text": "AMNH 5895", "whole": true },
+    { "text": "CMN 8880", "whole": true },
+    { "text": "Barnum Brown", "whole": true },
+    { "text": "Red Deer River", "lang": "en" },
+    { "text": "Canadian Museum of Nature", "lang": "en" },
+    { "text": "The Canadian Encyclopedia", "lang": "en" },
+    { "text": "Ankylosaurus armour after Arbour and Mallon 2017", "lang": "en" }
   ]
 }

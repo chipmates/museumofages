@@ -46,7 +46,11 @@
     { "name": "animals-triceratops-side", "file": "triceratops-side.png", "widths": [800, 1600, 2400] },
     { "name": "animals-triceratops-close", "file": "triceratops-close.png", "widths": [800, 1600] },
     { "name": "animals-triceratops-beside-t-rex", "file": "triceratops-vs.png", "widths": [800, 1600, 2400] },
-    { "name": "animals-triceratops-skeleton", "file": "triceratops-skeleton.png", "widths": [800, 1600] }
+    { "name": "animals-triceratops-skeleton", "file": "triceratops-skeleton.png", "widths": [800, 1600] },
+    { "name": "animals-ankylosaurus-side", "file": "ankylosaurus-side.png", "widths": [800, 1600, 2400] },
+    { "name": "animals-ankylosaurus-close", "file": "ankylosaurus-close.png", "widths": [800, 1600] },
+    { "name": "animals-ankylosaurus-beside", "file": "ankylosaurus-beside.png", "widths": [800, 1600, 2400] },
+    { "name": "animals-ankylosaurus-skeleton", "file": "ankylosaurus-skeleton.png", "widths": [800, 1600] }
   ],
   "share": [
     { "name": "vinci-inventions-og-1200x630", "file": "stop-works.webp", "crop": "1920x1008+0+60" },

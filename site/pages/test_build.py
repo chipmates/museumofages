@@ -350,7 +350,7 @@ class Case(unittest.TestCase):
     }
 
     def test_the_page_of_several_animals_refuses_each_never_say_phrase(self):
-        page = self.scale_page("marks")
+        page = self.topic_page("biggest_dinosaurs")
         topic = next(t for w in self.wings().values() if isinstance(w, dict) for t in w.get("topics", [])
                      if t.get("count") == self.data("en", page)["page"]["topic"])
         # every rule of the topic is met by a phrase of the list, so a rule added without its phrase is seen
@@ -372,7 +372,7 @@ class Case(unittest.TestCase):
     def test_a_famous_number_stands_where_the_page_says_whose_it_is(self):
         """The page names the mount's 39.7 m, the old 100 tonnes and a grown animal's 14 m on purpose: each stands
         with the words that say whose number it is. Without them, the same field stops the build."""
-        page = self.scale_page("marks")
+        page = self.topic_page("biggest_dinosaurs")
         cases = [
             (r"(?i)mounted|mount|sculpture|\bcast\b|montierte[ns]?|montage|skulptur|abguss", "thing",
              "39.7 m and 40 m are the mount's"),
@@ -471,8 +471,8 @@ class Case(unittest.TestCase):
             # a list of pages joins its names wherever it stands: the hub and both neighbours
             items = [m.group(1) for (pid, code), (other, text) in by_id.items() if code == lang
                      for m in re.finditer(r'<h2 class="sc-item__h"><a href="[^"]*t-rex/">(.*?)</a>', text)]
-            # the hub and the six pages that name it
-            self.assertEqual(len(items), 7)
+            # the hub and the seven pages that name it
+            self.assertEqual(len(items), 8)
             for item in items:
                 self.assertIn('<span class="nh">T.\u00a0rex</span>', item)
         # a page without the flag keeps the nowrap span in its own sentences
@@ -961,6 +961,164 @@ class Case(unittest.TestCase):
                     self.fails(re.escape(rule))
                     self.save(lang, original, page)
 
+    # Each claim the Ankylosaurus page must never make, by its topic's rules: the canon's NEVER SAY and the facts sheet's.
+    NEVER_ANKY = {
+        "en": ["Ankylosaurus was 8 m long", "It reached 8 metres", "Our Ankylosaurus is 8 m long",
+               "AMNH 5214 was 8 m long", "Ours is about 10 m", "Ankylosaurus was 10 m long",
+               "It weighed 8 tonnes", "It came to 8 t", "Ankylosaurus was 9 m long", "It reached 9.99 m",
+               "Its club was 1.2 m wide", "a 1.2 m club", "Ankylosaurus was 6.4 m long",
+               "Ankylosaurus stood 1.70 m at the hips", "It was 1.7 m tall", "Its shoulders stood 1.5 m high",
+               "Our Ankylosaurus weighs 3.5 tonnes", "Our model comes to 3.3 to 3.6 t",
+               "It came to 3.59 tonnes", "Our Ankylosaurus, about 4 t", "Its volume is 3.6 m³",
+               "Ankylosaurus weighed 5 tonnes", "It was weighed", "Our Ankylosaurus is the largest",
+               "Ours was the biggest of the three", "A complete skeleton of Ankylosaurus",
+               "Three partial skeletons are known", "The armour was found in place",
+               "It was found with its armour in place", "AMNH 5214 was counted",
+               "Our Ankylosaurus was one of the two", "It had shoulder spikes", "A spiked ball on its tail",
+               "Its armour was a solid shell", "Ankylosaurus was a living tank", "Its club could break bones",
+               "A bone-breaking club", "It broke bones with its club", "Its tail dragged on the ground",
+               "Its nostrils sat at the front", "It had grinding teeth", "It chewed like a cow",
+               "It ate 60 kg a day", "Its hands had four fingers", "Five fingers on each hand",
+               "It lived in herds", "It lived alone", "Its colour was known", "Its colour was reddish brown",
+               "The males had bigger clubs", "A female Ankylosaurus", "The largest armoured dinosaur",
+               "The biggest ankylosaur of all", "The largest of all ankylosaurs", "Ankylosaurus fought T. rex",
+               "T. rex fought Ankylosaurus", "The battle between T. rex and Ankylosaurus",
+               "The club was made to fight T. rex", "It killed a T. rex with its club",
+               "Its club killed T. rex", "It swung its club at rivals, not at T. rex",
+               "Clubs were swung only at rivals", "The club was only for defence", "It lived beside SUE",
+               "Our Ankylosaurus lived beside our Triceratops", "Ankylosaurus lived alongside Stegosaurus",
+               "Stegosaurus and Ankylosaurus lived together", "Stegosaurus and Ankylosaurus met",
+               "It was killed by the asteroid", "On the last day", "Its last fossils are 66 million years old",
+               "It lived 65 million years ago", "It died out 66 million years ago",
+               "It lived 68 million years ago", "Stegosaurus lived 150 million years ago",
+               "80 million years lie between them", "The big skull's teeth were 7.5 mm high",
+               "The biggest tooth is 9.1 mm", "The bigger skull had smaller teeth",
+               "The Jurassic World Ankylosaurus", "In the film", "The Schleich toy"],
+        "de": ["Der Ankylosaurus war 8 m lang", "Er erreichte 8 Meter", "Unser Ankylosaurus ist 8 m lang",
+               "AMNH 5214 war 8 m lang", "Unser Modell ist etwa 10 m", "Der Ankylosaurus war 10 m lang",
+               "Er wog 8 t", "Er kam auf 8 Tonnen", "Der Ankylosaurus war 9 m lang", "Er erreichte 9,99 m",
+               "Seine Keule war 1,2 m breit", "Der Ankylosaurus war 6,4 m lang",
+               "Der Ankylosaurus war an der Hüfte 1,70 m hoch", "Er war 1,7 m hoch",
+               "Die Schultern standen 1,5 m hoch", "Unser Ankylosaurus wiegt 3,5 t",
+               "Unser Modell käme auf 3,3 bis 3,6 t", "Er kam auf 3,59 Tonnen", "Unser Ankylosaurus, etwa 4 t",
+               "Sein Volumen ist 3,6 m³", "Der Ankylosaurus wurde gewogen", "Er wog 5 Tonnen",
+               "Unser Ankylosaurus ist der größte", "Unser Modell ist das größte der drei",
+               "Ein vollständiges Skelett des Ankylosaurus", "Drei Teilskelette sind bekannt",
+               "Der Panzer wurde an seiner Stelle gefunden", "Die Platten wurden an ihrer Stelle gefunden",
+               "AMNH 5214 wurde gezählt", "Unser Ankylosaurus war einer der beiden",
+               "Er hatte Schulterstacheln", "Eine Stachelkugel am Schwanz",
+               "Sein Panzer war eine feste Schale", "Der Ankylosaurus war ein lebender Panzer",
+               "Die Keule konnte Knochen brechen", "Eine knochenbrechende Keule",
+               "Seine Keule zertrümmerte Knochen", "Sein Schwanz schleifte über den Boden",
+               "Die Nasenlöcher saßen vorn", "Er hatte Mahlzähne", "Er kaute wie eine Kuh",
+               "Er fraß 60 kg am Tag", "Seine Hände hatten vier Finger", "Fünf Finger an jeder Hand",
+               "Er lebte in Herden", "Er lebte allein", "Seine Farbe war bekannt", "Seine Farbe war rotbraun",
+               "Die Männchen hatten größere Keulen", "Ein weiblicher Ankylosaurus",
+               "Der größte gepanzerte Dinosaurier", "Der größte Ankylosaurier überhaupt",
+               "Der Ankylosaurus kämpfte gegen den T. rex", "Der T. rex kämpfte gegen ihn",
+               "Der Kampf zwischen T. rex und Ankylosaurus", "Eine Keule zum Kampf gegen den T. rex",
+               "Er erschlug einen T. rex mit der Keule", "Seine Keule tötete den T. rex",
+               "Er schlug nicht gegen den T. rex", "Die Keule diente nur zur Abwehr", "Er lebte neben SUE",
+               "Unser Ankylosaurus lebte neben unserem Triceratops",
+               "Der Ankylosaurus lebte neben dem Stegosaurus", "Stegosaurus und Ankylosaurus lebten zusammen",
+               "Er wurde vom Asteroiden getötet", "Am letzten Tag",
+               "Seine letzten Fossilien sind 66 Millionen Jahre alt", "Er lebte vor 65 Millionen Jahren",
+               "Er starb vor 66 Millionen Jahren aus", "Er lebte vor 68 Millionen Jahren",
+               "Zwischen ihnen liegen 80 Millionen Jahre", "Die Zähne des großen Schädels waren 7,5 mm hoch",
+               "Der größte Zahn misst 9,1 mm", "Der größere Schädel hatte kleinere Zähne",
+               "Der Ankylosaurus aus Jurassic World", "Im Film", "Das Schleich-Spielzeug", "Die Panzerechse"],
+    }
+
+    def test_the_ankylosaurus_page_refuses_each_never_say_phrase(self):
+        page = self.topic_page("ankylosaurus")
+        topic = next(t for w in self.wings().values() if isinstance(w, dict) for t in w.get("topics", []) if t.get("count") == "ankylosaurus")
+        # every rule of the topic is met by a phrase of the list in a language it holds for, so a rule added without
+        # its phrase is seen
+        for pattern, _, *only in topic["never_say"]:
+            self.assertTrue(any(re.search(pattern, x.lower()) for lang, xs in self.NEVER_ANKY.items() if not only or lang in only[0]
+                                for x in xs), pattern)
+        for lang, phrases in self.NEVER_ANKY.items():
+            original = self.data(lang, page)
+            for phrase in phrases:
+                with self.subTest(lang=lang, phrase=phrase):
+                    # the line under the answer carries none of the words a rule lets a number stand with
+                    shutil.rmtree(self.dir / "out", ignore_errors=True)
+                    data = json.loads(json.dumps(original))
+                    data["top"]["out"]["text"] += f" {phrase}."
+                    self.save(lang, data, page)
+                    self.fails(r"top\.out\.text matches")
+                    self.save(lang, original, page)
+
+    def test_an_ankylosaurus_number_stands_only_with_the_words_that_say_whose_it_is(self):
+        """The page names the biggest animals' 8 m, the 10 m and 8 tonnes its authors doubt, our model's 6.4, 1.70 and
+        1.5 m, the study's weight, the shoulder spikes, the living tank, the bone-breaking club, the spiked ball, the
+        biggest armoured dinosaur, the teeth of 9.1 mm and 66 million years on purpose: without the words that say whose
+        the number is or what the claim was, the same fields stop the build."""
+        page = self.topic_page("ankylosaurus")
+        cases = [
+            ({"en": (r"up to about 8\sm\s\(26\sft\) as its study", "about 8 m (26 ft) as its study"),
+              "de": (r"bis etwa 8\sm nach dem Urteil", "etwa 8 m nach dem Urteil")},
+             "8 m only as the end of a range, for the biggest animals, or a number you may have read"),
+            ({"en": (r" but called probably too long by its authors", ""),
+              "de": (r" halten die Autoren selbst für wohl zu lang", "")},
+             "10 m only with its own authors' doubt: probably too long"),
+            ({"en": (r"about 8\st, a rough scaling its own authors doubt", "about 8 t"),
+              "de": (r"etwa 8\st, eine grobe Hochrechnung, an der die Autoren selbst zweifeln", "etwa 8 t")},
+             "8 tonnes only as the biggest skull's rough scaling, with its authors' doubt"),
+            ({"en": (r"6\.4\sm\s\(21\sft\) straight, beak to club", "6.4 m (21 ft), beak to club"),
+              "de": (r"6,4\sm gerade, vom Schnabel", "6,4 m, vom Schnabel")},
+             "6.4 m only as ours, our model's"),
+            ({"en": (r"Top of the back over the hips, 1\.70\sm, ours", "Top of the back over the hips, 1.70 m"),
+              "de": (r"Rücken über der Hüfte, 1,70\sm, unser Modell", "Rücken über der Hüfte, 1,70 m")},
+             "1.7 m only as ours, at the hips, or the person's height"),
+            ({"en": (r"over the shoulders, ours", "over the shoulders"),
+              "de": (r"über den Schultern, unser Modell", "über den Schultern")},
+             "1.5 m only as ours, over the shoulders"),
+            ({"en": (r"About 4\.8 tonnes for the animal ours is built on", "Ours, about 4.8 tonnes"),
+              "de": (r"Das Tier, nach dem unser Modell gebaut ist, kommt nach seinen Beinknochen auf etwa 4,8\st",
+                     "Unser Modell kommt auf etwa 4,8 t")},
+             "never a weight beside our animal, and never its volume: the weight is the study's, about 4.8 tonnes"),
+            ({"en": (r"one study of 2017, never weighed", "one study of 2017, weighed"),
+              "de": (r"eine Studie von 2017, nie gewogen", "eine Studie von 2017, gewogen")},
+             "never weighed: the weight is worked out from its leg bones"),
+            ({"en": (r"Old pictures borrowed them from another family of armoured dinosaurs\.", "Ankylosaurus wore them over its shoulders."),
+              "de": (r"Alte Bilder haben sie von einer anderen Familie gepanzerter Dinosaurier übernommen\.",
+                     "Der Ankylosaurus trug sie über den Schultern.")},
+             "shoulder spikes only as what old pictures borrowed from another family"),
+            ({"en": (r"An image, not a finding\. ", ""), "de": (r"Ein Bild, kein Befund\. ", "")},
+             "a living tank only as an image, explained"),
+            ({"en": (r"sits just under the size that could", "is the size that could"),
+              "de": (r"liegt knapp unter der Größe, die", "hat die Größe, die")},
+             "never that its club could break bones: its knob sits just under the size that could in a model of relatives"),
+            ({"en": (r"No known T\.\srex bone carries a club wound, and the one", "The one"),
+              "de": (r"An keinem bekannten Knochen eines T\.\srex sitzt eine Keulenwunde, und die einzige", "Die einzige")},
+             "never that it killed T. rex: no known T. rex bone carries a club wound"),
+            ({"en": (r"19\scm high, with no spikes\.", "19 cm high."), "de": (r"19\scm hoch, ohne Stacheln\.", "19 cm hoch.")},
+             "never a spiked ball on the tail: the knob is a low, flat disc"),
+            ({"en": (r"The 2017 study calls Ankylosaurus the biggest known of its club-tailed family, and possibly the biggest "
+                      r"ankylosaur of all\.", "Ankylosaurus was the biggest."),
+              "de": (r"Die Studie von 2017 nennt den Ankylosaurus den größten bekannten seiner Familie mit Schwanzkeule und "
+                      r"vielleicht den größten Ankylosaurier überhaupt\.", "Das war der Ankylosaurus.")},
+             "never the largest armoured dinosaur as fact: the biggest known of its club-tailed family, possibly of all"),
+            ({"en": (r"the biggest is about 9\smm high", "the biggest is about 9.1 mm high"),
+              "de": (r"ist der größte etwa 9\smm hoch", "ist der größte etwa 9,1 mm hoch")},
+             "the teeth of 7.5 and 9.1 mm stand only in the guess's answer"),
+            ({"en": (r"which came about 66 million", "which came 66 million"),
+              "de": (r"die vor etwa 66 Millionen Jahren endete", "die vor 66 Millionen Jahren endete")},
+             "never 65 million years, and a number of years only with about"),
+        ]
+        out, _ = self.build()
+        shutil.rmtree(out)
+        for subs, rule in cases:
+            for lang, (condition, instead) in subs.items():
+                with self.subTest(lang=lang, rule=rule):
+                    original = self.data(lang, page)
+                    text = json.dumps(original, ensure_ascii=False)
+                    self.assertRegex(text, condition)
+                    self.save(lang, json.loads(re.sub(condition, instead, text)), page)
+                    self.fails(re.escape(rule))
+                    self.save(lang, original, page)
+
     def test_a_share_picture_may_set_its_words_beside_the_picture(self):
         """A page whose picture would leave much of the share card empty under its words sets them in a column at the
         left and the picture at the right (page.og_image.layout beside): the picture whole, the words wrapped in their
@@ -1019,6 +1177,9 @@ class Case(unittest.TestCase):
                 self.assertNotIn(".sc-swatch", text)
                 continue
             seen += 1
+            # a name in a key's line is held whole (join_names): its no-break span or space, a long word's one break
+            text = re.sub(r'<span class="nh">([^<]*)</span>', r"\1", text).replace("&shy;", "").replace("\u00ad", "")
+            text = text.replace("&nbsp;", " ").replace("\u00a0", " ")
             for fig in figs:
                 colours = data["pics"][fig["pic"]]["swatches"]
                 keys = [k for k in fig["key"] if isinstance(k, dict)]
@@ -1027,8 +1188,8 @@ class Case(unittest.TestCase):
                     self.assertIn(".sc-swatch--%s-%s{background:%s}" % (fig["pic"], k["swatch"], colours[k["swatch"]]), text)
                     self.assertRegex(text, r'<li class="sc-keys__i"><span class="sc-swatch sc-swatch--%s-%s" aria-hidden="true"></span><span>%s'
                                      % (fig["pic"], k["swatch"], re.escape(html.escape(k["text"].split(":")[0], quote=False))))
-        # the Spinosaurus and the Brachiosaurus pages, in both languages
-        self.assertEqual(seen, 4)
+        # the Spinosaurus, the Brachiosaurus and the Ankylosaurus pages, in both languages
+        self.assertEqual(seen, 6)
         shutil.rmtree(out)
         for lang in ("en", "de"):
             data = self.data(lang, page)
@@ -1090,8 +1251,8 @@ class Case(unittest.TestCase):
                      if plain(re.search(r"<h2[^>]*>(.*?)</h2>", x, flags=re.S).group(1)) == topic["name"][lang]]
             self.assertEqual(len(found), 1, path)
             self.assertEqual(plain(found[0]), item.get("line") or topic["line"][lang])
-        # the hub and the six neighbours, in both languages
-        self.assertEqual(seen, 14)
+        # the hub and the seven neighbours, in both languages
+        self.assertEqual(seen, 16)
 
     def test_a_picture_too_tall_for_the_share_card_stands_whole_above_the_address(self):
         spec = importlib.util.spec_from_file_location("chart_share", self.dir / "chart.py")
@@ -1271,7 +1432,7 @@ class Case(unittest.TestCase):
                          [(360, 320), (390, 350), (960, 518.4), (1280, 690)])
 
     def test_a_picture_in_the_body_follows_the_paragraph_it_shows(self):
-        page = self.scale_page("marks")
+        page = self.topic_page("biggest_dinosaurs")
         out, written = self.build()
         for path in written:
             data, lang = self.page_of(path)

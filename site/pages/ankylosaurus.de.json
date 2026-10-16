@@ -1,0 +1,585 @@
+{
+ "_note": "THE WORDS of the Ankylosaurus page. Poured word for word from the writer's WORDS file; the title, the description and the heading are its first options. The person's height stands over the person in each picture (labels.person), and the labels at the pictures name the person too. pics.<name>.marks: each label's place as the start and end of what it names, shares of the picture's width, measured on the frame; pics.<name>.person: the person's centre and the top of its head. pics.side.tops: the top of the back over the hips (1.70 m) as a share of the picture's height from its top; its bracket over the picture runs from the back's top over the hips to the person, so its bar is one level line at the person's height. pics.close.marks: the knob (the model's knob landmarks) and handle and knob (the knob's end to the first handle bone). pics.skeleton.swatches: each colour of the found-bones key as the picture prints it (the median of the bones of that colour, measured on the final picture). pics.beside: our T. rex's, our Ankylosaurus's and our Stegosaurus's rows at one scale, the tails' ends on one left line. Empty cells of the table are the writer's: no sourced figure exists.",
+ "page": {
+  "id": "animals-ankylosaurus",
+  "wing": "animals",
+  "topic": "ankylosaurus",
+  "published": null,
+  "join_names": true,
+  "og_image": {
+   "file": "animals-ankylosaurus-og-{lang}-1200x630.png",
+   "width": 1200,
+   "height": 630,
+   "layout": "beside"
+  },
+  "breaks": [
+   "Ankylo|saurus",
+   "Stego|saurus"
+  ]
+ },
+ "pics": {
+  "side": {
+   "stem": "animals-ankylosaurus-side",
+   "widths": [
+    800,
+    1600,
+    2400
+   ],
+   "sizes": "(min-width: 1280px) 588px, (min-width: 960px) calc(100vw - 80px), (min-width: 600px) calc(100vw - 64px), calc(100vw - 40px)",
+   "person": "93.67% 17.91%",
+   "marks": {
+    "ankylosaurus": "3% 87.5%",
+    "hips": "47.37% 93.67%",
+    "person": "91.74% 95.61%"
+   },
+   "behind": [
+    "hips"
+   ],
+   "tops": {
+    "hips": "18.18%"
+   }
+  },
+  "close": {
+   "stem": "animals-ankylosaurus-close",
+   "widths": [
+    800,
+    1600
+   ],
+   "sizes": "(min-width: 1280px) 690px, (min-width: 960px) 54vw, (min-width: 600px) calc(100vw - 64px), calc(100vw - 40px)",
+   "person": "6.14% 13.4%",
+   "marks": {
+    "knob": "13.7% 24.39%",
+    "club": "13.7% 49.28%",
+    "person": "3.56% 8.72%"
+   },
+   "behind": [
+    "knob"
+   ]
+  },
+  "beside": {
+   "stem": "animals-ankylosaurus-beside",
+   "widths": [
+    800,
+    1600,
+    2400
+   ],
+   "sizes": "(min-width: 1280px) 690px, (min-width: 960px) 54vw, (min-width: 600px) calc(100vw - 64px), calc(100vw - 40px)",
+   "person": "7.11% 30.75%",
+   "marks": {
+    "t-rex": "14.67% 97.78%",
+    "ankylosaurus": "14.63% 61.59%",
+    "stegosaurus": "14.63% 55.65%",
+    "person": "6.03% 8.18%"
+   },
+   "behind": [
+    "t-rex"
+   ]
+  },
+  "skeleton": {
+   "stem": "animals-ankylosaurus-skeleton",
+   "widths": [
+    800,
+    1600
+   ],
+   "sizes": "(min-width: 1280px) 690px, (min-width: 960px) 54vw, (min-width: 600px) calc(100vw - 64px), calc(100vw - 40px)",
+   "person": "93.71% 18.05%",
+   "swatches": {
+    "found": "#cc8869",
+    "other": "#474c5b",
+    "rebuilt": "#cacfdf"
+   }
+  },
+  "trex": {
+   "stem": "animals-t-rex-side",
+   "widths": [
+    800,
+    1600,
+    2400
+   ],
+   "sizes": "(min-width: 1280px) 690px, (min-width: 960px) 54vw, (min-width: 600px) calc(100vw - 64px), calc(100vw - 40px)",
+   "person": "86.42% 63.92%"
+  },
+  "tricera": {
+   "stem": "animals-triceratops-side",
+   "widths": [
+    800,
+    1600,
+    2400
+   ],
+   "sizes": "(min-width: 1280px) 690px, (min-width: 960px) 54vw, (min-width: 600px) calc(100vw - 64px), calc(100vw - 40px)",
+   "person": "92.2% 38.85%"
+  },
+  "dinosaurs": {
+   "stem": "animals-biggest-dinosaurs-row",
+   "widths": [
+    800,
+    1600
+   ],
+   "sizes": "(min-width: 1280px) 690px, (min-width: 960px) 54vw, (min-width: 600px) calc(100vw - 64px), calc(100vw - 40px)",
+   "person": "32.82% 84.25%"
+  }
+ },
+ "meta": {
+  "title": "Ankylosaurus-Größe: etwa 6 bis 8 m, 4,8 t | Museum of Ages",
+  "description": "Ankylosaurus: etwa 6 bis 8 m lang. Das kleinste bekannte Tier, das mit der einzigen gefundenen Schwanzkeule, kommt nach seinen Beinknochen auf etwa 4,8 t.",
+  "og_title": "Ankylosaurus-Größe: etwa 6 bis 8 m, 4,8 t",
+  "og_image_alt": "Ein Ankylosaurus von der Seite: ein flacher, breiter Körper unter Reihen von Knochenplatten, ein breiter, tief getragener Kopf, vier kurze Beine und ein gerader Schwanz mit einer flachen Keule am Ende. Daneben ein grauer Mensch, so groß, wie der Rücken über der Hüfte hoch ist."
+ },
+ "labels": {
+  "crumbs": "Du bist hier",
+  "crumb_home": "Museum",
+  "crumb_here": "Ankylosaurus",
+  "toc": "Auf dieser Seite",
+  "tag_made": "Für diese Seite gemacht",
+  "tag_built": "Rekonstruktion",
+  "person": "1,70 m",
+  "to_table": "Die Zahlen als Tabelle",
+  "no_figure": "keine belegte Zahl",
+  "og_answer": "Ein Ankylosaurus war etwa 6 bis 8 m lang, und die einzige gefundene Schwanzkeule ist etwa einen halben Meter breit"
+ },
+ "top": {
+  "h1": "Wie groß war ein Ankylosaurus?",
+  "answer": "Ein Ankylosaurus war etwa 6 bis 8 m lang, nach einer Studie von 2017, und ein vollständiges Skelett wurde bisher nicht gefunden. Das kleinste der bekannten Tiere kommt auf etwa 4,8 t, berechnet aus der Dicke seiner Beinknochen. Unser Ankylosaurus ist in der Größe dieses Tiers gebaut: 6,4 m lang, fast vier Menschen der Länge nach hintereinandergelegt. Am höchsten ist sein Rücken über der Hüfte, mit 1,70 m genauso hoch wie der Mensch daneben.",
+  "answer_more": "Bisher wurde nur eine Schwanzkeule eines Ankylosaurus gefunden, an eben diesem Tier. Sie ist etwa einen halben Meter breit und saß am Ende eines Schwanzes, dessen hintere Hälfte steif war wie eine Stange.",
+  "scale": {
+   "pic": "side",
+   "tag": "tag_made",
+   "what": "Unser Ankylosaurus neben einem Menschen von 1,70 m, im selben Maßstab: 6,4 m vom Schnabel bis zur Keule. Seine Schultern reichen dem Menschen etwa bis zum Kinn, und sein Körper ist fast so breit, wie der Mensch groß ist.",
+   "alt": "Ein Ankylosaurus von der Seite: ein flacher, breiter Körper unter Reihen von Knochenplatten, ein breiter, tief getragener Kopf, vier kurze Beine und ein gerader Schwanz mit einer flachen Keule am Ende. Daneben ein grauer Mensch, so groß, wie der Rücken über der Hüfte hoch ist.",
+   "note": [
+    "Unsere eigene Rekonstruktion, nach veröffentlichten Maßen in Code gebaut und in unserer Engine gerendert. Keine Fotos. ",
+    "Der Panzer unseres Ankylosaurus folgt dem Plan von ",
+    {
+     "text": "Arbour und Mallon 2017",
+     "href": "https://doi.org/10.1139/facets-2017-0063"
+    },
+    " (",
+    {
+     "text": "CC BY 4.0",
+     "href": "https://creativecommons.org/licenses/by/4.0/"
+    },
+    "). Wir haben ihn vermessen und verändert."
+   ],
+   "marks": [
+    {
+     "span": "ankylosaurus",
+     "text": "Unser Ankylosaurus, 6,4 m vom Schnabel bis zur Keule"
+    },
+    {
+     "span": "hips",
+     "text": "Rücken über der Hüfte, 1,70 m, unser Modell"
+    },
+    {
+     "span": "person",
+     "text": "Der Mensch, 1,70 m"
+    }
+   ],
+   "close": {
+    "pic": "close",
+    "tag": "tag_made",
+    "what": "Aus der Nähe: Die Keule unseres Modells, mit ihrer Hornschicht 61 mal 51 cm groß, sitzt etwa auf Brusthöhe des Menschen. Stiel und Keule zusammen sind etwa 2 m lang, länger, als der Mensch groß ist.",
+    "alt": "Die hintere Hälfte des Ankylosaurus aus der Nähe, von der Seite: Reihen ovaler Platten auf Rücken und Flanken, mit Haut dazwischen, der steife Schwanz und seine flache Keule auf Brusthöhe des grauen Menschen.",
+    "marks": [
+     {
+      "span": "knob",
+      "text": "Keule, 61 cm lang mit Hornschicht, unser Modell"
+     },
+     {
+      "span": "club",
+      "text": "Stiel und Keule, etwa 2 m, unser Modell"
+     },
+     {
+      "span": "person",
+      "text": "Der Mensch, 1,70 m"
+     }
+    ]
+   }
+  },
+  "guess": {
+   "h": "Zum Raten",
+   "q": "Der größte bisher gefundene Schädel eines Ankylosaurus: Waren seine Zähne größer oder kleiner als im kleinsten Schädel?",
+   "button": "Antwort zeigen",
+   "a": "Kleiner: Der größte unabgenutzte Zahn des großen Schädels ist etwa 7,5 mm hoch. Im kleinsten Schädel, nach dem unser Modell gebaut ist, misst der größte etwa 9,1 mm.",
+   "button_open": "Antwort verbergen"
+  },
+  "out": {
+   "text": "Der Flügel für dieses Tier wird noch gebaut. Der Flügel von Leonardo da Vinci ist heute schon offen.",
+   "link": "Zum Leonardo-Flügel"
+  }
+ },
+ "blocks": [
+  {
+   "type": "numbers",
+   "id": "numbers",
+   "nav": "Ankylosaurus-Steckbrief: Größe, Höhe und Gewicht",
+   "h": "Ankylosaurus-Steckbrief: Größe, Höhe und Gewicht",
+   "unit": "In Metern und Tonnen. Jede Höhenzelle nennt den Punkt, den sie misst. Eine leere Zelle hat keine belegte Zahl.",
+   "cols": [
+    "Tier",
+    "Länge",
+    "Höhe, mit dem Messpunkt",
+    "Schädellänge",
+    "Gewicht",
+    "Wie sicher"
+   ],
+   "rows": [
+    {
+     "cells": [
+      "Das Tier mit dem größten Schädel (CMN 8880, Ottawa), nur vom Schädel bekannt",
+      "bis etwa 8 m nach dem Urteil der Studie, die errechneten knapp 10 m halten die Autoren selbst für wohl zu lang",
+      "nicht gemessen",
+      "etwa 67 cm",
+      "etwa 8 t, eine grobe Hochrechnung, an der die Autoren selbst zweifeln",
+      "schwach: ein Schädel, kein Körper"
+     ]
+    },
+    {
+     "cells": [
+      "AMNH 5214, New York, das Tier, nach dem unser Modell gebaut ist",
+      "etwa 6 bis 8 m, am ehesten am unteren Ende, nach den Schwänzen von Verwandten berechnet",
+      "nicht gemessen, für die heutigen Längen keine veröffentlicht",
+      "etwa 56 cm lang, 64 cm über die Hörner",
+      "etwa 4,8 t, berechnet aus Oberarm- und Oberschenkelknochen, Spanne der Studie 3,6 bis 6 t",
+      "mittel: eine Studie von 2017, nie gewogen"
+     ]
+    },
+    {
+     "cells": [
+      "Unser Modell",
+      "6,4 m gerade, vom Schnabel bis zur Keule",
+      "1,70 m an der Oberkante des Rückens über der Hüfte, 1,5 m über den Schultern, unser Modell",
+      "der Schädel von AMNH 5214",
+      "",
+      "an unseren Dateien gemessen, die Höhe aus den Knochen aufgebaut"
+     ]
+    },
+    {
+     "cells": [
+      "T. rex, SUE",
+      "etwa 12 m, die Montage",
+      "an der Hüfte etwa 4 m, nach dem Museum",
+      "etwa 1,4 m, von der Schnauze bis zum hinteren Rand der Wange",
+      "etwa 8 bis 9 t, nach einem Knochen und drei Modellen",
+      "wie auf unserer T.-rex-Seite"
+     ]
+    },
+    {
+     "cells": [
+      "Stegosaurus, Sophie, London",
+      "etwa 5,6 m, die Montage",
+      "an der Hüfte nicht veröffentlicht",
+      "",
+      "etwa 1,6 t, ein Modell ihres eigenen Skeletts",
+      "ein fast vollständiges Tier, wie auf unserer Seite der größten Dinosaurier"
+     ]
+    },
+    {
+     "cells": [
+      "Der Mensch",
+      "",
+      "1,70 m groß, vom Scheitel bis zur Sohle",
+      "",
+      "",
+      "unsere Vergleichsfigur"
+     ]
+    }
+   ]
+  },
+  {
+   "type": "text",
+   "id": "tail-club",
+   "nav": "Die Schwanzkeule des Ankylosaurus",
+   "h": "Die Schwanzkeule des Ankylosaurus",
+   "paras": [
+    "Die Keule ist 60 cm lang, 49 cm breit und nur 19 cm hoch, am Fossil gemessen. Sie bildet eine flache, abgerundete Scheibe aus Knochenplatten, ohne Stacheln, und überraschend nicht breiter als die Keulen kleinerer Verwandter. Der Stiel war die hintere Hälfte des Schwanzes, aus Wirbeln, die fest ineinandergriffen und von verknöcherten Sehnen umschnürt waren: eine steife Stange.",
+    "Biegen ließ sich nur der vordere Teil des Schwanzes, vor allem zur Seite. Eine Studie an den Schwänzen von Verwandten kam auf einen Ausschlag von etwa 100 Grad. Konnte die Keule Knochen brechen? Im Modell dieser Studie schafften das nur Keulen von mehr als 50 cm Breite, und diese liegt knapp darunter.",
+    "Wofür solche Keulen dienten, verrät am besten eine Studie an einem älteren Verwandten, Zuul: An seinen Flanken sitzen verheilte, gebrochene Platten, genau dort, wo eine andere Keule treffen würde. Die Keulen wurden also offenbar vor allem im Kampf unter Artgenossen eingesetzt. Dieselbe Studie zweifelt kaum daran, dass sie auch einen Räuber abwehren konnten, doch kein Fossil eines Ankylosaurus zeigt das eine oder das andere."
+   ]
+  },
+  {
+   "type": "text",
+   "id": "armour",
+   "nav": "Der Panzer: Knochenplatten in der Haut",
+   "h": "Der Panzer: Knochenplatten in der Haut",
+   "paras": [
+    "Der Ankylosaurus trug Knochenplatten in der Haut, mit Haut dazwischen, keine feste Schale, und über dem Hals zwei knöcherne Halbringe. Lose Platten von ihm sind bekannt, doch bisher wurde kein Ankylosaurus gefunden, an dem noch eine Platte an ihrer Stelle saß.",
+    "Wo jede Platte saß, ist darum eine vorsichtige Annahme nach dem Vorbild von Verwandten, und unser Modell folgt einem Plan von 2017. Die großen Schulterstacheln alter Bilder gehören zu einer anderen Familie gepanzerter Dinosaurier, und bei den Verwandten des Ankylosaurus trug der Bauch keine großen Platten. Eine Farbe ist nicht bekannt, die Farbe unseres Modells ist also eine Wahl."
+   ]
+  },
+  {
+   "type": "text",
+   "id": "skeleton",
+   "nav": "Ankylosaurus-Fossilien und Skelett: was gefunden wurde",
+   "h": "Ankylosaurus-Fossilien und Skelett: was gefunden wurde",
+   "paras": [
+    "Bekannt ist der Ankylosaurus aus zwei Teilskeletten und einem großen Schädel, und keiner dieser Funde ist vollständig. Das erste Skelett, auf dem sein Name beruht, fand 1906 ein Team unter Barnum Brown in Montana. Das zweite fand Browns Team 1910 am Red Deer River in Alberta: AMNH 5214, das Tier mit der Keule. Beide werden im American Museum of Natural History in New York aufbewahrt.",
+    "Der größte Schädel kam 1947 zutage, ebenfalls in Alberta, und liegt heute im Canadian Museum of Nature in Ottawa. Dazu kommen lose Platten, ein Stück eines Keulenstiels und Zähne. In den Gesteinen ist der Ankylosaurus selten: In einer Zählung der großen Dinosaurier der Hell-Creek-Formation in Montana stammten nur 2 von etwa 180 Skeletten von ihm.",
+    "Unser Skelettbild zeigt, welche Knochen mit diesem Tier gefunden wurden."
+   ],
+   "scale": {
+    "pic": "skeleton",
+    "tag": "tag_built",
+    "what": "Unser Ankylosaurus als Skelett, im selben Maßstab, jeder Knochen nach seiner Herkunft gefärbt.",
+    "alt": "Unser Ankylosaurus als Skelett von der Seite, neben dem grauen Menschen, die Knochen in drei Farben nach ihrer Herkunft. In der Farbe der Knochen, die mit diesem Tier gefunden wurden: Schädel, Unterkiefer, beide Oberarmknochen, ein Oberschenkelknochen, ein Wadenbein, sechs Rippen, die Keule und der hintere Teil ihres Stiels.",
+    "key": [
+     {
+      "swatch": "found",
+      "text": "Mit diesem Tier gefunden (AMNH 5214)"
+     },
+     {
+      "swatch": "other",
+      "text": "Von anderen Ankylosaurus-Funden, auf seine Größe gebracht"
+     },
+     {
+      "swatch": "rebuilt",
+      "text": "Von Verwandten oder ergänzt"
+     },
+     "Spiegelbilder der anderen Seite sind der rechte Oberschenkelknochen, das linke Wadenbein und ein Fußknochen. Die Platten haben die Formen echter Ankylosaurus-Platten, ihre Lage ist nach Verwandten geschätzt."
+    ]
+   }
+  },
+  {
+   "type": "text",
+   "id": "head-teeth",
+   "nav": "Kopf und Zähne des Ankylosaurus",
+   "h": "Kopf und Zähne des Ankylosaurus",
+   "subs": [
+    {
+     "h": "Kopf und Nase",
+     "paras": [
+      "Der Kopf war flach und dreieckig, breiter als lang, mit vier kurzen Hörnern an den hinteren Ecken. Die Nasenlöcher saßen seitlich an der Schnauze und wiesen nach unten, von vorn also nicht zu sehen, anders als bei seinen Verwandten. Innen nahm die Luft wohl einen Weg in Schleifen, der bei Verwandten in Modellen wie ein Wärmetauscher arbeitet, doch wozu diese seltsame Nase diente, weiß man nicht."
+     ]
+    },
+    {
+     "h": "Schnabel, Zähne und Nahrung",
+     "paras": [
+      "Vorn saß ein Hornschnabel, dahinter Reihen sehr kleiner, blattförmiger Zähne, 34 bis 36 in jedem Oberkiefer. Im Schädel, nach dem unser Modell gebaut ist, ist der größte etwa 9 mm hoch, winzig für ein Tier von fast 5 t. Der Ankylosaurus fraß wohl niedrige Pflanzen, vielleicht Farne und Sträucher, doch was genau, ist nicht bekannt."
+     ]
+    }
+   ]
+  },
+  {
+   "type": "text",
+   "id": "t-rex",
+   "nav": "Ankylosaurus und T. rex",
+   "h": "Ankylosaurus und T. rex",
+   "paras": [
+    "Ankylosaurus und T. rex lebten zur selben Zeit im selben Land, und ihre Knochen liegen in denselben Gesteinen. Doch kein bekannter Fund zeigt, dass die beiden sich begegnet sind: kein Biss eines T. rex an einem Knochen des Ankylosaurus, keine Keulenwunde an einem T. rex. Wer gewonnen hätte, darauf geben die Gesteine keine Antwort.",
+    "Was sich sagen lässt: Ein großer T. rex war etwa doppelt so schwer, mit etwa 8 bis 9 t gegenüber etwa 4,8 t. Der Ankylosaurus trug Platten und konnte eine Keule schwingen, doch seine Verwandten setzten ihre Keulen offenbar vor allem gegeneinander ein.",
+    "In unserem Bild ist unser T. rex 1,8-mal so lang wie unser Ankylosaurus, und dessen höchster Punkt bleibt unter dem Knie unseres T. rex."
+   ],
+   "scale": {
+    "pic": "beside",
+    "tag": "tag_made",
+    "what": "Unser T. rex, unser Ankylosaurus und unser Stegosaurus im selben Maßstab mit dem Menschen, nur zum Größenvergleich. Der Stegosaurus lebte etwa 80 Millionen Jahre früher, und kein bekannter Fund zeigt, dass Ankylosaurus und T. rex sich begegnet sind.",
+    "alt": "Drei Dinosaurier von der Seite, alle in dieselbe Richtung gewandt: ein T. rex auf zwei Beinen, viel länger und höher, der flache, gepanzerte Ankylosaurus und ein Stegosaurus mit hohen Platten auf dem Rücken, daneben der graue Mensch.",
+    "marks": [
+     {
+      "span": "t-rex",
+      "text": "Unser T. rex, nach SUE, etwa 11,4 m"
+     },
+     {
+      "span": "ankylosaurus",
+      "text": "Unser Ankylosaurus, 6,4 m"
+     },
+     {
+      "span": "stegosaurus",
+      "text": "Unser Stegosaurus, nach Sophie, etwa 5,6 m"
+     },
+     {
+      "span": "person",
+      "text": "Der Mensch, 1,70 m"
+     }
+    ]
+   }
+  },
+  {
+   "type": "text",
+   "id": "stegosaurus",
+   "nav": "Stegosaurus und Ankylosaurus",
+   "h": "Stegosaurus und Ankylosaurus",
+   "paras": [
+    "Die beiden sind sich nie begegnet: Zwischen ihnen liegen etwa 80 Millionen Jahre. Der Stegosaurus lebte im Oberen Jura, vor etwa 150 Millionen Jahren, und so lebte der Ankylosaurus uns zeitlich näher als dem Stegosaurus. Oft werden sie zusammen genannt, weil beide gepanzerte Pflanzenfresser waren, verwandt in einem größeren Stammbaum. Unser Ankylosaurus ist etwa 0,8 m länger als unser Stegosaurus, dessen höchste Platte dafür etwa 0,8 m höher aufragt."
+   ]
+  },
+  {
+   "type": "text",
+   "id": "when-where",
+   "nav": "Wann und wo der Ankylosaurus lebte",
+   "h": "Wann und wo der Ankylosaurus lebte",
+   "paras": [
+    "Der Ankylosaurus lebte im Westen Nordamerikas, wo heute Alberta, Saskatchewan, Montana und Wyoming liegen, vor etwa 68 bis 66 Millionen Jahren. Er lebte bis gegen Ende der Kreidezeit, die vor etwa 66 Millionen Jahren endete, als vermutlich ein Einschlag auf der Halbinsel Yucatán den Zusammenbruch auslöste."
+   ]
+  },
+  {
+   "type": "notes",
+   "id": "numbers-read",
+   "nav": "Zahlen, die du vielleicht gelesen hast",
+   "h": "Zahlen, die du vielleicht gelesen hast",
+   "intro": "Zu jeder Zahl: woher sie kommt und was sie bedeutet.",
+   "rows": [
+    {
+     "term": "8 m lang",
+     "text": "Die Obergrenze für die größten Tiere, geschätzt nach dem größten Schädel. Das kleinere Tier, nach dem unser Modell gebaut ist, war am ehesten etwa 6 m lang."
+    },
+    {
+     "term": "10 m lang",
+     "text": "Mit derselben Methode aus dem größten Schädel errechnet, und die Autoren selbst halten das für wahrscheinlich zu lang."
+    },
+    {
+     "term": "8 t",
+     "text": "Eine grobe Hochrechnung für den größten Schädel, zu dem kein Körper gehört, und ihre eigenen Autoren mahnen zur Vorsicht."
+    },
+    {
+     "term": "Eine Keule, die Knochen brach und den T. rex tötete",
+     "text": "An keinem bekannten Knochen eines T. rex sitzt eine Keulenwunde, und die einzige bekannte Keule eines Ankylosaurus liegt knapp unter der Größe, die im Modell der Keulen von Verwandten Knochen brechen konnte."
+    },
+    {
+     "term": "Schulterstacheln",
+     "text": "Alte Bilder haben sie von einer anderen Familie gepanzerter Dinosaurier übernommen."
+    },
+    {
+     "term": "Eine Stachelkugel am Schwanzende",
+     "text": "Die einzige gefundene Keule ist eine flache Scheibe, 19 cm hoch, ohne Stacheln."
+    },
+    {
+     "term": "Der größte gepanzerte Dinosaurier",
+     "text": "Die Studie von 2017 nennt den Ankylosaurus den größten bekannten seiner Familie mit Schwanzkeule und vielleicht den größten Ankylosaurier überhaupt."
+    },
+    {
+     "term": "Ein lebender Panzer",
+     "text": "Ein Bild, kein Befund. Die Platten des Ankylosaurus saßen einzeln in biegsamer Haut, und bei seinen Verwandten trug der Bauch keine großen Platten."
+    }
+   ]
+  },
+  {
+   "type": "faq",
+   "id": "questions",
+   "nav": "Weitere Fragen",
+   "h": "Weitere Fragen",
+   "items": [
+    {
+     "q": "Wie schwer war ein Ankylosaurus?",
+     "a": "Das Tier, nach dem unser Modell gebaut ist, kommt nach seinen Beinknochen auf etwa 4,8 t. Die Spanne der Studie selbst reicht von 3,6 bis 6 t."
+    },
+    {
+     "q": "Was bedeutet der Name Ankylosaurus?",
+     "a": "Verwachsene Echse: So gibt das Natural History Museum in London die Bedeutung an, nach Knochen, die zusammengewachsen sind. Den vollen Namen, Ankylosaurus magniventris, gab ihm 1908 Barnum Brown, der auch den ersten Fund eines T. rex geleitet hatte."
+    },
+    {
+     "q": "Wie hoch war ein Ankylosaurus?",
+     "a": "Eine an einem echten Ankylosaurus gemessene Höhe ist bisher nicht veröffentlicht. Unser Modell, aus den Knochen aufgebaut, misst 1,70 m an der Oberkante des Rückens über der Hüfte, seinem höchsten Punkt."
+    }
+   ]
+  },
+  {
+   "type": "text",
+   "id": "museum",
+   "nav": "Im Museum",
+   "h": "Im Museum",
+   "paras": [
+    "Museum of Ages ist ein digitales Museum, gemacht von einer gemeinnützigen Organisation. Der Eintritt ist frei, ein Konto brauchst du nicht. Im Flügel der Tiere wird dieses Tier unter den anderen stehen, von den Riesen der Vorzeit bis zu den letzten ihrer Art. Wie ein fertiger Flügel aussieht, zeigt der Flügel von Leonardo da Vinci."
+   ],
+   "links": [
+    {
+     "out": true,
+     "text": "Zum Leonardo-Flügel"
+    }
+   ]
+  },
+  {
+   "type": "pages",
+   "id": "next",
+   "items": [
+    {
+     "page": "t-rex",
+     "pic": "trex",
+     "alt": "Ein T. rex von der Seite auf zwei Beinen, das Maul offen, der Kopf erhoben, neben einem grauen Menschen, der weit unter seiner Hüfte steht.",
+     "line": "Ein großer erwachsener T. rex war etwa 12 m lang, an der Hüfte etwa 4 m hoch und kam auf rund 8 bis 9 t. Unser T. rex ist nach den Maßen von SUE gebaut und steht im selben Maßstab neben einem Menschen, dazu eine Liste dessen, was von SUE gefunden wurde."
+    },
+    {
+     "page": "triceratops",
+     "pic": "tricera",
+     "alt": "Ein Triceratops von der Seite: ein breiter Nackenschild hinter dem Kopf, zwei lange Hörner über den Augen, ein kurzes auf der Nase, vier Beine. Daneben ein grauer Mensch, der etwa bis zu zwei Dritteln der Rückenhöhe reicht.",
+     "line": "Ein großer erwachsener Triceratops war etwa 7 bis 8 m lang, der Schädel etwa 2 m. Unser Triceratops ist nach dem Skelett in Washington gebaut, einer Montage aus etwa zehn Tieren, und steht im selben Maßstab neben einem Menschen, dazu Torosaurus und das, was die Knochen über den T. rex sagen."
+    },
+    {
+     "page": "biggest-dinosaurs",
+     "pic": "dinosaurs",
+     "alt": "Sieben Dinosaurier in einer Reihe von der Seite, zwei mit langen Hälsen hoch über den anderen, und ein grauer Mensch, der daneben winzig wirkt.",
+     "line": "Sieben von unseren neben einem Menschen, im selben Maßstab: der schwerste höchstwahrscheinlich ein Titanosaurier aus Patagonien, der höchste vermutlich Sauroposeidon, und warum der längste noch offen ist."
+    }
+   ]
+  },
+  {
+   "type": "sources",
+   "id": "sources",
+   "nav": "Quellen",
+   "h": "Quellen",
+   "intro": "Die Zahlen stammen aus diesen Studien und von den Museen, die die Knochen bewahren. Das Museum ist von allen unabhängig.",
+   "read": [
+    {
+     "text": "Arbour und Mallon, 2017, FACETS, zu Größe, Gewicht, Keule, Schädel und Panzer.",
+     "href": "https://doi.org/10.1139/facets-2017-0063"
+    },
+    {
+     "text": "Arbour, 2009, PLOS ONE, zu Schwung und Wucht der Schwanzkeulen.",
+     "href": "https://doi.org/10.1371/journal.pone.0006738"
+    },
+    {
+     "text": "Arbour, Zanno und Evans, 2022, Biology Letters, zu den verheilten Platten von Zuul.",
+     "href": "https://doi.org/10.1098/rsbl.2022.0404"
+    },
+    {
+     "text": "Bourke, Porter und Witmer, 2018, PLOS ONE, die Kurzfassung, zu den Nasen in Schleifen bei Verwandten.",
+     "href": "https://doi.org/10.1371/journal.pone.0207381"
+    },
+    {
+     "text": "Horner, Goodwin und Myhrvold, 2011, PLOS ONE, die Zählung der Dinosaurier der Hell-Creek-Formation.",
+     "href": "https://doi.org/10.1371/journal.pone.0016574"
+    },
+    {
+     "text": "Barnosky und andere, 2011, Nature, zum Ende der Kreidezeit.",
+     "href": "https://doi.org/10.1038/nature09678"
+    },
+    {
+     "text": "American Museum of Natural History, New York: Ankylosaurus AMNH 5214, das erste Skelett, AMNH 5895, und seine Grabungsberichte von 1910 und 1911."
+    },
+    {
+     "text": "Canadian Museum of Nature, Ottawa: der größte Schädel, CMN 8880."
+    },
+    {
+     "text": "Natural History Museum, London: seine Seiten zu Ankylosaurus und Stegosaurus.",
+     "href": "https://www.nhm.ac.uk/discover/dino-directory/ankylosaurus.html"
+    },
+    {
+     "text": "The Canadian Encyclopedia: ihr Artikel zum Ankylosaurus, 2025.",
+     "href": "https://thecanadianencyclopedia.ca/en/article/ankylosaurus"
+    },
+    {
+     "text": "T. rex und Stegosaurus: die Zahlen und Quellen unserer T.-rex-Seite und unserer Seite der größten Dinosaurier.",
+     "href": "https://museumofages.org/de/tiere/t-rex/"
+    }
+   ],
+   "contact": "Ist eine Zahl oder ein Museum falsch angegeben, schreib uns, und wir korrigieren es.",
+   "contact_link": "Zum Impressum",
+   "what_link": "Was dieses Museum ist"
+  },
+  {
+   "type": "text",
+   "id": "pictures",
+   "nav": "Unsere Bilder nutzen",
+   "h": "Unsere Bilder nutzen",
+   "paras": [
+    [
+     "Die vier Bilder des Ankylosaurus auf dieser Seite, die Seitenansicht, die Keule, das Skelett und die Reihe mit unserem T. rex und unserem Stegosaurus, sind unsere eigene Arbeit unter ",
+     {
+      "text": "CC BY-SA 4.0",
+      "href": "https://creativecommons.org/licenses/by-sa/4.0/deed.de"
+     },
+     ", Nachweis: Museum of Ages, dazu „Ankylosaurus armour after Arbour and Mallon 2017 (CC BY 4.0)“. Sie zeigen eine Rekonstruktion, in Code gebaut und in unserer Engine gerendert, keine Fotos. Die Bilder der anderen Seiten, die hier aufgeführt sind, nennen ihren Nachweis auf der jeweiligen Seite."
+    ]
+   ]
+  }
+ ]
+}
