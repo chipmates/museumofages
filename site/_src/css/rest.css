@@ -553,5 +553,6 @@
   html:not(.js) .layers details:not([open])>summary{cursor:default}
   html:not(.js) .layers details:not([open])>summary::after{display:none}
 }
-/* A section of the landing and of a wing's page starts with the chalk bar every section of the site starts with. */
-.head>h2::before{content:"";display:block;width:56px;height:3px;margin-bottom:22px;background:var(--mark)}
+/* A section of the landing and of a wing's page starts with the chalk bar every section of the site starts with, its
+   closing invitation too. */
+.head>h2::before,.close__text>h2::before{content:"";display:block;width:56px;height:3px;margin-bottom:22px;background:var(--mark)}

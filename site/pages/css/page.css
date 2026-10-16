@@ -20,8 +20,20 @@
 .sp-top h1.sp-h1--long{font-size:clamp(1.5rem,6.6vw,2.375rem)}
 .sp-top h1.sp-h1--wrap{text-wrap:balance}
 .sp-answer{margin-top:10px;font-size:1.125rem;line-height:1.5;color:var(--ink-body);max-width:36rem}
-/* The answer's first sentence is the answer: a size up and in full linen, so it is found before anything else. */
-.sp-answer__lead{display:block;margin-bottom:6px;font-size:1.3125rem;line-height:1.32;letter-spacing:-.003em;color:var(--ink);text-wrap:balance}
+/* The answer's first sentence is the answer: a size up and in full linen, with air under it, so it is found before
+   anything else. Its lines fill (pretty): balanced, a two-line lead broke after its subject ("Die Mona Lisa / misst").
+   A long one (build.py LEAD_LONG) is a paragraph more than a headline: on a phone it keeps the answer's size and
+   stands apart by its ink, its own line and its air, so the first picture and its labels keep the first screen. */
+.sp-answer__lead{display:block;margin-bottom:10px;font-size:1.3125rem;line-height:1.3;letter-spacing:-.003em;color:var(--ink);text-wrap:pretty}
+.sp-answer__lead--long{margin-bottom:8px;font-size:inherit;line-height:inherit;letter-spacing:0}
+/* A short first screen (a small phone) keeps the top of its first picture in view: the answer block sets closer. */
+@media (max-width:599px) and (max-height:700px){
+  .sp-top.sp-top{gap:8px}
+  .sp-top h1{font-size:1.75rem}
+  .sp-top .sp-answer{margin-top:4px}
+  .sp-answer__lead{margin-bottom:5px;font-size:1.0625rem;line-height:1.32}
+  .sp-answer__lead--long{font-size:inherit;line-height:inherit}
+}
 /* German display text never hyphenates (the site's rule); the answer is display text. */
 :lang(de) .sp-answer{hyphens:manual;-webkit-hyphens:manual}
 .sp-frame .hang{--pool-up:74%;--pool-side:30%;--pool-down:10%}
@@ -49,7 +61,7 @@
 /* A section starts on a rule the eye can follow (2.2:1), with a short chalk bar on it: the one landmark of a long
    page, the same at every section, larger than the label's tick and the period's rule under it. More room above
    than below, so a heading belongs to what follows. */
-.sp-sec{position:relative;padding-top:28px;margin-top:56px;border-top:1px solid var(--rule)}
+.sp-sec{position:relative;padding-top:26px;margin-top:48px;border-top:1px solid var(--rule)}
 .sp-sec::before{content:"";position:absolute;left:0;top:-2px;width:56px;height:3px;background:var(--mark)}
 .sp-sec h2{font-size:clamp(1.75rem,7.6vw,2rem);line-height:1.12;letter-spacing:-.008em;color:var(--ink)}
 .sp-intro,.sp-after{margin-top:12px;color:var(--ink-body);max-width:38rem}
@@ -166,7 +178,8 @@
   .sp-top h1{font-size:clamp(2.625rem,4.5vw,3.875rem);line-height:1.04;letter-spacing:-.014em}
   .sp-top h1.sp-h1--long{font-size:clamp(2rem,3.3vw,2.875rem)}
   .sp-answer{margin-top:22px;font-size:1.25rem;line-height:1.52}
-  .sp-answer__lead{margin-bottom:10px;font-size:1.75rem;line-height:1.26;letter-spacing:-.006em}
+  .sp-answer__lead{margin-bottom:12px;font-size:1.75rem;line-height:1.26;letter-spacing:-.006em}
+  .sp-answer__lead--long{font-size:1.5rem;line-height:1.3;letter-spacing:-.003em}
   .sp-grid{grid-template-columns:repeat(12,1fr);column-gap:24px;margin-top:88px}
   .sp-toc{grid-column:1/4;position:sticky;top:calc(var(--top-h) + 24px);align-self:start;margin-inline:0;padding:14px 16px 6px}
   .sp-toc a{font-size:.875rem;min-height:40px;padding:6px 0 6px 12px;margin-left:-12px;border-left:3px solid transparent;color:var(--ink-soft)}

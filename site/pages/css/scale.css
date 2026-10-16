@@ -43,7 +43,8 @@
 .sc-guess__d[open]>.sc-guess__btn::after{margin-top:4px;transform:rotate(225deg)}
 .sc-guess__btn:hover{border-color:var(--ink-soft)}
 .sc-guess__btn:focus-visible{outline:2px solid var(--mark);outline-offset:3px}
-.sc-guess__a{margin-top:14px;color:var(--ink-body);max-width:34rem}
+/* The revealed answer fills its lines: balanced (the phone's rule for a paragraph), its first line stopped short. */
+.sc-guess__a{margin-top:14px;color:var(--ink-body);max-width:34rem;text-wrap:pretty}
 /* The button names what it does: show the answer, or hide it again */
 .sc-guess__d[open] .sc-guess__show,.sc-guess__d:not([open]) .sc-guess__hide{display:none}
 
@@ -74,16 +75,16 @@
   .sc-table tbody{display:grid;gap:10px}
   .sc-table tr{display:block;padding:0 16px;margin-inline:-6px;background:var(--ledger)}
   .sc-table tr.sc-our{box-shadow:inset 3px 0 0 var(--mark)}
-  .sc-table tbody th{display:block;padding:14px 0 11px;font-size:1.1875rem;line-height:1.28;border-bottom:1px solid var(--ledger-rule)}
-  .sc-table td{display:block;padding:9px 0 10px}
+  .sc-table tbody th{display:block;padding:13px 0 10px;font-size:1.1875rem;line-height:1.28;border-bottom:1px solid var(--ledger-rule)}
+  /* the column's name, then its words: beside it where they are short ("Höhe  nicht gemessen", an empty cell's note),
+     over them where they are long, so a short value costs no line of its own */
+  .sc-table td{display:flex;flex-wrap:wrap;align-items:baseline;column-gap:.6em;row-gap:1px;padding:7px 0 8px}
   .sc-table td+td{border-top:1px solid var(--hair)}
-  /* the column's name over its words; read once by a screen reader, which hears the header the cell already has */
-  .sc-table td::before{content:attr(data-k);content:attr(data-k) / "";display:block;margin-bottom:1px;font-size:.8125rem;letter-spacing:.02em;color:var(--ink-soft)}
-  .sc-table td:empty{display:flex;flex-wrap:wrap;column-gap:.6em;align-items:baseline}
-  .sc-table td:empty::before{display:inline;margin:0}
+  /* read once by a screen reader, which hears the header the cell already has */
+  .sc-table td::before{content:attr(data-k);content:attr(data-k) / "";font-size:.8125rem;line-height:1.35;letter-spacing:.02em;color:var(--ink-soft)}
   .sc-table td:empty::after{font-size:.875rem}
   /* how sure: the card's foot, a shade under the card, so it is found in the same place on every card */
-  .sc-table td.sc-sure{margin-inline:-16px;padding:11px 16px 13px;border-top:0;background:color-mix(in srgb,var(--ledger) 55%,var(--ground))}
+  .sc-table td.sc-sure{margin-inline:-16px;padding:10px 16px 11px;border-top:0;background:color-mix(in srgb,var(--ledger) 55%,var(--ground))}
   .sc-table td.sc-sure::before{color:var(--ink-soft)}
   .sc-table td.sc-sure .sc-sure__w{font-size:1rem}
 }
@@ -103,6 +104,11 @@
   .sc-table thead,.sc-table tbody{background:var(--ledger)}
   .sc-table tr{position:relative;padding-inline:20px}
   .sc-table th,.sc-table td{display:block;padding:12px 18px 12px 0}
+  /* A column is about 110 px: a long word breaks only where it may, with its hyphen drawn ("Computer-modelle"), never
+     mid-word without one. WebKit reads only its own prefixed limits. */
+  .sc-table td{overflow-wrap:normal}
+  :is(:lang(de),:lang(es),:lang(pt)) .sc-table td{hyphens:auto;-webkit-hyphens:auto;hyphenate-limit-chars:10 4 4;
+    -webkit-hyphenate-limit-before:4;-webkit-hyphenate-limit-after:4}
   .sc-table thead th{padding-block:13px 10px}
   .sc-table thead tr{border-bottom:1px solid var(--ledger-rule)}
   .sc-table thead th:last-child:not(:nth-child(2)){position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%)}
@@ -133,7 +139,8 @@
   text-decoration-color:var(--mark);text-underline-offset:.18em}
 .sc-item__h a:hover{color:var(--mark-ink)}
 .sc-item__line{color:var(--ink-body);max-width:38rem}
-.sc-item__pic picture{display:block;margin-top:4px;background:var(--stone)}
+/* A neighbour page's picture hangs in the site's frame line, as every picture does. */
+.sc-item__pic picture{display:block;margin-top:4px;background:var(--stone);border:2px solid var(--frame-line);border-top-color:color-mix(in srgb,var(--frame-line) 58%,var(--lamp));outline:1px solid var(--shade);outline-offset:-3px;box-shadow:0 3px 6px color-mix(in srgb,var(--shade) 55%,transparent)}
 .sc-item__pic img{display:block;width:100%;height:auto}
 
 @media (min-width:960px){

@@ -8,7 +8,7 @@
 .statement__head::before{content:"";position:absolute;left:0;top:0;width:28px;height:1px;background:var(--mark)}
 .statement h1{font-size:clamp(2.4rem,10vw,3.25rem);line-height:1.05;letter-spacing:-.012em}
 /* A section starts on a rule a reader follows with a short chalk bar on it, as on every page of the site. */
-.statement__body section{position:relative;padding-top:28px;margin-top:56px;border-top:1px solid var(--rule)}
+.statement__body section{position:relative;padding-top:26px;margin-top:48px;border-top:1px solid var(--rule)}
 .statement__body section::before{content:"";position:absolute;left:0;top:-2px;width:56px;height:3px;background:var(--mark)}
 .statement__body section:first-child{margin-top:0}
 .statement__body h2{font-size:clamp(1.75rem,7.6vw,2rem);line-height:1.12;color:var(--ink)}
