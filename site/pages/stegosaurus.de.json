@@ -14,6 +14,11 @@
   },
   "taxa": [
    "Diplodocus"
+  ],
+  "breaks": [
+   "Stego|saurus",
+   "Stego|saurier",
+   "Tricera|tops"
   ]
  },
  "pics": {
