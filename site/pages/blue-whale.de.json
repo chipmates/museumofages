@@ -1,0 +1,667 @@
+{
+ "_note": "THE WORDS of the blue whale page. Poured word for word from the writer's WORDS file; the title, the description and the heading are its first options. pics.<name>.marks: each label's place as the start and end of what it names, shares of the picture's width, measured on the frame; pics.<name>.person: the person's centre and the top of its head (null in the side view, where the person stands in front of the whale's flank and its label under the picture names it). pics.side.marks.depth: the station of the body's greatest depth, where a light line in the picture runs from the back to the belly. pics.close: the head rolled 20 degrees about its long axis, so the blowholes on top show; lengths along the body and the person keep the panel's one scale. pics.<name>.parts: labels that name a part, with no length. pics.skeleton.swatches: each colour of the key as the picture prints it. pics.beside: our Argentinosaurus's, our blue whale's and our megalodon's rows at one scale, the tails' ends on one left line, the person at one place in each row. An empty cell of the table has no sourced figure.",
+ "page": {
+  "id": "animals-blue-whale",
+  "wing": "animals",
+  "topic": "blue_whale",
+  "published": null,
+  "join_names": true,
+  "og_image": {
+   "file": "animals-blue-whale-og-{lang}-1200x630.png",
+   "width": 1200,
+   "height": 630,
+   "layout": "beside"
+  },
+  "breaks": [
+   "Argentino|saurus"
+  ]
+ },
+ "pics": {
+  "side": {
+   "stem": "animals-blue-whale-side",
+   "widths": [
+    800,
+    1600,
+    2400
+   ],
+   "sizes": "(min-width: 1280px) 588px, (min-width: 960px) calc(100vw - 80px), (min-width: 600px) calc(100vw - 64px), calc(100vw - 40px)",
+   "person": null,
+   "marks": {
+    "whale": "3.6% 98.05%",
+    "depth": "59.67% 61.48%",
+    "person": "54.62% 56.57%"
+   },
+   "behind": [
+    "depth"
+   ]
+  },
+  "close": {
+   "stem": "animals-blue-whale-close",
+   "widths": [
+    800,
+    1600
+   ],
+   "sizes": "(min-width: 1280px) 690px, (min-width: 960px) 54vw, (min-width: 600px) calc(100vw - 64px), calc(100vw - 40px)",
+   "person": "90.3% 42.25%",
+   "marks": {
+    "snout": "24.34% 78.06%",
+    "blowholes": "14.75% 24.34%",
+    "grooves": "0% 64.18%",
+    "person": "86.8% 93.8%"
+   },
+   "behind": [
+    "snout",
+    "blowholes"
+   ],
+   "parts": [
+    "grooves",
+    "blowholes"
+   ]
+  },
+  "beside": {
+   "stem": "animals-blue-whale-beside",
+   "widths": [
+    800,
+    1600,
+    2400
+   ],
+   "sizes": "(min-width: 1280px) 690px, (min-width: 960px) 54vw, (min-width: 600px) calc(100vw - 64px), calc(100vw - 40px)",
+   "person": "81.76% 64.78%",
+   "marks": {
+    "argentinosaurus": "6.08% 99.08%",
+    "blue-whale": "7.88% 77.36%",
+    "megalodon": "6.12% 56%",
+    "person": "81.04% 82.48%"
+   }
+  },
+  "skeleton": {
+   "stem": "animals-blue-whale-skeleton",
+   "widths": [
+    800,
+    1600
+   ],
+   "sizes": "(min-width: 1280px) 690px, (min-width: 960px) 54vw, (min-width: 600px) calc(100vw - 64px), calc(100vw - 40px)",
+   "person": "89.14% 46.34%",
+   "marks": {
+    "skull": "63.94% 85.7%",
+    "person": "88.25% 90.02%"
+   },
+   "swatches": {
+    "measured": "#cc8766",
+    "comparator": "#3e4357"
+   }
+  },
+  "megalodon": {
+   "stem": "animals-megalodon-side",
+   "widths": [
+    800,
+    1600,
+    2400
+   ],
+   "sizes": "(min-width: 1280px) 690px, (min-width: 960px) 54vw, (min-width: 600px) calc(100vw - 64px), calc(100vw - 40px)",
+   "person": "92% 60.62%"
+  },
+  "dinosaurs": {
+   "stem": "animals-biggest-dinosaurs-row",
+   "widths": [
+    800,
+    1600
+   ],
+   "sizes": "(min-width: 1280px) 690px, (min-width: 960px) 54vw, (min-width: 600px) calc(100vw - 64px), calc(100vw - 40px)",
+   "person": "32.88% 84.25%"
+  }
+ },
+ "meta": {
+  "title": "Blauwal-Größe: 23 bis 27 m, 100 bis 150 t | Museum of Ages",
+  "description": "Der Blauwal wird meist 23 bis 27 m lang, die größten etwa 30 m, und rund 100 bis 150 t schwer. Er ist das schwerste uns bekannte Tier.",
+  "og_title": "Blauwal-Größe: 23 bis 27 m, 100 bis 150 t",
+  "og_image_alt": "Ein Blauwal von der Seite: ein langer, schlanker, blaugrauer Körper mit hellen Flecken, ein flacher Kopf, eine lange Brustflosse mit hellem Rand und eine kleine Rückenfinne weit hinten. Daneben ein grauer Mensch, der etwas über die halbe Höhe des Wals reicht."
+ },
+ "labels": {
+  "crumbs": "Du bist hier",
+  "crumb_home": "Museum",
+  "crumb_here": "Blauwal",
+  "toc": "Auf dieser Seite",
+  "tag_made": "Für diese Seite gemacht",
+  "tag_built": "Rekonstruktion",
+  "person": "1,70 m",
+  "to_table": "Die Zahlen als Tabelle",
+  "no_figure": "keine belegte Zahl",
+  "og_answer": "Der Blauwal, das schwerste uns bekannte Tier, ist meist 23 bis 27 m lang"
+ },
+ "top": {
+  "h1": "Wie groß ist ein Blauwal?",
+  "answer": "Die meisten ausgewachsenen Blauwale sind etwa 23 bis 27 m lang, die größten zuverlässig gemessenen Tiere erreichen etwa 30 m. Nach einer Studie von 2025 wiegen sie rund 100 bis 150 t, doch noch nie wurde ein ganzer Blauwal gewogen. Der Blauwal, Balaenoptera musculus, ist das schwerste und größte uns bekannte Tier, ob lebend oder ausgestorben. Unser Blauwal ist 22,9 m lang, nach der Länge, die 1903 für ein erlegtes Männchen notiert wurde.",
+  "answer_more": "Blauwale leben heute in allen Ozeanen außer dem Nordpolarmeer. Neben unserem Blauwal reicht ein Mensch bis etwas über die halbe Höhe des Wals.",
+  "scale": {
+   "pic": "side",
+   "tag": "tag_made",
+   "what": "Unser Blauwal neben einem Menschen von 1,70 m, im selben Maßstab: so lang wie etwa 13 Menschen, der Länge nach hintereinandergelegt.",
+   "alt": "Ein Blauwal von der Seite: ein langer, schlanker, blaugrauer Körper mit hellen Flecken, ein flacher Kopf, eine lange Brustflosse mit hellem Rand und eine kleine Rückenfinne weit hinten. Daneben ein grauer Mensch, der etwas über die halbe Höhe des Wals reicht.",
+   "note": "Unsere eigene Rekonstruktion, nach veröffentlichten Maßen in Code gebaut und in unserer Engine gerendert. Keine Fotos.",
+   "marks": [
+    {
+     "span": "whale",
+     "text": "Unser Blauwal, 22,86 m, Schnauzenspitze bis Schwanzkerbe"
+    },
+    {
+     "span": "depth",
+     "text": "Größte Körperhöhe, 2,86 m, unser Modell"
+    },
+    {
+     "span": "person",
+     "text": "Der Mensch, 1,70 m"
+    }
+   ],
+   "close": {
+    "pic": "close",
+    "tag": "tag_made",
+    "what": "Aus der Nähe: der Kopf unseres Blauwals neben dem Menschen. Die beiden Blaslöcher liegen oben hinter einem erhöhten Spritzschutz, und der Blas aus ihnen steigt schmal und hoch auf, 9 m oder mehr.",
+    "alt": "Der Kopf des Blauwals aus der Nähe, von der Seite: ein langer, flacher Kopf, oben die Blaslöcher, an der Kehle feine Furchen entlang, daneben der graue Mensch.",
+    "marks": [
+     {
+      "span": "snout",
+      "text": "Schnauzenspitze bis Blaslöcher, 3,6 m, unser Modell"
+     },
+     {
+      "span": "grooves",
+      "text": "Kehlfurchen"
+     },
+     {
+      "span": "blowholes",
+      "text": "Zwei Blaslöcher"
+     },
+     {
+      "span": "person",
+      "text": "Der Mensch, 1,70 m"
+     }
+    ]
+   }
+  },
+  "guess": {
+   "h": "Zum Raten",
+   "q": "Ein neugeborener Blauwal ist etwa 7 m lang. Wiegt er mehr oder weniger als eine Tonne?",
+   "button": "Antwort zeigen",
+   "a": "Mehr: etwa 2,7 t, nach Angaben des Natural History Museum in London. Mit etwa 7 m ist das Kalb schon länger als vier Menschen, der Länge nach hintereinandergelegt.",
+   "button_open": "Antwort verbergen"
+  },
+  "out": {
+   "text": "Der Flügel für dieses Tier wird noch gebaut. Der Flügel von Leonardo da Vinci ist heute schon offen.",
+   "link": "Zum Leonardo-Flügel"
+  }
+ },
+ "blocks": [
+  {
+   "type": "numbers",
+   "id": "numbers",
+   "nav": "Blauwal-Steckbrief: die Zahlen als Tabelle",
+   "h": "Blauwal-Steckbrief: die Zahlen als Tabelle",
+   "unit": "In Metern und Tonnen. Jede Zelle zu Höhe oder Körperhöhe nennt den Punkt, den sie misst. Eine leere Zelle hat keine belegte Zahl.",
+   "cols": [
+    "Tier",
+    "Länge",
+    "Höhe oder Körperhöhe, mit dem Messpunkt",
+    "Gewicht",
+    "Wie sicher"
+   ],
+   "rows": [
+    {
+     "cells": [
+      "Die meisten ausgewachsenen Blauwale",
+      "etwa 23 bis 27 m, Weibchen länger als Männchen",
+      "",
+      "rund 100 bis 150 t, nach einer Studie von 2025, nie im Ganzen gewogen",
+      "gut für die Länge: ein Bestimmungsbuch und die US-Meeresbehörde stimmen überein. Das Gewicht ist ein Modell"
+     ]
+    },
+    {
+     "cells": [
+      "Die größten Blauwale",
+      "etwa 30 m, vielleicht mehr",
+      "",
+      "vielleicht knapp 200 t, die Obergrenze eines Modells",
+      "mittel: eine Studie von 2025 und die Übersicht, auf die sie sich stützt"
+     ]
+    },
+    {
+     "cells": [
+      "Der längste verzeichnete Blauwal, ein Weibchen",
+      "33,27 m, ein umstrittener Rekord aus dem Walfang in einer norwegischen Liste von 1928, neben einem Fabrikschiff vermessen",
+      "",
+      "",
+      "umstritten: zwei neuere Studien sind sich uneins"
+     ]
+    },
+    {
+     "cells": [
+      "Das höchste verzeichnete Gewicht, 1940er-Jahre",
+      "27,6 m",
+      "",
+      "190 t für ein trächtiges Weibchen, in Stücken gewogen, eine Angabe, die wir nicht an ihrer Quelle lesen konnten",
+      "eine Angabe, die eine Studie von 2025 zitiert"
+     ]
+    },
+    {
+     "cells": [
+      "Die am besten belegte Wägung, ein Weibchen, 1948",
+      "27,1 m",
+      "",
+      "etwa 130 t ohne Blut, mit einer Schätzung für das Blut etwa 140 t, in Stücken gewogen",
+      "gut: der Bericht über die Wägung selbst"
+     ]
+    },
+    {
+     "cells": [
+      "USNM 49757, das Männchen, nach dem unser Modell gebaut ist, Washington",
+      "22,86 m, wie 1903 notiert",
+      "nicht notiert",
+      "nicht bekannt",
+      "die Aufzeichnung von 1903. Ob er ausgewachsen war, ist umstritten: Sein Beschreiber nannte ihn erwachsen, doch die Enden seiner Unterarmknochen waren noch nicht verwachsen"
+     ]
+    },
+    {
+     "cells": [
+      "Unser Modell",
+      "22,86 m, Schnauzenspitze bis Schwanzkerbe",
+      "2,86 m, größte Körperhöhe, unser Modell",
+      "",
+      "an unseren Dateien gemessen"
+     ]
+    },
+    {
+     "cells": [
+      "Kopf und Flossen unseres Modells",
+      "Schädel 5,81 m, Schnauzenspitze bis Blaslöcher 3,64 m, eine Brustflosse 3,19 m, die Schwanzflosse 4,44 m von Spitze zu Spitze",
+      "",
+      "",
+      "an unseren Dateien gemessen, der Schädel nach dem Schädel von USNM 49757 bemessen, der 5,79 m lang ist"
+     ]
+    },
+    {
+     "cells": [
+      "Hope, London, ein junges Weibchen",
+      "25,2 m, so wie ihr Skelett montiert ist",
+      "",
+      "ihr Skelett 4,5 t",
+      "das Museum, das sie bewahrt"
+     ]
+    },
+    {
+     "cells": [
+      "Unser Megalodon",
+      "etwa 16 m",
+      "",
+      "rund 30 t (Modell von 2025), etwa 61 t (Modell von 2022)",
+      "zwei Modelle derselben Wirbelsäule, Gewicht umstritten"
+     ]
+    },
+    {
+     "cells": [
+      "Der größte Megalodon",
+      "vielleicht etwa 20 m",
+      "",
+      "",
+      "ein Zahn, hochgerechnet über ganze Gebisse"
+     ]
+    },
+    {
+     "cells": [
+      "Argentinosaurus",
+      "etwa 30 bis 35 m, rekonstruiert, nie gemessen, unser Argentinosaurus etwa 30,6 m",
+      "",
+      "rund 65 bis 80 t, ein Modell",
+      "ein Teilskelett, der Körper von Verwandten übernommen"
+     ]
+    },
+    {
+     "cells": [
+      "Der Mensch",
+      "",
+      "1,70 m groß, vom Scheitel bis zur Sohle",
+      "",
+      "unsere Vergleichsfigur"
+     ]
+    }
+   ]
+  },
+  {
+   "type": "text",
+   "id": "biggest-ever",
+   "nav": "Ist der Blauwal das größte Tier der Welt?",
+   "h": "Ist der Blauwal das größte Tier der Welt?",
+   "paras": [
+    "Ja, soweit man weiß. Der Blauwal ist das schwerste uns bekannte Tier, und die US-Meeresbehörde NOAA und eine Studie von 2017 nennen ihn das größte Tier, das je gelebt hat. Eine Studie von 2025 ist vorsichtiger. Sie hält offen, welches Tier das größte überhaupt war, denn einige riesige Dinosaurier, die nur aus Bruchstücken oder verlorenen Knochen bekannt sind, könnten ihm gleichgekommen sein. Perucetus, ein fossiler Wal, der 2023 als womöglich schwerer vorgestellt wurde, ist nach zwei späteren Studien weit leichter."
+   ]
+  },
+  {
+   "type": "text",
+   "id": "length-weight",
+   "nav": "Blauwal: Länge und Gewicht",
+   "h": "Blauwal: Länge und Gewicht",
+   "paras": [
+    "Die meisten ausgewachsenen Blauwale sind 23 bis 27 m lang, und die Weibchen werden länger als die Männchen. Am größten sind die Blauwale der Antarktis. Im Nordatlantik und im Nordpazifik erreichen Blauwale etwa 27 m, und der Zwergblauwal bleibt kürzer.",
+    "Nach einer Studie von 2025 wiegen ausgewachsene Blauwale rund 100 bis 150 t, die größten vielleicht knapp 200 t. Gewogen wurde noch nie ein ganzer Blauwal. Jedes Gewicht stammt von Walen, die auf Walfangschiffen zerlegt und Stück für Stück gewogen wurden, und weil an Deck Blut verloren ging, fallen diese Summen zu niedrig aus. Ein Modell aus 31 so gewogenen Walen ergibt für einen Blauwal von 23 m Länge rund 75 bis 85 t."
+   ]
+  },
+  {
+   "type": "text",
+   "id": "records",
+   "nav": "Der größte Blauwal, der je gemessen wurde",
+   "h": "Der größte Blauwal, der je gemessen wurde",
+   "paras": [
+    "Der längste verzeichnete Blauwal ist ein Weibchen von 33,27 m aus einer norwegischen Walfangliste von 1928, im Wasser neben einem Fabrikschiff vermessen. Über diesen umstrittenen Rekord aus dem Walfang sind sich zwei neuere Studien uneins: Die eine hält das Tier für den längsten zuverlässig gemessenen Blauwal, die andere die Länge für nicht glaubhaft. Seit Biologen auf den Fangflotten mitfuhren, tauchte in den Listen kein Wal über 30,5 m mehr auf, die größten Blauwale waren also etwa 30 m lang, vielleicht mehr. Das höchste verzeichnete Gewicht sind 190 t für ein trächtiges, sehr fettes Weibchen von 27,6 m, in den 1940er-Jahren von einer sowjetischen Flotte in Stücken gewogen. Es ist eine Angabe, die wir nicht an ihrer Quelle lesen konnten."
+   ]
+  },
+  {
+   "type": "text",
+   "id": "heart",
+   "nav": "Das Herz des Blauwals",
+   "h": "Das Herz des Blauwals",
+   "paras": [
+    "Das einzige erhaltene Blauwalherz wog rund 180 kg und misst etwa 1,5 mal 1,2 m. Es stammt von einem der Blauwale, die 2014 vor Neufundland im Eis eingeschlossen starben, und wird im Royal Ontario Museum in Toronto aufbewahrt. Herzen, die in den 1940er-Jahren auf Walfangschiffen gewogen wurden, kamen auf rund 180 bis 625 kg. Einem Männchen wurde vor Kalifornien ein Messgerät angeheftet. Bei tiefen Tauchgängen sank sein Herzschlag bis auf zwei Schläge pro Minute, an der Oberfläche stieg er auf 25 bis 37."
+   ]
+  },
+  {
+   "type": "text",
+   "id": "tongue",
+   "nav": "Wie schwer ist die Zunge eines Blauwals?",
+   "h": "Wie schwer ist die Zunge eines Blauwals?",
+   "paras": [
+    "Einen Beleg, dass je eine Blauwalzunge gewogen wurde, haben wir nicht gefunden, doch sie soll 4 t wiegen, oder 7 t, oder so viel wie ein Elefant. Keine dieser Angaben nennt eine Methode, und die beiden Zahlen widersprechen sich. Sicher ist: Die Zunge ist riesig, weich und flach und drückt nach einem großen Schluck das Wasser durch die Barten hinaus."
+   ]
+  },
+  {
+   "type": "text",
+   "id": "megalodon",
+   "nav": "Blauwal und Megalodon",
+   "h": "Blauwal und Megalodon",
+   "paras": [
+    "Den Fossilien nach sind sich die beiden nie begegnet: Der letzte Megalodon lebte vor etwa 3,6 Millionen Jahren, das älteste uns bekannte Fossil eines Blauwals ist etwa 1,5 bis 1,25 Millionen Jahre alt. Wer gewonnen hätte, darauf gibt es keine Antwort. Unser Megalodon, etwa 16 m lang, kommt auf etwas mehr als zwei Drittel der Länge unseres Blauwals. Ein Rückgang kleiner Bartenwale, seiner Beute, wird als eine der möglichen Ursachen für das Ende des Megalodons genannt, doch keine ist gesichert. Argentinosaurus war mit etwa 30 bis 35 m ungefähr so lang wie die längsten Blauwale und mit rund 65 bis 80 t nach seinen Modellen etwa halb so schwer wie ein großer Blauwal. Kein bekannter Dinosaurier war schwerer.",
+    "In unserem Bild ist unser Blauwal etwa drei Viertel so lang wie unser Argentinosaurus."
+   ],
+   "scale": {
+    "pic": "beside",
+    "tag": "tag_made",
+    "what": "Unser Argentinosaurus, unser Blauwal und unser Megalodon im selben Maßstab mit dem Menschen, nur zum Größenvergleich. Die drei lebten nie zur selben Zeit.",
+    "alt": "Drei Riesen von der Seite, alle in dieselbe Richtung gewandt: ein Dinosaurier mit langem Hals und Schwanz auf vier Beinen, länger als die anderen, ein Blauwal und ein Hai, daneben der graue Mensch.",
+    "note": [
+     "Der Körper unseres Megalodons folgt dem Modell von ",
+     {
+      "text": "Shimada und anderen 2025",
+      "href": "https://palaeo-electronica.org/content/2025/5450-biology-of-otodus-megalodon"
+     },
+     " (",
+     {
+      "text": "CC BY 4.0",
+      "href": "https://creativecommons.org/licenses/by/4.0/"
+     },
+     "). Wir haben ihn vermessen und verändert."
+    ],
+    "marks": [
+     {
+      "span": "argentinosaurus",
+      "text": "Unser Argentinosaurus, etwa 30,6 m"
+     },
+     {
+      "span": "blue-whale",
+      "text": "Unser Blauwal, 22,86 m"
+     },
+     {
+      "span": "megalodon",
+      "text": "Unser Megalodon, etwa 16 m"
+     },
+     {
+      "span": "person",
+      "text": "Der Mensch, 1,70 m"
+     }
+    ]
+   }
+  },
+  {
+   "type": "text",
+   "id": "skeleton",
+   "nav": "Blauwal-Skelett",
+   "h": "Blauwal-Skelett",
+   "paras": [
+    "Das bekannteste Blauwalskelett ist Hope, ein junges Weibchen von etwa 15 Jahren, das im März 1891 bei Wexford in Irland strandete. Ihr Skelett, montiert 25,2 m lang, wiegt 4,5 t und kam 1892 nach London. Seit 2017 hängt es in der Hintze Hall des Natural History Museum von der Decke, als tauche der Wal ab. Unser Modell folgt einem anderen Wal, dem Männchen USNM 49757, das 1903 an der Hermitage Bay auf Neufundland erlegt wurde und dessen Skelett die Smithsonian Institution in Washington aufbewahrt. Ob dieses Männchen ausgewachsen war, ist umstritten. In Toronto hat das Royal Ontario Museum das Skelett eines 23,3 m langen Wals gezeigt, der 2014 bei Trout River auf Neufundland angespült wurde.",
+    "Unser Skelettbild zeigt, welche Knochen nach seinen eigenen Maßen bemessen sind."
+   ],
+   "scale": {
+    "pic": "skeleton",
+    "tag": "tag_built",
+    "what": "Unser Blauwal als Skelett, im selben Maßstab. Jeder Knochen ist danach gefärbt, wie seine Größe bestimmt wurde.",
+    "alt": "Unser Blauwal als Skelett von der Seite, neben dem grauen Menschen, die Knochen in zwei Farben, je nachdem, wie ihre Größe bestimmt wurde. In der Farbe seiner eigenen Knochenmaße: der Schädel, die Unterkiefer, die ersten Halswirbel, alle Rippen, das Brustbein, die Schulterblätter, die meisten Knochen der Brustflossen und einzelne Wirbel. Der übrige Rücken ist in der anderen Farbe.",
+    "key": [
+     {
+      "swatch": "measured",
+      "text": "Bemessen nach seinen eigenen Knochenmaßen (USNM 49757)"
+     },
+     {
+      "swatch": "comparator",
+      "text": "Bemessen nach anderen Walen"
+     },
+     "„Nach seinen eigenen Knochenmaßen“ heißt: auf die veröffentlichten Maße seiner Knochen gebracht, nicht gescannt. Das Zungenbein in der Kehle ist nicht gebaut."
+    ],
+    "marks": [
+     {
+      "span": "skull",
+      "text": "Schädel, 5,8 m, unser Modell"
+     },
+     {
+      "span": "person",
+      "text": "Der Mensch, 1,70 m"
+     }
+    ]
+   }
+  },
+  {
+   "type": "text",
+   "id": "lifespan",
+   "nav": "Wie alt werden Blauwale?",
+   "h": "Wie alt werden Blauwale?",
+   "paras": [
+    "Die NOAA schätzt, dass Blauwale im Schnitt etwa 80 bis 90 Jahre alt werden. Gezählt wird das Alter an den Schichten der wachsartigen Ohrpfropfen toter Wale."
+   ]
+  },
+  {
+   "type": "text",
+   "id": "how-many",
+   "nav": "Wie viele Blauwale gibt es noch?",
+   "h": "Wie viele Blauwale gibt es noch?",
+   "paras": [
+    "Gezählt hat sie niemand vollständig: Nach einer Schätzung, die das Royal Ontario Museum 2016 nannte, waren es damals 5.000 bis 10.000. Nach einer anderen, der Einstufung der Roten Liste von 2018, gab es 5.000 bis 15.000 ausgewachsene Tiere, und die Art galt als stark gefährdet. Diese Einstufung konnten wir nur aus zweiter Hand lesen.",
+    "Walfänger meldeten allein in der Antarktis zwischen 1909 und 1965 rund 330.000 getötete Blauwale. Seit Mitte der 1960er-Jahre ist der Blauwal vor dem Walfang geschützt, und 1986 trat ein internationales Verbot des kommerziellen Walfangs in Kraft. Nach Angaben der NOAA nehmen die Bestände wieder zu, und die größten Gefahren sind heute Schiffe und Fischereigerät."
+   ]
+  },
+  {
+   "type": "text",
+   "id": "eating",
+   "nav": "Wie ein Blauwal frisst",
+   "h": "Wie ein Blauwal frisst",
+   "paras": [
+    "Blauwale fressen Krill, kleine garnelenartige Tiere. Ein Blauwal stößt mit offenem Maul in einen Schwarm, und die Kehlfurchen, Furchen an der Kehle, dehnen sich, bis das Maul prall gefüllt ist. Das Wasser fließt durch die Barten hinaus, Hornplatten, die anstelle von Zähnen vom Oberkiefer hängen, und der Krill bleibt drinnen."
+   ]
+  },
+  {
+   "type": "notes",
+   "id": "numbers-read",
+   "nav": "Zahlen, die du vielleicht gelesen hast",
+   "h": "Zahlen, die du vielleicht gelesen hast",
+   "intro": "Zu jeder Zahl: woher sie kommt und was sie bedeutet.",
+   "rows": [
+    {
+     "term": "33 m",
+     "text": "Ein umstrittener Rekord aus dem Walfang, ein einzelnes Weibchen in einer Liste von 1928. Längen über 30,5 m verschwanden, sobald Biologen maßen."
+    },
+    {
+     "term": "190 t und 200 t",
+     "text": "Die 190 t stammen von einem trächtigen Weibchen, in den 1940er-Jahren in Stücken gewogen, eine Angabe, die wir nicht an ihrer Quelle lesen konnten. Die 200 t sind die Obergrenze eines Modells."
+    },
+    {
+     "term": "270 t",
+     "text": "Ein Modell von 2024 für einen Wal von 33 m, die Länge des umstrittenen Rekords aus dem Walfang. Eine Studie von 2025 kommt für einen Wal von 30,5 m auf etwa 195 t."
+    },
+    {
+     "term": "Ein Herz so groß wie ein Auto",
+     "text": "Keine Messung, die wir fanden, stützt das. Das einzige erhaltene Herz misst etwa 1,5 mal 1,2 m, viel kleiner als ein Auto, nach unserem eigenen Vergleich."
+    },
+    {
+     "term": "Schlagadern, durch die ein Mensch schwimmen könnte",
+     "text": "Nichts, was wir gelesen haben, stützt das, und eine gemessene Weite der Hauptschlagader eines Blauwals fanden wir nicht."
+    },
+    {
+     "term": "Eine Zunge so schwer wie ein Elefant",
+     "text": "Die Zunge soll so schwer sein, doch keine Wägung steht dahinter."
+    },
+    {
+     "term": "Das größte Tier, das je gelebt hat",
+     "text": "Mit einem Wort mehr stimmt es, das größte bekannte Tier."
+    },
+    {
+     "term": "Perucetus mit bis zu 340 t",
+     "text": "Zwei spätere Studien setzten diesen fossilen Wal weit herab, auf rund 60 bis 70 t und auf 35 bis 40 t."
+    }
+   ]
+  },
+  {
+   "type": "faq",
+   "id": "questions",
+   "nav": "Weitere Fragen",
+   "h": "Weitere Fragen",
+   "items": [
+    {
+     "q": "Wie groß ist ein Blauwal im Vergleich zum Menschen?",
+     "a": "Unser Blauwal ist so lang wie etwa 13 Menschen von 1,70 m, der Länge nach hintereinandergelegt. Sein Schädel allein ist so lang wie drei Menschen und ein Stück, eine Brustflosse fast so lang wie zwei. Das sind unsere eigenen Rechnungen, an unserem Modell."
+    },
+    {
+     "q": "Warum heißt er Blauwal?",
+     "a": "Seine Haut ist blaugrau und gefleckt, und unter Wasser wirkt er hellblau."
+    }
+   ]
+  },
+  {
+   "type": "text",
+   "id": "museum",
+   "nav": "Im Museum",
+   "h": "Im Museum",
+   "paras": [
+    "Museum of Ages ist ein digitales Museum, gemacht von einer gemeinnützigen Organisation. Der Eintritt ist frei, ein Konto brauchst du nicht. Im Flügel der Tiere wird dieses Tier unter den anderen stehen, von den Riesen der Vorzeit bis zu den letzten ihrer Art. Wie ein fertiger Flügel aussieht, zeigt der Flügel von Leonardo da Vinci."
+   ],
+   "links": [
+    {
+     "out": true,
+     "text": "Zum Leonardo-Flügel"
+    }
+   ]
+  },
+  {
+   "type": "pages",
+   "id": "next",
+   "items": [
+    {
+     "page": "megalodon",
+     "pic": "megalodon",
+     "alt": "Ein Hai mit geschlossenem Maul von der Seite, dunkelgrau mit einem helleren Band an der Flanke, neben einem grauen Menschen, der winzig daneben steht.",
+     "line": "Die eine lange Wirbelsäule eines Megalodons, die gefunden wurde, ergibt etwa 16 m, und die größten Megalodons waren vielleicht etwa 20 m lang, im Größenvergleich mit Mensch, Weißem Hai und Blauwal."
+    },
+    {
+     "page": "biggest-dinosaurs",
+     "pic": "dinosaurs",
+     "alt": "Sieben Dinosaurier in einer Reihe von der Seite, zwei mit langen Hälsen hoch über den anderen, und ein grauer Mensch, der daneben winzig wirkt.",
+     "line": "Sieben von unseren neben einem Menschen, im selben Maßstab: der schwerste höchstwahrscheinlich ein Titanosaurier aus Patagonien, der höchste vermutlich Sauroposeidon, und warum der längste noch offen ist."
+    }
+   ]
+  },
+  {
+   "type": "sources",
+   "id": "sources",
+   "nav": "Quellen",
+   "h": "Quellen",
+   "intro": "Die Zahlen stammen aus diesen Studien und von den Museen und Behörden, die die Knochen und die Aufzeichnungen bewahren. Das Museum ist von allen unabhängig.",
+   "read": [
+    {
+     "text": "Motani und Pyenson, 2024, PeerJ, zum Gewicht eines Blauwals bei jeder Länge, zu den Rekorden und zu Perucetus.",
+     "href": "https://doi.org/10.7717/peerj.16978"
+    },
+    {
+     "text": "Paul und Larramendi, 2025, Palaeontologia Electronica, zu den größten Blauwalen, den Rekorden und Perucetus.",
+     "href": "https://palaeo-electronica.org/content/2025/5431-trimming-down-perucetus"
+    },
+    {
+     "text": "Nishiwaki, 1950, Scientific Reports of the Whales Research Institute, die Wägungen in Stücken von 1947 bis 1949.",
+     "href": "https://www.icrwhale.org/pdf/SC004184-209.pdf"
+    },
+    {
+     "text": "Goldbogen und andere, 2019, PNAS, zum Herzschlag eines Blauwals mit Messgerät.",
+     "href": "https://doi.org/10.1073/pnas.1914273116"
+    },
+    {
+     "text": "Slater, Goldbogen und Pyenson, 2017, Proceedings of the Royal Society B.",
+     "href": "https://doi.org/10.1098/rspb.2017.0546"
+    },
+    {
+     "text": "Bianucci und andere, 2019, Biology Letters, die Kurzfassung, zum ältesten uns bekannten Fossil eines Blauwals.",
+     "href": "https://doi.org/10.1098/rsbl.2019.0175"
+    },
+    {
+     "text": "Boessenecker und andere, 2019, PeerJ, die Kurzfassung, zum Ende des Megalodons.",
+     "href": "https://peerj.com/articles/6088/"
+    },
+    {
+     "text": "Bianucci und andere, 2023, Nature, die Kurzfassung, zu Perucetus.",
+     "href": "https://doi.org/10.1038/s41586-023-06381-1"
+    },
+    {
+     "text": "Cooke, 2018, die Einstufung des Blauwals in der Roten Liste der IUCN, nur aus Zitaten gelesen."
+    },
+    {
+     "text": "Miller, 1924, die Beschreibung des Männchens USNM 49757, und eine Besprechung davon in Nature, 1925, wie unsere Faktenprüfung sie zitiert."
+    },
+    {
+     "text": "Jefferson, Leatherwood und Webber, 1993, das Bestimmungsbuch der FAO Marine Mammals of the World.",
+     "href": "https://www.fao.org/4/t0725e/t0725e07.pdf"
+    },
+    {
+     "text": "NOAA Fisheries: ihre Seite zum Blauwal, Stand 2026.",
+     "href": "https://www.fisheries.noaa.gov/species/blue-whale"
+    },
+    {
+     "text": "Natural History Museum, London: seine Seite zur Geschichte von Hope.",
+     "href": "https://www.nhm.ac.uk/discover/hope-the-blue-whale-history.html"
+    },
+    {
+     "text": "Royal Ontario Museum, Toronto: seine Pressemitteilung zum Herz, 2017, zwei Beiträge seines Blogs, 2015 und 2016, und sein Jahresbericht 2015 bis 2016.",
+     "href": "https://www.rom.on.ca/news-releases/blue-whale-heart-arrives-rom"
+    },
+    {
+     "text": "Megalodon und Argentinosaurus: die Zahlen und Quellen unserer Megalodon-Seite und unserer Seite der größten Dinosaurier.",
+     "href": "https://museumofages.org/de/tiere/megalodon/"
+    }
+   ],
+   "contact": "Ist eine Zahl oder ein Museum falsch angegeben, schreib uns, und wir korrigieren es.",
+   "contact_link": "Zum Impressum",
+   "what_link": "Was dieses Museum ist"
+  },
+  {
+   "type": "text",
+   "id": "pictures",
+   "nav": "Unsere Bilder nutzen",
+   "h": "Unsere Bilder nutzen",
+   "paras": [
+    [
+     "Die vier Bilder des Blauwals auf dieser Seite, die Seitenansicht, der Kopf, das Skelett und die Reihe mit unserem Megalodon und unserem Argentinosaurus, sind unsere eigene Arbeit unter ",
+     {
+      "text": "CC BY-SA 4.0",
+      "href": "https://creativecommons.org/licenses/by-sa/4.0/deed.de"
+     },
+     ", Nachweis: Museum of Ages, für die Reihe dazu Körperform des Megalodons nach Shimada und anderen 2025 (",
+     {
+      "text": "CC BY 4.0",
+      "href": "https://creativecommons.org/licenses/by/4.0/"
+     },
+     "). Sie zeigen eine Rekonstruktion, in Code gebaut und in unserer Engine gerendert, keine Fotos. Die Bilder der anderen Seiten, die hier aufgeführt sind, nennen ihren Nachweis auf der jeweiligen Seite."
+    ]
+   ]
+  }
+ ]
+}

@@ -1533,6 +1533,138 @@
    "sha256": "abdd1a417585af51a60cefcd911f772344153c854d9277e660d0c4a9400d2156"
   },
   {
+   "path": "pages/pics/img/animals-blue-whale-beside-1600.avif",
+   "url": "/static/img/animals-blue-whale-beside-1600.avif",
+   "bytes": 17776,
+   "sha256": "0e30ada540e27713bc3faf78edda9399cafc8e83468bdc802506b638cc8acaa6"
+  },
+  {
+   "path": "pages/pics/img/animals-blue-whale-beside-1600.webp",
+   "url": "/static/img/animals-blue-whale-beside-1600.webp",
+   "bytes": 27280,
+   "sha256": "b7c8c9dbe0fd1f635889cd1a2280e7943708710335c5e6c3dd2a63caece39021"
+  },
+  {
+   "path": "pages/pics/img/animals-blue-whale-beside-2400.avif",
+   "url": "/static/img/animals-blue-whale-beside-2400.avif",
+   "bytes": 27951,
+   "sha256": "cd5aa1da35cf6a5d0b905ef917059546750d98257404828d9458f6d8c46cfc66"
+  },
+  {
+   "path": "pages/pics/img/animals-blue-whale-beside-2400.webp",
+   "url": "/static/img/animals-blue-whale-beside-2400.webp",
+   "bytes": 46444,
+   "sha256": "6fe10d7a2e545a0f72cc61b28fc4537de7ada1cd10842de5a0be3c22ff6e84be"
+  },
+  {
+   "path": "pages/pics/img/animals-blue-whale-beside-800.avif",
+   "url": "/static/img/animals-blue-whale-beside-800.avif",
+   "bytes": 8194,
+   "sha256": "abeafd392540694d975bc2d8ac9b15c66cd31d160d9a9955e3dafeb499bb3620"
+  },
+  {
+   "path": "pages/pics/img/animals-blue-whale-beside-800.webp",
+   "url": "/static/img/animals-blue-whale-beside-800.webp",
+   "bytes": 11522,
+   "sha256": "c64251b7b11b3cffa1b3f1896c03a955edde54db03a0627d66a38a7511513dc8"
+  },
+  {
+   "path": "pages/pics/img/animals-blue-whale-close-1600.avif",
+   "url": "/static/img/animals-blue-whale-close-1600.avif",
+   "bytes": 10419,
+   "sha256": "3e1569c4503025dc3df74aa007d0ce18200074aeabc8cb7941944c4e51f36488"
+  },
+  {
+   "path": "pages/pics/img/animals-blue-whale-close-1600.webp",
+   "url": "/static/img/animals-blue-whale-close-1600.webp",
+   "bytes": 16866,
+   "sha256": "6bc719898944a0dda18810f5b1f92b30ff42a29d95058f7c48bb86cae958c5c6"
+  },
+  {
+   "path": "pages/pics/img/animals-blue-whale-close-800.avif",
+   "url": "/static/img/animals-blue-whale-close-800.avif",
+   "bytes": 4777,
+   "sha256": "880e7576938c47b58bd660eb7e0d4d67f57cda9b931986d7bc569ab6510a30e8"
+  },
+  {
+   "path": "pages/pics/img/animals-blue-whale-close-800.webp",
+   "url": "/static/img/animals-blue-whale-close-800.webp",
+   "bytes": 7052,
+   "sha256": "7012ba68dcdc3e067d6da731baf656853498bb9ad2b77f0e6ac729670d6af6e7"
+  },
+  {
+   "path": "pages/pics/img/animals-blue-whale-og-de-1200x630.png",
+   "url": "/static/img/animals-blue-whale-og-de-1200x630.png",
+   "bytes": 87689,
+   "sha256": "1bba26a47da6bae46df65c9c8d4e075b5c384a2a126b1b52b4635c4de4e703af"
+  },
+  {
+   "path": "pages/pics/img/animals-blue-whale-og-en-1200x630.png",
+   "url": "/static/img/animals-blue-whale-og-en-1200x630.png",
+   "bytes": 87429,
+   "sha256": "d07ee45cc2efb47def96c861f4a2048253278bfdcf9fdc0a35dc3eb80b046098"
+  },
+  {
+   "path": "pages/pics/img/animals-blue-whale-side-1600.avif",
+   "url": "/static/img/animals-blue-whale-side-1600.avif",
+   "bytes": 10331,
+   "sha256": "d8c3bf438c5b1f4ae171935c1297eaac9b9b255159325b0e947c390f2f427fe9"
+  },
+  {
+   "path": "pages/pics/img/animals-blue-whale-side-1600.webp",
+   "url": "/static/img/animals-blue-whale-side-1600.webp",
+   "bytes": 14290,
+   "sha256": "e818a8d7deb35383177d1c0b09901b8f6880e75a946fe0a948174c461b25e65d"
+  },
+  {
+   "path": "pages/pics/img/animals-blue-whale-side-2400.avif",
+   "url": "/static/img/animals-blue-whale-side-2400.avif",
+   "bytes": 16429,
+   "sha256": "81c33f6054407fa198ae6f70c18a470470241461f82f16c182fb20ae570e28f9"
+  },
+  {
+   "path": "pages/pics/img/animals-blue-whale-side-2400.webp",
+   "url": "/static/img/animals-blue-whale-side-2400.webp",
+   "bytes": 24278,
+   "sha256": "60845b5496f1ece12d73d3c31400f15797312facc2a9adf7c55c05cdab98751b"
+  },
+  {
+   "path": "pages/pics/img/animals-blue-whale-side-800.avif",
+   "url": "/static/img/animals-blue-whale-side-800.avif",
+   "bytes": 4534,
+   "sha256": "d9602021debfeac55e576e91b93e6cc08e14f39e1a014903f50de7e0a6f55646"
+  },
+  {
+   "path": "pages/pics/img/animals-blue-whale-side-800.webp",
+   "url": "/static/img/animals-blue-whale-side-800.webp",
+   "bytes": 5906,
+   "sha256": "08a714ee6c62eeed22af94f6e3dbf986e159a6a3c337200851b164752d8b59a2"
+  },
+  {
+   "path": "pages/pics/img/animals-blue-whale-skeleton-1600.avif",
+   "url": "/static/img/animals-blue-whale-skeleton-1600.avif",
+   "bytes": 14953,
+   "sha256": "f9c9384704fa9294401fb3fcd2a7d74ee932c6e2f9b63f79264ed8a1add9e8b4"
+  },
+  {
+   "path": "pages/pics/img/animals-blue-whale-skeleton-1600.webp",
+   "url": "/static/img/animals-blue-whale-skeleton-1600.webp",
+   "bytes": 24860,
+   "sha256": "267b3cb9959140b1355b576bed064a5912e9817dd3c738bb9cd08e1a4bcf9b4b"
+  },
+  {
+   "path": "pages/pics/img/animals-blue-whale-skeleton-800.avif",
+   "url": "/static/img/animals-blue-whale-skeleton-800.avif",
+   "bytes": 6770,
+   "sha256": "86a377612003692e22ede3d7fae5b6c938c93322fa90ca8156db3c15a600b7f3"
+  },
+  {
+   "path": "pages/pics/img/animals-blue-whale-skeleton-800.webp",
+   "url": "/static/img/animals-blue-whale-skeleton-800.webp",
+   "bytes": 10068,
+   "sha256": "f7821d7f8da67b28aa5f11053b55145de4a221aceffd3a92d4c73c2f4c80c50e"
+  },
+  {
    "path": "pages/pics/img/animals-brachiosaurus-close-1600.avif",
    "url": "/static/img/animals-brachiosaurus-close-1600.avif",
    "bytes": 79745,

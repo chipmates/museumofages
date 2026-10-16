@@ -146,6 +146,16 @@
    ],
    "sizes": "(min-width: 1280px) 690px, (min-width: 960px) 54vw, (min-width: 600px) calc(100vw - 64px), calc(100vw - 40px)",
    "person": "93.5% 36.88%"
+  },
+  "whale": {
+   "stem": "animals-blue-whale-side",
+   "widths": [
+    800,
+    1600,
+    2400
+   ],
+   "sizes": "(min-width: 1280px) 690px, (min-width: 960px) 54vw, (min-width: 600px) calc(100vw - 64px), calc(100vw - 40px)",
+   "person": null
   }
  },
  "meta": {
@@ -588,6 +598,13 @@
      "pic": "stego",
      "alt": "A Stegosaurus from the side: a small low head, two rows of tall plates along the arched back, two of its four tail spikes, the front legs shorter than the hind legs. Beside it a grey person whose head stays below the top of its back.",
      "line": "The Stegosaurus from the row, on its own: its plates and tail spikes against a person, Sophie in London, and the “second brain” story."
+    },
+    {
+     "page": "blue-whale",
+     "pic": "whale",
+     "alt": "A blue whale from the side: a long, slim, blue-grey body with pale mottling, a flat head, a long, pale-edged flipper and a small back fin far back. Beside it a grey person who reaches a little past halfway up its side.",
+     "line": "Not a dinosaur but a living whale, the heaviest animal known: most grown blue whales measure 23 to 27 m, and ours stands to one scale beside our Argentinosaurus and our megalodon.",
+     "only": "en"
     }
    ]
   },

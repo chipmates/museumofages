@@ -93,6 +93,16 @@
    ],
    "sizes": "(min-width: 1280px) 690px, (min-width: 960px) 54vw, (min-width: 600px) calc(100vw - 64px), calc(100vw - 40px)",
    "person": "92.45% 40.98%"
+  },
+  "whale": {
+   "stem": "animals-blue-whale-side",
+   "widths": [
+    800,
+    1600,
+    2400
+   ],
+   "sizes": "(min-width: 1280px) 690px, (min-width: 960px) 54vw, (min-width: 600px) calc(100vw - 64px), calc(100vw - 40px)",
+   "person": null
   }
  },
  "meta": {
@@ -415,6 +425,13 @@
      "pic": "mammoth",
      "alt": "Ein Wollhaarmammut von der Seite im dunkelbraunen Fell, mit hoch gewölbtem Kopf, abfallendem Rücken, zwei gebogenen Stoßzähnen und einer Marke an der Schulter. Der graue Mensch daneben steht niedriger als die Spitzen der Stoßzähne.",
      "line": "Ein typischer sibirischer Bulle maß an der Schulter etwa 2,7 bis 2,9 m, etwa so hoch wie ein Bulle des Asiatischen Elefanten. Unser Mammut ist ein einzelner echter Bulle, 1900 im Permafrost gefunden, mit dem, was seines ist und was ergänzt wurde."
+    },
+    {
+     "page": "blue-whale",
+     "pic": "whale",
+     "alt": "Ein Blauwal von der Seite: ein langer, schlanker, blaugrauer Körper mit hellen Flecken, ein flacher Kopf, eine lange Brustflosse mit hellem Rand und eine kleine Rückenfinne weit hinten. Daneben ein grauer Mensch, der etwas über die halbe Höhe des Wals reicht.",
+     "line": "Der Blauwal, das schwerste uns bekannte Tier, ist meist 23 bis 27 m lang, die größten erreichen etwa 30 m, und unser Blauwal steht im selben Maßstab neben unserem Megalodon, dazu, warum sich die beiden nie begegnet sind.",
+     "only": "de"
     }
    ]
   },

@@ -1308,6 +1308,173 @@ class Case(unittest.TestCase):
                 self.assertNotIn("taxa", data["page"])
         self.assertEqual(len(seen), 4, seen)
 
+    # Each claim the blue whale page must never make, by its topic's rules: the canon's NEVER SAY and the facts sheet's.
+    NEVER_WHALE = {
+        "en": ["Our blue whale weighs 80 tonnes", "Ours would weigh about 75 tonnes",
+               "USNM 49757 weighed 70 t", "Our whale, 75 to 85 t", "Its volume is 90 m³",
+               "Our model came to 82 tonnes", "Blue whales are 22.9 m long", "A blue whale is 22.86 m",
+               "The blue whale grows to 75 ft", "The largest blue whale was 33 m", "They reach 33.27 m",
+               "A whale of 110 feet", "The blue whale reaches 35 m", "Blue whales grow up to 40 metres",
+               "It weighed 173 tonnes", "A whale of 177 t", "The record is 180 tonnes",
+               "One whale weighed 136.4 tonnes", "The heaviest weighed 190 tonnes",
+               "190 t for a pregnant female, weighed in pieces", "The heaviest blue whale weighed 200 tonnes",
+               "A blue whale can weigh 270 tonnes", "A model gives 270 t", "A blue whale was weighed whole",
+               "The whale was weighed at 150 tonnes", "Whole blue whales were weighed",
+               "The blue whale weighed 150 t", "Our whale was full grown", "USNM 49757 was a full-grown adult",
+               "He was fully grown", "Our blue whale is 25 m long", "Our model is Hope",
+               "Our whale was about 30 m", "Our blue whale, 33 m",
+               "The blue whale is the largest animal that ever lived", "It is the biggest animal ever.",
+               "The largest animal to have ever lived", "Its heart is the size of a car",
+               "A heart as big as a small car", "A person could swim through its arteries",
+               "A child could crawl through its arteries", "Its tongue weighs 4 tonnes",
+               "The tongue weighs as much as an elephant", "A tongue of 7 t", "Perucetus was heavier",
+               "Perucetus could outweigh it", "Heavier than the blue whale was Perucetus",
+               "An ichthyosaur was as big", "The megalodon hunted blue whales", "Megalodon ate blue whales",
+               "Blue whales and megalodon met", "The fight between a megalodon and a blue whale",
+               "Megalodon and blue whales lived at the same time", "Its real bones are coloured",
+               "It is louder than a jet", "The loudest animal on Earth", "Its call reaches 188 decibels",
+               "A newborn weighs 2.7 tonnes", "A calf is 2,700 kg", "About 10,000 are left",
+               "There are 5,000 to 10,000 blue whales", "Only 10,000 remain",
+               "Blue whales have been protected since 1966", "Protected from whaling since 1967",
+               "Blue whales live to 110", "They can live up to 110 years", "Their maximum age is 90",
+               "It eats 4 tonnes of krill a day", "Krill a day",
+               "Our whale's skeleton is on display in Washington",
+               "His skeleton is on display at the Smithsonian", "It was 78 feet long",
+               "Blue whales are bright blue", "A yellow belly", "Blue whales have teeth", "Its baleen teeth",
+               "It grows over 35 m", "Calves gain 91 kg a day", "It eats 7,000 kg of krill",
+               "There are 10,000 to 25,000", "They live 65 to 80 years", "Megalodon was a giant great white",
+               "A megalodon skeleton", "Megalodon weighed about 60 tonnes", "Argentinosaurus was 39.7 m",
+               "Argentinosaurus was about 40 m", "Argentinosaurus weighed 100 tonnes",
+               "The largest land animal ever", "Hope was a male, and he stranded", "The female lost his blood",
+               "USNM 49757 and her bones", "She is our blue whale", "The blue whale and his calf",
+               "A blue whale opens her mouth"],
+        "de": ["Unser Blauwal wiegt 80 t", "Unser Modell käme auf etwa 75 t", "USNM 49757 wog 70 t",
+               "Unser Wal, 75 bis 85 t", "Sein Volumen ist 90 m³", "Unser Modell kommt auf 82 Tonnen",
+               "Blauwale sind 22,9 m lang", "Ein Blauwal ist 22,86 m lang", "Der größte Blauwal war 33 m lang",
+               "Sie erreichen 33,27 m", "Der Blauwal erreicht 35 m", "Blauwale werden bis zu 40 Meter lang",
+               "Er wog 173 t", "Ein Wal von 177 t", "Der Rekord sind 180 Tonnen", "Ein Wal wog 136,4 Tonnen",
+               "Der schwerste wog 190 t", "190 t für ein trächtiges Weibchen, in Stücken gewogen",
+               "Der schwerste Blauwal wog 200 t", "Ein Blauwal kann 270 t wiegen", "Ein Modell ergibt 270 t",
+               "Ein ganzer Blauwal wurde gewogen", "Der Wal wog 150 t", "Blauwale wurden im Ganzen gewogen",
+               "Unser Wal war ausgewachsen", "USNM 49757 war ein ausgewachsenes Männchen",
+               "Unser Blauwal ist 25 m lang", "Unser Modell ist Hope", "Unser Blauwal war etwa 30 m",
+               "Der Blauwal ist das größte Tier, das je gelebt hat", "Das größte Tier aller Zeiten",
+               "Sein Herz ist so groß wie ein Auto", "Ein Herz so groß wie ein kleiner PKW",
+               "Durch seine Adern könnte ein Mensch schwimmen",
+               "Ein Kind könnte durch die Hauptschlagader kriechen", "Seine Zunge wiegt 4 t",
+               "Die Zunge ist so schwer wie ein Elefant", "Perucetus war schwerer",
+               "Schwerer als der Blauwal war Perucetus", "Ein Ichthyosaurier war so groß",
+               "Der Megalodon jagte Blauwale", "Blauwale und der Megalodon begegneten sich",
+               "Der Kampf zwischen Megalodon und Blauwal", "Megalodon und Blauwal lebten zur selben Zeit",
+               "Seine echten Knochen sind gefärbt", "Er ist lauter als ein Düsenjet",
+               "Das lauteste Tier der Erde", "Sein Ruf erreicht 188 Dezibel", "Ein Neugeborenes wiegt 2,7 t",
+               "Ein Kalb wiegt 2.700 kg", "Es gibt noch etwa 10.000 Blauwale",
+               "Es gibt 5.000 bis 10.000 Blauwale", "Etwa 10.000 sind übrig",
+               "Blauwale sind seit 1966 geschützt", "Geschützt seit 1967",
+               "Blauwale werden bis zu 110 Jahre alt", "Ihr Höchstalter liegt bei 90",
+               "Er frisst 4 t Krill am Tag", "Bis 7 Tonnen Krill pro Tag",
+               "Sein Skelett ist in Washington ausgestellt", "In Washington ist es zu sehen",
+               "Er war 78 Fuß lang", "Blauwale sind leuchtend blau", "Ein gelber Bauch",
+               "Blauwale haben Zähne", "Die Bartenzähne", "Ein Panzer aus Barten", "Er wird über 35 m lang",
+               "Kälber nehmen 91 kg am Tag zu", "Er frisst 7.000 Kilogramm Krill", "Es gibt 10.000 bis 25.000",
+               "Sie werden 65 bis 80 Jahre alt", "Der Megalodon war ein riesiger Weißer Hai",
+               "Ein Megalodon-Skelett ist bekannt", "Das Skelett eines Megalodon",
+               "Der Megalodon wog etwa 60 t", "Argentinosaurus war 39,7 m lang",
+               "Argentinosaurus war etwa 40 m lang", "Argentinosaurus wog 100 t",
+               "Das größte Landtier aller Zeiten", "Hope strandete, und er war jung", "Er hieß Hope"],
+    }
+
+    def test_the_blue_whale_page_refuses_each_never_say_phrase(self):
+        page = self.topic_page("blue_whale")
+        topic = next(t for w in self.wings().values() if isinstance(w, dict) for t in w.get("topics", []) if t.get("count") == "blue_whale")
+        # every rule of the topic is met by a phrase of the list in a language it holds for, so a rule added without
+        # its phrase is seen
+        for pattern, _, *only in topic["never_say"]:
+            self.assertTrue(any(re.search(pattern, x.lower()) for lang, xs in self.NEVER_WHALE.items() if not only or lang in only[0]
+                                for x in xs), pattern)
+        for lang, phrases in self.NEVER_WHALE.items():
+            original = self.data(lang, page)
+            for phrase in phrases:
+                with self.subTest(lang=lang, phrase=phrase):
+                    # the line under the answer carries none of the words a rule lets a number stand with
+                    shutil.rmtree(self.dir / "out", ignore_errors=True)
+                    data = json.loads(json.dumps(original))
+                    data["top"]["out"]["text"] += f" {phrase}."
+                    self.save(lang, data, page)
+                    self.fails(r"top\.out\.text matches")
+                    self.save(lang, original, page)
+
+    def test_a_blue_whale_number_stands_only_with_the_words_that_say_whose_it_is(self):
+        """The page names our whale's 22.86 m, the disputed 33 m record, the 190, 200 and 270 tonnes, the weighings in
+        pieces, whether he was full grown, a model's weight at 23 m, the largest animal that ever lived, the heart, the
+        arteries and the tongue, Perucetus, the megalodon's time, the newborn's weight, the count and the baleen on
+        purpose: without the words that say whose the number is or what the claim was, the same fields stop the build."""
+        page = self.topic_page("blue_whale")
+        cases = [
+            ({"en": (r", snout tip to tail notch", ""),
+              "de": (r", Schnauzenspitze bis Schwanzkerbe", "")},
+             "22.86 m, 22.9 m and 75 ft only as ours or as the recorded length of the male of 1903"),
+            ({"en": (r"A disputed whaling record, one female", "A whaling record, one female"),
+              "de": (r"Ein umstrittener Rekord aus dem Walfang, ein einzelnes Weibchen", "Ein Rekord aus dem Walfang, ein einzelnes Weibchen")},
+             "33 m, 33.27 m and 110 feet only as the disputed whaling record"),
+            ({"en": (r" It is a record we could not read at its source\.", ""),
+              "de": (r" Es ist eine Angabe, die wir nicht an ihrer Quelle lesen konnten\.", "")},
+             "190 tonnes only as a pregnant female weighed in pieces, a record not read at its source"),
+            ({"en": (r"perhaps near 200\st, the top of a model", "near 200 t"),
+              "de": (r"vielleicht knapp 200\st, die Obergrenze eines Modells", "knapp 200 t")},
+             "200 tonnes only as perhaps, the top of a model"),
+            ({"en": (r"model for a whale of 33\sm, the length of the disputed whaling record", "record for a whale of 33 m"),
+              "de": (r"Ein Modell von 2024 für einen Wal von 33\sm, die Länge des umstrittenen Rekords aus dem Walfang", "Eine Angabe von 2024 für einen Wal von 33 m")},
+             "270 tonnes only as a model's number for the disputed record"),
+            ({"en": (r"though none was ever weighed whole", "as one was weighed whole"),
+              "de": (r"doch noch nie wurde ein ganzer Blauwal gewogen", "und einmal wurde ein ganzer Blauwal gewogen")},
+             "never a whole blue whale weighed: every weight comes from whales weighed in pieces"),
+            ({"en": (r"Whether he was full grown is disputed", "He was full grown"),
+              "de": (r"Ob dieses Männchen ausgewachsen war, ist umstritten", "Dieses Männchen war ausgewachsen")},
+             "never full grown for our whale as certain: whether he was is disputed"),
+            ({"en": (r"A model built from 31 whales weighed this way puts a blue whale 23\sm long at", "A model puts our blue whale at"),
+              "de": (r"Ein Modell aus 31 so gewogenen Walen ergibt für einen Blauwal von 23\sm Länge", "Ein Modell ergibt für unseren Blauwal")},
+             "never a weight beside our whale or USNM 49757, and never its volume: no weight is known for him"),
+            ({"en": (r"True with one word added, the largest animal known\.", "True."),
+              "de": (r"Mit einem Wort mehr stimmt es, das größte bekannte Tier\.", "Das stimmt.")},
+             "the largest animal that ever lived only with known: the largest animal known"),
+            ({"en": (r"No measurement we found backs it\..*?by our own comparison\.", "It is true."),
+              "de": (r"Keine Messung, die wir fanden, stützt das\..*?nach unserem eigenen Vergleich\.", "Das stimmt.")},
+             "a heart the size of a car only with what was measured: far smaller than a car"),
+            ({"en": (r"Nothing we read supports it, and we", "We"),
+              "de": (r"Nichts, was wir gelesen haben, stützt das, und eine", "Eine")},
+             "arteries to swim or crawl through only as a claim nothing we read supports"),
+            ({"en": (r"though it is said to weigh 4\stonnes", "though it weighs 4 tonnes"),
+              "de": (r"doch sie soll 4\st wiegen", "doch sie wiegt 4 t")},
+             "a tongue's weight only as said to: no weighing stands behind it"),
+            ({"en": (r"as possibly heavier, comes out far lighter in two later studies", "was heavier"),
+              "de": (r"der 2023 als womöglich schwerer vorgestellt wurde, ist nach zwei späteren Studien weit leichter", "war schwerer")},
+             "Perucetus heavier only as possibly, with the later studies that brought it down"),
+            ({"en": (r"The three never lived at the same time\.", "The three lived at the same time."),
+              "de": (r"Die drei lebten nie zur selben Zeit\.", "Die drei lebten zur selben Zeit.")},
+             "the megalodon and the blue whale never as meeting, hunting or fighting: they never lived at the same time"),
+            ({"en": (r"more or less than a tonne", "a tonne"),
+              "de": (r"mehr oder weniger als eine Tonne", "eine Tonne")},
+             "the newborn's 2.7 tonnes stand only in the guess's answer"),
+            ({"en": (r"Nobody has counted them all: by one estimate, given by the Royal Ontario Museum in 2016, there were then", "There were"),
+              "de": (r"Gezählt hat sie niemand vollständig: Nach einer Schätzung, die das Royal Ontario Museum 2016 nannte, waren es damals", "Es waren")},
+             "how many are left only by one estimate, with who gave it and its year"),
+            ({"en": (r"in place of teeth", "like teeth"),
+              "de": (r"anstelle von Zähnen", "wie Zähne")},
+             "never teeth: baleen in place of teeth"),
+        ]
+        out, written = self.build()
+        shutil.rmtree(out)
+        for subs, rule in cases:
+            for lang, (condition, instead) in subs.items():
+                with self.subTest(lang=lang, rule=rule):
+                    original = self.data(lang, page)
+                    text = json.dumps(original, ensure_ascii=False)
+                    self.assertRegex(text, condition)
+                    self.save(lang, json.loads(re.sub(condition, instead, text)), page)
+                    self.fails(re.escape(rule))
+                    self.save(lang, original, page)
+
     def test_a_share_picture_may_set_its_words_beside_the_picture(self):
         """A page whose picture would leave much of the share card empty under its words sets them in a column at the
         left and the picture at the right (page.og_image.layout beside): the picture whole, the words wrapped in their
@@ -1377,8 +1544,8 @@ class Case(unittest.TestCase):
                     self.assertIn(".sc-swatch--%s-%s{background:%s}" % (fig["pic"], k["swatch"], colours[k["swatch"]]), text)
                     self.assertRegex(text, r'<li class="sc-keys__i"><span class="sc-swatch sc-swatch--%s-%s" aria-hidden="true"></span><span>%s'
                                      % (fig["pic"], k["swatch"], re.escape(html.escape(k["text"].split(":")[0], quote=True))))
-        # the Spinosaurus, the Brachiosaurus, the Ankylosaurus and the Stegosaurus pages, in both languages
-        self.assertEqual(seen, 8)
+        # the Spinosaurus, the Brachiosaurus, the Ankylosaurus, the Stegosaurus and the blue whale pages, in both languages
+        self.assertEqual(seen, 10)
         shutil.rmtree(out)
         for lang in ("en", "de"):
             data = self.data(lang, page)
@@ -2195,7 +2362,8 @@ class Case(unittest.TestCase):
             self.assertIsNotNone(details, path)
             self.assertIn(html.escape(guess["button"], quote=False), details.group(1))
             self.assertRegex(details.group(1), r"<summary[^>]*>")
-            self.assertIn(guess["a"][:40], self.words(details.group(1)).replace("\u00a0", " "))
+            # a name held whole (join_names) is its own span: the words around it part by spaces only
+            self.assertIn(guess["a"][:40], re.sub(r"\s+", " ", self.words(details.group(1)).replace("\u00a0", " ")))
             self.assertNotIn("<script", own.replace('<script type="application/ld+json">', ""))
             # the person's height stands over the person in every picture at one scale
             self.assertGreaterEqual(own.count('class="sc-person '), 2)

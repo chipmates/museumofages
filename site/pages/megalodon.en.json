@@ -93,6 +93,16 @@
    ],
    "sizes": "(min-width: 1280px) 690px, (min-width: 960px) 54vw, (min-width: 600px) calc(100vw - 64px), calc(100vw - 40px)",
    "person": "92.45% 40.98%"
+  },
+  "whale": {
+   "stem": "animals-blue-whale-side",
+   "widths": [
+    800,
+    1600,
+    2400
+   ],
+   "sizes": "(min-width: 1280px) 690px, (min-width: 960px) 54vw, (min-width: 600px) calc(100vw - 64px), calc(100vw - 40px)",
+   "person": null
   }
  },
  "meta": {
@@ -415,6 +425,13 @@
      "pic": "mammoth",
      "alt": "A woolly mammoth from the side in a dark brown coat: high domed head, sloping back, two curved tusks, a mark at the shoulder. The grey person beside him stands lower than the tusk tips.",
      "line": "A typical Siberian bull stood about 2.7 to 2.9 m at the shoulder, about as tall as an Asian elephant bull. Ours is one real bull found frozen in 1900, with what is his and what is restored."
+    },
+    {
+     "page": "blue-whale",
+     "pic": "whale",
+     "alt": "A blue whale from the side: a long, slim, blue-grey body with pale mottling, a flat head, a long, pale-edged flipper and a small back fin far back. Beside it a grey person who reaches a little past halfway up its side.",
+     "line": "The blue whale, the heaviest animal known, is mostly 23 to 27 m long, the largest about 30 m, and ours stands to one scale beside our megalodon, with why the two never met.",
+     "only": "en"
     }
    ]
   },

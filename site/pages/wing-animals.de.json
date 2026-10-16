@@ -103,6 +103,16 @@
    ],
    "sizes": "(min-width: 1280px) 690px, (min-width: 960px) 54vw, (min-width: 600px) calc(100vw - 64px), calc(100vw - 40px)",
    "person": "93.5% 36.88%"
+  },
+  "whale": {
+   "stem": "animals-blue-whale-side",
+   "widths": [
+    800,
+    1600,
+    2400
+   ],
+   "sizes": "(min-width: 1280px) 690px, (min-width: 960px) 54vw, (min-width: 600px) calc(100vw - 64px), calc(100vw - 40px)",
+   "person": null
   }
  },
  "meta": {
@@ -176,6 +186,12 @@
      "page": "stegosaurus",
      "pic": "stego",
      "alt": "Ein Stegosaurus von der Seite: ein kleiner, tief sitzender Kopf, zwei Reihen hoher Platten auf dem gewölbten Rücken, zwei seiner vier Schwanzstacheln, die Vorderbeine kürzer als die Hinterbeine. Daneben ein grauer Mensch, dessen Kopf unter der Oberkante des Rückens bleibt."
+    },
+    {
+     "page": "blue-whale",
+     "pic": "whale",
+     "alt": "Ein Blauwal von der Seite: ein langer, schlanker, blaugrauer Körper mit hellen Flecken, ein flacher Kopf, eine lange Brustflosse mit hellem Rand und eine kleine Rückenfinne weit hinten. Daneben ein grauer Mensch, der etwas über die halbe Höhe des Wals reicht.",
+     "only": "de"
     }
    ]
   }

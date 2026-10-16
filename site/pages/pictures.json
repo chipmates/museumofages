@@ -54,7 +54,11 @@
     { "name": "animals-stegosaurus-side", "file": "stegosaurus-side.png", "widths": [800, 1600, 2400] },
     { "name": "animals-stegosaurus-close", "file": "stegosaurus-close.png", "widths": [800, 1600] },
     { "name": "animals-stegosaurus-beside-triceratops-t-rex", "file": "stegosaurus-vs.png", "widths": [800, 1600, 2400] },
-    { "name": "animals-stegosaurus-skeleton", "file": "stegosaurus-skeleton.png", "widths": [800, 1600] }
+    { "name": "animals-stegosaurus-skeleton", "file": "stegosaurus-skeleton.png", "widths": [800, 1600] },
+    { "name": "animals-blue-whale-side", "file": "blue-whale-side.png", "widths": [800, 1600, 2400] },
+    { "name": "animals-blue-whale-close", "file": "blue-whale-close.png", "widths": [800, 1600] },
+    { "name": "animals-blue-whale-beside", "file": "blue-whale-beside.png", "widths": [800, 1600, 2400] },
+    { "name": "animals-blue-whale-skeleton", "file": "blue-whale-skeleton.png", "widths": [800, 1600] }
   ],
   "share": [
     { "name": "vinci-inventions-og-1200x630", "file": "stop-works.webp", "crop": "1920x1008+0+60" },

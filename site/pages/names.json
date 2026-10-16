@@ -262,6 +262,15 @@
     { "text": "Swiss Journal of Geosciences", "lang": "en" },
     { "text": "Paleobiology", "lang": "en" },
     { "text": "Far Side", "whole": true, "lang": "en" },
-    { "text": "Thagomizer", "lang": "en" }
+    { "text": "Thagomizer", "lang": "en" },
+    { "text": "Balaenoptera musculus", "taxon": true, "whole": true },
+    { "text": "Perucetus", "taxon": true },
+    { "text": "USNM 49757", "whole": true },
+    { "text": "Hermitage Bay", "lang": "en" },
+    { "text": "Hintze Hall", "lang": "en" },
+    { "text": "Trout River", "lang": "en" },
+    { "text": "Royal Ontario Museum", "lang": "en" },
+    { "text": "Scientific Reports of the Whales Research Institute", "lang": "en" },
+    { "text": "Marine Mammals of the World", "lang": "en" }
   ]
 }
