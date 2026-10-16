@@ -325,7 +325,7 @@
     "pic": "skeleton",
     "tag": "tag_built",
     "what": "Unser Stegosaurus als Skelett, im Maßstab der Seitenansicht, mit Sophies eigenen und den ergänzten Knochen in zwei Tönen.",
-    "alt": "Unser Stegosaurus als Skelett von der Seite, neben dem grauen Menschen: die meisten Knochen im Ton von Sophies eigenen, die Vorderfüße, eine Platte und der vordere Teil des Schwanzes im Ton der ergänzten.",
+    "alt": "Unser Stegosaurus als Skelett von der Seite, neben dem grauen Menschen: die meisten Knochen im Ton von Sophies eigenen, im Ton der ergänzten die Vorderfüße, die meisten Zehen, ein Schulterknochen, mehrere Halsrippen, eine Platte, der vordere Teil des Schwanzes und die meisten kleinen Knochen darunter.",
     "key": [
      {
       "swatch": "own",
@@ -335,7 +335,7 @@
       "swatch": "rebuilt",
       "text": "Fehlt bei Sophie, ergänzt"
      },
-     "Ergänzte Knochen sind von Sophies anderer Körperseite gespiegelt oder nach anderen Funden geformt. Sophies Knochen zeigen wir nicht zerdrückt, und einige als Sophies markierte Rippenenden sind am echten Skelett aus Gips. Die ersten drei Schwanzwirbel erscheinen als ergänzt, obwohl deren obere Teile gefunden wurden, und am Schädel sind die ergänzten Stellen nur ungefähr eingezeichnet."
+     "Ergänzte Knochen sind von Sophies anderer Körperseite gespiegelt oder nach Sophies Nachbarknochen und nach anderen Funden geformt. Sophies Knochen zeigen wir nicht zerdrückt, und einige als Sophies markierte Rippenenden und Plattenränder sind am echten Skelett aus Gips. Die ersten drei Schwanzwirbel und der zwanzigste erscheinen als ergänzt, obwohl der zwanzigste und die oberen Teile der ersten drei gefunden wurden. Am Schädel sind die ergänzten Stellen nur ungefähr eingezeichnet."
     ]
    }
   },
