@@ -148,7 +148,7 @@
  },
  "top": {
   "h1": "¿Cuál fue el dinosaurio más grande?",
-  "answer": "Probablemente Argentinosaurus, un titanosaurio de cuello largo de Argentina: unos 30 a 35 m de largo y más o menos 65 a 80 toneladas, según modelos hechos a partir de unos pocos huesos. Nadie puede estar seguro. Nunca se ha encontrado un esqueleto completo de ninguna de las especies más grandes, y su pariente Patagotitan se le acerca mucho. Nuestro Argentinosaurus de la imagen mide 30,6 m, lo mismo que 18 personas de 1,70 m tumbadas una detrás de otra.",
+  "answer": "Probablemente Argentinosaurus, un titanosaurio de cuello largo de Argentina: unos 30 a 35 m de largo y más o menos 65 a 80 toneladas, según modelos hechos a partir de unos pocos huesos. Nadie puede estar seguro. Hasta hoy no se encontró un esqueleto completo de ninguna de las especies más grandes, y su pariente Patagotitan se le acerca mucho. Nuestro Argentinosaurus de la imagen mide 30,6 m, lo mismo que 18 personas de 1,70 m tumbadas una detrás de otra.",
   "answer_more": "«El más grande» puede querer decir tres cosas. El más pesado fue muy probablemente un titanosaurio de la Patagonia, Argentinosaurus o Patagotitan. El más largo no está establecido. El más alto fue probablemente Sauroposeidon, con la cabeza a unos 17 m del suelo, según cuatro vértebras del cuello.",
   "scale": {
    "pic": "row",
@@ -408,7 +408,7 @@
     },
     {
      "term": "Los 37 m y las 69 toneladas de Patagotitan",
-     "text": "Los 37 m son su réplica de Chicago, hecha a partir de al menos seis animales y con los huesos que faltaban esculpidos, no una cifra del estudio que lo describió en 2017. Las 69 toneladas salieron en ese estudio del grosor de los huesos de las patas, y el mismo equipo las corrigió en 2020 a unas 57. Un estudio de volumen de 2025 lo vuelve a poner por encima de 60."
+     "text": "Los 37 m son su réplica de Chicago, hecha a partir de al menos seis animales y con los huesos que faltaban esculpidos, no una cifra del estudio que lo describió en 2017. Las 69 toneladas salieron en ese estudio del perímetro de los huesos de las patas, y el mismo equipo las corrigió en 2020 a unas 57. Un estudio de volumen de 2025 lo vuelve a poner por encima de 60."
     },
     {
      "term": "Bruhathkayosaurus, con 175 toneladas o más",
@@ -424,7 +424,7 @@
     },
     {
      "term": "Brachiosaurus, 13 m de alto",
-     "text": "El esqueleto de Berlín, que es un Giraffatitan. Su cráneo está a unos 13 m del suelo desde el nuevo montaje de 2007, y a 11,87 m en el primero, de 1937: la diferencia está en la postura del cuello. Nunca se midió la altura del Brachiosaurus americano, y las alturas de la cabeza publicadas van de 9,4 a 13 m, según el ángulo del cuello que se elija."
+     "text": "El esqueleto de Berlín, que es un Giraffatitan. Su cráneo está a unos 13 m del suelo desde el nuevo montaje de 2007, y estaba a 11,87 m en el primero, de 1937: la diferencia está en la postura del cuello. Nunca se midió la altura del Brachiosaurus americano, y las alturas de la cabeza publicadas van de 9,4 a 13 m, según el ángulo del cuello que se elija."
     },
     {
      "term": "Tan alto como un edificio de seis pisos",
@@ -438,12 +438,12 @@
    "nav": "Cuán seguro es esto",
    "h": "Cuán seguro es esto",
    "paras": [
-    "Nadie ha puesto nunca un dinosaurio en una báscula. Solo quedan huesos, y la mayor parte de un cuerpo es carne. Cada peso de esta página es un cálculo, hecho de una de estas tres maneras.",
+    "Nadie puso nunca un dinosaurio en una báscula. Solo quedan huesos, y la mayor parte de un cuerpo es carne. Cada peso de esta página es un cálculo, hecho de una de estas tres maneras.",
     {
      "points": [
       [
-       "El grosor de los huesos de las patas:",
-       "se mide el contorno del fémur y del húmero, y se aplica la regla que une ese contorno con el peso en los animales que viven hoy. Cuanto más lejos está el animal de todo lo que vive, menos firme es el resultado. De Argentinosaurus no se tiene ni un solo hueso del brazo."
+       "El perímetro de los huesos de las patas:",
+       "se mide el perímetro del fémur y del húmero, y se aplica la regla que une ese perímetro con el peso en los animales que viven hoy. Cuanto más lejos está el animal de todo lo que vive, menos firme es el resultado. De Argentinosaurus no se tiene ni un solo hueso del brazo."
       ],
       [
        "Un modelo de volumen:",
@@ -474,7 +474,7 @@
     "tag": "tag_built",
     "what": "Nuestro Argentinosaurus como esqueleto.",
     "alt": "Nuestro Argentinosaurus como esqueleto, de lado: unos pocos huesos rojo oscuro de la espalda, la cadera y la pata entre otros claros, reconstruidos o tomados de parientes, junto a la persona gris.",
-    "key": "Rojo oscuro: todo lo que se ha encontrado de este animal. Seis o siete vértebras de la espalda, la parte inferior de la cadera, un trozo de costilla y un peroné de 1,55 m de largo. Azul: nunca encontrado, las vértebras de la espalda y las costillas que faltan, el segundo peroné como reflejo del primero, y las partes que faltan de los huesos hallados, con una forma que encaja con los suyos. Crema: tomado de parientes, sobre todo de Patagotitan.",
+    "key": "Rojo oscuro: todo lo que se encontró de este animal. Seis o siete vértebras de la espalda, la parte inferior de la cadera, un trozo de costilla y un peroné de 1,55 m de largo. Azul: nunca encontrado, las vértebras de la espalda y las costillas que faltan, el segundo peroné como reflejo del primero, y las partes que faltan de los huesos hallados, con una forma que encaja con los suyos. Crema: tomado de parientes, sobre todo de Patagotitan.",
     "after": 1
    }
   },
@@ -499,7 +499,7 @@
     },
     {
      "q": "¿Hubo algún dinosaurio más grande que una ballena azul?",
-     "a": "No, según lo que se sabe. La NOAA, la agencia de los océanos de Estados Unidos, llama a la ballena azul el animal más grande que ha vivido en nuestro planeta. La mayoría de las adultas miden de 23 a 27 m, las más grandes unos 30 m. Argentinosaurus, con unos 30 a 35 m, medía más o menos lo mismo. Solo una vez se acercó un hallazgo en tierra al peso de las ballenas más grandes, el de la India que se perdió, y sus huesos ya no existen."
+     "a": "No, según lo que se sabe. La NOAA, la agencia de los océanos de Estados Unidos, llama a la ballena azul el animal más grande que ha vivido en nuestro planeta. La mayoría de las adultas miden de 23 a 27 m, las más grandes unos 30 m. Argentinosaurus, con unos 30 a 35 m, medía más o menos lo mismo. Solo una vez se propuso para un animal de tierra un peso cercano al de las ballenas más grandes, el de la India que se perdió, y sus huesos ya no existen."
     }
    ]
   },
@@ -549,7 +549,7 @@
      "page": "brachiosaurus",
      "pic": "brachio",
      "alt": "Un Brachiosaurus de lado, con el cuello largo levantado en una curva suave, las patas delanteras más largas que las traseras y la cola sin tocar el suelo, junto a una persona gris que podría pasar por debajo de su vientre, y una barra corta que marca lo alto de la cabeza.",
-     "line": "El Brachiosaurus de la fila, solo: unos 22 a 25 m de largo según una reconstrucción, una altura que nadie ha medido, y por qué el famoso esqueleto de Berlín es su pariente Giraffatitan."
+     "line": "El Brachiosaurus de la fila, solo: unos 22 a 25 m de largo según una reconstrucción, una altura que nadie midió, y por qué el famoso esqueleto de Berlín es su pariente Giraffatitan."
     },
     {
      "page": "triceratops",

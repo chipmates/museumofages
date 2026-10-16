@@ -138,7 +138,7 @@
   "scale": {
    "pic": "side",
    "tag": "tag_made",
-   "what": "O nosso Triceratops ao lado de uma pessoa de 1,70 m, na mesma escala, feito segundo o esqueleto de Washington, formado por uns dez animais. Ele mede 6,9 m do bico à cauda, e o dorso dele fica a uns 2,5 m de altura acima do quadril, como uma pessoa e meia.",
+   "what": "O nosso Triceratops ao lado de uma pessoa de 1,70 m, na mesma escala, feito segundo o esqueleto de Washington, formado por uns dez animais. Ele mede 6,9 m do bico à cauda, e o dorso dele fica a uns 2,5 m de altura acima do quadril, mais ou menos a altura de uma pessoa e meia.",
    "alt": "Um Triceratops de lado: um babado largo atrás da cabeça, dois chifres longos acima dos olhos, um curto acima do nariz, quatro patas. Ao lado, uma pessoa cinza que chega a uns dois terços da altura do dorso.",
    "note": [
     "A nossa própria reconstrução, construída em código a partir de medidas publicadas e desenhada com o nosso próprio motor gráfico. Não são fotografias. ",
@@ -293,8 +293,8 @@
   {
    "type": "text",
    "id": "t-rex",
-   "nav": "Triceratops vs T. rex",
-   "h": "Triceratops vs T. rex",
+   "nav": "Triceratops vs. T. rex",
+   "h": "Triceratops vs. T. rex",
    "paras": [
     "Numa contagem dos grandes dinossauros da Formação Hell Creek, em Montana, onde os dois viveram na mesma época, o Triceratops era o mais comum de todos. O T. rex mordia, sim, os Triceratops: um osso do quadril de Triceratops achado em 1991 tem 58 marcas de dentes certas que só um T. rex poderia ter feito, segundo o relatório de uma universidade de 1996. Um chifre acima do olho, arrancado por uma mordida, sarou depois, então pelo menos um Triceratops sobreviveu a uma mordida de T. rex.",
     "Se o T. rex caçava os Triceratops na maior parte das vezes ou comia sobretudo animais mortos, os ossos não dizem, e nenhum achado mostra uma luta entre os dois. Os famosos “Dueling Dinosaurs” de Montana, um Triceratops e um tiranossauro encontrados juntos, também não provam uma luta. Desde 2025, o tiranossauro deles é considerado um Nanotyrannus, um tipo menor, não um T. rex, e isso ainda é discutido.",
@@ -342,7 +342,7 @@
    "scale": {
     "pic": "skeleton",
     "tag": "tag_built",
-    "what": "O nosso Triceratops como esqueleto, com a pessoa, segundo a montagem de Washington, formada por uns dez animais, e o escaneamento que o museu fez dela. A forma clara atrás é a silhueta do nosso animal. Nenhum mapa osso por osso foi publicado: o crânio é de um animal e a maior parte do corpo de outro, então nenhum osso está colorido pelo seu achado. Os chifres são só núcleos de osso: em vida, uma bainha de chifre os deixava mais longos.",
+    "what": "O nosso Triceratops como esqueleto, com a pessoa, segundo a montagem de Washington, formada por uns dez animais, e o escaneamento que o museu fez dela. A forma clara atrás é a silhueta do nosso animal. Nenhum mapa osso por osso foi publicado: o crânio é de um animal e a maior parte do corpo de outro, então nenhum osso está colorido pelo achado de onde veio. Os chifres são só núcleos de osso: em vida, uma bainha de chifre os deixava mais longos.",
     "alt": "O esqueleto do Triceratops de lado, o grande crânio com o babado e os núcleos dos chifres, as costelas e quatro patas, ao lado da pessoa cinza, com a silhueta clara do corpo atrás dos ossos."
    }
   },
@@ -436,7 +436,7 @@
    "nav": "No museu",
    "h": "No museu",
    "paras": [
-    "O Museum of Ages é um museu digital, feito por uma organização sem fins lucrativos. Entrada franca, sem cadastro. Na ala dos animais, este animal vai estar entre os outros, dos gigantes de muito tempo atrás aos últimos da sua espécie. A ala de Leonardo da Vinci mostra como é uma ala pronta."
+    "O Museum of Ages é um museu digital, feito por uma organização sem fins lucrativos. Entrada franca, sem cadastro. Na ala dos animais, este animal vai estar entre os outros, dos gigantes de muito tempo atrás aos últimos da própria espécie. A ala de Leonardo da Vinci mostra como é uma ala pronta."
    ],
    "links": [
     {

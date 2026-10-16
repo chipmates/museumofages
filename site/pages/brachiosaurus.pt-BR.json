@@ -94,7 +94,7 @@
  },
  "meta": {
   "title": "Braquiossauro: tamanho de uns 22 a 25 m | Museum of Ages",
-  "description": "Qual o tamanho do braquiossauro? Uns 22 a 25 m de comprimento e mais ou menos 30 a 45 t, por um esqueleto parcial. O famoso de Berlim é um Giraffatitan.",
+  "description": "Qual o tamanho do braquiossauro? Uns 22 a 25 m e umas 30 a 45 t, reconstruído a partir de um esqueleto parcial. O famoso de Berlim é um Giraffatitan.",
   "og_title": "Braquiossauro: tamanho de uns 22 a 25 m de comprimento",
   "og_image_alt": "Um braquiossauro de lado, com o pescoço longo erguido numa curva suave, as patas da frente mais longas que as de trás e a cauda sem tocar o chão, ao lado de uma pessoa cinza que poderia passar por baixo da barriga dele. Uma barra curta marca o alto da cabeça."
  },
@@ -117,7 +117,7 @@
   "scale": {
    "pic": "side",
    "tag": "tag_made",
-   "what": "O nosso braquiossauro ao lado de uma pessoa de 1,70 m, na mesma escala, no tamanho do único esqueleto em que o nome se baseia, desenterrado no Colorado em 1900. O pescoço, a cabeça, a parte de baixo das pernas e quase toda a cauda seguem o Giraffatitan e outros achados. A cabeça fica a 11,8 m de altura só por causa do ângulo do pescoço que escolhemos: essa altura é nossa, não um achado.",
+   "what": "O nosso braquiossauro ao lado de uma pessoa de 1,70 m, na mesma escala, no tamanho do único esqueleto em que o nome se baseia, desenterrado no Colorado em 1900. O pescoço, a cabeça, a parte de baixo das pernas e a maior parte da cauda seguem o Giraffatitan e outros achados. A cabeça fica a 11,8 m de altura só por causa do ângulo do pescoço que escolhemos: essa altura é nossa, não um achado.",
    "alt": "Um braquiossauro de lado, com o pescoço longo erguido numa curva suave, as patas da frente mais longas que as de trás e a cauda sem tocar o chão, ao lado de uma pessoa cinza que poderia passar por baixo da barriga dele. Uma barra curta marca o alto da cabeça.",
    "note": "A nossa própria reconstrução, construída em código a partir de medidas publicadas e desenhada com o nosso próprio motor gráfico. Não são fotografias.",
    "marks": [
@@ -231,7 +231,7 @@
    "h": "Qual era a altura do braquiossauro, e ele foi o dinossauro mais alto?",
    "paras": [
     "Ninguém sabe dizer ao metro: o esqueleto de Chicago não tem pescoço, e as duas vértebras do pescoço achadas em outros lugares talvez nem sejam de braquiossauro. Por isso toda altura da cabeça já publicada foi desenhada sobre o pescoço do Giraffatitan, e nenhuma foi medida.",
-    "Como ele segurava esse pescoço é discutido, e a posição do meio é erguido, nem na horizontal nem na vertical. O pescoço do nosso modelo sobe com uns 42 graus, com o alto da cabeça a 11,8 m. O mesmo corpo teria a cabeça a uns 7 m com o pescoço na horizontal, e a mais de 14 m com o pescoço na vertical. O esqueleto de dinossauro montado mais alto é esse Giraffatitan de Berlim, e qual dinossauro foi o mais alto em vida ninguém sabe ao certo: a página dos maiores dinossauros trata dessa pergunta."
+    "Como ele segurava esse pescoço é discutido, e a posição do meio é a do pescoço erguido, nem na horizontal nem na vertical. O pescoço do nosso modelo sobe com uns 42 graus, com o alto da cabeça a 11,8 m. O mesmo corpo teria a cabeça a uns 7 m com o pescoço na horizontal, e a mais de 14 m com o pescoço na vertical. O esqueleto de dinossauro montado mais alto é esse Giraffatitan de Berlim, e qual dinossauro foi o mais alto em vida ninguém sabe ao certo: a página dos maiores dinossauros trata dessa pergunta."
    ],
    "links": [
     {
@@ -267,7 +267,7 @@
       {
        "points": [
         "A cabeça: segundo um crânio achado no Colorado em 1883, atribuído a esta espécie só com dúvidas, com as partes que faltam reconstruídas, entre elas o arco do nariz.",
-        "O pescoço, a parte da frente das costas, as escápulas, os antebraços, as mãos, a parte de baixo das pernas de trás, os pés e a cauda depois dos dois primeiros ossos: quase tudo segundo o Giraffatitan.",
+        "O pescoço, a parte da frente das costas, as escápulas, os antebraços, as mãos, a parte de baixo das pernas de trás, os pés e a cauda depois dos dois primeiros ossos: a maior parte segundo o Giraffatitan.",
         "O úmero e o fêmur esquerdos: reflexos dos direitos."
        ]
       }
@@ -297,7 +297,7 @@
      },
      {
       "swatch": "brown",
-      "text": "Marrom: segundo o Giraffatitan, todo o resto: o pescoço, a parte da frente das costas, as escápulas, quase toda a parte de baixo das pernas, as costelas e a cauda."
+      "text": "Marrom: segundo o Giraffatitan, todo o resto: o pescoço, a parte da frente das costas, as escápulas, a maior parte das pernas abaixo do cotovelo e do joelho, as costelas e a cauda."
      }
     ],
     "after": 1
@@ -309,7 +309,7 @@
    "nav": "Giraffatitan, o famoso de Berlim",
    "h": "Giraffatitan, o famoso de Berlim",
    "paras": [
-    "Giraffatitan brancai é o esqueleto alto do Museum für Naturkunde de Berlim. Os ossos dele foram escavados em Tendaguru, na atual Tanzânia, de 1909 a 1913, sob o domínio colonial alemão, como o próprio museu diz. Chamado de Brachiosaurus brancai em 1914, ele ganhou um gênero próprio em 2009, quando um estudo contou pelo menos 26 diferenças em relação ao animal americano. A montagem junta vários animais, o pescoço e o crânio são de gesso, e quase todo o osso verdadeiro está nas pernas, no quadril e nas costelas. Ela tem uns 23 m de comprimento, e o crânio está a uns 13 m de altura desde a nova montagem de 2007, a 12 m como foi montado em 1937, com o pescoço agora quase vertical para a exposição. A maioria das imagens de braquiossauro segue esse parente mais conhecido."
+    "Giraffatitan brancai é o esqueleto alto do Museum für Naturkunde de Berlim. Os ossos dele foram escavados em Tendaguru, na atual Tanzânia, de 1909 a 1913, sob o domínio colonial alemão, como o próprio museu diz. Chamado de Brachiosaurus brancai em 1914, ele ganhou um gênero próprio em 2009, quando um estudo contou pelo menos 26 diferenças em relação ao animal americano. A montagem junta vários animais, o pescoço e o crânio são de gesso, e a maior parte do osso verdadeiro está nas pernas, no quadril e nas costelas. Ela tem uns 23 m de comprimento, e o crânio está a uns 13 m de altura desde a nova montagem de 2007, e estava a 12 m como foi montado em 1937, com o pescoço agora quase vertical para a exposição. A maioria das imagens de braquiossauro segue esse parente mais conhecido."
    ]
   },
   {
@@ -341,8 +341,8 @@
   {
    "type": "text",
    "id": "giraffe",
-   "nav": "Braquiossauro vs uma girafa, e vs Argentinosaurus",
-   "h": "Braquiossauro vs uma girafa, e vs Argentinosaurus",
+   "nav": "Braquiossauro vs. uma girafa, e vs. Argentinosaurus",
+   "h": "Braquiossauro vs. uma girafa, e vs. Argentinosaurus",
    "paras": [
     "Uma girafa macho chega a uns 5,5 m de altura e pesa até umas 1,4 tonelada. A cabeça do nosso modelo fica mais ou menos duas vezes mais alta, só os ombros dele já passam da cabeça de uma girafa alta, e 30 a 45 toneladas, mais ou menos, são umas 22 a 33 girafas macho. O Argentinosaurus era maior: uns 30 a 35 m de comprimento e mais ou menos 65 a 80 toneladas, dois números reconstruídos, contra uns 22 a 25 m e 30 a 45 toneladas. Os dois nunca se encontraram, separados por dezenas de milhões de anos e um continente, e os nossos dois modelos têm a cabeça quase na mesma altura só por causa dos pescoços que escolhemos."
    ]
@@ -432,7 +432,7 @@
    "nav": "No museu",
    "h": "No museu",
    "paras": [
-    "O Museum of Ages é um museu digital, feito por uma organização sem fins lucrativos. Entrada franca, sem cadastro. Na ala dos animais, este animal vai estar entre os outros, dos gigantes de muito tempo atrás aos últimos da sua espécie. A ala de Leonardo da Vinci mostra como é uma ala pronta."
+    "O Museum of Ages é um museu digital, feito por uma organização sem fins lucrativos. Entrada franca, sem cadastro. Na ala dos animais, este animal vai estar entre os outros, dos gigantes de muito tempo atrás aos últimos da própria espécie. A ala de Leonardo da Vinci mostra como é uma ala pronta."
    ],
    "links": [
     {

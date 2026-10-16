@@ -408,7 +408,7 @@
     },
     {
      "term": "Os 37 m e as 69 toneladas do Patagotitan",
-     "text": "Os 37 m são a réplica dele em Chicago, feita a partir de pelo menos seis animais e com os ossos que faltavam esculpidos, não um número do estudo que o descreveu em 2017. As 69 toneladas saíram nesse estudo da grossura dos ossos das patas, e a mesma equipe as corrigiu em 2020 para cerca de 57. Um estudo de volume de 2025 o coloca de novo acima de 60."
+     "text": "Os 37 m são a réplica dele em Chicago, feita a partir de pelo menos seis animais e com os ossos que faltavam esculpidos, não um número do estudo que o descreveu em 2017. As 69 toneladas saíram nesse estudo da circunferência dos ossos das patas, e a mesma equipe as corrigiu em 2020 para cerca de 57. Um estudo de volume de 2025 o coloca de novo acima de 60."
     },
     {
      "term": "Bruhathkayosaurus, com 175 toneladas ou mais",
@@ -428,7 +428,7 @@
     },
     {
      "term": "Tão alto quanto um prédio de seis andares",
-     "text": "A imagem de uma revista para o Sauroposeidon, de por volta de 2002, a partir da estimativa de cerca de 17 m. Esses 17 m, por sua vez, se apoiam em quatro vértebras do pescoço. A frase é do Sauroposeidon, não do braquiossauro nem do Argentinosaurus."
+     "text": "A imagem de uma revista para o Sauroposeidon, de por volta de 2002, a partir da estimativa de cerca de 17 m. E esses 17 m se apoiam em quatro vértebras do pescoço. A frase é do Sauroposeidon, não do braquiossauro nem do Argentinosaurus."
     }
    ]
   },
@@ -442,8 +442,8 @@
     {
      "points": [
       [
-       "A grossura dos ossos das patas:",
-       "mede-se a volta do fêmur e do úmero e aplica-se a regra que liga essa medida ao peso nos animais que vivem hoje. Quanto mais longe o animal está de tudo o que vive, menos firme fica o resultado. Do Argentinosaurus não se tem nem um único osso do braço."
+       "A circunferência dos ossos das patas:",
+       "mede-se a circunferência do fêmur e do úmero e aplica-se a regra que liga essa medida ao peso nos animais que vivem hoje. Quanto mais longe o animal está de tudo o que vive, menos firme fica o resultado. Do Argentinosaurus não se tem nem um único osso do braço."
       ],
       [
        "Um modelo de volume:",
@@ -499,7 +499,7 @@
     },
     {
      "q": "Algum dinossauro foi maior que uma baleia-azul?",
-     "a": "Não, pelo que se sabe. A NOAA, a agência dos oceanos dos Estados Unidos, diz que a baleia-azul é o maior animal que já viveu no nosso planeta. A maioria das adultas tem de 23 a 27 m, as maiores cerca de 30 m. O Argentinosaurus, com cerca de 30 a 35 m, tinha mais ou menos o mesmo comprimento. Só uma vez um achado em terra foi colocado perto do peso das maiores baleias, o da Índia que se perdeu, e os ossos dele já não existem."
+     "a": "Não, pelo que se sabe. A NOAA, a agência dos oceanos dos Estados Unidos, diz que a baleia-azul é o maior animal que já viveu no nosso planeta. A maioria das adultas tem de 23 a 27 m, as maiores cerca de 30 m. O Argentinosaurus, com cerca de 30 a 35 m, tinha mais ou menos o mesmo comprimento. Só uma vez se propôs para um animal de terra um peso perto do das maiores baleias, o da Índia que se perdeu, e os ossos dele já não existem."
     }
    ]
   },
@@ -554,7 +554,7 @@
     {
      "page": "triceratops",
      "pic": "tricera",
-     "alt": "Um Triceratops visto de lado: um escudo largo atrás da cabeça, dois chifres longos sobre os olhos, um curto no nariz, quatro patas. Ao lado, uma pessoa cinza que chega a cerca de dois terços da altura do dorso.",
+     "alt": "Um Triceratops visto de lado: um babado largo atrás da cabeça, dois chifres longos sobre os olhos, um curto no nariz, quatro patas. Ao lado, uma pessoa cinza que chega a cerca de dois terços da altura do dorso.",
      "line": "O Triceratops da fila, sozinho: o crânio ao lado de uma pessoa, o esqueleto de Washington feito com cerca de dez animais, o Torosaurus e o que os ossos dizem sobre o T. rex."
     }
    ]

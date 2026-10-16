@@ -98,7 +98,7 @@
  },
  "top": {
   "h1": "Animais",
-  "answer": "O museu está construindo uma ala de animais, dos gigantes de muito tempo atrás aos últimos da sua espécie. Até ela abrir, cada página daqui responde a uma pergunta: qual era o tamanho deste animal? A nossa própria imagem o coloca ao lado de uma pessoa de 1,70 m, na mesma escala, com os números e aquilo em que eles se apoiam.",
+  "answer": "O museu está construindo uma ala de animais, dos gigantes de muito tempo atrás aos últimos da própria espécie. Até ela abrir, cada página daqui responde a uma pergunta: qual era o tamanho deste animal? A nossa própria imagem o coloca ao lado de uma pessoa de 1,70 m, na mesma escala, com os números e aquilo em que eles se apoiam.",
   "out": {
    "text": "Museum of Ages é um museu digital. Hoje está aberta a ala de Leonardo da Vinci. Entrada franca, sem cadastro.",
    "link": "Ir para a ala de Leonardo"
@@ -142,7 +142,7 @@
     {
      "page": "triceratops",
      "pic": "tricera",
-     "alt": "Um Triceratops visto de lado: um escudo largo atrás da cabeça, dois chifres longos sobre os olhos, um curto no nariz, quatro patas. Ao lado, uma pessoa cinza que chega a cerca de dois terços da altura do dorso."
+     "alt": "Um Triceratops visto de lado: um babado largo atrás da cabeça, dois chifres longos sobre os olhos, um curto no nariz, quatro patas. Ao lado, uma pessoa cinza que chega a cerca de dois terços da altura do dorso."
     }
    ]
   }

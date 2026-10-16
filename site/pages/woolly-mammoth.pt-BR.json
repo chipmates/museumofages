@@ -88,7 +88,7 @@
  },
  "top": {
   "h1": "Qual era o tamanho do mamute-lanoso?",
-  "answer": "Um macho adulto de mamute-lanoso, ou mamute-lanudo, da Sibéria tinha uns 2,7 a 2,9 m de altura no ombro e pesava umas 4 a 5 toneladas. Os machos maiores da Europa chegavam a uns 3 a 3,3 m e a umas 5 a 7 toneladas. O nosso é um único macho real, encontrado congelado em 1900: 2,71 m no ombro e umas 4,2 toneladas, reconstruídos a partir dos ossos dele. Ao lado da pessoa de 1,70 m, o ombro dele fica na altura de uma pessoa e meia.",
+  "answer": "Um macho adulto de mamute-lanoso, ou mamute-lanudo, da Sibéria tinha uns 2,7 a 2,9 m de altura no ombro e pesava umas 4 a 5 toneladas. Os machos maiores da Europa chegavam a uns 3 a 3,3 m e a umas 5 a 7 toneladas. O nosso é um único macho real, encontrado congelado em 1900: 2,71 m no ombro e umas 4,2 toneladas, reconstruídos a partir dos ossos dele. Ao lado da pessoa de 1,70 m, o ombro dele fica mais ou menos na altura de uma pessoa e meia.",
   "answer_more": "Então um macho de mamute da Sibéria era mais ou menos tão alto quanto um macho de elefante-asiático, e um pouco mais pesado para a altura dele. Um macho grande de elefante-africano-da-savana é mais ou menos meio metro mais alto e pesa mais.",
   "scale": {
    "pic": "side",
@@ -204,8 +204,8 @@
   {
    "type": "text",
    "id": "elephants",
-   "nav": "Mamute-lanoso vs elefante",
-   "h": "Mamute-lanoso vs elefante",
+   "nav": "Mamute-lanoso vs. elefante",
+   "h": "Mamute-lanoso vs. elefante",
    "paras": [
     "O mamute-lanoso, Mammuthus primigenius, era um parente próximo dos elefantes de hoje, e não o antepassado deles. Um macho típico da Sibéria era mais ou menos tão alto quanto um macho de elefante-asiático, e um pouco mais pesado para essa altura. A pelve dele era mais larga, e os ossos da parte de cima das pernas, mais longos. Um macho de elefante-africano-da-savana, o maior animal terrestre vivo, é até meio metro mais alto, mais ou menos, e pesa umas 5 a 7 toneladas. Os grandes machos de mamute da Europa se igualavam a ele. Diferente de qualquer elefante, o mamute tinha uma pelagem grossa, orelhas pequenas e uma cauda curta."
    ]
@@ -251,7 +251,7 @@
     {
      "h": "O macho de Berezovka",
      "paras": [
-      "Em agosto de 1900, um caçador da região o encontrou na margem do rio Berezovka, um afluente do Kolyma no nordeste da Sibéria. Em 1901, uma expedição de São Petersburgo chefiada por Otto Herz o desenterrou, e em 1902 ele chegou à cidade. Desde 1903 ele está exposto lá, no Museu Zoológico. O esqueleto está montado. O corpo foi restaurado na posição em que foi encontrado, deitado de barriga com as patas da frente para a frente, e a cabeça e a tromba são modeladas. Ele estava longe de completo: o alto da cabeça e grande parte do dorso tinham descongelado e sido comidos muito antes, e faltava quase toda a tromba. Ele tinha capim entre os dentes. O mais provável é que ele tenha caído numa vala ou de uma margem alta, quebrado a pelve e uma pata da frente e não tenha conseguido sair. As sementes das plantas que ele tinha comido apontam para o fim do verão."
+      "Em agosto de 1900, um caçador da região o encontrou na margem do rio Berezovka, um afluente do Kolyma no nordeste da Sibéria. Em 1901, uma expedição de São Petersburgo chefiada por Otto Herz o desenterrou, e em 1902 ele chegou à cidade. Desde 1903 ele está exposto lá, no Museu Zoológico. O esqueleto está montado. O corpo foi restaurado na posição em que foi encontrado, deitado de barriga com as patas da frente para a frente, e a cabeça e a tromba são modeladas. Ele estava longe de completo: o alto da cabeça e grande parte do dorso tinham descongelado e sido comidos muito antes, e faltava a maior parte da tromba. Ele tinha capim entre os dentes. O mais provável é que ele tenha caído numa vala ou de uma margem alta, quebrado a pelve e uma pata da frente e não tenha conseguido sair. As sementes das plantas que ele tinha comido apontam para o fim do verão."
      ]
     },
     {
@@ -390,7 +390,7 @@
    "nav": "No museu",
    "h": "No museu",
    "paras": [
-    "O Museum of Ages é um museu digital, feito por uma organização sem fins lucrativos. Entrada franca, sem cadastro. Na ala dos animais, este animal vai estar entre os outros, dos gigantes de muito tempo atrás aos últimos da sua espécie. A ala de Leonardo da Vinci mostra como é uma ala pronta."
+    "O Museum of Ages é um museu digital, feito por uma organização sem fins lucrativos. Entrada franca, sem cadastro. Na ala dos animais, este animal vai estar entre os outros, dos gigantes de muito tempo atrás aos últimos da própria espécie. A ala de Leonardo da Vinci mostra como é uma ala pronta."
    ],
    "links": [
     {
@@ -473,7 +473,7 @@
      "text": "Lister e Bahn, 2007, Mammoths: Giants of the Ice Age, como a linha de fontes de uma tabela de tamanhos muito usada o cita."
     },
     {
-     "text": "Instituto Zoológico da Academia de Ciências da Rússia, São Petersburgo: o mamute de Berezovka e a sala dos mamutes do seu Museu Zoológico.",
+     "text": "Instituto Zoológico da Academia de Ciências da Rússia, São Petersburgo: o mamute de Berezovka e a sala dos mamutes do Museu Zoológico do instituto.",
      "href": "https://www.zin.ru/museum/expositions/mammoth_fauna.html"
     },
     {

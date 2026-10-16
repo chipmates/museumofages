@@ -216,19 +216,22 @@ test('the edge puts the wing\'s first-look style into the head of a wing\'s addr
 
 const HUB = ['/a/g/animals/', `/a/g/animals/?gclid=${GCLID}`, '/a/g/de/tiere/', '/a/g/animals', '/a/g/de/tiere', '/a/g//animals/',
   '/a/g/Animals/', '/a/g/%61nimals/', '/a/g/de//tiere/', '/a/g/animals/index.html', '/a/g/de/TIERE/',
+  '/a/g/es/animales/', '/a/g/pt-br/animais/', '/a/g/PT-BR/animais/', '/a/g/es/animales/index.html',
   // a path that only begins like a topic page's stays under the wing's own and is not asked
   '/a/g/animals/megalodonx/', '/a/g/animals/megalodon/x/', '/a/g/de/tiere/megalodon-x/']
 const TOPICS = Object.values(ASKED_MAKING).flat()
 const spellings = (page) => [`/a/g${page}`, `/a/g${page}?gclid=${GCLID}`, `/a/g${page.slice(0, -1)}`, `/a/g${page}index.html`,
   `/a/g${page.toUpperCase()}`, `/a/g/${page}`, `/a/g${page.replace(/a/, '%61')}`]
 
-test('the count\'s lists name the seven animal pages in English and German as the topic pages that ask', () => {
-  assert.deepEqual([...UNASKED].sort(), ['/animals/', '/de/tiere/'])
+test('the count\'s lists name the seven animal pages in all four of their languages as the topic pages that ask', () => {
+  assert.deepEqual([...UNASKED].sort(), ['/animals/', '/de/tiere/', '/es/animales/', '/pt-br/animais/'])
   assert.deepEqual(Object.keys(ASKED_MAKING), ['megalodon', 'biggest_dinosaurs', 't_rex', 'spinosaurus', 'woolly_mammoth', 'brachiosaurus', 'triceratops'])
   for (const pages of Object.values(ASKED_MAKING)) {
-    assert.equal(pages.length, 2)
+    assert.equal(pages.length, 4)
     assert.match(pages[0], /^\/animals\/[a-z-]+\/$/)
     assert.match(pages[1], /^\/de\/tiere\/[a-z-]+\/$/)
+    assert.match(pages[2], /^\/es\/animales\/[a-z-]+\/$/)
+    assert.match(pages[3], /^\/pt-br\/animais\/[a-z-]+\/$/)
   }
 })
 
@@ -249,7 +252,7 @@ test('the edge never asks on the own page of a wing in the making, by any spelli
 })
 
 test('the edge asks on every topic page of a wing in the making, by any spelling of its address, never with GPC', () => {
-  assert.equal(TOPICS.length, 14)
+  assert.equal(TOPICS.length, 28)
   for (const page of TOPICS) {
     assert.equal(askedMaking(page), true, page)
     for (const path of spellings(page)) {

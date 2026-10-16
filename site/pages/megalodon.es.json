@@ -97,7 +97,7 @@
  },
  "meta": {
   "title": "Tamaño del megalodón: unos 16 m, quizá 20 m | Museum of Ages",
-  "description": "¿Cuánto medía el megalodón? Unos 16 m por la única columna larga hallada, el mayor quizá 20 m. Junto a una persona, un tiburón blanco y una ballena azul.",
+  "description": "¿Cuánto medía el megalodón? Unos 16 m según la única columna larga, los mayores quizá unos 20 m. Junto a una persona, un tiburón blanco y una ballena azul.",
   "og_title": "Tamaño del megalodón: unos 16 m, quizá 20 m",
   "og_image_alt": "Un tiburón con la boca abierta, visto de lado, gris oscuro con una franja más clara en el costado, junto a una persona gris que a su lado parece diminuta.",
   "credit": "Museum of Ages, forma del cuerpo según Shimada y otros 2025 (CC BY 4.0)"
@@ -116,7 +116,7 @@
  },
  "top": {
   "h1": "¿Cuánto medía el megalodón?",
-  "answer": "Unos 16 m. Es la longitud del megalodón del que viene la única columna vertebral larga que se ha encontrado, y que se guarda en Bruselas. Nuestros 16 m son algo más de nueve personas de 1,70 m tumbadas una detrás de otra. Los más grandes de su especie medían quizá unos 20 m, según sus dientes.",
+  "answer": "Unos 16 m. Es la longitud del megalodón del que viene la única columna vertebral larga encontrada hasta hoy, y que se guarda en Bruselas. Nuestros 16 m son algo más de nueve personas de 1,70 m tumbadas una detrás de otra. Los más grandes de su especie medían quizá unos 20 m, según sus dientes.",
   "answer_more": "Su peso es discutido: más o menos 30 toneladas en el modelo delgado de 2025, y alrededor del doble en el modelo más robusto de 2022, porque nadie conoce la forma de su cuerpo.",
   "scale": {
    "pic": "side",
@@ -254,7 +254,7 @@
    "nav": "Huesos y cuerpo",
    "h": "Huesos y cuerpo",
    "paras": [
-    "El megalodón, Otodus megalodon, era un tiburón, y los tiburones no tienen huesos. Su esqueleto es de cartílago, y el cartílago casi siempre se pudre en la tierra. Lo que queda son los dientes y, a veces, las vértebras, que son más duras que el resto. Por eso el megalodón se conoce por sus dientes, por vértebras sueltas, por trozos de cartílago endurecido y por escamas diminutas de la piel. Nunca se ha encontrado un cuerpo, ni una cabeza, ni una aleta, ni una cola."
+    "El megalodón, Otodus megalodon, era un tiburón, y los tiburones no tienen huesos. Su esqueleto es de cartílago, y el cartílago casi siempre se pudre en la tierra. Lo que queda son los dientes y, a veces, las vértebras, que son más duras que el resto. Por eso el megalodón se conoce por sus dientes, por vértebras sueltas, por trozos de cartílago endurecido y por escamas diminutas de la piel. Hasta hoy no se encontró un cuerpo, ni una cabeza, ni una aleta, ni una cola."
    ],
    "scale": {
     "pic": "skeleton",
@@ -288,7 +288,7 @@
    "paras": [
     "En Bruselas, en el Real Instituto Belga de Ciencias Naturales, hay 141 vértebras sueltas de un solo tiburón, IRSNB P 9893, halladas cerca de Amberes en la década de 1860. La más grande mide 15,5 cm de ancho, y en fila suman unos 11 m. Dan la longitud del tronco, pero no la de la cabeza ni el grosor del cuerpo. No se encontraron dientes con ellas, así que incluso el nombre de megalodón para este animal es una deducción.",
     "En Dinamarca, en 1978, se desenterraron en Gram restos de unas 20 vértebras. En 1989 se dañaron en el almacén, y durante mucho tiempo se creyeron perdidas. Quedan dos vértebras rotas y muchos fragmentos. La mayor mide 23 cm de ancho, y en ella se apoya la estimación más grande de la lista de abajo.",
-    "Nadie ha encontrado un esqueleto de megalodón, ni una dentadura con los dientes todavía en su sitio en la mandíbula. Cada fila de dientes que hayas visto es un montaje, también la nuestra."
+    "Hasta hoy nadie encontró un esqueleto de megalodón, ni una dentadura con los dientes todavía en su sitio en la mandíbula. Cada fila de dientes que hayas visto es un montaje, también la nuestra."
    ]
   },
   {
@@ -326,7 +326,7 @@
    "nav": "Por qué nuestro megalodón se ve así",
    "h": "Por qué nuestro megalodón se ve así",
    "paras": [
-    "Es delgado, según el modelo de 2025: con un cuerpo robusto como el del tiburón blanco, nadar quizá le costaba demasiado esfuerzo, dicen sus autores, y los tiburones vivos más grandes son delgados. Está pintado oscuro por arriba y claro por abajo, como los tiburones vivos de mar abierto, porque su color real no se conoce. Los dientes siguen otro hallazgo, UF-VP-311000, una dentadura real, a su propio tamaño. La cabeza, las aletas y la cola se toman de los lamniformes vivos, porque nunca se ha encontrado una cabeza de megalodón. No es un tiburón blanco agrandado: pertenecía a su propia familia, hoy extinta, y según los trabajos más recientes era más delgado y más alargado que el monstruo de la película."
+    "Es delgado, según el modelo de 2025: con un cuerpo robusto como el del tiburón blanco, nadar quizá le costaba demasiado esfuerzo, dicen sus autores, y los tiburones vivos más grandes son delgados. Está pintado oscuro por arriba y claro por abajo, como los tiburones vivos de mar abierto, porque su color real no se conoce. Los dientes siguen otro hallazgo, UF-VP-311000, una dentadura real, a su propio tamaño. La cabeza, las aletas y la cola se toman de los lamniformes vivos, porque todavía no se encontró una cabeza de megalodón. No es un tiburón blanco agrandado: pertenecía a su propia familia, hoy extinta, y según los trabajos más recientes era más delgado y más alargado que el monstruo de la película."
    ]
   },
   {
@@ -341,15 +341,15 @@
     },
     {
      "q": "Megalodón contra ballena azul: ¿cuál era más grande?",
-     "a": "La ballena azul. La mayoría de las ballenas azules adultas miden de 23 a 27 m, las más grandes unos 30 m, y la NOAA, la agencia de los océanos de Estados Unidos, la llama el animal más grande que se sabe que ha existido. Nuestro megalodón llegaría a algo más de la mitad de la más grande. Incluso el tiburón ballena más grande que se ha medido, de 18,8 m, era más largo que nuestro megalodón, y con cerca de 34 toneladas pesaba más o menos lo mismo que su modelo delgado."
+     "a": "La ballena azul. La mayoría de las ballenas azules adultas miden de 23 a 27 m, las más grandes unos 30 m, y la NOAA, la agencia de los océanos de Estados Unidos, la llama el animal más grande que se sabe que ha existido. Nuestro megalodón llegaría a algo más de la mitad de la más grande. Incluso el tiburón ballena más grande medido hasta hoy, de 18,8 m, era más largo que nuestro megalodón, y con cerca de 34 toneladas pesaba más o menos lo mismo que su modelo delgado."
     },
     {
      "q": "¿Qué tamaño tenían los dientes del megalodón?",
-     "a": "Los más grandes que se han hallado miden al menos 16 cm de alto, y los museos dan casi 18 cm: unas tres veces un diente de tiburón blanco, que mide unos 5 cm. Los dientes de nuestro modelo siguen una dentadura real de otro hallazgo, UF-VP-311000. Delante miden unos 10 cm de alto, y hacia las comisuras de la boca son más pequeños."
+     "a": "Los más grandes hallados hasta hoy miden al menos 16 cm de alto, y los museos dan casi 18 cm: unas tres veces un diente de tiburón blanco, que mide unos 5 cm. Los dientes de nuestro modelo siguen una dentadura real de otro hallazgo, UF-VP-311000. Delante miden unos 10 cm de alto, y hacia las comisuras de la boca son más pequeños."
     },
     {
      "q": "¿Cuándo y por qué se extinguió el megalodón?",
-     "a": "Hace unos 3,6 millones de años, según los fósiles fiables más recientes. El porqué no está establecido. Se han propuesto los mares más fríos, que dividieron su área de distribución, el tiburón blanco, recién aparecido, como rival, una caída de las pequeñas ballenas con barbas que cazaba, y el gasto de un cuerpo caliente, porque se mantenía más caliente que el agua que lo rodeaba."
+     "a": "Hace unos 3,6 millones de años, según los fósiles fiables más recientes. El porqué no está establecido. Se propusieron los mares más fríos, que dividieron su área de distribución, el tiburón blanco, recién aparecido, como rival, una caída de las pequeñas ballenas con barbas que cazaba, y el gasto de un cuerpo caliente, porque se mantenía más caliente que el agua que lo rodeaba."
     }
    ]
   },

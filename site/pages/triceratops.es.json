@@ -138,7 +138,7 @@
   "scale": {
    "pic": "side",
    "tag": "tag_made",
-   "what": "Nuestro Triceratops junto a una persona de 1,70 m, a la misma escala, hecho según el esqueleto de Washington, formado por unos diez animales. Mide 6,9 m del pico a la cola, y su lomo está a unos 2,5 m de altura sobre la cadera, como una persona y media.",
+   "what": "Nuestro Triceratops junto a una persona de 1,70 m, a la misma escala, hecho según el esqueleto de Washington, formado por unos diez animales. Mide 6,9 m del pico a la cola, y su lomo está a unos 2,5 m de altura sobre la cadera, más o menos la altura de una persona y media.",
    "alt": "Un Triceratops de lado: una gola ancha detrás de la cabeza, dos cuernos largos sobre los ojos, uno corto sobre la nariz, cuatro patas. A su lado, una persona gris que le llega a unos dos tercios de la altura del lomo.",
    "note": [
     "Nuestra propia reconstrucción, construida en código a partir de medidas publicadas y dibujada con nuestro propio motor gráfico. No son fotografías. ",
@@ -287,14 +287,14 @@
    "paras": [
     "El cráneo de un adulto grande medía unos 2 m de largo, según un estudio de diez cráneos, desde crías hasta adultos. En el escaneo del cráneo reconstruido de Washington medimos 2,12 m de hueso.",
     "Sobre los ojos tiene dos cuernos largos, y sobre la nariz, uno corto y bajo. El cuerno largo de la nariz de muchas imágenes es de la especie posterior, Triceratops prorsus, y el nuestro es el Triceratops horridus, más antiguo. El hueso que se ve en un museo es solo el núcleo del cuerno: en vida lo cubría una funda de cuerno, así que los cuernos eran más largos, y cuánto, nadie lo sabe. También cambiaban con la edad: en un Triceratops joven, los cuernos de sobre los ojos se curvaban hacia atrás, y en un adulto, hacia delante.",
-    "La gola es un escudo ancho de hueso macizo detrás de la cabeza, sin agujeros, cubierto de piel. Para qué servían los cuernos y la gola, nadie lo ha demostrado. La mejor prueba son heridas curadas en las golas, que se explican mejor por los cuernos de otros Triceratops, así que muy probablemente luchaban entre ellos. Exhibirse y reconocerse entre sí son usos probables también, y defenderse de los depredadores es posible."
+    "La gola es un escudo ancho de hueso macizo detrás de la cabeza, sin agujeros, cubierto de piel. Para qué servían los cuernos y la gola, hasta hoy nadie lo demostró. La mejor prueba son heridas curadas en las golas, que se explican mejor por los cuernos de otros Triceratops, así que muy probablemente luchaban entre ellos. Exhibirse y reconocerse entre sí son usos probables también, y defenderse de los depredadores es posible."
    ]
   },
   {
    "type": "text",
    "id": "t-rex",
-   "nav": "Triceratops vs T. rex",
-   "h": "Triceratops vs T. rex",
+   "nav": "Triceratops vs. T. rex",
+   "h": "Triceratops vs. T. rex",
    "paras": [
     "En un recuento de los grandes dinosaurios de la Formación Hell Creek, en Montana, donde los dos vivieron en la misma época, el Triceratops era el más común de todos. El T. rex sí mordía a los Triceratops: un hueso de la cadera de un Triceratops hallado en 1991 tiene 58 marcas de dientes seguras que solo pudo hacer un T. rex, según el informe de una universidad de 1996. Un cuerno de sobre el ojo, arrancado de un mordisco, se curó después, así que al menos un Triceratops sobrevivió a un mordisco de T. rex.",
     "Si el T. rex sobre todo los cazaba o sobre todo comía animales muertos, los huesos no lo dicen, y ningún hallazgo muestra una pelea entre los dos. Los famosos «Dueling Dinosaurs» de Montana, un Triceratops y un tiranosaurio encontrados juntos, tampoco la demuestran. Desde 2025, su tiranosaurio se considera un Nanotyrannus, un tipo más pequeño, no un T. rex, y eso todavía se discute.",
@@ -342,7 +342,7 @@
    "scale": {
     "pic": "skeleton",
     "tag": "tag_built",
-    "what": "Nuestro Triceratops como esqueleto, con la persona, según el montaje de Washington, formado por unos diez animales, y el escaneo que hizo de él el museo. La forma clara de detrás es la silueta de nuestro animal. No se ha publicado ningún mapa hueso por hueso: el cráneo es de un animal y casi todo el cuerpo de otro, así que ningún hueso está coloreado según su hallazgo. Los cuernos son solo núcleos de hueso: en vida, una funda de cuerno los hacía más largos.",
+    "what": "Nuestro Triceratops como esqueleto, con la persona, según el montaje de Washington, formado por unos diez animales, y el escaneo que hizo de él el museo. La forma clara de detrás es la silueta de nuestro animal. Todavía no se publicó ningún mapa hueso por hueso: el cráneo es de un animal y la mayor parte del cuerpo de otro, así que ningún hueso está coloreado según su hallazgo. Los cuernos son solo núcleos de hueso: en vida, una funda de cuerno los hacía más largos.",
     "alt": "El esqueleto del Triceratops de lado, el gran cráneo con su gola y los núcleos de los cuernos, las costillas y cuatro patas, junto a la persona gris, con la silueta clara de su cuerpo detrás de los huesos."
    }
   },
@@ -453,7 +453,7 @@
      "page": "t-rex",
      "pic": "trex",
      "alt": "Un T. rex de lado, sobre dos patas, con la boca abierta y la cabeza levantada, junto a una persona gris que queda muy por debajo de sus caderas.",
-     "line": "Un T. rex adulto grande medía unos 12 m de largo, unos 4 m a la cadera y más o menos de 8 a 9 toneladas. Nuestro T. rex está hecho con las medidas de SUE y está junto a una persona a la misma escala, con una lista de lo que se encontró de SUE."
+     "line": "Un T. rex adulto grande medía unos 12 m de largo y unos 4 m a la cadera, y pesaba más o menos de 8 a 9 toneladas. Nuestro T. rex está hecho con las medidas de SUE y está junto a una persona a la misma escala, con una lista de lo que se encontró de SUE."
     },
     {
      "page": "biggest-dinosaurs",

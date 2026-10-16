@@ -136,7 +136,7 @@
  },
  "top": {
   "h1": "¿Cuánto medía el Spinosaurus?",
-  "answer": "Los adultos más grandes de Spinosaurus aegyptiacus, el espinosaurio, medían algo menos de 14 m de largo y pesaban unas 7,4 toneladas, según un modelo de 2022. Nadie ha encontrado un esqueleto entero. El nuestro es un joven de unos 10 m, más o menos tres cuartas partes del tamaño completo y unas 3 a 4 toneladas según un modelo. Junto a la persona de 1,70 m, su articulación de la cadera queda más o menos a la altura de la cabeza, y mide casi seis personas de largo.",
+  "answer": "Los adultos más grandes de Spinosaurus aegyptiacus, el espinosaurio, medían algo menos de 14 m de largo y pesaban unas 7,4 toneladas, según un modelo de 2022. Hasta hoy nadie encontró un esqueleto entero. El nuestro es un joven de unos 10 m, más o menos tres cuartas partes del tamaño completo y unas 3 a 4 toneladas según un modelo. Junto a la persona de 1,70 m, su articulación de la cadera queda más o menos a la altura de la cabeza, y mide casi seis personas de largo.",
   "answer_more": "Comparado con el T. rex, el Spinosaurus más grande era más largo, muy probablemente más ligero y mucho más bajo a la altura de la cadera. Nunca se encontraron: entre los dos había unos 30 millones de años y dos continentes.",
   "scale": {
    "pic": "side",
@@ -242,8 +242,8 @@
   {
    "type": "text",
    "id": "t-rex",
-   "nav": "Spinosaurus vs T. rex, solo el tamaño",
-   "h": "Spinosaurus vs T. rex, solo el tamaño",
+   "nav": "Spinosaurus vs. T. rex, solo el tamaño",
+   "h": "Spinosaurus vs. T. rex, solo el tamaño",
    "paras": [
     "El Spinosaurus más grande era más largo que cualquier T. rex encontrado hasta hoy: algo menos de 14 m según un modelo, frente a unos 12 m del esqueleto de SUE. Muy probablemente no era más pesado: unas 7,4 a 8 toneladas en el modelo, frente a unas 8 a 9 toneladas de los T. rex más grandes que se conocen. A la altura de la cadera era mucho más bajo. El fémur del joven de Marruecos mide 61 cm, y el de SUE, 1,32 m. Nunca se encontraron: el Spinosaurus vivió hace unos 95 millones de años en el norte de África, y el T. rex hace unos 68 a 66 millones de años en América del Norte."
    ],
@@ -301,7 +301,7 @@
     {
      "h": "La cabeza",
      "paras": [
-      "El hocico se ensanchaba en la punta como una cuchara. Ningún espinosáurido nos ha dejado su piel, sus labios ni su color."
+      "El hocico se ensanchaba en la punta como una cuchara. Ningún espinosáurido nos dejó su piel, sus labios ni su color."
      ]
     }
    ]
@@ -418,7 +418,7 @@
    "rows": [
     {
      "term": "18 m",
-     "text": "El extremo de arriba de un rango de 2005, de 16 a 18 m: un cuerpo entero dibujado alrededor del gran hocico de Milán, con la constitución de un pariente de patas largas. El rango exacto del estudio no lo hemos leído nosotros. El Spinosaurus resultó tener patas cortas, así que ese cuerpo salió demasiado largo. El modelo de 2022 da algo menos de 14 m, aunque algunos textos de museos todavía dan 18 m."
+     "text": "El extremo de arriba de un rango de 2005, de 16 a 18 m: un cuerpo entero dibujado alrededor del gran hocico de Milán, con la constitución de un pariente de patas largas. El rango exacto del estudio no lo leímos nosotros. El Spinosaurus resultó tener patas cortas, así que ese cuerpo salió demasiado largo. El modelo de 2022 da algo menos de 14 m, aunque algunos textos de museos todavía dan 18 m."
     },
     {
      "term": "15 m",
@@ -426,7 +426,7 @@
     },
     {
      "term": "20 toneladas",
-     "text": "Un cálculo de 2007 a partir de la longitud del cráneo, con una fórmula hecha con otros dinosaurios carnívoros: un animal más corto y mucho más pesado. El rango exacto del estudio no lo hemos leído nosotros. El modelo del cuerpo de 2022 da a los adultos más grandes de 7,4 a 8 toneladas."
+     "text": "Un cálculo de 2007 a partir de la longitud del cráneo, con una fórmula hecha con otros dinosaurios carnívoros: un animal más corto y mucho más pesado. El rango exacto del estudio no lo leímos nosotros. El modelo del cuerpo de 2022 da a los adultos más grandes de 7,4 a 8 toneladas."
     },
     {
      "term": "7 toneladas",
@@ -463,7 +463,7 @@
    "items": [
     {
      "q": "¿Qué altura tenía el Spinosaurus?",
-     "a": "Nuestro joven: lo alto de la vela, unos 3,5 m, y la cabeza, unos 3 m en su postura. Su articulación de la cadera queda a unos 1,6 m. Para los adultos no se ha publicado ninguna altura de la cadera, solo que el T. rex era más alto a la altura de la cadera."
+     "a": "Nuestro joven: lo alto de la vela, unos 3,5 m, y la cabeza, unos 3 m en su postura. Su articulación de la cadera queda a unos 1,6 m. Para los adultos todavía no se publicó ninguna altura de la cadera, solo que el T. rex era más alto a la altura de la cadera."
     },
     {
      "q": "¿Fue el Spinosaurus el dinosaurio más grande?",
