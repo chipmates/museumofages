@@ -73,11 +73,15 @@
 .sp-after{margin-top:28px}
 
 /* A drawing we have not built, with what is known of it */
-/* Numbers you may have read: each the figure as a reader met it, set large, then where it comes from. */
+/* A list of terms and what is true of them. Numbers you may have read: each the figure as a reader met it, set
+   large, then where it comes from. A section's list of terms lies on the ledger, as every list of facts does. */
 .sp-dir{margin-top:22px;border-top:1px solid var(--rule);max-width:42rem}
 .sp-dir>div{padding:16px 0 18px;border-bottom:1px solid var(--rule)}
 .sp-dir dt{font-family:var(--serif);font-size:1.375rem;line-height:1.22;color:var(--ink)}
 .sp-dir dd{margin-top:6px;font-size:1.0625rem;line-height:1.55;color:var(--ink-body)}
+.sp-notes .sp-dir{padding:0 16px;margin-inline:-6px;border-top:0;background:var(--ledger)}
+.sp-notes .sp-dir>div{border-bottom-color:var(--ledger-rule)}
+.sp-notes .sp-dir>div:last-child{border-bottom:0}
 
 /* One thing: its name, where it stands, its plate, what it does, then the sheet, our part and the record */
 .sp-item{margin-top:48px;max-width:42rem}
@@ -171,6 +175,7 @@
   .sp-body__main>.sp-sec:first-child{margin-top:0}
   /* One right edge for the lines, the lists and the plates: the column's own. */
   .sp-dir,.sp-item,.sp-rows,.sp-holders,.sp-stands{max-width:none}
+  .sp-notes .sp-dir{margin-inline:0;padding-inline:20px}
   .sp-sec{padding-top:36px;margin-top:96px}
   .sp-sec h2{font-size:2.375rem;line-height:1.1}
   .sp-sec>.sp-intro{font-size:1.1875rem}
