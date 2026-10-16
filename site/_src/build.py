@@ -58,7 +58,7 @@ HIDDEN = False
 # The line on every page's first screen that says whose project the museum is (project.line). It is temporary:
 # False takes it off every page, and that is the one change. PROJECT_LINE_AT is where it stands while it is on:
 # "under" the bar or "over" it. Either way it leaves the screen with the page, and the bar stays.
-PROJECT_LINE = True
+PROJECT_LINE = False
 PROJECT_LINE_AT = "under"
 # The rule that tells a first screen the line is there (its height is --by-h in base.css).
 BY_RULE = ":root{--by:var(--by-h)}"
