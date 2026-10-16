@@ -1534,7 +1534,9 @@ class Case(unittest.TestCase):
                 continue
             seen += 1
             # a name in a key's line is held whole (join_names): its no-break span or space, a long word's one break
+            # (its two halves in one .brk span)
             text = re.sub(r'<span class="nh">([^<]*)</span>', r"\1", text).replace("&shy;", "").replace("\u00ad", "")
+            text = re.sub(r'<span class="brk">([^<]*)</span>', r"\1", text)
             text = text.replace("&nbsp;", " ").replace("\u00a0", " ")
             for fig in figs:
                 colours = data["pics"][fig["pic"]]["swatches"]
@@ -2353,7 +2355,11 @@ class Case(unittest.TestCase):
                 # empty, or one span around the words, so a name's span never takes a grid place of its own
                 if cell:
                     self.assertRegex(cell, r"^<span>.*</span>$", path)
-                    self.assertNotRegex(re.sub(r"<span[^>]*>[^<]*</span>", "", cell[6:-7]), r"<", path)
+                    # spans inside it (a figure holding a name) are inline: strip them from the innermost out
+                    inner, before = cell[6:-7], None
+                    while inner != before:
+                        before, inner = inner, re.sub(r"<span[^>]*>[^<]*</span>", "", inner)
+                    self.assertNotRegex(inner, r"<", path)
         self.assertGreater(cells, 0)
 
     def test_a_list_of_pages_binds_each_number_to_its_unit(self):

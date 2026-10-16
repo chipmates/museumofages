@@ -735,10 +735,10 @@ def swatch_rules(defs):
 
 
 # A table's last column that says how sure each row is, by its heading in each language.
-SURE_COLS = {"How sure", "Wie sicher"}
+SURE_COLS = {"How sure", "Wie sicher", "Certeza"}
 SURE_CELL = ' class="sc-sure"'
 # The museum's own figure: a row that opens with "our" carries the chalk bar.
-OUR_RE = re.compile(r"(?:Unser|Our)\b")
+OUR_RE = re.compile(r"(?:Unser|Our|Nuestr[oa]|(?:O |A )?[Nn]oss[oa])\b")
 OUR_ROW = ' class="sc-our"'
 # A cell's figure is its words up to the first comma and space, where they hold a number (a decimal comma has no space).
 FIGURE_MAX = 64
@@ -755,11 +755,16 @@ def cell_html(text, sure, rich):
             return f'<span><span class="sc-sure__w">{rich(text)}</span></span>'
         return f"<span>{rich(text)}</span>"
     head, sep, rest = text.partition(", ")
-    if sep and re.search(r"\d", head) and len(head) <= FIGURE_MAX:
+    if sep and figure(head, rich) and len(head) <= FIGURE_MAX:
         return f'<span><span class="sc-fig">{rich(head)}</span>, {rich(rest)}</span>'
-    if re.search(r"\d", text) and len(text) <= FIGURE_MAX:
+    if figure(text, rich) and len(text) <= FIGURE_MAX:
         return f'<span><span class="sc-fig">{rich(text)}</span></span>'
     return f"<span>{rich(text)}</span>"
+
+
+def figure(text, rich):
+    """Words hold a figure where a digit stands outside a held name: a specimen's number ("AMNH 5214") is a name."""
+    return bool(re.search(r"\d", re.sub(r'<span class="(?:nw )?nh">[^<]*</span>', "", rich(text))))
 
 
 
@@ -1903,7 +1908,8 @@ def answer_text(answer):
 
 
 # The answer's first sentence is set as its lead. A stop ends a sentence where a capital follows, never after an initial,
-# a short abbreviation or (German) a number, which there is an ordinal or a date ("am 2. Mai").
+# a short abbreviation or (outside English) a number of one or two digits, which there is an ordinal or a date ("am 2.
+# Mai"); a year ends one ("nach einer Studie von 2017.").
 LEAD_END = re.compile(r"(?<=[.!?])\s+(?=[„\"(]?[A-ZÄÖÜÀ-ÞА-Я])")
 LEAD_ABBR = {"ca", "Nr", "St", "Dr", "Mr", "Mrs", "Ms", "vs", "bzw", "usw", "etc", "Chr", "Abb", "inkl", "z", "B", "u", "a", "d", "h"}
 LEAD_MAX = 240
@@ -1915,7 +1921,7 @@ def lead_split(text, lang):
         lead, rest = text[:m.start()], text[m.end():]
         word = re.search(r"([^\s.]+)[.!?]$", lead)
         word = word.group(1) if word else ""
-        if (len(word) == 1 and word.isupper()) or word in LEAD_ABBR or (lang != "en" and word.isdigit()):
+        if (len(word) == 1 and word.isupper()) or word in LEAD_ABBR or (lang != "en" and word.isdigit() and len(word) <= 2):
             continue
         return (lead, rest) if 8 <= len(lead) <= LEAD_MAX and rest.strip() else None
     return None
@@ -1924,6 +1930,16 @@ def lead_split(text, lang):
 # A range in the lead stays on one line: "7 bis 8 m", "7 to 8 m", "de 7 à 8 m", "от 7 до 8 м" (the lead is display text,
 # balanced, and broke "etwa 7 / bis 8 m" at 1280 px).
 LEAD_RANGE = re.compile(r"(?<![\w.,])\d[\d.,]*[ \u00a0](?:bis|to|à|a|al|до)[ \u00a0]\d[\d.,]*(?:[ \u00a0][^\W\d_]{1,3}\b)?")
+
+
+# A lead longer than this is a paragraph more than a headline: it is set a step smaller (page.css), so it never takes the
+# phone's first screen from the picture.
+LEAD_LONG = 105
+
+
+def lead_span(lead, linked):
+    long = " sp-answer__lead--long" if len(lead) > LEAD_LONG else ""
+    return f'<span class="sp-answer__lead{long}">{bind_ranges(linked(lead))}</span>'
 
 
 def bind_ranges(html_text):
@@ -1938,11 +1954,11 @@ def lead_and_rest(para, lang, linked):
         split = lead_split(para[0], lang)
         if not split:
             return linked(para)
-        return f'<span class="sp-answer__lead">{bind_ranges(linked(split[0]))}</span> ' + linked([split[1]] + para[1:])
+        return lead_span(split[0], linked) + " " + linked([split[1]] + para[1:])
     split = lead_split(para, lang)
     if not split:
         return linked(para)
-    return f'<span class="sp-answer__lead">{bind_ranges(linked(split[0]))}</span> {linked(split[1])}'
+    return f'{lead_span(split[0], linked)} {linked(split[1])}'
 
 
 def answer_length(top):
