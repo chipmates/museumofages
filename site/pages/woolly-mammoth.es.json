@@ -69,9 +69,9 @@
   }
  },
  "meta": {
-  "title": "Tamaño del mamut lanudo: unos 2,7 a 3,3 m | Museum of Ages",
+  "title": "Mamut lanudo: tamaño de unos 2,7 a 3,3 m | Museum of Ages",
   "description": "¿Cuánto medía el mamut lanudo? Un macho de Siberia, unos 2,7 a 2,9 m a la altura del hombro y unas 4 a 5 t. El nuestro es un macho real, a escala.",
-  "og_title": "Tamaño del mamut lanudo: unos 2,7 a 3,3 m",
+  "og_title": "Mamut lanudo: tamaño de unos 2,7 a 3,3 m",
   "og_image_alt": "Un mamut lanudo de lado, con pelaje marrón oscuro: la cabeza alta y abombada, el lomo en pendiente, dos colmillos curvos y una marca en el hombro. La persona gris de al lado queda más baja que las puntas de los colmillos."
  },
  "labels": {
@@ -88,14 +88,14 @@
  },
  "top": {
   "h1": "¿Cuánto medía el mamut lanudo?",
-  "answer": "Un macho adulto de mamut lanudo de Siberia medía unos 2,7 a 2,9 m a la altura del hombro y pesaba unas 4 a 5 toneladas. Los machos más grandes de Europa llegaban a unos 3 a 3,3 m y a unas 5 a 7 toneladas. El nuestro es un solo macho real, encontrado congelado en 1900: 2,71 m a la altura del hombro y unas 4,2 toneladas, reconstruidos a partir de sus huesos. Junto a la persona de 1,70 m, su hombro queda más o menos a la altura de una persona y media.",
+  "answer": "Un macho adulto de mamut lanudo de Siberia medía unos 2,7 a 2,9 m a la altura del hombro y pesaba unas 4 a 5 toneladas. Los machos más grandes de Europa llegaban a unos 3 a 3,3 m y a unas 5 a 7 toneladas. El nuestro es un solo macho siberiano real, encontrado congelado en 1900: 2,71 m a la altura del hombro y unas 4,2 toneladas, reconstruidos a partir de sus huesos. Junto a la persona de 1,70 m, su hombro queda más o menos a la altura de una persona y media.",
   "answer_more": "Así que un macho de mamut de Siberia era más o menos igual de alto que un macho de elefante asiático, y un poco más pesado para su altura. Un macho grande de elefante africano de sabana es más o menos medio metro más alto y pesa más.",
   "scale": {
    "pic": "side",
    "tag": "tag_made",
    "what": "Nuestro mamut lanudo junto a una persona de 1,70 m, a la misma escala. Está hecho con el tamaño y el armazón de un solo animal real, el macho de Berezovka, encontrado congelado en 1900 en el noreste de Siberia. La marca en su hombro es su propia altura en vida, 271 cm, reconstruida a partir de sus huesos. Cuando murió le quedaba un solo colmillo, el izquierdo. El derecho se le había caído mucho antes, y los cazadores que lo encontraron cortaron el izquierdo y lo vendieron. El nuestro lleva los dos: el derecho es el reflejo del izquierdo, una reconstrucción.",
    "alt": "Un mamut lanudo de lado, con pelaje marrón oscuro: la cabeza alta y abombada, el lomo en pendiente, dos colmillos curvos y una marca en el hombro. La persona gris de al lado queda más baja que las puntas de los colmillos.",
-   "note": "Nuestra propia reconstrucción, construida en código a partir de medidas publicadas y dibujada con nuestro propio motor gráfico. No son fotografías.",
+   "note": "Nuestra propia reconstrucción, construida en código a partir de medidas publicadas y renderizada con nuestro propio motor gráfico. No son fotografías.",
    "marks": [
     {
      "span": "mammoth",
@@ -219,7 +219,7 @@
     {
      "h": "El pelaje",
      "paras": [
-      "Tres capas: pelos largos y oscuros por fuera, una capa media más clara y una lana pálida por debajo. En vida, el pelaje probablemente era marrón oscuro, y no de un solo color. El tono pelirrojo del pelo de los museos es un color del entierro: en el suelo helado, el pelo pierde su propio color y toma el de la tierra. El pelo más largo de nuestro macho, en la barbilla y el pecho, medía unos 50 cm, según el cálculo del jefe de la excavación."
+      "Tres capas: pelos largos y oscuros por fuera, una capa media más clara y una lana pálida por debajo. En vida, el pelaje probablemente era marrón oscuro, y no de un solo color. El tono rojizo del pelo de los museos es un color del entierro: en el suelo helado, el pelo pierde su propio color y toma el de la tierra. El pelo más largo de nuestro macho, en la barbilla y el pecho, medía unos 50 cm, según el cálculo del jefe de la excavación."
      ]
     },
     {
@@ -294,14 +294,14 @@
    "nav": "¿Cuándo se extinguió el mamut lanudo?",
    "h": "¿Cuándo se extinguió el mamut lanudo?",
    "paras": [
-    "Los mamuts lanudos vivieron durante cientos de miles de años, en la última glaciación desde España hasta Alaska, y desaparecieron por etapas, no todos a la vez. En el continente, los últimos vivieron en el norte de Siberia hasta hace unos 10 000 años, y en la isla Saint Paul, frente a Alaska, hasta hace unos 5600 años. La última población que se conoce vivió en la isla de Wrangel, en el océano Ártico frente a Siberia, hasta hace unos 4000 años, y no eran enanos. Por qué se extinguieron se discute: en el continente, el calentamiento del final de la glaciación y la caza por parte de las personas, en proporciones que nadie aclaró todavía. En Saint Paul, la isla se encogió y faltó agua dulce, y allí no había personas. En Wrangel, el final parece haber llegado rápido, y nadie sabe por qué: una capa de hielo por la lluvia sobre la nieve es una idea, y no se puede descartar a las personas."
+    "Los mamuts lanudos vivieron durante cientos de miles de años, en la última glaciación desde España hasta Alaska, y desaparecieron por etapas, no todos a la vez. En el continente, los últimos vivieron en el norte de Siberia hasta hace unos 10 000 años, y en la isla Saint Paul, frente a Alaska, hasta hace unos 5600 años. La última población que se conoce vivió en la isla de Wrangel, en el océano Ártico frente a Siberia, hasta hace unos 4000 años, y no eran enanos. Por qué se extinguieron se discute: en el continente, el calentamiento del final de la glaciación y la caza por parte de las personas, en proporciones que nadie aclaró todavía. En Saint Paul, la isla se encogió y faltó agua dulce, y allí no había personas. En Wrangel, el final parece haber llegado rápido, y nadie sabe por qué: una capa de hielo por la lluvia sobre la nieve es una idea, y no se puede descartar la acción humana."
    ]
   },
   {
    "type": "text",
    "id": "how-sure",
-   "nav": "Cuán seguro es esto",
-   "h": "Cuán seguro es esto",
+   "nav": "Hasta qué punto es seguro",
+   "h": "Hasta qué punto es seguro",
    "paras": [
     "Dos cosas deciden cada cifra de esta página.",
     {
@@ -330,7 +330,7 @@
      "text": "Una cifra de un manual de 2007 para un macho grande, que se extendió con una tabla de tamaños muy usada. Encaja con un macho grande de Europa, no con uno típico de Siberia, ni con el nuestro."
     },
     {
-     "term": "3,5 m, y colmillos de 4 m",
+     "term": "3,5 m y colmillos de 4 m",
      "text": "Máximos del museo de San Petersburgo. Machos de hasta 3,5 m, colmillos de machos viejos de hasta 4 m y unos 100 kg, no medias."
     },
     {
@@ -342,7 +342,7 @@
      "text": "6 toneladas es la media de los grandes machos de Europa, y también la de los machos de elefante africano de sabana. Solo los más grandes de todos llegaban a 8 toneladas, como un macho de Siegsdorf, en Baviera, con unas 8,2 toneladas."
     },
     {
-     "term": "Pelaje pelirrojo",
+     "term": "Pelaje rojizo",
      "text": "El color del pelo que pasó miles de años en el suelo helado, perdiendo su propio pigmento y tomando el de la tierra. En vida, el pelaje probablemente era marrón oscuro y mezclado."
     },
     {
@@ -488,8 +488,8 @@
   {
    "type": "text",
    "id": "pictures",
-   "nav": "Usa nuestras imágenes",
-   "h": "Usa nuestras imágenes",
+   "nav": "Usar nuestras imágenes",
+   "h": "Usar nuestras imágenes",
    "paras": [
     [
      "Las imágenes del mamut lanudo de esta página son obra nuestra, con licencia ",
@@ -497,7 +497,7 @@
       "text": "CC BY-SA 4.0",
       "href": "https://creativecommons.org/licenses/by-sa/4.0/deed.es"
      },
-     ". Crédito: Museum of Ages. Muestran una reconstrucción, construida en código y dibujada con nuestro propio motor gráfico, no una fotografía. Las imágenes de las otras páginas que aparecen aquí dan su crédito en esas páginas."
+     ". Crédito: Museum of Ages. Muestran una reconstrucción, construida en código y renderizada con nuestro propio motor gráfico, no una fotografía. Las imágenes de las otras páginas que aparecen aquí dan su crédito en esas páginas."
     ]
    ]
   }

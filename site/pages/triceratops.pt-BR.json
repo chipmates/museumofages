@@ -114,10 +114,10 @@
   }
  },
  "meta": {
-  "title": "Triceratops: tamanho de uns 7 a 8 m | Museum of Ages",
-  "description": "Qual era o tamanho do Triceratops? Os adultos grandes, uns 7 a 8 m, e o crânio uns 2 m. Dois modelos do esqueleto de Washington dão umas 6,5 a 8,5 t.",
-  "og_title": "Triceratops: tamanho de uns 7 a 8 m, crânio de 2 m",
-  "og_image_alt": "Um Triceratops de lado: um babado largo atrás da cabeça, dois chifres longos acima dos olhos, um curto acima do nariz, quatro patas. Ao lado, uma pessoa cinza que chega a uns dois terços da altura do dorso."
+  "title": "Triceratops: tamanho de cerca de 7 a 8 m | Museum of Ages",
+  "description": "Tamanho do Triceratops: os adultos grandes, cerca de 7 a 8 m, e o crânio cerca de 2 m. Dois modelos do esqueleto de Washington dão cerca de 6,5 a 8,5 t.",
+  "og_title": "Triceratops: tamanho de cerca de 7 a 8 m, crânio de 2 m",
+  "og_image_alt": "Um Triceratops de lado: um babado largo atrás da cabeça, dois chifres longos acima dos olhos, um curto acima do nariz, quatro patas. Ao lado, uma pessoa cinza que chega a cerca de dois terços da altura do dorso."
  },
  "labels": {
   "crumbs": "Você está aqui",
@@ -129,19 +129,19 @@
   "person": "1,70 m",
   "to_table": "Os números numa tabela",
   "no_figure": "sem número com fonte",
-  "og_answer": "Um Triceratops adulto grande tinha uns 7 a 8 m, com um crânio de uns 2 m"
+  "og_answer": "Os adultos grandes: cerca de 7 a 8 m, e o crânio cerca de 2 m"
  },
  "top": {
   "h1": "Qual era o tamanho do Triceratops?",
-  "answer": "Os Triceratops adultos grandes tinham uns 7 a 8 m de comprimento, e os maiores chegavam a uns 9 m. Nenhum Triceratops jamais foi pesado: dois modelos de computador do famoso esqueleto de Washington dão umas 6,5 a 8,5 toneladas. O nosso Triceratops foi feito segundo esse esqueleto, uma montagem com ossos de uns dez animais. Ele tem 6,9 m de comprimento, umas quatro pessoas em fila, e uns 2,5 m de altura acima do quadril.",
-  "answer_more": "O crânio de um adulto grande tem uns 2 m de comprimento, do bico até a borda de trás do babado: mais do que a altura de uma pessoa. É uma das maiores cabeças de todos os animais terrestres.",
+  "answer": "Os Triceratops adultos grandes tinham cerca de 7 a 8 m de comprimento, e os maiores chegavam a cerca de 9 m. Nenhum Triceratops jamais foi pesado: dois modelos de computador do famoso esqueleto de Washington dão cerca de 6,5 a 8,5 toneladas. O nosso Triceratops foi feito a partir desse esqueleto, uma montagem com ossos de cerca de dez animais. Ele tem 6,9 m de comprimento, cerca de quatro pessoas em fila, e cerca de 2,5 m de altura acima do quadril.",
+  "answer_more": "O crânio de um adulto grande tem cerca de 2 m de comprimento, do bico até a borda de trás do babado: mais do que a altura de uma pessoa. É uma das maiores cabeças de todos os animais terrestres.",
   "scale": {
    "pic": "side",
    "tag": "tag_made",
-   "what": "O nosso Triceratops ao lado de uma pessoa de 1,70 m, na mesma escala, feito segundo o esqueleto de Washington, formado por uns dez animais. Ele mede 6,9 m do bico à cauda, e o dorso dele fica a uns 2,5 m de altura acima do quadril, mais ou menos a altura de uma pessoa e meia.",
-   "alt": "Um Triceratops de lado: um babado largo atrás da cabeça, dois chifres longos acima dos olhos, um curto acima do nariz, quatro patas. Ao lado, uma pessoa cinza que chega a uns dois terços da altura do dorso.",
+   "what": "O nosso Triceratops ao lado de uma pessoa de 1,70 m, na mesma escala, feito a partir do esqueleto de Washington, formado por cerca de dez animais. Ele mede 6,9 m do bico à cauda, e o dorso dele fica a cerca de 2,5 m de altura acima do quadril, mais ou menos a altura de uma pessoa e meia.",
+   "alt": "Um Triceratops de lado: um babado largo atrás da cabeça, dois chifres longos acima dos olhos, um curto acima do nariz, quatro patas. Ao lado, uma pessoa cinza que chega a cerca de dois terços da altura do dorso.",
    "note": [
-    "A nossa própria reconstrução, construída em código a partir de medidas publicadas e desenhada com o nosso próprio motor gráfico. Não são fotografias. ",
+    "A nossa própria reconstrução, construída em código a partir de medidas publicadas e renderizada com o nosso próprio motor gráfico. Não são fotografias. ",
     "A silhueta do nosso Triceratops segue o modelo do corpo de ",
     {
      "text": "Dempsey 2025",
@@ -171,7 +171,7 @@
    "close": {
     "pic": "close",
     "tag": "tag_made",
-    "what": "Mais de perto: a cabeça ao lado da pessoa. O nosso crânio tem 2,2 m de comprimento com a pele, mais do que a altura da pessoa. Os chifres acima dos olhos, de 0,9 m com a bainha de chifre, terminam a uns 1,8 m de altura, na altura da cabeça da pessoa.",
+    "what": "Mais de perto: a cabeça ao lado da pessoa. O crânio do nosso modelo tem 2,2 m de comprimento com a pele, mais do que a altura da pessoa. Os chifres acima dos olhos, de 0,9 m com a bainha de chifre, terminam a cerca de 1,8 m de altura, na altura da cabeça da pessoa.",
     "alt": "A cabeça do Triceratops mais de perto, de lado: o bico, o olho embaixo de um chifre longo e o babado que se ergue atrás. Ao lado, a pessoa cinza, com a cabeça na altura da ponta do chifre.",
     "marks": [
      {
@@ -180,7 +180,7 @@
      },
      {
       "span": "horns",
-      "text": "As pontas dos chifres, a uns 1,8 m, o nosso modelo"
+      "text": "As pontas dos chifres, a cerca de 1,8 m, o nosso modelo"
      },
      {
       "span": "person",
@@ -220,9 +220,9 @@
     {
      "cells": [
       "Triceratops, adultos grandes",
-      "uns 7 a 8 m, pelos grandes esqueletos conhecidos",
+      "cerca de 7 a 8 m, pelos grandes esqueletos conhecidos",
       "não medida",
-      "uns 2 m, do bico até a borda de trás do babado",
+      "cerca de 2 m, do bico até a borda de trás do babado",
       "",
       "média: os comprimentos, de relatos sobre esqueletos com nome, o crânio, de um estudo de dez crânios"
      ]
@@ -230,7 +230,7 @@
     {
      "cells": [
       "O maior Triceratops",
-      "uns 9 m, o número redondo de um museu, sem método",
+      "cerca de 9 m, o número redondo de um museu, sem método",
       "não medida",
       "",
       "",
@@ -241,29 +241,29 @@
      "cells": [
       "O esqueleto de Washington, Hatcher",
       "não publicado",
-      "uns 2,3 a 2,5 m no alto do dorso acima do quadril, lido por nós em fotografias, não publicado",
+      "cerca de 2,3 a 2,5 m no alto do dorso acima do quadril, lido por nós em fotografias, não publicado",
       "2,12 m de osso, medido por nós no escaneamento dele, aumentado na reconstrução",
-      "umas 6,5 a 8,5 t, dois modelos de computador",
-      "uma montagem com ossos de uns dez animais, os pesos vêm de modelos, nunca foi pesado"
+      "cerca de 6,5 a 8,5 t, dois modelos de computador",
+      "uma montagem com ossos de cerca de dez animais, os pesos vêm de modelos, nunca foi pesado"
      ]
     },
     {
      "cells": [
       "O nosso modelo",
       "6,9 m em linha reta, 7,1 m até as pontas dos chifres",
-      "2,5 m acima do quadril no alto do dorso, o alto do babado uns 2,4 m",
+      "2,5 m acima do quadril no alto do dorso, o alto do babado cerca de 2,4 m",
       "2,2 m com pele",
       "",
-      "medido nos nossos arquivos, feito segundo o escaneamento de Washington"
+      "medido nos nossos arquivos, feito a partir do escaneamento de Washington"
      ]
     },
     {
      "cells": [
       "T. rex, SUE",
-      "uns 12 m, a montagem",
-      "até o quadril uns 4 m, segundo o museu",
-      "uns 1,4 m, do focinho até a borda de trás da bochecha",
-      "umas 8 a 9 t, por um osso e três modelos",
+      "cerca de 12 m, a montagem",
+      "até o quadril cerca de 4 m, segundo o museu",
+      "cerca de 1,4 m, do focinho até a borda de trás da bochecha",
+      "cerca de 8 a 9 t, por um osso e três modelos",
       "como na nossa página do T. rex"
      ]
     },
@@ -285,7 +285,7 @@
    "nav": "Crânio, chifres e babado do Triceratops",
    "h": "Crânio, chifres e babado do Triceratops",
    "paras": [
-    "O crânio de um adulto grande tinha uns 2 m de comprimento, segundo um estudo de dez crânios, de filhotes a adultos. No escaneamento do crânio reconstruído de Washington, medimos 2,12 m de osso.",
+    "O crânio de um adulto grande tinha cerca de 2 m de comprimento, segundo um estudo de dez crânios, de filhotes a adultos. No escaneamento do crânio reconstruído de Washington, medimos 2,12 m de osso.",
     "Acima dos olhos ficam dois chifres longos, e acima do nariz, um curto e baixo. O chifre longo no nariz de muitas imagens é da espécie posterior, Triceratops prorsus, e o nosso é o Triceratops horridus, mais antigo. O osso que se vê num museu é só o núcleo do chifre: em vida, uma bainha de chifre o cobria, então os chifres eram mais longos, e quanto, ninguém sabe. Eles também mudavam com a idade: num Triceratops jovem, os chifres acima dos olhos se curvavam para trás, e num adulto, para a frente.",
     "O babado é um escudo largo de osso maciço atrás da cabeça, sem buracos, coberto de pele. Para que serviam os chifres e o babado, ninguém provou. A melhor evidência são ferimentos curados nos babados, que se explicam melhor pelos chifres de outros Triceratops, então muito provavelmente eles lutavam entre si. Exibir-se e reconhecer uns aos outros também são usos prováveis, e defender-se de predadores é possível."
    ]
@@ -296,14 +296,14 @@
    "nav": "Triceratops vs. T. rex",
    "h": "Triceratops vs. T. rex",
    "paras": [
-    "Numa contagem dos grandes dinossauros da Formação Hell Creek, em Montana, onde os dois viveram na mesma época, o Triceratops era o mais comum de todos. O T. rex mordia, sim, os Triceratops: um osso do quadril de Triceratops achado em 1991 tem 58 marcas de dentes certas que só um T. rex poderia ter feito, segundo o relatório de uma universidade de 1996. Um chifre acima do olho, arrancado por uma mordida, sarou depois, então pelo menos um Triceratops sobreviveu a uma mordida de T. rex.",
+    "Numa contagem dos grandes dinossauros da Formação Hell Creek, em Montana, onde os dois viveram na mesma época, o Triceratops era o mais comum de todos. O T. rex mordia, sim, os Triceratops: um osso do quadril de Triceratops achado em 1991 tem 58 marcas de dentes inequívocas que só um T. rex poderia ter feito, segundo o relatório de uma universidade de 1996. Um chifre acima do olho, arrancado por uma mordida, sarou depois, então pelo menos um Triceratops sobreviveu a uma mordida de T. rex.",
     "Se o T. rex caçava os Triceratops na maior parte das vezes ou comia sobretudo animais mortos, os ossos não dizem, e nenhum achado mostra uma luta entre os dois. Os famosos “Dueling Dinosaurs” de Montana, um Triceratops e um tiranossauro encontrados juntos, também não provam uma luta. Desde 2025, o tiranossauro deles é considerado um Nanotyrannus, um tipo menor, não um T. rex, e isso ainda é discutido.",
     "Os nossos dois na mesma escala, só para comparar o tamanho: o nosso T. rex tem cerca de 1,6 vez o comprimento do nosso Triceratops."
    ],
    "scale": {
     "pic": "vs",
     "tag": "tag_made",
-    "what": "O nosso Triceratops e o nosso T. rex na mesma escala, os dois virados para o mesmo lado, com a pessoa. O nosso T. rex, feito segundo SUE, tem uns 11,4 m de comprimento, cerca de 1,6 vez o nosso Triceratops. Um ao lado do outro só para comparar o tamanho, nunca como uma luta.",
+    "what": "O nosso Triceratops e o nosso T. rex na mesma escala, os dois virados para o mesmo lado, com a pessoa. O nosso T. rex, feito a partir de SUE, tem cerca de 11,4 m de comprimento, cerca de 1,6 vez o nosso Triceratops. Um ao lado do outro só para comparar o tamanho, nunca como uma luta.",
     "alt": "Um Triceratops sobre quatro patas e um T. rex sobre duas, os dois de lado e virados para o mesmo lado, o T. rex mais longo e bem mais alto no quadril, ao lado da pessoa cinza.",
     "marks": [
      {
@@ -312,7 +312,7 @@
      },
      {
       "span": "t-rex",
-      "text": "O nosso T. rex, segundo SUE, uns 11,4 m"
+      "text": "O nosso T. rex, a partir de SUE, cerca de 11,4 m"
      },
      {
       "span": "person",
@@ -336,13 +336,13 @@
    "nav": "O esqueleto de Triceratops de Washington",
    "h": "O esqueleto de Triceratops de Washington",
    "paras": [
-    "O esqueleto do museu de história natural do Smithsonian, em Washington, se chama Hatcher, por causa do caçador de fósseis John Bell Hatcher, e os ossos dele vêm do Wyoming. Ele foi exposto a partir de 1905, baixo e com as pernas abertas como um crocodilo, e por mais de vinte anos não houve outro Triceratops exposto em lugar nenhum. Não se conhecia nenhum esqueleto completo, então o museu o montou com uns dez animais. O crânio era pequeno demais, as patas da frente tinham comprimentos diferentes, e os pés de trás, que vinham de outro dinossauro, tinham o número errado de dedos.",
-    "Em 1996, um pedaço de osso do quadril caiu: minerais que cresciam dentro dos ossos os estavam quebrando, e em 1998 o esqueleto foi desmontado. Então, pela primeira vez, um esqueleto inteiro de dinossauro foi escaneado em 3D, o crânio foi aumentado no computador em cerca de 15 por cento e o lado direito foi espelhado para fazer o esquerdo. Depois disso, a montagem ficou ereta, e desde 2019 o Hatcher está deitado na sala dos fósseis enquanto um T. rex se alimenta dele: uma cena do museu, não um achado. O nosso Triceratops foi feito segundo esse escaneamento."
+    "O esqueleto do museu de história natural do Smithsonian, em Washington, se chama Hatcher, por causa do caçador de fósseis John Bell Hatcher, e os ossos dele vêm do Wyoming. Ele foi exposto a partir de 1905, baixo e com as pernas abertas como um crocodilo, e por mais de vinte anos não houve outro Triceratops exposto em lugar nenhum. Não se conhecia nenhum esqueleto completo, então o museu o montou com cerca de dez animais. O crânio era pequeno demais, as patas da frente tinham comprimentos diferentes, e os pés de trás, que vinham de outro dinossauro, tinham o número errado de dedos.",
+    "Em 1996, um pedaço de osso do quadril caiu: minerais que cresciam dentro dos ossos os estavam quebrando, e em 1998 o esqueleto foi desmontado. Então, pela primeira vez, um esqueleto inteiro de dinossauro foi escaneado em 3D, o crânio foi aumentado no computador em cerca de 15 por cento e o lado direito foi espelhado para fazer o esquerdo. Depois disso, a montagem ficou ereta, e desde 2019 o Hatcher está deitado na sala dos fósseis enquanto um T. rex se alimenta dele: uma cena do museu, não um achado. O nosso Triceratops foi feito a partir desse escaneamento."
    ],
    "scale": {
     "pic": "skeleton",
     "tag": "tag_built",
-    "what": "O nosso Triceratops como esqueleto, com a pessoa, segundo a montagem de Washington, formada por uns dez animais, e o escaneamento que o museu fez dela. A forma clara atrás é a silhueta do nosso animal. Nenhum mapa osso por osso foi publicado: o crânio é de um animal e a maior parte do corpo de outro, então nenhum osso está colorido pelo achado de onde veio. Os chifres são só núcleos de osso: em vida, uma bainha de chifre os deixava mais longos.",
+    "what": "O nosso Triceratops como esqueleto, com a pessoa, a partir da montagem de Washington, formada por cerca de dez animais, e o escaneamento que o museu fez dela. A forma clara atrás é a silhueta do nosso animal. Nenhum mapa osso por osso foi publicado: o crânio é de um animal e a maior parte do corpo de outro, então nenhum osso está colorido pelo achado de onde veio. Os chifres são só núcleos de osso: em vida, uma bainha de chifre os deixava mais longos.",
     "alt": "O esqueleto do Triceratops de lado, o grande crânio com o babado e os núcleos dos chifres, as costelas e quatro patas, ao lado da pessoa cinza, com a silhueta clara do corpo atrás dos ossos."
    }
   },
@@ -378,7 +378,7 @@
    "nav": "Quando e onde o Triceratops viveu",
    "h": "Quando e onde o Triceratops viveu",
    "paras": [
-    "O Triceratops viveu no oeste da América do Norte no Cretáceo Superior, entre uns 68 e 66 milhões de anos atrás. Duas espécies vieram uma depois da outra: o T. horridus, mais antigo, o nosso, foi mudando aos poucos até virar o T. prorsus, posterior. Os últimos fósseis dele chegam ao fim do Cretáceo, uns 66 milhões de anos atrás, quando se pensa que um impacto na península de Iucatã desencadeou o colapso."
+    "O Triceratops viveu no oeste da América do Norte no Cretáceo Superior, entre cerca de 68 e 66 milhões de anos atrás. Duas espécies vieram uma depois da outra: o T. horridus, mais antigo, o nosso, foi mudando aos poucos até virar o T. prorsus, posterior. Os últimos fósseis dele chegam ao fim do Cretáceo, cerca de 66 milhões de anos atrás, quando se pensa que um impacto na península de Iucatã desencadeou o colapso."
    ]
   },
   {
@@ -390,11 +390,11 @@
    "rows": [
     {
      "term": "9 m de comprimento",
-     "text": "Um número redondo de máximo para os maiores, do diretório de dinossauros de um museu, sem método e sem citar nenhum esqueleto. Um adulto grande tinha uns 7 a 8 m, e o nosso tem 6,9 m."
+     "text": "Um número redondo de máximo para os maiores, do catálogo de dinossauros de um museu, sem método e sem citar nenhum esqueleto. Um adulto grande tinha cerca de 7 a 8 m, e o nosso tem 6,9 m."
     },
     {
      "term": "10 toneladas",
-     "text": "Aparece ao lado dos 9 m, também sem método. Os modelos mais novos do esqueleto de Washington dão umas 6,5 a 8,5 toneladas."
+     "text": "Aparece ao lado dos 9 m, também sem método. Os modelos mais novos do esqueleto de Washington dão cerca de 6,5 a 8,5 toneladas."
     },
     {
      "term": "13 toneladas",
@@ -402,7 +402,7 @@
     },
     {
      "term": "A maior cabeça de todos os animais terrestres",
-     "text": "Um grande museu diz “uma das maiores”, não “a maior”. Os crânios dos adultos grandes têm uns 2 m de comprimento."
+     "text": "Um grande museu diz “uma das maiores”, não “a maior”. Os crânios dos adultos grandes têm cerca de 2 m de comprimento."
     },
     {
      "term": "Um chifre longo no nariz",
@@ -422,7 +422,7 @@
    "items": [
     {
      "q": "O Triceratops era maior que o T. rex?",
-     "a": "Não. Um Triceratops adulto grande tinha uns 7 a 8 m de comprimento, e um T. rex grande, uns 12 m, e era bem mais alto no quadril. No peso eles ficavam mais perto: umas 6,5 a 8,5 toneladas o Triceratops de Washington, e umas 8 a 9 um T. rex grande. Só o crânio era mais longo: uns 2 m contra os 1,4 m de SUE."
+     "a": "Não. Um Triceratops adulto grande tinha cerca de 7 a 8 m de comprimento, e um T. rex grande, cerca de 12 m, e era bem mais alto no quadril. No peso eles ficavam mais perto: cerca de 6,5 a 8,5 toneladas o Triceratops de Washington, e cerca de 8 a 9 um T. rex grande. Só o crânio era mais longo: cerca de 2 m contra os 1,4 m de SUE."
     },
     {
      "q": "O que significa o nome Triceratops?",
@@ -436,7 +436,7 @@
    "nav": "No museu",
    "h": "No museu",
    "paras": [
-    "O Museum of Ages é um museu digital, feito por uma organização sem fins lucrativos. Entrada franca, sem cadastro. Na ala dos animais, este animal vai estar entre os outros, dos gigantes de muito tempo atrás aos últimos da própria espécie. A ala de Leonardo da Vinci mostra como é uma ala pronta."
+    "O Museum of Ages é um museu digital, feito por uma organização sem fins lucrativos. Entrada franca, sem cadastro. Na ala dos animais, este animal vai estar entre os outros, dos gigantes de muito tempo atrás aos últimos de sua espécie. A ala de Leonardo da Vinci mostra como é uma ala pronta."
    ],
    "links": [
     {
@@ -453,7 +453,7 @@
      "page": "t-rex",
      "pic": "trex",
      "alt": "Um T. rex de lado, sobre duas patas, com a boca aberta e a cabeça erguida, ao lado de uma pessoa cinza que fica bem abaixo do quadril dele.",
-     "line": "Um T. rex adulto grande tinha uns 12 m de comprimento, uns 4 m até o quadril e mais ou menos 8 a 9 toneladas. O nosso T. rex foi feito com as medidas de SUE e está ao lado de uma pessoa na mesma escala, com uma lista do que foi encontrado de SUE."
+     "line": "Um T. rex adulto grande tinha cerca de 12 m de comprimento, cerca de 4 m até o quadril e mais ou menos 8 a 9 toneladas. O nosso T. rex foi feito com as medidas de SUE e está ao lado de uma pessoa na mesma escala, com uma lista do que foi encontrado de SUE."
     },
     {
      "page": "biggest-dinosaurs",
@@ -465,7 +465,7 @@
      "page": "brachiosaurus",
      "pic": "brachio",
      "alt": "Um braquiossauro de lado, com o pescoço longo erguido numa curva suave, as patas da frente mais longas que as de trás e a cauda sem tocar o chão, ao lado de uma pessoa cinza que poderia passar por baixo da barriga dele. Uma barra curta marca o alto da cabeça.",
-     "line": "O braquiossauro, um herbívoro de pescoço longo do Jurássico Superior, tinha uns 22 a 25 m de comprimento e pesava mais ou menos de 30 a 45 toneladas, dois números reconstruídos a partir de um único esqueleto parcial. O nosso braquiossauro está ao lado de uma pessoa, com a cabeça na altura de umas sete pessoas, na pose que escolhemos."
+     "line": "O braquiossauro, um herbívoro de pescoço longo do Jurássico Superior, tinha cerca de 22 a 25 m de comprimento e pesava mais ou menos de 30 a 45 toneladas, dois números reconstruídos a partir de um único esqueleto parcial. O nosso braquiossauro está ao lado de uma pessoa, com a cabeça na altura de cerca de sete pessoas, na pose que escolhemos."
     }
    ]
   },
@@ -561,8 +561,8 @@
   {
    "type": "text",
    "id": "pictures",
-   "nav": "Use as nossas imagens",
-   "h": "Use as nossas imagens",
+   "nav": "Usar nossas imagens",
+   "h": "Usar nossas imagens",
    "paras": [
     [
      "As quatro imagens do Triceratops nesta página, a vista de lado, a cabeça, a dupla com o nosso T. rex e o esqueleto, são obra nossa, com licença ",
@@ -570,7 +570,7 @@
       "text": "CC BY-SA 4.0",
       "href": "https://creativecommons.org/licenses/by-sa/4.0/deed.pt-br"
      },
-     ". Crédito: Museum of Ages, e também “Triceratops outline after Dempsey 2025 (CC BY 4.0)”. Elas mostram uma reconstrução, construída em código e desenhada com o nosso próprio motor gráfico, não fotografias. As imagens das outras páginas que aparecem aqui dão o crédito nessas páginas."
+     ". Crédito: Museum of Ages, e também “Triceratops outline after Dempsey 2025 (CC BY 4.0)”. Elas mostram uma reconstrução, construída em código e renderizada com o nosso próprio motor gráfico, não fotografias. As imagens das outras páginas que aparecem aqui dão o crédito nessas páginas."
     ]
    ]
   }

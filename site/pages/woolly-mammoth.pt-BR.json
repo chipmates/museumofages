@@ -70,8 +70,8 @@
  },
  "meta": {
   "title": "Mamute-lanoso: tamanho de uns 2,7 a 3,3 m | Museum of Ages",
-  "description": "Qual era o tamanho do mamute-lanoso? Um macho da Sibéria tinha uns 2,7 a 2,9 m no ombro e umas 4 a 5 t. O nosso é um macho real, em escala.",
-  "og_title": "Mamute-lanoso: tamanho de uns 2,7 a 3,3 m",
+  "description": "Qual era o tamanho do mamute-lanoso? Um macho da Sibéria tinha cerca de 2,7 a 2,9 m no ombro e cerca de 4 a 5 t. O nosso é um macho real, em escala.",
+  "og_title": "Mamute-lanoso: tamanho de cerca de 2,7 a 3,3 m",
   "og_image_alt": "Um mamute-lanoso de lado, com pelagem marrom-escura: a cabeça alta e abaulada, o dorso inclinado, duas presas curvas e uma marca no ombro. A pessoa cinza ao lado fica mais baixa que as pontas das presas."
  },
  "labels": {
@@ -84,18 +84,18 @@
   "person": "1,70 m",
   "to_table": "Os números numa tabela",
   "no_figure": "sem número com fonte",
-  "og_answer": "Um macho da Sibéria tinha uns 2,7 a 2,9 m no ombro"
+  "og_answer": "Um macho da Sibéria tinha cerca de 2,7 a 2,9 m no ombro"
  },
  "top": {
   "h1": "Qual era o tamanho do mamute-lanoso?",
-  "answer": "Um macho adulto de mamute-lanoso, ou mamute-lanudo, da Sibéria tinha uns 2,7 a 2,9 m de altura no ombro e pesava umas 4 a 5 toneladas. Os machos maiores da Europa chegavam a uns 3 a 3,3 m e a umas 5 a 7 toneladas. O nosso é um único macho real, encontrado congelado em 1900: 2,71 m no ombro e umas 4,2 toneladas, reconstruídos a partir dos ossos dele. Ao lado da pessoa de 1,70 m, o ombro dele fica mais ou menos na altura de uma pessoa e meia.",
+  "answer": "Um macho adulto de mamute-lanoso, ou mamute-lanudo, da Sibéria tinha cerca de 2,7 a 2,9 m de altura no ombro e pesava cerca de 4 a 5 toneladas. Os machos maiores da Europa chegavam a cerca de 3 a 3,3 m e a cerca de 5 a 7 toneladas. O nosso é um único macho siberiano real, encontrado congelado em 1900: 2,71 m no ombro e cerca de 4,2 toneladas, reconstruídos a partir dos ossos dele. Ao lado da pessoa de 1,70 m, o ombro dele fica mais ou menos na altura de uma pessoa e meia.",
   "answer_more": "Então um macho de mamute da Sibéria era mais ou menos tão alto quanto um macho de elefante-asiático, e um pouco mais pesado para a altura dele. Um macho grande de elefante-africano-da-savana é mais ou menos meio metro mais alto e pesa mais.",
   "scale": {
    "pic": "side",
    "tag": "tag_made",
    "what": "O nosso mamute-lanoso ao lado de uma pessoa de 1,70 m, na mesma escala. Ele foi feito com o tamanho e a estrutura de um único animal real, o macho de Berezovka, encontrado congelado em 1900 no nordeste da Sibéria. A marca no ombro é a altura dele em vida, 271 cm, reconstruída a partir dos ossos dele. Quando morreu, ele tinha só uma presa, a esquerda. A direita tinha caído muito antes, e os caçadores que o encontraram cortaram a esquerda e a venderam. O nosso tem as duas: a direita é o reflexo da esquerda, uma reconstrução.",
    "alt": "Um mamute-lanoso de lado, com pelagem marrom-escura: a cabeça alta e abaulada, o dorso inclinado, duas presas curvas e uma marca no ombro. A pessoa cinza ao lado fica mais baixa que as pontas das presas.",
-   "note": "A nossa própria reconstrução, construída em código a partir de medidas publicadas e desenhada com o nosso próprio motor gráfico. Não são fotografias.",
+   "note": "A nossa própria reconstrução, construída em código a partir de medidas publicadas e renderizada com o nosso próprio motor gráfico. Não são fotografias.",
    "marks": [
     {
      "span": "mammoth",
@@ -121,7 +121,7 @@
    "h": "Tente adivinhar",
    "q": "Quantos anos tinha o macho de Berezovka quando morreu?",
    "button": "Ver a resposta",
-   "a": "Uns 45 a 50 anos, segundo o museu que o guarda. Ele era um macho adulto, então o tamanho dele é o de um adulto, não o de um animal jovem.",
+   "a": "Cerca de 45 a 50 anos, segundo o museu que o guarda. Ele era um macho adulto, então o tamanho dele é o de um adulto, não o de um animal jovem.",
    "button_open": "Esconder a resposta"
   },
   "out": {
@@ -147,47 +147,47 @@
      "cells": [
       "O nosso mamute, o macho de Berezovka",
       "271 cm",
-      "umas 4,2 t com a pelagem",
+      "cerca de 4,2 t com a pelagem",
       "reconstruído a partir dos próprios ossos, no estudo de 2016"
      ]
     },
     {
      "cells": [
       "Um macho típico da Sibéria",
-      "uns 2,7 a 2,9 m",
-      "umas 4 a 5 t",
+      "cerca de 2,7 a 2,9 m",
+      "cerca de 4 a 5 t",
       "um estudo de 2016, muitos esqueletos, um só método"
      ]
     },
     {
      "cells": [
       "Um macho grande da Europa",
-      "uns 3 a 3,3 m",
-      "umas 5 a 7 t, os maiores de todos, mais de 8 t",
+      "cerca de 3 a 3,3 m",
+      "cerca de 5 a 7 t, os maiores de todos, mais de 8 t",
       "o mesmo estudo e o mesmo método"
      ]
     },
     {
      "cells": [
       "Uma fêmea",
-      "uns 2,3 a 2,6 m",
-      "umas 2,8 a 4,2 t",
+      "cerca de 2,3 a 2,6 m",
+      "cerca de 2,8 a 4,2 t",
       "cinco esqueletos no mesmo estudo"
      ]
     },
     {
      "cells": [
       "Um macho de elefante-asiático",
-      "uns 2,6 a 2,9 m",
-      "umas 3,5 a 4,6 t",
+      "cerca de 2,6 a 2,9 m",
+      "cerca de 3,5 a 4,6 t",
       "o mesmo estudo e o mesmo método"
      ]
     },
     {
      "cells": [
       "Um macho de elefante-africano-da-savana",
-      "uns 3 a 3,4 m",
-      "umas 5,2 a 6,9 t",
+      "cerca de 3 a 3,4 m",
+      "cerca de 5,2 a 6,9 t",
       "o mesmo estudo e o mesmo método"
      ]
     },
@@ -207,7 +207,7 @@
    "nav": "Mamute-lanoso vs. elefante",
    "h": "Mamute-lanoso vs. elefante",
    "paras": [
-    "O mamute-lanoso, Mammuthus primigenius, era um parente próximo dos elefantes de hoje, e não o antepassado deles. Um macho típico da Sibéria era mais ou menos tão alto quanto um macho de elefante-asiático, e um pouco mais pesado para essa altura. A pelve dele era mais larga, e os ossos da parte de cima das pernas, mais longos. Um macho de elefante-africano-da-savana, o maior animal terrestre vivo, é até meio metro mais alto, mais ou menos, e pesa umas 5 a 7 toneladas. Os grandes machos de mamute da Europa se igualavam a ele. Diferente de qualquer elefante, o mamute tinha uma pelagem grossa, orelhas pequenas e uma cauda curta."
+    "O mamute-lanoso, Mammuthus primigenius, era um parente próximo dos elefantes de hoje, e não o antepassado deles. Um macho típico da Sibéria era mais ou menos tão alto quanto um macho de elefante-asiático, e um pouco mais pesado para essa altura. A pelve dele era mais larga, e os ossos da parte de cima das pernas, mais longos. Um macho de elefante-africano-da-savana, o maior animal terrestre vivo, é até meio metro mais alto, mais ou menos, e pesa cerca de 5 a 7 toneladas. Os grandes machos de mamute da Europa se igualavam a ele. Diferente de qualquer elefante, o mamute tinha uma pelagem grossa, orelhas pequenas e uma cauda curta."
    ]
   },
   {
@@ -219,19 +219,19 @@
     {
      "h": "A pelagem",
      "paras": [
-      "Três camadas: pelos longos e escuros por fora, uma camada do meio mais clara e uma lã clarinha por baixo. Em vida, a pelagem provavelmente era marrom-escura, e não de uma cor só. O tom ruivo do pelo dos museus é uma cor do enterro: no chão congelado, o pelo perde a própria cor e pega a da terra. O pelo mais longo do nosso macho, no queixo e no peito, tinha uns 50 cm, pela estimativa do chefe da escavação."
+      "Três camadas: pelos longos e escuros por fora, uma camada do meio mais clara e uma lã clarinha por baixo. Em vida, a pelagem provavelmente era marrom-escura, e não de uma cor só. O tom ruivo do pelo dos museus é uma cor do soterramento: no chão congelado, o pelo perde a própria cor e pega a da terra. O pelo mais longo do nosso macho, no queixo e no peito, tinha cerca de 50 cm, pela estimativa do chefe da escavação."
      ]
     },
     {
      "h": "As presas",
      "paras": [
-      "Elas se curvavam para fora e para baixo, depois para cima e para dentro, como uma espiral aberta, e eram gastas no lado de fora da ponta. As presas dos machos velhos chegavam a 4 m e a uns 100 kg, segundo o museu que guarda o nosso macho. As das fêmeas eram menores e quase retas, com uns 2 a 2,2 m."
+      "Elas se curvavam para fora e para baixo, depois para cima e para dentro, como uma espiral aberta, e eram gastas no lado de fora da ponta. As presas dos machos velhos chegavam a 4 m e a cerca de 100 kg, segundo o museu que guarda o nosso macho. As das fêmeas eram menores e quase retas, com cerca de 2 a 2,2 m."
      ]
     },
     {
      "h": "A tromba e as orelhas",
      "paras": [
-      "A tromba terminava num dedo longo em cima e num lóbulo curto embaixo, como mostram as trombas congeladas. Mais abaixo, ela se alargava entre duas dobras de pele, que nenhum elefante vivo tem, e para que elas serviam ainda é discutido. As orelhas eram pequenas, com uns 30 cm de altura num macho congelado. A cauda era curta, de 36 cm no nosso macho, com um tufo de pelo longo."
+      "A tromba terminava num dedo longo em cima e num lóbulo curto embaixo, como mostram as trombas congeladas. Mais abaixo, ela se alargava entre duas dobras de pele, que nenhum elefante vivo tem, e para que elas serviam ainda é discutido. As orelhas eram pequenas, com cerca de 30 cm de altura num macho congelado. A cauda era curta, de 36 cm no nosso macho, com um tufo de pelo longo."
      ]
     },
     {
@@ -263,7 +263,7 @@
         "A largura do crânio e da mandíbula.",
         "A cauda, de 36 cm, e a pele, de 19 a 23 mm de espessura.",
         "O pelo das pernas, do queixo e do peito.",
-        "O peso da única presa dele, uns 29 kg."
+        "O peso da única presa dele, cerca de 29 kg."
        ]
       }
      ]
@@ -273,10 +273,10 @@
      "paras": [
       {
        "points": [
-        "A cabeça, a orelha, o olho e a pata da frente: segundo outro macho congelado da Sibéria.",
-        "A silhueta de lado: segundo a reconstrução de um terceiro macho feita por Larramendi, 2016.",
-        "A tromba: segundo outros mamutes congelados.",
-        "A forma de cada osso: segundo outros esqueletos montados. Só os comprimentos e as larguras são dele.",
+        "A cabeça, a orelha, o olho e a pata da frente: a partir de outro macho congelado da Sibéria.",
+        "A silhueta de lado: a partir da reconstrução de um terceiro macho feita por Larramendi, 2016.",
+        "A tromba: a partir de outros mamutes congelados.",
+        "A forma de cada osso: a partir de outros esqueletos montados. Só os comprimentos e as larguras são dele.",
         "A presa direita: o reflexo da esquerda.",
         "A cor da pelagem: escolha nossa."
        ]
@@ -294,7 +294,7 @@
    "nav": "Quando o mamute-lanoso foi extinto?",
    "h": "Quando o mamute-lanoso foi extinto?",
    "paras": [
-    "Os mamutes-lanosos viveram por centenas de milhares de anos, na última era do gelo, da Espanha até o Alasca, e desapareceram aos poucos, não todos de uma vez. No continente, os últimos viveram no norte da Sibéria até uns 10.000 anos atrás, e na ilha de São Paulo, diante da costa do Alasca, até uns 5.600 anos atrás. A última população conhecida viveu na ilha de Wrangel, no oceano Ártico diante da Sibéria, até uns 4.000 anos atrás, e eles não eram anões. Por que eles foram extintos é discutido: no continente, o aquecimento do fim da era do gelo e a caça pelas pessoas, em proporções que ninguém esclareceu. Em São Paulo, a ilha encolheu e faltou água doce, e lá não havia pessoas. Em Wrangel, o fim parece ter chegado rápido, e ninguém sabe por quê: uma camada de gelo pela chuva sobre a neve é uma ideia, e as pessoas não podem ser descartadas."
+    "Os mamutes-lanosos viveram por centenas de milhares de anos, na última era do gelo, da Espanha até o Alasca, e desapareceram aos poucos, não todos de uma vez. No continente, os últimos viveram no norte da Sibéria até cerca de 10.000 anos atrás, e na ilha Saint Paul, no Alasca, até cerca de 5.600 anos atrás. A última população conhecida viveu na ilha de Wrangel, no oceano Ártico diante da Sibéria, até cerca de 4.000 anos atrás, e eles não eram anões. Por que eles foram extintos é discutido: no continente, o aquecimento do fim da era do gelo e a caça pelas pessoas, em proporções que ninguém esclareceu. Em Saint Paul, a ilha encolheu e faltou água doce, e lá não havia pessoas. Em Wrangel, o fim parece ter chegado rápido, e ninguém sabe por quê: uma camada de gelo pela chuva sobre a neve é uma ideia, e a ação humana não pode ser descartada."
    ]
   },
   {
@@ -330,8 +330,8 @@
      "text": "Um número de um manual de 2007 para um macho grande, espalhado por uma tabela de tamanhos muito usada. Ele combina com um macho grande da Europa, não com um típico da Sibéria, nem com o nosso."
     },
     {
-     "term": "3,5 m, e presas de 4 m",
-     "text": "Máximos do museu de São Petersburgo. Machos de até 3,5 m, presas de machos velhos de até 4 m e uns 100 kg, não médias."
+     "term": "3,5 m e presas de 4 m",
+     "text": "Máximos do museu de São Petersburgo. Machos de até 3,5 m, presas de machos velhos de até 4 m e cerca de 100 kg, não médias."
     },
     {
      "term": "4 m de altura",
@@ -339,7 +339,7 @@
     },
     {
      "term": "6 e 8 toneladas",
-     "text": "6 toneladas é a média dos grandes machos da Europa, e também a dos machos de elefante-africano-da-savana. Só os maiores de todos chegavam a 8 toneladas, como um macho de Siegsdorf, na Baviera, com umas 8,2 toneladas."
+     "text": "6 toneladas é a média dos grandes machos da Europa, e também a dos machos de elefante-africano-da-savana. Só os maiores de todos chegavam a 8 toneladas, como um macho de Siegsdorf, na Baviera, com cerca de 8,2 toneladas."
     },
     {
      "term": "Pelagem ruiva",
@@ -347,11 +347,11 @@
     },
     {
      "term": "Uma saia de pelo de 80 a 90 cm",
-     "text": "O museu que guarda o nosso macho dá esse número, e em outro trecho da mesma página, de 70 a 80 cm. No nosso macho, a escavação encontrou tufos de pelo arrancados de 36 cm. Inteiros, eles mediriam uns 50 cm, pela estimativa do chefe da escavação."
+     "text": "O museu que guarda o nosso macho dá esse número, e em outro trecho da mesma página, de 70 a 80 cm. No nosso macho, a escavação encontrou tufos de pelo arrancados de 36 cm. Inteiros, eles mediriam cerca de 50 cm, pela estimativa do chefe da escavação."
     },
     {
      "term": "Os mamutes foram extintos há 4.000 anos",
-     "text": "Mais ou menos verdade, e só para a última população conhecida, na ilha de Wrangel, uns 4.000 anos atrás. No continente, os últimos viveram até uns 10.000 anos atrás."
+     "text": "Mais ou menos verdade, e só para a última população conhecida, na ilha de Wrangel, cerca de 4.000 anos atrás. No continente, os últimos viveram até cerca de 10.000 anos atrás."
     },
     {
      "term": "Congelado com comida na boca",
@@ -380,7 +380,7 @@
     },
     {
      "q": "Há quanto tempo viveu o macho de Berezovka?",
-     "a": "Há uns 44.000 anos, pela datação por radiocarbono do museu que o guarda. O chão congelado conservou a pele, o pelo e o capim entre os dentes dele durante todo esse tempo."
+     "a": "Há cerca de 44.000 anos, pela datação por radiocarbono do museu que o guarda. O chão congelado conservou a pele, o pelo e o capim entre os dentes dele durante todo esse tempo."
     }
    ]
   },
@@ -390,7 +390,7 @@
    "nav": "No museu",
    "h": "No museu",
    "paras": [
-    "O Museum of Ages é um museu digital, feito por uma organização sem fins lucrativos. Entrada franca, sem cadastro. Na ala dos animais, este animal vai estar entre os outros, dos gigantes de muito tempo atrás aos últimos da própria espécie. A ala de Leonardo da Vinci mostra como é uma ala pronta."
+    "O Museum of Ages é um museu digital, feito por uma organização sem fins lucrativos. Entrada franca, sem cadastro. Na ala dos animais, este animal vai estar entre os outros, dos gigantes de muito tempo atrás aos últimos de sua espécie. A ala de Leonardo da Vinci mostra como é uma ala pronta."
    ],
    "links": [
     {
@@ -407,7 +407,7 @@
      "page": "megalodon",
      "pic": "megalodon",
      "alt": "Um tubarão de boca aberta, visto de lado, cinza-escuro com uma faixa mais clara no flanco, ao lado de uma pessoa cinza que ao lado dele parece minúscula.",
-     "line": "O megalodon da coluna de Bruxelas tinha uns 16 m de comprimento, e os maiores da espécie, talvez uns 20 m. O nosso megalodon ao lado de uma pessoa, na mesma escala."
+     "line": "O megalodon da coluna de Bruxelas tinha cerca de 16 m de comprimento, e os maiores da espécie, talvez cerca de 20 m. O nosso megalodon ao lado de uma pessoa, na mesma escala."
     },
     {
      "page": "biggest-dinosaurs",
@@ -419,7 +419,7 @@
      "page": "t-rex",
      "pic": "trex",
      "alt": "Um T. rex de lado, sobre duas patas, com a boca aberta e a cabeça erguida, ao lado de uma pessoa cinza que fica bem abaixo do quadril dele.",
-     "line": "Um T. rex adulto grande tinha uns 12 m de comprimento e mais ou menos 8 a 9 toneladas, pelos ossos de SUE. O nosso T. rex ao lado de uma pessoa, com o que foi encontrado de SUE."
+     "line": "Um T. rex adulto grande tinha cerca de 12 m de comprimento e mais ou menos 8 a 9 toneladas, pelos ossos de SUE. O nosso T. rex ao lado de uma pessoa, com o que foi encontrado de SUE."
     }
    ]
   },
@@ -488,8 +488,8 @@
   {
    "type": "text",
    "id": "pictures",
-   "nav": "Use as nossas imagens",
-   "h": "Use as nossas imagens",
+   "nav": "Usar nossas imagens",
+   "h": "Usar nossas imagens",
    "paras": [
     [
      "As imagens do mamute-lanoso nesta página são obra nossa, com licença ",
@@ -497,7 +497,7 @@
       "text": "CC BY-SA 4.0",
       "href": "https://creativecommons.org/licenses/by-sa/4.0/deed.pt-br"
      },
-     ". Crédito: Museum of Ages. Elas mostram uma reconstrução, construída em código e desenhada com o nosso próprio motor gráfico, não uma fotografia. As imagens das outras páginas que aparecem aqui dão o crédito nessas páginas."
+     ". Crédito: Museum of Ages. Elas mostram uma reconstrução, construída em código e renderizada com o nosso próprio motor gráfico, não uma fotografia. As imagens das outras páginas que aparecem aqui dão o crédito nessas páginas."
     ]
    ]
   }

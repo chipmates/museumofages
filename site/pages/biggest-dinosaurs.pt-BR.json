@@ -130,7 +130,7 @@
  },
  "meta": {
   "title": "Qual foi o maior dinossauro do mundo? | Museum of Ages",
-  "description": "Qual foi o maior dinossauro do mundo? Provavelmente o Argentinosaurus: uns 30 a 35 m e mais ou menos 65 a 80 t. Sete dinossauros e uma pessoa, em escala.",
+  "description": "Qual foi o maior dinossauro do mundo? Provavelmente Argentinosaurus: cerca de 30 a 35 m e mais ou menos 65 a 80 t. Sete dinossauros e uma pessoa em escala.",
   "og_title": "Qual foi o maior dinossauro do mundo? Provavelmente o Argentinosaurus",
   "og_image_alt": "Sete dinossauros em fila, vistos de lado, dois deles com pescoços longos bem acima dos outros, e uma pessoa cinza que parece minúscula perto deles."
  },
@@ -153,10 +153,10 @@
   "scale": {
    "pic": "row",
    "tag": "tag_made",
-   "what": "Os nossos sete ao lado de uma pessoa de 1,70 m, na mesma escala, cada um do jeito que o nosso modelo foi construído. O nosso espinossauro é um animal jovem de cerca de 10 m, uns três quartos de um adulto, então aqui ele é mais curto que o nosso T. rex. Um espinossauro adulto era mais longo que qualquer T. rex e, muito provavelmente, mais leve.",
+   "what": "Os nossos sete ao lado de uma pessoa de 1,70 m, na mesma escala, cada um do jeito que o nosso modelo foi construído. O nosso espinossauro é um animal jovem de cerca de 10 m, cerca de três quartos de um adulto, então aqui ele é mais curto que o nosso T. rex. Um espinossauro adulto era mais longo que qualquer T. rex e, muito provavelmente, mais leve.",
    "alt": "Sete dinossauros em fila, vistos de lado, dois deles com pescoços longos bem acima dos outros, e uma pessoa cinza que parece minúscula perto deles.",
    "note": [
-    "Reconstruções do próprio museu, construídas em código a partir de medidas e desenhos publicados, e desenhadas com o nosso próprio motor gráfico. Não são fotografias. ",
+    "Reconstruções do próprio museu, construídas em código a partir de medidas e desenhos publicados, e renderizadas com o nosso próprio motor gráfico. Não são fotografias. ",
     "O contorno do nosso Triceratops segue o modelo de corpo de ",
     {
      "text": "Dempsey 2025",
@@ -356,13 +356,13 @@
     {
      "h": "O mais pesado",
      "paras": [
-      "Muito provavelmente um titanossauro da Patagônia, o Argentinosaurus ou o Patagotitan. O Argentinosaurus é o candidato com mais apoio: mais ou menos 65 a 80 toneladas segundo vários modelos, todos feitos a partir de poucos ossos. O Patagotitan, conhecido por pelo menos seis animais, recebeu 69 toneladas em 2017, e a própria equipe dele corrigiu isso em 2020 para cerca de 57. Qual dos dois era maior continua em aberto: eles têm poucos ossos em comum para comparar. O Dreadnoughtus, que já recebeu 59 toneladas, hoje fica em cerca de 22 a 30."
+      "Muito provavelmente um titanossauro da Patagônia, o Argentinosaurus ou o Patagotitan. O Argentinosaurus é o candidato com mais apoio: mais ou menos 65 a 80 toneladas segundo vários modelos, todos feitos a partir de poucos ossos. O Patagotitan, conhecido por pelo menos seis animais, foi estimado em 69 toneladas em 2017, e a própria equipe dele corrigiu isso em 2020 para cerca de 57. Qual dos dois era maior continua em aberto: eles têm poucos ossos em comum para comparar. O Dreadnoughtus, que já foi estimado em 59 toneladas, hoje fica em cerca de 22 a 30."
      ]
     },
     {
      "h": "O mais longo",
      "paras": [
-      "Ninguém sabe. Os titanossauros mais bem conhecidos chegam a cerca de 30 a 37 m, segundo os ossos e as réplicas deles. O Supersaurus, um primo do Diplodocus de cauda longa, recebeu de 39 a 42 m em uma palestra de um congresso de 2021, ainda não publicada em uma revista científica."
+      "Ninguém sabe. Os titanossauros mais bem conhecidos chegam a cerca de 30 a 37 m, segundo os ossos e as réplicas deles. O Supersaurus, um primo de cauda longa do Diplodocus, foi estimado em 39 a 42 m em uma palestra de um congresso de 2021, ainda não publicada em uma revista científica."
      ]
     },
     {
@@ -399,11 +399,11 @@
    "intro": "Para cada número: de onde ele veio e o que a pesquisa pensa dele hoje.",
    "rows": [
     {
-     "term": "39,7 m, e 40 m",
+     "term": "39,7 m e 40 m",
      "text": "O esqueleto montado do Museo Carmen Funes, em Plaza Huincul, construído nos anos 1990 com os poucos ossos reais como guia. Um escaneamento a laser de 2013 mediu 39,7 m nele. Esse é o comprimento de uma escultura, de 5 a 10 m a mais que qualquer estimativa a partir dos ossos, e os 40 m são esse mesmo número arredondado. A réplica de Atlanta é do mesmo tipo: segundo o museu de lá, tem mais de 37 m."
     },
     {
-     "term": "100 toneladas, e 83",
+     "term": "100 toneladas e 83",
      "text": "As 100 vêm de palpites dos anos 1990 e de um primeiro modelo de volume de 80 a 100. As 83 são a montagem escaneada em 2013 e envolvida em uma pele digital, então pertencem à escultura. Os modelos de hoje dão mais ou menos 65 a 80 toneladas."
     },
     {
@@ -428,7 +428,7 @@
     },
     {
      "term": "Tão alto quanto um prédio de seis andares",
-     "text": "A imagem de uma revista para o Sauroposeidon, de por volta de 2002, a partir da estimativa de cerca de 17 m. E esses 17 m se apoiam em quatro vértebras do pescoço. A frase é do Sauroposeidon, não do braquiossauro nem do Argentinosaurus."
+     "text": "A comparação de uma revista para o Sauroposeidon, de cerca de 2002, a partir da estimativa de cerca de 17 m. E esses 17 m se apoiam em quatro vértebras do pescoço. A frase é do Sauroposeidon, não do braquiossauro nem do Argentinosaurus."
     }
    ]
   },
@@ -447,7 +447,7 @@
       ],
       [
        "Um modelo de volume:",
-       "constrói-se um corpo em volta do esqueleto, mede-se o volume dele e multiplica-se por uma densidade. O contorno é uma escolha: assim, um T. rex adulto pode dar de menos de 6 a mais de 18 toneladas."
+       "modela-se um corpo em volta do esqueleto, mede-se o volume dele e multiplica-se por uma densidade. O contorno é uma escolha: assim, um T. rex adulto pode dar de menos de 6 a mais de 18 toneladas."
       ],
       [
        "Ampliar a partir de um parente:",
@@ -466,8 +466,8 @@
    "paras": [
     "O Argentinosaurus huinculensis é conhecido por um único animal, MCF-PVPH-1, encontrado no fim dos anos 1980 a cerca de 8 km a leste de Plaza Huincul, em Neuquén, na Argentina. O que restou: seis ou sete vértebras do dorso incompletas, a parte de baixo do quadril, um pedaço de costela e uma fíbula de 1,55 m de comprimento. Nenhuma cabeça, nenhum pescoço, nenhuma cauda, nenhum ombro, nenhum braço, nenhum pé. Os ossos estão guardados no Museo Municipal Carmen Funes, em Plaza Huincul. Dois fêmures enormes talvez sejam dele, ou talvez não.",
     "O Patagotitan mayorum é a mais bem conhecida das maiores espécies. Pelo menos seis adultos jovens saíram de uma única escavação numa fazenda em Chubut, na Argentina: o primeiro osso em 2012, e mais de cem ossos no total. Eles estão guardados no Museo Paleontológico Egidio Feruglio, em Trelew, onde um fêmur real de mais de 2 m fica ao lado da réplica.",
-    "O Brachiosaurus altithorax se apoia em um único esqueleto parcial, FMNH P 25107, desenterrado em 1900 no oeste do Colorado e guardado no Field Museum, em Chicago. Foram encontradas sete vértebras do dorso, o sacro, duas vértebras da cauda, um osso do ombro, o úmero direito, o fêmur direito, as duas lâminas do quadril e algumas costelas. Nenhuma cabeça, nenhum pescoço, nenhum antebraço, nenhuma parte de baixo das patas, nenhum pé, e quase nada da cauda, de um animal que ainda não tinha terminado de crescer. Conhecem-se uns dez achados da espécie, nenhum quase completo.",
-    "O esqueleto alto do Museum für Naturkunde de Berlim não é um braquiossauro, mas o Giraffatitan brancai, um parente próximo da África. Ele foi desenterrado em Tendaguru, na atual Tanzânia, entre 1909 e 1913, no período colonial que o próprio museu nomeia. Em 2009 os dois foram separados em gêneros diferentes, por pelo menos 26 diferenças nos ossos, e quase toda imagem de um braquiossauro mostra o animal africano. A montagem de Berlim junta vários animais e é, nas palavras do próprio museu, o maior esqueleto de dinossauro montado do mundo."
+    "O Brachiosaurus altithorax se apoia em um único esqueleto parcial, FMNH P 25107, desenterrado em 1900 no oeste do Colorado e guardado no Field Museum, em Chicago. Foram encontradas sete vértebras do dorso, o sacro, duas vértebras da cauda, um osso do ombro, o úmero direito, o fêmur direito, as duas lâminas do quadril e algumas costelas. Nenhuma cabeça, nenhum pescoço, nenhum antebraço, nenhuma parte de baixo das patas, nenhum pé, e quase nada da cauda, de um animal que ainda não tinha terminado de crescer. Conhecem-se cerca de dez achados da espécie, nenhum perto de estar completo.",
+    "O esqueleto alto do Museum für Naturkunde de Berlim não é um braquiossauro, mas o Giraffatitan brancai, um parente próximo africano. Ele foi desenterrado em Tendaguru, na atual Tanzânia, entre 1909 e 1913, no período colonial que o próprio museu nomeia. Em 2009 os dois foram separados em gêneros diferentes, por pelo menos 26 diferenças nos ossos, e quase toda imagem de um braquiossauro mostra o animal africano. A montagem de Berlim junta vários animais e é, nas palavras do próprio museu, o maior esqueleto de dinossauro montado do mundo."
    ],
    "scale": {
     "pic": "skeleton",
@@ -484,7 +484,7 @@
    "nav": "Por que os nossos são assim",
    "h": "Por que os nossos são assim",
    "paras": [
-    "Cada um foi construído no tamanho de um achado ou de uma montagem com nome. O Argentinosaurus, segundo os ossos de Plaza Huincul, com um corpo sobretudo segundo o Patagotitan. O braquiossauro, segundo o esqueleto de Chicago, com o pescoço e a cabeça segundo os parentes dele. O T. rex, segundo SUE, e o espinossauro, segundo o animal jovem do Marrocos. O Triceratops, segundo a montagem do Smithsonian, feita com cerca de dez animais: o crânio dela foi aumentado quando ela foi refeita. O anquilossauro, segundo o menor dos três esqueletos conhecidos, e o estegossauro, segundo Sophie, em Londres. De nenhum deles se conhece a cor, então as cores são nossas, e os vizinhos se diferenciam onde nada se sabe. Os ângulos dos dois pescoços longos fomos nós que escolhemos, porque não existe nenhuma vértebra do pescoço de nenhum dos dois animais. Por isso as cabeças deles estão quase na mesma altura, embora o nosso Argentinosaurus seja nove metros mais longo. O nosso T. rex está de boca aberta. Fechada, os lábios dele muito provavelmente cobriam os dentes."
+    "Cada um foi construído no tamanho de um achado ou de uma montagem com nome. O Argentinosaurus, a partir dos ossos de Plaza Huincul, com um corpo sobretudo a partir do Patagotitan. O braquiossauro, a partir do esqueleto de Chicago, com o pescoço e a cabeça a partir dos parentes dele. O T. rex, a partir de SUE, e o espinossauro, a partir do animal jovem do Marrocos. O Triceratops, a partir da montagem do Smithsonian, feita com cerca de dez animais: o crânio dela foi aumentado quando ela foi refeita. O anquilossauro, a partir do menor dos três esqueletos conhecidos, e o estegossauro, a partir de Sophie, em Londres. De nenhum deles se conhece a cor, então as cores são nossas, e os vizinhos se diferenciam onde nada se sabe. Os ângulos dos dois pescoços longos fomos nós que escolhemos, porque não existe nenhuma vértebra do pescoço de nenhum dos dois animais. Por isso as cabeças deles estão quase na mesma altura, embora o nosso Argentinosaurus seja nove metros mais longo. O nosso T. rex está de boca aberta. Fechada, os lábios dele muito provavelmente cobriam os dentes."
    ]
   },
   {
@@ -499,7 +499,7 @@
     },
     {
      "q": "Algum dinossauro foi maior que uma baleia-azul?",
-     "a": "Não, pelo que se sabe. A NOAA, a agência dos oceanos dos Estados Unidos, diz que a baleia-azul é o maior animal que já viveu no nosso planeta. A maioria das adultas tem de 23 a 27 m, as maiores cerca de 30 m. O Argentinosaurus, com cerca de 30 a 35 m, tinha mais ou menos o mesmo comprimento. Só uma vez se propôs para um animal de terra um peso perto do das maiores baleias, o da Índia que se perdeu, e os ossos dele já não existem."
+     "a": "Não, pelo que se sabe. A NOAA, a agência dos oceanos dos Estados Unidos, diz que a baleia-azul é o maior animal que já viveu no nosso planeta. A maioria das adultas tem de 23 a 27 m, as maiores cerca de 30 m. O Argentinosaurus, com cerca de 30 a 35 m, tinha mais ou menos o mesmo comprimento. Só uma vez se propôs para um animal terrestre um peso perto do das maiores baleias, o da Índia que se perdeu, e os ossos dele já não existem."
     }
    ]
   },
@@ -509,7 +509,7 @@
    "nav": "No museu",
    "h": "No museu",
    "paras": [
-    "Museum of Ages é um museu digital, feito por uma organização sem fins lucrativos. Entrada franca, sem cadastro. Na ala dos animais, estes sete vão ficar entre os outros. A ala de Leonardo da Vinci mostra como é uma ala pronta."
+    "O Museum of Ages é um museu digital, feito por uma organização sem fins lucrativos. Entrada franca, sem cadastro. Na ala dos animais, estes sete vão ficar entre os outros. A ala de Leonardo da Vinci mostra como é uma ala pronta."
    ],
    "links": [
     {
@@ -526,7 +526,7 @@
      "page": "t-rex",
      "pic": "trex",
      "alt": "Um T. rex visto de lado, sobre duas patas, de boca aberta e cabeça erguida, ao lado de uma pessoa cinza que fica muito abaixo do quadril dele.",
-     "line": "O T. rex da fila, sozinho e mais de perto: comprimento, altura do quadril, peso, e por que nenhum animal mede a espécie inteira."
+     "line": "O T. rex da fila, sozinho e mais de perto: comprimento, altura do quadril, peso, e por que nenhum animal representa a espécie inteira."
     },
     {
      "page": "megalodon",
@@ -536,7 +536,7 @@
     {
      "page": "spinosaurus",
      "pic": "spino",
-     "alt": "Um espinossauro com uma vela alta e uma cauda larga, com o contorno claro de um adulto maior atrás, ao lado de uma pessoa cinza que chega ao quadril dele.",
+     "alt": "Um espinossauro com uma vela alta e uma cauda alta, com o contorno claro de um adulto maior atrás, ao lado de uma pessoa cinza que chega ao quadril dele.",
      "line": "O espinossauro da fila, sozinho: a vela, a cauda, a água, e por que um adulto era mais longo que o nosso."
     },
     {
@@ -701,15 +701,15 @@
      "href": "https://www.fisheries.noaa.gov/species/blue-whale"
     }
    ],
-   "contact": "Se um número ou uma instituição estiver errado, escreva para nós e faremos a correção.",
+   "contact": "Se um número ou uma instituição estiver errada, escreva para nós e faremos a correção.",
    "contact_link": "Ir para as informações legais",
    "what_link": "O que é este museu"
   },
   {
    "type": "text",
    "id": "pictures",
-   "nav": "Use as nossas imagens",
-   "h": "Use as nossas imagens",
+   "nav": "Usar nossas imagens",
+   "h": "Usar nossas imagens",
    "paras": [
     [
      "As imagens desta página são obra do próprio museu, sob a licença ",
@@ -717,7 +717,7 @@
       "text": "CC BY-SA 4.0",
       "href": "https://creativecommons.org/licenses/by-sa/4.0/deed.pt-br"
      },
-     ". Crédito: Museum of Ages e, onde uma legenda cita uma fonte, também essa fonte. Elas mostram reconstruções, construídas em código e desenhadas com o nosso próprio motor gráfico, não fotografias."
+     ". Crédito: Museum of Ages e, onde uma legenda cita uma fonte, também essa fonte. Elas mostram reconstruções, construídas em código e renderizadas com o nosso próprio motor gráfico, não fotografias."
     ]
    ]
   }

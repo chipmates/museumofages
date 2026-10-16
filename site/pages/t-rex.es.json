@@ -96,9 +96,9 @@
   }
  },
  "meta": {
-  "title": "Tamaño del T. rex: unos 12 m y de 8 a 9 t | Museum of Ages",
+  "title": "Tiranosaurio rex: unos 12 m y de 8 a 9 t | Museum of Ages",
   "description": "¿Cuánto medía el T. rex? Un tiranosaurio rex adulto grande, unos 12 m de largo, unos 4 m a la cadera y de 8 a 9 t. El nuestro, con las medidas de SUE.",
-  "og_title": "Tamaño del T. rex: unos 12 m y de 8 a 9 t",
+  "og_title": "Tiranosaurio rex: unos 12 m y de 8 a 9 t",
   "og_image_alt": "Un T. rex de lado, sobre dos patas, con la boca abierta y la cabeza levantada, junto a una persona gris que queda muy por debajo de sus caderas."
  },
  "labels": {
@@ -115,14 +115,14 @@
  },
  "top": {
   "h1": "¿Cuánto medía el T. rex?",
-  "answer": "Un Tyrannosaurus rex adulto grande medía unos 12 m de largo, y la mayoría eran más pequeños. A la altura de la cadera medía unos 3,5 a 4 m. Un adulto grande pesaba más o menos de 8 a 9 toneladas, según los huesos y los modelos del cuerpo, y uno adulto corriente, menos. Nuestro T. rex, hecho con las medidas de SUE, mide unos 11,4 m en esta postura, con la cabeza levantada a unos 4,6 m del suelo.",
+  "answer": "Un Tyrannosaurus rex adulto grande medía unos 12 m de largo, y la mayoría eran más pequeños. A la altura de la cadera medía unos 3,5 a 4 m. Un adulto grande pesaba más o menos de 8 a 9 toneladas, según los huesos y los modelos del cuerpo, y un adulto corriente, menos. Nuestro T. rex, hecho con las medidas de SUE, mide unos 11,4 m en esta postura, con la cabeza levantada a unos 4,6 m del suelo.",
   "answer_more": "Los dos T. rex más grandes que se conocen son SUE, en Chicago, el esqueleto más largo y más completo, y Scotty, probablemente el más pesado.",
   "scale": {
    "pic": "side",
    "tag": "tag_made",
    "what": "Nuestro T. rex junto a una persona de 1,70 m, a la misma escala, hecho con las medidas de SUE. En esta postura, con la cabeza levantada y girada y la cola curvada, mide unos 11,4 m. Eso es más de seis personas y media tumbadas una detrás de otra. Lo alto de la cabeza levantada está a unos 4,6 m del suelo, y eso depende de la postura. Estirado en línea recta, el mismo esqueleto mediría unos 11,8 m. El montaje de SUE en Chicago mide unos 12 m.",
    "alt": "Un T. rex de lado, sobre dos patas, con la boca abierta y la cabeza levantada, junto a una persona gris que queda muy por debajo de sus caderas.",
-   "note": "Nuestra propia reconstrucción, construida en código a partir de medidas publicadas y dibujada con nuestro propio motor gráfico. No es una fotografía.",
+   "note": "Nuestra propia reconstrucción, construida en código a partir de medidas publicadas y renderizada con nuestro propio motor gráfico. No es una fotografía.",
    "marks": [
     {
      "span": "t-rex",
@@ -166,7 +166,7 @@
    "id": "numbers",
    "nav": "Las cifras",
    "h": "Las cifras",
-   "unit": "En metros y toneladas. Donde no hay una cifra con fuente, la celda queda vacía. Nuestro modelo no recibe un peso: el peso viene de los estudios sobre SUE, no de nuestro archivo.",
+   "unit": "En metros y toneladas. Donde no hay una cifra con fuente, la celda queda vacía. Nuestro modelo no lleva peso: el peso viene de los estudios sobre SUE, no de nuestro archivo.",
    "cols": [
     "Animal",
     "Longitud",
@@ -188,7 +188,7 @@
      "cells": [
       "SUE, Field Museum, Chicago",
       "unos 12 m, el montaje 12,3 m, con el final de la cola reconstruido",
-      "a la cadera unos 4 m, según el museo",
+      "a la altura de la cadera unos 4 m, según el museo",
       "unas 8 a 9 t, según un hueso y tres modelos",
       "buena: el museo y dos estudios coinciden"
      ]
@@ -206,7 +206,7 @@
      "cells": [
       "La especie, un adulto grande",
       "unos 12 m, la mayoría más pequeños",
-      "a la cadera unos 3,5 a 4 m",
+      "a la altura de la cadera unos 3,5 a 4 m",
       "más o menos de 8 a 9 t, los adultos corrientes menos",
       "buena: un museo y varios estudios, la cadera menos segura"
      ]
@@ -228,14 +228,14 @@
    "nav": "¿Qué T. rex fue el más grande?",
    "h": "¿Qué T. rex fue el más grande?",
    "paras": [
-    "SUE y Scotty son los dos T. rex más grandes que se conocen, y cada museo llama al suyo el más grande, cada uno según una medida distinta. SUE es el esqueleto más largo y, con mucho, el más completo: unos 12 m montado, y alrededor del 90 por ciento por volumen de hueso. A Scotty, con el fémur más grueso, se le considera el más pesado: unas 8,9 toneladas, según un estudio de 2019 que un segundo estudio respalda. Las estimaciones se solapan, porque las de SUE van de unas 8,2 a 9,5 toneladas. Nadie sabe qué tamaño tenía el T. rex más grande que haya vivido. Un modelo de 2024 calcula unas 15 toneladas y más de 15 m, y hasta hoy no se encontró un animal así."
+    "SUE y Scotty son los dos T. rex más grandes que se conocen, y cada museo llama al suyo el más grande, cada uno según una medida distinta. SUE es el esqueleto más largo y, con mucho, el más completo: unos 12 m montado, y alrededor del 90 por ciento por volumen de hueso. A Scotty, con el fémur más grueso, se le considera el más pesado: unas 8,9 toneladas, según un estudio de 2019 que un segundo estudio respalda. Las estimaciones se solapan, porque las de SUE van de unas 8,2 a 9,5 toneladas. Nadie sabe qué tamaño tenía el T. rex más grande que haya vivido. Un modelo de 2024 estima unas 15 toneladas y más de 15 m, y hasta hoy no se encontró un animal así."
    ]
   },
   {
    "type": "text",
    "id": "how-sure",
-   "nav": "Cuán seguro es esto",
-   "h": "Cuán seguro es esto",
+   "nav": "Hasta qué punto es seguro",
+   "h": "Hasta qué punto es seguro",
    "paras": [
     "Tres cosas deciden cada cifra de esta página.",
     {
@@ -246,11 +246,11 @@
       ],
       [
        "El peso a partir de un hueso o de un cuerpo:",
-       "con el hueso, se mide el perímetro del fémur y se aplica la regla que une ese perímetro con el peso en los animales vivos. Ningún animal vivo que ande sobre dos patas se acerca a ese tamaño, y ese es el punto débil. Con un modelo del cuerpo, se construye carne alrededor del esqueleto y se multiplica el volumen por la densidad. Según la silueta elegida, a un T. rex adulto le salieron desde menos de 6 hasta más de 18 toneladas."
+       "con el hueso, se mide el perímetro del fémur y se aplica la regla que une ese perímetro con el peso en los animales vivos. Ningún animal vivo que ande sobre dos patas se acerca a ese tamaño, y ese es el punto débil. Con un modelo del cuerpo, se modela la carne alrededor del esqueleto y se multiplica el volumen por la densidad. Según la silueta elegida, a un T. rex adulto le salieron desde menos de 6 hasta más de 18 toneladas."
       ],
       [
        "Un animal no es la especie:",
-       "SUE era un animal viejo y muy grande. La mayoría de los T. rex fueron más pequeños, y un adulto corriente está más cerca de 5 a 8 toneladas, según estudios y museos. Por eso aquí hay tres cifras separadas: nuestro modelo, SUE y la especie."
+       "SUE era un animal viejo y excepcionalmente grande. La mayoría de los T. rex fueron más pequeños, y un adulto corriente está más cerca de 5 a 8 toneladas, según estudios y museos. Por eso aquí hay tres cifras separadas: nuestro modelo, SUE y la especie."
       ]
      ]
     }
@@ -290,7 +290,7 @@
         "Casi todo el pie izquierdo, del que existe un solo hueso de un dedo (menos seguro: en un lugar, la descripción se contradice sobre qué pie es).",
         "Unas 11 de las 47 vértebras de la cola del montaje, en parte al final de la cola (cálculo nuestro).",
         "Unas 34 de las aproximadamente 60 costillas del vientre, según el recuento del museo.",
-        "Piel: nada."
+        "Piel: ninguna."
        ]
       }
      ]
@@ -321,7 +321,7 @@
     },
     {
      "term": "15 toneladas",
-     "text": "Un modelo de 2024 parte de cuántos T. rex vivieron y de cómo crecían. Con eso calcula cuánto pudo pesar y medir el más grande: quizá unas 15 toneladas y más de 15 m. Hasta hoy no se encontró nada de ese tamaño, y los autores consideran un hallazgo así muy poco probable."
+     "text": "Un modelo de 2024 parte de cuántos T. rex vivieron y de cómo crecían. Con eso calcula cuánto pudo pesar y medir el más grande: quizá unas 15 toneladas y más de 15 m. Hasta hoy no se encontró nada de ese tamaño, y los autores consideran un hallazgo así extremadamente improbable."
     },
     {
      "term": "90 por ciento",
@@ -346,7 +346,7 @@
    "nav": "Por qué nuestro T. rex se ve así",
    "h": "Por qué nuestro T. rex se ve así",
    "paras": [
-    "Está hecho con las medidas de los huesos de SUE: el fémur, el húmero, la pala de la cadera y el cráneo a su tamaño, y el resto según otro T. rex, unas reglas y nuestra propia reconstrucción. Los colores son nuestros, porque no se conoce el color de ningún T. rex. Mostramos la boca abierta, con la franja de labio y encía sobre los dientes de arriba."
+    "Está hecho con las medidas de los huesos de SUE: el fémur, el húmero, la pala de la cadera y el cráneo a su tamaño real, y el resto según otro T. rex, unas reglas y nuestra propia reconstrucción. Los colores son nuestros, porque no se conoce el color de ningún T. rex. Mostramos la boca abierta, con la franja de labio y encía sobre los dientes de arriba."
    ]
   },
   {
@@ -403,7 +403,7 @@
     {
      "page": "spinosaurus",
      "pic": "spino",
-     "alt": "Un Spinosaurus con una vela alta y una cola ancha, con la silueta clara de un adulto más grande detrás, junto a una persona gris que le llega a la cadera.",
+     "alt": "Un Spinosaurus con una vela alta y una cola alta, con la silueta clara de un adulto más grande detrás, junto a una persona gris que le llega a la cadera.",
      "line": "Un Spinosaurus adulto era más largo que cualquier T. rex encontrado hasta hoy, muy probablemente más ligero y mucho más bajo a la altura de la cadera. Aquí nuestro ejemplar joven está junto a nuestro T. rex, a la misma escala."
     },
     {
@@ -494,8 +494,8 @@
   {
    "type": "text",
    "id": "pictures",
-   "nav": "Usa nuestras imágenes",
-   "h": "Usa nuestras imágenes",
+   "nav": "Usar nuestras imágenes",
+   "h": "Usar nuestras imágenes",
    "paras": [
     [
      "Las imágenes del T. rex de esta página son obra nuestra, con licencia ",
@@ -503,7 +503,7 @@
       "text": "CC BY-SA 4.0",
       "href": "https://creativecommons.org/licenses/by-sa/4.0/deed.es"
      },
-     ". Crédito: Museum of Ages. Muestran una reconstrucción, construida en código y dibujada con nuestro propio motor gráfico, no una fotografía. Las imágenes de las otras páginas que aparecen aquí dan su crédito en esas páginas."
+     ". Crédito: Museum of Ages. Muestran una reconstrucción, construida en código y renderizada con nuestro propio motor gráfico, no una fotografía. Las imágenes de las otras páginas que aparecen aquí dan su crédito en esas páginas."
     ]
    ]
   }

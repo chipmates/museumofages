@@ -645,9 +645,9 @@ def picture_still_svg(words, colours, picture, size, person, beside=False):
 
 
 def _keep(s):
-    """A number keeps its unit on its line, a range its two ends, a short name its two parts (T. rex) and a German
-    article its noun: the words are then wrapped at their plain spaces only."""
-    return re.sub(r"(\d) (?=(?:m|ft|cm|kg|t|tonnes|Tonnen)\b)|(\d) (to|bis) (?=\d)|\b([A-Z]\.) (?=[a-z])"
+    """A number keeps its unit on its line, a range its two ends (to, bis, and a in Spanish and Portuguese), a short
+    name its two parts (T. rex) and a German article its noun: the words are then wrapped at their plain spaces only."""
+    return re.sub(r"(\d) (?=(?:m|ft|cm|kg|t|tonnes|Tonnen|toneladas?)\b)|(\d) (to|bis|a) (?=\d)|\b([A-Z]\.) (?=[a-z])"
                   r"|\b(der|die|das|ein|eine) (?=\w)",
                   lambda m: (m.group(1) or "") + (f"{m.group(2)}\u00a0{m.group(3)}" if m.group(2) else "")
                   + (m.group(4) or m.group(5) or "") + "\u00a0", s)

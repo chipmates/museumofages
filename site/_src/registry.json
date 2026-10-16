@@ -703,11 +703,11 @@
         },
         "never_say": [
           [
-            "(?s)^(?!.*(?:adults?|model|erwachsen|modell|largest|größten|up\\sto|bis\\setwa|just\\sunder|knapp\\sunter|7[.,]4\\s(?:to|bis|a)\\s8|hasta\\sunos|até\\suns|algo\\smenos\\sde|pouco\\smenos\\sde|casi\\s14|quase\\s14)).*\\b14\\s*(?:m|metres?|meters?|metern?)\\b",
+            "(?s)^(?!.*(?:adults?|model|erwachsen|modell|largest|größten|up\\sto|bis\\setwa|just\\sunder|knapp\\sunter|7[.,]4\\s(?:to|bis|a)\\s8|hasta\\sunos|até\\suns|até\\scerca\\sde|algo\\smenos\\sde|pouco\\smenos\\sde|casi\\s14|quase\\s14)).*\\b14\\s*(?:m|metres?|meters?|metern?)\\b",
             "14 m is the largest adults' length by a model: never without adult or model"
           ],
           [
-            "(?s)^(?!.*(?:adults?|model|erwachsen|modell|largest|größten|up\\sto|bis\\setwa|just\\sunder|knapp\\sunter|7[.,]4\\s(?:to|bis|a)\\s8|hasta\\sunos|até\\suns|algo\\smenos\\sde|pouco\\smenos\\sde|casi\\s14|quase\\s14)).*\\b7(?:[.,]4)?\\s*(?:t|tonnes?|tons?|tonnen)\\b",
+            "(?s)^(?!.*(?:adults?|model|erwachsen|modell|largest|größten|up\\sto|bis\\setwa|just\\sunder|knapp\\sunter|7[.,]4\\s(?:to|bis|a)\\s8|hasta\\sunos|até\\suns|até\\scerca\\sde|algo\\smenos\\sde|pouco\\smenos\\sde|casi\\s14|quase\\s14)).*\\b7(?:[.,]4)?\\s*(?:t|tonnes?|tons?|tonnen)\\b",
             "7.4 tonnes is the largest adults' weight by a model: never without adult or model"
           ],
           [
@@ -847,7 +847,9 @@
           "name": "Mammuthus primigenius",
           "alternateName": [
             "Woolly mammoth",
-            "Wollhaarmammut"
+            "Wollhaarmammut",
+            "Mamut lanudo",
+            "Mamute-lanoso"
           ],
           "taxonRank": "species",
           "sameAs": "https://www.wikidata.org/wiki/Q3699044"

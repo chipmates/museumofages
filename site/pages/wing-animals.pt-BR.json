@@ -87,7 +87,7 @@
   "description": "Qual era o tamanho dos animais do museu, cada um ao lado de uma pessoa de 1,70 m na mesma escala, em imagens nossas e com as fontes.",
   "og_title": "Animais: qual era o tamanho deles",
   "og_image_alt": "Um tubarão de boca aberta, visto de lado, cinza-escuro com uma faixa mais clara no flanco, ao lado de uma pessoa cinza que parece minúscula perto dele.",
-  "credit": "Museum of Ages, forma do corpo segundo Shimada e outros 2025 (CC BY 4.0)"
+  "credit": "Museum of Ages, forma do corpo a partir de Shimada e outros 2025 (CC BY 4.0)"
  },
  "labels": {
   "crumbs": "Você está aqui",
@@ -98,9 +98,9 @@
  },
  "top": {
   "h1": "Animais",
-  "answer": "O museu está construindo uma ala de animais, dos gigantes de muito tempo atrás aos últimos da própria espécie. Até ela abrir, cada página daqui responde a uma pergunta: qual era o tamanho deste animal? A nossa própria imagem o coloca ao lado de uma pessoa de 1,70 m, na mesma escala, com os números e aquilo em que eles se apoiam.",
+  "answer": "O museu está construindo uma ala de animais, dos gigantes de muito tempo atrás aos últimos de sua espécie. Até ela abrir, cada página aqui responde a uma pergunta: qual era o tamanho deste animal? A nossa própria imagem o coloca ao lado de uma pessoa de 1,70 m, na mesma escala, com os números e aquilo em que eles se apoiam.",
   "out": {
-   "text": "Museum of Ages é um museu digital. Hoje está aberta a ala de Leonardo da Vinci. Entrada franca, sem cadastro.",
+   "text": "O Museum of Ages é um museu digital. Hoje está aberta a ala de Leonardo da Vinci. Entrada franca, sem cadastro.",
    "link": "Ir para a ala de Leonardo"
   }
  },
@@ -127,7 +127,7 @@
     {
      "page": "spinosaurus",
      "pic": "spino",
-     "alt": "Um espinossauro com uma vela alta e uma cauda larga, com o contorno claro de um adulto maior atrás, ao lado de uma pessoa cinza que chega ao quadril dele."
+     "alt": "Um espinossauro com uma vela alta e uma cauda alta, com o contorno claro de um adulto maior atrás, ao lado de uma pessoa cinza que chega ao quadril dele."
     },
     {
      "page": "woolly-mammoth",

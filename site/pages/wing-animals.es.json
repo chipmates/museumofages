@@ -98,7 +98,7 @@
  },
  "top": {
   "h1": "Animales",
-  "answer": "El museo está construyendo un ala de animales, desde los gigantes de hace mucho tiempo hasta los últimos de su especie. Hasta que abra, cada página de aquí responde a una pregunta: ¿cuánto medía este animal? Nuestra propia imagen lo pone junto a una persona de 1,70 m, a la misma escala, con las cifras y aquello en lo que se apoyan.",
+  "answer": "El museo está construyendo un ala de animales, desde los gigantes de hace mucho tiempo hasta los últimos de su especie. Hasta que abra, cada página responde a una pregunta: ¿cuánto medía este animal? Nuestra propia imagen lo pone junto a una persona de 1,70 m, a la misma escala, con las cifras y aquello en lo que se apoyan.",
   "out": {
    "text": "Museum of Ages es un museo digital. Hoy está abierta el ala de Leonardo da Vinci. Entrada libre, sin cuenta.",
    "link": "Ir al ala de Leonardo"
@@ -127,7 +127,7 @@
     {
      "page": "spinosaurus",
      "pic": "spino",
-     "alt": "Un Spinosaurus con una vela alta y una cola ancha, con la silueta clara de un adulto más grande detrás, junto a una persona gris que le llega a la cadera."
+     "alt": "Un Spinosaurus con una vela alta y una cola alta, con la silueta clara de un adulto más grande detrás, junto a una persona gris que le llega a la cadera."
     },
     {
      "page": "woolly-mammoth",

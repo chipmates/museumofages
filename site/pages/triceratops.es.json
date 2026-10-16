@@ -114,9 +114,9 @@
   }
  },
  "meta": {
-  "title": "Tamaño del Triceratops: unos 7 a 8 m | Museum of Ages",
+  "title": "Triceratops: tamaño de unos 7 a 8 m | Museum of Ages",
   "description": "¿Cuánto medía el Triceratops? Los adultos grandes, unos 7 a 8 m y el cráneo unos 2 m. Dos modelos del esqueleto de Washington dan unas 6,5 a 8,5 t.",
-  "og_title": "Tamaño del Triceratops: unos 7 a 8 m, cráneo de 2 m",
+  "og_title": "Triceratops: tamaño de unos 7 a 8 m, cráneo de 2 m",
   "og_image_alt": "Un Triceratops de lado: una gola ancha detrás de la cabeza, dos cuernos largos sobre los ojos, uno corto sobre la nariz, cuatro patas. A su lado, una persona gris que le llega a unos dos tercios de la altura del lomo."
  },
  "labels": {
@@ -141,7 +141,7 @@
    "what": "Nuestro Triceratops junto a una persona de 1,70 m, a la misma escala, hecho según el esqueleto de Washington, formado por unos diez animales. Mide 6,9 m del pico a la cola, y su lomo está a unos 2,5 m de altura sobre la cadera, más o menos la altura de una persona y media.",
    "alt": "Un Triceratops de lado: una gola ancha detrás de la cabeza, dos cuernos largos sobre los ojos, uno corto sobre la nariz, cuatro patas. A su lado, una persona gris que le llega a unos dos tercios de la altura del lomo.",
    "note": [
-    "Nuestra propia reconstrucción, construida en código a partir de medidas publicadas y dibujada con nuestro propio motor gráfico. No son fotografías. ",
+    "Nuestra propia reconstrucción, construida en código a partir de medidas publicadas y renderizada con nuestro propio motor gráfico. No son fotografías. ",
     "La silueta de nuestro Triceratops sigue el modelo del cuerpo de ",
     {
      "text": "Dempsey 2025",
@@ -171,7 +171,7 @@
    "close": {
     "pic": "close",
     "tag": "tag_made",
-    "what": "Más de cerca: la cabeza junto a la persona. Nuestro cráneo mide 2,2 m de largo con su piel, más de lo que mide de alto la persona. Los cuernos de sobre los ojos, de 0,9 m con su funda de cuerno, terminan a unos 1,8 m de altura, a la altura de la cabeza de la persona.",
+    "what": "Más de cerca: la cabeza junto a la persona. El cráneo de nuestro modelo mide 2,2 m de largo con su piel, más de lo que mide de alto la persona. Los cuernos de encima de los ojos, de 0,9 m con su funda de cuerno, terminan a unos 1,8 m de altura, a la altura de la cabeza de la persona.",
     "alt": "La cabeza del Triceratops más de cerca, de lado: el pico, el ojo bajo un cuerno largo y la gola que se levanta detrás. Al lado, la persona gris, con la cabeza a la altura de la punta del cuerno.",
     "marks": [
      {
@@ -261,7 +261,7 @@
      "cells": [
       "T. rex, SUE",
       "unos 12 m, el montaje",
-      "a la cadera unos 4 m, según el museo",
+      "a la altura de la cadera unos 4 m, según el museo",
       "unos 1,4 m, del hocico al borde de atrás de la mejilla",
       "unas 8 a 9 t, según un hueso y tres modelos",
       "como en nuestra página del T. rex"
@@ -286,7 +286,7 @@
    "h": "Cráneo, cuernos y gola del Triceratops",
    "paras": [
     "El cráneo de un adulto grande medía unos 2 m de largo, según un estudio de diez cráneos, desde crías hasta adultos. En el escaneo del cráneo reconstruido de Washington medimos 2,12 m de hueso.",
-    "Sobre los ojos tiene dos cuernos largos, y sobre la nariz, uno corto y bajo. El cuerno largo de la nariz de muchas imágenes es de la especie posterior, Triceratops prorsus, y el nuestro es el Triceratops horridus, más antiguo. El hueso que se ve en un museo es solo el núcleo del cuerno: en vida lo cubría una funda de cuerno, así que los cuernos eran más largos, y cuánto, nadie lo sabe. También cambiaban con la edad: en un Triceratops joven, los cuernos de sobre los ojos se curvaban hacia atrás, y en un adulto, hacia delante.",
+    "Sobre los ojos tiene dos cuernos largos, y sobre la nariz, uno corto y bajo. El cuerno largo de la nariz de muchas imágenes es de la especie posterior, Triceratops prorsus, y el nuestro es el Triceratops horridus, más antiguo. El hueso que se ve en un museo es solo el núcleo del cuerno: en vida lo cubría una funda de cuerno, así que los cuernos eran más largos, y cuánto, nadie lo sabe. También cambiaban con la edad: en un Triceratops joven, los cuernos de encima de los ojos se curvaban hacia atrás, y en un adulto, hacia delante.",
     "La gola es un escudo ancho de hueso macizo detrás de la cabeza, sin agujeros, cubierto de piel. Para qué servían los cuernos y la gola, hasta hoy nadie lo demostró. La mejor prueba son heridas curadas en las golas, que se explican mejor por los cuernos de otros Triceratops, así que muy probablemente luchaban entre ellos. Exhibirse y reconocerse entre sí son usos probables también, y defenderse de los depredadores es posible."
    ]
   },
@@ -296,7 +296,7 @@
    "nav": "Triceratops vs. T. rex",
    "h": "Triceratops vs. T. rex",
    "paras": [
-    "En un recuento de los grandes dinosaurios de la Formación Hell Creek, en Montana, donde los dos vivieron en la misma época, el Triceratops era el más común de todos. El T. rex sí mordía a los Triceratops: un hueso de la cadera de un Triceratops hallado en 1991 tiene 58 marcas de dientes seguras que solo pudo hacer un T. rex, según el informe de una universidad de 1996. Un cuerno de sobre el ojo, arrancado de un mordisco, se curó después, así que al menos un Triceratops sobrevivió a un mordisco de T. rex.",
+    "En un recuento de los grandes dinosaurios de la Formación Hell Creek, en Montana, donde los dos vivieron en la misma época, el Triceratops era el más común de todos. El T. rex sí mordía a los Triceratops: un hueso de la cadera de un Triceratops hallado en 1991 tiene 58 marcas de dientes inequívocas que solo pudo hacer un T. rex, según el informe de una universidad de 1996. Un cuerno de encima del ojo, arrancado de un mordisco, se curó después, así que al menos un Triceratops sobrevivió a un mordisco de T. rex.",
     "Si el T. rex sobre todo los cazaba o sobre todo comía animales muertos, los huesos no lo dicen, y ningún hallazgo muestra una pelea entre los dos. Los famosos «Dueling Dinosaurs» de Montana, un Triceratops y un tiranosaurio encontrados juntos, tampoco la demuestran. Desde 2025, su tiranosaurio se considera un Nanotyrannus, un tipo más pequeño, no un T. rex, y eso todavía se discute.",
     "Los nuestros a la misma escala, solo para comparar el tamaño: nuestro T. rex mide unas 1,6 veces la longitud de nuestro Triceratops."
    ],
@@ -355,13 +355,13 @@
     {
      "h": "Piel y escamas",
      "paras": [
-      "Escamas de hasta 9 cm de ancho en el tronco, las escamas corrientes más grandes que se conocen de ningún dinosaurio, con una escama algo mayor y abultada cada 15 a 20 cm. Eso viene de un molde de arcilla de la superficie de la piel de otro Triceratops grande. Es poco probable que tuviera plumas o púas."
+      "Escamas de hasta 9 cm de ancho en el tronco, las escamas corrientes más grandes que se conocen en un dinosaurio, con una escama algo mayor y abultada cada 15 a 20 cm. Eso viene de un molde de arcilla de la superficie de la piel de otro Triceratops grande. Es poco probable que tuviera plumas o púas."
      ]
     },
     {
      "h": "Pico, dientes y comida",
      "paras": [
-      "Un pico córneo cortaba las plantas, y filas de dientes en la parte de atrás de las mandíbulas las cortaban como tijeras."
+      "Un pico córneo arrancaba las plantas, y filas de dientes en la parte de atrás de las mandíbulas las cortaban como tijeras."
      ]
     },
     {
@@ -390,7 +390,7 @@
    "rows": [
     {
      "term": "9 m de largo",
-     "text": "Una cifra redonda de máximo para los más grandes, del directorio de dinosaurios de un museo, sin método y sin nombrar ningún esqueleto. Un adulto grande medía unos 7 a 8 m, y el nuestro mide 6,9 m."
+     "text": "Una cifra redonda de máximo para los más grandes, del catálogo de dinosaurios de un museo, sin método y sin nombrar ningún esqueleto. Un adulto grande medía unos 7 a 8 m, y el nuestro mide 6,9 m."
     },
     {
      "term": "10 toneladas",
@@ -453,7 +453,7 @@
      "page": "t-rex",
      "pic": "trex",
      "alt": "Un T. rex de lado, sobre dos patas, con la boca abierta y la cabeza levantada, junto a una persona gris que queda muy por debajo de sus caderas.",
-     "line": "Un T. rex adulto grande medía unos 12 m de largo y unos 4 m a la cadera, y pesaba más o menos de 8 a 9 toneladas. Nuestro T. rex está hecho con las medidas de SUE y está junto a una persona a la misma escala, con una lista de lo que se encontró de SUE."
+     "line": "Un T. rex adulto grande medía unos 12 m de largo y unos 4 m a la altura de la cadera, y pesaba más o menos de 8 a 9 toneladas. Nuestro T. rex está hecho con las medidas de SUE y está junto a una persona a la misma escala, con una lista de lo que se encontró de SUE."
     },
     {
      "page": "biggest-dinosaurs",
@@ -561,8 +561,8 @@
   {
    "type": "text",
    "id": "pictures",
-   "nav": "Usa nuestras imágenes",
-   "h": "Usa nuestras imágenes",
+   "nav": "Usar nuestras imágenes",
+   "h": "Usar nuestras imágenes",
    "paras": [
     [
      "Las cuatro imágenes del Triceratops de esta página, la vista de lado, la cabeza, la pareja con nuestro T. rex y el esqueleto, son obra nuestra, con licencia ",
@@ -570,7 +570,7 @@
       "text": "CC BY-SA 4.0",
       "href": "https://creativecommons.org/licenses/by-sa/4.0/deed.es"
      },
-     ". Crédito: Museum of Ages, y además «Triceratops outline after Dempsey 2025 (CC BY 4.0)». Muestran una reconstrucción, construida en código y dibujada con nuestro propio motor gráfico, no fotografías. Las imágenes de las otras páginas que aparecen aquí dan su crédito en esas páginas."
+     ". Crédito: Museum of Ages, y además «Triceratops outline after Dempsey 2025 (CC BY 4.0)». Muestran una reconstrucción, construida en código y renderizada con nuestro propio motor gráfico, no fotografías. Las imágenes de las otras páginas que aparecen aquí dan su crédito en esas páginas."
     ]
    ]
   }

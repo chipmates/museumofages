@@ -148,15 +148,15 @@
  },
  "top": {
   "h1": "¿Cuál fue el dinosaurio más grande?",
-  "answer": "Probablemente Argentinosaurus, un titanosaurio de cuello largo de Argentina: unos 30 a 35 m de largo y más o menos 65 a 80 toneladas, según modelos hechos a partir de unos pocos huesos. Nadie puede estar seguro. Hasta hoy no se encontró un esqueleto completo de ninguna de las especies más grandes, y su pariente Patagotitan se le acerca mucho. Nuestro Argentinosaurus de la imagen mide 30,6 m, lo mismo que 18 personas de 1,70 m tumbadas una detrás de otra.",
+  "answer": "Probablemente Argentinosaurus, un titanosaurio de cuello largo de Argentina: unos 30 a 35 m de largo y más o menos 65 a 80 toneladas, según modelos hechos a partir de unos pocos huesos. Nadie puede estar seguro. Hasta hoy no se encontró un esqueleto completo de ninguna de las especies más grandes, y su pariente Patagotitan se le acerca. Nuestro Argentinosaurus de la imagen mide 30,6 m, lo mismo que 18 personas de 1,70 m tumbadas una detrás de otra.",
   "answer_more": "«El más grande» puede querer decir tres cosas. El más pesado fue muy probablemente un titanosaurio de la Patagonia, Argentinosaurus o Patagotitan. El más largo no está establecido. El más alto fue probablemente Sauroposeidon, con la cabeza a unos 17 m del suelo, según cuatro vértebras del cuello.",
   "scale": {
    "pic": "row",
    "tag": "tag_made",
-   "what": "Nuestros siete junto a una persona de 1,70 m, a la misma escala, cada uno tal como está construido nuestro modelo. Nuestro Spinosaurus es un animal joven de unos 10 m, unas tres cuartas partes de uno adulto, así que aquí es más corto que nuestro T. rex. Un Spinosaurus adulto era más largo que cualquier T. rex y, muy probablemente, más ligero.",
+   "what": "Nuestros siete junto a una persona de 1,70 m, a la misma escala, cada uno tal como está construido nuestro modelo. Nuestro Spinosaurus es un animal joven de unos 10 m, unas tres cuartas partes de un adulto, así que aquí es más corto que nuestro T. rex. Un Spinosaurus adulto era más largo que cualquier T. rex y, muy probablemente, más ligero.",
    "alt": "Siete dinosaurios en fila, vistos de lado, dos de ellos con cuellos largos muy por encima de los demás, y una persona gris que a su lado parece diminuta.",
    "note": [
-    "Reconstrucciones propias del museo, construidas en código a partir de medidas y dibujos publicados, y dibujadas con nuestro propio motor gráfico. No son fotografías. ",
+    "Reconstrucciones propias del museo, construidas en código a partir de medidas y dibujos publicados, y renderizadas con nuestro propio motor gráfico. No son fotografías. ",
     "La silueta de nuestro Triceratops sigue el modelo del cuerpo de ",
     {
      "text": "Dempsey 2025",
@@ -356,13 +356,13 @@
     {
      "h": "El más pesado",
      "paras": [
-      "Muy probablemente un titanosaurio de la Patagonia, Argentinosaurus o Patagotitan. Argentinosaurus es el candidato con más apoyo: más o menos 65 a 80 toneladas según varios modelos, todos hechos a partir de unos pocos huesos. A Patagotitan, conocido por al menos seis animales, se le dieron 69 toneladas en 2017, y su propio equipo lo corrigió en 2020 a unas 57. Cuál de los dos era más grande sigue abierto: comparten muy pocos huesos para compararlos. Dreadnoughtus, al que antes se le daban 59 toneladas, hoy se queda en unas 22 a 30."
+      "Muy probablemente un titanosaurio de la Patagonia, Argentinosaurus o Patagotitan. Argentinosaurus es el candidato con más apoyo: más o menos 65 a 80 toneladas según varios modelos, todos hechos a partir de unos pocos huesos. Patagotitan, conocido por al menos seis animales, se estimó en 69 toneladas en 2017, y su propio equipo lo corrigió en 2020 a unas 57. Cuál de los dos era más grande sigue abierto: comparten muy pocos huesos para compararlos. Dreadnoughtus, que antes se estimaba en 59 toneladas, hoy se queda en unas 22 a 30."
      ]
     },
     {
      "h": "El más largo",
      "paras": [
-      "Nadie lo sabe. Los titanosaurios mejor conocidos llegan a unos 30 a 37 m, según sus huesos y sus réplicas. A Supersaurus, un primo de Diplodocus con una cola larga, se le dieron de 39 a 42 m en una charla de un congreso de 2021, todavía no publicada en una revista."
+      "Nadie lo sabe. Los titanosaurios mejor conocidos llegan a unos 30 a 37 m, según sus huesos y sus réplicas. Supersaurus, un primo de cola larga de Diplodocus, se estimó en 39 a 42 m en una charla de un congreso de 2021, todavía no publicada en una revista."
      ]
     },
     {
@@ -380,7 +380,7 @@
         "text": "Spinosaurus",
         "page": "spinosaurus"
        },
-       ": uno adulto medía algo menos de 14 m en el modelo de 2022, escalado a partir de un esqueleto joven y de un hocico suelto de un adulto. Por el peso, ",
+       ": un adulto medía algo menos de 14 m en el modelo de 2022, escalado a partir de un esqueleto joven y de un hocico suelto de un adulto. Por el peso, ",
        {
         "text": "T. rex",
         "page": "t-rex"
@@ -399,12 +399,12 @@
    "intro": "Para cada cifra: de dónde viene y qué piensa hoy de ella la investigación.",
    "rows": [
     {
-     "term": "39,7 m, y 40 m",
-     "text": "El esqueleto montado del Museo Carmen Funes, en Plaza Huincul, construido en los años 1990 tomando como guía los pocos huesos reales. Un escáner láser de 2013 le midió 39,7 m. Esa es la longitud de una escultura, de 5 a 10 m más que cualquier estimación a partir de los huesos, y los 40 m son esa misma cifra redondeada. La réplica de Atlanta es del mismo tipo: según su museo, mide más de 37 m."
+     "term": "39,7 m y 40 m",
+     "text": "El esqueleto montado del Museo Carmen Funes, en Plaza Huincul, construido en la década de 1990 tomando como guía los pocos huesos reales. Un escáner láser de 2013 le midió 39,7 m. Esa es la longitud de una escultura, de 5 a 10 m más que cualquier estimación a partir de los huesos, y los 40 m son esa misma cifra redondeada. La réplica de Atlanta es del mismo tipo: según su museo, mide más de 37 m."
     },
     {
-     "term": "100 toneladas, y 83",
-     "text": "Las 100 vienen de cálculos aproximados de los años 1990 y de un primer modelo de volumen de 80 a 100. Las 83 son el montaje escaneado en 2013 y envuelto en una piel digital, así que pertenecen a la escultura. Los modelos de hoy dan más o menos 65 a 80 toneladas."
+     "term": "100 toneladas y 83",
+     "text": "Las 100 vienen de cálculos aproximados de la década de 1990 y de un primer modelo de volumen de 80 a 100. Las 83 son el montaje escaneado en 2013 y envuelto en una piel digital, así que pertenecen a la escultura. Los modelos de hoy dan más o menos 65 a 80 toneladas."
     },
     {
      "term": "Los 37 m y las 69 toneladas de Patagotitan",
@@ -420,7 +420,7 @@
     },
     {
      "term": "Spinosaurus, con 18 m",
-     "text": "Según relatos posteriores, una cifra de 2005 a partir de un hocico suelto de Milán, escalado con las proporciones de un pariente a 16 a 18 m. Un modelo del esqueleto de 2014 dio más de 15 m. El modelo de 2022, hecho con el animal joven de Marruecos y el hocico adulto, da algo menos de 14 m, con unas 7,4 toneladas."
+     "text": "Según relatos posteriores, una cifra de 2005 a partir de un hocico suelto de Milán, escalado con las proporciones de un pariente hasta 16 a 18 m. Un modelo del esqueleto de 2014 dio más de 15 m. El modelo de 2022, hecho con el animal joven de Marruecos y el hocico adulto, da algo menos de 14 m, con unas 7,4 toneladas."
     },
     {
      "term": "Brachiosaurus, 13 m de alto",
@@ -428,15 +428,15 @@
     },
     {
      "term": "Tan alto como un edificio de seis pisos",
-     "text": "La imagen de una revista para Sauroposeidon, de hacia 2002, a partir de la estimación de unos 17 m. Esos 17 m se apoyan a su vez en cuatro vértebras del cuello. La frase es de Sauroposeidon, no de Brachiosaurus ni de Argentinosaurus."
+     "text": "La comparación de una revista para Sauroposeidon, de hacia 2002, a partir de la estimación de unos 17 m. Esos 17 m se apoyan a su vez en cuatro vértebras del cuello. La frase es de Sauroposeidon, no de Brachiosaurus ni de Argentinosaurus."
     }
    ]
   },
   {
    "type": "text",
    "id": "how-sure",
-   "nav": "Cuán seguro es esto",
-   "h": "Cuán seguro es esto",
+   "nav": "Hasta qué punto es seguro",
+   "h": "Hasta qué punto es seguro",
    "paras": [
     "Nadie puso nunca un dinosaurio en una báscula. Solo quedan huesos, y la mayor parte de un cuerpo es carne. Cada peso de esta página es un cálculo, hecho de una de estas tres maneras.",
     {
@@ -447,7 +447,7 @@
       ],
       [
        "Un modelo de volumen:",
-       "se construye un cuerpo alrededor del esqueleto, se toma su volumen y se multiplica por una densidad. La silueta es una elección: así, un T. rex adulto puede dar desde menos de 6 hasta más de 18 toneladas."
+       "se modela un cuerpo alrededor del esqueleto, se toma su volumen y se multiplica por una densidad. La silueta es una elección: así, un T. rex adulto puede dar desde menos de 6 hasta más de 18 toneladas."
       ],
       [
        "Escalar a partir de un pariente:",
@@ -464,10 +464,10 @@
    "nav": "Lo que se encontró",
    "h": "Lo que se encontró",
    "paras": [
-    "Argentinosaurus huinculensis se conoce por un solo animal, MCF-PVPH-1, hallado a finales de los años 1980 a unos 8 km al este de Plaza Huincul, en Neuquén, Argentina. Lo que queda: seis o siete vértebras de la espalda incompletas, la parte inferior de la cadera, un trozo de costilla y un peroné de 1,55 m de largo. Ni cabeza, ni cuello, ni cola, ni hombro, ni brazo, ni pie. Los huesos se guardan en el Museo Municipal Carmen Funes, en Plaza Huincul. Dos fémures enormes quizá sean suyos, o quizá no.",
+    "Argentinosaurus huinculensis se conoce por un solo animal, MCF-PVPH-1, hallado a finales de la década de 1980 a unos 8 km al este de Plaza Huincul, en Neuquén, Argentina. Lo que queda: seis o siete vértebras de la espalda incompletas, la parte inferior de la cadera, un trozo de costilla y un peroné de 1,55 m de largo. Ni cabeza, ni cuello, ni cola, ni hombro, ni brazo, ni pie. Los huesos se guardan en el Museo Municipal Carmen Funes, en Plaza Huincul. Dos fémures enormes quizá sean suyos, o quizá no.",
     "Patagotitan mayorum es la mejor conocida de las especies más grandes. Al menos seis adultos jóvenes salieron de una sola cantera en una estancia de Chubut, Argentina: el primer hueso en 2012, y más de cien huesos en total. Se guardan en el Museo Paleontológico Egidio Feruglio, en Trelew, donde un fémur real de más de 2 m está junto a la réplica.",
-    "Brachiosaurus altithorax se apoya en un solo esqueleto parcial, FMNH P 25107, desenterrado en 1900 en el oeste de Colorado y guardado en el Field Museum de Chicago. Se encontraron siete vértebras de la espalda, el sacro, dos vértebras de la cola, un hueso del hombro, el húmero derecho, el fémur derecho, las dos palas de la cadera y algunas costillas. Ni cabeza, ni cuello, ni antebrazos, ni la parte baja de las patas, ni pies, y casi nada de la cola, de un animal que todavía no había terminado de crecer. Se conocen unos diez hallazgos de la especie, ninguno casi completo.",
-    "El esqueleto alto del Museum für Naturkunde de Berlín no es un Brachiosaurus, sino Giraffatitan brancai, un pariente cercano de África. Se desenterró en Tendaguru, en la actual Tanzania, entre 1909 y 1913, en la época colonial que el propio museo nombra. En 2009 los dos se separaron en géneros distintos, por al menos 26 diferencias en los huesos, y casi todas las imágenes de un Brachiosaurus muestran el animal africano. El montaje de Berlín combina varios animales y es, en palabras del propio museo, el esqueleto de dinosaurio montado más grande del mundo."
+    "Brachiosaurus altithorax se apoya en un solo esqueleto parcial, FMNH P 25107, desenterrado en 1900 en el oeste de Colorado y guardado en el Field Museum de Chicago. Se encontraron siete vértebras de la espalda, el sacro, dos vértebras de la cola, un hueso del hombro, el húmero derecho, el fémur derecho, las dos palas de la cadera y algunas costillas. Ni cabeza, ni cuello, ni antebrazos, ni la parte baja de las patas, ni pies, y casi nada de la cola, de un animal que todavía no había terminado de crecer. Se conocen unos diez hallazgos de la especie, ninguno cerca de estar completo.",
+    "El esqueleto alto del Museum für Naturkunde de Berlín no es un Brachiosaurus, sino Giraffatitan brancai, un pariente cercano africano. Se desenterró en Tendaguru, en la actual Tanzania, entre 1909 y 1913, en la época colonial que el propio museo nombra. En 2009 los dos se separaron en géneros distintos, por al menos 26 diferencias en los huesos, y casi todas las imágenes de un Brachiosaurus muestran el animal africano. El montaje de Berlín combina varios animales y es, en palabras del propio museo, el esqueleto de dinosaurio montado más grande del mundo."
    ],
    "scale": {
     "pic": "skeleton",
@@ -499,7 +499,7 @@
     },
     {
      "q": "¿Hubo algún dinosaurio más grande que una ballena azul?",
-     "a": "No, según lo que se sabe. La NOAA, la agencia de los océanos de Estados Unidos, llama a la ballena azul el animal más grande que ha vivido en nuestro planeta. La mayoría de las adultas miden de 23 a 27 m, las más grandes unos 30 m. Argentinosaurus, con unos 30 a 35 m, medía más o menos lo mismo. Solo una vez se propuso para un animal de tierra un peso cercano al de las ballenas más grandes, el de la India que se perdió, y sus huesos ya no existen."
+     "a": "No, según lo que se sabe. La NOAA, la agencia de los océanos de Estados Unidos, llama a la ballena azul el animal más grande que ha vivido en nuestro planeta. La mayoría de las adultas miden de 23 a 27 m, las más grandes unos 30 m. Argentinosaurus, con unos 30 a 35 m, medía más o menos lo mismo. Solo una vez se propuso para un animal terrestre un peso cercano al de las ballenas más grandes, el de la India que se perdió, y sus huesos ya no existen."
     }
    ]
   },
@@ -526,7 +526,7 @@
      "page": "t-rex",
      "pic": "trex",
      "alt": "Un T. rex de lado, sobre dos patas, con la boca abierta y la cabeza levantada, junto a una persona gris que queda muy por debajo de sus caderas.",
-     "line": "El T. rex de la fila, solo y más de cerca: longitud, altura de la cadera, peso, y por qué ningún animal mide a toda la especie."
+     "line": "El T. rex de la fila, solo y más de cerca: longitud, altura de la cadera, peso, y por qué ningún animal representa a toda la especie."
     },
     {
      "page": "megalodon",
@@ -536,7 +536,7 @@
     {
      "page": "spinosaurus",
      "pic": "spino",
-     "alt": "Un Spinosaurus con una vela alta y una cola ancha, con la silueta clara de un adulto más grande detrás, junto a una persona gris que le llega a la cadera.",
+     "alt": "Un Spinosaurus con una vela alta y una cola alta, con la silueta clara de un adulto más grande detrás, junto a una persona gris que le llega a la cadera.",
      "line": "El Spinosaurus de la fila, solo: la vela, la cola, el agua, y por qué un adulto era más largo que el nuestro."
     },
     {
@@ -708,8 +708,8 @@
   {
    "type": "text",
    "id": "pictures",
-   "nav": "Usa nuestras imágenes",
-   "h": "Usa nuestras imágenes",
+   "nav": "Usar nuestras imágenes",
+   "h": "Usar nuestras imágenes",
    "paras": [
     [
      "Las imágenes de esta página son obra propia del museo, con licencia ",
@@ -717,7 +717,7 @@
       "text": "CC BY-SA 4.0",
       "href": "https://creativecommons.org/licenses/by-sa/4.0/deed.es"
      },
-     ". Crédito: Museum of Ages y, donde un pie de imagen nombra una fuente, también esa fuente. Muestran reconstrucciones, construidas en código y dibujadas con nuestro propio motor gráfico, no fotografías."
+     ". Crédito: Museum of Ages y, donde un pie de imagen nombra una fuente, también esa fuente. Muestran reconstrucciones, construidas en código y renderizadas con nuestro propio motor gráfico, no fotografías."
     ]
    ]
   }

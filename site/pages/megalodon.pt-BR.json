@@ -97,10 +97,10 @@
  },
  "meta": {
   "title": "Megalodon: tamanho de uns 16 m, talvez 20 m | Museum of Ages",
-  "description": "Qual o tamanho do megalodon? Uns 16 m pela única coluna longa, os maiores talvez uns 20 m. Ao lado de uma pessoa, um tubarão-branco e uma baleia-azul.",
-  "og_title": "Megalodon: tamanho de uns 16 m, talvez 20 m",
+  "description": "Tamanho do megalodon: cerca de 16 m pela única coluna longa, os maiores talvez cerca de 20 m. Ao lado de uma pessoa, um tubarão-branco e uma baleia-azul.",
+  "og_title": "Megalodon: tamanho de cerca de 16 m, talvez 20 m",
   "og_image_alt": "Um tubarão de boca aberta, visto de lado, cinza-escuro com uma faixa mais clara no flanco, ao lado de uma pessoa cinza que parece minúscula perto dele.",
-  "credit": "Museum of Ages, forma do corpo segundo Shimada e outros 2025 (CC BY 4.0)"
+  "credit": "Museum of Ages, forma do corpo a partir de Shimada e outros 2025 (CC BY 4.0)"
  },
  "labels": {
   "crumbs": "Você está aqui",
@@ -116,7 +116,7 @@
  },
  "top": {
   "h1": "Qual era o tamanho do megalodon?",
-  "answer": "Cerca de 16 m. Esse é o comprimento do megalodon (ou megalodonte) de quem vem a única coluna vertebral longa já encontrada, guardada em Bruxelas. Os nossos 16 m são um pouco mais que nove pessoas de 1,70 m deitadas uma atrás da outra. Os maiores da espécie mediam talvez uns 20 m, a julgar pelos dentes.",
+  "answer": "Cerca de 16 m. Esse é o comprimento do megalodon (ou megalodonte) cuja coluna vertebral longa, a única já encontrada, está guardada em Bruxelas. Os nossos 16 m são um pouco mais que nove pessoas de 1,70 m deitadas uma atrás da outra. Os maiores da espécie mediam talvez cerca de 20 m, a julgar pelos dentes.",
   "answer_more": "O peso dele é controverso: mais ou menos 30 toneladas no modelo esbelto de 2025, e cerca do dobro no modelo mais robusto de 2022, porque ninguém conhece a forma do corpo dele.",
   "scale": {
    "pic": "side",
@@ -124,7 +124,7 @@
    "what": "O nosso megalodon ao lado de uma pessoa de 1,70 m, na mesma escala: cerca de 16 m de comprimento, o tamanho que a coluna de Bruxelas lhe dá.",
    "alt": "Um tubarão de boca aberta, visto de lado, cinza-escuro com uma faixa mais clara no flanco, ao lado de uma pessoa cinza que parece minúscula perto dele.",
    "note": [
-    "Reconstrução do próprio museu, construída em código a partir das medidas citadas e desenhada com o nosso próprio motor gráfico. Não é uma fotografia. A forma do corpo segue o modelo de Shimada e outros 2025 (",
+    "Reconstrução do próprio museu, construída em código a partir das medidas citadas e renderizada com o nosso próprio motor gráfico. Não é uma fotografia. A forma do corpo segue o modelo de Shimada e outros 2025 (",
     {
      "text": "CC BY 4.0",
      "href": "https://creativecommons.org/licenses/by/4.0/"
@@ -227,7 +227,7 @@
       "Os dentes de megalodon mais altos já achados",
       "pelo menos 16 cm de altura, museus citam quase 18 cm",
       "",
-      "medidos, cerca de três vezes um dente de tubarão-branco"
+      "medidos, cerca de três vezes mais altos que um dente de tubarão-branco"
      ]
     },
     {
@@ -260,7 +260,7 @@
     "pic": "skeleton",
     "tag": "tag_built",
     "what": "O mesmo animal como esqueleto. As vértebras e os dentes seguem os fósseis, e todo o resto é reconstruído e de propósito parece reconstruído.",
-    "alt": "O esqueleto visto de lado, uma longa fila de vértebras e uma mandíbula com dentes segundo os fósseis, com a cabeça, as nadadeiras e a cauda como formas que se veem reconstruídas.",
+    "alt": "O esqueleto visto de lado, uma longa fila de vértebras e uma mandíbula com dentes a partir dos fósseis, com a cabeça, as nadadeiras e a cauda como formas que se veem reconstruídas.",
     "key": "Marrom-escuro: as vértebras fósseis. Dourado: os dentes. Claro: o que foi reconstruído, inclusive as peças que completam vértebras quebradas.",
     "close": {
      "pic": "skeleton_head",
@@ -287,7 +287,7 @@
    "h": "O que foi encontrado",
    "paras": [
     "Em Bruxelas, no Instituto Real Belga de Ciências Naturais, estão 141 vértebras soltas de um único tubarão, IRSNB P 9893, achadas perto da Antuérpia na década de 1860. A maior tem 15,5 cm de diâmetro, e em fila elas somam cerca de 11 m. Elas dão o comprimento do tronco, mas não o da cabeça nem a grossura do corpo. Nenhum dente foi encontrado com elas, então até o nome megalodon para este animal é uma dedução.",
-    "Na Dinamarca, em 1978, restos de cerca de 20 vértebras foram desenterrados em Gram. Em 1989 eles se danificaram no depósito, e por muito tempo foram dados como perdidos. Restam duas vértebras quebradas e muitos fragmentos. A maior tem 23 cm de diâmetro, e nela se apoia a maior estimativa da lista abaixo.",
+    "Na Dinamarca, em 1978, restos de cerca de 20 vértebras foram desenterrados em Gram. Em 1989 eles foram danificados no depósito, e por muito tempo foram dados como perdidos. Restam duas vértebras quebradas e muitos fragmentos. A maior tem 23 cm de diâmetro, e nela se apoia a maior estimativa da lista abaixo.",
     "Ninguém encontrou um esqueleto de megalodon, nem uma arcada com os dentes ainda no lugar, na mandíbula. Toda fileira de dentes que você já viu é uma montagem, inclusive a nossa."
    ]
   },
@@ -308,7 +308,7 @@
     },
     {
      "term": "De 24 a 25 m e cerca de 94 toneladas",
-     "text": "Shimada e outros, 2025 e 2026. O modelo de Bruxelas, ampliado para uma vértebra dinamarquesa de 23 cm: 24,3 m, e com o corpo esbelto, cerca de 94 toneladas. Os autores chamam isso de hipotético. A conta se apoia na maior de duas vértebras dinamarquesas quebradas e em um único passo de aritmética."
+     "text": "Shimada e outros, 2025 e 2026. O modelo de Bruxelas, ampliado para uma vértebra dinamarquesa de 23 cm: 24,3 m, e com o corpo esbelto, cerca de 94 toneladas. Os autores chamam isso de hipotético. A conta se apoia na maior de duas vértebras dinamarquesas quebradas e em um único cálculo."
     },
     {
      "term": "De 50 a 60 ou mais toneladas",
@@ -336,20 +336,20 @@
    "h": "Mais perguntas",
    "items": [
     {
-     "q": "Megalodon contra tubarão-branco: quanto ele era maior?",
+     "q": "Megalodon contra tubarão-branco: quanto maior ele era?",
      "a": "Os maiores tubarões-brancos chegam a cerca de 6 m, e um adulto costuma ter de 4 a 5 m. Então o nosso megalodon de cerca de 16 m tinha mais ou menos duas vezes e meia a três vezes o comprimento do maior tubarão-branco."
     },
     {
      "q": "Megalodon contra baleia-azul: qual era maior?",
-     "a": "A baleia-azul. A maioria das baleias-azuis adultas tem de 23 a 27 m, as maiores cerca de 30 m, e a NOAA, a agência dos oceanos dos Estados Unidos, diz que ela é o maior animal que se sabe ter existido. O nosso megalodon chegaria a um pouco mais da metade da maior. Até o maior tubarão-baleia já medido, com 18,8 m, era mais comprido que o nosso megalodon, e com perto de 34 toneladas pesava mais ou menos o mesmo que o modelo esbelto dele."
+     "a": "A baleia-azul. A maioria das baleias-azuis adultas tem de 23 a 27 m, as maiores cerca de 30 m, e a NOAA, a agência dos oceanos dos Estados Unidos, diz que ela é o maior animal que se sabe ter existido. O nosso megalodon chegaria a um pouco mais da metade da maior. Até o maior tubarão-baleia já medido, com 18,8 m, era mais comprido que o nosso megalodon, e com perto de 34 toneladas pesava mais ou menos o mesmo que o modelo esbelto do megalodon."
     },
     {
      "q": "Qual era o tamanho dos dentes do megalodon?",
-     "a": "Os maiores já achados têm pelo menos 16 cm de altura, e museus citam quase 18 cm: cerca de três vezes um dente de tubarão-branco, que tem cerca de 5 cm. Os dentes do nosso modelo seguem uma arcada real de outro achado, UF-VP-311000. Na frente, eles têm cerca de 10 cm de altura, e ficam menores em direção aos cantos da boca."
+     "a": "Os maiores já achados têm pelo menos 16 cm de altura, e museus citam quase 18 cm: cerca de três vezes mais altos que um dente de tubarão-branco, que tem cerca de 5 cm. Os dentes do nosso modelo seguem uma arcada real de outro achado, UF-VP-311000. Na frente, eles têm cerca de 10 cm de altura, e ficam menores em direção aos cantos da boca."
     },
     {
      "q": "Quando e por que o megalodon foi extinto?",
-     "a": "Há cerca de 3,6 milhões de anos, segundo os fósseis confiáveis mais recentes. O motivo não está estabelecido. As propostas são mares mais frios, que dividiram a área onde ele vivia, o tubarão-branco, recém-surgido, como rival, uma queda no número das pequenas baleias com barbatanas que ele caçava, e o custo de um corpo quente, porque ele se mantinha mais quente que a água em volta."
+     "a": "Há cerca de 3,6 milhões de anos, segundo os fósseis confiáveis mais recentes. O motivo não está estabelecido. As propostas são mares mais frios, que dividiram a área onde ele vivia, o tubarão-branco recém-surgido como rival, uma queda no número das pequenas baleias com barbatanas que ele caçava, e o custo de um corpo quente, porque ele se mantinha mais quente que a água em volta."
     }
    ]
   },
@@ -359,7 +359,7 @@
    "nav": "No museu",
    "h": "No museu",
    "paras": [
-    "Museum of Ages é um museu digital, feito por uma organização sem fins lucrativos. Entrada franca, sem cadastro. Na ala dos animais, este animal vai ficar entre os outros, dos gigantes de muito tempo atrás aos últimos da própria espécie. A ala de Leonardo da Vinci mostra como é uma ala pronta."
+    "O Museum of Ages é um museu digital, feito por uma organização sem fins lucrativos. Entrada franca, sem cadastro. Na ala dos animais, este animal vai ficar entre os outros, dos gigantes de muito tempo atrás aos últimos de sua espécie. A ala de Leonardo da Vinci mostra como é uma ala pronta."
    ],
    "links": [
     {
@@ -386,7 +386,7 @@
     {
      "page": "spinosaurus",
      "pic": "spino",
-     "alt": "Um espinossauro com uma vela alta e uma cauda larga, com o contorno claro de um adulto maior atrás, ao lado de uma pessoa cinza que chega ao quadril dele.",
+     "alt": "Um espinossauro com uma vela alta e uma cauda alta, com o contorno claro de um adulto maior atrás, ao lado de uma pessoa cinza que chega ao quadril dele.",
      "line": "Os maiores adultos, pouco menos de 14 m segundo um modelo, o nosso um jovem de cerca de 10 m, na beira da água e sobre duas patas."
     },
     {
@@ -467,15 +467,15 @@
      "href": "https://www.smnk.de/fileadmin/page_content/pressemitteilungen/PM_Megalodon_Naturkundemuseum_Karlsruhe_.pdf"
     }
    ],
-   "contact": "Se um número ou uma instituição estiver errado, escreva para nós e faremos a correção.",
+   "contact": "Se um número ou uma instituição estiver errada, escreva para nós e faremos a correção.",
    "contact_link": "Ir para as informações legais",
    "what_link": "O que é este museu"
   },
   {
    "type": "text",
    "id": "pictures",
-   "nav": "Use as nossas imagens",
-   "h": "Use as nossas imagens",
+   "nav": "Usar nossas imagens",
+   "h": "Usar nossas imagens",
    "paras": [
     [
      "As imagens desta página são obra do próprio museu, sob a licença ",
@@ -483,12 +483,12 @@
       "text": "CC BY-SA 4.0",
       "href": "https://creativecommons.org/licenses/by-sa/4.0/deed.pt-br"
      },
-     ". Crédito: Museum of Ages, forma do corpo segundo Shimada e outros 2025 (",
+     ". Crédito: Museum of Ages, forma do corpo a partir de Shimada e outros 2025 (",
      {
       "text": "CC BY 4.0",
       "href": "https://creativecommons.org/licenses/by/4.0/"
      },
-     "). Elas mostram uma reconstrução, construída em código e desenhada com o nosso próprio motor gráfico, não uma fotografia."
+     "). Elas mostram uma reconstrução, construída em código e renderizada com o nosso próprio motor gráfico, não uma fotografia."
     ]
    ]
   }

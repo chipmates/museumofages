@@ -96,9 +96,9 @@
   }
  },
  "meta": {
-  "title": "Tamaño del megalodón: unos 16 m, quizá 20 m | Museum of Ages",
+  "title": "Megalodón: tamaño de unos 16 m, quizá 20 m | Museum of Ages",
   "description": "¿Cuánto medía el megalodón? Unos 16 m según la única columna larga, los mayores quizá unos 20 m. Junto a una persona, un tiburón blanco y una ballena azul.",
-  "og_title": "Tamaño del megalodón: unos 16 m, quizá 20 m",
+  "og_title": "Megalodón: tamaño de unos 16 m, quizá 20 m",
   "og_image_alt": "Un tiburón con la boca abierta, visto de lado, gris oscuro con una franja más clara en el costado, junto a una persona gris que a su lado parece diminuta.",
   "credit": "Museum of Ages, forma del cuerpo según Shimada y otros 2025 (CC BY 4.0)"
  },
@@ -116,7 +116,7 @@
  },
  "top": {
   "h1": "¿Cuánto medía el megalodón?",
-  "answer": "Unos 16 m. Es la longitud del megalodón del que viene la única columna vertebral larga encontrada hasta hoy, y que se guarda en Bruselas. Nuestros 16 m son algo más de nueve personas de 1,70 m tumbadas una detrás de otra. Los más grandes de su especie medían quizá unos 20 m, según sus dientes.",
+  "answer": "Unos 16 m. Es la longitud del megalodón del que viene la única columna vertebral larga encontrada hasta hoy. Se guarda en Bruselas. Nuestros 16 m son algo más de nueve personas de 1,70 m tumbadas una detrás de otra. Los más grandes de su especie medían quizá unos 20 m, según sus dientes.",
   "answer_more": "Su peso es discutido: más o menos 30 toneladas en el modelo delgado de 2025, y alrededor del doble en el modelo más robusto de 2022, porque nadie conoce la forma de su cuerpo.",
   "scale": {
    "pic": "side",
@@ -124,7 +124,7 @@
    "what": "Nuestro megalodón junto a una persona de 1,70 m, a la misma escala: unos 16 m de largo, la longitud que le da la columna de Bruselas.",
    "alt": "Un tiburón con la boca abierta, visto de lado, gris oscuro con una franja más clara en el costado, junto a una persona gris que a su lado parece diminuta.",
    "note": [
-    "Reconstrucción propia del museo, construida en código a partir de las medidas citadas y dibujada con nuestro propio motor gráfico. No es una fotografía. La forma del cuerpo sigue el modelo de Shimada y otros 2025 (",
+    "Reconstrucción propia del museo, construida en código a partir de las medidas citadas y renderizada con nuestro propio motor gráfico. No es una fotografía. La forma del cuerpo sigue el modelo de Shimada y otros 2025 (",
     {
      "text": "CC BY 4.0",
      "href": "https://creativecommons.org/licenses/by/4.0/"
@@ -187,7 +187,7 @@
       "La columna hallada, Bruselas",
       "unos 11 m en fila, 141 vértebras",
       "",
-      "vértebras medidas, huecos entre ellas estimados"
+      "vértebras medidas, espacios entre ellas estimados"
      ]
     },
     {
@@ -227,7 +227,7 @@
       "Los dientes de megalodón más altos hallados",
       "al menos 16 cm de alto, los museos dan casi 18 cm",
       "",
-      "medidos, unas tres veces un diente de tiburón blanco"
+      "medidos, unas tres veces más altos que un diente de tiburón blanco"
      ]
     },
     {
@@ -259,7 +259,7 @@
    "scale": {
     "pic": "skeleton",
     "tag": "tag_built",
-    "what": "El mismo animal como esqueleto. Las vértebras y los dientes siguen a los fósiles, y todo lo demás está reconstruido y se nota a propósito.",
+    "what": "El mismo animal como esqueleto. Las vértebras y los dientes siguen a los fósiles, y todo lo demás está reconstruido y se distingue a propósito.",
     "alt": "El esqueleto de lado, una larga fila de vértebras y una mandíbula con dientes según los fósiles, con la cabeza, las aletas y la cola como formas que se ven reconstruidas.",
     "key": "Marrón oscuro: las vértebras fósiles. Dorado: los dientes. Claro: lo reconstruido, también las piezas que completan vértebras rotas.",
     "close": {
@@ -274,8 +274,8 @@
   {
    "type": "text",
    "id": "how-sure",
-   "nav": "Cuán seguro es esto",
-   "h": "Cuán seguro es esto",
+   "nav": "Hasta qué punto es seguro",
+   "h": "Hasta qué punto es seguro",
    "paras": [
     "Los 16 m se apoyan en la columna de Bruselas: 141 vértebras, unos 11 m en fila, más una cabeza y una cola con las proporciones de los lamniformes actuales, el grupo de tiburones al que pertenece el tiburón blanco. Dos equipos de investigación obtuvieron 15,9 m y 16,4 m con modelos distintos, y por eso decimos unos 16 m. Los 20 m se apoyan en un solo diente, escalado a partir de dentaduras completas. El peso se apoya en un modelo del cuerpo, y ese modelo necesita una forma del cuerpo que nadie conoce: delgado como los tiburones vivos más grandes, da unas 30 toneladas, y robusto como un tiburón blanco, unas 61. Por eso la longitud dice «unos» y el peso dice «discutido»."
    ]
@@ -308,7 +308,7 @@
     },
     {
      "term": "De 24 a 25 m y unas 94 toneladas",
-     "text": "Shimada y otros, 2025 y 2026. El modelo de Bruselas, escalado a una vértebra danesa de 23 cm: 24,3 m, y con el cuerpo delgado, unas 94 toneladas. Los autores lo llaman hipotético. Se apoya en la mayor de dos vértebras danesas rotas y en un solo paso de aritmética."
+     "text": "Shimada y otros, 2025 y 2026. El modelo de Bruselas, escalado a una vértebra danesa de 23 cm: 24,3 m, y con el cuerpo delgado, unas 94 toneladas. Los autores lo llaman hipotético. Se apoya en la mayor de dos vértebras danesas rotas y en un solo cálculo."
     },
     {
      "term": "De 50 a 60 o más toneladas",
@@ -337,19 +337,19 @@
    "items": [
     {
      "q": "Megalodón contra tiburón blanco: ¿cuánto más grande era?",
-     "a": "Los tiburones blancos más grandes llegan a unos 6 m, y uno adulto suele medir de 4 a 5 m. Así que nuestro megalodón de unos 16 m medía más o menos entre dos veces y media y tres veces lo que el tiburón blanco más grande."
+     "a": "Los tiburones blancos más grandes llegan a unos 6 m, y un adulto suele medir de 4 a 5 m. Así que nuestro megalodón de unos 16 m medía más o menos entre dos veces y media y tres veces lo que el tiburón blanco más grande."
     },
     {
      "q": "Megalodón contra ballena azul: ¿cuál era más grande?",
-     "a": "La ballena azul. La mayoría de las ballenas azules adultas miden de 23 a 27 m, las más grandes unos 30 m, y la NOAA, la agencia de los océanos de Estados Unidos, la llama el animal más grande que se sabe que ha existido. Nuestro megalodón llegaría a algo más de la mitad de la más grande. Incluso el tiburón ballena más grande medido hasta hoy, de 18,8 m, era más largo que nuestro megalodón, y con cerca de 34 toneladas pesaba más o menos lo mismo que su modelo delgado."
+     "a": "La ballena azul. La mayoría de las ballenas azules adultas miden de 23 a 27 m, las más grandes unos 30 m, y la NOAA, la agencia de los océanos de Estados Unidos, la llama el animal más grande que se sabe que ha existido. Nuestro megalodón llegaría a algo más de la mitad de la más grande. Incluso el tiburón ballena más grande medido hasta hoy, de 18,8 m, era más largo que nuestro megalodón, y con cerca de 34 toneladas pesaba más o menos lo mismo que el modelo delgado del megalodón."
     },
     {
      "q": "¿Qué tamaño tenían los dientes del megalodón?",
-     "a": "Los más grandes hallados hasta hoy miden al menos 16 cm de alto, y los museos dan casi 18 cm: unas tres veces un diente de tiburón blanco, que mide unos 5 cm. Los dientes de nuestro modelo siguen una dentadura real de otro hallazgo, UF-VP-311000. Delante miden unos 10 cm de alto, y hacia las comisuras de la boca son más pequeños."
+     "a": "Los más grandes hallados hasta hoy miden al menos 16 cm de alto, y los museos dan casi 18 cm: unas tres veces más altos que un diente de tiburón blanco, que mide unos 5 cm. Los dientes de nuestro modelo siguen una dentadura real de otro hallazgo, UF-VP-311000. Delante miden unos 10 cm de alto, y hacia las comisuras de la boca son más pequeños."
     },
     {
      "q": "¿Cuándo y por qué se extinguió el megalodón?",
-     "a": "Hace unos 3,6 millones de años, según los fósiles fiables más recientes. El porqué no está establecido. Se propusieron los mares más fríos, que dividieron su área de distribución, el tiburón blanco, recién aparecido, como rival, una caída de las pequeñas ballenas con barbas que cazaba, y el gasto de un cuerpo caliente, porque se mantenía más caliente que el agua que lo rodeaba."
+     "a": "Hace unos 3,6 millones de años, según los fósiles fiables más recientes. El porqué no está establecido. Se propusieron los mares más fríos, que dividieron su área de distribución, el tiburón blanco recién aparecido como rival, una caída de las pequeñas ballenas con barbas que cazaba, y el gasto de un cuerpo caliente, porque se mantenía más caliente que el agua que lo rodeaba."
     }
    ]
   },
@@ -386,7 +386,7 @@
     {
      "page": "spinosaurus",
      "pic": "spino",
-     "alt": "Un Spinosaurus con una vela alta y una cola ancha, con la silueta clara de un adulto más grande detrás, junto a una persona gris que le llega a la cadera.",
+     "alt": "Un Spinosaurus con una vela alta y una cola alta, con la silueta clara de un adulto más grande detrás, junto a una persona gris que le llega a la cadera.",
      "line": "Los adultos más grandes, algo menos de 14 m según un modelo, el nuestro un ejemplar joven de unos 10 m, junto al agua y sobre dos patas."
     },
     {
@@ -474,8 +474,8 @@
   {
    "type": "text",
    "id": "pictures",
-   "nav": "Usa nuestras imágenes",
-   "h": "Usa nuestras imágenes",
+   "nav": "Usar nuestras imágenes",
+   "h": "Usar nuestras imágenes",
    "paras": [
     [
      "Las imágenes de esta página son obra propia del museo, con licencia ",
@@ -488,7 +488,7 @@
       "text": "CC BY 4.0",
       "href": "https://creativecommons.org/licenses/by/4.0/"
      },
-     "). Muestran una reconstrucción, construida en código y dibujada con nuestro propio motor gráfico, no una fotografía."
+     "). Muestran una reconstrucción, construida en código y renderizada con nuestro propio motor gráfico, no una fotografía."
     ]
    ]
   }

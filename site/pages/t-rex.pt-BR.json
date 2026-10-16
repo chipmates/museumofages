@@ -96,9 +96,9 @@
   }
  },
  "meta": {
-  "title": "T. rex: tamanho de uns 12 m e de 8 a 9 t | Museum of Ages",
-  "description": "Qual o tamanho do T. rex? Um tiranossauro rex adulto grande tinha uns 12 m de comprimento, uns 4 m até o quadril e de 8 a 9 t. O nosso, nas medidas de SUE.",
-  "og_title": "T. rex: tamanho de uns 12 m e de 8 a 9 t",
+  "title": "T. rex: tamanho de cerca de 12 m e 8 a 9 t | Museum of Ages",
+  "description": "Tamanho do T. rex: um tiranossauro rex adulto grande tinha cerca de 12 m de comprimento, cerca de 4 m até o quadril e 8 a 9 t. O nosso, nas medidas de SUE.",
+  "og_title": "T. rex: tamanho de cerca de 12 m e de 8 a 9 t",
   "og_image_alt": "Um T. rex de lado, sobre duas patas, com a boca aberta e a cabeça erguida, ao lado de uma pessoa cinza que fica bem abaixo do quadril dele."
  },
  "labels": {
@@ -111,22 +111,22 @@
   "person": "1,70 m",
   "to_table": "Os números numa tabela",
   "no_figure": "sem número com fonte",
-  "og_answer": "Uns 12 m de comprimento, mais ou menos 8 a 9 toneladas"
+  "og_answer": "Cerca de 12 m de comprimento, mais ou menos 8 a 9 toneladas"
  },
  "top": {
   "h1": "Qual era o tamanho do T. rex?",
-  "answer": "Um Tyrannosaurus rex adulto grande tinha uns 12 m de comprimento, e a maioria era menor. Até o quadril, media uns 3,5 a 4 m. Um adulto grande pesava mais ou menos de 8 a 9 toneladas, pelos ossos e pelos modelos do corpo, e um adulto comum, menos. O nosso T. rex, feito com as medidas de SUE, mede uns 11,4 m nesta pose, com a cabeça erguida a uns 4,6 m do chão.",
+  "answer": "Um Tyrannosaurus rex adulto grande tinha cerca de 12 m de comprimento, e a maioria era menor. Até o quadril, media cerca de 3,5 a 4 m. Um adulto grande pesava mais ou menos de 8 a 9 toneladas, pelos ossos e pelos modelos do corpo, e um adulto comum, menos. O nosso T. rex, feito com as medidas de SUE, mede cerca de 11,4 m nesta pose, com a cabeça erguida a cerca de 4,6 m do chão.",
   "answer_more": "Os dois maiores T. rex conhecidos são SUE, em Chicago, o esqueleto mais longo e mais completo, e Scotty, provavelmente o mais pesado.",
   "scale": {
    "pic": "side",
    "tag": "tag_made",
-   "what": "O nosso T. rex ao lado de uma pessoa de 1,70 m, na mesma escala, feito com as medidas de SUE. Nesta pose, com a cabeça erguida e virada e a cauda curvada, ele mede uns 11,4 m. É mais do que seis pessoas e meia deitadas uma atrás da outra. O alto da cabeça erguida fica a uns 4,6 m do chão, e isso depende da pose. Esticado em linha reta, o mesmo esqueleto mediria uns 11,8 m. A montagem de SUE em Chicago mede uns 12 m.",
+   "what": "O nosso T. rex ao lado de uma pessoa de 1,70 m, na mesma escala, feito com as medidas de SUE. Nesta pose, com a cabeça erguida e virada e a cauda curvada, ele mede cerca de 11,4 m. É mais do que seis pessoas e meia deitadas uma atrás da outra. O alto da cabeça erguida fica a cerca de 4,6 m do chão, e isso depende da pose. Esticado em linha reta, o mesmo esqueleto mediria cerca de 11,8 m. A montagem de SUE em Chicago mede cerca de 12 m.",
    "alt": "Um T. rex de lado, sobre duas patas, com a boca aberta e a cabeça erguida, ao lado de uma pessoa cinza que fica bem abaixo do quadril dele.",
-   "note": "A nossa própria reconstrução, construída em código a partir de medidas publicadas e desenhada com o nosso próprio motor gráfico. Não é uma fotografia.",
+   "note": "A nossa própria reconstrução, construída em código a partir de medidas publicadas e renderizada com o nosso próprio motor gráfico. Não é uma fotografia.",
    "marks": [
     {
      "span": "t-rex",
-     "text": "T. rex, uns 11,4 m nesta pose"
+     "text": "T. rex, cerca de 11,4 m nesta pose"
     },
     {
      "span": "person",
@@ -138,7 +138,7 @@
     },
     {
      "span": "head",
-     "text": "a cabeça erguida, uns 4,6 m"
+     "text": "a cabeça erguida, cerca de 4,6 m"
     }
    ],
    "close": {
@@ -152,7 +152,7 @@
    "h": "Tente adivinhar",
    "q": "Qual era o tamanho do crânio de SUE?",
    "button": "Ver a resposta",
-   "a": "Uns 1,4 m, do focinho até a borda de trás da bochecha, um pouco menos do que a pessoa de 1,70 m. O crânio verdadeiro, achatado na terra, pesa uns 270 kg e fica em Chicago, numa vitrine só dele.",
+   "a": "Cerca de 1,4 m, do focinho até a borda de trás da bochecha, um pouco menos do que a pessoa de 1,70 m. O crânio verdadeiro, achatado na terra, pesa cerca de 270 kg e fica em Chicago, numa vitrine só dele.",
    "button_open": "Esconder a resposta"
   },
   "out": {
@@ -177,9 +177,9 @@
    "rows": [
     {
      "cells": [
-      "O nosso modelo, segundo SUE",
-      "uns 11,4 m nesta pose, uns 11,8 m em linha reta",
-      "acima do quadril 3,96 m, a cabeça erguida a uns 4,6 m",
+      "O nosso modelo, a partir de SUE",
+      "cerca de 11,4 m nesta pose, cerca de 11,8 m em linha reta",
+      "acima do quadril 3,96 m, a cabeça erguida a cerca de 4,6 m",
       "não informado",
       "exata: medida nos nossos arquivos"
      ]
@@ -187,9 +187,9 @@
     {
      "cells": [
       "SUE, Field Museum, Chicago",
-      "uns 12 m, a montagem 12,3 m, com o fim da cauda reconstruído",
-      "até o quadril uns 4 m, segundo o museu",
-      "umas 8 a 9 t, por um osso e três modelos",
+      "cerca de 12 m, a montagem 12,3 m, com o fim da cauda reconstruído",
+      "até o quadril cerca de 4 m, segundo o museu",
+      "cerca de 8 a 9 t, por um osso e três modelos",
       "boa: o museu e dois estudos concordam"
      ]
     },
@@ -198,15 +198,15 @@
       "Scotty, Royal Saskatchewan Museum",
       "quase 12 m pelo museu em 2015, 13 m só nas notícias",
       "4 m pelo museu, sem dizer em que ponto",
-      "umas 8,9 t pelo fêmur, com uma margem larga",
+      "cerca de 8,9 t pelo fêmur, com uma margem larga",
       "média: um estudo, apoiado por outro, o comprimento fraco"
      ]
     },
     {
      "cells": [
       "A espécie, um adulto grande",
-      "uns 12 m, a maioria menor",
-      "até o quadril uns 3,5 a 4 m",
+      "cerca de 12 m, a maioria menor",
+      "até o quadril cerca de 3,5 a 4 m",
       "mais ou menos de 8 a 9 t, os adultos comuns menos",
       "boa: um museu e vários estudos, o quadril menos certo"
      ]
@@ -228,7 +228,7 @@
    "nav": "Qual T. rex foi o maior?",
    "h": "Qual T. rex foi o maior?",
    "paras": [
-    "SUE e Scotty são os dois maiores T. rex conhecidos, e cada museu diz que o maior é o que guarda, cada um por uma medida diferente. SUE é o esqueleto mais longo e, de longe, o mais completo: uns 12 m montado, e cerca de 90 por cento em volume de osso. Scotty, com o fêmur mais grosso, é considerado o mais pesado: umas 8,9 toneladas, por um estudo de 2019 que um segundo estudo apoia. As estimativas se sobrepõem, porque as de SUE vão de umas 8,2 a 9,5 toneladas. Ninguém sabe qual era o tamanho do maior T. rex que já viveu. Um modelo de 2024 calcula umas 15 toneladas e mais de 15 m, e nunca se encontrou um animal assim."
+    "SUE e Scotty são os dois maiores T. rex conhecidos, e cada museu diz que o maior é o que guarda, cada um por uma medida diferente. SUE é o esqueleto mais longo e, de longe, o mais completo: cerca de 12 m montado, e cerca de 90 por cento em volume de osso. Scotty, com o fêmur mais grosso, é considerado o mais pesado: cerca de 8,9 toneladas, por um estudo de 2019 que um segundo estudo apoia. As estimativas se sobrepõem, porque as de SUE vão de cerca de 8,2 a 9,5 toneladas. Ninguém sabe qual era o tamanho do maior T. rex que já viveu. Um modelo de 2024 estima cerca de 15 toneladas e mais de 15 m, e nunca se encontrou um animal assim."
    ]
   },
   {
@@ -242,15 +242,15 @@
      "points": [
       [
        "O comprimento de uma montagem:",
-       "uma fita métrica ou um modelo digital percorre o esqueleto em pé, do focinho até a ponta da cauda. Em SUE, o fim da cauda é reconstruído, e cada pose muda o número. Por isso dizemos uns 12 m."
+       "uma fita métrica ou um modelo digital percorre o esqueleto em pé, do focinho até a ponta da cauda. Em SUE, o fim da cauda é reconstruído, e cada pose muda o número. Por isso dizemos cerca de 12 m."
       ],
       [
        "O peso a partir de um osso ou de um corpo:",
-       "pelo osso, mede-se a circunferência do fêmur e aplica-se a regra que liga essa circunferência ao peso nos animais vivos. Nenhum animal vivo que anda sobre duas patas chega perto desse tamanho, e esse é o ponto fraco. Por um modelo do corpo, constrói-se carne em volta do esqueleto e multiplica-se o volume pela densidade. Conforme a silhueta escolhida, um T. rex adulto já deu de menos de 6 a mais de 18 toneladas."
+       "pelo osso, mede-se a circunferência do fêmur e aplica-se a regra que liga essa circunferência ao peso nos animais vivos. Nenhum animal vivo que anda sobre duas patas chega perto desse tamanho, e esse é o ponto fraco. Por um modelo do corpo, modela-se a carne em volta do esqueleto e multiplica-se o volume pela densidade. Conforme a silhueta escolhida, um T. rex adulto já deu de menos de 6 a mais de 18 toneladas."
       ],
       [
        "Um animal não é a espécie:",
-       "SUE era um animal velho e muito grande. A maioria dos T. rex foi menor, e um adulto comum fica mais perto de 5 a 8 toneladas, segundo estudos e museus. Por isso há aqui três números separados: o nosso modelo, SUE e a espécie."
+       "SUE era um animal velho e excepcionalmente grande. A maioria dos T. rex foi menor, e um adulto comum fica mais perto de 5 a 8 toneladas, segundo estudos e museus. Por isso há aqui três números separados: o nosso modelo, SUE e a espécie."
       ]
      ]
     }
@@ -275,7 +275,7 @@
         "O braço direito: o úmero, os dois ossos do antebraço e partes da mão.",
         "O sacro e o quadril, com a lâmina esquerda do quadril quebrada e unida de novo.",
         "As duas escápulas, a direita com um ferimento curado.",
-        "Partes de todas as costelas das costas, 26 de umas 60 costelas da barriga (pela contagem do museu), e ainda a fúrcula e um osso do ouvido (as duas coisas segundo o museu).",
+        "Partes de todas as costelas das costas, 26 de cerca de 60 costelas da barriga (pela contagem do museu), e ainda a fúrcula e um osso do ouvido (as duas coisas segundo o museu).",
         "36 vértebras da cauda: em 2003, nenhuma cauda conhecida de T. rex estava mais completa."
        ]
       }
@@ -288,9 +288,9 @@
        "points": [
         "O pulso, reconstruído na montagem a partir de outros tiranossauros.",
         "Quase todo o pé esquerdo, do qual existe um único osso de um dedo (menos certo: num trecho, a descrição se contradiz sobre qual pé é).",
-        "Umas 11 das 47 vértebras da cauda da montagem, em parte no fim da cauda (conta nossa).",
-        "Umas 34 das cerca de 60 costelas da barriga, pela contagem do museu.",
-        "Pele: nada."
+        "Cerca de 11 das 47 vértebras da cauda da montagem, em parte no fim da cauda (conta nossa).",
+        "Cerca de 34 das cerca de 60 costelas da barriga, pela contagem do museu.",
+        "Pele: nenhuma."
        ]
       }
      ]
@@ -309,7 +309,7 @@
    "rows": [
     {
      "term": "12,3 m",
-     "text": "A montagem de SUE em Chicago, como o museu informa e como um modelo digital de 2011 mediu. O fim da cauda é reconstruído, porque foram encontradas 36 das 47 vértebras da cauda da montagem. Por isso dizemos uns 12 m."
+     "text": "A montagem de SUE em Chicago, como o museu informa e como um modelo digital de 2011 mediu. O fim da cauda é reconstruído, porque foram encontradas 36 das 47 vértebras da cauda da montagem. Por isso dizemos cerca de 12 m."
     },
     {
      "term": "13 m",
@@ -317,15 +317,15 @@
     },
     {
      "term": "8,8 toneladas, 9 toneladas curtas",
-     "text": "As 8,8 são Scotty: 8.870 kg pela circunferência do fêmur, com uma margem larga. As 9 são SUE pelo modelo em 3D do Field Museum, em toneladas curtas dos Estados Unidos, ou seja, mais ou menos 8,2 toneladas. Os modelos do corpo de um estudo de 2025 também chegam perto de 9 toneladas. Todas ficam dentro de umas 8 a 9 toneladas."
+     "text": "As 8,8 são Scotty: 8.870 kg pela circunferência do fêmur, com uma margem larga. As 9 são SUE pelo modelo em 3D do Field Museum, em toneladas curtas dos Estados Unidos, ou seja, mais ou menos 8,2 toneladas. Os modelos do corpo de um estudo de 2025 também chegam perto de 9 toneladas. Todas ficam dentro de cerca de 8 a 9 toneladas."
     },
     {
      "term": "15 toneladas",
-     "text": "Um modelo de 2024 parte de quantos T. rex viveram e de como eles cresciam. Com isso, calcula qual pode ter sido o tamanho do maior: talvez umas 15 toneladas e mais de 15 m. Nunca se encontrou nada desse tamanho, e os autores acham um achado assim muito improvável."
+     "text": "Um modelo de 2024 parte de quantos T. rex viveram e de como eles cresciam. Com isso, calcula qual pode ter sido o tamanho do maior: talvez cerca de 15 toneladas e mais de 15 m. Nunca se encontrou nada desse tamanho, e os autores acham um achado assim extremamente improvável."
     },
     {
      "term": "90 por cento",
-     "text": "É o que foi encontrado de SUE, mas em volume de osso, porque os ossos que faltam são sobretudo pequenos. Contados um a um, são 250 de uns 380, mais ou menos dois terços."
+     "text": "É o que foi encontrado de SUE, mas em volume de osso, porque os ossos que faltam são sobretudo pequenos. Contados um a um, são 250 de cerca de 380, mais ou menos dois terços."
     }
    ]
   },
@@ -336,7 +336,7 @@
    "h": "Pele, penas e lábios",
    "paras": [
     "Todos os pedaços de pele de T. rex já encontrados têm escamas. Todos vêm de um único animal, Wyrex, em Houston: três pedaços pequenos do pescoço, do quadril e do começo da cauda. As escamas medem menos de um milímetro.",
-    "Nenhuma pena foi encontrada em nenhum T. rex, nem em nenhum outro tiranossauro grande. Parentes menores e mais antigos tinham penas como fios: o pequeno Dilong, e o Yutyrannus, com umas 1,4 tonelada, mais ou menos um sexto de SUE. O Yutyrannus viveu uns 60 milhões de anos antes do T. rex. Não se conhece pele da parte de cima das costas, então uma camada fina ali não pode ser mostrada nem descartada.",
+    "Nenhuma pena foi encontrada em nenhum T. rex, nem em nenhum outro tiranossauro grande. Parentes menores e mais antigos tinham penas como fios: o pequeno Dilong, e o Yutyrannus, com cerca de 1,4 toneladas, mais ou menos um sexto de SUE. O Yutyrannus viveu cerca de 60 milhões de anos antes do T. rex. Não se conhece pele da parte de cima das costas, então uma camada fina ali não pode ser mostrada nem descartada.",
     "E os lábios: segundo um estudo de 2023, o lábio e a gengiva muito provavelmente cobriam todos os dentes com a boca fechada. Uma minoria ainda defende um rosto como o de um crocodilo, e nunca se encontrou um lábio."
    ]
   },
@@ -346,7 +346,7 @@
    "nav": "Por que o nosso T. rex é assim",
    "h": "Por que o nosso T. rex é assim",
    "paras": [
-    "Ele é feito com as medidas dos ossos de SUE: o fêmur, o úmero, a lâmina do quadril e o crânio no tamanho dele, e o resto segundo outro T. rex, algumas regras e a nossa própria reconstrução. As cores são nossas, porque a cor de nenhum T. rex é conhecida. Mostramos a boca aberta, com a faixa de lábio e gengiva sobre os dentes de cima."
+    "Ele é feito com as medidas dos ossos de SUE: o fêmur, o úmero, a lâmina do quadril e o crânio no tamanho real, e o resto a partir de outro T. rex, algumas regras e a nossa própria reconstrução. As cores são nossas, porque a cor de nenhum T. rex é conhecida. Mostramos a boca aberta, com a faixa de lábio e gengiva sobre os dentes de cima."
    ]
   },
   {
@@ -357,7 +357,7 @@
    "items": [
     {
      "q": "O espinossauro era maior que o T. rex?",
-     "a": "Mais longo e, muito provavelmente, mais leve. Os maiores adultos tinham pouco menos de 14 m e umas 7,4 toneladas, por um modelo de 2022. Esse modelo amplia um esqueleto jovem até o tamanho do maior focinho já encontrado. Um T. rex grande tinha uns 12 m e pesava de 8 a 9 toneladas. Há mais na página do espinossauro, onde os dois estão na mesma escala, com as fontes.",
+     "a": "Mais longo e, muito provavelmente, mais leve. Os maiores adultos tinham pouco menos de 14 m e cerca de 7,4 toneladas, por um modelo de 2022. Esse modelo amplia um esqueleto jovem até o tamanho do maior focinho já encontrado. Um T. rex grande tinha cerca de 12 m e pesava de 8 a 9 toneladas. Há mais na página do espinossauro, onde os dois estão na mesma escala, com as fontes.",
      "links": [
       {
        "page": "spinosaurus",
@@ -367,7 +367,7 @@
     },
     {
      "q": "Quantos anos SUE tinha?",
-     "a": "Uns 28 anos ou mais, pelos anéis de crescimento dos ossos, como diz o museu. Um estudo de 2026 situa o tamanho completo de um T. rex por volta dos 35 a 40 anos, então SUE talvez fosse mais velho. De qualquer forma, era um animal velho, com ferimentos curados."
+     "a": "Cerca de 28 anos ou mais, pelos anéis de crescimento dos ossos, como diz o museu. Um estudo de 2026 situa o tamanho completo de um T. rex por volta dos 35 a 40 anos, então SUE talvez fosse mais velho. De qualquer forma, era um animal velho, com ferimentos curados."
     }
    ]
   },
@@ -377,7 +377,7 @@
    "nav": "No museu",
    "h": "No museu",
    "paras": [
-    "O Museum of Ages é um museu digital, feito por uma organização sem fins lucrativos. Entrada franca, sem cadastro. Na ala dos animais, este animal vai estar entre os outros, dos gigantes de muito tempo atrás aos últimos da própria espécie. A ala de Leonardo da Vinci mostra como é uma ala pronta."
+    "O Museum of Ages é um museu digital, feito por uma organização sem fins lucrativos. Entrada franca, sem cadastro. Na ala dos animais, este animal vai estar entre os outros, dos gigantes de muito tempo atrás aos últimos de sua espécie. A ala de Leonardo da Vinci mostra como é uma ala pronta."
    ],
    "links": [
     {
@@ -403,20 +403,20 @@
     {
      "page": "spinosaurus",
      "pic": "spino",
-     "alt": "Um espinossauro com uma vela alta e uma cauda larga, com a silhueta clara de um adulto maior atrás, ao lado de uma pessoa cinza que chega ao quadril dele.",
+     "alt": "Um espinossauro com uma vela alta e uma cauda alta, com a silhueta clara de um adulto maior atrás, ao lado de uma pessoa cinza que chega ao quadril dele.",
      "line": "Um espinossauro adulto era mais longo do que qualquer T. rex encontrado até hoje, muito provavelmente mais leve e bem mais baixo na altura do quadril. Aqui o nosso exemplar jovem está ao lado do nosso T. rex, na mesma escala."
     },
     {
      "page": "brachiosaurus",
      "pic": "brachio",
      "alt": "Um braquiossauro de lado, com o pescoço longo erguido numa curva suave, as patas da frente mais longas que as de trás e a cauda sem tocar o chão, ao lado de uma pessoa cinza que poderia passar por baixo da barriga dele, e uma barra curta que marca o alto da cabeça.",
-     "line": "O braquiossauro, um herbívoro de pescoço longo do Jurássico Superior, tinha uns 22 a 25 m de comprimento e pesava mais ou menos de 30 a 45 toneladas, dois números reconstruídos a partir de um único esqueleto parcial. O nosso braquiossauro está ao lado de uma pessoa, com a cabeça na altura de umas sete pessoas, na pose que escolhemos."
+     "line": "O braquiossauro, um herbívoro de pescoço longo do Jurássico Superior, tinha cerca de 22 a 25 m de comprimento e pesava mais ou menos de 30 a 45 toneladas, dois números reconstruídos a partir de um único esqueleto parcial. O nosso braquiossauro está ao lado de uma pessoa, com a cabeça na altura de cerca de sete pessoas, na pose que escolhemos."
     },
     {
      "page": "triceratops",
      "pic": "tricera",
-     "alt": "Um Triceratops de lado: um babado largo atrás da cabeça, dois chifres longos acima dos olhos, um curto acima do nariz, quatro patas. Ao lado, uma pessoa cinza que chega a uns dois terços da altura do dorso.",
-     "line": "Um Triceratops adulto grande tinha uns 7 a 8 m de comprimento, com um crânio de uns 2 m, mais longo que o de SUE. O nosso Triceratops está ao lado do nosso T. rex na mesma escala, com o que os ossos mostram dos dois e o que não mostram."
+     "alt": "Um Triceratops de lado: um babado largo atrás da cabeça, dois chifres longos acima dos olhos, um curto acima do nariz, quatro patas. Ao lado, uma pessoa cinza que chega a cerca de dois terços da altura do dorso.",
+     "line": "Um Triceratops adulto grande tinha cerca de 7 a 8 m de comprimento, com um crânio de cerca de 2 m, mais longo que o de SUE. O nosso Triceratops está ao lado do nosso T. rex na mesma escala, com o que os ossos mostram dos dois e o que não mostram."
     }
    ]
   },
@@ -494,8 +494,8 @@
   {
    "type": "text",
    "id": "pictures",
-   "nav": "Use as nossas imagens",
-   "h": "Use as nossas imagens",
+   "nav": "Usar nossas imagens",
+   "h": "Usar nossas imagens",
    "paras": [
     [
      "As imagens do T. rex nesta página são obra nossa, com licença ",
@@ -503,7 +503,7 @@
       "text": "CC BY-SA 4.0",
       "href": "https://creativecommons.org/licenses/by-sa/4.0/deed.pt-br"
      },
-     ". Crédito: Museum of Ages. Elas mostram uma reconstrução, construída em código e desenhada com o nosso próprio motor gráfico, não uma fotografia. As imagens das outras páginas que aparecem aqui dão o crédito nessas páginas."
+     ". Crédito: Museum of Ages. Elas mostram uma reconstrução, construída em código e renderizada com o nosso próprio motor gráfico, não uma fotografia. As imagens das outras páginas que aparecem aqui dão o crédito nessas páginas."
     ]
    ]
   }

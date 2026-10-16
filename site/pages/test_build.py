@@ -2866,6 +2866,9 @@ class PictureLicences(unittest.TestCase):
         "house", "v-house", "v-court", "v-court-m", "court", "stair", "v-hall", "v-hall-m", "v-lion",
         "vinci-stop-hall", "vinci-view-anemometer", "vinci-view-parachute", "m-parachute"}
 
+    # the shark's body shape credit in a page's own words, where the page's own line stands in for the list's
+    OWN_SHAPE_CREDIT = {"de": "Körperform", "es": "forma del cuerpo", "pt-BR": "forma do corpo"}
+
     @classmethod
     def setUpClass(cls):
         cls.lib = _buildlib()
@@ -2903,10 +2906,26 @@ class PictureLicences(unittest.TestCase):
                     self.assertTrue(text.endswith("(CC BY 4.0)"), path)
                     page = path.read_text(encoding="utf-8")
                     shared = re.search(r'<meta property="og:image" content="([^"]+)"', page)
-                    if ('<html lang="de"' in page[:200] and owed == self.lib.PICTURE_CREDITS.get(self.lib.picture_stem(shared.group(1)))
+                    lang = re.search(r'<html lang="([\w-]+)"', page[:200]).group(1)
+                    if (lang in self.OWN_SHAPE_CREDIT and owed == self.lib.PICTURE_CREDITS.get(self.lib.picture_stem(shared.group(1)))
                             and "Shimada" in owed[0]):
-                        self.assertIn("Körperform", text, path)
+                        self.assertIn(self.OWN_SHAPE_CREDIT[lang], text, path)
                     self.assertEqual(image["license"], "https://creativecommons.org/licenses/by-sa/4.0/", path)
+        self.assertGreater(found, 0)
+
+    def test_a_share_picture_in_another_language_owes_what_the_english_one_owes(self):
+        # a share picture in another language is the English one with its words in that language: it carries the
+        # same rights, so a page's own credit line stands in every language, not in English and German only
+        found = 0
+        for path in self.pages:
+            shared = re.search(r'<meta property="og:image" content="([^"]+)"', path.read_text(encoding="utf-8"))
+            stem = self.lib.picture_stem(html.unescape(shared.group(1))) if shared else None
+            twin = re.sub(r"-og-[a-z]{2}(?:-[a-z]{2})?$", "-og-en", stem or "")
+            if not stem or twin == stem or twin not in self.lib.FREE_PICTURES:
+                continue
+            found += 1
+            self.assertIn(stem, self.lib.FREE_PICTURES, path)
+            self.assertEqual(self.lib.PICTURE_CREDITS.get(stem), self.lib.PICTURE_CREDITS.get(twin), path)
         self.assertGreater(found, 0)
 
     def test_only_the_museums_own_pictures_carry_licence_data(self):
