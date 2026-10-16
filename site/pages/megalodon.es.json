@@ -34,7 +34,7 @@
     1600
    ],
    "sizes": "(min-width: 1280px) 690px, (min-width: 960px) 54vw, (min-width: 600px) calc(100vw - 64px), calc(100vw - 40px)",
-   "person": "84% 45.6%"
+   "person": "84% 51.31%"
   },
   "skeleton": {
    "stem": "animals-megalodon-skeleton",
@@ -134,8 +134,8 @@
    "close": {
     "pic": "head",
     "tag": "tag_made",
-    "what": "La cabeza en plena mordida, más de cerca. Los dientes del modelo siguen otro hallazgo, una dentadura real, a su propio tamaño: delante miden unos 10 cm de alto.",
-    "alt": "La cabeza del tiburón, con la mandíbula superior adelantada y dientes anchos y triangulares, junto a la persona gris, que mide menos de lo que mide la cabeza de largo."
+    "what": "La cabeza con la boca cerrada, más de cerca. Los dientes del modelo siguen otro hallazgo, una dentadura real, a su propio tamaño: delante miden unos 10 cm de alto.",
+    "alt": "La cabeza del tiburón, con la boca cerrada, junto a la persona gris, que mide menos de lo que mide la cabeza de largo."
    },
    "bars": [
     {

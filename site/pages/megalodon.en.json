@@ -34,7 +34,7 @@
     1600
    ],
    "sizes": "(min-width: 1280px) 690px, (min-width: 960px) 54vw, (min-width: 600px) calc(100vw - 64px), calc(100vw - 40px)",
-   "person": "84% 45.6%"
+   "person": "84% 51.31%"
   },
   "skeleton": {
    "stem": "animals-megalodon-skeleton",
@@ -134,8 +134,8 @@
    "close": {
     "pic": "head",
     "tag": "tag_made",
-    "what": "The head in its bite, closer up. The teeth in the model are built after another find, a real set, at its own size, about 10 cm (4 in) tall in front.",
-    "alt": "The shark's head with the upper jaw pushed forward and broad triangular teeth, beside the grey person, who is shorter than the head is long."
+    "what": "The head, mouth closed, closer up. The teeth in the model are built after another find, a real set, at its own size, about 10 cm (4 in) tall in front.",
+    "alt": "The shark's head with its mouth closed, beside the grey person, who is shorter than the head is long."
    },
    "bars": [
     {

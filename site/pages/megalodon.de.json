@@ -34,7 +34,7 @@
     1600
    ],
    "sizes": "(min-width: 1280px) 690px, (min-width: 960px) 54vw, (min-width: 600px) calc(100vw - 64px), calc(100vw - 40px)",
-   "person": "84% 45.6%"
+   "person": "84% 51.31%"
   },
   "skeleton": {
    "stem": "animals-megalodon-skeleton",
@@ -134,8 +134,8 @@
    "close": {
     "pic": "head",
     "tag": "tag_made",
-    "what": "Der Kopf beim Zubeißen, aus der Nähe. Die Zähne im Modell sind nach einem anderen Fund gebaut, einem echten Gebiss in seiner eigenen Größe, vorne etwa 10 cm hoch.",
-    "alt": "Der Kopf des Hais mit vorgeschobenem Oberkiefer und breiten dreieckigen Zähnen, daneben der graue Mensch, kürzer als der Kopf lang ist."
+    "what": "Der Kopf mit geschlossenem Maul, aus der Nähe. Die Zähne im Modell sind nach einem anderen Fund gebaut, einem echten Gebiss in seiner eigenen Größe, vorne etwa 10 cm hoch.",
+    "alt": "Der Kopf des Hais mit geschlossenem Maul, daneben der graue Mensch, kürzer als der Kopf lang ist."
    },
    "bars": [
     {

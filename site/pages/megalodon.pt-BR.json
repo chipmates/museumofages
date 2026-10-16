@@ -34,7 +34,7 @@
     1600
    ],
    "sizes": "(min-width: 1280px) 690px, (min-width: 960px) 54vw, (min-width: 600px) calc(100vw - 64px), calc(100vw - 40px)",
-   "person": "84% 45.6%"
+   "person": "84% 51.31%"
   },
   "skeleton": {
    "stem": "animals-megalodon-skeleton",
@@ -134,8 +134,8 @@
    "close": {
     "pic": "head",
     "tag": "tag_made",
-    "what": "A cabeça no meio da mordida, mais de perto. Os dentes do modelo seguem outro achado, uma arcada real, no tamanho dela: na frente, eles têm cerca de 10 cm de altura.",
-    "alt": "A cabeça do tubarão, com a mandíbula de cima projetada para a frente e dentes largos e triangulares, ao lado da pessoa cinza, que é mais baixa do que o comprimento da cabeça."
+    "what": "A cabeça de boca fechada, mais de perto. Os dentes do modelo seguem outro achado, uma arcada real, no tamanho dela: na frente, eles têm cerca de 10 cm de altura.",
+    "alt": "A cabeça do tubarão, de boca fechada, ao lado da pessoa cinza, que é mais baixa do que o comprimento da cabeça."
    },
    "bars": [
     {
