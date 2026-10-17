@@ -33,7 +33,7 @@
   },
   "meta": {
     "title": "Salvator Mundi: Preis, Besitzer, Echtheit | Museum of Ages",
-    "description": "Der „Salvator Mundi“ wurde 2017 für 450,3 Millionen Dollar versteigert, höher als je ein Gemälde zuvor. Wem er gehört, wo er ist, ob er von Leonardo ist.",
+    "description": "Der „Salvator Mundi“ wurde 2017 für 450,3 Millionen Dollar versteigert, teurer als je ein Gemälde zuvor. Wem er gehört, wo er ist, ob er von Leonardo ist.",
     "og_title": "Salvator Mundi: Preis, Besitzer, Echtheit",
     "og_image_alt": "Eine Reproduktion des „Salvator Mundi“ nach der Restaurierung: Christus als Halbfigur von vorn, mit langen Locken und einem blauen Gewand, über dem sich zwei bestickte Borten kreuzen. Mit zwei Fingern der rechten Hand segnet er, in der linken hält er eine durchsichtige Kugel, dahinter schwarzer Grund."
   },
@@ -60,7 +60,7 @@
       "id": "price",
       "nav": "Der Preis",
       "h": "Was hat der „Salvator Mundi“ gekostet?",
-      "answer": "450,3 Millionen US-Dollar samt Gebühren, versteigert am 15. November 2017 von Christie's in New York. Damit ist er auf Auktionen das teuerste Gemälde der Welt und sogar das teuerste Kunstwerk überhaupt, so die öffentlichen Rekordlisten vom November 2025.",
+      "answer": "450,3 Millionen US-Dollar samt Gebühren, versteigert am 15. November 2017 von Christie's in New York. Damit ist er auf Auktionen das teuerste Gemälde der Welt und sogar das teuerste je versteigerte Kunstwerk, so die öffentlichen Rekordlisten vom November 2025.",
       "pic": {
         "pic": "salvator-mundi",
         "shape": "whole",
@@ -76,7 +76,7 @@
         ]
       },
       "known": [
-        "Etwa 19 Minuten lang wurde geboten, am Ende nur noch von zwei Bietern. Bei 400 Millionen Dollar fiel der Zuschlag an einen Bieter am Telefon, mit den Gebühren kamen 450.312.500 Dollar zusammen. Christie's hatte das Bild auf über 100 Millionen Dollar geschätzt, die höchste, die es bis dahin für das Gemälde eines Alten Meisters gab, und es in der Abendauktion für Kunst der Nachkriegszeit und Gegenwart angeboten, nicht bei den Alten Meistern. Den Rekord davor hielt Picassos „Les Femmes d'Alger“ mit etwa 179,4 Millionen Dollar aus dem Jahr 2015, und auf den Listen vom November 2025 folgt Klimts „Bildnis Elisabeth Lederer“, im selben Monat bei Sotheby's für 236,4 Millionen Dollar versteigert. Verkauft wurde das Bild im Auftrag von Trusts des russischen Milliardärs Dmitri Rybolowlew."
+        "Etwa 19 Minuten lang wurde geboten, am Ende nur noch von zwei Bietern. Bei 400 Millionen Dollar fiel der Zuschlag an einen Bieter am Telefon, mit den Gebühren kamen 450.312.500 Dollar zusammen. Christie's hatte das Bild auf über 100 Millionen Dollar geschätzt, die höchste Schätzung, die es bis dahin für ein Gemälde eines Alten Meisters gab, und es in der Abendauktion für Kunst der Nachkriegszeit und Gegenwart angeboten, nicht bei den Alten Meistern. Den Rekord davor hielt Picassos „Les Femmes d'Alger“ mit etwa 179,4 Millionen Dollar aus dem Jahr 2015, und auf den Listen vom November 2025 folgt Klimts „Bildnis Elisabeth Lederer“, im selben Monat bei Sotheby's für 236,4 Millionen Dollar versteigert. Verkauft wurde das Bild im Auftrag von Trusts des russischen Milliardärs Dmitri Rybolowlew."
       ],
       "open": "Wer am Telefon geboten hatte, blieb an diesem Abend ungenannt. Darum geht es in der nächsten Frage."
     },
@@ -166,7 +166,7 @@
             },
             {
               "term": "September 2018",
-              "text": "Ein Schweizer Restaurator prüfte in einem Zollfreilager in der Schweiz den Zustand des Bildes für die Versicherung, berichtet seine Restauratorin."
+              "text": "Ein Schweizer Restaurator prüfte in einem Zollfreilager in der Schweiz den Zustand des Bildes für die Versicherung, berichtet die Restauratorin des Bildes."
             },
             {
               "term": "2019",
