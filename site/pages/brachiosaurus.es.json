@@ -24,9 +24,9 @@
    "sizes": "(min-width: 1280px) 588px, (min-width: 960px) calc(100vw - 80px), (min-width: 600px) calc(100vw - 64px), calc(100vw - 40px)",
    "person": "77.93% 84.88%",
    "marks": {
-    "brachiosaurus": "1.23% 98.16%",
+    "brachiosaurus": "1.02% 96.97%",
     "person": "76.86% 78.99%",
-    "head": "92.12% 97.52%"
+    "head": "90.54% 95.95%"
    },
    "behind": [
     "head"
@@ -50,10 +50,10 @@
    "sizes": "(min-width: 1280px) 690px, (min-width: 960px) 54vw, (min-width: 600px) calc(100vw - 64px), calc(100vw - 40px)",
    "person": "77.93% 84.88%",
    "swatches": {
-    "own": "#c5b48f",
-    "blue": "#597382",
-    "orange": "#ac6f23",
-    "brown": "#493624"
+    "own": "#c4b38e",
+    "blue": "#435966",
+    "orange": "#a56a20",
+    "brown": "#483523"
    },
    "narrow": {
     "stem": "animals-brachiosaurus-skeleton-narrow",
@@ -117,7 +117,7 @@
   "scale": {
    "pic": "side",
    "tag": "tag_made",
-   "what": "Nuestro Brachiosaurus junto a una persona de 1,70 m, a la misma escala, al tamaño del único esqueleto en el que se basa el nombre, desenterrado en Colorado en 1900. El cuello, la cabeza, la parte de abajo de las patas y la mayor parte de la cola siguen a Giraffatitan y a otros hallazgos. La cabeza está a 11,8 m de altura solo por el ángulo del cuello que elegimos: esa altura es nuestra, no un resultado.",
+   "what": "Nuestro Brachiosaurus junto a una persona de 1,70 m, a la misma escala, al tamaño del único esqueleto en el que se basa el nombre, desenterrado en Colorado en 1900. El cuello, la cabeza, la parte de abajo de las patas y la mayor parte de la cola siguen a Giraffatitan y a otros hallazgos. La cabeza está a 11,5 m de altura solo por el ángulo del cuello que elegimos: esa altura es nuestra, no un resultado.",
    "alt": "Un Brachiosaurus de lado, con el cuello largo levantado en una curva suave, las patas delanteras más largas que las traseras y la cola sin tocar el suelo, junto a una persona gris que podría pasar por debajo de su vientre. Una barra corta marca lo alto de la cabeza.",
    "note": "Nuestra propia reconstrucción, construida en código a partir de medidas publicadas y renderizada con nuestro propio motor gráfico. No son fotografías.",
    "marks": [
@@ -127,7 +127,7 @@
     },
     {
      "span": "head",
-     "text": "Lo alto de la cabeza, 11,8 m, el ángulo del cuello es elección nuestra"
+     "text": "Lo alto de la cabeza, 11,5 m, el ángulo del cuello es elección nuestra"
     },
     {
      "span": "person",
@@ -180,8 +180,8 @@
     {
      "cells": [
       "Nuestro modelo",
-      "24,4 m a lo largo de la columna, 21,5 m en línea recta con el cuello levantado",
-      "lo alto de la cabeza 11,8 m en nuestra postura, los hombros 6,8 m, la cadera 5,0 m",
+      "24,0 m a lo largo de la columna, 21,3 m en línea recta con el cuello levantado",
+      "lo alto de la cabeza 11,5 m en nuestra postura, los hombros 6,7 m, la cadera 5,0 m",
       "",
       "medido en nuestros archivos, hecho al tamaño del esqueleto de Chicago"
      ]
@@ -231,7 +231,7 @@
    "h": "¿Qué altura tenía el Brachiosaurus, y fue el dinosaurio más alto?",
    "paras": [
     "Nadie puede decirlo con precisión de un metro: al esqueleto de Chicago le falta el cuello, y las dos vértebras del cuello halladas en otros lugares quizá ni siquiera sean de Brachiosaurus. Por eso toda altura de la cabeza publicada hasta hoy se dibujó sobre el cuello de Giraffatitan, y ninguna se midió.",
-    "Cómo llevaba ese cuello se discute, y la postura intermedia es la del cuello levantado, ni horizontal ni vertical. El cuello de nuestro modelo sube con unos 42 grados, con lo alto de la cabeza a 11,8 m. El mismo cuerpo tendría la cabeza a unos 7 m con el cuello horizontal, y a más de 14 m con el cuello vertical. El esqueleto de dinosaurio montado más alto es ese Giraffatitan de Berlín, y qué dinosaurio fue el más alto en vida no se sabe con seguridad: la página de los dinosaurios más grandes trata esa pregunta."
+    "Cómo llevaba ese cuello se discute, y la postura intermedia es la del cuello levantado, ni horizontal ni vertical. El cuello de nuestro modelo sube con unos 41 grados, con lo alto de la cabeza a 11,5 m. El mismo cuerpo tendría la cabeza a unos 7 m con el cuello horizontal, y a más de 14 m con el cuello vertical. El esqueleto de dinosaurio montado más alto es ese Giraffatitan de Berlín, y qué dinosaurio fue el más alto en vida no se sabe con seguridad: la página de los dinosaurios más grandes trata esa pregunta."
    ],
    "links": [
     {
@@ -371,7 +371,7 @@
       ],
       [
        "El nuestro es un modelo, no la especie:",
-       "sus 24,4 m a lo largo de la columna y su cabeza a 11,8 m son cifras propias del modelo, la de la cabeza según el cuello que elegimos, nunca cifras del animal."
+       "sus 24,0 m a lo largo de la columna y su cabeza a 11,5 m son cifras propias del modelo, la de la cabeza según el cuello que elegimos, nunca cifras del animal."
       ]
      ]
     }

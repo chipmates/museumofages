@@ -29,9 +29,9 @@
    "sizes": "(min-width: 1280px) 588px, (min-width: 960px) calc(100vw - 80px), (min-width: 600px) calc(100vw - 64px), calc(100vw - 40px)",
    "person": "77.93% 84.88%",
    "marks": {
-    "brachiosaurus": "1.23% 98.16%",
+    "brachiosaurus": "1.02% 96.97%",
     "person": "76.86% 78.99%",
-    "head": "92.12% 97.52%"
+    "head": "90.54% 95.95%"
    },
    "behind": [
     "head"
@@ -55,10 +55,10 @@
    "sizes": "(min-width: 1280px) 690px, (min-width: 960px) 54vw, (min-width: 600px) calc(100vw - 64px), calc(100vw - 40px)",
    "person": "77.93% 84.88%",
    "swatches": {
-    "own": "#c5b48f",
-    "blue": "#597382",
-    "orange": "#ac6f23",
-    "brown": "#493624"
+    "own": "#c4b38e",
+    "blue": "#435966",
+    "orange": "#a56a20",
+    "brown": "#483523"
    },
    "narrow": {
     "stem": "animals-brachiosaurus-skeleton-narrow",
@@ -122,7 +122,7 @@
   "scale": {
    "pic": "side",
    "tag": "tag_made",
-   "what": "Unser Brachiosaurus neben einem Menschen von 1,70 m, im selben Maßstab, in der Größe des einen Skeletts, auf dem der Name beruht, 1900 in Colorado ausgegraben. Hals, Kopf, die unteren Beinteile und der größte Teil des Schwanzes folgen Giraffatitan und anderen Funden. Seine 11,8 m Kopfhöhe ergeben sich nur aus dem Halswinkel, den wir gewählt haben: Diese Höhe ist unsere Wahl, kein Befund.",
+   "what": "Unser Brachiosaurus neben einem Menschen von 1,70 m, im selben Maßstab, in der Größe des einen Skeletts, auf dem der Name beruht, 1900 in Colorado ausgegraben. Hals, Kopf, die unteren Beinteile und der größte Teil des Schwanzes folgen Giraffatitan und anderen Funden. Seine 11,5 m Kopfhöhe ergeben sich nur aus dem Halswinkel, den wir gewählt haben: Diese Höhe ist unsere Wahl, kein Befund.",
    "alt": "Ein Brachiosaurus von der Seite, den langen Hals in sanftem Bogen erhoben, die Vorderbeine länger als die Hinterbeine, der Schwanz frei über dem Boden, daneben ein grauer Mensch, der unter seinem Bauch hindurchgehen könnte. Ein kurzer Strich markiert die Kopfhöhe.",
    "note": "Unsere eigene Rekonstruktion, nach veröffentlichten Maßen in Code gebaut und in unserer Engine gerendert. Keine Fotos.",
    "marks": [
@@ -132,7 +132,7 @@
     },
     {
      "span": "head",
-     "text": "Kopfhöhe 11,8 m, der Halswinkel ist unsere Wahl"
+     "text": "Kopfhöhe 11,5 m, der Halswinkel ist unsere Wahl"
     },
     {
      "span": "person",
@@ -185,8 +185,8 @@
     {
      "cells": [
       "Unser Modell",
-      "24,4 m entlang der Wirbelsäule, 21,5 m gerade mit erhobenem Hals",
-      "Scheitel 11,8 m in unserer Haltung, Schultern 6,8 m, Hüfte 5,0 m",
+      "24,0 m entlang der Wirbelsäule, 21,3 m gerade mit erhobenem Hals",
+      "Scheitel 11,5 m in unserer Haltung, Schultern 6,7 m, Hüfte 5,0 m",
       "",
       "an unseren Dateien gemessen, in der Größe des Skeletts aus Chicago gebaut"
      ]
@@ -236,7 +236,7 @@
    "h": "Wie hoch war ein Brachiosaurus, und war er der höchste Dinosaurier?",
    "paras": [
     "Auf den Meter genau weiß das niemand: Dem Skelett in Chicago fehlt der Hals, und die zwei Halswirbel, die anderswo gefunden wurden, stammen vielleicht nicht einmal von einem Brachiosaurus. Darum ist jede gedruckte Kopfhöhe auf den Hals des Giraffatitan gezeichnet, keine gemessen.",
-    "Wie er diesen Hals hielt, ist umstritten. Ein häufig vertretener Mittelweg: erhoben, aber weder waagerecht noch senkrecht. Der Hals unseres Modells steigt mit etwa 42 Grad an, der Kopf steht 11,8 m hoch. Mit waagerechtem Hals stünde der Kopf desselben Körpers etwa 7 m hoch, mit senkrechtem Hals über 14 m. Das höchste montierte Dinosaurierskelett ist dieser Berliner Giraffatitan, und welcher Dinosaurier im Leben am höchsten stand, weiß niemand sicher: Die Seite der größten Dinosaurier geht dieser Frage nach."
+    "Wie er diesen Hals hielt, ist umstritten. Ein häufig vertretener Mittelweg: erhoben, aber weder waagerecht noch senkrecht. Der Hals unseres Modells steigt mit etwa 41 Grad an, der Kopf steht 11,5 m hoch. Mit waagerechtem Hals stünde der Kopf desselben Körpers etwa 7 m hoch, mit senkrechtem Hals über 14 m. Das höchste montierte Dinosaurierskelett ist dieser Berliner Giraffatitan, und welcher Dinosaurier im Leben am höchsten stand, weiß niemand sicher: Die Seite der größten Dinosaurier geht dieser Frage nach."
    ],
    "links": [
     {
@@ -376,7 +376,7 @@
       ],
       [
        "Unser Brachiosaurus ist ein Modell, nicht die Art:",
-       "Seine 24,4 m entlang der Wirbelsäule und der Kopf in 11,8 m Höhe sind Zahlen des Modells, die Kopfhöhe nach dem Hals, den wir gewählt haben, nie Zahlen des Tiers."
+       "Seine 24,0 m entlang der Wirbelsäule und der Kopf in 11,5 m Höhe sind Zahlen des Modells, die Kopfhöhe nach dem Hals, den wir gewählt haben, nie Zahlen des Tiers."
       ]
      ]
     }

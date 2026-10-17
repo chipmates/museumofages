@@ -24,9 +24,9 @@
    "sizes": "(min-width: 1280px) 588px, (min-width: 960px) calc(100vw - 80px), (min-width: 600px) calc(100vw - 64px), calc(100vw - 40px)",
    "person": "77.93% 84.88%",
    "marks": {
-    "brachiosaurus": "1.23% 98.16%",
+    "brachiosaurus": "1.02% 96.97%",
     "person": "76.86% 78.99%",
-    "head": "92.12% 97.52%"
+    "head": "90.54% 95.95%"
    },
    "behind": [
     "head"
@@ -50,10 +50,10 @@
    "sizes": "(min-width: 1280px) 690px, (min-width: 960px) 54vw, (min-width: 600px) calc(100vw - 64px), calc(100vw - 40px)",
    "person": "77.93% 84.88%",
    "swatches": {
-    "own": "#c5b48f",
-    "blue": "#597382",
-    "orange": "#ac6f23",
-    "brown": "#493624"
+    "own": "#c4b38e",
+    "blue": "#435966",
+    "orange": "#a56a20",
+    "brown": "#483523"
    },
    "narrow": {
     "stem": "animals-brachiosaurus-skeleton-narrow",
@@ -117,7 +117,7 @@
   "scale": {
    "pic": "side",
    "tag": "tag_made",
-   "what": "Our Brachiosaurus beside a person 1.70 m tall, to one scale, at the size of the one skeleton the name rests on, dug up in Colorado in 1900. Neck, head, lower legs and most of the tail follow Giraffatitan and other finds. The head stands 11.8 m (39 ft) up only by the neck angle we chose: that height is ours, not a finding.",
+   "what": "Our Brachiosaurus beside a person 1.70 m tall, to one scale, at the size of the one skeleton the name rests on, dug up in Colorado in 1900. Neck, head, lower legs and most of the tail follow Giraffatitan and other finds. The head stands 11.5 m (38 ft) up only by the neck angle we chose: that height is ours, not a finding.",
    "alt": "A Brachiosaurus from the side, its long neck raised in a gentle curve, the front legs longer than the hind legs, the tail off the ground, beside a grey person who could walk under its belly, a short bar marking the head's top.",
    "note": "Our own reconstruction, built in code from published measurements and rendered in our own engine. Not photographs.",
    "marks": [
@@ -127,7 +127,7 @@
     },
     {
      "span": "head",
-     "text": "Head top, 11.8 m, the neck angle is our choice"
+     "text": "Head top, 11.5 m, the neck angle is our choice"
     },
     {
      "span": "person",
@@ -180,8 +180,8 @@
     {
      "cells": [
       "Our model",
-      "24.4 m (80 ft) along the backbone, 21.5 m (71 ft) straight with the neck raised",
-      "head top 11.8 m (39 ft) in our pose, shoulders 6.8 m (22 ft), hips 5.0 m (16 ft)",
+      "24.0 m (79 ft) along the backbone, 21.3 m (70 ft) straight with the neck raised",
+      "head top 11.5 m (38 ft) in our pose, shoulders 6.7 m (22 ft), hips 5.0 m (16 ft)",
       "",
       "measured on our files, built at the Chicago skeleton's size"
      ]
@@ -231,7 +231,7 @@
    "h": "How tall was Brachiosaurus, and was it the tallest dinosaur?",
    "paras": [
     "Nobody can say to the metre: the Chicago skeleton has no neck, and the two neck bones found elsewhere may not even be Brachiosaurus. So every head height in print was drawn on Giraffatitan's neck, none measured.",
-    "How it held that neck is argued, and the middle view is raised, neither level nor straight up. Our model's neck rises at about 42 degrees, its head top 11.8 m (39 ft) up. The same body would hold its head about 7 m (23 ft) up with a level neck, over 14 m (46 ft) with it straight up. The tallest mounted dinosaur skeleton is that Berlin Giraffatitan, and which dinosaur stood tallest in life is not known for sure: the biggest dinosaurs page takes up that question."
+    "How it held that neck is argued, and the middle view is raised, neither level nor straight up. Our model's neck rises at about 41 degrees, its head top 11.5 m (38 ft) up. The same body would hold its head about 7 m (23 ft) up with a level neck, over 14 m (46 ft) with it straight up. The tallest mounted dinosaur skeleton is that Berlin Giraffatitan, and which dinosaur stood tallest in life is not known for sure: the biggest dinosaurs page takes up that question."
    ],
    "links": [
     {
@@ -371,7 +371,7 @@
       ],
       [
        "Ours is one model, not the species:",
-       "its 24.4 m along the backbone and its head at 11.8 m are the model's own numbers, the head's from the neck we chose, never the animal's."
+       "its 24.0 m along the backbone and its head at 11.5 m are the model's own numbers, the head's from the neck we chose, never the animal's."
       ]
      ]
     }

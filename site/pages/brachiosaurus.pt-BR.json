@@ -24,9 +24,9 @@
    "sizes": "(min-width: 1280px) 588px, (min-width: 960px) calc(100vw - 80px), (min-width: 600px) calc(100vw - 64px), calc(100vw - 40px)",
    "person": "77.93% 84.88%",
    "marks": {
-    "brachiosaurus": "1.23% 98.16%",
+    "brachiosaurus": "1.02% 96.97%",
     "person": "76.86% 78.99%",
-    "head": "92.12% 97.52%"
+    "head": "90.54% 95.95%"
    },
    "behind": [
     "head"
@@ -50,10 +50,10 @@
    "sizes": "(min-width: 1280px) 690px, (min-width: 960px) 54vw, (min-width: 600px) calc(100vw - 64px), calc(100vw - 40px)",
    "person": "77.93% 84.88%",
    "swatches": {
-    "own": "#c5b48f",
-    "blue": "#597382",
-    "orange": "#ac6f23",
-    "brown": "#493624"
+    "own": "#c4b38e",
+    "blue": "#435966",
+    "orange": "#a56a20",
+    "brown": "#483523"
    },
    "narrow": {
     "stem": "animals-brachiosaurus-skeleton-narrow",
@@ -117,7 +117,7 @@
   "scale": {
    "pic": "side",
    "tag": "tag_made",
-   "what": "O nosso braquiossauro ao lado de uma pessoa de 1,70 m, na mesma escala, no tamanho do único esqueleto em que o nome se baseia, desenterrado no Colorado em 1900. O pescoço, a cabeça, a parte de baixo das pernas e a maior parte da cauda seguem o Giraffatitan e outros achados. A cabeça fica a 11,8 m de altura só por causa do ângulo do pescoço que escolhemos: essa altura é nossa, não um resultado.",
+   "what": "O nosso braquiossauro ao lado de uma pessoa de 1,70 m, na mesma escala, no tamanho do único esqueleto em que o nome se baseia, desenterrado no Colorado em 1900. O pescoço, a cabeça, a parte de baixo das pernas e a maior parte da cauda seguem o Giraffatitan e outros achados. A cabeça fica a 11,5 m de altura só por causa do ângulo do pescoço que escolhemos: essa altura é nossa, não um resultado.",
    "alt": "Um braquiossauro de lado, com o pescoço longo erguido numa curva suave, as patas da frente mais longas que as de trás e a cauda sem tocar o chão, ao lado de uma pessoa cinza que poderia passar por baixo da barriga dele. Uma barra curta marca o alto da cabeça.",
    "note": "A nossa própria reconstrução, construída em código a partir de medidas publicadas e renderizada com o nosso próprio motor gráfico. Não são fotografias.",
    "marks": [
@@ -127,7 +127,7 @@
     },
     {
      "span": "head",
-     "text": "O alto da cabeça, 11,8 m, o ângulo do pescoço é escolha nossa"
+     "text": "O alto da cabeça, 11,5 m, o ângulo do pescoço é escolha nossa"
     },
     {
      "span": "person",
@@ -180,8 +180,8 @@
     {
      "cells": [
       "O nosso modelo",
-      "24,4 m ao longo da coluna, 21,5 m em linha reta com o pescoço erguido",
-      "o alto da cabeça 11,8 m na nossa pose, os ombros 6,8 m, o quadril 5,0 m",
+      "24,0 m ao longo da coluna, 21,3 m em linha reta com o pescoço erguido",
+      "o alto da cabeça 11,5 m na nossa pose, os ombros 6,7 m, o quadril 5,0 m",
       "",
       "medido nos nossos arquivos, feito no tamanho do esqueleto de Chicago"
      ]
@@ -231,7 +231,7 @@
    "h": "Qual era a altura do braquiossauro, e ele foi o dinossauro mais alto?",
    "paras": [
     "Ninguém sabe dizer com precisão de metro: o esqueleto de Chicago não tem pescoço, e as duas vértebras do pescoço achadas em outros lugares talvez nem sejam de braquiossauro. Por isso toda altura da cabeça já publicada foi desenhada sobre o pescoço do Giraffatitan, e nenhuma foi medida.",
-    "Como ele segurava esse pescoço é discutido, e a posição do meio é a do pescoço erguido, nem na horizontal nem na vertical. O pescoço do nosso modelo sobe com cerca de 42 graus, com o alto da cabeça a 11,8 m. O mesmo corpo teria a cabeça a cerca de 7 m com o pescoço na horizontal, e a mais de 14 m com o pescoço na vertical. O esqueleto de dinossauro montado mais alto é esse Giraffatitan de Berlim, e qual dinossauro foi o mais alto em vida ninguém sabe ao certo: a página dos maiores dinossauros trata dessa pergunta."
+    "Como ele segurava esse pescoço é discutido, e a posição do meio é a do pescoço erguido, nem na horizontal nem na vertical. O pescoço do nosso modelo sobe com cerca de 41 graus, com o alto da cabeça a 11,5 m. O mesmo corpo teria a cabeça a cerca de 7 m com o pescoço na horizontal, e a mais de 14 m com o pescoço na vertical. O esqueleto de dinossauro montado mais alto é esse Giraffatitan de Berlim, e qual dinossauro foi o mais alto em vida ninguém sabe ao certo: a página dos maiores dinossauros trata dessa pergunta."
    ],
    "links": [
     {
@@ -371,7 +371,7 @@
       ],
       [
        "O nosso é um modelo, não a espécie:",
-       "os 24,4 m dele ao longo da coluna e a cabeça a 11,8 m são números do próprio modelo, o da cabeça pelo pescoço que escolhemos, nunca números do animal."
+       "os 24,0 m dele ao longo da coluna e a cabeça a 11,5 m são números do próprio modelo, o da cabeça pelo pescoço que escolhemos, nunca números do animal."
       ]
      ]
     }

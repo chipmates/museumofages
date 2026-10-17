@@ -65,7 +65,7 @@
    "sizes": "(min-width: 1280px) 690px, (min-width: 960px) 54vw, (min-width: 600px) calc(100vw - 64px), calc(100vw - 40px)",
    "person": "81.76% 64.78%",
    "marks": {
-    "argentinosaurus": "6.08% 99.08%",
+    "argentinosaurus": "6.08% 99.04%",
     "blue-whale": "7.88% 77.36%",
     "megalodon": "6.12% 56%",
     "person": "81.04% 82.48%"

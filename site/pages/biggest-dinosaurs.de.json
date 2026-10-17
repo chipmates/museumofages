@@ -26,8 +26,8 @@
    "person": "32.88% 84.25%",
    "person_from": 680,
    "marks": {
-    "argentinosaurus": "9.39% 71.81%",
-    "brachiosaurus": "51.22% 95.18%",
+    "argentinosaurus": "9.44% 71.84%",
+    "brachiosaurus": "51.15% 94.62%",
     "stegosaurus": "0.41% 11.84%",
     "ankylosaurus": "12.48% 25.51%",
     "person": "32.4% 33.37%",
@@ -219,7 +219,7 @@
     },
     {
      "span": "brachiosaurus",
-     "text": "Brachiosaurus, etwa 24,4 m entlang der Wirbelsäule (21,5 m gerade, mit erhobenem Hals)"
+     "text": "Brachiosaurus, etwa 24,0 m entlang der Wirbelsäule (21,3 m gerade, mit erhobenem Hals)"
     },
     {
      "span": "stegosaurus",
@@ -309,7 +309,7 @@
     {
      "cells": [
       "Argentinosaurus, Argentinosaurus huinculensis",
-      "etwa 30,6 m, 32,1 m entlang der Wirbelsäule",
+      "etwa 30,6 m, 32,0 m entlang der Wirbelsäule",
       "etwa 30 bis 35 m, rekonstruiert, nie gemessen",
       "grob 65 bis 80 t, ein Modell",
       "ein Teilskelett, der Körper von Verwandten übernommen"
@@ -318,7 +318,7 @@
     {
      "cells": [
       "Brachiosaurus, Brachiosaurus altithorax",
-      "etwa 24,4 m entlang der Wirbelsäule, 21,5 m gerade mit erhobenem Hals",
+      "etwa 24,0 m entlang der Wirbelsäule, 21,3 m gerade mit erhobenem Hals",
       "etwa 22 bis 25 m, rekonstruiert",
       "grob 30 bis 45 t, rekonstruiert",
       "ein Teilskelett, Hals und Kopf übernommen"

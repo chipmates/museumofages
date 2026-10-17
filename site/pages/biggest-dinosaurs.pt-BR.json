@@ -23,8 +23,8 @@
    "person": "32.88% 84.25%",
    "person_from": 680,
    "marks": {
-    "argentinosaurus": "9.39% 71.81%",
-    "brachiosaurus": "51.22% 95.18%",
+    "argentinosaurus": "9.44% 71.84%",
+    "brachiosaurus": "51.15% 94.62%",
     "stegosaurus": "0.41% 11.84%",
     "ankylosaurus": "12.48% 25.51%",
     "person": "32.4% 33.37%",
@@ -216,7 +216,7 @@
     },
     {
      "span": "brachiosaurus",
-     "text": "Braquiossauro, cerca de 24,4 m ao longo da coluna (21,5 m em linha reta, com o pescoço erguido)"
+     "text": "Braquiossauro, cerca de 24,0 m ao longo da coluna (21,3 m em linha reta, com o pescoço erguido)"
     },
     {
      "span": "stegosaurus",
@@ -306,7 +306,7 @@
     {
      "cells": [
       "Argentinosaurus, Argentinosaurus huinculensis",
-      "cerca de 30,6 m, 32,1 m ao longo da coluna",
+      "cerca de 30,6 m, 32,0 m ao longo da coluna",
       "cerca de 30 a 35 m, reconstruído, nunca medido",
       "mais ou menos 65 a 80 t, um modelo",
       "um esqueleto parcial, o corpo tomado de parentes"
@@ -315,7 +315,7 @@
     {
      "cells": [
       "Braquiossauro, Brachiosaurus altithorax",
-      "cerca de 24,4 m ao longo da coluna, 21,5 m em linha reta com o pescoço erguido",
+      "cerca de 24,0 m ao longo da coluna, 21,3 m em linha reta com o pescoço erguido",
       "cerca de 22 a 25 m, reconstruído",
       "mais ou menos 30 a 45 t, reconstruído",
       "um esqueleto parcial, pescoço e cabeça tomados de outros"

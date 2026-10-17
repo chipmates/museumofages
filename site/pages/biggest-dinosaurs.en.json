@@ -23,8 +23,8 @@
    "person": "32.88% 84.25%",
    "person_from": 680,
    "marks": {
-    "argentinosaurus": "9.39% 71.81%",
-    "brachiosaurus": "51.22% 95.18%",
+    "argentinosaurus": "9.44% 71.84%",
+    "brachiosaurus": "51.15% 94.62%",
     "stegosaurus": "0.41% 11.84%",
     "ankylosaurus": "12.48% 25.51%",
     "person": "32.4% 33.37%",
@@ -216,7 +216,7 @@
     },
     {
      "span": "brachiosaurus",
-     "text": "Brachiosaurus, about 24.4 m along the backbone (21.5 m straight, neck raised)"
+     "text": "Brachiosaurus, about 24.0 m along the backbone (21.3 m straight, neck raised)"
     },
     {
      "span": "stegosaurus",
@@ -306,7 +306,7 @@
     {
      "cells": [
       "Argentinosaurus, Argentinosaurus huinculensis",
-      "about 30.6 m (100 ft), 32.1 m (105 ft) along the backbone",
+      "about 30.6 m (100 ft), 32.0 m (105 ft) along the backbone",
       "about 30 to 35 m (98 to 115 ft), rebuilt, never measured",
       "roughly 65 to 80 t, a model",
       "one partial skeleton, the body borrowed from relatives"
@@ -315,7 +315,7 @@
     {
      "cells": [
       "Brachiosaurus, Brachiosaurus altithorax",
-      "about 24.4 m (80 ft) along the backbone, 21.5 m (71 ft) straight with the neck raised",
+      "about 24.0 m (79 ft) along the backbone, 21.3 m (70 ft) straight with the neck raised",
       "about 22 to 25 m (72 to 82 ft), rebuilt",
       "roughly 30 to 45 t, rebuilt",
       "one partial skeleton, neck and head borrowed"
