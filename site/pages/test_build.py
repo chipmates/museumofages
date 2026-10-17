@@ -3013,6 +3013,27 @@ class Case(unittest.TestCase):
                              [(nb(b["h"]), nb(b["answer"])) for b in data["blocks"] if b["type"] == "question"])
             self.assertNotIn(nb(data["top"]["h1"]), [nb(q["name"]) for q in faqs[0]["mainEntity"]])
 
+    def test_a_sale_made_privately_is_no_private_holder(self):
+        page = next((p for p in self.pages if any(b["type"] == "ledger" for b in self.data("en", p)["blocks"])), None)
+        if not page:
+            self.skipTest("no page holds a short table of words")
+        cases = [("en", "The work of a private owner.", True), ("de", "Privat, ohne Auktion.", True),
+                 ("en", "Sold privately through a dealer.", False), ("de", "Privat über Sotheby's verkauft.", False)]
+        for lang, words, stops in cases:
+            with self.subTest(words=words):
+                data = self.data(lang, page)
+                block = next(b for b in data["blocks"] if b["type"] == "ledger")
+                keep = block["note"]
+                block["note"] = f"{keep} {words}"
+                self.save(lang, data, page)
+                if stops:
+                    self.fails(r"never Private")
+                else:
+                    out, written = self.build()
+                    shutil.rmtree(out)
+                block["note"] = keep
+                self.save(lang, data, page)
+
     # ---- a page about one wall: its drawing, its doors to the stop, its links ----
 
     def drawing_facts(self):
