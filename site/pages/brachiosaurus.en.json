@@ -96,7 +96,7 @@
   "title": "Brachiosaurus size: about 22 to 25 m long | Museum of Ages",
   "description": "Brachiosaurus was about 22 to 25 m long and roughly 30 to 45 t, rebuilt from one partial skeleton. The famous skeleton in Berlin is Giraffatitan.",
   "og_title": "Brachiosaurus size: about 22 to 25 m long",
-  "og_image_alt": "A Brachiosaurus from the side, its long neck raised in a gentle curve, the front legs longer than the hind legs, the tail off the ground, beside a grey person who could walk under its belly, a short bar marking the head's top."
+  "og_image_alt": "Our Brachiosaurus from the side, built at the Chicago skeleton's size, 24.0 m (79 ft) along the backbone, its long neck raised in a gentle curve to a head top 11.5 m (38 ft) up, the neck angle our choice. The front legs are longer than the hind legs, the tail is off the ground, and a grey person 1.70 m tall could walk under its belly."
  },
  "labels": {
   "crumbs": "You are here",
@@ -112,13 +112,13 @@
  },
  "top": {
   "h1": "How big was Brachiosaurus?",
-  "answer": "Brachiosaurus was about 22 to 25 m (72 to 82 ft) long and roughly 30 to 45 tonnes, both rebuilt from one partial skeleton. That skeleton has no neck, so its height was never measured: it depends on how the animal held its neck. Our model is built at the size of that one skeleton, kept in Chicago, from an animal probably still growing. With the neck raised as we chose it, the head stands about seven people up and the shoulders about four.",
+  "answer": "Brachiosaurus was about 22 to 25 m (72 to 82 ft) long and roughly 30 to 45 tonnes, both rebuilt from one partial skeleton. The height of Brachiosaurus was never measured, since that skeleton has no neck: rebuilt, its head would stand about 7 m (23 ft) up with the neck level, over 14 m (46 ft) with it straight up. Our model is built at the size of that one skeleton, kept in Chicago, from an animal probably still growing. With the neck raised as we chose it, the head stands about seven people up and the shoulders about four.",
   "answer_more": "Berlin's famous skeleton, its skull about 13 m (43 ft) up, is its African relative Giraffatitan in a show pose. Most pictures of Brachiosaurus show that relative too.",
   "scale": {
    "pic": "side",
    "tag": "tag_made",
    "what": "Our Brachiosaurus beside a person 1.70 m tall, to one scale, at the size of the one skeleton the name rests on, dug up in Colorado in 1900. Neck, head, lower legs and most of the tail follow Giraffatitan and other finds. The head stands 11.5 m (38 ft) up only by the neck angle we chose: that height is ours, not a finding.",
-   "alt": "A Brachiosaurus from the side, its long neck raised in a gentle curve, the front legs longer than the hind legs, the tail off the ground, beside a grey person who could walk under its belly, a short bar marking the head's top.",
+   "alt": "Our Brachiosaurus from the side, built at the Chicago skeleton's size, 24.0 m (79 ft) along the backbone, its long neck raised in a gentle curve to a head top 11.5 m (38 ft) up, the neck angle our choice. The front legs are longer than the hind legs, the tail is off the ground, and a grey person 1.70 m tall could walk under its belly.",
    "note": "Our own reconstruction, built in code from published measurements and rendered in our own engine. Not photographs.",
    "marks": [
     {
@@ -384,6 +384,10 @@
    "h": "Numbers you may have read",
    "intro": "For each number: where it came from, and what it means.",
    "rows": [
+    {
+     "term": "18 to 22 m (59 to 72 ft)",
+     "text": "A range many sites give. Such lengths mostly copy the proportions of Giraffatitan, its African relative, and several of them are older than a study of 2009. That study found the American animal's trunk about 23 percent longer than Giraffatitan's and its tail 20 to 25 percent longer. With those proportions, the length comes to about 22 to 25 m."
+    },
     {
      "term": "80 tonnes",
      "text": "A figure of 1962 from a small model dipped in water, and the model showed the Berlin species, not this one. Later work set it aside as an outlier."

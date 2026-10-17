@@ -101,7 +101,7 @@
   "title": "Brachiosaurus-Größe: etwa 22 bis 25 m lang | Museum of Ages",
   "description": "Der Brachiosaurus war etwa 22 bis 25 m lang und grob 30 bis 45 t schwer, nach einem Teilskelett rekonstruiert. Das Berliner Skelett ist ein Giraffatitan.",
   "og_title": "Brachiosaurus-Größe: etwa 22 bis 25 m lang",
-  "og_image_alt": "Ein Brachiosaurus von der Seite, den langen Hals in sanftem Bogen erhoben, die Vorderbeine länger als die Hinterbeine, der Schwanz frei über dem Boden, daneben ein grauer Mensch, der unter seinem Bauch hindurchgehen könnte. Ein kurzer Strich markiert die Kopfhöhe."
+  "og_image_alt": "Unser Brachiosaurus von der Seite, in der Größe des Skeletts aus Chicago, 24,0 m entlang der Wirbelsäule, den langen Hals in sanftem Bogen erhoben, die Kopfhöhe 11,5 m, der Halswinkel unsere Wahl. Die Vorderbeine sind länger als die Hinterbeine, der Schwanz ist frei über dem Boden, und ein grauer Mensch von 1,70 m könnte unter seinem Bauch hindurchgehen."
  },
  "labels": {
   "crumbs": "Du bist hier",
@@ -117,13 +117,13 @@
  },
  "top": {
   "h1": "Wie groß war ein Brachiosaurus?",
-  "answer": "Der Brachiosaurus war etwa 22 bis 25 m lang und grob 30 bis 45 t schwer, beides nach einem einzigen Teilskelett rekonstruiert. Diesem Skelett fehlt der Hals, seine Höhe wurde also nie gemessen: Sie hängt davon ab, wie das Tier den Hals hielt. Unser Modell ist in der Größe dieses einen Skeletts gebaut, das in Chicago liegt und von einem wohl noch wachsenden Tier stammt. Mit dem Hals so erhoben, wie wir ihn gewählt haben, ragt der Kopf so hoch wie etwa sieben Menschen übereinander, die Schultern so hoch wie etwa vier.",
+  "answer": "Der Brachiosaurus war etwa 22 bis 25 m lang und grob 30 bis 45 t schwer, beides nach einem einzigen Teilskelett rekonstruiert. Die Höhe des Brachiosaurus wurde nie gemessen, weil diesem Skelett der Hals fehlt: Rekonstruiert stünde sein Kopf mit waagerechtem Hals etwa 7 m hoch, mit senkrechtem über 14 m. Unser Modell ist in der Größe dieses einen Skeletts gebaut, das in Chicago liegt und von einem wohl noch wachsenden Tier stammt. Mit dem Hals so erhoben, wie wir ihn gewählt haben, ragt der Kopf so hoch wie etwa sieben Menschen übereinander, die Schultern so hoch wie etwa vier.",
   "answer_more": "Das berühmte Berliner Skelett, der Schädel in etwa 13 m Höhe, ist sein afrikanischer Verwandter Giraffatitan in einer Pose für die Ausstellung. Auch die meisten Bilder eines Brachiosaurus zeigen diesen Verwandten.",
   "scale": {
    "pic": "side",
    "tag": "tag_made",
    "what": "Unser Brachiosaurus neben einem Menschen von 1,70 m, im selben Maßstab, in der Größe des einen Skeletts, auf dem der Name beruht, 1900 in Colorado ausgegraben. Hals, Kopf, die unteren Beinteile und der größte Teil des Schwanzes folgen Giraffatitan und anderen Funden. Seine 11,5 m Kopfhöhe ergeben sich nur aus dem Halswinkel, den wir gewählt haben: Diese Höhe ist unsere Wahl, kein Befund.",
-   "alt": "Ein Brachiosaurus von der Seite, den langen Hals in sanftem Bogen erhoben, die Vorderbeine länger als die Hinterbeine, der Schwanz frei über dem Boden, daneben ein grauer Mensch, der unter seinem Bauch hindurchgehen könnte. Ein kurzer Strich markiert die Kopfhöhe.",
+   "alt": "Unser Brachiosaurus von der Seite, in der Größe des Skeletts aus Chicago, 24,0 m entlang der Wirbelsäule, den langen Hals in sanftem Bogen erhoben, die Kopfhöhe 11,5 m, der Halswinkel unsere Wahl. Die Vorderbeine sind länger als die Hinterbeine, der Schwanz ist frei über dem Boden, und ein grauer Mensch von 1,70 m könnte unter seinem Bauch hindurchgehen.",
    "note": "Unsere eigene Rekonstruktion, nach veröffentlichten Maßen in Code gebaut und in unserer Engine gerendert. Keine Fotos.",
    "marks": [
     {
@@ -389,6 +389,10 @@
    "h": "Zahlen, die du vielleicht gelesen hast",
    "intro": "Zu jeder Zahl: woher sie kommt und was sie bedeutet.",
    "rows": [
+    {
+     "term": "18 bis 22 m",
+     "text": "Eine Spanne, die viele Seiten nennen. Solche Längen übernehmen meist die Proportionen des afrikanischen Verwandten Giraffatitan, und mehrere sind älter als eine Studie von 2009. Diese Studie fand den Rumpf des amerikanischen Tiers etwa 23 Prozent länger als bei Giraffatitan und den Schwanz 20 bis 25 Prozent länger. Mit diesen Proportionen kommt man auf etwa 22 bis 25 m."
+    },
     {
      "term": "80 t",
      "text": "Eine Zahl von 1962 aus einem kleinen Modell, das man ins Wasser tauchte, und das Modell zeigte die Berliner Art, nicht diese. Spätere Arbeiten legten sie als Ausreißer beiseite."

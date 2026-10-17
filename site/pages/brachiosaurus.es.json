@@ -96,7 +96,7 @@
   "title": "Brachiosaurus: tamaño de unos 22 a 25 m | Museum of Ages",
   "description": "¿Cuánto medía el Brachiosaurus? Unos 22 a 25 m y unas 30 a 45 t, reconstruido a partir de un esqueleto parcial. El esqueleto de Berlín es un Giraffatitan.",
   "og_title": "Brachiosaurus: tamaño de unos 22 a 25 m de largo",
-  "og_image_alt": "Un Brachiosaurus de lado, con el cuello largo levantado en una curva suave, las patas delanteras más largas que las traseras y la cola sin tocar el suelo, junto a una persona gris que podría pasar por debajo de su vientre. Una barra corta marca lo alto de la cabeza."
+  "og_image_alt": "Nuestro Brachiosaurus de lado, al tamaño del esqueleto de Chicago, 24,0 m a lo largo de la columna, con el cuello largo levantado en una curva suave y lo alto de la cabeza a 11,5 m, el ángulo del cuello elección nuestra. Las patas delanteras son más largas que las traseras, la cola no toca el suelo, y una persona gris de 1,70 m podría pasar por debajo de su vientre."
  },
  "labels": {
   "crumbs": "Estás aquí",
@@ -112,13 +112,13 @@
  },
  "top": {
   "h1": "¿Cuánto medía el Brachiosaurus?",
-  "answer": "El Brachiosaurus, o braquiosaurio, medía unos 22 a 25 m de largo y pesaba más o menos de 30 a 45 toneladas, dos cifras reconstruidas a partir de un solo esqueleto parcial. A ese esqueleto le falta el cuello, así que su altura nunca se midió: depende de cómo llevaba el animal el cuello. Nuestro modelo está hecho al tamaño de ese único esqueleto, que se guarda en Chicago y que viene de un animal que probablemente todavía crecía. Con el cuello levantado como lo elegimos, la cabeza queda a la altura de unas siete personas, y los hombros, de unas cuatro.",
+  "answer": "El Brachiosaurus, o braquiosaurio, medía unos 22 a 25 m de largo y pesaba más o menos de 30 a 45 toneladas, dos cifras reconstruidas a partir de un solo esqueleto parcial. La altura del Brachiosaurus nunca se midió, porque a ese esqueleto le falta el cuello: reconstruido, tendría la cabeza a unos 7 m con el cuello horizontal, y a más de 14 m con el cuello vertical. Nuestro modelo está hecho al tamaño de ese único esqueleto, que se guarda en Chicago y que viene de un animal que probablemente todavía crecía. Con el cuello levantado como lo elegimos, la cabeza queda a la altura de unas siete personas, y los hombros, de unas cuatro.",
   "answer_more": "El famoso esqueleto de Berlín, con el cráneo a unos 13 m de altura, es su pariente africano Giraffatitan, en una postura pensada para la exposición. La mayoría de las imágenes de Brachiosaurus también muestran a ese pariente.",
   "scale": {
    "pic": "side",
    "tag": "tag_made",
    "what": "Nuestro Brachiosaurus junto a una persona de 1,70 m, a la misma escala, al tamaño del único esqueleto en el que se basa el nombre, desenterrado en Colorado en 1900. El cuello, la cabeza, la parte de abajo de las patas y la mayor parte de la cola siguen a Giraffatitan y a otros hallazgos. La cabeza está a 11,5 m de altura solo por el ángulo del cuello que elegimos: esa altura es nuestra, no un resultado.",
-   "alt": "Un Brachiosaurus de lado, con el cuello largo levantado en una curva suave, las patas delanteras más largas que las traseras y la cola sin tocar el suelo, junto a una persona gris que podría pasar por debajo de su vientre. Una barra corta marca lo alto de la cabeza.",
+   "alt": "Nuestro Brachiosaurus de lado, al tamaño del esqueleto de Chicago, 24,0 m a lo largo de la columna, con el cuello largo levantado en una curva suave y lo alto de la cabeza a 11,5 m, el ángulo del cuello elección nuestra. Las patas delanteras son más largas que las traseras, la cola no toca el suelo, y una persona gris de 1,70 m podría pasar por debajo de su vientre.",
    "note": "Nuestra propia reconstrucción, construida en código a partir de medidas publicadas y renderizada con nuestro propio motor gráfico. No son fotografías.",
    "marks": [
     {
@@ -384,6 +384,10 @@
    "h": "Cifras que quizá hayas leído",
    "intro": "Para cada cifra: de dónde viene y qué significa.",
    "rows": [
+    {
+     "term": "De 18 a 22 m",
+     "text": "Un rango que dan muchas páginas. Esas longitudes suelen copiar las proporciones de Giraffatitan, su pariente africano, y varias son anteriores a un estudio de 2009. Ese estudio encontró el tronco del animal americano un 23 por ciento más largo que el de Giraffatitan, y la cola, de un 20 a un 25 por ciento más larga. Con esas proporciones, la longitud da unos 22 a 25 m."
+    },
     {
      "term": "80 toneladas",
      "text": "Una cifra de 1962, de un modelo pequeño sumergido en agua, y el modelo mostraba la especie de Berlín, no esta. Trabajos posteriores la dejaron de lado como un valor atípico."
