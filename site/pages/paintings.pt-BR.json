@@ -248,8 +248,8 @@
   "class_field": "Não está na sala dos quadros"
  },
  "top": {
-  "h1": "As pinturas de Leonardo da Vinci",
-  "answer": "Ninguém concorda sobre um número. Conforme quem faz a lista, cerca de 15 a 20 pinturas que chegaram até nós são obra do próprio Leonardo da Vinci. O Hermitage fala em pouco mais de uma dúzia. O especialista em Leonardo Martin Kemp contou cerca de 16 em 2025, e mais quatro ou cinco que Leonardo pintou junto com outros. A casa de leilões que vendeu o Salvator Mundi falou em menos de 20.",
+  "h1": "As obras de Leonardo da Vinci",
+  "answer": "Não há consenso sobre o número. Conforme quem faz a lista, cerca de 15 a 20 pinturas que chegaram até nós são obra do próprio Leonardo da Vinci. O Hermitage fala em pouco mais de uma dúzia. O especialista em Leonardo Martin Kemp contou cerca de 16 em 2025, e mais quatro ou cinco que Leonardo pintou com outros. A casa de leilões que vendeu o Salvator Mundi falou em menos de 20.",
   "answer_more": [
    "Na nossa ala de Leonardo estão expostas 24 obras, cada uma com uma palavra que diz quão certa é a atribuição: 14 documentadas, 4 controversas, 4 com ressalva, 1 do ateliê dele e 1 cópia, e ",
    {
@@ -324,7 +324,7 @@
        "title": "O Batismo de Cristo",
        "when": "Cerca de 1470 a 1475",
        "where": "Gallerie degli Uffizi, Florença",
-       "who": "Documentado, mas atenção: esta é a pintura de Verrocchio. A Galeria Uffizi cita Verrocchio primeiro e Leonardo em segundo lugar. Vasari registrou a parte do jovem aluno, o anjo da esquerda. Estudos atuais dão a ele mais: o rio ao fundo, o brilho da luz e o próprio Cristo.",
+       "who": "Documentado, mas atenção: esta é a pintura de Verrocchio. A Galeria Uffizi cita Verrocchio primeiro e Leonardo em segundo lugar. Vasari registrou a parte do jovem aluno, o anjo da esquerda. Estudos atuais atribuem a ele mais: o rio ao fundo, o brilho da luz e o próprio Cristo.",
        "shows": "João derrama água sobre a cabeça de Cristo no rio Jordão, e dois anjos se ajoelham à esquerda. O anjo da esquerda, visto de costas e virando-se para olhar por cima do ombro, é de Leonardo.",
        "worth_knowing": "Vasari escreveu que o aluno pintou o anjo tão bem que perturbou o mestre, e um terceiro pintor, mais velho, provavelmente também trabalhou no painel: as mãos de Deus e a pomba no alto são de uma mão mais fraca.",
        "door": "o Batismo de Cristo",
@@ -346,8 +346,8 @@
        "title": "A Anunciação",
        "when": "Cerca de 1472",
        "where": "Gallerie degli Uffizi, Florença",
-       "who": "Documentado. Uma obra do início, pintada quando ele ainda estava no ateliê de Verrocchio. Ninguém sabe quem a encomendou nem onde ela ficou primeiro. A Galeria Uffizi a recebeu em 1867 de uma igreja logo do lado de fora de uma das portas da cidade de Florença.",
-       "shows": "Gabriel se ajoelha na grama de um jardim murado e oferece um lírio a Maria. Ela está sentada a uma estante de leitura diante de um palácio, com o livro aberto.",
+       "who": "Documentado. Uma obra de juventude, pintada quando ele ainda estava no ateliê de Verrocchio. Ninguém sabe quem a encomendou nem onde ela ficou primeiro. A Galeria Uffizi a recebeu em 1867 de uma igreja logo fora de uma das portas da cidade de Florença.",
+       "shows": "Gabriel se ajoelha na grama de um jardim murado e oferece um lírio a Maria. Ela está sentada diante de uma estante de leitura, em frente a um palácio, com o livro aberto.",
        "worth_knowing": "As asas do anjo seguem as de uma ave de rapina de verdade, e o braço direito de Maria parece comprido demais: a Galeria Uffizi acredita que Leonardo o desenhou para quem olhasse do lado direito, onde um altar lateral nos colocaria.",
        "door": "a Anunciação",
        "shape": "wide",
@@ -427,9 +427,9 @@
        "title": "Anunciação, predela",
        "when": "Cerca de 1475 a 1478",
        "where": "Musée du Louvre, Paris",
-       "who": "Controverso, e aqui é o próprio museu que fica do outro lado. O Louvre atribui o painel a Lorenzo di Credi, que se formou ao lado de Leonardo com Verrocchio, deixa Leonardo como atribuição antiga e o data de cerca de 1475 a 1500. Hoje os especialistas se dividem em três posições: Lorenzo, Leonardo ou os dois juntos.",
+       "who": "Controverso, e aqui é o próprio museu que toma o outro partido. O Louvre atribui o painel a Lorenzo di Credi, que se formou ao lado de Leonardo com Verrocchio, deixa Leonardo como atribuição antiga e o data de cerca de 1475 a 1500. Hoje os especialistas se dividem em três posições: Lorenzo, Leonardo ou os dois juntos.",
        "shows": "Um painel pequeno e largo: o anjo se ajoelha diante de Maria num jardim. Ele vem da predela, a faixa de pequenas cenas embaixo de um retábulo, do retábulo que o ateliê de Verrocchio pintou para a catedral de Pistoia, onde o painel principal continua até hoje.",
-       "worth_knowing": "O Louvre acha os olhos grandes, os rostos mais simples e as dobras mais achatadas mais próximos de Lorenzo. O museu comprou o painel em 1863 com a coleção do marquês Campana, em Roma, vendida depois da falência dele.",
+       "worth_knowing": "Para o Louvre, os olhos grandes, os rostos mais simples e as dobras mais achatadas lembram Lorenzo. O museu comprou o painel em 1863 com a coleção do marquês Campana, em Roma, vendida depois da falência dele.",
        "door": "a predela",
        "shape": "wide",
        "pic": "annunciation-predella",
@@ -550,8 +550,8 @@
        "when": "Cerca de 1485",
        "where": "Veneranda Biblioteca Ambrosiana, Milão",
        "who": "Controverso, embora sobretudo por vozes mais antigas. A Ambrosiana atribui o quadro a Leonardo sem nenhuma dúvida, e a maioria dos especialistas concorda. A dúvida começou em 1890, quando se propôs o nome de Ambrogio de Predis. Um estudo de 1987 sugeriu que Leonardo pintou a cabeça e o busto, e que outra pessoa, possivelmente Boltraffio, acrescentou depois a mão com a folha.",
-       "shows": "Um rapaz visto até os ombros, um pouco virado para longe de nós e olhando para a direita dele, com uma partitura dobrada na mão. Quem ele é, ninguém sabe: passou pelo duque de Milão até que uma limpeza em 1905 revelou a mão e a folha, e entre os nomes propostos desde então estão o mestre de capela da catedral, Franchino Gaffurio, e o amigo músico de Leonardo, Atalante Migliorotti.",
-       "worth_knowing": "As duas pupilas dele não têm o mesmo tamanho, a esquerda um pouco menor, como se ele tivesse sido visto bem quando o olho se abre mais com a luz que vai sumindo, algo que Leonardo descreveu nas notas dele.",
+       "shows": "Um rapaz visto até os ombros, um pouco virado para longe de nós e olhando para a direita dele, com uma partitura dobrada na mão. Quem ele é, ninguém sabe: foi tido como o duque de Milão até que uma limpeza em 1905 revelou a mão e a folha, e entre os nomes propostos desde então estão o mestre de capela da catedral, Franchino Gaffurio, e o amigo músico de Leonardo, Atalante Migliorotti.",
+       "worth_knowing": "As duas pupilas dele não têm o mesmo tamanho, a esquerda um pouco menor, como se ele fosse flagrado no instante em que o olho se abre mais com a luz que vai sumindo, algo que Leonardo descreveu nas notas dele.",
        "door": "o Músico",
        "shape": "tall",
        "pic": "portrait-of-a-musician",
@@ -571,9 +571,9 @@
        "title": "Dama com Arminho",
        "when": "Cerca de 1489 a 1491",
        "where": "Muzeum Narodowe w Krakowie, Muzeum Książąt Czartoryskich, Cracóvia",
-       "who": "Documentado. Encomendado por Ludovico Sforza, segundo o museu, quando a retratada tinha cerca de 16 anos, e a única pintura de Leonardo na Polônia.",
-       "shows": "Cecilia Gallerani, uma jovem da corte de Milão e amante do duque, virada a três quartos e olhando para além de nós, com um arminho branco nos braços. A proposta de que é ela surgiu por volta de 1900 e hoje é aceita, porque um poeta da corte escreveu um poema sobre o retrato que Leonardo fez dela. O arminho representa o duque, chamado de Arminho Branco por causa de uma ordem que recebeu em 1488, por isso o museu lê a pintura como um retrato duplo.",
-       "worth_knowing": "Num canto de cima, alguém escreveu, por volta de 1800, que o quadro mostra La belle ferronnière, o nome do retrato seguinte nesta página, então por um tempo os dois tiveram o mesmo nome.",
+       "who": "Documentado. Encomendada por Ludovico Sforza, segundo o museu, quando a retratada tinha cerca de 16 anos, e é a única pintura de Leonardo na Polônia.",
+       "shows": "Cecilia Gallerani, uma jovem da corte de Milão e amante do duque, virada a três quartos e olhando para além de nós, com um arminho branco nos braços. A proposta de que é ela surgiu por volta de 1900 e hoje é aceita, porque um poeta da corte escreveu um poema sobre o retrato que Leonardo fez dela. O arminho representa o duque, chamado de Arminho Branco por causa de uma ordem que recebeu em 1488, por isso o museu vê a pintura como um retrato duplo.",
+       "worth_knowing": "Num canto de cima, alguém escreveu, por volta de 1800, que o quadro mostra La Belle Ferronnière, o nome do retrato seguinte nesta página, então por um tempo os dois tiveram o mesmo nome.",
        "door": "a Dama com Arminho",
        "shape": "tall",
        "pic": "lady-with-an-ermine",
@@ -590,16 +590,16 @@
       {
        "id": "la-belle-ferronniere",
        "work": "la-belle-ferronniere",
-       "title": "La belle ferronnière",
+       "title": "La Belle Ferronnière",
        "when": "Cerca de 1490 a 1497",
        "where": "Musée du Louvre, Paris. O Louvre a listava como fora de exposição quando verificamos.",
        "who": "Documentado. Quem ela é continua em aberto. A candidata mais antiga é Lucrezia Crivelli, amante do duque a partir de cerca de 1495, citada num poema em latim que foi copiado no Codex Atlanticus de Leonardo. Outros propõem Beatriz d’Este, a esposa do duque, ou Isabel de Aragão.",
        "shows": "Uma jovem diante de um parapeito de pedra, com o corpo virado para um lado e a cabeça para o outro, num vestido vermelho à moda de Milão com mangas amarradas por fitas, e um cordão fino na testa com uma pedra vermelha. O olhar dela passa logo ao lado de nós.",
        "worth_knowing": "O nome é um engano, e o próprio título do Louvre diz isso: era o nome de outro retrato da coleção real francesa, uma gravura desta pintura o recebeu por erro, e em 1784 um inventário chegou a chamá-la de Ana Bolena.",
-       "door": "La belle ferronnière",
+       "door": "La Belle Ferronnière",
        "shape": "tall",
        "pic": "la-belle-ferronniere",
-       "alt": "La belle ferronnière: uma prancha impressa monocromática de 1901. Uma jovem vista de cabeça e ombros, com o rosto voltado para nós, uma faixa fina na testa, contra um fundo escuro, com um parapeito na borda de baixo. Uma reprodução.",
+       "alt": "La Belle Ferronnière: uma prancha impressa monocromática de 1901. Uma jovem vista de cabeça e ombros, com o rosto voltado para nós, uma faixa fina na testa, contra um fundo escuro, com um parapeito na borda de baixo. Uma reprodução.",
        "src": [
         "Fac-símile impresso monocromático de 1901, prancha 7. Ele registra o estado e os tons daquele ano, não a cor atual. Domínio público, via ",
         {
@@ -637,7 +637,7 @@
        "title": "Virgem dos Rochedos, versão de Londres",
        "when": "Cerca de 1491 a 1508",
        "where": "National Gallery, Londres",
-       "who": "Atribuição com ressalva. A National Gallery a atribui só a Leonardo. O curador do Louvre vê trabalho de alunos em partes dela, o menino João próximo de Boltraffio, e a lê como pintada em grande parte pelo ateliê sob o olhar de Leonardo, com a mão dele em alguns pontos.",
+       "who": "Atribuição com ressalva. A National Gallery a atribui só a Leonardo. O curador do Louvre vê trabalho de alunos em partes dela, o menino João próximo de Boltraffio, e a considera pintada em grande parte pelo ateliê sob o olhar de Leonardo, com a mão dele em alguns pontos.",
        "shows": "A mesma cena da pintura de Paris, com diferenças: o anjo não aponta mais, as figuras usam auréolas douradas finas e o menino João segura uma cruz de junco. Ela foi pintada para a capela de Milão citada no contrato de 1483, e a galeria encontrou três fases de trabalho: começada no início da década de 1490, a cabeça de Cristo virada de perfil alguns anos depois, e o céu azul acrescentado depois que Leonardo foi chamado de volta, em 1506.",
        "worth_knowing": "As plantas da gruta não são espécies reais: a galeria diz que são misturas de várias plantas diferentes.",
        "door": "a Virgem dos Rochedos de Londres",
@@ -670,13 +670,13 @@
        "work": "yarnwinder-buccleuch",
        "title": "Madona do Fuso, versão Buccleuch",
        "when": "Cerca de 1501",
-       "where": "Coleção Buccleuch, em empréstimo às National Galleries Scotland",
-       "who": "Atribuição com ressalva. Existem duas versões, lado a lado na ala. Sob a tinta de cada uma, os estudos encontraram as mesmas mudanças, feitas enquanto as duas avançavam no ateliê. Martin Kemp lê isso como Leonardo usando uma encomenda para fazer uma segunda pintura para vender. Outros perguntam quanto de cada uma é dele.",
-       "shows": "Maria está sentada entre rochas e estende a mão enquanto o menino, torcido sobre os joelhos dela, agarra um fuso, a ferramenta em forma de cruz para enrolar fio, aqui um sinal da cruz que virá. Um frade escreveu a Isabel d’Este em abril de 1501 que Leonardo a estava pintando para Florimond Robertet, secretário do rei da França. Em agosto de 2003, dois homens que se passavam por turistas a tiraram da parede no castelo de Drumlanrig, na Escócia, e a polícia a encontrou quatro anos depois num escritório de advocacia em Glasgow.",
+       "where": "Coleção Buccleuch, em empréstimo às National Galleries of Scotland",
+       "who": "Atribuição com ressalva. Existem duas versões, lado a lado na ala. Sob a tinta de cada uma, os estudos encontraram as mesmas mudanças, feitas enquanto as duas avançavam no ateliê. Martin Kemp vê nisso Leonardo aproveitando uma encomenda para fazer uma segunda pintura para vender. Outros perguntam quanto de cada uma é dele.",
+       "shows": "Maria está sentada entre rochas e estende a mão enquanto o menino, virando-se sobre os joelhos dela, agarra uma dobadoura, a ferramenta em forma de cruz para enrolar fio, aqui um sinal da cruz que virá. Um frade escreveu a Isabel d’Este em abril de 1501 que Leonardo a estava pintando para Florimond Robertet, secretário do rei da França. Em agosto de 2003, dois homens que se passavam por turistas a tiraram da parede no castelo de Drumlanrig, na Escócia, e a polícia a encontrou quatro anos depois num escritório de advocacia em Glasgow.",
        "door": "a Madona do Fuso de Buccleuch",
        "shape": "tall",
        "pic": "yarnwinder-buccleuch",
-       "alt": "Madona do Fuso, versão Buccleuch: Maria, de vermelho e azul, sentada entre rochas, com o menino no colo erguendo um fuso em forma de cruz, e colinas e água atrás. Uma reprodução.",
+       "alt": "Madona do Fuso, versão Buccleuch: Maria, de vermelho e azul, sentada entre rochas, com o menino no colo erguendo uma dobadoura em forma de cruz, e colinas e água atrás. Uma reprodução.",
        "src": [
         "Obra em domínio público. Reprodução do ",
         {
@@ -692,13 +692,13 @@
        "title": "Madona do Fuso, versão Lansdowne",
        "when": "Cerca de 1501",
        "where": "Kenneth C. Griffin Collection, em empréstimo ao Metropolitan Museum of Art, Nova York",
-       "who": "Atribuição com ressalva. A etiqueta do Met diz “Leonardo da Vinci e ateliê”. As duas versões cresceram lado a lado no ateliê. Segundo Martin Kemp, uma foi para um funcionário francês e a outra, ele acha, para o próprio rei.",
-       "shows": "A mesma cena do painel Buccleuch: o menino com o fuso, Maria estendendo a mão para ele, rochas atrás. Ela está exposta nas galerias de pintura europeia do Met desde a primavera de 2026, num empréstimo de longo prazo e sem comunicado à imprensa.",
+       "who": "Atribuição com ressalva. A etiqueta do Met diz “Leonardo da Vinci e ateliê”. As duas versões avançaram juntas no ateliê. Segundo Martin Kemp, uma foi para um funcionário francês e a outra, ele acha, para o próprio rei.",
+       "shows": "A mesma cena do painel Buccleuch: o menino com a dobadoura, Maria estendendo a mão para ele, rochas atrás. Ela está exposta nas galerias de pintura europeia do Met desde a primavera de 2026, num empréstimo de longo prazo e sem comunicado à imprensa.",
        "worth_knowing": "Em maio de 2025 Martin Kemp escreveu que não era mais possível localizar a pintura, e um ano depois ela estava numa parede do Met.",
        "door": "a Madona do Fuso de Lansdowne",
        "shape": "tall",
        "pic": "yarnwinder-lansdowne",
-       "alt": "Madona do Fuso, versão Lansdowne: fotografada na moldura dourada, numa exposição. Maria de azul, sentada, com o menino no colo olhando para um fuso em forma de cruz, e montanhas atrás. Uma reprodução.",
+       "alt": "Madona do Fuso, versão Lansdowne: fotografada na moldura dourada, numa exposição. Maria de azul, sentada, com o menino no colo olhando para uma dobadoura em forma de cruz, e montanhas atrás. Uma reprodução.",
        "src": [
         "Obra em domínio público. Reprodução do ",
         {
@@ -792,8 +792,8 @@
        "title": "A Virgem, o Menino, Sant’Ana e São João Batista",
        "when": "Cerca de 1506 a 1508",
        "where": "National Gallery, Londres",
-       "who": "Documentado. Não é uma pintura, mas um desenho, a carvão e giz branco sobre papel, e o único desenho grande da mão dele que chegou até nós. A data é discutida: a galeria diz cerca de 1506 a 1508, o curador do Louvre, cerca de 1500, como a primeira ideia dele para a Santa Ana.",
-       "shows": "Maria está sentada no colo da mãe, Ana, e segura o menino, que se estica em direção ao pequeno João, enquanto Ana aponta para cima. É um desenho em tamanho real que nunca foi usado para pintar, porque a folha nunca foi furada para transferir o desenho, por isso a galeria acha que ele foi feito para mostrar a um cliente.",
+       "who": "Documentado. Conhecido como o cartão de Burlington House, não é uma pintura, mas um desenho, a carvão e giz branco sobre papel, e o único desenho grande da mão dele que chegou até nós. A data é discutida: a galeria diz cerca de 1506 a 1508, o curador do Louvre, cerca de 1500, como a primeira ideia dele para a Santa Ana.",
+       "shows": "Maria está sentada no colo da mãe, Ana, e segura o menino, que se estica em direção ao pequeno João, enquanto Ana aponta para cima. É um desenho em tamanho real que nunca foi usado para pintar, porque a folha nunca foi furada para transferir o desenho, por isso a galeria acha que ele foi feito para mostrar a um comitente.",
        "worth_knowing": "Na época dele, o papel não era fabricado em folhas desse tamanho, então ele colou muitas, e as emendas aparecem de perto.",
        "door": "o cartão de Burlington House",
        "shape": "tall",
@@ -815,7 +815,7 @@
        "when": "Cerca de 1506 a 1508",
        "where": "Galleria Nazionale di Parma, Complesso della Pilotta, Parma",
        "who": "Atribuição com ressalva. A galeria a atribui a Leonardo, com a opinião italiana quase unânime, e a data de cerca de 1492 a 1501. A ala segue uma proposta de cerca de 1508. A ressalva vem do que a obra é: um esboço monocromático num painel de madeira, nem desenho nem pintura terminada.",
-       "shows": "A cabeça de uma moça olhando para baixo, com o cabelo solto e despenteado. Scapigliata quer dizer “despenteada” em italiano. Não se sabe para que ela servia: um estudo para uma pintura de Leda, para o cartão que hoje está em Londres, para a Virgem dos Rochedos de Londres, ou algo feito por si mesmo.",
+       "shows": "A cabeça de uma moça olhando para baixo, com o cabelo solto e despenteado. Scapigliata quer dizer “despenteada” em italiano. Não se sabe para que ela servia: um estudo para uma pintura de Leda, para o cartão que hoje está em Londres, para a Virgem dos Rochedos de Londres, ou algo feito como obra autônoma.",
        "worth_knowing": "O próprio diretor da galeria duvidou dela em 1896 porque ela tinha vindo do ateliê de um pintor. A galeria a tinha comprado em 1839 dos herdeiros de um pintor, e o inventário que veio com ela a chamava simplesmente de cabeça de Madona em claro-escuro.",
        "door": "La Scapigliata",
        "shape": "tall",
@@ -864,7 +864,7 @@
        "when": "Cerca de 1499 a 1510",
        "where": "Coleção particular, local atual não confirmado",
        "who": "Controverso, mais do que qualquer outro. A favor de Leonardo: Martin Kemp e a National Gallery de Londres, que o expôs como dele em 2011. Contra ou em dúvida: Carmen Bambach, que atribui a maior parte a Boltraffio, e Frank Zöllner, que vê uma pintura de ateliê, provavelmente com a mão de Leonardo, danificada demais e restaurada demais para um veredito firme.",
-       "shows": "Cristo como salvador do mundo, que é o que o título quer dizer, de frente para nós, com a mão direita erguida para abençoar e uma esfera de cristal transparente na esquerda, vestido de azul com faixas bordadas. Em 1958 foi vendido em leilão por 45 libras como obra de escola, e em novembro de 2017, na Christie’s de Nova York, por cerca de 450 milhões de dólares, o preço mais alto já pago em leilão por uma obra de arte. Desde então não foi mais mostrado em público, e um relatório de 2024 diz que ele pode estar guardado num depósito em Genebra.",
+       "shows": "Cristo como salvador do mundo, que é o que o título quer dizer, de frente para nós, com a mão direita erguida para abençoar e uma esfera de cristal transparente na esquerda, vestido de azul com faixas bordadas. Em 1958 foi vendido em leilão por 45 libras como obra de escola, e em novembro de 2017, na Christie’s de Nova York, por cerca de 450 milhões de dólares, o preço mais alto já pago em leilão por uma obra de arte. Desde então não foi mais mostrado em público, e uma reportagem de 2024 diz que ele pode estar guardado num depósito em Genebra.",
        "door": "o Salvator Mundi",
        "shape": "tall",
        "pic": "salvator-mundi",
@@ -922,7 +922,7 @@
        "where": "Museo del Cenacolo Vinciano, Santa Maria delle Grazie, Milão",
        "who": "Não está na sala dos quadros. Uma pintura mural, ainda na parede onde foi pintada, no refeitório de um convento dominicano, e a ala mostra uma reprodução dela numa parede do pátio, no tamanho do original.",
        "shows": "Cristo no meio e os apóstolos em volta dele numa mesa comprida, pintada para Ludovico Sforza, duque de Milão, em têmpera sobre reboco seco, e não como afresco.",
-       "worth_knowing": "Como a tinta ficou sobre a parede e não dentro dela, começou a descascar em cerca de vinte anos. O resto da história está na página própria dela, em inglês.",
+       "worth_knowing": "Como a tinta ficou sobre a parede e não dentro dela, começou a descascar em cerca de vinte anos. O resto da história está na página própria dela.",
        "door": "a Última Ceia",
        "shape": "wide",
        "pic": "supper",
@@ -947,7 +947,7 @@
    ],
    "links": [
     {
-     "text": "Todos os tamanhos, da cabeça menor à Última Ceia, estão na página dos tamanhos, desenhados na mesma escala, em inglês.",
+     "text": "Todos os tamanhos, da cabeça menor à Última Ceia, estão na página dos tamanhos, em inglês, desenhados na mesma escala.",
      "page": "sizes"
     },
     {
@@ -965,7 +965,7 @@
    "rows": [
     {
      "term": "Paris, Musée du Louvre",
-     "text": "cinco pinturas dele, a Virgem dos Rochedos, La belle ferronnière, a Mona Lisa, o São João e a Santa Ana, e três obras ligadas a ele, a predela, o Baco e o desenho de Anghiari. La belle ferronnière estava listada como fora de exposição quando verificamos, e o desenho de Anghiari só é mostrado com hora marcada."
+     "text": "cinco pinturas dele, a Virgem dos Rochedos, La Belle Ferronnière, a Mona Lisa, o São João e a Santa Ana, e três obras ligadas a ele, a predela, o Baco e o desenho de Anghiari. La Belle Ferronnière estava listada como fora de exposição quando verificamos, e o desenho de Anghiari só é mostrado com hora marcada."
     },
     {
      "term": "Florença, Gallerie degli Uffizi",
@@ -1000,7 +1000,7 @@
      "text": "a Dama com Arminho."
     },
     {
-     "term": "Em empréstimo às National Galleries Scotland",
+     "term": "Em empréstimo às National Galleries of Scotland",
      "text": "a Madona do Fuso de Buccleuch."
     },
     {
@@ -1022,7 +1022,7 @@
    "id": "sources",
    "nav": "Fontes",
    "h": "Fontes",
-   "intro": "Os títulos, as datas, os acervos e as atribuições seguem as etiquetas da ala, conferidas em outubro de 2026 com as páginas e os registros dos próprios museus: a Galeria Uffizi, a National Gallery of Art de Washington, a Alte Pinakothek, o Hermitage, os Museus Vaticanos, o Louvre, a Ambrosiana, o Museu Nacional de Cracóvia, a National Gallery de Londres, a Pilotta de Parma e o Cenacolo Vinciano. Para a contagem e os debates: Martin Kemp no The Art Newspaper (maio de 2025), o verbete de catálogo de Frank Zöllner sobre o Salvator Mundi (2019), The Art Newspaper (2018, 2021 e 2024), NPR (2017), e Cultured e Artlyst (2026). Onde a opinião de um museu difere da etiqueta da ala, o verbete diz isso.",
+   "intro": "Os títulos, as datas, os acervos e as atribuições seguem as etiquetas da ala, conferidas em outubro de 2026 com as páginas e os registros dos próprios museus: a Galeria Uffizi, a National Gallery of Art de Washington, a Alte Pinakothek, o Hermitage, os Museus Vaticanos, o Louvre, a Ambrosiana, o Museu Nacional de Cracóvia, a National Gallery de Londres, a Pilotta de Parma e o Cenacolo Vinciano. Para a contagem e os debates: Martin Kemp no jornal The Art Newspaper (maio de 2025), o verbete de catálogo de Frank Zöllner sobre o Salvator Mundi (2019), The Art Newspaper (2018, 2021 e 2024), NPR (2017), e Cultured e Artlyst (2026). Onde a opinião de um museu difere da etiqueta da ala, o verbete diz isso.",
    "notes": [],
    "contact": "Se você encontrar um erro numa data, numa atribuição ou numa frase desta página, escreva para nós e faremos a correção.",
    "contact_link": "Ir para as informações legais",
