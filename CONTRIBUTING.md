@@ -81,7 +81,7 @@ Colours live in `site/_src/css/tokens.css`. The build stops on a colour written 
 
 Every displayed sentence exists in both languages.
 
-- On the site, the words live in `site/_src/words.en.json` and `site/_src/words.de.json` under identical keys, and a wing's own words in `site/_src/wings/<wing>.en.json` and `<wing>.de.json`. A change lands in both files under the same key. The build stops on a key that exists in one language only, on a dash or a semicolon in displayed text, and when one of the locked lines changes, such as the tagline or the trust line.
+- On the site, the words live in `site/_src/words.en.json` and `site/_src/words.de.json` under identical keys, and a wing's own words in `site/_src/wings/<wing>.en.json` and `<wing>.de.json`. A change lands in both files under the same key. The build stops on a key that exists in one language only, on a dash or a semicolon in displayed text, and when one of the locked lines changes, such as the tagline, the note under it or the trust line.
 - In the wing, each text carries its English and its German side by side, as `en` and `de`.
 
 German runs about a third longer than English. Check a change to what you see in German too.

@@ -1,5 +1,5 @@
 {
- "_note": "THE WORDS OF THE WHOLE SITE, English. Every displayed sentence that belongs to no single wing lives here and in its twin, with identical keys. A wing's own words live in wings/<slug>.<lang>.json, the privacy page's in privacy.<lang>.json. Locked (build.py, LOCKED): the two tagline sentences, the trust line, the mission sentence inside footer.mission, page_what.m_one and page_what.s5_p1, the company's purpose inside page_what.s5_p1, page_what.s4_made, page_what.honesty and project.line. The four grades (page_what.s2_four_1 to 4) must stand word for word in sure.text. {name}, {place} and {day} are filled from the registry. No em dash, no en dash, no semicolon. Then run the build.",
+ "_note": "THE WORDS OF THE WHOLE SITE, English. Every displayed sentence that belongs to no single wing lives here and in its twin, with identical keys. A wing's own words live in wings/<slug>.<lang>.json, the privacy page's in privacy.<lang>.json. Locked (build.py, LOCKED): the tagline's line and the note under it, the trust line, the mission sentence inside footer.mission, page_what.m_one and page_what.s5_p1, the company's purpose inside page_what.s5_p1, page_what.s4_made, page_what.honesty and project.line. The four grades (page_what.s2_four_1 to 4) must stand word for word in sure.text. {name}, {place} and {day} are filled from the registry. No em dash, no en dash, no semicolon. Then run the build.",
  "a11y": {
   "crumb": "Vous êtes ici",
   "footer_nav": "À propos de ce site",
@@ -81,8 +81,8 @@
   "entry_note": "Entrée libre, sans compte.",
   "kind_inline": "un musée numérique",
   "name": "Museum of Ages",
-  "tagline_1": "Nous reconstruisons ce qui a été.",
-  "tagline_2": "Vous y entrez.",
+  "tagline_1": "Époques du passé reconstituées en 3D",
+  "tagline_2": "Nous indiquons ce qui est documenté et ce qui est supposé.",
   "what_link": "Ce qu’est ce musée"
  },
  "hint": {

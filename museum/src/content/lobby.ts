@@ -2,15 +2,20 @@ import type { Bilingual } from '../wings/content'
 
 /* THE MUSEUM'S NAME, ITS DESCRIPTOR AND ITS LINE. Decided words: the name is
    the same in both languages, the descriptor stands beside it wherever the
-   name first appears, and the line is two sentences that break between them. */
+   name first appears, and the line is a description with no full stop of its
+   own, with its note under it in a smaller size: two texts, never one. */
 const NAME = 'Museum of Ages'
 /** inside a running sentence the name keeps to one line (no-break spaces) */
 const NAME_SET = NAME.replaceAll(' ', '\u00a0')
-const LINE_FIRST: Bilingual = { en: 'We rebuild what was.', de: 'Wir bauen nach, was war.' }
-const LINE_SECOND: Bilingual = { en: 'You walk through it.', de: 'Du gehst hinein.' }
-const LINE: Bilingual = {
-  en: `${LINE_FIRST.en} ${LINE_SECOND.en}`,
-  de: `${LINE_FIRST.de} ${LINE_SECOND.de}`,
+const LINE: Bilingual = { en: 'The past rebuilt in 3D', de: 'Vergangene Zeiten in 3D nachgebaut' }
+const LINE_NOTE: Bilingual = {
+  en: 'We mark what is known and what is guessed.',
+  de: 'Wir kennzeichnen, was belegt ist und was wir vermuten.',
+}
+/** the line and its note in running text, where the line takes a full stop */
+const LINE_WITH_NOTE: Bilingual = {
+  en: `${LINE.en}. ${LINE_NOTE.en}`,
+  de: `${LINE.de}. ${LINE_NOTE.de}`,
 }
 /** the name with its descriptor inside a title or a sentence of its own */
 const NAME_IN_TITLE: Bilingual = {
@@ -27,8 +32,8 @@ const WING_IN_SEARCH: Bilingual = {
 export const LOBBY_TEXT = {
   name: { en: NAME, de: NAME },
   descriptor: { en: 'Digital museum', de: 'Digitales Museum' },
-  lineFirst: LINE_FIRST,
-  lineSecond: LINE_SECOND,
+  line: LINE,
+  lineNote: LINE_NOTE,
   pageTitle: {
     en: `${NAME}: a digital museum of the past, rebuilt in 3D`,
     de: `${NAME}: digitales Museum, Geschichte in 3D nachgebaut`,
@@ -36,10 +41,10 @@ export const LOBBY_TEXT = {
   /** what follows a wing's own name in the tab while that wing stands */
   titleInside: NAME_IN_TITLE,
   searchDescription: {
-    en: `${NAME_IN_TITLE.en}. ${LINE.en} ${WING_IN_SEARCH.en}`,
-    de: `${NAME_IN_TITLE.de}. ${LINE.de} ${WING_IN_SEARCH.de}`,
+    en: `${NAME_IN_TITLE.en}. ${LINE_WITH_NOTE.en} ${WING_IN_SEARCH.en}`,
+    de: `${NAME_IN_TITLE.de}. ${LINE_WITH_NOTE.de} ${WING_IN_SEARCH.de}`,
   },
-  tagline: LINE,
+  tagline: LINE_WITH_NOTE,
   shareLocale: { en: 'en_GB', de: 'de_DE' },
   descentTitle: { en: 'The museum', de: 'Das Museum' },
   descentMuseum: {
@@ -130,6 +135,12 @@ export const LOBBY_TEXT = {
     de: 'Ein Gang durch alle Räume, damit dein Rundgang ruhig läuft',
   },
 } satisfies Record<string, Bilingual>
+
+/** Where the line's note runs to two rows it breaks before its last "and",
+    never inside a clause; a language not named here sets it as one text. */
+export const NOTE_AND: Record<string, string> = {
+  en: ' and ', de: ' und ', fr: ' et ', it: ' e ', es: ' y ', 'pt-BR': ' e ', bg: ' и ',
+}
 
 /* THE MUSEUM'S OWN PAGES. They stand on the same site as the lobby, one path
    per language, so the legal notice and the privacy page are one press from

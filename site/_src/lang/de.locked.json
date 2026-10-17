@@ -1,6 +1,7 @@
 {
   "_note": "THE LOCKED LINES of this language, approved word for word. The build compares the words files with them and stops on any difference. A language without this file is built and checked, never listed. Change a line only with the owner's approval.",
-  "tagline": "Wir bauen nach, was war. Du gehst hinein.",
+  "tagline": "Vergangene Zeiten in 3D nachgebaut",
+  "tagline_note": "Wir kennzeichnen, was belegt ist und was wir vermuten.",
   "trust": "Gemeinnützig · Open Source · Keine Tracking-Cookies, kein Profiling",
   "trust_before": "Gemeinnützig · Keine Tracking-Cookies, kein Profiling",
   "descriptor": "ein digitales Museum",

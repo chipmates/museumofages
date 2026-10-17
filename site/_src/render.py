@@ -212,6 +212,16 @@ def frame_rules(d):
     return "".join(out)
 
 
+# The tagline's note is "this and that": where it runs to two rows it breaks before its last "and", never inside a
+# clause. A language not named here sets the note as one text.
+NOTE_AND = {"en": " and ", "de": " und ", "fr": " et ", "it": " e ", "es": " y ", "pt-BR": " e ", "bg": " и "}
+
+
+def note_halves(text, lang):
+    at = text.rfind(NOTE_AND[lang]) if lang in NOTE_AND else -1
+    return f"<span>{text[:at]}</span> <span>{text[at + 1:]}</span>" if at > 0 else text
+
+
 def first(c, kind, slug):
     """The first screen. In the page's order: the lettering on the wall, what hangs there, the words beside it."""
     w, reg, d = c.w, c.wings[slug], c.wd[slug]
@@ -224,7 +234,8 @@ def first(c, kind, slug):
             f'<p class="hero__kicker">{w["brand.descriptor"]}</p>'
         )
         text = (
-            f'<p class="hero__tagline"><span>{w["hero.tagline_1"]}</span> <span>{w["hero.tagline_2"]}</span></p>'
+            # the line, then its note in a smaller size: two texts, never one two-sentence tagline
+            f'<p class="hero__tagline">{w["hero.tagline_1"]}</p><p class="hero__tagline-note">{note_halves(w["hero.tagline_2"], c.lang)}</p>'
             f'<p class="hero__today">{c.today}</p>'
         )
         glance = (

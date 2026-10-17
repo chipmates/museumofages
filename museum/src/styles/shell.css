@@ -50,18 +50,22 @@
   max-width: 860px;
   margin-inline: auto;
 }
-/* the line is two sentences and breaks only between them */
-#veil h1 span { display: block; }
 .descent-beat:first-of-type { top: 19%; }
 .descent-ask { max-width: 28em; font-size: clamp(23px, 2.5vw, 34px); }
+/* the note under the line: one plain sentence a size under it, in sentence
+   case (the caps register is for labels, not for a sentence to be read) */
 .tagline {
-  margin-top: 25px;
+  max-width: 36em;
+  margin: 18px auto 0;
   font-family: var(--press-ui);
-  font-size: var(--type-caption);
-  letter-spacing: .2em;
-  text-indent: .2em;
+  font-size: 16px;
+  line-height: 1.5;
+  letter-spacing: .01em;
+  text-indent: 0;
+  text-transform: none;
   color: var(--press-muted);
 }
+.tagline span { display: inline-block; }
 .status {
   margin-top: 30px;
   font-family: var(--press-ui);
@@ -73,10 +77,10 @@
 body.door .status { animation: none; }
 /* the status names the museum, so the longer language wraps: in two even lines */
 .status { text-wrap: balance; }
-/* A SHORT STAGE (a phone held sideways) sets the line as one line and brings
-   it down to the way on, so it stands under the eclipse and not across it. */
+/* A SHORT STAGE (a phone held sideways) keeps the note close under the line
+   and brings both down to the way on, under the eclipse and not across it. */
 @media (max-height: 480px) and (min-aspect-ratio: 9/10) {
-  #veil h1 span { display: inline-block; }
+  .tagline { margin-top: 6px; }
   .status { margin-top: 8px; }
   body #enter-museum { margin-top: 16px; }
 }
@@ -255,7 +259,7 @@ body.door .status { animation: none; }
   #constellation-plate { top: max(11%, calc(100px + env(safe-area-inset-top))); }
   #veil { padding: 0 24px calc(32px + env(safe-area-inset-bottom)); }
   #veil h1 { font-size: clamp(25px, 6.8vw, 34px); line-height: 1.2; letter-spacing: -.015em; }
-  .tagline { max-width: 290px; margin: 20px auto 0; font-size: 10px; letter-spacing: .14em; text-indent: .14em; line-height: 1.8; }
+  .tagline { max-width: 320px; margin-top: 14px; font-size: 14px; letter-spacing: .01em; text-indent: 0; line-height: 1.5; }
   .status { margin-top: 25px; font-size: 10px; letter-spacing: .12em; text-indent: .12em; }
   /* on a phone the two rail marks reach the middle of the foot, so the
      descent's caption steps above them instead of landing between them */

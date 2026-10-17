@@ -13,7 +13,7 @@ function reference(text) {
 
 test('the fixed vectors', () => {
   assert.equal(contentKey('Back', 'Zurück'), 'b91ac107236cb883')
-  assert.equal(contentKey('We rebuild what was. You walk through it.', 'Wir bauen nach, was war. Du gehst hinein.'), '949ed8f7231218b1')
+  assert.equal(contentKey('The past rebuilt in 3D', 'Vergangene Zeiten in 3D nachgebaut'), '7e56f2eeb302db71')
   // the published FNV-1a 64 test vectors
   assert.equal(fnv1a64(''), 'cbf29ce484222325')
   assert.equal(fnv1a64('a'), 'af63dc4c8601ec8c')

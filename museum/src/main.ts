@@ -25,7 +25,7 @@ import { catalogPage, lang, pageLang, say, sayNamed, wingCount, wordsReady } fro
 import { publishedLangs } from './wings/languages'
 import { adoptBrowserLanguage } from './wings/browser-lang'
 import { sitePage, wayOut, type Settings } from './wings/way-out'
-import { LOBBY_LINKS, LOBBY_TEXT } from './content/lobby'
+import { LOBBY_LINKS, LOBBY_TEXT, NOTE_AND } from './content/lobby'
 import { gaitPace, setGaitPace } from './wings/vinci/gait'
 import { benchOptions, benchPath, createBench, type BenchOptions } from './bench'
 
@@ -35,6 +35,20 @@ adoptBrowserLanguage(publishedLangs(import.meta.env['VITE_NA_LANGS']))
 const firstLanguage = pageLang()
 if (firstLanguage !== 'en' && firstLanguage !== 'de') await wordsReady()
 
+/** a text as two boxes that share a row where they fit and break between them where they do not */
+function setHalves(el: HTMLElement, text: string, and: string | undefined): void {
+  const at = and ? text.lastIndexOf(and) : -1
+  if (at <= 0) {
+    el.textContent = text
+    return
+  }
+  const first = document.createElement('span')
+  const second = document.createElement('span')
+  first.textContent = text.slice(0, at)
+  second.textContent = text.slice(at + 1)
+  el.replaceChildren(first, ' ', second)
+}
+
 function syncLobbyCopy(): void {
   document.documentElement.lang = pageLang()
   for (const el of document.querySelectorAll<HTMLElement>('[data-lobby]')) {
@@ -42,6 +56,7 @@ function syncLobbyCopy(): void {
     if (!(key in LOBBY_TEXT)) continue
     const text = say(LOBBY_TEXT[key])
     if (el instanceof HTMLMetaElement) el.content = text
+    else if (key === 'lineNote') setHalves(el, text, NOTE_AND[pageLang()])
     else el.textContent = text
     if (el instanceof HTMLAnchorElement && key in LOBBY_LINKS) {
       // a catalog language names its own page where the site has one, and keeps the English page where it has none

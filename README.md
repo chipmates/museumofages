@@ -7,7 +7,8 @@
 <p align="center">a digital museum</p>
 
 <p align="center">
-  <strong>We rebuild what was. You walk through it.</strong><br/>
+  <strong>The past rebuilt in 3D</strong><br/>
+  We mark what is known and what is guessed.<br/>
   <sub>Nonprofit · Open Source · No tracking cookies, no profiling</sub>
 </p>
 

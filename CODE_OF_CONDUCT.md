@@ -2,7 +2,7 @@
 
 ## Our commitment
 
-Museum of Ages is a digital museum by ChipMates gemeinnützige GmbH, a German nonprofit. We rebuild what was. You walk through it. This code of conduct is about how we work together on it.
+Museum of Ages is a digital museum by ChipMates gemeinnützige GmbH, a German nonprofit. It shows the past rebuilt in 3D and marks what is known and what is guessed. This code of conduct is about how we work together on it.
 
 We want taking part in this project to be respectful, constructive and welcoming, whatever a person's age, body size, visible or invisible disability, ethnicity, sex characteristics, gender identity and expression, level of experience, education, socio-economic status, nationality, personal appearance, race, caste, colour, religion, or sexual identity and orientation.
 

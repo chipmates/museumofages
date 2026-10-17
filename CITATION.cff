@@ -1,7 +1,7 @@
 cff-version: 1.2.0
 message: "If you cite Museum of Ages, please cite it as below."
 title: "Museum of Ages"
-abstract: "A digital museum. We rebuild what was. You walk through it. One wing is open: Leonardo da Vinci's last house in Amboise, as it may have stood on 10 October 1517, rebuilt in code."
+abstract: "A digital museum. The past rebuilt in 3D. We mark what is known and what is guessed. One wing is open: Leonardo da Vinci's last house in Amboise, as it may have stood on 10 October 1517, rebuilt in code."
 type: software
 authors:
   - name: "ChipMates gemeinnützige GmbH"

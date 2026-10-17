@@ -150,9 +150,9 @@ TWO_ONLY = {"a11y.lang_switch"}
 # language whose status is ai carries it, and it is exempt from the rule that says once how the words are made.
 AI_TAG = "ai.tag"
 # The locked lines of each language, word for word, from its approved file (lang/<code>.locked.json). A language
-# without one is built, never listed.
-LOCKED_KEYS = ("tagline", "trust", "trust_before", "descriptor", "title", "mission", "purpose", "project", "grades", "made",
-               "honesty")
+# without one is built, never listed. The tagline is two texts in two sizes: the line, and the note under it.
+LOCKED_KEYS = ("tagline", "tagline_note", "trust", "trust_before", "descriptor", "title", "mission", "purpose", "project", "grades",
+               "made", "honesty")
 
 
 TRUST_KEYS = ("glance.trust", "page_what.trust")
@@ -612,8 +612,10 @@ def check_words(site):
             # no approved locked lines yet: built and checked, never listed (languages.json)
             problems += lint(site, f"words.{lang}", {k: v for k, v in raw.items() if not k.startswith("hero.tagline_")}, "", lang=lang)
             continue
-        if f'{raw["hero.tagline_1"]} {raw["hero.tagline_2"]}' != lock["tagline"]:
-            problems.append(f"{lang}: the tagline is not the locked wording")
+        if raw["hero.tagline_1"] != lock["tagline"]:
+            problems.append(f"{lang}: hero.tagline_1 is not the locked line")
+        if raw["hero.tagline_2"] != lock["tagline_note"]:
+            problems.append(f"{lang}: hero.tagline_2 is not the locked note under the line")
         for key in ("glance.trust", "page_what.trust"):
             if raw[key] != lock["trust"]:
                 problems.append(f"{lang}: {key} is not the locked trust wording")
@@ -1605,7 +1607,8 @@ def build(out, registry, wing_dirs, mark=None, topics=True, quiet=False, more_pi
         # the museum's page
         c = Ctx(site, lang, L.folder(lang) + "index.html")
         w, twin = common(c, "home")
-        tagline = f'{c.raw["hero.tagline_1"]} {c.raw["hero.tagline_2"]}'
+        # the line is a description with no full stop of its own: running text gives it one before the note
+        line, tagline = c.raw["hero.tagline_1"], f'{c.raw["hero.tagline_1"]}. {c.raw["hero.tagline_2"]}'
         # a wing may name itself more plainly for the landing's description, while it is the only open wing
         lt = (c.wd[site.newest].get("meta") or {}).get("landing_today") if len(c.open) == 1 else None
         today = html_text(lt) if lt else html_text(c.today)
@@ -1614,7 +1617,7 @@ def build(out, registry, wing_dirs, mark=None, topics=True, quiet=False, more_pi
         share = newest["pictures"]["share"]
         first, sets = R.first(c, "home", site.newest)
         w.update(head_values(c, "home", c.raw["meta.title"], desc, f"{ORIGIN}/{twin[lang]}", {l: f"{ORIGIN}/{twin[l]}" for l in LANGS},
-                             f"{named} {tagline}", share, c.at(c.wd[site.newest], share["alt"]), R.preload(c, sets), deferred=True))
+                             f"{named} {line}", share, c.at(c.wd[site.newest], share["alt"]), R.preload(c, sets), deferred=True))
         w.update({
             "css.inline": first_css + lang_css(c, "home") + grain(c.static) + wing_rules(site, site.open, ("landing", site.newest)),
             "html.first": first, "html.wall": R.wall(c), "html.visit": R.stop_section(c, site.newest), "html.closing": R.closing(c),

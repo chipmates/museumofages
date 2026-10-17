@@ -1,5 +1,5 @@
 {
-  "_note": "THE WORDS OF THE WHOLE SITE, English. Every displayed sentence that belongs to no single wing lives here and in its twin, with identical keys. A wing's own words live in wings/<slug>.<lang>.json, the privacy page's in privacy.<lang>.json. Locked (build.py, LOCKED): the two tagline sentences, the trust line, the mission sentence inside footer.mission, page_what.m_one and page_what.s5_p1, the company's purpose inside page_what.s5_p1, page_what.s4_made, page_what.honesty and project.line. The four grades (page_what.s2_four_1 to 4) must stand word for word in sure.text. {name}, {place} and {day} are filled from the registry. No em dash, no en dash, no semicolon. Then run the build.",
+  "_note": "THE WORDS OF THE WHOLE SITE, English. Every displayed sentence that belongs to no single wing lives here and in its twin, with identical keys. A wing's own words live in wings/<slug>.<lang>.json, the privacy page's in privacy.<lang>.json. Locked (build.py, LOCKED): the tagline's line and the note under it, the trust line, the mission sentence inside footer.mission, page_what.m_one and page_what.s5_p1, the company's purpose inside page_what.s5_p1, page_what.s4_made, page_what.honesty and project.line. The four grades (page_what.s2_four_1 to 4) must stand word for word in sure.text. {name}, {place} and {day} are filled from the registry. No em dash, no en dash, no semicolon. Then run the build.",
   "meta": {
     "title": "Museum of Ages: a digital museum of the past, rebuilt in 3D"
   },
@@ -32,8 +32,8 @@
   },
   "hero": {
     "name": "Museum of Ages",
-    "tagline_1": "We rebuild what was.",
-    "tagline_2": "You walk through it.",
+    "tagline_1": "The past rebuilt in 3D",
+    "tagline_2": "We mark what is known and what is guessed.",
     "kind_inline": "a digital museum",
     "enter": "Enter the museum",
     "entry_note": "Free entry, no account.",

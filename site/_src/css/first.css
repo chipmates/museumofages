@@ -57,8 +57,12 @@
 .hero__crumb span{display:inline-flex;align-items:center;gap:.7em}
 .hero__crumb span::before{content:"/";color:var(--hair-strong)}
 .hero__text{flex:none;padding:0 var(--pad) 10px}
-.hero__tagline{margin-top:11px;font-size:clamp(1.25rem,5.6vw,1.5rem);line-height:1.28;color:var(--ink)}
-.hero__tagline span{display:block;text-wrap:balance}
+.hero__tagline{margin-top:11px;font-size:clamp(1.25rem,5.6vw,1.5rem);line-height:1.28;color:var(--ink);text-wrap:balance}
+/* The note under the line: one plain sentence in the voice of the page's other notes, a size under the line. Its
+   two halves (render.note_halves) share a row where they fit and break between them where they do not. */
+.hero__tagline-note{margin-top:6px;font-family:var(--sans);font-size:.9375rem;line-height:1.45;color:var(--ink-soft);text-wrap:balance}
+.hero__tagline-note span{display:inline-block}
+.hero__tagline-note+.hero__today{margin-top:12px}
 /* What a visitor finds today, from the registry. */
 .hero__today{margin-top:9px;font-size:1.0625rem;line-height:1.35;color:var(--ink-soft);text-wrap:balance}
 /* A wing's facts, set as a wall label sets them: the key small, the fact in the text's own size. The short rule
@@ -99,6 +103,8 @@
   .hero__name--wing{font-size:clamp(1.9rem,10.2vw,3rem)}
   .hero__crumb{margin-bottom:5px}
   .hero__tagline{margin-top:8px;font-size:1.125rem;line-height:1.24}
+  .hero__tagline-note{margin-top:4px;font-size:.875rem;line-height:1.4}
+  .hero__tagline-note+.hero__today{margin-top:8px}
   .hero__today{margin-top:6px;font-size:1rem}
   .hero__facts{margin-top:9px;padding-top:8px}
   .hero__facts dd{font-size:.9375rem}
@@ -115,6 +121,8 @@
   .hero__head{padding-top:6px}
   .hero__text{padding-bottom:2px}
   .hero__tagline{margin-top:6px;line-height:1.2}
+  .hero__tagline-note{margin-top:3px;line-height:1.35}
+  .hero__tagline-note+.hero__today{margin-top:5px}
   .hero__today{margin-top:4px}
   .hero__go{margin-top:11px}
   .hero__go .door{min-height:48px}
@@ -286,7 +294,8 @@
   .hero--home .hero__first{padding-bottom:166px}
   .hero__text{grid-column:9/13;grid-row:2;display:flex;flex-direction:column;position:relative;z-index:2;padding:0 0 0 12px}
   .hero__tagline{margin-top:-.2em;font-size:clamp(1.375rem,2.05vw,1.625rem);line-height:1.26}
-  .hero__tagline span+span{margin-top:.3em}
+  .hero__tagline-note{margin-top:12px;font-size:1rem;line-height:1.5;max-width:22rem}
+  .hero__tagline-note+.hero__today{margin-top:22px}
   .hero__today{margin-top:22px;font-size:1.125rem;line-height:1.45;max-width:20rem}
   .hero__facts{margin-top:2px;padding-top:16px;grid-template-columns:minmax(0,1fr);gap:0}
   .hero__facts>div{grid-template-columns:minmax(0,1fr)}
