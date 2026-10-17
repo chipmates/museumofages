@@ -202,8 +202,9 @@ TIMELINE = "museum/src/wings/{wing}/line/data/timeline.json"
 # A dated line's mark as the site's bead (base.css): the timeline's three marks take the colour and the fill of the
 # grades whose hue the wing's floor gives them (green and whole, amber and half, red and a ring).
 YEAR_BEADS = {"mark_documented": "documented", "mark_inferred": "reconstructed", "mark_tradition": "conjectural",
-              # a work's own story (a years block of items) may rest a line on one published account: the half bead
-              "mark_report": "reconstructed"}
+              # a work's own story (a years block of items) may rest a line on one published account: the ring, so each
+              # of the story's three marks has a shape of its own
+              "mark_report": "conjectural"}
 
 # The pictures of the search pages (make_pictures.py cuts them). Its plates are the reproductions a wing hangs, each
 # with the record the build checks its source line against.

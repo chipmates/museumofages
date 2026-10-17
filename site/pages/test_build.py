@@ -3421,7 +3421,7 @@ class Case(unittest.TestCase):
         if not page:
             self.skipTest("no page of questions hangs a plate in its first part")
         beads = {"mark_documented": "documented", "mark_inferred": "reconstructed", "mark_tradition": "conjectural",
-                 "mark_report": "reconstructed"}
+                 "mark_report": "conjectural"}
         plain = lambda s: html.unescape(re.sub(r"<[^>]+>", "", s)).replace("\u00a0", " ").replace("\u00ad", "")
         plates = {x["name"]: x for x in json.loads((HERE / "pictures.json").read_text(encoding="utf-8"))["plates"]}
         out, written = self.build()
