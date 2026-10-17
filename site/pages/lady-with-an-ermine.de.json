@@ -44,6 +44,7 @@
   "h1": "Wer war die Dame mit dem Hermelin?",
   "answer": "Die junge Frau ist fast sicher Cecilia Gallerani, ein Mädchen von etwa 16 oder 17 Jahren am Mailänder Hof und die Geliebte von Ludovico Sforza, der Mailand regierte. Kein Dokument nennt sie als Dargestellte, aber ein Gedicht und zwei Briefe aus ihrer Zeit sprechen von einem Bildnis, das Leonardo von ihr malte, und das Hermelin gilt als Anspielung auf ihren Namen. Leonardo da Vinci malte sie um 1490 in Mailand, in Öl auf eine Tafel aus Nussbaumholz. Das Original hängt in Krakau, im Czartoryski-Museum, einem Haus des Nationalmuseums Krakau.",
   "jump": true,
+  "side": true,
   "faq": true,
   "plate": {
    "pic": "lady-with-an-ermine",

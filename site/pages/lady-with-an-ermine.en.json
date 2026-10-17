@@ -44,6 +44,7 @@
   "h1": "Who was the Lady with an Ermine?",
   "answer": "The woman is almost certainly Cecilia Gallerani, a girl of about sixteen or seventeen at the court of Milan and the mistress of its ruler, Ludovico Sforza. No document names her as the sitter, but a poem and two letters of her time speak of a portrait Leonardo made of her, and the ermine is read as a play on her name. Leonardo da Vinci painted her in Milan about 1490, in oil on a walnut panel. The original hangs in Kraków, in the Czartoryski Museum, a branch of the National Museum in Kraków.",
   "jump": true,
+  "side": true,
   "faq": true,
   "plate": {
    "pic": "lady-with-an-ermine",
