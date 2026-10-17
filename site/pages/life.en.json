@@ -320,6 +320,10 @@
             {
               "text": "See the Mona Lisa in the wing",
               "stop": "picture-room-lisa"
+            },
+            {
+              "text": "The Mona Lisa: who she was, and how she was stolen in 1911",
+              "page": "mona-lisa"
             }
           ]
         },

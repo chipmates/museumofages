@@ -333,6 +333,10 @@
             {
               "text": "Die Mona Lisa im Flügel ansehen",
               "stop": "picture-room-lisa"
+            },
+            {
+              "text": "Die Mona Lisa: wer sie war und wie sie 1911 gestohlen wurde",
+              "page": "mona-lisa"
             }
           ]
         },
