@@ -5,7 +5,8 @@
     "wing": "vinci",
     "topic": "salvator-mundi",
     "stop": "picture-room",
-    "published": null,
+    "published": "2026-10-17",
+    "checked": "2026-10-17",
     "og_image": {
       "file": "vinci-salvator-mundi-og-{lang}-1200x630.png",
       "width": 1200,
@@ -85,7 +86,7 @@
       "id": "sales",
       "nav": "Die Verkäufe",
       "h": "Seine Verkäufe seit 1900",
-      "intro": "Kein Dokument verbindet einen Verkauf vor 1900 mit dieser Tafel. Seitdem:",
+      "intro": "Kein Dokument verbindet einen Verkauf vor 1900 mit dieser Tafel. Seitdem:",
       "cols": [
         "Jahr",
         "Was geschah",

@@ -5,7 +5,8 @@
     "wing": "vinci",
     "topic": "salvator-mundi",
     "stop": "picture-room",
-    "published": null,
+    "published": "2026-10-17",
+    "checked": "2026-10-17",
     "og_image": {
       "file": "vinci-salvator-mundi-og-{lang}-1200x630.png",
       "width": 1200,
@@ -85,7 +86,7 @@
       "id": "sales",
       "nav": "The sales",
       "h": "Its sales since 1900",
-      "intro": "No document ties any sale before 1900 to this panel. Since then:",
+      "intro": "No document ties any sale before 1900 to this panel. Since then:",
       "cols": [
         "Year",
         "What happened",
