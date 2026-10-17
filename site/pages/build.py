@@ -169,9 +169,8 @@ BANNED_FACTS = [
     (r"open.source|offenen quellen|offener quelle|github|source code|quellcode|repositor",
      "the page says nothing about the museum's code and links to no code"),
     (r"nothing records|nichts belegt", "say no record is known"),
-    # a holder's name from the wing's facts (Private collection) is a name, not a claim, nor is a sale made privately
-    # ("privat über Sotheby's verkauft", the English "sold privately")
-    (r"\bprivate\b(?! collection)|\bprivat\b(?! (?:über \S+ )?verkauft)", "never Private"),
+    # a holder's name from the wing's facts (Private collection) is a name, not a claim
+    (r"\bprivate\b(?! collection)|\bprivat\b", "never Private"),
     (r"\bfree\b(?! entry)|\bkostenlos\b|\bgratis\b", "never Free alone: Free entry, no account"),
     (r"true size|wahre[rn]? größe|(?<!annähernd in )originalgröße", "at true size only where it is literally true: "
      "near real size, annähernd in Originalgröße"),
