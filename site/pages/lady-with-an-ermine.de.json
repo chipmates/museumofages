@@ -26,7 +26,7 @@
  },
  "meta": {
   "title": "Dame mit dem Hermelin: Cecilia Gallerani | Museum of Ages",
-  "description": "Wer war die Dame mit dem Hermelin? Fast sicher Cecilia Gallerani. Was das Hermelin bedeutet, wo das Bild in Krakau hängt, sein Wert und der Raub von 1939.",
+  "description": "Wer war die Dame mit dem Hermelin? Fast sicher Cecilia Gallerani. Was das Hermelin bedeutet, wo das Bild hängt, sein Wert, der Raub und die Netflix-Serie.",
   "og_title": "Dame mit dem Hermelin: Cecilia Gallerani",
   "og_image_alt": "Eine Reproduktion der Dame mit dem Hermelin. Die junge Frau trägt ein rotes Kleid, ein blaues Tuch über der Schulter und dunkle Perlen am Hals und wendet den Kopf nach rechts. Im Arm hält sie ein weißes Hermelin, die Hand auf seinem Rücken. Der Hintergrund ist schwarz, oben links steht eine alte Beschriftung."
  },
@@ -111,13 +111,13 @@
       "text": "der Seite des Museums",
       "href": "https://mnk.pl/en/branches/czartoryski-museum/"
      },
-     " nach. Im Dezember 2019 sagte der künftige Direktor des Nationalmuseums im Gespräch mit der polnischen Nachrichtenagentur PAP, das Bild werde nicht verliehen und solle das Czartoryski-Museum in seiner fünfjährigen Amtszeit nicht verlassen. Zur Größe: Die Tafel aus Nussbaumholz misst laut den Restauratoren des Museums etwa 55 mal 40,5 Zentimeter, der Katalog des Museums nennt 53,4 mal 39,3, weil beide Maße Verschiedenes erfassen."
+     " nach. Im Dezember 2019 sagte der künftige Direktor des Nationalmuseums im Gespräch mit der polnischen Nachrichtenagentur PAP, das Bild werde nicht verliehen und solle das Czartoryski-Museum in seiner fünfjährigen Amtszeit nicht verlassen."
     ]
    ],
    "open": "Ob das nach dem Ende seiner Amtszeit noch gilt, konnten wir nicht herausfinden.",
    "end": [
     [
-     "Wie groß das Bild neben der Mona Lisa und seinen anderen Werken ist: ",
+     "Zur Größe: Die Tafel aus Nussbaumholz misst laut den Restauratoren des Museums etwa 55 mal 40,5 Zentimeter, der Katalog des Museums nennt 53,4 mal 39,3, weil beide Maße Verschiedenes erfassen. Wie groß das Bild neben der Mona Lisa und seinen anderen Werken ist: ",
      {
       "text": "Wie groß ist die Mona Lisa?",
       "page": "sizes"
@@ -140,7 +140,7 @@
    "id": "meaning",
    "nav": "Was das Hermelin bedeutet",
    "h": "Was bedeutet das Hermelin?",
-   "answer": "Kein Dokument erklärt es, jede Bedeutung ist also eine Deutung. Das Museum in Krakau und die National Gallery in London nennen beide die zwei häufigsten Deutungen: Das Hermelin steht für Ludovico Sforza und sein griechischer Name, galê, spielt auf ihren an.",
+   "answer": "Kein Dokument erklärt es, jede Bedeutung ist also eine Deutung. Das Museum in Krakau und die National Gallery in London nennen beide die zwei häufigsten Deutungen: Das Hermelin steht für Ludovico Sforza und der griechische Name des Tiers, galê, spielt auf ihren an.",
    "known": [
     "1488 verlieh der König von Neapel Ludovico den Hermelinorden und seitdem hieß er „Ermellino Bianco“, das weiße Hermelin. Für das Museum in Krakau wird das Bild so zum Doppelbildnis der beiden Liebenden: Cecilia und, im Tier, Ludovico. Das Wortspiel läuft über das Griechische: galê, ein Wort für Wiesel oder Hermelin, klingt wie der Anfang von Gallerani. Das Dizionario Biografico degli Italiani, das große italienische Personenlexikon, verweist auf ein ähnliches Spiel in Leonardos Bildnis der Ginevra de' Benci, mit einem Wacholder, italienisch ginepro. Beide Museen lesen das weiße Hermelin auch als Zeichen der Reinheit, nach einem alten Glauben, den Leonardo selbst um 1494 notierte: Das Hermelin lasse sich lieber von den Jägern fangen, als in einen schlammigen Bau zu fliehen und sein Fell zu beschmutzen. Das Museum in Krakau nennt noch eine vierte Deutung: Wiesel galten als Schutz für Schwangere und im November 1490 erwartete Cecilia ein Kind von Ludovico."
    ],
@@ -153,7 +153,7 @@
    "h": "Ist das Tier wirklich ein Hermelin oder ein Frettchen?",
    "answer": "Das Museum in Krakau nennt es ein Hermelin im weißen Winterfell. Doch für ein Hermelin wirkt es groß, manche sehen darin ein Frettchen und entschieden ist die Frage nicht.",
    "known": [
-    "Das Hermelin, Mustela erminea, ist ein kleines Raubtier mit langem Körper und kurzen Beinen, von der Nase bis zum Schwanzansatz etwa 17 bis 33 Zentimeter lang. Im Sommer ist es oben braun und unten hell, im Winter wird es weiß, bis auf die schwarze Schwanzspitze. Janusz Wałek, der verstorbene Kunsthistoriker des Museums, soll gesagt haben, das Tier sei nicht nach der Natur gemalt, sondern Leonardos eigene Schöpfung. Und die Untersuchung des Museums von 2012 zeigt, dass Leonardo Größe und Haltung des Tiers beim Malen änderte."
+    "Das Hermelin, Mustela erminea, ist ein kleines Raubtier mit langem Körper und kurzen Beinen, von der Nase bis zum Schwanzansatz etwa 17 bis 33 Zentimeter lang. Im Sommer ist es oben braun und unten hell, im Winter wird es weiß, bis auf die schwarze Schwanzspitze. In einem Buch von Katarzyna Bik über das Bild wird Janusz Wałek, der verstorbene Kunsthistoriker des Museums, mit den Worten zitiert, das Tier sei nicht nach der Natur gemalt, sondern Leonardos eigene Schöpfung. Und die Untersuchung des Museums von 2012 zeigt, dass Leonardo Größe und Haltung des Tiers beim Malen änderte."
    ],
    "open": "Ob Leonardo ein lebendes Tier vor sich hatte, ist nicht bekannt und eine Studie eines Zoologen dazu haben wir nicht gefunden."
   },
@@ -174,7 +174,7 @@
    "h": "Was hat die Forschung unter der Farbe gefunden?",
    "answer": "Dass der schwarze Hintergrund nicht von Leonardo ist und dass er beim Malen umplante. Das Hermelin malte er über seine erste Anlage der Frau und den Umriss des Tiers machte er etwas kleiner.",
    "known": [
-    "Das erste Röntgenbild entstand 1945 in München, während das Bild im Kunstdepot der Alliierten lag, und in den 1950er Jahren kamen in Krakau und Warschau Aufnahmen im ultravioletten und infraroten Licht hinzu. 1991 und 1992 fand David Bull, ein Restaurator der National Gallery of Art in Washington, eine Reihe winziger Kohlepunkte um ihren Kopf und ihr Gesicht. Sie zeigen, dass Leonardo seinen Entwurf von einer Zeichnung in voller Größe auf die Tafel übertrug, und Bull fand auch Fingerabdrücke in der Farbe. 2007 tastete die Pariser Firma Lumiere Technology das Bild vom Ultraviolett bis ins Infrarot ab und sah, dass Leonardo ein Band übermalt hatte, das den Schleier unter ihrem Kinn hielt. Das eigene Team des Museums untersuchte es 2012 und veröffentlichte 2024: Unter dem Schwarz liegt Leonardos dunkelgrauer Grund, ohne Fenster und ohne Landschaft, und auch an ihrer Hand und ihrem Kleid änderte er beim Malen manches. Das Schwarz kam später, in mindestens zwei Schichten, im 18. oder 19. Jahrhundert: Die Studie von 2024 nennt am ehesten das 18., die Sammlungsseite des Museums das 19. Jahrhundert."
+    "Das erste Röntgenbild entstand 1945 in München, während das Bild im Kunstdepot der Alliierten lag, und in den 1950er Jahren kamen in Krakau und Warschau Aufnahmen im ultravioletten und infraroten Licht hinzu. 1991 und 1992 fand David Bull, ein Restaurator der National Gallery of Art in Washington, eine Reihe winziger Kohlepunkte um ihren Kopf und ihr Gesicht. Sie zeigen, dass Leonardo seinen Entwurf von einer Zeichnung in voller Größe auf die Tafel übertrug, und Bull fand auch Fingerabdrücke in der Farbe. 2007 tastete die Pariser Firma Lumiere Technology das Bild vom Ultraviolett bis ins Infrarot ab und sah, dass Leonardo ein Band übermalt hatte, das den Schleier unter ihrem Kinn hielt. Das eigene Team des Museums untersuchte es 2012 und veröffentlichte 2015 und 2024: Unter dem Schwarz liegt Leonardos dunkelgrauer Grund, ohne Fenster und ohne Landschaft, und auch an ihrer Hand und ihrem Kleid änderte er beim Malen manches. Das Schwarz kam später, in mindestens zwei Schichten, im 18. oder 19. Jahrhundert: Die Studie von 2024 nennt am ehesten das 18., die Sammlungsseite des Museums das 19. Jahrhundert."
    ],
    "open": "2014 behauptete der französische Ingenieur Pascal Cotte, dessen Firma den Scan von 2007 gemacht hatte, Leonardo habe das Bild in drei Stufen gemalt: zuerst ohne Tier, dann mit einem schlankeren Hermelin, zuletzt mit dem kräftigeren, das wir sehen. Andere Fachleute überzeugt das nicht und die Studie des Museums berichtet nur von kleineren Änderungen an Größe und Haltung des Tiers.",
    "end": [
