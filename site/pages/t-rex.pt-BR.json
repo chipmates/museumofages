@@ -119,7 +119,7 @@
   "title": "T. rex: tamanho de cerca de 12 m e 8 a 9 t | Museum of Ages",
   "description": "Tamanho do T. rex: um tiranossauro rex adulto grande tinha cerca de 12 m de comprimento, cerca de 4 m até o quadril e 8 a 9 t. O nosso, nas medidas de SUE.",
   "og_title": "T. rex: tamanho de cerca de 12 m e de 8 a 9 t",
-  "og_image_alt": "Um T. rex de lado, sobre duas patas, com a boca fechada e a cabeça erguida, ao lado de uma pessoa cinza que fica bem abaixo do quadril dele."
+  "og_image_alt": "O nosso T. rex de lado, sobre duas patas, com cerca de 11,4 m de comprimento nesta pose, de boca fechada e cabeça erguida, ao lado de uma pessoa cinza de 1,70 m que fica bem abaixo do quadril dele."
  },
  "labels": {
   "crumbs": "Você está aqui",
@@ -135,13 +135,13 @@
  },
  "top": {
   "h1": "Qual era o tamanho do T. rex?",
-  "answer": "Um Tyrannosaurus rex adulto grande tinha cerca de 12 m de comprimento, e a maioria era menor. Até o quadril, media cerca de 3,5 a 4 m. Um adulto grande pesava mais ou menos de 8 a 9 toneladas, pelos ossos e pelos modelos do corpo, e um adulto comum, menos. O nosso T. rex, feito com as medidas de SUE, mede cerca de 11,4 m nesta pose, com a cabeça erguida a cerca de 4,6 m do chão.",
+  "answer": "Um Tyrannosaurus rex adulto grande tinha cerca de 12 m de comprimento, e a maioria era menor. Um T. rex grande media cerca de 3,5 a 4 m até o quadril e pesava mais ou menos de 8 a 9 toneladas, pelos ossos e pelos modelos do corpo, e um adulto comum, menos. O nosso T. rex, feito com as medidas de SUE, mede cerca de 11,4 m nesta pose, com a cabeça erguida a cerca de 4,6 m do chão.",
   "answer_more": "Os dois maiores T. rex conhecidos são SUE, em Chicago, o esqueleto mais longo e mais completo, e Scotty, provavelmente o mais pesado.",
   "scale": {
    "pic": "side",
    "tag": "tag_made",
    "what": "O nosso T. rex ao lado de uma pessoa de 1,70 m, na mesma escala, feito com as medidas de SUE. Nesta pose, com a cabeça erguida e virada e a cauda curvada, ele mede cerca de 11,4 m. É mais do que seis pessoas e meia deitadas uma atrás da outra. O alto da cabeça erguida fica a cerca de 4,6 m do chão, e isso depende da pose. Esticado em linha reta, o mesmo esqueleto mediria cerca de 11,8 m. A montagem de SUE em Chicago mede cerca de 12 m.",
-   "alt": "Um T. rex de lado, sobre duas patas, com a boca fechada e a cabeça erguida, ao lado de uma pessoa cinza que fica bem abaixo do quadril dele.",
+   "alt": "O nosso T. rex de lado, sobre duas patas, com cerca de 11,4 m de comprimento nesta pose, de boca fechada e cabeça erguida, ao lado de uma pessoa cinza de 1,70 m que fica bem abaixo do quadril dele.",
    "note": "A nossa própria reconstrução, construída em código a partir de medidas publicadas e renderizada com o nosso próprio motor gráfico. Não é uma fotografia.",
    "marks": [
     {
@@ -332,8 +332,8 @@
      "text": "A montagem de SUE em Chicago, como o museu informa e como um modelo digital de 2011 mediu. O fim da cauda é reconstruído, porque foram encontradas 36 das 47 vértebras da cauda da montagem. Por isso dizemos cerca de 12 m."
     },
     {
-     "term": "13 m",
-     "text": "Scotty, como as notícias de 2019 disseram. O resumo do estudo não dá comprimento nenhum, e o museu antes dava quase 12 m. O Natural History Museum de Londres escreve “quase 13 m” para SUE e Scotty juntos, sem citar um método."
+     "term": "Até 13 m",
+     "text": "Muitos sites dão esse número. É o comprimento de Scotty, como as notícias de 2019 o deram. O resumo do estudo não dá comprimento nenhum, e o museu antes dava quase 12 m. O Natural History Museum de Londres escreve “quase 13 m” para SUE e Scotty juntos, sem citar um método."
     },
     {
      "term": "8,8 toneladas, 9 toneladas curtas",
@@ -378,7 +378,7 @@
    "type": "text",
    "id": "skin",
    "nav": "Pele, penas e lábios",
-   "h": "Pele, penas e lábios",
+   "h": "O T. rex tinha penas?",
    "paras": [
     "Todos os pedaços de pele de T. rex já encontrados têm escamas. Todos vêm de um único animal, Wyrex, em Houston: três pedaços pequenos do pescoço, do quadril e do começo da cauda. As escamas medem menos de um milímetro.",
     "Nenhuma pena foi encontrada em nenhum T. rex, nem em nenhum outro tiranossauro grande. Parentes menores e mais antigos tinham penas como fios: o pequeno Dilong, e o Yutyrannus, com cerca de 1,4 toneladas, mais ou menos um sexto de SUE. O Yutyrannus viveu cerca de 60 milhões de anos antes do T. rex. Não se conhece pele da parte de cima das costas, então uma camada fina ali não pode ser mostrada nem descartada.",

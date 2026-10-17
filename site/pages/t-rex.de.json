@@ -122,7 +122,7 @@
   "title": "T-Rex-Größe: etwa 12 m lang, 8 bis 9 t | Museum of Ages",
   "description": "Größe des T. rex: ein großes erwachsenes Tier etwa 12 m lang, an der Hüfte etwa 4 m hoch, rund 8 bis 9 t. Unser T. rex ist nach den Maßen von SUE gebaut.",
   "og_title": "T-Rex-Größe: etwa 12 m lang, 8 bis 9 t",
-  "og_image_alt": "Ein T. rex von der Seite auf zwei Beinen, das Maul geschlossen, der Kopf erhoben, neben einem grauen Menschen, der weit unter seiner Hüfte steht."
+  "og_image_alt": "Unser T. rex von der Seite auf zwei Beinen, in dieser Haltung etwa 11,4 m lang, das Maul geschlossen, der Kopf erhoben, neben einem grauen Menschen von 1,70 m, der weit unter seiner Hüfte steht."
  },
  "labels": {
   "crumbs": "Du bist hier",
@@ -138,13 +138,13 @@
  },
  "top": {
   "h1": "Wie groß war ein T. rex?",
-  "answer": "Ein großer erwachsener Tyrannosaurus rex war etwa 12 m lang, und die meisten waren kleiner. An der Hüfte stand er etwa 3,5 bis 4 m hoch. Ein großes erwachsenes Tier kam auf rund 8 bis 9 t, nach Knochen und Körpermodellen, ein gewöhnliches auf weniger. Unser T. rex, nach den Maßen von SUE gebaut, misst in dieser Haltung etwa 11,4 m, sein erhobener Kopf reicht bis etwa 4,6 m.",
+  "answer": "Ein großer erwachsener Tyrannosaurus rex war etwa 12 m lang, und die meisten waren kleiner. Ein großer T. rex stand an der Hüfte etwa 3,5 bis 4 m hoch und kam nach Knochen und Körpermodellen auf rund 8 bis 9 t, ein gewöhnlicher erwachsener auf weniger. Unser T. rex, nach den Maßen von SUE gebaut, misst in dieser Haltung etwa 11,4 m, sein erhobener Kopf reicht bis etwa 4,6 m.",
   "answer_more": "Die beiden größten bekannten T. rex sind SUE in Chicago, das längere und vollständigere Skelett, und Scotty, wahrscheinlich der schwerere.",
   "scale": {
    "pic": "side",
    "tag": "tag_made",
    "what": "Unser T. rex neben einem Menschen von 1,70 m, im selben Maßstab, nach den Maßen von SUE gebaut. In dieser Haltung, Kopf erhoben und gedreht, Schwanz geschwungen, misst er etwa 11,4 m. Das sind mehr als sechseinhalb Menschen, der Länge nach aneinandergelegt. Der erhobene Kopf reicht bis etwa 4,6 m, und das hängt von der Haltung ab. Gerade ausgelegt wäre dasselbe Skelett etwa 11,8 m lang. SUEs aufgestelltes Skelett in Chicago misst etwa 12 m.",
-   "alt": "Ein T. rex von der Seite auf zwei Beinen, das Maul geschlossen, der Kopf erhoben, neben einem grauen Menschen, der weit unter seiner Hüfte steht.",
+   "alt": "Unser T. rex von der Seite auf zwei Beinen, in dieser Haltung etwa 11,4 m lang, das Maul geschlossen, der Kopf erhoben, neben einem grauen Menschen von 1,70 m, der weit unter seiner Hüfte steht.",
    "note": "Unsere eigene Rekonstruktion, nach veröffentlichten Maßen in Code gebaut und in unserer Engine gerendert. Kein Foto.",
    "marks": [
     {
@@ -335,8 +335,8 @@
      "text": "SUEs aufgestelltes Skelett in Chicago, so gibt es das Museum an, und so maß es ein Computermodell von 2011. Das Schwanzende ist ergänzt, 36 der 47 Schwanzwirbel der Montage wurden gefunden. Darum sagen wir etwa 12 m."
     },
     {
-     "term": "13 m",
-     "text": "Scotty, in Nachrichten von 2019 so genannt. Die Kurzfassung der Studie nennt keine Länge, und das Museum gab ihn früher mit knapp 12 m an. Das Natural History Museum in London schreibt „fast 13 m“ für SUE und Scotty zusammen, ohne eine Methode zu nennen."
+     "term": "Bis zu 13 m",
+     "text": "Viele Seiten nennen diese Zahl. Es ist Scottys Länge, wie Nachrichten von 2019 sie angaben. Die Kurzfassung der Studie nennt keine Länge, und das Museum gab ihn früher mit knapp 12 m an. Das Natural History Museum in London schreibt „fast 13 m“ für SUE und Scotty zusammen, ohne eine Methode zu nennen."
     },
     {
      "term": "8,8 t, 9 US-Tonnen",
@@ -381,7 +381,7 @@
    "type": "text",
    "id": "skin",
    "nav": "Haut, Federn und Lippen",
-   "h": "Haut, Federn und Lippen",
+   "h": "Hatte der T. rex Federn?",
    "paras": [
     "Jedes Stück T. rex-Haut, das je gefunden wurde, ist schuppig. Alles stammt von einem einzigen Tier, Wyrex in Houston: drei kleine Hautstücke vom Hals, von der Hüfte und vom Schwanzansatz. Die Schuppen sind kleiner als ein Millimeter.",
     "Eine Feder wurde an einem T. rex nie gefunden, auch an keinem anderen großen Tyrannosaurier. Kleinere, frühere Verwandte trugen fadenartige Federn: der kleine Dilong und Yutyrannus mit etwa 1,4 t, rund ein Sechstel von SUE. Yutyrannus lebte etwa 60 Millionen Jahre vor T. rex. Von der Oberseite des Rückens ist keine Haut bekannt, ein dünner Flaum dort lässt sich weder zeigen noch ausschließen.",

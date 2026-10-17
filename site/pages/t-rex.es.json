@@ -119,7 +119,7 @@
   "title": "Tiranosaurio rex: unos 12 m y de 8 a 9 t | Museum of Ages",
   "description": "¿Cuánto medía el T. rex? Un tiranosaurio rex adulto grande, unos 12 m de largo, unos 4 m a la cadera y de 8 a 9 t. El nuestro, con las medidas de SUE.",
   "og_title": "Tiranosaurio rex: unos 12 m y de 8 a 9 t",
-  "og_image_alt": "Un T. rex de lado, sobre dos patas, con la boca cerrada y la cabeza levantada, junto a una persona gris que queda muy por debajo de sus caderas."
+  "og_image_alt": "Nuestro T. rex de lado, sobre dos patas, de unos 11,4 m de largo en esta postura, con la boca cerrada y la cabeza levantada, junto a una persona gris de 1,70 m que queda muy por debajo de sus caderas."
  },
  "labels": {
   "crumbs": "Estás aquí",
@@ -135,13 +135,13 @@
  },
  "top": {
   "h1": "¿Cuánto medía el T. rex?",
-  "answer": "Un Tyrannosaurus rex adulto grande medía unos 12 m de largo, y la mayoría eran más pequeños. A la altura de la cadera medía unos 3,5 a 4 m. Un adulto grande pesaba más o menos de 8 a 9 toneladas, según los huesos y los modelos del cuerpo, y un adulto corriente, menos. Nuestro T. rex, hecho con las medidas de SUE, mide unos 11,4 m en esta postura, con la cabeza levantada a unos 4,6 m del suelo.",
+  "answer": "Un Tyrannosaurus rex adulto grande medía unos 12 m de largo, y la mayoría eran más pequeños. Un T. rex grande medía unos 3,5 a 4 m a la altura de la cadera y pesaba más o menos de 8 a 9 toneladas, según los huesos y los modelos del cuerpo, y un adulto corriente, menos. Nuestro T. rex, hecho con las medidas de SUE, mide unos 11,4 m en esta postura, con la cabeza levantada a unos 4,6 m del suelo.",
   "answer_more": "Los dos T. rex más grandes que se conocen son SUE, en Chicago, el esqueleto más largo y más completo, y Scotty, probablemente el más pesado.",
   "scale": {
    "pic": "side",
    "tag": "tag_made",
    "what": "Nuestro T. rex junto a una persona de 1,70 m, a la misma escala, hecho con las medidas de SUE. En esta postura, con la cabeza levantada y girada y la cola curvada, mide unos 11,4 m. Eso es más de seis personas y media tumbadas una detrás de otra. Lo alto de la cabeza levantada está a unos 4,6 m del suelo, y eso depende de la postura. Estirado en línea recta, el mismo esqueleto mediría unos 11,8 m. El montaje de SUE en Chicago mide unos 12 m.",
-   "alt": "Un T. rex de lado, sobre dos patas, con la boca cerrada y la cabeza levantada, junto a una persona gris que queda muy por debajo de sus caderas.",
+   "alt": "Nuestro T. rex de lado, sobre dos patas, de unos 11,4 m de largo en esta postura, con la boca cerrada y la cabeza levantada, junto a una persona gris de 1,70 m que queda muy por debajo de sus caderas.",
    "note": "Nuestra propia reconstrucción, construida en código a partir de medidas publicadas y renderizada con nuestro propio motor gráfico. No es una fotografía.",
    "marks": [
     {
@@ -332,8 +332,8 @@
      "text": "El montaje de SUE en Chicago, tal como lo da el museo y tal como lo midió un modelo digital de 2011. El final de la cola está reconstruido, porque se encontraron 36 de las 47 vértebras de la cola del montaje. Por eso decimos unos 12 m."
     },
     {
-     "term": "13 m",
-     "text": "Scotty, como lo dijeron las noticias de 2019. El resumen del estudio no da ninguna longitud, y el museo antes daba casi 12 m. El Natural History Museum de Londres escribe «casi 13 m» para SUE y Scotty juntos, sin nombrar un método."
+     "term": "Hasta 13 m",
+     "text": "Muchas páginas dan esta cifra. Es la longitud de Scotty, como la dieron las noticias de 2019. El resumen del estudio no da ninguna longitud, y el museo antes daba casi 12 m. El Natural History Museum de Londres escribe «casi 13 m» para SUE y Scotty juntos, sin nombrar un método."
     },
     {
      "term": "8,8 toneladas, 9 toneladas cortas",
@@ -378,7 +378,7 @@
    "type": "text",
    "id": "skin",
    "nav": "Piel, plumas y labios",
-   "h": "Piel, plumas y labios",
+   "h": "¿Tenía plumas el T. rex?",
    "paras": [
     "Todos los trozos de piel de T. rex encontrados hasta hoy tienen escamas. Todos vienen de un solo animal, Wyrex, en Houston: tres trozos pequeños del cuello, de la cadera y del comienzo de la cola. Las escamas miden menos de un milímetro.",
     "Hasta hoy no se encontró ni una pluma en ningún T. rex, ni en ningún otro tiranosaurio grande. Parientes más pequeños y más antiguos sí tenían plumas como hilos: el pequeño Dilong, y Yutyrannus, con unas 1,4 toneladas, más o menos una sexta parte de SUE. Yutyrannus vivió unos 60 millones de años antes que el T. rex. No se conoce piel de la parte de arriba de la espalda, así que una capa fina allí no se puede ni mostrar ni descartar.",
