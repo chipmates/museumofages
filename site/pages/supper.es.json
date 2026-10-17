@@ -39,7 +39,7 @@
  },
  "top": {
   "h1": "La última cena de Leonardo da Vinci",
-  "answer": "La última cena es una pintura mural. Leonardo da Vinci la pintó en Milán, en el refectorio de Santa Maria delle Grazie, el comedor de un convento dominico. La pintó para Ludovico Sforza, duque de Milán, entre 1494 y 1498 aproximadamente, y sigue en su muro original: según el museo, mide 4,6 por 8,8 metros, alto por ancho. Mira debajo de la mesa: Cristo no tiene pies. En el siglo XVII, los frailes quisieron una puerta más grande hacia sus cocinas. La que ensancharon está en el centro de ese muro, justo donde estaban los pies de Cristo.",
+  "answer": "La última cena de Leonardo da Vinci es una pintura mural en Santa Maria delle Grazie, en Milán. Está en el refectorio, el comedor de un convento dominico. Leonardo la pintó para Ludovico Sforza, duque de Milán, entre 1494 y 1498 aproximadamente. Otras fuentes la fechan entre 1495 y 1498, o entre 1495 y 1497: incluso las fuentes oficiales de Italia difieren en un año en el comienzo y en el final. La pintura sigue en su muro original: según el museo, mide 4,6 por 8,8 metros, alto por ancho. Mira debajo de la mesa: Cristo no tiene pies. En el siglo XVII, los frailes quisieron una puerta más grande hacia sus cocinas. La que ensancharon está en el centro de ese muro, justo donde estaban los pies de Cristo.",
   "drawing": {
    "wall": "supper",
    "tag": "tag_chart",
