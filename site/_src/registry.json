@@ -1832,7 +1832,7 @@
             "the largest animal that ever lived only with known: the largest animal known"
           ],
           [
-            "(?s)^(?!.*(?:no\\smeasurement|keine\\smessung|smaller\\sthan\\sa\\scar|kleiner\\sals\\sein\\sauto|ninguna\\smedida|nenhuma\\smedida|menos\\sque\\sun\\s(?:coche|auto|carro)|menor\\sque\\sum\\scarro)).*(?:size\\sof\\sa\\s(?:small\\s)?car|as\\s(?:big|large|heavy)\\sas\\sa\\s(?:small\\s)?car|so\\s(?:groß|schwer)\\swie\\sein\\s(?:kleine[rs]\\s)?(?:auto|pkw)|tamaño\\sde\\sun\\s(?:coche|auto|carro|automóvil)|tan\\s(?:grande|pesad[oa])\\scomo\\sun\\s(?:coche|auto|carro)|tamanho\\sde\\sum\\s(?:carro|automóvel)|tão\\s(?:grande|pesad[oa])\\squanto\\sum\\scarro)",
+            "(?s)^(?!.*(?:no\\smeasurement|keine\\smessung|smaller\\sthan\\sa\\scar|kleiner\\sals\\sein\\sauto|ninguna\\smedida|nenhuma\\smedida|menos\\sque\\sun\\s(?:coche|auto|carro)|menor\\sque\\sun\\s(?:coche|auto|carro)|menor\\sque\\sum\\scarro)).*(?:size\\sof\\sa\\s(?:small\\s)?car|as\\s(?:big|large|heavy)\\sas\\sa\\s(?:small\\s)?car|so\\s(?:groß|schwer)\\swie\\sein\\s(?:kleine[rs]\\s)?(?:auto|pkw)|tamaño\\sde\\sun\\s(?:coche|auto|carro|automóvil)|tan\\s(?:grande|pesad[oa])\\scomo\\sun\\s(?:coche|auto|carro)|tamanho\\sde\\sum\\s(?:carro|automóvel)|tão\\s(?:grande|pesad[oa])\\squanto\\sum\\scarro)",
             "a heart the size of a car only with what was measured: far smaller than a car"
           ],
           [
