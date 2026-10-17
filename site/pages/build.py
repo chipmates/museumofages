@@ -629,6 +629,12 @@ def lint(page, lang, data, wing, names, topic=None):
             if names.left_over(house["name"]):
                 problems.append(f"{page}.{lang}: the house {house['name']!r} is not in {NAMES_FILE.name}, "
                                 "so its name would be hyphenated and read in the wrong language")
+    # a topic page names its neighbours under one heading of their own; the wing's list of pages is the page
+    for block in (b for b in data["blocks"] if b["type"] == "pages"):
+        if data["page"].get("hub") and "h" in block:
+            problems.append(f"{page}.{lang}: a wing's list of pages carries no heading over its list (pages.h): it is the page")
+        elif not data["page"].get("hub") and not block.get("h"):
+            problems.append(f"{page}.{lang}: the list of neighbouring pages needs its heading (pages.h)")
     # a wing's list of its pages names no source of its own: each page it lists carries its sources
     if kinds.count("sources") != (0 if data["page"].get("hub") else 1):
         problems.append(f"{page}.{lang}: a page needs exactly one sources block, a wing's list of pages none")
@@ -1852,12 +1858,14 @@ def render(page, lang, data, shared, out_root):
                 # the registry's line binds a number to its unit as the page's own words do
                 # a page may name a neighbour with a line of its own (line), else the list's line
                 line = re.sub(rf"(\d) (?={MORE_UNITS}\b)", "\\1" + LIB.NBSP, item.get("line") or topic["line"][lang])
-                items.append(fill(parts["page_item"], {"href": page_href(item["page"]), "name": joined(topic["name"][lang]),
+                # on a topic page each neighbour is a step under the list's own heading; the wing's list is the page
+                items.append(fill(parts["page_item"], {"tag": "h2" if hub else "h3", "href": page_href(item["page"]), "name": joined(topic["name"][lang]),
                                                        "line": joined(LIB.bind(line, lang), split=True),
                                                        "html.pic": pics.picture(item["pic"], esc(item["alt"])) if item.get("pic") else ""}))
             values["html.items"] = "\n".join(items)
             # on a topic page the list names its neighbours after the page's own sections; the wing's list is the page
             values["attr.pages"] = "" if hub else " sc-pages--next"
+            values["html.h"] = "" if hub else f'\n  <h2>{rich(block["h"])}</h2>'
         elif kind == "chart":
             values.update({
                 "zoom": rich(block["zoom"].replace("{n}", LIB.number(CHART.ZOOM, lang))),

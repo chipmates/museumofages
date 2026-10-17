@@ -525,6 +525,7 @@
   {
    "type": "pages",
    "id": "next",
+   "h": "Más animales a la misma escala",
    "items": [
     {
      "page": "biggest-dinosaurs",

@@ -213,6 +213,17 @@ class Case(unittest.TestCase):
         self.save("de", data)
         self.fails(r"another day")
 
+    def test_a_list_of_neighbours_without_its_heading(self):
+        page = next((p for p in self.pages if any(b["type"] == "pages" for b in self.data("en", p)["blocks"])
+                     and not self.data("en", p)["page"].get("hub")), None)
+        if not page:
+            self.skipTest("no topic page lists its neighbours")
+        for lang in ("en", "de"):
+            data = self.data(lang, page)
+            del next(b for b in data["blocks"] if b["type"] == "pages")["h"]
+            self.save(lang, data, page)
+        self.fails(r"pages\.h")
+
     def test_a_borrowed_picture_must_be_a_plate_of_the_wing(self):
         page = next((p for p in self.pages if self.data("en", p)["page"].get("primary_from")), None)
         if not page:
@@ -500,7 +511,7 @@ class Case(unittest.TestCase):
             self.assertIn('<i class="nh">Tyrannosaurus\u00a0rex</i>', own)
             # a list of pages joins its names wherever it stands: the hub and both neighbours
             items = [m.group(1) for (pid, code), (other, text) in by_id.items() if code == lang
-                     for m in re.finditer(r'<h2 class="sc-item__h"><a href="[^"]*t-rex/">(.*?)</a>', text)]
+                     for m in re.finditer(r'<h[23] class="sc-item__h"><a href="[^"]*t-rex/">(.*?)</a>', text)]
             # the hub and the eight pages that name it
             self.assertEqual(len(items), 9)
             for item in items:
@@ -1636,7 +1647,7 @@ class Case(unittest.TestCase):
             plain = lambda markup: " ".join(html.unescape(re.sub(r"<[^>]+>", "", markup)).replace("\u00a0", " ").split())
             found = [re.search(r'<p class="sc-item__line">(.*?)</p>', x, flags=re.S).group(1)
                      for x in re.findall(r'<li class="sc-item">(.*?)</li>', own, flags=re.S)
-                     if plain(re.search(r"<h2[^>]*>(.*?)</h2>", x, flags=re.S).group(1)) == topic["name"][lang]]
+                     if plain(re.search(r"<h[23][^>]*>(.*?)</h[23]>", x, flags=re.S).group(1)) == topic["name"][lang]]
             self.assertEqual(len(found), 1, path)
             self.assertEqual(plain(found[0]), item.get("line") or topic["line"][lang])
         # the hub and the eight neighbours, in both languages
@@ -4054,6 +4065,27 @@ class SiteWide(unittest.TestCase):
             self.assertIn(f"https://museumofages.org/static/img/{data['page']['still']['file'].replace('{lang}', lang)}",
                           [n.get("contentUrl") for n in _graph(text)])
             self.assertRegex(text, r'<meta property="og:image" content="[^"]*vinci-sizes-og-%s-1200x630\.png"' % lang)
+
+    def test_the_neighbours_stand_under_one_heading_and_the_list_of_pages_is_the_page(self):
+        found = {"topic": 0, "hub": 0}
+        for path, text in self.pages.items():
+            listed = re.search(r'<section class="sp-sec sc-pages( sc-pages--next)?" id="[\w-]+">(.*?)</section>', text, flags=re.S)
+            if not listed:
+                continue
+            levels = re.findall(r"<h([1-6])\b", listed.group(2))
+            items = re.findall(r'<li class="sc-item">\s*<h([1-6]) class="sc-item__h">', listed.group(2))
+            self.assertTrue(items, path)
+            if listed.group(1):
+                # a topic page: one h2 for the list, then each neighbour an h3
+                self.assertEqual(levels, ["2"] + ["3"] * len(items), path)
+                self.assertRegex(listed.group(2), r"^\s*<h2>(?:(?!</h2>).)+</h2>\s*<ul class=\"sc-list\">", path)
+                found["topic"] += 1
+            else:
+                # the wing's list of pages: each page an h2, as the page's own sections
+                self.assertEqual(levels, ["2"] * len(items), path)
+                found["hub"] += 1
+        self.assertGreaterEqual(found["topic"], 40)
+        self.assertGreaterEqual(found["hub"], 4)
 
     def test_a_pages_own_picture_carries_no_words(self):
         """The share card, with its heading in it, stays the link preview; the page's own picture (primaryImageOfPage,

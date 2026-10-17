@@ -500,14 +500,14 @@
   </table>
 </section>
 <!--@ block:pages -->
-<section class="sp-sec sc-pages{{attr.pages}}" id="{{id}}">
+<section class="sp-sec sc-pages{{attr.pages}}" id="{{id}}">{{html.h}}
   <ul class="sc-list">
 {{html.items}}
   </ul>
 </section>
 <!--@ page_item -->
 <li class="sc-item">
-  <h2 class="sc-item__h"><a href="{{href}}">{{name}}</a></h2>
+  <{{tag}} class="sc-item__h"><a href="{{href}}">{{name}}</a></{{tag}}>
   <p class="sc-item__line">{{line}}</p>
   <div class="sc-item__pic" aria-hidden="true">{{html.pic}}</div>
 </li>
