@@ -14,12 +14,14 @@ picture or a word. Standard library only.
 """
 import copy
 import hashlib
+import html
 import importlib.util
 import json
 import math
 import re
 import shutil
 import sys
+import urllib.parse
 from pathlib import Path
 
 import ask
@@ -2086,16 +2088,29 @@ def checked_day(text):
     return next((n["dateModified"] for n in page_graph(text) if n.get("@type") == "Article" and n.get("dateModified")), None)
 
 
+def page_pictures(text, page_url):
+    """Every picture a built page shows (img) and every one its structured data describes (an ImageObject's contentUrl),
+    as addresses on the site, once each in the order met. A picture a page may show may be listed: the list adds no
+    picture the page does not already serve."""
+    found = [urllib.parse.urljoin(page_url, html.unescape(src)) for src in re.findall(r'<img\b[^>]*?\bsrc="([^"]+)"', text)]
+    found += [i.get("contentUrl") or i.get("url") or "" for i in image_objects(page_graph(text))]
+    return [u for u in dict.fromkeys(found) if u.startswith(f"{ORIGIN}/")]
+
+
 def write_sitemap(out, site, listed):
     rel = lambda p: str(Path(p).relative_to(out).parent).replace(".", "", 1).strip("/")
     url = lambda p: f"{ORIGIN}/{rel(p)}/".replace("//", "/").replace("https:/", "https://")
     urls = sorted({url(p) for _, _, p in listed})
     # a topic page's last change that counts is the day its facts were checked: the day its dated line shows
-    lastmod = {}
+    lastmod, pictures = {}, {}
     for kind, _, p in listed:
-        day = checked_day(Path(p).read_text(encoding="utf-8")) if kind == "topic" else None
+        text = Path(p).read_text(encoding="utf-8")
+        day = checked_day(text) if kind == "topic" else None
         if day:
             lastmod[url(p)] = f"<lastmod>{day}</lastmod>"
+        # Google reads one image:loc per picture, a thousand at most per address
+        pictures[url(p)] = "".join(f"<image:image><image:loc>{html.escape(u, quote=False)}</image:loc></image:image>"
+                                   for u in page_pictures(text, url(p))[:1000])
     # From three listed languages on, each address names its twins, as the pages' heads do. With two, the heads alone.
     twins = {}
     if len(LISTED) > 2:
@@ -2103,8 +2118,9 @@ def write_sitemap(out, site, listed):
             for _, p in page:
                 twins[url(p)] = [(L.html(l), url(q)) for l, q in page] + [("x-default", url(dict(page)["en"]))] if "en" in dict(page) else []
     link = lambda u: "".join(f'<xhtml:link rel="alternate" hreflang="{tag}" href="{v}"/>' for tag, v in twins.get(u, []))
-    body = "".join(f"  <url><loc>{u}</loc>{lastmod.get(u, '')}{link(u)}</url>\n" for u in urls)
-    space = ' xmlns:xhtml="http://www.w3.org/1999/xhtml"' if twins else ""
+    body = "".join(f"  <url><loc>{u}</loc>{lastmod.get(u, '')}{link(u)}{pictures.get(u, '')}</url>\n" for u in urls)
+    space = (' xmlns:xhtml="http://www.w3.org/1999/xhtml"' if twins else "") + (
+        ' xmlns:image="http://www.google.com/schemas/sitemap-image/1.1"' if any(pictures.values()) else "")
     (out / "sitemap.xml").write_text(
         f'<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"{space}>\n' + body + "</urlset>\n",
         encoding="utf-8")

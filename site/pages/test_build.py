@@ -15,6 +15,7 @@ import os
 import re
 import shutil
 import unittest
+import urllib.parse
 from pathlib import Path
 
 HERE = Path(__file__).resolve().parent
@@ -3973,6 +3974,31 @@ class SiteWide(unittest.TestCase):
         checked = {self.address(path): article["dateModified"] for path, _, article in self.articles()}
         self.assertEqual(lastmod, {u: d for u, d in checked.items() if f"<loc>{u}</loc>" in self.sitemap})
         self.assertGreaterEqual(len(lastmod), 60)
+
+    def test_the_sitemap_lists_each_pages_pictures_and_each_is_a_built_file(self):
+        import xml.dom.minidom
+        dom = xml.dom.minidom.parseString(self.sitemap.encode("utf-8"))
+        self.assertEqual(dom.documentElement.getAttribute("xmlns:image"), "http://www.google.com/schemas/sitemap-image/1.1")
+        listed = {}
+        for entry in re.findall(r"<url>(.*?)</url>", self.sitemap):
+            loc = re.search(r"<loc>([^<]+)</loc>", entry).group(1)
+            listed[loc] = re.findall(r"<image:image><image:loc>([^<]+)</image:loc></image:image>", entry)
+            self.assertEqual(len(listed[loc]), len(set(listed[loc])), loc)
+            for image in listed[loc]:
+                self.assertTrue(image.startswith("https://museumofages.org/"), image)
+                self.assertTrue((SITE_BUILT / image[len("https://museumofages.org/"):]).is_file(), image)
+        self.assertGreaterEqual(sum(len(v) for v in listed.values()), 300)
+        # every picture a listed page shows, and every one its structured data describes, stands under its address
+        for path, text in self.pages.items():
+            address = self.address(path)
+            if address not in listed:
+                continue
+            shown = {html.unescape(src) for src in re.findall(r'<img\b[^>]*?\bsrc="([^"]+)"', text)}
+            for src in shown:
+                self.assertIn(urllib.parse.urljoin(address, src), listed[address], path)
+            for node in _graph(text):
+                if node.get("@type") == "ImageObject" and node.get("contentUrl"):
+                    self.assertIn(node["contentUrl"], listed[address], path)
 
 
 if __name__ == "__main__":
