@@ -25,7 +25,7 @@
    "sizes": "(min-width: 1280px) 588px, (min-width: 960px) calc(100vw - 80px), (min-width: 600px) calc(100vw - 64px), calc(100vw - 40px)",
    "person": "92.53% 38.98%",
    "marks": {
-    "triceratops": "3.03% 82.76%",
+    "triceratops": "3.03% 82.68%",
     "hips": "31.01% 41.36%",
     "person": "89.82% 95.24%"
    },
@@ -68,7 +68,7 @@
    "person": "7.31% 36.44%",
    "marks": {
     "t-rex": "14.67% 97.78%",
-    "triceratops": "14.63% 65.36%",
+    "triceratops": "14.63% 65.31%",
     "person": "5.57% 9.06%"
    },
    "behind": [
