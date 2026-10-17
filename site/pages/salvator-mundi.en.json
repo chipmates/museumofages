@@ -85,7 +85,7 @@
       "id": "sales",
       "nav": "The sales",
       "h": "Its sales since 1900",
-      "intro": "No sale before 1900 can be tied to this panel. Since then:",
+      "intro": "No document ties any sale before 1900 to this panel. Since then:",
       "cols": [
         "Year",
         "What happened",
