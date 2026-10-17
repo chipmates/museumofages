@@ -2740,8 +2740,9 @@ class Case(unittest.TestCase):
     # ---- a page of questions: its answer first, the list of its questions, each answer first, its FAQ data ----
 
     def ask_page(self):
-        """The first page whose first part lists its questions (top.jump)."""
-        return next((p for p in self.pages if self.data("en", p)["top"].get("jump")), None)
+        """The first page of questions: its first part lists them (top.jump) and its blocks ask them (question)."""
+        return next((p for p in self.pages if self.data("en", p)["top"].get("jump")
+                     and any(b["type"] == "question" for b in self.data("en", p)["blocks"])), None)
 
     def test_a_page_of_questions_answers_first_and_lists_its_questions_in_its_first_part(self):
         page = self.ask_page()
