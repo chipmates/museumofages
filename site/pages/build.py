@@ -347,9 +347,9 @@ def shape(obj):
     """The structure of a data file without its words, to compare the two languages. An entry of a list that only
     one language has (only: its code, a source in that language) is no part of it."""
     if isinstance(obj, dict):
-        # a list of one language's entries alone is no part of it either
+        # a list of one language's entries alone is no part of it either, nor the empty list of a language without them
         return {k: shape(v) for k, v in obj.items() if k != "_note"
-                and not (isinstance(v, list) and v and all(isinstance(x, dict) and "only" in x for x in v))}
+                and not (isinstance(v, list) and all(isinstance(x, dict) and "only" in x for x in v))}
     if isinstance(obj, list):
         return [shape(v) for v in obj if not (isinstance(v, dict) and "only" in v)]
     return type(obj).__name__
