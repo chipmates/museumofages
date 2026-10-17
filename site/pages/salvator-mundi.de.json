@@ -150,6 +150,27 @@
     },
     {
       "type": "question",
+      "id": "meaning",
+      "nav": "Die Bedeutung",
+      "h": "Was bedeutet „Salvator Mundi“ und was zeigt das Bild?",
+      "answer": "„Salvator Mundi“ ist Latein und heißt Erlöser der Welt. Das Bild zeigt Christus von vorn, er segnet mit der erhobenen rechten Hand und hält in der linken eine durchsichtige Kugel.",
+      "known": [
+        "Woraus die Kugel ist, wird verschieden beschrieben. Die National Gallery nannte sie 2011 Bergkristall, das unveröffentlichte Buch des Louvre fand laut dem Bericht von The Art Newspaper Glas mit Luftbläschen. Laut demselben Bericht stellte das Buch auch fest, dass die segnende Hand über den schwarzen Hintergrund gemalt ist, sie war also wohl nicht von Anfang an geplant. 2025 vertrat der Kunsthistoriker Philipp Zitzlsperger die These, das ganz blaue Gewand mit dem tiefen Ausschnitt sei Bildern von Frauen und der Jungfrau Maria entlehnt. Frank Zöllner nannte den Gedanken wichtig, aber etwas zu reißerisch. Martin Kemp sagte, wenn kein anderer Christus ein solches blaues Gewand trage, spreche das eher für Leonardo."
+      ],
+      "open": "Für wen das Bild gemalt wurde, ist nicht bekannt. Die National Gallery meinte 2011, Leonardo habe es wahrscheinlich für den französischen König Ludwig XII. gemalt, das Buch des Louvre nennt diese Annahme laut dem Bericht schwach.",
+      "end": [
+        [
+          "Wie groß es ist, im selben Maßstab gezeichnet wie die anderen Werke des Flügels: ",
+          {
+            "text": "die Größenseite",
+            "page": "sizes"
+          },
+          "."
+        ]
+      ]
+    },
+    {
+      "type": "question",
       "id": "where",
       "nav": "Der Verbleib",
       "h": "Wo ist der „Salvator Mundi“ heute?",
@@ -328,27 +349,6 @@
         "Restauriert hat es Dianne Dwyer Modestini von der New York University, in Etappen von 2005 bis Juli 2017, kurz vor der Auktion. Sie hält Leonardo für den Maler, ihr ausführlicher Bericht auf ihrer eigenen Website kommt also von einer Partei im Streit. Sie beschreibt ein einzelnes Brett aus Walnussholz mit einem durchgehenden Riss, Wurmgänge, die Stücke von Stirn, Nasenspitze und linkem Auge gekostet hatten, und Kinn, Hals und Brust, die eine scharfe Reinigung abgerieben hatte. Sie schloss die Fehlstellen mit dünnen Lasuren, berührte die Augen so wenig wie möglich, ergänzte ein paar Wellen Haar, wo es fehlte, und malte die verlorenen Teile des schwarzen Hintergrunds neu. Eine frühere Lage des Daumens an der segnenden Hand schien durch, und die Restauratorin übermalte sie, nachdem der Kurator der National Gallery, Luke Syson, so entschieden hatte. Sie sagt, eine Ultraviolettaufnahme zeige genau, wo sie retuschiert hat, und keine ihrer Retuschen liege auf originaler Farbe."
       ],
       "open": "Welcher Anteil der Farbe original ist, dazu hat niemand eine Zahl veröffentlicht. Frank Zöllner sagt, Fotos von 2005 bis 2017 zeigten, dass die weiche, rauchige Modellierung des Bildes zum Teil von dieser letzten Restaurierung stammt, und die Befunde der Restaurierung seien nie vollständig veröffentlicht worden."
-    },
-    {
-      "type": "question",
-      "id": "meaning",
-      "nav": "Die Bedeutung",
-      "h": "Was bedeutet „Salvator Mundi“ und was zeigt das Bild?",
-      "answer": "„Salvator Mundi“ ist Latein und heißt Erlöser der Welt. Das Bild zeigt Christus von vorn, er segnet mit der erhobenen rechten Hand und hält in der linken eine durchsichtige Kugel.",
-      "known": [
-        "Woraus die Kugel ist, wird verschieden beschrieben. Die National Gallery nannte sie 2011 Bergkristall, das unveröffentlichte Buch des Louvre fand laut dem Bericht von The Art Newspaper Glas mit Luftbläschen. Laut demselben Bericht stellte das Buch auch fest, dass die segnende Hand über den schwarzen Hintergrund gemalt ist, sie war also wohl nicht von Anfang an geplant. 2025 vertrat der Kunsthistoriker Philipp Zitzlsperger die These, das ganz blaue Gewand mit dem tiefen Ausschnitt sei Bildern von Frauen und der Jungfrau Maria entlehnt. Frank Zöllner nannte den Gedanken wichtig, aber etwas zu reißerisch. Martin Kemp sagte, wenn kein anderer Christus ein solches blaues Gewand trage, spreche das eher für Leonardo."
-      ],
-      "open": "Für wen das Bild gemalt wurde, ist nicht bekannt. Die National Gallery meinte 2011, Leonardo habe es wahrscheinlich für den französischen König Ludwig XII. gemalt, das Buch des Louvre nennt diese Annahme laut dem Bericht schwach.",
-      "end": [
-        [
-          "Wie groß es ist, im selben Maßstab gezeichnet wie die anderen Werke des Flügels: ",
-          {
-            "text": "die Größenseite",
-            "page": "sizes"
-          },
-          "."
-        ]
-      ]
     },
     {
       "type": "sources",

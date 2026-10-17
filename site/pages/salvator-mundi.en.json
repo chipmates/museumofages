@@ -150,6 +150,27 @@
     },
     {
       "type": "question",
+      "id": "meaning",
+      "nav": "What it means",
+      "h": "What does Salvator Mundi mean, and what does the painting show?",
+      "answer": "Salvator Mundi is Latin for Saviour of the World. The painting shows Christ from the front, raising his right hand to bless and holding a clear orb in his left.",
+      "known": [
+        "The orb has been described in two ways. In 2011 the National Gallery called it rock crystal, and the unreleased Louvre book, as The Art Newspaper reported, found it is glass with air bubbles. According to the same report, the book also found that the blessing hand was painted over the black background, which suggests it was not part of the first plan. In 2025 the art historian Philipp Zitzlsperger argued that the all-blue robe with its low neckline borrows from pictures of women and of the Virgin Mary. Frank Zöllner called the idea important but a little too sensational. Martin Kemp said that if no other Christ wears such a blue robe, that would count for Leonardo."
+      ],
+      "open": "Who it was painted for is not known. The National Gallery suggested in 2011 that Leonardo probably made it for the French king, Louis XII, and the Louvre's book, as reported, calls that idea weak.",
+      "end": [
+        [
+          "How big it is, drawn to one scale with the other works in the wing: ",
+          {
+            "text": "the sizes page",
+            "page": "sizes"
+          },
+          "."
+        ]
+      ]
+    },
+    {
+      "type": "question",
       "id": "where",
       "nav": "Where it is",
       "h": "Where is the Salvator Mundi now?",
@@ -328,27 +349,6 @@
         "Its restorer was Dianne Dwyer Modestini of New York University, who worked on it in stages from 2005 until July 2017, shortly before the sale. She holds that Leonardo painted it, so her detailed account on her own website comes from a party to the debate. She records a single walnut board with a split running through it, worm tunnels that had cost bits of the forehead, the tip of the nose and the left eye, and a chin, neck and chest worn down by harsh cleaning. She filled the losses with thin glazes, touched the eyes as little as she could, added a few waves of hair where it was missing and repainted the lost parts of the black background. An earlier position of the blessing hand's thumb showed through, and she painted it out after the National Gallery's curator, Luke Syson, decided so. She says an ultraviolet photograph shows exactly where she retouched, and that none of her retouching lies on original paint."
       ],
       "open": "What share of the paint is original: no one has published a figure. Frank Zöllner says photographs from 2005 to 2017 show that the painting's soft, smoky modelling partly comes from this latest restoration, and that its findings were never fully published."
-    },
-    {
-      "type": "question",
-      "id": "meaning",
-      "nav": "What it means",
-      "h": "What does Salvator Mundi mean, and what does the painting show?",
-      "answer": "Salvator Mundi is Latin for Saviour of the World. The painting shows Christ from the front, raising his right hand to bless and holding a clear orb in his left.",
-      "known": [
-        "The orb has been described in two ways. In 2011 the National Gallery called it rock crystal, and the unreleased Louvre book, as The Art Newspaper reported, found it is glass with air bubbles. According to the same report, the book also found that the blessing hand was painted over the black background, which suggests it was not part of the first plan. In 2025 the art historian Philipp Zitzlsperger argued that the all-blue robe with its low neckline borrows from pictures of women and of the Virgin Mary. Frank Zöllner called the idea important but a little too sensational. Martin Kemp said that if no other Christ wears such a blue robe, that would count for Leonardo."
-      ],
-      "open": "Who it was painted for is not known. The National Gallery suggested in 2011 that Leonardo probably made it for the French king, Louis XII, and the Louvre's book, as reported, calls that idea weak.",
-      "end": [
-        [
-          "How big it is, drawn to one scale with the other works in the wing: ",
-          {
-            "text": "the sizes page",
-            "page": "sizes"
-          },
-          "."
-        ]
-      ]
     },
     {
       "type": "sources",
