@@ -152,7 +152,7 @@
       "nav": "Wie er starb",
       "h": "Woran starb Leonardo da Vinci? Sein Testament und seine letzten Tage",
       "paras": [
-        "Kein bekanntes Dokument sagt, woran Leonardo da Vinci starb. Manche Quellen nennen einen Schlaganfall als mögliche Ursache, doch das ist eine spätere Vermutung: Kein bekannter Brief und kein bekanntes Dokument von 1519 nennt eine Ursache. Vasari schreibt Jahrzehnte später nur, er sei viele Monate krank gewesen.",
+        "Kein bekanntes Dokument sagt, woran Leonardo da Vinci starb. Manche Quellen nennen einen Schlaganfall als mögliche Ursache, doch das ist eine spätere Vermutung: Kein Brief und kein Schriftstück von 1519, das wir kennen, nennt eine Ursache. Vasari schreibt Jahrzehnte später, er sei viele Monate krank gewesen.",
         "Am 23. April 1519 machte er in Cloux sein Testament, vor einem königlichen Notar aus Amboise. Das Original ist verloren, der Text ist in Abschriften erhalten. Das Datum darauf lautet 1518, vor Ostern: Das Jahr wechselte damals zu Ostern, nach unserer Zählung ist es 1519. Er wollte in der Kirche Saint-Florentin in Amboise begraben werden, getragen von ihren Kaplänen, und sechzig arme Männer sollten sechzig Kerzen tragen. Francesco Melzi, sein einziger Testamentsvollstrecker, bekam alle seine Bücher und die Instrumente und Bilder seines Handwerks. Kein Gemälde wird genannt: Die drei, die der Kardinal gesehen hatte, kommen im Testament nicht vor, und der Louvre schließt daraus, dass der König sie sehr wahrscheinlich schon 1518 gekauft hatte, über eine Zahlung an Salaì.",
         "Neun Tage später, am 2. Mai 1519, starb er in Cloux, mit 67 Jahren. Der Beleg ist Melzis Brief vom 1. Juni an Leonardos Brüder in Florenz: Er sei am 2. Mai gestorben, mit allen Sakramenten der Kirche. Eine Ursache nennt der Brief nicht. Die gelähmte Hand von 1517 wird oft auf einen Schlaganfall zurückgeführt, und eine medizinische Arbeit von 2019 hielt stattdessen eine Nervenschädigung für wahrscheinlich. Beides sind Deutungen, keine Belege."
       ]
@@ -296,6 +296,10 @@
         {
           "text": "Musée du Louvre, Die Jungfrau mit dem Kind und der heiligen Anna",
           "href": "https://collections.louvre.fr/en/ark:/53355/cl010066107"
+        },
+        {
+          "text": "Musée du Louvre, Johannes der Täufer",
+          "href": "https://collections.louvre.fr/en/ark:/53355/cl010062374"
         },
         {
           "text": "Treccani, Dizionario Biografico degli Italiani, Leonardo da Vinci (auf Italienisch)",

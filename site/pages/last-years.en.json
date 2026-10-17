@@ -152,7 +152,7 @@
       "nav": "How he died",
       "h": "How did Leonardo da Vinci die? His will and his last days",
       "paras": [
-        "No known record says what Leonardo da Vinci died of. Some sources say he possibly died of a stroke, but that is a later guess: no known letter or document from 1519 names a cause. Vasari, writing decades later, says only that he had been ill for many months.",
+        "No known record says what Leonardo da Vinci died of. Some sources say he possibly died of a stroke, but that is a later guess: no known letter or document from 1519 names a cause. Vasari, writing decades later, says he had been ill for many months.",
         "On 23 April 1519 he made his will at Cloux, before a royal notary of Amboise. The original is lost and the text survives in copies. Its date reads 1518, before Easter: the year then turned at Easter, so by our reckoning it is 1519. He wanted his grave in Saint-Florentin, the castle church at Amboise, carried there by its chaplains, with sixty poor men bearing sixty candles. Francesco Melzi, his only executor, got all his books and the instruments and pictures of his trade. No painting is named: the three the cardinal saw are not in the will at all, and the Louvre's reading is that the king had very probably bought them in 1518, through a payment to Salaì.",
         "He died nine days later, on 2 May 1519, at Cloux, aged 67. The record is Melzi's letter of 1 June to Leonardo's brothers in Florence: he had died on 2 May with all the rites of the Church. The letter names no cause. The paralysed hand of 1517 is often put down to a stroke, and a medical paper of 2019 argued for nerve damage instead. Both are readings, not records."
       ]
@@ -296,6 +296,10 @@
         {
           "text": "Musée du Louvre, The Virgin and Child with Saint Anne",
           "href": "https://collections.louvre.fr/en/ark:/53355/cl010066107"
+        },
+        {
+          "text": "Musée du Louvre, Saint John the Baptist",
+          "href": "https://collections.louvre.fr/en/ark:/53355/cl010062374"
         },
         {
           "text": "Treccani, Dizionario Biografico degli Italiani, Leonardo da Vinci (in Italian)",
