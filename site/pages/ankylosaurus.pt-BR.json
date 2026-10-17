@@ -22,17 +22,17 @@
     2400
    ],
    "sizes": "(min-width: 1280px) 588px, (min-width: 960px) calc(100vw - 80px), (min-width: 600px) calc(100vw - 64px), calc(100vw - 40px)",
-   "person": "91.69% 23.4%",
+   "person": "91.64% 23.4%",
    "marks": {
-    "ankylosaurus": "2.92% 85.26%",
-    "hips": "46.15% 91.69%",
-    "person": "88.67% 94.72%"
+    "ankylosaurus": "3.04% 84.97%",
+    "hips": "46.15% 91.64%",
+    "person": "88.62% 94.67%"
    },
    "behind": [
     "hips"
    ],
    "tops": {
-    "hips": "23.4%"
+    "hips": "23.79%"
    }
   },
   "close": {
@@ -44,8 +44,8 @@
    "sizes": "(min-width: 1280px) 690px, (min-width: 960px) 54vw, (min-width: 600px) calc(100vw - 64px), calc(100vw - 40px)",
    "person": "8.97% 19.41%",
    "marks": {
-    "knob": "17.31% 30%",
-    "club": "17.31% 59.56%",
+    "knob": "17.6% 30.23%",
+    "club": "17.6% 59.7%",
     "person": "4.06% 13.87%"
    },
    "behind": [
@@ -63,7 +63,7 @@
    "person": "7.34% 30.8%",
    "marks": {
     "t-rex": "14.67% 97.78%",
-    "ankylosaurus": "14.63% 61.59%",
+    "ankylosaurus": "14.63% 61.38%",
     "stegosaurus": "14.63% 55.65%",
     "person": "5.61% 9.06%"
    },
@@ -78,7 +78,7 @@
     1600
    ],
    "sizes": "(min-width: 1280px) 690px, (min-width: 960px) 54vw, (min-width: 600px) calc(100vw - 64px), calc(100vw - 40px)",
-   "person": "91.64% 23.4%",
+   "person": "91.69% 23.4%",
    "swatches": {
     "found": "#b07357",
     "other": "#474c5b",
@@ -145,7 +145,7 @@
  },
  "top": {
   "h1": "Qual era o tamanho do anquilossauro?",
-  "answer": "O anquilossauro tinha cerca de 6 a 8 m de comprimento, segundo um estudo de 2017. O menor dos animais conhecidos chega a cerca de 4,8 toneladas (de 3,6 a 6 na margem do próprio estudo), calculadas a partir da circunferência dos ossos das patas. O nosso anquilossauro foi feito no tamanho desse animal: 6,4 m de comprimento, quase quatro pessoas deitadas uma atrás da outra. O ponto mais alto do dorso fica acima do quadril, com 1,70 m, exatamente a altura da pessoa ao lado.",
+  "answer": "O anquilossauro tinha cerca de 6 a 8 m de comprimento, segundo um estudo de 2017. O menor dos animais conhecidos chega a cerca de 4,8 toneladas (de 3,6 a 6 na margem do próprio estudo), calculadas a partir da circunferência dos ossos das patas. O nosso anquilossauro foi feito no tamanho desse animal: 6,4 m de comprimento, quase quatro pessoas deitadas uma atrás da outra. O ponto mais alto do dorso fica acima do quadril, com 1,7 m, a altura da pessoa ao lado.",
   "answer_more": "Até hoje só foi encontrada uma clava de cauda de anquilossauro, nesse mesmo animal. Ela tem cerca de meio metro de largura e ficava na ponta de uma cauda que, na metade de trás, era rígida como uma haste.",
   "scale": {
    "pic": "side",
@@ -173,7 +173,7 @@
     },
     {
      "span": "hips",
-     "text": "O alto do dorso acima do quadril, 1,70 m, o nosso modelo"
+     "text": "O alto do dorso acima do quadril, 1,7 m, o nosso modelo"
     },
     {
      "span": "person",
@@ -253,7 +253,7 @@
      "cells": [
       "O nosso modelo",
       "6,4 m em linha reta, do bico à clava",
-      "1,70 m no alto do dorso acima do quadril, 1,5 m acima dos ombros, o nosso modelo",
+      "1,7 m no alto do dorso acima do quadril, 1,5 m acima dos ombros, o nosso modelo",
       "o crânio do AMNH 5214",
       "",
       "medido nos nossos arquivos, a altura obtida ao montar os ossos"
@@ -513,7 +513,7 @@
     },
     {
      "q": "Qual era a altura do anquilossauro?",
-     "a": "Até hoje nenhuma altura medida num anquilossauro real foi publicada. O nosso, montado a partir dos ossos, tem 1,70 m no alto do dorso acima do quadril, o ponto mais alto dele."
+     "a": "Até hoje nenhuma altura medida num anquilossauro real foi publicada. O nosso, montado a partir dos ossos, tem 1,7 m no alto do dorso acima do quadril, o ponto mais alto dele."
     }
    ]
   },

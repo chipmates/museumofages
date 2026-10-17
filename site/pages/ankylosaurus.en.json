@@ -22,17 +22,17 @@
     2400
    ],
    "sizes": "(min-width: 1280px) 588px, (min-width: 960px) calc(100vw - 80px), (min-width: 600px) calc(100vw - 64px), calc(100vw - 40px)",
-   "person": "91.69% 23.4%",
+   "person": "91.64% 23.4%",
    "marks": {
-    "ankylosaurus": "2.92% 85.26%",
-    "hips": "46.15% 91.69%",
-    "person": "88.67% 94.72%"
+    "ankylosaurus": "3.04% 84.97%",
+    "hips": "46.15% 91.64%",
+    "person": "88.62% 94.67%"
    },
    "behind": [
     "hips"
    ],
    "tops": {
-    "hips": "23.4%"
+    "hips": "23.79%"
    }
   },
   "close": {
@@ -44,8 +44,8 @@
    "sizes": "(min-width: 1280px) 690px, (min-width: 960px) 54vw, (min-width: 600px) calc(100vw - 64px), calc(100vw - 40px)",
    "person": "8.97% 19.41%",
    "marks": {
-    "knob": "17.31% 30%",
-    "club": "17.31% 59.56%",
+    "knob": "17.6% 30.23%",
+    "club": "17.6% 59.7%",
     "person": "4.06% 13.87%"
    },
    "behind": [
@@ -63,7 +63,7 @@
    "person": "7.34% 30.8%",
    "marks": {
     "t-rex": "14.67% 97.78%",
-    "ankylosaurus": "14.63% 61.59%",
+    "ankylosaurus": "14.63% 61.38%",
     "stegosaurus": "14.63% 55.65%",
     "person": "5.61% 9.06%"
    },
@@ -78,7 +78,7 @@
     1600
    ],
    "sizes": "(min-width: 1280px) 690px, (min-width: 960px) 54vw, (min-width: 600px) calc(100vw - 64px), calc(100vw - 40px)",
-   "person": "91.64% 23.4%",
+   "person": "91.69% 23.4%",
    "swatches": {
     "found": "#b07357",
     "other": "#474c5b",
@@ -145,7 +145,7 @@
  },
  "top": {
   "h1": "How big was Ankylosaurus?",
-  "answer": "Ankylosaurus was about 6 to 8 m (20 to 26 ft) long, by a 2017 study. The smallest of the known animals came to about 4.8 tonnes (3.6 to 6 by the study's own spread), worked out from how thick its leg bones are. Our Ankylosaurus is built at that animal's size: 6.4 m (21 ft) long, almost four people lying head to foot. Its back is highest over the hips, at 1.70 m (5.6 ft), exactly the height of the person beside it.",
+  "answer": "Ankylosaurus was about 6 to 8 m (20 to 26 ft) long, by a 2017 study. The smallest of the known animals came to about 4.8 tonnes (3.6 to 6 by the study's own spread), worked out from how thick its leg bones are. Our Ankylosaurus is built at that animal's size: 6.4 m (21 ft) long, almost four people lying head to foot. Its back is highest over the hips, at 1.7 m (5.6 ft), the height of the person beside it.",
   "answer_more": "Only one Ankylosaurus tail club has been found so far, on that same animal. Its knob is about half a metre (1.6 ft) wide, at the end of a tail whose back half was stiff as a rod.",
   "scale": {
    "pic": "side",
@@ -173,7 +173,7 @@
     },
     {
      "span": "hips",
-     "text": "Top of the back over the hips, 1.70 m, ours"
+     "text": "Top of the back over the hips, 1.7 m, ours"
     },
     {
      "span": "person",
@@ -253,7 +253,7 @@
      "cells": [
       "Our model",
       "6.4 m (21 ft) straight, beak to club",
-      "1.70 m (5.6 ft) at the top of the back over the hips, 1.5 m (4.9 ft) over the shoulders, ours",
+      "1.7 m (5.6 ft) at the top of the back over the hips, 1.5 m (4.9 ft) over the shoulders, ours",
       "the skull of AMNH 5214",
       "",
       "measured on our files, the height built up from the bones"
@@ -513,7 +513,7 @@
     },
     {
      "q": "How tall was Ankylosaurus?",
-     "a": "No height measured on a real Ankylosaurus has been published. Ours, built up from its bones, is 1.70 m (5.6 ft) at the top of the back over the hips, its highest point."
+     "a": "No height measured on a real Ankylosaurus has been published. Ours, built up from its bones, is 1.7 m (5.6 ft) at the top of the back over the hips, its highest point."
     }
    ]
   },

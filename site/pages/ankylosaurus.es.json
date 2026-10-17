@@ -22,17 +22,17 @@
     2400
    ],
    "sizes": "(min-width: 1280px) 588px, (min-width: 960px) calc(100vw - 80px), (min-width: 600px) calc(100vw - 64px), calc(100vw - 40px)",
-   "person": "91.69% 23.4%",
+   "person": "91.64% 23.4%",
    "marks": {
-    "ankylosaurus": "2.92% 85.26%",
-    "hips": "46.15% 91.69%",
-    "person": "88.67% 94.72%"
+    "ankylosaurus": "3.04% 84.97%",
+    "hips": "46.15% 91.64%",
+    "person": "88.62% 94.67%"
    },
    "behind": [
     "hips"
    ],
    "tops": {
-    "hips": "23.4%"
+    "hips": "23.79%"
    }
   },
   "close": {
@@ -44,8 +44,8 @@
    "sizes": "(min-width: 1280px) 690px, (min-width: 960px) 54vw, (min-width: 600px) calc(100vw - 64px), calc(100vw - 40px)",
    "person": "8.97% 19.41%",
    "marks": {
-    "knob": "17.31% 30%",
-    "club": "17.31% 59.56%",
+    "knob": "17.6% 30.23%",
+    "club": "17.6% 59.7%",
     "person": "4.06% 13.87%"
    },
    "behind": [
@@ -63,7 +63,7 @@
    "person": "7.34% 30.8%",
    "marks": {
     "t-rex": "14.67% 97.78%",
-    "ankylosaurus": "14.63% 61.59%",
+    "ankylosaurus": "14.63% 61.38%",
     "stegosaurus": "14.63% 55.65%",
     "person": "5.61% 9.06%"
    },
@@ -78,7 +78,7 @@
     1600
    ],
    "sizes": "(min-width: 1280px) 690px, (min-width: 960px) 54vw, (min-width: 600px) calc(100vw - 64px), calc(100vw - 40px)",
-   "person": "91.64% 23.4%",
+   "person": "91.69% 23.4%",
    "swatches": {
     "found": "#b07357",
     "other": "#474c5b",
@@ -145,7 +145,7 @@
  },
  "top": {
   "h1": "¿Cuánto medía el Ankylosaurus?",
-  "answer": "El Ankylosaurus, o anquilosaurio, medía unos 6 a 8 m de largo, según un estudio de 2017. El más pequeño de los animales conocidos llega a unas 4,8 toneladas (de 3,6 a 6 según el margen del propio estudio), calculadas a partir del grosor de los huesos de sus patas. Nuestro Ankylosaurus está hecho al tamaño de ese animal: 6,4 m de largo, casi cuatro personas tumbadas una detrás de otra. Lo más alto del lomo está sobre la cadera, a 1,70 m, exactamente la altura de la persona a su lado.",
+  "answer": "El Ankylosaurus, o anquilosaurio, medía unos 6 a 8 m de largo, según un estudio de 2017. El más pequeño de los animales conocidos llega a unas 4,8 toneladas (de 3,6 a 6 según el margen del propio estudio), calculadas a partir del grosor de los huesos de sus patas. Nuestro Ankylosaurus está hecho al tamaño de ese animal: 6,4 m de largo, casi cuatro personas tumbadas una detrás de otra. Lo más alto del lomo está sobre la cadera, a 1,7 m, la altura de la persona a su lado.",
   "answer_more": "Hasta hoy solo se encontró una maza de la cola de Ankylosaurus, en ese mismo animal. Mide más o menos medio metro de ancho y estaba al final de la cola, que en su mitad trasera era rígida como una barra.",
   "scale": {
    "pic": "side",
@@ -173,7 +173,7 @@
     },
     {
      "span": "hips",
-     "text": "Lo alto del lomo sobre la cadera, 1,70 m, nuestro modelo"
+     "text": "Lo alto del lomo sobre la cadera, 1,7 m, nuestro modelo"
     },
     {
      "span": "person",
@@ -253,7 +253,7 @@
      "cells": [
       "Nuestro modelo",
       "6,4 m en línea recta, del pico a la maza",
-      "1,70 m en lo alto del lomo sobre la cadera, 1,5 m sobre los hombros, nuestro modelo",
+      "1,7 m en lo alto del lomo sobre la cadera, 1,5 m sobre los hombros, nuestro modelo",
       "el cráneo de AMNH 5214",
       "",
       "medido en nuestros archivos, la altura obtenida al montar los huesos"
@@ -513,7 +513,7 @@
     },
     {
      "q": "¿Qué altura tenía el Ankylosaurus?",
-     "a": "Hasta hoy no se publicó ninguna altura medida en un Ankylosaurus real. El nuestro, montado a partir de sus huesos, mide 1,70 m en lo alto del lomo sobre la cadera, su punto más alto."
+     "a": "Hasta hoy no se publicó ninguna altura medida en un Ankylosaurus real. El nuestro, montado a partir de sus huesos, mide 1,7 m en lo alto del lomo sobre la cadera, su punto más alto."
     }
    ]
   },

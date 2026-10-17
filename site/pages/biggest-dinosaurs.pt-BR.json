@@ -26,7 +26,7 @@
     "argentinosaurus": "9.39% 71.81%",
     "brachiosaurus": "51.22% 95.18%",
     "stegosaurus": "0.41% 11.84%",
-    "ankylosaurus": "12.45% 25.56%",
+    "ankylosaurus": "12.48% 25.51%",
     "person": "32.4% 33.37%",
     "triceratops": "34.69% 49.26%",
     "t-rex": "55.51% 78.7%",
@@ -51,7 +51,7 @@
     "stegosaurus": "0.75% 20.68%",
     "triceratops": "28.11% 53.51%",
     "person": "57.61% 59.3%",
-    "ankylosaurus": "59.79% 82.65%"
+    "ankylosaurus": "59.83% 82.56%"
    },
    "behind": [
     "t-rex",
@@ -135,7 +135,7 @@
     2400
    ],
    "sizes": "(min-width: 1280px) 690px, (min-width: 960px) 54vw, (min-width: 600px) calc(100vw - 64px), calc(100vw - 40px)",
-   "person": "91.69% 23.4%"
+   "person": "91.64% 23.4%"
   },
   "stego": {
    "stem": "animals-stegosaurus-side",
@@ -280,7 +280,7 @@
    "h": "Tente adivinhar",
    "q": "Qual dos nossos sete tem no quadril exatamente a altura da pessoa, 1,70 m?",
    "button": "Ver a resposta",
-   "a": "O nosso anquilossauro. O quadril dele fica a 1,70 m do chão, a altura da pessoa, e ele tem 6,4 m de comprimento, quase quatro pessoas deitadas uma atrás da outra.",
+   "a": "O nosso anquilossauro. O quadril dele fica a 1,7 m do chão, a altura da pessoa, e ele tem 6,4 m de comprimento, quase quatro pessoas deitadas uma atrás da outra.",
    "button_open": "Esconder a resposta"
   },
   "out": {

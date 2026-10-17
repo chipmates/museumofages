@@ -26,17 +26,17 @@
     2400
    ],
    "sizes": "(min-width: 1280px) 588px, (min-width: 960px) calc(100vw - 80px), (min-width: 600px) calc(100vw - 64px), calc(100vw - 40px)",
-   "person": "91.69% 23.4%",
+   "person": "91.64% 23.4%",
    "marks": {
-    "ankylosaurus": "2.92% 85.26%",
-    "hips": "46.15% 91.69%",
-    "person": "88.67% 94.72%"
+    "ankylosaurus": "3.04% 84.97%",
+    "hips": "46.15% 91.64%",
+    "person": "88.62% 94.67%"
    },
    "behind": [
     "hips"
    ],
    "tops": {
-    "hips": "23.4%"
+    "hips": "23.79%"
    }
   },
   "close": {
@@ -48,8 +48,8 @@
    "sizes": "(min-width: 1280px) 690px, (min-width: 960px) 54vw, (min-width: 600px) calc(100vw - 64px), calc(100vw - 40px)",
    "person": "8.97% 19.41%",
    "marks": {
-    "knob": "17.31% 30%",
-    "club": "17.31% 59.56%",
+    "knob": "17.6% 30.23%",
+    "club": "17.6% 59.7%",
     "person": "4.06% 13.87%"
    },
    "behind": [
@@ -67,7 +67,7 @@
    "person": "7.34% 30.8%",
    "marks": {
     "t-rex": "14.67% 97.78%",
-    "ankylosaurus": "14.63% 61.59%",
+    "ankylosaurus": "14.63% 61.38%",
     "stegosaurus": "14.63% 55.65%",
     "person": "5.61% 9.06%"
    },
@@ -82,7 +82,7 @@
     1600
    ],
    "sizes": "(min-width: 1280px) 690px, (min-width: 960px) 54vw, (min-width: 600px) calc(100vw - 64px), calc(100vw - 40px)",
-   "person": "91.64% 23.4%",
+   "person": "91.69% 23.4%",
    "swatches": {
     "found": "#b07357",
     "other": "#474c5b",
@@ -149,7 +149,7 @@
  },
  "top": {
   "h1": "Wie groß war ein Ankylosaurus?",
-  "answer": "Ein Ankylosaurus war etwa 6 bis 8 m lang, nach einer Studie von 2017. Das kleinste der bekannten Tiere kommt auf etwa 4,8 t (3,6 bis 6 t nach der Spanne der Studie selbst), berechnet aus der Dicke seiner Beinknochen. Unser Ankylosaurus ist in der Größe dieses Tiers gebaut: 6,4 m lang, fast vier Menschen der Länge nach hintereinandergelegt. Am höchsten ist sein Rücken über der Hüfte, mit 1,70 m genauso hoch wie der Mensch daneben.",
+  "answer": "Ein Ankylosaurus war etwa 6 bis 8 m lang, nach einer Studie von 2017. Das kleinste der bekannten Tiere kommt auf etwa 4,8 t (3,6 bis 6 t nach der Spanne der Studie selbst), berechnet aus der Dicke seiner Beinknochen. Unser Ankylosaurus ist in der Größe dieses Tiers gebaut: 6,4 m lang, fast vier Menschen der Länge nach hintereinandergelegt. Am höchsten ist sein Rücken über der Hüfte, mit 1,7 m so hoch wie der Mensch daneben.",
   "answer_more": "Bisher wurde nur eine Schwanzkeule eines Ankylosaurus gefunden, an eben diesem Tier. Sie ist etwa einen halben Meter breit und saß am Ende eines Schwanzes, dessen hintere Hälfte steif war wie eine Stange.",
   "scale": {
    "pic": "side",
@@ -177,7 +177,7 @@
     },
     {
      "span": "hips",
-     "text": "Rücken über der Hüfte, 1,70 m, unser Modell"
+     "text": "Rücken über der Hüfte, 1,7 m, unser Modell"
     },
     {
      "span": "person",
@@ -257,7 +257,7 @@
      "cells": [
       "Unser Modell",
       "6,4 m gerade, vom Schnabel bis zur Keule",
-      "1,70 m an der Oberkante des Rückens über der Hüfte, 1,5 m über den Schultern, unser Modell",
+      "1,7 m an der Oberkante des Rückens über der Hüfte, 1,5 m über den Schultern, unser Modell",
       "der Schädel von AMNH 5214",
       "",
       "an unseren Dateien gemessen, die Höhe aus den Knochen aufgebaut"
@@ -517,7 +517,7 @@
     },
     {
      "q": "Wie hoch war ein Ankylosaurus?",
-     "a": "Eine an einem echten Ankylosaurus gemessene Höhe ist bisher nicht veröffentlicht. Unser Modell, aus den Knochen aufgebaut, misst 1,70 m an der Oberkante des Rückens über der Hüfte, seinem höchsten Punkt."
+     "a": "Eine an einem echten Ankylosaurus gemessene Höhe ist bisher nicht veröffentlicht. Unser Modell, aus den Knochen aufgebaut, misst 1,7 m an der Oberkante des Rückens über der Hüfte, seinem höchsten Punkt."
     }
    ]
   },
