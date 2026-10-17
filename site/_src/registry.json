@@ -245,6 +245,27 @@
       },
       {
         "slug": {
+          "en": "salvator-mundi",
+          "de": "salvator-mundi"
+        },
+        "name": {
+          "en": "Salvator Mundi",
+          "de": "Salvator Mundi"
+        },
+        "line": {
+          "en": "What it sold for in 2017, who owns it, where it is, and why experts disagree whether Leonardo painted it.",
+          "de": "Was er 2017 kostete, wem er gehört, wo er ist und warum die Fachleute uneins sind, ob Leonardo ihn malte."
+        },
+        "langs": ["en", "de"],
+        "count": "salvator-mundi",
+        "about": {"@type": "Painting", "name": "Salvator Mundi", "sameAs": "https://www.wikidata.org/wiki/Q1892745"},
+        "never_say": [
+          ["private collection|privatsammlung", "who owns it is not publicly confirmed: never a private collection on this page"],
+          ["\\bthe salvator mundi is (?:a (?:painting|work) )?by leonardo\\b|\\bleonardo painted the salvator mundi\\b|der „?salvator mundi“? ist (?:ein (?:werk|gemälde) )?von leonardo\\b|leonardo malte den „?salvator mundi", "the attribution is disputed: never his as a fact"]
+        ]
+      },
+      {
+        "slug": {
           "en": "sizes",
           "de": "groessen"
         },

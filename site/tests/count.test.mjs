@@ -165,7 +165,7 @@ test('every language, hold, kind of work, page kind and door on its list writes;
 })
 
 test('the lists the build writes hold the sheet\'s pages and languages', () => {
-  for (const kind of ['home', 'leonardo', 'inventions', 'paintings', 'sizes', 'supper', 'mona-lisa', 'last-years', 'life', 'statement', 'privacy', 'imprint',
+  for (const kind of ['home', 'leonardo', 'inventions', 'paintings', 'sizes', 'supper', 'mona-lisa', 'salvator-mundi', 'last-years', 'life', 'statement', 'privacy', 'imprint',
     'animals', 'megalodon']) assert.ok(PAGE_KINDS.includes(kind), kind)
   // the pages of the wing in the making, which the edge never asks the ads' question
   assert.deepEqual([...UNASKED].sort(), ['/animals/', '/de/tiere/', '/es/animales/', '/pt-br/animais/'])

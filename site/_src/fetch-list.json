@@ -3177,6 +3177,30 @@
    "sha256": "d5e6e77fb1b39dfac5ba6873a839dfdc164325e621df81908152226d300852ad"
   },
   {
+   "path": "pages/pics/img/vinci-plate-salvator-mundi-cook-320.avif",
+   "url": "/static/img/vinci-plate-salvator-mundi-cook-320.avif",
+   "bytes": 17728,
+   "sha256": "66c661766cbcdbbe7360a2605ccde4e717881f4bd89161bfd4b6130bfaf1f389"
+  },
+  {
+   "path": "pages/pics/img/vinci-plate-salvator-mundi-cook-320.webp",
+   "url": "/static/img/vinci-plate-salvator-mundi-cook-320.webp",
+   "bytes": 25548,
+   "sha256": "959f507bfb58a4ebf4af3d9bac2d58cc5ea327d2c702e9c59ad7996dda8d2199"
+  },
+  {
+   "path": "pages/pics/img/vinci-plate-salvator-mundi-cook-640.avif",
+   "url": "/static/img/vinci-plate-salvator-mundi-cook-640.avif",
+   "bytes": 101102,
+   "sha256": "eae6154cafb1f451a6e1c8074080fab3cc01b46fb6e54a17ddd315075351987e"
+  },
+  {
+   "path": "pages/pics/img/vinci-plate-salvator-mundi-cook-640.webp",
+   "url": "/static/img/vinci-plate-salvator-mundi-cook-640.webp",
+   "bytes": 148062,
+   "sha256": "469b31aaf34d1f5b08c6d0ff7c50c53ef17e171a2fa532c1a3879f6a469de1e2"
+  },
+  {
    "path": "pages/pics/img/vinci-plate-virgin-and-child-with-st-anne-320.avif",
    "url": "/static/img/vinci-plate-virgin-and-child-with-st-anne-320.avif",
    "bytes": 20483,
@@ -3607,6 +3631,18 @@
    "url": "/static/img/vinci-poster-water-lifting-screw-720.webp",
    "bytes": 8808,
    "sha256": "08ed52a64804623a466e8a571415619f345f6d09f104ad0af1cf3c9d6752c5ea"
+  },
+  {
+   "path": "pages/pics/img/vinci-salvator-mundi-og-de-1200x630.png",
+   "url": "/static/img/vinci-salvator-mundi-og-de-1200x630.png",
+   "bytes": 244214,
+   "sha256": "7632f8c1b85a21ba9a171656c4a5f9bc05222fa71015df9f10c382159799ceae"
+  },
+  {
+   "path": "pages/pics/img/vinci-salvator-mundi-og-en-1200x630.png",
+   "url": "/static/img/vinci-salvator-mundi-og-en-1200x630.png",
+   "bytes": 242585,
+   "sha256": "c087232be1051479daee7cdb8e5353f2447c1ad0338c03006bb3ff43fa09238d"
   },
   {
    "path": "pages/pics/img/vinci-sizes-chart-de-1600.png",
