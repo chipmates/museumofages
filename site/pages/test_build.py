@@ -3113,6 +3113,7 @@ class Built(unittest.TestCase):
         wings = json.loads(REGISTRY.read_text(encoding="utf-8"))
         lists = (HERE.parent / "functions" / "_count" / "lists.js").read_text(encoding="utf-8")
         kinds = json.loads(re.search(r"PAGE_KINDS = Object\.freeze\((\[.*?\])\)", lists).group(1))
+        table = {e["code"]: e for e in json.loads((SITE_SRC / "languages.json").read_text(encoding="utf-8"))["languages"]}
         found = 0
         for key, wing in wings.items():
             if key.startswith("_") or wing.get("state") != "open":
@@ -3121,7 +3122,13 @@ class Built(unittest.TestCase):
                 kind = topic.get("count") or topic["slug"]["en"].replace("-", "_")
                 self.assertIn(kind, kinds)
                 for lang in topic.get("langs") or ["en", "de"]:
-                    page = SITE_BUILT / wing["page"][lang].strip("/") / topic["slug"][lang] / "index.html"
+                    # English and German addresses stand in the registry, the other languages' in languages.json
+                    if lang in wing["page"]:
+                        page = SITE_BUILT / wing["page"][lang].strip("/") / topic["slug"][lang] / "index.html"
+                    else:
+                        slugs = table[lang]["slugs"]
+                        page = (SITE_BUILT / table[lang]["folder"] / slugs["wings"][key] / slugs["topics"][topic["slug"]["en"]]
+                                / "index.html")
                     self.assertIn(f'data-count="{kind}"', page.read_text(encoding="utf-8"), page)
                     found += 1
         self.assertGreater(found, 2)

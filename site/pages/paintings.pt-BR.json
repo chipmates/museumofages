@@ -1,0 +1,1043 @@
+{
+ "_note": "AS PALAVRAS da página das pinturas, em português do Brasil. Reescritas a partir do inglês e do alemão, com os mesmos títulos, datas, acervos, graus de atribuição e fontes. Os títulos, as datas e os acervos da lista são os da ficha da ala em português (vinci.facts.pt-BR.json). Sem travessão, sem ponto e vírgula. Status ai: nenhuma pessoa as revisou ainda.",
+ "page": {
+  "id": "vinci-paintings",
+  "wing": "vinci",
+  "topic": "paintings",
+  "stop": "picture-room",
+  "published": null,
+  "og_image": {
+   "file": "vinci-paintings-og-{lang}-1200x630.png",
+   "width": 1200,
+   "height": 630
+  }
+ },
+ "pics": {
+  "baptism-of-christ": {
+   "stem": "vinci-plate-baptism-of-christ",
+   "widths": [
+    320,
+    640
+   ],
+   "sizes": "(min-width: 960px) 224px, (min-width: 600px) 192px, (min-width: 360px) 320px, calc(100vw - 40px)"
+  },
+  "annunciation": {
+   "stem": "vinci-plate-annunciation",
+   "widths": [
+    480,
+    960
+   ],
+   "sizes": "(min-width: 600px) 576px, calc(100vw - 40px)"
+  },
+  "ginevra-de-benci": {
+   "stem": "vinci-plate-ginevra-de-benci",
+   "widths": [
+    240,
+    480
+   ],
+   "sizes": "(min-width: 960px) 224px, (min-width: 600px) 192px, 160px"
+  },
+  "ginevra-de-benci-back": {
+   "stem": "vinci-plate-ginevra-de-benci-back",
+   "widths": [
+    240,
+    480
+   ],
+   "sizes": "(min-width: 960px) 224px, (min-width: 600px) 192px, 160px"
+  },
+  "madonna-of-the-carnation": {
+   "stem": "vinci-plate-madonna-of-the-carnation",
+   "widths": [
+    320,
+    640
+   ],
+   "sizes": "(min-width: 960px) 224px, (min-width: 600px) 192px, (min-width: 360px) 320px, calc(100vw - 40px)"
+  },
+  "benois-madonna": {
+   "stem": "vinci-plate-benois-madonna",
+   "widths": [
+    320,
+    640
+   ],
+   "sizes": "(min-width: 960px) 224px, (min-width: 600px) 192px, (min-width: 360px) 320px, calc(100vw - 40px)"
+  },
+  "saint-jerome": {
+   "stem": "vinci-plate-saint-jerome",
+   "widths": [
+    320,
+    640
+   ],
+   "sizes": "(min-width: 960px) 224px, (min-width: 600px) 192px, (min-width: 360px) 320px, calc(100vw - 40px)"
+  },
+  "adoration-of-the-magi": {
+   "stem": "vinci-plate-adoration-of-the-magi",
+   "widths": [
+    320,
+    640
+   ],
+   "sizes": "(min-width: 960px) 224px, (min-width: 600px) 192px, (min-width: 360px) 320px, calc(100vw - 40px)"
+  },
+  "annunciation-predella": {
+   "stem": "vinci-plate-annunciation-predella",
+   "widths": [
+    480,
+    960
+   ],
+   "sizes": "(min-width: 600px) 576px, calc(100vw - 40px)"
+  },
+  "virgin-of-the-rocks-louvre": {
+   "stem": "vinci-plate-virgin-of-the-rocks-louvre",
+   "widths": [
+    320,
+    640
+   ],
+   "sizes": "(min-width: 960px) 224px, (min-width: 600px) 192px, (min-width: 360px) 320px, calc(100vw - 40px)"
+  },
+  "portrait-of-a-musician": {
+   "stem": "vinci-plate-portrait-of-a-musician",
+   "widths": [
+    320,
+    640
+   ],
+   "sizes": "(min-width: 960px) 224px, (min-width: 600px) 192px, (min-width: 360px) 320px, calc(100vw - 40px)"
+  },
+  "lady-with-an-ermine": {
+   "stem": "vinci-plate-lady-with-an-ermine",
+   "widths": [
+    320,
+    640
+   ],
+   "sizes": "(min-width: 960px) 224px, (min-width: 600px) 192px, (min-width: 360px) 320px, calc(100vw - 40px)"
+  },
+  "la-belle-ferronniere": {
+   "stem": "vinci-plate-la-belle-ferronniere",
+   "widths": [
+    320,
+    640
+   ],
+   "sizes": "(min-width: 960px) 224px, (min-width: 600px) 192px, (min-width: 360px) 320px, calc(100vw - 40px)"
+  },
+  "madonna-litta": {
+   "stem": "vinci-plate-madonna-litta",
+   "widths": [
+    320,
+    640
+   ],
+   "sizes": "(min-width: 960px) 224px, (min-width: 600px) 192px, (min-width: 360px) 320px, calc(100vw - 40px)"
+  },
+  "burlington-house-cartoon": {
+   "stem": "vinci-plate-burlington-house-cartoon",
+   "widths": [
+    320,
+    640
+   ],
+   "sizes": "(min-width: 960px) 224px, (min-width: 600px) 192px, (min-width: 360px) 320px, calc(100vw - 40px)"
+  },
+  "yarnwinder-buccleuch": {
+   "stem": "vinci-plate-yarnwinder-buccleuch",
+   "widths": [
+    320,
+    640
+   ],
+   "sizes": "(min-width: 960px) 224px, (min-width: 600px) 192px, (min-width: 360px) 320px, calc(100vw - 40px)"
+  },
+  "yarnwinder-lansdowne": {
+   "stem": "vinci-plate-yarnwinder-lansdowne",
+   "widths": [
+    320,
+    640
+   ],
+   "sizes": "(min-width: 960px) 224px, (min-width: 600px) 192px, (min-width: 360px) 320px, calc(100vw - 40px)"
+  },
+  "anghiari-copy": {
+   "stem": "vinci-plate-anghiari-copy",
+   "widths": [
+    480,
+    960
+   ],
+   "sizes": "(min-width: 600px) 576px, calc(100vw - 40px)"
+  },
+  "mona-lisa": {
+   "stem": "vinci-plate-mona-lisa",
+   "widths": [
+    320,
+    640
+   ],
+   "sizes": "(min-width: 960px) 224px, (min-width: 600px) 192px, (min-width: 360px) 320px, calc(100vw - 40px)"
+  },
+  "virgin-of-the-rocks-london": {
+   "stem": "vinci-plate-virgin-of-the-rocks-london",
+   "widths": [
+    320,
+    640
+   ],
+   "sizes": "(min-width: 960px) 224px, (min-width: 600px) 192px, (min-width: 360px) 320px, calc(100vw - 40px)"
+  },
+  "virgin-and-child-with-st-anne": {
+   "stem": "vinci-plate-virgin-and-child-with-st-anne",
+   "widths": [
+    320,
+    640
+   ],
+   "sizes": "(min-width: 960px) 224px, (min-width: 600px) 192px, (min-width: 360px) 320px, calc(100vw - 40px)"
+  },
+  "salvator-mundi": {
+   "stem": "vinci-plate-salvator-mundi",
+   "widths": [
+    320,
+    640
+   ],
+   "sizes": "(min-width: 960px) 224px, (min-width: 600px) 192px, (min-width: 360px) 320px, calc(100vw - 40px)"
+  },
+  "saint-john-the-baptist": {
+   "stem": "vinci-plate-saint-john-the-baptist",
+   "widths": [
+    320,
+    640
+   ],
+   "sizes": "(min-width: 960px) 224px, (min-width: 600px) 192px, (min-width: 360px) 320px, calc(100vw - 40px)"
+  },
+  "la-scapigliata": {
+   "stem": "vinci-plate-la-scapigliata",
+   "widths": [
+    320,
+    640
+   ],
+   "sizes": "(min-width: 960px) 224px, (min-width: 600px) 192px, (min-width: 360px) 320px, calc(100vw - 40px)"
+  },
+  "bacchus": {
+   "stem": "vinci-plate-bacchus",
+   "widths": [
+    320,
+    640
+   ],
+   "sizes": "(min-width: 960px) 224px, (min-width: 600px) 192px, (min-width: 360px) 320px, calc(100vw - 40px)"
+  },
+  "supper": {
+   "stem": "v-supper",
+   "widths": [
+    800,
+    1600
+   ],
+   "sizes": "(min-width: 600px) 576px, calc(100vw - 40px)"
+  }
+ },
+ "meta": {
+  "title": "Obras de Leonardo da Vinci, uma por uma | Museum of Ages",
+  "description": "Obras de Leonardo da Vinci: quantas pinturas são dele? Cerca de 15 a 20, conforme quem faz a lista. O que mostram, onde estão e quão certo é que são dele.",
+  "og_title": "Obras de Leonardo da Vinci, uma por uma",
+  "og_image_alt": "As 24 obras da ala de Leonardo por período, cada uma com uma marca de quão certa é a atribuição: 14 documentadas, 4 controversas, 4 com ressalva, 1 do ateliê dele, 1 cópia, e a Última Ceia numa parede própria. Um gráfico feito para esta página."
+ },
+ "labels": {
+  "crumbs": "Você está aqui",
+  "crumb_home": "Museu",
+  "toc": "Nesta página",
+  "tag_chart": "Feito para esta página",
+  "crumb_here": "Pinturas",
+  "tag_still": "Reprodução",
+  "still_open": "Uma imagem do filme da ala. A parede traz",
+  "burlington_line": "A etiqueta do museu vale para a reprodução, não para o desenho.",
+  "salvator_line": "A fotografia, feita para a Christie’s em 2017 depois do restauro, mostrava a moldura. Aqui ela está recortada na pintura.",
+  "ginevra_front_line": "A frente: uma reprodução em domínio público do Wikimedia Commons, por cortesia da National Gallery of Art, Washington, sob CC0.",
+  "ginevra_back_line": "O verso: via Google Arts & Culture, por cortesia da National Gallery of Art, Washington. Obra em domínio público. Reprodução do Wikimedia Commons. A etiqueta do museu vale para a reprodução, não para a pintura. Uso cultural sem fins lucrativos.",
+  "class_documented": "Documentado",
+  "class_disputed": "Controverso",
+  "class_qualified": "Atribuição com ressalva",
+  "class_workshop": "Ateliê",
+  "class_copy": "Cópia",
+  "class_field": "Não está na sala dos quadros"
+ },
+ "top": {
+  "h1": "As pinturas de Leonardo da Vinci",
+  "answer": "Ninguém concorda sobre um número. Conforme quem faz a lista, cerca de 15 a 20 pinturas que chegaram até nós são obra do próprio Leonardo da Vinci. O Hermitage fala em pouco mais de uma dúzia. O especialista em Leonardo Martin Kemp contou cerca de 16 em 2025, e mais quatro ou cinco que Leonardo pintou junto com outros. A casa de leilões que vendeu o Salvator Mundi falou em menos de 20.",
+  "answer_more": [
+   "Na nossa ala de Leonardo estão expostas 24 obras, cada uma com uma palavra que diz quão certa é a atribuição: 14 documentadas, 4 controversas, 4 com ressalva, 1 do ateliê dele e 1 cópia, e ",
+   {
+    "text": "a Última Ceia",
+    "at": "last-supper"
+   },
+   " numa parede própria. ",
+   {
+    "text": "A Mona Lisa",
+    "at": "mona-lisa"
+   },
+   ", ",
+   {
+    "text": "a Dama com Arminho",
+    "at": "lady-with-an-ermine"
+   },
+   ", ",
+   {
+    "text": "as duas versões da Virgem dos Rochedos",
+    "at": "virgin-of-the-rocks-louvre"
+   },
+   " e ",
+   {
+    "text": "o Salvator Mundi",
+    "at": "salvator-mundi"
+   },
+   " estão todas aqui, cada uma com uma porta para a sala dos quadros onde está exposta."
+  ],
+  "tally": {
+   "title": "As obras, por período",
+   "tag": "tag_chart",
+   "key": {
+    "documented": "14 documentadas",
+    "disputed": "4 controversas",
+    "qualified": "4 com ressalva",
+    "workshop": "1 do ateliê dele",
+    "copy": "1 cópia",
+    "field": "a Última Ceia numa parede própria"
+   }
+  },
+  "door": {
+   "text": "Ver os quadros na ala",
+   "note": "Entrada franca, sem cadastro.",
+   "leads": "A porta abre a ala de Leonardo na sala dos quadros, onde as 24 obras estão expostas."
+  }
+ },
+ "blocks": [
+  {
+   "type": "text",
+   "id": "how-sure",
+   "nav": "Certeza",
+   "h": "Quão certos estamos de que são dele",
+   "paras": [
+    "“Documentado” quer dizer que a mão dele na obra está registrada e que o museu que a guarda concorda. “Controverso” quer dizer que os especialistas não concordam, ou que o próprio museu indica outro pintor. “Com ressalva” quer dizer que ele está na obra, mas uma parte não é dele, ou que não é uma pintura terminada. “Ateliê” quer dizer que um aluno a pintou ao lado dele, a partir do desenho dele, e “cópia”, que é uma obra posterior feita por outras mãos a partir de algo dele que se perdeu. O número muda porque ele deixou obras inacabadas, porque os alunos pintavam a partir dos desenhos dele tão bem que passavam por obras dele, e porque cópias antigas foram apresentadas como originais. Achados novos são raros: Martin Kemp diz que, desde a Madona Benois, por volta de 1900, só apareceu uma nova candidata, o Salvator Mundi, e ela é controversa."
+   ]
+  },
+  {
+   "type": "periods",
+   "id": "works",
+   "nav": "As obras",
+   "h": "As obras, por período",
+   "intro": "As obras estão agrupadas pelos períodos da ala, pelo ano em que cada uma foi começada, com duas exceções. O Salvator Mundi, datado de cerca de 1499 a 1510, fica com os anos de 1506 a 1513, onde caem as propostas mais tardias para a data dele, e a cópia de Anghiari fica com a parede que ela copia. Nenhuma obra desta página foi começada em Roma ou depois de 1519.",
+   "go": "Ver {work} na ala",
+   "periods": [
+    {
+     "id": "florence-1452",
+     "h": "Vinci e Florença, de 1452 a 1481",
+     "items": [
+      {
+       "id": "baptism-of-christ",
+       "work": "baptism-of-christ",
+       "title": "O Batismo de Cristo",
+       "when": "Cerca de 1470 a 1475",
+       "where": "Gallerie degli Uffizi, Florença",
+       "who": "Documentado, mas atenção: esta é a pintura de Verrocchio. A Galeria Uffizi cita Verrocchio primeiro e Leonardo em segundo lugar. Vasari registrou a parte do jovem aluno, o anjo da esquerda. Estudos atuais dão a ele mais: o rio ao fundo, o brilho da luz e o próprio Cristo.",
+       "shows": "João derrama água sobre a cabeça de Cristo no rio Jordão, e dois anjos se ajoelham à esquerda. O anjo da esquerda, visto de costas e virando-se para olhar por cima do ombro, é de Leonardo.",
+       "worth_knowing": "Vasari escreveu que o aluno pintou o anjo tão bem que perturbou o mestre, e um terceiro pintor, mais velho, provavelmente também trabalhou no painel: as mãos de Deus e a pomba no alto são de uma mão mais fraca.",
+       "door": "o Batismo de Cristo",
+       "shape": "tall",
+       "pic": "baptism-of-christ",
+       "alt": "O Batismo de Cristo: Cristo de pé num rio enquanto João, à direita, derrama água sobre a cabeça dele, dois anjos ajoelhados à esquerda ao lado de uma palmeira, e no alto uma pomba e um par de mãos. Uma reprodução.",
+       "src": [
+        "Obra em domínio público. Reprodução do ",
+        {
+         "text": "Wikimedia Commons",
+         "href": "https://commons.wikimedia.org/wiki/File:Verrocchio_and_Leonardo,_Baptism_of_Christ,_c1470-75,_Uffizi.jpg"
+        },
+        ". A etiqueta do museu vale para a reprodução, não para a pintura. Uso cultural sem fins lucrativos. {museum:it108}"
+       ]
+      },
+      {
+       "id": "annunciation",
+       "work": "annunciation",
+       "title": "A Anunciação",
+       "when": "Cerca de 1472",
+       "where": "Gallerie degli Uffizi, Florença",
+       "who": "Documentado. Uma obra do início, pintada quando ele ainda estava no ateliê de Verrocchio. Ninguém sabe quem a encomendou nem onde ela ficou primeiro. A Galeria Uffizi a recebeu em 1867 de uma igreja logo do lado de fora de uma das portas da cidade de Florença.",
+       "shows": "Gabriel se ajoelha na grama de um jardim murado e oferece um lírio a Maria. Ela está sentada a uma estante de leitura diante de um palácio, com o livro aberto.",
+       "worth_knowing": "As asas do anjo seguem as de uma ave de rapina de verdade, e o braço direito de Maria parece comprido demais: a Galeria Uffizi acredita que Leonardo o desenhou para quem olhasse do lado direito, onde um altar lateral nos colocaria.",
+       "door": "a Anunciação",
+       "shape": "wide",
+       "pic": "annunciation",
+       "alt": "A Anunciação: uma fotografia do painel largo. O anjo Gabriel se ajoelha num gramado à esquerda com um lírio, e Maria está sentada à direita diante de uma estante de leitura entalhada, em frente ao muro de um palácio, com árvores escuras atrás. Uma reprodução.",
+       "src": [
+        "Obra em domínio público. Reprodução do ",
+        {
+         "text": "Wikimedia Commons",
+         "href": "https://commons.wikimedia.org/wiki/File:Annunciation_(Leonardo_c._1472%E2%80%931476).jpg"
+        },
+        ". A etiqueta do museu vale para a reprodução, não para a pintura. Uso cultural sem fins lucrativos. Foto: Justin Benttinen, 13 de setembro de 2023. {museum:it108}"
+       ]
+      },
+      {
+       "id": "ginevra-de-benci",
+       "work": "ginevra-de-benci",
+       "title": "Retrato de Ginevra de’ Benci",
+       "when": "Cerca de 1474 a 1478",
+       "where": "National Gallery of Art, Washington, D.C.",
+       "who": "Documentado. A identidade dela é certa. Quem encomendou o retrato, não: ele pode marcar o casamento dela aos 16 anos, ou pode ter sido encomendado pelo embaixador veneziano Bernardo Bembo, que a admirava. O emblema de Bembo era o louro e a palma, e o lema dele aparece por baixo do dela nas imagens de infravermelho, então pelo menos o verso provavelmente foi de Bembo.",
+       "shows": "A frente: Ginevra de’ Benci, uma jovem de uma família de banqueiros de Florença, diante de um arbusto de zimbro, ginepro em italiano, um jogo com o nome dela. O verso do mesmo painel, que a ala expõe ao lado da frente: louro e palma em coroa em volta de um raminho de zimbro, e uma faixa com um lema em latim, a beleza adorna a virtude. Uma tira foi cortada da parte de baixo do painel, provavelmente por causa de danos, e as mãos dela foram junto.",
+       "door": "Ginevra de’ Benci",
+       "shape": "pair",
+       "pic": "ginevra-de-benci",
+       "alt": "Ginevra de’ Benci: uma jovem de cabelos cacheados olha para nós diante de um arbusto escuro de zimbro, com um pouco de água e de céu à direita. Uma reprodução.",
+       "pic_back": "ginevra-de-benci-back",
+       "alt_back": "O verso do painel: uma coroa de louro e palma em volta de um raminho de zimbro, com uma faixa, sobre um fundo amarronzado. Uma reprodução.",
+       "src": [
+        "A frente: uma reprodução em domínio público do ",
+        {
+         "text": "Wikimedia Commons",
+         "href": "https://commons.wikimedia.org/wiki/File:Ginevra_de%27_Benci_-_National_Gallery_of_Art.jpg"
+        },
+        ", por cortesia da National Gallery of Art, Washington, sob ",
+        {
+         "text": "CC0",
+         "href": "https://creativecommons.org/publicdomain/zero/1.0/deed.en"
+        },
+        ".",
+        {
+         "br": true
+        },
+        "O verso: via Google Arts & Culture, por cortesia da National Gallery of Art, Washington. Obra em domínio público. Reprodução do ",
+        {
+         "text": "Wikimedia Commons",
+         "href": "https://commons.wikimedia.org/wiki/File:Leonardo_da_Vinci_-_Wreath_of_Laurel,_Palm,_and_Juniper_with_a_Scroll_inscribed_Virtutem_Forum_Decorat_(reverse)_-_Google_Art_Project.jpg"
+        },
+        ". A etiqueta do museu vale para a reprodução, não para a pintura. Uso cultural sem fins lucrativos."
+       ]
+      },
+      {
+       "id": "madonna-of-the-carnation",
+       "work": "madonna-of-the-carnation",
+       "title": "Madona do Cravo",
+       "when": "Cerca de 1475",
+       "where": "Bayerische Staatsgemäldesammlungen, Alte Pinakothek, Munique",
+       "who": "Documentado. Um dos primeiros painéis dele, feito nos anos com Verrocchio, e uma das primeiras experiências dele com tinta a óleo.",
+       "shows": "Maria, num cômodo com janelas, estende um cravo vermelho para o menino, sentado numa almofada diante dela. Pelas janelas aparecem montanhas.",
+       "worth_knowing": "São as primeiras daquelas montanhas azuis e distantes que conhecemos da mão dele, e o painel já pertenceu a Giulio de’ Medici, que se tornou o papa Clemente VII.",
+       "door": "a Madona do Cravo",
+       "shape": "tall",
+       "pic": "madonna-of-the-carnation",
+       "alt": "Madona do Cravo: Maria, de vermelho e azul, sentada, com o menino numa almofada à frente dela, segura um cravo, e atrás dela há duas janelas em arco com montanhas. Uma reprodução.",
+       "src": [
+        "Obra em domínio público. Reprodução do ",
+        {
+         "text": "Wikimedia Commons",
+         "href": "https://commons.wikimedia.org/wiki/File:LEONARDO-DA-VINCI_-_MADONNA-MIT-DER-NELKE-7779_917154_BSTGS.jpg"
+        },
+        ". A etiqueta do museu vale para a reprodução, não para a pintura. Uso cultural sem fins lucrativos."
+       ]
+      },
+      {
+       "id": "annunciation-predella",
+       "work": "annunciation-predella",
+       "title": "Anunciação, predela",
+       "when": "Cerca de 1475 a 1478",
+       "where": "Musée du Louvre, Paris",
+       "who": "Controverso, e aqui é o próprio museu que fica do outro lado. O Louvre atribui o painel a Lorenzo di Credi, que se formou ao lado de Leonardo com Verrocchio, deixa Leonardo como atribuição antiga e o data de cerca de 1475 a 1500. Hoje os especialistas se dividem em três posições: Lorenzo, Leonardo ou os dois juntos.",
+       "shows": "Um painel pequeno e largo: o anjo se ajoelha diante de Maria num jardim. Ele vem da predela, a faixa de pequenas cenas embaixo de um retábulo, do retábulo que o ateliê de Verrocchio pintou para a catedral de Pistoia, onde o painel principal continua até hoje.",
+       "worth_knowing": "O Louvre acha os olhos grandes, os rostos mais simples e as dobras mais achatadas mais próximos de Lorenzo. O museu comprou o painel em 1863 com a coleção do marquês Campana, em Roma, vendida depois da falência dele.",
+       "door": "a predela",
+       "shape": "wide",
+       "pic": "annunciation-predella",
+       "alt": "Anunciação, predela: um painel comprido e baixo, com o anjo ajoelhado num gramado à esquerda e Maria sentada à direita junto a um muro, com árvores atrás. Uma reprodução.",
+       "src": [
+        "Obra em domínio público. Reprodução do ",
+        {
+         "text": "Wikimedia Commons",
+         "href": "https://commons.wikimedia.org/wiki/File:L%27Annonciation,_by_Leonardo_da_Vinci,_from_C2RMF_retouched.jpg"
+        },
+        ". A etiqueta do museu vale para a reprodução, não para a pintura. Uso cultural sem fins lucrativos."
+       ]
+      },
+      {
+       "id": "benois-madonna",
+       "work": "benois-madonna",
+       "title": "Madona Benois",
+       "when": "Cerca de 1478 a 1480",
+       "where": "Museu Hermitage, São Petersburgo. A própria página do Hermitage diz que ela não está na exposição permanente, então confira antes de visitar.",
+       "who": "Documentado. A pintura foi transferida do painel de madeira para uma tela.",
+       "shows": "Aqui Maria é muito jovem, com vestido e cabelo no estilo florentino da época dela. Ela ergue uma florzinha para o bebê, que tenta pegá-la e firma a mão dela. As pétalas formam uma cruz, um sinal do que está por vir.",
+       "worth_knowing": "O Hermitage diz que o rosto dela vem de uma modelo viva, não de um ideal, e, tiradas as auréolas douradas, o que sobra é uma mãe brincando com o filho.",
+       "door": "a Madona Benois",
+       "shape": "tall",
+       "pic": "benois-madonna",
+       "alt": "Madona Benois: uma pintura com o alto em arco. Uma Maria jovem, sentada com o bebê no colo, ergue uma florzinha para ele, num cômodo escuro com uma pequena janela em arco no alto à direita. Uma reprodução.",
+       "src": [
+        "Obra em domínio público. Reprodução do ",
+        {
+         "text": "Wikimedia Commons",
+         "href": "https://commons.wikimedia.org/wiki/File:Leonardo_Da_Vinci_-_Madonna_Benois.jpg"
+        },
+        ". A etiqueta do museu vale para a reprodução, não para a pintura. Uso cultural sem fins lucrativos."
+       ]
+      },
+      {
+       "id": "saint-jerome",
+       "work": "saint-jerome",
+       "title": "São Jerônimo no deserto",
+       "when": "Cerca de 1480 a 1490",
+       "where": "Pinacoteca Vaticana, Cidade do Vaticano",
+       "who": "Documentado. O Vaticano diz que a atribuição nunca foi posta em dúvida. Ele data o painel de cerca de 1482, porque o estilo é muito próximo do da Adoração dos Magos. Alguns historiadores o colocam mais perto da década de 1490.",
+       "shows": "O santo estudioso como penitente no deserto, magro, sem barba e em farrapos, ajoelhado com uma pedra no punho, erguida para bater no peito, e um leão deitado diante dele. Na maior parte do painel, a pintura não passou do desenho marrom de base, e uma mancha vermelha representa o chapéu de cardeal dele.",
+       "worth_knowing": "Em algum momento o painel foi partido em cinco pedaços. O tio de Napoleão, o cardeal Joseph Fesch, encontrou as partes e mandou juntá-las, e o papa Pio IX o comprou em 1856.",
+       "door": "o São Jerônimo",
+       "shape": "tall",
+       "pic": "saint-jerome",
+       "alt": "São Jerônimo no deserto: um homem muito magro se ajoelha entre rochas, com um braço estendido segurando uma pedra, um leão deitado ao longo da parte de baixo e a maior parte do painel em desenho marrom. Uma reprodução.",
+       "src": [
+        "Obra em domínio público. Reprodução do ",
+        {
+         "text": "Wikimedia Commons",
+         "href": "https://commons.wikimedia.org/wiki/File:Leonardo_da_Vinci_%E2%80%94_Jerome.jpg"
+        },
+        ", ",
+        {
+         "text": "CC0",
+         "href": "https://creativecommons.org/publicdomain/zero/1.0/deed.en"
+        },
+        ". A etiqueta do museu vale para a reprodução, não para a pintura. Uso cultural sem fins lucrativos."
+       ]
+      },
+      {
+       "id": "adoration-of-the-magi",
+       "work": "adoration-of-the-magi",
+       "title": "A Adoração dos Magos",
+       "when": "Cerca de 1481 a 1482",
+       "where": "Gallerie degli Uffizi, Florença",
+       "who": "Documentado. Os monges de San Donato a Scopeto, uma casa agostiniana logo fora de Florença, encomendaram a obra em julho de 1481 para o altar-mor e deram a ele 30 meses. Leonardo partiu para Milão antes de terminá-la. No fim, Filippino Lippi pintou o retábulo para eles.",
+       "shows": "Os três reis se ajoelham com os presentes diante de Maria e do menino, com uma multidão em curva em volta deles, e atrás há ruínas, uma construção pela metade com escadas e cavaleiros lutando. A maior parte nunca passou do desenho: algumas figuras são só contornos, outras estão quase modeladas.",
+       "worth_knowing": "O restauro de 2012 a 2017 mostrou que ele resolveu a composição no próprio painel, em vez de defini-la antes no papel, algo raro até para ele. Restauradores anteriores tinham coberto o painel com um verniz tingido que o deixava quase monocromático.",
+       "door": "a Adoração dos Magos",
+       "shape": "square",
+       "pic": "adoration-of-the-magi",
+       "alt": "A Adoração dos Magos: uma prancha impressa monocromática de 1901, em tons de cinza. Maria e o menino no centro de uma multidão de figuras ajoelhadas e de pé, com ruínas, uma escada e cavalos atrás. Uma reprodução.",
+       "src": [
+        "Fac-símile impresso monocromático de 1901, prancha 10. Ele registra o estado e os tons daquele ano, não a cor atual. Domínio público, via ",
+        {
+         "text": "Wikimedia Commons",
+         "href": "https://commons.wikimedia.org/wiki/File:Da_Vinci_-_masters_of_art_1901_-_Plate_10.png"
+        },
+        "."
+       ]
+      }
+     ],
+     "p": "Ele aprendeu a pintar no ateliê de Verrocchio, em Florença. Desses anos vêm uma pintura feita a várias mãos, uma Anunciação, um retrato, duas pequenas Madonas e uma predela que hoje o Louvre atribui a um colega de ateliê. Depois, dois painéis que ele nunca terminou: o São Jerônimo e a Adoração dos Magos, encomendada a ele em 1481."
+    },
+    {
+     "id": "milan-1482",
+     "h": "Milão, de 1482 a 1499",
+     "items": [
+      {
+       "id": "virgin-of-the-rocks-louvre",
+       "work": "virgin-of-the-rocks-louvre",
+       "title": "Virgem dos Rochedos, versão do Louvre",
+       "when": "Cerca de 1483 a 1494",
+       "where": "Musée du Louvre, Paris",
+       "who": "Documentado. O contrato tem a data de 25 de abril de 1483: Leonardo e dois pintores, os irmãos de Predis, deviam pintar e dourar o retábulo da capela de uma confraria em Milão. Seguiu-se uma longa disputa por dinheiro. Esta é a primeira das duas versões.",
+       "shows": "Maria se ajoelha numa gruta de pedra, com uma mão estendida sobre o menino Jesus, e com a outra puxa para perto o pequeno João Batista. Um anjo segura Jesus e aponta o dedo para João, e Jesus o abençoa. Atrás, montanhas e água.",
+       "worth_knowing": "Ninguém sabe como ela chegou à França: o primeiro registro dela é em Fontainebleau, em 1625. Imagens de infravermelho feitas em 2009 mostram que o anjo foi pintado primeiro sem a mão que aponta, como no painel de Londres, e que Leonardo acrescentou o gesto perto do fim.",
+       "door": "a Virgem dos Rochedos do Louvre",
+       "shape": "tall",
+       "pic": "virgin-of-the-rocks-louvre",
+       "alt": "Virgem dos Rochedos, versão do Louvre: Maria se ajoelha numa gruta escura entre duas crianças, um anjo à direita aponta através do quadro, e atrás há rochas e água. Uma reprodução.",
+       "src": [
+        "Obra em domínio público. Reprodução do ",
+        {
+         "text": "Wikimedia Commons",
+         "href": "https://commons.wikimedia.org/wiki/File:Leonardo_Da_Vinci_-_Vergine_delle_Rocce_(Louvre).jpg"
+        },
+        ". A etiqueta do museu vale para a reprodução, não para a pintura. Uso cultural sem fins lucrativos."
+       ]
+      },
+      {
+       "id": "portrait-of-a-musician",
+       "work": "portrait-of-a-musician",
+       "title": "Retrato de um Músico",
+       "when": "Cerca de 1485",
+       "where": "Veneranda Biblioteca Ambrosiana, Milão",
+       "who": "Controverso, embora sobretudo por vozes mais antigas. A Ambrosiana atribui o quadro a Leonardo sem nenhuma dúvida, e a maioria dos especialistas concorda. A dúvida começou em 1890, quando se propôs o nome de Ambrogio de Predis. Um estudo de 1987 sugeriu que Leonardo pintou a cabeça e o busto, e que outra pessoa, possivelmente Boltraffio, acrescentou depois a mão com a folha.",
+       "shows": "Um rapaz visto até os ombros, um pouco virado para longe de nós e olhando para a direita dele, com uma partitura dobrada na mão. Quem ele é, ninguém sabe: passou pelo duque de Milão até que uma limpeza em 1905 revelou a mão e a folha, e entre os nomes propostos desde então estão o mestre de capela da catedral, Franchino Gaffurio, e o amigo músico de Leonardo, Atalante Migliorotti.",
+       "worth_knowing": "As duas pupilas dele não têm o mesmo tamanho, a esquerda um pouco menor, como se ele tivesse sido visto bem quando o olho se abre mais com a luz que vai sumindo, algo que Leonardo descreveu nas notas dele.",
+       "door": "o Músico",
+       "shape": "tall",
+       "pic": "portrait-of-a-musician",
+       "alt": "Retrato de um Músico: um rapaz de gorro vermelho e cabelo comprido, cabeça e ombros contra um fundo escuro, segura uma partitura dobrada embaixo à direita. Uma reprodução.",
+       "src": [
+        "Obra em domínio público. Reprodução do ",
+        {
+         "text": "Wikimedia Commons",
+         "href": "https://commons.wikimedia.org/wiki/File:Leonardo_da_Vinci_-_Portrait_of_a_Musician_-_Pinacoteca_Ambrosiana.jpg"
+        },
+        ". A etiqueta do museu vale para a reprodução, não para a pintura. Uso cultural sem fins lucrativos. {museum:it108}"
+       ]
+      },
+      {
+       "id": "lady-with-an-ermine",
+       "work": "lady-with-an-ermine",
+       "title": "Dama com Arminho",
+       "when": "Cerca de 1489 a 1491",
+       "where": "Muzeum Narodowe w Krakowie, Muzeum Książąt Czartoryskich, Cracóvia",
+       "who": "Documentado. Encomendado por Ludovico Sforza, segundo o museu, quando a retratada tinha cerca de 16 anos, e a única pintura de Leonardo na Polônia.",
+       "shows": "Cecilia Gallerani, uma jovem da corte de Milão e amante do duque, virada a três quartos e olhando para além de nós, com um arminho branco nos braços. A proposta de que é ela surgiu por volta de 1900 e hoje é aceita, porque um poeta da corte escreveu um poema sobre o retrato que Leonardo fez dela. O arminho representa o duque, chamado de Arminho Branco por causa de uma ordem que recebeu em 1488, por isso o museu lê a pintura como um retrato duplo.",
+       "worth_knowing": "Num canto de cima, alguém escreveu, por volta de 1800, que o quadro mostra La belle ferronnière, o nome do retrato seguinte nesta página, então por um tempo os dois tiveram o mesmo nome.",
+       "door": "a Dama com Arminho",
+       "shape": "tall",
+       "pic": "lady-with-an-ermine",
+       "alt": "Dama com Arminho: uma jovem de vestido vermelho e manto azul, virada para a esquerda, segura um arminho branco junto ao peito, contra um fundo escuro. Uma reprodução.",
+       "src": [
+        "Imagem da coleção do Museu Nacional de Cracóvia. Domínio público, via ",
+        {
+         "text": "Wikimedia Commons",
+         "href": "https://commons.wikimedia.org/wiki/File:Leonardo_da_Vinci_(1452-1519)_-_Lady_with_an_Ermine_%E2%80%93_Portrait_of_Cecilia_Gallerani_(ca._1473%E2%80%931536)_-_MNK_XII-209_-_National_Museum_Krak%C3%B3w.jpg"
+        },
+        "."
+       ]
+      },
+      {
+       "id": "la-belle-ferronniere",
+       "work": "la-belle-ferronniere",
+       "title": "La belle ferronnière",
+       "when": "Cerca de 1490 a 1497",
+       "where": "Musée du Louvre, Paris. O Louvre a listava como fora de exposição quando verificamos.",
+       "who": "Documentado. Quem ela é continua em aberto. A candidata mais antiga é Lucrezia Crivelli, amante do duque a partir de cerca de 1495, citada num poema em latim que foi copiado no Codex Atlanticus de Leonardo. Outros propõem Beatriz d’Este, a esposa do duque, ou Isabel de Aragão.",
+       "shows": "Uma jovem diante de um parapeito de pedra, com o corpo virado para um lado e a cabeça para o outro, num vestido vermelho à moda de Milão com mangas amarradas por fitas, e um cordão fino na testa com uma pedra vermelha. O olhar dela passa logo ao lado de nós.",
+       "worth_knowing": "O nome é um engano, e o próprio título do Louvre diz isso: era o nome de outro retrato da coleção real francesa, uma gravura desta pintura o recebeu por erro, e em 1784 um inventário chegou a chamá-la de Ana Bolena.",
+       "door": "La belle ferronnière",
+       "shape": "tall",
+       "pic": "la-belle-ferronniere",
+       "alt": "La belle ferronnière: uma prancha impressa monocromática de 1901. Uma jovem vista de cabeça e ombros, com o rosto voltado para nós, uma faixa fina na testa, contra um fundo escuro, com um parapeito na borda de baixo. Uma reprodução.",
+       "src": [
+        "Fac-símile impresso monocromático de 1901, prancha 7. Ele registra o estado e os tons daquele ano, não a cor atual. Domínio público, via ",
+        {
+         "text": "Wikimedia Commons",
+         "href": "https://commons.wikimedia.org/wiki/File:Da_Vinci_-_masters_of_art_1901_-_Plate_7.png"
+        },
+        "."
+       ]
+      },
+      {
+       "id": "madonna-litta",
+       "work": "madonna-litta",
+       "title": "Madona Litta",
+       "when": "Cerca de 1490",
+       "where": "Museu Hermitage, São Petersburgo",
+       "who": "Controverso. O Hermitage atribui a pintura a Leonardo, sem restrições, e a data de meados da década de 1490. Muitos especialistas acham que o aluno dele Giovanni Antonio Boltraffio a pintou a partir do desenho de Leonardo. Martin Kemp já disse que quase todos os especialistas a veem assim.",
+       "shows": "Maria amamenta o menino num cômodo escuro com duas janelas iguais, cada uma aberta para montanhas amplas. O Louvre tem um estudo para ela, diz o Hermitage, e o nome vem do duque milanês Antonio Litta: o Hermitage a comprou da coleção Litta em 1865.",
+       "worth_knowing": "Quando a National Gallery de Londres a pegou emprestada em 2011, a pintura foi exposta como um Leonardo, enquanto um estudo de panejamento para ela, na mesma mostra, levava o nome de Boltraffio.",
+       "door": "a Madona Litta",
+       "shape": "tall",
+       "pic": "madonna-litta",
+       "alt": "Madona Litta: uma pintura com o alto em arco. Maria amamenta o menino num cômodo escuro, com uma janela de cada lado aberta para montanhas azuis. Uma reprodução.",
+       "src": [
+        "Obra em domínio público. Reprodução do ",
+        {
+         "text": "Wikimedia Commons",
+         "href": "https://commons.wikimedia.org/wiki/File:Leonardo_da_Vinci_-_The_Madonna_and_Child_(The_Litta_Madonna).jpg"
+        },
+        ". A etiqueta do museu vale para a reprodução, não para a pintura. Uso cultural sem fins lucrativos."
+       ]
+      },
+      {
+       "id": "virgin-of-the-rocks-london",
+       "work": "virgin-of-the-rocks-london",
+       "title": "Virgem dos Rochedos, versão de Londres",
+       "when": "Cerca de 1491 a 1508",
+       "where": "National Gallery, Londres",
+       "who": "Atribuição com ressalva. A National Gallery a atribui só a Leonardo. O curador do Louvre vê trabalho de alunos em partes dela, o menino João próximo de Boltraffio, e a lê como pintada em grande parte pelo ateliê sob o olhar de Leonardo, com a mão dele em alguns pontos.",
+       "shows": "A mesma cena da pintura de Paris, com diferenças: o anjo não aponta mais, as figuras usam auréolas douradas finas e o menino João segura uma cruz de junco. Ela foi pintada para a capela de Milão citada no contrato de 1483, e a galeria encontrou três fases de trabalho: começada no início da década de 1490, a cabeça de Cristo virada de perfil alguns anos depois, e o céu azul acrescentado depois que Leonardo foi chamado de volta, em 1506.",
+       "worth_knowing": "As plantas da gruta não são espécies reais: a galeria diz que são misturas de várias plantas diferentes.",
+       "door": "a Virgem dos Rochedos de Londres",
+       "shape": "tall",
+       "pic": "virgin-of-the-rocks-london",
+       "alt": "Virgem dos Rochedos, versão de Londres: fotografada na moldura alta e dourada do altar, com colunas. Dentro dela, Maria se ajoelha numa gruta entre as duas crianças, com um anjo à direita. Uma reprodução.",
+       "src": [
+        "Obra em domínio público. Reprodução do ",
+        {
+         "text": "Wikimedia Commons",
+         "href": "https://commons.wikimedia.org/wiki/File:Leonardo_da_vinci,_vergine_delle_rocce,_1491-92_poi_1506-08,_01.jpg"
+        },
+        ". A etiqueta do museu vale para a reprodução, não para a pintura. Uso cultural sem fins lucrativos. A fotografia inclui a moldura. Foto: Sailko, ",
+        {
+         "text": "CC BY 3.0",
+         "href": "https://creativecommons.org/licenses/by/3.0/"
+        },
+        "."
+       ]
+      }
+     ],
+     "p": "Em Milão ele pintou um retábulo para uma confraria, que existe em duas versões, a de Londres, para muitos, com a mão do ateliê dele. Vêm depois três retratos, um deles controverso, e uma Madona amamentando que, para muitos, um aluno pintou a partir do desenho dele. Na parede de um refeitório ele pintou a Última Ceia para Ludovico Sforza, que fecha esta página."
+    },
+    {
+     "id": "florence-1500",
+     "h": "Veneza, Florença e a Romanha, de 1500 a 1506",
+     "items": [
+      {
+       "id": "yarnwinder-buccleuch",
+       "work": "yarnwinder-buccleuch",
+       "title": "Madona do Fuso, versão Buccleuch",
+       "when": "Cerca de 1501",
+       "where": "Coleção Buccleuch, em empréstimo às National Galleries Scotland",
+       "who": "Atribuição com ressalva. Existem duas versões, lado a lado na ala. Sob a tinta de cada uma, os estudos encontraram as mesmas mudanças, feitas enquanto as duas avançavam no ateliê. Martin Kemp lê isso como Leonardo usando uma encomenda para fazer uma segunda pintura para vender. Outros perguntam quanto de cada uma é dele.",
+       "shows": "Maria está sentada entre rochas e estende a mão enquanto o menino, torcido sobre os joelhos dela, agarra um fuso, a ferramenta em forma de cruz para enrolar fio, aqui um sinal da cruz que virá. Um frade escreveu a Isabel d’Este em abril de 1501 que Leonardo a estava pintando para Florimond Robertet, secretário do rei da França. Em agosto de 2003, dois homens que se passavam por turistas a tiraram da parede no castelo de Drumlanrig, na Escócia, e a polícia a encontrou quatro anos depois num escritório de advocacia em Glasgow.",
+       "door": "a Madona do Fuso de Buccleuch",
+       "shape": "tall",
+       "pic": "yarnwinder-buccleuch",
+       "alt": "Madona do Fuso, versão Buccleuch: Maria, de vermelho e azul, sentada entre rochas, com o menino no colo erguendo um fuso em forma de cruz, e colinas e água atrás. Uma reprodução.",
+       "src": [
+        "Obra em domínio público. Reprodução do ",
+        {
+         "text": "Wikimedia Commons",
+         "href": "https://commons.wikimedia.org/wiki/File:Leonardo_da_Vinci_-_Madonna_of_the_Yarnwinder,_Buccleuch_version.jpg"
+        },
+        ". A etiqueta do museu vale para a reprodução, não para a pintura. Uso cultural sem fins lucrativos."
+       ]
+      },
+      {
+       "id": "yarnwinder-lansdowne",
+       "work": "yarnwinder-lansdowne",
+       "title": "Madona do Fuso, versão Lansdowne",
+       "when": "Cerca de 1501",
+       "where": "Kenneth C. Griffin Collection, em empréstimo ao Metropolitan Museum of Art, Nova York",
+       "who": "Atribuição com ressalva. A etiqueta do Met diz “Leonardo da Vinci e ateliê”. As duas versões cresceram lado a lado no ateliê. Segundo Martin Kemp, uma foi para um funcionário francês e a outra, ele acha, para o próprio rei.",
+       "shows": "A mesma cena do painel Buccleuch: o menino com o fuso, Maria estendendo a mão para ele, rochas atrás. Ela está exposta nas galerias de pintura europeia do Met desde a primavera de 2026, num empréstimo de longo prazo e sem comunicado à imprensa.",
+       "worth_knowing": "Em maio de 2025 Martin Kemp escreveu que não era mais possível localizar a pintura, e um ano depois ela estava numa parede do Met.",
+       "door": "a Madona do Fuso de Lansdowne",
+       "shape": "tall",
+       "pic": "yarnwinder-lansdowne",
+       "alt": "Madona do Fuso, versão Lansdowne: fotografada na moldura dourada, numa exposição. Maria de azul, sentada, com o menino no colo olhando para um fuso em forma de cruz, e montanhas atrás. Uma reprodução.",
+       "src": [
+        "Obra em domínio público. Reprodução do ",
+        {
+         "text": "Wikimedia Commons",
+         "href": "https://commons.wikimedia.org/wiki/File:Madonne_aux_fuseaux_(Lansdowne).jpg"
+        },
+        ". A etiqueta do museu vale para a reprodução, não para a pintura. Uso cultural sem fins lucrativos. A fotografia, feita na exposição do Louvre em 2 de dezembro de 2019, inclui a moldura. Foto: Tangopaso, colocada em domínio público pelo fotógrafo."
+       ]
+      },
+      {
+       "id": "mona-lisa",
+       "work": "mona-lisa",
+       "title": "Mona Lisa",
+       "when": "Cerca de 1503 a 1519",
+       "where": "Musée du Louvre, Paris",
+       "who": "Documentado. Começada em Florença por volta de 1503, provavelmente para o marido da retratada, o comerciante de seda Francesco del Giocondo. Leonardo nunca a entregou: ela viajou com ele para Milão, Roma e a França, e ele continuou trabalhando nela. O rei da França muito provavelmente a comprou em 1518 de Salaì, aluno de Leonardo.",
+       "shows": "Lisa Gherardini, esposa de Francesco del Giocondo, sentada numa cadeira e virada para nós, uma mão pousada sobre a outra, uma balaustrada baixa atrás dela e, mais além, montanhas, água, uma estrada sinuosa e uma ponte. Para o Louvre, outros nomes para a retratada não estão em questão: é Lisa.",
+       "worth_knowing": "Em 2005 apareceu uma anotação na margem de um livro da biblioteca da universidade de Heidelberg: um funcionário florentino escreveu em outubro de 1503 que Leonardo estava trabalhando na cabeça de Lisa del Giocondo, e isso resolveu tanto quem é a retratada quanto a data.",
+       "door": "a Mona Lisa",
+       "shape": "tall",
+       "pic": "mona-lisa",
+       "alt": "Mona Lisa: uma mulher sentada com as mãos cruzadas, virada para nós, um véu fino sobre o cabelo, e montanhas e água sinuosa atrás dela. Uma reprodução.",
+       "src": [
+        "Uma captura em alta definição do C2RMF (Centre de recherche et de restauration des musées de France), no Wikimedia Commons desde 2011, recortada e com os níveis ajustados ali. Obra em domínio público. Reprodução do ",
+        {
+         "text": "Wikimedia Commons",
+         "href": "https://commons.wikimedia.org/wiki/File:Mona_Lisa,_by_Leonardo_da_Vinci,_from_C2RMF_retouched.jpg"
+        },
+        ". A etiqueta do museu vale para a reprodução, não para a pintura. Uso cultural sem fins lucrativos."
+       ]
+      },
+      {
+       "id": "virgin-and-child-with-st-anne",
+       "work": "virgin-and-child-with-st-anne",
+       "title": "A Virgem e o Menino com Santa Ana",
+       "when": "Cerca de 1503 a 1519",
+       "where": "Musée du Louvre, Paris",
+       "who": "Documentado. Não há registro de quem a encomendou. O Louvre acredita que ele a começou sem encomenda, em Florença, entre cerca de 1500 e 1503, como uma mostra do que sabia fazer, e a manteve com ele na França. O rei da França muito provavelmente a adquiriu em 1518.",
+       "shows": "Ana está sentada com a filha adulta, Maria, no colo, e Maria se inclina para segurar o menino, que agarrou um cordeiro, o sinal do sacrifício dele. Atrás, montanhas e lagos, e na frente, rochas em camadas e água.",
+       "worth_knowing": "Ela ainda estava inacabada quando ele morreu: o restauro de 2010 a 2012 encontrou as últimas pinceladas dele no manto de Ana, e o rosto de Maria nunca recebeu a modelagem final, a mais fina.",
+       "door": "a Santa Ana",
+       "shape": "tall",
+       "pic": "virgin-and-child-with-st-anne",
+       "alt": "A Virgem e o Menino com Santa Ana: fotografada na moldura dourada e ornamentada. Duas mulheres, uma sentada no colo da outra, se inclinam para uma criança que segura um cordeiro, com montanhas claras atrás. Uma reprodução.",
+       "src": [
+        "Obra em domínio público. Reprodução do ",
+        {
+         "text": "Wikimedia Commons",
+         "href": "https://commons.wikimedia.org/wiki/File:Leonardo_da_vinci,_sant%27anna,_madonna_col_bambino_e_agnellino,_1503-1519_ca._01.jpg"
+        },
+        ". A etiqueta do museu vale para a reprodução, não para a pintura. Uso cultural sem fins lucrativos. Foto: Francesco Bini, ",
+        {
+         "text": "CC BY-SA 4.0",
+         "href": "https://creativecommons.org/licenses/by-sa/4.0/"
+        },
+        "."
+       ]
+      },
+      {
+       "id": "anghiari-copy",
+       "work": "anghiari-copy",
+       "title": "A luta pelo estandarte, a partir da Batalha de Anghiari",
+       "when": "Século XVI, retocada no início do século XVII",
+       "where": "Musée du Louvre, Paris, Departamento de Artes Gráficas. Só pode ser visto com hora marcada, na sala de estudo.",
+       "who": "Cópia. Um desenho, não uma pintura, feito por outras mãos: na ficha do Louvre, o artista é Rubens. Um italiano desconhecido copiou o enorme cartão de Leonardo no século XVI, outros o retocaram no início do século XVII, e Rubens, que foi dono dele, passou por cima com pena e aquarela e aumentou a folha.",
+       "shows": "Cavaleiros travados numa luta por um estandarte de batalha, cavalos e cavaleiros emaranhados numa só massa: o centro da Batalha de Anghiari, a pintura mural que Leonardo começou entre 1504 e 1505 para o Palazzo della Signoria, em Florença, hoje Palazzo Vecchio. O que ele pôs na parede foi destruído por volta de 1560, e Rubens nunca o viu.",
+       "worth_knowing": "No verso do painel da Santa Ana, no Louvre, imagens de infravermelho encontraram três esboços, um deles uma cabeça de cavalo muito parecida com o cavalo da direita desta batalha.",
+       "door": "a cópia da Batalha de Anghiari",
+       "shape": "wide",
+       "pic": "anghiari-copy",
+       "alt": "A luta pelo estandarte: um slide de biblioteca do desenho, em tons de cinza e marrom. Um emaranhado de cavalos e cavaleiros disputando uma bandeira, a pena, tinta e aguada com realces brancos. Uma reprodução.",
+       "src": [
+        "Um slide de biblioteca recortado no desenho, das KU Leuven Libraries, via ",
+        {
+         "text": "Europeana",
+         "href": "https://www.europeana.eu/en/item/2024903/photography_ProvidedCHO_KU_Leuven_9991113610101488"
+        },
+        ". Domínio público."
+       ]
+      }
+     ],
+     "p": "De volta a Florença, ele começou a Mona Lisa e a Santa Ana, e trabalhou nas duas por muitos anos. Uma pequena Madona para o secretário do rei da França chegou até nós em duas versões, cada uma com atribuição com ressalva. Numa parede do Palazzo della Signoria ele começou uma batalha que se perdeu e que aqui se conhece por uma cópia."
+    },
+    {
+     "id": "milan-1506",
+     "h": "Milão de novo, de 1506 a 1513",
+     "items": [
+      {
+       "id": "burlington-house-cartoon",
+       "work": "burlington-house-cartoon",
+       "title": "A Virgem, o Menino, Sant’Ana e São João Batista",
+       "when": "Cerca de 1506 a 1508",
+       "where": "National Gallery, Londres",
+       "who": "Documentado. Não é uma pintura, mas um desenho, a carvão e giz branco sobre papel, e o único desenho grande da mão dele que chegou até nós. A data é discutida: a galeria diz cerca de 1506 a 1508, o curador do Louvre, cerca de 1500, como a primeira ideia dele para a Santa Ana.",
+       "shows": "Maria está sentada no colo da mãe, Ana, e segura o menino, que se estica em direção ao pequeno João, enquanto Ana aponta para cima. É um desenho em tamanho real que nunca foi usado para pintar, porque a folha nunca foi furada para transferir o desenho, por isso a galeria acha que ele foi feito para mostrar a um cliente.",
+       "worth_knowing": "Na época dele, o papel não era fabricado em folhas desse tamanho, então ele colou muitas, e as emendas aparecem de perto.",
+       "door": "o cartão de Burlington House",
+       "shape": "tall",
+       "pic": "burlington-house-cartoon",
+       "alt": "O cartão de Burlington House: uma fotogravura de 1898, em tons de marrom. Duas mulheres sentadas bem juntas, uma segurando uma criança que se estica em direção a uma segunda criança, com partes sombreadas e partes só em contorno. Uma reprodução.",
+       "src": [
+        "Fotogravura de 1898 em Eugène Müntz, Leonardo da Vinci, vol. II, recortada na prancha impressa. Obra em domínio público. Reprodução do ",
+        {
+         "text": "Internet Archive",
+         "href": "https://archive.org/details/gri_33125000944922/page/n160/mode/1up"
+        },
+        ". A etiqueta do museu vale para a reprodução, não para o desenho. Uso cultural sem fins lucrativos."
+       ]
+      },
+      {
+       "id": "la-scapigliata",
+       "work": "la-scapigliata",
+       "title": "La Scapigliata",
+       "when": "Cerca de 1506 a 1508",
+       "where": "Galleria Nazionale di Parma, Complesso della Pilotta, Parma",
+       "who": "Atribuição com ressalva. A galeria a atribui a Leonardo, com a opinião italiana quase unânime, e a data de cerca de 1492 a 1501. A ala segue uma proposta de cerca de 1508. A ressalva vem do que a obra é: um esboço monocromático num painel de madeira, nem desenho nem pintura terminada.",
+       "shows": "A cabeça de uma moça olhando para baixo, com o cabelo solto e despenteado. Scapigliata quer dizer “despenteada” em italiano. Não se sabe para que ela servia: um estudo para uma pintura de Leda, para o cartão que hoje está em Londres, para a Virgem dos Rochedos de Londres, ou algo feito por si mesmo.",
+       "worth_knowing": "O próprio diretor da galeria duvidou dela em 1896 porque ela tinha vindo do ateliê de um pintor. A galeria a tinha comprado em 1839 dos herdeiros de um pintor, e o inventário que veio com ela a chamava simplesmente de cabeça de Madona em claro-escuro.",
+       "door": "La Scapigliata",
+       "shape": "tall",
+       "pic": "la-scapigliata",
+       "alt": "La Scapigliata: a cabeça de uma moça olhando para baixo, com o cabelo solto caindo, pintada em marrom sobre um painel claro. Uma reprodução.",
+       "src": [
+        "Obra em domínio público. Reprodução do ",
+        {
+         "text": "Wikimedia Commons",
+         "href": "https://commons.wikimedia.org/wiki/File:Head_of_a_Young_Woman,_called_%22Scapiliata%22.jpg"
+        },
+        ". A etiqueta do museu vale para a reprodução, não para a pintura. Uso cultural sem fins lucrativos. {museum:it108}"
+       ]
+      },
+      {
+       "id": "saint-john-the-baptist",
+       "work": "saint-john-the-baptist",
+       "title": "São João Batista",
+       "when": "Cerca de 1508 a 1519",
+       "where": "Musée du Louvre, Paris",
+       "who": "Documentado. Não se conhece quem o encomendou. Leonardo o manteve consigo na França, e o rei da França muito provavelmente o comprou em 1518. Depois a pintura andou muito: um duque francês a deu de presente a Carlos I da Inglaterra, ela foi vendida depois da execução desse rei, e Luís XIV a comprou de volta para a França em 1662.",
+       "shows": "Um jovem João Batista surge do escuro, sorrindo, com a mão direita apontando para cima, uma cruz fina de junco na esquerda e uma pele de animal malhada sobre o corpo.",
+       "worth_knowing": "A pele é malhada como a de um leopardo, e não o pelo de camelo da Bíblia, o que o Louvre considera único na época, e exames mostram que ele mudou o contorno do corpo três vezes ou mais.",
+       "door": "o São João Batista",
+       "shape": "tall",
+       "pic": "saint-john-the-baptist",
+       "alt": "São João Batista: um jovem sorridente surge de um fundo escuro, com a mão direita erguida e um dedo apontando para cima, e uma cruz fina na mão esquerda. Uma reprodução.",
+       "src": [
+        "Obra em domínio público. Reprodução do ",
+        {
+         "text": "Wikimedia Commons",
+         "href": "https://commons.wikimedia.org/wiki/File:Leonardo_da_vinci,_san_giovanni_battista_indicante_verso_l%27alto,_1508-1519_ca._(louvre)_02.jpg"
+        },
+        ". A etiqueta do museu vale para a reprodução, não para a pintura. Uso cultural sem fins lucrativos. Foto: Francesco Bini, ",
+        {
+         "text": "CC BY-SA 4.0",
+         "href": "https://creativecommons.org/licenses/by-sa/4.0/"
+        },
+        "."
+       ]
+      },
+      {
+       "id": "salvator-mundi",
+       "work": "salvator-mundi",
+       "title": "Salvator Mundi",
+       "when": "Cerca de 1499 a 1510",
+       "where": "Coleção particular, local atual não confirmado",
+       "who": "Controverso, mais do que qualquer outro. A favor de Leonardo: Martin Kemp e a National Gallery de Londres, que o expôs como dele em 2011. Contra ou em dúvida: Carmen Bambach, que atribui a maior parte a Boltraffio, e Frank Zöllner, que vê uma pintura de ateliê, provavelmente com a mão de Leonardo, danificada demais e restaurada demais para um veredito firme.",
+       "shows": "Cristo como salvador do mundo, que é o que o título quer dizer, de frente para nós, com a mão direita erguida para abençoar e uma esfera de cristal transparente na esquerda, vestido de azul com faixas bordadas. Em 1958 foi vendido em leilão por 45 libras como obra de escola, e em novembro de 2017, na Christie’s de Nova York, por cerca de 450 milhões de dólares, o preço mais alto já pago em leilão por uma obra de arte. Desde então não foi mais mostrado em público, e um relatório de 2024 diz que ele pode estar guardado num depósito em Genebra.",
+       "door": "o Salvator Mundi",
+       "shape": "tall",
+       "pic": "salvator-mundi",
+       "alt": "Salvator Mundi: Cristo de frente para nós com uma túnica azul, a mão direita erguida para abençoar e uma esfera de cristal na mão esquerda, contra um fundo escuro. Uma reprodução.",
+       "src": [
+        "Obra em domínio público. Reprodução do ",
+        {
+         "text": "Wikimedia Commons",
+         "href": "https://commons.wikimedia.org/wiki/File:Leonardo_da_Vinci_or_Boltraffio_(attrib)_Salvator_Mundi_circa_1500.jpg"
+        },
+        ". A etiqueta do museu vale para a reprodução, não para a pintura. Uso cultural sem fins lucrativos. A fotografia, feita para a Christie’s em 2017 depois do restauro, mostrava a moldura. Aqui ela está recortada na pintura."
+       ]
+      }
+     ],
+     "p": "Depois de voltar a Milão, ele terminou a Virgem dos Rochedos de Londres, e o São João sorridente talvez tenha sido começado aqui. A ala data destes anos mais duas obras, o grande cartão hoje em Londres e uma cabeça de moça de cabelos soltos, embora as fontes discutam as datas delas. O Salvator Mundi, controverso, fica aqui porque a data dele vai até 1510."
+    },
+    {
+     "id": "amboise-1516",
+     "h": "Amboise, de 1516 a 1519",
+     "items": [
+      {
+       "id": "bacchus",
+       "work": "bacchus",
+       "title": "Baco, antes São João Batista",
+       "when": "Cerca de 1517 a 1520",
+       "where": "Musée du Louvre, Paris",
+       "who": "Ateliê. O Louvre o classifica como ateliê de Leonardo e o atribui a Francesco Melzi, o aluno que viveu com ele na França a partir de 1516. O Louvre sugere que Melzi o pintou lá para o rei da França, a partir do pequeno São João de Leonardo.",
+       "shows": "Um rapaz sentado em campo aberto, sorrindo e apontando, com hera na cabeça, uvas e um bastão nas mãos e uma pele malhada em volta do corpo. Ele foi pintado como João Batista.",
+       "worth_knowing": "Em 1625 um visitante de Fontainebleau anotou que a pintura não movia à devoção, e no fim daquele século ela foi transformada no deus pagão Baco: as uvas e a hera foram acrescentadas e a cruz de João virou um bastão. O restauro de 2017 a 2019 mostrou que a pele é original e que as uvas e a hera são posteriores.",
+       "door": "o Baco",
+       "shape": "tall",
+       "pic": "bacchus",
+       "alt": "Baco: um rapaz sentado em campo aberto sob árvores, apontando com uma mão, com hera na cabeça, uma pele malhada em volta do corpo, uvas ao lado e céu azul acima. Uma reprodução.",
+       "src": [
+        "Obra em domínio público. Reprodução do ",
+        {
+         "text": "Wikimedia Commons",
+         "href": "https://commons.wikimedia.org/wiki/File:Bacchus_-_Leonardo_da_Vinci_workshop_-_Louvre_INV_780.jpg"
+        },
+        ". A etiqueta do museu vale para a reprodução, não para a pintura. Uso cultural sem fins lucrativos."
+       ]
+      }
+     ],
+     "p": "Depois de três anos em Roma, ele foi para a França com a Mona Lisa, a Santa Ana e o São João ainda nas mãos. A única pintura destes anos na ala é do ateliê dele, não dele."
+    },
+    {
+     "id": "own-wall",
+     "h": "Numa parede própria",
+     "items": [
+      {
+       "id": "last-supper",
+       "work": "field",
+       "title": "A Última Ceia",
+       "when": "Cerca de 1494 a 1498",
+       "where": "Museo del Cenacolo Vinciano, Santa Maria delle Grazie, Milão",
+       "who": "Não está na sala dos quadros. Uma pintura mural, ainda na parede onde foi pintada, no refeitório de um convento dominicano, e a ala mostra uma reprodução dela numa parede do pátio, no tamanho do original.",
+       "shows": "Cristo no meio e os apóstolos em volta dele numa mesa comprida, pintada para Ludovico Sforza, duque de Milão, em têmpera sobre reboco seco, e não como afresco.",
+       "worth_knowing": "Como a tinta ficou sobre a parede e não dentro dela, começou a descascar em cerca de vinte anos. O resto da história está na página própria dela, em inglês.",
+       "door": "a Última Ceia",
+       "shape": "wide",
+       "pic": "supper",
+       "alt": "Uma imagem do filme da ala: a reprodução da Última Ceia numa parede clara do pátio, com o rodapé e o chão à frente. Cristo no meio de treze figuras atrás de uma mesa comprida, num salão pintado.",
+       "src": [
+        "Uma imagem do filme da ala. A parede traz uma fotografia de Paris Orlando, 2019. Obra em domínio público. Reprodução do ",
+        {
+         "text": "Wikimedia Commons",
+         "href": "https://commons.wikimedia.org/wiki/File:Last_Supper_by_Leonardo_da_Vinci.jpg"
+        },
+        ". A etiqueta do museu vale para a reprodução, não para a pintura. Uso cultural sem fins lucrativos. {museum:it108}"
+       ],
+       "links": [
+        {
+         "text": "A Última Ceia tem uma página própria, em inglês: a porta, a bomba, o restauro e como vê-la em Milão.",
+         "page": "supper"
+        }
+       ]
+      }
+     ]
+    }
+   ],
+   "links": [
+    {
+     "text": "Todos os tamanhos, da cabeça menor à Última Ceia, estão na página dos tamanhos, desenhados na mesma escala, em inglês.",
+     "page": "sizes"
+    },
+    {
+     "text": "As pinturas na página de Leonardo da Vinci",
+     "wing": "paintings"
+    }
+   ]
+  },
+  {
+   "type": "notes",
+   "id": "where",
+   "nav": "Onde vê-las",
+   "h": "Onde vê-las",
+   "intro": "O Louvre é o que tem mais. Por cidade:",
+   "rows": [
+    {
+     "term": "Paris, Musée du Louvre",
+     "text": "cinco pinturas dele, a Virgem dos Rochedos, La belle ferronnière, a Mona Lisa, o São João e a Santa Ana, e três obras ligadas a ele, a predela, o Baco e o desenho de Anghiari. La belle ferronnière estava listada como fora de exposição quando verificamos, e o desenho de Anghiari só é mostrado com hora marcada."
+    },
+    {
+     "term": "Florença, Gallerie degli Uffizi",
+     "text": "três numa mesma sala, o Batismo de Cristo, a Anunciação e a Adoração dos Magos."
+    },
+    {
+     "term": "Milão",
+     "text": "o Retrato de um Músico na Veneranda Biblioteca Ambrosiana, e a Última Ceia numa parede própria, em Santa Maria delle Grazie, só com reserva."
+    },
+    {
+     "term": "Londres, National Gallery",
+     "text": "a Virgem dos Rochedos e o cartão de Burlington House."
+    },
+    {
+     "term": "São Petersburgo, Museu Hermitage",
+     "text": "a Madona Litta, e a Madona Benois, que a página do Hermitage lista como fora da exposição permanente."
+    },
+    {
+     "term": "Washington, National Gallery of Art",
+     "text": "Ginevra de’ Benci."
+    },
+    {
+     "term": "Munique, Alte Pinakothek",
+     "text": "a Madona do Cravo."
+    },
+    {
+     "term": "Cidade do Vaticano, Pinacoteca Vaticana",
+     "text": "São Jerônimo no deserto."
+    },
+    {
+     "term": "Cracóvia, Museu Czartoryski",
+     "text": "a Dama com Arminho."
+    },
+    {
+     "term": "Em empréstimo às National Galleries Scotland",
+     "text": "a Madona do Fuso de Buccleuch."
+    },
+    {
+     "term": "Nova York, The Metropolitan Museum of Art",
+     "text": "a Madona do Fuso de Lansdowne, em empréstimo."
+    },
+    {
+     "term": "Parma, Galleria Nazionale",
+     "text": "La Scapigliata."
+    },
+    {
+     "term": "Em nenhum lugar público",
+     "text": "o Salvator Mundi, numa coleção particular, sem ser mostrado desde 2017."
+    }
+   ]
+  },
+  {
+   "type": "sources",
+   "id": "sources",
+   "nav": "Fontes",
+   "h": "Fontes",
+   "intro": "Os títulos, as datas, os acervos e as atribuições seguem as etiquetas da ala, conferidas em outubro de 2026 com as páginas e os registros dos próprios museus: a Galeria Uffizi, a National Gallery of Art de Washington, a Alte Pinakothek, o Hermitage, os Museus Vaticanos, o Louvre, a Ambrosiana, o Museu Nacional de Cracóvia, a National Gallery de Londres, a Pilotta de Parma e o Cenacolo Vinciano. Para a contagem e os debates: Martin Kemp no The Art Newspaper (maio de 2025), o verbete de catálogo de Frank Zöllner sobre o Salvator Mundi (2019), The Art Newspaper (2018, 2021 e 2024), NPR (2017), e Cultured e Artlyst (2026). Onde a opinião de um museu difere da etiqueta da ala, o verbete diz isso.",
+   "notes": [],
+   "contact": "Se você encontrar um erro numa data, numa atribuição ou numa frase desta página, escreva para nós e faremos a correção.",
+   "contact_link": "Ir para as informações legais",
+   "what_link": "O que é este museu"
+  },
+  {
+   "type": "close",
+   "id": "enter",
+   "nav": "",
+   "h": "Ver os quadros na ala",
+   "p": "Esta porta leva à sala dos quadros da ala de Leonardo, onde as 24 obras estão expostas como reproduções perto do tamanho real. De lá, o percurso segue para a sala das máquinas, a mesa de leitura e a última casa dele.",
+   "door": {
+    "text": "Entrar no museu",
+    "note": "Entrada franca, sem cadastro."
+   }
+  }
+ ]
+}

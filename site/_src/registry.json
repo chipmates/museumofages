@@ -190,10 +190,26 @@
         },
         "langs": [
           "en",
-          "de"
+          "de",
+          "es",
+          "pt-BR"
         ],
         "count": "paintings",
-        "from": "paintings"
+        "from": "paintings",
+        "never_say": [
+          ["(?<!unas )(?<!cerca de )\\b15 a 20\\b", "about 15 to 20, depending on whose list: unas / cerca de, never a bare count", ["es", "pt-BR"]],
+          ["salvator mundi,? (?:es|é|fue|foi) (?:obra )?de leonardo|salvator mundi,? pintado por leonardo|leonardo (?:pintó el|pintou o) salvator mundi", "the Salvator Mundi is disputed, more than any other: never his as a fact", ["es", "pt-BR"]],
+          ["(?:madonna|madona) litta,? (?:es|é|fue|foi) (?:obra )?de leonardo|leonardo (?:pintó|pintou) (?:la|a) (?:madonna|madona) litta", "the Hermitage gives it to Leonardo, many scholars think a pupil painted it from his design: never his alone", ["es", "pt-BR"]],
+          ["(?:bautismo|batismo) de cristo,? (?:es|é|fue|foi) (?:obra )?de leonardo|leonardo (?:pintó|pintou) (?:el|o) (?:bautismo|batismo) de cristo", "Verrocchio's painting, with Leonardo's angel and probably more: never by Leonardo", ["es", "pt-BR"]],
+          ["predela,? (?:es|é|fue|foi) (?:obra )?de leonardo|leonardo (?:pintó|pintou) (?:la|a) predela", "the Louvre labels the predella Lorenzo di Credi: never his as a fact", ["es", "pt-BR"]],
+          ["\\bbaco,? (?:es|é|fue|foi) (?:obra )?de leonardo|leonardo (?:pintó|pintou) (?:el|o) baco", "the Bacchus is from his workshop, attributed to Melzi: never his", ["es", "pt-BR"]],
+          ["rubens (?:vio|viu|copió|copiou) (?:el|la|o|a) (?:muro|pared|parede|pintura mural|original)", "the Anghiari drawing copies a copy of his cartoon, and Rubens never saw the wall", ["es", "pt-BR"]],
+          ["(?<!\\bno )\\b(?:al|un|como) fresco\\b|(?<!\\bnão )(?<!\\bnão um )(?<!\\bnão como )\\bafresco\\b", "the Last Supper is tempera on dry plaster, not a fresco", ["es", "pt-BR"]],
+          ["(?<!unos )(?<!cerca de )\\b450 (?:millones|milhões)", "about 450 million dollars: unos / cerca de", ["es", "pt-BR"]],
+          ["(?:el rey de francia|o rei da frança) (?!muy probablemente|muito provavelmente)[^.]{0,40}?(?:compró|comprou|adquirió|adquiriu)", "the French king very probably bought it: muy probablemente / muito provavelmente", ["es", "pt-BR"]],
+          ["(?:retratada|ella|ela) (?:es|é|era) lucrezia crivelli|retrato de lucrezia crivelli", "who La Belle Ferronnière shows remains open: Lucrezia Crivelli is the oldest candidate", ["es", "pt-BR"]],
+          ["(?:el met|o met) (?:la |a )?(?:compró|comprou|adquirió|adquiriu)", "the Lansdowne Yarnwinder is on loan to the Met from the Griffin collection", ["es", "pt-BR"]]
+        ]
       },
       {
         "slug": {

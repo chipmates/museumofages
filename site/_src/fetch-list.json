@@ -2625,6 +2625,18 @@
    "sha256": "4c4963ac054f446614dfefb6a720bf9c62e1bfab0fc014a975ed00690021fa7c"
   },
   {
+   "path": "pages/pics/img/vinci-paintings-og-es-1200x630.png",
+   "url": "/static/img/vinci-paintings-og-es-1200x630.png",
+   "bytes": 21249,
+   "sha256": "747c288877b38f9e0c970b7453c5807a677b7b692837ce9a03cf8fa0bde25b48"
+  },
+  {
+   "path": "pages/pics/img/vinci-paintings-og-pt-br-1200x630.png",
+   "url": "/static/img/vinci-paintings-og-pt-br-1200x630.png",
+   "bytes": 22049,
+   "sha256": "fe88cbe038af3ad513beea800c54d9838a6394590ae907e06b8ce255a2a6ec70"
+  },
+  {
    "path": "pages/pics/img/vinci-plate-adoration-of-the-magi-320.avif",
    "url": "/static/img/vinci-plate-adoration-of-the-magi-320.avif",
    "bytes": 15962,

@@ -197,13 +197,27 @@ TIER_LINE = {
                      "Kulturelle Nutzung ohne Gewinnabsicht.")},
     "TIER1": {"en": ("public domain",), "de": ("gemeinfrei",)},
 }
+# Spanish and Portuguese say the second tier's line in the museum's own words for it (its walk's label line)
+TIER_LINE["TIER2"].update({
+    "es": ("Obra de dominio público.", "Reproducción de ", "El museo etiqueta la reproducción, no el cuadro.",
+           "Uso cultural sin fines de lucro."),
+    "pt-BR": ("Obra em domínio público.", "Reprodução do ", "A etiqueta do museu vale para a reprodução, não para a pintura.",
+              "Uso cultural sem fins lucrativos.")})
+TIER_LINE["TIER1"].update({"es": ("dominio público",), "pt-BR": ("domínio público",)})
 BARE_LINE = {"en": re.compile(r"\bpublic domain reproductions? from\b", re.I),
-             "de": re.compile(r"\bgemeinfreie reproduktion(?:en)? aus\b", re.I)}
+             "de": re.compile(r"\bgemeinfreie reproduktion(?:en)? aus\b", re.I),
+             "es": re.compile(r"\breproducci(?:ón|ones) de dominio público de\b", re.I),
+             "pt-BR": re.compile(r"\breproduç(?:ão|ões) em domínio público d[oa]\b", re.I)}
 # Units an animal's numbers carry beside the site's own (buildlib.UNIT), and the things they count: a number keeps
 # them on its line.
 MORE_UNITS = r"(?:ft|in|t|feet|tonnes|Tonnen|kg|million|Millionen|discs|Wirbeln?)"
 # The wing's dates are written in English: the German page writes them by these rules.
 DATE_DE = {"Sixteenth century, reworked in the early seventeenth century": "16. Jahrhundert, überarbeitet im frühen 17. Jahrhundert"}
+# The Spanish and Portuguese pages write them as the wing's own labels in those languages do: (fixed, one year, a span).
+DATE_MORE = {"es": ({"Sixteenth century, reworked in the early seventeenth century": "Siglo XVI, retocada a comienzos del siglo XVII"},
+                    "Hacia {0}", "Entre {0} y {1}, aproximadamente"),
+             "pt-BR": ({"Sixteenth century, reworked in the early seventeenth century": "Século XVI, retocada no início do século XVII"},
+                       "Cerca de {0}", "Cerca de {0} a {1}")}
 
 
 # ---------- small tools ----------
@@ -926,7 +940,9 @@ RECORD = "museum/src/wings/{wing}/pictures/data/store-audit.json"
 
 def museum_words(text, lang):
     """A sentence with the museum's own words ({museum:key}) filled in."""
-    museum = json.loads((LANG.HERE / "museum-texts.json").read_text(encoding="utf-8"))[lang]
+    texts = json.loads((LANG.HERE / "museum-texts.json").read_text(encoding="utf-8"))
+    # a language the file does not hold keeps its own beside it (museum-texts.<code>.json), as the wing's build reads it
+    museum = texts[lang] if lang in texts else json.loads((LANG.HERE / f"museum-texts.{lang}.json").read_text(encoding="utf-8"))
     return re.sub(r"\{museum:(\w+)\}", lambda m: museum[m.group(1)], text)
 
 
@@ -1093,6 +1109,10 @@ def date_in(lang, date):
     """The wing's date (English) as a page in lang writes it, or None where no rule knows it."""
     if lang == "en":
         return date
+    if lang in DATE_MORE:
+        fixed, one, span = DATE_MORE[lang]
+        m = re.fullmatch(r"About (\d{4})(?: to (\d{4}))?", date)
+        return fixed.get(date) or ((span.format(*m.groups()) if m.group(2) else one.format(m.group(1))) if m else None)
     if lang != "de":
         return None
     if date in DATE_DE:
@@ -1343,9 +1363,12 @@ def render(page, lang, data, shared, out_root):
         """Every sentence of a block or an entry as HTML. An id is an attribute and stays plain."""
         return {k: esc(v) if k in ("id", "type") else rich(v) for k, v in entry.items() if isinstance(v, str)}
 
-    def page_href(name):
-        """Another page of this build in the page's language, from here."""
+    def page_href(name, english=False):
+        """Another page of this build in the page's language, from here. A way on (english) to a page written in
+        fewer languages leads to the English one, as a language without a legal notice links the English notice."""
         if lang not in shared["data"].get(name, {}):
+            if english and "en" in shared["data"].get(name, {}):
+                return f'{root}{page_path(shared["data"][name]["en"], wing, "en")}/'
             raise SystemExit(f"{page}.{lang}: a link names the page {name!r}, which this build does not make in {lang}")
         return f'{root}{page_path(shared["data"][name][lang], wing, lang)}/'
 
@@ -1380,6 +1403,8 @@ def render(page, lang, data, shared, out_root):
             elif link.get("out"):
                 # a wing in the making: the plain link to the newest open wing's page, counted as a way out
                 href, attr = href_out(), ' data-out="wing"'
+            elif "page" in link and lang not in shared["data"].get(link["page"], {}):
+                href, attr = page_href(link["page"], english=True), ' hreflang="en"'
             else:
                 href, attr = part_href(link), ""
             out.append(f'\n<p class="sp-more"><a class="more" href="{esc(href)}"{attr}><span>{rich(link["text"])}</span>{chrome["arrow"]}</a></p>')
@@ -2061,6 +2086,11 @@ def load_pages(pages=PAGES):
             # the wing's facts: its stops, and the sizes a page's drawing or chart shows
             if (LANG.HERE / "wings" / f"{key}.facts.json").is_file():
                 facts = json.loads((LANG.HERE / "wings" / f"{key}.facts.json").read_text(encoding="utf-8"))
+                # the facts' titles, holders and periods in another of the topic's languages: <wing>.facts.<code>.json
+                for code in LANG.topic_langs(topic, wing_codes):
+                    own = LANG.load_own(LANG.HERE / "wings", f"{key}.facts", code)
+                    if own is not None:
+                        problems += LANG.merge_leaves(facts, own, code, f"wings/{key}.facts.{code}.json")
             wing_words = json.loads((LANG.HERE / "wings" / f"{key}.en.json").read_text(encoding="utf-8")) if topic.get("from") else {}
             group = next((g for g in wing_words.get("holds", {}).get("groups", []) if g["id"] == topic.get("from")), {})
             # a group of works (its own from) gives the page its works; a group of text only links the page
