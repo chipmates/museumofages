@@ -1,0 +1,240 @@
+{
+ "_note": "AS PALAVRAS da página da Última Ceia, em português do Brasil. Reescritas a partir do inglês e do alemão, com as mesmas datas, medidas, nomes, graus de certeza e fontes. A mesa e o arco do desenho (top.drawing.inside) são uma reconstrução a partir de uma fotografia da parede, a mesma do inglês, e a nota sob o desenho diz isso. Sem travessão, sem ponto e vírgula. Status ai: nenhuma pessoa as revisou ainda.",
+ "page": {
+  "id": "vinci-supper",
+  "wing": "vinci",
+  "topic": "supper",
+  "stop": "supper-wall",
+  "published": null,
+  "og_image": {
+   "file": "vinci-supper-og-{lang}-1200x630.png",
+   "width": 1200,
+   "height": 630
+  }
+ },
+ "pics": {
+  "supper": {
+   "stem": "v-supper",
+   "widths": [
+    800,
+    1600
+   ],
+   "sizes": "(min-width: 960px) 640px, calc(100vw - 40px)"
+  }
+ },
+ "meta": {
+  "title": "A Última Ceia de Leonardo da Vinci | Museum of Ages",
+  "description": "A Última Ceia, ou Santa Ceia, de Leonardo da Vinci: pintura mural de 4,6 por 8,8 metros num refeitório de Milão, de cerca de 1494 a 1498. O que resta dela.",
+  "og_title": "A Última Ceia de Leonardo da Vinci",
+  "og_image_alt": "A Última Ceia e, ao lado, uma pessoa de 1,70 metro, desenhadas na mesma escala: a pintura mural mede 4,6 por 8,8 metros. Nela, a mesa e, embaixo dela, o topo do arco da porta, onde ficavam os pés de Cristo. Um desenho feito para esta página, a mesa e o arco a partir de uma fotografia."
+ },
+ "labels": {
+  "crumbs": "Você está aqui",
+  "crumb_home": "Museu",
+  "crumb_here": "A Última Ceia",
+  "toc": "Nesta página",
+  "tag_chart": "Feito para esta página",
+  "tag_still": "Reprodução",
+  "person": "1,70 m"
+ },
+ "top": {
+  "h1": "A Última Ceia de Leonardo da Vinci",
+  "answer": "A Última Ceia, ou Santa Ceia, é uma pintura mural. Leonardo da Vinci a pintou em Milão, no refeitório de Santa Maria delle Grazie, um convento dominicano. Ele a pintou para Ludovico Sforza, duque de Milão, de cerca de 1494 a 1498, e ela continua na mesma parede: segundo o museu, mede 4,6 por 8,8 metros, altura por largura. Olhe embaixo da mesa: Cristo não tem pés. No século XVII, os frades alargaram a porta das cozinhas, bem no meio dessa parede, onde ficavam os pés de Cristo.",
+  "drawing": {
+   "wall": "supper",
+   "tag": "tag_chart",
+   "title": "A Última Ceia",
+   "what": "ao lado de uma pessoa de 1,70 metro",
+   "alt": "A Última Ceia, de 4,6 por 8,8 metros, e ao lado uma pessoa de 1,70 metro, desenhadas na mesma escala. Dentro dela, a mesa, e embaixo da mesa o topo do arco da porta, onde ficavam os pés de Cristo. A mesa e o arco são uma reconstrução a partir de uma fotografia. A porta embaixo e o piso não estão no desenho.",
+   "note": "Mesa e arco: reconstrução a partir de uma fotografia. Porta e piso: não desenhados.",
+   "inside": {
+    "table": {
+     "from_m": 0.57,
+     "to_m": 8.29,
+     "hem_m": 0.85,
+     "top_m": 1.42
+    },
+    "arch": {
+     "from_m": 3.2,
+     "to_m": 5.58,
+     "spring_m": 0.87,
+     "crown_m": 1.17
+    }
+   },
+   "arch_label": [
+    "O arco da porta,",
+    "onde ficavam os pés de Cristo"
+   ]
+  },
+  "door": {
+   "text": "Ver a Última Ceia na ala",
+   "note": "Entrada franca, sem cadastro.",
+   "leads": "A porta abre a ala de Leonardo na parede do pátio."
+  }
+ },
+ "blocks": [
+  {
+   "type": "text",
+   "id": "painted",
+   "nav": "Como ele a pintou",
+   "h": "Como ele a pintou e por que ela começou a se deteriorar",
+   "paras": [
+    "Na época dele, uma pintura mural costumava ser um afresco. O pintor trabalha rápido sobre o reboco úmido, e o reboco, ao secar, absorve a cor. Leonardo não queria trabalhar rápido. O museu explica que ele queria ir devagar e fazer mudanças enquanto pintava. Então ele deixou o reboco secar, aplicou por cima uma base branca e pintou em têmpera, como se a parede fosse um dos painéis de madeira dele. Um estudo de laboratório de 2023 indica que também havia óleo na mistura.",
+    "Por isso ela começou a se deteriorar. Nada prendia a cor à parede. A cor ficava por cima, como uma pele, e a sala era úmida. Em cerca de vinte anos, a pintura já descascava: em 1517, um visitante viu o estrago. Em 1568, Vasari escreveu que mal se distinguia algo além de uma mancha luminosa, segundo a citação do site do museu."
+   ]
+  },
+  {
+   "type": "text",
+   "id": "centuries",
+   "nav": "Cinco séculos numa parede",
+   "h": "Cinco séculos numa parede",
+   "paras": [
+    "Os danos vieram em ondas. No século XVII, os frades alargaram a porta embaixo da mesa (um catálogo dá a data de 1652), e os pés de Cristo se perderam. Na década de 1720, um restaurador achou que fosse uma pintura a óleo, segundo um catálogo nacional. Ele lavou a parede com soda cáustica, aplicou uma camada de verniz a óleo e repintou grandes partes dela. Na década de 1770, ela recebeu outra camada de repintura. Em 1821, outro restaurador tentou descolar partes da pintura da parede, sem sucesso. Na época de Napoleão, tropas ocuparam a sala, que segundo um relato serviu de estábulo.",
+    "Depois veio a guerra. Em agosto de 1943, uma bomba explodiu no claustro ao lado. O refeitório perdeu a abóbada e a parede do lado leste. A parede pintada resistiu. Desde 1940 ela estava atrás de uma armação de aço e de uma grossa parede de sacos de areia, e foi essa proteção que a salvou. A reconstrução da sala começou em 1945."
+   ]
+  },
+  {
+   "type": "text",
+   "id": "restoration",
+   "nav": "A longa restauração",
+   "h": "A longa restauração",
+   "paras": [
+    "Desde o começo do século XVIII, restauradores trabalharam na parede cerca de nove vezes, pela contagem do museu. Durante a maior parte desse tempo, restaurar queria dizer repintar o que faltava. No começo do século XX, Luigi Cavenaghi a restaurou, e na década de 1950 Mauro Pellicioli fixou a superfície, que descascava, sem tirar as repinturas antigas.",
+    "A última restauração foi diferente. Pinin Brambilla Barcilon começou no fim da década de 1970 e terminou em 1999, mais de vinte anos depois. Por trás dela estavam a Soprintendenza de Milão e o instituto central de restauração de Roma, como noticiou a imprensa. A equipe dela retirou as repinturas dos séculos anteriores. Com lentes de aumento, a equipe limpou o que restava da tinta de Leonardo, escama por escama, e preencheu as lacunas com um tom de aquarela, que a água pode retirar de novo. Restauradores anteriores, segundo o relato dela, tinham mudado olhos de lugar, fechado bocas e posto barbas em rostos sem barba.",
+    "O que voltou à vista é pouco. Quanto da tinta ainda é do próprio Leonardo? As estimativas dos especialistas vão de um quinto à metade. Não há consenso sobre um número."
+   ]
+  },
+  {
+   "type": "text",
+   "id": "milan",
+   "nav": "Em Milão hoje",
+   "h": "Ver a pintura hoje em Milão",
+   "paras": [
+    "A pintura continua na mesma sala. Junto com a igreja e o convento, ela é Patrimônio Mundial da UNESCO desde 1980. O refeitório tem o ar filtrado e o clima controlado. Por isso você entra por uma sequência de salas pequenas, com portas que se abrem uma depois da outra, e as visitas são curtas, com horário marcado e em grupos pequenos. É preciso reservar.",
+    [
+     "Na parede em frente há uma Crucificação de Giovanni Donato Montorfano. Ele assinou a obra, pôs a data de 1495 e a pintou em afresco. Ela conservou a cor muito melhor que a parede de Leonardo. Mais tarde, alguém pintou sobre ela figuras ajoelhadas da família do duque, provavelmente Leonardo, segundo o museu, e delas quase nada resta. Para a visita, o site do próprio museu: ",
+     {
+      "text": "cenacolovinciano.org",
+      "href": "https://cenacolovinciano.org/en/"
+     },
+     " (em inglês e em italiano)."
+    ]
+   ]
+  },
+  {
+   "type": "text",
+   "id": "wing",
+   "nav": "Na ala",
+   "h": "O que a nossa cópia mostra e o que ela não pode mostrar",
+   "paras": [
+    "A ala de Leonardo do museu tem uma cópia da Última Ceia numa parede do pátio. É uma reprodução, com a altura e a largura do original, 4,6 por 8,8 metros. Ela mostra o que um livro não consegue: a composição inteira em tamanho real, com você diante dela, Cristo no meio e os apóstolos em quatro grupos de três.",
+    "O que uma cópia plana não pode mostrar é a própria parede: como as escamas de tinta se levantam do reboco e como tudo é frágil. E ela não pode mostrar a luz da sala. Em Milão, a luz pintada vem da esquerda, do mesmo lado que as janelas reais do refeitório. Tire a pintura daquela parede e essa combinação se perde.",
+    [
+     "O tamanho dela ao lado da Mona Lisa e das outras obras: ",
+     {
+      "text": "a página dos tamanhos",
+      "page": "sizes"
+     },
+     ", em inglês."
+    ]
+   ],
+   "pic": {
+    "pic": "supper",
+    "title": "A Última Ceia no pátio",
+    "tag": "tag_still",
+    "what": "uma imagem do filme da ala. A reprodução na parede dela, no pátio do museu, com 4,6 por 8,8 metros. A parede é construída em código. O original está em Milão, no refeitório de Santa Maria delle Grazie.",
+    "alt": "Uma reprodução da Última Ceia ocupa uma parede clara num pátio: uma fileira de figuras numa mesa comprida, numa sala pintada. Uma imagem do filme da ala.",
+    "src": [
+     "Fotografia de Paris Orlando, 2019, domínio público (PD-Art), via ",
+     {
+      "text": "Wikimedia Commons",
+      "href": "https://commons.wikimedia.org/wiki/File:Last_Supper_by_Leonardo_da_Vinci.jpg"
+     },
+     ". {museum:it108}"
+    ]
+   },
+   "links": [
+    {
+     "text": "Ver a Última Ceia na ala",
+     "stop": "supper-wall"
+    }
+   ]
+  },
+  {
+   "type": "sources",
+   "id": "sources",
+   "nav": "Fontes",
+   "h": "Fontes",
+   "intro": "Esta página se baseia nestas fontes, todas consultadas em 12 de outubro de 2026:",
+   "read": [
+    {
+     "text": "Museo del Cenacolo Vinciano, a obra",
+     "href": "https://cenacolovinciano.org/en/museum/the-works/the-last-supper-leonardo-da-vinci-1452-1519/"
+    },
+    {
+     "text": "Museo del Cenacolo Vinciano, técnica, conservação e restaurações",
+     "href": "https://cenacolovinciano.org/en/museum/backstage/"
+    },
+    {
+     "text": "Museo del Cenacolo Vinciano, a história",
+     "href": "https://cenacolovinciano.org/en/museum/history/"
+    },
+    {
+     "text": "Museo del Cenacolo Vinciano, a Crucificação de Montorfano",
+     "href": "https://cenacolovinciano.org/en/museum/the-works/the-crucifixion-donato-montorfano-1460-ca-1502-ca/"
+    },
+    {
+     "text": "Museo del Cenacolo Vinciano, a descrição verbal da pintura (PDF, em italiano)",
+     "href": "https://cenacolovinciano.org/wp-content/uploads/2019/07/DescriVedendo-Cenacolo.pdf"
+    },
+    {
+     "text": "Museo del Cenacolo Vinciano, a folha informativa do museu de 2023 (PDF, em italiano)",
+     "href": "https://cenacolovinciano.org/wp-content/uploads/2023/07/Museo-del-Cenacolo-Vinciano.pdf"
+    },
+    {
+     "text": "Ministero della Cultura, o local",
+     "href": "https://cultura.gov.it/luogo/museo-del-cenacolo-vinciano"
+    },
+    {
+     "text": "Regione Lombardia, registro de catálogo da pintura",
+     "href": "https://lombardiabeniculturali.it/opere-arte/schede-complete/3o210-01279"
+    },
+    {
+     "text": "Regione Lombardia, registro de catálogo do refeitório",
+     "href": "https://www.lombardiabeniculturali.it/architetture/schede/LMD80-00084/"
+    },
+    {
+     "text": "ICCD, registro do catálogo nacional (1975)",
+     "href": "https://sigecweb.beniculturali.it/sigec/item/print/ICCD3288350"
+    },
+    {
+     "text": "The Art Newspaper, 1º de novembro de 1998, sobre a restauração",
+     "href": "https://www.theartnewspaper.com/1998/11/01/leonardos-last-supper-restored-a-wreck-but-an-authentic-wreck"
+    },
+    {
+     "text": "The Art Newspaper, 30 de abril de 1999, sobre quanto ainda é de Leonardo",
+     "href": "https://www.theartnewspaper.com/1999/05/01/the-director-of-one-of-italys-top-restoration-laboratories-responds-to-denunciations-of-work-carried-out-on-leonardos-last-supper"
+    },
+    {
+     "text": "Universidade de Amsterdã, 2023, sobre o óleo na tinta",
+     "href": "https://hims.uva.nl/content/news/2023/10/shedding-light-on-leonardos-painting-methods.html"
+    }
+   ],
+   "notes": [],
+   "contact": "Se você encontrar um erro numa data, num nome ou numa frase, escreva para nós e faremos a correção.",
+   "contact_link": "Ir para as informações legais",
+   "what_link": "O que é este museu"
+  },
+  {
+   "type": "close",
+   "id": "enter",
+   "nav": "",
+   "h": "Ver a Última Ceia na ala",
+   "p": "Esta porta leva direto à parede do pátio. O percurso completo começa na sala dos quadros, com a Mona Lisa.",
+   "door": {
+    "text": "Entrar no museu",
+    "note": "Entrada franca, sem cadastro."
+   }
+  }
+ ]
+}

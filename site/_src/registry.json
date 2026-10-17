@@ -255,8 +255,21 @@
           "en": "The wall in Milan, 4.6 by 8.8 metres: how he painted it, what five centuries did to it, and what is left.",
           "de": "Die Wand in Mailand, 4,6 mal 8,8 Meter: wie er es malte, was ihm fünf Jahrhunderte antaten und was übrig ist."
         },
-        "langs": ["en", "de"],
-        "count": "supper"
+        "langs": ["en", "de", "es", "pt-BR"],
+        "count": "supper",
+        "never_say": [
+          ["(?<!cerca de )(?<!hacia )\\b1494 (?:y|a|e) 1498\\b(?!,? aproximadamente)", "about 1494 to 1498: aproximadamente / cerca de, never two bare years", ["es", "pt-BR"]],
+          ["(?:la última cena|a última ceia|santa ceia),? (?:es|era|fue|é|foi) (?:un |uma? )?(?:fresco|afresco)|(?:pintó|pintou) (?:la última cena|a última ceia) (?:al|em|como) (?:fresco|afresco)|(?:el fresco|o afresco|los frescos|os afrescos) de leonardo|(?:fresco|afresco) (?:de la última cena|da última ceia|da santa ceia)", "the Last Supper is tempera on dry plaster, not a fresco: the Crucifixion opposite is the fresco", ["es", "pt-BR"]],
+          ["(?<!creyó que )(?<!achou que )\\b(?:es|era|fue|é|foi|fosse) (?:una|uma) pintura (?:al|a) óleo", "a lab study points to oil in the mix: never an oil painting (only the 1720s restorer took it for one)", ["es", "pt-BR"]],
+          ["(?:\\d+ ?%|\\bpor ciento\\b|\\bpor cento\\b)[^.]*\\b(?:pintura|tinta|leonardo)\\b|\\b(?:queda|quedan|resta|restam|sobrevive|sobrevivem)\\b[^.]*(?:\\d+ ?%|\\bpor ciento\\b|\\bpor cento\\b)", "how much is Leonardo's: the experts' estimates lie between a fifth and a half, no single figure", ["es", "pt-BR"]],
+          ["(?<!según un relato )(?<!segundo um relato )\\b(?:sirvió|serviu) (?:de|como) (?:establo|estábulo)|\\b(?:fue|era|foi) (?:un |uma? )?(?:establo|estábulo)", "the room as a stable is one account (según un relato / segundo um relato)", ["es", "pt-BR"]],
+          ["(?:figuras arrodilladas|figuras ajoelhadas)(?:(?!probablemente|provavelmente)[^.])*\\bleonardo\\b", "the kneeling figures are probably Leonardo's, the museum says: probablemente / provavelmente", ["es", "pt-BR"]],
+          ["(?:^|[.?] )(?:(?!catálogo|catalogue|katalog)[^.])*\\b1652\\b", "the door's year 1652 is one catalogue's: say the catalogue", ["es", "pt-BR"]],
+          ["(?<!unas )(?<!cerca de )\\b(?:nueve veces|nove vezes)\\b", "about nine times by the museum's count: unas / cerca de", ["es", "pt-BR"]],
+          ["(?<!unos )(?<!cerca de )(?<!más de )(?<!mais de )\\b(?:veinte años|vinte anos)\\b", "within about twenty years it was flaking: unos / cerca de (more than twenty years is the restoration's)", ["es", "pt-BR"]],
+          ["\\b(?:1[0-9]|2[0-9]|3[01]|1º) de agosto de 1943", "the bomb fell in August 1943: no source we read gives the day", ["es", "pt-BR"]],
+          ["(?:estudio|estudo)[^.]*\\b(?:demostró|demuestra|prueba|probó|comprobó|comprovou|comprova|provou|prova)\\b", "the 2023 lab study points to oil: never proves it", ["es", "pt-BR"]]
+        ]
       },
       {
         "slug": {

@@ -1416,6 +1416,10 @@ def render(page, lang, data, shared, out_root):
             return f'{href["href.wing"]}#{part["wing"]}'
         return page_href(part["page"])
 
+    def english_only(part):
+        """A link inside a sentence to a page written in fewer languages leads to the English page, and says so."""
+        return "page" in part and lang not in shared["data"].get(part["page"], {})
+
     def linked(para, words=None):
         """A paragraph: its words, or its parts, where a part is a link to an address (href) or to another page (page).
         A link, an opening bracket before it and the stop after it stay on one line. words marks the text (rich)."""
@@ -1423,10 +1427,12 @@ def render(page, lang, data, shared, out_root):
         if isinstance(para, str):
             return words(para)
         out = "".join(words(part) if isinstance(part, str) else
+                      f'<a href="{esc(page_href(part["page"], english=True))}" hreflang="en">{words(part["text"])}</a>'
+                      if english_only(part) else
                       f'<a href="{esc(part_href(part))}">{words(part["text"])}</a>'
                       for part in para)
-        out = re.sub(r'\((<a href="[^"]*">(?:(?!</a>).)*</a>[.,:)]*)', r'<span class="nw">(\1</span>', out)
-        return re.sub(r'(?<!\()(<a href="[^"]*">(?:(?!</a>).)*</a>)([.,:)]+)', r'<span class="nw">\1\2</span>', out)
+        out = re.sub(r'\((<a href="[^"]*"(?: hreflang="en")?>(?:(?!</a>).)*</a>[.,:)]*)', r'<span class="nw">(\1</span>', out)
+        return re.sub(r'(?<!\()(<a href="[^"]*"(?: hreflang="en")?>(?:(?!</a>).)*</a>)([.,:)]+)', r'<span class="nw">\1\2</span>', out)
 
     def ways(links):
         """A block's ways on, each a line of its own: into the wing at a stop (stop), or to another page (page)."""

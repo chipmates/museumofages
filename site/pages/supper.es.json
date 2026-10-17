@@ -1,0 +1,240 @@
+{
+ "_note": "LAS PALABRAS de la página de La última cena, en español. Reescritas a partir del inglés y del alemán, con las mismas fechas, medidas, nombres, grados de certeza y fuentes. La mesa y el arco del dibujo (top.drawing.inside) son una reconstrucción a partir de una fotografía del muro, la misma que en inglés, y la nota bajo el dibujo lo dice. Sin raya, sin punto y coma. Estado ai: ninguna persona las ha revisado todavía.",
+ "page": {
+  "id": "vinci-supper",
+  "wing": "vinci",
+  "topic": "supper",
+  "stop": "supper-wall",
+  "published": null,
+  "og_image": {
+   "file": "vinci-supper-og-{lang}-1200x630.png",
+   "width": 1200,
+   "height": 630
+  }
+ },
+ "pics": {
+  "supper": {
+   "stem": "v-supper",
+   "widths": [
+    800,
+    1600
+   ],
+   "sizes": "(min-width: 960px) 640px, calc(100vw - 40px)"
+  }
+ },
+ "meta": {
+  "title": "La última cena de Leonardo da Vinci | Museum of Ages",
+  "description": "La última cena de Leonardo da Vinci: mural de 4,6 por 8,8 metros en un refectorio de Milán, de 1494 a 1498 aproximadamente. Cómo se deterioró y qué queda.",
+  "og_title": "La última cena de Leonardo da Vinci",
+  "og_image_alt": "La última cena y, a su lado, una persona de 1,70 metros, dibujadas a la misma escala: la pintura mural mide 4,6 por 8,8 metros. En ella, la mesa y, debajo, la parte alta del arco de la puerta, donde estaban los pies de Cristo. Un dibujo hecho para esta página, la mesa y el arco a partir de una fotografía."
+ },
+ "labels": {
+  "crumbs": "Estás aquí",
+  "crumb_home": "Museo",
+  "crumb_here": "La última cena",
+  "toc": "En esta página",
+  "tag_chart": "Hecho para esta página",
+  "tag_still": "Reproducción",
+  "person": "1,70 m"
+ },
+ "top": {
+  "h1": "La última cena de Leonardo da Vinci",
+  "answer": "La última cena es una pintura mural. Leonardo da Vinci la pintó en Milán, en el refectorio de Santa Maria delle Grazie, el comedor de un convento dominico. La pintó para Ludovico Sforza, duque de Milán, entre 1494 y 1498 aproximadamente, y sigue en el muro donde la pintó: según el museo, mide 4,6 por 8,8 metros, alto por ancho. Mira debajo de la mesa: Cristo no tiene pies. En el siglo XVII, los frailes quisieron una puerta más grande hacia sus cocinas. La que ensancharon está en el centro de ese muro, justo donde estaban los pies de Cristo.",
+  "drawing": {
+   "wall": "supper",
+   "tag": "tag_chart",
+   "title": "La última cena",
+   "what": "junto a una persona de 1,70 metros",
+   "alt": "La última cena, de 4,6 por 8,8 metros, y a su lado una persona de 1,70 metros, dibujadas a la misma escala. Dentro, la mesa, y debajo de la mesa la parte alta del arco de la puerta, donde estaban los pies de Cristo. La mesa y el arco son una reconstrucción a partir de una fotografía. La puerta de abajo y el suelo no están dibujados.",
+   "note": "Mesa y arco: reconstrucción a partir de una fotografía. Puerta y suelo: sin dibujar.",
+   "inside": {
+    "table": {
+     "from_m": 0.57,
+     "to_m": 8.29,
+     "hem_m": 0.85,
+     "top_m": 1.42
+    },
+    "arch": {
+     "from_m": 3.2,
+     "to_m": 5.58,
+     "spring_m": 0.87,
+     "crown_m": 1.17
+    }
+   },
+   "arch_label": [
+    "El arco de la puerta,",
+    "donde estaban los pies de Cristo"
+   ]
+  },
+  "door": {
+   "text": "Ver La última cena en el ala",
+   "note": "Entrada libre, sin cuenta.",
+   "leads": "La puerta abre el ala de Leonardo en el muro del patio."
+  }
+ },
+ "blocks": [
+  {
+   "type": "text",
+   "id": "painted",
+   "nav": "Cómo la pintó",
+   "h": "Cómo la pintó y por qué empezó a deteriorarse",
+   "paras": [
+    "En su época, una pintura mural solía ser un fresco. El pintor trabaja rápido sobre el yeso húmedo, y el yeso, al secarse, absorbe el color. Leonardo no quería trabajar rápido. El museo explica que quería ir despacio y hacer cambios mientras pintaba. Así que dejó secar el yeso, extendió encima una base blanca y pintó al temple, como si el muro fuera una de sus tablas de madera. Un estudio de laboratorio de 2023 apunta a que la mezcla también llevaba aceite.",
+    "Por eso empezó a deteriorarse. Nada unía el color al muro. Quedaba encima como una piel, y la sala era húmeda. En unos veinte años ya se estaba desprendiendo: en 1517, un visitante vio el deterioro. En 1568, Vasari escribió que apenas se distinguía algo más que una mancha luminosa, según la cita que recoge el sitio del museo."
+   ]
+  },
+  {
+   "type": "text",
+   "id": "centuries",
+   "nav": "Cinco siglos en un muro",
+   "h": "Cinco siglos en un muro",
+   "paras": [
+    "Los daños llegaron en oleadas. En el siglo XVII, los frailes agrandaron la puerta de debajo de la mesa (un catálogo lo fecha en 1652), y se perdieron los pies de Cristo. En la década de 1720, un restaurador creyó que era una pintura al óleo, según un catálogo nacional. Lavó el muro con sosa cáustica, le dio una capa de barniz al óleo y volvió a pintar grandes partes. En la década de 1770 la repintaron otra vez. En 1821, otro restaurador intentó despegar trozos de la pintura del muro, sin éxito. En tiempos de Napoleón, las tropas ocuparon la sala, y según un relato sirvió de establo.",
+    "Después vino la guerra. En agosto de 1943, una bomba estalló en el claustro de al lado. El refectorio perdió su bóveda y el muro de su extremo este. El muro pintado resistió. Desde 1940 estaba detrás de un armazón de acero y una gruesa pared de sacos de arena, y esa protección fue lo que lo salvó. La sala se reconstruyó a partir de 1945."
+   ]
+  },
+  {
+   "type": "text",
+   "id": "restoration",
+   "nav": "La larga restauración",
+   "h": "La larga restauración",
+   "paras": [
+    "Desde comienzos del siglo XVIII, los restauradores han trabajado en el muro unas nueve veces, según la cuenta del museo. Durante la mayor parte de ese tiempo, restaurar significaba volver a pintar lo que faltaba. A comienzos del siglo XX la restauró Luigi Cavenaghi, y en la década de 1950 Mauro Pellicioli fijó la superficie, que se descascaraba, sin quitar los repintes antiguos.",
+    "La última restauración fue distinta. Pinin Brambilla Barcilon empezó a finales de la década de 1970 y terminó en 1999, más de veinte años después. Detrás de ella estaban la Soprintendenza de Milán y el instituto central de restauración de Roma, como informó la prensa. Su equipo quitó los repintes de los siglos anteriores. Con lupa, el equipo limpió lo que quedaba de la pintura de Leonardo, escama a escama, y rellenó los huecos con un tono de acuarela, que el agua puede volver a quitar. Según contó ella, restauradores anteriores habían cambiado ojos de sitio, cerrado bocas y puesto barbas en caras que no las tenían.",
+    "Lo que volvió a la luz es poco. ¿Cuánto de la pintura es todavía del propio Leonardo? Las estimaciones de los expertos van de una quinta parte a la mitad. No hay una cifra aceptada por todos."
+   ]
+  },
+  {
+   "type": "text",
+   "id": "milan",
+   "nav": "En Milán hoy",
+   "h": "Verla hoy en Milán",
+   "paras": [
+    "La pintura sigue en la misma sala. Junto con la iglesia y el convento, es Patrimonio Mundial de la UNESCO desde 1980. El aire del refectorio se filtra y su clima se controla. Por eso entras por una serie de salas pequeñas, con puertas que se abren una tras otra, y las visitas son cortas, con hora fija y en grupos pequeños. Hay que reservar.",
+    [
+     "En el muro de enfrente hay una Crucifixión de Giovanni Donato Montorfano. La firmó, la fechó en 1495 y la pintó al fresco. Ha conservado su color mucho mejor que el muro de Leonardo. Más tarde se pintaron sobre ella figuras arrodilladas de la familia del duque, probablemente de mano de Leonardo, según el museo, y de ellas casi no queda nada. Para la visita, el sitio del propio museo: ",
+     {
+      "text": "cenacolovinciano.org",
+      "href": "https://cenacolovinciano.org/en/"
+     },
+     " (en inglés y en italiano)."
+    ]
+   ]
+  },
+  {
+   "type": "text",
+   "id": "wing",
+   "nav": "En el ala",
+   "h": "Lo que muestra nuestra copia y lo que no puede mostrar",
+   "paras": [
+    "El ala de Leonardo del museo tiene una copia de La última cena en un muro de su patio. Es una reproducción y tiene la altura y la anchura del original, 4,6 por 8,8 metros. Te muestra lo que un libro no puede: toda la composición a su tamaño real, contigo delante, Cristo en el centro y los apóstoles en cuatro grupos de tres.",
+    "Lo que una copia plana no puede mostrar es el muro mismo: cómo las escamas de pintura se levantan del yeso y lo frágil que es todo. Tampoco puede mostrar la luz de la sala. En Milán, la luz pintada entra por la izquierda, del mismo lado que las ventanas reales del refectorio. Si quitas la pintura de ese muro, esa correspondencia se pierde.",
+    [
+     "Su tamaño al lado de la Gioconda y de las demás obras: ",
+     {
+      "text": "la página de los tamaños",
+      "page": "sizes"
+     },
+     ", en inglés."
+    ]
+   ],
+   "pic": {
+    "pic": "supper",
+    "title": "La última cena en el patio",
+    "tag": "tag_still",
+    "what": "una imagen de la película del ala. La reproducción en su muro del patio del museo, de 4,6 por 8,8 metros. El muro está construido con código. El original está en Milán, en el refectorio de Santa Maria delle Grazie.",
+    "alt": "Una reproducción de La última cena ocupa un muro claro en un patio: una fila de figuras en una mesa larga, en una sala pintada. Una imagen de la película del ala.",
+    "src": [
+     "Fotografía de Paris Orlando, 2019, dominio público (PD-Art), vía ",
+     {
+      "text": "Wikimedia Commons",
+      "href": "https://commons.wikimedia.org/wiki/File:Last_Supper_by_Leonardo_da_Vinci.jpg"
+     },
+     ". {museum:it108}"
+    ]
+   },
+   "links": [
+    {
+     "text": "Ver La última cena en el ala",
+     "stop": "supper-wall"
+    }
+   ]
+  },
+  {
+   "type": "sources",
+   "id": "sources",
+   "nav": "Fuentes",
+   "h": "Fuentes",
+   "intro": "La página se basa en estas fuentes, todas leídas el 12 de octubre de 2026:",
+   "read": [
+    {
+     "text": "Museo del Cenacolo Vinciano, la obra",
+     "href": "https://cenacolovinciano.org/en/museum/the-works/the-last-supper-leonardo-da-vinci-1452-1519/"
+    },
+    {
+     "text": "Museo del Cenacolo Vinciano, técnica, conservación y restauraciones",
+     "href": "https://cenacolovinciano.org/en/museum/backstage/"
+    },
+    {
+     "text": "Museo del Cenacolo Vinciano, la historia",
+     "href": "https://cenacolovinciano.org/en/museum/history/"
+    },
+    {
+     "text": "Museo del Cenacolo Vinciano, la Crucifixión de Montorfano",
+     "href": "https://cenacolovinciano.org/en/museum/the-works/the-crucifixion-donato-montorfano-1460-ca-1502-ca/"
+    },
+    {
+     "text": "Museo del Cenacolo Vinciano, la descripción verbal de la pintura (PDF, en italiano)",
+     "href": "https://cenacolovinciano.org/wp-content/uploads/2019/07/DescriVedendo-Cenacolo.pdf"
+    },
+    {
+     "text": "Museo del Cenacolo Vinciano, la hoja informativa del museo de 2023 (PDF, en italiano)",
+     "href": "https://cenacolovinciano.org/wp-content/uploads/2023/07/Museo-del-Cenacolo-Vinciano.pdf"
+    },
+    {
+     "text": "Ministero della Cultura, la sede",
+     "href": "https://cultura.gov.it/luogo/museo-del-cenacolo-vinciano"
+    },
+    {
+     "text": "Regione Lombardia, ficha de catálogo de la pintura",
+     "href": "https://lombardiabeniculturali.it/opere-arte/schede-complete/3o210-01279"
+    },
+    {
+     "text": "Regione Lombardia, ficha de catálogo del refectorio",
+     "href": "https://www.lombardiabeniculturali.it/architetture/schede/LMD80-00084/"
+    },
+    {
+     "text": "ICCD, ficha del catálogo nacional (1975)",
+     "href": "https://sigecweb.beniculturali.it/sigec/item/print/ICCD3288350"
+    },
+    {
+     "text": "The Art Newspaper, 1 de noviembre de 1998, sobre la restauración",
+     "href": "https://www.theartnewspaper.com/1998/11/01/leonardos-last-supper-restored-a-wreck-but-an-authentic-wreck"
+    },
+    {
+     "text": "The Art Newspaper, 30 de abril de 1999, sobre cuánto es de Leonardo",
+     "href": "https://www.theartnewspaper.com/1999/05/01/the-director-of-one-of-italys-top-restoration-laboratories-responds-to-denunciations-of-work-carried-out-on-leonardos-last-supper"
+    },
+    {
+     "text": "Universidad de Ámsterdam, 2023, sobre el aceite en la pintura",
+     "href": "https://hims.uva.nl/content/news/2023/10/shedding-light-on-leonardos-painting-methods.html"
+    }
+   ],
+   "notes": [],
+   "contact": "Si una fecha, un nombre o una frase están mal, escríbenos y lo corregiremos.",
+   "contact_link": "Ir al aviso legal",
+   "what_link": "Qué es este museo"
+  },
+  {
+   "type": "close",
+   "id": "enter",
+   "nav": "",
+   "h": "Ver La última cena en el ala",
+   "p": "Esta puerta lleva directamente al muro del patio. El recorrido completo empieza en la sala de los cuadros, con la Gioconda.",
+   "door": {
+    "text": "Entrar en el museo",
+    "note": "Entrada libre, sin cuenta."
+   }
+  }
+ ]
+}
