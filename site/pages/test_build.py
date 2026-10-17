@@ -2921,6 +2921,98 @@ class Case(unittest.TestCase):
             self.save(lang, data, page)
         self.fails(r"top\.jump lists the page's questions, and no block names its place in the list")
 
+    # ---- a page of questions with rows inside a question, a short table of words, and only its own questions ----
+
+    def rows_page(self):
+        """The first page whose questions carry rows (question.lists)."""
+        return next((p for p in self.pages if any(b.get("lists") for b in self.data("en", p)["blocks"])), None)
+
+    def built_of(self, written, page, lang):
+        pid = self.data(lang, page)["page"]["id"]
+        return next(p for p in written if self.page_of(p)[0]["page"]["id"] == pid and self.page_of(p)[1] == lang)
+
+    def test_rows_inside_a_question_stand_as_the_paintings_page_rows_in_their_groups(self):
+        page = self.rows_page()
+        if not page:
+            self.skipTest("no question carries rows")
+        out, written = self.build()
+        bare = lambda markup: html.unescape(re.sub(r"<[^>]+>", "", markup)).replace(" ", " ")
+        for lang in ("en", "de"):
+            data = self.data(lang, page)
+            own = self.own_part(self.built_of(written, page, lang).read_text(encoding="utf-8"))
+            for b in (b for b in data["blocks"] if b.get("lists")):
+                section = re.search(r'<section class="sp-sec sp-prose sp-ask" id="%s">(.*?)</section>' % b["id"], own, flags=re.S).group(1)
+                # the answer first, then the rows, then what is open
+                self.assertLess(section.index("sp-ask__a"), section.index("sp-ask__rows"))
+                if b.get("open"):
+                    self.assertLess(section.rindex("sp-ask__rows"), section.index("sp-ask__open"))
+                lists = re.findall(r'<div class="sp-notes sp-ask__rows">\s*<dl class="sp-dir sp-dir--long">(.*?)</dl>\s*</div>', section, flags=re.S)
+                self.assertEqual(len(lists), len(b["lists"]))
+                # a group's heading over its rows, in the list's order; a list without a heading stands bare
+                heads = re.findall(r'<div class="sp-ask__group">\s*<h3>(.*?)</h3>', section)
+                self.assertEqual([bare(h) for h in heads], [x["h"].replace(" ", " ") for x in b["lists"] if x.get("h")])
+                for shown, item in zip(lists, b["lists"]):
+                    terms = [bare(t) for t in re.findall(r"<dt>(.*?)</dt>", shown, flags=re.S)]
+                    self.assertEqual(len(terms), len(item["rows"]))
+                    self.assertEqual(len(re.findall(r"<dd>", shown)), len(item["rows"]))
+                if b.get("lists_intro"):
+                    before = re.sub(r"\s+", " ", bare(section[:section.index("sp-ask__rows")]))
+                    self.assertIn(re.sub(r"\s+", " ", b["lists_intro"].replace("\u00a0", " ")), before)
+            # the rows' sheet comes with the page, and only with a page that has rows or a table
+            self.assertIn(".sp-ask__group{", self.built_of(written, page, lang).read_text(encoding="utf-8"))
+        other = self.ask_page()
+        if other and other != page:
+            self.assertNotIn(".sp-ask__group{", self.built_of(written, other, "en").read_text(encoding="utf-8"))
+
+    def test_a_short_table_of_words_reads_as_a_table_and_as_cards(self):
+        page = next((p for p in self.pages if any(b["type"] == "ledger" for b in self.data("en", p)["blocks"])), None)
+        if not page:
+            self.skipTest("no page holds a short table of words")
+        out, written = self.build()
+        bare = lambda markup: html.unescape(re.sub(r"<[^>]+>", "", markup)).replace(" ", " ")
+        for lang in ("en", "de"):
+            data = self.data(lang, page)
+            block = next(b for b in data["blocks"] if b["type"] == "ledger")
+            own = self.own_part(self.built_of(written, page, lang).read_text(encoding="utf-8"))
+            section = re.search(r'<section class="sp-sec lg-sec" id="%s" aria-labelledby="%s-h">(.*?)</section>' % (block["id"], block["id"]),
+                                own, flags=re.S).group(1)
+            table = re.search(r'<table class="lg-table" role="table"[^>]*>(.*?)</table>', section, flags=re.S).group(1)
+            # the roles stay set, since a table shown as blocks on a phone loses them in some readers
+            heads = re.findall(r'<th scope="col" role="columnheader">(.*?)</th>', table)
+            self.assertEqual([bare(h) for h in heads], [c.replace(" ", " ") for c in block["cols"]])
+            rows = re.findall(r'<tr role="row"><th scope="row" role="rowheader">(.*?)</th>(.*?)</tr>', table)
+            self.assertEqual([bare(r[0]) for r in rows], [r["cells"][0].replace(" ", " ") for r in block["rows"]])
+            for (_, cells), row in zip(rows, block["rows"]):
+                # each cell names its column for the phone's cards, and holds its words in one element
+                keys = re.findall(r'<td role="cell" data-k="([^"]*)"><span>', cells)
+                self.assertEqual([html.unescape(k) for k in keys], block["cols"][1:])
+            self.assertLess(section.index('class="sp-intro"'), section.index("lg-table"))
+            self.assertLess(section.index("lg-table"), section.index("lg-note"))
+        # a row short of a cell stops the build
+        for lang in ("en", "de"):
+            data = self.data(lang, page)
+            next(b for b in data["blocks"] if b["type"] == "ledger")["rows"][0]["cells"].pop()
+            self.save(lang, data, page)
+        shutil.rmtree(out)
+        self.fails(r"a row of the table has not one cell per column")
+
+    def test_a_page_of_questions_without_its_first_answer_asks_only_its_sections(self):
+        page = next((p for p in self.pages if self.data("en", p)["top"].get("jump") and not self.data("en", p)["top"].get("faq")
+                     and any(b["type"] == "question" for b in self.data("en", p)["blocks"])), None)
+        if not page:
+            self.skipTest("every page of questions asks its first heading too")
+        out, written = self.build()
+        for lang in ("en", "de"):
+            data = self.data(lang, page)
+            text = self.built_of(written, page, lang).read_text(encoding="utf-8")
+            graph = json.loads(re.search(r'<script type="application/ld\+json">(.*?)</script>', text, flags=re.S).group(1).replace("<\\/", "</"))["@graph"]
+            faqs = [n for n in graph if n.get("@type") == "FAQPage"]
+            self.assertEqual(len(faqs), 1)
+            nb = lambda s: s.replace(" ", " ")
+            self.assertEqual([(nb(q["name"]), nb(q["acceptedAnswer"]["text"])) for q in faqs[0]["mainEntity"]],
+                             [(nb(b["h"]), nb(b["answer"])) for b in data["blocks"] if b["type"] == "question"])
+            self.assertNotIn(nb(data["top"]["h1"]), [nb(q["name"]) for q in faqs[0]["mainEntity"]])
+
     # ---- a page about one wall: its drawing, its doors to the stop, its links ----
 
     def drawing_facts(self):

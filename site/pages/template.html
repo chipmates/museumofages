@@ -315,10 +315,35 @@
 <section class="sp-sec sp-prose sp-ask" id="{{id}}">
   <h2>{{h}}</h2>
   <p class="sp-ask__a">{{answer}}</p>
-{{html.pic}}{{html.known}}{{html.open}}{{html.end}}{{html.links}}
+{{html.pic}}{{html.known}}{{html.rows}}{{html.open}}{{html.end}}{{html.links}}
 </section>
 <!--@ ask_open -->
   <p class="sp-ask__open">{{text}}</p>
+<!--@ ask_rows -->
+  <!-- A section's rows lie on the ledger, as the paintings page's places to see them do: a term, then its words. -->
+  <div class="sp-notes sp-ask__rows">
+  <dl class="sp-dir sp-dir--long">
+{{html.rows}}
+  </dl>
+  </div>
+<!--@ ask_group -->
+  <div class="sp-ask__group">
+  <h3>{{h}}</h3>
+{{html.rows}}
+  </div>
+<!--@ block:ledger -->
+<section class="sp-sec lg-sec" id="{{id}}" aria-labelledby="{{id}}-h">
+  <h2 id="{{id}}-h">{{h}}</h2>
+  <p class="sp-intro">{{intro}}</p>
+  <!-- A short table of words on the ledger. On a phone each row stands as a card, each cell under its column's name. -->
+  <table class="lg-table" role="table" aria-labelledby="{{id}}-h">
+    <thead role="rowgroup"><tr role="row">{{html.head}}</tr></thead>
+    <tbody role="rowgroup">
+{{html.rows}}
+    </tbody>
+  </table>
+  <p class="sp-does lg-note">{{note}}</p>
+</section>
 <!--@ block:myths -->
 <section class="sp-sec sp-prose sp-notes sp-myths" id="{{id}}">
   <h2>{{h}}</h2>

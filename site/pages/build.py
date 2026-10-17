@@ -150,6 +150,9 @@ SCALE_CSS = ["scale"]
 ASK_CSS = ["ask"]
 # and on a page that tells a life by its periods, each with its dated lines, the sheet of that page after the chart's
 LIFE_CSS = ["life"]
+# and on a page of questions whose sections carry rows (question.lists) or a short table of words (ledger), the sheet of
+# those after the questions'
+LEDGER_CSS = ["ledger"]
 CSS_AFTER = ["foot", "motion"]
 CSP_MARK = "<!--csp-->"
 
@@ -187,7 +190,7 @@ PAIRS = {"term": "text", "text": "term", "q": "a", "a": "q"}
 MAY_BE_EMPTY = r"\.rows\.\d+\.cells\.[1-9]\d*$"
 
 BLOCK_TYPES = ("places", "group", "feature", "notes", "faq", "sources", "close", "chart", "works", "table", "text", "periods",
-               "numbers", "pages", "question", "myths", "years")
+               "numbers", "pages", "question", "myths", "years", "ledger")
 # The blocks of a page of questions: each its own section, the answer first (question), and a short list of what people
 # say with what good sources say of it (myths).
 ASK_TYPES = ("question", "myths")
@@ -1900,12 +1903,18 @@ def render(page, lang, data, shared, out_root):
             values["html.pic"] = figure(block.get("pic")) + (scale_fig(sc) if sc and "after" not in sc else "")
             values["html.links"] = ways(block.get("links", []))
         elif kind == "question":
-            # the answer first, display text that never hyphenates; its picture under it; then what is known, what is
-            # not, and the section's closing lines with their links
+            # the answer first, display text that never hyphenates; its picture under it; then what is known, its rows
+            # (lists, each a term and its words on the ledger, under a heading where a list has one), what is not, and
+            # the section's closing lines with their links
             para = lambda p: fill(parts["text_para"], {"text": linked(p, prose)})
+            rows = [para(block["lists_intro"])] if block.get("lists_intro") else []
+            for item in block.get("lists", []):
+                listed = fill(parts["ask_rows"], {"html.rows": term_rows(item["rows"])})
+                rows.append(fill(parts["ask_group"], {"h": rich(item["h"]), "html.rows": listed}) if item.get("h") else listed)
             values.update({
                 "html.pic": figure(block.get("pic")),
                 "html.known": "\n".join(para(p) for p in block["known"]) + "\n",
+                "html.rows": "".join(r + "\n" for r in rows),
                 "html.open": fill(parts["ask_open"], {"text": linked(block["open"], prose)}) + "\n" if block.get("open") else "",
                 "html.end": "".join(para(p) + "\n" for p in block.get("end", [])),
                 "html.links": ways(block.get("links", [])),
@@ -1914,6 +1923,18 @@ def render(page, lang, data, shared, out_root):
             values["html.rows"] = "\n".join(fill(parts["myth_row"], {"name": rich(m["name"]), "claim": prose(m["claim"]),
                                                                     "known": prose(m["known"])}) for m in block["items"])
             values["html.end"] = "\n".join(fill(parts["text_para"], {"text": linked(p, prose)}) for p in block.get("end", []))
+        elif kind == "ledger":
+            # a short table of words: a row's first cell names it; on a phone each row is a card, each cell under its
+            # column's name (data-k); the roles restate the table's own for the screen readers that drop them there
+            if any(len(row["cells"]) != len(block["cols"]) for row in block["rows"]):
+                raise SystemExit(f"{page}.{lang}: {block['id']}: a row of the table has not one cell per column")
+            values["html.head"] = "".join(f'<th scope="col" role="columnheader">{rich(c)}</th>' for c in block["cols"])
+            # a narrow cell keeps a sum whole: a number stays on the line of the word for money after it
+            sums = lambda c: re.sub(rf"(\d) (?=(?:million|Millionen|dollars?|Dollar|pounds|Pfund)\b)", "\\1" + LIB.NBSP, c)
+            values["html.rows"] = "\n".join(
+                f'      <tr role="row"><th scope="row" role="rowheader">{rich(row["cells"][0])}</th>'
+                + "".join(f'<td role="cell" data-k="{esc(block["cols"][i])}"><span>{prose(sums(c))}</span></td>' for i, c in enumerate(row["cells"][1:], 1))
+                + "</tr>" for row in block["rows"])
         elif kind == "numbers":
             # the pictures' numbers as a table: a row's first cell names it, an empty cell has no sourced figure
             # the roles restate the table's own: a table laid out as cards or a grid keeps them in every screen reader
@@ -2162,6 +2183,7 @@ def render(page, lang, data, shared, out_root):
         "og.width": str(og["width"]), "og.height": str(og["height"]),
         "css.inline": shared["css_scale" if making(wing) else "css_list" if any(b["type"] == "periods" for b in data["blocks"]) else
                              "css_life" if any(b["type"] == "years" for b in data["blocks"]) else
+                             "css_ledger" if any(b["type"] == "ledger" or b.get("lists") for b in data["blocks"]) else
                              "css_ask" if ask or any(b["type"] in ASK_TYPES for b in data["blocks"]) else
                              "css_chart" if works or "drawing" in data["top"] or any(b["type"] == "text" for b in data["blocks"]) else "css"]
                       + (shared["langs_css"] + chrome["by"] if chrome["langs"] else ""),
@@ -3002,7 +3024,7 @@ def build_pages(out_dir, site_src=SITE_SRC, site_built=SITE_BUILT, pages=PAGES, 
             for x, y in zip(a["blocks"], b["blocks"]):
                 if x["type"] != y["type"] or x["id"] != y["id"]:
                     problems.append(f"{page}: block {x['id']} and {y['id']} do not match")
-    for name in OWN_CSS + CHART_CSS + LIST_CSS + SCALE_CSS + ASK_CSS + LIFE_CSS:
+    for name in OWN_CSS + CHART_CSS + LIST_CSS + SCALE_CSS + ASK_CSS + LIFE_CSS + LEDGER_CSS:
         body = re.sub(r"/\*.*?\*/", "", (HERE / "css" / f"{name}.css").read_text(encoding="utf-8"), flags=re.S)
         if re.search(r"#[0-9a-fA-F]{3,8}\b|rgba?\(|hsla?\(", body):
             problems.append(f"css/{name}.css: a colour is written outside the site's token file")
@@ -3053,6 +3075,9 @@ def build_pages(out_dir, site_src=SITE_SRC, site_built=SITE_BUILT, pages=PAGES, 
                            *[site["css"] / f"{n}.css" for n in CSS_AFTER]),
         "css_life": css_min(*[site["css"] / f"{n}.css" for n in CSS_BEFORE], *[HERE / "css" / f"{n}.css" for n in OWN_CSS + CHART_CSS + LIFE_CSS],
                             *[site["css"] / f"{n}.css" for n in CSS_AFTER]),
+        "css_ledger": css_min(*[site["css"] / f"{n}.css" for n in CSS_BEFORE],
+                              *[HERE / "css" / f"{n}.css" for n in OWN_CSS + CHART_CSS + ASK_CSS + LEDGER_CSS],
+                              *[site["css"] / f"{n}.css" for n in CSS_AFTER]),
         # a page of several subjects at one scale: only the pages whose picture carries labels take its rules
         "css_several": css_min(HERE / "css" / "several.css"),
         # a page of a wing in the making links the newest open wing's own page, in its language

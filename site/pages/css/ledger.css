@@ -1,0 +1,55 @@
+/* A page of questions whose sections carry rows or a short table of words (build.py: question.lists, block ledger):
+   set inline after ask.css, on those pages only. The rows are the paintings page's (page.css, .sp-notes .sp-dir); this
+   sheet adds their groups' headings and the table. Colours: only the site's roles. */
+
+/* A section's rows in groups: each opens with the period's short chalk rule over its heading, as the paintings page's
+   periods do. */
+.sp-ask__group{margin-top:34px}
+.sp-ask__group>h3{position:relative;padding-top:16px;font-size:1.375rem;line-height:1.22;color:var(--ink)}
+.sp-ask__group>h3::before{content:"";position:absolute;top:0;left:0;width:48px;border-top:2px solid var(--mark)}
+.sp-ask__group .sp-dir{margin-top:14px}
+/* A row's term is its heading: its lines kept even, so a date or a year never stands alone on the last one. */
+.sp-ask .sp-dir dt{text-wrap:balance}
+.sp-ask__rows+.sp-ask__open,.sp-ask__group+.sp-ask__open{margin-top:24px}
+
+/* A short table of words, on the ledger as every table of the site: a row's name in the reading face, the column's
+   names as keys, the last column (what it cost) in full ink. */
+.lg-table{width:100%;margin-top:20px;border-collapse:collapse;font-family:var(--sans);font-size:.9375rem;line-height:1.45}
+.lg-table th,.lg-table td{text-align:left;vertical-align:top;font-weight:400}
+.lg-table thead th{font-size:.8125rem;letter-spacing:.02em;color:var(--ink-soft)}
+.lg-table tbody th{font-family:var(--serif);font-size:1.1875rem;line-height:1.3;color:var(--ink)}
+.lg-table td{color:var(--ink-body)}
+.lg-table td:last-child{color:var(--ink)}
+.lg-note{margin-top:18px}
+/* On a phone each row is a card: its name over a ledger rule, each cell its column's name over its words (read once:
+   a screen reader hears the header the cell already has). */
+@media (max-width:599px){
+  .lg-table,.lg-table tbody,.lg-table tr,.lg-table th,.lg-table td{display:block}
+  .lg-table thead{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%)}
+  .lg-table tbody{display:grid;gap:10px}
+  .lg-table tr{padding:0 16px;margin-inline:-6px;background:var(--ledger)}
+  .lg-table tbody th{padding:12px 0 9px;border-bottom:1px solid var(--ledger-rule)}
+  .lg-table td{padding:7px 0 8px;text-wrap:pretty}
+  .lg-table td+td{border-top:1px solid var(--hair)}
+  .lg-table td::before{content:attr(data-k);content:attr(data-k) / "";display:block;margin-bottom:1px;font-size:.8125rem;line-height:1.35;
+    letter-spacing:.02em;color:var(--ink-soft)}
+  /* German words of a long cell may break; a sum (the last column) never does, its number bound to its word */
+  :lang(de) .lg-table td:not(:last-child){hyphens:auto;-webkit-hyphens:auto;hyphenate-limit-chars:10 4 4;
+    -webkit-hyphenate-limit-before:4;-webkit-hyphenate-limit-after:4;-webkit-hyphenate-limit-lines:2}
+}
+@media (max-width:359px){.lg-table tr{margin-inline:-8px;padding-inline:12px}}
+/* Wider, one table on the ledger: the year a narrow column, what happened the widest, the price beside it. */
+@media (min-width:600px){
+  .lg-table{background:var(--ledger)}
+  .lg-table thead tr{border-bottom:1px solid var(--ledger-rule)}
+  .lg-table tbody tr+tr{border-top:1px solid var(--ledger-rule)}
+  .lg-table th,.lg-table td{padding:12px 18px 13px 0}
+  .lg-table thead th{padding-block:13px 10px}
+  .lg-table :is(th,td):first-child{width:4.5rem;padding-left:20px}
+  .lg-table :is(th,td):last-child{width:32%;padding-right:20px}
+  .lg-table tbody th{padding-top:10px}
+}
+/* This page's door words are long: on a phone they break into two even lines, never one word alone under them, and
+   never inside the work's name. */
+.sp-way .door{text-wrap:balance}
+.sp-way .door .nh{display:inline-block}
