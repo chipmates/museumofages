@@ -25,7 +25,7 @@
    "marks": {
     "argentinosaurus": "9.44% 71.84%",
     "brachiosaurus": "51.15% 94.62%",
-    "stegosaurus": "0.41% 11.84%",
+    "stegosaurus": "0.43% 11.84%",
     "ankylosaurus": "12.48% 25.51%",
     "person": "32.4% 33.37%",
     "triceratops": "34.69% 49.26%",
@@ -48,7 +48,7 @@
    "marks": {
     "t-rex": "1.07% 41.5%",
     "spinosaurus": "62.99% 98.49%",
-    "stegosaurus": "0.75% 20.68%",
+    "stegosaurus": "0.8% 20.68%",
     "triceratops": "28.11% 53.51%",
     "person": "57.61% 59.3%",
     "ankylosaurus": "59.83% 82.56%"

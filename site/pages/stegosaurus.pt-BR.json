@@ -27,7 +27,7 @@
    "sizes": "(min-width: 1280px) 588px, (min-width: 960px) calc(100vw - 80px), (min-width: 600px) calc(100vw - 64px), calc(100vw - 40px)",
    "person": "93.5% 36.88%",
    "marks": {
-    "stegosaurus": "3.83% 83.99%",
+    "stegosaurus": "3.83% 84.03%",
     "plate": "39.28% 42.45% end",
     "hips": "44.75% 48.49% start",
     "person": "90.12% 96.89%"
@@ -73,7 +73,7 @@
    "sizes": "(min-width: 1280px) 690px, (min-width: 960px) 54vw, (min-width: 600px) calc(100vw - 64px), calc(100vw - 40px)",
    "person": "7.34% 84.27%",
    "marks": {
-    "stegosaurus": "14.67% 55.65%",
+    "stegosaurus": "14.67% 55.69%",
     "triceratops": "14.63% 65.33%",
     "t-rex": "14.67% 97.78%",
     "person": "5.61% 9.06%"
@@ -340,7 +340,7 @@
       "swatch": "rebuilt",
       "text": "Faltam em Sophie, reconstruídos"
      },
-     "Os ossos reconstruídos são cópias espelhadas do outro lado de Sophie, ou foram modelados a partir dos ossos vizinhos de Sophie e de outros achados. Mostramos os ossos de Sophie sem estarem esmagados, e algumas pontas de costelas e bordas de placas marcadas como de Sophie são de gesso no esqueleto real. As três primeiras vértebras da cauda e a vigésima aparecem como reconstruídas, embora a vigésima e as partes de cima das três primeiras tenham sido encontradas. No crânio, as partes reconstruídas estão marcadas só de forma aproximada."
+     "Os ossos reconstruídos são cópias espelhadas do outro lado de Sophie, ou foram modelados a partir dos ossos vizinhos de Sophie e de outros achados. Mostramos os ossos de Sophie sem estarem esmagados, e algumas pontas de costelas e bordas de placas marcadas como de Sophie são de gesso no esqueleto real. As três primeiras vértebras da cauda aparecem como reconstruídas, embora as partes de cima das três primeiras tenham sido encontradas. No crânio, as partes reconstruídas estão marcadas só de forma aproximada."
     ]
    }
   },
