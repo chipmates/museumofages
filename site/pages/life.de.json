@@ -149,19 +149,13 @@
           "id": "vinci-florence",
           "nav": "Vinci und Florenz",
           "h": "Vinci und Florenz, 1452 bis 1481",
-          "p": "Er kam am 15. April 1452 bei Vinci zur Welt, als Sohn des Notars ser Piero und einer Frau namens Caterina, die nicht miteinander verheiratet waren. Tag und Stunde kennen wir aus einer Notiz seines Großvaters Antonio in einem alten Notariatsregister, die im Staatsarchiv von Florenz auftauchte und 1939 gedruckt wurde. Einen Ort nennt sie nicht, darum ist das Bauernhaus in Anchiano, heute als sein Geburtshaus gezeigt, nur der Überlieferung nach sein Geburtsort. Er wuchs in Vinci bei der Familie seines Vaters auf, und als unehelicher Sohn konnte er nicht wie sein Vater Notar werden. Sein Lehrer war Andrea del Verrocchio, in dessen Werkstatt in Florenz er seit den 1460er Jahren lernte. Ein Lehrvertrag ist nicht erhalten, darum ist der Beginn erschlossen: Die ersten Belege sind sein Eintrag bei der Malerbruderschaft 1472 und ein Schriftstück von 1476, das ihn noch bei Verrocchio zeigt. Seine ersten großen Aufträge, ein Altarbild für die Regierung der Stadt 1478 und die Anbetung der Könige 1481, blieben beide unvollendet.",
+          "p": "Er kam am 15. April 1452 bei Vinci zur Welt, als Sohn des Notars ser Piero und einer Frau namens Caterina, die nicht miteinander verheiratet waren. Tag und Stunde kennen wir aus einer Notiz seines Großvaters Antonio in einem alten Notariatsregister, die im Staatsarchiv von Florenz auftauchte und 1939 gedruckt wurde. Einen Ort nennt sie nicht, darum ist das Bauernhaus in Anchiano, heute als sein Geburtshaus gezeigt, nur der Überlieferung nach sein Geburtsort. Er wuchs in Vinci bei der Familie seines Vaters auf, und als unehelicher Sohn konnte er nicht wie sein Vater Notar werden. Sein Lehrer war Andrea del Verrocchio in Florenz. Seine ersten großen Aufträge, ein Altarbild und die Anbetung der Könige, blieben beide unvollendet.",
           "items": [
             {
               "id": "life-01",
               "date": "15. April 1452",
               "k": "mark_documented",
               "line": "Er kommt in der dritten Stunde der Nacht zur Welt, nach unserer Uhr gegen zehn Uhr abends. Sein Großvater Antonio notiert Tag, Stunde und den Namen Lionardo."
-            },
-            {
-              "id": "life-02",
-              "date": "15. April 1452",
-              "k": "mark_tradition",
-              "line": "Der Überlieferung nach kommt er in einem Bauernhaus in Anchiano bei Vinci zur Welt. Die Notiz seines Großvaters nennt keinen Ort."
             },
             {
               "id": "life-04",
@@ -224,19 +218,13 @@
           "id": "milan",
           "nav": "Mailand",
           "h": "Mailand, 1482 bis 1499",
-          "p": "Um 1482, mit etwa dreißig, zog er nach Mailand, an den Hof von Ludovico Sforza, genannt il Moro, der die Stadt regierte und 1494 ihr Herzog wurde. Ein früher Autor erzählt, Lorenzo de' Medici habe ihn mit einer Leier dorthin geschickt, und ein Briefentwurf, von seiner Hand verbessert, bot Ludovico seine Dienste als Ingenieur und Künstler an. Der erste feste Beleg für ihn in Mailand ist ein Vertrag vom April 1483 über die Felsgrottenmadonna. Etwa siebzehn Jahre arbeitete er in Mailand: an einem Modell für den Turm des Doms, an Festen für den Hof, an einem riesigen Pferd aus Ton für ein Bronzedenkmal und am Abendmahl. Sein Haushalt wuchs: 1490 kam Salaì, zehn Jahre alt, und 1493 zog eine Frau namens Caterina zu ihm, in der die Forschung meist seine Mutter sieht. 1494 wurde die Bronze für das Pferd zu Kanonen gegossen, und 1499 nahmen die Franzosen Mailand ein, Ludovico floh. Leonardo schickte 600 Goldgulden auf sein Konto in Florenz und verließ die Stadt spätestens im Dezember, mit Luca Pacioli, Richtung Mantua und Venedig.",
+          "p": "Um 1482, mit etwa dreißig, zog er wahrscheinlich nach Mailand, an den Hof von Ludovico Sforza, genannt il Moro, der die Stadt regierte und 1494 ihr Herzog wurde. Ein früher Autor erzählt, Lorenzo de' Medici habe ihn mit einer Leier dorthin geschickt. Etwa siebzehn Jahre arbeitete er in Mailand: an einem Modell für den Turm des Doms, an Festen für den Hof, an einem riesigen Pferd aus Ton für ein Bronzedenkmal und am Abendmahl. Sein Haushalt wuchs: 1493 zog eine Frau namens Caterina zu ihm, in der die Forschung meist seine Mutter sieht. 1499 nahmen die Franzosen Mailand ein, Ludovico floh. Leonardo schickte 600 Goldgulden auf sein Konto in Florenz und verließ die Stadt spätestens im Dezember, mit Luca Pacioli, Richtung Mantua und Venedig.",
           "items": [
-            {
-              "id": "life-12",
-              "date": "Um 1482",
-              "k": "mark_inferred",
-              "line": "Wahrscheinlich zieht er um dieses Jahr nach Mailand. Ein Beleg für den Umzug ist nicht erhalten."
-            },
             {
               "id": "life-13",
               "date": "Um 1482 bis 1484",
               "k": "mark_inferred",
-              "line": "Ein undatierter Briefentwurf bietet Ludovico Sforza seine Dienste als Ingenieur und Künstler an."
+              "line": "Ein undatierter Briefentwurf, von seiner Hand verbessert, bietet Ludovico Sforza seine Dienste als Ingenieur und Künstler an."
             },
             {
               "id": "life-14",
@@ -287,12 +275,6 @@
               "line": "Ludovico schenkt ihm einen Weinberg vor der Porta Vercellina."
             },
             {
-              "id": "life-24",
-              "date": "1499",
-              "k": "mark_documented",
-              "line": "Die Franzosen nehmen Mailand ein. Leonardo verlässt die Stadt spätestens im Dezember."
-            },
-            {
               "id": "life-25",
               "date": "1499 oder später",
               "k": "mark_tradition",
@@ -314,14 +296,8 @@
           "id": "venice-romagna",
           "nav": "Venedig und die Romagna",
           "h": "Venedig, Florenz und die Romagna, 1500 bis 1506",
-          "p": "Über Mantua, wo er Isabella d'Este zeichnete, kam er nach Venedig, und im April 1500 war er wieder in Florenz. In Venedig beriet er die Stadt, wie sie sich gegen die Türken verteidigen könne. Ein Brief von 1501 beschreibt ihn in Florenz als ganz in die Geometrie vertieft und ohne Geduld für den Pinsel. Im August 1502 nahm ihn Cesare Borgia als Architekten und Generalingenieur in Dienst, und er vermaß Festungen in der Romagna und zeichnete einen Plan von Imola. Zurück in Florenz, begann er 1503 das Bildnis der Lisa del Giocondo und übernahm die Schlacht von Anghiari, ein Wandbild für den Saal des Großen Rates. Im Juli 1504 starb sein Vater. Am 30. Mai 1506 brach er nach Mailand auf und versprach, in drei Monaten zurück zu sein, doch aus dem Aufenthalt wurden Jahre.",
+          "p": "Über Mantua, wo er Isabella d'Este zeichnete, kam er nach Venedig, wo ihn ein Brief vom 13. März 1500 belegt, und im April war er wieder in Florenz. In Venedig beriet er die Stadt, wie sie sich gegen die Türken verteidigen könne. Ein Brief von 1501 beschreibt ihn in Florenz als ganz in die Geometrie vertieft und ohne Geduld für den Pinsel. Für Cesare Borgia vermaß er Festungen in der Romagna. Zurück in Florenz, begann er 1503 das Bildnis der Lisa del Giocondo und übernahm die Schlacht von Anghiari, ein Wandbild für den Saal des Großen Rates. Am 30. Mai 1506 brach er nach Mailand auf und versprach, in drei Monaten zurück zu sein, doch aus dem Aufenthalt wurden Jahre.",
           "items": [
-            {
-              "id": "life-26",
-              "date": "13. März 1500",
-              "k": "mark_documented",
-              "line": "Ein Brief belegt seinen Aufenthalt in Venedig."
-            },
             {
               "id": "life-27",
               "date": "18. August 1502",
@@ -364,7 +340,7 @@
           "id": "milan-again",
           "nav": "Wieder Mailand",
           "h": "Wieder Mailand, 1506 bis 1513",
-          "p": "Mailand war jetzt französisch, und sein Statthalter Charles d'Amboise wollte ihn dort behalten. 1507 nannte ihn König Ludwig XII. seinen eigenen Maler und Ingenieur. Von etwa August 1507 bis zum Frühjahr 1508 war er wieder in Florenz, im Streit mit seinen Halbbrüdern um das Testament seines Onkels Francesco, und studierte in Santa Maria Nuova die Anatomie. Zurück in Mailand füllte er seine Notizen mit Anatomie, mit Wasser und Gestein und mit Plänen für ein Reiterdenkmal. In diesen Jahren wurde Francesco Melzi, ein junger Mailänder Adliger, sein Schüler. Nach dem Tod von Charles d'Amboise lebte Leonardo ab 1511 als Gast in der Villa der Melzi in Vaprio d'Adda.",
+          "p": "Mailand war jetzt französisch, Statthalter war Charles d'Amboise. 1507 nannte ihn König Ludwig XII. seinen eigenen Maler und Ingenieur. Von etwa August 1507 bis zum Frühjahr 1508 war er wieder in Florenz, im Streit mit seinen Halbbrüdern um das Testament seines Onkels Francesco, und studierte in Santa Maria Nuova die Anatomie. Zurück in Mailand füllte er seine Notizen mit Studien zu Wasser und Gestein. In diesen Jahren wurde Francesco Melzi, ein junger Mailänder Adliger, sein Schüler. Nach dem Tod von Charles d'Amboise lebte Leonardo ab 1511 als Gast in der Villa der Melzi in Vaprio d'Adda.",
           "items": [
             {
               "id": "life-32",
@@ -396,7 +372,7 @@
           "id": "rome",
           "nav": "Rom",
           "h": "Rom, 1513 bis 1516",
-          "p": "Am 24. September 1513 brach er mit Melzi, Salaì und zwei weiteren Leuten seines Haushalts von Mailand nach Rom auf. Sein Gönner dort war Giuliano de' Medici, der Bruder von Papst Leo X., der ihm Räume im Belvedere des Vatikans gab. Er arbeitete an Spiegeln, an der Geometrie und an Plänen für die Pontinischen Sümpfe, doch die Belege aus diesen Jahren sind dünn. Spätere Autoren erzählen von einem mechanischen Löwen, den er für einen König gebaut haben soll, eine Geschichte, für die wir keine Quelle aus seiner Zeit gefunden haben. Giuliano starb im März 1516, und im selben Jahr ging Leonardo nach Frankreich.",
+          "p": "In Rom war sein Gönner Giuliano de' Medici, der Bruder von Papst Leo X., der ihm Räume im Belvedere des Vatikans gab. Er arbeitete an Spiegeln, an der Geometrie und an Plänen für die Pontinischen Sümpfe, doch die Belege aus diesen Jahren sind dünn. Giuliano starb im März 1516, und im selben Jahr ging Leonardo nach Frankreich.",
           "items": [
             {
               "id": "life-35",
@@ -424,7 +400,7 @@
           "nav": "Amboise",
           "h": "Amboise, 1516 bis 1519",
           "p": [
-            "1516 ging er nach Frankreich, in den Dienst von König Franz I., und wohnte in Cloux, dem heutigen Clos Lucé, nahe dem Königsschloss von Amboise. Melzi kam mit ihm. Im Oktober 1517 sah ein Besucher, dass seine rechte Hand teilweise gelähmt war, er aber noch zeichnete und unterrichtete. Seine letzten Jahre in Frankreich, sein Testament, sein Tod und sein Grab haben ",
+            "In Frankreich wohnte er in Cloux, dem heutigen Clos Lucé, nahe dem Königsschloss von Amboise. Melzi kam mit ihm. Seine letzten Jahre in Frankreich, sein Testament, sein Tod und sein Grab haben ",
             {
               "text": "eine eigene Seite",
               "page": "last-years"
@@ -436,13 +412,13 @@
               "id": "life-37",
               "date": "1516",
               "k": "mark_inferred",
-              "line": "Er tritt in den Dienst von Franz I. und wohnt in Cloux."
+              "line": "Er tritt in den Dienst von König Franz I. und wohnt in Cloux."
             },
             {
               "id": "life-39",
               "date": "10. Oktober 1517",
               "k": "mark_documented",
-              "line": "Ein Kardinalssekretär notiert einen Besuch und drei Gemälde. Leonardos rechte Hand sei gelähmt, schreibt er, doch er zeichne und lehre noch."
+              "line": "Ein Kardinalssekretär notiert einen Besuch und drei Gemälde. Leonardos rechte Hand sei teilweise gelähmt, schreibt er, doch er zeichne und lehre noch."
             },
             {
               "id": "life-41",
@@ -462,7 +438,7 @@
           "id": "after-1519",
           "nav": "Nach 1519",
           "h": "Nach 1519, was blieb",
-          "p": "Melzi erbte seine Bücher und Notizen. Nach Melzis Tod um 1570 gingen sie an seinen Sohn Orazio, und der Bildhauer Pompeo Leoni kaufte Blätter und band sie zu Alben. Die größte Sammlung seiner Blätter, der Codex Atlanticus, kam 1637 in die Ambrosiana, eine Bibliothek in Mailand, wurde 1796 nach Paris gebracht und kehrte 1815 zurück. Tausende Seiten seiner Notizen sind erhalten, und einige davon kannst du am Lesetisch des Flügels umblättern. Die Mona Lisa wurde 1911 aus dem Louvre gestohlen und zwei Jahre später in Florenz wiedergefunden.",
+          "p": "Melzi erbte seine Bücher und Notizen. Tausende Seiten seiner Notizen sind erhalten, und einige davon kannst du am Lesetisch des Flügels umblättern.",
           "items": [
             {
               "id": "life-43",
@@ -480,7 +456,7 @@
               "id": "life-45",
               "date": "1637",
               "k": "mark_documented",
-              "line": "Arconati schenkt der Ambrosiana, einer Bibliothek in Mailand, den Codex Atlanticus und weitere Manuskripte."
+              "line": "Arconati schenkt der Ambrosiana, einer Bibliothek in Mailand, den Codex Atlanticus, die größte Sammlung seiner Blätter, und weitere Manuskripte."
             },
             {
               "id": "life-46",

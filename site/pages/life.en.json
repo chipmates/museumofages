@@ -136,19 +136,13 @@
           "id": "vinci-florence",
           "nav": "Vinci and Florence",
           "h": "Vinci and Florence, 1452 to 1481",
-          "p": "He was born on 15 April 1452 near Vinci, the son of ser Piero, a notary, and a woman named Caterina, who were not married to each other. We know the day and the hour because his grandfather Antonio wrote them into an old notarial register, a note that turned up in the state archive in Florence and was printed in 1939. The note names no place, so the farmhouse at Anchiano that is shown today as his birthplace has only tradition behind it. He grew up in Vinci with his father's family, and as a son born outside marriage he could not become a notary like his father. His teacher was Andrea del Verrocchio, in whose Florence workshop he trained from the 1460s. No contract survives, so the start is worked out from later records: the painters' company lists him in 1472, and a paper of 1476 places him with Verrocchio. His first big commissions both stayed unfinished: an altarpiece for the city's government in 1478, and in 1481 the Adoration of the Magi.",
+          "p": "He was born on 15 April 1452 near Vinci, the son of ser Piero, a notary, and a woman named Caterina, who were not married to each other. We know the day and the hour because his grandfather Antonio wrote them into an old notarial register, a note that turned up in the state archive in Florence and was printed in 1939. The note names no place, so the farmhouse at Anchiano that is shown today as his birthplace has only tradition behind it. He grew up in Vinci with his father's family, and as a son born outside marriage he could not become a notary like his father. His teacher was Andrea del Verrocchio, in Florence. His first big commissions, an altarpiece and the Adoration of the Magi, both stayed unfinished.",
           "items": [
             {
               "id": "life-01",
               "date": "15 April 1452",
               "k": "mark_documented",
               "line": "He is born at the third hour of night, close to 10 pm by today's clock. His grandfather Antonio notes the day, the hour and the name, Lionardo."
-            },
-            {
-              "id": "life-02",
-              "date": "15 April 1452",
-              "k": "mark_tradition",
-              "line": "Tradition places the birth in a farmhouse at Anchiano, near Vinci. His grandfather's note names no place."
             },
             {
               "id": "life-04",
@@ -211,19 +205,13 @@
           "id": "milan",
           "nav": "Milan",
           "h": "Milan, 1482 to 1499",
-          "p": "About 1482, at around thirty, he moved to Milan, to the court of Ludovico Sforza, called il Moro, who ruled the city and became its duke in 1494. An early writer says Lorenzo de' Medici sent him there with a lyre, and a draft letter, corrected in his own hand, offered Ludovico his skills as an engineer and an artist. The first hard record of him in Milan is the Virgin of the Rocks contract of April 1483. For about seventeen years he worked in Milan: a model for the cathedral's tower, festivals for the court, a giant clay horse for a bronze statue, and the Last Supper. His household grew: Salaì came in 1490, aged ten, and in 1493 Caterina, whom scholars usually take for his mother, joined it. In 1494 the bronze for the horse went into cannon, and in 1499 the French took Milan and Ludovico fled. Leonardo sent 600 gold florins to his account in Florence and left by December with Luca Pacioli, for Mantua and Venice.",
+          "p": "About 1482, at around thirty, he probably moved to Milan, to the court of Ludovico Sforza, called il Moro, who ruled the city and became its duke in 1494. An early writer says Lorenzo de' Medici sent him there with a lyre. For about seventeen years he worked in Milan: a model for the cathedral's tower, festivals for the court, a giant clay horse for a bronze statue, and the Last Supper. His household grew: in 1493 Caterina, whom scholars usually take for his mother, joined it. In 1499 the French took Milan and Ludovico fled. Leonardo sent 600 gold florins to his account in Florence and left by December with Luca Pacioli, for Mantua and Venice.",
           "items": [
-            {
-              "id": "life-12",
-              "date": "About 1482",
-              "k": "mark_inferred",
-              "line": "He probably moves to Milan around this year. No record of the move survives."
-            },
             {
               "id": "life-13",
               "date": "About 1482 to 1484",
               "k": "mark_inferred",
-              "line": "An undated draft letter offers Ludovico Sforza his services as an engineer and artist."
+              "line": "An undated draft letter, corrected in his own hand, offers Ludovico Sforza his services as an engineer and artist."
             },
             {
               "id": "life-14",
@@ -274,12 +262,6 @@
               "line": "Ludovico gives him a vineyard outside the Porta Vercellina."
             },
             {
-              "id": "life-24",
-              "date": "1499",
-              "k": "mark_documented",
-              "line": "The French take Milan, and Leonardo is gone by December."
-            },
-            {
               "id": "life-25",
               "date": "1499 or later",
               "k": "mark_tradition",
@@ -301,14 +283,8 @@
           "id": "venice-romagna",
           "nav": "Venice and the Romagna",
           "h": "Venice, Florence and the Romagna, 1500 to 1506",
-          "p": "From Mantua, where he drew Isabella d'Este, he went on to Venice, and by April 1500 he was back in Florence. In Venice he gave advice on defending the city against the Turks. In Florence a letter of 1501 found him busy with geometry and out of patience with the brush. In August 1502 Cesare Borgia took him on as architect and general engineer, and he surveyed fortresses in the Romagna and drew a map of Imola. Back in Florence in 1503 he began the portrait of Lisa del Giocondo and took on the Battle of Anghiari, a wall painting for the hall of the Great Council. In July 1504 his father died. On 30 May 1506 he left for Milan, promising to be back within three months, and his stay there lasted far longer.",
+          "p": "From Mantua, where he drew Isabella d'Este, he went on to Venice, where a letter of 13 March 1500 places him, and by April he was back in Florence. In Venice he gave advice on defending the city against the Turks. In Florence a letter of 1501 found him busy with geometry and out of patience with the brush. For Cesare Borgia he surveyed fortresses in the Romagna. Back in Florence in 1503 he began the portrait of Lisa del Giocondo and took on the Battle of Anghiari, a wall painting for the hall of the Great Council. On 30 May 1506 he left for Milan, promising to be back within three months, and his stay there lasted far longer.",
           "items": [
-            {
-              "id": "life-26",
-              "date": "13 March 1500",
-              "k": "mark_documented",
-              "line": "A letter places him in Venice."
-            },
             {
               "id": "life-27",
               "date": "18 August 1502",
@@ -351,7 +327,7 @@
           "id": "milan-again",
           "nav": "Milan again",
           "h": "Milan again, 1506 to 1513",
-          "p": "Milan was French now, and its governor, Charles d'Amboise, wanted him to stay. In 1507 King Louis XII called him his own painter and engineer. From about August 1507 to the spring of 1508 he was back in Florence, in a quarrel with his half-brothers over his uncle Francesco's will, and studied anatomy at Santa Maria Nuova. Back in Milan he filled his notes with anatomy, water and the earth, and with plans for a horse and rider monument. In these years a young Milanese nobleman, Francesco Melzi, became his pupil. After Charles d'Amboise died, Leonardo stayed from 1511 at the Melzi villa at Vaprio d'Adda.",
+          "p": "Milan was French now, governed by Charles d'Amboise. In 1507 King Louis XII called him his own painter and engineer. From about August 1507 to the spring of 1508 he was back in Florence, in a quarrel with his half-brothers over his uncle Francesco's will, and studied anatomy at Santa Maria Nuova. Back in Milan he filled his notes with studies of water and the earth. In these years a young Milanese nobleman, Francesco Melzi, became his pupil. After Charles d'Amboise died, Leonardo stayed from 1511 at the Melzi villa at Vaprio d'Adda.",
           "items": [
             {
               "id": "life-32",
@@ -383,7 +359,7 @@
           "id": "rome",
           "nav": "Rome",
           "h": "Rome, 1513 to 1516",
-          "p": "On 24 September 1513 he left Milan for Rome with Melzi, Salaì and two more of his household. His patron there was Giuliano de' Medici, brother of Pope Leo X, who gave him rooms in the Belvedere of the Vatican. He worked on mirrors, on geometry and on plans for the Pontine marshes, but the records of these years are thin. Later writers tell of a mechanical lion he made for a king, a story for which we found no record of the time. Giuliano died in March 1516, and that year Leonardo left for France.",
+          "p": "In Rome his patron was Giuliano de' Medici, brother of Pope Leo X, who gave him rooms in the Belvedere of the Vatican. He worked on mirrors, on geometry and on plans for the Pontine marshes, but the records of these years are thin. Giuliano died in March 1516, and that year Leonardo left for France.",
           "items": [
             {
               "id": "life-35",
@@ -411,7 +387,7 @@
           "nav": "Amboise",
           "h": "Amboise, 1516 to 1519",
           "p": [
-            "In 1516 he went to France, into the service of King Francis I, and lived at Cloux, today the Clos Lucé, close to the royal castle of Amboise. Melzi came with him. In October 1517 a visitor found his right hand partly paralysed, though he still drew and taught. His last years in France, his will, his death and his grave have ",
+            "In France he lived at Cloux, today the Clos Lucé, close to the royal castle of Amboise. Melzi came with him. His last years in France, his will, his death and his grave have ",
             {
               "text": "their own page",
               "page": "last-years"
@@ -423,13 +399,13 @@
               "id": "life-37",
               "date": "1516",
               "k": "mark_inferred",
-              "line": "He enters the service of Francis I and lives at Cloux."
+              "line": "He enters the service of King Francis I and lives at Cloux."
             },
             {
               "id": "life-39",
               "date": "10 October 1517",
               "k": "mark_documented",
-              "line": "A cardinal's secretary notes a visit and three paintings. Leonardo's right hand is paralysed, he writes, yet he still draws and teaches."
+              "line": "A cardinal's secretary notes a visit and three paintings. Leonardo's right hand is partly paralysed, he writes, yet he still draws and teaches."
             },
             {
               "id": "life-41",
@@ -449,7 +425,7 @@
           "id": "after-1519",
           "nav": "After 1519",
           "h": "After 1519, what was left",
-          "p": "Melzi inherited his books and notes. After Melzi's death about 1570 they passed to his son Orazio, and the sculptor Pompeo Leoni bought sheets and bound them into albums. The largest gathering of his sheets, the Codex Atlanticus, went to Milan's Ambrosiana library in 1637, was carried off to Paris in 1796 and came back in 1815. Thousands of pages of his notes survive, and you can turn some of them at the wing's reading table. The Mona Lisa, meanwhile, was stolen from the Louvre in 1911 and found again in Florence two years later.",
+          "p": "Melzi inherited his books and notes. Thousands of pages of his notes survive, and you can turn some of them at the wing's reading table.",
           "items": [
             {
               "id": "life-43",
@@ -467,7 +443,7 @@
               "id": "life-45",
               "date": "1637",
               "k": "mark_documented",
-              "line": "Arconati gives the Codex Atlanticus and other manuscripts to the Ambrosiana, a library in Milan."
+              "line": "Arconati gives the Codex Atlanticus, the largest gathering of his sheets, and other manuscripts to the Ambrosiana, a library in Milan."
             },
             {
               "id": "life-46",
