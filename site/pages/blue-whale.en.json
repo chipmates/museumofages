@@ -113,7 +113,7 @@
   "title": "Blue whale size: 23 to 27 m, 100 to 150 t | Museum of Ages",
   "description": "Blue whale: most grown ones are 23 to 27 m (75 to 89 ft) long, the largest about 30 m, and weigh roughly 100 to 150 t. The heaviest animal known.",
   "og_title": "Blue whale size: 23 to 27 m, 100 to 150 t",
-  "og_image_alt": "A blue whale from the side: a long, slim, blue-grey body with pale mottling, a flat head, a long, pale-edged flipper and a small back fin far back. Beside it a grey person who reaches a little past halfway up its side."
+  "og_image_alt": "Our blue whale from the side, 22.86 m (75 ft) long: a slim blue-grey body with pale mottling, a flat head, a long, pale-edged flipper and a small back fin far back. Beside it a grey person 1.70 m tall who reaches a little past halfway up its side."
  },
  "labels": {
   "crumbs": "You are here",
@@ -134,8 +134,8 @@
   "scale": {
    "pic": "side",
    "tag": "tag_made",
-   "what": "Our blue whale beside a person 1.70 m tall, to one scale: as long as about 13 people laid head to foot.",
-   "alt": "A blue whale from the side: a long, slim, blue-grey body with pale mottling, a flat head, a long, pale-edged flipper and a small back fin far back. Beside it a grey person who reaches a little past halfway up its side.",
+   "what": "Our blue whale, 22.86 m (75 ft) long, beside a person 1.70 m tall, to one scale: as long as about 13 people laid head to foot.",
+   "alt": "Our blue whale from the side, 22.86 m (75 ft) long: a slim blue-grey body with pale mottling, a flat head, a long, pale-edged flipper and a small back fin far back. Beside it a grey person 1.70 m tall who reaches a little past halfway up its side.",
    "note": "Our own reconstruction, built in code from published measurements and rendered in our own engine. Not photographs.",
    "marks": [
     {
@@ -325,7 +325,8 @@
    "nav": "The biggest blue whale ever recorded",
    "h": "The biggest blue whale ever recorded",
    "paras": [
-    "The longest in the records is a female of 33.27 m (109 ft) in a Norwegian whaling list from 1928, measured beside a factory ship. This disputed whaling record splits two recent studies: one calls her the longest reliably measured, the other calls the length not credible. A 2025 study notes that once biologists sailed with the fleets, no whale over 30.5 m turned up in the records, so the largest were about 30 m (98 ft), perhaps more. The heaviest weighing on record is 190 tonnes, for a pregnant, very fat female of 27.6 m (91 ft), weighed in pieces by a Soviet fleet in the 1940s. It is a record we could not read at its source."
+    "The longest in the records is a female of 33.27 m (109 ft) in a Norwegian whaling list from 1928, measured beside a factory ship. This disputed whaling record splits two recent studies: one calls her the longest reliably measured, the other calls the length not credible. A 2025 study notes that once biologists sailed with the fleets, no whale over 30.5 m turned up in the records, so the largest were about 30 m (98 ft), perhaps more. The heaviest weighing on record is 190 tonnes, for a pregnant, very fat female of 27.6 m (91 ft), weighed in pieces by a Soviet fleet in the 1940s. It is a record we could not read at its source.",
+    "Some sites give 33.6 m, dated 1922. We could not trace that figure to a record we could read."
    ]
   },
   {
@@ -467,6 +468,10 @@
    "h": "Numbers you may have read",
    "intro": "For each number: where it came from, and what it means.",
    "rows": [
+    {
+     "term": "70 to 135 tonnes",
+     "text": "A range many sites give, from a field guide to marine mammals, and it takes in smaller whales. A study of 2025, built on body models checked against whales weighed in pieces, puts the average grown blue whale at roughly 100 to 150 tonnes. By such a model, a whale 23 m (75 ft) long comes to about 75 to 85 tonnes."
+    },
     {
      "term": "33 m (109 ft)",
      "text": "A disputed whaling record, one female in a list from 1928. Lengths over 30.5 m vanished once biologists measured."

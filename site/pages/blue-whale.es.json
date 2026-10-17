@@ -113,7 +113,7 @@
   "title": "Ballena azul: tamaño 23 a 27 m, 100 a 150 t | Museum of Ages",
   "description": "¿Cuánto mide una ballena azul? La mayoría de las adultas mide 23 a 27 m y ronda las 100 a 150 t. Las mayores, unos 30 m. El animal más pesado conocido.",
   "og_title": "Ballena azul: tamaño 23 a 27 m, 100 a 150 t",
-  "og_image_alt": "Una ballena azul de lado: un cuerpo largo y esbelto, gris azulado, con manchas claras, una cabeza plana, una aleta pectoral larga de borde claro y una pequeña aleta dorsal muy atrás. A su lado, una persona gris que llega a poco más de media altura de la ballena."
+  "og_image_alt": "Nuestra ballena azul de lado, de 22,86 m de largo: un cuerpo esbelto, gris azulado, con manchas claras, una cabeza plana, una aleta pectoral larga de borde claro y una pequeña aleta dorsal muy atrás. A su lado, una persona gris de 1,70 m que llega a poco más de media altura de la ballena."
  },
  "labels": {
   "crumbs": "Estás aquí",
@@ -134,8 +134,8 @@
   "scale": {
    "pic": "side",
    "tag": "tag_made",
-   "what": "Nuestra ballena azul junto a una persona de 1,70 m, a la misma escala: tan larga como unas 13 personas tumbadas en fila, una tras otra.",
-   "alt": "Una ballena azul de lado: un cuerpo largo y esbelto, gris azulado, con manchas claras, una cabeza plana, una aleta pectoral larga de borde claro y una pequeña aleta dorsal muy atrás. A su lado, una persona gris que llega a poco más de media altura de la ballena.",
+   "what": "Nuestra ballena azul, de 22,86 m de largo, junto a una persona de 1,70 m, a la misma escala: tan larga como unas 13 personas tumbadas en fila, una tras otra.",
+   "alt": "Nuestra ballena azul de lado, de 22,86 m de largo: un cuerpo esbelto, gris azulado, con manchas claras, una cabeza plana, una aleta pectoral larga de borde claro y una pequeña aleta dorsal muy atrás. A su lado, una persona gris de 1,70 m que llega a poco más de media altura de la ballena.",
    "note": "Nuestra propia reconstrucción, construida en código a partir de medidas publicadas y renderizada con nuestro propio motor gráfico. No son fotografías.",
    "marks": [
     {
@@ -325,7 +325,8 @@
    "nav": "La ballena azul más grande registrada",
    "h": "La ballena azul más grande registrada",
    "paras": [
-    "La más larga de los registros es una hembra de 33,27 m, en una lista ballenera noruega de 1928, medida junto a un buque factoría. Este récord discutido de la caza de ballenas divide a dos estudios recientes: uno la considera la más larga medida con fiabilidad, el otro dice que esa longitud no es creíble. Un estudio de 2025 señala que, desde que los biólogos viajaron con las flotas, ninguna ballena de más de 30,5 m apareció en los registros, así que las más grandes medían unos 30 m, quizá más. El mayor pesaje registrado es de 190 toneladas, de una hembra preñada y muy gorda de 27,6 m, pesada por partes por una flota soviética en la década de 1940. Es un dato que no pudimos leer en su fuente."
+    "La más larga de los registros es una hembra de 33,27 m, en una lista ballenera noruega de 1928, medida junto a un buque factoría. Este récord discutido de la caza de ballenas divide a dos estudios recientes: uno la considera la más larga medida con fiabilidad, el otro dice que esa longitud no es creíble. Un estudio de 2025 señala que, desde que los biólogos viajaron con las flotas, ninguna ballena de más de 30,5 m apareció en los registros, así que las más grandes medían unos 30 m, quizá más. El mayor pesaje registrado es de 190 toneladas, de una hembra preñada y muy gorda de 27,6 m, pesada por partes por una flota soviética en la década de 1940. Es un dato que no pudimos leer en su fuente.",
+    "Algunas páginas dan 33,6 m, con el año 1922. No pudimos seguir esa cifra hasta un registro que pudiéramos leer."
    ]
   },
   {
@@ -467,6 +468,10 @@
    "h": "Cifras que quizá hayas leído",
    "intro": "Para cada cifra: de dónde viene y qué significa.",
    "rows": [
+    {
+     "term": "De 70 a 135 toneladas",
+     "text": "Un rango que dan muchas páginas, de una guía de campo de mamíferos marinos, y que incluye ballenas más pequeñas. Un estudio de 2025, con modelos del cuerpo comprobados con ballenas pesadas por partes, sitúa a la ballena azul adulta media en más o menos 100 a 150 toneladas. Según un modelo así, una ballena de 23 m llega a unas 75 a 85 toneladas."
+    },
     {
      "term": "33 m",
      "text": "Un récord discutido de la caza de ballenas, una sola hembra en una lista de 1928. Las longitudes de más de 30,5 m desaparecieron en cuanto los biólogos midieron."

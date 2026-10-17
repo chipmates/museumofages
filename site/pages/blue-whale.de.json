@@ -116,7 +116,7 @@
   "title": "Blauwal-Größe: 23 bis 27 m, 100 bis 150 t | Museum of Ages",
   "description": "Der Blauwal wird meist 23 bis 27 m lang, die größten etwa 30 m, und rund 100 bis 150 t schwer. Er ist das schwerste uns bekannte Tier.",
   "og_title": "Blauwal-Größe: 23 bis 27 m, 100 bis 150 t",
-  "og_image_alt": "Ein Blauwal von der Seite: ein langer, schlanker, blaugrauer Körper mit hellen Flecken, ein flacher Kopf, eine lange Brustflosse mit hellem Rand und eine kleine Rückenfinne weit hinten. Daneben ein grauer Mensch, der etwas über die halbe Höhe des Wals reicht."
+  "og_image_alt": "Unser Blauwal von der Seite, 22,86 m lang: ein schlanker, blaugrauer Körper mit hellen Flecken, ein flacher Kopf, eine lange Brustflosse mit hellem Rand und eine kleine Rückenfinne weit hinten. Daneben ein grauer Mensch von 1,70 m, der etwas über die halbe Höhe des Wals reicht."
  },
  "labels": {
   "crumbs": "Du bist hier",
@@ -137,8 +137,8 @@
   "scale": {
    "pic": "side",
    "tag": "tag_made",
-   "what": "Unser Blauwal neben einem Menschen von 1,70 m, im selben Maßstab: so lang wie etwa 13 Menschen, der Länge nach hintereinandergelegt.",
-   "alt": "Ein Blauwal von der Seite: ein langer, schlanker, blaugrauer Körper mit hellen Flecken, ein flacher Kopf, eine lange Brustflosse mit hellem Rand und eine kleine Rückenfinne weit hinten. Daneben ein grauer Mensch, der etwas über die halbe Höhe des Wals reicht.",
+   "what": "Unser Blauwal, 22,86 m lang, neben einem Menschen von 1,70 m, im selben Maßstab: so lang wie etwa 13 Menschen, der Länge nach hintereinandergelegt.",
+   "alt": "Unser Blauwal von der Seite, 22,86 m lang: ein schlanker, blaugrauer Körper mit hellen Flecken, ein flacher Kopf, eine lange Brustflosse mit hellem Rand und eine kleine Rückenfinne weit hinten. Daneben ein grauer Mensch von 1,70 m, der etwas über die halbe Höhe des Wals reicht.",
    "note": "Unsere eigene Rekonstruktion, nach veröffentlichten Maßen in Code gebaut und in unserer Engine gerendert. Keine Fotos.",
    "marks": [
     {
@@ -328,7 +328,8 @@
    "nav": "Der größte Blauwal, der je gemessen wurde",
    "h": "Der größte Blauwal, der je gemessen wurde",
    "paras": [
-    "Der längste verzeichnete Blauwal ist ein Weibchen von 33,27 m aus einer norwegischen Walfangliste von 1928, neben einem Fabrikschiff vermessen. Über diesen umstrittenen Rekord aus dem Walfang sind sich zwei neuere Studien uneins: Die eine hält das Tier für den längsten zuverlässig gemessenen Blauwal, die andere die Länge für nicht glaubhaft. Eine Studie von 2025 merkt an, dass in den Listen kein Wal über 30,5 m mehr auftauchte, seit Biologen auf den Fangflotten mitfuhren, und dass die größten Blauwale also etwa 30 m lang waren, vielleicht mehr. Das höchste verzeichnete Gewicht sind 190 t für ein trächtiges, sehr fettes Weibchen von 27,6 m, in den 1940er-Jahren von einer sowjetischen Flotte in Stücken gewogen. Es ist eine Angabe, die wir nicht an ihrer Quelle lesen konnten."
+    "Der längste verzeichnete Blauwal ist ein Weibchen von 33,27 m aus einer norwegischen Walfangliste von 1928, neben einem Fabrikschiff vermessen. Über diesen umstrittenen Rekord aus dem Walfang sind sich zwei neuere Studien uneins: Die eine hält das Tier für den längsten zuverlässig gemessenen Blauwal, die andere die Länge für nicht glaubhaft. Eine Studie von 2025 merkt an, dass in den Listen kein Wal über 30,5 m mehr auftauchte, seit Biologen auf den Fangflotten mitfuhren, und dass die größten Blauwale also etwa 30 m lang waren, vielleicht mehr. Das höchste verzeichnete Gewicht sind 190 t für ein trächtiges, sehr fettes Weibchen von 27,6 m, in den 1940er-Jahren von einer sowjetischen Flotte in Stücken gewogen. Es ist eine Angabe, die wir nicht an ihrer Quelle lesen konnten.",
+    "Manche Seiten nennen 33,6 m und das Jahr 1922. Diese Zahl konnten wir zu keiner Angabe zurückverfolgen, die wir lesen konnten."
    ]
   },
   {
@@ -337,7 +338,7 @@
    "nav": "Das Herz des Blauwals",
    "h": "Das Herz des Blauwals",
    "paras": [
-    "Das einzige erhaltene Blauwalherz wog rund 180 kg und maß vor dem Präparieren etwa 1,5 mal 1,2 m. Es stammt von einem der Blauwale, die 2014 vor Neufundland im Eis eingeschlossen starben, und wird im Royal Ontario Museum in Toronto aufbewahrt. Herzen, die in den 1940er-Jahren auf Walfangschiffen gewogen wurden, kamen auf rund 180 bis 625 kg. Einem Männchen wurde vor Kalifornien ein Messgerät angeheftet. Bei tiefen Tauchgängen sank sein Herzschlag bis auf zwei Schläge pro Minute, an der Oberfläche stieg er auf 25 bis 37."
+    "Das einzige erhaltene Blauwalherz wog rund 180 kg und maß vor dem Präparieren etwa 1,5 mal 1,2 m. Es stammt von einem der Blauwale, die 2014 vor Neufundland im Eis eingeschlossen starben, und wird im Royal Ontario Museum in Toronto aufbewahrt. Herzen, die in den 1940er-Jahren auf Walfangschiffen gewogen wurden, kamen auf rund 180 bis 625 kg. Deutsche Seiten nennen oft 600 kg bis eine Tonne, ohne Quelle. Einem Männchen wurde vor Kalifornien ein Messgerät angeheftet. Bei tiefen Tauchgängen sank sein Herzschlag bis auf zwei Schläge pro Minute, an der Oberfläche stieg er auf 25 bis 37."
    ]
   },
   {
@@ -470,6 +471,10 @@
    "h": "Zahlen, die du vielleicht gelesen hast",
    "intro": "Zu jeder Zahl: woher sie kommt und was sie bedeutet.",
    "rows": [
+    {
+     "term": "70 bis 135 t",
+     "text": "Eine Spanne, die viele Seiten nennen, aus einem Bestimmungsbuch der Meeressäuger, und sie schließt kleinere Wale ein. Eine Studie von 2025, deren Körpermodelle an stückweise gewogenen Walen geprüft sind, setzt den durchschnittlichen ausgewachsenen Blauwal bei rund 100 bis 150 t an. Nach einem solchen Modell kommt ein 23 m langer Wal auf etwa 75 bis 85 t."
+    },
     {
      "term": "33 m",
      "text": "Ein umstrittener Rekord aus dem Walfang, ein einzelnes Weibchen in einer Liste von 1928. Längen über 30,5 m verschwanden, sobald Biologen maßen."
