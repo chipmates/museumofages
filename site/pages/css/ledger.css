@@ -21,6 +21,8 @@
 .lg-table td{color:var(--ink-body)}
 .lg-table td:last-child{color:var(--ink)}
 .lg-note{margin-top:18px}
+/* The table's short intro fills its lines on a phone: balanced, two lines stop at half the width. */
+@media (max-width:599px){.lg-sec>.sp-intro{text-wrap:pretty}}
 /* On a phone each row is a card: its name over a ledger rule, each cell its column's name over its words (read once:
    a screen reader hears the header the cell already has). */
 @media (max-width:599px){
