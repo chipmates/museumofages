@@ -2631,6 +2631,18 @@
    "sha256": "747c288877b38f9e0c970b7453c5807a677b7b692837ce9a03cf8fa0bde25b48"
   },
   {
+   "path": "pages/pics/img/vinci-paintings-og-fr-1200x630.png",
+   "url": "/static/img/vinci-paintings-og-fr-1200x630.png",
+   "bytes": 21460,
+   "sha256": "1d084bc4449c8fbfef0ba038833dc0c475584a9a86a058f8eaf48f45b0109b66"
+  },
+  {
+   "path": "pages/pics/img/vinci-paintings-og-it-1200x630.png",
+   "url": "/static/img/vinci-paintings-og-it-1200x630.png",
+   "bytes": 20842,
+   "sha256": "7a29ec9d9cbe396f74e92c30c8cbc7810411e9b11953bf33c007cc87cf39f364"
+  },
+  {
    "path": "pages/pics/img/vinci-paintings-og-pt-br-1200x630.png",
    "url": "/static/img/vinci-paintings-og-pt-br-1200x630.png",
    "bytes": 21776,

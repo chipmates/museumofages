@@ -192,7 +192,9 @@
           "en",
           "de",
           "es",
-          "pt-BR"
+          "pt-BR",
+          "fr",
+          "it"
         ],
         "count": "paintings",
         "from": "paintings",
@@ -208,7 +210,19 @@
           ["(?<!unos )(?<!cerca de )\\b450 (?:millones|milhões)", "about 450 million dollars: unos / cerca de", ["es", "pt-BR"]],
           ["(?:el rey de francia|o rei da frança) (?!muy probablemente|muito provavelmente)[^.]{0,40}?(?:compró|comprou|adquirió|adquiriu)", "the French king very probably bought it: muy probablemente / muito provavelmente", ["es", "pt-BR"]],
           ["(?:retratada|ella|ela) (?:es|é|era) lucrezia crivelli|retrato de lucrezia crivelli", "who La Belle Ferronnière shows remains open: Lucrezia Crivelli is the oldest candidate", ["es", "pt-BR"]],
-          ["(?:el met|o met) (?:la |a )?(?:compró|comprou|adquirió|adquiriu)", "the Lansdowne Yarnwinder is on loan to the Met from the Griffin collection", ["es", "pt-BR"]]
+          ["(?:el met|o met) (?:la |a )?(?:compró|comprou|adquirió|adquiriu)", "the Lansdowne Yarnwinder is on loan to the Met from the Griffin collection", ["es", "pt-BR"]],
+          ["(?<!environ )\\b15 à 20\\b|(?<!circa )\\bda 15 a 20\\b(?! circa)", "about 15 to 20, depending on whose list: environ / circa, never a bare count", ["fr", "it"]],
+          ["salvator mundi,? (?:est|était|è|era) (?:une œuvre |un’opera |un'opera |opera )?(?:de léonard|di leonardo)|salvator mundi,? (?:peint par léonard|dipinto da leonardo)|léonard a peint le salvator mundi|leonardo ha dipinto il salvator mundi", "the Salvator Mundi is disputed, more than any other: never his as a fact", ["fr", "it"]],
+          ["(?:madone|madonna) litta,? (?:est|était|è|era) (?:une œuvre |un’opera |un'opera |opera )?(?:de léonard|di leonardo)|léonard a peint la madone litta|leonardo ha dipinto la madonna litta", "the Hermitage gives it to Leonardo, many scholars think a pupil painted it from his design: never his alone", ["fr", "it"]],
+          ["(?:baptême du christ|battesimo di cristo),? (?:est|était|è|era) (?:une œuvre |un’opera |un'opera |opera )?(?:de léonard|di leonardo)|léonard a peint le baptême du christ|leonardo ha dipinto il battesimo di cristo", "Verrocchio's painting, with Leonardo's angel and probably more: never by Leonardo", ["fr", "it"]],
+          ["(?:prédelle|predella),? (?:est|était|è|era) (?:une œuvre |un’opera |un'opera |opera )?(?:de léonard|di leonardo)|léonard a peint la prédelle|leonardo ha dipinto la predella", "the Louvre labels the predella Lorenzo di Credi: never his as a fact", ["fr", "it"]],
+          ["\\b(?:bacchus|bacco),? (?:est|était|è|era) (?:une œuvre |un’opera |un'opera |opera )?(?:de léonard|di leonardo)|léonard a peint le bacchus|leonardo ha dipinto il bacco", "the Bacchus is from his workshop, attributed to Melzi: never his", ["fr", "it"]],
+          ["rubens a (?:vu|copié) (?:le mur|la peinture murale|l’original|l'original)|rubens ha (?:visto|copiato) (?:la parete|il muro|la pittura murale|l’originale|l'originale)", "the Anghiari drawing copies a copy of his cartoon, and Rubens never saw the wall", ["fr", "it"]],
+          ["(?<!non à )(?<!pas une )(?<!pas à )\\bfresques?\\b|(?<!non ad )(?<!non un )(?<!non è un )\\baffresc[oh]i?\\b", "the Last Supper is tempera on dry plaster, not a fresco", ["fr", "it"]],
+          ["(?<!environ )\\b450 millions|(?<!circa )\\b450 milioni", "about 450 million dollars: environ / circa", ["fr", "it"]],
+          ["le roi de france (?:(?!très probablement)[^.])*?\\b(?:achet|acqui)|il re di francia (?:(?!molto probabilmente)[^.])*?\\b(?:compr|acquist)", "the French king very probably bought it: très probablement / molto probabilmente", ["fr", "it"]],
+          ["(?:elle|le modèle) (?:est|était) lucrezia crivelli|portrait de lucrezia crivelli|(?:lei|la donna ritratta) (?:è|era) lucrezia crivelli|ritratto di lucrezia crivelli", "who La Belle Ferronnière shows remains open: Lucrezia Crivelli is the oldest candidate", ["fr", "it"]],
+          ["le met (?:l’|l')?(?:a acheté|a acquis)|il (?:met|metropolitan)(?: museum of art)? (?:l’|l')?(?:ha comprat|ha acquistat)", "the Lansdowne Yarnwinder is on loan to the Met from the Griffin collection", ["fr", "it"]]
         ]
       },
       {

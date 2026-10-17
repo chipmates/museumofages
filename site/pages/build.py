@@ -197,27 +197,38 @@ TIER_LINE = {
                      "Kulturelle Nutzung ohne Gewinnabsicht.")},
     "TIER1": {"en": ("public domain",), "de": ("gemeinfrei",)},
 }
-# Spanish and Portuguese say the second tier's line in the museum's own words for it (its walk's label line)
+# Spanish, Portuguese, French and Italian say the second tier's line in the museum's own words for it (its walk's label line)
 TIER_LINE["TIER2"].update({
     "es": ("Obra de dominio público.", "Reproducción de ", "El museo etiqueta la reproducción, no el cuadro.",
            "Uso cultural sin fines de lucro."),
     "pt-BR": ("Obra em domínio público.", "Reprodução do ", "A etiqueta do museu vale para a reprodução, não para a pintura.",
-              "Uso cultural sem fins lucrativos.")})
-TIER_LINE["TIER1"].update({"es": ("dominio público",), "pt-BR": ("domínio público",)})
+              "Uso cultural sem fins lucrativos."),
+    "fr": ("Œuvre du domaine public.", "Reproduction issue de ",
+           "Les mentions du musée portent sur la reproduction, pas sur le tableau.", "Usage culturel à but non lucratif."),
+    "it": ("Opera di pubblico dominio.", "Riproduzione da ",
+           "Le indicazioni del museo riguardano la riproduzione, non il dipinto.", "Uso culturale senza scopo di lucro.")})
+TIER_LINE["TIER1"].update({"es": ("dominio público",), "pt-BR": ("domínio público",), "fr": ("domaine public",),
+                           "it": ("pubblico dominio",)})
 BARE_LINE = {"en": re.compile(r"\bpublic domain reproductions? from\b", re.I),
              "de": re.compile(r"\bgemeinfreie reproduktion(?:en)? aus\b", re.I),
              "es": re.compile(r"\breproducci(?:ón|ones) de dominio público de\b", re.I),
-             "pt-BR": re.compile(r"\breproduç(?:ão|ões) em domínio público d[oa]\b", re.I)}
+             "pt-BR": re.compile(r"\breproduç(?:ão|ões) em domínio público d[oa]\b", re.I),
+             "fr": re.compile(r"\breproductions? du domaine public issues? de\b", re.I),
+             "it": re.compile(r"\briproduzion[ei] di pubblico dominio da\b", re.I)}
 # Units an animal's numbers carry beside the site's own (buildlib.UNIT), and the things they count: a number keeps
 # them on its line.
 MORE_UNITS = r"(?:ft|in|t|feet|tonnes|Tonnen|kg|million|Millionen|discs|Wirbeln?)"
 # The wing's dates are written in English: the German page writes them by these rules.
 DATE_DE = {"Sixteenth century, reworked in the early seventeenth century": "16. Jahrhundert, überarbeitet im frühen 17. Jahrhundert"}
-# The Spanish and Portuguese pages write them as the wing's own labels in those languages do: (fixed, one year, a span).
+# The other languages' pages write them as the wing's own labels in those languages do: (fixed, one year, a span).
 DATE_MORE = {"es": ({"Sixteenth century, reworked in the early seventeenth century": "Siglo XVI, retocada a comienzos del siglo XVII"},
                     "Hacia {0}", "Entre {0} y {1}, aproximadamente"),
              "pt-BR": ({"Sixteenth century, reworked in the early seventeenth century": "Século XVI, retocada no início do século XVII"},
-                       "Cerca de {0}", "Cerca de {0} a {1}")}
+                       "Cerca de {0}", "Cerca de {0} a {1}"),
+             "fr": ({"Sixteenth century, reworked in the early seventeenth century": "XVIe siècle, reprise au début du XVIIe siècle"},
+                    "Vers {0}", "Entre {0} et {1} environ"),
+             "it": ({"Sixteenth century, reworked in the early seventeenth century": "XVI secolo, rielaborata all’inizio del XVII secolo"},
+                    "{0} circa", "Dal {0} al {1} circa")}
 
 
 # ---------- small tools ----------
