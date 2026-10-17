@@ -227,6 +227,24 @@
       },
       {
         "slug": {
+          "en": "mona-lisa",
+          "de": "mona-lisa"
+        },
+        "name": {
+          "en": "Who was the Mona Lisa",
+          "de": "Wer war Mona Lisa"
+        },
+        "line": {
+          "en": "Who she was, why the painting is so famous, the theft of 1911, where it hangs, what it is worth and whether the Louvre's is the real one.",
+          "de": "Wer sie war, warum das Bild so berühmt ist, der Diebstahl von 1911, wo es hängt, was es wert ist und ob im Louvre die echte hängt."
+        },
+        "langs": ["en", "de"],
+        "count": "mona-lisa",
+        "about": {"@type": "Painting", "name": "Mona Lisa", "sameAs": "https://www.wikidata.org/wiki/Q12418",
+                  "creator": {"@type": "Person", "name": "Leonardo da Vinci", "sameAs": "https://www.wikidata.org/wiki/Q762"}}
+      },
+      {
+        "slug": {
           "en": "sizes",
           "de": "groessen"
         },

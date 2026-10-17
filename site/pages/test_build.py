@@ -167,7 +167,7 @@ class Case(unittest.TestCase):
             names.add(key)
             names |= {part.lower() for name in wing["name"].values() for part in name.split() if len(part) > 3}
         for name in ("template.html", "build.py", "chart.py", "make_pictures.py", "css/page.css", "css/chart.css", "css/list.css",
-                     "css/scale.css", "css/several.css"):
+                     "css/scale.css", "css/several.css", "css/ask.css"):
             text = (HERE / name).read_text(encoding="utf-8").lower()
             for word in names:
                 self.assertNotIn(word, text, f"{name} names a wing: {word}")
@@ -2236,8 +2236,8 @@ class Case(unittest.TestCase):
             self.skipTest("no page gives an answer line for its share picture")
 
     def plate_page(self):
-        """The first page whose share picture shows its marked work itself (page.og_image.plate)."""
-        return next((p for p in self.pages if self.data("en", p)["page"]["og_image"].get("plate")), None)
+        """The first page whose share picture shows its marked work itself (page.og_image.plate) at the person's scale."""
+        return next((p for p in self.pages if self.data("en", p)["page"]["og_image"].get("plate") and "figure" in self.data("en", p)["top"]), None)
 
     def test_a_sizes_share_picture_shows_its_marked_work_and_is_the_pages_picture(self):
         page = self.plate_page()
@@ -2723,9 +2723,9 @@ class Case(unittest.TestCase):
         # one), its words stay
         for other, lang in ((o, l) for o in self.pages if o != self.works_page for l in ("en", "de")):
             data = self.data(lang, other)
-            for b in (b for b in data["blocks"] if "paras" in b):
-                b["paras"] = ["".join(x if isinstance(x, str) else x["text"] for x in p) if isinstance(p, list) and
-                              any(isinstance(x, dict) and x.get("page") == self.works_page for x in p) else p for p in b.get("paras", [])]
+            for b, field in ((b, k) for b in data["blocks"] for k in ("paras", "known", "end") if k in b):
+                b[field] = ["".join(x if isinstance(x, str) else x["text"] for x in p) if isinstance(p, list) and
+                            any(isinstance(x, dict) and x.get("page") == self.works_page for x in p) else p for p in b[field]]
             for b in (b for b in data["blocks"] if "links" in b):
                 b["links"] = [x for x in b["links"] if x.get("page") != self.works_page]
             self.save(lang, data, other)
@@ -2736,6 +2736,116 @@ class Case(unittest.TestCase):
         self.assertEqual(re.findall(r'<link rel="alternate" hreflang="([\w-]+)"', text), ["en", "x-default"])
         # its way to German leads to the wing's German page
         self.assertRegex(text, r'href="(?:\.\./)+%s/" lang="de" hreflang="de"' % re.escape(wings[key]["page"]["de"].strip("/")))
+
+    # ---- a page of questions: its answer first, the list of its questions, each answer first, its FAQ data ----
+
+    def ask_page(self):
+        """The first page whose first part lists its questions (top.jump)."""
+        return next((p for p in self.pages if self.data("en", p)["top"].get("jump")), None)
+
+    def test_a_page_of_questions_answers_first_and_lists_its_questions_in_its_first_part(self):
+        page = self.ask_page()
+        if not page:
+            self.skipTest("no page lists its questions in its first part")
+        out, written = self.build()
+        for path in written:
+            data, lang = self.page_of(path)
+            if data["page"]["id"] != self.data("en", page)["page"]["id"]:
+                continue
+            text = path.read_text(encoding="utf-8")
+            own = self.own_part(text)
+            top = re.search(r'<header class="sp-top\b.*?</header>', own, flags=re.S).group(0)
+            # the first part: the answer, the door, then the list of the page's parts, and no picture
+            self.assertNotIn("<img", top)
+            self.assertLess(top.index('class="sp-answer"'), top.index('data-door="top"'))
+            self.assertLess(top.index('data-door="top"'), top.index('class="sp-toc sp-toc--top"'))
+            listed = re.findall(r'<li><a href="#([\w-]+)">', top)
+            self.assertEqual(listed, [b["id"] for b in data["blocks"] if b.get("nav")])
+            # its text has no column beside it: one list only
+            self.assertEqual(own.count('class="sp-toc'), 1)
+            self.assertIn('class="sp-grid sp-grid--solo"', own)
+            asked = [b for b in data["blocks"] if b["type"] == "question"]
+            self.assertGreaterEqual(len(asked), 2)
+            # the words as shown: a name's span adds no space
+            bare = lambda markup: html.unescape(re.sub(r"<[^>]+>", "", markup)).replace("\u00a0", " ")
+            for b in asked:
+                section = re.search(r'<section class="sp-sec sp-prose sp-ask" id="%s">(.*?)</section>' % b["id"], own, flags=re.S).group(1)
+                # the heading, then the answer before anything else, then what is known and what is not
+                first = re.search(r"<h2>.*?</h2>\s*<p class=\"([\w_-]+)\">(.*?)</p>", section, flags=re.S)
+                self.assertEqual(first.group(1), "sp-ask__a")
+                self.assertEqual(bare(first.group(2)), b["answer"].replace("\u00a0", " "))
+                if b.get("open"):
+                    self.assertLess(section.index("sp-ask__a"), section.index("sp-ask__open"))
+            # the FAQ data: the first heading with the first screen's answer, then each question with its answer, each
+            # shown on the page
+            graph = json.loads(re.search(r'<script type="application/ld\+json">(.*?)</script>', text, flags=re.S).group(1).replace("<\\/", "</"))["@graph"]
+            faq = next(n for n in graph if n.get("@type") == "FAQPage")
+            want = [(data["top"]["h1"], data["top"]["answer"])] + [(b["h"], b["answer"]) for b in asked]
+            nb = lambda s: s.replace(" ", " ")
+            self.assertEqual([(nb(q["name"]), nb(q["acceptedAnswer"]["text"])) for q in faq["mainEntity"]], want)
+            flat = re.sub(r"\s+", " ", bare(own))
+            for q, a in want:
+                self.assertIn(re.sub(r"\s+", " ", q), flat)
+                self.assertIn(re.sub(r"\s+", " ", a.replace(" ", " ")), flat)
+            # the page's picture is its share picture, which shows the plate the page's words call a reproduction
+            frame = next(n for n in graph if n.get("@id", "").endswith("#frame"))
+            self.assertTrue(frame["url"].endswith("/" + data["page"]["og_image"]["file"].replace("{lang}", lang)))
+            # every way into the walk opens the wing at the page's stop: the top, the sentence in a section, the end
+            wing = self.wings()[data["page"]["wing"]]
+            door = re.escape(wing["door"][lang].replace("&", "&amp;") + "#s=" + data["page"]["stop"])
+            for place in ("top", "item", "end"):
+                self.assertRegex(text, r'<a (?:class="(?:door|more)" )?href="%s"[^>]*data-door="%s"' % (door, place))
+
+    def test_a_plate_under_a_question_carries_the_line_its_record_asks_for(self):
+        page = self.ask_page()
+        if not page:
+            self.skipTest("no page lists its questions in its first part")
+        for lang in ("en", "de"):
+            data = self.data(lang, page)
+            block = next(b for b in data["blocks"] if b.get("pic"))
+            block["pic"]["src"] = [p.rsplit(". ", 1)[0] + "." if isinstance(p, str) and p.count(". ") else p for p in block["pic"]["src"]]
+            self.save(lang, data, page)
+        self.fails(r"carries '(?:Non-profit cultural use|Kulturelle Nutzung ohne Gewinnabsicht)\.' in its source line")
+
+    def test_a_link_into_the_walk_inside_a_sentence_names_a_stop_of_the_facts(self):
+        page = self.ask_page()
+        if not page:
+            self.skipTest("no page lists its questions in its first part")
+        for lang in ("en", "de"):
+            data = self.data(lang, page)
+            for b in data["blocks"]:
+                for p in b.get("end", []):
+                    for x in p if isinstance(p, list) else []:
+                        if isinstance(x, dict) and "stop" in x:
+                            x["stop"] = "nowhere"
+            self.save(lang, data, page)
+        self.fails(r"is 'nowhere', which is no stop of the wing's facts")
+
+    def test_a_list_of_one_languages_entries_stands_in_that_language_alone(self):
+        page = self.ask_page()
+        if not page:
+            self.skipTest("no page lists its questions in its first part")
+        data = self.data("en", page)
+        block = next(b for b in data["blocks"] if b["type"] == "question")
+        block["links"] = [{"text": "One way on", "page": page, "only": "en"}]
+        self.save("en", data, page)
+        out, written = self.build()
+        self.assertEqual(len(written), 2 * len(self.pages))
+        data["blocks"][0]["links"][0]["only"] = "de"
+        self.save("en", data, page)
+        shutil.rmtree(out)
+        self.fails(r"an entry marked only 'de' stands in the en file")
+
+    def test_a_list_of_questions_needs_its_parts_in_the_list(self):
+        page = self.ask_page()
+        if not page:
+            self.skipTest("no page lists its questions in its first part")
+        for lang in ("en", "de"):
+            data = self.data(lang, page)
+            for b in data["blocks"]:
+                b["nav"] = ""
+            self.save(lang, data, page)
+        self.fails(r"top\.jump lists the page's questions, and no block names its place in the list")
 
     # ---- a page about one wall: its drawing, its doors to the stop, its links ----
 

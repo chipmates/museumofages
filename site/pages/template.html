@@ -84,11 +84,26 @@
       </nav>
 <!--@ toc_item -->
           <li><a href="#{{id}}">{{nav}}</a></li>
+<!--@ toc_top -->
+      <!-- A page of questions lists them in its first part, after the door: on a phone the answer and the way in come
+           first, a desktop sets the list beside the answer, where another page hangs its picture. -->
+      <nav class="sp-toc sp-toc--top" aria-label="{{labels.toc}}">
+        <h2 class="key sp-toc__h">{{labels.toc}}</h2>
+        <ol>
+{{html.toc}}
+        </ol>
+      </nav>
 <!--@ figure -->
 <figure class="plate sp-plate{{attr.plate}}">
   <div class="hang">{{html.picture}}</div>
   <!-- The heading above the plate is its title: the label says what kind of thing the picture shows. -->
   <figcaption class="label sp-plate__label">{{html.title}}<span class="label__what"><span class="tag">{{tag}}<span class="vh">:</span></span> {{what}}</span>{{html.src}}</figcaption>
+</figure>
+<!--@ figure_titled -->
+<figure class="plate sp-plate{{attr.plate}}">
+  <div class="hang">{{html.picture}}</div>
+  <!-- A plate whose title line says what it shows and that it is a reproduction: no kind word under it. -->
+  <figcaption class="label sp-plate__label"><span class="label__title">{{title}}</span>{{html.src}}</figcaption>
 </figure>
 <!--@ row -->
 <div><dt class="key">{{label}}</dt><dd>{{v}}</dd></div>
@@ -248,6 +263,25 @@
 {{html.paras}}
 {{html.pic}}{{html.links}}
 </section>
+<!--@ block:question -->
+<section class="sp-sec sp-prose sp-ask" id="{{id}}">
+  <h2>{{h}}</h2>
+  <p class="sp-ask__a">{{answer}}</p>
+{{html.pic}}{{html.known}}{{html.open}}{{html.end}}{{html.links}}
+</section>
+<!--@ ask_open -->
+  <p class="sp-ask__open">{{text}}</p>
+<!--@ block:myths -->
+<section class="sp-sec sp-prose sp-notes sp-myths" id="{{id}}">
+  <h2>{{h}}</h2>
+  <p class="sp-intro">{{intro}}</p>
+  <dl class="sp-dir sp-dir--long">
+{{html.rows}}
+  </dl>
+{{html.end}}
+</section>
+<!--@ myth_row -->
+<div><dt>{{name}}</dt><dd><p class="sp-myths__claim">{{claim}}</p><p>{{known}}</p></dd></div>
 <!--@ block:chart -->
 <section class="sp-sec sz-sec" id="{{id}}">
   <h2>{{h}}</h2>

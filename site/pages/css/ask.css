@@ -1,0 +1,38 @@
+/* A page of questions (build.py: blocks question and myths, top.jump): set inline after page.css and chart.css, on
+   those pages only. Colours: only the site's roles. */
+
+/* The list of the page's questions stands in its first part, after the door. Each entry a thumb's height. */
+.sp-toc--top{margin-top:6px}
+.sp-toc--top a{min-height:44px;color:var(--ink)}
+/* Its text has no column beside it. */
+.sp-grid--solo{margin-top:24px}
+
+/* A question: the answer first, a step up and in full ink, then what is known, then what is not, set apart by a
+   quiet rule at its left. German display text never hyphenates. */
+/* A name in a question's heading stays on one line: "Mona / Lisa" read as two words. */
+.sp-ask h2 .nh{white-space:nowrap}
+.sp-ask__a{margin-top:12px;max-width:38rem;font-size:1.1875rem;line-height:1.42;color:var(--ink);text-wrap:pretty}
+:lang(de) .sp-ask__a{hyphens:manual;-webkit-hyphens:manual}
+.sp-ask__open{margin-top:16px;max-width:38rem;padding-left:14px;border-left:2px solid var(--hair-strong);color:var(--ink-soft)}
+.sp-ask__open a{display:inline-block;padding:11px 0;margin:-11px 0}
+/* A painting keeps its own shape, hung narrower than the column; its label runs as wide as the words. */
+.sp-ask .sp-plate--whole{max-width:36rem}
+.sp-ask .sp-plate--whole .hang{max-width:16.25rem}
+.sp-ask .sp-plate__label .label__title{display:block}
+
+/* The myths: one ledger, a name, what people say and what good sources say of it. */
+.sp-myths dd p+p{margin-top:6px}
+.sp-myths__claim{color:var(--ink-soft)}
+.sp-myths .sp-dir+.sp-does{margin-top:18px}
+/* Inside the ledger a balanced paragraph leaves a gap at its edge: fill the lines, as the notes' panel does. */
+@media (max-width:599px){:where(.sp-myths .sp-dir) dd p{text-wrap:pretty}}
+
+@media (min-width:960px){
+  .sp-top>.sp-toc--top{grid-column:7/13;grid-row:1/3;position:static;align-self:start;margin:0;padding:14px 20px 6px}
+  .sp-toc--top a{min-height:44px;padding:6px 0;margin-left:0;border-left:0;font-size:.9375rem;color:var(--ink)}
+  .sp-grid--solo{margin-top:64px}
+  /* the reading column under the answer's, as wide as the models' text column */
+  .sp-grid--solo .sp-body__main{grid-column:1/8}
+  .sp-ask__a{font-size:1.375rem;line-height:1.38}
+  .sp-ask .sp-plate--whole .hang{max-width:20rem}
+}

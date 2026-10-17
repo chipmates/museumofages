@@ -1,0 +1,334 @@
+{
+  "_note": "THE WORDS of the Mona Lisa page, English. Poured from the writer's WORDS file of round 1 word for word, slot by slot. The page answers the questions people ask about the painting, each a section with its answer first (question: answer, known, open), then the myths (myths). The first screen is the answer, the door and the list of the questions (top.jump); the first heading with its answer and every question with its answer make the page's FAQ data (top.faq). The plate's source line is the paintings page's, as its record asks. The share picture's alt is the plate's. No em dash, no en dash, no semicolon.",
+  "page": {
+    "id": "vinci-mona-lisa",
+    "wing": "vinci",
+    "topic": "mona-lisa",
+    "stop": "picture-room-lisa",
+    "published": null,
+    "og_image": {
+      "file": "vinci-mona-lisa-og-{lang}-1200x630.png",
+      "width": 1200,
+      "height": 630,
+      "plate": "vinci-plate-mona-lisa"
+    }
+  },
+  "pics": {
+    "mona-lisa": {
+      "stem": "vinci-plate-mona-lisa",
+      "widths": [
+        320,
+        640
+      ],
+      "sizes": "(min-width: 960px) 320px, 260px"
+    }
+  },
+  "meta": {
+    "title": "Who was the Mona Lisa? Facts and answers | Museum of Ages",
+    "description": "Who was the Mona Lisa? Lisa Gherardini of Florence, named in a note of 1503. Why it is so famous, the 1911 theft, where it hangs and what it is worth.",
+    "og_title": "Who was the Mona Lisa? Facts and answers",
+    "og_image_alt": "A reproduction of the Mona Lisa: a young woman in dark clothes sits half turned toward us, her hands resting one on the other, with hazy hills, water and a winding road far behind her."
+  },
+  "labels": {
+    "crumbs": "You are here",
+    "crumb_home": "Museum",
+    "crumb_here": "The Mona Lisa",
+    "toc": "On this page"
+  },
+  "top": {
+    "h1": "Who was the Mona Lisa?",
+    "answer": "The woman in the Mona Lisa was Lisa Gherardini, who married Francesco del Giocondo, a silk merchant in Florence. The Louvre names her, and a note from October 1503 makes it firm: a clerk in Florence wrote that Leonardo was then painting Lisa del Giocondo's head. Leonardo da Vinci began the portrait around 1503 and kept working on it until he died in 1519. It hangs in the Louvre in Paris.",
+    "jump": true,
+    "faq": true,
+    "door": {
+      "text": "Visit her in the wing",
+      "note": "Free entry, no account.",
+      "leads": "This door takes you into the Leonardo wing, to her stop, “A woman called Lisa”."
+    }
+  },
+  "blocks": [
+    {
+      "type": "question",
+      "id": "who",
+      "nav": "Who she was",
+      "h": "Who was Lisa Gherardini?",
+      "answer": "A Florentine woman, born in 1479 into an old family with land in the Chianti, who died in 1542. In 1495 she married Francesco del Giocondo, a silk merchant, and they had six children, the Louvre says.",
+      "pic": {
+        "pic": "mona-lisa",
+        "shape": "whole",
+        "title": "Mona Lisa, about 1503 to 1519. Leonardo da Vinci. Musée du Louvre, Paris. A reproduction.",
+        "alt": "A reproduction of the Mona Lisa: a young woman in dark clothes sits half turned toward us, her hands resting one on the other, with hazy hills, water and a winding road far behind her.",
+        "src": [
+          "A high-definition capture by the C2RMF (Centre de recherche et de restauration des musées de France), on Wikimedia Commons since 2011, cropped and relevelled there. Public domain work. Reproduction from ",
+          {
+            "text": "Wikimedia Commons",
+            "href": "https://commons.wikimedia.org/wiki/File:Mona_Lisa,_by_Leonardo_da_Vinci,_from_C2RMF_retouched.jpg"
+          },
+          ". The museum labels the reproduction, not the painting. Non-profit cultural use."
+        ]
+      },
+      "known": [
+        "That she is the woman in the painting is firm: the Louvre names her, and it calls the doubts raised since the 20th century a false problem. The best evidence is a note written in October 1503 by Agostino Vespucci, a clerk in Florence, in a volume of Cicero's letters printed in 1477. Next to a passage about the ancient painter Apelles, who finished only the head and chest of a Venus, he wrote that Leonardo does the same in all his paintings, as in his head of Lisa del Giocondo. Heidelberg University Library holds the book: a librarian came across the note there in 2005, and the university announced it in 2008. Her names are simple to explain: Mona is short for Madonna, my lady, and La Gioconda, in French La Joconde, is her husband's family name in its female form."
+      ],
+      "open": "Little more is known about her life, the Louvre says, despite long searches in the archives. Vasari wrote in 1550 that her husband asked Leonardo to paint her, which the Louvre thinks may be so, and nobody knows whether she ever saw the portrait finished.",
+      "end": [
+        [
+          "In our Leonardo wing she has a stop of her own, ",
+          {
+            "text": "“A woman called Lisa”",
+            "stop": "picture-room-lisa"
+          },
+          ", with a reproduction close to its real size."
+        ]
+      ]
+    },
+    {
+      "type": "question",
+      "id": "famous",
+      "nav": "Why so famous",
+      "h": "Why is the Mona Lisa so famous?",
+      "answer": "It was admired from the start, but a crime made it the most famous painting in the world: the theft of 1911. The Louvre itself says the theft spread its fame around the globe, and above all among ordinary people.",
+      "known": [
+        "The young Raphael learned from it, and in 1550 Giorgio Vasari praised it in his Lives of the Artists, though he had never seen it. It belonged to the French kings and went on show in the Louvre after the Revolution, yet it stayed one famous picture among many: between 1851 and 1880 copyists in the Louvre painted it 71 times, and a Murillo 197 times, the historian Donald Sassoon reports. In the same century writers such as Théophile Gautier and Walter Pater turned her into a beauty with a dangerous secret. Then it vanished, in August 1911: crowds came to stare at the empty wall, and the news of its recovery in December 1913 made the front pages in France and America. Later it went on tour: in 1963 about 1.75 million people saw it in Washington and New York in just over six weeks."
+      ],
+      "open": "How much the theft alone did is still argued. Sassoon sees many causes adding up, from the kings' collection and the Louvre to the tours, mass tourism and advertising."
+    },
+    {
+      "type": "question",
+      "id": "theft",
+      "nav": "The theft",
+      "h": "When was the Mona Lisa stolen?",
+      "answer": "On 21 August 1911, from the Louvre. The thief was Vincenzo Peruggia, an Italian glazier who had worked at the museum, and the painting turned up in Florence in December 1913.",
+      "known": [
+        "It was a Monday, when the Louvre was closed in those years, as the museum's own booklet on the theft tells it. Nobody noticed until the next day, when the painter Louis Béroud came to paint it and found it gone. The poet Guillaume Apollinaire spent a week in prison as a suspect, and Picasso was drawn in too, but neither was the thief. Peruggia had worked for the firm that fitted protective glass to the Louvre's paintings, and he kept the panel with him in Paris for two years. In late 1913 he offered it to an art dealer in Florence, Alfredo Geri, who called in the director of the Uffizi, Giovanni Poggi. On 11 December the two inspected the panel at Peruggia's hotel, and on 12 December the police arrested him on the hotel stairs. He said he had wanted to give back to Italy a painting stolen from it, but Leonardo had taken it to France himself. Italy showed it in Florence and Rome before it went back to Paris, and on 5 June 1914 a court in Florence sentenced Peruggia to a year and fifteen days."
+      ],
+      "open": "How he got the panel out of the building we know only from his own later account. So the popular story that he hid overnight in a cupboard is not settled fact."
+    },
+    {
+      "type": "question",
+      "id": "where",
+      "nav": "Where it hangs",
+      "h": "Where is the Mona Lisa?",
+      "answer": "In the Louvre in Paris, in the Salle des États, the largest room in the palace: Denon wing, level 1, room 711. It has hung in this room since 1966.",
+      "known": [
+        [
+          "Leonardo began it in Florence and brought it with him when he settled in France in 1516. Since 2005 it has stood alone in the middle of the room, in a glass case that guards it and keeps temperature and humidity steady, because the poplar panel has warped and cracked. In 2019 the Louvre found that four in five of its visitors come to see it, and that they spend about 50 seconds looking at it. It last left France in 1974, for Tokyo and Moscow, and since then it has stayed in the Louvre because it is so fragile. The Louvre is closed on Tuesdays, and ",
+          {
+            "text": "its own site",
+            "href": "https://www.louvre.fr/en/visit/hours-admission"
+          },
+          " has the hours and the ticket prices."
+        ]
+      ],
+      "open": "It may move. In January 2025 France's president announced a room of its own with a separate way in, by 2031 at the latest, and in May 2026 the Louvre picked its architects but named no opening date.",
+      "end": [
+        [
+          "How big it really is, next to a person: ",
+          {
+            "text": "How big is the Mona Lisa?",
+            "page": "sizes"
+          }
+        ]
+      ]
+    },
+    {
+      "type": "question",
+      "id": "worth",
+      "nav": "What it is worth",
+      "h": "How much is the Mona Lisa worth?",
+      "answer": "Nobody can say, because it can never be sold. The figure you often read, 100 million US dollars, was an insurance valuation from 1962, and Guinness World Records still lists it as the highest ever for a painting.",
+      "known": [
+        "That figure was set for the painting's trip to Washington and New York in 1962 and 1963. Guinness adds that the insurance was never taken out, because the tightest security cost less than the premiums would have. The painting belongs to the French state, and French law, article L. 451-5 of the Code du patrimoine, makes museum collections owned by public bodies inalienable: they cannot be sold or given away. Long before the record, an estimate of 1849 put it at 90,000 francs, below several paintings by Raphael. Today it is not insured at all, Guinness wrote in 2026."
+      ],
+      "open": "No valuation of the painting itself exists. Even Guinness, which keeps the 1962 record, says the painting has never been valued."
+    },
+    {
+      "type": "question",
+      "id": "real",
+      "nav": "Is it the real one",
+      "h": "Is the Mona Lisa in the Louvre the real one?",
+      "answer": "Yes. The painting behind the glass is Leonardo's original, and the Louvre follows its path from his hands to the French kings and into the museum.",
+      "known": [
+        "When it turned up in 1913, the Uffizi's director, Giovanni Poggi, examined the panel and declared it Leonardo's. More than a hundred old copies are known, the Louvre says. The one in the Prado in Madrid was painted in Leonardo's own workshop, beside the original as experts think, and both museums accept it as the earliest known copy. In 2011 and 2012 restorers took a later black overpaint off it and found the scenery behind her, and its colours are far brighter than those of the original, which lies under yellowed varnish. A foundation in Zurich claims that another picture, the Isleworth Mona Lisa, is an earlier version by Leonardo, but leading experts reject it: the Leonardo scholar Martin Kemp points out that it is on canvas, and Leonardo is not known to have painted on canvas."
+      ],
+      "open": "Who painted the Prado copy is not known: Leonardo's pupils Salaì and Melzi have been named, and other experts doubt both. Where the Isleworth picture was before 1913 is unknown, even by the foundation's own account.",
+      "end": [
+        [
+          "The Mona Lisa among his other works, with how sure each one is his: ",
+          {
+            "text": "Leonardo da Vinci's paintings",
+            "page": "paintings"
+          },
+          "."
+        ]
+      ]
+    },
+    {
+      "type": "myths",
+      "id": "myths",
+      "nav": "Myths and claims",
+      "h": "Myths and claims",
+      "intro": "Some things people say about the painting are claims, and some are myths. Each is marked as what it is, with what good sources say.",
+      "items": [
+        {
+          "name": "A hidden secret",
+          "claim": "A popular claim: the painting hides a secret.",
+          "known": "The Louvre calls that an absurd myth, born of 19th-century writers' fantasies. Her husband's name, Giocondo, means happy in Italian, and the Louvre suggests the smile may play on it."
+        },
+        {
+          "name": "Letters hidden in her eyes",
+          "claim": "In 2010 the Italian researcher Silvano Vinceti claimed that tiny letters are hidden in her eyes, LV in the right one.",
+          "known": "It remains a claim. The Louvre's own text on the painting counts hidden secrets as a myth."
+        },
+        {
+          "name": "She is Leonardo himself",
+          "claim": "In 1987 the computer artist Lillian Schwartz claimed the face is partly Leonardo's own, after matching it on screen with a mirrored drawing thought to be his self-portrait.",
+          "known": "Even her own collaborator did not think this proved anything, and art historians were sceptical. The note of 1503 names the sitter: Lisa."
+        },
+        {
+          "name": "Her eyes follow you",
+          "claim": "Her eyes follow you around the room, people say.",
+          "known": "That effect is real for portraits that look straight out, but not for her. In a 2019 study at Bielefeld University, viewers saw her gaze turned about 15 degrees to their right on average, too far off to feel looked at."
+        },
+        {
+          "name": "Her missing eyebrows",
+          "claim": "She once had eyebrows: in 2007 the engineer Pascal Cotte claimed that his high-resolution scans showed a trace of the left one.",
+          "known": "Today she has no visible eyebrows or lashes. Vasari praised her eyebrows in 1550, but he never saw the painting, so nobody knows for sure."
+        },
+        {
+          "name": "Napoleon took it from Italy",
+          "claim": "A claim the thief of 1911 believed: Napoleon stole the painting from Italy.",
+          "known": "No. It came to France with Leonardo in 1516, long before Napoleon, and in 1518 the French king very probably paid for it. Napoleon only kept it in his bedroom for a while, the historian Donald Sassoon writes."
+        }
+      ],
+      "end": [
+        [
+          "His life, and the whole wing: ",
+          {
+            "text": "Leonardo da Vinci",
+            "wing": ""
+          },
+          "."
+        ]
+      ]
+    },
+    {
+      "type": "sources",
+      "id": "sources",
+      "nav": "",
+      "h": "Sources",
+      "intro": "The facts come from the Louvre (the painting's own record, its pages on the room and its booklet on the theft), Heidelberg University and its library, the Library of Congress, the State Archive of Florence, Guinness World Records, the French Ministry of Culture, Bielefeld University, Vasari's Lives of 1550 as the Louvre quotes them, the historian Donald Sassoon, and The Art Newspaper on the Prado copy, reporting the Prado and the Louvre.",
+      "notes": [
+        "The page relies on these, all read on 17 October 2026, the Florence records on 21 September 2026:"
+      ],
+      "read": [
+        {
+          "text": "Musée du Louvre, the painting's collection record",
+          "href": "https://collections.louvre.fr/en/ark:/53355/cl010062370"
+        },
+        {
+          "text": "Musée du Louvre, the Salle des États",
+          "href": "https://www.louvre.fr/en/explore/the-palace/from-the-mona-lisa-to-the-wedding-feast-at-cana"
+        },
+        {
+          "text": "Musée du Louvre, the reopening of the Salle des États, 2019",
+          "href": "https://presse.louvre.fr/reopening-of-the-newly-renovated-salle-des-etatsbr-the-emmona-lisa-em-back-in-its-rightful-place/"
+        },
+        {
+          "text": "Musée du Louvre, the booklet on the theft, 2021 (in French)",
+          "href": "https://mini-site.louvre.fr/trimestriel/2021/Vol-de-La-Joconde/3/"
+        },
+        {
+          "text": "Musée du Louvre, the architecture competition, May 2026 (in French)",
+          "href": "https://www.louvre.fr/decouvrir/vie-du-musee/concours-international-d-architecture-louvre-nouvelle-renaissance"
+        },
+        {
+          "text": "Musée du Louvre, hours and admission",
+          "href": "https://www.louvre.fr/en/visit/hours-admission"
+        },
+        {
+          "text": "Élysée, the speech at the Louvre of 28 January 2025 (in French)",
+          "href": "https://www.elysee.fr/emmanuel-macron/2025/01/28/pour-la-nouvelle-renaissance-du-louvre"
+        },
+        {
+          "text": "Heidelberg University, press release of 14 January 2008",
+          "href": "https://www.uni-heidelberg.de/press/news/press552e.html"
+        },
+        {
+          "text": "Heidelberg University, Veit Probst on the note, Ruperto Carola 3/2008 (in German)",
+          "href": "https://www.uni-heidelberg.de/presse/ruca/ruca08-3/mona.html"
+        },
+        {
+          "text": "Archivio di Stato di Firenze, the Peruggia records of December 1913 (in Italian)",
+          "href": "https://archiviodistatofirenze.cultura.gov.it/asfi/mostre/vincenzo-peruggia"
+        },
+        {
+          "text": "Library of Congress, research guide on the theft",
+          "href": "https://guides.loc.gov/chronicling-america-theft-mona-lisa"
+        },
+        {
+          "text": "Donald Sassoon, “The Mona Lisa”, Prospect, 2001",
+          "href": "https://www.prospectmagazine.co.uk/essays/56325/the-mona-lisa"
+        },
+        {
+          "text": "Guinness World Records, highest insurance valuation for a painting",
+          "href": "https://www.guinnessworldrecords.com/world-records/highest-insurance-valuation-for-a-painting"
+        },
+        {
+          "text": "Guinness World Records, most valuable object stolen",
+          "href": "https://www.guinnessworldrecords.com/world-records/65643-most-valuable-object-stolen"
+        },
+        {
+          "text": "Guinness World Records, record-breaking works of art, April 2026",
+          "href": "https://www.guinnessworldrecords.com/news/2026/4/record-breaking-works-of-art-that-have-shaped-our-world-from-da-vinci-to-banksy"
+        },
+        {
+          "text": "French Ministry of Culture, the museums glossary (in French)",
+          "href": "https://www.culture.gouv.fr/thematiques/musees/Les-musees-en-France/les-musees-de-france/dico-des-musees"
+        },
+        {
+          "text": "The Art Newspaper, 1 February 2012, on the Prado copy",
+          "href": "https://www.theartnewspaper.com/2012/02/01/earliest-copy-of-mona-lisa-found-in-prado"
+        },
+        {
+          "text": "The Art Newspaper, 28 September 2021, on the Prado copy",
+          "href": "https://www.theartnewspaper.com/2021/09/28/leonardos-unidentified-assistantwho-painted-the-prados-mona-lisaalso-copied-saint-anne-and-the-salvator-mundi-new-research-suggests"
+        },
+        {
+          "text": "swissinfo.ch, 15 February 2013, on the Isleworth claim",
+          "href": "https://www.swissinfo.ch/eng/culture/experts-query-new-proof-for-early-mona-lisa/34999346"
+        },
+        {
+          "text": "Bielefeld University, on her gaze, 2019",
+          "href": "https://blogs.uni-bielefeld.de/blog/uninews/entry/myth_of_mona_lisa_s"
+        },
+        {
+          "text": "The Henry Ford, on the “Mona Leo” theory",
+          "href": "https://www.thehenryford.org/collections/explore/articles/lillian-schwartz-the-mona-leo-theory"
+        },
+        {
+          "text": "Live Science, 2010, on the claim of hidden letters",
+          "href": "https://www.livescience.com/32890-the-eyes-have-it-are-there-secret-codes-in-the-mona-lisa.html"
+        },
+        {
+          "text": "HeraldNet, 21 October 2007, on the eyebrow claim",
+          "href": "https://www.heraldnet.com/2007/10/21/nation-world-briefly-mona-lisa-once-had-eyebrows-and-eyelashes/"
+        }
+      ],
+      "contact": "If a date, a name or a sentence is wrong, tell us and we will correct it.",
+      "contact_link": "To the legal notice",
+      "what_link": "What this museum is"
+    },
+    {
+      "type": "close",
+      "id": "enter",
+      "nav": "",
+      "h": "Visit her in the wing",
+      "p": "This door takes you into the Leonardo wing, straight to her stop in the picture room, the second of the walk. Her reproduction hangs there among his other pictures.",
+      "door": {
+        "text": "Enter the museum",
+        "note": "Free entry, no account."
+      }
+    }
+  ]
+}
