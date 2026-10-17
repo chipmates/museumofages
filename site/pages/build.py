@@ -1315,7 +1315,7 @@ def jsonld(lang, data, urls, pics, site, wing, alternate_name, frame, folders, t
     pub = {"@id": f"{ORIGIN}/#publisher"}
     publisher = site or {
         "@type": "NGO", "@id": pub["@id"], "name": "ChipMates gemeinnützige GmbH",
-        "legalName": "ChipMates gemeinnützige GmbH"}
+        "legalName": "ChipMates gemeinnützige GmbH", "url": f"{ORIGIN}/"}
     if frame.get("still"):
         found = next((f / frame["still"] for f in folders if (f / frame["still"]).is_file()), None)
         # a page's own drawing (png) or a picture the site shows elsewhere (webp)

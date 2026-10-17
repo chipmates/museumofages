@@ -4087,6 +4087,21 @@ class SiteWide(unittest.TestCase):
         self.assertGreaterEqual(found["topic"], 40)
         self.assertGreaterEqual(found["hub"], 4)
 
+    def test_the_publisher_names_its_address_and_its_sign(self):
+        found = 0
+        for path, text in self.pages.items():
+            for node in _graph(text):
+                if not str(node.get("@id", "")).endswith("#publisher") or node.get("@type") != "NGO":
+                    continue
+                found += 1
+                self.assertEqual(node["url"], "https://museumofages.org/", path)
+                self.assertRegex(node["logo"], r"^https://museumofages\.org/static/sign/[\w-]+\.png$", path)
+                logo = SITE_BUILT / node["logo"][len("https://museumofages.org/"):]
+                self.assertGreaterEqual(min(self.build.CHART.png_info(logo)[0]), 112, path)
+                # no link to the code
+                self.assertNotRegex(json.dumps(node), r"(?i)github|source|repositor")
+        self.assertGreaterEqual(found, 85)
+
     def test_a_pages_own_picture_carries_no_words(self):
         """The share card, with its heading in it, stays the link preview; the page's own picture (primaryImageOfPage,
         Article image) is one without words wherever the page has one."""

@@ -86,6 +86,8 @@ SIGN_CUTS = {"block": ("lockup-wall.svg", 32), "name": ("lockup-wall-name.svg", 
 ICONS = (("icon", 'sizes="32x32" type="image/png"', "tab-32.png", 32), ("icon", 'sizes="96x96" type="image/png"', "tab-96.png", 96),
          ("icon", 'type="image/svg+xml"', "tab.svg", None),
          ("apple-touch-icon", "", "home-180.png", 180))
+# The publisher's logo in the structured data: the home screen's picture of the sign (search asks for 112 px at least).
+PUBLISHER_LOGO = "home-180.png"
 # The empty icon the topic pages' own template carries: the build sets the site's icons in its place.
 EMPTY_ICON = '<link rel="icon" href="data:,">'
 # The museum app's own list of wings: an open wing's slug must stand in it. Read only, and only where it is there.
@@ -1508,8 +1510,10 @@ def check_picture_licences(out):
 
 
 def publisher():
+    # the logo is the sign the header draws, in its one served picture of at least 112 px (the home screen's); no link
+    # to the code
     return {"@type": "NGO", "@id": f"{ORIGIN}/#publisher", "name": "ChipMates gemeinnützige GmbH",
-            "legalName": "ChipMates gemeinnützige GmbH"}
+            "legalName": "ChipMates gemeinnützige GmbH", "url": f"{ORIGIN}/", "logo": f"{ORIGIN}/{STATIC}/sign/{PUBLISHER_LOGO}"}
 
 
 def imprint_lang(c):
