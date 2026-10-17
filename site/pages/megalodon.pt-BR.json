@@ -109,7 +109,7 @@
   "title": "Megalodon: tamanho de uns 16 m, talvez 20 m | Museum of Ages",
   "description": "Tamanho do megalodon: cerca de 16 m pela única coluna longa, os maiores talvez cerca de 20 m. Ao lado de uma pessoa, um tubarão-branco e uma baleia-azul.",
   "og_title": "Megalodon: tamanho de cerca de 16 m, talvez 20 m",
-  "og_image_alt": "Um tubarão de boca fechada, visto de lado, cinza-escuro com uma faixa mais clara no flanco, ao lado de uma pessoa cinza que parece minúscula perto dele.",
+  "og_image_alt": "O nosso megalodon visto de lado, com cerca de 16 m de comprimento, de boca fechada, cinza-escuro com uma faixa mais clara no flanco, ao lado de uma pessoa cinza de 1,70 m que parece minúscula perto dele.",
   "credit": "Museum of Ages, forma do corpo a partir de Shimada e outros 2025 (CC BY 4.0)"
  },
  "labels": {
@@ -126,13 +126,13 @@
  },
  "top": {
   "h1": "Qual era o tamanho do megalodon?",
-  "answer": "Cerca de 16 m. Esse é o comprimento do megalodon (ou megalodonte) cuja coluna vertebral longa, a única já encontrada, está guardada em Bruxelas. Os nossos 16 m são um pouco mais que nove pessoas de 1,70 m deitadas uma atrás da outra. Os maiores da espécie mediam talvez cerca de 20 m, a julgar pelos dentes.",
-  "answer_more": "O peso dele é controverso: mais ou menos 30 toneladas no modelo esbelto de 2025, e cerca do dobro no modelo mais robusto de 2022, porque ninguém conhece a forma do corpo dele.",
+  "answer": "O megalodon (ou megalodonte) tinha cerca de 16 m de comprimento, segundo a única coluna vertebral longa já encontrada, que está guardada em Bruxelas. Os nossos 16 m são um pouco mais que nove pessoas de 1,70 m deitadas uma atrás da outra. Os maiores da espécie mediam talvez cerca de 20 m, a julgar pelos dentes.",
+  "answer_more": "O peso do megalodon é controverso: mais ou menos 30 toneladas no modelo esbelto de 2025, e cerca do dobro no modelo mais robusto de 2022, porque ninguém conhece a forma do corpo dele.",
   "scale": {
    "pic": "side",
    "tag": "tag_made",
    "what": "O nosso megalodon ao lado de uma pessoa de 1,70 m, na mesma escala: cerca de 16 m de comprimento, o tamanho que a coluna de Bruxelas lhe dá.",
-   "alt": "Um tubarão de boca fechada, visto de lado, cinza-escuro com uma faixa mais clara no flanco, ao lado de uma pessoa cinza que parece minúscula perto dele.",
+   "alt": "O nosso megalodon visto de lado, com cerca de 16 m de comprimento, de boca fechada, cinza-escuro com uma faixa mais clara no flanco, ao lado de uma pessoa cinza de 1,70 m que parece minúscula perto dele.",
    "note": [
     "Reconstrução do próprio museu, construída em código a partir das medidas citadas e renderizada com o nosso próprio motor gráfico. Não é uma fotografia. A forma do corpo segue o modelo de Shimada e outros 2025 (",
     {
@@ -311,6 +311,10 @@
     {
      "term": "De 14 a 18 m",
      "text": "O método do dente. A coroa de um dente, ampliada para um corpo com as proporções do tubarão-branco. Assim, estudos de 1996 a 2019 chegaram a 14 a 18 m, e o American Museum of Natural History ainda diz mais ou menos 15 m. Segundo o estudo de 2025, essas regras dos dentes dão comprimentos curtos demais ou pouco confiáveis."
+    },
+    {
+     "term": "Cerca de 10 m",
+     "text": "Segundo relatos posteriores, o comprimento mais comum em um estudo de 2015 que calculou megalodons de todas as idades a partir dos dentes, incluindo os jovens. É um animal típico de qualquer idade, não um adulto, e o número se baseia no método do dente, acima."
     },
     {
      "term": "20 m",

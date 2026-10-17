@@ -109,7 +109,7 @@
   "title": "Megalodon size: about 16 m, perhaps 20 m | Museum of Ages",
   "description": "Megalodon size: about 16 m (52 ft) by the one long backbone found, the largest perhaps about 20 m. Compared with a person, a great white and a blue whale.",
   "og_title": "Megalodon size: about 16 m, perhaps 20 m",
-  "og_image_alt": "A shark with its mouth closed, seen from the side, dark grey with a paler band along the flank, beside a grey person who looks tiny next to it.",
+  "og_image_alt": "Our megalodon from the side, about 16 m (52 ft) long, mouth closed, dark grey with a paler band along the flank, beside a grey person 1.70 m tall who looks tiny next to it.",
   "credit": "Museum of Ages, body shape after Shimada and others 2025 (CC BY 4.0)"
  },
  "labels": {
@@ -126,13 +126,13 @@
  },
  "top": {
   "h1": "How big was megalodon?",
-  "answer": "About 16 m, or 52 feet. That is the megalodon whose backbone lies in Brussels, the only long one ever found. Our 16 m is a little over nine people of 1.70 m laid head to foot. The largest of its kind were perhaps about 20 m (66 feet), by their teeth.",
-  "answer_more": "Its weight is disputed: roughly 30 tonnes in the slim model of 2025, about twice that in the thicker model of 2022, because nobody knows the shape of its body.",
+  "answer": "Megalodon was about 16 m (52 ft) long, by the only long backbone ever found, which lies in Brussels. Our 16 m is a little over nine people of 1.70 m laid head to foot. The largest of its kind were perhaps about 20 m (66 feet), by their teeth.",
+  "answer_more": "Megalodon's weight is disputed: roughly 30 tonnes in the slim model of 2025, about twice that in the thicker model of 2022, because nobody knows the shape of its body.",
   "scale": {
    "pic": "side",
    "tag": "tag_made",
    "what": "Our megalodon beside a person 1.70 m tall, to one scale: about 16 m (52 ft) long, the length the backbone in Brussels gives it.",
-   "alt": "A shark with its mouth closed, seen from the side, dark grey with a paler band along the flank, beside a grey person who looks tiny next to it.",
+   "alt": "Our megalodon from the side, about 16 m (52 ft) long, mouth closed, dark grey with a paler band along the flank, beside a grey person 1.70 m tall who looks tiny next to it.",
    "note": [
     "The museum's own reconstruction, built in code from the cited measurements and rendered in our own engine. Not a photograph. The body shape follows the model of Shimada and others 2025 (",
     {
@@ -311,6 +311,10 @@
     {
      "term": "14 to 18 m (46 to 59 feet)",
      "text": "The tooth method. A tooth's crown, scaled up to a body with the great white's proportions. Studies from 1996 to 2019 got 14 to 18 m that way, and the American Museum of Natural History still says roughly 15 m. By the study of 2025, such tooth rules give lengths that are too short or unreliable."
+    },
+    {
+     "term": "About 10 m (33 ft)",
+     "text": "By later accounts, the most common length in a study of 2015 that worked out megalodons of every age from their teeth, the young ones included. That is a typical animal of any age, not a grown one, and it rests on the tooth method above."
     },
     {
      "term": "20 m (66 feet)",

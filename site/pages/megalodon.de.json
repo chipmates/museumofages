@@ -109,7 +109,7 @@
   "title": "Megalodon-Größe: etwa 16 m, vielleicht 20 m | Museum of Ages",
   "description": "Größe des Megalodons: etwa 16 m nach der einen langen Wirbelsäule, die größten vielleicht etwa 20 m. Größenvergleich mit Mensch, Weißem Hai und Blauwal.",
   "og_title": "Megalodon-Größe: etwa 16 m, vielleicht 20 m",
-  "og_image_alt": "Ein Hai mit geschlossenem Maul von der Seite, dunkelgrau mit einem helleren Band an der Flanke, neben einem grauen Menschen, der winzig daneben steht.",
+  "og_image_alt": "Unser Megalodon von der Seite, etwa 16 m lang, das Maul geschlossen, dunkelgrau mit einem helleren Band an der Flanke, neben einem grauen Menschen von 1,70 m, der winzig daneben steht.",
   "credit": "Museum of Ages, Körperform nach Shimada und anderen 2025 (CC BY 4.0)"
  },
  "labels": {
@@ -126,13 +126,13 @@
  },
  "top": {
   "h1": "Wie groß war der Megalodon?",
-  "answer": "Etwa 16 m. So lang war der Megalodon, von dem die einzige längere Wirbelsäule stammt, die je gefunden wurde. Sie liegt in Brüssel. Unsere 16 m sind gut neun Menschen von 1,70 m, der Länge nach hintereinandergelegt. Die größten seiner Art wurden nach ihren Zähnen vielleicht etwa 20 m lang.",
-  "answer_more": "Wie schwer er war, ist umstritten: etwa 30 t nach dem schlanken Modell von 2025, rund doppelt so viel nach dem dickeren von 2022, denn seine Körperform kennt niemand.",
+  "answer": "Der Megalodon war etwa 16 m lang, nach der einzigen längeren Wirbelsäule, die je gefunden wurde. Sie liegt in Brüssel. Unsere 16 m sind gut neun Menschen von 1,70 m, der Länge nach hintereinandergelegt. Die größten seiner Art wurden nach ihren Zähnen vielleicht etwa 20 m lang.",
+  "answer_more": "Wie schwer der Megalodon war, ist umstritten: etwa 30 t nach dem schlanken Modell von 2025, rund doppelt so viel nach dem dickeren von 2022, denn seine Körperform kennt niemand.",
   "scale": {
    "pic": "side",
    "tag": "tag_made",
    "what": "Unser Megalodon neben einem Menschen von 1,70 m, im selben Maßstab: etwa 16 m lang, die Länge, die sich aus der Wirbelsäule in Brüssel ergibt.",
-   "alt": "Ein Hai mit geschlossenem Maul von der Seite, dunkelgrau mit einem helleren Band an der Flanke, neben einem grauen Menschen, der winzig daneben steht.",
+   "alt": "Unser Megalodon von der Seite, etwa 16 m lang, das Maul geschlossen, dunkelgrau mit einem helleren Band an der Flanke, neben einem grauen Menschen von 1,70 m, der winzig daneben steht.",
    "note": [
     "Eine eigene Rekonstruktion des Museums, nach den genannten Maßen in Code gebaut und in unserer Engine gerendert. Kein Foto. Die Körperform folgt dem Modell von Shimada und anderen 2025 (",
     {
@@ -311,6 +311,10 @@
     {
      "term": "14 bis 18 m",
      "text": "Die Zahnmethode. Die Krone eines Zahns, mit dem Verhältnis beim Weißen Hai auf den Körper hochgerechnet. So kamen Studien von 1996 bis 2019 auf 14 bis 18 m, und das American Museum of Natural History nennt bis heute rund 15 m. Nach der Studie von 2025 liefern solche Zahnregeln zu kurze oder unzuverlässige Längen."
+    },
+    {
+     "term": "Etwa 10 m",
+     "text": "Nach späteren Darstellungen die häufigste Länge in einer Studie von 2015, die Megalodons jeden Alters aus ihren Zähnen berechnete, junge Tiere eingeschlossen. Das ist ein typisches Tier jeden Alters, kein ausgewachsenes, und die Zahl beruht auf der Zahnmethode oben."
     },
     {
      "term": "20 m",

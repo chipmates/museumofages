@@ -109,7 +109,7 @@
   "title": "Megalodón: tamaño de unos 16 m, quizá 20 m | Museum of Ages",
   "description": "¿Cuánto medía el megalodón? Unos 16 m según la única columna larga, los mayores quizá unos 20 m. Junto a una persona, un tiburón blanco y una ballena azul.",
   "og_title": "Megalodón: tamaño de unos 16 m, quizá 20 m",
-  "og_image_alt": "Un tiburón con la boca cerrada, visto de lado, gris oscuro con una franja más clara en el costado, junto a una persona gris que a su lado parece diminuta.",
+  "og_image_alt": "Nuestro megalodón visto de lado, de unos 16 m de largo, con la boca cerrada, gris oscuro con una franja más clara en el costado, junto a una persona gris de 1,70 m que a su lado parece diminuta.",
   "credit": "Museum of Ages, forma del cuerpo según Shimada y otros 2025 (CC BY 4.0)"
  },
  "labels": {
@@ -126,13 +126,13 @@
  },
  "top": {
   "h1": "¿Cuánto medía el megalodón?",
-  "answer": "Unos 16 m. Es la longitud del megalodón del que viene la única columna vertebral larga encontrada hasta hoy. Se guarda en Bruselas. Nuestros 16 m son algo más de nueve personas de 1,70 m tumbadas una detrás de otra. Los más grandes de su especie medían quizá unos 20 m, según sus dientes.",
-  "answer_more": "Su peso es discutido: más o menos 30 toneladas en el modelo delgado de 2025, y alrededor del doble en el modelo más robusto de 2022, porque nadie conoce la forma de su cuerpo.",
+  "answer": "El megalodón medía unos 16 m de largo, según la única columna vertebral larga encontrada hasta hoy. Se guarda en Bruselas. Nuestros 16 m son algo más de nueve personas de 1,70 m tumbadas una detrás de otra. Los más grandes de su especie medían quizá unos 20 m, según sus dientes.",
+  "answer_more": "El peso del megalodón es discutido: más o menos 30 toneladas en el modelo delgado de 2025, y alrededor del doble en el modelo más robusto de 2022, porque nadie conoce la forma de su cuerpo.",
   "scale": {
    "pic": "side",
    "tag": "tag_made",
    "what": "Nuestro megalodón junto a una persona de 1,70 m, a la misma escala: unos 16 m de largo, la longitud que le da la columna de Bruselas.",
-   "alt": "Un tiburón con la boca cerrada, visto de lado, gris oscuro con una franja más clara en el costado, junto a una persona gris que a su lado parece diminuta.",
+   "alt": "Nuestro megalodón visto de lado, de unos 16 m de largo, con la boca cerrada, gris oscuro con una franja más clara en el costado, junto a una persona gris de 1,70 m que a su lado parece diminuta.",
    "note": [
     "Reconstrucción propia del museo, construida en código a partir de las medidas citadas y renderizada con nuestro propio motor gráfico. No es una fotografía. La forma del cuerpo sigue el modelo de Shimada y otros 2025 (",
     {
@@ -311,6 +311,10 @@
     {
      "term": "De 14 a 18 m",
      "text": "El método del diente. La corona de un diente, escalada a un cuerpo con las proporciones del tiburón blanco. Así obtuvieron de 14 a 18 m varios estudios de 1996 a 2019, y el American Museum of Natural History todavía dice más o menos 15 m. Según el estudio de 2025, esas reglas de los dientes dan longitudes demasiado cortas o poco fiables."
+    },
+    {
+     "term": "Unos 10 m",
+     "text": "Según relatos posteriores, la longitud más común en un estudio de 2015 que calculó megalodones de todas las edades a partir de sus dientes, incluidos los jóvenes. Es un animal típico de cualquier edad, no uno adulto, y la cifra se basa en el método del diente de arriba."
     },
     {
      "term": "20 m",
