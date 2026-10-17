@@ -4002,7 +4002,10 @@ class SiteWide(unittest.TestCase):
             self.assertEqual(len(lines), 1, path)
             day = re.search(r'<time class="nw" datetime="([\d-]+)">([^<]+)</time>', lines[0])
             self.assertNotIn("..", lines[0], path)
-            self.assertEqual(day.group(1), article["dateModified"], path)
+            # the line names the check day; the page's last change is that day or, for a page that went live
+            # later (a translation keeps its source's check day), the day it went live
+            self.assertEqual(article["dateModified"], max(day.group(1), article["datePublished"]), path)
+            self.assertGreaterEqual(article["dateModified"], article["datePublished"], path)
             self.assertEqual(html.unescape(day.group(2)), self.build.date_words(day.group(1), code)[1], path)
             # the line stands first in the sources, under their heading
             self.assertRegex(text, r'<section class="sp-sec sp-sources"[^>]*>\s*<h2>[^<]*</h2>\s*<p class="sp-checked">', path)

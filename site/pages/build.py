@@ -243,7 +243,7 @@ DATE_MORE = {"es": ({"Sixteenth century, reworked in the early seventeenth centu
              "it": ({"Sixteenth century, reworked in the early seventeenth century": "XVI secolo, rielaborata all’inizio del XVII secolo"},
                     "{0} circa", "Dal {0} al {1} circa")}
 # The line at the top of a topic page's sources that says when its facts were last checked against them (page.checked),
-# the same day its structured data gives as dateModified. {date} is the day in the language's own form (date_words).
+# its structured data's dateModified unless the page went live later. {date} is the day in the language's own form.
 CHECKED_LINE = {
     "en": "Facts checked against the sources on {date}.",
     "de": "Fakten am {date} anhand der Quellen geprüft.",
@@ -1461,8 +1461,9 @@ def jsonld(lang, data, urls, pics, site, wing, alternate_name, frame, folders, t
     if data["page"].get("published"):
         graph[3]["datePublished"] = data["page"]["published"]
     if data["page"].get("checked"):
-        # the day the page's dated line shows
-        graph[3]["dateModified"] = data["page"]["checked"]
+        # the day the page's dated line shows, never before the page first went live: a translation keeps its source's
+        # check day, and a page is not modified before it exists
+        graph[3]["dateModified"] = max(data["page"]["checked"], data["page"].get("published") or "")
     for block in data["blocks"]:
         if block["type"] == "periods":
             # the works the page lists, each by its entry on the page
