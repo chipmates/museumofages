@@ -137,7 +137,7 @@
   "title": "Triceratops size: about 7 to 8 m, 2 m skull | Museum of Ages",
   "description": "Triceratops: big adults were about 7 to 8 m long, the skull about 2 m. Two models of the Washington skeleton give about 6.5 to 8.5 t. Ours beside a person.",
   "og_title": "Triceratops size: about 7 to 8 m, 2 m skull",
-  "og_image_alt": "A Triceratops from the side: a wide frill behind the head, two long horns over the eyes, a short one on the nose, four legs. Beside it a grey person who reaches about two thirds of the way up its back."
+  "og_image_alt": "Our Triceratops from the side, 6.9 m (23 ft) from beak to tail and 2.5 m (8 ft) high over the hips: a wide frill behind the head, two long horns over the eyes, a short one on the nose, four legs. Beside it a grey person 1.70 m tall who reaches about two thirds of the way up its back."
  },
  "labels": {
   "crumbs": "You are here",
@@ -154,12 +154,12 @@
  "top": {
   "h1": "How big was Triceratops?",
   "answer": "Big adult Triceratops were about 7 to 8 m (23 to 26 ft) long, and the largest reached about 9 m (30 ft). No Triceratops was ever weighed: two computer models of the famous Washington skeleton give about 6.5 to 8.5 tonnes. Our Triceratops is built after that skeleton, a mount of bones from about ten animals. It is 6.9 m (23 ft) long, about four people end to end, and stands about 2.5 m (8 ft) high over the hips.",
-  "answer_more": "A big adult's skull is about 2 m (6.5 ft) long, beak to the back of the frill: longer than a person is tall. It is one of the largest heads of any land animal.",
+  "answer_more": "A big adult Triceratops skull is about 2 m (6.5 ft) long, beak to the back of the frill: longer than a person is tall. It is one of the largest heads of any land animal.",
   "scale": {
    "pic": "side",
    "tag": "tag_made",
    "what": "Our Triceratops beside a person 1.70 m tall, to one scale, built after the Washington skeleton of about ten animals. It is 6.9 m (23 ft) from beak to tail, and its back over the hips is about 2.5 m (8 ft) up, about one and a half people high.",
-   "alt": "A Triceratops from the side: a wide frill behind the head, two long horns over the eyes, a short one on the nose, four legs. Beside it a grey person who reaches about two thirds of the way up its back.",
+   "alt": "Our Triceratops from the side, 6.9 m (23 ft) from beak to tail and 2.5 m (8 ft) high over the hips: a wide frill behind the head, two long horns over the eyes, a short one on the nose, four legs. Beside it a grey person 1.70 m tall who reaches about two thirds of the way up its back.",
    "note": [
     "Our own reconstruction, built in code from published measurements and rendered in our own engine. Not photographs. ",
     "The outline of our Triceratops follows the body model of ",
@@ -409,12 +409,16 @@
    "intro": "For each number: where it came from, and what it means.",
    "rows": [
     {
+     "term": "8 to 9 m (26 to 30 ft)",
+     "text": "A range many sites give, from popular dinosaur guides rather than measured skeletons. The named skeletons with a length run about 6.7 to 8 m (22 to 26 ft), and 9 m is a round figure for the largest."
+    },
+    {
      "term": "9 m long",
      "text": "A round top figure for the largest, from a museum's dinosaur directory with no method and no skeleton named. A big adult was about 7 to 8 m, and ours is 6.9 m."
     },
     {
      "term": "10 tonnes",
-     "text": "Printed beside the 9 m, again with no method. The newest models of the Washington skeleton give about 6.5 to 8.5 tonnes."
+     "text": "Printed beside the 9 m, again with no method. Many sites give 6 to 10 tonnes, a range from popular dinosaur guides, and some German ones a higher top figure from a study of 1985, which we have not read. The newest models of the Washington skeleton give about 6.5 to 8.5 tonnes."
     },
     {
      "term": "13 tonnes",
@@ -423,6 +427,10 @@
     {
      "term": "The largest head of any land animal",
      "text": "One big museum says “one of the largest”, not “the largest”. Big adult skulls are about 2 m long."
+    },
+    {
+     "term": "A skull of 2.5 m (8.2 ft)",
+     "text": "The largest Triceratops skull known, estimated as it would be if complete, by a study of 2010. Most big adults' skulls are about 2 m long, and the Washington skull that ours follows measures 2.12 m in bone on its scan."
     },
     {
      "term": "A long nose horn",

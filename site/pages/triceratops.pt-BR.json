@@ -137,7 +137,7 @@
   "title": "Triceratops: tamanho de cerca de 7 a 8 m | Museum of Ages",
   "description": "Tamanho do Triceratops: os adultos grandes, cerca de 7 a 8 m, e o crânio cerca de 2 m. Dois modelos do esqueleto de Washington dão cerca de 6,5 a 8,5 t.",
   "og_title": "Triceratops: tamanho de cerca de 7 a 8 m, crânio de 2 m",
-  "og_image_alt": "Um Triceratops de lado: um babado largo atrás da cabeça, dois chifres longos acima dos olhos, um curto acima do nariz, quatro patas. Ao lado, uma pessoa cinza que chega a cerca de dois terços da altura do dorso."
+  "og_image_alt": "O nosso Triceratops de lado, 6,9 m do bico à cauda e 2,5 m de altura acima do quadril: um babado largo atrás da cabeça, dois chifres longos acima dos olhos, um curto acima do nariz, quatro patas. Ao lado, uma pessoa cinza de 1,70 m que chega a cerca de dois terços da altura do dorso."
  },
  "labels": {
   "crumbs": "Você está aqui",
@@ -154,12 +154,12 @@
  "top": {
   "h1": "Qual era o tamanho do Triceratops?",
   "answer": "Os Triceratops adultos grandes tinham cerca de 7 a 8 m de comprimento, e os maiores chegavam a cerca de 9 m. Nenhum Triceratops jamais foi pesado: dois modelos de computador do famoso esqueleto de Washington dão cerca de 6,5 a 8,5 toneladas. O nosso Triceratops foi feito a partir desse esqueleto, uma montagem com ossos de cerca de dez animais. Ele tem 6,9 m de comprimento, cerca de quatro pessoas em fila, e cerca de 2,5 m de altura acima do quadril.",
-  "answer_more": "O crânio de um adulto grande tem cerca de 2 m de comprimento, do bico até a borda de trás do babado: mais do que a altura de uma pessoa. É uma das maiores cabeças de todos os animais terrestres.",
+  "answer_more": "O crânio de um Triceratops adulto grande tem cerca de 2 m de comprimento, do bico até a borda de trás do babado: mais do que a altura de uma pessoa. É uma das maiores cabeças de todos os animais terrestres.",
   "scale": {
    "pic": "side",
    "tag": "tag_made",
    "what": "O nosso Triceratops ao lado de uma pessoa de 1,70 m, na mesma escala, feito a partir do esqueleto de Washington, formado por cerca de dez animais. Ele mede 6,9 m do bico à cauda, e o dorso dele fica a cerca de 2,5 m de altura acima do quadril, mais ou menos a altura de uma pessoa e meia.",
-   "alt": "Um Triceratops de lado: um babado largo atrás da cabeça, dois chifres longos acima dos olhos, um curto acima do nariz, quatro patas. Ao lado, uma pessoa cinza que chega a cerca de dois terços da altura do dorso.",
+   "alt": "O nosso Triceratops de lado, 6,9 m do bico à cauda e 2,5 m de altura acima do quadril: um babado largo atrás da cabeça, dois chifres longos acima dos olhos, um curto acima do nariz, quatro patas. Ao lado, uma pessoa cinza de 1,70 m que chega a cerca de dois terços da altura do dorso.",
    "note": [
     "A nossa própria reconstrução, construída em código a partir de medidas publicadas e renderizada com o nosso próprio motor gráfico. Não são fotografias. ",
     "A silhueta do nosso Triceratops segue o modelo do corpo de ",
@@ -409,12 +409,16 @@
    "intro": "Para cada número: de onde ele vem e o que significa.",
    "rows": [
     {
+     "term": "De 8 a 9 m",
+     "text": "Uma faixa que muitos sites dão, tirada de livros de divulgação sobre dinossauros e não de esqueletos medidos. Os esqueletos com nome e com um comprimento conhecido medem cerca de 6,7 a 8 m, e 9 m é um número redondo para os maiores."
+    },
+    {
      "term": "9 m de comprimento",
      "text": "Um número redondo de máximo para os maiores, do catálogo de dinossauros de um museu, sem método e sem citar nenhum esqueleto. Um adulto grande tinha cerca de 7 a 8 m, e o nosso tem 6,9 m."
     },
     {
      "term": "10 toneladas",
-     "text": "Aparece ao lado dos 9 m, também sem método. Os modelos mais novos do esqueleto de Washington dão cerca de 6,5 a 8,5 toneladas."
+     "text": "Aparece ao lado dos 9 m, também sem método. Muitos sites dão de 6 a 10 toneladas, uma faixa de livros de divulgação sobre dinossauros, e alguns sites em alemão um limite ainda mais alto, de um estudo de 1985 que não lemos. Os modelos mais novos do esqueleto de Washington dão cerca de 6,5 a 8,5 toneladas."
     },
     {
      "term": "13 toneladas",
@@ -423,6 +427,10 @@
     {
      "term": "A maior cabeça de todos os animais terrestres",
      "text": "Um grande museu diz “uma das maiores”, não “a maior”. Os crânios dos adultos grandes têm cerca de 2 m de comprimento."
+    },
+    {
+     "term": "Um crânio de 2,5 m",
+     "text": "O maior crânio de Triceratops conhecido, estimado como se estivesse completo, segundo um estudo de 2010. Os crânios da maioria dos adultos grandes medem cerca de 2 m, e o crânio de Washington, que o nosso modelo segue, mede 2,12 m de osso no escaneamento."
     },
     {
      "term": "Um chifre longo no nariz",

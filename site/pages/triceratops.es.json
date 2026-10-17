@@ -137,7 +137,7 @@
   "title": "Triceratops: tamaño de unos 7 a 8 m | Museum of Ages",
   "description": "¿Cuánto medía el Triceratops? Los adultos grandes, unos 7 a 8 m y el cráneo unos 2 m. Dos modelos del esqueleto de Washington dan unas 6,5 a 8,5 t.",
   "og_title": "Triceratops: tamaño de unos 7 a 8 m, cráneo de 2 m",
-  "og_image_alt": "Un Triceratops de lado: una gola ancha detrás de la cabeza, dos cuernos largos sobre los ojos, uno corto sobre la nariz, cuatro patas. A su lado, una persona gris que le llega a unos dos tercios de la altura del lomo."
+  "og_image_alt": "Nuestro Triceratops de lado, 6,9 m del pico a la cola y 2,5 m de alto sobre la cadera: una gola ancha detrás de la cabeza, dos cuernos largos sobre los ojos, uno corto sobre la nariz, cuatro patas. A su lado, una persona gris de 1,70 m que le llega a unos dos tercios de la altura del lomo."
  },
  "labels": {
   "crumbs": "Estás aquí",
@@ -154,12 +154,12 @@
  "top": {
   "h1": "¿Cuánto medía el Triceratops?",
   "answer": "Los Triceratops adultos grandes medían unos 7 a 8 m de largo, y los más grandes llegaban a unos 9 m. Ningún Triceratops se pesó nunca: dos modelos digitales del famoso esqueleto de Washington dan unas 6,5 a 8,5 toneladas. Nuestro Triceratops está hecho según ese esqueleto, un montaje con huesos de unos diez animales. Mide 6,9 m de largo, unas cuatro personas en fila, y unos 2,5 m de alto sobre la cadera.",
-  "answer_more": "El cráneo de un adulto grande mide unos 2 m de largo, del pico al borde de atrás de la gola: más de lo que mide de alto una persona. Es una de las cabezas más grandes de todos los animales terrestres.",
+  "answer_more": "El cráneo de un Triceratops adulto grande mide unos 2 m de largo, del pico al borde de atrás de la gola: más de lo que mide de alto una persona. Es una de las cabezas más grandes de todos los animales terrestres.",
   "scale": {
    "pic": "side",
    "tag": "tag_made",
    "what": "Nuestro Triceratops junto a una persona de 1,70 m, a la misma escala, hecho según el esqueleto de Washington, formado por unos diez animales. Mide 6,9 m del pico a la cola, y su lomo está a unos 2,5 m de altura sobre la cadera, más o menos la altura de una persona y media.",
-   "alt": "Un Triceratops de lado: una gola ancha detrás de la cabeza, dos cuernos largos sobre los ojos, uno corto sobre la nariz, cuatro patas. A su lado, una persona gris que le llega a unos dos tercios de la altura del lomo.",
+   "alt": "Nuestro Triceratops de lado, 6,9 m del pico a la cola y 2,5 m de alto sobre la cadera: una gola ancha detrás de la cabeza, dos cuernos largos sobre los ojos, uno corto sobre la nariz, cuatro patas. A su lado, una persona gris de 1,70 m que le llega a unos dos tercios de la altura del lomo.",
    "note": [
     "Nuestra propia reconstrucción, construida en código a partir de medidas publicadas y renderizada con nuestro propio motor gráfico. No son fotografías. ",
     "La silueta de nuestro Triceratops sigue el modelo del cuerpo de ",
@@ -409,12 +409,16 @@
    "intro": "Para cada cifra: de dónde viene y qué significa.",
    "rows": [
     {
+     "term": "De 8 a 9 m",
+     "text": "Un rango que dan muchas páginas, sacado de libros de divulgación sobre dinosaurios y no de esqueletos medidos. Los esqueletos con nombre y con una longitud conocida miden unos 6,7 a 8 m, y 9 m es una cifra redonda para los más grandes."
+    },
+    {
      "term": "9 m de largo",
      "text": "Una cifra redonda de máximo para los más grandes, del catálogo de dinosaurios de un museo, sin método y sin nombrar ningún esqueleto. Un adulto grande medía unos 7 a 8 m, y el nuestro mide 6,9 m."
     },
     {
      "term": "10 toneladas",
-     "text": "Aparece junto a los 9 m, también sin método. Los modelos más nuevos del esqueleto de Washington dan unas 6,5 a 8,5 toneladas."
+     "text": "Aparece junto a los 9 m, también sin método. Muchas páginas dan de 6 a 10 toneladas, un rango de libros de divulgación sobre dinosaurios, y algunas páginas en alemán un límite aún más alto, de un estudio de 1985 que no hemos leído. Los modelos más nuevos del esqueleto de Washington dan unas 6,5 a 8,5 toneladas."
     },
     {
      "term": "13 toneladas",
@@ -423,6 +427,10 @@
     {
      "term": "La cabeza más grande de todos los animales terrestres",
      "text": "Un gran museo dice «una de las más grandes», no «la más grande». Los cráneos de los adultos grandes miden unos 2 m de largo."
+    },
+    {
+     "term": "Un cráneo de 2,5 m",
+     "text": "El cráneo de Triceratops más grande que se conoce, estimado como si estuviera completo, según un estudio de 2010. Los cráneos de la mayoría de los adultos grandes miden unos 2 m, y el cráneo de Washington, que sigue nuestro modelo, mide 2,12 m de hueso en su escaneo."
     },
     {
      "term": "Un cuerno largo en la nariz",

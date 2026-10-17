@@ -142,7 +142,7 @@
   "title": "Triceratops-Größe: etwa 7 bis 8 m lang | Museum of Ages",
   "description": "Triceratops: Große Tiere waren etwa 7 bis 8 m lang, der Schädel etwa 2 m. Zwei Modelle des Skeletts in Washington ergeben etwa 6,5 bis 8,5 t.",
   "og_title": "Triceratops-Größe: etwa 7 bis 8 m lang",
-  "og_image_alt": "Ein Triceratops von der Seite: ein breiter Nackenschild hinter dem Kopf, zwei lange Hörner über den Augen, ein kurzes auf der Nase, vier Beine. Daneben ein grauer Mensch, der etwa bis zu zwei Dritteln der Rückenhöhe reicht."
+  "og_image_alt": "Unser Triceratops von der Seite, 6,9 m vom Schnabel bis zum Schwanz und über der Hüfte 2,5 m hoch: ein breiter Nackenschild hinter dem Kopf, zwei lange Hörner über den Augen, ein kurzes auf der Nase, vier Beine. Daneben ein grauer Mensch von 1,70 m, der etwa bis zu zwei Dritteln der Rückenhöhe reicht."
  },
  "labels": {
   "crumbs": "Du bist hier",
@@ -159,12 +159,12 @@
  "top": {
   "h1": "Wie groß war ein Triceratops?",
   "answer": "Große erwachsene Triceratops waren etwa 7 bis 8 m lang, die größten erreichten etwa 9 m. Gewogen wurde nie ein Triceratops: Zwei Computermodelle des berühmten Skeletts in Washington ergeben etwa 6,5 bis 8,5 t. Unser Triceratops ist nach diesem Skelett gebaut, einer Montage aus den Knochen von etwa zehn Tieren. Er ist 6,9 m lang, etwa vier Menschen der Länge nach hintereinander, und über der Hüfte etwa 2,5 m hoch.",
-  "answer_more": "Der Schädel eines großen erwachsenen Tiers misst etwa 2 m vom Schnabel bis zum hinteren Rand des Nackenschilds, länger, als ein Mensch groß ist. Das ist einer der größten Köpfe aller Landtiere.",
+  "answer_more": "Der Schädel eines großen erwachsenen Triceratops misst etwa 2 m vom Schnabel bis zum hinteren Rand des Nackenschilds, länger, als ein Mensch groß ist. Das ist einer der größten Köpfe aller Landtiere.",
   "scale": {
    "pic": "side",
    "tag": "tag_made",
    "what": "Unser Triceratops neben einem Menschen von 1,70 m, im selben Maßstab, gebaut nach dem Skelett in Washington aus etwa zehn Tieren. Er misst 6,9 m vom Schnabel bis zur Schwanzspitze, und sein Rücken liegt über der Hüfte etwa 2,5 m hoch, so hoch wie anderthalb Menschen übereinander.",
-   "alt": "Ein Triceratops von der Seite: ein breiter Nackenschild hinter dem Kopf, zwei lange Hörner über den Augen, ein kurzes auf der Nase, vier Beine. Daneben ein grauer Mensch, der etwa bis zu zwei Dritteln der Rückenhöhe reicht.",
+   "alt": "Unser Triceratops von der Seite, 6,9 m vom Schnabel bis zum Schwanz und über der Hüfte 2,5 m hoch: ein breiter Nackenschild hinter dem Kopf, zwei lange Hörner über den Augen, ein kurzes auf der Nase, vier Beine. Daneben ein grauer Mensch von 1,70 m, der etwa bis zu zwei Dritteln der Rückenhöhe reicht.",
    "note": [
     "Unsere eigene Rekonstruktion, nach veröffentlichten Maßen in Code gebaut und in unserer Engine gerendert. Keine Fotos. ",
     "Der Umriss unseres Triceratops folgt dem Körpermodell von ",
@@ -414,12 +414,16 @@
    "intro": "Zu jeder Zahl: woher sie kommt und was sie bedeutet.",
    "rows": [
     {
+     "term": "8 bis 9 m",
+     "text": "Eine Spanne, die viele Seiten nennen, aus bekannten Dinosaurierbüchern, nicht von gemessenen Skeletten. Die benannten Skelette mit einer Länge kommen auf etwa 6,7 bis 8 m, und 9 m ist eine runde Zahl für die größten."
+    },
+    {
      "term": "9 m lang",
      "text": "Eine runde Obergrenze für die größten, aus dem Dinosaurierverzeichnis eines Museums, ohne Methode und ohne ein benanntes Skelett. Ein großes erwachsenes Tier war etwa 7 bis 8 m lang, unser Modell ist 6,9 m lang."
     },
     {
      "term": "10 t",
-     "text": "Im selben Verzeichnis neben den 9 m, wieder ohne Methode. Die neuesten Modelle des Skeletts in Washington ergeben etwa 6,5 bis 8,5 t."
+     "text": "Im selben Verzeichnis neben den 9 m, wieder ohne Methode. Viele Seiten nennen 6 bis 10 t, eine Spanne aus bekannten Dinosaurierbüchern, manche deutsche Seiten eine noch höhere Obergrenze aus einer Studie von 1985, die wir nicht gelesen haben. Die neuesten Modelle des Skeletts in Washington ergeben etwa 6,5 bis 8,5 t."
     },
     {
      "term": "13 t",
@@ -428,6 +432,10 @@
     {
      "term": "Der größte Kopf aller Landtiere",
      "text": "Ein großes Museum schreibt „einer der größten“, nicht „der größte“. Die Schädel großer erwachsener Tiere sind etwa 2 m lang."
+    },
+    {
+     "term": "Ein Schädel von 2,5 m",
+     "text": "Der größte bekannte Triceratops-Schädel, geschätzt so, als wäre er vollständig, nach einer Studie von 2010. Die Schädel der meisten großen Tiere messen etwa 2 m, und der Schädel in Washington, nach dem unser Modell gebaut ist, misst auf seinem Scan 2,12 m in Knochen."
     },
     {
      "term": "Ein langes Nasenhorn",
