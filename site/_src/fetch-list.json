@@ -1451,122 +1451,122 @@
   {
    "path": "pages/pics/img/animals-biggest-dinosaurs-og-de-1200x630.png",
    "url": "/static/img/animals-biggest-dinosaurs-og-de-1200x630.png",
-   "bytes": 183028,
-   "sha256": "4f789c52bcdd6b0f1973856cdeb6ddbcd5f0b9999d2138aa6c1ec5e82612f346"
+   "bytes": 192903,
+   "sha256": "424d22649896b4c902efdbde5d062de8fcb6abfb4278148ab19558cf28766c97"
   },
   {
    "path": "pages/pics/img/animals-biggest-dinosaurs-og-en-1200x630.png",
    "url": "/static/img/animals-biggest-dinosaurs-og-en-1200x630.png",
-   "bytes": 183578,
-   "sha256": "a83f2a787a9d6acf515862e5ae7f2fa7fb85c79912cddb02add7646643748153"
+   "bytes": 193430,
+   "sha256": "5c31047c0b103cf073b0c254281c12edbc9f750397ccb3fc946c1dce750df9a2"
   },
   {
    "path": "pages/pics/img/animals-biggest-dinosaurs-og-es-1200x630.png",
    "url": "/static/img/animals-biggest-dinosaurs-og-es-1200x630.png",
-   "bytes": 180009,
-   "sha256": "f7ad5f588dba7866a8547730bd81831acffa68e941c32a486bbefdde25c81885"
+   "bytes": 189862,
+   "sha256": "2c03bbd61f510f3c57b08188d6d7055dd0eed6f8e0965948d63f30b796ed5c2e"
   },
   {
    "path": "pages/pics/img/animals-biggest-dinosaurs-og-pt-br-1200x630.png",
    "url": "/static/img/animals-biggest-dinosaurs-og-pt-br-1200x630.png",
-   "bytes": 178503,
-   "sha256": "e4f357896a635d93dc67fb5c401b81f16de743d13faed4d6f6858c7d783e254d"
+   "bytes": 188333,
+   "sha256": "29fc70cf79ce3e79ca55b062278dda1c5d67aca2f5aa87f5a4758f2c81ff9986"
   },
   {
    "path": "pages/pics/img/animals-biggest-dinosaurs-row-1600.avif",
    "url": "/static/img/animals-biggest-dinosaurs-row-1600.avif",
-   "bytes": 16496,
-   "sha256": "fab0484c63a321f9b2e17ba35a324ff0be9a0cf85e01cfb29d0b7b093c339211"
+   "bytes": 19277,
+   "sha256": "57b1698678391942f26338ff117d60fd5ad10be5c15e676adc96cdd1dfbe3175"
   },
   {
    "path": "pages/pics/img/animals-biggest-dinosaurs-row-1600.webp",
    "url": "/static/img/animals-biggest-dinosaurs-row-1600.webp",
-   "bytes": 22850,
-   "sha256": "37af19ff7182a25236a1d624c5c72bc78843cece99457a65be97f5fbe34efbea"
+   "bytes": 25272,
+   "sha256": "acde1749f694681cf68f3afe6cc28f588e709b1baa8618c2c1d66eb507b2f957"
   },
   {
    "path": "pages/pics/img/animals-biggest-dinosaurs-row-800.avif",
    "url": "/static/img/animals-biggest-dinosaurs-row-800.avif",
-   "bytes": 6651,
-   "sha256": "d1fdab095af4f8f5efb7d0be3d94d15bb0f6e95da6a5bf42ea3639b66ffb680a"
+   "bytes": 6973,
+   "sha256": "a06f9c3c72267743fe31f37e09bd9c202a54708bded13e0fe6c0d39d0c27a321"
   },
   {
    "path": "pages/pics/img/animals-biggest-dinosaurs-row-800.webp",
    "url": "/static/img/animals-biggest-dinosaurs-row-800.webp",
-   "bytes": 9524,
-   "sha256": "99151aa6787d3008f9eaf4bfdcc2b5a254ad36075160bcb81fa27f4e5eaf0a89"
+   "bytes": 10022,
+   "sha256": "ae5e9cb3f88faf05efbdfdeff1ba1283627d275715f1f870a578f28aee71b0f8"
   },
   {
    "path": "pages/pics/img/animals-biggest-dinosaurs-skeleton-1600.avif",
    "url": "/static/img/animals-biggest-dinosaurs-skeleton-1600.avif",
-   "bytes": 22292,
-   "sha256": "6424f88f15eae5343957a128269798791dd6d75919b9e556bd26bd4dd48a4ce3"
+   "bytes": 22612,
+   "sha256": "1910139daf151b08180a0d864ca89124bae8d2dbb01531455b669831ca312e1c"
   },
   {
    "path": "pages/pics/img/animals-biggest-dinosaurs-skeleton-1600.webp",
    "url": "/static/img/animals-biggest-dinosaurs-skeleton-1600.webp",
-   "bytes": 35588,
-   "sha256": "8efde715e86b8d1de8ef5f665d6d096224cf6f51c3232d894f26c3887d8a5f34"
+   "bytes": 36242,
+   "sha256": "17b4090f87bc1fbb0bb9773c5ee75a5a5f055c601d776cca18b4665f68557b3c"
   },
   {
    "path": "pages/pics/img/animals-biggest-dinosaurs-skeleton-2400.avif",
    "url": "/static/img/animals-biggest-dinosaurs-skeleton-2400.avif",
-   "bytes": 37351,
-   "sha256": "90d1ff2edf6e7e82cd02698fa7cd060a4cba337d778173c7353e24241725f5d5"
+   "bytes": 38072,
+   "sha256": "38f0f237f33c1e6e227bcb7d50ffccff2f97dab28236bf79ef056bdb8e63d9c2"
   },
   {
    "path": "pages/pics/img/animals-biggest-dinosaurs-skeleton-2400.webp",
    "url": "/static/img/animals-biggest-dinosaurs-skeleton-2400.webp",
-   "bytes": 60770,
-   "sha256": "e34156027deb1c456b0f3e599aba3c2f9925695d47eb96133267ec6f14fc395c"
+   "bytes": 61962,
+   "sha256": "5e3ea6c1238d8a09dbaf1ca8acfb4d3be4e3d4744c765d9f4c1ba68f5980dd06"
   },
   {
    "path": "pages/pics/img/animals-biggest-dinosaurs-skeleton-800.avif",
    "url": "/static/img/animals-biggest-dinosaurs-skeleton-800.avif",
-   "bytes": 9339,
-   "sha256": "0bde3c01b98370b1f1d668f4bf52f9c9e5f4907240a74bb52feee137e54fbca9"
+   "bytes": 9508,
+   "sha256": "eef5b5de2489033837de4b5abb2eced6e85dc29db856672ab94df3076c2f4899"
   },
   {
    "path": "pages/pics/img/animals-biggest-dinosaurs-skeleton-800.webp",
    "url": "/static/img/animals-biggest-dinosaurs-skeleton-800.webp",
-   "bytes": 13264,
-   "sha256": "1a2aaa0dd43bf8d0701fd0f8a182dd5ef461373d6b251dfcb698ca916a4e3b71"
+   "bytes": 13502,
+   "sha256": "daa76ab09c45092d4ff8ed5ffc68a3e1cac187f6b336bbdc90b415c182d3a1b6"
   },
   {
    "path": "pages/pics/img/animals-blue-whale-beside-1600.avif",
    "url": "/static/img/animals-blue-whale-beside-1600.avif",
-   "bytes": 20103,
-   "sha256": "bbc433f9d648d190a0b8d07692caacc2ecd2c68ecf298e48c207ab053e327d8b"
+   "bytes": 25643,
+   "sha256": "06504b5c098bcacb3052d9f2acb4c6201030de00f9d25a9d091bc4c221ebfaa0"
   },
   {
    "path": "pages/pics/img/animals-blue-whale-beside-1600.webp",
    "url": "/static/img/animals-blue-whale-beside-1600.webp",
-   "bytes": 29574,
-   "sha256": "9bab4b9845d6c9dc35494560cef8df8559a23f3392063f882dab699e538214e6"
+   "bytes": 34048,
+   "sha256": "9672027c0eaf66768b91ea79538575c0b87cbaedeb71d38c05e9a2fcdedccb9d"
   },
   {
    "path": "pages/pics/img/animals-blue-whale-beside-2400.avif",
    "url": "/static/img/animals-blue-whale-beside-2400.avif",
-   "bytes": 31783,
-   "sha256": "9f0f0dbbac749115977ba7b9557d240e5b2078efb13d0f98c2fb01c3226f0e4f"
+   "bytes": 40676,
+   "sha256": "d4858985f4fdcdcfc4a0ecdfced3b81116cb715c0709f04350c9aa59979fc8c7"
   },
   {
    "path": "pages/pics/img/animals-blue-whale-beside-2400.webp",
    "url": "/static/img/animals-blue-whale-beside-2400.webp",
-   "bytes": 50352,
-   "sha256": "8e755ccdd8a51348d417fe55093eec0d0bb05436cac21ec50403157c4ff76ec7"
+   "bytes": 58604,
+   "sha256": "ee8013e67b5f01bacf5d853284516386ba6b0b52891d673ce622738427aa4829"
   },
   {
    "path": "pages/pics/img/animals-blue-whale-beside-800.avif",
    "url": "/static/img/animals-blue-whale-beside-800.avif",
-   "bytes": 8953,
-   "sha256": "d5a3d34df427aee66033e1932e5ba61d602e37748f582c05ba735ca92dd8da80"
+   "bytes": 10357,
+   "sha256": "304fbabcc93cb977556229db125dc5c2e0d2febc0a7bcd6187578379ff224998"
   },
   {
    "path": "pages/pics/img/animals-blue-whale-beside-800.webp",
    "url": "/static/img/animals-blue-whale-beside-800.webp",
-   "bytes": 12092,
-   "sha256": "419e3e4fa0fa44b35fcf25f0a121bd61eff1b29699eb8b3301ddfb115f3aea4c"
+   "bytes": 13458,
+   "sha256": "65d8b996eb405e2bfeb0766e0999f976c02c7d786eaca02494d33bb7109b01d8"
   },
   {
    "path": "pages/pics/img/animals-blue-whale-close-1600.avif",
