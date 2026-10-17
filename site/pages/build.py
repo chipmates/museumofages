@@ -652,6 +652,13 @@ def lint(page, lang, data, wing, names, topic=None):
             datetime.date.fromisoformat(value or "")
         except ValueError:
             problems.append(f"{page}.{lang}: page.{key} is {value!r}, not a day as YYYY-MM-DD")
+    # the day of the page's last change to a shown number after its check, where one came later (page.changed)
+    changed = data["page"].get("changed")
+    if changed is not None:
+        try:
+            datetime.date.fromisoformat(changed if isinstance(changed, str) and not data["page"].get("hub") else "")
+        except ValueError:
+            problems.append(f"{page}.{lang}: page.changed is {changed!r}, a day as YYYY-MM-DD on a topic page")
     if not data["page"].get("hub") and lang not in CHECKED_LINE:
         problems.append(f"{page}.{lang}: no line for the day the facts were checked in {lang} (CHECKED_LINE, MONTHS)")
     WARNINGS.extend(f"{page}.{lang}: {x}" for x in soft_problems(data, lang))
@@ -1461,9 +1468,9 @@ def jsonld(lang, data, urls, pics, site, wing, alternate_name, frame, folders, t
     if data["page"].get("published"):
         graph[3]["datePublished"] = data["page"]["published"]
     if data["page"].get("checked"):
-        # the day the page's dated line shows, never before the page first went live: a translation keeps its source's
-        # check day, and a page is not modified before it exists
-        graph[3]["dateModified"] = max(data["page"]["checked"], data["page"].get("published") or "")
+        # the day the page's dated line shows, never before the page first went live (a translation keeps its source's
+        # check day, and a page is not modified before it exists) nor before its last change to a shown number
+        graph[3]["dateModified"] = max(data["page"]["checked"], data["page"].get("published") or "", data["page"].get("changed") or "")
     for block in data["blocks"]:
         if block["type"] == "periods":
             # the works the page lists, each by its entry on the page

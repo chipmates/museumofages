@@ -254,6 +254,12 @@ class Case(unittest.TestCase):
         self.save("en", data)
         self.fails(r"page\.published")
 
+    def test_a_change_that_is_no_day(self):
+        data = self.data("en")
+        data["page"]["changed"] = "today"
+        self.save("en", data)
+        self.fails(r"page\.changed is 'today'")
+
     def test_free_alone(self):
         data = self.data("en")
         data["top"]["door"]["note"] = "Free, no account."
@@ -3980,6 +3986,17 @@ class SiteWide(unittest.TestCase):
         cls.build = _pages_build()
         cls.pages = {p: p.read_text(encoding="utf-8") for p in sorted(SITE_BUILT.rglob("*.html"))}
         cls.sitemap = (SITE_BUILT / "sitemap.xml").read_text(encoding="utf-8")
+        # each page's last change to a shown number after its check (page.changed), by its id and language
+        cls.changes = {}
+        for f in HERE.glob("*.*.json"):
+            data = json.loads(f.read_text(encoding="utf-8"))
+            if isinstance(data, dict) and isinstance(data.get("page"), dict) and data["page"].get("changed"):
+                cls.changes[(data["page"]["id"], f.name.split(".")[1])] = data["page"]["changed"]
+
+    def changed(self, text):
+        label = re.search(r'data-page="([\w-]+)"', text)
+        lang = re.search(r'<html lang="([\w-]+)"', text).group(1)
+        return self.changes.get((label.group(1) if label else "", lang), "")
 
     def address(self, path):
         rel = path.relative_to(SITE_BUILT).parent.as_posix()
@@ -4002,9 +4019,9 @@ class SiteWide(unittest.TestCase):
             self.assertEqual(len(lines), 1, path)
             day = re.search(r'<time class="nw" datetime="([\d-]+)">([^<]+)</time>', lines[0])
             self.assertNotIn("..", lines[0], path)
-            # the line names the check day; the page's last change is that day or, for a page that went live
-            # later (a translation keeps its source's check day), the day it went live
-            self.assertEqual(article["dateModified"], max(day.group(1), article["datePublished"]), path)
+            # the line names the check day; the page's last change is that day, the day it went live where that is
+            # later (a translation keeps its source's check day), or a later change to a shown number
+            self.assertEqual(article["dateModified"], max(day.group(1), article["datePublished"], self.changed(text)), path)
             self.assertGreaterEqual(article["dateModified"], article["datePublished"], path)
             self.assertEqual(html.unescape(day.group(2)), self.build.date_words(day.group(1), code)[1], path)
             # the line stands first in the sources, under their heading
