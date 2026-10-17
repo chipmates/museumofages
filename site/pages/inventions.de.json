@@ -312,7 +312,7 @@
             },
             {
               "k": "row_built",
-              "v": "Ein Sprung zu seinen Lebzeiten ist nicht belegt. Im Jahr 2000 sank ein Mann unter einem schweren Nachbau herab, trennte ihn ab und landete an einem zweiten, modernen Fallschirm. Ältere italienische Zeichnungen von Fallschirmen werden in die 1470er Jahre datiert."
+              "v": "Ein Sprung zu seinen Lebzeiten ist nicht belegt. Im Jahr 2000 sank ein Mann unter einem schweren Nachbau herab, trennte ihn ab und landete an einem zweiten, modernen Fallschirm. Ältere italienische Zeichnungen von Fallschirmen werden in die 1470er Jahre datiert. Viele Quellen nennen diesen Sprung und einen weiteren von 2008 erfolgreiche Tests seines Entwurfs. Der Springer von 2008 landete zwar unter dem Schirm, doch der war aus modernem Stoff und Netz, ohne Holzrahmen."
             }
           ],
           "pic": {
@@ -674,16 +674,16 @@
       "type": "notes",
       "id": "not-built",
       "nav": "Panzer, Brücken, Roboter",
-      "h": "Der Panzer, die Brücken und der Roboter",
+      "h": "Der Panzer, die Leonardo-Brücke und der Roboter",
       "intro": "Nichts davon hat das Museum gebaut. Die meisten gehören zu siebenundzwanzig weiteren Studien von ihm, die zu wenig hergeben, um danach zu bauen. Einige Blätter dieser Studien gehören zu den Seiten am Lesetisch.",
       "rows": [
         {
           "term": "Der gepanzerte Wagen, oft sein Panzer genannt",
-          "text": "Ein geschlossener Kampfwagen auf einem einzelnen Blatt im British Museum in London, das es auf etwa 1485 datiert. Menschen im Inneren drehen Kurbeln, die Notiz nennt acht. Das British Museum führt ihn als nicht gebaut. Das Blatt nennt keine Maße, und wie der Wagen gelenkt werden sollte, ist offen."
+          "text": "Ein geschlossener Kampfwagen auf einem einzelnen Blatt im British Museum in London, das es auf etwa 1485 datiert. Menschen im Inneren drehen Kurbeln, die Notiz nennt acht. Das British Museum führt ihn als nicht gebaut. Das Blatt nennt keine Maße, und wie der Wagen gelenkt werden sollte, ist offen. Viele Quellen sprechen von zwei oder vier Männern an den Kurbeln und datieren das Blatt auf 1487. Diese Seite folgt der Notiz auf dem Blatt, die acht nennt, und der Datierung des British Museum. Manche Quellen sagen außerdem, die Zahnräder hätten den Wagen so, wie sie gezeichnet sind, nicht bewegen können, und er habe sie absichtlich so gezeichnet. Für die Absicht haben wir keine Quelle gefunden."
         },
         {
-          "term": "Die Brücke aus Stangen, oft Leonardo-Brücke genannt",
-          "text": "Codex Atlanticus, Blatt 69a recto und Blatt 71 verso, in der Veneranda Biblioteca Ambrosiana in Mailand, vom Standardkatalog auf etwa 1485 bis 1487 datiert. Sie zeigen eine hölzerne Behelfsbrücke für ein Heer. In seiner Notiz heißt es, man solle die Brücke flechten. Ein Museum in Vinci liest die Zeichnung so: Stämme, die ineinandergreifen und ohne Seil stehen. Einen Beleg, dass eine zu seinen Lebzeiten gebaut wurde, haben wir nicht gefunden."
+          "term": "Die Leonardo-Brücke aus Stangen",
+          "text": "Codex Atlanticus, Blatt 69a recto und Blatt 71 verso, in der Veneranda Biblioteca Ambrosiana in Mailand, vom Standardkatalog auf etwa 1485 bis 1487 datiert. Sie zeigen eine hölzerne Behelfsbrücke für ein Heer. In seiner Notiz heißt es, man solle die Brücke flechten. Ein Museum in Vinci liest die Zeichnung so: Stämme, die ineinandergreifen und ohne Seil stehen. Einen Beleg, dass eine zu seinen Lebzeiten gebaut wurde, haben wir nicht gefunden. Manche Quellen nennen 1478 bis 1518. Das ist die Zeitspanne des ganzen Codex Atlanticus, nicht das Datum dieser beiden Blätter."
         },
         {
           "term": "Die Brücke über das Goldene Horn",
@@ -695,7 +695,7 @@
         },
         {
           "term": "Die Studien zum Gleitflug",
-          "text": "Der Kodex über den Vogelflug von 1505 liegt in der Biblioteca Reale in Turin. Seine Seiten untersuchen Flügelgelenke, Steuerzüge und das Gleichgewicht. Keine von ihnen ist ein vollständiger Plan für einen Gleiter."
+          "text": "Der Kodex über den Vogelflug von 1505 liegt in der Biblioteca Reale in Turin. Seine Seiten untersuchen Flügelgelenke, Steuerzüge und das Gleichgewicht. Keine von ihnen ist ein vollständiger Plan für einen Gleiter. Manche Quellen sagen, ein Gleiter nach seinen Studien sei geflogen. Einer flog 2002: ein moderner Nachbau nach seinen Zeichnungen, aus Materialien seiner Zeit. Einen vollständigen Plan dafür enthalten seine Seiten trotzdem nicht."
         },
         {
           "term": "Der mechanische Ritter, oft sein Roboter genannt",
@@ -723,7 +723,7 @@
       "items": [
         {
           "q": "Was hat Leonardo da Vinci erfunden?",
-          "a": "Eine Maschine, die sicher seine eigene Idee war und sicher gebaut wurde, lässt sich schwer nennen. Er zeichnete viele, und für fast alle fand unsere Recherche keinen Beleg, dass er eine davon baute. Mehrere Arten waren älter als er: Kanalschleusen, die Wasserschnecke, eine Windplatte, die Alberti 1450 beschrieb. Nachschlagewerke schreiben ihm oft das Schleusentor aus zwei schräg schließenden Flügeln zu. Was auf den Blättern steht, ist sein eigenes Durchdenken einer Aufgabe: eine Luftschraube aus gestärktem Leinen, ein Fallschirm mit seinen Maßen, ein Lager aus acht Holzkugeln."
+          "a": "Eine Maschine, die sicher seine eigene Idee war und sicher gebaut wurde, lässt sich schwer nennen. Er zeichnete viele, und für fast alle fand unsere Recherche keinen Beleg, dass er eine davon baute. Mehrere Arten waren älter als er: Kanalschleusen, die Wasserschnecke, eine Windplatte, die Alberti 1450 beschrieb. Nachschlagewerke schreiben ihm oft das Schleusentor aus zwei schräg schließenden Flügeln zu. Was auf den Blättern steht, ist sein eigenes Durchdenken einer Aufgabe: eine Luftschraube aus gestärktem Leinen, ein Fallschirm mit seinen Maßen, ein Lager aus acht Holzkugeln. Viele Listen sagen, er habe den Fallschirm, den Hubschrauber, den Panzer und das Auto erfunden. Manche fügen hinzu: als Idee, auf dem Papier. Das passt zu den Blättern: Für keine der vier Maschinen fand unsere Recherche einen Bau zu seinen Lebzeiten, und italienische Zeichnungen von Fallschirmen aus den 1470er Jahren sind älter als seine."
         },
         {
           "q": "Hat Leonardo da Vinci den Hubschrauber erfunden?",
