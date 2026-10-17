@@ -1895,62 +1895,62 @@
   {
    "path": "pages/pics/img/animals-megalodon-skeleton-1600.avif",
    "url": "/static/img/animals-megalodon-skeleton-1600.avif",
-   "bytes": 13411,
-   "sha256": "6f16ce2b767ec3cd20728b8f8c3554659541ef18ccaf9302a76cb1435ef74150"
+   "bytes": 13202,
+   "sha256": "41e9bd88891e87868c24cec44053aba96fe3160e36df0a318d42b776f0d949dc"
   },
   {
    "path": "pages/pics/img/animals-megalodon-skeleton-1600.webp",
    "url": "/static/img/animals-megalodon-skeleton-1600.webp",
-   "bytes": 18526,
-   "sha256": "1612f8410e27aedd9e2596df54a51c36a31363632ae266c605d5a465e5fc5251"
+   "bytes": 18096,
+   "sha256": "cd007a4e3b678856c32756cb4b15eeb38e61bded82d00b530b26144e0733cdf4"
   },
   {
    "path": "pages/pics/img/animals-megalodon-skeleton-2400.avif",
    "url": "/static/img/animals-megalodon-skeleton-2400.avif",
-   "bytes": 21470,
-   "sha256": "3c635d5eb14d9c641c5ab527c3f1aecf600569578431d35ee3e0f5459f975d1d"
+   "bytes": 21014,
+   "sha256": "ea209acaba572878c5892d4700ba169181fea82ae47d96cc7a23fedfce7b60f6"
   },
   {
    "path": "pages/pics/img/animals-megalodon-skeleton-2400.webp",
    "url": "/static/img/animals-megalodon-skeleton-2400.webp",
-   "bytes": 31020,
-   "sha256": "e9c1792ca36f558dab0c07ccc03e69367cd384da961e13f01bb58421952896b8"
+   "bytes": 29870,
+   "sha256": "941084a053585092b9b41c203ed3460934c6651eb899e1c59e021444f401befa"
   },
   {
    "path": "pages/pics/img/animals-megalodon-skeleton-800.avif",
    "url": "/static/img/animals-megalodon-skeleton-800.avif",
-   "bytes": 5256,
-   "sha256": "57e6a1c4f841c640cbf68b3c458104151d7ba4b87dd6749623bf74661002e4b6"
+   "bytes": 5173,
+   "sha256": "32d6f624f192e9ad94b2b5ab763e32346f369214ae1389dcfab74960ac1fe144"
   },
   {
    "path": "pages/pics/img/animals-megalodon-skeleton-800.webp",
    "url": "/static/img/animals-megalodon-skeleton-800.webp",
-   "bytes": 7078,
-   "sha256": "c4aba39f1bbf71450a1195a48e302a87828199921918f48a635cb2fbd0aa964b"
+   "bytes": 6930,
+   "sha256": "019b3e86dd99f55666575772d0dd9f3459807516a036cf3a7fc952693b56b650"
   },
   {
    "path": "pages/pics/img/animals-megalodon-skeleton-head-1600.avif",
    "url": "/static/img/animals-megalodon-skeleton-head-1600.avif",
-   "bytes": 21231,
-   "sha256": "de0d723951358022312a87f5ff5bf0345e3ce987a46f10f08d4adfce68b7d7c8"
+   "bytes": 20405,
+   "sha256": "da162fceb1ed138b67899fa188a76ef98eafd1f3f53abe89733719ec7b7191fe"
   },
   {
    "path": "pages/pics/img/animals-megalodon-skeleton-head-1600.webp",
    "url": "/static/img/animals-megalodon-skeleton-head-1600.webp",
-   "bytes": 29760,
-   "sha256": "a53f57e11fa071671f1f87375565363d1812d510def2e991e51d0cd20bdd8bf2"
+   "bytes": 28542,
+   "sha256": "1e67588b638a9e5ebb9b01daae9495619b21551a254b1323da72a7b72b640a42"
   },
   {
    "path": "pages/pics/img/animals-megalodon-skeleton-head-800.avif",
    "url": "/static/img/animals-megalodon-skeleton-head-800.avif",
-   "bytes": 8388,
-   "sha256": "bd8d886b49b8b31a298bccf498df2e2caa9b842b73055f56a59ef0d686cd17ee"
+   "bytes": 8259,
+   "sha256": "eb14f5e81a3051ec6ff2922b5363b492ceb6271e3991ce813dfc13a93e74998b"
   },
   {
    "path": "pages/pics/img/animals-megalodon-skeleton-head-800.webp",
    "url": "/static/img/animals-megalodon-skeleton-head-800.webp",
-   "bytes": 12934,
-   "sha256": "77dc6d5d789a1e767d3b19d9287b2b3e316df3300fa6a871301de314896d55f6"
+   "bytes": 12440,
+   "sha256": "aa6d5df2a68699be2678ccc7e2e395c666c856c0aa84baa4ccdddc0aaa10be96"
   },
   {
    "path": "pages/pics/img/animals-og-de-1200x630.png",
