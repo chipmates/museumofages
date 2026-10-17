@@ -144,7 +144,7 @@
   "title": "Stegosaurus-Größe: bis zu etwa 9 m lang | Museum of Ages",
   "description": "Stegosaurus: Die größten Tiere wurden etwa 9 m lang. Sophie in London, ein junges Tier, ist etwa 5,6 m lang und nach einem Modell etwa 1,6 t schwer.",
   "og_title": "Stegosaurus-Größe: bis zu etwa 9 m lang",
-  "og_image_alt": "Ein Stegosaurus von der Seite: ein kleiner, tief sitzender Kopf, zwei Reihen hoher Platten auf dem gewölbten Rücken, zwei seiner vier Schwanzstacheln, die Vorderbeine kürzer als die Hinterbeine. Daneben ein grauer Mensch, dessen Kopf unter der Oberkante des Rückens bleibt."
+  "og_image_alt": "Unser Stegosaurus von der Seite, 5,6 m vom Schnabel bis zur Schwanzspitze, der Rücken über der Hüfte 1,9 m hoch: ein kleiner, tief sitzender Kopf, zwei Reihen hoher Platten auf dem gewölbten Rücken, zwei seiner vier Schwanzstacheln, die Vorderbeine kürzer als die Hinterbeine. Daneben ein grauer Mensch von 1,70 m, dessen Kopf unter der Oberkante des Rückens bleibt."
  },
  "labels": {
   "crumbs": "Du bist hier",
@@ -166,7 +166,7 @@
    "pic": "side",
    "tag": "tag_made",
    "what": "Unser Stegosaurus, nach Sophie gebaut, neben einem Menschen von 1,70 m, im selben Maßstab: 5,6 m vom Schnabel bis zur Schwanzspitze, so lang wie gut drei Menschen, die hintereinander liegen, der Kopf etwa auf Schulterhöhe des Menschen.",
-   "alt": "Ein Stegosaurus von der Seite: ein kleiner, tief sitzender Kopf, zwei Reihen hoher Platten auf dem gewölbten Rücken, zwei seiner vier Schwanzstacheln, die Vorderbeine kürzer als die Hinterbeine. Daneben ein grauer Mensch, dessen Kopf unter der Oberkante des Rückens bleibt.",
+   "alt": "Unser Stegosaurus von der Seite, 5,6 m vom Schnabel bis zur Schwanzspitze, der Rücken über der Hüfte 1,9 m hoch: ein kleiner, tief sitzender Kopf, zwei Reihen hoher Platten auf dem gewölbten Rücken, zwei seiner vier Schwanzstacheln, die Vorderbeine kürzer als die Hinterbeine. Daneben ein grauer Mensch von 1,70 m, dessen Kopf unter der Oberkante des Rückens bleibt.",
    "note": "Unsere eigene Rekonstruktion, nach veröffentlichten Maßen in Code gebaut und in unserer Engine gerendert. Keine Fotos.",
    "marks": [
     {
@@ -308,6 +308,7 @@
    "h": "Die Schwanzstacheln des Stegosaurus",
    "paras": [
     "Sophies vier Schwanzstacheln, zwei Paare, sind als Knochen 35 bis 38 cm lang, an allen fehlt die Spitze, und mit Hornscheide war jeder Stachel noch etwas länger. Die Stacheln zeigten fast waagrecht zur Seite und nach hinten. Das legt ein anderes Skelett nahe, dessen Schwanzknochen noch an Ort und Stelle lagen. An Sophies Montage stehen die vier dagegen schräg nach oben.",
+    "Viele Seiten nennen 60 bis 90 cm pro Stachel. Die Zahl stammt aus einer Studie von 1998 über ein anderes Skelett aus Colorado, und Sophie war ein junges Tier.",
     "Höchstwahrscheinlich waren es Waffen. Von 51 untersuchten Stegosaurier-Stacheln aus der Morrison-Formation in Nordamerika hat etwa jeder zehnte eine abgebrochene Spitze, bei manchen ist der Bruch verheilt. Ein Schwanzwirbel eines Allosaurus hat sogar ein Loch, in das eine Stachelspitze passt. Im Englischen heißen die Schwanzstacheln oft „Thagomizer“: Der Spitzname stammt aus einem Witz in einem Far-Side-Cartoon der frühen 1980er-Jahre, und Forscher übernahmen ihn, aber nur inoffiziell."
    ]
   },
@@ -318,6 +319,7 @@
    "h": "Das Gehirn des Stegosaurus und das „zweite Gehirn“",
    "paras": [
     "Für seinen großen Körper hatte der Stegosaurus ein sehr kleines Gehirn. Den Raum dafür im Schädel verglich man lange mit einer Walnuss, das Londoner Museum mit einer Pflaume, doch ein Reptiliengehirn füllt diesen Raum nicht aus, das Gehirn war also noch kleiner.",
+    "Viele Seiten nennen für sein Gehirn eine Zahl in Gramm. Solche Zahlen beruhen auf einem Abguss des Hirnraums, den das Gehirn nicht ausfüllte, und können darum nur eine Obergrenze sein.",
     "In den 1880er- und 1890er-Jahren fand Othniel Marsh im Rückgrat über der Hüfte einen Hohlraum, mindestens zwanzigmal so groß wie der des Gehirns, und nannte ihn vorsichtig eine hintere Hirnkapsel. Ein „zweites Gehirn“ gab es nicht. In dem Raum lag höchstwahrscheinlich, wie bei Vögeln, ein Polster aus weichem Gewebe, reich an Glykogen, einem gespeicherten Zucker. Wozu es diente, ist nicht geklärt."
    ]
   },
@@ -448,7 +450,7 @@
     },
     {
      "term": "4 m hoch und 5 t",
-     "text": "Keine Studie, die wir gelesen haben, nennt eine dieser Zahlen. Keine nennt eine Höhe oder ein Gewicht für einen benannten, ausgewachsenen Stegosaurus."
+     "text": "Keine Studie, die wir gelesen haben, nennt eine dieser Zahlen. Keine nennt eine Höhe oder ein Gewicht für einen benannten, ausgewachsenen Stegosaurus. Bekannte Dinosaurierbücher geben den größten bis etwa 5 t, eine Schätzung aus Büchern für ausgewachsene Tiere, kein Modell eines Skeletts."
     },
     {
      "term": "3,75 t und über 7 t",
@@ -501,7 +503,7 @@
    "items": [
     {
      "q": "Wie schwer war ein Stegosaurus?",
-     "a": "Nach einem 3D-Modell des Skeletts kommt Sophie, ein junges Tier, auf etwa 1,6 t (1,1 bis 2,3 t), so viel wie ein kleines Nashorn, sagt das Londoner Museum. Formeln nach der Dicke der Beinknochen ergeben mehr, weil ein junges Tier für sein Gewicht dicke Beine hat. Für die größten Tiere der Gattung nennt keine Studie, die wir gelesen haben, ein Gewicht."
+     "a": "Nach einem 3D-Modell des Skeletts kommt Sophie, ein junges Tier, auf etwa 1,6 t (1,1 bis 2,3 t), so viel wie ein kleines Nashorn, sagt das Londoner Museum. Formeln nach der Dicke der Beinknochen ergeben mehr, weil ein junges Tier für sein Gewicht dicke Beine hat. Für die größten Tiere der Gattung nennt keine Studie, die wir gelesen haben, ein Gewicht. Bekannte Dinosaurierbücher geben einem ausgewachsenen Stegosaurus stenops etwa 6,5 m und 3,5 t, den größten bis etwa 5 t. Das sind Schätzungen aus Büchern für ausgewachsene Tiere, Sophies 1,6 t dagegen sind das Modell eines jungen Tiers."
     },
     {
      "q": "Was bedeutet der Name Stegosaurus?",

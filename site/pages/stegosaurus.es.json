@@ -139,7 +139,7 @@
   "title": "Stegosaurus: tamaño de hasta unos 9 m | Museum of Ages",
   "description": "¿Cuánto medía el estegosaurio? Los más grandes, unos 9 m de largo. Sophie, en Londres, un ejemplar joven, mide unos 5,6 m y un modelo le da unas 1,6 t.",
   "og_title": "Stegosaurus: tamaño de hasta unos 9 m",
-  "og_image_alt": "Un Stegosaurus de lado: una cabeza pequeña y baja, dos filas de placas altas a lo largo del lomo arqueado, dos de sus cuatro púas de la cola y las patas delanteras más cortas que las traseras. A su lado, una persona gris con la cabeza por debajo de lo alto del lomo."
+  "og_image_alt": "Nuestro Stegosaurus de lado, 5,6 m del pico a la punta de la cola, con lo alto del lomo a 1,9 m sobre la cadera: una cabeza pequeña y baja, dos filas de placas altas a lo largo del lomo arqueado, dos de sus cuatro púas de la cola y las patas delanteras más cortas que las traseras. A su lado, una persona gris de 1,70 m con la cabeza por debajo de lo alto del lomo."
  },
  "labels": {
   "crumbs": "Estás aquí",
@@ -161,7 +161,7 @@
    "pic": "side",
    "tag": "tag_made",
    "what": "Nuestro Stegosaurus, hecho según Sophie, junto a una persona de 1,70 m, a la misma escala: 5,6 m del pico a la punta de la cola, poco más de tres personas tumbadas una detrás de otra, con su cabeza más o menos a la altura del hombro de la persona.",
-   "alt": "Un Stegosaurus de lado: una cabeza pequeña y baja, dos filas de placas altas a lo largo del lomo arqueado, dos de sus cuatro púas de la cola y las patas delanteras más cortas que las traseras. A su lado, una persona gris con la cabeza por debajo de lo alto del lomo.",
+   "alt": "Nuestro Stegosaurus de lado, 5,6 m del pico a la punta de la cola, con lo alto del lomo a 1,9 m sobre la cadera: una cabeza pequeña y baja, dos filas de placas altas a lo largo del lomo arqueado, dos de sus cuatro púas de la cola y las patas delanteras más cortas que las traseras. A su lado, una persona gris de 1,70 m con la cabeza por debajo de lo alto del lomo.",
    "note": "Nuestra propia reconstrucción, construida en código a partir de medidas publicadas y renderizada con nuestro propio motor gráfico. No son fotografías.",
    "marks": [
     {
@@ -303,6 +303,7 @@
    "h": "Las púas de la cola del Stegosaurus",
    "paras": [
     "Las cuatro púas de la cola de Sophie, en dos pares, miden de 35 a 38 cm de hueso, a todas les falta la punta, y su vaina córnea las hacía un poco más largas. Apuntaban hacia los lados y hacia atrás, casi en horizontal, como sugiere otro esqueleto con los huesos de la cola todavía en su sitio, aunque el montaje de Sophie las tiene levantadas.",
+    "Muchas páginas dan de 60 a 90 cm por púa. Esa cifra viene de un estudio de 1998 sobre otro esqueleto, de Colorado, y Sophie era un animal joven.",
     "Muy probablemente eran armas. De 51 púas de animales del grupo del Stegosaurus de la Formación Morrison, en América del Norte, más o menos una de cada diez tiene la punta rota, y algunas se curaron. Una vértebra de la cola de un Allosaurus tiene incluso un agujero en el que encaja la punta de una púa. En inglés, a las púas de la cola se les dice a menudo «thagomizer»: el apodo nació como una broma en una viñeta de The Far Side de principios de la década de 1980, y los científicos lo adoptaron de manera informal."
    ]
   },
@@ -313,6 +314,7 @@
    "h": "El cerebro del Stegosaurus y el «segundo cerebro»",
    "paras": [
     "Para un cuerpo tan grande, el Stegosaurus tenía un cerebro muy pequeño. El espacio para el cerebro dentro del cráneo se comparó durante mucho tiempo con una nuez, y el museo de Londres lo compara con una ciruela, pero el cerebro de un reptil no llena ese espacio, así que el cerebro era todavía más pequeño.",
+    "Muchas páginas dan una cifra en gramos para su cerebro. Esas cifras se basan en un molde del espacio del cerebro, que el cerebro no llenaba, así que solo pueden ser un límite superior.",
     "En las décadas de 1880 y 1890, Othniel Marsh encontró en la columna, sobre la cadera, un espacio al menos veinte veces más grande que el del cerebro, y lo llamó, con cautela, caja cerebral trasera. No había ningún «segundo cerebro». Como en las aves, ese espacio muy probablemente guardaba un bulto blando de tejido rico en glucógeno, un azúcar de reserva. Para qué servía no está establecido."
    ]
   },
@@ -443,7 +445,7 @@
     },
     {
      "term": "4 m de alto y 5 toneladas",
-     "text": "Ningún estudio de los que leímos da ninguna de las dos cifras. Ninguno da una altura ni un peso para un Stegosaurus adulto con nombre."
+     "text": "Ningún estudio de los que leímos da ninguna de las dos cifras. Ninguno da una altura ni un peso para un Stegosaurus adulto con nombre. Libros conocidos sobre dinosaurios dan a los más grandes hasta unas 5 toneladas, una estimación de libros para animales adultos, no el modelo de un esqueleto."
     },
     {
      "term": "3,75 toneladas y más de 7",
@@ -496,7 +498,7 @@
    "items": [
     {
      "q": "¿Cuánto pesaba el Stegosaurus?",
-     "a": "Según un modelo 3D del esqueleto, Sophie, un animal joven, llega a unas 1,6 toneladas (de 1,1 a 2,3), el peso de un rinoceronte pequeño, dice el museo de Londres. Las fórmulas basadas en los huesos de las patas dan más, porque un animal joven tiene las patas gruesas para su peso. Para los Stegosaurus más grandes, ningún estudio de los que leímos da un peso."
+     "a": "Según un modelo 3D del esqueleto, Sophie, un animal joven, llega a unas 1,6 toneladas (de 1,1 a 2,3), el peso de un rinoceronte pequeño, dice el museo de Londres. Las fórmulas basadas en los huesos de las patas dan más, porque un animal joven tiene las patas gruesas para su peso. Para los Stegosaurus más grandes, ningún estudio de los que leímos da un peso. Libros conocidos sobre dinosaurios dan a un Stegosaurus stenops adulto unos 6,5 m y 3,5 toneladas, y a los más grandes hasta unas 5 toneladas. Son estimaciones de libros para animales adultos, mientras que las 1,6 toneladas de Sophie son el modelo de uno joven."
     },
     {
      "q": "¿Qué significa el nombre Stegosaurus?",

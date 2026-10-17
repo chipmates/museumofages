@@ -139,7 +139,7 @@
   "title": "Stegosaurus size: up to about 9 m (30 ft) | Museum of Ages",
   "description": "Stegosaurus: the largest were about 9 m (30 ft) long. Sophie in London, a young animal, is about 5.6 m (18 ft) long and about 1.6 t by a model.",
   "og_title": "Stegosaurus size: up to about 9 m (30 ft)",
-  "og_image_alt": "A Stegosaurus from the side: a small low head, two rows of tall plates along the arched back, two of its four tail spikes, the front legs shorter than the hind legs. Beside it a grey person whose head stays below the top of its back."
+  "og_image_alt": "Our Stegosaurus from the side, 5.6 m (18 ft) from beak to tail tip, its back 1.9 m (6.4 ft) high over the hips: a small low head, two rows of tall plates along the arched back, two of its four tail spikes, the front legs shorter than the hind legs. Beside it a grey person 1.70 m tall whose head stays below the top of its back."
  },
  "labels": {
   "crumbs": "You are here",
@@ -161,7 +161,7 @@
    "pic": "side",
    "tag": "tag_made",
    "what": "Our Stegosaurus, built after Sophie, beside a person 1.70 m tall, to one scale: 5.6 m (18 ft) from beak to tail tip, a little over three people lying head to foot, its head about at the person's shoulder.",
-   "alt": "A Stegosaurus from the side: a small low head, two rows of tall plates along the arched back, two of its four tail spikes, the front legs shorter than the hind legs. Beside it a grey person whose head stays below the top of its back.",
+   "alt": "Our Stegosaurus from the side, 5.6 m (18 ft) from beak to tail tip, its back 1.9 m (6.4 ft) high over the hips: a small low head, two rows of tall plates along the arched back, two of its four tail spikes, the front legs shorter than the hind legs. Beside it a grey person 1.70 m tall whose head stays below the top of its back.",
    "note": "Our own reconstruction, built in code from published measurements and rendered in our own engine. Not photographs.",
    "marks": [
     {
@@ -218,8 +218,8 @@
   {
    "type": "numbers",
    "id": "numbers",
-   "nav": "Stegosaurus size, height and weight: the numbers",
-   "h": "Stegosaurus size, height and weight: the numbers",
+   "nav": "Stegosaurus size, height and weight: the facts",
+   "h": "Stegosaurus size, height and weight: the facts",
    "unit": "Metres and feet, tonnes. Each height cell names the point it measures. An empty cell has no sourced figure.",
    "cols": [
     "Animal",
@@ -303,6 +303,7 @@
    "h": "Stegosaurus tail spikes: the thagomizer",
    "paras": [
     "Sophie's four tail spikes, in two pairs, are 35 to 38 cm (14 to 15 in) of bone, their tips missing, and horn sheaths made them a little longer. They pointed out to the sides and back, close to level, as another skeleton with its tail bones in place suggests, though Sophie's mount holds them raised.",
+    "Many sites give 60 to 90 cm (2 to 3 ft) a spike. That figure comes from a study of 1998 on another skeleton, from Colorado, and Sophie was a young animal.",
     "Most likely they were weapons. Of 51 stegosaur spikes from North America's Morrison Formation, about one in ten has a broken tip, some healed. One Allosaurus tail bone even has a hole that a spike tip fits. The nickname thagomizer began as a joke in a Far Side cartoon of the early 1980s, and scientists took it up informally."
    ]
   },
@@ -313,6 +314,7 @@
    "h": "Stegosaurus brain, and the “second brain”",
    "paras": [
     "For so big a body, Stegosaurus had a very small brain. The space for it in the skull has long been likened to a walnut, by the London museum to a plum, but a reptile's brain does not fill it, so the brain was smaller still.",
+    "Many sites give a figure in grams for its brain. Such figures rest on a cast of the brain space, which the brain did not fill, so they can only be an upper limit.",
     "In the 1880s and 1890s Othniel Marsh found a space in the backbone over the hips at least twenty times as big as the brain's, and called it, carefully, a rear brain case. There was no “second brain”. As in birds, the space most likely held a soft lump of tissue rich in glycogen, a stored sugar. What it did is not settled."
    ]
   },
@@ -443,7 +445,7 @@
     },
     {
      "term": "4 m tall, and 5 tonnes",
-     "text": "No study we read gives either. None gives a height or a weight for a named full-grown Stegosaurus."
+     "text": "No study we read gives either. None gives a height or a weight for a named full-grown Stegosaurus. Popular dinosaur books give the largest up to about 5 tonnes, a book estimate for full-grown animals, not a model of a skeleton."
     },
     {
      "term": "3.75 tonnes, and over 7",
@@ -496,7 +498,7 @@
    "items": [
     {
      "q": "How heavy was Stegosaurus?",
-     "a": "By a 3D model of the skeleton, Sophie, a young animal, comes to about 1.6 tonnes (1.1 to 2.3), a small rhino's weight, says the London museum. Leg-bone rules give more, since a young animal's legs are thick for its weight. For the biggest Stegosaurus, no study we read gives a weight."
+     "a": "By a 3D model of the skeleton, Sophie, a young animal, comes to about 1.6 tonnes (1.1 to 2.3), a small rhino's weight, says the London museum. Leg-bone rules give more, since a young animal's legs are thick for its weight. For the biggest Stegosaurus, no study we read gives a weight. Popular dinosaur books give a grown Stegosaurus stenops about 6.5 m (21 ft) and 3.5 tonnes, and the largest up to about 5 tonnes. Those are book estimates for full-grown animals, while Sophie's 1.6 tonnes is a model of a young one."
     },
     {
      "q": "What does the name Stegosaurus mean?",

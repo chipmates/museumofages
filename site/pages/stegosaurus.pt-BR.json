@@ -139,7 +139,7 @@
   "title": "Estegossauro: tamanho de até cerca de 9 m | Museum of Ages",
   "description": "Qual era o tamanho do estegossauro? Os maiores, cerca de 9 m. Sophie, em Londres, um animal jovem, tem cerca de 5,6 m e, por um modelo, cerca de 1,6 t.",
   "og_title": "Estegossauro: tamanho de até cerca de 9 m",
-  "og_image_alt": "Um estegossauro de lado: uma cabeça pequena e baixa, duas fileiras de placas altas ao longo do dorso arqueado, dois dos quatro espinhos da cauda e as patas da frente mais curtas que as de trás. Ao lado, uma pessoa cinza com a cabeça abaixo do alto do dorso."
+  "og_image_alt": "O nosso estegossauro de lado, 5,6 m do bico à ponta da cauda, com o alto do dorso a 1,9 m acima do quadril: uma cabeça pequena e baixa, duas fileiras de placas altas ao longo do dorso arqueado, dois dos quatro espinhos da cauda e as patas da frente mais curtas que as de trás. Ao lado, uma pessoa cinza de 1,70 m com a cabeça abaixo do alto do dorso."
  },
  "labels": {
   "crumbs": "Você está aqui",
@@ -161,7 +161,7 @@
    "pic": "side",
    "tag": "tag_made",
    "what": "O nosso estegossauro, feito a partir de Sophie, ao lado de uma pessoa de 1,70 m, na mesma escala: 5,6 m do bico à ponta da cauda, pouco mais de três pessoas deitadas uma atrás da outra, com a cabeça dele mais ou menos na altura do ombro da pessoa.",
-   "alt": "Um estegossauro de lado: uma cabeça pequena e baixa, duas fileiras de placas altas ao longo do dorso arqueado, dois dos quatro espinhos da cauda e as patas da frente mais curtas que as de trás. Ao lado, uma pessoa cinza com a cabeça abaixo do alto do dorso.",
+   "alt": "O nosso estegossauro de lado, 5,6 m do bico à ponta da cauda, com o alto do dorso a 1,9 m acima do quadril: uma cabeça pequena e baixa, duas fileiras de placas altas ao longo do dorso arqueado, dois dos quatro espinhos da cauda e as patas da frente mais curtas que as de trás. Ao lado, uma pessoa cinza de 1,70 m com a cabeça abaixo do alto do dorso.",
    "note": "A nossa própria reconstrução, construída em código a partir de medidas publicadas e renderizada com o nosso próprio motor gráfico. Não são fotografias.",
    "marks": [
     {
@@ -303,6 +303,7 @@
    "h": "Os espinhos da cauda do estegossauro",
    "paras": [
     "Os quatro espinhos da cauda de Sophie, em dois pares, têm de 35 a 38 cm de osso, todos sem a ponta, e a bainha córnea os deixava um pouco mais longos. Eles apontavam para os lados e para trás, quase na horizontal, como sugere outro esqueleto com os ossos da cauda ainda no lugar, embora a montagem de Sophie os mostre levantados.",
+    "Muitos sites dão de 60 a 90 cm por espinho. Esse número vem de um estudo de 1998 sobre outro esqueleto, do Colorado, e Sophie era um animal jovem.",
     "Muito provavelmente eram armas. De 51 espinhos de animais do grupo do estegossauro da Formação Morrison, na América do Norte, cerca de um em cada dez tem a ponta quebrada, e alguns cicatrizaram. Uma vértebra da cauda de um Allosaurus tem até um buraco onde a ponta de um espinho se encaixa. Em inglês, os espinhos da cauda costumam ser chamados de “thagomizer”: o apelido surgiu como uma piada num cartum de The Far Side do início da década de 1980, e os cientistas passaram a usá-lo de modo informal."
    ]
   },
@@ -313,6 +314,7 @@
    "h": "O cérebro do estegossauro e o “segundo cérebro”",
    "paras": [
     "Para um corpo tão grande, o estegossauro tinha um cérebro muito pequeno. Por muito tempo se comparou o espaço para o cérebro dentro do crânio a uma noz, e o museu de Londres o compara a uma ameixa, mas o cérebro de um réptil não preenche esse espaço, então o cérebro era ainda menor.",
+    "Muitos sites dão um número em gramas para o cérebro dele. Esses números se baseiam num molde do espaço do cérebro, que o cérebro não preenchia, então só podem ser um limite superior.",
     "Nas décadas de 1880 e 1890, Othniel Marsh encontrou na coluna, acima do quadril, um espaço pelo menos vinte vezes maior que o do cérebro, e o chamou, com cautela, de caixa cerebral traseira. Não havia nenhum “segundo cérebro”. Como nas aves, esse espaço muito provavelmente guardava uma massa macia de tecido rico em glicogênio, um açúcar de reserva. Para que ele servia não está estabelecido."
    ]
   },
@@ -443,7 +445,7 @@
     },
     {
      "term": "4 m de altura e 5 toneladas",
-     "text": "Nenhum estudo que lemos dá qualquer um dos dois números. Nenhum dá uma altura ou um peso para um estegossauro adulto com nome."
+     "text": "Nenhum estudo que lemos dá qualquer um dos dois números. Nenhum dá uma altura ou um peso para um estegossauro adulto com nome. Livros conhecidos sobre dinossauros dão aos maiores até cerca de 5 toneladas, uma estimativa de livros para animais adultos, não o modelo de um esqueleto."
     },
     {
      "term": "3,75 toneladas e mais de 7",
@@ -496,7 +498,7 @@
    "items": [
     {
      "q": "Quanto pesava o estegossauro?",
-     "a": "Por um modelo 3D do esqueleto, Sophie, um animal jovem, chega a cerca de 1,6 toneladas (de 1,1 a 2,3), o peso de um rinoceronte pequeno, diz o museu de Londres. Fórmulas baseadas nos ossos das patas dão mais, porque um animal jovem tem patas grossas para o próprio peso. Para os maiores estegossauros, nenhum estudo que lemos dá um peso."
+     "a": "Por um modelo 3D do esqueleto, Sophie, um animal jovem, chega a cerca de 1,6 toneladas (de 1,1 a 2,3), o peso de um rinoceronte pequeno, diz o museu de Londres. Fórmulas baseadas nos ossos das patas dão mais, porque um animal jovem tem patas grossas para o próprio peso. Para os maiores estegossauros, nenhum estudo que lemos dá um peso. Livros conhecidos sobre dinossauros dão a um Stegosaurus stenops adulto cerca de 6,5 m e 3,5 toneladas, e aos maiores até cerca de 5 toneladas. São estimativas de livros para animais adultos, enquanto as 1,6 toneladas de Sophie são o modelo de um jovem."
     },
     {
      "q": "O que significa o nome Stegosaurus?",
