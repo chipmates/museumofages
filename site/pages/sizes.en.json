@@ -51,6 +51,7 @@
   "top": {
     "h1": "How big is the Mona Lisa?",
     "answer": "The Mona Lisa is 79.4 by 53.4 centimetres, 31 by 21 inches. Beside a person of 1.7 metres it is less than half as tall, and a little over half a metre wide. The Last Supper is 8.8 metres wide: sixteen Mona Lisas would fit across it side by side.",
+    "answer_more": "Many books and websites give 77 by 53 centimetres, or 30 by 21 inches. That is an older official figure. The Louvre's record now gives 79.4 by 53.4 centimetres, the size of the wooden panel as measured for a scientific study published in 2006. With its frame it measures 1.01 metres by 77 centimetres, the Louvre says.",
     "order": "All sizes are height by width.",
     "figure": {
       "work": "mona-lisa",
@@ -202,7 +203,97 @@
       "id": "sources",
       "nav": "Sources",
       "h": "Sources",
-      "intro": "The sizes are the holders' own measurements of the originals. The museum names these museums and collections because they hold the originals, and is independent of every one of them.",
+      "intro": "The sizes are the holders' own measurements of the originals. The museum names these museums and collections because they hold the originals, and is independent of every one of them. The holders' records we read for the sizes:",
+      "read": [
+        {
+          "text": "Musée du Louvre, Mona Lisa",
+          "href": "https://collections.louvre.fr/en/ark:/53355/cl010062370"
+        },
+        {
+          "text": "Gallerie degli Uffizi, The Baptism of Christ",
+          "href": "https://www.uffizi.it/en/artworks/verrocchio-leonardo-baptism-of-christ"
+        },
+        {
+          "text": "Gallerie degli Uffizi, Annunciation",
+          "href": "https://www.uffizi.it/en/artworks/annunciation"
+        },
+        {
+          "text": "National Gallery of Art, Ginevra de' Benci",
+          "href": "https://www.nga.gov/collection/art-object-page.50724.html"
+        },
+        {
+          "text": "Alte Pinakothek, Madonna of the Carnation",
+          "href": "https://www.sammlung.pinakothek.de/en/artwork/Y0GR916LRX/leonardo-da-vinci/madonna-mit-der-nelke"
+        },
+        {
+          "text": "State Hermitage Museum, Benois Madonna (in Russian)",
+          "href": "https://www.hermitagemuseum.org/digital-collection/29908"
+        },
+        {
+          "text": "Pinacoteca Vaticana, Saint Jerome",
+          "href": "https://www.museivaticani.va/content/museivaticani/en/collezioni/musei/la-pinacoteca/sala-ix---secolo-xv-xvi/leonardo-da-vinci--s--girolamo.html"
+        },
+        {
+          "text": "Gallerie degli Uffizi, Adoration of the Magi",
+          "href": "https://www.uffizi.it/en/artworks/leonardo-adoration-of-the-magi"
+        },
+        {
+          "text": "Musée du Louvre, Annunciation, predella panel",
+          "href": "https://collections.louvre.fr/en/ark:/53355/cl010064973"
+        },
+        {
+          "text": "Musée du Louvre, Virgin of the Rocks",
+          "href": "https://collections.louvre.fr/en/ark:/53355/cl010062373"
+        },
+        {
+          "text": "Regione Lombardia, catalogue record of the Portrait of a Musician",
+          "href": "https://www.lombardiabeniculturali.it/opere-arte/schede-complete/L0040-00015/"
+        },
+        {
+          "text": "National Museum in Kraków, the conservators' paper on the Lady with an Ermine (PDF, in Polish)",
+          "href": "https://mnk.pl/wp-content/uploads/2026/05/R4-Chmielewska.pdf"
+        },
+        {
+          "text": "Musée du Louvre, La Belle Ferronnière",
+          "href": "https://collections.louvre.fr/en/ark:/53355/cl010062372"
+        },
+        {
+          "text": "State Hermitage Museum, Madonna Litta (in Russian)",
+          "href": "https://www.hermitagemuseum.org/digital-collection/29633"
+        },
+        {
+          "text": "National Gallery, The Burlington House Cartoon",
+          "href": "https://www.nationalgallery.org.uk/paintings/leonardo-da-vinci-the-burlington-house-cartoon"
+        },
+        {
+          "text": "Musée du Louvre, the Anghiari drawing",
+          "href": "https://collections.louvre.fr/en/ark:/53355/cl020110446"
+        },
+        {
+          "text": "National Gallery, Virgin of the Rocks",
+          "href": "https://www.nationalgallery.org.uk/paintings/leonardo-da-vinci-the-virgin-of-the-rocks"
+        },
+        {
+          "text": "Musée du Louvre, The Virgin and Child with Saint Anne",
+          "href": "https://collections.louvre.fr/en/ark:/53355/cl010066107"
+        },
+        {
+          "text": "Musée du Louvre, Saint John the Baptist",
+          "href": "https://collections.louvre.fr/en/ark:/53355/cl010062374"
+        },
+        {
+          "text": "Complesso della Pilotta, La Scapigliata",
+          "href": "https://complessopilotta.it/en/opera/testa-di-fanciulla-detta-la-scapiliata-en/"
+        },
+        {
+          "text": "Musée du Louvre, Bacchus",
+          "href": "https://collections.louvre.fr/en/ark:/53355/cl010062371"
+        },
+        {
+          "text": "Museo del Cenacolo Vinciano, The Last Supper",
+          "href": "https://cenacolovinciano.org/en/museum/the-works/the-last-supper-leonardo-da-vinci-1452-1519/"
+        }
+      ],
       "notes": [],
       "contact": "If a size or a holder is wrong, tell us and we will correct it.",
       "contact_link": "To the legal notice",

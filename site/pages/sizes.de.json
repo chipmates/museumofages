@@ -51,6 +51,7 @@
   "top": {
     "h1": "Wie groß ist die Mona Lisa?",
     "answer": "Die Mona Lisa misst 79,4 mal 53,4 Zentimeter. Neben einem Menschen von 1,70 Metern ist sie nicht einmal halb so hoch und etwas mehr als einen halben Meter breit. Das Abendmahl ist 8,8 Meter breit: Sechzehn Mona Lisas hätten nebeneinander darauf Platz.",
+    "answer_more": "Viele Bücher und Websites nennen 77 mal 53 Zentimeter. Das ist eine ältere offizielle Angabe. Der Louvre verzeichnet heute 79,4 mal 53,4 Zentimeter: die Größe der Holztafel, gemessen für eine naturwissenschaftliche Untersuchung, die 2006 erschien. Mit Rahmen misst sie 1,01 Meter mal 77 Zentimeter, sagt der Louvre.",
     "order": "Alle Maße: Höhe mal Breite.",
     "figure": {
       "work": "mona-lisa",
@@ -202,7 +203,97 @@
       "id": "sources",
       "nav": "Quellen",
       "h": "Quellen",
-      "intro": "Die Größen sind die Maße, die die Häuser für die Originale angeben. Das Museum nennt diese Museen und Sammlungen, weil sie die Originale bewahren, und ist von jedem von ihnen unabhängig.",
+      "intro": "Die Größen sind die Maße, die die Häuser für die Originale angeben. Das Museum nennt diese Museen und Sammlungen, weil sie die Originale bewahren, und ist von jedem von ihnen unabhängig. Die Verzeichnisse der Häuser, in denen wir die Größen gelesen haben:",
+      "read": [
+        {
+          "text": "Musée du Louvre, Mona Lisa",
+          "href": "https://collections.louvre.fr/en/ark:/53355/cl010062370"
+        },
+        {
+          "text": "Gallerie degli Uffizi, Taufe Christi",
+          "href": "https://www.uffizi.it/en/artworks/verrocchio-leonardo-baptism-of-christ"
+        },
+        {
+          "text": "Gallerie degli Uffizi, Die Verkündigung",
+          "href": "https://www.uffizi.it/en/artworks/annunciation"
+        },
+        {
+          "text": "National Gallery of Art, Bildnis der Ginevra de' Benci",
+          "href": "https://www.nga.gov/collection/art-object-page.50724.html"
+        },
+        {
+          "text": "Alte Pinakothek, Madonna mit der Nelke",
+          "href": "https://www.sammlung.pinakothek.de/de/artwork/Y0GR916LRX/leonardo-da-vinci/madonna-mit-der-nelke"
+        },
+        {
+          "text": "Staatliche Eremitage, Madonna Benois (auf Russisch)",
+          "href": "https://www.hermitagemuseum.org/digital-collection/29908"
+        },
+        {
+          "text": "Pinacoteca Vaticana, Der heilige Hieronymus",
+          "href": "https://www.museivaticani.va/content/museivaticani/en/collezioni/musei/la-pinacoteca/sala-ix---secolo-xv-xvi/leonardo-da-vinci--s--girolamo.html"
+        },
+        {
+          "text": "Gallerie degli Uffizi, Anbetung der Könige aus dem Morgenland",
+          "href": "https://www.uffizi.it/en/artworks/leonardo-adoration-of-the-magi"
+        },
+        {
+          "text": "Musée du Louvre, Die Verkündigung, Predella",
+          "href": "https://collections.louvre.fr/en/ark:/53355/cl010064973"
+        },
+        {
+          "text": "Musée du Louvre, Felsgrottenmadonna",
+          "href": "https://collections.louvre.fr/en/ark:/53355/cl010062373"
+        },
+        {
+          "text": "Regione Lombardia, Katalogeintrag zum Bildnis eines Musikers",
+          "href": "https://www.lombardiabeniculturali.it/opere-arte/schede-complete/L0040-00015/"
+        },
+        {
+          "text": "Nationalmuseum Krakau, ein Aufsatz seiner Restauratoren zur Dame mit dem Hermelin (PDF, auf Polnisch)",
+          "href": "https://mnk.pl/wp-content/uploads/2026/05/R4-Chmielewska.pdf"
+        },
+        {
+          "text": "Musée du Louvre, La Belle Ferronnière",
+          "href": "https://collections.louvre.fr/en/ark:/53355/cl010062372"
+        },
+        {
+          "text": "Staatliche Eremitage, Madonna Litta (auf Russisch)",
+          "href": "https://www.hermitagemuseum.org/digital-collection/29633"
+        },
+        {
+          "text": "National Gallery, der Burlington-House-Karton",
+          "href": "https://www.nationalgallery.org.uk/paintings/leonardo-da-vinci-the-burlington-house-cartoon"
+        },
+        {
+          "text": "Musée du Louvre, die Zeichnung nach der Schlacht von Anghiari",
+          "href": "https://collections.louvre.fr/en/ark:/53355/cl020110446"
+        },
+        {
+          "text": "National Gallery, Felsgrottenmadonna",
+          "href": "https://www.nationalgallery.org.uk/paintings/leonardo-da-vinci-the-virgin-of-the-rocks"
+        },
+        {
+          "text": "Musée du Louvre, Die Jungfrau mit dem Kind und der heiligen Anna",
+          "href": "https://collections.louvre.fr/en/ark:/53355/cl010066107"
+        },
+        {
+          "text": "Musée du Louvre, Johannes der Täufer",
+          "href": "https://collections.louvre.fr/en/ark:/53355/cl010062374"
+        },
+        {
+          "text": "Complesso della Pilotta, Scapigliata",
+          "href": "https://complessopilotta.it/en/opera/testa-di-fanciulla-detta-la-scapiliata-en/"
+        },
+        {
+          "text": "Musée du Louvre, Bacchus",
+          "href": "https://collections.louvre.fr/en/ark:/53355/cl010062371"
+        },
+        {
+          "text": "Museo del Cenacolo Vinciano, Das Abendmahl",
+          "href": "https://cenacolovinciano.org/en/museum/the-works/the-last-supper-leonardo-da-vinci-1452-1519/"
+        }
+      ],
       "notes": [],
       "contact": "Ist eine Größe oder ein Haus falsch angegeben, schreib uns, und wir korrigieren es.",
       "contact_link": "Zum Impressum",
