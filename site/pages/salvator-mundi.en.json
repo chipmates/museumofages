@@ -1,5 +1,5 @@
 {
-  "_note": "THE WORDS of the Salvator Mundi page, English. Poured from the writer's WORDS file of round 1 word for word, slot by slot. A page of questions: each a section with its answer first (question: answer, known, open); two carry rows (lists: the reports in date order, the views in three groups), and the sales stand in a short table after the price (ledger). The first screen is the answer, the door and the list of the parts (top.jump); the six questions with their answers make the page's FAQ data. Both plates carry the second tier's line, the painting's as the paintings page writes it. The share title is the page's title without the site's name; the share picture's alt is the plate's. No em dash, no en dash, no semicolon.",
+  "_note": "THE WORDS of the Salvator Mundi page, English. Poured from the writer's WORDS file of round 1 word for word, slot by slot. A page of questions: each a section with its answer first (question: answer, known, open); three carry rows (lists: the owner's and the place's reports in date order, the views in three groups), and the sales stand in a short table after the price (ledger). The first screen is the answer, the door and the list of the parts (top.jump); the six questions with their answers make the page's FAQ data. Both plates carry the second tier's line, the painting's as the paintings page writes it. The share title is the page's title without the site's name; the share picture's alt is the plate's. No em dash, no en dash, no semicolon.",
   "page": {
     "id": "vinci-salvator-mundi",
     "wing": "vinci",
@@ -144,7 +144,37 @@
       "h": "Who bought the Salvator Mundi, and who owns it now?",
       "answer": "Its owner has never been publicly confirmed. The buyer of record, reported in December 2017, was the Saudi prince Badr bin Abdullah Al Saud, and according to press reports the real buyer was Saudi Arabia's crown prince, Mohammed bin Salman.",
       "known": [
-        "On 6 December 2017 The New York Times named Prince Badr, who later became Saudi Arabia's first minister of culture, as the buyer. A day later The Wall Street Journal, citing intelligence reports, named the crown prince as the real buyer, and we found no official Saudi statement that confirms it. Abu Dhabi said something else: on 8 December 2017 the Louvre Abu Dhabi announced that the emirate's Department of Culture and Tourism had acquired the painting for the museum, and in June 2018 the department said it had bought it through a proxy. The Saudi embassy said Prince Badr had bought it as an intermediary for Abu Dhabi, Monopol reported in 2019. In June 2018 the Louvre's laboratory examined the painting in Paris with the permission of the Saudi Ministry of Culture, and a Louvre book of 2019, never released, names that ministry as the owner, The Art Newspaper reported in 2021."
+        "The reports and statements point to Saudi Arabia or to Abu Dhabi. In date order:"
+      ],
+      "lists": [
+        {
+          "rows": [
+            {
+              "term": "6 December 2017",
+              "text": "The New York Times named Prince Badr, who later became Saudi Arabia's first minister of culture, as the buyer."
+            },
+            {
+              "term": "7 December 2017",
+              "text": "The Wall Street Journal, citing intelligence reports, named the crown prince as the real buyer. We found no official Saudi statement that confirms it."
+            },
+            {
+              "term": "8 December 2017",
+              "text": "The Louvre Abu Dhabi announced that the emirate's Department of Culture and Tourism had acquired the painting for the museum."
+            },
+            {
+              "term": "June 2018",
+              "text": "The department said it had bought it through a proxy. That month the Louvre's laboratory examined the painting in Paris, with the permission of the Saudi Ministry of Culture."
+            },
+            {
+              "term": "2019",
+              "text": "The Saudi embassy said Prince Badr had bought it as an intermediary for Abu Dhabi, Monopol reported."
+            },
+            {
+              "term": "2021",
+              "text": "The Art Newspaper reported that a Louvre book of 2019, withdrawn from sale, names the Saudi Ministry of Culture as the owner."
+            }
+          ]
+        }
       ],
       "open": "Whether it belongs today to a person or to a state body, and which one, is not public. The owner has said nothing about it in public that we could find."
     },
@@ -155,7 +185,7 @@
       "h": "What does Salvator Mundi mean, and what does the painting show?",
       "answer": "Salvator Mundi is Latin for Saviour of the World. The painting shows Christ from the front, raising his right hand to bless and holding a clear orb in his left.",
       "known": [
-        "The orb has been described in two ways. In 2011 the National Gallery called it rock crystal, and the unreleased Louvre book, as The Art Newspaper reported, found it is glass with air bubbles. According to the same report, the book also found that the blessing hand was painted over the black background, which suggests it was not part of the first plan. In 2025 the art historian Philipp Zitzlsperger argued that the all-blue robe with its low neckline borrows from pictures of women and of the Virgin Mary. Frank Zöllner called the idea important but a little too sensational. Martin Kemp said that if no other Christ wears such a blue robe, that would count for Leonardo."
+        "The orb has been described in two ways. In 2011 the National Gallery called it rock crystal, and the withdrawn Louvre book, as The Art Newspaper reported, found it is glass with air bubbles. According to the same report, the book also found that the blessing hand was painted over the black background, which suggests it was not part of the first plan. In 2025 the art historian Philipp Zitzlsperger argued that the all-blue robe with its low neckline borrows from pictures of women and of the Virgin Mary. Frank Zöllner called the idea important but a little too sensational. Martin Kemp said that if no other Christ wears such a blue robe, that would count for Leonardo."
       ],
       "open": "Who it was painted for is not known. The National Gallery suggested in 2011 that Leonardo probably made it for the French king, Louis XII, and the Louvre's book, as reported, calls that idea weak.",
       "end": [

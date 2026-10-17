@@ -1,5 +1,5 @@
 {
-  "_note": "THE WORDS of the Salvator Mundi page, German. Poured from the writer's WORDS file of round 1 word for word, slot by slot. A page of questions: each a section with its answer first (question: answer, known, open); two carry rows (lists: the reports in date order, the views in three groups), and the sales stand in a short table after the price (ledger). The first screen is the answer, the door and the list of the parts (top.jump); the six questions with their answers make the page's FAQ data. Both plates carry the second tier's line, the painting's as the paintings page writes it. The share title is the page's title without the site's name; the share picture's alt is the plate's. No em dash, no en dash, no semicolon.",
+  "_note": "THE WORDS of the Salvator Mundi page, German. Poured from the writer's WORDS file of round 1 word for word, slot by slot. A page of questions: each a section with its answer first (question: answer, known, open); three carry rows (lists: the owner's and the place's reports in date order, the views in three groups), and the sales stand in a short table after the price (ledger). The first screen is the answer, the door and the list of the parts (top.jump); the six questions with their answers make the page's FAQ data. Both plates carry the second tier's line, the painting's as the paintings page writes it. The share title is the page's title without the site's name; the share picture's alt is the plate's. No em dash, no en dash, no semicolon.",
   "page": {
     "id": "vinci-salvator-mundi",
     "wing": "vinci",
@@ -144,7 +144,37 @@
       "h": "Wer hat den „Salvator Mundi“ gekauft und wem gehört er heute?",
       "answer": "Wem er gehört, ist nie öffentlich bestätigt worden. Als Käufer wurde im Dezember 2017 der saudische Prinz Badr bin Abdullah Al Saud genannt, und laut Presseberichten war der eigentliche Käufer der saudische Kronprinz Mohammed bin Salman.",
       "known": [
-        "Am 6. Dezember 2017 nannte die New York Times Prinz Badr, der später Saudi-Arabiens erster Kulturminister wurde, als Käufer. Einen Tag danach meldete das Wall Street Journal unter Berufung auf Geheimdienstberichte, der eigentliche Käufer sei der Kronprinz. Eine offizielle saudische Bestätigung dafür haben wir nicht gefunden. Abu Dhabi stellte es anders dar: Am 8. Dezember 2017 gab der Louvre Abu Dhabi bekannt, die Kultur- und Tourismusbehörde des Emirats habe das Bild für das Museum erworben, und im Juni 2018 hieß es von dieser Behörde, sie habe es über einen Vermittler gekauft. Die saudische Botschaft erklärte, Prinz Badr habe als Mittelsmann für Abu Dhabi gekauft, wie Monopol 2019 berichtete. Im Juni 2018 untersuchte das Labor des Louvre das Bild in Paris, mit Erlaubnis des saudischen Kulturministeriums, und ein Buch des Louvre von 2019, das nie erschien, nennt dieses Ministerium als Eigentümer, so The Art Newspaper 2021."
+        "Die Berichte und Erklärungen weisen auf Saudi-Arabien oder auf Abu Dhabi, hier der Reihe nach:"
+      ],
+      "lists": [
+        {
+          "rows": [
+            {
+              "term": "6. Dezember 2017",
+              "text": "Die New York Times nannte Prinz Badr, der später Saudi-Arabiens erster Kulturminister wurde, als Käufer."
+            },
+            {
+              "term": "7. Dezember 2017",
+              "text": "Das Wall Street Journal meldete unter Berufung auf Geheimdienstberichte, der eigentliche Käufer sei der Kronprinz. Eine offizielle saudische Bestätigung dafür haben wir nicht gefunden."
+            },
+            {
+              "term": "8. Dezember 2017",
+              "text": "Der Louvre Abu Dhabi gab bekannt, die Kultur- und Tourismusbehörde des Emirats habe das Bild für das Museum erworben."
+            },
+            {
+              "term": "Juni 2018",
+              "text": "Die Behörde erklärte, sie habe es über einen Vermittler gekauft. Im selben Monat untersuchte das Labor des Louvre das Bild in Paris, mit Erlaubnis des saudischen Kulturministeriums."
+            },
+            {
+              "term": "2019",
+              "text": "Die saudische Botschaft erklärte, Prinz Badr habe als Mittelsmann für Abu Dhabi gekauft, wie Monopol berichtete."
+            },
+            {
+              "term": "2021",
+              "text": "The Art Newspaper berichtete, ein 2019 zurückgezogenes Buch des Louvre nenne das saudische Kulturministerium als Eigentümer."
+            }
+          ]
+        }
       ],
       "open": "Ob das Bild heute einer Person gehört oder einer staatlichen Stelle, und welcher, ist nicht öffentlich. Der Eigentümer hat sich, soweit wir sehen, nie öffentlich dazu geäußert."
     },
@@ -155,7 +185,7 @@
       "h": "Was bedeutet „Salvator Mundi“ und was zeigt das Bild?",
       "answer": "„Salvator Mundi“ ist Latein und heißt Erlöser der Welt. Das Bild zeigt Christus von vorn, er segnet mit der erhobenen rechten Hand und hält in der linken eine durchsichtige Kugel.",
       "known": [
-        "Woraus die Kugel ist, wird verschieden beschrieben. Die National Gallery nannte sie 2011 Bergkristall, das unveröffentlichte Buch des Louvre fand laut dem Bericht von The Art Newspaper Glas mit Luftbläschen. Laut demselben Bericht stellte das Buch auch fest, dass die segnende Hand über den schwarzen Hintergrund gemalt ist, sie war also wohl nicht von Anfang an geplant. 2025 vertrat der Kunsthistoriker Philipp Zitzlsperger die These, das ganz blaue Gewand mit dem tiefen Ausschnitt sei Bildern von Frauen und der Jungfrau Maria entlehnt. Frank Zöllner nannte den Gedanken wichtig, aber etwas zu reißerisch. Martin Kemp sagte, wenn kein anderer Christus ein solches blaues Gewand trage, spreche das eher für Leonardo."
+        "Woraus die Kugel ist, wird verschieden beschrieben. Die National Gallery nannte sie 2011 Bergkristall, das zurückgezogene Buch des Louvre fand laut dem Bericht von The Art Newspaper Glas mit Luftbläschen. Laut demselben Bericht stellte das Buch auch fest, dass die segnende Hand über den schwarzen Hintergrund gemalt ist, sie war also wohl nicht von Anfang an geplant. 2025 vertrat der Kunsthistoriker Philipp Zitzlsperger die These, das ganz blaue Gewand mit dem tiefen Ausschnitt sei Bildern von Frauen und der Jungfrau Maria entlehnt. Frank Zöllner nannte den Gedanken wichtig, aber etwas zu reißerisch. Martin Kemp sagte, wenn kein anderer Christus ein solches blaues Gewand trage, spreche das eher für Leonardo."
       ],
       "open": "Für wen das Bild gemalt wurde, ist nicht bekannt. Die National Gallery meinte 2011, Leonardo habe es wahrscheinlich für den französischen König Ludwig XII. gemalt, das Buch des Louvre nennt diese Annahme laut dem Bericht schwach.",
       "end": [
