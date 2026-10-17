@@ -3701,6 +3701,24 @@ class Built(unittest.TestCase):
             self.assertEqual(own.count('data-door="end"'), 1)
             self.assertEqual(own.count('data-door="item"'), 25)
 
+    def test_the_life_pages_door_note_gives_way_on_a_narrow_phone(self):
+        """Below 390 px the life page hides its first door's second note and sets its parts closer, so both rows of parts
+        stay on the first screen; the closing section still says where the door leads, and no other page hides that note
+        (a work page carries the same sheet, but the rule asks for a top that holds the parts)."""
+        rule = re.compile(r"@media\s*\(max-width:\s*389px\)\s*\{\s*\.sp-top:has\(>\.lf-jump\) \.sp-way__leads\s*\{\s*display:\s*none")
+        for path in ("leonardo-da-vinci/life", "de/leonardo-da-vinci/steckbrief"):
+            text = (SITE_BUILT / path / "index.html").read_text(encoding="utf-8")
+            self.assertRegex(text, rule)
+            self.assertRegex(text, r"@media\s*\(max-width:\s*389px\)\s*\{[^@]*\.lf-jump__list a\s*\{\s*margin-right:\s*12px")
+            self.assertIn('class="sp-way__leads"', text)
+            self.assertIn('class="sp-sec sp-close', text[text.index('class="sp-way__leads"'):])
+        for path in ("leonardo-da-vinci/paintings", "de/leonardo-da-vinci/gemaelde"):
+            self.assertNotRegex((SITE_BUILT / path / "index.html").read_text(encoding="utf-8"), rule)
+        # a work page reads the life page's sheet too: its top holds no parts, so its note stays
+        for path in ("leonardo-da-vinci/lady-with-an-ermine", "de/leonardo-da-vinci/dame-mit-dem-hermelin"):
+            top = (SITE_BUILT / path / "index.html").read_text(encoding="utf-8").split('<header class="sp-top', 1)[1].split("</header>", 1)[0]
+            self.assertNotIn('class="lf-jump"', top)
+
     def test_the_life_page_reaches_the_count_by_its_kind(self):
         lists = (HERE.parent / "functions" / "_count" / "lists.js").read_text(encoding="utf-8")
         kinds = json.loads(re.search(r"PAGE_KINDS = Object\.freeze\((\[.*?\])\)", lists).group(1))

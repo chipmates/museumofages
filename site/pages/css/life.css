@@ -24,6 +24,11 @@
 .lf-table td{padding:9px 0 10px;vertical-align:top;color:var(--ink);text-wrap:pretty}
 .lf-table a{display:inline-block;padding:11px 0;margin:-11px 0;color:var(--ink);text-decoration-color:var(--mark)}
 
+/* On a narrow phone both rows of parts stay on the first screen (measured at 360 x 780, German): the door's second
+   note gives way, as the closing door says where it leads again, and the parts set closer, so a row takes one line
+   fewer. Each stays a thumb's height. Only a top that holds the parts: a work page reads this sheet too. */
+@media (max-width:389px){.sp-top:has(>.lf-jump) .sp-way__leads{display:none}.lf-jump__h a,.lf-jump__list a{margin-right:12px}}
+
 /* ---------- His life by its periods ---------- */
 .lf-period{margin-top:44px}
 /* A period opens with a short chalk rule over its heading, as the paintings page's periods do. */
