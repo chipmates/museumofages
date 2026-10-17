@@ -148,6 +148,16 @@
   },
   {
    "type": "question",
+   "id": "worth",
+   "nav": "What it is worth",
+   "h": "What is the Lady with an Ermine worth?",
+   "answer": "There is no price for the painting alone. In December 2016 the Polish state bought the Czartoryski collection, with the painting, for 100 million euros.",
+   "known": [
+    "The deal was signed on 29 December 2016 at the Royal Castle in Warsaw, by the culture minister for the state and by Prince Adam Karol Czartoryski and his family's foundation. For that sum the state received about 86,000 museum objects and about 250,000 books, manuscripts and old prints, the Polish press agency PAP reported, and a separate deed promised it the collection's buildings in Kraków as a gift. Estimates at the time put the whole collection at more than 2 billion euros, and press reports gave the painting's insurance value as about 350 million euros. The prince called the sale a donation, and the foundation's whole board resigned when it learned he was negotiating it."
+   ]
+  },
+  {
+   "type": "question",
    "id": "ermine-or-ferret",
    "nav": "Ermine or ferret?",
    "h": "Is the animal really an ermine, or a ferret?",
@@ -156,16 +166,6 @@
     "The stoat, Mustela erminea, is a small predator with a long body and short legs, about 17 to 33 centimetres from the nose to the root of the tail. In summer it is brown above and pale below, and in winter it turns white, all but the black tip of its tail. In a book on the painting by Katarzyna Bik, the museum's late art historian Janusz Wałek is quoted as saying that the animal is not one taken from nature but Leonardo's own creation. The museum's study of 2012 also found that Leonardo changed the animal's size and pose as he painted."
    ],
    "open": "Whether Leonardo had a live animal in front of him is not known, and we found no study of it by a zoologist."
-  },
-  {
-   "type": "question",
-   "id": "worth",
-   "nav": "What it is worth",
-   "h": "What is the Lady with an Ermine worth?",
-   "answer": "There is no price for the painting alone. In December 2016 the Polish state bought the Czartoryski collection, with the painting, for 100 million euros.",
-   "known": [
-    "The deal was signed on 29 December 2016 at the Royal Castle in Warsaw, by the culture minister for the state and by Prince Adam Karol Czartoryski and his family's foundation. For that sum the state received about 86,000 museum objects and about 250,000 books, manuscripts and old prints, the Polish press agency PAP reported, and a separate deed promised it the collection's buildings in Kraków as a gift. Estimates at the time put the whole collection at more than 2 billion euros, and press reports gave the painting's insurance value as about 350 million euros. The prince called the sale a donation, and the foundation's whole board resigned when it learned he was negotiating it."
-   ]
   },
   {
    "type": "question",

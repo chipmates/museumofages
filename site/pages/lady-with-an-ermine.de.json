@@ -148,6 +148,16 @@
   },
   {
    "type": "question",
+   "id": "worth",
+   "nav": "Was das Bild wert ist",
+   "h": "Was ist die Dame mit dem Hermelin wert?",
+   "answer": "Einen Preis für das Bild allein gibt es nicht. Im Dezember 2016 kaufte der polnische Staat die Sammlung der Czartoryski samt dem Bild für 100 Millionen Euro.",
+   "known": [
+    "Unterzeichnet wurde am 29. Dezember 2016 im Königsschloss in Warschau, vom Kulturminister für den Staat und von Fürst Adam Karol Czartoryski und der Stiftung seiner Familie. Für diese Summe bekam der Staat rund 86.000 Museumsstücke und rund 250.000 Bücher, Handschriften und alte Drucke, meldete die polnische Nachrichtenagentur PAP, und in einem eigenen Vertrag wurden ihm die Gebäude der Sammlung in Krakau als Schenkung versprochen. Schätzungen von damals setzten die ganze Sammlung mit mehr als 2 Milliarden Euro an und Presseberichte nannten für das Bild einen Versicherungswert von rund 350 Millionen Euro. Der Fürst nannte den Verkauf eine Schenkung und der gesamte Vorstand der Stiftung trat zurück, als er von den Verhandlungen erfuhr."
+   ]
+  },
+  {
+   "type": "question",
    "id": "ermine-or-ferret",
    "nav": "Hermelin oder Frettchen?",
    "h": "Ist das Tier wirklich ein Hermelin oder ein Frettchen?",
@@ -156,16 +166,6 @@
     "Das Hermelin, Mustela erminea, ist ein kleines Raubtier mit langem Körper und kurzen Beinen, von der Nase bis zum Schwanzansatz etwa 17 bis 33 Zentimeter lang. Im Sommer ist es oben braun und unten hell, im Winter wird es weiß, bis auf die schwarze Schwanzspitze. In einem Buch von Katarzyna Bik über das Bild wird Janusz Wałek, der verstorbene Kunsthistoriker des Museums, mit den Worten zitiert, das Tier sei nicht nach der Natur gemalt, sondern Leonardos eigene Schöpfung. Und die Untersuchung des Museums von 2012 zeigt, dass Leonardo Größe und Haltung des Tiers beim Malen änderte."
    ],
    "open": "Ob Leonardo ein lebendes Tier vor sich hatte, ist nicht bekannt und eine Studie eines Zoologen dazu haben wir nicht gefunden."
-  },
-  {
-   "type": "question",
-   "id": "worth",
-   "nav": "Was das Bild wert ist",
-   "h": "Was ist die Dame mit dem Hermelin wert?",
-   "answer": "Einen Preis für das Bild allein gibt es nicht. Im Dezember 2016 kaufte der polnische Staat die Sammlung der Czartoryski samt dem Bild für 100 Millionen Euro.",
-   "known": [
-    "Unterzeichnet wurde am 29. Dezember 2016 im Königsschloss in Warschau, vom Kulturminister für den Staat und von Fürst Adam Karol Czartoryski und der Stiftung seiner Familie. Für diese Summe bekam der Staat rund 86.000 Museumsstücke und rund 250.000 Bücher, Handschriften und alte Drucke, meldete die polnische Nachrichtenagentur PAP, und in einem eigenen Vertrag wurden ihm die Gebäude der Sammlung in Krakau als Schenkung versprochen. Schätzungen von damals setzten die ganze Sammlung mit mehr als 2 Milliarden Euro an und Presseberichte nannten für das Bild einen Versicherungswert von rund 350 Millionen Euro. Der Fürst nannte den Verkauf eine Schenkung und der gesamte Vorstand der Stiftung trat zurück, als er von den Verhandlungen erfuhr."
-   ]
   },
   {
    "type": "question",
