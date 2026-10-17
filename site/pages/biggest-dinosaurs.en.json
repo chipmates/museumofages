@@ -162,7 +162,7 @@
   "title": "Biggest dinosaur: probably Argentinosaurus | Museum of Ages",
   "description": "Biggest dinosaur: probably Argentinosaurus, about 30 to 35 m (98 to 115 ft), roughly 65 to 80 t. Size comparison: seven dinosaurs and a person to scale.",
   "og_title": "Biggest dinosaur: probably Argentinosaurus",
-  "og_image_alt": "Seven dinosaurs in a row from the side, two with long necks towering over the rest, and a grey person who looks tiny beside them."
+  "og_image_alt": "Our seven dinosaurs in a row from the side, to one scale. The longest, our Argentinosaurus, is about 30.6 m (100 ft), two long necks tower over the rest, and a grey person 1.70 m tall looks tiny beside them."
  },
  "labels": {
   "crumbs": "You are here",
@@ -178,13 +178,13 @@
  },
  "top": {
   "h1": "What was the biggest dinosaur?",
-  "answer": "Probably Argentinosaurus, a long-necked titanosaur from Argentina: about 30 to 35 m (98 to 115 ft) long and roughly 65 to 80 tonnes, by models from a few bones. Nobody can be sure. No complete skeleton of any of the largest kinds has ever been found, and its relative Patagotitan comes close. Our Argentinosaurus in the picture is 30.6 m (100 ft) long, as long as 18 people, each 1.70 m, laid end to end.",
+  "answer": "The biggest dinosaur was probably Argentinosaurus, a long-necked titanosaur from Argentina: about 30 to 35 m (98 to 115 ft) long and roughly 65 to 80 tonnes, by models from a few bones. Nobody can be sure. No complete skeleton of any of the largest kinds has ever been found, and its relative Patagotitan comes close. Our Argentinosaurus in the picture is 30.6 m (100 ft) long, as long as 18 people, each 1.70 m, laid end to end.",
   "answer_more": "Biggest means three things. The heaviest was most likely a titanosaur from Patagonia, Argentinosaurus or Patagotitan. The longest is not settled. The tallest was probably Sauroposeidon, its head about 17 m (56 ft) up, by four neck bones.",
   "scale": {
    "pic": "row",
    "tag": "tag_made",
    "what": "Our seven beside a person 1.70 m tall, to one scale, each as our model is built. Our Spinosaurus is a young animal of about 10 m, about three quarters as long as a grown one, so here it is shorter than our T. rex. A grown Spinosaurus was longer than every T. rex, and most likely lighter.",
-   "alt": "Seven dinosaurs in a row from the side, two with long necks towering over the rest, and a grey person who looks tiny beside them.",
+   "alt": "Our seven dinosaurs in a row from the side, to one scale. The longest, our Argentinosaurus, is about 30.6 m (100 ft), two long necks tower over the rest, and a grey person 1.70 m tall looks tiny beside them.",
    "note": [
     "The museum's own reconstructions, built in code from published measurements and drawings and rendered in our own engine. Not photographs. ",
     "The outline of our Triceratops follows the body model of ",
@@ -431,6 +431,10 @@
     {
      "term": "39.7 m (130 ft), and 40 m",
      "text": "The mounted skeleton in the Museo Carmen Funes in Plaza Huincul, built in the 1990s from the few real bones as a guide. A laser scan of 2013 measured it at 39.7 m. That is a sculpture's length, 5 to 10 m more than any estimate from the bones, and 40 m is that figure rounded. The cast in Atlanta is of the same kind, over 123 feet (about 37.5 m) by its museum."
+    },
+    {
+     "term": "Over 35 m, or 36 m (118 ft)",
+     "text": "The top of one researcher's reckoning, from 2019. Other reckonings from the same few bones come to about 30 to 33 m (98 to 108 ft). Each of them borrows the body of a relative, since no neck, tail or shoulder was found."
     },
     {
      "term": "100 tonnes, and 83",

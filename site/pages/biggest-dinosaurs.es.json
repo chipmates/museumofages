@@ -162,7 +162,7 @@
   "title": "¿Cuál fue el dinosaurio más grande? | Museum of Ages",
   "description": "¿Cuál fue el dinosaurio más grande? Probablemente Argentinosaurus: unos 30 a 35 m y más o menos 65 a 80 t. Siete dinosaurios y una persona, a escala.",
   "og_title": "¿Cuál fue el dinosaurio más grande? Probablemente Argentinosaurus",
-  "og_image_alt": "Siete dinosaurios en fila, vistos de lado, dos de ellos con cuellos largos muy por encima de los demás, y una persona gris que a su lado parece diminuta."
+  "og_image_alt": "Nuestros siete dinosaurios en fila, vistos de lado, a la misma escala. El más largo, nuestro Argentinosaurus, mide unos 30,6 m, dos cuellos largos se alzan muy por encima de los demás, y una persona gris de 1,70 m parece diminuta a su lado."
  },
  "labels": {
   "crumbs": "Estás aquí",
@@ -178,13 +178,13 @@
  },
  "top": {
   "h1": "¿Cuál fue el dinosaurio más grande?",
-  "answer": "Probablemente Argentinosaurus, un titanosaurio de cuello largo de Argentina: unos 30 a 35 m de largo y más o menos 65 a 80 toneladas, según modelos hechos a partir de unos pocos huesos. Nadie puede estar seguro. Hasta hoy no se encontró un esqueleto completo de ninguna de las especies más grandes, y su pariente Patagotitan se le acerca. Nuestro Argentinosaurus de la imagen mide 30,6 m, lo mismo que 18 personas de 1,70 m tumbadas una detrás de otra.",
+  "answer": "El dinosaurio más grande fue probablemente Argentinosaurus, un titanosaurio de cuello largo de Argentina: unos 30 a 35 m de largo y más o menos 65 a 80 toneladas, según modelos hechos a partir de unos pocos huesos. Nadie puede estar seguro. Hasta hoy no se encontró un esqueleto completo de ninguna de las especies más grandes, y su pariente Patagotitan se le acerca. Nuestro Argentinosaurus de la imagen mide 30,6 m, lo mismo que 18 personas de 1,70 m tumbadas una detrás de otra.",
   "answer_more": "«El más grande» puede querer decir tres cosas. El más pesado fue muy probablemente un titanosaurio de la Patagonia, Argentinosaurus o Patagotitan. El más largo no está establecido. El más alto fue probablemente Sauroposeidon, con la cabeza a unos 17 m del suelo, según cuatro vértebras del cuello.",
   "scale": {
    "pic": "row",
    "tag": "tag_made",
    "what": "Nuestros siete junto a una persona de 1,70 m, a la misma escala, cada uno tal como está construido nuestro modelo. Nuestro Spinosaurus es un animal joven de unos 10 m, unas tres cuartas partes de un adulto, así que aquí es más corto que nuestro T. rex. Un Spinosaurus adulto era más largo que cualquier T. rex y, muy probablemente, más ligero.",
-   "alt": "Siete dinosaurios en fila, vistos de lado, dos de ellos con cuellos largos muy por encima de los demás, y una persona gris que a su lado parece diminuta.",
+   "alt": "Nuestros siete dinosaurios en fila, vistos de lado, a la misma escala. El más largo, nuestro Argentinosaurus, mide unos 30,6 m, dos cuellos largos se alzan muy por encima de los demás, y una persona gris de 1,70 m parece diminuta a su lado.",
    "note": [
     "Reconstrucciones propias del museo, construidas en código a partir de medidas y dibujos publicados, y renderizadas con nuestro propio motor gráfico. No son fotografías. ",
     "La silueta de nuestro Triceratops sigue el modelo del cuerpo de ",
@@ -431,6 +431,10 @@
     {
      "term": "39,7 m y 40 m",
      "text": "El esqueleto montado del Museo Carmen Funes, en Plaza Huincul, construido en la década de 1990 tomando como guía los pocos huesos reales. Un escáner láser de 2013 le midió 39,7 m. Esa es la longitud de una escultura, de 5 a 10 m más que cualquier estimación a partir de los huesos, y los 40 m son esa misma cifra redondeada. La réplica de Atlanta es del mismo tipo: según su museo, mide más de 37 m."
+    },
+    {
+     "term": "Más de 35 m, o 36 m",
+     "text": "El extremo superior del cálculo de un investigador, de 2019. Otros cálculos a partir de los mismos pocos huesos dan unos 30 a 33 m. Todos toman prestado el cuerpo de un pariente, porque nunca se encontraron el cuello, la cola ni el hombro."
     },
     {
      "term": "100 toneladas y 83",

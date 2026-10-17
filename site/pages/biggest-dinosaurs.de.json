@@ -165,7 +165,7 @@
   "title": "Größter Dinosaurier: wohl Argentinosaurus | Museum of Ages",
   "description": "Größter Dinosaurier: wohl Argentinosaurus, etwa 30 bis 35 m lang, grob 65 bis 80 t. Größenvergleich: sieben Dinosaurier und ein Mensch im selben Maßstab.",
   "og_title": "Größter Dinosaurier: wohl Argentinosaurus",
-  "og_image_alt": "Sieben Dinosaurier in einer Reihe von der Seite, zwei mit langen Hälsen hoch über den anderen, und ein grauer Mensch, der daneben winzig wirkt."
+  "og_image_alt": "Unsere sieben Dinosaurier in einer Reihe von der Seite, im selben Maßstab. Der längste, unser Argentinosaurus, misst etwa 30,6 m, zwei lange Hälse ragen hoch über die anderen, und ein grauer Mensch von 1,70 m wirkt daneben winzig."
  },
  "labels": {
   "crumbs": "Du bist hier",
@@ -181,13 +181,13 @@
  },
  "top": {
   "h1": "Was war der größte Dinosaurier?",
-  "answer": "Wahrscheinlich der Argentinosaurus, ein Langhalsdinosaurier aus Argentinien: etwa 30 bis 35 m lang und grob 65 bis 80 t, nach Modellen aus wenigen Knochen. Sicher ist das nicht. Von keiner der ganz großen Arten wurde je ein vollständiges Skelett gefunden, und sein Verwandter Patagotitan kommt ihm nahe. Unser Argentinosaurus im Bild ist 30,6 m lang, so lang wie 18 Menschen von 1,70 m, der Länge nach hintereinandergelegt.",
+  "answer": "Der größte Dinosaurier war wahrscheinlich der Argentinosaurus, ein Langhalsdinosaurier aus Argentinien: etwa 30 bis 35 m lang und grob 65 bis 80 t schwer, nach Modellen aus wenigen Knochen. Sicher ist das nicht. Von keiner der ganz großen Arten wurde je ein vollständiges Skelett gefunden, und sein Verwandter Patagotitan kommt ihm nahe. Unser Argentinosaurus im Bild ist 30,6 m lang, so lang wie 18 Menschen von 1,70 m, der Länge nach hintereinandergelegt.",
   "answer_more": "Und „der größte“ kann dreierlei heißen. Der schwerste war höchstwahrscheinlich ein Titanosaurier aus Patagonien, Argentinosaurus oder Patagotitan. Der längste ist nicht geklärt. Der höchste war vermutlich Sauroposeidon, den Kopf etwa 17 m über dem Boden, nach vier Halswirbeln.",
   "scale": {
    "pic": "row",
    "tag": "tag_made",
    "what": "Unsere sieben neben einem Menschen von 1,70 m, im selben Maßstab, jedes Tier so, wie unser Modell gebaut ist. Unser Spinosaurus ist ein junges Tier von etwa 10 m, etwa drei Viertel so lang wie ein erwachsenes, darum ist er hier kürzer als unser T. rex. Ein erwachsener Spinosaurus war länger als jeder T. rex und wahrscheinlich leichter.",
-   "alt": "Sieben Dinosaurier in einer Reihe von der Seite, zwei mit langen Hälsen hoch über den anderen, und ein grauer Mensch, der daneben winzig wirkt.",
+   "alt": "Unsere sieben Dinosaurier in einer Reihe von der Seite, im selben Maßstab. Der längste, unser Argentinosaurus, misst etwa 30,6 m, zwei lange Hälse ragen hoch über die anderen, und ein grauer Mensch von 1,70 m wirkt daneben winzig.",
    "note": [
     "Eigene Rekonstruktionen des Museums, nach veröffentlichten Maßen und Zeichnungen in Code gebaut und in unserer Engine gerendert. Keine Fotos. ",
     "Der Umriss unseres Triceratops folgt dem Körpermodell von ",
@@ -434,6 +434,10 @@
     {
      "term": "39,7 m und 40 m",
      "text": "Das montierte Skelett im Museo Carmen Funes in Plaza Huincul, in den 1990er Jahren nach den wenigen echten Knochen als Vorlage gebaut. Ein Laserscan von 2013 maß es mit 39,7 m. Das ist die Länge einer Skulptur, 5 bis 10 m mehr als jede Schätzung aus den Knochen, und 40 m ist dieselbe Zahl gerundet. Der Abguss in Atlanta ist von derselben Art, nach dem Museum dort mehr als 37 m lang."
+    },
+    {
+     "term": "Über 35 m, oder 36 m",
+     "text": "Das obere Ende der Rechnung eines Forschers von 2019. Andere Rechnungen aus denselben wenigen Knochen kommen auf etwa 30 bis 33 m. Jede leiht sich den Körper eines Verwandten, denn Hals, Schwanz und Schulter wurden nie gefunden."
     },
     {
      "term": "100 t und 83 t",
