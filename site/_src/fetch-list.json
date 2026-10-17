@@ -1535,38 +1535,38 @@
   {
    "path": "pages/pics/img/animals-blue-whale-beside-1600.avif",
    "url": "/static/img/animals-blue-whale-beside-1600.avif",
-   "bytes": 25643,
-   "sha256": "06504b5c098bcacb3052d9f2acb4c6201030de00f9d25a9d091bc4c221ebfaa0"
+   "bytes": 25679,
+   "sha256": "72d42a6f01a76eb243ad6349300df9e7c152d09b79e445a89c5241a4d6542e62"
   },
   {
    "path": "pages/pics/img/animals-blue-whale-beside-1600.webp",
    "url": "/static/img/animals-blue-whale-beside-1600.webp",
-   "bytes": 34048,
-   "sha256": "9672027c0eaf66768b91ea79538575c0b87cbaedeb71d38c05e9a2fcdedccb9d"
+   "bytes": 33996,
+   "sha256": "d3bb4d4d6ffb578d993765a25b6f0448fef1f95767ceb60a516726252acba905"
   },
   {
    "path": "pages/pics/img/animals-blue-whale-beside-2400.avif",
    "url": "/static/img/animals-blue-whale-beside-2400.avif",
-   "bytes": 40676,
-   "sha256": "d4858985f4fdcdcfc4a0ecdfced3b81116cb715c0709f04350c9aa59979fc8c7"
+   "bytes": 40933,
+   "sha256": "29979e64b2fe97922b1f0ba50de87cae0a5e9759aa27ce936d5a2c91bb17aaba"
   },
   {
    "path": "pages/pics/img/animals-blue-whale-beside-2400.webp",
    "url": "/static/img/animals-blue-whale-beside-2400.webp",
-   "bytes": 58604,
-   "sha256": "ee8013e67b5f01bacf5d853284516386ba6b0b52891d673ce622738427aa4829"
+   "bytes": 58704,
+   "sha256": "e4a5627a798c32b2e11bd2c0be765fefccb3aec5a0ff34e763c7219368ef39ca"
   },
   {
    "path": "pages/pics/img/animals-blue-whale-beside-800.avif",
    "url": "/static/img/animals-blue-whale-beside-800.avif",
-   "bytes": 10357,
-   "sha256": "304fbabcc93cb977556229db125dc5c2e0d2febc0a7bcd6187578379ff224998"
+   "bytes": 10273,
+   "sha256": "133749060239ed63f758dc2b8a14c9739ec5d997dd020b7c991712aca79c1c50"
   },
   {
    "path": "pages/pics/img/animals-blue-whale-beside-800.webp",
    "url": "/static/img/animals-blue-whale-beside-800.webp",
-   "bytes": 13458,
-   "sha256": "65d8b996eb405e2bfeb0766e0999f976c02c7d786eaca02494d33bb7109b01d8"
+   "bytes": 13456,
+   "sha256": "98d6db2df144ef65d0eb2da84d7bd879b3a5bd70d4cbdbe372f7f012a50f8564"
   },
   {
    "path": "pages/pics/img/animals-blue-whale-close-1600.avif",
@@ -1811,86 +1811,86 @@
   {
    "path": "pages/pics/img/animals-megalodon-head-1600.avif",
    "url": "/static/img/animals-megalodon-head-1600.avif",
-   "bytes": 8410,
-   "sha256": "36c65bd119612944098d1fc2b824799e3a84996a0f9d33bd836b5709d0d8418b"
+   "bytes": 10545,
+   "sha256": "8645d4db69f6c8f146095ddc8670369aedf65b53d64094fc635f6ff986194079"
   },
   {
    "path": "pages/pics/img/animals-megalodon-head-1600.webp",
    "url": "/static/img/animals-megalodon-head-1600.webp",
-   "bytes": 13196,
-   "sha256": "f05d0e446567d69af6dc762a31ac12b73a193484c3bce4c2f99a6a7e3be7a398"
+   "bytes": 15534,
+   "sha256": "bea2aafe22b2078470904171899bb8c1a44b0896337f9cbdae5d2db4f28b810b"
   },
   {
    "path": "pages/pics/img/animals-megalodon-head-800.avif",
    "url": "/static/img/animals-megalodon-head-800.avif",
-   "bytes": 4177,
-   "sha256": "5498b93fd0f955fc1cde90e810ddfaf79f9203649dec880a945c3e07777a11d8"
+   "bytes": 4386,
+   "sha256": "10e0621fbd8bd304aa17907ded2e155acf864c57fc98189541780dc5a150b6c5"
   },
   {
    "path": "pages/pics/img/animals-megalodon-head-800.webp",
    "url": "/static/img/animals-megalodon-head-800.webp",
-   "bytes": 5690,
-   "sha256": "700253d5505025ea7aaa3766a1fc162e4039372720bd1414523b2db7d6153152"
+   "bytes": 6010,
+   "sha256": "41a71330bd3e22d571f9693647734ce86898cdc5753592aed70a9768c30e0fb4"
   },
   {
    "path": "pages/pics/img/animals-megalodon-og-de-1200x630.png",
    "url": "/static/img/animals-megalodon-og-de-1200x630.png",
-   "bytes": 112397,
-   "sha256": "bf8f3a0040844f3aa9a4bad1e9c3fca2f6fb735ed54353e14d75e66b2c8d3a9c"
+   "bytes": 114033,
+   "sha256": "96eca96ebdbd408b251b26db20276f0dfdad1d30a1f1a930797acc4d657452f0"
   },
   {
    "path": "pages/pics/img/animals-megalodon-og-en-1200x630.png",
    "url": "/static/img/animals-megalodon-og-en-1200x630.png",
-   "bytes": 112364,
-   "sha256": "229b748e589959e88fb75493833965990b69cf7bf7fbbbc7d4973b25b29a0bff"
+   "bytes": 114011,
+   "sha256": "30da82888d640f247130e9f40fbf7a8ea4b7de9e6e333d7723a27b4206748dda"
   },
   {
    "path": "pages/pics/img/animals-megalodon-og-es-1200x630.png",
    "url": "/static/img/animals-megalodon-og-es-1200x630.png",
-   "bytes": 111226,
-   "sha256": "8f287ef34866c2b56f1444976cd9ca1d72d3446943788db2858b352f7a4a15c1"
+   "bytes": 112883,
+   "sha256": "2079e4d4baeb6a5d1ac1e56921c2f1c459ed198431c0329b4886e7abd3fa321c"
   },
   {
    "path": "pages/pics/img/animals-megalodon-og-pt-br-1200x630.png",
    "url": "/static/img/animals-megalodon-og-pt-br-1200x630.png",
-   "bytes": 112018,
-   "sha256": "7c25ec68749c94ed3e0c86bb4caa79a4a2e77f19583a1ab53ad66bf9e2e3dac0"
+   "bytes": 113656,
+   "sha256": "6387578035a10d333b048ae50a2ff3a7f30f3b5a317fced187339e9c5c36b07f"
   },
   {
    "path": "pages/pics/img/animals-megalodon-side-1600.avif",
    "url": "/static/img/animals-megalodon-side-1600.avif",
-   "bytes": 7103,
-   "sha256": "b393ccae6240600317fbc4c9de9c80fb8df5db5deb2d8e536e72ae93af0aa594"
+   "bytes": 7230,
+   "sha256": "92b97094c9c050e24eb5b8763446c740920a29601decb51e3827b3ba6fabad27"
   },
   {
    "path": "pages/pics/img/animals-megalodon-side-1600.webp",
    "url": "/static/img/animals-megalodon-side-1600.webp",
-   "bytes": 10382,
-   "sha256": "b22a28ea01f3d34d758c21996ba5f7e6925561248fab1f91a7fab53887f944d6"
+   "bytes": 10428,
+   "sha256": "2e9d5ae0e704a86f4313f20877dbdfd3a7058216be33d2926e1f3371d7829206"
   },
   {
    "path": "pages/pics/img/animals-megalodon-side-2400.avif",
    "url": "/static/img/animals-megalodon-side-2400.avif",
-   "bytes": 10311,
-   "sha256": "07560229e307885cb79fcd867fb040d0ddd9d44961da8881be2fd64a7dfb70a3"
+   "bytes": 11165,
+   "sha256": "330d2644d283dc2c1e03c8de528731a23c6312ceea5a6a6be036d727d62d7d1c"
   },
   {
    "path": "pages/pics/img/animals-megalodon-side-2400.webp",
    "url": "/static/img/animals-megalodon-side-2400.webp",
-   "bytes": 16604,
-   "sha256": "cc901bf9d11fb80ae352b13b33a7aef5da6ad21cd3e8b14c27367151f8424336"
+   "bytes": 17222,
+   "sha256": "e874519f37abf03655e0a63a7d1bf7c95d67357e6d6609af52128e2afcd9524d"
   },
   {
    "path": "pages/pics/img/animals-megalodon-side-800.avif",
    "url": "/static/img/animals-megalodon-side-800.avif",
-   "bytes": 3663,
-   "sha256": "d581b15d634ab159ed1116a5669c8fec0a716efce3078b491c6a78e561da3eb3"
+   "bytes": 3630,
+   "sha256": "58f98fc36030eec5a630e072e272656c758a6caa6d20f81a0de15d9514fc3912"
   },
   {
    "path": "pages/pics/img/animals-megalodon-side-800.webp",
    "url": "/static/img/animals-megalodon-side-800.webp",
-   "bytes": 4724,
-   "sha256": "2a5482cb88b6731808a216705d6870b50377a02e8cba1889e048f4bdb6020b39"
+   "bytes": 4630,
+   "sha256": "e6c6249ab61470bfd2e663e71fa31926d8cb9b36bb933f7e3123033b36e8c00c"
   },
   {
    "path": "pages/pics/img/animals-megalodon-skeleton-1600.avif",
@@ -1955,26 +1955,26 @@
   {
    "path": "pages/pics/img/animals-og-de-1200x630.png",
    "url": "/static/img/animals-og-de-1200x630.png",
-   "bytes": 102671,
-   "sha256": "2bb8a130021ffe4a1db3ac395126006003c6a4f4c150ba1d55587cbe6f5401c9"
+   "bytes": 104411,
+   "sha256": "40be32af5d3bdd11cf5703507ff3e0bf994580af279909d8cca15470fa6f4bca"
   },
   {
    "path": "pages/pics/img/animals-og-en-1200x630.png",
    "url": "/static/img/animals-og-en-1200x630.png",
-   "bytes": 104094,
-   "sha256": "8f1faf7d162c0d66e189f6de98e2b130455eae197a2fec92c964802e3e765327"
+   "bytes": 105826,
+   "sha256": "37eaaacadf258f6b85cd086f069295ce7e9adec47ae6c3ef8bde1557a0285238"
   },
   {
    "path": "pages/pics/img/animals-og-es-1200x630.png",
    "url": "/static/img/animals-og-es-1200x630.png",
-   "bytes": 104160,
-   "sha256": "a68b73a5a5b00f2a542cf2db654261e72c1d2878be597a1ebfa9152ac15db561"
+   "bytes": 105888,
+   "sha256": "b13c88ec27db5eb5eef683569a23f89f89d04f68abd83e7c1c4444ebeeddc87b"
   },
   {
    "path": "pages/pics/img/animals-og-pt-br-1200x630.png",
    "url": "/static/img/animals-og-pt-br-1200x630.png",
-   "bytes": 104658,
-   "sha256": "a43316744b315f3c4001dc954103163e93ec9246865674075a70a041e31a0617"
+   "bytes": 106385,
+   "sha256": "f93461a4cb9c79f58f5acf433dd2e8d2f120949e9931502df8b8b6c87cfedfe6"
   },
   {
    "path": "pages/pics/img/animals-spinosaurus-beside-t-rex-1600.avif",

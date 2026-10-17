@@ -68,7 +68,7 @@
    "marks": {
     "argentinosaurus": "6.08% 99.04%",
     "blue-whale": "7.88% 77.36%",
-    "megalodon": "6.12% 56%",
+    "megalodon": "6.12% 55.52%",
     "person": "81.04% 82.48%"
    },
    "in_order": true
@@ -98,7 +98,7 @@
     2400
    ],
    "sizes": "(min-width: 1280px) 690px, (min-width: 960px) 54vw, (min-width: 600px) calc(100vw - 64px), calc(100vw - 40px)",
-   "person": "92% 60.62%"
+   "person": "92% 60.75%"
   },
   "dinosaurs": {
    "stem": "animals-biggest-dinosaurs-row",

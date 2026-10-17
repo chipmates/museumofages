@@ -22,10 +22,10 @@
     2400
    ],
    "sizes": "(min-width: 1280px) 588px, (min-width: 960px) calc(100vw - 80px), (min-width: 600px) calc(100vw - 64px), calc(100vw - 40px)",
-   "person": "92% 60.62%",
+   "person": "92% 60.75%",
    "spans": {
-    "whole": "4.91% 87%",
-    "found": "22.98% 77.87%"
+    "whole": "5.69% 87%",
+    "found": "23.13% 77.87%"
    }
   },
   "head": {
@@ -35,7 +35,7 @@
     1600
    ],
    "sizes": "(min-width: 1280px) 690px, (min-width: 960px) 54vw, (min-width: 600px) calc(100vw - 64px), calc(100vw - 40px)",
-   "person": "84% 51.31%"
+   "person": "84% 51.47%"
   },
   "skeleton": {
    "stem": "animals-megalodon-skeleton",
