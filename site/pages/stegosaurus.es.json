@@ -74,7 +74,7 @@
    "sizes": "(min-width: 1280px) 690px, (min-width: 960px) 54vw, (min-width: 600px) calc(100vw - 64px), calc(100vw - 40px)",
    "person": "7.34% 84.27%",
    "marks": {
-    "stegosaurus": "14.67% 55.69%",
+    "stegosaurus": "14.63% 55.65%",
     "triceratops": "14.63% 65.33%",
     "t-rex": "14.67% 97.78%",
     "person": "5.61% 9.06%"

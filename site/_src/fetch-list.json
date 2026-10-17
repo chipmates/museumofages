@@ -1283,38 +1283,38 @@
   {
    "path": "pages/pics/img/animals-ankylosaurus-beside-1600.avif",
    "url": "/static/img/animals-ankylosaurus-beside-1600.avif",
-   "bytes": 26658,
-   "sha256": "5b9854c52e103e6af901119a926da61c0ce5bd86c336a4e4352bb58d7ded6045"
+   "bytes": 26839,
+   "sha256": "18e293340d9cbc8bed29272d8d96117c660cb964aac3dd2f0b277a8d4649b253"
   },
   {
    "path": "pages/pics/img/animals-ankylosaurus-beside-1600.webp",
    "url": "/static/img/animals-ankylosaurus-beside-1600.webp",
-   "bytes": 34548,
-   "sha256": "a9b41e12ec65a201a4c52df43cce27e1ff7a8e2b82e965bc620c5ec1679c46e9"
+   "bytes": 34626,
+   "sha256": "86b57434a5fea95e2af88c3ac8f6739f4561520230c06ee3b40026f7e76302da"
   },
   {
    "path": "pages/pics/img/animals-ankylosaurus-beside-2400.avif",
    "url": "/static/img/animals-ankylosaurus-beside-2400.avif",
-   "bytes": 46182,
-   "sha256": "67c483d23b977a065c921eaa52f05352d3bc114397233cc4834b0d6da40ac81c"
+   "bytes": 46259,
+   "sha256": "cd0eefec34efc24712e2d73bd90b02c08bdafc4387de7a63d1e063f4d2c3ff42"
   },
   {
    "path": "pages/pics/img/animals-ankylosaurus-beside-2400.webp",
    "url": "/static/img/animals-ankylosaurus-beside-2400.webp",
-   "bytes": 61792,
-   "sha256": "58f9649f0aeac30ee9df66120cb4152fa095d86253f75c051840aafd7a7bce62"
+   "bytes": 61854,
+   "sha256": "24d3d364fcc68ec6a1103b82475b82f96455a47f47390370e75613a14cbe8928"
   },
   {
    "path": "pages/pics/img/animals-ankylosaurus-beside-800.avif",
    "url": "/static/img/animals-ankylosaurus-beside-800.avif",
-   "bytes": 11492,
-   "sha256": "071d8dbb54641207cd97738c271c52afc6b58af27c95369a67d06f15311f0793"
+   "bytes": 11533,
+   "sha256": "5571cfea904ee49914a5d89685dd6c6011b895ad3e4a382dea62438c034c01bb"
   },
   {
    "path": "pages/pics/img/animals-ankylosaurus-beside-800.webp",
    "url": "/static/img/animals-ankylosaurus-beside-800.webp",
-   "bytes": 13886,
-   "sha256": "3a5710ee9b7868f0aeff92bd23bc4fe215b3af3d1bd26d56b97c5cadf1bceb2d"
+   "bytes": 13888,
+   "sha256": "69cad9c7506cd9e1c921abc1f48223f24cc41d9fcdffdcb2954f490ffd1702aa"
   },
   {
    "path": "pages/pics/img/animals-ankylosaurus-close-1600.avif",
@@ -1427,74 +1427,74 @@
   {
    "path": "pages/pics/img/animals-biggest-dinosaurs-close-1600.avif",
    "url": "/static/img/animals-biggest-dinosaurs-close-1600.avif",
-   "bytes": 17507,
-   "sha256": "a14bd8999b937d659189fc08118cf7475693655a262bf6ac899f3440b8407b18"
+   "bytes": 17610,
+   "sha256": "13d84250fd9015d7abb311602707697a9244c7012271dfa2287ad4d10518ac2e"
   },
   {
    "path": "pages/pics/img/animals-biggest-dinosaurs-close-1600.webp",
    "url": "/static/img/animals-biggest-dinosaurs-close-1600.webp",
-   "bytes": 21554,
-   "sha256": "30e006e4627fd475e2c333080cb8fea289897f9b114f40eb3b72bdc75ffe03fa"
+   "bytes": 21576,
+   "sha256": "8df698e5104a3de8481a1fdb17255e2f3ea9f92a79966dff3588de990495f5d9"
   },
   {
    "path": "pages/pics/img/animals-biggest-dinosaurs-close-800.avif",
    "url": "/static/img/animals-biggest-dinosaurs-close-800.avif",
-   "bytes": 6679,
-   "sha256": "9ed7edf9ebcb5898f9f06792438c5f7bdf55aa27e8748f787fd31ec60fc2a8c3"
+   "bytes": 6689,
+   "sha256": "42cde432a36e1865d9e22b2b463c3c817080ce6a1f8b2f4c01cf02885266d8a7"
   },
   {
    "path": "pages/pics/img/animals-biggest-dinosaurs-close-800.webp",
    "url": "/static/img/animals-biggest-dinosaurs-close-800.webp",
-   "bytes": 8742,
-   "sha256": "4e132c1d3f5e6da470a5ad8834c883a3500e77bd7516beeaa8d3694b312de422"
+   "bytes": 8684,
+   "sha256": "b692ca116541405a0a22cb1204d2c6c7fafc6b1da699952b8491bbe0f21adcba"
   },
   {
    "path": "pages/pics/img/animals-biggest-dinosaurs-og-de-1200x630.png",
    "url": "/static/img/animals-biggest-dinosaurs-og-de-1200x630.png",
-   "bytes": 192800,
-   "sha256": "d0012b46d6009d467f2d945971f4e2e5a51fb636490fbca77a4d1fc135ced300"
+   "bytes": 192535,
+   "sha256": "ecc1fc669b4351a6b685d45b69c9506045fee65defa4b6e66d6d047253e39162"
   },
   {
    "path": "pages/pics/img/animals-biggest-dinosaurs-og-en-1200x630.png",
    "url": "/static/img/animals-biggest-dinosaurs-og-en-1200x630.png",
-   "bytes": 193324,
-   "sha256": "f30d85123cc2588a655f60fc9d3e07529a410e9966bbd99a63a40c76b4d21986"
+   "bytes": 193053,
+   "sha256": "2a37f4476a9079ffc63fb063fcad0d8137bc29dd1f6d89df5a49019ee185b2ce"
   },
   {
    "path": "pages/pics/img/animals-biggest-dinosaurs-og-es-1200x630.png",
    "url": "/static/img/animals-biggest-dinosaurs-og-es-1200x630.png",
-   "bytes": 189724,
-   "sha256": "fa0c74fcfed7bf82e3b5dd72cd24881cd42fb95af9a4de59c8abe56fb995ac69"
+   "bytes": 189454,
+   "sha256": "95d5fd0b13caa989145c7792c4c3b3b3ee2719d70fc139132c41d884b2d3c0e7"
   },
   {
    "path": "pages/pics/img/animals-biggest-dinosaurs-og-pt-br-1200x630.png",
    "url": "/static/img/animals-biggest-dinosaurs-og-pt-br-1200x630.png",
-   "bytes": 188192,
-   "sha256": "d88266fead872d21c3d64ef5323e4ad59198fc591457d3b1cadc42fc8f64cdd3"
+   "bytes": 187928,
+   "sha256": "45bf07472e4db28aad739c5729be3eb1de50047f82020c7814c84626e5b33460"
   },
   {
    "path": "pages/pics/img/animals-biggest-dinosaurs-row-1600.avif",
    "url": "/static/img/animals-biggest-dinosaurs-row-1600.avif",
-   "bytes": 19117,
-   "sha256": "f9e60e3deca40d1cf71ef14a4b9fa7c47948b36b2183ee0d5e73e6214f9d888f"
+   "bytes": 19115,
+   "sha256": "30ac3b3e33fc6aea0146609d31609f040810b4c5a8e7f1ce51dd72b5b901262b"
   },
   {
    "path": "pages/pics/img/animals-biggest-dinosaurs-row-1600.webp",
    "url": "/static/img/animals-biggest-dinosaurs-row-1600.webp",
-   "bytes": 25296,
-   "sha256": "c905de26e163fac507817aef371f88eff2df1d3008edb1c4cbb0d093e0e8bbfc"
+   "bytes": 25326,
+   "sha256": "ab287c7ac66c022bc50ba8198fc74dfea83bddb2d84cd9d8f2f2d0c4bec24196"
   },
   {
    "path": "pages/pics/img/animals-biggest-dinosaurs-row-800.avif",
    "url": "/static/img/animals-biggest-dinosaurs-row-800.avif",
-   "bytes": 7012,
-   "sha256": "11edbcbc343d12955ec2915602043ef30fec669dd9fe8f46c5b2c740576d11ca"
+   "bytes": 7031,
+   "sha256": "35e04aabe46a4b4d8bb38cedb67ebe96435876e022da3014d77165f0fa10d546"
   },
   {
    "path": "pages/pics/img/animals-biggest-dinosaurs-row-800.webp",
    "url": "/static/img/animals-biggest-dinosaurs-row-800.webp",
-   "bytes": 10110,
-   "sha256": "86ab2ed56a21ae427d32a8959e94fdf199cc4b60d6b3cf6eba5da9cc321df2af"
+   "bytes": 10116,
+   "sha256": "dcba42f87d19ad889fc87d9952c7386a90eb7c25df74c25e004faef663a61887"
   },
   {
    "path": "pages/pics/img/animals-biggest-dinosaurs-skeleton-1600.avif",
@@ -2147,146 +2147,146 @@
   {
    "path": "pages/pics/img/animals-stegosaurus-beside-triceratops-t-rex-1600.avif",
    "url": "/static/img/animals-stegosaurus-beside-triceratops-t-rex-1600.avif",
-   "bytes": 36747,
-   "sha256": "c53e0f2d8d3bdabccbca2fae40c769ef1255248e7d16e6d588d1c57c7e202e3d"
+   "bytes": 36770,
+   "sha256": "e198d8f9aac2ae1525e1dfdad267b7bd2026623e6e5b6969fa85b928615965e2"
   },
   {
    "path": "pages/pics/img/animals-stegosaurus-beside-triceratops-t-rex-1600.webp",
    "url": "/static/img/animals-stegosaurus-beside-triceratops-t-rex-1600.webp",
-   "bytes": 48088,
-   "sha256": "fdd2c2c0795291ceb36efb2be936bcf13046685b6726110c0a36be14804f9f18"
+   "bytes": 48292,
+   "sha256": "6c86be5095c01341e5513ebdde45563f3be954491caad9fbc16668f3ebf342af"
   },
   {
    "path": "pages/pics/img/animals-stegosaurus-beside-triceratops-t-rex-2400.avif",
    "url": "/static/img/animals-stegosaurus-beside-triceratops-t-rex-2400.avif",
-   "bytes": 64122,
-   "sha256": "2672099f3e4e904fde62f36906d7e538215aee5b403a5b559a497d737804876b"
+   "bytes": 64139,
+   "sha256": "fb99eb34fd247f164cc57a066b5b6423f34dd2fc94195d9522ea468bfce9a4a4"
   },
   {
    "path": "pages/pics/img/animals-stegosaurus-beside-triceratops-t-rex-2400.webp",
    "url": "/static/img/animals-stegosaurus-beside-triceratops-t-rex-2400.webp",
-   "bytes": 84880,
-   "sha256": "380a891c9044b411ef5c1c1c5055924a66e6cbf9da594e1c286396492b73c27e"
+   "bytes": 85112,
+   "sha256": "2fdbc7e507ce5f86f30e88811bbb7488f969516e47c54afda1051e652853d610"
   },
   {
    "path": "pages/pics/img/animals-stegosaurus-beside-triceratops-t-rex-800.avif",
    "url": "/static/img/animals-stegosaurus-beside-triceratops-t-rex-800.avif",
-   "bytes": 13567,
-   "sha256": "bcfda9d4c1b3ca5a90d030cbc458bb6b18da17a718962b3751c3822a1163033e"
+   "bytes": 13569,
+   "sha256": "7cfa8adba21ba6f31c5b11c7433e3f6207a313a2b3457e8bfaf6f0c149be070e"
   },
   {
    "path": "pages/pics/img/animals-stegosaurus-beside-triceratops-t-rex-800.webp",
    "url": "/static/img/animals-stegosaurus-beside-triceratops-t-rex-800.webp",
-   "bytes": 16374,
-   "sha256": "02a4025aff58afd3b349f85b8309b2fd86b5088e3ccfe97ef151ef68f8a278e4"
+   "bytes": 16362,
+   "sha256": "e0df5d91d9947f13a476327669f7bb058c87644fa0cee7acdc929af306881d8c"
   },
   {
    "path": "pages/pics/img/animals-stegosaurus-close-1600.avif",
    "url": "/static/img/animals-stegosaurus-close-1600.avif",
-   "bytes": 14407,
-   "sha256": "20e67705309472955691b321b5219024f92ec75602f0405ad05eb4fc949ff159"
+   "bytes": 14141,
+   "sha256": "89e1038a857ba164285f7383e65ea11dca318f800aed2ae67602c7ea5b55c462"
   },
   {
    "path": "pages/pics/img/animals-stegosaurus-close-1600.webp",
    "url": "/static/img/animals-stegosaurus-close-1600.webp",
-   "bytes": 20046,
-   "sha256": "d594bdccc617e18a2cf9fd3f51070d093045b8e5beda8d33130b377f8a4ec11b"
+   "bytes": 19636,
+   "sha256": "fb3de9f0b6dd72711732fbfffe8bddb1c694348078640acaf0d2988ba18668a2"
   },
   {
    "path": "pages/pics/img/animals-stegosaurus-close-800.avif",
    "url": "/static/img/animals-stegosaurus-close-800.avif",
-   "bytes": 5772,
-   "sha256": "d073c38d67c556c3b0bcc09649a6e77b0cfe141a02338221f2b651de22854083"
+   "bytes": 5771,
+   "sha256": "f160f849f39be16403f6f37b18dab1a6d422ef92411488fdfea8b69516d1719a"
   },
   {
    "path": "pages/pics/img/animals-stegosaurus-close-800.webp",
    "url": "/static/img/animals-stegosaurus-close-800.webp",
-   "bytes": 7614,
-   "sha256": "8f1e477e5217de2f35f4f0c5858371eeca37a3d2e9a7910dd1bbe13a5eead53b"
+   "bytes": 7566,
+   "sha256": "b682a7d4d97d407e57ba945098c0ec1da0d7f7f6947c3840136a0eae2cc083ac"
   },
   {
    "path": "pages/pics/img/animals-stegosaurus-og-de-1200x630.png",
    "url": "/static/img/animals-stegosaurus-og-de-1200x630.png",
-   "bytes": 112838,
-   "sha256": "084f9e098c63a7f12488815d8c31b7f5fe4da76d3e1cd2272ea358391e9f09e1"
+   "bytes": 112591,
+   "sha256": "599b8c235282afb19b0e8cbbeb867d8367ff83dd341a6a1b4f3c5a859957610a"
   },
   {
    "path": "pages/pics/img/animals-stegosaurus-og-en-1200x630.png",
    "url": "/static/img/animals-stegosaurus-og-en-1200x630.png",
-   "bytes": 108886,
-   "sha256": "ce147206dc8d0143ff5c95b94b504d4f3b6bea4d0c835456f9973da9bce010c5"
+   "bytes": 108847,
+   "sha256": "c7515a961286b76a6e3bf68e287f9f41572404e67adcd31d2992c117e9d1087a"
   },
   {
    "path": "pages/pics/img/animals-stegosaurus-og-es-1200x630.png",
    "url": "/static/img/animals-stegosaurus-og-es-1200x630.png",
-   "bytes": 107911,
-   "sha256": "612dc7b3b9586c562f70087c7bb445e58d7257038c49ec2260f8b98949c459cc"
+   "bytes": 107995,
+   "sha256": "bf41a5d66eabe5907d755192d660ff6b1ea4aa64482bbb8fed63b64261921a13"
   },
   {
    "path": "pages/pics/img/animals-stegosaurus-og-pt-br-1200x630.png",
    "url": "/static/img/animals-stegosaurus-og-pt-br-1200x630.png",
-   "bytes": 108095,
-   "sha256": "14df93ce4f30630c0f468bf1b025a2feb49b5f316af598e317e1fc396b9d26c8"
+   "bytes": 108274,
+   "sha256": "bb3b9c7e4a4e646ad9e366fb08056d6cbe05bfeeaf5cb8624ac65c73376d6a8a"
   },
   {
    "path": "pages/pics/img/animals-stegosaurus-side-1600.avif",
    "url": "/static/img/animals-stegosaurus-side-1600.avif",
-   "bytes": 11905,
-   "sha256": "c25e2af9f0376cd26e02ec15ac84c20ce4cab913f054d228cfa861603d0ab45a"
+   "bytes": 11914,
+   "sha256": "20f88eac3f8b37fb5683220d7d0f8e658e078b7327c13932d081e9f03fef7ef3"
   },
   {
    "path": "pages/pics/img/animals-stegosaurus-side-1600.webp",
    "url": "/static/img/animals-stegosaurus-side-1600.webp",
-   "bytes": 16006,
-   "sha256": "49e004818f18398ba5673cf5161468ce3b67e3d4d69fc3649fe252963f596083"
+   "bytes": 15936,
+   "sha256": "5dae6a771bcc173784bcde6248decaf3aa568fa4efbd8314b9a825923b3f7c3a"
   },
   {
    "path": "pages/pics/img/animals-stegosaurus-side-2400.avif",
    "url": "/static/img/animals-stegosaurus-side-2400.avif",
-   "bytes": 20844,
-   "sha256": "3c274c60421f5fb7ba9f13cb0a97fd3201c621557eb822557116657343f43a65"
+   "bytes": 20694,
+   "sha256": "3e52d02714ad97497530005df740b33c68109326d6c17d84265d53423ddea958"
   },
   {
    "path": "pages/pics/img/animals-stegosaurus-side-2400.webp",
    "url": "/static/img/animals-stegosaurus-side-2400.webp",
-   "bytes": 29174,
-   "sha256": "1f8b67785b22638cbe38ba83cc7f4d5d0b382e3c467e36dac21c8bb22afa4930"
+   "bytes": 28720,
+   "sha256": "ba8cc6b83e2fd4790c08359ae757eaedd82f8608cecf53bc0d43f223d95f1d2d"
   },
   {
    "path": "pages/pics/img/animals-stegosaurus-side-800.avif",
    "url": "/static/img/animals-stegosaurus-side-800.avif",
-   "bytes": 5151,
-   "sha256": "a61c61aa79f42dd349f4fba6882cee44fc8829e880e44c03c037045626002056"
+   "bytes": 5177,
+   "sha256": "bbd897b44ae39da03bd70f70600b63638c4e8a0d544ee52bbbae0e4bc578afc0"
   },
   {
    "path": "pages/pics/img/animals-stegosaurus-side-800.webp",
    "url": "/static/img/animals-stegosaurus-side-800.webp",
-   "bytes": 6606,
-   "sha256": "172c36d00f6e792ba77cabfed54e757f7ae8d68b582faee2a47b2f3b28e08c8f"
+   "bytes": 6624,
+   "sha256": "844eed609482195f61e2fee4dc9175fbe2a30e830ed3073cecefc0cfe7f31bb7"
   },
   {
    "path": "pages/pics/img/animals-stegosaurus-skeleton-1600.avif",
    "url": "/static/img/animals-stegosaurus-skeleton-1600.avif",
-   "bytes": 25489,
-   "sha256": "46bbae0bbf42c063716d91681a1b4a1490d610e68503fa277c0e8f74861ec1cf"
+   "bytes": 25401,
+   "sha256": "7d0f88a3cd2966a20efbdb424ab41d9bc83a74c0990190d0dff89298c2535c99"
   },
   {
    "path": "pages/pics/img/animals-stegosaurus-skeleton-1600.webp",
    "url": "/static/img/animals-stegosaurus-skeleton-1600.webp",
-   "bytes": 37440,
-   "sha256": "c81a5d599f3c8fe850187490761117f1d223e28e03f7d5f409c38b36cfdb2023"
+   "bytes": 37420,
+   "sha256": "a48de68b4e8a17b4f25893805169a56e9ff84418712e3cc9174d6b86d8a3579c"
   },
   {
    "path": "pages/pics/img/animals-stegosaurus-skeleton-800.avif",
    "url": "/static/img/animals-stegosaurus-skeleton-800.avif",
-   "bytes": 10256,
-   "sha256": "ca7ddceba011a78e7c7b3aa91ccff03a3297eb132956a389167026922987acdf"
+   "bytes": 10262,
+   "sha256": "07a15d9be13df6e712fd1d73a4e45a1eadff718697db584bb0b872d6bc3fc52a"
   },
   {
    "path": "pages/pics/img/animals-stegosaurus-skeleton-800.webp",
    "url": "/static/img/animals-stegosaurus-skeleton-800.webp",
-   "bytes": 15000,
-   "sha256": "5df95a06c225f05dfd1847f7b9af9cc4c8b2c3b03b9f8f4ef60edf29bc4836b2"
+   "bytes": 15018,
+   "sha256": "b2959cd2cdd2cb254776e582ed5b2046d32169e67f9815245d7b7812eae7f54a"
   },
   {
    "path": "pages/pics/img/animals-t-rex-close-1600.avif",
