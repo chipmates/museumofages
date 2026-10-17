@@ -289,7 +289,7 @@
     { "text": "Pascal Cotte", "lang": "fr", "person": true },
     { "text": "Veit Probst", "lang": "de", "person": true },
     { "text": "Murillo", "lang": "es" },
-    { "text": "Salle des États", "lang": "fr" },
+    { "text": "Salle des États", "lang": "fr", "whole": true },
     { "text": "Code du patrimoine", "lang": "fr" },
     { "text": "Isleworth", "lang": "en" },
     { "text": "Archivio di Stato di Firenze", "lang": "it" },
