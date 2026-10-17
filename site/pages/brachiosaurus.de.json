@@ -101,7 +101,7 @@
   "title": "Brachiosaurus-Größe: etwa 22 bis 25 m lang | Museum of Ages",
   "description": "Der Brachiosaurus war etwa 22 bis 25 m lang und grob 30 bis 45 t schwer, nach einem Teilskelett rekonstruiert. Das Berliner Skelett ist ein Giraffatitan.",
   "og_title": "Brachiosaurus-Größe: etwa 22 bis 25 m lang",
-  "og_image_alt": "Unser Brachiosaurus von der Seite, in der Größe des Skeletts aus Chicago, 24,0 m entlang der Wirbelsäule, den langen Hals in sanftem Bogen erhoben, die Kopfhöhe 11,5 m, der Halswinkel unsere Wahl. Die Vorderbeine sind länger als die Hinterbeine, der Schwanz ist frei über dem Boden, und ein grauer Mensch von 1,70 m könnte unter seinem Bauch hindurchgehen."
+  "og_image_alt": "Unser Brachiosaurus von der Seite, in der Größe des Skeletts aus Chicago, 24,0 m entlang der Wirbelsäule, den langen Hals in sanftem Bogen erhoben, die Kopfhöhe 11,5 m, den Halswinkel haben wir gewählt. Die Vorderbeine sind länger als die Hinterbeine, der Schwanz ist frei über dem Boden, und ein grauer Mensch von 1,70 m könnte unter seinem Bauch hindurchgehen."
  },
  "labels": {
   "crumbs": "Du bist hier",
@@ -123,7 +123,7 @@
    "pic": "side",
    "tag": "tag_made",
    "what": "Unser Brachiosaurus neben einem Menschen von 1,70 m, im selben Maßstab, in der Größe des einen Skeletts, auf dem der Name beruht, 1900 in Colorado ausgegraben. Hals, Kopf, die unteren Beinteile und der größte Teil des Schwanzes folgen Giraffatitan und anderen Funden. Seine 11,5 m Kopfhöhe ergeben sich nur aus dem Halswinkel, den wir gewählt haben: Diese Höhe ist unsere Wahl, kein Befund.",
-   "alt": "Unser Brachiosaurus von der Seite, in der Größe des Skeletts aus Chicago, 24,0 m entlang der Wirbelsäule, den langen Hals in sanftem Bogen erhoben, die Kopfhöhe 11,5 m, der Halswinkel unsere Wahl. Die Vorderbeine sind länger als die Hinterbeine, der Schwanz ist frei über dem Boden, und ein grauer Mensch von 1,70 m könnte unter seinem Bauch hindurchgehen.",
+   "alt": "Unser Brachiosaurus von der Seite, in der Größe des Skeletts aus Chicago, 24,0 m entlang der Wirbelsäule, den langen Hals in sanftem Bogen erhoben, die Kopfhöhe 11,5 m, den Halswinkel haben wir gewählt. Die Vorderbeine sind länger als die Hinterbeine, der Schwanz ist frei über dem Boden, und ein grauer Mensch von 1,70 m könnte unter seinem Bauch hindurchgehen.",
    "note": "Unsere eigene Rekonstruktion, nach veröffentlichten Maßen in Code gebaut und in unserer Engine gerendert. Keine Fotos.",
    "marks": [
     {
@@ -391,7 +391,7 @@
    "rows": [
     {
      "term": "18 bis 22 m",
-     "text": "Eine Spanne, die viele Seiten nennen. Solche Längen übernehmen meist die Proportionen des afrikanischen Verwandten Giraffatitan, und mehrere sind älter als eine Studie von 2009. Diese Studie fand den Rumpf des amerikanischen Tiers etwa 23 Prozent länger als bei Giraffatitan und den Schwanz 20 bis 25 Prozent länger. Mit diesen Proportionen kommt man auf etwa 22 bis 25 m."
+     "text": "Eine Spanne, die viele Seiten nennen. Solche Längen übernehmen meist die Proportionen des afrikanischen Verwandten Giraffatitan, und mehrere sind älter als eine Studie von 2009. Diese Studie fand den Rumpf des amerikanischen Tiers etwa 23 Prozent länger als bei Giraffatitan und den Schwanz wohl 20 bis 25 Prozent länger. Mit diesen Proportionen kommt man auf etwa 22 bis 25 m."
     },
     {
      "term": "80 t",

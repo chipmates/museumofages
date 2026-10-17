@@ -96,7 +96,7 @@
   "title": "Braquiossauro: tamanho, cerca de 22 a 25 m | Museum of Ages",
   "description": "Brachiosaurus: cerca de 22 a 25 m e cerca de 30 a 45 t, reconstruídos a partir de um esqueleto parcial. O esqueleto famoso de Berlim é um Giraffatitan.",
   "og_title": "Braquiossauro: tamanho de cerca de 22 a 25 m de comprimento",
-  "og_image_alt": "O nosso braquiossauro de lado, no tamanho do esqueleto de Chicago, 24,0 m ao longo da coluna, com o pescoço longo erguido numa curva suave e o alto da cabeça a 11,5 m, o ângulo do pescoço escolha nossa. As patas da frente são mais longas que as de trás, a cauda não toca o chão, e uma pessoa cinza de 1,70 m poderia passar por baixo da barriga dele."
+  "og_image_alt": "O nosso braquiossauro de lado, no tamanho do esqueleto de Chicago, 24,0 m ao longo da coluna, com o pescoço longo erguido numa curva suave e o alto da cabeça a 11,5 m, com o ângulo do pescoço escolhido por nós. As patas da frente são mais longas que as de trás, a cauda não toca o chão, e uma pessoa cinza de 1,70 m poderia passar por baixo da barriga dele."
  },
  "labels": {
   "crumbs": "Você está aqui",
@@ -118,7 +118,7 @@
    "pic": "side",
    "tag": "tag_made",
    "what": "O nosso braquiossauro ao lado de uma pessoa de 1,70 m, na mesma escala, no tamanho do único esqueleto em que o nome se baseia, desenterrado no Colorado em 1900. O pescoço, a cabeça, a parte de baixo das pernas e a maior parte da cauda seguem o Giraffatitan e outros achados. A cabeça fica a 11,5 m de altura só por causa do ângulo do pescoço que escolhemos: essa altura é nossa, não um resultado.",
-   "alt": "O nosso braquiossauro de lado, no tamanho do esqueleto de Chicago, 24,0 m ao longo da coluna, com o pescoço longo erguido numa curva suave e o alto da cabeça a 11,5 m, o ângulo do pescoço escolha nossa. As patas da frente são mais longas que as de trás, a cauda não toca o chão, e uma pessoa cinza de 1,70 m poderia passar por baixo da barriga dele.",
+   "alt": "O nosso braquiossauro de lado, no tamanho do esqueleto de Chicago, 24,0 m ao longo da coluna, com o pescoço longo erguido numa curva suave e o alto da cabeça a 11,5 m, com o ângulo do pescoço escolhido por nós. As patas da frente são mais longas que as de trás, a cauda não toca o chão, e uma pessoa cinza de 1,70 m poderia passar por baixo da barriga dele.",
    "note": "A nossa própria reconstrução, construída em código a partir de medidas publicadas e renderizada com o nosso próprio motor gráfico. Não são fotografias.",
    "marks": [
     {
@@ -386,7 +386,7 @@
    "rows": [
     {
      "term": "De 18 a 22 m",
-     "text": "Uma faixa que muitos sites dão. Esses comprimentos costumam copiar as proporções do Giraffatitan, o parente africano dele, e vários são anteriores a um estudo de 2009. Esse estudo achou o tronco do animal americano cerca de 23 por cento mais longo que o do Giraffatitan, e a cauda de 20 a 25 por cento mais longa. Com essas proporções, o comprimento chega a cerca de 22 a 25 m."
+     "text": "Uma faixa que muitos sites dão. Esses comprimentos costumam copiar as proporções do Giraffatitan, o parente africano dele, e vários são anteriores a um estudo de 2009. Esse estudo achou o tronco do animal americano cerca de 23 por cento mais longo que o do Giraffatitan, e a cauda provavelmente de 20 a 25 por cento mais longa. Com essas proporções, o comprimento chega a cerca de 22 a 25 m."
     },
     {
      "term": "80 toneladas",

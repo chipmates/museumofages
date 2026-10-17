@@ -96,7 +96,7 @@
   "title": "Brachiosaurus: tamaño de unos 22 a 25 m | Museum of Ages",
   "description": "¿Cuánto medía el Brachiosaurus? Unos 22 a 25 m y unas 30 a 45 t, reconstruido a partir de un esqueleto parcial. El esqueleto de Berlín es un Giraffatitan.",
   "og_title": "Brachiosaurus: tamaño de unos 22 a 25 m de largo",
-  "og_image_alt": "Nuestro Brachiosaurus de lado, al tamaño del esqueleto de Chicago, 24,0 m a lo largo de la columna, con el cuello largo levantado en una curva suave y lo alto de la cabeza a 11,5 m, el ángulo del cuello elección nuestra. Las patas delanteras son más largas que las traseras, la cola no toca el suelo, y una persona gris de 1,70 m podría pasar por debajo de su vientre."
+  "og_image_alt": "Nuestro Brachiosaurus de lado, al tamaño del esqueleto de Chicago, 24,0 m a lo largo de la columna, con el cuello largo levantado en una curva suave y lo alto de la cabeza a 11,5 m, con el ángulo del cuello elegido por nosotros. Las patas delanteras son más largas que las traseras, la cola no toca el suelo, y una persona gris de 1,70 m podría pasar por debajo de su vientre."
  },
  "labels": {
   "crumbs": "Estás aquí",
@@ -118,7 +118,7 @@
    "pic": "side",
    "tag": "tag_made",
    "what": "Nuestro Brachiosaurus junto a una persona de 1,70 m, a la misma escala, al tamaño del único esqueleto en el que se basa el nombre, desenterrado en Colorado en 1900. El cuello, la cabeza, la parte de abajo de las patas y la mayor parte de la cola siguen a Giraffatitan y a otros hallazgos. La cabeza está a 11,5 m de altura solo por el ángulo del cuello que elegimos: esa altura es nuestra, no un resultado.",
-   "alt": "Nuestro Brachiosaurus de lado, al tamaño del esqueleto de Chicago, 24,0 m a lo largo de la columna, con el cuello largo levantado en una curva suave y lo alto de la cabeza a 11,5 m, el ángulo del cuello elección nuestra. Las patas delanteras son más largas que las traseras, la cola no toca el suelo, y una persona gris de 1,70 m podría pasar por debajo de su vientre.",
+   "alt": "Nuestro Brachiosaurus de lado, al tamaño del esqueleto de Chicago, 24,0 m a lo largo de la columna, con el cuello largo levantado en una curva suave y lo alto de la cabeza a 11,5 m, con el ángulo del cuello elegido por nosotros. Las patas delanteras son más largas que las traseras, la cola no toca el suelo, y una persona gris de 1,70 m podría pasar por debajo de su vientre.",
    "note": "Nuestra propia reconstrucción, construida en código a partir de medidas publicadas y renderizada con nuestro propio motor gráfico. No son fotografías.",
    "marks": [
     {
@@ -386,7 +386,7 @@
    "rows": [
     {
      "term": "De 18 a 22 m",
-     "text": "Un rango que dan muchas páginas. Esas longitudes suelen copiar las proporciones de Giraffatitan, su pariente africano, y varias son anteriores a un estudio de 2009. Ese estudio encontró el tronco del animal americano un 23 por ciento más largo que el de Giraffatitan, y la cola, de un 20 a un 25 por ciento más larga. Con esas proporciones, la longitud da unos 22 a 25 m."
+     "text": "Un rango que dan muchas páginas. Esas longitudes suelen copiar las proporciones de Giraffatitan, su pariente africano, y varias son anteriores a un estudio de 2009. Ese estudio encontró el tronco del animal americano un 23 por ciento más largo que el de Giraffatitan, y la cola, probablemente de un 20 a un 25 por ciento más larga. Con esas proporciones, la longitud da unos 22 a 25 m."
     },
     {
      "term": "80 toneladas",
