@@ -23,6 +23,14 @@
         640
       ],
       "sizes": "(min-width: 960px) 320px, 260px"
+    },
+    "lisa": {
+      "stem": "v-lisa",
+      "widths": [
+        800,
+        1280
+      ],
+      "sizes": "(min-width: 960px) 640px, calc(100vw - 40px)"
     }
   },
   "meta": {
@@ -35,12 +43,14 @@
     "crumbs": "You are here",
     "crumb_home": "Museum",
     "crumb_here": "The Mona Lisa",
-    "toc": "On this page"
+    "toc": "On this page",
+    "tag_still": "Reproduction"
   },
   "top": {
     "h1": "Who was the Mona Lisa?",
     "answer": "The woman in the Mona Lisa was Lisa Gherardini, who married Francesco del Giocondo, a silk merchant in Florence. The Louvre names her, and a note from October 1503 makes it firm: a clerk in Florence wrote that Leonardo was then painting Lisa del Giocondo's head. Leonardo da Vinci began the portrait around 1503 and kept working on it until he died in 1519. It hangs in the Louvre in Paris.",
     "jump": true,
+    "side": true,
     "faq": true,
     "door": {
       "text": "Visit her in the wing",
@@ -70,7 +80,8 @@
         ]
       },
       "known": [
-        "That she is the woman in the painting is firm: the Louvre names her, and it calls the doubts raised since the 20th century a false problem. The best evidence is a note written in October 1503 by Agostino Vespucci, a clerk in Florence, in a volume of Cicero's letters printed in 1477. Next to a passage about the ancient painter Apelles, who finished only the head and chest of a Venus, he wrote that Leonardo does the same in all his paintings, as in his head of Lisa del Giocondo. Heidelberg University Library holds the book: a librarian came across the note there in 2005, and the university announced it in 2008. Her names are simple to explain: Mona is short for Madonna, my lady, and La Gioconda, in French La Joconde, is her husband's family name in its female form."
+        "That she is the woman in the painting is firm: the Louvre names her, and it calls the doubts raised since the 20th century a false problem. The best evidence is a note written in October 1503 by Agostino Vespucci, a clerk in Florence, in a volume of Cicero's letters printed in 1477. Next to a passage about the ancient painter Apelles, who finished only the head and chest of a Venus, he wrote that Leonardo does the same in all his paintings, as in his head of Lisa del Giocondo.",
+        "Heidelberg University Library holds the book: a librarian came across the note there in 2005, and the university announced it in 2008. Her names are simple to explain: Mona is short for Madonna, my lady, and La Gioconda, in French La Joconde, is her husband's family name in its female form."
       ],
       "open": "Little more is known about her life, the Louvre says, despite long searches in the archives. Vasari wrote in 1550 that her husband asked Leonardo to paint her, which the Louvre thinks may be so, and nobody knows whether she ever saw the portrait.",
       "end": [
@@ -91,7 +102,8 @@
       "h": "Why is the Mona Lisa so famous?",
       "answer": "It was admired from the start, but a crime made it world famous, the Louvre says: the theft of 1911 spread its fame around the globe, above all among ordinary people.",
       "known": [
-        "The young Raphael learned from it, and in 1550 Giorgio Vasari praised it in his Lives of the Artists, though he had never seen it. It belonged to the French kings and went on show in the Louvre after the Revolution, yet it stayed one famous picture among many: between 1851 and 1880 copyists in the Louvre painted it 71 times, and a Murillo 197 times, the historian Donald Sassoon reports. In the same century writers such as Théophile Gautier and Walter Pater turned her into a beauty with a dangerous secret. Then it vanished, in August 1911: crowds came to stare at the empty wall, and the news of its recovery in December 1913 made the front pages in France and America. Later it went on tour: in 1963 about 1.75 million people saw it in Washington and New York in just over six weeks."
+        "The young Raphael learned from it, and in 1550 Giorgio Vasari praised it in his Lives of the Artists, though he had never seen it. It belonged to the French kings and went on show in the Louvre after the Revolution, yet it stayed one famous picture among many: between 1851 and 1880 copyists in the Louvre painted it 71 times, and a Murillo 197 times, the historian Donald Sassoon reports. In the same century writers such as Théophile Gautier and Walter Pater turned her into a beauty with a dangerous secret.",
+        "Then it vanished, in August 1911: crowds came to stare at the empty wall, and the news of its recovery in December 1913 made the front pages in France and America. Later it went on tour: in 1963 about 1.75 million people saw it in Washington and New York in just over six weeks."
       ],
       "open": "How much the theft alone did is still argued. Sassoon sees many causes adding up, from the kings' collection and the Louvre to the tours, mass tourism and advertising."
     },
@@ -102,7 +114,9 @@
       "h": "When was the Mona Lisa stolen?",
       "answer": "On 21 August 1911, from the Louvre. The thief was Vincenzo Peruggia, an Italian glazier who had worked at the museum, and the painting turned up in Florence in December 1913.",
       "known": [
-        "It was a Monday, when the Louvre was closed in those years, as the museum's own booklet on the theft tells it. The next day the painter Louis Béroud came to paint it and found it gone. The poet Guillaume Apollinaire spent a week in prison as a suspect, and Picasso was drawn in too, but neither was the thief. Peruggia had worked for the firm that fitted protective glass to the Louvre's paintings, and he kept the panel with him in Paris for two years. In late 1913 he offered it to an art dealer in Florence, Alfredo Geri, who called in the director of the Uffizi, Giovanni Poggi. On 11 December the two inspected the panel at Peruggia's hotel, and on 12 December the police arrested him on the hotel stairs. He said he had wanted to give back to Italy a painting stolen from it, but Leonardo had taken it to France himself. Italy showed it in Florence and Rome before it went back to Paris, and on 5 June 1914 a court in Florence sentenced Peruggia to a year and fifteen days."
+        "It was a Monday, when the Louvre was closed in those years, as the museum's own booklet on the theft tells it. The next day the painter Louis Béroud came to paint it and found it gone. The poet Guillaume Apollinaire spent a week in prison as a suspect, and Picasso was drawn in too, but neither was the thief.",
+        "Peruggia had worked for the firm that fitted protective glass to the Louvre's paintings, and he kept the panel with him in Paris for two years. In late 1913 he offered it to an art dealer in Florence, Alfredo Geri, who called in the director of the Uffizi, Giovanni Poggi. On 11 December the two inspected the panel at Peruggia's hotel, and on 12 December the police arrested him on the hotel stairs.",
+        "He said he had wanted to give back to Italy a painting stolen from it, but Leonardo had taken it to France himself. Italy showed it in Florence and Rome before it went back to Paris, and on 5 June 1914 a court in Florence sentenced Peruggia to a year and fifteen days."
       ],
       "open": "How he got the panel out of the building we know only from his own later account. So the popular story that he hid overnight in a cupboard is not settled fact."
     },
@@ -112,15 +126,32 @@
       "nav": "Where it hangs",
       "h": "Where is the Mona Lisa?",
       "answer": "In the Louvre in Paris, in the Salle des États, the largest room in the palace: Denon wing, level 1, room 711. It has hung in this room since 1966, apart from 1992 to 1995.",
+      "pic": {
+        "pic": "lisa",
+        "title": "The Mona Lisa on the picture wall",
+        "tag": "tag_still",
+        "what": "a still from the wing's film. The reproduction hangs close to its real size among the other pictures, the wall running on to her left. The original is in the Louvre, Paris.",
+        "alt": "A long dark blue wall hung with framed reproductions under spotlights. The Mona Lisa hangs among them, close to her real size, and more frames run on to her left. A still from the wing's film.",
+        "src": [
+          "Reproduction: plate 43 of Corrado Ricci's Tesori della pittura italiana, digitized by the National Library of Poland, public domain, via ",
+          {
+            "text": "Wikimedia Commons",
+            "href": "https://commons.wikimedia.org/wiki/File:Tesori_della_pittura_italiana_1910_(146775587).jpg"
+          },
+          ". The other frames hold reproductions as well, each with its source and licence on its label in the wing."
+        ],
+        "at": "end"
+      },
       "known": [
         [
-          "Leonardo began it in Florence and brought it with him when he settled in France in 1516. Since 2005 it has stood alone in the middle of the room, in a glass case that guards it and keeps temperature and humidity steady, because the poplar panel has warped and cracked. In 2019 the Louvre found that four in five of its visitors come to see it, and that they spend about 50 seconds looking at it. It last left France in 1974, for Tokyo and Moscow, and since then it has stayed in the Louvre because it is so fragile. The Louvre is closed on Tuesdays, and ",
+          "Since 2005 it has stood alone in the middle of the room, in a glass case that guards it and keeps temperature and humidity steady, because the poplar panel has warped and cracked. In 2019 the Louvre found that four in five of its visitors come to see it, and that they spend about 50 seconds looking at it. The Louvre is closed on Tuesdays, and ",
           {
             "text": "its own site",
             "href": "https://www.louvre.fr/en/visit/hours-admission"
           },
           " has the hours and the ticket prices."
-        ]
+        ],
+        "Leonardo began it in Florence and brought it with him when he settled in France in 1516. You will often read 1503 to 1506 as its date, but the Louvre's own record says 1503 to 1519, because he kept painting it until he died and it was still unfinished then. It last left France in 1974, for Tokyo and Moscow, and since then it has stayed in the Louvre because it is so fragile."
       ],
       "open": "It may move. In January 2025 France's president announced a room of its own with a separate way in, by 2031 at the latest, and in May 2026 the Louvre picked its architects but named no opening date.",
       "end": [
@@ -140,7 +171,8 @@
       "h": "How much is the Mona Lisa worth?",
       "answer": "Nobody can say, because it can never be sold. The figure you often read, 100 million US dollars, was an insurance valuation from 1962, and Guinness World Records still lists it as the highest ever for a painting.",
       "known": [
-        "That figure was set for the painting's trip to Washington and New York in 1962 and 1963. Guinness adds that the insurance was never taken out, because the tightest security cost less than the premiums would have. The painting belongs to the French state, and French law, article L. 451-5 of the Code du patrimoine, makes museum collections owned by public bodies inalienable: they cannot be sold or given away. Long before the record, an estimate of 1849 put it at 90,000 francs, below several paintings by Raphael. Today it is not insured at all, Guinness wrote in 2026."
+        "That figure was set for the painting's trip to Washington and New York in 1962 and 1963. Guinness adds that the insurance was never taken out, because the tightest security cost less than the premiums would have.",
+        "The painting belongs to the French state, and French law, article L. 451-5 of the Code du patrimoine, makes museum collections owned by public bodies inalienable: they cannot be sold or given away. Long before the record, an estimate of 1849 put it at 90,000 francs, below several paintings by Raphael. Today it is not insured at all, Guinness wrote in 2026."
       ],
       "open": "It has not been sold since the French king bought it, so it has no market price. Even Guinness, which keeps the 1962 record, says the painting has never been valued."
     },
@@ -151,7 +183,16 @@
       "h": "Is the Mona Lisa in the Louvre the real one?",
       "answer": "Yes. The painting behind the glass is Leonardo's original, and the Louvre follows its path from his hands to the French kings and into the museum.",
       "known": [
-        "When it turned up in 1913, the Uffizi's director, Giovanni Poggi, examined the panel and declared it Leonardo's. More than a hundred old copies are known, the Louvre says. The one in the Prado in Madrid was painted in Leonardo's own workshop, beside the original as experts think, and both museums accept it as the earliest known copy. In 2011 and 2012 restorers took a later black overpaint off it and found the scenery behind her, and its colours are far brighter than those of the original, which lies under yellowed varnish. A foundation in Zurich claims that another picture, the Isleworth Mona Lisa, is an earlier version by Leonardo, but leading experts reject it: the Leonardo scholar Martin Kemp points out that it is on canvas, and Leonardo is not known to have painted on canvas."
+        "When it turned up in 1913, the Uffizi's director, Giovanni Poggi, examined the panel and declared it Leonardo's. More than a hundred old copies are known, the Louvre says.",
+        "A foundation in Zurich claims that another picture, the Isleworth Mona Lisa, is an earlier version by Leonardo. Leading experts reject it: the Leonardo scholar Martin Kemp points out that it is on canvas, and Leonardo is not known to have painted on canvas."
+      ],
+      "lists": [
+        {
+          "h": "The Prado copy",
+          "paras": [
+            "The Prado in Madrid holds a copy that was painted in Leonardo's own workshop, beside the original as experts think, and both museums accept it as the earliest known copy. In 2011 and 2012 restorers took a later black overpaint off it and found the scenery behind her. Its colours are far brighter than those of the original, which lies under yellowed varnish."
+          ]
+        }
       ],
       "open": "Who painted the Prado copy is not known: Leonardo's pupils Salaì and Melzi have been named, and other experts doubt both. Where the Isleworth picture was before 1913 is unknown, even by the foundation's own account.",
       "end": [
