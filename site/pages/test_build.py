@@ -3987,6 +3987,7 @@ class SiteWide(unittest.TestCase):
             lines = re.findall(r'<p class="sp-checked">(.*?)</p>', text, flags=re.S)
             self.assertEqual(len(lines), 1, path)
             day = re.search(r'<time class="nw" datetime="([\d-]+)">([^<]+)</time>', lines[0])
+            self.assertNotIn("..", lines[0], path)
             self.assertEqual(day.group(1), article["dateModified"], path)
             self.assertEqual(html.unescape(day.group(2)), self.build.date_words(day.group(1), code)[1], path)
             # the line stands first in the sources, under their heading
@@ -4001,6 +4002,9 @@ class SiteWide(unittest.TestCase):
                 before, words = self.build.date_words(day, code)
                 self.assertIn("2026", words)
                 self.assertNotRegex(before + words, "[—–;]")
+                # one stop at the end, also where the day ends on an abbreviation
+                shown = re.sub(r"<[^>]+>", "", self.build.checked_html(day, code))
+                self.assertRegex(shown, r"[^.]\.$", code)
         self.assertEqual(self.build.date_words("2026-10-08", "it")[0], "l’")
         self.assertEqual(self.build.date_words("2026-10-01", "fr")[1], "1er octobre 2026")
         self.assertEqual(self.build.date_words("2026-10-13", "de")[1], "13. Oktober 2026")

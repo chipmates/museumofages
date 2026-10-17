@@ -1311,6 +1311,9 @@ def checked_html(iso, lang):
     """The line that says when the page's facts were checked, its day a time element a machine reads."""
     before, after = CHECKED_LINE[lang].split("{date}")
     article, words = date_words(iso, lang)
+    # a day that ends on an abbreviation ("2026 г.") ends the sentence with its own stop
+    if words.endswith(".") and after.startswith("."):
+        after = after[1:]
     return f'{esc(LIB.space(before + article, lang))}<time class="nw" datetime="{iso}">{esc(words)}</time>{esc(LIB.space(after, lang))}'
 
 
