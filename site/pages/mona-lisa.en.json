@@ -50,6 +50,7 @@
     "h1": "Who was the Mona Lisa?",
     "answer": "The woman in the Mona Lisa was Lisa Gherardini, who married Francesco del Giocondo, a silk merchant in Florence. The Louvre names her, and a note from October 1503 makes it firm: a clerk in Florence wrote that Leonardo was then painting Lisa del Giocondo's head. Leonardo da Vinci began the portrait around 1503 and kept working on it until he died in 1519. It hangs in the Louvre in Paris.",
     "jump": true,
+    "side": true,
     "faq": true,
     "door": {
       "text": "Visit her in the wing",

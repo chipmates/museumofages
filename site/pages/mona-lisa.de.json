@@ -50,6 +50,7 @@
     "h1": "Wer war Mona Lisa?",
     "answer": "Die Frau auf dem Bild war Lisa Gherardini, verheiratet mit dem Florentiner Seidenhändler Francesco del Giocondo. Der Louvre nennt ihren Namen, eine Notiz vom Oktober 1503 bestätigt ihn: Ein Kanzleischreiber notierte darin, Leonardo male gerade den Kopf der Lisa del Giocondo. Leonardo da Vinci begann das Bildnis um 1503 und arbeitete bis zu seinem Tod 1519 daran. Es hängt im Louvre in Paris.",
     "jump": true,
+    "side": true,
     "faq": true,
     "door": {
       "text": "Besuch sie im Flügel",
