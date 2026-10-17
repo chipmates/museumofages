@@ -1,0 +1,448 @@
+{
+ "_note": "THE WORDS of the Lady with an Ermine page, German. Poured from the writer's WORDS file of round 1 word for word by a script; the labels the writer does not give are the site's own (the Mona Lisa and life pages').",
+ "page": {
+  "id": "vinci-lady-with-an-ermine",
+  "wing": "vinci",
+  "topic": "lady-with-an-ermine",
+  "stop": "picture-room",
+  "published": null,
+  "og_image": {
+   "file": "vinci-lady-with-an-ermine-og-{lang}-1200x630.png",
+   "width": 1200,
+   "height": 630,
+   "plate": "vinci-plate-lady-with-an-ermine"
+  }
+ },
+ "pics": {
+  "lady-with-an-ermine": {
+   "stem": "vinci-plate-lady-with-an-ermine",
+   "widths": [
+    320,
+    640
+   ],
+   "sizes": "(min-width: 960px) 320px, 260px"
+  }
+ },
+ "meta": {
+  "title": "Dame mit dem Hermelin: Cecilia Gallerani | Museum of Ages",
+  "description": "Wer war die Dame mit dem Hermelin? Fast sicher Cecilia Gallerani. Was das Hermelin bedeutet, wo das Bild in Krakau hängt, sein Wert und der Raub von 1939.",
+  "og_title": "Dame mit dem Hermelin: Cecilia Gallerani",
+  "og_image_alt": "Eine Reproduktion der Dame mit dem Hermelin. Die junge Frau trägt ein rotes Kleid, ein blaues Tuch über der Schulter und dunkle Perlen am Hals und wendet den Kopf nach rechts. Im Arm hält sie ein weißes Hermelin, die Hand auf seinem Rücken. Der Hintergrund ist schwarz, oben links steht eine alte Beschriftung."
+ },
+ "labels": {
+  "crumbs": "Du bist hier",
+  "crumb_home": "Museum",
+  "crumb_here": "Dame mit dem Hermelin",
+  "toc": "Auf dieser Seite",
+  "mark_documented": "belegt",
+  "mark_inferred": "erschlossen",
+  "mark_report": "Bericht",
+  "col_sure": "Wie sicher"
+ },
+ "top": {
+  "h1": "Wer war die Dame mit dem Hermelin?",
+  "answer": "Die junge Frau ist fast sicher Cecilia Gallerani, ein Mädchen von etwa 16 oder 17 Jahren am Mailänder Hof und die Geliebte von Ludovico Sforza, der Mailand regierte. Kein Dokument nennt sie als Dargestellte, aber ein Gedicht und zwei Briefe aus ihrer Zeit sprechen von einem Bildnis, das Leonardo von ihr malte, und das Hermelin gilt als Anspielung auf ihren Namen. Leonardo da Vinci malte sie um 1490 in Mailand, in Öl auf eine Tafel aus Nussbaumholz. Das Original hängt in Krakau, im Czartoryski-Museum, einem Haus des Nationalmuseums Krakau.",
+  "jump": true,
+  "faq": true,
+  "plate": {
+   "pic": "lady-with-an-ermine",
+   "shape": "whole",
+   "title": "Dame mit dem Hermelin, etwa 1489 bis 1491. Leonardo da Vinci. Muzeum Narodowe w Krakowie, Muzeum Książąt Czartoryskich, Krakau. Eine Reproduktion.",
+   "alt": "Eine Reproduktion der Dame mit dem Hermelin. Die junge Frau trägt ein rotes Kleid, ein blaues Tuch über der Schulter und dunkle Perlen am Hals und wendet den Kopf nach rechts. Im Arm hält sie ein weißes Hermelin, die Hand auf seinem Rücken. Der Hintergrund ist schwarz, oben links steht eine alte Beschriftung.",
+   "src": [
+    "Sammlungsbild des Nationalmuseums in Krakau. Gemeinfrei, über ",
+    {
+     "text": "Wikimedia Commons",
+     "href": "https://commons.wikimedia.org/wiki/File:Leonardo_da_Vinci_(1452-1519)_-_Lady_with_an_Ermine_%E2%80%93_Portrait_of_Cecilia_Gallerani_(ca._1473%E2%80%931536)_-_MNK_XII-209_-_National_Museum_Krak%C3%B3w.jpg"
+    },
+    "."
+   ]
+  },
+  "door": {
+   "text": "Die Dame mit dem Hermelin im Flügel ansehen",
+   "note": "Eintritt frei, kein Konto.",
+   "leads": "Durch diese Tür kommst du in den Bildersaal des Flügels, wo ihre Reproduktion zwischen seinen anderen Gemälden hängt."
+  }
+ },
+ "blocks": [
+  {
+   "type": "question",
+   "id": "who",
+   "nav": "Wer sie war",
+   "h": "Wer war Cecilia Gallerani?",
+   "answer": "Eine junge Frau vom Mailänder Hof. Sie kam 1473 in Mailand zur Welt, in einer Familie, die aus Siena stammte, und war etwa von 1489 bis 1491 die Geliebte von Ludovico Sforza, der Mailand regierte und 1494 Herzog wurde.",
+   "known": [
+    "Ihr Vater Fazio, ein Gesandter im Dienst der Sforza, starb, als sie sieben war, und hinterließ eine Familie ohne großes Vermögen. Im November 1490 meldete ein Gesandter der Este, sie sei schwanger, und im Januar 1491 heiratete Ludovico Beatrice d'Este. Im Mai 1491 kam ihr Sohn Cesare zur Welt und später mussten Mutter und Kind den Hof verlassen. 1492 heiratete sie, von Ludovico vermittelt, den Grafen Lodovico Carminati, genannt Bergamini, und lebte mit ihm in Mailand im Palazzo Carmagnola. Zeitgenossen rühmten ihre Bildung: Sie schrieb Verse auf Latein und Italienisch, von denen keiner erhalten ist, und kannte den Dichter Bernardo Bellincioni und den Schriftsteller Matteo Bandello. Als Ludovico 1499 stürzte, fanden sie und ihr Mann Zuflucht bei Isabella d'Este in Mantua, später kehrten sie nach Mailand zurück."
+   ],
+   "open": "Wann sie starb, ist nicht sicher bekannt. Sie lebte wohl bis etwa 1536."
+  },
+  {
+   "type": "question",
+   "id": "how-we-know",
+   "nav": "Woher wir es wissen",
+   "h": "Woher wissen wir, dass es Cecilia Gallerani ist?",
+   "answer": "Aus Indizien, nicht aus einer Beschriftung: Kein Dokument nennt die Frau auf dieser Tafel. Dass Leonardo das Bild malte, steht außer Zweifel, ihr Name aber stützt sich auf ein Gedicht, zwei Briefe und das Tier.",
+   "known": [
+    "Der Hofdichter Bernardo Bellincioni schrieb ein Sonett auf Leonardos Bildnis der „Madonna Cecilia“ und lobte, dass sie darauf zu lauschen scheine, statt zu sprechen. Gedruckt wurde es 1493, ein Jahr nach seinem Tod, und ein Hermelin kommt darin nicht vor: Das Gedicht zeigt also, dass Leonardo Cecilia malte, nicht, dass diese Tafel jenes Bildnis ist. Im April 1498 bat Isabella d'Este, die Markgräfin von Mantua, Cecilia um das Bildnis, das Leonardo von ihr gemalt hatte, um es mit Bildnissen von Giovanni Bellini zu vergleichen. Cecilia schickte es und schrieb dazu, es sehe ihr nicht mehr ähnlich, weil sie beim Malen noch so jung gewesen sei. Ihr Alter um 1490 passt zu dem jungen Gesicht, das Hermelin gilt als Wortspiel mit ihrem Namen und als Zeichen für Ludovico. Um 1900 brachte die Forschung ihren Namen ins Spiel, heute ist er allgemein anerkannt und das Museum in Krakau sieht ihn als gesichert an."
+   ],
+   "open": "Kein Schriftstück verfolgt Leonardos Bildnis von Cecilia aus ihren Händen bis zu der Tafel, die um 1800 in Italien auftauchte. Der Name ruht also auf diesen Indizien, so gut sie passen, nicht auf einem Dokument.",
+   "end": [
+    [
+     "Wie sicher jedes seiner Gemälde von ihm ist und wo jedes hängt: ",
+     {
+      "text": "Leonardo da Vincis Gemälde",
+      "page": "paintings"
+     },
+     "."
+    ]
+   ]
+  },
+  {
+   "type": "question",
+   "id": "where",
+   "nav": "Wo das Bild hängt",
+   "h": "Wo hängt die Dame mit dem Hermelin?",
+   "answer": "Das Original hängt in Krakau, im Czartoryski-Museum in der ul. Pijarska 15, einem Haus des Nationalmuseums Krakau. Es gehört zur Dauerausstellung und hängt hinter Glas.",
+   "known": [
+    [
+     "Es ist das einzige Bild Leonardos in Polen. Seit der polnische Staat 2016 die Sammlung der Czartoryski kaufte, gehört es dem Nationalmuseum Krakau. Das Czartoryski-Museum öffnete im Dezember 2019 nach fast zehn Jahren Umbau wieder und das Bild kehrte an seinen alten Platz zurück. Öffnungszeiten und Eintrittspreise ändern sich, darum schau sie auf ",
+     {
+      "text": "der Seite des Museums",
+      "href": "https://mnk.pl/en/branches/czartoryski-museum/"
+     },
+     " nach. Im Dezember 2019 sagte der künftige Direktor des Nationalmuseums im Gespräch mit der polnischen Nachrichtenagentur PAP, das Bild werde nicht verliehen und solle das Czartoryski-Museum in seiner fünfjährigen Amtszeit nicht verlassen. Zur Größe: Die Tafel aus Nussbaumholz misst laut den Restauratoren des Museums etwa 55 mal 40,5 Zentimeter, der Katalog des Museums nennt 53,4 mal 39,3, weil beide Maße Verschiedenes erfassen."
+    ]
+   ],
+   "open": "Ob das nach dem Ende seiner Amtszeit noch gilt, konnten wir nicht herausfinden.",
+   "end": [
+    [
+     "Wie groß das Bild neben der Mona Lisa und seinen anderen Werken ist: ",
+     {
+      "text": "Wie groß ist die Mona Lisa?",
+      "page": "sizes"
+     }
+    ]
+   ]
+  },
+  {
+   "type": "question",
+   "id": "stolen",
+   "nav": "Wurde es gestohlen?",
+   "h": "Wurde die Dame mit dem Hermelin gestohlen, wie in der Netflix-Serie?",
+   "answer": "Nicht so, wie die Serie es erzählt: „Berlin und die Dame mit dem Hermelin“ ist erfunden und das Bild ist sicher in Krakau. Der einzige bekannte Diebstahl aber war echt: 1939 raubten es die Nationalsozialisten, 1946 kam es zurück.",
+   "known": [
+    "Die Serie läuft seit dem 15. Mai 2026 bei Netflix, als Fortsetzung der Serie „Berlin“, in acht Folgen, die in Sevilla spielen. Die Bande tut darin nur so, als sei sie hinter dem Bild her, schreibt Netflix. Ihr eigentliches Ziel sind ein Herzog und seine Frau. Der echte Raub kam mit dem Krieg: Die Familie hatte das Bild wieder in Sieniawa versteckt und Ende September 1939 fanden es die deutschen Besatzer und nahmen es mit. Es wurde in Berlin gezeigt, war für das Museum bestimmt, das Hitler in Linz plante, und hing ab 1940 auf dem Wawel in Krakau, in der Sammlung von Hans Frank, dem deutschen Generalgouverneur. Bei Kriegsende kam es in Franks Villa in Schliersee in Bayern, wo amerikanische Truppen es 1945 fanden, und 1946 hing es wieder im Czartoryski-Museum."
+   ]
+  },
+  {
+   "type": "question",
+   "id": "meaning",
+   "nav": "Was das Hermelin bedeutet",
+   "h": "Was bedeutet das Hermelin?",
+   "answer": "Kein Dokument erklärt es, jede Bedeutung ist also eine Deutung. Das Museum in Krakau und die National Gallery in London nennen beide die zwei häufigsten Deutungen: Das Hermelin steht für Ludovico Sforza und sein griechischer Name, galê, spielt auf ihren an.",
+   "known": [
+    "1488 verlieh der König von Neapel Ludovico den Hermelinorden und seitdem hieß er „Ermellino Bianco“, das weiße Hermelin. Für das Museum in Krakau wird das Bild so zum Doppelbildnis der beiden Liebenden: Cecilia und, im Tier, Ludovico. Das Wortspiel läuft über das Griechische: galê, ein Wort für Wiesel oder Hermelin, klingt wie der Anfang von Gallerani. Das Dizionario Biografico degli Italiani, das große italienische Personenlexikon, verweist auf ein ähnliches Spiel in Leonardos Bildnis der Ginevra de' Benci, mit einem Wacholder, italienisch ginepro. Beide Museen lesen das weiße Hermelin auch als Zeichen der Reinheit, nach einem alten Glauben, den Leonardo selbst um 1494 notierte: Das Hermelin lasse sich lieber von den Jägern fangen, als in einen schlammigen Bau zu fliehen und sein Fell zu beschmutzen. Das Museum in Krakau nennt noch eine vierte Deutung: Wiesel galten als Schutz für Schwangere und im November 1490 erwartete Cecilia ein Kind von Ludovico."
+   ],
+   "open": "Welche davon Leonardo meinte oder ob er mehrere zugleich meinte, sagt uns keine Quelle. Bellincionis Gedicht auf das Bildnis erwähnt das Tier nicht einmal."
+  },
+  {
+   "type": "question",
+   "id": "ermine-or-ferret",
+   "nav": "Hermelin oder Frettchen?",
+   "h": "Ist das Tier wirklich ein Hermelin oder ein Frettchen?",
+   "answer": "Das Museum in Krakau nennt es ein Hermelin im weißen Winterfell. Doch für ein Hermelin wirkt es groß, manche sehen darin ein Frettchen und entschieden ist die Frage nicht.",
+   "known": [
+    "Das Hermelin, Mustela erminea, ist ein kleines Raubtier mit langem Körper und kurzen Beinen, von der Nase bis zum Schwanzansatz etwa 17 bis 33 Zentimeter lang. Im Sommer ist es oben braun und unten hell, im Winter wird es weiß, bis auf die schwarze Schwanzspitze. Janusz Wałek, der verstorbene Kunsthistoriker des Museums, soll gesagt haben, das Tier sei nicht nach der Natur gemalt, sondern Leonardos eigene Schöpfung. Und die Untersuchung des Museums von 2012 zeigt, dass Leonardo Größe und Haltung des Tiers beim Malen änderte."
+   ],
+   "open": "Ob Leonardo ein lebendes Tier vor sich hatte, ist nicht bekannt und eine Studie eines Zoologen dazu haben wir nicht gefunden."
+  },
+  {
+   "type": "question",
+   "id": "worth",
+   "nav": "Was das Bild wert ist",
+   "h": "Was ist die Dame mit dem Hermelin wert?",
+   "answer": "Einen Preis für das Bild allein gibt es nicht. Im Dezember 2016 kaufte der polnische Staat die Sammlung der Czartoryski samt dem Bild für 100 Millionen Euro.",
+   "known": [
+    "Unterzeichnet wurde am 29. Dezember 2016 im Königsschloss in Warschau, vom Kulturminister für den Staat und von Fürst Adam Karol Czartoryski und der Stiftung seiner Familie. Für diese Summe bekam der Staat rund 86.000 Museumsstücke und rund 250.000 Bücher, Handschriften und alte Drucke, meldete die polnische Nachrichtenagentur PAP, und in einem eigenen Vertrag wurden ihm die Gebäude der Sammlung in Krakau als Schenkung versprochen. Schätzungen von damals setzten die ganze Sammlung mit mehr als 2 Milliarden Euro an und Presseberichte nannten für das Bild einen Versicherungswert von rund 350 Millionen Euro. Der Fürst nannte den Verkauf eine Schenkung und der gesamte Vorstand der Stiftung trat zurück, als er von den Verhandlungen erfuhr."
+   ]
+  },
+  {
+   "type": "question",
+   "id": "science",
+   "nav": "Was die Forschung fand",
+   "h": "Was hat die Forschung unter der Farbe gefunden?",
+   "answer": "Dass der schwarze Hintergrund nicht von Leonardo ist und dass er beim Malen umplante. Das Hermelin malte er über seine erste Anlage der Frau und den Umriss des Tiers machte er etwas kleiner.",
+   "known": [
+    "Das erste Röntgenbild entstand 1945 in München, während das Bild im Kunstdepot der Alliierten lag, und in den 1950er Jahren kamen in Krakau und Warschau Aufnahmen im ultravioletten und infraroten Licht hinzu. 1991 und 1992 fand David Bull, ein Restaurator der National Gallery of Art in Washington, eine Reihe winziger Kohlepunkte um ihren Kopf und ihr Gesicht. Sie zeigen, dass Leonardo seinen Entwurf von einer Zeichnung in voller Größe auf die Tafel übertrug, und Bull fand auch Fingerabdrücke in der Farbe. 2007 tastete die Pariser Firma Lumiere Technology das Bild vom Ultraviolett bis ins Infrarot ab und sah, dass Leonardo ein Band übermalt hatte, das den Schleier unter ihrem Kinn hielt. Das eigene Team des Museums untersuchte es 2012 und veröffentlichte 2024: Unter dem Schwarz liegt Leonardos dunkelgrauer Grund, ohne Fenster und ohne Landschaft, und auch an ihrer Hand und ihrem Kleid änderte er beim Malen manches. Das Schwarz kam später, in mindestens zwei Schichten, im 18. oder 19. Jahrhundert: Die Studie von 2024 nennt am ehesten das 18., die Sammlungsseite des Museums das 19. Jahrhundert."
+   ],
+   "open": "2014 behauptete der französische Ingenieur Pascal Cotte, dessen Firma den Scan von 2007 gemacht hatte, Leonardo habe das Bild in drei Stufen gemalt: zuerst ohne Tier, dann mit einem schlankeren Hermelin, zuletzt mit dem kräftigeren, das wir sehen. Andere Fachleute überzeugt das nicht und die Studie des Museums berichtet nur von kleineren Änderungen an Größe und Haltung des Tiers.",
+   "end": [
+    "In unserem Leonardo-Flügel hängt ihre Reproduktion im Bildersaal, annähernd in Originalgröße, mit einer Nahansicht auf das Schwarz."
+   ],
+   "links": [
+    {
+     "text": "Die Dame mit dem Hermelin im Flügel ansehen",
+     "stop": "picture-room"
+    }
+   ]
+  },
+  {
+   "type": "years",
+   "id": "story",
+   "nav": "Seine Geschichte",
+   "h": "Seine Geschichte, von Mailand nach Krakau",
+   "intro": "Jede Zeile trägt ein Zeichen. Belegt: Ein Zeugnis jener Zeit oder die Forschung des Museums selbst zeigt es. Erschlossen: Fachleute folgern es aus anderen Spuren. Bericht: Es stützt sich auf eine einzige veröffentlichte Quelle.",
+   "items": [
+    {
+     "id": "story-01",
+     "date": "Um 1490",
+     "k": "mark_inferred",
+     "line": "Leonardo malt Cecilia in Mailand, nach Angaben des Museums im Auftrag von Ludovico Sforza. Das Jahr ergibt sich aus dem Stil und aus ihrem Alter."
+    },
+    {
+     "id": "story-02",
+     "date": "1493",
+     "k": "mark_documented",
+     "line": "Bellincionis Gedichte erscheinen im Druck, darunter sein Sonett auf Leonardos Bildnis der Cecilia."
+    },
+    {
+     "id": "story-03",
+     "date": "April 1498",
+     "k": "mark_documented",
+     "line": "Cecilia leiht ihr Bildnis von Leonardo an Isabella d'Este in Mantua."
+    },
+    {
+     "id": "story-04",
+     "date": "1498 bis um 1536",
+     "k": "mark_inferred",
+     "line": "Das Bildnis bleibt wohl bis zu ihrem Tod bei Cecilia."
+    },
+    {
+     "id": "story-05",
+     "date": "Um 1800",
+     "k": "mark_documented",
+     "line": "Nach mehr als zwei Jahrhunderten ohne sichere Spur kauft Fürst Adam Jerzy Czartoryski das Bild in Italien, für seine Mutter, Fürstin Izabela Czartoryska, die in Puławy das erste Museum Polens aufbaut."
+    },
+    {
+     "id": "story-06",
+     "date": "1809",
+     "k": "mark_documented",
+     "line": "Es wird im Gotischen Haus in Puławy gezeigt. Schon vorher hat jemand einen falschen Titel in die linke obere Ecke gemalt, LA BELE FERONIERE, und das W in LEONARD D'AWINCI verrät eine polnische Hand, sagen die Restauratoren des Museums."
+    },
+    {
+     "id": "story-07",
+     "date": "Nach 1831",
+     "k": "mark_documented",
+     "line": "Nach dem gescheiterten Novemberaufstand mauert die Familie es für acht Jahre in eine Nische ihres Schlosses in Sieniawa ein, damit es nicht beschlagnahmt wird."
+    },
+    {
+     "id": "story-08",
+     "date": "Ab den 1840er Jahren",
+     "k": "mark_documented",
+     "line": "Es liegt in Paris im Hôtel Lambert, dem Sitz der Familie im Exil, und bleibt jahrzehntelang vor der Öffentlichkeit verborgen."
+    },
+    {
+     "id": "story-09",
+     "date": "1882",
+     "k": "mark_documented",
+     "line": "Es kommt aus Paris nach Krakau und wird im Czartoryski-Museum gezeigt, das Władysław Czartoryski dort 1876 gegründet hat."
+    },
+    {
+     "id": "story-10",
+     "date": "1914 bis 1920",
+     "k": "mark_documented",
+     "line": "Im Ersten Weltkrieg wird es in der Gemäldegalerie in Dresden verwahrt, wo Fachleute es mit Bellincionis Sonett verbinden. 1920 kehrt es nach Krakau zurück."
+    },
+    {
+     "id": "story-11",
+     "date": "September 1939",
+     "k": "mark_documented",
+     "line": "Wieder in Sieniawa versteckt, wird es von den deutschen Besatzern gefunden und geraubt."
+    },
+    {
+     "id": "story-12",
+     "date": "1939 bis 1945",
+     "k": "mark_documented",
+     "line": "Es wird in Berlin gezeigt und ist für Hitlers Museum in Linz bestimmt, hängt dann auf dem Wawel in der Sammlung von Hans Frank und erlebt das Kriegsende in seiner Villa in Schliersee."
+    },
+    {
+     "id": "story-13",
+     "date": "1945",
+     "k": "mark_documented",
+     "line": "Amerikanische Truppen finden es. Im Kunstdepot der Alliierten in München wird es zum ersten Mal geröntgt und die abgebrochene Ecke wird geleimt."
+    },
+    {
+     "id": "story-14",
+     "date": "30. April 1946",
+     "k": "mark_report",
+     "line": "Ein Zug mit 27 Wagen voller geraubter polnischer Kunstschätze, darunter das Bild, erreicht unter amerikanischem Geleit Polen. Bald hängt es wieder im Czartoryski-Museum."
+    },
+    {
+     "id": "story-15",
+     "date": "2011",
+     "k": "mark_documented",
+     "line": "Es wird nach Madrid, Berlin und an die National Gallery in London verliehen. Ein im April unterzeichnetes Memorandum hält fest, dass es nach seiner Rückkehr mindestens zehn Jahre nicht mehr verliehen wird."
+    },
+    {
+     "id": "story-16",
+     "date": "2012",
+     "k": "mark_documented",
+     "line": "Zurück in Krakau untersucht das eigene Team des Museums das Bild."
+    },
+    {
+     "id": "story-17",
+     "date": "29. Dezember 2016",
+     "k": "mark_documented",
+     "line": "Die Sammlung der Czartoryski geht an den polnischen Staat, das Bild an das Nationalmuseum Krakau."
+    },
+    {
+     "id": "story-18",
+     "date": "Dezember 2019",
+     "k": "mark_documented",
+     "line": "Das Czartoryski-Museum öffnet nach dem Umbau wieder und das Bild kehrt in seinen alten Raum zurück."
+    }
+   ],
+   "end": [
+    [
+     "Wer Leonardo war und der Flügel, der um sein Leben gebaut ist: ",
+     {
+      "text": "Leonardo da Vinci",
+      "wing": ""
+     },
+     "."
+    ]
+   ]
+  },
+  {
+   "type": "sources",
+   "id": "sources",
+   "nav": "",
+   "h": "Quellen",
+   "intro": "Die Fakten stammen vom Nationalmuseum Krakau (seinen Sammlungsseiten, dem Aufsatz seiner Restauratoren von 2013 und dem seiner Forscher in Technè, 2024), aus dem Dizionario Biografico degli Italiani, von der National Gallery in London, den Staatlichen Museen zu Berlin und dem US-Nationalarchiv, aus Bellincionis Gedichten und Leonardos Notizen in ihren gedruckten Ausgaben, aus dem Animal Diversity Web, von der polnischen Nachrichtenagentur PAP, Notes from Poland, Euronews, Netflix, Lumiere Technology und Art History News.",
+   "notes": [
+    "Alle diese Quellen haben wir am 17. Oktober 2026 gelesen:"
+   ],
+   "read": [
+    {
+     "text": "Nationalmuseum Krakau, die Sammlungsseite des Bildes (auf Englisch)",
+     "href": "https://mnk.pl/en/collections/lady-with-an-ermine/"
+    },
+    {
+     "text": "Nationalmuseum Krakau, der Artikel zum Bild, 2026 (auf Polnisch)",
+     "href": "https://mnk.pl/artykul/leonardo-da-vinci-dama-z-gronostajem-mediolan-ok-1490/"
+    },
+    {
+     "text": "Nationalmuseum Krakau, das Czartoryski-Museum (auf Englisch)",
+     "href": "https://mnk.pl/en/branches/czartoryski-museum/"
+    },
+    {
+     "text": "Nationalmuseum Krakau, seine Restauratoren über das Bild, 2013 (PDF, auf Polnisch)",
+     "href": "https://mnk.pl/wp-content/uploads/2026/05/R4-Chmielewska.pdf"
+    },
+    {
+     "text": "Nationalmuseum Krakau, seine Forscher über Leonardos Material und Technik, Technè, 2024 (auf Englisch)",
+     "href": "https://journals.openedition.org/techne/21487?lang=en"
+    },
+    {
+     "text": "Nationalmuseum Krakau bei Google Arts & Culture, „Behind the Mystery of The Lady with an Ermine“ (auf Englisch)",
+     "href": "https://artsandculture.google.com/story/LAWRkq8iKEKGJA"
+    },
+    {
+     "text": "Nationalmuseum Krakau, die Katalogdaten seines eigenen Bildes, auf Wikimedia Commons",
+     "href": "https://commons.wikimedia.org/wiki/File:Leonardo_da_Vinci_(1452-1519)_-_Lady_with_an_Ermine_%E2%80%93_Portrait_of_Cecilia_Gallerani_(ca._1473%E2%80%931536)_-_MNK_XII-209_-_National_Museum_Krak%C3%B3w.jpg"
+    },
+    {
+     "text": "Dizionario Biografico degli Italiani, „Gallerani, Cecilia“, 1998 (auf Italienisch)",
+     "href": "https://www.treccani.it/enciclopedia/cecilia-gallerani_(Dizionario-Biografico)/"
+    },
+    {
+     "text": "National Gallery, London, zur Ausstellung von 2011 (auf Englisch)",
+     "href": "https://www.nationalgallery.org.uk/about-us/press-and-media/press-releases-archive/leonardo-da-vinci-painter-at-the-court-of-milan"
+    },
+    {
+     "text": "Staatliche Museen zu Berlin, 2011",
+     "href": "https://www.smb.museum/nachrichten/detail/leonardo-da-vincis-meisterwerk-kommt-nach-berlin/"
+    },
+    {
+     "text": "US-Nationalarchiv, zum Zug von 1946 (auf Englisch)",
+     "href": "https://text-message.blogs.archives.gov/2014/01/09/karol-estreicher-the-polish-monuments-man"
+    },
+    {
+     "text": "Bernardo Bellincioni, Rime, Ausgabe von 1876, Sonett 45 (auf Italienisch)",
+     "href": "https://archive.org/details/rimebernardo01belluoft"
+    },
+    {
+     "text": "Julia Cartwright, Isabella d'Este, 1903, zu den Briefen von 1498 (auf Englisch)",
+     "href": "https://archive.org/details/isabelladestemar01cartuoft"
+    },
+    {
+     "text": "Die Notizbücher Leonardo da Vincis, herausgegeben von J. P. Richter (auf Englisch)",
+     "href": "https://www.gutenberg.org/ebooks/5000"
+    },
+    {
+     "text": "Animal Diversity Web, das Hermelin (auf Englisch)",
+     "href": "https://animaldiversity.org/accounts/Mustela_erminea/"
+    },
+    {
+     "text": "PAP auf dzieje.pl, die Leihgaben von 2011 (auf Polnisch)",
+     "href": "https://dzieje.pl/node/46491"
+    },
+    {
+     "text": "PAP auf dzieje.pl, der Kauf vor dem Senat, 2017 (auf Polnisch)",
+     "href": "https://dzieje.pl/dziedzictwo-kulturowe/na-senackiej-komisji-o-zakupie-kolekcji-ksiazat-czartoryskich"
+    },
+    {
+     "text": "PAP auf dzieje.pl, der Direktor des Museums zum Verleihen, 2019 (auf Polnisch)",
+     "href": "https://dzieje.pl/node/111510"
+    },
+    {
+     "text": "dzieje.pl, die Besprechung eines Buchs über das Bild, 2019 (auf Polnisch)",
+     "href": "https://dzieje.pl/node/108206"
+    },
+    {
+     "text": "Notes from Poland, zur Wiedereröffnung, 2019 (auf Englisch)",
+     "href": "https://notesfrompoland.com/2019/12/21/polands-oldest-museum-reopens-after-ten-years-of-closure-and-controversy/"
+    },
+    {
+     "text": "stol.it nach APA und AFP, zum Kauf, 2016",
+     "href": "https://www.stol.it/artikel/kultur/kunst/polen-erwirbt-da-vincis-dame-mit-dem-hermelin-von-privatsammlung"
+    },
+    {
+     "text": "Euronews, zur Glasvitrine des Bildes, 2024 (auf Englisch)",
+     "href": "https://www.euronews.com/culture/2024/06/28/stop-and-smell-the-art-polish-museum-captures-original-scent-of-da-vincis-lady-with-an-erm"
+    },
+    {
+     "text": "Lumiere Technology, zu ihrem Buch über das Bild (auf Englisch)",
+     "href": "https://lumiere-technology.com/?p=770"
+    },
+    {
+     "text": "Art History News, zur Behauptung von 2014 (auf Englisch)",
+     "href": "https://arthistorynews.com/articles/3016_Secrets_of_Leonardo_revealed"
+    },
+    {
+     "text": "Netflix, zur Serie (auf Englisch)",
+     "href": "https://about.netflix.com/en/news/berlin-and-the-lady-with-an-ermine-arrives-to-netflix-on-may-15"
+    },
+    {
+     "text": "Filmstarts, zum Start der Serie",
+     "href": "https://www.filmstarts.de/nachrichten/1000187567.html",
+     "only": "de"
+    }
+   ],
+   "contact": "Ist ein Datum, ein Name oder ein Satz falsch, schreib uns, und wir korrigieren es.",
+   "contact_link": "Zum Impressum",
+   "what_link": "Was dieses Museum ist"
+  },
+  {
+   "type": "close",
+   "id": "enter",
+   "nav": "",
+   "h": "Die Dame mit dem Hermelin im Flügel ansehen",
+   "p": "Diese Tür öffnet unseren Leonardo-Flügel im Bildersaal. Dort hängt ihre Reproduktion bei seinen anderen Gemälden und eine Nahansicht zeigt das Schwarz, das eine spätere Hand über sein Grau legte.",
+   "door": {
+    "text": "Ins Museum",
+    "note": "Eintritt frei, kein Konto."
+   }
+  }
+ ]
+}

@@ -266,6 +266,24 @@
       },
       {
         "slug": {
+          "en": "lady-with-an-ermine",
+          "de": "dame-mit-dem-hermelin"
+        },
+        "name": {
+          "en": "Who was the Lady with an Ermine",
+          "de": "Wer war die Dame mit dem Hermelin"
+        },
+        "line": {
+          "en": "Who she was, what the ermine means, where it hangs, its theft in 1939 and what scientists found under the paint.",
+          "de": "Wer sie war, was das Hermelin bedeutet, wo das Bild hängt, der Raub von 1939 und was die Forschung unter der Farbe fand."
+        },
+        "langs": ["en", "de"],
+        "count": "lady-with-an-ermine",
+        "about": {"@type": "Painting", "name": "Lady with an Ermine", "sameAs": "https://www.wikidata.org/wiki/Q474338",
+                  "creator": {"@type": "Person", "name": "Leonardo da Vinci", "sameAs": "https://www.wikidata.org/wiki/Q762"}}
+      },
+      {
+        "slug": {
           "en": "sizes",
           "de": "groessen"
         },

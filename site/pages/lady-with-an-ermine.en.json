@@ -1,0 +1,443 @@
+{
+ "_note": "THE WORDS of the Lady with an Ermine page, English. Poured from the writer's WORDS file of round 1 word for word by a script; the labels the writer does not give are the site's own (the Mona Lisa and life pages').",
+ "page": {
+  "id": "vinci-lady-with-an-ermine",
+  "wing": "vinci",
+  "topic": "lady-with-an-ermine",
+  "stop": "picture-room",
+  "published": null,
+  "og_image": {
+   "file": "vinci-lady-with-an-ermine-og-{lang}-1200x630.png",
+   "width": 1200,
+   "height": 630,
+   "plate": "vinci-plate-lady-with-an-ermine"
+  }
+ },
+ "pics": {
+  "lady-with-an-ermine": {
+   "stem": "vinci-plate-lady-with-an-ermine",
+   "widths": [
+    320,
+    640
+   ],
+   "sizes": "(min-width: 960px) 320px, 260px"
+  }
+ },
+ "meta": {
+  "title": "Lady with an Ermine: Cecilia Gallerani | Museum of Ages",
+  "description": "Who was the Lady with an Ermine? Almost certainly Cecilia Gallerani. What the ermine means, where it hangs in Kraków, and its real theft in 1939.",
+  "og_title": "Lady with an Ermine: Cecilia Gallerani",
+  "og_image_alt": "A reproduction of the Lady with an Ermine. The young woman wears a red dress, with a blue cloth over one shoulder and dark beads at her throat, and turns her head to the right. She cradles a white ermine, her hand on its back. The background is black, with old lettering in the upper left corner."
+ },
+ "labels": {
+  "crumbs": "You are here",
+  "crumb_home": "Museum",
+  "crumb_here": "Lady with an Ermine",
+  "toc": "On this page",
+  "mark_documented": "documented",
+  "mark_inferred": "inferred",
+  "mark_report": "report",
+  "col_sure": "How sure"
+ },
+ "top": {
+  "h1": "Who was the Lady with an Ermine?",
+  "answer": "The woman is almost certainly Cecilia Gallerani, a girl of about sixteen or seventeen at the court of Milan and the mistress of its ruler, Ludovico Sforza. No document names her as the sitter, but a poem and two letters of her time speak of a portrait Leonardo made of her, and the ermine is read as a play on her name. Leonardo da Vinci painted her in Milan about 1490, in oil on a walnut panel. The original hangs in Kraków, in the Czartoryski Museum, a branch of the National Museum in Kraków.",
+  "jump": true,
+  "faq": true,
+  "plate": {
+   "pic": "lady-with-an-ermine",
+   "shape": "whole",
+   "title": "Lady with an Ermine, about 1489 to 1491. Leonardo da Vinci. Muzeum Narodowe w Krakowie, Muzeum Książąt Czartoryskich, Kraków. A reproduction.",
+   "alt": "A reproduction of the Lady with an Ermine. The young woman wears a red dress, with a blue cloth over one shoulder and dark beads at her throat, and turns her head to the right. She cradles a white ermine, her hand on its back. The background is black, with old lettering in the upper left corner.",
+   "src": [
+    "National Museum in Kraków collection image. Public domain, via ",
+    {
+     "text": "Wikimedia Commons",
+     "href": "https://commons.wikimedia.org/wiki/File:Leonardo_da_Vinci_(1452-1519)_-_Lady_with_an_Ermine_%E2%80%93_Portrait_of_Cecilia_Gallerani_(ca._1473%E2%80%931536)_-_MNK_XII-209_-_National_Museum_Krak%C3%B3w.jpg"
+    },
+    "."
+   ]
+  },
+  "door": {
+   "text": "See the Lady with an Ermine in the wing",
+   "note": "Free entry, no account.",
+   "leads": "Through this door you reach the wing's picture room, where her reproduction hangs among his other paintings."
+  }
+ },
+ "blocks": [
+  {
+   "type": "question",
+   "id": "who",
+   "nav": "Who she was",
+   "h": "Who was Cecilia Gallerani?",
+   "answer": "A young woman of the court of Milan. She was born in Milan in 1473 into a family that had come from Siena, and from about 1489 to 1491 she was the mistress of Ludovico Sforza, who ruled Milan and was its duke from 1494.",
+   "known": [
+    "Her father, Fazio, served the Sforza court as an envoy and died when she was seven, leaving a family that was not rich. In November 1490 an envoy of the Este court reported that she was pregnant, and in January 1491 Ludovico married Beatrice d'Este. Her son Cesare was born in May 1491, and later she and the boy were sent away from court. In 1492, in a match Ludovico arranged, she married Count Lodovico Carminati, called Bergamini, and lived with him in Milan at the Palazzo Carmagnola. Writers of her time praised her learning: she wrote poems in Latin and Italian, none of which survives, and she knew the poet Bernardo Bellincioni and the writer Matteo Bandello. When Ludovico fell in 1499, she and her husband found shelter with Isabella d'Este in Mantua, and later they went back to Milan."
+   ],
+   "open": "When she died is not known for sure. She seems to have lived until about 1536."
+  },
+  {
+   "type": "question",
+   "id": "how-we-know",
+   "nav": "How we know it is her",
+   "h": "How do we know it is Cecilia Gallerani?",
+   "answer": "From clues, not from a label: no document names the woman on this panel. That Leonardo painted it is not in doubt, but her name rests on a poem, two letters and the animal.",
+   "known": [
+    "The court poet Bernardo Bellincioni wrote a sonnet on Leonardo's portrait of “Madonna Cecilia”, praising him for making her seem to listen rather than speak, and it was printed in 1493, a year after the poet died. The poem never mentions an ermine, so it shows that Leonardo painted Cecilia, not that this panel is that portrait. In April 1498 Isabella d'Este, Marchioness of Mantua, asked Cecilia to lend her the portrait Leonardo had painted of her, to compare it with portraits by Giovanni Bellini. Cecilia sent it, writing that it no longer looked like her, since she had been so young when it was made. The ermine is taken as a pun on her name and a sign of Ludovico, and her age around 1490 fits the young face. The name was first put forward around 1900, it is the accepted identification today, and the museum in Kraków treats it as confirmed."
+   ],
+   "open": "No record follows Leonardo's portrait of Cecilia from her hands to the panel that came to light in Italy around 1800. So the name rests on these clues, however well they fit, and not on a document.",
+   "end": [
+    [
+     "How sure we are of each of his paintings, and where each one hangs: ",
+     {
+      "text": "Leonardo da Vinci's paintings",
+      "page": "paintings"
+     },
+     "."
+    ]
+   ]
+  },
+  {
+   "type": "question",
+   "id": "where",
+   "nav": "Where it hangs",
+   "h": "Where is the Lady with an Ermine?",
+   "answer": "The original hangs in Kraków, in the Czartoryski Museum at ul. Pijarska 15, a branch of the National Museum in Kraków. It is in the permanent exhibition, behind glass.",
+   "known": [
+    [
+     "It is the only painting by Leonardo in Poland, and the National Museum in Kraków has owned it since the Polish state bought the Czartoryski collection in 2016. The Czartoryski Museum reopened in December 2019 after almost ten years of renovation, and the painting went back to its old place there. Opening hours and ticket prices change, so check them on ",
+     {
+      "text": "the museum's own page",
+      "href": "https://mnk.pl/en/branches/czartoryski-museum/"
+     },
+     ". In December 2019 the museum's incoming director told the Polish press agency PAP that the painting is not lent, and that it would not leave the Czartoryski Museum during his five-year term. As for its size, the walnut panel measures about 55 by 40.5 centimetres, the museum's conservators found, and the museum's catalogue gives 53.4 by 39.3, because the two measure different things."
+    ]
+   ],
+   "open": "Whether that rule still holds now that his term is over, we could not find out.",
+   "end": [
+    [
+     "Its size next to the Mona Lisa and his other works: ",
+     {
+      "text": "How big is the Mona Lisa?",
+      "page": "sizes"
+     }
+    ]
+   ]
+  },
+  {
+   "type": "question",
+   "id": "stolen",
+   "nav": "Was it stolen?",
+   "h": "Was the Lady with an Ermine stolen, as in the Netflix series?",
+   "answer": "Not as the series tells it: Berlin and the Lady with an Ermine is fiction, and the painting is safe in Kraków. Its one known theft was real, though: the Nazis took it in 1939, and it came home in 1946.",
+   "known": [
+    "The series came out on Netflix on 15 May 2026, the next part of the Money Heist spin-off Berlin, eight episodes long and set in Seville. Its gang only pretends to be after the painting, Netflix says, while its true aim is a duke and his wife. The real theft came with the war: the family had hidden the painting again at Sieniawa, and at the end of September 1939 the German occupiers found it and took it. It was shown in Berlin and meant for the museum Hitler planned in Linz, and from 1940 it hung at Wawel Castle in Kraków, in the collection of Hans Frank, the German governor-general. At the end of the war it was taken to Frank's villa at Schliersee in Bavaria, where American troops found it in 1945, and in 1946 it was back in the Czartoryski Museum."
+   ]
+  },
+  {
+   "type": "question",
+   "id": "meaning",
+   "nav": "What the ermine means",
+   "h": "What does the ermine mean?",
+   "answer": "No document explains it, so every meaning is a reading. The museum in Kraków and the National Gallery in London both give the two readings cited most often: the ermine stands for Ludovico Sforza, and its Greek name, galê, plays on hers.",
+   "known": [
+    "In 1488 the King of Naples gave Ludovico the Order of the Ermine, and from then on he was called “Ermellino Bianco”, the White Ermine. For the museum in Kraków that makes the painting a double portrait of the two lovers, Cecilia and the man in the animal. The pun works through Greek: galê, a word for a weasel or an ermine, sounds like the start of Gallerani. The Italian national biography, the Dizionario Biografico degli Italiani, points to a similar play in Leonardo's portrait of Ginevra de' Benci, with its juniper, in Italian ginepro. Both museums also read the white ermine as a sign of purity, an old belief that Leonardo himself wrote down around 1494: the ermine, he noted, lets the hunters catch it rather than flee into a muddy den and soil its coat. The museum in Kraków adds a fourth reading: weasels were believed to protect pregnant women, and by November 1490 Cecilia was expecting Ludovico's child."
+   ],
+   "open": "Which of these Leonardo meant, or whether he meant several at once, no source can tell us. Bellincioni's poem on the portrait does not mention the animal at all."
+  },
+  {
+   "type": "question",
+   "id": "ermine-or-ferret",
+   "nav": "Ermine or ferret?",
+   "h": "Is the animal really an ermine, or a ferret?",
+   "answer": "The museum in Kraków calls it an ermine, which is a stoat that has turned white for the winter. It looks big for a stoat, so some people see a ferret in it, and the question is still open.",
+   "known": [
+    "The stoat, Mustela erminea, is a small predator with a long body and short legs, about 17 to 33 centimetres from the nose to the root of the tail. In summer it is brown above and pale below, and in winter it turns white, all but the black tip of its tail. The museum's late art historian Janusz Wałek is quoted as saying that the animal is not one taken from nature but Leonardo's own creation. The museum's study of 2012 also found that Leonardo changed the animal's size and pose as he painted."
+   ],
+   "open": "Whether Leonardo had a live animal in front of him is not known, and we found no study of it by a zoologist."
+  },
+  {
+   "type": "question",
+   "id": "worth",
+   "nav": "What it is worth",
+   "h": "What is the Lady with an Ermine worth?",
+   "answer": "There is no price for the painting alone. In December 2016 the Polish state bought the Czartoryski collection, with the painting, for 100 million euros.",
+   "known": [
+    "The deal was signed on 29 December 2016 at the Royal Castle in Warsaw, by the culture minister for the state and by Prince Adam Karol Czartoryski and his family's foundation. For that sum the state received about 86,000 museum objects and about 250,000 books, manuscripts and old prints, the Polish press agency PAP reported, and a separate deed promised it the collection's buildings in Kraków as a gift. Estimates at the time put the whole collection at more than 2 billion euros, and press reports gave the painting's insurance value as about 350 million euros. The prince called the sale a donation, and the foundation's whole board resigned when it learned he was negotiating it."
+   ]
+  },
+  {
+   "type": "question",
+   "id": "science",
+   "nav": "What scientists found",
+   "h": "What did scientists find under the paint?",
+   "answer": "That the black background is not Leonardo's, and that he changed his mind as he painted. He laid the ermine over his first layout of the woman and made its outline slightly smaller.",
+   "known": [
+    "The first X-ray was made in 1945 in Munich, while the painting sat in the Allied art depot, and in the 1950s conservators in Kraków and Warsaw added ultraviolet and infrared photographs. In 1991 and 1992 David Bull, a conservator working for the National Gallery of Art in Washington, found a line of tiny charcoal dots around her head and face. They show that Leonardo transferred his design from a full-size drawing, and Bull also found fingerprints in the paint. In 2007 the Paris firm Lumiere Technology scanned it from ultraviolet to infrared and found that Leonardo had painted over a ribbon holding the veil under her chin. The museum's own team studied it in 2012 and published in 2024: under the black lies Leonardo's dark grey background, with no window or scenery, and he also changed her hand and her dress as he went. The black came later, in at least two layers, in the 1700s or 1800s: the 2024 paper says most likely the 18th century, the museum's collection page says the 19th."
+   ],
+   "open": "In 2014 the French engineer Pascal Cotte, whose firm made the 2007 scan, claimed that Leonardo painted the picture in three stages: first with no animal, then with a slimmer ermine, then the bulkier one we see. Other experts are not convinced, and the museum's own study reports only smaller changes to the animal's size and pose.",
+   "end": [
+    "In our Leonardo wing her reproduction hangs in the picture room, near its real size, with a close-up of that black."
+   ],
+   "links": [
+    {
+     "text": "See the Lady with an Ermine in the wing",
+     "stop": "picture-room"
+    }
+   ]
+  },
+  {
+   "type": "years",
+   "id": "story",
+   "nav": "Its story",
+   "h": "Its story, from Milan to Kraków",
+   "intro": "Each line carries a mark. Documented: a record of the time, or the museum's own research, shows it. Inferred: scholars deduce it from other clues. Report: it rests on a single published account.",
+   "items": [
+    {
+     "id": "story-01",
+     "date": "About 1490",
+     "k": "mark_inferred",
+     "line": "Leonardo paints Cecilia in Milan, on Ludovico Sforza's order according to the museum. The year is worked out from the style and from her age."
+    },
+    {
+     "id": "story-02",
+     "date": "1493",
+     "k": "mark_documented",
+     "line": "Bellincioni's poems appear in print, among them his sonnet on Leonardo's portrait of Cecilia."
+    },
+    {
+     "id": "story-03",
+     "date": "April 1498",
+     "k": "mark_documented",
+     "line": "Cecilia lends her portrait by Leonardo to Isabella d'Este in Mantua."
+    },
+    {
+     "id": "story-04",
+     "date": "1498 to about 1536",
+     "k": "mark_inferred",
+     "line": "The portrait probably stays with Cecilia until her death."
+    },
+    {
+     "id": "story-05",
+     "date": "About 1800",
+     "k": "mark_documented",
+     "line": "After more than two centuries with no sure trace, Prince Adam Jerzy Czartoryski buys the painting in Italy for his mother, Princess Izabela Czartoryska, who is creating Poland's first museum at Puławy."
+    },
+    {
+     "id": "story-06",
+     "date": "1809",
+     "k": "mark_documented",
+     "line": "It goes on show in the Gothic House at Puławy. By then a wrong title, LA BELE FERONIERE, has been painted in its upper left corner, and the W in LEONARD D'AWINCI points to a Polish hand, the museum's conservators say."
+    },
+    {
+     "id": "story-07",
+     "date": "After 1831",
+     "k": "mark_documented",
+     "line": "When the November Uprising fails, the family walls it up in an alcove of their palace at Sieniawa for eight years, out of reach of confiscation."
+    },
+    {
+     "id": "story-08",
+     "date": "From the 1840s",
+     "k": "mark_documented",
+     "line": "It is kept in Paris at the Hôtel Lambert, the family's home in exile, unseen by the public for decades."
+    },
+    {
+     "id": "story-09",
+     "date": "1882",
+     "k": "mark_documented",
+     "line": "It comes from Paris to Kraków and goes on show in the Czartoryski Museum, which Władysław Czartoryski founded there in 1876."
+    },
+    {
+     "id": "story-10",
+     "date": "1914 to 1920",
+     "k": "mark_documented",
+     "line": "Through the First World War it is kept safe at the picture gallery in Dresden, where scholars link it with Bellincioni's sonnet. It returns to Kraków in 1920."
+    },
+    {
+     "id": "story-11",
+     "date": "September 1939",
+     "k": "mark_documented",
+     "line": "Hidden again at Sieniawa, it is found and taken by the German occupiers."
+    },
+    {
+     "id": "story-12",
+     "date": "1939 to 1945",
+     "k": "mark_documented",
+     "line": "It is shown in Berlin, meant for Hitler's museum in Linz, then hangs at Wawel Castle in Hans Frank's collection, and ends the war at his villa at Schliersee."
+    },
+    {
+     "id": "story-13",
+     "date": "1945",
+     "k": "mark_documented",
+     "line": "American troops find it. In the Allied art depot in Munich it gets its first X-ray, and its broken corner is glued."
+    },
+    {
+     "id": "story-14",
+     "date": "30 April 1946",
+     "k": "mark_report",
+     "line": "A train of 27 cars with looted Polish treasures, the painting among them, reaches Poland under US escort. Soon it hangs in the Czartoryski Museum again."
+    },
+    {
+     "id": "story-15",
+     "date": "2011",
+     "k": "mark_documented",
+     "line": "It is lent to Madrid, Berlin and the National Gallery in London. A memorandum signed that April says it will not be lent again for at least ten years after its return."
+    },
+    {
+     "id": "story-16",
+     "date": "2012",
+     "k": "mark_documented",
+     "line": "Back in Kraków, the museum's own team studies it."
+    },
+    {
+     "id": "story-17",
+     "date": "29 December 2016",
+     "k": "mark_documented",
+     "line": "The Czartoryski collection passes to the Polish state, and the painting to the National Museum in Kraków."
+    },
+    {
+     "id": "story-18",
+     "date": "December 2019",
+     "k": "mark_documented",
+     "line": "The Czartoryski Museum reopens after its renovation, and the painting returns to its old room."
+    }
+   ],
+   "end": [
+    [
+     "Who Leonardo was, and the wing built around his life: ",
+     {
+      "text": "Leonardo da Vinci",
+      "wing": ""
+     },
+     "."
+    ]
+   ]
+  },
+  {
+   "type": "sources",
+   "id": "sources",
+   "nav": "",
+   "h": "Sources",
+   "intro": "The facts come from the National Museum in Kraków (its collection pages, its conservators' paper of 2013 and its scientists' paper in Technè, 2024), the Dizionario Biografico degli Italiani, the Staatliche Museen zu Berlin, the National Gallery in London and the US National Archives, Bellincioni's poems and Leonardo's notes in their printed editions, the Animal Diversity Web, the Polish press agency PAP, Notes from Poland, Euronews, Netflix, Lumiere Technology and Art History News.",
+   "notes": [
+    "We read all of these on 17 October 2026:"
+   ],
+   "read": [
+    {
+     "text": "National Museum in Kraków, the painting's collection page",
+     "href": "https://mnk.pl/en/collections/lady-with-an-ermine/"
+    },
+    {
+     "text": "National Museum in Kraków, the article on the painting, 2026 (in Polish)",
+     "href": "https://mnk.pl/artykul/leonardo-da-vinci-dama-z-gronostajem-mediolan-ok-1490/"
+    },
+    {
+     "text": "National Museum in Kraków, the Czartoryski Museum",
+     "href": "https://mnk.pl/en/branches/czartoryski-museum/"
+    },
+    {
+     "text": "National Museum in Kraków, its conservators on the painting, 2013 (PDF, in Polish)",
+     "href": "https://mnk.pl/wp-content/uploads/2026/05/R4-Chmielewska.pdf"
+    },
+    {
+     "text": "National Museum in Kraków, its scientists on Leonardo's materials and technique, Technè, 2024",
+     "href": "https://journals.openedition.org/techne/21487?lang=en"
+    },
+    {
+     "text": "National Museum in Kraków on Google Arts & Culture, “Behind the Mystery of The Lady with an Ermine”",
+     "href": "https://artsandculture.google.com/story/LAWRkq8iKEKGJA"
+    },
+    {
+     "text": "National Museum in Kraków, the catalogue data of its own image, on Wikimedia Commons",
+     "href": "https://commons.wikimedia.org/wiki/File:Leonardo_da_Vinci_(1452-1519)_-_Lady_with_an_Ermine_%E2%80%93_Portrait_of_Cecilia_Gallerani_(ca._1473%E2%80%931536)_-_MNK_XII-209_-_National_Museum_Krak%C3%B3w.jpg"
+    },
+    {
+     "text": "Dizionario Biografico degli Italiani, “Gallerani, Cecilia”, 1998 (in Italian)",
+     "href": "https://www.treccani.it/enciclopedia/cecilia-gallerani_(Dizionario-Biografico)/"
+    },
+    {
+     "text": "National Gallery, London, on the exhibition of 2011",
+     "href": "https://www.nationalgallery.org.uk/about-us/press-and-media/press-releases-archive/leonardo-da-vinci-painter-at-the-court-of-milan"
+    },
+    {
+     "text": "Staatliche Museen zu Berlin, 2011 (in German)",
+     "href": "https://www.smb.museum/nachrichten/detail/leonardo-da-vincis-meisterwerk-kommt-nach-berlin/"
+    },
+    {
+     "text": "US National Archives, on the train of 1946",
+     "href": "https://text-message.blogs.archives.gov/2014/01/09/karol-estreicher-the-polish-monuments-man"
+    },
+    {
+     "text": "Bernardo Bellincioni, Rime, edition of 1876, sonnet 45 (in Italian)",
+     "href": "https://archive.org/details/rimebernardo01belluoft"
+    },
+    {
+     "text": "Julia Cartwright, Isabella d'Este, 1903, on the letters of 1498",
+     "href": "https://archive.org/details/isabelladestemar01cartuoft"
+    },
+    {
+     "text": "The Notebooks of Leonardo da Vinci, edited by J. P. Richter",
+     "href": "https://www.gutenberg.org/ebooks/5000"
+    },
+    {
+     "text": "Animal Diversity Web, the stoat",
+     "href": "https://animaldiversity.org/accounts/Mustela_erminea/"
+    },
+    {
+     "text": "PAP on dzieje.pl, the loans of 2011 (in Polish)",
+     "href": "https://dzieje.pl/node/46491"
+    },
+    {
+     "text": "PAP on dzieje.pl, the purchase before the Senate, 2017 (in Polish)",
+     "href": "https://dzieje.pl/dziedzictwo-kulturowe/na-senackiej-komisji-o-zakupie-kolekcji-ksiazat-czartoryskich"
+    },
+    {
+     "text": "PAP on dzieje.pl, the museum's director on lending, 2019 (in Polish)",
+     "href": "https://dzieje.pl/node/111510"
+    },
+    {
+     "text": "dzieje.pl, a review of a book on the painting, 2019 (in Polish)",
+     "href": "https://dzieje.pl/node/108206"
+    },
+    {
+     "text": "Notes from Poland, on the reopening, 2019",
+     "href": "https://notesfrompoland.com/2019/12/21/polands-oldest-museum-reopens-after-ten-years-of-closure-and-controversy/"
+    },
+    {
+     "text": "stol.it, reporting APA and AFP, on the purchase, 2016 (in German)",
+     "href": "https://www.stol.it/artikel/kultur/kunst/polen-erwirbt-da-vincis-dame-mit-dem-hermelin-von-privatsammlung"
+    },
+    {
+     "text": "Euronews, on the painting's glass case, 2024",
+     "href": "https://www.euronews.com/culture/2024/06/28/stop-and-smell-the-art-polish-museum-captures-original-scent-of-da-vincis-lady-with-an-erm"
+    },
+    {
+     "text": "Lumiere Technology, on its book about the painting",
+     "href": "https://lumiere-technology.com/?p=770"
+    },
+    {
+     "text": "Art History News, on the claim of 2014",
+     "href": "https://arthistorynews.com/articles/3016_Secrets_of_Leonardo_revealed"
+    },
+    {
+     "text": "Netflix, on the series",
+     "href": "https://about.netflix.com/en/news/berlin-and-the-lady-with-an-ermine-arrives-to-netflix-on-may-15"
+    }
+   ],
+   "contact": "If a date, a name or a sentence is wrong, tell us and we will correct it.",
+   "contact_link": "To the legal notice",
+   "what_link": "What this museum is"
+  },
+  {
+   "type": "close",
+   "id": "enter",
+   "nav": "",
+   "h": "See the Lady with an Ermine in the wing",
+   "p": "This door opens our Leonardo wing at its picture room. Her reproduction hangs there with his other paintings, and a close-up shows the black that a later hand laid over his grey.",
+   "door": {
+    "text": "Enter the museum",
+    "note": "Free entry, no account."
+   }
+  }
+ ]
+}
