@@ -1,5 +1,5 @@
 {
-  "_note": "THE WORDS of the sizes page, English. Poured from the writer's WORDS file of round 3 word for word; every size, holder and stop the page shows comes from the wing's facts file, and the build checks each line of works.lines against it. A plate's src is its source line as the wing's record names it, and the build checks each file it links against that record. The two files hold the same structure. No em dash, no en dash, no semicolon.",
+  "_note": "THE WORDS of the sizes page, English. Poured from the writer's WORDS file of round 3 word for word; every size, holder and stop the page shows comes from the wing's facts file, except a size under page.held: there the holder publishes another figure than the facts carry (the Lady with an Ermine: the National Museum in Kraków's catalogue, 53.4 by 39.3 cm, where the facts carry the hang's 54.8 by 40.3), and facts_cm names the facts' figure it stands in for, so the build stops when the facts change. The build checks each line of works.lines against the size the page shows. A plate's src is its source line as the wing's record names it, and the build checks each file it links against that record. The two files hold the same structure. No em dash, no en dash, no semicolon.",
   "page": {
     "id": "vinci-sizes",
     "wing": "vinci",
@@ -15,6 +15,16 @@
     "still": {
       "file": "vinci-sizes-chart-{lang}-1600.png",
       "figure": "vinci-sizes-figure-{lang}-1600.png"
+    },
+    "held": {
+      "lady-with-an-ermine": {
+        "h_cm": 53.4,
+        "w_cm": 39.3,
+        "facts_cm": [
+          54.8,
+          40.3
+        ]
+      }
     }
   },
   "pics": {
@@ -168,7 +178,7 @@
         "Annunciation, predella panel. 16 × 60 cm (6 × 24 in). Musée du Louvre, Paris. Disputed. The shortest picture on the wall, 16 centimetres tall, and almost four times as wide.",
         "Virgin of the Rocks, Louvre version. 199.5 × 122 cm (79 × 48 in). Musée du Louvre, Paris. Just under two metres tall. The London version is ten centimetres shorter.",
         "Portrait of a Musician. 44.7 × 32 cm (18 × 13 in). Veneranda Biblioteca Ambrosiana, Milan. Disputed.",
-        "Lady with an Ermine. 54.8 × 40.3 cm (22 × 16 in). Muzeum Narodowe w Krakowie, Muzeum Książąt Czartoryskich, Kraków. Shorter and narrower than the Mona Lisa.",
+        "Lady with an Ermine. 53.4 × 39.3 cm (21 × 15 in). Muzeum Narodowe w Krakowie, Muzeum Książąt Czartoryskich, Kraków. Shorter and narrower than the Mona Lisa.",
         "La Belle Ferronnière. 63 × 45 cm (25 × 18 in). Musée du Louvre, Paris.",
         "Madonna Litta. 42 × 33 cm (17 × 13 in). State Hermitage Museum, Saint Petersburg. Disputed.",
         "The Burlington House Cartoon. Drawing. 141.5 × 104.6 cm (56 × 41 in). National Gallery, London. The larger of the two drawings on the wall.",
@@ -256,8 +266,8 @@
           "href": "https://www.lombardiabeniculturali.it/opere-arte/schede-complete/L0040-00015/"
         },
         {
-          "text": "National Museum in Kraków, the conservators' paper on the Lady with an Ermine (PDF, in Polish)",
-          "href": "https://mnk.pl/wp-content/uploads/2026/05/R4-Chmielewska.pdf"
+          "text": "National Museum in Kraków, the catalogue data of its image of the Lady with an Ermine, on Wikimedia Commons",
+          "href": "https://commons.wikimedia.org/wiki/File:Leonardo_da_Vinci_(1452-1519)_-_Lady_with_an_Ermine_%E2%80%93_Portrait_of_Cecilia_Gallerani_(ca._1473%E2%80%931536)_-_MNK_XII-209_-_National_Museum_Krak%C3%B3w.jpg"
         },
         {
           "text": "Musée du Louvre, La Belle Ferronnière",

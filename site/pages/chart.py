@@ -2,7 +2,9 @@
 
 Every size, holder and stop is read from the wing's facts file and the group of the wing's page that a topic page
 names (its registry entry, from), never from the page's words. The page's words name a work by its line, and the
-build checks that each line carries its work's size as the facts give it.
+build checks that each line carries its work's size as the facts give it. One exception: a size the page holds
+itself (page.held), where the holder publishes another figure than the facts carry. It names the facts' figure it
+stands in for, so a change of the facts stops the build instead of passing unseen.
 
 A shape on the page is an inline SVG whose width and height are set in em, one em being one metre: a panel sets the
 font size of its shapes from its own width (container query units), so every shape of a panel stands at one scale,
@@ -50,13 +52,17 @@ def cm_of(m):
 class Works:
     """The works of one group of a wing's page, in the order they hang, with the work that hangs elsewhere (field) last.
 
-    Each work: n, id, face, h and w in centimetres, class, holder (the facts' entry), stop, and title by language."""
+    Each work: n, id, face, h and w in centimetres, class, holder (the facts' entry), stop, and title by language.
+    held: the page's own sizes by work, {id: {h_cm, w_cm, facts_cm: [h, w]}}; what is wrong with them is in problems."""
 
-    def __init__(self, facts, group):
+    def __init__(self, facts, group, held=None):
         holders = {h["id"]: h for h in facts["holders"]}
         self.items = []
+        self.problems = held_problems(facts[group["from"]], held or {})
+        own = {} if self.problems else (held or {})
         for p in facts[group["from"]]:
-            self.items.append({"n": p["n"], "id": p["id"], "face": p["face"], "h": p["h_cm"], "w": p["w_cm"],
+            h, w = (own[p["id"]]["h_cm"], own[p["id"]]["w_cm"]) if p["id"] in own else (p["h_cm"], p["w_cm"])
+            self.items.append({"n": p["n"], "id": p["id"], "face": p["face"], "h": h, "w": w,
                                "class": p["class"], "holder": holders[p["holder"]], "stop": p["stop"], "title": p["title"]})
         field, size = group.get("field"), (facts.get("wall") or {}).get("supper")
         if field and size:
@@ -77,6 +83,28 @@ class Works:
 
     def by_id(self, key):
         return next(it for it in self.items if it["id"] == key)
+
+
+def held_problems(works, held):
+    """A page's own size of a work (page.held) is a work of its group, two positive numbers other than the facts', and
+    names in facts_cm the height and width the facts give that work today. Returns the problems."""
+    problems, facts = [], {p["id"]: [p["h_cm"], p["w_cm"]] for p in works}
+    if not isinstance(held, dict):
+        return ["page.held is a map of a work's id to its own size"]
+    for key, own in held.items():
+        where = f"page.held.{key}"
+        if key not in facts:
+            problems.append(f"{where} names no work of the facts' list")
+            continue
+        size = [own.get("h_cm"), own.get("w_cm")] if isinstance(own, dict) else []
+        if not (len(size) == 2 and all(type(x) in (int, float) and x > 0 for x in size)):
+            problems.append(f"{where} gives h_cm and w_cm, the holder's height and width in centimetres")
+        elif own.get("facts_cm") != facts[key]:
+            problems.append(f"{where} stands in for the facts' {own.get('facts_cm')!r} cm, and the facts now give {facts[key]!r}: "
+                            "read the holder's size again, then set facts_cm to the facts' figure or drop the entry")
+        elif size == facts[key]:
+            problems.append(f"{where} is the facts' own size: drop it")
+    return problems
 
 
 NBSP = "\u00a0"

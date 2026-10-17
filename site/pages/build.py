@@ -2600,7 +2600,8 @@ def load_pages(pages=PAGES):
             group = next((g for g in wing_words.get("holds", {}).get("groups", []) if g["id"] == topic.get("from")), {})
             # a group of works (its own from) gives the page its works; a group of text only links the page
             if group.get("from"):
-                works = CHART.Works(facts, group)
+                works = CHART.Works(facts, group, head.get("held"))
+                problems += [f"{p}: {x}" for x in works.problems]
                 # the title of the work that hangs elsewhere, as the wing's page writes it in each language
                 for code in LANG.topic_langs(topic, LANGS):
                     own = LANG.HERE / "wings" / f"{key}.{code}.json"
@@ -2653,6 +2654,11 @@ def load_pages(pages=PAGES):
             # what the drawing shows inside its wall is one reading of the wall, the same in every language
             if info[p]["drawing"] and d["top"]["drawing"].get("inside") != data[p][info[p]["langs"][0]]["top"]["drawing"].get("inside"):
                 problems.append(f"{p}.{lang}: top.drawing.inside differs from the {info[p]['langs'][0]} file's: the drawing is one")
+            # the page's own sizes are read from the English file: every language holds the same
+            if d["page"].get("held") != data[p]["en"]["page"].get("held"):
+                problems.append(f"{p}.{lang}: page.held differs from the en file's: a work's size is one in every language")
+            if d["page"].get("held") and not works:
+                problems.append(f"{p}.{lang}: page.held holds sizes for a page that shows no works of its wing")
             blocks = {b["type"] for b in d["blocks"]}
             wants = blocks & {"chart", "works", "table", "periods"} or ("figure" in d["top"]) or ("tally" in d["top"])
             if wants and not works:

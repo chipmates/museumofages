@@ -2649,8 +2649,11 @@ class Case(unittest.TestCase):
             text = (out / rel).read_text(encoding="utf-8")
             own = self.own_part(text)
             door = wing["door"][lang].replace("&", "&amp;")
-            works = facts["paintings"]
-            # one row of the table per work, its height and width as the facts give them
+            # a size the page holds itself (page.held) stands in for the facts' figure of that work
+            held = self.data(lang, self.works_page)["page"].get("held") or {}
+            works = [dict(p, h_cm=held[p["id"]]["h_cm"], w_cm=held[p["id"]]["w_cm"]) if p["id"] in held else p
+                     for p in facts["paintings"]]
+            # one row of the table per work, its height and width as the facts (or the page's held size) give them
             rows = re.findall(r"<tr><th scope=\"row\">(.*?)</tr>", own, flags=re.S)
             self.assertEqual(len(rows), len(works) + 1)
             for p, row in zip(works, rows):
@@ -2668,6 +2671,62 @@ class Case(unittest.TestCase):
             # every way into the walk names its place among the count's doors
             for a in re.findall(r'<a\b[^>]*href="/w/[^"]*"[^>]*>', text):
                 self.assertRegex(a, r'data-door="(top|item|end)"')
+
+    def test_the_lady_with_an_ermine_shows_the_size_her_holders_catalogue_gives(self):
+        """The sizes page promises each work's size as its holder gives it. The National Museum in Kraków's catalogue
+        gives 53.4 by 39.3 cm, and the wing's facts carry the hang's 54.8 by 40.3, so the page holds its own figure:
+        the chart's four shapes, the line and the table row show the catalogue's, and nothing of the page the facts'."""
+        if not self.works_page:
+            self.skipTest("no page shows a wing's works")
+        held = self.data("en", self.works_page)["page"].get("held") or {}
+        self.assertIn("lady-with-an-ermine", held, "the sizes page holds the Lady with an Ermine's catalogue size")
+        out, written = self.build()
+        wing, topic, facts = self.works_facts()
+        ermine = next(p for p in facts["paintings"] if p["id"] == "lady-with-an-ermine")
+        self.assertEqual(held["lady-with-an-ermine"], {"h_cm": 53.4, "w_cm": 39.3, "facts_cm": [ermine["h_cm"], ermine["w_cm"]]})
+        for lang, line, cells in (("en", "53.4\u00a0×\u00a039.3\u00a0cm (21\u00a0×\u00a015 in)", ("53.4 (21)", "39.3 (15)")),
+                                  ("de", "53,4\u00a0×\u00a039,3\u00a0cm.", ("53,4", "39,3"))):
+            self.assertEqual(self.data(lang, self.works_page)["page"]["held"], held, lang)
+            own = self.own_part((out / f'{wing["page"][lang].strip("/")}/{topic["slug"][lang]}/index.html').read_text(encoding="utf-8"))
+            # one shape in each of the chart's three bands and one in the panel of the works under a metre
+            self.assertEqual(own.count('width="0.393em" height="0.534em"'), 4, lang)
+            self.assertNotIn('width="0.403em" height="0.548em"', own)
+            entry = re.search(r'<li id="w%d">.*?</li>' % ermine["n"], own, flags=re.S).group(0)
+            self.assertIn(line, entry)
+            row = re.findall(r"<tr><th scope=\"row\">(.*?)</tr>", own, flags=re.S)[ermine["n"] - 1]
+            self.assertEqual(tuple(re.findall(r"<td>(.*?)</td>", row, flags=re.S)[:2]), cells, lang)
+            for figure in ("54.8", "54,8", "40.3", "40,3"):
+                self.assertNotIn(figure, own, lang)
+
+    def test_a_held_size_the_facts_no_longer_match_stops_the_build(self):
+        if not self.works_page:
+            self.skipTest("no page shows a wing's works")
+        wing, topic, facts = self.works_facts()
+        first = facts["paintings"][0]
+        for lang in ("en", "de"):
+            data = self.data(lang, self.works_page)
+            data["page"]["held"] = {first["id"]: {"h_cm": first["h_cm"] + 1, "w_cm": first["w_cm"], "facts_cm": [first["h_cm"] - 1, first["w_cm"]]}}
+            self.save(lang, data, self.works_page)
+        self.fails(r"page\.held\.%s stands in for the facts' .* and the facts now give" % re.escape(first["id"]))
+
+    def test_a_held_size_that_is_the_facts_own_or_in_one_language_stops_the_build(self):
+        if not self.works_page:
+            self.skipTest("no page shows a wing's works")
+        wing, topic, facts = self.works_facts()
+        first = facts["paintings"][0]
+        size = [first["h_cm"], first["w_cm"]]
+        for lang in ("en", "de"):
+            data = self.data(lang, self.works_page)
+            data["page"]["held"] = {first["id"]: {"h_cm": size[0], "w_cm": size[1], "facts_cm": size}}
+            self.save(lang, data, self.works_page)
+        self.fails(r"page\.held\.%s is the facts' own size: drop it" % re.escape(first["id"]))
+        data = self.data("de", self.works_page)
+        data["page"]["held"] = {first["id"]: {"h_cm": size[0] + 1, "w_cm": size[1], "facts_cm": size}}
+        self.save("de", data, self.works_page)
+        data = self.data("en", self.works_page)
+        data["page"].pop("held")
+        self.save("en", data, self.works_page)
+        self.fails(r"page\.held differs from the en file's")
 
     def test_every_row_of_the_chart_opens_with_the_person(self):
         if not self.works_page:

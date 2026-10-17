@@ -1,5 +1,5 @@
 {
-  "_note": "THE WORDS of the sizes page, German. Poured from the writer's WORDS file of round 3 word for word; every size, holder and stop the page shows comes from the wing's facts file, and the build checks each line of works.lines against it. A plate's src is its source line as the wing's record names it, and the build checks each file it links against that record. The two files hold the same structure. No em dash, no en dash, no semicolon.",
+  "_note": "THE WORDS of the sizes page, German. Poured from the writer's WORDS file of round 3 word for word; every size, holder and stop the page shows comes from the wing's facts file, except a size under page.held: there the holder publishes another figure than the facts carry (the Lady with an Ermine: the National Museum in Kraków's catalogue, 53.4 by 39.3 cm, where the facts carry the hang's 54.8 by 40.3), and facts_cm names the facts' figure it stands in for, so the build stops when the facts change. The build checks each line of works.lines against the size the page shows. A plate's src is its source line as the wing's record names it, and the build checks each file it links against that record. The two files hold the same structure. No em dash, no en dash, no semicolon.",
   "page": {
     "id": "vinci-sizes",
     "wing": "vinci",
@@ -15,6 +15,16 @@
     "still": {
       "file": "vinci-sizes-chart-{lang}-1600.png",
       "figure": "vinci-sizes-figure-{lang}-1600.png"
+    },
+    "held": {
+      "lady-with-an-ermine": {
+        "h_cm": 53.4,
+        "w_cm": 39.3,
+        "facts_cm": [
+          54.8,
+          40.3
+        ]
+      }
     }
   },
   "pics": {
@@ -168,7 +178,7 @@
         "Die Verkündigung, Predella. 16 × 60 cm. Musée du Louvre, Paris. Umstritten. Mit 16 Zentimetern das niedrigste Bild an der Wand und fast viermal so breit wie hoch.",
         "Felsgrottenmadonna, Louvre-Fassung. 199,5 × 122 cm. Musée du Louvre, Paris. Knapp zwei Meter hoch. Die Londoner Fassung ist zehn Zentimeter niedriger.",
         "Bildnis eines Musikers. 44,7 × 32 cm. Veneranda Biblioteca Ambrosiana, Mailand. Umstritten.",
-        "Dame mit dem Hermelin. 54,8 × 40,3 cm. Muzeum Narodowe w Krakowie, Muzeum Książąt Czartoryskich, Krakau. Niedriger und schmaler als die Mona Lisa.",
+        "Dame mit dem Hermelin. 53,4 × 39,3 cm. Muzeum Narodowe w Krakowie, Muzeum Książąt Czartoryskich, Krakau. Niedriger und schmaler als die Mona Lisa.",
         "Bildnis einer Dame, genannt La Belle Ferronnière. 63 × 45 cm. Musée du Louvre, Paris.",
         "Madonna Litta. 42 × 33 cm. Staatliche Eremitage, Sankt Petersburg. Umstritten.",
         "Die Jungfrau mit dem Kind, der heiligen Anna und Johannes dem Täufer. Zeichnung. 141,5 × 104,6 cm. National Gallery, London. Die größere der zwei Zeichnungen an der Wand.",
@@ -256,8 +266,8 @@
           "href": "https://www.lombardiabeniculturali.it/opere-arte/schede-complete/L0040-00015/"
         },
         {
-          "text": "Nationalmuseum Krakau, ein Aufsatz seiner Restauratoren zur Dame mit dem Hermelin (PDF, auf Polnisch)",
-          "href": "https://mnk.pl/wp-content/uploads/2026/05/R4-Chmielewska.pdf"
+          "text": "Nationalmuseum Krakau, die Katalogdaten seines Bildes der Dame mit dem Hermelin, auf Wikimedia Commons",
+          "href": "https://commons.wikimedia.org/wiki/File:Leonardo_da_Vinci_(1452-1519)_-_Lady_with_an_Ermine_%E2%80%93_Portrait_of_Cecilia_Gallerani_(ca._1473%E2%80%931536)_-_MNK_XII-209_-_National_Museum_Krak%C3%B3w.jpg"
         },
         {
           "text": "Musée du Louvre, La Belle Ferronnière",
