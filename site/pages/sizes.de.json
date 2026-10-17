@@ -13,7 +13,8 @@
       "plate": "vinci-plate-mona-lisa"
     },
     "still": {
-      "file": "vinci-sizes-chart-{lang}-1600.png"
+      "file": "vinci-sizes-chart-{lang}-1600.png",
+      "figure": "vinci-sizes-figure-{lang}-1600.png"
     }
   },
   "pics": {

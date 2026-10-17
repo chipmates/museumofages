@@ -1927,14 +1927,27 @@ def render(page, lang, data, shared, out_root):
         frame = {"title": chart_words["mark"], "what": f'{CHART.size_text(it, LIB.number, lang, space=LIB.NBSP)}, {fig["what"]}', "alt": fig["alt"],
                  "tag": fig["tag"], "still": shared["stills"][page][lang]["chart"],
                  "caption": chart["still_caption"], "description": chart["still_caption"]}
-        if og.get("plate"):
+        drawing = CHART.top_figure(works, mark, chart_words, LIB.number, lang)
+        figure_still = shared["stills"][page][lang].get("figure")
+        if figure_still:
+            # the first screen's drawing is a picture of its own, without the card's words: the page's picture, the chart
+            # described beside it
+            w, h = CHART.png_info(pics.find(figure_still))[0]
+            # in a picture element, so it hangs in the frame line every picture of the site hangs in (base.css, .hang>picture)
+            drawing = (f'<picture><img class="sz-top" src="{root}{STATIC}/img/{esc(figure_still)}" width="{w}" height="{h}" '
+                       f'alt="{esc(fig["alt"])}" fetchpriority="high"></picture>')
+            plain = lambda t: t.replace(LIB.NBSP, " ")
+            frame.update(still=figure_still, caption=plain(f'{frame["title"]}, {frame["what"]}'), description=plain(fig["alt"]),
+                         more=[{"id": "chart", "still": shared["stills"][page][lang]["chart"],
+                                "caption": chart["still_caption"], "description": chart["still_caption"]}])
+        elif og.get("plate"):
             # a share picture that shows the marked work itself is the page's picture, in the share picture's words;
             # the chart keeps its own description beside it
             frame.update(still=og["file"], caption=data["meta"]["og_title"].replace(LIB.NBSP, " "),
                          description=data["meta"]["og_image_alt"].replace(LIB.NBSP, " "),
                          more=[{"id": "chart", "still": shared["stills"][page][lang]["chart"],
                                 "caption": chart["still_caption"], "description": chart["still_caption"]}])
-        frame_html = fill(parts["frame:chart"], {"html.figure": CHART.top_figure(works, mark, chart_words, LIB.number, lang),
+        frame_html = fill(parts["frame:chart"], {"html.figure": drawing,
                                                  "title": rich(frame["title"]), "tag": rich(labels[frame["tag"]]),
                                                  "what": rich(frame["what"]), "html.note": ""})
         preload, focus = "", ""
@@ -2093,6 +2106,8 @@ def render(page, lang, data, shared, out_root):
     if "figure" in data["top"]:
         # the chart's still, which its block links, whichever picture the page names
         files[f"img/{shared['stills'][page][lang]['chart']}"] = pics.find(shared["stills"][page][lang]["chart"])
+    for more in frame.get("more", []):
+        files[f"img/{more['still']}"] = pics.find(more["still"])
     return out_root / path / "index.html", text, files
 
 
@@ -2731,6 +2746,10 @@ def still_jobs(pages=PAGES, loaded=None):
             words = {"h1": unbound(d["top"]["h1"]), "caption": unbound(chart["still_caption"]), "person": unbound(d["labels"]["person"]),
                      "mark": titles[works.by_id(mark)["n"]], "field": titles[field["n"]] if field else "", "titles": titles,
                      "site": ORIGIN.split("://", 1)[1], "credit": [f"Museum of Ages, {address}", unbound(chart["licence"])]}
+            if d["page"]["still"].get("figure"):
+                # the first screen's drawing as a picture search can read, its two heights its only words
+                jobs.append({"file": d["page"]["still"]["figure"].replace("{lang}", code), "page": page, "lang": lang,
+                             "kind": "figure", "svg": CHART.top_still_svg(works, mark, words, LIB.number, lang, colours)})
             for kind, name in (("chart", d["page"]["still"]["file"]), ("share", d["page"]["og_image"]["file"])):
                 job = {"file": name.replace("{lang}", code), "page": page, "lang": lang, "kind": kind,
                        "svg": CHART.still_svg(works, mark, words, LIB.number, lang, colours, kind)}
@@ -2846,6 +2865,8 @@ def build_pages(out_dir, site_src=SITE_SRC, site_built=SITE_BUILT, pages=PAGES, 
             code = L.html(lang).lower()
             stills[page][lang] = {"chart": d["page"]["still"]["file"].replace("{lang}", code),
                                   "share": d["page"]["og_image"]["file"].replace("{lang}", code)}
+            if d["page"]["still"].get("figure"):
+                stills[page][lang]["figure"] = d["page"]["still"]["figure"].replace("{lang}", code)
     folders = [PICS, site_built / STATIC / "img"]
     for job in still_jobs(pages, (data, wings, info, [])):
         found = next((f / job["file"] for f in folders if (f / job["file"]).is_file()), None)

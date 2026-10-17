@@ -2259,7 +2259,7 @@ class Case(unittest.TestCase):
         """The first page whose share picture shows its marked work itself (page.og_image.plate) at the person's scale."""
         return next((p for p in self.pages if self.data("en", p)["page"]["og_image"].get("plate") and "figure" in self.data("en", p)["top"]), None)
 
-    def test_a_sizes_share_picture_shows_its_marked_work_and_is_the_pages_picture(self):
+    def test_a_sizes_share_picture_shows_its_marked_work(self):
         page = self.plate_page()
         if not page:
             self.skipTest("no share picture shows a plate")
@@ -2293,10 +2293,16 @@ class Case(unittest.TestCase):
             graph = json.loads(re.search(r'<script type="application/ld\+json">(.*?)</script>', text, flags=re.S).group(1).replace("<\\/", "</"))["@graph"]
             frame = next(n for n in graph if n.get("@id", "").endswith("#frame"))
             share = data["page"]["og_image"]["file"].replace("{lang}", lang)
-            self.assertTrue(frame["url"].endswith("/" + share), frame["url"])
             plain = lambda s: s.replace("\u00a0", " ")
-            self.assertEqual((frame["caption"], frame["description"]), (plain(data["meta"]["og_title"]), plain(data["meta"]["og_image_alt"])))
-            self.assertIn(f'<meta property="og:image" content="{frame["url"]}">', text)
+            self.assertIn(f'<meta property="og:image" content="https://museumofages.org/static/img/{share}">', text)
+            figure = data["page"]["still"].get("figure")
+            if figure:
+                # the first screen's drawing as a picture without the card's words is the page's own picture
+                self.assertTrue(frame["url"].endswith("/" + figure.replace("{lang}", lang)), frame["url"])
+                self.assertEqual(frame["description"], plain(data["top"]["figure"]["alt"]))
+            else:
+                self.assertTrue(frame["url"].endswith("/" + share), frame["url"])
+                self.assertEqual((frame["caption"], frame["description"]), (plain(data["meta"]["og_title"]), plain(data["meta"]["og_image_alt"])))
             # the chart's still, which the page links, still ships beside it
             chart = data["page"]["still"]["file"].replace("{lang}", lang)
             self.assertIn(f"static/img/{chart}", text)
@@ -3821,27 +3827,28 @@ class PictureLicences(unittest.TestCase):
             self.assertEqual(credit, self.lib.picture_terms(code, "")["creditText"], code)
             self.assertEqual(maps, written, code)
 
-    def test_the_sizes_pages_name_their_share_picture_of_the_painting_without_a_licence(self):
-        # the card holds the Mona Lisa's reproduction: described, never licensed; the chart keeps its own licence
+    def test_the_sizes_pages_share_their_card_of_the_painting_without_a_licence(self):
+        # the card holds the Mona Lisa's reproduction: the link preview, never licensed; the page's own picture is the
+        # first screen's drawing, ours, licensed as the chart is
         for path, lang in (("leonardo-da-vinci/sizes", "en"), ("de/leonardo-da-vinci/groessen", "de")):
             text = (SITE_BUILT / path / "index.html").read_text(encoding="utf-8")
             graph = self.graph(text)
             page = next(n for n in graph["@graph"] if n.get("@type") == "WebPage")
             frame = next(i for i in self.lib.image_objects(graph) if i["@id"] == page["primaryImageOfPage"]["@id"])
             card = f"https://museumofages.org/static/img/vinci-sizes-og-{lang}-1200x630.png"
-            self.assertEqual(frame["contentUrl"], card)
+            self.assertEqual(frame["contentUrl"], f"https://museumofages.org/static/img/vinci-sizes-figure-{lang}-1600.png")
+            self.assertEqual(frame["license"], "https://creativecommons.org/licenses/by-sa/4.0/", path)
             self.assertIn(f'<meta property="og:image" content="{card}">', text)
             self.assertTrue((SITE_BUILT / "static" / "img" / f"vinci-sizes-og-{lang}-1200x630.png").is_file())
             self.assertTrue(frame["caption"] and frame["description"], path)
-            self.assertFalse([k for k in self.lib.LICENCE_FIELDS if k in frame], path)
-            self.assertEqual([i for i in self.lib.image_objects(graph) if i.get("contentUrl") == card], [frame], path)
+            self.assertEqual([i for i in self.lib.image_objects(graph) if i.get("contentUrl") == card], [], path)
             chart = next(i for i in self.lib.image_objects(graph) if i["@id"].endswith("#chart"))
             self.assertEqual(chart["contentUrl"], f"https://museumofages.org/static/img/vinci-sizes-chart-{lang}-1600.png")
             self.assertEqual(chart["license"], "https://creativecommons.org/licenses/by-sa/4.0/", path)
             self.assertEqual(chart["creditText"], self.lib.picture_terms("en", "")["creditText"], path)
             # a licence field put on the card is found, and the site's build stops on it
             for key in self.lib.LICENCE_FIELDS:
-                given = text.replace(f'"contentUrl":"{card}"', f'"contentUrl":"{card}","{key}":"x"', 1)
+                given = text.replace('"@graph":[', f'"@graph":[{{"@type":"ImageObject","contentUrl":"{card}","{key}":"x"}},', 1)
                 self.assertNotEqual(given, text)
                 self.assertRegex(" ".join(self.lib.licence_problems(given, "page")),
                                  r"vinci-sizes-og-%s-1200x630\.png carries licence data" % lang)
@@ -3999,6 +4006,36 @@ class SiteWide(unittest.TestCase):
             for node in _graph(text):
                 if node.get("@type") == "ImageObject" and node.get("contentUrl"):
                     self.assertIn(node["contentUrl"], listed[address], path)
+
+    def primary(self, text):
+        """The page's own picture as its structured data names it: the ImageObject both the page and its Article point at."""
+        graph = _graph(text)
+        page = next(n for n in graph if n.get("@type") in ("WebPage", "CollectionPage"))
+        frame = next(n for n in graph if n.get("@id") == page["primaryImageOfPage"]["@id"])
+        article = next((n for n in graph if n.get("@type") == "Article"), None)
+        if article:
+            self.assertEqual(article["image"]["@id"], frame["@id"])
+        return frame
+
+    def test_the_sizes_drawing_is_a_picture_and_the_pages_own(self):
+        for rel, lang in (("leonardo-da-vinci/sizes", "en"), ("de/leonardo-da-vinci/groessen", "de")):
+            text = (SITE_BUILT / rel / "index.html").read_text(encoding="utf-8")
+            data = json.loads((HERE / f"sizes.{lang}.json").read_text(encoding="utf-8"))
+            still = data["page"]["still"]["figure"].replace("{lang}", lang)
+            frame = re.search(r'<figure class="plate sp-frame sz-frame"[^>]*>(.*?)</figure>', text, flags=re.S).group(1)
+            # the drawing is an img in the frame line's picture, with the page's alt, and no inline drawing is left there
+            img = re.search(r'<div class="hang"><picture><img class="sz-top" src="([^"]+)" width="(\d+)" height="(\d+)" alt="([^"]+)"', frame)
+            self.assertIsNotNone(img, rel)
+            self.assertTrue(img.group(1).endswith(f"/static/img/{still}"), img.group(1))
+            self.assertEqual(html.unescape(img.group(4)).replace("\u00a0", " "), data["top"]["figure"]["alt"])
+            self.assertNotIn("<svg", frame)
+            built = (SITE_BUILT / rel / img.group(1)).resolve()
+            self.assertEqual(self.build.CHART.png_info(built)[0], (int(img.group(2)), int(img.group(3))))
+            self.assertEqual(self.primary(text)["contentUrl"], f"https://museumofages.org/static/img/{still}")
+            # the chart keeps its own description beside it, the share card stays the link preview
+            self.assertIn(f"https://museumofages.org/static/img/{data['page']['still']['file'].replace('{lang}', lang)}",
+                          [n.get("contentUrl") for n in _graph(text)])
+            self.assertRegex(text, r'<meta property="og:image" content="[^"]*vinci-sizes-og-%s-1200x630\.png"' % lang)
 
 
 if __name__ == "__main__":

@@ -249,6 +249,40 @@ def top_figure(works, mark, labels, num, lang):
             f'<path class="sz-floor" d="M200 {floor}H3800" vector-effect="non-scaling-stroke"/>{person}{work}{marks}</svg>')
 
 
+def _mix(a, b, share):
+    """Two token colours mixed as color-mix(in srgb, a share, b) mixes them."""
+    to = lambda c: [int(c[i:i + 2], 16) for i in (1, 3, 5)]
+    return "#" + "".join(f"{round(x * share + y * (1 - share)):02x}" for x, y in zip(to(a), to(b)))
+
+
+def top_still_svg(works, mark, words, num, lang, colours):
+    """The first screen's drawing as a picture, 1600 by 800: top_figure's person, work, floor and two heights at four
+    tenths of its units, in the page's colours (chart.css, .sz-top). Its lines are filled boxes, since ImageMagick
+    draws no strokes; they are a little heavier than the page's hairlines, so they keep their weight when the picture
+    is shown at a phone's width."""
+    c, s = colours, 0.4
+    it = works.by_id(mark)
+    k = works.person_cm / 170
+    ph = works.person_cm * 10
+    w, h = it["w"] * 10, it["h"] * 10
+    px, mx, floor = 1180, 2050, 1880
+    hair, edge, size = 4, 9, 60
+    parts = [_rect(200 * s, floor * s - hair / 2, 3600 * s, hair, c["line-strong"], c["line-strong"], 0),
+             _person(px * s, floor * s, ph * s, c["text-3"]),
+             _rect(mx * s, (floor - h) * s, w * s, h * s, _mix(c["wall-lit"], c["wall"], 0.7), c["chalk"], edge)]
+
+    def tick(x, top, label, anchor):
+        x, top = x * s, top * s
+        return (f'<rect x="{x - hair / 2:g}" y="{top:g}" width="{hair:g}" height="{floor * s - top:g}" fill="{c["chalk"]}"/>'
+                f'<rect x="{x - 16:g}" y="{top - hair / 2:g}" width="32" height="{hair:g}" fill="{c["chalk"]}"/>'
+                + _text(x + (28 if anchor == "start" else -28), top + 24, label, size, c["linen"], anchor))
+    parts.append(tick(px - 120, floor - ph, words["person"], "end"))
+    parts.append(tick(mx + w + 120, floor - h, size_text(it, num, lang), "start"))
+    W, H = 1600, 800
+    return (f'<svg xmlns="http://www.w3.org/2000/svg" width="{W}" height="{H}" viewBox="0 0 {W} {H}">'
+            f'<rect width="{W}" height="{H}" fill="{c["wall"]}"/>{"".join(parts)}</svg>\n')
+
+
 def check_inside(inside, h_m, w_m):
     """The table and the crown of the door's arch a drawing shows inside its wall: the table within the wall, the
     arch within the table's length, springing at or above the table's hem and cresting below its top (no source

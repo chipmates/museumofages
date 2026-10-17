@@ -32,6 +32,8 @@
 /* A door that names a work runs longer than the site's own: on a narrow phone it takes a second line. */
 .sp-way .door{max-width:100%;white-space:normal;text-align:left;padding-block:10px}
 .sz-top{background:var(--ground-wall)}
+/* The drawing as a picture keeps its two to one on every screen: a frame's cut would take the floor or a height. */
+.sz-frame img.sz-top{display:block;width:100%;height:auto;aspect-ratio:2/1;object-fit:contain;object-position:50% 50%}
 .sz-top .sz-p{fill:var(--ink-quiet)}
 .sz-top .sz-m{fill:color-mix(in srgb,var(--ground-lit) 70%,var(--ground-wall));stroke:var(--mark);stroke-width:2.5}
 .sz-top .sz-floor{fill:none;stroke:var(--hair-strong);stroke-width:1}

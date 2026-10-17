@@ -3621,6 +3621,18 @@
    "sha256": "11e3dac4305968c3aee81157ae0b5ae5a093ca9868a23fe7d12a4c047b2dfefa"
   },
   {
+   "path": "pages/pics/img/vinci-sizes-figure-de-1600.png",
+   "url": "/static/img/vinci-sizes-figure-de-1600.png",
+   "bytes": 14861,
+   "sha256": "281c066ee3da32d24df21400c5560fbbea86c3e4c6b20ebef514dc1892b0a329"
+  },
+  {
+   "path": "pages/pics/img/vinci-sizes-figure-en-1600.png",
+   "url": "/static/img/vinci-sizes-figure-en-1600.png",
+   "bytes": 14240,
+   "sha256": "88ac9f4d31a63c9f7db953aea54de6d5d7479ef6eb1df4395bfb44610ab1e6b5"
+  },
+  {
    "path": "pages/pics/img/vinci-sizes-og-de-1200x630.png",
    "url": "/static/img/vinci-sizes-og-de-1200x630.png",
    "bytes": 85844,
