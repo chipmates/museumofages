@@ -73,7 +73,7 @@
   },
   "top": {
     "h1": "Wo ist Leonardo da Vinci begraben?",
-    "answer": "Leonardo da Vinci starb am 2. Mai 1519 im Herrenhaus Cloux in Amboise an der Loire, mit 67 Jahren. Er hatte sich ein Grab in der Kirche Saint-Florentin im Königsschloss gewünscht und bekam es. Anfang des 19. Jahrhunderts wurde die Kirche abgerissen, und die Gräber darin wurden zerstört. Gebeine, die 1863 auf dem Gelände ausgegraben wurden, liegen heute unter einer Platte in der Schlosskapelle Saint-Hubert, und niemand konnte bisher beweisen, dass es seine sind.",
+    "answer": "Leonardo da Vinci starb am 2. Mai 1519 im Herrenhaus Cloux in Amboise an der Loire, mit 67 Jahren. Heute heißt das Haus Clos Lucé, nach eigener Angabe seit dem späten 17. Jahrhundert. Er hatte sich ein Grab in der Kirche Saint-Florentin im Königsschloss gewünscht und bekam es. Anfang des 19. Jahrhunderts wurde die Kirche abgerissen, und die Gräber darin wurden zerstört. Gebeine, die 1863 auf dem Gelände ausgegraben wurden, liegen heute unter einer Platte in der Schlosskapelle Saint-Hubert, und niemand konnte bisher beweisen, dass es seine sind.",
     "frame": {
       "pic": "court",
       "focus": "50% 58%",
@@ -150,10 +150,11 @@
       "type": "text",
       "id": "will-and-death",
       "nav": "Wie er starb",
-      "h": "Sein Testament und wie er starb",
+      "h": "Woran starb Leonardo da Vinci? Sein Testament und seine letzten Tage",
       "paras": [
+        "Kein bekanntes Dokument sagt, woran Leonardo da Vinci starb. Manche Quellen nennen einen Schlaganfall als mögliche Ursache, doch das ist eine spätere Vermutung: Kein bekannter Brief und kein bekanntes Dokument von 1519 nennt eine Ursache. Vasari schreibt Jahrzehnte später nur, er sei viele Monate krank gewesen.",
         "Am 23. April 1519 machte er in Cloux sein Testament, vor einem königlichen Notar aus Amboise. Das Original ist verloren, der Text ist in Abschriften erhalten. Das Datum darauf lautet 1518, vor Ostern: Das Jahr wechselte damals zu Ostern, nach unserer Zählung ist es 1519. Er wollte in der Kirche Saint-Florentin in Amboise begraben werden, getragen von ihren Kaplänen, und sechzig arme Männer sollten sechzig Kerzen tragen. Francesco Melzi, sein einziger Testamentsvollstrecker, bekam alle seine Bücher und die Instrumente und Bilder seines Handwerks. Kein Gemälde wird genannt: Die drei, die der Kardinal gesehen hatte, kommen im Testament nicht vor, und der Louvre schließt daraus, dass der König sie sehr wahrscheinlich schon 1518 gekauft hatte, über eine Zahlung an Salaì.",
-        "Neun Tage später, am 2. Mai 1519, starb er in Cloux, mit 67 Jahren. Der Beleg ist Melzis Brief vom 1. Juni an Leonardos Brüder in Florenz: Er sei am 2. Mai gestorben, mit allen Sakramenten der Kirche. Woran er starb, hat niemand aufgeschrieben. Vasari, Jahrzehnte später, sagt, er sei viele Monate krank gewesen. Die gelähmte Hand von 1517 wird oft auf einen Schlaganfall zurückgeführt, und eine medizinische Arbeit von 2019 hielt stattdessen eine Nervenschädigung für wahrscheinlich. Beides sind Deutungen, keine Belege."
+        "Neun Tage später, am 2. Mai 1519, starb er in Cloux, mit 67 Jahren. Der Beleg ist Melzis Brief vom 1. Juni an Leonardos Brüder in Florenz: Er sei am 2. Mai gestorben, mit allen Sakramenten der Kirche. Eine Ursache nennt der Brief nicht. Die gelähmte Hand von 1517 wird oft auf einen Schlaganfall zurückgeführt, und eine medizinische Arbeit von 2019 hielt stattdessen eine Nervenschädigung für wahrscheinlich. Beides sind Deutungen, keine Belege."
       ]
     },
     {
@@ -258,7 +259,105 @@
       "id": "sources",
       "nav": "Quellen",
       "h": "Quellen",
-      "intro": "Die Seite stützt sich auf Leonardos Testament von 1519 und das Tagebuch des Antonio de Beatis von 1517 in ihren gedruckten Ausgaben, auf Vasaris Viten von 1550 und 1568, den Katalog der Urkunden Franz' I., Melzis Brief vom 1. Juni 1519 im Druck von 1804 und Arsène Houssayes Bericht über seine Grabung von 1863, dazu auf die Einträge und Seiten des Louvre, des biografischen Lexikons der Treccani, des Château du Clos Lucé, des Château royal d'Amboise, der Bibliothèque nationale de France, der Denkmalregister des französischen Kulturministeriums, des Petit Palais, des Museo Galileo, des Tourismusbüros von Amboise, eines Aufsatzes von 2019 im Journal of the Royal Society of Medicine und des Smithsonian Magazine, alle gelesen am 13. Oktober 2026.",
+      "intro": "Die Seite stützt sich auf Leonardos Testament von 1519 und das Tagebuch des Antonio de Beatis von 1517 in ihren gedruckten Ausgaben, auf Vasaris Viten von 1550 und 1568, den Katalog der Urkunden Franz' I., Melzis Brief vom 1. Juni 1519 im Druck von 1804 und Arsène Houssayes Bericht über seine Grabung von 1863, dazu auf die Einträge und Seiten des Louvre, des biografischen Lexikons der Treccani, des Château du Clos Lucé, des Château royal d'Amboise, der Bibliothèque nationale de France, der Denkmalregister des französischen Kulturministeriums, des Petit Palais, des Museo Galileo, des Tourismusbüros von Amboise, eines Aufsatzes von 2019 im Journal of the Royal Society of Medicine und des Smithsonian Magazine, alle gelesen am 13. Oktober 2026. Was davon online steht:",
+      "read": [
+        {
+          "text": "Leonardos Testament von 1519, in Richters Ausgabe (Internet Archive)",
+          "href": "https://archive.org/details/literaryworksofl02leonuoft"
+        },
+        {
+          "text": "Das Tagebuch des Antonio de Beatis, in Pastors Ausgabe (Internet Archive)",
+          "href": "https://archive.org/details/diereisedeskard00pastgoog"
+        },
+        {
+          "text": "Vasari, die Viten von 1550, das Leben Leonardos (auf Italienisch, Wikisource)",
+          "href": "https://it.wikisource.org/wiki/Le_vite_de%27_pi%C3%B9_eccellenti_pittori,_scultori_e_architettori_(1550)/Lionardo_da_Vinci"
+        },
+        {
+          "text": "Vasari, die Viten von 1568, das Leben Leonardos (auf Italienisch, Wikisource)",
+          "href": "https://it.wikisource.org/wiki/Le_vite_de%27_pi%C3%B9_eccellenti_pittori,_scultori_e_architettori_(1568)/Lionardo_da_Vinci"
+        },
+        {
+          "text": "Der Katalog der Urkunden Franz' I., Band 1 (auf Französisch, Internet Archive)",
+          "href": "https://archive.org/details/collectiondesord01acad"
+        },
+        {
+          "text": "Melzis Brief vom 1. Juni 1519, wie Amoretti ihn 1804 druckte (auf Italienisch, Wikisource)",
+          "href": "https://it.wikisource.org/wiki/Pagina:Memorie_storiche_su_la_vita_gli_studj_e_le_opere_di_Lionardo_da_Vinci.djvu/130"
+        },
+        {
+          "text": "Arsène Houssaye, Histoire de Léonard de Vinci, 1869 (Internet Archive)",
+          "href": "https://archive.org/details/bub_gb_9QERB__wdBQC"
+        },
+        {
+          "text": "Musée du Louvre, Mona Lisa",
+          "href": "https://collections.louvre.fr/en/ark:/53355/cl010062370"
+        },
+        {
+          "text": "Musée du Louvre, Die Jungfrau mit dem Kind und der heiligen Anna",
+          "href": "https://collections.louvre.fr/en/ark:/53355/cl010066107"
+        },
+        {
+          "text": "Treccani, Dizionario Biografico degli Italiani, Leonardo da Vinci (auf Italienisch)",
+          "href": "https://www.treccani.it/enciclopedia/leonardo-da-vinci_(Dizionario-Biografico)/"
+        },
+        {
+          "text": "Château du Clos Lucé, Leonardo da Vinci",
+          "href": "https://www.vinci-closluce.com/en/leonardo-da-vinci/"
+        },
+        {
+          "text": "Château du Clos Lucé, das Haus und seine Geschichte",
+          "href": "https://www.vinci-closluce.com/en/chateau-du-clos-luce/"
+        },
+        {
+          "text": "Château royal d'Amboise, Leonardo da Vinci",
+          "href": "https://www.chateau-amboise.com/en/leonardo-da-vinci/"
+        },
+        {
+          "text": "Château royal d'Amboise, zur Geschichte seines Todes",
+          "href": "https://www.chateau-amboise.com/en/le-recit-de-la-mort-de-leonard-de-vinci-une-fake-news-avant-lheure/"
+        },
+        {
+          "text": "Château royal d'Amboise, die Kapelle Saint-Hubert (auf Französisch)",
+          "href": "https://www.chateau-amboise.com/la-chapelle-saint-hubert/"
+        },
+        {
+          "text": "Bibliothèque nationale de France, Pressemitteilung von 2019 (PDF, auf Französisch)",
+          "href": "https://www.bnf.fr/sites/default/files/2019-04/cp_mort_leonard_0.pdf"
+        },
+        {
+          "text": "Französisches Kulturministerium, Denkmaleintrag zum Clos Lucé (auf Französisch)",
+          "href": "https://pop.culture.gouv.fr/notice/merimee/PA00097504"
+        },
+        {
+          "text": "Französisches Kulturministerium, Denkmaleintrag zum Château d'Amboise (auf Französisch)",
+          "href": "https://pop.culture.gouv.fr/notice/merimee/PA00097503"
+        },
+        {
+          "text": "Petit Palais, der Eintrag zum Gemälde von Ingres (Paris Musées, auf Französisch)",
+          "href": "https://www.parismuseescollections.paris.fr/fr/petit-palais/oeuvres/francois-ier-recoit-les-derniers-soupirs-de-leonard-de-vinci"
+        },
+        {
+          "text": "Museo Galileo, Amboise",
+          "href": "https://mostre.museogalileo.it/bibliotecaleonardo/3dstudioleo/amboise/index_en.html"
+        },
+        {
+          "text": "Tourismusbüro Amboise, Leonardo im Königsschloss",
+          "href": "https://amboise-valdeloire.com/en/leonardo-da-vinci-at-the-royal-chateau-of-amboise/"
+        },
+        {
+          "text": "Journal of the Royal Society of Medicine, der Aufsatz von 2019 über seine Hand",
+          "href": "https://doi.org/10.1177/0141076819848115"
+        },
+        {
+          "text": "Royal Society of Medicine, Pressemitteilung zu diesem Aufsatz",
+          "href": "https://www.rsm.ac.uk/media-releases/2019/da-vinci-s-hand-impairment-caused-by-nerve-damage-not-stroke-suggests-new-study/"
+        },
+        {
+          "text": "Smithsonian Magazine, 2026, zur Suche nach seiner DNA",
+          "href": "https://www.smithsonianmag.com/smart-news/could-leonardo-da-vincis-dna-be-hiding-inside-one-of-his-renaissance-sketches-180987982/"
+        }
+      ],
       "notes": [],
       "contact": "Ist ein Datum, ein Name oder ein Satz hier falsch, schreib uns, und wir korrigieren es.",
       "contact_link": "Zum Impressum",

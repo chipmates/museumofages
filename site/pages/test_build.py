@@ -3551,8 +3551,10 @@ class LastYears(unittest.TestCase):
                 self.assertTrue(any(h.rstrip("/").endswith(("leonardo-da-vinci/#wing", "../#wing")) or h == "../#wing" for h in hrefs), "the Leonardo page")
                 supper = next(t for t in json.loads(REGISTRY.read_text(encoding="utf-8"))["vinci"]["topics"] if t.get("count") == "supper")
                 self.assertTrue(any(h.endswith(f'/{supper["slug"][lang]}/') for h in hrefs), "the Last Supper page")
+                # each house's own site once outside the sources, whose list links the pages read there
+                outside = own[:own.index('id="sources"')]
                 for host in ("https://www.vinci-closluce.com/", "https://www.chateau-amboise.com/"):
-                    self.assertEqual(sum(h.startswith(host) for h in hrefs), 1, host)
+                    self.assertEqual(sum(h.startswith(host) for h in re.findall(r'href="([^"]+)"', outside)), 1, host)
 
     def test_the_grave_court_wears_the_wing_pages_tag_and_line(self):
         for lang, own in self.own.items():

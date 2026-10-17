@@ -73,7 +73,7 @@
   },
   "top": {
     "h1": "Where is Leonardo da Vinci buried?",
-    "answer": "Leonardo da Vinci died on 2 May 1519 at the manor of Cloux in Amboise, on the Loire in France, at 67. He had asked for a grave in Saint-Florentin, the church inside the royal château, and got it. Early in the 19th century that church was pulled down and the graves in it were broken up. Bones dug up on the site in 1863 lie today under a slab in the château's chapel of Saint-Hubert, and no one has yet proved that they are his.",
+    "answer": "Leonardo da Vinci died on 2 May 1519 at the manor of Cloux in Amboise, on the Loire in France, at 67. Today the house is called the Clos Lucé, a name it has carried since the late 17th century, by its own account. He had asked for a grave in Saint-Florentin, the church inside the royal château, and got it. Early in the 19th century that church was pulled down and the graves in it were broken up. Bones dug up on the site in 1863 lie today under a slab in the château's chapel of Saint-Hubert, and no one has yet proved that they are his.",
     "frame": {
       "pic": "court",
       "focus": "50% 58%",
@@ -150,10 +150,11 @@
       "type": "text",
       "id": "will-and-death",
       "nav": "How he died",
-      "h": "His will, and how he died",
+      "h": "How did Leonardo da Vinci die? His will and his last days",
       "paras": [
+        "No known record says what Leonardo da Vinci died of. Some sources say he possibly died of a stroke, but that is a later guess: no known letter or document from 1519 names a cause. Vasari, writing decades later, says only that he had been ill for many months.",
         "On 23 April 1519 he made his will at Cloux, before a royal notary of Amboise. The original is lost and the text survives in copies. Its date reads 1518, before Easter: the year then turned at Easter, so by our reckoning it is 1519. He wanted his grave in Saint-Florentin, the castle church at Amboise, carried there by its chaplains, with sixty poor men bearing sixty candles. Francesco Melzi, his only executor, got all his books and the instruments and pictures of his trade. No painting is named: the three the cardinal saw are not in the will at all, and the Louvre's reading is that the king had very probably bought them in 1518, through a payment to Salaì.",
-        "He died nine days later, on 2 May 1519, at Cloux, aged 67. The record is Melzi's letter of 1 June to Leonardo's brothers in Florence: he had died on 2 May with all the rites of the Church. What he died of, nobody wrote down. Vasari, decades later, says he had been ill for many months. The paralysed hand of 1517 is often put down to a stroke, and a medical paper of 2019 argued for nerve damage instead. Both are readings, not records."
+        "He died nine days later, on 2 May 1519, at Cloux, aged 67. The record is Melzi's letter of 1 June to Leonardo's brothers in Florence: he had died on 2 May with all the rites of the Church. The letter names no cause. The paralysed hand of 1517 is often put down to a stroke, and a medical paper of 2019 argued for nerve damage instead. Both are readings, not records."
       ]
     },
     {
@@ -258,7 +259,105 @@
       "id": "sources",
       "nav": "Sources",
       "h": "Sources",
-      "intro": "The page relies on Leonardo's will of 1519 and Antonio de Beatis' diary of 1517 in their printed editions, Vasari's Lives of 1550 and 1568, the catalogue of the acts of Francis I, Melzi's letter of 1 June 1519 as printed in 1804, Arsène Houssaye's account of his dig of 1863, and the records and pages of the Louvre, the Treccani biographical dictionary, the Château du Clos Lucé, the Château royal d'Amboise, the Bibliothèque nationale de France, the French Ministry of Culture's heritage records, the Petit Palais, Museo Galileo, the tourist office of Amboise, a 2019 paper in the Journal of the Royal Society of Medicine and Smithsonian magazine, all read on 13 October 2026.",
+      "intro": "The page relies on Leonardo's will of 1519 and Antonio de Beatis' diary of 1517 in their printed editions, Vasari's Lives of 1550 and 1568, the catalogue of the acts of Francis I, Melzi's letter of 1 June 1519 as printed in 1804, Arsène Houssaye's account of his dig of 1863, and the records and pages of the Louvre, the Treccani biographical dictionary, the Château du Clos Lucé, the Château royal d'Amboise, the Bibliothèque nationale de France, the French Ministry of Culture's heritage records, the Petit Palais, Museo Galileo, the tourist office of Amboise, a 2019 paper in the Journal of the Royal Society of Medicine and Smithsonian magazine, all read on 13 October 2026. Those that are online:",
+      "read": [
+        {
+          "text": "Leonardo's will of 1519, in Richter's edition (Internet Archive)",
+          "href": "https://archive.org/details/literaryworksofl02leonuoft"
+        },
+        {
+          "text": "Antonio de Beatis' diary, in Pastor's edition (Internet Archive)",
+          "href": "https://archive.org/details/diereisedeskard00pastgoog"
+        },
+        {
+          "text": "Vasari, the Lives of 1550, the life of Leonardo (in Italian, Wikisource)",
+          "href": "https://it.wikisource.org/wiki/Le_vite_de%27_pi%C3%B9_eccellenti_pittori,_scultori_e_architettori_(1550)/Lionardo_da_Vinci"
+        },
+        {
+          "text": "Vasari, the Lives of 1568, the life of Leonardo (in Italian, Wikisource)",
+          "href": "https://it.wikisource.org/wiki/Le_vite_de%27_pi%C3%B9_eccellenti_pittori,_scultori_e_architettori_(1568)/Lionardo_da_Vinci"
+        },
+        {
+          "text": "The catalogue of the acts of Francis I, volume 1 (in French, Internet Archive)",
+          "href": "https://archive.org/details/collectiondesord01acad"
+        },
+        {
+          "text": "Melzi's letter of 1 June 1519, as Amoretti printed it in 1804 (in Italian, Wikisource)",
+          "href": "https://it.wikisource.org/wiki/Pagina:Memorie_storiche_su_la_vita_gli_studj_e_le_opere_di_Lionardo_da_Vinci.djvu/130"
+        },
+        {
+          "text": "Arsène Houssaye, Histoire de Léonard de Vinci, 1869 (Internet Archive)",
+          "href": "https://archive.org/details/bub_gb_9QERB__wdBQC"
+        },
+        {
+          "text": "Musée du Louvre, the Mona Lisa",
+          "href": "https://collections.louvre.fr/en/ark:/53355/cl010062370"
+        },
+        {
+          "text": "Musée du Louvre, The Virgin and Child with Saint Anne",
+          "href": "https://collections.louvre.fr/en/ark:/53355/cl010066107"
+        },
+        {
+          "text": "Treccani, Dizionario Biografico degli Italiani, Leonardo da Vinci (in Italian)",
+          "href": "https://www.treccani.it/enciclopedia/leonardo-da-vinci_(Dizionario-Biografico)/"
+        },
+        {
+          "text": "Château du Clos Lucé, Leonardo da Vinci",
+          "href": "https://www.vinci-closluce.com/en/leonardo-da-vinci/"
+        },
+        {
+          "text": "Château du Clos Lucé, the house and its history",
+          "href": "https://www.vinci-closluce.com/en/chateau-du-clos-luce/"
+        },
+        {
+          "text": "Château royal d'Amboise, Leonardo da Vinci",
+          "href": "https://www.chateau-amboise.com/en/leonardo-da-vinci/"
+        },
+        {
+          "text": "Château royal d'Amboise, on the story of his death",
+          "href": "https://www.chateau-amboise.com/en/le-recit-de-la-mort-de-leonard-de-vinci-une-fake-news-avant-lheure/"
+        },
+        {
+          "text": "Château royal d'Amboise, the chapel of Saint-Hubert (in French)",
+          "href": "https://www.chateau-amboise.com/la-chapelle-saint-hubert/"
+        },
+        {
+          "text": "Bibliothèque nationale de France, press release of 2019 (PDF, in French)",
+          "href": "https://www.bnf.fr/sites/default/files/2019-04/cp_mort_leonard_0.pdf"
+        },
+        {
+          "text": "French Ministry of Culture, heritage record of the Clos Lucé (in French)",
+          "href": "https://pop.culture.gouv.fr/notice/merimee/PA00097504"
+        },
+        {
+          "text": "French Ministry of Culture, heritage record of the Château d'Amboise (in French)",
+          "href": "https://pop.culture.gouv.fr/notice/merimee/PA00097503"
+        },
+        {
+          "text": "Petit Palais, the record of the Ingres painting (Paris Musées, in French)",
+          "href": "https://www.parismuseescollections.paris.fr/fr/petit-palais/oeuvres/francois-ier-recoit-les-derniers-soupirs-de-leonard-de-vinci"
+        },
+        {
+          "text": "Museo Galileo, Amboise",
+          "href": "https://mostre.museogalileo.it/bibliotecaleonardo/3dstudioleo/amboise/index_en.html"
+        },
+        {
+          "text": "Tourist office of Amboise, Leonardo at the royal château",
+          "href": "https://amboise-valdeloire.com/en/leonardo-da-vinci-at-the-royal-chateau-of-amboise/"
+        },
+        {
+          "text": "Journal of the Royal Society of Medicine, the paper of 2019 on his hand",
+          "href": "https://doi.org/10.1177/0141076819848115"
+        },
+        {
+          "text": "Royal Society of Medicine, press release on that paper",
+          "href": "https://www.rsm.ac.uk/media-releases/2019/da-vinci-s-hand-impairment-caused-by-nerve-damage-not-stroke-suggests-new-study/"
+        },
+        {
+          "text": "Smithsonian Magazine, 2026, on the search for his DNA",
+          "href": "https://www.smithsonianmag.com/smart-news/could-leonardo-da-vincis-dna-be-hiding-inside-one-of-his-renaissance-sketches-180987982/"
+        }
+      ],
       "notes": [],
       "contact": "If a date, a name or a sentence here is wrong, tell us and we will correct it.",
       "contact_link": "To the legal notice",
