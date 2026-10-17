@@ -119,7 +119,7 @@
   "title": "Spinosaurus size: up to about 14 m (46 ft) | Museum of Ages",
   "description": "Spinosaurus size: the largest adults just under 14 m (46 ft) and about 7.4 tonnes, by a model. Ours is a young one of about 10 m, beside a person.",
   "og_title": "Spinosaurus size: up to about 14 m (46 ft)",
-  "og_image_alt": "A Spinosaurus with a tall sail and a deep tail, the pale outline of a larger adult behind it, beside a grey person who reaches its hip."
+  "og_image_alt": "Our young Spinosaurus from the side, about 10 m (33 ft) long, with a tall sail and a deep tail. Behind it the pale outline of the largest adults, just under 14 m (46 ft) by a model, and beside it a grey person 1.70 m tall who reaches its hip."
  },
  "labels": {
   "crumbs": "You are here",
@@ -142,7 +142,7 @@
    "pic": "side",
    "tag": "tag_made",
    "what": "Our Spinosaurus beside a person 1.70 m tall, to one scale: a young one of about 10 m (33 ft), built on the skeleton from Morocco. The pale outline behind it is the largest adults' size by the model of 2022, just under 14 m (46 ft): our model enlarged by about a third. The outline is an estimate, not an animal anyone found. In the pose of our model, the outline measures about 13.2 m end to end.",
-   "alt": "A Spinosaurus with a tall sail and a deep tail, the pale outline of a larger adult behind it, beside a grey person who reaches its hip.",
+   "alt": "Our young Spinosaurus from the side, about 10 m (33 ft) long, with a tall sail and a deep tail. Behind it the pale outline of the largest adults, just under 14 m (46 ft) by a model, and beside it a grey person 1.70 m tall who reaches its hip.",
    "note": "Our own reconstruction, built in code from published measurements and rendered in our own engine. Not photographs.",
    "marks": [
     {
@@ -417,8 +417,8 @@
    "intro": "For each number: where it came from, and what it means.",
    "rows": [
     {
-     "term": "18 m (59 ft)",
-     "text": "The top of a 2005 range of 16 to 18 m: a whole body drawn around the big snout in Milan, with the build of a long-legged relative. We have not read the study's exact range ourselves. Spinosaurus turned out to have short legs, so that body came out too long. The model of 2022 gives just under 14 m, though some museum texts still give 18 m."
+     "term": "16 to 18 m and 7 to 9 tonnes",
+     "text": "An estimate of 2005: a whole body drawn around the big snout in Milan, with the build of a long-legged relative. We have not read the study's exact range ourselves. Many sites still give it, some with the year 2012, which is a slip for 2005. Spinosaurus turned out to have short legs, so that body came out too long. The model of 2022 gives just under 14 m, though some museum texts still give 18 m."
     },
     {
      "term": "15 m and 50 feet",

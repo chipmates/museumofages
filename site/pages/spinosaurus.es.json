@@ -119,7 +119,7 @@
   "title": "Spinosaurus: tamaño de hasta unos 14 m | Museum of Ages",
   "description": "¿Cuánto medía el Spinosaurus? Los adultos más grandes, casi 14 m y unas 7,4 t según un modelo. El nuestro, un ejemplar joven de unos 10 m, con una persona.",
   "og_title": "Spinosaurus: tamaño de hasta unos 14 m",
-  "og_image_alt": "Un Spinosaurus de lado, con una vela alta y una cola alta, la silueta clara de un adulto más grande detrás y una persona gris que le llega a la cadera."
+  "og_image_alt": "Nuestro Spinosaurus joven de lado, de unos 10 m de largo, con una vela alta y una cola alta. Detrás, la silueta clara de los adultos más grandes, algo menos de 14 m según un modelo, y a su lado una persona gris de 1,70 m que le llega a la cadera."
  },
  "labels": {
   "crumbs": "Estás aquí",
@@ -142,7 +142,7 @@
    "pic": "side",
    "tag": "tag_made",
    "what": "Nuestro Spinosaurus junto a una persona de 1,70 m, a la misma escala: un ejemplar joven de unos 10 m, construido según el esqueleto de Marruecos. La silueta clara de detrás es el tamaño de los adultos más grandes según el modelo de 2022, algo menos de 14 m: nuestro modelo agrandado más o menos un tercio. La silueta es una estimación, no un animal que alguien haya encontrado. En la postura de nuestro modelo, la silueta mide unos 13,2 m de punta a punta.",
-   "alt": "Un Spinosaurus de lado, con una vela alta y una cola alta, la silueta clara de un adulto más grande detrás y una persona gris que le llega a la cadera.",
+   "alt": "Nuestro Spinosaurus joven de lado, de unos 10 m de largo, con una vela alta y una cola alta. Detrás, la silueta clara de los adultos más grandes, algo menos de 14 m según un modelo, y a su lado una persona gris de 1,70 m que le llega a la cadera.",
    "note": "Nuestra propia reconstrucción, construida en código a partir de medidas publicadas y renderizada con nuestro propio motor gráfico. No son fotografías.",
    "marks": [
     {
@@ -417,8 +417,8 @@
    "intro": "Para cada cifra: de dónde viene y qué significa.",
    "rows": [
     {
-     "term": "18 m",
-     "text": "El extremo de arriba de un rango de 2005, de 16 a 18 m: un cuerpo entero dibujado alrededor del gran hocico de Milán, con la constitución de un pariente de patas largas. El rango exacto del estudio no lo leímos nosotros. El Spinosaurus resultó tener patas cortas, así que ese cuerpo salió demasiado largo. El modelo de 2022 da algo menos de 14 m, aunque algunos textos de museos todavía dan 18 m."
+     "term": "De 16 a 18 m, de 7 a 9 toneladas",
+     "text": "Una estimación de 2005: un cuerpo entero dibujado alrededor del gran hocico de Milán, con la constitución de un pariente de patas largas. El rango exacto del estudio no lo leímos nosotros. Muchas páginas todavía lo dan, algunas con el año 2012, un error por 2005. El Spinosaurus resultó tener patas cortas, así que ese cuerpo salió demasiado largo. El modelo de 2022 da algo menos de 14 m, aunque algunos textos de museos todavía dan 18 m."
     },
     {
      "term": "15 m",
