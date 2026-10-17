@@ -249,19 +249,19 @@
  },
  "top": {
   "h1": "Las pinturas de Leonardo da Vinci",
-  "answer": "No hay una cifra fija. Según de quién sea la lista, unas 15 a 20 pinturas conservadas son obra del propio Leonardo da Vinci. El Hermitage habla de poco más de una docena. El especialista en Leonardo Martin Kemp contó unas 16 en 2025, y otras cuatro o cinco que Leonardo pintó con otros. La casa de subastas que vendió el Salvator Mundi dijo que eran menos de 20.",
+  "answer": "Unas 15 a 20 pinturas conservadas son obra del propio Leonardo da Vinci, según de quién sea la lista. No hay una cifra fija. El Hermitage habla de poco más de una docena. El especialista en Leonardo Martin Kemp contó unas 16 en 2025, y otras cuatro o cinco que Leonardo pintó con otros. La casa de subastas que vendió el Salvator Mundi dijo que eran menos de 20.",
   "answer_more": [
    "En nuestra ala de Leonardo cuelgan 24 obras, cada una con una palabra que dice cuán segura es su atribución: 14 documentadas, 4 discutidas, 4 con reservas, 1 de su taller y 1 copia, y ",
    {
     "text": "La última cena",
     "at": "last-supper"
    },
-   " en su propio muro. ",
+   " en su propio muro. La pintura más conocida de Leonardo es ",
    {
-    "text": "La Gioconda (la Mona Lisa)",
+    "text": "la Gioconda (la Mona Lisa)",
     "at": "mona-lisa"
    },
-   ", ",
+   ", en el Louvre de París. El Louvre la llama la obra más famosa del mundo. Cuelga aquí también, igual que ",
    {
     "text": "La dama del armiño",
     "at": "lady-with-an-ermine"
@@ -276,7 +276,7 @@
     "text": "el Salvator Mundi",
     "at": "salvator-mundi"
    },
-   " están todas aquí, cada una con una puerta a la sala de los cuadros donde cuelga."
+   ", cada una con una puerta a la sala de los cuadros donde cuelga."
   ],
   "tally": {
    "title": "Las obras, por periodo",
@@ -527,7 +527,7 @@
        "title": "La Virgen de las rocas, versión del Louvre",
        "when": "Entre 1483 y 1494, aproximadamente",
        "where": "Musée du Louvre, París",
-       "who": "Documentado. El contrato está fechado el 25 de abril de 1483: Leonardo y dos pintores, los hermanos de Predis, debían pintar y dorar el retablo de la capilla de una cofradía de Milán. Siguió una larga disputa por dinero. Esta es la primera de las dos versiones.",
+       "who": "Documentado. El contrato está fechado el 25 de abril de 1483: Leonardo y dos pintores, los hermanos de Predis, debían pintar y dorar el retablo de la capilla de una cofradía de Milán. Siguió una larga disputa por dinero. Esta es la primera de las dos versiones. Muchas fuentes la fechan entre 1483 y 1486. La fecha de aquí es la del propio Louvre: entre 1483 y 1494, aproximadamente.",
        "shows": "María se arrodilla en una gruta rocosa, con una mano extendida sobre el niño Jesús, y con la otra acerca al pequeño Juan el Bautista. Un ángel sostiene a Jesús y señala a Juan con el dedo, y Jesús lo bendice. Detrás, montañas y agua.",
        "worth_knowing": "Nadie sabe cómo llegó a Francia: la primera noticia de ella es de Fontainebleau, en 1625. Unas imágenes infrarrojas tomadas en 2009 muestran que el ángel se pintó primero sin la mano que señala, como en la tabla de Londres, y que Leonardo añadió el gesto casi al final.",
        "door": "La Virgen de las rocas del Louvre",
@@ -577,7 +577,7 @@
        "door": "La dama del armiño",
        "shape": "tall",
        "pic": "lady-with-an-ermine",
-       "alt": "La dama del armiño: una joven con vestido rojo y manto azul, girada hacia la izquierda, sostiene un armiño blanco contra el pecho, sobre un fondo oscuro. Una reproducción.",
+       "alt": "La dama del armiño: una joven con vestido rojo y manto azul, mirando hacia la derecha, sostiene un armiño blanco contra el pecho, sobre un fondo oscuro. Una reproducción.",
        "src": [
         "Imagen de la colección del Museo Nacional de Cracovia. Dominio público, vía ",
         {
@@ -593,7 +593,7 @@
        "title": "Retrato de una dama de la corte de Milán, conocido como La bella ferretera",
        "when": "Entre 1490 y 1497, aproximadamente",
        "where": "Musée du Louvre, París. Cuando lo comprobamos, el Louvre lo daba como no expuesto.",
-       "who": "Documentado. Quién es ella sigue sin saberse. La candidata más antigua es Lucrezia Crivelli, amante del duque desde hacia 1495, nombrada en un poema latino que se copió en el Codex Atlanticus de Leonardo. Otros proponen a Beatriz de Este, la esposa del duque, o a Isabel de Aragón.",
+       "who": "Documentado. Quién es ella sigue sin saberse. La candidata más antigua es Lucrezia Crivelli, amante del duque desde hacia 1495, nombrada en un poema latino que se copió en el Codex Atlanticus de Leonardo. Otros proponen a Beatriz de Este, la esposa del duque, o a Isabel de Aragón. Algunas fuentes todavía atribuyen el cuadro a la escuela de Leonardo, y su autoría se ha discutido. El Louvre, que lo conserva, se lo atribuye al propio Leonardo.",
        "shows": "Una joven ante un parapeto de piedra, con el cuerpo girado hacia un lado y la cabeza hacia el otro, un vestido rojo a la moda milanesa con mangas atadas con cintas y un cordón fino en la frente con una piedra roja. Su mirada pasa justo a nuestro lado.",
        "worth_knowing": "El nombre, La Belle Ferronnière en francés, es un error, y el propio título del Louvre lo dice: era el nombre de otro retrato de la colección real francesa, un grabado de este cuadro lo llevó por equivocación, y en 1784 un inventario llegó a llamarla Ana Bolena.",
        "door": "La bella ferretera",
@@ -714,7 +714,7 @@
        "title": "La Gioconda",
        "when": "Entre 1503 y 1519, aproximadamente",
        "where": "Musée du Louvre, París",
-       "who": "Documentado. Se empezó en Florencia hacia 1503, probablemente para el marido de la retratada, el comerciante de seda Francesco del Giocondo. Leonardo nunca la entregó: viajó con él a Milán, a Roma y a Francia, y siguió trabajando en ella. El rey de Francia muy probablemente la compró en 1518 a Salaì, alumno de Leonardo.",
+       "who": "Documentado. Se empezó en Florencia hacia 1503, probablemente para el marido de la retratada, el comerciante de seda Francesco del Giocondo. Leonardo nunca la entregó: viajó con él a Milán, a Roma y a Francia, y siguió trabajando en ella. Muchas fuentes la fechan entre 1503 y 1506. El registro del Louvre da de 1503 a 1519, porque Leonardo siguió pintándola hasta el final y quedó sin terminar. El rey de Francia muy probablemente la compró en 1518 a Salaì, alumno de Leonardo. Relatos más antiguos dicen que el rey la compró tras la muerte de Leonardo, algunos por 4000 florines de oro. Solo en 1999 el historiador Bertrand Jestaz encontró un pago del rey de 2604 libras a Salaì, de 1518, por unas pinturas, y el Louvre relaciona la Gioconda con ese pago.",
        "shows": "Lisa Gherardini, esposa de Francesco del Giocondo, sentada en una silla y girada hacia nosotros, con una mano sobre la otra, una balaustrada baja detrás y, más allá, montañas, agua, un camino sinuoso y un puente. Para el Louvre, otros nombres para la retratada no son una cuestión abierta: es Lisa.",
        "worth_knowing": "En 2005 apareció una nota en el margen de un libro de la biblioteca universitaria de Heidelberg: un funcionario florentino escribió en octubre de 1503 que Leonardo estaba trabajando en la cabeza de Lisa del Giocondo, y eso zanjó tanto quién es la retratada como la fecha.",
        "door": "la Gioconda",
@@ -836,7 +836,7 @@
        "title": "Juan el Bautista",
        "when": "Entre 1508 y 1519, aproximadamente",
        "where": "Musée du Louvre, París",
-       "who": "Documentado. No se conoce ningún comitente. Lo tuvo consigo en Francia, y el rey de Francia muy probablemente lo compró en 1518. Después pasó de mano en mano: un duque francés se lo regaló a Carlos I de Inglaterra, se vendió tras la ejecución de ese rey, y Luis XIV lo volvió a comprar para Francia en 1662.",
+       "who": "Documentado. No se conoce ningún comitente. Lo tuvo consigo en Francia, y el rey de Francia muy probablemente lo compró en 1518. Después pasó de mano en mano: un duque francés se lo regaló a Carlos I de Inglaterra, se vendió tras la ejecución de ese rey, y Luis XIV lo volvió a comprar para Francia en 1662. Muchas fuentes lo fechan entre 1513 y 1516, en sus años en Roma. El Louvre señala que Kenneth Clark propuso en 1939 una fecha romana, y da la suya: entre 1508 y 1519, aproximadamente, una obra concebida probablemente hacia 1508 y aún sin terminar a su muerte.",
        "shows": "Un joven Juan el Bautista sale de la oscuridad, sonriendo, con la mano derecha señalando hacia arriba, una fina cruz de caña en la izquierda y una piel de animal moteada sobre el cuerpo.",
        "worth_knowing": "La piel tiene manchas como la de un leopardo, no es el pelo de camello de la Biblia, algo que el Louvre considera único en su época, y los análisis muestran que movió el contorno del cuerpo tres veces o más.",
        "door": "Juan el Bautista",
@@ -1026,7 +1026,129 @@
    "id": "sources",
    "nav": "Fuentes",
    "h": "Fuentes",
-   "intro": "Los títulos, las fechas, los lugares de conservación y las atribuciones siguen las etiquetas del ala, comprobadas en octubre de 2026 con las páginas y los registros de los propios museos: la Galería Uffizi, la National Gallery of Art de Washington, la Alte Pinakothek, el Hermitage, los Museos Vaticanos, el Louvre, la Ambrosiana, el Museo Nacional de Cracovia, la National Gallery de Londres, la Pilotta de Parma y el Cenacolo Vinciano. Para la cifra y los debates: Martin Kemp en The Art Newspaper (mayo de 2025), la ficha de catálogo de Frank Zöllner sobre el Salvator Mundi (2019), The Art Newspaper (2018, 2021 y 2024), NPR (2017), y Cultured y Artlyst (2026). Donde la opinión de un museo difiere de la etiqueta del ala, la entrada lo dice.",
+   "intro": "Los títulos, las fechas, los lugares de conservación y las atribuciones siguen las etiquetas del ala, comprobadas en octubre de 2026 con las páginas y los registros de los propios museos: la Galería Uffizi, la National Gallery of Art de Washington, la Alte Pinakothek, el Hermitage, los Museos Vaticanos, el Louvre, la Ambrosiana, el Museo Nacional de Cracovia, la National Gallery de Londres, la Pilotta de Parma y el Cenacolo Vinciano. Para la cifra y los debates: Martin Kemp en The Art Newspaper (mayo de 2025), la ficha de catálogo de Frank Zöllner sobre el Salvator Mundi (2019), The Art Newspaper (2018, 2021 y 2024), NPR (2017), y Cultured y Artlyst (2026). Donde la opinión de un museo difiere de la etiqueta del ala, la entrada lo dice. Los registros de los museos y los artículos, con enlace:",
+   "read": [
+    {
+     "text": "Gallerie degli Uffizi, Bautismo de Cristo",
+     "href": "https://www.uffizi.it/en/artworks/verrocchio-leonardo-baptism-of-christ"
+    },
+    {
+     "text": "Gallerie degli Uffizi, Anunciación",
+     "href": "https://www.uffizi.it/en/artworks/annunciation"
+    },
+    {
+     "text": "National Gallery of Art, Ginevra de’ Benci",
+     "href": "https://www.nga.gov/collection/art-object-page.50724.html"
+    },
+    {
+     "text": "Alte Pinakothek, Virgen del clavel",
+     "href": "https://www.sammlung.pinakothek.de/en/artwork/Y0GR916LRX/leonardo-da-vinci/madonna-mit-der-nelke"
+    },
+    {
+     "text": "Musée du Louvre, Anunciación, predela",
+     "href": "https://collections.louvre.fr/en/ark:/53355/cl010064973"
+    },
+    {
+     "text": "Museo del Hermitage, Madona Benois (en ruso)",
+     "href": "https://www.hermitagemuseum.org/digital-collection/29908"
+    },
+    {
+     "text": "Pinacoteca Vaticana, San Jerónimo",
+     "href": "https://www.museivaticani.va/content/museivaticani/en/collezioni/musei/la-pinacoteca/sala-ix---secolo-xv-xvi/leonardo-da-vinci--s--girolamo.html"
+    },
+    {
+     "text": "Gallerie degli Uffizi, Adoración de los Magos",
+     "href": "https://www.uffizi.it/en/artworks/leonardo-adoration-of-the-magi"
+    },
+    {
+     "text": "Musée du Louvre, La Virgen de las rocas, versión del Louvre",
+     "href": "https://collections.louvre.fr/en/ark:/53355/cl010062373"
+    },
+    {
+     "text": "Veneranda Biblioteca Ambrosiana, Retrato de un músico",
+     "href": "https://www.ambrosiana.it/en/discover/masterpieces/portrait-of-a-musician/"
+    },
+    {
+     "text": "Muzeum Narodowe w Krakowie, La dama del armiño (en polaco)",
+     "href": "https://mnk.pl/artykul/leonardo-da-vinci-dama-z-gronostajem-mediolan-ok-1490/"
+    },
+    {
+     "text": "Musée du Louvre, Retrato de una dama de la corte de Milán, conocido como La bella ferretera",
+     "href": "https://collections.louvre.fr/en/ark:/53355/cl010062372"
+    },
+    {
+     "text": "Museo del Hermitage, Madonna Litta (en ruso)",
+     "href": "https://www.hermitagemuseum.org/digital-collection/29633"
+    },
+    {
+     "text": "National Gallery, La Virgen de las rocas, versión de Londres",
+     "href": "https://www.nationalgallery.org.uk/paintings/leonardo-da-vinci-the-virgin-of-the-rocks"
+    },
+    {
+     "text": "Musée du Louvre, La Gioconda",
+     "href": "https://collections.louvre.fr/en/ark:/53355/cl010062370"
+    },
+    {
+     "text": "Musée du Louvre, La Virgen y el Niño con santa Ana",
+     "href": "https://collections.louvre.fr/en/ark:/53355/cl010066107"
+    },
+    {
+     "text": "Musée du Louvre, La lucha por el estandarte, a partir de La batalla de Anghiari",
+     "href": "https://collections.louvre.fr/en/ark:/53355/cl020110446"
+    },
+    {
+     "text": "National Gallery, Cartón de Burlington House",
+     "href": "https://www.nationalgallery.org.uk/paintings/leonardo-da-vinci-the-burlington-house-cartoon"
+    },
+    {
+     "text": "Galleria Nazionale di Parma, La despeinada",
+     "href": "https://complessopilotta.it/en/opera/testa-di-fanciulla-detta-la-scapiliata-en/"
+    },
+    {
+     "text": "Musée du Louvre, Juan el Bautista",
+     "href": "https://collections.louvre.fr/en/ark:/53355/cl010062374"
+    },
+    {
+     "text": "Musée du Louvre, Baco, antes Juan el Bautista",
+     "href": "https://collections.louvre.fr/en/ark:/53355/cl010062371"
+    },
+    {
+     "text": "Museo del Cenacolo Vinciano, La última cena",
+     "href": "https://cenacolovinciano.org/en/museum/the-works/the-last-supper-leonardo-da-vinci-1452-1519/"
+    },
+    {
+     "text": "Martin Kemp en The Art Newspaper, 23 de mayo de 2025",
+     "href": "https://www.theartnewspaper.com/2025/05/23/how-to-see-every-painting-leonardo-da-vinci"
+    },
+    {
+     "text": "NPR, 11 de octubre de 2017, sobre la venta del Salvator Mundi",
+     "href": "https://www.npr.org/sections/thetwo-way/2017/10/11/557183483/last-da-vinci-painting-in-private-hands-will-be-auctioned-next-month"
+    },
+    {
+     "text": "Frank Zöllner, ficha de catálogo del Salvator Mundi, 2019 (PDF)",
+     "href": "https://www.gko.uni-leipzig.de/fileadmin/Fakult%C3%A4t_GKR/Kunstgeschichte/PDF/Publikationen/Frank_Z%C3%B6llner-B%C3%BCcher/SalvatorCatXXXII2019.pdf"
+    },
+    {
+     "text": "The Art Newspaper, 30 de marzo de 2018, sobre la Madonna Litta",
+     "href": "https://www.theartnewspaper.com/2018/03/30/national-gallery-in-london-accused-of-altering-attribution-of-hermitages-leonardo-for-2011-blockbuster-show"
+    },
+    {
+     "text": "The Art Newspaper, 13 de abril de 2021, sobre el estudio del Salvator Mundi en el Louvre",
+     "href": "https://www.theartnewspaper.com/2021/04/13/what-the-louvres-scientific-examinations-of-the-salvator-mundi-really-revealedaccording-to-the-museums-own-book"
+    },
+    {
+     "text": "The Art Newspaper, 19 de agosto de 2024, sobre dónde está el Salvator Mundi",
+     "href": "https://www.theartnewspaper.com/2024/08/19/where-is-salvator-mundi-in-storage-in-geneva-apparently"
+    },
+    {
+     "text": "Cultured, 4 de agosto de 2026, sobre la Virgen de la rueca Lansdowne en el Met",
+     "href": "https://culturedmag.com/article/2026/08/04/art-leonardo-da-vinci-met-museum-kenneth-griffin/"
+    },
+    {
+     "text": "Artlyst, 13 de agosto de 2026, sobre el mismo cuadro",
+     "href": "https://artlyst.com/mets-leonardo-da-vinci-studio-work-may-be-the-masters-hand/"
+    }
+   ],
    "notes": [],
    "contact": "Si una fecha, una atribución o una frase de esta página están mal, escríbenos y lo corregiremos.",
    "contact_link": "Ir al aviso legal",

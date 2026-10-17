@@ -249,19 +249,19 @@
  },
  "top": {
   "h1": "Leonardo da Vincis Gemälde",
-  "answer": "Eine feste Zahl gibt es nicht. Je nachdem, wessen Liste man liest, sind etwa 15 bis 20 erhaltene Gemälde Leonardo da Vincis eigene Arbeit. Die Eremitage spricht von wenig mehr als einem Dutzend. Der Leonardo-Forscher Martin Kemp zählte 2025 etwa 16, dazu vier oder fünf, an denen Leonardo mit anderen arbeitete. Das Auktionshaus, das den Salvator Mundi verkaufte, sprach von weniger als 20.",
+  "answer": "Etwa 15 bis 20 erhaltene Gemälde sind von Leonardo da Vinci selbst, je nachdem, wessen Liste man liest. Eine feste Zahl gibt es nicht. Die Eremitage spricht von wenig mehr als einem Dutzend. Der Leonardo-Forscher Martin Kemp zählte 2025 etwa 16, dazu vier oder fünf, an denen Leonardo mit anderen arbeitete. Das Auktionshaus, das den Salvator Mundi verkaufte, sprach von weniger als 20.",
   "answer_more": [
    "In unserem Leonardo-Flügel hängen 24 Werke, jedes mit einem Wort dazu, wie sicher die Zuschreibung ist: 14 belegt, 4 umstritten, 4 mit Vorbehalt, 1 aus seiner Werkstatt und 1 Kopie, dazu ",
    {
     "text": "das Abendmahl",
     "at": "last-supper"
    },
-   " auf einer eigenen Wand. ",
+   " auf einer eigenen Wand. Leonardos bekanntestes Gemälde ist ",
    {
-    "text": "Die Mona Lisa",
+    "text": "die Mona Lisa",
     "at": "mona-lisa"
    },
-   ", ",
+   " im Louvre in Paris. Der Louvre nennt sie das berühmteste Werk der Welt. Sie hängt hier ebenso wie ",
    {
     "text": "die Dame mit dem Hermelin",
     "at": "lady-with-an-ermine"
@@ -276,7 +276,7 @@
     "text": "der Salvator Mundi",
     "at": "salvator-mundi"
    },
-   " sind alle da, jedes Werk mit einer Tür in den Bildersaal, in dem es hängt."
+   ", jedes Werk mit einer Tür in den Bildersaal, in dem es hängt."
   ],
   "tally": {
    "title": "Die Werke, nach Lebensabschnitten",
@@ -527,7 +527,7 @@
        "title": "Felsgrottenmadonna, Louvre-Fassung",
        "when": "Etwa 1483 bis 1494",
        "where": "Musée du Louvre, Paris",
-       "who": "Belegt. Der Vertrag trägt das Datum 25. April 1483: Leonardo und zwei Maler, die Brüder de Predis, sollten das Altarbild der Kapelle einer Bruderschaft in Mailand malen und vergolden. Es folgte ein langer Streit ums Geld. Dies ist die frühere der beiden Fassungen.",
+       "who": "Belegt. Der Vertrag trägt das Datum 25. April 1483: Leonardo und zwei Maler, die Brüder de Predis, sollten das Altarbild der Kapelle einer Bruderschaft in Mailand malen und vergolden. Es folgte ein langer Streit ums Geld. Dies ist die frühere der beiden Fassungen. Viele Quellen datieren sie auf 1483 bis 1486. Die Datierung hier ist die des Louvre: etwa 1483 bis 1494.",
        "shows": "Maria kniet in einer Felsgrotte, eine Hand über dem Jesuskind, mit der anderen zieht sie den kleinen Johannes den Täufer näher. Ein Engel stützt Jesus und zeigt mit dem Finger auf Johannes, und Jesus segnet ihn. Dahinter Berge und Wasser.",
        "worth_knowing": "Wie das Bild nach Frankreich kam, weiß niemand: Die erste Nachricht von ihm stammt aus Fontainebleau, 1625. Infrarotaufnahmen von 2009 zeigen, dass der Engel zuerst ohne die zeigende Hand gemalt war, wie auf der Londoner Tafel, und dass Leonardo die Geste erst gegen Ende hinzufügte.",
        "door": "die Felsgrottenmadonna aus dem Louvre",
@@ -572,12 +572,12 @@
        "when": "Etwa 1489 bis 1491",
        "where": "Muzeum Narodowe w Krakowie, Muzeum Książąt Czartoryskich, Krakau",
        "who": "Belegt. Bestellt von Ludovico Sforza, sagt das Museum, als die Dargestellte etwa 16 war, und das einzige Gemälde Leonardos in Polen.",
-       "shows": "Cecilia Gallerani, eine junge Dame am Mailänder Hof und Geliebte des Herzogs, im Dreiviertelprofil, an uns vorbeiblickend, ein weißes Hermelin im Arm. Ihr Name wurde um 1900 vorgeschlagen und gilt heute als gesichert, denn ein Hofdichter schrieb ein Gedicht auf Leonardos Bildnis von ihr. Das Hermelin steht für den Herzog, der nach einem Orden von 1488 der Weiße Hermelin genannt wurde, und so liest das Museum das Bild als Doppelbildnis.",
+       "shows": "Cecilia Gallerani, eine junge Dame am Mailänder Hof und Geliebte des Herzogs, im Dreiviertelprofil, an uns vorbeiblickend, ein weißes Hermelin im Arm. Ihr Name wurde um 1900 vorgeschlagen und gilt heute als gesichert, denn ein Hofdichter schrieb ein Gedicht auf Leonardos Bildnis von ihr. Das Hermelin steht für den Herzog, der nach einem Orden von 1488 das Weiße Hermelin genannt wurde, und so liest das Museum das Bild als Doppelbildnis.",
        "worth_knowing": "In eine obere Ecke schrieb jemand um 1800, das Bild zeige La Belle Ferronnière, den Namen des nächsten Bildnisses auf dieser Seite, und so trugen beide eine Zeit lang denselben Namen.",
        "door": "die Dame mit dem Hermelin",
        "shape": "tall",
        "pic": "lady-with-an-ermine",
-       "alt": "Dame mit dem Hermelin: Eine junge Frau in rotem Kleid und blauem Umhang, nach links gewandt, hält ein weißes Hermelin an die Brust, vor dunklem Grund. Eine Reproduktion.",
+       "alt": "Dame mit dem Hermelin: Eine junge Frau in rotem Kleid und blauem Umhang, nach rechts blickend, hält ein weißes Hermelin an die Brust, vor dunklem Grund. Eine Reproduktion.",
        "src": [
         "Sammlungsbild des Nationalmuseums in Krakau. Gemeinfrei, über ",
         {
@@ -593,7 +593,7 @@
        "title": "Bildnis einer Dame, genannt La Belle Ferronnière",
        "when": "Etwa 1490 bis 1497",
        "where": "Musée du Louvre, Paris. Der Louvre führte das Bild als nicht ausgestellt, als wir nachsahen.",
-       "who": "Belegt. Wer sie ist, bleibt offen. Der älteste Vorschlag ist Lucrezia Crivelli, ab etwa 1495 Geliebte des Herzogs, genannt in einem lateinischen Gedicht, das in Leonardos Codex Atlanticus abgeschrieben wurde. Andere schlagen Beatrice d'Este vor, die Frau des Herzogs, oder Isabella von Aragon.",
+       "who": "Belegt. Wer sie ist, bleibt offen. Der älteste Vorschlag ist Lucrezia Crivelli, ab etwa 1495 Geliebte des Herzogs, genannt in einem lateinischen Gedicht, das in Leonardos Codex Atlanticus abgeschrieben wurde. Andere schlagen Beatrice d'Este vor, die Frau des Herzogs, oder Isabella von Aragon. Manche Quellen schreiben das Bild noch Leonardos Schule zu, und die Zuschreibung war umstritten. Der Louvre, dem es gehört, gibt es Leonardo selbst.",
        "shows": "Eine junge Frau an einer Steinbrüstung, der Körper in die eine, der Kopf in die andere Richtung gewandt, in einem roten Kleid nach Mailänder Mode mit Ärmeln, die mit Bändern geschnürt sind, über der Stirn eine dünne Schnur mit einem roten Stein. Ihr Blick geht knapp an uns vorbei.",
        "worth_knowing": "Der Name ist ein Irrtum, und der Titel des Louvre sagt es selbst: Er gehörte einem anderen Bildnis der französischen Königssammlung, ein Druck nach diesem Bild trug ihn aus Versehen, und ein Inventar von 1784 hielt sie sogar für Anne Boleyn.",
        "door": "La Belle Ferronnière",
@@ -714,7 +714,7 @@
        "title": "Mona Lisa",
        "when": "Etwa 1503 bis 1519",
        "where": "Musée du Louvre, Paris",
-       "who": "Belegt. Begonnen in Florenz um 1503, wahrscheinlich für ihren Mann, den Seidenhändler Francesco del Giocondo. Leonardo gab das Bild nie ab: Es reiste mit ihm nach Mailand, nach Rom und nach Frankreich, und er arbeitete weiter daran. Der französische König kaufte es sehr wahrscheinlich 1518, von Leonardos Schüler Salaì.",
+       "who": "Belegt. Begonnen in Florenz um 1503, wahrscheinlich für ihren Mann, den Seidenhändler Francesco del Giocondo. Leonardo gab das Bild nie ab: Es reiste mit ihm nach Mailand, nach Rom und nach Frankreich, und er arbeitete weiter daran. Viele Quellen datieren es auf 1503 bis 1506. Das Verzeichnis des Louvre nennt 1503 bis 1519, weil Leonardo bis zuletzt daran malte und es unvollendet blieb. Der französische König kaufte es sehr wahrscheinlich 1518, von Leonardos Schüler Salaì. Ältere Darstellungen sagen, der König habe es nach Leonardos Tod gekauft, manche nennen 4.000 Goldflorin. Erst 1999 fand der Historiker Bertrand Jestaz eine königliche Zahlung von 2.604 Livres an Salaì aus dem Jahr 1518 für einige Gemälde, und der Louvre bezieht die Mona Lisa darauf.",
        "shows": "Lisa Gherardini, die Frau von Francesco del Giocondo, sitzt auf einem Stuhl und wendet sich uns zu, eine Hand über die andere gelegt, hinter ihr eine niedrige Brüstung und dahinter Berge, Wasser, ein gewundener Weg und eine Brücke. Andere Namen für die Dargestellte sind für den Louvre keine Frage: Es ist Lisa.",
        "worth_knowing": "2005 tauchte am Rand eines Buchs in der Universitätsbibliothek Heidelberg eine Notiz auf: Ein Florentiner Kanzleischreiber hielt im Oktober 1503 fest, Leonardo arbeite am Kopf der Lisa del Giocondo, und damit standen die Dargestellte und das Datum fest.",
        "door": "die Mona Lisa",
@@ -843,7 +843,7 @@
        "title": "Johannes der Täufer",
        "when": "Etwa 1508 bis 1519",
        "where": "Musée du Louvre, Paris",
-       "who": "Belegt. Ein Auftraggeber ist nicht bekannt. Er behielt das Bild bei sich in Frankreich, und der französische König kaufte es sehr wahrscheinlich 1518. Später ging es auf Wanderschaft: Ein französischer Herzog schenkte es Karl I. von England, nach dessen Hinrichtung wurde es verkauft, und Ludwig XIV. holte es 1662 nach Frankreich zurück.",
+       "who": "Belegt. Ein Auftraggeber ist nicht bekannt. Er behielt das Bild bei sich in Frankreich, und der französische König kaufte es sehr wahrscheinlich 1518. Später ging es auf Wanderschaft: Ein französischer Herzog schenkte es Karl I. von England, nach dessen Hinrichtung wurde es verkauft, und Ludwig XIV. holte es 1662 nach Frankreich zurück. Viele Quellen datieren es auf 1513 bis 1516, in seine Jahre in Rom. Der Louvre vermerkt, dass Kenneth Clark 1939 eine Entstehung in Rom vorschlug, und datiert selbst auf etwa 1508 bis 1519: wohl um 1508 entworfen und bei seinem Tod noch unvollendet.",
        "shows": "Ein junger Johannes der Täufer tritt aus dem Dunkel, lächelnd, die rechte Hand nach oben zeigend, ein dünnes Rohrkreuz in der linken, ein geflecktes Tierfell über dem Körper.",
        "worth_knowing": "Das Fell ist gefleckt wie das eines Leoparden, nicht das Kamelhaar der Bibel, was der Louvre für seine Zeit einzigartig nennt, und Aufnahmen zeigen, dass er den Umriss des Körpers mindestens dreimal verschob.",
        "door": "Johannes den Täufer",
@@ -1033,7 +1033,129 @@
    "id": "sources",
    "nav": "Quellen",
    "h": "Quellen",
-   "intro": "Titel, Daten, Häuser und Zuschreibungen folgen den Beschriftungen des Flügels, im Oktober 2026 geprüft an den eigenen Seiten und Verzeichnissen der Häuser: Uffizien, National Gallery of Art in Washington, Alte Pinakothek, Eremitage, Vatikanische Museen, Louvre, Ambrosiana, Nationalmuseum Krakau, National Gallery in London, Pilotta in Parma und Cenacolo Vinciano. Für die Zahl und die Streitfragen: Martin Kemp in The Art Newspaper (Mai 2025), Frank Zöllners Katalogeintrag zum Salvator Mundi (2019), The Art Newspaper (2018, 2021 und 2024), NPR (2017) sowie Cultured und Artlyst (2026). Wo die Ansicht eines Hauses vom Wort des Flügels abweicht, sagt es der Eintrag.",
+   "intro": "Titel, Daten, Häuser und Zuschreibungen folgen den Beschriftungen des Flügels, im Oktober 2026 geprüft an den eigenen Seiten und Verzeichnissen der Häuser: Uffizien, National Gallery of Art in Washington, Alte Pinakothek, Eremitage, Vatikanische Museen, Louvre, Ambrosiana, Nationalmuseum Krakau, National Gallery in London, Pilotta in Parma und Cenacolo Vinciano. Für die Zahl und die Streitfragen: Martin Kemp in The Art Newspaper (Mai 2025), Frank Zöllners Katalogeintrag zum Salvator Mundi (2019), The Art Newspaper (2018, 2021 und 2024), NPR (2017) sowie Cultured und Artlyst (2026). Wo die Ansicht eines Hauses vom Wort des Flügels abweicht, sagt es der Eintrag. Die Verzeichnisse der Häuser und die Artikel, verlinkt:",
+   "read": [
+    {
+     "text": "Gallerie degli Uffizi, Taufe Christi",
+     "href": "https://www.uffizi.it/en/artworks/verrocchio-leonardo-baptism-of-christ"
+    },
+    {
+     "text": "Gallerie degli Uffizi, Die Verkündigung",
+     "href": "https://www.uffizi.it/en/artworks/annunciation"
+    },
+    {
+     "text": "National Gallery of Art, Bildnis der Ginevra de' Benci",
+     "href": "https://www.nga.gov/collection/art-object-page.50724.html"
+    },
+    {
+     "text": "Alte Pinakothek, Madonna mit der Nelke",
+     "href": "https://www.sammlung.pinakothek.de/de/artwork/Y0GR916LRX/leonardo-da-vinci/madonna-mit-der-nelke"
+    },
+    {
+     "text": "Musée du Louvre, Die Verkündigung, Predella",
+     "href": "https://collections.louvre.fr/en/ark:/53355/cl010064973"
+    },
+    {
+     "text": "Staatliche Eremitage, Madonna Benois (auf Russisch)",
+     "href": "https://www.hermitagemuseum.org/digital-collection/29908"
+    },
+    {
+     "text": "Pinacoteca Vaticana, Der heilige Hieronymus",
+     "href": "https://www.museivaticani.va/content/museivaticani/en/collezioni/musei/la-pinacoteca/sala-ix---secolo-xv-xvi/leonardo-da-vinci--s--girolamo.html"
+    },
+    {
+     "text": "Gallerie degli Uffizi, Anbetung der Könige aus dem Morgenland",
+     "href": "https://www.uffizi.it/en/artworks/leonardo-adoration-of-the-magi"
+    },
+    {
+     "text": "Musée du Louvre, Felsgrottenmadonna, Louvre-Fassung",
+     "href": "https://collections.louvre.fr/en/ark:/53355/cl010062373"
+    },
+    {
+     "text": "Veneranda Biblioteca Ambrosiana, Bildnis eines Musikers",
+     "href": "https://www.ambrosiana.it/en/discover/masterpieces/portrait-of-a-musician/"
+    },
+    {
+     "text": "Muzeum Narodowe w Krakowie, Dame mit dem Hermelin (auf Polnisch)",
+     "href": "https://mnk.pl/artykul/leonardo-da-vinci-dama-z-gronostajem-mediolan-ok-1490/"
+    },
+    {
+     "text": "Musée du Louvre, Bildnis einer Dame, genannt La Belle Ferronnière",
+     "href": "https://collections.louvre.fr/en/ark:/53355/cl010062372"
+    },
+    {
+     "text": "Staatliche Eremitage, Madonna Litta (auf Russisch)",
+     "href": "https://www.hermitagemuseum.org/digital-collection/29633"
+    },
+    {
+     "text": "National Gallery, Felsgrottenmadonna, Londoner Fassung",
+     "href": "https://www.nationalgallery.org.uk/paintings/leonardo-da-vinci-the-virgin-of-the-rocks"
+    },
+    {
+     "text": "Musée du Louvre, Mona Lisa",
+     "href": "https://collections.louvre.fr/en/ark:/53355/cl010062370"
+    },
+    {
+     "text": "Musée du Louvre, Die Jungfrau mit dem Kind und der heiligen Anna",
+     "href": "https://collections.louvre.fr/en/ark:/53355/cl010066107"
+    },
+    {
+     "text": "Musée du Louvre, Der Kampf um die Standarte, nach der Schlacht von Anghiari",
+     "href": "https://collections.louvre.fr/en/ark:/53355/cl020110446"
+    },
+    {
+     "text": "National Gallery, Die Jungfrau mit dem Kind, der heiligen Anna und Johannes dem Täufer",
+     "href": "https://www.nationalgallery.org.uk/paintings/leonardo-da-vinci-the-burlington-house-cartoon"
+    },
+    {
+     "text": "Galleria Nazionale di Parma, Scapigliata",
+     "href": "https://complessopilotta.it/en/opera/testa-di-fanciulla-detta-la-scapiliata-en/"
+    },
+    {
+     "text": "Musée du Louvre, Johannes der Täufer",
+     "href": "https://collections.louvre.fr/en/ark:/53355/cl010062374"
+    },
+    {
+     "text": "Musée du Louvre, Bacchus, ehemals Johannes der Täufer",
+     "href": "https://collections.louvre.fr/en/ark:/53355/cl010062371"
+    },
+    {
+     "text": "Museo del Cenacolo Vinciano, Das Abendmahl",
+     "href": "https://cenacolovinciano.org/en/museum/the-works/the-last-supper-leonardo-da-vinci-1452-1519/"
+    },
+    {
+     "text": "Martin Kemp in The Art Newspaper, 23. Mai 2025",
+     "href": "https://www.theartnewspaper.com/2025/05/23/how-to-see-every-painting-leonardo-da-vinci"
+    },
+    {
+     "text": "NPR, 11. Oktober 2017, zum Verkauf des Salvator Mundi",
+     "href": "https://www.npr.org/sections/thetwo-way/2017/10/11/557183483/last-da-vinci-painting-in-private-hands-will-be-auctioned-next-month"
+    },
+    {
+     "text": "Frank Zöllner, Katalogeintrag zum Salvator Mundi, 2019 (PDF)",
+     "href": "https://www.gko.uni-leipzig.de/fileadmin/Fakult%C3%A4t_GKR/Kunstgeschichte/PDF/Publikationen/Frank_Z%C3%B6llner-B%C3%BCcher/SalvatorCatXXXII2019.pdf"
+    },
+    {
+     "text": "The Art Newspaper, 30. März 2018, zur Madonna Litta",
+     "href": "https://www.theartnewspaper.com/2018/03/30/national-gallery-in-london-accused-of-altering-attribution-of-hermitages-leonardo-for-2011-blockbuster-show"
+    },
+    {
+     "text": "The Art Newspaper, 13. April 2021, zur Untersuchung des Salvator Mundi im Louvre",
+     "href": "https://www.theartnewspaper.com/2021/04/13/what-the-louvres-scientific-examinations-of-the-salvator-mundi-really-revealedaccording-to-the-museums-own-book"
+    },
+    {
+     "text": "The Art Newspaper, 19. August 2024, zum Verbleib des Salvator Mundi",
+     "href": "https://www.theartnewspaper.com/2024/08/19/where-is-salvator-mundi-in-storage-in-geneva-apparently"
+    },
+    {
+     "text": "Cultured, 4. August 2026, zur Lansdowne-Madonna im Metropolitan Museum",
+     "href": "https://culturedmag.com/article/2026/08/04/art-leonardo-da-vinci-met-museum-kenneth-griffin/"
+    },
+    {
+     "text": "Artlyst, 13. August 2026, zum selben Bild",
+     "href": "https://artlyst.com/mets-leonardo-da-vinci-studio-work-may-be-the-masters-hand/"
+    }
+   ],
    "notes": [],
    "contact": "Stimmt ein Datum, ein Name oder ein Satz nicht, schreib uns, und wir bessern es aus.",
    "contact_link": "Zum Impressum",

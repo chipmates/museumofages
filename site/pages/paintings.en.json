@@ -249,19 +249,19 @@
  },
  "top": {
   "h1": "Leonardo da Vinci's paintings",
-  "answer": "Nobody agrees on a number. Depending on whose list it is, about 15 to 20 surviving paintings are Leonardo da Vinci's own work. The Hermitage speaks of little more than a dozen. The Leonardo scholar Martin Kemp counted about 16 in 2025, and four or five more that Leonardo painted with others. The auction house that sold the Salvator Mundi said fewer than 20.",
+  "answer": "About 15 to 20 surviving paintings are Leonardo da Vinci's own work, depending on whose list it is. Nobody agrees on one number. The Hermitage speaks of little more than a dozen. The Leonardo scholar Martin Kemp counted about 16 in 2025, and four or five more that Leonardo painted with others. The auction house that sold the Salvator Mundi said fewer than 20.",
   "answer_more": [
    "Our Leonardo wing hangs 24 works, each with a word that says how sure the attribution is: 14 documented, 4 disputed, 4 qualified, 1 from his workshop and 1 copy, and ",
    {
     "text": "the Last Supper",
     "at": "last-supper"
    },
-   " on its own wall. ",
+   " on its own wall. Leonardo's best-known painting is ",
    {
-    "text": "The Mona Lisa",
+    "text": "the Mona Lisa",
     "at": "mona-lisa"
    },
-   ", ",
+   ", in the Louvre in Paris. The Louvre calls it the most famous work in the world. It hangs here too, with ",
    {
     "text": "the Lady with an Ermine",
     "at": "lady-with-an-ermine"
@@ -276,7 +276,7 @@
     "text": "the Salvator Mundi",
     "at": "salvator-mundi"
    },
-   " are all here, each with a door into the picture room where it hangs."
+   ", each with a door into the picture room where it hangs."
   ],
   "tally": {
    "title": "The works, by period",
@@ -527,7 +527,7 @@
        "title": "Virgin of the Rocks, Louvre version",
        "when": "About 1483 to 1494",
        "where": "Musée du Louvre, Paris",
-       "who": "Documented. The contract is dated 25 April 1483: Leonardo and two painters, the brothers de Predis, would paint and gild the altarpiece of a confraternity's chapel in Milan. A long dispute over money followed. This is the earlier of the two versions.",
+       "who": "Documented. The contract is dated 25 April 1483: Leonardo and two painters, the brothers de Predis, would paint and gild the altarpiece of a confraternity's chapel in Milan. A long dispute over money followed. This is the earlier of the two versions. Many sources date it 1483 to 1486. The date here is the Louvre's own, about 1483 to 1494.",
        "shows": "Mary kneels in a rocky grotto, one hand over the child Jesus, and with the other she draws the small John the Baptist closer. An angel supports Jesus and points a finger at John, and Jesus blesses him. Behind them, mountains and water.",
        "worth_knowing": "How it reached France nobody knows: the first record of it is at Fontainebleau in 1625. Infrared images taken in 2009 show that the angel was first painted without the pointing hand, as in the London panel, and that Leonardo added the gesture near the end.",
        "door": "the Virgin of the Rocks from the Louvre",
@@ -577,7 +577,7 @@
        "door": "the Lady with an Ermine",
        "shape": "tall",
        "pic": "lady-with-an-ermine",
-       "alt": "Lady with an Ermine: a young woman in a red dress and blue cloak, turned to the left, holds a white ermine against her chest, against a dark ground. A reproduction.",
+       "alt": "Lady with an Ermine: a young woman in a red dress and blue cloak, looking off to the right, holds a white ermine against her chest, against a dark ground. A reproduction.",
        "src": [
         "National Museum in Kraków collection image. Public domain, via ",
         {
@@ -593,7 +593,7 @@
        "title": "La Belle Ferronnière",
        "when": "About 1490 to 1497",
        "where": "Musée du Louvre, Paris. The Louvre listed it as not on display when we checked.",
-       "who": "Documented. Who she is remains open. The oldest candidate is Lucrezia Crivelli, the duke's mistress from around 1495, named in a Latin poem that was copied into Leonardo's Codex Atlanticus. Others propose Beatrice d'Este, the duke's wife, or Isabella of Aragon.",
+       "who": "Documented. Who she is remains open. The oldest candidate is Lucrezia Crivelli, the duke's mistress from around 1495, named in a Latin poem that was copied into Leonardo's Codex Atlanticus. Others propose Beatrice d'Este, the duke's wife, or Isabella of Aragon. Some sources still give the picture to Leonardo's school, and its attribution has been debated. The Louvre, which holds it, gives it to Leonardo himself.",
        "shows": "A young woman at a stone parapet, her body turned one way and her head the other, in a red dress in the Milanese fashion with sleeves tied by ribbons, a thin cord across her forehead with a red stone. Her gaze slides just past us.",
        "worth_knowing": "The name is a mistake, and the Louvre's own title says so: it was another portrait's name in the French royal collection, a print of this picture carried it by error, and in 1784 an inventory even called her Anne Boleyn.",
        "door": "La Belle Ferronnière",
@@ -714,7 +714,7 @@
        "title": "Mona Lisa",
        "when": "About 1503 to 1519",
        "where": "Musée du Louvre, Paris",
-       "who": "Documented. Begun in Florence around 1503, probably for her husband, the silk merchant Francesco del Giocondo. Leonardo never handed it over: it travelled with him to Milan, to Rome and to France, and he kept working on it. The French king very probably bought it in 1518, from Leonardo's pupil Salaì.",
+       "who": "Documented. Begun in Florence around 1503, probably for her husband, the silk merchant Francesco del Giocondo. Leonardo never handed it over: it travelled with him to Milan, to Rome and to France, and he kept working on it. Many sources date it 1503 to 1506. The Louvre's record gives 1503 to 1519, since he went on painting it to the end and left it unfinished. The French king very probably bought it in 1518, from Leonardo's pupil Salaì. Older accounts say the king bought it after Leonardo's death, some for 4,000 gold florins. Only in 1999 did the historian Bertrand Jestaz find a royal payment of 2,604 livres to Salaì in 1518 for some paintings, and the Louvre links the Mona Lisa to it.",
        "shows": "Lisa Gherardini, wife of Francesco del Giocondo, seated in a chair and turned toward us, one hand laid over the other, a low balustrade behind her and beyond it mountains, water, a winding road and a bridge. The Louvre treats other names for the sitter as a non-question: it is Lisa.",
        "worth_knowing": "In 2005 a note turned up in the margin of a book in the university library at Heidelberg: a Florentine clerk wrote in October 1503 that Leonardo was working on Lisa del Giocondo's head, and that settled both the sitter and the date.",
        "door": "the Mona Lisa",
@@ -843,7 +843,7 @@
        "title": "Saint John the Baptist",
        "when": "About 1508 to 1519",
        "where": "Musée du Louvre, Paris",
-       "who": "Documented. No patron is known. He kept it with him in France, and the French king very probably bought it in 1518. Later it wandered: a French duke gave it to Charles I of England, it was sold after that king's execution, and Louis XIV bought it back for France in 1662.",
+       "who": "Documented. No patron is known. He kept it with him in France, and the French king very probably bought it in 1518. Later it wandered: a French duke gave it to Charles I of England, it was sold after that king's execution, and Louis XIV bought it back for France in 1662. Many sources date it 1513 to 1516, to his years in Rome. The Louvre notes that Kenneth Clark proposed a date in Rome in 1939, and itself gives about 1508 to 1519: probably conceived around 1508, and still unfinished at his death.",
        "shows": "A young John the Baptist comes out of the dark, smiling, his right hand pointing upward, a thin reed cross in his left, a spotted animal pelt over his body.",
        "worth_knowing": "The pelt is spotted like a leopard's, not the camel hair of the Bible, which the Louvre calls unique for its time, and scans show he shifted the body's outline three times or more.",
        "door": "Saint John the Baptist",
@@ -1033,7 +1033,129 @@
    "id": "sources",
    "nav": "Sources",
    "h": "Sources",
-   "intro": "The titles, dates, holders and attributions follow the wing's labels, checked in October 2026 against the holders' own pages and records: the Uffizi, the National Gallery of Art in Washington, the Alte Pinakothek, the Hermitage, the Vatican Museums, the Louvre, the Ambrosiana, the National Museum in Kraków, the National Gallery in London, the Pilotta in Parma and the Cenacolo Vinciano. For the count and the debates: Martin Kemp in The Art Newspaper (May 2025), Frank Zöllner's catalogue entry on the Salvator Mundi (2019), The Art Newspaper (2018, 2021 and 2024), NPR (2017), and Cultured and Artlyst (2026). Where a holder's view differs from the wing's label, the entry says so.",
+   "intro": "The titles, dates, holders and attributions follow the wing's labels, checked in October 2026 against the holders' own pages and records: the Uffizi, the National Gallery of Art in Washington, the Alte Pinakothek, the Hermitage, the Vatican Museums, the Louvre, the Ambrosiana, the National Museum in Kraków, the National Gallery in London, the Pilotta in Parma and the Cenacolo Vinciano. For the count and the debates: Martin Kemp in The Art Newspaper (May 2025), Frank Zöllner's catalogue entry on the Salvator Mundi (2019), The Art Newspaper (2018, 2021 and 2024), NPR (2017), and Cultured and Artlyst (2026). Where a holder's view differs from the wing's label, the entry says so. The holders' records and the articles, linked:",
+   "read": [
+    {
+     "text": "Gallerie degli Uffizi, The Baptism of Christ",
+     "href": "https://www.uffizi.it/en/artworks/verrocchio-leonardo-baptism-of-christ"
+    },
+    {
+     "text": "Gallerie degli Uffizi, Annunciation",
+     "href": "https://www.uffizi.it/en/artworks/annunciation"
+    },
+    {
+     "text": "National Gallery of Art, Ginevra de' Benci",
+     "href": "https://www.nga.gov/collection/art-object-page.50724.html"
+    },
+    {
+     "text": "Alte Pinakothek, Madonna of the Carnation",
+     "href": "https://www.sammlung.pinakothek.de/en/artwork/Y0GR916LRX/leonardo-da-vinci/madonna-mit-der-nelke"
+    },
+    {
+     "text": "Musée du Louvre, Annunciation, predella panel",
+     "href": "https://collections.louvre.fr/en/ark:/53355/cl010064973"
+    },
+    {
+     "text": "State Hermitage Museum, Benois Madonna (in Russian)",
+     "href": "https://www.hermitagemuseum.org/digital-collection/29908"
+    },
+    {
+     "text": "Pinacoteca Vaticana, Saint Jerome in the Wilderness",
+     "href": "https://www.museivaticani.va/content/museivaticani/en/collezioni/musei/la-pinacoteca/sala-ix---secolo-xv-xvi/leonardo-da-vinci--s--girolamo.html"
+    },
+    {
+     "text": "Gallerie degli Uffizi, Adoration of the Magi",
+     "href": "https://www.uffizi.it/en/artworks/leonardo-adoration-of-the-magi"
+    },
+    {
+     "text": "Musée du Louvre, Virgin of the Rocks, Louvre version",
+     "href": "https://collections.louvre.fr/en/ark:/53355/cl010062373"
+    },
+    {
+     "text": "Veneranda Biblioteca Ambrosiana, Portrait of a Musician",
+     "href": "https://www.ambrosiana.it/en/discover/masterpieces/portrait-of-a-musician/"
+    },
+    {
+     "text": "Muzeum Narodowe w Krakowie, Lady with an Ermine (in Polish)",
+     "href": "https://mnk.pl/artykul/leonardo-da-vinci-dama-z-gronostajem-mediolan-ok-1490/"
+    },
+    {
+     "text": "Musée du Louvre, La Belle Ferronnière",
+     "href": "https://collections.louvre.fr/en/ark:/53355/cl010062372"
+    },
+    {
+     "text": "State Hermitage Museum, Madonna Litta (in Russian)",
+     "href": "https://www.hermitagemuseum.org/digital-collection/29633"
+    },
+    {
+     "text": "National Gallery, Virgin of the Rocks, London version",
+     "href": "https://www.nationalgallery.org.uk/paintings/leonardo-da-vinci-the-virgin-of-the-rocks"
+    },
+    {
+     "text": "Musée du Louvre, Mona Lisa",
+     "href": "https://collections.louvre.fr/en/ark:/53355/cl010062370"
+    },
+    {
+     "text": "Musée du Louvre, The Virgin and Child with Saint Anne",
+     "href": "https://collections.louvre.fr/en/ark:/53355/cl010066107"
+    },
+    {
+     "text": "Musée du Louvre, The Fight for the Standard, after the Battle of Anghiari",
+     "href": "https://collections.louvre.fr/en/ark:/53355/cl020110446"
+    },
+    {
+     "text": "National Gallery, The Burlington House Cartoon",
+     "href": "https://www.nationalgallery.org.uk/paintings/leonardo-da-vinci-the-burlington-house-cartoon"
+    },
+    {
+     "text": "Galleria Nazionale di Parma, La Scapigliata",
+     "href": "https://complessopilotta.it/en/opera/testa-di-fanciulla-detta-la-scapiliata-en/"
+    },
+    {
+     "text": "Musée du Louvre, Saint John the Baptist",
+     "href": "https://collections.louvre.fr/en/ark:/53355/cl010062374"
+    },
+    {
+     "text": "Musée du Louvre, Bacchus, formerly Saint John the Baptist",
+     "href": "https://collections.louvre.fr/en/ark:/53355/cl010062371"
+    },
+    {
+     "text": "Museo del Cenacolo Vinciano, The Last Supper",
+     "href": "https://cenacolovinciano.org/en/museum/the-works/the-last-supper-leonardo-da-vinci-1452-1519/"
+    },
+    {
+     "text": "Martin Kemp in The Art Newspaper, 23 May 2025",
+     "href": "https://www.theartnewspaper.com/2025/05/23/how-to-see-every-painting-leonardo-da-vinci"
+    },
+    {
+     "text": "NPR, 11 October 2017, on the sale of the Salvator Mundi",
+     "href": "https://www.npr.org/sections/thetwo-way/2017/10/11/557183483/last-da-vinci-painting-in-private-hands-will-be-auctioned-next-month"
+    },
+    {
+     "text": "Frank Zöllner, catalogue entry on the Salvator Mundi, 2019 (PDF)",
+     "href": "https://www.gko.uni-leipzig.de/fileadmin/Fakult%C3%A4t_GKR/Kunstgeschichte/PDF/Publikationen/Frank_Z%C3%B6llner-B%C3%BCcher/SalvatorCatXXXII2019.pdf"
+    },
+    {
+     "text": "The Art Newspaper, 30 March 2018, on the Madonna Litta",
+     "href": "https://www.theartnewspaper.com/2018/03/30/national-gallery-in-london-accused-of-altering-attribution-of-hermitages-leonardo-for-2011-blockbuster-show"
+    },
+    {
+     "text": "The Art Newspaper, 13 April 2021, on the Louvre's study of the Salvator Mundi",
+     "href": "https://www.theartnewspaper.com/2021/04/13/what-the-louvres-scientific-examinations-of-the-salvator-mundi-really-revealedaccording-to-the-museums-own-book"
+    },
+    {
+     "text": "The Art Newspaper, 19 August 2024, on where the Salvator Mundi is",
+     "href": "https://www.theartnewspaper.com/2024/08/19/where-is-salvator-mundi-in-storage-in-geneva-apparently"
+    },
+    {
+     "text": "Cultured, 4 August 2026, on the Lansdowne Madonna at the Met",
+     "href": "https://culturedmag.com/article/2026/08/04/art-leonardo-da-vinci-met-museum-kenneth-griffin/"
+    },
+    {
+     "text": "Artlyst, 13 August 2026, on the same picture",
+     "href": "https://artlyst.com/mets-leonardo-da-vinci-studio-work-may-be-the-masters-hand/"
+    }
+   ],
    "notes": [],
    "contact": "If a date, an attribution or a sentence here is wrong, tell us and we will put it right.",
    "contact_link": "To the legal notice",
