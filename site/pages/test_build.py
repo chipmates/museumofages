@@ -199,6 +199,25 @@ class Case(unittest.TestCase):
         self.save("de", data)
         self.fails(r"code")
 
+    def test_a_topic_page_without_the_day_of_its_check(self):
+        for lang in ("en", "de"):
+            data = self.data(lang)
+            del data["page"]["checked"]
+            self.save(lang, data)
+        self.fails(r"page\.checked")
+
+    def test_a_translation_checked_on_another_day(self):
+        data = self.data("de")
+        data["page"]["checked"] = "2026-10-01"
+        self.save("de", data)
+        self.fails(r"another day")
+
+    def test_a_day_that_is_no_day(self):
+        data = self.data("en")
+        data["page"]["published"] = "6 October 2026"
+        self.save("en", data)
+        self.fails(r"page\.published")
+
     def test_free_alone(self):
         data = self.data("en")
         data["top"]["door"]["note"] = "Free, no account."
@@ -3886,6 +3905,74 @@ class PictureLicences(unittest.TestCase):
             if '<footer class="foot"' in text:
                 self.assertRegex(text, r'<a class="foot__use" href="[^"]*#use-our-pictures">', path)
         self.assertGreaterEqual(len(seen), 7)
+
+
+def _pages_build():
+    spec = importlib.util.spec_from_file_location("pages_build_test", HERE / "build.py")
+    module = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(module)
+    return module
+
+
+def _graph(text):
+    nodes = []
+    for block in re.findall(r'<script type="application/ld\+json">(.*?)</script>', text, flags=re.S):
+        nodes += json.loads(block.replace("<\\/", "</"))["@graph"]
+    return nodes
+
+
+class SiteWide(unittest.TestCase):
+    """What every page shares for search and AI answers, on the site as its own build wrote it."""
+
+    @classmethod
+    def setUpClass(cls):
+        cls.build = _pages_build()
+        cls.pages = {p: p.read_text(encoding="utf-8") for p in sorted(SITE_BUILT.rglob("*.html"))}
+        cls.sitemap = (SITE_BUILT / "sitemap.xml").read_text(encoding="utf-8")
+
+    def address(self, path):
+        rel = path.relative_to(SITE_BUILT).parent.as_posix()
+        return "https://museumofages.org/" + ("" if rel == "." else rel + "/")
+
+    def articles(self):
+        for path, text in self.pages.items():
+            article = next((n for n in _graph(text) if n.get("@type") == "Article"), None)
+            if article:
+                yield path, text, article
+
+    def test_the_dated_line_shows_the_day_the_structured_data_gives(self):
+        found = 0
+        for path, text, article in self.articles():
+            lang = re.search(r'<html lang="([\w-]+)"', text).group(1)
+            code = next(c for c in self.build.CHECKED_LINE if self.build.L.html(c) == lang)
+            self.assertRegex(article.get("dateModified", ""), r"^\d{4}-\d{2}-\d{2}$", path)
+            self.assertRegex(article.get("datePublished", ""), r"^\d{4}-\d{2}-\d{2}$", path)
+            lines = re.findall(r'<p class="sp-checked">(.*?)</p>', text, flags=re.S)
+            self.assertEqual(len(lines), 1, path)
+            day = re.search(r'<time class="nw" datetime="([\d-]+)">([^<]+)</time>', lines[0])
+            self.assertEqual(day.group(1), article["dateModified"], path)
+            self.assertEqual(html.unescape(day.group(2)), self.build.date_words(day.group(1), code)[1], path)
+            # the line stands first in the sources, under their heading
+            self.assertRegex(text, r'<section class="sp-sec sp-sources"[^>]*>\s*<h2>[^<]*</h2>\s*<p class="sp-checked">', path)
+            found += 1
+        self.assertGreaterEqual(found, 60)
+
+    def test_every_language_writes_its_dated_line(self):
+        for code, line in self.build.CHECKED_LINE.items():
+            self.assertEqual(line.count("{date}"), 1, code)
+            for day in ("2026-10-01", "2026-10-08", "2026-10-13"):
+                before, words = self.build.date_words(day, code)
+                self.assertIn("2026", words)
+                self.assertNotRegex(before + words, "[—–;]")
+        self.assertEqual(self.build.date_words("2026-10-08", "it")[0], "l’")
+        self.assertEqual(self.build.date_words("2026-10-01", "fr")[1], "1er octobre 2026")
+        self.assertEqual(self.build.date_words("2026-10-13", "de")[1], "13. Oktober 2026")
+
+    def test_the_sitemap_gives_each_topic_page_the_day_of_its_check(self):
+        lastmod = dict(re.findall(r"<loc>([^<]+)</loc><lastmod>([^<]+)</lastmod>", self.sitemap))
+        checked = {self.address(path): article["dateModified"] for path, _, article in self.articles()}
+        self.assertEqual(lastmod, {u: d for u, d in checked.items() if f"<loc>{u}</loc>" in self.sitemap})
+        self.assertGreaterEqual(len(lastmod), 60)
 
 
 if __name__ == "__main__":

@@ -4,7 +4,8 @@
   "id": "animals-triceratops",
   "wing": "animals",
   "topic": "triceratops",
-  "published": null,
+  "published": "2026-10-15",
+  "checked": "2026-10-15",
   "join_names": true,
   "og_image": {
    "file": "animals-triceratops-og-{lang}-1200x630.png",

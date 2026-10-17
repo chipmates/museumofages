@@ -127,6 +127,9 @@
 
 /* Sources */
 .sp-sources h3{margin-top:28px}
+/* The day the facts were checked, first under the heading: the day itself in the full ink. */
+.sp-checked{margin-top:10px;font-family:var(--sans);font-size:.9375rem;line-height:1.45;color:var(--ink-soft);max-width:38rem}
+.sp-checked time{color:var(--ink)}
 .sp-holders{margin-top:8px;max-width:42rem;border-bottom:1px solid var(--rule)}
 .sp-holders li{display:grid;gap:2px;padding:10px 0 11px;border-top:1px solid var(--rule);font-family:var(--sans);font-size:.9375rem;line-height:1.45}
 .sp-holders__name{color:var(--ink)}

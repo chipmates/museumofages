@@ -5,7 +5,8 @@
     "wing": "vinci",
     "topic": "supper",
     "stop": "supper-wall",
-    "published": null,
+    "published": "2026-10-12",
+    "checked": "2026-10-12",
     "og_image": {
       "file": "vinci-supper-og-{lang}-1200x630.png",
       "width": 1200,

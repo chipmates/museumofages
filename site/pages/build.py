@@ -23,6 +23,7 @@ pictures.json (make_pictures.py writes them to pics/img/, and _src/tools/fetch.p
 repository keeps no picture). Nothing else: every pair of data files is built.
 """
 import base64
+import datetime
 import hashlib
 import html
 import importlib.util
@@ -241,6 +242,26 @@ DATE_MORE = {"es": ({"Sixteenth century, reworked in the early seventeenth centu
                     "Vers {0}", "Entre {0} et {1} environ"),
              "it": ({"Sixteenth century, reworked in the early seventeenth century": "XVI secolo, rielaborata all’inizio del XVII secolo"},
                     "{0} circa", "Dal {0} al {1} circa")}
+# The line at the top of a topic page's sources that says when its facts were last checked against them (page.checked),
+# the same day its structured data gives as dateModified. {date} is the day in the language's own form (date_words).
+CHECKED_LINE = {
+    "en": "Facts checked against the sources on {date}.",
+    "de": "Fakten am {date} anhand der Quellen geprüft.",
+    "es": "Datos contrastados con las fuentes el {date}.",
+    "pt-BR": "Dados conferidos com as fontes em {date}.",
+    "fr": "Faits vérifiés auprès des sources le {date}.",
+    "it": "Dati verificati sulle fonti {date}.",
+    "bg": "Фактите са проверени спрямо източниците на {date}.",
+}
+MONTHS = {
+    "en": "January February March April May June July August September October November December",
+    "de": "Januar Februar März April Mai Juni Juli August September Oktober November Dezember",
+    "es": "enero febrero marzo abril mayo junio julio agosto septiembre octubre noviembre diciembre",
+    "pt-BR": "janeiro fevereiro março abril maio junho julho agosto setembro outubro novembro dezembro",
+    "fr": "janvier février mars avril mai juin juillet août septembre octobre novembre décembre",
+    "it": "gennaio febbraio marzo aprile maggio giugno luglio agosto settembre ottobre novembre dicembre",
+    "bg": "януари февруари март април май юни юли август септември октомври ноември декември",
+}
 
 
 # ---------- small tools ----------
@@ -614,6 +635,19 @@ def lint(page, lang, data, wing, names, topic=None):
     for entry in only_entries(data):
         if entry["only"] != lang:
             problems.append(f"{page}.{lang}: an entry marked only {entry['only']!r} stands in the {lang} file")
+    # a topic page says when its facts were last checked and when it first went live; a wing's list of pages does neither
+    for key in ("checked", "published"):
+        value = data["page"].get(key)
+        if data["page"].get("hub"):
+            if key == "checked" and value is not None:
+                problems.append(f"{page}.{lang}: page.checked stands on a wing's list of pages, which has no sources")
+            continue
+        try:
+            datetime.date.fromisoformat(value or "")
+        except ValueError:
+            problems.append(f"{page}.{lang}: page.{key} is {value!r}, not a day as YYYY-MM-DD")
+    if not data["page"].get("hub") and lang not in CHECKED_LINE:
+        problems.append(f"{page}.{lang}: no line for the day the facts were checked in {lang} (CHECKED_LINE, MONTHS)")
     return problems
 
 
@@ -1175,6 +1209,35 @@ def date_in(lang, date):
     return f"Etwa {m.group(1)}" + (f" bis {m.group(2)}" if m.group(2) else "") if m else None
 
 
+def date_words(iso, lang):
+    """A day (YYYY-MM-DD) as a sentence in lang writes it: (the words before the date, the date). Only Italian puts an
+    article before it (il 13 ottobre, l’8 ottobre). The day and its month never part."""
+    day = datetime.date.fromisoformat(iso)
+    d, month, y = day.day, MONTHS[lang].split()[day.month - 1], day.year
+    nb = LIB.NBSP
+    if lang == "en":
+        return "", f"{d}{nb}{month} {y}"
+    if lang == "de":
+        return "", f"{d}.{nb}{month} {y}"
+    if lang in ("es", "pt-BR"):
+        first = "1º" if lang == "pt-BR" and d == 1 else str(d)
+        return "", f"{first} de {month} de {y}"
+    if lang == "fr":
+        return "", f"{'1er' if d == 1 else d}{nb}{month} {y}"
+    if lang == "it":
+        return ("l’" if d in (8, 11) else "il "), f"{'1º' if d == 1 else d}{nb}{month} {y}"
+    if lang == "bg":
+        return "", f"{d}{nb}{month} {y}{nb}г."
+    raise SystemExit(f"no date form for {lang!r}: add its month names and its line to MONTHS and CHECKED_LINE")
+
+
+def checked_html(iso, lang):
+    """The line that says when the page's facts were checked, its day a time element a machine reads."""
+    before, after = CHECKED_LINE[lang].split("{date}")
+    article, words = date_words(iso, lang)
+    return f'{esc(LIB.space(before + article, lang))}<time class="nw" datetime="{iso}">{esc(words)}</time>{esc(LIB.space(after, lang))}'
+
+
 def check_periods(d, lang, works, facts, field_title, pics):
     """A list of works by period: every work of the facts once, in a period of the facts, each with its title, date,
     holder and class as the facts give them, and each plate under the source line its record asks for."""
@@ -1317,6 +1380,9 @@ def jsonld(lang, data, urls, pics, site, wing, alternate_name, frame, folders, t
             {"@type": "ListItem", "position": 2, "name": wing["name"][lang], "item": self_url}]
     if data["page"].get("published"):
         graph[3]["datePublished"] = data["page"]["published"]
+    if data["page"].get("checked"):
+        # the day the page's dated line shows
+        graph[3]["dateModified"] = data["page"]["checked"]
     for block in data["blocks"]:
         if block["type"] == "periods":
             # the works the page lists, each by its entry on the page
@@ -1722,6 +1788,7 @@ def render(page, lang, data, shared, out_root):
                 for h in block.get("holders", []))
             values["html.notes"] = "\n".join(fill(parts["note"], {"text": rich(n)}) for n in block.get("notes", []))
             values["html.editions"] = editions(block.get("editions", []))
+            values["html.checked"] = fill(parts["checked"], {"html.text": checked_html(data["page"]["checked"], lang)})
         elif kind == "close":
             values.update({"door.text": rich(block["door"]["text"]), "door.note": rich(block["door"]["note"])})
         elif kind == "text":
@@ -2756,6 +2823,9 @@ def build_pages(out_dir, site_src=SITE_SRC, site_built=SITE_BUILT, pages=PAGES, 
                     or a["page"].get("still") != b["page"].get("still") or a["page"].get("primary") != b["page"].get("primary")):
                 problems.append(f"{page}: {lang} differs from English in pictures or in the page label" if lang != "de" else
                                 f"{page}: the two languages differ in pictures or in the page label")
+            # a translation states the facts of its source page, checked on the same day
+            if a["page"].get("checked") != b["page"].get("checked"):
+                problems.append(f"{page}: {lang} gives another day for the facts' check than English (page.checked)")
             for x, y in zip(a["blocks"], b["blocks"]):
                 if x["type"] != y["type"] or x["id"] != y["id"]:
                     problems.append(f"{page}: block {x['id']} and {y['id']} do not match")

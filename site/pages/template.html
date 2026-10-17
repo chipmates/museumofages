@@ -226,6 +226,7 @@
 <!--@ block:sources -->
 <section class="sp-sec sp-sources" id="{{id}}">
   <h2>{{h}}</h2>
+{{html.checked}}
   <p class="sp-intro">{{intro}}</p>
 {{html.holders_part}}
 {{html.notes}}
@@ -233,6 +234,8 @@
   <p class="sp-contact">{{contact}} <a href="{{href.imprint}}"{{attr.imprint_lang}}>{{contact_link}}</a></p>
   <p class="sp-more"><a class="more" href="{{href.what}}"><span>{{what_link}}</span>{{svg.arrow}}</a></p>
 </section>
+<!--@ checked -->
+  <p class="sp-checked">{{html.text}}</p>
 <!--@ holder -->
 <li><span class="sp-holders__name">{{name}}, {{place}}</span> <span class="sp-holders__what">{{text}}</span></li>
 <!--@ edition -->

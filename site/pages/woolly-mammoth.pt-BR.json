@@ -4,7 +4,8 @@
   "id": "animals-woolly-mammoth",
   "wing": "animals",
   "topic": "woolly_mammoth",
-  "published": null,
+  "published": "2026-10-16",
+  "checked": "2026-10-15",
   "join_names": true,
   "og_image": {
    "file": "animals-woolly-mammoth-og-{lang}-1200x630.png",

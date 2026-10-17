@@ -2072,10 +2072,30 @@ def film_data(site):
     return "window.MoaFilmData = " + json.dumps({"wings": wings}, separators=(",", ":")) + ";\n"
 
 
+def page_graph(text):
+    """A built page's structured data as one list of nodes (none where it has none)."""
+    nodes = []
+    for block in re.findall(r'<script type="application/ld\+json">(.*?)</script>', text, flags=re.S):
+        data = json.loads(block.replace("<\\/", "</"))
+        nodes += data.get("@graph", [data])
+    return nodes
+
+
+def checked_day(text):
+    """The day a topic page's facts were last checked, as its Article gives it (dateModified), or None."""
+    return next((n["dateModified"] for n in page_graph(text) if n.get("@type") == "Article" and n.get("dateModified")), None)
+
+
 def write_sitemap(out, site, listed):
     rel = lambda p: str(Path(p).relative_to(out).parent).replace(".", "", 1).strip("/")
     url = lambda p: f"{ORIGIN}/{rel(p)}/".replace("//", "/").replace("https:/", "https://")
     urls = sorted({url(p) for _, _, p in listed})
+    # a topic page's last change that counts is the day its facts were checked: the day its dated line shows
+    lastmod = {}
+    for kind, _, p in listed:
+        day = checked_day(Path(p).read_text(encoding="utf-8")) if kind == "topic" else None
+        if day:
+            lastmod[url(p)] = f"<lastmod>{day}</lastmod>"
     # From three listed languages on, each address names its twins, as the pages' heads do. With two, the heads alone.
     twins = {}
     if len(LISTED) > 2:
@@ -2083,7 +2103,7 @@ def write_sitemap(out, site, listed):
             for _, p in page:
                 twins[url(p)] = [(L.html(l), url(q)) for l, q in page] + [("x-default", url(dict(page)["en"]))] if "en" in dict(page) else []
     link = lambda u: "".join(f'<xhtml:link rel="alternate" hreflang="{tag}" href="{v}"/>' for tag, v in twins.get(u, []))
-    body = "".join(f"  <url><loc>{u}</loc>{link(u)}</url>\n" for u in urls)
+    body = "".join(f"  <url><loc>{u}</loc>{lastmod.get(u, '')}{link(u)}</url>\n" for u in urls)
     space = ' xmlns:xhtml="http://www.w3.org/1999/xhtml"' if twins else ""
     (out / "sitemap.xml").write_text(
         f'<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"{space}>\n' + body + "</urlset>\n",
