@@ -32,7 +32,7 @@
   },
   "top": {
     "h1": "Leonardo da Vinci's life, year by year",
-    "answer": "Leonardo da Vinci's biography and facts at a glance: he was a painter and engineer who painted the Mona Lisa and the Last Supper. He was born near Vinci in Tuscany on 15 April 1452, the day his grandfather wrote down, and he died at Cloux, by Amboise in France, on 2 May 1519, aged 67. Here is his life year by year, and every date says how sure it is.",
+    "answer": "Leonardo da Vinci was a painter and engineer. He painted the Mona Lisa and the Last Supper. He was born near Vinci in Tuscany on 15 April 1452, the day his grandfather wrote down, and he died at Cloux, by Amboise in France, on 2 May 1519, aged 67. Here is his life year by year, and every date says how sure it is.",
     "jump": true,
     "facts": {
       "id": "facts",
