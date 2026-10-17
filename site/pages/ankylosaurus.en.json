@@ -129,7 +129,7 @@
   "title": "Ankylosaurus size: about 6 to 8 m, 4.8 t | Museum of Ages",
   "description": "Ankylosaurus was about 6 to 8 m (20 to 26 ft) long. The smallest known animal, with the only tail club found, came to about 4.8 t by its leg bones.",
   "og_title": "Ankylosaurus size: about 6 to 8 m, 4.8 t",
-  "og_image_alt": "An Ankylosaurus from the side: a low, wide body under rows of bony plates, a broad head carried low, four short legs and a straight tail ending in a flat club. Beside it a grey person, as tall as the top of its back over the hips."
+  "og_image_alt": "Our Ankylosaurus from the side, 6.4 m (21 ft) from beak to club, its back 1.7 m (5.6 ft) high over the hips: a low, wide body under rows of bony plates, a broad head carried low, four short legs and a straight tail ending in a flat club. Beside it a grey person 1.70 m tall, as tall as the top of its back."
  },
  "labels": {
   "crumbs": "You are here",
@@ -145,13 +145,13 @@
  },
  "top": {
   "h1": "How big was Ankylosaurus?",
-  "answer": "Ankylosaurus was about 6 to 8 m (20 to 26 ft) long, by a 2017 study. The smallest of the known animals came to about 4.8 tonnes (3.6 to 6 by the study's own spread), worked out from how thick its leg bones are. Our Ankylosaurus is built at that animal's size: 6.4 m (21 ft) long, almost four people lying head to foot. Its back is highest over the hips, at 1.7 m (5.6 ft), the height of the person beside it.",
+  "answer": "Ankylosaurus was about 6 to 8 m (20 to 26 ft) long, by a 2017 study. The smallest known Ankylosaurus came to about 4.8 tonnes (3.6 to 6 by the study's own spread), worked out from how thick its leg bones are. Our Ankylosaurus is built at that animal's size: 6.4 m (21 ft) long, almost four people lying head to foot. Its back is highest over the hips, at 1.7 m (5.6 ft), the height of the person beside it.",
   "answer_more": "Only one Ankylosaurus tail club has been found so far, on that same animal. Its knob is about half a metre (1.6 ft) wide, at the end of a tail whose back half was stiff as a rod.",
   "scale": {
    "pic": "side",
    "tag": "tag_made",
    "what": "Our Ankylosaurus beside a person 1.70 m tall, to one scale: 6.4 m (21 ft) from beak to club. Its shoulders reach about the person's chin, and its body is nearly as wide as the person is tall.",
-   "alt": "An Ankylosaurus from the side: a low, wide body under rows of bony plates, a broad head carried low, four short legs and a straight tail ending in a flat club. Beside it a grey person, as tall as the top of its back over the hips.",
+   "alt": "Our Ankylosaurus from the side, 6.4 m (21 ft) from beak to club, its back 1.7 m (5.6 ft) high over the hips: a low, wide body under rows of bony plates, a broad head carried low, four short legs and a straight tail ending in a flat club. Beside it a grey person 1.70 m tall, as tall as the top of its back.",
    "note": [
     "Our own reconstruction, built in code from published measurements and rendered in our own engine. Not photographs. ",
     "The armour of our Ankylosaurus follows the plan of ",
@@ -434,6 +434,10 @@
    "h": "Numbers you may have read",
    "intro": "For each number: where it came from, and what it means.",
    "rows": [
+    {
+     "term": "A longer, lighter Ankylosaurus",
+     "text": "German sites often give it a greater length and a lower weight than the figures here, without a source. The figures here come from the one modern study, of 2017: about 6 to 8 m (20 to 26 ft) for the known animals, about 4.8 tonnes for the smallest."
+    },
     {
      "term": "8 m long",
      "text": "The upper end for the biggest animals, judged from the biggest skull. The smaller animal ours is built on was most likely near 6 m."

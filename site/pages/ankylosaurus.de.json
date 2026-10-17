@@ -133,7 +133,7 @@
   "title": "Ankylosaurus-Größe: etwa 6 bis 8 m, 4,8 t | Museum of Ages",
   "description": "Ankylosaurus: etwa 6 bis 8 m lang. Das kleinste bekannte Tier, das mit der einzigen gefundenen Schwanzkeule, kommt nach seinen Beinknochen auf etwa 4,8 t.",
   "og_title": "Ankylosaurus-Größe: etwa 6 bis 8 m, 4,8 t",
-  "og_image_alt": "Ein Ankylosaurus von der Seite: ein flacher, breiter Körper unter Reihen von Knochenplatten, ein breiter, tief getragener Kopf, vier kurze Beine und ein gerader Schwanz mit einer flachen Keule am Ende. Daneben ein grauer Mensch, so groß, wie der Rücken über der Hüfte hoch ist."
+  "og_image_alt": "Unser Ankylosaurus von der Seite, 6,4 m vom Schnabel bis zur Keule, der Rücken über der Hüfte 1,7 m hoch: ein flacher, breiter Körper unter Reihen von Knochenplatten, ein breiter, tief getragener Kopf, vier kurze Beine und ein gerader Schwanz mit einer flachen Keule am Ende. Daneben ein grauer Mensch von 1,70 m, so groß, wie der Rücken hoch ist."
  },
  "labels": {
   "crumbs": "Du bist hier",
@@ -149,13 +149,13 @@
  },
  "top": {
   "h1": "Wie groß war ein Ankylosaurus?",
-  "answer": "Ein Ankylosaurus war etwa 6 bis 8 m lang, nach einer Studie von 2017. Das kleinste der bekannten Tiere kommt auf etwa 4,8 t (3,6 bis 6 t nach der Spanne der Studie selbst), berechnet aus der Dicke seiner Beinknochen. Unser Ankylosaurus ist in der Größe dieses Tiers gebaut: 6,4 m lang, fast vier Menschen der Länge nach hintereinandergelegt. Am höchsten ist sein Rücken über der Hüfte, mit 1,7 m so hoch wie der Mensch daneben.",
+  "answer": "Ein Ankylosaurus war etwa 6 bis 8 m lang, nach einer Studie von 2017. Der kleinste bekannte Ankylosaurus kommt auf etwa 4,8 t (3,6 bis 6 t nach der Spanne der Studie selbst), berechnet aus der Dicke seiner Beinknochen. Unser Ankylosaurus ist in der Größe dieses Tiers gebaut: 6,4 m lang, fast vier Menschen der Länge nach hintereinandergelegt. Am höchsten ist sein Rücken über der Hüfte, mit 1,7 m so hoch wie der Mensch daneben.",
   "answer_more": "Bisher wurde nur eine Schwanzkeule eines Ankylosaurus gefunden, an eben diesem Tier. Sie ist etwa einen halben Meter breit und saß am Ende eines Schwanzes, dessen hintere Hälfte steif war wie eine Stange.",
   "scale": {
    "pic": "side",
    "tag": "tag_made",
    "what": "Unser Ankylosaurus neben einem Menschen von 1,70 m, im selben Maßstab: 6,4 m vom Schnabel bis zur Keule. Seine Schultern reichen dem Menschen etwa bis zum Kinn, und sein Körper ist fast so breit, wie der Mensch groß ist.",
-   "alt": "Ein Ankylosaurus von der Seite: ein flacher, breiter Körper unter Reihen von Knochenplatten, ein breiter, tief getragener Kopf, vier kurze Beine und ein gerader Schwanz mit einer flachen Keule am Ende. Daneben ein grauer Mensch, so groß, wie der Rücken über der Hüfte hoch ist.",
+   "alt": "Unser Ankylosaurus von der Seite, 6,4 m vom Schnabel bis zur Keule, der Rücken über der Hüfte 1,7 m hoch: ein flacher, breiter Körper unter Reihen von Knochenplatten, ein breiter, tief getragener Kopf, vier kurze Beine und ein gerader Schwanz mit einer flachen Keule am Ende. Daneben ein grauer Mensch von 1,70 m, so groß, wie der Rücken hoch ist.",
    "note": [
     "Unsere eigene Rekonstruktion, nach veröffentlichten Maßen in Code gebaut und in unserer Engine gerendert. Keine Fotos. ",
     "Der Panzer unseres Ankylosaurus folgt dem Plan von ",
@@ -438,6 +438,10 @@
    "h": "Zahlen, die du vielleicht gelesen hast",
    "intro": "Zu jeder Zahl: woher sie kommt und was sie bedeutet.",
    "rows": [
+    {
+     "term": "Ein längerer, leichterer Ankylosaurus",
+     "text": "Deutsche Seiten nennen oft eine größere Länge und ein geringeres Gewicht als die Zahlen hier, ohne Quelle. Die Zahlen hier stammen aus der einzigen neueren Studie, von 2017: etwa 6 bis 8 m für die bekannten Tiere, etwa 4,8 t für das kleinste."
+    },
     {
      "term": "8 m lang",
      "text": "Die Obergrenze für die größten Tiere, geschätzt nach dem größten Schädel. Das kleinere Tier, nach dem unser Modell gebaut ist, war am ehesten etwa 6 m lang."

@@ -129,7 +129,7 @@
   "title": "Anquilossauro: tamanho, uns 6 a 8 m e 4,8 t | Museum of Ages",
   "description": "Qual era o tamanho do anquilossauro? Cerca de 6 a 8 m. O menor conhecido, o da única clava achada, chega a cerca de 4,8 t pelos ossos das patas.",
   "og_title": "Anquilossauro: tamanho de cerca de 6 a 8 m, 4,8 t",
-  "og_image_alt": "Um anquilossauro de lado: um corpo baixo e largo, coberto de fileiras de placas de osso, uma cabeça larga mantida baixa, quatro patas curtas e uma cauda reta que termina numa clava achatada. Ao lado, uma pessoa cinza da altura do alto do dorso dele acima do quadril."
+  "og_image_alt": "O nosso anquilossauro de lado, 6,4 m do bico à clava, com o alto do dorso a 1,7 m acima do quadril: um corpo baixo e largo, coberto de fileiras de placas de osso, uma cabeça larga mantida baixa, quatro patas curtas e uma cauda reta que termina numa clava achatada. Ao lado, uma pessoa cinza de 1,70 m, da altura do alto do dorso."
  },
  "labels": {
   "crumbs": "Você está aqui",
@@ -145,13 +145,13 @@
  },
  "top": {
   "h1": "Qual era o tamanho do anquilossauro?",
-  "answer": "O anquilossauro tinha cerca de 6 a 8 m de comprimento, segundo um estudo de 2017. O menor dos animais conhecidos chega a cerca de 4,8 toneladas (de 3,6 a 6 na margem do próprio estudo), calculadas a partir da circunferência dos ossos das patas. O nosso anquilossauro foi feito no tamanho desse animal: 6,4 m de comprimento, quase quatro pessoas deitadas uma atrás da outra. O ponto mais alto do dorso fica acima do quadril, com 1,7 m, a altura da pessoa ao lado.",
+  "answer": "O anquilossauro tinha cerca de 6 a 8 m de comprimento, segundo um estudo de 2017. O menor anquilossauro conhecido chega a cerca de 4,8 toneladas (de 3,6 a 6 na margem do próprio estudo), calculadas a partir da circunferência dos ossos das patas. O nosso anquilossauro foi feito no tamanho desse animal: 6,4 m de comprimento, quase quatro pessoas deitadas uma atrás da outra. O ponto mais alto do dorso fica acima do quadril, com 1,7 m, a altura da pessoa ao lado.",
   "answer_more": "Até hoje só foi encontrada uma clava de cauda de anquilossauro, nesse mesmo animal. Ela tem cerca de meio metro de largura e ficava na ponta de uma cauda que, na metade de trás, era rígida como uma haste.",
   "scale": {
    "pic": "side",
    "tag": "tag_made",
    "what": "O nosso anquilossauro ao lado de uma pessoa de 1,70 m, na mesma escala: 6,4 m do bico à clava. Os ombros dele chegam mais ou menos ao queixo da pessoa, e o corpo é quase tão largo quanto a pessoa é alta.",
-   "alt": "Um anquilossauro de lado: um corpo baixo e largo, coberto de fileiras de placas de osso, uma cabeça larga mantida baixa, quatro patas curtas e uma cauda reta que termina numa clava achatada. Ao lado, uma pessoa cinza da altura do alto do dorso dele acima do quadril.",
+   "alt": "O nosso anquilossauro de lado, 6,4 m do bico à clava, com o alto do dorso a 1,7 m acima do quadril: um corpo baixo e largo, coberto de fileiras de placas de osso, uma cabeça larga mantida baixa, quatro patas curtas e uma cauda reta que termina numa clava achatada. Ao lado, uma pessoa cinza de 1,70 m, da altura do alto do dorso.",
    "note": [
     "A nossa própria reconstrução, construída em código a partir de medidas publicadas e renderizada com o nosso próprio motor gráfico. Não são fotografias. ",
     "A couraça do nosso anquilossauro segue o desenho de ",
@@ -434,6 +434,10 @@
    "h": "Números que você talvez tenha lido",
    "intro": "Para cada número: de onde ele vem e o que significa.",
    "rows": [
+    {
+     "term": "Um anquilossauro mais longo e mais leve",
+     "text": "Sites em alemão costumam dar a ele um comprimento maior e um peso menor que os números daqui, sem fonte. Os números daqui vêm do único estudo moderno, de 2017: cerca de 6 a 8 m para os animais conhecidos, e cerca de 4,8 toneladas para o menor."
+    },
     {
      "term": "8 m de comprimento",
      "text": "O limite superior para os maiores animais, estimado a partir do maior crânio. O mais provável é que o animal menor em que o nosso se baseia tivesse perto de 6 m."

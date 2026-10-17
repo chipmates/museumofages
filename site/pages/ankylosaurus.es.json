@@ -129,7 +129,7 @@
   "title": "Ankylosaurus: tamaño de unos 6 a 8 m, 4,8 t | Museum of Ages",
   "description": "¿Cuánto medía el anquilosaurio? Unos 6 a 8 m. El Ankylosaurus menor conocido, el de la única maza hallada, rondaba las 4,8 t según los huesos de sus patas.",
   "og_title": "Ankylosaurus: tamaño de unos 6 a 8 m, 4,8 t",
-  "og_image_alt": "Un Ankylosaurus de lado: un cuerpo bajo y ancho, cubierto de filas de placas de hueso, una cabeza ancha y baja, cuatro patas cortas y una cola recta que termina en una maza plana. A su lado, una persona gris tan alta como lo alto del lomo sobre la cadera."
+  "og_image_alt": "Nuestro Ankylosaurus de lado, 6,4 m del pico a la maza, con lo alto del lomo a 1,7 m sobre la cadera: un cuerpo bajo y ancho, cubierto de filas de placas de hueso, una cabeza ancha y baja, cuatro patas cortas y una cola recta que termina en una maza plana. A su lado, una persona gris de 1,70 m, tan alta como lo alto del lomo."
  },
  "labels": {
   "crumbs": "Estás aquí",
@@ -145,13 +145,13 @@
  },
  "top": {
   "h1": "¿Cuánto medía el Ankylosaurus?",
-  "answer": "El Ankylosaurus, o anquilosaurio, medía unos 6 a 8 m de largo, según un estudio de 2017. El más pequeño de los animales conocidos llega a unas 4,8 toneladas (de 3,6 a 6 según el margen del propio estudio), calculadas a partir del grosor de los huesos de sus patas. Nuestro Ankylosaurus está hecho al tamaño de ese animal: 6,4 m de largo, casi cuatro personas tumbadas una detrás de otra. Lo más alto del lomo está sobre la cadera, a 1,7 m, la altura de la persona a su lado.",
+  "answer": "El Ankylosaurus, o anquilosaurio, medía unos 6 a 8 m de largo, según un estudio de 2017. El Ankylosaurus más pequeño que se conoce llega a unas 4,8 toneladas (de 3,6 a 6 según el margen del propio estudio), calculadas a partir del grosor de los huesos de sus patas. Nuestro Ankylosaurus está hecho al tamaño de ese animal: 6,4 m de largo, casi cuatro personas tumbadas una detrás de otra. Lo más alto del lomo está sobre la cadera, a 1,7 m, la altura de la persona a su lado.",
   "answer_more": "Hasta hoy solo se encontró una maza de la cola de Ankylosaurus, en ese mismo animal. Mide más o menos medio metro de ancho y estaba al final de la cola, que en su mitad trasera era rígida como una barra.",
   "scale": {
    "pic": "side",
    "tag": "tag_made",
    "what": "Nuestro Ankylosaurus junto a una persona de 1,70 m, a la misma escala: 6,4 m del pico a la maza. Sus hombros llegan más o menos a la barbilla de la persona, y su cuerpo es casi tan ancho como alta es la persona.",
-   "alt": "Un Ankylosaurus de lado: un cuerpo bajo y ancho, cubierto de filas de placas de hueso, una cabeza ancha y baja, cuatro patas cortas y una cola recta que termina en una maza plana. A su lado, una persona gris tan alta como lo alto del lomo sobre la cadera.",
+   "alt": "Nuestro Ankylosaurus de lado, 6,4 m del pico a la maza, con lo alto del lomo a 1,7 m sobre la cadera: un cuerpo bajo y ancho, cubierto de filas de placas de hueso, una cabeza ancha y baja, cuatro patas cortas y una cola recta que termina en una maza plana. A su lado, una persona gris de 1,70 m, tan alta como lo alto del lomo.",
    "note": [
     "Nuestra propia reconstrucción, construida en código a partir de medidas publicadas y renderizada con nuestro propio motor gráfico. No son fotografías. ",
     "La coraza de nuestro Ankylosaurus sigue el plano de ",
@@ -434,6 +434,10 @@
    "h": "Cifras que quizá hayas leído",
    "intro": "Para cada cifra: de dónde viene y qué significa.",
    "rows": [
+    {
+     "term": "Un Ankylosaurus más largo y más ligero",
+     "text": "Las páginas en alemán suelen darle más longitud y menos peso que las cifras de aquí, sin fuente. Las cifras de aquí vienen del único estudio moderno, de 2017: unos 6 a 8 m para los animales conocidos, y unas 4,8 toneladas para el más pequeño."
+    },
     {
      "term": "8 m de largo",
      "text": "El límite superior para los animales más grandes, estimado a partir del cráneo más grande. Lo más probable es que el animal más pequeño en el que se basa el nuestro midiera cerca de 6 m."
