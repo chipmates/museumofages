@@ -278,7 +278,7 @@
   },
   "guess": {
    "h": "Para adivinar",
-   "q": "¿Cuál de nuestros siete mide en la cadera exactamente lo mismo que la persona, 1,70 m?",
+   "q": "¿Cuál de nuestros siete mide en la cadera aproximadamente lo mismo que la persona, 1,70 m?",
    "button": "Ver la respuesta",
    "a": "Nuestro Ankylosaurus. Su cadera está a 1,7 m del suelo, la altura de la persona, y mide 6,4 m de largo, casi cuatro personas tumbadas una detrás de otra.",
    "button_open": "Ocultar la respuesta"

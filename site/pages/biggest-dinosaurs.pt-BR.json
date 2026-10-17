@@ -278,7 +278,7 @@
   },
   "guess": {
    "h": "Tente adivinhar",
-   "q": "Qual dos nossos sete tem no quadril exatamente a altura da pessoa, 1,70 m?",
+   "q": "Qual dos nossos sete tem no quadril aproximadamente a altura da pessoa, 1,70 m?",
    "button": "Ver a resposta",
    "a": "O nosso anquilossauro. O quadril dele fica a 1,7 m do chão, a altura da pessoa, e ele tem 6,4 m de comprimento, quase quatro pessoas deitadas uma atrás da outra.",
    "button_open": "Esconder a resposta"
