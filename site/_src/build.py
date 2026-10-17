@@ -1907,6 +1907,9 @@ def build_topics(out, site):
         raise SystemExit(f"The site's own pages are built. The topic pages' build ({PAGES_BUILD}) stopped:\n{stop}")
     except Exception as error:
         raise SystemExit(f"The site's own pages are built. The topic pages' build ({PAGES_BUILD}) broke: {type(error).__name__}: {error}")
+    # the topic pages' soft checks warn and never stop the build: their count goes to the writer's notes
+    if getattr(mod, "WARNINGS", None):
+        site.notes.append(f"{len(mod.WARNINGS)} warnings to improve: python3 site/pages/build.py --warnings")
     # every address with a scheme, in the order it stands on the page
     outside = lambda page: re.findall(r'="([a-z][a-z0-9+.-]*:[^"]*)"', page)
     found, problems = [], []
