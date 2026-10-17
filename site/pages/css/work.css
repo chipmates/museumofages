@@ -21,4 +21,7 @@
   .sp-top>.sp-plate{grid-column:8/13;grid-row:1/5;margin-top:6px}
   .sp-top>.sp-plate .hang{max-width:20rem}
   .sp-top:has(>.sp-plate)>.sp-toc--top{grid-column:1/7;grid-row:auto;padding:14px 20px 6px}
+  /* With the list beside the text (top.side) the first part's list stands down: no row waits for it. */
+  .sp-top--side:has(>.sp-plate){grid-template-rows:auto 1fr}
+  .sp-top--side>.sp-plate{grid-row:1/3}
 }

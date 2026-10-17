@@ -2227,7 +2227,10 @@ def render(page, lang, data, shared, out_root):
         "html.header": chrome["header"],
         "html.footer": chrome["footer"],
         "attr.h1": h1_class,
-        "attr.top": (" sp-top--long" if answer_length(data["top"]) > LONG_ANSWER else "") + (" sc-top" if making(wing) else ""),
+        # a page whose list stands beside its text (top.side): a desktop shows that list alone, never its first part's too;
+        # with no plate in its first part, the list stands beside the answer from the top (sp-top--list)
+        "attr.top": (" sp-top--long" if answer_length(data["top"]) > LONG_ANSWER else "") + (" sc-top" if making(wing) else "")
+                    + (" sp-top--side" + ("" if data["top"].get("plate") else " sp-top--list") if side else ""),
         "top.h1": names.mark(h1, wrap_wing=run > KEEP_SMALL),
         "top.answer": lead_and_rest(data["top"]["answer"], lang, linked),
         # an answer in two paragraphs: the second, with its links, under the first

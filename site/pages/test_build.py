@@ -2941,7 +2941,15 @@ class Case(unittest.TestCase):
         self.assertIn('<div class="sp-grid sp-grid--side">', own)
         self.assertEqual(own.count('<nav class="sp-toc'), 2)
         self.assertIn(".sp-grid--side>.sp-toc{display:none}", text)
-        self.assertRegex(text, r"@media \(min-width:960px\)\{[^@]*\.sp-grid--side>\.sp-toc\{display:block\}")
+        desktop = r"@media \(min-width:960px\)\{[^@]*"
+        self.assertRegex(text, desktop + r"\.sp-grid--side>\.sp-toc\{display:block\}")
+        # one list on a desktop's first screen: the first part's own list stands down there
+        self.assertRegex(own, r'<header class="sp-top[^"]* sp-top--side sp-top--list">')
+        self.assertRegex(text, desktop + r"\.sp-top--side>\.sp-toc--top\{display:none\}")
+        # no plate beside the answer, so the list stands there from the top, the answer in the parts' column
+        self.assertNotIn("<img", re.search(r'<header class="sp-top\b.*?</header>', own, flags=re.S).group(0))
+        self.assertRegex(text, desktop + r"\.wrap:has\(>\.sp-top--list\)\{display:grid;")
+        self.assertRegex(text, desktop + r"\.wrap:has\(>\.sp-top--list\)>\.sp-grid\{display:contents\}")
         for lang in ("en", "de"):
             data = self.data(lang, page)
             data["top"].pop("side")
@@ -2951,6 +2959,31 @@ class Case(unittest.TestCase):
         own = self.own_part(self.built_of(written, page, "de").read_text(encoding="utf-8"))
         self.assertIn('<div class="sp-grid sp-grid--solo">', own)
         self.assertEqual(own.count('<nav class="sp-toc'), 1)
+        self.assertNotIn("sp-top--side", own)
+        self.assertNotIn("sp-top--list", own)
+
+    def test_a_page_about_one_work_keeps_its_plate_beside_the_answer_and_its_list_beside_the_text(self):
+        """With its list beside its text (top.side), a page that hangs its plate in its first part keeps the plate there,
+        beside the answer on a desktop, and its list beside the text from the parts on: the first part's list stands down
+        on a desktop, a phone keeps it, and the plate shows once."""
+        page = self.work_page()
+        if not page:
+            self.skipTest("no page of questions hangs a plate in its first part")
+        for lang in ("en", "de"):
+            data = self.data(lang, page)
+            data["top"]["side"] = True
+            self.save(lang, data, page)
+        out, written = self.build()
+        for lang in ("en", "de"):
+            data = self.data(lang, page)
+            own = self.own_part(self.built_of(written, page, lang).read_text(encoding="utf-8"))
+            top = re.search(r'<header class="sp-top\b[^>]*>.*?</header>', own, flags=re.S).group(0)
+            self.assertRegex(top, r'^<header class="sp-top[^"]* sp-top--side">')
+            self.assertEqual(len(re.findall(r"<figure\b", top)), 1)
+            self.assertIn('class="sp-toc sp-toc--top"', top)
+            self.assertIn('<div class="sp-grid sp-grid--side">', own)
+            stem = data["pics"][data["top"]["plate"]["pic"]]["stem"]
+            self.assertEqual(sum(f"img/{stem}-" in x for x in re.findall(r"<picture>.*?</picture>", own, flags=re.S)), 1)
 
     def test_a_named_part_of_an_answer_stands_under_its_own_heading(self):
         page = self.ask_page()

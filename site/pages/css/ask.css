@@ -4,7 +4,8 @@
 /* The list of the page's questions stands in its first part, after the door. Each entry a thumb's height. */
 .sp-toc--top{margin-top:6px}
 .sp-toc--top a{min-height:44px;color:var(--ink)}
-/* Its text has no column beside it, or (top.side) the list again beside it on a desktop only: a phone has it above. */
+/* Its text has no column beside it, or (top.side) the list beside it on a desktop only, in place of the first part's:
+   a phone has it above. */
 .sp-grid--solo,.sp-grid--side{margin-top:24px}
 .sp-grid--side>.sp-toc{display:none}
 
@@ -34,6 +35,18 @@
   .sp-grid--solo{margin-top:64px}
   .sp-grid--side{margin-top:88px}
   .sp-grid--side>.sp-toc{display:block}
+  /* one list on the first screen: beside the text, the first part's own list stands down */
+  .sp-top--side>.sp-toc--top{display:none}
+  /* No plate beside the answer (a reproduction of the second rights tier never stands in the first part): the list stands
+     there instead, from the top, and the answer and the parts share one column beside it. A browser without :has()
+     keeps the models' grid. */
+  .wrap:has(>.sp-top--list){display:grid;grid-template-columns:repeat(12,1fr);column-gap:24px;align-items:start}
+  .wrap:has(>.sp-top--list)>.sp-crumbs{grid-column:1/-1}
+  .wrap:has(>.sp-top--list)>.sp-top{grid-column:5/13;grid-row:2;grid-template-columns:minmax(0,1fr)}
+  .wrap:has(>.sp-top--list)>.sp-top>.sp-top__text,.wrap:has(>.sp-top--list)>.sp-top>.sp-way{grid-column:1/-1}
+  .wrap:has(>.sp-top--list)>.sp-grid{display:contents}
+  .wrap:has(>.sp-top--list)>.sp-grid>.sp-toc{grid-column:1/4;grid-row:2/4;margin-top:30px}
+  .wrap:has(>.sp-top--list)>.sp-grid>.sp-body__main{grid-column:5/13;grid-row:3;margin-top:88px}
   /* the reading column under the answer's, as wide as the models' text column */
   .sp-grid--solo .sp-body__main{grid-column:1/8}
   .sp-ask__a{font-size:1.375rem;line-height:1.38}
