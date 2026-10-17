@@ -4242,7 +4242,8 @@ class SiteWide(unittest.TestCase):
         Article image) is one without words wherever the page has one."""
         own = {"vinci-sizes": r"vinci-sizes-figure-{lang}-1600\.png", "vinci-supper": r"vinci-supper-drawing-{lang}-1600\.png",
                "animals": r"animals-biggest-dinosaurs-row-1600\.webp",
-               "vinci-mona-lisa": r"vinci-plate-mona-lisa-\d+\.webp"}
+               "vinci-mona-lisa": r"vinci-plate-mona-lisa-\d+\.webp",
+               "vinci-salvator-mundi": r"vinci-plate-salvator-mundi-\d+\.webp"}
         seen, cards = set(), set()
         for path, text in self.pages.items():
             label = re.search(r'<main[^>]*class="sp"[^>]*data-page="([\w-]+)"', text)
