@@ -20,7 +20,8 @@
 .lf-table tr+tr{border-top:1px solid var(--ledger-rule)}
 .lf-table th{width:6.75rem;padding:10px 12px 10px 0;text-align:left;vertical-align:top;font-weight:400;font-size:.8125rem;
   line-height:1.55;letter-spacing:.02em;color:var(--ink-soft)}
-.lf-table td{padding:9px 0 10px;vertical-align:top;color:var(--ink)}
+/* No value ends on one word alone on its line. */
+.lf-table td{padding:9px 0 10px;vertical-align:top;color:var(--ink);text-wrap:pretty}
 .lf-table a{display:inline-block;padding:11px 0;margin:-11px 0;color:var(--ink);text-decoration-color:var(--mark)}
 
 /* ---------- His life by its periods ---------- */
