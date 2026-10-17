@@ -225,14 +225,28 @@ class Case(unittest.TestCase):
         self.fails(r"pages\.h")
 
     def test_a_borrowed_picture_must_be_a_plate_of_the_wing(self):
-        page = next((p for p in self.pages if self.data("en", p)["page"].get("primary_from")), None)
-        if not page:
-            self.skipTest("no page borrows its picture")
+        if "paintings" not in self.pages:
+            self.skipTest("no page of the paintings")
         for lang in ("en", "de"):
-            data = self.data(lang, page)
+            data = self.data(lang, "paintings")
             data["page"]["primary_from"] = "wing:rooms.0.plates.99"
-            self.save(lang, data, page)
+            self.save(lang, data, "paintings")
         self.fails(r"page\.primary_from 'wing:rooms\.0\.plates\.99'")
+
+    def test_a_pages_own_picture_of_the_second_tier_stands_on_it_with_its_source(self):
+        """A film frame of the second tier the page does not show may not be its own picture (the picture room on the
+        paintings page); the Mona Lisa's plate, shown with its source line, may."""
+        if "paintings" not in self.pages:
+            self.skipTest("no page of the paintings")
+        for lang in ("en", "de"):
+            data = self.data(lang, "paintings")
+            data["page"]["primary_from"] = "wing:rooms.0.plates.0"
+            self.save(lang, data, "paintings")
+        # a built page's checks read the written files, so this failure comes after the writing
+        with self.assertRaises(SystemExit) as caught:
+            self.build()
+        self.assertRegex(str(caught.exception), r"own picture is \['stop-picture-room'\], a frame of the second rights tier")
+        self.assertNotRegex(str(caught.exception), r"mona-lisa")
 
     def test_a_day_that_is_no_day(self):
         data = self.data("en")
@@ -4110,7 +4124,7 @@ class SiteWide(unittest.TestCase):
         """The share card, with its heading in it, stays the link preview; the page's own picture (primaryImageOfPage,
         Article image) is one without words wherever the page has one."""
         own = {"vinci-sizes": r"vinci-sizes-figure-{lang}-1600\.png", "vinci-supper": r"vinci-supper-drawing-{lang}-1600\.png",
-               "vinci-paintings": r"v-picture-room-1600\.webp", "animals": r"animals-biggest-dinosaurs-row-1600\.webp",
+               "animals": r"animals-biggest-dinosaurs-row-1600\.webp",
                "vinci-mona-lisa": r"vinci-plate-mona-lisa-\d+\.webp"}
         seen, cards = set(), set()
         for path, text in self.pages.items():
@@ -4129,8 +4143,9 @@ class SiteWide(unittest.TestCase):
             self.assertTrue((SITE_BUILT / frame["contentUrl"][len("https://museumofages.org/"):]).is_file(), path)
             self.assertTrue(frame.get("width") and frame.get("height"), path)
         self.assertEqual(seen, set(own))
-        # the one page without a picture of its own: the life, a fact box and dated lines
-        self.assertEqual(cards, {"vinci-life"})
+        # the pages without a picture of their own: the life (a fact box and dated lines) and the paintings, whose
+        # one picture without words is a film frame of the second tier the page does not show
+        self.assertEqual(cards, {"vinci-life", "vinci-paintings"})
 
 
 class SoftChecks(unittest.TestCase):

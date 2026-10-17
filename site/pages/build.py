@@ -2437,6 +2437,18 @@ def check_tier(text):
     loose = re.sub(r"<figure\b.*?</figure>", " ", body, flags=re.S)
     if stems(loose) & (second | _TIER["plates"]):
         problems.append(f"{sorted(stems(loose) & (second | _TIER['plates']))} stands outside a plate with a label")
+    # the page's own picture in its structured data, the one a search result shows first, is a frame of the second
+    # tier only where the page shows that very picture in a plate whose label carries its source line
+    for block in re.findall(r'<script type="application/ld\+json">(.*?)</script>', text, flags=re.S):
+        for node in json.loads(block.replace("<\\/", "</")).get("@graph", []):
+            if not str(node.get("@id", "")).endswith("#frame"):
+                continue
+            own = {frame.get(x, x) for x in re.findall(r"img/([a-z0-9-]+?)-\d+\.(?:avif|webp|png)\b", node.get("contentUrl", ""))} & second
+            labelled = [fig for fig in re.findall(r"<figure\b.*?</figure>", body, flags=re.S)
+                        if own & shows(fig) and re.search(r'<span class="label__src">[^<]*\S', fig)]
+            if own and not labelled:
+                problems.append(f"the page's own picture is {sorted(own)}, a frame of the second rights tier, which the "
+                                "page does not show in a plate whose label carries its source line")
     return problems
 
 
