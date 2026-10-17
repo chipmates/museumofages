@@ -44,7 +44,7 @@
   },
   "top": {
     "h1": "Leonardo da Vinci: Steckbrief und Lebenslauf",
-    "answer": "Leonardo da Vinci war Maler und Ingenieur, der Maler der Mona Lisa und des Abendmahls. Geboren wurde er am 15. April 1452 bei Vinci in der Toskana, so hat es sein Großvater notiert. Gestorben ist er am 2. Mai 1519 in Cloux bei Amboise in Frankreich, mit 67 Jahren. Hier steht sein Leben Jahr für Jahr, und bei jedem Datum, wie sicher es ist.",
+    "answer": "Leonardo da Vinci war Maler und Ingenieur. Er malte die Mona Lisa und das Abendmahl. Geboren wurde er bei Vinci in der Toskana, am 15. April 1452. Den Tag hat sein Großvater notiert. Gestorben ist er am 2. Mai 1519 in Cloux bei Amboise in Frankreich, mit 67 Jahren. Hier steht sein Leben Jahr für Jahr, und bei jedem Datum, wie sicher es ist.",
     "jump": true,
     "facts": {
       "id": "facts",
@@ -70,7 +70,7 @@
         },
         {
           "term": "Geschwister",
-          "text": "Nur Halbgeschwister: elf vom Vater, 1504 lebend, und fünf von der Mutter"
+          "text": "Nur Halbgeschwister: elf vom Vater, die 1504 noch lebten, und fünf von der Mutter"
         },
         {
           "term": "Lehrer",
@@ -223,7 +223,7 @@
           "id": "milan",
           "nav": "Mailand",
           "h": "Mailand, 1482 bis 1499",
-          "p": "Um 1482, mit etwa dreißig, zog er nach Mailand, an den Hof von Ludovico Sforza, genannt il Moro, der die Stadt regierte und 1494 ihr Herzog wurde. Ein früher Autor erzählt, Lorenzo de' Medici habe ihn mit einer Leier dorthin geschickt, und ein Briefentwurf, von seiner Hand verbessert, bot Ludovico seine Dienste als Ingenieur und Künstler an. Der erste feste Beleg für ihn in Mailand ist ein Vertrag vom April 1483 über die Felsgrottenmadonna. Etwa siebzehn Jahre arbeitete er in Mailand: ein Modell für den Turm des Doms, Feste für den Hof, ein riesiges Pferd aus Ton für ein Bronzedenkmal und das Abendmahl. Sein Haushalt wuchs: 1490 kam Salaì, zehn Jahre alt, und 1493 zog eine Frau namens Caterina zu ihm, in der die Forschung meist seine Mutter sieht. 1494 wanderte die Bronze für das Pferd in Kanonen, und 1499 nahmen die Franzosen Mailand ein, Ludovico floh. Leonardo schickte 600 Goldgulden auf sein Konto in Florenz und verließ die Stadt spätestens im Dezember, mit Luca Pacioli, Richtung Mantua und Venedig.",
+          "p": "Um 1482, mit etwa dreißig, zog er nach Mailand, an den Hof von Ludovico Sforza, genannt il Moro, der die Stadt regierte und 1494 ihr Herzog wurde. Ein früher Autor erzählt, Lorenzo de' Medici habe ihn mit einer Leier dorthin geschickt, und ein Briefentwurf, von seiner Hand verbessert, bot Ludovico seine Dienste als Ingenieur und Künstler an. Der erste feste Beleg für ihn in Mailand ist ein Vertrag vom April 1483 über die Felsgrottenmadonna. Etwa siebzehn Jahre arbeitete er in Mailand: an einem Modell für den Turm des Doms, an Festen für den Hof, an einem riesigen Pferd aus Ton für ein Bronzedenkmal und am Abendmahl. Sein Haushalt wuchs: 1490 kam Salaì, zehn Jahre alt, und 1493 zog eine Frau namens Caterina zu ihm, in der die Forschung meist seine Mutter sieht. 1494 wurde die Bronze für das Pferd zu Kanonen gegossen, und 1499 nahmen die Franzosen Mailand ein, Ludovico floh. Leonardo schickte 600 Goldgulden auf sein Konto in Florenz und verließ die Stadt spätestens im Dezember, mit Luca Pacioli, Richtung Mantua und Venedig.",
           "items": [
             {
               "id": "life-12",
@@ -253,7 +253,7 @@
               "id": "life-17",
               "date": "22. Juli 1490",
               "k": "mark_documented",
-              "line": "Giacomo, ein zehnjähriger Junge, kommt in seinen Haushalt. Später heißt er Salaì."
+              "line": "Giacomo, ein zehnjähriger Junge, kommt in seinen Haushalt. Später nennt man ihn Salaì."
             },
             {
               "id": "life-18",
@@ -331,7 +331,7 @@
               "id": "life-28",
               "date": "Herbst 1502",
               "k": "mark_documented",
-              "line": "Er zeichnet seinen Plan der Stadt Imola, der in Windsor erhalten ist. Die Jahreszeit ist die übliche Datierung der Forschung, kein Beleg."
+              "line": "Er zeichnet seinen Plan der Stadt Imola, der in Windsor erhalten ist. Die Forschung datiert ihn meist auf diesen Herbst."
             },
             {
               "id": "life-29",
@@ -395,7 +395,7 @@
           "id": "rome",
           "nav": "Rom",
           "h": "Rom, 1513 bis 1516",
-          "p": "Am 24. September 1513 brach er mit Melzi, Salaì und zwei weiteren Leuten seines Haushalts von Mailand nach Rom auf. Sein Gönner dort war Giuliano de' Medici, der Bruder von Papst Leo X., der ihm Räume im Belvedere des Vatikans gab. Er arbeitete an Spiegeln, an der Geometrie und an Plänen für die Pontinischen Sümpfe, doch die Belege aus diesen Jahren sind dünn. Spätere Autoren erzählen von einem mechanischen Löwen, den er für einen König gebaut haben soll, eine Geschichte, die keine Quelle aus seiner Zeit bestätigt. Giuliano starb im März 1516, und im selben Jahr ging Leonardo nach Frankreich.",
+          "p": "Am 24. September 1513 brach er mit Melzi, Salaì und zwei weiteren Leuten seines Haushalts von Mailand nach Rom auf. Sein Gönner dort war Giuliano de' Medici, der Bruder von Papst Leo X., der ihm Räume im Belvedere des Vatikans gab. Er arbeitete an Spiegeln, an der Geometrie und an Plänen für die Pontinischen Sümpfe, doch die Belege aus diesen Jahren sind dünn. Spätere Autoren erzählen von einem mechanischen Löwen, den er für einen König gebaut haben soll, eine Geschichte, für die wir keine Quelle aus seiner Zeit gefunden haben. Giuliano starb im März 1516, und im selben Jahr ging Leonardo nach Frankreich.",
           "items": [
             {
               "id": "life-35",
@@ -423,7 +423,7 @@
           "nav": "Amboise",
           "h": "Amboise, 1516 bis 1519",
           "p": [
-            "1516 ging er nach Frankreich, in den Dienst von König Franz I., und wohnte in Cloux, dem heutigen Clos Lucé, nahe dem Königsschloss von Amboise. Melzi kam mit ihm. Im Oktober 1517 traf ihn ein Besucher mit einer teilweise gelähmten rechten Hand an, aber noch beim Zeichnen und Unterrichten. Seine letzten Jahre in Frankreich, sein Testament, sein Tod und sein Grab haben ",
+            "1516 ging er nach Frankreich, in den Dienst von König Franz I., und wohnte in Cloux, dem heutigen Clos Lucé, nahe dem Königsschloss von Amboise. Melzi kam mit ihm. Im Oktober 1517 sah ein Besucher, dass seine rechte Hand teilweise gelähmt war, er aber noch zeichnete und unterrichtete. Seine letzten Jahre in Frankreich, sein Testament, sein Tod und sein Grab haben ",
             {
               "text": "eine eigene Seite",
               "page": "last-years"
@@ -461,7 +461,7 @@
           "id": "after-1519",
           "nav": "Nach 1519",
           "h": "Nach 1519, was blieb",
-          "p": "Melzi erbte seine Bücher und Notizen und bewahrte sie im Haus seiner Familie auf. Nach Melzis Tod um 1570 gingen sie an seinen Sohn Orazio, und der Bildhauer Pompeo Leoni kaufte Blätter und band sie zu Alben. Die größte Sammlung seiner Blätter, der Codex Atlanticus, kam 1637 in die Ambrosiana, eine Bibliothek in Mailand, wurde 1796 nach Paris gebracht und kehrte 1815 zurück. Tausende Seiten seiner Notizen sind erhalten, und einige davon kannst du am Lesetisch des Flügels umblättern. Die Mona Lisa wurde 1911 aus dem Louvre gestohlen und zwei Jahre später in Florenz wiedergefunden.",
+          "p": "Melzi erbte seine Bücher und Notizen. Nach Melzis Tod um 1570 gingen sie an seinen Sohn Orazio, und der Bildhauer Pompeo Leoni kaufte Blätter und band sie zu Alben. Die größte Sammlung seiner Blätter, der Codex Atlanticus, kam 1637 in die Ambrosiana, eine Bibliothek in Mailand, wurde 1796 nach Paris gebracht und kehrte 1815 zurück. Tausende Seiten seiner Notizen sind erhalten, und einige davon kannst du am Lesetisch des Flügels umblättern. Die Mona Lisa wurde 1911 aus dem Louvre gestohlen und zwei Jahre später in Florenz wiedergefunden.",
           "items": [
             {
               "id": "life-43",
@@ -553,8 +553,8 @@
           "id": "sexuality",
           "nav": "Homosexuell?",
           "q": "War Leonardo da Vinci homosexuell?",
-          "a": "Kein Dokument entscheidet das. Die Quellen kennen eine anonyme Anzeige von 1476, die zurückgewiesen wurde, keine Ehefrau, kein Kind und einen Haushalt, den er viele Jahre mit Salaì teilte, der als Junge zu ihm kam, und später mit Melzi.",
-          "known": "Im April 1476 beschuldigte eine anonyme Anzeige in Florenz ihn und drei andere Männer der Sodomie. Das Verfahren wurde eingestellt und im Juni mit einem Freispruch beendet, und eine Anzeige belegt keine Schuld. Mehrere Forscher, unter ihnen Frank Zöllner und Giovanni Dall'Orto, sehen in ihm einen Mann, der Männer liebte. Die Historikerin Elizabeth Abbott glaubt, er habe sich nach 1476 für ein enthaltsames Leben entschieden, und gibt zu bedenken, dass es Homosexualität als Identität zu seiner Zeit nicht gab. Einige wenige haben nach einer Frau in seinem Leben gesucht, auf sehr dünner Grundlage, und Sigmund Freuds berühmte Deutung von 1910 beruhte auf einem falsch übersetzten Wort. Kein Dokument entscheidet die Frage, weder in die eine noch in die andere Richtung."
+          "a": "Kein Dokument entscheidet das. Die Quellen kennen ein Verfahren von 1476, das mit einem Freispruch endete, keine Ehefrau, kein Kind und einen Haushalt, den er viele Jahre mit Salaì teilte und später mit Melzi.",
+          "known": "Im April 1476 beschuldigte eine anonyme Anzeige in Florenz ihn und drei andere Männer der Sodomie. Das Verfahren wurde eingestellt und im Juni mit einem Freispruch beendet, und eine Anzeige belegt keine Schuld. Mehrere Forscher, unter ihnen Frank Zöllner und Giovanni Dall'Orto, sehen in ihm einen Mann, der Männer liebte. Die Historikerin Elizabeth Abbott hält ihn nach heutigen Begriffen wohl für homosexuell, glaubt aber, er habe sich nach 1476 für ein enthaltsames Leben entschieden, und gibt zu bedenken, dass es Homosexualität als Identität zu seiner Zeit nicht gab. Einige wenige haben nach einer Frau in seinem Leben gesucht, auf sehr dünner Grundlage, und Sigmund Freuds berühmte Deutung von 1910 beruhte auf einem falsch übersetzten Wort. Kein Dokument entscheidet die Frage, weder in die eine noch in die andere Richtung."
         },
         {
           "id": "parents",
@@ -582,7 +582,7 @@
           "nav": "Linkshänder?",
           "q": "War Leonardo da Vinci Linkshänder?",
           "a": "Ja. Er schrieb seine Notizen mit der linken Hand von rechts nach links, sodass sie sich im Spiegel normal lesen.",
-          "known": "Das sagt schon Vasari 1568. 2019 untersuchte das Opificio delle Pietre Dure in Florenz seine Zeichnung von 1473: Das Datum vorn in Spiegelschrift schrieb er mit der linken Hand, eine Zeile in gewöhnlicher Schrift auf der Rückseite mit der rechten. Er konnte also beides. Warum er in Spiegelschrift schrieb, weiß man nicht. Die verbreitete Erklärung, er habe seine Ideen verstecken wollen, hat keine Quelle."
+          "known": "Das sagt schon Vasari 1568. 2019 untersuchte das Opificio delle Pietre Dure in Florenz seine Zeichnung von 1473: Das Datum vorn in Spiegelschrift schrieb er mit der linken Hand, eine Zeile in gewöhnlicher Schrift auf der Rückseite mit der rechten. Er konnte also beides. Warum er in Spiegelschrift schrieb, weiß man nicht. Verbreitet ist die Erklärung, er habe seine Ideen verstecken wollen. Einen Beleg aus seiner Zeit dafür kennen wir nicht."
         },
         {
           "id": "vegetarian",

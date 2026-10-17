@@ -31,7 +31,7 @@
   },
   "top": {
     "h1": "Leonardo da Vinci's life, year by year",
-    "answer": "Leonardo da Vinci was a painter and engineer, the painter of the Mona Lisa and the Last Supper. He was born on 15 April 1452 near Vinci in Tuscany, as his grandfather noted, and he died at Cloux, by Amboise in France, on 2 May 1519, aged 67. Here is his life year by year, and every date says how sure it is.",
+    "answer": "Leonardo da Vinci was a painter and engineer who painted the Mona Lisa and the Last Supper. He was born near Vinci in Tuscany on 15 April 1452, the day his grandfather wrote down, and he died at Cloux, by Amboise in France, on 2 May 1519, aged 67. Here is his life year by year, and every date says how sure it is.",
     "jump": true,
     "facts": {
       "id": "facts",
@@ -318,7 +318,7 @@
               "id": "life-28",
               "date": "Autumn 1502",
               "k": "mark_documented",
-              "line": "He draws his plan of the town of Imola, which survives at Windsor. The season is the usual dating by scholars, not a record."
+              "line": "He draws his plan of the town of Imola, which survives at Windsor. Scholars usually date it to that autumn."
             },
             {
               "id": "life-29",
@@ -382,7 +382,7 @@
           "id": "rome",
           "nav": "Rome",
           "h": "Rome, 1513 to 1516",
-          "p": "On 24 September 1513 he left Milan for Rome with Melzi, Salaì and two more of his household. His patron there was Giuliano de' Medici, brother of Pope Leo X, who gave him rooms in the Belvedere of the Vatican. He worked on mirrors, on geometry and on plans for the Pontine marshes, but the records of these years are thin. Later writers tell of a mechanical lion he made for a king, a story no record of the time confirms. Giuliano died in March 1516, and that year Leonardo left for France.",
+          "p": "On 24 September 1513 he left Milan for Rome with Melzi, Salaì and two more of his household. His patron there was Giuliano de' Medici, brother of Pope Leo X, who gave him rooms in the Belvedere of the Vatican. He worked on mirrors, on geometry and on plans for the Pontine marshes, but the records of these years are thin. Later writers tell of a mechanical lion he made for a king, a story for which we found no record of the time. Giuliano died in March 1516, and that year Leonardo left for France.",
           "items": [
             {
               "id": "life-35",
@@ -410,7 +410,7 @@
           "nav": "Amboise",
           "h": "Amboise, 1516 to 1519",
           "p": [
-            "In 1516 he went to France, into the service of King Francis I, and lived at Cloux, today the Clos Lucé, close to the royal castle of Amboise. Melzi came with him. In October 1517 a visitor found him with a partly paralysed right hand, still drawing and teaching. His last years in France, his will, his death and his grave have ",
+            "In 1516 he went to France, into the service of King Francis I, and lived at Cloux, today the Clos Lucé, close to the royal castle of Amboise. Melzi came with him. In October 1517 a visitor found his right hand partly paralysed, though he still drew and taught. His last years in France, his will, his death and his grave have ",
             {
               "text": "their own page",
               "page": "last-years"
@@ -448,7 +448,7 @@
           "id": "after-1519",
           "nav": "After 1519",
           "h": "After 1519, what was left",
-          "p": "Melzi inherited his books and notes and kept them in his family's house. After Melzi's death about 1570 they passed to his son Orazio, and the sculptor Pompeo Leoni bought sheets and bound them into albums. The largest gathering of his sheets, the Codex Atlanticus, went to Milan's Ambrosiana library in 1637, was carried off to Paris in 1796 and came back in 1815. Thousands of pages of his notes survive, and you can turn some of them at the wing's reading table. The Mona Lisa, meanwhile, was stolen from the Louvre in 1911 and found again in Florence two years later.",
+          "p": "Melzi inherited his books and notes. After Melzi's death about 1570 they passed to his son Orazio, and the sculptor Pompeo Leoni bought sheets and bound them into albums. The largest gathering of his sheets, the Codex Atlanticus, went to Milan's Ambrosiana library in 1637, was carried off to Paris in 1796 and came back in 1815. Thousands of pages of his notes survive, and you can turn some of them at the wing's reading table. The Mona Lisa, meanwhile, was stolen from the Louvre in 1911 and found again in Florence two years later.",
           "items": [
             {
               "id": "life-43",
@@ -540,15 +540,15 @@
           "id": "sexuality",
           "nav": "Was he gay?",
           "q": "Was Leonardo da Vinci gay?",
-          "a": "No document settles it. The records hold one anonymous accusation from 1476, which was dismissed, no known wife or child, and a household he shared for many years with Salaì, who came to him as a boy, and later with Melzi.",
-          "known": "In Florence in April 1476, an unsigned denunciation named him, with three other men, in a case of sodomy. The charge was dropped, the case ended in June with the accused absolved, and an accusation is not a finding of guilt. Several scholars, among them Frank Zöllner and Giovanni Dall'Orto, read him as a man who loved men. The historian Elizabeth Abbott thinks he chose a celibate life after 1476, and points out that being gay, as an identity, was not an idea of his time. A few others have searched for a woman in his life, on very weak evidence, and Sigmund Freud's famous reading of 1910 rested on a mistranslated word. No document settles it either way."
+          "a": "No document settles it. The records hold one case from 1476, which ended with the accused absolved, no known wife or child, and a household he shared for many years with Salaì, and later with Melzi.",
+          "known": "In Florence in April 1476, an unsigned denunciation named him, with three other men, in a case of sodomy. The charge was dropped, the case ended in June with the accused absolved, and an accusation is not a finding of guilt. Several scholars, among them Frank Zöllner and Giovanni Dall'Orto, read him as a man who loved men. The historian Elizabeth Abbott thinks he would likely count as gay in today's words, but chose a celibate life after 1476, and points out that being gay, as an identity, was not an idea of his time. A few others have searched for a woman in his life, on very weak evidence, and Sigmund Freud's famous reading of 1910 rested on a mistranslated word. No document settles it either way."
         },
         {
           "id": "parents",
           "nav": "Parents",
           "q": "Who were Leonardo da Vinci's parents?",
           "a": "His father was ser Piero da Vinci, a notary in Florence. His mother was a woman named Caterina, and the two were not married.",
-          "known": "His grandfather's tax return from the late 1450s lists the boy as ser Piero's son, not born in marriage, and names his mother Caterina, by then the wife of a man of Vinci known as Accattabriga. Who she was is still argued over. In 2023 the scholar Carlo Vecce presented a deed that Leonardo's father wrote in November 1452, freeing an enslaved woman named Caterina from the Caucasus, and he thinks she was the mother. Martin Kemp and Giuseppe Pallanti argued in 2017 for a poor orphan from near Vinci. Both are hypotheses, and no document says which, if either, is right. In 1493 a Caterina moved into his house in Milan, and about a year later he paid for her funeral: scholars usually take her to be his mother."
+          "known": "His grandfather's tax return from the late 1450s lists the boy as ser Piero's son, not born in marriage, and names his mother Caterina, by then the wife of a man of Vinci known as Accattabriga. Who she was is still argued over. In 2023 the scholar Carlo Vecce presented a deed that Leonardo's father wrote in November 1452, freeing an enslaved woman named Caterina from the Caucasus, and Vecce thinks she was Leonardo's mother. Martin Kemp and Giuseppe Pallanti argued in 2017 for a poor orphan from near Vinci. Both are hypotheses, and no document says which, if either, is right. In 1493 a Caterina moved into his house in Milan, and about a year later he paid for her funeral: scholars usually take her to be his mother."
         },
         {
           "id": "siblings",
@@ -569,7 +569,7 @@
           "nav": "Left-handed?",
           "q": "Was Leonardo da Vinci left-handed?",
           "a": "Yes. He wrote his notes with his left hand, from right to left, so they read normally in a mirror.",
-          "known": "Vasari already said so in 1568. In 2019 a study of his drawing dated 1473, by the Opificio delle Pietre Dure in Florence, found the date in mirror writing on the front, made with the left hand, and a line in ordinary script on the back, made with the right. So he could write both ways. Why he chose mirror writing is not known. The popular idea that he did it to hide his ideas has no source behind it."
+          "known": "Vasari already said so in 1568. In 2019 a study of his drawing dated 1473, by the Opificio delle Pietre Dure in Florence, found the date in mirror writing on the front, made with the left hand, and a line in ordinary script on the back, made with the right. So he could write both ways. Why he chose mirror writing is not known. The popular idea is that he did it to hide his ideas. We know of no record from his time that says so."
         },
         {
           "id": "vegetarian",
