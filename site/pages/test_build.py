@@ -4129,5 +4129,59 @@ class SiteWide(unittest.TestCase):
         self.assertEqual(cards, {"vinci-life"})
 
 
+class SoftChecks(unittest.TestCase):
+    """Two checks that warn and never stop the build: a picture at one scale whose words give no length or not the
+    person's height, and an answer whose second or third sentence leans on the one before while it carries a number."""
+
+    @classmethod
+    def setUpClass(cls):
+        cls.build = _pages_build()
+
+    def page(self, alt, answer, person="1.70 m", key="scale"):
+        return {"top": {key: {"alt": alt}, "answer": answer}, "labels": {"person": person}}
+
+    def test_a_scale_picture_names_a_length_and_the_persons_height(self):
+        soft = self.build.soft_problems
+        good = self.page("A T. rex about 11.4 m (37 ft) long beside a grey person 1.70 m (5 ft 7 in) tall.", "One. Two.")
+        self.assertEqual(soft(good, "en"), [])
+        bare = soft(self.page("A T. rex beside a grey person who stands far below its hips.", "One."), "en")
+        self.assertEqual(len(bare), 2)
+        self.assertIn("top.scale.alt names no length with its unit", bare)
+        # the person's height alone, with its feet in brackets, is no length of the animal
+        only = soft(self.page("A shark beside a grey person 1.70 m (5 ft 7 in) tall.", "One."), "en")
+        self.assertEqual(only, ["top.scale.alt names no length with its unit"])
+        self.assertEqual(soft(self.page("Ein T. rex, etwa 11,4 Meter lang, neben einem Menschen von 1,70 Metern.", "Eins.",
+                                        "1,70 m"), "de"), [])
+        self.assertEqual(soft(self.page("Тиранозавър, дълъг 11,4 м, до човек от 1,70 м.", "Едно.", "1,70 м"), "bg"), [])
+        drawing = soft(self.page("The Last Supper, 4.6 by 8.8 metres.", "One.", "1.7 m", "drawing"), "en")
+        self.assertEqual(drawing, ["top.drawing.alt does not name the person's height (1.7 m)"])
+
+    def test_an_answer_whose_later_sentence_leans_on_a_pronoun_with_a_number(self):
+        soft = self.build.soft_problems
+        answer = "The Last Supper is in Milan. Leonardo painted it on a wall. He began it in about 1494. It is 8.8 m wide."
+        found = soft({"top": {"answer": answer}, "labels": {}}, "en")
+        self.assertEqual(len(found), 1)
+        self.assertRegex(found[0], r"^top\.answer's sentence 3 opens on 'He' and carries a number")
+        # the first sentence and the fourth are never read; a pronoun without a number is no warning
+        self.assertEqual(soft({"top": {"answer": "It is 8.8 m wide. It is old. Leonardo made it. It took 3 years."},
+                               "labels": {}}, "en"), [])
+        self.assertEqual(len(soft({"top": {"answer": "Das Abendmahl ist in Mailand. Er malte es ab 1494."}, "labels": {}},
+                                  "de")), 1)
+        # an Italian sentence opening on its article is no pronoun
+        self.assertEqual(soft({"top": {"answer": "Il Cenacolo è a Milano. Il dipinto misura 8,8 m."}, "labels": {}}, "it"), [])
+
+    def test_the_warnings_never_stop_a_build_and_name_their_page(self):
+        build = self.build
+        data, wings, info, _ = build.load_pages()
+        page, bare = "t-rex", dict(data["t-rex"]["en"])
+        bare["top"] = dict(bare["top"], scale=dict(bare["top"]["scale"], alt="A T. rex beside a grey person."))
+        wing = build.wing_of(page, bare, wings)
+        del build.WARNINGS[:]
+        problems = build.lint(page, "en", bare, wing, build.Names([], wing["name"]["en"], "en"), info[page]["topic"])
+        self.assertFalse([p for p in problems if "top.scale.alt" in p])
+        self.assertIn("t-rex.en: top.scale.alt names no length with its unit", build.WARNINGS)
+        self.assertTrue(all(w.startswith(f"{page}.en: ") for w in build.WARNINGS))
+
+
 if __name__ == "__main__":
     unittest.main(verbosity=1)

@@ -654,7 +654,77 @@ def lint(page, lang, data, wing, names, topic=None):
             problems.append(f"{page}.{lang}: page.{key} is {value!r}, not a day as YYYY-MM-DD")
     if not data["page"].get("hub") and lang not in CHECKED_LINE:
         problems.append(f"{page}.{lang}: no line for the day the facts were checked in {lang} (CHECKED_LINE, MONTHS)")
+    WARNINGS.extend(f"{page}.{lang}: {x}" for x in soft_problems(data, lang))
     return problems
+
+
+# ---------- soft checks: warned, never refused ----------
+
+# What the last build's lint() found to improve; build_pages empties it and prints it.
+WARNINGS = []
+
+# A length with its unit: "12 m", "79.4 by 53.4 centimetres", "1,70 Metern", "39 ft".
+LENGTH_UNIT = (r"(?:mm|cm|km|m|ft|feet|foot|(?:centi|milli|kilo)?(?:metres?|meters?)|(?:[Zz]enti|[Mm]illi|[Kk]ilo)?[Mm]etern?"
+               r"|(?:cent[íi]|mil[íi]|quil[ôo])?metros?|(?:centi|milli|kilo)?mètres?|(?:centi|milli|chilo)?metr[io]"
+               r"|(?:санти|мили|кило)?метр(?:а|и)?|см|мм|км|м)(?!\w)")
+LENGTH = re.compile(r"(?<![\w.,])(\d+(?:[.,]\d+)?)[ \u00a0]?" + LENGTH_UNIT)
+
+# Words that lean on the sentence before when they open one; Italian drops its subject and its "Il" is an article.
+LEANING = {"en": "It Its They Their He His She Her",
+           "de": "Er Sie Es Sein Seine Seinen Seinem Seiner Ihr Ihre Ihren Ihrem Ihrer",
+           "es": "Él Ella Ellos Ellas Su Sus", "pt-BR": "Ele Ela Eles Elas Seu Sua Seus Suas",
+           "fr": "Il Elle Ils Elles Son Sa Ses Leur Leurs", "it": "Lui Lei Esso Essa Suo Sua Suoi Sue",
+           "bg": "Той Тя То Те Неговият Нейният Техният Неговата Нейната Тяхната"}
+
+
+def number_of(text):
+    return float(text.replace(",", "."))
+
+
+def sentences(text, lang):
+    """The sentences of an answer, cut where lead_split would cut its first."""
+    out = []
+    while True:
+        cut = None
+        for m in LEAD_END.finditer(text):
+            word = re.search(r"([^\s.]+)[.!?]$", text[:m.start()])
+            word = word.group(1) if word else ""
+            if not ((len(word) == 1 and word.isupper()) or word in LEAD_ABBR or (lang != "en" and word.isdigit() and len(word) <= 2)):
+                cut = m
+                break
+        if not cut:
+            return out + [text]
+        out.append(text[:cut.start()])
+        text = text[cut.end():]
+
+
+def soft_problems(data, lang):
+    """What a page could say better for a reader or an answer that lifts one part of it: a picture at one scale whose
+    words give no length with its unit or not the person's height, and an answer whose second or third sentence opens
+    on a word that leans on the one before while it carries a number."""
+    found, top = [], data["top"]
+    person = re.match(r"\d+(?:[.,]\d+)?", data["labels"].get("person", ""))
+    for key in ("scale", "figure", "drawing"):
+        alt = (top.get(key) or {}).get("alt") if isinstance(top.get(key), dict) else None
+        if not alt or not person:
+            continue
+        alt = alt.replace("\u00a0", " ")
+        own = [m for m in LENGTH.finditer(alt) if number_of(m.group(1)) == number_of(person.group(0))]
+        # the person's height in another unit stands in brackets after it: "1.70 m (5 ft 7 in)"
+        rest = alt
+        for m in reversed(own):
+            tail = re.match(r"\s*\([^)]*\)", rest[m.end():])
+            rest = rest[:m.start()] + rest[m.end() + (tail.end() if tail else 0):]
+        if not LENGTH.search(rest):
+            found.append(f"top.{key}.alt names no length with its unit")
+        if not own:
+            found.append(f"top.{key}.alt does not name the person's height ({data['labels']['person']})")
+    lean = set(LEANING.get(lang, "").split())
+    for n, sentence in enumerate(sentences(answer_text(top.get("answer", "")), lang)[1:3], start=2):
+        first = re.match(r"[„\"(]?([^\W\d_]+)", sentence)
+        if first and first.group(1) in lean and re.search(r"\d", sentence):
+            found.append(f"top.answer's sentence {n} opens on {first.group(1)!r} and carries a number: {sentence[:70]}")
+    return found
 
 
 # ---------- pictures ----------
@@ -2872,6 +2942,7 @@ def build_pages(out_dir, site_src=SITE_SRC, site_built=SITE_BUILT, pages=PAGES, 
     """Builds every page into out_dir with the files it uses under out_dir/static/.
     Returns the list of written pages. Raises SystemExit with the problems when a rule is broken."""
     out_dir, site_src, site_built = Path(out_dir), Path(site_src), Path(site_built)
+    del WARNINGS[:]
     parts = parts_of((HERE / "template.html").read_text(encoding="utf-8"))
     data, wings, info, problems = load_pages(pages)
     names = json.loads(NAMES_FILE.read_text(encoding="utf-8"))["names"]
@@ -3008,6 +3079,8 @@ def build_pages(out_dir, site_src=SITE_SRC, site_built=SITE_BUILT, pages=PAGES, 
                 if where.isupper() or "wing" in where or "outside" in where or "moved" in where:
                     print(f"    link {ref}: {where}")
         print(f"static files copied: {len(files)}. All checks passed.")
+        for line in WARNINGS:
+            print(f"warning: {line}")
     return [path for path, _, _, _ in built]
 
 
@@ -3031,6 +3104,12 @@ def facts(pages=PAGES):
 if __name__ == "__main__":
     if "--facts" in sys.argv:
         facts()
+    elif "--warnings" in sys.argv:
+        found, _, info, _ = load_pages()
+        for page, every in found.items():
+            for lang in info[page]["langs"]:
+                for line in soft_problems(every[lang], lang):
+                    print(f"{page}.{lang}: {line}")
     else:
         out = HERE / "out"
         if "--out" in sys.argv:
