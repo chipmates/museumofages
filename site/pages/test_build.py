@@ -796,16 +796,16 @@ class Case(unittest.TestCase):
                 self.save(lang, original, page)
 
     def test_a_brachiosaurus_number_stands_only_with_the_words_that_say_whose_it_is(self):
-        """The page names our model's 11.8 m head and its 21.5 and 24.4 m, the 80 and 50 tonnes, Berlin's 13 and 12 m, the
+        """The page names our model's 11.5 m head and its 21.3 and 24.0 m, the 80 and 50 tonnes, Berlin's 13 and 12 m, the
         arm bone's 2.04 m, the old name, the nostrils, the swamp, the largest dinosaur and the Tendaguru dig on purpose:
         without the words that say whose the number is or what the claim was, the same fields stop the build."""
         page = self.topic_page("brachiosaurus")
         cases = [
             ({"en": (r"Our model's neck rises", "The neck rises"), "de": (r"Der Hals unseres Modells steigt", "Der Hals steigt")},
-             "11.8 m only as ours"),
-            ({"en": (r"\(80 ft\) along the backbone, 21\.5 m \(71 ft\) straight with the neck raised", "(80 ft), 21.5 m (71 ft)"),
-              "de": (r"24,4 m entlang der Wirbelsäule, 21,5 m gerade mit erhobenem Hals", "24,4 m, 21,5 m")},
-             "21.5 m and 24.4 m only as ours"),
+             "11.5 m only as ours"),
+            ({"en": (r"\(79 ft\) along the backbone, 21\.3 m \(70 ft\) straight with the neck raised", "(79 ft), 21.3 m (70 ft)"),
+              "de": (r"24,0 m entlang der Wirbelsäule, 21,3 m gerade mit erhobenem Hals", "24,0 m, 21,3 m")},
+             "21.3 m and 24.0 m only as ours"),
             ({"en": (r"A figure of 1962 from[^\"]*", "A figure."), "de": (r"Eine Zahl von 1962 aus[^\"]*", "Eine Zahl.")},
              "80 tonnes only as Colbert's outlier of 1962"),
             ({"en": (r"The Berlin exhibition's label of 2007[^\"]*", "A figure."),

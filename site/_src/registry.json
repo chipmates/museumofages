@@ -1067,20 +1067,20 @@
             "13 m and 12 m tall only with the Berlin mount or Giraffatitan"
           ],
           [
-            "(?s)^(?!.*(?:(?:\\bour\\b|\\bours\\b|\\bunser\\w*)|model|modell|\\bnuestr\\w*|\\bnoss[oa]s?\\b)).*\\b11[.,]8\\s?m\\b",
-            "11.8 m only as ours, our model's"
+            "(?s)^(?!.*(?:(?:\\bour\\b|\\bours\\b|\\bunser\\w*)|model|modell|\\bnuestr\\w*|\\bnoss[oa]s?\\b)).*\\b11[.,][58]\\s?m\\b",
+            "11.5 m only as ours, our model's"
           ],
           [
-            "(?s)^(?!.*(?:neck|hals|pose|haltung|chose|choice|gewählt|wahl|cuello|pescoço|postura|elegimos|elegid[oa]|escolh)).*\\b11[.,]8\\s?m\\b",
-            "11.8 m only with the neck we chose"
+            "(?s)^(?!.*(?:neck|hals|pose|haltung|chose|choice|gewählt|wahl|cuello|pescoço|postura|elegimos|elegid[oa]|escolh)).*\\b11[.,][58]\\s?m\\b",
+            "11.5 m only with the neck we chose"
           ],
           [
             "(?<![\\d.,])(?:23|1[46])\\s?(?:m|metres?|meters?|metern?)\\b\\s(?:\\(\\d+\\sft\\)\\s)?(?:tall|high|hoch)",
             "never 23 m, 16 m or 14 m tall: no height of Brachiosaurus was measured"
           ],
           [
-            "(?s)^(?!.*(?:(?:\\bour\\b|\\bours\\b|\\bunser\\w*)|model|modell|along\\sthe\\sbackbone|entlang\\sder\\swirbelsäule|neck\\sraised|erhobenem\\shals|columna|coluna|cuello\\slevantado|pescoço\\serguido|\\bnuestr\\w*|\\bnoss[oa]s?\\b)).*\\b(?:21[.,]5|24[.,]4)\\s?m\\b",
-            "21.5 m and 24.4 m only as ours: Brachiosaurus was about 22 to 25 m"
+            "(?s)^(?!.*(?:(?:\\bour\\b|\\bours\\b|\\bunser\\w*)|model|modell|along\\sthe\\sbackbone|entlang\\sder\\swirbelsäule|neck\\sraised|erhobenem\\shals|columna|coluna|cuello\\slevantado|pescoço\\serguido|\\bnuestr\\w*|\\bnoss[oa]s?\\b)).*\\b(?:21[.,][35]|24[.,][04])\\s?m\\b",
+            "21.3 m and 24.0 m only as ours: Brachiosaurus was about 22 to 25 m"
           ],
           [
             "(?s)^(?!.*(?:\\bour\\b|\\bours\\b|\\bunser\\w*)).*\\b\\d+\\s?(?:°|degrees?|grad)\\b",
