@@ -69,10 +69,10 @@
   }
  },
  "meta": {
-  "title": "Mamute-lanoso: tamanho de uns 2,7 a 3,3 m | Museum of Ages",
+  "title": "Mamute-lanoso: tamanho, 2,7 a 3,3 m de alto | Museum of Ages",
   "description": "Qual era o tamanho do mamute-lanoso? Um macho da Sibéria tinha cerca de 2,7 a 2,9 m no ombro e cerca de 4 a 5 t. O nosso é um macho real, em escala.",
-  "og_title": "Mamute-lanoso: tamanho de cerca de 2,7 a 3,3 m",
-  "og_image_alt": "Um mamute-lanoso de lado, com pelagem marrom-escura: a cabeça alta e abaulada, o dorso inclinado, duas presas curvas e uma marca no ombro. A pessoa cinza ao lado fica mais baixa que as pontas das presas."
+  "og_title": "Mamute-lanoso: tamanho de 2,7 a 3,3 m de altura",
+  "og_image_alt": "O nosso mamute-lanoso, o macho de Berezovka, de lado, com pelagem marrom-escura: a cabeça alta e abaulada, o dorso inclinado, duas presas curvas e uma marca no ombro, a 271 cm por uma reconstrução. A pessoa cinza ao lado, de 1,70 m, fica mais baixa que as pontas das presas."
  },
  "labels": {
   "crumbs": "Você está aqui",
@@ -89,12 +89,12 @@
  "top": {
   "h1": "Qual era o tamanho do mamute-lanoso?",
   "answer": "Um macho adulto de mamute-lanoso, ou mamute-lanudo, da Sibéria tinha cerca de 2,7 a 2,9 m de altura no ombro e pesava cerca de 4 a 5 toneladas. Os machos maiores da Europa chegavam a cerca de 3 a 3,3 m e a cerca de 5 a 7 toneladas. O nosso é um único macho siberiano real, encontrado congelado em 1900: 2,71 m no ombro e cerca de 4,2 toneladas, reconstruídos a partir dos ossos dele. Ao lado da pessoa de 1,70 m, o ombro dele fica mais ou menos na altura de uma pessoa e meia.",
-  "answer_more": "Então um macho de mamute da Sibéria era mais ou menos tão alto quanto um macho de elefante-asiático, e um pouco mais pesado para a altura dele. Um macho grande de elefante-africano-da-savana é mais ou menos meio metro mais alto e pesa mais.",
+  "answer_more": "Um macho de mamute da Sibéria era mais ou menos tão alto quanto um macho de elefante-asiático, e um pouco mais pesado para a altura dele. Um macho grande de elefante-africano-da-savana é mais ou menos meio metro mais alto e pesa mais.",
   "scale": {
    "pic": "side",
    "tag": "tag_made",
    "what": "O nosso mamute-lanoso ao lado de uma pessoa de 1,70 m, na mesma escala. Ele foi feito com o tamanho e a estrutura de um único animal real, o macho de Berezovka, encontrado congelado em 1900 no nordeste da Sibéria. A marca no ombro é a altura dele em vida, 271 cm, reconstruída a partir dos ossos dele. Quando morreu, ele tinha só uma presa, a esquerda. A direita tinha caído muito antes, e os caçadores que o encontraram cortaram a esquerda e a venderam. O nosso tem as duas: a direita é o reflexo da esquerda, uma reconstrução.",
-   "alt": "Um mamute-lanoso de lado, com pelagem marrom-escura: a cabeça alta e abaulada, o dorso inclinado, duas presas curvas e uma marca no ombro. A pessoa cinza ao lado fica mais baixa que as pontas das presas.",
+   "alt": "O nosso mamute-lanoso, o macho de Berezovka, de lado, com pelagem marrom-escura: a cabeça alta e abaulada, o dorso inclinado, duas presas curvas e uma marca no ombro, a 271 cm por uma reconstrução. A pessoa cinza ao lado, de 1,70 m, fica mais baixa que as pontas das presas.",
    "note": "A nossa própria reconstrução, construída em código a partir de medidas publicadas e renderizada com o nosso próprio motor gráfico. Não são fotografias.",
    "marks": [
     {
@@ -325,6 +325,14 @@
    "h": "Números que você talvez tenha lido",
    "intro": "Para cada número: de onde ele vem e o que significa.",
    "rows": [
+    {
+     "term": "Do tamanho de um elefante-africano",
+     "text": "Vale para os grandes machos da Europa, com cerca de 3 a 3,3 m no ombro e 5 a 7 toneladas, mais ou menos como um macho de elefante-africano-da-savana. Os machos da Sibéria, o nosso entre eles, pareciam mais com um macho de elefante-asiático. Todos esses números vêm de um mesmo estudo de 2016 e do método dele."
+    },
+    {
+     "term": "Machos de 2,7 a 3,4 m, fêmeas de 2,6 a 2,9 m, 5 a 6 toneladas",
+     "text": "Números de livros de divulgação dos anos 1990, que sites em alemão ainda citam. Um estudo de 2016 calculou muitos esqueletos do mesmo jeito, região por região: os machos da Sibéria deram cerca de 2,7 a 2,9 m e 4 a 5 toneladas, os grandes machos da Europa 5 a 7 toneladas, e as fêmeas cerca de 2,3 a 2,6 m."
+    },
     {
      "term": "3,4 m",
      "text": "Um número de um manual de 2007 para um macho grande, espalhado por uma tabela de tamanhos muito usada. Ele combina com um macho grande da Europa, não com um típico da Sibéria, nem com o nosso."
