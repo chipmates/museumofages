@@ -475,6 +475,7 @@
   {
    "type": "pages",
    "id": "next",
+   "nav": "Mais animais na mesma escala",
    "h": "Mais animais na mesma escala",
    "items": [
     {

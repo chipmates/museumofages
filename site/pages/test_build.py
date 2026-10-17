@@ -4117,6 +4117,11 @@ class SiteWide(unittest.TestCase):
                 # a topic page: one h2 for the list, then each neighbour an h3
                 self.assertEqual(levels, ["2"] + ["3"] * len(items), path)
                 self.assertRegex(listed.group(2), r"^\s*<h2>(?:(?!</h2>).)+</h2>\s*<ul class=\"sc-list\">", path)
+                # and "On this page" names it in the heading's words, so the side list follows the reader through it
+                own = re.search(r'<section class="sp-sec sc-pages sc-pages--next" id="([\w-]+)">\s*<h2>(.*?)</h2>', text, flags=re.S)
+                toc = re.search(rf'<li><a href="#{own.group(1)}">(.*?)</a></li>', text, flags=re.S)
+                self.assertTrue(toc, path)
+                self.assertEqual(re.sub(r"<[^>]+>", "", toc.group(1)), re.sub(r"<[^>]+>", "", own.group(2)), path)
                 found["topic"] += 1
             else:
                 # the wing's list of pages: each page an h2, as the page's own sections
