@@ -2155,6 +2155,10 @@ def render(page, lang, data, shared, out_root):
         # structured data is its share picture
         frame = {"alt": data["meta"]["og_image_alt"], "still": og["file"], "caption": data["meta"]["og_title"],
                  "description": data["meta"]["og_image_alt"]}
+        if data["top"].get("plate"):
+            # the work's plate in the first part, without the card's words, in the words it shows there
+            plate = data["top"]["plate"]
+            frame = {"pic": plate["pic"], "alt": plate["alt"], "description": plate["alt"], "caption": plate["title"]}
         if data["page"].get("primary"):
             # a picture the page shows further down, without the card's words
             frame = primary_frame(data)
