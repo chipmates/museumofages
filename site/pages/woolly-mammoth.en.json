@@ -71,8 +71,8 @@
  "meta": {
   "title": "Woolly mammoth size: 2.7 to 3.3 m tall | Museum of Ages",
   "description": "Woolly mammoth size: a Siberian bull stood about 2.7 to 2.9 m (9 ft) at the shoulder and weighed about 4 to 5 tonnes. Ours is one real bull, to scale.",
-  "og_title": "Woolly mammoth size: 2.7 to 3.3 m tall",
-  "og_image_alt": "Our woolly mammoth, the Berezovka bull, from the side in a dark brown coat: high domed head, sloping back, two curved tusks, and a mark at his shoulder, 271 cm (8.9 ft) by a reconstruction. The grey person beside him, 1.70 m tall, stands lower than the tusk tips."
+  "og_title": "Woolly mammoth size: about 2.7 to 3.3 m tall",
+  "og_image_alt": "Our woolly mammoth, the Berezovka bull, from the side in a dark brown coat: high domed head, sloping back, two curved tusks, and a mark at his shoulder height, 271 cm (8.9 ft) by a reconstruction. The grey person beside him, 1.70 m tall, stands lower than the tusk tips."
  },
  "labels": {
   "crumbs": "You are here",
@@ -94,7 +94,7 @@
    "pic": "side",
    "tag": "tag_made",
    "what": "Our woolly mammoth beside a person 1.70 m tall, to one scale. He is built to the size and frame of one real animal, the Berezovka bull, found frozen in north-east Siberia in 1900. The mark at his shoulder is his own height in the flesh, 271 cm (8.9 ft), reconstructed from his bones. When he died he had one tusk left, the left. The right had fallen out long before, and the hunters who found him cut off the left and sold it. Ours carries both, the right as a mirror of the left, a reconstruction.",
-   "alt": "Our woolly mammoth, the Berezovka bull, from the side in a dark brown coat: high domed head, sloping back, two curved tusks, and a mark at his shoulder, 271 cm (8.9 ft) by a reconstruction. The grey person beside him, 1.70 m tall, stands lower than the tusk tips.",
+   "alt": "Our woolly mammoth, the Berezovka bull, from the side in a dark brown coat: high domed head, sloping back, two curved tusks, and a mark at his shoulder height, 271 cm (8.9 ft) by a reconstruction. The grey person beside him, 1.70 m tall, stands lower than the tusk tips.",
    "note": "Our own reconstruction, built in code from published measurements and rendered in our own engine. Not photographs.",
    "marks": [
     {
@@ -327,11 +327,11 @@
    "rows": [
     {
      "term": "As big as an African elephant",
-     "text": "True of the big European bulls, about 3 to 3.3 m (10 to 11 ft) at the shoulder and 5 to 7 tonnes, much like an African bush elephant bull. The Siberian bulls, ours among them, matched an Asian elephant bull instead. All these figures come from one study of 2016 and its method."
+     "text": "True of the big European bulls, about 3 to 3.3 m (10 to 11 ft) at the shoulder and 5 to 7 tonnes, much like an African bush elephant bull. The Siberian bulls, ours among them, were about as tall as an Asian elephant bull instead. All these figures come from one study of 2016 and its method."
     },
     {
      "term": "Bulls 2.7 to 3.4 m, cows 2.6 to 2.9 m, 5 to 6 tonnes",
-     "text": "From popular books of the 1990s, still quoted on German sites. A study of 2016 worked out many skeletons the same way, region by region: the Siberian bulls came to about 2.7 to 2.9 m (9 ft) and 4 to 5 tonnes, the big European bulls to 5 to 7 tonnes, the cows to about 2.3 to 2.6 m (7.5 to 8.5 ft)."
+     "text": "From popular books of the 1990s, still quoted on German sites. A study of 2016 worked out the heights and weights of many skeletons the same way, region by region: the Siberian bulls came to about 2.7 to 2.9 m (9 ft) and 4 to 5 tonnes, the big European bulls to 5 to 7 tonnes, the cows to about 2.3 to 2.6 m (7.5 to 8.5 ft)."
     },
     {
      "term": "3.4 m",

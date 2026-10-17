@@ -71,8 +71,8 @@
  "meta": {
   "title": "Mamut lanudo: tamaño de 2,7 a 3,3 m de alto | Museum of Ages",
   "description": "¿Cuánto medía el mamut lanudo? Un macho de Siberia, unos 2,7 a 2,9 m a la altura del hombro y unas 4 a 5 t. El nuestro es un macho real, a escala.",
-  "og_title": "Mamut lanudo: tamaño de 2,7 a 3,3 m de alto",
-  "og_image_alt": "Nuestro mamut lanudo, el macho de Berezovka, de lado, con pelaje marrón oscuro: la cabeza alta y abombada, el lomo en pendiente, dos colmillos curvos y una marca en el hombro, a 271 cm según una reconstrucción. La persona gris de al lado, de 1,70 m, queda más baja que las puntas de los colmillos."
+  "og_title": "Mamut lanudo: tamaño de unos 2,7 a 3,3 m de alto",
+  "og_image_alt": "Nuestro mamut lanudo, el macho de Berezovka, de lado, con pelaje marrón oscuro: la cabeza alta y abombada, el lomo en pendiente, dos colmillos curvos y una marca a la altura del hombro, a 271 cm según una reconstrucción. La persona gris de al lado, de 1,70 m, queda más baja que las puntas de los colmillos."
  },
  "labels": {
   "crumbs": "Estás aquí",
@@ -94,7 +94,7 @@
    "pic": "side",
    "tag": "tag_made",
    "what": "Nuestro mamut lanudo junto a una persona de 1,70 m, a la misma escala. Está hecho con el tamaño y el armazón de un solo animal real, el macho de Berezovka, encontrado congelado en 1900 en el noreste de Siberia. La marca en su hombro es su propia altura en vida, 271 cm, reconstruida a partir de sus huesos. Cuando murió le quedaba un solo colmillo, el izquierdo. El derecho se le había caído mucho antes, y los cazadores que lo encontraron cortaron el izquierdo y lo vendieron. El nuestro lleva los dos: el derecho es el reflejo del izquierdo, una reconstrucción.",
-   "alt": "Nuestro mamut lanudo, el macho de Berezovka, de lado, con pelaje marrón oscuro: la cabeza alta y abombada, el lomo en pendiente, dos colmillos curvos y una marca en el hombro, a 271 cm según una reconstrucción. La persona gris de al lado, de 1,70 m, queda más baja que las puntas de los colmillos.",
+   "alt": "Nuestro mamut lanudo, el macho de Berezovka, de lado, con pelaje marrón oscuro: la cabeza alta y abombada, el lomo en pendiente, dos colmillos curvos y una marca a la altura del hombro, a 271 cm según una reconstrucción. La persona gris de al lado, de 1,70 m, queda más baja que las puntas de los colmillos.",
    "note": "Nuestra propia reconstrucción, construida en código a partir de medidas publicadas y renderizada con nuestro propio motor gráfico. No son fotografías.",
    "marks": [
     {
@@ -327,11 +327,11 @@
    "rows": [
     {
      "term": "Tan grande como un elefante africano",
-     "text": "Es cierto para los grandes machos de Europa, de unos 3 a 3,3 m a la altura del hombro y 5 a 7 toneladas, más o menos como un macho de elefante africano de sabana. Los machos de Siberia, el nuestro entre ellos, se parecían más a un macho de elefante asiático. Todas estas cifras vienen de un mismo estudio de 2016 y de su método."
+     "text": "Es cierto para los grandes machos de Europa, de unos 3 a 3,3 m a la altura del hombro y 5 a 7 toneladas, más o menos como un macho de elefante africano de sabana. Los machos de Siberia, el nuestro entre ellos, eran en cambio más o menos igual de altos que un macho de elefante asiático. Todas estas cifras vienen de un mismo estudio de 2016 y de su método."
     },
     {
      "term": "Machos de 2,7 a 3,4 m, hembras de 2,6 a 2,9 m, 5 a 6 toneladas",
-     "text": "Cifras de libros de divulgación de los años noventa, que las páginas en alemán todavía citan. Un estudio de 2016 calculó muchos esqueletos de la misma manera, región por región: los machos de Siberia daban unos 2,7 a 2,9 m y 4 a 5 toneladas, los grandes machos de Europa 5 a 7 toneladas, y las hembras unos 2,3 a 2,6 m."
+     "text": "Cifras de libros de divulgación de los años noventa, que las páginas en alemán todavía citan. Un estudio de 2016 calculó la altura y el peso de muchos esqueletos de la misma manera, región por región: los machos de Siberia resultaron de unos 2,7 a 2,9 m y 4 a 5 toneladas, los grandes machos de Europa 5 a 7 toneladas, y las hembras unos 2,3 a 2,6 m."
     },
     {
      "term": "3,4 m",

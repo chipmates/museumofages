@@ -71,8 +71,8 @@
  "meta": {
   "title": "Wollhaarmammut-Größe: 2,7 bis 3,3 m hoch | Museum of Ages",
   "description": "Wollhaarmammut-Größe: Ein sibirischer Bulle maß an der Schulter etwa 2,7 bis 2,9 m und wog etwa 4 bis 5 t. Unser Mammut ist ein echter Bulle, im Maßstab.",
-  "og_title": "Wollhaarmammut-Größe: 2,7 bis 3,3 m hoch",
-  "og_image_alt": "Unser Wollhaarmammut, der Beresowka-Bulle, von der Seite im dunkelbraunen Fell, mit hoch gewölbtem Kopf, abfallendem Rücken, zwei gebogenen Stoßzähnen und einer Marke an der Schulter, rekonstruiert 271 cm hoch. Der graue Mensch daneben, 1,70 m groß, steht niedriger als die Spitzen der Stoßzähne."
+  "og_title": "Wollhaarmammut-Größe: etwa 2,7 bis 3,3 m hoch",
+  "og_image_alt": "Unser Wollhaarmammut, der Beresowka-Bulle, von der Seite im dunkelbraunen Fell, mit hoch gewölbtem Kopf, abfallendem Rücken, zwei gebogenen Stoßzähnen und einer Marke an der Schulter bei 271 cm, seiner rekonstruierten Schulterhöhe. Der graue Mensch daneben, 1,70 m groß, steht niedriger als die Spitzen der Stoßzähne."
  },
  "labels": {
   "crumbs": "Du bist hier",
@@ -94,7 +94,7 @@
    "pic": "side",
    "tag": "tag_made",
    "what": "Unser Wollhaarmammut neben einem Menschen von 1,70 m, im selben Maßstab. Es ist in Größe und Gerüst nach einem einzigen echten Tier gebaut, dem Beresowka-Bullen, 1900 im Permafrost im Nordosten Sibiriens gefunden. Die Marke an seiner Schulter zeigt seine eigene Schulterhöhe am lebenden Tier, 271 cm, aus seinen Knochen rekonstruiert. Als er starb, hatte er noch einen Stoßzahn, den linken. Der rechte war lange vorher ausgefallen, und die Jäger, die ihn fanden, trennten den linken ab und verkauften ihn. Unser Mammut trägt beide, der rechte ist das Spiegelbild des linken, eine Rekonstruktion.",
-   "alt": "Unser Wollhaarmammut, der Beresowka-Bulle, von der Seite im dunkelbraunen Fell, mit hoch gewölbtem Kopf, abfallendem Rücken, zwei gebogenen Stoßzähnen und einer Marke an der Schulter, rekonstruiert 271 cm hoch. Der graue Mensch daneben, 1,70 m groß, steht niedriger als die Spitzen der Stoßzähne.",
+   "alt": "Unser Wollhaarmammut, der Beresowka-Bulle, von der Seite im dunkelbraunen Fell, mit hoch gewölbtem Kopf, abfallendem Rücken, zwei gebogenen Stoßzähnen und einer Marke an der Schulter bei 271 cm, seiner rekonstruierten Schulterhöhe. Der graue Mensch daneben, 1,70 m groß, steht niedriger als die Spitzen der Stoßzähne.",
    "note": "Unsere eigene Rekonstruktion, nach veröffentlichten Maßen in Code gebaut und in unserer Engine gerendert. Keine Fotos.",
    "marks": [
     {
@@ -327,11 +327,11 @@
    "rows": [
     {
      "term": "So groß wie ein Afrikanischer Elefant",
-     "text": "Das stimmt für die großen europäischen Bullen, an der Schulter etwa 3 bis 3,3 m hoch und 5 bis 7 t schwer, ähnlich wie ein Bulle des Afrikanischen Elefanten. Die sibirischen Bullen, unserer darunter, glichen eher einem Bullen des Asiatischen Elefanten. Alle diese Zahlen stammen aus einer Studie von 2016 und ihrer Methode."
+     "text": "Das stimmt für die großen europäischen Bullen, an der Schulter etwa 3 bis 3,3 m hoch und 5 bis 7 t schwer, ähnlich wie ein Bulle des Afrikanischen Elefanten. Die sibirischen Bullen, unserer darunter, waren dagegen etwa so hoch wie ein Bulle des Asiatischen Elefanten. Alle diese Zahlen stammen aus einer Studie von 2016 und ihrer Methode."
     },
     {
      "term": "Bullen 2,7 bis 3,4 m, Kühe 2,6 bis 2,9 m, 5 bis 6 t",
-     "text": "Zahlen aus Sachbüchern der 1990er Jahre, die deutsche Seiten noch oft zitieren. Eine Studie von 2016 hat viele Skelette einheitlich und nach Regionen neu berechnet: Die sibirischen Bullen kamen auf etwa 2,7 bis 2,9 m und 4 bis 5 t, die großen europäischen auf 5 bis 7 t, die Kühe auf etwa 2,3 bis 2,6 m."
+     "text": "Zahlen aus Sachbüchern der 1990er-Jahre, die deutsche Seiten noch oft zitieren. Eine Studie von 2016 hat Höhe und Gewicht vieler Skelette einheitlich und nach Regionen neu berechnet: Die sibirischen Bullen kamen auf etwa 2,7 bis 2,9 m und 4 bis 5 t, die großen europäischen auf 5 bis 7 t, die Kühe auf etwa 2,3 bis 2,6 m."
     },
     {
      "term": "3,4 m",
