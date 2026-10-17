@@ -4,8 +4,9 @@
 /* The list of the page's questions stands in its first part, after the door. Each entry a thumb's height. */
 .sp-toc--top{margin-top:6px}
 .sp-toc--top a{min-height:44px;color:var(--ink)}
-/* Its text has no column beside it. */
-.sp-grid--solo{margin-top:24px}
+/* Its text has no column beside it, or (top.side) the list again beside it on a desktop only: a phone has it above. */
+.sp-grid--solo,.sp-grid--side{margin-top:24px}
+.sp-grid--side>.sp-toc{display:none}
 
 /* A question: the answer first, a step up and in full ink, then what is known, then what is not, set apart by a
    quiet rule at its left. German display text never hyphenates. */
@@ -31,6 +32,8 @@
   .sp-top>.sp-toc--top{grid-column:7/13;grid-row:1/3;position:static;align-self:start;margin:0;padding:14px 20px 6px}
   .sp-toc--top a{min-height:44px;padding:6px 0;margin-left:0;border-left:0;font-size:.9375rem;color:var(--ink)}
   .sp-grid--solo{margin-top:64px}
+  .sp-grid--side{margin-top:88px}
+  .sp-grid--side>.sp-toc{display:block}
   /* the reading column under the answer's, as wide as the models' text column */
   .sp-grid--solo .sp-body__main{grid-column:1/8}
   .sp-ask__a{font-size:1.375rem;line-height:1.38}

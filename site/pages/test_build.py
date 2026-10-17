@@ -2830,9 +2830,13 @@ class Case(unittest.TestCase):
             self.assertLess(top.index('data-door="top"'), top.index('class="sp-toc sp-toc--top"'))
             listed = re.findall(r'<li><a href="#([\w-]+)">', top)
             self.assertEqual(listed, [b["id"] for b in data["blocks"] if b.get("nav")])
-            # its text has no column beside it: one list only
-            self.assertEqual(own.count('class="sp-toc'), 1)
-            self.assertIn('class="sp-grid sp-grid--solo"', own)
+            # its text has no column beside it, one list only, or the same list beside it on a desktop (top.side)
+            side = bool(data["top"].get("side"))
+            self.assertEqual(own.count('class="sp-toc'), 2 if side else 1)
+            self.assertIn('class="sp-grid sp-grid--side"' if side else 'class="sp-grid sp-grid--solo"', own)
+            if side:
+                beside = re.search(r'<div class="sp-grid sp-grid--side">\s*<nav class="sp-toc" [^>]*>(.*?)</nav>', own, flags=re.S).group(1)
+                self.assertEqual(re.findall(r'<li><a href="#([\w-]+)">', beside), listed)
             asked = [b for b in data["blocks"] if b["type"] == "question"]
             self.assertGreaterEqual(len(asked), 2)
             # the words as shown: a name's span adds no space
@@ -2922,11 +2926,126 @@ class Case(unittest.TestCase):
             self.save(lang, data, page)
         self.fails(r"top\.jump lists the page's questions, and no block names its place in the list")
 
+    def test_a_page_of_questions_sets_its_list_beside_its_text_on_a_desktop_only_where_it_asks_for_it(self):
+        page = self.ask_page()
+        if not page:
+            self.skipTest("no page lists its questions in its first part")
+        for lang in ("en", "de"):
+            data = self.data(lang, page)
+            data["top"]["side"] = True
+            self.save(lang, data, page)
+        out, written = self.build()
+        text = self.built_of(written, page, "de").read_text(encoding="utf-8")
+        own = self.own_part(text)
+        # the models' grid: the list stands again beside the text, and only a desktop shows it, a phone has it above
+        self.assertIn('<div class="sp-grid sp-grid--side">', own)
+        self.assertEqual(own.count('<nav class="sp-toc'), 2)
+        self.assertIn(".sp-grid--side>.sp-toc{display:none}", text)
+        self.assertRegex(text, r"@media \(min-width:960px\)\{[^@]*\.sp-grid--side>\.sp-toc\{display:block\}")
+        for lang in ("en", "de"):
+            data = self.data(lang, page)
+            data["top"].pop("side")
+            self.save(lang, data, page)
+        shutil.rmtree(out)
+        out, written = self.build()
+        own = self.own_part(self.built_of(written, page, "de").read_text(encoding="utf-8"))
+        self.assertIn('<div class="sp-grid sp-grid--solo">', own)
+        self.assertEqual(own.count('<nav class="sp-toc'), 1)
+
+    def test_a_named_part_of_an_answer_stands_under_its_own_heading(self):
+        page = self.ask_page()
+        if not page:
+            self.skipTest("no page lists its questions in its first part")
+        for lang in ("en", "de"):
+            data = self.data(lang, page)
+            block = next(b for b in data["blocks"] if b["type"] == "question" and b.get("open"))
+            block["lists"] = [{"h": "A part of its own", "paras": ["The first words of the part.", "And its second paragraph."]}]
+            self.save(lang, data, page)
+        out, written = self.build()
+        for lang in ("en", "de"):
+            block = next(b for b in self.data(lang, page)["blocks"] if b.get("lists"))
+            own = self.own_part(self.built_of(written, page, lang).read_text(encoding="utf-8"))
+            section = re.search(r'<section class="sp-sec sp-prose sp-ask" id="%s">(.*?)</section>' % block["id"], own, flags=re.S).group(1)
+            # the small heading over its paragraphs, after what is known and before what is open; no rows
+            group = re.search(r'<div class="sp-ask__group">\s*<h3>A part of its own</h3>\s*<p class="sp-does">The first words of the part\.</p>'
+                              r'\s*<p class="sp-does">And its second paragraph\.</p>\s*</div>', section)
+            self.assertIsNotNone(group)
+            self.assertNotIn("sp-ask__rows", section)
+            self.assertLess(section.rindex('class="sp-does"', 0, group.start()), group.start())
+            self.assertLess(group.end(), section.index("sp-ask__open"))
+            # its heading's sheet comes with it
+            self.assertIn(".sp-ask__group>h3{", self.built_of(written, page, lang).read_text(encoding="utf-8"))
+        # paragraphs without their heading stop the build
+        for lang in ("en", "de"):
+            data = self.data(lang, page)
+            next(b for b in data["blocks"] if b.get("lists"))["lists"][0].pop("h")
+            self.save(lang, data, page)
+        shutil.rmtree(out)
+        self.fails(r"a list of paragraphs \(paras\) stands under its own heading")
+
+    def test_a_question_may_hang_its_picture_at_its_end_beside_its_closing_lines(self):
+        page = self.ask_page()
+        if not page:
+            self.skipTest("no page lists its questions in its first part")
+        for lang in ("en", "de"):
+            data = self.data(lang, page)
+            block = next(b for b in data["blocks"] if b.get("pic"))
+            block["pic"]["at"] = "end"
+            block["end"] = block.get("end") or ["Its closing line."]
+            self.save(lang, data, page)
+        out, written = self.build()
+        for lang in ("en", "de"):
+            block = next(b for b in self.data(lang, page)["blocks"] if b.get("pic"))
+            own = self.own_part(self.built_of(written, page, lang).read_text(encoding="utf-8"))
+            section = re.search(r'<section class="sp-sec sp-prose sp-ask" id="%s">(.*?)</section>' % block["id"], own, flags=re.S).group(1)
+            figure = section.index("<figure")
+            # after what is known and what is open, before the lines that close the section
+            self.assertEqual(section.count("<figure"), 1)
+            self.assertLess(section.rindex('class="sp-does"', 0, figure), figure)
+            if block.get("open"):
+                self.assertLess(section.index("sp-ask__open"), figure)
+            self.assertGreater(section.rindex('class="sp-does"'), figure)
+        for lang in ("en", "de"):
+            data = self.data(lang, page)
+            next(b for b in data["blocks"] if b.get("pic"))["pic"]["at"] = "start"
+            self.save(lang, data, page)
+        shutil.rmtree(out)
+        self.fails(r"a question's picture stands after its answer, or at its end")
+
+    def test_a_page_of_questions_keeps_a_sum_on_the_line_of_its_word_for_money(self):
+        page = self.ask_page()
+        if not page:
+            self.skipTest("no page lists its questions in its first part")
+        for lang, words in (("en", "it sold for 100 million dollars and 90,000 francs"), ("de", "für 100 Millionen Dollar und 90.000 Francs")):
+            data = self.data(lang, page)
+            block = next(b for b in data["blocks"] if b["type"] == "question")
+            block["known"] = list(block["known"]) + [f"Once {words}."]
+            self.save(lang, data, page)
+        out, written = self.build()
+        for lang, held in (("en", ("100\u00a0million", "90,000\u00a0francs")), ("de", ("100\u00a0Millionen", "90.000\u00a0Francs"))):
+            own = self.own_part(self.built_of(written, page, lang).read_text(encoding="utf-8")).replace("&nbsp;", "\u00a0")
+            for pair in held:
+                self.assertIn(pair, own)
+            self.assertNotRegex(own, r"\d (?:million|Millionen|francs|Francs)\b")
+
+    def test_a_number_a_name_holds_stays_whole(self):
+        page = self.ask_page()
+        if not page:
+            self.skipTest("no page lists its questions in its first part")
+        names = json.loads((self.dir / "names.json").read_text(encoding="utf-8"))["names"]
+        held = [n["text"] for n in names if n.get("whole") and re.search(r"\d", n["text"])]
+        out, written = self.build()
+        for lang in ("en", "de"):
+            own = self.own_part(self.built_of(written, page, lang).read_text(encoding="utf-8"))
+            for name in held:
+                if name in re.sub(r"<[^>]+>", "", own):
+                    self.assertIn(f'<span class="nw nh">{html.escape(name, quote=False)}</span>', own)
+
     # ---- a page of questions with rows inside a question, a short table of words, and only its own questions ----
 
     def rows_page(self):
-        """The first page whose questions carry rows (question.lists)."""
-        return next((p for p in self.pages if any(b.get("lists") for b in self.data("en", p)["blocks"])), None)
+        """The first page whose questions carry rows (question.lists with rows)."""
+        return next((p for p in self.pages if any(x.get("rows") for b in self.data("en", p)["blocks"] for x in b.get("lists", []))), None)
 
     def built_of(self, written, page, lang):
         pid = self.data(lang, page)["page"]["id"]
@@ -2948,11 +3067,12 @@ class Case(unittest.TestCase):
                 if b.get("open"):
                     self.assertLess(section.rindex("sp-ask__rows"), section.index("sp-ask__open"))
                 lists = re.findall(r'<div class="sp-notes sp-ask__rows">\s*<dl class="sp-dir sp-dir--long">(.*?)</dl>\s*</div>', section, flags=re.S)
-                self.assertEqual(len(lists), len(b["lists"]))
+                rowed = [x for x in b["lists"] if "rows" in x]
+                self.assertEqual(len(lists), len(rowed))
                 # a group's heading over its rows, in the list's order; a list without a heading stands bare
                 heads = re.findall(r'<div class="sp-ask__group">\s*<h3>(.*?)</h3>', section)
                 self.assertEqual([bare(h) for h in heads], [x["h"].replace(" ", " ") for x in b["lists"] if x.get("h")])
-                for shown, item in zip(lists, b["lists"]):
+                for shown, item in zip(lists, rowed):
                     terms = [bare(t) for t in re.findall(r"<dt>(.*?)</dt>", shown, flags=re.S)]
                     self.assertEqual(len(terms), len(item["rows"]))
                     self.assertEqual(len(re.findall(r"<dd>", shown)), len(item["rows"]))
@@ -2961,7 +3081,8 @@ class Case(unittest.TestCase):
                     self.assertIn(re.sub(r"\s+", " ", b["lists_intro"].replace("\u00a0", " ")), before)
             # the rows' sheet comes with the page, and only with a page that has rows or a table
             self.assertIn(".sp-ask__group{", self.built_of(written, page, lang).read_text(encoding="utf-8"))
-        other = self.ask_page()
+        other = next((p for p in self.pages if self.data("en", p)["top"].get("jump") and not self.data("en", p)["top"].get("plate")
+                      and not any(b.get("lists") or b["type"] in ("ledger", "years") for b in self.data("en", p)["blocks"])), None)
         if other and other != page:
             self.assertNotIn(".sp-ask__group{", self.built_of(written, other, "en").read_text(encoding="utf-8"))
 

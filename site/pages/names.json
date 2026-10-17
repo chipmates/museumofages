@@ -430,6 +430,8 @@
     { "text": "Notes from Poland", "lang": "en" },
     { "text": "Money Heist", "lang": "en" },
     { "text": "Mustela erminea", "whole": true, "taxon": true },
-    { "text": "galê" }
+    { "text": "galê" },
+    { "text": "L. 451-5", "whole": true },
+    { "text": "A reproduction", "whole": true }
   ]
 }

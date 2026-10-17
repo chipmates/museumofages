@@ -240,6 +240,8 @@ BARE_LINE = {"en": re.compile(r"\bpublic domain reproductions? from\b", re.I),
 # Units an animal's numbers carry beside the site's own (buildlib.UNIT), and the things they count: a number keeps
 # them on its line.
 MORE_UNITS = r"(?:ft|in|t|feet|tonnes|Tonnen|kg|million|Millionen|discs|Wirbeln?)"
+# A sum keeps its number on the line of the word for money after it: in a table's cell, and on a page of questions.
+SUM_PAIR = re.compile(r"(\d) (?=(?:million|Millionen|dollars?|Dollar|pounds|Pfund|francs|Francs)\b)")
 # The wing's dates are written in English: the German page writes them by these rules.
 DATE_DE = {"Sixteenth century, reworked in the early seventeenth century": "16. Jahrhundert, überarbeitet im frühen 17. Jahrhundert"}
 # The other languages' pages write them as the wing's own labels in those languages do: (fixed, one year, a span).
@@ -1919,10 +1921,20 @@ def render(page, lang, data, shared, out_root):
             para = lambda p: fill(parts["text_para"], {"text": linked(p, prose)})
             rows = [para(block["lists_intro"])] if block.get("lists_intro") else []
             for item in block.get("lists", []):
-                listed = fill(parts["ask_rows"], {"html.rows": term_rows(item["rows"])})
+                if "paras" in item and not item.get("h"):
+                    raise SystemExit(f"{page}.{lang}: {block['id']}: a list of paragraphs (paras) stands under its own heading (h)")
+                # a list may be paragraphs under its small heading (paras): a named part of the answer, not rows
+                listed = ("".join(para(p) for p in item["paras"]).rstrip("\n") if "paras" in item else
+                          fill(parts["ask_rows"], {"html.rows": term_rows(item["rows"])}))
                 rows.append(fill(parts["ask_group"], {"h": rich(item["h"]), "html.rows": listed}) if item.get("h") else listed)
+            pic = block.get("pic")
+            if pic and pic.get("at") not in (None, "end"):
+                raise SystemExit(f"{page}.{lang}: {block['id']}: a question's picture stands after its answer, or at its end (at: end)")
+            # a picture the closing lines lead on from stands beside them, after what is open (pic.at: end)
+            last = bool(pic) and pic.get("at") == "end"
             values.update({
-                "html.pic": figure(block.get("pic")),
+                "html.pic": "" if last else figure(pic),
+                "html.pic_end": figure(pic) if last else "",
                 "html.known": "\n".join(para(p) for p in block["known"]) + "\n",
                 "html.rows": "".join(r + "\n" for r in rows),
                 "html.open": fill(parts["ask_open"], {"text": linked(block["open"], prose)}) + "\n" if block.get("open") else "",
@@ -1940,7 +1952,7 @@ def render(page, lang, data, shared, out_root):
                 raise SystemExit(f"{page}.{lang}: {block['id']}: a row of the table has not one cell per column")
             values["html.head"] = "".join(f'<th scope="col" role="columnheader">{rich(c)}</th>' for c in block["cols"])
             # a narrow cell keeps a sum whole: a number stays on the line of the word for money after it
-            sums = lambda c: re.sub(rf"(\d) (?=(?:million|Millionen|dollars?|Dollar|pounds|Pfund)\b)", "\\1" + LIB.NBSP, c)
+            sums = lambda c: SUM_PAIR.sub("\\1" + LIB.NBSP, c)
             values["html.rows"] = "\n".join(
                 f'      <tr role="row"><th scope="row" role="rowheader">{rich(row["cells"][0])}</th>'
                 + "".join(f'<td role="cell" data-k="{esc(block["cols"][i])}"><span>{prose(sums(c))}</span></td>' for i, c in enumerate(row["cells"][1:], 1))
@@ -2032,6 +2044,7 @@ def render(page, lang, data, shared, out_root):
                     for b in data["blocks"] if b.get("nav"))
     # a page of questions sets the list in its first part (top.jump), and its text has no column beside it
     ask = bool(data["top"].get("jump")) and any(b["type"] in ASK_TYPES for b in data["blocks"])
+    side = ask and bool(data["top"].get("side"))
     if ask and not toc:
         raise SystemExit(f"{page}.{lang}: top.jump lists the page's questions, and no block names its place in the list (nav)")
 
@@ -2225,8 +2238,9 @@ def render(page, lang, data, shared, out_root):
         "html.after": after_html,
         # the crumbs: the museum, the wing's page, this page; a wing's own list of pages is the wing's page
         "html.crumb_wing": "" if hub else fill(parts["crumb_wing"], base),
-        "html.toc_part": fill(parts["toc"], dict(base, **{"html.toc": toc})) if toc and not ask else "",
-        "attr.grid": "" if toc and not ask else " sp-grid--solo",
+        # a page of questions may keep its list beside its text on a desktop as well (top.side): the models' column
+        "html.toc_part": fill(parts["toc"], dict(base, **{"html.toc": toc})) if toc and (not ask or side) else "",
+        "attr.grid": "" if toc and not ask else " sp-grid--side" if side else " sp-grid--solo",
         # a wing in the making: its own page never asks the question for the ads' visitors, its topic pages ask it, and a
         # yes there counts the visit alone, since no way into a walk follows (_src/js/ask.js)
         "attr.main": (" data-unasked" if hub else ' data-asks="visit"') if making(wing) else "",
@@ -2593,7 +2607,8 @@ def load_pages(pages=PAGES):
         info[p] = {"topic": topic, "langs": LANG.topic_langs(topic, wing_codes) if topic else wing_codes, "works": works, "facts": facts, "field": field,
                    "drawing": "drawing" in english["top"], "hub": bool(head.get("hub")), "wing_key": head.get("wing"),
                    # a page of pictures at one scale binds its numbers to their units, as a page of sizes does
-                   "pairs": bool(works) or "drawing" in english["top"] or "scale" in english["top"] or bool(head.get("hub"))}
+                   "pairs": bool(works) or "drawing" in english["top"] or "scale" in english["top"] or bool(head.get("hub")),
+                   "asks": bool(english["top"].get("jump")) and any(b["type"] in ASK_TYPES for b in english["blocks"])}
     missing = [f"{p}.{lang}.json" for p in pages for lang in info[p]["langs"] if not (HERE / f"{p}.{lang}.json").is_file()]
     if missing:
         raise SystemExit(f"{', '.join(missing)} missing: every built language (languages.json) a page is written in has its file")
@@ -2602,20 +2617,23 @@ def load_pages(pages=PAGES):
     # picture's sizes, an address or a key
     # A page of sizes binds its pairs as the site's own pages do (a number and its unit, a size of two numbers), so no
     # size breaks across two lines.
-    def spaced(obj, lang, path="", pairs=False, more=False):
+    def spaced(obj, lang, path="", pairs=False, more=False, sums=False):
         if isinstance(obj, dict):
-            return {k: spaced(v, lang, f"{path}.{k}" if path else k, pairs, more) for k, v in obj.items()}
+            return {k: spaced(v, lang, f"{path}.{k}" if path else k, pairs, more, sums) for k, v in obj.items()}
         if isinstance(obj, list):
-            return [spaced(v, lang, f"{path}.{i}", pairs, more) for i, v in enumerate(obj)]
+            return [spaced(v, lang, f"{path}.{i}", pairs, more, sums) for i, v in enumerate(obj)]
         if isinstance(obj, str) and not re.search(NOT_SPACED, path):
             if lang == "de":
                 obj = ORDINAL_DE.sub("\\1." + LIB.NBSP, obj)
             if more:
                 obj = re.sub(rf"(\d) (?={MORE_UNITS}\b)", "\\1" + LIB.NBSP, obj)
+            if sums:
+                # a page of questions keeps a sum whole, as a table's cell does
+                obj = SUM_PAIR.sub("\\1" + LIB.NBSP, obj)
             return LIB.bind(obj, lang) if pairs else LIB.space(obj, lang)
         return obj
     data = {p: {lang: spaced(json.loads((HERE / f"{p}.{lang}.json").read_text(encoding="utf-8")), lang, pairs=info[p]["pairs"],
-                             more=making(wings.get(info[p]["wing_key"]) or {}))
+                             more=making(wings.get(info[p]["wing_key"]) or {}), sums=info[p]["asks"])
                 for lang in info[p]["langs"]} for p in pages}
     for p in pages:
         topic, works = info[p]["topic"], info[p]["works"]
