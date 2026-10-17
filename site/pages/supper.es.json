@@ -11,6 +11,9 @@
    "file": "vinci-supper-og-{lang}-1200x630.png",
    "width": 1200,
    "height": 630
+  },
+  "still": {
+   "figure": "vinci-supper-drawing-{lang}-1600.png"
   }
  },
  "pics": {

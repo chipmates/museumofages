@@ -353,6 +353,54 @@ def wall_figure(h_cm, w_cm, person_cm, labels, num, lang, inside=None):
             f'{ground}{person}{wall}{drawn}{tick}{size}</svg>')
 
 
+def wall_figure_still_svg(h_cm, w_cm, person_cm, words, num, lang, colours, inside=None):
+    """The first screen's drawing of one wall painting as a picture, 1600 wide: wall_figure's person, floor, wall, table
+    and the crown of the door's arch at four tenths of its units, with the two sizes and no other words (the arch's
+    label stays on the page). Lines are filled boxes, as in top_still_svg."""
+    c, f = colours, 0.4
+    s = 0.3
+    k = person_cm / 170
+    ph, pw, w, h = person_cm * 10 * s, PERSON_W * k * s, w_cm * 10 * s, h_cm * 10 * s
+    px, floor = 720, 1450
+    wx = px + pw + 260
+    m = 1000 * s
+    hair, edge, arch, size = 4, 9, 5, 60
+    fill = _mix(c["wall-lit"], c["wall"], 0.7)
+    parts = [_rect((px - 220) * f, floor * f - hair / 2, (pw + 280) * f, hair, c["line-strong"], c["line-strong"], 0),
+             _person(px * f, floor * f, ph * f, c["text-3"]),
+             _rect(wx * f, (floor - h) * f, w * f, h * f, fill, c["chalk"], edge)]
+    size_y = floor - h / 2 + 50
+    if inside:
+        t, a = inside["table"], inside["arch"]
+        tx0, tx1 = (wx + t["from_m"] * m) * f, (wx + t["to_m"] * m) * f
+        top, hem = (floor - t["top_m"] * m) * f, (floor - t["hem_m"] * m) * f
+        x0, x1 = (wx + a["from_m"] * m) * f, (wx + a["to_m"] * m) * f
+        spring, crown = (floor - a["spring_m"] * m) * f, (floor - a["crown_m"] * m) * f
+        ink = c["chalk"]
+        # the cloth, its hem broken where the arch comes up through it
+        parts += [f'<rect x="{tx0:g}" y="{top - hair / 2:g}" width="{tx1 - tx0:g}" height="{hair:g}" fill="{ink}"/>',
+                  f'<rect x="{tx0 - hair / 2:g}" y="{top - hair / 2:g}" width="{hair:g}" height="{hem - top + hair:g}" fill="{ink}"/>',
+                  f'<rect x="{tx1 - hair / 2:g}" y="{top - hair / 2:g}" width="{hair:g}" height="{hem - top + hair:g}" fill="{ink}"/>',
+                  f'<rect x="{tx0:g}" y="{hem - hair / 2:g}" width="{x0 - tx0:g}" height="{hair:g}" fill="{ink}"/>',
+                  f'<rect x="{x1:g}" y="{hem - hair / 2:g}" width="{tx1 - x1:g}" height="{hair:g}" fill="{ink}"/>']
+        # the crown as a band: the arch's shape in the mark, the same shape a line inside it in the wall's own
+        for d, colour in ((-arch / 2, ink), (arch / 2, fill)):
+            parts.append(f'<path d="M{x0 + d:g} {hem + hair:g}V{spring:g}{_arc(x0 + d, x1 - d, spring, crown + d)}'
+                         f'V{hem + hair:g}Z" fill="{colour}"/>')
+        if words.get("arch"):
+            # where the page labels the arch, its size stands high in the wall, as there
+            size_y = floor - h + 330
+    tx = px - 120
+    parts += [f'<rect x="{tx * f - hair / 2:g}" y="{(floor - ph) * f:g}" width="{hair:g}" height="{ph * f:g}" fill="{c["chalk"]}"/>',
+              f'<rect x="{tx * f - 16:g}" y="{(floor - ph) * f - hair / 2:g}" width="32" height="{hair:g}" fill="{c["chalk"]}"/>',
+              _text((px - 190) * f, (floor - ph + 60) * f, words["person"], size, c["linen"], "end"),
+              _text((wx + w / 2) * f, size_y * f, size_text({"h": h_cm / 100, "w": w_cm / 100}, num, lang, unit="m"), size,
+                    c["linen"], "middle")]
+    W, H = 1600, round(1520 * f)
+    return (f'<svg xmlns="http://www.w3.org/2000/svg" width="{W}" height="{H}" viewBox="0 0 {W} {H}">'
+            f'<rect width="{W}" height="{H}" fill="{c["wall"]}"/>{"".join(parts)}</svg>\n')
+
+
 def door_href(door, stop):
     return f"{door}#s={stop}" if stop else door
 

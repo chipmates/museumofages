@@ -1312,7 +1312,8 @@ def jsonld(lang, data, urls, pics, site, wing, alternate_name, frame, folders, t
         "legalName": "ChipMates gemeinnützige GmbH"}
     if frame.get("still"):
         found = next((f / frame["still"] for f in folders if (f / frame["still"]).is_file()), None)
-        w, h = CHART.png_info(found)[0]
+        # a page's own drawing (png) or a picture the site shows elsewhere (webp)
+        w, h = webp_size(found) if found.suffix == ".webp" else CHART.png_info(found)[0]
         image_url = f"{ORIGIN}/{STATIC}/img/{frame['still']}"
     else:
         d = pics.defs[frame["pic"]]
@@ -1956,9 +1957,11 @@ def render(page, lang, data, shared, out_root):
         size = facts["wall"][dr["wall"]]
         h_cm, w_cm, person_cm = CHART.cm_of(size["h_m"]), CHART.cm_of(size["w_m"]), CHART.cm_of(facts["set"]["person_m"])
         what = f'{CHART.size_text({"h": h_cm / 100, "w": w_cm / 100}, LIB.number, lang, unit="m", space=LIB.NBSP)}, {dr["what"]}'
-        # the page's picture in the structured data is the drawing as its share picture
+        # the page's picture in the structured data is the drawing: as a picture without the card's words where the page
+        # has one (page.still.figure), else as its share picture
         plain = lambda s: s.replace(LIB.NBSP, " ")
-        frame = {"title": dr["title"], "what": what, "alt": dr["alt"], "tag": dr["tag"], "still": og["file"],
+        frame = {"title": dr["title"], "what": what, "alt": dr["alt"], "tag": dr["tag"],
+                 "still": shared["stills"][page].get(lang, {}).get("figure") or og["file"],
                  "caption": plain(f'{dr["title"]}, {what}'), "description": plain(dr["alt"])}
         frame_html = fill(parts["frame:chart"], {"html.figure": CHART.wall_figure(h_cm, w_cm, person_cm, {"person": labels["person"], "alt": dr["alt"],
                                                                                     "arch": dr.get("arch_label")},
@@ -2013,15 +2016,26 @@ def render(page, lang, data, shared, out_root):
             parts["frame:facts"], {"id": esc(fa["id"]), "h": rich(fa["h"]), "html.rows": rows})
         frame_html, preload, focus = "", "", ""
     elif hub:
-        # a wing in the making's list of its pages: its picture in the structured data is its share picture
+        # a wing in the making's list of its pages: its picture in the structured data is one of the list's pictures
+        # (page.primary, without words), else its share picture
         frame = {"alt": data["meta"]["og_image_alt"], "still": og["file"], "caption": data["meta"]["og_title"],
                  "description": data["meta"]["og_image_alt"]}
+        key = data["page"].get("primary")
+        if key:
+            item = next((x for b in data["blocks"] if b["type"] == "pages" for x in b["items"] if x.get("pic") == key), None)
+            if item is None:
+                raise SystemExit(f"{page}.{lang}: page.primary {key!r} names no picture of the page's list")
+            frame = {"pic": key, "alt": item["alt"], "description": item["alt"],
+                     "caption": (item.get("line") or shared["topics"][item["page"]]["line"][lang]).replace(LIB.NBSP, " ")}
         frame_html, preload, focus = "", "", ""
     elif ask:
         # a page of questions: its first part is words, the door and the list of its questions; its picture in the
         # structured data is its share picture
         frame = {"alt": data["meta"]["og_image_alt"], "still": og["file"], "caption": data["meta"]["og_title"],
                  "description": data["meta"]["og_image_alt"]}
+        if data["page"].get("primary"):
+            # a picture the page shows further down, without the card's words
+            frame = primary_frame(data)
         after_html = "\n" + fill(parts["toc_top"], dict(base, **{"html.toc": toc}))
         frame_html, preload, focus = "", "", ""
     else:
@@ -2035,9 +2049,10 @@ def render(page, lang, data, shared, out_root):
         if data["page"].get("primary"):
             # the page names a picture further down as its own: the structured data describes it in the words of its
             # place on the page, and the first screen keeps its picture
-            shown = primary_words(data)
-            frame = {"pic": shown["pic"], "alt": shown["alt"], "description": shown["alt"],
-                     "caption": shown["what"][:1].upper() + shown["what"][1:]}
+            frame = primary_frame(data)
+    if data["page"].get("primary_from"):
+        # the page's own picture is one the site shows elsewhere, in the words it shows it with there
+        frame = borrowed_frame(data["page"]["primary_from"], lang, wing.get("_data", data["page"]["wing"]))
     values = dict(base)
     values.update({
         "lang": L.html(lang),
@@ -2118,7 +2133,8 @@ def primary_words(data):
 
     def find(node):
         if isinstance(node, dict):
-            if isinstance(node.get("pic"), dict) and node["pic"].get("pic") == key and node["pic"].get("what") and node["pic"].get("alt"):
+            if (isinstance(node.get("pic"), dict) and node["pic"].get("pic") == key and (node["pic"].get("what") or node["pic"].get("title"))
+                    and node["pic"].get("alt")):
                 return node["pic"]
             node = list(node.values())
         if isinstance(node, list):
@@ -2128,6 +2144,34 @@ def primary_words(data):
     if found is None or key not in data["pics"]:
         raise SystemExit(f"{data['page']['id']}: page.primary {key!r} names no picture the page's blocks show with its words")
     return found
+
+
+def primary_frame(data):
+    """The structured data's words for the picture a page names as its own (page.primary): its place on the page."""
+    shown = primary_words(data)
+    words = shown.get("what") or shown["title"]
+    return {"pic": shown["pic"], "alt": shown["alt"], "description": shown["alt"], "caption": words[:1].upper() + words[1:]}
+
+
+def borrowed_frame(spec, lang, wing_key):
+    """A picture the site shows on its wing's page, as a page's own picture (page.primary_from, wing:<key> of a plate):
+    its largest cut, and its title, what and alt as the wing's page in lang gives them."""
+    kind, _, key = spec.partition(":")
+    plate = json.loads((LANG.HERE / "wings" / f"{wing_key}.{lang}.json").read_text(encoding="utf-8"))
+    for part in key.split(".") if kind == "wing" else [None]:
+        if isinstance(plate, list) and part and part.isdigit() and int(part) < len(plate):
+            plate = plate[int(part)]
+        elif isinstance(plate, dict) and part in plate:
+            plate = plate[part]
+        else:
+            raise SystemExit(f"page.primary_from {spec!r}: the wing's {lang} page has no plate at {key}")
+    words = [plate.get(k) for k in ("title", "what", "alt")]
+    if (not isinstance(plate, dict) or not isinstance(plate.get("pic"), dict) or not all(isinstance(w, str) and w for w in words)
+            or any(re.search(r"\{\w+:\w+\}", w) for w in words)):
+        raise SystemExit(f"page.primary_from {spec!r}: no plate with plain title, what and alt in the wing's {lang} page")
+    title, what, alt = words
+    return {"still": f'{plate["pic"]["stem"]}-{max(plate["pic"]["widths"])}.webp', "alt": alt, "description": alt,
+            "caption": f"{title}, {what}"}
 
 
 def answer_text(answer):
@@ -2637,8 +2681,9 @@ def check_wing_facts(d, facts):
         person = re.search(r"\d+(?:[.,]\d+)?", d["labels"].get("person", ""))
         if not facts or not person or float(person.group(0).replace(",", ".")) != facts["set"]["person_m"]:
             problems.append("labels.person does not give the facts' person")
-        if d["page"].get("still"):
-            problems.append("page.still is a chart's: a page with a drawing shares the drawing (page.og_image)")
+        if set(d["page"].get("still") or {}) - {"figure"}:
+            problems.append("page.still is a chart's: a page with a drawing shares the drawing (page.og_image), and may "
+                            "only bake it as a picture of its own (page.still.figure)")
         size = ((facts or {}).get("wall") or {}).get(drawing.get("wall"))
         if size and drawing.get("inside"):
             problems += CHART.check_inside(drawing["inside"], size["h_m"], size["w_m"])
@@ -2703,6 +2748,12 @@ def still_jobs(pages=PAGES, loaded=None):
                 jobs.append({"file": d["page"]["og_image"]["file"].replace("{lang}", code), "page": page, "lang": lang, "kind": "share",
                              "svg": CHART.wall_still_svg(CHART.cm_of(size["h_m"]), CHART.cm_of(size["w_m"]), CHART.cm_of(facts["set"]["person_m"]),
                                                          words, LIB.number, lang, colours, d["top"]["drawing"].get("inside"))})
+                if (d["page"].get("still") or {}).get("figure"):
+                    # the page's drawing as a picture without the card's words: the page's own picture
+                    jobs.append({"file": d["page"]["still"]["figure"].replace("{lang}", code), "page": page, "lang": lang, "kind": "figure",
+                                 "svg": CHART.wall_figure_still_svg(CHART.cm_of(size["h_m"]), CHART.cm_of(size["w_m"]),
+                                                                    CHART.cm_of(facts["set"]["person_m"]), words, LIB.number, lang,
+                                                                    colours, d["top"]["drawing"].get("inside"))})
                 continue
             unbound = lambda s: s.replace(LIB.NBSP, " ")
             if "tally" in d["top"] and works:
@@ -2839,7 +2890,8 @@ def build_pages(out_dir, site_src=SITE_SRC, site_built=SITE_BUILT, pages=PAGES, 
                 problems.append(f"{page}: {lang} does not hold the same structure as English" if lang != "de" else
                                 f"{page}: the two languages do not hold the same structure")
             if (a["pics"] != b["pics"] or a["page"]["id"] != b["page"]["id"] or a["page"]["og_image"] != b["page"]["og_image"]
-                    or a["page"].get("still") != b["page"].get("still") or a["page"].get("primary") != b["page"].get("primary")):
+                    or a["page"].get("still") != b["page"].get("still") or a["page"].get("primary") != b["page"].get("primary")
+                    or a["page"].get("primary_from") != b["page"].get("primary_from")):
                 problems.append(f"{page}: {lang} differs from English in pictures or in the page label" if lang != "de" else
                                 f"{page}: the two languages differ in pictures or in the page label")
             # a translation states the facts of its source page, checked on the same day
@@ -2860,13 +2912,14 @@ def build_pages(out_dir, site_src=SITE_SRC, site_built=SITE_BUILT, pages=PAGES, 
         stills[page] = {}
         for lang in info[page]["langs"]:
             d = data[page][lang]
-            if not d["page"].get("still"):
-                continue
+            still = d["page"].get("still") or {}
             code = L.html(lang).lower()
-            stills[page][lang] = {"chart": d["page"]["still"]["file"].replace("{lang}", code),
-                                  "share": d["page"]["og_image"]["file"].replace("{lang}", code)}
-            if d["page"]["still"].get("figure"):
-                stills[page][lang]["figure"] = d["page"]["still"]["figure"].replace("{lang}", code)
+            # a chart's two stills (file), and the first screen's drawing as a picture (figure)
+            if still.get("file"):
+                stills[page][lang] = {"chart": still["file"].replace("{lang}", code),
+                                      "share": d["page"]["og_image"]["file"].replace("{lang}", code)}
+            if still.get("figure"):
+                stills[page].setdefault(lang, {})["figure"] = still["figure"].replace("{lang}", code)
     folders = [PICS, site_built / STATIC / "img"]
     for job in still_jobs(pages, (data, wings, info, [])):
         found = next((f / job["file"] for f in folders if (f / job["file"]).is_file()), None)

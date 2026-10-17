@@ -5,6 +5,7 @@
   "wing": "animals",
   "hub": true,
   "published": null,
+  "primary": "dinosaurs",
   "og_image": {
    "file": "animals-og-{lang}-1200x630.png",
    "width": 1200,

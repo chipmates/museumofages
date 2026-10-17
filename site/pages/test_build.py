@@ -213,6 +213,16 @@ class Case(unittest.TestCase):
         self.save("de", data)
         self.fails(r"another day")
 
+    def test_a_borrowed_picture_must_be_a_plate_of_the_wing(self):
+        page = next((p for p in self.pages if self.data("en", p)["page"].get("primary_from")), None)
+        if not page:
+            self.skipTest("no page borrows its picture")
+        for lang in ("en", "de"):
+            data = self.data(lang, page)
+            data["page"]["primary_from"] = "wing:rooms.0.plates.99"
+            self.save(lang, data, page)
+        self.fails(r"page\.primary_from 'wing:rooms\.0\.plates\.99'")
+
     def test_a_day_that_is_no_day(self):
         data = self.data("en")
         data["page"]["published"] = "6 October 2026"
@@ -2814,9 +2824,15 @@ class Case(unittest.TestCase):
             for q, a in want:
                 self.assertIn(re.sub(r"\s+", " ", q), flat)
                 self.assertIn(re.sub(r"\s+", " ", a.replace(" ", " ")), flat)
-            # the page's picture is its share picture, which shows the plate the page's words call a reproduction
+            # the page's picture is the plate the page's words call a reproduction (page.primary), else its share picture,
+            # which shows that plate
             frame = next(n for n in graph if n.get("@id", "").endswith("#frame"))
-            self.assertTrue(frame["url"].endswith("/" + data["page"]["og_image"]["file"].replace("{lang}", lang)))
+            if data["page"].get("primary"):
+                stem = data["pics"][data["page"]["primary"]]["stem"]
+                self.assertRegex(frame["url"], r"/%s-\d+\.webp$" % re.escape(stem))
+                self.assertIn(f'img/{frame["url"].rsplit("/", 1)[-1]}"', own)
+            else:
+                self.assertTrue(frame["url"].endswith("/" + data["page"]["og_image"]["file"].replace("{lang}", lang)))
             # every way into the walk opens the wing at the page's stop: the top, the sentence in a section, the end
             wing = self.wings()[data["page"]["wing"]]
             door = re.escape(wing["door"][lang].replace("&", "&amp;") + "#s=" + data["page"]["stop"])
@@ -2927,12 +2943,14 @@ class Case(unittest.TestCase):
                 self.assertRegex(text, r'<a class="(?:door|more)" href="%s"[^>]*data-door="%s"' % (door, place))
             for a in re.findall(r'<a\b[^>]*href="/w/[^"]*"[^>]*>', self.own_part(text)):
                 self.assertRegex(a, r'#s=%s"' % data["page"]["stop"])
-            # the page's picture in the structured data is the drawing's share picture, which is also its preview
+            # the page's picture in the structured data is the drawing: baked without the card's words where the page
+            # asks for it (page.still.figure), else its share picture; the share picture stays the preview
             graph = json.loads(re.search(r'<script type="application/ld\+json">(.*?)</script>', text, flags=re.S).group(1).replace("<\\/", "</"))["@graph"]
-            image = next(n for n in graph if n["@type"] == "ImageObject")
+            image = next(n for n in graph if n["@id"].endswith("#frame"))
             share = data["page"]["og_image"]["file"].replace("{lang}", lang)
-            self.assertTrue(image["url"].endswith("/" + share), image["url"])
-            self.assertIn(f'<meta property="og:image" content="{image["url"]}">', text)
+            own = (data["page"].get("still") or {}).get("figure", share).replace("{lang}", lang)
+            self.assertTrue(image["url"].endswith("/" + own), image["url"])
+            self.assertIn(f'<meta property="og:image" content="https://museumofages.org/static/img/{share}">', text)
 
     def test_a_link_to_another_page_leads_to_it_in_the_pages_language(self):
         if not self.drawing_page:
@@ -4036,6 +4054,32 @@ class SiteWide(unittest.TestCase):
             self.assertIn(f"https://museumofages.org/static/img/{data['page']['still']['file'].replace('{lang}', lang)}",
                           [n.get("contentUrl") for n in _graph(text)])
             self.assertRegex(text, r'<meta property="og:image" content="[^"]*vinci-sizes-og-%s-1200x630\.png"' % lang)
+
+    def test_a_pages_own_picture_carries_no_words(self):
+        """The share card, with its heading in it, stays the link preview; the page's own picture (primaryImageOfPage,
+        Article image) is one without words wherever the page has one."""
+        own = {"vinci-sizes": r"vinci-sizes-figure-{lang}-1600\.png", "vinci-supper": r"vinci-supper-drawing-{lang}-1600\.png",
+               "vinci-paintings": r"v-picture-room-1600\.webp", "animals": r"animals-biggest-dinosaurs-row-1600\.webp",
+               "vinci-mona-lisa": r"vinci-plate-mona-lisa-\d+\.webp"}
+        seen, cards = set(), set()
+        for path, text in self.pages.items():
+            label = re.search(r'<main[^>]*class="sp"[^>]*data-page="([\w-]+)"', text)
+            if not label:
+                continue
+            lang = re.search(r'<html lang="([\w-]+)"', text).group(1).lower()
+            frame = self.primary(text)
+            share = re.search(r'<meta property="og:image" content="([^"]+)"', text).group(1)
+            self.assertIn("-og", share, path)
+            if label.group(1) in own:
+                self.assertRegex(frame["contentUrl"], "/static/img/" + own[label.group(1)].replace("{lang}", lang) + "$", path)
+                seen.add(label.group(1))
+            if "-og" in frame["contentUrl"]:
+                cards.add(label.group(1))
+            self.assertTrue((SITE_BUILT / frame["contentUrl"][len("https://museumofages.org/"):]).is_file(), path)
+            self.assertTrue(frame.get("width") and frame.get("height"), path)
+        self.assertEqual(seen, set(own))
+        # the one page without a picture of its own: the life, a fact box and dated lines
+        self.assertEqual(cards, {"vinci-life"})
 
 
 if __name__ == "__main__":
