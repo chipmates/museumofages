@@ -39,7 +39,7 @@
  },
  "top": {
   "h1": "La última cena de Leonardo da Vinci",
-  "answer": "La última cena es una pintura mural. Leonardo da Vinci la pintó en Milán, en el refectorio de Santa Maria delle Grazie, el comedor de un convento dominico. La pintó para Ludovico Sforza, duque de Milán, entre 1494 y 1498 aproximadamente, y sigue en el muro donde la pintó: según el museo, mide 4,6 por 8,8 metros, alto por ancho. Mira debajo de la mesa: Cristo no tiene pies. En el siglo XVII, los frailes quisieron una puerta más grande hacia sus cocinas. La que ensancharon está en el centro de ese muro, justo donde estaban los pies de Cristo.",
+  "answer": "La última cena es una pintura mural. Leonardo da Vinci la pintó en Milán, en el refectorio de Santa Maria delle Grazie, el comedor de un convento dominico. La pintó para Ludovico Sforza, duque de Milán, entre 1494 y 1498 aproximadamente, y sigue en su muro original: según el museo, mide 4,6 por 8,8 metros, alto por ancho. Mira debajo de la mesa: Cristo no tiene pies. En el siglo XVII, los frailes quisieron una puerta más grande hacia sus cocinas. La que ensancharon está en el centro de ese muro, justo donde estaban los pies de Cristo.",
   "drawing": {
    "wall": "supper",
    "tag": "tag_chart",
@@ -69,7 +69,7 @@
   "door": {
    "text": "Ver La última cena en el ala",
    "note": "Entrada libre, sin cuenta.",
-   "leads": "La puerta abre el ala de Leonardo en el muro del patio."
+   "leads": "La puerta lleva al ala de Leonardo, al muro del patio."
   }
  },
  "blocks": [
@@ -80,7 +80,7 @@
    "h": "Cómo la pintó y por qué empezó a deteriorarse",
    "paras": [
     "En su época, una pintura mural solía ser un fresco. El pintor trabaja rápido sobre el yeso húmedo, y el yeso, al secarse, absorbe el color. Leonardo no quería trabajar rápido. El museo explica que quería ir despacio y hacer cambios mientras pintaba. Así que dejó secar el yeso, extendió encima una base blanca y pintó al temple, como si el muro fuera una de sus tablas de madera. Un estudio de laboratorio de 2023 apunta a que la mezcla también llevaba aceite.",
-    "Por eso empezó a deteriorarse. Nada unía el color al muro. Quedaba encima como una piel, y la sala era húmeda. En unos veinte años ya se estaba desprendiendo: en 1517, un visitante vio el deterioro. En 1568, Vasari escribió que apenas se distinguía algo más que una mancha luminosa, según la cita que recoge el sitio del museo."
+    "Por eso empezó a deteriorarse. Nada unía el color al muro. Quedaba encima como una piel, y la sala era húmeda. En unos veinte años ya se estaba desprendiendo: en 1517, un visitante vio el deterioro. En 1568, Vasari escribió que apenas se distinguía algo más que «una mancha luminosa», según la cita que recoge el sitio del museo."
    ]
   },
   {
@@ -89,7 +89,7 @@
    "nav": "Cinco siglos en un muro",
    "h": "Cinco siglos en un muro",
    "paras": [
-    "Los daños llegaron en oleadas. En el siglo XVII, los frailes agrandaron la puerta de debajo de la mesa (un catálogo lo fecha en 1652), y se perdieron los pies de Cristo. En la década de 1720, un restaurador creyó que era una pintura al óleo, según un catálogo nacional. Lavó el muro con sosa cáustica, le dio una capa de barniz al óleo y volvió a pintar grandes partes. En la década de 1770 la repintaron otra vez. En 1821, otro restaurador intentó despegar trozos de la pintura del muro, sin éxito. En tiempos de Napoleón, las tropas ocuparon la sala, y según un relato sirvió de establo.",
+    "Los daños llegaron en oleadas. En el siglo XVII, los frailes agrandaron la puerta de debajo de la mesa (un catálogo lo fecha en 1652), y se perdieron los pies de Cristo. En la década de 1720, un restaurador creyó que era una pintura al óleo, según un catálogo nacional. Lavó el muro con sosa cáustica, le dio una capa de barniz de aceite y volvió a pintar grandes partes. En la década de 1770 la repintaron otra vez. En 1821, otro restaurador intentó despegar trozos de la pintura del muro, sin éxito. En tiempos de Napoleón, las tropas ocuparon la sala, que, según un relato, sirvió de establo.",
     "Después vino la guerra. En agosto de 1943, una bomba estalló en el claustro de al lado. El refectorio perdió su bóveda y el muro de su extremo este. El muro pintado resistió. Desde 1940 estaba detrás de un armazón de acero y una gruesa pared de sacos de arena, y esa protección fue lo que lo salvó. La sala se reconstruyó a partir de 1945."
    ]
   },
@@ -99,8 +99,8 @@
    "nav": "La larga restauración",
    "h": "La larga restauración",
    "paras": [
-    "Desde comienzos del siglo XVIII, los restauradores han trabajado en el muro unas nueve veces, según la cuenta del museo. Durante la mayor parte de ese tiempo, restaurar significaba volver a pintar lo que faltaba. A comienzos del siglo XX la restauró Luigi Cavenaghi, y en la década de 1950 Mauro Pellicioli fijó la superficie, que se descascaraba, sin quitar los repintes antiguos.",
-    "La última restauración fue distinta. Pinin Brambilla Barcilon empezó a finales de la década de 1970 y terminó en 1999, más de veinte años después. Detrás de ella estaban la Soprintendenza de Milán y el instituto central de restauración de Roma, como informó la prensa. Su equipo quitó los repintes de los siglos anteriores. Con lupa, el equipo limpió lo que quedaba de la pintura de Leonardo, escama a escama, y rellenó los huecos con un tono de acuarela, que el agua puede volver a quitar. Según contó ella, restauradores anteriores habían cambiado ojos de sitio, cerrado bocas y puesto barbas en caras que no las tenían.",
+    "Desde comienzos del siglo XVIII, los restauradores han trabajado en el muro unas nueve veces, según el recuento del museo. Durante la mayor parte de ese tiempo, restaurar significaba volver a pintar lo que faltaba. A comienzos del siglo XX la restauró Luigi Cavenaghi, y en la década de 1950 Mauro Pellicioli fijó la superficie, que se descascaraba, sin quitar los repintes antiguos.",
+    "La última restauración fue distinta. Pinin Brambilla Barcilon empezó a finales de la década de 1970 y terminó en 1999, más de veinte años después. La respaldaban la Soprintendenza de Milán y el instituto central de restauración de Roma, como informó la prensa. Su equipo quitó los repintes de los siglos anteriores. Con lupa, el equipo limpió lo que quedaba de la pintura de Leonardo, escama a escama, y rellenó los huecos con un tono de acuarela, que el agua puede volver a quitar. Según contó ella, restauradores anteriores habían cambiado ojos de sitio, cerrado bocas y puesto barbas en caras que no las tenían.",
     "Lo que volvió a la luz es poco. ¿Cuánto de la pintura es todavía del propio Leonardo? Las estimaciones de los expertos van de una quinta parte a la mitad. No hay una cifra aceptada por todos."
    ]
   },
@@ -127,7 +127,7 @@
    "nav": "En el ala",
    "h": "Lo que muestra nuestra copia y lo que no puede mostrar",
    "paras": [
-    "El ala de Leonardo del museo tiene una copia de La última cena en un muro de su patio. Es una reproducción y tiene la altura y la anchura del original, 4,6 por 8,8 metros. Te muestra lo que un libro no puede: toda la composición a su tamaño real, contigo delante, Cristo en el centro y los apóstoles en cuatro grupos de tres.",
+    "Nuestra ala de Leonardo tiene una copia de La última cena en un muro de su patio. Es una reproducción y tiene la altura y la anchura del original, 4,6 por 8,8 metros. Te muestra lo que un libro no puede: toda la composición a su tamaño real, contigo delante, Cristo en el centro y los apóstoles en cuatro grupos de tres.",
     "Lo que una copia plana no puede mostrar es el muro mismo: cómo las escamas de pintura se levantan del yeso y lo frágil que es todo. Tampoco puede mostrar la luz de la sala. En Milán, la luz pintada entra por la izquierda, del mismo lado que las ventanas reales del refectorio. Si quitas la pintura de ese muro, esa correspondencia se pierde.",
     [
      "Su tamaño al lado de la Gioconda y de las demás obras: ",
@@ -145,7 +145,7 @@
     "what": "una imagen de la película del ala. La reproducción en su muro del patio del museo, de 4,6 por 8,8 metros. El muro está construido con código. El original está en Milán, en el refectorio de Santa Maria delle Grazie.",
     "alt": "Una reproducción de La última cena ocupa un muro claro en un patio: una fila de figuras en una mesa larga, en una sala pintada. Una imagen de la película del ala.",
     "src": [
-     "Fotografía de Paris Orlando, 2019, dominio público (PD-Art), vía ",
+     "Fotografía de Paris Orlando, 2019, dominio público (PD‑Art), vía ",
      {
       "text": "Wikimedia Commons",
       "href": "https://commons.wikimedia.org/wiki/File:Last_Supper_by_Leonardo_da_Vinci.jpg"
@@ -192,7 +192,7 @@
      "href": "https://cenacolovinciano.org/wp-content/uploads/2023/07/Museo-del-Cenacolo-Vinciano.pdf"
     },
     {
-     "text": "Ministero della Cultura, la sede",
+     "text": "Ministero della Cultura, el lugar",
      "href": "https://cultura.gov.it/luogo/museo-del-cenacolo-vinciano"
     },
     {

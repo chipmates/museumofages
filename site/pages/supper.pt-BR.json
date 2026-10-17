@@ -23,15 +23,15 @@
   }
  },
  "meta": {
-  "title": "A Última Ceia de Leonardo da Vinci | Museum of Ages",
+  "title": "A Última Ceia de Leonardo da Vinci em Milão | Museum of Ages",
   "description": "A Última Ceia, ou Santa Ceia, de Leonardo da Vinci: pintura mural de 4,6 por 8,8 metros num refeitório de Milão, de cerca de 1494 a 1498. O que resta dela.",
-  "og_title": "A Última Ceia de Leonardo da Vinci",
+  "og_title": "A Última Ceia de Leonardo da Vinci em Milão",
   "og_image_alt": "A Última Ceia e, ao lado, uma pessoa de 1,70 metro, desenhadas na mesma escala: a pintura mural mede 4,6 por 8,8 metros. Nela, a mesa e, embaixo dela, o topo do arco da porta, onde ficavam os pés de Cristo. Um desenho feito para esta página, a mesa e o arco a partir de uma fotografia."
  },
  "labels": {
   "crumbs": "Você está aqui",
   "crumb_home": "Museu",
-  "crumb_here": "A Última Ceia",
+  "crumb_here": "Última Ceia",
   "toc": "Nesta página",
   "tag_chart": "Feito para esta página",
   "tag_still": "Reprodução",
@@ -39,7 +39,7 @@
  },
  "top": {
   "h1": "A Última Ceia de Leonardo da Vinci",
-  "answer": "A Última Ceia, ou Santa Ceia, é uma pintura mural. Leonardo da Vinci a pintou em Milão, no refeitório de Santa Maria delle Grazie, um convento dominicano. Ele a pintou para Ludovico Sforza, duque de Milão, de cerca de 1494 a 1498, e ela continua na mesma parede: segundo o museu, mede 4,6 por 8,8 metros, altura por largura. Olhe embaixo da mesa: Cristo não tem pés. No século XVII, os frades alargaram a porta das cozinhas, bem no meio dessa parede, onde ficavam os pés de Cristo.",
+  "answer": "A Última Ceia, ou Santa Ceia, é uma pintura mural. Leonardo da Vinci a pintou em Milão, no refeitório de Santa Maria delle Grazie, um convento dominicano. Ele a pintou para Ludovico Sforza, duque de Milão, de cerca de 1494 a 1498, e ela continua na mesma parede: segundo o museu, mede 4,6 por 8,8 metros, altura por largura. Olhe embaixo da mesa: Cristo não tem pés. No século XVII, os frades, querendo uma porta maior, alargaram a das cozinhas, bem no meio dessa parede, onde ficavam os pés de Cristo.",
   "drawing": {
    "wall": "supper",
    "tag": "tag_chart",
@@ -80,7 +80,7 @@
    "h": "Como ele a pintou e por que ela começou a se deteriorar",
    "paras": [
     "Na época dele, uma pintura mural costumava ser um afresco. O pintor trabalha rápido sobre o reboco úmido, e o reboco, ao secar, absorve a cor. Leonardo não queria trabalhar rápido. O museu explica que ele queria ir devagar e fazer mudanças enquanto pintava. Então ele deixou o reboco secar, aplicou por cima uma base branca e pintou em têmpera, como se a parede fosse um dos painéis de madeira dele. Um estudo de laboratório de 2023 indica que também havia óleo na mistura.",
-    "Por isso ela começou a se deteriorar. Nada prendia a cor à parede. A cor ficava por cima, como uma pele, e a sala era úmida. Em cerca de vinte anos, a pintura já descascava: em 1517, um visitante viu o estrago. Em 1568, Vasari escreveu que mal se distinguia algo além de uma mancha luminosa, segundo a citação do site do museu."
+    "Por isso ela começou a se deteriorar. Nada prendia a cor à parede. A cor ficava por cima, como uma pele, e a sala era úmida. Em cerca de vinte anos, a pintura já descascava: em 1517, um visitante viu o estrago. Em 1568, Vasari escreveu que mal se distinguia algo além de “uma mancha luminosa”, segundo a citação do site do museu."
    ]
   },
   {
@@ -89,7 +89,7 @@
    "nav": "Cinco séculos numa parede",
    "h": "Cinco séculos numa parede",
    "paras": [
-    "Os danos vieram em ondas. No século XVII, os frades alargaram a porta embaixo da mesa (um catálogo dá a data de 1652), e os pés de Cristo se perderam. Na década de 1720, um restaurador achou que fosse uma pintura a óleo, segundo um catálogo nacional. Ele lavou a parede com soda cáustica, aplicou uma camada de verniz a óleo e repintou grandes partes dela. Na década de 1770, ela recebeu outra camada de repintura. Em 1821, outro restaurador tentou descolar partes da pintura da parede, sem sucesso. Na época de Napoleão, tropas ocuparam a sala, que segundo um relato serviu de estábulo.",
+    "Os danos vieram em ondas. No século XVII, os frades alargaram a porta embaixo da mesa (um catálogo dá a data de 1652), e os pés de Cristo se perderam. Na década de 1720, um restaurador achou que fosse uma pintura a óleo, segundo um catálogo nacional. Ele lavou a parede com soda cáustica, aplicou uma camada de verniz a óleo e repintou grandes partes dela. Na década de 1770, ela recebeu outra camada de repintura. Em 1821, outro restaurador tentou descolar partes da pintura da parede, sem sucesso. Na época de Napoleão, tropas ocuparam a sala, que, segundo um relato, serviu de estábulo.",
     "Depois veio a guerra. Em agosto de 1943, uma bomba explodiu no claustro ao lado. O refeitório perdeu a abóbada e a parede do lado leste. A parede pintada resistiu. Desde 1940 ela estava atrás de uma armação de aço e de uma grossa parede de sacos de areia, e foi essa proteção que a salvou. A reconstrução da sala começou em 1945."
    ]
   },
@@ -100,8 +100,8 @@
    "h": "A longa restauração",
    "paras": [
     "Desde o começo do século XVIII, restauradores trabalharam na parede cerca de nove vezes, pela contagem do museu. Durante a maior parte desse tempo, restaurar queria dizer repintar o que faltava. No começo do século XX, Luigi Cavenaghi a restaurou, e na década de 1950 Mauro Pellicioli fixou a superfície, que descascava, sem tirar as repinturas antigas.",
-    "A última restauração foi diferente. Pinin Brambilla Barcilon começou no fim da década de 1970 e terminou em 1999, mais de vinte anos depois. Por trás dela estavam a Soprintendenza de Milão e o instituto central de restauração de Roma, como noticiou a imprensa. A equipe dela retirou as repinturas dos séculos anteriores. Com lentes de aumento, a equipe limpou o que restava da tinta de Leonardo, escama por escama, e preencheu as lacunas com um tom de aquarela, que a água pode retirar de novo. Restauradores anteriores, segundo o relato dela, tinham mudado olhos de lugar, fechado bocas e posto barbas em rostos sem barba.",
-    "O que voltou à vista é pouco. Quanto da tinta ainda é do próprio Leonardo? As estimativas dos especialistas vão de um quinto à metade. Não há consenso sobre um número."
+    "A última restauração foi diferente. Pinin Brambilla Barcilon começou no fim da década de 1970 e terminou em 1999, mais de vinte anos depois. Apoiavam o trabalho a Soprintendenza de Milão e o instituto central de restauração de Roma, como noticiou a imprensa. A equipe dela retirou as repinturas dos séculos anteriores. Com lentes de aumento, a equipe limpou o que restava da tinta de Leonardo, escama por escama, e preencheu as lacunas com um tom de aquarela, que a água pode retirar de novo. Restauradores anteriores, segundo o relato dela, tinham mudado olhos de lugar, fechado bocas e posto barbas em rostos sem barba.",
+    "O que reapareceu é pouco. Quanto da tinta ainda é do próprio Leonardo? As estimativas dos especialistas vão de um quinto à metade. Não há consenso sobre um número."
    ]
   },
   {
@@ -130,7 +130,7 @@
     "A ala de Leonardo do museu tem uma cópia da Última Ceia numa parede do pátio. É uma reprodução, com a altura e a largura do original, 4,6 por 8,8 metros. Ela mostra o que um livro não consegue: a composição inteira em tamanho real, com você diante dela, Cristo no meio e os apóstolos em quatro grupos de três.",
     "O que uma cópia plana não pode mostrar é a própria parede: como as escamas de tinta se levantam do reboco e como tudo é frágil. E ela não pode mostrar a luz da sala. Em Milão, a luz pintada vem da esquerda, do mesmo lado que as janelas reais do refeitório. Tire a pintura daquela parede e essa combinação se perde.",
     [
-     "O tamanho dela ao lado da Mona Lisa e das outras obras: ",
+     "O tamanho da Última Ceia ao lado da Mona Lisa e das outras obras: ",
      {
       "text": "a página dos tamanhos",
       "page": "sizes"
@@ -142,10 +142,10 @@
     "pic": "supper",
     "title": "A Última Ceia no pátio",
     "tag": "tag_still",
-    "what": "uma imagem do filme da ala. A reprodução na parede dela, no pátio do museu, com 4,6 por 8,8 metros. A parede é construída em código. O original está em Milão, no refeitório de Santa Maria delle Grazie.",
+    "what": "uma imagem do filme da ala. A reprodução numa parede do pátio do museu, com 4,6 por 8,8 metros. A parede é construída em código. O original está em Milão, no refeitório de Santa Maria delle Grazie.",
     "alt": "Uma reprodução da Última Ceia ocupa uma parede clara num pátio: uma fileira de figuras numa mesa comprida, numa sala pintada. Uma imagem do filme da ala.",
     "src": [
-     "Fotografia de Paris Orlando, 2019, domínio público (PD-Art), via ",
+     "Fotografia de Paris Orlando, 2019, domínio público (PD‑Art), via ",
      {
       "text": "Wikimedia Commons",
       "href": "https://commons.wikimedia.org/wiki/File:Last_Supper_by_Leonardo_da_Vinci.jpg"

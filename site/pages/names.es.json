@@ -1,0 +1,6 @@
+{
+ "_note": "NAMES OF THE SPANISH PAGES ONLY, added to names.json for es. A long name with hold keeps only those last words on one line, so a narrow line wraps before them.",
+ "names": [
+  {"text": "Giovanni Donato Montorfano", "lang": "it", "person": true, "hold": "Donato Montorfano"}
+ ]
+}

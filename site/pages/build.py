@@ -293,6 +293,12 @@ class Names:
             # a scientific name (taxon) is set in italics, as biology writes it
             tag = "i" if entry.get("taxon") else "span"
             code = entry.get("lang")
+            hold = entry.get("hold")
+            if hold and kind == "nw nh" and name.endswith(" " + hold):
+                # a language's names file may hold only a long name's last words together, so a narrow line wraps before them
+                lead = f' lang="{code}"' if code and code != self.lang else ""
+                out.append(f'<{tag} class="nh"{lead}>{esc(name[:-len(hold) - 1])}</{tag}> ')
+                name = hold
             if code and code != self.lang:
                 # the ending is the page's own language and stays outside
                 out.append(f'<{tag} class="{kind}" lang="{code}">{esc(name)}</{tag}>{esc(ending)}')

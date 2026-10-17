@@ -1,7 +1,8 @@
 {
- "_note": "NAMES OF THE PORTUGUESE PAGES ONLY, added to names.json for pt-BR. An animal's hyphenated name stays on one line: a browser breaks it at its hyphen, which Portuguese typesetting would mark by repeating the hyphen.",
+ "_note": "NAMES OF THE PORTUGUESE PAGES ONLY, added to names.json for pt-BR. An animal's hyphenated name stays on one line: a browser breaks it at its hyphen, which Portuguese typesetting would mark by repeating the hyphen. A long name with hold keeps only those last words on one line, so a narrow line wraps before them.",
  "names": [
   {"text": "baleia-azul", "whole": true},
-  {"text": "baleias-azuis", "whole": true}
+  {"text": "baleias-azuis", "whole": true},
+  {"text": "Giovanni Donato Montorfano", "lang": "it", "person": true, "hold": "Donato Montorfano"}
  ]
 }
