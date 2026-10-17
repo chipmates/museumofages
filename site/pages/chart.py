@@ -608,6 +608,40 @@ def tally_still_svg(rows, words, c):
             f'<rect width="{W}" height="{H}" fill="{c["page"]}"/>{"".join(parts)}</svg>\n')
 
 
+def facts_still_svg(rows, words, c):
+    """The share picture of a page with a fact box, 1200 by 630: the page's heading, then on the ledger under the
+    mark's line the box's name and the rows the box marks for its card, each its term and its words, the site's
+    address. The type steps down until the heading and the rows fit above the address."""
+    W, H, m, pad, term_w = 1200, 630, 60, 26, 204
+    floor = H - 62 - 30
+    # Cardo sets these words at about 0.43 of its size a letter, so the stills' measure (0.47) is let run 8 % wider
+    for head_size, size in ((54, 28), (50, 27), (46, 26), (42, 24)):
+        head = _wrap(words["h1"], head_size, (W - 2 * m) * 1.08)
+        value_w = W - 2 * m - 2 * pad - term_w
+        lines = [_wrap(text, size, value_w * 1.08) for _, text in rows]
+        step = round(size * 1.3)
+        top = 104 + round(head_size * 1.16) * (len(head) - 1) + 40
+        bottom = top + 52 + sum(22 + step * len(x) for x in lines) + 8
+        if bottom <= floor:
+            break
+    parts = [_text(m, 104 + round(head_size * 1.16) * i, row, head_size, c["linen"]) for i, row in enumerate(head)]
+    parts.append(_rect(m, top, W - 2 * m, bottom - top, c["wall"], c["wall"], 0))
+    parts.append(_rect(m, top, W - 2 * m, 2, c["chalk"], c["chalk"], 0))
+    parts.append(_text(m + pad, top + 40, words["h"].upper(), 17, c["text-2"], face="Marcellus"))
+    y = top + 52
+    for (term, _), wrapped in zip(rows, lines):
+        parts.append(_rect(m + pad, y, W - 2 * m - 2 * pad, 1.5, c["line-row-wall"], c["line-row-wall"], 0))
+        base = y + 12 + step - round(size * 0.3)
+        parts.append(_text(m + pad, base, term, 21, c["text-2"], face="Marcellus"))
+        for i, row in enumerate(wrapped):
+            parts.append(_text(m + pad + term_w, base + step * i, row, size, c["linen"]))
+        y += 22 + step * len(wrapped)
+    parts.append(_rect(m, H - 62, 48, 2, c["chalk"], c["chalk"], 0))
+    parts.append(_text(m, H - 30, words["site"], 20, c["text-3"]))
+    return (f'<svg xmlns="http://www.w3.org/2000/svg" width="{W}" height="{H}" viewBox="0 0 {W} {H}">'
+            f'<rect width="{W}" height="{H}" fill="{c["page"]}"/>{"".join(parts)}</svg>\n')
+
+
 # Where a share picture's drawing names a picture of the pages' own folder: the tool that renders the drawing writes
 # the folder in (make_pictures.py), so the drawing, and the mark made from it, are the same on every machine.
 PICS_MARK = "@pics@"

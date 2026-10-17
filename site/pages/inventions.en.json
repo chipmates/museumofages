@@ -743,7 +743,14 @@
         },
         {
           "q": "Where are Leonardo da Vinci's notebooks today?",
-          "a": "The originals are in a few libraries and collections, none of them in this museum. The Codex Atlanticus, with 1,119 leaves, is in the Veneranda Biblioteca Ambrosiana in Milan. Twelve notebooks are in the Bibliothèque de l'Institut de France in Paris, two in the Biblioteca Nacional de España in Madrid, and five, bound in three volumes, in the Victoria and Albert Museum in London. About 550 leaves are in the Royal Collection at Windsor. The Codex Arundel is in the British Library in London, the Codex on the Flight of Birds in the Biblioteca Reale in Turin. One notebook is privately owned. At this museum's reading table you turn photographed pages, and each one names the notebook it comes from."
+          "a": "The originals are in a few libraries and collections, none of them in this museum. The Codex Atlanticus, with 1,119 leaves, is in the Veneranda Biblioteca Ambrosiana in Milan. Twelve notebooks are in the Bibliothèque de l'Institut de France in Paris, two in the Biblioteca Nacional de España in Madrid, and five, bound in three volumes, in the Victoria and Albert Museum in London. About 550 leaves are in the Royal Collection at Windsor. The Codex Arundel is in the British Library in London, the Codex on the Flight of Birds in the Biblioteca Reale in Turin. One notebook is privately owned. At this museum's reading table you turn photographed pages, and each one names the notebook it comes from.",
+          "links": [
+            {
+              "text": "Leonardo da Vinci's life, year by year",
+              "page": "life",
+              "only": "en"
+            }
+          ]
         }
       ]
     },

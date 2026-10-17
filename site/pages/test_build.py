@@ -167,7 +167,7 @@ class Case(unittest.TestCase):
             names.add(key)
             names |= {part.lower() for name in wing["name"].values() for part in name.split() if len(part) > 3}
         for name in ("template.html", "build.py", "chart.py", "make_pictures.py", "css/page.css", "css/chart.css", "css/list.css",
-                     "css/scale.css", "css/several.css", "css/ask.css"):
+                     "css/scale.css", "css/several.css", "css/ask.css", "css/life.css"):
             text = (HERE / name).read_text(encoding="utf-8").lower()
             for word in names:
                 self.assertNotIn(word, text, f"{name} names a wing: {word}")
@@ -3236,6 +3236,69 @@ class Case(unittest.TestCase):
                 for lang in ("en", "de"):
                     self.save(lang, data[lang], page)
 
+    # ---- a life told by its periods ----
+
+    def life_page(self):
+        page = next((p for p in self.pages if any(b["type"] == "years" for b in self.data("en", p)["blocks"])), None)
+        if not page:
+            self.skipTest("no page tells a life by its periods")
+        return page
+
+    def test_a_life_page_shows_each_dated_line_with_its_date_and_mark(self):
+        """Each dated line stands in the data's order with its row's address, its date, the word of its mark and the bead
+        of that mark's grade; the first screen leads to every period and every question; the questions' structured data
+        give each answer as the page shows it, the answer and what is known behind it."""
+        page = self.life_page()
+        beads = {"mark_documented": "documented", "mark_inferred": "reconstructed", "mark_tradition": "conjectural"}
+        plain = lambda s: html.unescape(re.sub(r"<[^>]+>", "", s)).replace("\u00a0", " ").replace("\u00ad", "")
+        out, written = self.build()
+        for lang in ("en", "de"):
+            data = self.data(lang, page)
+            path = next(p for p in written if self.page_of(p) == (data, lang))
+            text = path.read_text(encoding="utf-8")
+            own = self.own_part(text)
+            lines = [x for b in data["blocks"] if b["type"] == "years" for p in b["periods"] for x in p["items"]]
+            shown = re.findall(r'<li class="lf-line" id="([\w-]+)">\s*<p class="lf-line__when"><span class="lf-date">(.*?)</span> '
+                               r'<span class="lf-mark"><span class="bead bead--(\w+)" aria-hidden="true"></span><span class="vh">.*?</span>'
+                               r'(.*?)</span></p>\s*<p class="lf-line__what">(.*?)</p>', own, flags=re.S)
+            self.assertEqual([s[0] for s in shown], [x["id"] for x in lines])
+            for (_, date, bead, mark, line), x in zip(shown, lines):
+                self.assertEqual((plain(date), plain(mark), bead, plain(line)),
+                                 (x["date"], data["labels"][x["k"]], beads[x["k"]], x["line"]))
+            jump = re.search(r'<div class="lf-jump">(.*?)\n      </div>', own, flags=re.S).group(1)
+            parts = [x["id"] for b in data["blocks"] if b["type"] in ("years", "faq") for x in b.get("periods") or b["items"]]
+            self.assertTrue(set(parts) <= set(re.findall(r'href="#([\w-]+)"', jump)))
+            graph = json.loads(re.search(r'<script type="application/ld\+json">(.*?)</script>', text, flags=re.S).group(1).replace("<\\/", "</"))["@graph"]
+            faq = next(n for n in graph if n["@type"] == "FAQPage")["mainEntity"]
+            items = next(b for b in data["blocks"] if b["type"] == "faq")["items"]
+            self.assertEqual([(q["name"], q["acceptedAnswer"]["text"].replace("\u00a0", " ")) for q in faq],
+                             [(i["q"], f'{i["a"]} {i["known"]}') for i in items])
+            for i in items:
+                self.assertIn(f'id="{i["id"]}"', own)
+
+    def test_a_dated_line_off_the_wings_timeline_stops_the_build(self):
+        page = self.life_page()
+        cases = [("en", "date", "16 April 1452", r"is not the timeline's '15 April 1452'"),
+                 ("de", "k", "mark_inferred", r"the mark 'mark_inferred' is not the timeline's 'documented'"),
+                 ("en", "id", "life-99", r"no row of the wing's timeline")]
+        for lang, key, value, words in cases:
+            with self.subTest(key=key):
+                data = self.data(lang, page)
+                entry = next(b for b in data["blocks"] if b["type"] == "years")["periods"][0]["items"][0]
+                keep = entry[key]
+                entry[key] = value
+                self.save(lang, data, page)
+                self.fails(words)
+                entry[key] = keep
+                self.save(lang, data, page)
+        # a date wider than the row's stands only with the row's own date beside it (wing_date)
+        data = self.data("en", page)
+        entry = next(x for b in data["blocks"] if b["type"] == "years" for p in b["periods"] for x in p["items"] if x.get("wing_date"))
+        del entry["wing_date"]
+        self.save("en", data, page)
+        self.fails(r"the date .* is not the timeline's")
+
+
 class Built(unittest.TestCase):
     """The site as its own build wrote it (python3 _src/build.py): the topic pages with their count."""
 
@@ -3275,6 +3338,19 @@ class Built(unittest.TestCase):
             self.assertEqual(own.count('data-door="top"'), 1)
             self.assertEqual(own.count('data-door="end"'), 1)
             self.assertEqual(own.count('data-door="item"'), 25)
+
+    def test_the_life_page_reaches_the_count_by_its_kind(self):
+        lists = (HERE.parent / "functions" / "_count" / "lists.js").read_text(encoding="utf-8")
+        kinds = json.loads(re.search(r"PAGE_KINDS = Object\.freeze\((\[.*?\])\)", lists).group(1))
+        self.assertIn("life", kinds)
+        for path in ("leonardo-da-vinci/life", "de/leonardo-da-vinci/steckbrief"):
+            text = (SITE_BUILT / path / "index.html").read_text(encoding="utf-8")
+            self.assertIn('data-count="life"', text)
+            # one door at the top, one at the end, and one way in at each period that names a stop
+            own = text[text.index("<main"):text.index("</main>")]
+            self.assertEqual(own.count('data-door="top"'), 1)
+            self.assertEqual(own.count('data-door="end"'), 1)
+            self.assertEqual(own.count('data-door="item"'), 6)
 
     def test_a_topic_page_stands_only_in_its_languages(self):
         wings = json.loads(REGISTRY.read_text(encoding="utf-8"))

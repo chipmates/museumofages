@@ -1,0 +1,77 @@
+/* A page that tells a life by its periods (a years block): set inline after chart.css, on those pages only. The first
+   screen's parts and fact box, each period's dated lines with the wing's mark, the questions. Colours: only the
+   site's roles. */
+
+/* ---------- The first screen: the parts a tap away, then the fact box ---------- */
+/* Each row runs as a line of words: its name as a key, then its parts, every one a thumb's height. */
+.lf-jump{display:grid;gap:2px;font-family:var(--sans)}
+.lf-jump__row,.lf-jump__h,.lf-jump__list,.lf-jump__list li{display:inline}
+.lf-jump__h a{display:inline-flex;align-items:center;min-height:44px;margin-right:16px;font-size:.75rem;letter-spacing:.1em;
+  text-transform:uppercase;color:var(--ink-soft);text-decoration:none}
+.lf-jump__h a:hover{color:var(--mark-ink)}
+.lf-jump__list a{display:inline-flex;align-items:center;min-height:44px;margin-right:16px;font-size:.9375rem;line-height:1.3;color:var(--ink);
+  text-decoration:underline;text-decoration-color:var(--hair-strong);text-underline-offset:4px}
+.lf-jump__list a:hover{color:var(--mark-ink);text-decoration-color:var(--mark)}
+
+/* The fact box lies on the ledger under the mark's line, as the list of contents does: a term and its words a row. */
+.lf-facts{padding:14px 16px 4px;margin-inline:-6px;background:var(--ledger);box-shadow:inset 0 2px 0 var(--mark)}
+.lf-facts__h{color:var(--ink-soft)}
+.lf-table{width:100%;margin-top:6px;border-collapse:collapse;font-family:var(--sans);font-size:.9375rem;line-height:1.45}
+.lf-table tr+tr{border-top:1px solid var(--ledger-rule)}
+.lf-table th{width:6.75rem;padding:10px 12px 10px 0;text-align:left;vertical-align:top;font-weight:400;font-size:.8125rem;
+  line-height:1.55;letter-spacing:.02em;color:var(--ink-soft)}
+.lf-table td{padding:9px 0 10px;vertical-align:top;color:var(--ink)}
+.lf-table a{display:inline-block;padding:11px 0;margin:-11px 0;color:var(--ink);text-decoration-color:var(--mark)}
+
+/* ---------- His life by its periods ---------- */
+.lf-period{margin-top:44px}
+/* A period opens with a short chalk rule over its heading, as the paintings page's periods do. */
+.lf-period>h3{position:relative;padding-top:18px;font-size:1.5rem;line-height:1.2}
+.lf-period>h3::before{content:"";position:absolute;top:0;left:0;width:48px;border-top:2px solid var(--mark)}
+.lf-period__p{margin-top:10px;color:var(--ink-body);max-width:38rem}
+.lf-period__p a{display:inline-block;padding:11px 0;margin:-11px 0}
+/* Its dated lines lie on the ledger, as every list of facts does: the date and the mark, then what happened. */
+.lf-lines{margin:18px -6px 0;padding:0 16px;background:var(--ledger)}
+.lf-line{display:grid;gap:3px;padding:12px 0 13px}
+.lf-line+.lf-line{border-top:1px solid var(--ledger-rule)}
+.lf-line__when{display:flex;flex-wrap:wrap;align-items:baseline;column-gap:14px;row-gap:2px;font-family:var(--sans);font-size:.875rem;line-height:1.45}
+.lf-date{color:var(--ink)}
+/* The mark: the site's bead of the grade whose colour and fill the wing's floor gives it, its word beside it. */
+.lf-mark{display:inline-flex;align-items:center;gap:7px;font-size:.8125rem;letter-spacing:.02em;color:var(--ink-soft)}
+.lf-mark .bead{width:10px;height:10px;transform:translateY(-1px)}
+.lf-line__what{font-size:1.0625rem;line-height:1.5;color:var(--ink-body);max-width:38rem}
+/* A period's ways on, and the part's at its end: a long one runs as a sentence, its arrow after the last word. */
+.lf-sec .sp-more{margin-top:14px;max-width:36rem}
+.lf-sec .sp-more+.sp-more{margin-top:4px}
+.lf-sec .sp-more .more{display:inline;padding:12px 0;line-height:1.6}
+.lf-sec .sp-more .more .arrow{display:inline-block;margin-left:8px;vertical-align:-2px}
+.lf-ways{margin-top:36px}
+
+/* ---------- The questions: the answer first, a step brighter, then what the records say ---------- */
+.lf-q .lf-q__a{color:var(--ink)}
+.lf-q .lf-q__known{margin-top:10px}
+
+/* On the phone a line on the ledger fills its measure (a balanced one leaves a gap at the panel's edge), and a German
+   value may hyphenate, as body text does there. */
+@media (max-width:599px){
+  :where(.lf-lines) .lf-line__what{text-wrap:pretty}
+  :lang(de) .lf-table td{hyphens:auto;-webkit-hyphens:auto;hyphenate-limit-chars:10 4 4;
+    -webkit-hyphenate-limit-before:4;-webkit-hyphenate-limit-after:4;-webkit-hyphenate-limit-lines:2}
+}
+@media (min-width:600px){
+  .lf-line{grid-template-columns:10rem minmax(0,1fr);column-gap:20px;padding:13px 0 14px}
+  .lf-line__when{flex-direction:column;align-items:flex-start;padding-top:3px}
+  .lf-table th{width:9rem}
+}
+@media (min-width:960px){
+  /* The answer, the door and the parts at the left; the fact box beside them, its height taken by a last row. */
+  .sp-top:has(>.lf-facts){grid-template-rows:auto auto auto 1fr}
+  /* Beside the box the heading has half the measure: a size down, so a German one keeps to two lines. */
+  .sp-top:has(>.lf-facts) h1{font-size:clamp(2.25rem,3.6vw,3.25rem)}
+  .lf-jump{grid-column:1/7}
+  .lf-facts{grid-column:7/13;grid-row:1/5;margin-inline:0;padding:16px 20px 6px}
+  .lf-lines{margin-inline:0;padding-inline:20px}
+  .lf-period{margin-top:56px}
+  .lf-period>h3{font-size:1.6875rem}
+  .lf-line{grid-template-columns:11rem minmax(0,1fr);column-gap:24px}
+}

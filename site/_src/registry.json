@@ -305,6 +305,23 @@
         "langs": ["en", "de"],
         "count": "last-years",
         "from": "last-house"
+      },
+      {
+        "slug": {
+          "en": "life",
+          "de": "steckbrief"
+        },
+        "name": {
+          "en": "Leonardo da Vinci's life, year by year",
+          "de": "Leonardo da Vinci: Steckbrief und Lebenslauf"
+        },
+        "line": {
+          "en": "Born 15 April 1452 near Vinci, died 2 May 1519 at Amboise. His parents, his teacher, whether he married, and how we know.",
+          "de": "Geboren am 15. April 1452 bei Vinci, gestorben am 2. Mai 1519 in Cloux bei Amboise. Eltern, Geschwister, Lebenslauf."
+        },
+        "langs": ["en", "de"],
+        "count": "life",
+        "from": "life"
       }
     ],
     "out": {

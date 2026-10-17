@@ -147,6 +147,8 @@ LIST_CSS = ["list"]
 SCALE_CSS = ["scale"]
 # and on a page of questions (blocks question and myths), the sheet of its questions after the chart's
 ASK_CSS = ["ask"]
+# and on a page that tells a life by its periods, each with its dated lines, the sheet of that page after the chart's
+LIFE_CSS = ["life"]
 CSS_AFTER = ["foot", "motion"]
 CSP_MARK = "<!--csp-->"
 
@@ -184,10 +186,15 @@ PAIRS = {"term": "text", "text": "term", "q": "a", "a": "q"}
 MAY_BE_EMPTY = r"\.rows\.\d+\.cells\.[1-9]\d*$"
 
 BLOCK_TYPES = ("places", "group", "feature", "notes", "faq", "sources", "close", "chart", "works", "table", "text", "periods",
-               "numbers", "pages", "question", "myths")
+               "numbers", "pages", "question", "myths", "years")
 # The blocks of a page of questions: each its own section, the answer first (question), and a short list of what people
 # say with what good sources say of it (myths).
 ASK_TYPES = ("question", "myths")
+# The wing's timeline of dated rows (relative to the repository): a life page's dated lines name its rows.
+TIMELINE = "museum/src/wings/{wing}/line/data/timeline.json"
+# A dated line's mark as the site's bead (base.css): the timeline's three marks take the colour and the fill of the
+# grades whose hue the wing's floor gives them (green and whole, amber and half, red and a ring).
+YEAR_BEADS = {"mark_documented": "documented", "mark_inferred": "reconstructed", "mark_tradition": "conjectural"}
 
 # The pictures of the search pages (make_pictures.py cuts them). Its plates are the reproductions a wing hangs, each
 # with the record the build checks its source line against.
@@ -1324,8 +1331,10 @@ def jsonld(lang, data, urls, pics, site, wing, alternate_name, frame, folders, t
         if block["type"] == "faq":
             graph.append({
                 "@type": "FAQPage", "@id": f"{self_url}#faq", "inLanguage": L.html(lang),
+                # an answer with what is known behind it (known) is both its paragraphs, as the page shows them
                 "mainEntity": [{"@type": "Question", "name": item["q"],
-                                "acceptedAnswer": {"@type": "Answer", "text": item["a"]}} for item in block["items"]],
+                                "acceptedAnswer": {"@type": "Answer", "text": item["a"] + (" " + item["known"] if item.get("known") else "")}}
+                               for item in block["items"]],
             })
     # a page of questions: the first heading with the first screen's answer (top.faq), then each question's heading
     # with its answer, each word for word as the page shows it
@@ -1434,6 +1443,9 @@ def render(page, lang, data, shared, out_root):
         """A link's address: outside (href), another page (page), an entry of this page (at), a part of the wing's page (wing)."""
         if "href" in part:
             return part["href"]
+        if "page" in part and "at" in part:
+            # a part of another page
+            return f'{page_href(part["page"])}#{part["at"]}'
         if "at" in part:
             return f'#{part["at"]}'
         if "wing" in part:
@@ -1659,6 +1671,18 @@ def render(page, lang, data, shared, out_root):
         values["html.items"] = "\n".join(items)
         return fill(parts["period"], values)
 
+    def years_html(block):
+        """A life by its periods: each its heading, its story, its dated lines with the wing's mark of each, and its
+        ways on. The mark is the site's bead of the grade whose colour and fill the wing's timeline gives it."""
+        out = []
+        for period in block["periods"]:
+            lines = "\n".join(fill(parts["years_line"], {
+                "id": esc(x["id"]), "date": rich(x["date"]), "bead": YEAR_BEADS[x["k"]], "mark": rich(labels[x["k"]]),
+                "sure": rich(labels["col_sure"]), "line": prose(x["line"])}) for x in period["items"])
+            out.append(fill(parts["years_period"], {"id": esc(period["id"]), "h": rich(period["h"]), "p": linked(period["p"], prose),
+                                                    "html.items": lines, "html.links": ways(period.get("links", []))}))
+        return "\n".join(out)
+
     def block_html(block):
         kind = block["type"]
         values = dict(base)
@@ -1684,8 +1708,12 @@ def render(page, lang, data, shared, out_root):
                 "html.pic": figure(block.get("pic")),
             })
         elif kind == "faq":
-            # an answer may close with a way on to another page (links), as a block's own ways
+            # an answer may close with a way on to another page (links), as a block's own ways; an answer with what is
+            # known behind it (known) stands first, the records and their readings after it, and the question has its
+            # own address
             values["html.items"] = "\n".join(
+                fill(parts["faq_item_known"], {"id": esc(i["id"]), "q": rich(i["q"]), "a": prose(i["a"]), "known": prose(i["known"]),
+                                               "html.links": ways(i.get("links", []))}) if "known" in i else
                 fill(parts["faq_item"], {"q": rich(i["q"]), "a": prose(i["a"]), "html.links": ways(i.get("links", []))})
                 for i in block["items"])
         elif kind == "sources":
@@ -1779,6 +1807,9 @@ def render(page, lang, data, shared, out_root):
         elif kind == "periods":
             values["html.periods"] = "\n".join(period_html(block, period) for period in block["periods"])
             values["html.links"] = ways(block.get("links", []))
+        elif kind == "years":
+            values["html.periods"] = years_html(block)
+            values["html.links"] = ways(block.get("links", []))
         elif kind == "table":
             values.update({f"cols.{k}": rich(v) for k, v in block["cols"].items()})
             values["html.rows"] = CHART.table_rows(works, lines, door, block["go"], rich, LIB.number, lang)
@@ -1810,8 +1841,8 @@ def render(page, lang, data, shared, out_root):
     toc = "\n".join(fill(parts["toc_item"], {"id": esc(b["id"]), "nav": toc_words(b["nav"])})
                     for b in data["blocks"] if b.get("nav"))
     # a page of questions sets the list in its first part (top.jump), and its text has no column beside it
-    jump = bool(data["top"].get("jump"))
-    if jump and not toc:
+    ask = bool(data["top"].get("jump")) and any(b["type"] in ASK_TYPES for b in data["blocks"])
+    if ask and not toc:
         raise SystemExit(f"{page}.{lang}: top.jump lists the page's questions, and no block names its place in the list (nav)")
 
     # The wing's name stays on one line in the h1. Where it is long the h1 is set smaller on a
@@ -1884,12 +1915,29 @@ def render(page, lang, data, shared, out_root):
             "html.guess": fill(parts["guess"], {**{k: rich(guess[k]) for k in ("h", "q", "button", "a")},
                                                 "button_open": rich(guess.get("button_open") or guess["button"])}) if guess else ""})
         preload, focus = pics.preload(sc["pic"]), ""
+    elif "facts" in data["top"]:
+        # a fact box after the door, with the page's parts a tap away before it (top.jump): a phone reads the answer,
+        # the way in, the parts, then the box; a desktop sets the box beside the answer. The share picture is its card.
+        fa = data["top"]["facts"]
+        frame = {"title": fa["h"], "what": "", "alt": data["meta"]["og_image_alt"], "still": og["file"],
+                 "caption": data["meta"]["og_title"], "description": data["meta"]["og_image_alt"]}
+        jump = []
+        for b in data["blocks"] if data["top"].get("jump") else []:
+            entries = b.get("periods") if b["type"] == "years" else b.get("items") if b["type"] == "faq" else None
+            if entries and b.get("nav"):
+                jump.append(fill(parts["jump_row"], {"id": esc(b["id"]), "label": toc_words(b["nav"]), "html.items": "".join(
+                    fill(parts["jump_item"], {"id": esc(e["id"]), "nav": toc_words(e["nav"])}) for e in entries if e.get("nav"))}))
+        # a table's cell is display text: a long word of page.breaks is only kept whole there
+        rows = "\n".join(fill(parts["facts_row"], {"term": rich(r["term"]), "text": linked(r["text"])}) for r in fa["rows"])
+        after_html = "\n" + (fill(parts["jump"], {"html.rows": "\n".join(jump)}) if jump else "") + fill(
+            parts["frame:facts"], {"id": esc(fa["id"]), "h": rich(fa["h"]), "html.rows": rows})
+        frame_html, preload, focus = "", "", ""
     elif hub:
         # a wing in the making's list of its pages: its picture in the structured data is its share picture
         frame = {"alt": data["meta"]["og_image_alt"], "still": og["file"], "caption": data["meta"]["og_title"],
                  "description": data["meta"]["og_image_alt"]}
         frame_html, preload, focus = "", "", ""
-    elif jump:
+    elif ask:
         # a page of questions: its first part is words, the door and the list of its questions; its picture in the
         # structured data is its share picture
         frame = {"alt": data["meta"]["og_image_alt"], "still": og["file"], "caption": data["meta"]["og_title"],
@@ -1929,7 +1977,8 @@ def render(page, lang, data, shared, out_root):
         "url.og_image": f"{ORIGIN}/{STATIC}/img/{og['file']}",
         "og.width": str(og["width"]), "og.height": str(og["height"]),
         "css.inline": shared["css_scale" if making(wing) else "css_list" if any(b["type"] == "periods" for b in data["blocks"]) else
-                             "css_ask" if jump or any(b["type"] in ASK_TYPES for b in data["blocks"]) else
+                             "css_life" if any(b["type"] == "years" for b in data["blocks"]) else
+                             "css_ask" if ask or any(b["type"] in ASK_TYPES for b in data["blocks"]) else
                              "css_chart" if works or "drawing" in data["top"] or any(b["type"] == "text" for b in data["blocks"]) else "css"]
                       + (shared["langs_css"] + chrome["by"] if chrome["langs"] else ""),
         "css.faces": faces(root, lang) + focus + person_rules(data["pics"]) + span_rules(data["pics"]) + swatch_rules(data["pics"]) + top_rules(data["pics"])
@@ -1950,8 +1999,8 @@ def render(page, lang, data, shared, out_root):
         "html.after": after_html,
         # the crumbs: the museum, the wing's page, this page; a wing's own list of pages is the wing's page
         "html.crumb_wing": "" if hub else fill(parts["crumb_wing"], base),
-        "html.toc_part": fill(parts["toc"], dict(base, **{"html.toc": toc})) if toc and not jump else "",
-        "attr.grid": "" if toc and not jump else " sp-grid--solo",
+        "html.toc_part": fill(parts["toc"], dict(base, **{"html.toc": toc})) if toc and not ask else "",
+        "attr.grid": "" if toc and not ask else " sp-grid--solo",
         # a wing in the making: its own page never asks the question for the ads' visitors, its topic pages ask it, and a
         # yes there counts the visit alone, since no way into a walk follows (_src/js/ask.js)
         "attr.main": (" data-unasked" if hub else ' data-asks="visit"') if making(wing) else "",
@@ -2310,6 +2359,7 @@ def load_pages(pages=PAGES):
                                     "leave the slug to the registry")
                 d["page"]["slug"] = topic["slug"][lang]
             problems += [f"{p}.{lang}: {x}" for x in check_wing_facts(d, info[p]["facts"])]
+            problems += [f"{p}.{lang}: {x}" for x in check_years(d, lang, d["page"].get("wing"))]
             # what the drawing shows inside its wall is one reading of the wall, the same in every language
             if info[p]["drawing"] and d["top"]["drawing"].get("inside") != data[p][info[p]["langs"][0]]["top"]["drawing"].get("inside"):
                 problems.append(f"{p}.{lang}: top.drawing.inside differs from the {info[p]['langs'][0]} file's: the drawing is one")
@@ -2493,6 +2543,8 @@ def check_wing_facts(d, facts):
             return [x for v in node for x in inline(v, where)]
         return []
     wanted += [x for b in d["blocks"] for x in inline(b, b["id"])]
+    wanted += [(f"{b['id']}.{p['id']}.links", link["stop"]) for b in d["blocks"] if b["type"] == "years" for p in b["periods"]
+               for link in p.get("links", []) if "stop" in link]
     for where, stop in wanted:
         if stop is not None and stop not in stops:
             problems.append(f"{where} is {stop!r}, which is no stop of the wing's facts")
@@ -2512,6 +2564,32 @@ def check_wing_facts(d, facts):
             problems.append("top.drawing.arch_label labels an arch the drawing does not draw")
         if drawing.get("inside") and not drawing.get("note", "").strip():
             problems.append("top.drawing.inside draws a reconstruction, and top.drawing.note, which says so under the drawing, is missing")
+    return problems
+
+
+def check_years(d, lang, wing):
+    """A life told by its periods (a years block): each dated line names its row of the wing's timeline (id) and gives
+    that row's mark and its date as the timeline writes them, where the repository holds the timeline. A line that
+    gives a wider date than the row names the row's own date in wing_date. Returns the problems."""
+    blocks = [b for b in d["blocks"] if b["type"] == "years"]
+    path = LANG.HERE.parent.parent / TIMELINE.format(wing=wing)
+    if not blocks or not path.is_file():
+        return []
+    rows = {r["id"]: r for r in json.loads(path.read_text(encoding="utf-8"))["studs"]}
+    plain = lambda t: t.replace(LIB.NBSP, " ")
+    problems = []
+    for block in blocks:
+        for period in block["periods"]:
+            for x in period["items"]:
+                where, row = f"{period['id']}.{x['id']}", rows.get(x["id"])
+                if row is None:
+                    problems.append(f"{where} is no row of the wing's timeline")
+                    continue
+                if x.get("k") != f"mark_{row['certainty']}" or not d["labels"].get(x.get("k")):
+                    problems.append(f"{where}: the mark {x.get('k')!r} is not the timeline's {row['certainty']!r} with its word in labels")
+                want = row.get(f"date_label_{lang}")
+                if want is not None and plain(x.get("wing_date") or x["date"]) != want:
+                    problems.append(f"{where}: the date {x.get('wing_date') or x['date']!r} is not the timeline's {want!r}")
     return problems
 
 
@@ -2552,6 +2630,15 @@ def still_jobs(pages=PAGES, loaded=None):
                 rows = [(unbound(h), kinds) for h, kinds in tally_rows(d, works)]
                 jobs.append({"file": d["page"]["og_image"]["file"].replace("{lang}", code), "page": page, "lang": lang, "kind": "share",
                              "svg": CHART.tally_still_svg(rows, words, colours)})
+                continue
+            if "facts" in d["top"]:
+                # a fact box's card: the box's rows marked for it (card), its words as the box gives them
+                fa = d["top"]["facts"]
+                said = lambda t: unbound(t if isinstance(t, str) else "".join(p if isinstance(p, str) else p["text"] for p in t))
+                words = {"h1": unbound(d["top"]["h1"]), "h": unbound(fa["h"]), "site": ORIGIN.split("://", 1)[1]}
+                jobs.append({"file": d["page"]["og_image"]["file"].replace("{lang}", code), "page": page, "lang": lang, "kind": "share",
+                             "svg": CHART.facts_still_svg([(said(r["term"]), said(r["text"])) for r in fa["rows"] if r.get("card")],
+                                                          words, colours)})
                 continue
             if d["top"].get("jump"):
                 # a page of questions shares its heading, the line its share title adds to it, and beside them the
@@ -2672,7 +2759,7 @@ def build_pages(out_dir, site_src=SITE_SRC, site_built=SITE_BUILT, pages=PAGES, 
             for x, y in zip(a["blocks"], b["blocks"]):
                 if x["type"] != y["type"] or x["id"] != y["id"]:
                     problems.append(f"{page}: block {x['id']} and {y['id']} do not match")
-    for name in OWN_CSS + CHART_CSS + LIST_CSS + SCALE_CSS + ASK_CSS:
+    for name in OWN_CSS + CHART_CSS + LIST_CSS + SCALE_CSS + ASK_CSS + LIFE_CSS:
         body = re.sub(r"/\*.*?\*/", "", (HERE / "css" / f"{name}.css").read_text(encoding="utf-8"), flags=re.S)
         if re.search(r"#[0-9a-fA-F]{3,8}\b|rgba?\(|hsla?\(", body):
             problems.append(f"css/{name}.css: a colour is written outside the site's token file")
@@ -2718,6 +2805,8 @@ def build_pages(out_dir, site_src=SITE_SRC, site_built=SITE_BUILT, pages=PAGES, 
                              *[site["css"] / f"{n}.css" for n in CSS_AFTER]),
         "css_ask": css_min(*[site["css"] / f"{n}.css" for n in CSS_BEFORE], *[HERE / "css" / f"{n}.css" for n in OWN_CSS + CHART_CSS + ASK_CSS],
                            *[site["css"] / f"{n}.css" for n in CSS_AFTER]),
+        "css_life": css_min(*[site["css"] / f"{n}.css" for n in CSS_BEFORE], *[HERE / "css" / f"{n}.css" for n in OWN_CSS + CHART_CSS + LIFE_CSS],
+                            *[site["css"] / f"{n}.css" for n in CSS_AFTER]),
         # a page of several subjects at one scale: only the pages whose picture carries labels take its rules
         "css_several": css_min(HERE / "css" / "several.css"),
         # a page of a wing in the making links the newest open wing's own page, in its language

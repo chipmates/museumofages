@@ -2613,6 +2613,18 @@
    "sha256": "a288f2cd90722fd440a78e0815c74349b6105a756c6d374eeecb2540d62ae8e0"
   },
   {
+   "path": "pages/pics/img/vinci-life-og-de-1200x630.png",
+   "url": "/static/img/vinci-life-og-de-1200x630.png",
+   "bytes": 24588,
+   "sha256": "7d47757b5dabb4607099946ac3152920e10c23330e2da9e3fdecbce467497013"
+  },
+  {
+   "path": "pages/pics/img/vinci-life-og-en-1200x630.png",
+   "url": "/static/img/vinci-life-og-en-1200x630.png",
+   "bytes": 21380,
+   "sha256": "f667bc661ea2644715abae01fc6cd5a02155dd71df65f24a254d1a4ccfc49936"
+  },
+  {
    "path": "pages/pics/img/vinci-mona-lisa-og-de-1200x630.png",
    "url": "/static/img/vinci-mona-lisa-og-de-1200x630.png",
    "bytes": 326595,

@@ -1,0 +1,620 @@
+{
+  "_note": "THE WORDS of the page on Leonardo's life, year by year, English. Poured from the writer's WORDS file word for word by the build seat's pour script. Each dated line names its row of the wing's timeline (id): the build checks its date and its mark against that row; a line whose date the page gives wider than the wing names the wing's own date in wing_date. The fact box's rows marked card stand on the share card too. The two files hold the same structure. No em dash, no en dash, no semicolon.",
+  "page": {
+    "id": "vinci-life",
+    "wing": "vinci",
+    "topic": "life",
+    "stop": "line-early",
+    "published": null,
+    "og_image": {
+      "file": "vinci-life-og-{lang}-1200x630.png",
+      "width": 1200,
+      "height": 630
+    }
+  },
+  "pics": {},
+  "meta": {
+    "title": "Leonardo da Vinci: biography and facts | Museum of Ages",
+    "description": "Leonardo da Vinci's life story: born 15 April 1452 near Vinci, died 2 May 1519 at Amboise. His parents, his teacher, whether he married, and how we know.",
+    "og_title": "Leonardo da Vinci: biography and facts",
+    "og_image_alt": "Leonardo da Vinci's life, year by year. Born: 15 April 1452, about ten at night. Where: Near Vinci, in Tuscany. Anchiano is tradition, not record. Best known for: The Mona Lisa, the Last Supper, his notebooks. Died: 2 May 1519, at Cloux by Amboise, France. A card made for this page."
+  },
+  "labels": {
+    "crumbs": "You are here",
+    "crumb_home": "Museum",
+    "crumb_here": "His life",
+    "toc": "On this page",
+    "mark_documented": "documented",
+    "mark_inferred": "inferred",
+    "mark_tradition": "tradition",
+    "col_sure": "How sure"
+  },
+  "top": {
+    "h1": "Leonardo da Vinci's life, year by year",
+    "answer": "Leonardo da Vinci was a painter and engineer, the painter of the Mona Lisa and the Last Supper. He was born on 15 April 1452 near Vinci in Tuscany, as his grandfather noted, and he died at Cloux, by Amboise in France, on 2 May 1519, aged 67. Here is his life year by year, and every date says how sure it is.",
+    "jump": true,
+    "facts": {
+      "id": "facts",
+      "h": "Fact file",
+      "rows": [
+        {
+          "term": "Name",
+          "text": "Lionardo di ser Piero da Vinci: Leonardo, son of ser Piero, from Vinci"
+        },
+        {
+          "term": "Born",
+          "text": "15 April 1452, about ten at night",
+          "card": true
+        },
+        {
+          "term": "Where",
+          "text": "Near Vinci, in Tuscany. Anchiano is tradition, not record.",
+          "card": true
+        },
+        {
+          "term": "Parents",
+          "text": "Ser Piero da Vinci, a notary, and Caterina, never married to each other"
+        },
+        {
+          "term": "Half-siblings",
+          "text": "Eleven living on his father's side in 1504, five on his mother's"
+        },
+        {
+          "term": "Teacher",
+          "text": "Andrea del Verrocchio, in Florence, from the 1460s"
+        },
+        {
+          "term": "Work",
+          "text": "Painter, engineer, architect"
+        },
+        {
+          "term": "Best known for",
+          "text": "The Mona Lisa, the Last Supper, his notebooks",
+          "card": true
+        },
+        {
+          "term": "Cities",
+          "text": "Vinci, Florence, Milan, Rome, and Amboise in France"
+        },
+        {
+          "term": "Married, children",
+          "text": "No wife or child is known"
+        },
+        {
+          "term": "School and languages",
+          "text": "No Latin school, only reckoning. He wrote in Italian."
+        },
+        {
+          "term": "Hand",
+          "text": "Left-handed. He wrote his notes in mirror writing."
+        },
+        {
+          "term": "Died",
+          "text": "2 May 1519, at Cloux by Amboise, France",
+          "card": true
+        },
+        {
+          "term": "Age",
+          "text": "67"
+        },
+        {
+          "term": "Buried",
+          "text": [
+            {
+              "text": "Amboise",
+              "page": "last-years"
+            }
+          ]
+        }
+      ]
+    },
+    "door": {
+      "text": "See his life in the wing",
+      "note": "Free entry, no account.",
+      "leads": "The door opens the Leonardo wing in the long gallery, where the dates of his life are cut into the floor."
+    }
+  },
+  "blocks": [
+    {
+      "type": "text",
+      "id": "how-sure",
+      "nav": "How sure",
+      "h": "How sure each date is",
+      "paras": [
+        "Every date on this page carries the mark the museum's timeline gives it. Documented means a record from the time names it: a contract, a letter, a tax return, a note in his own hand. Inferred means scholars work it out from such records, and tradition means a story told later, with no record behind it."
+      ]
+    },
+    {
+      "type": "years",
+      "id": "life",
+      "nav": "His life, year by year",
+      "h": "His life, year by year",
+      "intro": "His life in seven parts, as the museum's timeline tells it. The seventh begins after his death.",
+      "periods": [
+        {
+          "id": "vinci-florence",
+          "nav": "Vinci and Florence",
+          "h": "Vinci and Florence, 1452 to 1481",
+          "p": "He was born on 15 April 1452 near Vinci, the son of ser Piero, a notary, and a woman named Caterina, who were not married to each other. We know the day and the hour because his grandfather Antonio wrote them into an old notarial register, a note that turned up in the state archive in Florence and was printed in 1939. The note names no place, so the farmhouse at Anchiano that is shown today as his birthplace has only tradition behind it. He grew up in Vinci with his father's family, and as a son born outside marriage he could not become a notary like his father. His teacher was Andrea del Verrocchio, in whose Florence workshop he trained from the 1460s. No contract survives, so the start is worked out from later records: the painters' company lists him in 1472, and a paper of 1476 places him with Verrocchio. His first big commissions both stayed unfinished: an altarpiece for the city's government in 1478, and in 1481 the Adoration of the Magi.",
+          "items": [
+            {
+              "id": "life-01",
+              "date": "15 April 1452",
+              "k": "mark_documented",
+              "line": "He is born at the third hour of night, close to 10 pm by today's clock. His grandfather Antonio notes the day, the hour and the name, Lionardo."
+            },
+            {
+              "id": "life-02",
+              "date": "15 April 1452",
+              "k": "mark_tradition",
+              "line": "Tradition places the birth in a farmhouse at Anchiano, near Vinci. His grandfather's note names no place."
+            },
+            {
+              "id": "life-04",
+              "date": "From the 1460s",
+              "k": "mark_inferred",
+              "line": "He trains in Verrocchio's workshop in Florence. No apprenticeship contract survives. The museum's timeline puts the start at about 1466, other scholars earlier.",
+              "wing_date": "About 1466 to 1472"
+            },
+            {
+              "id": "life-03",
+              "date": "1469",
+              "k": "mark_documented",
+              "line": "A Florentine household declaration lists him as ser Piero's son, born outside marriage, aged seventeen."
+            },
+            {
+              "id": "life-05",
+              "date": "1472",
+              "k": "mark_documented",
+              "line": "His name enters the book of Florence's painters' company."
+            },
+            {
+              "id": "life-06",
+              "date": "5 August 1473",
+              "k": "mark_documented",
+              "line": "He dates a drawing of the Arno valley. It is the earliest drawing with a date in his hand."
+            },
+            {
+              "id": "life-07",
+              "date": "9 April 1476",
+              "k": "mark_documented",
+              "line": "An anonymous accusation of sodomy names him and three other men. It also places him with Verrocchio. An accusation is not a finding of guilt."
+            },
+            {
+              "id": "life-08",
+              "date": "7 June 1476",
+              "k": "mark_documented",
+              "line": "The renewed charge is dismissed, and all the accused are absolved."
+            },
+            {
+              "id": "life-09",
+              "date": "1 or 10 January 1478",
+              "k": "mark_documented",
+              "line": "Florence's government, the Signoria, orders an altarpiece from him. The sources disagree on the day."
+            },
+            {
+              "id": "life-11",
+              "date": "March 1480 or 1481, or July 1481",
+              "k": "mark_documented",
+              "line": "The monks of San Donato order the Adoration of the Magi from him. His father is their notary. Sources differ on the month and on his deadline."
+            }
+          ],
+          "links": [
+            {
+              "text": "See the pictures of his Florence years in the wing",
+              "stop": "picture-room"
+            }
+          ]
+        },
+        {
+          "id": "milan",
+          "nav": "Milan",
+          "h": "Milan, 1482 to 1499",
+          "p": "About 1482, at around thirty, he moved to Milan, to the court of Ludovico Sforza, called il Moro, who ruled the city and became its duke in 1494. An early writer says Lorenzo de' Medici sent him there with a lyre, and a draft letter, corrected in his own hand, offered Ludovico his skills as an engineer and an artist. The first hard record of him in Milan is the Virgin of the Rocks contract of April 1483. For about seventeen years he worked in Milan: a model for the cathedral's tower, festivals for the court, a giant clay horse for a bronze statue, and the Last Supper. His household grew: Salaì came in 1490, aged ten, and in 1493 Caterina, whom scholars usually take for his mother, joined it. In 1494 the bronze for the horse went into cannon, and in 1499 the French took Milan and Ludovico fled. Leonardo sent 600 gold florins to his account in Florence and left by December with Luca Pacioli, for Mantua and Venice.",
+          "items": [
+            {
+              "id": "life-12",
+              "date": "About 1482",
+              "k": "mark_inferred",
+              "line": "He probably moves to Milan around this year. No record of the move survives."
+            },
+            {
+              "id": "life-13",
+              "date": "About 1482 to 1484",
+              "k": "mark_inferred",
+              "line": "An undated draft letter offers Ludovico Sforza his services as an engineer and artist."
+            },
+            {
+              "id": "life-14",
+              "date": "25 April 1483",
+              "k": "mark_documented",
+              "line": "He and the de Predis brothers sign the Virgin of the Rocks contract. It is the first hard record of him in Milan."
+            },
+            {
+              "id": "life-15",
+              "date": "1487",
+              "k": "mark_documented",
+              "line": "Milan cathedral's accounts record work on a model for its crossing tower."
+            },
+            {
+              "id": "life-17",
+              "date": "22 July 1490",
+              "k": "mark_documented",
+              "line": "Giacomo, a boy of ten, comes to live in his household. Later he is called Salaì."
+            },
+            {
+              "id": "life-18",
+              "date": "November 1493",
+              "k": "mark_documented",
+              "line": "The clay model of the great horse is shown at a Sforza wedding."
+            },
+            {
+              "id": "life-19",
+              "date": "November 1494",
+              "k": "mark_documented",
+              "line": "Ludovico sends the bronze meant for the horse to be made into cannon."
+            },
+            {
+              "id": "life-20",
+              "date": "29 June 1497",
+              "k": "mark_documented",
+              "line": "The court presses him to finish the Last Supper."
+            },
+            {
+              "id": "life-21",
+              "date": "9 February 1498",
+              "k": "mark_documented",
+              "line": "Luca Pacioli, in the dedication of his book De divina proportione, describes the Last Supper as finished."
+            },
+            {
+              "id": "life-23",
+              "date": "1499",
+              "k": "mark_documented",
+              "line": "Ludovico gives him a vineyard outside the Porta Vercellina."
+            },
+            {
+              "id": "life-24",
+              "date": "1499",
+              "k": "mark_documented",
+              "line": "The French take Milan, and Leonardo is gone by December."
+            },
+            {
+              "id": "life-25",
+              "date": "1499 or later",
+              "k": "mark_tradition",
+              "line": "A later writer, Sabba da Castiglione, says Gascon crossbowmen used the clay horse as a target."
+            }
+          ],
+          "links": [
+            {
+              "text": "The Last Supper on its wall in the wing",
+              "stop": "supper-wall"
+            },
+            {
+              "text": "The Last Supper: how he painted it, and what is left",
+              "page": "supper"
+            }
+          ]
+        },
+        {
+          "id": "venice-romagna",
+          "nav": "Venice and the Romagna",
+          "h": "Venice, Florence and the Romagna, 1500 to 1506",
+          "p": "From Mantua, where he drew Isabella d'Este, he went on to Venice, and by April 1500 he was back in Florence. In Venice he gave advice on defending the city against the Turks. In Florence a letter of 1501 found him busy with geometry and out of patience with the brush. In August 1502 Cesare Borgia took him on as architect and general engineer, and he surveyed fortresses in the Romagna and drew a map of Imola. Back in Florence in 1503 he began the portrait of Lisa del Giocondo and took on the Battle of Anghiari, a wall painting for the hall of the Great Council. In July 1504 his father died. On 30 May 1506 he left for Milan, promising to be back within three months, and his stay there lasted far longer.",
+          "items": [
+            {
+              "id": "life-26",
+              "date": "13 March 1500",
+              "k": "mark_documented",
+              "line": "A letter places him in Venice."
+            },
+            {
+              "id": "life-27",
+              "date": "18 August 1502",
+              "k": "mark_documented",
+              "line": "Cesare Borgia names him architect and general engineer."
+            },
+            {
+              "id": "life-28",
+              "date": "Autumn 1502",
+              "k": "mark_documented",
+              "line": "He draws his plan of the town of Imola, which survives at Windsor. The season is the usual dating by scholars, not a record."
+            },
+            {
+              "id": "life-29",
+              "date": "October 1503",
+              "k": "mark_documented",
+              "line": "Agostino Vespucci writes a dated note in the margin of a book. It names Leonardo's portrait of Lisa del Giocondo and a Saint Anne."
+            },
+            {
+              "id": "life-30",
+              "date": "By 4 May 1504",
+              "k": "mark_documented",
+              "line": "The contract for the Battle of Anghiari records a payment. It sets a deadline for the cartoon, the full-size drawing."
+            },
+            {
+              "id": "life-31",
+              "date": "9 or 7 July 1504",
+              "k": "mark_documented",
+              "line": "He writes down his father's death. Two editors of his notes read the day differently."
+            }
+          ],
+          "links": [
+            {
+              "text": "See the Mona Lisa in the wing",
+              "stop": "picture-room-lisa"
+            }
+          ]
+        },
+        {
+          "id": "milan-again",
+          "nav": "Milan again",
+          "h": "Milan again, 1506 to 1513",
+          "p": "Milan was French now, and its governor, Charles d'Amboise, wanted him to stay. In 1507 King Louis XII called him his own painter and engineer. From about August 1507 to the spring of 1508 he was back in Florence, in a quarrel with his half-brothers over his uncle Francesco's will, and studied anatomy at Santa Maria Nuova. Back in Milan he filled his notes with anatomy, water and the earth, and with plans for a horse and rider monument. In these years a young Milanese nobleman, Francesco Melzi, became his pupil. After Charles d'Amboise died, Leonardo stayed from 1511 at the Melzi villa at Vaprio d'Adda.",
+          "items": [
+            {
+              "id": "life-32",
+              "date": "18 August 1506",
+              "k": "mark_documented",
+              "line": "Charles d'Amboise, the French governor of Milan, asks Florence to let him remain in Milan for two months."
+            },
+            {
+              "id": "life-33",
+              "date": "About 1507 to 1511",
+              "k": "mark_inferred",
+              "line": "He works out plans for a horse and rider monument for Trivulzio."
+            },
+            {
+              "id": "life-34",
+              "date": "About 1508 to 1513",
+              "k": "mark_inferred",
+              "line": "His studies of anatomy run through these years. Vasari, writing later, names della Torre as his partner in them."
+            }
+          ],
+          "links": [
+            {
+              "text": "See his anatomy sheets in the wing",
+              "stop": "body"
+            }
+          ]
+        },
+        {
+          "id": "rome",
+          "nav": "Rome",
+          "h": "Rome, 1513 to 1516",
+          "p": "On 24 September 1513 he left Milan for Rome with Melzi, Salaì and two more of his household. His patron there was Giuliano de' Medici, brother of Pope Leo X, who gave him rooms in the Belvedere of the Vatican. He worked on mirrors, on geometry and on plans for the Pontine marshes, but the records of these years are thin. Later writers tell of a mechanical lion he made for a king, a story no record of the time confirms. Giuliano died in March 1516, and that year Leonardo left for France.",
+          "items": [
+            {
+              "id": "life-35",
+              "date": "24 September 1513",
+              "k": "mark_documented",
+              "line": "He notes his departure for Rome with Melzi, Salaì, Lorenzo and il Fanfoia."
+            },
+            {
+              "id": "life-36",
+              "date": "1515",
+              "k": "mark_tradition",
+              "line": "Later writers describe a mechanical lion for a royal entry. Where and for which occasion is uncertain."
+            }
+          ],
+          "links": [
+            {
+              "text": "The mechanical lion, and what the old accounts say",
+              "page": "inventions",
+              "at": "mechanical-lion"
+            }
+          ]
+        },
+        {
+          "id": "amboise",
+          "nav": "Amboise",
+          "h": "Amboise, 1516 to 1519",
+          "p": [
+            "In 1516 he went to France, into the service of King Francis I, and lived at Cloux, today the Clos Lucé, close to the royal castle of Amboise. Melzi came with him. In October 1517 a visitor found him with a partly paralysed right hand, still drawing and teaching. His last years in France, his will, his death and his grave have ",
+            {
+              "text": "their own page",
+              "page": "last-years"
+            },
+            "."
+          ],
+          "items": [
+            {
+              "id": "life-37",
+              "date": "1516",
+              "k": "mark_inferred",
+              "line": "He enters the service of Francis I and lives at Cloux."
+            },
+            {
+              "id": "life-39",
+              "date": "10 October 1517",
+              "k": "mark_documented",
+              "line": "A cardinal's secretary notes a visit and three paintings. Leonardo's right hand is paralysed, he writes, yet he still draws and teaches."
+            },
+            {
+              "id": "life-41",
+              "date": "2 May 1519",
+              "k": "mark_documented",
+              "line": "He dies at Cloux, aged 67. Melzi reports the death in a letter of 1 June."
+            }
+          ],
+          "links": [
+            {
+              "text": "See his last house in the wing",
+              "stop": "hall"
+            }
+          ]
+        },
+        {
+          "id": "after-1519",
+          "nav": "After 1519",
+          "h": "After 1519, what was left",
+          "p": "Melzi inherited his books and notes and kept them in his family's house. After Melzi's death about 1570 they passed to his son Orazio, and the sculptor Pompeo Leoni bought sheets and bound them into albums. The largest gathering of his sheets, the Codex Atlanticus, went to Milan's Ambrosiana library in 1637, was carried off to Paris in 1796 and came back in 1815. Thousands of pages of his notes survive, and you can turn some of them at the wing's reading table. The Mona Lisa, meanwhile, was stolen from the Louvre in 1911 and found again in Florence two years later.",
+          "items": [
+            {
+              "id": "life-43",
+              "date": "About 1570",
+              "k": "mark_inferred",
+              "line": "After Melzi's death the manuscripts pass to his son Orazio."
+            },
+            {
+              "id": "life-44",
+              "date": "1582 to 1590",
+              "k": "mark_inferred",
+              "line": "The sculptor Pompeo Leoni buys sheets and binds them into new albums."
+            },
+            {
+              "id": "life-45",
+              "date": "1637",
+              "k": "mark_documented",
+              "line": "Arconati gives the Codex Atlanticus and other manuscripts to the Ambrosiana, a library in Milan."
+            },
+            {
+              "id": "life-46",
+              "date": "1796",
+              "k": "mark_documented",
+              "line": "French requisitions take the manuscripts to Paris."
+            },
+            {
+              "id": "life-47",
+              "date": "1815",
+              "k": "mark_documented",
+              "line": "The Codex Atlanticus returns to Milan. The smaller manuscripts stay in Paris."
+            },
+            {
+              "id": "life-50",
+              "date": "21 August 1911",
+              "k": "mark_documented",
+              "line": "The Mona Lisa is stolen from the Louvre."
+            },
+            {
+              "id": "life-51",
+              "date": "11 December 1913",
+              "k": "mark_documented",
+              "line": "The stolen Mona Lisa is found again in Florence."
+            }
+          ],
+          "links": [
+            {
+              "text": "Turn the pages of his notebooks in the wing",
+              "stop": "reading-table"
+            }
+          ]
+        }
+      ],
+      "links": [
+        {
+          "text": "His paintings, work by work, and how sure each one is his",
+          "page": "paintings"
+        },
+        {
+          "text": "The machines on his sheets, and which of them anyone ever built",
+          "page": "inventions"
+        },
+        {
+          "text": "His last years at Amboise, how he died, and where he is buried",
+          "page": "last-years"
+        }
+      ]
+    },
+    {
+      "type": "faq",
+      "id": "questions",
+      "nav": "Questions",
+      "h": "What people ask about his life",
+      "items": [
+        {
+          "id": "married",
+          "nav": "Married?",
+          "q": "Was Leonardo da Vinci married?",
+          "a": "No marriage of his is known. No document of his life names a wife.",
+          "known": "His will, made at Cloux in April 1519, leaves his books and drawings to his pupil Melzi and remembers Salaì, two servants and his half-brothers. It names no wife and no child, and no other record read for this page names one. That tells us what the records lack, not whom he loved."
+        },
+        {
+          "id": "children",
+          "nav": "Children?",
+          "q": "Did Leonardo da Vinci have children?",
+          "a": "No child of his is known.",
+          "known": "No record names a son or a daughter of his, and his will mentions none. The young men who lived in his house, Salaì and later Melzi, were his pupils and helpers, not his children."
+        },
+        {
+          "id": "sexuality",
+          "nav": "Was he gay?",
+          "q": "Was Leonardo da Vinci gay?",
+          "a": "No document settles it. The records hold one anonymous accusation from 1476, which was dismissed, no known wife or child, and a household he shared for many years with Salaì, who came to him as a boy, and later with Melzi.",
+          "known": "In Florence in April 1476, an unsigned denunciation named him, with three other men, in a case of sodomy. The charge was dropped, the case ended in June with the accused absolved, and an accusation is not a finding of guilt. Several scholars, among them Frank Zöllner and Giovanni Dall'Orto, read him as a man who loved men. The historian Elizabeth Abbott thinks he chose a celibate life after 1476, and points out that being gay, as an identity, was not an idea of his time. A few others have searched for a woman in his life, on very weak evidence, and Sigmund Freud's famous reading of 1910 rested on a mistranslated word. No document settles it either way."
+        },
+        {
+          "id": "parents",
+          "nav": "Parents",
+          "q": "Who were Leonardo da Vinci's parents?",
+          "a": "His father was ser Piero da Vinci, a notary in Florence. His mother was a woman named Caterina, and the two were not married.",
+          "known": "His grandfather's tax return from the late 1450s lists the boy as ser Piero's son, not born in marriage, and names his mother Caterina, by then the wife of a man of Vinci known as Accattabriga. Who she was is still argued over. In 2023 the scholar Carlo Vecce presented a deed that Leonardo's father wrote in November 1452, freeing an enslaved woman named Caterina from the Caucasus, and he thinks she was the mother. Martin Kemp and Giuseppe Pallanti argued in 2017 for a poor orphan from near Vinci. Both are hypotheses, and no document says which, if either, is right. In 1493 a Caterina moved into his house in Milan, and about a year later he paid for her funeral: scholars usually take her to be his mother."
+        },
+        {
+          "id": "siblings",
+          "nav": "Siblings",
+          "q": "Did Leonardo da Vinci have siblings?",
+          "a": "No full brothers or sisters, but many half-siblings. When his father died in 1504, eleven more of his father's children were living, and his mother had five children with her husband.",
+          "known": "Ser Piero had four wives, one after another, and his first child in marriage came only in 1476, when Leonardo was 24. At his father's death Leonardo noted two daughters and ten sons, himself among the sons, so nine half-brothers and two half-sisters were living. Counting children who died young, Museo Galileo gives at least sixteen. His mother had four daughters and a son with Accattabriga. In 1507 Leonardo quarrelled with his half-brothers over the will of his uncle Francesco."
+        },
+        {
+          "id": "salai-melzi",
+          "nav": "Salaì and Melzi",
+          "q": "Who were Salaì and Melzi?",
+          "a": "Two young men of his household. Salaì came to him as a boy of ten in 1490 and stayed about 25 years, and Francesco Melzi, a young Milanese nobleman, became his pupil and his heir.",
+          "known": "Salaì's real name was Gian Giacomo Caprotti, from Oreno near Milan. In the note on his arrival Leonardo also listed the boy's thefts and called him a thief, a liar, stubborn and a glutton. The nickname Salaì comes from a devil in Pulci's poem Morgante. Melzi joined him during his second stay in Milan, went with him to Rome and France, wrote the letter that reported his death, and inherited his books and drawings."
+        },
+        {
+          "id": "left-handed",
+          "nav": "Left-handed?",
+          "q": "Was Leonardo da Vinci left-handed?",
+          "a": "Yes. He wrote his notes with his left hand, from right to left, so they read normally in a mirror.",
+          "known": "Vasari already said so in 1568. In 2019 a study of his drawing dated 1473, by the Opificio delle Pietre Dure in Florence, found the date in mirror writing on the front, made with the left hand, and a line in ordinary script on the back, made with the right. So he could write both ways. Why he chose mirror writing is not known. The popular idea that he did it to hide his ideas has no source behind it."
+        },
+        {
+          "id": "vegetarian",
+          "nav": "Vegetarian?",
+          "q": "Was Leonardo da Vinci vegetarian?",
+          "a": "Nobody knows. The story rests on one comparison in one letter, and his own household accounts list meat.",
+          "known": "Andrea Corsali, a Florentine travelling in India, wrote to Giuliano de' Medici about people there who eat nothing that has blood in it and harm no living thing, and compared them to “our Leonardo da Vinci”. The vegetarian story rests on that one comparison and nothing more. Museo Galileo points out that his lists of expenses often include meat, though it may have been for his household. Vasari, writing decades later, says he bought caged birds to let them fly off."
+        },
+        {
+          "id": "height",
+          "nav": "Height",
+          "q": "How tall was Leonardo da Vinci?",
+          "a": "Nobody knows. No record gives his height.",
+          "known": "Vasari, who wrote after his death, praises his good looks and his great strength, but gives no measure. The one portrait drawn from life that scholars generally accept is a profile in red chalk by Melzi, made about 1510 and kept at Windsor."
+        },
+        {
+          "id": "school",
+          "nav": "School",
+          "q": "Did Leonardo da Vinci go to school?",
+          "a": "Not to a Latin school. His schooling was in reckoning, the arithmetic of trade, and much of the rest he taught himself.",
+          "known": "Vasari says he learned the abacus, as commercial arithmetic was called, and mastered it in a few months. In his own words he was a man without letters, meaning without Latin learning, and he wrote in Italian. In Milan, as a grown man, he worked through Latin grammar on his own."
+        }
+      ]
+    },
+    {
+      "type": "sources",
+      "id": "sources",
+      "nav": "Sources",
+      "h": "Sources",
+      "intro": "The page relies on the documents of his life as scholars have published them, from his grandfather's note to the records of 1476 in the Florence state archive, on his own notes in J. P. Richter's edition of 1883, Vasari's Life of Leonardo of 1568, Gustavo Uzielli's research of 1872 and 1896, the Treccani biographical dictionary, the chronology and pages of Museo Galileo in Florence, the Museo Leonardiano in Vinci, the Opificio delle Pietre Dure's 2019 study of his drawing of 1473 in the Uffizi, Walter Isaacson's biography of 2017, Live Science and Finestre sull'Arte, Carleton University's report on a lecture by Elizabeth Abbott, and the timeline of the museum's Leonardo wing, all read on 17 October 2026.",
+      "notes": [],
+      "contact": "If a date, a name or a sentence here is wrong, tell us and we will correct it.",
+      "contact_link": "To the legal notice",
+      "what_link": "What this museum is"
+    },
+    {
+      "type": "close",
+      "id": "enter",
+      "nav": "",
+      "h": "See his life in the wing",
+      "p": "This door opens the walk in the long gallery, at the dates of his life cut into the floor. Choose one, and the timeline opens there, with all 56 dates and their marks. The reading table with his notebooks stands in the same gallery.",
+      "door": {
+        "text": "Enter the museum",
+        "note": "Free entry, no account."
+      }
+    }
+  ]
+}

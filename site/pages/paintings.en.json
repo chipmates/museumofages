@@ -960,6 +960,10 @@
     {
      "text": "The paintings on the Leonardo da Vinci page",
      "wing": "paintings"
+    },
+    {
+     "text": "Leonardo da Vinci's life, year by year",
+     "page": "life"
     }
    ]
   },

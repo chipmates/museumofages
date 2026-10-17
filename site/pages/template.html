@@ -178,6 +178,51 @@
   <h3>{{q}}</h3>
   <p>{{a}}</p>{{html.links}}
 </div>
+<!--@ faq_item_known -->
+<div class="sp-q lf-q" id="{{id}}">
+  <h3>{{q}}</h3>
+  <p class="lf-q__a">{{a}}</p>
+  <p class="lf-q__known">{{known}}</p>{{html.links}}
+</div>
+<!--@ jump -->
+      <!-- The page's parts on its first screen: each period of the life and each question, a tap away. -->
+      <div class="lf-jump">
+{{html.rows}}
+      </div>
+<!--@ jump_row -->
+        <div class="lf-jump__row"><p class="lf-jump__h"><a href="#{{id}}">{{label}}</a></p><ul class="lf-jump__list">{{html.items}}</ul></div>
+<!--@ jump_item -->
+<li><a href="#{{id}}">{{nav}}</a></li>
+<!--@ frame:facts -->
+      <section class="lf-facts" id="{{id}}" aria-labelledby="{{id}}-h">
+        <h2 class="key lf-facts__h" id="{{id}}-h">{{h}}</h2>
+        <table class="lf-table">
+{{html.rows}}
+        </table>
+      </section>
+<!--@ facts_row -->
+          <tr><th scope="row">{{term}}</th><td>{{text}}</td></tr>
+<!--@ block:years -->
+<section class="sp-sec lf-sec" id="{{id}}">
+  <h2>{{h}}</h2>
+  <p class="sp-intro">{{intro}}</p>
+{{html.periods}}
+  <div class="lf-ways">{{html.links}}
+  </div>
+</section>
+<!--@ years_period -->
+<section class="lf-period" id="{{id}}" aria-labelledby="{{id}}-h">
+  <h3 id="{{id}}-h">{{h}}</h3>
+  <p class="lf-period__p">{{p}}</p>
+  <ol class="lf-lines">
+{{html.items}}
+  </ol>{{html.links}}
+</section>
+<!--@ years_line -->
+    <li class="lf-line" id="{{id}}">
+      <p class="lf-line__when"><span class="lf-date">{{date}}</span> <span class="lf-mark"><span class="bead bead--{{bead}}" aria-hidden="true"></span><span class="vh">{{sure}}: </span>{{mark}}</span></p>
+      <p class="lf-line__what">{{line}}</p>
+    </li>
 <!--@ block:sources -->
 <section class="sp-sec sp-sources" id="{{id}}">
   <h2>{{h}}</h2>

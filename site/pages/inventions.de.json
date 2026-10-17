@@ -743,7 +743,14 @@
         },
         {
           "q": "Wo sind Leonardo da Vincis Notizbücher heute?",
-          "a": "Die Originale liegen in wenigen Bibliotheken und Sammlungen, keines davon in diesem Museum. Der Codex Atlanticus mit 1.119 Blättern liegt in der Veneranda Biblioteca Ambrosiana in Mailand. Zwölf Notizbücher sind in der Bibliothèque de l'Institut de France in Paris, zwei in der Biblioteca Nacional de España in Madrid und fünf, in drei Bänden gebunden, im Victoria and Albert Museum in London. Etwa 550 Blätter liegen in der Royal Collection in Windsor. Der Codex Arundel ist in der British Library in London, der Kodex über den Vogelflug in der Biblioteca Reale in Turin. Ein Notizbuch ist in Privatbesitz. Am Lesetisch dieses Museums blätterst du durch fotografierte Seiten, und jede nennt das Notizbuch, aus dem sie stammt."
+          "a": "Die Originale liegen in wenigen Bibliotheken und Sammlungen, keines davon in diesem Museum. Der Codex Atlanticus mit 1.119 Blättern liegt in der Veneranda Biblioteca Ambrosiana in Mailand. Zwölf Notizbücher sind in der Bibliothèque de l'Institut de France in Paris, zwei in der Biblioteca Nacional de España in Madrid und fünf, in drei Bänden gebunden, im Victoria and Albert Museum in London. Etwa 550 Blätter liegen in der Royal Collection in Windsor. Der Codex Arundel ist in der British Library in London, der Kodex über den Vogelflug in der Biblioteca Reale in Turin. Ein Notizbuch ist in Privatbesitz. Am Lesetisch dieses Museums blätterst du durch fotografierte Seiten, und jede nennt das Notizbuch, aus dem sie stammt.",
+          "links": [
+            {
+              "text": "Leonardo da Vinci: Steckbrief und Lebenslauf",
+              "page": "life",
+              "only": "de"
+            }
+          ]
         }
       ]
     },
