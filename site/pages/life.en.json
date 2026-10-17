@@ -32,7 +32,7 @@
   },
   "top": {
     "h1": "Leonardo da Vinci's life, year by year",
-    "answer": "Leonardo da Vinci was a painter and engineer. He painted the Mona Lisa and the Last Supper. He was born near Vinci in Tuscany on 15 April 1452, the day his grandfather wrote down, and he died at Cloux, by Amboise in France, on 2 May 1519, aged 67. Here is his life year by year, and every date says how sure it is.",
+    "answer": "Leonardo da Vinci was a painter and engineer. He painted the Mona Lisa and the Last Supper. He was born near Vinci in Tuscany on 15 April 1452, the day his grandfather wrote down, and he died at Cloux, by Amboise in France, on 2 May 1519, aged 67. Here is his life year by year, and every dated line says how sure it is.",
     "jump": true,
     "facts": {
       "id": "facts",
@@ -58,7 +58,7 @@
         },
         {
           "term": "Half-siblings",
-          "text": "Eleven living on his father's side in 1504, five on his mother's"
+          "text": "Eleven on his father's side, living in 1504. Five on his mother's side."
         },
         {
           "term": "Teacher",
@@ -120,9 +120,9 @@
       "type": "text",
       "id": "how-sure",
       "nav": "How sure",
-      "h": "How sure each date is",
+      "h": "How sure the dates are",
       "paras": [
-        "Every date on this page carries the mark the museum's timeline gives it. Documented means a record from the time names it: a contract, a letter, a tax return, a note in his own hand. Inferred means scholars work it out from such records, and tradition means a story told later, with no record behind it."
+        "Every dated line below carries the mark the museum's timeline gives it. Documented means a record from the time names the date: a contract, a letter, a tax return, a note in his own hand. Inferred means scholars work it out from such records, and tradition means a story told later, with no record behind it."
       ]
     },
     {
@@ -359,7 +359,7 @@
           "id": "rome",
           "nav": "Rome",
           "h": "Rome, 1513 to 1516",
-          "p": "In Rome his patron was Giuliano de' Medici, brother of Pope Leo X, who gave him rooms in the Belvedere of the Vatican. He worked on mirrors, on geometry and on plans for the Pontine marshes, but the records of these years are thin. Giuliano died in March 1516, and that year Leonardo left for France.",
+          "p": "Giuliano de' Medici, the brother of Pope Leo X, was his patron in Rome and gave him rooms in the Belvedere of the Vatican. Leonardo worked on mirrors, on geometry and on plans for the Pontine marshes, but the records of these years are thin. Giuliano died in March 1516, and that year Leonardo left for France.",
           "items": [
             {
               "id": "life-35",
@@ -517,7 +517,7 @@
           "id": "sexuality",
           "nav": "Was he gay?",
           "q": "Was Leonardo da Vinci gay?",
-          "a": "No document settles it. The records hold one case from 1476, which ended with the accused absolved, no known wife or child, and a household he shared for many years with Salaì, and later with Melzi.",
+          "a": "No document settles it. The records hold one case from 1476, and it ended with the accused absolved. No wife or child of his is known. For many years he shared a household with Salaì, and later with Melzi.",
           "known": "In Florence in April 1476, an unsigned denunciation named him, with three other men, in a case of sodomy. The charge was dropped, the case ended in June with the accused absolved, and an accusation is not a finding of guilt. Several scholars, among them Frank Zöllner and Giovanni Dall'Orto, read him as a man who loved men. The historian Elizabeth Abbott thinks he would likely count as gay in today's words, but chose a celibate life after 1476, and points out that being gay, as an identity, was not an idea of his time. A few others have searched for a woman in his life, on very weak evidence, and Sigmund Freud's famous reading of 1910 rested on a mistranslated word. No document settles it either way."
         },
         {
@@ -531,7 +531,7 @@
           "id": "siblings",
           "nav": "Siblings",
           "q": "Did Leonardo da Vinci have siblings?",
-          "a": "No full brothers or sisters, but many half-siblings. When his father died in 1504, eleven more of his father's children were living, and his mother had five children with her husband.",
+          "a": "No full brothers or sisters are known, but he had many half-siblings. When his father died in 1504, eleven more of his father's children were living, and his mother had five children with her husband.",
           "known": "Ser Piero had four wives, one after another, and his first child in marriage came only in 1476, when Leonardo was 24. At his father's death Leonardo noted two daughters and ten sons, himself among the sons, so nine half-brothers and two half-sisters were living. Counting children who died young, Museo Galileo gives at least sixteen. His mother had four daughters and a son with Accattabriga. In 1507 Leonardo quarrelled with his half-brothers over the will of his uncle Francesco."
         },
         {
@@ -546,7 +546,7 @@
           "nav": "Left-handed?",
           "q": "Was Leonardo da Vinci left-handed?",
           "a": "Yes. He wrote his notes with his left hand, from right to left, so they read normally in a mirror.",
-          "known": "Vasari already said so in 1568. In 2019 a study of his drawing dated 1473, by the Opificio delle Pietre Dure in Florence, found the date in mirror writing on the front, made with the left hand, and a line in ordinary script on the back, made with the right. So he could write both ways. Why he chose mirror writing is not known. The popular idea is that he did it to hide his ideas. We know of no record from his time that says so."
+          "known": "Vasari already said so in 1568. In 2019 a study of his drawing dated 1473, by the Opificio delle Pietre Dure in Florence, found the date in mirror writing on the front, probably made with the left hand, and a line in ordinary script on the back, made with the right. So he could write both ways. Why he chose mirror writing is not known. The popular idea is that he did it to hide his ideas. We know of no record from his time that says so."
         },
         {
           "id": "vegetarian",

@@ -45,7 +45,7 @@
   },
   "top": {
     "h1": "Leonardo da Vinci: Steckbrief und Lebenslauf",
-    "answer": "Leonardo da Vinci war Maler und Ingenieur. Er malte die Mona Lisa und das Abendmahl. Geboren wurde er bei Vinci in der Toskana, am 15. April 1452. Den Tag hat sein Großvater notiert. Gestorben ist er am 2. Mai 1519 in Cloux bei Amboise in Frankreich, mit 67 Jahren. Hier steht sein Leben Jahr für Jahr, und bei jedem Datum, wie sicher es ist.",
+    "answer": "Leonardo da Vinci war Maler und Ingenieur. Er malte die Mona Lisa und das Abendmahl. Geboren wurde er bei Vinci in der Toskana, am 15. April 1452. Den Tag hat sein Großvater notiert. Gestorben ist er am 2. Mai 1519 in Cloux bei Amboise in Frankreich, mit 67 Jahren. Hier steht sein Leben Jahr für Jahr, und bei jeder datierten Zeile, wie sicher sie ist.",
     "jump": true,
     "facts": {
       "id": "facts",
@@ -71,11 +71,11 @@
         },
         {
           "term": "Geschwister",
-          "text": "Nur Halbgeschwister: elf vom Vater, die 1504 noch lebten, und fünf von der Mutter"
+          "text": "Halbgeschwister: elf vom Vater (1504 noch am Leben), fünf von der Mutter"
         },
         {
           "term": "Lehrer",
-          "text": "Andrea del Verrocchio in Florenz, seit den 1460er Jahren"
+          "text": "Andrea del Verrocchio in Florenz, ab den 1460er Jahren"
         },
         {
           "term": "Beruf",
@@ -133,9 +133,9 @@
       "type": "text",
       "id": "how-sure",
       "nav": "Wie sicher",
-      "h": "Wie sicher jedes Datum ist",
+      "h": "Wie sicher die Daten sind",
       "paras": [
-        "Jedes Datum auf dieser Seite trägt das Zeichen, das ihm die Chronik des Museums gibt. Belegt heißt: Ein Schriftstück aus der Zeit nennt es, ein Vertrag, ein Brief, eine Steuererklärung, eine Notiz von seiner Hand. Erschlossen heißt, die Forschung leitet es aus solchen Schriftstücken ab, und Überlieferung heißt, es wurde erst später erzählt, ohne ein Schriftstück dahinter."
+        "Jede datierte Zeile weiter unten trägt das Zeichen, das ihr die Chronik des Museums gibt. Belegt heißt: Ein Schriftstück aus der Zeit nennt das Datum, ein Vertrag, ein Brief, eine Steuererklärung, eine Notiz von seiner Hand. Erschlossen heißt, die Forschung leitet es aus solchen Schriftstücken ab, und Überlieferung heißt, es wurde erst später erzählt, ohne ein Schriftstück dahinter."
       ]
     },
     {
@@ -159,7 +159,7 @@
             },
             {
               "id": "life-04",
-              "date": "Seit den 1460er Jahren",
+              "date": "Ab den 1460er Jahren",
               "k": "mark_inferred",
               "line": "Er lernt in Verrocchios Werkstatt in Florenz. Ein Lehrvertrag ist nicht erhalten. Die Chronik des Museums setzt den Beginn um 1466 an, andere Forscher früher.",
               "wing_date": "Um 1466 bis 1472"
@@ -296,7 +296,7 @@
           "id": "venice-romagna",
           "nav": "Venedig und die Romagna",
           "h": "Venedig, Florenz und die Romagna, 1500 bis 1506",
-          "p": "Über Mantua, wo er Isabella d'Este zeichnete, kam er nach Venedig, wo ihn ein Brief vom 13. März 1500 belegt, und im April war er wieder in Florenz. In Venedig beriet er die Stadt, wie sie sich gegen die Türken verteidigen könne. Ein Brief von 1501 beschreibt ihn in Florenz als ganz in die Geometrie vertieft und ohne Geduld für den Pinsel. Für Cesare Borgia vermaß er Festungen in der Romagna. Zurück in Florenz, begann er 1503 das Bildnis der Lisa del Giocondo und übernahm die Schlacht von Anghiari, ein Wandbild für den Saal des Großen Rates. Am 30. Mai 1506 brach er nach Mailand auf und versprach, in drei Monaten zurück zu sein, doch aus dem Aufenthalt wurden Jahre.",
+          "p": "Über Mantua, wo er Isabella d'Este zeichnete, kam er nach Venedig, wo ihn ein Brief vom 13. März 1500 belegt, und im April war er wieder in Florenz. In Venedig beriet er die Stadt, wie sie sich gegen die Türken verteidigen könne. Ein Brief von 1501 beschreibt ihn in Florenz als ganz in die Geometrie vertieft und ohne Geduld für den Pinsel. Für Cesare Borgia vermaß er Festungen in der Romagna. Zurück in Florenz begann er 1503 das Bildnis der Lisa del Giocondo und übernahm die Schlacht von Anghiari, ein Wandbild für den Saal des Großen Rates. Am 30. Mai 1506 brach er nach Mailand auf und versprach, in drei Monaten zurück zu sein, doch aus dem Aufenthalt wurden Jahre.",
           "items": [
             {
               "id": "life-27",
@@ -340,7 +340,7 @@
           "id": "milan-again",
           "nav": "Wieder Mailand",
           "h": "Wieder Mailand, 1506 bis 1513",
-          "p": "Mailand war jetzt französisch, Statthalter war Charles d'Amboise. 1507 nannte ihn König Ludwig XII. seinen eigenen Maler und Ingenieur. Von etwa August 1507 bis zum Frühjahr 1508 war er wieder in Florenz, im Streit mit seinen Halbbrüdern um das Testament seines Onkels Francesco, und studierte in Santa Maria Nuova die Anatomie. Zurück in Mailand füllte er seine Notizen mit Studien zu Wasser und Gestein. In diesen Jahren wurde Francesco Melzi, ein junger Mailänder Adliger, sein Schüler. Nach dem Tod von Charles d'Amboise lebte Leonardo ab 1511 als Gast in der Villa der Melzi in Vaprio d'Adda.",
+          "p": "Mailand war jetzt französisch, Statthalter war Charles d'Amboise. 1507 nannte ihn König Ludwig XII. seinen eigenen Maler und Ingenieur. Von etwa August 1507 bis zum Frühjahr 1508 war er wieder in Florenz, im Streit mit seinen Halbbrüdern um das Testament seines Onkels Francesco, und trieb in Santa Maria Nuova Anatomie. Zurück in Mailand füllte er seine Notizen mit Studien zu Wasser und Gestein. In diesen Jahren wurde Francesco Melzi, ein junger Mailänder Adliger, sein Schüler. Nach dem Tod von Charles d'Amboise lebte Leonardo ab 1511 als Gast in der Villa der Melzi in Vaprio d'Adda.",
           "items": [
             {
               "id": "life-32",
@@ -358,7 +358,7 @@
               "id": "life-34",
               "date": "Um 1508 bis 1513",
               "k": "mark_inferred",
-              "line": "Seine anatomischen Studien reichen durch diese Jahre. Vasari nennt später della Torre als seinen Mitarbeiter darin."
+              "line": "Seine anatomischen Studien reichen durch diese Jahre. Vasari nennt später della Torre als seinen Mitarbeiter dabei."
             }
           ],
           "links": [
@@ -372,7 +372,7 @@
           "id": "rome",
           "nav": "Rom",
           "h": "Rom, 1513 bis 1516",
-          "p": "In Rom war sein Gönner Giuliano de' Medici, der Bruder von Papst Leo X., der ihm Räume im Belvedere des Vatikans gab. Er arbeitete an Spiegeln, an der Geometrie und an Plänen für die Pontinischen Sümpfe, doch die Belege aus diesen Jahren sind dünn. Giuliano starb im März 1516, und im selben Jahr ging Leonardo nach Frankreich.",
+          "p": "Giuliano de' Medici, der Bruder von Papst Leo X., förderte ihn in Rom und gab ihm Räume im Belvedere des Vatikans. Leonardo arbeitete an Spiegeln, an der Geometrie und an Plänen für die Pontinischen Sümpfe, doch die Belege aus diesen Jahren sind dünn. Giuliano starb im März 1516, und im selben Jahr ging Leonardo nach Frankreich.",
           "items": [
             {
               "id": "life-35",
@@ -524,14 +524,14 @@
           "nav": "Kinder?",
           "q": "Hatte Leonardo da Vinci Kinder?",
           "a": "Ein Kind von ihm ist nicht bekannt.",
-          "known": "Keine Quelle nennt einen Sohn oder eine Tochter von ihm, und sein Testament erwähnt keine. Die jungen Männer in seinem Haus, Salaì und später Melzi, waren seine Schüler und Gehilfen, nicht seine Kinder."
+          "known": "Keine Quelle nennt einen Sohn oder eine Tochter von ihm, und sein Testament erwähnt keines. Die jungen Männer in seinem Haus, Salaì und später Melzi, waren seine Schüler und Gehilfen, nicht seine Kinder."
         },
         {
           "id": "sexuality",
           "nav": "Homosexuell?",
           "q": "War Leonardo da Vinci homosexuell?",
-          "a": "Kein Dokument entscheidet das. Die Quellen kennen ein Verfahren von 1476, das mit einem Freispruch endete, keine Ehefrau, kein Kind und einen Haushalt, den er viele Jahre mit Salaì teilte und später mit Melzi.",
-          "known": "Im April 1476 beschuldigte eine anonyme Anzeige in Florenz ihn und drei andere Männer der Sodomie. Das Verfahren wurde eingestellt und im Juni mit einem Freispruch beendet, und eine Anzeige belegt keine Schuld. Mehrere Forscher, unter ihnen Frank Zöllner und Giovanni Dall'Orto, sehen in ihm einen Mann, der Männer liebte. Die Historikerin Elizabeth Abbott hält ihn nach heutigen Begriffen wohl für homosexuell, glaubt aber, er habe sich nach 1476 für ein enthaltsames Leben entschieden, und gibt zu bedenken, dass es Homosexualität als Identität zu seiner Zeit nicht gab. Einige wenige haben nach einer Frau in seinem Leben gesucht, auf sehr dünner Grundlage, und Sigmund Freuds berühmte Deutung von 1910 beruhte auf einem falsch übersetzten Wort. Kein Dokument entscheidet die Frage, weder in die eine noch in die andere Richtung."
+          "a": "Kein Dokument entscheidet das. Die Quellen kennen ein Verfahren von 1476, das mit einem Freispruch endete. Eine Ehefrau oder ein Kind von ihm ist nicht bekannt. Viele Jahre teilte er einen Haushalt mit Salaì, später mit Melzi.",
+          "known": "Im April 1476 beschuldigte eine anonyme Anzeige in Florenz ihn und drei andere Männer der Sodomie. Die Anzeige wurde zunächst abgewiesen. Im Juni endete das Verfahren mit einem Freispruch. Eine Anzeige belegt keine Schuld. Mehrere Forscher, unter ihnen Frank Zöllner und Giovanni Dall'Orto, sehen in ihm einen Mann, der Männer liebte. Die Historikerin Elizabeth Abbott hält ihn nach heutigen Begriffen wohl für homosexuell, glaubt aber, er habe sich nach 1476 für ein enthaltsames Leben entschieden, und gibt zu bedenken, dass es Homosexualität als Identität zu seiner Zeit nicht gab. Einige wenige haben nach einer Frau in seinem Leben gesucht, auf sehr dünner Grundlage, und Sigmund Freuds berühmte Deutung von 1910 beruhte auf einem falsch übersetzten Wort. Kein Dokument entscheidet die Frage, weder in die eine noch in die andere Richtung."
         },
         {
           "id": "parents",
@@ -544,7 +544,7 @@
           "id": "siblings",
           "nav": "Geschwister",
           "q": "Hatte Leonardo da Vinci Geschwister?",
-          "a": "Keine vollen Geschwister, aber viele Halbgeschwister. Als sein Vater 1504 starb, lebten noch elf weitere Kinder des Vaters, und seine Mutter hatte mit ihrem Mann fünf Kinder.",
+          "a": "Vollgeschwister sind keine bekannt, aber er hatte viele Halbgeschwister. Als sein Vater 1504 starb, lebten noch elf weitere Kinder des Vaters, und seine Mutter hatte mit ihrem Mann fünf Kinder.",
           "known": "Sein Vater heiratete viermal und bekam erst 1476 ein eheliches Kind, als Leonardo 24 war. Beim Tod des Vaters notierte Leonardo zwei Töchter und zehn Söhne, er selbst einer davon: Neun Halbbrüder und zwei Halbschwestern lebten also. Zählt man die Kinder mit, die früh starben, kommt das Museo Galileo auf mindestens sechzehn. Seine Mutter bekam mit Accattabriga vier Töchter und einen Sohn. 1507 stritt Leonardo mit seinen Halbbrüdern um das Testament seines Onkels Francesco."
         },
         {
@@ -559,7 +559,7 @@
           "nav": "Linkshänder?",
           "q": "War Leonardo da Vinci Linkshänder?",
           "a": "Ja. Er schrieb seine Notizen mit der linken Hand von rechts nach links, sodass sie sich im Spiegel normal lesen.",
-          "known": "Das sagt schon Vasari 1568. 2019 untersuchte das Opificio delle Pietre Dure in Florenz seine Zeichnung von 1473: Das Datum vorn in Spiegelschrift schrieb er mit der linken Hand, eine Zeile in gewöhnlicher Schrift auf der Rückseite mit der rechten. Er konnte also beides. Warum er in Spiegelschrift schrieb, weiß man nicht. Verbreitet ist die Erklärung, er habe seine Ideen verstecken wollen. Einen Beleg aus seiner Zeit dafür kennen wir nicht."
+          "known": "Das sagt schon Vasari 1568. 2019 untersuchte das Opificio delle Pietre Dure in Florenz seine Zeichnung von 1473: Das Datum vorn in Spiegelschrift schrieb er wohl mit der linken Hand, eine Zeile in gewöhnlicher Schrift auf der Rückseite mit der rechten. Er konnte also beides. Warum er in Spiegelschrift schrieb, weiß man nicht. Verbreitet ist die Erklärung, er habe seine Ideen verstecken wollen. Einen Beleg aus seiner Zeit dafür kennen wir nicht."
         },
         {
           "id": "vegetarian",
@@ -580,7 +580,7 @@
           "nav": "Schule",
           "q": "Ging Leonardo da Vinci zur Schule?",
           "a": "Nicht auf eine Lateinschule. Er lernte das Rechnen der Kaufleute und brachte sich vieles andere selbst bei.",
-          "known": "Vasari erzählt, er habe das Rechnen mit dem Abakus, wie es Kaufleute brauchten, in wenigen Monaten gemeistert. Er nannte sich selbst einen omo sanza lettere, einen Mann ohne Latein und Gelehrsamkeit, und schrieb Italienisch. In Mailand, schon erwachsen, arbeitete er sich auf eigene Faust durch die lateinische Grammatik."
+          "known": "Vasari erzählt, er habe das Rechnen mit dem Abakus, wie es Kaufleute brauchten, in wenigen Monaten gemeistert. Er nannte sich selbst einen „omo sanza lettere“, einen Mann ohne Latein und Gelehrsamkeit, und schrieb Italienisch. In Mailand, schon erwachsen, arbeitete er sich auf eigene Faust durch die lateinische Grammatik."
         }
       ]
     },
