@@ -224,9 +224,9 @@
  },
  "meta": {
   "title": "Opere di Leonardo da Vinci, una per una | Museum of Ages",
-  "description": "Opere di Leonardo da Vinci: quanti dipinti sono suoi? Da 15 a 20 circa, a seconda di chi fa l’elenco. Cosa mostrano, dove sono e se sono davvero suoi.",
+  "description": "Opere di Leonardo da Vinci: quanti dipinti sono suoi? Da 15 a 20 circa, secondo chi fa l’elenco. Cosa mostrano, dove sono e quanto è certo che siano suoi.",
   "og_title": "Opere di Leonardo da Vinci, una per una",
-  "og_image_alt": "Le 24 opere dell’ala di Leonardo per periodo, ognuna con un segno che dice quanto è sicura la sua attribuzione: 14 documentate, 4 controverse, 4 con riserva, 1 della sua bottega, 1 copia, e l’Ultima Cena sulla sua parete. Un grafico fatto per questa pagina."
+  "og_image_alt": "Le 24 opere dell’ala di Leonardo per periodo, ognuna con un segno che dice quanto è sicura la sua attribuzione: 14 documentate, 4 controverse, 4 con riserva, 1 della sua bottega, 1 copia, e l’Ultima Cena su una parete tutta sua. Un grafico fatto per questa pagina."
  },
  "labels": {
   "crumbs": "Sei qui",
@@ -249,14 +249,14 @@
  },
  "top": {
   "h1": "Le opere di Leonardo da Vinci",
-  "answer": "Un numero fisso non c’è. A seconda di chi fa l’elenco, i dipinti conservati di mano di Leonardo da Vinci sono circa da 15 a 20. L’Ermitage parla di poco più di una dozzina. Lo studioso di Leonardo Martin Kemp ne ha contati circa 16 nel 2025, più altri quattro o cinque che Leonardo ha dipinto insieme ad altri. La casa d’aste che ha venduto il Salvator Mundi ha parlato di meno di 20.",
+  "answer": "Un numero fisso non c’è. A seconda di chi fa l’elenco, i dipinti conservati di mano di Leonardo da Vinci sono da 15 a 20 circa. L’Ermitage parla di poco più di una dozzina. Lo studioso di Leonardo Martin Kemp ne ha contati circa 16 nel 2025, più altri quattro o cinque che Leonardo ha dipinto insieme ad altri. La casa d’aste che ha venduto il Salvator Mundi ha parlato di meno di 20.",
   "answer_more": [
-   "La nostra ala di Leonardo espone 24 opere, ognuna con una parola che dice quanto è sicura l’attribuzione: 14 documentate, 4 controverse, 4 con riserva, 1 della sua bottega e 1 copia, e ",
+   "La nostra ala di Leonardo espone 24 opere, ognuna con una parola che dice quanto è sicura l’attribuzione: 14 documentate, 4 controverse, 4 con riserva, 1 della sua bottega e 1 copia, e ",
    {
     "text": "l’Ultima Cena",
     "at": "last-supper"
    },
-   " sulla sua parete. ",
+   " su una parete tutta sua. ",
    {
     "text": "La Gioconda (Monna Lisa)",
     "at": "mona-lisa"
@@ -276,7 +276,7 @@
     "text": "il Salvator Mundi",
     "at": "salvator-mundi"
    },
-   " sono tutti qui, ognuno con una porta sulla sala dove è appeso."
+   " sono tutti qui, ognuno con una porta verso la sala dei quadri dove è appeso."
   ],
   "tally": {
    "title": "Le opere, per periodo",
@@ -287,7 +287,7 @@
     "qualified": "4 con riserva",
     "workshop": "1 della sua bottega",
     "copy": "1 copia",
-    "field": "l’Ultima Cena, sulla sua parete"
+    "field": "l’Ultima Cena, su una parete tutta sua"
    }
   },
   "door": {
@@ -303,7 +303,7 @@
    "nav": "Certezza",
    "h": "Quanto siamo sicuri che siano suoi",
    "paras": [
-    "«Documentato» vuol dire che la sua mano nell’opera è attestata dai documenti e che il museo che la conserva è d’accordo. «Controverso» vuol dire che gli studiosi non sono d’accordo, o che il museo stesso indica un altro pittore. «Con riserva» vuol dire che la sua mano c’è, ma una parte non è sua, o che non è un dipinto finito. «Bottega» vuol dire che l’ha dipinta un allievo accanto a lui, su un suo disegno, e «copia» che è un’opera più tarda di altre mani, tratta da qualcosa di suo che è andato perduto. Il numero cambia perché ha lasciato opere incompiute, perché i suoi allievi dipingevano sui suoi disegni così bene da passare per lui, e perché vecchie copie sono state spacciate per originali. Le nuove scoperte sono rare: secondo Martin Kemp, dalla Madonna Benois, intorno al 1900, è emerso un solo nuovo candidato, il Salvator Mundi, ed è controverso."
+    "«Documentato» vuol dire che la sua mano nell’opera è attestata e che il museo che la conserva è d’accordo. «Controverso» vuol dire che gli studiosi non sono d’accordo, o che il museo stesso indica un altro pittore. «Con riserva» vuol dire che la sua mano c’è, ma una parte non è sua, o che non è un dipinto finito. «Bottega» vuol dire che l’ha dipinta un allievo accanto a lui, su un suo disegno, e «copia» che è un’opera più tarda di altre mani, tratta da qualcosa di suo che è andato perduto. Il numero cambia perché ha lasciato opere incompiute, perché i suoi allievi dipingevano sui suoi disegni così bene che le loro opere passavano per sue, e perché vecchie copie sono state spacciate per originali. Le nuove scoperte sono rare: secondo Martin Kemp, dalla Madonna Benois, intorno al 1900, è emerso un solo nuovo candidato, il Salvator Mundi, ed è controverso."
    ]
   },
   {
@@ -324,7 +324,7 @@
        "title": "Battesimo di Cristo",
        "when": "Dal 1470 al 1475 circa",
        "where": "Gallerie degli Uffizi, Firenze",
-       "who": "Documentato, con una precisazione: è il dipinto del Verrocchio. Gli Uffizi indicano prima Verrocchio e poi Leonardo. Vasari ha annotato la parte del giovane allievo, l’angelo di sinistra. Gli studi attuali attribuiscono a Leonardo di più: il fiume sullo sfondo, il bagliore della luce e lo stesso Cristo.",
+       "who": "Documentato, con una precisazione: è il dipinto del Verrocchio. Gli Uffizi indicano prima Verrocchio e poi Leonardo. Giorgio Vasari ha annotato la parte del giovane allievo, l’angelo di sinistra. Gli studi attuali attribuiscono a Leonardo di più: il fiume sullo sfondo, il chiarore della luce e lo stesso Cristo.",
        "shows": "Giovanni versa l’acqua sul capo di Cristo nel fiume Giordano, e due angeli sono inginocchiati a sinistra. L’angelo di sinistra, visto di spalle e che si volta a guardare sopra la spalla, è di Leonardo.",
        "worth_knowing": "Vasari ha scritto che l’allievo ha dipinto il suo angelo così bene da turbare il maestro, e probabilmente anche un terzo pittore, più anziano, ha lavorato alla tavola: le mani di Dio e la colomba in alto vengono da una mano più debole.",
        "door": "il Battesimo di Cristo",
@@ -471,7 +471,7 @@
        "title": "San Girolamo nel deserto",
        "when": "Dal 1480 al 1490 circa",
        "where": "Pinacoteca Vaticana, Città del Vaticano",
-       "who": "Documentato. Il Vaticano dice che l’attribuzione non è mai stata messa in dubbio, e data la tavola al 1482 circa, perché lo stile è molto vicino a quello dell’Adorazione dei Magi. Alcuni storici la collocano più vicino al decennio del 1490.",
+       "who": "Documentato. Il Vaticano dice che l’attribuzione non è mai stata messa in dubbio, e data la tavola al 1482 circa, perché lo stile è molto vicino a quello dell’Adorazione dei Magi. Alcuni storici la collocano più vicino agli anni Novanta del Quattrocento.",
        "shows": "Il santo dotto, penitente nel deserto, magro, senza barba e coperto di stracci, è inginocchiato con una pietra nel pugno, alzata per battersi il petto, e un leone è sdraiato davanti a lui. Sulla maggior parte della tavola Leonardo non è mai andato oltre il disegno preparatorio bruno, e una macchia rossa sta per il suo cappello cardinalizio.",
        "worth_knowing": "A un certo punto la tavola è stata tagliata in cinque pezzi. Lo zio di Napoleone, il cardinale Joseph Fesch, li ha ritrovati e li ha fatti riunire, e papa Pio IX l’ha comprata nel 1856.",
        "door": "il San Girolamo",
@@ -499,8 +499,8 @@
        "when": "Dal 1481 al 1482 circa",
        "where": "Gallerie degli Uffizi, Firenze",
        "who": "Documentato. I monaci di San Donato a Scopeto, un convento agostiniano appena fuori Firenze, l’hanno commissionata nel luglio 1481 per l’altare maggiore e gli hanno dato 30 mesi. Leonardo è partito per Milano prima di finirla. Alla fine, la pala per loro l’ha dipinta Filippino Lippi.",
-       "shows": "I tre re sono inginocchiati con i loro doni davanti a Maria e al bambino, una folla disposta in curva intorno a loro, e dietro ci sono rovine, una costruzione a metà con scale e cavalieri che combattono. Gran parte non è mai andata oltre il disegno: alcune figure sono solo contorni, altre sono quasi modellate.",
-       "worth_knowing": "Il restauro dal 2012 al 2017 ha mostrato che ha elaborato la composizione direttamente sulla tavola, invece di fissarla prima su carta, una cosa rara anche per lui. Restauratori precedenti avevano coperto la tavola con una vernice colorata che la faceva sembrare quasi monocroma.",
+       "shows": "I tre re sono inginocchiati con i loro doni davanti a Maria e al bambino, una folla disposta in curva intorno a loro, e dietro ci sono rovine, una costruzione a metà con scale, e cavalieri che combattono. Gran parte non è mai andata oltre il disegno: alcune figure sono solo contorni, altre sono quasi modellate.",
+       "worth_knowing": "Il restauro dal 2012 al 2017 ha mostrato che Leonardo ha elaborato la composizione direttamente sulla tavola, invece di fissarla prima su carta, una cosa rara anche per lui. Restauratori precedenti avevano coperto la tavola con una vernice colorata che la faceva sembrare quasi monocroma.",
        "door": "l’Adorazione dei Magi",
        "shape": "square",
        "pic": "adoration-of-the-magi",
@@ -527,7 +527,7 @@
        "title": "Vergine delle Rocce, versione del Louvre",
        "when": "Dal 1483 al 1494 circa",
        "where": "Musée du Louvre, Parigi",
-       "who": "Documentato. Il contratto è datato 25 aprile 1483: Leonardo e due pittori, i fratelli de Predis, dovevano dipingere e dorare la pala della cappella di una confraternita a Milano. Ne è seguita una lunga lite per soldi. Questa è la prima delle due versioni.",
+       "who": "Documentato. Il contratto è datato 25 aprile 1483: Leonardo e due pittori, i fratelli de Predis, dovevano dipingere e dorare la pala della cappella di una confraternita a Milano. Ne è seguita una lunga lite sul compenso. Questa è la prima delle due versioni.",
        "shows": "Maria è inginocchiata in una grotta rocciosa, con una mano tesa sopra Gesù bambino, e con l’altra avvicina il piccolo Giovanni Battista. Un angelo sostiene Gesù e indica Giovanni con il dito, e Gesù lo benedice. Dietro, montagne e acqua.",
        "worth_knowing": "Nessuno sa come sia arrivata in Francia: la prima notizia è del 1625, a Fontainebleau. Immagini all’infrarosso fatte nel 2009 mostrano che l’angelo è stato dipinto prima senza la mano che indica, come nella tavola di Londra, e che Leonardo ha aggiunto il gesto verso la fine.",
        "door": "la Vergine delle Rocce del Louvre",
@@ -549,7 +549,7 @@
        "title": "Ritratto di Musico",
        "when": "1485 circa",
        "where": "Veneranda Biblioteca Ambrosiana, Milano",
-       "who": "Controverso, anche se soprattutto da voci più antiche. L’Ambrosiana lo attribuisce a Leonardo senza esitazioni, e la maggior parte degli studiosi è d’accordo. Il dubbio è nato nel 1890, quando è stato proposto il nome di Ambrogio de Predis. Uno studio del 1987 ha suggerito che Leonardo abbia dipinto la testa e il busto, e che qualcun altro, forse Boltraffio, abbia aggiunto più tardi la mano con il foglio.",
+       "who": "Controverso, anche se i dubbi vengono soprattutto da voci più antiche. L’Ambrosiana lo attribuisce a Leonardo senza esitazioni, e la maggior parte degli studiosi è d’accordo. Il dubbio è nato nel 1890, quando è stato proposto il nome di Ambrogio de Predis. Uno studio del 1987 ha suggerito che Leonardo abbia dipinto la testa e il busto, e che qualcun altro, forse Boltraffio, abbia aggiunto più tardi la mano con il foglio.",
        "shows": "Un giovane visto fino alle spalle, con il corpo un po’ girato dall’altra parte e lo sguardo verso la sua destra, un foglio di musica piegato in mano. Chi sia, nessuno lo sa: passava per il duca di Milano finché una pulitura del 1905 ha scoperto la mano e il foglio, e tra i nomi proposti da allora ci sono il maestro di cappella del Duomo, Franchino Gaffurio, e l’amico musicista di Leonardo, Atalante Migliorotti.",
        "worth_knowing": "Le sue due pupille non hanno la stessa grandezza, la sinistra un po’ più piccola, come se fosse colto proprio quando l’occhio si apre di più nella luce che cala, una cosa che Leonardo ha descritto nei suoi appunti.",
        "door": "il Musico",
@@ -593,13 +593,13 @@
        "title": "Ritratto di dama, detta la Belle Ferronnière",
        "when": "Dal 1490 al 1497 circa",
        "where": "Musée du Louvre, Parigi. Quando abbiamo controllato, il Louvre la indicava come non esposta.",
-       "who": "Documentato. Non si sa chi sia. La candidata più antica è Lucrezia Crivelli, amante del duca dal 1495 circa, nominata in una poesia latina copiata nel Codice Atlantico di Leonardo. Altri propongono Beatrice d’Este, moglie del duca, o Isabella d’Aragona.",
+       "who": "Documentato. Chi sia non è stabilito. La candidata più antica è Lucrezia Crivelli, amante del duca dal 1495 circa, nominata in una poesia latina copiata nel Codice Atlantico di Leonardo. Altri propongono Beatrice d’Este, moglie del duca, o Isabella d’Aragona.",
        "shows": "Una giovane donna dietro un parapetto di pietra, il corpo girato da una parte e la testa dall’altra, in un abito rosso alla moda milanese con le maniche legate da nastri, un sottile cordoncino sulla fronte con una pietra rossa. Il suo sguardo ci passa appena accanto.",
        "worth_knowing": "Il nome è un errore, e il Louvre lo dice nel suo stesso titolo («dit à tort», detto a torto). Era il nome di un altro ritratto della collezione reale francese, una stampa di questo quadro lo ha portato per sbaglio, e nel 1784 un inventario l’ha chiamata perfino Anna Bolena.",
        "door": "la Belle Ferronnière",
        "shape": "tall",
        "pic": "la-belle-ferronniere",
-       "alt": "La Belle Ferronnière: una stampa monocroma del 1901. Una giovane donna vista a mezzo busto, il volto girato verso di noi, una sottile fascia sulla fronte, su un fondo scuro, con un davanzale lungo il bordo inferiore. Una riproduzione.",
+       "alt": "La Belle Ferronnière: una stampa monocroma del 1901. Una giovane donna vista a mezzo busto, il volto girato verso di noi, una sottile fascia sulla fronte, su un fondo scuro, con un parapetto lungo il bordo inferiore. Una riproduzione.",
        "src": [
         "Facsimile a stampa monocromo del 1901, tavola 7. Registra lo stato e i toni di quell’anno, non i colori di oggi. Pubblico dominio, tramite ",
         {
@@ -615,7 +615,7 @@
        "title": "Madonna Litta",
        "when": "1490 circa",
        "where": "Museo statale Ermitage, San Pietroburgo",
-       "who": "Controverso. L’Ermitage la presenta come opera di Leonardo, senza riserve, e la data alla metà del decennio del 1490. Molti studiosi pensano che l’abbia dipinta il suo allievo Giovanni Antonio Boltraffio su un disegno di Leonardo. Martin Kemp ha detto che quasi tutti gli specialisti la vedono così.",
+       "who": "Controverso. L’Ermitage la presenta come opera di Leonardo, senza riserve, e la data alla metà degli anni Novanta del Quattrocento. Molti studiosi pensano che l’abbia dipinta il suo allievo Giovanni Antonio Boltraffio su un disegno di Leonardo. Martin Kemp ha detto che quasi tutti gli specialisti la vedono così.",
        "shows": "Maria allatta il bambino in una stanza scura con due finestre uguali, ognuna aperta su ampie montagne. Il Louvre ha uno studio per questo dipinto, dice l’Ermitage, e il nome viene dal duca milanese Antonio Litta: l’Ermitage l’ha comprata dalla collezione Litta nel 1865.",
        "worth_knowing": "Quando la National Gallery di Londra l’ha avuta in prestito nel 2011, il dipinto era esposto come un Leonardo, mentre uno studio di panneggio per lo stesso dipinto, nella stessa mostra, portava il nome di Boltraffio.",
        "door": "la Madonna Litta",
@@ -638,7 +638,7 @@
        "when": "Dal 1491 al 1508 circa",
        "where": "National Gallery, Londra",
        "who": "Attribuzione con riserva. La National Gallery la attribuisce al solo Leonardo. Il curatore del Louvre vede in alcune parti il lavoro di allievi, il piccolo Giovanni vicino a Boltraffio, e la considera dipinta in gran parte dalla bottega sotto lo sguardo di Leonardo, con la sua mano in alcuni punti.",
-       "shows": "La stessa scena del quadro di Parigi, con delle differenze: l’angelo non indica più, le figure hanno sottili aureole d’oro e il piccolo Giovanni tiene una croce di canna. Il dipinto è stato fatto per la cappella di Milano citata nel contratto del 1483, e la National Gallery ha trovato tre fasi di lavoro: l’inizio nei primi anni del decennio del 1490, la testa di Cristo girata di profilo qualche anno dopo, e il cielo azzurro aggiunto dopo che Leonardo è stato richiamato nel 1506.",
+       "shows": "La stessa scena del quadro di Parigi, con delle differenze: l’angelo non indica più, le figure hanno sottili aureole d’oro e il piccolo Giovanni tiene una croce di canna. Il dipinto è stato fatto per la cappella di Milano citata nel contratto del 1483, e la National Gallery ha trovato tre fasi di lavoro: l’inizio nei primi anni Novanta del Quattrocento, la testa di Cristo girata di profilo qualche anno dopo, e il cielo azzurro aggiunto dopo che Leonardo è stato richiamato nel 1506.",
        "worth_knowing": "Le piante della grotta non sono specie reali: la National Gallery dice che sono miscugli di diverse piante.",
        "door": "la Vergine delle Rocce di Londra",
        "shape": "tall",
@@ -659,7 +659,7 @@
        ]
       }
      ],
-     "p": "A Milano ha dipinto una pala d’altare per una confraternita, che esiste in due versioni: in quella di Londra, secondo molti, c’è la mano della sua bottega. Seguono tre ritratti, uno dei quali controverso, e una Madonna che allatta che secondo molti ha dipinto un allievo su un suo disegno. Sulla parete di un refettorio ha dipinto l’Ultima Cena per Ludovico Sforza, che chiude questa pagina."
+     "p": "A Milano ha dipinto per una confraternita una pala d’altare che esiste in due versioni: in quella di Londra, secondo molti, c’è la mano della sua bottega. Seguono tre ritratti, uno dei quali controverso, e una Madonna che allatta, dipinta secondo molti da un allievo su un suo disegno. Sulla parete di un refettorio ha dipinto per Ludovico Sforza l’Ultima Cena, che chiude questa pagina."
     },
     {
      "id": "florence-1500",
@@ -692,7 +692,7 @@
        "title": "Madonna dei Fusi, versione Lansdowne",
        "when": "1501 circa",
        "where": "Kenneth C. Griffin Collection, in prestito al Metropolitan Museum of Art, New York",
-       "who": "Attribuzione con riserva. La didascalia del Metropolitan Museum of Art dice «Leonardo da Vinci e bottega». Le due versioni sono andate avanti insieme in bottega. Secondo Martin Kemp, una è andata a un funzionario francese e l’altra, pensa lui, al re in persona.",
+       "who": "Attribuzione con riserva. La didascalia del Metropolitan Museum of Art dice Leonardo da Vinci e bottega. Le due versioni sono andate avanti insieme in bottega. Secondo Martin Kemp, una è andata a un funzionario francese e l’altra, pensa lui, al re in persona.",
        "shows": "La stessa scena della tavola Buccleuch: il bambino con l’aspo, Maria che allunga la mano verso di lui, rocce dietro. Dalla primavera 2026 il dipinto è appeso nelle sale di pittura europea del Metropolitan Museum of Art, in prestito a lungo termine e senza un comunicato stampa.",
        "worth_knowing": "Nel maggio 2025 Martin Kemp ha scritto che del quadro si erano perse le tracce, e un anno dopo era appeso a una parete del Metropolitan.",
        "door": "la versione Lansdowne della Madonna dei Fusi",
@@ -780,7 +780,7 @@
        ]
       }
      ],
-     "p": "Tornato a Firenze, ha iniziato la Gioconda e la Sant’Anna, e ci ha lavorato per anni. Una piccola Madonna per il segretario del re di Francia si è conservata in due versioni, ognuna con un’attribuzione con riserva. Su una parete del Palazzo della Signoria ha iniziato una battaglia che è andata perduta e che qui è nota da una copia."
+     "p": "Tornato a Firenze, ha iniziato la Gioconda e la Sant’Anna, e ci ha lavorato per anni. Una piccola Madonna per il segretario del re di Francia si è conservata in due versioni, ognuna attribuita con riserva. Su una parete del Palazzo della Signoria ha iniziato una battaglia che è andata perduta e che qui è nota da una copia."
     },
     {
      "id": "milan-1506",
@@ -814,7 +814,7 @@
        "title": "La Scapigliata",
        "when": "Dal 1506 al 1508 circa",
        "where": "Galleria Nazionale di Parma, Complesso della Pilotta, Parma",
-       "who": "Attribuzione con riserva. La galleria la attribuisce a Leonardo, con un parere italiano quasi unanime, e la data dal 1492 al 1501 circa. L’ala segue una proposta che la data intorno al 1508. La riserva dipende da ciò che l’opera è: uno schizzo monocromo su una tavola di legno, né disegno né dipinto finito.",
+       "who": "Attribuzione con riserva. La galleria la attribuisce a Leonardo, con la critica italiana quasi unanime, e la data dal 1492 al 1501 circa. L’ala segue una proposta che la data intorno al 1508. La riserva dipende da ciò che l’opera è: uno schizzo monocromo su una tavola di legno, né disegno né dipinto finito.",
        "shows": "La testa di una giovane donna che guarda in basso, con i capelli sciolti e scompigliati, da cui il nome. A cosa servisse, non si sa: uno studio per un dipinto di Leda, per il cartone oggi a Londra, per la Vergine delle Rocce di Londra, oppure un’opera autonoma.",
        "worth_knowing": "Lo stesso direttore della galleria ne ha dubitato nel 1896, perché veniva dallo studio di un pittore. La galleria l’aveva comprata nel 1839 dagli eredi di un pittore, e l’inventario che l’accompagnava la chiamava semplicemente testa di Madonna a chiaroscuro.",
        "door": "la Scapigliata",
@@ -862,9 +862,9 @@
        "work": "salvator-mundi",
        "title": "Salvator Mundi",
        "when": "Dal 1499 al 1510 circa",
-       "where": "Collezione particolare, luogo attuale non confermato",
+       "where": "Collezione privata, luogo attuale non confermato",
        "who": "Controverso, più di ogni altro. A favore di Leonardo: Martin Kemp e la National Gallery di Londra, che l’ha esposto come opera di Leonardo nel 2011. Contro o in dubbio: Carmen Bambach, che ne attribuisce la maggior parte a Boltraffio, e Frank Zöllner, che vede un dipinto di bottega, probabilmente con la mano di Leonardo, troppo danneggiato e troppo restaurato per un giudizio sicuro.",
-       "shows": "Cristo come salvatore del mondo, che è il significato del titolo, di fronte, la mano destra alzata a benedire, una sfera di cristallo trasparente nella sinistra, vestito di blu con bande ricamate. Nel 1958 è stato venduto all’asta per 45 sterline come opera di scuola, e nel novembre 2017, da Christie’s a New York, per circa 450 milioni di dollari, il prezzo più alto mai pagato all’asta per un’opera d’arte. Da allora non è più stato esposto in pubblico, e secondo un articolo del 2024 potrebbe essere in un deposito a Ginevra.",
+       "shows": "Cristo come salvatore del mondo, che è il significato del titolo, visto di fronte, la mano destra alzata a benedire, una sfera di cristallo trasparente nella sinistra, vestito di blu con bande ricamate. Nel 1958 è stato venduto all’asta per 45 sterline come opera di scuola, e nel novembre 2017, da Christie’s a New York, per circa 450 milioni di dollari, il prezzo più alto mai pagato all’asta per un’opera d’arte. Da allora non è più stato esposto in pubblico, e secondo un articolo del 2024 potrebbe essere in un deposito a Ginevra.",
        "door": "il Salvator Mundi",
        "shape": "tall",
        "pic": "salvator-mundi",
@@ -893,7 +893,7 @@
        "where": "Musée du Louvre, Parigi",
        "who": "Bottega. Il Louvre lo indica come bottega di Leonardo e lo attribuisce a Francesco Melzi, l’allievo che ha vissuto con lui in Francia dal 1516. Il Louvre suggerisce che Melzi l’abbia dipinto lì per il re di Francia, partendo dal piccolo San Giovanni di Leonardo.",
        "shows": "Un giovane siede in aperta campagna, sorridendo e indicando, con l’edera sul capo, l’uva e un bastone in mano, una pelle maculata intorno al corpo. È stato dipinto come Giovanni Battista.",
-       "worth_knowing": "Nel 1625 un visitatore di Fontainebleau ha annotato che il quadro non muoveva alla devozione, e alla fine di quel secolo è stato trasformato nel dio pagano Bacco: l’uva e l’edera sono state aggiunte, e la croce di Giovanni è diventata un bastone. Il restauro dal 2017 al 2019 ha mostrato che la pelle è originale, e che l’uva e l’edera sono più tarde.",
+       "worth_knowing": "Nel 1625 un visitatore a Fontainebleau ha annotato che il quadro non muoveva alla devozione, e alla fine di quel secolo è stato trasformato nel dio pagano Bacco: l’uva e l’edera sono state aggiunte, e la croce di Giovanni è diventata un bastone. Il restauro dal 2017 al 2019 ha mostrato che la pelle è originale, e che l’uva e l’edera sono più tarde.",
        "door": "il Bacco",
        "shape": "tall",
        "pic": "bacchus",
@@ -912,7 +912,7 @@
     },
     {
      "id": "own-wall",
-     "h": "Sulla sua parete",
+     "h": "Su una parete tutta sua",
      "items": [
       {
        "id": "last-supper",
@@ -947,7 +947,7 @@
    ],
    "links": [
     {
-     "text": "Tutte le misure, dalla testa più piccola all’Ultima Cena, sono nella pagina delle misure, in inglese, disegnate alla stessa scala.",
+     "text": "Tutte le misure, dalla testa più piccola all’Ultima Cena, sono nella pagina delle misure, disegnate alla stessa scala, in inglese.",
      "page": "sizes"
     },
     {
@@ -973,7 +973,7 @@
     },
     {
      "term": "Milano",
-     "text": "il Ritratto di Musico alla Veneranda Biblioteca Ambrosiana, e l’Ultima Cena sulla sua parete a Santa Maria delle Grazie, solo su prenotazione."
+     "text": "il Ritratto di Musico alla Veneranda Biblioteca Ambrosiana, e l’Ultima Cena su una parete tutta sua a Santa Maria delle Grazie, solo su prenotazione."
     },
     {
      "term": "Londra, National Gallery",
@@ -1012,8 +1012,8 @@
      "text": "la Scapigliata."
     },
     {
-     "term": "In nessun luogo pubblico",
-     "text": "il Salvator Mundi, in una collezione particolare, non più esposto dal 2017."
+     "term": "Non esposto al pubblico",
+     "text": "il Salvator Mundi, in una collezione privata, non più esposto dal 2017."
     }
    ]
   },
@@ -1025,7 +1025,7 @@
    "intro": "I titoli, le date, i luoghi di conservazione e le attribuzioni seguono le didascalie dell’ala, controllate nell’ottobre 2026 sulle pagine e sulle schede dei musei stessi: gli Uffizi, la National Gallery of Art di Washington, l’Alte Pinakothek, l’Ermitage, i Musei Vaticani, il Louvre, l’Ambrosiana, il Museo nazionale di Cracovia, la National Gallery di Londra, la Pilotta di Parma e il Cenacolo Vinciano. Per il numero e i dibattiti: Martin Kemp su The Art Newspaper (maggio 2025), la scheda di catalogo di Frank Zöllner sul Salvator Mundi (2019), The Art Newspaper (2018, 2021 e 2024), NPR (2017), e Cultured e Artlyst (2026). Dove il parere di un museo è diverso dalla didascalia dell’ala, la scheda dell’opera lo dice.",
    "notes": [],
    "contact": "Se una data, un’attribuzione o una frase di questa pagina è sbagliata, scrivici e la correggiamo.",
-   "contact_link": "Vai alle note legali",
+   "contact_link": "Vai alle note legali (in inglese)",
    "what_link": "Che cos’è questo museo"
   },
   {

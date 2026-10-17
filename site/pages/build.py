@@ -973,11 +973,11 @@ RECORD = "museum/src/wings/{wing}/pictures/data/store-audit.json"
 
 
 def museum_words(text, lang):
-    """A sentence with the museum's own words ({museum:key}) filled in."""
+    """A sentence with the museum's own words ({museum:key}) filled in, spaced as the language sets its punctuation."""
     texts = json.loads((LANG.HERE / "museum-texts.json").read_text(encoding="utf-8"))
     # a language the file does not hold keeps its own beside it (museum-texts.<code>.json), as the wing's build reads it
     museum = texts[lang] if lang in texts else json.loads((LANG.HERE / f"museum-texts.{lang}.json").read_text(encoding="utf-8"))
-    return re.sub(r"\{museum:(\w+)\}", lambda m: museum[m.group(1)], text)
+    return re.sub(r"\{museum:(\w+)\}", lambda m: LIB.space(museum[m.group(1)], lang), text)
 
 
 def plates():

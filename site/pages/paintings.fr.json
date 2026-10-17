@@ -224,7 +224,7 @@
  },
  "meta": {
   "title": "Tableaux de Léonard de Vinci, un par un | Museum of Ages",
-  "description": "Combien de tableaux sont de Léonard de Vinci? Environ 15 à 20, selon qui fait la liste. Chaque œuvre: ce qu’elle montre, où la voir, si elle est de lui.",
+  "description": "Combien de tableaux sont de Léonard de Vinci? Environ 15 à 20, selon la liste. Chaque œuvre: ce qu’elle montre, où la voir, à quel point elle est de lui.",
   "og_title": "Tableaux de Léonard de Vinci, un par un",
   "og_image_alt": "Les 24 œuvres de l’aile de Léonard par période, chacune avec une marque qui dit à quel point son attribution est sûre: 14 documentées, 4 contestées, 4 avec réserve, 1 de son atelier, 1 copie, et la Cène sur son propre mur. Un graphique fait pour cette page."
  },
@@ -249,9 +249,9 @@
  },
  "top": {
   "h1": "Les tableaux de Léonard de Vinci",
-  "answer": "Les spécialistes ne sont pas d’accord sur le nombre. Selon qui fait la liste, environ 15 à 20 tableaux conservés sont de la main de Léonard de Vinci. L’Ermitage parle d’un peu plus d’une douzaine. Martin Kemp, spécialiste de Léonard, en a compté environ 16 en 2025, et quatre ou cinq autres que Léonard a peints avec d’autres. La maison de ventes qui a vendu le Salvator Mundi a parlé de moins de 20.",
+  "answer": "Les spécialistes ne sont pas d’accord sur le nombre. Selon qui fait la liste, environ 15 à 20 tableaux conservés sont de la main de Léonard de Vinci. L’Ermitage parle d’un peu plus d’une douzaine. Martin Kemp, spécialiste de Léonard, en a compté environ 16 en 2025, et quatre ou cinq autres que Léonard a peints avec d’autres. La maison de ventes qui a vendu le Salvator Mundi a parlé de moins de 20.",
   "answer_more": [
-   "Dans notre aile de Léonard, 24 œuvres sont accrochées, chacune avec un mot qui dit à quel point son attribution est sûre: 14 documentées, 4 contestées, 4 avec réserve, 1 de son atelier et 1 copie, et ",
+   "Dans notre aile de Léonard, 24 œuvres sont accrochées, chacune avec un mot qui dit à quel point son attribution est sûre: 14 documentées, 4 contestées, 4 avec réserve, 1 de son atelier et 1 copie, et ",
    {
     "text": "la Cène",
     "at": "last-supper"
@@ -303,7 +303,7 @@
    "nav": "Certitude",
    "h": "À quel point nous sommes sûrs qu’ils sont de lui",
    "paras": [
-    "«Documenté» signifie que sa main dans l’œuvre est attestée par des documents et que le musée qui la conserve est d’accord. «Contesté» signifie que les spécialistes ne sont pas d’accord, ou que le musée lui-même nomme un autre peintre. «Avec réserve» signifie que sa main y est, mais qu’une partie n’est pas de lui, ou que ce n’est pas un tableau achevé. «Atelier» signifie qu’un élève l’a peinte à ses côtés, d’après son dessin, et «copie», que c’est une œuvre plus tardive, faite par d’autres d’après une œuvre de lui aujourd’hui perdue. Le nombre change parce qu’il a laissé des œuvres inachevées, parce que ses élèves peignaient d’après ses dessins assez bien pour passer pour lui, et parce que de vieilles copies ont été vendues comme des originaux. Les nouvelles découvertes sont rares: selon Martin Kemp, un seul nouveau candidat est apparu depuis la Madone Benois, vers 1900, le Salvator Mundi, et il est contesté."
+    "«Documenté» signifie que sa main dans l’œuvre est attestée et que le musée qui la conserve est d’accord. «Contesté» signifie que les spécialistes ne sont pas d’accord, ou que le musée lui-même nomme un autre peintre. «Avec réserve» signifie que sa main y est, mais qu’une partie n’est pas de lui, ou que ce n’est pas un tableau achevé. «Atelier» signifie qu’un élève l’a peinte à ses côtés, d’après son dessin, et «copie», que c’est une œuvre plus tardive, faite par d’autres d’après une œuvre de lui aujourd’hui perdue. Le nombre change parce qu’il a laissé des œuvres inachevées, parce que ses élèves peignaient d’après ses dessins assez bien pour que leurs œuvres passent pour les siennes, et parce que de vieilles copies ont été vendues comme des originaux. Les nouvelles découvertes sont rares: selon Martin Kemp, un seul nouveau candidat est apparu depuis la Madone Benois, vers 1900, le Salvator Mundi, et il est contesté."
    ]
   },
   {
@@ -311,7 +311,7 @@
    "id": "works",
    "nav": "Les œuvres",
    "h": "Les œuvres, par période",
-   "intro": "Les œuvres sont groupées selon les périodes de l’aile, d’après l’année où chacune a été commencée, avec deux exceptions. Le Salvator Mundi, daté d’environ 1499 à 1510, est placé avec les années 1506 à 1513, où se situent les propositions les plus tardives pour sa date, et la copie d’Anghiari est placée avec le mur qu’elle copie. Aucune œuvre de cette page n’a été commencée à Rome ni après 1519.",
+   "intro": "Les œuvres sont groupées selon les périodes de l’aile, d’après l’année où chacune a été commencée, avec deux exceptions. Le Salvator Mundi, daté d’environ 1499 à 1510, est placé avec les années 1506 à 1513, où se situent les propositions plus tardives pour sa date, et la copie d’Anghiari est placée avec le mur qu’elle copie. Aucune œuvre de cette page n’a été commencée à Rome ni après 1519.",
    "go": "Voir {work} dans l’aile",
    "periods": [
     {
@@ -368,8 +368,8 @@
        "title": "Portrait de Ginevra de’ Benci",
        "when": "Entre 1474 et 1478 environ",
        "where": "National Gallery of Art, Washington",
-       "who": "Documenté. Son identité est sûre. Le commanditaire du portrait ne l’est pas. Le portrait peut marquer son mariage, à 16 ans. Il peut aussi avoir été commandé par l’ambassadeur vénitien Bernardo Bembo, qui l’admirait. L’emblème de Bembo était le laurier et la palme, et sa devise se trouve sous celle de Ginevra sur les images infrarouges: le revers, au moins, vient donc probablement de Bembo.",
-       "shows": "La face: Ginevra de’ Benci, une jeune femme d’une famille de banquiers florentins, devant un buisson de genévrier, ginepro en italien, un jeu de mots sur son nom. Le revers du même panneau, que l’aile accroche à côté de la face: le laurier et la palme en couronne autour d’un brin de genévrier, et un ruban avec une devise latine, la beauté orne la vertu. Une bande a été coupée au bas du panneau, probablement à cause de dégâts, et ses mains ont disparu avec elle.",
+       "who": "Documenté. Son identité est sûre. Celle du commanditaire ne l’est pas. Le portrait peut marquer son mariage, à 16 ans. Il peut aussi avoir été commandé par l’ambassadeur vénitien Bernardo Bembo, qui l’admirait. L’emblème de Bembo était le laurier et la palme, et sa devise se trouve sous celle de Ginevra sur les images infrarouges: le revers, au moins, vient donc probablement de Bembo.",
+       "shows": "La face: Ginevra de’ Benci, une jeune femme d’une famille de banquiers florentins, devant un buisson de genévrier, ginepro en italien, un jeu de mots sur son nom. Le revers du même panneau, que l’aile accroche à côté de la face: le laurier et la palme en couronne autour d’un brin de genévrier, et un ruban avec une devise latine, la beauté orne la vertu. Une bande a été coupée au bas du panneau, probablement à cause de dégâts, et ses mains ont disparu avec cette bande.",
        "door": "Ginevra de’ Benci",
        "shape": "pair",
        "pic": "ginevra-de-benci",
@@ -527,7 +527,7 @@
        "title": "La Vierge aux rochers, version du Louvre",
        "when": "Entre 1483 et 1494 environ",
        "where": "Musée du Louvre, Paris",
-       "who": "Documenté. Le contrat est daté du 25 avril 1483: Léonard et deux peintres, les frères de Predis, devaient peindre et dorer le retable de la chapelle d’une confrérie à Milan. Une longue dispute d’argent a suivi. C’est la première des deux versions.",
+       "who": "Documenté. Le contrat est daté du 25 avril 1483: Léonard et deux peintres, les frères de Predis, devaient peindre et dorer le retable de la chapelle d’une confrérie à Milan. Un long litige financier a suivi. C’est la première des deux versions.",
        "shows": "Marie est agenouillée dans une grotte rocheuse, une main au-dessus de l’enfant Jésus, et de l’autre elle rapproche le petit Jean-Baptiste. Un ange soutient Jésus et pointe un doigt vers Jean, et Jésus le bénit. Derrière eux, des montagnes et de l’eau.",
        "worth_knowing": "Personne ne sait comment le tableau est arrivé en France: sa première mention date de 1625, à Fontainebleau. Des images infrarouges prises en 2009 montrent que l’ange a d’abord été peint sans la main qui montre, comme dans le panneau de Londres, et que Léonard a ajouté le geste vers la fin.",
        "door": "la Vierge aux rochers du Louvre",
@@ -593,7 +593,7 @@
        "title": "Portrait de femme, dit à tort La Belle Ferronnière",
        "when": "Entre 1490 et 1497 environ",
        "where": "Musée du Louvre, Paris. Quand nous avons vérifié, le Louvre l’indiquait comme non exposé.",
-       "who": "Documenté. Son identité reste inconnue. La plus ancienne candidate est Lucrezia Crivelli, maîtresse du duc depuis 1495 environ, nommée dans un poème latin recopié dans le Codex Atlanticus de Léonard. D’autres proposent Béatrice d’Este, l’épouse du duc, ou Isabelle d’Aragon.",
+       "who": "Documenté. Son identité n’est pas établie. La plus ancienne candidate est Lucrezia Crivelli, maîtresse du duc depuis 1495 environ, nommée dans un poème latin recopié dans le Codex Atlanticus de Léonard. D’autres proposent Béatrice d’Este, l’épouse du duc, ou Isabelle d’Aragon.",
        "shows": "Une jeune femme derrière un parapet de pierre, le corps tourné d’un côté et la tête de l’autre, dans une robe rouge à la mode milanaise aux manches nouées de rubans, un fin cordon sur le front avec une pierre rouge. Son regard glisse juste à côté de nous.",
        "worth_knowing": "Le nom est une erreur, et le titre même du Louvre le dit («dit à tort»). C’était le nom d’un autre portrait de la collection royale française, une gravure de ce tableau l’a porté par erreur, et en 1784, un inventaire l’a même appelée Anne Boleyn.",
        "door": "la Belle Ferronnière",
@@ -638,7 +638,7 @@
        "when": "Entre 1491 et 1508 environ",
        "where": "National Gallery, Londres",
        "who": "Attribution avec réserve. La National Gallery l’attribue à Léonard seul. Le conservateur du Louvre voit le travail d’élèves dans certaines parties, l’enfant Jean proche de Boltraffio, et la considère comme peinte en grande partie par l’atelier sous l’œil de Léonard, avec sa propre main par endroits.",
-       "shows": "La même scène que le tableau de Paris, avec des différences: l’ange ne montre plus du doigt, les figures portent de fines auréoles dorées, et l’enfant Jean tient une croix de roseau. Le tableau a été peint pour la chapelle milanaise nommée dans le contrat de 1483, et la National Gallery a trouvé trois phases de travail: un début au commencement des années 1490, la tête du Christ tournée de profil quelques années plus tard, et le ciel bleu ajouté après que Léonard a été rappelé à Milan en 1506.",
+       "shows": "La même scène que le tableau de Paris, avec des différences: l’ange ne montre plus du doigt, les figures portent de fines auréoles dorées, et l’enfant Jean tient une croix de roseau. Le tableau a été peint pour la chapelle milanaise nommée dans le contrat de 1483, et la National Gallery a trouvé trois phases de travail: commencé au début des années 1490, la tête du Christ tournée de profil quelques années plus tard, et le ciel bleu ajouté après que Léonard a été rappelé à Milan en 1506.",
        "worth_knowing": "Les plantes de la grotte ne sont pas des espèces réelles: selon la National Gallery, ce sont des mélanges de plusieurs plantes différentes.",
        "door": "la Vierge aux rochers de Londres",
        "shape": "tall",
@@ -659,7 +659,7 @@
        ]
       }
      ],
-     "p": "À Milan, il a peint un retable pour une confrérie. Il existe en deux versions, et dans celle de Londres, beaucoup voient la main de son atelier. Suivent trois portraits, dont un contesté, et une Madone qui allaite que beaucoup pensent peinte par un élève, d’après son dessin. Sur le mur d’un réfectoire, il a peint la Cène pour Ludovic Sforza, qui clôt cette page."
+     "p": "À Milan, il a peint un retable pour une confrérie. Il existe en deux versions, et dans celle de Londres, beaucoup voient la main de son atelier. Suivent trois portraits, dont un contesté, et une Madone qui allaite que beaucoup croient peinte par un élève, d’après son dessin. Sur le mur d’un réfectoire, il a peint pour Ludovic Sforza la Cène, qui clôt cette page."
     },
     {
      "id": "florence-1500",
@@ -692,7 +692,7 @@
        "title": "La Vierge au dévidoir, version Lansdowne",
        "when": "Vers 1501",
        "where": "Kenneth C. Griffin Collection, en dépôt au Metropolitan Museum of Art, New York",
-       "who": "Attribution avec réserve. L’étiquette du Met indique «Léonard de Vinci et atelier». Les deux versions ont avancé ensemble dans l’atelier. D’après Martin Kemp, l’une est allée à un fonctionnaire français et l’autre, pense-t-il, au roi lui-même.",
+       "who": "Attribution avec réserve. L’étiquette du Met indique Léonard de Vinci et atelier. Les deux versions ont avancé ensemble dans l’atelier. D’après Martin Kemp, l’une est allée à un fonctionnaire français et l’autre, pense-t-il, au roi lui-même.",
        "shows": "La même scène que le panneau Buccleuch: l’enfant avec le dévidoir, Marie qui tend la main vers lui, des rochers derrière. Depuis le printemps 2026, le tableau est accroché dans les salles de peinture européenne du Met, en dépôt de longue durée et sans communiqué de presse.",
        "worth_knowing": "En mai 2025, Martin Kemp a écrit que la trace du tableau était perdue, et un an plus tard, il était accroché à un mur du Met.",
        "door": "la version Lansdowne de la Vierge au dévidoir",
@@ -814,7 +814,7 @@
        "title": "La Scapigliata",
        "when": "Entre 1506 et 1508 environ",
        "where": "Galleria Nazionale di Parma, Complesso della Pilotta, Parme",
-       "who": "Attribution avec réserve. La galerie l’attribue à Léonard, avec un avis italien presque unanime, et la date d’environ 1492 à 1501. L’aile suit une proposition qui la date vers 1508. La réserve tient à la nature de l’œuvre: une esquisse monochrome sur un panneau de bois, ni dessin ni tableau achevé.",
+       "who": "Attribution avec réserve. La galerie l’attribue à Léonard, avec la critique italienne presque unanime, et la date d’environ 1492 à 1501. L’aile suit une proposition qui la date vers 1508. La réserve tient à la nature de l’œuvre: une esquisse monochrome sur un panneau de bois, ni dessin ni tableau achevé.",
        "shows": "La tête d’une jeune femme qui regarde vers le bas, les cheveux défaits et ébouriffés. Scapigliata veut dire «échevelée» en italien. On ne sait pas à quoi elle servait: une étude pour un tableau de Léda, pour le carton aujourd’hui à Londres, pour la Vierge aux rochers de Londres, ou une œuvre autonome.",
        "worth_knowing": "Le directeur de la galerie lui-même en a douté en 1896, car elle venait de l’atelier d’un peintre. La galerie l’avait achetée en 1839 aux héritiers d’un peintre, et l’inventaire qui l’accompagnait l’appelait simplement tête de Madone en clair-obscur.",
        "door": "la Scapigliata",
@@ -864,7 +864,7 @@
        "when": "Entre 1499 et 1510 environ",
        "where": "Collection particulière, lieu actuel non confirmé",
        "who": "Contesté, plus que tout autre. Pour Léonard: Martin Kemp et la National Gallery de Londres, qui l’a exposé comme une œuvre de Léonard en 2011. Contre, ou dans le doute: Carmen Bambach, qui en attribue la plus grande partie à Boltraffio, et Frank Zöllner, qui y voit un tableau d’atelier, probablement avec la main de Léonard, trop abîmé et trop restauré pour un jugement ferme.",
-       "shows": "Le Christ en sauveur du monde, c’est le sens du titre, de face, la main droite levée pour bénir, une sphère de cristal transparent dans la gauche, vêtu de bleu avec des bandes brodées. En 1958, il a été vendu aux enchères 45 livres comme une œuvre d’école, et en novembre 2017, chez Christie’s à New York, environ 450 millions de dollars, le prix le plus élevé jamais payé aux enchères pour une œuvre d’art. Il n’a plus été montré en public depuis, et selon un article de presse de 2024, il se trouve peut-être dans un entrepôt à Genève.",
+       "shows": "Le Christ en sauveur du monde (le sens du titre), de face, la main droite levée pour bénir, une sphère de cristal transparent dans la gauche, vêtu de bleu avec des bandes brodées. En 1958, il a été vendu aux enchères 45 livres sterling comme une œuvre d’école, et en novembre 2017, chez Christie’s à New York, environ 450 millions de dollars, le prix le plus élevé jamais payé aux enchères pour une œuvre d’art. Il n’a plus été montré en public depuis, et selon un article de presse de 2024, il se trouve peut-être dans un entrepôt à Genève.",
        "door": "le Salvator Mundi",
        "shape": "tall",
        "pic": "salvator-mundi",
@@ -879,7 +879,7 @@
        ]
       }
      ],
-     "p": "Après son retour à Milan, il a achevé la Vierge aux rochers de Londres, et le Saint Jean souriant a peut-être été commencé ici. L’aile date de ces années deux autres œuvres, le grand carton aujourd’hui à Londres et une tête de jeune fille aux cheveux défaits, même si les sources débattent de leurs dates. Le Salvator Mundi, contesté, est placé ici parce que sa date va jusqu’à 1510."
+     "p": "Après son retour à Milan, il a achevé la Vierge aux rochers de Londres, et le Saint Jean souriant a peut-être été commencé ici. L’aile date de ces années deux autres œuvres, le grand carton aujourd’hui à Londres et une tête de jeune fille aux cheveux défaits, même si les sources débattent de leurs dates. Le Salvator Mundi, contesté, est placé ici parce que sa date va jusqu’en 1510."
     },
     {
      "id": "amboise-1516",
@@ -893,7 +893,7 @@
        "where": "Musée du Louvre, Paris",
        "who": "Atelier. Le Louvre le classe comme atelier de Léonard et l’attribue à Francesco Melzi, l’élève qui a vécu avec lui en France à partir de 1516. Le Louvre suggère que Melzi l’a peint là-bas pour le roi de France, d’après le petit Saint Jean de Léonard.",
        "shows": "Un jeune homme est assis en pleine campagne, souriant et montrant du doigt, du lierre sur la tête, du raisin et un bâton dans les mains, une peau tachetée autour de lui. Il a été peint en Jean-Baptiste.",
-       "worth_knowing": "En 1625, un visiteur de Fontainebleau a noté que le tableau n’incitait pas à la dévotion, et à la fin de ce siècle, il a été transformé en dieu païen Bacchus: le raisin et le lierre ont été ajoutés, et la croix de Jean est devenue un bâton. La restauration de 2017 à 2019 a montré que la peau est d’origine, et que le raisin et le lierre sont plus tardifs.",
+       "worth_knowing": "En 1625, un visiteur à Fontainebleau a noté que le tableau n’incitait pas à la dévotion, et à la fin de ce siècle, il a été transformé en dieu païen Bacchus: le raisin et le lierre ont été ajoutés, et la croix de Jean est devenue un bâton. La restauration de 2017 à 2019 a montré que la peau est d’origine, et que le raisin et le lierre sont plus tardifs.",
        "door": "le Bacchus",
        "shape": "tall",
        "pic": "bacchus",
@@ -947,7 +947,7 @@
    ],
    "links": [
     {
-     "text": "Toutes les tailles, de la plus petite tête à la Cène, sont sur la page des tailles, en anglais, dessinées à la même échelle.",
+     "text": "Toutes les dimensions, de la plus petite tête à la Cène, sont sur la page des dimensions, dessinées à la même échelle, en anglais.",
      "page": "sizes"
     },
     {
@@ -1012,8 +1012,8 @@
      "text": "la Scapigliata."
     },
     {
-     "term": "Nulle part en public",
-     "text": "le Salvator Mundi, dans une collection particulière, plus montré depuis 2017."
+     "term": "Non visible du public",
+     "text": "le Salvator Mundi, dans une collection particulière, n’est plus montré depuis 2017."
     }
    ]
   },
@@ -1022,10 +1022,10 @@
    "id": "sources",
    "nav": "Sources",
    "h": "Sources",
-   "intro": "Les titres, les dates, les lieux de conservation et les attributions suivent les étiquettes de l’aile, vérifiées en octobre 2026 sur les pages et les fiches des musées eux-mêmes: les Offices, la National Gallery of Art de Washington, l’Alte Pinakothek, l’Ermitage, les musées du Vatican, le Louvre, l’Ambrosiana, le Musée national de Cracovie, la National Gallery de Londres, la Pilotta de Parme et le Cenacolo Vinciano. Pour le nombre et les débats: Martin Kemp dans The Art Newspaper (mai 2025), la notice de catalogue de Frank Zöllner sur le Salvator Mundi (2019), The Art Newspaper (2018, 2021 et 2024), NPR (2017), et Cultured et Artlyst (2026). Là où l’avis d’un musée diffère de l’étiquette de l’aile, l’entrée le dit.",
+   "intro": "Les titres, les dates, les lieux de conservation et les attributions suivent les étiquettes de l’aile, vérifiées en octobre 2026 sur les pages et les fiches des musées eux-mêmes: les Offices, la National Gallery of Art de Washington, l’Alte Pinakothek, l’Ermitage, les musées du Vatican, le Louvre, l’Ambrosiana, le Musée national de Cracovie, la National Gallery de Londres, la Pilotta de Parme et le Cenacolo Vinciano. Pour le nombre et les débats: Martin Kemp dans The Art Newspaper (mai 2025), la notice de catalogue de Frank Zöllner sur le Salvator Mundi (2019), The Art Newspaper (2018, 2021 et 2024), NPR (2017), et Cultured et Artlyst (2026). Là où l’avis d’un musée diffère de l’étiquette de l’aile, la fiche le dit.",
    "notes": [],
    "contact": "Si une date, une attribution ou une phrase de cette page est fausse, écrivez-nous et nous la corrigerons.",
-   "contact_link": "Voir les mentions légales",
+   "contact_link": "Voir les mentions légales (en anglais)",
    "what_link": "Ce qu’est ce musée"
   },
   {
