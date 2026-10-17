@@ -153,6 +153,9 @@ LIFE_CSS = ["life"]
 # and on a page of questions whose sections carry rows (question.lists) or a short table of words (ledger), the sheet of
 # those after the questions'
 LEDGER_CSS = ["ledger"]
+# and on a page of questions about one work that hangs its plate in its first part (top.plate) or tells the work's own
+# story in dated lines (a years block of items), the life page's sheet and the sheet of those after the questions'
+WORK_CSS = ["life", "work"]
 CSS_AFTER = ["foot", "motion"]
 CSP_MARK = "<!--csp-->"
 
@@ -198,7 +201,9 @@ ASK_TYPES = ("question", "myths")
 TIMELINE = "museum/src/wings/{wing}/line/data/timeline.json"
 # A dated line's mark as the site's bead (base.css): the timeline's three marks take the colour and the fill of the
 # grades whose hue the wing's floor gives them (green and whole, amber and half, red and a ring).
-YEAR_BEADS = {"mark_documented": "documented", "mark_inferred": "reconstructed", "mark_tradition": "conjectural"}
+YEAR_BEADS = {"mark_documented": "documented", "mark_inferred": "reconstructed", "mark_tradition": "conjectural",
+              # a work's own story (a years block of items) may rest a line on one published account: the half bead
+              "mark_report": "reconstructed"}
 
 # The pictures of the search pages (make_pictures.py cuts them). Its plates are the reproductions a wing hangs, each
 # with the record the build checks its source line against.
@@ -1728,9 +1733,9 @@ def render(page, lang, data, shared, out_root):
     def term_rows(rows):
         return "\n".join(fill(parts["term_row"], {"term": rich(r["term"]), "text": prose(r["text"])}) for r in rows)
 
-    def figure(pic):
+    def figure(pic, first=False):
         """A plate with its label. A plate that says nothing of its own carries the page's usual line, and one that
-        shows a reproduction carries its source line (src)."""
+        shows a reproduction carries its source line (src). One in the first part (first) loads first."""
         if not pic:
             return ""
         found = line_problems(pic, data["pics"][pic["pic"]])
@@ -1748,7 +1753,7 @@ def render(page, lang, data, shared, out_root):
         src = label_src(pic)
         if "tag" not in pic:
             # a plate whose title line names it and calls it a reproduction: no kind word under it
-            values.update({"html.picture": pics.picture(pic["pic"], esc(pic["alt"])), "title": rich(pic["title"]),
+            values.update({"html.picture": pics.picture(pic["pic"], esc(pic["alt"]), first=first), "title": rich(pic["title"]),
                            "html.src": f'<span class="label__src">{src}</span>' if src else "",
                            "attr.plate": " sp-plate--whole" if pic.get("shape") == "whole" else ""})
             return fill(parts["figure_titled"], values)
@@ -1832,10 +1837,14 @@ def render(page, lang, data, shared, out_root):
         """A life by its periods: each its heading, its story, its dated lines with the wing's mark of each, and its
         ways on. The mark is the site's bead of the grade whose colour and fill the wing's timeline gives it."""
         out = []
+        line_html = lambda items: "\n".join(fill(parts["years_line"], {
+            "id": esc(x["id"]), "date": rich(x["date"]), "bead": YEAR_BEADS[x["k"]], "mark": rich(labels[x["k"]]),
+            "sure": rich(labels["col_sure"]), "line": prose(x["line"])}) for x in items)
+        if "items" in block:
+            # one work's story: its dated lines under the section's intro, no periods
+            return fill(parts["years_lines"], {"html.items": line_html(block["items"])})
         for period in block["periods"]:
-            lines = "\n".join(fill(parts["years_line"], {
-                "id": esc(x["id"]), "date": rich(x["date"]), "bead": YEAR_BEADS[x["k"]], "mark": rich(labels[x["k"]]),
-                "sure": rich(labels["col_sure"]), "line": prose(x["line"])}) for x in period["items"])
+            lines = line_html(period["items"])
             out.append(fill(parts["years_period"], {"id": esc(period["id"]), "h": rich(period["h"]), "p": linked(period["p"], prose),
                                                     "html.items": lines, "html.links": ways(period.get("links", []))}))
         return "\n".join(out)
@@ -1987,7 +1996,9 @@ def render(page, lang, data, shared, out_root):
             values["html.links"] = ways(block.get("links", []))
         elif kind == "years":
             values["html.periods"] = years_html(block)
-            values["html.links"] = ways(block.get("links", []))
+            # a work's story may close with lines of its own words and links (end), before its ways on
+            values["html.links"] = "".join("\n" + fill(parts["text_para"], {"text": linked(p, prose)}).rstrip("\n")
+                                           for p in block.get("end", [])) + ways(block.get("links", []))
         elif kind == "table":
             values.update({f"cols.{k}": rich(v) for k, v in block["cols"].items()})
             values["html.rows"] = CHART.table_rows(works, lines, door, block["go"], rich, LIB.number, lang)
@@ -2147,7 +2158,10 @@ def render(page, lang, data, shared, out_root):
             # a picture the page shows further down, without the card's words
             frame = primary_frame(data)
         after_html = "\n" + fill(parts["toc_top"], dict(base, **{"html.toc": toc}))
-        frame_html, preload, focus = "", "", ""
+        # a page about one work may hang its plate there, after the answer on a phone and beside it on a desktop; only a
+        # plate open at its source may stand there (check_tier)
+        frame_html = figure(data["top"]["plate"], first=True).rstrip("\n") if data["top"].get("plate") else ""
+        preload, focus = "", ""
     else:
         frame = data["top"]["frame"]
         src = label_src(frame)
@@ -2182,6 +2196,7 @@ def render(page, lang, data, shared, out_root):
         "url.og_image": f"{ORIGIN}/{STATIC}/img/{og['file']}",
         "og.width": str(og["width"]), "og.height": str(og["height"]),
         "css.inline": shared["css_scale" if making(wing) else "css_list" if any(b["type"] == "periods" for b in data["blocks"]) else
+                             "css_work" if ask and (data["top"].get("plate") or any(b["type"] == "years" for b in data["blocks"])) else
                              "css_life" if any(b["type"] == "years" for b in data["blocks"]) else
                              "css_ledger" if any(b["type"] == "ledger" or b.get("lists") for b in data["blocks"]) else
                              "css_ask" if ask or any(b["type"] in ASK_TYPES for b in data["blocks"]) else
@@ -2792,7 +2807,7 @@ def check_wing_facts(d, facts):
             return [x for v in node for x in inline(v, where)]
         return []
     wanted += [x for b in d["blocks"] for x in inline(b, b["id"])]
-    wanted += [(f"{b['id']}.{p['id']}.links", link["stop"]) for b in d["blocks"] if b["type"] == "years" for p in b["periods"]
+    wanted += [(f"{b['id']}.{p['id']}.links", link["stop"]) for b in d["blocks"] if b["type"] == "years" for p in b.get("periods", [])
                for link in p.get("links", []) if "stop" in link]
     for where, stop in wanted:
         if stop is not None and stop not in stops:
@@ -2829,7 +2844,12 @@ def check_years(d, lang, wing):
     plain = lambda t: t.replace(LIB.NBSP, " ")
     problems = []
     for block in blocks:
-        for period in block["periods"]:
+        # a work's own story (items, no periods) is no part of the wing's timeline: each line carries a mark the site
+        # has a bead for, with its word in labels
+        for x in block.get("items", []):
+            if x.get("k") not in YEAR_BEADS or not d["labels"].get(x.get("k")) or not d["labels"].get("col_sure"):
+                problems.append(f"{block['id']}.{x.get('id')}: the mark {x.get('k')!r} is none of {sorted(YEAR_BEADS)} with its word in labels")
+        for period in block.get("periods", []):
             for x in period["items"]:
                 where, row = f"{period['id']}.{x['id']}", rows.get(x["id"])
                 if row is None:
@@ -3024,7 +3044,7 @@ def build_pages(out_dir, site_src=SITE_SRC, site_built=SITE_BUILT, pages=PAGES, 
             for x, y in zip(a["blocks"], b["blocks"]):
                 if x["type"] != y["type"] or x["id"] != y["id"]:
                     problems.append(f"{page}: block {x['id']} and {y['id']} do not match")
-    for name in OWN_CSS + CHART_CSS + LIST_CSS + SCALE_CSS + ASK_CSS + LIFE_CSS + LEDGER_CSS:
+    for name in OWN_CSS + CHART_CSS + LIST_CSS + SCALE_CSS + ASK_CSS + LIFE_CSS + LEDGER_CSS + WORK_CSS:
         body = re.sub(r"/\*.*?\*/", "", (HERE / "css" / f"{name}.css").read_text(encoding="utf-8"), flags=re.S)
         if re.search(r"#[0-9a-fA-F]{3,8}\b|rgba?\(|hsla?\(", body):
             problems.append(f"css/{name}.css: a colour is written outside the site's token file")
@@ -3074,6 +3094,8 @@ def build_pages(out_dir, site_src=SITE_SRC, site_built=SITE_BUILT, pages=PAGES, 
         "css_ask": css_min(*[site["css"] / f"{n}.css" for n in CSS_BEFORE], *[HERE / "css" / f"{n}.css" for n in OWN_CSS + CHART_CSS + ASK_CSS],
                            *[site["css"] / f"{n}.css" for n in CSS_AFTER]),
         "css_life": css_min(*[site["css"] / f"{n}.css" for n in CSS_BEFORE], *[HERE / "css" / f"{n}.css" for n in OWN_CSS + CHART_CSS + LIFE_CSS],
+                            *[site["css"] / f"{n}.css" for n in CSS_AFTER]),
+        "css_work": css_min(*[site["css"] / f"{n}.css" for n in CSS_BEFORE], *[HERE / "css" / f"{n}.css" for n in OWN_CSS + CHART_CSS + ASK_CSS + WORK_CSS],
                             *[site["css"] / f"{n}.css" for n in CSS_AFTER]),
         "css_ledger": css_min(*[site["css"] / f"{n}.css" for n in CSS_BEFORE],
                               *[HERE / "css" / f"{n}.css" for n in OWN_CSS + CHART_CSS + ASK_CSS + LEDGER_CSS],

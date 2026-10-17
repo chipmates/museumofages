@@ -2807,8 +2807,9 @@ class Case(unittest.TestCase):
     # ---- a page of questions: its answer first, the list of its questions, each answer first, its FAQ data ----
 
     def ask_page(self):
-        """The first page of questions: its first part lists them (top.jump) and its blocks ask them (question)."""
-        return next((p for p in self.pages if self.data("en", p)["top"].get("jump")
+        """The first page of questions: its first part lists them (top.jump) and its blocks ask them (question). A page
+        about one work that hangs its plate in its first part (top.plate) has a test of its own."""
+        return next((p for p in self.pages if self.data("en", p)["top"].get("jump") and not self.data("en", p)["top"].get("plate")
                      and any(b["type"] == "question" for b in self.data("en", p)["blocks"])), None)
 
     def test_a_page_of_questions_answers_first_and_lists_its_questions_in_its_first_part(self):
@@ -3404,10 +3405,82 @@ class Case(unittest.TestCase):
                 for lang in ("en", "de"):
                     self.save(lang, data[lang], page)
 
+    # ---- a page of questions about one work: its plate in the first part, its story in dated lines ----
+
+    def work_page(self):
+        """The first page of questions that hangs its work's plate in its first part (top.plate)."""
+        return next((p for p in self.pages if self.data("en", p)["top"].get("plate")
+                     and any(b["type"] == "question" for b in self.data("en", p)["blocks"])), None)
+
+    def test_a_page_about_one_work_hangs_its_open_plate_after_the_answer_and_tells_its_story_by_dated_lines(self):
+        """The first part: the answer, the work's plate with its source line, the door, then the list of the page's parts.
+        The plate is open at its source (the first tier) and loads first. The story's lines stand in the data's order, each
+        with its date, the word of its mark and the bead of that mark's grade, and none is a row of the wing's timeline.
+        The FAQ data is the first heading with the answer, then each question with its answer."""
+        page = self.work_page()
+        if not page:
+            self.skipTest("no page of questions hangs a plate in its first part")
+        beads = {"mark_documented": "documented", "mark_inferred": "reconstructed", "mark_tradition": "conjectural",
+                 "mark_report": "reconstructed"}
+        plain = lambda s: html.unescape(re.sub(r"<[^>]+>", "", s)).replace("\u00a0", " ").replace("\u00ad", "")
+        plates = {x["name"]: x for x in json.loads((HERE / "pictures.json").read_text(encoding="utf-8"))["plates"]}
+        out, written = self.build()
+        for lang in ("en", "de"):
+            data = self.data(lang, page)
+            text = self.built_of(written, page, lang).read_text(encoding="utf-8")
+            own = self.own_part(text)
+            top = re.search(r'<header class="sp-top\b.*?</header>', own, flags=re.S).group(0)
+            stem = data["pics"][data["top"]["plate"]["pic"]]["stem"]
+            self.assertEqual(plates[stem]["tier"], "TIER1")
+            self.assertEqual(len(re.findall(r"<figure\b", top)), 1)
+            self.assertLess(top.index('class="sp-answer"'), top.index("<figure"))
+            self.assertLess(top.index("</figure>"), top.index('data-door="top"'))
+            self.assertLess(top.index('data-door="top"'), top.index('class="sp-toc sp-toc--top"'))
+            fig = re.search(r"<figure\b.*?</figure>", top, flags=re.S).group(0)
+            self.assertIn(f"img/{stem}-640.webp", fig)
+            self.assertIn('fetchpriority="high"', fig)
+            self.assertIn(plain(data["top"]["plate"]["title"]), plain(fig))
+            self.assertRegex(fig, r'<span class="label__src">[^<]*\S')
+            # the story: every dated line in order, its mark's word and bead
+            story = next(b for b in data["blocks"] if b["type"] == "years")
+            self.assertNotIn("periods", story)
+            shown = re.findall(r'<li class="lf-line" id="([\w-]+)">\s*<p class="lf-line__when"><span class="lf-date">(.*?)</span> '
+                               r'<span class="lf-mark"><span class="bead bead--(\w+)" aria-hidden="true"></span><span class="vh">.*?</span>'
+                               r'(.*?)</span></p>\s*<p class="lf-line__what">(.*?)</p>', own, flags=re.S)
+            self.assertEqual([s[0] for s in shown], [x["id"] for x in story["items"]])
+            for (_, date, bead, mark, line), x in zip(shown, story["items"]):
+                self.assertEqual((plain(date), plain(mark), bead, plain(line)),
+                                 (x["date"].replace("\u00a0", " "), data["labels"][x["k"]], beads[x["k"]], x["line"].replace("\u00a0", " ")))
+            # the page carries the questions' sheet and the dated lines' sheet
+            self.assertIn(".sp-ask__a{", text)
+            self.assertIn(".lf-line{", text)
+            # the FAQ: the first heading with the first screen's answer, then each question with its answer
+            graph = json.loads(re.search(r'<script type="application/ld\+json">(.*?)</script>', text, flags=re.S).group(1).replace("<\\/", "</"))["@graph"]
+            faq = next(n for n in graph if n.get("@type") == "FAQPage")["mainEntity"]
+            want = [(data["top"]["h1"], data["top"]["answer"])] + [(b["h"], b["answer"]) for b in data["blocks"] if b["type"] == "question"]
+            nb = lambda s: s.replace("\u00a0", " ")
+            self.assertEqual([(nb(q["name"]), nb(q["acceptedAnswer"]["text"])) for q in faq], [(nb(q), nb(a)) for q, a in want])
+        # a page of questions without a plate keeps its first part free of pictures and its sheet free of the work's rules
+        other = self.ask_page()
+        if other:
+            text = self.built_of(written, other, "en").read_text(encoding="utf-8")
+            self.assertNotIn("<img", re.search(r'<header class="sp-top\b.*?</header>', text, flags=re.S).group(0))
+            self.assertNotIn(".lf-lines--story{", text)
+
+    def test_a_line_of_a_works_story_with_a_mark_the_site_has_no_bead_for_stops_the_build(self):
+        page = self.work_page()
+        if not page:
+            self.skipTest("no page of questions hangs a plate in its first part")
+        data = self.data("de", page)
+        story = next(b for b in data["blocks"] if b["type"] == "years")
+        story["items"][0]["k"] = "mark_rumour"
+        self.save("de", data, page)
+        self.fails(r"the mark 'mark_rumour' is none of")
+
     # ---- a life told by its periods ----
 
     def life_page(self):
-        page = next((p for p in self.pages if any(b["type"] == "years" for b in self.data("en", p)["blocks"])), None)
+        page = next((p for p in self.pages if any(b["type"] == "years" and b.get("periods") for b in self.data("en", p)["blocks"])), None)
         if not page:
             self.skipTest("no page tells a life by its periods")
         return page

@@ -1,0 +1,24 @@
+/* A page of questions about one work (build.py: top.plate, or a years block of items): set inline after ask.css and
+   life.css, on those pages only. The work's plate in the first part, and its story in dated lines. Colours: only the
+   site's roles. */
+
+/* The plate after the answer on a phone, hung narrower than the column, its label as wide as the words. */
+.sp-top>.sp-plate{margin-top:4px}
+.sp-top>.sp-plate .hang{max-width:16.25rem}
+.sp-top>.sp-plate .label__title{display:block}
+.sp-top>.sp-plate .label__src{display:block;margin-top:6px}
+/* The door's words wrap evenly: no line of one or two words under the work's name. */
+.sp-top>.sp-way .door>span{text-wrap:balance}
+
+/* The story's lines follow the intro at once, as a period's follow its words. */
+.lf-lines--story{margin-top:22px}
+.lf-sec .lf-ways>p{max-width:38rem;color:var(--ink-body)}
+.lf-sec .lf-ways>p a{display:inline-block;padding:11px 0;margin:-11px 0}
+
+@media (min-width:960px){
+  /* The answer, the door and the list at the left; the plate beside them, its height taken by a last row. */
+  .sp-top:has(>.sp-plate){grid-template-rows:auto auto auto 1fr}
+  .sp-top>.sp-plate{grid-column:8/13;grid-row:1/5;margin-top:6px}
+  .sp-top>.sp-plate .hang{max-width:20rem}
+  .sp-top:has(>.sp-plate)>.sp-toc--top{grid-column:1/7;grid-row:auto;padding:14px 20px 6px}
+}
