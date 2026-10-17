@@ -8,9 +8,10 @@
 .sp-prose .label__src{display:block;margin-top:6px}
 /* A link in the running text is as tall as a thumb without moving its line. */
 .sp-prose .sp-does a{display:inline-block;padding:11px 0;margin:-11px 0}
-/* A painting keeps its own shape: the plate is never cut to the frame's 16 by 9 */
+/* A painting keeps its own shape: the plate is never cut to the frame's 16 by 9. Its ratio is the img's width and
+   height (page.css sets none on it), so its frame keeps its height before a lazy image arrives. */
 .sp-prose .sp-plate--whole{max-width:35rem}
-.sp-plate--whole img{aspect-ratio:auto;object-fit:contain}
+.sp-plate--whole img{object-fit:contain}
 /* The first picture's source line: under its words from the desktop up; on a phone the label stays one line */
 .sp-frame__src{display:none}
 @media (min-width:960px){.sp-frame .sp-frame__src{display:block;margin-top:3px}}

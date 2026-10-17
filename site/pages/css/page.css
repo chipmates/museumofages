@@ -80,7 +80,7 @@
    close, so it lights the wall and not the lines above it. */
 .sp-plate{margin-top:14px}
 .sp-plate .hang{--pool-up:30px;--pool-side:12%;--pool-down:-46%}
-.sp-plate img{aspect-ratio:16/9;object-fit:cover}
+.sp-plate:not(.sp-plate--whole) img{aspect-ratio:16/9;object-fit:cover}
 .sp-plate .sp-plate__label{margin-top:11px;padding-top:0;max-width:none}
 .sp-plate__label::before{content:none}
 
