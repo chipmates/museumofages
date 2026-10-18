@@ -123,6 +123,31 @@ def bind(text, lang=None):
     return space(re.sub(rf"(\d) (?={unit}\b)", "\\1" + NBSP, text), lang)
 
 
+# The months as each language writes them in a date.
+MONTHS = {
+    "en": "January February March April May June July August September October November December",
+    "de": "Januar Februar März April Mai Juni Juli August September Oktober November Dezember",
+    "es": "enero febrero marzo abril mayo junio julio agosto septiembre octubre noviembre diciembre",
+    "pt-BR": "janeiro fevereiro março abril maio junho julho agosto setembro outubro novembro dezembro",
+    "fr": "janvier février mars avril mai juin juillet août septembre octobre novembre décembre",
+    "it": "gennaio febbraio marzo aprile maggio giugno luglio agosto settembre ottobre novembre dicembre",
+    "bg": "януари февруари март април май юни юли август септември октомври ноември декември",
+}
+# A day and its month as the language joins them: 17 October, 17. Oktober, 1er mai, 1º maggio, 2 de mayo, 2 май.
+DAY_FORM = {"en": r"(\d{1,2}) ", "de": r"(\d{1,2}\.) ", "fr": r"(\d{1,2}|1er) ", "it": r"(\d{1,2}|1º) ",
+            "es": r"(\d{1,2}) (de) ", "pt-BR": r"(\d{1,2}|1º) (de) ", "bg": r"(\d{1,2}) "}
+DAY_MONTH = {lang: re.compile(r"(?<![\w.,])" + DAY_FORM[lang] + r"(?=(?:" + MONTHS[lang].replace(" ", "|") + r")(?!\w))")
+             for lang in MONTHS}
+
+
+def day_month(text, lang):
+    """A day never parts from its month at a line's end; the year after them may wrap. Displayed text only: a date in
+    the structured data or a datetime attribute stays as written."""
+    if lang not in DAY_MONTH:
+        return text
+    return DAY_MONTH[lang].sub(lambda m: NBSP.join(g for g in m.groups() if g) + NBSP, text)
+
+
 NNBSP = "\u202f"
 
 

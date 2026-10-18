@@ -31,7 +31,7 @@ import placed
 import render as R
 from buildlib import (ARROW, BANNED, CSP_MARK, FACES_SCRIPT, LANG_FACES, LOOSE_PAIR, NBSP, NNBSP, REST_SCRIPT, WORDS, bind, css,
                       dump, esc, faces, fill, flatten, grain, keep_whole, number, number_word, shown_text, space, tail,
-                      whole_names, hold_names, held, with_policy, LD_BLOCK, free_pictures_of, image_objects, licence_problems, picture_terms,
+                      whole_names, hold_names, held, day_month, with_policy, LD_BLOCK, free_pictures_of, image_objects, licence_problems, picture_terms,
                       with_picture_rights)
 
 SRC = Path(__file__).resolve().parent
@@ -514,14 +514,14 @@ class Site:
         self.held = {lang: self.names[lang] + [n for n in spelt + person_names(lang) if held(n)[0] and n not in self.names[lang]]
                      for lang in LANGS}
         self.words_html = {lang: {k: keep_whole(esc(trust_breaks(
-            hold_names(tail(bind(v, lang), short=k in ENDS), self.held[lang]) if re.search(RUNNING_KEY, k) else
-            whole_names(tail(bind(v, lang), short=k in ENDS), self.names[lang]), k))) for k, v in self.words[lang].items()} for lang in LANGS}
+            hold_names(tail(day_month(bind(v, lang), lang), short=k in ENDS), self.held[lang]) if re.search(RUNNING_KEY, k) else
+            whole_names(tail(day_month(bind(v, lang), lang), short=k in ENDS), self.names[lang]), k))) for k, v in self.words[lang].items()} for lang in LANGS}
         if not SOURCE_LINK:
             for lang in LANGS:
                 shown = self.words_html[lang]
                 shown["glance.trust"] = shown["page_what.trust"] = keep_whole(esc(trust_breaks(space(self.locked(lang)["trust_before"], lang), "glance.trust")))
                 shown.update({key: shown[key + "_before"] for key in BEFORE if key + "_before" in shown})
-        self.privacy = {lang: walk(load(PRIVACY_WORDS / f"privacy.{lang}.json"), lambda p, t, l=lang: space(t, l)) for lang in LANGS}
+        self.privacy = {lang: walk(load(PRIVACY_WORDS / f"privacy.{lang}.json"), lambda p, t, l=lang: day_month(space(t, l), l)) for lang in LANGS}
         self.museum = load(MUSEUM_TEXTS)
         for lang in LANGS:
             # the museum's texts in a language the file does not hold: museum-texts.<code>.json beside it
@@ -558,7 +558,7 @@ class Site:
         """A sentence of a wing as the page carries it: escaped, with its pairs bound (a number and its unit), and
         where it is running text, with its last words kept together and every wing's name whole."""
         if not re.search(NOT_WORDS, path):
-            text = bind(text, lang)
+            text = day_month(bind(text, lang), lang)
             if re.search(PROSE, path):
                 text = hold_names(tail(text), self.held[lang])
         return esc(text)

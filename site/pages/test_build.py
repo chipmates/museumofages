@@ -4652,7 +4652,7 @@ class SoftChecks(unittest.TestCase):
 
 class LongNames(unittest.TestCase):
     """Running text holds a long name by its last words, so a phone's line wraps before them instead of ending a third
-    short; display text keeps it whole. Read on the site as its build wrote it."""
+    short; display text keeps it whole. A day keeps to its month. Read on the site as its build wrote it."""
 
     @classmethod
     def setUpClass(cls):
@@ -4700,6 +4700,21 @@ class LongNames(unittest.TestCase):
         self.assertEqual(held("Sir J. C. Robinson"), ("", "Sir J. C. Robinson"))
         self.assertEqual(held("Badr bin Abdullah Al Saud"), ("Badr bin Abdullah", "Al Saud"))
         self.assertEqual(held("Frank Zöllner"), ("", "Frank Zöllner"))
+
+    def test_a_day_keeps_to_its_month(self):
+        day_month = self.build.LIB.day_month
+        self.assertEqual(day_month("all read on 17 October 2026", "en"), "all read on 17 October 2026")
+        self.assertEqual(day_month("mort le 2 mai 1519, le 1er mai", "fr"), "mort le 2 mai 1519, le 1er mai")
+        self.assertEqual(day_month("el 2 de mayo de 1519", "es"), "el 2 de mayo de 1519")
+        # a number that is no day stays free
+        self.assertEqual(day_month("3.5 May", "en"), "3.5 May")
+        grave = self.page("leonardo-da-vinci/death-and-grave")
+        self.assertIn("died on 2 May 1519", grave)
+        self.assertIn("16 octobre 2026", (SITE_BUILT / "fr" / "confidentialite" / "index.html").read_text(encoding="utf-8"))
+        # the structured data keeps the page's words as written
+        for graph in re.findall(r'<script type="application/ld\+json">(.*?)</script>', grave, flags=re.S):
+            self.assertNotIn("2 May", graph)
+
 
 if __name__ == "__main__":
     unittest.main(verbosity=1)

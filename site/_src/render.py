@@ -5,7 +5,7 @@ Standard library only."""
 import re
 
 import ask
-from buildlib import ARROW, LAYERS_SCRIPT, NBSP, bind, esc, hold_names, number, sign_whole
+from buildlib import ARROW, LAYERS_SCRIPT, NBSP, bind, day_month, esc, hold_names, number, sign_whole
 
 # The sizes of the plates on the wall after the largest, in the order they hang: never a row of equal boxes.
 HANG = "msmssmssms"
@@ -252,7 +252,7 @@ def first(c, kind, slug):
         )
         text = (
             f'<dl class="hero__facts"><div><dt>{esc(coll["dates_key"][c.lang])}</dt><dd>{esc(reg["dates"][c.lang])}</dd></div>'
-            f'<div><dt>{w["wingpage.k_shows"]}</dt><dd>{esc(reg["shows"]["place"][c.lang])}, {esc(reg["shows"]["day"][c.lang])}</dd></div></dl>'
+            f'<div><dt>{w["wingpage.k_shows"]}</dt><dd>{esc(reg["shows"]["place"][c.lang])}, {esc(day_month(reg["shows"]["day"][c.lang], c.lang))}</dd></div></dl>'
             f'<p class="hero__lede">{d["first"]["lede"]}</p>'
         )
         glance = ""
@@ -277,7 +277,7 @@ def card(c, slug, size, level):
     if size == "feature":
         lines += (
             f'<span class="wcard__shows"><span class="key">{w["wingpage.k_shows"]}</span> '
-            f'{esc(reg["shows"]["place"][lang])}, {esc(reg["shows"]["day"][lang])}</span>'
+            f'{esc(reg["shows"]["place"][lang])}, {esc(day_month(reg["shows"]["day"][lang], lang))}</span>'
             f'<span class="label__what"><span class="tag">{d["card"]["kind"]}</span><span class="vh">:</span> {d["card"]["what"]}</span>'
             + (f'<span class="label__src">{d["card"]["src"]}</span>' if d["card"].get("src") else "")
             + f'<span class="wcard__go">{door(c, esc(reg["door"][lang]), w["nav.enter"], "item", small=True)} '
@@ -580,7 +580,7 @@ def closing(c):
     already said which wing is open and what it shows, so the close does not say it again."""
     w, reg = c.w, c.wings[c.newest]
     words = (w["closing.p"].replace("{name}", esc(hold_names(reg["name"][c.lang], [reg["name"][c.lang]]))).replace("{place}", esc(reg["shows"]["place"][c.lang]))
-             .replace("{day}", esc(reg["shows"]["day"][c.lang])))
+             .replace("{day}", esc(day_month(reg["shows"]["day"][c.lang], c.lang))))
     go = (f'<div class="close__go" data-door-watch>{door(c, esc(reg["door"][c.lang]), w["hero.enter"], "end")}'
           f'<p class="hero__note">{w["hero.entry_note"]}</p></div>')
     p = c.wd[c.newest].get("landing", {}).get("close")
@@ -844,7 +844,7 @@ def more(c, slug):
     entry = lambda href, name, line: (
         f'<li><a class="more" href="{href}"><span>{name}</span>{ARROW}</a><span class="topics__line">{line}</span></li>')
     # a topic's line may give a size, which never breaks
-    items = [entry(topic_href(c, slug, t), esc(t["name"][lang]), esc(hold_names(bind(t["line"][lang], lang), c.held))) for t in topics_here(c, slug)]
+    items = [entry(topic_href(c, slug, t), esc(t["name"][lang]), esc(hold_names(day_month(bind(t["line"][lang], lang), lang), c.held))) for t in topics_here(c, slug)]
     if c.wd[slug].get("holders"):
         items.append(entry("#originals", w["wingpage.more_originals"], w["wingpage.more_originals_line"]))
     items.append(entry(c.to(c.addr("what")), w["nav.what"], w["wingpage.more_what_line"]))

@@ -268,15 +268,7 @@ CHECKED_LINE = {
     "it": "Dati verificati sulle fonti {date}.",
     "bg": "Фактите са проверени спрямо източниците на {date}.",
 }
-MONTHS = {
-    "en": "January February March April May June July August September October November December",
-    "de": "Januar Februar März April Mai Juni Juli August September Oktober November Dezember",
-    "es": "enero febrero marzo abril mayo junio julio agosto septiembre octubre noviembre diciembre",
-    "pt-BR": "janeiro fevereiro março abril maio junho julho agosto setembro outubro novembro dezembro",
-    "fr": "janvier février mars avril mai juin juillet août septembre octobre novembre décembre",
-    "it": "gennaio febbraio marzo aprile maggio giugno luglio agosto settembre ottobre novembre dicembre",
-    "bg": "януари февруари март април май юни юли август септември октомври ноември декември",
-}
+MONTHS = LIB.MONTHS
 
 
 # ---------- small tools ----------
@@ -316,6 +308,8 @@ class Names:
         long words (breaks) with their one break point, for running text that hyphenates; elsewhere they stay whole.
         run marks running text (a paragraph, a list's entry, a table's cell, the answer, a caption): there a person's
         name of three or more words holds only its last words together (buildlib.held), so a narrow line wraps before them."""
+        # a day keeps to its month in every displayed sentence (the structured data takes the page's words unbound)
+        text = LIB.day_month(text, self.lang)
         out, last = [], 0
         for m in self.find.finditer(text):
             entry, ending = self.table[straight(m.group(1))], m.group(2) or ""
@@ -1329,7 +1323,7 @@ def date_words(iso, lang):
         return "", f"{d}.{nb}{month} {y}"
     if lang in ("es", "pt-BR"):
         first = "1º" if lang == "pt-BR" and d == 1 else str(d)
-        return "", f"{first} de {month} de {y}"
+        return "", f"{first}{nb}de{nb}{month} de {y}"
     if lang == "fr":
         return "", f"{'1er' if d == 1 else d}{nb}{month} {y}"
     if lang == "it":
