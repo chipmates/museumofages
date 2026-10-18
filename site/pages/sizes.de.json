@@ -1,5 +1,5 @@
 {
-  "_note": "THE WORDS of the sizes page, German. Poured from the writer's WORDS file of round 3 word for word; every size, holder and stop the page shows comes from the wing's facts file, except a size under page.held: there the holder publishes another figure than the facts carry (the Lady with an Ermine: the National Museum in Kraków's catalogue, 53.4 by 39.3 cm, where the facts carry the hang's 54.8 by 40.3), and facts_cm names the facts' figure it stands in for, so the build stops when the facts change. The build checks each line of works.lines against the size the page shows. A plate's src is its source line as the wing's record names it, and the build checks each file it links against that record. The two files hold the same structure. No em dash, no en dash, no semicolon.",
+  "_note": "THE WORDS of the sizes page, German. Poured from the writer's WORDS file of round 3 word for word; every size, holder and stop the page shows comes from the wing's facts file, except a size under page.held: there the holder publishes another figure than the facts carry (Saint Jerome: the Vatican Museums' catalogue, 102.8 by 73.5 cm, for the facts' 103 by 75. The predella: the Louvre's record, 16.2 by 60.7, for 16 by 60. The Lady with an Ermine: the National Museum in Kraków's catalogue, 53.4 by 39.3 cm, where the facts carry the hang's 54.8 by 40.3), or where no holder publishes a size, the source its line names (the Salvator Mundi: Zöllner's catalogue raisonné, 65.5 by 45.6, its height and its widest width, for the facts' 65.7 by 45.7), and facts_cm names the facts' figure it stands in for, so the build stops when the facts change. The build checks each line of works.lines against the size the page shows. A plate's src is its source line as the wing's record names it, and the build checks each file it links against that record. The two files hold the same structure. No em dash, no en dash, no semicolon.",
   "page": {
     "id": "vinci-sizes",
     "wing": "vinci",
@@ -17,12 +17,36 @@
       "figure": "vinci-sizes-figure-{lang}-1600.png"
     },
     "held": {
+      "saint-jerome": {
+        "h_cm": 102.8,
+        "w_cm": 73.5,
+        "facts_cm": [
+          103,
+          75
+        ]
+      },
+      "annunciation-predella": {
+        "h_cm": 16.2,
+        "w_cm": 60.7,
+        "facts_cm": [
+          16,
+          60
+        ]
+      },
       "lady-with-an-ermine": {
         "h_cm": 53.4,
         "w_cm": 39.3,
         "facts_cm": [
           54.8,
           40.3
+        ]
+      },
+      "salvator-mundi": {
+        "h_cm": 65.5,
+        "w_cm": 45.6,
+        "facts_cm": [
+          65.7,
+          45.7
         ]
       }
     }
@@ -85,7 +109,7 @@
       "h": "Das Diagramm",
       "lead": "Hier ist jedes Werk des Bildersaals, dazu das Abendmahl, im selben Maßstab gezeichnet.",
       "caption": "Alle 24 Werke des Bildersaals und das Abendmahl im selben Maßstab, neben einem Menschen von 1,70 Metern. Die Größen sind die der Originale.",
-      "alt": "Ein Diagramm mit 24 Werken und dem Abendmahl im selben Maßstab neben einem Menschen von 1,70 Metern: Das Abendmahl ist 4,6 Meter hoch und 8,8 Meter breit, die größte Tafel, die Anbetung der Könige aus dem Morgenland, ist 2,4 Meter hoch, die Mona Lisa 79,4 Zentimeter, und die niedrigste, die Predella der Verkündigung, 16 Zentimeter.",
+      "alt": "Ein Diagramm mit 24 Werken und dem Abendmahl im selben Maßstab neben einem Menschen von 1,70 Metern: Das Abendmahl ist 4,6 Meter hoch und 8,8 Meter breit, die größte Tafel, die Anbetung der Könige aus dem Morgenland, ist 2,4 Meter hoch, die Mona Lisa 79,4 Zentimeter, und die niedrigste, die Predella der Verkündigung, 16,2 Zentimeter.",
       "zoom": "Die Werke unter einem Meter Höhe noch einmal, dreimal so groß, damit auch die kleinen gut zu erkennen sind.",
       "key_h": "Die Formen nach Nummern",
       "still_caption": "Alle 24 Werke und das Abendmahl im selben Maßstab, neben einem Menschen von 1,70 Metern.",
@@ -173,9 +197,9 @@
         "Bildnis der Ginevra de' Benci, die Rückseite der Tafel. 38,1 × 37 cm. National Gallery of Art, Washington. Die bemalte Rückseite derselben Tafel: ein Werk, das zweimal hängt.",
         "Madonna mit der Nelke. 62 × 48,5 cm. Bayerische Staatsgemäldesammlungen, Alte Pinakothek, München.",
         "Madonna Benois. 49,5 × 33 cm. Staatliche Eremitage, Sankt Petersburg.",
-        "Der heilige Hieronymus. 103 × 75 cm. Pinacoteca Vaticana, Vatikanstadt. Knapp über einen Meter hoch.",
+        "Der heilige Hieronymus. 102,8 × 73,5 cm. Pinacoteca Vaticana, Vatikanstadt. Knapp über einen Meter hoch.",
         "Anbetung der Könige aus dem Morgenland. 244 × 240 cm. Gallerie degli Uffizi, Florenz. Das größte Werk an der Wand: fast quadratisch und 74 Zentimeter höher als ein Mensch von 1,70 Metern.",
-        "Die Verkündigung, Predella. 16 × 60 cm. Musée du Louvre, Paris. Umstritten. Mit 16 Zentimetern das niedrigste Bild an der Wand und fast viermal so breit wie hoch.",
+        "Die Verkündigung, Predella. 16,2 × 60,7 cm. Musée du Louvre, Paris. Umstritten. Mit 16,2 Zentimetern das niedrigste Bild an der Wand und fast viermal so breit wie hoch.",
         "Felsgrottenmadonna, Louvre-Fassung. 199,5 × 122 cm. Musée du Louvre, Paris. Knapp zwei Meter hoch. Die Londoner Fassung ist zehn Zentimeter niedriger.",
         "Bildnis eines Musikers. 44,7 × 32 cm. Veneranda Biblioteca Ambrosiana, Mailand. Umstritten.",
         "Dame mit dem Hermelin. 53,4 × 39,3 cm. Muzeum Narodowe w Krakowie, Muzeum Książąt Czartoryskich, Krakau. Niedriger und schmaler als die Mona Lisa.",
@@ -188,7 +212,7 @@
         "Mona Lisa. 79,4 × 53,4 cm. Musée du Louvre, Paris. Hat im Flügel ihre eigene Station. Von den anderen 23 Werken sind vierzehn niedriger als sie und neun höher.",
         "Felsgrottenmadonna, Londoner Fassung. 189,5 × 120 cm. National Gallery, London. Zuschreibung mit Vorbehalt. Zehn Zentimeter niedriger als die Louvre-Fassung und zwei schmaler.",
         "Die Jungfrau mit dem Kind und der heiligen Anna. 168 × 113 cm. Musée du Louvre, Paris. Zwei Zentimeter kleiner als ein Mensch von 1,70 Metern.",
-        "Salvator Mundi. 65,7 × 45,7 cm. Privatsammlung, heutiger Aufenthaltsort unbestätigt. Umstritten.",
+        "Salvator Mundi. 65,5 × 45,6 cm. Privatsammlung, heutiger Aufenthaltsort unbestätigt. Umstritten. Sein Eigentümer veröffentlicht keine Maße, darum stammt die Größe hier aus Frank Zöllners Werkverzeichnis der Gemälde Leonardos.",
         "Johannes der Täufer. 72,9 × 56,3 cm. Musée du Louvre, Paris. Etwas niedriger und etwas breiter als die Mona Lisa.",
         "Scapigliata. 24,7 × 21 cm. Galleria Nazionale di Parma, Complesso della Pilotta, Parma. Zuschreibung mit Vorbehalt. Das kleinste Werk an der Wand: ein Kopf, 21 Zentimeter breit.",
         "Bacchus, ehemals Johannes der Täufer. 177 × 115 cm. Musée du Louvre, Paris. Werkstatt. Genauso hoch wie die Taufe Christi, das erste Bild an der Wand.",
@@ -219,7 +243,7 @@
       "id": "sources",
       "nav": "Quellen",
       "h": "Quellen",
-      "intro": "Die Größen sind die Maße, die die Häuser für die Originale angeben. Das Museum nennt diese Museen und Sammlungen, weil sie die Originale bewahren, und ist von jedem von ihnen unabhängig. Die Verzeichnisse der Häuser, in denen wir die Größen gelesen haben:",
+      "intro": "Die Größen sind die Maße, die die Häuser für die Originale angeben, sofern ein Haus eigene Maße veröffentlicht. Das Museum nennt diese Museen und Sammlungen, weil sie die Originale bewahren, und ist von jedem von ihnen unabhängig. Die Verzeichnisse der Häuser, in denen wir die Größen gelesen haben:",
       "read": [
         {
           "text": "Musée du Louvre, Mona Lisa",
@@ -247,7 +271,7 @@
         },
         {
           "text": "Pinacoteca Vaticana, Der heilige Hieronymus",
-          "href": "https://www.museivaticani.va/content/museivaticani/en/collezioni/musei/la-pinacoteca/sala-ix---secolo-xv-xvi/leonardo-da-vinci--s--girolamo.html"
+          "href": "https://catalogo.museivaticani.va/index.php/Detail/objects/MV.40337.0.0"
         },
         {
           "text": "Gallerie degli Uffizi, Anbetung der Könige aus dem Morgenland",

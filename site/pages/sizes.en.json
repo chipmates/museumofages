@@ -1,5 +1,5 @@
 {
-  "_note": "THE WORDS of the sizes page, English. Poured from the writer's WORDS file of round 3 word for word; every size, holder and stop the page shows comes from the wing's facts file, except a size under page.held: there the holder publishes another figure than the facts carry (the Lady with an Ermine: the National Museum in Kraków's catalogue, 53.4 by 39.3 cm, where the facts carry the hang's 54.8 by 40.3), and facts_cm names the facts' figure it stands in for, so the build stops when the facts change. The build checks each line of works.lines against the size the page shows. A plate's src is its source line as the wing's record names it, and the build checks each file it links against that record. The two files hold the same structure. No em dash, no en dash, no semicolon.",
+  "_note": "THE WORDS of the sizes page, English. Poured from the writer's WORDS file of round 3 word for word; every size, holder and stop the page shows comes from the wing's facts file, except a size under page.held: there the holder publishes another figure than the facts carry (Saint Jerome: the Vatican Museums' catalogue, 102.8 by 73.5 cm, for the facts' 103 by 75. The predella: the Louvre's record, 16.2 by 60.7, for 16 by 60. The Lady with an Ermine: the National Museum in Kraków's catalogue, 53.4 by 39.3 cm, where the facts carry the hang's 54.8 by 40.3), or where no holder publishes a size, the source its line names (the Salvator Mundi: Zöllner's catalogue raisonné, 65.5 by 45.6, its height and its widest width, for the facts' 65.7 by 45.7), and facts_cm names the facts' figure it stands in for, so the build stops when the facts change. The build checks each line of works.lines against the size the page shows. A plate's src is its source line as the wing's record names it, and the build checks each file it links against that record. The two files hold the same structure. No em dash, no en dash, no semicolon.",
   "page": {
     "id": "vinci-sizes",
     "wing": "vinci",
@@ -17,12 +17,36 @@
       "figure": "vinci-sizes-figure-{lang}-1600.png"
     },
     "held": {
+      "saint-jerome": {
+        "h_cm": 102.8,
+        "w_cm": 73.5,
+        "facts_cm": [
+          103,
+          75
+        ]
+      },
+      "annunciation-predella": {
+        "h_cm": 16.2,
+        "w_cm": 60.7,
+        "facts_cm": [
+          16,
+          60
+        ]
+      },
       "lady-with-an-ermine": {
         "h_cm": 53.4,
         "w_cm": 39.3,
         "facts_cm": [
           54.8,
           40.3
+        ]
+      },
+      "salvator-mundi": {
+        "h_cm": 65.5,
+        "w_cm": 45.6,
+        "facts_cm": [
+          65.7,
+          45.7
         ]
       }
     }
@@ -85,7 +109,7 @@
       "h": "The chart",
       "lead": "Here is every work of the picture room, and the Last Supper, drawn to one scale.",
       "caption": "All 24 works of the picture room and the Last Supper at one scale, beside a person 1.7 metres tall. The sizes are those of the originals.",
-      "alt": "A chart of 24 works and the Last Supper at one scale beside a person 1.7 metres tall: the Last Supper is 4.6 metres high and 8.8 metres wide, the largest panel, the Adoration of the Magi, is 2.4 metres tall, the Mona Lisa is 79.4 centimetres tall, and the shortest, the predella panel of the Annunciation, is 16 centimetres tall.",
+      "alt": "A chart of 24 works and the Last Supper at one scale beside a person 1.7 metres tall: the Last Supper is 4.6 metres high and 8.8 metres wide, the largest panel, the Adoration of the Magi, is 2.4 metres tall, the Mona Lisa is 79.4 centimetres tall, and the shortest, the predella panel of the Annunciation, is 16.2 centimetres tall.",
       "zoom": "The works under one metre tall again, three times as large, so the small ones can be read.",
       "key_h": "The shapes by number",
       "still_caption": "All 24 works and the Last Supper at one scale, beside a person 1.7 metres tall.",
@@ -173,9 +197,9 @@
         "Ginevra de' Benci, the back of the panel. 38.1 × 37 cm (15 × 15 in). National Gallery of Art, Washington. The painted back of the same panel: one work that hangs twice.",
         "Madonna of the Carnation. 62 × 48.5 cm (24 × 19 in). Bayerische Staatsgemäldesammlungen, Alte Pinakothek, Munich.",
         "Benois Madonna. 49.5 × 33 cm (19 × 13 in). State Hermitage Museum, Saint Petersburg.",
-        "Saint Jerome in the Wilderness. 103 × 75 cm (41 × 30 in). Pinacoteca Vaticana, Vatican City. Just over a metre tall.",
+        "Saint Jerome in the Wilderness. 102.8 × 73.5 cm (40 × 29 in). Pinacoteca Vaticana, Vatican City. Just over a metre tall.",
         "Adoration of the Magi. 244 × 240 cm (96 × 94 in). Gallerie degli Uffizi, Florence. The largest work on the wall: almost square, and 74 centimetres taller than a person of 1.7 metres.",
-        "Annunciation, predella panel. 16 × 60 cm (6 × 24 in). Musée du Louvre, Paris. Disputed. The shortest picture on the wall, 16 centimetres tall, and almost four times as wide.",
+        "Annunciation, predella panel. 16.2 × 60.7 cm (6 × 24 in). Musée du Louvre, Paris. Disputed. The shortest picture on the wall, 16.2 centimetres tall, and almost four times as wide.",
         "Virgin of the Rocks, Louvre version. 199.5 × 122 cm (79 × 48 in). Musée du Louvre, Paris. Just under two metres tall. The London version is ten centimetres shorter.",
         "Portrait of a Musician. 44.7 × 32 cm (18 × 13 in). Veneranda Biblioteca Ambrosiana, Milan. Disputed.",
         "Lady with an Ermine. 53.4 × 39.3 cm (21 × 15 in). Muzeum Narodowe w Krakowie, Muzeum Książąt Czartoryskich, Kraków. Shorter and narrower than the Mona Lisa.",
@@ -188,7 +212,7 @@
         "Mona Lisa. 79.4 × 53.4 cm (31 × 21 in). Musée du Louvre, Paris. Has its own stop in the wing. Of the other 23 works, fourteen are shorter than it and nine are taller.",
         "Virgin of the Rocks, London version. 189.5 × 120 cm (75 × 47 in). National Gallery, London. Qualified attribution. Ten centimetres shorter than the Louvre version, and two narrower.",
         "The Virgin and Child with Saint Anne. 168 × 113 cm (66 × 44 in). Musée du Louvre, Paris. Two centimetres short of a person of 1.7 metres.",
-        "Salvator Mundi. 65.7 × 45.7 cm (26 × 18 in). Private collection, present location unconfirmed. Disputed.",
+        "Salvator Mundi. 65.5 × 45.6 cm (26 × 18 in). Private collection, present location unconfirmed. Disputed. Its owner publishes no size, so the size here is from Frank Zöllner's catalogue of Leonardo's paintings.",
         "Saint John the Baptist. 72.9 × 56.3 cm (29 × 22 in). Musée du Louvre, Paris. A little shorter and a little wider than the Mona Lisa.",
         "La Scapigliata. 24.7 × 21 cm (10 × 8 in). Galleria Nazionale di Parma, Complesso della Pilotta, Parma. Qualified attribution. The smallest work on the wall: a head, 21 centimetres wide.",
         "Bacchus, formerly Saint John the Baptist. 177 × 115 cm (70 × 45 in). Musée du Louvre, Paris. Workshop. The same height as the Baptism of Christ, the first picture on the wall.",
@@ -219,7 +243,7 @@
       "id": "sources",
       "nav": "Sources",
       "h": "Sources",
-      "intro": "The sizes are the holders' own measurements of the originals. The museum names these museums and collections because they hold the originals, and is independent of every one of them. The holders' records we read for the sizes:",
+      "intro": "The sizes are the holders' own measurements of the originals, where a holder publishes one. The museum names these museums and collections because they hold the originals, and is independent of every one of them. The holders' records we read for the sizes:",
       "read": [
         {
           "text": "Musée du Louvre, Mona Lisa",
@@ -247,7 +271,7 @@
         },
         {
           "text": "Pinacoteca Vaticana, Saint Jerome",
-          "href": "https://www.museivaticani.va/content/museivaticani/en/collezioni/musei/la-pinacoteca/sala-ix---secolo-xv-xvi/leonardo-da-vinci--s--girolamo.html"
+          "href": "https://catalogo.museivaticani.va/index.php/Detail/objects/MV.40337.0.0"
         },
         {
           "text": "Gallerie degli Uffizi, Adoration of the Magi",

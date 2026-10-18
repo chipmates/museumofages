@@ -3659,14 +3659,14 @@
   {
    "path": "pages/pics/img/vinci-sizes-chart-de-1600.png",
    "url": "/static/img/vinci-sizes-chart-de-1600.png",
-   "bytes": 58239,
-   "sha256": "fec232339451ea4d481d7127f0341d1258140fcb69bb42af62d72df789e933bf"
+   "bytes": 58186,
+   "sha256": "5a16890d0634ae1421e70a4722a5d5b54530cffff01d4d56ce7fcceae300e8f3"
   },
   {
    "path": "pages/pics/img/vinci-sizes-chart-en-1600.png",
    "url": "/static/img/vinci-sizes-chart-en-1600.png",
-   "bytes": 53968,
-   "sha256": "dd76e63a0fe714839b7eb9799613f1447828cda86fbae4f54c72490f6db8d8bd"
+   "bytes": 53880,
+   "sha256": "499e1bedfba82a301ab6a6a04fbce61d62f6b03c0ff9446b87af9357ad184b4f"
   },
   {
    "path": "pages/pics/img/vinci-sizes-figure-de-1600.png",

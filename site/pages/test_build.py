@@ -2704,6 +2704,49 @@ class Case(unittest.TestCase):
             for figure in ("54.8", "54,8", "40.3", "40,3"):
                 self.assertNotIn(figure, own, lang)
 
+    def test_the_works_whose_figure_is_not_their_holders_show_the_size_the_page_holds(self):
+        """Saint Jerome and the predella show their holders' records (the Vatican Museums' catalogue, the Louvre's), and
+        the Salvator Mundi, whose owner publishes no size, the catalogue raisonné's, its line naming that source. Each
+        stands in for the facts' figure: the chart's shapes, the line and the table row show the held one only."""
+        if not self.works_page:
+            self.skipTest("no page shows a wing's works")
+        held = self.data("en", self.works_page)["page"].get("held") or {}
+        wing, topic, facts = self.works_facts()
+        paintings = {p["id"]: p for p in facts["paintings"]}
+        # id: held size, shapes (three bands, and the panel of the works under a metre), the line's size per language,
+        # the table's two cells per language
+        rows = {"saint-jerome": ((102.8, 73.5), 3, ("102.8 × 73.5 cm (40 × 29 in)", "102,8 × 73,5 cm."),
+                                 (("102.8 (40)", "73.5 (29)"), ("102,8", "73,5"))),
+                "annunciation-predella": ((16.2, 60.7), 4, ("16.2 × 60.7 cm (6 × 24 in)", "16,2 × 60,7 cm."),
+                                          (("16.2 (6)", "60.7 (24)"), ("16,2", "60,7"))),
+                "salvator-mundi": ((65.5, 45.6), 4, ("65.5 × 45.6 cm (26 × 18 in)", "65,5 × 45,6 cm."),
+                                   (("65.5 (26)", "45.6 (18)"), ("65,5", "45,6")))}
+        for key, (size, count, lines, cells) in rows.items():
+            p = paintings[key]
+            self.assertEqual(held.get(key), {"h_cm": size[0], "w_cm": size[1], "facts_cm": [p["h_cm"], p["w_cm"]]}, key)
+        out, written = self.build()
+        for key, (size, count, lines, cells) in rows.items():
+            p = paintings[key]
+            for i, lang in enumerate(("en", "de")):
+                self.assertEqual(self.data(lang, self.works_page)["page"]["held"], held, lang)
+                own = self.own_part((out / f'{wing["page"][lang].strip("/")}/{topic["slug"][lang]}/index.html').read_text(encoding="utf-8"))
+                self.assertEqual(own.count(f'width="{size[1] / 100:g}em" height="{size[0] / 100:g}em"'), count, (key, lang))
+                self.assertNotIn(f'width="{p["w_cm"] / 100:g}em" height="{p["h_cm"] / 100:g}em"', own, (key, lang))
+                entry = re.search(r'<li id="w%d">.*?</li>' % p["n"], own, flags=re.S).group(0)
+                self.assertIn(lines[i], entry, (key, lang))
+                row = re.findall(r"<tr><th scope=\"row\">(.*?)</tr>", own, flags=re.S)[p["n"] - 1]
+                self.assertEqual(tuple(re.findall(r"<td>(.*?)</td>", row, flags=re.S)[:2]), cells[i], (key, lang))
+        for lang, source, intro in (("en", "Frank Zöllner</span>&#x27;s catalogue", "measurements of the originals, where a holder publishes one."),
+                                    ("de", "Frank Zöllners</span> Werkverzeichnis", "für die Originale angeben, sofern ein Haus eigene Maße veröffentlicht.")):
+            own = self.own_part((out / f'{wing["page"][lang].strip("/")}/{topic["slug"][lang]}/index.html').read_text(encoding="utf-8"))
+            # the Salvator Mundi's line names where its size comes from, and the sources say the sizes are the holders' where one publishes them
+            entry = re.search(r'<li id="w%d">.*?</li>' % paintings["salvator-mundi"]["n"], own, flags=re.S).group(0)
+            self.assertIn(source, entry, lang)
+            self.assertIn(intro, own, lang)
+            # Saint Jerome's record is the holder's catalogue, which prints the figure the page shows
+            self.assertIn('href="https://catalogo.museivaticani.va/index.php/Detail/objects/MV.40337.0.0"', own, lang)
+            self.assertNotIn("leonardo-da-vinci--s--girolamo.html", own, lang)
+
     def test_a_held_size_the_facts_no_longer_match_stops_the_build(self):
         if not self.works_page:
             self.skipTest("no page shows a wing's works")

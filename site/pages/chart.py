@@ -3,8 +3,9 @@
 Every size, holder and stop is read from the wing's facts file and the group of the wing's page that a topic page
 names (its registry entry, from), never from the page's words. The page's words name a work by its line, and the
 build checks that each line carries its work's size as the facts give it. One exception: a size the page holds
-itself (page.held), where the holder publishes another figure than the facts carry. It names the facts' figure it
-stands in for, so a change of the facts stops the build instead of passing unseen.
+itself (page.held), where the holder publishes another figure than the facts carry, or none and the work's line names
+the size's source. It names the facts' figure it stands in for, so a change of the facts stops the build instead of
+passing unseen.
 
 A shape on the page is an inline SVG whose width and height are set in em, one em being one metre: a panel sets the
 font size of its shapes from its own width (container query units), so every shape of a panel stands at one scale,
