@@ -4570,6 +4570,25 @@ class SiteWide(unittest.TestCase):
         # one picture without words is a film frame of the second tier the page does not show
         self.assertEqual(cards, {"vinci-life", "vinci-paintings"})
 
+    def test_a_side_list_keeps_full_targets_its_indent_and_the_screen(self):
+        found = 0
+        for path, text in self.pages.items():
+            if '<nav class="sp-toc"' not in text:
+                continue
+            found += 1
+            style = "".join(re.findall(r"<style[^>]*>(.*?)</style>", text, flags=re.S))
+            for sel, body in re.findall(r"([^{}]*\.sp-toc[^{}]*\ba)\{([^}]*)\}", style):
+                height = re.search(r"min-height:(\d+)px", body)
+                if height:
+                    self.assertGreaterEqual(int(height.group(1)), 44, (path, sel))
+            # a later rule for the entries may set their vertical padding only, or the desktop indent is lost
+            desk = style.find("padding:6px 0 6px 9px")
+            self.assertGreater(desk, -1, path)
+            for later in re.findall(r"\.sp-toc a\{([^}]*)\}", style[desk:]):
+                self.assertNotRegex(later, r"(?<![-\w])padding:", path)
+            self.assertRegex(style, r"\.sp-grid>\.sp-toc\{max-height:", path)
+        self.assertGreater(found, 60)
+
 
 class SoftChecks(unittest.TestCase):
     """Two checks that warn and never stop the build: a picture at one scale whose words give no length or not the
