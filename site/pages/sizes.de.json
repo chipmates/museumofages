@@ -6,6 +6,7 @@
     "topic": "sizes",
     "published": "2026-10-12",
     "checked": "2026-10-13",
+    "changed": "2026-10-18",
     "og_image": {
       "file": "vinci-sizes-og-{lang}-1200x630.png",
       "width": 1200,
@@ -152,7 +153,7 @@
       "nav": "Annähernd in Originalgröße",
       "h": "Annähernd in Originalgröße",
       "paras": [
-        "Im Flügel hängen Reproduktionen. Jede ist annähernd in Originalgröße zu sehen, mit Quelle und Lizenz auf ihrer Beschriftung, und die Originale befinden sich in den Museen und Sammlungen, die diese Seite nennt. Die Größen hier sind die der Originale, wie ihre Häuser sie angeben."
+        "Im Flügel hängen Reproduktionen. Jede ist annähernd in Originalgröße zu sehen, mit Quelle und Lizenz auf ihrer Beschriftung, und die Originale befinden sich in den Museen und Sammlungen, die diese Seite nennt. Die Größen hier sind die der Originale, wie ihre Häuser sie angeben, sofern ein Haus eigene Maße veröffentlicht."
       ],
       "pic": {
         "pic": "lisa",
@@ -189,7 +190,7 @@
       "id": "works",
       "nav": "Jedes Werk",
       "h": "Jedes Werk",
-      "intro": "Jedes Werk in der Reihenfolge, in der es hängt, mit der Größe, die sein Haus angibt. Zwei sind Zeichnungen und sagen das nach ihrem Titel. Ein Zusatz nach dem Haus, etwa umstritten, Werkstatt oder Zuschreibung mit Vorbehalt, sagt, wie sicher die Zuschreibung an Leonardo ist. Kein Zusatz heißt: belegt. Eine Predella ist eine kleine Tafel vom Sockel eines Altarbilds.",
+      "intro": "Jedes Werk in der Reihenfolge, in der es hängt, mit der Größe, die sein Haus angibt. Wo ein Haus keine Maße veröffentlicht, sagt die Zeile, woher die Größe stammt. Zwei sind Zeichnungen und sagen das nach ihrem Titel. Ein Zusatz nach dem Haus, etwa umstritten, Werkstatt oder Zuschreibung mit Vorbehalt, sagt, wie sicher die Zuschreibung an Leonardo ist. Kein Zusatz heißt: belegt. Eine Predella ist eine kleine Tafel vom Sockel eines Altarbilds.",
       "lines": [
         "Taufe Christi. 177 × 151 cm. Gallerie degli Uffizi, Florenz. Von Verrocchio und Leonardo. Höher als ein Mensch von 1,70 Metern.",
         "Die Verkündigung. 90 × 222 cm. Gallerie degli Uffizi, Florenz. Über zwei Meter breit und keinen Meter hoch.",
@@ -212,7 +213,7 @@
         "Mona Lisa. 79,4 × 53,4 cm. Musée du Louvre, Paris. Hat im Flügel ihre eigene Station. Von den anderen 23 Werken sind vierzehn niedriger als sie und neun höher.",
         "Felsgrottenmadonna, Londoner Fassung. 189,5 × 120 cm. National Gallery, London. Zuschreibung mit Vorbehalt. Zehn Zentimeter niedriger als die Louvre-Fassung und zwei schmaler.",
         "Die Jungfrau mit dem Kind und der heiligen Anna. 168 × 113 cm. Musée du Louvre, Paris. Zwei Zentimeter kleiner als ein Mensch von 1,70 Metern.",
-        "Salvator Mundi. 65,5 × 45,6 cm. Privatsammlung, heutiger Aufenthaltsort unbestätigt. Umstritten. Sein Eigentümer veröffentlicht keine Maße, darum stammt die Größe hier aus Frank Zöllners Werkverzeichnis der Gemälde Leonardos.",
+        "Salvator Mundi. 65,5 × 45,6 cm. Privatsammlung, heutiger Aufenthaltsort unbestätigt. Umstritten. Sein Eigentümer veröffentlicht keine Maße, darum stammen Höhe und größte Breite hier aus Frank Zöllners Werkverzeichnis von 2019 zu Leonardos Gemälden und Zeichnungen.",
         "Johannes der Täufer. 72,9 × 56,3 cm. Musée du Louvre, Paris. Etwas niedriger und etwas breiter als die Mona Lisa.",
         "Scapigliata. 24,7 × 21 cm. Galleria Nazionale di Parma, Complesso della Pilotta, Parma. Zuschreibung mit Vorbehalt. Das kleinste Werk an der Wand: ein Kopf, 21 Zentimeter breit.",
         "Bacchus, ehemals Johannes der Täufer. 177 × 115 cm. Musée du Louvre, Paris. Werkstatt. Genauso hoch wie die Taufe Christi, das erste Bild an der Wand.",
@@ -332,6 +333,10 @@
         {
           "text": "Museo del Cenacolo Vinciano, Das Abendmahl",
           "href": "https://cenacolovinciano.org/en/museum/the-works/the-last-supper-leonardo-da-vinci-1452-1519/"
+        },
+        {
+          "text": "Für den Salvator Mundi, dessen Eigentümer keine Maße veröffentlicht: Frank Zöllner, Katalogeintrag XXXII in Leonardo da Vinci. The Complete Paintings and Drawings, 2019 (PDF auf der Website seiner Universität)",
+          "href": "https://www.gko.uni-leipzig.de/fileadmin/Fakult%C3%A4t_GKR/Kunstgeschichte/PDF/Publikationen/Frank_Z%C3%B6llner-B%C3%BCcher/SalvatorCatXXXII2019.pdf"
         }
       ],
       "notes": [],

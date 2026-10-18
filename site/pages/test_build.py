@@ -2736,8 +2736,8 @@ class Case(unittest.TestCase):
                 self.assertIn(lines[i], entry, (key, lang))
                 row = re.findall(r"<tr><th scope=\"row\">(.*?)</tr>", own, flags=re.S)[p["n"] - 1]
                 self.assertEqual(tuple(re.findall(r"<td>(.*?)</td>", row, flags=re.S)[:2]), cells[i], (key, lang))
-        for lang, source, intro in (("en", "Frank Zöllner</span>&#x27;s catalogue", "measurements of the originals, where a holder publishes one."),
-                                    ("de", "Frank Zöllners</span> Werkverzeichnis", "für die Originale angeben, sofern ein Haus eigene Maße veröffentlicht.")):
+        for lang, source, intro in (("en", "Frank Zöllner</span>&#x27;s 2019 catalogue", "measurements of the originals, where a holder publishes one."),
+                                    ("de", "Frank Zöllners</span> Werkverzeichnis von 2019", "für die Originale angeben, sofern ein Haus eigene Maße veröffentlicht.")):
             own = self.own_part((out / f'{wing["page"][lang].strip("/")}/{topic["slug"][lang]}/index.html').read_text(encoding="utf-8"))
             # the Salvator Mundi's line names where its size comes from, and the sources say the sizes are the holders' where one publishes them
             entry = re.search(r'<li id="w%d">.*?</li>' % paintings["salvator-mundi"]["n"], own, flags=re.S).group(0)

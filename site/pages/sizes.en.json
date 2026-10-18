@@ -6,6 +6,7 @@
     "topic": "sizes",
     "published": "2026-10-12",
     "checked": "2026-10-13",
+    "changed": "2026-10-18",
     "og_image": {
       "file": "vinci-sizes-og-{lang}-1200x630.png",
       "width": 1200,
@@ -152,7 +153,7 @@
       "nav": "Near real size",
       "h": "Near real size",
       "paras": [
-        "What hangs in the wing are reproductions. Each is shown close to its real size, with its source and its licence on its label, and the originals are in the museums and collections named on this page. The sizes here are the originals' own, as their holders give them."
+        "What hangs in the wing are reproductions. Each is shown close to its real size, with its source and its licence on its label, and the originals are in the museums and collections named on this page. The sizes here are the originals' own, as their holders give them, where a holder publishes one."
       ],
       "pic": {
         "pic": "lisa",
@@ -189,7 +190,7 @@
       "id": "works",
       "nav": "Every work",
       "h": "Every work",
-      "intro": "Every work in the order it hangs, with the size its holder gives. Two are drawings and say so after their title. A word after the holder, such as disputed, workshop or qualified attribution, says how sure the attribution to Leonardo is, and no word means it is documented. A predella is a small panel from the foot of an altarpiece.",
+      "intro": "Every work in the order it hangs, with the size its holder gives. Where a holder publishes no size, the line says where the size is from. Two are drawings and say so after their title. A word after the holder, such as disputed, workshop or qualified attribution, says how sure the attribution to Leonardo is, and no word means it is documented. A predella is a small panel from the foot of an altarpiece.",
       "lines": [
         "The Baptism of Christ. 177 × 151 cm (70 × 59 in). Gallerie degli Uffizi, Florence. By Verrocchio and Leonardo. Taller than a person of 1.7 metres.",
         "Annunciation. 90 × 222 cm (35 × 87 in). Gallerie degli Uffizi, Florence. Over two metres wide and under a metre tall.",
@@ -212,7 +213,7 @@
         "Mona Lisa. 79.4 × 53.4 cm (31 × 21 in). Musée du Louvre, Paris. Has its own stop in the wing. Of the other 23 works, fourteen are shorter than it and nine are taller.",
         "Virgin of the Rocks, London version. 189.5 × 120 cm (75 × 47 in). National Gallery, London. Qualified attribution. Ten centimetres shorter than the Louvre version, and two narrower.",
         "The Virgin and Child with Saint Anne. 168 × 113 cm (66 × 44 in). Musée du Louvre, Paris. Two centimetres short of a person of 1.7 metres.",
-        "Salvator Mundi. 65.5 × 45.6 cm (26 × 18 in). Private collection, present location unconfirmed. Disputed. Its owner publishes no size, so the size here is from Frank Zöllner's catalogue of Leonardo's paintings.",
+        "Salvator Mundi. 65.5 × 45.6 cm (26 × 18 in). Private collection, present location unconfirmed. Disputed. Its owner publishes no size, so the height and greatest width here are from Frank Zöllner's 2019 catalogue of Leonardo's paintings and drawings.",
         "Saint John the Baptist. 72.9 × 56.3 cm (29 × 22 in). Musée du Louvre, Paris. A little shorter and a little wider than the Mona Lisa.",
         "La Scapigliata. 24.7 × 21 cm (10 × 8 in). Galleria Nazionale di Parma, Complesso della Pilotta, Parma. Qualified attribution. The smallest work on the wall: a head, 21 centimetres wide.",
         "Bacchus, formerly Saint John the Baptist. 177 × 115 cm (70 × 45 in). Musée du Louvre, Paris. Workshop. The same height as the Baptism of Christ, the first picture on the wall.",
@@ -332,6 +333,10 @@
         {
           "text": "Museo del Cenacolo Vinciano, The Last Supper",
           "href": "https://cenacolovinciano.org/en/museum/the-works/the-last-supper-leonardo-da-vinci-1452-1519/"
+        },
+        {
+          "text": "For the Salvator Mundi, whose owner publishes no size: Frank Zöllner, catalogue entry XXXII in Leonardo da Vinci. The Complete Paintings and Drawings, 2019 (PDF on his university's site)",
+          "href": "https://www.gko.uni-leipzig.de/fileadmin/Fakult%C3%A4t_GKR/Kunstgeschichte/PDF/Publikationen/Frank_Z%C3%B6llner-B%C3%BCcher/SalvatorCatXXXII2019.pdf"
         }
       ],
       "notes": [],
