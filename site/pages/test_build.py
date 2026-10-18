@@ -2473,7 +2473,10 @@ class Case(unittest.TestCase):
             text = path.read_text(encoding="utf-8")
             data, lang = self.page_of(path)
             name = wings[data["page"]["wing"]]["name"][lang]
-            own = self.own_part(text)
+            # running text holds a long name by its last words (a lead and a hold by no-break spaces, LongNames): read
+            # such a pair as the one span it stands for, so the name is still never loose
+            own = re.sub(r'<span class="nh">([^<]*)</span> <span class="nh">([^<]*)</span>',
+                         lambda m: f'<span class="nw">{m.group(1)} {m.group(2).replace(chr(160), " ")}</span>', self.own_part(text))
             # the site's rule that the span relies on travels with the page
             self.assertIn(".nw{white-space:nowrap}", text)
             if name not in data["top"]["h1"]:
@@ -2549,7 +2552,10 @@ class Case(unittest.TestCase):
             data, lang = self.page_of(path)
             own = self.own_part(text)
             self.assertIn(".nh{hyphens:none", text)
-            spans = re.findall(r'<(?:span|i) class="(?:nw nh|nh)"(?: lang="(\w+)")?>([^<]*)</(?:span|i)>', own)
+            # a long name that holds its last words in running text (LongNames) is read as the one name it is
+            joined = re.sub(r'<(span|i) class="nh"( lang="\w+")?>([^<]*)</\1> <\1 class="nh"\2>([^<]*)</\1>',
+                            lambda m: f'<{m[1]} class="nw nh"{m[2] or ""}>{m[3]} {m[4]}</{m[1]}>', own)
+            spans = re.findall(r'<(?:span|i) class="(?:nw nh|nh)"(?: lang="(\w+)")?>([^<]*)</(?:span|i)>', joined)
             # a name held whole by no-break spaces is the same name
             marked = {html.unescape(word).replace("\u00a0", " "): code for code, word in spans}
             loose = self.words(re.sub(r'<(span|i) class="(?:nw|nh|nw nh)"[^>]*>[^<]*</\1>', " ", own))
@@ -2580,8 +2586,8 @@ class Case(unittest.TestCase):
             self.assertIn('<span class="nh" lang="it">Veneranda Biblioteca Ambrosiana</span>', own)
             self.assertIn('<span class="nh" lang="fr">Bibliothèque de l&#x27;Institut de France</span>', own)
             self.assertIn('<span class="nh" lang="es">Biblioteca Nacional de España</span>', own)
-            # a person's name of the list is kept on one line as well
-            self.assertRegex(own, r'<span class="nw nh" lang="it">Bartolomeo Della Valle</span>')
+            # a person's long name of the list holds its last words in running text (LongNames)
+            self.assertIn('<span class="nh" lang="it">Bartolomeo</span> <span class="nh" lang="it">Della\u00a0Valle</span>', own)
 
     def test_a_house_missing_from_the_names_stops_the_build(self):
         for lang in ("en", "de"):
@@ -4643,6 +4649,57 @@ class SoftChecks(unittest.TestCase):
         self.assertIn("t-rex.en: top.scale.alt names no length with its unit", build.WARNINGS)
         self.assertTrue(all(w.startswith(f"{page}.en: ") for w in build.WARNINGS))
 
+
+class LongNames(unittest.TestCase):
+    """Running text holds a long name by its last words, so a phone's line wraps before them instead of ending a third
+    short; display text keeps it whole. Read on the site as its build wrote it."""
+
+    @classmethod
+    def setUpClass(cls):
+        cls.build = _pages_build()
+        cls.page = lambda cls_, path: (SITE_BUILT / path / "index.html").read_text(encoding="utf-8")
+
+    def names(self, lang="en"):
+        entries = [{"text": "Gian Giacomo Caprotti", "lang": "it", "person": True},
+                   {"text": "Frank Zöllner", "lang": "de", "person": True},
+                   {"text": "Isabella d'Este", "lang": "it", "person": True}]
+        return self.build.Names(entries, "Leonardo da Vinci", lang)
+
+    def test_a_long_name_in_running_text_holds_its_last_two_words(self):
+        mark = self.names().mark
+        self.assertEqual(mark("His name was Gian Giacomo Caprotti, from Oreno.", run=True),
+                         'His name was <span class="nh" lang="it">Gian</span> <span class="nh" lang="it">Giacomo\u00a0Caprotti</span>, from Oreno.')
+        # the wing's own name, with its particle held to the last word; the hold is by a no-break space, since WebKit
+        # runs a nowrap name and the mark after it past the column
+        self.assertEqual(mark("What Leonardo da Vinci drew.", run=True),
+                         'What <span class="nh">Leonardo</span> <span class="nh">da\u00a0Vinci</span> drew.')
+        # a two-word name stays whole, as a particle's name does
+        self.assertIn('<span class="nw nh" lang="de">Frank Zöllner</span>', mark("A book by Frank Zöllner.", run=True))
+        self.assertIn('<span class="nw nh" lang="it">Isabella d&#x27;Este</span>', mark("He drew Isabella d'Este.", run=True))
+        # the built pages: a paragraph of the life page, the answer of the page on his grave
+        life = self.page("leonardo-da-vinci/life")
+        self.assertIn('<span class="nh" lang="it">Gian</span> <span class="nh" lang="it">Giacomo\u00a0Caprotti</span>', life)
+        self.assertIn('<span class="nw nh" lang="de">Frank Zöllner</span>', life)
+        grave = self.page("leonardo-da-vinci/death-and-grave")
+        self.assertIn('<span class="sp-answer__lead"><span class="nh">Leonardo</span> <span class="nh">da\u00a0Vinci</span> died', grave)
+
+    def test_display_text_keeps_a_long_name_whole(self):
+        mark = self.names().mark
+        self.assertEqual(mark("Where is Leonardo da Vinci buried?"), 'Where is <span class="nw">Leonardo da Vinci</span> buried?')
+        self.assertIn('<span class="nw nh" lang="it">Gian Giacomo Caprotti</span>', mark("Gian Giacomo Caprotti"))
+        grave = self.page("leonardo-da-vinci/death-and-grave")
+        self.assertIn('<h1>Where is <span class="nw">Leonardo da Vinci</span> buried?</h1>', grave)
+        # no heading of any built page splits a long name
+        for path in SITE_BUILT.rglob("*.html"):
+            for h in re.findall(r"<h[1-6][^>]*>.*?</h[1-6]>", path.read_text(encoding="utf-8"), flags=re.S):
+                self.assertNotRegex(h, r'<(span|i) class="nh"[^>]*>[^<]*</(span|i)> <(span|i) class="nh"[^>]*>[^< ]*\u00a0', path)
+
+    def test_a_particle_never_ends_a_line_inside_a_name(self):
+        held = self.build.LIB.held
+        self.assertEqual(held("Lorenzo de' Medici"), ("Lorenzo", "de' Medici"))
+        self.assertEqual(held("Sir J. C. Robinson"), ("", "Sir J. C. Robinson"))
+        self.assertEqual(held("Badr bin Abdullah Al Saud"), ("Badr bin Abdullah", "Al Saud"))
+        self.assertEqual(held("Frank Zöllner"), ("", "Frank Zöllner"))
 
 if __name__ == "__main__":
     unittest.main(verbosity=1)

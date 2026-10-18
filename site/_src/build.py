@@ -31,7 +31,7 @@ import placed
 import render as R
 from buildlib import (ARROW, BANNED, CSP_MARK, FACES_SCRIPT, LANG_FACES, LOOSE_PAIR, NBSP, NNBSP, REST_SCRIPT, WORDS, bind, css,
                       dump, esc, faces, fill, flatten, grain, keep_whole, number, number_word, shown_text, space, tail,
-                      whole_names, with_policy, LD_BLOCK, free_pictures_of, image_objects, licence_problems, picture_terms,
+                      whole_names, hold_names, held, with_policy, LD_BLOCK, free_pictures_of, image_objects, licence_problems, picture_terms,
                       with_picture_rights)
 
 SRC = Path(__file__).resolve().parent
@@ -322,6 +322,16 @@ WING_KEYS = ("collection", "state", "name", "page", "door", "dates", "shows", "w
 NOT_WORDS = r"(^_|\.pic\.|\.crop\.|\.focus\.|\.loads\.\d+$|(?<!\.quote)\.from$|\.(id|form|show|n|stop|holder|count|script|clip|name|lang|hang|lamp|href|src_to|grade)$)"
 # The running text of a wing's data: a paragraph's last words are kept together, and a wing's name is never broken.
 PROSE = r"(^|\.)(p(\.\d+)?|lede|what|src|text|v|intro|line|terms|after|lead|stills|source)$"
+# A key of the site's words that holds running text (a paragraph's _p, a line, a note): there a long name holds its
+# last words (hold_names); a heading, a button or a label keeps it whole.
+RUNNING_KEY = r"(^|[._])(p\d*|lede|lead|what|text|line|note|intro|after|src|terms|source|stills)$"
+
+
+def person_names(lang):
+    """The persons' names of three or more words in the pages' names files (pages/names.json and its language's own)."""
+    files = [SRC.parent / "pages" / "names.json", SRC.parent / "pages" / f"names.{lang}.json"]
+    return sorted({e["text"] for f in files if f.is_file() for e in load(f)["names"] if e.get("person") and len(e["text"].split()) >= 3},
+                  key=len, reverse=True)
 # Where a wing's sentence may carry digits: a credit line, a shelf mark, the explanation of a leaf number, the
 # rows that quote what a sheet gives, and a model's spoken name (it says 3D).
 DIGITS_OK = r"\.(src|source|terms|canvas_label)$|\.close\.rows\.\d+\.v$"
@@ -444,7 +454,8 @@ class Ctx:
         self.absolute = here.endswith("404.html")
         self.root = "/" if self.absolute else "../" * depth
         self.static = f"{self.root}{STATIC}/"
-        name = esc(self.wings[self.newest]["name"][lang]).replace(" ", NBSP)
+        self.held = site.held[lang]
+        name = esc(hold_names(self.wings[self.newest]["name"][lang], self.held))
         self.today = tail(self.w["today.one" if len(self.open) == 1 else "today.many"].replace("{name}", name), short=True)
 
     def count(self, slug, name):
@@ -498,8 +509,13 @@ class Site:
         # a name of several words never breaks, and no paragraph ends on a word alone
         self.names = {lang: sorted({e["name"][lang] for e in self.wings.values() if " " in e.get("name", {}).get(lang, "")}, key=len, reverse=True)
                       for lang in LANGS}
-        self.words_html = {lang: {k: keep_whole(esc(trust_breaks(whole_names(tail(bind(v, lang), short=k in ENDS), self.names[lang]), k)))
-                                  for k, v in self.words[lang].items()} for lang in LANGS}
+        # running text holds a long name by its last words (hold_names): the wing's name and a person's from names.json
+        spelt = sorted({n for e in self.wings.values() for n in e.get("name", {}).values() if len(n.split()) >= 3}, key=len, reverse=True)
+        self.held = {lang: self.names[lang] + [n for n in spelt + person_names(lang) if held(n)[0] and n not in self.names[lang]]
+                     for lang in LANGS}
+        self.words_html = {lang: {k: keep_whole(esc(trust_breaks(
+            hold_names(tail(bind(v, lang), short=k in ENDS), self.held[lang]) if re.search(RUNNING_KEY, k) else
+            whole_names(tail(bind(v, lang), short=k in ENDS), self.names[lang]), k))) for k, v in self.words[lang].items()} for lang in LANGS}
         if not SOURCE_LINK:
             for lang in LANGS:
                 shown = self.words_html[lang]
@@ -544,7 +560,7 @@ class Site:
         if not re.search(NOT_WORDS, path):
             text = bind(text, lang)
             if re.search(PROSE, path):
-                text = whole_names(tail(text), self.names[lang])
+                text = hold_names(tail(text), self.held[lang])
         return esc(text)
 
     def count(self, slug, name):

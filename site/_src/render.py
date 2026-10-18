@@ -5,7 +5,7 @@ Standard library only."""
 import re
 
 import ask
-from buildlib import ARROW, LAYERS_SCRIPT, NBSP, bind, esc, number, sign_whole
+from buildlib import ARROW, LAYERS_SCRIPT, NBSP, bind, esc, hold_names, number, sign_whole
 
 # The sizes of the plates on the wall after the largest, in the order they hang: never a row of equal boxes.
 HANG = "msmssmssms"
@@ -562,7 +562,7 @@ def stop_number(c, slug, s):
 def stop_section(c, slug):
     """How a visit works, on the museum's page: one stop of the newest open wing, with its three layers of text."""
     w, s = c.w, c.wd[slug]["stop"]
-    name = esc(c.wings[slug]["name"][c.lang])
+    name = esc(hold_names(c.wings[slug]["name"][c.lang], c.held))
     p3 = w["visit.p3"].replace("{name}", name)
     if "{stop}" in p3:
         p3 = bind(p3.replace("{stop}", str(stop_number(c, slug, s))))
@@ -579,7 +579,7 @@ def closing(c):
     and beside the words a picture of that wing where its data gives one (landing.close). The first screen has
     already said which wing is open and what it shows, so the close does not say it again."""
     w, reg = c.w, c.wings[c.newest]
-    words = (w["closing.p"].replace("{name}", esc(reg["name"][c.lang]).replace(" ", NBSP)).replace("{place}", esc(reg["shows"]["place"][c.lang]))
+    words = (w["closing.p"].replace("{name}", esc(hold_names(reg["name"][c.lang], [reg["name"][c.lang]]))).replace("{place}", esc(reg["shows"]["place"][c.lang]))
              .replace("{day}", esc(reg["shows"]["day"][c.lang])))
     go = (f'<div class="close__go" data-door-watch>{door(c, esc(reg["door"][c.lang]), w["hero.enter"], "end")}'
           f'<p class="hero__note">{w["hero.entry_note"]}</p></div>')
@@ -844,7 +844,7 @@ def more(c, slug):
     entry = lambda href, name, line: (
         f'<li><a class="more" href="{href}"><span>{name}</span>{ARROW}</a><span class="topics__line">{line}</span></li>')
     # a topic's line may give a size, which never breaks
-    items = [entry(topic_href(c, slug, t), esc(t["name"][lang]), esc(bind(t["line"][lang], lang))) for t in topics_here(c, slug)]
+    items = [entry(topic_href(c, slug, t), esc(t["name"][lang]), esc(hold_names(bind(t["line"][lang], lang), c.held))) for t in topics_here(c, slug)]
     if c.wd[slug].get("holders"):
         items.append(entry("#originals", w["wingpage.more_originals"], w["wingpage.more_originals_line"]))
     items.append(entry(c.to(c.addr("what")), w["nav.what"], w["wingpage.more_what_line"]))

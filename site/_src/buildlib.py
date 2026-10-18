@@ -152,6 +152,49 @@ def tail(text, least=12, most=26, short=False):
     return text if n == 1 else " ".join(words[:-n]) + " " + NBSP.join(words[-n:])
 
 
+# Words that never end a line on their own inside a name: particles, titles, the word for "son of". An initial ("C.")
+# keeps to the next word as well.
+BINDERS = {"d'", "d’", "da", "dal", "dall'", "dalla", "das", "de", "de'", "de’", "degli", "dei", "del", "della", "delle",
+           "der", "des", "di", "do", "dos", "du", "la", "le", "van", "von", "bin", "ibn", "al", "el", "sir", "ser", "fra",
+           "don", "san", "santa", "saint", "st.", "да", "де", "ди"}
+
+
+def binds(word):
+    return word.lower() in BINDERS or bool(re.fullmatch(r"\w\.", word))
+
+
+def held(name):
+    """A long name split for running text: (lead, hold). The hold is the last two words, and as many more as the
+    words before them that may not end a line (Lorenzo / de' Medici, Sir J. C. Robinson stays whole). A name of
+    fewer than three words is held whole."""
+    words = name.split(" ")
+    n = 2
+    while n < len(words) and binds(words[-n - 1]):
+        n += 1
+    if len(words) < 3 or n >= len(words):
+        return "", name
+    return bound_lead(" ".join(words[:-n])), " ".join(words[-n:])
+
+
+def bound_lead(lead):
+    """The words before a name's hold: a particle there keeps to the word after it (Badr bin Abdullah)."""
+    words = lead.split(" ")
+    return "".join(w + (NBSP if binds(w) and i < len(words) - 1 else " ") for i, w in enumerate(words)).rstrip(" ")
+
+
+def hold_names(text, names):
+    """Running text: a name of three or more words keeps only its last words together (held), so a narrow line may
+    wrap before them. A shorter name stays whole."""
+    for name in names:
+        lead, hold = held(name)
+        if lead:
+            find = r"(?<!\w)" + re.escape(name).replace("'", "['’]").replace(r"\ ", " ") + r"(?=s?(?!\w))"
+            text = re.sub(find, lambda m: lead + " " + m.group(0)[len(name) - len(hold):].replace(" ", NBSP), text)
+        elif name in text:
+            text = text.replace(name, name.replace(" ", NBSP))
+    return text
+
+
 def whole_names(text, names):
     """A name of several words never breaks inside a sentence."""
     for name in names:

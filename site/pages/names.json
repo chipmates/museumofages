@@ -234,7 +234,7 @@
     { "text": "Bison alticornis", "whole": true, "taxon": true },
     { "text": "Torosaurus", "taxon": true },
     { "text": "Nanotyrannus", "taxon": true },
-    { "text": "John Bell Hatcher", "whole": true },
+    { "text": "John Bell Hatcher", "person": true },
     { "text": "Othniel Marsh", "whole": true },
     { "text": "Hell Creek Formation", "lang": "en" },
     { "text": "North Carolina Museum of Natural Sciences", "lang": "en" },

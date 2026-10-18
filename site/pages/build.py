@@ -197,6 +197,10 @@ BLOCK_TYPES = ("places", "group", "feature", "notes", "faq", "sources", "close",
 # The blocks of a page of questions: each its own section, the answer first (question), and a short list of what people
 # say with what good sources say of it (myths).
 ASK_TYPES = ("question", "myths")
+# The keys of a block or an entry that hold running text (Names.mark, run): a heading, a title, a label, a button
+# and a door's words keep a long name whole.
+RUNNING = {"intro", "after", "text", "does", "a", "known", "claim", "p", "line", "what", "lead", "answer", "caption",
+           "shows", "contact", "licence", "hint", "note"}
 # The wing's timeline of dated rows (relative to the repository): a life page's dated lines name its rows.
 TIMELINE = "museum/src/wings/{wing}/line/data/timeline.json"
 # A dated line's mark as the site's bead (base.css): the timeline's three marks take the colour and the fill of the
@@ -307,9 +311,11 @@ class Names:
         ordered = sorted(self.table, key=len, reverse=True)
         self.find = re.compile(r"(?<!\w)(%s)('s|’s|s)?(?!\w)" % "|".join(re.escape(n).replace("'", "['’]") for n in ordered))
 
-    def mark(self, text, wrap_wing=False, split=False):
+    def mark(self, text, wrap_wing=False, split=False, run=False):
         """The sentence as HTML. wrap_wing lets the wing's name wrap where it is too long for a line. split sets a page's
-        long words (breaks) with their one break point, for running text that hyphenates; elsewhere they stay whole."""
+        long words (breaks) with their one break point, for running text that hyphenates; elsewhere they stay whole.
+        run marks running text (a paragraph, a list's entry, a table's cell, the answer, a caption): there a person's
+        name of three or more words holds only its last words together (buildlib.held), so a narrow line wraps before them."""
         out, last = [], 0
         for m in self.find.finditer(text):
             entry, ending = self.table[straight(m.group(1))], m.group(2) or ""
@@ -317,7 +323,12 @@ class Names:
             last = m.end()
             if entry.get("wing"):
                 kind = "nh" if wrap_wing else "nw"
-                out.append(f'<span class="{kind}">{esc(m.group(1) + ending)}</span>')
+                lead, hold = LIB.held(m.group(1)) if run and kind == "nw" else ("", m.group(1))
+                if lead:
+                    # the hold by no-break spaces, not nowrap: WebKit runs a nowrap name and the mark after it past the column
+                    out.append(f'<span class="nh">{esc(lead)}</span> ')
+                    kind, hold = "nh", hold.replace(" ", LIB.NBSP)
+                out.append(f'<span class="{kind}">{esc(hold + ending)}</span>')
                 continue
             if entry.get("split"):
                 # two halves never hyphenated, joined by a soft hyphen: the word breaks there or nowhere; display text
@@ -337,12 +348,15 @@ class Names:
             # a scientific name (taxon) is set in italics, as biology writes it
             tag = "i" if entry.get("taxon") else "span"
             code = entry.get("lang")
-            hold = entry.get("hold")
+            # a names file's own hold wins, in every kind of text; running text holds a person's long name by its last words
+            hold = entry.get("hold") or (LIB.held(name)[1] if run and entry.get("person") and kind == "nw nh" else None)
             if hold and kind == "nw nh" and name.endswith(" " + hold):
                 # a language's names file may hold only a long name's last words together, so a narrow line wraps before them
                 lead = f' lang="{code}"' if code and code != self.lang else ""
-                out.append(f'<{tag} class="nh"{lead}>{esc(name[:-len(hold) - 1])}</{tag}> ')
+                out.append(f'<{tag} class="nh"{lead}>{esc(LIB.bound_lead(name[:-len(hold) - 1]))}</{tag}> ')
                 name = hold
+                if run:
+                    kind, name = "nh", name.replace(" ", LIB.NBSP)
             if code and code != self.lang:
                 # the ending is the page's own language and stays outside
                 out.append(f'<{tag} class="{kind}" lang="{code}">{esc(name)}</{tag}>{esc(ending)}')
@@ -1551,14 +1565,18 @@ def render(page, lang, data, shared, out_root):
     chrome = site_chrome(shared["chrome_pages"], lang, root, twins, door)
     hub = data["page"].get("hub")
     taxa = data["page"].get("taxa", ())
-    names = Names(shared["names"] + shared["own_names"][lang], wing["name"][lang], lang, join=data["page"].get("join_names", False),
+    # another open wing's name in a sentence is a person's name as well: running text holds it by its last words
+    others = [{"text": n, "person": True} for n in shared["open_names"] if n != wing["name"][lang]]
+    names = Names(shared["names"] + shared["own_names"][lang] + others, wing["name"][lang], lang, join=data["page"].get("join_names", False),
                   breaks=data["page"].get("breaks", ()), taxa=taxa)
     rich = names.mark
+    # running text that does not hyphenate (the answer, a caption, a row's value): a long name holds its last words
+    running = lambda text: names.mark(text, run=True)
     # running text that hyphenates (a paragraph, a list's point, a note's text, an answer to a question)
-    prose = lambda text: names.mark(text, split=True)
+    prose = lambda text: names.mark(text, split=True, run=True)
     # the list of pages is new on every page that carries one, so its names are held by no-break spaces; the page's
     # long words keep their one break point there too, since a list's line hyphenates like running text
-    joined = Names(shared["names"] + shared["own_names"][lang], wing["name"][lang], lang, join=True,
+    joined = Names(shared["names"] + shared["own_names"][lang] + others, wing["name"][lang], lang, join=True,
                    breaks=data["page"].get("breaks", ()), taxa=taxa).mark
 
     def site_page(name, code=lang):
@@ -1592,8 +1610,10 @@ def render(page, lang, data, shared, out_root):
     base["wing.name"] = rich(wing["name"][lang])
 
     def words(entry):
-        """Every sentence of a block or an entry as HTML. An id is an attribute and stays plain."""
-        return {k: esc(v) if k in ("id", "type") else rich(v) for k, v in entry.items() if isinstance(v, str)}
+        """Every sentence of a block or an entry as HTML. An id is an attribute and stays plain. A heading, a title or a
+        label keeps a long name whole, running text (RUNNING) holds its last words."""
+        return {k: esc(v) if k in ("id", "type") else running(v) if k in RUNNING else rich(v) for k, v in entry.items()
+                if isinstance(v, str)}
 
     def page_href(name, english=False):
         """Another page of this build in the page's language, from here. A way on (english) to a page written in
@@ -1686,7 +1706,7 @@ def render(page, lang, data, shared, out_root):
         out = fill(parts["scale_fig"], {"html.picture": pics.picture(fig["pic"], esc(fig["alt"]), first=first),
                                         "html.above": marks_html(fig, True), "html.below": marks_html(fig, False),
                                         "html.person": person_html(fig["pic"]), "tag": rich(labels[fig["tag"]]),
-                                        "what": rich(fig["what"]), "html.totable": to_table(),
+                                        "what": running(fig["what"]), "html.totable": to_table(),
                                         # a source line under the caption, with its links: a credit the picture owes
                                         "html.note": f'<span class="label__src">{linked(fig["note"])}</span>' if fig.get("note") else "",
                                         "html.key": key_html(fig)})
@@ -1731,7 +1751,7 @@ def render(page, lang, data, shared, out_root):
         return fill(parts["scale_marks"], {"side": "over" if over else "under", "html.items": items}) if items else ""
 
     def rows_html(rows):
-        return "\n".join(fill(parts["row"], {"label": rich(labels[r["k"]]), "v": rich(r["v"])}) for r in rows)
+        return "\n".join(fill(parts["row"], {"label": rich(labels[r["k"]]), "v": running(r["v"])}) for r in rows)
 
     def term_rows(rows):
         return "\n".join(fill(parts["term_row"], {"term": rich(r["term"]), "text": prose(r["text"])}) for r in rows)
@@ -1761,7 +1781,7 @@ def render(page, lang, data, shared, out_root):
                            "attr.plate": " sp-plate--whole" if pic.get("shape") == "whole" else ""})
             return fill(parts["figure_titled"], values)
         values.update({"html.picture": pics.picture(pic["pic"], esc(pic["alt"])),
-                       "tag": rich(labels[pic["tag"]]), "what": rich(pic.get("what") or labels["plate_what"]),
+                       "tag": rich(labels[pic["tag"]]), "what": running(pic.get("what") or labels["plate_what"]),
                        "html.title": f'<span class="label__title">{rich(pic["title"])}</span>' if pic.get("title") else "",
                        "html.src": f'<span class="label__src">{src}</span>' if src else "",
                        # a painting shown whole, never cut to the plate's frame
@@ -1771,9 +1791,9 @@ def render(page, lang, data, shared, out_root):
     def label_src(pic):
         """A picture's source line: its own (src), or one the site already says (src_from)."""
         if pic.get("src"):
-            return source_line(pic["src"], data["page"]["wing"], lang, rich)
+            return source_line(pic["src"], data["page"]["wing"], lang, running)
         if pic.get("src_from"):
-            return source_line(borrowed_line(pic["src_from"], lang, wing.get("_data", data["page"]["wing"])), data["page"]["wing"], lang, rich)
+            return source_line(borrowed_line(pic["src_from"], lang, wing.get("_data", data["page"]["wing"])), data["page"]["wing"], lang, running)
         return ""
 
     def place(text):
@@ -1785,7 +1805,7 @@ def render(page, lang, data, shared, out_root):
         out = []
         for row in rows:
             values = dict(base)
-            values.update({"term": rich(row["term"]), "text": rich(row["text"]), "html.pic": figure(row.get("pic"))})
+            values.update({"term": rich(row["term"]), "text": running(row["text"]), "html.pic": figure(row.get("pic"))})
             out.append(fill(parts["stand"], values))
         return "\n".join(out)
 
@@ -1794,7 +1814,7 @@ def render(page, lang, data, shared, out_root):
         for entry in entries:
             links = "\n".join(fill(parts["link"], {"href": esc(link["href"]), "label": rich(link["label"])})
                               for link in entry["links"])
-            out.append(fill(parts["edition"], {"name": rich(entry["name"]), "text": rich(entry["text"]),
+            out.append(fill(parts["edition"], {"name": rich(entry["name"]), "text": running(entry["text"]),
                                                "html.links": links}))
         return "\n".join(out)
 
@@ -1805,7 +1825,7 @@ def render(page, lang, data, shared, out_root):
             return ""
         values = dict(base)
         values.update({"html.picture": "".join(pics.picture(name, esc(alt)) for name, alt in shown),
-                       "tag": rich(labels["tag_still"]), "html.src": source_line(item["src"], data["page"]["wing"], lang, rich)})
+                       "tag": rich(labels["tag_still"]), "html.src": source_line(item["src"], data["page"]["wing"], lang, running)})
         return fill(parts["plate"], values)
 
     def period_html(block, period):
@@ -1821,9 +1841,9 @@ def render(page, lang, data, shared, out_root):
                 "shape": esc(item["shape"]),
                 "html.figure": plate_html(item),
                 # the class word, as the facts give it, stands apart at the head of its sentence
-                "html.who": f'<span class="pt-class pt-class--{it["class"] or "field"}">{rich(word)}</span>{rich(who[len(word):])}',
+                "html.who": f'<span class="pt-class pt-class--{it["class"] or "field"}">{rich(word)}</span>{running(who[len(word):])}',
                 # a tightened entry says it all in two paragraphs
-                "html.worth": f'\n    <p>{rich(item["worth_knowing"])}</p>' if item.get("worth_knowing") else "",
+                "html.worth": f'\n    <p>{running(item["worth_knowing"])}</p>' if item.get("worth_knowing") else "",
                 "href.go": esc(CHART.door_href(door, it["stop"])),
                 # the door's line names the work, and a line begins with a capital in every language
                 "go": rich(go[:1].upper() + go[1:]),
@@ -1832,7 +1852,7 @@ def render(page, lang, data, shared, out_root):
             items.append(fill(parts["work"], values))
         values = dict(base)
         values.update(words(period))
-        values["html.p"] = f'<p class="pt-period__p">{rich(period["p"])}</p>' if period.get("p") else ""
+        values["html.p"] = f'<p class="pt-period__p">{running(period["p"])}</p>' if period.get("p") else ""
         values["html.items"] = "\n".join(items)
         return fill(parts["period"], values)
 
@@ -1872,7 +1892,7 @@ def render(page, lang, data, shared, out_root):
         elif kind == "feature":
             values.update({
                 "html.place": place(block["place"]),
-                "html.paras": "\n".join(fill(parts["para"], {"text": rich(p)}) for p in block["paras"]),
+                "html.paras": "\n".join(fill(parts["para"], {"text": running(p)}) for p in block["paras"]),
                 "html.rows": rows_html(block["rows"]),
                 "html.pic": figure(block.get("pic")),
             })
@@ -1887,9 +1907,9 @@ def render(page, lang, data, shared, out_root):
                 for i in block["items"])
         elif kind == "sources":
             values["html.holders"] = "\n".join(
-                fill(parts["holder"], {"name": rich(h["name"]), "place": rich(h["place"]), "text": rich(h["text"])})
+                fill(parts["holder"], {"name": rich(h["name"]), "place": rich(h["place"]), "text": running(h["text"])})
                 for h in block.get("holders", []))
-            values["html.notes"] = "\n".join(fill(parts["note"], {"text": rich(n)}) for n in block.get("notes", []))
+            values["html.notes"] = "\n".join(fill(parts["note"], {"text": running(n)}) for n in block.get("notes", []))
             values["html.editions"] = editions(block.get("editions", []))
             values["html.checked"] = fill(parts["checked"], {"html.text": checked_html(data["page"]["checked"], lang)})
         elif kind == "close":
@@ -1969,7 +1989,7 @@ def render(page, lang, data, shared, out_root):
                 f'      <tr role="row"{OUR_ROW if OUR_RE.match(row["cells"][0]) else ""}><th scope="row" role="rowheader">{row_name(rich(row["cells"][0]))}</th>'
                 # a cell's words in one span: its figure, where it opens with one, in a span of its own
                 + "".join(f'<td role="cell" data-k="{esc(block["cols"][i])}"{SURE_CELL if i == sure else ""}{"" if c else none}>'
-                          f'{cell_html(c, i == sure, rich) if c else ""}</td>'
+                          f'{cell_html(c, i == sure, running) if c else ""}</td>'
                           for i, c in enumerate(row["cells"][1:], 1)) + "</tr>"
                 for row in block["rows"])
         elif kind == "pages":
@@ -1984,7 +2004,7 @@ def render(page, lang, data, shared, out_root):
                 line = re.sub(rf"(\d) (?={MORE_UNITS}\b)", "\\1" + LIB.NBSP, item.get("line") or topic["line"][lang])
                 # on a topic page each neighbour is a step under the list's own heading; the wing's list is the page
                 items.append(fill(parts["page_item"], {"tag": "h2" if hub else "h3", "href": page_href(item["page"]), "name": joined(topic["name"][lang]),
-                                                       "line": joined(LIB.bind(line, lang), split=True),
+                                                       "line": joined(LIB.bind(line, lang), split=True, run=True),
                                                        "html.pic": pics.picture(item["pic"], esc(item["alt"])) if item.get("pic") else ""}))
             values["html.items"] = "\n".join(items)
             # on a topic page the list names its neighbours after the page's own sections; the wing's list is the page
@@ -2085,7 +2105,7 @@ def render(page, lang, data, shared, out_root):
                                 "caption": chart["still_caption"], "description": chart["still_caption"]}])
         frame_html = fill(parts["frame:chart"], {"html.figure": drawing,
                                                  "title": rich(frame["title"]), "tag": rich(labels[frame["tag"]]),
-                                                 "what": rich(frame["what"]), "html.note": ""})
+                                                 "what": running(frame["what"]), "html.note": ""})
         preload, focus = "", ""
     elif "drawing" in data["top"]:
         dr, facts = data["top"]["drawing"], shared["facts"][page]
@@ -2101,9 +2121,9 @@ def render(page, lang, data, shared, out_root):
         frame_html = fill(parts["frame:chart"], {"html.figure": CHART.wall_figure(h_cm, w_cm, person_cm, {"person": labels["person"], "alt": dr["alt"],
                                                                                     "arch": dr.get("arch_label")},
                                                                                    LIB.number, lang, dr.get("inside")),
-                                                 "title": rich(dr["title"]), "tag": rich(labels[dr["tag"]]), "what": rich(what),
+                                                 "title": rich(dr["title"]), "tag": rich(labels[dr["tag"]]), "what": running(what),
                                                  # what the drawing reconstructs stands under it at every width
-                                                 "html.note": f'<span class="sp-frame__note">{rich(dr["note"])}</span>' if dr.get("note") else ""})
+                                                 "html.note": f'<span class="sp-frame__note">{running(dr["note"])}</span>' if dr.get("note") else ""})
         preload, focus = "", ""
     elif "tally" in data["top"]:
         ta = data["top"]["tally"]
@@ -2127,10 +2147,10 @@ def render(page, lang, data, shared, out_root):
         guess = data["top"].get("guess")
         frame_html = fill(parts["frame:scale"], {
             "html.picture": pics.picture(sc["pic"], esc(sc["alt"]), first=True), "html.person": person_html(sc["pic"]),
-            "tag": rich(labels[sc["tag"]]), "what": rich(sc["what"]), "note": linked(sc["note"]),
+            "tag": rich(labels[sc["tag"]]), "what": running(sc["what"]), "note": linked(sc["note"], running),
             "html.above": marks_html(sc, True), "html.bars": bars_html(sc) + marks_html(sc, False), "html.totable": to_table(),
             "html.close": scale_fig(sc["close"]) if sc.get("close") else "",
-            "html.guess": fill(parts["guess"], {**{k: rich(guess[k]) for k in ("h", "q", "button", "a")},
+            "html.guess": fill(parts["guess"], {**{k: running(guess[k]) if k == "a" else rich(guess[k]) for k in ("h", "q", "button", "a")},
                                                 "button_open": rich(guess.get("button_open") or guess["button"])}) if guess else ""})
         preload, focus = pics.preload(sc["pic"]), ""
     elif "facts" in data["top"]:
@@ -2146,7 +2166,7 @@ def render(page, lang, data, shared, out_root):
                 jump.append(fill(parts["jump_row"], {"id": esc(b["id"]), "label": toc_words(b["nav"]), "html.items": "".join(
                     fill(parts["jump_item"], {"id": esc(e["id"]), "nav": toc_words(e["nav"])}) for e in entries if e.get("nav"))}))
         # a table's cell is display text: a long word of page.breaks is only kept whole there
-        rows = "\n".join(fill(parts["facts_row"], {"term": rich(r["term"]), "text": linked(r["text"])}) for r in fa["rows"])
+        rows = "\n".join(fill(parts["facts_row"], {"term": rich(r["term"]), "text": linked(r["text"], running)}) for r in fa["rows"])
         after_html = "\n" + (fill(parts["jump"], {"html.rows": "\n".join(jump)}) if jump else "") + fill(
             parts["frame:facts"], {"id": esc(fa["id"]), "h": rich(fa["h"]), "html.rows": rows})
         frame_html, preload, focus = "", "", ""
@@ -2185,7 +2205,7 @@ def render(page, lang, data, shared, out_root):
         src = label_src(frame)
         frame_html = fill(parts["frame:picture"], {"html.picture": pics.picture(frame["pic"], esc(frame["alt"]), first=True),
                                                    "title": rich(frame["title"]), "tag": rich(labels[frame["tag"]]),
-                                                   "what": rich(frame["what"]),
+                                                   "what": running(frame["what"]),
                                                    "html.src": f'<span class="label__src sp-frame__src">{src}</span>' if src else ""})
         preload, focus = pics.preload(frame["pic"]), focus_rule(frame)
         if data["page"].get("primary"):
@@ -2232,11 +2252,11 @@ def render(page, lang, data, shared, out_root):
         "attr.top": (" sp-top--long" if answer_length(data["top"]) > LONG_ANSWER else "") + (" sc-top" if making(wing) else "")
                     + (" sp-top--side" + ("" if data["top"].get("plate") else " sp-top--list") if side else ""),
         "top.h1": names.mark(h1, wrap_wing=run > KEEP_SMALL),
-        "top.answer": lead_and_rest(data["top"]["answer"], lang, linked),
+        "top.answer": lead_and_rest(data["top"]["answer"], lang, lambda para: linked(para, running)),
         # an answer in two paragraphs: the second, with its links, under the first
-        "html.answer_more": f'<p class="sp-answer">{linked(data["top"]["answer_more"])}</p>' if data["top"].get("answer_more") else "",
+        "html.answer_more": f'<p class="sp-answer">{linked(data["top"]["answer_more"], running)}</p>' if data["top"].get("answer_more") else "",
         # the one place a sizes page says in which order its sizes stand
-        "html.order": f'<p class="sz-order">{rich(data["top"]["order"])}</p>' if data["top"].get("order") else "",
+        "html.order": f'<p class="sz-order">{running(data["top"]["order"])}</p>' if data["top"].get("order") else "",
         "html.frame": frame_html,
         "html.after": after_html,
         # the crumbs: the museum, the wing's page, this page; a wing's own list of pages is the wing's page
@@ -2253,7 +2273,7 @@ def render(page, lang, data, shared, out_root):
     })
     if making(wing):
         out = data["top"]["out"]
-        values["html.way"] = fill(parts["way:out"], dict(values, text=rich(out["text"]), link=rich(out["link"])))
+        values["html.way"] = fill(parts["way:out"], dict(values, text=running(out["text"]), link=rich(out["link"])))
     else:
         values.update({"top.door.text": rich(data["top"]["door"]["text"]), "top.door.note": rich(data["top"]["door"]["note"]),
                        "top.door.leads": rich(data["top"]["door"]["leads"])})
@@ -3112,6 +3132,10 @@ def build_pages(out_dir, site_src=SITE_SRC, site_built=SITE_BUILT, pages=PAGES, 
         "langs": {p: info[p]["langs"] for p in pages}, "works": {p: info[p]["works"] for p in pages if info[p]["works"]},
         "stills": stills, "facts": {p: info[p]["facts"] for p in pages},
         "names": names, "own_names": own_names,
+        # the open wings' long names, which a page of another wing may name in a sentence
+        # (in every language's spelling: a source line may quote a title in another language)
+        "open_names": sorted({n for e in wings.values() if e.get("state") == "open" for n in e.get("name", {}).values()
+                              if len(n.split()) >= 3}, key=len, reverse=True),
         "css": css_min(*[site["css"] / f"{n}.css" for n in CSS_BEFORE], *[HERE / "css" / f"{n}.css" for n in OWN_CSS],
                        *[site["css"] / f"{n}.css" for n in CSS_AFTER]),
         "css_chart": css_min(*[site["css"] / f"{n}.css" for n in CSS_BEFORE], *[HERE / "css" / f"{n}.css" for n in OWN_CSS + CHART_CSS],
