@@ -26,8 +26,8 @@
    "person": "93.07% 63.27%",
    "person_from": 600,
    "marks": {
-    "outline": "1.81% 97.95%",
-    "spinosaurus": "15.85% 88.7%",
+    "outline": "2.09% 97.64%",
+    "spinosaurus": "16.06% 88.46%",
     "person": "91.34% 94.79%"
    },
    "behind": [
@@ -51,12 +51,12 @@
     2400
    ],
    "sizes": "(min-width: 1280px) 690px, (min-width: 960px) 54vw, (min-width: 600px) calc(100vw - 64px), calc(100vw - 40px)",
-   "person": "49.14% 63.27%",
+   "person": "55.4% 63.27%",
    "person_from": 960,
    "marks": {
-    "spinosaurus": "1.11% 45.17%",
-    "person": "48.1% 50.18%",
-    "t-rex": "48.65% 98.83%"
+    "spinosaurus": "1.11% 51.78%",
+    "person": "54.49% 56.31%",
+    "t-rex": "54.97% 98.97%"
    },
    "behind": [
     "t-rex"
@@ -68,10 +68,10 @@
      1600
     ],
     "below": 600,
-    "person": "9.43% 33.8%",
+    "person": "7.84% 30.24%",
     "marks": {
-     "t-rex": "8.57% 97.9%",
-     "spinosaurus": "8.57% 87.01%"
+     "t-rex": "7.12% 81.32%",
+     "spinosaurus": "7.12% 92.59%"
     }
    }
   },
