@@ -187,8 +187,8 @@
   "scale": {
    "pic": "side",
    "tag": "tag_made",
-   "what": "Nuestro Ankylosaurus junto a una persona de 1,70 m, a la misma escala: 6,4 m del pico a la maza. Sus hombros llegan más o menos a la barbilla de la persona, y su cuerpo es casi tan ancho como alta es la persona.",
-   "alt": "Nuestro Ankylosaurus de lado, 6,4 m del pico a la maza, con lo alto del lomo a 1,7 m sobre la cadera: un cuerpo bajo y ancho, cubierto de filas de placas de hueso, una cabeza ancha y baja, cuatro patas cortas y una cola recta que termina en una maza plana. A su lado, una persona gris de 1,70 m, tan alta como lo alto del lomo.",
+   "what": "Comparación de tamaño: nuestro Ankylosaurus junto a una persona de 1,70 m, a la misma escala, 6,4 m del pico a la maza. Sus hombros llegan más o menos a la barbilla de la persona, y su cuerpo es casi tan ancho como alta es la persona.",
+   "alt": "Comparación de tamaño: nuestro Ankylosaurus de lado, 6,4 m del pico a la maza, con lo alto del lomo a 1,7 m sobre la cadera: un cuerpo bajo y ancho, cubierto de filas de placas de hueso, una cabeza ancha y baja, cuatro patas cortas y una cola recta que termina en una maza plana. A su lado, una persona gris de 1,70 m, tan alta como lo alto del lomo.",
    "note": [
     "Nuestra propia reconstrucción, construida en código a partir de medidas publicadas y renderizada con nuestro propio motor gráfico. No son fotografías. ",
     "La coraza de nuestro Ankylosaurus sigue el plano de ",
@@ -418,7 +418,7 @@
    "h": "Ankylosaurus vs. T. rex",
    "paras": [
     "El Ankylosaurus y el T. rex vivieron en la misma época y en la misma región, y sus huesos están en las mismas rocas. Pero ningún fósil conocido muestra un encuentro entre los dos: ningún mordisco de T. rex en un hueso de Ankylosaurus, ninguna herida de maza en un T. rex. Las rocas no dicen quién ganaría.",
-    "Lo que sí se puede decir: un T. rex grande era más o menos el doble de pesado, unas 8 a 9 toneladas frente a unas 4,8 del animal en el que se basa nuestro modelo. El Ankylosaurus llevaba placas y podía blandir una maza, aunque sus parientes probablemente usaban las suyas sobre todo unos contra otros.",
+    "Lo que sí se puede decir: un T. rex grande era más o menos el doble de pesado, unas 8 a 9 toneladas frente a unas 4,8 del Ankylosaurus más pequeño que se conoce, en el que se basa nuestro modelo. El Ankylosaurus llevaba placas y podía blandir una maza, aunque sus parientes probablemente usaban las suyas sobre todo unos contra otros.",
     "En nuestra imagen, el punto más alto de nuestro Ankylosaurus queda por debajo de la rodilla de nuestro T. rex."
    ],
    "scale": {
@@ -429,7 +429,7 @@
     "marks": [
      {
       "span": "t-rex",
-      "text": "Nuestro T. rex, según SUE, unos 11,4 m"
+      "text": "Nuestro T. rex, según SUE, unos 11 m"
      },
      {
       "span": "ankylosaurus",
@@ -546,7 +546,7 @@
    "items": [
     {
      "q": "¿Cuánto pesaba el Ankylosaurus?",
-     "a": "Unas 4,8 toneladas para el animal en el que se basa el nuestro, calculadas a partir de los huesos de sus patas. El margen del propio estudio va de 3,6 a 6 toneladas."
+     "a": "Unas 4,8 toneladas para el Ankylosaurus más pequeño que se conoce, en el que se basa el nuestro, calculadas a partir de los huesos de sus patas. El margen del propio estudio va de 3,6 a 6 toneladas."
     },
     {
      "q": "¿Qué significa el nombre Ankylosaurus?",
@@ -664,7 +664,7 @@
    "h": "Usar nuestras imágenes",
    "paras": [
     [
-     "Las cuatro imágenes del Ankylosaurus de esta página, la vista de lado, la maza, el esqueleto y la fila con nuestro T. rex y nuestro Stegosaurus, son obra nuestra, con licencia ",
+     "Las cinco imágenes del Ankylosaurus de esta página, la vista de lado, la maza, el esqueleto, la fila con nuestro T. rex y nuestro Stegosaurus y la comparación de tamaño de abajo en tres formatos, son obra nuestra, con licencia ",
      {
       "text": "CC BY-SA 4.0",
       "href": "https://creativecommons.org/licenses/by-sa/4.0/deed.es"
@@ -673,19 +673,18 @@
     ]
    ],
    "shapes": {
-    "caption": "Comparación de tamaño del Ankylosaurus: nuestro Ankylosaurus, 6,4 m del pico a la maza, junto a una persona de 1,70 m, a la misma escala.",
+    "caption": "Comparación de tamaño del Ankylosaurus, el animal entero: nuestro Ankylosaurus, de 6,4 m del pico a la maza, junto a una persona de 1,70 m, a la misma escala.",
     "lead": "Para presentaciones y publicaciones, esta comparación de tamaño está en tres formatos, todos con la misma licencia.",
     "alts": {
-     "size_1x1": "Comparación de tamaño del Ankylosaurus: la parte delantera de nuestro Ankylosaurus, con el lomo acorazado, la cabeza y las patas delanteras, y una persona gris de 1,70 m frente a su cabeza.",
-     "size_4x3": "El Ankylosaurus junto a una persona, en comparación de tamaño: nuestro Ankylosaurus bajo y ancho, cubierto de filas de placas de hueso, y una persona gris de 1,70 m ante su cabeza ancha.",
-     "size_16x9": "Comparación de tamaño del Ankylosaurus, el animal entero de lado: nuestro Ankylosaurus, 6,4 m del pico a la maza, y una persona gris de 1,70 m delante de él."
+     "size_1x1": "Comparación de tamaño del Ankylosaurus, el cuerpo: nuestro Ankylosaurus sin casi toda la cola, con el lomo acorazado, la cabeza ancha y las cuatro patas cortas, y una persona gris de 1,70 m delante de la cabeza.",
+     "size_4x3": "El Ankylosaurus junto a una persona, en comparación de tamaño: nuestro Ankylosaurus entero, bajo y ancho, cubierto de filas de placas óseas, con la larga cola que acaba en una maza, y una persona gris de 1,70 m delante de la cabeza.",
+     "size_16x9": "Comparación de tamaño del Ankylosaurus, el animal entero de lado: nuestro Ankylosaurus, de 6,4 m del pico a la maza, y una persona gris de 1,70 m delante de él."
     },
     "links": {
      "size_1x1": "Cuadrada (1:1)",
      "size_4x3": "Diapositiva (4:3)",
      "size_16x9": "Panorámica (16:9)"
-    },
-    "draft": true
+    }
    }
   }
  ]

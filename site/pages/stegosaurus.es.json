@@ -196,8 +196,8 @@
   "scale": {
    "pic": "side",
    "tag": "tag_made",
-   "what": "Nuestro Stegosaurus, hecho según Sophie, junto a una persona de 1,70 m, a la misma escala: 5,6 m del pico a la punta de la cola, poco más de tres personas tumbadas una detrás de otra, con su cabeza más o menos a la altura del hombro de la persona.",
-   "alt": "Nuestro Stegosaurus de lado, 5,6 m del pico a la punta de la cola, con lo alto del lomo a 1,9 m sobre la cadera: una cabeza pequeña y baja, dos filas de placas altas a lo largo del lomo arqueado, dos de sus cuatro púas de la cola y las patas delanteras más cortas que las traseras. A su lado, una persona gris de 1,70 m con la cabeza por debajo de lo alto del lomo.",
+   "what": "Comparación de tamaño: nuestro Stegosaurus, hecho según Sophie, junto a una persona de 1,70 m, a la misma escala. Mide 5,6 m del pico a la punta de la cola, poco más de tres personas tumbadas una detrás de otra, y lleva la cabeza más o menos a la altura del hombro de la persona.",
+   "alt": "Comparación de tamaño: nuestro Stegosaurus de lado, 5,6 m del pico a la punta de la cola, con lo alto del lomo a 1,9 m sobre la cadera: una cabeza pequeña y baja, dos filas de placas altas a lo largo del lomo arqueado, dos de sus cuatro púas de la cola y las patas delanteras más cortas que las traseras. A su lado, una persona gris de 1,70 m con la cabeza por debajo de lo alto del lomo.",
    "note": "Nuestra propia reconstrucción, construida en código a partir de medidas publicadas y renderizada con nuestro propio motor gráfico. No son fotografías.",
    "marks": [
     {
@@ -295,7 +295,7 @@
     {
      "cells": [
       "T. rex, SUE",
-      "unos 12 m, el montaje, el nuestro 11,4 m",
+      "unos 12 m, el montaje, el nuestro, en su postura, unos 11 m",
       "a la altura de la cadera unos 4 m, según el museo",
       "unas 8 a 9 t, según un hueso y tres modelos",
       "como en nuestra página del T. rex"
@@ -415,13 +415,13 @@
    "h": "Stegosaurus vs. T. rex y Triceratops",
    "paras": [
     "El Stegosaurus nunca coincidió con el T. rex ni con el Triceratops. Entre el último Stegosaurus y los primeros T. rex o Triceratops pasaron unos 80 millones de años, como mínimo unos 75. Es más que los 66 millones de años entre el último T. rex y nosotros, así que el T. rex está más cerca de nosotros en el tiempo que del Stegosaurus. Las películas que los muestran juntos son ficción. Entre los vecinos del Stegosaurus estaban el Diplodocus, de cuello largo, y el carnívoro Allosaurus.",
-    "En la imagen, nuestro T. rex es el doble de largo que nuestro Stegosaurus, y la punta de la placa más alta del Stegosaurus llega más o menos a la altura del lomo de nuestro Triceratops."
+    "En la imagen, nuestro T. rex es casi el doble de largo que nuestro Stegosaurus, y la punta de la placa más alta del Stegosaurus llega más o menos a la altura del lomo de nuestro Triceratops."
    ],
    "scale": {
     "pic": "vs",
     "tag": "tag_made",
     "what": "Nuestros Stegosaurus, Triceratops y T. rex a la misma escala, mirando hacia el mismo lado, solo para comparar el tamaño. Entre el Stegosaurus y los otros dos pasaron unos 80 millones de años: los tres nunca coincidieron.",
-    "alt": "Tres dinosaurios en tres filas, todos de lado y mirando hacia el mismo lado, cada uno junto a la persona gris: un Stegosaurus con placas y púas en la cola, un Triceratops con cuernos y gola, y un T. rex sobre dos patas, el doble de largo que el Stegosaurus.",
+    "alt": "Tres dinosaurios en tres filas, todos de lado y mirando hacia el mismo lado, cada uno junto a la persona gris: un Stegosaurus con placas y púas en la cola, un Triceratops con cuernos y gola, y un T. rex sobre dos patas, casi el doble de largo que el Stegosaurus.",
     "note": [
      "La silueta de nuestro Triceratops sigue el modelo del cuerpo de ",
      {
@@ -446,7 +446,7 @@
      },
      {
       "span": "t-rex",
-      "text": "Nuestro T. rex, según SUE, unos 11,4 m"
+      "text": "Nuestro T. rex, según SUE, unos 11 m"
      },
      {
       "span": "person",
@@ -535,6 +535,10 @@
     {
      "q": "¿Cuánto pesaba el Stegosaurus?",
      "a": "Según un modelo 3D del esqueleto, Sophie, un animal joven, llega a unas 1,6 toneladas (de 1,1 a 2,3), el peso de un rinoceronte pequeño, dice el museo de Londres. Las fórmulas basadas en los huesos de las patas dan más, porque un animal joven tiene las patas gruesas para su peso. Para los Stegosaurus más grandes, ningún estudio de los que leímos da un peso. Los libros de divulgación sobre dinosaurios dan a un Stegosaurus stenops adulto unos 6,5 m y 3,5 toneladas, y a los más grandes hasta unas 5 toneladas. Son estimaciones de libros para animales adultos, mientras que las 1,6 toneladas de Sophie salen del modelo de uno joven."
+    },
+    {
+     "q": "¿Cuánto medía de alto un Stegosaurus?",
+     "a": "No se ha publicado la altura de un Stegosaurus vivo, y el montaje de Sophie en Londres mide 2,9 m en su punto más alto, con la cola levantada. El nuestro, hecho según Sophie, mide 1,9 m en lo alto del lomo, sobre la cadera, y la punta de su placa más alta llega a 2,5 m, muy por encima de la cabeza de la persona."
     },
     {
      "q": "¿Qué significa el nombre Stegosaurus?",
@@ -684,7 +688,7 @@
    "h": "Usar nuestras imágenes",
    "paras": [
     [
-     "Las cuatro imágenes del Stegosaurus de esta página, la vista de lado, las placas y las púas, el esqueleto y la de los tres con nuestro Triceratops y nuestro T. rex, son obra nuestra, con licencia ",
+     "Las cinco imágenes del Stegosaurus de esta página, la vista de lado, las placas y las púas, el esqueleto, la de los tres con nuestro Triceratops y nuestro T. rex y la comparación de tamaño de abajo en tres formatos, son obra nuestra, con licencia ",
      {
       "text": "CC BY-SA 4.0",
       "href": "https://creativecommons.org/licenses/by-sa/4.0/deed.es"
@@ -693,19 +697,18 @@
     ]
    ],
    "shapes": {
-    "caption": "Comparación de tamaño del Stegosaurus: nuestro Stegosaurus, 5,6 m del pico a la punta de la cola, junto a una persona de 1,70 m, a la misma escala.",
+    "caption": "Comparación de tamaño del Stegosaurus, el animal entero: nuestro Stegosaurus, de 5,6 m del pico a la punta de la cola, junto a una persona de 1,70 m, a la misma escala.",
     "lead": "Para presentaciones y publicaciones, esta comparación de tamaño está en tres formatos, todos con la misma licencia.",
     "alts": {
-     "size_1x1": "Comparación de tamaño del Stegosaurus: nuestro Stegosaurus entero de lado, con placas altas a lo largo del lomo, y una persona gris de 1,70 m frente a su cabeza.",
-     "size_4x3": "El Stegosaurus junto a una persona, en comparación de tamaño: nuestro Stegosaurus con sus dos filas de placas y las púas de la cola, y una persona gris de 1,70 m ante su cabeza pequeña.",
-     "size_16x9": "Comparación de tamaño del Stegosaurus, el animal entero de lado: nuestro Stegosaurus, 5,6 m del pico a la punta de la cola, y una persona gris de 1,70 m delante de él."
+     "size_1x1": "Comparación de tamaño del Stegosaurus: nuestro Stegosaurus entero, de lado, con placas altas sobre el lomo arqueado, y una persona gris de 1,70 m delante de la cabeza.",
+     "size_4x3": "El Stegosaurus junto a una persona, en comparación de tamaño: nuestro Stegosaurus con sus dos filas de placas y las púas al final de la cola, y una persona gris de 1,70 m delante de su pequeña cabeza.",
+     "size_16x9": "Comparación de tamaño del Stegosaurus, el animal entero de lado: nuestro Stegosaurus, de 5,6 m del pico a la punta de la cola, y una persona gris de 1,70 m delante de él."
     },
     "links": {
      "size_1x1": "Cuadrada (1:1)",
      "size_4x3": "Diapositiva (4:3)",
      "size_16x9": "Panorámica (16:9)"
-    },
-    "draft": true
+    }
    }
   }
  ]

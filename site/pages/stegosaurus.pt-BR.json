@@ -175,7 +175,7 @@
   "title": "Estegossauro: tamanho de até cerca de 9 m | Museum of Ages",
   "description": "Qual era o tamanho do estegossauro? Os maiores, cerca de 9 m. Sophie, em Londres, um animal jovem, tem cerca de 5,6 m e, por um modelo, cerca de 1,6 t.",
   "og_title": "Estegossauro: tamanho de até cerca de 9 m",
-  "og_image_alt": "O nosso estegossauro de lado, 5,6 m do bico à ponta da cauda, com o alto do dorso a 1,9 m acima do quadril: uma cabeça pequena e baixa, duas fileiras de placas altas ao longo do dorso arqueado, dois dos quatro espinhos da cauda e as patas da frente mais curtas que as de trás. Ao lado, uma pessoa cinza de 1,70 m com a cabeça abaixo do alto do dorso."
+  "og_image_alt": "Nosso estegossauro de lado, 5,6 m do bico à ponta da cauda, com o alto do dorso a 1,9 m acima do quadril: uma cabeça pequena e baixa, duas fileiras de placas altas ao longo do dorso arqueado, dois dos quatro espinhos da cauda e as patas da frente mais curtas que as de trás. Ao lado, uma pessoa cinza de 1,70 m com a cabeça abaixo do alto do dorso."
  },
  "labels": {
   "crumbs": "Você está aqui",
@@ -185,7 +185,7 @@
   "tag_made": "Feito para esta página",
   "tag_built": "Reconstrução",
   "person": "1,70 m",
-  "to_table": "Os números numa tabela",
+  "to_table": "Os números em uma tabela",
   "no_figure": "sem número com fonte",
   "og_answer": "Os maiores tinham cerca de 9 m de comprimento, e Sophie, em Londres, tem cerca de 5,6 m"
  },
@@ -196,17 +196,17 @@
   "scale": {
    "pic": "side",
    "tag": "tag_made",
-   "what": "O nosso estegossauro, feito a partir de Sophie, ao lado de uma pessoa de 1,70 m, na mesma escala: 5,6 m do bico à ponta da cauda, pouco mais de três pessoas deitadas uma atrás da outra, com a cabeça dele mais ou menos na altura do ombro da pessoa.",
-   "alt": "O nosso estegossauro de lado, 5,6 m do bico à ponta da cauda, com o alto do dorso a 1,9 m acima do quadril: uma cabeça pequena e baixa, duas fileiras de placas altas ao longo do dorso arqueado, dois dos quatro espinhos da cauda e as patas da frente mais curtas que as de trás. Ao lado, uma pessoa cinza de 1,70 m com a cabeça abaixo do alto do dorso.",
-   "note": "A nossa própria reconstrução, construída em código a partir de medidas publicadas e renderizada com o nosso próprio motor gráfico. Não são fotografias.",
+   "what": "Comparação de tamanho: nosso estegossauro, feito a partir de Sophie, ao lado de uma pessoa de 1,70 m, na mesma escala. Ele mede 5,6 m do bico à ponta da cauda, pouco mais de três pessoas deitadas uma atrás da outra, e leva a cabeça mais ou menos na altura do ombro da pessoa.",
+   "alt": "Comparação de tamanho: o nosso estegossauro de lado, 5,6 m do bico à ponta da cauda, com o alto do dorso a 1,9 m acima do quadril: uma cabeça pequena e baixa, duas fileiras de placas altas ao longo do dorso arqueado, dois dos quatro espinhos da cauda e as patas da frente mais curtas que as de trás. Ao lado, uma pessoa cinza de 1,70 m com a cabeça abaixo do alto do dorso.",
+   "note": "Nossa própria reconstrução, construída em código a partir de medidas publicadas e renderizada com nosso próprio motor gráfico. Não são fotografias.",
    "marks": [
     {
      "span": "stegosaurus",
-     "text": "O nosso estegossauro, 5,6 m do bico à ponta da cauda"
+     "text": "Nosso estegossauro, 5,6 m do bico à ponta da cauda"
     },
     {
      "span": "hips",
-     "text": "O alto do dorso acima do quadril, 1,9 m, o nosso modelo"
+     "text": "O alto do dorso acima do quadril, 1,9 m, nosso modelo"
     },
     {
      "span": "plate",
@@ -220,16 +220,16 @@
    "close": {
     "pic": "close",
     "tag": "tag_made",
-    "what": "Mais de perto, na mesma escala: os nossos espinhos, de até 0,44 m com a bainha córnea, chegam ao peito da pessoa, e a ponta da placa mais alta fica cerca de 0,8 m acima da cabeça da pessoa. Vistos de lado, os espinhos parecem mais levantados do que são: esta vista esconde que eles apontam para os lados.",
+    "what": "Mais de perto, na mesma escala: nossos espinhos, de até 0,44 m com a bainha córnea, chegam ao peito da pessoa, e a ponta da placa mais alta fica cerca de 0,8 m acima da cabeça da pessoa. Vistos de lado, os espinhos parecem mais levantados do que são: esta vista esconde que eles apontam para os lados.",
     "alt": "O dorso e a cauda do estegossauro mais de perto: placas altas acima do quadril, que se erguem acima da cabeça da pessoa cinza, e dois dos quatro espinhos da cauda, na altura do peito da pessoa.",
     "marks": [
      {
       "span": "plate",
-      "text": "A ponta da placa mais alta, 2,5 m, o nosso modelo"
+      "text": "A ponta da placa mais alta, 2,5 m, nosso modelo"
      },
      {
       "span": "spikes",
-      "text": "As pontas dos espinhos, de 1,3 a 1,4 m de altura, o nosso modelo"
+      "text": "As pontas dos espinhos, de 1,3 a 1,4 m de altura, nosso modelo"
      },
      {
       "span": "person",
@@ -242,7 +242,7 @@
    "h": "Tente adivinhar",
    "q": "Como o esqueleto de Sophie foi descoberto?",
    "button": "Ver a resposta",
-   "a": "Por acaso, em 2003. Um homem que manobrava um trator de esteira num rancho de Wyoming, tarde da noite e no meio de uma ventania, raspou uma encosta, e na manhã seguinte havia ossos à mostra no barranco.",
+   "a": "Por acaso, em 2003. Um homem que manobrava um trator de esteira em um rancho de Wyoming, tarde da noite e no meio de uma ventania, raspou uma encosta, e na manhã seguinte havia ossos à mostra no barranco.",
    "button_open": "Esconder a resposta"
   },
   "out": {
@@ -285,7 +285,7 @@
     },
     {
      "cells": [
-      "O nosso modelo, feito a partir de Sophie",
+      "Nosso modelo, feito a partir de Sophie",
       "5,6 m em linha reta, do bico à ponta da cauda",
       "o alto do dorso acima do quadril 1,9 m, a ponta da placa mais alta 2,5 m, o alto da cabeça cerca de 1,3 m, tudo do nosso modelo",
       "",
@@ -295,7 +295,7 @@
     {
      "cells": [
       "T. rex, SUE",
-      "cerca de 12 m, a montagem, o nosso 11,4 m",
+      "cerca de 12 m, a montagem, o nosso, na pose dele, cerca de 11 m",
       "até o quadril cerca de 4 m, segundo o museu",
       "cerca de 8 a 9 t, por um osso e três modelos",
       "como na nossa página do T. rex"
@@ -304,7 +304,7 @@
     {
      "cells": [
       "Triceratops",
-      "adultos grandes cerca de 7 a 8 m, o nosso 6,9 m",
+      "adultos grandes cerca de 7 a 8 m, nosso 6,9 m",
       "não medida",
       "o esqueleto de Washington cerca de 6,5 a 8,5 t, por dois modelos de computador",
       "como na nossa página do Triceratops"
@@ -340,7 +340,7 @@
    "paras": [
     "Os quatro espinhos da cauda de Sophie, em dois pares, têm de 35 a 38 cm de osso, todos sem a ponta, e a bainha córnea os deixava um pouco mais longos. Eles apontavam para os lados e para trás, quase na horizontal, como sugere outro esqueleto com os ossos da cauda ainda no lugar, embora a montagem de Sophie os mostre levantados.",
     "Muitos sites dão de 60 a 90 cm por espinho. Esse número vem de um estudo de 1998 sobre outro esqueleto, do Colorado, e Sophie era um animal jovem.",
-    "Muito provavelmente eram armas. De 51 espinhos de animais do grupo do estegossauro da Formação Morrison, na América do Norte, cerca de um em cada dez tem a ponta quebrada, e alguns cicatrizaram. Uma vértebra da cauda de um Allosaurus tem até um buraco onde a ponta de um espinho se encaixa. Em inglês, os espinhos da cauda costumam ser chamados de “thagomizer”: o apelido surgiu como uma piada num cartum de The Far Side do início da década de 1980, e os cientistas passaram a usá-lo de modo informal."
+    "Muito provavelmente eram armas. De 51 espinhos de animais do grupo do estegossauro da Formação Morrison, na América do Norte, cerca de um em cada dez tem a ponta quebrada, e alguns cicatrizaram. Uma vértebra da cauda de um Allosaurus tem até um buraco onde a ponta de um espinho se encaixa. Em inglês, os espinhos da cauda costumam ser chamados de “thagomizer”: o apelido surgiu como uma piada em um cartum de The Far Side do início da década de 1980, e os cientistas passaram a usá-lo de modo informal."
    ]
   },
   {
@@ -350,7 +350,7 @@
    "h": "O cérebro do estegossauro e o “segundo cérebro”",
    "paras": [
     "Para um corpo tão grande, o estegossauro tinha um cérebro muito pequeno. Por muito tempo se comparou o espaço para o cérebro dentro do crânio a uma noz, e o museu de Londres o compara a uma ameixa, mas o cérebro de um réptil não preenche esse espaço, então o cérebro era ainda menor.",
-    "Muitos sites dão um número em gramas para o cérebro dele. Esses números se baseiam num molde do espaço do cérebro, que o cérebro não preenchia, então só podem ser um limite superior.",
+    "Muitos sites dão um número em gramas para o cérebro dele. Esses números se baseiam em um molde do espaço do cérebro, que o cérebro não preenchia, então só podem ser um limite superior.",
     "Nas décadas de 1880 e 1890, Othniel Marsh encontrou na coluna, acima do quadril, um espaço pelo menos vinte vezes maior que o do cérebro, e o chamou, com cautela, de caixa cerebral traseira. Não havia nenhum “segundo cérebro”. Como nas aves, esse espaço muito provavelmente guardava uma massa macia de tecido rico em glicogênio, um açúcar de reserva. Para que ele servia não está estabelecido."
    ]
   },
@@ -360,15 +360,15 @@
    "nav": "Sophie, o esqueleto de estegossauro de Londres",
    "h": "Sophie, o esqueleto de estegossauro de Londres",
    "paras": [
-    "O esqueleto de Sophie, de um Stegosaurus stenops, foi encontrado em 2003 num rancho perto de Shell, em Wyoming, escavado em 2004 e preparado no Sauriermuseum Aathal, na Suíça. Cientistas do Natural History Museum de Londres viram uma réplica dele numa feira em Tucson, em 2012, e o museu comprou o esqueleto com a ajuda de doadores. O museu o expõe desde dezembro de 2014. O nome homenageia a filha de um doador: ninguém sabe se Sophie era macho ou fêmea.",
+    "O esqueleto de Sophie, de um Stegosaurus stenops, foi encontrado em 2003 em um rancho perto de Shell, em Wyoming, escavado em 2004 e preparado no Sauriermuseum Aathal, na Suíça. Cientistas do Natural History Museum de Londres viram uma réplica dele em uma feira em Tucson, em 2012, e o museu comprou o esqueleto com a ajuda de doadores. O museu o expõe desde dezembro de 2014. O nome homenageia a filha de um doador: ninguém sabe se Sophie era macho ou fêmea.",
     "Com cerca de 360 ossos, Sophie é um dos esqueletos de estegossauro mais completos que se conhecem. Faltam o braço esquerdo, as duas mãos, a maior parte da base da cauda e alguns ossos menores, além da pele e das plaquinhas de osso da garganta. O crânio exposto é uma réplica. Ninguém sabe como Sophie morreu: os ossos não mostram nenhuma mordida nem ferimento, e os cientistas que os descreveram consideram a fome ou uma doença as causas mais prováveis.",
     "A imagem do esqueleto mostra quais dos nossos ossos são de Sophie."
    ],
    "scale": {
     "pic": "skeleton",
     "tag": "tag_built",
-    "what": "O nosso estegossauro como esqueleto, na escala da vista de lado, com os ossos de Sophie e os reconstruídos em dois tons.",
-    "alt": "O nosso estegossauro como esqueleto, visto de lado, ao lado da pessoa cinza: a maior parte dos ossos no tom dos de Sophie, e no tom dos reconstruídos os pés da frente, a maior parte dos dedos, um osso do ombro, várias costelas do pescoço, uma placa, a primeira parte da cauda e a maior parte dos ossos pequenos sob a cauda.",
+    "what": "Nosso estegossauro como esqueleto, na escala da vista de lado, com os ossos de Sophie e os reconstruídos em dois tons.",
+    "alt": "Nosso estegossauro como esqueleto, visto de lado, ao lado da pessoa cinza: a maior parte dos ossos no tom dos de Sophie, e no tom dos reconstruídos os pés da frente, a maior parte dos dedos, um osso do ombro, várias costelas do pescoço, uma placa, a primeira parte da cauda e a maior parte dos ossos pequenos sob a cauda.",
     "key": [
      {
       "swatch": "own",
@@ -415,13 +415,13 @@
    "h": "Estegossauro vs. T. rex e Triceratops",
    "paras": [
     "O estegossauro nunca coincidiu com o T. rex nem com o Triceratops. Entre o último estegossauro e os primeiros T. rex ou Triceratops se passaram cerca de 80 milhões de anos, no mínimo cerca de 75. É mais do que os 66 milhões de anos entre o último T. rex e nós, então o T. rex está mais perto de nós no tempo do que do estegossauro. Os filmes que mostram esses animais juntos são ficção. Entre os vizinhos do estegossauro estavam o Diplodocus, de pescoço longo, e o carnívoro Allosaurus.",
-    "Na imagem, o nosso T. rex tem o dobro do comprimento do nosso estegossauro, e a ponta da placa mais alta do estegossauro fica mais ou menos na altura do dorso do nosso Triceratops."
+    "Na imagem, nosso T. rex tem quase o dobro do comprimento do nosso estegossauro, e a ponta da placa mais alta do estegossauro fica mais ou menos na altura do dorso do nosso Triceratops."
    ],
    "scale": {
     "pic": "vs",
     "tag": "tag_made",
-    "what": "O nosso estegossauro, o nosso Triceratops e o nosso T. rex na mesma escala, virados para o mesmo lado, só para comparar o tamanho. Entre o estegossauro e os outros dois se passaram cerca de 80 milhões de anos: os três nunca coincidiram.",
-    "alt": "Três dinossauros em três fileiras, todos de lado e virados para o mesmo lado, cada um ao lado da pessoa cinza: um estegossauro com placas e espinhos na cauda, um Triceratops com chifres e babado, e um T. rex sobre duas patas, com o dobro do comprimento do estegossauro.",
+    "what": "Nosso estegossauro, nosso Triceratops e nosso T. rex na mesma escala, virados para o mesmo lado, só para comparar o tamanho. Entre o estegossauro e os outros dois se passaram cerca de 80 milhões de anos: os três nunca coincidiram.",
+    "alt": "Três dinossauros em três fileiras, todos de lado e virados para o mesmo lado, cada um ao lado da pessoa cinza: um estegossauro com placas e espinhos na cauda, um Triceratops com chifres e babado, e um T. rex sobre duas patas, com quase o dobro do comprimento do estegossauro.",
     "note": [
      "A silhueta do nosso Triceratops segue o modelo do corpo de ",
      {
@@ -438,15 +438,15 @@
     "marks": [
      {
       "span": "stegosaurus",
-      "text": "O nosso estegossauro, 5,6 m"
+      "text": "Nosso estegossauro, 5,6 m"
      },
      {
       "span": "triceratops",
-      "text": "O nosso Triceratops, 6,9 m"
+      "text": "Nosso Triceratops, 6,9 m"
      },
      {
       "span": "t-rex",
-      "text": "O nosso T. rex, a partir de SUE, cerca de 11,4 m"
+      "text": "Nosso T. rex, a partir de SUE, cerca de 11 m"
      },
      {
       "span": "person",
@@ -485,7 +485,7 @@
     },
     {
      "term": "3,75 toneladas e mais de 7",
-     "text": "Os dois vêm de métodos baseados nos ossos das patas, que para Sophie deram números altos demais: até 3,75 toneladas, um número que o mesmo estudo rejeitou. As mais de 7 toneladas são de um animal muito grande do grupo do estegossauro, sem o gênero informado, num resumo de congresso de 2025. Os autores dizem que o número só vale se os métodos deles estiverem certos."
+     "text": "Os dois vêm de métodos baseados nos ossos das patas, que para Sophie deram números altos demais: até 3,75 toneladas, um número que o mesmo estudo rejeitou. As mais de 7 toneladas são de um animal muito grande do grupo do estegossauro, sem o gênero informado, em um resumo de congresso de 2025. Os autores dizem que o número só vale se os métodos deles estiverem certos."
     },
     {
      "term": "“Dois cérebros”",
@@ -537,6 +537,10 @@
      "a": "Por um modelo 3D do esqueleto, Sophie, um animal jovem, chega a cerca de 1,6 toneladas (de 1,1 a 2,3), o peso de um rinoceronte pequeno, diz o museu de Londres. Fórmulas baseadas nos ossos das patas dão mais, porque um animal jovem tem patas grossas para o próprio peso. Para os maiores estegossauros, nenhum estudo que lemos dá um peso. Livros de divulgação sobre dinossauros dão a um Stegosaurus stenops adulto cerca de 6,5 m e 3,5 toneladas, e aos maiores até cerca de 5 toneladas. São estimativas de livros para animais adultos, enquanto as 1,6 toneladas de Sophie vêm do modelo de um jovem."
     },
     {
+     "q": "Qual era a altura do estegossauro?",
+     "a": "Nenhuma altura de um estegossauro vivo foi publicada, e a montagem de Sophie em Londres tem 2,9 m no ponto mais alto, com a cauda erguida. Nosso estegossauro, feito a partir de Sophie, tem 1,9 m no alto do dorso, acima do quadril, e a ponta da placa mais alta chega a 2,5 m, bem acima da cabeça da pessoa."
+    },
+    {
      "q": "O que significa o nome Stegosaurus?",
      "a": "“Lagarto telhado”, do grego, pela primeira ideia de Othniel Marsh, em 1877: ele achava que as placas, encontradas soltas, tinham ficado deitadas sobre o dorso como as telhas de um telhado."
     }
@@ -566,26 +570,26 @@
     {
      "page": "biggest-dinosaurs",
      "pic": "dinosaurs",
-     "alt": "Os nossos sete dinossauros em fila, vistos de lado, na mesma escala. O mais longo, o nosso Argentinosaurus, tem cerca de 30,6 m. Dois pescoços longos se erguem bem acima dos outros, e uma pessoa cinza de 1,70 m parece minúscula perto deles.",
+     "alt": "Nossos sete dinossauros em fila, vistos de lado, na mesma escala. O mais longo, nosso Argentinosaurus, tem cerca de 30,6 m. Dois pescoços longos se erguem bem acima dos outros, e uma pessoa cinza de 1,70 m parece minúscula perto deles.",
      "line": "Sete dos nossos ao lado de uma pessoa, na mesma escala: o mais pesado, muito provavelmente um titanossauro da Patagônia, o mais alto, provavelmente o Sauroposeidon, e por que ainda não se sabe qual foi o mais longo."
     },
     {
      "page": "triceratops",
      "pic": "tricera",
-     "alt": "O nosso Triceratops de lado, 6,9 m do bico à cauda e 2,5 m de altura acima do quadril: um babado largo atrás da cabeça, dois chifres longos acima dos olhos, um curto acima do nariz, quatro patas. Ao lado, uma pessoa cinza de 1,70 m que chega a cerca de dois terços da altura do dorso.",
-     "line": "Um Triceratops adulto grande tinha cerca de 7 a 8 m de comprimento, e dois modelos dão cerca de 6,5 a 8,5 toneladas para o esqueleto de Washington, uma montagem de cerca de dez animais. O nosso Triceratops está ao lado de uma pessoa na mesma escala, com o crânio ao lado da pessoa, o Torosaurus e o que os ossos dizem sobre o T. rex."
+     "alt": "Nosso Triceratops de lado, 6,9 m do bico à cauda e 2,5 m de altura acima do quadril: um babado largo atrás da cabeça, dois chifres longos acima dos olhos, um curto acima do nariz, quatro patas. Ao lado, uma pessoa cinza de 1,70 m que chega a cerca de dois terços da altura do dorso.",
+     "line": "Um Triceratops adulto grande tinha cerca de 7 a 8 m de comprimento, e dois modelos dão cerca de 6,5 a 8,5 toneladas para o esqueleto de Washington, uma montagem de cerca de dez animais. Nosso Triceratops está ao lado de uma pessoa na mesma escala, com o crânio ao lado da pessoa, o Torosaurus e o que os ossos dizem sobre o T. rex."
     },
     {
      "page": "t-rex",
      "pic": "trex",
-     "alt": "O nosso T. rex de lado, sobre duas patas, com cerca de 11 m de comprimento nesta pose, de boca fechada e cabeça erguida, ao lado de uma pessoa cinza de 1,70 m que fica bem abaixo do quadril dele.",
-     "line": "Um T. rex adulto grande tinha cerca de 12 m de comprimento, cerca de 4 m até o quadril e mais ou menos 8 a 9 toneladas. O nosso T. rex foi feito com as medidas de SUE e está ao lado de uma pessoa na mesma escala, com uma lista do que foi encontrado de SUE."
+     "alt": "Nosso T. rex de lado, sobre duas patas, com cerca de 11 m de comprimento nesta pose, de boca fechada e cabeça erguida, ao lado de uma pessoa cinza de 1,70 m que fica bem abaixo do quadril dele.",
+     "line": "Um T. rex adulto grande tinha cerca de 12 m de comprimento, cerca de 4 m até o quadril e mais ou menos 8 a 9 toneladas. Nosso T. rex foi feito com as medidas de SUE e está ao lado de uma pessoa na mesma escala, com uma lista do que foi encontrado de SUE."
     },
     {
      "page": "ankylosaurus",
      "pic": "anky",
-     "alt": "O nosso anquilossauro de lado, 6,4 m do bico à clava, com o alto do dorso a 1,7 m acima do quadril: um corpo baixo e largo, coberto de fileiras de placas de osso, uma cabeça larga mantida baixa, quatro patas curtas e uma cauda reta que termina numa clava achatada. Ao lado, uma pessoa cinza de 1,70 m, da altura do alto do dorso.",
-     "line": "O anquilossauro tinha cerca de 6 a 8 m de comprimento, segundo um estudo de 2017. O animal da única clava de cauda achada chega a cerca de 4,8 toneladas, calculadas a partir dos ossos das patas. O nosso anquilossauro foi feito no tamanho desse animal e fica ao lado de uma pessoa na mesma escala, com a clava, a couraça, o que foi encontrado e o que os ossos dizem sobre o T. rex."
+     "alt": "Nosso anquilossauro de lado, 6,4 m do bico à clava, com o alto do dorso a 1,7 m acima do quadril: um corpo baixo e largo, coberto de fileiras de placas de osso, uma cabeça larga mantida baixa, quatro patas curtas e uma cauda reta que termina em uma clava achatada. Ao lado, uma pessoa cinza de 1,70 m, da altura do alto do dorso.",
+     "line": "O anquilossauro tinha cerca de 6 a 8 m de comprimento, segundo um estudo de 2017. O animal da única clava de cauda achada chega a cerca de 4,8 toneladas, calculadas a partir dos ossos das patas. Nosso anquilossauro foi feito no tamanho desse animal e fica ao lado de uma pessoa na mesma escala, com a clava, a couraça, o que foi encontrado e o que os ossos dizem sobre o T. rex."
     }
    ]
   },
@@ -629,7 +633,7 @@
      "text": "Mallison, 2011, Palaeontologia Electronica, com os estudos que ele cita sobre a direção dos espinhos, as pontas quebradas e o osso do Allosaurus."
     },
     {
-     "text": "Galton, 2010, sobre as reconstruções antigas, como a nossa revisão científica o cita."
+     "text": "Galton, 2010, sobre as reconstruções antigas, como nossa revisão científica o cita."
     },
     {
      "text": "Marsh, 1896, The Dinosaurs of North America, sobre o cérebro e o espaço no quadril."
@@ -646,7 +650,7 @@
      "href": "https://doi.org/10.1002/cne.25597"
     },
     {
-     "text": "Senter, 2010, como a nossa revisão científica o cita, e Senter, 2026, Alcheringa, o resumo do estudo, sobre os pés da frente.",
+     "text": "Senter, 2010, como nossa revisão científica o cita, e Senter, 2026, Alcheringa, o resumo do estudo, sobre os pés da frente.",
      "href": "https://doi.org/10.1080/03115518.2026.2697810"
     },
     {
@@ -684,28 +688,27 @@
    "h": "Usar nossas imagens",
    "paras": [
     [
-     "As quatro imagens do estegossauro nesta página, a vista de lado, as placas e os espinhos, o esqueleto e a dos três com o nosso Triceratops e o nosso T. rex, são obra nossa, com licença ",
+     "As cinco imagens do estegossauro nesta página, a vista de lado, as placas e os espinhos, o esqueleto, a dos três com nosso Triceratops e nosso T. rex e a comparação de tamanho abaixo em três formatos, são obra nossa, com licença ",
      {
       "text": "CC BY-SA 4.0",
       "href": "https://creativecommons.org/licenses/by-sa/4.0/deed.pt-br"
      },
-     ". Crédito: Museum of Ages, e, para a imagem dos três, também “Triceratops outline after Dempsey 2025 (CC BY 4.0)”. Elas mostram uma reconstrução, construída em código e renderizada com o nosso próprio motor gráfico, não fotografias. As imagens das outras páginas que aparecem aqui dão o crédito nessas páginas."
+     ". Crédito: Museum of Ages, e, para a imagem dos três, também “Triceratops outline after Dempsey 2025 (CC BY 4.0)”. Elas mostram uma reconstrução, construída em código e renderizada com nosso próprio motor gráfico, não fotografias. As imagens das outras páginas que aparecem aqui dão o crédito nessas páginas."
     ]
    ],
    "shapes": {
-    "caption": "Comparação de tamanho do estegossauro: nosso estegossauro, 5,6 m do bico à ponta da cauda, ao lado de uma pessoa de 1,70 m, na mesma escala.",
+    "caption": "Comparação de tamanho do estegossauro, o animal inteiro: nosso estegossauro, com 5,6 m do bico à ponta da cauda, ao lado de uma pessoa de 1,70 m, na mesma escala.",
     "lead": "Para slides e publicações, esta comparação de tamanho vem em três formatos, todos com a mesma licença.",
     "alts": {
-     "size_1x1": "Comparação de tamanho do estegossauro: nosso estegossauro inteiro de lado, com placas altas ao longo do dorso, e uma pessoa cinza de 1,70 m diante da cabeça.",
-     "size_4x3": "O estegossauro ao lado de uma pessoa, em comparação de tamanho: nosso estegossauro com as duas fileiras de placas e os espinhos da cauda, e uma pessoa cinza de 1,70 m diante da cabeça pequena.",
-     "size_16x9": "Comparação de tamanho do estegossauro, o animal inteiro de lado: nosso estegossauro, 5,6 m do bico à ponta da cauda, e uma pessoa cinza de 1,70 m na frente dele."
+     "size_1x1": "Comparação de tamanho do estegossauro: nosso estegossauro inteiro, de lado, com placas altas no dorso arqueado, e uma pessoa cinza de 1,70 m na frente da cabeça.",
+     "size_4x3": "O estegossauro ao lado de uma pessoa, em comparação de tamanho: nosso estegossauro com as duas fileiras de placas e os espinhos na ponta da cauda, e uma pessoa cinza de 1,70 m na frente da cabeça pequena.",
+     "size_16x9": "Comparação de tamanho do estegossauro, o animal inteiro de lado: nosso estegossauro, com 5,6 m do bico à ponta da cauda, e uma pessoa cinza de 1,70 m na frente dele."
     },
     "links": {
      "size_1x1": "Quadrada (1:1)",
      "size_4x3": "Slide (4:3)",
      "size_16x9": "Panorâmica (16:9)"
-    },
-    "draft": true
+    }
    }
   }
  ]

@@ -106,9 +106,9 @@
  },
  "meta": {
   "title": "Mamute-lanoso: tamanho, 2,7 a 3,3 m de alto | Museum of Ages",
-  "description": "Qual era o tamanho do mamute-lanoso? Um macho da Sibéria tinha cerca de 2,7 a 2,9 m no ombro e cerca de 4 a 5 t. O nosso é um macho real, em escala.",
+  "description": "Qual era o tamanho do mamute-lanoso? Um macho da Sibéria tinha cerca de 2,7 a 2,9 m no ombro e cerca de 4 a 5 t. Nosso mamute reconstrói um macho real.",
   "og_title": "Mamute-lanoso: tamanho de cerca de 2,7 a 3,3 m de alto",
-  "og_image_alt": "O nosso mamute-lanoso, o macho de Berezovka, de lado, com pelagem marrom-escura: a cabeça alta e abaulada, o dorso inclinado, duas presas curvas e uma marca na altura do ombro, a 271 cm por uma reconstrução. A pessoa cinza ao lado, de 1,70 m, fica mais baixa que as pontas das presas."
+  "og_image_alt": "Nosso mamute-lanoso, o macho de Berezovka, de lado, com pelagem marrom-escura: a cabeça alta e abaulada, o dorso inclinado, duas presas curvas e uma marca na altura do ombro, a 271 cm por uma reconstrução. A pessoa cinza ao lado, de 1,70 m, fica mais baixa que as pontas das presas."
  },
  "labels": {
   "crumbs": "Você está aqui",
@@ -118,23 +118,23 @@
   "tag_made": "Feito para esta página",
   "tag_built": "Reconstrução",
   "person": "1,70 m",
-  "to_table": "Os números numa tabela",
+  "to_table": "Os números em uma tabela",
   "no_figure": "sem número com fonte",
   "og_answer": "Um macho da Sibéria tinha cerca de 2,7 a 2,9 m no ombro"
  },
  "top": {
   "h1": "Qual era o tamanho do mamute-lanoso?",
-  "answer": "Um macho adulto de mamute-lanoso, ou mamute-lanudo, da Sibéria tinha cerca de 2,7 a 2,9 m de altura no ombro e pesava cerca de 4 a 5 toneladas. Os machos maiores da Europa chegavam a cerca de 3 a 3,3 m e a cerca de 5 a 7 toneladas. O nosso é um único macho siberiano real, encontrado congelado em 1900: 2,71 m no ombro e cerca de 4,2 toneladas, reconstruídos a partir dos ossos dele. Ao lado da pessoa de 1,70 m, o ombro dele fica mais ou menos na altura de uma pessoa e meia.",
+  "answer": "Um macho adulto de mamute-lanoso, ou mamute-lanudo, da Sibéria tinha cerca de 2,7 a 2,9 m de altura no ombro e pesava cerca de 4 a 5 toneladas. Os machos maiores da Europa chegavam a cerca de 3 a 3,3 m e a cerca de 5 a 7 toneladas. Nosso mamute foi feito a partir de um único macho siberiano real, encontrado congelado em 1900: 2,71 m no ombro e cerca de 4,2 toneladas, reconstruídos a partir dos ossos dele. Ao lado da pessoa de 1,70 m, o ombro dele fica mais ou menos na altura de uma pessoa e meia.",
   "scale": {
    "pic": "side",
    "tag": "tag_made",
-   "what": "O nosso mamute-lanoso ao lado de uma pessoa de 1,70 m, na mesma escala. Ele foi feito com o tamanho e a estrutura de um único animal real, o macho de Berezovka, encontrado congelado em 1900 no nordeste da Sibéria. A marca no ombro é a altura dele em vida, 271 cm, reconstruída a partir dos ossos dele. Quando morreu, ele tinha só uma presa, a esquerda. A direita tinha caído muito antes, e os caçadores que o encontraram cortaram a esquerda e a venderam. O nosso tem as duas: a direita é o reflexo da esquerda, uma reconstrução.",
-   "alt": "O nosso mamute-lanoso, o macho de Berezovka, de lado, com pelagem marrom-escura: a cabeça alta e abaulada, o dorso inclinado, duas presas curvas e uma marca na altura do ombro, a 271 cm por uma reconstrução. A pessoa cinza ao lado, de 1,70 m, fica mais baixa que as pontas das presas.",
-   "note": "A nossa própria reconstrução, construída em código a partir de medidas publicadas e renderizada com o nosso próprio motor gráfico. Não são fotografias.",
+   "what": "Comparação de tamanho: nosso mamute-lanoso ao lado de uma pessoa de 1,70 m, na mesma escala. Ele foi feito com o tamanho e a estrutura de um único animal real, o macho de Berezovka, encontrado congelado em 1900 no nordeste da Sibéria. A marca no ombro é a altura dele em vida, 271 cm, reconstruída a partir dos ossos dele. Quando morreu, ele tinha só uma presa, a esquerda. A direita tinha caído muito antes, e os caçadores que o encontraram cortaram a esquerda e a venderam. O nosso tem as duas: a direita é o reflexo da esquerda, uma reconstrução.",
+   "alt": "Comparação de tamanho: o nosso mamute-lanoso, o macho de Berezovka, de lado, com pelagem marrom-escura: a cabeça alta e abaulada, o dorso inclinado, duas presas curvas e uma marca na altura do ombro, a 271 cm por uma reconstrução. A pessoa cinza ao lado, de 1,70 m, fica mais baixa que as pontas das presas.",
+   "note": "Nossa própria reconstrução, construída em código a partir de medidas publicadas e renderizada com nosso próprio motor gráfico. Não são fotografias.",
    "marks": [
     {
      "span": "mammoth",
-     "text": "O nosso mamute, o macho de Berezovka"
+     "text": "Nosso mamute, o macho de Berezovka"
     },
     {
      "span": "shoulder",
@@ -180,7 +180,7 @@
    "rows": [
     {
      "cells": [
-      "O nosso mamute, o macho de Berezovka",
+      "Nosso mamute, o macho de Berezovka",
       "271 cm",
       "cerca de 4,2 t com a pelagem",
       "reconstruído a partir dos próprios ossos, no estudo de 2016"
@@ -266,7 +266,7 @@
     {
      "h": "A tromba e as orelhas",
      "paras": [
-      "A tromba terminava num dedo longo em cima e num lóbulo curto embaixo, como mostram as trombas congeladas. Mais abaixo, ela se alargava entre duas dobras de pele, que nenhum elefante vivo tem, e para que elas serviam ainda é discutido. As orelhas eram pequenas, com cerca de 30 cm de altura num macho congelado. A cauda era curta, de 36 cm no nosso macho, com um tufo de pelo longo."
+      "A tromba terminava em um dedo longo em cima e em um lóbulo curto embaixo, como mostram as trombas congeladas. Mais abaixo, ela se alargava entre duas dobras de pele, que nenhum elefante vivo tem, e para que elas serviam ainda é discutido. As orelhas eram pequenas, com cerca de 30 cm de altura em um macho congelado. A cauda era curta, de 36 cm no nosso macho, com um tufo de pelo longo."
      ]
     },
     {
@@ -286,7 +286,7 @@
     {
      "h": "O macho de Berezovka",
      "paras": [
-      "Em agosto de 1900, um caçador da região o encontrou na margem do rio Berezovka, um afluente do Kolyma no nordeste da Sibéria. Em 1901, uma expedição de São Petersburgo chefiada por Otto Herz o desenterrou, e em 1902 ele chegou à cidade. Desde 1903 ele está exposto lá, no Museu Zoológico. O esqueleto está montado. O corpo foi restaurado na posição em que foi encontrado, deitado de barriga com as patas da frente para a frente, e a cabeça e a tromba são modeladas. Ele estava longe de completo: o alto da cabeça e grande parte do dorso tinham descongelado e sido comidos muito antes, e faltava a maior parte da tromba. Ele tinha capim entre os dentes. O mais provável é que ele tenha caído numa vala ou de uma margem alta, quebrado a pelve e uma pata da frente e não tenha conseguido sair. As sementes das plantas que ele tinha comido apontam para o fim do verão."
+      "Em agosto de 1900, um caçador da região o encontrou na margem do rio Berezovka, um afluente do Kolyma no nordeste da Sibéria. Em 1901, uma expedição de São Petersburgo chefiada por Otto Herz o desenterrou, e em 1902 ele chegou à cidade. Desde 1903 ele está exposto lá, no Museu Zoológico. O esqueleto está montado. O corpo foi restaurado na posição em que foi encontrado, deitado de barriga com as patas da frente para a frente, e a cabeça e a tromba são modeladas. Ele estava longe de completo: o alto da cabeça e grande parte do dorso tinham descongelado e sido comidos muito antes, e faltava a maior parte da tromba. Ele tinha capim entre os dentes. O mais provável é que ele tenha caído em uma vala ou de uma margem alta, quebrado a pelve e uma pata da frente e não tenha conseguido sair. As sementes das plantas que ele tinha comido apontam para o fim do verão."
      ]
     },
     {
@@ -347,7 +347,7 @@
       ],
       [
        "O nosso é um animal, não a espécie:",
-       "um único macho da Sibéria, um pouco abaixo da média da Sibéria. Por isso há aqui três números separados: o nosso macho, o macho típico da Sibéria e os grandes machos da Europa."
+       "um único macho da Sibéria, um pouco abaixo da média da Sibéria. Por isso há aqui três números separados: nosso macho, o macho típico da Sibéria e os grandes machos da Europa."
       ]
      ]
     }
@@ -362,7 +362,7 @@
    "rows": [
     {
      "term": "Do tamanho de um elefante-africano",
-     "text": "Vale para os grandes machos da Europa, com cerca de 3 a 3,3 m no ombro e 5 a 7 toneladas, mais ou menos como um macho de elefante-africano-da-savana. Já os machos da Sibéria, o nosso entre eles, eram mais ou menos tão altos quanto um macho de elefante-asiático. Todos esses números vêm de um mesmo estudo de 2016 e do método dele."
+     "text": "Vale para os grandes machos da Europa, com cerca de 3 a 3,3 m no ombro e 5 a 7 toneladas, mais ou menos como um macho de elefante-africano-da-savana. Já os machos da Sibéria, nosso entre eles, eram mais ou menos tão altos quanto um macho de elefante-asiático. Todos esses números vêm de um mesmo estudo de 2016 e do método dele."
     },
     {
      "term": "Machos de 2,7 a 3,4 m, fêmeas de 2,6 a 2,9 m, 5 a 6 toneladas",
@@ -398,7 +398,7 @@
     },
     {
      "term": "Congelado com comida na boca",
-     "text": "O nosso macho tinha capim entre os dentes. Daí nasceu a imagem de um mamute que congelou na hora enquanto comia. O chefe da escavação interpretou o achado como uma queda, com ossos quebrados e uma agonia curta."
+     "text": "Nosso macho tinha capim entre os dentes. Daí nasceu a imagem de um mamute que congelou na hora enquanto comia. O chefe da escavação interpretou o achado como uma queda, com ossos quebrados e uma agonia curta."
     }
    ]
   },
@@ -439,6 +439,10 @@
    "h": "Mais perguntas",
    "items": [
     {
+     "q": "O mamute-lanoso ainda existe?",
+     "a": "Não. Os últimos mamutes-lanosos conhecidos viveram na ilha de Wrangel, no oceano Ártico, perto da Sibéria, até cerca de 4.000 anos atrás."
+    },
+    {
      "q": "Existem outros mamutes congelados?",
      "a": "Sim. O museu de São Petersburgo cita vários outros. Entre eles, o mamute de Adams, de 1799, o primeiro esqueleto completo que a ciência teve, e o mamute de Taimyr, de 1948, com músculo, pele e pelo. É graças aos corpos congelados que a tromba, as orelhas e a pelagem desta espécie são conhecidas."
     },
@@ -472,20 +476,20 @@
     {
      "page": "megalodon",
      "pic": "megalodon",
-     "alt": "O nosso megalodon visto de lado, com cerca de 16 m de comprimento, de boca fechada, cinza-escuro com uma faixa mais clara no flanco, ao lado de uma pessoa cinza de 1,70 m que parece minúscula perto dele.",
-     "line": "O megalodon da coluna de Bruxelas tinha cerca de 16 m de comprimento, e os maiores da espécie, talvez cerca de 20 m. O nosso megalodon ao lado de uma pessoa, na mesma escala."
+     "alt": "Nosso megalodon visto de lado, com cerca de 16 m de comprimento, de boca fechada, cinza-escuro com uma faixa mais clara no flanco, ao lado de uma pessoa cinza de 1,70 m que parece minúscula perto dele.",
+     "line": "O megalodon da coluna de Bruxelas tinha cerca de 16 m de comprimento, e os maiores da espécie, talvez cerca de 20 m. Nosso megalodon ao lado de uma pessoa, na mesma escala."
     },
     {
      "page": "biggest-dinosaurs",
      "pic": "dinosaurs",
-     "alt": "Os nossos sete dinossauros em fila, vistos de lado, na mesma escala. O mais longo, o nosso Argentinosaurus, tem cerca de 30,6 m. Dois pescoços longos se erguem bem acima dos outros, e uma pessoa cinza de 1,70 m parece minúscula perto deles.",
+     "alt": "Nossos sete dinossauros em fila, vistos de lado, na mesma escala. O mais longo, nosso Argentinosaurus, tem cerca de 30,6 m. Dois pescoços longos se erguem bem acima dos outros, e uma pessoa cinza de 1,70 m parece minúscula perto deles.",
      "line": "Sete dos nossos ao lado de uma pessoa, na mesma escala: o mais pesado, muito provavelmente um titanossauro da Patagônia, o mais alto, provavelmente o Sauroposeidon, e por que o mais longo continua em aberto."
     },
     {
      "page": "t-rex",
      "pic": "trex",
-     "alt": "O nosso T. rex de lado, sobre duas patas, com cerca de 11 m de comprimento nesta pose, de boca fechada e cabeça erguida, ao lado de uma pessoa cinza de 1,70 m que fica bem abaixo do quadril dele.",
-     "line": "Um T. rex adulto grande tinha cerca de 12 m de comprimento e mais ou menos 8 a 9 toneladas, pelos ossos de SUE. O nosso T. rex ao lado de uma pessoa, com o que foi encontrado de SUE."
+     "alt": "Nosso T. rex de lado, sobre duas patas, com cerca de 11 m de comprimento nesta pose, de boca fechada e cabeça erguida, ao lado de uma pessoa cinza de 1,70 m que fica bem abaixo do quadril dele.",
+     "line": "Um T. rex adulto grande tinha cerca de 12 m de comprimento e mais ou menos 8 a 9 toneladas, pelos ossos de SUE. Nosso T. rex ao lado de uma pessoa, com o que foi encontrado de SUE."
     }
    ]
   },
@@ -563,23 +567,22 @@
       "text": "CC BY-SA 4.0",
       "href": "https://creativecommons.org/licenses/by-sa/4.0/deed.pt-br"
      },
-     ". Crédito: Museum of Ages. Elas mostram uma reconstrução, construída em código e renderizada com o nosso próprio motor gráfico, não uma fotografia. As imagens das outras páginas que aparecem aqui dão o crédito nessas páginas."
+     ". Crédito: Museum of Ages. Elas mostram uma reconstrução, construída em código e renderizada com nosso próprio motor gráfico, não uma fotografia. As imagens das outras páginas que aparecem aqui dão o crédito nessas páginas."
     ]
    ],
    "shapes": {
-    "caption": "Comparação de tamanho do mamute-lanoso: nosso mamute-lanoso, construído segundo o macho de Berezovka, ao lado de uma pessoa de 1,70 m, na mesma escala.",
+    "caption": "Comparação de tamanho do mamute-lanoso, o animal inteiro: nosso mamute-lanoso, feito a partir do macho de Berezovka, com 2,71 m no ombro, ao lado de uma pessoa de 1,70 m, na mesma escala.",
     "lead": "Para slides e publicações, esta comparação de tamanho vem em três formatos, todos com a mesma licença.",
     "alts": {
-     "size_1x1": "Comparação de tamanho do mamute-lanoso: nosso mamute inteiro de lado, com as presas curvas e a tromba, e uma pessoa cinza de 1,70 m diante das presas.",
-     "size_4x3": "O mamute-lanoso ao lado de uma pessoa, em comparação de tamanho: nosso mamute com a pelagem marrom-escura, a cabeça alta e abaulada e o dorso inclinado, e ao lado uma pessoa cinza de 1,70 m.",
-     "size_16x9": "Comparação de tamanho do mamute-lanoso, o animal inteiro de lado: nosso mamute, construído segundo o macho de Berezovka, e uma pessoa cinza de 1,70 m na frente da tromba."
+     "size_1x1": "Comparação de tamanho do mamute-lanoso: nosso mamute-lanoso inteiro, de lado, com as presas curvas e a tromba, e uma pessoa cinza de 1,70 m na frente das presas.",
+     "size_4x3": "O mamute-lanoso ao lado de uma pessoa, em comparação de tamanho: nosso mamute-lanoso com a pelagem marrom-escura, a cabeça alta e abaulada e o dorso inclinado, e uma pessoa cinza de 1,70 m na frente da tromba.",
+     "size_16x9": "Comparação de tamanho do mamute-lanoso, o animal inteiro de lado: nosso mamute-lanoso, feito a partir do macho de Berezovka, e uma pessoa cinza de 1,70 m cuja cabeça fica abaixo do ombro dele."
     },
     "links": {
      "size_1x1": "Quadrada (1:1)",
      "size_4x3": "Slide (4:3)",
      "size_16x9": "Panorâmica (16:9)"
-    },
-    "draft": true
+    }
    }
   }
  ]

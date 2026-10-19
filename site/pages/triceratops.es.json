@@ -194,8 +194,8 @@
   "scale": {
    "pic": "side",
    "tag": "tag_made",
-   "what": "Nuestro Triceratops junto a una persona de 1,70 m, a la misma escala, hecho según el esqueleto de Washington, formado por unos diez animales. Mide 6,9 m del pico a la cola, y su lomo está a unos 2,5 m de altura sobre la cadera, más o menos la altura de una persona y media.",
-   "alt": "Nuestro Triceratops de lado, 6,9 m del pico a la cola y 2,5 m de alto sobre la cadera: una gola ancha detrás de la cabeza, dos cuernos largos sobre los ojos, uno corto sobre la nariz, cuatro patas. A su lado, una persona gris de 1,70 m que le llega a unos dos tercios de la altura del lomo.",
+   "what": "Comparación de tamaño: nuestro Triceratops junto a una persona de 1,70 m, a la misma escala, hecho según el esqueleto de Washington, formado por unos diez animales. Mide 6,9 m del pico a la cola, y su lomo está a unos 2,5 m de altura sobre la cadera, más o menos la altura de una persona y media.",
+   "alt": "Comparación de tamaño: nuestro Triceratops de lado, 6,9 m del pico a la cola y 2,5 m de alto sobre la cadera: una gola ancha detrás de la cabeza, dos cuernos largos sobre los ojos, uno corto sobre la nariz, cuatro patas. A su lado, una persona gris de 1,70 m que le llega a unos dos tercios de la altura del lomo.",
    "note": [
     "Nuestra propia reconstrucción, construida en código a partir de medidas publicadas y renderizada con nuestro propio motor gráfico. No son fotografías. ",
     "La silueta de nuestro Triceratops sigue el modelo del cuerpo de ",
@@ -359,7 +359,7 @@
    "scale": {
     "pic": "vs",
     "tag": "tag_made",
-    "what": "Nuestro Triceratops y nuestro T. rex a la misma escala, los dos mirando hacia el mismo lado, con la persona. Nuestro T. rex, hecho según SUE, mide unos 11,4 m de largo, unas 1,6 veces nuestro Triceratops. Uno al lado del otro solo para comparar el tamaño, nunca como una pelea.",
+    "what": "Nuestro Triceratops y nuestro T. rex a la misma escala, los dos mirando hacia el mismo lado, con la persona. Nuestro T. rex, hecho según SUE, mide unos 11 m de largo, unas 1,6 veces nuestro Triceratops. Uno al lado del otro solo para comparar el tamaño, nunca como una pelea.",
     "alt": "Un Triceratops sobre cuatro patas y un T. rex sobre dos, los dos de lado y mirando hacia el mismo lado, el T. rex más largo y mucho más alto a la altura de la cadera, junto a la persona gris.",
     "marks": [
      {
@@ -368,7 +368,7 @@
      },
      {
       "span": "t-rex",
-      "text": "Nuestro T. rex, según SUE, unos 11,4 m"
+      "text": "Nuestro T. rex, según SUE, unos 11 m"
      },
      {
       "span": "person",
@@ -509,6 +509,10 @@
    "nav": "Más preguntas",
    "h": "Más preguntas",
    "items": [
+    {
+     "q": "¿Cuánto medía de alto un Triceratops?",
+     "a": "No se ha publicado ninguna altura, pero en fotografías del esqueleto de Washington leemos unos 2,3 a 2,5 m en lo alto del lomo, sobre la cadera. El nuestro, hecho según ese esqueleto, mide allí 2,5 m, más o menos la altura de una persona y media, y lo alto de su gola queda a unos 2,4 m."
+    },
     {
      "q": "¿Era el Triceratops más grande que el T. rex?",
      "a": "No. Un Triceratops adulto grande medía unos 7 a 8 m de largo, y un T. rex grande, unos 12 m, y era mucho más alto a la altura de la cadera. En peso estaban más cerca: unas 6,5 a 8,5 toneladas el Triceratops de Washington, y unas 8 a 9 un T. rex grande. Solo el cráneo era más largo: unos 2 m frente a los 1,4 m de SUE."
@@ -668,7 +672,7 @@
    "h": "Usar nuestras imágenes",
    "paras": [
     [
-     "Las cuatro imágenes del Triceratops de esta página, la vista de lado, la cabeza, la pareja con nuestro T. rex y el esqueleto, son obra nuestra, con licencia ",
+     "Las cinco imágenes del Triceratops de esta página, la vista de lado, la cabeza, la pareja con nuestro T. rex, el esqueleto y la comparación de tamaño de abajo en tres formatos, son obra nuestra, con licencia ",
      {
       "text": "CC BY-SA 4.0",
       "href": "https://creativecommons.org/licenses/by-sa/4.0/deed.es"
@@ -677,19 +681,18 @@
     ]
    ],
    "shapes": {
-    "caption": "Comparación de tamaño del Triceratops: nuestro Triceratops, 6,9 m del pico a la cola, junto a una persona de 1,70 m, a la misma escala.",
+    "caption": "Comparación de tamaño del Triceratops, el animal entero: nuestro Triceratops, de 6,9 m del pico a la cola, junto a una persona de 1,70 m, a la misma escala.",
     "lead": "Para presentaciones y publicaciones, esta comparación de tamaño está en tres formatos, todos con la misma licencia.",
     "alts": {
-     "size_1x1": "Comparación de tamaño del Triceratops: la parte delantera de nuestro Triceratops, con la cabeza, la gola, los cuernos y las patas delanteras, y una persona gris de 1,70 m frente a los cuernos.",
-     "size_4x3": "El Triceratops junto a una persona, en comparación de tamaño: nuestro Triceratops de lado, con su gola ancha y sus largos cuernos de la frente, y una persona gris de 1,70 m ante su cabeza.",
-     "size_16x9": "Comparación de tamaño del Triceratops, el animal entero de lado: nuestro Triceratops, 6,9 m del pico a la cola, y una persona gris de 1,70 m delante de él."
+     "size_1x1": "Comparación de tamaño del Triceratops, la parte delantera: la cabeza de nuestro Triceratops con su gola y sus cuernos, el pecho y las patas delanteras, y una persona gris de 1,70 m delante de los cuernos.",
+     "size_4x3": "El Triceratops junto a una persona, en comparación de tamaño: nuestro Triceratops entero, de lado, con su gola ancha y sus largos cuernos sobre los ojos, y una persona gris de 1,70 m delante de la cabeza.",
+     "size_16x9": "Comparación de tamaño del Triceratops, el animal entero de lado: nuestro Triceratops, de 6,9 m del pico a la cola, y una persona gris de 1,70 m delante de él."
     },
     "links": {
      "size_1x1": "Cuadrada (1:1)",
      "size_4x3": "Diapositiva (4:3)",
      "size_16x9": "Panorámica (16:9)"
-    },
-    "draft": true
+    }
    }
   }
  ]
