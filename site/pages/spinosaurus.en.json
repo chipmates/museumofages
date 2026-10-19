@@ -20,7 +20,7 @@
     "size_4x3",
     "size_16x9"
    ],
-   "figure": "size_16x9"
+   "figure": "size_4x3"
   }
  },
  "pics": {
@@ -153,7 +153,7 @@
  },
  "meta": {
   "title": "Spinosaurus size: up to about 14 m (46 ft) | Museum of Ages",
-  "description": "Spinosaurus size: the largest adults just under 14 m (46 ft) and about 7.4 tonnes, by a model. Ours is a young one of about 10 m, beside a person.",
+  "description": "Spinosaurus size and height: the largest adults just under 14 m (46 ft) and about 7.4 tonnes, by a model. And the new Spinosaurus mirabilis (2026).",
   "og_title": "Spinosaurus size: up to about 14 m (46 ft)",
   "og_image_alt": "The largest adult Spinosaurus from the side, just under 14 m (46 ft) by a model, with a tall sail and a deep tail. In front of it our young one of about 10 m (33 ft) as a flat grey shape, and a grey person 1.70 m tall who reaches the young one's hip."
  },
@@ -258,8 +258,8 @@
     {
      "cells": [
       "Our T. rex, after SUE",
-      "about 11.4 m (37 ft) in its pose",
-      "hip joint about 3.2 m (10.5 ft), back over the hips 3.96 m (13 ft), raised head about 4.6 m (15 ft)",
+      "about 11.0 m (36 ft) in its pose",
+      "hip joint about 3.2 m (10.5 ft), back over the hips 3.87 m (12.7 ft), raised head about 4.4 m (14.5 ft)",
       "not given",
       "measured on our files"
      ]
@@ -277,6 +277,15 @@
   },
   {
    "type": "text",
+   "id": "how-tall",
+   "nav": "How tall was Spinosaurus?",
+   "h": "How tall was Spinosaurus?",
+   "paras": [
+    "The largest adults, in our model enlarged by about a third, stood about 4.6 m (15 ft) to the top of the sail, the hip joint about 2.1 m (6.9 ft) up. Our young one: the top of the sail about 3.5 m (11.5 ft), the head about 3 m (10 ft) in its pose. Its hip joint sits about 1.6 m (5.2 ft) up. The 2.1 m comes from our model: no hip height for adults is published, only that T. rex stood higher at the hips."
+   ]
+  },
+  {
+   "type": "text",
    "id": "t-rex",
    "nav": "Spinosaurus vs T. rex, size only",
    "h": "Spinosaurus vs T. rex, size only",
@@ -286,7 +295,7 @@
    "scale": {
     "pic": "vs",
     "tag": "tag_made",
-    "what": "The largest adult Spinosaurus and our T. rex, to one scale. The Spinosaurus is our model enlarged by about a third, the way the model of 2022 was made. By that model the largest adults were just under 14 m (46 ft) long. Our T. rex, after SUE, is a large adult of about 11.4 m (37 ft). So the Spinosaurus is the longer one here. The T. rex stands much higher at the hips. Spinosaurus was most likely the lighter of the two.",
+    "what": "The largest adult Spinosaurus and our T. rex, to one scale. The Spinosaurus is our model enlarged by about a third, the way the model of 2022 was made. By that model the largest adults were just under 14 m (46 ft) long. Our T. rex, after SUE, is a large adult of about 11 m (36 ft) in its pose. So the Spinosaurus is the longer one here. The T. rex stands much higher at the hips. Spinosaurus was most likely the lighter of the two.",
     "alt": "A large adult Spinosaurus with a sail on its back and a shorter T. rex with its head raised, both from the side, the T. rex about one and a half times as high at the hips, beside the grey person.",
     "marks": [
      {
@@ -295,7 +304,7 @@
      },
      {
       "span": "t-rex",
-      "text": "Our T. rex, after SUE, about 11.4 m"
+      "text": "Our T. rex, after SUE, about 11 m"
      },
      {
       "span": "person",
@@ -340,6 +349,15 @@
       "The snout widened at the tip like a spoon. No spinosaur has left us its skin, lips or colour."
      ]
     }
+   ]
+  },
+  {
+   "type": "text",
+   "id": "mirabilis",
+   "nav": "The new Spinosaurus: Spinosaurus mirabilis (2026)",
+   "h": "The new Spinosaurus: Spinosaurus mirabilis (2026)",
+   "paras": [
+    "In February 2026 a team led by Paul Sereno named a second species, Spinosaurus mirabilis, in the journal Science, from fossils found in Niger in river sandstones about 95 million years old. They are skull bones, teeth and a few other bones, all from young animals: the team puts its young type at about 8 m (26 ft) and calls the size of a grown one uncertain. It carried a tall, curved crest on its snout, for its skull taller than in any other known dinosaur apart from birds, and the paper finds it likely that a horn sheath covered and lengthened it, as on a guinea fowl. Otherwise its bones are very like those of Spinosaurus aegyptiacus. It changes none of the sizes on this page, and it is not our animal: ours is Spinosaurus aegyptiacus."
    ]
   },
   {
@@ -519,10 +537,6 @@
    "h": "More questions",
    "items": [
     {
-     "q": "How tall was Spinosaurus?",
-     "a": "The largest adults, as our model enlarged by about a third: the top of the sail about 4.6 m (15 ft), the hip joint about 2.1 m (6.9 ft). Our young one: the top of the sail about 3.5 m (11.5 ft), the head about 3 m (10 ft) in its pose. Its hip joint sits about 1.6 m (5.2 ft) up. The 2.1 m comes from our model: no hip height for adults is published, only that T. rex stood higher at the hips."
-    },
-    {
      "q": "Was Spinosaurus the biggest dinosaur?",
      "a": "No. The long-necked dinosaurs were far bigger: Argentinosaurus about 30 to 35 m (98 to 115 ft) long and roughly 65 to 80 tonnes. More on the biggest dinosaurs page.",
      "links": [
@@ -669,19 +683,18 @@
     ]
    ],
    "shapes": {
-    "caption": "Spinosaurus size comparison: the largest adult, our model enlarged, about 13.1 m end to end in its pose, beside a person 1.70 m tall, to one scale.",
+    "caption": "Spinosaurus size comparison: the largest adult as our model enlarged, whole from the side, about 13.1 m end to end in its pose, beside a person 1.70 m tall, to one scale.",
     "lead": "For slides and posts, this size comparison comes in three shapes, all under the same licence.",
     "alts": {
      "size_1x1": "Spinosaurus size comparison: the front of the largest adult, our model enlarged, with its long snout, neck, sail and legs, and a grey person 1.70 m tall under its head.",
      "size_4x3": "Spinosaurus beside a person, a size comparison: the largest adult, our model enlarged, whole from the side with its tall sail and long tail, and a grey person 1.70 m tall below its snout.",
-     "size_16x9": "Spinosaurus size comparison, the whole adult from the side: the largest adult, our model enlarged, about 13.1 m end to end, and a grey person 1.70 m tall under its head."
+     "size_16x9": "Spinosaurus size comparison, the whole animal from the side: the largest adult as our model enlarged, about 13.1 m end to end, and a grey person 1.70 m tall under its head."
     },
     "links": {
      "size_1x1": "Square (1:1)",
      "size_4x3": "Slide (4:3)",
      "size_16x9": "Wide (16:9)"
-    },
-    "draft": true
+    }
    }
   }
  ]

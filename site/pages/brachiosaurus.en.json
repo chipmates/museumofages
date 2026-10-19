@@ -21,7 +21,7 @@
     "size_4x3",
     "size_16x9"
    ],
-   "figure": "size_16x9"
+   "figure": "size_4x3"
   }
  },
  "pics": {
@@ -150,7 +150,6 @@
  "top": {
   "h1": "How big was Brachiosaurus?",
   "answer": "Brachiosaurus was about 22 to 25 m (72 to 82 ft) long and roughly 30 to 45 tonnes, both rebuilt from one partial skeleton. The height of Brachiosaurus was never measured, since that skeleton has no neck: rebuilt, its head would stand about 7 m (23 ft) up with the neck level, over 14 m (46 ft) with it straight up. Our model is built at the size of that one skeleton, kept in Chicago, from an animal probably still growing. With the neck raised as we chose it, the head stands about seven people up and the shoulders about four.",
-  "answer_more": "Berlin's famous skeleton, its skull about 13 m (43 ft) up, is its African relative Giraffatitan in a show pose. Most pictures of Brachiosaurus show that relative too.",
   "scale": {
    "pic": "side",
    "tag": "tag_made",
@@ -268,13 +267,22 @@
    "h": "How tall was Brachiosaurus, and was it the tallest dinosaur?",
    "paras": [
     "Nobody can say to the metre: the Chicago skeleton has no neck, and the two neck bones found elsewhere may not even be Brachiosaurus. So every head height in print was drawn on Giraffatitan's neck, none measured.",
-    "How it held that neck is argued, and the middle view is raised, neither level nor straight up. Our model's neck rises at about 41 degrees, its head top 11.5 m (38 ft) up. The same body would hold its head about 7 m (23 ft) up with a level neck, over 14 m (46 ft) with it straight up. The tallest mounted dinosaur skeleton is that Berlin Giraffatitan, and which dinosaur stood tallest in life is not known for sure: the biggest dinosaurs page takes up that question."
+    "How it held that neck is argued, and the middle view is raised, neither level nor straight up. Our model's neck rises at about 41 degrees, its head top 11.5 m (38 ft) up. The same body would hold its head about 7 m (23 ft) up with a level neck, over 14 m (46 ft) with it straight up. The tallest mounted dinosaur skeleton is the Giraffatitan in Berlin, an African relative, and which dinosaur stood tallest in life is not known for sure: the biggest dinosaurs page takes up that question."
    ],
    "links": [
     {
      "page": "biggest-dinosaurs",
      "text": "What was the biggest dinosaur?"
     }
+   ]
+  },
+  {
+   "type": "text",
+   "id": "weight",
+   "nav": "How heavy was Brachiosaurus?",
+   "h": "How heavy was Brachiosaurus?",
+   "paras": [
+    "Brachiosaurus came to roughly 30 to 45 tonnes, by models. Nobody ever put one on a scale, and its one skeleton is incomplete, so every weight comes from a model of the body. The range rests on two figures: about 29 tonnes from a body model of the Chicago skeleton, published in 2009, and 46.9 tonnes from the Natural History Museum in London, which gives no method. The low figure moves with the density chosen and with the body's width, which the known ribs cannot settle."
    ]
   },
   {
@@ -529,7 +537,7 @@
      "page": "woolly-mammoth",
      "pic": "mammoth",
      "alt": "Our woolly mammoth, the Berezovka bull, from the side in a dark brown coat: high domed head, sloping back, two curved tusks, and a mark at his shoulder height, 271 cm (8.9 ft) by a reconstruction. The grey person beside him, 1.70 m tall, stands lower than the tusk tips.",
-     "line": "A typical Siberian bull stood about 2.7 to 2.9 m at the shoulder and weighed about 4 to 5 tonnes. Our woolly mammoth is one real bull found frozen in 1900, 2.71 m at the shoulder by a reconstruction, beside a person to one scale."
+     "line": "A typical Siberian bull stood about 2.7 to 2.9 m at the shoulder and weighed about 4 to 5 tonnes. Our woolly mammoth is built after one real bull found frozen in 1900, 2.71 m at the shoulder by a reconstruction, beside a person to one scale."
     }
    ]
   },
@@ -632,19 +640,18 @@
     ]
    ],
    "shapes": {
-    "caption": "Brachiosaurus size comparison: our Brachiosaurus with its neck raised at the angle we chose, the head top 11.5 m (38 ft) up, beside a person 1.70 m tall, to one scale.",
+    "caption": "Brachiosaurus size comparison: the front of our Brachiosaurus, its neck raised at the angle we chose to a head top 11.5 m (38 ft) up, beside a person 1.70 m tall, to one scale.",
     "lead": "For slides and posts, this size comparison comes in three shapes, all under the same licence.",
     "alts": {
      "size_1x1": "Brachiosaurus size comparison, the height: the front legs, chest and raised neck of our Brachiosaurus, the head 11.5 m (38 ft) up, and a grey person 1.70 m tall under the neck.",
      "size_4x3": "Brachiosaurus beside a person, a size comparison: the neck, head and body of our Brachiosaurus, the tail cut at the left edge, and a grey person 1.70 m tall below the neck.",
-     "size_16x9": "Brachiosaurus size comparison, the whole animal from the side: our Brachiosaurus, the top of its head 11.5 m (38 ft) up, and a grey person 1.70 m tall under its neck."
+     "size_16x9": "Brachiosaurus size comparison, the whole animal from the side: our Brachiosaurus, 21.3 m (70 ft) long with the neck raised, and a grey person 1.70 m tall under its neck."
     },
     "links": {
      "size_1x1": "Square (1:1)",
      "size_4x3": "Slide (4:3)",
      "size_16x9": "Wide (16:9)"
-    },
-    "draft": true
+    }
    }
   }
  ]

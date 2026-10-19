@@ -26,7 +26,7 @@
     "size_4x3",
     "size_16x9"
    ],
-   "figure": "size_16x9"
+   "figure": "size_4x3"
   }
  },
  "pics": {
@@ -155,12 +155,11 @@
  "top": {
   "h1": "Wie groß war ein Brachiosaurus?",
   "answer": "Der Brachiosaurus war etwa 22 bis 25 m lang und grob 30 bis 45 t schwer, beides nach einem einzigen Teilskelett rekonstruiert. Die Höhe des Brachiosaurus wurde nie gemessen, weil diesem Skelett der Hals fehlt: Rekonstruiert stünde sein Kopf mit waagerechtem Hals etwa 7 m hoch, mit senkrechtem über 14 m. Unser Modell ist in der Größe dieses einen Skeletts gebaut, das in Chicago liegt und von einem wohl noch wachsenden Tier stammt. Mit dem Hals so erhoben, wie wir ihn gewählt haben, ragt der Kopf so hoch wie etwa sieben Menschen übereinander, die Schultern so hoch wie etwa vier.",
-  "answer_more": "Das berühmte Berliner Skelett, der Schädel in etwa 13 m Höhe, ist sein afrikanischer Verwandter Giraffatitan in einer Pose für die Ausstellung. Auch die meisten Bilder eines Brachiosaurus zeigen diesen Verwandten.",
   "scale": {
    "pic": "side",
    "tag": "tag_made",
-   "what": "Unser Brachiosaurus neben einem Menschen von 1,70 m, im selben Maßstab, in der Größe des einen Skeletts, auf dem der Name beruht, 1900 in Colorado ausgegraben. Hals, Kopf, die unteren Beinteile und der größte Teil des Schwanzes folgen Giraffatitan und anderen Funden. Seine 11,5 m Kopfhöhe ergeben sich nur aus dem Halswinkel, den wir gewählt haben: Diese Höhe ist unsere Wahl, kein Befund.",
-   "alt": "Unser Brachiosaurus von der Seite, in der Größe des Skeletts aus Chicago, 24,0 m entlang der Wirbelsäule, den langen Hals in sanftem Bogen erhoben, die Kopfhöhe 11,5 m, den Halswinkel haben wir gewählt. Die Vorderbeine sind länger als die Hinterbeine, der Schwanz ist frei über dem Boden, und ein grauer Mensch von 1,70 m könnte unter seinem Bauch hindurchgehen.",
+   "what": "Größenvergleich: unser Brachiosaurus neben einem Menschen von 1,70 m, im selben Maßstab, in der Größe des einen Skeletts, auf dem der Name beruht, 1900 in Colorado ausgegraben. Hals, Kopf, die unteren Beinteile und der größte Teil des Schwanzes folgen Giraffatitan und anderen Funden. Seine 11,5 m Kopfhöhe ergeben sich nur aus dem Halswinkel, den wir gewählt haben: Diese Höhe ist unsere Wahl, kein Befund.",
+   "alt": "Größenvergleich: unser Brachiosaurus von der Seite, in der Größe des Skeletts aus Chicago, 24,0 m entlang der Wirbelsäule, den langen Hals in sanftem Bogen erhoben, die Kopfhöhe 11,5 m, den Halswinkel haben wir gewählt. Die Vorderbeine sind länger als die Hinterbeine, der Schwanz ist frei über dem Boden, und ein grauer Mensch von 1,70 m könnte unter seinem Bauch hindurchgehen.",
    "note": "Unsere eigene Rekonstruktion, nach veröffentlichten Maßen in Code gebaut und in unserer Engine gerendert. Keine Fotos.",
    "marks": [
     {
@@ -199,8 +198,8 @@
   {
    "type": "numbers",
    "id": "numbers",
-   "nav": "Die Zahlen",
-   "h": "Die Zahlen",
+   "nav": "Brachiosaurus-Steckbrief: die Zahlen",
+   "h": "Brachiosaurus-Steckbrief: die Zahlen",
    "unit": "In Metern und Tonnen. Jede Höhenzelle nennt den Punkt, den sie misst. Eine leere Zelle hat keine belegte Zahl.",
    "cols": [
     "Tier",
@@ -273,13 +272,22 @@
    "h": "Wie hoch war ein Brachiosaurus, und war er der höchste Dinosaurier?",
    "paras": [
     "Auf den Meter genau weiß das niemand: Dem Skelett in Chicago fehlt der Hals, und die zwei Halswirbel, die anderswo gefunden wurden, stammen vielleicht nicht einmal von einem Brachiosaurus. Darum ist jede gedruckte Kopfhöhe auf den Hals des Giraffatitan gezeichnet, keine gemessen.",
-    "Wie er diesen Hals hielt, ist umstritten. Ein häufig vertretener Mittelweg: erhoben, aber weder waagerecht noch senkrecht. Der Hals unseres Modells steigt mit etwa 41 Grad an, der Kopf steht 11,5 m hoch. Mit waagerechtem Hals stünde der Kopf desselben Körpers etwa 7 m hoch, mit senkrechtem Hals über 14 m. Das höchste montierte Dinosaurierskelett ist dieser Berliner Giraffatitan, und welcher Dinosaurier im Leben am höchsten stand, weiß niemand sicher: Die Seite der größten Dinosaurier geht dieser Frage nach."
+    "Wie er diesen Hals hielt, ist umstritten. Ein häufig vertretener Mittelweg: erhoben, aber weder waagerecht noch senkrecht. Der Hals unseres Modells steigt mit etwa 41 Grad an, der Kopf steht 11,5 m hoch. Mit waagerechtem Hals stünde der Kopf desselben Körpers etwa 7 m hoch, mit senkrechtem Hals über 14 m. Das höchste montierte Dinosaurierskelett ist der Giraffatitan in Berlin, ein afrikanischer Verwandter, und welcher Dinosaurier im Leben am höchsten stand, weiß niemand sicher: Die Seite der größten Dinosaurier geht dieser Frage nach."
    ],
    "links": [
     {
      "page": "biggest-dinosaurs",
      "text": "Was war der größte Dinosaurier?"
     }
+   ]
+  },
+  {
+   "type": "text",
+   "id": "weight",
+   "nav": "Wie schwer war ein Brachiosaurus?",
+   "h": "Wie schwer war ein Brachiosaurus?",
+   "paras": [
+    "Ein Brachiosaurus war grob 30 bis 45 t schwer, nach Modellen. Auf eine Waage gestellt hat ihn niemand, und sein einziges Skelett ist unvollständig, also stammt jedes Gewicht aus einem Körpermodell. Die Spanne beruht auf zwei Zahlen: etwa 29 t aus einem Körpermodell des Skeletts aus Chicago von 2009 und 46,9 t vom Natural History Museum in London, das keine Methode nennt. Der untere Wert hängt von der gewählten Dichte ab und von der Breite des Körpers, die sich aus den bekannten Rippen nicht sicher bestimmen lässt."
    ]
   },
   {
@@ -383,8 +391,8 @@
   {
    "type": "text",
    "id": "giraffe",
-   "nav": "Brachiosaurus gegen Giraffe und gegen Argentinosaurus",
-   "h": "Brachiosaurus gegen Giraffe und gegen Argentinosaurus",
+   "nav": "Brachiosaurus im Vergleich: Giraffe, Argentinosaurus",
+   "h": "Brachiosaurus im Vergleich: Giraffe, Argentinosaurus",
    "paras": [
     "Ein Giraffenbulle wird bis zu etwa 5,5 m hoch und bis zu etwa 1,4 t schwer. Der Kopf unseres Modells steht etwa doppelt so hoch, schon seine Schultern ragen über den Kopf einer großen Giraffe, und grob 30 bis 45 t sind etwa 22 bis 33 Giraffenbullen. Argentinosaurus war größer: etwa 30 bis 35 m lang und grob 65 bis 80 t, beides rekonstruiert, gegen etwa 22 bis 25 m und 30 bis 45 t. Begegnet sind sich die beiden nie, viele Millionen Jahre und ein Kontinent lagen dazwischen, und unsere beiden Modelle tragen den Kopf nur deshalb fast gleich hoch, weil wir die Hälse so gewählt haben."
    ]
@@ -534,7 +542,7 @@
      "page": "woolly-mammoth",
      "pic": "mammoth",
      "alt": "Unser Wollhaarmammut, der Beresowka-Bulle, von der Seite im dunkelbraunen Fell, mit hoch gewölbtem Kopf, abfallendem Rücken, zwei gebogenen Stoßzähnen und einer Marke an der Schulter bei 271 cm, seiner rekonstruierten Schulterhöhe. Der graue Mensch daneben, 1,70 m groß, steht niedriger als die Spitzen der Stoßzähne.",
-     "line": "Ein typischer sibirischer Bulle maß an der Schulter etwa 2,7 bis 2,9 m und wog etwa 4 bis 5 t. Unser Wollhaarmammut ist ein einzelner echter Bulle, 1900 im Permafrost gefunden, 2,71 m an der Schulter nach einer Rekonstruktion, neben einem Menschen im selben Maßstab."
+     "line": "Ein typischer sibirischer Bulle maß an der Schulter etwa 2,7 bis 2,9 m und wog etwa 4 bis 5 t. Unser Wollhaarmammut ist nach einem einzelnen echten Bullen gebaut, der 1900 im Permafrost gefunden wurde. Rekonstruiert misst es 2,71 m an der Schulter und steht im selben Maßstab neben einem Menschen."
     }
    ]
   },
@@ -637,19 +645,18 @@
     ]
    ],
    "shapes": {
-    "caption": "Brachiosaurus im Größenvergleich: unser Brachiosaurus mit erhobenem Hals im von uns gewählten Winkel, die Kopfhöhe 11,5 m, neben einem Menschen von 1,70 m, im selben Maßstab.",
+    "caption": "Brachiosaurus im Größenvergleich: der vordere Teil unseres Brachiosaurus, den Hals im von uns gewählten Winkel erhoben, die Kopfhöhe 11,5 m, neben einem Menschen von 1,70 m, im selben Maßstab.",
     "lead": "Für Folien und Beiträge gibt es diesen Größenvergleich in drei Formaten, alle unter derselben Lizenz.",
     "alts": {
      "size_1x1": "Brachiosaurus im Größenvergleich, die Höhe: Vorderbeine, Brust und erhobener Hals unseres Brachiosaurus, der Kopf 11,5 m hoch, unter dem Hals ein grauer Mensch von 1,70 m.",
      "size_4x3": "Brachiosaurus neben einem Menschen im Größenvergleich: Hals, Kopf und Körper unseres Brachiosaurus, der Schwanz am linken Rand abgeschnitten, und unter dem Hals ein grauer Mensch von 1,70 m.",
-     "size_16x9": "Brachiosaurus im Größenvergleich, das ganze Tier von der Seite: unser Brachiosaurus, die Kopfhöhe 11,5 m, und unter seinem Hals ein grauer Mensch von 1,70 m."
+     "size_16x9": "Brachiosaurus im Größenvergleich, das ganze Tier von der Seite: unser Brachiosaurus, mit erhobenem Hals 21,3 m lang, und unter seinem Hals ein grauer Mensch von 1,70 m."
     },
     "links": {
      "size_1x1": "Quadrat (1:1)",
      "size_4x3": "Folie (4:3)",
      "size_16x9": "Breitbild (16:9)"
-    },
-    "draft": true
+    }
    }
   }
  ]
