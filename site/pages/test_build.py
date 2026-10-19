@@ -561,7 +561,7 @@ class Case(unittest.TestCase):
         stop the build."""
         page = self.topic_page("t_rex")
         cases = [
-            ({"en": (r" in this pose", ""), "de": (r" in dieser Haltung", "")}, "11.4 m is our model's length"),
+            ({"en": (r" in this pose", ""), "de": (r" in dieser Haltung", "")}, "11 m is our model's length"),
             ({"en": (r"\b[Mm]odel\b", "study"), "de": (r"\bModell\b", "Studie")}, "15 tonnes only as a model's guess"),
             ({"en": (r"bone volume", "count"), "de": (r"Knochenvolumen", "Zählung")}, "90 percent only by bone volume"),
             ({"en": (r"\bnews\b", "reports"), "de": (r"Nachrichten", "Berichten")}, "13 m only as the news of 2019"),

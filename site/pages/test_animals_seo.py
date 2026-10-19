@@ -446,7 +446,7 @@ class Words(Site):
         for page in self.final("spinosaurus"):
             block = next((b for b in page["data"]["blocks"] if "Spinosaurus mirabilis" in b.get("h", "") and "2026" in b.get("h", "")), None)
             self.assertIsNotNone(block, page["path"])
-            self.assertIn("Niger", json.dumps(block, ensure_ascii=False), page["path"])
+            self.assertRegex(json.dumps(block, ensure_ascii=False), "N[ií]ger", page["path"])
             sources = next(b for b in page["data"]["blocks"] if b["type"] == "sources")
             self.assertIn("10.1126/science.adx5486", json.dumps(sources), page["path"])
 
