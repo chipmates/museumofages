@@ -141,7 +141,7 @@
     1600
    ],
    "sizes": "(min-width: 1280px) 690px, (min-width: 960px) 54vw, (min-width: 600px) calc(100vw - 64px), calc(100vw - 40px)",
-   "person": "90.53% 39.5%"
+   "person": "88.88% 33.56%"
   },
   "size_4x3": {
    "stem": "animals-ankylosaurus-size-comparison-4x3",
@@ -676,7 +676,7 @@
     "caption": "Comparación de tamaño del Ankylosaurus: nuestro Ankylosaurus, 6,4 m del pico a la maza, junto a una persona de 1,70 m, a la misma escala.",
     "lead": "Para presentaciones y publicaciones, esta comparación de tamaño está en tres formatos, todos con la misma licencia.",
     "alts": {
-     "size_1x1": "Comparación de tamaño del Ankylosaurus: nuestro Ankylosaurus entero de lado, con el lomo acorazado y la maza de la cola, y una persona gris de 1,70 m frente a su cabeza.",
+     "size_1x1": "Comparación de tamaño del Ankylosaurus: la parte delantera de nuestro Ankylosaurus, con el lomo acorazado, la cabeza y las patas delanteras, y una persona gris de 1,70 m frente a su cabeza.",
      "size_4x3": "El Ankylosaurus junto a una persona, en comparación de tamaño: nuestro Ankylosaurus bajo y ancho, cubierto de filas de placas de hueso, y una persona gris de 1,70 m ante su cabeza ancha.",
      "size_16x9": "Comparación de tamaño del Ankylosaurus, el animal entero de lado: nuestro Ankylosaurus, 6,4 m del pico a la maza, y una persona gris de 1,70 m delante de él."
     },

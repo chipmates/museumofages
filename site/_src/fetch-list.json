@@ -1403,62 +1403,62 @@
   {
    "path": "pages/pics/img/animals-ankylosaurus-size-comparison-16x9-1600.avif",
    "url": "/static/img/animals-ankylosaurus-size-comparison-16x9-1600.avif",
-   "bytes": 15074,
-   "sha256": "28d33f95916b08a7755ab5b2a1f4e0a2332f0de8afd45a725e730b1f8ac27398"
+   "bytes": 15106,
+   "sha256": "934a20900eaa823ee91b3f77115862dd8fac1b679e8b7ffe5e20971d78be2e3c"
   },
   {
    "path": "pages/pics/img/animals-ankylosaurus-size-comparison-16x9-1600.webp",
    "url": "/static/img/animals-ankylosaurus-size-comparison-16x9-1600.webp",
-   "bytes": 17944,
-   "sha256": "59af9f7337af5ba8433070b40e3fa52ae3ae51ff0d2549865f3f4c8aaf78fa56"
+   "bytes": 18108,
+   "sha256": "36ceb13d8d18028008a5c1cbcd1cc583b29b714f919b93405da7af1378460cea"
   },
   {
    "path": "pages/pics/img/animals-ankylosaurus-size-comparison-16x9-2400.avif",
    "url": "/static/img/animals-ankylosaurus-size-comparison-16x9-2400.avif",
-   "bytes": 29531,
-   "sha256": "c277e131e699ca43181387ad7f40d096ccb876378274568ac76a3d53cd5afb3a"
+   "bytes": 29510,
+   "sha256": "d91fc6c33f109443f44e1e8465934efe418ef840c8b0394965d75c2bf04462f6"
   },
   {
    "path": "pages/pics/img/animals-ankylosaurus-size-comparison-16x9-2400.webp",
    "url": "/static/img/animals-ankylosaurus-size-comparison-16x9-2400.webp",
-   "bytes": 36788,
-   "sha256": "4d0e35b434ba9daffce84f107da7d6ed62b173fbf2d7a95ff15749c5a26e1bce"
+   "bytes": 36784,
+   "sha256": "0fa3fdd19cb7e604b19a5afc95ee994b07716441149f4d21bf26fdf91a94978d"
   },
   {
    "path": "pages/pics/img/animals-ankylosaurus-size-comparison-16x9-800.avif",
    "url": "/static/img/animals-ankylosaurus-size-comparison-16x9-800.avif",
-   "bytes": 5509,
-   "sha256": "5332e61f44bda3aecdde2f32a8c3634793363ca35da290fa36c728d35cc9d5f7"
+   "bytes": 5528,
+   "sha256": "66435fee9068a917063bad924ee776dc4ef5252b79b85785e040e0f3c6a5f0c2"
   },
   {
    "path": "pages/pics/img/animals-ankylosaurus-size-comparison-16x9-800.webp",
    "url": "/static/img/animals-ankylosaurus-size-comparison-16x9-800.webp",
-   "bytes": 6562,
-   "sha256": "702033aa7bf8266753367a19a7cb2fefe6a454656350dad9df78ac919232b8ca"
+   "bytes": 6560,
+   "sha256": "1b3656cda24b1cfdd4fe4ddcbbc20f56c1f66d930e0ba24f44f16e9c08d2b96c"
   },
   {
    "path": "pages/pics/img/animals-ankylosaurus-size-comparison-1x1-1600.avif",
    "url": "/static/img/animals-ankylosaurus-size-comparison-1x1-1600.avif",
-   "bytes": 13968,
-   "sha256": "8aca253a99851c2d31b3c1f40978a9da0340bb88c4e647d5c883d7dac8549119"
+   "bytes": 29912,
+   "sha256": "ac96f7a3e8c57973a90f64911f4aab0f5079f265b89532b719ed5102b19b410c"
   },
   {
    "path": "pages/pics/img/animals-ankylosaurus-size-comparison-1x1-1600.webp",
    "url": "/static/img/animals-ankylosaurus-size-comparison-1x1-1600.webp",
-   "bytes": 19022,
-   "sha256": "598590d126ace7a884253f40024249bc5d0bf226f26cb7e184c2a59283fd739e"
+   "bytes": 36256,
+   "sha256": "03025343abac290bac046e1969751eb5513527a0735108b0556829406ba7ff4a"
   },
   {
    "path": "pages/pics/img/animals-ankylosaurus-size-comparison-4x3-1600.avif",
    "url": "/static/img/animals-ankylosaurus-size-comparison-4x3-1600.avif",
-   "bytes": 13838,
-   "sha256": "bf5e6f25cba6426536fcd2ba9b2b8445a17f28f83727d45c2dbdddc25e3f335e"
+   "bytes": 13881,
+   "sha256": "a94797738922d76c8c7e8017aa2b7c34341569fd13fa347b43b7fb566c57143c"
   },
   {
    "path": "pages/pics/img/animals-ankylosaurus-size-comparison-4x3-1600.webp",
    "url": "/static/img/animals-ankylosaurus-size-comparison-4x3-1600.webp",
-   "bytes": 17936,
-   "sha256": "f37f887c9aa4119354c21d24656fa4117814f1e5b72d9e4320f3d0ee76ed130a"
+   "bytes": 17924,
+   "sha256": "c2743dbd110635cedbdc5fa011916bf57db0a003e6227f32171a0f751022865c"
   },
   {
    "path": "pages/pics/img/animals-ankylosaurus-skeleton-1600.avif",
@@ -2975,62 +2975,62 @@
   {
    "path": "pages/pics/img/animals-triceratops-size-comparison-16x9-1600.avif",
    "url": "/static/img/animals-triceratops-size-comparison-16x9-1600.avif",
-   "bytes": 31834,
-   "sha256": "a44ef80fbf722867756bcf4355d96675f252d96590b8c694971d3848f2ccf11b"
+   "bytes": 32079,
+   "sha256": "0024e240507ec82bbabee9dc3e0bcb4b7bd44a91280cc422241195eaa2eb8b79"
   },
   {
    "path": "pages/pics/img/animals-triceratops-size-comparison-16x9-1600.webp",
    "url": "/static/img/animals-triceratops-size-comparison-16x9-1600.webp",
-   "bytes": 39010,
-   "sha256": "3e052994fb0ed3e24dd808dadd2c270953f2d9c6a7c457b0ec8de77ce79d1a08"
+   "bytes": 39062,
+   "sha256": "99e01639f027bd1e9469ae748afb53a27c52ac82faa53e00548d2024baf212fe"
   },
   {
    "path": "pages/pics/img/animals-triceratops-size-comparison-16x9-2400.avif",
    "url": "/static/img/animals-triceratops-size-comparison-16x9-2400.avif",
-   "bytes": 54479,
-   "sha256": "668eb4b58c1b8b0ffe1ca2038f56a5e9509b0085563662409fadc86900b5174a"
+   "bytes": 54469,
+   "sha256": "98d24511c1a50303f57afb0dc94c725366611d1d9d4095329454f89cb0f65be7"
   },
   {
    "path": "pages/pics/img/animals-triceratops-size-comparison-16x9-2400.webp",
    "url": "/static/img/animals-triceratops-size-comparison-16x9-2400.webp",
-   "bytes": 66450,
-   "sha256": "76fe97c1941c45724ea61e018fff3e44dfe662d281ddfbbeac5c0aa46b686bb8"
+   "bytes": 66448,
+   "sha256": "90dc80cdb07641068bac507f3327c169f3a139b9bfe109a3b5cc637b06a66f8c"
   },
   {
    "path": "pages/pics/img/animals-triceratops-size-comparison-16x9-800.avif",
    "url": "/static/img/animals-triceratops-size-comparison-16x9-800.avif",
-   "bytes": 10671,
-   "sha256": "0ea5a8a37cc1be03744a87e2e530c7df7349e952b04cf950056731d11ff4501c"
+   "bytes": 10624,
+   "sha256": "5153e3d1b97d891d8424b016c093a738a2f7640a1c9b61bbefb645bbbb0e4347"
   },
   {
    "path": "pages/pics/img/animals-triceratops-size-comparison-16x9-800.webp",
    "url": "/static/img/animals-triceratops-size-comparison-16x9-800.webp",
-   "bytes": 12780,
-   "sha256": "1de510ed22d014e05e2924d480899614f1902b8c8534bb1dcd0f0538adb08fc6"
+   "bytes": 12774,
+   "sha256": "6755a62cf709d7ec8c61b8eaa243b98a9f570388c6699962edeb3dc8bc2d285d"
   },
   {
    "path": "pages/pics/img/animals-triceratops-size-comparison-1x1-1600.avif",
    "url": "/static/img/animals-triceratops-size-comparison-1x1-1600.avif",
-   "bytes": 30042,
-   "sha256": "c64f0d65c9e401cd34da48afe41279065e1c9f830c60eafb7445ec5c6be554d3"
+   "bytes": 47239,
+   "sha256": "afdb0fe6378e14cdaeaec7d1e7bf00f8bf96d8514516fbef60acc808be183aac"
   },
   {
    "path": "pages/pics/img/animals-triceratops-size-comparison-1x1-1600.webp",
    "url": "/static/img/animals-triceratops-size-comparison-1x1-1600.webp",
-   "bytes": 37948,
-   "sha256": "ee3f533202e1a4b66ca7c55e0f40e584303baa8e9537901abd73820b8005f94f"
+   "bytes": 57084,
+   "sha256": "0fc65a07c511daf50b89b52a83c208c656d63a27f4df5b31ae19b11cddddd586"
   },
   {
    "path": "pages/pics/img/animals-triceratops-size-comparison-4x3-1600.avif",
    "url": "/static/img/animals-triceratops-size-comparison-4x3-1600.avif",
-   "bytes": 29656,
-   "sha256": "41cb64bf2d79fc41a24586ab1cf22264c1580a80f62165b0256c006143e4474e"
+   "bytes": 29869,
+   "sha256": "a832982ec6bd8ee95211ffec701c909ce8e157be49b2bd32a07352c9ae22fbe5"
   },
   {
    "path": "pages/pics/img/animals-triceratops-size-comparison-4x3-1600.webp",
    "url": "/static/img/animals-triceratops-size-comparison-4x3-1600.webp",
-   "bytes": 36958,
-   "sha256": "d20eacf80bc9a0d87e87f3b6f93042c5afcf9a51a51edfd50b41374a7e89808b"
+   "bytes": 37518,
+   "sha256": "fcd2f8dfdf0361414b231a4edf2133db766dc1d71e89f1266f51355c3227b7de"
   },
   {
    "path": "pages/pics/img/animals-triceratops-skeleton-1600.avif",

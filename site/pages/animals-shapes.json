@@ -449,30 +449,30 @@
      "model": "museum-two/animal-queue/animals/triceratops/judged/round-15/animal.glb",
      "sha256": "ae736190b777dbcc130b3218abaeb07b2e9d4ae31a4bcceffe769053a4a311a0",
      "still": "triceratops-size-comparison-1x1.png",
-     "still_sha256": "2a6b3d0df7fdd534286241751dc1b5b72ee7f2aa2bae25da99f205d9ec3dfe86",
+     "still_sha256": "9adad1fa302b8961cff89e6e16aadc418383c37ab70f7d5faf5e97a8bd4498af",
      "w": 1600,
      "h": 1600,
-     "ppm": 177.5457,
+     "ppm": 277.551,
      "frame_m": [
-      -3.836,
-      5.1758,
-      -3.2399,
-      5.7719
+      -0.8,
+      4.9647,
+      -1.6164,
+      4.1483
      ],
      "person_px": [
-      1411,
-      723,
+      1364,
+      680,
       1495,
-      1025
+      1151
      ],
      "animal_px": [
-      71,
-      575,
-      1337,
-      1025
+      0,
+      449,
+      1248,
+      1151
      ],
-     "front_end": false,
-     "cut": null,
+     "front_end": true,
+     "cut": "the hips and tail behind x -0.8 m",
      "exception": null
     },
     "size_4x3": {
@@ -481,7 +481,7 @@
      "model": "museum-two/animal-queue/animals/triceratops/judged/round-15/animal.glb",
      "sha256": "ae736190b777dbcc130b3218abaeb07b2e9d4ae31a4bcceffe769053a4a311a0",
      "still": "triceratops-size-comparison-4x3.png",
-     "still_sha256": "43db408ba89930d20cdd578ec55cd4b31866c71196981581821951313cb44b2a",
+     "still_sha256": "605f3f4076c5a35eb91700a79b2af25f69971f9669faf1a16da4cdcb561ca48e",
      "w": 1600,
      "h": 1200,
      "ppm": 177.5457,
@@ -492,7 +492,7 @@
       4.6454
      ],
      "person_px": [
-      1412,
+      1411,
       523,
       1495,
       825
@@ -513,7 +513,7 @@
      "model": "museum-two/animal-queue/animals/triceratops/judged/round-15/animal.glb",
      "sha256": "ae736190b777dbcc130b3218abaeb07b2e9d4ae31a4bcceffe769053a4a311a0",
      "still": "triceratops-size-comparison-16x9.png",
-     "still_sha256": "f55dc9793ab0bd0fca02d9b6b682a931f553ebe63241de8100b32768802f2218",
+     "still_sha256": "be3b19a955c13fa7e224ad5a4a56561e68214270dbb98ef2cae0f0936097cffb",
      "w": 2400,
      "h": 1350,
      "ppm": 260.6219,
@@ -764,30 +764,30 @@
      "model": "museum-two/animal-queue/animals/ankylosaurus/judged/round-14/animal.glb",
      "sha256": "b28921dc8b06b586dcdfafeff82d2378b7f2871ce87077391e23c3325580682f",
      "still": "ankylosaurus-size-comparison-1x1.png",
-     "still_sha256": "69ec6aad8621c55bd5041e3796ba118535af55a6dc9edbf6d08d7e573d64d58f",
+     "still_sha256": "65625f858d09de8b326851c154299e1ef1b715c66247916e1cdd644256ea9c19",
      "w": 1600,
      "h": 1600,
-     "ppm": 198.067,
+     "ppm": 309.0909,
      "frame_m": [
-      -3.613,
-      4.4651,
-      -3.189,
-      4.8891
+      -0.9,
+      4.2765,
+      -1.7382,
+      3.4383
      ],
      "person_px": [
-      1402,
-      632,
+      1349,
+      537,
       1495,
-      968
+      1063
      ],
      "animal_px": [
-      79,
-      632,
-      1345,
-      968
+      0,
+      537,
+      1260,
+      1063
      ],
-     "front_end": false,
-     "cut": null,
+     "front_end": true,
+     "cut": "the hips and tail behind x -0.9 m",
      "exception": null
     },
     "size_4x3": {
@@ -796,7 +796,7 @@
      "model": "museum-two/animal-queue/animals/ankylosaurus/judged/round-14/animal.glb",
      "sha256": "b28921dc8b06b586dcdfafeff82d2378b7f2871ce87077391e23c3325580682f",
      "still": "ankylosaurus-size-comparison-4x3.png",
-     "still_sha256": "cf35260069dce754284346509eda298be362ae6fe98f5fd999f03a06ece89286",
+     "still_sha256": "7703132cde0453b25d6730b0e905a2f28d9bb540240eb06dbe58d3150b06f184",
      "w": 1600,
      "h": 1200,
      "ppm": 198.067,
@@ -828,7 +828,7 @@
      "model": "museum-two/animal-queue/animals/ankylosaurus/judged/round-14/animal.glb",
      "sha256": "b28921dc8b06b586dcdfafeff82d2378b7f2871ce87077391e23c3325580682f",
      "still": "ankylosaurus-size-comparison-16x9.png",
-     "still_sha256": "40fa0e6470aa9d6f6299f5cb0c5f6b285a81d4036eb4de448cc3310996bb4867",
+     "still_sha256": "2a457504473958962dbb260ad36131c7a12c89d5fbc6c12e4929baba75d2e009",
      "w": 2400,
      "h": 1350,
      "ppm": 290.7454,

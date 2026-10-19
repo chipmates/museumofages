@@ -148,7 +148,7 @@
     1600
    ],
    "sizes": "(min-width: 1280px) 690px, (min-width: 960px) 54vw, (min-width: 600px) calc(100vw - 64px), calc(100vw - 40px)",
-   "person": "90.81% 45.19%"
+   "person": "89.34% 42.5%"
   },
   "size_4x3": {
    "stem": "animals-triceratops-size-comparison-4x3",
@@ -156,7 +156,7 @@
     1600
    ],
    "sizes": "(min-width: 1280px) 690px, (min-width: 960px) 54vw, (min-width: 600px) calc(100vw - 64px), calc(100vw - 40px)",
-   "person": "90.84% 43.58%"
+   "person": "90.81% 43.58%"
   },
   "size_16x9": {
    "stem": "animals-triceratops-size-comparison-16x9",
@@ -680,7 +680,7 @@
     "caption": "Triceratops size comparison: our Triceratops, 6.9 m (23 ft) from beak to tail, beside a person 1.70 m tall, to one scale.",
     "lead": "For slides and posts, this size comparison comes in three shapes, all under the same licence.",
     "alts": {
-     "size_1x1": "Triceratops size comparison: our whole Triceratops from the side, frill and horns at the front, and a grey person 1.70 m tall in front of the horns.",
+     "size_1x1": "Triceratops size comparison: the front of our Triceratops, its head with frill and horns, its front legs and chest, and a grey person 1.70 m tall in front of the horns.",
      "size_4x3": "Triceratops beside a person, a size comparison: our Triceratops from the side with its wide frill and long brow horns, and a grey person 1.70 m tall facing its head.",
      "size_16x9": "Triceratops size comparison, the whole animal from the side: our Triceratops, 6.9 m (23 ft) from beak to tail, and a grey person 1.70 m tall in front of it."
     },

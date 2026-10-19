@@ -148,7 +148,7 @@
     1600
    ],
    "sizes": "(min-width: 1280px) 690px, (min-width: 960px) 54vw, (min-width: 600px) calc(100vw - 64px), calc(100vw - 40px)",
-   "person": "90.81% 45.19%"
+   "person": "89.34% 42.5%"
   },
   "size_4x3": {
    "stem": "animals-triceratops-size-comparison-4x3",
@@ -156,7 +156,7 @@
     1600
    ],
    "sizes": "(min-width: 1280px) 690px, (min-width: 960px) 54vw, (min-width: 600px) calc(100vw - 64px), calc(100vw - 40px)",
-   "person": "90.84% 43.58%"
+   "person": "90.81% 43.58%"
   },
   "size_16x9": {
    "stem": "animals-triceratops-size-comparison-16x9",
@@ -680,7 +680,7 @@
     "caption": "Comparação de tamanho do Triceratops: nosso Triceratops, 6,9 m do bico à cauda, ao lado de uma pessoa de 1,70 m, na mesma escala.",
     "lead": "Para slides e publicações, esta comparação de tamanho vem em três formatos, todos com a mesma licença.",
     "alts": {
-     "size_1x1": "Comparação de tamanho do Triceratops: nosso Triceratops inteiro de lado, com o babado e os chifres na frente, e uma pessoa cinza de 1,70 m diante dos chifres.",
+     "size_1x1": "Comparação de tamanho do Triceratops: a parte da frente do nosso Triceratops, com a cabeça, o babado, os chifres e as patas dianteiras, e uma pessoa cinza de 1,70 m diante dos chifres.",
      "size_4x3": "O Triceratops ao lado de uma pessoa, em comparação de tamanho: nosso Triceratops de lado, com o babado largo e os chifres longos da testa, e uma pessoa cinza de 1,70 m diante da cabeça.",
      "size_16x9": "Comparação de tamanho do Triceratops, o animal inteiro de lado: nosso Triceratops, 6,9 m do bico à cauda, e uma pessoa cinza de 1,70 m na frente dele."
     },
