@@ -20,7 +20,7 @@
     "size_4x3",
     "size_16x9"
    ],
-   "figure": "size_16x9"
+   "figure": "size_4x3"
   }
  },
  "pics": {
@@ -359,7 +359,7 @@
    "scale": {
     "pic": "vs",
     "tag": "tag_made",
-    "what": "Our Triceratops and our T. rex to one scale, both facing the same way, with the person. Our T. rex, after SUE, is about 11.4 m (37 ft) long, about 1.6 times our Triceratops. Side by side for size only, never as a fight.",
+    "what": "Our Triceratops and our T. rex to one scale, both facing the same way, with the person. Our T. rex, after SUE, is about 11 m (36 ft) long, about 1.6 times our Triceratops. Side by side for size only, never as a fight.",
     "alt": "A Triceratops on four legs and a T. rex on two, both from the side facing the same way, the T. rex longer and much higher at the hips, beside the grey person.",
     "marks": [
      {
@@ -368,7 +368,7 @@
      },
      {
       "span": "t-rex",
-      "text": "Our T. rex, after SUE, about 11.4 m"
+      "text": "Our T. rex, after SUE, about 11 m"
      },
      {
       "span": "person",
@@ -509,6 +509,10 @@
    "nav": "More questions",
    "h": "More questions",
    "items": [
+    {
+     "q": "How tall was Triceratops?",
+     "a": "No height has been published, but on photographs of the Washington skeleton we read about 2.3 to 2.5 m (7.5 to 8 ft) at the top of the back over the hips. Ours, built after that skeleton, is 2.5 m (8 ft) there, about one and a half people high, and the top of its frill is about 2.4 m (7.8 ft) up."
+    },
     {
      "q": "Was Triceratops bigger than T. rex?",
      "a": "No. A big adult Triceratops was about 7 to 8 m (23 to 26 ft) long, a large T. rex about 12 m (39 ft) and far higher at the hips. In weight they were closer: about 6.5 to 8.5 tonnes for the Washington Triceratops, about 8 to 9 for a large T. rex. Only the skull was longer: about 2 m against SUE's 1.4 m."
@@ -668,7 +672,7 @@
    "h": "Use our pictures",
    "paras": [
     [
-     "The four pictures of the Triceratops on this page, the side view, the head, the pair with our T. rex and the skeleton, are our own work under ",
+     "The five pictures of the Triceratops on this page, the side view, the head, the pair with our T. rex, the skeleton and the size comparison below in three shapes, are our own work under ",
      {
       "text": "CC BY-SA 4.0",
       "href": "https://creativecommons.org/licenses/by-sa/4.0/"
@@ -677,19 +681,18 @@
     ]
    ],
    "shapes": {
-    "caption": "Triceratops size comparison: our Triceratops, 6.9 m (23 ft) from beak to tail, beside a person 1.70 m tall, to one scale.",
+    "caption": "Triceratops size comparison, the whole animal: our Triceratops, 6.9 m (23 ft) from beak to tail, beside a person 1.70 m tall, to one scale.",
     "lead": "For slides and posts, this size comparison comes in three shapes, all under the same licence.",
     "alts": {
-     "size_1x1": "Triceratops size comparison: the front of our Triceratops, its head with frill and horns, its front legs and chest, and a grey person 1.70 m tall in front of the horns.",
-     "size_4x3": "Triceratops beside a person, a size comparison: our Triceratops from the side with its wide frill and long brow horns, and a grey person 1.70 m tall facing its head.",
+     "size_1x1": "Triceratops size comparison, the front: the head of our Triceratops with its frill and horns, its chest and front legs, and a grey person 1.70 m tall in front of the horns.",
+     "size_4x3": "Triceratops beside a person, a size comparison: our whole Triceratops from the side, its wide frill and long brow horns, and a grey person 1.70 m tall in front of its head.",
      "size_16x9": "Triceratops size comparison, the whole animal from the side: our Triceratops, 6.9 m (23 ft) from beak to tail, and a grey person 1.70 m tall in front of it."
     },
     "links": {
      "size_1x1": "Square (1:1)",
      "size_4x3": "Slide (4:3)",
      "size_16x9": "Wide (16:9)"
-    },
-    "draft": true
+    }
    }
   }
  ]

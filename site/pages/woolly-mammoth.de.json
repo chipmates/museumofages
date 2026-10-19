@@ -20,7 +20,7 @@
     "size_4x3",
     "size_16x9"
    ],
-   "figure": "size_16x9"
+   "figure": "size_4x3"
   }
  },
  "pics": {
@@ -106,7 +106,7 @@
  },
  "meta": {
   "title": "Wollhaarmammut-Größe: 2,7 bis 3,3 m hoch | Museum of Ages",
-  "description": "Wollhaarmammut-Größe: Ein sibirischer Bulle maß an der Schulter etwa 2,7 bis 2,9 m und wog etwa 4 bis 5 t. Unser Mammut ist ein echter Bulle, im Maßstab.",
+  "description": "Wollhaarmammut-Größe: Ein sibirischer Bulle maß an der Schulter etwa 2,7 bis 2,9 m und wog etwa 4 bis 5 t. Unser Mammut ist einem echten Bullen nachgebaut.",
   "og_title": "Wollhaarmammut-Größe: etwa 2,7 bis 3,3 m hoch",
   "og_image_alt": "Unser Wollhaarmammut, der Beresowka-Bulle, von der Seite im dunkelbraunen Fell, mit hoch gewölbtem Kopf, abfallendem Rücken, zwei gebogenen Stoßzähnen und einer Marke an der Schulter bei 271 cm, seiner rekonstruierten Schulterhöhe. Der graue Mensch daneben, 1,70 m groß, steht niedriger als die Spitzen der Stoßzähne."
  },
@@ -124,13 +124,12 @@
  },
  "top": {
   "h1": "Wie groß war ein Mammut?",
-  "answer": "Ein ausgewachsener sibirischer Bulle des Wollhaarmammuts maß an der Schulter etwa 2,7 bis 2,9 m und wog etwa 4 bis 5 t. Die größeren Bullen aus Europa kamen auf etwa 3 bis 3,3 m und etwa 5 bis 7 t. Unser Mammut ist ein einzelner echter Bulle, 1900 im Permafrost Sibiriens gefunden: 2,71 m an der Schulter, etwa 4,2 t, aus seinen Knochen rekonstruiert. Neben dem Menschen von 1,70 m ist seine Schulter etwa anderthalb Menschen hoch.",
-  "answer_more": "Ein sibirischer Mammutbulle war also etwa so hoch wie ein Bulle des Asiatischen Elefanten und für seine Höhe etwas schwerer. Ein großer Bulle des Afrikanischen Elefanten steht etwa einen halben Meter höher und wiegt mehr.",
+  "answer": "Ein ausgewachsener sibirischer Bulle des Wollhaarmammuts maß an der Schulter etwa 2,7 bis 2,9 m und wog etwa 4 bis 5 t. Die größeren Bullen aus Europa kamen auf etwa 3 bis 3,3 m und etwa 5 bis 7 t. Unser Mammut ist nach einem einzelnen echten Bullen gebaut, der 1900 im Permafrost Sibiriens gefunden wurde: 2,71 m an der Schulter, etwa 4,2 t, aus seinen Knochen rekonstruiert. Neben dem Menschen von 1,70 m ist seine Schulter etwa anderthalb Menschen hoch.",
   "scale": {
    "pic": "side",
    "tag": "tag_made",
-   "what": "Unser Wollhaarmammut neben einem Menschen von 1,70 m, im selben Maßstab. Es ist in Größe und Gerüst nach einem einzigen echten Tier gebaut, dem Beresowka-Bullen, 1900 im Permafrost im Nordosten Sibiriens gefunden. Die Marke an seiner Schulter zeigt seine eigene Schulterhöhe am lebenden Tier, 271 cm, aus seinen Knochen rekonstruiert. Als er starb, hatte er noch einen Stoßzahn, den linken. Der rechte war lange vorher ausgefallen, und die Jäger, die ihn fanden, trennten den linken ab und verkauften ihn. Unser Mammut trägt beide, der rechte ist das Spiegelbild des linken, eine Rekonstruktion.",
-   "alt": "Unser Wollhaarmammut, der Beresowka-Bulle, von der Seite im dunkelbraunen Fell, mit hoch gewölbtem Kopf, abfallendem Rücken, zwei gebogenen Stoßzähnen und einer Marke an der Schulter bei 271 cm, seiner rekonstruierten Schulterhöhe. Der graue Mensch daneben, 1,70 m groß, steht niedriger als die Spitzen der Stoßzähne.",
+   "what": "Größenvergleich: unser Wollhaarmammut neben einem Menschen von 1,70 m, im selben Maßstab. Es ist in Größe und Gerüst nach einem einzigen echten Tier gebaut, dem Beresowka-Bullen, 1900 im Permafrost im Nordosten Sibiriens gefunden. Die Marke an seiner Schulter zeigt seine eigene Schulterhöhe am lebenden Tier, 271 cm, aus seinen Knochen rekonstruiert. Als er starb, hatte er noch einen Stoßzahn, den linken. Der rechte war lange vorher ausgefallen, und die Jäger, die ihn fanden, trennten den linken ab und verkauften ihn. Unser Mammut trägt beide, der rechte ist das Spiegelbild des linken, eine Rekonstruktion.",
+   "alt": "Größenvergleich: unser Wollhaarmammut, der Beresowka-Bulle, von der Seite im dunkelbraunen Fell, mit hoch gewölbtem Kopf, abfallendem Rücken, zwei gebogenen Stoßzähnen und einer Marke an der Schulter bei 271 cm, seiner rekonstruierten Schulterhöhe. Der graue Mensch daneben, 1,70 m groß, steht niedriger als die Spitzen der Stoßzähne.",
    "note": "Unsere eigene Rekonstruktion, nach veröffentlichten Maßen in Code gebaut und in unserer Engine gerendert. Keine Fotos.",
    "marks": [
     {
@@ -169,8 +168,8 @@
   {
    "type": "numbers",
    "id": "numbers",
-   "nav": "Die Zahlen",
-   "h": "Die Zahlen",
+   "nav": "Wollhaarmammut-Steckbrief: die Zahlen",
+   "h": "Wollhaarmammut-Steckbrief: die Zahlen",
    "unit": "In Metern und Tonnen. Schulterhöhe am lebenden Tier, ausgewachsene Bullen, wo die Zeile nichts anderes sagt. Eine leere Zelle hat keine belegte Zahl.",
    "cols": [
     "Tier",
@@ -440,6 +439,10 @@
    "h": "Weitere Fragen",
    "items": [
     {
+     "q": "Gibt es heute noch Mammute?",
+     "a": "Nein. Die letzten bekannten Wollhaarmammute lebten bis vor etwa 4.000 Jahren auf der Wrangelinsel im Nordpolarmeer vor Sibirien."
+    },
+    {
      "q": "Gibt es noch andere gefrorene Mammute?",
      "a": "Ja. Das Museum in St. Petersburg nennt mehrere weitere. Darunter: das Adams-Mammut von 1799, das erste vollständige Skelett, das die Wissenschaft besaß, und das Taimyr-Mammut von 1948 mit Muskeln, Haut und Haar. Gefrorene Körper sind der Grund, warum Rüssel, Ohren und Fell dieser Art überhaupt bekannt sind."
     },
@@ -568,19 +571,18 @@
     ]
    ],
    "shapes": {
-    "caption": "Wollhaarmammut im Größenvergleich: unser Wollhaarmammut, nach dem Beresowka-Bullen gebaut, neben einem Menschen von 1,70 m, im selben Maßstab.",
+    "caption": "Wollhaarmammut im Größenvergleich, das ganze Tier: unser Wollhaarmammut, nach dem Beresowka-Bullen gebaut, 2,71 m an der Schulter, neben einem Menschen von 1,70 m, im selben Maßstab.",
     "lead": "Für Folien und Beiträge gibt es diesen Größenvergleich in drei Formaten, alle unter derselben Lizenz.",
     "alts": {
      "size_1x1": "Wollhaarmammut im Größenvergleich: unser ganzes Mammut von der Seite mit gebogenen Stoßzähnen und Rüssel, vor den Stoßzähnen ein grauer Mensch von 1,70 m.",
-     "size_4x3": "Wollhaarmammut neben einem Menschen im Größenvergleich: unser Mammut im dunkelbraunen Fell, mit hoch gewölbtem Kopf und abfallendem Rücken, daneben ein grauer Mensch von 1,70 m.",
-     "size_16x9": "Wollhaarmammut im Größenvergleich, das ganze Tier von der Seite: unser Mammut, nach dem Beresowka-Bullen gebaut, und vor dem Rüssel ein grauer Mensch von 1,70 m."
+     "size_4x3": "Wollhaarmammut neben einem Menschen im Größenvergleich: unser Mammut im dunkelbraunen Fell, mit hoch gewölbtem Kopf und abfallendem Rücken, vor dem Rüssel ein grauer Mensch von 1,70 m.",
+     "size_16x9": "Wollhaarmammut im Größenvergleich, das ganze Tier von der Seite: unser Mammut, nach dem Beresowka-Bullen gebaut, und ein grauer Mensch von 1,70 m, dessen Kopf unter seiner Schulter bleibt."
     },
     "links": {
      "size_1x1": "Quadrat (1:1)",
      "size_4x3": "Folie (4:3)",
      "size_16x9": "Breitbild (16:9)"
-    },
-    "draft": true
+    }
    }
   }
  ]

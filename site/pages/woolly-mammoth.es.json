@@ -20,7 +20,7 @@
     "size_4x3",
     "size_16x9"
    ],
-   "figure": "size_16x9"
+   "figure": "size_4x3"
   }
  },
  "pics": {
@@ -125,7 +125,6 @@
  "top": {
   "h1": "¿Cuánto medía el mamut lanudo?",
   "answer": "Un macho adulto de mamut lanudo de Siberia medía unos 2,7 a 2,9 m a la altura del hombro y pesaba unas 4 a 5 toneladas. Los machos más grandes de Europa llegaban a unos 3 a 3,3 m y a unas 5 a 7 toneladas. El nuestro es un solo macho siberiano real, encontrado congelado en 1900: 2,71 m a la altura del hombro y unas 4,2 toneladas, reconstruidos a partir de sus huesos. Junto a la persona de 1,70 m, su hombro queda más o menos a la altura de una persona y media.",
-  "answer_more": "Un macho de mamut de Siberia era más o menos igual de alto que un macho de elefante asiático, y un poco más pesado para su altura. Un macho grande de elefante africano de sabana es más o menos medio metro más alto y pesa más.",
   "scale": {
    "pic": "side",
    "tag": "tag_made",

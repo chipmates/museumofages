@@ -20,7 +20,7 @@
     "size_4x3",
     "size_16x9"
    ],
-   "figure": "size_16x9"
+   "figure": "size_4x3"
   }
  },
  "pics": {
@@ -125,7 +125,6 @@
  "top": {
   "h1": "Qual era o tamanho do mamute-lanoso?",
   "answer": "Um macho adulto de mamute-lanoso, ou mamute-lanudo, da Sibéria tinha cerca de 2,7 a 2,9 m de altura no ombro e pesava cerca de 4 a 5 toneladas. Os machos maiores da Europa chegavam a cerca de 3 a 3,3 m e a cerca de 5 a 7 toneladas. O nosso é um único macho siberiano real, encontrado congelado em 1900: 2,71 m no ombro e cerca de 4,2 toneladas, reconstruídos a partir dos ossos dele. Ao lado da pessoa de 1,70 m, o ombro dele fica mais ou menos na altura de uma pessoa e meia.",
-  "answer_more": "Um macho de mamute da Sibéria era mais ou menos tão alto quanto um macho de elefante-asiático, e um pouco mais pesado para a altura dele. Um macho grande de elefante-africano-da-savana é mais ou menos meio metro mais alto e pesa mais.",
   "scale": {
    "pic": "side",
    "tag": "tag_made",

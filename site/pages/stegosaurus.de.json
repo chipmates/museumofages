@@ -28,7 +28,7 @@
     "size_4x3",
     "size_16x9"
    ],
-   "figure": "size_16x9"
+   "figure": "size_4x3"
   }
  },
  "pics": {
@@ -196,13 +196,13 @@
  },
  "top": {
   "h1": "Wie groß war ein Stegosaurus?",
-  "answer": "Ein Stegosaurus wurde bis zu etwa 9 m lang, eine runde Zahl des Londoner Natural History Museum, ohne ein benanntes Skelett. Sophie, das berühmte Skelett dort, ist etwa 5,6 m lang und stammt von einem jungen Tier, das noch wuchs. Ein 3D-Modell des Skeletts ergibt etwa 1,6 t (1,1 bis 2,3 t), und wie hoch ein lebender Stegosaurus war, ist nicht veröffentlicht. Unser Stegosaurus, nach Sophie gebaut, ist 5,6 m lang, und sein Rücken ist über der Hüfte 1,9 m hoch, höher als ein Mensch.",
+  "answer": "Ein Stegosaurus wurde bis zu etwa 9 m lang, eine runde Zahl des Londoner Natural History Museum, das kein Skelett dazu nennt. Sophie, das berühmte Skelett dort, ist etwa 5,6 m lang und stammt von einem jungen Tier, das noch wuchs. Ein 3D-Modell des Skeletts ergibt etwa 1,6 t (1,1 bis 2,3 t), und wie hoch ein lebender Stegosaurus war, ist nicht veröffentlicht. Unser Stegosaurus, nach Sophie gebaut, ist 5,6 m lang, und sein Rücken ist über der Hüfte 1,9 m hoch, höher als ein Mensch.",
   "answer_more": "Über den Rücken liefen zwei Reihen hoher Knochenplatten, abwechselnd links und rechts, nie paarweise. Am Schwanzende saßen vier Stacheln, die zur Seite zeigten, nicht nach oben.",
   "scale": {
    "pic": "side",
    "tag": "tag_made",
-   "what": "Unser Stegosaurus, nach Sophie gebaut, neben einem Menschen von 1,70 m, im selben Maßstab: 5,6 m vom Schnabel bis zur Schwanzspitze, so lang wie gut drei Menschen, die hintereinander liegen, der Kopf etwa auf Schulterhöhe des Menschen.",
-   "alt": "Unser Stegosaurus von der Seite, 5,6 m vom Schnabel bis zur Schwanzspitze, der Rücken über der Hüfte 1,9 m hoch: ein kleiner, tief sitzender Kopf, zwei Reihen hoher Platten auf dem gewölbten Rücken, zwei seiner vier Schwanzstacheln, die Vorderbeine kürzer als die Hinterbeine. Daneben ein grauer Mensch von 1,70 m, dessen Kopf unter der Oberkante des Rückens bleibt.",
+   "what": "Größenvergleich: unser Stegosaurus, nach Sophie gebaut, neben einem Menschen von 1,70 m, im selben Maßstab. Er misst 5,6 m vom Schnabel bis zur Schwanzspitze, so lang wie gut drei Menschen, die hintereinander liegen, und trägt den Kopf etwa auf Schulterhöhe des Menschen.",
+   "alt": "Größenvergleich: unser Stegosaurus von der Seite, 5,6 m vom Schnabel bis zur Schwanzspitze, der Rücken über der Hüfte 1,9 m hoch: ein kleiner, tief sitzender Kopf, zwei Reihen hoher Platten auf dem gewölbten Rücken, zwei seiner vier Schwanzstacheln, die Vorderbeine kürzer als die Hinterbeine. Daneben ein grauer Mensch von 1,70 m, dessen Kopf unter der Oberkante des Rückens bleibt.",
    "note": "Unsere eigene Rekonstruktion, nach veröffentlichten Maßen in Code gebaut und in unserer Engine gerendert. Keine Fotos.",
    "marks": [
     {
@@ -300,7 +300,7 @@
     {
      "cells": [
       "T. rex, SUE",
-      "etwa 12 m, die Montage, unser T. rex 11,4 m",
+      "etwa 12 m, die Montage, unser T. rex in seiner Haltung etwa 11 m",
       "an der Hüfte etwa 4 m, nach dem Museum",
       "etwa 8 bis 9 t, nach einem Knochen und drei Modellen",
       "wie auf unserer T.-rex-Seite"
@@ -420,13 +420,13 @@
    "h": "Stegosaurus, T. rex und Triceratops",
    "paras": [
     "Dem T. rex und dem Triceratops ist der Stegosaurus nie begegnet. Zwischen dem letzten Stegosaurus und den ersten T. rex und Triceratops lagen etwa 80 Millionen Jahre, selbst knapp gerechnet etwa 75. Das ist mehr als die 66 Millionen Jahre zwischen dem letzten T. rex und uns: Der T. rex steht uns zeitlich näher als dem Stegosaurus. Filme, in denen sich die Tiere begegnen, sind erfunden. Zu den Nachbarn des Stegosaurus gehörten der Langhals Diplodocus und der Raubsaurier Allosaurus.",
-    "Im Bild ist unser T. rex doppelt so lang wie unser Stegosaurus, und die Spitze von dessen höchster Platte reicht etwa so hoch wie der Rücken unseres Triceratops."
+    "Im Bild ist unser T. rex fast doppelt so lang wie unser Stegosaurus, und die Spitze von dessen höchster Platte reicht etwa so hoch wie der Rücken unseres Triceratops."
    ],
    "scale": {
     "pic": "vs",
     "tag": "tag_made",
     "what": "Unser Stegosaurus, unser Triceratops und unser T. rex im selben Maßstab, in dieselbe Richtung gewandt, nur zum Größenvergleich. Zwischen dem Stegosaurus und den beiden anderen lagen etwa 80 Millionen Jahre: Begegnet sind sich die drei nie.",
-    "alt": "Drei Dinosaurier in drei Reihen, alle von der Seite und in dieselbe Richtung gewandt, jeder neben dem grauen Menschen: ein Stegosaurus mit Platten und Schwanzstacheln, ein Triceratops mit Hörnern und Nackenschild und ein T. rex auf zwei Beinen, doppelt so lang wie der Stegosaurus.",
+    "alt": "Drei Dinosaurier in drei Reihen, alle von der Seite und in dieselbe Richtung gewandt, jeder neben dem grauen Menschen: ein Stegosaurus mit Platten und Schwanzstacheln, ein Triceratops mit Hörnern und Nackenschild und ein T. rex auf zwei Beinen, fast doppelt so lang wie der Stegosaurus.",
     "note": [
      "Der Umriss unseres Triceratops folgt dem Körpermodell von ",
      {
@@ -451,7 +451,7 @@
      },
      {
       "span": "t-rex",
-      "text": "Unser T. rex, nach SUE, etwa 11,4 m"
+      "text": "Unser T. rex, nach SUE, etwa 11 m"
      },
      {
       "span": "person",
@@ -540,6 +540,10 @@
     {
      "q": "Wie schwer war ein Stegosaurus?",
      "a": "Nach einem 3D-Modell des Skeletts kommt Sophie, ein junges Tier, auf etwa 1,6 t (1,1 bis 2,3 t), so viel wie ein kleines Nashorn, sagt das Londoner Museum. Formeln nach der Dicke der Beinknochen ergeben mehr, weil ein junges Tier für sein Gewicht dicke Beine hat. Für die größten Tiere der Gattung nennt keine Studie, die wir gelesen haben, ein Gewicht. Sachbücher über Dinosaurier nennen für einen ausgewachsenen Stegosaurus stenops etwa 6,5 m und 3,5 t, für die größten bis etwa 5 t. Das sind Schätzungen aus Büchern für ausgewachsene Tiere, Sophies 1,6 t dagegen stammen aus dem Modell eines jungen Tiers."
+    },
+    {
+     "q": "Wie hoch war ein Stegosaurus?",
+     "a": "Wie hoch ein lebender Stegosaurus war, ist nicht veröffentlicht, und Sophie, als Montage in London aufgestellt, misst mit erhobenem Schwanz an der höchsten Stelle 2,9 m. Unser Stegosaurus, nach Sophie gebaut, misst an der Oberkante des Rückens über der Hüfte 1,9 m, und die Spitze seiner höchsten Platte liegt bei 2,5 m, weit über dem Kopf des Menschen."
     },
     {
      "q": "Was bedeutet der Name Stegosaurus?",
@@ -689,7 +693,7 @@
    "h": "Unsere Bilder nutzen",
    "paras": [
     [
-     "Die vier Bilder des Stegosaurus auf dieser Seite, die Seitenansicht, Platten und Stacheln, das Skelett und die drei mit unserem Triceratops und unserem T. rex, sind unsere eigene Arbeit unter ",
+     "Die fünf Bilder des Stegosaurus auf dieser Seite, die Seitenansicht, Platten und Stacheln, das Skelett, die drei mit unserem Triceratops und unserem T. rex und der Größenvergleich unten in drei Formaten, sind unsere eigene Arbeit unter ",
      {
       "text": "CC BY-SA 4.0",
       "href": "https://creativecommons.org/licenses/by-sa/4.0/deed.de"
@@ -698,19 +702,18 @@
     ]
    ],
    "shapes": {
-    "caption": "Stegosaurus im Größenvergleich: unser Stegosaurus, 5,6 m vom Schnabel bis zur Schwanzspitze, neben einem Menschen von 1,70 m, im selben Maßstab.",
+    "caption": "Stegosaurus im Größenvergleich, das ganze Tier: unser Stegosaurus, 5,6 m vom Schnabel bis zur Schwanzspitze, neben einem Menschen von 1,70 m, im selben Maßstab.",
     "lead": "Für Folien und Beiträge gibt es diesen Größenvergleich in drei Formaten, alle unter derselben Lizenz.",
     "alts": {
-     "size_1x1": "Stegosaurus im Größenvergleich: unser ganzer Stegosaurus von der Seite, hohe Platten auf dem Rücken, vor seinem Kopf ein grauer Mensch von 1,70 m.",
-     "size_4x3": "Stegosaurus neben einem Menschen im Größenvergleich: unser Stegosaurus mit zwei Reihen Platten und den Schwanzstacheln, vor dem kleinen Kopf ein grauer Mensch von 1,70 m.",
+     "size_1x1": "Stegosaurus im Größenvergleich: unser ganzer Stegosaurus von der Seite, hohe Platten auf dem gewölbten Rücken, vor seinem Kopf ein grauer Mensch von 1,70 m.",
+     "size_4x3": "Stegosaurus neben einem Menschen im Größenvergleich: unser Stegosaurus mit zwei Reihen Platten und den Stacheln am Schwanzende, vor dem kleinen Kopf ein grauer Mensch von 1,70 m.",
      "size_16x9": "Stegosaurus im Größenvergleich, das ganze Tier von der Seite: unser Stegosaurus, 5,6 m vom Schnabel bis zur Schwanzspitze, und davor ein grauer Mensch von 1,70 m."
     },
     "links": {
      "size_1x1": "Quadrat (1:1)",
      "size_4x3": "Folie (4:3)",
      "size_16x9": "Breitbild (16:9)"
-    },
-    "draft": true
+    }
    }
   }
  ]

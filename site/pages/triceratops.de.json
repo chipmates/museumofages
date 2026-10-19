@@ -25,7 +25,7 @@
     "size_4x3",
     "size_16x9"
    ],
-   "figure": "size_16x9"
+   "figure": "size_4x3"
   }
  },
  "pics": {
@@ -199,8 +199,8 @@
   "scale": {
    "pic": "side",
    "tag": "tag_made",
-   "what": "Unser Triceratops neben einem Menschen von 1,70 m, im selben Maßstab, gebaut nach dem Skelett in Washington aus etwa zehn Tieren. Er misst 6,9 m vom Schnabel bis zur Schwanzspitze, und sein Rücken liegt über der Hüfte etwa 2,5 m hoch, so hoch wie anderthalb Menschen übereinander.",
-   "alt": "Unser Triceratops von der Seite, 6,9 m vom Schnabel bis zum Schwanz und über der Hüfte 2,5 m hoch: ein breiter Nackenschild hinter dem Kopf, zwei lange Hörner über den Augen, ein kurzes auf der Nase, vier Beine. Daneben ein grauer Mensch von 1,70 m, der etwa bis zu zwei Dritteln der Rückenhöhe reicht.",
+   "what": "Größenvergleich: unser Triceratops neben einem Menschen von 1,70 m, im selben Maßstab, gebaut nach dem Skelett in Washington aus etwa zehn Tieren. Er misst 6,9 m vom Schnabel bis zur Schwanzspitze, und sein Rücken liegt über der Hüfte etwa 2,5 m hoch, so hoch wie anderthalb Menschen übereinander.",
+   "alt": "Größenvergleich: unser Triceratops von der Seite, 6,9 m vom Schnabel bis zum Schwanz und über der Hüfte 2,5 m hoch: ein breiter Nackenschild hinter dem Kopf, zwei lange Hörner über den Augen, ein kurzes auf der Nase, vier Beine. Daneben ein grauer Mensch von 1,70 m, der etwa bis zu zwei Dritteln der Rückenhöhe reicht.",
    "note": [
     "Unsere eigene Rekonstruktion, nach veröffentlichten Maßen in Code gebaut und in unserer Engine gerendert. Keine Fotos. ",
     "Der Umriss unseres Triceratops folgt dem Körpermodell von ",
@@ -364,7 +364,7 @@
    "scale": {
     "pic": "vs",
     "tag": "tag_made",
-    "what": "Unser Triceratops und unser T. rex im selben Maßstab, beide in dieselbe Richtung gewandt, mit dem Menschen. Unser T. rex, nach SUE gebaut, ist etwa 11,4 m lang, etwa 1,6-mal so lang wie unser Triceratops. Nebeneinander nur zum Größenvergleich, nie als Kampf.",
+    "what": "Unser Triceratops und unser T. rex im selben Maßstab, beide in dieselbe Richtung gewandt, mit dem Menschen. Unser T. rex, nach SUE gebaut, ist etwa 11 m lang, etwa 1,6-mal so lang wie unser Triceratops. Nebeneinander nur zum Größenvergleich, nie als Kampf.",
     "alt": "Ein Triceratops auf vier Beinen und ein T. rex auf zwei, beide von der Seite in dieselbe Richtung gewandt, der T. rex länger und an der Hüfte viel höher, daneben der graue Mensch.",
     "marks": [
      {
@@ -373,7 +373,7 @@
      },
      {
       "span": "t-rex",
-      "text": "Unser T. rex, nach SUE, etwa 11,4 m"
+      "text": "Unser T. rex, nach SUE, etwa 11 m"
      },
      {
       "span": "person",
@@ -514,6 +514,10 @@
    "nav": "Weitere Fragen",
    "h": "Weitere Fragen",
    "items": [
+    {
+     "q": "Wie hoch war ein Triceratops?",
+     "a": "Veröffentlicht ist keine Höhe, doch auf Fotos des Skeletts in Washington lesen wir an der Oberkante des Rückens über der Hüfte etwa 2,3 bis 2,5 m ab. Unser Triceratops, nach diesem Skelett gebaut, misst dort 2,5 m, so hoch wie anderthalb Menschen übereinander, und die Oberkante seines Nackenschilds liegt bei etwa 2,4 m."
+    },
     {
      "q": "War der Triceratops größer als der T. rex?",
      "a": "Nein. Ein großer erwachsener Triceratops war etwa 7 bis 8 m lang, ein großer T. rex etwa 12 m und an der Hüfte viel höher. Beim Gewicht lagen sie näher beieinander: etwa 6,5 bis 8,5 t für den Triceratops in Washington, etwa 8 bis 9 t für einen großen T. rex. Nur der Schädel war länger: etwa 2 m gegen 1,4 m bei SUE."
@@ -673,7 +677,7 @@
    "h": "Unsere Bilder nutzen",
    "paras": [
     [
-     "Die vier Bilder des Triceratops auf dieser Seite, die Seitenansicht, der Kopf, das Paar mit unserem T. rex und das Skelett, sind unsere eigene Arbeit unter ",
+     "Die fünf Bilder des Triceratops auf dieser Seite, die Seitenansicht, der Kopf, das Paar mit unserem T. rex, das Skelett und der Größenvergleich unten in drei Formaten, sind unsere eigene Arbeit unter ",
      {
       "text": "CC BY-SA 4.0",
       "href": "https://creativecommons.org/licenses/by-sa/4.0/deed.de"
@@ -682,19 +686,18 @@
     ]
    ],
    "shapes": {
-    "caption": "Triceratops im Größenvergleich: unser Triceratops, 6,9 m vom Schnabel bis zum Schwanz, neben einem Menschen von 1,70 m, im selben Maßstab.",
+    "caption": "Triceratops im Größenvergleich, das ganze Tier: unser Triceratops, 6,9 m vom Schnabel bis zum Schwanz, neben einem Menschen von 1,70 m, im selben Maßstab.",
     "lead": "Für Folien und Beiträge gibt es diesen Größenvergleich in drei Formaten, alle unter derselben Lizenz.",
     "alts": {
-     "size_1x1": "Triceratops im Größenvergleich: der vordere Teil unseres Triceratops mit Kopf, Nackenschild, Hörnern und Vorderbeinen, vor den Hörnern ein grauer Mensch von 1,70 m.",
-     "size_4x3": "Triceratops neben einem Menschen im Größenvergleich: unser Triceratops von der Seite mit breitem Nackenschild und langen Stirnhörnern, vor seinem Kopf ein grauer Mensch von 1,70 m.",
+     "size_1x1": "Triceratops im Größenvergleich, der vordere Teil: der Kopf unseres Triceratops mit Nackenschild und Hörnern, Brust und Vorderbeine, vor den Hörnern ein grauer Mensch von 1,70 m.",
+     "size_4x3": "Triceratops neben einem Menschen im Größenvergleich: unser ganzer Triceratops von der Seite mit breitem Nackenschild und langen Stirnhörnern, vor seinem Kopf ein grauer Mensch von 1,70 m.",
      "size_16x9": "Triceratops im Größenvergleich, das ganze Tier von der Seite: unser Triceratops, 6,9 m vom Schnabel bis zum Schwanz, und davor ein grauer Mensch von 1,70 m."
     },
     "links": {
      "size_1x1": "Quadrat (1:1)",
      "size_4x3": "Folie (4:3)",
      "size_16x9": "Breitbild (16:9)"
-    },
-    "draft": true
+    }
    }
   }
  ]

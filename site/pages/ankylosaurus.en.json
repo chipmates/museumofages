@@ -21,7 +21,7 @@
     "size_4x3",
     "size_16x9"
    ],
-   "figure": "size_16x9"
+   "figure": "size_4x3"
   }
  },
  "pics": {
@@ -418,7 +418,7 @@
    "h": "Ankylosaurus vs T. rex",
    "paras": [
     "Ankylosaurus and T. rex lived at the same time in the same land, and their bones lie in the same rocks. Yet no known fossil shows the two meeting: no T. rex bite on an Ankylosaurus bone, no club wound on a T. rex. Who would win has no answer in the rocks.",
-    "What can be said: a large T. rex was about twice as heavy, about 8 to 9 tonnes against about 4.8 for the animal ours is built on. Ankylosaurus wore plates and could swing a club, though its relatives seem to have used theirs mostly on each other.",
+    "What can be said: a large T. rex was about twice as heavy, about 8 to 9 tonnes against about 4.8 for the smallest known Ankylosaurus, the one ours is built on. Ankylosaurus wore plates and could swing a club, though its relatives seem to have used theirs mostly on each other.",
     "In our picture the highest point of our Ankylosaurus stays below our T. rex's knee."
    ],
    "scale": {
@@ -429,7 +429,7 @@
     "marks": [
      {
       "span": "t-rex",
-      "text": "Our T. rex, after SUE, about 11.4 m"
+      "text": "Our T. rex, after SUE, about 11 m"
      },
      {
       "span": "ankylosaurus",
@@ -546,7 +546,7 @@
    "items": [
     {
      "q": "How heavy was Ankylosaurus?",
-     "a": "About 4.8 tonnes for the animal ours is built on, worked out from its leg bones. The study's own spread runs from 3.6 to 6 tonnes."
+     "a": "About 4.8 tonnes for the smallest known Ankylosaurus, the one ours is built on, worked out from its leg bones. The study's own spread runs from 3.6 to 6 tonnes."
     },
     {
      "q": "What does the name Ankylosaurus mean?",
@@ -664,7 +664,7 @@
    "h": "Use our pictures",
    "paras": [
     [
-     "The four pictures of the Ankylosaurus on this page, the side view, the club, the skeleton and the row with our T. rex and our Stegosaurus, are our own work under ",
+     "The five pictures of the Ankylosaurus on this page, the side view, the club, the skeleton, the row with our T. rex and our Stegosaurus, and the size comparison below in three shapes, are our own work under ",
      {
       "text": "CC BY-SA 4.0",
       "href": "https://creativecommons.org/licenses/by-sa/4.0/"
@@ -673,19 +673,18 @@
     ]
    ],
    "shapes": {
-    "caption": "Ankylosaurus size comparison: our Ankylosaurus, 6.4 m (21 ft) from beak to club, beside a person 1.70 m tall, to one scale.",
+    "caption": "Ankylosaurus size comparison, the whole animal: our Ankylosaurus, 6.4 m (21 ft) from beak to club, beside a person 1.70 m tall, to one scale.",
     "lead": "For slides and posts, this size comparison comes in three shapes, all under the same licence.",
     "alts": {
-     "size_1x1": "Ankylosaurus size comparison: the front of our Ankylosaurus, its armoured back, head and front legs, and a grey person 1.70 m tall in front of its head.",
-     "size_4x3": "Ankylosaurus beside a person, a size comparison: our low, wide Ankylosaurus under rows of bony plates, and a grey person 1.70 m tall facing its broad head.",
+     "size_1x1": "Ankylosaurus size comparison, the body: our Ankylosaurus without most of its tail, the armoured back, the broad head and four short legs, and a grey person 1.70 m tall in front of its head.",
+     "size_4x3": "Ankylosaurus beside a person, a size comparison: our whole Ankylosaurus, low and wide under rows of bony plates, its long tail ending in a club, and a grey person 1.70 m tall in front of its head.",
      "size_16x9": "Ankylosaurus size comparison, the whole animal from the side: our Ankylosaurus, 6.4 m (21 ft) from beak to club, and a grey person 1.70 m tall in front of it."
     },
     "links": {
      "size_1x1": "Square (1:1)",
      "size_4x3": "Slide (4:3)",
      "size_16x9": "Wide (16:9)"
-    },
-    "draft": true
+    }
    }
   }
  ]
