@@ -27,6 +27,9 @@
     { "name": "animals-megalodon-head", "file": "megalodon-head.png", "widths": [800, 1600] },
     { "name": "animals-megalodon-skeleton", "file": "megalodon-skeleton.png", "widths": [800, 1600, 2400] },
     { "name": "animals-megalodon-skeleton-head", "file": "megalodon-skeleton-head.png", "widths": [800, 1600] },
+    { "name": "animals-megalodon-size-comparison-1x1", "file": "megalodon-size-comparison-1x1.png", "widths": [1600] },
+    { "name": "animals-megalodon-size-comparison-4x3", "file": "megalodon-size-comparison-4x3.png", "widths": [1600] },
+    { "name": "animals-megalodon-size-comparison-16x9", "file": "megalodon-size-comparison-16x9.png", "widths": [800, 1600, 2400] },
     { "name": "animals-biggest-dinosaurs-row", "file": "dinosaurs-row.png", "widths": [800, 1600] },
     { "name": "animals-biggest-dinosaurs-close", "file": "dinosaurs-close.png", "widths": [800, 1600] },
     { "name": "animals-biggest-dinosaurs-skeleton", "file": "dinosaurs-skeleton.png", "widths": [800, 1600, 2400] },
@@ -58,7 +61,10 @@
     { "name": "animals-blue-whale-side", "file": "blue-whale-side.png", "widths": [800, 1600, 2400] },
     { "name": "animals-blue-whale-close", "file": "blue-whale-close.png", "widths": [800, 1600] },
     { "name": "animals-blue-whale-beside", "file": "blue-whale-beside.png", "widths": [800, 1600, 2400] },
-    { "name": "animals-blue-whale-skeleton", "file": "blue-whale-skeleton.png", "widths": [800, 1600] }
+    { "name": "animals-blue-whale-skeleton", "file": "blue-whale-skeleton.png", "widths": [800, 1600] },
+    { "name": "animals-blue-whale-size-comparison-1x1", "file": "blue-whale-size-comparison-1x1.png", "widths": [1600] },
+    { "name": "animals-blue-whale-size-comparison-4x3", "file": "blue-whale-size-comparison-4x3.png", "widths": [1600] },
+    { "name": "animals-blue-whale-size-comparison-16x9", "file": "blue-whale-size-comparison-16x9.png", "widths": [800, 1600, 2400] }
   ],
   "share": [
     { "name": "vinci-inventions-og-1200x630", "file": "stop-works.webp", "crop": "1920x1008+0+60" },

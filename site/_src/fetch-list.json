@@ -1653,6 +1653,66 @@
    "sha256": "08a714ee6c62eeed22af94f6e3dbf986e159a6a3c337200851b164752d8b59a2"
   },
   {
+   "path": "pages/pics/img/animals-blue-whale-size-comparison-16x9-1600.avif",
+   "url": "/static/img/animals-blue-whale-size-comparison-16x9-1600.avif",
+   "bytes": 8931,
+   "sha256": "f8d2fcf344711f35c8b4491027e0efa2c181c1020c44c471b01bc4fdf07d0024"
+  },
+  {
+   "path": "pages/pics/img/animals-blue-whale-size-comparison-16x9-1600.webp",
+   "url": "/static/img/animals-blue-whale-size-comparison-16x9-1600.webp",
+   "bytes": 13572,
+   "sha256": "8697df129d2e6b264b01fdef733b9b177113bd66bad34fb10cbcbb750c0d5cec"
+  },
+  {
+   "path": "pages/pics/img/animals-blue-whale-size-comparison-16x9-2400.avif",
+   "url": "/static/img/animals-blue-whale-size-comparison-16x9-2400.avif",
+   "bytes": 14042,
+   "sha256": "2d601f28d487cb8414324cbc35755d213e81a349a0aeddcaf702fec0d2da7fae"
+  },
+  {
+   "path": "pages/pics/img/animals-blue-whale-size-comparison-16x9-2400.webp",
+   "url": "/static/img/animals-blue-whale-size-comparison-16x9-2400.webp",
+   "bytes": 24860,
+   "sha256": "0cd170f0a7ecf39735ad7dc5c80fc4cbf44d23eb2f9bb5a4c7394e8beb74eaef"
+  },
+  {
+   "path": "pages/pics/img/animals-blue-whale-size-comparison-16x9-800.avif",
+   "url": "/static/img/animals-blue-whale-size-comparison-16x9-800.avif",
+   "bytes": 3999,
+   "sha256": "a748f956e3dc8b1c783ada672514c40610a07686b65fb0c2ababed96edb0003e"
+  },
+  {
+   "path": "pages/pics/img/animals-blue-whale-size-comparison-16x9-800.webp",
+   "url": "/static/img/animals-blue-whale-size-comparison-16x9-800.webp",
+   "bytes": 5006,
+   "sha256": "3087cd701a6e147e313b1869cbf256c7841878f38c085e648bb034ab5c3c2269"
+  },
+  {
+   "path": "pages/pics/img/animals-blue-whale-size-comparison-1x1-1600.avif",
+   "url": "/static/img/animals-blue-whale-size-comparison-1x1-1600.avif",
+   "bytes": 12179,
+   "sha256": "9d73a0b764b762020b90e8953a6f5807298007b80c8088154eb7dbefcf5e9867"
+  },
+  {
+   "path": "pages/pics/img/animals-blue-whale-size-comparison-1x1-1600.webp",
+   "url": "/static/img/animals-blue-whale-size-comparison-1x1-1600.webp",
+   "bytes": 22842,
+   "sha256": "70d42b5e99f2b44a47d40fe5821f4467ba0c7be1526b8cc7bd32c4201699d550"
+  },
+  {
+   "path": "pages/pics/img/animals-blue-whale-size-comparison-4x3-1600.avif",
+   "url": "/static/img/animals-blue-whale-size-comparison-4x3-1600.avif",
+   "bytes": 12015,
+   "sha256": "7bfbbd66f4eccf8739734f612c3088ddf53e4ef68cf26496893e4bd6483905ab"
+  },
+  {
+   "path": "pages/pics/img/animals-blue-whale-size-comparison-4x3-1600.webp",
+   "url": "/static/img/animals-blue-whale-size-comparison-4x3-1600.webp",
+   "bytes": 20444,
+   "sha256": "8b161d07af4fcb02295daff43ba29b5de7deb9bf4178275a29a7f00592ef97c4"
+  },
+  {
    "path": "pages/pics/img/animals-blue-whale-skeleton-1600.avif",
    "url": "/static/img/animals-blue-whale-skeleton-1600.avif",
    "bytes": 14953,
@@ -1891,6 +1951,66 @@
    "url": "/static/img/animals-megalodon-side-800.webp",
    "bytes": 4630,
    "sha256": "e6c6249ab61470bfd2e663e71fa31926d8cb9b36bb933f7e3123033b36e8c00c"
+  },
+  {
+   "path": "pages/pics/img/animals-megalodon-size-comparison-16x9-1600.avif",
+   "url": "/static/img/animals-megalodon-size-comparison-16x9-1600.avif",
+   "bytes": 7412,
+   "sha256": "bd2f121a99ff732acfd56ed361faab751383ef23e50515ddd68117d838279d1e"
+  },
+  {
+   "path": "pages/pics/img/animals-megalodon-size-comparison-16x9-1600.webp",
+   "url": "/static/img/animals-megalodon-size-comparison-16x9-1600.webp",
+   "bytes": 12034,
+   "sha256": "fe64a4093d5d61c579a17707f8721022b189d1676a647297cda9ce2a0c64f055"
+  },
+  {
+   "path": "pages/pics/img/animals-megalodon-size-comparison-16x9-2400.avif",
+   "url": "/static/img/animals-megalodon-size-comparison-16x9-2400.avif",
+   "bytes": 11539,
+   "sha256": "89110f5d6ed5f40a4fbdbc63deefaf848ddf028981d14e08d99bed579371dc03"
+  },
+  {
+   "path": "pages/pics/img/animals-megalodon-size-comparison-16x9-2400.webp",
+   "url": "/static/img/animals-megalodon-size-comparison-16x9-2400.webp",
+   "bytes": 20716,
+   "sha256": "66fb0f45dac28fe6144f3d0fc708bb02cce331bddb618cb9b5e729aaa3d534cc"
+  },
+  {
+   "path": "pages/pics/img/animals-megalodon-size-comparison-16x9-800.avif",
+   "url": "/static/img/animals-megalodon-size-comparison-16x9-800.avif",
+   "bytes": 3765,
+   "sha256": "0491692cb49fe5333c7b3073ccf1a78291e786b8e9ba72d5abbacf5e75d7f694"
+  },
+  {
+   "path": "pages/pics/img/animals-megalodon-size-comparison-16x9-800.webp",
+   "url": "/static/img/animals-megalodon-size-comparison-16x9-800.webp",
+   "bytes": 5088,
+   "sha256": "f9b8f3b3956ecb577d1d0c74b0ec106acaf2fa7ec773be6b7afb5f15890f1067"
+  },
+  {
+   "path": "pages/pics/img/animals-megalodon-size-comparison-1x1-1600.avif",
+   "url": "/static/img/animals-megalodon-size-comparison-1x1-1600.avif",
+   "bytes": 11219,
+   "sha256": "b582f0a93bd2699202229da4038cd5bd95f672d3daf3681ac27a611cae6cfbba"
+  },
+  {
+   "path": "pages/pics/img/animals-megalodon-size-comparison-1x1-1600.webp",
+   "url": "/static/img/animals-megalodon-size-comparison-1x1-1600.webp",
+   "bytes": 18730,
+   "sha256": "5bc28976aff45cb7337fbe6ca21d9f302012e9b4442a2db55c5bdd237bd7aece"
+  },
+  {
+   "path": "pages/pics/img/animals-megalodon-size-comparison-4x3-1600.avif",
+   "url": "/static/img/animals-megalodon-size-comparison-4x3-1600.avif",
+   "bytes": 8553,
+   "sha256": "a96627b73f312f654e53678dacb21ada9b8a47e4c173d9505152212af5bcdf83"
+  },
+  {
+   "path": "pages/pics/img/animals-megalodon-size-comparison-4x3-1600.webp",
+   "url": "/static/img/animals-megalodon-size-comparison-4x3-1600.webp",
+   "bytes": 14488,
+   "sha256": "03ae7d601c296f7b149efa4fd3612b157e41f4e20cb654d62f4a40279908fc93"
   },
   {
    "path": "pages/pics/img/animals-megalodon-skeleton-1600.avif",

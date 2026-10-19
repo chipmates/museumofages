@@ -1,0 +1,215 @@
+{
+ "_note": "Where each animal page's three size picture shapes come from (seat P, ANIMAL-SEO-1019): the model round the page's live pictures show and its file's SHA-256, and for each shape its lossless still, size, pixels per metre, the camera's window in metres (x0, x1, y0, y1; the snout at +x), the person's and the animal's box on the still (left, top, right, bottom; right and bottom exclusive; the person read the 50 % way on the bench's 128-sample coverage), whether the shape shows only the front of the animal with the cut declared at the left edge, and an exception to the person gate (none on a single animal). Written by shapes.py --write; never by hand.",
+ "pages": {
+  "megalodon": {
+   "live": {
+    "round": "16 shut",
+    "model": "museum-two/animal-queue/animals/megalodon/judged/round-16/animal.glb",
+    "sha256": "2a4cc9a3e7177c4ca3f8fab8fa9bb25c81eecb1a2c49ee04ec581bde272ef4db"
+   },
+   "shapes": {
+    "size_1x1": {
+     "stem": "animals-megalodon-size-comparison-1x1",
+     "round": "16 shut",
+     "model": "museum-two/animal-queue/animals/megalodon/judged/round-16/animal.glb",
+     "sha256": "2a4cc9a3e7177c4ca3f8fab8fa9bb25c81eecb1a2c49ee04ec581bde272ef4db",
+     "still": "megalodon-size-comparison-1x1.png",
+     "still_sha256": "7353740ed81ab3eaf45c13bf359f991538639727e631afcf060d1783b74efb1b",
+     "w": 1600,
+     "h": 1600,
+     "ppm": 220.324,
+     "frame_m": [
+      2.45,
+      9.712,
+      0.0587,
+      7.3207
+     ],
+     "person_px": [
+      1391,
+      750,
+      1495,
+      1124
+     ],
+     "animal_px": [
+      0,
+      476,
+      1267,
+      1094
+     ],
+     "front_end": true,
+     "cut": "the body behind the pectoral fin (x 2.45 m)",
+     "exception": null
+    },
+    "size_4x3": {
+     "stem": "animals-megalodon-size-comparison-4x3",
+     "round": "16 shut",
+     "model": "museum-two/animal-queue/animals/megalodon/judged/round-16/animal.glb",
+     "sha256": "2a4cc9a3e7177c4ca3f8fab8fa9bb25c81eecb1a2c49ee04ec581bde272ef4db",
+     "still": "megalodon-size-comparison-4x3.png",
+     "still_sha256": "957e0be48cc64e34197174a6bfee647b8dbf2180187dd3d5f9e1fd14bf22aef4",
+     "w": 1600,
+     "h": 1200,
+     "ppm": 125.918,
+     "frame_m": [
+      -2.6407,
+      10.066,
+      -0.3992,
+      9.1308
+     ],
+     "person_px": [
+      1436,
+      656,
+      1495,
+      871
+     ],
+     "animal_px": [
+      0,
+      330,
+      1365,
+      853
+     ],
+     "front_end": true,
+     "cut": "the back third (x -2.64 m)",
+     "exception": null
+    },
+    "size_16x9": {
+     "stem": "animals-megalodon-size-comparison-16x9",
+     "round": "16 shut",
+     "model": "museum-two/animal-queue/animals/megalodon/judged/round-16/animal.glb",
+     "sha256": "2a4cc9a3e7177c4ca3f8fab8fa9bb25c81eecb1a2c49ee04ec581bde272ef4db",
+     "still": "megalodon-size-comparison-16x9.png",
+     "still_sha256": "8726f5875f89a05097ffd4ef0245c07fbbafe59336761183c99438ef1826a1dc",
+     "w": 2400,
+     "h": 1350,
+     "ppm": 124.06,
+     "frame_m": [
+      -8.4611,
+      10.8844,
+      -1.0751,
+      9.8067
+     ],
+     "person_px": [
+      2137,
+      731,
+      2196,
+      942
+     ],
+     "animal_px": [
+      51,
+      409,
+      2067,
+      942
+     ],
+     "front_end": false,
+     "cut": null,
+     "exception": null
+    }
+   }
+  },
+  "blue-whale": {
+   "live": {
+    "round": "8",
+    "model": "museum-two/animal-queue/animals/blue-whale/judged/round-8/animal.glb",
+    "sha256": "4d2113c4d74f0cabfe37f58202bbbfc2851acbeead53003583081c63a160347a"
+   },
+   "shapes": {
+    "size_1x1": {
+     "stem": "animals-blue-whale-size-comparison-1x1",
+     "round": "8",
+     "model": "museum-two/animal-queue/animals/blue-whale/judged/round-8/animal.glb",
+     "sha256": "4d2113c4d74f0cabfe37f58202bbbfc2851acbeead53003583081c63a160347a",
+     "still": "blue-whale-size-comparison-1x1.png",
+     "still_sha256": "aae6d7e74f9b0b29fbcaa9e620029124fc59be47d0f66a1fcd17dbf12b433bdd",
+     "w": 1600,
+     "h": 1600,
+     "ppm": 133.691,
+     "frame_m": [
+      1.55,
+      13.5179,
+      -2.1941,
+      9.7738
+     ],
+     "person_px": [
+      1432,
+      743,
+      1495,
+      970
+     ],
+     "animal_px": [
+      0,
+      587,
+      1376,
+      1013
+     ],
+     "front_end": true,
+     "cut": "the body behind the flipper's tip (x 1.55 m)",
+     "exception": null
+    },
+    "size_4x3": {
+     "stem": "animals-blue-whale-size-comparison-4x3",
+     "round": "8",
+     "model": "museum-two/animal-queue/animals/blue-whale/judged/round-8/animal.glb",
+     "sha256": "4d2113c4d74f0cabfe37f58202bbbfc2851acbeead53003583081c63a160347a",
+     "still": "blue-whale-size-comparison-4x3.png",
+     "still_sha256": "0199dcb83d5022aa6bf45d79d05ff2b4fe045a6dd4348c8efc4a369fe451fd94",
+     "w": 1600,
+     "h": 1200,
+     "ppm": 117.425,
+     "frame_m": [
+      0,
+      13.6257,
+      -1.3198,
+      8.8995
+     ],
+     "person_px": [
+      1440,
+      550,
+      1495,
+      749
+     ],
+     "animal_px": [
+      0,
+      413,
+      1390,
+      787
+     ],
+     "front_end": true,
+     "cut": "the back half (x 0 m)",
+     "exception": null
+    },
+    "size_16x9": {
+     "stem": "animals-blue-whale-size-comparison-16x9",
+     "round": "8",
+     "model": "museum-two/animal-queue/animals/blue-whale/judged/round-8/animal.glb",
+     "sha256": "4d2113c4d74f0cabfe37f58202bbbfc2851acbeead53003583081c63a160347a",
+     "still": "blue-whale-size-comparison-16x9.png",
+     "still_sha256": "fd3ac39b2e013b0de558078b8a6aefc03a089ef015ba08b171b56e0dfb65d14f",
+     "w": 2400,
+     "h": 1350,
+     "ppm": 88.153,
+     "frame_m": [
+      -12.1713,
+      15.0541,
+      -3.8673,
+      11.447
+     ],
+     "person_px": [
+      2154,
+      637,
+      2196,
+      787
+     ],
+     "animal_px": [
+      35,
+      535,
+      2117,
+      815
+     ],
+     "front_end": false,
+     "cut": null,
+     "exception": null
+    }
+   }
+  }
+ }
+}

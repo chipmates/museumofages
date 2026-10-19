@@ -23,6 +23,7 @@
     "vinci-supper-og-en", "vinci-supper-og-de", "vinci-supper-og-es", "vinci-supper-og-pt-br", "vinci-supper-drawing-en", "vinci-supper-drawing-de", "vinci-supper-drawing-es", "vinci-supper-drawing-pt-br", "vinci-paintings-og-en", "vinci-paintings-og-de", "vinci-paintings-og-es", "vinci-paintings-og-pt-br", "vinci-paintings-og-fr", "vinci-paintings-og-it",
     "animals-megalodon-side", "animals-megalodon-head", "animals-megalodon-skeleton", "animals-megalodon-skeleton-head",
     "animals-megalodon-og-en", "animals-megalodon-og-de", "animals-megalodon-og-es", "animals-megalodon-og-pt-br", "animals-og-en", "animals-og-de", "animals-og-es", "animals-og-pt-br",
+    "animals-megalodon-size-comparison-1x1", "animals-megalodon-size-comparison-4x3", "animals-megalodon-size-comparison-16x9",
     "animals-biggest-dinosaurs-row", "animals-biggest-dinosaurs-close", "animals-biggest-dinosaurs-skeleton", "animals-biggest-dinosaurs-og-en", "animals-biggest-dinosaurs-og-de", "animals-biggest-dinosaurs-og-es", "animals-biggest-dinosaurs-og-pt-br",
     "animals-t-rex-side", "animals-t-rex-close", "animals-t-rex-og-en", "animals-t-rex-og-de", "animals-t-rex-og-es", "animals-t-rex-og-pt-br",
     "animals-spinosaurus-side", "animals-spinosaurus-close", "animals-spinosaurus-beside-t-rex", "animals-spinosaurus-skeleton", "animals-spinosaurus-og-en", "animals-spinosaurus-og-de", "animals-spinosaurus-og-es", "animals-spinosaurus-og-pt-br",
@@ -33,12 +34,14 @@
     "animals-ankylosaurus-og-es", "animals-ankylosaurus-og-pt-br",
     "animals-stegosaurus-side", "animals-stegosaurus-close", "animals-stegosaurus-beside-triceratops-t-rex", "animals-stegosaurus-skeleton", "animals-stegosaurus-og-en", "animals-stegosaurus-og-de",
     "animals-stegosaurus-og-es", "animals-stegosaurus-og-pt-br",
-    "animals-blue-whale-side", "animals-blue-whale-close", "animals-blue-whale-beside", "animals-blue-whale-skeleton", "animals-blue-whale-og-en", "animals-blue-whale-og-de", "animals-blue-whale-og-es", "animals-blue-whale-og-pt-br"
+    "animals-blue-whale-side", "animals-blue-whale-close", "animals-blue-whale-beside", "animals-blue-whale-skeleton", "animals-blue-whale-og-en", "animals-blue-whale-og-de", "animals-blue-whale-og-es", "animals-blue-whale-og-pt-br",
+    "animals-blue-whale-size-comparison-1x1", "animals-blue-whale-size-comparison-4x3", "animals-blue-whale-size-comparison-16x9"
   ],
   "credits": {
     "body shape after Shimada and others 2025 (CC BY 4.0)": [
       "animals-megalodon-side", "animals-megalodon-head", "animals-megalodon-skeleton", "animals-megalodon-skeleton-head",
-      "animals-megalodon-og-en", "animals-megalodon-og-de", "animals-megalodon-og-es", "animals-megalodon-og-pt-br", "animals-og-en", "animals-og-de", "animals-og-es", "animals-og-pt-br"
+      "animals-megalodon-og-en", "animals-megalodon-og-de", "animals-megalodon-og-es", "animals-megalodon-og-pt-br", "animals-og-en", "animals-og-de", "animals-og-es", "animals-og-pt-br",
+      "animals-megalodon-size-comparison-1x1", "animals-megalodon-size-comparison-4x3", "animals-megalodon-size-comparison-16x9"
     ],
     "Megalodon body shape after Shimada and others 2025 (CC BY 4.0)": [
       "animals-blue-whale-beside"
