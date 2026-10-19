@@ -119,30 +119,30 @@
      "model": "museum-two/animal-queue/animals/blue-whale/judged/round-8/animal.glb",
      "sha256": "4d2113c4d74f0cabfe37f58202bbbfc2851acbeead53003583081c63a160347a",
      "still": "blue-whale-size-comparison-1x1.png",
-     "still_sha256": "aae6d7e74f9b0b29fbcaa9e620029124fc59be47d0f66a1fcd17dbf12b433bdd",
+     "still_sha256": "4b8ad07a746ba4954d7d1f88a330661626e7e28d1ec40be63b90644092a3fbc5",
      "w": 1600,
      "h": 1600,
-     "ppm": 133.691,
+     "ppm": 209.524,
      "frame_m": [
-      1.55,
-      13.5179,
-      -2.1941,
-      9.7738
+      5.6,
+      13.2364,
+      -0.1003,
+      7.5361
      ],
      "person_px": [
-      1432,
-      743,
+      1396,
+      695,
       1495,
-      970
+      1051
      ],
      "animal_px": [
       0,
-      587,
-      1376,
-      1013
+      479,
+      1307,
+      1009
      ],
      "front_end": true,
-     "cut": "the body behind the flipper's tip (x 1.55 m)",
+     "cut": "the body and the flipper behind x 5.6 m",
      "exception": null
     },
     "size_4x3": {
@@ -151,7 +151,7 @@
      "model": "museum-two/animal-queue/animals/blue-whale/judged/round-8/animal.glb",
      "sha256": "4d2113c4d74f0cabfe37f58202bbbfc2851acbeead53003583081c63a160347a",
      "still": "blue-whale-size-comparison-4x3.png",
-     "still_sha256": "0199dcb83d5022aa6bf45d79d05ff2b4fe045a6dd4348c8efc4a369fe451fd94",
+     "still_sha256": "15a93374d203245c67a29ffeb6d843822feaed1497e5d24eeba7d455f74af063",
      "w": 1600,
      "h": 1200,
      "ppm": 117.425,
@@ -164,7 +164,7 @@
      "person_px": [
       1440,
       550,
-      1495,
+      1496,
       749
      ],
      "animal_px": [
@@ -183,7 +183,7 @@
      "model": "museum-two/animal-queue/animals/blue-whale/judged/round-8/animal.glb",
      "sha256": "4d2113c4d74f0cabfe37f58202bbbfc2851acbeead53003583081c63a160347a",
      "still": "blue-whale-size-comparison-16x9.png",
-     "still_sha256": "fd3ac39b2e013b0de558078b8a6aefc03a089ef015ba08b171b56e0dfb65d14f",
+     "still_sha256": "8fc9c6467bcfe6777139c42e01a098b9ecfa4de15b20f2765c2a4b561931ae6d",
      "w": 2400,
      "h": 1350,
      "ppm": 88.153,
@@ -200,7 +200,7 @@
       787
      ],
      "animal_px": [
-      35,
+      36,
       535,
       2117,
       815

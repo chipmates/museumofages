@@ -127,7 +127,7 @@
     1600
    ],
    "sizes": "(min-width: 1280px) 690px, (min-width: 960px) 54vw, (min-width: 600px) calc(100vw - 64px), calc(100vw - 40px)",
-   "person": "91.47% 46.44%"
+   "person": "90.34% 43.44%"
   },
   "size_4x3": {
    "stem": "animals-blue-whale-size-comparison-4x3",
@@ -135,7 +135,7 @@
     1600
    ],
    "sizes": "(min-width: 1280px) 690px, (min-width: 960px) 54vw, (min-width: 600px) calc(100vw - 64px), calc(100vw - 40px)",
-   "person": "91.72% 45.83%"
+   "person": "91.75% 45.83%"
   },
   "size_16x9": {
    "stem": "animals-blue-whale-size-comparison-16x9",

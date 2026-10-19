@@ -1655,62 +1655,62 @@
   {
    "path": "pages/pics/img/animals-blue-whale-size-comparison-16x9-1600.avif",
    "url": "/static/img/animals-blue-whale-size-comparison-16x9-1600.avif",
-   "bytes": 8931,
-   "sha256": "f8d2fcf344711f35c8b4491027e0efa2c181c1020c44c471b01bc4fdf07d0024"
+   "bytes": 8976,
+   "sha256": "62a3b6a7e8841139d81e3f3bac5f6da994faddf73c1fc1ca5c11fc4a00a8e2f6"
   },
   {
    "path": "pages/pics/img/animals-blue-whale-size-comparison-16x9-1600.webp",
    "url": "/static/img/animals-blue-whale-size-comparison-16x9-1600.webp",
    "bytes": 13572,
-   "sha256": "8697df129d2e6b264b01fdef733b9b177113bd66bad34fb10cbcbb750c0d5cec"
+   "sha256": "f8e3a77ff38189911f1d570be2a57997479294d250630b444b44b7808a75a15c"
   },
   {
    "path": "pages/pics/img/animals-blue-whale-size-comparison-16x9-2400.avif",
    "url": "/static/img/animals-blue-whale-size-comparison-16x9-2400.avif",
-   "bytes": 14042,
-   "sha256": "2d601f28d487cb8414324cbc35755d213e81a349a0aeddcaf702fec0d2da7fae"
+   "bytes": 14026,
+   "sha256": "b60a5a99108b4c6cf25ecc5c8c90441cf25fe6ec11a79d72cc39bc4ebba3d7f2"
   },
   {
    "path": "pages/pics/img/animals-blue-whale-size-comparison-16x9-2400.webp",
    "url": "/static/img/animals-blue-whale-size-comparison-16x9-2400.webp",
-   "bytes": 24860,
-   "sha256": "0cd170f0a7ecf39735ad7dc5c80fc4cbf44d23eb2f9bb5a4c7394e8beb74eaef"
+   "bytes": 24902,
+   "sha256": "791326c084c70ec78794d81054fc1f474f021169c0ebe6e4b6908e455a0cd7c6"
   },
   {
    "path": "pages/pics/img/animals-blue-whale-size-comparison-16x9-800.avif",
    "url": "/static/img/animals-blue-whale-size-comparison-16x9-800.avif",
-   "bytes": 3999,
-   "sha256": "a748f956e3dc8b1c783ada672514c40610a07686b65fb0c2ababed96edb0003e"
+   "bytes": 4001,
+   "sha256": "91aa100cc7343c1a1e56551cdf5148adf798d28d8cf85df4f265ba0ce0ea0b0f"
   },
   {
    "path": "pages/pics/img/animals-blue-whale-size-comparison-16x9-800.webp",
    "url": "/static/img/animals-blue-whale-size-comparison-16x9-800.webp",
-   "bytes": 5006,
-   "sha256": "3087cd701a6e147e313b1869cbf256c7841878f38c085e648bb034ab5c3c2269"
+   "bytes": 5016,
+   "sha256": "1ce6175796b6ecfe7a73e1b4bb3c87212d99f9e04fd97359787dad9195c2c46f"
   },
   {
    "path": "pages/pics/img/animals-blue-whale-size-comparison-1x1-1600.avif",
    "url": "/static/img/animals-blue-whale-size-comparison-1x1-1600.avif",
-   "bytes": 12179,
-   "sha256": "9d73a0b764b762020b90e8953a6f5807298007b80c8088154eb7dbefcf5e9867"
+   "bytes": 12060,
+   "sha256": "2c52bd451a6dec71d0a736e3ebf095640b64c0ffb10abaffb89a52f8af75be24"
   },
   {
    "path": "pages/pics/img/animals-blue-whale-size-comparison-1x1-1600.webp",
    "url": "/static/img/animals-blue-whale-size-comparison-1x1-1600.webp",
-   "bytes": 22842,
-   "sha256": "70d42b5e99f2b44a47d40fe5821f4467ba0c7be1526b8cc7bd32c4201699d550"
+   "bytes": 24204,
+   "sha256": "4b83386ccba7e66000feb6d5aabdf894a5fc2337cd6acac57dbb2fd124dc0d9c"
   },
   {
    "path": "pages/pics/img/animals-blue-whale-size-comparison-4x3-1600.avif",
    "url": "/static/img/animals-blue-whale-size-comparison-4x3-1600.avif",
-   "bytes": 12015,
-   "sha256": "7bfbbd66f4eccf8739734f612c3088ddf53e4ef68cf26496893e4bd6483905ab"
+   "bytes": 11982,
+   "sha256": "ca424be1a7ef85af6dcbcad381ceb49a51e782aa48a66ddf17b9971ebdf43e38"
   },
   {
    "path": "pages/pics/img/animals-blue-whale-size-comparison-4x3-1600.webp",
    "url": "/static/img/animals-blue-whale-size-comparison-4x3-1600.webp",
-   "bytes": 20444,
-   "sha256": "8b161d07af4fcb02295daff43ba29b5de7deb9bf4178275a29a7f00592ef97c4"
+   "bytes": 20502,
+   "sha256": "f2cef70160533036e55048a446ecfe1a64298459933e38f777b3bc0683a552bf"
   },
   {
    "path": "pages/pics/img/animals-blue-whale-skeleton-1600.avif",
