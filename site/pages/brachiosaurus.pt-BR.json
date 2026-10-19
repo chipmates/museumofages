@@ -21,7 +21,7 @@
     "size_4x3",
     "size_16x9"
    ],
-   "figure": "size_16x9"
+   "figure": "size_4x3"
   }
  },
  "pics": {
@@ -133,7 +133,7 @@
   "title": "Braquiossauro: tamanho, cerca de 22 a 25 m | Museum of Ages",
   "description": "Brachiosaurus: cerca de 22 a 25 m e cerca de 30 a 45 t, reconstruídos a partir de um esqueleto parcial. O esqueleto famoso de Berlim é um Giraffatitan.",
   "og_title": "Braquiossauro: tamanho de cerca de 22 a 25 m de comprimento",
-  "og_image_alt": "O nosso braquiossauro de lado, no tamanho do esqueleto de Chicago, 24,0 m ao longo da coluna, com o pescoço longo erguido numa curva suave e o alto da cabeça a 11,5 m, com o ângulo do pescoço escolhido por nós. As patas da frente são mais longas que as de trás, a cauda não toca o chão, e uma pessoa cinza de 1,70 m poderia passar por baixo da barriga dele."
+  "og_image_alt": "Nosso braquiossauro de lado, no tamanho do esqueleto de Chicago, 24,0 m ao longo da coluna, com o pescoço longo erguido em uma curva suave e o alto da cabeça a 11,5 m, com o ângulo do pescoço escolhido por nós. As patas da frente são mais longas que as de trás, a cauda não toca o chão, e uma pessoa cinza de 1,70 m poderia passar por baixo da barriga dele."
  },
  "labels": {
   "crumbs": "Você está aqui",
@@ -143,24 +143,23 @@
   "tag_made": "Feito para esta página",
   "tag_built": "Reconstrução",
   "person": "1,70 m",
-  "to_table": "Os números numa tabela",
+  "to_table": "Os números em uma tabela",
   "no_figure": "sem número com fonte",
   "og_answer": "O braquiossauro tinha cerca de 22 a 25 m de comprimento, por uma reconstrução"
  },
  "top": {
   "h1": "Qual era o tamanho do braquiossauro?",
-  "answer": "O braquiossauro, ou Brachiosaurus, tinha cerca de 22 a 25 m de comprimento e pesava mais ou menos de 30 a 45 toneladas, dois números reconstruídos a partir de um único esqueleto parcial. A altura do braquiossauro nunca foi medida, porque esse esqueleto não tem pescoço: reconstruído, teria a cabeça a cerca de 7 m com o pescoço na horizontal, e a mais de 14 m com ele na vertical. O nosso modelo foi feito no tamanho desse único esqueleto, guardado em Chicago, de um animal que provavelmente ainda crescia. Com o pescoço erguido como escolhemos, a cabeça fica na altura de cerca de sete pessoas, e os ombros, de cerca de quatro.",
-  "answer_more": "O famoso esqueleto de Berlim, com o crânio a cerca de 13 m de altura, é o parente africano dele, o Giraffatitan, numa pose pensada para a exposição. A maioria das imagens de braquiossauro também mostra esse parente.",
+  "answer": "O braquiossauro, ou Brachiosaurus, tinha cerca de 22 a 25 m de comprimento e pesava mais ou menos de 30 a 45 toneladas, dois números reconstruídos a partir de um único esqueleto parcial. A altura do braquiossauro nunca foi medida, porque esse esqueleto não tem pescoço: reconstruído, teria a cabeça a cerca de 7 m com o pescoço na horizontal, e a mais de 14 m com ele na vertical. Nosso modelo foi feito no tamanho desse único esqueleto, guardado em Chicago, de um animal que provavelmente ainda crescia. Com o pescoço erguido como escolhemos, a cabeça fica na altura de cerca de sete pessoas, e os ombros, de cerca de quatro.",
   "scale": {
    "pic": "side",
    "tag": "tag_made",
-   "what": "O nosso braquiossauro ao lado de uma pessoa de 1,70 m, na mesma escala, no tamanho do único esqueleto em que o nome se baseia, desenterrado no Colorado em 1900. O pescoço, a cabeça, a parte de baixo das pernas e a maior parte da cauda seguem o Giraffatitan e outros achados. A cabeça fica a 11,5 m de altura só por causa do ângulo do pescoço que escolhemos: essa altura é nossa, não um resultado.",
-   "alt": "O nosso braquiossauro de lado, no tamanho do esqueleto de Chicago, 24,0 m ao longo da coluna, com o pescoço longo erguido numa curva suave e o alto da cabeça a 11,5 m, com o ângulo do pescoço escolhido por nós. As patas da frente são mais longas que as de trás, a cauda não toca o chão, e uma pessoa cinza de 1,70 m poderia passar por baixo da barriga dele.",
-   "note": "A nossa própria reconstrução, construída em código a partir de medidas publicadas e renderizada com o nosso próprio motor gráfico. Não são fotografias.",
+   "what": "Comparação de tamanho: nosso braquiossauro ao lado de uma pessoa de 1,70 m, na mesma escala, no tamanho do único esqueleto em que o nome se baseia, desenterrado no Colorado em 1900. O pescoço, a cabeça, a parte de baixo das pernas e a maior parte da cauda seguem o Giraffatitan e outros achados. A cabeça fica a 11,5 m de altura só por causa do ângulo do pescoço que escolhemos: essa altura é escolha nossa, não uma descoberta.",
+   "alt": "Comparação de tamanho: nosso braquiossauro de lado, no tamanho do esqueleto de Chicago, 24,0 m ao longo da coluna, com o pescoço longo erguido em uma curva suave e o alto da cabeça a 11,5 m, com o ângulo do pescoço escolhido por nós. As patas da frente são mais longas que as de trás, a cauda não toca o chão, e uma pessoa cinza de 1,70 m poderia passar por baixo da barriga dele.",
+   "note": "Nossa própria reconstrução, construída em código a partir de medidas publicadas e renderizada com o nosso próprio motor gráfico. Não são fotografias.",
    "marks": [
     {
      "span": "brachiosaurus",
-     "text": "O nosso braquiossauro, no tamanho do esqueleto de Chicago"
+     "text": "Nosso braquiossauro, no tamanho do esqueleto de Chicago"
     },
     {
      "span": "head",
@@ -216,7 +215,7 @@
     },
     {
      "cells": [
-      "O nosso modelo",
+      "Nosso modelo",
       "24,0 m ao longo da coluna, 21,3 m em linha reta com o pescoço erguido",
       "o alto da cabeça 11,5 m na nossa pose, os ombros 6,6 m, o quadril 5,0 m",
       "",
@@ -268,13 +267,22 @@
    "h": "Qual era a altura do braquiossauro, e ele foi o dinossauro mais alto?",
    "paras": [
     "Ninguém sabe dizer com precisão de metro: o esqueleto de Chicago não tem pescoço, e as duas vértebras do pescoço achadas em outros lugares talvez nem sejam de braquiossauro. Por isso toda altura da cabeça já publicada foi desenhada sobre o pescoço do Giraffatitan, e nenhuma foi medida.",
-    "Como ele segurava esse pescoço é discutido, e a posição do meio é a do pescoço erguido, nem na horizontal nem na vertical. O pescoço do nosso modelo sobe com cerca de 41 graus, com o alto da cabeça a 11,5 m. O mesmo corpo teria a cabeça a cerca de 7 m com o pescoço na horizontal, e a mais de 14 m com o pescoço na vertical. O esqueleto de dinossauro montado mais alto é esse Giraffatitan de Berlim, e qual dinossauro foi o mais alto em vida ninguém sabe ao certo: a página dos maiores dinossauros trata dessa pergunta."
+    "Como ele segurava esse pescoço é discutido, e a posição do meio é a do pescoço erguido, nem na horizontal nem na vertical. O pescoço do nosso modelo sobe com cerca de 41 graus, com o alto da cabeça a 11,5 m. O mesmo corpo teria a cabeça a cerca de 7 m com o pescoço na horizontal, e a mais de 14 m com o pescoço na vertical. O esqueleto de dinossauro montado mais alto é o Giraffatitan de Berlim, um parente africano, e qual dinossauro foi o mais alto em vida ninguém sabe ao certo: a página dos maiores dinossauros trata dessa pergunta."
    ],
    "links": [
     {
      "page": "biggest-dinosaurs",
      "text": "Qual foi o maior dinossauro do mundo?"
     }
+   ]
+  },
+  {
+   "type": "text",
+   "id": "weight",
+   "nav": "Quanto pesava o braquiossauro?",
+   "h": "Quanto pesava o braquiossauro?",
+   "paras": [
+    "O braquiossauro pesava mais ou menos 30 a 45 toneladas, por modelos. Ninguém nunca pesou um, e o único esqueleto dele está incompleto, então cada peso vem de um modelo do corpo. A faixa se apoia em dois números: cerca de 29 toneladas por um modelo do corpo do esqueleto de Chicago, publicado em 2009, e 46,9 toneladas pelo Natural History Museum de Londres, que não explica o método. O número mais baixo muda com a densidade escolhida e com a largura do corpo, que as costelas conhecidas não permitem fixar."
    ]
   },
   {
@@ -317,8 +325,8 @@
    "scale": {
     "pic": "skeleton",
     "tag": "tag_built",
-    "what": "O nosso braquiossauro como esqueleto, visto pela direita, colorido conforme a origem de cada osso.",
-    "alt": "O nosso braquiossauro como esqueleto, visto pela direita: poucos ossos cor de creme nas costas, no quadril, num fêmur e num úmero, entre outros azuis, laranja e marrons, ao lado da pessoa cinza.",
+    "what": "Nosso braquiossauro como esqueleto, visto pela direita, colorido conforme a origem de cada osso.",
+    "alt": "Nosso braquiossauro como esqueleto, visto pela direita: poucos ossos cor de creme nas costas, no quadril, em um fêmur e em um úmero, entre outros azuis, laranja e marrons, ao lado da pessoa cinza.",
     "key": [
      {
       "swatch": "own",
@@ -364,7 +372,7 @@
     {
      "h": "O pescoço e a cabeça",
      "paras": [
-      "O pescoço foi tirado do Giraffatitan, e no nosso está erguido numa curva suave, embora o ângulo seja discutido. A cabeça segue o crânio do Colorado de 1883, com o arco do nariz que falta reconstruído baixo, e as narinas carnosas baixas e bem para a frente no focinho."
+      "O pescoço foi tirado do Giraffatitan, e no nosso está erguido em uma curva suave, embora o ângulo seja discutido. A cabeça segue o crânio do Colorado de 1883, com o arco do nariz que falta reconstruído baixo, e as narinas carnosas baixas e bem para a frente no focinho."
      ]
     },
     {
@@ -404,7 +412,7 @@
      "points": [
       [
        "O comprimento e o peso são reconstruídos:",
-       "não existe nenhum esqueleto inteiro, então os dois números se apoiam na estrutura do Giraffatitan e numa densidade escolhida."
+       "não existe nenhum esqueleto inteiro, então os dois números se apoiam na estrutura do Giraffatitan e em uma densidade escolhida."
       ],
       [
        "O nosso é um modelo, não a espécie:",
@@ -516,20 +524,20 @@
     {
      "page": "biggest-dinosaurs",
      "pic": "dinosaurs",
-     "alt": "Os nossos sete dinossauros em fila, vistos de lado, na mesma escala. O mais longo, o nosso Argentinosaurus, tem cerca de 30,6 m. Dois pescoços longos se erguem bem acima dos outros, e uma pessoa cinza de 1,70 m parece minúscula perto deles.",
+     "alt": "Nossos sete dinossauros em fila, vistos de lado, na mesma escala. O mais longo, o nosso Argentinosaurus, tem cerca de 30,6 m. Dois pescoços longos se erguem bem acima dos outros, e uma pessoa cinza de 1,70 m parece minúscula perto deles.",
      "line": "Sete dos nossos ao lado de uma pessoa, na mesma escala: o mais pesado, muito provavelmente um titanossauro da Patagônia, o mais alto, provavelmente o Sauroposeidon, e por que o mais longo continua em aberto."
     },
     {
      "page": "t-rex",
      "pic": "trex",
-     "alt": "O nosso T. rex de lado, sobre duas patas, com cerca de 11 m de comprimento nesta pose, de boca fechada e cabeça erguida, ao lado de uma pessoa cinza de 1,70 m que fica bem abaixo do quadril dele.",
-     "line": "Um T. rex adulto grande tinha cerca de 12 m de comprimento, cerca de 4 m até o quadril e mais ou menos 8 a 9 toneladas. O nosso T. rex foi feito com as medidas de SUE e está ao lado de uma pessoa na mesma escala, com uma lista do que foi encontrado de SUE."
+     "alt": "Nosso T. rex de lado, sobre duas patas, com cerca de 11 m de comprimento nesta pose, de boca fechada e cabeça erguida, ao lado de uma pessoa cinza de 1,70 m que fica bem abaixo do quadril dele.",
+     "line": "Um T. rex adulto grande tinha cerca de 12 m de comprimento, cerca de 4 m até o quadril e mais ou menos 8 a 9 toneladas. Nosso T. rex foi feito com as medidas de SUE e está ao lado de uma pessoa na mesma escala, com uma lista do que foi encontrado de SUE."
     },
     {
      "page": "woolly-mammoth",
      "pic": "mammoth",
-     "alt": "O nosso mamute-lanoso, o macho de Berezovka, de lado, com pelagem marrom-escura: a cabeça alta e abaulada, o dorso inclinado, duas presas curvas e uma marca na altura do ombro, a 271 cm por uma reconstrução. A pessoa cinza ao lado, de 1,70 m, fica mais baixa que as pontas das presas.",
-     "line": "Um macho típico da Sibéria tinha cerca de 2,7 a 2,9 m no ombro e pesava cerca de 4 a 5 toneladas. O nosso mamute-lanoso é um único macho real encontrado congelado em 1900, com 2,71 m no ombro por uma reconstrução, ao lado de uma pessoa na mesma escala."
+     "alt": "Nosso mamute-lanoso, o macho de Berezovka, de lado, com pelagem marrom-escura: a cabeça alta e abaulada, o dorso inclinado, duas presas curvas e uma marca na altura do ombro, a 271 cm por uma reconstrução. A pessoa cinza ao lado, de 1,70 m, fica mais baixa que as pontas das presas.",
+     "line": "Um macho típico da Sibéria tinha cerca de 2,7 a 2,9 m no ombro e pesava cerca de 4 a 5 toneladas. Nosso mamute-lanoso foi construído a partir de um único macho real encontrado congelado em 1900, com 2,71 m no ombro por uma reconstrução, ao lado de uma pessoa na mesma escala."
     }
    ]
   },
@@ -632,19 +640,18 @@
     ]
    ],
    "shapes": {
-    "caption": "Comparação de tamanho do braquiossauro: nosso braquiossauro com o pescoço erguido no ângulo que escolhemos, o alto da cabeça a 11,5 m, ao lado de uma pessoa de 1,70 m, na mesma escala.",
+    "caption": "Comparação de tamanho do braquiossauro: a frente do nosso braquiossauro, com o pescoço erguido no ângulo que escolhemos e o alto da cabeça a 11,5 m, ao lado de uma pessoa de 1,70 m, na mesma escala.",
     "lead": "Para slides e publicações, esta comparação de tamanho vem em três formatos, todos com a mesma licença.",
     "alts": {
      "size_1x1": "Comparação de tamanho do braquiossauro, a altura: as patas da frente, o peito e o pescoço erguido do nosso braquiossauro, a cabeça a 11,5 m, e uma pessoa cinza de 1,70 m embaixo do pescoço.",
      "size_4x3": "O braquiossauro ao lado de uma pessoa, em comparação de tamanho: o pescoço, a cabeça e o corpo do nosso braquiossauro, com a cauda cortada na borda esquerda, e uma pessoa cinza de 1,70 m abaixo do pescoço.",
-     "size_16x9": "Comparação de tamanho do braquiossauro, o animal inteiro de lado: nosso braquiossauro, com o alto da cabeça a 11,5 m, e uma pessoa cinza de 1,70 m embaixo do pescoço."
+     "size_16x9": "Comparação de tamanho do braquiossauro, o animal inteiro de lado: nosso braquiossauro, de 21,3 m de comprimento com o pescoço erguido, e uma pessoa cinza de 1,70 m embaixo do pescoço."
     },
     "links": {
      "size_1x1": "Quadrada (1:1)",
      "size_4x3": "Slide (4:3)",
      "size_16x9": "Panorâmica (16:9)"
-    },
-    "draft": true
+    }
    }
   }
  ]

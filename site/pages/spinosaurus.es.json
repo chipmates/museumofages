@@ -20,7 +20,7 @@
     "size_4x3",
     "size_16x9"
    ],
-   "figure": "size_16x9"
+   "figure": "size_4x3"
   }
  },
  "pics": {
@@ -153,7 +153,7 @@
  },
  "meta": {
   "title": "Spinosaurus: tamaño de hasta unos 14 m | Museum of Ages",
-  "description": "¿Cuánto medía el Spinosaurus? Los adultos más grandes, casi 14 m y unas 7,4 t según un modelo. El nuestro, un ejemplar joven de unos 10 m, con una persona.",
+  "description": "¿Cuánto medía el Spinosaurus? Los adultos más grandes, casi 14 m y unas 7,4 t según un modelo. Además, su altura y el nuevo Spinosaurus mirabilis (2026).",
   "og_title": "Spinosaurus: tamaño de hasta unos 14 m",
   "og_image_alt": "El Spinosaurus adulto más grande de lado, algo menos de 14 m según un modelo, con una vela alta y una cola alta. Delante, nuestro ejemplar joven de unos 10 m como una forma gris plana, y una persona gris de 1,70 m que le llega al joven a la cadera."
  },
@@ -177,8 +177,8 @@
   "scale": {
    "pic": "side",
    "tag": "tag_made",
-   "what": "Los adultos más grandes de Spinosaurus junto a una persona de 1,70 m, a la misma escala: algo menos de 14 m según el modelo de 2022. Ese modelo agranda más o menos un tercio el esqueleto joven de Marruecos, y nosotros agrandamos nuestro modelo de la misma manera. Nadie encontró un esqueleto adulto, así que es una estimación, no un animal que alguien haya encontrado. En la postura de nuestro modelo, el adulto mide unos 13,1 m de punta a punta. Delante, en gris plano, nuestro ejemplar joven de unos 10 m, construido según ese esqueleto.",
-   "alt": "El Spinosaurus adulto más grande de lado, algo menos de 14 m según un modelo, con una vela alta y una cola alta. Delante, nuestro ejemplar joven de unos 10 m como una forma gris plana, y una persona gris de 1,70 m que le llega al joven a la cadera.",
+   "what": "Comparación de tamaño: los adultos más grandes de Spinosaurus junto a una persona de 1,70 m, a la misma escala, con algo menos de 14 m según el modelo de 2022. Ese modelo agranda más o menos un tercio el esqueleto joven de Marruecos, y nosotros agrandamos nuestro modelo de la misma manera. Nadie encontró un esqueleto adulto, así que es una estimación, no un animal que alguien haya encontrado. En la postura de nuestro modelo, el adulto mide unos 13,1 m de punta a punta. Delante, en gris plano, nuestro ejemplar joven de unos 10 m, construido según ese esqueleto.",
+   "alt": "Comparación de tamaño: el Spinosaurus adulto más grande de lado, algo menos de 14 m según un modelo, con una vela alta y una cola alta. Delante, nuestro ejemplar joven de unos 10 m como una forma gris plana, y una persona gris de 1,70 m que le llega al joven a la cadera.",
    "note": "Nuestra propia reconstrucción, construida en código a partir de medidas publicadas y renderizada con nuestro propio motor gráfico. No son fotografías.",
    "marks": [
     {
@@ -258,8 +258,8 @@
     {
      "cells": [
       "Nuestro T. rex, según SUE",
-      "unos 11,4 m en su postura",
-      "la articulación de la cadera unos 3,2 m, el lomo sobre la cadera 3,96 m, la cabeza levantada unos 4,6 m",
+      "unos 11,0 m en su postura",
+      "la articulación de la cadera unos 3,2 m, el lomo sobre la cadera 3,87 m, la cabeza levantada unos 4,4 m",
       "no se da",
       "medido en nuestros archivos"
      ]
@@ -277,6 +277,15 @@
   },
   {
    "type": "text",
+   "id": "how-tall",
+   "nav": "¿Qué altura tenía el Spinosaurus?",
+   "h": "¿Qué altura tenía el Spinosaurus?",
+   "paras": [
+    "Los adultos más grandes, en nuestro modelo agrandado más o menos un tercio, medían unos 4,6 m hasta lo alto de la vela, con la articulación de la cadera a unos 2,1 m. Nuestro ejemplar joven: lo alto de la vela, unos 3,5 m, y la cabeza, unos 3 m en su postura. Su articulación de la cadera queda a unos 1,6 m. Los 2,1 m salen de nuestro modelo: para los adultos todavía no se publicó ninguna altura de la cadera, solo que el T. rex era más alto a la altura de la cadera."
+   ]
+  },
+  {
+   "type": "text",
    "id": "t-rex",
    "nav": "Spinosaurus vs. T. rex, solo el tamaño",
    "h": "Spinosaurus vs. T. rex, solo el tamaño",
@@ -286,7 +295,7 @@
    "scale": {
     "pic": "vs",
     "tag": "tag_made",
-    "what": "El Spinosaurus adulto más grande y nuestro T. rex, a la misma escala. El Spinosaurus es nuestro modelo agrandado más o menos un tercio, como se hizo el modelo de 2022. Según ese modelo, los adultos más grandes medían algo menos de 14 m. Nuestro T. rex, según SUE, es un adulto grande de unos 11,4 m. Así que aquí el más largo es el Spinosaurus. El T. rex es mucho más alto a la altura de la cadera. El Spinosaurus era muy probablemente el más ligero de los dos.",
+    "what": "El Spinosaurus adulto más grande y nuestro T. rex, a la misma escala. El Spinosaurus es nuestro modelo agrandado más o menos un tercio, como se hizo el modelo de 2022. Según ese modelo, los adultos más grandes medían algo menos de 14 m. Nuestro T. rex, según SUE, es un adulto grande, de unos 11 m en su postura. Así que aquí el más largo es el Spinosaurus. El T. rex es mucho más alto a la altura de la cadera. El Spinosaurus era muy probablemente el más ligero de los dos.",
     "alt": "Un Spinosaurus adulto grande con una vela en el lomo y un T. rex más corto con la cabeza levantada, los dos de lado, el T. rex más o menos una vez y media más alto a la altura de la cadera, junto a la persona gris.",
     "marks": [
      {
@@ -295,7 +304,7 @@
      },
      {
       "span": "t-rex",
-      "text": "Nuestro T. rex, según SUE, unos 11,4 m"
+      "text": "Nuestro T. rex, según SUE, unos 11 m"
      },
      {
       "span": "person",
@@ -340,6 +349,15 @@
       "El hocico se ensanchaba en la punta como una cuchara. Ningún espinosáurido nos dejó su piel, sus labios ni su color."
      ]
     }
+   ]
+  },
+  {
+   "type": "text",
+   "id": "mirabilis",
+   "nav": "El nuevo Spinosaurus: Spinosaurus mirabilis (2026)",
+   "h": "El nuevo Spinosaurus: Spinosaurus mirabilis (2026)",
+   "paras": [
+    "En febrero de 2026, un equipo dirigido por Paul Sereno describió en la revista Science una segunda especie, Spinosaurus mirabilis, a partir de fósiles hallados en Níger, en areniscas de río de unos 95 millones de años. Son huesos del cráneo, dientes y algunos huesos más, todos de animales jóvenes: el equipo calcula unos 8 m para el ejemplar tipo, todavía joven, y considera incierto el tamaño de un adulto. Tenía en el hocico una cresta alta y curvada, más alta en proporción al cráneo que la de cualquier otro dinosaurio conocido, salvo las aves, y según el artículo probablemente la cubría y la alargaba una vaina de queratina, como en la gallina de Guinea. Por lo demás, sus huesos se parecen mucho a los de Spinosaurus aegyptiacus. No cambia ninguna de las medidas de esta página, y no es nuestro animal: el nuestro es Spinosaurus aegyptiacus."
    ]
   },
   {
@@ -519,10 +537,6 @@
    "h": "Más preguntas",
    "items": [
     {
-     "q": "¿Qué altura tenía el Spinosaurus?",
-     "a": "Los adultos más grandes, como nuestro modelo agrandado más o menos un tercio: lo alto de la vela, unos 4,6 m, y la articulación de la cadera, unos 2,1 m. Nuestro ejemplar joven: lo alto de la vela, unos 3,5 m, y la cabeza, unos 3 m en su postura. Su articulación de la cadera queda a unos 1,6 m. Los 2,1 m salen de nuestro modelo: para los adultos todavía no se publicó ninguna altura de la cadera, solo que el T. rex era más alto a la altura de la cadera."
-    },
-    {
      "q": "¿Fue el Spinosaurus el dinosaurio más grande?",
      "a": "No. Los dinosaurios de cuello largo eran mucho más grandes: el Argentinosaurus, unos 30 a 35 m de largo y más o menos de 65 a 80 toneladas. Hay más en la página de los dinosaurios más grandes.",
      "links": [
@@ -669,19 +683,18 @@
     ]
    ],
    "shapes": {
-    "caption": "Comparación de tamaño del Spinosaurus: el adulto más grande, nuestro modelo agrandado, de unos 13,1 m de punta a punta en su postura, junto a una persona de 1,70 m, a la misma escala.",
+    "caption": "Comparación de tamaño del Spinosaurus: el adulto más grande según nuestro modelo agrandado, entero de lado, de unos 13,1 m de punta a punta en su postura, junto a una persona de 1,70 m, a la misma escala.",
     "lead": "Para presentaciones y publicaciones, esta comparación de tamaño está en tres formatos, todos con la misma licencia.",
     "alts": {
      "size_1x1": "Comparación de tamaño del Spinosaurus: la parte delantera del adulto más grande, nuestro modelo agrandado, con el hocico largo, el cuello, la vela y las patas, y una persona gris de 1,70 m bajo su cabeza.",
      "size_4x3": "El Spinosaurus junto a una persona, en comparación de tamaño: el adulto más grande, nuestro modelo agrandado, entero de lado con su vela alta y su cola larga, y una persona gris de 1,70 m bajo el hocico.",
-     "size_16x9": "Comparación de tamaño del Spinosaurus, el adulto entero de lado: nuestro modelo agrandado, de unos 13,1 m de punta a punta, y una persona gris de 1,70 m bajo su cabeza."
+     "size_16x9": "Comparación de tamaño del Spinosaurus, el animal entero de lado: el adulto más grande según nuestro modelo agrandado, de unos 13,1 m de punta a punta, y una persona gris de 1,70 m bajo su cabeza."
     },
     "links": {
      "size_1x1": "Cuadrada (1:1)",
      "size_4x3": "Diapositiva (4:3)",
      "size_16x9": "Panorámica (16:9)"
-    },
-    "draft": true
+    }
    }
   }
  ]

@@ -21,7 +21,7 @@
     "size_4x3",
     "size_16x9"
    ],
-   "figure": "size_16x9"
+   "figure": "size_4x3"
   }
  },
  "pics": {
@@ -150,12 +150,11 @@
  "top": {
   "h1": "¿Cuánto medía el Brachiosaurus?",
   "answer": "El Brachiosaurus, o braquiosaurio, medía unos 22 a 25 m de largo y pesaba más o menos de 30 a 45 toneladas, dos cifras reconstruidas a partir de un solo esqueleto parcial. La altura del Brachiosaurus nunca se midió, porque a ese esqueleto le falta el cuello: reconstruido, tendría la cabeza a unos 7 m con el cuello horizontal, y a más de 14 m con el cuello vertical. Nuestro modelo está hecho al tamaño de ese único esqueleto, que se guarda en Chicago y que viene de un animal que probablemente todavía crecía. Con el cuello levantado como lo elegimos, la cabeza queda a la altura de unas siete personas, y los hombros, de unas cuatro.",
-  "answer_more": "El famoso esqueleto de Berlín, con el cráneo a unos 13 m de altura, es su pariente africano Giraffatitan, en una postura pensada para la exposición. La mayoría de las imágenes de Brachiosaurus también muestran a ese pariente.",
   "scale": {
    "pic": "side",
    "tag": "tag_made",
-   "what": "Nuestro Brachiosaurus junto a una persona de 1,70 m, a la misma escala, al tamaño del único esqueleto en el que se basa el nombre, desenterrado en Colorado en 1900. El cuello, la cabeza, la parte de abajo de las patas y la mayor parte de la cola siguen a Giraffatitan y a otros hallazgos. La cabeza está a 11,5 m de altura solo por el ángulo del cuello que elegimos: esa altura es nuestra, no un resultado.",
-   "alt": "Nuestro Brachiosaurus de lado, al tamaño del esqueleto de Chicago, 24,0 m a lo largo de la columna, con el cuello largo levantado en una curva suave y lo alto de la cabeza a 11,5 m, con el ángulo del cuello elegido por nosotros. Las patas delanteras son más largas que las traseras, la cola no toca el suelo, y una persona gris de 1,70 m podría pasar por debajo de su vientre.",
+   "what": "Comparación de tamaño: nuestro Brachiosaurus junto a una persona de 1,70 m, a la misma escala, al tamaño del único esqueleto en el que se basa el nombre, desenterrado en Colorado en 1900. El cuello, la cabeza, la parte de abajo de las patas y la mayor parte de la cola siguen a Giraffatitan y a otros hallazgos. La cabeza está a 11,5 m de altura solo por el ángulo del cuello que elegimos: esa altura es elección nuestra, no un hallazgo.",
+   "alt": "Comparación de tamaño: nuestro Brachiosaurus de lado, al tamaño del esqueleto de Chicago, 24,0 m a lo largo de la columna, con el cuello largo levantado en una curva suave y lo alto de la cabeza a 11,5 m, con el ángulo del cuello elegido por nosotros. Las patas delanteras son más largas que las traseras, la cola no toca el suelo, y una persona gris de 1,70 m podría pasar por debajo de su vientre.",
    "note": "Nuestra propia reconstrucción, construida en código a partir de medidas publicadas y renderizada con nuestro propio motor gráfico. No son fotografías.",
    "marks": [
     {
@@ -268,13 +267,22 @@
    "h": "¿Qué altura tenía el Brachiosaurus, y fue el dinosaurio más alto?",
    "paras": [
     "Nadie puede decirlo con precisión de un metro: al esqueleto de Chicago le falta el cuello, y las dos vértebras del cuello halladas en otros lugares quizá ni siquiera sean de Brachiosaurus. Por eso toda altura de la cabeza publicada hasta hoy se dibujó sobre el cuello de Giraffatitan, y ninguna se midió.",
-    "Cómo llevaba ese cuello se discute, y la postura intermedia es la del cuello levantado, ni horizontal ni vertical. El cuello de nuestro modelo sube con unos 41 grados, con lo alto de la cabeza a 11,5 m. El mismo cuerpo tendría la cabeza a unos 7 m con el cuello horizontal, y a más de 14 m con el cuello vertical. El esqueleto de dinosaurio montado más alto es ese Giraffatitan de Berlín, y qué dinosaurio fue el más alto en vida no se sabe con seguridad: la página de los dinosaurios más grandes trata esa pregunta."
+    "Cómo llevaba ese cuello se discute, y la postura intermedia es la del cuello levantado, ni horizontal ni vertical. El cuello de nuestro modelo sube con unos 41 grados, con lo alto de la cabeza a 11,5 m. El mismo cuerpo tendría la cabeza a unos 7 m con el cuello horizontal, y a más de 14 m con el cuello vertical. El esqueleto de dinosaurio montado más alto es el Giraffatitan de Berlín, un pariente africano, y qué dinosaurio fue el más alto en vida no se sabe con seguridad: la página de los dinosaurios más grandes trata esa pregunta."
    ],
    "links": [
     {
      "page": "biggest-dinosaurs",
      "text": "¿Cuál fue el dinosaurio más grande?"
     }
+   ]
+  },
+  {
+   "type": "text",
+   "id": "weight",
+   "nav": "¿Cuánto pesaba el Brachiosaurus?",
+   "h": "¿Cuánto pesaba el Brachiosaurus?",
+   "paras": [
+    "El Brachiosaurus pesaba más o menos de 30 a 45 toneladas, según modelos. Nadie pesó nunca uno, y su único esqueleto está incompleto, así que cada peso sale de un modelo del cuerpo. El rango se apoya en dos cifras: unas 29 toneladas según un modelo del cuerpo del esqueleto de Chicago, publicado en 2009, y 46,9 toneladas según el Natural History Museum de Londres, que no explica su método. La cifra baja cambia con la densidad elegida y con el ancho del cuerpo, que las costillas conocidas no permiten fijar."
    ]
   },
   {
@@ -529,7 +537,7 @@
      "page": "woolly-mammoth",
      "pic": "mammoth",
      "alt": "Nuestro mamut lanudo, el macho de Berezovka, de lado, con pelaje marrón oscuro: la cabeza alta y abombada, el lomo en pendiente, dos colmillos curvos y una marca a la altura del hombro, a 271 cm según una reconstrucción. La persona gris de al lado, de 1,70 m, queda más baja que las puntas de los colmillos.",
-     "line": "Un macho típico de Siberia medía unos 2,7 a 2,9 m a la altura del hombro y pesaba unas 4 a 5 toneladas. Nuestro mamut lanudo es un solo macho real encontrado congelado en 1900, de 2,71 m a la altura del hombro según una reconstrucción, junto a una persona a la misma escala."
+     "line": "Un macho típico de Siberia medía unos 2,7 a 2,9 m a la altura del hombro y pesaba unas 4 a 5 toneladas. Nuestro mamut lanudo está hecho a partir de un solo macho real encontrado congelado en 1900, de 2,71 m a la altura del hombro según una reconstrucción, junto a una persona a la misma escala."
     }
    ]
   },
@@ -632,19 +640,18 @@
     ]
    ],
    "shapes": {
-    "caption": "Comparación de tamaño del Brachiosaurus: nuestro Brachiosaurus con el cuello levantado en el ángulo que elegimos, lo alto de la cabeza a 11,5 m, junto a una persona de 1,70 m, a la misma escala.",
+    "caption": "Comparación de tamaño del Brachiosaurus: la parte delantera de nuestro Brachiosaurus, con el cuello levantado en el ángulo que elegimos y lo alto de la cabeza a 11,5 m, junto a una persona de 1,70 m, a la misma escala.",
     "lead": "Para presentaciones y publicaciones, esta comparación de tamaño está en tres formatos, todos con la misma licencia.",
     "alts": {
      "size_1x1": "Comparación de tamaño del Brachiosaurus, la altura: las patas delanteras, el pecho y el cuello levantado de nuestro Brachiosaurus, la cabeza a 11,5 m, y una persona gris de 1,70 m bajo el cuello.",
      "size_4x3": "El Brachiosaurus junto a una persona, en comparación de tamaño: el cuello, la cabeza y el cuerpo de nuestro Brachiosaurus, con la cola cortada en el borde izquierdo, y una persona gris de 1,70 m debajo del cuello.",
-     "size_16x9": "Comparación de tamaño del Brachiosaurus, el animal entero de lado: nuestro Brachiosaurus, con lo alto de la cabeza a 11,5 m, y una persona gris de 1,70 m bajo su cuello."
+     "size_16x9": "Comparación de tamaño del Brachiosaurus, el animal entero de lado: nuestro Brachiosaurus, de 21,3 m de largo con el cuello levantado, y una persona gris de 1,70 m bajo su cuello."
     },
     "links": {
      "size_1x1": "Cuadrada (1:1)",
      "size_4x3": "Diapositiva (4:3)",
      "size_16x9": "Panorámica (16:9)"
-    },
-    "draft": true
+    }
    }
   }
  ]

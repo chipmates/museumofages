@@ -20,7 +20,7 @@
     "size_4x3",
     "size_16x9"
    ],
-   "figure": "size_16x9"
+   "figure": "size_4x3"
   }
  },
  "pics": {
@@ -198,7 +198,7 @@
  },
  "meta": {
   "title": "¿Cuál fue el dinosaurio más grande? | Museum of Ages",
-  "description": "¿Cuál fue el dinosaurio más grande? Probablemente Argentinosaurus: unos 30 a 35 m y más o menos 65 a 80 t. Siete dinosaurios y una persona, a escala.",
+  "description": "¿Cuál fue el dinosaurio más grande? Probablemente Argentinosaurus: unos 30 a 35 m y unas 65 a 80 t, según modelos. Siete dinosaurios y una persona, a escala.",
   "og_title": "¿Cuál fue el dinosaurio más grande? Probablemente Argentinosaurus",
   "og_image_alt": "Nuestros siete dinosaurios en fila, vistos de lado, a la misma escala. El más largo, nuestro Argentinosaurus, mide unos 30,6 m. Dos cuellos largos se alzan muy por encima de los demás, y una persona gris de 1,70 m parece diminuta a su lado."
  },
@@ -217,12 +217,11 @@
  "top": {
   "h1": "¿Cuál fue el dinosaurio más grande?",
   "answer": "El dinosaurio más grande fue probablemente Argentinosaurus, un titanosaurio de cuello largo de Argentina: unos 30 a 35 m de largo y más o menos 65 a 80 toneladas, según modelos hechos a partir de unos pocos huesos. Nadie puede estar seguro. Hasta hoy no se encontró un esqueleto completo de ninguna de las especies más grandes, y su pariente Patagotitan se le acerca. Nuestro Argentinosaurus de la imagen mide 30,6 m, lo mismo que 18 personas de 1,70 m tumbadas una detrás de otra.",
-  "answer_more": "«El más grande» puede querer decir tres cosas. El más pesado fue muy probablemente un titanosaurio de la Patagonia, Argentinosaurus o Patagotitan. El más largo no está establecido. El más alto fue probablemente Sauroposeidon, con la cabeza a unos 17 m del suelo, según cuatro vértebras del cuello.",
   "scale": {
    "pic": "row",
    "tag": "tag_made",
-   "what": "Nuestros siete junto a una persona de 1,70 m, a la misma escala, cada uno tal como está construido nuestro modelo. Nuestro Spinosaurus es un animal joven de unos 10 m, unas tres cuartas partes de un adulto, así que aquí es más corto que nuestro T. rex. Un Spinosaurus adulto era más largo que cualquier T. rex y, muy probablemente, más ligero.",
-   "alt": "Nuestros siete dinosaurios en fila, vistos de lado, a la misma escala. El más largo, nuestro Argentinosaurus, mide unos 30,6 m. Dos cuellos largos se alzan muy por encima de los demás, y una persona gris de 1,70 m parece diminuta a su lado.",
+   "what": "Comparación de tamaño: nuestros siete junto a una persona de 1,70 m, a la misma escala, cada uno tal como está construido nuestro modelo. Nuestro Spinosaurus es un animal joven de unos 10 m, unas tres cuartas partes de un adulto, así que aquí es más corto que nuestro T. rex. Según el modelo de 2022, el Spinosaurus adulto más grande era más largo que cualquier T. rex encontrado hasta hoy y, muy probablemente, más ligero.",
+   "alt": "Comparación de tamaño: nuestros siete dinosaurios en fila, vistos de lado, a la misma escala. El más largo, nuestro Argentinosaurus, mide unos 30,6 m. Dos cuellos largos se alzan muy por encima de los demás, y una persona gris de 1,70 m parece diminuta a su lado.",
    "note": [
     "Reconstrucciones propias del museo, construidas en código a partir de medidas y dibujos publicados, y renderizadas con nuestro propio motor gráfico. No son fotografías. ",
     "La silueta de nuestro Triceratops sigue el modelo del cuerpo de ",
@@ -274,7 +273,7 @@
     },
     {
      "span": "t-rex",
-     "text": "T. rex, unos 11,4 m"
+     "text": "T. rex, unos 11,0 m"
     },
     {
      "span": "spinosaurus",
@@ -284,12 +283,12 @@
    "close": {
     "pic": "close",
     "tag": "tag_made",
-    "what": "La misma escala, más de cerca: la persona entre los cinco animales más pequeños. Nuestro T. rex lleva la cabeza a unos 4,6 m del suelo, y la vela de nuestro Spinosaurus llega a 3,5 m.",
+    "what": "La misma escala, más de cerca: la persona entre los cinco animales más pequeños. Nuestro T. rex lleva la cabeza a unos 4,4 m del suelo, y la vela de nuestro Spinosaurus llega a 3,5 m.",
     "alt": "La persona gris entre los cinco dinosaurios más pequeños, más de cerca: dos carnívoros sobre dos patas, y tres con cuernos, coraza y placas sobre cuatro.",
     "marks": [
      {
       "span": "t-rex",
-      "text": "T. rex, unos 11,4 m"
+      "text": "T. rex, unos 11,0 m"
      },
      {
       "span": "spinosaurus",
@@ -362,7 +361,7 @@
     {
      "cells": [
       "T. rex, Tyrannosaurus rex",
-      "unos 11,4 m",
+      "unos 11,0 m",
       "el esqueleto de SUE, unos 12 m",
       "unas 8 a 9 t",
       "uno de los esqueletos más grandes y más completos, varios modelos"
@@ -418,8 +417,24 @@
   {
    "type": "text",
    "id": "three",
-   "nav": "Tres respuestas y el carnívoro más grande",
-   "h": "Tres respuestas y el carnívoro más grande",
+   "nav": "El dinosaurio carnívoro más grande y tres respuestas",
+   "h": "El dinosaurio carnívoro más grande y tres respuestas",
+   "paras": [
+    [
+     "Por la longitud, el carnívoro más grande fue ",
+     {
+      "text": "Spinosaurus",
+      "page": "spinosaurus"
+     },
+     ": un adulto medía algo menos de 14 m en el modelo de 2022, escalado a partir de un esqueleto joven y de un hocico suelto de un adulto. Por el peso, ",
+     {
+      "text": "T. rex",
+      "page": "t-rex"
+     },
+     ": el más pesado que se conoce, llamado Scotty, llega a unas 8,9 toneladas, y un adulto grande medía unos 12 m de largo. También se nombra a menudo a Giganotosaurus, pero sus restos son fragmentos, y sus estimaciones van de unas 6,5 a 14 toneladas."
+    ],
+    "Y «el más grande», a secas, puede querer decir tres cosas: el más pesado, el más largo o el más alto."
+   ],
    "subs": [
     {
      "h": "El más pesado",
@@ -437,24 +452,6 @@
      "h": "El más alto",
      "paras": [
       "Probablemente Sauroposeidon, de Oklahoma, con la cabeza a unos 17 m del suelo. Eso se apoya en cuatro vértebras del cuello halladas en 1994 y escaladas con las proporciones de Brachiosaurus. El Natural History Museum de Londres señala que quizá esté más cerca de los titanosaurios. Es una base débil, pero no se conoce nada mejor. El esqueleto más alto que se puede visitar es el de Giraffatitan en Berlín, con el cráneo a unos 13 m del suelo."
-     ]
-    },
-    {
-     "h": "El carnívoro más grande",
-     "paras": [
-      [
-       "Hay dos respuestas. Por la longitud, ",
-       {
-        "text": "Spinosaurus",
-        "page": "spinosaurus"
-       },
-       ": un adulto medía algo menos de 14 m en el modelo de 2022, escalado a partir de un esqueleto joven y de un hocico suelto de un adulto. Por el peso, ",
-       {
-        "text": "T. rex",
-        "page": "t-rex"
-       },
-       ": el más pesado que se conoce, llamado Scotty, llega a unas 8,9 toneladas, y un adulto grande medía unos 12 m de largo. También se nombra a menudo a Giganotosaurus, pero sus restos son fragmentos, y sus estimaciones van de unas 6,5 a 14 toneladas."
-      ]
      ]
     }
    ]
@@ -533,8 +530,8 @@
   {
    "type": "text",
    "id": "found",
-   "nav": "Lo que se encontró",
-   "h": "Lo que se encontró",
+   "nav": "Esqueleto del Argentinosaurus: lo hallado",
+   "h": "Esqueleto del Argentinosaurus: lo hallado",
    "paras": [
     "Argentinosaurus huinculensis se conoce por un solo animal, MCF-PVPH-1, hallado a finales de la década de 1980 a unos 8 km al este de Plaza Huincul, en Neuquén, Argentina. Lo que queda: seis o siete vértebras de la espalda incompletas, la parte inferior de la cadera, un trozo de costilla y un peroné de 1,55 m de largo. Ni cabeza, ni cuello, ni cola, ni hombro, ni brazo, ni pie. Los huesos se guardan en el Museo Municipal Carmen Funes, en Plaza Huincul. Dos fémures enormes quizá sean suyos, o quizá no.",
     "Patagotitan mayorum es la mejor conocida de las especies más grandes. Al menos seis adultos jóvenes salieron de una sola cantera en una estancia de Chubut, Argentina: el primer hueso en 2012, y más de cien huesos en total. Se guardan en el Museo Paleontológico Egidio Feruglio, en Trelew, donde un fémur real de más de 2 m está junto a la réplica.",
@@ -565,6 +562,10 @@
    "nav": "Más preguntas",
    "h": "Más preguntas",
    "items": [
+    {
+     "q": "¿Qué altura tenía el Argentinosaurus?",
+     "a": "Nadie sabe qué altura tenía en vida, porque nunca se encontraron el cuello ni la cabeza de un Argentinosaurus. Nuestro modelo lleva la cabeza a unos 11 m del suelo, con un ángulo del cuello que elegimos nosotros."
+    },
     {
      "q": "¿Era el Spinosaurus más grande que el T. rex?",
      "a": "Más largo y, muy probablemente, más ligero. Un Spinosaurus adulto medía algo menos de 14 m y pesaba unas 7,4 toneladas en el modelo actual. Un T. rex adulto grande medía unos 12 m y pesaba de 8 a 9 toneladas. El nuestro de la imagen es un Spinosaurus joven de unos 10 m, así que allí es el más corto."
@@ -617,7 +618,7 @@
      "page": "woolly-mammoth",
      "pic": "mammoth",
      "alt": "Nuestro mamut lanudo, el macho de Berezovka, de lado, con pelaje marrón oscuro: la cabeza alta y abombada, el lomo en pendiente, dos colmillos curvos y una marca a la altura del hombro, a 271 cm según una reconstrucción. La persona gris de al lado, de 1,70 m, queda más baja que las puntas de los colmillos.",
-     "line": "No es un dinosaurio, sino un pariente de los elefantes de la edad de hielo: un macho siberiano medía unos 2,7 a 2,9 m a la altura del hombro. El nuestro es un macho real hallado congelado en 1900, junto a una persona."
+     "line": "No es un dinosaurio, sino un pariente de los elefantes de la edad de hielo: un macho siberiano medía unos 2,7 a 2,9 m a la altura del hombro. El nuestro está hecho a partir de un macho real hallado congelado en 1900, junto a una persona."
     },
     {
      "page": "brachiosaurus",
@@ -813,19 +814,18 @@
     ]
    ],
    "shapes": {
-    "caption": "Comparación de tamaño de dinosaurios: nuestros siete dinosaurios a la misma escala, cada uno como está construido nuestro modelo, el más largo nuestro Argentinosaurus con unos 30,6 m, y entre ellos una persona de 1,70 m.",
+    "caption": "Comparación de tamaño del Argentinosaurus: nuestro Argentinosaurus de la cadera hacia delante, de 30,6 m de largo en total, con el cuello levantado en el ángulo que elegimos, junto a una persona de 1,70 m, a la misma escala.",
     "lead": "Para presentaciones y publicaciones, esta comparación de tamaño está en tres formatos, todos con la misma licencia.",
     "alts": {
      "size_1x1": "Comparación de tamaño del Argentinosaurus: las patas delanteras, el cuello levantado y la cabeza de nuestro Argentinosaurus, con una persona gris de 1,70 m de pie bajo el cuello.",
-     "size_4x3": "El Argentinosaurus junto a una persona, en comparación de tamaño: nuestro Argentinosaurus de la cadera hacia delante, con su largo cuello en alto, y una persona gris de 1,70 m debajo.",
+     "size_4x3": "El Argentinosaurus junto a una persona, en comparación de tamaño: nuestro Argentinosaurus de la cadera hacia delante, con su largo cuello en alto, y una persona gris de 1,70 m debajo del cuello.",
      "size_16x9": "Comparación de tamaño de dinosaurios: nuestros siete dinosaurios uno al lado del otro a la misma escala, el más largo nuestro Argentinosaurus de unos 30,6 m, y entre ellos una persona gris de 1,70 m."
     },
     "links": {
      "size_1x1": "Cuadrada (1:1)",
      "size_4x3": "Diapositiva (4:3)",
      "size_16x9": "Panorámica (16:9)"
-    },
-    "draft": true
+    }
    }
   }
  ]
