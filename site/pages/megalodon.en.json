@@ -534,7 +534,21 @@
      },
      "). They show a reconstruction, built in code and rendered in our own engine, not a photograph."
     ]
-   ]
+   ],
+   "shapes": {
+    "caption": "Megalodon size comparison: our megalodon, about 16 m (52 ft) long, beside a person 1.70 m tall, to one scale.",
+    "lead": "For slides and posts, the size comparison also comes in three shapes, under the same licence.",
+    "alts": {
+     "size_1x1": "Megalodon size comparison: the head of our megalodon, from the pectoral fin forward, with a grey person 1.70 m tall by its snout.",
+     "size_4x3": "Megalodon size comparison: the front two thirds of our megalodon beside a grey person 1.70 m tall.",
+     "size_16x9": "Megalodon size comparison: our whole megalodon from the side, about 16 m (52 ft) long, beside a grey person 1.70 m tall."
+    },
+    "links": {
+     "size_1x1": "Square (1:1)",
+     "size_4x3": "Slide (4:3)",
+     "size_16x9": "Wide (16:9)"
+    }
+   }
   }
  ]
 }

@@ -1409,7 +1409,10 @@ def check_periods(d, lang, works, facts, field_title, pics):
 
 # ---------- structured data ----------
 
-def jsonld(lang, data, urls, pics, site, wing, alternate_name, frame, folders, topic=None, shared=None):
+def jsonld(lang, data, urls, pics, site, wing, alternate_name, frame, folders, topic=None, shared=None, shapes=(), card=None):
+    """The page's structured data. shapes: the page's pictures in the shapes search shows (page.shapes), each an
+    ImageObject; the first of them by id frame is the page's own, and the picture the page names otherwise keeps one of
+    its own (scale). card: the word card, described where the share picture is cut from a shape."""
     self_url = urls[lang]
     pub = {"@id": f"{ORIGIN}/#publisher"}
     publisher = site or {
@@ -1441,7 +1444,8 @@ def jsonld(lang, data, urls, pics, site, wing, alternate_name, frame, folders, t
         {
             "@type": "Article", "@id": f"{self_url}#article", "headline": data["top"]["h1"],
             "description": data["meta"]["description"], "inLanguage": L.html(lang),
-            "mainEntityOfPage": {"@id": f"{self_url}#page"}, "image": {"@id": f"{self_url}#frame"},
+            "mainEntityOfPage": {"@id": f"{self_url}#page"},
+            "image": [{"@id": f"{self_url}#{s['id']}"} for s in shapes] if shapes else {"@id": f"{self_url}#frame"},
             "author": pub, "publisher": pub, "isAccessibleForFree": True,
             # a topic page about one thing of its wing names that thing (its entry's about), else the wing's
             "about": (topic or {}).get("about") or wing["about"],
@@ -1459,12 +1463,21 @@ def jsonld(lang, data, urls, pics, site, wing, alternate_name, frame, folders, t
             ],
         },
         {
-            "@type": "ImageObject", "@id": f"{self_url}#frame", "url": image_url, "contentUrl": image_url,
+            "@type": "ImageObject", "@id": f"{self_url}#{'scale' if shapes else 'frame'}", "url": image_url, "contentUrl": image_url,
             "width": w, "height": h, "caption": frame.get("caption") or f"{frame['title']}, {frame['what']}",
             "description": frame.get("description") or frame["alt"],
-            "representativeOfPage": True,
+            **({} if shapes else {"representativeOfPage": True}),
         },
     ]
+    for s in shapes:
+        url = f"{ORIGIN}/{STATIC}/img/{s['file']}"
+        graph.append({"@type": "ImageObject", "@id": f"{self_url}#{s['id']}", "url": url, "contentUrl": url,
+                      "width": s["width"], "height": s["height"], "caption": s["caption"], "description": s["description"],
+                      **({"representativeOfPage": True} if s["id"] == "frame" else {})})
+    if card:
+        url = f"{ORIGIN}/{STATIC}/img/{card['file']}"
+        graph.append({"@type": "ImageObject", "@id": f"{self_url}#card", "url": url, "contentUrl": url,
+                      "width": card["width"], "height": card["height"], "caption": card["caption"], "description": card["description"]})
     for more in frame.get("more", []):
         found = next(f / more["still"] for f in folders if (f / more["still"]).is_file())
         w, h = CHART.png_info(found)[0]
@@ -1484,6 +1497,9 @@ def jsonld(lang, data, urls, pics, site, wing, alternate_name, frame, folders, t
         }
         graph[4]["itemListElement"] = graph[4]["itemListElement"][:1] + [
             {"@type": "ListItem", "position": 2, "name": wing["name"][lang], "item": self_url}]
+        if shapes:
+            # a list of pages has no Article: its shapes are the collection's own pictures
+            graph[2]["image"] = [{"@id": f"{self_url}#{s['id']}"} for s in shapes]
     if data["page"].get("published"):
         graph[3]["datePublished"] = data["page"]["published"]
     if data["page"].get("checked"):
@@ -1705,6 +1721,22 @@ def render(page, lang, data, shared, out_root):
                                         "html.note": f'<span class="label__src">{linked(fig["note"])}</span>' if fig.get("note") else "",
                                         "html.key": key_html(fig)})
         return out + (scale_fig(fig["close"]) if fig.get("close") else "")
+
+    shaped = data["page"].get("shapes")
+
+    def shape_fig(first=False):
+        """The page's shapes as one figure (page.shapes.figure), with its caption, then where a page has them the lead
+        and a plain link to each shape's largest file."""
+        key, sw = shaped["figure"], shape_words(data)
+        tag = data["top"].get("scale", {}).get("tag", "tag_made")
+        out = fill(parts["shape_fig"], {"html.picture": pics.picture(key, esc(sw["alts"][key]), first=first),
+                                        "html.person": person_html(key), "caption": running(sw["caption"]),
+                                        "html.tag": f'<span class="tag">{rich(labels[tag])}<span class="vh">:</span></span> ' if tag in labels else ""})
+        if not sw.get("links"):
+            return out
+        links = "\n".join(fill(parts["shape_link"], {"href": f'{root}{STATIC}/img/{esc(pics.defs[k]["stem"])}-{max(pics.defs[k]["widths"])}.webp',
+                                                     "text": rich(sw["links"][k]), "svg.arrow": chrome["arrow"]}) for k in shaped["list"])
+        return out + "\n" + fill(parts["shape_links"], {"lead": prose(sw["lead"]), "html.links": links})
 
     def key_html(fig):
         """A picture's key: one line, or a list whose lines each lead with the swatch of the colour they name."""
@@ -1928,6 +1960,9 @@ def render(page, lang, data, shared, out_root):
             values["html.paras"] = "\n".join(paras)
             values["html.pic"] = figure(block.get("pic")) + (scale_fig(sc) if sc and "after" not in sc else "")
             values["html.links"] = ways(block.get("links", []))
+            if shaped and not hub and block["id"] == "pictures":
+                # the shapes stand once, in the section that says how to use the pictures, after its licence line
+                values["html.pic"] += shape_fig() + "\n"
         elif kind == "question":
             # the answer first, display text that never hyphenates; its picture under it; then what is known, its rows
             # (lists, each a term and its words on the ledger, under a heading where a list has one), what is not, and
@@ -2177,6 +2212,9 @@ def render(page, lang, data, shared, out_root):
             frame = {"pic": key, "alt": item["alt"], "description": item["alt"],
                      "caption": (item.get("line") or shared["topics"][item["page"]]["line"][lang]).replace(LIB.NBSP, " ")}
         frame_html, preload, focus = "", "", ""
+        if shaped:
+            # the list's shapes: the wide one stands under the answer, its first picture
+            frame_html, preload = shape_fig(first=True), pics.preload(shaped["figure"])
     elif ask:
         # a page of questions: its first part is words, the door and the list of its questions; its picture in the
         # structured data is its share picture
@@ -2209,6 +2247,23 @@ def render(page, lang, data, shared, out_root):
     if data["page"].get("primary_from"):
         # the page's own picture is one the site shows elsewhere, in the words it shows it with there
         frame = borrowed_frame(data["page"]["primary_from"], lang, wing.get("_data", data["page"]["wing"]))
+    shapes, card = [], None
+    plain = lambda t: t.replace(LIB.NBSP, " ")
+    if shaped:
+        # the figure's words are its caption and its alt; a shape the page only links is described by its alt
+        sw = shape_words(data)
+        for key in shaped["list"]:
+            w, h = pics.size(key)
+            shapes.append({"id": shape_id(data, key), "file": f'{pics.defs[key]["stem"]}-{max(pics.defs[key]["widths"])}.webp',
+                           "width": w, "height": h, "description": plain(sw["alts"][key]),
+                           "caption": plain(sw["caption"] if key == shaped["figure"] else sw["alts"][key])})
+    og_file, og_size, og_alt = og["file"], (og["width"], og["height"]), data["meta"]["og_image_alt"]
+    if og.get("from"):
+        # the share picture is cut from a shape, without words; the word card stays served and described
+        og_file, og_alt = og_cut(data), shape_words(data)["alts"][og["from"]]
+        og_size = jpeg_size(pics.find(og_file))
+        card = {"file": og["file"], "width": og["width"], "height": og["height"],
+                "caption": plain(data["meta"]["og_title"]), "description": plain(data["meta"]["og_image_alt"])}
     values = dict(base)
     values.update({
         "lang": L.html(lang),
@@ -2223,10 +2278,10 @@ def render(page, lang, data, shared, out_root):
         "meta.title": esc(data["meta"]["title"]),
         "meta.description": esc(data["meta"]["description"]),
         "meta.og_title": esc(data["meta"]["og_title"]),
-        "meta.og_image_alt": esc(data["meta"]["og_image_alt"]),
+        "meta.og_image_alt": esc(og_alt),
         "url.self": urls[lang],
-        "url.og_image": f"{ORIGIN}/{STATIC}/img/{og['file']}",
-        "og.width": str(og["width"]), "og.height": str(og["height"]),
+        "url.og_image": f"{ORIGIN}/{STATIC}/img/{og_file}",
+        "og.width": str(og_size[0]), "og.height": str(og_size[1]),
         "css.inline": shared["css_scale" if making(wing) else "css_list" if any(b["type"] == "periods" for b in data["blocks"]) else
                              "css_work" if ask and (data["top"].get("plate") or any(b["type"] == "years" for b in data["blocks"])) else
                              "css_life" if any(b["type"] == "years" for b in data["blocks"]) else
@@ -2234,7 +2289,7 @@ def render(page, lang, data, shared, out_root):
                              "css_ask" if ask or any(b["type"] in ASK_TYPES for b in data["blocks"]) else
                              "css_chart" if works or "drawing" in data["top"] or any(b["type"] == "text" for b in data["blocks"]) else "css"]
                       + (shared["langs_css"] + chrome["by"] if chrome["langs"] else ""),
-        "css.faces": faces(root, lang) + focus + person_rules(data["pics"]) + span_rules(data["pics"]) + swatch_rules(data["pics"]) + top_rules(data["pics"])
+        "css.faces": faces(root, lang) + focus + person_rules(shown_pics(data)) + span_rules(data["pics"]) + swatch_rules(data["pics"]) + top_rules(data["pics"])
                      + (shared["css_several"] + mark_rules(data) if marked_figures(data) or has_points(data) else ""),
         "html.preload": preload,
         "html.theme": f'<meta name="theme-color" content="{chrome["theme"]}">\n' if chrome["theme"] else "",
@@ -2263,7 +2318,7 @@ def render(page, lang, data, shared, out_root):
         "attr.main": (" data-unasked" if hub else ' data-asks="visit"') if making(wing) else "",
         "html.blocks": blocks,
         "jsonld": jsonld(lang, data, urls, pics, chrome["publisher"], wing, chrome["alternate_name"],
-                         frame, shared["pic_folders"], shared["topics"].get(page), shared),
+                         frame, shared["pic_folders"], shared["topics"].get(page), shared, shapes, card),
     })
     if making(wing):
         out = data["top"]["out"]
@@ -2278,6 +2333,10 @@ def render(page, lang, data, shared, out_root):
                                        LIB.picture_terms(lang, chrome["use_pictures"], map_data=True), data["meta"].get("credit"))
     files = {f"img/{f}": pics.find(f) for name in sorted(pics.used) for f in pics.files(name)}
     files[f"img/{og['file']}"] = pics.find(og["file"])
+    files[f"img/{og_file}"] = pics.find(og_file)
+    for key in (shaped or {}).get("list", []):
+        # the shapes the page only links and describes are served beside the one it shows
+        files.update({f"img/{f}": pics.find(f) for f in pics.files(key)})
     if frame.get("still"):
         files[f"img/{frame['still']}"] = pics.find(frame["still"])
     if "figure" in data["top"]:
@@ -2334,6 +2393,87 @@ def borrowed_frame(spec, lang, wing_key):
     title, what, alt = words
     return {"still": f'{plate["pic"]["stem"]}-{max(plate["pic"]["widths"])}.webp', "alt": alt, "description": alt,
             "caption": f"{title}, {what}"}
+
+
+# ---------- a page's picture in the shapes search shows (page.shapes) ----------
+
+SHAPE_KEY = re.compile(r"size_(\d+)x(\d+)")
+SHAPE_STEM = re.compile(r"-(\d+)x(\d+)$")
+SHAPES_KEYS = {"primary", "list", "figure"}
+
+
+def shape_words(data):
+    """The words of a page's shapes: a list of pages has them in its first part (top.shapes), a topic page in its
+    section on using its pictures (the block whose id is pictures)."""
+    if data["page"].get("hub"):
+        return data["top"].get("shapes")
+    return next((b.get("shapes") for b in data["blocks"] if b["id"] == "pictures"), None)
+
+
+def shape_id(data, key):
+    """A shape's place in the structured data: the page's own picture (frame), the others by their shape."""
+    return "frame" if key == data["page"]["shapes"]["primary"] else f"frame-{key.split('_', 1)[1]}"
+
+
+def shown_pics(data):
+    """A page's pictures that it shows: its shapes only by the one it shows (page.shapes.figure)."""
+    shaped = data["page"].get("shapes")
+    linked = set(shaped["list"]) - {shaped["figure"]} if shaped else set()
+    return {k: v for k, v in data["pics"].items() if k not in linked}
+
+
+def og_cut(data):
+    """The share picture cut from a shape (page.og_image.from): the shape's stem, og for its shape, 1200 x 630 JPEG."""
+    return SHAPE_STEM.sub("-og", data["pics"][data["page"]["og_image"]["from"]]["stem"]) + "-1200x630.jpg"
+
+
+def jpeg_size(path):
+    """Pixel size from a JPEG's frame header, so no size is typed by hand."""
+    body = path.read_bytes()
+    if body[:2] != b"\xff\xd8":
+        raise ValueError(f"{path.name} is not a JPEG file")
+    i = 2
+    while i + 9 <= len(body) and body[i] == 0xFF:
+        marker = body[i + 1]
+        if marker == 0xFF or marker == 0x01 or 0xD0 <= marker <= 0xD7:
+            i += 1 if marker == 0xFF else 2
+            continue
+        if 0xC0 <= marker <= 0xCF and marker not in (0xC4, 0xC8, 0xCC):
+            h, w = struct.unpack(">HH", body[i + 5:i + 9])
+            return w, h
+        i += 2 + int.from_bytes(body[i + 2:i + 4], "big")
+    raise ValueError(f"{path.name}: no frame header")
+
+
+def shapes_problems(d):
+    """A page's shapes (page.shapes) name pictures of the page in the shapes their keys say, each with the words it
+    needs; a share picture cut from a shape (og_image.from) names one of them. Returns the problems."""
+    shapes, og_from = d["page"].get("shapes"), d["page"]["og_image"].get("from")
+    if not shapes:
+        return ["page.og_image.from names a shape, and the page has no page.shapes"] if og_from else []
+    if not isinstance(shapes, dict) or set(shapes) != SHAPES_KEYS or not isinstance(shapes["list"], list):
+        return [f"page.shapes holds {', '.join(sorted(SHAPES_KEYS))} and no other key, its list a list"]
+    problems, keys = [], shapes["list"]
+    for key in keys:
+        if not SHAPE_KEY.fullmatch(key) or key not in d["pics"]:
+            problems.append(f"page.shapes names {key!r}: a shape is a pics entry named size_<w>x<h>")
+        elif not SHAPE_STEM.search(d["pics"][key]["stem"]) or SHAPE_STEM.search(d["pics"][key]["stem"]).groups() != SHAPE_KEY.fullmatch(key).groups():
+            problems.append(f"pics.{key}: its stem ends in another shape than its name")
+    if len(set(keys)) != len(keys) or shapes["primary"] not in keys or shapes["figure"] not in keys:
+        problems.append("page.shapes: its list names each shape once, the primary and the figure among them")
+    if og_from is not None and og_from not in keys:
+        problems.append(f"page.og_image.from is {og_from!r}, which page.shapes does not list")
+    words = shape_words(d)
+    need = ("caption", "alts") if d["page"].get("hub") else ("caption", "lead", "alts", "links")
+    if not isinstance(words, dict) or any(k not in words for k in need):
+        problems.append(f"page.shapes stands, and the page's words for its shapes ({', '.join(need)}) are missing")
+    else:
+        if ("lead" in words) != ("links" in words):
+            problems.append("the shapes' lead and links stand together")
+        for field in ("alts", "links"):
+            if field in words and set(words[field]) != set(keys):
+                problems.append(f"the shapes' {field} name {sorted(words[field])}, page.shapes lists {sorted(keys)}")
+    return problems
 
 
 def answer_text(answer):
@@ -3072,6 +3212,7 @@ def build_pages(out_dir, site_src=SITE_SRC, site_built=SITE_BUILT, pages=PAGES, 
             b = every[lang]
             problems += lint(page, lang, b, wing[page], kept(page, lang), info[page]["topic"])
             problems += [f"{page}.{lang}: {x}" for x in making_problems(b, wing[page], data)]
+            problems += [f"{page}.{lang}: {x}" for x in shapes_problems(b)]
             if lang == "en":
                 continue
             if a["page"].get("wing") != b["page"].get("wing"):
@@ -3081,7 +3222,8 @@ def build_pages(out_dir, site_src=SITE_SRC, site_built=SITE_BUILT, pages=PAGES, 
                                 f"{page}: the two languages do not hold the same structure")
             if (a["pics"] != b["pics"] or a["page"]["id"] != b["page"]["id"] or a["page"]["og_image"] != b["page"]["og_image"]
                     or a["page"].get("still") != b["page"].get("still") or a["page"].get("primary") != b["page"].get("primary")
-                    or a["page"].get("primary_from") != b["page"].get("primary_from")):
+                    or a["page"].get("primary_from") != b["page"].get("primary_from")
+                    or a["page"].get("shapes") != b["page"].get("shapes")):
                 problems.append(f"{page}: {lang} differs from English in pictures or in the page label" if lang != "de" else
                                 f"{page}: the two languages differ in pictures or in the page label")
             # a translation states the facts of its source page, checked on the same day

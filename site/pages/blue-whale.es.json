@@ -651,7 +651,21 @@
      },
      "). Muestran una reconstrucción, construida en código y renderizada con nuestro propio motor gráfico, no fotografías. Las imágenes de las otras páginas que aparecen aquí dan su crédito en esas páginas."
     ]
-   ]
+   ],
+   "shapes": {
+    "caption": "Comparación de tamaño de la ballena azul: nuestra ballena azul, de 22,86 m de largo, junto a una persona de 1,70 m, a la misma escala.",
+    "lead": "Para presentaciones y publicaciones, la comparación de tamaño también está en tres formatos, con la misma licencia.",
+    "alts": {
+     "size_1x1": "Comparación de tamaño de la ballena azul: la cabeza y la aleta pectoral de nuestra ballena azul junto a una persona gris de 1,70 m.",
+     "size_4x3": "Comparación de tamaño de la ballena azul: la mitad delantera de nuestra ballena azul junto a una persona gris de 1,70 m.",
+     "size_16x9": "Comparación de tamaño de la ballena azul: nuestra ballena azul entera de lado, de 22,86 m de largo, junto a una persona gris de 1,70 m."
+    },
+    "links": {
+     "size_1x1": "Cuadrada (1:1)",
+     "size_4x3": "Diapositiva (4:3)",
+     "size_16x9": "Panorámica (16:9)"
+    }
+   }
   }
  ]
 }

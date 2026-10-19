@@ -534,7 +534,21 @@
      },
      "). Elas mostram uma reconstrução, construída em código e renderizada com o nosso próprio motor gráfico, não uma fotografia."
     ]
-   ]
+   ],
+   "shapes": {
+    "caption": "Comparação de tamanho do megalodon: o nosso megalodon, com cerca de 16 m de comprimento, ao lado de uma pessoa de 1,70 m, na mesma escala.",
+    "lead": "Para slides e publicações, a comparação de tamanho também vem em três formatos, com a mesma licença.",
+    "alts": {
+     "size_1x1": "Comparação de tamanho do megalodon: a cabeça do nosso megalodon até a nadadeira peitoral, com uma pessoa cinza de 1,70 m junto ao focinho.",
+     "size_4x3": "Comparação de tamanho do megalodon: os dois terços da frente do nosso megalodon ao lado de uma pessoa cinza de 1,70 m.",
+     "size_16x9": "Comparação de tamanho do megalodon: o nosso megalodon inteiro de lado, com cerca de 16 m de comprimento, ao lado de uma pessoa cinza de 1,70 m."
+    },
+    "links": {
+     "size_1x1": "Quadrada (1:1)",
+     "size_4x3": "Slide (4:3)",
+     "size_16x9": "Panorâmica (16:9)"
+    }
+   }
   }
  ]
 }

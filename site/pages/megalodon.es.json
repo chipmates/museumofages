@@ -534,7 +534,21 @@
      },
      "). Muestran una reconstrucción, construida en código y renderizada con nuestro propio motor gráfico, no una fotografía."
     ]
-   ]
+   ],
+   "shapes": {
+    "caption": "Comparación de tamaño del megalodón: nuestro megalodón, de unos 16 m de largo, junto a una persona de 1,70 m, a la misma escala.",
+    "lead": "Para presentaciones y publicaciones, la comparación de tamaño también está en tres formatos, con la misma licencia.",
+    "alts": {
+     "size_1x1": "Comparación de tamaño del megalodón: la cabeza de nuestro megalodón hasta la aleta pectoral, con una persona gris de 1,70 m junto al hocico.",
+     "size_4x3": "Comparación de tamaño del megalodón: los dos tercios delanteros de nuestro megalodón junto a una persona gris de 1,70 m.",
+     "size_16x9": "Comparación de tamaño del megalodón: nuestro megalodón entero de lado, de unos 16 m de largo, junto a una persona gris de 1,70 m."
+    },
+    "links": {
+     "size_1x1": "Cuadrada (1:1)",
+     "size_4x3": "Diapositiva (4:3)",
+     "size_16x9": "Panorámica (16:9)"
+    }
+   }
   }
  ]
 }

@@ -534,7 +534,21 @@
      },
      "). Sie zeigen eine Rekonstruktion, in Code gebaut und in unserer Engine gerendert, kein Foto."
     ]
-   ]
+   ],
+   "shapes": {
+    "caption": "Megalodon im Größenvergleich: unser Megalodon, etwa 16 m lang, neben einem Menschen von 1,70 m, im selben Maßstab.",
+    "lead": "Für Folien und Beiträge gibt es den Größenvergleich auch in drei Formaten, unter derselben Lizenz.",
+    "alts": {
+     "size_1x1": "Megalodon im Größenvergleich: der Kopf unseres Megalodons bis zur Brustflosse, an der Schnauze ein grauer Mensch von 1,70 m.",
+     "size_4x3": "Megalodon im Größenvergleich: die vorderen zwei Drittel unseres Megalodons neben einem grauen Menschen von 1,70 m.",
+     "size_16x9": "Megalodon im Größenvergleich: unser ganzer Megalodon von der Seite, etwa 16 m lang, neben einem grauen Menschen von 1,70 m."
+    },
+    "links": {
+     "size_1x1": "Quadratisch (1:1)",
+     "size_4x3": "Folie (4:3)",
+     "size_16x9": "Breit (16:9)"
+    }
+   }
   }
  ]
 }

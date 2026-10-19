@@ -651,7 +651,21 @@
      },
      "). They show a reconstruction, built in code and rendered in our own engine, not photographs. The pictures of the other pages listed here give their credits on those pages."
     ]
-   ]
+   ],
+   "shapes": {
+    "caption": "Blue whale size comparison: our blue whale, 22.86 m (75 ft) long, beside a person 1.70 m tall, to one scale.",
+    "lead": "For slides and posts, the size comparison also comes in three shapes, under the same licence.",
+    "alts": {
+     "size_1x1": "Blue whale size comparison: the head and flipper of our blue whale beside a grey person 1.70 m tall.",
+     "size_4x3": "Blue whale size comparison: the front half of our blue whale beside a grey person 1.70 m tall.",
+     "size_16x9": "Blue whale size comparison: our whole blue whale from the side, 22.86 m (75 ft) long, beside a grey person 1.70 m tall."
+    },
+    "links": {
+     "size_1x1": "Square (1:1)",
+     "size_4x3": "Slide (4:3)",
+     "size_16x9": "Wide (16:9)"
+    }
+   }
   }
  ]
 }
