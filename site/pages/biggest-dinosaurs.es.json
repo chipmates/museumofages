@@ -12,6 +12,15 @@
    "file": "animals-biggest-dinosaurs-og-{lang}-1200x630.png",
    "width": 1200,
    "height": 630
+  },
+  "shapes": {
+   "primary": "size_1x1",
+   "list": [
+    "size_1x1",
+    "size_4x3",
+    "size_16x9"
+   ],
+   "figure": "size_16x9"
   }
  },
  "pics": {
@@ -158,6 +167,33 @@
    ],
    "sizes": "(min-width: 1280px) 690px, (min-width: 960px) 54vw, (min-width: 600px) calc(100vw - 64px), calc(100vw - 40px)",
    "person": null
+  },
+  "size_1x1": {
+   "stem": "animals-biggest-dinosaurs-size-comparison-1x1",
+   "widths": [
+    1600
+   ],
+   "sizes": "(min-width: 1280px) 690px, (min-width: 960px) 54vw, (min-width: 600px) calc(100vw - 64px), calc(100vw - 40px)",
+   "person": "49.75% 81.25%"
+  },
+  "size_4x3": {
+   "stem": "animals-biggest-dinosaurs-size-comparison-4x3",
+   "widths": [
+    1600
+   ],
+   "sizes": "(min-width: 1280px) 690px, (min-width: 960px) 54vw, (min-width: 600px) calc(100vw - 64px), calc(100vw - 40px)",
+   "person": "65.62% 78.5%"
+  },
+  "size_16x9": {
+   "stem": "animals-biggest-dinosaurs-size-comparison-16x9",
+   "widths": [
+    800,
+    1600,
+    2400
+   ],
+   "sizes": "(min-width: 1280px) 690px, (min-width: 960px) 54vw, (min-width: 600px) calc(100vw - 64px), calc(100vw - 40px)",
+   "person": "33.19% 64.67%",
+   "person_from": 680
   }
  },
  "meta": {
@@ -775,7 +811,22 @@
      },
      ". Crédito: Museum of Ages y, donde un pie de imagen nombra una fuente, también esa fuente. Muestran reconstrucciones, construidas en código y renderizadas con nuestro propio motor gráfico, no fotografías."
     ]
-   ]
+   ],
+   "shapes": {
+    "caption": "Comparación de tamaño de dinosaurios: nuestros siete dinosaurios a la misma escala, cada uno como está construido nuestro modelo, el más largo nuestro Argentinosaurus con unos 30,6 m, y entre ellos una persona de 1,70 m.",
+    "lead": "Para presentaciones y publicaciones, esta comparación de tamaño está en tres formatos, todos con la misma licencia.",
+    "alts": {
+     "size_1x1": "Comparación de tamaño del Argentinosaurus: las patas delanteras, el cuello levantado y la cabeza de nuestro Argentinosaurus, con una persona gris de 1,70 m de pie bajo el cuello.",
+     "size_4x3": "El Argentinosaurus junto a una persona, en comparación de tamaño: nuestro Argentinosaurus de la cadera hacia delante, con su largo cuello en alto, y una persona gris de 1,70 m debajo.",
+     "size_16x9": "Comparación de tamaño de dinosaurios: nuestros siete dinosaurios uno al lado del otro a la misma escala, el más largo nuestro Argentinosaurus de unos 30,6 m, y entre ellos una persona gris de 1,70 m."
+    },
+    "links": {
+     "size_1x1": "Cuadrada (1:1)",
+     "size_4x3": "Diapositiva (4:3)",
+     "size_16x9": "Panorámica (16:9)"
+    },
+    "draft": true
+   }
   }
  ]
 }

@@ -1401,6 +1401,66 @@
    "sha256": "43c52c66a7a2e11095d97676cadc6c34d189ec178db28f8554a318cef3bad48d"
   },
   {
+   "path": "pages/pics/img/animals-ankylosaurus-size-comparison-16x9-1600.avif",
+   "url": "/static/img/animals-ankylosaurus-size-comparison-16x9-1600.avif",
+   "bytes": 15074,
+   "sha256": "28d33f95916b08a7755ab5b2a1f4e0a2332f0de8afd45a725e730b1f8ac27398"
+  },
+  {
+   "path": "pages/pics/img/animals-ankylosaurus-size-comparison-16x9-1600.webp",
+   "url": "/static/img/animals-ankylosaurus-size-comparison-16x9-1600.webp",
+   "bytes": 17944,
+   "sha256": "59af9f7337af5ba8433070b40e3fa52ae3ae51ff0d2549865f3f4c8aaf78fa56"
+  },
+  {
+   "path": "pages/pics/img/animals-ankylosaurus-size-comparison-16x9-2400.avif",
+   "url": "/static/img/animals-ankylosaurus-size-comparison-16x9-2400.avif",
+   "bytes": 29531,
+   "sha256": "c277e131e699ca43181387ad7f40d096ccb876378274568ac76a3d53cd5afb3a"
+  },
+  {
+   "path": "pages/pics/img/animals-ankylosaurus-size-comparison-16x9-2400.webp",
+   "url": "/static/img/animals-ankylosaurus-size-comparison-16x9-2400.webp",
+   "bytes": 36788,
+   "sha256": "4d0e35b434ba9daffce84f107da7d6ed62b173fbf2d7a95ff15749c5a26e1bce"
+  },
+  {
+   "path": "pages/pics/img/animals-ankylosaurus-size-comparison-16x9-800.avif",
+   "url": "/static/img/animals-ankylosaurus-size-comparison-16x9-800.avif",
+   "bytes": 5509,
+   "sha256": "5332e61f44bda3aecdde2f32a8c3634793363ca35da290fa36c728d35cc9d5f7"
+  },
+  {
+   "path": "pages/pics/img/animals-ankylosaurus-size-comparison-16x9-800.webp",
+   "url": "/static/img/animals-ankylosaurus-size-comparison-16x9-800.webp",
+   "bytes": 6562,
+   "sha256": "702033aa7bf8266753367a19a7cb2fefe6a454656350dad9df78ac919232b8ca"
+  },
+  {
+   "path": "pages/pics/img/animals-ankylosaurus-size-comparison-1x1-1600.avif",
+   "url": "/static/img/animals-ankylosaurus-size-comparison-1x1-1600.avif",
+   "bytes": 13968,
+   "sha256": "8aca253a99851c2d31b3c1f40978a9da0340bb88c4e647d5c883d7dac8549119"
+  },
+  {
+   "path": "pages/pics/img/animals-ankylosaurus-size-comparison-1x1-1600.webp",
+   "url": "/static/img/animals-ankylosaurus-size-comparison-1x1-1600.webp",
+   "bytes": 19022,
+   "sha256": "598590d126ace7a884253f40024249bc5d0bf226f26cb7e184c2a59283fd739e"
+  },
+  {
+   "path": "pages/pics/img/animals-ankylosaurus-size-comparison-4x3-1600.avif",
+   "url": "/static/img/animals-ankylosaurus-size-comparison-4x3-1600.avif",
+   "bytes": 13838,
+   "sha256": "bf5e6f25cba6426536fcd2ba9b2b8445a17f28f83727d45c2dbdddc25e3f335e"
+  },
+  {
+   "path": "pages/pics/img/animals-ankylosaurus-size-comparison-4x3-1600.webp",
+   "url": "/static/img/animals-ankylosaurus-size-comparison-4x3-1600.webp",
+   "bytes": 17936,
+   "sha256": "f37f887c9aa4119354c21d24656fa4117814f1e5b72d9e4320f3d0ee76ed130a"
+  },
+  {
    "path": "pages/pics/img/animals-ankylosaurus-skeleton-1600.avif",
    "url": "/static/img/animals-ankylosaurus-skeleton-1600.avif",
    "bytes": 18634,
@@ -1495,6 +1555,66 @@
    "url": "/static/img/animals-biggest-dinosaurs-row-800.webp",
    "bytes": 10190,
    "sha256": "0c72ba73637337f73d0590ef186aef821f49ae63266755c2ecd0c1fb3d57572d"
+  },
+  {
+   "path": "pages/pics/img/animals-biggest-dinosaurs-size-comparison-16x9-1600.avif",
+   "url": "/static/img/animals-biggest-dinosaurs-size-comparison-16x9-1600.avif",
+   "bytes": 18384,
+   "sha256": "ab2cb8776c22c743bd59d3522e1d460b122de2f544ddc73887a3b599abaf2f5f"
+  },
+  {
+   "path": "pages/pics/img/animals-biggest-dinosaurs-size-comparison-16x9-1600.webp",
+   "url": "/static/img/animals-biggest-dinosaurs-size-comparison-16x9-1600.webp",
+   "bytes": 27132,
+   "sha256": "f8a6fa9f0fb10ee9c95438a0e4f8f6957598a611d9acc5069387d06103ce3b72"
+  },
+  {
+   "path": "pages/pics/img/animals-biggest-dinosaurs-size-comparison-16x9-2400.avif",
+   "url": "/static/img/animals-biggest-dinosaurs-size-comparison-16x9-2400.avif",
+   "bytes": 32169,
+   "sha256": "659adec70993a809a030ab03d95b5db55d5fca96867951201ace263e818db288"
+  },
+  {
+   "path": "pages/pics/img/animals-biggest-dinosaurs-size-comparison-16x9-2400.webp",
+   "url": "/static/img/animals-biggest-dinosaurs-size-comparison-16x9-2400.webp",
+   "bytes": 46608,
+   "sha256": "cf92f19f47fa24322d3b0d37ab77d703433ca2ac28bd7cbebdff529d5235007f"
+  },
+  {
+   "path": "pages/pics/img/animals-biggest-dinosaurs-size-comparison-16x9-800.avif",
+   "url": "/static/img/animals-biggest-dinosaurs-size-comparison-16x9-800.avif",
+   "bytes": 6925,
+   "sha256": "3d25122c0815a55943b65021f92da1a1a9e2a3be78eab8242bf21d133b090fb8"
+  },
+  {
+   "path": "pages/pics/img/animals-biggest-dinosaurs-size-comparison-16x9-800.webp",
+   "url": "/static/img/animals-biggest-dinosaurs-size-comparison-16x9-800.webp",
+   "bytes": 10430,
+   "sha256": "78cdac96689149f1eb1e2926a55699a29987229f0b083e8f70aac1b7f49420c7"
+  },
+  {
+   "path": "pages/pics/img/animals-biggest-dinosaurs-size-comparison-1x1-1600.avif",
+   "url": "/static/img/animals-biggest-dinosaurs-size-comparison-1x1-1600.avif",
+   "bytes": 26493,
+   "sha256": "fc65c6be3936fca319d894a7beaf985c1f1bc50fb9575a2d1a44260bd5c09f8e"
+  },
+  {
+   "path": "pages/pics/img/animals-biggest-dinosaurs-size-comparison-1x1-1600.webp",
+   "url": "/static/img/animals-biggest-dinosaurs-size-comparison-1x1-1600.webp",
+   "bytes": 37736,
+   "sha256": "214d4235232bf05732728428e528f1381e120f5eb29e231b96ec14833b5a4093"
+  },
+  {
+   "path": "pages/pics/img/animals-biggest-dinosaurs-size-comparison-4x3-1600.avif",
+   "url": "/static/img/animals-biggest-dinosaurs-size-comparison-4x3-1600.avif",
+   "bytes": 23122,
+   "sha256": "e45c5a0f3bfb113708d4b73c1032ed9682257bae106e64399777d7c543c315f9"
+  },
+  {
+   "path": "pages/pics/img/animals-biggest-dinosaurs-size-comparison-4x3-1600.webp",
+   "url": "/static/img/animals-biggest-dinosaurs-size-comparison-4x3-1600.webp",
+   "bytes": 31074,
+   "sha256": "35bb79456f3a0d8b9f9ec3bd84e5dbbea32e7aedb38a93d4256c4e4e73739ea3"
   },
   {
    "path": "pages/pics/img/animals-biggest-dinosaurs-skeleton-1600.avif",
@@ -1819,6 +1939,66 @@
    "url": "/static/img/animals-brachiosaurus-side-800.webp",
    "bytes": 6614,
    "sha256": "220fa593b98eaa817bd7dd38d75da7595e10fbee2fb36c4e1fa7592fe8da8942"
+  },
+  {
+   "path": "pages/pics/img/animals-brachiosaurus-size-comparison-16x9-1600.avif",
+   "url": "/static/img/animals-brachiosaurus-size-comparison-16x9-1600.avif",
+   "bytes": 11278,
+   "sha256": "9592eefb19fa7d55fa21d613e39d4493e9b88047ec0bbe2279f6bd311faba838"
+  },
+  {
+   "path": "pages/pics/img/animals-brachiosaurus-size-comparison-16x9-1600.webp",
+   "url": "/static/img/animals-brachiosaurus-size-comparison-16x9-1600.webp",
+   "bytes": 16276,
+   "sha256": "4be3aeb5f35f4eda605f4ccea97f165515d36dcba901d4c9ffd67f7d17d47e9b"
+  },
+  {
+   "path": "pages/pics/img/animals-brachiosaurus-size-comparison-16x9-2400.avif",
+   "url": "/static/img/animals-brachiosaurus-size-comparison-16x9-2400.avif",
+   "bytes": 19789,
+   "sha256": "7bf2992e2726f19345754c9934e3a47b894bcea8e8448acd98e1c4f5ecef96a6"
+  },
+  {
+   "path": "pages/pics/img/animals-brachiosaurus-size-comparison-16x9-2400.webp",
+   "url": "/static/img/animals-brachiosaurus-size-comparison-16x9-2400.webp",
+   "bytes": 29084,
+   "sha256": "96cbc449393780b41b085c494e614256993d12067324acd13604816d5562f564"
+  },
+  {
+   "path": "pages/pics/img/animals-brachiosaurus-size-comparison-16x9-800.avif",
+   "url": "/static/img/animals-brachiosaurus-size-comparison-16x9-800.avif",
+   "bytes": 4770,
+   "sha256": "1b47a42b12a1fcd2f78ea2dff4b836d7823949e40bc421f9151a4f74fbb24f17"
+  },
+  {
+   "path": "pages/pics/img/animals-brachiosaurus-size-comparison-16x9-800.webp",
+   "url": "/static/img/animals-brachiosaurus-size-comparison-16x9-800.webp",
+   "bytes": 6412,
+   "sha256": "9200eec7bdf50015df682cad10da333fc89faaa471e8bfc7a45d191dc30c3d4b"
+  },
+  {
+   "path": "pages/pics/img/animals-brachiosaurus-size-comparison-1x1-1600.avif",
+   "url": "/static/img/animals-brachiosaurus-size-comparison-1x1-1600.avif",
+   "bytes": 17697,
+   "sha256": "c03edd1de44006ca6eb98df269da4bb843cd968c70b693acb9ecd6b77d429b31"
+  },
+  {
+   "path": "pages/pics/img/animals-brachiosaurus-size-comparison-1x1-1600.webp",
+   "url": "/static/img/animals-brachiosaurus-size-comparison-1x1-1600.webp",
+   "bytes": 24802,
+   "sha256": "9fb9b84766643436fdd6593f5c946878e2d7c4fb24f31d126874455edaf477d7"
+  },
+  {
+   "path": "pages/pics/img/animals-brachiosaurus-size-comparison-4x3-1600.avif",
+   "url": "/static/img/animals-brachiosaurus-size-comparison-4x3-1600.avif",
+   "bytes": 15781,
+   "sha256": "cd833a74aed3fa00d33689b465bd883c16732446a4ae30b4ea2153f566933a1c"
+  },
+  {
+   "path": "pages/pics/img/animals-brachiosaurus-size-comparison-4x3-1600.webp",
+   "url": "/static/img/animals-brachiosaurus-size-comparison-4x3-1600.webp",
+   "bytes": 22192,
+   "sha256": "54c63e091a5dfb3371b95fe2016c8b2ad68b78d7840000c360f387aaa0a4a8cc"
   },
   {
    "path": "pages/pics/img/animals-brachiosaurus-skeleton-1600.avif",
@@ -2241,6 +2421,66 @@
    "sha256": "597dc3312a411454b7faa84d475b2ab8c45feec7b91a96179f34d0aa5b1db35f"
   },
   {
+   "path": "pages/pics/img/animals-spinosaurus-size-comparison-16x9-1600.avif",
+   "url": "/static/img/animals-spinosaurus-size-comparison-16x9-1600.avif",
+   "bytes": 23002,
+   "sha256": "b57be8bee0a5b2c5cb6b2f50765509c037f94796057615781af16b53fda6f437"
+  },
+  {
+   "path": "pages/pics/img/animals-spinosaurus-size-comparison-16x9-1600.webp",
+   "url": "/static/img/animals-spinosaurus-size-comparison-16x9-1600.webp",
+   "bytes": 26080,
+   "sha256": "4cc4097e2e72fc8b935ac282f3da97e4b9bfd4ad6c62925f1d63c7776a6d24c8"
+  },
+  {
+   "path": "pages/pics/img/animals-spinosaurus-size-comparison-16x9-2400.avif",
+   "url": "/static/img/animals-spinosaurus-size-comparison-16x9-2400.avif",
+   "bytes": 48224,
+   "sha256": "e9e3235c0a95ccba62874d0aec6311e6826c33bd79555d8e38e0d98ce29503ed"
+  },
+  {
+   "path": "pages/pics/img/animals-spinosaurus-size-comparison-16x9-2400.webp",
+   "url": "/static/img/animals-spinosaurus-size-comparison-16x9-2400.webp",
+   "bytes": 55660,
+   "sha256": "3129cc9c4ce2964b2fabf68b2ed82530c44b506db2c719d534c2691de4f4426a"
+  },
+  {
+   "path": "pages/pics/img/animals-spinosaurus-size-comparison-16x9-800.avif",
+   "url": "/static/img/animals-spinosaurus-size-comparison-16x9-800.avif",
+   "bytes": 7178,
+   "sha256": "21be12cefec1a40a89c71aed6728986695c99f042591a5395eef337855bd9dbd"
+  },
+  {
+   "path": "pages/pics/img/animals-spinosaurus-size-comparison-16x9-800.webp",
+   "url": "/static/img/animals-spinosaurus-size-comparison-16x9-800.webp",
+   "bytes": 8236,
+   "sha256": "62a36d8b51cdab67b9eb0b3e6574c00af966078d48cd154d7476199e9d9c7269"
+  },
+  {
+   "path": "pages/pics/img/animals-spinosaurus-size-comparison-1x1-1600.avif",
+   "url": "/static/img/animals-spinosaurus-size-comparison-1x1-1600.avif",
+   "bytes": 54971,
+   "sha256": "7526f3a6117accd0d0b31aaac90d7c78a89c7d2c9682c2b332ac66cd63256040"
+  },
+  {
+   "path": "pages/pics/img/animals-spinosaurus-size-comparison-1x1-1600.webp",
+   "url": "/static/img/animals-spinosaurus-size-comparison-1x1-1600.webp",
+   "bytes": 62946,
+   "sha256": "7fd39fa7d20948e399eba378d9009bddac410b3b1e0362268c6c99131fdb0f0e"
+  },
+  {
+   "path": "pages/pics/img/animals-spinosaurus-size-comparison-4x3-1600.avif",
+   "url": "/static/img/animals-spinosaurus-size-comparison-4x3-1600.avif",
+   "bytes": 19707,
+   "sha256": "33a0e73185ef967a20ee720837824e9b7ffd8fdb4a2ed95f52fbce5a8ab4b671"
+  },
+  {
+   "path": "pages/pics/img/animals-spinosaurus-size-comparison-4x3-1600.webp",
+   "url": "/static/img/animals-spinosaurus-size-comparison-4x3-1600.webp",
+   "bytes": 25440,
+   "sha256": "34c18a437ecfa3d9b21f923e7ccfa2d68695121e438f1bd9e97273472bdef6eb"
+  },
+  {
    "path": "pages/pics/img/animals-spinosaurus-skeleton-1600.avif",
    "url": "/static/img/animals-spinosaurus-skeleton-1600.avif",
    "bytes": 24718,
@@ -2385,6 +2625,66 @@
    "sha256": "e128e481bea7f852c9602ef7d7f47eee2cff863db4de6a58ed87d0eaed093989"
   },
   {
+   "path": "pages/pics/img/animals-stegosaurus-size-comparison-16x9-1600.avif",
+   "url": "/static/img/animals-stegosaurus-size-comparison-16x9-1600.avif",
+   "bytes": 10838,
+   "sha256": "cb0005fa4a16a60f41695c296ab0ce517d1d94f84880a2019c3be9c6db6bc623"
+  },
+  {
+   "path": "pages/pics/img/animals-stegosaurus-size-comparison-16x9-1600.webp",
+   "url": "/static/img/animals-stegosaurus-size-comparison-16x9-1600.webp",
+   "bytes": 15132,
+   "sha256": "c861cb4d04d239049e569cda55b2aa1614c70222d61666a1e520881273e0a07b"
+  },
+  {
+   "path": "pages/pics/img/animals-stegosaurus-size-comparison-16x9-2400.avif",
+   "url": "/static/img/animals-stegosaurus-size-comparison-16x9-2400.avif",
+   "bytes": 18417,
+   "sha256": "1a28dba9b7ee2627c92b66dba911575cf209eea99fe3e467e45591544961d989"
+  },
+  {
+   "path": "pages/pics/img/animals-stegosaurus-size-comparison-16x9-2400.webp",
+   "url": "/static/img/animals-stegosaurus-size-comparison-16x9-2400.webp",
+   "bytes": 26776,
+   "sha256": "0cdbcd14ddf618592c248418b53c69967881c24fe76fa8433510a7099e58dc93"
+  },
+  {
+   "path": "pages/pics/img/animals-stegosaurus-size-comparison-16x9-800.avif",
+   "url": "/static/img/animals-stegosaurus-size-comparison-16x9-800.avif",
+   "bytes": 5082,
+   "sha256": "d374ce123e154cda82743754e5643f1383f76e36288b06af7fd076326c2aee6e"
+  },
+  {
+   "path": "pages/pics/img/animals-stegosaurus-size-comparison-16x9-800.webp",
+   "url": "/static/img/animals-stegosaurus-size-comparison-16x9-800.webp",
+   "bytes": 6240,
+   "sha256": "c1c8cc48c17b05c6214513c1f1f3f7979d8979eee649b4d3684c150c3c77048d"
+  },
+  {
+   "path": "pages/pics/img/animals-stegosaurus-size-comparison-1x1-1600.avif",
+   "url": "/static/img/animals-stegosaurus-size-comparison-1x1-1600.avif",
+   "bytes": 10773,
+   "sha256": "c76cf113200f702b938b21cc7cdb8fb571a059ce3baeb26cf610cc97b161b18a"
+  },
+  {
+   "path": "pages/pics/img/animals-stegosaurus-size-comparison-1x1-1600.webp",
+   "url": "/static/img/animals-stegosaurus-size-comparison-1x1-1600.webp",
+   "bytes": 16860,
+   "sha256": "481ca60f9548846c95480a073419e1d2e3b62910d85ff9367e462d9b7a4e50f6"
+  },
+  {
+   "path": "pages/pics/img/animals-stegosaurus-size-comparison-4x3-1600.avif",
+   "url": "/static/img/animals-stegosaurus-size-comparison-4x3-1600.avif",
+   "bytes": 10722,
+   "sha256": "586b0300363964174675ce9786a043787bc98e26d0afd45495f6ee4fe01337c1"
+  },
+  {
+   "path": "pages/pics/img/animals-stegosaurus-size-comparison-4x3-1600.webp",
+   "url": "/static/img/animals-stegosaurus-size-comparison-4x3-1600.webp",
+   "bytes": 15774,
+   "sha256": "2e87a76a8ad4efa275e7cd812a6242200fd9c2d1e38a247eb84424b6df568365"
+  },
+  {
    "path": "pages/pics/img/animals-stegosaurus-skeleton-1600.avif",
    "url": "/static/img/animals-stegosaurus-skeleton-1600.avif",
    "bytes": 25567,
@@ -2491,6 +2791,66 @@
    "url": "/static/img/animals-t-rex-side-800.webp",
    "bytes": 9010,
    "sha256": "13ccdab4cc28655206e27b85d509b08d7a9373015a959005f3bd36b6aad097d9"
+  },
+  {
+   "path": "pages/pics/img/animals-t-rex-size-comparison-16x9-1600.avif",
+   "url": "/static/img/animals-t-rex-size-comparison-16x9-1600.avif",
+   "bytes": 18592,
+   "sha256": "169a6b72ad3efa1f292c62901a5568e0bfcecd663c83364cf5a555a70899b304"
+  },
+  {
+   "path": "pages/pics/img/animals-t-rex-size-comparison-16x9-1600.webp",
+   "url": "/static/img/animals-t-rex-size-comparison-16x9-1600.webp",
+   "bytes": 24296,
+   "sha256": "0b85a403d51b4325c2e9dd6d82e299344e41009c0329043b896bb5e9ff9077bd"
+  },
+  {
+   "path": "pages/pics/img/animals-t-rex-size-comparison-16x9-2400.avif",
+   "url": "/static/img/animals-t-rex-size-comparison-16x9-2400.avif",
+   "bytes": 33271,
+   "sha256": "6bd20e27e33e4168693c2b179feafa29b300a9ed9347a151fe12da2507c6baf8"
+  },
+  {
+   "path": "pages/pics/img/animals-t-rex-size-comparison-16x9-2400.webp",
+   "url": "/static/img/animals-t-rex-size-comparison-16x9-2400.webp",
+   "bytes": 44364,
+   "sha256": "10ed8602dcb4801c314624a866b9316c40be460a419731b963517ffc6f06911a"
+  },
+  {
+   "path": "pages/pics/img/animals-t-rex-size-comparison-16x9-800.avif",
+   "url": "/static/img/animals-t-rex-size-comparison-16x9-800.avif",
+   "bytes": 7629,
+   "sha256": "888fbd7cf4f3d3e07b7b705738e5f1fd06a18d4c72c5d713e0b8529f421e7727"
+  },
+  {
+   "path": "pages/pics/img/animals-t-rex-size-comparison-16x9-800.webp",
+   "url": "/static/img/animals-t-rex-size-comparison-16x9-800.webp",
+   "bytes": 9118,
+   "sha256": "9ece9183a292c227793025ec69af76d7c6fb2c2bd0bc59a661d357c357f6bbb3"
+  },
+  {
+   "path": "pages/pics/img/animals-t-rex-size-comparison-1x1-1600.avif",
+   "url": "/static/img/animals-t-rex-size-comparison-1x1-1600.avif",
+   "bytes": 35011,
+   "sha256": "156a4eccdaad62c5b2d8cdf22b5e016d2b50c7b21148fe6b50ea4b434f6d4d76"
+  },
+  {
+   "path": "pages/pics/img/animals-t-rex-size-comparison-1x1-1600.webp",
+   "url": "/static/img/animals-t-rex-size-comparison-1x1-1600.webp",
+   "bytes": 43542,
+   "sha256": "6db0f845987e63cacb803b623907a20430a7e3ba39cd85a3f170510bc24ab2cb"
+  },
+  {
+   "path": "pages/pics/img/animals-t-rex-size-comparison-4x3-1600.avif",
+   "url": "/static/img/animals-t-rex-size-comparison-4x3-1600.avif",
+   "bytes": 18958,
+   "sha256": "de3009c3477eb5e0931ff340901f4a8d18890250727c5b44fb5d6d283dd2ab29"
+  },
+  {
+   "path": "pages/pics/img/animals-t-rex-size-comparison-4x3-1600.webp",
+   "url": "/static/img/animals-t-rex-size-comparison-4x3-1600.webp",
+   "bytes": 24692,
+   "sha256": "1cd2f0419f90dc3779c4a796e2e210063f40af406b46fda6b3c6c0f810ce6083"
   },
   {
    "path": "pages/pics/img/animals-triceratops-beside-t-rex-1600.avif",
@@ -2613,6 +2973,66 @@
    "sha256": "50f033a8b0bce00be8140e895a7f1c4a1b3c714aeabad8d7a4e4a63f5aa383a1"
   },
   {
+   "path": "pages/pics/img/animals-triceratops-size-comparison-16x9-1600.avif",
+   "url": "/static/img/animals-triceratops-size-comparison-16x9-1600.avif",
+   "bytes": 31834,
+   "sha256": "a44ef80fbf722867756bcf4355d96675f252d96590b8c694971d3848f2ccf11b"
+  },
+  {
+   "path": "pages/pics/img/animals-triceratops-size-comparison-16x9-1600.webp",
+   "url": "/static/img/animals-triceratops-size-comparison-16x9-1600.webp",
+   "bytes": 39010,
+   "sha256": "3e052994fb0ed3e24dd808dadd2c270953f2d9c6a7c457b0ec8de77ce79d1a08"
+  },
+  {
+   "path": "pages/pics/img/animals-triceratops-size-comparison-16x9-2400.avif",
+   "url": "/static/img/animals-triceratops-size-comparison-16x9-2400.avif",
+   "bytes": 54479,
+   "sha256": "668eb4b58c1b8b0ffe1ca2038f56a5e9509b0085563662409fadc86900b5174a"
+  },
+  {
+   "path": "pages/pics/img/animals-triceratops-size-comparison-16x9-2400.webp",
+   "url": "/static/img/animals-triceratops-size-comparison-16x9-2400.webp",
+   "bytes": 66450,
+   "sha256": "76fe97c1941c45724ea61e018fff3e44dfe662d281ddfbbeac5c0aa46b686bb8"
+  },
+  {
+   "path": "pages/pics/img/animals-triceratops-size-comparison-16x9-800.avif",
+   "url": "/static/img/animals-triceratops-size-comparison-16x9-800.avif",
+   "bytes": 10671,
+   "sha256": "0ea5a8a37cc1be03744a87e2e530c7df7349e952b04cf950056731d11ff4501c"
+  },
+  {
+   "path": "pages/pics/img/animals-triceratops-size-comparison-16x9-800.webp",
+   "url": "/static/img/animals-triceratops-size-comparison-16x9-800.webp",
+   "bytes": 12780,
+   "sha256": "1de510ed22d014e05e2924d480899614f1902b8c8534bb1dcd0f0538adb08fc6"
+  },
+  {
+   "path": "pages/pics/img/animals-triceratops-size-comparison-1x1-1600.avif",
+   "url": "/static/img/animals-triceratops-size-comparison-1x1-1600.avif",
+   "bytes": 30042,
+   "sha256": "c64f0d65c9e401cd34da48afe41279065e1c9f830c60eafb7445ec5c6be554d3"
+  },
+  {
+   "path": "pages/pics/img/animals-triceratops-size-comparison-1x1-1600.webp",
+   "url": "/static/img/animals-triceratops-size-comparison-1x1-1600.webp",
+   "bytes": 37948,
+   "sha256": "ee3f533202e1a4b66ca7c55e0f40e584303baa8e9537901abd73820b8005f94f"
+  },
+  {
+   "path": "pages/pics/img/animals-triceratops-size-comparison-4x3-1600.avif",
+   "url": "/static/img/animals-triceratops-size-comparison-4x3-1600.avif",
+   "bytes": 29656,
+   "sha256": "41cb64bf2d79fc41a24586ab1cf22264c1580a80f62165b0256c006143e4474e"
+  },
+  {
+   "path": "pages/pics/img/animals-triceratops-size-comparison-4x3-1600.webp",
+   "url": "/static/img/animals-triceratops-size-comparison-4x3-1600.webp",
+   "bytes": 36958,
+   "sha256": "d20eacf80bc9a0d87e87f3b6f93042c5afcf9a51a51edfd50b41374a7e89808b"
+  },
+  {
    "path": "pages/pics/img/animals-triceratops-skeleton-1600.avif",
    "url": "/static/img/animals-triceratops-skeleton-1600.avif",
    "bytes": 24786,
@@ -2719,6 +3139,66 @@
    "url": "/static/img/animals-woolly-mammoth-side-800.webp",
    "bytes": 34342,
    "sha256": "5d121a09b99cae5c098b5381d4e84050f0e75cd80b0a0c1c9a1fff4041323343"
+  },
+  {
+   "path": "pages/pics/img/animals-woolly-mammoth-size-comparison-16x9-1600.avif",
+   "url": "/static/img/animals-woolly-mammoth-size-comparison-16x9-1600.avif",
+   "bytes": 55152,
+   "sha256": "e5a34ca72ecad9479db0d7c3f9f384eb3a8e0dd03837518f35225b1ad1eff563"
+  },
+  {
+   "path": "pages/pics/img/animals-woolly-mammoth-size-comparison-16x9-1600.webp",
+   "url": "/static/img/animals-woolly-mammoth-size-comparison-16x9-1600.webp",
+   "bytes": 77988,
+   "sha256": "81263e196b576d9e157fe91d915757d33ae9ef2b9e0d297284cdd0b7b2830578"
+  },
+  {
+   "path": "pages/pics/img/animals-woolly-mammoth-size-comparison-16x9-2400.avif",
+   "url": "/static/img/animals-woolly-mammoth-size-comparison-16x9-2400.avif",
+   "bytes": 103342,
+   "sha256": "b432608bc83f5c27c8bf200e7ee9515f4cdf3933cf84b5d6f3b3475979e2b2c2"
+  },
+  {
+   "path": "pages/pics/img/animals-woolly-mammoth-size-comparison-16x9-2400.webp",
+   "url": "/static/img/animals-woolly-mammoth-size-comparison-16x9-2400.webp",
+   "bytes": 151150,
+   "sha256": "7ebd977acb05818ee1b46d6168281e9d39e31f23f8a5b22504368eb80acde3f3"
+  },
+  {
+   "path": "pages/pics/img/animals-woolly-mammoth-size-comparison-16x9-800.avif",
+   "url": "/static/img/animals-woolly-mammoth-size-comparison-16x9-800.avif",
+   "bytes": 18381,
+   "sha256": "37fa540558fd33bdd68c9d1ea52689398bbfd85419048e74c350b508daa9814b"
+  },
+  {
+   "path": "pages/pics/img/animals-woolly-mammoth-size-comparison-16x9-800.webp",
+   "url": "/static/img/animals-woolly-mammoth-size-comparison-16x9-800.webp",
+   "bytes": 24196,
+   "sha256": "d1c7f89f5b9ce07197f698c9a5137dc823ad8fd7e46691e958b8b6c4a5a90228"
+  },
+  {
+   "path": "pages/pics/img/animals-woolly-mammoth-size-comparison-1x1-1600.avif",
+   "url": "/static/img/animals-woolly-mammoth-size-comparison-1x1-1600.avif",
+   "bytes": 64374,
+   "sha256": "fee29d468e93c8c854e1d8bc365edc37e1b3fea81ed083ca5388486e506c8fcd"
+  },
+  {
+   "path": "pages/pics/img/animals-woolly-mammoth-size-comparison-1x1-1600.webp",
+   "url": "/static/img/animals-woolly-mammoth-size-comparison-1x1-1600.webp",
+   "bytes": 90248,
+   "sha256": "f23c8d972b31eb9ab0a995fd6c1988b8cbf4a69a82a9eba8b46eb6b2f4384d4c"
+  },
+  {
+   "path": "pages/pics/img/animals-woolly-mammoth-size-comparison-4x3-1600.avif",
+   "url": "/static/img/animals-woolly-mammoth-size-comparison-4x3-1600.avif",
+   "bytes": 64606,
+   "sha256": "fd2154550f3b17d0f9f1f0d9bf890399eeadd37b317b4e9606f21def0fb0d452"
+  },
+  {
+   "path": "pages/pics/img/animals-woolly-mammoth-size-comparison-4x3-1600.webp",
+   "url": "/static/img/animals-woolly-mammoth-size-comparison-4x3-1600.webp",
+   "bytes": 91018,
+   "sha256": "c2668a3bfd19f4334897e48aff2b9cd89727119bf94c05ac8c3ba1992072e763"
   },
   {
    "path": "pages/pics/img/vinci-inventions-og-1200x630.jpg",

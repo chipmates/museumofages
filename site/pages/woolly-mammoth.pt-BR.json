@@ -12,6 +12,15 @@
    "width": 1200,
    "height": 630,
    "layout": "beside"
+  },
+  "shapes": {
+   "primary": "size_1x1",
+   "list": [
+    "size_1x1",
+    "size_4x3",
+    "size_16x9"
+   ],
+   "figure": "size_16x9"
   }
  },
  "pics": {
@@ -67,6 +76,32 @@
     2400
    ],
    "sizes": "(min-width: 1280px) 690px, (min-width: 960px) 54vw, (min-width: 600px) calc(100vw - 64px), calc(100vw - 40px)"
+  },
+  "size_1x1": {
+   "stem": "animals-woolly-mammoth-size-comparison-1x1",
+   "widths": [
+    1600
+   ],
+   "sizes": "(min-width: 1280px) 690px, (min-width: 960px) 54vw, (min-width: 600px) calc(100vw - 64px), calc(100vw - 40px)",
+   "person": "89.28% 44.75%"
+  },
+  "size_4x3": {
+   "stem": "animals-woolly-mammoth-size-comparison-4x3",
+   "widths": [
+    1600
+   ],
+   "sizes": "(min-width: 1280px) 690px, (min-width: 960px) 54vw, (min-width: 600px) calc(100vw - 64px), calc(100vw - 40px)",
+   "person": "89.28% 43%"
+  },
+  "size_16x9": {
+   "stem": "animals-woolly-mammoth-size-comparison-16x9",
+   "widths": [
+    800,
+    1600,
+    2400
+   ],
+   "sizes": "(min-width: 1280px) 690px, (min-width: 960px) 54vw, (min-width: 600px) calc(100vw - 64px), calc(100vw - 40px)",
+   "person": "84.29% 41.56%"
   }
  },
  "meta": {
@@ -531,7 +566,22 @@
      },
      ". Crédito: Museum of Ages. Elas mostram uma reconstrução, construída em código e renderizada com o nosso próprio motor gráfico, não uma fotografia. As imagens das outras páginas que aparecem aqui dão o crédito nessas páginas."
     ]
-   ]
+   ],
+   "shapes": {
+    "caption": "Comparação de tamanho do mamute-lanoso: nosso mamute-lanoso, construído segundo o macho de Berezovka, ao lado de uma pessoa de 1,70 m, na mesma escala.",
+    "lead": "Para slides e publicações, esta comparação de tamanho vem em três formatos, todos com a mesma licença.",
+    "alts": {
+     "size_1x1": "Comparação de tamanho do mamute-lanoso: nosso mamute inteiro de lado, com as presas curvas e a tromba, e uma pessoa cinza de 1,70 m diante das presas.",
+     "size_4x3": "O mamute-lanoso ao lado de uma pessoa, em comparação de tamanho: nosso mamute com a pelagem marrom-escura, a cabeça alta e abaulada e o dorso inclinado, e ao lado uma pessoa cinza de 1,70 m.",
+     "size_16x9": "Comparação de tamanho do mamute-lanoso, o animal inteiro de lado: nosso mamute, construído segundo o macho de Berezovka, e uma pessoa cinza de 1,70 m na frente da tromba."
+    },
+    "links": {
+     "size_1x1": "Quadrada (1:1)",
+     "size_4x3": "Slide (4:3)",
+     "size_16x9": "Panorâmica (16:9)"
+    },
+    "draft": true
+   }
   }
  ]
 }

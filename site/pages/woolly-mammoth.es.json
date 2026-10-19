@@ -12,6 +12,15 @@
    "width": 1200,
    "height": 630,
    "layout": "beside"
+  },
+  "shapes": {
+   "primary": "size_1x1",
+   "list": [
+    "size_1x1",
+    "size_4x3",
+    "size_16x9"
+   ],
+   "figure": "size_16x9"
   }
  },
  "pics": {
@@ -67,6 +76,32 @@
     2400
    ],
    "sizes": "(min-width: 1280px) 690px, (min-width: 960px) 54vw, (min-width: 600px) calc(100vw - 64px), calc(100vw - 40px)"
+  },
+  "size_1x1": {
+   "stem": "animals-woolly-mammoth-size-comparison-1x1",
+   "widths": [
+    1600
+   ],
+   "sizes": "(min-width: 1280px) 690px, (min-width: 960px) 54vw, (min-width: 600px) calc(100vw - 64px), calc(100vw - 40px)",
+   "person": "89.28% 44.75%"
+  },
+  "size_4x3": {
+   "stem": "animals-woolly-mammoth-size-comparison-4x3",
+   "widths": [
+    1600
+   ],
+   "sizes": "(min-width: 1280px) 690px, (min-width: 960px) 54vw, (min-width: 600px) calc(100vw - 64px), calc(100vw - 40px)",
+   "person": "89.28% 43%"
+  },
+  "size_16x9": {
+   "stem": "animals-woolly-mammoth-size-comparison-16x9",
+   "widths": [
+    800,
+    1600,
+    2400
+   ],
+   "sizes": "(min-width: 1280px) 690px, (min-width: 960px) 54vw, (min-width: 600px) calc(100vw - 64px), calc(100vw - 40px)",
+   "person": "84.29% 41.56%"
   }
  },
  "meta": {
@@ -531,7 +566,22 @@
      },
      ". Crédito: Museum of Ages. Muestran una reconstrucción, construida en código y renderizada con nuestro propio motor gráfico, no una fotografía. Las imágenes de las otras páginas que aparecen aquí dan su crédito en esas páginas."
     ]
-   ]
+   ],
+   "shapes": {
+    "caption": "Comparación de tamaño del mamut lanudo: nuestro mamut lanudo, construido según el macho de Berezovka, junto a una persona de 1,70 m, a la misma escala.",
+    "lead": "Para presentaciones y publicaciones, esta comparación de tamaño está en tres formatos, todos con la misma licencia.",
+    "alts": {
+     "size_1x1": "Comparación de tamaño del mamut lanudo: nuestro mamut entero de lado, con los colmillos curvos y la trompa, y una persona gris de 1,70 m frente a los colmillos.",
+     "size_4x3": "El mamut lanudo junto a una persona, en comparación de tamaño: nuestro mamut con su pelaje marrón oscuro, la cabeza alta y abombada y el lomo en pendiente, y a su lado una persona gris de 1,70 m.",
+     "size_16x9": "Comparación de tamaño del mamut lanudo, el animal entero de lado: nuestro mamut, construido según el macho de Berezovka, y una persona gris de 1,70 m delante de la trompa."
+    },
+    "links": {
+     "size_1x1": "Cuadrada (1:1)",
+     "size_4x3": "Diapositiva (4:3)",
+     "size_16x9": "Panorámica (16:9)"
+    },
+    "draft": true
+   }
   }
  ]
 }

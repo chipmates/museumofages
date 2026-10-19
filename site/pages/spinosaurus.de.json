@@ -12,6 +12,15 @@
    "width": 1200,
    "height": 630,
    "layout": "beside"
+  },
+  "shapes": {
+   "primary": "size_1x1",
+   "list": [
+    "size_1x1",
+    "size_4x3",
+    "size_16x9"
+   ],
+   "figure": "size_16x9"
   }
  },
  "pics": {
@@ -114,6 +123,32 @@
     2400
    ],
    "sizes": "(min-width: 1280px) 690px, (min-width: 960px) 54vw, (min-width: 600px) calc(100vw - 64px), calc(100vw - 40px)"
+  },
+  "size_1x1": {
+   "stem": "animals-spinosaurus-size-comparison-1x1",
+   "widths": [
+    1600
+   ],
+   "sizes": "(min-width: 1280px) 690px, (min-width: 960px) 54vw, (min-width: 600px) calc(100vw - 64px), calc(100vw - 40px)",
+   "person": "88.31% 57.31%"
+  },
+  "size_4x3": {
+   "stem": "animals-spinosaurus-size-comparison-4x3",
+   "widths": [
+    1600
+   ],
+   "sizes": "(min-width: 1280px) 690px, (min-width: 960px) 54vw, (min-width: 600px) calc(100vw - 64px), calc(100vw - 40px)",
+   "person": "91.81% 55.5%"
+  },
+  "size_16x9": {
+   "stem": "animals-spinosaurus-size-comparison-16x9",
+   "widths": [
+    800,
+    1600,
+    2400
+   ],
+   "sizes": "(min-width: 1280px) 690px, (min-width: 960px) 54vw, (min-width: 600px) calc(100vw - 64px), calc(100vw - 40px)",
+   "person": "89.81% 57.19%"
   }
  },
  "meta": {
@@ -632,7 +667,22 @@
      },
      ", Nachweis: Museum of Ages. Sie zeigen eine Rekonstruktion, in Code gebaut und in unserer Engine gerendert, kein Foto. Die Bilder der anderen Seiten, die hier aufgeführt sind, nennen ihren Nachweis auf der jeweiligen Seite."
     ]
-   ]
+   ],
+   "shapes": {
+    "caption": "Spinosaurus im Größenvergleich: das größte erwachsene Tier, unser Modell vergrößert, in seiner Haltung etwa 13,1 m lang, neben einem Menschen von 1,70 m, im selben Maßstab.",
+    "lead": "Für Folien und Beiträge gibt es diesen Größenvergleich in drei Formaten, alle unter derselben Lizenz.",
+    "alts": {
+     "size_1x1": "Spinosaurus im Größenvergleich: die vordere Hälfte des größten erwachsenen Tiers, unser Modell vergrößert, mit langer Schnauze, Hals, Segel und Beinen, unter dem Kopf ein grauer Mensch von 1,70 m.",
+     "size_4x3": "Spinosaurus neben einem Menschen im Größenvergleich: das größte erwachsene Tier, unser Modell vergrößert, ganz von der Seite mit hohem Segel und langem Schwanz, und unter der Schnauze ein grauer Mensch von 1,70 m.",
+     "size_16x9": "Spinosaurus im Größenvergleich, das ganze erwachsene Tier von der Seite: unser Modell vergrößert, etwa 13,1 m lang, und unter seinem Kopf ein grauer Mensch von 1,70 m."
+    },
+    "links": {
+     "size_1x1": "Quadrat (1:1)",
+     "size_4x3": "Folie (4:3)",
+     "size_16x9": "Breitbild (16:9)"
+    },
+    "draft": true
+   }
   }
  ]
 }

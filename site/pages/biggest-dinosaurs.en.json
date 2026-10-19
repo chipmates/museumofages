@@ -12,6 +12,15 @@
    "file": "animals-biggest-dinosaurs-og-{lang}-1200x630.png",
    "width": 1200,
    "height": 630
+  },
+  "shapes": {
+   "primary": "size_1x1",
+   "list": [
+    "size_1x1",
+    "size_4x3",
+    "size_16x9"
+   ],
+   "figure": "size_16x9"
   }
  },
  "pics": {
@@ -158,6 +167,33 @@
    ],
    "sizes": "(min-width: 1280px) 690px, (min-width: 960px) 54vw, (min-width: 600px) calc(100vw - 64px), calc(100vw - 40px)",
    "person": null
+  },
+  "size_1x1": {
+   "stem": "animals-biggest-dinosaurs-size-comparison-1x1",
+   "widths": [
+    1600
+   ],
+   "sizes": "(min-width: 1280px) 690px, (min-width: 960px) 54vw, (min-width: 600px) calc(100vw - 64px), calc(100vw - 40px)",
+   "person": "49.75% 81.25%"
+  },
+  "size_4x3": {
+   "stem": "animals-biggest-dinosaurs-size-comparison-4x3",
+   "widths": [
+    1600
+   ],
+   "sizes": "(min-width: 1280px) 690px, (min-width: 960px) 54vw, (min-width: 600px) calc(100vw - 64px), calc(100vw - 40px)",
+   "person": "65.62% 78.5%"
+  },
+  "size_16x9": {
+   "stem": "animals-biggest-dinosaurs-size-comparison-16x9",
+   "widths": [
+    800,
+    1600,
+    2400
+   ],
+   "sizes": "(min-width: 1280px) 690px, (min-width: 960px) 54vw, (min-width: 600px) calc(100vw - 64px), calc(100vw - 40px)",
+   "person": "33.19% 64.67%",
+   "person_from": 680
   }
  },
  "meta": {
@@ -775,7 +811,22 @@
      },
      ", credit: Museum of Ages, and where a caption names a source, that source too. They show reconstructions, built in code and rendered in our own engine, not photographs."
     ]
-   ]
+   ],
+   "shapes": {
+    "caption": "Dinosaur size comparison: our seven dinosaurs to one scale, each as our model is built, the longest our Argentinosaurus at about 30.6 m (100 ft), with a person 1.70 m tall among them.",
+    "lead": "For slides and posts, this size comparison comes in three shapes, all under the same licence.",
+    "alts": {
+     "size_1x1": "Argentinosaurus size comparison: the front legs, raised neck and head of our Argentinosaurus, with a grey person 1.70 m tall standing under the neck.",
+     "size_4x3": "Argentinosaurus beside a person, a size comparison: our Argentinosaurus from the hips forward, its long neck rising, and a grey person 1.70 m tall below it.",
+     "size_16x9": "Dinosaur size comparison: our seven dinosaurs side by side to one scale, the longest our Argentinosaurus at about 30.6 m (100 ft), and a grey person 1.70 m tall among them."
+    },
+    "links": {
+     "size_1x1": "Square (1:1)",
+     "size_4x3": "Slide (4:3)",
+     "size_16x9": "Wide (16:9)"
+    },
+    "draft": true
+   }
   }
  ]
 }

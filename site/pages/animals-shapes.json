@@ -1,5 +1,5 @@
 {
- "_note": "Where each animal page's three size picture shapes come from (seat P, ANIMAL-SEO-1019): the model round the page's live pictures show and its file's SHA-256, and for each shape its lossless still, size, pixels per metre, the camera's window in metres (x0, x1, y0, y1; the snout at +x), the person's and the animal's box on the still (left, top, right, bottom; right and bottom exclusive; the person read the 50 % way on the bench's 128-sample coverage), whether the shape shows only the front of the animal with the cut declared at the left edge, and an exception to the person gate (none on a single animal). Written by shapes.py --write; never by hand.",
+ "_note": "Where each animal page's three size picture shapes come from (seats P and P2, ANIMAL-SEO-1019): the model round the page's live pictures show and its file's SHA-256, and for each shape its lossless still, size, pixels per metre, the camera's window in metres (x0, x1, y0, y1; the snout at +x), the person's and the animal's box on the still (left, top, right, bottom; right and bottom exclusive; the person read the 50 % way on the bench's 128-sample coverage), whether the shape shows only the front of the animal with the cut declared at the left edge, and an exception to the person gate (group pictures only). The Spinosaurus's metres and pixels per metre are the adult's (round 16 enlarged 1.32 times about x 0.44, as its side view). The biggest dinosaurs' 16:9 lays the page's row's own frames at one scale; its layers name each animal's model. Written by shapes.py --write; never by hand.",
  "pages": {
   "megalodon": {
    "live": {
@@ -208,6 +208,989 @@
      "front_end": false,
      "cut": null,
      "exception": null
+    }
+   }
+  },
+  "t-rex": {
+   "live": {
+    "round": "13 shut",
+    "model": "museum-two/animal-queue/animals/t-rex/judged/round-13/animal.glb",
+    "sha256": "fb18e49ecb55edcc6bff0c75e5f5e2ed2ab870aaf99a9f0266e0637f400a338d"
+   },
+   "shapes": {
+    "size_1x1": {
+     "stem": "animals-t-rex-size-comparison-1x1",
+     "round": "13 shut",
+     "model": "museum-two/animal-queue/animals/t-rex/judged/round-13/animal.glb",
+     "sha256": "fb18e49ecb55edcc6bff0c75e5f5e2ed2ab870aaf99a9f0266e0637f400a338d",
+     "still": "t-rex-size-comparison-1x1.png",
+     "still_sha256": "4726cab5d320e7d8a9a30e9cc3ee97366e15250cb92455f764382bdc826b0f7d",
+     "w": 1600,
+     "h": 1600,
+     "ppm": 240.1681,
+     "frame_m": [
+      -1.3,
+      5.362,
+      -1.0455,
+      5.6165
+     ],
+     "person_px": [
+      1168,
+      941,
+      1282,
+      1349
+     ],
+     "animal_px": [
+      0,
+      251,
+      1528,
+      1348
+     ],
+     "front_end": true,
+     "cut": "the hips and tail behind the thigh (x -1.3 m)",
+     "exception": null
+    },
+    "size_4x3": {
+     "stem": "animals-t-rex-size-comparison-4x3",
+     "round": "13 shut",
+     "model": "museum-two/animal-queue/animals/t-rex/judged/round-13/animal.glb",
+     "sha256": "fb18e49ecb55edcc6bff0c75e5f5e2ed2ab870aaf99a9f0266e0637f400a338d",
+     "still": "t-rex-size-comparison-4x3.png",
+     "still_sha256": "e08260cd32499768474b6f65c9b0d5c1eeefe7fb1bc8861727203f49b43bf781",
+     "w": 1600,
+     "h": 1200,
+     "ppm": 132.648,
+     "frame_m": [
+      -6.7,
+      5.362,
+      -2.2377,
+      6.8088
+     ],
+     "person_px": [
+      1362,
+      678,
+      1424,
+      903
+     ],
+     "animal_px": [
+      53,
+      297,
+      1561,
+      903
+     ],
+     "front_end": false,
+     "cut": null,
+     "exception": null
+    },
+    "size_16x9": {
+     "stem": "animals-t-rex-size-comparison-16x9",
+     "round": "13 shut",
+     "model": "museum-two/animal-queue/animals/t-rex/judged/round-13/animal.glb",
+     "sha256": "fb18e49ecb55edcc6bff0c75e5f5e2ed2ab870aaf99a9f0266e0637f400a338d",
+     "still": "t-rex-size-comparison-16x9.png",
+     "still_sha256": "1a40ed6ef4a55969d7a9a63231bc3e449736a44a5f22b3cb7d4243a436ac61b8",
+     "w": 2400,
+     "h": 1350,
+     "ppm": 198.972,
+     "frame_m": [
+      -6.7,
+      5.362,
+      -1.1069,
+      5.678
+     ],
+     "person_px": [
+      2042,
+      791,
+      2136,
+      1130
+     ],
+     "animal_px": [
+      79,
+      220,
+      2341,
+      1129
+     ],
+     "front_end": false,
+     "cut": null,
+     "exception": null
+    }
+   }
+  },
+  "spinosaurus": {
+   "live": {
+    "round": "16, the adult (enlarged 1.32 about x 0.44)",
+    "model": "museum-two/animal-queue/animals/spinosaurus/judged/round-16/animal.glb",
+    "sha256": "4d4b89044078e48edc34add5895cdb29dcb54c7520fa340a10c1c0b654c64c54"
+   },
+   "shapes": {
+    "size_1x1": {
+     "stem": "animals-spinosaurus-size-comparison-1x1",
+     "round": "16, the adult (enlarged 1.32 about x 0.44)",
+     "model": "museum-two/animal-queue/animals/spinosaurus/judged/round-16/animal.glb",
+     "sha256": "4d4b89044078e48edc34add5895cdb29dcb54c7520fa340a10c1c0b654c64c54",
+     "still": "spinosaurus-size-comparison-1x1.png",
+     "still_sha256": "e044ce684763daf55ab4624120415bd3ff48b33e3ef9b5f3a40eab396f90ec6b",
+     "w": 1600,
+     "h": 1600,
+     "ppm": 201.8673,
+     "frame_m": [
+      -2.0,
+      5.926,
+      -1.6845,
+      6.2415
+     ],
+     "person_px": [
+      1365,
+      917,
+      1461,
+      1260
+     ],
+     "animal_px": [
+      0,
+      340,
+      1540,
+      1260
+     ],
+     "front_end": true,
+     "cut": "the tail behind x -2.0 m, just behind the sail",
+     "exception": null,
+     "scale": {
+      "factor": 1.32,
+      "about_x_m": 0.44,
+      "model_ppm": 266.4648
+     }
+    },
+    "size_4x3": {
+     "stem": "animals-spinosaurus-size-comparison-4x3",
+     "round": "16, the adult (enlarged 1.32 about x 0.44)",
+     "model": "museum-two/animal-queue/animals/spinosaurus/judged/round-16/animal.glb",
+     "sha256": "4d4b89044078e48edc34add5895cdb29dcb54c7520fa340a10c1c0b654c64c54",
+     "still": "spinosaurus-size-comparison-4x3.png",
+     "still_sha256": "0707b223d4ff420b557dce62dea40228ba8cb93497cca88da3d11524e629459a",
+     "w": 1600,
+     "h": 1200,
+     "ppm": 114.1636,
+     "frame_m": [
+      -7.864,
+      6.151,
+      -2.9771,
+      7.5341
+     ],
+     "person_px": [
+      1442,
+      666,
+      1496,
+      860
+     ],
+     "animal_px": [
+      46,
+      340,
+      1540,
+      860
+     ],
+     "front_end": false,
+     "cut": null,
+     "exception": null,
+     "scale": {
+      "factor": 1.32,
+      "about_x_m": 0.44,
+      "model_ppm": 150.696
+     }
+    },
+    "size_16x9": {
+     "stem": "animals-spinosaurus-size-comparison-16x9",
+     "round": "16, the adult (enlarged 1.32 about x 0.44)",
+     "model": "museum-two/animal-queue/animals/spinosaurus/judged/round-16/animal.glb",
+     "sha256": "4d4b89044078e48edc34add5895cdb29dcb54c7520fa340a10c1c0b654c64c54",
+     "still": "spinosaurus-size-comparison-16x9.png",
+     "still_sha256": "1d84a83cba3c24014666ece18c7851f15bd247417e963826d7cb9c3a530dd7a1",
+     "w": 2400,
+     "h": 1350,
+     "ppm": 167.5824,
+     "frame_m": [
+      -7.864,
+      6.4573,
+      -1.7494,
+      6.3063
+     ],
+     "person_px": [
+      2116,
+      772,
+      2195,
+      1057
+     ],
+     "animal_px": [
+      67,
+      293,
+      2261,
+      1057
+     ],
+     "front_end": false,
+     "cut": null,
+     "exception": null,
+     "scale": {
+      "factor": 1.32,
+      "about_x_m": 0.44,
+      "model_ppm": 221.2088
+     }
+    }
+   }
+  },
+  "triceratops": {
+   "live": {
+    "round": "15",
+    "model": "museum-two/animal-queue/animals/triceratops/judged/round-15/animal.glb",
+    "sha256": "ae736190b777dbcc130b3218abaeb07b2e9d4ae31a4bcceffe769053a4a311a0"
+   },
+   "shapes": {
+    "size_1x1": {
+     "stem": "animals-triceratops-size-comparison-1x1",
+     "round": "15",
+     "model": "museum-two/animal-queue/animals/triceratops/judged/round-15/animal.glb",
+     "sha256": "ae736190b777dbcc130b3218abaeb07b2e9d4ae31a4bcceffe769053a4a311a0",
+     "still": "triceratops-size-comparison-1x1.png",
+     "still_sha256": "2a6b3d0df7fdd534286241751dc1b5b72ee7f2aa2bae25da99f205d9ec3dfe86",
+     "w": 1600,
+     "h": 1600,
+     "ppm": 177.5457,
+     "frame_m": [
+      -3.836,
+      5.1758,
+      -3.2399,
+      5.7719
+     ],
+     "person_px": [
+      1411,
+      723,
+      1495,
+      1025
+     ],
+     "animal_px": [
+      71,
+      575,
+      1337,
+      1025
+     ],
+     "front_end": false,
+     "cut": null,
+     "exception": null
+    },
+    "size_4x3": {
+     "stem": "animals-triceratops-size-comparison-4x3",
+     "round": "15",
+     "model": "museum-two/animal-queue/animals/triceratops/judged/round-15/animal.glb",
+     "sha256": "ae736190b777dbcc130b3218abaeb07b2e9d4ae31a4bcceffe769053a4a311a0",
+     "still": "triceratops-size-comparison-4x3.png",
+     "still_sha256": "43db408ba89930d20cdd578ec55cd4b31866c71196981581821951313cb44b2a",
+     "w": 1600,
+     "h": 1200,
+     "ppm": 177.5457,
+     "frame_m": [
+      -3.836,
+      5.1758,
+      -2.1134,
+      4.6454
+     ],
+     "person_px": [
+      1412,
+      523,
+      1495,
+      825
+     ],
+     "animal_px": [
+      71,
+      375,
+      1337,
+      825
+     ],
+     "front_end": false,
+     "cut": null,
+     "exception": null
+    },
+    "size_16x9": {
+     "stem": "animals-triceratops-size-comparison-16x9",
+     "round": "15",
+     "model": "museum-two/animal-queue/animals/triceratops/judged/round-15/animal.glb",
+     "sha256": "ae736190b777dbcc130b3218abaeb07b2e9d4ae31a4bcceffe769053a4a311a0",
+     "still": "triceratops-size-comparison-16x9.png",
+     "still_sha256": "f55dc9793ab0bd0fca02d9b6b682a931f553ebe63241de8100b32768802f2218",
+     "w": 2400,
+     "h": 1350,
+     "ppm": 260.6219,
+     "frame_m": [
+      -3.836,
+      5.3727,
+      -1.324,
+      3.8559
+     ],
+     "person_px": [
+      2072,
+      562,
+      2195,
+      1005
+     ],
+     "animal_px": [
+      104,
+      345,
+      1963,
+      1005
+     ],
+     "front_end": false,
+     "cut": null,
+     "exception": null
+    }
+   }
+  },
+  "brachiosaurus": {
+   "live": {
+    "round": "10",
+    "model": "museum-two/animal-queue/animals/brachiosaurus/judged/round-10/animal.glb",
+    "sha256": "a229d8d8483339bc5a9f9aa109d7adc4eb4a4d0a10d33506311b69f5f78a48b4"
+   },
+   "shapes": {
+    "size_1x1": {
+     "stem": "animals-brachiosaurus-size-comparison-1x1",
+     "round": "10",
+     "model": "museum-two/animal-queue/animals/brachiosaurus/judged/round-10/animal.glb",
+     "sha256": "a229d8d8483339bc5a9f9aa109d7adc4eb4a4d0a10d33506311b69f5f78a48b4",
+     "still": "brachiosaurus-size-comparison-1x1.png",
+     "still_sha256": "15d44c3992101c07b0509319413e1a8a230000767fd8b5823c62b5b942ccccb1",
+     "w": 1600,
+     "h": 1600,
+     "ppm": 130.0813,
+     "frame_m": [
+      0,
+      12.3,
+      -0.407,
+      11.893
+     ],
+     "person_px": [
+      789,
+      1326,
+      850,
+      1547
+     ],
+     "animal_px": [
+      0,
+      52,
+      1369,
+      1547
+     ],
+     "front_end": true,
+     "cut": "the body behind the belly's middle (x 0.0 m): the hind legs and tail",
+     "exception": null
+    },
+    "size_4x3": {
+     "stem": "animals-brachiosaurus-size-comparison-4x3",
+     "round": "10",
+     "model": "museum-two/animal-queue/animals/brachiosaurus/judged/round-10/animal.glb",
+     "sha256": "a229d8d8483339bc5a9f9aa109d7adc4eb4a4d0a10d33506311b69f5f78a48b4",
+     "still": "brachiosaurus-size-comparison-4x3.png",
+     "still_sha256": "14b00df352fdd46f8107eb03cf3ad7bb8e08de84fa4635de4df9275e04e69b39",
+     "w": 1600,
+     "h": 1200,
+     "ppm": 97.561,
+     "frame_m": [
+      -5.37,
+      11.03,
+      -0.407,
+      11.893
+     ],
+     "person_px": [
+      1115,
+      994,
+      1162,
+      1160
+     ],
+     "animal_px": [
+      0,
+      39,
+      1551,
+      1160
+     ],
+     "front_end": true,
+     "cut": "the tail behind x -5.37 m",
+     "exception": null
+    },
+    "size_16x9": {
+     "stem": "animals-brachiosaurus-size-comparison-16x9",
+     "round": "10",
+     "model": "museum-two/animal-queue/animals/brachiosaurus/judged/round-10/animal.glb",
+     "sha256": "a229d8d8483339bc5a9f9aa109d7adc4eb4a4d0a10d33506311b69f5f78a48b4",
+     "still": "brachiosaurus-size-comparison-16x9.png",
+     "still_sha256": "ee8f63f2d3624303e9863fccc4c29f3d435d7b9dbdddb59a4fc052c816291e6b",
+     "w": 2400,
+     "h": 1350,
+     "ppm": 104.8343,
+     "frame_m": [
+      -11.6196,
+      11.2737,
+      -0.6957,
+      12.1818
+     ],
+     "person_px": [
+      1854,
+      1099,
+      1903,
+      1277
+     ],
+     "animal_px": [
+      89,
+      73,
+      2322,
+      1277
+     ],
+     "front_end": false,
+     "cut": null,
+     "exception": null
+    }
+   }
+  },
+  "stegosaurus": {
+   "live": {
+    "round": "25",
+    "model": "museum-two/animal-queue/animals/stegosaurus/judged/round-25/animal.glb",
+    "sha256": "99c03865a18db8be5cb75087691bc35ed66118d01de2923884b45c7af37dd475"
+   },
+   "shapes": {
+    "size_1x1": {
+     "stem": "animals-stegosaurus-size-comparison-1x1",
+     "round": "25",
+     "model": "museum-two/animal-queue/animals/stegosaurus/judged/round-25/animal.glb",
+     "sha256": "99c03865a18db8be5cb75087691bc35ed66118d01de2923884b45c7af37dd475",
+     "still": "stegosaurus-size-comparison-1x1.png",
+     "still_sha256": "5ad93dfa631d82625da9ef5266fa34edac68bc7193cfbfdee3b1f44a5e04c9d9",
+     "w": 1600,
+     "h": 1600,
+     "ppm": 216.5292,
+     "frame_m": [
+      -3.219,
+      4.1703,
+      -2.4412,
+      4.9481
+     ],
+     "person_px": [
+      1393,
+      703,
+      1495,
+      1071
+     ],
+     "animal_px": [
+      87,
+      528,
+      1301,
+      1071
+     ],
+     "front_end": false,
+     "cut": null,
+     "exception": null
+    },
+    "size_4x3": {
+     "stem": "animals-stegosaurus-size-comparison-4x3",
+     "round": "25",
+     "model": "museum-two/animal-queue/animals/stegosaurus/judged/round-25/animal.glb",
+     "sha256": "99c03865a18db8be5cb75087691bc35ed66118d01de2923884b45c7af37dd475",
+     "still": "stegosaurus-size-comparison-4x3.png",
+     "still_sha256": "d9825de471db44d6eb53c64c179b895c7ec72ae26e923f5380ab163b79299ceb",
+     "w": 1600,
+     "h": 1200,
+     "ppm": 216.5292,
+     "frame_m": [
+      -3.219,
+      4.1703,
+      -1.5175,
+      4.0245
+     ],
+     "person_px": [
+      1393,
+      503,
+      1495,
+      871
+     ],
+     "animal_px": [
+      87,
+      328,
+      1301,
+      871
+     ],
+     "front_end": false,
+     "cut": null,
+     "exception": null
+    },
+    "size_16x9": {
+     "stem": "animals-stegosaurus-size-comparison-16x9",
+     "round": "25",
+     "model": "museum-two/animal-queue/animals/stegosaurus/judged/round-25/animal.glb",
+     "sha256": "99c03865a18db8be5cb75087691bc35ed66118d01de2923884b45c7af37dd475",
+     "still": "stegosaurus-size-comparison-16x9.png",
+     "still_sha256": "43d4a789335afd4f5272f316c309d1032cb4d9a3c38ef07618b85579e500f23d",
+     "w": 2400,
+     "h": 1350,
+     "ppm": 317.8463,
+     "frame_m": [
+      -3.219,
+      4.3318,
+      -0.8702,
+      3.3771
+     ],
+     "person_px": [
+      2045,
+      533,
+      2195,
+      1073
+     ],
+     "animal_px": [
+      127,
+      276,
+      1910,
+      1073
+     ],
+     "front_end": false,
+     "cut": null,
+     "exception": null
+    }
+   }
+  },
+  "ankylosaurus": {
+   "live": {
+    "round": "14",
+    "model": "museum-two/animal-queue/animals/ankylosaurus/judged/round-14/animal.glb",
+    "sha256": "b28921dc8b06b586dcdfafeff82d2378b7f2871ce87077391e23c3325580682f"
+   },
+   "shapes": {
+    "size_1x1": {
+     "stem": "animals-ankylosaurus-size-comparison-1x1",
+     "round": "14",
+     "model": "museum-two/animal-queue/animals/ankylosaurus/judged/round-14/animal.glb",
+     "sha256": "b28921dc8b06b586dcdfafeff82d2378b7f2871ce87077391e23c3325580682f",
+     "still": "ankylosaurus-size-comparison-1x1.png",
+     "still_sha256": "69ec6aad8621c55bd5041e3796ba118535af55a6dc9edbf6d08d7e573d64d58f",
+     "w": 1600,
+     "h": 1600,
+     "ppm": 198.067,
+     "frame_m": [
+      -3.613,
+      4.4651,
+      -3.189,
+      4.8891
+     ],
+     "person_px": [
+      1402,
+      632,
+      1495,
+      968
+     ],
+     "animal_px": [
+      79,
+      632,
+      1345,
+      968
+     ],
+     "front_end": false,
+     "cut": null,
+     "exception": null
+    },
+    "size_4x3": {
+     "stem": "animals-ankylosaurus-size-comparison-4x3",
+     "round": "14",
+     "model": "museum-two/animal-queue/animals/ankylosaurus/judged/round-14/animal.glb",
+     "sha256": "b28921dc8b06b586dcdfafeff82d2378b7f2871ce87077391e23c3325580682f",
+     "still": "ankylosaurus-size-comparison-4x3.png",
+     "still_sha256": "cf35260069dce754284346509eda298be362ae6fe98f5fd999f03a06ece89286",
+     "w": 1600,
+     "h": 1200,
+     "ppm": 198.067,
+     "frame_m": [
+      -3.613,
+      4.4651,
+      -2.1793,
+      3.8793
+     ],
+     "person_px": [
+      1402,
+      432,
+      1495,
+      768
+     ],
+     "animal_px": [
+      79,
+      432,
+      1345,
+      768
+     ],
+     "front_end": false,
+     "cut": null,
+     "exception": null
+    },
+    "size_16x9": {
+     "stem": "animals-ankylosaurus-size-comparison-16x9",
+     "round": "14",
+     "model": "museum-two/animal-queue/animals/ankylosaurus/judged/round-14/animal.glb",
+     "sha256": "b28921dc8b06b586dcdfafeff82d2378b7f2871ce87077391e23c3325580682f",
+     "still": "ankylosaurus-size-comparison-16x9.png",
+     "still_sha256": "40fa0e6470aa9d6f6299f5cb0c5f6b285a81d4036eb4de448cc3310996bb4867",
+     "w": 2400,
+     "h": 1350,
+     "ppm": 290.7454,
+     "frame_m": [
+      -3.613,
+      4.6416,
+      -1.4716,
+      3.1716
+     ],
+     "person_px": [
+      2058,
+      428,
+      2195,
+      922
+     ],
+     "animal_px": [
+      116,
+      428,
+      1974,
+      922
+     ],
+     "front_end": false,
+     "cut": null,
+     "exception": null
+    }
+   }
+  },
+  "woolly-mammoth": {
+   "live": {
+    "round": "10",
+    "model": "museum-two/animal-queue/animals/woolly-mammoth/judged/round-10/animal.glb",
+    "sha256": "181f5a4f4ab386a74945b0d3d06b885cac4c1705e480bd3b3afa2bb738e5b5e4"
+   },
+   "shapes": {
+    "size_1x1": {
+     "stem": "animals-woolly-mammoth-size-comparison-1x1",
+     "round": "10",
+     "model": "museum-two/animal-queue/animals/woolly-mammoth/judged/round-10/animal.glb",
+     "sha256": "181f5a4f4ab386a74945b0d3d06b885cac4c1705e480bd3b3afa2bb738e5b5e4",
+     "still": "woolly-mammoth-size-comparison-1x1.png",
+     "still_sha256": "3f1068a6bc49d85afd5b1e5213633173890bddfe11bf0c1083bd8fafe75f416d",
+     "w": 1600,
+     "h": 1600,
+     "ppm": 282.424,
+     "frame_m": [
+      -2.607,
+      3.0582,
+      -1.4316,
+      4.2336
+     ],
+     "person_px": [
+      1362,
+      716,
+      1495,
+      1196
+     ],
+     "animal_px": [
+      114,
+      405,
+      1296,
+      1196
+     ],
+     "front_end": false,
+     "cut": null,
+     "exception": null
+    },
+    "size_4x3": {
+     "stem": "animals-woolly-mammoth-size-comparison-4x3",
+     "round": "10",
+     "model": "museum-two/animal-queue/animals/woolly-mammoth/judged/round-10/animal.glb",
+     "sha256": "181f5a4f4ab386a74945b0d3d06b885cac4c1705e480bd3b3afa2bb738e5b5e4",
+     "still": "woolly-mammoth-size-comparison-4x3.png",
+     "still_sha256": "3c705bc01973f2a286ee62456cd47d25943c52524ef0706b417716c9bf0f21f4",
+     "w": 1600,
+     "h": 1200,
+     "ppm": 282.424,
+     "frame_m": [
+      -2.607,
+      3.0582,
+      -0.7235,
+      3.5254
+     ],
+     "person_px": [
+      1362,
+      516,
+      1495,
+      996
+     ],
+     "animal_px": [
+      114,
+      205,
+      1296,
+      996
+     ],
+     "front_end": false,
+     "cut": null,
+     "exception": null
+    },
+    "size_16x9": {
+     "stem": "animals-woolly-mammoth-size-comparison-16x9",
+     "round": "10",
+     "model": "museum-two/animal-queue/animals/woolly-mammoth/judged/round-10/animal.glb",
+     "sha256": "181f5a4f4ab386a74945b0d3d06b885cac4c1705e480bd3b3afa2bb738e5b5e4",
+     "still": "woolly-mammoth-size-comparison-16x9.png",
+     "still_sha256": "2241839a90d8728af1bf091c62e520552ac3eba850c2f2a203e6708eec643de7",
+     "w": 2400,
+     "h": 1350,
+     "ppm": 380.5404,
+     "frame_m": [
+      -2.8659,
+      3.4409,
+      -0.3728,
+      3.1748
+     ],
+     "person_px": [
+      1933,
+      561,
+      2113,
+      1208
+     ],
+     "animal_px": [
+      251,
+      142,
+      1844,
+      1208
+     ],
+     "front_end": false,
+     "cut": null,
+     "exception": null
+    }
+   }
+  },
+  "biggest-dinosaurs": {
+   "live": {
+    "round": "Argentinosaurus 12",
+    "model": "museum-two/animal-queue/animals/argentinosaurus/judged/round-12/animal.glb",
+    "sha256": "4265d77bd5532eac3d6d086925c4cfa805acc4066ba0e8182e041ff8fe478ab4"
+   },
+   "shapes": {
+    "size_1x1": {
+     "stem": "animals-biggest-dinosaurs-size-comparison-1x1",
+     "round": "Argentinosaurus 12",
+     "model": "museum-two/animal-queue/animals/argentinosaurus/judged/round-12/animal.glb",
+     "sha256": "4265d77bd5532eac3d6d086925c4cfa805acc4066ba0e8182e041ff8fe478ab4",
+     "still": "biggest-dinosaurs-size-comparison-1x1.png",
+     "still_sha256": "1161c022999088e35d5ea05126492dcc820d6dc4ed350d63d3fb448100a52049",
+     "w": 1600,
+     "h": 1600,
+     "ppm": 131.1475,
+     "frame_m": [
+      3.43,
+      15.63,
+      -0.59,
+      11.61
+     ],
+     "person_px": [
+      765,
+      1300,
+      827,
+      1523
+     ],
+     "animal_px": [
+      0,
+      77,
+      1561,
+      1523
+     ],
+     "front_end": true,
+     "cut": "the body behind the front legs (x 3.43 m): the hind legs and tail",
+     "exception": null
+    },
+    "size_4x3": {
+     "stem": "animals-biggest-dinosaurs-size-comparison-4x3",
+     "round": "Argentinosaurus 12",
+     "model": "museum-two/animal-queue/animals/argentinosaurus/judged/round-12/animal.glb",
+     "sha256": "4265d77bd5532eac3d6d086925c4cfa805acc4066ba0e8182e041ff8fe478ab4",
+     "still": "biggest-dinosaurs-size-comparison-4x3.png",
+     "still_sha256": "10bb2247047a0fe02d5c5873631212ef272f44e723f39ec814b40b26bc1cc938",
+     "w": 1600,
+     "h": 1200,
+     "ppm": 89.7364,
+     "frame_m": [
+      -2.2,
+      15.63,
+      -1.1762,
+      12.1963
+     ],
+     "person_px": [
+      1029,
+      942,
+      1071,
+      1094
+     ],
+     "animal_px": [
+      0,
+      106,
+      1573,
+      1094
+     ],
+     "front_end": true,
+     "cut": "the tail behind the hips (x -2.2 m)",
+     "exception": null
+    },
+    "size_16x9": {
+     "stem": "animals-biggest-dinosaurs-size-comparison-16x9",
+     "round": "Argentinosaurus 12",
+     "model": "museum-two/animal-queue/animals/argentinosaurus/judged/round-12/animal.glb",
+     "sha256": "4265d77bd5532eac3d6d086925c4cfa805acc4066ba0e8182e041ff8fe478ab4",
+     "still": "biggest-dinosaurs-size-comparison-16x9.png",
+     "still_sha256": "ffef098e10e275794e2c652e1cc8a3c79337dc862873e7a7340d9c1fa88d8cd2",
+     "w": 2400,
+     "h": 1350,
+     "ppm": 48.8175,
+     "frame_m": [
+      -4.8113,
+      44.3514,
+      -8.082,
+      19.572
+     ],
+     "person_px": [
+      785,
+      873,
+      808,
+      956
+     ],
+     "animal_px": [
+      21,
+      394,
+      2385,
+      956
+     ],
+     "front_end": false,
+     "cut": null,
+     "exception": "A group picture: the seven dinosaurs at one scale, 48 m from the Stegosaurus's tail to the Spinosaurus's snout, so the person stands 6.1 % of the height (83 px), under the 8 % a single animal's 16:9 keeps.",
+     "layers": [
+      {
+       "name": "argentinosaurus",
+       "dx_m": 15.281,
+       "box_px": [
+        236,
+        418,
+        1729,
+        956
+       ],
+       "x_m": [
+        0.023,
+        30.606
+       ],
+       "model": "museum-two/animal-queue/animals/argentinosaurus/judged/round-12/animal.glb",
+       "sha256": "4265d77bd5532eac3d6d086925c4cfa805acc4066ba0e8182e041ff8fe478ab4"
+      },
+      {
+       "name": "brachiosaurus",
+       "dx_m": 31.226,
+       "box_px": [
+        1234,
+        394,
+        2273,
+        955
+       ],
+       "x_m": [
+        20.467,
+        41.75
+       ],
+       "model": "museum-two/animal-queue/animals/brachiosaurus/judged/round-10/animal.glb",
+       "sha256": "a229d8d8483339bc5a9f9aa109d7adc4eb4a4d0a10d33506311b69f5f78a48b4"
+      },
+      {
+       "name": "stegosaurus",
+       "dx_m": -1.598,
+       "box_px": [
+        21,
+        833,
+        293,
+        955
+       ],
+       "x_m": [
+        -4.381,
+        1.191
+       ],
+       "model": "museum-two/animal-queue/animals/stegosaurus/judged/round-25/animal.glb",
+       "sha256": "99c03865a18db8be5cb75087691bc35ed66118d01de2923884b45c7af37dd475"
+      },
+      {
+       "name": "ankylosaurus",
+       "dx_m": 4.722,
+       "box_px": [
+        309,
+        873,
+        621,
+        955
+       ],
+       "x_m": [
+        1.518,
+        7.91
+       ],
+       "model": "museum-two/animal-queue/animals/ankylosaurus/judged/round-14/animal.glb",
+       "sha256": "b28921dc8b06b586dcdfafeff82d2378b7f2871ce87077391e23c3325580682f"
+      },
+      {
+       "name": "person",
+       "dx_m": 11.51,
+       "box_px": [
+        785,
+        873,
+        808,
+        956
+       ],
+       "x_m": [
+        11.269,
+        11.74
+       ]
+      },
+      {
+       "name": "triceratops",
+       "dx_m": 15.836,
+       "box_px": [
+        840,
+        832,
+        1188,
+        955
+       ],
+       "x_m": [
+        12.396,
+        19.524
+       ],
+       "model": "museum-two/animal-queue/animals/triceratops/judged/round-15/animal.glb",
+       "sha256": "ae736190b777dbcc130b3218abaeb07b2e9d4ae31a4bcceffe769053a4a311a0"
+      },
+      {
+       "name": "t-rex",
+       "dx_m": 28.905,
+       "box_px": [
+        1340,
+        733,
+        1893,
+        956
+       ],
+       "x_m": [
+        22.638,
+        33.966
+       ],
+       "model": "museum-two/animal-queue/animals/t-rex/judged/round-13/animal.glb",
+       "sha256": "fb18e49ecb55edcc6bff0c75e5f5e2ed2ab870aaf99a9f0266e0637f400a338d"
+      },
+      {
+       "name": "spinosaurus",
+       "dx_m": 39.678,
+       "box_px": [
+        1901,
+        787,
+        2385,
+        955
+       ],
+       "x_m": [
+        34.13,
+        44.044
+       ],
+       "model": "museum-two/animal-queue/animals/spinosaurus/judged/round-16/animal.glb",
+       "sha256": "4d4b89044078e48edc34add5895cdb29dcb54c7520fa340a10c1c0b654c64c54"
+      }
+     ]
     }
    }
   }

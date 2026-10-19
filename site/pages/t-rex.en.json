@@ -12,6 +12,15 @@
    "width": 1200,
    "height": 630,
    "layout": "beside"
+  },
+  "shapes": {
+   "primary": "size_1x1",
+   "list": [
+    "size_1x1",
+    "size_4x3",
+    "size_16x9"
+   ],
+   "figure": "size_16x9"
   }
  },
  "pics": {
@@ -114,6 +123,32 @@
    ],
    "sizes": "(min-width: 1280px) 690px, (min-width: 960px) 54vw, (min-width: 600px) calc(100vw - 64px), calc(100vw - 40px)",
    "person": "93.5% 36.88%"
+  },
+  "size_1x1": {
+   "stem": "animals-t-rex-size-comparison-1x1",
+   "widths": [
+    1600
+   ],
+   "sizes": "(min-width: 1280px) 690px, (min-width: 960px) 54vw, (min-width: 600px) calc(100vw - 64px), calc(100vw - 40px)",
+   "person": "76.56% 58.81%"
+  },
+  "size_4x3": {
+   "stem": "animals-t-rex-size-comparison-4x3",
+   "widths": [
+    1600
+   ],
+   "sizes": "(min-width: 1280px) 690px, (min-width: 960px) 54vw, (min-width: 600px) calc(100vw - 64px), calc(100vw - 40px)",
+   "person": "87.06% 56.5%"
+  },
+  "size_16x9": {
+   "stem": "animals-t-rex-size-comparison-16x9",
+   "widths": [
+    800,
+    1600,
+    2400
+   ],
+   "sizes": "(min-width: 1280px) 690px, (min-width: 960px) 54vw, (min-width: 600px) calc(100vw - 64px), calc(100vw - 40px)",
+   "person": "87.04% 58.59%"
   }
  },
  "meta": {
@@ -565,7 +600,22 @@
      },
      ", credit: Museum of Ages. They show a reconstruction, built in code and rendered in our own engine, not a photograph. The pictures of the other pages listed here give their credits on those pages."
     ]
-   ]
+   ],
+   "shapes": {
+    "caption": "T. rex size comparison: our T. rex, about 11.4 m (37 ft) long in this pose, beside a person 1.70 m tall, to one scale.",
+    "lead": "For slides and posts, this size comparison comes in three shapes, all under the same licence.",
+    "alts": {
+     "size_1x1": "T. rex size comparison: the front of our T. rex, its head, small arm, chest and legs, with a grey person 1.70 m tall standing under its head.",
+     "size_4x3": "T. rex beside a person, a size comparison: our whole T. rex from the side, head raised and tail out, and a grey person 1.70 m tall below its jaws.",
+     "size_16x9": "T. rex size comparison, the whole animal from the side: our T. rex, about 11.4 m (37 ft) long in this pose, and a grey person 1.70 m tall under its head."
+    },
+    "links": {
+     "size_1x1": "Square (1:1)",
+     "size_4x3": "Slide (4:3)",
+     "size_16x9": "Wide (16:9)"
+    },
+    "draft": true
+   }
   }
  ]
 }

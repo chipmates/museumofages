@@ -12,6 +12,15 @@
    "width": 1200,
    "height": 630,
    "layout": "beside"
+  },
+  "shapes": {
+   "primary": "size_1x1",
+   "list": [
+    "size_1x1",
+    "size_4x3",
+    "size_16x9"
+   ],
+   "figure": "size_16x9"
   }
  },
  "pics": {
@@ -132,6 +141,32 @@
    ],
    "sizes": "(min-width: 1280px) 690px, (min-width: 960px) 54vw, (min-width: 600px) calc(100vw - 64px), calc(100vw - 40px)",
    "person": "93.5% 36.88%"
+  },
+  "size_1x1": {
+   "stem": "animals-triceratops-size-comparison-1x1",
+   "widths": [
+    1600
+   ],
+   "sizes": "(min-width: 1280px) 690px, (min-width: 960px) 54vw, (min-width: 600px) calc(100vw - 64px), calc(100vw - 40px)",
+   "person": "90.81% 45.19%"
+  },
+  "size_4x3": {
+   "stem": "animals-triceratops-size-comparison-4x3",
+   "widths": [
+    1600
+   ],
+   "sizes": "(min-width: 1280px) 690px, (min-width: 960px) 54vw, (min-width: 600px) calc(100vw - 64px), calc(100vw - 40px)",
+   "person": "90.84% 43.58%"
+  },
+  "size_16x9": {
+   "stem": "animals-triceratops-size-comparison-16x9",
+   "widths": [
+    800,
+    1600,
+    2400
+   ],
+   "sizes": "(min-width: 1280px) 690px, (min-width: 960px) 54vw, (min-width: 600px) calc(100vw - 64px), calc(100vw - 40px)",
+   "person": "88.9% 41.63%"
   }
  },
  "meta": {
@@ -640,7 +675,22 @@
      },
      ". Crédito: Museum of Ages, y además «Triceratops outline after Dempsey 2025 (CC BY 4.0)». Muestran una reconstrucción, construida en código y renderizada con nuestro propio motor gráfico, no fotografías. Las imágenes de las otras páginas que aparecen aquí dan su crédito en esas páginas."
     ]
-   ]
+   ],
+   "shapes": {
+    "caption": "Comparación de tamaño del Triceratops: nuestro Triceratops, 6,9 m del pico a la cola, junto a una persona de 1,70 m, a la misma escala.",
+    "lead": "Para presentaciones y publicaciones, esta comparación de tamaño está en tres formatos, todos con la misma licencia.",
+    "alts": {
+     "size_1x1": "Comparación de tamaño del Triceratops: nuestro Triceratops entero de lado, con la gola y los cuernos delante, y una persona gris de 1,70 m frente a los cuernos.",
+     "size_4x3": "El Triceratops junto a una persona, en comparación de tamaño: nuestro Triceratops de lado, con su gola ancha y sus largos cuernos de la frente, y una persona gris de 1,70 m ante su cabeza.",
+     "size_16x9": "Comparación de tamaño del Triceratops, el animal entero de lado: nuestro Triceratops, 6,9 m del pico a la cola, y una persona gris de 1,70 m delante de él."
+    },
+    "links": {
+     "size_1x1": "Cuadrada (1:1)",
+     "size_4x3": "Diapositiva (4:3)",
+     "size_16x9": "Panorámica (16:9)"
+    },
+    "draft": true
+   }
   }
  ]
 }

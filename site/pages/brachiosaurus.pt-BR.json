@@ -13,6 +13,15 @@
    "width": 1200,
    "height": 630,
    "layout": "beside"
+  },
+  "shapes": {
+   "primary": "size_1x1",
+   "list": [
+    "size_1x1",
+    "size_4x3",
+    "size_16x9"
+   ],
+   "figure": "size_16x9"
   }
  },
  "pics": {
@@ -92,6 +101,32 @@
     2400
    ],
    "sizes": "(min-width: 1280px) 690px, (min-width: 960px) 54vw, (min-width: 600px) calc(100vw - 64px), calc(100vw - 40px)"
+  },
+  "size_1x1": {
+   "stem": "animals-brachiosaurus-size-comparison-1x1",
+   "widths": [
+    1600
+   ],
+   "sizes": "(min-width: 1280px) 690px, (min-width: 960px) 54vw, (min-width: 600px) calc(100vw - 64px), calc(100vw - 40px)",
+   "person": "51.22% 82.88%"
+  },
+  "size_4x3": {
+   "stem": "animals-brachiosaurus-size-comparison-4x3",
+   "widths": [
+    1600
+   ],
+   "sizes": "(min-width: 1280px) 690px, (min-width: 960px) 54vw, (min-width: 600px) calc(100vw - 64px), calc(100vw - 40px)",
+   "person": "71.16% 82.83%"
+  },
+  "size_16x9": {
+   "stem": "animals-brachiosaurus-size-comparison-16x9",
+   "widths": [
+    800,
+    1600,
+    2400
+   ],
+   "sizes": "(min-width: 1280px) 690px, (min-width: 960px) 54vw, (min-width: 600px) calc(100vw - 64px), calc(100vw - 40px)",
+   "person": "78.27% 81.41%"
   }
  },
  "meta": {
@@ -595,7 +630,22 @@
      },
      ". Crédito: Museum of Ages. Elas mostram uma reconstrução, construída em código e renderizada com o nosso próprio motor gráfico, não uma fotografia. As imagens das outras páginas que aparecem aqui dão o crédito nessas páginas."
     ]
-   ]
+   ],
+   "shapes": {
+    "caption": "Comparação de tamanho do braquiossauro: nosso braquiossauro com o pescoço erguido no ângulo que escolhemos, o alto da cabeça a 11,5 m, ao lado de uma pessoa de 1,70 m, na mesma escala.",
+    "lead": "Para slides e publicações, esta comparação de tamanho vem em três formatos, todos com a mesma licença.",
+    "alts": {
+     "size_1x1": "Comparação de tamanho do braquiossauro, a altura: as patas da frente, o peito e o pescoço erguido do nosso braquiossauro, a cabeça a 11,5 m, e uma pessoa cinza de 1,70 m embaixo do pescoço.",
+     "size_4x3": "O braquiossauro ao lado de uma pessoa, em comparação de tamanho: o pescoço, a cabeça e o corpo do nosso braquiossauro, com a cauda cortada na borda esquerda, e uma pessoa cinza de 1,70 m abaixo do pescoço.",
+     "size_16x9": "Comparação de tamanho do braquiossauro, o animal inteiro de lado: nosso braquiossauro, com o alto da cabeça a 11,5 m, e uma pessoa cinza de 1,70 m embaixo do pescoço."
+    },
+    "links": {
+     "size_1x1": "Quadrada (1:1)",
+     "size_4x3": "Slide (4:3)",
+     "size_16x9": "Panorâmica (16:9)"
+    },
+    "draft": true
+   }
   }
  ]
 }

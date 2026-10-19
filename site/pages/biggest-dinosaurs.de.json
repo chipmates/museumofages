@@ -15,7 +15,16 @@
   },
   "breaks": [
    "Stego|saurus"
-  ]
+  ],
+  "shapes": {
+   "primary": "size_1x1",
+   "list": [
+    "size_1x1",
+    "size_4x3",
+    "size_16x9"
+   ],
+   "figure": "size_16x9"
+  }
  },
  "pics": {
   "row": {
@@ -161,6 +170,33 @@
    ],
    "sizes": "(min-width: 1280px) 690px, (min-width: 960px) 54vw, (min-width: 600px) calc(100vw - 64px), calc(100vw - 40px)",
    "person": null
+  },
+  "size_1x1": {
+   "stem": "animals-biggest-dinosaurs-size-comparison-1x1",
+   "widths": [
+    1600
+   ],
+   "sizes": "(min-width: 1280px) 690px, (min-width: 960px) 54vw, (min-width: 600px) calc(100vw - 64px), calc(100vw - 40px)",
+   "person": "49.75% 81.25%"
+  },
+  "size_4x3": {
+   "stem": "animals-biggest-dinosaurs-size-comparison-4x3",
+   "widths": [
+    1600
+   ],
+   "sizes": "(min-width: 1280px) 690px, (min-width: 960px) 54vw, (min-width: 600px) calc(100vw - 64px), calc(100vw - 40px)",
+   "person": "65.62% 78.5%"
+  },
+  "size_16x9": {
+   "stem": "animals-biggest-dinosaurs-size-comparison-16x9",
+   "widths": [
+    800,
+    1600,
+    2400
+   ],
+   "sizes": "(min-width: 1280px) 690px, (min-width: 960px) 54vw, (min-width: 600px) calc(100vw - 64px), calc(100vw - 40px)",
+   "person": "33.19% 64.67%",
+   "person_from": 680
   }
  },
  "meta": {
@@ -778,7 +814,22 @@
      },
      ", Nachweis: Museum of Ages, und wo eine Beschriftung eine Vorlage nennt, auch diese. Sie zeigen Rekonstruktionen, in Code gebaut und in unserer Engine gerendert, keine Fotos."
     ]
-   ]
+   ],
+   "shapes": {
+    "caption": "Dinosaurier im Größenvergleich: unsere sieben Dinosaurier im selben Maßstab, jeder so, wie unser Modell gebaut ist, der längste unser Argentinosaurus mit etwa 30,6 m, dazwischen ein Mensch von 1,70 m.",
+    "lead": "Für Folien und Beiträge gibt es diesen Größenvergleich in drei Formaten, alle unter derselben Lizenz.",
+    "alts": {
+     "size_1x1": "Argentinosaurus im Größenvergleich: Vorderbeine, erhobener Hals und Kopf unseres Argentinosaurus, unter dem Hals ein grauer Mensch von 1,70 m.",
+     "size_4x3": "Argentinosaurus neben einem Menschen im Größenvergleich: unser Argentinosaurus von der Hüfte nach vorn mit dem langen, aufragenden Hals, darunter ein grauer Mensch von 1,70 m.",
+     "size_16x9": "Dinosaurier im Größenvergleich: unsere sieben Dinosaurier nebeneinander im selben Maßstab, der längste unser Argentinosaurus mit etwa 30,6 m, dazwischen ein grauer Mensch von 1,70 m."
+    },
+    "links": {
+     "size_1x1": "Quadrat (1:1)",
+     "size_4x3": "Folie (4:3)",
+     "size_16x9": "Breitbild (16:9)"
+    },
+    "draft": true
+   }
   }
  ]
 }

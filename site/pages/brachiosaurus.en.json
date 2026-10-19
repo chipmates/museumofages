@@ -13,6 +13,15 @@
    "width": 1200,
    "height": 630,
    "layout": "beside"
+  },
+  "shapes": {
+   "primary": "size_1x1",
+   "list": [
+    "size_1x1",
+    "size_4x3",
+    "size_16x9"
+   ],
+   "figure": "size_16x9"
   }
  },
  "pics": {
@@ -92,6 +101,32 @@
     2400
    ],
    "sizes": "(min-width: 1280px) 690px, (min-width: 960px) 54vw, (min-width: 600px) calc(100vw - 64px), calc(100vw - 40px)"
+  },
+  "size_1x1": {
+   "stem": "animals-brachiosaurus-size-comparison-1x1",
+   "widths": [
+    1600
+   ],
+   "sizes": "(min-width: 1280px) 690px, (min-width: 960px) 54vw, (min-width: 600px) calc(100vw - 64px), calc(100vw - 40px)",
+   "person": "51.22% 82.88%"
+  },
+  "size_4x3": {
+   "stem": "animals-brachiosaurus-size-comparison-4x3",
+   "widths": [
+    1600
+   ],
+   "sizes": "(min-width: 1280px) 690px, (min-width: 960px) 54vw, (min-width: 600px) calc(100vw - 64px), calc(100vw - 40px)",
+   "person": "71.16% 82.83%"
+  },
+  "size_16x9": {
+   "stem": "animals-brachiosaurus-size-comparison-16x9",
+   "widths": [
+    800,
+    1600,
+    2400
+   ],
+   "sizes": "(min-width: 1280px) 690px, (min-width: 960px) 54vw, (min-width: 600px) calc(100vw - 64px), calc(100vw - 40px)",
+   "person": "78.27% 81.41%"
   }
  },
  "meta": {
@@ -595,7 +630,22 @@
      },
      ", credit: Museum of Ages. They show a reconstruction, built in code and rendered in our own engine, not a photograph. The pictures of the other pages listed here give their credits on those pages."
     ]
-   ]
+   ],
+   "shapes": {
+    "caption": "Brachiosaurus size comparison: our Brachiosaurus with its neck raised at the angle we chose, the head top 11.5 m (38 ft) up, beside a person 1.70 m tall, to one scale.",
+    "lead": "For slides and posts, this size comparison comes in three shapes, all under the same licence.",
+    "alts": {
+     "size_1x1": "Brachiosaurus size comparison, the height: the front legs, chest and raised neck of our Brachiosaurus, the head 11.5 m (38 ft) up, and a grey person 1.70 m tall under the neck.",
+     "size_4x3": "Brachiosaurus beside a person, a size comparison: the neck, head and body of our Brachiosaurus, the tail cut at the left edge, and a grey person 1.70 m tall below the neck.",
+     "size_16x9": "Brachiosaurus size comparison, the whole animal from the side: our Brachiosaurus, the top of its head 11.5 m (38 ft) up, and a grey person 1.70 m tall under its neck."
+    },
+    "links": {
+     "size_1x1": "Square (1:1)",
+     "size_4x3": "Slide (4:3)",
+     "size_16x9": "Wide (16:9)"
+    },
+    "draft": true
+   }
   }
  ]
 }

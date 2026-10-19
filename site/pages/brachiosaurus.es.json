@@ -13,6 +13,15 @@
    "width": 1200,
    "height": 630,
    "layout": "beside"
+  },
+  "shapes": {
+   "primary": "size_1x1",
+   "list": [
+    "size_1x1",
+    "size_4x3",
+    "size_16x9"
+   ],
+   "figure": "size_16x9"
   }
  },
  "pics": {
@@ -92,6 +101,32 @@
     2400
    ],
    "sizes": "(min-width: 1280px) 690px, (min-width: 960px) 54vw, (min-width: 600px) calc(100vw - 64px), calc(100vw - 40px)"
+  },
+  "size_1x1": {
+   "stem": "animals-brachiosaurus-size-comparison-1x1",
+   "widths": [
+    1600
+   ],
+   "sizes": "(min-width: 1280px) 690px, (min-width: 960px) 54vw, (min-width: 600px) calc(100vw - 64px), calc(100vw - 40px)",
+   "person": "51.22% 82.88%"
+  },
+  "size_4x3": {
+   "stem": "animals-brachiosaurus-size-comparison-4x3",
+   "widths": [
+    1600
+   ],
+   "sizes": "(min-width: 1280px) 690px, (min-width: 960px) 54vw, (min-width: 600px) calc(100vw - 64px), calc(100vw - 40px)",
+   "person": "71.16% 82.83%"
+  },
+  "size_16x9": {
+   "stem": "animals-brachiosaurus-size-comparison-16x9",
+   "widths": [
+    800,
+    1600,
+    2400
+   ],
+   "sizes": "(min-width: 1280px) 690px, (min-width: 960px) 54vw, (min-width: 600px) calc(100vw - 64px), calc(100vw - 40px)",
+   "person": "78.27% 81.41%"
   }
  },
  "meta": {
@@ -595,7 +630,22 @@
      },
      ". Crédito: Museum of Ages. Muestran una reconstrucción, construida en código y renderizada con nuestro propio motor gráfico, no una fotografía. Las imágenes de las otras páginas que aparecen aquí dan su crédito en esas páginas."
     ]
-   ]
+   ],
+   "shapes": {
+    "caption": "Comparación de tamaño del Brachiosaurus: nuestro Brachiosaurus con el cuello levantado en el ángulo que elegimos, lo alto de la cabeza a 11,5 m, junto a una persona de 1,70 m, a la misma escala.",
+    "lead": "Para presentaciones y publicaciones, esta comparación de tamaño está en tres formatos, todos con la misma licencia.",
+    "alts": {
+     "size_1x1": "Comparación de tamaño del Brachiosaurus, la altura: las patas delanteras, el pecho y el cuello levantado de nuestro Brachiosaurus, la cabeza a 11,5 m, y una persona gris de 1,70 m bajo el cuello.",
+     "size_4x3": "El Brachiosaurus junto a una persona, en comparación de tamaño: el cuello, la cabeza y el cuerpo de nuestro Brachiosaurus, con la cola cortada en el borde izquierdo, y una persona gris de 1,70 m debajo del cuello.",
+     "size_16x9": "Comparación de tamaño del Brachiosaurus, el animal entero de lado: nuestro Brachiosaurus, con lo alto de la cabeza a 11,5 m, y una persona gris de 1,70 m bajo su cuello."
+    },
+    "links": {
+     "size_1x1": "Cuadrada (1:1)",
+     "size_4x3": "Diapositiva (4:3)",
+     "size_16x9": "Panorámica (16:9)"
+    },
+    "draft": true
+   }
   }
  ]
 }

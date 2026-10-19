@@ -12,6 +12,15 @@
    "width": 1200,
    "height": 630,
    "layout": "beside"
+  },
+  "shapes": {
+   "primary": "size_1x1",
+   "list": [
+    "size_1x1",
+    "size_4x3",
+    "size_16x9"
+   ],
+   "figure": "size_16x9"
   }
  },
  "pics": {
@@ -114,6 +123,32 @@
     2400
    ],
    "sizes": "(min-width: 1280px) 690px, (min-width: 960px) 54vw, (min-width: 600px) calc(100vw - 64px), calc(100vw - 40px)"
+  },
+  "size_1x1": {
+   "stem": "animals-spinosaurus-size-comparison-1x1",
+   "widths": [
+    1600
+   ],
+   "sizes": "(min-width: 1280px) 690px, (min-width: 960px) 54vw, (min-width: 600px) calc(100vw - 64px), calc(100vw - 40px)",
+   "person": "88.31% 57.31%"
+  },
+  "size_4x3": {
+   "stem": "animals-spinosaurus-size-comparison-4x3",
+   "widths": [
+    1600
+   ],
+   "sizes": "(min-width: 1280px) 690px, (min-width: 960px) 54vw, (min-width: 600px) calc(100vw - 64px), calc(100vw - 40px)",
+   "person": "91.81% 55.5%"
+  },
+  "size_16x9": {
+   "stem": "animals-spinosaurus-size-comparison-16x9",
+   "widths": [
+    800,
+    1600,
+    2400
+   ],
+   "sizes": "(min-width: 1280px) 690px, (min-width: 960px) 54vw, (min-width: 600px) calc(100vw - 64px), calc(100vw - 40px)",
+   "person": "89.81% 57.19%"
   }
  },
  "meta": {
@@ -632,7 +667,22 @@
      },
      ". Crédito: Museum of Ages. Muestran una reconstrucción, construida en código y renderizada con nuestro propio motor gráfico, no una fotografía. Las imágenes de las otras páginas que aparecen aquí dan su crédito en esas páginas."
     ]
-   ]
+   ],
+   "shapes": {
+    "caption": "Comparación de tamaño del Spinosaurus: el adulto más grande, nuestro modelo agrandado, de unos 13,1 m de punta a punta en su postura, junto a una persona de 1,70 m, a la misma escala.",
+    "lead": "Para presentaciones y publicaciones, esta comparación de tamaño está en tres formatos, todos con la misma licencia.",
+    "alts": {
+     "size_1x1": "Comparación de tamaño del Spinosaurus: la parte delantera del adulto más grande, nuestro modelo agrandado, con el hocico largo, el cuello, la vela y las patas, y una persona gris de 1,70 m bajo su cabeza.",
+     "size_4x3": "El Spinosaurus junto a una persona, en comparación de tamaño: el adulto más grande, nuestro modelo agrandado, entero de lado con su vela alta y su cola larga, y una persona gris de 1,70 m bajo el hocico.",
+     "size_16x9": "Comparación de tamaño del Spinosaurus, el adulto entero de lado: nuestro modelo agrandado, de unos 13,1 m de punta a punta, y una persona gris de 1,70 m bajo su cabeza."
+    },
+    "links": {
+     "size_1x1": "Cuadrada (1:1)",
+     "size_4x3": "Diapositiva (4:3)",
+     "size_16x9": "Panorámica (16:9)"
+    },
+    "draft": true
+   }
   }
  ]
 }

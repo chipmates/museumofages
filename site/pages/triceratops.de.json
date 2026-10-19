@@ -17,7 +17,16 @@
    "Tricera|tops",
    "Stego|saurus",
    "Stego|saurier"
-  ]
+  ],
+  "shapes": {
+   "primary": "size_1x1",
+   "list": [
+    "size_1x1",
+    "size_4x3",
+    "size_16x9"
+   ],
+   "figure": "size_16x9"
+  }
  },
  "pics": {
   "side": {
@@ -137,6 +146,32 @@
    ],
    "sizes": "(min-width: 1280px) 690px, (min-width: 960px) 54vw, (min-width: 600px) calc(100vw - 64px), calc(100vw - 40px)",
    "person": "93.5% 36.88%"
+  },
+  "size_1x1": {
+   "stem": "animals-triceratops-size-comparison-1x1",
+   "widths": [
+    1600
+   ],
+   "sizes": "(min-width: 1280px) 690px, (min-width: 960px) 54vw, (min-width: 600px) calc(100vw - 64px), calc(100vw - 40px)",
+   "person": "90.81% 45.19%"
+  },
+  "size_4x3": {
+   "stem": "animals-triceratops-size-comparison-4x3",
+   "widths": [
+    1600
+   ],
+   "sizes": "(min-width: 1280px) 690px, (min-width: 960px) 54vw, (min-width: 600px) calc(100vw - 64px), calc(100vw - 40px)",
+   "person": "90.84% 43.58%"
+  },
+  "size_16x9": {
+   "stem": "animals-triceratops-size-comparison-16x9",
+   "widths": [
+    800,
+    1600,
+    2400
+   ],
+   "sizes": "(min-width: 1280px) 690px, (min-width: 960px) 54vw, (min-width: 600px) calc(100vw - 64px), calc(100vw - 40px)",
+   "person": "88.9% 41.63%"
   }
  },
  "meta": {
@@ -645,7 +680,22 @@
      },
      ", Nachweis: Museum of Ages, dazu „Triceratops outline after Dempsey 2025 (CC BY 4.0)“. Sie zeigen eine Rekonstruktion, in Code gebaut und in unserer Engine gerendert, keine Fotos. Die Bilder der anderen Seiten, die hier aufgeführt sind, nennen ihren Nachweis auf der jeweiligen Seite."
     ]
-   ]
+   ],
+   "shapes": {
+    "caption": "Triceratops im Größenvergleich: unser Triceratops, 6,9 m vom Schnabel bis zum Schwanz, neben einem Menschen von 1,70 m, im selben Maßstab.",
+    "lead": "Für Folien und Beiträge gibt es diesen Größenvergleich in drei Formaten, alle unter derselben Lizenz.",
+    "alts": {
+     "size_1x1": "Triceratops im Größenvergleich: unser ganzer Triceratops von der Seite, vorn Nackenschild und Hörner, vor den Hörnern ein grauer Mensch von 1,70 m.",
+     "size_4x3": "Triceratops neben einem Menschen im Größenvergleich: unser Triceratops von der Seite mit breitem Nackenschild und langen Stirnhörnern, vor seinem Kopf ein grauer Mensch von 1,70 m.",
+     "size_16x9": "Triceratops im Größenvergleich, das ganze Tier von der Seite: unser Triceratops, 6,9 m vom Schnabel bis zum Schwanz, und davor ein grauer Mensch von 1,70 m."
+    },
+    "links": {
+     "size_1x1": "Quadrat (1:1)",
+     "size_4x3": "Folie (4:3)",
+     "size_16x9": "Breitbild (16:9)"
+    },
+    "draft": true
+   }
   }
  ]
 }

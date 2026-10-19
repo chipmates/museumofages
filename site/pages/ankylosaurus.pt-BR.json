@@ -13,6 +13,15 @@
    "width": 1200,
    "height": 630,
    "layout": "beside"
+  },
+  "shapes": {
+   "primary": "size_1x1",
+   "list": [
+    "size_1x1",
+    "size_4x3",
+    "size_16x9"
+   ],
+   "figure": "size_16x9"
   }
  },
  "pics": {
@@ -125,6 +134,32 @@
    ],
    "sizes": "(min-width: 1280px) 690px, (min-width: 960px) 54vw, (min-width: 600px) calc(100vw - 64px), calc(100vw - 40px)",
    "person": "93.5% 36.88%"
+  },
+  "size_1x1": {
+   "stem": "animals-ankylosaurus-size-comparison-1x1",
+   "widths": [
+    1600
+   ],
+   "sizes": "(min-width: 1280px) 690px, (min-width: 960px) 54vw, (min-width: 600px) calc(100vw - 64px), calc(100vw - 40px)",
+   "person": "90.53% 39.5%"
+  },
+  "size_4x3": {
+   "stem": "animals-ankylosaurus-size-comparison-4x3",
+   "widths": [
+    1600
+   ],
+   "sizes": "(min-width: 1280px) 690px, (min-width: 960px) 54vw, (min-width: 600px) calc(100vw - 64px), calc(100vw - 40px)",
+   "person": "90.53% 36%"
+  },
+  "size_16x9": {
+   "stem": "animals-ankylosaurus-size-comparison-16x9",
+   "widths": [
+    800,
+    1600,
+    2400
+   ],
+   "sizes": "(min-width: 1280px) 690px, (min-width: 960px) 54vw, (min-width: 600px) calc(100vw - 64px), calc(100vw - 40px)",
+   "person": "88.6% 31.7%"
   }
  },
  "meta": {
@@ -636,7 +671,22 @@
      },
      ". Crédito: Museum of Ages, e também “Ankylosaurus armour after Arbour and Mallon 2017 (CC BY 4.0)”. Elas mostram uma reconstrução, construída em código e renderizada com o nosso próprio motor gráfico, não fotografias. As imagens das outras páginas que aparecem aqui dão o crédito nessas páginas."
     ]
-   ]
+   ],
+   "shapes": {
+    "caption": "Comparação de tamanho do anquilossauro: nosso anquilossauro, 6,4 m do bico à clava, ao lado de uma pessoa de 1,70 m, na mesma escala.",
+    "lead": "Para slides e publicações, esta comparação de tamanho vem em três formatos, todos com a mesma licença.",
+    "alts": {
+     "size_1x1": "Comparação de tamanho do anquilossauro: nosso anquilossauro inteiro de lado, com o dorso couraçado e a clava da cauda, e uma pessoa cinza de 1,70 m diante da cabeça.",
+     "size_4x3": "O anquilossauro ao lado de uma pessoa, em comparação de tamanho: nosso anquilossauro baixo e largo, coberto de fileiras de placas de osso, e uma pessoa cinza de 1,70 m diante da cabeça larga.",
+     "size_16x9": "Comparação de tamanho do anquilossauro, o animal inteiro de lado: nosso anquilossauro, 6,4 m do bico à clava, e uma pessoa cinza de 1,70 m na frente dele."
+    },
+    "links": {
+     "size_1x1": "Quadrada (1:1)",
+     "size_4x3": "Slide (4:3)",
+     "size_16x9": "Panorâmica (16:9)"
+    },
+    "draft": true
+   }
   }
  ]
 }

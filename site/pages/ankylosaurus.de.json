@@ -17,7 +17,16 @@
   "breaks": [
    "Ankylo|saurus",
    "Stego|saurus"
-  ]
+  ],
+  "shapes": {
+   "primary": "size_1x1",
+   "list": [
+    "size_1x1",
+    "size_4x3",
+    "size_16x9"
+   ],
+   "figure": "size_16x9"
+  }
  },
  "pics": {
   "side": {
@@ -129,6 +138,32 @@
    ],
    "sizes": "(min-width: 1280px) 690px, (min-width: 960px) 54vw, (min-width: 600px) calc(100vw - 64px), calc(100vw - 40px)",
    "person": "93.5% 36.88%"
+  },
+  "size_1x1": {
+   "stem": "animals-ankylosaurus-size-comparison-1x1",
+   "widths": [
+    1600
+   ],
+   "sizes": "(min-width: 1280px) 690px, (min-width: 960px) 54vw, (min-width: 600px) calc(100vw - 64px), calc(100vw - 40px)",
+   "person": "90.53% 39.5%"
+  },
+  "size_4x3": {
+   "stem": "animals-ankylosaurus-size-comparison-4x3",
+   "widths": [
+    1600
+   ],
+   "sizes": "(min-width: 1280px) 690px, (min-width: 960px) 54vw, (min-width: 600px) calc(100vw - 64px), calc(100vw - 40px)",
+   "person": "90.53% 36%"
+  },
+  "size_16x9": {
+   "stem": "animals-ankylosaurus-size-comparison-16x9",
+   "widths": [
+    800,
+    1600,
+    2400
+   ],
+   "sizes": "(min-width: 1280px) 690px, (min-width: 960px) 54vw, (min-width: 600px) calc(100vw - 64px), calc(100vw - 40px)",
+   "person": "88.6% 31.7%"
   }
  },
  "meta": {
@@ -640,7 +675,22 @@
      },
      ", Nachweis: Museum of Ages, dazu „Ankylosaurus armour after Arbour and Mallon 2017 (CC BY 4.0)“. Sie zeigen eine Rekonstruktion, in Code gebaut und in unserer Engine gerendert, keine Fotos. Die Bilder der anderen Seiten, die hier aufgeführt sind, nennen ihren Nachweis auf der jeweiligen Seite."
     ]
-   ]
+   ],
+   "shapes": {
+    "caption": "Ankylosaurus im Größenvergleich: unser Ankylosaurus, 6,4 m vom Schnabel bis zur Keule, neben einem Menschen von 1,70 m, im selben Maßstab.",
+    "lead": "Für Folien und Beiträge gibt es diesen Größenvergleich in drei Formaten, alle unter derselben Lizenz.",
+    "alts": {
+     "size_1x1": "Ankylosaurus im Größenvergleich: unser ganzer Ankylosaurus von der Seite mit gepanzertem Rücken und Schwanzkeule, vor seinem Kopf ein grauer Mensch von 1,70 m.",
+     "size_4x3": "Ankylosaurus neben einem Menschen im Größenvergleich: unser flacher, breiter Ankylosaurus unter Reihen von Knochenplatten, vor dem breiten Kopf ein grauer Mensch von 1,70 m.",
+     "size_16x9": "Ankylosaurus im Größenvergleich, das ganze Tier von der Seite: unser Ankylosaurus, 6,4 m vom Schnabel bis zur Keule, und davor ein grauer Mensch von 1,70 m."
+    },
+    "links": {
+     "size_1x1": "Quadrat (1:1)",
+     "size_4x3": "Folie (4:3)",
+     "size_16x9": "Breitbild (16:9)"
+    },
+    "draft": true
+   }
   }
  ]
 }

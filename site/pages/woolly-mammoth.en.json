@@ -12,6 +12,15 @@
    "width": 1200,
    "height": 630,
    "layout": "beside"
+  },
+  "shapes": {
+   "primary": "size_1x1",
+   "list": [
+    "size_1x1",
+    "size_4x3",
+    "size_16x9"
+   ],
+   "figure": "size_16x9"
   }
  },
  "pics": {
@@ -67,6 +76,32 @@
     2400
    ],
    "sizes": "(min-width: 1280px) 690px, (min-width: 960px) 54vw, (min-width: 600px) calc(100vw - 64px), calc(100vw - 40px)"
+  },
+  "size_1x1": {
+   "stem": "animals-woolly-mammoth-size-comparison-1x1",
+   "widths": [
+    1600
+   ],
+   "sizes": "(min-width: 1280px) 690px, (min-width: 960px) 54vw, (min-width: 600px) calc(100vw - 64px), calc(100vw - 40px)",
+   "person": "89.28% 44.75%"
+  },
+  "size_4x3": {
+   "stem": "animals-woolly-mammoth-size-comparison-4x3",
+   "widths": [
+    1600
+   ],
+   "sizes": "(min-width: 1280px) 690px, (min-width: 960px) 54vw, (min-width: 600px) calc(100vw - 64px), calc(100vw - 40px)",
+   "person": "89.28% 43%"
+  },
+  "size_16x9": {
+   "stem": "animals-woolly-mammoth-size-comparison-16x9",
+   "widths": [
+    800,
+    1600,
+    2400
+   ],
+   "sizes": "(min-width: 1280px) 690px, (min-width: 960px) 54vw, (min-width: 600px) calc(100vw - 64px), calc(100vw - 40px)",
+   "person": "84.29% 41.56%"
   }
  },
  "meta": {
@@ -531,7 +566,22 @@
      },
      ", credit: Museum of Ages. They show a reconstruction, built in code and rendered in our own engine, not a photograph. The pictures of the other pages listed here give their credits on those pages."
     ]
-   ]
+   ],
+   "shapes": {
+    "caption": "Woolly mammoth size comparison: our woolly mammoth, built to the Berezovka bull, beside a person 1.70 m tall, to one scale.",
+    "lead": "For slides and posts, this size comparison comes in three shapes, all under the same licence.",
+    "alts": {
+     "size_1x1": "Woolly mammoth size comparison: our whole woolly mammoth from the side, its curved tusks and trunk, and a grey person 1.70 m tall in front of the tusks.",
+     "size_4x3": "Woolly mammoth beside a person, a size comparison: our mammoth in its dark brown coat, high domed head and sloping back, and a grey person 1.70 m tall beside it.",
+     "size_16x9": "Woolly mammoth size comparison, the whole animal from the side: our woolly mammoth, built to the Berezovka bull, and a grey person 1.70 m tall in front of the trunk."
+    },
+    "links": {
+     "size_1x1": "Square (1:1)",
+     "size_4x3": "Slide (4:3)",
+     "size_16x9": "Wide (16:9)"
+    },
+    "draft": true
+   }
   }
  ]
 }

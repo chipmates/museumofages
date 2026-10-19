@@ -15,7 +15,16 @@
   },
   "breaks": [
    "Stego|saurus"
-  ]
+  ],
+  "shapes": {
+   "primary": "size_1x1",
+   "list": [
+    "size_1x1",
+    "size_4x3",
+    "size_16x9"
+   ],
+   "figure": "size_16x9"
+  }
  },
  "pics": {
   "side": {
@@ -117,6 +126,32 @@
    ],
    "sizes": "(min-width: 1280px) 690px, (min-width: 960px) 54vw, (min-width: 600px) calc(100vw - 64px), calc(100vw - 40px)",
    "person": "93.5% 36.88%"
+  },
+  "size_1x1": {
+   "stem": "animals-t-rex-size-comparison-1x1",
+   "widths": [
+    1600
+   ],
+   "sizes": "(min-width: 1280px) 690px, (min-width: 960px) 54vw, (min-width: 600px) calc(100vw - 64px), calc(100vw - 40px)",
+   "person": "76.56% 58.81%"
+  },
+  "size_4x3": {
+   "stem": "animals-t-rex-size-comparison-4x3",
+   "widths": [
+    1600
+   ],
+   "sizes": "(min-width: 1280px) 690px, (min-width: 960px) 54vw, (min-width: 600px) calc(100vw - 64px), calc(100vw - 40px)",
+   "person": "87.06% 56.5%"
+  },
+  "size_16x9": {
+   "stem": "animals-t-rex-size-comparison-16x9",
+   "widths": [
+    800,
+    1600,
+    2400
+   ],
+   "sizes": "(min-width: 1280px) 690px, (min-width: 960px) 54vw, (min-width: 600px) calc(100vw - 64px), calc(100vw - 40px)",
+   "person": "87.04% 58.59%"
   }
  },
  "meta": {
@@ -568,7 +603,22 @@
      },
      ", Nachweis: Museum of Ages. Sie zeigen eine Rekonstruktion, in Code gebaut und in unserer Engine gerendert, kein Foto. Die Bilder der anderen Seiten, die hier aufgeführt sind, nennen ihren Nachweis auf der jeweiligen Seite."
     ]
-   ]
+   ],
+   "shapes": {
+    "caption": "T. rex im Größenvergleich: unser T. rex, in dieser Haltung etwa 11,4 m lang, neben einem Menschen von 1,70 m, im selben Maßstab.",
+    "lead": "Für Folien und Beiträge gibt es diesen Größenvergleich in drei Formaten, alle unter derselben Lizenz.",
+    "alts": {
+     "size_1x1": "T. rex im Größenvergleich: die vordere Hälfte unseres T. rex mit Kopf, kurzem Arm, Brust und Beinen, unter dem Kopf ein grauer Mensch von 1,70 m.",
+     "size_4x3": "T. rex neben einem Menschen im Größenvergleich: unser ganzer T. rex von der Seite, Kopf erhoben, Schwanz gestreckt, und unter seinem Maul ein grauer Mensch von 1,70 m.",
+     "size_16x9": "T. rex im Größenvergleich, das ganze Tier von der Seite: unser T. rex, in dieser Haltung etwa 11,4 m lang, und unter seinem Kopf ein grauer Mensch von 1,70 m."
+    },
+    "links": {
+     "size_1x1": "Quadrat (1:1)",
+     "size_4x3": "Folie (4:3)",
+     "size_16x9": "Breitbild (16:9)"
+    },
+    "draft": true
+   }
   }
  ]
 }

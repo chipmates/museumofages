@@ -18,7 +18,16 @@
    "Brachio|saurus",
    "Giraffa|titan",
    "Argentino|saurus"
-  ]
+  ],
+  "shapes": {
+   "primary": "size_1x1",
+   "list": [
+    "size_1x1",
+    "size_4x3",
+    "size_16x9"
+   ],
+   "figure": "size_16x9"
+  }
  },
  "pics": {
   "side": {
@@ -97,6 +106,32 @@
     2400
    ],
    "sizes": "(min-width: 1280px) 690px, (min-width: 960px) 54vw, (min-width: 600px) calc(100vw - 64px), calc(100vw - 40px)"
+  },
+  "size_1x1": {
+   "stem": "animals-brachiosaurus-size-comparison-1x1",
+   "widths": [
+    1600
+   ],
+   "sizes": "(min-width: 1280px) 690px, (min-width: 960px) 54vw, (min-width: 600px) calc(100vw - 64px), calc(100vw - 40px)",
+   "person": "51.22% 82.88%"
+  },
+  "size_4x3": {
+   "stem": "animals-brachiosaurus-size-comparison-4x3",
+   "widths": [
+    1600
+   ],
+   "sizes": "(min-width: 1280px) 690px, (min-width: 960px) 54vw, (min-width: 600px) calc(100vw - 64px), calc(100vw - 40px)",
+   "person": "71.16% 82.83%"
+  },
+  "size_16x9": {
+   "stem": "animals-brachiosaurus-size-comparison-16x9",
+   "widths": [
+    800,
+    1600,
+    2400
+   ],
+   "sizes": "(min-width: 1280px) 690px, (min-width: 960px) 54vw, (min-width: 600px) calc(100vw - 64px), calc(100vw - 40px)",
+   "person": "78.27% 81.41%"
   }
  },
  "meta": {
@@ -600,7 +635,22 @@
      },
      ", Nachweis: Museum of Ages. Sie zeigen eine Rekonstruktion, in Code gebaut und in unserer Engine gerendert, kein Foto. Die Bilder der anderen Seiten, die hier aufgeführt sind, nennen ihren Nachweis auf der jeweiligen Seite."
     ]
-   ]
+   ],
+   "shapes": {
+    "caption": "Brachiosaurus im Größenvergleich: unser Brachiosaurus mit erhobenem Hals im von uns gewählten Winkel, die Kopfhöhe 11,5 m, neben einem Menschen von 1,70 m, im selben Maßstab.",
+    "lead": "Für Folien und Beiträge gibt es diesen Größenvergleich in drei Formaten, alle unter derselben Lizenz.",
+    "alts": {
+     "size_1x1": "Brachiosaurus im Größenvergleich, die Höhe: Vorderbeine, Brust und erhobener Hals unseres Brachiosaurus, der Kopf 11,5 m hoch, unter dem Hals ein grauer Mensch von 1,70 m.",
+     "size_4x3": "Brachiosaurus neben einem Menschen im Größenvergleich: Hals, Kopf und Körper unseres Brachiosaurus, der Schwanz am linken Rand abgeschnitten, und unter dem Hals ein grauer Mensch von 1,70 m.",
+     "size_16x9": "Brachiosaurus im Größenvergleich, das ganze Tier von der Seite: unser Brachiosaurus, die Kopfhöhe 11,5 m, und unter seinem Hals ein grauer Mensch von 1,70 m."
+    },
+    "links": {
+     "size_1x1": "Quadrat (1:1)",
+     "size_4x3": "Folie (4:3)",
+     "size_16x9": "Breitbild (16:9)"
+    },
+    "draft": true
+   }
   }
  ]
 }

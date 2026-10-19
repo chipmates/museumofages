@@ -13,6 +13,15 @@
    "width": 1200,
    "height": 630,
    "layout": "beside"
+  },
+  "shapes": {
+   "primary": "size_1x1",
+   "list": [
+    "size_1x1",
+    "size_4x3",
+    "size_16x9"
+   ],
+   "figure": "size_16x9"
   }
  },
  "pics": {
@@ -125,6 +134,32 @@
    ],
    "sizes": "(min-width: 1280px) 690px, (min-width: 960px) 54vw, (min-width: 600px) calc(100vw - 64px), calc(100vw - 40px)",
    "person": "93.5% 36.88%"
+  },
+  "size_1x1": {
+   "stem": "animals-ankylosaurus-size-comparison-1x1",
+   "widths": [
+    1600
+   ],
+   "sizes": "(min-width: 1280px) 690px, (min-width: 960px) 54vw, (min-width: 600px) calc(100vw - 64px), calc(100vw - 40px)",
+   "person": "90.53% 39.5%"
+  },
+  "size_4x3": {
+   "stem": "animals-ankylosaurus-size-comparison-4x3",
+   "widths": [
+    1600
+   ],
+   "sizes": "(min-width: 1280px) 690px, (min-width: 960px) 54vw, (min-width: 600px) calc(100vw - 64px), calc(100vw - 40px)",
+   "person": "90.53% 36%"
+  },
+  "size_16x9": {
+   "stem": "animals-ankylosaurus-size-comparison-16x9",
+   "widths": [
+    800,
+    1600,
+    2400
+   ],
+   "sizes": "(min-width: 1280px) 690px, (min-width: 960px) 54vw, (min-width: 600px) calc(100vw - 64px), calc(100vw - 40px)",
+   "person": "88.6% 31.7%"
   }
  },
  "meta": {
@@ -636,7 +671,22 @@
      },
      ", credit: Museum of Ages, Ankylosaurus armour after Arbour and Mallon 2017 (CC BY 4.0). They show a reconstruction, built in code and rendered in our own engine, not photographs. The pictures of the other pages listed here give their credits on those pages."
     ]
-   ]
+   ],
+   "shapes": {
+    "caption": "Ankylosaurus size comparison: our Ankylosaurus, 6.4 m (21 ft) from beak to club, beside a person 1.70 m tall, to one scale.",
+    "lead": "For slides and posts, this size comparison comes in three shapes, all under the same licence.",
+    "alts": {
+     "size_1x1": "Ankylosaurus size comparison: our whole Ankylosaurus from the side, its armoured back and tail club, and a grey person 1.70 m tall in front of its head.",
+     "size_4x3": "Ankylosaurus beside a person, a size comparison: our low, wide Ankylosaurus under rows of bony plates, and a grey person 1.70 m tall facing its broad head.",
+     "size_16x9": "Ankylosaurus size comparison, the whole animal from the side: our Ankylosaurus, 6.4 m (21 ft) from beak to club, and a grey person 1.70 m tall in front of it."
+    },
+    "links": {
+     "size_1x1": "Square (1:1)",
+     "size_4x3": "Slide (4:3)",
+     "size_16x9": "Wide (16:9)"
+    },
+    "draft": true
+   }
   }
  ]
 }

@@ -15,7 +15,16 @@
   },
   "taxa": [
    "Diplodocus"
-  ]
+  ],
+  "shapes": {
+   "primary": "size_1x1",
+   "list": [
+    "size_1x1",
+    "size_4x3",
+    "size_16x9"
+   ],
+   "figure": "size_16x9"
+  }
  },
  "pics": {
   "side": {
@@ -134,6 +143,32 @@
    ],
    "sizes": "(min-width: 1280px) 690px, (min-width: 960px) 54vw, (min-width: 600px) calc(100vw - 64px), calc(100vw - 40px)",
    "person": "91.67% 23.4%"
+  },
+  "size_1x1": {
+   "stem": "animals-stegosaurus-size-comparison-1x1",
+   "widths": [
+    1600
+   ],
+   "sizes": "(min-width: 1280px) 690px, (min-width: 960px) 54vw, (min-width: 600px) calc(100vw - 64px), calc(100vw - 40px)",
+   "person": "90.25% 43.94%"
+  },
+  "size_4x3": {
+   "stem": "animals-stegosaurus-size-comparison-4x3",
+   "widths": [
+    1600
+   ],
+   "sizes": "(min-width: 1280px) 690px, (min-width: 960px) 54vw, (min-width: 600px) calc(100vw - 64px), calc(100vw - 40px)",
+   "person": "90.25% 41.92%"
+  },
+  "size_16x9": {
+   "stem": "animals-stegosaurus-size-comparison-16x9",
+   "widths": [
+    800,
+    1600,
+    2400
+   ],
+   "sizes": "(min-width: 1280px) 690px, (min-width: 960px) 54vw, (min-width: 600px) calc(100vw - 64px), calc(100vw - 40px)",
+   "person": "88.33% 39.48%"
   }
  },
  "meta": {
@@ -656,7 +691,22 @@
      },
      ", credit: Museum of Ages, and for the picture of all three also Triceratops outline after Dempsey 2025 (CC BY 4.0). They show a reconstruction, built in code and rendered in our own engine, not photographs. The pictures of the other pages listed here give their credits on those pages."
     ]
-   ]
+   ],
+   "shapes": {
+    "caption": "Stegosaurus size comparison: our Stegosaurus, 5.6 m (18 ft) from beak to tail tip, beside a person 1.70 m tall, to one scale.",
+    "lead": "For slides and posts, this size comparison comes in three shapes, all under the same licence.",
+    "alts": {
+     "size_1x1": "Stegosaurus size comparison: our whole Stegosaurus from the side, tall plates along its back, and a grey person 1.70 m tall in front of its head.",
+     "size_4x3": "Stegosaurus beside a person, a size comparison: our Stegosaurus with its two rows of plates and its tail spikes, and a grey person 1.70 m tall facing its small head.",
+     "size_16x9": "Stegosaurus size comparison, the whole animal from the side: our Stegosaurus, 5.6 m (18 ft) from beak to tail tip, and a grey person 1.70 m tall in front of it."
+    },
+    "links": {
+     "size_1x1": "Square (1:1)",
+     "size_4x3": "Slide (4:3)",
+     "size_16x9": "Wide (16:9)"
+    },
+    "draft": true
+   }
   }
  ]
 }

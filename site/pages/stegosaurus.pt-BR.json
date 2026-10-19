@@ -15,7 +15,16 @@
   },
   "taxa": [
    "Diplodocus"
-  ]
+  ],
+  "shapes": {
+   "primary": "size_1x1",
+   "list": [
+    "size_1x1",
+    "size_4x3",
+    "size_16x9"
+   ],
+   "figure": "size_16x9"
+  }
  },
  "pics": {
   "side": {
@@ -134,6 +143,32 @@
    ],
    "sizes": "(min-width: 1280px) 690px, (min-width: 960px) 54vw, (min-width: 600px) calc(100vw - 64px), calc(100vw - 40px)",
    "person": "91.67% 23.4%"
+  },
+  "size_1x1": {
+   "stem": "animals-stegosaurus-size-comparison-1x1",
+   "widths": [
+    1600
+   ],
+   "sizes": "(min-width: 1280px) 690px, (min-width: 960px) 54vw, (min-width: 600px) calc(100vw - 64px), calc(100vw - 40px)",
+   "person": "90.25% 43.94%"
+  },
+  "size_4x3": {
+   "stem": "animals-stegosaurus-size-comparison-4x3",
+   "widths": [
+    1600
+   ],
+   "sizes": "(min-width: 1280px) 690px, (min-width: 960px) 54vw, (min-width: 600px) calc(100vw - 64px), calc(100vw - 40px)",
+   "person": "90.25% 41.92%"
+  },
+  "size_16x9": {
+   "stem": "animals-stegosaurus-size-comparison-16x9",
+   "widths": [
+    800,
+    1600,
+    2400
+   ],
+   "sizes": "(min-width: 1280px) 690px, (min-width: 960px) 54vw, (min-width: 600px) calc(100vw - 64px), calc(100vw - 40px)",
+   "person": "88.33% 39.48%"
   }
  },
  "meta": {
@@ -656,7 +691,22 @@
      },
      ". Crédito: Museum of Ages, e, para a imagem dos três, também “Triceratops outline after Dempsey 2025 (CC BY 4.0)”. Elas mostram uma reconstrução, construída em código e renderizada com o nosso próprio motor gráfico, não fotografias. As imagens das outras páginas que aparecem aqui dão o crédito nessas páginas."
     ]
-   ]
+   ],
+   "shapes": {
+    "caption": "Comparação de tamanho do estegossauro: nosso estegossauro, 5,6 m do bico à ponta da cauda, ao lado de uma pessoa de 1,70 m, na mesma escala.",
+    "lead": "Para slides e publicações, esta comparação de tamanho vem em três formatos, todos com a mesma licença.",
+    "alts": {
+     "size_1x1": "Comparação de tamanho do estegossauro: nosso estegossauro inteiro de lado, com placas altas ao longo do dorso, e uma pessoa cinza de 1,70 m diante da cabeça.",
+     "size_4x3": "O estegossauro ao lado de uma pessoa, em comparação de tamanho: nosso estegossauro com as duas fileiras de placas e os espinhos da cauda, e uma pessoa cinza de 1,70 m diante da cabeça pequena.",
+     "size_16x9": "Comparação de tamanho do estegossauro, o animal inteiro de lado: nosso estegossauro, 5,6 m do bico à ponta da cauda, e uma pessoa cinza de 1,70 m na frente dele."
+    },
+    "links": {
+     "size_1x1": "Quadrada (1:1)",
+     "size_4x3": "Slide (4:3)",
+     "size_16x9": "Panorâmica (16:9)"
+    },
+    "draft": true
+   }
   }
  ]
 }

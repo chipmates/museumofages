@@ -12,6 +12,15 @@
    "width": 1200,
    "height": 630,
    "layout": "beside"
+  },
+  "shapes": {
+   "primary": "size_1x1",
+   "list": [
+    "size_1x1",
+    "size_4x3",
+    "size_16x9"
+   ],
+   "figure": "size_16x9"
   }
  },
  "pics": {
@@ -114,6 +123,32 @@
     2400
    ],
    "sizes": "(min-width: 1280px) 690px, (min-width: 960px) 54vw, (min-width: 600px) calc(100vw - 64px), calc(100vw - 40px)"
+  },
+  "size_1x1": {
+   "stem": "animals-spinosaurus-size-comparison-1x1",
+   "widths": [
+    1600
+   ],
+   "sizes": "(min-width: 1280px) 690px, (min-width: 960px) 54vw, (min-width: 600px) calc(100vw - 64px), calc(100vw - 40px)",
+   "person": "88.31% 57.31%"
+  },
+  "size_4x3": {
+   "stem": "animals-spinosaurus-size-comparison-4x3",
+   "widths": [
+    1600
+   ],
+   "sizes": "(min-width: 1280px) 690px, (min-width: 960px) 54vw, (min-width: 600px) calc(100vw - 64px), calc(100vw - 40px)",
+   "person": "91.81% 55.5%"
+  },
+  "size_16x9": {
+   "stem": "animals-spinosaurus-size-comparison-16x9",
+   "widths": [
+    800,
+    1600,
+    2400
+   ],
+   "sizes": "(min-width: 1280px) 690px, (min-width: 960px) 54vw, (min-width: 600px) calc(100vw - 64px), calc(100vw - 40px)",
+   "person": "89.81% 57.19%"
   }
  },
  "meta": {
@@ -632,7 +667,22 @@
      },
      ", credit: Museum of Ages. They show a reconstruction, built in code and rendered in our own engine, not a photograph. The pictures of the other pages listed here give their credits on those pages."
     ]
-   ]
+   ],
+   "shapes": {
+    "caption": "Spinosaurus size comparison: the largest adult, our model enlarged, about 13.1 m end to end in its pose, beside a person 1.70 m tall, to one scale.",
+    "lead": "For slides and posts, this size comparison comes in three shapes, all under the same licence.",
+    "alts": {
+     "size_1x1": "Spinosaurus size comparison: the front of the largest adult, our model enlarged, with its long snout, neck, sail and legs, and a grey person 1.70 m tall under its head.",
+     "size_4x3": "Spinosaurus beside a person, a size comparison: the largest adult, our model enlarged, whole from the side with its tall sail and long tail, and a grey person 1.70 m tall below its snout.",
+     "size_16x9": "Spinosaurus size comparison, the whole adult from the side: the largest adult, our model enlarged, about 13.1 m end to end, and a grey person 1.70 m tall under its head."
+    },
+    "links": {
+     "size_1x1": "Square (1:1)",
+     "size_4x3": "Slide (4:3)",
+     "size_16x9": "Wide (16:9)"
+    },
+    "draft": true
+   }
   }
  ]
 }

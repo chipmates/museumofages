@@ -12,6 +12,15 @@
    "width": 1200,
    "height": 630,
    "layout": "beside"
+  },
+  "shapes": {
+   "primary": "size_1x1",
+   "list": [
+    "size_1x1",
+    "size_4x3",
+    "size_16x9"
+   ],
+   "figure": "size_16x9"
   }
  },
  "pics": {
@@ -132,6 +141,32 @@
    ],
    "sizes": "(min-width: 1280px) 690px, (min-width: 960px) 54vw, (min-width: 600px) calc(100vw - 64px), calc(100vw - 40px)",
    "person": "93.5% 36.88%"
+  },
+  "size_1x1": {
+   "stem": "animals-triceratops-size-comparison-1x1",
+   "widths": [
+    1600
+   ],
+   "sizes": "(min-width: 1280px) 690px, (min-width: 960px) 54vw, (min-width: 600px) calc(100vw - 64px), calc(100vw - 40px)",
+   "person": "90.81% 45.19%"
+  },
+  "size_4x3": {
+   "stem": "animals-triceratops-size-comparison-4x3",
+   "widths": [
+    1600
+   ],
+   "sizes": "(min-width: 1280px) 690px, (min-width: 960px) 54vw, (min-width: 600px) calc(100vw - 64px), calc(100vw - 40px)",
+   "person": "90.84% 43.58%"
+  },
+  "size_16x9": {
+   "stem": "animals-triceratops-size-comparison-16x9",
+   "widths": [
+    800,
+    1600,
+    2400
+   ],
+   "sizes": "(min-width: 1280px) 690px, (min-width: 960px) 54vw, (min-width: 600px) calc(100vw - 64px), calc(100vw - 40px)",
+   "person": "88.9% 41.63%"
   }
  },
  "meta": {
@@ -640,7 +675,22 @@
      },
      ". Crédito: Museum of Ages, e também “Triceratops outline after Dempsey 2025 (CC BY 4.0)”. Elas mostram uma reconstrução, construída em código e renderizada com o nosso próprio motor gráfico, não fotografias. As imagens das outras páginas que aparecem aqui dão o crédito nessas páginas."
     ]
-   ]
+   ],
+   "shapes": {
+    "caption": "Comparação de tamanho do Triceratops: nosso Triceratops, 6,9 m do bico à cauda, ao lado de uma pessoa de 1,70 m, na mesma escala.",
+    "lead": "Para slides e publicações, esta comparação de tamanho vem em três formatos, todos com a mesma licença.",
+    "alts": {
+     "size_1x1": "Comparação de tamanho do Triceratops: nosso Triceratops inteiro de lado, com o babado e os chifres na frente, e uma pessoa cinza de 1,70 m diante dos chifres.",
+     "size_4x3": "O Triceratops ao lado de uma pessoa, em comparação de tamanho: nosso Triceratops de lado, com o babado largo e os chifres longos da testa, e uma pessoa cinza de 1,70 m diante da cabeça.",
+     "size_16x9": "Comparação de tamanho do Triceratops, o animal inteiro de lado: nosso Triceratops, 6,9 m do bico à cauda, e uma pessoa cinza de 1,70 m na frente dele."
+    },
+    "links": {
+     "size_1x1": "Quadrada (1:1)",
+     "size_4x3": "Slide (4:3)",
+     "size_16x9": "Panorâmica (16:9)"
+    },
+    "draft": true
+   }
   }
  ]
 }

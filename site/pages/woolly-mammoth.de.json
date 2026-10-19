@@ -12,6 +12,15 @@
    "width": 1200,
    "height": 630,
    "layout": "beside"
+  },
+  "shapes": {
+   "primary": "size_1x1",
+   "list": [
+    "size_1x1",
+    "size_4x3",
+    "size_16x9"
+   ],
+   "figure": "size_16x9"
   }
  },
  "pics": {
@@ -67,6 +76,32 @@
     2400
    ],
    "sizes": "(min-width: 1280px) 690px, (min-width: 960px) 54vw, (min-width: 600px) calc(100vw - 64px), calc(100vw - 40px)"
+  },
+  "size_1x1": {
+   "stem": "animals-woolly-mammoth-size-comparison-1x1",
+   "widths": [
+    1600
+   ],
+   "sizes": "(min-width: 1280px) 690px, (min-width: 960px) 54vw, (min-width: 600px) calc(100vw - 64px), calc(100vw - 40px)",
+   "person": "89.28% 44.75%"
+  },
+  "size_4x3": {
+   "stem": "animals-woolly-mammoth-size-comparison-4x3",
+   "widths": [
+    1600
+   ],
+   "sizes": "(min-width: 1280px) 690px, (min-width: 960px) 54vw, (min-width: 600px) calc(100vw - 64px), calc(100vw - 40px)",
+   "person": "89.28% 43%"
+  },
+  "size_16x9": {
+   "stem": "animals-woolly-mammoth-size-comparison-16x9",
+   "widths": [
+    800,
+    1600,
+    2400
+   ],
+   "sizes": "(min-width: 1280px) 690px, (min-width: 960px) 54vw, (min-width: 600px) calc(100vw - 64px), calc(100vw - 40px)",
+   "person": "84.29% 41.56%"
   }
  },
  "meta": {
@@ -531,7 +566,22 @@
      },
      ", Nachweis: Museum of Ages. Sie zeigen eine Rekonstruktion, in Code gebaut und in unserer Engine gerendert, kein Foto. Die Bilder der anderen Seiten, die hier aufgeführt sind, nennen ihren Nachweis auf der jeweiligen Seite."
     ]
-   ]
+   ],
+   "shapes": {
+    "caption": "Wollhaarmammut im Größenvergleich: unser Wollhaarmammut, nach dem Beresowka-Bullen gebaut, neben einem Menschen von 1,70 m, im selben Maßstab.",
+    "lead": "Für Folien und Beiträge gibt es diesen Größenvergleich in drei Formaten, alle unter derselben Lizenz.",
+    "alts": {
+     "size_1x1": "Wollhaarmammut im Größenvergleich: unser ganzes Mammut von der Seite mit gebogenen Stoßzähnen und Rüssel, vor den Stoßzähnen ein grauer Mensch von 1,70 m.",
+     "size_4x3": "Wollhaarmammut neben einem Menschen im Größenvergleich: unser Mammut im dunkelbraunen Fell, mit hoch gewölbtem Kopf und abfallendem Rücken, daneben ein grauer Mensch von 1,70 m.",
+     "size_16x9": "Wollhaarmammut im Größenvergleich, das ganze Tier von der Seite: unser Mammut, nach dem Beresowka-Bullen gebaut, und vor dem Rüssel ein grauer Mensch von 1,70 m."
+    },
+    "links": {
+     "size_1x1": "Quadrat (1:1)",
+     "size_4x3": "Folie (4:3)",
+     "size_16x9": "Breitbild (16:9)"
+    },
+    "draft": true
+   }
   }
  ]
 }

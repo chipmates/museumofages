@@ -12,6 +12,15 @@
    "width": 1200,
    "height": 630,
    "layout": "beside"
+  },
+  "shapes": {
+   "primary": "size_1x1",
+   "list": [
+    "size_1x1",
+    "size_4x3",
+    "size_16x9"
+   ],
+   "figure": "size_16x9"
   }
  },
  "pics": {
@@ -114,6 +123,32 @@
    ],
    "sizes": "(min-width: 1280px) 690px, (min-width: 960px) 54vw, (min-width: 600px) calc(100vw - 64px), calc(100vw - 40px)",
    "person": "93.5% 36.88%"
+  },
+  "size_1x1": {
+   "stem": "animals-t-rex-size-comparison-1x1",
+   "widths": [
+    1600
+   ],
+   "sizes": "(min-width: 1280px) 690px, (min-width: 960px) 54vw, (min-width: 600px) calc(100vw - 64px), calc(100vw - 40px)",
+   "person": "76.56% 58.81%"
+  },
+  "size_4x3": {
+   "stem": "animals-t-rex-size-comparison-4x3",
+   "widths": [
+    1600
+   ],
+   "sizes": "(min-width: 1280px) 690px, (min-width: 960px) 54vw, (min-width: 600px) calc(100vw - 64px), calc(100vw - 40px)",
+   "person": "87.06% 56.5%"
+  },
+  "size_16x9": {
+   "stem": "animals-t-rex-size-comparison-16x9",
+   "widths": [
+    800,
+    1600,
+    2400
+   ],
+   "sizes": "(min-width: 1280px) 690px, (min-width: 960px) 54vw, (min-width: 600px) calc(100vw - 64px), calc(100vw - 40px)",
+   "person": "87.04% 58.59%"
   }
  },
  "meta": {
@@ -565,7 +600,22 @@
      },
      ". Crédito: Museum of Ages. Elas mostram uma reconstrução, construída em código e renderizada com o nosso próprio motor gráfico, não uma fotografia. As imagens das outras páginas que aparecem aqui dão o crédito nessas páginas."
     ]
-   ]
+   ],
+   "shapes": {
+    "caption": "Comparação de tamanho do T. rex: nosso T. rex, com cerca de 11,4 m de comprimento nesta pose, ao lado de uma pessoa de 1,70 m, na mesma escala.",
+    "lead": "Para slides e publicações, esta comparação de tamanho vem em três formatos, todos com a mesma licença.",
+    "alts": {
+     "size_1x1": "Comparação de tamanho do T. rex: a frente do nosso T. rex, com a cabeça, o braço curto, o peito e as patas, e uma pessoa cinza de 1,70 m de pé embaixo da cabeça.",
+     "size_4x3": "O T. rex ao lado de uma pessoa, em comparação de tamanho: nosso T. rex inteiro de lado, de cabeça erguida e cauda esticada, e uma pessoa cinza de 1,70 m embaixo das mandíbulas.",
+     "size_16x9": "Comparação de tamanho do T. rex, o animal inteiro de lado: nosso T. rex, com cerca de 11,4 m de comprimento nesta pose, e uma pessoa cinza de 1,70 m embaixo da cabeça."
+    },
+    "links": {
+     "size_1x1": "Quadrada (1:1)",
+     "size_4x3": "Slide (4:3)",
+     "size_16x9": "Panorâmica (16:9)"
+    },
+    "draft": true
+   }
   }
  ]
 }
