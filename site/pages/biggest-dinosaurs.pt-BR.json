@@ -200,7 +200,7 @@
   "title": "Qual foi o maior dinossauro do mundo? | Museum of Ages",
   "description": "Qual foi o maior dinossauro do mundo? Provavelmente Argentinosaurus: cerca de 30 a 35 m e de 65 a 80 t, por modelos. Sete dinossauros e uma pessoa em escala.",
   "og_title": "Qual foi o maior dinossauro do mundo? Provavelmente o Argentinosaurus",
-  "og_image_alt": "Nossos sete dinossauros em fila, vistos de lado, na mesma escala. O mais longo, o nosso Argentinosaurus, tem cerca de 30,6 m. Dois pescoços longos se erguem bem acima dos outros, e uma pessoa cinza de 1,70 m parece minúscula perto deles."
+  "og_image_alt": "Os nossos sete dinossauros em fila, vistos de lado, na mesma escala. O mais longo, o nosso Argentinosaurus, tem cerca de 30,6 m. Dois pescoços longos se erguem bem acima dos outros, e uma pessoa cinza de 1,70 m parece minúscula perto deles."
  },
  "labels": {
   "crumbs": "Você está aqui",
@@ -220,8 +220,8 @@
   "scale": {
    "pic": "row",
    "tag": "tag_made",
-   "what": "Comparação de tamanho: nossos sete ao lado de uma pessoa de 1,70 m, na mesma escala, cada um do jeito que o nosso modelo foi construído. Nosso espinossauro é um animal jovem de cerca de 10 m, cerca de três quartos de um adulto, então aqui ele é mais curto que o nosso T. rex. Pelo modelo de 2022, o maior espinossauro adulto era mais longo que qualquer T. rex encontrado até hoje e, muito provavelmente, mais leve.",
-   "alt": "Comparação de tamanho: nossos sete dinossauros em fila, vistos de lado, na mesma escala. O mais longo, o nosso Argentinosaurus, tem cerca de 30,6 m. Dois pescoços longos se erguem bem acima dos outros, e uma pessoa cinza de 1,70 m parece minúscula perto deles.",
+   "what": "Comparação de tamanho: os nossos sete ao lado de uma pessoa de 1,70 m, na mesma escala, cada um do jeito que o nosso modelo foi construído. O nosso espinossauro é um animal jovem de cerca de 10 m, cerca de três quartos de um adulto, então aqui ele é mais curto que o nosso T. rex. Pelo modelo de 2022, o maior espinossauro adulto era mais longo que qualquer T. rex encontrado até hoje e, muito provavelmente, mais leve.",
+   "alt": "Comparação de tamanho: os nossos sete dinossauros em fila, vistos de lado, na mesma escala. O mais longo, o nosso Argentinosaurus, tem cerca de 30,6 m. Dois pescoços longos se erguem bem acima dos outros, e uma pessoa cinza de 1,70 m parece minúscula perto deles.",
    "note": [
     "Reconstruções do próprio museu, construídas em código a partir de medidas e desenhos publicados, e renderizadas com o nosso próprio motor gráfico. Não são fotografias. ",
     "O contorno do nosso Triceratops segue o modelo de corpo de ",
