@@ -20,7 +20,7 @@
     "size_4x3",
     "size_16x9"
    ],
-   "figure": "size_16x9"
+   "figure": "size_4x3"
   }
  },
  "pics": {
@@ -106,7 +106,7 @@
  },
  "meta": {
   "title": "Woolly mammoth size: 2.7 to 3.3 m tall | Museum of Ages",
-  "description": "Woolly mammoth size: a Siberian bull stood about 2.7 to 2.9 m (9 ft) at the shoulder and weighed about 4 to 5 tonnes. Ours is one real bull, to scale.",
+  "description": "Woolly mammoth size: a Siberian bull stood about 2.7 to 2.9 m (9 ft) at the shoulder and weighed about 4 to 5 t. Ours is built after one real bull, to scale.",
   "og_title": "Woolly mammoth size: about 2.7 to 3.3 m tall",
   "og_image_alt": "Our woolly mammoth, the Berezovka bull, from the side in a dark brown coat: high domed head, sloping back, two curved tusks, and a mark at his shoulder height, 271 cm (8.9 ft) by a reconstruction. The grey person beside him, 1.70 m tall, stands lower than the tusk tips."
  },
@@ -124,8 +124,7 @@
  },
  "top": {
   "h1": "How big was the woolly mammoth?",
-  "answer": "A full-grown Siberian woolly mammoth bull stood about 2.7 to 2.9 m (9 ft) at the shoulder and weighed about 4 to 5 tonnes. Bigger European bulls reached about 3 to 3.3 m (10 to 11 ft) and about 5 to 7 tonnes. Ours is one real Siberian bull found frozen in 1900: 2.71 m (8.9 ft) at the shoulder, about 4.2 tonnes, reconstructed from his bones. Beside the person of 1.70 m, his shoulder is about one and a half people high.",
-  "answer_more": "A Siberian mammoth bull was about as tall as an Asian elephant bull, and a little heavier for his height. A big African bush elephant bull stands about half a metre taller and weighs more.",
+  "answer": "A full-grown Siberian woolly mammoth bull stood about 2.7 to 2.9 m (9 ft) at the shoulder and weighed about 4 to 5 tonnes. Bigger European bulls reached about 3 to 3.3 m (10 to 11 ft) and about 5 to 7 tonnes. Ours is built after one real Siberian bull found frozen in 1900: 2.71 m (8.9 ft) at the shoulder, about 4.2 tonnes, reconstructed from his bones. Beside the person of 1.70 m, his shoulder is about one and a half people high.",
   "scale": {
    "pic": "side",
    "tag": "tag_made",
@@ -440,6 +439,10 @@
    "h": "More questions",
    "items": [
     {
+     "q": "Are woolly mammoths alive today?",
+     "a": "No. The last known woolly mammoths lived on Wrangel Island, in the Arctic Ocean off Siberia, until about 4,000 years ago."
+    },
+    {
      "q": "Are there other frozen mammoths?",
      "a": "Yes. The museum in St Petersburg names several more. Among them: the Adams mammoth of 1799, the first full skeleton science had, and the Taymyr mammoth of 1948 with muscle, skin and hair. Frozen bodies are why the trunk, ears and coat of this species are known at all."
     },
@@ -568,19 +571,18 @@
     ]
    ],
    "shapes": {
-    "caption": "Woolly mammoth size comparison: our woolly mammoth, built to the Berezovka bull, beside a person 1.70 m tall, to one scale.",
+    "caption": "Woolly mammoth size comparison, the whole animal: our woolly mammoth, built after the Berezovka bull, 2.71 m (8.9 ft) at the shoulder, beside a person 1.70 m tall, to one scale.",
     "lead": "For slides and posts, this size comparison comes in three shapes, all under the same licence.",
     "alts": {
      "size_1x1": "Woolly mammoth size comparison: our whole woolly mammoth from the side, its curved tusks and trunk, and a grey person 1.70 m tall in front of the tusks.",
-     "size_4x3": "Woolly mammoth beside a person, a size comparison: our mammoth in its dark brown coat, high domed head and sloping back, and a grey person 1.70 m tall beside it.",
-     "size_16x9": "Woolly mammoth size comparison, the whole animal from the side: our woolly mammoth, built to the Berezovka bull, and a grey person 1.70 m tall in front of the trunk."
+     "size_4x3": "Woolly mammoth beside a person, a size comparison: our mammoth in its dark brown coat, with its high domed head and sloping back, and a grey person 1.70 m tall in front of the trunk.",
+     "size_16x9": "Woolly mammoth size comparison, the whole animal from the side: our woolly mammoth, built after the Berezovka bull, and a grey person 1.70 m tall whose head stays below its shoulder."
     },
     "links": {
      "size_1x1": "Square (1:1)",
      "size_4x3": "Slide (4:3)",
      "size_16x9": "Wide (16:9)"
-    },
-    "draft": true
+    }
    }
   }
  ]

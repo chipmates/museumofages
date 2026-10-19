@@ -23,7 +23,7 @@
     "size_4x3",
     "size_16x9"
    ],
-   "figure": "size_16x9"
+   "figure": "size_4x3"
   }
  },
  "pics": {
@@ -191,7 +191,7 @@
  },
  "top": {
   "h1": "How big was Stegosaurus?",
-  "answer": "The largest Stegosaurus were about 9 m (30 ft) long, a round figure of London's Natural History Museum, with no skeleton named. Sophie, the famous skeleton in that museum, is about 5.6 m (18 ft) long, from a young animal that was still growing. A 3D model of the skeleton gives about 1.6 tonnes (1.1 to 2.3), and no height of a living Stegosaurus has been published. Ours, built after Sophie, is 5.6 m (18 ft) long, its back 1.9 m (6.4 ft) high over the hips, above a person's head.",
+  "answer": "The largest Stegosaurus were about 9 m (30 ft) long, a round figure from London's Natural History Museum that names no skeleton. Sophie, the famous skeleton in that museum, is about 5.6 m (18 ft) long, from a young animal that was still growing. A 3D model of the skeleton gives about 1.6 tonnes (1.1 to 2.3), and no height of a living Stegosaurus has been published. Ours, built after Sophie, is 5.6 m (18 ft) long, its back 1.9 m (6.4 ft) high over the hips, above a person's head.",
   "answer_more": "Along its back stood two rows of tall bony plates, left and right in turn, never in pairs. Its tail ended in four spikes that pointed out to the sides, not up.",
   "scale": {
    "pic": "side",
@@ -295,7 +295,7 @@
     {
      "cells": [
       "T. rex, SUE",
-      "about 12 m (39 ft), the mount, ours 11.4 m (37 ft)",
+      "about 12 m (39 ft), the mount, ours about 11 m (36 ft) in its pose",
       "at the hip about 4 m (13 ft), by the museum",
       "about 8 to 9 t, by a bone and three models",
       "as on our T. rex page"
@@ -415,13 +415,13 @@
    "h": "Stegosaurus vs T. rex and Triceratops",
    "paras": [
     "Stegosaurus never met T. rex or Triceratops. About 80 million years lay between the last Stegosaurus and the first T. rex or Triceratops, at least about 75. That is more than the 66 million years between the last T. rex and us, so T. rex is nearer to us in time than to Stegosaurus. Films that show them meeting are fiction. Stegosaurus's own neighbours included the long-necked Diplodocus and the meat-eater Allosaurus.",
-    "In the picture, our T. rex is twice as long as our Stegosaurus, whose tallest plate tip stands about as high as our Triceratops's back."
+    "In the picture, our T. rex is almost twice as long as our Stegosaurus, whose tallest plate tip stands about as high as our Triceratops's back."
    ],
    "scale": {
     "pic": "vs",
     "tag": "tag_made",
     "what": "Our Stegosaurus, Triceratops and T. rex to one scale, facing the same way, for size only. About 80 million years lay between Stegosaurus and the other two: the three never met.",
-    "alt": "Three dinosaurs in three rows, all from the side and facing the same way, each beside the grey person: a Stegosaurus with plates and tail spikes, a Triceratops with horns and a frill, and a T. rex on two legs, twice as long as the Stegosaurus.",
+    "alt": "Three dinosaurs in three rows, all from the side and facing the same way, each beside the grey person: a Stegosaurus with plates and tail spikes, a Triceratops with horns and a frill, and a T. rex on two legs, almost twice as long as the Stegosaurus.",
     "note": [
      "The outline of our Triceratops follows the body model of ",
      {
@@ -446,7 +446,7 @@
      },
      {
       "span": "t-rex",
-      "text": "Our T. rex, after SUE, about 11.4 m"
+      "text": "Our T. rex, after SUE, about 11 m"
      },
      {
       "span": "person",
@@ -535,6 +535,10 @@
     {
      "q": "How heavy was Stegosaurus?",
      "a": "By a 3D model of the skeleton, Sophie, a young animal, comes to about 1.6 tonnes (1.1 to 2.3), a small rhino's weight, says the London museum. Leg-bone rules give more, since a young animal's legs are thick for its weight. For the biggest Stegosaurus, no study we read gives a weight. Popular dinosaur books give a grown Stegosaurus stenops about 6.5 m (21 ft) and 3.5 tonnes, and the largest up to about 5 tonnes. Those are book estimates for full-grown animals, while Sophie's 1.6 tonnes comes from a model of a young one."
+    },
+    {
+     "q": "How tall was Stegosaurus?",
+     "a": "No height of a living Stegosaurus has been published, and Sophie's mount in London stands 2.9 m (9.5 ft) at its highest point, with the tail raised. Ours, built after Sophie, is 1.9 m (6.4 ft) at the top of the back over the hips, and its tallest plate tip is 2.5 m (8.2 ft) up, well above the person's head."
     },
     {
      "q": "What does the name Stegosaurus mean?",
@@ -684,7 +688,7 @@
    "h": "Use our pictures",
    "paras": [
     [
-     "The four pictures of the Stegosaurus on this page, the side view, the plates and spikes, the skeleton and the three with our Triceratops and our T. rex, are our own work under ",
+     "The five pictures of the Stegosaurus on this page, the side view, the plates and spikes, the skeleton, the three with our Triceratops and our T. rex, and the size comparison below in three shapes, are our own work under ",
      {
       "text": "CC BY-SA 4.0",
       "href": "https://creativecommons.org/licenses/by-sa/4.0/"
@@ -693,19 +697,18 @@
     ]
    ],
    "shapes": {
-    "caption": "Stegosaurus size comparison: our Stegosaurus, 5.6 m (18 ft) from beak to tail tip, beside a person 1.70 m tall, to one scale.",
+    "caption": "Stegosaurus size comparison, the whole animal: our Stegosaurus, 5.6 m (18 ft) from beak to tail tip, beside a person 1.70 m tall, to one scale.",
     "lead": "For slides and posts, this size comparison comes in three shapes, all under the same licence.",
     "alts": {
-     "size_1x1": "Stegosaurus size comparison: our whole Stegosaurus from the side, tall plates along its back, and a grey person 1.70 m tall in front of its head.",
-     "size_4x3": "Stegosaurus beside a person, a size comparison: our Stegosaurus with its two rows of plates and its tail spikes, and a grey person 1.70 m tall facing its small head.",
+     "size_1x1": "Stegosaurus size comparison: our whole Stegosaurus from the side, tall plates along its arched back, and a grey person 1.70 m tall in front of its head.",
+     "size_4x3": "Stegosaurus beside a person, a size comparison: our Stegosaurus with its two rows of plates and the spikes at the end of its tail, and a grey person 1.70 m tall in front of its small head.",
      "size_16x9": "Stegosaurus size comparison, the whole animal from the side: our Stegosaurus, 5.6 m (18 ft) from beak to tail tip, and a grey person 1.70 m tall in front of it."
     },
     "links": {
      "size_1x1": "Square (1:1)",
      "size_4x3": "Slide (4:3)",
      "size_16x9": "Wide (16:9)"
-    },
-    "draft": true
+    }
    }
   }
  ]

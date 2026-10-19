@@ -25,7 +25,7 @@
     "size_4x3",
     "size_16x9"
    ],
-   "figure": "size_16x9"
+   "figure": "size_4x3"
   }
  },
  "pics": {
@@ -191,8 +191,8 @@
   "scale": {
    "pic": "side",
    "tag": "tag_made",
-   "what": "Unser Ankylosaurus neben einem Menschen von 1,70 m, im selben Maßstab: 6,4 m vom Schnabel bis zur Keule. Seine Schultern reichen dem Menschen etwa bis zum Kinn, und sein Körper ist fast so breit, wie der Mensch groß ist.",
-   "alt": "Unser Ankylosaurus von der Seite, 6,4 m vom Schnabel bis zur Keule, der Rücken über der Hüfte 1,7 m hoch: ein flacher, breiter Körper unter Reihen von Knochenplatten, ein breiter, tief getragener Kopf, vier kurze Beine und ein gerader Schwanz mit einer flachen Keule am Ende. Daneben ein grauer Mensch von 1,70 m, so groß, wie der Rücken hoch ist.",
+   "what": "Größenvergleich: unser Ankylosaurus neben einem Menschen von 1,70 m, im selben Maßstab, 6,4 m vom Schnabel bis zur Keule. Seine Schultern reichen dem Menschen etwa bis zum Kinn, und sein Körper ist fast so breit, wie der Mensch groß ist.",
+   "alt": "Größenvergleich: unser Ankylosaurus von der Seite, 6,4 m vom Schnabel bis zur Keule, der Rücken über der Hüfte 1,7 m hoch: ein flacher, breiter Körper unter Reihen von Knochenplatten, ein breiter, tief getragener Kopf, vier kurze Beine und ein gerader Schwanz mit einer flachen Keule am Ende. Daneben ein grauer Mensch von 1,70 m, so groß, wie der Rücken hoch ist.",
    "note": [
     "Unsere eigene Rekonstruktion, nach veröffentlichten Maßen in Code gebaut und in unserer Engine gerendert. Keine Fotos. ",
     "Der Panzer unseres Ankylosaurus folgt dem Plan von ",
@@ -422,7 +422,7 @@
    "h": "Ankylosaurus und T. rex",
    "paras": [
     "Ankylosaurus und T. rex lebten zur selben Zeit im selben Land, und ihre Knochen liegen in denselben Gesteinen. Doch kein bekannter Fund zeigt, dass die beiden sich begegnet sind: kein Biss eines T. rex an einem Knochen des Ankylosaurus, keine Keulenwunde an einem T. rex. Wer gewonnen hätte, darauf geben die Gesteine keine Antwort.",
-    "Was sich sagen lässt: Ein großer T. rex war etwa doppelt so schwer, mit etwa 8 bis 9 t gegenüber etwa 4,8 t beim Tier, nach dem unser Modell gebaut ist. Der Ankylosaurus trug Platten und konnte eine Keule schwingen, doch seine Verwandten setzten ihre Keulen wohl vor allem gegeneinander ein.",
+    "Was sich sagen lässt: Ein großer T. rex war etwa doppelt so schwer, mit etwa 8 bis 9 t gegenüber etwa 4,8 t beim kleinsten bekannten Ankylosaurus, nach dem unser Modell gebaut ist. Der Ankylosaurus trug Platten und konnte eine Keule schwingen, doch seine Verwandten setzten ihre Keulen wohl vor allem gegeneinander ein.",
     "In unserem Bild bleibt der höchste Punkt unseres Ankylosaurus unter dem Knie unseres T. rex."
    ],
    "scale": {
@@ -433,7 +433,7 @@
     "marks": [
      {
       "span": "t-rex",
-      "text": "Unser T. rex, nach SUE, etwa 11,4 m"
+      "text": "Unser T. rex, nach SUE, etwa 11 m"
      },
      {
       "span": "ankylosaurus",
@@ -550,7 +550,7 @@
    "items": [
     {
      "q": "Wie schwer war ein Ankylosaurus?",
-     "a": "Das Tier, nach dem unser Modell gebaut ist, kommt nach seinen Beinknochen auf etwa 4,8 t. Die Spanne der Studie selbst reicht von 3,6 bis 6 t."
+     "a": "Das Tier, nach dem unser Modell gebaut ist, kommt nach seinen Beinknochen auf etwa 4,8 t, und es ist der kleinste bekannte Ankylosaurus. Die Spanne der Studie selbst reicht von 3,6 bis 6 t."
     },
     {
      "q": "Was bedeutet der Name Ankylosaurus?",
@@ -668,7 +668,7 @@
    "h": "Unsere Bilder nutzen",
    "paras": [
     [
-     "Die vier Bilder des Ankylosaurus auf dieser Seite, die Seitenansicht, die Keule, das Skelett und die Reihe mit unserem T. rex und unserem Stegosaurus, sind unsere eigene Arbeit unter ",
+     "Die fünf Bilder des Ankylosaurus auf dieser Seite, die Seitenansicht, die Keule, das Skelett, die Reihe mit unserem T. rex und unserem Stegosaurus und der Größenvergleich unten in drei Formaten, sind unsere eigene Arbeit unter ",
      {
       "text": "CC BY-SA 4.0",
       "href": "https://creativecommons.org/licenses/by-sa/4.0/deed.de"
@@ -677,19 +677,18 @@
     ]
    ],
    "shapes": {
-    "caption": "Ankylosaurus im Größenvergleich: unser Ankylosaurus, 6,4 m vom Schnabel bis zur Keule, neben einem Menschen von 1,70 m, im selben Maßstab.",
+    "caption": "Ankylosaurus im Größenvergleich, das ganze Tier: unser Ankylosaurus, 6,4 m vom Schnabel bis zur Keule, neben einem Menschen von 1,70 m, im selben Maßstab.",
     "lead": "Für Folien und Beiträge gibt es diesen Größenvergleich in drei Formaten, alle unter derselben Lizenz.",
     "alts": {
-     "size_1x1": "Ankylosaurus im Größenvergleich: der vordere Teil unseres Ankylosaurus mit gepanzertem Rücken, Kopf und Vorderbeinen, vor seinem Kopf ein grauer Mensch von 1,70 m.",
-     "size_4x3": "Ankylosaurus neben einem Menschen im Größenvergleich: unser flacher, breiter Ankylosaurus unter Reihen von Knochenplatten, vor dem breiten Kopf ein grauer Mensch von 1,70 m.",
+     "size_1x1": "Ankylosaurus im Größenvergleich, der Körper: unser Ankylosaurus ohne den Großteil seines Schwanzes, mit gepanzertem Rücken, breitem Kopf und vier kurzen Beinen, vor seinem Kopf ein grauer Mensch von 1,70 m.",
+     "size_4x3": "Ankylosaurus neben einem Menschen im Größenvergleich: unser ganzer Ankylosaurus, flach und breit unter Reihen von Knochenplatten, der lange Schwanz mit der Keule am Ende, vor seinem Kopf ein grauer Mensch von 1,70 m.",
      "size_16x9": "Ankylosaurus im Größenvergleich, das ganze Tier von der Seite: unser Ankylosaurus, 6,4 m vom Schnabel bis zur Keule, und davor ein grauer Mensch von 1,70 m."
     },
     "links": {
      "size_1x1": "Quadrat (1:1)",
      "size_4x3": "Folie (4:3)",
      "size_16x9": "Breitbild (16:9)"
-    },
-    "draft": true
+    }
    }
   }
  ]

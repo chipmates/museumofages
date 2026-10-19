@@ -20,7 +20,7 @@
     "size_4x3",
     "size_16x9"
    ],
-   "figure": "size_16x9"
+   "figure": "size_4x3"
   }
  },
  "pics": {
@@ -106,7 +106,7 @@
  },
  "meta": {
   "title": "Mamut lanudo: tamaño de 2,7 a 3,3 m de alto | Museum of Ages",
-  "description": "¿Cuánto medía el mamut lanudo? Un macho de Siberia, unos 2,7 a 2,9 m a la altura del hombro y unas 4 a 5 t. El nuestro es un macho real, a escala.",
+  "description": "¿Cuánto medía el mamut lanudo? Un macho de Siberia, unos 2,7 a 2,9 m a la altura del hombro y unas 4 a 5 t. El nuestro está hecho según un macho real.",
   "og_title": "Mamut lanudo: tamaño de unos 2,7 a 3,3 m de alto",
   "og_image_alt": "Nuestro mamut lanudo, el macho de Berezovka, de lado, con pelaje marrón oscuro: la cabeza alta y abombada, el lomo en pendiente, dos colmillos curvos y una marca a la altura del hombro, a 271 cm según una reconstrucción. La persona gris de al lado, de 1,70 m, queda más baja que las puntas de los colmillos."
  },
@@ -124,13 +124,12 @@
  },
  "top": {
   "h1": "¿Cuánto medía el mamut lanudo?",
-  "answer": "Un macho adulto de mamut lanudo de Siberia medía unos 2,7 a 2,9 m a la altura del hombro y pesaba unas 4 a 5 toneladas. Los machos más grandes de Europa llegaban a unos 3 a 3,3 m y a unas 5 a 7 toneladas. El nuestro es un solo macho siberiano real, encontrado congelado en 1900: 2,71 m a la altura del hombro y unas 4,2 toneladas, reconstruidos a partir de sus huesos. Junto a la persona de 1,70 m, su hombro queda más o menos a la altura de una persona y media.",
-  "answer_more": "Un macho de mamut de Siberia era más o menos igual de alto que un macho de elefante asiático, y un poco más pesado para su altura. Un macho grande de elefante africano de sabana es más o menos medio metro más alto y pesa más.",
+  "answer": "Un macho adulto de mamut lanudo de Siberia medía unos 2,7 a 2,9 m a la altura del hombro y pesaba unas 4 a 5 toneladas. Los machos más grandes de Europa llegaban a unos 3 a 3,3 m y a unas 5 a 7 toneladas. El nuestro está hecho según un solo macho siberiano real, encontrado congelado en 1900: 2,71 m a la altura del hombro y unas 4,2 toneladas, reconstruidos a partir de sus huesos. Junto a la persona de 1,70 m, su hombro queda más o menos a la altura de una persona y media.",
   "scale": {
    "pic": "side",
    "tag": "tag_made",
-   "what": "Nuestro mamut lanudo junto a una persona de 1,70 m, a la misma escala. Está hecho con el tamaño y el armazón de un solo animal real, el macho de Berezovka, encontrado congelado en 1900 en el noreste de Siberia. La marca en su hombro es su propia altura en vida, 271 cm, reconstruida a partir de sus huesos. Cuando murió le quedaba un solo colmillo, el izquierdo. El derecho se le había caído mucho antes, y los cazadores que lo encontraron cortaron el izquierdo y lo vendieron. El nuestro lleva los dos: el derecho es el reflejo del izquierdo, una reconstrucción.",
-   "alt": "Nuestro mamut lanudo, el macho de Berezovka, de lado, con pelaje marrón oscuro: la cabeza alta y abombada, el lomo en pendiente, dos colmillos curvos y una marca a la altura del hombro, a 271 cm según una reconstrucción. La persona gris de al lado, de 1,70 m, queda más baja que las puntas de los colmillos.",
+   "what": "Comparación de tamaño: nuestro mamut lanudo junto a una persona de 1,70 m, a la misma escala. Está hecho con el tamaño y el armazón de un solo animal real, el macho de Berezovka, encontrado congelado en 1900 en el noreste de Siberia. La marca en su hombro es su propia altura en vida, 271 cm, reconstruida a partir de sus huesos. Cuando murió le quedaba un solo colmillo, el izquierdo. El derecho se le había caído mucho antes, y los cazadores que lo encontraron cortaron el izquierdo y lo vendieron. El nuestro lleva los dos: el derecho es el reflejo del izquierdo, una reconstrucción.",
+   "alt": "Comparación de tamaño: nuestro mamut lanudo, el macho de Berezovka, de lado, con pelaje marrón oscuro: la cabeza alta y abombada, el lomo en pendiente, dos colmillos curvos y una marca a la altura del hombro, a 271 cm según una reconstrucción. La persona gris de al lado, de 1,70 m, queda más baja que las puntas de los colmillos.",
    "note": "Nuestra propia reconstrucción, construida en código a partir de medidas publicadas y renderizada con nuestro propio motor gráfico. No son fotografías.",
    "marks": [
     {
@@ -440,6 +439,10 @@
    "h": "Más preguntas",
    "items": [
     {
+     "q": "¿Existen todavía los mamuts lanudos?",
+     "a": "No. Los últimos mamuts lanudos que se conocen vivieron en la isla de Wrangel, en el océano Ártico, frente a Siberia, hasta hace unos 4000 años."
+    },
+    {
      "q": "¿Hay otros mamuts congelados?",
      "a": "Sí. El museo de San Petersburgo nombra varios más. Entre ellos, el mamut de Adams, de 1799, el primer esqueleto completo que tuvo la ciencia, y el mamut de Taimyr, de 1948, con músculo, piel y pelo. Gracias a los cuerpos congelados se conocen la trompa, las orejas y el pelaje de esta especie."
     },
@@ -568,19 +571,18 @@
     ]
    ],
    "shapes": {
-    "caption": "Comparación de tamaño del mamut lanudo: nuestro mamut lanudo, construido según el macho de Berezovka, junto a una persona de 1,70 m, a la misma escala.",
+    "caption": "Comparación de tamaño del mamut lanudo, el animal entero: nuestro mamut lanudo, hecho según el macho de Berezovka, de 2,71 m a la altura del hombro, junto a una persona de 1,70 m, a la misma escala.",
     "lead": "Para presentaciones y publicaciones, esta comparación de tamaño está en tres formatos, todos con la misma licencia.",
     "alts": {
-     "size_1x1": "Comparación de tamaño del mamut lanudo: nuestro mamut entero de lado, con los colmillos curvos y la trompa, y una persona gris de 1,70 m frente a los colmillos.",
-     "size_4x3": "El mamut lanudo junto a una persona, en comparación de tamaño: nuestro mamut con su pelaje marrón oscuro, la cabeza alta y abombada y el lomo en pendiente, y a su lado una persona gris de 1,70 m.",
-     "size_16x9": "Comparación de tamaño del mamut lanudo, el animal entero de lado: nuestro mamut, construido según el macho de Berezovka, y una persona gris de 1,70 m delante de la trompa."
+     "size_1x1": "Comparación de tamaño del mamut lanudo: nuestro mamut lanudo entero, de lado, con los colmillos curvos y la trompa, y una persona gris de 1,70 m delante de los colmillos.",
+     "size_4x3": "El mamut lanudo junto a una persona, en comparación de tamaño: nuestro mamut lanudo con su pelaje marrón oscuro, la cabeza alta y abombada y el lomo en pendiente, y una persona gris de 1,70 m delante de la trompa.",
+     "size_16x9": "Comparación de tamaño del mamut lanudo, el animal entero de lado: nuestro mamut lanudo, hecho según el macho de Berezovka, y una persona gris de 1,70 m cuya cabeza queda por debajo de su hombro."
     },
     "links": {
      "size_1x1": "Cuadrada (1:1)",
      "size_4x3": "Diapositiva (4:3)",
      "size_16x9": "Panorámica (16:9)"
-    },
-    "draft": true
+    }
    }
   }
  ]
