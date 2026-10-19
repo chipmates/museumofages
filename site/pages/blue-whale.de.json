@@ -689,7 +689,22 @@
      },
      "). Sie zeigen eine Rekonstruktion, in Code gebaut und in unserer Engine gerendert, keine Fotos. Die Bilder der anderen Seiten, die hier aufgeführt sind, nennen ihren Nachweis auf der jeweiligen Seite."
     ]
-   ]
+   ],
+   "shapes": {
+    "draft": true,
+    "caption": "Blauwal im Größenvergleich: unser Blauwal, 22,86 m lang, neben einem Menschen von 1,70 m, im selben Maßstab.",
+    "lead": "Für Folien und Beiträge gibt es den Größenvergleich auch in drei Formaten, unter derselben Lizenz.",
+    "alts": {
+     "size_1x1": "Blauwal im Größenvergleich: Kopf und Brustflosse unseres Blauwals neben einem grauen Menschen von 1,70 m.",
+     "size_4x3": "Blauwal im Größenvergleich: die vordere Hälfte unseres Blauwals neben einem grauen Menschen von 1,70 m.",
+     "size_16x9": "Blauwal im Größenvergleich: unser ganzer Blauwal von der Seite, 22,86 m lang, neben einem grauen Menschen von 1,70 m."
+    },
+    "links": {
+     "size_1x1": "Quadratisch (1:1)",
+     "size_4x3": "Folie (4:3)",
+     "size_16x9": "Breit (16:9)"
+    }
+   }
   }
  ]
 }

@@ -477,6 +477,17 @@
   {{html.above}}<div class="hang">{{html.picture}}{{html.person}}</div>{{html.below}}
   <figcaption class="label sc-label"><span class="label__what"><span class="tag">{{tag}}<span class="vh">:</span></span> {{what}}</span>{{html.note}}{{html.key}}{{html.totable}}</figcaption>
 </figure>
+<!--@ shape_fig -->
+<!-- The size comparison in the shape search shows wide, whole, at one scale beside the person. -->
+<figure class="plate sc-fig" data-slot="shape">
+  <div class="hang">{{html.picture}}{{html.person}}</div>
+  <figcaption class="label sc-label"><span class="label__what">{{html.tag}}{{caption}}</span>{{html.totable}}</figcaption>
+</figure>
+<!--@ shape_links -->
+<p class="sp-does">{{lead}}</p>
+{{html.links}}
+<!--@ shape_link -->
+<p class="sp-more"><a class="more" href="{{href}}"><span>{{text}}</span>{{svg.arrow}}</a></p>
 <!--@ scale_key -->
 <span class="label__src sc-key">{{text}}</span>
 <!--@ scale_keys -->

@@ -686,7 +686,22 @@
      },
      "). Elas mostram uma reconstrução, construída em código e renderizada com o nosso próprio motor gráfico, não fotografias. As imagens das outras páginas que aparecem aqui dão o crédito nessas páginas."
     ]
-   ]
+   ],
+   "shapes": {
+    "draft": true,
+    "caption": "Comparação de tamanho da baleia-azul: a nossa baleia-azul, com 22,86 m de comprimento, ao lado de uma pessoa de 1,70 m, na mesma escala.",
+    "lead": "Para slides e publicações, a comparação de tamanho também vem em três formatos, com a mesma licença.",
+    "alts": {
+     "size_1x1": "Comparação de tamanho da baleia-azul: a cabeça e a nadadeira peitoral da nossa baleia-azul ao lado de uma pessoa cinza de 1,70 m.",
+     "size_4x3": "Comparação de tamanho da baleia-azul: a metade da frente da nossa baleia-azul ao lado de uma pessoa cinza de 1,70 m.",
+     "size_16x9": "Comparação de tamanho da baleia-azul: a nossa baleia-azul inteira de lado, com 22,86 m de comprimento, ao lado de uma pessoa cinza de 1,70 m."
+    },
+    "links": {
+     "size_1x1": "Quadrada (1:1)",
+     "size_4x3": "Slide (4:3)",
+     "size_16x9": "Panorâmica (16:9)"
+    }
+   }
   }
  ]
 }

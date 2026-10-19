@@ -2076,6 +2076,10 @@
       [
         "enter the (?:museum|wing)|walk in\\b|ins museum|den flügel betreten|\\bbetritt\\b|geh(?:e|st)? hinein",
         "the wing has no way in yet: a plain link leads to an open wing"
+      ],
+      [
+        "\\bcheap|\\btoys?\\b|\\bold games?\\b|\\bbillig|spielzeug|\\balte[sn]? spiele?n?\\b|\\bbarat[oa]s?\\b|\\bjuguetes?\\b|\\bbrinquedos?\\b",
+        "the museum's taste: never cheap, a toy or an old game, in any language"
       ]
     ],
     "claim_phrase": "biggest ever|largest ever|größte[rns]? aller zeiten"

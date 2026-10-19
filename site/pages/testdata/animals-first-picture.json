@@ -1,0 +1,366 @@
+{
+ "_note": "Frozen from a build of main 1e93bfb4 (19 Oct 2026) by the generator seat's freeze.py; never rewritten. test_animals_seo.py holds every later build to it.",
+ "base": "1e93bfb4",
+ "pages": {
+  "https://museumofages.org/animals/ankylosaurus/": {
+   "page": "animals-ankylosaurus",
+   "src": "https://museumofages.org/static/img/animals-ankylosaurus-side-2400.webp",
+   "alt": "Our Ankylosaurus from the side, 6.4 m (21 ft) from beak to club, its back 1.7 m (5.6 ft) high over the hips: a low, wide body under rows of bony plates, a broad head carried low, four short legs and a straight tail ending in a flat club. Beside it a grey person 1.70 m tall, as tall as the top of its back.",
+   "fetchpriority": "high",
+   "width": 2400,
+   "height": 723,
+   "preload_names_it": true
+  },
+  "https://museumofages.org/animals/biggest-dinosaurs/": {
+   "page": "animals-biggest-dinosaurs",
+   "src": "https://museumofages.org/static/img/animals-biggest-dinosaurs-row-1600.webp",
+   "alt": "Our seven dinosaurs in a row from the side, to one scale. The longest, our Argentinosaurus, is about 30.6 m (100 ft) long. Two long necks tower over the rest, and a grey person 1.70 m tall looks tiny beside them.",
+   "fetchpriority": "high",
+   "width": 1600,
+   "height": 415,
+   "preload_names_it": true
+  },
+  "https://museumofages.org/animals/blue-whale/": {
+   "page": "animals-blue-whale",
+   "src": "https://museumofages.org/static/img/animals-blue-whale-side-2400.webp",
+   "alt": "Our blue whale from the side, 22.86 m (75 ft) long: a slim blue-grey body with pale mottling, a flat head, a long, pale-edged flipper and a small back fin far back. Beside it a grey person 1.70 m tall who reaches a little past halfway up its side.",
+   "fetchpriority": "high",
+   "width": 2400,
+   "height": 353,
+   "preload_names_it": true
+  },
+  "https://museumofages.org/animals/brachiosaurus/": {
+   "page": "animals-brachiosaurus",
+   "src": "https://museumofages.org/static/img/animals-brachiosaurus-side-2400.webp",
+   "alt": "Our Brachiosaurus from the side, built at the Chicago skeleton's size, 24.0 m (79 ft) along the backbone, its long neck raised in a gentle curve to a head top 11.5 m (38 ft) up, the neck angle our choice. The front legs are longer than the hind legs, the tail is off the ground, and a grey person 1.70 m tall could walk under its belly.",
+   "fetchpriority": "high",
+   "width": 2400,
+   "height": 1319,
+   "preload_names_it": true
+  },
+  "https://museumofages.org/animals/megalodon/": {
+   "page": "animals-megalodon",
+   "src": "https://museumofages.org/static/img/animals-megalodon-side-2400.webp",
+   "alt": "Our megalodon from the side, about 16 m (52 ft) long, mouth closed, dark grey with a paler band along the flank, beside a grey person 1.70 m tall who looks tiny next to it.",
+   "fetchpriority": "high",
+   "width": 2400,
+   "height": 600,
+   "preload_names_it": true
+  },
+  "https://museumofages.org/animals/spinosaurus/": {
+   "page": "animals-spinosaurus",
+   "src": "https://museumofages.org/static/img/animals-spinosaurus-side-2400.webp",
+   "alt": "The largest adult Spinosaurus from the side, just under 14 m (46 ft) by a model, with a tall sail and a deep tail. In front of it our young one of about 10 m (33 ft) as a flat grey shape, and a grey person 1.70 m tall who reaches the young one's hip.",
+   "fetchpriority": "high",
+   "width": 2400,
+   "height": 858,
+   "preload_names_it": true
+  },
+  "https://museumofages.org/animals/stegosaurus/": {
+   "page": "animals-stegosaurus",
+   "src": "https://museumofages.org/static/img/animals-stegosaurus-side-2400.webp",
+   "alt": "Our Stegosaurus from the side, 5.6 m (18 ft) from beak to tail tip, its back 1.9 m (6.4 ft) high over the hips: a small low head, two rows of tall plates along the arched back, two of its four tail spikes, the front legs shorter than the hind legs. Beside it a grey person 1.70 m tall whose head stays below the top of its back.",
+   "fetchpriority": "high",
+   "width": 2400,
+   "height": 985,
+   "preload_names_it": true
+  },
+  "https://museumofages.org/animals/t-rex/": {
+   "page": "animals-t-rex",
+   "src": "https://museumofages.org/static/img/animals-t-rex-side-2400.webp",
+   "alt": "Our T. rex from the side on two legs, about 11.4 m (37 ft) long in this pose, mouth closed and head raised, beside a grey person 1.70 m tall who stands far below its hips.",
+   "fetchpriority": "high",
+   "width": 2400,
+   "height": 1000,
+   "preload_names_it": true
+  },
+  "https://museumofages.org/animals/triceratops/": {
+   "page": "animals-triceratops",
+   "src": "https://museumofages.org/static/img/animals-triceratops-side-2400.webp",
+   "alt": "Our Triceratops from the side, 6.9 m (23 ft) from beak to tail and 2.5 m (8 ft) high over the hips: a wide frill behind the head, two long horns over the eyes, a short one on the nose, four legs. Beside it a grey person 1.70 m tall who reaches about two thirds of the way up its back.",
+   "fetchpriority": "high",
+   "width": 2400,
+   "height": 814,
+   "preload_names_it": true
+  },
+  "https://museumofages.org/animals/woolly-mammoth/": {
+   "page": "animals-woolly-mammoth",
+   "src": "https://museumofages.org/static/img/animals-woolly-mammoth-side-2400.webp",
+   "alt": "Our woolly mammoth, the Berezovka bull, from the side in a dark brown coat: high domed head, sloping back, two curved tusks, and a mark at his shoulder height, 271 cm (8.9 ft) by a reconstruction. The grey person beside him, 1.70 m tall, stands lower than the tusk tips.",
+   "fetchpriority": "high",
+   "width": 2400,
+   "height": 1381,
+   "preload_names_it": true
+  },
+  "https://museumofages.org/de/tiere/ankylosaurus/": {
+   "page": "animals-ankylosaurus",
+   "src": "https://museumofages.org/static/img/animals-ankylosaurus-side-2400.webp",
+   "alt": "Unser Ankylosaurus von der Seite, 6,4 m vom Schnabel bis zur Keule, der Rücken über der Hüfte 1,7 m hoch: ein flacher, breiter Körper unter Reihen von Knochenplatten, ein breiter, tief getragener Kopf, vier kurze Beine und ein gerader Schwanz mit einer flachen Keule am Ende. Daneben ein grauer Mensch von 1,70 m, so groß, wie der Rücken hoch ist.",
+   "fetchpriority": "high",
+   "width": 2400,
+   "height": 723,
+   "preload_names_it": true
+  },
+  "https://museumofages.org/de/tiere/blauwal/": {
+   "page": "animals-blue-whale",
+   "src": "https://museumofages.org/static/img/animals-blue-whale-side-2400.webp",
+   "alt": "Unser Blauwal von der Seite, 22,86 m lang: ein schlanker, blaugrauer Körper mit hellen Flecken, ein flacher Kopf, eine lange Brustflosse mit hellem Rand und eine kleine Rückenfinne weit hinten. Daneben ein grauer Mensch von 1,70 m, der etwas über die halbe Höhe des Wals reicht.",
+   "fetchpriority": "high",
+   "width": 2400,
+   "height": 353,
+   "preload_names_it": true
+  },
+  "https://museumofages.org/de/tiere/brachiosaurus/": {
+   "page": "animals-brachiosaurus",
+   "src": "https://museumofages.org/static/img/animals-brachiosaurus-side-2400.webp",
+   "alt": "Unser Brachiosaurus von der Seite, in der Größe des Skeletts aus Chicago, 24,0 m entlang der Wirbelsäule, den langen Hals in sanftem Bogen erhoben, die Kopfhöhe 11,5 m, den Halswinkel haben wir gewählt. Die Vorderbeine sind länger als die Hinterbeine, der Schwanz ist frei über dem Boden, und ein grauer Mensch von 1,70 m könnte unter seinem Bauch hindurchgehen.",
+   "fetchpriority": "high",
+   "width": 2400,
+   "height": 1319,
+   "preload_names_it": true
+  },
+  "https://museumofages.org/de/tiere/groesste-dinosaurier/": {
+   "page": "animals-biggest-dinosaurs",
+   "src": "https://museumofages.org/static/img/animals-biggest-dinosaurs-row-1600.webp",
+   "alt": "Unsere sieben Dinosaurier in einer Reihe von der Seite, im selben Maßstab. Der längste, unser Argentinosaurus, misst etwa 30,6 m. Zwei lange Hälse ragen hoch über die anderen, und ein grauer Mensch von 1,70 m wirkt daneben winzig.",
+   "fetchpriority": "high",
+   "width": 1600,
+   "height": 415,
+   "preload_names_it": true
+  },
+  "https://museumofages.org/de/tiere/megalodon/": {
+   "page": "animals-megalodon",
+   "src": "https://museumofages.org/static/img/animals-megalodon-side-2400.webp",
+   "alt": "Unser Megalodon von der Seite, etwa 16 m lang, das Maul geschlossen, dunkelgrau mit einem helleren Band an der Flanke, neben einem grauen Menschen von 1,70 m, der winzig daneben steht.",
+   "fetchpriority": "high",
+   "width": 2400,
+   "height": 600,
+   "preload_names_it": true
+  },
+  "https://museumofages.org/de/tiere/spinosaurus/": {
+   "page": "animals-spinosaurus",
+   "src": "https://museumofages.org/static/img/animals-spinosaurus-side-2400.webp",
+   "alt": "Der größte erwachsene Spinosaurus von der Seite, nach einem Modell knapp unter 14 m lang, mit hohem Rückensegel und tiefem Schwanz. Davor unser junges Tier von etwa 10 m als graue Silhouette und ein grauer Mensch von 1,70 m, der dem jungen Tier bis zur Hüfte reicht.",
+   "fetchpriority": "high",
+   "width": 2400,
+   "height": 858,
+   "preload_names_it": true
+  },
+  "https://museumofages.org/de/tiere/stegosaurus/": {
+   "page": "animals-stegosaurus",
+   "src": "https://museumofages.org/static/img/animals-stegosaurus-side-2400.webp",
+   "alt": "Unser Stegosaurus von der Seite, 5,6 m vom Schnabel bis zur Schwanzspitze, der Rücken über der Hüfte 1,9 m hoch: ein kleiner, tief sitzender Kopf, zwei Reihen hoher Platten auf dem gewölbten Rücken, zwei seiner vier Schwanzstacheln, die Vorderbeine kürzer als die Hinterbeine. Daneben ein grauer Mensch von 1,70 m, dessen Kopf unter der Oberkante des Rückens bleibt.",
+   "fetchpriority": "high",
+   "width": 2400,
+   "height": 985,
+   "preload_names_it": true
+  },
+  "https://museumofages.org/de/tiere/t-rex/": {
+   "page": "animals-t-rex",
+   "src": "https://museumofages.org/static/img/animals-t-rex-side-2400.webp",
+   "alt": "Unser T. rex von der Seite auf zwei Beinen, in dieser Haltung etwa 11,4 m lang, das Maul geschlossen, der Kopf erhoben, neben einem grauen Menschen von 1,70 m, der weit unter seiner Hüfte steht.",
+   "fetchpriority": "high",
+   "width": 2400,
+   "height": 1000,
+   "preload_names_it": true
+  },
+  "https://museumofages.org/de/tiere/triceratops/": {
+   "page": "animals-triceratops",
+   "src": "https://museumofages.org/static/img/animals-triceratops-side-2400.webp",
+   "alt": "Unser Triceratops von der Seite, 6,9 m vom Schnabel bis zum Schwanz und über der Hüfte 2,5 m hoch: ein breiter Nackenschild hinter dem Kopf, zwei lange Hörner über den Augen, ein kurzes auf der Nase, vier Beine. Daneben ein grauer Mensch von 1,70 m, der etwa bis zu zwei Dritteln der Rückenhöhe reicht.",
+   "fetchpriority": "high",
+   "width": 2400,
+   "height": 814,
+   "preload_names_it": true
+  },
+  "https://museumofages.org/de/tiere/wollhaarmammut/": {
+   "page": "animals-woolly-mammoth",
+   "src": "https://museumofages.org/static/img/animals-woolly-mammoth-side-2400.webp",
+   "alt": "Unser Wollhaarmammut, der Beresowka-Bulle, von der Seite im dunkelbraunen Fell, mit hoch gewölbtem Kopf, abfallendem Rücken, zwei gebogenen Stoßzähnen und einer Marke an der Schulter bei 271 cm, seiner rekonstruierten Schulterhöhe. Der graue Mensch daneben, 1,70 m groß, steht niedriger als die Spitzen der Stoßzähne.",
+   "fetchpriority": "high",
+   "width": 2400,
+   "height": 1381,
+   "preload_names_it": true
+  },
+  "https://museumofages.org/es/animales/ankylosaurus/": {
+   "page": "animals-ankylosaurus",
+   "src": "https://museumofages.org/static/img/animals-ankylosaurus-side-2400.webp",
+   "alt": "Nuestro Ankylosaurus de lado, 6,4 m del pico a la maza, con lo alto del lomo a 1,7 m sobre la cadera: un cuerpo bajo y ancho, cubierto de filas de placas de hueso, una cabeza ancha y baja, cuatro patas cortas y una cola recta que termina en una maza plana. A su lado, una persona gris de 1,70 m, tan alta como lo alto del lomo.",
+   "fetchpriority": "high",
+   "width": 2400,
+   "height": 723,
+   "preload_names_it": true
+  },
+  "https://museumofages.org/es/animales/ballena-azul/": {
+   "page": "animals-blue-whale",
+   "src": "https://museumofages.org/static/img/animals-blue-whale-side-2400.webp",
+   "alt": "Nuestra ballena azul de lado, de 22,86 m de largo: un cuerpo esbelto, gris azulado, con manchas claras, una cabeza plana, una aleta pectoral larga de borde claro y una pequeña aleta dorsal muy atrás. A su lado, una persona gris de 1,70 m que llega a poco más de media altura de la ballena.",
+   "fetchpriority": "high",
+   "width": 2400,
+   "height": 353,
+   "preload_names_it": true
+  },
+  "https://museumofages.org/es/animales/brachiosaurus/": {
+   "page": "animals-brachiosaurus",
+   "src": "https://museumofages.org/static/img/animals-brachiosaurus-side-2400.webp",
+   "alt": "Nuestro Brachiosaurus de lado, al tamaño del esqueleto de Chicago, 24,0 m a lo largo de la columna, con el cuello largo levantado en una curva suave y lo alto de la cabeza a 11,5 m, con el ángulo del cuello elegido por nosotros. Las patas delanteras son más largas que las traseras, la cola no toca el suelo, y una persona gris de 1,70 m podría pasar por debajo de su vientre.",
+   "fetchpriority": "high",
+   "width": 2400,
+   "height": 1319,
+   "preload_names_it": true
+  },
+  "https://museumofages.org/es/animales/dinosaurio-mas-grande/": {
+   "page": "animals-biggest-dinosaurs",
+   "src": "https://museumofages.org/static/img/animals-biggest-dinosaurs-row-1600.webp",
+   "alt": "Nuestros siete dinosaurios en fila, vistos de lado, a la misma escala. El más largo, nuestro Argentinosaurus, mide unos 30,6 m. Dos cuellos largos se alzan muy por encima de los demás, y una persona gris de 1,70 m parece diminuta a su lado.",
+   "fetchpriority": "high",
+   "width": 1600,
+   "height": 415,
+   "preload_names_it": true
+  },
+  "https://museumofages.org/es/animales/mamut-lanudo/": {
+   "page": "animals-woolly-mammoth",
+   "src": "https://museumofages.org/static/img/animals-woolly-mammoth-side-2400.webp",
+   "alt": "Nuestro mamut lanudo, el macho de Berezovka, de lado, con pelaje marrón oscuro: la cabeza alta y abombada, el lomo en pendiente, dos colmillos curvos y una marca a la altura del hombro, a 271 cm según una reconstrucción. La persona gris de al lado, de 1,70 m, queda más baja que las puntas de los colmillos.",
+   "fetchpriority": "high",
+   "width": 2400,
+   "height": 1381,
+   "preload_names_it": true
+  },
+  "https://museumofages.org/es/animales/megalodon/": {
+   "page": "animals-megalodon",
+   "src": "https://museumofages.org/static/img/animals-megalodon-side-2400.webp",
+   "alt": "Nuestro megalodón visto de lado, de unos 16 m de largo, con la boca cerrada, gris oscuro con una franja más clara en el costado, junto a una persona gris de 1,70 m que a su lado parece diminuta.",
+   "fetchpriority": "high",
+   "width": 2400,
+   "height": 600,
+   "preload_names_it": true
+  },
+  "https://museumofages.org/es/animales/spinosaurus/": {
+   "page": "animals-spinosaurus",
+   "src": "https://museumofages.org/static/img/animals-spinosaurus-side-2400.webp",
+   "alt": "El Spinosaurus adulto más grande de lado, algo menos de 14 m según un modelo, con una vela alta y una cola alta. Delante, nuestro ejemplar joven de unos 10 m como una forma gris plana, y una persona gris de 1,70 m que le llega al joven a la cadera.",
+   "fetchpriority": "high",
+   "width": 2400,
+   "height": 858,
+   "preload_names_it": true
+  },
+  "https://museumofages.org/es/animales/stegosaurus/": {
+   "page": "animals-stegosaurus",
+   "src": "https://museumofages.org/static/img/animals-stegosaurus-side-2400.webp",
+   "alt": "Nuestro Stegosaurus de lado, 5,6 m del pico a la punta de la cola, con lo alto del lomo a 1,9 m sobre la cadera: una cabeza pequeña y baja, dos filas de placas altas a lo largo del lomo arqueado, dos de sus cuatro púas de la cola y las patas delanteras más cortas que las traseras. A su lado, una persona gris de 1,70 m con la cabeza por debajo de lo alto del lomo.",
+   "fetchpriority": "high",
+   "width": 2400,
+   "height": 985,
+   "preload_names_it": true
+  },
+  "https://museumofages.org/es/animales/t-rex/": {
+   "page": "animals-t-rex",
+   "src": "https://museumofages.org/static/img/animals-t-rex-side-2400.webp",
+   "alt": "Nuestro T. rex de lado, sobre dos patas, de unos 11,4 m de largo en esta postura, con la boca cerrada y la cabeza levantada, junto a una persona gris de 1,70 m que queda muy por debajo de sus caderas.",
+   "fetchpriority": "high",
+   "width": 2400,
+   "height": 1000,
+   "preload_names_it": true
+  },
+  "https://museumofages.org/es/animales/triceratops/": {
+   "page": "animals-triceratops",
+   "src": "https://museumofages.org/static/img/animals-triceratops-side-2400.webp",
+   "alt": "Nuestro Triceratops de lado, 6,9 m del pico a la cola y 2,5 m de alto sobre la cadera: una gola ancha detrás de la cabeza, dos cuernos largos sobre los ojos, uno corto sobre la nariz, cuatro patas. A su lado, una persona gris de 1,70 m que le llega a unos dos tercios de la altura del lomo.",
+   "fetchpriority": "high",
+   "width": 2400,
+   "height": 814,
+   "preload_names_it": true
+  },
+  "https://museumofages.org/pt-br/animais/anquilossauro/": {
+   "page": "animals-ankylosaurus",
+   "src": "https://museumofages.org/static/img/animals-ankylosaurus-side-2400.webp",
+   "alt": "O nosso anquilossauro de lado, 6,4 m do bico à clava, com o alto do dorso a 1,7 m acima do quadril: um corpo baixo e largo, coberto de fileiras de placas de osso, uma cabeça larga mantida baixa, quatro patas curtas e uma cauda reta que termina numa clava achatada. Ao lado, uma pessoa cinza de 1,70 m, da altura do alto do dorso.",
+   "fetchpriority": "high",
+   "width": 2400,
+   "height": 723,
+   "preload_names_it": true
+  },
+  "https://museumofages.org/pt-br/animais/baleia-azul/": {
+   "page": "animals-blue-whale",
+   "src": "https://museumofages.org/static/img/animals-blue-whale-side-2400.webp",
+   "alt": "A nossa baleia-azul de lado, com 22,86 m de comprimento: um corpo esguio, cinza-azulado, com manchas claras, uma cabeça achatada, uma nadadeira peitoral longa de borda clara e uma pequena nadadeira dorsal bem atrás. Ao lado, uma pessoa cinza de 1,70 m que chega a pouco mais da metade da altura da baleia.",
+   "fetchpriority": "high",
+   "width": 2400,
+   "height": 353,
+   "preload_names_it": true
+  },
+  "https://museumofages.org/pt-br/animais/braquiossauro/": {
+   "page": "animals-brachiosaurus",
+   "src": "https://museumofages.org/static/img/animals-brachiosaurus-side-2400.webp",
+   "alt": "O nosso braquiossauro de lado, no tamanho do esqueleto de Chicago, 24,0 m ao longo da coluna, com o pescoço longo erguido numa curva suave e o alto da cabeça a 11,5 m, com o ângulo do pescoço escolhido por nós. As patas da frente são mais longas que as de trás, a cauda não toca o chão, e uma pessoa cinza de 1,70 m poderia passar por baixo da barriga dele.",
+   "fetchpriority": "high",
+   "width": 2400,
+   "height": 1319,
+   "preload_names_it": true
+  },
+  "https://museumofages.org/pt-br/animais/espinossauro/": {
+   "page": "animals-spinosaurus",
+   "src": "https://museumofages.org/static/img/animals-spinosaurus-side-2400.webp",
+   "alt": "O maior espinossauro adulto de lado, pouco menos de 14 m por um modelo, com uma vela alta e uma cauda alta. Na frente, o nosso jovem de cerca de 10 m como uma forma cinza chapada, e uma pessoa cinza de 1,70 m que chega ao quadril do jovem.",
+   "fetchpriority": "high",
+   "width": 2400,
+   "height": 858,
+   "preload_names_it": true
+  },
+  "https://museumofages.org/pt-br/animais/estegossauro/": {
+   "page": "animals-stegosaurus",
+   "src": "https://museumofages.org/static/img/animals-stegosaurus-side-2400.webp",
+   "alt": "O nosso estegossauro de lado, 5,6 m do bico à ponta da cauda, com o alto do dorso a 1,9 m acima do quadril: uma cabeça pequena e baixa, duas fileiras de placas altas ao longo do dorso arqueado, dois dos quatro espinhos da cauda e as patas da frente mais curtas que as de trás. Ao lado, uma pessoa cinza de 1,70 m com a cabeça abaixo do alto do dorso.",
+   "fetchpriority": "high",
+   "width": 2400,
+   "height": 985,
+   "preload_names_it": true
+  },
+  "https://museumofages.org/pt-br/animais/maior-dinossauro/": {
+   "page": "animals-biggest-dinosaurs",
+   "src": "https://museumofages.org/static/img/animals-biggest-dinosaurs-row-1600.webp",
+   "alt": "Os nossos sete dinossauros em fila, vistos de lado, na mesma escala. O mais longo, o nosso Argentinosaurus, tem cerca de 30,6 m. Dois pescoços longos se erguem bem acima dos outros, e uma pessoa cinza de 1,70 m parece minúscula perto deles.",
+   "fetchpriority": "high",
+   "width": 1600,
+   "height": 415,
+   "preload_names_it": true
+  },
+  "https://museumofages.org/pt-br/animais/mamute-lanoso/": {
+   "page": "animals-woolly-mammoth",
+   "src": "https://museumofages.org/static/img/animals-woolly-mammoth-side-2400.webp",
+   "alt": "O nosso mamute-lanoso, o macho de Berezovka, de lado, com pelagem marrom-escura: a cabeça alta e abaulada, o dorso inclinado, duas presas curvas e uma marca na altura do ombro, a 271 cm por uma reconstrução. A pessoa cinza ao lado, de 1,70 m, fica mais baixa que as pontas das presas.",
+   "fetchpriority": "high",
+   "width": 2400,
+   "height": 1381,
+   "preload_names_it": true
+  },
+  "https://museumofages.org/pt-br/animais/megalodon/": {
+   "page": "animals-megalodon",
+   "src": "https://museumofages.org/static/img/animals-megalodon-side-2400.webp",
+   "alt": "O nosso megalodon visto de lado, com cerca de 16 m de comprimento, de boca fechada, cinza-escuro com uma faixa mais clara no flanco, ao lado de uma pessoa cinza de 1,70 m que parece minúscula perto dele.",
+   "fetchpriority": "high",
+   "width": 2400,
+   "height": 600,
+   "preload_names_it": true
+  },
+  "https://museumofages.org/pt-br/animais/t-rex/": {
+   "page": "animals-t-rex",
+   "src": "https://museumofages.org/static/img/animals-t-rex-side-2400.webp",
+   "alt": "O nosso T. rex de lado, sobre duas patas, com cerca de 11,4 m de comprimento nesta pose, de boca fechada e cabeça erguida, ao lado de uma pessoa cinza de 1,70 m que fica bem abaixo do quadril dele.",
+   "fetchpriority": "high",
+   "width": 2400,
+   "height": 1000,
+   "preload_names_it": true
+  },
+  "https://museumofages.org/pt-br/animais/triceratops/": {
+   "page": "animals-triceratops",
+   "src": "https://museumofages.org/static/img/animals-triceratops-side-2400.webp",
+   "alt": "O nosso Triceratops de lado, 6,9 m do bico à cauda e 2,5 m de altura acima do quadril: um babado largo atrás da cabeça, dois chifres longos acima dos olhos, um curto acima do nariz, quatro patas. Ao lado, uma pessoa cinza de 1,70 m que chega a cerca de dois terços da altura do dorso.",
+   "fetchpriority": "high",
+   "width": 2400,
+   "height": 814,
+   "preload_names_it": true
+  }
+ }
+}
