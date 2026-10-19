@@ -170,8 +170,8 @@
   "scale": {
    "pic": "side",
    "tag": "tag_made",
-   "what": "Nuestra ballena azul, de 22,86 m de largo, junto a una persona de 1,70 m, a la misma escala: tan larga como unas 13 personas tumbadas en fila, una tras otra.",
-   "alt": "Nuestra ballena azul de lado, de 22,86 m de largo: un cuerpo esbelto, gris azulado, con manchas claras, una cabeza plana, una aleta pectoral larga de borde claro y una pequeña aleta dorsal muy atrás. A su lado, una persona gris de 1,70 m que llega a poco más de media altura de la ballena.",
+   "what": "Comparación de tamaño: nuestra ballena azul, de 22,86 m de largo, junto a una persona de 1,70 m, a la misma escala, tan larga como unas 13 personas en fila.",
+   "alt": "Comparación de tamaño: nuestra ballena azul de lado, de 22,86 m de largo: un cuerpo esbelto, gris azulado, con manchas claras, una cabeza plana, una aleta pectoral larga de borde claro y una pequeña aleta dorsal muy atrás. A su lado, una persona gris de 1,70 m que llega a poco más de media altura de la ballena.",
    "note": "Nuestra propia reconstrucción, construida en código a partir de medidas publicadas y renderizada con nuestro propio motor gráfico. No son fotografías.",
    "marks": [
     {
@@ -342,7 +342,7 @@
    "nav": "¿Es la ballena azul el animal más grande del mundo, o de todos los tiempos?",
    "h": "¿Es la ballena azul el animal más grande del mundo, o de todos los tiempos?",
    "paras": [
-    "Sí, por lo que se sabe. Es el animal más pesado que se conoce, y la NOAA, la agencia de los océanos de Estados Unidos, y un estudio de 2017 la llaman el animal más grande que ha vivido. Un estudio de 2025 es más prudente. Considera incierto cuál fue el animal más grande de todos, porque algunos dinosaurios gigantes, conocidos solo por fragmentos o por huesos perdidos, podrían haberla igualado. Perucetus, una ballena fósil presentada en 2023 como posiblemente más pesada, resulta mucho más ligera en dos estudios posteriores."
+    "Sí. La ballena azul es el animal más grande del mundo y, por lo que se sabe, también el más grande que ha vivido nunca. Así lo dicen la NOAA, la agencia de los océanos de Estados Unidos, y un estudio de 2017. Un estudio de 2025 es más prudente: llama a la ballena azul el animal vivo más grande, pero considera incierto cuál fue el animal más grande de todos, porque algunos dinosaurios gigantes, conocidos solo por fragmentos o por huesos perdidos, podrían haberla igualado. Perucetus, una ballena fósil presentada en 2023 como posiblemente más pesada, resulta mucho más ligera en dos estudios posteriores."
    ]
   },
   {
@@ -351,8 +351,8 @@
    "nav": "Longitud y peso de la ballena azul",
    "h": "Longitud y peso de la ballena azul",
    "paras": [
-    "La mayoría de las ballenas azules adultas miden de 23 a 27 m, y las hembras son más largas que los machos. Las más grandes son las de la Antártida. Las del Atlántico Norte y el Pacífico Norte llegan a unos 27 m, y la ballena azul pigmea es más corta.",
-    "Según un estudio de 2025, las ballenas azules adultas pesan más o menos de 100 a 150 toneladas, y las más grandes quizá cerca de 200. Nunca se pesó una ballena azul entera. Cada peso viene de ballenas despiezadas en barcos balleneros y pesadas pedazo a pedazo, y la sangre que se perdía en cubierta deja esas sumas demasiado bajas. Un modelo hecho con 31 ballenas pesadas así le da a una ballena azul de 23 m de largo más o menos de 75 a 85 toneladas."
+    "En el Atlántico Norte y el Pacífico Norte, las ballenas azules adultas llegan a unos 27 m, y las más grandes son las de la Antártida. Las hembras son más largas que los machos, y la ballena azul pigmea es más corta.",
+    "Según el estudio de 2025, las más grandes quizá se acerquen a las 200 toneladas. Cada peso registrado viene de ballenas despiezadas en barcos balleneros y pesadas pedazo a pedazo, y la sangre que se perdía en cubierta deja esas sumas demasiado bajas. Un modelo hecho con 31 ballenas pesadas así le da a una ballena azul de 23 m de largo más o menos de 75 a 85 toneladas."
    ]
   },
   {
@@ -396,8 +396,8 @@
    "scale": {
     "pic": "beside",
     "tag": "tag_made",
-    "what": "Nuestro Argentinosaurus, nuestra ballena azul y nuestro megalodón a la misma escala con la persona, solo para comparar tamaños. Los tres nunca vivieron en la misma época.",
-    "alt": "Tres gigantes de lado, todos mirando en la misma dirección: un dinosaurio de cuello y cola largos sobre cuatro patas, más largo que los otros, una ballena azul y un tiburón, junto a la persona gris.",
+    "what": "Nuestro Argentinosaurus, nuestra ballena azul y nuestro megalodón a la misma escala con la persona, solo como comparación de tamaño. Los tres nunca vivieron en la misma época.",
+    "alt": "Nuestra ballena azul en comparación de tamaño con nuestro Argentinosaurus y nuestro megalodón: tres filas de lado, todos mirando en la misma dirección, arriba el dinosaurio de cuello largo, el más largo, abajo el tiburón, el más corto, y la persona gris en cada fila.",
     "note": [
      "El cuerpo de nuestro megalodón sigue el modelo de ",
      {
@@ -468,6 +468,15 @@
      }
     ]
    }
+  },
+  {
+   "type": "text",
+   "id": "bones",
+   "nav": "¿Cuántos huesos tiene una ballena azul?",
+   "h": "¿Cuántos huesos tiene una ballena azul?",
+   "paras": [
+    "No hay una cifra única para todas las ballenas azules: en Hope, el esqueleto de Londres, el Natural History Museum contó 221 huesos. Lo que se sabe de la especie es la columna: unas 63 a 66 vértebras, según el animal, 7 de ellas en el cuello. El museo no dice si sus 221 incluyen los huesos pequeños, como los de los dedos o los restos de la pelvis."
+   ]
   },
   {
    "type": "text",
@@ -550,7 +559,7 @@
    "items": [
     {
      "q": "¿Cuánto mide una ballena azul comparada con una persona?",
-     "a": "Nuestra ballena azul es tan larga como unas 13 personas de 1,70 m tumbadas en fila, una tras otra. Solo su cráneo equivale a tres personas y un poco más, y una aleta pectoral, a casi dos. Son nuestras propias cuentas, sobre nuestro modelo."
+     "a": "Unas 13 personas de 1,70 m tumbadas en fila igualan la longitud de nuestra ballena azul, y para las más grandes, de unos 30 m, harían falta unas 18. Solo el cráneo de la nuestra equivale a tres personas y un poco más, y una aleta pectoral, a casi dos. Son nuestras propias cuentas."
     },
     {
      "q": "¿Por qué se llama ballena azul?",
@@ -583,7 +592,7 @@
      "page": "megalodon",
      "pic": "megalodon",
      "alt": "Nuestro megalodón visto de lado, de unos 16 m de largo, con la boca cerrada, gris oscuro con una franja más clara en el costado, junto a una persona gris de 1,70 m que a su lado parece diminuta.",
-     "line": "La única columna larga de megalodón hallada da unos 16 m, y los más grandes medían quizá unos 20 m, comparados con una persona, un tiburón blanco y una ballena azul."
+     "line": "La única columna larga de megalodón hallada hasta hoy da unos 16 m, y los más grandes medían quizá unos 20 m, comparados con una persona, un tiburón blanco y una ballena azul."
     },
     {
      "page": "biggest-dinosaurs",
@@ -611,6 +620,10 @@
     {
      "text": "Nishiwaki, 1950, Scientific Reports of the Whales Research Institute, los pesajes por partes de 1947 a 1949.",
      "href": "https://www.icrwhale.org/pdf/SC004184-209.pdf"
+    },
+    {
+     "text": "Omura, Ichihara y Kasuya, 1970, Scientific Reports of the Whales Research Institute, sobre las vértebras de la ballena azul.",
+     "href": "https://www.icrwhale.org/pdf/SC0221-27.pdf"
     },
     {
      "text": "Goldbogen y otros, 2019, PNAS, sobre el latido del corazón de una ballena azul con sensor.",
@@ -651,6 +664,10 @@
      "href": "https://www.nhm.ac.uk/discover/hope-the-blue-whale-history.html"
     },
     {
+     "text": "Natural History Museum, Londres: su página sobre la exhibición de Hope, con la cuenta de sus huesos.",
+     "href": "https://www.nhm.ac.uk/discover/hope-the-blue-whale-display.html"
+    },
+    {
      "text": "Royal Ontario Museum, Toronto: su nota de prensa sobre el corazón, 2017, dos entradas de su blog, 2015 y 2016, y su informe anual de 2015 a 2016.",
      "href": "https://www.rom.on.ca/news-releases/blue-whale-heart-arrives-rom"
     },
@@ -674,7 +691,7 @@
    "h": "Usar nuestras imágenes",
    "paras": [
     [
-     "Las cuatro imágenes de la ballena azul de esta página, la vista de lado, la cabeza, el esqueleto y la fila con nuestro megalodón y nuestro Argentinosaurus, son obra nuestra, con licencia ",
+     "Las cinco imágenes de la ballena azul de esta página, la vista de lado, la cabeza, el esqueleto, la fila con nuestro megalodón y nuestro Argentinosaurus y la comparación de tamaño de abajo en tres formatos, son obra nuestra, con licencia ",
      {
       "text": "CC BY-SA 4.0",
       "href": "https://creativecommons.org/licenses/by-sa/4.0/deed.es"
@@ -688,13 +705,12 @@
     ]
    ],
    "shapes": {
-    "draft": true,
     "caption": "Comparación de tamaño de la ballena azul: nuestra ballena azul, de 22,86 m de largo, junto a una persona de 1,70 m, a la misma escala.",
-    "lead": "Para presentaciones y publicaciones, la comparación de tamaño también está en tres formatos, con la misma licencia.",
+    "lead": "Para presentaciones y publicaciones, esta comparación de tamaño está en tres formatos, todos con la misma licencia.",
     "alts": {
-     "size_1x1": "Comparación de tamaño de la ballena azul: la cabeza y la aleta pectoral de nuestra ballena azul junto a una persona gris de 1,70 m.",
-     "size_4x3": "Comparación de tamaño de la ballena azul: la mitad delantera de nuestra ballena azul junto a una persona gris de 1,70 m.",
-     "size_16x9": "Comparación de tamaño de la ballena azul: nuestra ballena azul entera de lado, de 22,86 m de largo, junto a una persona gris de 1,70 m."
+     "size_1x1": "Comparación de tamaño de la ballena azul, la cabeza: la cabeza larga y plana de nuestra ballena azul, con el ojo y los surcos de la garganta, y una persona gris de 1,70 m frente al hocico.",
+     "size_4x3": "La ballena azul junto a una persona, en comparación de tamaño: la mitad delantera de nuestra ballena azul, con su larga aleta pectoral, y una persona gris de 1,70 m delante del hocico.",
+     "size_16x9": "Comparación de tamaño de la ballena azul, entera y de lado: nuestra ballena azul, de 22,86 m de la punta del hocico a la muesca de la cola, y una persona gris de 1,70 m por delante."
     },
     "links": {
      "size_1x1": "Cuadrada (1:1)",

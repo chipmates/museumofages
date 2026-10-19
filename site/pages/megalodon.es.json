@@ -143,7 +143,7 @@
  },
  "meta": {
   "title": "Megalodón: tamaño de unos 16 m, quizá 20 m | Museum of Ages",
-  "description": "¿Cuánto medía el megalodón? Unos 16 m según la única columna larga, los mayores quizá unos 20 m. Junto a una persona, un tiburón blanco y una ballena azul.",
+  "description": "¿Cuánto medía el megalodón? Unos 16 m, los mayores quizá 20 m. Lo comparamos con una persona, un tiburón blanco y una ballena azul, y vemos si aún existe.",
   "og_title": "Megalodón: tamaño de unos 16 m, quizá 20 m",
   "og_image_alt": "Nuestro megalodón visto de lado, de unos 16 m de largo, con la boca cerrada, gris oscuro con una franja más clara en el costado, junto a una persona gris de 1,70 m que a su lado parece diminuta.",
   "credit": "Museum of Ages, forma del cuerpo según Shimada y otros 2025 (CC BY 4.0)"
@@ -167,8 +167,8 @@
   "scale": {
    "pic": "side",
    "tag": "tag_made",
-   "what": "Nuestro megalodón junto a una persona de 1,70 m, a la misma escala: unos 16 m de largo, la longitud que le da la columna de Bruselas.",
-   "alt": "Nuestro megalodón visto de lado, de unos 16 m de largo, con la boca cerrada, gris oscuro con una franja más clara en el costado, junto a una persona gris de 1,70 m que a su lado parece diminuta.",
+   "what": "Comparación de tamaño a la misma escala: nuestro megalodón, de unos 16 m de largo, junto a una persona de 1,70 m.",
+   "alt": "Comparación de tamaño: nuestro megalodón visto de lado, de unos 16 m de largo, con la boca cerrada, gris oscuro con una franja más clara en el costado, junto a una persona gris de 1,70 m que a su lado parece diminuta.",
    "note": [
     "Reconstrucción propia del museo, construida en código a partir de las medidas citadas y renderizada con nuestro propio motor gráfico. No es una fotografía. La forma del cuerpo sigue el modelo de Shimada y otros 2025 (",
     {
@@ -181,7 +181,7 @@
     "pic": "head",
     "tag": "tag_made",
     "what": "La cabeza con la boca cerrada, más de cerca. Los dientes del modelo siguen otro hallazgo, una dentadura real, a su propio tamaño: delante miden unos 10 cm de alto.",
-    "alt": "La cabeza del tiburón, con la boca cerrada, junto a la persona gris, que mide menos de lo que mide la cabeza de largo."
+    "alt": "La cabeza del megalodón, con la boca cerrada, junto a la persona gris, que mide menos de lo que mide la cabeza de largo."
    },
    "bars": [
     {
@@ -296,9 +296,28 @@
   },
   {
    "type": "text",
+   "id": "alive",
+   "nav": "¿Existe todavía el megalodón?",
+   "h": "¿Existe todavía el megalodón?",
+   "paras": [
+    "No, el megalodón fue real, pero se extinguió hace unos 3,6 millones de años, según sus fósiles fiables más recientes. El Natural History Museum de Londres da las razones en su página dedicada a esta pregunta: nunca se ha encontrado un diente de megalodón más reciente, ni siquiera uno recién caído, no hay ningún avistamiento confirmado, ni vivo ni muerto, y ningún animal actual tiene marcas de mordiscos del tamaño de su boca. El mar profundo, donde supuestamente se esconde, tiene muy poca comida para un cazador tan grande, añade el museo, y ningún tiburón vive mucho más abajo de 3000 m. Su página más antigua sobre el megalodón señala que un tiburón de mares cálidos no sobreviviría en el frío de las profundidades.",
+    "La idea de un megalodón vivo en las profundidades salió de un programa de televisión de 2013 que presentó imágenes falsas como si fueran reales."
+   ]
+  },
+  {
+   "type": "text",
+   "id": "weight",
+   "nav": "¿Cuánto pesaba el megalodón?",
+   "h": "¿Cuánto pesaba el megalodón?",
+   "paras": [
+    "Unas 30 toneladas según el modelo delgado de 2025, y unas 61 según el modelo robusto de 2022, los dos para la misma columna de Bruselas. Los dos modelos difieren en la forma del cuerpo, y nunca se encontró un cuerpo: uno es delgado como los tiburones vivos más grandes, el otro robusto como un tiburón blanco. Por eso el peso sigue siendo discutido."
+   ]
+  },
+  {
+   "type": "text",
    "id": "bones",
-   "nav": "Huesos y cuerpo",
-   "h": "Huesos y cuerpo",
+   "nav": "Esqueleto del megalodón: huesos y cuerpo",
+   "h": "Esqueleto del megalodón: huesos y cuerpo",
    "paras": [
     "El megalodón, Otodus megalodon, era un tiburón, y los tiburones no tienen huesos. Su esqueleto es de cartílago, y el cartílago casi siempre se pudre en la tierra. Lo que queda son los dientes y, a veces, las vértebras, que son más duras que el resto. Por eso el megalodón se conoce por sus dientes, por vértebras sueltas, por trozos de cartílago endurecido y por escamas diminutas de la piel. Hasta hoy no se encontró un cuerpo, ni una cabeza, ni una aleta, ni una cola."
    ],
@@ -306,13 +325,13 @@
     "pic": "skeleton",
     "tag": "tag_built",
     "what": "El mismo animal como esqueleto. Las vértebras y los dientes siguen a los fósiles, y todo lo demás está reconstruido y se distingue a propósito.",
-    "alt": "El esqueleto de lado, una larga fila de vértebras y una mandíbula con dientes según los fósiles, con la cabeza, las aletas y la cola como formas que se ven reconstruidas.",
+    "alt": "El esqueleto del megalodón de lado, una larga fila de vértebras y una mandíbula con dientes según los fósiles, con la cabeza, las aletas y la cola como formas que se ven reconstruidas.",
     "key": "Marrón oscuro: las vértebras fósiles. Dorado: los dientes. Claro: lo reconstruido, también las piezas que completan vértebras rotas.",
     "close": {
      "pic": "skeleton_head",
      "tag": "tag_built",
      "what": "El cráneo y la parte delantera de la columna, más de cerca, con la persona. Las vértebras siguen a los fósiles, el cráneo y la mandíbula están reconstruidos, y los dientes siguen otro hallazgo, una dentadura real, a su propio tamaño.",
-     "alt": "La parte delantera del esqueleto de lado: un cráneo y una mandíbula claros y reconstruidos, con dientes dorados, y después una fila de vértebras oscuras, junto a la persona gris.",
+     "alt": "La parte delantera del esqueleto del megalodón de lado: un cráneo y una mandíbula claros y reconstruidos, con dientes dorados, y después una fila de vértebras oscuras, junto a la persona gris.",
      "key": "Marrón oscuro: las vértebras fósiles. Dorado: los dientes. Claro: lo reconstruido, también las piezas que completan vértebras rotas."
     }
    }
@@ -323,7 +342,7 @@
    "nav": "Hasta qué punto es seguro",
    "h": "Hasta qué punto es seguro",
    "paras": [
-    "Los 16 m se apoyan en la columna de Bruselas: 141 vértebras, unos 11 m en fila, más una cabeza y una cola con las proporciones de los lamniformes actuales, el grupo de tiburones al que pertenece el tiburón blanco. Dos equipos de investigación obtuvieron 15,9 m y 16,4 m con modelos distintos, y por eso decimos unos 16 m. Los 20 m se apoyan en un solo diente, escalado a partir de dentaduras completas. El peso se apoya en un modelo del cuerpo, y ese modelo necesita una forma del cuerpo que nadie conoce: delgado como los tiburones vivos más grandes, da unas 30 toneladas, y robusto como un tiburón blanco, unas 61. Por eso la longitud dice «unos» y el peso dice «discutido»."
+    "Los 16 m se apoyan en la columna de Bruselas: 141 vértebras, unos 11 m en fila, más una cabeza y una cola con las proporciones de los lamniformes actuales, el grupo de tiburones al que pertenece el tiburón blanco. Dos equipos de investigación obtuvieron 15,9 m y 16,4 m con modelos distintos, y por eso decimos unos 16 m. Los 20 m se apoyan en un solo diente, escalado a partir de dentaduras completas. Por eso la longitud dice «unos» y los mayores, «quizá»."
    ]
   },
   {
@@ -383,7 +402,7 @@
     },
     {
      "term": "Vivo hoy, escondido en las profundidades del mar",
-     "text": "La televisión lo mostró así, pero desapareció hace unos 3,6 millones de años. Un gigante vivo dejaría marcas de mordiscos frescas y dientes por decenas de miles, y un tiburón de mares cálidos no sobreviviría en el frío del fondo del mar, como explica el Natural History Museum de Londres."
+     "text": "La televisión lo mostró así, pero se extinguió hace mucho: mira «¿Existe todavía el megalodón?» más arriba."
     },
     {
      "term": "Un megalodón que ataca a una ballena tan grande como una ballena azul",
@@ -412,7 +431,7 @@
     },
     {
      "q": "Megalodón contra ballena azul: ¿cuál era más grande?",
-     "a": "La ballena azul. La mayoría de las ballenas azules adultas miden de 23 a 27 m, las más grandes unos 30 m, y la NOAA, la agencia de los océanos de Estados Unidos, la llama el animal más grande que se sabe que ha existido. Nuestro megalodón llegaría a algo más de la mitad de la más grande. Incluso el tiburón ballena más grande medido hasta hoy, de 18,8 m, era más largo que nuestro megalodón, y con cerca de 34 toneladas pesaba más o menos lo mismo que el modelo delgado del megalodón."
+     "a": "La ballena azul: la mayoría de las adultas miden de 23 a 27 m, las más grandes unos 30 m, y la NOAA, la agencia de los océanos de Estados Unidos, la llama el animal más grande que se sabe que ha existido. Nuestro megalodón llegaría a algo más de la mitad de la más grande. Incluso el tiburón ballena más grande medido hasta hoy, de 18,8 m, era más largo que nuestro megalodón, y con cerca de 34 toneladas pesaba más o menos lo mismo que el modelo delgado del megalodón."
     },
     {
      "q": "¿Qué tamaño tenían los dientes del megalodón?",
@@ -420,7 +439,7 @@
     },
     {
      "q": "¿Cuándo y por qué se extinguió el megalodón?",
-     "a": "Hace unos 3,6 millones de años, según los fósiles fiables más recientes. El porqué no está establecido. Se propusieron los mares más fríos, que dividieron su área de distribución, el tiburón blanco recién aparecido como rival, una caída de las pequeñas ballenas con barbas que cazaba, y el gasto de un cuerpo caliente, porque se mantenía más caliente que el agua que lo rodeaba."
+     "a": "Muy probablemente hace unos 3,6 millones de años. Un estudio de 2019 vio que los dientes más recientes que revisó venían de rocas más antiguas, arrastrados por el agua, o no tenían un registro fiable, y su estimación sitúa el final entre hace unos 4,1 y 3,2 millones de años. El porqué no está establecido. Se propusieron los mares más fríos, que dividieron su área de distribución, el tiburón blanco recién aparecido como rival, una caída de las pequeñas ballenas con barbas que cazaba, y el gasto de un cuerpo caliente, porque se mantenía más caliente que el agua que lo rodeaba."
     }
    ]
   },
@@ -466,7 +485,7 @@
      "page": "woolly-mammoth",
      "pic": "mammoth",
      "alt": "Nuestro mamut lanudo, el macho de Berezovka, de lado, con pelaje marrón oscuro: la cabeza alta y abombada, el lomo en pendiente, dos colmillos curvos y una marca a la altura del hombro, a 271 cm según una reconstrucción. La persona gris de al lado, de 1,70 m, queda más baja que las puntas de los colmillos.",
-     "line": "Un macho típico de Siberia medía unos 2,7 a 2,9 m a la altura del hombro, más o menos lo que un macho de elefante asiático. El nuestro es un macho real hallado congelado en 1900, con lo que es suyo y lo que está reconstruido."
+     "line": "Un macho típico de Siberia medía unos 2,7 a 2,9 m a la altura del hombro, más o menos lo que un macho de elefante asiático. El nuestro está hecho a partir de un macho real hallado congelado en 1900, con lo que es suyo y lo que está reconstruido."
     },
     {
      "page": "blue-whale",
@@ -526,8 +545,12 @@
      "text": "Natural History Museum of Denmark: las vértebras danesas NHMD 157890."
     },
     {
-     "text": "Natural History Museum, Londres.",
+     "text": "Natural History Museum, Londres: su página sobre el megalodón.",
      "href": "https://www.nhm.ac.uk/discover/megalodon--the-truth-about-the-largest-shark-that-ever-lived.html"
+    },
+    {
+     "text": "Natural History Museum, Londres: su página sobre si el megalodón existe todavía, 2025.",
+     "href": "https://www.nhm.ac.uk/discover/is-megalodon-still-alive.html"
     },
     {
      "text": "American Museum of Natural History, Nueva York.",
@@ -571,13 +594,12 @@
     ]
    ],
    "shapes": {
-    "draft": true,
     "caption": "Comparación de tamaño del megalodón: nuestro megalodón, de unos 16 m de largo, junto a una persona de 1,70 m, a la misma escala.",
-    "lead": "Para presentaciones y publicaciones, la comparación de tamaño también está en tres formatos, con la misma licencia.",
+    "lead": "Para presentaciones y publicaciones, esta comparación de tamaño está en tres formatos, todos con la misma licencia.",
     "alts": {
-     "size_1x1": "Comparación de tamaño del megalodón: la cabeza de nuestro megalodón hasta la aleta pectoral, con una persona gris de 1,70 m junto al hocico.",
-     "size_4x3": "Comparación de tamaño del megalodón: los dos tercios delanteros de nuestro megalodón junto a una persona gris de 1,70 m.",
-     "size_16x9": "Comparación de tamaño del megalodón: nuestro megalodón entero de lado, de unos 16 m de largo, junto a una persona gris de 1,70 m."
+     "size_1x1": "Comparación de tamaño del megalodón: la cabeza de nuestro megalodón desde la aleta pectoral hacia delante, con una persona gris de 1,70 m de pie frente al hocico.",
+     "size_4x3": "El megalodón junto a una persona, en comparación de tamaño: los dos tercios delanteros de nuestro megalodón, con su alta aleta dorsal, y una persona gris de 1,70 m.",
+     "size_16x9": "Comparación de tamaño del megalodón, el tiburón entero de lado: nuestro megalodón, de unos 16 m de largo, y una persona gris de 1,70 m delante de él."
     },
     "links": {
      "size_1x1": "Cuadrada (1:1)",

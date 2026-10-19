@@ -143,7 +143,7 @@
  },
  "meta": {
   "title": "Megalodon: tamanho de uns 16 m, talvez 20 m | Museum of Ages",
-  "description": "Tamanho do megalodon: cerca de 16 m pela única coluna longa, os maiores talvez cerca de 20 m. Ao lado de uma pessoa, um tubarão-branco e uma baleia-azul.",
+  "description": "Tamanho do megalodon: cerca de 16 m, os maiores talvez 20 m. Nós o comparamos com uma pessoa, um tubarão-branco e uma baleia-azul e dizemos se ainda existe.",
   "og_title": "Megalodon: tamanho de cerca de 16 m, talvez 20 m",
   "og_image_alt": "O nosso megalodon visto de lado, com cerca de 16 m de comprimento, de boca fechada, cinza-escuro com uma faixa mais clara no flanco, ao lado de uma pessoa cinza de 1,70 m que parece minúscula perto dele.",
   "credit": "Museum of Ages, forma do corpo a partir de Shimada e outros 2025 (CC BY 4.0)"
@@ -156,21 +156,21 @@
   "tag_made": "Feito para esta página",
   "tag_built": "Reconstrução",
   "person": "1,70 m",
-  "to_table": "Os números numa tabela",
+  "to_table": "Os números em uma tabela",
   "no_figure": "sem número com fonte",
   "og_answer": "Cerca de 16 m de comprimento"
  },
  "top": {
   "h1": "Qual era o tamanho do megalodon?",
-  "answer": "O megalodon (ou megalodonte) tinha cerca de 16 m de comprimento, segundo a única coluna vertebral longa já encontrada, que está guardada em Bruxelas. Os nossos 16 m são um pouco mais que nove pessoas de 1,70 m deitadas uma atrás da outra. Os maiores da espécie mediam talvez cerca de 20 m, a julgar pelos dentes.",
-  "answer_more": "O peso do megalodon é controverso: mais ou menos 30 toneladas no modelo esbelto de 2025, e cerca do dobro no modelo mais robusto de 2022, porque ninguém conhece a forma do corpo dele.",
+  "answer": "O megalodon (ou megalodonte) tinha cerca de 16 m de comprimento, segundo a única coluna vertebral longa já encontrada, que está guardada em Bruxelas. Nossos 16 m são um pouco mais que nove pessoas de 1,70 m deitadas uma atrás da outra. Os maiores da espécie mediam talvez cerca de 20 m, a julgar pelos dentes.",
+  "answer_more": "O peso do megalodonte é controverso: mais ou menos 30 toneladas no modelo esbelto de 2025, e cerca do dobro no modelo mais robusto de 2022, porque ninguém conhece a forma do corpo dele.",
   "scale": {
    "pic": "side",
    "tag": "tag_made",
-   "what": "O nosso megalodon ao lado de uma pessoa de 1,70 m, na mesma escala: cerca de 16 m de comprimento, o tamanho que a coluna de Bruxelas lhe dá.",
-   "alt": "O nosso megalodon visto de lado, com cerca de 16 m de comprimento, de boca fechada, cinza-escuro com uma faixa mais clara no flanco, ao lado de uma pessoa cinza de 1,70 m que parece minúscula perto dele.",
+   "what": "Comparação de tamanho na mesma escala: nosso megalodonte, com cerca de 16 m de comprimento, ao lado de uma pessoa de 1,70 m.",
+   "alt": "Comparação de tamanho: o nosso megalodon visto de lado, com cerca de 16 m de comprimento, de boca fechada, cinza-escuro com uma faixa mais clara no flanco, ao lado de uma pessoa cinza de 1,70 m que parece minúscula perto dele.",
    "note": [
-    "Reconstrução do próprio museu, construída em código a partir das medidas citadas e renderizada com o nosso próprio motor gráfico. Não é uma fotografia. A forma do corpo segue o modelo de Shimada e outros 2025 (",
+    "Reconstrução do próprio museu, construída em código a partir das medidas citadas e renderizada com nosso próprio motor gráfico. Não é uma fotografia. A forma do corpo segue o modelo de Shimada e outros 2025 (",
     {
      "text": "CC BY 4.0",
      "href": "https://creativecommons.org/licenses/by/4.0/"
@@ -181,7 +181,7 @@
     "pic": "head",
     "tag": "tag_made",
     "what": "A cabeça de boca fechada, mais de perto. Os dentes do modelo seguem outro achado, uma arcada real, no tamanho dela: na frente, eles têm cerca de 10 cm de altura.",
-    "alt": "A cabeça do tubarão, de boca fechada, ao lado da pessoa cinza, que é mais baixa do que o comprimento da cabeça."
+    "alt": "A cabeça do megalodonte, de boca fechada, ao lado da pessoa cinza, que é mais baixa do que o comprimento da cabeça."
    },
    "bars": [
     {
@@ -222,7 +222,7 @@
    "rows": [
     {
      "cells": [
-      "O nosso megalodon",
+      "Nosso megalodonte",
       "cerca de 16 m",
       "mais ou menos 30 t (modelo de 2025), cerca de 61 t (modelo de 2022)",
       "dois modelos sobre uma mesma coluna, peso controverso"
@@ -238,7 +238,7 @@
     },
     {
      "cells": [
-      "O maior megalodon",
+      "O maior megalodonte",
       "talvez cerca de 20 m",
       "",
       "um dente, calculado a partir de arcadas inteiras"
@@ -270,7 +270,7 @@
     },
     {
      "cells": [
-      "Os dentes de megalodon mais altos já achados",
+      "Os dentes de megalodonte mais altos já achados",
       "pelo menos 16 cm de altura, museus citam quase 18 cm",
       "",
       "medidos, cerca de três vezes mais altos que um dente de tubarão-branco"
@@ -296,23 +296,42 @@
   },
   {
    "type": "text",
-   "id": "bones",
-   "nav": "Ossos e corpo",
-   "h": "Ossos e corpo",
+   "id": "alive",
+   "nav": "O megalodon ainda existe?",
+   "h": "O megalodon ainda existe?",
    "paras": [
-    "O megalodon, Otodus megalodon, era um tubarão, e tubarões não têm ossos. O esqueleto deles é de cartilagem, e a cartilagem quase sempre apodrece na terra. O que resta são os dentes e, às vezes, as vértebras, que são mais duras que o resto. Por isso o megalodon é conhecido por dentes, vértebras soltas, pedaços de cartilagem endurecida e escamas minúsculas da pele. Nunca se encontrou um corpo, nem uma cabeça, nem uma nadadeira, nem uma cauda."
+    "Não, o megalodonte existiu de verdade, mas foi extinto há cerca de 3,6 milhões de anos, segundo seus fósseis confiáveis mais recentes. O Natural History Museum de Londres dá os motivos em sua página sobre essa pergunta: nunca se achou um dente de megalodonte mais recente, nem mesmo um que tivesse acabado de cair, ninguém confirmou ter visto um, vivo ou morto, e nenhum animal de hoje tem marcas de mordida do tamanho da boca dele. O fundo do mar, onde ele supostamente se esconde, tem pouca comida para um caçador tão grande, acrescenta o museu, e nenhum tubarão vive muito abaixo de 3.000 m. A página mais antiga do museu sobre o megalodonte observa que um tubarão de mares quentes não sobreviveria no frio do fundo do mar.",
+    "O megalodonte que teria sobrevivido nas profundezas saiu de um programa de televisão de 2013 que apresentou imagens falsas como fatos."
+   ]
+  },
+  {
+   "type": "text",
+   "id": "weight",
+   "nav": "Quanto pesava o megalodon?",
+   "h": "Quanto pesava o megalodon?",
+   "paras": [
+    "Cerca de 30 toneladas pelo modelo esbelto de 2025, e cerca de 61 pelo modelo robusto de 2022, os dois para a mesma coluna de Bruxelas. Os modelos diferem na forma do corpo, e nunca se encontrou um corpo: um é esbelto como os maiores tubarões vivos, o outro robusto como um tubarão-branco. Por isso o peso continua controverso."
+   ]
+  },
+  {
+   "type": "text",
+   "id": "bones",
+   "nav": "Esqueleto do megalodon: ossos e corpo",
+   "h": "Esqueleto do megalodon: ossos e corpo",
+   "paras": [
+    "O megalodonte, Otodus megalodon, era um tubarão, e tubarões não têm ossos. O esqueleto deles é de cartilagem, e a cartilagem quase sempre apodrece na terra. O que resta são os dentes e, às vezes, as vértebras, que são mais duras que o resto. Por isso o megalodonte é conhecido por dentes, vértebras soltas, pedaços de cartilagem endurecida e escamas minúsculas da pele. Nunca se encontrou um corpo, nem uma cabeça, nem uma nadadeira, nem uma cauda."
    ],
    "scale": {
     "pic": "skeleton",
     "tag": "tag_built",
     "what": "O mesmo animal como esqueleto. As vértebras e os dentes seguem os fósseis, e todo o resto é reconstruído e de propósito parece reconstruído.",
-    "alt": "O esqueleto visto de lado, uma longa fila de vértebras e uma mandíbula com dentes a partir dos fósseis, com a cabeça, as nadadeiras e a cauda como formas que se veem reconstruídas.",
+    "alt": "O esqueleto do megalodonte visto de lado, uma longa fila de vértebras e uma mandíbula com dentes a partir dos fósseis, com a cabeça, as nadadeiras e a cauda como formas que se veem reconstruídas.",
     "key": "Marrom-escuro: as vértebras fósseis. Dourado: os dentes. Claro: o que foi reconstruído, inclusive as peças que completam vértebras quebradas.",
     "close": {
      "pic": "skeleton_head",
      "tag": "tag_built",
      "what": "O crânio e a parte da frente da coluna, mais de perto, com a pessoa. As vértebras seguem os fósseis, o crânio e a mandíbula são reconstruídos, e os dentes seguem outro achado, uma arcada real, no tamanho dela.",
-     "alt": "A parte da frente do esqueleto vista de lado: um crânio e uma mandíbula claros e reconstruídos, com dentes dourados, e depois uma fila de vértebras escuras, ao lado da pessoa cinza.",
+     "alt": "A parte da frente do esqueleto do megalodonte vista de lado: um crânio e uma mandíbula claros e reconstruídos, com dentes dourados, e depois uma fila de vértebras escuras, ao lado da pessoa cinza.",
      "key": "Marrom-escuro: as vértebras fósseis. Dourado: os dentes. Claro: o que foi reconstruído, inclusive as peças que completam vértebras quebradas."
     }
    }
@@ -323,7 +342,7 @@
    "nav": "Quão certo é isso",
    "h": "Quão certo é isso",
    "paras": [
-    "Os 16 m se apoiam na coluna de Bruxelas: 141 vértebras, cerca de 11 m em fila, mais uma cabeça e uma cauda nas proporções dos lamniformes atuais, o grupo de tubarões a que pertence o tubarão-branco. Duas equipes de pesquisa chegaram a 15,9 m e 16,4 m com modelos diferentes, e por isso dizemos cerca de 16 m. Os 20 m se apoiam em um único dente, calculado a partir de arcadas inteiras. O peso se apoia em um modelo do corpo, e esse modelo precisa de uma forma de corpo que ninguém conhece: esbelto como os maiores tubarões vivos, dá cerca de 30 toneladas, e robusto como um tubarão-branco, cerca de 61. Por isso o comprimento diz “cerca de” e o peso diz “controverso”."
+    "Os 16 m se apoiam na coluna de Bruxelas: 141 vértebras, cerca de 11 m em fila, mais uma cabeça e uma cauda nas proporções dos lamniformes atuais, o grupo de tubarões a que pertence o tubarão-branco. Duas equipes de pesquisa chegaram a 15,9 m e 16,4 m com modelos diferentes, e por isso dizemos cerca de 16 m. Os 20 m se apoiam em um único dente, calculado a partir de arcadas inteiras. Por isso o comprimento diz “cerca de” e os maiores, “talvez”."
    ]
   },
   {
@@ -334,7 +353,7 @@
    "paras": [
     "Em Bruxelas, no Instituto Real Belga de Ciências Naturais, estão 141 vértebras soltas de um único tubarão, IRSNB P 9893, achadas perto da Antuérpia na década de 1860. A maior tem 15,5 cm de diâmetro, e em fila elas somam cerca de 11 m. Elas dão o comprimento do tronco, mas não o da cabeça nem a grossura do corpo. Nenhum dente foi encontrado com elas, então até o nome megalodon para este animal é uma dedução.",
     "Na Dinamarca, em 1978, restos de cerca de 20 vértebras foram desenterrados em Gram. Em 1989 eles foram danificados no depósito, e por muito tempo foram dados como perdidos. Restam duas vértebras quebradas e muitos fragmentos. A maior tem 23 cm de diâmetro, e nela se apoia a maior estimativa da lista abaixo.",
-    "Ninguém encontrou um esqueleto de megalodon, nem uma arcada com os dentes ainda no lugar, na mandíbula. Toda fileira de dentes que você já viu é uma montagem, inclusive a nossa."
+    "Ninguém encontrou um esqueleto de megalodonte, nem uma arcada com os dentes ainda no lugar, na mandíbula. Toda fileira de dentes que você já viu é uma montagem, inclusive a nossa."
    ]
   },
   {
@@ -350,7 +369,7 @@
     },
     {
      "term": "Cerca de 10 m",
-     "text": "Segundo relatos posteriores, o comprimento mais comum em um estudo de 2015 que calculou o comprimento de megalodons de todas as idades a partir dos dentes, incluindo os jovens. O número vale para um animal típico de qualquer idade, não para um adulto, e se baseia no método do dente, acima."
+     "text": "Segundo relatos posteriores, o comprimento mais comum em um estudo de 2015 que calculou o comprimento de megalodontes de todas as idades a partir dos dentes, incluindo os jovens. O número vale para um animal típico de qualquer idade, não para um adulto, e se baseia no método do dente, acima."
     },
     {
      "term": "20 m",
@@ -379,25 +398,25 @@
    "rows": [
     {
      "term": "Um tubarão-branco, só que muito maior",
-     "text": "Não era um tubarão-branco: o megalodon foi o último da própria linhagem de tubarões, uma linhagem que, pelos dentes, remonta a cerca de 55 milhões de anos. O tubarão-branco vem de outra linhagem, e os primeiros membros dela já viviam ao lado do megalodon, então ele também não descende do megalodon."
+     "text": "Não era um tubarão-branco: o megalodonte foi o último da própria linhagem de tubarões, uma linhagem que, pelos dentes, remonta a cerca de 55 milhões de anos. O tubarão-branco vem de outra linhagem, e os primeiros membros dela já viviam ao lado do megalodonte, então ele também não descende do megalodonte."
     },
     {
      "term": "Vivo hoje, escondido no fundo do mar",
-     "text": "A televisão já o mostrou assim, mas ele desapareceu há cerca de 3,6 milhões de anos. Um gigante vivo deixaria marcas de mordida frescas e dentes às dezenas de milhares, e um tubarão de mares quentes não sobreviveria no frio do fundo do mar, como explica o Natural History Museum de Londres."
+     "text": "A televisão já o mostrou assim, mas ele foi extinto há muito tempo: veja “O megalodon ainda existe?” mais acima."
     },
     {
-     "term": "Um megalodon atacando uma baleia do tamanho de uma baleia-azul",
-     "text": "Algumas das marcas de mordida dele, achadas no Peru, estão em pequenas baleias com barbatanas e em focas, e não se sabe se ele as caçava ou comia animais já mortos. Muito provavelmente ele nunca encontrou uma baleia-azul: entre o último megalodon e o fóssil mais antigo conhecido de baleia-azul há cerca de dois milhões de anos."
+     "term": "Um megalodonte atacando uma baleia do tamanho de uma baleia-azul",
+     "text": "Algumas das marcas de mordida dele, achadas no Peru, estão em pequenas baleias com barbatanas e em focas, e não se sabe se ele as caçava ou comia animais já mortos. Muito provavelmente ele nunca encontrou uma baleia-azul: entre o último megalodonte e o fóssil mais antigo conhecido de baleia-azul há cerca de dois milhões de anos."
     }
    ]
   },
   {
    "type": "text",
    "id": "why",
-   "nav": "Por que o nosso megalodon é assim",
-   "h": "Por que o nosso megalodon é assim",
+   "nav": "Por que nosso megalodon é assim",
+   "h": "Por que nosso megalodon é assim",
    "paras": [
-    "Ele é esbelto, segundo o modelo de 2025: um corpo robusto como o do tubarão-branco talvez lhe custasse esforço demais para nadar, dizem os autores, e os maiores tubarões vivos são esbeltos. Ele é pintado escuro em cima e claro embaixo, como os tubarões vivos de mar aberto, porque a cor real não se conhece. Os dentes seguem outro achado, UF-VP-311000, uma arcada real, no tamanho dela. A cabeça, as nadadeiras e a cauda vêm dos lamniformes vivos, porque nunca se encontrou uma cabeça de megalodon. Ele não é um tubarão-branco ampliado: pertencia a uma família própria, hoje extinta, e segundo os trabalhos mais recentes era mais esbelto e mais alongado que o monstro do filme."
+    "Ele é esbelto, segundo o modelo de 2025: um corpo robusto como o do tubarão-branco talvez lhe custasse esforço demais para nadar, dizem os autores, e os maiores tubarões vivos são esbeltos. Ele é pintado escuro em cima e claro embaixo, como os tubarões vivos de mar aberto, porque a cor real não se conhece. Os dentes seguem outro achado, UF-VP-311000, uma arcada real, no tamanho dela. A cabeça, as nadadeiras e a cauda vêm dos lamniformes vivos, porque nunca se encontrou uma cabeça de megalodonte. Ele não é um tubarão-branco ampliado: pertencia a uma família própria, hoje extinta, e segundo os trabalhos mais recentes era mais esbelto e mais alongado que o monstro do filme."
    ]
   },
   {
@@ -408,11 +427,11 @@
    "items": [
     {
      "q": "Megalodon contra tubarão-branco: quanto maior ele era?",
-     "a": "Os maiores tubarões-brancos chegam a cerca de 6 m, e um adulto costuma ter de 4 a 5 m. Então o nosso megalodon de cerca de 16 m tinha mais ou menos duas vezes e meia a três vezes o comprimento do maior tubarão-branco."
+     "a": "Os maiores tubarões-brancos chegam a cerca de 6 m, e um adulto costuma ter de 4 a 5 m. Então nosso megalodonte de cerca de 16 m tinha mais ou menos duas vezes e meia a três vezes o comprimento do maior tubarão-branco."
     },
     {
      "q": "Megalodon contra baleia-azul: qual era maior?",
-     "a": "A baleia-azul. A maioria das baleias-azuis adultas tem de 23 a 27 m, as maiores cerca de 30 m, e a NOAA, a agência dos oceanos dos Estados Unidos, diz que ela é o maior animal que se sabe ter existido. O nosso megalodon chegaria a um pouco mais da metade da maior. Até o maior tubarão-baleia já medido, com 18,8 m, era mais comprido que o nosso megalodon, e com perto de 34 toneladas pesava mais ou menos o mesmo que o modelo esbelto do megalodon."
+     "a": "A baleia-azul: a maioria das adultas tem de 23 a 27 m, as maiores cerca de 30 m, e a NOAA, a agência dos oceanos dos Estados Unidos, diz que ela é o maior animal que se sabe ter existido. Nosso megalodonte chegaria a um pouco mais da metade da maior. Até o maior tubarão-baleia já medido, com 18,8 m, era mais comprido que nosso megalodonte, e com perto de 34 toneladas pesava mais ou menos o mesmo que o modelo esbelto do megalodonte."
     },
     {
      "q": "Qual era o tamanho dos dentes do megalodon?",
@@ -420,7 +439,7 @@
     },
     {
      "q": "Quando e por que o megalodon foi extinto?",
-     "a": "Há cerca de 3,6 milhões de anos, segundo os fósseis confiáveis mais recentes. O motivo não está estabelecido. As propostas são mares mais frios, que dividiram a área onde ele vivia, o tubarão-branco recém-surgido como rival, uma queda no número das pequenas baleias com barbatanas que ele caçava, e o custo de um corpo quente, porque ele se mantinha mais quente que a água em volta."
+     "a": "Muito provavelmente há cerca de 3,6 milhões de anos. Um estudo de 2019 viu que os dentes mais recentes que examinou tinham sido levados pela água de rochas mais antigas ou não tinham um registro confiável, e sua estimativa situa o fim entre cerca de 4,1 e 3,2 milhões de anos atrás. O motivo não está estabelecido. As propostas são mares mais frios, que dividiram a área onde ele vivia, o tubarão-branco recém-surgido como rival, uma queda no número das pequenas baleias com barbatanas que ele caçava, e o custo de um corpo quente, porque ele se mantinha mais quente que a água em volta."
     }
    ]
   },
@@ -448,31 +467,31 @@
     {
      "page": "biggest-dinosaurs",
      "pic": "dinosaurs",
-     "alt": "Os nossos sete dinossauros em fila, vistos de lado, na mesma escala. O mais longo, o nosso Argentinosaurus, tem cerca de 30,6 m. Dois pescoços longos se erguem bem acima dos outros, e uma pessoa cinza de 1,70 m parece minúscula perto deles."
+     "alt": "Nossos sete dinossauros em fila, vistos de lado, na mesma escala. O mais longo, nosso Argentinosaurus, tem cerca de 30,6 m. Dois pescoços longos se erguem bem acima dos outros, e uma pessoa cinza de 1,70 m parece minúscula perto deles."
     },
     {
      "page": "t-rex",
      "pic": "trex",
-     "alt": "O nosso T. rex de lado, sobre duas patas, com cerca de 11,4 m de comprimento nesta pose, de boca fechada e cabeça erguida, ao lado de uma pessoa cinza de 1,70 m que fica bem abaixo do quadril dele.",
-     "line": "Cerca de 12 m de comprimento e mais ou menos 8 a 9 toneladas, pelos ossos de SUE. O nosso T. rex ao lado de uma pessoa, com o que foi encontrado de SUE."
+     "alt": "Nosso T. rex de lado, sobre duas patas, com cerca de 11,4 m de comprimento nesta pose, de boca fechada e cabeça erguida, ao lado de uma pessoa cinza de 1,70 m que fica bem abaixo do quadril dele.",
+     "line": "Cerca de 12 m de comprimento e mais ou menos 8 a 9 toneladas, pelos ossos de SUE. Nosso T. rex ao lado de uma pessoa, com o que foi encontrado de SUE."
     },
     {
      "page": "spinosaurus",
      "pic": "spino",
-     "alt": "O maior espinossauro adulto de lado, pouco menos de 14 m por um modelo, com uma vela alta e uma cauda alta. Na frente, o nosso jovem de cerca de 10 m como uma forma cinza chapada, e uma pessoa cinza de 1,70 m que chega ao quadril do jovem.",
-     "line": "Os maiores adultos, pouco menos de 14 m segundo um modelo, o nosso um jovem de cerca de 10 m, na beira da água e sobre duas patas."
+     "alt": "O maior espinossauro adulto de lado, pouco menos de 14 m por um modelo, com uma vela alta e uma cauda alta. Na frente, nosso jovem de cerca de 10 m como uma forma cinza chapada, e uma pessoa cinza de 1,70 m que chega ao quadril do jovem.",
+     "line": "Os maiores adultos, pouco menos de 14 m segundo um modelo, o nosso, um jovem de cerca de 10 m, na beira da água e sobre duas patas."
     },
     {
      "page": "woolly-mammoth",
      "pic": "mammoth",
-     "alt": "O nosso mamute-lanoso, o macho de Berezovka, de lado, com pelagem marrom-escura: a cabeça alta e abaulada, o dorso inclinado, duas presas curvas e uma marca na altura do ombro, a 271 cm por uma reconstrução. A pessoa cinza ao lado, de 1,70 m, fica mais baixa que as pontas das presas.",
-     "line": "Um macho siberiano típico tinha cerca de 2,7 a 2,9 m de altura no ombro, mais ou menos o mesmo que um macho de elefante-asiático. O nosso é um macho real encontrado congelado em 1900, com o que é dele e o que foi reconstruído."
+     "alt": "Nosso mamute-lanoso, o macho de Berezovka, de lado, com pelagem marrom-escura: a cabeça alta e abaulada, o dorso inclinado, duas presas curvas e uma marca na altura do ombro, a 271 cm por uma reconstrução. A pessoa cinza ao lado, de 1,70 m, fica mais baixa que as pontas das presas.",
+     "line": "Um macho siberiano típico tinha cerca de 2,7 a 2,9 m de altura no ombro, mais ou menos o mesmo que um macho de elefante-asiático. Nosso mamute foi construído a partir de um macho real encontrado congelado em 1900, com o que é dele e o que foi reconstruído."
     },
     {
      "page": "blue-whale",
      "pic": "whale",
-     "alt": "A nossa baleia-azul de lado, com 22,86 m de comprimento: um corpo esguio, cinza-azulado, com manchas claras, uma cabeça achatada, uma nadadeira peitoral longa de borda clara e uma pequena nadadeira dorsal bem atrás. Ao lado, uma pessoa cinza de 1,70 m que chega a pouco mais da metade da altura da baleia.",
-     "line": "A baleia-azul, o animal mais pesado que se conhece, costuma ter de 23 a 27 m de comprimento, e as maiores, cerca de 30 m. A nossa baleia-azul ao lado do nosso megalodon, na mesma escala, e por que os dois nunca coincidiram."
+     "alt": "Nossa baleia-azul de lado, com 22,86 m de comprimento: um corpo esguio, cinza-azulado, com manchas claras, uma cabeça achatada, uma nadadeira peitoral longa de borda clara e uma pequena nadadeira dorsal bem atrás. Ao lado, uma pessoa cinza de 1,70 m que chega a pouco mais da metade da altura da baleia.",
+     "line": "A baleia-azul, o animal mais pesado que se conhece, costuma ter de 23 a 27 m de comprimento, e as maiores, cerca de 30 m. Nossa baleia-azul ao lado do nosso megalodonte, na mesma escala, e por que os dois nunca coincidiram."
     }
    ]
   },
@@ -526,8 +545,12 @@
      "text": "Natural History Museum of Denmark: as vértebras dinamarquesas NHMD 157890."
     },
     {
-     "text": "Natural History Museum, Londres.",
+     "text": "Natural History Museum, Londres: a página do museu sobre o megalodonte.",
      "href": "https://www.nhm.ac.uk/discover/megalodon--the-truth-about-the-largest-shark-that-ever-lived.html"
+    },
+    {
+     "text": "Natural History Museum, Londres: a página do museu sobre se o megalodonte ainda existe, 2025.",
+     "href": "https://www.nhm.ac.uk/discover/is-megalodon-still-alive.html"
     },
     {
      "text": "American Museum of Natural History, Nova York.",
@@ -567,17 +590,16 @@
       "text": "CC BY 4.0",
       "href": "https://creativecommons.org/licenses/by/4.0/"
      },
-     "). Elas mostram uma reconstrução, construída em código e renderizada com o nosso próprio motor gráfico, não uma fotografia."
+     "). Elas mostram uma reconstrução, construída em código e renderizada com nosso próprio motor gráfico, não uma fotografia."
     ]
    ],
    "shapes": {
-    "draft": true,
-    "caption": "Comparação de tamanho do megalodon: o nosso megalodon, com cerca de 16 m de comprimento, ao lado de uma pessoa de 1,70 m, na mesma escala.",
-    "lead": "Para slides e publicações, a comparação de tamanho também vem em três formatos, com a mesma licença.",
+    "caption": "Comparação de tamanho do megalodon: nosso megalodonte, com cerca de 16 m de comprimento, ao lado de uma pessoa de 1,70 m, na mesma escala.",
+    "lead": "Para slides e publicações, esta comparação de tamanho vem em três formatos, todos com a mesma licença.",
     "alts": {
-     "size_1x1": "Comparação de tamanho do megalodon: a cabeça do nosso megalodon até a nadadeira peitoral, com uma pessoa cinza de 1,70 m junto ao focinho.",
-     "size_4x3": "Comparação de tamanho do megalodon: os dois terços da frente do nosso megalodon ao lado de uma pessoa cinza de 1,70 m.",
-     "size_16x9": "Comparação de tamanho do megalodon: o nosso megalodon inteiro de lado, com cerca de 16 m de comprimento, ao lado de uma pessoa cinza de 1,70 m."
+     "size_1x1": "Comparação de tamanho do megalodon: a cabeça do nosso megalodonte da nadadeira peitoral para a frente, com uma pessoa cinza de 1,70 m de pé diante do focinho.",
+     "size_4x3": "O megalodon ao lado de uma pessoa, em comparação de tamanho: os dois terços da frente do nosso megalodonte, com a alta nadadeira dorsal, e uma pessoa cinza de 1,70 m.",
+     "size_16x9": "Comparação de tamanho do megalodon, o tubarão inteiro de lado: nosso megalodonte, com cerca de 16 m de comprimento, e uma pessoa cinza de 1,70 m na frente dele."
     },
     "links": {
      "size_1x1": "Quadrada (1:1)",
