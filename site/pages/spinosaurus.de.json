@@ -20,7 +20,7 @@
     "size_4x3",
     "size_16x9"
    ],
-   "figure": "size_16x9"
+   "figure": "size_4x3"
   }
  },
  "pics": {
@@ -153,7 +153,7 @@
  },
  "meta": {
   "title": "Spinosaurus-Größe: bis etwa 14 m lang | Museum of Ages",
-  "description": "Spinosaurus-Größe: die größten Tiere knapp unter 14 m lang, etwa 7,4 t, nach einem Modell. Unserer ist ein junges Tier von etwa 10 m neben einem Menschen.",
+  "description": "Spinosaurus-Größe und Höhe: die größten Tiere knapp unter 14 m lang und etwa 7,4 t schwer, nach einem Modell. Dazu der neue Spinosaurus mirabilis (2026).",
   "og_title": "Spinosaurus-Größe: bis etwa 14 m lang",
   "og_image_alt": "Der größte erwachsene Spinosaurus von der Seite, nach einem Modell knapp unter 14 m lang, mit hohem Rückensegel und tiefem Schwanz. Davor unser junges Tier von etwa 10 m als graue Silhouette und ein grauer Mensch von 1,70 m, der dem jungen Tier bis zur Hüfte reicht."
  },
@@ -177,8 +177,8 @@
   "scale": {
    "pic": "side",
    "tag": "tag_made",
-   "what": "Die größten erwachsenen Tiere neben einem Menschen von 1,70 m, im selben Maßstab: knapp unter 14 m nach dem Modell von 2022. Dieses Modell vergrößert das junge Skelett aus Marokko um etwa ein Drittel, und wir haben unser Modell genauso vergrößert. Ein erwachsenes Skelett hat niemand gefunden. Das große Tier ist eine Schätzung, kein gefundenes Tier. In der Haltung unseres Modells misst es etwa 13,1 m. Davor, einfarbig grau, unser junges Tier von etwa 10 m, nach diesem Skelett gebaut.",
-   "alt": "Der größte erwachsene Spinosaurus von der Seite, nach einem Modell knapp unter 14 m lang, mit hohem Rückensegel und tiefem Schwanz. Davor unser junges Tier von etwa 10 m als graue Silhouette und ein grauer Mensch von 1,70 m, der dem jungen Tier bis zur Hüfte reicht.",
+   "what": "Größenvergleich: die größten erwachsenen Tiere neben einem Menschen von 1,70 m, im selben Maßstab, nach dem Modell von 2022 knapp unter 14 m lang. Dieses Modell vergrößert das junge Skelett aus Marokko um etwa ein Drittel, und wir haben unser Modell genauso vergrößert. Ein erwachsenes Skelett hat niemand gefunden. Das große Tier ist eine Schätzung, kein gefundenes Tier. In der Haltung unseres Modells misst es etwa 13,1 m. Davor, einfarbig grau, unser junges Tier von etwa 10 m, nach diesem Skelett gebaut.",
+   "alt": "Größenvergleich: der größte erwachsene Spinosaurus von der Seite, nach einem Modell knapp unter 14 m lang, mit hohem Rückensegel und tiefem Schwanz. Davor unser junges Tier von etwa 10 m als graue Silhouette und ein grauer Mensch von 1,70 m, der dem jungen Tier bis zur Hüfte reicht.",
    "note": "Unsere eigene Rekonstruktion, nach veröffentlichten Maßen in Code gebaut und in unserer Engine gerendert. Keine Fotos.",
    "marks": [
     {
@@ -217,8 +217,8 @@
   {
    "type": "numbers",
    "id": "numbers",
-   "nav": "Die Zahlen",
-   "h": "Die Zahlen",
+   "nav": "Spinosaurus-Steckbrief: die Zahlen",
+   "h": "Spinosaurus-Steckbrief: die Zahlen",
    "unit": "In Metern und Tonnen. Eine leere Zelle hat keine belegte Zahl. Unser T. rex bekommt kein Gewicht, es steht auf seiner eigenen Seite nach den Studien zu SUE.",
    "cols": [
     "Tier",
@@ -258,8 +258,8 @@
     {
      "cells": [
       "Unser T. rex, nach SUE",
-      "etwa 11,4 m in seiner Haltung",
-      "Hüftgelenk etwa 3,2 m, Rücken über der Hüfte 3,96 m, erhobener Kopf etwa 4,6 m",
+      "etwa 11,0 m in seiner Haltung",
+      "Hüftgelenk etwa 3,2 m, Rücken über der Hüfte 3,87 m, erhobener Kopf etwa 4,4 m",
       "nicht angegeben",
       "an unseren Dateien gemessen"
      ]
@@ -277,16 +277,25 @@
   },
   {
    "type": "text",
+   "id": "how-tall",
+   "nav": "Wie hoch war der Spinosaurus?",
+   "h": "Wie hoch war der Spinosaurus?",
+   "paras": [
+    "Nach unserem um etwa ein Drittel vergrößerten Modell waren die größten erwachsenen Tiere bis zur Segelspitze etwa 4,6 m hoch, ihr Hüftgelenk lag etwa 2,1 m über dem Boden. Unser junges Tier: die Segelspitze etwa 3,5 m, der Kopf in seiner Haltung etwa 3 m, das Hüftgelenk etwa 1,6 m. Die 2,1 m stammen aus unserem Modell: Für erwachsene Tiere ist keine Hüfthöhe veröffentlicht, nur dass T. rex an der Hüfte höher stand."
+   ]
+  },
+  {
+   "type": "text",
    "id": "t-rex",
-   "nav": "Spinosaurus gegen T. rex, nur die Größe",
-   "h": "Spinosaurus gegen T. rex, nur die Größe",
+   "nav": "Spinosaurus und T. rex im Größenvergleich",
+   "h": "Spinosaurus und T. rex im Größenvergleich",
    "paras": [
     "Der größte Spinosaurus war länger als jeder bisher gefundene T. rex: knapp unter 14 m nach einem Modell, gegen etwa 12 m für das Skelett von SUE. Schwerer war er wahrscheinlich nicht, etwa 7,4 bis 8 t im Modell gegen etwa 8 bis 9 t bei den größten bekannten T. rex. An der Hüfte stand er viel niedriger. Der Oberschenkelknochen des jungen Tiers aus Marokko misst 61 cm, der von SUE 1,32 m. Begegnet sind sich die beiden nie: Spinosaurus lebte vor etwa 95 Millionen Jahren in Nordafrika, T. rex vor etwa 68 bis 66 Millionen Jahren in Nordamerika."
    ],
    "scale": {
     "pic": "vs",
     "tag": "tag_made",
-    "what": "Der größte erwachsene Spinosaurus und unser T. rex, im selben Maßstab. Der Spinosaurus ist unser Modell, um etwa ein Drittel vergrößert, so wie das Modell von 2022 entstand. Nach diesem Modell waren die größten Tiere knapp unter 14 m lang. Unser T. rex nach SUE ist ein großes erwachsenes Tier von etwa 11,4 m. Darum ist hier der Spinosaurus der längere. Der T. rex steht an der Hüfte viel höher. Der Spinosaurus war wahrscheinlich der leichtere der beiden.",
+    "what": "Der größte erwachsene Spinosaurus und unser T. rex, im selben Maßstab. Der Spinosaurus ist unser Modell, um etwa ein Drittel vergrößert, so wie das Modell von 2022 entstand. Nach diesem Modell waren die größten Tiere knapp unter 14 m lang. Unser T. rex nach SUE ist ein großes erwachsenes Tier, in seiner Haltung etwa 11 m lang. Darum ist hier der Spinosaurus der längere. Der T. rex steht an der Hüfte viel höher. Der Spinosaurus war wahrscheinlich der leichtere der beiden.",
     "alt": "Ein großer erwachsener Spinosaurus mit Rückensegel und ein kürzerer T. rex mit erhobenem Kopf, beide von der Seite, der T. rex an der Hüfte etwa anderthalbmal so hoch, daneben der graue Mensch.",
     "marks": [
      {
@@ -295,7 +304,7 @@
      },
      {
       "span": "t-rex",
-      "text": "Unser T. rex, nach SUE, etwa 11,4 m"
+      "text": "Unser T. rex, nach SUE, etwa 11 m"
      },
      {
       "span": "person",
@@ -340,6 +349,15 @@
       "Die Schnauze war vorne löffelförmig verbreitert. Haut, Lippen und Farbe kennt man von keinem Spinosaurier."
      ]
     }
+   ]
+  },
+  {
+   "type": "text",
+   "id": "mirabilis",
+   "nav": "Der neue Spinosaurus: Spinosaurus mirabilis (2026)",
+   "h": "Der neue Spinosaurus: Spinosaurus mirabilis (2026)",
+   "paras": [
+    "Im Februar 2026 benannte ein Team um Paul Sereno in der Fachzeitschrift Science eine zweite Art, Spinosaurus mirabilis, nach Fossilien aus etwa 95 Millionen Jahre alten Flusssandsteinen in Niger. Es sind Schädelknochen, Zähne und einige weitere Knochen, alle von jungen Tieren: Das Team schätzt das junge Typusexemplar auf etwa 8 m und hält die Größe ausgewachsener Tiere für ungewiss. Auf der Schnauze trug die Art einen hohen, gebogenen Kamm, im Verhältnis zum Schädel höher als bei jedem anderen bekannten Dinosaurier außer den Vögeln, und nach der Studie war er wahrscheinlich von einer Hornscheide umhüllt und verlängert, wie beim Helmperlhuhn. Ansonsten sind ihre Knochen denen von Spinosaurus aegyptiacus sehr ähnlich. An den Größen auf dieser Seite ändert die neue Art nichts, und sie ist nicht unser Tier: Unseres ist ein Spinosaurus aegyptiacus."
    ]
   },
   {
@@ -519,10 +537,6 @@
    "h": "Weitere Fragen",
    "items": [
     {
-     "q": "Wie hoch war der Spinosaurus?",
-     "a": "Die größten erwachsenen Tiere, nach unserem um etwa ein Drittel vergrößerten Modell: die Segelspitze etwa 4,6 m, das Hüftgelenk etwa 2,1 m. Unser junges Tier: die Segelspitze etwa 3,5 m, der Kopf in seiner Haltung etwa 3 m, das Hüftgelenk etwa 1,6 m. Die 2,1 m stammen aus unserem Modell: Für erwachsene Tiere ist keine Hüfthöhe veröffentlicht, nur dass T. rex an der Hüfte höher stand."
-    },
-    {
      "q": "War der Spinosaurus der größte Dinosaurier?",
      "a": "Nein. Die Langhalsdinosaurier waren viel größer: Argentinosaurus etwa 30 bis 35 m lang und grob 65 bis 80 t schwer. Mehr dazu auf der Seite der größten Dinosaurier.",
      "links": [
@@ -669,19 +683,18 @@
     ]
    ],
    "shapes": {
-    "caption": "Spinosaurus im Größenvergleich: das größte erwachsene Tier, unser Modell vergrößert, in seiner Haltung etwa 13,1 m lang, neben einem Menschen von 1,70 m, im selben Maßstab.",
+    "caption": "Spinosaurus im Größenvergleich: das größte erwachsene Tier nach unserem vergrößerten Modell, ganz von der Seite, in seiner Haltung etwa 13,1 m lang, neben einem Menschen von 1,70 m, im selben Maßstab.",
     "lead": "Für Folien und Beiträge gibt es diesen Größenvergleich in drei Formaten, alle unter derselben Lizenz.",
     "alts": {
-     "size_1x1": "Spinosaurus im Größenvergleich: die vordere Hälfte des größten erwachsenen Tiers, unser Modell vergrößert, mit langer Schnauze, Hals, Segel und Beinen, unter dem Kopf ein grauer Mensch von 1,70 m.",
-     "size_4x3": "Spinosaurus neben einem Menschen im Größenvergleich: das größte erwachsene Tier, unser Modell vergrößert, ganz von der Seite mit hohem Segel und langem Schwanz, und unter der Schnauze ein grauer Mensch von 1,70 m.",
-     "size_16x9": "Spinosaurus im Größenvergleich, das ganze erwachsene Tier von der Seite: unser Modell vergrößert, etwa 13,1 m lang, und unter seinem Kopf ein grauer Mensch von 1,70 m."
+     "size_1x1": "Spinosaurus im Größenvergleich: der vordere Teil des größten erwachsenen Tiers, unser vergrößertes Modell, mit langer Schnauze, Hals, Segel und Beinen, unter dem Kopf ein grauer Mensch von 1,70 m.",
+     "size_4x3": "Spinosaurus neben einem Menschen im Größenvergleich: das größte erwachsene Tier, unser vergrößertes Modell, ganz von der Seite mit hohem Segel und langem Schwanz, und unter der Schnauze ein grauer Mensch von 1,70 m.",
+     "size_16x9": "Spinosaurus im Größenvergleich, das ganze Tier von der Seite: das größte erwachsene Tier nach unserem vergrößerten Modell, etwa 13,1 m lang, und unter seinem Kopf ein grauer Mensch von 1,70 m."
     },
     "links": {
      "size_1x1": "Quadrat (1:1)",
      "size_4x3": "Folie (4:3)",
      "size_16x9": "Breitbild (16:9)"
-    },
-    "draft": true
+    }
    }
   }
  ]

@@ -20,7 +20,7 @@
     "size_4x3",
     "size_16x9"
    ],
-   "figure": "size_16x9"
+   "figure": "size_4x3"
   }
  },
  "pics": {
@@ -198,7 +198,7 @@
  },
  "meta": {
   "title": "Qual foi o maior dinossauro do mundo? | Museum of Ages",
-  "description": "Qual foi o maior dinossauro do mundo? Provavelmente Argentinosaurus: cerca de 30 a 35 m e mais ou menos 65 a 80 t. Sete dinossauros e uma pessoa em escala.",
+  "description": "Qual foi o maior dinossauro do mundo? Provavelmente Argentinosaurus: cerca de 30 a 35 m e de 65 a 80 t, por modelos. Sete dinossauros e uma pessoa em escala.",
   "og_title": "Qual foi o maior dinossauro do mundo? Provavelmente o Argentinosaurus",
   "og_image_alt": "Os nossos sete dinossauros em fila, vistos de lado, na mesma escala. O mais longo, o nosso Argentinosaurus, tem cerca de 30,6 m. Dois pescoços longos se erguem bem acima dos outros, e uma pessoa cinza de 1,70 m parece minúscula perto deles."
  },
@@ -210,19 +210,18 @@
   "tag_made": "Feito para esta página",
   "tag_built": "Reconstrução",
   "person": "1,70 m",
-  "to_table": "Os números numa tabela",
+  "to_table": "Os números em uma tabela",
   "no_figure": "sem número com fonte",
   "og_answer": "Provavelmente o Argentinosaurus, com cerca de 30 a 35 m"
  },
  "top": {
   "h1": "Qual foi o maior dinossauro do mundo?",
-  "answer": "O maior dinossauro foi provavelmente o Argentinosaurus, um titanossauro de pescoço longo da Argentina: cerca de 30 a 35 m de comprimento e mais ou menos 65 a 80 toneladas, segundo modelos feitos a partir de poucos ossos. Ninguém pode ter certeza. Nunca se encontrou um esqueleto completo de nenhuma das maiores espécies, e o parente dele, o Patagotitan, chega perto. O nosso Argentinosaurus na imagem tem 30,6 m, o mesmo que 18 pessoas de 1,70 m deitadas uma atrás da outra.",
-  "answer_more": "“O maior” pode querer dizer três coisas. O mais pesado foi muito provavelmente um titanossauro da Patagônia, o Argentinosaurus ou o Patagotitan. O mais longo não está estabelecido. O mais alto foi provavelmente o Sauroposeidon, com a cabeça a cerca de 17 m do chão, segundo quatro vértebras do pescoço.",
+  "answer": "O maior dinossauro foi provavelmente o Argentinosaurus, um titanossauro de pescoço longo da Argentina: cerca de 30 a 35 m de comprimento e mais ou menos 65 a 80 toneladas, segundo modelos feitos a partir de poucos ossos. Ninguém pode ter certeza. Nunca se encontrou um esqueleto completo de nenhuma das maiores espécies, e o parente dele, o Patagotitan, chega perto. Nosso Argentinosaurus na imagem tem 30,6 m, o mesmo que 18 pessoas de 1,70 m deitadas uma atrás da outra.",
   "scale": {
    "pic": "row",
    "tag": "tag_made",
-   "what": "Os nossos sete ao lado de uma pessoa de 1,70 m, na mesma escala, cada um do jeito que o nosso modelo foi construído. O nosso espinossauro é um animal jovem de cerca de 10 m, cerca de três quartos de um adulto, então aqui ele é mais curto que o nosso T. rex. Um espinossauro adulto era mais longo que qualquer T. rex e, muito provavelmente, mais leve.",
-   "alt": "Os nossos sete dinossauros em fila, vistos de lado, na mesma escala. O mais longo, o nosso Argentinosaurus, tem cerca de 30,6 m. Dois pescoços longos se erguem bem acima dos outros, e uma pessoa cinza de 1,70 m parece minúscula perto deles.",
+   "what": "Comparação de tamanho: os nossos sete ao lado de uma pessoa de 1,70 m, na mesma escala, cada um do jeito que o nosso modelo foi construído. O nosso espinossauro é um animal jovem de cerca de 10 m, cerca de três quartos de um adulto, então aqui ele é mais curto que o nosso T. rex. Pelo modelo de 2022, o maior espinossauro adulto era mais longo que qualquer T. rex encontrado até hoje e, muito provavelmente, mais leve.",
+   "alt": "Comparação de tamanho: os nossos sete dinossauros em fila, vistos de lado, na mesma escala. O mais longo, o nosso Argentinosaurus, tem cerca de 30,6 m. Dois pescoços longos se erguem bem acima dos outros, e uma pessoa cinza de 1,70 m parece minúscula perto deles.",
    "note": [
     "Reconstruções do próprio museu, construídas em código a partir de medidas e desenhos publicados, e renderizadas com o nosso próprio motor gráfico. Não são fotografias. ",
     "O contorno do nosso Triceratops segue o modelo de corpo de ",
@@ -274,7 +273,7 @@
     },
     {
      "span": "t-rex",
-     "text": "T. rex, cerca de 11,4 m"
+     "text": "T. rex, cerca de 11,0 m"
     },
     {
      "span": "spinosaurus",
@@ -284,12 +283,12 @@
    "close": {
     "pic": "close",
     "tag": "tag_made",
-    "what": "A mesma escala, mais de perto: a pessoa entre os cinco animais menores. O nosso T. rex leva a cabeça a cerca de 4,6 m do chão, e a vela do nosso espinossauro chega a 3,5 m.",
+    "what": "A mesma escala, mais de perto: a pessoa entre os cinco animais menores. Nosso T. rex leva a cabeça a cerca de 4,4 m do chão, e a vela do nosso espinossauro chega a 3,5 m.",
     "alt": "A pessoa cinza entre os cinco dinossauros menores, mais de perto: dois carnívoros sobre duas patas, e três com chifres, couraça e placas sobre quatro.",
     "marks": [
      {
       "span": "t-rex",
-      "text": "T. rex, cerca de 11,4 m"
+      "text": "T. rex, cerca de 11,0 m"
      },
      {
       "span": "spinosaurus",
@@ -318,7 +317,7 @@
    "h": "Tente adivinhar",
    "q": "Qual dos nossos sete tem no quadril aproximadamente a altura da pessoa, 1,70 m?",
    "button": "Ver a resposta",
-   "a": "O nosso anquilossauro. O quadril dele fica a 1,7 m do chão, a altura da pessoa, e ele tem 6,4 m de comprimento, quase quatro pessoas deitadas uma atrás da outra.",
+   "a": "Nosso anquilossauro. O quadril dele fica a 1,7 m do chão, a altura da pessoa, e ele tem 6,4 m de comprimento, quase quatro pessoas deitadas uma atrás da outra.",
    "button_open": "Esconder a resposta"
   },
   "out": {
@@ -362,7 +361,7 @@
     {
      "cells": [
       "T. rex, Tyrannosaurus rex",
-      "cerca de 11,4 m",
+      "cerca de 11,0 m",
       "o esqueleto de SUE, cerca de 12 m",
       "cerca de 8 a 9 t",
       "um dos esqueletos maiores e mais completos, vários modelos"
@@ -418,8 +417,24 @@
   {
    "type": "text",
    "id": "three",
-   "nav": "Três respostas e o maior carnívoro",
-   "h": "Três respostas e o maior carnívoro",
+   "nav": "O maior dinossauro carnívoro e três respostas",
+   "h": "O maior dinossauro carnívoro e três respostas",
+   "paras": [
+    [
+     "Pelo comprimento, o maior carnívoro foi o ",
+     {
+      "text": "espinossauro",
+      "page": "spinosaurus"
+     },
+     ": um adulto tinha pouco menos de 14 m no modelo de 2022, calculado a partir de um esqueleto jovem e de um focinho solto de um adulto. Pelo peso, o ",
+     {
+      "text": "T. rex",
+      "page": "t-rex"
+     },
+     ": o mais pesado que se conhece, chamado Scotty, chega a cerca de 8,9 toneladas, e um adulto grande tinha cerca de 12 m de comprimento. O Giganotosaurus também é citado muitas vezes, mas os restos dele são fragmentos, e as estimativas vão de cerca de 6,5 a 14 toneladas."
+    ],
+    "E “o maior”, sozinho, pode querer dizer três coisas: o mais pesado, o mais longo ou o mais alto."
+   ],
    "subs": [
     {
      "h": "O mais pesado",
@@ -437,24 +452,6 @@
      "h": "O mais alto",
      "paras": [
       "Provavelmente o Sauroposeidon, de Oklahoma, com a cabeça a cerca de 17 m do chão. Isso se apoia em quatro vértebras do pescoço encontradas em 1994 e ampliadas com as proporções do braquiossauro. O Natural History Museum de Londres observa que ele talvez fique mais perto dos titanossauros. É uma base fraca, mas não se conhece nada melhor. O esqueleto mais alto que se pode visitar é o do Giraffatitan, em Berlim, com o crânio a cerca de 13 m do chão."
-     ]
-    },
-    {
-     "h": "O maior carnívoro",
-     "paras": [
-      [
-       "Há duas respostas. Pelo comprimento, o ",
-       {
-        "text": "espinossauro",
-        "page": "spinosaurus"
-       },
-       ": um adulto tinha pouco menos de 14 m no modelo de 2022, calculado a partir de um esqueleto jovem e de um focinho solto de um adulto. Pelo peso, o ",
-       {
-        "text": "T. rex",
-        "page": "t-rex"
-       },
-       ": o mais pesado que se conhece, chamado Scotty, chega a cerca de 8,9 toneladas, e um adulto grande tinha cerca de 12 m de comprimento. O Giganotosaurus também é citado muitas vezes, mas os restos dele são fragmentos, e as estimativas vão de cerca de 6,5 a 14 toneladas."
-      ]
      ]
     }
    ]
@@ -510,7 +507,7 @@
    "nav": "Quão certo é isso",
    "h": "Quão certo é isso",
    "paras": [
-    "Ninguém nunca colocou um dinossauro numa balança. Só restam ossos, e a maior parte de um corpo é carne. Cada peso desta página é uma conta, feita de um destes três jeitos.",
+    "Ninguém nunca colocou um dinossauro em uma balança. Só restam ossos, e a maior parte de um corpo é carne. Cada peso desta página é uma conta, feita de um destes três jeitos.",
     {
      "points": [
       [
@@ -527,25 +524,25 @@
       ]
      ]
     },
-    "Uma fita métrica numa montagem de museu dá um número exato, mas da montagem, que em parte é escultura."
+    "Uma fita métrica em uma montagem de museu dá um número exato, mas da montagem, que em parte é escultura."
    ]
   },
   {
    "type": "text",
    "id": "found",
-   "nav": "O que foi encontrado",
-   "h": "O que foi encontrado",
+   "nav": "Esqueleto do Argentinosaurus: os achados",
+   "h": "Esqueleto do Argentinosaurus: os achados",
    "paras": [
     "O Argentinosaurus huinculensis é conhecido por um único animal, MCF-PVPH-1, encontrado no fim dos anos 1980 a cerca de 8 km a leste de Plaza Huincul, em Neuquén, na Argentina. O que restou: seis ou sete vértebras do dorso incompletas, a parte de baixo do quadril, um pedaço de costela e uma fíbula de 1,55 m de comprimento. Nenhuma cabeça, nenhum pescoço, nenhuma cauda, nenhum ombro, nenhum braço, nenhum pé. Os ossos estão guardados no Museo Municipal Carmen Funes, em Plaza Huincul. Dois fêmures enormes talvez sejam dele, ou talvez não.",
-    "O Patagotitan mayorum é a mais bem conhecida das maiores espécies. Pelo menos seis adultos jovens saíram de uma única escavação numa fazenda em Chubut, na Argentina: o primeiro osso em 2012, e mais de cem ossos no total. Eles estão guardados no Museo Paleontológico Egidio Feruglio, em Trelew, onde um fêmur real de mais de 2 m fica ao lado da réplica.",
+    "O Patagotitan mayorum é a mais bem conhecida das maiores espécies. Pelo menos seis adultos jovens saíram de uma única escavação em uma fazenda em Chubut, na Argentina: o primeiro osso em 2012, e mais de cem ossos no total. Eles estão guardados no Museo Paleontológico Egidio Feruglio, em Trelew, onde um fêmur real de mais de 2 m fica ao lado da réplica.",
     "O Brachiosaurus altithorax se apoia em um único esqueleto parcial, FMNH P 25107, desenterrado em 1900 no oeste do Colorado e guardado no Field Museum, em Chicago. Foram encontradas sete vértebras do dorso, o sacro, duas vértebras da cauda, um osso do ombro, o úmero direito, o fêmur direito, as duas lâminas do quadril e algumas costelas. Nenhuma cabeça, nenhum pescoço, nenhum antebraço, nenhuma parte de baixo das patas, nenhum pé, e quase nada da cauda, de um animal que ainda não tinha terminado de crescer. Conhecem-se cerca de dez achados da espécie, nenhum perto de estar completo.",
     "O esqueleto alto do Museum für Naturkunde de Berlim não é um braquiossauro, mas o Giraffatitan brancai, um parente próximo africano. Ele foi desenterrado em Tendaguru, na atual Tanzânia, entre 1909 e 1913, no período colonial que o próprio museu nomeia. Em 2009 os dois foram separados em gêneros diferentes, por pelo menos 26 diferenças nos ossos, e quase toda imagem de um braquiossauro mostra o animal africano. A montagem de Berlim junta vários animais e é, nas palavras do próprio museu, o maior esqueleto de dinossauro montado do mundo."
    ],
    "scale": {
     "pic": "skeleton",
     "tag": "tag_built",
-    "what": "O nosso Argentinosaurus como esqueleto.",
-    "alt": "O nosso Argentinosaurus como esqueleto, visto de lado: poucos ossos vermelho-escuros do dorso, do quadril e da pata entre outros claros, reconstruídos ou tomados de parentes, ao lado da pessoa cinza.",
+    "what": "Nosso Argentinosaurus como esqueleto.",
+    "alt": "Nosso Argentinosaurus como esqueleto, visto de lado: poucos ossos vermelho-escuros do dorso, do quadril e da pata entre outros claros, reconstruídos ou tomados de parentes, ao lado da pessoa cinza.",
     "key": "Vermelho-escuro: tudo o que já foi encontrado deste animal. Seis ou sete vértebras do dorso, a parte de baixo do quadril, um pedaço de costela e uma fíbula de 1,55 m de comprimento. Azul: nunca encontrado, as vértebras do dorso e as costelas que faltam, a segunda fíbula como reflexo da primeira, e as partes que faltam dos ossos encontrados, com uma forma que combina com os dele. Creme: tomado de parentes, sobretudo do Patagotitan.",
     "after": 1
    }
@@ -556,7 +553,7 @@
    "nav": "Por que os nossos são assim",
    "h": "Por que os nossos são assim",
    "paras": [
-    "Cada um foi construído no tamanho de um achado ou de uma montagem com nome. O Argentinosaurus, a partir dos ossos de Plaza Huincul, com um corpo sobretudo a partir do Patagotitan. O braquiossauro, a partir do esqueleto de Chicago, com o pescoço e a cabeça a partir dos parentes dele. O T. rex, a partir de SUE, e o espinossauro, a partir do animal jovem do Marrocos. O Triceratops, a partir da montagem do Smithsonian, feita com cerca de dez animais: o crânio dela foi aumentado quando ela foi refeita. O anquilossauro, a partir do menor dos três animais conhecidos, e o estegossauro, a partir de Sophie, em Londres. De nenhum deles se conhece a cor, então as cores são nossas, e os vizinhos se diferenciam onde nada se sabe. Os ângulos dos dois pescoços longos fomos nós que escolhemos, porque não existe nenhuma vértebra do pescoço de nenhum dos dois animais. Por isso as cabeças deles estão quase na mesma altura, embora o nosso Argentinosaurus seja nove metros mais longo. O nosso T. rex está de boca fechada, com os lábios sobre os dentes, como muito provavelmente estavam."
+    "Cada um foi construído no tamanho de um achado ou de uma montagem com nome. O Argentinosaurus, a partir dos ossos de Plaza Huincul, com um corpo sobretudo a partir do Patagotitan. O braquiossauro, a partir do esqueleto de Chicago, com o pescoço e a cabeça a partir dos parentes dele. O T. rex, a partir de SUE, e o espinossauro, a partir do animal jovem do Marrocos. O Triceratops, a partir da montagem do Smithsonian, feita com cerca de dez animais: o crânio dela foi aumentado quando ela foi refeita. O anquilossauro, a partir do menor dos três animais conhecidos, e o estegossauro, a partir de Sophie, em Londres. De nenhum deles se conhece a cor, então as cores são nossas, e os vizinhos se diferenciam onde nada se sabe. Os ângulos dos dois pescoços longos fomos nós que escolhemos, porque não existe nenhuma vértebra do pescoço de nenhum dos dois animais. Por isso as cabeças deles estão quase na mesma altura, embora o nosso Argentinosaurus seja nove metros mais longo. Nosso T. rex está de boca fechada, com os lábios sobre os dentes, como muito provavelmente estavam."
    ]
   },
   {
@@ -566,8 +563,12 @@
    "h": "Mais perguntas",
    "items": [
     {
+     "q": "Qual era a altura do Argentinosaurus?",
+     "a": "Ninguém sabe que altura ele tinha em vida, porque o pescoço e a cabeça do Argentinosaurus nunca foram encontrados. Nosso modelo leva a cabeça a cerca de 11 m do chão, com um ângulo do pescoço escolhido por nós."
+    },
+    {
      "q": "O espinossauro era maior que o T. rex?",
-     "a": "Mais longo e, muito provavelmente, mais leve. Um espinossauro adulto tinha pouco menos de 14 m e cerca de 7,4 toneladas no modelo atual. Um T. rex adulto grande tinha cerca de 12 m e de 8 a 9 toneladas. O nosso na imagem é um espinossauro jovem de cerca de 10 m, então ali ele é o mais curto."
+     "a": "Mais longo e, muito provavelmente, mais leve. Um espinossauro adulto tinha pouco menos de 14 m e cerca de 7,4 toneladas no modelo atual. Um T. rex adulto grande tinha cerca de 12 m e de 8 a 9 toneladas. Nosso na imagem é um espinossauro jovem de cerca de 10 m, então ali ele é o mais curto."
     },
     {
      "q": "Algum dinossauro foi maior que uma baleia-azul?",
@@ -599,13 +600,13 @@
     {
      "page": "t-rex",
      "pic": "trex",
-     "alt": "O nosso T. rex de lado, sobre duas patas, com cerca de 11 m de comprimento nesta pose, de boca fechada e cabeça erguida, ao lado de uma pessoa cinza de 1,70 m que fica bem abaixo do quadril dele.",
+     "alt": "Nosso T. rex de lado, sobre duas patas, com cerca de 11 m de comprimento nesta pose, de boca fechada e cabeça erguida, ao lado de uma pessoa cinza de 1,70 m que fica bem abaixo do quadril dele.",
      "line": "O T. rex da fila, sozinho e mais de perto: comprimento, altura do quadril, peso, e por que nenhum animal representa a espécie inteira."
     },
     {
      "page": "megalodon",
      "pic": "megalodon",
-     "alt": "O nosso megalodon visto de lado, com cerca de 16 m de comprimento, de boca fechada, cinza-escuro com uma faixa mais clara no flanco, ao lado de uma pessoa cinza de 1,70 m que parece minúscula perto dele."
+     "alt": "Nosso megalodon visto de lado, com cerca de 16 m de comprimento, de boca fechada, cinza-escuro com uma faixa mais clara no flanco, ao lado de uma pessoa cinza de 1,70 m que parece minúscula perto dele."
     },
     {
      "page": "spinosaurus",
@@ -616,37 +617,37 @@
     {
      "page": "woolly-mammoth",
      "pic": "mammoth",
-     "alt": "O nosso mamute-lanoso, o macho de Berezovka, de lado, com pelagem marrom-escura: a cabeça alta e abaulada, o dorso inclinado, duas presas curvas e uma marca na altura do ombro, a 271 cm por uma reconstrução. A pessoa cinza ao lado, de 1,70 m, fica mais baixa que as pontas das presas.",
-     "line": "Não é um dinossauro, mas um parente dos elefantes da Era do Gelo: um macho siberiano tinha cerca de 2,7 a 2,9 m de altura no ombro. O nosso é um macho real encontrado congelado em 1900, ao lado de uma pessoa."
+     "alt": "Nosso mamute-lanoso, o macho de Berezovka, de lado, com pelagem marrom-escura: a cabeça alta e abaulada, o dorso inclinado, duas presas curvas e uma marca na altura do ombro, a 271 cm por uma reconstrução. A pessoa cinza ao lado, de 1,70 m, fica mais baixa que as pontas das presas.",
+     "line": "Não é um dinossauro, mas um parente dos elefantes da Era do Gelo: um macho siberiano tinha cerca de 2,7 a 2,9 m de altura no ombro. Nosso mamute foi construído a partir de um macho real encontrado congelado em 1900, ao lado de uma pessoa."
     },
     {
      "page": "brachiosaurus",
      "pic": "brachio",
-     "alt": "O nosso braquiossauro de lado, no tamanho do esqueleto de Chicago, 24,0 m ao longo da coluna, com o pescoço longo erguido numa curva suave e o alto da cabeça a 11,5 m, com o ângulo do pescoço escolhido por nós. As patas da frente são mais longas que as de trás, a cauda não toca o chão, e uma pessoa cinza de 1,70 m poderia passar por baixo da barriga dele.",
+     "alt": "Nosso braquiossauro de lado, no tamanho do esqueleto de Chicago, 24,0 m ao longo da coluna, com o pescoço longo erguido em uma curva suave e o alto da cabeça a 11,5 m, com o ângulo do pescoço escolhido por nós. As patas da frente são mais longas que as de trás, a cauda não toca o chão, e uma pessoa cinza de 1,70 m poderia passar por baixo da barriga dele.",
      "line": "O braquiossauro da fila, sozinho: cerca de 22 a 25 m de comprimento segundo uma reconstrução, uma altura que ninguém mediu, e por que o famoso esqueleto de Berlim é o parente dele, o Giraffatitan."
     },
     {
      "page": "triceratops",
      "pic": "tricera",
-     "alt": "O nosso Triceratops de lado, 6,9 m do bico à cauda e 2,5 m de altura acima do quadril: um babado largo atrás da cabeça, dois chifres longos acima dos olhos, um curto acima do nariz, quatro patas. Ao lado, uma pessoa cinza de 1,70 m que chega a cerca de dois terços da altura do dorso.",
+     "alt": "Nosso Triceratops de lado, 6,9 m do bico à cauda e 2,5 m de altura acima do quadril: um babado largo atrás da cabeça, dois chifres longos acima dos olhos, um curto acima do nariz, quatro patas. Ao lado, uma pessoa cinza de 1,70 m que chega a cerca de dois terços da altura do dorso.",
      "line": "O Triceratops da fila, sozinho: o crânio ao lado de uma pessoa, o esqueleto de Washington feito com cerca de dez animais, o Torosaurus e o que os ossos dizem sobre o T. rex."
     },
     {
      "page": "ankylosaurus",
      "pic": "anky",
-     "alt": "O nosso anquilossauro de lado, 6,4 m do bico à clava, com o alto do dorso a 1,7 m acima do quadril: um corpo baixo e largo, coberto de fileiras de placas de osso, uma cabeça larga mantida baixa, quatro patas curtas e uma cauda reta que termina numa clava achatada. Ao lado, uma pessoa cinza de 1,70 m, da altura do alto do dorso.",
+     "alt": "Nosso anquilossauro de lado, 6,4 m do bico à clava, com o alto do dorso a 1,7 m acima do quadril: um corpo baixo e largo, coberto de fileiras de placas de osso, uma cabeça larga mantida baixa, quatro patas curtas e uma cauda reta que termina em uma clava achatada. Ao lado, uma pessoa cinza de 1,70 m, da altura do alto do dorso.",
      "line": "O anquilossauro da fila, sozinho: a clava e a couraça ao lado de uma pessoa, o que foi encontrado dele e o que os ossos dizem sobre o T. rex."
     },
     {
      "page": "stegosaurus",
      "pic": "stego",
-     "alt": "O nosso estegossauro de lado, 5,6 m do bico à ponta da cauda, com o alto do dorso a 1,9 m acima do quadril: uma cabeça pequena e baixa, duas fileiras de placas altas ao longo do dorso arqueado, dois dos quatro espinhos da cauda e as patas da frente mais curtas que as de trás. Ao lado, uma pessoa cinza de 1,70 m com a cabeça abaixo do alto do dorso.",
+     "alt": "Nosso estegossauro de lado, 5,6 m do bico à ponta da cauda, com o alto do dorso a 1,9 m acima do quadril: uma cabeça pequena e baixa, duas fileiras de placas altas ao longo do dorso arqueado, dois dos quatro espinhos da cauda e as patas da frente mais curtas que as de trás. Ao lado, uma pessoa cinza de 1,70 m com a cabeça abaixo do alto do dorso.",
      "line": "O estegossauro da fila, sozinho: as placas e os espinhos da cauda ao lado de uma pessoa, Sophie em Londres e a história do “segundo cérebro”."
     },
     {
      "page": "blue-whale",
      "pic": "whale",
-     "alt": "A nossa baleia-azul de lado, com 22,86 m de comprimento: um corpo esguio, cinza-azulado, com manchas claras, uma cabeça achatada, uma nadadeira peitoral longa de borda clara e uma pequena nadadeira dorsal bem atrás. Ao lado, uma pessoa cinza de 1,70 m que chega a pouco mais da metade da altura da baleia.",
+     "alt": "Nossa baleia-azul de lado, com 22,86 m de comprimento: um corpo esguio, cinza-azulado, com manchas claras, uma cabeça achatada, uma nadadeira peitoral longa de borda clara e uma pequena nadadeira dorsal bem atrás. Ao lado, uma pessoa cinza de 1,70 m que chega a pouco mais da metade da altura da baleia.",
      "line": "Não é um dinossauro, mas uma baleia atual, o animal mais pesado que se conhece: a maioria das baleias-azuis adultas tem de 23 a 27 m, e a nossa está na mesma escala ao lado do nosso Argentinosaurus e do nosso megalodon."
     }
    ]
@@ -813,19 +814,18 @@
     ]
    ],
    "shapes": {
-    "caption": "Comparação de tamanho de dinossauros: nossos sete dinossauros na mesma escala, cada um como nosso modelo é construído, o mais longo nosso Argentinosaurus com cerca de 30,6 m, e entre eles uma pessoa de 1,70 m.",
+    "caption": "Comparação de tamanho do Argentinosaurus: nosso Argentinosaurus do quadril para a frente, com 30,6 m de comprimento no total, o pescoço erguido no ângulo que escolhemos, ao lado de uma pessoa de 1,70 m, na mesma escala.",
     "lead": "Para slides e publicações, esta comparação de tamanho vem em três formatos, todos com a mesma licença.",
     "alts": {
      "size_1x1": "Comparação de tamanho do Argentinosaurus: as patas da frente, o pescoço erguido e a cabeça do nosso Argentinosaurus, com uma pessoa cinza de 1,70 m de pé embaixo do pescoço.",
-     "size_4x3": "O Argentinosaurus ao lado de uma pessoa, em comparação de tamanho: nosso Argentinosaurus do quadril para a frente, com o pescoço longo erguido, e uma pessoa cinza de 1,70 m embaixo.",
+     "size_4x3": "O Argentinosaurus ao lado de uma pessoa, em comparação de tamanho: nosso Argentinosaurus do quadril para a frente, com o pescoço longo erguido, e uma pessoa cinza de 1,70 m embaixo do pescoço.",
      "size_16x9": "Comparação de tamanho de dinossauros: nossos sete dinossauros lado a lado na mesma escala, o mais longo nosso Argentinosaurus com cerca de 30,6 m, e entre eles uma pessoa cinza de 1,70 m."
     },
     "links": {
      "size_1x1": "Quadrada (1:1)",
      "size_4x3": "Slide (4:3)",
      "size_16x9": "Panorâmica (16:9)"
-    },
-    "draft": true
+    }
    }
   }
  ]

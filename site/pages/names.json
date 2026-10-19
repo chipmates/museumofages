@@ -172,6 +172,7 @@
     { "text": "Brachiosaurus altithorax", "whole": true, "taxon": true },
     { "text": "Tyrannosaurus rex", "whole": true, "taxon": true },
     { "text": "Spinosaurus aegyptiacus", "whole": true, "taxon": true },
+    { "text": "Spinosaurus mirabilis", "whole": true, "taxon": true },
     { "text": "Triceratops horridus", "whole": true, "taxon": true },
     { "text": "Ankylosaurus magniventris", "whole": true, "taxon": true },
     { "text": "Stegosaurus stenops", "whole": true, "taxon": true },

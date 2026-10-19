@@ -20,7 +20,7 @@
     "size_4x3",
     "size_16x9"
    ],
-   "figure": "size_16x9"
+   "figure": "size_4x3"
   }
  },
  "pics": {
@@ -153,7 +153,7 @@
  },
  "meta": {
   "title": "T. rex: tamanho de cerca de 12 m e 8 a 9 t | Museum of Ages",
-  "description": "Tamanho do T. rex: um tiranossauro rex adulto grande tinha cerca de 12 m de comprimento, cerca de 4 m até o quadril e 8 a 9 t. O nosso, nas medidas de SUE.",
+  "description": "Tamanho do T. rex: um tiranossauro rex adulto grande tinha cerca de 12 m de comprimento, cerca de 4 m até o quadril e cerca de 8 a 9 t. Nosso modelo segue SUE.",
   "og_title": "T. rex: tamanho de cerca de 12 m e de 8 a 9 t",
   "og_image_alt": "O nosso T. rex de lado, sobre duas patas, com cerca de 11 m de comprimento nesta pose, de boca fechada e cabeça erguida, ao lado de uma pessoa cinza de 1,70 m que fica bem abaixo do quadril dele."
  },
@@ -165,24 +165,24 @@
   "tag_made": "Feito para esta página",
   "tag_built": "Reconstrução",
   "person": "1,70 m",
-  "to_table": "Os números numa tabela",
+  "to_table": "Os números em uma tabela",
   "no_figure": "sem número com fonte",
   "og_answer": "Cerca de 12 m de comprimento, mais ou menos 8 a 9 toneladas"
  },
  "top": {
   "h1": "Qual era o tamanho do T. rex?",
-  "answer": "Um Tyrannosaurus rex adulto grande tinha cerca de 12 m de comprimento, e a maioria era menor. Um T. rex grande media cerca de 3,5 a 4 m até o quadril e pesava mais ou menos de 8 a 9 toneladas, pelos ossos e pelos modelos do corpo, e um adulto comum, menos. O nosso T. rex, feito com as medidas de SUE, mede cerca de 11,4 m nesta pose, com a cabeça erguida a cerca de 4,6 m do chão.",
+  "answer": "Um Tyrannosaurus rex adulto grande tinha cerca de 12 m de comprimento, e a maioria era menor. Um T. rex grande media cerca de 3,5 a 4 m até o quadril e pesava mais ou menos de 8 a 9 toneladas, pelos ossos e pelos modelos do corpo, e um adulto comum, menos. Nosso T. rex, feito com as medidas de SUE, mede cerca de 11 m nesta pose, com a cabeça erguida a cerca de 4,4 m do chão.",
   "answer_more": "Os dois maiores T. rex conhecidos são SUE, em Chicago, o esqueleto mais longo e mais completo, e Scotty, provavelmente o mais pesado.",
   "scale": {
    "pic": "side",
    "tag": "tag_made",
-   "what": "O nosso T. rex ao lado de uma pessoa de 1,70 m, na mesma escala, feito com as medidas de SUE. Nesta pose, com a cabeça erguida e virada e a cauda curvada, ele mede cerca de 11,4 m. É mais do que seis pessoas e meia deitadas uma atrás da outra. O alto da cabeça erguida fica a cerca de 4,6 m do chão, e isso depende da pose. Esticado em linha reta, o mesmo esqueleto mediria cerca de 11,8 m. A montagem de SUE em Chicago mede cerca de 12 m.",
-   "alt": "O nosso T. rex de lado, sobre duas patas, com cerca de 11 m de comprimento nesta pose, de boca fechada e cabeça erguida, ao lado de uma pessoa cinza de 1,70 m que fica bem abaixo do quadril dele.",
-   "note": "A nossa própria reconstrução, construída em código a partir de medidas publicadas e renderizada com o nosso próprio motor gráfico. Não é uma fotografia.",
+   "what": "Comparação de tamanho: o nosso T. rex ao lado de uma pessoa de 1,70 m, na mesma escala, feito com as medidas de SUE. Nesta pose, com a cabeça erguida e a cauda esticada em curva, ele mede cerca de 11 m. São umas seis pessoas e meia deitadas uma atrás da outra. O alto da cabeça erguida fica a cerca de 4,4 m do chão, e isso depende da pose. Esticado em linha reta, o mesmo esqueleto mediria cerca de 11,8 m. A montagem de SUE em Chicago mede cerca de 12 m.",
+   "alt": "Comparação de tamanho: o nosso T. rex de lado, sobre duas patas, com cerca de 11 m de comprimento nesta pose, de boca fechada e cabeça erguida, ao lado de uma pessoa cinza de 1,70 m que fica bem abaixo do quadril dele.",
+   "note": "Nossa própria reconstrução, construída em código a partir de medidas publicadas e renderizada com o nosso próprio motor gráfico. Não é uma fotografia.",
    "marks": [
     {
      "span": "t-rex",
-     "text": "T. rex, cerca de 11,4 m nesta pose"
+     "text": "T. rex, cerca de 11 m nesta pose"
     },
     {
      "span": "person",
@@ -190,11 +190,11 @@
     },
     {
      "span": "hips",
-     "text": "acima do quadril, 3,96 m"
+     "text": "o dorso acima do quadril, 3,87 m"
     },
     {
      "span": "head",
-     "text": "a cabeça erguida, cerca de 4,6 m"
+     "text": "a cabeça erguida, cerca de 4,4 m"
     }
    ],
    "close": {
@@ -208,7 +208,7 @@
    "h": "Tente adivinhar",
    "q": "Qual era o tamanho do crânio de SUE?",
    "button": "Ver a resposta",
-   "a": "Cerca de 1,4 m, do focinho até a borda de trás da bochecha, um pouco menos do que a pessoa de 1,70 m. O crânio verdadeiro, achatado na terra, pesa cerca de 270 kg e fica em Chicago, numa vitrine só dele.",
+   "a": "Cerca de 1,4 m, do focinho até a borda de trás da bochecha, um pouco menos do que a pessoa de 1,70 m. O crânio verdadeiro, achatado na terra, pesa cerca de 270 kg e fica em Chicago, em uma vitrine só dele.",
    "button_open": "Esconder a resposta"
   },
   "out": {
@@ -222,7 +222,7 @@
    "id": "numbers",
    "nav": "Os números",
    "h": "Os números",
-   "unit": "Em metros e toneladas. Onde não há um número com fonte, a célula fica vazia. O nosso modelo não recebe um peso: o peso vem dos estudos sobre SUE, não do nosso arquivo.",
+   "unit": "Em metros e toneladas. Onde não há um número com fonte, a célula fica vazia. Nosso modelo não recebe um peso: o peso vem dos estudos sobre SUE, não do nosso arquivo.",
    "cols": [
     "Animal",
     "Comprimento",
@@ -233,9 +233,9 @@
    "rows": [
     {
      "cells": [
-      "O nosso modelo, a partir de SUE",
-      "cerca de 11,4 m nesta pose, cerca de 11,8 m em linha reta",
-      "acima do quadril 3,96 m, a cabeça erguida a cerca de 4,6 m",
+      "Nosso modelo, a partir de SUE",
+      "cerca de 11,0 m nesta pose, cerca de 11,8 m em linha reta",
+      "o dorso acima do quadril 3,87 m, a cabeça erguida a cerca de 4,4 m",
       "não informado",
       "exata: medida nos nossos arquivos"
      ]
@@ -280,6 +280,15 @@
   },
   {
    "type": "text",
+   "id": "weight",
+   "nav": "Quanto pesava o T. rex?",
+   "h": "Quanto pesava o T. rex?",
+   "paras": [
+    "Um T. rex adulto grande pesava mais ou menos 8 a 9 toneladas, pelos ossos e pelos modelos do corpo, e um adulto comum, menos, mais perto de 5 a 8 toneladas. Ninguém nunca pesou um T. rex: cada número sai da circunferência de um fêmur ou de um corpo construído em volta do esqueleto, e o contorno escolhido para esse corpo pode mudar o resultado em muitas toneladas."
+   ]
+  },
+  {
+   "type": "text",
    "id": "biggest",
    "nav": "Qual T. rex foi o maior?",
    "h": "Qual T. rex foi o maior?",
@@ -315,8 +324,8 @@
   {
    "type": "text",
    "id": "found",
-   "nav": "O que foi encontrado de SUE",
-   "h": "O que foi encontrado de SUE",
+   "nav": "Esqueleto do T. rex: o que foi encontrado de SUE",
+   "h": "Esqueleto do T. rex: o que foi encontrado de SUE",
    "paras": [
     "SUE, achado em 1990 em Dakota do Sul e guardado em Chicago, está entre os esqueletos grandes de T. rex mais completos. A lista segue a descrição do esqueleto de 2003 e tem uma base sólida, exceto onde está indicado."
    ],
@@ -331,7 +340,7 @@
         "O braço direito: o úmero, os dois ossos do antebraço e partes da mão.",
         "O sacro e o quadril, com a lâmina esquerda do quadril quebrada e unida de novo.",
         "As duas escápulas, a direita com um ferimento curado.",
-        "Partes de todas as costelas das costas, 26 de cerca de 60 costelas da barriga (pela contagem do museu), e ainda a fúrcula e um osso do ouvido (as duas coisas segundo o museu).",
+        "Costelas de todos os trechos das costas, mas não todas as costelas, 26 de cerca de 60 costelas da barriga (pela contagem do museu), e ainda a fúrcula e um osso do ouvido (as duas coisas segundo o museu).",
         "36 vértebras da cauda: em 2003, nenhuma cauda conhecida de T. rex estava mais completa."
        ]
       }
@@ -343,8 +352,8 @@
       {
        "points": [
         "O pulso, reconstruído na montagem a partir de outros tiranossauros.",
-        "Quase todo o pé esquerdo, do qual existe um único osso de um dedo (menos certo: num trecho, a descrição se contradiz sobre qual pé é).",
-        "Cerca de 11 das 47 vértebras da cauda da montagem, em parte no fim da cauda (conta nossa).",
+        "Quase todo o pé esquerdo, do qual existe um único osso de um dedo (menos certo: em um trecho, a descrição se contradiz sobre qual pé é).",
+        "O fim da cauda: cerca de 11 vértebras, as últimas das 47 da cauda da montagem (conta nossa).",
         "Cerca de 34 das cerca de 60 costelas da barriga, pela contagem do museu.",
         "Pele: nenhuma."
        ]
@@ -353,7 +362,7 @@
     }
    ],
    "end": [
-    "O crânio da montagem é uma réplica corrigida, e o verdadeiro está ao lado, numa vitrine só dele."
+    "O crânio da montagem é uma réplica corrigida, e o verdadeiro está ao lado, em uma vitrine só dele."
    ]
   },
   {
@@ -476,42 +485,42 @@
     {
      "page": "biggest-dinosaurs",
      "pic": "dinosaurs",
-     "alt": "Os nossos sete dinossauros em fila, vistos de lado, na mesma escala. O mais longo, o nosso Argentinosaurus, tem cerca de 30,6 m. Dois pescoços longos se erguem bem acima dos outros, e uma pessoa cinza de 1,70 m parece minúscula perto deles."
+     "alt": "Nossos sete dinossauros em fila, vistos de lado, na mesma escala. O mais longo, o nosso Argentinosaurus, tem cerca de 30,6 m. Dois pescoços longos se erguem bem acima dos outros, e uma pessoa cinza de 1,70 m parece minúscula perto deles."
     },
     {
      "page": "megalodon",
      "pic": "megalodon",
-     "alt": "O nosso megalodon visto de lado, com cerca de 16 m de comprimento, de boca fechada, cinza-escuro com uma faixa mais clara no flanco, ao lado de uma pessoa cinza de 1,70 m que parece minúscula perto dele."
+     "alt": "Nosso megalodon visto de lado, com cerca de 16 m de comprimento, de boca fechada, cinza-escuro com uma faixa mais clara no flanco, ao lado de uma pessoa cinza de 1,70 m que parece minúscula perto dele."
     },
     {
      "page": "spinosaurus",
      "pic": "spino",
      "alt": "O maior espinossauro adulto de lado, pouco menos de 14 m por um modelo, com uma vela alta e uma cauda alta. Na frente, o nosso jovem de cerca de 10 m como uma forma cinza chapada, e uma pessoa cinza de 1,70 m que chega ao quadril do jovem.",
-     "line": "Um espinossauro adulto era mais longo do que qualquer T. rex encontrado até hoje, muito provavelmente mais leve e bem mais baixo na altura do quadril. Aqui o nosso exemplar jovem está ao lado do nosso T. rex, na mesma escala."
+     "line": "Um espinossauro adulto era mais longo do que qualquer T. rex encontrado até hoje, muito provavelmente mais leve e bem mais baixo na altura do quadril. Lá o maior adulto, por um modelo, está ao lado do nosso T. rex, na mesma escala."
     },
     {
      "page": "brachiosaurus",
      "pic": "brachio",
-     "alt": "O nosso braquiossauro de lado, no tamanho do esqueleto de Chicago, 24,0 m ao longo da coluna, com o pescoço longo erguido numa curva suave e o alto da cabeça a 11,5 m, com o ângulo do pescoço escolhido por nós. As patas da frente são mais longas que as de trás, a cauda não toca o chão, e uma pessoa cinza de 1,70 m poderia passar por baixo da barriga dele.",
-     "line": "O braquiossauro, um herbívoro de pescoço longo do Jurássico Superior, tinha cerca de 22 a 25 m de comprimento e pesava mais ou menos de 30 a 45 toneladas, dois números reconstruídos a partir de um único esqueleto parcial. O nosso braquiossauro está ao lado de uma pessoa, com a cabeça na altura de cerca de sete pessoas, na pose que escolhemos."
+     "alt": "Nosso braquiossauro de lado, no tamanho do esqueleto de Chicago, 24,0 m ao longo da coluna, com o pescoço longo erguido em uma curva suave e o alto da cabeça a 11,5 m, com o ângulo do pescoço escolhido por nós. As patas da frente são mais longas que as de trás, a cauda não toca o chão, e uma pessoa cinza de 1,70 m poderia passar por baixo da barriga dele.",
+     "line": "O braquiossauro, um herbívoro de pescoço longo do Jurássico Superior, tinha cerca de 22 a 25 m de comprimento e pesava mais ou menos de 30 a 45 toneladas, dois números reconstruídos a partir de um único esqueleto parcial. Nosso braquiossauro está ao lado de uma pessoa, com a cabeça na altura de cerca de sete pessoas, na pose que escolhemos."
     },
     {
      "page": "triceratops",
      "pic": "tricera",
-     "alt": "O nosso Triceratops de lado, 6,9 m do bico à cauda e 2,5 m de altura acima do quadril: um babado largo atrás da cabeça, dois chifres longos acima dos olhos, um curto acima do nariz, quatro patas. Ao lado, uma pessoa cinza de 1,70 m que chega a cerca de dois terços da altura do dorso.",
-     "line": "Um Triceratops adulto grande tinha cerca de 7 a 8 m de comprimento, com um crânio de cerca de 2 m, mais longo que o de SUE. O nosso Triceratops está ao lado do nosso T. rex na mesma escala, com o que os ossos mostram dos dois e o que não mostram."
+     "alt": "Nosso Triceratops de lado, 6,9 m do bico à cauda e 2,5 m de altura acima do quadril: um babado largo atrás da cabeça, dois chifres longos acima dos olhos, um curto acima do nariz, quatro patas. Ao lado, uma pessoa cinza de 1,70 m que chega a cerca de dois terços da altura do dorso.",
+     "line": "Um Triceratops adulto grande tinha cerca de 7 a 8 m de comprimento, com um crânio de cerca de 2 m, mais longo que o de SUE. Nosso Triceratops está ao lado do nosso T. rex na mesma escala, com o que os ossos mostram dos dois e o que não mostram."
     },
     {
      "page": "ankylosaurus",
      "pic": "anky",
-     "alt": "O nosso anquilossauro de lado, 6,4 m do bico à clava, com o alto do dorso a 1,7 m acima do quadril: um corpo baixo e largo, coberto de fileiras de placas de osso, uma cabeça larga mantida baixa, quatro patas curtas e uma cauda reta que termina numa clava achatada. Ao lado, uma pessoa cinza de 1,70 m, da altura do alto do dorso.",
-     "line": "O anquilossauro, um herbívoro com couraça e uma clava na cauda, viveu na mesma época e na mesma região que o T. rex e tinha cerca de 6 a 8 m de comprimento. O nosso anquilossauro está ao lado do nosso T. rex na mesma escala, com o que os ossos mostram dos dois e o que não mostram."
+     "alt": "Nosso anquilossauro de lado, 6,4 m do bico à clava, com o alto do dorso a 1,7 m acima do quadril: um corpo baixo e largo, coberto de fileiras de placas de osso, uma cabeça larga mantida baixa, quatro patas curtas e uma cauda reta que termina em uma clava achatada. Ao lado, uma pessoa cinza de 1,70 m, da altura do alto do dorso.",
+     "line": "O anquilossauro, um herbívoro com couraça e uma clava na cauda, viveu na mesma época e na mesma região que o T. rex e tinha cerca de 6 a 8 m de comprimento. Nosso anquilossauro está ao lado do nosso T. rex na mesma escala, com o que os ossos mostram dos dois e o que não mostram."
     },
     {
      "page": "stegosaurus",
      "pic": "stego",
-     "alt": "O nosso estegossauro de lado, 5,6 m do bico à ponta da cauda, com o alto do dorso a 1,9 m acima do quadril: uma cabeça pequena e baixa, duas fileiras de placas altas ao longo do dorso arqueado, dois dos quatro espinhos da cauda e as patas da frente mais curtas que as de trás. Ao lado, uma pessoa cinza de 1,70 m com a cabeça abaixo do alto do dorso.",
-     "line": "Os maiores estegossauros tinham cerca de 9 m de comprimento, e Sophie, o esqueleto de Londres, tem cerca de 5,6 m. O nosso estegossauro está ao lado do nosso T. rex na mesma escala, embora o T. rex esteja mais perto de nós no tempo do que do estegossauro."
+     "alt": "Nosso estegossauro de lado, 5,6 m do bico à ponta da cauda, com o alto do dorso a 1,9 m acima do quadril: uma cabeça pequena e baixa, duas fileiras de placas altas ao longo do dorso arqueado, dois dos quatro espinhos da cauda e as patas da frente mais curtas que as de trás. Ao lado, uma pessoa cinza de 1,70 m com a cabeça abaixo do alto do dorso.",
+     "line": "Os maiores estegossauros tinham cerca de 9 m de comprimento, e Sophie, o esqueleto de Londres, tem cerca de 5,6 m. Nosso estegossauro está ao lado do nosso T. rex na mesma escala, embora o T. rex esteja mais perto de nós no tempo do que do estegossauro."
     }
    ]
   },
@@ -602,19 +611,18 @@
     ]
    ],
    "shapes": {
-    "caption": "Comparação de tamanho do T. rex: nosso T. rex, com cerca de 11 m de comprimento nesta pose, ao lado de uma pessoa de 1,70 m, na mesma escala.",
+    "caption": "Comparação de tamanho do T. rex: nosso T. rex inteiro de lado, com cerca de 11 m de comprimento nesta pose, ao lado de uma pessoa de 1,70 m, na mesma escala.",
     "lead": "Para slides e publicações, esta comparação de tamanho vem em três formatos, todos com a mesma licença.",
     "alts": {
      "size_1x1": "Comparação de tamanho do T. rex: a frente do nosso T. rex, com a cabeça, o braço curto, o peito e as patas, e uma pessoa cinza de 1,70 m de pé embaixo da cabeça.",
-     "size_4x3": "O T. rex ao lado de uma pessoa, em comparação de tamanho: nosso T. rex inteiro de lado, de cabeça erguida e cauda esticada, e uma pessoa cinza de 1,70 m embaixo das mandíbulas.",
+     "size_4x3": "O T. rex ao lado de uma pessoa, em comparação de tamanho: nosso T. rex inteiro de lado, de cabeça erguida e cauda esticada em curva, e uma pessoa cinza de 1,70 m embaixo das mandíbulas.",
      "size_16x9": "Comparação de tamanho do T. rex, o animal inteiro de lado: nosso T. rex, com cerca de 11 m de comprimento nesta pose, e uma pessoa cinza de 1,70 m embaixo da cabeça."
     },
     "links": {
      "size_1x1": "Quadrada (1:1)",
      "size_4x3": "Slide (4:3)",
      "size_16x9": "Panorâmica (16:9)"
-    },
-    "draft": true
+    }
    }
   }
  ]

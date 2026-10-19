@@ -20,7 +20,7 @@
     "size_4x3",
     "size_16x9"
    ],
-   "figure": "size_16x9"
+   "figure": "size_4x3"
   }
  },
  "pics": {
@@ -153,7 +153,7 @@
  },
  "meta": {
   "title": "Tiranosaurio rex: unos 12 m y de 8 a 9 t | Museum of Ages",
-  "description": "¿Cuánto medía el T. rex? Un tiranosaurio rex adulto grande, unos 12 m de largo, unos 4 m a la cadera y de 8 a 9 t. El nuestro, con las medidas de SUE.",
+  "description": "¿Cuánto medía el T. rex? Un tiranosaurio rex adulto grande, unos 12 m de largo, unos 4 m a la cadera y unas 8 a 9 t. El nuestro, con las medidas de SUE.",
   "og_title": "Tiranosaurio rex: unos 12 m y de 8 a 9 t",
   "og_image_alt": "Nuestro T. rex de lado, sobre dos patas, de unos 11 m de largo en esta postura, con la boca cerrada y la cabeza levantada, junto a una persona gris de 1,70 m que queda muy por debajo de sus caderas."
  },
@@ -171,18 +171,18 @@
  },
  "top": {
   "h1": "¿Cuánto medía el T. rex?",
-  "answer": "Un Tyrannosaurus rex adulto grande medía unos 12 m de largo, y la mayoría eran más pequeños. Un T. rex grande medía unos 3,5 a 4 m a la altura de la cadera y pesaba más o menos de 8 a 9 toneladas, según los huesos y los modelos del cuerpo, y un adulto corriente, menos. Nuestro T. rex, hecho con las medidas de SUE, mide unos 11,4 m en esta postura, con la cabeza levantada a unos 4,6 m del suelo.",
+  "answer": "Un Tyrannosaurus rex adulto grande medía unos 12 m de largo, y la mayoría eran más pequeños. Un T. rex grande medía unos 3,5 a 4 m a la altura de la cadera y pesaba más o menos de 8 a 9 toneladas, según los huesos y los modelos del cuerpo, y un adulto corriente, menos. Nuestro T. rex, hecho con las medidas de SUE, mide unos 11 m en esta postura, con la cabeza levantada a unos 4,4 m del suelo.",
   "answer_more": "Los dos T. rex más grandes que se conocen son SUE, en Chicago, el esqueleto más largo y más completo, y Scotty, probablemente el más pesado.",
   "scale": {
    "pic": "side",
    "tag": "tag_made",
-   "what": "Nuestro T. rex junto a una persona de 1,70 m, a la misma escala, hecho con las medidas de SUE. En esta postura, con la cabeza levantada y girada y la cola curvada, mide unos 11,4 m. Eso es más de seis personas y media tumbadas una detrás de otra. Lo alto de la cabeza levantada está a unos 4,6 m del suelo, y eso depende de la postura. Estirado en línea recta, el mismo esqueleto mediría unos 11,8 m. El montaje de SUE en Chicago mide unos 12 m.",
-   "alt": "Nuestro T. rex de lado, sobre dos patas, de unos 11 m de largo en esta postura, con la boca cerrada y la cabeza levantada, junto a una persona gris de 1,70 m que queda muy por debajo de sus caderas.",
+   "what": "Comparación de tamaño: nuestro T. rex junto a una persona de 1,70 m, a la misma escala, hecho con las medidas de SUE. En esta postura, con la cabeza levantada y la cola estirada en curva, mide unos 11 m. Eso son unas seis personas y media tumbadas una detrás de otra. Lo alto de la cabeza levantada está a unos 4,4 m del suelo, y eso depende de la postura. Estirado en línea recta, el mismo esqueleto mediría unos 11,8 m. El montaje de SUE en Chicago mide unos 12 m.",
+   "alt": "Comparación de tamaño: nuestro T. rex de lado, sobre dos patas, de unos 11 m de largo en esta postura, con la boca cerrada y la cabeza levantada, junto a una persona gris de 1,70 m que queda muy por debajo de sus caderas.",
    "note": "Nuestra propia reconstrucción, construida en código a partir de medidas publicadas y renderizada con nuestro propio motor gráfico. No es una fotografía.",
    "marks": [
     {
      "span": "t-rex",
-     "text": "T. rex, unos 11,4 m en esta postura"
+     "text": "T. rex, unos 11 m en esta postura"
     },
     {
      "span": "person",
@@ -190,11 +190,11 @@
     },
     {
      "span": "hips",
-     "text": "sobre la cadera, 3,96 m"
+     "text": "el lomo sobre la cadera, 3,87 m"
     },
     {
      "span": "head",
-     "text": "la cabeza levantada, unos 4,6 m"
+     "text": "la cabeza levantada, unos 4,4 m"
     }
    ],
    "close": {
@@ -234,8 +234,8 @@
     {
      "cells": [
       "Nuestro modelo, según SUE",
-      "unos 11,4 m en esta postura, unos 11,8 m en línea recta",
-      "sobre la cadera 3,96 m, la cabeza levantada a unos 4,6 m",
+      "unos 11,0 m en esta postura, unos 11,8 m en línea recta",
+      "el lomo sobre la cadera 3,87 m, la cabeza levantada a unos 4,4 m",
       "no se da",
       "exacta: medida en nuestros archivos"
      ]
@@ -280,6 +280,15 @@
   },
   {
    "type": "text",
+   "id": "weight",
+   "nav": "¿Cuánto pesaba el T. rex?",
+   "h": "¿Cuánto pesaba el T. rex?",
+   "paras": [
+    "Un T. rex adulto grande pesaba más o menos de 8 a 9 toneladas, según los huesos y los modelos del cuerpo, y un adulto corriente, menos, más cerca de 5 a 8 toneladas. Nadie pesó nunca un T. rex: cada cifra sale del perímetro de un fémur o de un cuerpo construido alrededor del esqueleto, y la silueta elegida para ese cuerpo puede cambiar el resultado en muchas toneladas."
+   ]
+  },
+  {
+   "type": "text",
    "id": "biggest",
    "nav": "¿Qué T. rex fue el más grande?",
    "h": "¿Qué T. rex fue el más grande?",
@@ -315,8 +324,8 @@
   {
    "type": "text",
    "id": "found",
-   "nav": "Lo que se encontró de SUE",
-   "h": "Lo que se encontró de SUE",
+   "nav": "Esqueleto del T. rex: lo que se encontró de SUE",
+   "h": "Esqueleto del T. rex: lo que se encontró de SUE",
    "paras": [
     "SUE, hallado en 1990 en Dakota del Sur y guardado en Chicago, está entre los esqueletos grandes de T. rex más completos. La lista sigue la descripción del esqueleto de 2003 y tiene una base sólida, salvo donde se indica."
    ],
@@ -331,7 +340,7 @@
         "El brazo derecho: el húmero, los dos huesos del antebrazo y partes de la mano.",
         "El sacro y la cadera, con la pala izquierda de la cadera rota y vuelta a unir.",
         "Los dos omóplatos, el derecho con una herida curada.",
-        "Partes de todas las costillas de la espalda, 26 de unas 60 costillas del vientre (según el recuento del museo), y además la fúrcula y un hueso del oído (las dos cosas según el museo).",
+        "Costillas de todos los tramos de la espalda, aunque no todas las costillas, 26 de unas 60 costillas del vientre (según el recuento del museo), y además la fúrcula y un hueso del oído (las dos cosas según el museo).",
         "36 vértebras de la cola: en 2003, ninguna cola conocida de T. rex estaba más completa."
        ]
       }
@@ -344,7 +353,7 @@
        "points": [
         "La muñeca, reconstruida en el montaje según otros tiranosaurios.",
         "Casi todo el pie izquierdo, del que existe un solo hueso de un dedo (menos seguro: en un lugar, la descripción se contradice sobre qué pie es).",
-        "Unas 11 de las 47 vértebras de la cola del montaje, en parte al final de la cola (cálculo nuestro).",
+        "El final de la cola: unas 11 vértebras, las últimas de las 47 de la cola del montaje (cálculo nuestro).",
         "Unas 34 de las aproximadamente 60 costillas del vientre, según el recuento del museo.",
         "Piel: ninguna."
        ]
@@ -487,7 +496,7 @@
      "page": "spinosaurus",
      "pic": "spino",
      "alt": "El Spinosaurus adulto más grande de lado, algo menos de 14 m según un modelo, con una vela alta y una cola alta. Delante, nuestro ejemplar joven de unos 10 m como una forma gris plana, y una persona gris de 1,70 m que le llega al joven a la cadera.",
-     "line": "Un Spinosaurus adulto era más largo que cualquier T. rex encontrado hasta hoy, muy probablemente más ligero y mucho más bajo a la altura de la cadera. Aquí nuestro ejemplar joven está junto a nuestro T. rex, a la misma escala."
+     "line": "Un Spinosaurus adulto era más largo que cualquier T. rex encontrado hasta hoy, muy probablemente más ligero y mucho más bajo a la altura de la cadera. Allí el adulto más grande, según un modelo, está junto a nuestro T. rex, a la misma escala."
     },
     {
      "page": "brachiosaurus",
@@ -602,19 +611,18 @@
     ]
    ],
    "shapes": {
-    "caption": "Comparación de tamaño del T. rex: nuestro T. rex, de unos 11 m de largo en esta postura, junto a una persona de 1,70 m, a la misma escala.",
+    "caption": "Comparación de tamaño del T. rex: nuestro T. rex entero de lado, de unos 11 m de largo en esta postura, junto a una persona de 1,70 m, a la misma escala.",
     "lead": "Para presentaciones y publicaciones, esta comparación de tamaño está en tres formatos, todos con la misma licencia.",
     "alts": {
      "size_1x1": "Comparación de tamaño del T. rex: la parte delantera de nuestro T. rex, con la cabeza, el brazo corto, el pecho y las patas, y una persona gris de 1,70 m de pie bajo su cabeza.",
-     "size_4x3": "El T. rex junto a una persona, en comparación de tamaño: nuestro T. rex entero de lado, con la cabeza levantada y la cola estirada, y una persona gris de 1,70 m bajo sus mandíbulas.",
+     "size_4x3": "El T. rex junto a una persona, en comparación de tamaño: nuestro T. rex entero de lado, con la cabeza levantada y la cola estirada en curva, y una persona gris de 1,70 m bajo sus mandíbulas.",
      "size_16x9": "Comparación de tamaño del T. rex, el animal entero de lado: nuestro T. rex, de unos 11 m de largo en esta postura, y una persona gris de 1,70 m bajo su cabeza."
     },
     "links": {
      "size_1x1": "Cuadrada (1:1)",
      "size_4x3": "Diapositiva (4:3)",
      "size_16x9": "Panorámica (16:9)"
-    },
-    "draft": true
+    }
    }
   }
  ]

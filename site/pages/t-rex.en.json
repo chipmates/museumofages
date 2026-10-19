@@ -20,7 +20,7 @@
     "size_4x3",
     "size_16x9"
    ],
-   "figure": "size_16x9"
+   "figure": "size_4x3"
   }
  },
  "pics": {
@@ -153,7 +153,7 @@
  },
  "meta": {
   "title": "T. rex size: about 12 m (39 ft), 8 to 9 t | Museum of Ages",
-  "description": "T. rex size: a large adult about 12 m (39 ft) long, about 4 m (13 ft) at the hips, 8 to 9 tonnes. Ours is built to SUE's measurements, beside a person.",
+  "description": "T. rex size: a large adult about 12 m (39 ft) long, about 4 m (13 ft) at the hips, roughly 8 to 9 t. Ours is built to SUE's measurements, beside a person.",
   "og_title": "T. rex size: about 12 m (39 ft), 8 to 9 t",
   "og_image_alt": "Our T. rex from the side on two legs, about 11 m (36 ft) long in this pose, mouth closed and head raised, beside a grey person 1.70 m tall who stands far below its hips."
  },
@@ -171,18 +171,18 @@
  },
  "top": {
   "h1": "How big was T. rex?",
-  "answer": "A large adult Tyrannosaurus rex was about 12 m (39 ft) long, and most were smaller. A large T. rex stood about 3.5 to 4 m (11.5 to 13 ft) high at the hips and came to roughly 8 to 9 tonnes, by bones and body models, an ordinary adult less. Our T. rex, built to SUE's measurements, measures about 11.4 m (37 ft) in this pose, its raised head about 4.6 m (15 ft) up.",
+  "answer": "A large adult Tyrannosaurus rex was about 12 m (39 ft) long, and most were smaller. A large T. rex stood about 3.5 to 4 m (11.5 to 13 ft) high at the hips and came to roughly 8 to 9 tonnes, by bones and body models, an ordinary adult less. Our T. rex, built to SUE's measurements, measures about 11 m (36 ft) in this pose, its raised head about 4.4 m (14.5 ft) up.",
   "answer_more": "The two largest known T. rex are SUE in Chicago, the longer and more complete skeleton, and Scotty, probably the heavier.",
   "scale": {
    "pic": "side",
    "tag": "tag_made",
-   "what": "Our T. rex beside a person 1.70 m tall, to one scale, built to SUE's measurements. In this pose, head raised and turned, tail swung, it measures about 11.4 m (37 ft). That is more than six and a half people laid end to end. The top of the raised head is about 4.6 m (15 ft) up, and that depends on the pose. Laid out straight the same skeleton would be about 11.8 m (39 ft). SUE's mount in Chicago is about 12 m.",
+   "what": "Our T. rex beside a person 1.70 m tall, to one scale, built to SUE's measurements. In this pose, head raised and tail held out in a curve, it measures about 11 m (36 ft). That is about six and a half people laid end to end. The top of the raised head is about 4.4 m (14.5 ft) up, and that depends on the pose. Laid out straight the same skeleton would be about 11.8 m (39 ft). SUE's mount in Chicago is about 12 m.",
    "alt": "Our T. rex from the side on two legs, about 11 m (36 ft) long in this pose, mouth closed and head raised, beside a grey person 1.70 m tall who stands far below its hips.",
    "note": "Our own reconstruction, built in code from published measurements and rendered in our own engine. Not a photograph.",
    "marks": [
     {
      "span": "t-rex",
-     "text": "T. rex, about 11.4 m in this pose"
+     "text": "T. rex, about 11 m in this pose"
     },
     {
      "span": "person",
@@ -190,11 +190,11 @@
     },
     {
      "span": "hips",
-     "text": "over the hips 3.96 m"
+     "text": "over the hips 3.87 m"
     },
     {
      "span": "head",
-     "text": "raised head about 4.6 m"
+     "text": "raised head about 4.4 m"
     }
    ],
    "close": {
@@ -234,8 +234,8 @@
     {
      "cells": [
       "Our model, after SUE",
-      "about 11.4 m (37 ft) in this pose, about 11.8 m (39 ft) straight",
-      "over the hips 3.96 m (13 ft), raised head about 4.6 m (15 ft)",
+      "about 11.0 m (36 ft) in this pose, about 11.8 m (39 ft) straight",
+      "over the hips 3.87 m (12.7 ft), raised head about 4.4 m (14.5 ft)",
       "not given",
       "exact: measured on our files"
      ]
@@ -280,6 +280,15 @@
   },
   {
    "type": "text",
+   "id": "weight",
+   "nav": "How heavy was T. rex?",
+   "h": "How heavy was T. rex?",
+   "paras": [
+    "A large adult T. rex came to roughly 8 to 9 tonnes (about 9 to 10 US tons), by bones and body models, and an ordinary adult was lighter, nearer 5 to 8 tonnes. Nobody has ever put one on a scale, so every figure is worked out from the girth of a thigh bone or from a body built around the skeleton, and the outline chosen for that body can move the answer by many tonnes."
+   ]
+  },
+  {
+   "type": "text",
    "id": "biggest",
    "nav": "Which T. rex was the biggest?",
    "h": "Which T. rex was the biggest?",
@@ -315,8 +324,8 @@
   {
    "type": "text",
    "id": "found",
-   "nav": "What was found of SUE",
-   "h": "What was found of SUE",
+   "nav": "T. rex skeleton: what was found of SUE",
+   "h": "T. rex skeleton: what was found of SUE",
    "paras": [
     "SUE, found in 1990 in South Dakota and kept in Chicago, is among the most complete big T. rex skeletons. The list follows the skeleton's description of 2003 and is well founded except where marked."
    ],
@@ -331,7 +340,7 @@
         "The right arm: upper arm, both forearm bones and parts of the hand.",
         "The sacrum and the hips, the left hip blade broken and pieced together.",
         "Both shoulder blades, the right one with a healed injury.",
-        "Parts of every back rib, 26 of about 60 belly ribs (the museum's count), plus the wishbone and an ear bone (both by the museum).",
+        "Back ribs from every segment of the back, though not every rib, 26 of about 60 belly ribs (the museum's count), plus the wishbone and an ear bone (both by the museum).",
         "36 tail bones: in 2003, no known T. rex tail was more complete."
        ]
       }
@@ -344,7 +353,7 @@
        "points": [
         "The wrist, restored on the mount after other tyrannosaurs.",
         "Almost all of the left foot, of which a single toe bone exists (less sure: the description contradicts itself in one place about which foot is meant).",
-        "About 11 of the mount's 47 tail bones, part of them at the tail's end (our sum).",
+        "The end of the tail, the last 11 or so of the mount's 47 tail bones (our sum).",
         "About 34 of some 60 belly ribs, by the museum's count.",
         "Skin: none."
        ]
@@ -487,7 +496,7 @@
      "page": "spinosaurus",
      "pic": "spino",
      "alt": "The largest adult Spinosaurus from the side, just under 14 m (46 ft) by a model, with a tall sail and a deep tail. In front of it our young one of about 10 m (33 ft) as a flat grey shape, and a grey person 1.70 m tall who reaches the young one's hip.",
-     "line": "An adult Spinosaurus was longer than any T. rex found so far, most likely lighter and much lower at the hips. Here our young one stands beside our T. rex, to one scale."
+     "line": "An adult Spinosaurus was longer than any T. rex found so far, most likely lighter and much lower at the hips. On that page the largest adult, by a model, stands beside our T. rex, to one scale."
     },
     {
      "page": "brachiosaurus",
@@ -602,19 +611,18 @@
     ]
    ],
    "shapes": {
-    "caption": "T. rex size comparison: our T. rex, about 11 m (36 ft) long in this pose, beside a person 1.70 m tall, to one scale.",
+    "caption": "T. rex size comparison: our whole T. rex from the side, about 11 m (36 ft) long in this pose, beside a person 1.70 m tall, to one scale.",
     "lead": "For slides and posts, this size comparison comes in three shapes, all under the same licence.",
     "alts": {
      "size_1x1": "T. rex size comparison: the front of our T. rex, its head, small arm, chest and legs, with a grey person 1.70 m tall standing under its head.",
-     "size_4x3": "T. rex beside a person, a size comparison: our whole T. rex from the side, head raised and tail out, and a grey person 1.70 m tall below its jaws.",
+     "size_4x3": "T. rex beside a person, a size comparison: our whole T. rex from the side, head raised and tail held out in a curve, and a grey person 1.70 m tall below its jaws.",
      "size_16x9": "T. rex size comparison, the whole animal from the side: our T. rex, about 11 m (36 ft) long in this pose, and a grey person 1.70 m tall under its head."
     },
     "links": {
      "size_1x1": "Square (1:1)",
      "size_4x3": "Slide (4:3)",
      "size_16x9": "Wide (16:9)"
-    },
-    "draft": true
+    }
    }
   }
  ]

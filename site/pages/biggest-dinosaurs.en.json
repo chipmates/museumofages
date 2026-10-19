@@ -20,7 +20,7 @@
     "size_4x3",
     "size_16x9"
    ],
-   "figure": "size_16x9"
+   "figure": "size_4x3"
   }
  },
  "pics": {
@@ -198,7 +198,7 @@
  },
  "meta": {
   "title": "Biggest dinosaur: probably Argentinosaurus | Museum of Ages",
-  "description": "Biggest dinosaur: probably Argentinosaurus, about 30 to 35 m (98 to 115 ft), roughly 65 to 80 t. Size comparison: seven dinosaurs and a person to scale.",
+  "description": "Biggest dinosaur: probably Argentinosaurus, about 30 to 35 m (98 to 115 ft) and 65 to 80 t by models. Size comparison: seven dinosaurs and a person to scale.",
   "og_title": "Biggest dinosaur: probably Argentinosaurus",
   "og_image_alt": "Our seven dinosaurs in a row from the side, to one scale. The longest, our Argentinosaurus, is about 30.6 m (100 ft) long. Two long necks tower over the rest, and a grey person 1.70 m tall looks tiny beside them."
  },
@@ -217,11 +217,10 @@
  "top": {
   "h1": "What was the biggest dinosaur?",
   "answer": "The biggest dinosaur was probably Argentinosaurus, a long-necked titanosaur from Argentina: about 30 to 35 m (98 to 115 ft) long and roughly 65 to 80 tonnes, by models from a few bones. Nobody can be sure. No complete skeleton of any of the largest kinds has ever been found, and its relative Patagotitan comes close. Our Argentinosaurus in the picture is 30.6 m (100 ft) long, as long as 18 people, each 1.70 m, laid end to end.",
-  "answer_more": "Biggest means three things. The heaviest was most likely a titanosaur from Patagonia, Argentinosaurus or Patagotitan. The longest is not settled. The tallest was probably Sauroposeidon, its head about 17 m (56 ft) up, by four neck bones.",
   "scale": {
    "pic": "row",
    "tag": "tag_made",
-   "what": "Our seven beside a person 1.70 m tall, to one scale, each as our model is built. Our Spinosaurus is a young animal of about 10 m, about three quarters as long as a grown one, so here it is shorter than our T. rex. A grown Spinosaurus was longer than every T. rex, and most likely lighter.",
+   "what": "Our seven beside a person 1.70 m tall, to one scale, each as our model is built. Our Spinosaurus is a young animal of about 10 m, about three quarters as long as a grown one, so here it is shorter than our T. rex. By the model of 2022, the largest grown Spinosaurus was longer than any T. rex found so far, and most likely lighter.",
    "alt": "Our seven dinosaurs in a row from the side, to one scale. The longest, our Argentinosaurus, is about 30.6 m (100 ft) long. Two long necks tower over the rest, and a grey person 1.70 m tall looks tiny beside them.",
    "note": [
     "The museum's own reconstructions, built in code from published measurements and drawings and rendered in our own engine. Not photographs. ",
@@ -274,7 +273,7 @@
     },
     {
      "span": "t-rex",
-     "text": "T. rex, about 11.4 m"
+     "text": "T. rex, about 11.0 m"
     },
     {
      "span": "spinosaurus",
@@ -284,12 +283,12 @@
    "close": {
     "pic": "close",
     "tag": "tag_made",
-    "what": "The same scale, closer up: the person among the five smaller animals. Our T. rex carries its head about 4.6 m up, the sail of our Spinosaurus tops out at 3.5 m.",
+    "what": "The same scale, closer up: the person among the five smaller animals. Our T. rex carries its head about 4.4 m up, the sail of our Spinosaurus tops out at 3.5 m.",
     "alt": "The grey person among the five smaller dinosaurs, closer up: two meat-eaters on two legs, three with horns, armour and plates on four.",
     "marks": [
      {
       "span": "t-rex",
-      "text": "T. rex, about 11.4 m"
+      "text": "T. rex, about 11.0 m"
      },
      {
       "span": "spinosaurus",
@@ -362,7 +361,7 @@
     {
      "cells": [
       "T. rex, Tyrannosaurus rex",
-      "about 11.4 m (37 ft)",
+      "about 11.0 m (36 ft)",
       "SUE's skeleton about 12 m (39 ft)",
       "about 8 to 9 t",
       "one of the largest and most complete skeletons, several models"
@@ -418,8 +417,24 @@
   {
    "type": "text",
    "id": "three",
-   "nav": "Three answers, and the biggest meat-eater",
-   "h": "Three answers, and the biggest meat-eater",
+   "nav": "Biggest carnivorous dinosaur, and three answers",
+   "h": "Biggest carnivorous dinosaur, and three answers",
+   "paras": [
+    [
+     "By length, the biggest meat-eater was ",
+     {
+      "text": "Spinosaurus",
+      "page": "spinosaurus"
+     },
+     ": a grown one was just under 14 m (46 ft) in the model of 2022, scaled up from a young skeleton and a loose adult snout. By weight, ",
+     {
+      "text": "T. rex",
+      "page": "t-rex"
+     },
+     ": the heaviest known, called Scotty, comes to about 8.9 tonnes, and a big adult was about 12 m (39 ft) long. Giganotosaurus is often named too, but its remains are fragments and its estimates run from about 6.5 to 14 tonnes."
+    ],
+    "Biggest on its own can mean three things: the heaviest, the longest or the tallest."
+   ],
    "subs": [
     {
      "h": "The heaviest",
@@ -437,24 +452,6 @@
      "h": "The tallest",
      "paras": [
       "Probably Sauroposeidon, from Oklahoma, its head about 17 m (56 ft) up. That rests on four neck bones found in 1994, scaled up on the proportions of Brachiosaurus. The Natural History Museum in London notes it may sit nearer the titanosaurs. Weak, but nothing better is known. The tallest skeleton you can visit is Giraffatitan in Berlin, its skull about 13 m (43 ft) up."
-     ]
-    },
-    {
-     "h": "The biggest meat-eater",
-     "paras": [
-      [
-       "Two answers. By length, ",
-       {
-        "text": "Spinosaurus",
-        "page": "spinosaurus"
-       },
-       ": a grown one was just under 14 m (46 ft) in the model of 2022, scaled up from a young skeleton and a loose adult snout. By weight, ",
-       {
-        "text": "T. rex",
-        "page": "t-rex"
-       },
-       ": the heaviest known, called Scotty, comes to about 8.9 tonnes, and a big adult was about 12 m (39 ft) long. Giganotosaurus is often named too, but its remains are fragments and its estimates run from about 6.5 to 14 tonnes."
-      ]
      ]
     }
    ]
@@ -533,8 +530,8 @@
   {
    "type": "text",
    "id": "found",
-   "nav": "What was found",
-   "h": "What was found",
+   "nav": "Argentinosaurus skeleton: what was found",
+   "h": "Argentinosaurus skeleton: what was found",
    "paras": [
     "Argentinosaurus huinculensis is known from one animal, MCF-PVPH-1, found in the late 1980s about 8 km east of Plaza Huincul in Neuquén, Argentina. What survives: six or seven incomplete back vertebrae, the lower part of the hips, one piece of rib and one calf bone 1.55 m long. No head, neck, tail, shoulder, arm or foot. The bones are kept in the Museo Municipal Carmen Funes in Plaza Huincul. Two huge thigh bones might belong to it, or might not.",
     "Patagotitan mayorum is the best known of the largest kinds. At least six young adults came from a single quarry on a ranch in Chubut, Argentina: the first bone in 2012, more than a hundred bones in all. They are kept at the Museo Paleontológico Egidio Feruglio in Trelew, where a real thigh bone over 2 m long stands beside the cast.",
@@ -565,6 +562,10 @@
    "nav": "More questions",
    "h": "More questions",
    "items": [
+    {
+     "q": "How tall was Argentinosaurus?",
+     "a": "Nobody knows how tall it stood in life, since no neck or head of Argentinosaurus has ever been found. Our model holds its head about 11 m (36 ft) up, by a neck angle we chose."
+    },
     {
      "q": "Was Spinosaurus bigger than T. rex?",
      "a": "Longer, and most likely lighter. A grown Spinosaurus was just under 14 m (46 ft) and about 7.4 tonnes in the current model. A big adult T. rex was about 12 m (39 ft) and 8 to 9 tonnes. Ours in the picture is a young Spinosaurus of about 10 m, so there it is the shorter one."
@@ -617,7 +618,7 @@
      "page": "woolly-mammoth",
      "pic": "mammoth",
      "alt": "Our woolly mammoth, the Berezovka bull, from the side in a dark brown coat: high domed head, sloping back, two curved tusks, and a mark at his shoulder height, 271 cm (8.9 ft) by a reconstruction. The grey person beside him, 1.70 m tall, stands lower than the tusk tips.",
-     "line": "Not a dinosaur but an ice age relative of the elephants: a Siberian bull stood about 2.7 to 2.9 m at the shoulder. Ours is one real bull found frozen in 1900, beside a person."
+     "line": "Not a dinosaur but an ice age relative of the elephants: a Siberian bull stood about 2.7 to 2.9 m at the shoulder. Ours is built after one real bull found frozen in 1900, beside a person."
     },
     {
      "page": "brachiosaurus",
@@ -813,19 +814,18 @@
     ]
    ],
    "shapes": {
-    "caption": "Dinosaur size comparison: our seven dinosaurs to one scale, each as our model is built, the longest our Argentinosaurus at about 30.6 m (100 ft), with a person 1.70 m tall among them.",
+    "caption": "Argentinosaurus size comparison: our Argentinosaurus from the hips forward, 30.6 m (100 ft) long in all, its neck raised at the angle we chose, beside a person 1.70 m tall, to one scale.",
     "lead": "For slides and posts, this size comparison comes in three shapes, all under the same licence.",
     "alts": {
      "size_1x1": "Argentinosaurus size comparison: the front legs, raised neck and head of our Argentinosaurus, with a grey person 1.70 m tall standing under the neck.",
-     "size_4x3": "Argentinosaurus beside a person, a size comparison: our Argentinosaurus from the hips forward, its long neck rising, and a grey person 1.70 m tall below it.",
+     "size_4x3": "Argentinosaurus beside a person, a size comparison: our Argentinosaurus from the hips forward, its long neck rising, and a grey person 1.70 m tall below the neck.",
      "size_16x9": "Dinosaur size comparison: our seven dinosaurs side by side to one scale, the longest our Argentinosaurus at about 30.6 m (100 ft), and a grey person 1.70 m tall among them."
     },
     "links": {
      "size_1x1": "Square (1:1)",
      "size_4x3": "Slide (4:3)",
      "size_16x9": "Wide (16:9)"
-    },
-    "draft": true
+    }
    }
   }
  ]
