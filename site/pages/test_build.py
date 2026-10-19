@@ -1332,9 +1332,10 @@ class Case(unittest.TestCase):
                 continue
             own = self.own_part(path.read_text(encoding="utf-8"))
             figures = re.findall(r'<figure class="plate sc-fig[^"]*".*?</figure>', own, flags=re.S)
-            self.assertEqual(len(figures), 4, lang)
+            # the three shapes add one figure (page.shapes.figure), which owes no Triceratops credit
+            self.assertEqual(len(figures), 5 if data["page"].get("shapes") else 4, lang)
             for figure in figures:
-                stem = re.search(r"/(animals-stegosaurus-[a-z-]+?)-\d+\.", figure).group(1)
+                stem = re.search(r"/(animals-stegosaurus-[a-z0-9-]+?)-\d+\.", figure).group(1)
                 caption = figure[figure.index("<figcaption"):]
                 if stem.endswith("-beside-triceratops-t-rex"):
                     line = re.search(r'</span><span class="label__src">(.*?)</span>(?:<a class="sc-totable"|</figcaption>)', caption, flags=re.S)
