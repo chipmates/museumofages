@@ -711,8 +711,8 @@
             "no run and no speed: most likely it could not run"
           ],
           [
-            "(?s)^(?!.*(?:this pose|dieser haltung|\\bours\\b|\\bunserer\\b|our (?:model|t\\. rex)|unser(?:em|en)? (?:modell|t\\. rex)|esta postura|nesta pose|\\bnuestr\\w*|\\bnoss[oa]s?\\b)).*\\b11[.,]4\\s*m\\b",
-            "11.4 m is our model's length in its pose, never SUE's"
+            "(?s)^(?!.*(?:this pose|dieser haltung|\\bours\\b|\\bunserer\\b|our (?:model|t\\. rex)|unser(?:em|en)? (?:modell|t\\. rex)|esta postura|nesta pose|\\bnuestr\\w*|\\bnoss[oa]s?\\b)).*\\b11(?:[.,]4)?\\s*m\\b",
+            "11 m is our model's length in its pose, never SUE's"
           ],
           [
             "\\bweighed\\b|\\bgewogen\\b|\\bwog\\b",
