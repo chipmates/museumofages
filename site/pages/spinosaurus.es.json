@@ -120,7 +120,7 @@
   "title": "Spinosaurus: tamaño de hasta unos 14 m | Museum of Ages",
   "description": "¿Cuánto medía el Spinosaurus? Los adultos más grandes, casi 14 m y unas 7,4 t según un modelo. El nuestro, un ejemplar joven de unos 10 m, con una persona.",
   "og_title": "Spinosaurus: tamaño de hasta unos 14 m",
-  "og_image_alt": "Nuestro Spinosaurus joven de lado, de unos 10 m de largo, con una vela alta y una cola alta. Detrás, la silueta clara de los adultos más grandes, algo menos de 14 m según un modelo, y a su lado una persona gris de 1,70 m que le llega a la cadera."
+  "og_image_alt": "El Spinosaurus adulto más grande de lado, algo menos de 14 m según un modelo, con una vela alta y una cola alta. Delante, nuestro ejemplar joven de unos 10 m como una forma gris plana, y una persona gris de 1,70 m que le llega al joven a la cadera."
  },
  "labels": {
   "crumbs": "Estás aquí",
@@ -137,22 +137,22 @@
  },
  "top": {
   "h1": "¿Cuánto medía el Spinosaurus?",
-  "answer": "Los adultos más grandes de Spinosaurus aegyptiacus, el espinosaurio, medían algo menos de 14 m de largo y pesaban unas 7,4 toneladas, según un modelo de 2022. Hasta hoy nadie encontró un esqueleto entero. El nuestro es un ejemplar joven de unos 10 m, más o menos tres cuartas partes del tamaño completo y unas 3 a 4 toneladas según un modelo. Junto a la persona de 1,70 m, su articulación de la cadera queda más o menos a la altura de la cabeza de la persona, y mide casi seis personas de largo.",
+  "answer": "Los adultos más grandes de Spinosaurus aegyptiacus, el espinosaurio, medían algo menos de 14 m de largo y pesaban unas 7,4 toneladas, según un modelo de 2022. Hasta hoy nadie encontró un esqueleto entero. El nuestro es un ejemplar joven de unos 10 m, más o menos tres cuartas partes del tamaño completo y unas 3,6 a 4,7 toneladas según nuestro modelo. Los modelos publicados del esqueleto en el que se basa dan un poco menos, unas 3,2 a 4,2 toneladas. Junto a la persona de 1,70 m, su articulación de la cadera queda más o menos a la altura de la cabeza de la persona, y mide casi seis personas de largo.",
   "answer_more": "Comparado con el T. rex, el Spinosaurus más grande era más largo, muy probablemente más ligero y mucho más bajo a la altura de la cadera. Nunca coincidieron: entre los dos había unos 30 millones de años y dos continentes.",
   "scale": {
    "pic": "side",
    "tag": "tag_made",
-   "what": "Nuestro Spinosaurus junto a una persona de 1,70 m, a la misma escala: un ejemplar joven de unos 10 m, construido según el esqueleto de Marruecos. La silueta clara de detrás es el tamaño de los adultos más grandes según el modelo de 2022, algo menos de 14 m: nuestro modelo agrandado más o menos un tercio. La silueta es una estimación, no un animal que alguien haya encontrado. En la postura de nuestro modelo, la silueta mide unos 13,2 m de punta a punta.",
-   "alt": "Nuestro Spinosaurus joven de lado, de unos 10 m de largo, con una vela alta y una cola alta. Detrás, la silueta clara de los adultos más grandes, algo menos de 14 m según un modelo, y a su lado una persona gris de 1,70 m que le llega a la cadera.",
+   "what": "Los adultos más grandes de Spinosaurus junto a una persona de 1,70 m, a la misma escala: algo menos de 14 m según el modelo de 2022. Ese modelo agranda más o menos un tercio el esqueleto joven de Marruecos, y nosotros agrandamos nuestro modelo de la misma manera. Nadie encontró un esqueleto adulto, así que es una estimación, no un animal que alguien haya encontrado. En la postura de nuestro modelo, el adulto mide unos 13,1 m de punta a punta. Delante, en gris plano, nuestro ejemplar joven de unos 10 m, construido según ese esqueleto.",
+   "alt": "El Spinosaurus adulto más grande de lado, algo menos de 14 m según un modelo, con una vela alta y una cola alta. Delante, nuestro ejemplar joven de unos 10 m como una forma gris plana, y una persona gris de 1,70 m que le llega al joven a la cadera.",
    "note": "Nuestra propia reconstrucción, construida en código a partir de medidas publicadas y renderizada con nuestro propio motor gráfico. No son fotografías.",
    "marks": [
     {
      "span": "spinosaurus",
-     "text": "Nuestro Spinosaurus, un ejemplar joven, unos 10 m"
+     "text": "En gris: nuestro ejemplar joven, unos 10 m"
     },
     {
      "span": "outline",
-     "text": "Silueta: los adultos más grandes, algo menos de 14 m, según un modelo"
+     "text": "Los adultos más grandes, algo menos de 14 m, según un modelo"
     },
     {
      "span": "person",
@@ -162,8 +162,8 @@
    "close": {
     "pic": "close",
     "tag": "tag_made",
-    "what": "La cabeza y la parte delantera del cuerpo, más de cerca, con la persona. El hocico es largo y estrecho, los dientes son conos sin borde de sierra y los orificios de la nariz quedan muy atrás. La cresta baja delante de los ojos es segura, su altura no: su borde de arriba está roto en todas las piezas encontradas. Los labios son una elección nuestra, no un hallazgo.",
-    "alt": "La cabeza y la parte delantera del Spinosaurus, más de cerca, con el hocico largo y estrecho, los dientes en forma de cono y una cresta baja delante del ojo, junto a la persona gris."
+    "what": "La cabeza y la parte delantera del cuerpo de nuestro ejemplar joven, más de cerca, con la persona. El hocico es largo y estrecho, los dientes son conos sin borde de sierra y los orificios de la nariz quedan muy atrás. La cresta baja delante de los ojos es segura, su altura no: su borde de arriba está roto en todas las piezas encontradas. Los labios son una elección nuestra, no un hallazgo.",
+    "alt": "La cabeza y la parte delantera de nuestro Spinosaurus joven, más de cerca, con el hocico largo y estrecho, los dientes en forma de cono y una cresta baja delante del ojo, junto a la persona gris."
    }
   },
   "guess": {
@@ -198,7 +198,7 @@
       "Nuestro Spinosaurus, un ejemplar joven",
       "unos 10 m en su postura",
       "lo alto de la vela unos 3,5 m, la articulación de la cadera unos 1,6 m",
-      "unas 3 a 4 t, según un modelo",
+      "unas 3,6 a 4,7 t, según nuestro modelo",
       "medido en nuestros archivos, construido según el esqueleto de Marruecos"
      ]
     },
@@ -206,7 +206,7 @@
      "cells": [
       "Los adultos más grandes, el modelo de 2022",
       "algo menos de 14 m",
-      "",
+      "nuestro modelo agrandado: lo alto de la vela unos 4,6 m, la articulación de la cadera unos 2,1 m",
       "unas 7,4 t, de 7,4 a 8 t según el aire que se suponga en el cuerpo",
       "el modelo de un equipo, el esqueleto joven agrandado hasta el hocico más grande"
      ]
@@ -251,12 +251,12 @@
    "scale": {
     "pic": "vs",
     "tag": "tag_made",
-    "what": "Nuestro Spinosaurus y nuestro T. rex, a la misma escala. Nuestro Spinosaurus es un ejemplar joven de unos 10 m, y nuestro T. rex, según SUE, un adulto grande de unos 11,4 m, así que aquí el más largo es el T. rex. Un Spinosaurus adulto era más largo que cualquier T. rex encontrado hasta hoy, muy probablemente más ligero y mucho más bajo a la altura de la cadera.",
-    "alt": "Un Spinosaurus con una vela en el lomo y un T. rex un poco más largo con la cabeza levantada, los dos de lado, el T. rex más o menos el doble de alto a la altura de la cadera, junto a la persona gris.",
+    "what": "El Spinosaurus adulto más grande y nuestro T. rex, a la misma escala. El adulto es nuestro modelo agrandado más o menos un tercio, como se hizo el modelo de 2022. Según ese modelo, los adultos más grandes medían algo menos de 14 m. Nuestro T. rex, según SUE, es un adulto grande de unos 11,4 m. Así que aquí el más largo es el Spinosaurus, y el T. rex es mucho más alto a la altura de la cadera. El Spinosaurus era muy probablemente el más ligero de los dos.",
+    "alt": "Un Spinosaurus adulto grande con una vela en el lomo y un T. rex más corto con la cabeza levantada, los dos de lado, el T. rex más o menos una vez y media más alto a la altura de la cadera, junto a la persona gris.",
     "marks": [
      {
       "span": "spinosaurus",
-      "text": "Nuestro Spinosaurus, un ejemplar joven, unos 10 m"
+      "text": "Los adultos más grandes, algo menos de 14 m, según un modelo"
      },
      {
       "span": "t-rex",
@@ -366,8 +366,8 @@
    "scale": {
     "pic": "skeleton",
     "tag": "tag_built",
-    "what": "Nuestro Spinosaurus como esqueleto, coloreado según de dónde viene cada parte.",
-    "alt": "Nuestro Spinosaurus como esqueleto: la cadera, las patas y la cola en rojo oscuro, las espinas de la vela y la mandíbula inferior en azul, el cráneo, el cuello, las costillas y los brazos claros, junto a la persona.",
+    "what": "Nuestro ejemplar joven como esqueleto, a su propio tamaño, coloreado según de dónde viene cada parte.",
+    "alt": "Nuestro Spinosaurus joven como esqueleto: la cadera, las patas y la cola en rojo oscuro, las espinas de la vela y la mandíbula inferior en azul, el cráneo, el cuello, las costillas y los brazos claros, junto a la persona.",
     "key": [
      {
       "swatch": "own",
@@ -431,7 +431,7 @@
     },
     {
      "term": "7 toneladas",
-     "text": "La cifra del modelo actual para los adultos más grandes, unas 7,4 toneladas. No vale para nuestro ejemplar joven, que tiene unas 3 a 4 toneladas."
+     "text": "La cifra del modelo actual para los adultos más grandes, unas 7,4 toneladas. No vale para nuestro ejemplar joven, que tiene unas 3,6 a 4,7 toneladas según nuestro modelo. Los modelos publicados del esqueleto en el que se basa dan un poco menos, unas 3,2 a 4,2 toneladas."
     },
     {
      "term": "El mayor depredador de todos los tiempos",
@@ -485,7 +485,7 @@
    "items": [
     {
      "q": "¿Qué altura tenía el Spinosaurus?",
-     "a": "Nuestro ejemplar joven: lo alto de la vela, unos 3,5 m, y la cabeza, unos 3 m en su postura. Su articulación de la cadera queda a unos 1,6 m. Para los adultos todavía no se publicó ninguna altura de la cadera, solo que el T. rex era más alto a la altura de la cadera."
+     "a": "Los adultos más grandes, como nuestro modelo agrandado más o menos un tercio: lo alto de la vela, unos 4,6 m, y la articulación de la cadera, unos 2,1 m. Nuestro ejemplar joven: lo alto de la vela, unos 3,5 m, y la cabeza, unos 3 m en su postura. Su articulación de la cadera queda a unos 1,6 m. Para los adultos todavía no se publicó ninguna altura de la cadera, solo que el T. rex era más alto a la altura de la cadera."
     },
     {
      "q": "¿Fue el Spinosaurus el dinosaurio más grande?",

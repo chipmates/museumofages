@@ -632,15 +632,15 @@ class Case(unittest.TestCase):
                     self.save(lang, original, page)
 
     def test_a_spinosaurus_number_stands_only_with_the_words_that_say_whose_it_is(self):
-        """The page names the adults' 14 m and the model's tonnes, our young animal's 10 m and 3 to 4 tonnes, the four
+        """The page names the adults' 14 m and the model's tonnes, our young animal's 10 m and its tonnes, the four
         legs of 2014, the swimming headline and the largest predator on purpose: without the words that say whose the
         number is, or what the claim was, the same fields stop the build."""
         page = self.topic_page("spinosaurus")
         cases = [
             ({"en": (r"just under 14", "14"), "de": (r"knapp unter 14", "14")}, "14 m is the largest adults' length"),
             ({"en": (r" in its pose", ""), "de": (r" in seiner Haltung", "")}, "about 10 m is our young animal's length"),
-            ({"en": (r"3 to 4 t, by a model", "3 to 4 t"), "de": (r"3 bis 4 t, nach einem Modell", "3 bis 4 t")},
-             "3 to 4 tonnes is our young animal's weight"),
+            ({"en": (r"3\.6 to 4\.7 t, by our model", "3.6 to 4.7 t"), "de": (r"3,6 bis 4,7 t, nach unserem Modell", "3,6 bis 4,7 t")},
+             "our young animal's tonnes stand with whose model they are"),
             ({"en": (r"A headline of 2020", "A finding of 2020"), "de": (r"Eine Schlagzeile von 2020", "Ein Befund von 2020")},
              "the first swimming dinosaur only as a headline"),
             ({"en": (r"the longest meat-eating dinosaur known", "the longest"),

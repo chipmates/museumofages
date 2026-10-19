@@ -120,7 +120,7 @@
   "title": "Espinossauro: tamanho de até cerca de 14 m | Museum of Ages",
   "description": "Qual era o tamanho do espinossauro? Os maiores adultos, quase 14 m e cerca de 7,4 t, por um modelo. O nosso, um jovem de cerca de 10 m, junto a uma pessoa.",
   "og_title": "Espinossauro: tamanho de até cerca de 14 m",
-  "og_image_alt": "O nosso espinossauro jovem de lado, com cerca de 10 m de comprimento, com uma vela alta e uma cauda alta. Atrás, a silhueta clara dos maiores adultos, pouco menos de 14 m por um modelo, e ao lado uma pessoa cinza de 1,70 m que chega ao quadril dele."
+  "og_image_alt": "O maior espinossauro adulto de lado, pouco menos de 14 m por um modelo, com uma vela alta e uma cauda alta. Na frente, o nosso jovem de cerca de 10 m como uma forma cinza chapada, e uma pessoa cinza de 1,70 m que chega ao quadril do jovem."
  },
  "labels": {
   "crumbs": "Você está aqui",
@@ -137,22 +137,22 @@
  },
  "top": {
   "h1": "Qual era o tamanho do espinossauro?",
-  "answer": "Os maiores adultos de Spinosaurus aegyptiacus, o espinossauro, tinham pouco menos de 14 m de comprimento e cerca de 7,4 toneladas, por um modelo de 2022. Ninguém encontrou um esqueleto inteiro. O nosso é um jovem de cerca de 10 m, mais ou menos três quartos do tamanho completo e cerca de 3 a 4 toneladas, por um modelo. Ao lado da pessoa de 1,70 m, a articulação do quadril dele fica mais ou menos na altura da cabeça da pessoa, e ele tem quase seis pessoas de comprimento.",
+  "answer": "Os maiores adultos de Spinosaurus aegyptiacus, o espinossauro, tinham pouco menos de 14 m de comprimento e cerca de 7,4 toneladas, por um modelo de 2022. Ninguém encontrou um esqueleto inteiro. O nosso é um jovem de cerca de 10 m, mais ou menos três quartos do tamanho completo e cerca de 3,6 a 4,7 toneladas, pelo nosso modelo. Os modelos publicados do esqueleto em que ele se baseia dão um pouco menos, cerca de 3,2 a 4,2 toneladas. Ao lado da pessoa de 1,70 m, a articulação do quadril dele fica mais ou menos na altura da cabeça da pessoa, e ele tem quase seis pessoas de comprimento.",
   "answer_more": "Comparado com o T. rex, o maior espinossauro era mais longo, muito provavelmente mais leve e bem mais baixo na altura do quadril. Os dois nunca se encontraram: entre eles havia cerca de 30 milhões de anos e dois continentes.",
   "scale": {
    "pic": "side",
    "tag": "tag_made",
-   "what": "O nosso espinossauro ao lado de uma pessoa de 1,70 m, na mesma escala: um jovem de cerca de 10 m, construído a partir do esqueleto do Marrocos. A silhueta clara atrás é o tamanho dos maiores adultos pelo modelo de 2022, pouco menos de 14 m: o nosso modelo aumentado em mais ou menos um terço. A silhueta é uma estimativa, não um animal que alguém tenha encontrado. Na pose do nosso modelo, a silhueta mede cerca de 13,2 m de ponta a ponta.",
-   "alt": "O nosso espinossauro jovem de lado, com cerca de 10 m de comprimento, com uma vela alta e uma cauda alta. Atrás, a silhueta clara dos maiores adultos, pouco menos de 14 m por um modelo, e ao lado uma pessoa cinza de 1,70 m que chega ao quadril dele.",
+   "what": "Os maiores espinossauros adultos ao lado de uma pessoa de 1,70 m, na mesma escala: pouco menos de 14 m pelo modelo de 2022. Esse modelo aumenta em mais ou menos um terço o esqueleto jovem do Marrocos, e nós aumentamos o nosso modelo do mesmo jeito. Ninguém encontrou um esqueleto adulto, então é uma estimativa, não um animal que alguém tenha encontrado. Na pose do nosso modelo, o adulto mede cerca de 13,1 m de ponta a ponta. Na frente, em cinza chapado, o nosso jovem de cerca de 10 m, construído a partir desse esqueleto.",
+   "alt": "O maior espinossauro adulto de lado, pouco menos de 14 m por um modelo, com uma vela alta e uma cauda alta. Na frente, o nosso jovem de cerca de 10 m como uma forma cinza chapada, e uma pessoa cinza de 1,70 m que chega ao quadril do jovem.",
    "note": "A nossa própria reconstrução, construída em código a partir de medidas publicadas e renderizada com o nosso próprio motor gráfico. Não são fotografias.",
    "marks": [
     {
      "span": "spinosaurus",
-     "text": "O nosso espinossauro, um jovem, cerca de 10 m"
+     "text": "Em cinza: o nosso jovem, cerca de 10 m"
     },
     {
      "span": "outline",
-     "text": "Silhueta: os maiores adultos, pouco menos de 14 m, por um modelo"
+     "text": "Os maiores adultos, pouco menos de 14 m, por um modelo"
     },
     {
      "span": "person",
@@ -162,8 +162,8 @@
    "close": {
     "pic": "close",
     "tag": "tag_made",
-    "what": "A cabeça e a parte da frente do corpo, mais de perto, com a pessoa. O focinho é longo e estreito, os dentes são cones sem borda de serra e as narinas ficam bem para trás. A crista baixa na frente dos olhos é certa, a altura dela não: a borda de cima está quebrada em todas as peças encontradas. Os lábios são uma escolha nossa, não um achado.",
-    "alt": "A cabeça e a parte da frente do espinossauro, mais de perto, com o focinho longo e estreito, os dentes em forma de cone e uma crista baixa na frente do olho, ao lado da pessoa cinza."
+    "what": "A cabeça e a parte da frente do corpo do nosso jovem, mais de perto, com a pessoa. O focinho é longo e estreito, os dentes são cones sem borda de serra e as narinas ficam bem para trás. A crista baixa na frente dos olhos é certa, a altura dela não: a borda de cima está quebrada em todas as peças encontradas. Os lábios são uma escolha nossa, não um achado.",
+    "alt": "A cabeça e a parte da frente do nosso espinossauro jovem, mais de perto, com o focinho longo e estreito, os dentes em forma de cone e uma crista baixa na frente do olho, ao lado da pessoa cinza."
    }
   },
   "guess": {
@@ -198,7 +198,7 @@
       "O nosso espinossauro, um jovem",
       "cerca de 10 m na pose dele",
       "o alto da vela cerca de 3,5 m, a articulação do quadril cerca de 1,6 m",
-      "cerca de 3 a 4 t, por um modelo",
+      "cerca de 3,6 a 4,7 t, pelo nosso modelo",
       "medido nos nossos arquivos, construído a partir do esqueleto do Marrocos"
      ]
     },
@@ -206,7 +206,7 @@
      "cells": [
       "Os maiores adultos, o modelo de 2022",
       "pouco menos de 14 m",
-      "",
+      "o nosso modelo aumentado: o alto da vela cerca de 4,6 m, a articulação do quadril cerca de 2,1 m",
       "cerca de 7,4 t, de 7,4 a 8 t conforme o ar suposto no corpo",
       "o modelo de uma equipe, o esqueleto jovem aumentado até o maior focinho"
      ]
@@ -251,12 +251,12 @@
    "scale": {
     "pic": "vs",
     "tag": "tag_made",
-    "what": "O nosso espinossauro e o nosso T. rex, na mesma escala. O nosso espinossauro é um jovem de cerca de 10 m, e o nosso T. rex, a partir de SUE, um adulto grande de cerca de 11,4 m, então aqui o mais longo é o T. rex. Um espinossauro adulto era mais longo do que qualquer T. rex encontrado até hoje, muito provavelmente mais leve e bem mais baixo na altura do quadril.",
-    "alt": "Um espinossauro com uma vela nas costas e um T. rex um pouco mais longo com a cabeça erguida, os dois de lado, o T. rex mais ou menos duas vezes mais alto no quadril, ao lado da pessoa cinza.",
+    "what": "O maior espinossauro adulto e o nosso T. rex, na mesma escala. O adulto é o nosso modelo aumentado em mais ou menos um terço, como foi feito o modelo de 2022. Por esse modelo, os maiores adultos tinham pouco menos de 14 m. O nosso T. rex, a partir de SUE, é um adulto grande de cerca de 11,4 m. Então aqui o mais longo é o espinossauro, e o T. rex é bem mais alto no quadril. O espinossauro era muito provavelmente o mais leve dos dois.",
+    "alt": "Um grande espinossauro adulto com uma vela nas costas e um T. rex mais curto com a cabeça erguida, os dois de lado, o T. rex mais ou menos uma vez e meia mais alto no quadril, ao lado da pessoa cinza.",
     "marks": [
      {
       "span": "spinosaurus",
-      "text": "O nosso espinossauro, um jovem, cerca de 10 m"
+      "text": "Os maiores adultos, pouco menos de 14 m, por um modelo"
      },
      {
       "span": "t-rex",
@@ -366,8 +366,8 @@
    "scale": {
     "pic": "skeleton",
     "tag": "tag_built",
-    "what": "O nosso espinossauro como esqueleto, colorido conforme a origem de cada parte.",
-    "alt": "O nosso espinossauro como esqueleto: o quadril, as pernas e a cauda em vermelho-escuro, os espinhos da vela e a mandíbula em azul, o crânio, o pescoço, as costelas e os braços claros, ao lado da pessoa.",
+    "what": "O nosso jovem como esqueleto, no tamanho dele, colorido conforme a origem de cada parte.",
+    "alt": "O nosso espinossauro jovem como esqueleto: o quadril, as pernas e a cauda em vermelho-escuro, os espinhos da vela e a mandíbula em azul, o crânio, o pescoço, as costelas e os braços claros, ao lado da pessoa.",
     "key": [
      {
       "swatch": "own",
@@ -431,7 +431,7 @@
     },
     {
      "term": "7 toneladas",
-     "text": "O número do modelo atual para os maiores adultos, cerca de 7,4 toneladas. Ele não vale para o nosso jovem, que tem cerca de 3 a 4 toneladas."
+     "text": "O número do modelo atual para os maiores adultos, cerca de 7,4 toneladas. Ele não vale para o nosso jovem, que tem cerca de 3,6 a 4,7 toneladas pelo nosso modelo. Os modelos publicados do esqueleto em que ele se baseia dão um pouco menos, cerca de 3,2 a 4,2 toneladas."
     },
     {
      "term": "O maior predador de todos os tempos",
@@ -485,7 +485,7 @@
    "items": [
     {
      "q": "Qual era a altura do espinossauro?",
-     "a": "O nosso jovem: o alto da vela, cerca de 3,5 m, e a cabeça, cerca de 3 m na pose dele. A articulação do quadril fica a cerca de 1,6 m. Para os adultos, nenhuma altura do quadril foi publicada, só que o T. rex era mais alto no quadril."
+     "a": "Os maiores adultos, como o nosso modelo aumentado em mais ou menos um terço: o alto da vela, cerca de 4,6 m, e a articulação do quadril, cerca de 2,1 m. O nosso jovem: o alto da vela, cerca de 3,5 m, e a cabeça, cerca de 3 m na pose dele. A articulação do quadril fica a cerca de 1,6 m. Para os adultos, nenhuma altura do quadril foi publicada, só que o T. rex era mais alto no quadril."
     },
     {
      "q": "O espinossauro foi o maior dinossauro?",

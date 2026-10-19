@@ -806,8 +806,8 @@
           "de": "Wie groß war der Spinosaurus?"
         },
         "line": {
-          "en": "The largest adult Spinosaurus were just under 14 m long and about 7.4 tonnes, by a model. Our Spinosaurus is a young one of about 10 m and stands to one scale beside a person and beside our T. rex.",
-          "de": "Die größten erwachsenen Tiere waren knapp unter 14 m lang und etwa 7,4 t schwer, nach einem Modell. Unser Spinosaurus ist ein junges Tier von etwa 10 m und steht im selben Maßstab neben einem Menschen und neben unserem T. rex."
+          "en": "The largest adult Spinosaurus were just under 14 m long and about 7.4 tonnes, by a model. They stand to one scale beside a person and beside our T. rex, with our young one of about 10 m in grey.",
+          "de": "Die größten erwachsenen Tiere waren knapp unter 14 m lang und etwa 7,4 t schwer, nach einem Modell. Sie stehen im selben Maßstab neben einem Menschen und neben unserem T. rex, unser junges Tier von etwa 10 m in Grau."
         },
         "langs": ["en", "de", "es", "pt-BR"],
         "count": "spinosaurus",
@@ -832,8 +832,8 @@
             "about 10 m is our young animal's length, never the species'"
           ],
           [
-            "(?s)^(?!.*(?:(?:\\bours?\\b|\\bour\\s(?:model|spinosaurus|young)|young|unser|junge[sn]?\\b|in\\s(?:its|this)\\spose|in\\s(?:seiner|dieser)\\shaltung|joven|jovem|\\bnuestr\\w*|\\bnoss[oa]s?\\b)|by\\sa\\smodel|nach\\seinem\\smodell|según\\sun\\smodelo|por\\sum\\smodelo)).*\\b3\\s(?:to|bis|a)\\s4\\s*(?:t|tonnes?|tonnen)\\b",
-            "3 to 4 tonnes is our young animal's weight by a model, never the species'"
+            "(?s)^(?!.*(?:(?:\\bours?\\b|\\bour\\s(?:model|spinosaurus|young)|young|unser|junge[sn]?\\b|in\\s(?:its|this)\\spose|in\\s(?:seiner|dieser)\\shaltung|joven|jovem|\\bnuestr\\w*|\\bnoss[oa]s?\\b)|by\\sa\\smodel|nach\\seinem\\smodell|según\\sun\\smodelo|por\\sum\\smodelo)).*\\b3(?:[.,]\\d)?\\s(?:to|bis|a)\\s4(?:[.,]\\d)?\\s*(?:t|tonnes?|tonnen)\\b",
+            "our young animal's tonnes stand with whose model they are, never as the species'"
           ],
           [
             "(?:\\bours?\\b|our\\sspinosaurus|unser(?:e[rs]?)?\\sspinosaurus|unser(?:e[rs]?)?\\s(?:junges\\s)?tier)\\s(?:\\w+\\s){0,3}(?:is|was|measures|weighs|ist|war|misst|wiegt|kommt\\sauf)\\s(?:about\\s|etwa\\s)?(?:14|13[.,]\\d)\\s*m|(?:\\bours?\\b|our\\sspinosaurus|unser(?:e[rs]?)?\\sspinosaurus)\\s(?:\\w+\\s){0,3}(?:comes\\sto|weighs|kommt\\sauf|wiegt)\\s(?:about\\s|etwa\\s)?7",
