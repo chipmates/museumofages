@@ -200,7 +200,7 @@
   "title": "Qual foi o maior dinossauro do mundo? | Museum of Ages",
   "description": "Qual foi o maior dinossauro do mundo? Provavelmente Argentinosaurus: cerca de 30 a 35 m e de 65 a 80 t, por modelos. Sete dinossauros e uma pessoa em escala.",
   "og_title": "Qual foi o maior dinossauro do mundo? Provavelmente o Argentinosaurus",
-  "og_image_alt": "Os nossos sete dinossauros em fila, vistos de lado, na mesma escala. O mais longo, o nosso Argentinosaurus, tem cerca de 30,6 m. Dois pescoços longos se erguem bem acima dos outros, e uma pessoa cinza de 1,70 m parece minúscula perto deles."
+  "og_image_alt": "Os nossos sete dinossauros em fila, vistos de lado, na mesma escala. O mais longo, nosso Argentinosaurus, tem cerca de 30,6 m. Dois pescoços longos se erguem bem acima dos outros, e uma pessoa cinza de 1,70 m parece minúscula perto deles."
  },
  "labels": {
   "crumbs": "Você está aqui",
@@ -220,7 +220,7 @@
   "scale": {
    "pic": "row",
    "tag": "tag_made",
-   "what": "Comparação de tamanho: os nossos sete ao lado de uma pessoa de 1,70 m, na mesma escala, cada um do jeito que o nosso modelo foi construído. O nosso espinossauro é um animal jovem de cerca de 10 m, cerca de três quartos de um adulto, então aqui ele é mais curto que o nosso T. rex. Pelo modelo de 2022, o maior espinossauro adulto era mais longo que qualquer T. rex encontrado até hoje e, muito provavelmente, mais leve.",
+   "what": "Comparação de tamanho: nossos sete ao lado de uma pessoa de 1,70 m, na mesma escala, cada um do jeito que nosso modelo foi construído. Nosso espinossauro é um animal jovem de cerca de 10 m, cerca de três quartos de um adulto, então aqui ele é mais curto que nosso T. rex. Pelo modelo de 2022, o maior espinossauro adulto era mais longo que qualquer T. rex encontrado até hoje e, muito provavelmente, mais leve.",
    "alt": "Comparação de tamanho: nossos sete dinossauros em fila, vistos de lado, na mesma escala. O mais longo, nosso Argentinosaurus, tem cerca de 30,6 m. Dois pescoços longos se erguem bem acima dos outros, e uma pessoa cinza de 1,70 m parece minúscula perto deles.",
    "note": [
     "Reconstruções do próprio museu, construídas em código a partir de medidas e desenhos publicados, e renderizadas com o nosso próprio motor gráfico. Não são fotografias. ",
@@ -431,7 +431,7 @@
       "text": "T. rex",
       "page": "t-rex"
      },
-     ": o mais pesado que se conhece, chamado Scotty, chega a cerca de 8,9 toneladas, e um adulto grande tinha cerca de 12 m de comprimento. O Giganotosaurus também é citado muitas vezes, mas os restos dele são fragmentos, e as estimativas vão de cerca de 6,5 a 14 toneladas."
+     ": o mais pesado que se conhece, chamado Scotty, chega a cerca de 8,9 toneladas pelo fêmur, e um adulto grande tinha cerca de 12 m de comprimento. O Giganotosaurus também é citado muitas vezes, mas os restos dele são fragmentos, e as estimativas vão de cerca de 6,5 a 14 toneladas."
     ],
     "E “o maior”, sozinho, pode querer dizer três coisas: o mais pesado, o mais longo ou o mais alto."
    ],
@@ -553,7 +553,7 @@
    "nav": "Por que os nossos são assim",
    "h": "Por que os nossos são assim",
    "paras": [
-    "Cada um foi construído no tamanho de um achado ou de uma montagem com nome. O Argentinosaurus, a partir dos ossos de Plaza Huincul, com um corpo sobretudo a partir do Patagotitan. O braquiossauro, a partir do esqueleto de Chicago, com o pescoço e a cabeça a partir dos parentes dele. O T. rex, a partir de SUE, e o espinossauro, a partir do animal jovem do Marrocos. O Triceratops, a partir da montagem do Smithsonian, feita com cerca de dez animais: o crânio dela foi aumentado quando ela foi refeita. O anquilossauro, a partir do menor dos três animais conhecidos, e o estegossauro, a partir de Sophie, em Londres. De nenhum deles se conhece a cor, então as cores são nossas, e os vizinhos se diferenciam onde nada se sabe. Os ângulos dos dois pescoços longos fomos nós que escolhemos, porque não existe nenhuma vértebra do pescoço de nenhum dos dois animais. Por isso as cabeças deles estão quase na mesma altura, embora o nosso Argentinosaurus seja nove metros mais longo. Nosso T. rex está de boca fechada, com os lábios sobre os dentes, como muito provavelmente estavam."
+    "Cada um foi construído no tamanho de um achado ou de uma montagem com nome. O Argentinosaurus, a partir dos ossos de Plaza Huincul, com um corpo sobretudo a partir do Patagotitan. O braquiossauro, a partir do esqueleto de Chicago, com o pescoço e a cabeça a partir dos parentes dele. O T. rex, a partir de SUE, e o espinossauro, a partir do animal jovem do Marrocos. O Triceratops, a partir da montagem do Smithsonian, feita com cerca de dez animais: o crânio dela foi aumentado quando ela foi refeita. O anquilossauro, a partir do menor dos três animais conhecidos, e o estegossauro, a partir de Sophie, em Londres. De nenhum deles se conhece a cor, então as cores são nossas, e os vizinhos se diferenciam onde nada se sabe. Os ângulos dos dois pescoços longos fomos nós que escolhemos, porque não existe nenhuma vértebra do pescoço de nenhum dos dois animais. Por isso as cabeças deles estão quase na mesma altura, embora nosso Argentinosaurus seja nove metros mais longo. Nosso T. rex está de boca fechada, com os lábios sobre os dentes, como muito provavelmente estavam."
    ]
   },
   {
@@ -568,7 +568,7 @@
     },
     {
      "q": "O espinossauro era maior que o T. rex?",
-     "a": "Mais longo e, muito provavelmente, mais leve. Um espinossauro adulto tinha pouco menos de 14 m e cerca de 7,4 toneladas no modelo atual. Um T. rex adulto grande tinha cerca de 12 m e de 8 a 9 toneladas. Nosso na imagem é um espinossauro jovem de cerca de 10 m, então ali ele é o mais curto."
+     "a": "Mais longo e, muito provavelmente, mais leve. Um espinossauro adulto tinha pouco menos de 14 m e cerca de 7,4 toneladas no modelo atual. Um T. rex adulto grande tinha cerca de 12 m e de 8 a 9 toneladas. O da imagem é um espinossauro jovem de cerca de 10 m, então ali ele é o mais curto."
     },
     {
      "q": "Algum dinossauro foi maior que uma baleia-azul?",
@@ -618,7 +618,7 @@
      "page": "woolly-mammoth",
      "pic": "mammoth",
      "alt": "Nosso mamute-lanoso, o macho de Berezovka, de lado, com pelagem marrom-escura: a cabeça alta e abaulada, o dorso inclinado, duas presas curvas e uma marca na altura do ombro, a 271 cm por uma reconstrução. A pessoa cinza ao lado, de 1,70 m, fica mais baixa que as pontas das presas.",
-     "line": "Não é um dinossauro, mas um parente dos elefantes da Era do Gelo: um macho siberiano tinha cerca de 2,7 a 2,9 m de altura no ombro. Nosso mamute foi construído a partir de um macho real encontrado congelado em 1900, ao lado de uma pessoa."
+     "line": "Não é um dinossauro, mas um parente dos elefantes da Era do Gelo: um macho siberiano tinha cerca de 2,7 a 2,9 m de altura no ombro. Nosso mamute foi construído a partir de um macho real encontrado congelado em 1900 e está ao lado de uma pessoa."
     },
     {
      "page": "brachiosaurus",

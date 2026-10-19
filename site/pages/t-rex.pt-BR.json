@@ -155,7 +155,7 @@
   "title": "T. rex: tamanho de cerca de 12 m e 8 a 9 t | Museum of Ages",
   "description": "Tamanho do T. rex: um tiranossauro rex adulto grande tinha cerca de 12 m de comprimento, cerca de 4 m até o quadril e cerca de 8 a 9 t. Nosso modelo segue SUE.",
   "og_title": "T. rex: tamanho de cerca de 12 m e de 8 a 9 t",
-  "og_image_alt": "O nosso T. rex de lado, sobre duas patas, com cerca de 11 m de comprimento nesta pose, de boca fechada e cabeça erguida, ao lado de uma pessoa cinza de 1,70 m que fica bem abaixo do quadril dele."
+  "og_image_alt": "Nosso T. rex de lado, sobre duas patas, com cerca de 11 m de comprimento nesta pose, de boca fechada e cabeça erguida, ao lado de uma pessoa cinza de 1,70 m que fica bem abaixo do quadril dele."
  },
  "labels": {
   "crumbs": "Você está aqui",
@@ -176,9 +176,9 @@
   "scale": {
    "pic": "side",
    "tag": "tag_made",
-   "what": "Comparação de tamanho: o nosso T. rex ao lado de uma pessoa de 1,70 m, na mesma escala, feito com as medidas de SUE. Nesta pose, com a cabeça erguida e a cauda esticada em curva, ele mede cerca de 11 m. São umas seis pessoas e meia deitadas uma atrás da outra. O alto da cabeça erguida fica a cerca de 4,4 m do chão, e isso depende da pose. Esticado em linha reta, o mesmo esqueleto mediria cerca de 11,8 m. A montagem de SUE em Chicago mede cerca de 12 m.",
+   "what": "Comparação de tamanho: nosso T. rex ao lado de uma pessoa de 1,70 m, na mesma escala, feito com as medidas de SUE. Nesta pose, com a cabeça erguida e a cauda esticada em curva, ele mede cerca de 11 m. São umas seis pessoas e meia deitadas uma atrás da outra. O alto da cabeça erguida fica a cerca de 4,4 m do chão, e isso depende da pose. Esticado em linha reta, o mesmo esqueleto mediria cerca de 11,8 m. A montagem de SUE em Chicago mede cerca de 12 m.",
    "alt": "Comparação de tamanho: nosso T. rex de lado, sobre duas patas, com cerca de 11 m de comprimento nesta pose, de boca fechada e cabeça erguida, ao lado de uma pessoa cinza de 1,70 m que fica bem abaixo do quadril dele.",
-   "note": "Nossa própria reconstrução, construída em código a partir de medidas publicadas e renderizada com o nosso próprio motor gráfico. Não é uma fotografia.",
+   "note": "Nossa própria reconstrução, construída em código a partir de medidas publicadas e renderizada com nosso próprio motor gráfico. Não é uma fotografia.",
    "marks": [
     {
      "span": "t-rex",
@@ -340,7 +340,7 @@
         "O braço direito: o úmero, os dois ossos do antebraço e partes da mão.",
         "O sacro e o quadril, com a lâmina esquerda do quadril quebrada e unida de novo.",
         "As duas escápulas, a direita com um ferimento curado.",
-        "Costelas de todos os trechos das costas, mas não todas as costelas, 26 de cerca de 60 costelas da barriga (pela contagem do museu), e ainda a fúrcula e um osso do ouvido (as duas coisas segundo o museu).",
+        "Costelas de todos os trechos das costas (mas não todas as costelas), 26 de cerca de 60 costelas da barriga (pela contagem do museu), e ainda a fúrcula e um osso do ouvido (as duas coisas segundo o museu).",
         "36 vértebras da cauda: em 2003, nenhuma cauda conhecida de T. rex estava mais completa."
        ]
       }
@@ -485,7 +485,7 @@
     {
      "page": "biggest-dinosaurs",
      "pic": "dinosaurs",
-     "alt": "Nossos sete dinossauros em fila, vistos de lado, na mesma escala. O mais longo, o nosso Argentinosaurus, tem cerca de 30,6 m. Dois pescoços longos se erguem bem acima dos outros, e uma pessoa cinza de 1,70 m parece minúscula perto deles."
+     "alt": "Nossos sete dinossauros em fila, vistos de lado, na mesma escala. O mais longo, nosso Argentinosaurus, tem cerca de 30,6 m. Dois pescoços longos se erguem bem acima dos outros, e uma pessoa cinza de 1,70 m parece minúscula perto deles."
     },
     {
      "page": "megalodon",
@@ -607,7 +607,7 @@
       "text": "CC BY-SA 4.0",
       "href": "https://creativecommons.org/licenses/by-sa/4.0/deed.pt-br"
      },
-     ". Crédito: Museum of Ages. Elas mostram uma reconstrução, construída em código e renderizada com o nosso próprio motor gráfico, não uma fotografia. As imagens das outras páginas que aparecem aqui dão o crédito nessas páginas."
+     ". Crédito: Museum of Ages. Elas mostram uma reconstrução, construída em código e renderizada com nosso próprio motor gráfico, não uma fotografia. As imagens das outras páginas que aparecem aqui dão o crédito nessas páginas."
     ]
    ],
    "shapes": {

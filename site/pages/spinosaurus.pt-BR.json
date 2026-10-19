@@ -155,7 +155,7 @@
   "title": "Espinossauro: tamanho de até cerca de 14 m | Museum of Ages",
   "description": "Qual era o tamanho do espinossauro? Os maiores adultos, quase 14 m e cerca de 7,4 t, por um modelo. Além disso, a altura e o novo Spinosaurus mirabilis (2026).",
   "og_title": "Espinossauro: tamanho de até cerca de 14 m",
-  "og_image_alt": "O maior espinossauro adulto de lado, pouco menos de 14 m por um modelo, com uma vela alta e uma cauda alta. Na frente, o nosso jovem de cerca de 10 m como uma forma cinza chapada, e uma pessoa cinza de 1,70 m que chega ao quadril do jovem."
+  "og_image_alt": "O maior espinossauro adulto de lado, pouco menos de 14 m por um modelo, com uma vela alta e uma cauda alta. Na frente, nosso jovem de cerca de 10 m como uma forma cinza chapada, e uma pessoa cinza de 1,70 m que chega ao quadril do jovem."
  },
  "labels": {
   "crumbs": "Você está aqui",
@@ -177,9 +177,9 @@
   "scale": {
    "pic": "side",
    "tag": "tag_made",
-   "what": "Comparação de tamanho: os maiores espinossauros adultos ao lado de uma pessoa de 1,70 m, na mesma escala, com pouco menos de 14 m pelo modelo de 2022. Esse modelo aumenta em mais ou menos um terço o esqueleto jovem do Marrocos, e nós aumentamos o nosso modelo do mesmo jeito. Ninguém encontrou um esqueleto adulto, então é uma estimativa, não um animal que alguém tenha encontrado. Na pose do nosso modelo, o adulto mede cerca de 13,1 m de ponta a ponta. Na frente, em cinza chapado, o nosso jovem de cerca de 10 m, construído a partir desse esqueleto.",
-   "alt": "Comparação de tamanho: o maior espinossauro adulto de lado, pouco menos de 14 m por um modelo, com uma vela alta e uma cauda alta. Na frente, o nosso jovem de cerca de 10 m como uma forma cinza chapada, e uma pessoa cinza de 1,70 m que chega ao quadril do jovem.",
-   "note": "Nossa própria reconstrução, construída em código a partir de medidas publicadas e renderizada com o nosso próprio motor gráfico. Não são fotografias.",
+   "what": "Comparação de tamanho: os maiores espinossauros adultos ao lado de uma pessoa de 1,70 m, na mesma escala, com pouco menos de 14 m pelo modelo de 2022. Esse modelo aumenta em mais ou menos um terço o esqueleto jovem do Marrocos, e nós aumentamos nosso modelo do mesmo jeito. Ninguém encontrou um esqueleto adulto, então é uma estimativa, não um animal que alguém tenha encontrado. Na pose do nosso modelo, o adulto mede cerca de 13,1 m de ponta a ponta. Na frente, em cinza chapado, nosso jovem de cerca de 10 m, construído a partir desse esqueleto.",
+   "alt": "Comparação de tamanho: o maior espinossauro adulto de lado, pouco menos de 14 m por um modelo, com uma vela alta e uma cauda alta. Na frente, nosso jovem de cerca de 10 m como uma forma cinza chapada, e uma pessoa cinza de 1,70 m que chega ao quadril do jovem.",
+   "note": "Nossa própria reconstrução, construída em código a partir de medidas publicadas e renderizada com nosso próprio motor gráfico. Não são fotografias.",
    "marks": [
     {
      "span": "spinosaurus",
@@ -295,7 +295,7 @@
    "scale": {
     "pic": "vs",
     "tag": "tag_made",
-    "what": "O maior espinossauro adulto e o nosso T. rex, na mesma escala. O espinossauro é o nosso modelo aumentado em mais ou menos um terço, como foi feito o modelo de 2022. Por esse modelo, os maiores adultos tinham pouco menos de 14 m. Nosso T. rex, a partir de SUE, é um adulto grande, com cerca de 11 m na pose dele. Então aqui o mais longo é o espinossauro. O T. rex é bem mais alto no quadril. O espinossauro era muito provavelmente o mais leve dos dois.",
+    "what": "O maior espinossauro adulto e nosso T. rex, na mesma escala. O espinossauro é nosso modelo aumentado em mais ou menos um terço, como foi feito o modelo de 2022. Por esse modelo, os maiores adultos tinham pouco menos de 14 m. Nosso T. rex, a partir de SUE, é um adulto grande, com cerca de 11 m na pose dele. Então aqui o mais longo é o espinossauro. O T. rex é bem mais alto no quadril. O espinossauro era muito provavelmente o mais leve dos dois.",
     "alt": "Um grande espinossauro adulto com uma vela nas costas e um T. rex mais curto com a cabeça erguida, os dois de lado, o T. rex mais ou menos uma vez e meia mais alto no quadril, ao lado da pessoa cinza.",
     "marks": [
      {
@@ -577,7 +577,7 @@
     {
      "page": "biggest-dinosaurs",
      "pic": "dinosaurs",
-     "alt": "Nossos sete dinossauros em fila, vistos de lado, na mesma escala. O mais longo, o nosso Argentinosaurus, tem cerca de 30,6 m. Dois pescoços longos se erguem bem acima dos outros, e uma pessoa cinza de 1,70 m parece minúscula perto deles."
+     "alt": "Nossos sete dinossauros em fila, vistos de lado, na mesma escala. O mais longo, nosso Argentinosaurus, tem cerca de 30,6 m. Dois pescoços longos se erguem bem acima dos outros, e uma pessoa cinza de 1,70 m parece minúscula perto deles."
     },
     {
      "page": "megalodon",
@@ -679,7 +679,7 @@
       "text": "CC BY-SA 4.0",
       "href": "https://creativecommons.org/licenses/by-sa/4.0/deed.pt-br"
      },
-     ". Crédito: Museum of Ages. Elas mostram uma reconstrução, construída em código e renderizada com o nosso próprio motor gráfico, não uma fotografia. As imagens das outras páginas que aparecem aqui dão o crédito nessas páginas."
+     ". Crédito: Museum of Ages. Elas mostram uma reconstrução, construída em código e renderizada com nosso próprio motor gráfico, não uma fotografia. As imagens das outras páginas que aparecem aqui dão o crédito nessas páginas."
     ]
    ],
    "shapes": {
