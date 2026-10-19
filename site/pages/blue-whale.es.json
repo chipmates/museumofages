@@ -20,7 +20,7 @@
     "size_4x3",
     "size_16x9"
    ],
-   "figure": "size_16x9"
+   "figure": "size_4x3"
   }
  },
  "pics": {
@@ -171,7 +171,7 @@
    "pic": "side",
    "tag": "tag_made",
    "what": "Comparación de tamaño: nuestra ballena azul, de 22,86 m de largo, junto a una persona de 1,70 m, a la misma escala, tan larga como unas 13 personas en fila.",
-   "alt": "Comparación de tamaño: nuestra ballena azul de lado, de 22,86 m de largo: un cuerpo esbelto, gris azulado, con manchas claras, una cabeza plana, una aleta pectoral larga de borde claro y una pequeña aleta dorsal muy atrás. A su lado, una persona gris de 1,70 m que llega a poco más de media altura de la ballena.",
+   "alt": "Comparación de tamaño: nuestra ballena azul de lado, de 22,86 m de largo. Un cuerpo esbelto, gris azulado, con manchas claras, una cabeza plana, una aleta pectoral larga de borde claro y una pequeña aleta dorsal muy atrás. A su lado, una persona gris de 1,70 m que llega a poco más de media altura de la ballena.",
    "note": "Nuestra propia reconstrucción, construida en código a partir de medidas publicadas y renderizada con nuestro propio motor gráfico. No son fotografías.",
    "marks": [
     {
@@ -351,7 +351,7 @@
    "nav": "Longitud y peso de la ballena azul",
    "h": "Longitud y peso de la ballena azul",
    "paras": [
-    "En el Atlántico Norte y el Pacífico Norte, las ballenas azules adultas llegan a unos 27 m, y las más grandes son las de la Antártida. Las hembras son más largas que los machos, y la ballena azul pigmea es más corta.",
+    "La mayoría de las ballenas azules adultas miden de 23 a 27 m y pesan unas 100 a 150 toneladas. En el Atlántico Norte y el Pacífico Norte llegan a unos 27 m, y las más grandes son las de la Antártida. Las hembras son más largas que los machos, y la ballena azul pigmea es más corta.",
     "Según el estudio de 2025, las más grandes quizá se acerquen a las 200 toneladas. Cada peso registrado viene de ballenas despiezadas en barcos balleneros y pesadas pedazo a pedazo, y la sangre que se perdía en cubierta deja esas sumas demasiado bajas. Un modelo hecho con 31 ballenas pesadas así le da a una ballena azul de 23 m de largo más o menos de 75 a 85 toneladas."
    ]
   },
@@ -622,7 +622,7 @@
      "href": "https://www.icrwhale.org/pdf/SC004184-209.pdf"
     },
     {
-     "text": "Omura, Ichihara y Kasuya, 1970, Scientific Reports of the Whales Research Institute, sobre las vértebras de la ballena azul.",
+     "text": "Omura, Ichihara y Kasuya, 1970, Scientific Reports of the Whales Research Institute, sobre las vértebras de la ballena azul pigmea, con recuentos para la ballena azul.",
      "href": "https://www.icrwhale.org/pdf/SC0221-27.pdf"
     },
     {
@@ -705,7 +705,7 @@
     ]
    ],
    "shapes": {
-    "caption": "Comparación de tamaño de la ballena azul: nuestra ballena azul, de 22,86 m de largo, junto a una persona de 1,70 m, a la misma escala.",
+    "caption": "Comparación de tamaño de la ballena azul: la mitad delantera de nuestra ballena azul, de 22,86 m de largo en total, junto a una persona de 1,70 m, a la misma escala.",
     "lead": "Para presentaciones y publicaciones, esta comparación de tamaño está en tres formatos, todos con la misma licencia.",
     "alts": {
      "size_1x1": "Comparación de tamaño de la ballena azul, la cabeza: la cabeza larga y plana de nuestra ballena azul, con el ojo y los surcos de la garganta, y una persona gris de 1,70 m frente al hocico.",

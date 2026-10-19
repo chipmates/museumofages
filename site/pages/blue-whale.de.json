@@ -23,7 +23,7 @@
     "size_4x3",
     "size_16x9"
    ],
-   "figure": "size_16x9"
+   "figure": "size_4x3"
   }
  },
  "pics": {
@@ -173,8 +173,8 @@
   "scale": {
    "pic": "side",
    "tag": "tag_made",
-   "what": "Größenvergleich: unser Blauwal, 22,86 m lang, neben einem Menschen von 1,70 m, im selben Maßstab, so lang wie etwa 13 Menschen hintereinander.",
-   "alt": "Größenvergleich: unser Blauwal von der Seite, 22,86 m lang: ein schlanker, blaugrauer Körper mit hellen Flecken, ein flacher Kopf, eine lange Brustflosse mit hellem Rand und eine kleine Rückenfinne weit hinten. Daneben ein grauer Mensch von 1,70 m, der etwas über die halbe Höhe des Wals reicht.",
+   "what": "Größenvergleich: unser Blauwal, 22,86 m lang, neben einem Menschen von 1,70 m, im selben Maßstab, so lang wie etwa 13 Menschen, der Länge nach hintereinandergelegt.",
+   "alt": "Größenvergleich: unser Blauwal von der Seite, 22,86 m lang. Ein schlanker, blaugrauer Körper mit hellen Flecken, ein flacher Kopf, eine lange Brustflosse mit hellem Rand und eine kleine Rückenfinne weit hinten. Daneben ein grauer Mensch von 1,70 m, der etwas über die halbe Höhe des Wals reicht.",
    "note": "Unsere eigene Rekonstruktion, nach veröffentlichten Maßen in Code gebaut und in unserer Engine gerendert. Keine Fotos.",
    "marks": [
     {
@@ -345,7 +345,7 @@
    "nav": "Ist der Blauwal das größte Tier der Welt?",
    "h": "Ist der Blauwal das größte Tier der Welt?",
    "paras": [
-    "Ja. Der Blauwal ist das größte Tier der Welt, und soweit man weiß, auch das größte, das je gelebt hat. So sehen es die US-Meeresbehörde NOAA und eine Studie von 2017. Eine Studie von 2025 ist vorsichtiger: Sie nennt den Blauwal das größte lebende Tier, hält aber offen, welches Tier das größte überhaupt war, denn einige riesige Dinosaurier, die nur aus Bruchstücken oder verlorenen Knochen bekannt sind, könnten ihm gleichgekommen sein. Perucetus, ein fossiler Wal, der 2023 als womöglich schwerer vorgestellt wurde, ist nach zwei späteren Studien weit leichter."
+    "Ja. Der Blauwal ist das größte Tier der Welt und, soweit man weiß, auch das größte, das je gelebt hat. So sehen es die US-Meeresbehörde NOAA und eine Studie von 2017. Eine Studie von 2025 ist vorsichtiger: Sie nennt den Blauwal das größte lebende Tier, hält aber offen, welches Tier das größte überhaupt war, denn einige riesige Dinosaurier, die nur aus Bruchstücken oder verlorenen Knochen bekannt sind, könnten ihm gleichgekommen sein. Perucetus, ein fossiler Wal, der 2023 als womöglich schwerer vorgestellt wurde, ist nach zwei späteren Studien weit leichter."
    ]
   },
   {
@@ -354,7 +354,7 @@
    "nav": "Blauwal: Länge und Gewicht",
    "h": "Blauwal: Länge und Gewicht",
    "paras": [
-    "Im Nordatlantik und im Nordpazifik erreichen ausgewachsene Blauwale etwa 27 m, am größten sind die Blauwale der Antarktis. Die Weibchen werden länger als die Männchen, und der Zwergblauwal bleibt kürzer.",
+    "Die meisten ausgewachsenen Blauwale sind 23 bis 27 m lang und wiegen rund 100 bis 150 t. Im Nordatlantik und im Nordpazifik erreichen sie etwa 27 m, am größten sind die Blauwale der Antarktis. Die Weibchen werden länger als die Männchen, und der Zwergblauwal bleibt kürzer.",
     "Nach der Studie von 2025 kommen die größten vielleicht auf knapp 200 t. Jedes verzeichnete Gewicht stammt von Walen, die auf Walfangschiffen zerlegt und Stück für Stück gewogen wurden, und weil an Deck Blut verloren ging, fallen diese Summen zu niedrig aus. Ein Modell aus 31 so gewogenen Walen ergibt für einen Blauwal von 23 m Länge rund 75 bis 85 t."
    ]
   },
@@ -625,7 +625,7 @@
      "href": "https://www.icrwhale.org/pdf/SC004184-209.pdf"
     },
     {
-     "text": "Omura, Ichihara und Kasuya, 1970, Scientific Reports of the Whales Research Institute, zu den Wirbeln des Blauwals.",
+     "text": "Omura, Ichihara und Kasuya, 1970, Scientific Reports of the Whales Research Institute, zu den Wirbeln des Zwergblauwals, mit Zählungen für den Blauwal.",
      "href": "https://www.icrwhale.org/pdf/SC0221-27.pdf"
     },
     {
@@ -708,7 +708,7 @@
     ]
    ],
    "shapes": {
-    "caption": "Blauwal im Größenvergleich: unser Blauwal, 22,86 m lang, neben einem Menschen von 1,70 m, im selben Maßstab.",
+    "caption": "Blauwal im Größenvergleich: die vordere Hälfte unseres Blauwals, der insgesamt 22,86 m lang ist, neben einem Menschen von 1,70 m, im selben Maßstab.",
     "lead": "Für Folien und Beiträge gibt es diesen Größenvergleich in drei Formaten, alle unter derselben Lizenz.",
     "alts": {
      "size_1x1": "Blauwal im Größenvergleich, der Kopf: der lange, flache Kopf unseres Blauwals mit Auge und Kehlfurchen, vor der Schnauze ein grauer Mensch von 1,70 m.",

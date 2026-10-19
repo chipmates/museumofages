@@ -297,6 +297,7 @@ class WhatRanks(Site):
 
     def test_the_first_picture_of_every_animal_page_is_mains(self):
         frozen = _frozen("animals-first-picture.json")["pages"]
+        reviewed = _frozen("animals-first-picture-reviewed.json")["alts"]
         found = {p["address"]: p for p in self.pages}
         self.assertEqual(len(frozen), 40)
         for address, was in frozen.items():
@@ -308,7 +309,10 @@ class WhatRanks(Site):
             self.assertEqual(attr.get("fetchpriority"), "high", address)
             self.assertEqual((int(attr["width"]), int(attr["height"])), (was["width"], was["height"]), address)
             alt = html.unescape(attr["alt"])
-            if page["lang"] == "en" or alt == was["alt"]:
+            if page["lang"] != "en" and address in reviewed:
+                # a reviewed edit beyond the comparison words, named word for word (testdata/animals-first-picture-reviewed.json)
+                self.assertEqual(alt.replace("\u00a0", " "), reviewed[address].replace("\u00a0", " "), address)
+            elif page["lang"] == "en" or alt == was["alt"]:
                 # the English lead alts stay word for word: those pages carry most image impressions
                 self.assertEqual(alt, was["alt"], address)
             else:

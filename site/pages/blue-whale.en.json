@@ -20,7 +20,7 @@
     "size_4x3",
     "size_16x9"
    ],
-   "figure": "size_16x9"
+   "figure": "size_4x3"
   }
  },
  "pics": {
@@ -351,7 +351,7 @@
    "nav": "Blue whale length and weight",
    "h": "Blue whale length and weight",
    "paras": [
-    "In the North Atlantic and North Pacific, grown blue whales reach about 27 m (89 ft), and the Antarctic ones are the biggest. Females grow longer than males, and the pygmy blue whale is shorter.",
+    "Most grown blue whales are 23 to 27 m (75 to 89 ft) long and weigh roughly 100 to 150 tonnes. In the North Atlantic and North Pacific, grown blue whales reach about 27 m (89 ft), and the Antarctic ones are the biggest. Females grow longer than males, and the pygmy blue whale is shorter.",
     "By the 2025 study, the largest may come close to 200 tonnes. Every weight on record comes from whales cut up on whaling ships and weighed piece by piece, and the blood lost on deck makes those sums too low. A model built from 31 whales weighed this way puts a blue whale 23 m long at roughly 75 to 85 tonnes."
    ]
   },
@@ -559,7 +559,7 @@
    "items": [
     {
      "q": "How big is a blue whale compared to a human?",
-     "a": "About 13 people of 1.70 m laid head to foot match our blue whale's length, and the largest blue whales, about 30 m, would take about 18. The skull of ours alone matches three people and a bit, and one flipper almost two. These are our own sums."
+     "a": "About 13 people of 1.70 m laid head to foot match our blue whale's length, and the largest blue whales, about 30 m, would take about 18. Our whale's skull alone matches three people and a bit, and one flipper almost two. These are our own sums."
     },
     {
      "q": "Why is it called blue?",
@@ -622,7 +622,7 @@
      "href": "https://www.icrwhale.org/pdf/SC004184-209.pdf"
     },
     {
-     "text": "Omura, Ichihara and Kasuya, 1970, Scientific Reports of the Whales Research Institute, on the vertebrae of the blue whale.",
+     "text": "Omura, Ichihara and Kasuya, 1970, Scientific Reports of the Whales Research Institute, on the vertebrae of the pygmy blue whale, with counts for the blue whale.",
      "href": "https://www.icrwhale.org/pdf/SC0221-27.pdf"
     },
     {
@@ -705,7 +705,7 @@
     ]
    ],
    "shapes": {
-    "caption": "Blue whale size comparison: our blue whale, 22.86 m (75 ft) long, beside a person 1.70 m tall, to one scale.",
+    "caption": "Blue whale size comparison: the front half of our blue whale, 22.86 m (75 ft) long in all, beside a person 1.70 m tall, to one scale.",
     "lead": "For slides and posts, this size comparison comes in three shapes, all under the same licence.",
     "alts": {
      "size_1x1": "Blue whale size comparison, the head: the long, flat head of our blue whale with its eye and the grooves of its throat, and a grey person 1.70 m tall in front of the snout.",

@@ -1,0 +1,9 @@
+{
+ "_note": "Lead alts in German, Spanish and Portuguese changed beyond the comparison words after a blind check (CHECK-B1 rows 7 to 10, 19 Oct 2026): the European-leaning \"o nosso\" and \"a nossa\" made Brazilian, two colons in one sentence split. The src, size, preload and the rest of each alt stay; English is never listed here.",
+ "alts": {
+  "https://museumofages.org/pt-br/animais/megalodon/": "Comparação de tamanho: nosso megalodon visto de lado, com cerca de 16 m de comprimento, de boca fechada, cinza-escuro com uma faixa mais clara no flanco, ao lado de uma pessoa cinza de 1,70 m que parece minúscula perto dele.",
+  "https://museumofages.org/pt-br/animais/baleia-azul/": "Comparação de tamanho: nossa baleia-azul de lado, com 22,86 m de comprimento. Um corpo esguio, cinza-azulado, com manchas claras, uma cabeça achatada, uma nadadeira peitoral longa de borda clara e uma pequena nadadeira dorsal bem atrás. Ao lado, uma pessoa cinza de 1,70 m que chega a pouco mais da metade da altura da baleia.",
+  "https://museumofages.org/de/tiere/blauwal/": "Größenvergleich: unser Blauwal von der Seite, 22,86 m lang. Ein schlanker, blaugrauer Körper mit hellen Flecken, ein flacher Kopf, eine lange Brustflosse mit hellem Rand und eine kleine Rückenfinne weit hinten. Daneben ein grauer Mensch von 1,70 m, der etwas über die halbe Höhe des Wals reicht.",
+  "https://museumofages.org/es/animales/ballena-azul/": "Comparación de tamaño: nuestra ballena azul de lado, de 22,86 m de largo. Un cuerpo esbelto, gris azulado, con manchas claras, una cabeza plana, una aleta pectoral larga de borde claro y una pequeña aleta dorsal muy atrás. A su lado, una persona gris de 1,70 m que llega a poco más de media altura de la ballena."
+ }
+}

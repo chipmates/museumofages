@@ -19,7 +19,7 @@
     "size_4x3",
     "size_16x9"
    ],
-   "figure": "size_16x9"
+   "figure": "size_4x3"
   }
  },
  "pics": {
@@ -162,12 +162,12 @@
  },
  "top": {
   "h1": "Wie groß war der Megalodon?",
-  "answer": "Der Megalodon war etwa 16 m lang, nach der einzigen längeren Wirbelsäule, die je gefunden wurde. Sie liegt in Brüssel. Unsere 16 m sind gut neun Menschen von 1,70 m, der Länge nach hintereinandergelegt. Die größten seiner Art wurden nach ihren Zähnen vielleicht etwa 20 m lang.",
+  "answer": "Der Megalodon war etwa 16 m lang, nach der einzigen längeren Wirbelsäule, die je gefunden wurde. Sie liegt in Brüssel. Unsere 16 m sind gut neun Menschen von 1,70 m, der Länge nach hintereinandergelegt. Die größten seiner Art wurden nach ihren Zähnen vielleicht 20 m lang.",
   "answer_more": "Wie schwer der Megalodon war, ist umstritten: etwa 30 t nach dem schlanken Modell von 2025, rund doppelt so viel nach dem dickeren von 2022, denn seine Körperform kennt niemand.",
   "scale": {
    "pic": "side",
    "tag": "tag_made",
-   "what": "Größenvergleich im selben Maßstab: unser Megalodon, etwa 16 m lang, neben einem Menschen von 1,70 m.",
+   "what": "Größenvergleich: unser Megalodon, etwa 16 m lang, neben einem Menschen von 1,70 m, im selben Maßstab.",
    "alt": "Größenvergleich: unser Megalodon von der Seite, etwa 16 m lang, das Maul geschlossen, dunkelgrau mit einem helleren Band an der Flanke, neben einem grauen Menschen von 1,70 m, der winzig daneben steht.",
    "note": [
     "Eine eigene Rekonstruktion des Museums, nach den genannten Maßen in Code gebaut und in unserer Engine gerendert. Kein Foto. Die Körperform folgt dem Modell von Shimada und anderen 2025 (",
@@ -239,7 +239,7 @@
     {
      "cells": [
       "Der größte Megalodon",
-      "vielleicht etwa 20 m",
+      "vielleicht 20 m",
       "",
       "ein Zahn, über ganze Gebisse hochgerechnet"
      ]
@@ -300,8 +300,8 @@
    "nav": "Lebt der Megalodon noch?",
    "h": "Lebt der Megalodon noch?",
    "paras": [
-    "Nein, den Megalodon gab es wirklich, aber er ist vor etwa 3,6 Millionen Jahren ausgestorben, so zeigen es seine jüngsten verlässlichen Fossilien. Die Gründe nennt das Natural History Museum in London auf seiner Seite zu genau dieser Frage: Nie wurde ein Megalodon-Zahn gefunden, der jünger ist, nicht einmal ein frisch ausgefallener, niemand hat je einen Megalodon sicher gesehen, lebend oder tot, und kein heutiges Tier trägt Bissspuren in der Größe seines Mauls. Die Tiefsee, in der er sich verstecken soll, bietet einem so großen Jäger zu wenig Nahrung, so das Museum, und kein Hai lebt viel tiefer als 3.000 m. Die ältere Megalodon-Seite des Museums fügt hinzu, dass ein Hai warmer Meere die kalte Tiefsee nicht überleben würde.",
-    "Der Megalodon, der in der Tiefsee überlebt haben soll, stammt aus einer Fernsehsendung von 2013, die gefälschte Aufnahmen als Tatsachen ausgab."
+    "Nein, der Megalodon ist vor etwa 3,6 Millionen Jahren ausgestorben, wie seine jüngsten verlässlichen Fossilien zeigen. Gegeben hat es ihn wirklich. Die Gründe nennt das Natural History Museum in London auf seiner Seite zu genau dieser Frage: Nie wurde ein jüngerer Megalodon-Zahn gefunden, nicht einmal ein frisch ausgefallener. Niemand hat je einen Megalodon nachweislich gesehen, weder lebend noch tot, und kein heutiges Tier trägt Bissspuren in der Größe seines Mauls. Die Tiefsee, in der er sich verstecken soll, bietet einem so großen Jäger zu wenig Nahrung, so das Museum, und kein Hai lebt viel tiefer als 3.000 m. Die ältere Megalodon-Seite des Museums fügt hinzu, dass ein Hai warmer Meere die kalte Tiefsee nicht überleben würde.",
+    "2013 behauptete eine Fernsehsendung, er lebe noch in der Tiefsee, und gab dafür gefälschte Aufnahmen als Tatsachen aus."
    ]
   },
   {
@@ -310,7 +310,7 @@
    "nav": "Wie schwer war der Megalodon?",
    "h": "Wie schwer war der Megalodon?",
    "paras": [
-    "Rund 30 t nach dem schlanken Modell von 2025, etwa 61 t nach dem kräftigen Modell von 2022, beide für dieselbe Wirbelsäule in Brüssel. Die beiden Modelle unterscheiden sich in der Körperform, und einen Körper hat man nie gefunden: Das eine ist schlank wie die größten lebenden Haie, das andere kräftig wie ein Weißer Hai. Darum bleibt das Gewicht umstritten."
+    "Rund 30 t nach dem schlanken Modell von 2025, etwa 61 t nach dem kräftigen Modell von 2022, beide für dieselbe Wirbelsäule in Brüssel. Einen Körper hat man nie gefunden, und die beiden Modelle nehmen verschiedene Körperformen an: das eine schlank wie die größten lebenden Haie, das andere kräftig wie ein Weißer Hai. Darum bleibt das Gewicht umstritten."
    ]
   },
   {
@@ -594,7 +594,7 @@
     ]
    ],
    "shapes": {
-    "caption": "Megalodon im Größenvergleich: unser Megalodon, etwa 16 m lang, neben einem Menschen von 1,70 m, im selben Maßstab.",
+    "caption": "Megalodon im Größenvergleich: die vorderen zwei Drittel unseres Megalodons, der insgesamt etwa 16 m lang ist, neben einem Menschen von 1,70 m, im selben Maßstab.",
     "lead": "Für Folien und Beiträge gibt es diesen Größenvergleich in drei Formaten, alle unter derselben Lizenz.",
     "alts": {
      "size_1x1": "Megalodon im Größenvergleich: der Kopf unseres Megalodons von der Brustflosse nach vorn, vor der Schnauze ein grauer Mensch von 1,70 m.",

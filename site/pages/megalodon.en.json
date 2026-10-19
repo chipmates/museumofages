@@ -19,7 +19,7 @@
     "size_4x3",
     "size_16x9"
    ],
-   "figure": "size_16x9"
+   "figure": "size_4x3"
   }
  },
  "pics": {
@@ -300,8 +300,8 @@
    "nav": "Is megalodon still alive?",
    "h": "Is megalodon still alive?",
    "paras": [
-    "No, megalodon was real but died out about 3.6 million years ago, by its youngest reliable fossils. London's Natural History Museum gives the reasons on its page “Is megalodon still alive?”: no megalodon tooth younger than that has ever been found, not even a freshly fallen one, there is no confirmed sighting, alive or dead, and no living animal carries bite marks the size of its mouth. The deep sea, where it is said to hide, has too little food for so big a hunter, the museum adds, and no shark lives much below 3,000 m (9,800 ft). Its older megalodon page points out that a shark of warm seas would not survive the cold deep.",
-    "The megalodon said to live on in the deep came from a television show of 2013 that presented faked footage as fact."
+    "No, megalodon was real but died out about 3.6 million years ago, by its youngest reliable fossils. London's Natural History Museum gives the reasons on its page “Is megalodon still alive?”: no megalodon tooth younger than that has ever been found, not even a freshly fallen one. There is no confirmed sighting, alive or dead, and no living animal carries bite marks the size of its mouth. The deep sea, where it is said to hide, has too little food for so big a hunter, the museum adds, and no shark lives much below 3,000 m (9,800 ft). Its older megalodon page points out that a shark of warm seas would not survive the cold deep.",
+    "In 2013 a television show claimed it had survived in the deep, with faked footage presented as fact."
    ]
   },
   {
@@ -310,7 +310,7 @@
    "nav": "How heavy was megalodon?",
    "h": "How heavy was megalodon?",
    "paras": [
-    "Roughly 30 tonnes by the slim model of 2025, and about 61 tonnes by the stout model of 2022, both for the same backbone in Brussels. The two differ in the body they build around it, and no body has been found: one is slim like the largest living sharks, the other stout like a great white. That is why the weight stays disputed."
+    "Roughly 30 tonnes by the slim model of 2025, and about 61 tonnes by the stout model of 2022, both for the same backbone in Brussels. No body has been found, and the two build different bodies around the backbone: one slim like the largest living sharks, the other stout like a great white. That is why the weight stays disputed."
    ]
   },
   {
@@ -485,7 +485,7 @@
      "page": "woolly-mammoth",
      "pic": "mammoth",
      "alt": "Our woolly mammoth, the Berezovka bull, from the side in a dark brown coat: high domed head, sloping back, two curved tusks, and a mark at his shoulder height, 271 cm (8.9 ft) by a reconstruction. The grey person beside him, 1.70 m tall, stands lower than the tusk tips.",
-     "line": "A typical Siberian bull stood about 2.7 to 2.9 m at the shoulder, about as tall as an Asian elephant bull. Ours is built to one real bull found frozen in 1900, with what is his and what is restored."
+     "line": "A typical Siberian bull stood about 2.7 to 2.9 m at the shoulder, about as tall as an Asian elephant bull. Ours is built after one real bull found frozen in 1900, with what is his and what is restored."
     },
     {
      "page": "blue-whale",
@@ -594,7 +594,7 @@
     ]
    ],
    "shapes": {
-    "caption": "Megalodon size comparison: our megalodon, about 16 m (52 ft) long, beside a person 1.70 m tall, to one scale.",
+    "caption": "Megalodon size comparison: the front two thirds of our megalodon, about 16 m (52 ft) long in all, beside a person 1.70 m tall, to one scale.",
     "lead": "For slides and posts, this size comparison comes in three shapes, all under the same licence.",
     "alts": {
      "size_1x1": "Megalodon size comparison: the head of our megalodon, from the pectoral fin forward, with a grey person 1.70 m tall standing in front of the snout.",

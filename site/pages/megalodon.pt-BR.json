@@ -19,7 +19,7 @@
     "size_4x3",
     "size_16x9"
    ],
-   "figure": "size_16x9"
+   "figure": "size_4x3"
   }
  },
  "pics": {
@@ -143,9 +143,9 @@
  },
  "meta": {
   "title": "Megalodon: tamanho de uns 16 m, talvez 20 m | Museum of Ages",
-  "description": "Tamanho do megalodon: cerca de 16 m, os maiores talvez 20 m. Nós o comparamos com uma pessoa, um tubarão-branco e uma baleia-azul e dizemos se ainda existe.",
+  "description": "Tamanho do megalodon: cerca de 16 m, os maiores talvez 20 m. O megalodonte ao lado de uma pessoa, um tubarão-branco e uma baleia-azul, e se ele ainda existe.",
   "og_title": "Megalodon: tamanho de cerca de 16 m, talvez 20 m",
-  "og_image_alt": "O nosso megalodon visto de lado, com cerca de 16 m de comprimento, de boca fechada, cinza-escuro com uma faixa mais clara no flanco, ao lado de uma pessoa cinza de 1,70 m que parece minúscula perto dele.",
+  "og_image_alt": "Nosso megalodon visto de lado, com cerca de 16 m de comprimento, de boca fechada, cinza-escuro com uma faixa mais clara no flanco, ao lado de uma pessoa cinza de 1,70 m que parece minúscula perto dele.",
   "credit": "Museum of Ages, forma do corpo a partir de Shimada e outros 2025 (CC BY 4.0)"
  },
  "labels": {
@@ -168,7 +168,7 @@
    "pic": "side",
    "tag": "tag_made",
    "what": "Comparação de tamanho na mesma escala: nosso megalodonte, com cerca de 16 m de comprimento, ao lado de uma pessoa de 1,70 m.",
-   "alt": "Comparação de tamanho: o nosso megalodon visto de lado, com cerca de 16 m de comprimento, de boca fechada, cinza-escuro com uma faixa mais clara no flanco, ao lado de uma pessoa cinza de 1,70 m que parece minúscula perto dele.",
+   "alt": "Comparação de tamanho: nosso megalodon visto de lado, com cerca de 16 m de comprimento, de boca fechada, cinza-escuro com uma faixa mais clara no flanco, ao lado de uma pessoa cinza de 1,70 m que parece minúscula perto dele.",
    "note": [
     "Reconstrução do próprio museu, construída em código a partir das medidas citadas e renderizada com nosso próprio motor gráfico. Não é uma fotografia. A forma do corpo segue o modelo de Shimada e outros 2025 (",
     {
@@ -301,7 +301,7 @@
    "h": "O megalodon ainda existe?",
    "paras": [
     "Não, o megalodonte existiu de verdade, mas foi extinto há cerca de 3,6 milhões de anos, segundo seus fósseis confiáveis mais recentes. O Natural History Museum de Londres dá os motivos em sua página sobre essa pergunta: nunca se achou um dente de megalodonte mais recente, nem mesmo um que tivesse acabado de cair, ninguém confirmou ter visto um, vivo ou morto, e nenhum animal de hoje tem marcas de mordida do tamanho da boca dele. O fundo do mar, onde ele supostamente se esconde, tem pouca comida para um caçador tão grande, acrescenta o museu, e nenhum tubarão vive muito abaixo de 3.000 m. A página mais antiga do museu sobre o megalodonte observa que um tubarão de mares quentes não sobreviveria no frio do fundo do mar.",
-    "O megalodonte que teria sobrevivido nas profundezas saiu de um programa de televisão de 2013 que apresentou imagens falsas como fatos."
+    "Em 2013, um programa de televisão afirmou que ele ainda vivia nas profundezas e apresentou imagens falsas como fatos."
    ]
   },
   {
@@ -439,7 +439,7 @@
     },
     {
      "q": "Quando e por que o megalodon foi extinto?",
-     "a": "Muito provavelmente há cerca de 3,6 milhões de anos. Um estudo de 2019 viu que os dentes mais recentes que examinou tinham sido levados pela água de rochas mais antigas ou não tinham um registro confiável, e sua estimativa situa o fim entre cerca de 4,1 e 3,2 milhões de anos atrás. O motivo não está estabelecido. As propostas são mares mais frios, que dividiram a área onde ele vivia, o tubarão-branco recém-surgido como rival, uma queda no número das pequenas baleias com barbatanas que ele caçava, e o custo de um corpo quente, porque ele se mantinha mais quente que a água em volta."
+     "a": "Muito provavelmente há cerca de 3,6 milhões de anos. Um estudo de 2019 constatou que os dentes mais recentes que examinou tinham sido levados pela água de rochas mais antigas ou não tinham um registro confiável, e sua estimativa situa o fim entre cerca de 4,1 e 3,2 milhões de anos atrás. O motivo não está estabelecido. As propostas são mares mais frios, que dividiram a área onde ele vivia, o tubarão-branco recém-surgido como rival, uma queda no número das pequenas baleias com barbatanas que ele caçava, e o custo de um corpo quente, porque ele se mantinha mais quente que a água em volta."
     }
    ]
   },
@@ -594,12 +594,12 @@
     ]
    ],
    "shapes": {
-    "caption": "Comparação de tamanho do megalodon: nosso megalodonte, com cerca de 16 m de comprimento, ao lado de uma pessoa de 1,70 m, na mesma escala.",
+    "caption": "Comparação de tamanho do megalodon: os dois terços da frente do nosso megalodon, com cerca de 16 m de comprimento no total, ao lado de uma pessoa de 1,70 m, na mesma escala.",
     "lead": "Para slides e publicações, esta comparação de tamanho vem em três formatos, todos com a mesma licença.",
     "alts": {
-     "size_1x1": "Comparação de tamanho do megalodon: a cabeça do nosso megalodonte da nadadeira peitoral para a frente, com uma pessoa cinza de 1,70 m de pé diante do focinho.",
-     "size_4x3": "O megalodon ao lado de uma pessoa, em comparação de tamanho: os dois terços da frente do nosso megalodonte, com a alta nadadeira dorsal, e uma pessoa cinza de 1,70 m.",
-     "size_16x9": "Comparação de tamanho do megalodon, o tubarão inteiro de lado: nosso megalodonte, com cerca de 16 m de comprimento, e uma pessoa cinza de 1,70 m na frente dele."
+     "size_1x1": "Comparação de tamanho do megalodon: a cabeça do nosso megalodon da nadadeira peitoral para a frente, com uma pessoa cinza de 1,70 m de pé diante do focinho.",
+     "size_4x3": "O megalodon ao lado de uma pessoa, em comparação de tamanho: os dois terços da frente do nosso megalodon, com a alta nadadeira dorsal, e uma pessoa cinza de 1,70 m.",
+     "size_16x9": "Comparação de tamanho do megalodon, o tubarão inteiro de lado: nosso megalodon, com cerca de 16 m de comprimento, e uma pessoa cinza de 1,70 m na frente dele."
     },
     "links": {
      "size_1x1": "Quadrada (1:1)",

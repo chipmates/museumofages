@@ -20,7 +20,7 @@
     "size_4x3",
     "size_16x9"
    ],
-   "figure": "size_16x9"
+   "figure": "size_4x3"
   }
  },
  "pics": {
@@ -149,7 +149,7 @@
   "title": "Baleia-azul: tamanho 23 a 27 m, 100 a 150 t | Museum of Ages",
   "description": "Qual é o tamanho da baleia-azul? A maioria das adultas: 23 a 27 m e mais ou menos 100 a 150 t. As maiores, cerca de 30 m. O animal mais pesado conhecido.",
   "og_title": "Baleia-azul: tamanho 23 a 27 m, 100 a 150 t",
-  "og_image_alt": "A nossa baleia-azul de lado, com 22,86 m de comprimento: um corpo esguio, cinza-azulado, com manchas claras, uma cabeça achatada, uma nadadeira peitoral longa de borda clara e uma pequena nadadeira dorsal bem atrás. Ao lado, uma pessoa cinza de 1,70 m que chega a pouco mais da metade da altura da baleia."
+  "og_image_alt": "Nossa baleia-azul de lado, com 22,86 m de comprimento. Um corpo esguio, cinza-azulado, com manchas claras, uma cabeça achatada, uma nadadeira peitoral longa de borda clara e uma pequena nadadeira dorsal bem atrás. Ao lado, uma pessoa cinza de 1,70 m que chega a pouco mais da metade da altura da baleia."
  },
  "labels": {
   "crumbs": "Você está aqui",
@@ -171,7 +171,7 @@
    "pic": "side",
    "tag": "tag_made",
    "what": "Comparação de tamanho: nossa baleia-azul, com 22,86 m de comprimento, ao lado de uma pessoa de 1,70 m, na mesma escala, tão comprida quanto cerca de 13 pessoas em fila.",
-   "alt": "Comparação de tamanho: a nossa baleia-azul de lado, com 22,86 m de comprimento: um corpo esguio, cinza-azulado, com manchas claras, uma cabeça achatada, uma nadadeira peitoral longa de borda clara e uma pequena nadadeira dorsal bem atrás. Ao lado, uma pessoa cinza de 1,70 m que chega a pouco mais da metade da altura da baleia.",
+   "alt": "Comparação de tamanho: nossa baleia-azul de lado, com 22,86 m de comprimento. Um corpo esguio, cinza-azulado, com manchas claras, uma cabeça achatada, uma nadadeira peitoral longa de borda clara e uma pequena nadadeira dorsal bem atrás. Ao lado, uma pessoa cinza de 1,70 m que chega a pouco mais da metade da altura da baleia.",
    "note": "Nossa própria reconstrução, construída em código a partir de medidas publicadas e renderizada com nosso próprio motor gráfico. Não são fotografias.",
    "marks": [
     {
@@ -351,7 +351,7 @@
    "nav": "Comprimento e peso da baleia-azul",
    "h": "Comprimento e peso da baleia-azul",
    "paras": [
-    "No Atlântico Norte e no Pacífico Norte, as baleias-azuis adultas chegam a cerca de 27 m, e as maiores são as da Antártida. As fêmeas são mais compridas que os machos, e a baleia-azul-pigmeia é menor.",
+    "A maioria das baleias-azuis adultas tem de 23 a 27 m e pesa cerca de 100 a 150 toneladas. No Atlântico Norte e no Pacífico Norte, elas chegam a cerca de 27 m, e as maiores são as da Antártida. As fêmeas são mais compridas que os machos, e a baleia-azul-pigmeia é menor.",
     "Segundo o estudo de 2025, as maiores talvez cheguem perto de 200 toneladas. Todo peso registrado vem de baleias cortadas em navios baleeiros e pesadas pedaço por pedaço, e o sangue perdido no convés deixa essas somas baixas demais. Um modelo feito com 31 baleias pesadas assim dá a uma baleia-azul de 23 m de comprimento mais ou menos 75 a 85 toneladas."
    ]
   },
@@ -622,7 +622,7 @@
      "href": "https://www.icrwhale.org/pdf/SC004184-209.pdf"
     },
     {
-     "text": "Omura, Ichihara e Kasuya, 1970, Scientific Reports of the Whales Research Institute, sobre as vértebras da baleia-azul.",
+     "text": "Omura, Ichihara e Kasuya, 1970, Scientific Reports of the Whales Research Institute, sobre as vértebras da baleia-azul-pigmeia, com contagens para a baleia-azul.",
      "href": "https://www.icrwhale.org/pdf/SC0221-27.pdf"
     },
     {
@@ -705,7 +705,7 @@
     ]
    ],
    "shapes": {
-    "caption": "Comparação de tamanho da baleia-azul: nossa baleia-azul, com 22,86 m de comprimento, ao lado de uma pessoa de 1,70 m, na mesma escala.",
+    "caption": "Comparação de tamanho da baleia-azul: a metade da frente da nossa baleia-azul, com 22,86 m de comprimento no total, ao lado de uma pessoa de 1,70 m, na mesma escala.",
     "lead": "Para slides e publicações, esta comparação de tamanho vem em três formatos, todos com a mesma licença.",
     "alts": {
      "size_1x1": "Comparação de tamanho da baleia-azul, a cabeça: a cabeça longa e achatada da nossa baleia-azul, com o olho e os sulcos da garganta, e uma pessoa cinza de 1,70 m diante do focinho.",
