@@ -137,7 +137,7 @@
  },
  "top": {
   "h1": "How big was Spinosaurus?",
-  "answer": "The largest adults of Spinosaurus aegyptiacus were just under 14 m (46 ft) long and about 7.4 tonnes, by a model of 2022. Nobody has found a whole skeleton. Ours is a young one of about 10 m (33 ft), about three quarters of full size and about 3.6 to 4.7 tonnes by our model. The published models of the skeleton it is built on come out a little lighter, about 3.2 to 4.2 tonnes. Beside the person of 1.70 m, its hip joint sits at about head height, and it is almost six people long.",
+  "answer": "The largest adults of Spinosaurus aegyptiacus were just under 14 m (46 ft) long and about 7.4 tonnes, by a model of 2022. Nobody has found a whole skeleton. Ours is a young one of about 10 m (33 ft), about three quarters the size of the largest adults and about 3.6 to 4.7 tonnes by our model. Worked out the same way, the published models of the skeleton it is built on come out a little lighter, about 3.2 to 4.2 tonnes. Beside the person of 1.70 m, its hip joint sits at about head height, and it is almost six people long.",
   "answer_more": "Compared with T. rex, the largest Spinosaurus was longer, most likely lighter and much lower at the hips. The two never met: about 30 million years and two continents lay between them.",
   "scale": {
    "pic": "side",
@@ -251,7 +251,7 @@
    "scale": {
     "pic": "vs",
     "tag": "tag_made",
-    "what": "The largest adult Spinosaurus and our T. rex, to one scale. The adult is our model enlarged by about a third, the way the model of 2022 was made. By that model the largest adults were just under 14 m (46 ft) long. Our T. rex, after SUE, is a large adult of about 11.4 m (37 ft). So the Spinosaurus is the longer one here, and the T. rex stands much higher at the hips. Spinosaurus was most likely the lighter of the two.",
+    "what": "The largest adult Spinosaurus and our T. rex, to one scale. The Spinosaurus is our model enlarged by about a third, the way the model of 2022 was made. By that model the largest adults were just under 14 m (46 ft) long. Our T. rex, after SUE, is a large adult of about 11.4 m (37 ft). So the Spinosaurus is the longer one here. The T. rex stands much higher at the hips. Spinosaurus was most likely the lighter of the two.",
     "alt": "A large adult Spinosaurus with a sail on its back and a shorter T. rex with its head raised, both from the side, the T. rex about one and a half times as high at the hips, beside the grey person.",
     "marks": [
      {
@@ -431,7 +431,7 @@
     },
     {
      "term": "7 tonnes",
-     "text": "The current model's figure for the largest adults, about 7.4 tonnes. It does not apply to our young one, about 3.6 to 4.7 tonnes by our model. The published models of the skeleton it is built on come out a little lighter, about 3.2 to 4.2 tonnes."
+     "text": "The current model's figure for the largest adults, about 7.4 tonnes. It does not apply to our young one, about 3.6 to 4.7 tonnes by our model. Worked out the same way, the published models of the skeleton it is built on come out a little lighter, about 3.2 to 4.2 tonnes."
     },
     {
      "term": "The largest predator ever",
@@ -485,7 +485,7 @@
    "items": [
     {
      "q": "How tall was Spinosaurus?",
-     "a": "The largest adults, as our model enlarged by about a third: the top of the sail about 4.6 m (15 ft), the hip joint about 2.1 m (6.9 ft). Our young one: the top of the sail about 3.5 m (11.5 ft), the head about 3 m (10 ft) in its pose. Its hip joint sits about 1.6 m (5.2 ft) up. For adults no hip height is published, only that T. rex stood higher at the hips."
+     "a": "The largest adults, as our model enlarged by about a third: the top of the sail about 4.6 m (15 ft), the hip joint about 2.1 m (6.9 ft). Our young one: the top of the sail about 3.5 m (11.5 ft), the head about 3 m (10 ft) in its pose. Its hip joint sits about 1.6 m (5.2 ft) up. The 2.1 m comes from our model: no hip height for adults is published, only that T. rex stood higher at the hips."
     },
     {
      "q": "Was Spinosaurus the biggest dinosaur?",

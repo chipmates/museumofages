@@ -137,7 +137,7 @@
  },
  "top": {
   "h1": "Qual era o tamanho do espinossauro?",
-  "answer": "Os maiores adultos de Spinosaurus aegyptiacus, o espinossauro, tinham pouco menos de 14 m de comprimento e cerca de 7,4 toneladas, por um modelo de 2022. Ninguém encontrou um esqueleto inteiro. O nosso é um jovem de cerca de 10 m, mais ou menos três quartos do tamanho completo e cerca de 3,6 a 4,7 toneladas, pelo nosso modelo. Os modelos publicados do esqueleto em que ele se baseia dão um pouco menos, cerca de 3,2 a 4,2 toneladas. Ao lado da pessoa de 1,70 m, a articulação do quadril dele fica mais ou menos na altura da cabeça da pessoa, e ele tem quase seis pessoas de comprimento.",
+  "answer": "Os maiores adultos de Spinosaurus aegyptiacus, o espinossauro, tinham pouco menos de 14 m de comprimento e cerca de 7,4 toneladas, por um modelo de 2022. Ninguém encontrou um esqueleto inteiro. O nosso é um jovem de cerca de 10 m, mais ou menos três quartos do tamanho dos maiores adultos e cerca de 3,6 a 4,7 toneladas, pelo nosso modelo. Calculados do mesmo jeito, os modelos publicados do esqueleto em que ele se baseia dão um pouco menos, cerca de 3,2 a 4,2 toneladas. Ao lado da pessoa de 1,70 m, a articulação do quadril dele fica mais ou menos na altura da cabeça da pessoa, e ele tem quase seis pessoas de comprimento.",
   "answer_more": "Comparado com o T. rex, o maior espinossauro era mais longo, muito provavelmente mais leve e bem mais baixo na altura do quadril. Os dois nunca se encontraram: entre eles havia cerca de 30 milhões de anos e dois continentes.",
   "scale": {
    "pic": "side",
@@ -251,7 +251,7 @@
    "scale": {
     "pic": "vs",
     "tag": "tag_made",
-    "what": "O maior espinossauro adulto e o nosso T. rex, na mesma escala. O adulto é o nosso modelo aumentado em mais ou menos um terço, como foi feito o modelo de 2022. Por esse modelo, os maiores adultos tinham pouco menos de 14 m. O nosso T. rex, a partir de SUE, é um adulto grande de cerca de 11,4 m. Então aqui o mais longo é o espinossauro, e o T. rex é bem mais alto no quadril. O espinossauro era muito provavelmente o mais leve dos dois.",
+    "what": "O maior espinossauro adulto e o nosso T. rex, na mesma escala. O espinossauro é o nosso modelo aumentado em mais ou menos um terço, como foi feito o modelo de 2022. Por esse modelo, os maiores adultos tinham pouco menos de 14 m. O nosso T. rex, a partir de SUE, é um adulto grande de cerca de 11,4 m. Então aqui o mais longo é o espinossauro. O T. rex é bem mais alto no quadril. O espinossauro era muito provavelmente o mais leve dos dois.",
     "alt": "Um grande espinossauro adulto com uma vela nas costas e um T. rex mais curto com a cabeça erguida, os dois de lado, o T. rex mais ou menos uma vez e meia mais alto no quadril, ao lado da pessoa cinza.",
     "marks": [
      {
@@ -431,7 +431,7 @@
     },
     {
      "term": "7 toneladas",
-     "text": "O número do modelo atual para os maiores adultos, cerca de 7,4 toneladas. Ele não vale para o nosso jovem, que tem cerca de 3,6 a 4,7 toneladas pelo nosso modelo. Os modelos publicados do esqueleto em que ele se baseia dão um pouco menos, cerca de 3,2 a 4,2 toneladas."
+     "text": "O número do modelo atual para os maiores adultos, cerca de 7,4 toneladas. Ele não vale para o nosso jovem, que tem cerca de 3,6 a 4,7 toneladas pelo nosso modelo. Calculados do mesmo jeito, os modelos publicados do esqueleto em que ele se baseia dão um pouco menos, cerca de 3,2 a 4,2 toneladas."
     },
     {
      "term": "O maior predador de todos os tempos",
@@ -485,7 +485,7 @@
    "items": [
     {
      "q": "Qual era a altura do espinossauro?",
-     "a": "Os maiores adultos, como o nosso modelo aumentado em mais ou menos um terço: o alto da vela, cerca de 4,6 m, e a articulação do quadril, cerca de 2,1 m. O nosso jovem: o alto da vela, cerca de 3,5 m, e a cabeça, cerca de 3 m na pose dele. A articulação do quadril fica a cerca de 1,6 m. Para os adultos, nenhuma altura do quadril foi publicada, só que o T. rex era mais alto no quadril."
+     "a": "Os maiores adultos, como o nosso modelo aumentado em mais ou menos um terço: o alto da vela, cerca de 4,6 m, e a articulação do quadril, cerca de 2,1 m. O nosso jovem: o alto da vela, cerca de 3,5 m, e a cabeça, cerca de 3 m na pose dele. A articulação do quadril fica a cerca de 1,6 m. Os 2,1 m vêm do nosso modelo: para os adultos, nenhuma altura do quadril foi publicada, só que o T. rex era mais alto no quadril."
     },
     {
      "q": "O espinossauro foi o maior dinossauro?",
