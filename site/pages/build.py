@@ -1730,7 +1730,7 @@ def render(page, lang, data, shared, out_root):
         key, sw = shaped["figure"], shape_words(data)
         tag = data["top"].get("scale", {}).get("tag", "tag_made")
         out = fill(parts["shape_fig"], {"html.picture": pics.picture(key, esc(sw["alts"][key]), first=first),
-                                        "html.person": person_html(key), "caption": running(sw["caption"]),
+                                        "html.person": person_html(key), "caption": running(sw["caption"]), "html.totable": to_table(),
                                         "html.tag": f'<span class="tag">{rich(labels[tag])}<span class="vh">:</span></span> ' if tag in labels else ""})
         if not sw.get("links"):
             return out
@@ -3213,6 +3213,8 @@ def build_pages(out_dir, site_src=SITE_SRC, site_built=SITE_BUILT, pages=PAGES, 
             problems += lint(page, lang, b, wing[page], kept(page, lang), info[page]["topic"])
             problems += [f"{page}.{lang}: {x}" for x in making_problems(b, wing[page], data)]
             problems += [f"{page}.{lang}: {x}" for x in shapes_problems(b)]
+            if b["page"].get("shapes") and (shape_words(b) or {}).get("draft"):
+                WARNINGS.append(f"{page}.{lang}: the words of its shapes are a draft (draft: true)")
             if lang == "en":
                 continue
             if a["page"].get("wing") != b["page"].get("wing"):

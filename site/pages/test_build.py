@@ -2188,7 +2188,8 @@ class Case(unittest.TestCase):
             self.assertIn(f'id="{table}"', own)
             figures = re.findall(r'<figure class="plate sc-fig[^"]*"[^>]*>.*?</figure>', own, flags=re.S)
             scales = [data["top"]["scale"]] + [b["scale"] for b in data["blocks"] if b.get("scale")]
-            self.assertEqual(len(figures), len(scales) + sum(1 for sc in scales if sc.get("close")))
+            # a page in three shapes (page.shapes) shows the wide one as a figure at one scale too
+            self.assertEqual(len(figures), len(scales) + sum(1 for sc in scales if sc.get("close")) + bool(data["page"].get("shapes")))
             for fig in figures:
                 self.assertIn(f'<a class="sc-totable" href="#{table}">', fig)
             keys = [b["scale"]["key"] for b in data["blocks"] if b.get("scale", {}).get("key")]
@@ -4526,7 +4527,9 @@ class SiteWide(unittest.TestCase):
         frame = next(n for n in graph if n.get("@id") == page["primaryImageOfPage"]["@id"])
         article = next((n for n in graph if n.get("@type") == "Article"), None)
         if article:
-            self.assertEqual(article["image"]["@id"], frame["@id"])
+            # a page in three shapes (page.shapes) lists them all, its own picture among them
+            image = article["image"] if isinstance(article["image"], list) else [article["image"]]
+            self.assertIn(frame["@id"], [i["@id"] for i in image])
         return frame
 
     def test_the_sizes_drawing_is_a_picture_and_the_pages_own(self):
@@ -4598,6 +4601,10 @@ class SiteWide(unittest.TestCase):
                "vinci-mona-lisa": r"vinci-plate-mona-lisa-\d+\.webp",
                "vinci-salvator-mundi": r"vinci-plate-salvator-mundi-\d+\.webp",
                "vinci-lady-with-an-ermine": r"vinci-plate-lady-with-an-ermine-\d+\.webp"}
+        hub = json.loads((HERE / "wing-animals.en.json").read_text(encoding="utf-8"))
+        if hub["page"].get("shapes"):
+            # the list of pages in three shapes: its own picture is its square, without words
+            own["animals"] = re.escape(hub["pics"][hub["page"]["shapes"]["primary"]]["stem"]) + r"-\d+\.webp"
         seen, cards = set(), set()
         for path, text in self.pages.items():
             label = re.search(r'<main[^>]*class="sp"[^>]*data-page="([\w-]+)"', text)
@@ -4757,6 +4764,14 @@ class LongNames(unittest.TestCase):
         # the structured data keeps the page's words as written
         for graph in re.findall(r'<script type="application/ld\+json">(.*?)</script>', grave, flags=re.S):
             self.assertNotIn("2 May", graph)
+
+
+# The animal pages' rules for search stand in their own file and run in this step too.
+_seo_spec = importlib.util.spec_from_file_location("test_animals_seo", HERE / "test_animals_seo.py")
+_seo = importlib.util.module_from_spec(_seo_spec)
+_seo_spec.loader.exec_module(_seo)
+globals().update({k: v for k, v in vars(_seo).items() if isinstance(v, type) and issubclass(v, unittest.TestCase)
+                  and v.__module__ == "test_animals_seo" and k not in globals()})
 
 
 if __name__ == "__main__":
