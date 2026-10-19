@@ -65,7 +65,7 @@
    "marks": {
     "spinosaurus": "1.11% 51.78%",
     "person": "54.49% 56.31%",
-    "t-rex": "54.97% 98.97%"
+    "t-rex": "56.19% 98.58%"
    },
    "behind": [
     "t-rex"
@@ -77,10 +77,10 @@
      1600
     ],
     "below": 600,
-    "person": "7.84% 30.24%",
+    "person": "7.68% 30.24%",
     "marks": {
-     "t-rex": "7.12% 81.32%",
-     "spinosaurus": "7.12% 92.59%"
+     "t-rex": "8.98% 79.05%",
+     "spinosaurus": "8.98% 92.74%"
     }
    }
   },
@@ -558,7 +558,7 @@
     {
      "page": "t-rex",
      "pic": "trex",
-     "alt": "Our T. rex from the side on two legs, about 11.4 m (37 ft) long in this pose, mouth closed and head raised, beside a grey person 1.70 m tall who stands far below its hips."
+     "alt": "Our T. rex from the side on two legs, about 11 m (36 ft) long in this pose, mouth closed and head raised, beside a grey person 1.70 m tall who stands far below its hips."
     },
     {
      "page": "biggest-dinosaurs",

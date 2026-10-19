@@ -90,7 +90,7 @@
    "marks": {
     "stegosaurus": "14.67% 55.65%",
     "triceratops": "14.63% 65.33%",
-    "t-rex": "14.67% 97.78%",
+    "t-rex": "14.67% 94.8%",
     "person": "5.61% 9.06%"
    },
    "behind": [
@@ -137,7 +137,7 @@
     2400
    ],
    "sizes": "(min-width: 1280px) 690px, (min-width: 960px) 54vw, (min-width: 600px) calc(100vw - 64px), calc(100vw - 40px)",
-   "person": "86.67% 64%"
+   "person": "87.07% 62.5%"
   },
   "anky": {
    "stem": "animals-ankylosaurus-side",
@@ -583,7 +583,7 @@
     {
      "page": "t-rex",
      "pic": "trex",
-     "alt": "Unser T. rex von der Seite auf zwei Beinen, in dieser Haltung etwa 11,4 m lang, das Maul geschlossen, der Kopf erhoben, neben einem grauen Menschen von 1,70 m, der weit unter seiner Hüfte steht.",
+     "alt": "Unser T. rex von der Seite auf zwei Beinen, in dieser Haltung etwa 11 m lang, das Maul geschlossen, der Kopf erhoben, neben einem grauen Menschen von 1,70 m, der weit unter seiner Hüfte steht.",
      "line": "Ein großer erwachsener T. rex war etwa 12 m lang, an der Hüfte etwa 4 m hoch und kam auf rund 8 bis 9 t. Unser T. rex ist nach den Maßen von SUE gebaut und steht im selben Maßstab neben einem Menschen, dazu eine Liste dessen, was von SUE gefunden wurde."
     },
     {

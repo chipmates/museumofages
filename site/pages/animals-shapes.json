@@ -213,38 +213,38 @@
   },
   "t-rex": {
    "live": {
-    "round": "13 shut",
-    "model": "museum-two/animal-queue/animals/t-rex/judged/round-13/animal.glb",
-    "sha256": "fb18e49ecb55edcc6bff0c75e5f5e2ed2ab870aaf99a9f0266e0637f400a338d"
+    "round": "18 shut",
+    "model": "museum-two/animal-queue/animals/t-rex/judged/round-18/animal.glb",
+    "sha256": "3fad6b63635910ecae38d64862c499199116f8ae61426192a11644142d780e70"
    },
    "shapes": {
     "size_1x1": {
      "stem": "animals-t-rex-size-comparison-1x1",
-     "round": "13 shut",
-     "model": "museum-two/animal-queue/animals/t-rex/judged/round-13/animal.glb",
-     "sha256": "fb18e49ecb55edcc6bff0c75e5f5e2ed2ab870aaf99a9f0266e0637f400a338d",
+     "round": "18 shut",
+     "model": "museum-two/animal-queue/animals/t-rex/judged/round-18/animal.glb",
+     "sha256": "3fad6b63635910ecae38d64862c499199116f8ae61426192a11644142d780e70",
      "still": "t-rex-size-comparison-1x1.png",
-     "still_sha256": "4726cab5d320e7d8a9a30e9cc3ee97366e15250cb92455f764382bdc826b0f7d",
+     "still_sha256": "9f32b481de48eecb498d9d231eb73c6c02af785e77efc9d19bd936819ddf5d6b",
      "w": 1600,
      "h": 1600,
-     "ppm": 240.1681,
+     "ppm": 243.6425,
      "frame_m": [
       -1.3,
-      5.362,
-      -1.0455,
-      5.6165
+      5.267,
+      -1.067,
+      5.5
      ],
      "person_px": [
-      1168,
-      941,
-      1282,
-      1349
+      1185,
+      926,
+      1300,
+      1340
      ],
      "animal_px": [
       0,
-      251,
-      1528,
-      1348
+      260,
+      1527,
+      1340
      ],
      "front_end": true,
      "cut": "the hips and tail behind the thigh (x -1.3 m)",
@@ -252,31 +252,31 @@
     },
     "size_4x3": {
      "stem": "animals-t-rex-size-comparison-4x3",
-     "round": "13 shut",
-     "model": "museum-two/animal-queue/animals/t-rex/judged/round-13/animal.glb",
-     "sha256": "fb18e49ecb55edcc6bff0c75e5f5e2ed2ab870aaf99a9f0266e0637f400a338d",
+     "round": "18 shut",
+     "model": "museum-two/animal-queue/animals/t-rex/judged/round-18/animal.glb",
+     "sha256": "3fad6b63635910ecae38d64862c499199116f8ae61426192a11644142d780e70",
      "still": "t-rex-size-comparison-4x3.png",
-     "still_sha256": "e08260cd32499768474b6f65c9b0d5c1eeefe7fb1bc8861727203f49b43bf781",
+     "still_sha256": "de0a0b3ff983361b273456999df7377ae93ead3e83453cb7ff3b666a7c637f96",
      "w": 1600,
      "h": 1200,
-     "ppm": 132.648,
+     "ppm": 137.233,
      "frame_m": [
-      -6.7,
-      5.362,
-      -2.2377,
-      6.8088
+      -6.392,
+      5.267,
+      -2.1556,
+      6.5887
      ],
      "person_px": [
-      1362,
-      678,
-      1424,
-      903
+      1366,
+      671,
+      1431,
+      904
      ],
      "animal_px": [
-      53,
-      297,
-      1561,
-      903
+      55,
+      296,
+      1559,
+      904
      ],
      "front_end": false,
      "cut": null,
@@ -284,31 +284,31 @@
     },
     "size_16x9": {
      "stem": "animals-t-rex-size-comparison-16x9",
-     "round": "13 shut",
-     "model": "museum-two/animal-queue/animals/t-rex/judged/round-13/animal.glb",
-     "sha256": "fb18e49ecb55edcc6bff0c75e5f5e2ed2ab870aaf99a9f0266e0637f400a338d",
+     "round": "18 shut",
+     "model": "museum-two/animal-queue/animals/t-rex/judged/round-18/animal.glb",
+     "sha256": "3fad6b63635910ecae38d64862c499199116f8ae61426192a11644142d780e70",
      "still": "t-rex-size-comparison-16x9.png",
-     "still_sha256": "1a40ed6ef4a55969d7a9a63231bc3e449736a44a5f22b3cb7d4243a436ac61b8",
+     "still_sha256": "9fbd23120b522f05d31ca7c7a19280d28b0e8c99b4322cc3c5d94135033352cf",
      "w": 2400,
      "h": 1350,
-     "ppm": 198.972,
+     "ppm": 205.8496,
      "frame_m": [
-      -6.7,
-      5.362,
-      -1.1069,
-      5.678
+      -6.392,
+      5.267,
+      -1.0626,
+      5.4956
      ],
      "person_px": [
-      2042,
-      791,
-      2136,
-      1130
+      2049,
+      781,
+      2147,
+      1131
      ],
      "animal_px": [
-      79,
-      220,
-      2341,
-      1129
+      82,
+      219,
+      2338,
+      1131
      ],
      "front_end": false,
      "cut": null,
@@ -1038,7 +1038,7 @@
      "model": "museum-two/animal-queue/animals/argentinosaurus/judged/round-12/animal.glb",
      "sha256": "4265d77bd5532eac3d6d086925c4cfa805acc4066ba0e8182e041ff8fe478ab4",
      "still": "biggest-dinosaurs-size-comparison-16x9.png",
-     "still_sha256": "ffef098e10e275794e2c652e1cc8a3c79337dc862873e7a7340d9c1fa88d8cd2",
+     "still_sha256": "f94e55bd6b024aec11d6837a58f9752cacdc65ce6983eb97025d27775ed32f70",
      "w": 2400,
      "h": 1350,
      "ppm": 48.8175,
@@ -1162,17 +1162,17 @@
        "name": "t-rex",
        "dx_m": 28.905,
        "box_px": [
-        1340,
-        733,
-        1893,
+        1354,
+        739,
+        1888,
         956
        ],
        "x_m": [
-        22.638,
-        33.966
+        22.925,
+        33.863
        ],
-       "model": "museum-two/animal-queue/animals/t-rex/judged/round-13/animal.glb",
-       "sha256": "fb18e49ecb55edcc6bff0c75e5f5e2ed2ab870aaf99a9f0266e0637f400a338d"
+       "model": "museum-two/animal-queue/animals/t-rex/judged/round-18/animal.glb",
+       "sha256": "3fad6b63635910ecae38d64862c499199116f8ae61426192a11644142d780e70"
       },
       {
        "name": "spinosaurus",

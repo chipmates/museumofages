@@ -73,7 +73,7 @@
    "sizes": "(min-width: 1280px) 690px, (min-width: 960px) 54vw, (min-width: 600px) calc(100vw - 64px), calc(100vw - 40px)",
    "person": "7.34% 30.8%",
    "marks": {
-    "t-rex": "14.67% 97.78%",
+    "t-rex": "14.67% 94.8%",
     "ankylosaurus": "14.63% 61.38%",
     "stegosaurus": "14.67% 55.65%",
     "person": "5.61% 9.06%"
@@ -104,7 +104,7 @@
     2400
    ],
    "sizes": "(min-width: 1280px) 690px, (min-width: 960px) 54vw, (min-width: 600px) calc(100vw - 64px), calc(100vw - 40px)",
-   "person": "86.67% 64%"
+   "person": "87.07% 62.5%"
   },
   "tricera": {
    "stem": "animals-triceratops-side",
@@ -582,7 +582,7 @@
     {
      "page": "t-rex",
      "pic": "trex",
-     "alt": "O nosso T. rex de lado, sobre duas patas, com cerca de 11,4 m de comprimento nesta pose, de boca fechada e cabeça erguida, ao lado de uma pessoa cinza de 1,70 m que fica bem abaixo do quadril dele.",
+     "alt": "O nosso T. rex de lado, sobre duas patas, com cerca de 11 m de comprimento nesta pose, de boca fechada e cabeça erguida, ao lado de uma pessoa cinza de 1,70 m que fica bem abaixo do quadril dele.",
      "line": "Um T. rex adulto grande tinha cerca de 12 m de comprimento, cerca de 4 m até o quadril e mais ou menos 8 a 9 toneladas. O nosso T. rex foi feito com as medidas de SUE e está ao lado de uma pessoa na mesma escala, com uma lista do que foi encontrado de SUE."
     },
     {
