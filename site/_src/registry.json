@@ -478,7 +478,7 @@
             "no swimming speed: the 2025 study calls one too speculative"
           ],
           [
-            "still (?:alive|lives|living)|may still live|lebt (?:heute )?noch|noch (?:heute )?(?:am )?leben",
+            "still (?:alive|lives|living)(?!\\?)|may still live|lebt (?:heute )?noch|noch (?:heute )?(?:am )?leben",
             "it died out about 3.6 million years ago"
           ]
         ]

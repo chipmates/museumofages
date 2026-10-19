@@ -143,7 +143,7 @@
  },
  "meta": {
   "title": "Megalodon-Größe: etwa 16 m, vielleicht 20 m | Museum of Ages",
-  "description": "Größe des Megalodons: etwa 16 m nach der einen langen Wirbelsäule, die größten vielleicht etwa 20 m. Größenvergleich mit Mensch, Weißem Hai und Blauwal.",
+  "description": "Der Megalodon war etwa 16 m lang, die größten vielleicht 20 m. Wir zeigen ihn im Größenvergleich mit Mensch, Weißem Hai und Blauwal und sagen, ob er noch lebt.",
   "og_title": "Megalodon-Größe: etwa 16 m, vielleicht 20 m",
   "og_image_alt": "Unser Megalodon von der Seite, etwa 16 m lang, das Maul geschlossen, dunkelgrau mit einem helleren Band an der Flanke, neben einem grauen Menschen von 1,70 m, der winzig daneben steht.",
   "credit": "Museum of Ages, Körperform nach Shimada und anderen 2025 (CC BY 4.0)"
@@ -167,8 +167,8 @@
   "scale": {
    "pic": "side",
    "tag": "tag_made",
-   "what": "Unser Megalodon neben einem Menschen von 1,70 m, im selben Maßstab: etwa 16 m lang, die Länge, die sich aus der Wirbelsäule in Brüssel ergibt.",
-   "alt": "Unser Megalodon von der Seite, etwa 16 m lang, das Maul geschlossen, dunkelgrau mit einem helleren Band an der Flanke, neben einem grauen Menschen von 1,70 m, der winzig daneben steht.",
+   "what": "Größenvergleich im selben Maßstab: unser Megalodon, etwa 16 m lang, neben einem Menschen von 1,70 m.",
+   "alt": "Größenvergleich: unser Megalodon von der Seite, etwa 16 m lang, das Maul geschlossen, dunkelgrau mit einem helleren Band an der Flanke, neben einem grauen Menschen von 1,70 m, der winzig daneben steht.",
    "note": [
     "Eine eigene Rekonstruktion des Museums, nach den genannten Maßen in Code gebaut und in unserer Engine gerendert. Kein Foto. Die Körperform folgt dem Modell von Shimada und anderen 2025 (",
     {
@@ -181,7 +181,7 @@
     "pic": "head",
     "tag": "tag_made",
     "what": "Der Kopf mit geschlossenem Maul, aus der Nähe. Die Zähne im Modell sind nach einem anderen Fund gebaut, einem echten Gebiss in seiner eigenen Größe, vorne etwa 10 cm hoch.",
-    "alt": "Der Kopf des Hais mit geschlossenem Maul, daneben der graue Mensch, kürzer als der Kopf lang ist."
+    "alt": "Der Kopf des Megalodons mit geschlossenem Maul, daneben der graue Mensch, kürzer als der Kopf lang ist."
    },
    "bars": [
     {
@@ -210,8 +210,8 @@
   {
    "type": "numbers",
    "id": "numbers",
-   "nav": "Die Zahlen",
-   "h": "Die Zahlen",
+   "nav": "Megalodon-Steckbrief: die Zahlen",
+   "h": "Megalodon-Steckbrief: die Zahlen",
    "unit": "In Metern und Tonnen, die Zähne in Zentimetern. Ohne belegte Zahl bleibt die Zelle leer.",
    "cols": [
     "Tier",
@@ -296,9 +296,28 @@
   },
   {
    "type": "text",
+   "id": "alive",
+   "nav": "Lebt der Megalodon noch?",
+   "h": "Lebt der Megalodon noch?",
+   "paras": [
+    "Nein, den Megalodon gab es wirklich, aber er ist vor etwa 3,6 Millionen Jahren ausgestorben, so zeigen es seine jüngsten verlässlichen Fossilien. Die Gründe nennt das Natural History Museum in London auf seiner Seite zu genau dieser Frage: Nie wurde ein Megalodon-Zahn gefunden, der jünger ist, nicht einmal ein frisch ausgefallener, niemand hat je einen Megalodon sicher gesehen, lebend oder tot, und kein heutiges Tier trägt Bissspuren in der Größe seines Mauls. Die Tiefsee, in der er sich verstecken soll, bietet einem so großen Jäger zu wenig Nahrung, so das Museum, und kein Hai lebt viel tiefer als 3.000 m. Die ältere Megalodon-Seite des Museums fügt hinzu, dass ein Hai warmer Meere die kalte Tiefsee nicht überleben würde.",
+    "Der Megalodon, der in der Tiefsee überlebt haben soll, stammt aus einer Fernsehsendung von 2013, die gefälschte Aufnahmen als Tatsachen ausgab."
+   ]
+  },
+  {
+   "type": "text",
+   "id": "weight",
+   "nav": "Wie schwer war der Megalodon?",
+   "h": "Wie schwer war der Megalodon?",
+   "paras": [
+    "Rund 30 t nach dem schlanken Modell von 2025, etwa 61 t nach dem kräftigen Modell von 2022, beide für dieselbe Wirbelsäule in Brüssel. Die beiden Modelle unterscheiden sich in der Körperform, und einen Körper hat man nie gefunden: Das eine ist schlank wie die größten lebenden Haie, das andere kräftig wie ein Weißer Hai. Darum bleibt das Gewicht umstritten."
+   ]
+  },
+  {
+   "type": "text",
    "id": "bones",
-   "nav": "Knochen und Körper",
-   "h": "Knochen und Körper",
+   "nav": "Megalodon-Skelett: Knochen und Körper",
+   "h": "Megalodon-Skelett: Knochen und Körper",
    "paras": [
     "Der Megalodon, Otodus megalodon, war ein Hai, und Haie haben keine Knochen. Ihr Skelett ist aus Knorpel, und Knorpel vergeht im Boden fast immer. Was bleibt, sind Zähne und manchmal Wirbel, die härter sind als der übrige Knorpel. Darum kennt man den Megalodon von Zähnen, losen Wirbeln, Splittern gehärteten Knorpels und winzigen Hautschuppen. Ein Körper wurde nie gefunden, kein Kopf, keine Flosse, kein Schwanz."
    ],
@@ -306,13 +325,13 @@
     "pic": "skeleton",
     "tag": "tag_built",
     "what": "Dasselbe Tier als Skelett. Wirbel und Zähne sind nach Fossilien gebaut, alles andere ist ergänzt und als Ergänzung erkennbar.",
-    "alt": "Das Skelett von der Seite, eine lange Reihe von Wirbeln und ein Gebiss nach Fossilien, Kopf, Flossen und Schwanz als erkennbar ergänzte Formen.",
+    "alt": "Das Megalodon-Skelett von der Seite, eine lange Reihe von Wirbeln und ein Gebiss nach Fossilien, Kopf, Flossen und Schwanz als erkennbar ergänzte Formen.",
     "key": "Dunkelbraun: die fossilen Wirbel. Gold: die Zähne. Hell: das Ergänzte, auch die Stücke, die zerbrochene Wirbel vervollständigen.",
     "close": {
      "pic": "skeleton_head",
      "tag": "tag_built",
      "what": "Schädel und vorderer Teil der Wirbelsäule aus der Nähe, mit dem Menschen. Die Wirbel sind nach den Fossilien gebaut, Schädel und Kiefer sind ergänzt, die Zähne sind nach einem anderen Fund gebaut, einem echten Gebiss in seiner eigenen Größe.",
-     "alt": "Der vordere Teil des Skeletts von der Seite, ein heller, ergänzter Schädel mit Kiefer und goldenen Zähnen, dann eine Reihe dunkler Wirbel, daneben der graue Mensch.",
+     "alt": "Der vordere Teil des Megalodon-Skeletts von der Seite, ein heller, ergänzter Schädel mit Kiefer und goldenen Zähnen, dann eine Reihe dunkler Wirbel, daneben der graue Mensch.",
      "key": "Dunkelbraun: die fossilen Wirbel. Gold: die Zähne. Hell: das Ergänzte, auch die Stücke, die zerbrochene Wirbel vervollständigen."
     }
    }
@@ -323,7 +342,7 @@
    "nav": "Wie sicher das ist",
    "h": "Wie sicher das ist",
    "paras": [
-    "Die 16 m beruhen auf der Wirbelsäule in Brüssel: 141 Wirbel, in einer Reihe etwa 11 m, dazu Kopf und Schwanz in den Proportionen lebender Makrelenhaie. Zwei Forschergruppen kamen mit verschiedenen Modellen auf 15,9 m und 16,4 m, darum sagen wir etwa 16 m. Die 20 m stützen sich auf einen einzigen Zahn, hochgerechnet über ganze Gebisse. Das Gewicht beruht auf einem Körpermodell, und dafür muss man eine Körperform annehmen, die niemand kennt: schlank wie die größten lebenden Haie etwa 30 t, dick wie ein Weißer Hai etwa 61 t. Darum heißt es bei der Länge „etwa“ und beim Gewicht „umstritten“."
+    "Die 16 m beruhen auf der Wirbelsäule in Brüssel: 141 Wirbel, in einer Reihe etwa 11 m, dazu Kopf und Schwanz in den Proportionen lebender Makrelenhaie. Zwei Forschergruppen kamen mit verschiedenen Modellen auf 15,9 m und 16,4 m, darum sagen wir etwa 16 m. Die 20 m stützen sich auf einen einzigen Zahn, hochgerechnet über ganze Gebisse. Darum heißt es bei der Länge „etwa“ und bei den größten „vielleicht“."
    ]
   },
   {
@@ -383,7 +402,7 @@
     },
     {
      "term": "Bis heute lebendig, versteckt in der Tiefsee",
-     "text": "Fernsehsendungen haben ihn so gezeigt, doch seit etwa 3,6 Millionen Jahren ist er verschwunden. Ein lebender Riese würde frische Bissspuren und Zähne zu Zehntausenden hinterlassen, und ein Hai warmer Meere würde die kalte Tiefsee nicht überleben, wie das Londoner Natural History Museum erklärt."
+     "text": "Fernsehsendungen haben ihn so gezeigt, doch er ist längst ausgestorben: siehe „Lebt der Megalodon noch?“ weiter oben."
     },
     {
      "term": "Ein Megalodon greift einen Wal so groß wie einen Blauwal an",
@@ -412,15 +431,15 @@
     },
     {
      "q": "Megalodon gegen den Blauwal: Wer war größer?",
-     "a": "Der Blauwal. Die meisten ausgewachsenen Blauwale sind 23 bis 27 m lang, die größten etwa 30 m, und die US-Meeresbehörde NOAA nennt ihn das größte Tier, das je gelebt hat, soweit man weiß. Unser Megalodon käme auf gut die Hälfte des größten. Selbst der größte vermessene Walhai war mit 18,8 m länger als unser Megalodon und mit etwa 34 t ungefähr so schwer wie dessen schlankes Modell."
+     "a": "Der Blauwal: Die meisten ausgewachsenen Blauwale sind 23 bis 27 m lang, die größten etwa 30 m, und die US-Meeresbehörde NOAA nennt ihn das größte Tier, das je gelebt hat, soweit man weiß. Unser Megalodon käme auf gut die Hälfte des größten. Selbst der größte vermessene Walhai war mit 18,8 m länger als unser Megalodon und mit etwa 34 t ungefähr so schwer wie dessen schlankes Modell."
     },
     {
-     "q": "Wie groß waren die Zähne des Megalodons?",
-     "a": "Die größten gefundenen sind mindestens 16 cm hoch, Museen nennen fast 18 cm, etwa dreimal so hoch wie ein Zahn des Weißen Hais mit etwa 5 cm. Die Zähne in unserem Modell sind nach einem echten Gebiss aus einem anderen Fund gebaut, UF-VP-311000, vorne etwa 10 cm hoch und zu den Mundwinkeln hin kleiner."
+     "q": "Wie groß war ein Megalodon-Zahn?",
+     "a": "Die größten gefundenen Zähne sind mindestens 16 cm hoch, Museen nennen fast 18 cm, etwa dreimal so hoch wie ein Zahn des Weißen Hais mit etwa 5 cm. Die Zähne in unserem Modell sind nach einem echten Gebiss aus einem anderen Fund gebaut, UF-VP-311000, vorne etwa 10 cm hoch und zu den Mundwinkeln hin kleiner."
     },
     {
      "q": "Wann und warum starb der Megalodon aus?",
-     "a": "Vor etwa 3,6 Millionen Jahren, nach den jüngsten verlässlichen Funden. Warum, ist nicht geklärt. Vorgeschlagen wurden kühlere Meere, die sein Verbreitungsgebiet zerrissen, der neu entstandene Weiße Hai als Konkurrent, der Rückgang der kleinen Bartenwale, seiner Beute, und die Kosten eines warmen Körpers, denn er hielt sich wärmer als das Wasser um ihn."
+     "a": "Wahrscheinlich vor etwa 3,6 Millionen Jahren. Eine Studie von 2019 fand, dass die jüngeren Zähne, die sie prüfte, aus älterem Gestein ausgewaschen waren oder keine verlässliche Herkunft hatten, und ihre Schätzung legt das Ende auf etwa 4,1 bis 3,2 Millionen Jahre vor heute. Warum, ist nicht geklärt. Vorgeschlagen wurden kühlere Meere, die sein Verbreitungsgebiet zerrissen, der neu entstandene Weiße Hai als Konkurrent, der Rückgang der kleinen Bartenwale, seiner Beute, und die Kosten eines warmen Körpers, denn er hielt sich wärmer als das Wasser um ihn."
     }
    ]
   },
@@ -466,7 +485,7 @@
      "page": "woolly-mammoth",
      "pic": "mammoth",
      "alt": "Unser Wollhaarmammut, der Beresowka-Bulle, von der Seite im dunkelbraunen Fell, mit hoch gewölbtem Kopf, abfallendem Rücken, zwei gebogenen Stoßzähnen und einer Marke an der Schulter bei 271 cm, seiner rekonstruierten Schulterhöhe. Der graue Mensch daneben, 1,70 m groß, steht niedriger als die Spitzen der Stoßzähne.",
-     "line": "Ein typischer sibirischer Bulle maß an der Schulter etwa 2,7 bis 2,9 m, etwa so hoch wie ein Bulle des Asiatischen Elefanten. Unser Mammut ist ein einzelner echter Bulle, 1900 im Permafrost gefunden, mit dem, was seines ist und was ergänzt wurde."
+     "line": "Ein typischer sibirischer Bulle maß an der Schulter etwa 2,7 bis 2,9 m, etwa so hoch wie ein Bulle des Asiatischen Elefanten. Unser Mammut ist nach einem einzelnen echten Bullen gebaut, der 1900 im Permafrost gefunden wurde, mit dem, was von ihm stammt und was ergänzt wurde."
     },
     {
      "page": "blue-whale",
@@ -526,8 +545,12 @@
      "text": "Natural History Museum of Denmark: die dänischen Wirbel NHMD 157890."
     },
     {
-     "text": "Natural History Museum, London.",
+     "text": "Natural History Museum, London: seine Seite über den Megalodon.",
      "href": "https://www.nhm.ac.uk/discover/megalodon--the-truth-about-the-largest-shark-that-ever-lived.html"
+    },
+    {
+     "text": "Natural History Museum, London: seine Seite zur Frage, ob der Megalodon noch lebt, 2025.",
+     "href": "https://www.nhm.ac.uk/discover/is-megalodon-still-alive.html"
     },
     {
      "text": "American Museum of Natural History, New York.",
@@ -571,18 +594,17 @@
     ]
    ],
    "shapes": {
-    "draft": true,
     "caption": "Megalodon im Größenvergleich: unser Megalodon, etwa 16 m lang, neben einem Menschen von 1,70 m, im selben Maßstab.",
-    "lead": "Für Folien und Beiträge gibt es den Größenvergleich auch in drei Formaten, unter derselben Lizenz.",
+    "lead": "Für Folien und Beiträge gibt es diesen Größenvergleich in drei Formaten, alle unter derselben Lizenz.",
     "alts": {
-     "size_1x1": "Megalodon im Größenvergleich: der Kopf unseres Megalodons bis zur Brustflosse, an der Schnauze ein grauer Mensch von 1,70 m.",
-     "size_4x3": "Megalodon im Größenvergleich: die vorderen zwei Drittel unseres Megalodons neben einem grauen Menschen von 1,70 m.",
-     "size_16x9": "Megalodon im Größenvergleich: unser ganzer Megalodon von der Seite, etwa 16 m lang, neben einem grauen Menschen von 1,70 m."
+     "size_1x1": "Megalodon im Größenvergleich: der Kopf unseres Megalodons von der Brustflosse nach vorn, vor der Schnauze ein grauer Mensch von 1,70 m.",
+     "size_4x3": "Megalodon neben einem Menschen im Größenvergleich: die vorderen zwei Drittel unseres Megalodons mit der hohen Rückenflosse und ein grauer Mensch von 1,70 m.",
+     "size_16x9": "Megalodon im Größenvergleich, der ganze Hai von der Seite: unser Megalodon, etwa 16 m lang, und vor ihm ein grauer Mensch von 1,70 m."
     },
     "links": {
-     "size_1x1": "Quadratisch (1:1)",
+     "size_1x1": "Quadrat (1:1)",
      "size_4x3": "Folie (4:3)",
-     "size_16x9": "Breit (16:9)"
+     "size_16x9": "Breitbild (16:9)"
     }
    }
   }

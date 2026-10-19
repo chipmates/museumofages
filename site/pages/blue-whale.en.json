@@ -342,7 +342,7 @@
    "nav": "Is the blue whale the largest animal in the world, or ever?",
    "h": "Is the blue whale the largest animal in the world, or ever?",
    "paras": [
-    "Yes, as far as anyone knows. It is the heaviest animal known, and NOAA, the US ocean agency, and a 2017 study call it the largest animal to have lived. A 2025 study is more careful. It calls the largest animal of all uncertain, since a few giant dinosaurs known only from scraps or lost bones may have matched it. Perucetus, a fossil whale put forward in 2023 as possibly heavier, comes out far lighter in two later studies."
+    "Yes. The blue whale is the largest animal in the world, and as far as anyone knows the largest that has ever lived. NOAA, the US ocean agency, and a 2017 study say so. A 2025 study is more careful: it calls the blue whale the largest living animal but the largest animal of all uncertain, since a few giant dinosaurs known only from scraps or lost bones may have matched it. Perucetus, a fossil whale put forward in 2023 as possibly heavier, comes out far lighter in two later studies."
    ]
   },
   {
@@ -351,8 +351,8 @@
    "nav": "Blue whale length and weight",
    "h": "Blue whale length and weight",
    "paras": [
-    "Most grown blue whales are 23 to 27 m (75 to 89 ft), females longer than males. The Antarctic ones are the biggest. Those of the North Atlantic and North Pacific reach about 27 m (89 ft), and the pygmy blue whale is shorter.",
-    "Grown blue whales weigh roughly 100 to 150 tonnes according to a 2025 study, the largest perhaps close to 200. No whole blue whale has ever been weighed. Every weight comes from whales cut up on whaling ships and weighed piece by piece, and the blood lost on deck makes those sums too low. A model built from 31 whales weighed this way puts a blue whale 23 m long at roughly 75 to 85 tonnes."
+    "In the North Atlantic and North Pacific, grown blue whales reach about 27 m (89 ft), and the Antarctic ones are the biggest. Females grow longer than males, and the pygmy blue whale is shorter.",
+    "By the 2025 study, the largest may come close to 200 tonnes. Every weight on record comes from whales cut up on whaling ships and weighed piece by piece, and the blood lost on deck makes those sums too low. A model built from 31 whales weighed this way puts a blue whale 23 m long at roughly 75 to 85 tonnes."
    ]
   },
   {
@@ -396,8 +396,8 @@
    "scale": {
     "pic": "beside",
     "tag": "tag_made",
-    "what": "Our Argentinosaurus, our blue whale and our megalodon to one scale with the person, for size only. The three never lived at the same time.",
-    "alt": "Three giants from the side, all facing the same way: a dinosaur with a long neck and tail on four legs, longer than the others, a blue whale and a shark, beside the grey person.",
+    "what": "Our Argentinosaurus, our blue whale and our megalodon to one scale with the person, for size comparison only. The three never lived at the same time.",
+    "alt": "Our blue whale in a size comparison with our Argentinosaurus and our megalodon: three rows from the side, all facing the same way, the long-necked dinosaur on top the longest, the shark below the shortest, and the grey person in each row.",
     "note": [
      "The body of our megalodon follows the model of ",
      {
@@ -468,6 +468,15 @@
      }
     ]
    }
+  },
+  {
+   "type": "text",
+   "id": "bones",
+   "nav": "How many bones does a blue whale have?",
+   "h": "How many bones does a blue whale have?",
+   "paras": [
+    "No single count holds for every blue whale: in Hope, the skeleton in London, the Natural History Museum counted 221 bones. What is known for the species is the backbone: about 63 to 66 vertebrae, varying from whale to whale, 7 of them in the neck. The museum does not say whether its 221 take in the small bones, such as the finger bones or the remnants of the hips."
+   ]
   },
   {
    "type": "text",
@@ -550,7 +559,7 @@
    "items": [
     {
      "q": "How big is a blue whale compared to a human?",
-     "a": "Our blue whale is as long as about 13 people of 1.70 m laid head to foot. Its skull alone matches three people and a bit, and one flipper almost two. These are our own sums, on our model."
+     "a": "About 13 people of 1.70 m laid head to foot match our blue whale's length, and the largest blue whales, about 30 m, would take about 18. The skull of ours alone matches three people and a bit, and one flipper almost two. These are our own sums."
     },
     {
      "q": "Why is it called blue?",
@@ -583,7 +592,7 @@
      "page": "megalodon",
      "pic": "megalodon",
      "alt": "Our megalodon from the side, about 16 m (52 ft) long, mouth closed, dark grey with a paler band along the flank, beside a grey person 1.70 m tall who looks tiny next to it.",
-     "line": "The one long megalodon backbone found gives about 16 m (52 ft), and the largest megalodons were perhaps about 20 m, compared with a person, a great white and a blue whale."
+     "line": "The only long megalodon backbone ever found gives about 16 m (52 ft), and the largest megalodons were perhaps about 20 m, compared with a person, a great white and a blue whale."
     },
     {
      "page": "biggest-dinosaurs",
@@ -611,6 +620,10 @@
     {
      "text": "Nishiwaki, 1950, Scientific Reports of the Whales Research Institute, the weighings in pieces of 1947 to 1949.",
      "href": "https://www.icrwhale.org/pdf/SC004184-209.pdf"
+    },
+    {
+     "text": "Omura, Ichihara and Kasuya, 1970, Scientific Reports of the Whales Research Institute, on the vertebrae of the blue whale.",
+     "href": "https://www.icrwhale.org/pdf/SC0221-27.pdf"
     },
     {
      "text": "Goldbogen and others, 2019, PNAS, on the heartbeat of a tagged blue whale.",
@@ -651,6 +664,10 @@
      "href": "https://www.nhm.ac.uk/discover/hope-the-blue-whale-history.html"
     },
     {
+     "text": "Natural History Museum, London: its page on Hope's display, with the count of her bones.",
+     "href": "https://www.nhm.ac.uk/discover/hope-the-blue-whale-display.html"
+    },
+    {
      "text": "Royal Ontario Museum, Toronto: its news release on the heart, 2017, two of its blog posts, 2015 and 2016, and its annual report 2015 to 2016.",
      "href": "https://www.rom.on.ca/news-releases/blue-whale-heart-arrives-rom"
     },
@@ -674,7 +691,7 @@
    "h": "Use our pictures",
    "paras": [
     [
-     "The four pictures of the blue whale on this page, the side view, the head, the skeleton and the row with our megalodon and our Argentinosaurus, are our own work under ",
+     "The five pictures of the blue whale on this page, the side view, the head, the skeleton, the row with our megalodon and our Argentinosaurus, and the size comparison below in three shapes, are our own work under ",
      {
       "text": "CC BY-SA 4.0",
       "href": "https://creativecommons.org/licenses/by-sa/4.0/"
@@ -688,13 +705,12 @@
     ]
    ],
    "shapes": {
-    "draft": true,
     "caption": "Blue whale size comparison: our blue whale, 22.86 m (75 ft) long, beside a person 1.70 m tall, to one scale.",
-    "lead": "For slides and posts, the size comparison also comes in three shapes, under the same licence.",
+    "lead": "For slides and posts, this size comparison comes in three shapes, all under the same licence.",
     "alts": {
-     "size_1x1": "Blue whale size comparison: the head and flipper of our blue whale beside a grey person 1.70 m tall.",
-     "size_4x3": "Blue whale size comparison: the front half of our blue whale beside a grey person 1.70 m tall.",
-     "size_16x9": "Blue whale size comparison: our whole blue whale from the side, 22.86 m (75 ft) long, beside a grey person 1.70 m tall."
+     "size_1x1": "Blue whale size comparison, the head: the long, flat head of our blue whale with its eye and the grooves of its throat, and a grey person 1.70 m tall in front of the snout.",
+     "size_4x3": "Blue whale beside a person, a size comparison: the front half of our blue whale with its long flipper, and a grey person 1.70 m tall ahead of the snout.",
+     "size_16x9": "Blue whale size comparison, the whole whale from the side: our blue whale, 22.86 m (75 ft) from snout tip to tail notch, and a grey person 1.70 m tall in front of it."
     },
     "links": {
      "size_1x1": "Square (1:1)",

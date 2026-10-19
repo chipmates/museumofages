@@ -143,7 +143,7 @@
  },
  "meta": {
   "title": "Megalodon size: about 16 m, perhaps 20 m | Museum of Ages",
-  "description": "Megalodon size: about 16 m (52 ft) by the one long backbone found, the largest perhaps about 20 m. Compared with a person, a great white and a blue whale.",
+  "description": "Megalodon size: about 16 m (52 ft) long, the largest perhaps about 20 m. Compared with a person, a great white and a blue whale, and why it is not alive today.",
   "og_title": "Megalodon size: about 16 m, perhaps 20 m",
   "og_image_alt": "Our megalodon from the side, about 16 m (52 ft) long, mouth closed, dark grey with a paler band along the flank, beside a grey person 1.70 m tall who looks tiny next to it.",
   "credit": "Museum of Ages, body shape after Shimada and others 2025 (CC BY 4.0)"
@@ -181,7 +181,7 @@
     "pic": "head",
     "tag": "tag_made",
     "what": "The head, mouth closed, closer up. The teeth in the model are built after another find, a real set, at its own size, about 10 cm (4 in) tall in front.",
-    "alt": "The shark's head with its mouth closed, beside the grey person, who is shorter than the head is long."
+    "alt": "The megalodon's head with its mouth closed, beside the grey person, who is shorter than the head is long."
    },
    "bars": [
     {
@@ -296,9 +296,28 @@
   },
   {
    "type": "text",
+   "id": "alive",
+   "nav": "Is megalodon still alive?",
+   "h": "Is megalodon still alive?",
+   "paras": [
+    "No, megalodon was real but died out about 3.6 million years ago, by its youngest reliable fossils. London's Natural History Museum gives the reasons on its page “Is megalodon still alive?”: no megalodon tooth younger than that has ever been found, not even a freshly fallen one, there is no confirmed sighting, alive or dead, and no living animal carries bite marks the size of its mouth. The deep sea, where it is said to hide, has too little food for so big a hunter, the museum adds, and no shark lives much below 3,000 m (9,800 ft). Its older megalodon page points out that a shark of warm seas would not survive the cold deep.",
+    "The megalodon said to live on in the deep came from a television show of 2013 that presented faked footage as fact."
+   ]
+  },
+  {
+   "type": "text",
+   "id": "weight",
+   "nav": "How heavy was megalodon?",
+   "h": "How heavy was megalodon?",
+   "paras": [
+    "Roughly 30 tonnes by the slim model of 2025, and about 61 tonnes by the stout model of 2022, both for the same backbone in Brussels. The two differ in the body they build around it, and no body has been found: one is slim like the largest living sharks, the other stout like a great white. That is why the weight stays disputed."
+   ]
+  },
+  {
+   "type": "text",
    "id": "bones",
-   "nav": "Bones and body",
-   "h": "Bones and body",
+   "nav": "Megalodon skeleton: bones and body",
+   "h": "Megalodon skeleton: bones and body",
    "paras": [
     "Megalodon, Otodus megalodon, was a shark, and sharks have no bones. Their skeleton is cartilage, and cartilage almost always rots away in the ground. What survives are the teeth, and sometimes the backbone discs, which are harder than the rest. So megalodon is known from teeth, loose backbone discs, scraps of hardened cartilage and tiny skin scales. No body has ever been found, no head, no fin, no tail."
    ],
@@ -306,13 +325,13 @@
     "pic": "skeleton",
     "tag": "tag_built",
     "what": "The same animal as a skeleton. The backbone discs and the teeth follow fossils, everything else is restored and is meant to look it.",
-    "alt": "The skeleton from the side, a long row of backbone discs and a jaw of teeth after fossils, with the head, fins and tail as plainly restored shapes.",
+    "alt": "The megalodon skeleton from the side, a long row of backbone discs and a jaw of teeth after fossils, with the head, fins and tail as plainly restored shapes.",
     "key": "Dark brown: the fossil discs. Gold: the teeth. Pale: what is restored, including the pieces that complete broken discs.",
     "close": {
      "pic": "skeleton_head",
      "tag": "tag_built",
      "what": "The skull and the front of the backbone, closer up, with the person. The discs are built after the fossils, the skull and the jaw are restored, the teeth are built after another find, a real set, at its own size.",
-     "alt": "The front of the skeleton from the side, a pale restored skull and jaw with gold teeth, then a row of dark discs, beside the grey person.",
+     "alt": "The front of the megalodon skeleton from the side, a pale restored skull and jaw with gold teeth, then a row of dark discs, beside the grey person.",
      "key": "Dark brown: the fossil discs. Gold: the teeth. Pale: what is restored, including the pieces that complete broken discs."
     }
    }
@@ -323,7 +342,7 @@
    "nav": "How sure this is",
    "h": "How sure this is",
    "paras": [
-    "The 16 m figure rests on the backbone in Brussels: 141 discs, about 11 m (36 ft) in a row, plus a head and a tail in the proportions of living mackerel sharks. Two research groups got 15.9 m and 16.4 m with different models, which is why we say about 16 m. The 20 m figure rests on a single tooth, scaled up through whole tooth sets. The weight rests on a body model, and that needs a body shape nobody knows: slim like the largest living sharks gives about 30 tonnes, stout like a great white about 61. That is why the length says “about” and the weight says “disputed”."
+    "The 16 m figure rests on the backbone in Brussels: 141 discs, about 11 m (36 ft) in a row, plus a head and a tail in the proportions of living mackerel sharks. Two research groups got 15.9 m and 16.4 m with different models, which is why we say about 16 m. The 20 m figure rests on a single tooth, scaled up through whole tooth sets. That is why the length says “about” and the largest “perhaps”."
    ]
   },
   {
@@ -383,7 +402,7 @@
     },
     {
      "term": "Alive today, hiding in the deep sea",
-     "text": "Television has shown it so, but it has been gone for about 3.6 million years. A living giant would leave fresh bite marks and teeth by the tens of thousands, and a shark of warm seas would not survive the cold deep, as London's Natural History Museum points out."
+     "text": "Television has shown it so, but it died out long ago: see “Is megalodon still alive?” above."
     },
     {
      "term": "Megalodon attacking a whale as big as a blue whale",
@@ -412,7 +431,7 @@
     },
     {
      "q": "Megalodon vs blue whale: which was bigger?",
-     "a": "The blue whale. Most grown blue whales are 23 to 27 m long, the largest about 30 m (98 ft), and NOAA, the US ocean agency, calls it the largest animal known to have lived. Our megalodon would come to a little over half of the largest. Even the largest whale shark ever measured, 18.8 m, was longer than our megalodon, and at about 34 tonnes about as heavy as the slim model of it."
+     "a": "The blue whale: most grown ones are 23 to 27 m long, the largest about 30 m (98 ft), and NOAA, the US ocean agency, calls it the largest animal known to have lived. Our megalodon would come to a little over half of the largest. Even the largest whale shark ever measured, 18.8 m, was longer than our megalodon, and at about 34 tonnes about as heavy as the slim model of it."
     },
     {
      "q": "How big were megalodon's teeth?",
@@ -420,7 +439,7 @@
     },
     {
      "q": "When and why did megalodon die out?",
-     "a": "About 3.6 million years ago, by the youngest reliable fossils. Why is not settled. The proposals are cooling seas that broke up its range, the newly evolved great white as a rival, a fall in the small baleen whales it hunted, and the cost of a warm body, because it kept itself warmer than the water around it."
+     "a": "Most likely about 3.6 million years ago. A study of 2019 found that the younger teeth it checked had been washed out of older rock or had no reliable record, and its estimate puts the end between about 4.1 and 3.2 million years ago. Why is not settled. The proposals are cooling seas that broke up its range, the newly evolved great white as a rival, a fall in the small baleen whales it hunted, and the cost of a warm body, because it kept itself warmer than the water around it."
     }
    ]
   },
@@ -466,7 +485,7 @@
      "page": "woolly-mammoth",
      "pic": "mammoth",
      "alt": "Our woolly mammoth, the Berezovka bull, from the side in a dark brown coat: high domed head, sloping back, two curved tusks, and a mark at his shoulder height, 271 cm (8.9 ft) by a reconstruction. The grey person beside him, 1.70 m tall, stands lower than the tusk tips.",
-     "line": "A typical Siberian bull stood about 2.7 to 2.9 m at the shoulder, about as tall as an Asian elephant bull. Ours is one real bull found frozen in 1900, with what is his and what is restored."
+     "line": "A typical Siberian bull stood about 2.7 to 2.9 m at the shoulder, about as tall as an Asian elephant bull. Ours is built to one real bull found frozen in 1900, with what is his and what is restored."
     },
     {
      "page": "blue-whale",
@@ -526,8 +545,12 @@
      "text": "Natural History Museum of Denmark: the Danish discs NHMD 157890."
     },
     {
-     "text": "Natural History Museum, London.",
+     "text": "Natural History Museum, London: Megalodon, the truth about the largest shark that ever lived.",
      "href": "https://www.nhm.ac.uk/discover/megalodon--the-truth-about-the-largest-shark-that-ever-lived.html"
+    },
+    {
+     "text": "Natural History Museum, London: Is megalodon still alive? (2025)",
+     "href": "https://www.nhm.ac.uk/discover/is-megalodon-still-alive.html"
     },
     {
      "text": "American Museum of Natural History, New York.",
@@ -571,13 +594,12 @@
     ]
    ],
    "shapes": {
-    "draft": true,
     "caption": "Megalodon size comparison: our megalodon, about 16 m (52 ft) long, beside a person 1.70 m tall, to one scale.",
-    "lead": "For slides and posts, the size comparison also comes in three shapes, under the same licence.",
+    "lead": "For slides and posts, this size comparison comes in three shapes, all under the same licence.",
     "alts": {
-     "size_1x1": "Megalodon size comparison: the head of our megalodon, from the pectoral fin forward, with a grey person 1.70 m tall by its snout.",
-     "size_4x3": "Megalodon size comparison: the front two thirds of our megalodon beside a grey person 1.70 m tall.",
-     "size_16x9": "Megalodon size comparison: our whole megalodon from the side, about 16 m (52 ft) long, beside a grey person 1.70 m tall."
+     "size_1x1": "Megalodon size comparison: the head of our megalodon, from the pectoral fin forward, with a grey person 1.70 m tall standing in front of the snout.",
+     "size_4x3": "Megalodon beside a person, a size comparison: the front two thirds of our megalodon with its tall dorsal fin, and a grey person 1.70 m tall.",
+     "size_16x9": "Megalodon size comparison, the whole shark from the side: our megalodon, about 16 m (52 ft) long, and a grey person 1.70 m tall in front of it."
     },
     "links": {
      "size_1x1": "Square (1:1)",

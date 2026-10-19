@@ -173,8 +173,8 @@
   "scale": {
    "pic": "side",
    "tag": "tag_made",
-   "what": "Unser Blauwal, 22,86 m lang, neben einem Menschen von 1,70 m, im selben Maßstab: so lang wie etwa 13 Menschen, der Länge nach hintereinandergelegt.",
-   "alt": "Unser Blauwal von der Seite, 22,86 m lang: ein schlanker, blaugrauer Körper mit hellen Flecken, ein flacher Kopf, eine lange Brustflosse mit hellem Rand und eine kleine Rückenfinne weit hinten. Daneben ein grauer Mensch von 1,70 m, der etwas über die halbe Höhe des Wals reicht.",
+   "what": "Größenvergleich: unser Blauwal, 22,86 m lang, neben einem Menschen von 1,70 m, im selben Maßstab, so lang wie etwa 13 Menschen hintereinander.",
+   "alt": "Größenvergleich: unser Blauwal von der Seite, 22,86 m lang: ein schlanker, blaugrauer Körper mit hellen Flecken, ein flacher Kopf, eine lange Brustflosse mit hellem Rand und eine kleine Rückenfinne weit hinten. Daneben ein grauer Mensch von 1,70 m, der etwas über die halbe Höhe des Wals reicht.",
    "note": "Unsere eigene Rekonstruktion, nach veröffentlichten Maßen in Code gebaut und in unserer Engine gerendert. Keine Fotos.",
    "marks": [
     {
@@ -345,7 +345,7 @@
    "nav": "Ist der Blauwal das größte Tier der Welt?",
    "h": "Ist der Blauwal das größte Tier der Welt?",
    "paras": [
-    "Ja, soweit man weiß. Der Blauwal ist das schwerste uns bekannte Tier, und die US-Meeresbehörde NOAA und eine Studie von 2017 nennen ihn das größte Tier, das je gelebt hat. Eine Studie von 2025 ist vorsichtiger. Sie hält offen, welches Tier das größte überhaupt war, denn einige riesige Dinosaurier, die nur aus Bruchstücken oder verlorenen Knochen bekannt sind, könnten ihm gleichgekommen sein. Perucetus, ein fossiler Wal, der 2023 als womöglich schwerer vorgestellt wurde, ist nach zwei späteren Studien weit leichter."
+    "Ja. Der Blauwal ist das größte Tier der Welt, und soweit man weiß, auch das größte, das je gelebt hat. So sehen es die US-Meeresbehörde NOAA und eine Studie von 2017. Eine Studie von 2025 ist vorsichtiger: Sie nennt den Blauwal das größte lebende Tier, hält aber offen, welches Tier das größte überhaupt war, denn einige riesige Dinosaurier, die nur aus Bruchstücken oder verlorenen Knochen bekannt sind, könnten ihm gleichgekommen sein. Perucetus, ein fossiler Wal, der 2023 als womöglich schwerer vorgestellt wurde, ist nach zwei späteren Studien weit leichter."
    ]
   },
   {
@@ -354,8 +354,8 @@
    "nav": "Blauwal: Länge und Gewicht",
    "h": "Blauwal: Länge und Gewicht",
    "paras": [
-    "Die meisten ausgewachsenen Blauwale sind 23 bis 27 m lang, und die Weibchen werden länger als die Männchen. Am größten sind die Blauwale der Antarktis. Im Nordatlantik und im Nordpazifik erreichen Blauwale etwa 27 m, und der Zwergblauwal bleibt kürzer.",
-    "Nach einer Studie von 2025 wiegen ausgewachsene Blauwale rund 100 bis 150 t, die größten vielleicht knapp 200 t. Gewogen wurde noch nie ein ganzer Blauwal. Jedes Gewicht stammt von Walen, die auf Walfangschiffen zerlegt und Stück für Stück gewogen wurden, und weil an Deck Blut verloren ging, fallen diese Summen zu niedrig aus. Ein Modell aus 31 so gewogenen Walen ergibt für einen Blauwal von 23 m Länge rund 75 bis 85 t."
+    "Im Nordatlantik und im Nordpazifik erreichen ausgewachsene Blauwale etwa 27 m, am größten sind die Blauwale der Antarktis. Die Weibchen werden länger als die Männchen, und der Zwergblauwal bleibt kürzer.",
+    "Nach der Studie von 2025 kommen die größten vielleicht auf knapp 200 t. Jedes verzeichnete Gewicht stammt von Walen, die auf Walfangschiffen zerlegt und Stück für Stück gewogen wurden, und weil an Deck Blut verloren ging, fallen diese Summen zu niedrig aus. Ein Modell aus 31 so gewogenen Walen ergibt für einen Blauwal von 23 m Länge rund 75 bis 85 t."
    ]
   },
   {
@@ -400,7 +400,7 @@
     "pic": "beside",
     "tag": "tag_made",
     "what": "Unser Argentinosaurus, unser Blauwal und unser Megalodon im selben Maßstab mit dem Menschen, nur zum Größenvergleich. Die drei lebten nie zur selben Zeit.",
-    "alt": "Drei Riesen von der Seite, alle in dieselbe Richtung gewandt: ein Dinosaurier mit langem Hals und Schwanz auf vier Beinen, länger als die anderen, ein Blauwal und ein Hai, daneben der graue Mensch.",
+    "alt": "Unser Blauwal im Größenvergleich mit unserem Argentinosaurus und unserem Megalodon: drei Reihen von der Seite, alle in dieselbe Richtung gewandt, oben der Dinosaurier mit dem langen Hals als längster, unten der Hai als kürzester, und in jeder Reihe der graue Mensch.",
     "note": [
      "Der Körper unseres Megalodons folgt dem Modell von ",
      {
@@ -471,6 +471,15 @@
      }
     ]
    }
+  },
+  {
+   "type": "text",
+   "id": "bones",
+   "nav": "Wie viele Knochen hat ein Blauwal?",
+   "h": "Wie viele Knochen hat ein Blauwal?",
+   "paras": [
+    "Eine Zahl für alle Blauwale gibt es nicht: Im Skelett von Hope in London hat das Natural History Museum 221 Knochen gezählt. Belegt ist für die Art die Zahl der Wirbel: etwa 63 bis 66, je nach Tier verschieden, davon 7 im Hals. Ob die 221 auch die kleinen Knochen einschließen, etwa die Fingerknochen oder die Reste des Beckens, sagt das Museum nicht."
+   ]
   },
   {
    "type": "text",
@@ -553,7 +562,7 @@
    "items": [
     {
      "q": "Wie groß ist ein Blauwal im Vergleich zum Menschen?",
-     "a": "Unser Blauwal ist so lang wie etwa 13 Menschen von 1,70 m, der Länge nach hintereinandergelegt. Sein Schädel allein ist so lang wie drei Menschen und ein Stück, eine Brustflosse fast so lang wie zwei. Das sind unsere eigenen Rechnungen, an unserem Modell."
+     "a": "Etwa 13 Menschen von 1,70 m, der Länge nach hintereinandergelegt, sind so lang wie unser Blauwal, und für die größten Blauwale mit etwa 30 m bräuchte es etwa 18. Der Schädel unseres Blauwals allein ist so lang wie drei Menschen und ein Stück, eine Brustflosse fast so lang wie zwei. Das sind unsere eigenen Rechnungen."
     },
     {
      "q": "Warum heißt er Blauwal?",
@@ -586,7 +595,7 @@
      "page": "megalodon",
      "pic": "megalodon",
      "alt": "Unser Megalodon von der Seite, etwa 16 m lang, das Maul geschlossen, dunkelgrau mit einem helleren Band an der Flanke, neben einem grauen Menschen von 1,70 m, der winzig daneben steht.",
-     "line": "Die eine lange Wirbelsäule eines Megalodons, die gefunden wurde, ergibt etwa 16 m, und die größten Megalodons waren vielleicht etwa 20 m lang, im Größenvergleich mit Mensch, Weißem Hai und Blauwal."
+     "line": "Die einzige längere Wirbelsäule eines Megalodons, die je gefunden wurde, ergibt etwa 16 m, und die größten Megalodons waren vielleicht etwa 20 m lang, im Größenvergleich mit Mensch, Weißem Hai und Blauwal."
     },
     {
      "page": "biggest-dinosaurs",
@@ -614,6 +623,10 @@
     {
      "text": "Nishiwaki, 1950, Scientific Reports of the Whales Research Institute, die Wägungen in Stücken von 1947 bis 1949.",
      "href": "https://www.icrwhale.org/pdf/SC004184-209.pdf"
+    },
+    {
+     "text": "Omura, Ichihara und Kasuya, 1970, Scientific Reports of the Whales Research Institute, zu den Wirbeln des Blauwals.",
+     "href": "https://www.icrwhale.org/pdf/SC0221-27.pdf"
     },
     {
      "text": "Goldbogen und andere, 2019, PNAS, zum Herzschlag eines Blauwals mit Messgerät.",
@@ -654,6 +667,10 @@
      "href": "https://www.nhm.ac.uk/discover/hope-the-blue-whale-history.html"
     },
     {
+     "text": "Natural History Museum, London: seine Seite zur Aufhängung von Hope, mit der Zahl ihrer Knochen.",
+     "href": "https://www.nhm.ac.uk/discover/hope-the-blue-whale-display.html"
+    },
+    {
      "text": "Royal Ontario Museum, Toronto: seine Pressemitteilung zum Herz, 2017, zwei Beiträge seines Blogs, 2015 und 2016, und sein Jahresbericht 2015 bis 2016.",
      "href": "https://www.rom.on.ca/news-releases/blue-whale-heart-arrives-rom"
     },
@@ -677,7 +694,7 @@
    "h": "Unsere Bilder nutzen",
    "paras": [
     [
-     "Die vier Bilder des Blauwals auf dieser Seite, die Seitenansicht, der Kopf, das Skelett und die Reihe mit unserem Megalodon und unserem Argentinosaurus, sind unsere eigene Arbeit unter ",
+     "Die fünf Bilder des Blauwals auf dieser Seite, die Seitenansicht, der Kopf, das Skelett, die Reihe mit unserem Megalodon und unserem Argentinosaurus und der Größenvergleich unten in drei Formaten, sind unsere eigene Arbeit unter ",
      {
       "text": "CC BY-SA 4.0",
       "href": "https://creativecommons.org/licenses/by-sa/4.0/deed.de"
@@ -691,18 +708,17 @@
     ]
    ],
    "shapes": {
-    "draft": true,
     "caption": "Blauwal im Größenvergleich: unser Blauwal, 22,86 m lang, neben einem Menschen von 1,70 m, im selben Maßstab.",
-    "lead": "Für Folien und Beiträge gibt es den Größenvergleich auch in drei Formaten, unter derselben Lizenz.",
+    "lead": "Für Folien und Beiträge gibt es diesen Größenvergleich in drei Formaten, alle unter derselben Lizenz.",
     "alts": {
-     "size_1x1": "Blauwal im Größenvergleich: Kopf und Brustflosse unseres Blauwals neben einem grauen Menschen von 1,70 m.",
-     "size_4x3": "Blauwal im Größenvergleich: die vordere Hälfte unseres Blauwals neben einem grauen Menschen von 1,70 m.",
-     "size_16x9": "Blauwal im Größenvergleich: unser ganzer Blauwal von der Seite, 22,86 m lang, neben einem grauen Menschen von 1,70 m."
+     "size_1x1": "Blauwal im Größenvergleich, der Kopf: der lange, flache Kopf unseres Blauwals mit Auge und Kehlfurchen, vor der Schnauze ein grauer Mensch von 1,70 m.",
+     "size_4x3": "Blauwal neben einem Menschen im Größenvergleich: die vordere Hälfte unseres Blauwals mit der langen Brustflosse und ein grauer Mensch von 1,70 m vor der Schnauze.",
+     "size_16x9": "Blauwal im Größenvergleich, der ganze Wal von der Seite: unser Blauwal, 22,86 m von der Schnauzenspitze bis zur Schwanzkerbe, und vor ihm ein grauer Mensch von 1,70 m."
     },
     "links": {
-     "size_1x1": "Quadratisch (1:1)",
+     "size_1x1": "Quadrat (1:1)",
      "size_4x3": "Folie (4:3)",
-     "size_16x9": "Breit (16:9)"
+     "size_16x9": "Breitbild (16:9)"
     }
    }
   }
