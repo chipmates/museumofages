@@ -916,8 +916,8 @@
             "webbed feet and lips are not findings"
           ],
           [
-            "mirabilis",
-            "not the crest or pictures of Spinosaurus mirabilis"
+            "(?s)^(?!.*(?:mirabilis \\(2026\\)|not our animal|nicht unser tier|no es nuestro animal|não é o animal que mostramos)).*mirabilis",
+            "not the crest or pictures of Spinosaurus mirabilis: it stands only in its own section, set apart from our animal"
           ],
           [
             "eight\\stimes|achtmal|acht\\smal",
