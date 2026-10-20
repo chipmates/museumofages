@@ -510,7 +510,8 @@ export function buildPlan(plan: J, opts: { houses?: boolean } = {}): Built {
   /* the class band sits on the ground beside each body; a body that starts in the air (a lintel over a door) has none */
   const bandFor = (poly: P2[], y0: number): number => {
     const c = centroid(poly)
-    let under = stand(c[0], c[1])
+    let under = -Infinity
+    for (const p of [...poly, c]) under = Math.max(under, stand(p[0], p[1]))
     for (const q of prisms) if (q.y1 <= y0 + 0.5 && q.y1 > under && pointInPoly(c, q.poly)) under = q.y1
     if (y0 > under + 1) return y0 - 1
     let lo = Infinity
@@ -518,12 +519,12 @@ export function buildPlan(plan: J, opts: { houses?: boolean } = {}): Built {
     return Math.max(y0, lo) + BAND
   }
   for (const p of prisms) p.band = bandFor(p.poly, p.y0)
-  // a grounded body reaches down into the ground under every corner, so no slope shows a gap under it
+  // a body standing on the ground (not on another body) reaches down under every corner, so no slope shows a gap under it
   for (const p of prisms) {
     if (p.band === p.y0 - 1) continue
-    let lo = Infinity
-    for (const q of p.poly) lo = Math.min(lo, ground(q[0], q[1]))
-    p.y0 = Math.min(p.y0, lo - 0.3)
+    let lo = Infinity, hi = -Infinity
+    for (const q of p.poly) { const g = ground(q[0], q[1]); lo = Math.min(lo, g); hi = Math.max(hi, g) }
+    if (p.y0 <= hi + 0.5) p.y0 = Math.min(p.y0, lo - 0.3)
   }
   for (const b of boxes) if (b.band === 0) b.band = Math.max(b.y0, ground(b.x, b.z)) + BAND
   for (const r of ramps) r.band = Math.max(r.floor, Math.min(ground(...r.a), ground(...r.b))) + BAND
@@ -606,11 +607,13 @@ export function buildPlan(plan: J, opts: { houses?: boolean } = {}): Built {
   for (const r of boxes) {
     if (r.group === 'tower-stage' || r.band === r.y0 - 1) continue
     const c = Math.cos(r.yaw), sn = Math.sin(r.yaw)
-    let lo = Infinity
+    let lo = Infinity, hi = -Infinity
     for (const [u, v] of [[-1, -1], [1, -1], [1, 1], [-1, 1]] as const) {
-      lo = Math.min(lo, ground(r.x + (u * r.sx * c) / 2 + (v * r.sz * sn) / 2, r.z - (u * r.sx * sn) / 2 + (v * r.sz * c) / 2))
+      const g = ground(r.x + (u * r.sx * c) / 2 + (v * r.sz * sn) / 2, r.z - (u * r.sx * sn) / 2 + (v * r.sz * c) / 2)
+      lo = Math.min(lo, g)
+      hi = Math.max(hi, g)
     }
-    r.y0 = Math.min(r.y0, lo - 0.3)
+    if (r.y0 <= hi + 0.5) r.y0 = Math.min(r.y0, lo - 0.3)
   }
   return { prisms, boxes, ramps, water, street, ground, streetAt, stand, houses, facts }
 }

@@ -170,17 +170,28 @@ for (const [t, az, el] of [['16:45', 267, 20], ['17:00', 269, 17], ['17:30', 273
 {
   const all = buildPlan(plan, { houses: true })
   let gaps = 0
+  const gapIds = []
   for (const r of all.boxes) {
     if (r.group === 'tower-stage' || r.band === r.y0 - 1) continue
     const c = Math.cos(r.yaw), sn = Math.sin(r.yaw)
     for (const [u, v] of [[-1, -1], [1, -1], [1, 1], [-1, 1]]) if (r.y0 > all.ground(r.x + (u * r.sx * c) / 2 + (v * r.sz * sn) / 2, r.z - (u * r.sx * sn) / 2 + (v * r.sz * c) / 2) + 0.01) { gaps++; break }
   }
-  for (const q of all.prisms) if (q.band !== q.y0 - 1 && q.poly.some((v) => q.y0 > all.ground(v[0], v[1]) + 0.01)) gaps++
+  const { pointInPoly } = await import(join(MAP, 'plan.ts'))
+  const centre = (poly) => [poly.reduce((a, p) => a + p[0], 0) / poly.length, poly.reduce((a, p) => a + p[1], 0) / poly.length]
+  for (const q of all.prisms) {
+    if (q.band === q.y0 - 1) continue
+    const gs = q.poly.map((v) => all.ground(v[0], v[1]))
+    if (q.y0 <= Math.max(...gs) + 0.5) { if (gs.some((g) => q.y0 > g + 0.01)) { gaps++; gapIds.push(q.id) } continue }
+    // standing on another body: one must carry it at its base
+    const c = centre(q.poly)
+    if (!all.prisms.some((o) => o !== q && Math.abs(o.y1 - q.y0) <= 0.5 && pointInPoly(c, o.poly))) { gaps++; gapIds.push(q.id) }
+  }
   check('bodies with a gap under a corner', gaps, 0, 0, '[Ours] defect screen: floating parts', 'count')
+  if (gapIds.length) rows[rows.length - 1].ids = gapIds
 }
 
 const bad = rows.filter((r) => !r.ok)
-for (const r of rows) console.log(`${r.ok ? 'ok  ' : 'FAIL'} ${r.name}: ${r.measured} ${r.unit} (source ${r.expected}, tolerance ${r.tol}) [${r.src}]${r.standsOn !== undefined ? ` stands on +${r.standsOn}` : ''}`)
+for (const r of rows) console.log(`${r.ok ? 'ok  ' : 'FAIL'} ${r.name}: ${r.measured} ${r.unit} (source ${r.expected}, tolerance ${r.tol}) [${r.src}]${r.standsOn !== undefined ? ` stands on +${r.standsOn}` : ''}${r.ids ? ' ' + r.ids.join(' ') : ''}`)
 console.log(`${rows.length - bad.length} of ${rows.length} ok`)
 const j = process.argv.indexOf('--json')
 if (j > 0) writeFileSync(process.argv[j + 1], JSON.stringify(rows, null, 1))
