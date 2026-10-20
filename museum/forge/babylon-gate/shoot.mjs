@@ -99,6 +99,24 @@ if (opt.crops && opt.crops !== true) {
   writeFileSync(to, JSON.stringify(out, null, 1))
   console.log(`crops ${to}`)
 }
+if (opt.hero && opt.hero !== true) {
+  // the hero's boxes in CSS pixels at every size a still is judged at; --looks '<json>' adds trial phone cameras by name
+  const to = writable(String(opt.hero))
+  if (!to) throw new Error('--hero <file inside the hand-in>')
+  const sizes = [['desktop', 1600, 900], ['phone', 390, 664], ['phone', 360, 640], ['phone', 390, 844]]
+  const looks = opt.looks && opt.looks !== true ? JSON.parse(String(opt.looks)) : {}
+  const out = {}
+  for (const [name, look] of [['cams', undefined], ...Object.entries(looks)]) {
+    out[name] = {}
+    for (const [framing, w, h] of sizes) {
+      if (look && framing !== 'phone') continue
+      out[name][`${framing}-${w}x${h}`] = await page.evaluate((o) => window.__gate.hero(o), { framing, w, h, look })
+    }
+  }
+  mkdirSync(dirname(to), { recursive: true })
+  writeFileSync(to, JSON.stringify(out, null, 1))
+  console.log(`hero ${to}`)
+}
 if (opt.out && opt.out !== true) {
   const out = writable(String(opt.out))
   if (!out) throw new Error(`--out <absolute folder inside ${HAND}>`)

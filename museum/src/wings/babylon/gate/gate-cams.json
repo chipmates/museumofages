@@ -25,7 +25,7 @@
     "phone": {
       "at": [
         -2.0,
-        17.5
+        22.0
       ],
       "look": [
         -1.6,
@@ -33,13 +33,13 @@
         -10
       ],
       "hfov": 58,
-      "shift": 0.45,
+      "shift": 0.04,
       "authored": [
         390,
         844
       ],
       "stop": 3,
-      "says": "stop 3's hold in the forecourt, 17.5 m from the face, a little east of the axis; the pedestals stay behind the frame's sides"
+      "says": "stop 3's hold at the forecourt's mouth, 22 m from the face, a little east of the axis: the phone's box covers the stage's lowest 36 to 42 percent at rest (the live wing's box with a three or four row line, checks/sheet-box.json), so the door, its foot, the measured band and the figure stand above it at 390x664, 360x640 and 390x844; the pedestals stay behind the frame's sides"
     }
   },
   "crops": {
@@ -103,6 +103,48 @@
         400
       ],
       "says": "the paving 11 m ahead of the desktop camera: the limestone middle and the breccia beside it"
+    },
+    "corner-east": {
+      "framing": "desktop",
+      "at": [
+        -4.85,
+        8.0,
+        2.05
+      ],
+      "size": [
+        640,
+        400
+      ],
+      "check": true,
+      "says": "the east front tower's inner front corner at mid height: the sun's hairline in a wall joint (a check, not a packet crop)"
+    },
+    "corner-west": {
+      "framing": "desktop",
+      "at": [
+        4.85,
+        8.0,
+        2.05
+      ],
+      "size": [
+        640,
+        400
+      ],
+      "check": true,
+      "says": "the west front tower's inner front corner at mid height, in the tower's own shade (a check)"
+    },
+    "corner-east-phone": {
+      "framing": "phone",
+      "at": [
+        -4.85,
+        4.0,
+        2.05
+      ],
+      "size": [
+        640,
+        400
+      ],
+      "check": true,
+      "says": "the east front tower's inner front corner, low, on the phone (a check)"
     }
   },
   "stops": [
@@ -162,7 +204,7 @@
           "t": 105,
           "at": [
             -2.0,
-            17.5
+            22.0
           ],
           "look": "gate",
           "kind": "arrive"
@@ -171,7 +213,7 @@
           "t": 108,
           "at": [
             -2.0,
-            17.5
+            22.0
           ],
           "look": "gate",
           "kind": "hold"
@@ -180,7 +222,7 @@
           "t": 113,
           "at": [
             -2.0,
-            17.5
+            22.0
           ],
           "look": [
             -37.2,
@@ -194,7 +236,7 @@
           "t": 117,
           "at": [
             -2.0,
-            17.5
+            22.0
           ],
           "look": "gate",
           "kind": "back"
@@ -203,7 +245,7 @@
           "t": 121,
           "at": [
             -2.0,
-            17.5
+            22.0
           ],
           "look": [
             35.4,
@@ -217,13 +259,13 @@
           "t": 125,
           "at": [
             -2.0,
-            17.5
+            22.0
           ],
           "look": "gate",
           "kind": "back"
         },
         {
-          "t": 133,
+          "t": 136,
           "at": [
             0,
             7.5
@@ -236,7 +278,7 @@
           "kind": "walk"
         },
         {
-          "t": 136,
+          "t": 139,
           "at": [
             0,
             7.5
@@ -260,7 +302,7 @@
       ],
       "keys": [
         {
-          "t": 136,
+          "t": 139,
           "at": [
             0,
             7.5
@@ -273,7 +315,7 @@
           "kind": "walk"
         },
         {
-          "t": 189,
+          "t": 192,
           "at": [
             0,
             -56
@@ -286,7 +328,7 @@
           "kind": "arrive"
         },
         {
-          "t": 190,
+          "t": 193,
           "at": [
             0,
             -56
@@ -299,7 +341,7 @@
           "kind": "hold"
         },
         {
-          "t": 195,
+          "t": 198,
           "at": [
             0,
             -56
@@ -308,7 +350,7 @@
           "kind": "turn"
         },
         {
-          "t": 199,
+          "t": 202,
           "at": [
             0,
             -56

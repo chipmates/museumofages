@@ -356,6 +356,12 @@ function aimWorld(pos: Vector3, look: Vector3, vfov: number, w: number, h: numbe
   fitShadow()
 }
 
+/** a trial camera in the gate's frame; a null height stands the eye on the street's profile and looks level */
+function aimTrial(t: { pos: (number | null)[]; look: (number | null)[]; hfov: number; shift?: number }, w: number, h: number): void {
+  const y = t.pos[1] ?? B.level(t.pos[2]!) + cams.eye
+  const pos: V3 = [t.pos[0]!, y, t.pos[2]!], look: V3 = [t.look[0]!, t.look[1] ?? y, t.look[2]!]
+  aimWorld(toWorld(pos), toWorld(look), fittedFov(t.hfov, [16, 9], w, h), w, h, t.shift ?? 0)
+}
 /* the stills' views, in the gate's frame, then the world */
 interface View { name: string; pos: V3; look: V3; hfov: number; shift: number; authored: [number, number] }
 function stillView(name: 'desktop' | 'phone'): View {
@@ -510,17 +516,40 @@ const rig = {
       const [px, py] = project(at, o.w, o.h)
       const [cw, ch] = c.size as [number, number]
       const x0 = Math.max(0, Math.min(o.w - cw, px - cw / 2)), y0 = Math.max(0, Math.min(o.h - ch, py - ch / 2))
-      out[name] = { anchor: at, centre: [px, py], box: [Math.round(x0), Math.round(y0), Math.round(x0) + cw, Math.round(y0) + ch] }
+      out[name] = { anchor: at, centre: [px, py], box: [Math.round(x0), Math.round(y0), Math.round(x0) + cw, Math.round(y0) + ch], check: c.check === true }
     }
     return out
   },
+  /** the hero's device-pixel boxes, the front door's opening to its crown and the figure, for a framing or a trial look */
+  hero(o: { framing: 'desktop' | 'phone'; w: number; h: number; look?: { pos: (number | null)[]; look: (number | null)[]; hfov: number; shift?: number } }) {
+    if (o.look) aimTrial(o.look, o.w, o.h)
+    else aimView(stillView(o.framing), o.w, o.h)
+    const box = (pts: V3[]): number[] => {
+      const p = pts.map((q) => project(q, o.w, o.h))
+      return [Math.min(...p.map((q) => q[0])), Math.min(...p.map((q) => q[1])), Math.max(...p.map((q) => q[0])), Math.max(...p.map((q) => q[1]))]
+    }
+    const half = FG.door / 2, foot = B.level(0), crown = FG.arch.crown
+    const f = figure.position, fh = plan.figure.height
+    // the measured band's projected height on the faces nearest the eye: the front towers' fronts and the door wall
+    const mb = plan.switch.mBand.height as number, tx = FG.towers.gap / 2 + FG.towers.w / 2
+    const bandAt: [string, number, number][] = [['east tower', -tx, FG.towers.proj], ['west tower', tx, FG.towers.proj], ['door wall east', -half - 0.5, 0], ['door wall west', half + 0.5, 0]]
+    const band = Object.fromEntries(bandAt.map(([n, x, z]) => {
+      const ya = toWorld([x, B.level(z), z]).project(camera).y, yb = toWorld([x, B.level(z) + mb, z]).project(camera).y
+      return [n, Math.round((Math.abs(ya - yb) / 2) * o.h * 100) / 100]
+    }))
+    return {
+      door: box([[-half, foot, 0], [half, foot, 0], [-half, crown, 0], [half, crown, 0]]),
+      figure: box([[f.x - 0.3, f.y, f.z], [f.x + 0.3, f.y, f.z], [f.x - 0.3, f.y + fh, f.z], [f.x + 0.3, f.y + fh, f.z]]),
+      band,
+    }
+  },
   /** a still: a framing, the scene state and the switch, device pixels and CSS size, sub-frames */
-  async shoot(o: { framing: 'desktop' | 'phone'; state?: 'grey' | 'flat' | 'full'; switch?: boolean; w: number; h: number; css: [number, number]; samples: number; out: string; name: string; hour?: string; stops?: number; box?: [number, number, number, number]; look?: { pos: V3; look: V3; hfov: number; shift?: number } }) {
+  async shoot(o: { framing: 'desktop' | 'phone'; state?: 'grey' | 'flat' | 'full'; switch?: boolean; w: number; h: number; css: [number, number]; samples: number; out: string; name: string; hour?: string; stops?: number; box?: [number, number, number, number]; look?: { pos: (number | null)[]; look: (number | null)[]; hfov: number; shift?: number } }) {
     setStates(o)
     const hour = o.hour ?? (U.uState.value === 1 ? '12:00' : cams.hour)
     setHour(hourOf(hour))
     const v = stillView(o.framing)
-    if (o.look) aimWorld(toWorld(o.look.pos), toWorld(o.look.look), fittedFov(o.look.hfov, [16, 9], o.w, o.h), o.w, o.h, o.look.shift ?? 0)
+    if (o.look) aimTrial(o.look, o.w, o.h)
     else aimView(v, o.w, o.h)
     const { bytes, ms } = await render(o.w, o.h, o.samples, o.stops ?? 0)
     const file = `${o.out}/${o.name}.png`

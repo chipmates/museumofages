@@ -18,6 +18,7 @@ const GATE = join(HERE, '../../src/wings/babylon/gate'), MAP = join(HERE, '../..
 const { buildGate, gateFrame } = await import(join(GATE, 'gate-geom.ts'))
 const { animalField } = await import(join(GATE, 'gate-relief.ts'))
 const { assemble, paved } = await import(join(GATE, 'gate-mesh.ts'))
+const { palmsGeometry, birdsGeometry } = await import(join(GATE, 'gate-life.ts'))
 const { buildPlan, makeFrame } = await import(join(MAP, 'plan.ts'))
 const { buildBodies, tonesFrom } = await import(join(MAP, 'mass.ts'))
 
@@ -110,6 +111,13 @@ for (const set of A.panels) {
 }
 trianglesOf(A.paving, null, () => 'gate:paving')
 A.bronzes.forEach((b, i) => trianglesOf(b.geometry, null, () => `gate:bronze-${i}`))
+// life (class G): the palms one body each by their triangle ranges, the birds one body each
+{
+  const one = palmsGeometry(plan.life.palms.slice(0, 1), B.level).getAttribute('position').count
+  trianglesOf(palmsGeometry(plan.life.palms, B.level), null, (i) => `life:palm-${Math.floor(i / one)}`)
+  const wing = birdsGeometry(plan.life.birds.slice(0, 1)).getAttribute('position').count
+  trianglesOf(birdsGeometry(plan.life.birds), null, (i) => `life:bird-${Math.floor(i / wing)}`)
+}
 const gateFaces = faces.length
 // the map, its instanced towers and piers by instance
 mapBodies.group.updateMatrixWorld(true)

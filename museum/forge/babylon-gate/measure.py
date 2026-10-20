@@ -106,14 +106,17 @@ def stats(folder, boxes=None, md=None):
         open(md, 'w').write(text + '\n')
 
 
-def crops(still, boxes, framing, outdir, suffix=''):
+def crops(still, boxes, framing, outdir, suffix='', checks=None):
+    """the 1:1 crops at the fixed boxes; a box marked as a check goes to `checks` when given"""
     bx = json.load(open(boxes))[framing]
     im = Image.open(still)
     if im.width != bx['devicePixels'][0]:
         raise SystemExit(f'{still} is {im.width} wide, the boxes are for {bx["devicePixels"][0]}')
     os.makedirs(outdir, exist_ok=True)
     for name, b in bx['boxes'].items():
-        out = os.path.join(outdir, f'crop-{name}{suffix}.png')
+        to = checks if (checks and b.get('check')) else outdir
+        os.makedirs(to, exist_ok=True)
+        out = os.path.join(to, f'crop-{name}{suffix}.png')
         im.crop(tuple(b['box'])).save(out)
         print(f'{out} {b["box"]}')
 
@@ -227,7 +230,7 @@ def main():
     elif cmd == 'stats':
         stats(pos[1], opt.get('boxes'), opt.get('md'))
     elif cmd == 'crops':
-        crops(pos[1], pos[2], pos[3], pos[4], opt.get('suffix', ''))
+        crops(pos[1], pos[2], pos[3], pos[4], opt.get('suffix', ''), opt.get('checks'))
     elif cmd == 'thumb':
         thumb(pos[1], int(pos[2]), pos[3])
     elif cmd == 'shares':

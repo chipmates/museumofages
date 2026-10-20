@@ -5,8 +5,9 @@
 #   bash step.sh first-pass [--again] the flat state's stills, thumbnails and crops into first-pass/ (refuses to overwrite)
 #   bash step.sh look <name> [state] [switch]   a look round: desktop and phone stills and the crops, looks/<name>/SHEET.jpg
 #   bash step.sh switch <name>        both states at both framings (and 360x640), the id pass, the difference masks and shares, looks/<name>/
+#   bash step.sh phone <name>         the phone camera's own look: plain and switch at 390x664, 360x640, 390x844, the box's outline, the legend
 #   bash step.sh geometry             the offline geometry check, default and near (10 mm) passes, into checks/
-#   bash step.sh final                the full set of section 6 into stills/, every check
+#   bash step.sh final [--again]      the full set of section 6 into stills/, every check into checks/
 set -u
 WM="$(cd "$(dirname "$0")/../.." && pwd)"
 # GATE_HAND names the hand-in folder of the round; GATE_LOCK a script that runs <log> <command...> under the render lock.
@@ -30,6 +31,19 @@ locked() { # <log name> <command...>
 shots() { # <out> <json>
   locked "shots-$(basename "$1")" node "$SHOOT" --port 5220 --data-port 5221 --out "$1" --shots "$2" --network "$1/network.json"
 }
+OVERLAY="$WM/forge/babylon-gate/overlay.mjs"
+overlays() { # <log name> <folder of stills> <hero json> <sizes...>: the legend in both languages over each switch still, the box's outline over the 664 and 640 plain stills
+  local name="$1" dir="$2" hero="$3"; shift 3
+  local script="$LOGS/$name.sh"
+  { echo 'set -u'
+    for S in "$@"; do
+      for L in en de; do echo "node --no-warnings '$OVERLAY' --still '$dir/$S-switch.png' --lang $L --out '$dir/$S-switch-$L.png' --live '$HAND/checks/sheet-box.json' --hero '$hero'; echo \"overlay $S $L exit \$?\""; done
+      case "$S" in *x664|*x640) echo "node --no-warnings '$OVERLAY' --still '$dir/$S-plain.png' --sheet --out '$dir/$S-sheet.png' --live '$HAND/checks/sheet-box.json' --hero '$hero'; echo \"overlay $S sheet exit \$?\"" ;; esac
+    done
+  } > "$script"
+  locked "$name" bash "$script"
+  grep -E '^(en|de|sheet):|^overlay ' "$LOGS/$name.log"
+}
 
 case "${1:-}" in
   massing)
@@ -48,8 +62,8 @@ case "${1:-}" in
     node --experimental-strip-types --no-warnings "$WM/forge/babylon-gate/legs.mjs" "$HAND/checks/facts-sketch.json" > "$OUT/LEGS.md"; echo "legs exit $?"
     for F in desktop phone; do
       $PY -I "$MEASURE" frames "$OUT" "$F-f" "$OUT/leg2-$F.jpg" --from 0 --to 68 --cols 10
-      $PY -I "$MEASURE" frames "$OUT" "$F-f" "$OUT/leg3-$F.jpg" --from 68 --to 136 --cols 10
-      $PY -I "$MEASURE" frames "$OUT" "$F-f" "$OUT/leg4-$F.jpg" --from 136 --to 199 --cols 10
+      $PY -I "$MEASURE" frames "$OUT" "$F-f" "$OUT/leg3-$F.jpg" --from 68 --to 139 --cols 10
+      $PY -I "$MEASURE" frames "$OUT" "$F-f" "$OUT/leg4-$F.jpg" --from 139 --to 202 --cols 10
     done
     ;;
   first-pass)
@@ -86,11 +100,22 @@ case "${1:-}" in
     $PY -I "$MEASURE" thumb "$OUT/phone-360x640-switch.png" 360 "$OUT/phone-360-switch-thumb.png"
     $PY -I "$MEASURE" sheet "$OUT" --out "$OUT/SHEET.jpg"
     ;;
+  phone)
+    NAME="${2:?look name}"; OUT="$HAND/looks/$NAME"; mkdir -p "$OUT"
+    locked crops node "$SHOOT" --port 5220 --data-port 5221 --crops "$HAND/checks/crop-boxes.json"
+    locked hero node "$SHOOT" --port 5220 --data-port 5221 --hero "$OUT/hero.json"
+    shots "$OUT" '[{"name":"phone-390x664-plain","framing":"phone","state":"full","css":[390,664],"ratio":3,"samples":8},{"name":"phone-390x664-switch","framing":"phone","state":"full","switch":true,"css":[390,664],"ratio":3,"samples":8},{"name":"phone-360x640-plain","framing":"phone","state":"full","css":[360,640],"ratio":3,"samples":8},{"name":"phone-360x640-switch","framing":"phone","state":"full","switch":true,"css":[360,640],"ratio":3,"samples":8},{"name":"phone-390x844-plain","framing":"phone","state":"full","css":[390,844],"ratio":3,"samples":8},{"name":"phone-390x844-switch","framing":"phone","state":"full","switch":true,"css":[390,844],"ratio":3,"samples":8}]'
+    overlays "overlay-$NAME" "$OUT" "$OUT/hero.json" phone-390x664 phone-360x640 phone-390x844
+    $PY -I "$MEASURE" crops "$OUT/phone-390x664-plain.png" "$HAND/checks/crop-boxes.json" phone "$OUT"
+    for S in 390x664 360x640 390x844; do $PY -I "$MEASURE" thumb "$OUT/phone-$S-plain.png" 360 "$OUT/thumb-$S-plain.png"; done
+    $PY -I "$MEASURE" sheet "$OUT" --out "$OUT/SHEET.jpg" --only phone-390x664-sheet,phone-360x640-sheet,phone-390x664-switch-de,phone-360x640-switch-de,phone-390x844-switch-en
+    $PY -I "$MEASURE" stats "$OUT" --boxes "$HAND/checks/crop-boxes.json" --md "$OUT/NUMBERS.md"
+    ;;
   geometry)
     G="$WM/forge/babylon-gate/geometry-check.mjs"
     node --experimental-strip-types --no-warnings "$G" --json "$HAND/checks/geometry.json" --eyes "$HAND/checks/facts-sketch.json" 2>&1 | grep -v toNonIndexed > "$HAND/checks/geometry.txt"; echo "geometry exit ${PIPESTATUS[0]} ($(tail -1 "$HAND/checks/geometry.txt"))"
     node --experimental-strip-types --no-warnings "$G" --near 10 --json "$HAND/checks/geometry-near10.json" --eyes "$HAND/checks/facts-sketch.json" 2>&1 | grep -v toNonIndexed > "$HAND/checks/geometry-near10.txt"; echo "geometry near 10 mm exit ${PIPESTATUS[0]} ($(tail -1 "$HAND/checks/geometry-near10.txt"))"
     ;;
   *)
-    sed -n 2,10p "$0"; exit 2 ;;
+    sed -n 2,11p "$0"; exit 2 ;;
 esac
