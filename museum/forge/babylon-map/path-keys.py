@@ -81,8 +81,8 @@ L = [
  (6,    dict(at=[445977, 3600126], y='eye', look=[445641.5, 3600034, 6], stop=9, kind='hold', still=True)),
  # 10. straight up off the street before Gate 5 over the precinct wall; out south-west over the precinct's south rooms:
  #     Esagila ahead, the river beyond
- (7,    dict(at=[445977, 3600126], y=26, look=[445641.5, 3600034, 40], stop=10, kind='fly', say='straight up: the precinct and the tower over its wall')),
- (15,   dict(at=[445860, 3599930], y=40, look=[445560, 3599700, 20], stop=10, kind='fly', still=True, say='out over the precinct\'s south-east corner: Esagila ahead, the river beyond')),
+ (7,    dict(at=[445977, 3600126], y=26, look=[445641.5, 3600034, 40], stop=10, kind='fly', still=True, say='straight up: the precinct and the tower over its wall')),
+ (15,   dict(at=[445860, 3599930], y=40, look=[445560, 3599700, 20], stop=10, kind='fly', say='out over the precinct\'s south-east corner: Esagila ahead, the river beyond')),
  # 11. over Esagila's annex and west past its south side; a turn right over the river bank: Esagila lit on its west face, the
  #     tower behind it; north along Esagila's west side and down to the precinct gate
  (22,   dict(at=[445720, 3599640], y=40, look=[445560, 3599690, 18], stop=11, kind='fly', say="over the annex, past Esagila's south side toward the river")),

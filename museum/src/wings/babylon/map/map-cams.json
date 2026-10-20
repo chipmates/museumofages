@@ -2853,6 +2853,7 @@
    ],
    "stop": 10,
    "kind": "fly",
+   "still": true,
    "say": "straight up: the precinct and the tower over its wall",
    "phone": {
     "hfov": 34,
@@ -3044,7 +3045,6 @@
    ],
    "stop": 10,
    "kind": "fly",
-   "still": true,
    "say": "out over the precinct's south-east corner: Esagila ahead, the river beyond",
    "phone": {
     "hfov": 34,

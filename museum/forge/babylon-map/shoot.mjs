@@ -86,7 +86,7 @@ if (opt.out && opt.out !== true) {
   const samples = Number(opt.samples ?? 16)
   for (const n of stops) for (const framing of framings) for (const view of kinds) {
     const [w, h] = framing === 'phone' ? [Number(opt.pw ?? 780), Number(opt.ph ?? 1688)] : [Number(opt.dw ?? 1920), Number(opt.dh ?? 1080)]
-    const css = framing === 'phone' ? [390, 844] : [Math.round(w / Number(opt.dratio ?? 1.2)), Math.round(h / Number(opt.dratio ?? 1.2))]
+    const css = framing === 'phone' ? [Math.round(w / Number(opt.pratio ?? 2)), Math.round(h / Number(opt.pratio ?? 2))] : [Math.round(w / Number(opt.dratio ?? 1.2)), Math.round(h / Number(opt.dratio ?? 1.2))]
     // --t <second> --name <file base>: a film second instead of the stop's still key (one stop only)
     const t = opt.t && opt.t !== true ? Number(opt.t) : undefined
     const name = opt.name && opt.name !== true ? `${opt.name}-${framing}-${view}` : undefined
