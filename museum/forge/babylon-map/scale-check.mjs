@@ -144,11 +144,13 @@ void half
 
 // 9 the cameras: eye 1.6 to 1.7 m over what the visitor stands on, at every eye-level stop
 const stand = (x, z) => b.stand(x, z)
-for (const s of cams.stops) for (const fr of ['desktop', 'phone']) {
-  const v = s[fr]
+// the stills are the film's own frames at each stop's still key; on foot the eye is the walk's
+for (const s of cams.stops) {
+  const ks = cams.path.filter((k) => k.stop === s.n)
+  const v = ks.find((k) => k.still) ?? ks[ks.length - 1]
   if (v.y !== 'eye') continue
   const [x, z] = F.s(...v.at)
-  check(`eye height, stop ${s.n} ${fr}`, cams.eye, 1.65, 0.05, 'museum two PROGRAMME rule 23: 1.60 to 1.70 m over the floor the visitor stands on')
+  check(`eye height, stop ${s.n} still`, cams.eye, 1.65, 0.05, 'museum two PROGRAMME rule 23: 1.60 to 1.70 m over the floor the visitor stands on')
   rows[rows.length - 1].standsOn = +stand(x, z).toFixed(2)
 }
 

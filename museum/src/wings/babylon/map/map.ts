@@ -102,7 +102,9 @@ scene.fogNode = fog(uHaze, densityFogFactor(uDensity))
 
 say('building the city')
 const tones = tonesFrom(plan)
-const bodies = buildBodies(built, tones, sky, uSun, canalZ)
+// the Ishtar Gate's passage through both gates, along its axis from the north face
+const gateFrame = plan.frames.gate
+const bodies = buildBodies(built, tones, sky, uSun, canalZ, { o: F.s(gateFrame.origin[0], gateFrame.origin[1]), a: F.dir(gateFrame.bearing), c: F.dir(gateFrame.bearing + 90), len: 50, half: 2.6 })
 scene.add(bodies.group)
 uView.value = q.get('view') === 'classes' ? 1 : 0
 
@@ -118,8 +120,27 @@ for (const s of cams.stops) {
   // its front (+x) toward the bearing it faces
   p.rotation.y = (90 - s.figure[2]) * D2R
   p.name = `figure-${s.n}`
+  p.userData['stop'] = s.n
   scene.add(p)
   figures.push(p)
+}
+/* one figure in a frame: only the running stop's own stands */
+function showFigure(stop: number): void {
+  for (const f of figures) f.visible = f.userData['stop'] === stop
+}
+const ndc = new Vector3()
+/** the figures whose body falls inside the frame, visible or not, for the pop check */
+function figuresInFrame(): number[] {
+  const seen: number[] = []
+  for (const f of figures) {
+    let inside = false
+    for (const h of [0.1, 0.9, 1.7]) {
+      ndc.set(f.position.x, f.position.y + h, f.position.z).project(camera)
+      if (ndc.z < 1 && Math.abs(ndc.x) <= 1 && Math.abs(ndc.y) <= 1) inside = true
+    }
+    if (inside) seen.push(f.userData['stop'] as number)
+  }
+  return seen
 }
 
 /* light: the sun's key with a shadow fitted round each view, and the sky's fill */
@@ -197,24 +218,11 @@ function aim(pos: V3, look: V3, hfov: number, w: number, h: number, shift = 0): 
   fitShadow(camera)
 }
 
-/* the stops' views, resolved: UTM to scene, eye heights over what the visitor stands on */
-interface View { id: string; stop: number; framing: 'desktop' | 'phone'; pos: V3; look: V3; hfov: number; shift: number; hour: number; eye: boolean }
-function resolve(stop: J, framing: 'desktop' | 'phone'): View {
-  const v = stop[framing]
-  const [x, z] = F.s(v.at[0], v.at[1])
-  const eye = v.y === 'eye'
-  const y = eye ? stand(x, z) + cams.eye : (v.y as number)
-  const [lx, lz] = F.s(v.look[0], v.look[1])
-  let look: V3 = [lx, v.look[2], lz]
-  // a level eye: the look keeps the eye's height and the shift slides the frame
-  if (eye && v.level !== false) look = [lx, y, lz]
-  return { id: `${String(stop.n).padStart(2, '0')}-${stop.id}`, stop: stop.n, framing, pos: [x, y, z], look, hfov: v.hfov ?? cams.lens[framing], shift: v.shift ?? 0, hour: hourOf(stop.hour), eye }
-}
 const path = makePath(cams, F.s, stand)
 
 /* one pipeline: the scene pass, the contact occlusion, output linear; the print on the CPU */
 setHour(hourOf(cams.stops[0].hour))
-const first = resolve(cams.stops[0], 'desktop')
+const first = path.sample(0)
 aim(first.pos, first.look, first.hfov, 1600, 900, first.shift)
 renderer.render(scene, camera)
 const fade = (q.get('aofade') ?? '250,900').split(',').map(Number) as [number, number]
@@ -261,13 +269,35 @@ async function render(w: number, h: number, samples: number, stops = 0): Promise
   return { bytes, ms: Math.round(performance.now() - t) }
 }
 
+/* the film at a second, in either framing: the path's camera, the phone's own composition, the eased exposure */
+const stopsOf = (n: number): number => cams.stops.find((x: J) => x.n === n)?.stops ?? 0
+const expAt = (time: number): number => {
+  let acc = 0
+  for (let k = -6; k <= 6; k++) acc += stopsOf(path.sample(time + k * 0.5).stop)
+  return acc / 13
+}
+function aimFilm(time: number, framing: 'desktop' | 'phone', w: number, h: number): PathSample {
+  const p = path.sample(time)
+  setHour(p.hour)
+  const ph = framing === 'phone'
+  aim(p.pos, ph ? p.phone.look : p.look, ph ? p.phone.hfov : p.hfov, w, h, ph ? p.phone.shift : p.shift)
+  showFigure(p.stop)
+  return p
+}
+/** the second a stop's still is taken: its key marked still, else its last key */
+function stillTime(stop: number): number {
+  const ks = path.keys.filter((k) => k.stop === stop)
+  if (!ks.length) throw new Error(`no keys for stop ${stop}`)
+  return (ks.find((k) => k.still) ?? ks[ks.length - 1]!).t
+}
+
 const rig = {
   ready: true,
   state: () => ({ planMs, counts: bodies.counts, backend: stack.backend, architecture: stack.architecture, view: uView.value, tower: q.get('tower') ?? 'full', duration: path.duration }),
   views: () => ({
     frame: plan.frame,
-    stops: cams.stops.map((s: J) => ({ n: s.n, id: s.id, hour: s.hour, desktop: resolve(s, 'desktop'), phone: resolve(s, 'phone') })),
-    keys: path.keys.map((k) => ({ t: k.t, stop: k.stop, kind: k.kind, cut: k.cut, pos: k.pos.map((v) => Math.round(v * 100) / 100), utm: F.utm(k.pos[0], k.pos[2]) })),
+    stops: cams.stops.map((s: J) => ({ n: s.n, id: s.id, hour: s.hour, still: stillTime(s.n) })),
+    keys: path.keys.map((k) => ({ t: k.t, stop: k.stop, kind: k.kind, cut: k.cut, hold: k.hold, still: k.still, pos: k.pos.map((v) => Math.round(v * 100) / 100), utm: F.utm(k.pos[0], k.pos[2]) })),
     duration: path.duration,
   }),
   /** what the scene holds, from the bodies the page built */
@@ -276,25 +306,27 @@ const rig = {
     const [x, z] = F.s(E, N)
     return { stand: stand(x, z), ground: built.ground(x, z), street: built.streetAt(x, z) }
   },
-  /** a still of one stop: framing, view, size in device pixels, sub-frames */
-  async shoot(o: { stop: number; framing: 'desktop' | 'phone'; view: 'grey' | 'classes'; w: number; h: number; samples: number; out: string; name?: string; css?: [number, number] }) {
+  /** a still of one stop: the film's own frame at the stop's still second, full size, either framing */
+  async shoot(o: { stop: number; framing: 'desktop' | 'phone'; view: 'grey' | 'classes'; w: number; h: number; samples: number; out: string; name?: string; css?: [number, number]; t?: number }) {
     const s = cams.stops.find((x: J) => x.n === o.stop)
     if (!s) throw new Error(`no stop ${o.stop}`)
-    const v = resolve(s, o.framing)
+    const time = o.t ?? stillTime(o.stop)
     uView.value = o.view === 'classes' ? 1 : 0
-    setHour(v.hour)
-    aim(v.pos, v.look, v.hfov, o.w, o.h, v.shift)
-    const { bytes, ms } = await render(o.w, o.h, o.samples, s.stops ?? 0)
-    const base = o.name ?? `${v.id}-${o.framing}-${o.view}`
+    const p = aimFilm(time, o.framing, o.w, o.h)
+    const ev = expAt(time)
+    const { bytes, ms } = await render(o.w, o.h, o.samples, ev)
+    const base = o.name ?? `${String(s.n).padStart(2, '0')}-${s.id}-${o.framing}-${o.view}`
     const file = `${o.out}/${base}.png`
     await upload(file, await toPNG(bytes, o.w, o.h))
-    const sun = sunAt(v.hour)
+    const sun = sunAt(p.hour)
     const side = {
-      file, stop: s.n, id: s.id, framing: o.framing, view: o.view, cssSize: o.css ?? [o.w, o.h], devicePixels: [o.w, o.h],
-      ratio: o.css ? o.w / o.css[0] : 1, subFrames: o.samples, sampleCountReadBack: 'one sample a sub-frame: the linear target is allocated without multisampling (render.ts)',
-      backend: stack.backend, adapter: stack.architecture, print: { ...PRINT, exposure: PRINT.exposure * Math.pow(2, s.stops ?? 0) },
-      hour: s.hour, sun: { azimuth: +sun.azimuth.toFixed(1), elevation: +sun.elevation.toFixed(1) },
-      camera: { utm: F.utm(v.pos[0], v.pos[2]), y: +v.pos[1].toFixed(2), eyeOverStand: +(v.pos[1] - stand(v.pos[0], v.pos[2])).toFixed(3), look: F.utm(v.look[0], v.look[2]).concat([+v.look[1].toFixed(2)]), hfov: v.hfov, shift: v.shift, near: camera.near, far: camera.far },
+      file, stop: s.n, id: s.id, framing: o.framing, view: o.view, filmSecond: +time.toFixed(3), filmFrameAt8fps: Math.round(time * 8),
+      cssSize: o.css ?? [o.w, o.h], devicePixels: [o.w, o.h], ratio: o.css ? o.w / o.css[0] : 1, subFrames: o.samples,
+      sampleCountReadBack: 'one sample a sub-frame: the linear target is allocated without multisampling (render.ts)',
+      backend: stack.backend, adapter: stack.architecture, exposureStops: +ev.toFixed(3), print: { ...PRINT, exposure: PRINT.exposure * Math.pow(2, ev) },
+      hour: +p.hour.toFixed(3), sun: { azimuth: +sun.azimuth.toFixed(1), elevation: +sun.elevation.toFixed(1) },
+      camera: { utm: F.utm(p.pos[0], p.pos[2]), y: +p.pos[1].toFixed(2), eyeOverStand: +(p.pos[1] - stand(p.pos[0], p.pos[2])).toFixed(3), hfov: +camera.fov.toFixed(2), kind: p.kind, near: camera.near, far: camera.far },
+      figures: figuresInFrame().filter((n) => n === p.stop),
       brightness: brightness(bytes), ms,
     }
     await upload(file.replace(/\.png$/, '.json'), JSON.stringify(side, null, 1))
@@ -320,24 +352,15 @@ const rig = {
     const n = Math.floor((to - from) * o.fps) + 1
     const log: Array<Record<string, unknown>> = []
     const t = performance.now()
-    // the stills' exposure per stop, eased over six seconds as an eye adapts
-    const stopsOf = (n: number): number => cams.stops.find((x: J) => x.n === n)?.stops ?? 0
-    const expAt = (time: number): number => {
-      let acc = 0
-      for (let k = -6; k <= 6; k++) acc += stopsOf(path.sample(time + k * 0.5).stop)
-      return acc / 13
-    }
+    const framing = o.framing ?? 'desktop'
     for (let i = 0; i < n; i++) {
       const time = from + i / o.fps
-      const p: PathSample = path.sample(time)
-      setHour(p.hour)
-      const hfov = o.framing === 'phone' ? (cams.lens.phoneFilm ?? 46) : p.hfov
-      aim(p.pos, p.look, hfov, o.w, o.h, 0)
+      const p = aimFilm(time, framing, o.w, o.h)
       const ev = expAt(time)
       const { bytes } = await render(o.w, o.h, o.samples, ev)
       const g = Math.round(time * o.fps)
       await upload(`${o.out}/f${String(g).padStart(5, '0')}.jpg`, await jpeg(bytes, o.w, o.h, 0.86))
-      log.push({ i: g, t: +time.toFixed(3), stop: p.stop, kind: p.kind, utm: F.utm(p.pos[0], p.pos[2]).map((v) => +v.toFixed(2)), y: +p.pos[1].toFixed(2), eyeOverStand: +(p.pos[1] - stand(p.pos[0], p.pos[2])).toFixed(2), hour: +p.hour.toFixed(3), ev: +ev.toFixed(3) })
+      log.push({ i: g, t: +time.toFixed(3), stop: p.stop, kind: p.kind, utm: F.utm(p.pos[0], p.pos[2]).map((v) => +v.toFixed(2)), y: +p.pos[1].toFixed(2), eyeOverStand: +(p.pos[1] - stand(p.pos[0], p.pos[2])).toFixed(2), hour: +p.hour.toFixed(3), ev: +ev.toFixed(3), figuresInFrame: figuresInFrame() })
     }
     await upload(`${o.out}/frames-${String(Math.round(from * o.fps)).padStart(5, '0')}.json`, JSON.stringify({ fps: o.fps, w: o.w, h: o.h, samples: o.samples, from, to, frames: log }, null, 0))
     return { frames: n, ms: Math.round(performance.now() - t) }

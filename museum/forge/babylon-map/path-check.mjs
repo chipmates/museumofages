@@ -114,7 +114,7 @@ for (const n of stops) {
     if (r.cut) { lastSign = 0; continue }
     if (Math.abs(r.yawRate) < 2) continue
     const sg = Math.sign(r.yawRate)
-    if (lastSign && sg !== lastSign && r.t - lastT < 4) swings++
+    if (lastSign && sg !== lastSign && r.t - lastT < 4) { swings++; if (process.argv.includes('--why')) console.log(`  swing stop ${n} at ${r.t.toFixed(2)} s (last turn ${lastT.toFixed(2)} s, now ${r.yawRate.toFixed(1)} deg/s)`) }
     lastSign = sg; lastT = r.t
   }
   const runOver = (pred) => {
@@ -161,19 +161,19 @@ for (const s of out) {
   s.red = r
   console.log(`${String(s.stop).padStart(4)}  ${s.from.toFixed(0).padStart(3)}-${s.to.toFixed(0).padEnd(3)}  ${String(s.seconds).padStart(6)}  ${String(s.metres).padStart(6)}  ${String(s.walkTop).padStart(8)}  ${String(s.flyTop).padStart(7)}  ${String(s.backS).padStart(6)}${s.craneS ? ` (crane ${s.craneS})` : ''}  ${String(s.swings).padStart(6)}  ${String(s.yawTop).padStart(9)}  ${s.eyeMin === null ? '      -      ' : `${s.eyeMin.toFixed(2)} to ${s.eyeMax.toFixed(2)}`}  ${String(s.insideS).padStart(8)}  ${String(s.nearRedS).padStart(10)}  ${String(s.fillS).padStart(6)}  ${String(s.minRay).padStart(9)}  ${r.length ? 'RED ' + r.join(',') + (s.insideIds.length ? ' ' + s.insideIds.join(' ') : '') : 'ok'}`)
 }
-/* the stills' cameras: the same floor and inside tests */
+/* the stills: each stop's still key on the film, the same floor and inside tests */
 let badStill = 0
-for (const st of cams.stops) for (const fr of ['desktop', 'phone']) {
-  const v = st[fr]
-  const [x, z] = F.s(v.at[0], v.at[1])
-  const y = v.y === 'eye' ? stand(x, z) + cams.eye : v.y
+for (const st of cams.stops) {
+  const ks = path.keys.filter((k) => k.stop === st.n)
+  const t = (ks.find((k) => k.still) ?? ks[ks.length - 1]).t
+  const p = path.sample(t)
+  const [x, y, z] = p.pos
   const over = y - floorUnder(x, z, y)
   const inside = solids.find((q) => y > q.y0 && y < q.y1 && contains(q, x, z))?.id ?? null
-  const okS = !inside && (v.y !== 'eye' || (over >= 1.6 && over <= 1.7))
+  const okS = !inside && (!p.eye || (over >= 1.6 && over <= 1.7))
   if (!okS) badStill++
-  console.log(`still ${String(st.n).padStart(2)} ${fr.padEnd(7)} at +${y.toFixed(2)}, ${over.toFixed(2)} m over the floor under it${inside ? ', INSIDE ' + inside : ''}${okS ? '' : '  RED'}`)
+  console.log(`still ${String(st.n).padStart(2)} at ${t.toFixed(2)} s, +${y.toFixed(2)}, ${over.toFixed(2)} m over the floor under it${p.eye ? '' : ' (in flight)'}${inside ? ', INSIDE ' + inside : ''}${okS ? '' : '  RED'}`)
 }
-if (badStill) bad++
 /* the people for size: the walk never passes through one; red under 1.5 m (a person by the wall of a 4.5 m door is passed at about 1.7 m) */
 for (const st of cams.stops) {
   if (!st.figure) continue
