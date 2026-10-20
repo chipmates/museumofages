@@ -192,6 +192,9 @@ for (const set of A.panels) {
   geo.setAttribute('iN', new InstancedBufferAttribute(set.iN, 3))
   geo.setAttribute('iA', new InstancedBufferAttribute(set.iA, 4))
   geo.setAttribute('iB', new InstancedBufferAttribute(set.iB, 4))
+  const origins = new Float32Array(set.count * 3)
+  for (let i = 0; i < set.count; i++) origins.set(set.matrices.subarray(i * 16 + 12, i * 16 + 15), i * 3)
+  geo.setAttribute('iO', new InstancedBufferAttribute(origins, 3))
   const im = new InstancedMesh(geo, panelMaterial(U, maps, schemesOf[set.kind]!, rooms), set.count)
   for (let i = 0; i < set.count; i++) im.setMatrixAt(i, new Matrix4().fromArray(set.matrices, i * 16))
   im.instanceMatrix.needsUpdate = true

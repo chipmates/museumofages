@@ -16,7 +16,7 @@ import { REG, type Field } from './gate-relief'
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 type N = any
 const T = TSL as unknown as Record<string, N>
-const { Fn, If, Loop, abs, attribute, cameraPosition, cameraViewMatrix, clamp, cos, dot, float, floor, fract, length, max, min, mix, mx_noise_float, normalize, normalWorld, positionLocal, positionWorld, select, sin, smoothstep, sqrt, step, texture, uniform, uv, vec2, vec3, vec4, atan, log2 } = T
+const { Fn, If, Loop, abs, attribute, cameraPosition, cameraViewMatrix, clamp, cos, dot, float, floor, fract, length, max, min, mix, mx_noise_float, normalize, positionLocal, positionWorld, select, sin, smoothstep, sqrt, step, texture, uniform, uv, vec2, vec3, vec4, atan, log2 } = T
 
 export const C = 0.086
 export const BR = 0.33
@@ -194,7 +194,8 @@ export function wallMaterial(U: GateUniforms, rooms: Rooms): Material {
   const gU = attribute('gU', 'float'), gEdge = attribute('gEdge', 'vec2'), gInfo = attribute('gInfo', 'vec4'), gCls = attribute('gCls', 'vec4')
   const p = positionLocal
   const kind = gInfo.z
-  const nW = normalize(normalWorld)
+  // the world normal from the gate-frame attribute: reading normalWorld here took the lighting's normal with it (the walls lost the lower hemisphere's bounce)
+  const nW = normalize(U.uRot.mul(attribute('normal', 'vec3')))
   const up = vec3(0, 1, 0)
   const tU = normalize(select(abs(nW.y).greaterThan(0.7), vec3(1, 0, 0), vec3(nW.z.negate(), 0, nW.x)))
   const fu = footprint(U, tU, nW), fy = footprint(U, up, nW)
@@ -397,7 +398,8 @@ export function panelMaterial(U: GateUniforms, maps: PanelMaps, schemes: Array<[
     return lit
   })()
   m.receivedShadowNode = Fn(([shadow]: [N]) => shadow.mul(selfShadow))
-  m.aoNode = openness(rooms, positionLocal)
+  // the point in the gate's frame from the instance's own origin (iO), not from positionLocal, which the instancing rewrites
+  m.aoNode = openness(rooms, attribute('iO', 'vec3').add(iU.mul(u)).add(vec3(0, v, 0)))
   return m
 }
 
