@@ -3249,6 +3249,12 @@
    "sha256": "7002e83fee9d85c95f53d1e147f3acaeb48c59ce4f7e52371f0edad86a4de861"
   },
   {
+   "path": "pages/pics/img/vinci-mona-lisa-og-es-1200x630.png",
+   "url": "/static/img/vinci-mona-lisa-og-es-1200x630.png",
+   "bytes": 319950,
+   "sha256": "a32efcc13a8438bf2e954ba9ac4db679baa2aa381861ad468f389f21f3dbb021"
+  },
+  {
    "path": "pages/pics/img/vinci-paintings-og-de-1200x630.png",
    "url": "/static/img/vinci-paintings-og-de-1200x630.png",
    "bytes": 23509,

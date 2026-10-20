@@ -238,10 +238,30 @@
           "en": "Who she was, why the painting is so famous, the theft of 1911, where it hangs, what it is worth and whether the Louvre's is the real one.",
           "de": "Wer sie war, warum das Bild so berühmt ist, der Diebstahl von 1911, wo es hängt, was es wert ist und ob im Louvre die echte hängt."
         },
-        "langs": ["en", "de"],
+        "langs": ["en", "de", "es"],
         "count": "mona-lisa",
         "about": {"@type": "Painting", "name": "Mona Lisa", "sameAs": "https://www.wikidata.org/wiki/Q12418",
-                  "creator": {"@type": "Person", "name": "Leonardo da Vinci", "sameAs": "https://www.wikidata.org/wiki/Q762"}}
+                  "creator": {"@type": "Person", "name": "Leonardo da Vinci", "sameAs": "https://www.wikidata.org/wiki/Q762"}},
+        "never_say": [
+          ["\\b(?:empezó|comenzó|inició|pintó|pintad[oa])\\b[^.]{0,40}\\b(?:en|el año|del año) 1503\\b|(?<!hacia )\\ben 1503\\b[^.]{0,40}\\b(?:empezó|comenzó|inició|pintó)\\b", "Leonardo began it around 1503: hacia 1503, never a bare year for its start", ["es"]],
+          ["(?:^|[.?!] )(?:(?!vasari|posible|probablemente)[^.])*\\b(?:su marido|el marido|francesco del giocondo)\\b(?:(?!vasari|posible|probablemente)[^.])*\\b(?:encargó|pidió)\\b|(?:^|[.?!] )(?:(?!vasari|posible|probablemente)[^.])*\\b(?:encargó|pidió)\\b(?:(?!vasari|posible|probablemente)[^.]){0,30}\\b(?:su marido|el marido|francesco del giocondo)\\b(?:(?!vasari|posible|probablemente)[^.])*(?:[.?!]|$)|\\b(?:por )?encargo de (?:su marido|el marido|francesco del giocondo)|\\bencargad[oa] por (?:su marido|el marido|francesco del giocondo)", "that her husband asked for the portrait is Vasari's account, which the Louvre thinks may be so: never a fact on its own", ["es"]],
+          ["(?<!unos )(?<!cerca de )(?<!alrededor de )\\b1,75 millones", "about 1.75 million saw it in 1963: unos / cerca de", ["es"]],
+          ["(?:^|[.?!] )(?:(?!historia|se cuenta|dicen|cuentan|según)[^.])*\\b(?:se escondió|se ocultó|pasó la noche|se quedó escondido|escondido en un armario)\\b", "the cupboard is the popular story, not settled fact: only as la historia de que, se cuenta que, dicen que", ["es"]],
+          ["\\bpicasso\\b[^.,]{0,30}\\b(?:fue|fueron|estuvo|estuvieron|quedó)\\b[^.,]{0,15}\\b(?:detenid|arrestad|encarcelad|pres)[oa]s?\\b|\\b(?:detuvo|detuvieron|arrestó|arrestaron|encarceló|encarcelaron) (?:también )?a (?:[\\w ]{1,25} y (?:también )?a )?picasso\\b", "Picasso was drawn in, never arrested: Apollinaire spent a week in prison", ["es"]],
+          ["\\bsiete meses\\b", "the sentence was a year and fifteen days: the seven months served are a weak, unchecked figure", ["es"]],
+          ["(?<!unos )(?<!cerca de )(?<!alrededor de )\\b50 segundos", "visitors look at it about 50 seconds: unos / cerca de", ["es"]],
+          ["(?<!a más tardar en )(?<!como muy tarde en )(?<!spätestens )\\b2031\\b(?! a más tardar| como muy tarde| at the latest)", "the new room is announced for 2031 at the latest, with no opening date: a más tardar", ["es"]],
+          ["\\bvale (?:unos |más de |alrededor de |cerca de )?\\d|\\bvalorada en (?:unos |más de )?\\d|\\bmil millones\\b|\\bprecio\\b[^.]*\\bmillones\\b|\\bvaldría\\b|\\bsu valor (?:es|sería|se estima|se calcula|asciende)\\b|\\b(?:tiene|tendría) un valor de\\b", "nobody can say what it is worth: the 100 million dollars were an insurance valuation of 1962, never its value or price", ["es"]],
+          ["(?:^|[.?!] )(?:(?!muy probablemente)[^.])*\\b(?:pagó|compró|adquirió)\\b(?:(?!muy probablemente)[^.])*\\b1518\\b|(?:^|[.?!] )(?:(?!muy probablemente)[^.])*\\b1518\\b(?:(?!muy probablemente)[^.])*\\b(?:pagó|compró|adquirió)\\b", "the French king very probably paid for it in 1518: muy probablemente", ["es"]],
+          ["\\b(?:al lado del|junto al) original\\b(?!, según creen los expertos)", "the Prado copy was painted beside the original as experts think: según creen los expertos", ["es"]],
+          ["\\b(?:salaì|salai|melzi) (?:la |lo )?pintó\\b|\\bpintad[oa] por (?:salaì|salai|melzi)\\b|\\bla pintó (?:salaì|salai|melzi)\\b", "who painted the Prado copy is not known: Salaì and Melzi have only been named", ["es"]],
+          ["(?:^|[.?!] )(?:(?!afirma|sostiene|según la fundación)[^.])*\\bisleworth\\b(?:(?!afirma|sostiene)[^.])*(?<!no )\\b(?:es|fue|era) (?:una |la )?(?:versión |obra )?(?:anterior )?(?:pintada )?(?:por |de )leonardo\\b", "the Isleworth picture is a foundation's claim that leading experts reject: never Leonardo's as a fact", ["es"]],
+          ["\\bleonardo nunca pintó (?:sobre|en) lienzo|\\bleonardo no pintó (?:nunca )?(?:sobre|en) lienzo", "Leonardo is not known to have painted on canvas: no se sabe que, never an absolute", ["es"]],
+          ["(?:encontr|descubri|hall)\\w*(?:(?!2005|anunci|dio a conocer)[^.]){0,60}\\b2008\\b|\\b2008\\b(?:(?!2005|anunci|dio a conocer)[^.]){0,40}\\b(?:se )?(?:encontr|descubri|hall)\\w*", "the note was found in 2005 and announced in 2008: keep the two years apart", ["es"]],
+          ["(?<!más de )\\bcien copias\\b|\\b100 copias\\b", "more than a hundred old copies are known: más de cien", ["es"]],
+          ["(?:^|[.?!] )(?:(?!podría|puede|quizá|quizás|sugiere)[^.])*\\bsonrisa\\b(?:(?!podría|puede|quizá|quizás)[^.])*\\b(?:alude|juega con|hace un juego|es un juego)", "the smile may play on the name Giocondo, the Louvre suggests: podría, never a fact", ["es"]],
+          ["(?<!unos )(?<!cerca de )(?<!alrededor de )\\b15 grados", "her gaze was seen about 15 degrees to the viewer's right on average: unos", ["es"]]
+        ]
       },
       {
         "slug": {

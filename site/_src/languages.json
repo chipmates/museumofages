@@ -18,7 +18,7 @@
     {"code": "es", "folder": "es/", "html": "es", "name": "Español", "og": "es_ES", "deed": "deed.es", "status": "ai",
      "slugs": {"what": "que-es-este-museo", "imprint": null, "privacy": "privacidad",
                "wings": {"vinci": "leonardo-da-vinci", "animals": "animales"},
-               "topics": {"inventions": "inventos", "paintings": "pinturas", "last-supper": "ultima-cena", "megalodon": "megalodon", "biggest-dinosaurs": "dinosaurio-mas-grande", "t-rex": "t-rex", "spinosaurus": "spinosaurus",
+               "topics": {"inventions": "inventos", "paintings": "pinturas", "mona-lisa": "mona-lisa", "last-supper": "ultima-cena", "megalodon": "megalodon", "biggest-dinosaurs": "dinosaurio-mas-grande", "t-rex": "t-rex", "spinosaurus": "spinosaurus",
                           "woolly-mammoth": "mamut-lanudo", "brachiosaurus": "brachiosaurus", "triceratops": "triceratops",
                           "ankylosaurus": "ankylosaurus", "stegosaurus": "stegosaurus", "blue-whale": "ballena-azul"}}},
     {"code": "pt-BR", "folder": "pt-br/", "html": "pt-BR", "name": "Português (Brasil)", "og": "pt_BR", "deed": "deed.pt-br", "status": "ai",
