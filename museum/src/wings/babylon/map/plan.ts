@@ -433,7 +433,9 @@ export function buildPlan(plan: J, opts: { houses?: boolean } = {}): Built {
       const c = at(t)
       boxes.push({ id, group: 'bridge', x: c[0], z: c[1], y0: br.abutments.base, y1: br.abutments.top, sx: br.abutments.along, sz: br.abutments.across, yaw, plan: br.abutments.plan, height: 'G', band: 0 })
     }
-    const e0 = at(inner - br.abutments.along), e1 = at(westInner + br.abutments.along)
+    // the deck spans the street's deck points (the axis ends) and no further: past them the street's own surface lies at the
+    // same level, and a deck reaching over it fought it in depth
+    const e0 = a, e1 = b
     const l0 = streetAt(e0[0], e0[1]).level, l1 = streetAt(e1[0], e1[1]).level
     ramps.push({ id: 'bridge-deck', group: 'bridge', a: e0, b: e1, y0: l0, y1: l1, w: br.deck.w, floor: Math.min(l0, l1) - br.deck.thick, plan: br.deck.plan, height: br.deck.height, band: 0 })
     facts['bridge'] = { piers: piers.map((t) => F.utm(...at(t))), abutmentsInner: [inner, westInner], span: westInner - inner, overall: westInner - inner + 2 * br.abutments.along }
