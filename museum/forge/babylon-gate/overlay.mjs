@@ -7,9 +7,12 @@
 //   node forge/babylon-gate/overlay.mjs --still <abs png> --lang en|de --out <abs png> --live <sheet-box.json>
 //        [--hero <hero.json>]                       the still's hero boxes, checked against the free area
 //        [--mark 0.5 --gap 0.2]                      the certainty mark's size and the gap after it, in em
+//        [--l2 drawer|line]                          the phone's fact line in the box's drawer text (default) or the line's
 //   node forge/babylon-gate/overlay.mjs --still <abs png> --sheet --out <abs png> --live <sheet-box.json> [--hero <hero.json>]
 //        the sheet's outline at rest laid over the still, for the live wing's line and for the legend, both languages
 // A JSON beside every output holds the boxes, the line's rows, the picture's share and each check's result.
+// On the phone the fact line (line 2) takes the film box's own drawer text (`.film-drawer p`), resolved by the cascade in
+// the page, so it keeps one row at 360 px in both languages; the desktop band sets both lines in the band's line.
 import { chromium } from 'playwright'
 import { existsSync, mkdirSync, readFileSync, writeFileSync } from 'node:fs'
 import { dirname, join, resolve, sep } from 'node:path'
@@ -70,6 +73,22 @@ function legendHtml(lang) {
 
 /** the mark's size and its gap after it, in the line's em */
 const MARK_EM = Number(opt.mark ?? 0.5), GAP_EM = Number(opt.gap ?? 0.2)
+const L2 = desk ? 'line' : String(opt.l2 ?? 'drawer')
+if (!['drawer', 'line'].includes(L2)) throw new Error(`--l2 ${L2}: drawer or line`)
+/** in the page: the fact line takes the font the house cascade gives the box's drawer paragraph */
+function drawerFont() {
+  const box = document.querySelector('.film-box')
+  const probe = document.createElement('div')
+  probe.className = 'film-drawer'
+  probe.hidden = true
+  probe.append(document.createElement('p'))
+  box.append(probe)
+  const cs = getComputedStyle(probe.firstChild)
+  const font = { fontStyle: cs.fontStyle, fontWeight: cs.fontWeight, fontSize: cs.fontSize, lineHeight: cs.lineHeight, fontFamily: cs.fontFamily }
+  probe.remove()
+  Object.assign(document.querySelector('.gate-l2').style, font)
+  return font
+}
 const OWN = `
 .gate-stage { position: fixed; left: 0; top: 0; width: 100vw; height: 100vh; overflow: hidden; z-index: 0; }
 .gate-still { width: 100%; height: 100%; object-fit: cover; object-position: 50% 50%; display: block; }
@@ -117,14 +136,16 @@ function read() {
   const line = document.querySelector('.film-line, .desk-line')
   const cs = getComputedStyle(line)
   const lh = parseFloat(cs.lineHeight)
-  const rows = (el) => Math.round(el.getBoundingClientRect().height / lh)
+  // each line's rows by its own leading: the fact line may stand in a smaller text than the line
+  const rows = (el) => Math.round(el.getBoundingClientRect().height / parseFloat(getComputedStyle(el).lineHeight))
   const box = document.querySelector('.film-box, .desk-low')
   // each line's width set on one row, against the measure it has
-  const natural = (el) => { const c = el.cloneNode(true); c.style.cssText = 'display:inline-block;white-space:nowrap;position:absolute;visibility:hidden'; line.append(c); const w = c.getBoundingClientRect().width; c.remove(); return Math.round(w) }
+  const natural = (el) => { const c = el.cloneNode(true); Object.assign(c.style, { display: 'inline-block', whiteSpace: 'nowrap', position: 'absolute', visibility: 'hidden' }); line.append(c); const w = c.getBoundingClientRect().width; c.remove(); return Math.round(w) }
+  const l1 = line.querySelector('.gate-l1'), l2 = line.querySelector('.gate-l2')
   return {
-    picture: r(stage), chrome: r(box), line: { ...r(line), rows: Math.round((line.getBoundingClientRect().height - parseFloat(cs.paddingTop) - parseFloat(cs.paddingBottom)) / lh), lineHeight: lh, font: cs.font,
-      rowsL1: rows(line.querySelector('.gate-l1')), rowsL2: rows(line.querySelector('.gate-l2')),
-      measure: Math.round(line.clientWidth - parseFloat(cs.paddingLeft) - parseFloat(cs.paddingRight)), widthL1: natural(line.querySelector('.gate-l1')), widthL2: natural(line.querySelector('.gate-l2')),
+    picture: r(stage), chrome: r(box), line: { ...r(line), rows: rows(l1) + rows(l2), lineHeight: lh, font: cs.font, fontL2: getComputedStyle(l2).font, sizeL2: `${getComputedStyle(l2).fontSize}/${getComputedStyle(l2).lineHeight}`,
+      rowsL1: rows(l1), rowsL2: rows(l2),
+      measure: Math.round(line.clientWidth - parseFloat(cs.paddingLeft) - parseFloat(cs.paddingRight)), widthL1: natural(l1), widthL2: natural(l2),
       overflow: line.scrollWidth > line.clientWidth + 0.5 },
     pictureShare: Math.round((1 - covered / total) * 1000) / 10,
   }
@@ -146,6 +167,7 @@ async function open(lang, mode) {
   await p.goto('http://overlay.local/')
   await p.waitForFunction(() => { const i = document.querySelector('.gate-still'); return i && i.complete && i.naturalWidth > 0 })
   await p.evaluate(() => document.fonts.ready)
+  if (L2 === 'drawer') report.l2 = { style: '.film-drawer p', font: await p.evaluate(drawerFont) }
   return { ctx, p }
 }
 /** a share floor by the line's rows: two thirds at three rows, three quarters at two or fewer */
@@ -185,7 +207,7 @@ try {
     mkdirSync(dirname(opt.out), { recursive: true })
     await p.screenshot({ path: String(opt.out) })
     report.runs.push(run)
-    console.log(`${lang}: chrome ${m.chrome.top}+${m.chrome.height} line rows ${m.line.rows} (${m.line.rowsL1}+${m.line.rowsL2}) widths ${m.line.widthL1}+${m.line.widthL2} of ${m.line.measure} mark ${MARK_EM} gap ${GAP_EM} share ${m.pictureShare} ${JSON.stringify(run.checks)}`)
+    console.log(`${lang}: chrome ${m.chrome.top}+${m.chrome.height} line rows ${m.line.rows} (${m.line.rowsL1}+${m.line.rowsL2}) widths ${m.line.widthL1}+${m.line.widthL2} of ${m.line.measure} fact line ${L2} ${m.line.sizeL2} mark ${MARK_EM} gap ${GAP_EM} share ${m.pictureShare} ${JSON.stringify(run.checks)}`)
     await ctx.close()
   } else {
     // the outline: where the live box stands at rest (dashed) and where the legend's box stands (solid), the hero's boxes ringed

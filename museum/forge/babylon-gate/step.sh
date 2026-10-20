@@ -8,6 +8,7 @@
 #   bash step.sh phone <name>         the phone camera's own look: plain and switch at 390x664, 360x640, 390x844, the box's outline, the legend
 #   bash step.sh geometry             the offline geometry check, default and near (10 mm) passes, into checks/
 #   bash step.sh final [--again]      the full set of section 6 into stills/, every check into checks/
+#   bash step.sh legend               the legend and the box's outline laid again over the stills/ renders, checks/OVERLAY.txt
 set -u
 WM="$(cd "$(dirname "$0")/../.." && pwd)"
 # GATE_HAND names the hand-in folder of the round; GATE_LOCK a script that runs <log> <command...> under the render lock.
@@ -162,11 +163,17 @@ RIGHTS
     { echo; echo "grep of the gate's code and tools for the eyes-only folders (step.sh left out: it holds the pattern itself):"; grep -rnE --exclude=step.sh "PILOT/refs|PILOT/sources|evidence-1019|research-1020|uppsala-maps-1020|/refs/" "$WM/src/wings/babylon/gate" "$WM/forge/babylon-gate" || echo "none"; } >> "$CH/RIGHTS.txt"
     tail -1 "$CH/RIGHTS.txt"
     ;;
+  legend)
+    # the words changed, the scene did not: only the HTML over the switch stills and the outline over the plain ones
+    OUT="$HAND/stills"; CH="$HAND/checks"
+    for S in desk phone-390x664 phone-360x640 phone-390x844; do [ -f "$OUT/$S-switch.png" ] || { echo "no $OUT/$S-switch.png"; exit 3; }; done
+    overlays overlay-legend "$OUT" "$CH/hero.json" desk phone-390x664 phone-360x640 phone-390x844 | tee "$CH/OVERLAY.txt"
+    ;;
   geometry)
     G="$WM/forge/babylon-gate/geometry-check.mjs"
     node --experimental-strip-types --no-warnings "$G" --json "$HAND/checks/geometry.json" --eyes "$HAND/checks/facts-sketch.json" 2>&1 | grep -v toNonIndexed > "$HAND/checks/geometry.txt"; echo "geometry exit ${PIPESTATUS[0]} ($(tail -1 "$HAND/checks/geometry.txt"))"
     node --experimental-strip-types --no-warnings "$G" --near 10 --json "$HAND/checks/geometry-near10.json" --eyes "$HAND/checks/facts-sketch.json" 2>&1 | grep -v toNonIndexed > "$HAND/checks/geometry-near10.txt"; echo "geometry near 10 mm exit ${PIPESTATUS[0]} ($(tail -1 "$HAND/checks/geometry-near10.txt"))"
     ;;
   *)
-    sed -n 2,11p "$0"; exit 2 ;;
+    sed -n 2,12p "$0"; exit 2 ;;
 esac
