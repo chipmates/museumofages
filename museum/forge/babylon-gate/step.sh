@@ -73,8 +73,8 @@ case "${1:-}" in
     shots "$OUT" '[{"name":"desk-plain","framing":"desktop","state":"flat","css":[1600,900],"ratio":2,"samples":16},{"name":"phone-390x664-plain","framing":"phone","state":"flat","css":[390,664],"ratio":3,"samples":16},{"name":"phone-360x640-plain","framing":"phone","state":"flat","css":[360,640],"ratio":3,"samples":16},{"name":"phone-390x844-plain","framing":"phone","state":"flat","css":[390,844],"ratio":3,"samples":16}]'
     $PY -I "$MEASURE" thumb "$OUT/desk-plain.png" 400 "$OUT/thumb-desk-400.png"
     $PY -I "$MEASURE" thumb "$OUT/phone-390x664-plain.png" 390 "$OUT/thumb-phone-390.png"
-    $PY -I "$MEASURE" crops "$OUT/desk-plain.png" "$HAND/checks/crop-boxes.json" desktop "$OUT"
-    $PY -I "$MEASURE" crops "$OUT/phone-390x664-plain.png" "$HAND/checks/crop-boxes.json" phone "$OUT"
+    $PY -I "$MEASURE" crops "$OUT/desk-plain.png" "$HAND/checks/crop-boxes.json" desktop "$OUT" --checks "$OUT/checks"
+    $PY -I "$MEASURE" crops "$OUT/phone-390x664-plain.png" "$HAND/checks/crop-boxes.json" phone "$OUT" --checks "$OUT/checks"
     $PY -I "$MEASURE" sheet "$OUT" --out "$OUT/SHEET.jpg"
     ;;
   look)
@@ -108,7 +108,7 @@ case "${1:-}" in
     locked hero node "$SHOOT" --port 5220 --data-port 5221 --hero "$OUT/hero.json"
     shots "$OUT" '[{"name":"phone-390x664-plain","framing":"phone","state":"full","css":[390,664],"ratio":3,"samples":8},{"name":"phone-390x664-switch","framing":"phone","state":"full","switch":true,"css":[390,664],"ratio":3,"samples":8},{"name":"phone-360x640-plain","framing":"phone","state":"full","css":[360,640],"ratio":3,"samples":8},{"name":"phone-360x640-switch","framing":"phone","state":"full","switch":true,"css":[360,640],"ratio":3,"samples":8},{"name":"phone-390x844-plain","framing":"phone","state":"full","css":[390,844],"ratio":3,"samples":8},{"name":"phone-390x844-switch","framing":"phone","state":"full","switch":true,"css":[390,844],"ratio":3,"samples":8}]'
     overlays "overlay-$NAME" "$OUT" "$OUT/hero.json" phone-390x664 phone-360x640 phone-390x844
-    $PY -I "$MEASURE" crops "$OUT/phone-390x664-plain.png" "$HAND/checks/crop-boxes.json" phone "$OUT"
+    $PY -I "$MEASURE" crops "$OUT/phone-390x664-plain.png" "$HAND/checks/crop-boxes.json" phone "$OUT" --checks "$OUT/checks"
     for S in 390x664 360x640 390x844; do $PY -I "$MEASURE" thumb "$OUT/phone-$S-plain.png" 360 "$OUT/thumb-$S-plain.png"; done
     $PY -I "$MEASURE" sheet "$OUT" --out "$OUT/SHEET.jpg" --only phone-390x664-sheet,phone-360x640-sheet,phone-390x664-switch-de,phone-360x640-switch-de,phone-390x844-switch-en
     $PY -I "$MEASURE" stats "$OUT" --boxes "$HAND/checks/crop-boxes.json" --md "$OUT/NUMBERS.md"
