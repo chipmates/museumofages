@@ -283,7 +283,8 @@ const rig = {
     setHour(v.hour)
     aim(v.pos, v.look, v.hfov, o.w, o.h, v.shift)
     const { bytes, ms } = await render(o.w, o.h, o.samples, s.stops ?? 0)
-    const file = `${o.out}/${o.name ?? `${v.id}-${o.framing}-${o.view}`}.png`
+    const base = o.name ?? `${v.id}-${o.framing}-${o.view}`
+    const file = `${o.out}/${base}.png`
     await upload(file, await toPNG(bytes, o.w, o.h))
     const sun = sunAt(v.hour)
     const side = {
