@@ -28,12 +28,14 @@ STOPS = {   # n: id, name, hour at the stop's first key, exposure stops, figure 
  8: ('nabu', 'The Nabu temple and the reading table', '17:46', 0.3, None, (44, -0.25)),
  9: ('etemenanki', 'Etemenanki at true size', '17:49', 0.3, [445953.4, 3600117.5, 75], (22, 0.33)),
  10: ('turn', 'The turn', '17:53', 0.4, None, (34, 0.0)),
- 11: ('esagila', 'Esagila, where the procession ended', '17:56', 0.6, None, (30, 0.0)),
+ 11: ('esagila', 'Esagila, where the procession ended', '17:56', 0.6, None, (54, 0.0)),
  12: ('great-stair', 'The great stair and the switch', '17:59', 0.9, ax(101, -6) + [343], (44, -0.05)),
  13: ('bridge', 'The bridge over the Euphrates at sunset', '18:07', 0.7, [445452, 3599833, 265], (44, -0.05)),
  14: ('city-and-sky', 'The city and the sky', '18:14', 1.2, None, (44, -0.3)),
 }
 END_HOUR = '18:19'
+# the upright phone at the river bank: the tower (bearing 7 to 17 degrees) and Esagila (23 to 54) both whole at 54 degrees
+ESAGILA_PHONE = [445685, 3599822, 16]
 
 L = [
  # 1. high over the outer city: the dam, the moat on its right, the North Gate and, far off, the tower; down onto the dam
@@ -88,8 +90,8 @@ L = [
  #     tower behind it; north along Esagila's west side and down to the precinct gate
  (22,   dict(at=[445720, 3599640], y=40, look=[445560, 3599690, 18], stop=11, kind='fly', say="over the annex, past Esagila's south side toward the river")),
  (11,   dict(at=[445540, 3599560], y=45, look=[445430, 3599720, 10], stop=11, kind='fly', hold=True, say='over the river bank')),
- (7,    dict(at=[445540, 3599560], y=45, look=[445680, 3599860, 20], stop=11, kind='turn', hold=True, say='turns right: Esagila lit on its west face, the tower behind it')),
- (4,    dict(at=[445540, 3599560], y=45, look=[445680, 3599860, 20], stop=11, kind='hold', still=True)),
+ (7,    dict(at=[445540, 3599560], y=45, look=[445680, 3599860, 20], phone=dict(look=ESAGILA_PHONE), stop=11, kind='turn', hold=True, say='turns right: Esagila lit on its west face, the tower behind it')),
+ (4,    dict(at=[445540, 3599560], y=45, look=[445680, 3599860, 20], phone=dict(look=ESAGILA_PHONE), stop=11, kind='hold', still=True)),
  (14,   dict(at=[445620, 3599790], y=24, look=[445641.5, 3600034, 45], stop=11, kind='fly', say="north along Esagila's west side")),
  (6,    dict(at=ax(200), y=10, look=[445641.5, 3600034, 45], stop=11, kind='fly', say='onto the gate\'s axis')),
  (7,    dict(at=ax(158), y='eye', look=[445641.5, 3600034, 45], stop=12, kind='fly', hold=True, say='down onto the street at the precinct gate: the stair and the tower in it')),
@@ -169,6 +171,10 @@ def even_keys(a, b, t0, dt, rest0, rest1):
         k['t'] = round(t0 + t, 2)
         k['stop'] = a['stop']                   # a stop starts at its own first key
         k['phone'] = {kk: round(a['phone'][kk] + (b['phone'][kk] - a['phone'][kk]) * u, 3) for kk in ('hfov', 'shift')}
+        if 'look' in a['phone'] or 'look' in b['phone']:
+            # the phone's own look turns with the leg like the desktop's, from its own look at either end
+            pa, pb = {**a, 'look': a['phone'].get('look', a['look'])}, {**b, 'look': b['phone'].get('look', b['look'])}
+            k['phone']['look'] = [round(x, 2) for x in look_at(pa, pb, u)]
         out.append(k)
     return out
 

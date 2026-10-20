@@ -3056,7 +3056,7 @@
    "kind": "fly",
    "t": 285.5,
    "phone": {
-    "hfov": 33.733,
+    "hfov": 35.333,
     "shift": 0.0
    }
   },
@@ -3075,7 +3075,7 @@
    "kind": "fly",
    "t": 286.96,
    "phone": {
-    "hfov": 33.467,
+    "hfov": 36.667,
     "shift": 0.0
    }
   },
@@ -3094,7 +3094,7 @@
    "kind": "fly",
    "t": 288.43,
    "phone": {
-    "hfov": 33.2,
+    "hfov": 38.0,
     "shift": 0.0
    }
   },
@@ -3113,7 +3113,7 @@
    "kind": "fly",
    "t": 289.9,
    "phone": {
-    "hfov": 32.933,
+    "hfov": 39.333,
     "shift": 0.0
    }
   },
@@ -3132,7 +3132,7 @@
    "kind": "fly",
    "t": 291.36,
    "phone": {
-    "hfov": 32.667,
+    "hfov": 40.667,
     "shift": 0.0
    }
   },
@@ -3151,7 +3151,7 @@
    "kind": "fly",
    "t": 292.83,
    "phone": {
-    "hfov": 32.4,
+    "hfov": 42.0,
     "shift": 0.0
    }
   },
@@ -3170,7 +3170,7 @@
    "kind": "fly",
    "t": 294.3,
    "phone": {
-    "hfov": 32.133,
+    "hfov": 43.333,
     "shift": 0.0
    }
   },
@@ -3189,7 +3189,7 @@
    "kind": "fly",
    "t": 295.76,
    "phone": {
-    "hfov": 31.867,
+    "hfov": 44.667,
     "shift": 0.0
    }
   },
@@ -3208,7 +3208,7 @@
    "kind": "fly",
    "t": 297.23,
    "phone": {
-    "hfov": 31.6,
+    "hfov": 46.0,
     "shift": 0.0
    }
   },
@@ -3227,7 +3227,7 @@
    "kind": "fly",
    "t": 298.7,
    "phone": {
-    "hfov": 31.333,
+    "hfov": 47.333,
     "shift": 0.0
    }
   },
@@ -3246,7 +3246,7 @@
    "kind": "fly",
    "t": 300.16,
    "phone": {
-    "hfov": 31.067,
+    "hfov": 48.667,
     "shift": 0.0
    }
   },
@@ -3265,7 +3265,7 @@
    "kind": "fly",
    "t": 301.63,
    "phone": {
-    "hfov": 30.8,
+    "hfov": 50.0,
     "shift": 0.0
    }
   },
@@ -3284,7 +3284,7 @@
    "kind": "fly",
    "t": 303.1,
    "phone": {
-    "hfov": 30.533,
+    "hfov": 51.333,
     "shift": 0.0
    }
   },
@@ -3303,7 +3303,7 @@
    "kind": "fly",
    "t": 304.56,
    "phone": {
-    "hfov": 30.267,
+    "hfov": 52.667,
     "shift": 0.0
    }
   },
@@ -3323,7 +3323,7 @@
    "kind": "fly",
    "say": "over the annex, past Esagila's south side toward the river",
    "phone": {
-    "hfov": 30,
+    "hfov": 54,
     "shift": 0.0
    }
   },
@@ -3342,7 +3342,7 @@
    "kind": "fly",
    "t": 307.61,
    "phone": {
-    "hfov": 30.0,
+    "hfov": 54.0,
     "shift": 0.0
    }
   },
@@ -3361,7 +3361,7 @@
    "kind": "fly",
    "t": 309.2,
    "phone": {
-    "hfov": 30.0,
+    "hfov": 54.0,
     "shift": 0.0
    }
   },
@@ -3380,7 +3380,7 @@
    "kind": "fly",
    "t": 310.78,
    "phone": {
-    "hfov": 30.0,
+    "hfov": 54.0,
     "shift": 0.0
    }
   },
@@ -3399,7 +3399,7 @@
    "kind": "fly",
    "t": 312.36,
    "phone": {
-    "hfov": 30.0,
+    "hfov": 54.0,
     "shift": 0.0
    }
   },
@@ -3418,7 +3418,7 @@
    "kind": "fly",
    "t": 313.95,
    "phone": {
-    "hfov": 30.0,
+    "hfov": 54.0,
     "shift": 0.0
    }
   },
@@ -3437,7 +3437,7 @@
    "kind": "fly",
    "t": 315.53,
    "phone": {
-    "hfov": 30.0,
+    "hfov": 54.0,
     "shift": 0.0
    }
   },
@@ -3458,7 +3458,7 @@
    "hold": true,
    "say": "over the river bank",
    "phone": {
-    "hfov": 30,
+    "hfov": 54,
     "shift": 0.0
    }
   },
@@ -3477,8 +3477,13 @@
    "kind": "turn",
    "t": 318.53,
    "phone": {
-    "hfov": 30.0,
-    "shift": 0.0
+    "hfov": 54.0,
+    "shift": 0.0,
+    "look": [
+     445449.07,
+     3599747.65,
+     10.82
+    ]
    }
   },
   {
@@ -3496,8 +3501,13 @@
    "kind": "turn",
    "t": 319.86,
    "phone": {
-    "hfov": 30.0,
-    "shift": 0.0
+    "hfov": 54.0,
+    "shift": 0.0,
+    "look": [
+     445497.48,
+     3599790.15,
+     12.27
+    ]
    }
   },
   {
@@ -3515,8 +3525,13 @@
    "kind": "turn",
    "t": 321.2,
    "phone": {
-    "hfov": 30.0,
-    "shift": 0.0
+    "hfov": 54.0,
+    "shift": 0.0,
+    "look": [
+     445562.26,
+     3599818.61,
+     13.73
+    ]
    }
   },
   {
@@ -3534,8 +3549,13 @@
    "kind": "turn",
    "t": 322.53,
    "phone": {
-    "hfov": 30.0,
-    "shift": 0.0
+    "hfov": 54.0,
+    "shift": 0.0,
+    "look": [
+     445638.94,
+     3599827.37,
+     15.18
+    ]
    }
   },
   {
@@ -3550,14 +3570,19 @@
     3599860,
     20
    ],
+   "phone": {
+    "hfov": 54,
+    "shift": 0.0,
+    "look": [
+     445685,
+     3599822,
+     16
+    ]
+   },
    "stop": 11,
    "kind": "turn",
    "hold": true,
-   "say": "turns right: Esagila lit on its west face, the tower behind it",
-   "phone": {
-    "hfov": 30,
-    "shift": 0.0
-   }
+   "say": "turns right: Esagila lit on its west face, the tower behind it"
   },
   {
    "t": 328.03,
@@ -3571,14 +3596,19 @@
     3599860,
     20
    ],
+   "phone": {
+    "hfov": 54,
+    "shift": 0.0,
+    "look": [
+     445685,
+     3599822,
+     16
+    ]
+   },
    "stop": 11,
    "kind": "hold",
    "still": true,
-   "hold": true,
-   "phone": {
-    "hfov": 30,
-    "shift": 0.0
-   }
+   "hold": true
   },
   {
    "at": [
@@ -3595,8 +3625,13 @@
    "kind": "fly",
    "t": 329.53,
    "phone": {
-    "hfov": 30.0,
-    "shift": 0.0
+    "hfov": 54.0,
+    "shift": 0.0,
+    "look": [
+     445681.87,
+     3599835.64,
+     17.64
+    ]
    }
   },
   {
@@ -3614,8 +3649,13 @@
    "kind": "fly",
    "t": 331.09,
    "phone": {
-    "hfov": 30.0,
-    "shift": 0.0
+    "hfov": 54.0,
+    "shift": 0.0,
+    "look": [
+     445675.51,
+     3599863.37,
+     21.06
+    ]
    }
   },
   {
@@ -3633,8 +3673,13 @@
    "kind": "fly",
    "t": 332.65,
    "phone": {
-    "hfov": 30.0,
-    "shift": 0.0
+    "hfov": 54.0,
+    "shift": 0.0,
+    "look": [
+     445669.44,
+     3599890.19,
+     24.48
+    ]
    }
   },
   {
@@ -3652,8 +3697,13 @@
    "kind": "fly",
    "t": 334.22,
    "phone": {
-    "hfov": 30.0,
-    "shift": 0.0
+    "hfov": 54.0,
+    "shift": 0.0,
+    "look": [
+     445663.69,
+     3599916.15,
+     27.9
+    ]
    }
   },
   {
@@ -3671,8 +3721,13 @@
    "kind": "fly",
    "t": 335.78,
    "phone": {
-    "hfov": 30.0,
-    "shift": 0.0
+    "hfov": 54.0,
+    "shift": 0.0,
+    "look": [
+     445658.33,
+     3599941.26,
+     31.32
+    ]
    }
   },
   {
@@ -3690,8 +3745,13 @@
    "kind": "fly",
    "t": 337.34,
    "phone": {
-    "hfov": 30.0,
-    "shift": 0.0
+    "hfov": 54.0,
+    "shift": 0.0,
+    "look": [
+     445653.38,
+     3599965.56,
+     34.74
+    ]
    }
   },
   {
@@ -3709,8 +3769,13 @@
    "kind": "fly",
    "t": 338.9,
    "phone": {
-    "hfov": 30.0,
-    "shift": 0.0
+    "hfov": 54.0,
+    "shift": 0.0,
+    "look": [
+     445648.9,
+     3599989.09,
+     38.16
+    ]
    }
   },
   {
@@ -3728,8 +3793,13 @@
    "kind": "fly",
    "t": 340.47,
    "phone": {
-    "hfov": 30.0,
-    "shift": 0.0
+    "hfov": 54.0,
+    "shift": 0.0,
+    "look": [
+     445644.93,
+     3600011.89,
+     41.58
+    ]
    }
   },
   {
@@ -3748,7 +3818,7 @@
    "kind": "fly",
    "say": "north along Esagila's west side",
    "phone": {
-    "hfov": 30,
+    "hfov": 54,
     "shift": 0.0
    }
   },
@@ -3767,7 +3837,7 @@
    "kind": "fly",
    "t": 343.53,
    "phone": {
-    "hfov": 30.0,
+    "hfov": 54.0,
     "shift": 0.0
    }
   },
@@ -3786,7 +3856,7 @@
    "kind": "fly",
    "t": 345.03,
    "phone": {
-    "hfov": 30.0,
+    "hfov": 54.0,
     "shift": 0.0
    }
   },
@@ -3805,7 +3875,7 @@
    "kind": "fly",
    "t": 346.53,
    "phone": {
-    "hfov": 30.0,
+    "hfov": 54.0,
     "shift": 0.0
    }
   },
@@ -3825,7 +3895,7 @@
    "kind": "fly",
    "say": "onto the gate's axis",
    "phone": {
-    "hfov": 30,
+    "hfov": 54,
     "shift": 0.0
    }
   },
