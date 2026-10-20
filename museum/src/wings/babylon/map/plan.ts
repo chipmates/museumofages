@@ -499,13 +499,32 @@ export function buildPlan(plan: J, opts: { houses?: boolean } = {}): Built {
   }
   groundRef.fn = ground
 
-  /* the class band sits on the ground beside each body */
+  const floors = prisms.filter((p) => p.walk)
+  const stand = (x: number, z: number): number => {
+    const st = streetAt(x, z)
+    let y = st.d <= st.w / 2 + 0.5 ? st.level : ground(x, z)
+    for (const p of floors) if (p.y1 > y && pointInPoly([x, z], p.poly) && !p.holes.some((h) => pointInPoly([x, z], h))) y = p.y1
+    return y
+  }
+
+  /* the class band sits on the ground beside each body; a body that starts in the air (a lintel over a door) has none */
   const bandFor = (poly: P2[], y0: number): number => {
+    const c = centroid(poly)
+    let under = stand(c[0], c[1])
+    for (const q of prisms) if (q.y1 <= y0 + 0.5 && q.y1 > under && pointInPoly(c, q.poly)) under = q.y1
+    if (y0 > under + 1) return y0 - 1
     let lo = Infinity
-    for (const p of [...poly, centroid(poly)]) lo = Math.min(lo, ground(p[0], p[1]))
+    for (const p of [...poly, c]) lo = Math.min(lo, ground(p[0], p[1]))
     return Math.max(y0, lo) + BAND
   }
   for (const p of prisms) p.band = bandFor(p.poly, p.y0)
+  // a grounded body reaches down into the ground under every corner, so no slope shows a gap under it
+  for (const p of prisms) {
+    if (p.band === p.y0 - 1) continue
+    let lo = Infinity
+    for (const q of p.poly) lo = Math.min(lo, ground(q[0], q[1]))
+    p.y0 = Math.min(p.y0, lo - 0.3)
+  }
   for (const b of boxes) if (b.band === 0) b.band = Math.max(b.y0, ground(b.x, b.z)) + BAND
   for (const r of ramps) r.band = Math.max(r.floor, Math.min(ground(...r.a), ground(...r.b))) + BAND
   for (const b of boxes) if (b.band === -1) b.band = b.y0 - 1
@@ -583,12 +602,15 @@ export function buildPlan(plan: J, opts: { houses?: boolean } = {}): Built {
 
   facts['street'] = street.map((p) => ({ utm: F.utm(p.x, p.z), s: Math.round(p.s * 10) / 10, level: p.level }))
   facts['streetLevelAtS'] = streetLevelAtS
-  const floors = prisms.filter((p) => p.walk)
-  const stand = (x: number, z: number): number => {
-    const st = streetAt(x, z)
-    let y = st.d <= st.w / 2 + 0.5 ? st.level : ground(x, z)
-    for (const p of floors) if (p.y1 > y && pointInPoly([x, z], p.poly) && !p.holes.some((h) => pointInPoly([x, z], h))) y = p.y1
-    return y
+  // the same for the boxes standing on the ground (towers, houses): down to the lowest corner
+  for (const r of boxes) {
+    if (r.group === 'tower-stage' || r.band === r.y0 - 1) continue
+    const c = Math.cos(r.yaw), sn = Math.sin(r.yaw)
+    let lo = Infinity
+    for (const [u, v] of [[-1, -1], [1, -1], [1, 1], [-1, 1]] as const) {
+      lo = Math.min(lo, ground(r.x + (u * r.sx * c) / 2 + (v * r.sz * sn) / 2, r.z - (u * r.sx * sn) / 2 + (v * r.sz * c) / 2))
+    }
+    r.y0 = Math.min(r.y0, lo - 0.3)
   }
   return { prisms, boxes, ramps, water, street, ground, streetAt, stand, houses, facts }
 }

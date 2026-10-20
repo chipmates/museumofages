@@ -166,6 +166,19 @@ for (const [t, az, el] of [['16:45', 267, 20], ['17:00', 269, 17], ['17:30', 273
   check(`sun elevation at ${t}`, s.elevation, el, 1, 'WALK, GR 5.1 formula', 'deg')
 }
 
+// 12 no body floats: every grounded block and box reaches the ground under each corner (houses included)
+{
+  const all = buildPlan(plan, { houses: true })
+  let gaps = 0
+  for (const r of all.boxes) {
+    if (r.group === 'tower-stage' || r.band === r.y0 - 1) continue
+    const c = Math.cos(r.yaw), sn = Math.sin(r.yaw)
+    for (const [u, v] of [[-1, -1], [1, -1], [1, 1], [-1, 1]]) if (r.y0 > all.ground(r.x + (u * r.sx * c) / 2 + (v * r.sz * sn) / 2, r.z - (u * r.sx * sn) / 2 + (v * r.sz * c) / 2) + 0.01) { gaps++; break }
+  }
+  for (const q of all.prisms) if (q.band !== q.y0 - 1 && q.poly.some((v) => q.y0 > all.ground(v[0], v[1]) + 0.01)) gaps++
+  check('bodies with a gap under a corner', gaps, 0, 0, '[Ours] defect screen: floating parts', 'count')
+}
+
 const bad = rows.filter((r) => !r.ok)
 for (const r of rows) console.log(`${r.ok ? 'ok  ' : 'FAIL'} ${r.name}: ${r.measured} ${r.unit} (source ${r.expected}, tolerance ${r.tol}) [${r.src}]${r.standsOn !== undefined ? ` stands on +${r.standsOn}` : ''}`)
 console.log(`${rows.length - bad.length} of ${rows.length} ok`)
