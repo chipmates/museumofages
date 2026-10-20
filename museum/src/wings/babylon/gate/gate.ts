@@ -25,7 +25,8 @@ import { makePath, type PathSample, type V3 as MV3 } from '../map/path'
 import { buildGate, gateFrame, hourOf, sunAt, sunVector, type V3 } from './gate-geom'
 import { animalField } from './gate-relief'
 import { assemble, panelGrid } from './gate-mesh'
-import { bakePanel, makeUniforms, panelMaterial, pavingMaterial, wallMaterial, C as COURSE, type Rooms } from './gate-mat'
+import { birdsGeometry, palmsGeometry } from './gate-life'
+import { bakePanel, lifeMaterial, makeUniforms, panelMaterial, pavingMaterial, wallMaterial, C as COURSE, type Rooms } from './gate-mat'
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 type N = any
@@ -220,6 +221,19 @@ for (const b of A.bronzes) {
   m.name = 'bronze'
   gate.add(m)
 }
+
+/* life without bodies (G): date palms beyond the walls, a few birds over the forecourt */
+const lifeMat = lifeMaterial(U)
+const palms = new Mesh(palmsGeometry(plan.life.palms, B.level), lifeMat)
+palms.castShadow = true
+palms.receiveShadow = true
+palms.frustumCulled = false
+palms.name = 'palms'
+gate.add(palms)
+const birds = new Mesh(birdsGeometry(plan.life.birds), lifeMat)
+birds.frustumCulled = false
+birds.name = 'birds'
+gate.add(birds)
 
 /* the figure: the house's grey sign person, 1.70 m, in the sun by the east tower */
 const personMat = new MeshStandardNodeMaterial({ roughness: 0.8, metalness: 0 })

@@ -124,6 +124,24 @@
   "doors": { "cls": "T", "src": "door leaves of cedar with copper, bronze thresholds and pivots (K1918 p. 53, col. VI 11 to 18); shown open, their form guessed" },
   "roof": { "cls": "T", "src": "cedar beams over the chambers (K1918 p. 47); the court open to the sky (K1918 p. 37)" },
   "figure": { "height": 1.7, "x": -8.0, "z": 3.4, "turn": -1.1, "src": "the house's grey sign person on the paving by the door (HOUSE-RULES); in front of the east tower, where the floor is in the sun at 17:00 (the west half of the recess lies in the west tower's shadow)" },
+  "life": {
+    "cls": "G",
+    "src": "date palms stood in Babylon's gardens and courts and birds over any city; their places here are ours, chosen where a camera sees them over the walls, none from a find",
+    "palms": [
+      { "x": -18.5, "z": -13, "h": 22.5, "lean": [-0.7, 0.5], "turn": 0.3 },
+      { "x": -22.5, "z": -6, "h": 20.5, "lean": [0.6, 0.8], "turn": 1.7 },
+      { "x": -27, "z": -19, "h": 23.0, "lean": [-0.6, -0.4], "turn": 2.9 },
+      { "x": -26, "z": 14, "h": 20.0, "lean": [-0.8, 0.6], "turn": 4.4 }
+    ],
+    "palmsSay": "east of the forecourt only: at 17:00 a palm west of the gate throws its shadow across the glazed face, which reads as streaks at the stills' size",
+    "birds": [
+      { "x": 3.0, "y": 20.5, "z": 12, "span": 0.62, "yaw": 0.6, "beat": 0.18 },
+      { "x": -6.0, "y": 22.0, "z": 20, "span": 0.58, "yaw": -0.9, "beat": 0.05 },
+      { "x": 9.0, "y": 21.0, "z": 8, "span": 0.6, "yaw": 2.4, "beat": 0.22 },
+      { "x": 4.0, "y": 28.5, "z": -5, "span": 0.62, "yaw": 1.2, "beat": 0.12 },
+      { "x": -7.0, "y": 30.0, "z": -2, "span": 0.6, "yaw": -2.1, "beat": 0.2 }
+    ]
+  },
   "light": {
     "about": "17:00 for both stills (the launcher's ruling, 20 Oct). The stack has no GI, so the shade's light is modelled: the map's sky dome, the paving's bounce as the environment's lower half, and the sunlit east walls as a warm band in it. Every value here is ours (G for the method), stated so a reader can redo it.",
     "sun": { "intensity": 4.5, "src": "the directional sun in the renderer's units, its colour warming with low elevation (gate.ts setHour). With env 0.6 a lit vertical face gets about three times a shaded one's light, the order of a clear sky at 17 degrees (diffuse about 0.4 of the direct on the ground; textbook order, Ours). At 3.2 with the sky at full strength the lit and shaded faces differed by under 2 to 1 and the hour did not show (HAND/scratch/light, variants a and h)" },

@@ -26,6 +26,7 @@ export const PAL = {
   brecciaPale: [0.55, 0.29, 0.22] as RGB,
   brecciaDark: [0.2, 0.065, 0.045] as RGB,
   brecciaVein: [0.7, 0.64, 0.56] as RGB,
+  dust: [0.42, 0.35, 0.26] as RGB,
   grey: 0.42,
 }
 
