@@ -45,9 +45,24 @@ function greyNode(base: number): N {
   return vec3(base).mul(float(1).add(up.mul(0.08))).mul(mottle)
 }
 
-export function bodyMaterial(t: ClassTones, grey: number): Material {
+/** a gate's passage: origin and unit directions along and across its axis (scene x, z), length and half width */
+export interface Passage { o: P2; a: P2; c: P2; len: number; half: number }
+
+/* a passage's side walls and soffit take their own lighter grey: in the facade's grey a door read as a dark
+   wedge over a slit of light, the opening never as an opening (a tone of the grey view, not of the plan) */
+function passageGrey(base: N, p: Passage): N {
+  const dx = positionWorld.x.sub(p.o[0]), dz = positionWorld.z.sub(p.o[1])
+  const along = dx.mul(p.a[0]).add(dz.mul(p.a[1])), across = dx.mul(p.c[0]).add(dz.mul(p.c[1]))
+  const inside = step(-0.3, along).mul(step(along, p.len)).mul(step(abs(across), p.half))
+  const side = smoothstep(0.6, 0.8, abs(normalWorld.x.mul(p.c[0]).add(normalWorld.z.mul(p.c[1]))))
+  const soffit = smoothstep(0.6, 0.8, normalWorld.y.negate())
+  return mix(base, mix(base, vec3(0.6), side).add(vec3(0.12).mul(soffit)), inside)
+}
+
+export function bodyMaterial(t: ClassTones, grey: number, passage?: Passage): Material {
   const m = new MeshStandardNodeMaterial({ roughness: 0.92, metalness: 0 })
-  m.colorNode = mix(greyNode(grey), classColour(t, attribute('cls', 'vec2'), attribute('band', 'float')), uView)
+  const g = passage ? passageGrey(greyNode(grey), passage) : greyNode(grey)
+  m.colorNode = mix(g, classColour(t, attribute('cls', 'vec2'), attribute('band', 'float')), uView)
   return m
 }
 
@@ -260,9 +275,12 @@ export function waterMaterial(sky: Sky, sunDir: N): Material {
   const refl = TSL.reflect(view, n)
   const cosV = abs(view.y)
   const fres = float(0.03).add(float(0.97).mul(TSL.pow(float(1).sub(cosV), 4)))
-  const body = vec3(0.035, 0.07, 0.085)
+  const body = vec3(0.03, 0.075, 0.095)
+  // the reflection is cooled and capped below the haze, so water keeps its own tone at a grazing view
+  // instead of taking the far ground's grey; a broad sheen under the glint carries the low sun along it
   const glint = TSL.pow(max(dot(refl, sunDir), 0), 90).mul(3.5)
-  m.colorNode = mix(body, sky.colour(refl).mul(vec3(0.82, 0.92, 1.0)), fres.mul(0.85)).add(vec3(1, 0.82, 0.6).mul(glint))
+  const sheen = TSL.pow(max(dot(refl, sunDir), 0), 10).mul(0.35)
+  m.colorNode = mix(body, sky.colour(refl).mul(vec3(0.62, 0.8, 0.95)), fres.mul(0.72)).add(vec3(1, 0.8, 0.58).mul(glint.add(sheen)))
   m.fog = true
   return m
 }
@@ -272,10 +290,10 @@ export interface Bodies {
   counts: { prisms: number; boxes: number; houses: number; triangles: number }
 }
 
-export function buildBodies(built: Built, tones: ClassTones, sky: Sky, sunDir: N, canalZ: number[]): Bodies {
+export function buildBodies(built: Built, tones: ClassTones, sky: Sky, sunDir: N, canalZ: number[], passage?: Passage): Bodies {
   const group = new Group()
   group.name = 'babylon-map'
-  const blockMat = bodyMaterial(tones, 0.42)
+  const blockMat = bodyMaterial(tones, 0.42, passage)
   const prismGeo = prismGeometry(built)
   const prisms = new Mesh(prismGeo, blockMat)
   prisms.castShadow = true
