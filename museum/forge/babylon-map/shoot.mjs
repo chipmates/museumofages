@@ -3,6 +3,7 @@
 //   node forge/babylon-map/shoot.mjs --out <abs folder in the hand-in> [--stops all|1,3] [--framing desktop,phone] [--view grey,classes]
 //        [--dw 1920 --dh 1080 --pw 780 --ph 1688 --samples 16] [--t <film second> --name <base>]
 //   node forge/babylon-map/shoot.mjs --clip <abs folder> [--fps 8 --w 640 --h 360 --samples 2 --from 0 --to 781 --framing desktop]
+//        [--watch E,N: a ground point's pixel place logged per frame]
 //        frames are named by their global index (time x fps), so spans written one after another join; one frames-<first>.json a span
 //   node forge/babylon-map/shoot.mjs --facts <abs file>
 //   --port 5210 --data-port 5211 (never 5199 or 5400); --q 'exp=0.6' passed to the page
@@ -109,7 +110,7 @@ if (opt.probes && opt.probes !== true) {
 if (opt.clip && opt.clip !== true) {
   const to = writable(String(opt.clip))
   if (!to) throw new Error('--clip <absolute folder inside the hand-in>')
-  const r = await page.evaluate((o) => window.__map.clip(o), { out: to, fps: Number(opt.fps ?? 8), w: Number(opt.w ?? 640), h: Number(opt.h ?? 360), samples: Number(opt.samples ?? 2), from: opt.from ? Number(opt.from) : undefined, to: opt.to ? Number(opt.to) : undefined, framing: opt.framing ?? 'desktop', view: opt.view ?? 'grey' }).catch((e) => ({ error: String(e) }))
+  const r = await page.evaluate((o) => window.__map.clip(o), { out: to, fps: Number(opt.fps ?? 8), w: Number(opt.w ?? 640), h: Number(opt.h ?? 360), samples: Number(opt.samples ?? 2), from: opt.from ? Number(opt.from) : undefined, to: opt.to ? Number(opt.to) : undefined, framing: opt.framing ?? 'desktop', view: opt.view ?? 'grey', watch: opt.watch && opt.watch !== true ? String(opt.watch).split(',').map(Number) : undefined }).catch((e) => ({ error: String(e) }))
   console.log(`clip ${JSON.stringify(r).slice(0, 300)}`)
   if (r.error) bad++
 }

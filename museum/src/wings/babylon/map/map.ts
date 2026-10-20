@@ -350,7 +350,7 @@ const rig = {
     return { file, ms, y: +y.toFixed(2), brightness: brightness(bytes) }
   },
   /** the moving sketch: frames of the whole path (or a span), JPEG, with a per-frame log */
-  async clip(o: { out: string; fps: number; w: number; h: number; samples: number; from?: number; to?: number; framing?: 'desktop' | 'phone'; view?: 'grey' | 'classes'; every?: number }) {
+  async clip(o: { out: string; fps: number; w: number; h: number; samples: number; from?: number; to?: number; framing?: 'desktop' | 'phone'; view?: 'grey' | 'classes'; every?: number; watch?: [number, number] }) {
     uView.value = o.view === 'classes' ? 1 : 0
     const from = o.from ?? 0, to = Math.min(o.to ?? path.duration, path.duration)
     const n = Math.floor((to - from) * o.fps) + 1
@@ -364,7 +364,14 @@ const rig = {
       const { bytes } = await render(o.w, o.h, o.samples, ev)
       const g = Math.round(time * o.fps)
       await upload(`${o.out}/f${String(g).padStart(5, '0')}.jpg`, await jpeg(bytes, o.w, o.h, 0.86))
-      log.push({ i: g, t: +time.toFixed(3), stop: p.stop, kind: p.kind, utm: F.utm(p.pos[0], p.pos[2]).map((v) => +v.toFixed(2)), y: +p.pos[1].toFixed(2), eyeOverStand: +(p.pos[1] - stand(p.pos[0], p.pos[2])).toFixed(2), hour: +p.hour.toFixed(3), ev: +ev.toFixed(3), figuresInFrame: figuresInFrame() })
+      // a watched ground point (E, N, on what a visitor stands there) in this frame's pixels, for a local flicker measure
+      let watch: number[] | undefined
+      if (o.watch) {
+        const [wx, wz] = F.s(o.watch[0], o.watch[1])
+        ndc.set(wx, stand(wx, wz), wz).project(camera)
+        watch = [+(((ndc.x + 1) / 2) * o.w).toFixed(1), +(((1 - ndc.y) / 2) * o.h).toFixed(1), ndc.z < 1 ? 1 : 0]
+      }
+      log.push({ i: g, t: +time.toFixed(3), stop: p.stop, kind: p.kind, utm: F.utm(p.pos[0], p.pos[2]).map((v) => +v.toFixed(2)), y: +p.pos[1].toFixed(2), eyeOverStand: +(p.pos[1] - stand(p.pos[0], p.pos[2])).toFixed(2), hour: +p.hour.toFixed(3), ev: +ev.toFixed(3), figuresInFrame: figuresInFrame(), ...(watch ? { watch } : {}) })
     }
     await upload(`${o.out}/frames-${String(Math.round(from * o.fps)).padStart(5, '0')}.json`, JSON.stringify({ fps: o.fps, w: o.w, h: o.h, samples: o.samples, from, to, frames: log }, null, 0))
     return { frames: n, ms: Math.round(performance.now() - t) }
