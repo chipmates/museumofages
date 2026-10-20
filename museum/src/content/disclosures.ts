@@ -24,7 +24,7 @@ export const DISCLOSURES: Record<DisclosureKey, DisclosureLine> = {
       what an Echo is, before one speaks */
   stone: {
     en: 'Each figure speaks as an AI Echo: an interpretation built from what they left behind.',
-    de: 'Jede Persönlichkeit spricht als KI-Echo: eine Deutung, gestützt auf das, was sie hinterließ.',
+    de: 'Jede Persönlichkeit spricht als KI-Echo: eine Deutung, gestützt auf das, was sie hinterließ. KI-Echos können sich irren.',
   },
   /** the colophon on every surface an Echo appears on. No surface of the
       museum carries one today: the figure pane used to, and it now shows a
