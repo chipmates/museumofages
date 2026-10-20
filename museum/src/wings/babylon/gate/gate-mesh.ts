@@ -357,6 +357,7 @@ const SCHEME: Record<Panel['colour'], number> = { yellow: 0, white: 1, lionWhite
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export function assemble(B: Built, plan: any, fields: Record<'bull' | 'dragon' | 'lion', Field>): Assembled {
   const C: number = plan.course
+  const MB: number = (plan.switch?.mBand?.courses ?? 1) * C
   const s = new Soup()
   const loopIn = B.loopholes
   const runKind = (id: string): number => (/^(lion|conn|bastion)-/.test(id) ? KIND.brick : KIND.gate)
@@ -374,7 +375,7 @@ export function assemble(B: Built, plan: any, fields: Record<'bull' | 'dragon' |
   const L = { bull: fields.bull.L, dragon: fields.dragon.L, lion: fields.lion.L }
   for (const f of B.faces) {
     const boxes = B.panels.filter((q) => q.face === f.id).map((q) => panelRect(q, L[q.kind], margin, C))
-    const bandTop = f.kind === 'lion' ? f.origin[1] + 3 + C : C
+    const bandTop = f.kind === 'lion' ? f.origin[1] + 3 + MB : MB
     s.mark(`skin:${f.id}`)
     addSkin(s, f, boxes, bandTop)
   }
@@ -385,7 +386,7 @@ export function assemble(B: Built, plan: any, fields: Record<'bull' | 'dragon' |
   }
   // the pedestals: square brick blocks, the round one a drum
   for (const p of B.pedestals) {
-    const at = bodyAttr(KIND.brick, p.plan, p.height, p.y0 + 0.4 + C, -1)
+    const at = bodyAttr(KIND.brick, p.plan, p.height, p.y0 + 0.4 + MB, -1)
     s.mark(`ped-${p.n}`)
     if (p.shape === 'round') {
       const sh = new Shape()
@@ -394,7 +395,7 @@ export function assemble(B: Built, plan: any, fields: Record<'bull' | 'dragon' |
       gg.rotateX(-Math.PI / 2)
       gg.translate(p.x, p.y0, p.z)
       s.add(gg, at)
-    } else addBox(s, { id: `ped-${p.n}`, part: 'forecourt', x0: p.x - p.d / 2, x1: p.x + p.d / 2, y0: p.y0, y1: p.y1, z0: p.z - p.d / 2, z1: p.z + p.d / 2, surf: 'brick', plan: p.plan, height: p.height, band: p.y0 + 0.4 + C }, KIND.brick)
+    } else addBox(s, { id: `ped-${p.n}`, part: 'forecourt', x0: p.x - p.d / 2, x1: p.x + p.d / 2, y0: p.y0, y1: p.y1, z0: p.z - p.d / 2, z1: p.z + p.d / 2, surf: 'brick', plan: p.plan, height: p.height, band: p.y0 + 0.4 + MB }, KIND.brick)
   }
   // the open door leaves: cedar with copper bands, hinged at the jamb, swung into the chamber
   for (const [di, d] of B.doors.entries()) {

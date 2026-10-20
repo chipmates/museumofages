@@ -211,7 +211,9 @@ export function buildGate(plan: J): Built {
   const facts: Record<string, unknown> = {}
   const SK = 0.015
   const FOOT = -2.5
-  const band = (y: number): number => y + C
+  // the measured class's band at a wall's foot: the plan is the one thing measured in place (gate-plan.json switch.mBand)
+  const MB: number = (plan.switch?.mBand?.courses ?? 1) * C
+  const band = (y: number): number => y + MB
 
   /* the street's own axis (346.3 grid), through the gate's axis at the face */
   const turn = (plan.street.bearingGrid - plan.frame.zGrid) * D2R
