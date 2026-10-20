@@ -55,8 +55,8 @@
     "door": { "w": 4.5, "cls": "G", "src": "not stated; 4.5 m like the front gate (GATE-RESEARCH 1.2)" },
     "cls": "M",
     "src": "K1918 p. 37; P2021 p. 72",
-    "wallTop": { "value": 21.0, "range": [18, 24], "cls": "G", "src": "at least one storey, 3 to 4 m, over the front gate (K1918 p. 47); Pedersen's model 19 m. Ours 21: from the street 66 m out on the axis the line over the front gate's merlons passes 0.5 m above a 19 m wall, so at 19 the main gate hides behind the front gate (one gate where two stood); at 21 its battlements show 1.4 m over the front gate's" },
-    "towerTop": { "value": 25.0, "range": [21, 28], "cls": "G", "src": "Pedersen's model 22.5 m (GATE-RESEARCH part 8); ours 25, one storey of 4 m over the 21 m walls, so the main towers' tops show over the front towers from the street" },
+    "wallTop": { "value": 21.0, "range": [18, 24], "cls": "G", "src": "at least one storey, 3 to 4 m, over the front gate (K1918 p. 47); Pedersén's model 19 m (P2021). Ours 21, accepted by the launcher on 20 Oct: from the street 66 m out on the axis the line over the front gate's merlons passes 0.5 m above a 19 m wall, so at Pedersén's height the main gate hides behind the front gate, and the double gate is the point of the stop; at 21 its battlements show 1.4 m over the front gate's. The desktop camera stays on the axis" },
+    "towerTop": { "value": 25.0, "range": [21, 28], "cls": "G", "src": "Pedersén's model 22.5 m (GATE-RESEARCH part 8); ours 25, accepted by the launcher on 20 Oct, one storey of 4 m over the 21 m walls, so the main towers' tops show over the front towers from the street on the axis" },
     "arch": { "crown": 12.3, "range": [10.5, 14], "cls": "G", "src": "ours: the top of the front door's range, for the larger gate" }
   },
   "forecourt": {
@@ -124,5 +124,19 @@
   "doors": { "cls": "T", "src": "door leaves of cedar with copper, bronze thresholds and pivots (K1918 p. 53, col. VI 11 to 18); shown open, their form guessed" },
   "roof": { "cls": "T", "src": "cedar beams over the chambers (K1918 p. 47); the court open to the sky (K1918 p. 37)" },
   "figure": { "height": 1.7, "x": -8.0, "z": 3.4, "turn": -1.1, "src": "the house's grey sign person on the paving by the door (HOUSE-RULES); in front of the east tower, where the floor is in the sun at 17:00 (the west half of the recess lies in the west tower's shadow)" },
+  "light": {
+    "about": "17:00 for both stills (the launcher's ruling, 20 Oct). The stack has no GI, so the shade's light is modelled: the map's sky dome, the paving's bounce as the environment's lower half, and the sunlit east walls as a warm band in it. Every value here is ours (G for the method), stated so a reader can redo it.",
+    "sun": { "intensity": 4.5, "src": "the directional sun in the renderer's units, its colour warming with low elevation (gate.ts setHour). With env 0.6 a lit vertical face gets about three times a shaded one's light, the order of a clear sky at 17 degrees (diffuse about 0.4 of the direct on the ground; textbook order, Ours). At 3.2 with the sky at full strength the lit and shaded faces differed by under 2 to 1 and the hour did not show (HAND/scratch/light, variants a and h)" },
+    "bounce": {
+      "paving": { "value": 0.32, "colour": [0.62, 0.52, 0.42], "src": "the environment below the horizon: a warm grey scaled by value. Limestone and breccia about 0.6 and 0.3 albedo, 15 percent of the forecourt floor in sun at 17:00 (P1's ray cast), the rest lit by the sky: a dim warm floor, not a bright one" },
+      "eastWalls": { "albedo": 0.35, "colour": [1.0, 0.82, 0.62], "azimuth": [10, 70], "elevation": [-2, 14], "src": "the west faces of the east bastion (x -10 to -30, z 21 to 50), the east connecting wall and the east lion wall stand in full sun at 17:00 (light on a west face 0.92). Seen from the door they fill azimuth 10 to 70 degrees east of the face's normal, elevation -2 to 14. Their radiance: albedo 0.35 (buff brick) times the sun on a west face over pi, in the brick's colour; computed per hour in gate.ts" }
+    },
+    "env": 0.6,
+    "envSrc": "the environment's strength: the sky dome, the paving's bounce and the east walls' band together; the sky in the picture is the dome itself at full strength",
+    "exposure": 1.4,
+    "exposureSrc": "exposed for the lit east tower front: its white dragons near 200 of 255 and the cobalt a clear blue; at 1.0 the cobalt read navy (glaze ground luma 42 on the lit front, HAND/scratch/light). The brighter state is the same picture 0.5 stops up (exposure 1.98), handed in beside it",
+    "brighterStops": 0.5,
+    "print": { "toe": 0.01, "gain": [1.05, 1, 0.93], "saturation": 1.1, "glow": 0.05, "src": "a white balance a little warm (a photographer's shade setting), so the shade reads blue-grey and the sun's side warm; saturation 1.1 for new glaze" }
+  },
   "hour": { "days": 20, "latitude": 32.5434, "obliquity": 23.76, "stills": "17:00", "src": "GATE-RESEARCH 5.1 and PILOT/scratch/sun2.py; local apparent solar time, 20 days after the spring equinox" }
 }

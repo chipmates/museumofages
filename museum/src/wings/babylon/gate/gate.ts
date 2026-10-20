@@ -31,7 +31,7 @@ import { bakePanel, makeUniforms, panelMaterial, pavingMaterial, wallMaterial, C
 type N = any
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 type J = any
-const { abs, clamp, dot, max, mix, normalize, positionLocal, positionWorld, pow, smoothstep, step, uniform, vec3, vec4, fog, densityFogFactor } = TSL as unknown as Record<string, N>
+const { abs, asin, atan, clamp, dot, max, mix, normalize, positionLocal, positionWorld, pow, smoothstep, step, uniform, vec3, vec4, fog, densityFogFactor } = TSL as unknown as Record<string, N>
 
 const q = new URLSearchParams(location.search)
 const says = document.getElementById('says') as HTMLElement
@@ -231,20 +231,33 @@ figure.name = 'figure'
 gate.add(figure)
 
 /* light: the sun's key with a shadow fitted over the gate and the camera, the sky and the modelled bounce as an environment */
-const sunLight = new DirectionalLight(new Color(1.0, 0.86, 0.7), 3.2)
+// the light's stated values (gate-plan.json `light`); the URL may override one for a test, the sidecar records what ran
+const LIGHT = plan.light
+const SUN_I = Number(q.get('sun') ?? LIGHT.sun.intensity)
+const sunLight = new DirectionalLight(new Color(1.0, 0.86, 0.7), SUN_I)
 sunLight.castShadow = true
 sunLight.shadow.mapSize.set(8192, 8192)
 sunLight.shadow.bias = -0.0002
 sunLight.shadow.normalBias = 0.03
 scene.add(sunLight, sunLight.target)
-const uBounce = uniform(Number(q.get('bounce') ?? 0.32))
+const uBounce = uniform(Number(q.get('bounce') ?? LIGHT.bounce.paving.value))
+const WALLS = LIGHT.bounce.eastWalls
+const wallsOn = Number(q.get('walls') ?? 1)
+// the sunlit east walls' radiance as an eye in the forecourt sees them (set per hour)
+const uWalls = uniform(new Color(0, 0, 0))
 const envScene = new Scene()
 {
   const m = new MeshBasicNodeMaterial({ side: BackSide, depthWrite: false })
   const d = normalize(positionLocal)
   // below the horizon: the lit paving and walls' bounce, a warm grey (albedo times what reaches the ground)
-  const ground = vec3(0.62, 0.52, 0.42).mul(uBounce).mul(uDay)
-  m.colorNode = mix(ground, skyColour(d), smoothstep(-0.05, 0.02, d.y))
+  const ground = vec3(...(LIGHT.bounce.paving.colour as [number, number, number])).mul(uBounce).mul(uDay)
+  // the sunlit west faces of the east bastion, the east connecting wall and the east lion wall: a warm band low in the north-east
+  const dg = uW2G.mul(vec4(d, 0)).xyz
+  const az = atan(dg.x.negate(), dg.z).mul(180 / Math.PI)
+  const el = asin(clamp(dg.y, -1, 1)).mul(180 / Math.PI)
+  const [a0, a1] = WALLS.azimuth as [number, number], [e0, e1] = WALLS.elevation as [number, number]
+  const band = smoothstep(a0 - 6, a0, az).mul(smoothstep(a1 + 6, a1, az)).mul(smoothstep(e0 - 3, e0, el)).mul(smoothstep(e1 + 3, e1, el))
+  m.colorNode = mix(ground, skyColour(d), smoothstep(-0.05, 0.02, d.y)).mul(band.oneMinus()).add(vec3(uWalls).mul(band))
   const mesh = new Mesh(new SphereGeometry(100, 64, 32), m)
   envScene.add(mesh)
 }
@@ -255,7 +268,7 @@ function bakeEnv(): void {
   envTarget = pmrem.fromScene(envScene, 0.02, 1, 1000)
   scene.environment = envTarget.texture
 }
-const uEnv = Number(q.get('env') ?? 1)
+const uEnv = Number(q.get('env') ?? plan.light.env)
 scene.environmentIntensity = uEnv
 
 let hourNow = -1
@@ -268,8 +281,11 @@ function setHour(hour: number): void {
   ;(uSun.value as Vector3).copy(w)
   const el = Math.asin(sG[1]) / D2R
   const k = Math.min(1, Math.max(0, (el + 0.5) / 6))
-  sunLight.intensity = 3.2 * k
+  sunLight.intensity = SUN_I * k
   sunLight.color.setRGB(1.0, 0.72 + 0.14 * Math.min(1, el / 20), 0.5 + 0.2 * Math.min(1, el / 20))
+  // a west-facing wall's radiance in the sun: albedo times the light on it over pi, in the wall's own buff
+  const onWest = Math.max(0, sG[0]) * sunLight.intensity * WALLS.albedo * wallsOn / Math.PI
+  ;(uWalls.value as Color).setRGB(sunLight.color.r * WALLS.colour[0] * onWest, sunLight.color.g * WALLS.colour[1] * onWest, sunLight.color.b * WALLS.colour[2] * onWest)
   const day = Math.min(1, Math.max(0.18, (el + 6) / 14))
   uDay.value = day
   ;(uHaze.value as Color).setRGB(0.72 * day, 0.64 * day, 0.54 * day)
@@ -377,9 +393,11 @@ const first = stillView('desktop')
 aimView(first, 1600, 900)
 renderer.render(scene, camera)
 const linear = createMapLinear(renderer, scene, camera, { ao: { on: q.get('ao') !== '0', intensity: Number(q.get('ao') ?? 0.75), radius: 1.2 }, fade: [120, 600] })
+const P0 = plan.light.print
+const three = (k: string, d: number[]): [number, number, number] => (q.get(k) ?? d.join(',')).split(',').map(Number) as [number, number, number]
 const PRINT: Print = {
-  exposure: Number(q.get('exp') ?? 0.9), toe: 0.01, shoulder: 1, lift: [0, 0, 0], gamma: [1, 1, 1], gain: [1, 1, 1], warm: [1.02, 1, 0.97], cool: [0.97, 1, 1.03],
-  split: 0.3, saturation: 1, vignette: 0.1, grain: 0.003, glow: { threshold: 1.2, strength: 0.05, radii: [0.012, 0.06] },
+  exposure: Number(q.get('exp') ?? plan.light.exposure), toe: Number(q.get('toe') ?? P0.toe), shoulder: 1, lift: [0, 0, 0], gamma: [1, 1, 1], gain: three('gain', P0.gain), warm: [1.02, 1, 0.97], cool: [0.97, 1, 1.03],
+  split: 0.3, saturation: Number(q.get('sat') ?? P0.saturation), vignette: 0.1, grain: 0.003, glow: { threshold: 1.2, strength: Number(q.get('glow') ?? P0.glow), radii: [0.012, 0.06] },
 }
 
 const putBase = q.get('put') ?? ''
@@ -473,7 +491,7 @@ const rig = {
       renderTarget: target, sampleCountReadBack: (linear.post as N).renderer?.samples ?? 'the accumulation target is created by the kit with samples 0 (render.ts: RenderTarget(width, height, { type: FloatType, format: RGBAFormat, depthBuffer: false }))',
       backend: stack.backend, adapter: stack.architecture, print: { ...PRINT, exposure: PRINT.exposure * Math.pow(2, o.stops ?? 0) },
       hour, sun: { azimuth: +s.azimuth.toFixed(1), elevation: +s.elevation.toFixed(1), toward: sunVector(plan, hourOf(hour)).map((x) => +x.toFixed(3)) },
-      env: { intensity: scene.environmentIntensity, bounce: uBounce.value },
+      env: { intensity: scene.environmentIntensity, bounce: uBounce.value, sunIntensity: sunLight.intensity, eastWalls: [(uWalls.value as Color).r, (uWalls.value as Color).g, (uWalls.value as Color).b].map((v) => +v.toFixed(4)) },
       camera: o.look ? { gate: o.look } : { gate: { pos: v.pos.map((x) => +x.toFixed(3)), look: v.look }, utm: GF.utm(v.pos[0], v.pos[2]).map((x) => +x.toFixed(2)), eyeOverStreet: +(v.pos[1] - B.level(v.pos[2])).toFixed(3), hfov: v.hfov, vfov: +camera.fov.toFixed(3), shift: shiftNow, near: camera.near, far: camera.far },
       brightness: brightness(bytes), box: o.box ? { box: o.box, ...brightness(bytes, o.box, o.w) } : undefined, ms,
     }
