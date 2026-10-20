@@ -1,0 +1,244 @@
+{
+ "_note": "LE PAROLE della pagina dell’Ultima Cena, in italiano. Riscritte dall’inglese e dal tedesco, con le stesse date, misure, nomi, gradi di certezza e fonti. La tavola e l’arco del disegno (top.drawing.inside) sono una ricostruzione da una fotografia della parete, la stessa dell’inglese, e la nota sotto il disegno lo dice. Il titolo dice il Cenacolo e l’Ultima Cena, le due parole che si cercano. Senza lineette, senza punto e virgola. Stato ai: nessuna persona le ha ancora rilette.",
+ "page": {
+  "id": "vinci-supper",
+  "wing": "vinci",
+  "topic": "supper",
+  "stop": "supper-wall",
+  "published": "2026-10-20",
+  "checked": "2026-10-12",
+  "og_image": {
+   "file": "vinci-supper-og-{lang}-1200x630.png",
+   "width": 1200,
+   "height": 630
+  },
+  "still": {
+   "figure": "vinci-supper-drawing-{lang}-1600.png"
+  }
+ },
+ "pics": {
+  "supper": {
+   "stem": "v-supper",
+   "widths": [
+    800,
+    1600
+   ],
+   "sizes": "(min-width: 960px) 640px, calc(100vw - 40px)"
+  }
+ },
+ "meta": {
+  "title": "Il Cenacolo, l’Ultima Cena di Leonardo | Museum of Ages",
+  "description": "L’Ultima Cena di Leonardo da Vinci: pittura murale di 4,6 per 8,8 metri in un refettorio di Milano, dal 1494 al 1498 circa. Come si è rovinata e cosa ne resta.",
+  "og_title": "Il Cenacolo, l’Ultima Cena di Leonardo",
+  "og_image_alt": "L’Ultima Cena e, accanto, una persona alta 1,70 metri, disegnate alla stessa scala: la pittura murale misura 4,6 per 8,8 metri. Al suo interno la tavola e, sotto, la parte alta dell’arco della porta, dove erano i piedi di Cristo. Un disegno fatto per questa pagina, con la tavola e l’arco ricavati da una fotografia."
+ },
+ "labels": {
+  "crumbs": "Sei qui",
+  "crumb_home": "Museo",
+  "crumb_here": "Ultima Cena",
+  "toc": "In questa pagina",
+  "tag_chart": "Fatto per questa pagina",
+  "tag_still": "Riproduzione",
+  "person": "1,70 m"
+ },
+ "top": {
+  "h1": "L’Ultima Cena di Leonardo da Vinci",
+  "answer": "L’Ultima Cena di Leonardo da Vinci, detta anche il Cenacolo, è una pittura murale in Santa Maria delle Grazie, a Milano. È nel refettorio, la sala da pranzo di un convento domenicano. Leonardo l’ha dipinta per Ludovico Sforza, duca di Milano, dal 1494 al 1498 circa. Altre fonti dicono dal 1495 al 1498, o dal 1495 al 1497: perfino le fonti ufficiali italiane differiscono di un anno all’inizio e alla fine. L’opera è ancora sulla sua parete originale: secondo il museo misura 4,6 per 8,8 metri, altezza per larghezza. Guarda sotto la tavola: Cristo non ha i piedi. Nel XVII secolo i frati volevano una porta più grande verso le cucine. Quella che hanno allargato è al centro della parete, proprio dove c’erano i piedi di Cristo.",
+  "drawing": {
+   "wall": "supper",
+   "tag": "tag_chart",
+   "title": "L’Ultima Cena",
+   "what": "accanto a una persona alta 1,70 metri",
+   "alt": "L’Ultima Cena, 4,6 per 8,8 metri, e accanto una persona alta 1,70 metri, disegnate alla stessa scala. Al suo interno la tavola, e sotto la tavola la parte alta dell’arco della porta, dove erano i piedi di Cristo. La tavola e l’arco sono una ricostruzione da una fotografia. La porta, più in basso, e il pavimento non sono disegnati.",
+   "note": "Tavola e arco: ricostruzione da una fotografia. Porta e pavimento: non disegnati.",
+   "inside": {
+    "table": {
+     "from_m": 0.57,
+     "to_m": 8.29,
+     "hem_m": 0.85,
+     "top_m": 1.42
+    },
+    "arch": {
+     "from_m": 3.2,
+     "to_m": 5.58,
+     "spring_m": 0.87,
+     "crown_m": 1.17
+    }
+   },
+   "arch_label": [
+    "L’arco della porta,",
+    "dove erano i piedi di Cristo"
+   ]
+  },
+  "door": {
+   "text": "Vedi l’Ultima Cena nell’ala",
+   "note": "Ingresso libero, senza account.",
+   "leads": "La porta ti conduce nell’ala di Leonardo, alla parete del cortile."
+  }
+ },
+ "blocks": [
+  {
+   "type": "text",
+   "id": "painted",
+   "nav": "Come l’ha dipinta",
+   "h": "Come l’ha dipinta e perché ha cominciato a rovinarsi",
+   "paras": [
+    "Ai suoi tempi una pittura murale era di solito un affresco. Il pittore lavora in fretta sull’intonaco ancora umido, e l’intonaco, asciugandosi, assorbe il colore. Leonardo non voleva lavorare in fretta. Il museo spiega che voleva procedere con calma e fare modifiche mentre dipingeva. Così ha lasciato asciugare l’intonaco, ci ha steso sopra una preparazione bianca e ha dipinto a tempera, come se la parete fosse una delle sue tavole di legno. Uno studio di laboratorio del 2023 indica che nella miscela c’era anche dell’olio.",
+    "Per questo ha iniziato a rovinarsi. Niente legava il colore alla parete: stava in superficie come una pelle, e la sala era umida. Nel giro di una ventina d’anni il colore aveva già cominciato a staccarsi: nel 1517 un visitatore ha notato il degrado. Nel 1568 Vasari ha scritto che «non si scorge più se non una macchia abbagliata», come riporta il sito del museo."
+   ]
+  },
+  {
+   "type": "text",
+   "id": "centuries",
+   "nav": "Cinque secoli su una parete",
+   "h": "Cinque secoli su una parete",
+   "paras": [
+    "I danni sono arrivati a ondate. Nel XVII secolo i frati hanno allargato la porta sotto la tavola (un catalogo indica l’anno 1652), e i piedi di Cristo sono andati perduti. Negli anni Venti del Settecento un restauratore ha creduto che fosse un dipinto a olio, secondo un catalogo nazionale. Ha lavato la parete con la soda caustica, ci ha dato una mano di vernice a olio e ne ha ridipinto grandi parti. Negli anni Settanta del Settecento è stata ridipinta un’altra volta. Nel 1821 un altro restauratore ha provato a staccarne alcune parti dalla parete, senza riuscirci. Sotto Napoleone la sala è stata occupata dalle truppe e, secondo un racconto, usata come stalla.",
+    "Poi la guerra. Nell’agosto 1943 una bomba è esplosa nel chiostro accanto. Il refettorio ha perso la volta e la parete sul lato est. La parete dipinta ha resistito. Dal 1940 stava dietro un’armatura d’acciaio e uno spesso muro di sacchi di sabbia, ed è stata questa protezione a salvarla. La sala è stata ricostruita a partire dal 1945."
+   ]
+  },
+  {
+   "type": "text",
+   "id": "restoration",
+   "nav": "Il lungo restauro",
+   "h": "Il lungo restauro",
+   "paras": [
+    "Dall’inizio del XVIII secolo i restauratori hanno lavorato sulla parete circa nove volte, secondo il conteggio del museo. Per gran parte di questo tempo restaurare voleva dire ridipingere ciò che mancava. All’inizio del XX secolo l’ha restaurata Luigi Cavenaghi, e negli anni Cinquanta Mauro Pellicioli ha fissato la superficie che si sfaldava, senza togliere le vecchie ridipinture.",
+    "L’ultimo restauro è stato diverso. Pinin Brambilla Barcilon lo ha cominciato alla fine degli anni Settanta e lo ha concluso nel 1999, più di vent’anni dopo. La sostenevano la Soprintendenza di Milano e l’Istituto centrale del restauro di Roma, come ha riferito la stampa. La sua squadra ha tolto le ridipinture dei secoli precedenti. Con la lente d’ingrandimento ha pulito ciò che restava del colore di Leonardo, scaglia per scaglia, e ha colmato le lacune con tinte ad acquerello, che si possono togliere con l’acqua. I restauratori precedenti, ha raccontato la restauratrice, avevano spostato occhi, chiuso bocche e messo barbe su volti che non le avevano.",
+    "Ciò che è tornato alla luce è poco. Quanto del colore è ancora di Leonardo? Le stime degli esperti vanno da un quinto alla metà. Su una cifra precisa non c’è accordo."
+   ]
+  },
+  {
+   "type": "text",
+   "id": "milan",
+   "nav": "A Milano oggi",
+   "h": "Vederla oggi a Milano",
+   "paras": [
+    "Il dipinto è ancora nella sua sala. Insieme alla chiesa e al convento, dal 1980 è Patrimonio mondiale dell’UNESCO. Nel refettorio l’aria è filtrata e il clima è controllato. Per questo entri attraverso una serie di piccole stanze, con porte che si aprono una dopo l’altra, e le visite sono brevi, a orario fisso e in piccoli gruppi. Bisogna prenotare.",
+    [
+     "Sulla parete di fronte c’è una Crocifissione di Giovanni Donato Montorfano. L’ha firmata e datata 1495, e l’ha dipinta ad affresco. Ha conservato il colore molto meglio della parete di Leonardo. Più tardi vi sono state aggiunte figure inginocchiate della famiglia del duca, dipinte probabilmente da Leonardo, dice il museo, e di quelle figure non resta quasi nulla. Per la visita, il sito del museo: ",
+     {
+      "text": "cenacolovinciano.org",
+      "href": "https://cenacolovinciano.org/en/"
+     },
+     " (in inglese e in italiano)."
+    ]
+   ]
+  },
+  {
+   "type": "text",
+   "id": "wing",
+   "nav": "Nell’ala",
+   "h": "Cosa mostra la nostra copia e cosa non può mostrare",
+   "paras": [
+    "La nostra ala di Leonardo ha una copia dell’Ultima Cena su una parete del cortile. È una riproduzione, con l’altezza e la larghezza dell’originale, 4,6 per 8,8 metri. Ti mostra ciò che un libro non può mostrare: tutta la composizione a grandezza naturale, con te davanti, Cristo al centro e gli apostoli in quattro gruppi di tre.",
+    "Ciò che una copia piatta non può mostrare è la parete stessa: come le scaglie di colore si sollevano dall’intonaco, e quanto è fragile tutto l’insieme. E non può mostrare la luce della sala. A Milano la luce dipinta entra da sinistra, dallo stesso lato delle vere finestre del refettorio. Se togli il dipinto da quella parete, questo legame si perde.",
+    [
+     "Quanto è grande accanto alla Gioconda e alle altre opere: ",
+     {
+      "text": "la pagina delle misure",
+      "page": "sizes"
+     },
+     ", in inglese."
+    ]
+   ],
+   "pic": {
+    "pic": "supper",
+    "title": "L’Ultima Cena nel cortile",
+    "tag": "tag_still",
+    "what": "un’immagine del film dell’ala. La riproduzione su una parete del cortile del museo, 4,6 per 8,8 metri. La parete è costruita in codice. L’originale è a Milano, nel refettorio di Santa Maria delle Grazie.",
+    "alt": "Una riproduzione dell’Ultima Cena occupa una parete chiara in un cortile: una fila di figure a una lunga tavola, in una sala dipinta. Un’immagine del film dell’ala.",
+    "src": [
+     "Fotografia di Paris Orlando, 2019, pubblico dominio (PD-Art), tramite ",
+     {
+      "text": "Wikimedia Commons",
+      "href": "https://commons.wikimedia.org/wiki/File:Last_Supper_by_Leonardo_da_Vinci.jpg"
+     },
+     ". {museum:it108}"
+    ]
+   },
+   "links": [
+    {
+     "text": "Vedi l’Ultima Cena nell’ala",
+     "stop": "supper-wall"
+    }
+   ]
+  },
+  {
+   "type": "sources",
+   "id": "sources",
+   "nav": "Fonti",
+   "h": "Fonti",
+   "intro": "La pagina si basa su queste fonti, tutte consultate il 12 ottobre 2026:",
+   "read": [
+    {
+     "text": "Museo del Cenacolo Vinciano, l’opera",
+     "href": "https://cenacolovinciano.org/en/museum/the-works/the-last-supper-leonardo-da-vinci-1452-1519/"
+    },
+    {
+     "text": "Museo del Cenacolo Vinciano, tecnica, conservazione e restauri",
+     "href": "https://cenacolovinciano.org/en/museum/backstage/"
+    },
+    {
+     "text": "Museo del Cenacolo Vinciano, la storia",
+     "href": "https://cenacolovinciano.org/en/museum/history/"
+    },
+    {
+     "text": "Museo del Cenacolo Vinciano, la Crocifissione di Montorfano",
+     "href": "https://cenacolovinciano.org/en/museum/the-works/the-crucifixion-donato-montorfano-1460-ca-1502-ca/"
+    },
+    {
+     "text": "Museo del Cenacolo Vinciano, la descrizione verbale del dipinto (PDF)",
+     "href": "https://cenacolovinciano.org/wp-content/uploads/2019/07/DescriVedendo-Cenacolo.pdf"
+    },
+    {
+     "text": "Museo del Cenacolo Vinciano, la scheda del museo del 2023 (PDF)",
+     "href": "https://cenacolovinciano.org/wp-content/uploads/2023/07/Museo-del-Cenacolo-Vinciano.pdf"
+    },
+    {
+     "text": "Ministero della Cultura, il luogo",
+     "href": "https://cultura.gov.it/luogo/museo-del-cenacolo-vinciano"
+    },
+    {
+     "text": "Regione Lombardia, scheda di catalogo del dipinto",
+     "href": "https://lombardiabeniculturali.it/opere-arte/schede-complete/3o210-01279"
+    },
+    {
+     "text": "Regione Lombardia, scheda di catalogo del refettorio",
+     "href": "https://www.lombardiabeniculturali.it/architetture/schede/LMD80-00084/"
+    },
+    {
+     "text": "ICCD, scheda del catalogo nazionale (1975)",
+     "href": "https://sigecweb.beniculturali.it/sigec/item/print/ICCD3288350"
+    },
+    {
+     "text": "The Art Newspaper, 1º novembre 1998, sul restauro",
+     "href": "https://www.theartnewspaper.com/1998/11/01/leonardos-last-supper-restored-a-wreck-but-an-authentic-wreck"
+    },
+    {
+     "text": "The Art Newspaper, 30 aprile 1999, su quanto è ancora di Leonardo",
+     "href": "https://www.theartnewspaper.com/1999/05/01/the-director-of-one-of-italys-top-restoration-laboratories-responds-to-denunciations-of-work-carried-out-on-leonardos-last-supper"
+    },
+    {
+     "text": "Università di Amsterdam, 2023, sull’olio nel colore",
+     "href": "https://hims.uva.nl/content/news/2023/10/shedding-light-on-leonardos-painting-methods.html"
+    }
+   ],
+   "notes": [],
+   "contact": "Se una data, un nome o una frase è sbagliata, scrivici e la correggiamo.",
+   "contact_link": "Vai alle note legali (in inglese)",
+   "what_link": "Che cos’è questo museo"
+  },
+  {
+   "type": "close",
+   "id": "enter",
+   "nav": "",
+   "h": "Vedi l’Ultima Cena nell’ala",
+   "p": "Questa porta conduce direttamente alla parete del cortile. Il percorso completo comincia nella sala dei quadri, con la Gioconda.",
+   "door": {
+    "text": "Entra nel museo",
+    "note": "Ingresso libero, senza account."
+   }
+  }
+ ]
+}

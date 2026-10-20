@@ -332,7 +332,7 @@
           "en": "The wall in Milan, 4.6 by 8.8 metres: how he painted it, what five centuries did to it, and what is left.",
           "de": "Die Wand in Mailand, 4,6 mal 8,8 Meter: wie er es malte, was ihm fünf Jahrhunderte antaten und was übrig ist."
         },
-        "langs": ["en", "de", "es", "pt-BR"],
+        "langs": ["en", "de", "es", "pt-BR", "it"],
         "count": "supper",
         "never_say": [
           ["(?<!cerca de )(?<!hacia )\\b1494 (?:y|a|e) 1498\\b(?!,? aproximadamente)", "about 1494 to 1498: aproximadamente / cerca de, never two bare years", ["es", "pt-BR"]],
@@ -345,7 +345,18 @@
           ["(?<!unas )(?<!cerca de )\\b(?:nueve veces|nove vezes)\\b", "about nine times by the museum's count: unas / cerca de", ["es", "pt-BR"]],
           ["(?<!unos )(?<!cerca de )(?<!más de )(?<!mais de )\\b(?:veinte años|vinte anos)\\b", "within about twenty years it was flaking: unos / cerca de (more than twenty years is the restoration's)", ["es", "pt-BR"]],
           ["\\b(?:1[0-9]|2[0-9]|3[01]|1º) de agosto de 1943", "the bomb fell in August 1943: no source we read gives the day", ["es", "pt-BR"]],
-          ["(?:estudio|estudo)[^.]*\\b(?:demostró|demuestra|prueba|probó|comprobó|comprovou|comprova|provou|prova)\\b", "the 2023 lab study points to oil: never proves it", ["es", "pt-BR"]]
+          ["(?:estudio|estudo)[^.]*\\b(?:demostró|demuestra|prueba|probó|comprobó|comprovou|comprova|provou|prova)\\b", "the 2023 lab study points to oil: never proves it", ["es", "pt-BR"]],
+          ["(?<!circa )\\b(?:dal 1494 al|tra il 1494 e il) 1498\\b(?! circa)", "about 1494 to 1498: circa, never two bare years", ["it"]],
+          ["l[’']ultima cena(?: di leonardo(?: da vinci)?)?,? (?:è|era|è stata) (?:un |dipinta (?:a|ad) )?affresco|(?:ha|aveva) dipinto (?:l[’']ultima cena|il cenacolo) (?:a|ad) affresco|\\baffresco di leonardo|\\baffreschi di leonardo|\\baffresco (?:dell[’']ultima cena|del cenacolo)|\\bil cenacolo,? (?:è|era) un affresco|\\bleonardo (?:ha |aveva )?affresc(?:ato|ò)\\b", "the Last Supper is tempera on dry plaster, not a fresco: the Crucifixion opposite is the fresco", ["it"]],
+          ["(?<!creduto che )\\b(?:è|era|fosse) un (?:dipinto|quadro) a olio|\\b(?:è|era) (?:una )?pittura a olio|\\bdipint[oa] a olio da leonardo", "a lab study points to oil in the mix: never an oil painting (only the 1720s restorer took it for one)", ["it"]],
+          ["(?:\\d+ ?%|\\bper cento\\b)[^.]*\\b(?:colore|pittura|leonardo)\\b|\\b(?:resta|restano|sopravvive|sopravvivono|rimane|rimangono)\\b[^.]*(?:\\d+ ?%|\\bper cento\\b)", "how much is Leonardo's: the experts' estimates lie between a fifth and a half, no single figure", ["it"]],
+          ["(?<!secondo un racconto )(?<!secondo un racconto, )\\b(?:usat[oa]|trasformat[oa]|servit[oa]|adibit[oa]) (?:come|in|a|da) stalla|\\b(?:è stata|era|è diventata) (?:una )?stalla", "the room as a stable is one account: secondo un racconto", ["it"]],
+          ["figure inginocchiate(?:(?!probabilmente)[^.])*\\bleonardo\\b", "the kneeling figures are probably Leonardo's, the museum says: probabilmente", ["it"]],
+          ["(?:^|[.?!] )(?:(?!catalogo|catalogue|katalog|catálogo)[^.])*\\b1652\\b", "the door's year 1652 is one catalogue's: say the catalogue", ["it"]],
+          ["(?<!circa )\\bnove volte\\b", "about nine times by the museum's count: circa", ["it"]],
+          ["(?<!circa )(?<!più di )(?<!oltre )\\b(?:vent[’']anni|venti anni)\\b", "within about twenty years it was flaking: una ventina d’anni or circa (more than twenty years is the restoration's)", ["it"]],
+          ["\\b(?:[1-9]|[12][0-9]|3[01])º? agosto (?:del )?1943\\b", "the bomb fell in August 1943: no source we read gives the day", ["it"]],
+          ["\\bstudio\\b[^.]*\\b(?:dimostra|ha dimostrato|prova|ha provato|conferma|ha confermato)\\b", "the 2023 lab study points to oil: never proves it", ["it"]]
         ]
       },
       {

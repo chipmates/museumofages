@@ -4413,6 +4413,12 @@
    "sha256": "afb7fc5ea1820a9169996b2ddeab45d7c7d7daf899d3d87f60cd8223c655eea7"
   },
   {
+   "path": "pages/pics/img/vinci-supper-drawing-it-1600.png",
+   "url": "/static/img/vinci-supper-drawing-it-1600.png",
+   "bytes": 9594,
+   "sha256": "afb7fc5ea1820a9169996b2ddeab45d7c7d7daf899d3d87f60cd8223c655eea7"
+  },
+  {
    "path": "pages/pics/img/vinci-supper-drawing-pt-br-1600.png",
    "url": "/static/img/vinci-supper-drawing-pt-br-1600.png",
    "bytes": 9594,
@@ -4435,6 +4441,12 @@
    "url": "/static/img/vinci-supper-og-es-1200x630.png",
    "bytes": 14833,
    "sha256": "93a7fd88b10ff79b990eb555256b7f218fd7721eda8f830e69c8ebffb7a018bc"
+  },
+  {
+   "path": "pages/pics/img/vinci-supper-og-it-1200x630.png",
+   "url": "/static/img/vinci-supper-og-it-1200x630.png",
+   "bytes": 14960,
+   "sha256": "5078647d2faebf03033c428212f3bf5e24ad4aad6c0990f4042bbbf6484b7eb6"
   },
   {
    "path": "pages/pics/img/vinci-supper-og-pt-br-1200x630.png",
