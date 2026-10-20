@@ -7,6 +7,8 @@
   python3 -I measure.py frames <folder> <prefix> <out> [--cols 8]                     a sheet of sketch frames (1 fps)
   python3 -I measure.py shares <ids.png>                                             shares of sky, glazed wall, plain wall, paving, figure, other from an id pass
   python3 -I measure.py mask <plain> <switch> <out.png> [--ids ids.png]               the switch's difference mask; with the id pass, the sky's own difference
+  python3 -I measure.py settings <folder> [--md SETTINGS.md]                          the settings every sidecar read back, one row per still, and the render seconds
+  python3 -I measure.py hues <png> [--md HUES.md]                                    each glaze's pixels in a still, picked by nearest hue, their median hue and chroma (a report)
 """
 import json
 import os
@@ -208,6 +210,80 @@ def mask(a, b, out, ids=None):
     return res
 
 
+def settings(folder, md=None):
+    rows = ['| still | CSS | device px | ratio | sub-frames read back (asked) | target read back | backend, adapter | exposure | sun az, el | camera (gate frame) | hfov, vfov, shift | render s |',
+            '|---|---|---|---|---|---|---|---|---|---|---|---|']
+    total = 0.0
+    for n in sorted(os.listdir(folder)):
+        if not n.endswith('.json') or n == 'network.json':
+            continue
+        d = json.load(open(os.path.join(folder, n)))
+        if 'cssSize' not in d:
+            continue
+        t = d.get('renderTarget') or {}
+        cam = d.get('camera', {})
+        g = cam.get('gate', {})
+        sec = d.get('ms', 0) / 1000
+        total += sec
+        rows.append(f"| {os.path.basename(d['file'])} | {d['cssSize'][0]}x{d['cssSize'][1]} | {d['devicePixels'][0]}x{d['devicePixels'][1]} | {d['ratio']} | "
+                    f"{d.get('subFrames')} ({d.get('subFramesAsked', d.get('subFrames'))}) | {t.get('width')}x{t.get('height')} {t.get('type')} {t.get('format')} samples {t.get('samples')} depth {t.get('depthBuffer')} | "
+                    f"{d.get('backend')}, {d.get('adapter')} | {round(d['print']['exposure'], 3)} | {d['sun']['azimuth']}, {d['sun']['elevation']} | "
+                    f"{g.get('pos')} to {g.get('look')} | {cam.get('hfov', g.get('hfov'))}, {cam.get('vfov', '')}, {cam.get('shift', g.get('shift'))} | {sec:.1f} |")
+    rows.append(f'\nrender seconds, all stills: {total:.1f} ({total / 60:.2f} min)')
+    text = '\n'.join(rows)
+    print(text)
+    if md:
+        open(md, 'w').write(text + '\n')
+
+
+def _lab(r, g, b):
+    def lin(c):
+        c /= 255
+        return c / 12.92 if c <= 0.04045 else ((c + 0.055) / 1.055) ** 2.4
+    r, g, b = lin(r), lin(g), lin(b)
+    X, Y, Z = 0.4124 * r + 0.3576 * g + 0.1805 * b, 0.2126 * r + 0.7152 * g + 0.0722 * b, 0.0193 * r + 0.1192 * g + 0.9505 * b
+    def f(t):
+        return t ** (1 / 3) if t > 0.008856 else 7.787 * t + 16 / 116
+    fx, fy, fz = f(X / 0.9505), f(Y), f(Z / 1.089)
+    return 116 * fy - 16, 500 * (fx - fy), 200 * (fy - fz)
+
+
+# the glazes' hues in the palette's own reading (colour-check.mjs); white and black are told by lightness at low chroma
+GLAZE_HUES = {'cobalt': 272, 'turquoise': 209, 'yellow': 84, 'red': 33}
+
+
+def hues(path, md=None):
+    import math
+    im = Image.open(path).convert('RGB')
+    if im.width * im.height > 600000:
+        im = im.resize((im.width // 2, im.height // 2), Image.BOX)
+    groups = {k: [] for k in list(GLAZE_HUES) + ['white', 'black']}
+    for r, g, b in im.get_flattened_data():
+        L, a, bb = _lab(r, g, b)
+        C = math.hypot(a, bb)
+        if C < 8:
+            if L > 70:
+                groups['white'].append((L, 0, C))
+            elif L < 20:
+                groups['black'].append((L, 0, C))
+            continue
+        h = (math.degrees(math.atan2(bb, a)) + 360) % 360
+        best = min(GLAZE_HUES, key=lambda k: min(abs(h - GLAZE_HUES[k]), 360 - abs(h - GLAZE_HUES[k])))
+        if min(abs(h - GLAZE_HUES[best]), 360 - abs(h - GLAZE_HUES[best])) <= 20 and C >= 15:
+            groups[best].append((L, h, C))
+    rows = [f'{os.path.basename(path)}: pixels picked by nearest glaze hue (within 20 degrees, chroma 15 or more), or by lightness at chroma under 8', '| glaze | pixels | median L* | median hue | median chroma |', '|---|---|---|---|---|']
+    for k, v in groups.items():
+        if not v:
+            rows.append(f'| {k} | 0 | | | |')
+            continue
+        med = lambda i: sorted(x[i] for x in v)[len(v) // 2]
+        rows.append(f'| {k} | {len(v)} | {med(0):.1f} | {med(1):.1f} | {med(2):.1f} |')
+    text = '\n'.join(rows)
+    print(text)
+    if md:
+        open(md, 'a').write(text + '\n\n')
+
+
 def main():
     a = sys.argv[1:]
     opt = {}
@@ -237,6 +313,10 @@ def main():
         shares(pos[1])
     elif cmd == 'mask':
         mask(pos[1], pos[2], pos[3], opt.get('ids'))
+    elif cmd == 'settings':
+        settings(pos[1], opt.get('md'))
+    elif cmd == 'hues':
+        hues(pos[1], opt.get('md'))
     elif cmd == 'frames':
         frames(pos[1], pos[2], pos[3], int(opt.get('cols', 8)), int(opt['from']) if 'from' in opt else None, int(opt['to']) if 'to' in opt else None)
     else:

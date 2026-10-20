@@ -81,10 +81,12 @@ case "${1:-}" in
     NAME="${2:?look name}"; STATE="${3:-full}"; SW="${4:-}"
     OUT="$HAND/looks/$NAME"; mkdir -p "$OUT"
     S=false; [ "$SW" = "switch" ] && S=true
+    locked crops node "$SHOOT" --port 5220 --data-port 5221 --crops "$HAND/checks/crop-boxes.json"
     shots "$OUT" "[{\"name\":\"desk\",\"framing\":\"desktop\",\"state\":\"$STATE\",\"switch\":$S,\"css\":[1600,900],\"ratio\":2,\"samples\":8},{\"name\":\"phone-390x664\",\"framing\":\"phone\",\"state\":\"$STATE\",\"switch\":$S,\"css\":[390,664],\"ratio\":3,\"samples\":8}]"
     $PY -I "$MEASURE" crops "$OUT/desk.png" "$HAND/checks/crop-boxes.json" desktop "$OUT"
     $PY -I "$MEASURE" crops "$OUT/phone-390x664.png" "$HAND/checks/crop-boxes.json" phone "$OUT"
     $PY -I "$MEASURE" thumb "$OUT/phone-390x664.png" 360 "$OUT/phone-360-thumb.png"
+    $PY -I "$MEASURE" thumb "$OUT/desk.png" 400 "$OUT/desk-400-thumb.png"
     $PY -I "$MEASURE" sheet "$OUT" --out "$OUT/SHEET.jpg"
     $PY -I "$MEASURE" stats "$OUT" --boxes "$HAND/checks/crop-boxes.json" --md "$OUT/NUMBERS.md"
     ;;
@@ -110,6 +112,55 @@ case "${1:-}" in
     for S in 390x664 360x640 390x844; do $PY -I "$MEASURE" thumb "$OUT/phone-$S-plain.png" 360 "$OUT/thumb-$S-plain.png"; done
     $PY -I "$MEASURE" sheet "$OUT" --out "$OUT/SHEET.jpg" --only phone-390x664-sheet,phone-360x640-sheet,phone-390x664-switch-de,phone-360x640-switch-de,phone-390x844-switch-en
     $PY -I "$MEASURE" stats "$OUT" --boxes "$HAND/checks/crop-boxes.json" --md "$OUT/NUMBERS.md"
+    ;;
+  final)
+    OUT="$HAND/stills"; CH="$HAND/checks"
+    if ls "$OUT"/*.png > /dev/null 2>&1 && [ "${2:-}" != "--again" ]; then echo "refused: $OUT already holds stills (--again renders them again)"; exit 3; fi
+    mkdir -p "$OUT" "$CH/ids" "$CH/corners"
+    locked crops node "$SHOOT" --port 5220 --data-port 5221 --crops "$CH/crop-boxes.json"
+    locked hero node "$SHOOT" --port 5220 --data-port 5221 --hero "$CH/hero.json"
+    locked facts node "$SHOOT" --port 5220 --data-port 5221 --facts "$CH/facts.json"
+    shots "$OUT" '[{"name":"desk-plain","framing":"desktop","state":"full","css":[1600,900],"ratio":2,"samples":16},{"name":"desk-switch","framing":"desktop","state":"full","switch":true,"css":[1600,900],"ratio":2,"samples":16},{"name":"desk-plain-r1","framing":"desktop","state":"full","css":[1600,900],"ratio":1,"samples":16},{"name":"desk-plain-brighter","framing":"desktop","state":"full","css":[1600,900],"ratio":2,"samples":16,"stops":0.5},{"name":"phone-390x664-plain","framing":"phone","state":"full","css":[390,664],"ratio":3,"samples":16},{"name":"phone-390x664-switch","framing":"phone","state":"full","switch":true,"css":[390,664],"ratio":3,"samples":16},{"name":"phone-390x664-plain-brighter","framing":"phone","state":"full","css":[390,664],"ratio":3,"samples":16,"stops":0.5},{"name":"phone-360x640-plain","framing":"phone","state":"full","css":[360,640],"ratio":3,"samples":16},{"name":"phone-360x640-switch","framing":"phone","state":"full","switch":true,"css":[360,640],"ratio":3,"samples":16},{"name":"phone-390x844-plain","framing":"phone","state":"full","css":[390,844],"ratio":3,"samples":16},{"name":"phone-390x844-switch","framing":"phone","state":"full","switch":true,"css":[390,844],"ratio":3,"samples":16}]'
+    mv "$OUT/network.json" "$CH/network-stills.json"
+    locked ids-final node "$SHOOT" --port 5220 --data-port 5221 --out "$CH/ids" --q 'ids=1&ao=0' --network "$CH/ids/network.json" --shots '[{"name":"desk-ids","framing":"desktop","state":"full","css":[1600,900],"ratio":2,"samples":1},{"name":"phone-390x664-ids","framing":"phone","state":"full","css":[390,664],"ratio":3,"samples":1},{"name":"phone-360x640-ids","framing":"phone","state":"full","css":[360,640],"ratio":3,"samples":1},{"name":"phone-390x844-ids","framing":"phone","state":"full","css":[390,844],"ratio":3,"samples":1}]'
+    for F in desk phone-390x664 phone-360x640 phone-390x844; do
+      $PY -I "$MEASURE" mask "$OUT/$F-plain.png" "$OUT/$F-switch.png" "$CH/mask-$F.png" --ids "$CH/ids/$F-ids.png"
+      $PY -I "$MEASURE" shares "$CH/ids/$F-ids.png"
+    done | tee "$CH/SWITCH.txt"
+    overlays overlay-final "$OUT" "$CH/hero.json" desk phone-390x664 phone-360x640 phone-390x844 | tee "$CH/OVERLAY.txt"
+    $PY -I "$MEASURE" thumb "$OUT/desk-plain.png" 400 "$OUT/thumb-desk-400.png"
+    $PY -I "$MEASURE" thumb "$OUT/phone-390x664-plain.png" 390 "$OUT/thumb-phone-390.png"
+    $PY -I "$MEASURE" crops "$OUT/desk-plain.png" "$CH/crop-boxes.json" desktop "$OUT" --checks "$CH/corners"
+    $PY -I "$MEASURE" crops "$OUT/phone-390x664-plain.png" "$CH/crop-boxes.json" phone "$OUT" --checks "$CH/corners"
+    $PY -I "$MEASURE" stats "$OUT" --boxes "$CH/crop-boxes.json" --md "$CH/NUMBERS.md" > /dev/null
+    $PY -I "$MEASURE" settings "$OUT" --md "$CH/SETTINGS.md" > /dev/null
+    rm -f "$CH/HUES.md"; for F in crop-door crop-far-courses crop-figure; do $PY -I "$MEASURE" hues "$OUT/$F.png" --md "$CH/HUES.md" > /dev/null; done
+    $PY -I "$MEASURE" sheet "$OUT" --out "$CH/STILLS-SHEET.jpg" > /dev/null
+    node --experimental-strip-types --no-warnings "$WM/forge/babylon-gate/fidelity.mjs" --facts "$CH/facts.json" --json "$CH/fidelity.json" > "$CH/fidelity.txt"; echo "fidelity exit $? ($(tail -1 "$CH/fidelity.txt"))"
+    node --experimental-strip-types --no-warnings "$WM/forge/babylon-gate/colour-check.mjs" --md "$CH/colours.md" > /dev/null; echo "colour-check exit $?"
+    G="$WM/forge/babylon-gate/geometry-check.mjs"
+    node --experimental-strip-types --no-warnings "$G" --json "$CH/geometry.json" --eyes "$CH/facts.json" 2>&1 | grep -v toNonIndexed > "$CH/geometry.txt"; echo "geometry exit ${PIPESTATUS[0]} ($(tail -1 "$CH/geometry.txt"))"
+    node --experimental-strip-types --no-warnings "$G" --near 10 --json "$CH/geometry-near10.json" --eyes "$CH/facts.json" 2>&1 | grep -v toNonIndexed > "$CH/geometry-near10.txt"; echo "geometry near 10 mm exit ${PIPESTATUS[0]} ($(tail -1 "$CH/geometry-near10.txt"))"
+    # rights: every file the page loaded, against the folders whose files are eyes only; then the code itself
+    $PY -I - "$CH" "$OUT" > "$CH/RIGHTS.txt" <<'RIGHTS'
+import json, os, sys
+ch, out = sys.argv[1], sys.argv[2]
+lists = [os.path.join(ch, 'network-stills.json'), os.path.join(ch, 'ids', 'network.json')]
+seen = set()
+for f in lists:
+    seen |= set(json.load(open(f)))
+for f in sorted(os.listdir(out)):
+    if f.endswith('.json'):
+        d = json.load(open(os.path.join(out, f)))
+        seen |= set(d.get('requests', []))
+bad = [u for u in seen if any(k in u for k in ('/refs/', '/sources/', 'evidence-1019', 'research-1020', 'uppsala-maps-1020', 'PILOT'))]
+print(f'files loaded by the page and the overlay: {len(seen)}; from an eyes-only folder: {len(bad)}')
+for u in sorted(seen):
+    print(u)
+RIGHTS
+    echo "rights: $(head -1 "$CH/RIGHTS.txt")"
+    { echo; echo "grep of the gate's code and tools for the eyes-only folders (step.sh left out: it holds the pattern itself):"; grep -rnE --exclude=step.sh "PILOT/refs|PILOT/sources|evidence-1019|research-1020|uppsala-maps-1020|/refs/" "$WM/src/wings/babylon/gate" "$WM/forge/babylon-gate" || echo "none"; } >> "$CH/RIGHTS.txt"
+    tail -1 "$CH/RIGHTS.txt"
     ;;
   geometry)
     G="$WM/forge/babylon-gate/geometry-check.mjs"
