@@ -28,16 +28,20 @@ class Languages:
         self.order = [e["code"] for e in data["languages"]]
         self.built = tuple(c for c in self.order if c in data["BUILT"])
         self.listed = tuple(c for c in self.order if c in data["LISTED"])
+        # the languages whose pages have left the site: their addresses forward to English
+        self.left = tuple(c for c in self.order if c in data.get("LEFT", []))
         self.problems = self.check(data)
 
     def check(self, data):
         p, where = [], self.path.name
-        for name in ("BUILT", "LISTED"):
-            unknown = [c for c in data[name] if c not in self.entries]
+        for name in ("BUILT", "LISTED", "LEFT"):
+            unknown = [c for c in data.get(name, []) if c not in self.entries]
             if unknown:
                 p.append(f"{where}: {name} names {unknown}, which the table does not hold")
         if [c for c in data["LISTED"] if c not in data["BUILT"]]:
             p.append(f"{where}: a listed language is always built")
+        if [c for c in data.get("LEFT", []) if c in data["BUILT"]]:
+            p.append(f"{where}: a language whose pages have left the site is never built")
         if self.order[:1] != ["en"] or "en" not in self.listed:
             p.append(f"{where}: English comes first and is always listed: its pages stand at the site's root")
         folders = [e.get("folder") for e in self.entries.values()]

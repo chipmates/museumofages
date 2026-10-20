@@ -4315,7 +4315,7 @@ class PictureLicences(unittest.TestCase):
     def test_the_lines_to_copy_are_one_form_in_every_language(self):
         # the credit is the image data's creditText, the map line the English as written (no French spacing)
         written = json.loads((SITE_SRC / "words.en.json").read_text(encoding="utf-8"))["page_what"]["use_map"]
-        for code in ("en", "de", "fr", "it", "es", "pt-BR", "bg"):
+        for code in ("en", "de", "fr", "it", "es", "pt-BR"):
             entry = next(e for e in json.loads((SITE_SRC / "languages.json").read_text(encoding="utf-8"))["languages"] if e["code"] == code)
             text = (SITE_BUILT / entry["folder"] / entry["slugs"]["what"] / "index.html").read_text(encoding="utf-8")
             section = re.search(r'<section id="use-our-pictures">.*?</section>', text, flags=re.S).group(0)
@@ -4351,8 +4351,8 @@ class PictureLicences(unittest.TestCase):
 
     def test_the_inventions_pages_name_the_aerial_screw(self):
         langs = json.loads((SITE_SRC / "languages.json").read_text(encoding="utf-8"))["languages"]
-        pages = sorted(p for p in self.pages if re.search(r"/(inventions|erfindungen|inventos|invenzioni|invencoes|izobreteniya)/index\.html$", str(p)))
-        self.assertEqual(len(pages), len([e for e in langs if e["code"] in ("en", "de", "fr", "it", "es", "pt-BR", "bg")]))
+        pages = sorted(p for p in self.pages if re.search(r"/(inventions|erfindungen|inventos|invenzioni|invencoes)/index\.html$", str(p)))
+        self.assertEqual(len(pages), len([e for e in langs if e["code"] in ("en", "de", "fr", "it", "es", "pt-BR")]))
         for path in pages:
             graph = self.graph(path.read_text(encoding="utf-8"))
             page = next(n for n in graph["@graph"] if n.get("@type") == "WebPage")
@@ -4390,7 +4390,8 @@ class PictureLicences(unittest.TestCase):
                          ["primaryImageOfPage"]["license"], terms["license"])
 
     def test_each_licence_page_is_the_note_in_the_pages_language(self):
-        langs = {e["html"]: e for e in json.loads((SITE_SRC / "languages.json").read_text(encoding="utf-8"))["languages"]}
+        table = json.loads((SITE_SRC / "languages.json").read_text(encoding="utf-8"))
+        langs = {e["html"]: e for e in table["languages"]}
         seen = set()
         for path in self.pages:
             text = path.read_text(encoding="utf-8")
@@ -4408,7 +4409,8 @@ class PictureLicences(unittest.TestCase):
             # the footer's licence line leads to the note on every page
             if '<footer class="foot"' in text:
                 self.assertRegex(text, r'<a class="foot__use" href="[^"]*#use-our-pictures">', path)
-        self.assertGreaterEqual(len(seen), 7)
+        # every built language
+        self.assertEqual(seen, {e["html"] for e in table["languages"] if e["code"] in table["BUILT"]})
 
 
 def _pages_build():
@@ -4489,6 +4491,25 @@ class SiteWide(unittest.TestCase):
         self.assertEqual(self.build.date_words("2026-10-08", "it")[0], "l’")
         self.assertEqual(self.build.date_words("2026-10-01", "fr")[1], "1er octobre 2026")
         self.assertEqual(self.build.date_words("2026-10-13", "de")[1], "13. Oktober 2026")
+
+    def test_the_pages_of_a_language_that_left_forward_once_to_their_english_twins(self):
+        # the Bulgarian pages the live sitemap listed on 20 Oct 2026, each with its English twin
+        live = {"/bg/": "/", "/bg/kakvo-e-tozi-muzey/": "/what-this-museum-is/", "/bg/leonardo-da-vinchi/": "/leonardo-da-vinci/",
+                "/bg/leonardo-da-vinchi/izobreteniya/": "/leonardo-da-vinci/inventions/", "/bg/poveritelnost/": "/privacy/"}
+        rules = [line.split() for line in (SITE_BUILT / "_redirects").read_text(encoding="utf-8").splitlines()]
+        moved = [r for r in rules if r[2] == "301"]
+        forwards = {r[0]: r[1] for r in moved}
+        self.assertEqual(len(forwards), len(moved), "an address is forwarded twice")
+        self.assertEqual(forwards, {**live, **{old.rstrip("/"): twin for old, twin in live.items()}})
+        # one step: every twin is a built page and is not forwarded again
+        for twin in set(forwards.values()):
+            self.assertTrue((SITE_BUILT / twin.lstrip("/") / "index.html").is_file(), twin)
+            self.assertNotIn(twin, forwards)
+        self.assertFalse((SITE_BUILT / "bg").exists())
+        self.assertFalse((SITE_BUILT / "static" / "fonts" / "bg").exists())
+        self.assertNotIn("/bg/", self.sitemap)
+        for path, text in self.pages.items():
+            self.assertNotRegex(text, r'hreflang="bg"|href="[^"]*/bg/|"bg_BG"|Български', path)
 
     def test_the_sitemap_gives_each_topic_page_the_day_of_its_check(self):
         lastmod = dict(re.findall(r"<loc>([^<]+)</loc><lastmod>([^<]+)</lastmod>", self.sitemap))

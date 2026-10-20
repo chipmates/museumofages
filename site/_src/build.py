@@ -1795,8 +1795,9 @@ def build(out, registry, wing_dirs, mark=None, topics=True, quiet=False, more_pi
     unbuilt = [c for c in L.order if c not in LANGS]
     shutil.copytree(FONTS, static_dir / "fonts", dirs_exist_ok=True, ignore=lambda d, names: [n for n in names if n in unbuilt])
 
-    # the host forwards the site's own address of the code to the repository, once the repository is public
-    (out / "_redirects").write_text(f"{SOURCE} {SOURCE_TO} 302\n" if SOURCE_LINK else "", encoding="utf-8")
+    # the host forwards the site's own address of the code to the repository, once the repository is public, and each
+    # page of a language that has left the site to its English twin
+    (out / "_redirects").write_text(redirects(site), encoding="utf-8")
     (out / "_routes.json").write_text(json.dumps(ROUTES, indent=1) + "\n", encoding="utf-8")
 
     listed = [(k, l, p) for p, _, k, l in built if k in ("home", "wing", "what", "imprint", "privacy")]
@@ -1817,8 +1818,9 @@ def build(out, registry, wing_dirs, mark=None, topics=True, quiet=False, more_pi
     problems += check_picture_licences(out) + placed.finish(out, STATIC, ORIGIN)
     problems += ask.check(out, STATIC, {L.html(l): L.page(l, "privacy") for l in LANGS}, unasked_pages(site), asked_making(site),
                           topics_built=bool(topics and PAGES_BUILD.exists() and not mark))
-    if (out / "_redirects").read_text(encoding="utf-8").split() != ([SOURCE, SOURCE_TO, "302"] if SOURCE_LINK else []):
-        problems.append("_redirects does not agree with the switch for the link to the code")
+    if (out / "_redirects").read_text(encoding="utf-8") != redirects(site):
+        problems.append("_redirects does not agree with the switch for the link to the code and the languages that left")
+    problems += check_forwards(out, site, topics_built=bool(topics and PAGES_BUILD.exists() and not mark))
     if problems:
         raise SystemExit("\n".join(problems))
     # the count's lists follow the real registry only, never a test registry
@@ -2009,9 +2011,65 @@ def topic_count_kind(topic):
     return topic.get("count") or topic["slug"]["en"].replace("-", "_")
 
 
+def count_langs():
+    """The count's languages: every one built, and every one whose pages have left the site, since the walk may still
+    be read in it (languages.json LEFT)."""
+    return [c for c in L.order if c in LANGS or c in L.left]
+
+
+def forwards(site):
+    """The pages of each language that has left the site, each with its English twin, as (address, twin, kind) from
+    the site's root: its front page, its pages about the museum, and each wing's page and topic page its entry has a
+    slug for, where the wing and the topic were written in it. kind is "topic" for a topic page."""
+    out = []
+    for code in L.left:
+        slugs = L.entries[code]["slugs"]
+        kinds = ("home", "what", "privacy") + (("imprint",) if L.has_imprint(code) else ())
+        out += [(f"/{L.page(code, k)}", f"/{L.page('en', k)}", k) for k in kinds]
+        for key, slug in slugs.get("wings", {}).items():
+            wing = site.wings.get(key)
+            if not wing or key not in site.open + paged(site) or code not in languages.wing_langs(wing, (code,)):
+                continue
+            mine, twin = f"/{L.folder(code)}{slug}/", f'/{wing["page"]["en"].strip("/")}/'
+            out.append((mine, twin, "wing"))
+            for topic in wing.get("topics", []):
+                own = slugs.get("topics", {}).get(topic["slug"]["en"])
+                if own and code in languages.topic_langs(topic, (code,)):
+                    out.append((f"{mine}{own}/", f'{twin}{topic["slug"]["en"]}/', "topic"))
+    return out
+
+
+def redirects(site):
+    """The host's forwards (_redirects): the address of the code while the switch is on, then each page of a language
+    that left, with its slash and without, once and straight to its twin (301)."""
+    lines = [f"{SOURCE} {SOURCE_TO} 302"] if SOURCE_LINK else []
+    for old, twin, _ in forwards(site):
+        lines += [f"{old.rstrip('/')} {twin} 301", f"{old} {twin} 301"]
+    return "".join(f"{line}\n" for line in lines)
+
+
+def check_forwards(out, site, topics_built):
+    """Each forwarded address is no page of the build and is named once; each twin is a page of the build and is not
+    forwarded itself, so a visitor arrives in one step. A topic page's twin is checked where the topic pages are built."""
+    problems, seen = [], set()
+    pairs = forwards(site)
+    olds = {old for old, _, _ in pairs}
+    for old, twin, kind in pairs:
+        if old in seen:
+            problems.append(f"_redirects: {old} is forwarded twice")
+        seen.add(old)
+        if (out / old.lstrip("/")).exists():
+            problems.append(f"_redirects: {old} is forwarded, but the built site still holds it")
+        if twin in olds:
+            problems.append(f"_redirects: {old} forwards to {twin}, which is forwarded again")
+        if (kind != "topic" or topics_built) and not (out / twin.lstrip("/") / "index.html").is_file():
+            problems.append(f"_redirects: {old} forwards to {twin}, which the build does not write")
+    return problems
+
+
 def count_lists(site):
     """The count's closed lists as the function's module: each open wing with the number of its stops, every page
-    kind, every language built, and the pages the edge never asks. Returns (text, problems)."""
+    kind, every language built or left (count_langs), and the pages the edge never asks. Returns (text, problems)."""
     wings = {s: site.count(s, "stops") for s in site.open}
     kinds = list(COUNT_KINDS.values())
     for s in site.open + paged(site):
@@ -2025,7 +2083,7 @@ def count_lists(site):
     text = ("// Written by site/_src/build.py from the site's registry, its wings' facts and its languages. Not edited by hand.\n"
             f"export const WING_STOPS = Object.freeze({json.dumps(wings, separators=(', ', ': '))})\n"
             f"export const PAGE_KINDS = Object.freeze({json.dumps(kinds, separators=(', ', ': '))})\n"
-            f"export const LANGUAGES = Object.freeze({json.dumps(list(LANGS), separators=(', ', ': '))})\n"
+            f"export const LANGUAGES = Object.freeze({json.dumps(count_langs(), separators=(', ', ': '))})\n"
             f"export const UNASKED = Object.freeze({json.dumps(unasked, separators=(', ', ': '))})\n"
             f"export const ASKED_MAKING = Object.freeze({json.dumps(asked, ensure_ascii=False, separators=(', ', ': '))})\n")
     return text, problems
@@ -2585,6 +2643,11 @@ def run():
             p for p in (SITE / STATIC).glob("*.js") if p.name not in asked and (SRC / "js" / p.name).is_file()]:
         if old.exists():
             old.unlink()
+    # the pages and faces of a language that has left the site
+    for code in L.left:
+        for gone in (SITE / L.folder(code), SITE / STATIC / "fonts" / code):
+            if gone.is_dir():
+                shutil.rmtree(gone)
     # --no-topics builds the site's own pages only, for work on them while the topic pages are being changed
     build(SITE, load(SRC / "registry.json"), [SRC / "wings"], topics="--no-topics" not in sys.argv)
 
