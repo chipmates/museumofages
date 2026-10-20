@@ -125,7 +125,8 @@
   "roof": { "cls": "T", "src": "cedar beams over the chambers (K1918 p. 47); the court open to the sky (K1918 p. 37)" },
   "figure": { "height": 1.7, "x": -8.0, "z": 3.4, "turn": -1.1, "src": "the house's grey sign person on the paving by the door (HOUSE-RULES); in front of the east tower, where the floor is in the sun at 17:00 (the west half of the recess lies in the west tower's shadow)" },
   "switch": {
-    "mBand": { "courses": 2, "height": 0.172, "src": "the brief's band one course (8.6 cm) high stands 1.6 CSS px tall at the door face on the 360x640 still (17.5 m, 325 CSS px per unit at 1 m), under the 3 px the brief's fallback names; two courses give 3.2 px there, the smallest height that reads, far under the plinth's top (1.12 m)" },
+    "mBand": { "courses": 3, "height": 0.258, "src": "the brief's band one course (8.6 cm) high stands under the 3 CSS px the brief's fallback names on the 360x640 still: 1.6 px from 17.5 m, 2.5 to 2.8 px at two courses from the phone's 22 m (looks/phone-1/hero.json); three courses give 3.8 to 4.2 px there, the smallest height that reads, far under the plinth's top (1.12 m)" },
+    "selfLit": { "value": 0.3, "cls": "Ours", "src": "the share of each class colour the switch's materials emit, the same for every class and every surface: at 17:00 the forecourt floor and the shaded faces take a fifth to a third of a sunlit wall's light, so the gold of R read olive there and the rose of G mauve (looks/phone-1); the light and the geometry stay the scene's" },
     "classes": "M, R and G with T merged into G, in the house's certainty colours read from the map's plan (--ui-sure-documented, -reconstructed, -conjectural); M a little darker and solid, R as it is, G lighter and hatched"
   },
   "life": {

@@ -36,6 +36,8 @@ export interface GateUniforms {
   uM: N
   uR: N
   uG: N
+  /** the switch's own light, a share of each class colour emitted, so a class keeps its hue in shade and on the low-lit floor */
+  uSelf: N
 }
 
 export function makeUniforms(classes: { M: string; R: string; G: string }): GateUniforms {
@@ -52,6 +54,7 @@ export function makeUniforms(classes: { M: string; R: string; G: string }): Gate
     uM: uniform(lin(classes.M)),
     uR: uniform(lin(classes.R)),
     uG: uniform(lin(classes.G)),
+    uSelf: uniform(0),
   }
 }
 
@@ -215,6 +218,7 @@ export function wallMaterial(U: GateUniforms, rooms: Rooms): Material {
   const stateCol = select(U.uState.lessThan(0.5), grey, select(U.uState.lessThan(1.5), flatCol, full))
   const cc = classColour(U, classIndex(gCls, p.y), gU, p.y, max(fu, fy))
   m.colorNode = mix(stateCol, cc, U.uSwitch)
+  m.emissiveNode = cc.mul(U.uSwitch.mul(U.uSelf))
   const roughState = select(U.uState.lessThan(0.5), float(0.92), select(U.uState.lessThan(1.5), mix(float(0.88), float(0.45), k0.add(k1.mul(frieze))), roughFull))
   m.roughnessNode = mix(roughState, float(0.85), U.uSwitch)
   m.metalnessNode = mix(select(U.uState.lessThan(1.5), float(0), metalFull), float(0), U.uSwitch)
@@ -361,6 +365,7 @@ export function panelMaterial(U: GateUniforms, maps: PanelMaps, schemes: Array<[
   const stateCol = select(U.uState.lessThan(0.5), grey, select(U.uState.lessThan(1.5), flat, full))
   const cc = classColour(U, float(1), bondU, yW, fw)
   m.colorNode = mix(stateCol, cc, U.uSwitch)
+  m.emissiveNode = cc.mul(U.uSwitch.mul(U.uSelf))
   m.roughnessNode = mix(select(U.uState.lessThan(1.5), select(U.uState.lessThan(0.5), float(0.92), float(0.45)), mix(float(0.18), float(0.9), joint)), float(0.85), U.uSwitch)
   m.clearcoatNode = mix(select(U.uState.lessThan(1.5), float(0), float(1).sub(joint)), float(0), U.uSwitch)
   m.clearcoatRoughnessNode = float(0.06)
@@ -442,7 +447,9 @@ export function pavingMaterial(U: GateUniforms, P: PaveSpec, rooms: Rooms): Mate
   const stateCol = select(U.uState.lessThan(0.5), grey, select(U.uState.lessThan(1.5), flat, full))
   // the class: limestone and breccia R (found), the brick paving to the walls G
   const ci = select(at.lessThan(outer), float(1), float(2))
-  m.colorNode = mix(stateCol, classColour(U, ci, s, t, fw), U.uSwitch)
+  const cc = classColour(U, ci, s, t, fw)
+  m.colorNode = mix(stateCol, cc, U.uSwitch)
+  m.emissiveNode = cc.mul(U.uSwitch.mul(U.uSelf))
   m.roughnessNode = mix(select(U.uState.lessThan(1.5), float(0.85), mix(mix(float(0.82), float(0.6), worn), mix(float(0.7), float(0.5), worn), inBrec)), float(0.9), U.uSwitch)
   m.aoNode = openness(rooms, p)
   return m
@@ -453,7 +460,9 @@ export function lifeMaterial(U: GateUniforms): Material {
   const m = new MeshStandardNodeMaterial({ roughness: 0.75, metalness: 0, side: DoubleSide })
   const fw = U.uPix.mul(positionWorld.distance(cameraPosition))
   const stateCol = select(U.uState.lessThan(0.5), vec3(0.6), attribute('color', 'vec3'))
-  m.colorNode = mix(stateCol, classColour(U, float(2), positionWorld.x, positionWorld.y, fw), U.uSwitch)
+  const cc = classColour(U, float(2), positionWorld.x, positionWorld.y, fw)
+  m.colorNode = mix(stateCol, cc, U.uSwitch)
+  m.emissiveNode = cc.mul(U.uSwitch.mul(U.uSelf))
   return m
 }
 

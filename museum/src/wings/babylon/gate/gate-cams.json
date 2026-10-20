@@ -14,13 +14,13 @@
         -20
       ],
       "hfov": 58,
-      "shift": 0.22,
+      "shift": 0.35,
       "authored": [
         16,
         9
       ],
       "stop": 2,
-      "says": "stop 2's last frame: the lion street's end, the forecourt and the double gate ahead; on the gate's axis 66 m out, where a course still spans 4 device pixels at 3200 across"
+      "says": "stop 2's last frame: the lion street's end, the forecourt and the double gate ahead; on the gate's axis 66 m out, where a course still spans 4 device pixels at 3200 across; the shift raised from 0.22 to 0.35 so the towers' battlements keep their sky when the band stands under the picture (the picture covers 1600x707, half the band off its top and foot)"
     },
     "phone": {
       "at": [

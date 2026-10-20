@@ -90,6 +90,7 @@ const STATE = q.get('state') === 'grey' ? 0 : q.get('state') === 'flat' ? 1 : 2
 const U = makeUniforms({ M: mapPlan.classes.M.colour, R: mapPlan.classes.R.colour, G: mapPlan.classes.G.colour })
 U.uState.value = STATE
 U.uSwitch.value = q.get('switch') === 'classes' ? 1 : 0
+U.uSelf.value = Number(q.get('self') ?? plan.switch.selfLit?.value ?? 0)
 ;(U.uRot.value as Matrix3).copy(ROT)
 
 /* the sky and the sun (the map's sky, one set of uniforms for every hour) */
@@ -478,11 +479,28 @@ function brightness(bytes: Uint8ClampedArray, box?: [number, number, number, num
   return { median: at(0.5), p1: at(0.01), p99: at(0.99) }
 }
 
-async function render(w: number, h: number, samples: number, stops = 0): Promise<{ bytes: Uint8ClampedArray; rgb: Float32Array; ms: number }> {
+/** what the accumulation actually read back: one read per sub-frame, and the target it read from */
+interface ReadBack { subFrames: number; target: { width: number; height: number; type: string; format: string; samples: number; depthBuffer: boolean } | null }
+const TYPE_NAMES: Record<number, string> = { 1015: 'FloatType', 1016: 'HalfFloatType', 1009: 'UnsignedByteType' }
+const FORMAT_NAMES: Record<number, string> = { 1023: 'RGBAFormat', 1022: 'RGBFormat' }
+async function render(w: number, h: number, samples: number, stops = 0): Promise<{ bytes: Uint8ClampedArray; rgb: Float32Array; ms: number; readBack: ReadBack }> {
   const t = performance.now()
-  const rgb = await accumulate(renderer, camera, linear.post, w, h, samples)
+  const readBack: ReadBack = { subFrames: 0, target: null }
+  const read = renderer.readRenderTargetPixelsAsync.bind(renderer)
+  // count the reads the kit's accumulation makes and keep the target it allocated, instead of trusting its source
+  renderer.readRenderTargetPixelsAsync = ((rt: J, ...rest: J[]) => {
+    readBack.subFrames++
+    readBack.target = { width: rt.width, height: rt.height, type: TYPE_NAMES[rt.texture.type] ?? String(rt.texture.type), format: FORMAT_NAMES[rt.texture.format] ?? String(rt.texture.format), samples: rt.samples, depthBuffer: rt.depthBuffer }
+    return (read as J)(rt, ...rest)
+  }) as typeof renderer.readRenderTargetPixelsAsync
+  let rgb: Float32Array
+  try {
+    rgb = await accumulate(renderer, camera, linear.post, w, h, samples)
+  } finally {
+    renderer.readRenderTargetPixelsAsync = read
+  }
   const bytes = printFrame(rgb, w, h, { ...PRINT, exposure: PRINT.exposure * Math.pow(2, stops) }, 0)
-  return { bytes, rgb, ms: Math.round(performance.now() - t) }
+  return { bytes, rgb, ms: Math.round(performance.now() - t), readBack }
 }
 
 /** a world point (gate frame) to device pixels for the current camera */
@@ -551,15 +569,14 @@ const rig = {
     const v = stillView(o.framing)
     if (o.look) aimTrial(o.look, o.w, o.h)
     else aimView(v, o.w, o.h)
-    const { bytes, ms } = await render(o.w, o.h, o.samples, o.stops ?? 0)
+    const { bytes, ms, readBack } = await render(o.w, o.h, o.samples, o.stops ?? 0)
     const file = `${o.out}/${o.name}.png`
     await upload(file, await toPNG(bytes, o.w, o.h))
     const s = sunAt(plan, hourOf(hour))
-    const target = { type: 'FloatType', format: 'RGBAFormat', samples: 0, depthBuffer: false }
     const side = {
       file, framing: o.framing, state: ['grey', 'flat', 'full'][U.uState.value as number], switch: !!U.uSwitch.value,
-      cssSize: o.css, devicePixels: [o.w, o.h], ratio: +(o.w / o.css[0]).toFixed(3), subFrames: o.samples,
-      renderTarget: target, sampleCountReadBack: (linear.post as N).renderer?.samples ?? 'the accumulation target is created by the kit with samples 0 (render.ts: RenderTarget(width, height, { type: FloatType, format: RGBAFormat, depthBuffer: false }))',
+      cssSize: o.css, devicePixels: [o.w, o.h], ratio: +(o.w / o.css[0]).toFixed(3), subFramesAsked: o.samples, subFrames: readBack.subFrames,
+      renderTarget: readBack.target, sampleCountReadBack: readBack.target?.samples ?? null,
       backend: stack.backend, adapter: stack.architecture, print: { ...PRINT, exposure: PRINT.exposure * Math.pow(2, o.stops ?? 0) },
       hour, sun: { azimuth: +s.azimuth.toFixed(1), elevation: +s.elevation.toFixed(1), toward: sunVector(plan, hourOf(hour)).map((x) => +x.toFixed(3)) },
       env: { intensity: scene.environmentIntensity, bounce: uBounce.value, sunIntensity: sunLight.intensity, eastWalls: [(uWalls.value as Color).r, (uWalls.value as Color).g, (uWalls.value as Color).b].map((v) => +v.toFixed(4)) },
