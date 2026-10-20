@@ -4511,6 +4511,19 @@ class SiteWide(unittest.TestCase):
         for path, text in self.pages.items():
             self.assertNotRegex(text, r'hreflang="bg"|href="[^"]*/bg/|"bg_BG"|Български', path)
 
+    def test_a_first_stills_source_line_shows_on_a_phone_too(self):
+        # it carries the picture's licence credit (the map data on the death and grave pages)
+        found = 0
+        for path, text in self.pages.items():
+            if 'class="label__src sp-frame__src"' not in text:
+                continue
+            found += 1
+            style = "".join(re.findall(r"<style[^>]*>(.*?)</style>", text, flags=re.S))
+            # the rules every width reads: the media blocks for wider screens taken out
+            narrow = re.sub(r"@media[^{]*min-width[^{]*\{(?:[^{}]*\{[^}]*\})*[^{}]*\}", "", style)
+            self.assertNotRegex(narrow, r"[^{}]*sp-frame__src[^{}]*\{[^}]*display:none", path)
+        self.assertGreaterEqual(found, 2)
+
     def test_the_sitemap_gives_each_topic_page_the_day_of_its_check(self):
         lastmod = dict(re.findall(r"<loc>([^<]+)</loc><lastmod>([^<]+)</lastmod>", self.sitemap))
         checked = {self.address(path): article["dateModified"] for path, _, article in self.articles()}

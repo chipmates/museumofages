@@ -12,8 +12,9 @@
    height (page.css sets none on it), so its frame keeps its height before a lazy image arrives. */
 .sp-prose .sp-plate--whole{max-width:35rem}
 .sp-plate--whole img{object-fit:contain}
-/* The first picture's source line: under its words from the desktop up; on a phone the label stays one line */
-.sp-frame__src{display:none}
+/* The first picture's source line is a licence credit, so it stands on every screen: under the picture's words from the
+   desktop up, in a row of its own under the label on a phone */
+.sp-frame .sp-frame__src{flex-basis:100%}
 @media (min-width:960px){.sp-frame .sp-frame__src{display:block;margin-top:3px}}
 /* A part's ways on: into the wing at its stop, or to another page. A long one runs as a sentence, its arrow after
    the last word, never at the far edge of a wrapped box. */
