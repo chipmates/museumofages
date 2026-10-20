@@ -8,7 +8,7 @@
      ?put=<url>              where the rig hands its files (the shooter's own server) */
 
 import {
-  BackSide, Color, DirectionalLight, Float32BufferAttribute, Group, InstancedBufferAttribute, InstancedMesh, Matrix3, Matrix4, Mesh,
+  BackSide, Color, DoubleSide, DirectionalLight, Float32BufferAttribute, Group, InstancedBufferAttribute, InstancedMesh, Matrix3, Matrix4, Mesh,
   MeshBasicNodeMaterial, MeshStandardNodeMaterial, PerspectiveCamera, PMREMGenerator, Scene, SphereGeometry, Vector3,
 } from 'three/webgpu'
 import * as TSL from 'three/tsl'
@@ -400,6 +400,34 @@ const standMap = (x: number, z: number): number => {
   return B.level(gz) + L0
 }
 const path = makePath(pathCams, MF.s, standMap)
+
+/* the id pass (`?ids=1`, with `ao=0`): every surface in one flat colour by what it is, for the shares per still (guard 6) */
+if (q.get('ids') === '1') {
+  // both sides, as the palms' and birds' own material draws them
+  const flat = (r: number, g: number, b: number): MeshBasicNodeMaterial => { const m = new MeshBasicNodeMaterial({ side: DoubleSide }); m.colorNode = vec3(r, g, b); m.fog = false; return m }
+  const SKY = flat(0, 0, 1), GLAZED = flat(0, 1, 0), PLAIN = flat(1, 0, 0), PAVING = flat(1, 1, 0), FIGURE = flat(1, 1, 1), OTHER = flat(1, 0, 1)
+  scene.fogNode = null
+  ;(skyDome.material as MeshBasicNodeMaterial).colorNode = vec3(0, 0, 1)
+  const wallIds = new MeshBasicNodeMaterial()
+  {
+    const info = TSL.attribute('gInfo', 'vec4') as N, y = positionLocal.y
+    const k = info.z
+    const frieze = step(info.w, y).mul(step(y, info.w.add(23 * COURSE))).mul(step(0.5, k)).mul(step(k, 1.5))
+    const glazed = step(k, 0.5).add(frieze).min(1)
+    const other = step(4.5, k)
+    wallIds.colorNode = mix(mix(vec3(1, 0, 0), vec3(0, 1, 0), glazed), vec3(1, 0, 1), other)
+    wallIds.fog = false
+  }
+  scene.traverse((o) => {
+    const m = o as Mesh
+    if (!m.isMesh || o === skyDome) return
+    const n = o.name
+    m.material = n === 'gate-walls' ? wallIds : n.startsWith('panels-') ? GLAZED : n === 'gate-paving' || n === 'street' || n === 'ground' ? PAVING
+      : n === 'figure' || o.parent?.name === 'figure' ? FIGURE : n === 'bronze' || n === 'palms' || n === 'birds' || n.startsWith('water') ? OTHER : PLAIN
+  })
+  figure.traverse((o) => { if ((o as Mesh).isMesh) (o as Mesh).material = FIGURE })
+  void SKY
+}
 
 /* one pipeline: the scene pass, the contact occlusion, output linear; the print on the CPU */
 setHour(hourOf(cams.hour))

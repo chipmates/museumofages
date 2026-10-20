@@ -5,12 +5,14 @@
   python3 -I measure.py crops <still> <crop-boxes.json> <framing> <outdir> [--suffix]  the 1:1 crops at the fixed boxes
   python3 -I measure.py thumb <still> <width> <out>
   python3 -I measure.py frames <folder> <prefix> <out> [--cols 8]                     a sheet of sketch frames (1 fps)
+  python3 -I measure.py shares <ids.png>                                             shares of sky, glazed wall, plain wall, paving, figure, other from an id pass
+  python3 -I measure.py mask <plain> <switch> <out.png> [--ids ids.png]               the switch's difference mask; with the id pass, the sky's own difference
 """
 import json
 import os
 import sys
 
-from PIL import Image, ImageDraw, ImageFont
+from PIL import Image, ImageDraw, ImageFilter, ImageFont
 
 
 def luma_stats(img, box=None):
@@ -145,6 +147,64 @@ def frames(folder, prefix, out, cols=8, lo=None, hi=None):
     print(f'frames {out} {len(ims)}')
 
 
+IDS = {'sky': (0, 0, 255), 'glazed wall': (0, 255, 0), 'plain wall': (255, 0, 0), 'paving': (255, 255, 0), 'figure': (255, 255, 255), 'other': (255, 0, 255)}
+
+
+def classify(img):
+    """the id class of every pixel, by the nearest of the pass's flat colours (the print moves them a little)"""
+    names = list(IDS)
+    cols = [IDS[n] for n in names]
+    out = []
+    for r, g, b in img.convert('RGB').get_flattened_data():
+        best, bi = 1e9, 0
+        for i, (cr, cg, cb) in enumerate(cols):
+            d = (r - cr) ** 2 + (g - cg) ** 2 + (b - cb) ** 2
+            if d < best:
+                best, bi = d, i
+        out.append(bi)
+    return names, out
+
+
+def shares(path):
+    im = Image.open(path)
+    names, cls = classify(im)
+    n = len(cls)
+    res = {name: round(100 * sum(1 for c in cls if c == i) / n, 1) for i, name in enumerate(names)}
+    print(json.dumps({'still': os.path.basename(path), 'percent': res}))
+    return res
+
+
+def mask(a, b, out, ids=None):
+    A = Image.open(a).convert('RGB')
+    Bm = Image.open(b).convert('RGB')
+    if A.size != Bm.size:
+        raise SystemExit('the two states differ in size')
+    pa, pb = list(A.get_flattened_data()), list(Bm.get_flattened_data())
+    diff = [max(abs(x[0] - y[0]), abs(x[1] - y[1]), abs(x[2] - y[2])) for x, y in zip(pa, pb)]
+    m = Image.new('L', A.size)
+    m.putdata([255 if d > 6 else 0 for d in diff])
+    m.save(out)
+    changed = sum(1 for d in diff if d > 6) / len(diff)
+    res = {'changed_percent': round(100 * changed, 1)}
+    if ids:
+        I = Image.open(ids)
+        if I.size != A.size:
+            I = I.resize(A.size, Image.NEAREST)
+        names, cls = classify(I)
+        si = names.index('sky')
+        # the sky's own pixels, 3 px away from any edge (an edge pixel mixes the sky with the surface beside it)
+        S = Image.new('L', A.size)
+        S.putdata([255 if c == si else 0 for c in cls])
+        S = S.filter(ImageFilter.MinFilter(7))
+        sky = [d for d, k in zip(diff, S.get_flattened_data()) if k]
+        if sky:
+            res['sky_pixels_inside'] = len(sky)
+            res['sky_changed_percent'] = round(100 * sum(1 for d in sky if d > 6) / len(sky), 3)
+            res['sky_max_diff'] = max(sky)
+    print(json.dumps(res))
+    return res
+
+
 def main():
     a = sys.argv[1:]
     opt = {}
@@ -170,6 +230,10 @@ def main():
         crops(pos[1], pos[2], pos[3], pos[4], opt.get('suffix', ''))
     elif cmd == 'thumb':
         thumb(pos[1], int(pos[2]), pos[3])
+    elif cmd == 'shares':
+        shares(pos[1])
+    elif cmd == 'mask':
+        mask(pos[1], pos[2], pos[3], opt.get('ids'))
     elif cmd == 'frames':
         frames(pos[1], pos[2], pos[3], int(opt.get('cols', 8)), int(opt['from']) if 'from' in opt else None, int(opt['to']) if 'to' in opt else None)
     else:

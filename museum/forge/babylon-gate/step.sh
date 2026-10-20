@@ -4,6 +4,7 @@
 #   bash step.sh sketch               the timed path of stops 2 to 4 on the grey massing: frames, 1 fps sheets per leg, the leg numbers
 #   bash step.sh first-pass [--again] the flat state's stills, thumbnails and crops into first-pass/ (refuses to overwrite)
 #   bash step.sh look <name> [state] [switch]   a look round: desktop and phone stills and the crops, looks/<name>/SHEET.jpg
+#   bash step.sh switch <name>        both states at both framings (and 360x640), the id pass, the difference masks and shares, looks/<name>/
 #   bash step.sh geometry             the offline geometry check, default and near (10 mm) passes, into checks/
 #   bash step.sh final                the full set of section 6 into stills/, every check
 set -u
@@ -73,11 +74,23 @@ case "${1:-}" in
     $PY -I "$MEASURE" sheet "$OUT" --out "$OUT/SHEET.jpg"
     $PY -I "$MEASURE" stats "$OUT" --boxes "$HAND/checks/crop-boxes.json" --md "$OUT/NUMBERS.md"
     ;;
+  switch)
+    NAME="${2:?look name}"; OUT="$HAND/looks/$NAME"; mkdir -p "$OUT"
+    shots "$OUT" '[{"name":"desk-plain","framing":"desktop","state":"full","css":[1600,900],"ratio":2,"samples":8},{"name":"desk-switch","framing":"desktop","state":"full","switch":true,"css":[1600,900],"ratio":2,"samples":8},{"name":"phone-390x664-plain","framing":"phone","state":"full","css":[390,664],"ratio":3,"samples":8},{"name":"phone-390x664-switch","framing":"phone","state":"full","switch":true,"css":[390,664],"ratio":3,"samples":8},{"name":"phone-360x640-switch","framing":"phone","state":"full","switch":true,"css":[360,640],"ratio":3,"samples":8}]'
+    locked "ids-$NAME" node "$SHOOT" --port 5220 --data-port 5221 --out "$OUT/ids" --q 'ids=1&ao=0' --shots '[{"name":"desk-ids","framing":"desktop","state":"full","css":[1600,900],"ratio":2,"samples":1},{"name":"phone-390x664-ids","framing":"phone","state":"full","css":[390,664],"ratio":3,"samples":1}]'
+    for F in desk phone-390x664; do
+      $PY -I "$MEASURE" mask "$OUT/$F-plain.png" "$OUT/$F-switch.png" "$OUT/mask-$F.png" --ids "$OUT/ids/$F-ids.png"
+      $PY -I "$MEASURE" shares "$OUT/ids/$F-ids.png"
+    done | tee "$OUT/SWITCH.txt"
+    $PY -I "$MEASURE" crops "$OUT/phone-390x664-switch.png" "$HAND/checks/crop-boxes.json" phone "$OUT" --suffix -switch
+    $PY -I "$MEASURE" thumb "$OUT/phone-360x640-switch.png" 360 "$OUT/phone-360-switch-thumb.png"
+    $PY -I "$MEASURE" sheet "$OUT" --out "$OUT/SHEET.jpg"
+    ;;
   geometry)
     G="$WM/forge/babylon-gate/geometry-check.mjs"
     node --experimental-strip-types --no-warnings "$G" --json "$HAND/checks/geometry.json" --eyes "$HAND/checks/facts-sketch.json" 2>&1 | grep -v toNonIndexed > "$HAND/checks/geometry.txt"; echo "geometry exit ${PIPESTATUS[0]} ($(tail -1 "$HAND/checks/geometry.txt"))"
     node --experimental-strip-types --no-warnings "$G" --near 10 --json "$HAND/checks/geometry-near10.json" --eyes "$HAND/checks/facts-sketch.json" 2>&1 | grep -v toNonIndexed > "$HAND/checks/geometry-near10.txt"; echo "geometry near 10 mm exit ${PIPESTATUS[0]} ($(tail -1 "$HAND/checks/geometry-near10.txt"))"
     ;;
   *)
-    sed -n 2,9p "$0"; exit 2 ;;
+    sed -n 2,10p "$0"; exit 2 ;;
 esac
