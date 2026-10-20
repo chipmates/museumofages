@@ -73,7 +73,8 @@ function palm(m: Mesh, p: PalmSpec, base: number, seed: number): void {
       const t = i / S
       // the rib arches: out along the frond's direction, falling with t squared
       const c = add(add(top, dir, L * t), [0, -1, 0], 1.4 * t * t * (0.6 + age))
-      const w = 0.5 * Math.pow(Math.sin(Math.PI * Math.min(1, t * 1.1)), 0.7) + 0.02
+      // the tip stays 16 cm wide: a narrower blade falls under a device pixel from 86 m (geometry-check.mjs)
+      const w = 0.5 * Math.pow(Math.sin(Math.PI * Math.min(1, t * 1.1)), 0.7) + 0.08
       // the leaflets fold down from the rib, a shallow V
       const l = add(add(c, side, w), [0, -1, 0], w * 0.35)
       const rr = add(add(c, side, -w), [0, -1, 0], w * 0.35)
