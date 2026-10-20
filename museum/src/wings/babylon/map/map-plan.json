@@ -328,7 +328,7 @@
   "plan": "R",
   "height": "R",
   "skirt": true,
-  "src": "line: C6.2 and E2.2, with P2021's UTM points; levels: +7.5 north of the North Gate, +15.4 in the gate, +13 at the palace, +7.5 to +8 at Nabu, +3.0 at Gate 5, +2.1 to +2.5 on the turn, +2.3 and +3.1 at the bridge (P2021 p. 205, 208, 213, 215, 228; K1918 p. 8)",
+  "src": "line: C6.2 and E2.2, with P2021's UTM points; levels: +7.5 north of the North Gate, +12.5 at survey point 2 north of the gate and +15.4 in the gate (about 3 percent between them), +13 at the palace, +7.5 to +8 at Nabu, +3.0 at Gate 5, +2.1 to +2.5 on the turn, +2.3 and +3.1 at the bridge (P2021 p. 205, 208, 213, 215, 228; K1918 p. 8)",
   "points": [
    {
     "at": [
@@ -359,6 +359,16 @@
     "w": 20,
     "cls": "M",
     "note": "North Gate, P2021 p. 230"
+   },
+   {
+    "at": [
+     445754.0,
+     3600938.7
+    ],
+    "level": 12.5,
+    "w": 20,
+    "cls": "M",
+    "note": "+12.5 at survey point 2 north of the gate (P2021 p. 228 note 29); its place guessed 97 m out, where the about 3 percent from the gate puts it"
    },
    {
     "at": [
@@ -823,7 +833,7 @@
       445630.5,
       445685.5,
       3600635.5,
-      3600727
+      3600726
      ],
      "plan": "M",
      "src": "Main Courtyard 55 x 61 m (P2021 p. 103) on its place in C6.2, with the throne room's footprint south of it"
@@ -1538,8 +1548,9 @@
    "top": 2.5,
    "plan": "M",
    "height": "R",
-   "src": "piers 21 x 9 m, 9 m apart, six free (P2021 p. 204 to 205); spacing checked on C6.2",
-   "hsrc": "foundations to about -5 (P2021 p. 204)"
+   "src": "piers 21 x 9 m, 9 m apart, six free (P2021 p. 204 to 205); spacing checked on C6.2; 9 m apart except between the westernmost and the west abutment, abutments first 126 m apart (P2021 p. 204): that gap is 18 m here",
+   "hsrc": "foundations to about -5 (P2021 p. 204)",
+   "lastGap": 18
   },
   "abutments": {
    "along": 14,

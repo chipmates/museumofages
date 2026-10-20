@@ -420,7 +420,7 @@ export function buildPlan(plan: J, opts: { houses?: boolean } = {}): Built {
     const inner = 8.5
     const piers: number[] = []
     for (let i = 0; i < br.piers.count; i++) piers.push(inner + br.piers.gap + br.piers.along / 2 + i * (br.piers.along + br.piers.gap))
-    const westInner = inner + br.piers.gap + br.piers.count * (br.piers.along + br.piers.gap)
+    const westInner = inner + br.piers.gap + br.piers.count * br.piers.along + (br.piers.count - 1) * br.piers.gap + (br.piers.lastGap ?? br.piers.gap)
     piers.forEach((t, i) => {
       const c = at(t)
       boxes.push({ id: `bridge-pier-${i + 1}`, group: 'bridge', x: c[0], z: c[1], y0: br.piers.base, y1: br.piers.top, sx: br.piers.along, sz: br.piers.across, yaw, plan: br.piers.plan, height: br.piers.height, band: 0 })
