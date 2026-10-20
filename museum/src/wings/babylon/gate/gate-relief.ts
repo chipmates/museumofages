@@ -157,10 +157,10 @@ function bull(): { L: number; parts: Part[]; curls: Array<{ c: Pt; r: number; a:
 function dragon(): { L: number; parts: Part[]; curls: Array<{ c: Pt; r: number; a: number }>; keep: Field['keep']; scales: (p: Pt) => boolean } {
   const L = 1.65
   const parts: Part[] = []
-  // a long cat's body, the neck rising in an S, the tail rising behind and curling forward over the back
+  // a long lean cat's body, the neck rising steeply in an S to a head carried high, the tail rising behind and curling forward over the back
   const trunk = (p: Pt): number => {
-    let d = capsule(p, [0.44, 0.63], [1.02, 0.65], 0.13, 0.145)
-    d = smax(d, chain(p, [[1.02, 0.7], [1.13, 0.81], [1.2, 0.92], [1.27, 0.985]], [0.12, 0.085, 0.068, 0.058]), 0.04)
+    let d = capsule(p, [0.44, 0.625], [1.0, 0.645], 0.12, 0.135)
+    d = smax(d, chain(p, [[0.99, 0.69], [1.065, 0.8], [1.1, 0.91], [1.125, 0.995], [1.17, 1.048]], [0.11, 0.074, 0.058, 0.05, 0.046]), 0.04)
     d = smax(d, chain(p, [[0.42, 0.68], [0.29, 0.76], [0.2, 0.87], [0.16, 0.97], [0.17, 1.03]], [0.085, 0.06, 0.045, 0.036, 0.03]), 0.03)
     return d
   }
@@ -171,27 +171,27 @@ function dragon(): { L: number; parts: Part[]; curls: Array<{ c: Pt; r: number; 
   // near legs
   parts.push({ reg: REG.body, d: (p) => smax(chain(p, [[1.04, 0.6], [1.085, 0.42], [1.13, 0.12]], [0.088, 0.058, 0.042]), catPaw(p, [1.12, 0.0]), 0.02), h: 0.038, r: 0.035 })
   parts.push({ reg: REG.body, d: (p) => smax(chain(p, [[0.45, 0.6], [0.43, 0.43], [0.36, 0.3], [0.41, 0.11]], [0.11, 0.06, 0.038, 0.028]), talons(p, [0.41, 0.095], 1), 0.01), h: 0.038, r: 0.035 })
-  // the viper's head, level, its mouth shut with the forked tongue out
-  parts.push({ reg: REG.body, d: (p) => smax(capsule(p, [1.27, 0.995], [1.49, 0.985], 0.058, 0.03), ellipse(p, [1.33, 0.995], 0.07, 0.058), 0.02), h: 0.042, r: 0.04 })
-  parts.push({ reg: REG.red, d: (p) => Math.max(capsule(p, [1.49, 0.985], [1.55, 0.988], 0.006, 0.005), capsule(p, [1.55, 0.988], [1.6, 1.008], 0.005, 0.003), capsule(p, [1.55, 0.988], [1.6, 0.968], 0.005, 0.003)), h: 0.02, r: 0.005 })
-  // the long straight horn up and back, and the skin curling back from its root
-  parts.push({ reg: REG.red, d: (p) => capsule(p, [1.325, 1.035], [1.235, 1.113], 0.02, 0.007), h: 0.032, r: 0.01 })
-  parts.push({ reg: REG.body, d: (p) => stroke(p, [[1.3, 1.04], [1.25, 1.05], ...spiral([1.215, 1.045], 0.026, 0.2, 1.1, 1)], 0.011, 0.006), h: 0.032, r: 0.009 })
+  // the viper's head, long and flat, carried high and a little down at the snout, its mouth shut with the forked tongue out
+  parts.push({ reg: REG.body, d: (p) => smax(capsule(p, [1.2, 1.055], [1.45, 1.0], 0.052, 0.026), ellipse(p, [1.24, 1.05], 0.068, 0.052, -0.2), 0.02), h: 0.042, r: 0.04 })
+  parts.push({ reg: REG.red, d: (p) => Math.max(capsule(p, [1.45, 1.0], [1.51, 1.0], 0.006, 0.005), capsule(p, [1.51, 1.0], [1.57, 1.02], 0.005, 0.003), capsule(p, [1.51, 1.0], [1.57, 0.98], 0.005, 0.003)), h: 0.02, r: 0.005 })
+  // the long straight horn back along the head's line, and the skin curling back from its root
+  parts.push({ reg: REG.red, d: (p) => capsule(p, [1.255, 1.084], [1.08, 1.104], 0.019, 0.007), h: 0.032, r: 0.01 })
+  parts.push({ reg: REG.body, d: (p) => stroke(p, [[1.24, 1.088], [1.2, 1.094], ...spiral([1.165, 1.084], 0.02, 0.2, 1.1, 1)], 0.01, 0.006), h: 0.032, r: 0.009 })
   // three locks from the head down the neck's back, each ending in a curl (K1918 p. 28)
   for (let i = 0; i < 3; i++) {
-    const a: Pt = [1.24 - i * 0.04, 0.95 - i * 0.085], c: Pt = [1.15 - i * 0.045, 0.9 - i * 0.09]
+    const a: Pt = [1.13 - i * 0.03, 1.0 - i * 0.085], c: Pt = [1.045 - i * 0.03, 0.955 - i * 0.09]
     parts.push({ reg: REG.mane, d: (p) => stroke(p, [a, [(a[0] + c[0]) / 2, (a[1] + c[1]) / 2 + 0.014], ...spiral(c, 0.028, 0.6, 1.2, -1)], 0.018, 0.009), h: 0.047, r: 0.012 })
   }
   // the tail's end curling forward into the scorpion's sting
   parts.push({ reg: REG.body, d: (p) => stroke(p, spiral([0.24, 1.03], 0.06, Math.PI, 0.75, -1), 0.03, 0.012), h: 0.03, r: 0.014 })
   parts.push({ reg: REG.red, d: (p) => capsule(p, [0.265, 0.995], [0.3, 1.04], 0.011, 0.003), h: 0.024, r: 0.007 })
-  parts.push({ reg: REG.eyeWhite, d: (p) => ellipse(p, [1.35, 1.012], 0.019, 0.014), h: 0.046, r: 0.007 })
-  parts.push({ reg: REG.black, d: (p) => circle(p, [1.353, 1.012], 0.0075), h: 0.047, r: 0.004 })
-  parts.push({ reg: REG.black, d: (p) => capsule(p, [1.39, 0.978], [1.49, 0.982], 0.003, 0.003), h: 0.042, r: 0.003 })
-  const curls: Array<{ c: Pt; r: number; a: number }> = [{ c: [1.29, 0.955], r: 0.014, a: 0 }, { c: [1.27, 0.93], r: 0.014, a: 1 }, { c: [1.25, 0.905], r: 0.014, a: 2 }]
+  parts.push({ reg: REG.eyeWhite, d: (p) => ellipse(p, [1.268, 1.064], 0.019, 0.014, -0.2), h: 0.046, r: 0.007 })
+  parts.push({ reg: REG.black, d: (p) => circle(p, [1.271, 1.064], 0.0075), h: 0.047, r: 0.004 })
+  parts.push({ reg: REG.black, d: (p) => capsule(p, [1.32, 1.02], [1.44, 0.997], 0.003, 0.003), h: 0.042, r: 0.003 })
+  const curls: Array<{ c: Pt; r: number; a: number }> = [{ c: [1.19, 1.0], r: 0.014, a: 0 }, { c: [1.17, 0.97], r: 0.014, a: 1 }, { c: [1.155, 0.94], r: 0.014, a: 2 }]
   const scales = (p: Pt): boolean => trunk(p) > 0.004 && p[1] > 0.5
   const keep: Field['keep'] = [
-    { what: 'eye', u: 1.35, v: 1.012, r: 0.02 },
+    { what: 'eye', u: 1.268, v: 1.064, r: 0.02 },
     { what: 'paw', u: 1.16, v: 0.032, r: 0.07, rv: 0.034 },
     { what: 'paw', u: 0.91, v: 0.032, r: 0.07, rv: 0.034 },
   ]
