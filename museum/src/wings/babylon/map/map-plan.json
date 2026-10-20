@@ -1,0 +1,2468 @@
+{
+ "about": "Babylon about 570 BC as grey blocks at true scale. Positions are UTM zone 38N metres (E, N); levels are metres in the German excavation zero (+0.0 = 25.5 m above sea level). Every block names the class of its plan and of its height: M measured (read off a dug outline on the sheets, or a dug size in print), R reasoned (drawn on the sheets but not dug, or set from a text or a scholar's inference), G guessed (ours).",
+ "frame": {
+  "E0": 445700,
+  "N0": 3600400,
+  "axes": "scene x = E - E0 (east), scene z = N0 - N (south), scene y = level (up)"
+ },
+ "sources": {
+  "C6.2": "Uppsala sheet Babylon100_Centre_6.2 (O. Pedersén, Uppsala University, CC BY 4.0, Zenodo 13380012), read off at 300 dpi on its 100 m grid",
+  "E2.2": "Uppsala sheet Babylon200_East_2.2 (same record and licence), 200 m grid",
+  "A2.1": "Uppsala sheet Babylon500_Areas_2.1 (same record and licence), 500 m grid",
+  "X1.4": "Uppsala sheet Babylon500_Excavations_1.4 (same record and licence): coloured = dug, uncoloured line = drawn",
+  "P2021": "O. Pedersén, Babylon. The Great City, Zaphon 2021, printed pages",
+  "K1914": "R. Koldewey, The Excavations at Babylon, 1914",
+  "K1918": "R. Koldewey, Das Ischtar-Tor in Babylon, 1918",
+  "GR": "internal gate research 1019, part 8 (the gate's numbers)",
+  "WALK": "internal walk sheet 1020"
+ },
+ "classes": {
+  "M": {
+   "says": "measured: dug and drawn, or a dug size",
+   "token": "--ui-sure-documented",
+   "colour": "#8cba8b",
+   "value": 0.8
+  },
+  "R": {
+   "says": "reasoned: drawn but not dug, or from a text",
+   "token": "--ui-sure-reconstructed",
+   "colour": "#d2a557",
+   "value": 1.0
+  },
+  "G": {
+   "says": "guessed",
+   "token": "--ui-sure-conjectural",
+   "colour": "#df9385",
+   "value": 1.12
+  },
+  "band": 2.0
+ },
+ "ground": {
+  "base": 3.0,
+  "baseWeight": 0.12,
+  "plan": "G",
+  "height": "G",
+  "says": "the plain at +3.0 with smooth rises toward the raised quarters; the street pulls the ground to its own level within 8 m and lets go by 40 m",
+  "src": "P2021 p. 93, 118, 143, 154, 182 to 183, 215, 246 (floor levels: palace +12, North Palace +15, Ninmah +14.5, Nabu street +7.5 to +8, precinct +2 to +6, Esagila +4.4 to +5.6, Merkes +4 to +8); the shape between them is ours",
+  "points": [
+   {
+    "at": [
+     445845,
+     3600790
+    ],
+    "level": 14.0,
+    "r": 85,
+    "why": "Ninmah and the gate's east side, +14.5 at the end of the reign (P2021 p. 183)"
+   },
+   {
+    "at": [
+     445630,
+     3600700
+    ],
+    "level": 12.0,
+    "r": 130,
+    "why": "the South Palace's floor (P2021 p. 93)"
+   },
+   {
+    "at": [
+     445590,
+     3600950
+    ],
+    "level": 15.0,
+    "r": 120,
+    "why": "the North Palace terrace (P2021 p. 118)"
+   },
+   {
+    "at": [
+     445860,
+     3600600
+    ],
+    "level": 11.0,
+    "r": 70,
+    "why": "beside the street at the palace's south-east corner (street +13)"
+   },
+   {
+    "at": [
+     445870,
+     3600430
+    ],
+    "level": 7.0,
+    "r": 100,
+    "why": "the Nabu temple's street at +7.5 to +8 (P2021 p. 215)"
+   },
+   {
+    "at": [
+     446050,
+     3600400
+    ],
+    "level": 6.0,
+    "r": 160,
+    "why": "Merkes house floors +4 to +8 (P2021 p. 246)"
+   },
+   {
+    "at": [
+     445720,
+     3600080
+    ],
+    "level": 3.5,
+    "r": 260,
+    "why": "the precinct +2 to +6 (P2021 p. 154)"
+   },
+   {
+    "at": [
+     445680,
+     3599740
+    ],
+    "level": 5.0,
+    "r": 110,
+    "why": "Esagila's floors +4.4 to +5.6 (P2021 p. 143)"
+   },
+   {
+    "at": [
+     445740,
+     3601060
+    ],
+    "level": 7.5,
+    "r": 45,
+    "why": "the street north of the North Gate at +7.5 (P2021 p. 228)"
+   }
+  ],
+  "bed": -4.0,
+  "bedBlend": 7.0
+ },
+ "water": [
+  {
+   "id": "euphrates",
+   "name": "the Euphrates (Arahtu) in its old bed",
+   "level": -1.0,
+   "plan": "R",
+   "height": "G",
+   "src": "west bank: C6.2 and A2.1 (the drawn line west of 'Euphrates Arahtu'); east bank: the embankments and the Kasr's west front on C6.2; level: spring high water below the embankment's walkway at -0.4 (P2021 p. 24, 66); north of the Kasr the west bank is ours, about 120 m west of the outer river wall",
+   "poly": [
+    [
+     445905,
+     3603800
+    ],
+    [
+     445905,
+     3602100
+    ],
+    [
+     445800,
+     3602045
+    ],
+    [
+     445695,
+     3601800
+    ],
+    [
+     445558,
+     3601450
+    ],
+    [
+     445454,
+     3601170
+    ],
+    [
+     445452,
+     3600905
+    ],
+    [
+     445349,
+     3600894
+    ],
+    [
+     445374,
+     3600598
+    ],
+    [
+     445380,
+     3600580
+    ],
+    [
+     445420,
+     3600400
+    ],
+    [
+     445448,
+     3600250
+    ],
+    [
+     445488,
+     3600000
+    ],
+    [
+     445515,
+     3599850
+    ],
+    [
+     445550,
+     3599700
+    ],
+    [
+     445600,
+     3599520
+    ],
+    [
+     445700,
+     3599330
+    ],
+    [
+     445830,
+     3599140
+    ],
+    [
+     445980,
+     3598900
+    ],
+    [
+     446120,
+     3598600
+    ],
+    [
+     446300,
+     3598300
+    ],
+    [
+     446100,
+     3598300
+    ],
+    [
+     445936,
+     3598701
+    ],
+    [
+     445612,
+     3599300
+    ],
+    [
+     445522,
+     3599525
+    ],
+    [
+     445410,
+     3599840
+    ],
+    [
+     445343,
+     3600200
+    ],
+    [
+     445300,
+     3600400
+    ],
+    [
+     445275,
+     3600560
+    ],
+    [
+     445260,
+     3600750
+    ],
+    [
+     445248,
+     3600965
+    ],
+    [
+     445300,
+     3601150
+    ],
+    [
+     445420,
+     3601430
+    ],
+    [
+     445560,
+     3601780
+    ],
+    [
+     445670,
+     3602020
+    ],
+    [
+     445785,
+     3602100
+    ],
+    [
+     445785,
+     3603800
+    ]
+   ]
+  },
+  {
+   "id": "moat-north",
+   "name": "the moat in front of the North Palace's north wall",
+   "level": -1.0,
+   "plan": "R",
+   "height": "G",
+   "src": "C6.2 and E2.2: the band between the palace's north wall (N 3601086) and the wall at N 3601157; the street crossed it on a dam (K1918 p. 5); the north wall stood next to the water-filled moat (P2021 Fig. 3.23)",
+   "poly": [
+    [
+     445458,
+     3601088
+    ],
+    [
+     445700,
+     3601088
+    ],
+    [
+     445708,
+     3601155
+    ],
+    [
+     445458,
+     3601155
+    ]
+   ]
+  }
+ ],
+ "moat": {
+  "width": 80,
+  "gap": 2,
+  "plan": "R",
+  "height": "G",
+  "src": "80 m moats round the inner wall and the outer east wall (P2021 p. 51, 59)"
+ },
+ "street": {
+  "name": "the Processional Way (Aj-ibur-shapu) and its west turn to the bridge",
+  "plan": "R",
+  "height": "R",
+  "skirt": true,
+  "src": "line: C6.2 and E2.2, with P2021's UTM points; levels: +7.5 north of the North Gate, +15.4 in the gate, +13 at the palace, +7.5 to +8 at Nabu, +3.0 at Gate 5, +2.1 to +2.5 on the turn, +2.3 and +3.1 at the bridge (P2021 p. 205, 208, 213, 215, 228; K1918 p. 8)",
+  "points": [
+   {
+    "at": [
+     445697,
+     3601320
+    ],
+    "level": 7.5,
+    "w": 16,
+    "cls": "G",
+    "note": "outer city, north of the moat"
+   },
+   {
+    "at": [
+     445710,
+     3601200
+    ],
+    "level": 7.5,
+    "w": 20,
+    "cls": "R",
+    "note": "the dam over the moat (K1918 p. 5)"
+   },
+   {
+    "at": [
+     445735,
+     3601035
+    ],
+    "level": 7.5,
+    "w": 20,
+    "cls": "M",
+    "note": "North Gate, P2021 p. 230"
+   },
+   {
+    "at": [
+     445772.7,
+     3600843.9
+    ],
+    "level": 15.4,
+    "w": 20,
+    "cls": "M",
+    "note": "the gate's north face, +15.40 (K1918 p. 8)"
+   },
+   {
+    "at": [
+     445787.3,
+     3600796.1
+    ],
+    "level": 15.4,
+    "w": 10,
+    "cls": "M",
+    "note": "the gate's south face"
+   },
+   {
+    "at": [
+     445806,
+     3600720
+    ],
+    "level": 14.2,
+    "w": 10,
+    "cls": "R",
+    "note": "along the palace's east front, 10 m wide (K1918 p. 8)"
+   },
+   {
+    "at": [
+     445833,
+     3600620
+    ],
+    "level": 13.0,
+    "w": 10,
+    "cls": "R",
+    "note": "palace south-east corner, about +13 (P2021 Fig. 5.13)"
+   },
+   {
+    "at": [
+     445837,
+     3600604
+    ],
+    "level": 12.6,
+    "w": 10,
+    "cls": "G",
+    "note": "the canal bridge (P2021 p. 218); the stretch south of here was washed away"
+   },
+   {
+    "at": [
+     445891,
+     3600447
+    ],
+    "level": 8.0,
+    "w": 10,
+    "cls": "G",
+    "note": "washed-away stretch ends; level needed for the Nabu temple"
+   },
+   {
+    "at": [
+     445903,
+     3600410
+    ],
+    "level": 7.75,
+    "w": 10,
+    "cls": "R",
+    "note": "at the Nabu temple, +7.5 to +8 (P2021 p. 215)"
+   },
+   {
+    "at": [
+     445920,
+     3600335
+    ],
+    "level": 5.8,
+    "w": 8.6,
+    "cls": "M",
+    "note": "precinct's north-east corner, middle level ends at +5.8 (P2021 p. 217)"
+   },
+   {
+    "at": [
+     445976,
+     3600125
+    ],
+    "level": 3.0,
+    "w": 8.6,
+    "cls": "M",
+    "note": "Gate 5, breccia at +3.0 (P2021 Fig. 5.12)"
+   },
+   {
+    "at": [
+     446020,
+     3599962
+    ],
+    "level": 2.6,
+    "w": 8.6,
+    "cls": "R",
+    "note": "along the precinct's east wall"
+   },
+   {
+    "at": [
+     446024,
+     3599925
+    ],
+    "level": 2.4,
+    "w": 8.6,
+    "cls": "R",
+    "note": "the turn west (P2021 p. 208: +2.1 to +2.5)"
+   },
+   {
+    "at": [
+     445985,
+     3599918
+    ],
+    "level": 2.4,
+    "w": 8.0,
+    "cls": "R",
+    "note": "along the precinct's south side"
+   },
+   {
+    "at": [
+     445830,
+     3599897
+    ],
+    "level": 2.4,
+    "w": 8.0,
+    "cls": "R"
+   },
+   {
+    "at": [
+     445600,
+     3599860
+    ],
+    "level": 2.5,
+    "w": 8.0,
+    "cls": "R"
+   },
+   {
+    "at": [
+     445534,
+     3599840
+    ],
+    "level": 2.7,
+    "w": 9.0,
+    "cls": "M",
+    "note": "the bridge's east abutment, street at +2.3 and +3.1 (P2021 p. 205)"
+   },
+   {
+    "at": [
+     445398,
+     3599828
+    ],
+    "level": 3.1,
+    "w": 9.0,
+    "cls": "G",
+    "note": "the deck: not found (P2021 p. 206)"
+   },
+   {
+    "at": [
+     445340,
+     3599824
+    ],
+    "level": 3.1,
+    "w": 9.0,
+    "cls": "G",
+    "note": "the west bank"
+   }
+  ],
+  "deck": {
+   "from": 445534,
+   "to": 445398,
+   "says": "over the river the street is a deck on the piers (G)"
+  }
+ },
+ "frames": {
+  "gate": {
+   "origin": [
+    445772.7,
+    3600843.9
+   ],
+   "bearing": 163,
+   "says": "a along the gate's axis from its north face (axis 343 true, GR 1.1), c across toward 253"
+  },
+  "tower": {
+   "origin": [
+    445641.5,
+    3600034
+   ],
+   "bearing": 163,
+   "says": "the tower's centre (C6.2, P2021 p. 153: 445640, 3600040); a toward the south stairs"
+  },
+  "lion": {
+   "origin": [
+    445772.7,
+    3600843.9
+   ],
+   "bearing": 348.4,
+   "says": "the lion street from the gate's north face toward the North Gate"
+  }
+ },
+ "blocks": [
+  {
+   "id": "gate-front",
+   "name": "Ishtar Gate, front gate",
+   "in": "gate",
+   "local": [
+    0,
+    13,
+    -14,
+    14
+   ],
+   "base": 0,
+   "top": 30.4,
+   "door": {
+    "w": 4.5,
+    "h": 11.8
+   },
+   "plan": "M",
+   "height": "G",
+   "src": "13 m along, 28 m across (K1918, P2021 p. 71 to 72)",
+   "hsrc": "walls 15 m over the +15.40 street (P2021 p. 78 to 79, GR 2.3)"
+  },
+  {
+   "id": "gate-front-tower-w",
+   "name": "front gate, west door tower",
+   "in": "gate",
+   "local": [
+    -2.05,
+    13,
+    4.85,
+    11.05
+   ],
+   "base": 0,
+   "top": 33.9,
+   "plan": "M",
+   "height": "G",
+   "src": "towers 6.2 m wide, 2.05 m proud, 9.7 m apart (GR part 8)",
+   "hsrc": "18.5 m (Pedersén's model)"
+  },
+  {
+   "id": "gate-front-tower-e",
+   "name": "front gate, east door tower",
+   "in": "gate",
+   "local": [
+    -2.05,
+    13,
+    -11.05,
+    -4.85
+   ],
+   "base": 0,
+   "top": 33.9,
+   "plan": "M",
+   "height": "G",
+   "src": "GR part 8",
+   "hsrc": "18.5 m"
+  },
+  {
+   "id": "gate-main",
+   "name": "Ishtar Gate, main gate",
+   "in": "gate",
+   "local": [
+    17,
+    50,
+    -11,
+    11
+   ],
+   "base": 0,
+   "top": 34.4,
+   "door": {
+    "w": 4.5,
+    "h": 13.5
+   },
+   "plan": "M",
+   "height": "G",
+   "src": "33 m along, 22 m across (K1918, P2021 p. 71 to 72)",
+   "hsrc": "walls 19 m (Pedersén); door height ours"
+  },
+  {
+   "id": "gate-main-tower-w",
+   "name": "main gate, west tower",
+   "in": "gate",
+   "local": [
+    12.91,
+    26,
+    5.4,
+    14.45
+   ],
+   "base": 0,
+   "top": 37.9,
+   "plan": "M",
+   "height": "G",
+   "src": "towers 9.05 m wide, 4.09 proud, 10.8 apart (GR part 8)",
+   "hsrc": "22.5 m"
+  },
+  {
+   "id": "gate-main-tower-e",
+   "name": "main gate, east tower",
+   "in": "gate",
+   "local": [
+    12.91,
+    26,
+    -14.45,
+    -5.4
+   ],
+   "base": 0,
+   "top": 37.9,
+   "plan": "M",
+   "height": "G",
+   "src": "GR part 8",
+   "hsrc": "22.5 m"
+  },
+  {
+   "id": "bastion-w",
+   "name": "forecourt bastion west",
+   "in": "gate",
+   "local": [
+    -29,
+    0,
+    16,
+    37
+   ],
+   "base": 0,
+   "top": 27.4,
+   "plan": "M",
+   "height": "G",
+   "src": "forecourt about 32 x 20 m, bastions about 21 x 29 m (GR part 8, read off sheet 2.28)",
+   "hsrc": "12 m over the street, ours"
+  },
+  {
+   "id": "bastion-e",
+   "name": "forecourt bastion east",
+   "in": "gate",
+   "local": [
+    -29,
+    0,
+    -37,
+    -16
+   ],
+   "base": 0,
+   "top": 27.4,
+   "plan": "M",
+   "height": "G",
+   "src": "GR part 8",
+   "hsrc": "ours"
+  },
+  {
+   "id": "north-gate",
+   "name": "the North Gate",
+   "rect": {
+    "c": [
+     445735,
+     3601035
+    ],
+    "along": 30,
+    "across": 36,
+    "bearing": 348.4
+   },
+   "base": 0,
+   "top": 19.5,
+   "door": {
+    "w": 4.6,
+    "h": 9
+   },
+   "plan": "M",
+   "height": "G",
+   "src": "about 30 m long, 4.6 m door, found 1981 (P2021 p. 80, 230 to 231)",
+   "hsrc": "12 m over its +7.5 street, ours"
+  },
+  {
+   "id": "south-palace",
+   "name": "the South Palace",
+   "poly": [
+    [
+     445516,
+     3600726
+    ],
+    [
+     445634,
+     3600760
+    ],
+    [
+     445700,
+     3600780
+    ],
+    [
+     445778,
+     3600802
+    ],
+    [
+     445812,
+     3600616
+    ],
+    [
+     445516,
+     3600610
+    ]
+   ],
+   "base": 0,
+   "top": 12.0,
+   "plan": "M",
+   "height": "R",
+   "src": "outline C6.2 (dug: green and orange on X1.4)",
+   "hsrc": "the top level's floor about +12 (P2021 p. 93, 104)"
+  },
+  {
+   "id": "south-palace-rooms",
+   "name": "the South Palace's rooms over its floor",
+   "poly": [
+    [
+     445516,
+     3600726
+    ],
+    [
+     445634,
+     3600760
+    ],
+    [
+     445700,
+     3600780
+    ],
+    [
+     445778,
+     3600802
+    ],
+    [
+     445812,
+     3600616
+    ],
+    [
+     445516,
+     3600610
+    ]
+   ],
+   "holes": [
+    {
+     "id": "court-east",
+     "rect": [
+      445750,
+      445788,
+      3600659,
+      3600714
+     ],
+     "plan": "M",
+     "src": "East Court, C6.2"
+    },
+    {
+     "id": "court-central",
+     "rect": [
+      445701,
+      445737,
+      3600672,
+      3600715
+     ],
+     "plan": "M",
+     "src": "Central Court, C6.2"
+    },
+    {
+     "id": "court-main",
+     "rect": [
+      445630.5,
+      445685.5,
+      3600635.5,
+      3600727
+     ],
+     "plan": "M",
+     "src": "Main Courtyard 55 x 61 m (P2021 p. 103) on its place in C6.2, with the throne room's footprint south of it"
+    },
+    {
+     "id": "court-west-a",
+     "rect": [
+      445572,
+      445606,
+      3600672,
+      3600708
+     ],
+     "plan": "M",
+     "src": "C6.2"
+    },
+    {
+     "id": "court-west-b",
+     "rect": [
+      445523,
+      445555,
+      3600672,
+      3600708
+     ],
+     "plan": "M",
+     "src": "C6.2"
+    }
+   ],
+   "base": 12.0,
+   "top": 23.0,
+   "plan": "M",
+   "height": "G",
+   "src": "outline and courts C6.2",
+   "hsrc": "walls to about +23 (P2021 p. 67, GR 5.2)"
+  },
+  {
+   "id": "throne-room",
+   "name": "the throne room",
+   "poly": [
+    [
+     445627.6,
+     3600635.5
+    ],
+    [
+     445691.5,
+     3600635.5
+    ],
+    [
+     445691.5,
+     3600665
+    ],
+    [
+     445627.6,
+     3600665
+    ]
+   ],
+   "base": 12.0,
+   "top": 28.0,
+   "facade": {
+    "side": "north",
+    "doors": [
+     [
+      -17,
+      3.8
+     ],
+     [
+      0,
+      5.8
+     ],
+     [
+      17,
+      3.8
+     ]
+    ],
+    "h": 9
+   },
+   "plan": "M",
+   "height": "G",
+   "src": "room 51.9 x 17.5 m, long walls 6 m, three doors 3.8, 5.8, 3.8 m (P2021 p. 103 to 105); on its place in C6.2",
+   "hsrc": "the facade's height and roof are guessed (P2021 p. 106); door places along the wall ours"
+  },
+  {
+   "id": "north-palace-terrace",
+   "name": "the North Palace terrace",
+   "poly": [
+    [
+     445452,
+     3600790
+    ],
+    [
+     445714,
+     3600862
+    ],
+    [
+     445722,
+     3601010
+    ],
+    [
+     445718,
+     3601086
+    ],
+    [
+     445452,
+     3601086
+    ]
+   ],
+   "base": 0,
+   "top": 15.0,
+   "plan": "R",
+   "height": "R",
+   "src": "C6.2: between the inner walls and the north wall; the borders not fully dug (P2021 p. 114)",
+   "hsrc": "main terrace +15 (P2021 p. 118)"
+  },
+  {
+   "id": "north-palace-main",
+   "name": "the North Palace's main building",
+   "poly": [
+    [
+     445505,
+     3600870
+    ],
+    [
+     445635,
+     3600870
+    ],
+    [
+     445635,
+     3600965
+    ],
+    [
+     445505,
+     3600965
+    ]
+   ],
+   "base": 15.0,
+   "top": 26.0,
+   "plan": "M",
+   "height": "G",
+   "src": "C6.2 (green with orange cores on X1.4)",
+   "hsrc": "ours"
+  },
+  {
+   "id": "north-fortification",
+   "name": "the North Palace's north part on the moat",
+   "poly": [
+    [
+     445452,
+     3601012
+    ],
+    [
+     445718,
+     3601012
+    ],
+    [
+     445718,
+     3601086
+    ],
+    [
+     445452,
+     3601086
+    ]
+   ],
+   "base": 15.0,
+   "top": 21.0,
+   "limestone": true,
+   "plan": "M",
+   "height": "G",
+   "src": "C6.2 and E2.2; its north wall faced the moat with a limestone foot and water inlets (P2021 p. 47, 114, 119)",
+   "hsrc": "ours"
+  },
+  {
+   "id": "west-outwork",
+   "name": "the West Outwork in the river",
+   "poly": [
+    [
+     445349,
+     3600894
+    ],
+    [
+     445450,
+     3600905
+    ],
+    [
+     445490,
+     3600600
+    ],
+    [
+     445374,
+     3600598
+    ]
+   ],
+   "base": -5.0,
+   "top": 12.0,
+   "plan": "M",
+   "height": "G",
+   "src": "C6.2 (dug, X1.4); built with the North Palace's first step (P2021 p. 114)",
+   "hsrc": "ours"
+  },
+  {
+   "id": "moat-counter-wall",
+   "name": "the moat's north wall",
+   "poly": [
+    [
+     445458,
+     3601155
+    ],
+    [
+     445704,
+     3601155
+    ],
+    [
+     445705,
+     3601163
+    ],
+    [
+     445458,
+     3601163
+    ]
+   ],
+   "base": -2.0,
+   "top": 6.0,
+   "plan": "R",
+   "height": "G",
+   "src": "E2.2, drawn",
+   "hsrc": "ours"
+  },
+  {
+   "id": "ninmah",
+   "name": "Ninmah temple (E-mah)",
+   "rect": {
+    "c": [
+     445845,
+     3600800
+    ],
+    "along": 50,
+    "across": 35,
+    "bearing": 330
+   },
+   "base": 0,
+   "top": 23.0,
+   "court": 0.45,
+   "plan": "M",
+   "height": "G",
+   "src": "1,750 m2 by the gate on the east side (P2021 p. 181, 445850 3600800); outline C6.2",
+   "hsrc": "floor +14.5 (P2021 p. 183), walls ours"
+  },
+  {
+   "id": "nabu",
+   "name": "Nabu sha hare temple",
+   "rect": {
+    "c": [
+     445862,
+     3600413
+    ],
+    "along": 44,
+    "across": 34,
+    "bearing": 0
+   },
+   "base": 0,
+   "top": 17.0,
+   "court": 0.4,
+   "plan": "M",
+   "height": "G",
+   "src": "1,080 m2, west of the street (P2021 p. 167, 445860 3600410); outline C6.2",
+   "hsrc": "floor about +7.5, walls ours"
+  },
+  {
+   "id": "ishtar-akkad",
+   "name": "Ishtar of Akkad temple (E-mashdari)",
+   "rect": {
+    "c": [
+     445978,
+     3600458
+    ],
+    "along": 35,
+    "across": 40,
+    "bearing": 0
+   },
+   "base": 0,
+   "top": 15.0,
+   "court": 0.4,
+   "plan": "M",
+   "height": "G",
+   "src": "1,150 m2 east of the street (P2021 p. 174: 445980 3600460); outline C6.2",
+   "hsrc": "ours"
+  },
+  {
+   "id": "temple-z",
+   "name": "small temple west of Nabu",
+   "rect": {
+    "c": [
+     445753,
+     3600395
+    ],
+    "along": 29,
+    "across": 36,
+    "bearing": 0
+   },
+   "base": 0,
+   "top": 13.0,
+   "court": 0.35,
+   "plan": "M",
+   "height": "G",
+   "src": "C6.2",
+   "hsrc": "ours"
+  },
+  {
+   "id": "ashratum",
+   "name": "Ashratum temple by the precinct's corner",
+   "rect": {
+    "c": [
+     445889,
+     3600260
+    ],
+    "along": 37,
+    "across": 33,
+    "bearing": 0
+   },
+   "base": 0,
+   "top": 12.0,
+   "court": 0.35,
+   "plan": "M",
+   "height": "G",
+   "src": "C6.2 (P2021 Fig. 5.18)",
+   "hsrc": "ours"
+  },
+  {
+   "id": "merkes-1",
+   "name": "Merkes houses, dug",
+   "poly": [
+    [
+     445918,
+     3600418
+    ],
+    [
+     445957,
+     3600418
+    ],
+    [
+     445957,
+     3600473
+    ],
+    [
+     445918,
+     3600473
+    ]
+   ],
+   "base": 0,
+   "top": 9.5,
+   "court": 0.3,
+   "plan": "M",
+   "height": "G",
+   "src": "C6.2 (Merkes, green on X1.4; 13 house plans, P2021 p. 246)",
+   "hsrc": "one storey, about 3 m over the floor (P2021 p. 29)"
+  },
+  {
+   "id": "merkes-2",
+   "name": "Merkes houses, dug",
+   "poly": [
+    [
+     445962,
+     3600357
+    ],
+    [
+     445999,
+     3600357
+    ],
+    [
+     445999,
+     3600436
+    ],
+    [
+     445962,
+     3600436
+    ]
+   ],
+   "base": 0,
+   "top": 9.0,
+   "court": 0.3,
+   "plan": "M",
+   "height": "G",
+   "src": "C6.2",
+   "hsrc": "as above"
+  },
+  {
+   "id": "merkes-3",
+   "name": "Merkes houses, dug",
+   "poly": [
+    [
+     446002,
+     3600344
+    ],
+    [
+     446034,
+     3600344
+    ],
+    [
+     446034,
+     3600440
+    ],
+    [
+     446002,
+     3600440
+    ]
+   ],
+   "base": 0,
+   "top": 9.0,
+   "court": 0.3,
+   "plan": "M",
+   "height": "G",
+   "src": "C6.2",
+   "hsrc": "as above"
+  },
+  {
+   "id": "merkes-4",
+   "name": "Merkes houses, dug",
+   "poly": [
+    [
+     446038,
+     3600364
+    ],
+    [
+     446102,
+     3600364
+    ],
+    [
+     446102,
+     3600440
+    ],
+    [
+     446038,
+     3600440
+    ]
+   ],
+   "base": 0,
+   "top": 9.0,
+   "court": 0.3,
+   "plan": "M",
+   "height": "G",
+   "src": "C6.2",
+   "hsrc": "as above"
+  },
+  {
+   "id": "merkes-5",
+   "name": "Merkes houses, dug",
+   "poly": [
+    [
+     446073,
+     3600447
+    ],
+    [
+     446127,
+     3600447
+    ],
+    [
+     446127,
+     3600505
+    ],
+    [
+     446073,
+     3600505
+    ]
+   ],
+   "base": 0,
+   "top": 9.0,
+   "court": 0.3,
+   "plan": "M",
+   "height": "G",
+   "src": "C6.2",
+   "hsrc": "as above"
+  },
+  {
+   "id": "merkes-6",
+   "name": "Merkes large house, dug",
+   "poly": [
+    [
+     445918,
+     3600502
+    ],
+    [
+     445970,
+     3600502
+    ],
+    [
+     445970,
+     3600563
+    ],
+    [
+     445918,
+     3600563
+    ]
+   ],
+   "base": 0,
+   "top": 10.0,
+   "court": 0.35,
+   "plan": "M",
+   "height": "G",
+   "src": "C6.2",
+   "hsrc": "as above"
+  },
+  {
+   "id": "precinct-west-rooms",
+   "name": "Etemenanki precinct, west rooms",
+   "poly": [
+    [
+     445506,
+     3600254
+    ],
+    [
+     445521,
+     3600257
+    ],
+    [
+     445578,
+     3599868
+    ],
+    [
+     445562,
+     3599864
+    ]
+   ],
+   "base": 0,
+   "top": 12.0,
+   "plan": "M",
+   "height": "G",
+   "src": "C6.2 (dug 1908 to 1910, X1.4)",
+   "hsrc": "mud brick with white plaster; height ours"
+  },
+  {
+   "id": "precinct-ne-block",
+   "name": "Etemenanki precinct, north-east block",
+   "poly": [
+    [
+     445842,
+     3600214
+    ],
+    [
+     445934,
+     3600234
+    ],
+    [
+     445956,
+     3600139
+    ],
+    [
+     445868,
+     3600119
+    ]
+   ],
+   "base": 0,
+   "top": 13.0,
+   "court": 0.45,
+   "plan": "M",
+   "height": "G",
+   "src": "C6.2",
+   "hsrc": "ours"
+  },
+  {
+   "id": "precinct-se-block",
+   "name": "Etemenanki precinct, south-east block",
+   "poly": [
+    [
+     445880,
+     3600086
+    ],
+    [
+     445970,
+     3600108
+    ],
+    [
+     445990,
+     3600030
+    ],
+    [
+     445900,
+     3600008
+    ]
+   ],
+   "base": 0,
+   "top": 13.0,
+   "court": 0.45,
+   "plan": "M",
+   "height": "G",
+   "src": "C6.2",
+   "hsrc": "ours"
+  },
+  {
+   "id": "esagila",
+   "name": "Esagila, Marduk's temple",
+   "poly": [
+    [
+     445625,
+     3599756
+    ],
+    [
+     445703,
+     3599768
+    ],
+    [
+     445713,
+     3599685
+    ],
+    [
+     445640,
+     3599672
+    ]
+   ],
+   "base": 0,
+   "top": 21.5,
+   "courtRect": [
+    31.3,
+    37.6
+   ],
+   "plan": "M",
+   "height": "G",
+   "src": "79.3 x 85.8 m (K1914 ch. XXXV) on its place in C6.2 (P2021 p. 142, the printed N is a slip)",
+   "hsrc": "walls 16.5 m, Pedersén's model value (P2021 p. 143)"
+  },
+  {
+   "id": "esagila-annex",
+   "name": "Esagila's annex",
+   "poly": [
+    [
+     445703,
+     3599768
+    ],
+    [
+     445707,
+     3599777
+    ],
+    [
+     445784,
+     3599792
+    ],
+    [
+     445809,
+     3599681
+    ],
+    [
+     445736,
+     3599665
+    ],
+    [
+     445713,
+     3599685
+    ]
+   ],
+   "base": 0,
+   "top": 15.0,
+   "court": 0.55,
+   "plan": "M",
+   "height": "G",
+   "src": "outline only (K1914 ch. XXXVI), C6.2",
+   "hsrc": "ours"
+  },
+  {
+   "id": "babil",
+   "name": "the Summer Palace on Babil",
+   "rect": {
+    "c": [
+     445990,
+     3603310
+    ],
+    "along": 160,
+    "across": 140,
+    "bearing": 0
+   },
+   "base": 0,
+   "top": 33.0,
+   "plan": "R",
+   "height": "G",
+   "src": "two courtyards traced, floor about +21 on the mound at +25 (P2021 p. 135 to 136); A2.1",
+   "hsrc": "ours"
+  },
+  {
+   "id": "altar-gate5",
+   "name": "the altar before Gate 5",
+   "rect": {
+    "c": [
+     446143,
+     3600184
+    ],
+    "along": 8,
+    "across": 8,
+    "bearing": 343
+   },
+   "base": 0,
+   "top": 5.0,
+   "plan": "M",
+   "height": "G",
+   "src": "pedestal or altar with Esarhaddon's bricks (P2021 Fig. 5.14)",
+   "hsrc": "ours"
+  }
+ ],
+ "bridge": {
+  "name": "the Euphrates bridge",
+  "axis": [
+   [
+    445534,
+    3599840
+   ],
+   [
+    445398,
+    3599828
+   ]
+  ],
+  "piers": {
+   "count": 6,
+   "along": 9,
+   "across": 21,
+   "gap": 9,
+   "base": -5.0,
+   "top": 2.5,
+   "plan": "M",
+   "height": "R",
+   "src": "piers 21 x 9 m, 9 m apart, six free (P2021 p. 204 to 205); spacing checked on C6.2",
+   "hsrc": "foundations to about -5 (P2021 p. 204)"
+  },
+  "abutments": {
+   "along": 14,
+   "across": 24,
+   "base": -5.0,
+   "top": 2.5,
+   "plan": "M",
+   "height": "G",
+   "src": "first and last pillars used as abutments, first 126 m apart (P2021 p. 204)"
+  },
+  "deck": {
+   "w": 9.0,
+   "thick": 0.8,
+   "plan": "G",
+   "height": "G",
+   "src": "deck not found; stone very probable, beam holes under the street levels (P2021 p. 206)"
+  }
+ },
+ "tower": {
+  "name": "Etemenanki",
+  "in": "tower",
+  "base": 3.5,
+  "stages": [
+   {
+    "side": 91.5,
+    "h": 30.0,
+    "plan": "M",
+    "height": "R",
+    "src": "base 91.5 x 91.5 m (P2021 p. 153), about 90 m (K1914 ch. XXX)",
+    "hsrc": "the father's 15 m mantle and the son's terrace of 30 cubits, about 30 m (P2021 p. 158)"
+   },
+   {
+    "side": 78.0,
+    "h": 18.0,
+    "plan": "G",
+    "height": "G",
+    "src": "stages after the stele (P2021 p. 159 to 160, Fig. 4.18)"
+   },
+   {
+    "side": 60.0,
+    "h": 12.0,
+    "plan": "G",
+    "height": "G",
+    "src": "as above"
+   },
+   {
+    "side": 51.0,
+    "h": 9.0,
+    "plan": "G",
+    "height": "G",
+    "src": "as above"
+   },
+   {
+    "side": 42.0,
+    "h": 7.0,
+    "plan": "G",
+    "height": "G",
+    "src": "as above"
+   },
+   {
+    "side": 33.0,
+    "h": 6.5,
+    "plan": "G",
+    "height": "G",
+    "src": "as above"
+   },
+   {
+    "side": 23.0,
+    "h": 9.0,
+    "plan": "G",
+    "height": "G",
+    "src": "the top temple in blue glaze is text-attested, its form not (EV section 6)"
+   }
+  ],
+  "total": 91.5,
+  "range": [
+   66,
+   91.5
+  ],
+  "stairs": {
+   "middle": {
+    "w": 9.0,
+    "from": 51.6,
+    "to": 0,
+    "top": 30.0,
+    "plan": "M",
+    "height": "G",
+    "src": "the middle stair from 51.6 m out (P2021 p. 156)"
+   },
+   "side": {
+    "w": 8.0,
+    "run": 40.0,
+    "top": 30.0,
+    "plan": "M",
+    "height": "G",
+    "src": "two side stairs along the south face (P2021 p. 156)"
+   }
+  }
+ },
+ "walls": [
+  {
+   "id": "kasr-wall-c",
+   "name": "inner city main wall through the Kasr",
+   "line": [
+    [
+     445470,
+     3600743
+    ],
+    [
+     445760,
+     3600826
+    ]
+   ],
+   "thick": 6.5,
+   "top": 23.0,
+   "towers": {
+    "w": 8,
+    "proj": 3.5,
+    "pitch": 18.1,
+    "side": "left",
+    "top": 25.0
+   },
+   "plan": "M",
+   "height": "G",
+   "src": "C6.2, dug (X1.4); Imgur-Enlil 6.5 m (K1914 ch. XXV)",
+   "hsrc": "higher here with the raised terrain (P2021 p. 30); ours"
+  },
+  {
+   "id": "kasr-wall-b",
+   "name": "inner city front wall through the Kasr",
+   "line": [
+    [
+     445468,
+     3600774
+    ],
+    [
+     445737,
+     3600851
+    ]
+   ],
+   "thick": 3.7,
+   "top": 21.0,
+   "towers": {
+    "w": 6,
+    "proj": 2.5,
+    "pitch": 20.5,
+    "side": "left",
+    "top": 23.0
+   },
+   "plan": "M",
+   "height": "G",
+   "src": "C6.2; Nemet-Enlil 3.72 m (K1914 ch. XXV)",
+   "hsrc": "ours"
+  },
+  {
+   "id": "lion-wall-w",
+   "name": "the lion street's west wall",
+   "in": "lion",
+   "line": [
+    [
+     29,
+     -13.5
+    ],
+    [
+     180,
+     -13.5
+    ]
+   ],
+   "thick": 7,
+   "rel": "street",
+   "top": 10.0,
+   "towers": {
+    "w": 4.5,
+    "proj": 0.6,
+    "pitch": 9.0,
+    "side": "right",
+    "top": 11.5
+   },
+   "plan": "M",
+   "height": "G",
+   "src": "walls 7 m thick about 20 m apart, 180 m long, towers at their own width (K1914 ch. V, P2021 p. 80)",
+   "hsrc": "10 m over the street, ours"
+  },
+  {
+   "id": "lion-wall-e",
+   "name": "the lion street's east wall",
+   "in": "lion",
+   "line": [
+    [
+     29,
+     13.5
+    ],
+    [
+     180,
+     13.5
+    ]
+   ],
+   "thick": 7,
+   "rel": "street",
+   "top": 10.0,
+   "towers": {
+    "w": 4.5,
+    "proj": 0.6,
+    "pitch": 9.0,
+    "side": "left",
+    "top": 11.5
+   },
+   "plan": "M",
+   "height": "G",
+   "src": "as above",
+   "hsrc": "as above"
+  },
+  {
+   "id": "east-fortification",
+   "name": "the East Fortification's north wall",
+   "line": [
+    [
+     445760,
+     3601017
+    ],
+    [
+     445985,
+     3601144
+    ],
+    [
+     446083,
+     3601112
+    ]
+   ],
+   "thick": 6,
+   "top": 14.0,
+   "plan": "R",
+   "height": "G",
+   "src": "C6.2 and E2.2, drawn",
+   "hsrc": "ours"
+  },
+  {
+   "id": "east-fortification-2",
+   "name": "the wall north of the East Fortification",
+   "line": [
+    [
+     445741,
+     3601175
+    ],
+    [
+     445953,
+     3601283
+    ]
+   ],
+   "thick": 5,
+   "top": 12.0,
+   "plan": "R",
+   "height": "G",
+   "src": "E2.2, drawn",
+   "hsrc": "ours"
+  },
+  {
+   "id": "kasr-river-wall",
+   "name": "the river embankment beside the Kasr and the Sahn",
+   "line": [
+    [
+     445380,
+     3600590
+    ],
+    [
+     445420,
+     3600400
+    ],
+    [
+     445448,
+     3600250
+    ],
+    [
+     445488,
+     3600000
+    ],
+    [
+     445515,
+     3599850
+    ]
+   ],
+   "thick": 5.25,
+   "top": 4.0,
+   "base": -5.0,
+   "towers": {
+    "w": 7,
+    "proj": 3,
+    "pitch": 26,
+    "side": "right",
+    "top": 6.0
+   },
+   "plan": "M",
+   "height": "M",
+   "src": "C6.2 (dug, X1.4); base -5, 5.25 m thick, top +4.0 (P2021 p. 66)",
+   "hsrc": "P2021 p. 66 (reconstructed top)"
+  },
+  {
+   "id": "kasr-river-wall-2",
+   "name": "the older inner embankment",
+   "line": [
+    [
+     445403,
+     3600583
+    ],
+    [
+     445440,
+     3600410
+    ],
+    [
+     445466,
+     3600260
+    ],
+    [
+     445500,
+     3600050
+    ]
+   ],
+   "thick": 4,
+   "top": 8.0,
+   "plan": "M",
+   "height": "G",
+   "src": "C6.2, the second line 20 to 25 m inside (P2021 p. 66)",
+   "hsrc": "ours"
+  },
+  {
+   "id": "river-wall-south",
+   "name": "the river wall south of the bridge",
+   "line": [
+    [
+     445540,
+     3599800
+    ],
+    [
+     445590,
+     3599525
+    ],
+    [
+     445784,
+     3599262
+    ],
+    [
+     445934,
+     3599110
+    ]
+   ],
+   "thick": 5.25,
+   "top": 4.0,
+   "base": -5.0,
+   "plan": "R",
+   "height": "R",
+   "src": "A2.1 and X1.4, drawn",
+   "hsrc": "as the embankment, P2021 p. 66"
+  },
+  {
+   "id": "outer-river-wall",
+   "name": "the outer city's wall along the river",
+   "line": [
+    [
+     445454,
+     3601168
+    ],
+    [
+     445558,
+     3601450
+    ],
+    [
+     445695,
+     3601800
+    ],
+    [
+     445800,
+     3602045
+    ],
+    [
+     445905,
+     3602100
+    ],
+    [
+     445905,
+     3603467
+    ]
+   ],
+   "thick": 7,
+   "top": 12.0,
+   "towers": {
+    "w": 8,
+    "proj": 3.5,
+    "pitch": 40,
+    "side": "right",
+    "top": 14.0
+   },
+   "plan": "R",
+   "height": "G",
+   "src": "E2.2 and A2.1, drawn",
+   "hsrc": "ours"
+  },
+  {
+   "id": "precinct-north-wall",
+   "name": "Etemenanki precinct, north wall",
+   "line": [
+    [
+     445506,
+     3600254
+    ],
+    [
+     445897,
+     3600338
+    ]
+   ],
+   "thick": 8,
+   "top": 11.0,
+   "plan": "M",
+   "height": "G",
+   "src": "C6.2 (dug 1908 to 1910, X1.4)",
+   "hsrc": "mud brick with white plaster; height ours"
+  },
+  {
+   "id": "precinct-east-wall",
+   "name": "Etemenanki precinct, east wall",
+   "line": [
+    [
+     445897,
+     3600338
+    ],
+    [
+     446012,
+     3599936
+    ]
+   ],
+   "thick": 8,
+   "top": 11.0,
+   "gaps": [
+    {
+     "at": [
+      445972,
+      3600117
+     ],
+     "w": 30
+    }
+   ],
+   "plan": "M",
+   "height": "G",
+   "src": "C6.2; Gate 5 an opening about 30 m wide (P2021 p. 211, at 445970 3600125)",
+   "hsrc": "ours"
+  },
+  {
+   "id": "precinct-south-rooms",
+   "name": "Etemenanki precinct, south rooms",
+   "line": [
+    [
+     445565.5,
+     3599880.5
+    ],
+    [
+     446009,
+     3599951
+    ]
+   ],
+   "thick": 32,
+   "top": 12.0,
+   "gaps": [
+    {
+     "at": [
+      445686,
+      3599900
+     ],
+     "w": 14
+    }
+   ],
+   "plan": "M",
+   "height": "G",
+   "src": "C6.2; the south side had gates with open squares 21 x 25 m before them (P2021 p. 208); one gate is cut here on the middle stair's axis, its place ours",
+   "hsrc": "ours"
+  }
+ ],
+ "circuits": [
+  {
+   "id": "inner-east",
+   "name": "the inner city wall on the east bank (Imgur-Enlil and Nemet-Enlil), its embankment and its 80 m moat",
+   "line": [
+    [
+     445800,
+     3600830
+    ],
+    [
+     446737,
+     3601360
+    ],
+    [
+     447230,
+     3599740
+    ],
+    [
+     445934,
+     3599110
+    ]
+   ],
+   "outward": "left",
+   "main": {
+    "thick": 6.5,
+    "top": 16.0,
+    "towers": {
+     "w": 8,
+     "proj": 3,
+     "pitch": 18.1,
+     "top": 18.0
+    }
+   },
+   "front": {
+    "offset": 12.35,
+    "thick": 3.72,
+    "top": 12.0,
+    "towers": {
+     "w": 6,
+     "proj": 2.5,
+     "pitch": 20.5,
+     "top": 13.5
+    }
+   },
+   "karu": {
+    "offset": 37,
+    "thick": 5,
+    "top": 4.0
+   },
+   "segments": [
+    {
+     "plan": "M",
+     "src": "north and east fronts dug in stretches (green, X1.4; K1914 ch. XXV)"
+    },
+    {
+     "plan": "M",
+     "src": "east front, X1.4"
+    },
+    {
+     "plan": "R",
+     "src": "south front drawn (A2.1)"
+    }
+   ],
+   "height": "R",
+   "hsrc": "main wall +14 and front wall +10, each with a 2 m parapet (P2021 p. 30); tower heights ours",
+   "moatSkip": 320
+  },
+  {
+   "id": "outer-east",
+   "name": "the outer east wall and its 80 m moat",
+   "line": [
+    [
+     445905,
+     3603467
+    ],
+    [
+     446170,
+     3603500
+    ],
+    [
+     446302,
+     3602887
+    ],
+    [
+     447298,
+     3601838
+    ],
+    [
+     448725,
+     3600264
+    ],
+    [
+     446406,
+     3598927
+    ],
+    [
+     446150,
+     3598700
+    ]
+   ],
+   "outward": "left",
+   "main": {
+    "thick": 7.0,
+    "top": 15.0,
+    "towers": {
+     "w": 8.37,
+     "proj": 3,
+     "pitch": 52.5,
+     "top": 17.0
+    }
+   },
+   "karu": {
+    "offset": 22,
+    "thick": 8,
+    "top": 4.0
+   },
+   "segments": [
+    {
+     "plan": "R",
+     "src": "A2.1"
+    },
+    {
+     "plan": "R",
+     "src": "A2.1"
+    },
+    {
+     "plan": "M",
+     "src": "north-east front, dug in stretches (X1.4, K1914 ch. I)"
+    },
+    {
+     "plan": "M",
+     "src": "X1.4"
+    },
+    {
+     "plan": "R",
+     "src": "A2.1"
+    },
+    {
+     "plan": "R",
+     "src": "A2.1"
+    }
+   ],
+   "height": "R",
+   "hsrc": "13 m plus 2 m of battlements (P2021 p. 60); towers 8.37 m wide about 52.5 m apart (K1914 ch. I)"
+  },
+  {
+   "id": "west-city",
+   "name": "the west city's walls (not dug)",
+   "line": [
+    [
+     445275,
+     3600470
+    ],
+    [
+     444290,
+     3600190
+    ],
+    [
+     444690,
+     3598780
+    ],
+    [
+     445560,
+     3599020
+    ]
+   ],
+   "outward": "right",
+   "main": {
+    "thick": 6.5,
+    "top": 16.0,
+    "towers": {
+     "w": 8,
+     "proj": 3,
+     "pitch": 40,
+     "top": 18.0
+    }
+   },
+   "front": {
+    "offset": 12.35,
+    "thick": 3.72,
+    "top": 12.0
+   },
+   "segments": [
+    {
+     "plan": "R",
+     "src": "A2.1, drawn; 'Of the western walls nothing is now to be seen' (K1914 ch. I)"
+    },
+    {
+     "plan": "R",
+     "src": "A2.1"
+    },
+    {
+     "plan": "R",
+     "src": "A2.1"
+    }
+   ],
+   "height": "G",
+   "hsrc": "as the east bank's, ours"
+  }
+ ],
+ "canal": {
+  "name": "the Libil-hegalla canal along the palace's south side",
+  "line": [
+   [
+    445495,
+    3600603.5
+   ],
+   [
+    445660,
+    3600604
+   ],
+   [
+    445837,
+    3600604
+   ]
+  ],
+  "w": 2.8,
+  "level": -1.0,
+  "wall": 0.8,
+  "plan": "R",
+  "height": "G",
+  "src": "2.6 to 2.9 m wide, established from the river to the middle of the South Palace; its further line not known (P2021 p. 218); drawn here from the Kasr river wall east of the West Outwork"
+ },
+ "houses": {
+  "says": "the filled city as a type: courtyard houses of one storey in blocks between streets, never a dug plan",
+  "plan": "G",
+  "height": [
+   3.4,
+   5.2
+  ],
+  "src": "13 complete house plans in Merkes, all round courtyards, walls about 1 m, about 3 m high (P2021 p. 29, 246); the street grid is ours, laid on the precinct's own orientation",
+  "bearing": 73,
+  "block": [
+   64,
+   92
+  ],
+  "street": 6.5,
+  "lane": 3.2,
+  "lot": [
+   14,
+   26
+  ],
+  "depth": [
+   16,
+   28
+  ],
+  "court": 0.36,
+  "seed": 570,
+  "regions": [
+   {
+    "id": "east-bank",
+    "poly": [
+     [
+      445805,
+      3600805
+     ],
+     [
+      446710,
+      3601315
+     ],
+     [
+      447185,
+      3599760
+     ],
+     [
+      445950,
+      3599150
+     ],
+     [
+      445810,
+      3599285
+     ],
+     [
+      445600,
+      3599560
+     ],
+     [
+      445565,
+      3599800
+     ],
+     [
+      445500,
+      3600050
+     ],
+     [
+      445470,
+      3600250
+     ],
+     [
+      445440,
+      3600420
+     ],
+     [
+      445420,
+      3600590
+     ],
+     [
+      445520,
+      3600605
+     ],
+     [
+      445812,
+      3600600
+     ]
+    ]
+   },
+   {
+    "id": "west-bank",
+    "poly": [
+     [
+      445240,
+      3600430
+     ],
+     [
+      444330,
+      3600165
+     ],
+     [
+      444715,
+      3598820
+     ],
+     [
+      445520,
+      3599045
+     ],
+     [
+      445405,
+      3599700
+     ],
+     [
+      445300,
+      3600200
+     ]
+    ]
+   }
+  ],
+  "keepOut": [
+   {
+    "id": "precinct",
+    "poly": [
+     [
+      445496,
+      3600262
+     ],
+     [
+      445905,
+      3600350
+     ],
+     [
+      446025,
+      3599930
+     ],
+     [
+      445555,
+      3599850
+     ]
+    ]
+   },
+   {
+    "id": "esagila-ground",
+    "poly": [
+     [
+      445590,
+      3599855
+     ],
+     [
+      446000,
+      3599905
+     ],
+     [
+      445840,
+      3599640
+     ],
+     [
+      445600,
+      3599640
+     ]
+    ]
+   },
+   {
+    "id": "gate5-square",
+    "poly": [
+     [
+      445975,
+      3600150
+     ],
+     [
+      446160,
+      3600215
+     ],
+     [
+      446175,
+      3600160
+     ],
+     [
+      445985,
+      3600100
+     ]
+    ]
+   },
+   {
+    "id": "east-fortification",
+    "poly": [
+     [
+      445790,
+      3600850
+     ],
+     [
+      445760,
+      3601020
+     ],
+     [
+      445990,
+      3601150
+     ],
+     [
+      446090,
+      3601110
+     ],
+     [
+      446000,
+      3600930
+     ]
+    ]
+   },
+   {
+    "id": "kasr",
+    "poly": [
+     [
+      445400,
+      3600600
+     ],
+     [
+      445830,
+      3600600
+     ],
+     [
+      445800,
+      3600830
+     ],
+     [
+      445400,
+      3600830
+     ]
+    ]
+   }
+  ],
+  "streetClear": 4.0,
+  "blockClear": 4.0
+ }
+}
