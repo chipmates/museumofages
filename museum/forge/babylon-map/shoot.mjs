@@ -1,7 +1,7 @@
 // THE MAP'S SHOOTER: opens the Babylon map page once and takes stills, the moving sketch, or the facts.
 //
 //   node forge/babylon-map/shoot.mjs --out <abs folder in the hand-in> [--stops all|1,3] [--framing desktop,phone] [--view grey,classes]
-//        [--dw 1920 --dh 1080 --pw 780 --ph 1688 --samples 16]
+//        [--dw 1920 --dh 1080 --pw 780 --ph 1688 --samples 16] [--t <film second> --name <base>]
 //   node forge/babylon-map/shoot.mjs --clip <abs folder> [--fps 8 --w 640 --h 360 --samples 2 --from 0 --to 781 --framing desktop]
 //        frames are named by their global index (time x fps), so spans written one after another join; one frames-<first>.json a span
 //   node forge/babylon-map/shoot.mjs --facts <abs file>
@@ -87,7 +87,10 @@ if (opt.out && opt.out !== true) {
   for (const n of stops) for (const framing of framings) for (const view of kinds) {
     const [w, h] = framing === 'phone' ? [Number(opt.pw ?? 780), Number(opt.ph ?? 1688)] : [Number(opt.dw ?? 1920), Number(opt.dh ?? 1080)]
     const css = framing === 'phone' ? [390, 844] : [Math.round(w / Number(opt.dratio ?? 1.2)), Math.round(h / Number(opt.dratio ?? 1.2))]
-    const r = await page.evaluate((o) => window.__map.shoot(o), { stop: n, framing, view, w, h, samples, out, css }).catch((e) => ({ error: String(e) }))
+    // --t <second> --name <file base>: a film second instead of the stop's still key (one stop only)
+    const t = opt.t && opt.t !== true ? Number(opt.t) : undefined
+    const name = opt.name && opt.name !== true ? `${opt.name}-${framing}-${view}` : undefined
+    const r = await page.evaluate((o) => window.__map.shoot(o), { stop: n, framing, view, w, h, samples, out, css, t, name }).catch((e) => ({ error: String(e) }))
     if (r.error) { bad++; console.log(`FAILED ${n} ${framing} ${view}: ${r.error.slice(0, 400)}`) }
     else console.log(`${r.file.split('/').pop()} ${r.ms} ms median ${r.brightness.median} p1 ${r.brightness.p1} p99 ${r.brightness.p99} eye ${r.camera.eyeOverStand}`)
   }
