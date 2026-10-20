@@ -304,17 +304,26 @@ const rig = {
     const n = Math.floor((to - from) * o.fps) + 1
     const log: Array<Record<string, unknown>> = []
     const t = performance.now()
+    // the stills' exposure per stop, eased over six seconds as an eye adapts
+    const stopsOf = (n: number): number => cams.stops.find((x: J) => x.n === n)?.stops ?? 0
+    const expAt = (time: number): number => {
+      let acc = 0
+      for (let k = -6; k <= 6; k++) acc += stopsOf(path.sample(time + k * 0.5).stop)
+      return acc / 13
+    }
     for (let i = 0; i < n; i++) {
       const time = from + i / o.fps
       const p: PathSample = path.sample(time)
       setHour(p.hour)
       const hfov = o.framing === 'phone' ? (cams.lens.phoneFilm ?? 46) : p.hfov
       aim(p.pos, p.look, hfov, o.w, o.h, 0)
-      const { bytes } = await render(o.w, o.h, o.samples)
-      await upload(`${o.out}/f${String(i).padStart(5, '0')}.jpg`, await jpeg(bytes, o.w, o.h, 0.86))
-      log.push({ i, t: +time.toFixed(3), stop: p.stop, kind: p.kind, utm: F.utm(p.pos[0], p.pos[2]).map((v) => +v.toFixed(2)), y: +p.pos[1].toFixed(2), eyeOverStand: +(p.pos[1] - stand(p.pos[0], p.pos[2])).toFixed(2), hour: +p.hour.toFixed(3) })
+      const ev = expAt(time)
+      const { bytes } = await render(o.w, o.h, o.samples, ev)
+      const g = Math.round(time * o.fps)
+      await upload(`${o.out}/f${String(g).padStart(5, '0')}.jpg`, await jpeg(bytes, o.w, o.h, 0.86))
+      log.push({ i: g, t: +time.toFixed(3), stop: p.stop, kind: p.kind, utm: F.utm(p.pos[0], p.pos[2]).map((v) => +v.toFixed(2)), y: +p.pos[1].toFixed(2), eyeOverStand: +(p.pos[1] - stand(p.pos[0], p.pos[2])).toFixed(2), hour: +p.hour.toFixed(3), ev: +ev.toFixed(3) })
     }
-    await upload(`${o.out}/frames.json`, JSON.stringify({ fps: o.fps, w: o.w, h: o.h, samples: o.samples, from, to, frames: log }, null, 0))
+    await upload(`${o.out}/frames-${String(Math.round(from * o.fps)).padStart(5, '0')}.json`, JSON.stringify({ fps: o.fps, w: o.w, h: o.h, samples: o.samples, from, to, frames: log }, null, 0))
     return { frames: n, ms: Math.round(performance.now() - t) }
   },
   /** the path sampled for the motion check, no rendering */

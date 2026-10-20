@@ -2,7 +2,8 @@
 //
 //   node forge/babylon-map/shoot.mjs --out <abs folder in the hand-in> [--stops all|1,3] [--framing desktop,phone] [--view grey,classes]
 //        [--dw 1920 --dh 1080 --pw 780 --ph 1688 --samples 16]
-//   node forge/babylon-map/shoot.mjs --clip <abs folder> [--fps 8 --w 640 --h 360 --samples 2 --from 0 --to 618 --framing desktop]
+//   node forge/babylon-map/shoot.mjs --clip <abs folder> [--fps 8 --w 640 --h 360 --samples 2 --from 0 --to 781 --framing desktop]
+//        frames are named by their global index (time x fps), so spans written one after another join; one frames-<first>.json a span
 //   node forge/babylon-map/shoot.mjs --facts <abs file>
 //   --port 5210 --data-port 5211 (never 5199 or 5400); --q 'exp=0.6' passed to the page
 import { chromium } from 'playwright'
