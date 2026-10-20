@@ -25,6 +25,11 @@ export class Soup {
   gEdge: number[] = []
   gInfo: number[] = []
   gCls: number[] = []
+  /** where each named body starts (a vertex index), so an offline check can split the merged soup by body */
+  marks: Array<{ id: string; from: number }> = []
+  mark(id: string): void {
+    this.marks.push({ id, from: this.pos.length / 3 })
+  }
   tri(a: V3, b: V3, c: V3, n: V3, at: (p: V3) => Attr): void {
     for (const p of [a, b, c]) {
       const t = at(p)
@@ -116,9 +121,10 @@ export function addArch(s: Soup, a: GArch): void {
   sh.lineTo(a.x1, a.top)
   sh.lineTo(a.x0, a.top)
   sh.closePath()
-  const depth = a.z1 - a.inset - a.z0
+  const z0 = a.z0 + (a.inset0 ?? 0)
+  const depth = a.z1 - a.inset - z0
   const g = new ExtrudeGeometry(sh, { depth, bevelEnabled: false, curveSegments: 48 })
-  g.translate(0, 0, a.z0)
+  g.translate(0, 0, z0)
   s.add(g, bodyAttr(KIND.gate, a.plan, a.height, -99, -1))
 }
 
@@ -240,8 +246,9 @@ export function addHoledWall(s: Soup, b: GBox, holes: Array<{ c: V3; n: V3; r: n
   if (!mine.length) return false
   const n = mine[0]!.n
   const alongX = Math.abs(n[2]) > 0.5
+  const x0 = b.x0 + (b.inset?.nx ?? 0), x1 = b.x1 - (b.inset?.px ?? 0), z0 = b.z0 + (b.inset?.nz ?? 0), z1 = b.z1 - (b.inset?.pz ?? 0)
   // the wall in its own plane: a along it, y up; extruded through its thickness
-  const a0 = alongX ? b.x0 : b.z0, a1 = alongX ? b.x1 : b.z1
+  const a0 = alongX ? x0 : z0, a1 = alongX ? x1 : z1
   const sh = new Shape()
   sh.moveTo(a0, b.y0)
   sh.lineTo(a1, b.y0)
@@ -253,7 +260,7 @@ export function addHoledWall(s: Soup, b: GBox, holes: Array<{ c: V3; n: V3; r: n
     p.absarc(alongX ? h.c[0] : h.c[2], h.c[1], h.r, 0, Math.PI * 2, false)
     sh.holes.push(p)
   }
-  const t0 = alongX ? b.z0 : b.x0, t1 = alongX ? b.z1 : b.x1
+  const t0 = alongX ? z0 : x0, t1 = alongX ? z1 : x1
   const g = new ExtrudeGeometry(sh, { depth: t1 - t0, bevelEnabled: false, curveSegments: 24 })
   const P = g.getAttribute('position'), N = g.getAttribute('normal')
   for (let i = 0; i < P.count; i++) {
@@ -338,6 +345,7 @@ export function merge(parts: BufferGeometry[]): BufferGeometry {
 export interface PanelInstances { kind: 'bull' | 'dragon' | 'lion'; count: number; matrices: Float32Array; iU: Float32Array; iN: Float32Array; iA: Float32Array; iB: Float32Array }
 export interface Assembled {
   walls: BufferGeometry
+  marks: Soup['marks']
   panels: PanelInstances[]
   bronzes: Array<{ geometry: BufferGeometry; cls: [number, number, number, number] }>
   paving: BufferGeometry
@@ -354,27 +362,31 @@ export function assemble(B: Built, plan: any, fields: Record<'bull' | 'dragon' |
   const runKind = (id: string): number => (/^(lion|conn|bastion)-/.test(id) ? KIND.brick : KIND.gate)
   for (const b of B.boxes) {
     const kind = kindOfSurf(b.surf)
+    s.mark(b.id)
     if (/^m?guard-.*-(n|w|e)$/.test(b.id) && addHoledWall(s, b, loopIn.map((l) => ({ c: l.c, n: l.n, r: l.r })), bodyAttr(kind, b.plan, b.height, b.band, b.rTop ?? -1))) continue
     addBox(s, b, kind)
   }
-  for (const b of B.beams) addBox(s, b, KIND.cedar)
-  for (const p of B.prisms) addPrism(s, p)
-  for (const a of B.arches) addArch(s, a)
+  for (const b of B.beams) { s.mark(b.id); addBox(s, b, KIND.cedar) }
+  for (const p of B.prisms) { s.mark(p.id); addPrism(s, p) }
+  for (const a of B.arches) { s.mark(a.id); addArch(s, a) }
   // the skins, with holes where the relief panels sit
   const margin = 0.02
   const L = { bull: fields.bull.L, dragon: fields.dragon.L, lion: fields.lion.L }
   for (const f of B.faces) {
     const boxes = B.panels.filter((q) => q.face === f.id).map((q) => panelRect(q, L[q.kind], margin, C))
     const bandTop = f.kind === 'lion' ? f.origin[1] + 3 + C : C
+    s.mark(`skin:${f.id}`)
     addSkin(s, f, boxes, bandTop)
   }
   for (const r of B.runs) {
     const k = runKind(r.id)
+    s.mark(r.id)
     addRun(s, r, plan.battlements.pitch, bodyAttr(k, r.plan, r.plan, -99, -1))
   }
   // the pedestals: square brick blocks, the round one a drum
   for (const p of B.pedestals) {
     const at = bodyAttr(KIND.brick, p.plan, p.height, p.y0 + 0.4 + C, -1)
+    s.mark(`ped-${p.n}`)
     if (p.shape === 'round') {
       const sh = new Shape()
       sh.absarc(0, 0, p.d / 2, 0, Math.PI * 2, false)
@@ -385,7 +397,8 @@ export function assemble(B: Built, plan: any, fields: Record<'bull' | 'dragon' |
     } else addBox(s, { id: `ped-${p.n}`, part: 'forecourt', x0: p.x - p.d / 2, x1: p.x + p.d / 2, y0: p.y0, y1: p.y1, z0: p.z - p.d / 2, z1: p.z + p.d / 2, surf: 'brick', plan: p.plan, height: p.height, band: p.y0 + 0.4 + C }, KIND.brick)
   }
   // the open door leaves: cedar with copper bands, hinged at the jamb, swung into the chamber
-  for (const d of B.doors) {
+  for (const [di, d] of B.doors.entries()) {
+    s.mark(`leaf-${di}`)
     const geo = leafGeometry(d.w, d.springing, d.thick)
     const sgn = d.pivot[0] > 0 ? 1 : -1
     const P = geo.getAttribute('position'), Nn = geo.getAttribute('normal')
@@ -440,7 +453,7 @@ export function assemble(B: Built, plan: any, fields: Record<'bull' | 'dragon' |
   }
 
   const paving = pavingGeometry(B, plan)
-  return { walls, panels, bronzes, paving, counts: { wallTriangles: walls.getAttribute('position').count / 3, panels: B.panels.length, pavingTriangles: paving.getAttribute('position').count / 3 } }
+  return { walls, marks: s.marks, panels, bronzes, paving, counts: { wallTriangles: walls.getAttribute('position').count / 3, panels: B.panels.length, pavingTriangles: paving.getAttribute('position').count / 3 } }
 }
 
 /** where the gate's own paving lies (the map's street and ground are masked there): the complex and the forecourt, then the lion street */

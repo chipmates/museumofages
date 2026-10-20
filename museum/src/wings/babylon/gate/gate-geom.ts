@@ -51,6 +51,8 @@ export interface GArch {
   r: number
   top: number
   inset: number
+  /** a step back at z0 (the separation pass sets it) */
+  inset0?: number
   plan: Cls
   height: Cls
 }
@@ -257,7 +259,7 @@ export function buildGate(plan: J): Built {
     boxes.push({ id: `guard-${side}-w`, part: 'front gate', x0: gx1 - wt, x1: gx1, y0: g0, y1: g1, z0: gz0, z1: gz1 - wt + 0.01, surf: 'glaze', plan: 'G', height: 'G', band: -99 })
     boxes.push({ id: `guard-${side}-e`, part: 'front gate', x0: gx0, x1: gx0 + wt, y0: g0, y1: g1, z0: gz0, z1: gz1 - wt + 0.01, surf: 'glaze', plan: 'G', height: 'G', band: -99 })
     boxes.push({ id: `guard-${side}-floor`, part: 'front gate', x0: gx0 + 0.3, x1: gx1 - 0.3, y0: g0 - 0.2, y1: g0 + 0.25, z0: gz0, z1: gz1 - 0.3, surf: 'glaze', plan: 'G', height: 'G', band: -99, shadow: true })
-    boxes.push({ id: `guard-${side}-roof`, part: 'front gate', x0: gx0 + 0.02, x1: gx1 - 0.02, y0: g1 - 0.35, y1: g1, z0: gz0, z1: gz1 - 0.02, surf: 'glaze', plan: 'G', height: 'G', band: -99 })
+    boxes.push({ id: `guard-${side}-roof`, part: 'front gate', x0: gx0 + 0.05, x1: gx1 - 0.05, y0: g1 - 0.35, y1: g1, z0: gz0, z1: gz1 - 0.05, surf: 'glaze', plan: 'G', height: 'G', band: -99 })
     // round loopholes: three on the front, one on each flank
     const lr = gs.loophole / 2, ly = gs.loopholeY
     for (const k of [-1, 0, 1]) loopholes.push({ id: `loop-${side}-n${k}`, c: [(gx0 + gx1) / 2 + k * 1.9, ly, gz1], n: [0, 0, 1], r: lr, depth: wt })
@@ -373,7 +375,7 @@ export function buildGate(plan: J): Built {
     boxes.push({ id: `mguard-${side}-n`, part: 'main gate', x0: gx0, x1: gx1, y0: mtop, y1: mttop, z0: gz1 - wt, z1: gz1, surf: 'glaze', plan: 'G', height: 'G', band: -99 })
     boxes.push({ id: `mguard-${side}-w`, part: 'main gate', x0: gx1 - wt, x1: gx1, y0: mtop, y1: mttop, z0: gz0, z1: gz1 - wt + 0.01, surf: 'glaze', plan: 'G', height: 'G', band: -99 })
     boxes.push({ id: `mguard-${side}-e`, part: 'main gate', x0: gx0, x1: gx0 + wt, y0: mtop, y1: mttop, z0: gz0, z1: gz1 - wt + 0.01, surf: 'glaze', plan: 'G', height: 'G', band: -99 })
-    boxes.push({ id: `mguard-${side}-roof`, part: 'main gate', x0: gx0 + 0.02, x1: gx1 - 0.02, y0: mttop - 0.35, y1: mttop, z0: gz0, z1: gz1 - 0.02, surf: 'glaze', plan: 'G', height: 'G', band: -99 })
+    boxes.push({ id: `mguard-${side}-roof`, part: 'main gate', x0: gx0 + 0.05, x1: gx1 - 0.05, y0: mttop - 0.35, y1: mttop, z0: gz0, z1: gz1 - 0.05, surf: 'glaze', plan: 'G', height: 'G', band: -99 })
     for (const k of [-1, 0, 1]) loopholes.push({ id: `mloop-${side}-n${k}`, c: [(gx0 + gx1) / 2 + k * 2.6, mtop + 1.9, gz1], n: [0, 0, 1], r: gs.loophole / 2, depth: wt })
     runs.push({ id: `mguard-${side}-n`, a: [gx0, gz1], b: [gx1, gz1], out: [0, 1], y: mttop, thick: 0.33, plan: 'G' })
     runs.push({ id: `mguard-${side}-o`, a: [s > 0 ? gx1 : gx0, gz1], b: [s > 0 ? gx1 : gx0, gz0], out: [s, 0], y: mttop, thick: 0.33, plan: 'G' })
@@ -535,5 +537,52 @@ export function buildGate(plan: J): Built {
   facts['grades'] = (plan.street.levels as J[]).slice(1).map((p, i) => { const q = plan.street.levels[i]; return { from: q.a, to: p.a, percent: +((100 * (q.level - p.level)) / (p.a - q.a)).toFixed(2) } })
   facts['forecourt'] = { width: wIn - eIn, westWall: wIn, eastWall: eIn, depthWest: westEnd, depthEast: eastEnd, height: H }
   facts['lionFaces'] = lionFaces.length
+  separate(boxes, arches, prisms)
   return { boxes, prisms, arches, faces, panels, runs, loopholes, doors, beams, pedestals, level, street, facts }
+}
+
+/** Two bodies that overlap and share an upright face plane looking the same way fight for depth (the card's rule: a lap or step
+    of at least 4 mm). The arch, or else the smaller body, steps back 12 mm on that face: the default depth buffer resolves about 4 mm
+    at 85 m (the main gate from the desktop still), so the step is three of its steps. Two boxes whose soffits coincide: the smaller
+    sinks the same into what carries it (a lap, never a slit); the faces looking up stand above every eye. */
+function separate(boxes: GBox[], arches: GArch[], prisms: GPrism[]): void {
+  const STEP = 0.012
+  type E = { x0: number; x1: number; y0: number; y1: number; z0: number; z1: number }
+  type It = { box?: GBox; arch?: GArch }
+  const ext = (it: It): E => {
+    if (it.box) { const b = it.box; return { x0: b.x0 + (b.inset?.nx ?? 0), x1: b.x1 - (b.inset?.px ?? 0), y0: b.y0, y1: b.y1, z0: b.z0 + (b.inset?.nz ?? 0), z1: b.z1 - (b.inset?.pz ?? 0) } }
+    const a = it.arch!
+    return { x0: a.x0, x1: a.x1, y0: a.springing, y1: a.top, z0: a.z0 + (a.inset0 ?? 0), z1: a.z1 - a.inset }
+  }
+  const vol = (e: E): number => (e.x1 - e.x0) * (e.y1 - e.y0) * (e.z1 - e.z0)
+  const back = (it: It, side: 'nx' | 'px' | 'nz' | 'pz'): void => {
+    if (it.box) { it.box.inset = { ...(it.box.inset ?? {}), [side]: (it.box.inset?.[side] ?? 0) + STEP }; return }
+    const a = it.arch!
+    if (side === 'nx') a.x0 += STEP
+    else if (side === 'px') a.x1 -= STEP
+    else if (side === 'nz') a.inset0 = (a.inset0 ?? 0) + STEP
+    else a.inset += STEP
+  }
+  const items: It[] = [...boxes.map((box) => ({ box })), ...arches.map((arch) => ({ arch }))]
+  const over = (a0: number, a1: number, b0: number, b1: number): boolean => Math.min(a1, b1) - Math.max(a0, b0) > 1e-3
+  for (let i = 0; i < items.length; i++) for (let j = i + 1; j < items.length; j++) {
+    const A = items[i]!, Bq = items[j]!
+    for (const [lo, hi, sLo, sHi] of [['x0', 'x1', 'nx', 'px'], ['z0', 'z1', 'nz', 'pz']] as const) {
+      const ea = ext(A), eb = ext(Bq)
+      if (!(over(ea.x0, ea.x1, eb.x0, eb.x1) && over(ea.y0, ea.y1, eb.y0, eb.y1) && over(ea.z0, ea.z1, eb.z0, eb.z1))) break
+      const second = Bq.arch && !A.arch ? Bq : A.arch && !Bq.arch ? A : vol(ea) <= vol(eb) ? A : Bq
+      if (Math.abs(ea[lo] - eb[lo]) < 1e-4) back(second, sLo)
+      if (Math.abs(ea[hi] - eb[hi]) < 1e-4) back(second, sHi)
+    }
+    if (A.box && Bq.box) {
+      const ea = ext(A), eb = ext(Bq)
+      if (over(ea.x0, ea.x1, eb.x0, eb.x1) && over(ea.y0, ea.y1, eb.y0, eb.y1) && over(ea.z0, ea.z1, eb.z0, eb.z1) && Math.abs(ea.y0 - eb.y0) < 1e-4) (vol(ea) <= vol(eb) ? A : Bq).box!.y0 -= STEP
+    }
+  }
+  // the prisms' soffits the same way, their plans compared by their bounds (a sink where they do not meet costs nothing)
+  const pe = (p: GPrism): E => ({ x0: Math.min(...p.poly.map((q) => q[0])), x1: Math.max(...p.poly.map((q) => q[0])), y0: p.y0, y1: p.y1, z0: Math.min(...p.poly.map((q) => q[1])), z1: Math.max(...p.poly.map((q) => q[1])) })
+  for (let i = 0; i < prisms.length; i++) for (let j = i + 1; j < prisms.length; j++) {
+    const ea = pe(prisms[i]!), eb = pe(prisms[j]!)
+    if (over(ea.x0, ea.x1, eb.x0, eb.x1) && over(ea.y0, ea.y1, eb.y0, eb.y1) && over(ea.z0, ea.z1, eb.z0, eb.z1) && Math.abs(ea.y0 - eb.y0) < 1e-4) (vol(ea) <= vol(eb) ? prisms[i]! : prisms[j]!).y0 -= STEP
+  }
 }
