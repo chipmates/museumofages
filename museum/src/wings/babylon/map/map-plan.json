@@ -969,11 +969,95 @@
     ]
    ],
    "base": 15.0,
-   "top": 26.0,
+   "top": 20.0,
    "plan": "M",
    "height": "G",
    "src": "C6.2 (green with orange cores on X1.4)",
-   "hsrc": "ours"
+   "hsrc": "its first step, 5 m over the main terrace, ours; the steps above it are the gardens question's guessed terraces"
+  },
+  {
+   "id": "gardens-step-2",
+   "name": "the gardens question, terrace step 2",
+   "poly": [
+    [
+     445517,
+     3600882
+    ],
+    [
+     445623,
+     3600882
+    ],
+    [
+     445623,
+     3600953
+    ],
+    [
+     445517,
+     3600953
+    ]
+   ],
+   "base": 20.0,
+   "top": 25.0,
+   "plan": "G",
+   "height": "G",
+   "src": "the gardens question as one candidate: the North Palace's terraces (gigunatu) and its large top building in the king's texts (P2021 p. 122), the palace Berossus names for the terraces (P2021 p. 123 to 124); stepped here as a guess, about 20 m over the main terrace in four steps (Diodorus' 50 cubits, about 23 m, P2021 p. 124); no plants (grey sketch)",
+   "hsrc": "ours, inside Diodorus' height"
+  },
+  {
+   "id": "gardens-step-3",
+   "name": "the gardens question, terrace step 3",
+   "poly": [
+    [
+     445529,
+     3600894
+    ],
+    [
+     445611,
+     3600894
+    ],
+    [
+     445611,
+     3600941
+    ],
+    [
+     445529,
+     3600941
+    ]
+   ],
+   "base": 25.0,
+   "top": 30.0,
+   "plan": "G",
+   "height": "G",
+   "src": "the gardens question as one candidate: the North Palace's terraces (gigunatu) and its large top building in the king's texts (P2021 p. 122), the palace Berossus names for the terraces (P2021 p. 123 to 124); stepped here as a guess, about 20 m over the main terrace in four steps (Diodorus' 50 cubits, about 23 m, P2021 p. 124); no plants (grey sketch)",
+   "hsrc": "ours, inside Diodorus' height"
+  },
+  {
+   "id": "gardens-step-4",
+   "name": "the gardens question, terrace step 4",
+   "poly": [
+    [
+     445541,
+     3600906
+    ],
+    [
+     445599,
+     3600906
+    ],
+    [
+     445599,
+     3600929
+    ],
+    [
+     445541,
+     3600929
+    ]
+   ],
+   "base": 30.0,
+   "top": 35.0,
+   "plan": "G",
+   "height": "G",
+   "src": "the gardens question as one candidate: the North Palace's terraces (gigunatu) and its large top building in the king's texts (P2021 p. 122), the palace Berossus names for the terraces (P2021 p. 123 to 124); stepped here as a guess, about 20 m over the main terrace in four steps (Diodorus' 50 cubits, about 23 m, P2021 p. 124); no plants (grey sketch)",
+   "hsrc": "ours, inside Diodorus' height"
   },
   {
    "id": "north-fortification",
