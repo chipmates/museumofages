@@ -102,55 +102,54 @@ const EDGE = 0.012
 function bull(): { L: number; parts: Part[]; curls: Array<{ c: Pt; r: number; a: number }>; keep: Field['keep'] } {
   const L = 1.485
   const parts: Part[] = []
+  // the far legs first, lower: the near legs and the body stand over them
+  parts.push({ reg: REG.body, d: (p) => chain(p, [[0.93, 0.5], [0.915, 0.3], [0.905, 0.15], [0.915, 0.07]], [0.075, 0.05, 0.04, 0.036]), h: 0.03, r: 0.03, base: -0.006 })
+  parts.push({ reg: REG.body, d: (p) => chain(p, [[0.5, 0.55], [0.47, 0.32], [0.52, 0.16], [0.555, 0.07]], [0.11, 0.05, 0.04, 0.036]), h: 0.03, r: 0.03, base: -0.006 })
+  parts.push({ reg: REG.red, d: (p) => ellipse(p, [0.92, 0.036], 0.042, 0.038), h: 0.026, r: 0.02, base: -0.006 })
+  parts.push({ reg: REG.red, d: (p) => ellipse(p, [0.565, 0.036], 0.042, 0.038), h: 0.026, r: 0.02, base: -0.006 })
+  // the barrel: a deep chest, the withers over the forelegs, the rump lower
   const body = (p: Pt): number => {
-    let d = ellipse(p, [0.66, 0.6], 0.4, 0.165)
-    d = smax(d, ellipse(p, [0.97, 0.6], 0.17, 0.2, 0.25), 0.05)
-    d = smax(d, ellipse(p, [0.34, 0.62], 0.15, 0.175), 0.05)
-    d = smax(d, ellipse(p, [0.9, 0.74], 0.14, 0.085, -0.15), 0.05)
-    d = smax(d, capsule(p, [0.98, 0.7], [1.16, 0.9], 0.13, 0.085), 0.05)
+    let d = ellipse(p, [0.66, 0.635], 0.43, 0.2)
+    d = smax(d, ellipse(p, [1.0, 0.65], 0.18, 0.25, 0.1), 0.06)
+    d = smax(d, ellipse(p, [0.33, 0.66], 0.15, 0.2), 0.05)
+    // the short thick neck into the head
+    d = smax(d, capsule(p, [1.05, 0.73], [1.22, 0.82], 0.16, 0.115), 0.05)
     return d
   }
-  parts.push({ reg: REG.body, d: body, h: 0.045, r: 0.1 })
-  // the far legs first, lower: the near ones and the body stand over them
-  parts.push({ reg: REG.body, d: (p) => chain(p, [[0.95, 0.52], [0.93, 0.38], [0.915, 0.23], [0.93, 0.075]], [0.06, 0.044, 0.028, 0.021]), h: 0.03, r: 0.03, base: -0.006 })
-  parts.push({ reg: REG.body, d: (p) => chain(p, [[0.48, 0.55], [0.5, 0.38], [0.47, 0.25], [0.565, 0.075]], [0.08, 0.05, 0.028, 0.021]), h: 0.03, r: 0.03, base: -0.006 })
-  parts.push({ reg: REG.red, d: (p) => ellipse(p, [0.937, 0.035], 0.03, 0.038), h: 0.026, r: 0.02, base: -0.006 })
-  parts.push({ reg: REG.red, d: (p) => ellipse(p, [0.575, 0.035], 0.03, 0.038), h: 0.026, r: 0.02, base: -0.006 })
-  // the near legs: the foreleg reaching forward, the hind leg back
-  parts.push({ reg: REG.body, d: (p) => chain(p, [[1.03, 0.55], [1.05, 0.4], [1.11, 0.24], [1.165, 0.075]], [0.075, 0.05, 0.03, 0.023]), h: 0.038, r: 0.035 })
-  parts.push({ reg: REG.body, d: (p) => chain(p, [[0.38, 0.58], [0.38, 0.41], [0.3, 0.27], [0.375, 0.075]], [0.125, 0.07, 0.033, 0.023]), h: 0.04, r: 0.04 })
-  parts.push({ reg: REG.red, d: (p) => ellipse(p, [1.18, 0.035], 0.03, 0.038), h: 0.03, r: 0.02 })
-  parts.push({ reg: REG.red, d: (p) => ellipse(p, [0.39, 0.035], 0.03, 0.038), h: 0.03, r: 0.02 })
-  // head held high, the muzzle down and forward
-  parts.push({ reg: REG.body, d: (p) => smax(capsule(p, [1.19, 0.94], [1.395, 0.825], 0.072, 0.05), ellipse(p, [1.29, 0.85], 0.08, 0.05, -0.4), 0.03), h: 0.042, r: 0.05 })
-  // the ear back, the horn forward and up (one in pure profile)
-  parts.push({ reg: REG.body, d: (p) => capsule(p, [1.17, 0.975], [1.07, 1.0], 0.022, 0.008), h: 0.024, r: 0.015 })
-  parts.push({ reg: REG.red, d: (p) => stroke(p, curve([1.215, 0.995], [1.22, 1.1], [1.335, 1.088]), 0.02, 0.006), h: 0.026, r: 0.012 })
+  parts.push({ reg: REG.body, d: body, h: 0.046, r: 0.11 })
+  // the near legs: the foreleg reaching forward, the hind leg back, thick as a bull's
+  parts.push({ reg: REG.body, d: (p) => chain(p, [[1.04, 0.52], [1.07, 0.32], [1.1, 0.15], [1.115, 0.07]], [0.085, 0.055, 0.043, 0.038]), h: 0.04, r: 0.035 })
+  parts.push({ reg: REG.body, d: (p) => chain(p, [[0.36, 0.56], [0.31, 0.32], [0.355, 0.16], [0.38, 0.07]], [0.13, 0.055, 0.042, 0.038]), h: 0.042, r: 0.04 })
+  parts.push({ reg: REG.red, d: (p) => ellipse(p, [1.125, 0.036], 0.044, 0.038), h: 0.03, r: 0.02 })
+  parts.push({ reg: REG.red, d: (p) => ellipse(p, [0.39, 0.036], 0.044, 0.038), h: 0.03, r: 0.02 })
+  // the head carried level with the back, the muzzle a little down and square
+  parts.push({ reg: REG.body, d: (p) => smax(capsule(p, [1.24, 0.86], [1.4, 0.75], 0.088, 0.062), ellipse(p, [1.41, 0.735], 0.055, 0.05), 0.03), h: 0.044, r: 0.05 })
+  // the ear back; the horn from the poll, forward and up, a sickle (one in pure profile)
+  parts.push({ reg: REG.body, d: (p) => capsule(p, [1.2, 0.93], [1.1, 0.965], 0.032, 0.012), h: 0.026, r: 0.015 })
+  parts.push({ reg: REG.red, d: (p) => stroke(p, curve([1.225, 0.935], [1.2, 1.09], [1.35, 1.095]), 0.034, 0.009), h: 0.03, r: 0.016 })
   // the tail down the haunch, its tuft blue
-  parts.push({ reg: REG.body, d: (p) => stroke(p, curve([0.235, 0.77], [0.15, 0.68], [0.172, 0.32]), 0.017, 0.012), h: 0.022, r: 0.015 })
-  parts.push({ reg: REG.mane, d: (p) => ellipse(p, [0.175, 0.255], 0.032, 0.075), h: 0.03, r: 0.02 })
-  // the manes (K1918 p. 25 to 26): the crest along the neck, the throat and chest, the belly fringe, a tuft on the back
-  parts.push({ reg: REG.mane, d: (p) => chain(p, [[1.17, 0.975], [1.08, 0.9], [0.98, 0.83], [0.88, 0.8]], [0.026, 0.034, 0.036, 0.022]), h: 0.046, r: 0.025 })
-  parts.push({ reg: REG.mane, d: (p) => chain(p, [[1.255, 0.835], [1.19, 0.72], [1.12, 0.6], [1.06, 0.5]], [0.022, 0.03, 0.034, 0.026]), h: 0.046, r: 0.025 })
-  parts.push({ reg: REG.mane, d: (p) => chain(p, [[1.0, 0.475], [0.82, 0.435], [0.62, 0.44], [0.5, 0.47]], [0.026, 0.034, 0.03, 0.02]), h: 0.044, r: 0.025 })
-  parts.push({ reg: REG.mane, d: (p) => ellipse(p, [0.47, 0.775], 0.065, 0.034), h: 0.047, r: 0.025 })
-  // the eye: white, black in the middle
-  parts.push({ reg: REG.eyeWhite, d: (p) => ellipse(p, [1.272, 0.918], 0.019, 0.016), h: 0.046, r: 0.008 })
-  parts.push({ reg: REG.black, d: (p) => circle(p, [1.276, 0.918], 0.008), h: 0.047, r: 0.005 })
-  parts.push({ reg: REG.black, d: (p) => ellipse(p, [1.395, 0.838], 0.011, 0.006, 0.3), h: 0.04, r: 0.004 })
+  parts.push({ reg: REG.body, d: (p) => stroke(p, curve([0.21, 0.8], [0.13, 0.68], [0.15, 0.3]), 0.022, 0.016), h: 0.024, r: 0.015 })
+  parts.push({ reg: REG.mane, d: (p) => ellipse(p, [0.15, 0.245], 0.036, 0.08), h: 0.032, r: 0.02 })
+  // the blue hair (K1918 p. 25 to 26): the crest from the poll to the withers, the dewlap from the throat to the brisket, the belly fringe
+  parts.push({ reg: REG.mane, d: (p) => chain(p, [[1.2, 0.935], [1.1, 0.885], [0.98, 0.86], [0.88, 0.855]], [0.03, 0.036, 0.034, 0.02]), h: 0.048, r: 0.025 })
+  parts.push({ reg: REG.mane, d: (p) => chain(p, [[1.3, 0.73], [1.22, 0.62], [1.14, 0.52], [1.07, 0.45]], [0.03, 0.04, 0.04, 0.028]), h: 0.048, r: 0.025 })
+  parts.push({ reg: REG.mane, d: (p) => chain(p, [[0.98, 0.45], [0.8, 0.43], [0.62, 0.435], [0.5, 0.46]], [0.03, 0.036, 0.032, 0.02]), h: 0.046, r: 0.025 })
+  // the eye: white, black in the middle; the nostril
+  parts.push({ reg: REG.eyeWhite, d: (p) => ellipse(p, [1.27, 0.9], 0.021, 0.017), h: 0.048, r: 0.008 })
+  parts.push({ reg: REG.black, d: (p) => circle(p, [1.274, 0.9], 0.009), h: 0.049, r: 0.005 })
+  parts.push({ reg: REG.black, d: (p) => ellipse(p, [1.425, 0.76], 0.012, 0.007, 0.3), h: 0.042, r: 0.004 })
   const curls: Array<{ c: Pt; r: number; a: number }> = []
-  for (let i = 0; i < 6; i++) curls.push({ c: [1.15 - i * 0.055, 0.955 - i * 0.03], r: 0.018, a: i })
-  for (let i = 0; i < 6; i++) curls.push({ c: [1.24 - i * 0.035, 0.81 - i * 0.055], r: 0.017, a: i + 2 })
-  for (let i = 0; i < 9; i++) curls.push({ c: [0.98 - i * 0.055, 0.465 - Math.sin(i * 0.4) * 0.012], r: 0.016, a: i + 4 })
-  for (let i = 0; i < 3; i++) curls.push({ c: [0.43 + i * 0.04, 0.775], r: 0.015, a: i })
-  curls.push({ c: [0.175, 0.23], r: 0.022, a: 1 })
+  for (let i = 0; i < 6; i++) curls.push({ c: [1.18 - i * 0.055, 0.915 - i * 0.012], r: 0.02, a: i })
+  for (let i = 0; i < 5; i++) curls.push({ c: [1.28 - i * 0.05, 0.71 - i * 0.065], r: 0.02, a: i + 2 })
+  for (let i = 0; i < 9; i++) curls.push({ c: [0.96 - i * 0.055, 0.445 - Math.sin(i * 0.4) * 0.01], r: 0.018, a: i + 4 })
+  curls.push({ c: [0.15, 0.22], r: 0.024, a: 1 })
   const keep: Field['keep'] = [
-    { what: 'eye', u: 1.272, v: 0.918, r: 0.02 },
-    { what: 'nostril', u: 1.395, v: 0.838, r: 0.012 },
-    { what: 'hoof', u: 1.18, v: 0.035, r: 0.032, rv: 0.038 },
-    { what: 'hoof', u: 0.937, v: 0.035, r: 0.032, rv: 0.038 },
-    { what: 'hoof', u: 0.39, v: 0.035, r: 0.032, rv: 0.038 },
-    { what: 'hoof', u: 0.575, v: 0.035, r: 0.032, rv: 0.038 },
+    { what: 'eye', u: 1.27, v: 0.9, r: 0.022 },
+    { what: 'nostril', u: 1.425, v: 0.76, r: 0.013 },
+    { what: 'hoof', u: 1.125, v: 0.036, r: 0.045, rv: 0.038 },
+    { what: 'hoof', u: 0.92, v: 0.036, r: 0.043, rv: 0.038 },
+    { what: 'hoof', u: 0.39, v: 0.036, r: 0.045, rv: 0.038 },
+    { what: 'hoof', u: 0.565, v: 0.036, r: 0.043, rv: 0.038 },
   ]
   return { L, parts, curls, keep }
 }
@@ -158,41 +157,43 @@ function bull(): { L: number; parts: Part[]; curls: Array<{ c: Pt; r: number; a:
 function dragon(): { L: number; parts: Part[]; curls: Array<{ c: Pt; r: number; a: number }>; keep: Field['keep']; scales: (p: Pt) => boolean } {
   const L = 1.65
   const parts: Part[] = []
+  // a long cat's body, the neck rising in an S, the tail rising behind and curling forward over the back
   const trunk = (p: Pt): number => {
-    let d = capsule(p, [0.42, 0.645], [1.06, 0.65], 0.115, 0.125)
-    d = smax(d, chain(p, [[1.04, 0.69], [1.19, 0.8], [1.285, 0.93], [1.33, 1.0]], [0.1, 0.07, 0.055, 0.05]), 0.04)
-    d = smax(d, chain(p, [[0.44, 0.67], [0.3, 0.72], [0.215, 0.83], [0.175, 0.95], [0.165, 1.03]], [0.075, 0.05, 0.035, 0.026, 0.02]), 0.03)
+    let d = capsule(p, [0.44, 0.63], [1.02, 0.65], 0.13, 0.145)
+    d = smax(d, chain(p, [[1.02, 0.7], [1.13, 0.81], [1.2, 0.92], [1.27, 0.985]], [0.12, 0.085, 0.068, 0.058]), 0.04)
+    d = smax(d, chain(p, [[0.42, 0.68], [0.29, 0.76], [0.2, 0.87], [0.16, 0.97], [0.17, 1.03]], [0.085, 0.06, 0.045, 0.036, 0.03]), 0.03)
     return d
   }
   // far legs: a cat's foreleg, a bird's hind leg
-  parts.push({ reg: REG.body, d: (p) => smax(chain(p, [[0.96, 0.58], [0.945, 0.41], [0.915, 0.12]], [0.055, 0.04, 0.027]), ellipse(p, [0.93, 0.04], 0.05, 0.036), 0.02), h: 0.028, r: 0.028, base: -0.006 })
-  parts.push({ reg: REG.body, d: (p) => smax(chain(p, [[0.53, 0.57], [0.535, 0.42], [0.475, 0.27], [0.545, 0.1]], [0.07, 0.04, 0.027, 0.018]), talons(p, [0.545, 0.085], 1), 0.01), h: 0.026, r: 0.025, base: -0.006 })
-  parts.push({ reg: REG.body, d: trunk, h: 0.042, r: 0.07 })
-  parts.push({ reg: REG.body, d: (p) => smax(chain(p, [[1.04, 0.6], [1.065, 0.42], [1.105, 0.12]], [0.065, 0.045, 0.03]), ellipse(p, [1.135, 0.04], 0.055, 0.038), 0.02), h: 0.036, r: 0.035 })
-  parts.push({ reg: REG.body, d: (p) => smax(chain(p, [[0.44, 0.6], [0.42, 0.42], [0.35, 0.27], [0.4, 0.1]], [0.09, 0.05, 0.03, 0.02]), talons(p, [0.4, 0.085], 1), 0.01), h: 0.036, r: 0.035 })
-  // the small viper's head, horizontal, its mouth shut with the forked tongue out
-  parts.push({ reg: REG.body, d: (p) => smax(capsule(p, [1.335, 1.002], [1.55, 0.993], 0.046, 0.024), ellipse(p, [1.39, 1.0], 0.06, 0.05), 0.02), h: 0.04, r: 0.04 })
-  parts.push({ reg: REG.red, d: (p) => Math.max(capsule(p, [1.55, 0.993], [1.6, 0.996], 0.0045, 0.0045), capsule(p, [1.6, 0.996], [1.635, 1.011], 0.004, 0.003), capsule(p, [1.6, 0.996], [1.635, 0.98], 0.004, 0.003)), h: 0.018, r: 0.004 })
-  // the straight horn, and the skin curling back from its root
-  parts.push({ reg: REG.red, d: (p) => capsule(p, [1.395, 1.035], [1.378, 1.108], 0.011, 0.004), h: 0.03, r: 0.008 })
-  parts.push({ reg: REG.body, d: (p) => stroke(p, [[1.375, 1.03], [1.33, 1.06], ...spiral([1.305, 1.07], 0.022, 0.2, 1.1, 1)], 0.008, 0.005), h: 0.03, r: 0.008 })
+  parts.push({ reg: REG.body, d: (p) => smax(chain(p, [[0.93, 0.58], [0.925, 0.4], [0.9, 0.13]], [0.06, 0.045, 0.036]), ellipse(p, [0.92, 0.042], 0.06, 0.04), 0.02), h: 0.028, r: 0.028, base: -0.006 })
+  parts.push({ reg: REG.body, d: (p) => smax(chain(p, [[0.56, 0.58], [0.53, 0.42], [0.49, 0.3], [0.545, 0.11]], [0.085, 0.05, 0.034, 0.026]), talons(p, [0.545, 0.095], 1), 0.01), h: 0.026, r: 0.025, base: -0.006 })
+  parts.push({ reg: REG.body, d: trunk, h: 0.044, r: 0.075 })
+  // near legs
+  parts.push({ reg: REG.body, d: (p) => smax(chain(p, [[1.04, 0.6], [1.07, 0.42], [1.1, 0.13]], [0.072, 0.05, 0.038]), ellipse(p, [1.125, 0.042], 0.065, 0.042), 0.02), h: 0.038, r: 0.035 })
+  parts.push({ reg: REG.body, d: (p) => smax(chain(p, [[0.45, 0.6], [0.43, 0.43], [0.36, 0.3], [0.41, 0.11]], [0.11, 0.06, 0.038, 0.028]), talons(p, [0.41, 0.095], 1), 0.01), h: 0.038, r: 0.035 })
+  // the viper's head, level, its mouth shut with the forked tongue out
+  parts.push({ reg: REG.body, d: (p) => smax(capsule(p, [1.27, 0.995], [1.49, 0.985], 0.058, 0.03), ellipse(p, [1.33, 0.995], 0.07, 0.058), 0.02), h: 0.042, r: 0.04 })
+  parts.push({ reg: REG.red, d: (p) => Math.max(capsule(p, [1.49, 0.985], [1.55, 0.988], 0.006, 0.005), capsule(p, [1.55, 0.988], [1.6, 1.008], 0.005, 0.003), capsule(p, [1.55, 0.988], [1.6, 0.968], 0.005, 0.003)), h: 0.02, r: 0.005 })
+  // the long straight horn up and back, and the skin curling back from its root
+  parts.push({ reg: REG.red, d: (p) => capsule(p, [1.325, 1.035], [1.235, 1.113], 0.02, 0.007), h: 0.032, r: 0.01 })
+  parts.push({ reg: REG.body, d: (p) => stroke(p, [[1.3, 1.04], [1.25, 1.05], ...spiral([1.215, 1.045], 0.026, 0.2, 1.1, 1)], 0.011, 0.006), h: 0.032, r: 0.009 })
   // three locks from the head down the neck's back, each ending in a curl (K1918 p. 28)
   for (let i = 0; i < 3; i++) {
-    const a: Pt = [1.3 - i * 0.04, 0.96 - i * 0.085], c: Pt = [1.215 - i * 0.045, 0.915 - i * 0.09]
-    parts.push({ reg: REG.mane, d: (p) => stroke(p, [a, [(a[0] + c[0]) / 2, (a[1] + c[1]) / 2 + 0.012], ...spiral(c, 0.022, 0.6, 1.2, -1)], 0.014, 0.007), h: 0.045, r: 0.01 })
+    const a: Pt = [1.24 - i * 0.04, 0.95 - i * 0.085], c: Pt = [1.15 - i * 0.045, 0.9 - i * 0.09]
+    parts.push({ reg: REG.mane, d: (p) => stroke(p, [a, [(a[0] + c[0]) / 2, (a[1] + c[1]) / 2 + 0.014], ...spiral(c, 0.028, 0.6, 1.2, -1)], 0.018, 0.009), h: 0.047, r: 0.012 })
   }
-  // the tail's sting
-  parts.push({ reg: REG.body, d: (p) => stroke(p, spiral([0.13, 1.055], 0.034, -0.5, 0.9, 1), 0.016, 0.007), h: 0.028, r: 0.012 })
-  parts.push({ reg: REG.red, d: (p) => capsule(p, [0.16, 1.03], [0.19, 1.09], 0.007, 0.002), h: 0.022, r: 0.006 })
-  parts.push({ reg: REG.eyeWhite, d: (p) => ellipse(p, [1.395, 1.012], 0.016, 0.012), h: 0.044, r: 0.006 })
-  parts.push({ reg: REG.black, d: (p) => circle(p, [1.398, 1.012], 0.0065), h: 0.045, r: 0.004 })
-  parts.push({ reg: REG.black, d: (p) => capsule(p, [1.43, 0.986], [1.55, 0.99], 0.0025, 0.0025), h: 0.04, r: 0.003 })
-  const curls: Array<{ c: Pt; r: number; a: number }> = [{ c: [1.345, 0.965], r: 0.012, a: 0 }, { c: [1.33, 0.945], r: 0.012, a: 1 }, { c: [1.31, 0.925], r: 0.012, a: 2 }]
+  // the tail's end curling forward into the scorpion's sting
+  parts.push({ reg: REG.body, d: (p) => stroke(p, spiral([0.24, 1.03], 0.06, Math.PI, 0.75, -1), 0.03, 0.012), h: 0.03, r: 0.014 })
+  parts.push({ reg: REG.red, d: (p) => capsule(p, [0.265, 0.995], [0.3, 1.04], 0.011, 0.003), h: 0.024, r: 0.007 })
+  parts.push({ reg: REG.eyeWhite, d: (p) => ellipse(p, [1.35, 1.012], 0.019, 0.014), h: 0.046, r: 0.007 })
+  parts.push({ reg: REG.black, d: (p) => circle(p, [1.353, 1.012], 0.0075), h: 0.047, r: 0.004 })
+  parts.push({ reg: REG.black, d: (p) => capsule(p, [1.39, 0.978], [1.49, 0.982], 0.003, 0.003), h: 0.042, r: 0.003 })
+  const curls: Array<{ c: Pt; r: number; a: number }> = [{ c: [1.29, 0.955], r: 0.014, a: 0 }, { c: [1.27, 0.93], r: 0.014, a: 1 }, { c: [1.25, 0.905], r: 0.014, a: 2 }]
   const scales = (p: Pt): boolean => trunk(p) > 0.004 && p[1] > 0.5
   const keep: Field['keep'] = [
-    { what: 'eye', u: 1.395, v: 1.012, r: 0.018 },
-    { what: 'paw', u: 1.135, v: 0.04, r: 0.055, rv: 0.036 },
-    { what: 'paw', u: 0.93, v: 0.04, r: 0.05, rv: 0.036 },
+    { what: 'eye', u: 1.35, v: 1.012, r: 0.02 },
+    { what: 'paw', u: 1.125, v: 0.042, r: 0.065, rv: 0.04 },
+    { what: 'paw', u: 0.92, v: 0.042, r: 0.06, rv: 0.04 },
   ]
   return { L, parts, curls, keep, scales }
 }
@@ -200,7 +201,7 @@ function dragon(): { L: number; parts: Part[]; curls: Array<{ c: Pt; r: number; 
 /** a bird's foot: three claws forward, one back, from the ankle point */
 function talons(p: Pt, a: Pt, s: number): number {
   let d = -1e9
-  for (const [dx, dy] of [[0.07, -0.08], [0.045, -0.085], [0.016, -0.085], [-0.05, -0.07]] as Pt[]) d = Math.max(d, capsule(p, a, [a[0] + dx * s, a[1] + dy], 0.012, 0.004))
+  for (const [dx, dy] of [[0.085, -0.088], [0.05, -0.092], [0.015, -0.092], [-0.06, -0.078]] as Pt[]) d = Math.max(d, capsule(p, a, [a[0] + dx * s, a[1] + dy], 0.016, 0.006))
   return d
 }
 
@@ -269,12 +270,12 @@ export function animalField(kind: AnimalKind, res = 0.004): Field {
       region[k] = reg
       if (best > 0 && scales && scales(p)) {
         // roof-shaped scales in offset rows; larger cross scales under the belly
-        const sw = 0.026, sh = 0.02
+        const sw = 0.036, sh = 0.028
         const row = Math.floor(p[1] / sh)
         const off = (row % 2) * sw * 0.5
         const fx = ((p[0] + off) / sw) % 1, fy = (p[1] / sh) % 1
         const roof = 1 - Math.abs(fx - 0.5) * 2
-        detail[k] = 0.0025 * Math.min(1, roof * 2.2) * (0.4 + 0.6 * fy)
+        detail[k] = 0.0035 * Math.min(1, roof * 2.2) * (0.4 + 0.6 * fy)
         if (p[1] < 0.56 && p[1] > 0.51) detail[k] = 0.002 * (1 - Math.abs(((p[0] / 0.045) % 1) - 0.5) * 2)
       }
     }

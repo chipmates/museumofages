@@ -108,7 +108,7 @@
     "bull": { "length": 1.5, "src": "grid of 9 half bricks (K1918 p. 20, 23, pl. 13)" },
     "dragon": { "length": 1.7, "src": "grid of 10 half bricks (K1918 p. 20, 23)" },
     "lion": { "length": 2.0, "src": "about 2 m (K1914 ch. V)" },
-    "depth": { "value": 0.055, "cls": "G", "src": "the moulded body's highest point over the wall's plane, read by eye off the open-licence photos of moulded bricks (commons-amin2019-berlin-unglazed-dragon-head-brick and the in-situ rows), never traced" }
+    "depth": { "value": 0.048, "peak": 0.055, "cls": "G", "src": "the moulded bodies stand about 4.5 cm over the wall's plane, the manes' locks and curls to about 5.5 cm, read by eye off the open-licence photos of moulded bricks (commons-amin2019-berlin-unglazed-dragon-head-brick and the in-situ rows), never traced; the fields' highest points are printed by fidelity.mjs" }
   },
   "corners": { "blue": 0.0825, "red": 0.0825, "border": 0.258, "cls": "R", "topCls": "G", "src": "the borders run up the corner, a red stripe toward it, the corner a blue stripe a quarter brick wide (K1918 p. 22); how they ended at the top is not known (K1918 p. 47)" },
   "battlements": { "steps": 3, "pitch": 0.99, "height": 0.6, "stepH": 0.172, "parapet": 0.33, "cls": "R", "shapeCls": "G", "src": "stepped, blue glazed, steps two courses high with a quarter-brick setback, parapet one or two bricks (K1918 p. 31, 45)" },
