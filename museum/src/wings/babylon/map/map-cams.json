@@ -23,12 +23,7 @@
    "n": 2,
    "id": "lion-street",
    "name": "The lion street",
-   "hour": "17:32",
-   "figure": [
-    445756,
-    3600915,
-    168
-   ]
+   "hour": "17:32"
   },
   {
    "n": 3,
@@ -111,12 +106,7 @@
    "id": "esagila",
    "name": "Esagila, where the procession ended",
    "hour": "17:56",
-   "stops": 0.6,
-   "figure": [
-    445702,
-    3599868,
-    260
-   ]
+   "stops": 0.6
   },
   {
    "n": 12,

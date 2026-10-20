@@ -18,7 +18,7 @@ def ga(a, c=0.0):
 
 STOPS = {   # n: id, name, hour at the stop's first key, exposure stops, figure (E, N, facing), phone lens and shift
  1: ('moat', 'Over the moat to the North Gate', '17:30', 0.0, [445727, 3601085, 168], (30, -0.25)),
- 2: ('lion-street', 'The lion street', '17:32', 0.0, [445756, 3600915, 168], (44, 0.05)),
+ 2: ('lion-street', 'The lion street', '17:32', 0.0, None, (44, 0.05)),
  3: ('forecourt', 'The forecourt and the whole double gate', '17:34', 0.15, [445766.9, 3600844.2, 163], (30, 0.1)),
  4: ('through-the-gate', 'Through the gate', '17:35', 0.6, ga(36, 1.8) + [163], (44, 0.0)),
  5: ('gardens', 'The gardens question', '17:37', 0.2, None, (44, -0.35)),
@@ -27,7 +27,7 @@ STOPS = {   # n: id, name, hour at the stop's first key, exposure stops, figure 
  8: ('nabu', 'The Nabu temple and the reading table', '17:46', 0.3, None, (44, -0.25)),
  9: ('etemenanki', 'Etemenanki at true size', '17:49', 0.3, [445953.4, 3600117.5, 75], (22, 0.33)),
  10: ('turn', 'The turn', '17:53', 0.4, None, (34, 0.0)),
- 11: ('esagila', 'Esagila, where the procession ended', '17:56', 0.6, [445702, 3599868, 260], (30, 0.0)),
+ 11: ('esagila', 'Esagila, where the procession ended', '17:56', 0.6, None, (30, 0.0)),
  12: ('great-stair', 'The great stair and the switch', '17:59', 0.9, ax(101, -6) + [343], (44, -0.05)),
  13: ('bridge', 'The bridge over the Euphrates at sunset', '18:07', 0.7, [445452, 3599833, 265], (44, -0.05)),
  14: ('city-and-sky', 'The city and the sky', '18:14', 1.2, None, (44, -0.3)),

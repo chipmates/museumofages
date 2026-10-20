@@ -124,9 +124,11 @@ for (const s of cams.stops) {
   scene.add(p)
   figures.push(p)
 }
-/* one figure in a frame: only the running stop's own stands */
+/* one figure in a frame: the running stop's own, or the next stop's where the stop has none, so a figure
+   changes only at a cut or far out of sight */
 function showFigure(stop: number): void {
-  for (const f of figures) f.visible = f.userData['stop'] === stop
+  const own = figures.some((f) => f.userData['stop'] === stop) ? stop : stop + 1
+  for (const f of figures) f.visible = f.userData['stop'] === own
 }
 const ndc = new Vector3()
 /** the figures whose body falls inside the frame, visible or not, for the pop check */
@@ -284,11 +286,13 @@ function aimFilm(time: number, framing: 'desktop' | 'phone', w: number, h: numbe
   showFigure(p.stop)
   return p
 }
-/** the second a stop's still is taken: its key marked still, else its last key */
+/** the second a stop's still is taken: the film frame (8 a second) at its key marked still, else at its last
+    key; on a cut key the first frame after the cut */
 function stillTime(stop: number): number {
   const ks = path.keys.filter((k) => k.stop === stop)
   if (!ks.length) throw new Error(`no keys for stop ${stop}`)
-  return (ks.find((k) => k.still) ?? ks[ks.length - 1]!).t
+  const k = ks.find((x) => x.still) ?? ks[ks.length - 1]!
+  return (k.cut ? Math.ceil(k.t * 8) : Math.floor(k.t * 8 + 1e-6)) / 8
 }
 
 const rig = {
