@@ -174,6 +174,16 @@ for (const st of cams.stops) for (const fr of ['desktop', 'phone']) {
   console.log(`still ${String(st.n).padStart(2)} ${fr.padEnd(7)} at +${y.toFixed(2)}, ${over.toFixed(2)} m over the floor under it${inside ? ', INSIDE ' + inside : ''}${okS ? '' : '  RED'}`)
 }
 if (badStill) bad++
+/* the people for size: the walk never passes through one; red under 1.5 m (a person by the wall of a 4.5 m door is passed at about 1.7 m) */
+for (const st of cams.stops) {
+  if (!st.figure) continue
+  const [fx, fz] = F.s(st.figure[0], st.figure[1])
+  let best = Infinity, at = 0
+  for (const r of rows) if (r.eye) { const d = Math.hypot(r.x - fx, r.z - fz); if (d < best) { best = d; at = r.t } }
+  const okF = best >= 1.5
+  if (!okF) bad++
+  console.log(`figure ${String(st.n).padStart(2)}: the walk passes ${best.toFixed(2)} m from it at ${at.toFixed(1)} s${okF ? '' : '  RED'}`)
+}
 console.log(`film ${path.duration} s, ${rows.length} samples at ${FPS} fps; ${out.length - bad} of ${out.length} stops clean`)
 if (process.argv.includes('--why')) for (const r of rows) if (r.back || Math.abs(r.yawRate) > 20 || (r.eye && r.hspeed > 2)) console.log(`  t ${r.t.toFixed(2)} stop ${r.stop} ${r.kind}${r.back ? ' back' : ''} yaw ${r.yawRate.toFixed(1)} h ${r.hspeed.toFixed(2)} y ${r.y.toFixed(1)}`)
 const j = process.argv.indexOf('--json')
