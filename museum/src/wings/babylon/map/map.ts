@@ -5,6 +5,7 @@
 
      ?view=classes   the plan's and the height's class (M, R, G) in three tones
      ?tower=base     Etemenanki's excavated base only
+     ?ao=0           no contact occlusion; ?aofade=250,900 where it fades out (m)
      ?put=<url>      where the rig hands its files (the shooter's own server) */
 
 import {
@@ -14,7 +15,8 @@ import {
 import * as TSL from 'three/tsl'
 import { createStack } from '../../../stack'
 import { IDENTITY } from '../../../stack/grade'
-import { accumulate, createLinear, toPNG } from '../../animals/cave/render'
+import { accumulate, toPNG } from '../../animals/cave/render'
+import { createMapLinear } from './map-render'
 import { printFrame } from '../../animals/cave/print'
 import type { Print } from '../../animals/cave/site'
 import { PERSON_FORMS, signPerson } from '../../place/person'
@@ -27,7 +29,7 @@ import { makePath, type PathSample, type V3 } from './path'
 type N = any
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 type J = any
-const { clamp, dot, float, max, mix, normalize, positionLocal, pow, smoothstep, uniform, vec3, fog, densityFogFactor } = TSL as unknown as Record<string, N>
+const { clamp, dot, max, mix, normalize, positionLocal, pow, smoothstep, uniform, vec3, fog, densityFogFactor } = TSL as unknown as Record<string, N>
 
 const q = new URLSearchParams(location.search)
 const says = document.getElementById('says') as HTMLElement
@@ -93,7 +95,7 @@ const skyDome = (() => {
 })()
 scene.add(skyDome)
 const uHaze = uniform(new Color(0.7, 0.66, 0.58))
-const uDensity = uniform(Number(q.get('haze') ?? 0.00016))
+const uDensity = uniform(Number(q.get('haze') ?? 0.0002))
 scene.fogNode = fog(uHaze, densityFogFactor(uDensity))
 
 say('building the city')
@@ -213,13 +215,8 @@ setHour(hourOf(cams.stops[0].hour))
 const first = resolve(cams.stops[0], 'desktop')
 aim(first.pos, first.look, first.hfov, 1600, 900, first.shift)
 renderer.render(scene, camera)
-const linear = createLinear(renderer, scene, camera, {
-  ao: { on: q.get('ao') !== '0', intensity: Number(q.get('ao') ?? 0.75), radius: 1.2 },
-  haze: null,
-  sun: { light: sunLight, dir: uSun, rgb: uniform(new Vector3(1, 1, 1)), visibility: () => float(1) },
-  steps: 1,
-  reach: 1,
-})
+const fade = (q.get('aofade') ?? '250,900').split(',').map(Number) as [number, number]
+const linear = createMapLinear(renderer, scene, camera, { ao: { on: q.get('ao') !== '0', intensity: Number(q.get('ao') ?? 0.75), radius: 1.2 }, fade })
 const PRINT: Print = {
   exposure: Number(q.get('exp') ?? 0.62), toe: 0.01, shoulder: 1, lift: [0, 0, 0], gamma: [1, 1, 1], gain: [1, 1, 1], warm: [1.02, 1, 0.97], cool: [0.97, 1, 1.03],
   split: 0.3, saturation: 0.9, vignette: 0.12, grain: 0.004, glow: { threshold: 1.2, strength: 0.05, radii: [0.012, 0.06] },
