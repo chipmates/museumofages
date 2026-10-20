@@ -43,10 +43,10 @@ L = [
  # 2. a taste of the lion street, then its far end toward the double gate
  (0.01, dict(at=[445740, 3601003], y='eye', look=[445773, 3600850, 15], stop=2, cut=True, kind='walk', say='cut: through the North Gate')),
  (4,    dict(at=[445741.0, 3600998.2], y='eye', look=[445773, 3600849, 15], stop=2, kind='walk')),
- (0.01, dict(at=[445748.5, 3600937], y='eye', look=[445773, 3600844, 17], stop=2, cut=True, kind='walk', still=True, say='cut: toward the end of the lion street')),
- (26,   dict(at=[445753.7, 3600906.1], y='eye', look=[445772.7, 3600843.9, 17], stop=3, kind='walk')),
+ (0.01, dict(at=[445748.5, 3600937], y='eye', look=[445773, 3600844, 20], stop=2, cut=True, kind='walk', still=True, say='cut: toward the end of the lion street')),
+ (26,   dict(at=[445753.7, 3600906.1], y='eye', look=[445772.7, 3600843.9, 20], stop=3, kind='walk')),
  # 3. the whole double gate, held
- (5,    dict(at=[445753.7, 3600906.1], y='eye', look=[445772.7, 3600843.9, 17], stop=3, kind='hold', still=True)),
+ (5,    dict(at=[445753.7, 3600906.1], y='eye', look=[445772.7, 3600843.9, 20], stop=3, kind='hold', still=True)),
  # 4. inside the main gate's passage: the light slot, the figure passed, out onto the street
  (0.01, dict(at=ga(26), y='eye', look=ga(160) + [17], stop=4, cut=True, kind='walk', say='cut: inside the main gate')),
  (2.5,  dict(at=ga(29), y='eye', look=ga(161) + [17], stop=4, kind='walk', still=True)),
