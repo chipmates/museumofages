@@ -8,7 +8,7 @@
 //   --port 5210 --data-port 5211 (never 5199 or 5400); --q 'exp=0.6' passed to the page
 import { chromium } from 'playwright'
 import { createServer as httpServer } from 'node:http'
-import { existsSync, mkdirSync, writeFileSync } from 'node:fs'
+import { existsSync, mkdirSync, readFileSync, writeFileSync } from 'node:fs'
 import { dirname, isAbsolute, join, resolve, sep } from 'node:path'
 import { fileURLToPath } from 'node:url'
 import { browserArgs, FRAME_TIME_FLAGS } from '../rig.mjs'
@@ -90,6 +90,17 @@ if (opt.out && opt.out !== true) {
     const r = await page.evaluate((o) => window.__map.shoot(o), { stop: n, framing, view, w, h, samples, out, css }).catch((e) => ({ error: String(e) }))
     if (r.error) { bad++; console.log(`FAILED ${n} ${framing} ${view}: ${r.error.slice(0, 400)}`) }
     else console.log(`${r.file.split('/').pop()} ${r.ms} ms median ${r.brightness.median} p1 ${r.brightness.p1} p99 ${r.brightness.p99} eye ${r.camera.eyeOverStand}`)
+  }
+}
+if (opt.probes && opt.probes !== true) {
+  // a JSON list of probe cameras (see the rig's probe), written beside --probe-out
+  const out = writable(String(opt['probe-out'] ?? ''))
+  if (!out) throw new Error('--probe-out <absolute folder inside the hand-in>')
+  const list = JSON.parse(readFileSync(String(opt.probes), 'utf8'))
+  for (const p of list) {
+    const r = await page.evaluate((o) => window.__map.probe(o), { w: 640, h: 360, samples: 4, ...p, out }).catch((e) => ({ error: String(e) }))
+    if (r.error) { bad++; console.log(`FAILED probe ${p.name}: ${r.error.slice(0, 400)}`) }
+    else console.log(`${r.file.split('/').pop()} ${r.ms} ms y ${r.y} median ${r.brightness.median}`)
   }
 }
 if (opt.clip && opt.clip !== true) {
