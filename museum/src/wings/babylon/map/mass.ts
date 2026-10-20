@@ -56,7 +56,8 @@ function passageGrey(base: N, p: Passage): N {
   const inside = step(-0.3, along).mul(step(along, p.len)).mul(step(abs(across), p.half))
   const side = smoothstep(0.6, 0.8, abs(normalWorld.x.mul(p.c[0]).add(normalWorld.z.mul(p.c[1]))))
   const soffit = smoothstep(0.6, 0.8, normalWorld.y.negate())
-  return mix(base, mix(base, vec3(0.6), side).add(vec3(0.12).mul(soffit)), inside)
+  // seen down the axis the side walls are edge-on, so the soffit carries the opening: near white, lit only by bounce
+  return mix(base, mix(mix(base, vec3(0.6), side), vec3(0.95), soffit), inside)
 }
 
 export function bodyMaterial(t: ClassTones, grey: number, passage?: Passage): Material {
