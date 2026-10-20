@@ -18,17 +18,17 @@ def ga(a, c=0.0):
 
 STOPS = {   # n: id, name, hour at the stop's first key, exposure stops, figure (E, N, facing), phone lens and shift
  1: ('moat', 'Over the moat to the North Gate', '17:30', 0.0, [445727, 3601085, 168], (30, -0.25)),
- 2: ('lion-street', 'The lion street', '17:32', 0.0, [445756, 3600915, 168], (44, 0.15)),
- 3: ('forecourt', 'The forecourt and the whole double gate', '17:34', 0.15, [445766.9, 3600844.2, 163], (30, 0.3)),
+ 2: ('lion-street', 'The lion street', '17:32', 0.0, [445756, 3600915, 168], (44, 0.05)),
+ 3: ('forecourt', 'The forecourt and the whole double gate', '17:34', 0.15, [445766.9, 3600844.2, 163], (30, 0.1)),
  4: ('through-the-gate', 'Through the gate', '17:35', 0.6, ga(36, 1.8) + [163], (44, 0.0)),
  5: ('gardens', 'The gardens question', '17:37', 0.2, None, (44, -0.35)),
  6: ('throne-court', 'The throne-room facade', '17:40', 0.6, [445652, 3600680, 180], (44, -0.25)),
  7: ('canal-city', 'The canal bridge and the filled city', '17:44', 0.3, None, (44, -0.25)),
  8: ('nabu', 'The Nabu temple and the reading table', '17:46', 0.3, None, (44, -0.25)),
  9: ('etemenanki', 'Etemenanki at true size', '17:49', 0.3, [445953.4, 3600117.5, 75], (22, 0.33)),
- 10: ('turn', 'The turn', '17:53', 0.4, None, (34, 0.1)),
+ 10: ('turn', 'The turn', '17:53', 0.4, None, (34, 0.0)),
  11: ('esagila', 'Esagila, where the procession ended', '17:56', 0.6, [445702, 3599868, 260], (30, 0.0)),
- 12: ('great-stair', 'The great stair and the switch', '17:59', 0.9, ax(101, -6) + [343], (44, 0.1)),
+ 12: ('great-stair', 'The great stair and the switch', '17:59', 0.9, ax(101, -6) + [343], (44, -0.05)),
  13: ('bridge', 'The bridge over the Euphrates at sunset', '18:07', 0.7, [445452, 3599833, 265], (44, -0.05)),
  14: ('city-and-sky', 'The city and the sky', '18:14', 1.2, None, (44, -0.3)),
 }
@@ -102,11 +102,11 @@ L = [
  # 13. west and down to the bridge at sunset; a walk on it; the look back at the tower
  (8,    dict(at=[445600, 3599990], y=92, look=[445400, 3599820, 12], stop=13, kind='fly', say='turns left over the top: the river and the bridge')),
  (15,   dict(at=[445548, 3599868], y=34, look=[445380, 3599830, 3], stop=13, kind='fly', say='glides down over the street line')),
- (8,    dict(at=[445500, 3599838], y='eye', look=[445300, 3599826, 4], stop=13, kind='fly', hold=True, still=True, say='lands on the bridge, the sun ahead')),
+ (8,    dict(at=[445500, 3599838], y='eye', look=[445300, 3599826, 4], stop=13, kind='fly', hold=True, say='lands on the bridge, the sun ahead')),
  (6,    dict(at=[445492.5, 3599837.3], y='eye', look=[445300, 3599826, 4], stop=13, kind='walk', hold=True)),
  (6,    dict(at=[445492.5, 3599837.3], y='eye', look=[445480, 3600000, 14], stop=13, kind='turn', say='looks back, turning right through north')),
  (6,    dict(at=[445492.5, 3599837.3], y='eye', look=[445641.5, 3600034, 32], stop=13, kind='turn', say='to the tower across the river')),
- (4,    dict(at=[445492.5, 3599837.3], y='eye', look=[445641.5, 3600034, 32], stop=13, kind='hold')),
+ (4,    dict(at=[445492.5, 3599837.3], y='eye', look=[445641.5, 3600034, 32], stop=13, kind='hold', still=True)),
  # 14. the crane up and back over the river: the whole city
  (18,   dict(at=[445380, 3599700], y=170, look=[445800, 3600250, 0], stop=14, kind='crane', say='rises up and back, a crane, the one backward move (WALK stop 14)')),
  (10,   dict(at=[445300, 3599610], y=255, look=[445870, 3600360, 0], stop=14, kind='crane', still=True)),
