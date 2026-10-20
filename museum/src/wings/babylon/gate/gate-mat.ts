@@ -12,37 +12,18 @@
 import { Color, DataTexture, DataUtils, HalfFloatType, LinearFilter, LinearMipmapLinearFilter, Matrix3, MeshPhysicalNodeMaterial, MeshStandardNodeMaterial, RGBAFormat, Vector3, type Material } from 'three/webgpu'
 import * as TSL from 'three/tsl'
 import { REG, type Field } from './gate-relief'
+import { PAL } from './gate-colours'
+
+export { PAL }
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 type N = any
 const T = TSL as unknown as Record<string, N>
-const { Fn, If, Loop, abs, attribute, cameraPosition, cameraViewMatrix, clamp, cos, dot, float, floor, fract, length, max, min, mix, mx_noise_float, normalize, positionLocal, positionWorld, select, sin, smoothstep, sqrt, step, texture, uniform, uv, vec2, vec3, vec4, atan, log2 } = T
+const { Fn, If, Loop, abs, attribute, cameraPosition, cameraViewMatrix, clamp, cos, dot, float, floor, fract, length, max, min, mix, mx_noise_float, mx_worley_noise_vec2, normalize, positionLocal, positionWorld, select, sin, smoothstep, sqrt, step, texture, uniform, uv, vec2, vec3, vec4, atan, log2 } = T
 
 export const C = 0.086
 export const BR = 0.33
 
-/* ── the palette, linear albedo; glazes from COLOURS.md 9 at the saturated end (P5), scaled so the white glaze is 0.73 ── */
-const g = (r: number, gg: number, b: number, k = 0.8): [number, number, number] => [r * k, gg * k, b * k]
-export const PAL = {
-  white: g(0.9067, 0.8184, 0.7148),
-  cobalt: g(0.0423, 0.1114, 0.2657),
-  yellow: g(0.8197, 0.4693, 0.0622),
-  turquoise: g(0.1019, 0.4568, 0.4608),
-  red: g(0.3902, 0.0551, 0.0371),
-  black: g(0.0204, 0.0187, 0.0191),
-  buff: [0.52, 0.4, 0.27] as [number, number, number],
-  redBrown: [0.36, 0.2, 0.13] as [number, number, number],
-  asphalt: [0.035, 0.032, 0.03] as [number, number, number],
-  lime: [0.36, 0.35, 0.32] as [number, number, number],
-  mud: [0.4, 0.33, 0.25] as [number, number, number],
-  cedar: [0.24, 0.13, 0.065] as [number, number, number],
-  copper: [0.93, 0.6, 0.47] as [number, number, number],
-  bronze: [0.72, 0.5, 0.3] as [number, number, number],
-  limestone: [0.62, 0.59, 0.52] as [number, number, number],
-  breccia: [0.42, 0.17, 0.12] as [number, number, number],
-  brecciaVein: [0.66, 0.6, 0.52] as [number, number, number],
-  grey: 0.42,
-}
 const V = (c: [number, number, number]): N => vec3(...c)
 
 /** the state shared by every material: the switch, the state, the pixel angle, the sun in the gate's frame, the frame's turn into the world */
@@ -428,8 +409,18 @@ export function pavingMaterial(U: GateUniforms, P: PaveSpec, rooms: Rooms): Mate
   // polished by feet: lighter and smoother along the middle of the walk, never rutted
   const worn = float(1).sub(smoothstep(1.0, 4.5, at))
   const lime = V(PAL.limestone).mul(float(1).add(slab.sub(0.5).mul(0.08)).add(fine.mul(0.04)).add(worn.mul(0.05)))
-  const vein = smoothstep(0.82, 0.9, float(1).sub(abs(mx_noise_float(vec3(s.mul(1.7), t.mul(1.7), 3.1))))).mul(float(1).sub(smoothstep(0.03, 0.09, fw)))
-  const brec = mix(V(PAL.breccia).mul(float(1).add(mx_noise_float(vec3(s.mul(4), t.mul(4), 7)).mul(0.18))), V(PAL.brecciaVein), vein.mul(0.8))
+  // breccia: angular clasts of a few centimetres, pale and dark reds in a red matrix, thin white veins where the cells meet;
+  // the pattern fades to its mean once a pixel's footprint passes a clast
+  const near = float(1).sub(smoothstep(0.012, 0.05, fw))
+  const cell = mx_worley_noise_vec2(vec2(s, t).mul(16))
+  const edge = cell.y.sub(cell.x)
+  const clastId = mx_noise_float(vec3(s.mul(11), t.mul(11), 0.7)).mul(0.6).add(0.5).add(cell.x.mul(0.25))
+  const clast = mix(mix(V(PAL.brecciaDark), V(PAL.breccia), smoothstep(0.0, 0.5, clastId)), V(PAL.brecciaPale), smoothstep(0.6, 1.0, clastId))
+  const matrix = smoothstep(0.12, 0.05, edge)
+  const vein = smoothstep(0.035, 0.0, edge).mul(step(0.55, mx_noise_float(vec3(s.mul(2.3), t.mul(2.3), 3.1)).add(0.5)))
+  const brecNear = mix(mix(clast, V(PAL.breccia).mul(0.85), matrix.mul(0.6)), V(PAL.brecciaVein), vein.mul(0.85))
+  const brecMean = V(PAL.breccia).mul(0.95).add(V(PAL.brecciaVein).mul(0.05))
+  const brec = mix(brecMean, brecNear, near)
   const brickH = hash2(floor(t.div(BR)), kk)
   const brick = mix(V(PAL.buff), V(PAL.redBrown), brickH.mul(0.7)).mul(0.92)
   const dark = V(PAL.asphalt)
@@ -440,7 +431,7 @@ export function pavingMaterial(U: GateUniforms, P: PaveSpec, rooms: Rooms): Mate
   // the class: limestone and breccia R (found), the brick paving to the walls G
   const ci = select(at.lessThan(outer), float(1), float(2))
   m.colorNode = mix(stateCol, classColour(U, ci, s, t, fw), U.uSwitch)
-  m.roughnessNode = mix(select(U.uState.lessThan(1.5), float(0.85), mix(float(0.62), float(0.45), worn.mul(inLime.add(inBrec).min(1)))), float(0.9), U.uSwitch)
+  m.roughnessNode = mix(select(U.uState.lessThan(1.5), float(0.85), mix(mix(float(0.82), float(0.6), worn), mix(float(0.7), float(0.5), worn), inBrec)), float(0.9), U.uSwitch)
   m.aoNode = openness(rooms, p)
   return m
 }
