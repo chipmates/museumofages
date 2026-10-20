@@ -9,7 +9,7 @@
    (pixel angle times distance, stretched by the view's slant), never over
    screen derivatives, so the jittered sub-frames agree. */
 
-import { Color, DataTexture, DataUtils, HalfFloatType, LinearFilter, LinearMipmapLinearFilter, Matrix3, MeshPhysicalNodeMaterial, MeshStandardNodeMaterial, RGBAFormat, Vector3, type Material } from 'three/webgpu'
+import { Color, DataTexture, DataUtils, DoubleSide, HalfFloatType, LinearFilter, LinearMipmapLinearFilter, Matrix3, MeshPhysicalNodeMaterial, MeshStandardNodeMaterial, RGBAFormat, Vector3, type Material } from 'three/webgpu'
 import * as TSL from 'three/tsl'
 import { REG, type Field } from './gate-relief'
 import { PAL } from './gate-colours'
@@ -302,7 +302,8 @@ export function bakePanel(f: Field, schemes: string[]): PanelMaps {
  */
 export function panelMaterial(U: GateUniforms, maps: PanelMaps, schemes: Array<[string, number]>, rooms: Rooms): Material {
   const f = maps.field
-  const m = new MeshStandardNodeMaterial({ roughness: 0.2, metalness: 0 })
+  // the same physical glaze as the wall around it (clear coat, pooling, brick variation), so the panel's ground never shows as a box
+  const m = new MeshPhysicalNodeMaterial({ roughness: 0.2, metalness: 0 })
   const iU = attribute('iU', 'vec3'), iN = attribute('iN', 'vec3'), iA = attribute('iA', 'vec4'), iB = attribute('iB', 'vec4')
   const W = f.w * f.res, H = f.h * f.res
   const texUV = (u: N, v: N): N => {
@@ -347,7 +348,10 @@ export function panelMaterial(U: GateUniforms, maps: PanelMaps, schemes: Array<[
   }
   const ground = mix(V(PAL.cobalt), V(PAL.turquoise), iB.y)
   const vary = b.brick.sub(0.5).mul(float(1).sub(smoothstep(0.08, 0.3, fu)))
-  const glaze = mix(ground, animal.xyz, animal.w).mul(float(1).add(vary.mul(0.08)))
+  const pG = attribute('iO', 'vec3').add(iU.mul(u)).add(vec3(0, v, 0))
+  const fine = mx_noise_float(pG.mul(31)).mul(float(1).sub(smoothstep(0.01, 0.04, fw)))
+  const pool = lines(yW, C, 0.016, fy).add(lines(bondU, BR / 2, 0.014, fu)).min(1).mul(0.07)
+  const glaze = mix(ground, animal.xyz, animal.w).mul(float(1).add(vary.mul(0.09)).add(fine.mul(0.025)).sub(pool))
   const full = mix(glaze, vec3(0.05, 0.048, 0.045), joint)
   // flat: the animal's silhouette in its body colour on the flat ground
   const body = select(iB.x.lessThan(0.5), V(PAL.yellow), select(iB.x.lessThan(1.5), V(PAL.white), select(iB.x.lessThan(2.5), V(PAL.white), V(PAL.yellow))))
@@ -358,6 +362,9 @@ export function panelMaterial(U: GateUniforms, maps: PanelMaps, schemes: Array<[
   const cc = classColour(U, float(1), bondU, yW, fw)
   m.colorNode = mix(stateCol, cc, U.uSwitch)
   m.roughnessNode = mix(select(U.uState.lessThan(1.5), select(U.uState.lessThan(0.5), float(0.92), float(0.45)), mix(float(0.18), float(0.9), joint)), float(0.85), U.uSwitch)
+  m.clearcoatNode = mix(select(U.uState.lessThan(1.5), float(0), float(1).sub(joint)), float(0), U.uSwitch)
+  m.clearcoatRoughnessNode = float(0.06)
+  m.clearcoatNormalNode = m.normalNode
   // its own shadow: march from the point toward the sun over the height map
   const selfShadow = Fn(() => {
     const sU = dot(U.uSunG, iU).mul(select(iA.z.greaterThan(0), float(1), float(-1)))
@@ -408,7 +415,9 @@ export function pavingMaterial(U: GateUniforms, P: PaveSpec, rooms: Rooms): Mate
   const fine = mx_noise_float(p.mul(9)).mul(float(1).sub(smoothstep(0.02, 0.08, fw)))
   // polished by feet: lighter and smoother along the middle of the walk, never rutted
   const worn = float(1).sub(smoothstep(1.0, 4.5, at))
-  const lime = V(PAL.limestone).mul(float(1).add(slab.sub(0.5).mul(0.08)).add(fine.mul(0.04)).add(worn.mul(0.05)))
+  // slab to slab the stone varies by about 8 percent each way and a little in hue (a few slabs warmer, a few greyer)
+  const slab2 = hash2(floor(s.div(P.limestone)).add(17), floor(t.div(P.limestone)).add(5))
+  const lime = V(PAL.limestone).mul(float(1).add(slab.sub(0.5).mul(0.16)).add(fine.mul(0.04)).add(worn.mul(0.05))).mul(vec3(float(1).add(slab2.sub(0.5).mul(0.05)), 1, float(1).sub(slab2.sub(0.5).mul(0.06))))
   // breccia: angular clasts of a few centimetres, pale and dark reds in a red matrix, thin white veins where the cells meet;
   // the pattern fades to its mean once a pixel's footprint passes a clast
   const near = float(1).sub(smoothstep(0.012, 0.05, fw))
@@ -417,14 +426,17 @@ export function pavingMaterial(U: GateUniforms, P: PaveSpec, rooms: Rooms): Mate
   const clastId = mx_noise_float(vec3(s.mul(11), t.mul(11), 0.7)).mul(0.6).add(0.5).add(cell.x.mul(0.25))
   const clast = mix(mix(V(PAL.brecciaDark), V(PAL.breccia), smoothstep(0.0, 0.5, clastId)), V(PAL.brecciaPale), smoothstep(0.6, 1.0, clastId))
   const matrix = smoothstep(0.12, 0.05, edge)
-  const vein = smoothstep(0.035, 0.0, edge).mul(step(0.55, mx_noise_float(vec3(s.mul(2.3), t.mul(2.3), 3.1)).add(0.5)))
-  const brecNear = mix(mix(clast, V(PAL.breccia).mul(0.85), matrix.mul(0.6)), V(PAL.brecciaVein), vein.mul(0.85))
+  const vein = smoothstep(0.02, 0.0, edge).mul(step(0.78, mx_noise_float(vec3(s.mul(1.7), t.mul(1.7), 3.1)).add(0.5)))
+  const brecNear = mix(mix(clast, V(PAL.brecciaDark), matrix.mul(0.5)), V(PAL.brecciaVein), vein.mul(0.45))
   const brecMean = V(PAL.breccia).mul(0.95).add(V(PAL.brecciaVein).mul(0.05))
   const brec = mix(brecMean, brecNear, near)
   const brickH = hash2(floor(t.div(BR)), kk)
   const brick = mix(V(PAL.buff), V(PAL.redBrown), brickH.mul(0.7)).mul(0.92)
   const dark = V(PAL.asphalt)
-  const full = mix(mix(mix(brick, dark, jr), mix(brec, vec3(0.08), jb), inBrec), mix(lime, vec3(0.12), jl), inLime)
+  // dust: drifts in patches toward the walls and the slabs' edges, swept from the middle of the walk (G, life without bodies)
+  const drift = smoothstep(0.35, 0.75, mx_noise_float(vec3(s.mul(0.31), t.mul(0.31), 1.9)).add(0.5)).mul(float(0.35).add(smoothstep(2.5, 9, at).mul(0.65)))
+  const dust = drift.mul(worn.oneMinus()).mul(0.28)
+  const full = mix(mix(mix(mix(brick, dark, jr), mix(brec, vec3(0.08), jb), inBrec), mix(lime, vec3(0.12), jl), inLime), V(PAL.dust), dust)
   const flat = mix(mix(V(PAL.buff).mul(0.8), V(PAL.breccia), inBrec), V(PAL.limestone), inLime)
   const grey = vec3(0.6).mul(mx_noise_float(positionWorld.mul(0.07)).mul(0.05).add(1))
   const stateCol = select(U.uState.lessThan(0.5), grey, select(U.uState.lessThan(1.5), flat, full))
@@ -433,6 +445,15 @@ export function pavingMaterial(U: GateUniforms, P: PaveSpec, rooms: Rooms): Mate
   m.colorNode = mix(stateCol, classColour(U, ci, s, t, fw), U.uSwitch)
   m.roughnessNode = mix(select(U.uState.lessThan(1.5), float(0.85), mix(mix(float(0.82), float(0.6), worn), mix(float(0.7), float(0.5), worn), inBrec)), float(0.9), U.uSwitch)
   m.aoNode = openness(rooms, p)
+  return m
+}
+
+/* ── life without bodies: palms and birds in their vertex colours, grey in the massing state, class G in the switch ── */
+export function lifeMaterial(U: GateUniforms): Material {
+  const m = new MeshStandardNodeMaterial({ roughness: 0.75, metalness: 0, side: DoubleSide })
+  const fw = U.uPix.mul(positionWorld.distance(cameraPosition))
+  const stateCol = select(U.uState.lessThan(0.5), vec3(0.6), attribute('color', 'vec3'))
+  m.colorNode = mix(stateCol, classColour(U, float(2), positionWorld.x, positionWorld.y, fw), U.uSwitch)
   return m
 }
 
