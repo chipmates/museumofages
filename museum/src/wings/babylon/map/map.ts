@@ -70,6 +70,9 @@ stack.setScene(scene, camera, { ...IDENTITY, name: 'babylon-map' })
 /* the sky and the sun, one set of uniforms for every hour */
 const uSun = uniform(new Vector3(0, 1, 0))
 const uDay = uniform(1)
+const uHaze = uniform(new Color(0.7, 0.66, 0.58))
+/* at and below the horizon the sky is the haze the far ground fades into, blended upward over about
+   seven degrees: a darker dome under a lit haze printed a hard band from every height above the roofs */
 const skyColour = (d: N): N => {
   const up = clamp(d.y, 0, 1)
   const low = smoothstep(-0.04, 0.35, uSun.y)
@@ -78,9 +81,9 @@ const skyColour = (d: N): N => {
   const cosS = max(dot(d, uSun), 0)
   const glow = vec3(1.0, 0.72, 0.45).mul(pow(cosS, 8).mul(0.55).add(pow(cosS, 120).mul(1.6)))
   const disc = smoothstep(0.99996, 0.99999, cosS).mul(60)
-  const sky = mix(horizon, zenith, pow(up, 0.45)).add(glow).add(vec3(1, 0.9, 0.75).mul(disc))
-  const below = horizon.mul(0.55)
-  return mix(below, sky, smoothstep(-0.02, 0.0, d.y)).mul(uDay)
+  const above = mix(horizon, zenith, pow(up, 0.45)).mul(uDay)
+  const sun = glow.add(vec3(1, 0.9, 0.75).mul(disc)).mul(smoothstep(-0.03, 0.0, d.y)).mul(uDay)
+  return mix(uHaze, above, smoothstep(0.0, 0.12, d.y)).add(sun)
 }
 const sky: Sky = { colour: skyColour }
 const skyDome = (() => {
@@ -94,7 +97,6 @@ const skyDome = (() => {
   return mesh
 })()
 scene.add(skyDome)
-const uHaze = uniform(new Color(0.7, 0.66, 0.58))
 const uDensity = uniform(Number(q.get('haze') ?? 0.0002))
 scene.fogNode = fog(uHaze, densityFogFactor(uDensity))
 
@@ -297,6 +299,19 @@ const rig = {
     }
     await upload(file.replace(/\.png$/, '.json'), JSON.stringify(side, null, 1))
     return side
+  },
+  /** a still from any camera: UTM place, a height (a level or 'eye'), a look point (E, N, level), an hour */
+  async probe(o: { at: [number, number]; y: number | 'eye'; look: [number, number, number]; hour: string; hfov?: number; shift?: number; stops?: number; w: number; h: number; samples: number; out: string; name: string; view?: 'grey' | 'classes' }) {
+    const [x, z] = F.s(o.at[0], o.at[1])
+    const y = o.y === 'eye' ? stand(x, z) + cams.eye : o.y
+    const [lx, lz] = F.s(o.look[0], o.look[1])
+    uView.value = o.view === 'classes' ? 1 : 0
+    setHour(hourOf(o.hour))
+    aim([x, y, z], [lx, o.look[2], lz], o.hfov ?? cams.lens.desktop, o.w, o.h, o.shift ?? 0)
+    const { bytes, ms } = await render(o.w, o.h, o.samples, o.stops ?? 0)
+    const file = `${o.out}/${o.name}.${o.w > 1000 ? 'png' : 'jpg'}`
+    await upload(file, o.w > 1000 ? await toPNG(bytes, o.w, o.h) : await jpeg(bytes, o.w, o.h, 0.9))
+    return { file, ms, y: +y.toFixed(2), brightness: brightness(bytes) }
   },
   /** the moving sketch: frames of the whole path (or a span), JPEG, with a per-frame log */
   async clip(o: { out: string; fps: number; w: number; h: number; samples: number; from?: number; to?: number; framing?: 'desktop' | 'phone'; view?: 'grey' | 'classes'; every?: number }) {
