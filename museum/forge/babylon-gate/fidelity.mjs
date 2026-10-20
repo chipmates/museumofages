@@ -181,11 +181,18 @@ for (const [k, g] of [['front', plan.front], ['main', plan.main]]) {
     keep(`${k} ${key} inside its range ${r.join('..')}`, v >= r[0] && v <= r[1] ? 1 : 0, 1, 0)
   }
 }
+line('\n== the chosen heights (class G), their ranges and their sources')
+for (const [g, name] of [['front', 'front gate'], ['main', 'main gate']]) for (const k of ['wallTop', 'towerTop', 'arch']) {
+  const h = plan[g]?.[k]
+  if (!h || typeof h !== 'object') continue
+  line(`  ${name} ${k}: ${h.value ?? h.crown} (range ${JSON.stringify(h.range)}, ${h.cls}); ${h.src}${h.record ? `; record: ${typeof h.record === 'string' ? h.record : JSON.stringify(h.record)}` : ''}`)
+}
 line('\n== the rows')
 const C = plan.course
 keep('course', C * 10, 0.86, 1e-9, '(10 courses, m)')
 keep('row pitch (courses)', plan.rows.pitch, plan.rows.animal + plan.rows.plain, 0)
 line(`  row pitch ${(plan.rows.pitch * C).toFixed(3)} m; animal ${(plan.rows.animal * C).toFixed(3)} m; plinth 0 to ${(plan.rows.plinth * C).toFixed(3)} m`)
+line(`  the rows' classes: ${plan.rows.cls}, their count ${plan.rows.countCls}; sources and row 11: ${plan.rows.src}`)
 const rowsBy = {}
 for (const p of B.panels) {
   const key = `${p.face} row ${p.row}`

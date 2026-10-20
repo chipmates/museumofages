@@ -55,8 +55,8 @@
     "door": { "w": 4.5, "cls": "G", "src": "not stated; 4.5 m like the front gate (GATE-RESEARCH 1.2)" },
     "cls": "M",
     "src": "K1918 p. 37; P2021 p. 72",
-    "wallTop": { "value": 21.0, "range": [18, 24], "cls": "G", "src": "at least one storey, 3 to 4 m, over the front gate (K1918 p. 47); Pedersén's model 19 m (P2021). Ours 21, accepted by the launcher on 20 Oct: from the street 66 m out on the axis the line over the front gate's merlons passes 0.5 m above a 19 m wall, so at Pedersén's height the main gate hides behind the front gate, and the double gate is the point of the stop; at 21 its battlements show 1.4 m over the front gate's. The desktop camera stays on the axis" },
-    "towerTop": { "value": 25.0, "range": [21, 28], "cls": "G", "src": "Pedersén's model 22.5 m (GATE-RESEARCH part 8); ours 25, accepted by the launcher on 20 Oct, one storey of 4 m over the 21 m walls, so the main towers' tops show over the front towers from the street on the axis" },
+    "wallTop": { "value": 21.0, "range": [18, 24], "cls": "G", "src": "at least one storey, 3 to 4 m, over the front gate (K1918 p. 47); Pedersén's model 19 m (P2021). Ours 21, the ruling of 20 Oct: from the street 66 m out on the axis the line over the front gate's merlons passes 0.5 m above a 19 m wall, so at Pedersén's height the main gate hides behind the front gate, and the double gate is the point of the stop; at 21 its battlements show 1.4 m over the front gate's. The desktop camera stays on the axis" },
+    "towerTop": { "value": 25.0, "range": [21, 28], "cls": "G", "src": "Pedersén's model 22.5 m (GATE-RESEARCH part 8); ours 25, the ruling of 20 Oct, one storey of 4 m over the 21 m walls, so the main towers' tops show over the front towers from the street on the axis" },
     "arch": { "crown": 12.3, "range": [10.5, 14], "cls": "G", "src": "ours: the top of the front door's range, for the larger gate" }
   },
   "forecourt": {
@@ -148,7 +148,7 @@
     ]
   },
   "light": {
-    "about": "17:00 for both stills (the launcher's ruling, 20 Oct). The stack has no GI, so the shade's light is modelled: the map's sky dome, the paving's bounce as the environment's lower half, and the sunlit east walls as a warm band in it. Every value here is ours (G for the method), stated so a reader can redo it.",
+    "about": "17:00 for both stills (the the ruling of 20 Oct). The stack has no GI, so the shade's light is modelled: the map's sky dome, the paving's bounce as the environment's lower half, and the sunlit east walls as a warm band in it. Every value here is ours (G for the method), stated so a reader can redo it.",
     "sun": { "intensity": 4.5, "src": "the directional sun in the renderer's units, its colour warming with low elevation (gate.ts setHour). With env 0.6 a lit vertical face gets about three times a shaded one's light, the order of a clear sky at 17 degrees (diffuse about 0.4 of the direct on the ground; textbook order, Ours). At 3.2 with the sky at full strength the lit and shaded faces differed by under 2 to 1 and the hour did not show (HAND/scratch/light, variants a and h)" },
     "bounce": {
       "paving": { "value": 0.32, "colour": [0.62, 0.52, 0.42], "src": "the environment below the horizon: a warm grey scaled by value. Limestone and breccia about 0.6 and 0.3 albedo, 15 percent of the forecourt floor in sun at 17:00 (P1's ray cast), the rest lit by the sky: a dim warm floor, not a bright one" },

@@ -101,7 +101,7 @@ parts.append('`pnpm -C museum typecheck` (exit 0); `pnpm -C museum build` (exit 
 parts.append(block('\n'.join(read('build.txt').split('\n')[:3] + ['...'] + read('build.txt').split('\n')[-6:])))
 
 text = '\n\n'.join(parts) + '\n'
-bad = re.findall(r'\b(first|final|dull|opus|fable|claude|gpt|sonnet|seat)\b', text, re.I)
+bad = re.findall(r'\b(first|final|dull|opus|fable|claude|gpt|sonnet|seat|launcher|tholos|diorama)\b', text, re.I)
 if bad:
     raise SystemExit(f'side words in GATES.md: {sorted(set(bad))}')
 open(os.path.join(hand, 'GATES.md'), 'w', encoding='utf-8').write(text)
