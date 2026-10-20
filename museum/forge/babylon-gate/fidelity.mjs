@@ -227,7 +227,8 @@ if (cams) {
   for (const [name, c] of Object.entries(cams.stills)) {
     const ground = B.level(c.at[1])
     const eye = c.eye ?? cams.eye
-    line(`  ${name}: x ${c.at[0]}, z ${c.at[1]}, street +${(ground + plan.frame.level0).toFixed(2)}, eye ${eye} m over it (+${(ground + eye + plan.frame.level0).toFixed(2)}), ${c.hfov} degrees across, shift ${c.shift}`)
+    const u = F.utm(c.at[0], c.at[1])
+    line(`  ${name}: x ${c.at[0]}, z ${c.at[1]} (UTM ${u[0].toFixed(1)} E, ${u[1].toFixed(1)} N), street +${(ground + plan.frame.level0).toFixed(2)}, eye ${eye} m over it (+${(ground + eye + plan.frame.level0).toFixed(2)}), ${c.hfov} degrees across, shift ${c.shift}`)
     keep(`${name} eye over the street`, eye, 1.65, 0.05)
     const inside = solids.some((q) => (q.kind === 'box' ? (c.at[0] > q.lo[0] && c.at[0] < q.hi[0] && ground + eye > q.lo[1] && ground + eye < q.hi[1] && c.at[1] > q.lo[2] && c.at[1] < q.hi[2]) : inPoly(c.at[0], c.at[1], q.poly) && ground + eye < q.y1))
     keep(`${name} not inside a body`, inside ? 0 : 1, 1, 0)
@@ -235,9 +236,29 @@ if (cams) {
 }
 
 if (opt.facts && opt.facts !== true) {
-  const facts = JSON.parse(readFileSync(String(opt.facts), 'utf8'))
-  line('\n== the page\'s own numbers')
+  const read = JSON.parse(readFileSync(String(opt.facts), 'utf8'))
+  const facts = read.facts ?? read
+  line('\n== the page\'s own numbers against the build checked above')
   keep('figure height', facts.figure?.height ?? 0, plan.figure.height, 0.005)
+  // every number the page built must be the number node built from the same plan
+  const flat = (o, pre = '') => Object.entries(o ?? {}).flatMap(([k2, v]) => (typeof v === 'number' ? [[pre + k2, v]] : v && typeof v === 'object' ? flat(v, `${pre}${k2}.`) : []))
+  const nodeNums = new Map(flat(B.facts))
+  // the page's rig reports `panels` as every panel it placed (B.panels), where the build's facts count them partway
+  nodeNums.set('panels', B.panels.length)
+  let same = 0, differ = 0
+  for (const [k2, v] of flat(Object.fromEntries(Object.entries(facts).filter(([k3]) => k3 in B.facts)))) {
+    if (!nodeNums.has(k2)) continue
+    if (Math.abs(nodeNums.get(k2) - v) <= 1e-6) same++
+    else { differ++; line(`  differs ${k2}: page ${v}, node ${nodeNums.get(k2)}`) }
+  }
+  keep('page numbers equal to the node build (differing)', differ, 0, 0)
+  line(`  ${same} numbers equal`)
+  for (const name of ['desktop', 'phone']) {
+    const v = read.views?.[name] ?? facts.views?.[name]
+    if (!v) continue
+    const at = cams.stills[name].at
+    keep(`page ${name} camera at the camera file's place (m)`, Math.hypot(v.pos[0] - at[0], v.pos[2] - at[1]), 0, 0.001)
+  }
   if (facts.measured) for (const [k2, v] of Object.entries(facts.measured)) line(`  ${k2}: ${JSON.stringify(v)}`)
 }
 
