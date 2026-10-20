@@ -1,0 +1,128 @@
+{
+  "about": "The Ishtar Gate at Level 1, the last street level, built late in Nebuchadnezzar's reign, after 586 BC, its year unknown. Every number of the gate's scene with its class and source. Classes: M measured in place, R original material placed by inference, T named in the king's text with its form guessed, G guessed; T is shown as G on the switch.",
+  "frame": {
+    "says": "origin on the gate's axis in the outer plane of the front gate's front wall (the door's wall), at the +15.40 street; +z out of the face (342.8 true, 343.1 grid), +x to the right of a visitor facing the gate (252.8 true, west), +y up; y 0 is +15.40 in the German excavation zero (25.5 m above sea level)",
+    "face": [445774.8, 3600843.7],
+    "faceSrc": "read off Uppsala sheet 2.28 (Babylon020_IshtarGate, CC BY 4.0) at 600 dpi with GATE-RESEARCH 1.3's pixel formula: the towers' centres stand 2.0 m east of the map's frame origin and the door wall's line 0.8 m south of it; reading plus or minus 0.3 m",
+    "zGrid": 343.1,
+    "convergence": -0.31,
+    "faceNormalTrue": 342.8,
+    "level0": 15.4,
+    "mapBlocksReplaced": ["gate-front", "gate-front-tower-w", "gate-front-tower-e", "gate-main", "gate-main-tower-w", "gate-main-tower-e", "bastion-w", "bastion-e"],
+    "mapWallsReplaced": ["lion-wall-w", "lion-wall-e"],
+    "mapStreetMasked": "the map's street is masked from the main gate's south face to the lion walls' north end; beyond, the map's street and levels stand"
+  },
+  "course": 0.086,
+  "brick": 0.33,
+  "units": { "src": "brick about 33 x 33 cm, 10 courses = 86 cm (K1918 p. 16, 19; P2021 p. 34, 71)", "cls": "M" },
+  "street": {
+    "bearingGrid": 346.3,
+    "bearingSrc": "street lines north of the gate 13.7 degrees west of grid north on sheet 2.28 (GATE-RESEARCH 1.1)",
+    "levels": [
+      { "a": 0, "level": 15.4, "cls": "M", "src": "+15.40 in the gate (K1918 p. 8)" },
+      { "a": 10.5, "level": 15.3, "cls": "M", "src": "+15.30 at the west connecting wall, where the west postern's stair lands (K1918 p. 11); the postern's place read off sheet 2.28, 8.7 to 12.4 m north of the face" },
+      { "a": 99.35, "level": 12.56, "cls": "M", "utm": [445750, 3600940], "src": "+12.56 beside triangulation point 2 (P2021 p. 228 note 29, from K1918 pl. 35); 99.35 m along the gate's axis from the face, 4.3 m east of it" },
+      { "a": 194.6, "level": 7.5, "cls": "M", "utm": [445735, 3601035], "src": "+7.5 at the North Gate (P2021 p. 228); the stretch beyond point 2 follows the map's line" }
+    ],
+    "gradeSays": "straight grades between the measured spots [Guess between them]; Level 0's later near-level relaying is not shown",
+    "halfWidth": 9.5,
+    "halfWidthSrc": "the lion walls' inner faces read off sheet 2.28 about 18 to 19 m apart north of the bastions (P2021 p. 80: about 20 m); 19 m taken",
+    "paving": { "limestone": 1.05, "limestoneN": 5, "breccia": 0.66, "brecciaN": 4, "thickLime": 0.34, "thickBreccia": 0.2, "rest": "brick with asphalt joints", "cls": "R", "restCls": "G", "src": "P2021 p. 231 to 232; no wheel ruts (K1914 ch. V)" },
+    "forecourtPaving": "breccia with the limestone strip on the axis, as Pedersen's model has it (GATE-RESEARCH 4.3) [Guess]"
+  },
+  "front": {
+    "towers": { "w": 6.2, "proj": 2.05, "gap": 9.7, "src": "K1918 p. 16; gap read off sheet 2.28", "cls": "M" },
+    "frontWall": 4.12,
+    "walls": 3.1,
+    "chamber": [21.9, 3.68],
+    "across": 28.1,
+    "along": 12.95,
+    "door": 4.5,
+    "src": "K1918 p. 16; P2021 p. 72",
+    "cls": "M",
+    "wallTop": { "value": 15.0, "range": [14, 19], "cls": "G", "src": "P2021 p. 78 to 79 (Pedersen's model), GATE-RESEARCH 2.3; the 15 m is the parapet walk at the battlements' foot, the merlons stand 0.6 m above it" },
+    "towerTop": { "value": 18.5, "range": [17, 23], "cls": "G", "src": "one storey (3 to 4 m) over the walls, K1918 p. 46 to 47" },
+    "arch": { "crown": 11.8, "range": [10.5, 12.3], "springing": 9.55, "cls": "G", "src": "semicircular brick arch (K1918 p. 38), crown after P2021 p. 78" },
+    "guardStorey": { "from": 15.0, "proj": 0.165, "loophole": 0.32, "loopholeY": 16.9, "shape": "round", "cls": "G", "src": "projecting guard storey with round loopholes (K1918 p. 31, 46); Pedersen draws them rectangular (P2021 p. 50)" }
+  },
+  "court": { "depth": 4.0, "cls": "M", "src": "4 m open to the sky between the buildings (P2021 p. 72, K1918 p. 37)" },
+  "main": {
+    "towers": { "w": 9.05, "proj": 4.09, "gap": 10.8, "src": "K1918 p. 37; gap read off sheet 2.28", "cls": "M" },
+    "walls": 7.0,
+    "chamber": [14.9, 8.05],
+    "along": 33.0,
+    "across": 22.05,
+    "door": { "w": 4.5, "cls": "G", "src": "not stated; 4.5 m like the front gate (GATE-RESEARCH 1.2)" },
+    "cls": "M",
+    "src": "K1918 p. 37; P2021 p. 72",
+    "wallTop": { "value": 21.0, "range": [18, 24], "cls": "G", "src": "at least one storey, 3 to 4 m, over the front gate (K1918 p. 47); Pedersen's model 19 m. Ours 21: from the street 66 m out on the axis the line over the front gate's merlons passes 0.5 m above a 19 m wall, so at 19 the main gate hides behind the front gate (one gate where two stood); at 21 its battlements show 1.4 m over the front gate's" },
+    "towerTop": { "value": 25.0, "range": [21, 28], "cls": "G", "src": "Pedersen's model 22.5 m (GATE-RESEARCH part 8); ours 25, one storey of 4 m over the 21 m walls, so the main towers' tops show over the front towers from the street" },
+    "arch": { "crown": 12.3, "range": [10.5, 14], "cls": "G", "src": "ours: the top of the front door's range, for the larger gate" }
+  },
+  "forecourt": {
+    "westWall": { "inner": 16.25, "thick": 4.0, "cls": "M", "src": "read off sheet 2.28" },
+    "eastWall": { "inner": -16.9, "thick": 5.5, "strengthening": 3.7, "cls": "M", "src": "5.50 m plus 3.70 m (K1918 p. 11), inner face read off sheet 2.28" },
+    "height": { "value": 7.5, "range": [5, 12], "cls": "G", "src": "compared with Pedersen's model (fig. 2.32, late afternoon light, eyes only): the connecting walls stand about half the front gate's walls" },
+    "wing": { "z": [-3.95, -0.45], "cls": "M", "src": "read off sheet 2.28: the wing between the gate block and the connecting walls, its face 0.45 m behind the gate's face; Nemet-Enlil's outer face 6 m behind the tower fronts (K1918 p. 16)" },
+    "postern": { "z": 10.5, "w": 4.65, "h": 3.4, "cls": "M", "hCls": "G", "src": "west postern 4.65 m, a stair of 17 steps down west (K1918 p. 12); its place read off sheet 2.28" },
+    "eastStairs": { "z": [4.5, 9.5, 14.5], "w": 2.4, "h": 3.0, "cls": "M", "hCls": "G", "src": "three stairs down on the east side (P2021 p. 73), places read off sheet 2.28" },
+    "depth": 20.8
+  },
+  "bastions": {
+    "west": { "poly": [[9.4, 21.3], [7.8, 39.0], [12.5, 39.0], [12.5, 50.0], [27.2, 50.0], [29.4, 21.3]], "cls": "M" },
+    "east": { "poly": [[-12.9, 20.25], [-33.75, 20.25], [-33.75, 49.5], [-18.8, 49.5], [-18.8, 38.5], [-12.9, 38.5]], "cls": "M" },
+    "src": "read off sheet 2.28 in the gate's frame, plus or minus 0.5 m; about 21 x 29 m (GATE-RESEARCH 1.2)",
+    "height": { "value": 12.0, "range": [8, 16], "cls": "G", "src": "compared with Pedersen's model (fig. 2.32); the map's 12 m" }
+  },
+  "lionWalls": {
+    "from": 39.0,
+    "to": 180.0,
+    "thick": 7.0,
+    "towers": { "w": 7.2, "pitch": 14.4, "proj": 1.0, "cls": "M", "src": "towers at their own spacing (K1914 ch. V), read off sheet 2.28: about 7.2 m with 7 m gaps" },
+    "height": { "value": 10.0, "range": [7, 14], "cls": "G", "src": "compared with Pedersen's street (fig. 2.31, eyes only); the map's 10 m" },
+    "towerHeight": { "value": 11.5, "cls": "G" },
+    "lions": { "length": 2.0, "spacing": 3.5, "band": 13, "bandFrom": 0.35, "ground": "turquoise", "schemes": ["white with yellow mane", "yellow with red mane"], "cls": "R", "placeCls": "G", "src": "lions about 2 m long, about 60 a side over 180 m, walking north, white with yellow manes or yellow with red manes on light or dark blue (K1914 ch. V; K1918 p. 5); none found in place, so every lion's place is a guess; ground turquoise after the four original panels sampled (COLOURS.md part 4) [Guess]" }
+  },
+  "cityWalls": {
+    "nemet": { "thick": 3.7, "outer": -3.95, "cls": "M", "src": "Nemet-Enlil 3.7 m, mud brick (P2021 p. 59); its outer face 6 m behind the tower fronts (K1918 p. 16)" },
+    "imgur": { "thick": 6.5, "cls": "M", "src": "Imgur-Enlil 6.5 m, mud brick (P2021 p. 59)" },
+    "height": { "value": 7.5, "cls": "G", "src": "raised with the terrain by the gate and perhaps covered (P2021 p. 30); no higher than the front gate's walls; ours" },
+    "reach": 42.0
+  },
+  "rows": {
+    "plinth": 13,
+    "animal": 13,
+    "plain": 11,
+    "pitch": 24,
+    "facade": 6,
+    "door": 4,
+    "main": 8,
+    "flankShift": 1,
+    "order": ["bull", "dragon", "bull", "dragon", "bull", "dragon", "bull", "dragon"],
+    "colour": { "bull": "yellow", "dragon": "white" },
+    "cls": "R",
+    "countCls": "G",
+    "src": "animal 13 courses, 11 plain, pitch 24 (K1918 p. 20); rows level (K1918 p. 20); a row one course up across a corner (K1918 p. 19 to 20); 6 rows on the facade and 4 in the door (P2021 p. 78 to 79); the lowest Level 1 row bulls and one colour per row are guesses; row 11 (flat glazed dragons) not shown, Pedersen's reading (P2021 p. 80), Koldewey read it as a base at Level 1 (K1918 p. 52)"
+  },
+  "animals": {
+    "bull": { "length": 1.5, "src": "grid of 9 half bricks (K1918 p. 20, 23, pl. 13)" },
+    "dragon": { "length": 1.7, "src": "grid of 10 half bricks (K1918 p. 20, 23)" },
+    "lion": { "length": 2.0, "src": "about 2 m (K1914 ch. V)" },
+    "depth": { "value": 0.055, "cls": "G", "src": "the moulded body's highest point over the wall's plane, read by eye off the open-licence photos of moulded bricks (commons-amin2019-berlin-unglazed-dragon-head-brick and the in-situ rows), never traced" }
+  },
+  "corners": { "blue": 0.0825, "red": 0.0825, "border": 0.258, "cls": "R", "topCls": "G", "src": "the borders run up the corner, a red stripe toward it, the corner a blue stripe a quarter brick wide (K1918 p. 22); how they ended at the top is not known (K1918 p. 47)" },
+  "battlements": { "steps": 3, "pitch": 0.99, "height": 0.6, "stepH": 0.172, "parapet": 0.33, "cls": "R", "shapeCls": "G", "src": "stepped, blue glazed, steps two courses high with a quarter-brick setback, parapet one or two bricks (K1918 p. 31, 45)" },
+  "pedestals": [
+    { "n": 1, "x": 9.4, "z": 16.5, "shape": "round", "d": 1.4, "h": 1.0, "animal": "bull", "cls": "M", "hCls": "G", "src": "round, 1.40 m across, 14 m north of the gate (K1918 p. 10, P2021 p. 73 to 74); place read off sheet 2.28" },
+    { "n": 2, "x": -11.9, "z": 15.9, "shape": "square", "d": 1.4, "h": 1.0, "animal": "dragon", "cls": "M", "hCls": "G", "src": "read off sheet 2.28" },
+    { "n": 3, "x": 4.75, "z": 3.05, "shape": "square", "d": 0.9, "h": 1.0, "cls": "G", "src": "placed by symmetry (P2021 p. 73)" },
+    { "n": 4, "x": -4.75, "z": 3.05, "shape": "square", "d": 0.9, "h": 1.0, "cls": "M", "hCls": "G", "src": "small square pedestal at the east tower's corner (K1918 p. 16), read off sheet 2.28" },
+    { "n": 5, "x": 7.6, "z": -5.95, "shape": "square", "d": 1.8, "h": 1.0, "cls": "M", "hCls": "G", "src": "in the chamber's west half (K1918 p. 16), read off sheet 2.28" },
+    { "n": 6, "x": -7.6, "z": -5.95, "shape": "square", "d": 1.8, "h": 1.0, "cls": "G", "src": "by symmetry" }
+  ],
+  "bronze": { "cls": "T", "src": "'wild oxen of bronze and raging dragons' at the entrances (East India House inscription col. 6, K1918 p. 53); form, size and facing guessed: plain bronze at the relief animals' proportions", "scale": 1.25 },
+  "doors": { "cls": "T", "src": "door leaves of cedar with copper, bronze thresholds and pivots (K1918 p. 53, col. VI 11 to 18); shown open, their form guessed" },
+  "roof": { "cls": "T", "src": "cedar beams over the chambers (K1918 p. 47); the court open to the sky (K1918 p. 37)" },
+  "figure": { "height": 1.7, "x": -8.0, "z": 3.4, "turn": -1.1, "src": "the house's grey sign person on the paving by the door (HOUSE-RULES); in front of the east tower, where the floor is in the sun at 17:00 (the west half of the recess lies in the west tower's shadow)" },
+  "hour": { "days": 20, "latitude": 32.5434, "obliquity": 23.76, "stills": "17:00", "src": "GATE-RESEARCH 5.1 and PILOT/scratch/sun2.py; local apparent solar time, 20 days after the spring equinox" }
+}
