@@ -165,11 +165,11 @@ function dragon(): { L: number; parts: Part[]; curls: Array<{ c: Pt; r: number; 
     return d
   }
   // far legs: a cat's foreleg, a bird's hind leg
-  parts.push({ reg: REG.body, d: (p) => smax(chain(p, [[0.93, 0.58], [0.925, 0.4], [0.9, 0.13]], [0.06, 0.045, 0.036]), ellipse(p, [0.92, 0.042], 0.06, 0.04), 0.02), h: 0.028, r: 0.028, base: -0.006 })
+  parts.push({ reg: REG.body, d: (p) => smax(chain(p, [[0.93, 0.58], [0.915, 0.4], [0.88, 0.12]], [0.075, 0.052, 0.04]), catPaw(p, [0.87, 0.0]), 0.02), h: 0.028, r: 0.028, base: -0.006 })
   parts.push({ reg: REG.body, d: (p) => smax(chain(p, [[0.56, 0.58], [0.53, 0.42], [0.49, 0.3], [0.545, 0.11]], [0.085, 0.05, 0.034, 0.026]), talons(p, [0.545, 0.095], 1), 0.01), h: 0.026, r: 0.025, base: -0.006 })
   parts.push({ reg: REG.body, d: trunk, h: 0.044, r: 0.075 })
   // near legs
-  parts.push({ reg: REG.body, d: (p) => smax(chain(p, [[1.04, 0.6], [1.07, 0.42], [1.1, 0.13]], [0.072, 0.05, 0.038]), ellipse(p, [1.125, 0.042], 0.065, 0.042), 0.02), h: 0.038, r: 0.035 })
+  parts.push({ reg: REG.body, d: (p) => smax(chain(p, [[1.04, 0.6], [1.085, 0.42], [1.13, 0.12]], [0.088, 0.058, 0.042]), catPaw(p, [1.12, 0.0]), 0.02), h: 0.038, r: 0.035 })
   parts.push({ reg: REG.body, d: (p) => smax(chain(p, [[0.45, 0.6], [0.43, 0.43], [0.36, 0.3], [0.41, 0.11]], [0.11, 0.06, 0.038, 0.028]), talons(p, [0.41, 0.095], 1), 0.01), h: 0.038, r: 0.035 })
   // the viper's head, level, its mouth shut with the forked tongue out
   parts.push({ reg: REG.body, d: (p) => smax(capsule(p, [1.27, 0.995], [1.49, 0.985], 0.058, 0.03), ellipse(p, [1.33, 0.995], 0.07, 0.058), 0.02), h: 0.042, r: 0.04 })
@@ -192,10 +192,17 @@ function dragon(): { L: number; parts: Part[]; curls: Array<{ c: Pt; r: number; 
   const scales = (p: Pt): boolean => trunk(p) > 0.004 && p[1] > 0.5
   const keep: Field['keep'] = [
     { what: 'eye', u: 1.35, v: 1.012, r: 0.02 },
-    { what: 'paw', u: 1.125, v: 0.042, r: 0.065, rv: 0.04 },
-    { what: 'paw', u: 0.92, v: 0.042, r: 0.06, rv: 0.04 },
+    { what: 'paw', u: 1.16, v: 0.032, r: 0.07, rv: 0.034 },
+    { what: 'paw', u: 0.91, v: 0.032, r: 0.07, rv: 0.034 },
   ]
   return { L, parts, curls, keep, scales }
+}
+
+/** a cat's paw in profile from its heel on the course: low, long, three toes rounded forward */
+function catPaw(p: Pt, heel: Pt): number {
+  let d = capsule(p, [heel[0] + 0.01, heel[1] + 0.034], [heel[0] + 0.075, heel[1] + 0.03], 0.034, 0.028)
+  for (const [dx, r] of [[0.06, 0.024], [0.085, 0.022], [0.105, 0.018]] as Pt[]) d = smax(d, circle(p, [heel[0] + dx, heel[1] + r], r), 0.008)
+  return d
 }
 
 /** a bird's foot: three claws forward, one back, from the ankle point */
