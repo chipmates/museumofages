@@ -55,12 +55,7 @@ const canalZ: number[] = []
   for (const d of [-2.4, -plan.canal.w / 2, plan.canal.w / 2, 2.4]) canalZ.push(Math.round((cz + d) * 100) / 100)
 }
 
-/** where a visitor stands: on the street inside its width, on the bridge's deck, else the ground */
-function stand(x: number, z: number): number {
-  const st = built.streetAt(x, z)
-  if (st.d <= st.w / 2 + 0.5) return st.level
-  return built.ground(x, z)
-}
+const stand = (x: number, z: number): number => built.stand(x, z)
 
 /* ── the page ── */
 const canvas = document.getElementById('stage') as HTMLCanvasElement

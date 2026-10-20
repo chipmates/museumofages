@@ -773,7 +773,8 @@
    "plan": "M",
    "height": "R",
    "src": "outline C6.2 (dug: green and orange on X1.4)",
-   "hsrc": "the top level's floor about +12 (P2021 p. 93, 104)"
+   "hsrc": "the top level's floor about +12 (P2021 p. 93, 104); its top is the courts' floor",
+   "walk": true
   },
   {
    "id": "south-palace-rooms",

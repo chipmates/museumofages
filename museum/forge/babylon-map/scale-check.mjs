@@ -143,7 +143,7 @@ check('street slope, North Gate up to survey point 2, walkable (percent)', ((12.
 void half
 
 // 9 the cameras: eye 1.6 to 1.7 m over what the visitor stands on, at every eye-level stop
-const stand = (x, z) => { const s = b.streetAt(x, z); return s.d <= s.w / 2 + 0.5 ? s.level : b.ground(x, z) }
+const stand = (x, z) => b.stand(x, z)
 for (const s of cams.stops) for (const fr of ['desktop', 'phone']) {
   const v = s[fr]
   if (v.y !== 'eye') continue

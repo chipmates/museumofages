@@ -20,6 +20,8 @@ export interface Prism {
   height: Cls
   /** the class band's top: the plan's class below it, the height's above */
   band: number
+  /** its top is a floor a visitor stands on (a court in a palace) */
+  walk?: boolean
 }
 
 /** an upright box: centre (x, z), size along its own x (sx) and z (sz), yaw about y */
@@ -79,6 +81,8 @@ export interface Built {
   street: StreetPoint[]
   ground: (x: number, z: number) => number
   streetAt: (x: number, z: number) => { d: number; level: number; w: number; s: number }
+  /** what a visitor stands on: the street inside its width (and the bridge's deck), a walkable top, else the ground */
+  stand: (x: number, z: number) => number
   houses: number
   facts: Record<string, unknown>
 }
@@ -336,7 +340,7 @@ export function buildPlan(plan: J, opts: { houses?: boolean } = {}): Built {
       holes.push([add(add(c, mul(ea, -w! / 2)), mul(ec, -h! / 2)), add(add(c, mul(ea, w! / 2)), mul(ec, -h! / 2)), add(add(c, mul(ea, w! / 2)), mul(ec, h! / 2)), add(add(c, mul(ea, -w! / 2)), mul(ec, h! / 2))])
     }
     const pushP = (id: string, p: P2[], y0: number, y1: number, hs: P2[][] = []): void => {
-      prisms.push({ id, name: b.name, group: 'block', poly: p, holes: hs, y0, y1, plan: cls.plan, height: cls.height, band: 0 })
+      prisms.push({ id, name: b.name, group: 'block', poly: p, holes: hs, y0, y1, plan: cls.plan, height: cls.height, band: 0, ...(b.walk ? { walk: true } : {}) })
     }
     if (b.door && axis) {
       // a passage along the block's own axis, centred, with a plug under the street it carries
@@ -579,5 +583,12 @@ export function buildPlan(plan: J, opts: { houses?: boolean } = {}): Built {
 
   facts['street'] = street.map((p) => ({ utm: F.utm(p.x, p.z), s: Math.round(p.s * 10) / 10, level: p.level }))
   facts['streetLevelAtS'] = streetLevelAtS
-  return { prisms, boxes, ramps, water, street, ground, streetAt, houses, facts }
+  const floors = prisms.filter((p) => p.walk)
+  const stand = (x: number, z: number): number => {
+    const st = streetAt(x, z)
+    let y = st.d <= st.w / 2 + 0.5 ? st.level : ground(x, z)
+    for (const p of floors) if (p.y1 > y && pointInPoly([x, z], p.poly) && !p.holes.some((h) => pointInPoly([x, z], h))) y = p.y1
+    return y
+  }
+  return { prisms, boxes, ramps, water, street, ground, streetAt, stand, houses, facts }
 }
