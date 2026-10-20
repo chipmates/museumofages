@@ -1,0 +1,325 @@
+{
+  "about": "The gate's cameras in the gate's frame (x west, the visitor's right facing the gate; z north out of the face; y up from the +15.40 street). Positions [x, z] stand on the street's profile with the eye over it; looks are [x, y, z]. One file for every arm.",
+  "eye": 1.65,
+  "hour": "17:00",
+  "stills": {
+    "desktop": {
+      "at": [
+        0,
+        66
+      ],
+      "look": [
+        0,
+        null,
+        -20
+      ],
+      "hfov": 58,
+      "shift": 0.22,
+      "authored": [
+        16,
+        9
+      ],
+      "stop": 2,
+      "says": "stop 2's last frame: the lion street's end, the forecourt and the double gate ahead; on the gate's axis 66 m out, where a course still spans 4 device pixels at 3200 across"
+    },
+    "phone": {
+      "at": [
+        -2.0,
+        17.5
+      ],
+      "look": [
+        -1.6,
+        null,
+        -10
+      ],
+      "hfov": 58,
+      "shift": 0.45,
+      "authored": [
+        390,
+        844
+      ],
+      "stop": 3,
+      "says": "stop 3's hold in the forecourt, 17.5 m from the face, a little east of the axis; the pedestals stay behind the frame's sides"
+    }
+  },
+  "crops": {
+    "door": {
+      "framing": "phone",
+      "at": [
+        -3.6,
+        1.7,
+        0.03
+      ],
+      "size": [
+        640,
+        400
+      ],
+      "says": "the door zone with the east door-side bull of row 1"
+    },
+    "battlements": {
+      "framing": "desktop",
+      "at": [
+        -7.95,
+        18.7,
+        2.2
+      ],
+      "size": [
+        640,
+        400
+      ],
+      "says": "the battlements over the east tower's guard storey"
+    },
+    "figure": {
+      "framing": "desktop",
+      "at": "figure",
+      "size": [
+        640,
+        400
+      ],
+      "says": "the figure, centred on its waist"
+    },
+    "far-courses": {
+      "framing": "desktop",
+      "at": [
+        9.9,
+        20.6,
+        -14.9
+      ],
+      "size": [
+        640,
+        400
+      ],
+      "says": "the main gate's west tower above the front gate"
+    },
+    "paving": {
+      "framing": "desktop",
+      "at": [
+        2.0,
+        null,
+        55
+      ],
+      "size": [
+        640,
+        400
+      ],
+      "says": "the paving 11 m ahead of the desktop camera: the limestone middle and the breccia beside it"
+    }
+  },
+  "stops": [
+    {
+      "n": 2,
+      "id": "lion-street",
+      "hour": [
+        "16:45",
+        "17:00"
+      ],
+      "keys": [
+        {
+          "t": 0,
+          "at": "street:150",
+          "look": "gate",
+          "kind": "walk"
+        },
+        {
+          "t": 64,
+          "at": [
+            0,
+            66
+          ],
+          "look": "gate",
+          "kind": "arrive"
+        },
+        {
+          "t": 68,
+          "at": [
+            0,
+            66
+          ],
+          "look": "gate",
+          "kind": "hold"
+        }
+      ],
+      "ends": "the forecourt and the double gate ahead (the desktop still)"
+    },
+    {
+      "n": 3,
+      "id": "forecourt",
+      "hour": [
+        "17:00",
+        "17:00"
+      ],
+      "keys": [
+        {
+          "t": 68,
+          "at": [
+            0,
+            66
+          ],
+          "look": "gate",
+          "kind": "walk"
+        },
+        {
+          "t": 105,
+          "at": [
+            -2.0,
+            17.5
+          ],
+          "look": "gate",
+          "kind": "arrive"
+        },
+        {
+          "t": 108,
+          "at": [
+            -2.0,
+            17.5
+          ],
+          "look": "gate",
+          "kind": "hold"
+        },
+        {
+          "t": 113,
+          "at": [
+            -2.0,
+            17.5
+          ],
+          "look": [
+            -37.2,
+            1.65,
+            -1.3
+          ],
+          "kind": "look-left",
+          "says": "the east wall's stairs down"
+        },
+        {
+          "t": 117,
+          "at": [
+            -2.0,
+            17.5
+          ],
+          "look": "gate",
+          "kind": "back"
+        },
+        {
+          "t": 121,
+          "at": [
+            -2.0,
+            17.5
+          ],
+          "look": [
+            35.4,
+            1.65,
+            3.2
+          ],
+          "kind": "look-right",
+          "says": "the west postern"
+        },
+        {
+          "t": 125,
+          "at": [
+            -2.0,
+            17.5
+          ],
+          "look": "gate",
+          "kind": "back"
+        },
+        {
+          "t": 133,
+          "at": [
+            0,
+            7.5
+          ],
+          "look": [
+            0,
+            1.65,
+            -200
+          ],
+          "kind": "walk"
+        },
+        {
+          "t": 136,
+          "at": [
+            0,
+            7.5
+          ],
+          "look": [
+            0,
+            1.65,
+            -200
+          ],
+          "kind": "hold"
+        }
+      ],
+      "ends": "the open door with the chamber and the main gate's door beyond"
+    },
+    {
+      "n": 4,
+      "id": "through-the-gate",
+      "hour": [
+        "17:00",
+        "17:00"
+      ],
+      "keys": [
+        {
+          "t": 136,
+          "at": [
+            0,
+            7.5
+          ],
+          "look": [
+            0,
+            1.65,
+            -200
+          ],
+          "kind": "walk"
+        },
+        {
+          "t": 189,
+          "at": [
+            0,
+            -56
+          ],
+          "look": [
+            0,
+            1.65,
+            -200
+          ],
+          "kind": "arrive"
+        },
+        {
+          "t": 190,
+          "at": [
+            0,
+            -56
+          ],
+          "look": [
+            0,
+            1.65,
+            -200
+          ],
+          "kind": "hold"
+        },
+        {
+          "t": 195,
+          "at": [
+            0,
+            -56
+          ],
+          "look": "south",
+          "kind": "turn"
+        },
+        {
+          "t": 199,
+          "at": [
+            0,
+            -56
+          ],
+          "look": "south",
+          "kind": "hold"
+        }
+      ],
+      "ends": "outside the main gate's south door, looking along the procession street south (the map's stop 4 look, UTM 445831, 3600652), the city below and the way to the tower's precinct ahead"
+    }
+  ],
+  "speedSays": "about 1.3 m/s walking, holds of 3 to 4 s at each stop's last frame; the look eases over each leg",
+  "looksSay": "an explicit look's y is in the gate's frame (1.65 = eye height over the +15.40 street); 'gate' is a level look at the face's axis; 'south' is the map's stop 4 look"
+}
