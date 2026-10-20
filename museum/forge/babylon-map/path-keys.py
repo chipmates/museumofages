@@ -17,6 +17,7 @@ def ga(a, c=0.0):
     return [round(GATE[0] + 0.2924 * a - 0.9563 * c, 2), round(GATE[1] - 0.9563 * a - 0.2924 * c, 2)]
 
 STOPS = {   # n: id, name, hour at the stop's first key, exposure stops, figure (E, N, facing), phone lens and shift
+            # (+ slides the frame up, more sky; a wide subject on the upright phone leaves spare height to split, not remove)
  1: ('moat', 'Over the moat to the North Gate', '17:30', 0.0, [445727, 3601085, 168], (30, -0.25)),
  2: ('lion-street', 'The lion street', '17:32', 0.0, None, (44, 0.05)),
  3: ('forecourt', 'The forecourt and the whole double gate', '17:34', 0.15, [445766.9, 3600844.2, 163], (30, 0.1)),
