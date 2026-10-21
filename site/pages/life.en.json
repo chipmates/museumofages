@@ -6,7 +6,7 @@
     "topic": "life",
     "stop": "line-early",
     "published": "2026-10-17",
-    "checked": "2026-10-17",
+    "checked": "2026-10-21",
     "og_image": {
       "file": "vinci-life-og-{lang}-1200x630.png",
       "width": 1200,
@@ -179,7 +179,7 @@
               "id": "life-08",
               "date": "7 June 1476",
               "k": "mark_documented",
-              "line": "The renewed charge is dismissed, and all the accused are absolved."
+              "line": "A second denunciation names the same four. Both times they are released from the charge, unless a new denunciation comes."
             },
             {
               "id": "life-09",
@@ -508,7 +508,7 @@
           "nav": "Married?",
           "q": "Was Leonardo da Vinci married?",
           "a": "No marriage of his is known. No document of his life names a wife.",
-          "known": "His will, made at Cloux in April 1519, leaves his books and drawings to his pupil Melzi and remembers Salaì, two servants and his half-brothers. It names no wife and no child, and no other record read for this page names one. That tells us what the records lack, not whom he loved."
+          "known": "His will, made at Cloux in April 1519, leaves his pupil Melzi his books, and with them the instruments and portraits of his art as a painter. It remembers Salaì, two servants and his half-brothers. It names no wife and no child, and no other record read for this page names one. That tells us what the records lack, not whom he loved."
         },
         {
           "id": "children",
@@ -521,8 +521,8 @@
           "id": "sexuality",
           "nav": "Was he gay?",
           "q": "Was Leonardo da Vinci gay?",
-          "a": "No document settles it. The records hold one case from 1476, and it ended with the accused absolved. No wife or child of his is known. For many years he shared a household with Salaì, and later with Melzi.",
-          "known": "In Florence in April 1476, an unsigned denunciation named him, with three other men, in a case of sodomy. The charge was dropped, the case ended in June with the accused absolved, and an accusation is not a finding of guilt. Several scholars, among them Frank Zöllner and Giovanni Dall'Orto, read him as a man who loved men. The historian Elizabeth Abbott thinks he would likely count as gay in today's words, but chose a celibate life after 1476, and points out that being gay, as an identity, was not an idea of his time. A few others have searched for a woman in his life, on very weak evidence, and Sigmund Freud's famous reading of 1910 rested on a mistranslated word. No document settles it either way."
+          "a": "No document settles it. The records hold one case from 1476. The four men accused were released from the charge, in April and again in June, each time on the condition that no new denunciation came. No wife or child of his is known. For many years he shared a household with Salaì, and later with Melzi.",
+          "known": "In Florence in April 1476, an unsigned denunciation named him, with three other men, in a case of sodomy. The four were released from the charge, on the condition that no new denunciation came. In June a second denunciation named the same four. They were released again on the same terms. An accusation is not a finding of guilt. Several scholars, among them Frank Zöllner and Giovanni Dall'Orto, read him as a man who loved men. The historian Elizabeth Abbott thinks he would likely count as gay in today's words, but chose a celibate life after 1476, and points out that being gay, as an identity, was not an idea of his time. A few others have searched for a woman in his life, on very weak evidence, and Sigmund Freud's famous reading of 1910 rested on a mistranslated word. No document settles it either way."
         },
         {
           "id": "parents",
@@ -543,7 +543,7 @@
           "nav": "Salaì and Melzi",
           "q": "Who were Salaì and Melzi?",
           "a": "Two young men of his household. Salaì came to him as a boy of ten in 1490 and stayed about 25 years, and Francesco Melzi, a young Milanese nobleman, became his pupil and his heir.",
-          "known": "Salaì's real name was Gian Giacomo Caprotti, from Oreno near Milan. In the note on his arrival Leonardo also listed the boy's thefts and called him a thief, a liar, stubborn and a glutton. The nickname Salaì comes from a devil in Pulci's poem Morgante. Melzi joined him during his second stay in Milan, went with him to Rome and France, wrote the letter that reported his death, and inherited his books and drawings."
+          "known": "Salaì's real name was Gian Giacomo Caprotti, from Oreno near Milan. In the note on his arrival Leonardo also listed the boy's thefts and called him a thief, a liar, stubborn and a glutton. The nickname Salaì is said to come from a devil in Pulci's poem Morgante. Nobody is sure. Melzi joined him during his second stay in Milan, went with him to Rome and France, wrote the letter that reported his death, and inherited his books and the instruments and portraits of his art."
         },
         {
           "id": "left-handed",
@@ -580,7 +580,7 @@
       "id": "sources",
       "nav": "Sources",
       "h": "Sources",
-      "intro": "The page relies on the documents of his life as scholars have published them, from his grandfather's note to the records of 1476 in the Florence state archive, on his own notes in J. P. Richter's edition of 1883, Vasari's Life of Leonardo of 1568, Gustavo Uzielli's research of 1872 and 1896, the Treccani biographical dictionary, the chronology and pages of Museo Galileo in Florence, the Museo Leonardiano in Vinci, the Opificio delle Pietre Dure's 2019 study of his drawing of 1473 in the Uffizi, Walter Isaacson's biography of 2017, Live Science and Finestre sull'Arte, Carleton University's report on a lecture by Elizabeth Abbott, and the timeline of the museum's Leonardo wing, all read on 17 October 2026.",
+      "intro": "The page relies on the documents of his life as scholars have published them, from his grandfather's note to the records of 1476 in the Florence state archive, printed by Nino Smiraglia Scognamiglio in the Archivio storico dell'arte in 1896, on his own notes in J. P. Richter's edition of 1883, Vasari's Life of Leonardo of 1568, Gustavo Uzielli's research of 1896, the Treccani biographical dictionary, the chronology and pages of Museo Galileo in Florence, the Museo Leonardiano in Vinci, the Opificio delle Pietre Dure's 2019 study of his drawing of 1473 in the Uffizi, Walter Isaacson's biography of 2017, Live Science and Finestre sull'Arte, Carleton University's report on a lecture by Elizabeth Abbott, and the timeline of the museum's Leonardo wing, all read on 17 October 2026, the print of 1896 on 21 October.",
       "notes": [],
       "contact": "If a date, a name or a sentence here is wrong, tell us and we will correct it.",
       "contact_link": "To the legal notice",

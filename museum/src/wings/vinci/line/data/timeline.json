@@ -307,11 +307,11 @@
       "certainty": "documented",
       "line_en": "An anonymous accusation names him and three others in a sodomy case. An accusation is not a finding of guilt.",
       "line_de": "Eine anonyme Anzeige nennt ihn und drei weitere Männer in einem Sodomieverfahren. Eine Anzeige belegt keine Schuld.",
-      "document": "notarised copy among the records of the Ufficiali di Notte e Conservatori dei Monasteri, Archivio di Stato di Firenze",
-      "document_de": "notariell beglaubigte Abschrift in den Akten der Ufficiali di Notte e Conservatori dei Monasteri, Archivio di Stato di Firenze",
+      "document": "the register of the Ufficiali di notte e monasteri, Deliberazioni 1475-1476, f. 41v, the entry of 9 April 1476 with the officers' note beside the names. Printed by Nino Smiraglia Scognamiglio, Archivio storico dell'arte, 2nd series, vol. 2 (1896), p. 315",
+      "document_de": "das Register der Ufficiali di notte e monasteri, Deliberazioni 1475-1476, f. 41v, der Eintrag vom 9. April 1476 mit dem Vermerk der Beamten neben den Namen. Gedruckt von Nino Smiraglia Scognamiglio, Archivio storico dell'arte, 2. Serie, Bd. 2 (1896), S. 315",
       "holder": "Archivio di Stato di Firenze",
       "plate_file": null,
-      "source_url": "https://en.wikipedia.org/wiki/Jacopo_Saltarelli",
+      "source_url": "https://archive.org/details/archiviostoricodellarte2s2",
       "station": "line-early",
       "date_end": null,
       "date_original": "9 Apr 1476",
@@ -323,6 +323,13 @@
       "qualifications_en": null,
       "qualifications_de": null,
       "sources": [
+        {
+          "url": "https://archive.org/details/archiviostoricodellarte2s2",
+          "supports": "Both entries of 1476 as printed from the register, with their folios and the officers' notes",
+          "local_source": "Smiraglia Scognamiglio, Nuovi documenti su Leonardo da Vinci, Archivio storico dell'arte, 2nd series, vol. 2 (1896), pp. 313-315",
+          "name_en": "Internet Archive, Archivio storico dell’arte of 1896 with both entries",
+          "name_de": "Internet Archive, Archivio storico dell’arte von 1896 mit beiden Einträgen"
+        },
         {
           "url": "https://en.wikipedia.org/wiki/Jacopo_Saltarelli",
           "supports": "Catalog event and document",
@@ -349,13 +356,13 @@
       "date": "1476-06-07",
       "date_precision": "day",
       "certainty": "documented",
-      "line_en": "The renewed accusation is dismissed and the accused are absolved.",
-      "line_de": "Die erneute Anzeige wird zurückgewiesen, die Beschuldigten werden freigesprochen.",
-      "document": "same series",
-      "document_de": "dieselbe Aktenreihe",
+      "line_en": "A second denunciation names the same four. Both times they are released from the charge, unless a new denunciation comes.",
+      "line_de": "Eine zweite Anzeige nennt dieselben vier. Beide Male werden sie vom Vorwurf losgesprochen, falls keine neue Anzeige kommt.",
+      "document": "the same register, f. 51r, the entry of 7 June 1476 with the officers' note beside the names. Printed by Nino Smiraglia Scognamiglio, Archivio storico dell'arte, 2nd series, vol. 2 (1896), p. 315",
+      "document_de": "dasselbe Register, f. 51r, der Eintrag vom 7. Juni 1476 mit dem Vermerk der Beamten neben den Namen. Gedruckt von Nino Smiraglia Scognamiglio, Archivio storico dell'arte, 2. Serie, Bd. 2 (1896), S. 315",
       "holder": "Archivio di Stato di Firenze",
       "plate_file": null,
-      "source_url": "https://www.treccani.it/enciclopedia/leonardo-da-vinci_(Dizionario-Biografico)/",
+      "source_url": "https://archive.org/details/archiviostoricodellarte2s2",
       "station": "line-early",
       "date_end": null,
       "date_original": "7 Jun 1476",
@@ -367,6 +374,20 @@
       "qualifications_en": null,
       "qualifications_de": null,
       "sources": [
+        {
+          "url": "https://archive.org/details/archiviostoricodellarte2s2",
+          "supports": "Both entries of 1476 as printed from the register, with their folios and the officers' notes",
+          "local_source": "Smiraglia Scognamiglio, Nuovi documenti su Leonardo da Vinci, Archivio storico dell'arte, 2nd series, vol. 2 (1896), pp. 313-315",
+          "name_en": "Internet Archive, Archivio storico dell’arte of 1896 with both entries",
+          "name_de": "Internet Archive, Archivio storico dell’arte von 1896 mit beiden Einträgen"
+        },
+        {
+          "url": "https://archive.org/details/ricercheintorno01uziegoog",
+          "supports": "Uzielli's extract of both entries, which dates the second 9 June",
+          "local_source": "Uzielli, Ricerche intorno a Leonardo da Vinci, serie prima, 2nd ed. (1896), p. 201 n. 1",
+          "name_en": "Internet Archive, Uzielli’s Ricerche of 1896",
+          "name_de": "Internet Archive, Uziellis Ricerche von 1896"
+        },
         {
           "url": "https://www.treccani.it/enciclopedia/leonardo-da-vinci_(Dizionario-Biografico)/",
           "supports": "Catalog event and document",
@@ -390,9 +411,9 @@
       "display_order": 8,
       "gaps_de": [],
       "date_certainty": null,
-      "date_note_en": null,
-      "date_note_de": null,
-      "date_note_source": null
+      "date_note_en": "The register's print reads 7 June. Gustavo Uzielli's extract of 1896 gives 9 June.",
+      "date_note_de": "Im Druck des Registers steht der 7. Juni, in Gustavo Uziellis Auszug von 1896 der 9. Juni.",
+      "date_note_source": "Smiraglia Scognamiglio 1896, p. 315 (die vij Juni) · Uzielli, Ricerche, serie prima, 2nd ed. 1896, p. 201 n. 1 (9 di Giugno)"
     },
     {
       "id": "life-09",

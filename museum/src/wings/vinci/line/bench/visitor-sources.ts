@@ -30,12 +30,12 @@ export const SOURCE_READINGS: Record<string, SourceReading> = {
     de: 'Leonardo schrieb das Datum auf die Landschaftszeichnung selbst. Der Katalog der Uffizien weist das erhaltene Blatt nach. Das Werk trägt seine Datierung, sie wurde nicht aus seinem Stil erschlossen.',
   },
   'life-07': {
-    en: 'Wikipedia’s account of Jacopo Saltarelli describes a notarised copy of the accusation in the Florence State Archives. It names Leonardo among the accused. The document records an allegation and does not establish guilt.',
-    de: 'Der Wikipedia-Artikel über Jacopo Saltarelli beschreibt eine beglaubigte Abschrift der Anzeige im Staatsarchiv Florenz. Sie nennt Leonardo unter den Beschuldigten. Das Dokument überliefert einen Vorwurf und belegt keine Schuld.',
+    en: 'The register of the Ufficiali di notte, Florence’s morals office, holds the entry of 9 April 1476. Nino Smiraglia Scognamiglio printed it in 1896. An unsigned denunciation accuses four men, Leonardo among them, over a boy of about 17, Jacopo Saltarelli. The officers’ note beside the names releases the four from the charge, unless a new denunciation comes. The document records an allegation and does not establish guilt.',
+    de: 'Das Register der Ufficiali di notte, der Sittenbehörde von Florenz, enthält den Eintrag vom 9. April 1476. Nino Smiraglia Scognamiglio hat ihn 1896 gedruckt. Eine anonyme Anzeige beschuldigt vier Männer, Leonardo darunter, wegen eines Jungen von etwa 17 Jahren, Jacopo Saltarelli. Der Vermerk der Beamten neben den Namen spricht die vier vom Vorwurf los, falls keine neue Anzeige kommt. Das Dokument überliefert einen Vorwurf und belegt keine Schuld.',
   },
   'life-08': {
-    en: 'Treccani’s biography cites the renewed accusation and its dismissal in the same Florentine record series. The outcome belongs beside the allegation whenever the case is told.',
-    de: 'Treccanis Biografie nennt die erneute Anzeige und ihre Zurückweisung in derselben Florentiner Aktenreihe. Zum Bericht über den Vorwurf gehört auch der Ausgang des Verfahrens.',
+    en: 'The same register holds a second entry, of 7 June 1476, and Smiraglia Scognamiglio printed it too. A second denunciation names the same four men, and the officers’ note releases them again on the same condition. The outcome belongs beside the allegation whenever the case is told.',
+    de: 'Dasselbe Register enthält einen zweiten Eintrag vom 7. Juni 1476, und auch ihn hat Smiraglia Scognamiglio gedruckt. Eine zweite Anzeige nennt dieselben vier Männer, und der Vermerk der Beamten spricht sie wieder los, unter derselben Bedingung. Zum Bericht über den Vorwurf gehört auch der Ausgang des Verfahrens.',
   },
   'life-09': {
     en: 'The chronology printed with the Treatise on Painting and Treccani’s biography disagree about the January day of the Signoria’s commission. The later advance payment is a separate event. The precise commission date remains disputed here.',
