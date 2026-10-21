@@ -33,6 +33,10 @@ export interface AirUniforms {
   uBeta: N
   /** the haze's own strength, 0 to switch the air off for a test */
   uOn: N
+  /** the far air's colour at full day away from the sun and toward it, and how far round toward the sun the warm side reaches */
+  uAway: N
+  uNear: N
+  uReach: N
 }
 
 export function makeAirUniforms(o: { sigma?: number; scale?: number; floor?: number } = {}): AirUniforms {
@@ -44,6 +48,9 @@ export function makeAirUniforms(o: { sigma?: number; scale?: number; floor?: num
     uFloor: uniform(o.floor ?? 3),
     uBeta: uniform(new Vector3(0.88, 1, 1.16)),
     uOn: uniform(1),
+    uAway: uniform(new Vector3(0.52, 0.48, 0.45)),
+    uNear: uniform(new Vector3(0.92, 0.72, 0.5)),
+    uReach: uniform(-1.0),
   }
 }
 
@@ -52,9 +59,9 @@ export function airColour(U: AirUniforms, d: N): N {
   const low = smoothstep(-0.04, 0.35, U.uSun.y)
   const flat = normalize(vec3(d.x, 0.0001, d.z))
   const sunFlat = normalize(vec3(U.uSun.x, 0.0001, U.uSun.z))
-  const toward = smoothstep(-0.7, 1, dot(flat, sunFlat))
-  const away = mix(vec3(0.3, 0.3, 0.35), vec3(0.42, 0.47, 0.55), low)
-  const near = mix(vec3(0.82, 0.5, 0.3), vec3(0.86, 0.74, 0.58), low)
+  const toward = smoothstep(U.uReach, 1, dot(flat, sunFlat))
+  const away = mix(vec3(0.3, 0.3, 0.34), vec3(U.uAway), low)
+  const near = mix(vec3(0.82, 0.5, 0.3), vec3(U.uNear), low)
   const cosS = max(dot(normalize(d), U.uSun), 0)
   const glow = vec3(1.0, 0.7, 0.42).mul(pow(cosS, 6).mul(0.5).add(pow(cosS, 60).mul(0.9)))
   return mix(away, near, toward).add(glow).mul(U.uDay)

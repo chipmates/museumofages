@@ -29,7 +29,7 @@ import { assemble, panelGrid } from '../gate/gate-mesh'
 import { birdsGeometry, palmsGeometry } from '../gate/gate-life'
 import { bakePanel, lifeMaterial, makeUniforms, panelMaterial, pavingMaterial, wallMaterial, C as COURSE, type Rooms } from '../gate/gate-mat'
 import { airColour, createOpenLinear, makeAirUniforms, skyColour } from './air'
-import { blockMaterial, boxMaterial, groundMaterial, houseMaterial, streetMaterial, toneTexture, waterMaterial } from './earth'
+import { blockMaterial, boxMaterial, groundMaterial, houseMaterial, streetMaterial, toneTexture, uTracts, waterMaterial } from './earth'
 import { makeFlight, resolveFlight, type FlightSample } from './flight'
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -101,7 +101,7 @@ function setView(view: 'grey' | 'classes'): void {
 setView(q.get('view') === 'classes' ? 'classes' : 'grey')
 
 /* the air and the sky: one set of uniforms */
-const AIR = makeAirUniforms({ sigma: Number(q.get('sigma') ?? 0.00016), scale: Number(q.get('scale') ?? 650), floor: 3 })
+const AIR = makeAirUniforms({ sigma: Number(q.get('sigma') ?? 0.00018), scale: Number(q.get('scale') ?? 300), floor: 3 })
 AIR.uOn.value = Number(q.get('air') ?? 1)
 const sky: Sky = { colour: (d: N) => skyColour(AIR, d) }
 const skyDome = (() => {
@@ -125,7 +125,7 @@ scene.add(bodies.group)
 const uTime = uniform(0)
 {
   const blocks = bodies.group.getObjectByName('blocks') as Mesh
-  blocks.material = blockMaterial(tones, toneTexture(city.prisms.map((p) => p.id)), Math.max(1, city.prisms.length))
+  blocks.material = blockMaterial(tones, toneTexture(city.prisms.map((p) => p.id)), Math.max(1, city.prisms.length), U.uPix)
   const houses = bodies.group.getObjectByName('houses') as InstancedMesh | undefined
   if (houses) {
     const list = city.boxes.filter((b) => b.group === 'house')
@@ -267,7 +267,10 @@ function bakeEnv(): void {
   envTarget = pmrem.fromScene(envScene, 0.02, 1, 1000)
   scene.environment = envTarget.texture
 }
-scene.environmentIntensity = Number(q.get('env') ?? LIGHT.env)
+/* the environment's strength: the gate's stated value at the street; over the open plain from the air a weaker fill, so the
+   shade under the low sun keeps its depth (ours, G for the method) */
+const ENV = { street: Number(LIGHT.env), aloft: Number(q.get('envAloft') ?? 0.42) }
+scene.environmentIntensity = ENV.street
 
 let hourNow = -1
 function setHour(hour: number): void {
@@ -374,6 +377,7 @@ function aim(pos: Vector3, look: Vector3, hfov: number, w: number, h: number, sh
   skyDome.updateMatrixWorld(true)
   U.uPix.value = (2 * Math.tan((vfov / 2) * D2R)) / h
   // the contact occlusion reaches and fades further out as the camera climbs
+  scene.environmentIntensity = ENV.street + (ENV.aloft - ENV.street) * Math.min(1, Math.max(0, pos.y - 15) / 120)
   uAoNear.value = 250 + over * 1.2
   uAoFar.value = 900 + over * 3.5
   setNear(pos.distanceTo(toWorld([0, 10, 0])))
@@ -386,8 +390,9 @@ const g2s = (x: number, z: number): [number, number] => {
   const [E, N] = GF.utm(x, z)
   return MF.s(E, N)
 }
-const streetAt = (s: number): { x: number; z: number; level: number } => {
-  const x = s * B.street.dir[0], z = s * B.street.dir[1]
+const streetAt = (s: number, t = 0): { x: number; z: number; level: number } => {
+  // s along the street's line, t across it (+ toward the gate frame's +x, west)
+  const x = s * B.street.dir[0] + t * B.street.dir[1], z = s * B.street.dir[1] - t * B.street.dir[0]
   const [sx, sz] = g2s(x, z)
   return { x: sx, z: sz, level: B.level(z) + L0 }
 }
@@ -413,6 +418,9 @@ const stopsAt = (y: number): number => Number(q.get('stops') ?? 0) + -0.35 * alo
 /** the print's saturation: the gate's own at the street, a little less over the city */
 const SAT = { street: PRINT.saturation, aloft: Number(q.get('satAloft') ?? 1.0) }
 const satAt = (y: number): number => SAT.street + (SAT.aloft - SAT.street) * aloft(y)
+/** the print's toe: the gate's own at the street; over the city a little deeper, so the hazed shade keeps its weight */
+const TOE = { street: Number(P0.toe), aloft: Number(q.get('toeAloft') ?? 0.035) }
+const toeAt = (y: number): number => TOE.street + (TOE.aloft - TOE.street) * aloft(y)
 
 const putBase = q.get('put') ?? ''
 async function upload(file: string, bytes: Uint8Array | string): Promise<void> {
@@ -441,7 +449,7 @@ function brightness(bytes: Uint8ClampedArray): { median: number; p1: number; p99
 async function render(w: number, h: number, samples: number, stops: number): Promise<{ bytes: Uint8ClampedArray; ms: number }> {
   const t = performance.now()
   const rgb = await accumulate(renderer, camera, linear.post, w, h, samples)
-  const bytes = printFrame(rgb, w, h, { ...PRINT, exposure: PRINT.exposure * Math.pow(2, stops), saturation: satAt(camera.position.y) }, 0)
+  const bytes = printFrame(rgb, w, h, { ...PRINT, exposure: PRINT.exposure * Math.pow(2, stops), saturation: satAt(camera.position.y), toe: toeAt(camera.position.y) }, 0)
   return { bytes, ms: Math.round(performance.now() - t) }
 }
 
@@ -476,7 +484,7 @@ const rig = {
     const side = {
       file, framing: o.framing, view: o.view, flightSecond: t, cssSize: o.css, devicePixels: [o.w, o.h], subFrames: o.samples, backend: stack.backend, adapter: stack.architecture,
       hour: `${Math.floor(HOUR)}:${String(Math.round((HOUR % 1) * 60)).padStart(2, '0')}`, sun: { azimuth: +s.azimuth.toFixed(1), elevation: +s.elevation.toFixed(1) }, camera: camFacts(p, o.framing), shadowTexel: +texel.toFixed(3),
-      air: { sigma: AIR.uSigma.value, scale: AIR.uScale.value, on: AIR.uOn.value }, print: { ...PRINT, exposure: PRINT.exposure * Math.pow(2, stops), saturation: satAt(p.pos[1]) }, brightness: brightness(bytes), ms,
+      air: { sigma: AIR.uSigma.value, scale: AIR.uScale.value, on: AIR.uOn.value }, print: { ...PRINT, exposure: PRINT.exposure * Math.pow(2, stops), saturation: satAt(p.pos[1]), toe: toeAt(p.pos[1]) }, brightness: brightness(bytes), ms,
     }
     await upload(file.replace(/\.png$/, '.json'), JSON.stringify(side, null, 1))
     setView(q.get('view') === 'classes' ? 'classes' : 'grey')
@@ -517,15 +525,23 @@ const rig = {
     return { file, ms, brightness: brightness(bytes) }
   },
   /** test values without a reload: the haze, the exposure's base, the print's saturation, the environment, the sun */
-  tune(o: { sigma?: number; scale?: number; exposure?: number; saturation?: number; env?: number; sun?: number; hour?: string }) {
+  tune(o: { sigma?: number; scale?: number; exposure?: number; saturation?: number; env?: number; sun?: number; hour?: string; away?: [number, number, number]; near?: [number, number, number]; reach?: number; toe?: number; split?: number; cool?: [number, number, number]; warm?: [number, number, number]; tracts?: number }) {
+    if (o.tracts !== undefined) uTracts.value = o.tracts
+    if (o.split !== undefined) PRINT.split = o.split
+    if (o.cool) PRINT.cool = o.cool
+    if (o.warm) PRINT.warm = o.warm
+    if (o.away) (AIR.uAway.value as Vector3).set(...o.away)
+    if (o.near) (AIR.uNear.value as Vector3).set(...o.near)
+    if (o.reach !== undefined) AIR.uReach.value = o.reach
+    if (o.toe !== undefined) TOE.aloft = o.toe
     if (o.sigma !== undefined) AIR.uSigma.value = o.sigma
     if (o.scale !== undefined) AIR.uScale.value = o.scale
     if (o.exposure !== undefined) PRINT.exposure = o.exposure
     if (o.saturation !== undefined) SAT.aloft = o.saturation
-    if (o.env !== undefined) scene.environmentIntensity = o.env
+    if (o.env !== undefined) ENV.aloft = o.env
     if (o.sun !== undefined) { SUN.i = o.sun; hourNow = -1; setHour(HOUR) }
     if (o.hour !== undefined) { HOUR = hourOf(o.hour); setHour(HOUR) }
-    return { sigma: AIR.uSigma.value, scale: AIR.uScale.value, exposure: PRINT.exposure, saturation: SAT.aloft, env: scene.environmentIntensity, sun: SUN.i, hour: HOUR }
+    return { tracts: uTracts.value, split: PRINT.split, cool: PRINT.cool, warm: PRINT.warm, away: (AIR.uAway.value as Vector3).toArray(), near: (AIR.uNear.value as Vector3).toArray(), reach: AIR.uReach.value, toe: TOE.aloft, sigma: AIR.uSigma.value, scale: AIR.uScale.value, exposure: PRINT.exposure, saturation: SAT.aloft, env: ENV.aloft, sun: SUN.i, hour: HOUR }
   },
   /** the flight sampled, no rendering */
   pathSamples(dt = 1 / 30) {
