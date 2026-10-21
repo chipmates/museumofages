@@ -28,6 +28,8 @@ test('a particle holds to the name after it, in each language', () => {
     ['почина Сер Пиеро', `почина Сер${NB}Пиеро`],
     ['murió Ser Piero da Vinci', `murió Ser${NB}Piero da${NB}Vinci`],
     ['Салаи и ил Фанфоя.', `Салаи и ил${NB}Фанфоя.`],
+    ['La losa de la capilla dice LEONARDO DA VINCI, y la placa', `La losa de la capilla dice LEONARDO DA${NB}VINCI, y la placa`],
+    ['PROSPETTIVA DE’ COLORI', `PROSPETTIVA DE’${NB}COLORI`],
   ]
   for (const [said, kept] of cases) assert.equal(keepNames(said), kept, said)
 })

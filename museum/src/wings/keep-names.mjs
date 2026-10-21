@@ -11,7 +11,9 @@
 const PARTICLES = new Set(["de'", 'de’', 'de', 'del', 'della', 'delle', 'dei', 'degli', 'da', 'dal', 'dalla', 'di', 'да', 'де', 'ди', 'дел', 'дела', 'деле'])
 const TITLES = new Set(['ser', 'Ser', 'сер', 'Сер', 'il', 'ил'])
 const capital = (word) => /^[«“"‘'(\[¿¡]*\p{Lu}/u.test(word.split(' ').pop() ?? '')
-const leads = (word) => PARTICLES.has(word) || TITLES.has(word)
+// an inscription set in capitals ("LEONARDO DA VINCI") holds its particle the same way
+const particle = (word) => PARTICLES.has(word) || (word.length > 1 && word === word.toUpperCase() && PARTICLES.has(word.toLowerCase()))
+const leads = (word) => particle(word) || TITLES.has(word)
 
 /**
  * The text with every name's particle bound to the word after it.
