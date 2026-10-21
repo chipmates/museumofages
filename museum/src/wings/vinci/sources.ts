@@ -39,7 +39,7 @@ export function createVinciSourcesWindow(host: HTMLElement, control: HTMLButtonE
   let scrolled = -1
   dialog.addEventListener('scroll', () => {
     const at = Math.min(Math.round(dialog.scrollTop), 16)
-    if (at !== scrolled) { scrolled = at; dialog.style.setProperty('--dock-scrolled', `${at}px`) }
+    if (at !== scrolled) { scrolled = at; dialog.style.setProperty('--sheet-scrolled', `${at}px`) }
   }, { passive: true })
   const toolbar = document.createElement('div')
   toolbar.className = 'vinci-sources-toolbar'

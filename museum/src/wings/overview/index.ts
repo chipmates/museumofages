@@ -182,7 +182,15 @@ export function createDeskOverview(host: DeskOverviewHost): DeskOverview {
   on.append(onWords, onArrow)
   foot.append(named, on)
   view.append(stepBack, shut, title, sub, grid, books, absent, foot)
-  if (host.sheet) view.dataset['sheet'] = ''
+  if (host.sheet) {
+    view.dataset['sheet'] = ''
+    // how far the list has scrolled, up to where the phone sheet's head has grown past its close (film-wing.css)
+    let scrolled = -1
+    view.addEventListener('scroll', () => {
+      const at = Math.min(Math.round(view.scrollTop), 16)
+      if (at !== scrolled) { scrolled = at; view.style.setProperty('--sheet-scrolled', `${at}px`) }
+    }, { passive: true })
+  }
 
   let shown: DeskOverviewCell[] = []
   let buttons: HTMLButtonElement[] = []

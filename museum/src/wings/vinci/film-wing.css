@@ -353,12 +353,12 @@
   content: ''; display: block; position: sticky; top: 0; z-index: 3; height: 16px; margin: 0 -16px;
   background: linear-gradient(to bottom, var(--ui-ground-sheet) 35%, color-mix(in srgb, var(--ui-ground-sheet) 0%, transparent)); pointer-events: none;
 }
-/* the record's band grows four times as fast as the first scroll until its solid part reaches below the
-   close, ahead of the first full-width line, so no line passes under the close; at the top it is the band
-   above, and the reading keeps its place */
-#wing[data-film='upright'] .vinci-dock[open]::before {
-  --dock-head: min(calc(var(--film-shut-top) + var(--film-shut) + 12px - 16px), calc(4 * var(--dock-scrolled, 0px)));
-  height: calc(16px + var(--dock-head)); margin-bottom: calc(-1 * var(--dock-head));
+/* the record's and the room list's band grows four times as fast as the first scroll until its solid part
+   reaches below the close, ahead of the first full-width line or picture, so nothing passes under the close;
+   at the top it is the band above, and the reading keeps its place */
+#wing[data-film='upright'] :is(.vinci-dock, .desk-ov[data-sheet])[open]::before {
+  --sheet-head: min(calc(var(--film-shut-top) + var(--film-shut) + 12px - 16px), calc(4 * var(--sheet-scrolled, 0px)));
+  height: calc(16px + var(--sheet-head)); margin-bottom: calc(-1 * var(--sheet-head));
   background: linear-gradient(to bottom, var(--ui-ground-sheet) calc(100% - 10.4px), color-mix(in srgb, var(--ui-ground-sheet) 0%, transparent));
 }
 /* THE RECORD'S THREE TABS STAND AT ITS FOOT, in the thumb's reach; the foot
@@ -445,7 +445,9 @@ html:has(#wing[data-film='upright']) #wing :is(.desk-ov[data-sheet] .desk-ov-shu
 /* the first rows keep clear of the close and stand level with it */
 html:has(#wing[data-film='upright']) #instruments .inst-kicker { padding-right: calc(var(--film-shut) + var(--film-shut-right) + 8px - 24px); }
 #wing[data-film='upright'] .desk-ov[data-sheet] :is(.desk-ov-title, .desk-ov-sub) { padding-right: calc(var(--film-shut) + var(--film-shut-right) + 8px - 16px); }
-#wing[data-film='upright'] .desk-ov[data-sheet] .desk-ov-title { margin-top: -4px; }
+/* the list's title stands 4 px up into the head's band, carried by the band's own margin: two negative
+   margins that meet merge into the larger, so a title's own would let the list jump as the band grows */
+#wing[data-film='upright'] .desk-ov[data-sheet][open]::before { margin-bottom: calc(-4px - var(--sheet-head)); }
 #wing[data-film='upright'] .wing-life[data-narrow='true'] .wing-life-head { padding-top: 22px; }
 #wing[data-film='upright'] .vinci-dock :is(.vinci-certainty, h2) { padding-right: calc(var(--film-shut) + var(--film-shut-right) + 8px - 16px); }
 .wing-life[data-narrow='true'] .wing-life-through::before { height: 44px; }
@@ -619,6 +621,8 @@ html:has(#wing[data-film='upright']) #instruments :is(legend, small) { font-size
 #wing[data-film='upright'] .desk-ov[data-sheet] {
   padding-top: 0; padding-bottom: calc(32px + env(safe-area-inset-bottom));
   border-top: 6px solid var(--ui-ground-sheet); box-shadow: 0 -1px 0 var(--ui-line-strong);
+  /* a work brought into view (the chosen one as the list opens, the keys) stands below the grown head */
+  scroll-padding-top: calc(var(--film-shut-top) + var(--film-shut) + 12px);
 }
 #wing[data-film='upright'] .desk-ov[data-sheet]::after {
   height: calc(20px + env(safe-area-inset-bottom));
