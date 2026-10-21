@@ -353,6 +353,14 @@
   content: ''; display: block; position: sticky; top: 0; z-index: 3; height: 16px; margin: 0 -16px;
   background: linear-gradient(to bottom, var(--ui-ground-sheet) 35%, color-mix(in srgb, var(--ui-ground-sheet) 0%, transparent)); pointer-events: none;
 }
+/* the record's band grows four times as fast as the first scroll until its solid part reaches below the
+   close, ahead of the first full-width line, so no line passes under the close; at the top it is the band
+   above, and the reading keeps its place */
+#wing[data-film='upright'] .vinci-dock[open]::before {
+  --dock-head: min(calc(var(--film-shut-top) + var(--film-shut) + 12px - 16px), calc(4 * var(--dock-scrolled, 0px)));
+  height: calc(16px + var(--dock-head)); margin-bottom: calc(-1 * var(--dock-head));
+  background: linear-gradient(to bottom, var(--ui-ground-sheet) calc(100% - 10.4px), color-mix(in srgb, var(--ui-ground-sheet) 0%, transparent));
+}
 /* THE RECORD'S THREE TABS STAND AT ITS FOOT, in the thumb's reach; the foot
    is solid, so the reading ends above it */
 #wing[data-film='upright'] .vinci-dock .vinci-sources-toolbar {

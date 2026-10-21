@@ -35,6 +35,12 @@ export function createVinciSourcesWindow(host: HTMLElement, control: HTMLButtonE
   dialog.tabIndex = -1
   dialog.setAttribute('aria-label', say(SOURCES_TITLE))
   setRegister(dialog, 'drawer')
+  // how far the reading has scrolled, up to where the phone sheet's head has grown past its close (film-wing.css)
+  let scrolled = -1
+  dialog.addEventListener('scroll', () => {
+    const at = Math.min(Math.round(dialog.scrollTop), 16)
+    if (at !== scrolled) { scrolled = at; dialog.style.setProperty('--dock-scrolled', `${at}px`) }
+  }, { passive: true })
   const toolbar = document.createElement('div')
   toolbar.className = 'vinci-sources-toolbar'
   const tabs = document.createElement('div')
