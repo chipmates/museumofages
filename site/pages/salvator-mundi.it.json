@@ -1,0 +1,537 @@
+{
+ "_note": "LE PAROLE della pagina sul Salvator Mundi, in italiano. Riscritte a partire dall’inglese e dal tedesco, con le stesse date, cifre, nomi, gradi di certezza e fonti. Le righe di fonte delle due lastre sono quelle della pagina delle opere in italiano. Senza lineette, senza punto e virgola. Stato ai: nessuna persona le ha ancora rilette.",
+ "page": {
+  "id": "vinci-salvator-mundi",
+  "wing": "vinci",
+  "topic": "salvator-mundi",
+  "stop": "picture-room",
+  "published": "2026-10-22",
+  "checked": "2026-10-17",
+  "primary": "salvator-mundi",
+  "og_image": {
+   "file": "vinci-salvator-mundi-og-{lang}-1200x630.png",
+   "width": 1200,
+   "height": 630,
+   "plate": "vinci-plate-salvator-mundi"
+  }
+ },
+ "pics": {
+  "salvator-mundi": {
+   "stem": "vinci-plate-salvator-mundi",
+   "widths": [
+    320,
+    640
+   ],
+   "sizes": "(min-width: 960px) 320px, 260px"
+  },
+  "salvator-mundi-cook": {
+   "stem": "vinci-plate-salvator-mundi-cook",
+   "widths": [
+    320,
+    640
+   ],
+   "sizes": "(min-width: 960px) 320px, 260px"
+  }
+ },
+ "meta": {
+  "title": "Salvator Mundi: prezzo, proprietario, dov’è | Museum of Ages",
+  "description": "Nel 2017 il Salvator Mundi è stato venduto all’asta per 450,3 milioni di dollari, un record. Chi lo possiede, dov’è e se l’ha dipinto davvero Leonardo.",
+  "og_title": "Salvator Mundi: prezzo, proprietario, dov’è",
+  "og_image_alt": "Una riproduzione del Salvator Mundi dopo il restauro: Cristo a mezza figura, visto di fronte, con lunghi capelli ricci e una veste blu attraversata da due bande ricamate. Alza due dita della mano destra per benedire e nella sinistra tiene una sfera trasparente, su uno sfondo nero."
+ },
+ "labels": {
+  "crumbs": "Sei qui",
+  "crumb_home": "Museo",
+  "crumb_here": "Salvator Mundi",
+  "toc": "In questa pagina",
+  "salvator_line": "La fotografia, scattata per Christie’s nel 2017 dopo il restauro, mostrava la cornice. Qui è ritagliata sul dipinto."
+ },
+ "top": {
+  "h1": "Salvator Mundi: il prezzo record. È di Leonardo?",
+  "answer": "Il Salvator Mundi, che in latino significa Salvatore del mondo, è un dipinto di Cristo la cui composizione risale a Leonardo da Vinci, ma gli studiosi non sono d’accordo su chi l’abbia dipinto, se lui stesso o la sua bottega. Il 15 novembre 2017 è stato venduto da Christie’s a New York per 450,3 milioni di dollari statunitensi, commissioni comprese. Nessuna opera d’arte è mai stata venduta all’asta a un prezzo più alto, secondo le classifiche pubbliche dei record di novembre 2025. Chi ne sia il proprietario non è mai stato confermato pubblicamente, e non è pubblico dove si trovi.",
+  "jump": true,
+  "side": true,
+  "door": {
+   "text": "Vedi il Salvator Mundi nell’ala",
+   "note": "Ingresso libero, senza account.",
+   "leads": "Questa porta ti conduce nella sala dei quadri della nostra ala di Leonardo, dove ne è appesa una riproduzione con la didascalia «controverso»."
+  }
+ },
+ "blocks": [
+  {
+   "type": "question",
+   "id": "price",
+   "nav": "Il prezzo",
+   "h": "A quanto è stato venduto il Salvator Mundi?",
+   "answer": "Per 450,3 milioni di dollari statunitensi, commissioni comprese, da Christie’s a New York, il 15 novembre 2017. È quindi il dipinto più caro mai venduto all’asta, e anche l’opera d’arte di qualunque genere più cara mai venduta all’asta, secondo le classifiche pubbliche dei record di novembre 2025.",
+   "pic": {
+    "pic": "salvator-mundi",
+    "shape": "whole",
+    "title": "Salvator Mundi, il dipinto dopo il restauro. Attribuzione controversa. Una riproduzione.",
+    "alt": "Una riproduzione del Salvator Mundi dopo il restauro: Cristo a mezza figura, visto di fronte, con lunghi capelli ricci e una veste blu attraversata da due bande ricamate. Alza due dita della mano destra per benedire e nella sinistra tiene una sfera trasparente, su uno sfondo nero.",
+    "src": [
+     "Opera di pubblico dominio. Riproduzione da ",
+     {
+      "text": "Wikimedia Commons",
+      "href": "https://commons.wikimedia.org/wiki/File:Leonardo_da_Vinci_or_Boltraffio_(attrib)_Salvator_Mundi_circa_1500.jpg"
+     },
+     ". Le indicazioni del museo riguardano la riproduzione, non il dipinto. Uso culturale senza scopo di lucro. La fotografia, scattata per Christie’s nel 2017 dopo il restauro, mostrava la cornice. Qui è ritagliata sul dipinto."
+    ]
+   },
+   "known": [
+    "L’asta è durata circa 19 minuti, e alla fine erano rimasti due offerenti. Il banditore lo ha aggiudicato per 400 milioni di dollari a un offerente al telefono, e con le commissioni il totale è arrivato a 450.312.500 dollari. Christie’s lo aveva stimato oltre 100 milioni, la stima più alta mai data a un dipinto di un antico maestro, e lo ha messo nella sua asta serale di arte del dopoguerra e contemporanea, non tra gli antichi maestri. Il record precedente era Les Femmes d’Alger di Picasso, circa 179,4 milioni di dollari nel 2015, e subito dopo, negli elenchi di novembre 2025, viene il ritratto di Elisabeth Lederer di Klimt, venduto da Sotheby’s quello stesso mese per 236,4 milioni. Il Salvator Mundi è stato venduto per conto di trust del miliardario russo Dmitry Rybolovlev."
+   ],
+   "open": "Quella sera l’offerente al telefono non è stato nominato. Chi fosse è la domanda successiva."
+  },
+  {
+   "type": "ledger",
+   "id": "sales",
+   "nav": "Le vendite",
+   "h": "Le sue vendite dal 1900",
+   "intro": "Nessun documento collega a questa tavola una vendita precedente al 1900. Da allora:",
+   "cols": [
+    "Anno",
+    "Che cosa è successo",
+    "Prezzo"
+   ],
+   "rows": [
+    {
+     "cells": [
+      "1900",
+      "Sir Francis Cook lo compra tramite il suo consulente, Sir J. C. Robinson, come opera di Bernardino Luini",
+      "120 sterline"
+     ]
+    },
+    {
+     "cells": [
+      "1958",
+      "Venduto da Sotheby’s a Londra con la collezione Cook, come opera di Boltraffio, a Warren e Minnie Kuntz di New Orleans",
+      "45 sterline"
+     ]
+    },
+    {
+     "cells": [
+      "2005",
+      "Venduto alla St. Charles Gallery di New Orleans, catalogato come copia da Leonardo, ai mercanti newyorkesi Robert Simon e Alexander Parish",
+      "circa 1.175 dollari, a quanto riportato"
+     ]
+    },
+    {
+     "cells": [
+      "2013",
+      "Venduto senza asta, tramite Sotheby’s, al mercante svizzero Yves Bouvier",
+      "circa 80 milioni di dollari"
+     ]
+    },
+    {
+     "cells": [
+      "2013",
+      "Rivenduto da Bouvier a Dmitry Rybolovlev",
+      "127,5 milioni di dollari"
+     ]
+    },
+    {
+     "cells": [
+      "2017",
+      "Venduto da Christie’s a New York, il 15 novembre",
+      "400 milioni di dollari all’aggiudicazione, 450,3 milioni con le commissioni"
+     ]
+    }
+   ],
+   "note": "In seguito Rybolovlev ha accusato Bouvier di avergli fatto pagare troppo 38 opere, tra cui questa, e Bouvier lo ha negato. Nel dicembre 2023 i due hanno chiuso tutte le loro controversie. La causa di Rybolovlev contro Sotheby’s si è chiusa nel gennaio 2024, quando una giuria di New York ha dato ragione alla casa d’aste su tutti i punti."
+  },
+  {
+   "type": "question",
+   "id": "owner",
+   "nav": "Il proprietario",
+   "h": "Chi ha comprato il Salvator Mundi, e chi lo possiede oggi?",
+   "answer": "Il proprietario non è mai stato confermato pubblicamente. L’acquirente ufficiale, secondo quanto riportato nel dicembre 2017, era il principe saudita Badr bin Abdullah Al Saud, e secondo la stampa il vero acquirente era il principe ereditario dell’Arabia Saudita, Mohammed bin Salman.",
+   "known": [
+    "I resoconti e le dichiarazioni indicano l’Arabia Saudita o Abu Dhabi. In ordine di data:"
+   ],
+   "lists": [
+    {
+     "rows": [
+      {
+       "term": "6 dicembre 2017",
+       "text": "Il New York Times ha indicato come acquirente il principe Badr, che in seguito è stato il primo a ricoprire la carica di ministro della Cultura dell’Arabia Saudita."
+      },
+      {
+       "term": "7 dicembre 2017",
+       "text": "Il Wall Street Journal, citando rapporti dei servizi segreti, ha indicato come vero acquirente il principe ereditario. Non abbiamo trovato nessuna dichiarazione ufficiale saudita che lo confermi."
+      },
+      {
+       "term": "8 dicembre 2017",
+       "text": "Il Louvre Abu Dhabi ha annunciato che il dipartimento della cultura e del turismo dell’emirato aveva acquistato il dipinto per il museo."
+      },
+      {
+       "term": "Giugno 2018",
+       "text": "Il dipartimento ha detto di averlo comprato tramite un intermediario. Quello stesso mese il laboratorio del Louvre ha esaminato il dipinto a Parigi, con il permesso del ministero della Cultura saudita."
+      },
+      {
+       "term": "2019",
+       "text": "L’ambasciata saudita ha dichiarato che il principe Badr lo aveva comprato come intermediario per Abu Dhabi, ha riferito Monopol."
+      },
+      {
+       "term": "2021",
+       "text": "The Art Newspaper ha riferito che un libro del Louvre del 2019, ritirato dalla vendita, indica come proprietario il ministero della Cultura saudita."
+      }
+     ]
+    }
+   ],
+   "open": "Se oggi appartenga a una persona o a un ente statale, e a quale, non è pubblico. Per quanto abbiamo potuto trovare, il proprietario non ne ha mai parlato in pubblico."
+  },
+  {
+   "type": "question",
+   "id": "meaning",
+   "nav": "Il significato",
+   "h": "Che cosa significa Salvator Mundi, e che cosa mostra il dipinto?",
+   "answer": "Salvator Mundi in latino significa Salvatore del mondo. Il dipinto mostra Cristo di fronte, che alza la mano destra per benedire e tiene nella sinistra una sfera trasparente.",
+   "known": [
+    "La sfera è stata descritta in due modi. Nel 2011 la National Gallery l’ha definita di cristallo di rocca, mentre il libro ritirato del Louvre, secondo The Art Newspaper, l’ha identificata come vetro con bolle d’aria. Secondo lo stesso articolo, il libro ha anche trovato che la mano che benedice è dipinta sopra lo sfondo nero, e questo fa pensare che non facesse parte del primo progetto. Nel 2025 lo storico dell’arte Philipp Zitzlsperger ha sostenuto che la veste tutta blu, con la scollatura bassa, riprende le immagini di donne e della Vergine Maria. Frank Zöllner ha definito l’idea importante ma un po’ troppo sensazionale. Martin Kemp ha detto che, se nessun altro Cristo portasse una veste blu come questa, sarebbe un punto a favore di Leonardo."
+   ],
+   "open": "Non si sa per chi sia stato dipinto. Nel 2011 la National Gallery ha suggerito che Leonardo l’abbia fatto probabilmente per il re di Francia, Luigi XII, e il libro del Louvre, secondo quanto riportato, giudica debole questa idea.",
+   "end": [
+    [
+     "Quanto è grande, disegnato alla stessa scala delle altre opere dell’ala: ",
+     {
+      "text": "la pagina delle misure",
+      "page": "sizes"
+     },
+     ", in inglese."
+    ]
+   ]
+  },
+  {
+   "type": "question",
+   "id": "where",
+   "nav": "Dove si trova",
+   "h": "Dove si trova oggi il Salvator Mundi?",
+   "answer": "Non è pubblico dove si trovi. L’ultima volta è stato esposto nei giorni prima dell’asta, nel novembre 2017, e ogni luogo indicato da allora viene da un resoconto, spesso di una sola persona.",
+   "known": [
+    "Abu Dhabi aveva in programma di presentarlo nel 2018, e poi ci ha rinunciato. Da allora ci sono stati solo resoconti. In ordine di data:"
+   ],
+   "lists": [
+    {
+     "rows": [
+      {
+       "term": "Da dicembre 2017 a settembre 2018",
+       "text": "Nel dicembre 2017 il Louvre Abu Dhabi ha annunciato che avrebbe esposto il dipinto, e nel giugno 2018 ha fissato la presentazione per il 18 settembre. Il 3 settembre il dipartimento della cultura di Abu Dhabi l’ha annullata, senza dare una ragione."
+      },
+      {
+       "term": "Settembre 2018",
+       "text": "Un restauratore svizzero ne ha controllato lo stato per l’assicurazione in un porto franco in Svizzera, riferisce la restauratrice del dipinto."
+      },
+      {
+       "term": "2019",
+       "text": "Il Louvre aveva chiesto di averlo in prestito per la sua mostra su Leonardo, e il dipinto non è arrivato. Un resoconto di quell’anno sosteneva che fosse stato portato in aereo sullo yacht del principe ereditario. Quando The Art Newspaper ha seguito lo yacht nel 2022, non ha trovato niente a sostegno di quel resoconto."
+      },
+      {
+       "term": "Ottobre 2022",
+       "text": "Secondo quanto riportato, lo studioso di Leonardo Martin Kemp ha detto che il dipinto era in Arabia Saudita, dove si stava costruendo una galleria per accoglierlo. Interpellato da The Art Newspaper, ha detto di non avere prove sicure né di dove fosse né di chi lo possedesse."
+      },
+      {
+       "term": "Agosto 2024",
+       "text": "Un amico del principe ereditario ha detto alla BBC che il dipinto è in un deposito a Ginevra, destinato a un futuro museo a Riad."
+      },
+      {
+       "term": "Maggio 2025",
+       "text": "Kemp l’ha lasciato fuori dalla sua guida a tutti i dipinti di Leonardo perché, ha scritto, non si sa con certezza dove si trovi."
+      },
+      {
+       "term": "Ottobre 2025",
+       "text": "The Art Newspaper ha scritto che, a quanto risulta, il dipinto è destinato a un museo in costruzione a Riad, e che la sua collocazione finale non è ancora nota."
+      },
+      {
+       "term": "Ottobre 2026",
+       "text": "Nessuna fonte pubblica che abbiamo potuto leggere riferisce che sia esposto da qualche parte."
+      }
+     ]
+    }
+   ],
+   "open": "Dove si trovi, in che stato sia, e se e quando sarà di nuovo esposto: niente di tutto questo è pubblico."
+  },
+  {
+   "type": "question",
+   "id": "is-it-his",
+   "nav": "È di Leonardo?",
+   "h": "Il Salvator Mundi è davvero di Leonardo?",
+   "answer": "Gli studiosi non sono d’accordo. Quasi tutti concordano che la composizione risalga a Leonardo e che la tavola sia gravemente danneggiata e pesantemente restaurata, ma non su chi l’abbia dipinta, se lui stesso o la sua bottega, con o senza la sua mano.",
+   "known": [
+    "Nessun documento dell’epoca di Leonardo parla di un Salvator Mundi dipinto da lui. La composizione è legata a lui da due studi a sanguigna per la veste, conservati nella Royal Collection a Windsor, e da più di venti copie e versioni. Dopo la sua morte, un inventario del 1525 dei beni del suo allievo Salaì elenca un Cristo raffigurato come Dio Padre, e inventari reali dell’Inghilterra del XVII secolo elencano un Cristo di Leonardo, ma nessun documento li collega a questa tavola. Un’acquaforte fatta da Wenceslaus Hollar nel 1650 indica Leonardo come pittore del quadro che copia, ma il Cristo di Hollar ha la barba folta, e la tavola restaurata non ce l’ha. La tavola stessa si può seguire solo dal 1900, come mostra la tabella delle vendite. La nostra ala la data dal 1499 al 1510 circa, e le date proposte vanno dal 1499 circa fino al 1523 circa, come mostra l’elenco qui sotto."
+   ],
+   "lists_intro": "Chi sostiene quale tesi, e da quando:",
+   "lists": [
+    {
+     "h": "A favore di Leonardo",
+     "rows": [
+      {
+       "term": "Luke Syson (2011), Francis Ames-Lewis (2012) e gli autori del catalogo d’asta di Christie’s (2017)",
+       "text": "Lo attribuiscono a Leonardo più o meno senza riserve, scrive Frank Zöllner."
+      },
+      {
+       "term": "Martin Kemp, dal 2011 al 2019",
+       "text": "Lo studioso di Leonardo sostiene che sia suo. In un’intervista televisiva del 2019 lo ha definito un Leonardo fuori di ogni dubbio."
+      },
+      {
+       "term": "Dianne Dwyer Modestini, dal 2014 al 2025",
+       "text": "La restauratrice del dipinto lo considera un’opera tarda di Leonardo, sul suo sito e in una conferenza del 2025."
+      },
+      {
+       "term": "Pietro C. Marani, 2012 e 2013",
+       "text": "Da una composizione di Leonardo, e molto probabilmente dipinto da lui. In seguito ha cambiato idea (vedi sotto)."
+      },
+      {
+       "term": "Robert Simon, 2021",
+       "text": "Uno dei due mercanti che lo hanno comprato nel 2005, quindi un tempo suo comproprietario, difende l’attribuzione."
+      }
+     ]
+    },
+    {
+     "h": "A favore della bottega, o di un’altra mano",
+     "rows": [
+      {
+       "term": "Frank Zöllner, dal 2012 al 2022",
+       "text": "Lo storico dell’arte di Lipsia vede un pregevole dipinto di bottega, tratto dalla composizione di Leonardo e con la sua partecipazione, eseguito nel 1507 o più tardi. Secondo lui, i danni e un restauro mai pubblicato per intero escludono un’attribuzione seria. Nel 2022 lo ha definito un Leonardo tanto quanto la Vergine delle Rocce di Londra, un quadro fatto, ha detto, con molto aiuto della bottega."
+      },
+      {
+       "term": "Carmen Bambach, 2012 e 2019",
+       "text": "Studiosa del Metropolitan Museum di New York, attribuisce gran parte della pittura all’allievo di Leonardo Giovanni Antonio Boltraffio, e alcuni passaggi, come la mano che benedice, a Leonardo. Nel 2019 ha scritto di Boltraffio che lavorava sotto la stretta supervisione di Leonardo, dal 1505 al 1510 circa."
+      },
+      {
+       "term": "Maria Teresa Fiorio, 2005 e 2022",
+       "text": "La studiosa milanese nel 2005 vi vedeva solo una composizione di Leonardo, non un suo dipinto, e nel 2022 lo ha attribuito in gran parte a Boltraffio."
+      },
+      {
+       "term": "Pietro C. Marani, 2022",
+       "text": "Secondo The Art Newspaper, ha detto che Leonardo ha partecipato alla sua realizzazione, ma che gli assistenti ne hanno dipinto la maggior parte."
+      },
+      {
+       "term": "Matthew Landrus, 2018 e 2022",
+       "text": "Lo studioso di Oxford indica Bernardino Luini come coautore e ha stimato la parte di Leonardo tra il 5 e il 20 per cento. Nel 2022 ha proposto una data intorno al 1523, quattro anni dopo la morte di Leonardo."
+      },
+      {
+       "term": "Jacques Franck, 2019 e 2022",
+       "text": "Lo studioso parigino lo attribuisce all’allievo di Leonardo Salaì, come registra il catalogo di Zöllner del 2019. Nel 2022 ha sostenuto che le mani, i riccioli e i contorni scuri e spessi visibili all’infrarosso non corrispondano ai dipinti indiscussi di Leonardo."
+      },
+      {
+       "term": "Antonio Forcellino, 2022",
+       "text": "Lo studioso romano vede in tutte e tre le versioni nate quando Leonardo era in vita, compresa questa, dei dipinti di bottega eseguiti sotto la sua supervisione. Cambiamenti fatti durante la pittura compaiono in tutte e tre, dice, quindi non provano niente su quale mano li abbia dipinti."
+      },
+      {
+       "term": "Charles Hope, Charles Robertson e Carlo Pedretti, 2011 e 2012",
+       "text": "Si sono espressi contro Leonardo: Pedretti nel 2011, Hope e Robertson in recensioni della mostra di Londra."
+      }
+     ]
+    },
+    {
+     "h": "I musei",
+     "rows": [
+      {
+       "term": "National Gallery, Londra, 2011",
+       "text": "Ha esposto il dipinto come opera di Leonardo, datato dal 1499 circa in poi, nella sua mostra curata da Luke Syson. Era la prima volta che il dipinto era presentato come suo. Accanto c’erano due studi a sanguigna per la veste, uno con la didascalia «Leonardo» e l’altro «Leonardo e bottega», perché il tratteggio bianco su una manica era tracciato con la mano destra, e Leonardo era mancino. Nel 2008 la galleria aveva mostrato la tavola a cinque studiosi di Leonardo, e tre di loro, Bambach, Marani e Fiorio, hanno detto in seguito che allora non l’avevano giudicata interamente sua, ha riferito The Art Newspaper."
+      },
+      {
+       "term": "Il Louvre, dal 2018 al 2021",
+       "text": "Il suo laboratorio ha esaminato il dipinto nel 2018. Un libro sul dipinto, del curatore Vincent Delieuvin e di due scienziati del laboratorio, lo considera interamente di mano di Leonardo, anche se molto danneggiato, e lo data dopo il San Giovanni Battista di Leonardo, al suo secondo soggiorno milanese. Il libro è stato in vendita per poco tempo nel negozio del Louvre nel dicembre 2019, poi è stato ritirato, e The Art Newspaper ha riferito nel 2021 che cosa dice. Nel 2020 il Louvre ha detto ai giornalisti che una pubblicazione del genere non esiste. Nel 2021 Delieuvin ha scritto di alcuni dettagli sorprendentemente deboli del dipinto."
+      },
+      {
+       "term": "Il Prado, Madrid, 2021",
+       "text": "Il catalogo della sua mostra elenca il dipinto tra le opere attribuite a Leonardo, fatte nella sua bottega o sotto la sua supervisione, e non tra le sue. The Art Newspaper lo ha definito un declassamento. Robert Simon ha risposto che un posto in un indice non è un verdetto."
+      },
+      {
+       "term": "Oggi",
+       "text": "Nessun museo lo espone, e nessuno prende pubblicamente posizione."
+      }
+     ]
+    }
+   ],
+   "open": "Se in questa tavola ci sia la mano di Leonardo, e quanta. Due documenti che aiuterebbero non sono pubblici: i risultati del laboratorio del Louvre, noti solo dal libro ritirato, e un resoconto completo del restauro, che secondo Zöllner non è mai stato pubblicato per intero.",
+   "end": [
+    [
+     "Le altre opere dell’ala, una per una, e quanto sono sicuri gli studiosi di ciascuna: ",
+     {
+      "text": "Le opere di Leonardo da Vinci",
+      "page": "paintings"
+     },
+     "."
+    ]
+   ]
+  },
+  {
+   "type": "question",
+   "id": "restoration",
+   "nav": "Il restauro",
+   "h": "Com’era il Salvator Mundi prima del restauro?",
+   "answer": "Molto danneggiato: quando la sua restauratrice lo ha ricevuto, nel 2005, la tavola di noce era spaccata, il volto consumato e in alcuni punti danneggiato, e gran parte dello sfondo raschiata e ridipinta. Una fotografia più vecchia della collezione Cook mostra un volto diverso.",
+   "pic": {
+    "pic": "salvator-mundi-cook",
+    "shape": "whole",
+    "title": "Una fotografia della collezione Cook, data non nota. Mostra la tavola prima del restauro moderno, con un volto diverso. Una riproduzione.",
+    "alt": "Una vecchia fotografia in bianco e nero dello stesso quadro: Cristo con lunghi riccioli alza la mano destra e tiene una sfera trasparente, ma il volto è diverso, con baffi sottili e una piccola barba sul mento, su un fondo grigio a chiazze.",
+    "src": [
+     "Opera di pubblico dominio. Riproduzione da ",
+     {
+      "text": "Wikimedia Commons",
+      "href": "https://commons.wikimedia.org/wiki/File:Leonardo_da_Vinci,_Salvator_Mundi_before_restoration_(black_and_white),_Cook_Collection.jpg"
+     },
+     ". Le indicazioni del museo riguardano la riproduzione, non il dipinto. Uso culturale senza scopo di lucro."
+    ]
+   },
+   "known": [
+    "La restauratrice è Dianne Dwyer Modestini, della New York University, che ci ha lavorato a più riprese dal 2005 al luglio 2017, poco prima della vendita. Sostiene che il dipinto sia di Leonardo, quindi il suo resoconto dettagliato, sul suo sito, viene da una delle parti del dibattito. Descrive una sola asse di noce attraversata da una spaccatura, gallerie di tarli che avevano fatto perdere pezzi della fronte, della punta del naso e dell’occhio sinistro, e mento, collo e petto consumati da pulizie troppo aggressive. Ha riempito le lacune con velature sottili, ha toccato gli occhi il meno possibile, ha aggiunto qualche onda di capelli dove mancavano e ha ridipinto le parti perdute dello sfondo nero. Una posizione precedente del pollice della mano che benedice traspariva, e lei l’ha coperta dopo che il curatore della National Gallery, Luke Syson, aveva deciso così. Dice che una fotografia all’ultravioletto mostra esattamente dove ha ritoccato, e che nessuno dei suoi ritocchi si trova sulla pittura originale."
+   ],
+   "open": "Quale parte della pittura sia originale: nessuno ha pubblicato una cifra. Frank Zöllner dice che le fotografie dal 2005 al 2017 mostrano che il modellato morbido e sfumato del dipinto viene in parte da quest’ultimo restauro, e che i risultati del restauro non sono mai stati pubblicati per intero."
+  },
+  {
+   "type": "sources",
+   "id": "sources",
+   "nav": "Fonti",
+   "h": "Fonti",
+   "intro": "I fatti vengono dalla guida della mostra della National Gallery del 2011, dalla scheda di catalogo di Frank Zöllner del 2019, dal sito della restauratrice, da The Art Newspaper (dal 2017 al 2025), da Monopol (dal 2017 al 2025), dall’intervista a Martin Kemp su PBS (2019), dalla New York University Abu Dhabi (2025), da Art History News (2011) e dalle pagine dei file di Wikimedia Commons.",
+   "notes": [
+    "La pagina si basa su queste fonti, tutte consultate il 17 ottobre 2026:"
+   ],
+   "read": [
+    {
+     "text": "National Gallery, Londra, guida della mostra Leonardo da Vinci: Painter at the Court of Milan, 2011 (PDF)",
+     "href": "https://www.nationalgallery.org.uk/media/15705/exhibition-guide_leonardo-da-vinci.pdf"
+    },
+    {
+     "text": "National Gallery, Londra, comunicato stampa sulla mostra",
+     "href": "https://www.nationalgallery.org.uk/about-us/press-and-media/press-releases-archive/leonardo-da-vinci-painter-at-the-court-of-milan"
+    },
+    {
+     "text": "Art History News, la dichiarazione della National Gallery del luglio 2011",
+     "href": "https://www.arthistorynews.com/articles/442_Salvator_Mundi_-_National_Gallery_statement"
+    },
+    {
+     "text": "Frank Zöllner, scheda di catalogo XXXII, Salvator Mundi, 2019 (PDF, Università di Lipsia)",
+     "href": "https://www.gko.uni-leipzig.de/fileadmin/Fakult%C3%A4t_GKR/Kunstgeschichte/PDF/Publikationen/Frank_Z%C3%B6llner-B%C3%BCcher/SalvatorCatXXXII2019.pdf"
+    },
+    {
+     "text": "Dianne Dwyer Modestini, Salvator Mundi Revisited, stato di conservazione e restauro",
+     "href": "https://salvatormundirevisited.com/Condition-and-Restoration"
+    },
+    {
+     "text": "Dianne Dwyer Modestini, Salvator Mundi Revisited, storia",
+     "href": "https://salvatormundirevisited.com/History-of-the-Salvator-Mundi"
+    },
+    {
+     "text": "New York University Abu Dhabi, la conferenza della restauratrice, ottobre 2025",
+     "href": "https://nyuad.nyu.edu/en/events/2025/october/leonardo-da-vinci-s-salvator-mundi-lost-and-found-.html"
+    },
+    {
+     "text": "PBS, Amanpour and Company, Martin Kemp, 30 settembre 2019",
+     "href": "https://www.pbs.org/wnet/amanpour-and-company/video/martin-kemp-analyzes-leonardo-da-vincis-paintings/"
+    },
+    {
+     "text": "The Art Newspaper, 8 dicembre 2017, la dichiarazione di Abu Dhabi",
+     "href": "https://www.theartnewspaper.com/2017/12/08/we-acquired-leonardos-salvator-mundi-abu-dhabi-says"
+    },
+    {
+     "text": "The Art Newspaper, 27 giugno 2018, la presentazione prevista",
+     "href": "https://www.theartnewspaper.com/2018/06/27/leonardo-da-vincis-dollar450m-salvator-mundi-to-go-on-show-at-louvre-abu-dhabi-on-18-september"
+    },
+    {
+     "text": "The Art Newspaper, 26 gennaio 2021, nuove scoperte",
+     "href": "https://www.theartnewspaper.com/2021/01/26/disarming-new-findings-on-leonardos-salvator-mundi"
+    },
+    {
+     "text": "The Art Newspaper, 13 aprile 2021, il libro del Louvre",
+     "href": "https://www.theartnewspaper.com/2021/04/13/what-the-louvres-scientific-examinations-of-the-salvator-mundi-really-revealedaccording-to-the-museums-own-book"
+    },
+    {
+     "text": "The Art Newspaper, 11 novembre 2021, il catalogo del Prado",
+     "href": "https://www.theartnewspaper.com/2021/11/11/prado-museum-downgrades-leonardos-dollar450m-salvator-mundi-in-exhibition-catalogue"
+    },
+    {
+     "text": "The Art Newspaper, 21 dicembre 2021, la lettera di Robert Simon",
+     "href": "https://www.theartnewspaper.com/2021/12/21/letters-or-salvator-mundi-a-circumspect-description-does-not-a-negative-verdict-make"
+    },
+    {
+     "text": "The Art Newspaper, 14 ottobre 2022, Kemp sull’Arabia Saudita",
+     "href": "https://www.theartnewspaper.com/2022/10/14/saudi-arabia-reportedly-building-gallery-to-house-leonardo-da-vincis-salvator-mundi"
+    },
+    {
+     "text": "The Art Newspaper, 16 novembre 2022, il libro ritirato del Louvre",
+     "href": "https://www.theartnewspaper.com/2022/11/16/revealed-the-first-photograph-of-the-louvres-leonardo-book-that-was-spiked-over-salvator-mundi-fiasco"
+    },
+    {
+     "text": "The Art Newspaper, 18 novembre 2022, una cronologia del dipinto",
+     "href": "https://www.theartnewspaper.com/2022/11/18/a-timeline-of-the-450m-salvator-mundi-centuries-of-deals-disputes-and-drama"
+    },
+    {
+     "text": "The Art Newspaper, 18 novembre 2022, il convegno di Lipsia",
+     "href": "https://www.theartnewspaper.com/2022/11/18/first-international-conference-on-salvator-mundi-what-was-the-role-of-leonardos-workshopand-why-is-christ-wearing-womens-clothes"
+    },
+    {
+     "text": "The Art Newspaper, 18 novembre 2022, la ricerca del dipinto",
+     "href": "https://www.theartnewspaper.com/2022/11/18/they-seek-him-here-they-seek-him-there-us-journos-seek-him-everywhere-where-the-heck-is-the-salvator-mundi"
+    },
+    {
+     "text": "The Art Newspaper, 7 marzo 2023, la causa contro Sotheby’s",
+     "href": "https://www.theartnewspaper.com/2023/03/07/leonardos-salvator-mundi-heads-to-court-in-case-against-sothebys"
+    },
+    {
+     "text": "The Art Newspaper, 8 dicembre 2023, l’accordo con Bouvier",
+     "href": "https://www.theartnewspaper.com/2023/12/08/dmitry-rybolovlev-and-yves-bouvier-settle-nine-year-feud"
+    },
+    {
+     "text": "The Art Newspaper, 30 gennaio 2024, il verdetto",
+     "href": "https://www.theartnewspaper.com/2024/01/30/rybolovlev-sothebys-fraud-lawsuit-verdict"
+    },
+    {
+     "text": "The Art Newspaper, 19 agosto 2024, la notizia da Ginevra",
+     "href": "https://www.theartnewspaper.com/2024/08/19/where-is-salvator-mundi-in-storage-in-geneva-apparently"
+    },
+    {
+     "text": "The Art Newspaper, 23 maggio 2025, la guida di Martin Kemp ai dipinti di Leonardo",
+     "href": "https://www.theartnewspaper.com/2025/05/23/how-to-see-every-painting-leonardo-da-vinci"
+    },
+    {
+     "text": "The Art Newspaper, 11 settembre 2025, la veste blu",
+     "href": "https://www.theartnewspaper.com/2025/09/11/is-leonardo-da-vincis-salvator-mundi-wearing-womens-clothing"
+    },
+    {
+     "text": "The Art Newspaper, 3 ottobre 2025, il museo a Riad",
+     "href": "https://www.theartnewspaper.com/2025/10/03/colnaghi-worlds-oldest-gallery-to-open-saudi-arabian-outpostis-there-enough-demand"
+    },
+    {
+     "text": "Monopol, 16 novembre 2017, la vendita (in tedesco)",
+     "href": "https://www.monopol-magazin.de/da-vinci-gemaelde-fuer-450-millionen-dollar-versteigert"
+    },
+    {
+     "text": "Monopol, 14 agosto 2018, la tesi della bottega (in tedesco)",
+     "href": "https://www.monopol-magazin.de/kunsthistoriker-salvator-mundi-von-leonardo-assistent-gemalt"
+    },
+    {
+     "text": "Monopol, 11 giugno 2019, lo yacht e l’ambasciata (in tedesco)",
+     "href": "https://www.monopol-magazin.de/bericht-teuerstes-gemaelde-der-welt-auf-saudischer-prinzen-jacht"
+    },
+    {
+     "text": "Monopol, 19 novembre 2025, i dipinti più cari (in tedesco)",
+     "href": "https://www.monopol-magazin.de/das-sind-die-teuersten-gemaelde-aller-zeiten"
+    },
+    {
+     "text": "Wikimedia Commons, la fotografia della collezione Cook",
+     "href": "https://commons.wikimedia.org/wiki/File:Leonardo_da_Vinci,_Salvator_Mundi_before_restoration_(black_and_white),_Cook_Collection.jpg"
+    }
+   ],
+   "contact": "Se una data, un nome o una frase è sbagliata, scrivici e la correggiamo.",
+   "contact_link": "Vai alle note legali (in inglese)",
+   "what_link": "Che cos’è questo museo"
+  },
+  {
+   "type": "close",
+   "id": "enter",
+   "nav": "",
+   "h": "Vedi il Salvator Mundi nell’ala",
+   "p": "Da qui entri direttamente nella sala dei quadri della nostra ala di Leonardo. Lì una riproduzione del Salvator Mundi è appesa tra le altre opere, con la sua didascalia: «controverso».",
+   "door": {
+    "text": "Entra nel museo",
+    "note": "Ingresso libero, senza account."
+   }
+  }
+ ]
+}

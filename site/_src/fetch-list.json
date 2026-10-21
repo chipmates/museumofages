@@ -4263,6 +4263,12 @@
    "sha256": "c087232be1051479daee7cdb8e5353f2447c1ad0338c03006bb3ff43fa09238d"
   },
   {
+   "path": "pages/pics/img/vinci-salvator-mundi-og-it-1200x630.png",
+   "url": "/static/img/vinci-salvator-mundi-og-it-1200x630.png",
+   "bytes": 236127,
+   "sha256": "428a9ed9577aff4b83047a4519f2961db07342a128b68571d635b1a0862710bf"
+  },
+  {
    "path": "pages/pics/img/vinci-sizes-chart-de-1600.png",
    "url": "/static/img/vinci-sizes-chart-de-1600.png",
    "bytes": 58186,
