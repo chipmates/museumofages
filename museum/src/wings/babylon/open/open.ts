@@ -464,7 +464,11 @@ function aimFlight(t: number, framing: 'desktop' | 'phone', w: number, h: number
 }
 const camFacts = (p: FlightSample, framing: string) => {
   const [E, N] = [p.pos[0] + MF.E0, MF.N0 - p.pos[2]]
-  return { utm: [+E.toFixed(2), +N.toFixed(2)], level: +p.pos[1].toFixed(2), look: (framing === 'phone' ? p.phoneLook : p.look).map((v) => +v.toFixed(2)), hfov: +camera.fov.toFixed(2), metres: +p.s.toFixed(1), speed: +p.speed.toFixed(2) }
+  const look = framing === 'phone' ? p.phoneLook : p.look
+  return {
+    utm: [+E.toFixed(2), +N.toFixed(2)], level: +p.pos[1].toFixed(2), lookUtm: [+(look[0] + MF.E0).toFixed(2), +(MF.N0 - look[2]).toFixed(2), +look[1].toFixed(2)],
+    hfov: +(framing === 'phone' ? p.phoneHfov : p.hfov).toFixed(2), vfov: +camera.fov.toFixed(2), metres: +p.s.toFixed(1), speed: +p.speed.toFixed(2),
+  }
 }
 
 const rig = {
