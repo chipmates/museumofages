@@ -3383,7 +3383,7 @@
       "prompt": "Compose bilingual museum labels and the four-colour certainty key. Keep labels to a certainty word and title, and reading paragraphs to ordinary bilingual museum language. A close look carries the same label with the certainty word alone on its first line, because the window names the work above it. Preserve each selected source honesty line and licence verbatim in the deliberately opened record, together with immutable collection data and superseded wording. Generated typesetting carries no documentary artwork claim.",
       "model": "Deterministic TypeScript DOM composition",
       "note": "Museum typesetting, not documentary imagery. recipe_file=src/wings/vinci/pictures/policy-label.ts production_files=src/wings/vinci/pictures/policy.ts",
-      "sha256": "d45a4d81d771db03cd655bef49487818a892b5448081555c73f6d73ed67b826b"
+      "sha256": "13ecc7b1452d62f4c32deca27d38df5a03eed5c05aed859941544b7eaa5e5cd1"
     },
     {
       "wing": "vinci",
@@ -3544,7 +3544,7 @@
         },
         {
           "path": "src/wings/vinci/pictures/policy-label.ts",
-          "sha256": "d45a4d81d771db03cd655bef49487818a892b5448081555c73f6d73ed67b826b"
+          "sha256": "13ecc7b1452d62f4c32deca27d38df5a03eed5c05aed859941544b7eaa5e5cd1"
         },
         {
           "path": "src/wings/vinci/index.ts",
