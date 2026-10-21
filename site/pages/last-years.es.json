@@ -1,0 +1,383 @@
+{
+ "_note": "LAS PALABRAS de la página sobre sus últimos años, su muerte y su tumba, en español. Reescritas a partir del inglés y del alemán, con las mismas fechas, cifras, nombres, grados de certeza y fuentes. Las líneas que nombra src_from las toma la construcción del sitio. Sin raya, sin punto y coma. Estado ai: ninguna persona las ha revisado todavía.",
+ "page": {
+  "id": "vinci-last-years",
+  "wing": "vinci",
+  "topic": "last-years",
+  "stop": "courtyard",
+  "published": "2026-10-22",
+  "checked": "2026-10-13",
+  "og_image": {
+   "file": "vinci-last-years-og-1200x630.jpg",
+   "width": 1200,
+   "height": 630
+  }
+ },
+ "pics": {
+  "court": {
+   "stem": "v-court",
+   "widths": [
+    960,
+    1600
+   ],
+   "sizes": "(min-width: 1280px) 588px, (min-width: 960px) 46vw, calc(100vw - 40px)"
+  },
+  "house": {
+   "stem": "v-house",
+   "widths": [
+    480,
+    800,
+    1600
+   ],
+   "sizes": "(min-width: 960px) 640px, calc(100vw - 40px)"
+  },
+  "hall": {
+   "stem": "v-hall",
+   "widths": [
+    960,
+    1600
+   ],
+   "sizes": "(min-width: 960px) 640px, calc(100vw - 40px)"
+  },
+  "ingres": {
+   "stem": "vinci-plate-deathbed-painting",
+   "widths": [
+    640,
+    960
+   ],
+   "sizes": "(min-width: 960px) 560px, calc(100vw - 40px)"
+  },
+  "grave": {
+   "stem": "grave-court",
+   "widths": [
+    560,
+    960,
+    1600
+   ],
+   "sizes": "(min-width: 960px) 640px, calc(100vw - 40px)"
+  }
+ },
+ "meta": {
+  "title": "Da Vinci: su muerte en Amboise y su tumba | Museum of Ages",
+  "description": "Leonardo da Vinci murió en Amboise el 2 de mayo de 1519. La iglesia de su tumba ya no existe. Qué guarda la capilla de San Huberto, y con qué certeza.",
+  "og_title": "Da Vinci: su muerte en Amboise y su tumba",
+  "og_image_alt": "Muros de ladrillo con esquinas de piedra cierran un patio estrecho, con el sol bajo, y una escalera corta sube a la puerta de la casa, junto a una pequeña torre. Una imagen de la película del ala, con la casa reconstruida en código."
+ },
+ "labels": {
+  "crumbs": "Estás aquí",
+  "crumb_home": "Museo",
+  "crumb_here": "Muerte y tumba",
+  "toc": "En esta página",
+  "tag_still": "Reconstrucción",
+  "tag_built": "Construido en código",
+  "tag_repro": "Reproducción"
+ },
+ "top": {
+  "h1": "¿Dónde está enterrado Leonardo da Vinci?",
+  "answer": "Leonardo da Vinci murió el 2 de mayo de 1519 en la casa señorial de Cloux, en Amboise, a orillas del Loira, en Francia, a los 67 años. Hoy la casa se llama Clos Lucé, un nombre que lleva desde finales del siglo XVII, según la propia casa. Leonardo había pedido una tumba en Saint-Florentin, la iglesia que había dentro del castillo real, y la tuvo. A comienzos del siglo XIX derribaron esa iglesia y destruyeron las tumbas que había en ella. Unos huesos desenterrados en ese lugar en 1863 están hoy bajo una losa en la capilla de San Huberto del castillo, y nadie ha probado todavía que sean suyos.",
+  "frame": {
+   "pic": "court",
+   "focus": "50% 58%",
+   "title": "El patio de Clos Lucé",
+   "tag": "tag_still",
+   "what": "una imagen de la película del ala. El patio estrecho entre los muros de ladrillo y los escalones que suben a la puerta. La casa está reconstruida en código a partir de planos y fotografías.",
+   "alt": "Muros de ladrillo con esquinas de piedra cierran un patio estrecho, con el sol bajo, y una escalera corta sube a la puerta de la casa, junto a una pequeña torre. Una imagen de la película del ala, con la casa reconstruida en código.",
+   "src_from": "site:map"
+  },
+  "door": {
+   "text": "Ver la casa en el ala",
+   "note": "Entrada libre, sin cuenta.",
+   "leads": "La puerta lleva al ala de Leonardo, a su última casa, en el patio de Clos Lucé. El patio de la tumba es la última parada del recorrido."
+  }
+ },
+ "blocks": [
+  {
+   "type": "text",
+   "id": "why-france",
+   "nav": "Por qué Francia",
+   "h": "Por qué se fue a Francia",
+   "paras": [
+    "Lo invitó Francisco I, el rey de Francia. El protector de Leonardo en Roma, Juliano de Médici, murió en 1516. Clos Lucé, el castillo de Amboise y el Louvre ven en esa muerte la razón por la que aceptó. Dejó Roma en 1516 y llegó a Amboise, muy probablemente en otoño. La primera nota escrita por él y fechada en Cloux es de mayo de 1517.",
+    "Tenía 64 años cuando llegó a Amboise. Llevó consigo sus cuadernos, sus hojas de anatomía y, según Clos Lucé, tres pinturas que hoy cuelgan en el Louvre. Con él llegaron Francesco Melzi, un joven noble de Milán que era su alumno, y Battista de Vilanis, su criado. Salaì, su compañero durante muchos años, también estuvo un tiempo en Francia, pero en 1518, señala el Louvre, ya había vuelto a Milán.",
+    "El rey le dio para vivir la casa señorial de Cloux, a un corto paseo del castillo real, y una pensión: mil écus al año según Clos Lucé y el diccionario biográfico italiano Treccani, y 700 según el sitio web del propio castillo. El testamento lo llama pintor del rey."
+   ]
+  },
+  {
+   "type": "text",
+   "id": "house",
+   "nav": "La casa",
+   "h": "Cloux, hoy Clos Lucé",
+   "paras": [
+    "La casa no se construyó para él. Étienne le Loup, un servidor de Luis XI convertido en noble, la construyó en la segunda mitad del siglo XV, de ladrillo y de una piedra clara, el tuffeau. Carlos VIII la compró, en 1490 según la casa, y mandó construir una pequeña capilla. Luisa de Saboya crio allí a sus hijos, entre ellos al futuro Francisco I, dice también la casa. Entonces se llamaba Cloux, y el nombre de Clos Lucé llegó después.",
+    "Sigue en pie. Es monumento histórico protegido desde 1862, y la familia que es su propietaria desde 1854 la restauró a partir de 1954. Los muros y el palomar son antiguos. Las salas son una puesta en escena: los muebles, y la habitación que se muestra como dormitorio de Leonardo, son elecciones de la casa, porque ningún documento dice cuál era su cuarto. La casa atribuye a alumnos de Leonardo la Anunciación pintada en la capilla. Eso no está probado."
+   ],
+   "pic": {
+    "pic": "house",
+    "title": "La casa vista desde fuera",
+    "tag": "tag_still",
+    "what": "una imagen de la película del ala. La casa al otro lado de su terraza, con el sol bajo. Una reconstrucción hecha en código a partir de planos y fotografías de la casa verdadera.",
+    "alt": "Al otro lado de una terraza empedrada, con el sol bajo: una casa alta de ladrillo con esquinas de piedra y un tejado en punta muy inclinado, y a los lados árboles con colores de otoño. Una imagen de la película del ala, con la casa reconstruida en código.",
+    "src_from": "site:map"
+   }
+  },
+  {
+   "type": "text",
+   "id": "october-1517",
+   "nav": "Octubre de 1517",
+   "h": "Un día de octubre de 1517",
+   "paras": [
+    "El 10 de octubre de 1517 fue a verlo un cardenal, Luis de Aragón. Viajaba por Francia con su secretario, Antonio de Beatis, y después de comer al mediodía en Tours siguieron hasta Amboise. De Beatis llevaba un diario, y lo que anotó ese día es la razón por la que el ala muestra justo ese día y no otro.",
+    "Esto es lo que escribió, en resumen. Leonardo era viejo: De Beatis le calculó más de setenta años, aunque tenía 65. Leonardo le mostró al cardenal tres cuadros: el retrato de una dama florentina pintado para Juliano de Médici, un san Juan Bautista joven y la Virgen con el Niño en el regazo de santa Ana. Hoy se cree que son tres cuadros del Louvre, la Gioconda, Juan el Bautista y la Santa Ana, aunque el diario no nombra ninguna Gioconda. Tenía paralizada parte de la mano derecha, así que ya no se podía esperar de él buena pintura, pero todavía dibujaba y enseñaba. Dijo que había diseccionado más de treinta cuerpos, y mostró volúmenes de sus escritos sobre anatomía, agua y máquinas, todos en italiano."
+   ],
+   "pic": {
+    "pic": "hall",
+    "title": "La sala grande",
+    "tag": "tag_still",
+    "what": "una imagen de la película del ala. La sala con el sol de la tarde, la mesa larga y el león mecánico junto a la ventana. La sala está reconstruida en código a partir de planos y fotografías. Los muebles son de la época, no suyos.",
+    "alt": "El sol de la tarde entra por ventanas de vidrios en rombo en una sala con techo de vigas y baldosas rojas, cruza una mesa larga sobre caballetes, y a la izquierda, junto a la ventana, hay un león de madera y metal. Una imagen de la película del ala, con la sala reconstruida en código."
+   }
+  },
+  {
+   "type": "text",
+   "id": "last-work",
+   "nav": "Su último trabajo",
+   "h": "En qué trabajó en Francia",
+   "paras": [
+    "No dejó de trabajar. Sus notas lo sitúan en Romorantin, al sur de Orleans, donde diseñó un palacio para el rey, con canales para unirlo al Loira. Nunca llegó a construirse, y en cambio Francisco I levantó Chambord. Leonardo organizó fiestas para la corte: el castillo le atribuye un papel central en la organización de las celebraciones de Amboise en la primavera de 1518, aunque reconoce que sus archivos sobre ellas son imprecisos.",
+    "Siguió dibujando. Los dibujos del diluvio que se conservan en Windsor se fechan entre 1517 y 1518, aproximadamente, y uno de ellos lo puedes abrir en el ala, bajo la ventana del estudio. Y seguía trabajando en la Santa Ana: la restauración de 2010 a 2012 sacó a la luz sus últimas pinceladas en el vestido de la santa, según el Louvre."
+   ]
+  },
+  {
+   "type": "text",
+   "id": "will-and-death",
+   "nav": "Cómo murió",
+   "h": "¿Cómo murió Leonardo da Vinci? Su testamento y sus últimos días",
+   "paras": [
+    "Ningún documento conocido dice de qué murió Leonardo da Vinci. Algunas fuentes dicen que posiblemente murió de un derrame cerebral, pero es una suposición posterior: ninguna carta ni ningún documento conocido de 1519 nombra una causa. Vasari, que escribió décadas después, dice que llevaba muchos meses enfermo.",
+    "El 23 de abril de 1519 hizo testamento en Cloux, ante un notario real de Amboise. El original se perdió, y el texto se conserva en copias. Lleva la fecha de 1518, antes de Pascua: entonces el año cambiaba en Pascua, así que, con nuestro calendario, es 1519. Pidió que lo enterraran en Saint-Florentin, la iglesia del castillo de Amboise, que lo llevaran allí los capellanes de esa iglesia y que sesenta pobres portaran sesenta velas. Francesco Melzi, su único albacea, recibió todos sus libros y los instrumentos e imágenes de su oficio. El testamento no nombra ninguna pintura: los tres cuadros que vio el cardenal no aparecen en él, y el Louvre interpreta que el rey muy probablemente ya los había comprado en 1518, mediante un pago a Salaì.",
+    "Murió nueve días después, el 2 de mayo de 1519, en Cloux, a los 67 años. Lo registra la carta de Melzi del 1 de junio a los hermanos de Leonardo en Florencia: había muerto el 2 de mayo con todos los sacramentos de la Iglesia. La carta no nombra ninguna causa. La mano paralizada de 1517 se atribuye a menudo a un derrame cerebral, y un artículo médico de 2019 defendió en cambio que fue una lesión de los nervios. Las dos son interpretaciones, no documentos."
+   ]
+  },
+  {
+   "type": "text",
+   "id": "famous-scene",
+   "nav": "La escena famosa",
+   "h": "El rey junto a su lecho de muerte",
+   "paras": [
+    "La historia que se cuenta es esta. El rey, que lo visitaba a menudo, entró en la habitación. Leonardo se incorporó en la cama para hablarle de su enfermedad, sufrió un último ataque y murió en brazos del rey. Vasari la contó por primera vez en 1550, en la primera edición de sus Vidas, 31 años después de la muerte, y otra vez en 1568, y escribió que Leonardo tenía 75 años. Tenía 67.",
+    "La mayoría de los historiadores dudan de la escena, por dos razones. Hay documentos del rey del 1 y del 3 de mayo de 1519 fechados en Saint-Germain-en-Laye, cerca de París, donde la corte celebraba el nacimiento del segundo hijo del rey. Y la carta de Melzi, escrita en Amboise un mes después de la muerte, no dice nada del rey. Eso no es una prueba, porque un documento podía expedirse allí donde estaba la cancillería sin la intervención del propio rey, así que la escena no se puede descartar. Solo que ningún documento conocido sitúa al rey en la habitación.",
+    "Fueron los pintores quienes hicieron famosa la escena. François-Guillaume Ménageot expuso un gran lienzo de ella en el Salón de París de 1781, y ese cuadro, según la Biblioteca Nacional de Francia, es lo que fijó la historia en la memoria del público. Hoy cuelga en el dormitorio del rey del Castillo Real de Amboise. Ingres volvió a pintar la escena en 1818. Su pequeño lienzo está en el Petit Palais de París, y la ficha del propio museo dice que el episodio muy probablemente es inventado. En su patio de la tumba, el ala tiene una reproducción de este cuadro, ampliada y con una etiqueta que dice lo que es: una escena imaginada tres siglos después."
+   ],
+   "pic": {
+    "pic": "ingres",
+    "title": "El rey junto a la cama, como lo imaginó Ingres",
+    "tag": "tag_repro",
+    "what": "el cuadro de 1818 de Jean-Auguste-Dominique Ingres, tal como está en el ala, ampliado, en el patio de la tumba. La escena es la historia de Vasari, pintada tres siglos después de la muerte.",
+    "alt": "Un anciano moribundo de larga barba blanca yace en una cama, sostenido por un rey joven con ropa lujosa, y alrededor hay cortesanos en una habitación oscura. Una reproducción del cuadro de 1818 de Ingres.",
+    "src_from": "wing:end.plate.src",
+    "shape": "whole"
+   }
+  },
+  {
+   "type": "text",
+   "id": "grave",
+   "nav": "La tumba",
+   "h": "La tumba",
+   "paras": [
+    "Lo enterraron en Saint-Florentin, como pedía su testamento. Nadie sabe con seguridad qué día: la fecha que se da a menudo, el 12 de agosto de 1519, se basa en una anotación de un registro que solo se conoce por una copia aparecida después de 1863, y el propio Arsène Houssaye, que la publicó, advirtió que había que tomarla con la mayor reserva.",
+    "A comienzos del siglo XIX derribaron la iglesia. El castillo estaba entonces en manos de un senador de Napoleón. Las lápidas se vendieron, los ataúdes de plomo se fundieron y los huesos quedaron tirados por el suelo, escribió más tarde Houssaye.",
+    "En 1863 Houssaye excavó en ese lugar, con el apoyo del emperador. El 20 de agosto sus obreros abrieron una tumba antigua en el coro, junto al muro: un esqueleto con la cabeza apoyada en una mano y una moneda de plata del joven Francisco I. Entre los escombros de alrededor, removidos más de una vez, había trozos de piedra con letras: INC, LEO, y tres que juntos dicen EO DUS VINC. Para los médicos, el cráneo era el de un hombre de unos setenta años. Houssaye lo comparó con un retrato y creyó haber encontrado a Leonardo, aunque escribió que entonces nadie se atrevía a decirlo.",
+    "Según el castillo, los huesos que eligió Houssaye se enterraron de nuevo en 1874 en su capilla de San Huberto, y desde 1869 un busto en los jardines marca la primera tumba. La losa del suelo de la capilla lleva el nombre de Leonardo. Se rehízo en 1930, dice el castillo, y en la década de 2000 se le añadió un medallón de bronce con el perfil de Leonardo, obra del escultor Jean Cardot.",
+    "¿Hasta qué punto se puede estar seguro? No mucho. Todo se basa en la interpretación de un solo hombre en 1863. La ficha de patrimonio del Estado francés sobre el castillo dice que la capilla contendría sus restos, en condicional (contiendrait). La oficina de turismo de Amboise habla de presuntos restos. El ADN tampoco lo ha aclarado: un proyecto de investigación busca desde 2016 una muestra con la que comparar los huesos, y todavía no tiene ninguna segura. Así que la respuesta a dónde está enterrado es esta: los huesos que se tienen por suyos están en la capilla de San Huberto, en Amboise, y nadie puede probar que lo sean."
+   ]
+  },
+  {
+   "type": "text",
+   "id": "in-the-wing",
+   "nav": "En el ala",
+   "h": "La casa en nuestra ala",
+   "paras": [
+    [
+     "El ala muestra la última casa de Leonardo el día de la visita del cardenal, el 10 de octubre de 1517, a una hora que elegimos nosotros. Qué está documentado de la casa y qué es reconstrucción nuestra se explica sala por sala en ",
+     {
+      "text": "la página de Leonardo",
+      "wing": "last-house"
+     },
+     "."
+    ],
+    "El patio de la tumba, al final del recorrido, es un lugar propio del museo, no una copia de la capilla de Amboise: no está probado dónde descansa Leonardo, así que el museo no construye ninguna tumba, solo un patio con una losa que lleva su nombre, un modelo del sol bajo del 2 de mayo de 1519, en el minuto que elegimos nosotros, y una piedra con el año de la excavación. Después oscurece, y las estrellas están como estaban sobre Cloux aquella noche de octubre de 1517."
+   ],
+   "pic": {
+    "pic": "grave",
+    "title": "El patio de la tumba",
+    "tag": "tag_built",
+    "what": "una imagen de la película del ala. El patio propio del museo, no la capilla de Amboise: una losa con el nombre de Leonardo, el modelo del sol bajo del 2 de mayo de 1519 y la piedra con el año de la excavación. A la izquierda, una reproducción del cuadro de Ingres.",
+    "alt": "Sol bajo en un patio cerrado por muros, con un solo árbol joven. En el suelo hay una losa de piedra clara con el nombre Leonardo da Vinci grabado, y detrás un pequeño modelo sobre dos postes que proyecta una sombra larga, con un mojón al lado. En el muro de la izquierda cuelga un cuadro enmarcado. Una imagen de la película del ala, con el patio construido en código.",
+    "src_from": "wing:end.plate.src"
+   },
+   "links": [
+    {
+     "text": "Entrar en la casa",
+     "stop": "hall"
+    },
+    {
+     "text": "El ala entera, sala por sala: Leonardo da Vinci",
+     "wing": "wing"
+    },
+    {
+     "text": "La última cena y lo que le hicieron cinco siglos",
+     "page": "supper"
+    },
+    {
+     "text": "La vida de Leonardo da Vinci, año por año, en inglés",
+     "page": "life"
+    }
+   ]
+  },
+  {
+   "type": "text",
+   "id": "visiting",
+   "nav": "Visita",
+   "h": "Visitar Amboise",
+   "paras": [
+    [
+     "La casa se puede visitar como Château du Clos Lucé, ",
+     {
+      "text": "vinci-closluce.com",
+      "href": "https://www.vinci-closluce.com/en/"
+     },
+     ". La capilla con la tumba, el busto de los jardines y el cuadro de Ménageot están en el Château royal d’Amboise, ",
+     {
+      "text": "chateau-amboise.com",
+      "href": "https://www.chateau-amboise.com/en/"
+     },
+     ", y los dos sitios web están en francés y en inglés."
+    ]
+   ]
+  },
+  {
+   "type": "sources",
+   "id": "sources",
+   "nav": "Fuentes",
+   "h": "Fuentes",
+   "intro": "La página se basa en el testamento de Leonardo de 1519 y en el diario de Antonio de Beatis de 1517, en sus ediciones impresas, en las Vidas de Vasari de 1550 y de 1568, en el catálogo de los documentos de Francisco I, en la carta de Melzi del 1 de junio de 1519 tal como se imprimió en 1804, en el relato de Arsène Houssaye sobre su excavación de 1863 y en las fichas y páginas del Louvre, del diccionario biográfico Treccani, del Château du Clos Lucé, del Château royal d’Amboise, de la Bibliothèque nationale de France, de las fichas de patrimonio del Ministerio de Cultura de Francia, del Petit Palais, del Museo Galileo, de la oficina de turismo de Amboise, de un artículo de 2019 del Journal of the Royal Society of Medicine y de la revista Smithsonian, todas leídas el 13 de octubre de 2026. Las que están en internet:",
+   "read": [
+    {
+     "text": "El testamento de Leonardo de 1519, en la edición de Richter (Internet Archive)",
+     "href": "https://archive.org/details/literaryworksofl02leonuoft"
+    },
+    {
+     "text": "El diario de Antonio de Beatis, en la edición de Pastor (Internet Archive)",
+     "href": "https://archive.org/details/diereisedeskard00pastgoog"
+    },
+    {
+     "text": "Vasari, las Vidas de 1550, la vida de Leonardo (en italiano, Wikisource)",
+     "href": "https://it.wikisource.org/wiki/Le_vite_de%27_pi%C3%B9_eccellenti_pittori,_scultori_e_architettori_(1550)/Lionardo_da_Vinci"
+    },
+    {
+     "text": "Vasari, las Vidas de 1568, la vida de Leonardo (en italiano, Wikisource)",
+     "href": "https://it.wikisource.org/wiki/Le_vite_de%27_pi%C3%B9_eccellenti_pittori,_scultori_e_architettori_(1568)/Lionardo_da_Vinci"
+    },
+    {
+     "text": "El catálogo de los documentos de Francisco I, volumen 1 (en francés, Internet Archive)",
+     "href": "https://archive.org/details/collectiondesord01acad"
+    },
+    {
+     "text": "La carta de Melzi del 1 de junio de 1519, tal como la imprimió Amoretti en 1804 (en italiano, Wikisource)",
+     "href": "https://it.wikisource.org/wiki/Pagina:Memorie_storiche_su_la_vita_gli_studj_e_le_opere_di_Lionardo_da_Vinci.djvu/130"
+    },
+    {
+     "text": "Arsène Houssaye, Histoire de Léonard de Vinci, 1869 (Internet Archive)",
+     "href": "https://archive.org/details/bub_gb_9QERB__wdBQC"
+    },
+    {
+     "text": "Musée du Louvre, la Gioconda",
+     "href": "https://collections.louvre.fr/en/ark:/53355/cl010062370"
+    },
+    {
+     "text": "Musée du Louvre, La Virgen y el Niño con santa Ana",
+     "href": "https://collections.louvre.fr/en/ark:/53355/cl010066107"
+    },
+    {
+     "text": "Musée du Louvre, Juan el Bautista",
+     "href": "https://collections.louvre.fr/en/ark:/53355/cl010062374"
+    },
+    {
+     "text": "Treccani, Dizionario Biografico degli Italiani, Leonardo da Vinci (en italiano)",
+     "href": "https://www.treccani.it/enciclopedia/leonardo-da-vinci_(Dizionario-Biografico)/"
+    },
+    {
+     "text": "Château du Clos Lucé, Leonardo da Vinci",
+     "href": "https://www.vinci-closluce.com/en/leonardo-da-vinci/"
+    },
+    {
+     "text": "Château du Clos Lucé, la casa y su historia",
+     "href": "https://www.vinci-closluce.com/en/chateau-du-clos-luce/"
+    },
+    {
+     "text": "Château royal d’Amboise, Leonardo da Vinci",
+     "href": "https://www.chateau-amboise.com/en/leonardo-da-vinci/"
+    },
+    {
+     "text": "Château royal d’Amboise, sobre la historia de su muerte",
+     "href": "https://www.chateau-amboise.com/en/le-recit-de-la-mort-de-leonard-de-vinci-une-fake-news-avant-lheure/"
+    },
+    {
+     "text": "Château royal d’Amboise, la capilla de San Huberto (en francés)",
+     "href": "https://www.chateau-amboise.com/la-chapelle-saint-hubert/"
+    },
+    {
+     "text": "Bibliothèque nationale de France, comunicado de prensa de 2019 (PDF, en francés)",
+     "href": "https://www.bnf.fr/sites/default/files/2019-04/cp_mort_leonard_0.pdf"
+    },
+    {
+     "text": "Ministerio de Cultura de Francia, ficha de patrimonio de Clos Lucé (en francés)",
+     "href": "https://pop.culture.gouv.fr/notice/merimee/PA00097504"
+    },
+    {
+     "text": "Ministerio de Cultura de Francia, ficha de patrimonio del castillo de Amboise (en francés)",
+     "href": "https://pop.culture.gouv.fr/notice/merimee/PA00097503"
+    },
+    {
+     "text": "Petit Palais, la ficha del cuadro de Ingres (Paris Musées, en francés)",
+     "href": "https://www.parismuseescollections.paris.fr/fr/petit-palais/oeuvres/francois-ier-recoit-les-derniers-soupirs-de-leonard-de-vinci"
+    },
+    {
+     "text": "Museo Galileo, Amboise",
+     "href": "https://mostre.museogalileo.it/bibliotecaleonardo/3dstudioleo/amboise/index_en.html"
+    },
+    {
+     "text": "Oficina de turismo de Amboise, Leonardo en el castillo real",
+     "href": "https://amboise-valdeloire.com/en/leonardo-da-vinci-at-the-royal-chateau-of-amboise/"
+    },
+    {
+     "text": "Journal of the Royal Society of Medicine, el artículo de 2019 sobre su mano",
+     "href": "https://doi.org/10.1177/0141076819848115"
+    },
+    {
+     "text": "Royal Society of Medicine, comunicado de prensa sobre ese artículo",
+     "href": "https://www.rsm.ac.uk/media-releases/2019/da-vinci-s-hand-impairment-caused-by-nerve-damage-not-stroke-suggests-new-study/"
+    },
+    {
+     "text": "Smithsonian Magazine, 2026, sobre la búsqueda de su ADN",
+     "href": "https://www.smithsonianmag.com/smart-news/could-leonardo-da-vincis-dna-be-hiding-inside-one-of-his-renaissance-sketches-180987982/"
+    }
+   ],
+   "notes": [],
+   "contact": "Si una fecha, un nombre o una frase están mal, escríbenos y lo corregiremos.",
+   "contact_link": "Ir al aviso legal",
+   "what_link": "Qué es este museo"
+  },
+  {
+   "type": "close",
+   "id": "enter",
+   "nav": "",
+   "h": "Ver la casa en el ala",
+   "p": "Con esta puerta empiezas el recorrido en la última casa de Leonardo. El recorrido cruza el patio hasta la sala grande, pasando junto a la capilla y la ventana del estudio, y termina en el patio de la tumba, bajo las estrellas de aquella noche.",
+   "door": {
+    "text": "Entrar en el museo",
+    "note": "Entrada libre, sin cuenta."
+   }
+  }
+ ]
+}
