@@ -14,7 +14,7 @@ export default defineConfig({
     naAssets(),
     naWingPages({
       read: readSettings,
-      words: { name: LOBBY_TEXT.name.en, line: LOBBY_TEXT.tagline, inside: LOBBY_TEXT.titleInside },
+      words: { name: LOBBY_TEXT.name.en, line: LOBBY_TEXT.tagline, inside: LOBBY_TEXT.titleInside, page: LOBBY_TEXT.pageTitle },
       languages: (settings) => publishedLangs(settings['VITE_NA_LANGS']),
       names: OWN_NAMES,
     }),

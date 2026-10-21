@@ -4,11 +4,14 @@
 // is left out and one plain block stands in its place, naming each wing that
 // has a page and linking to it in both languages, and in every other language
 // the build publishes that has a page, and the door's and the sky's own words
-// are emptied. A build that names no page is not touched.
+// are emptied. A build that names no page keeps its mirror and its words.
 //
 // The block's words are the caller's (the museum's fixed name and line); the
 // wing's name is the register's; another language's link reads its words
 // from that language's catalog, or names the language where none is written.
+//
+// Every build, wing page or not, writes each catalog language's page title
+// into the head's first script, so a tab reads it before the catalog loads.
 import { existsSync, readdirSync, readFileSync } from 'node:fs'
 import { join } from 'node:path'
 import { contentKey } from './lang/key.mjs'
@@ -24,6 +27,7 @@ const LOBBY_WORDS = [
   ['sky-invite', /(<p id="sky-invite">)[^<]+(<\/p>)/g],
   ['pane-close', /(<button class="pane-close" type="button">)[^<]+(<\/button>)/g],
 ]
+const EARLY_TITLES = '{} /* na-early-titles */'
 const esc = (s) => String(s).replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' })[c])
 
 /** the register's slugs and names, read as text: its modules are the app's */
@@ -46,7 +50,7 @@ function catalogText(root, code, pair) {
 
 /**
  * @param {{ read: (settings: Record<string, unknown>) => { wings: { key: string, en: string, de: string, pages?: Record<string, string> }[], refused: string[] },
- *   words: { name: string, line: { en: string, de: string }, inside: { en: string, de: string } },
+ *   words: { name: string, line: { en: string, de: string }, inside: { en: string, de: string }, page?: { en: string, de: string } },
  *   languages?: (settings: Record<string, unknown>) => string[], names?: Record<string, string> }} options
  */
 export function naWingPages({ read, words, languages = () => ['en', 'de'], names = {} }) {
@@ -66,7 +70,16 @@ export function naWingPages({ read, words, languages = () => ['en', 'de'], names
         return { ...w, name: entry.name }
       })
     },
-    transformIndexHtml(html) {
+    transformIndexHtml(source) {
+      // every build: each catalog language's page title for the head's first script, which acts before the code arrives
+      const marks = source.split(EARLY_TITLES).length - 1
+      if (marks !== 1) throw new Error(`index.html carries the early titles' mark ${marks} times, not once`)
+      const codes = readdirSync(join(root, 'lang'), { withFileTypes: true }).filter((d) => d.isDirectory()).map((d) => d.name)
+      const titles = Object.fromEntries(codes.flatMap((code) => {
+        const title = words.page ? catalogText(root, code, words.page) : null
+        return title ? [[code, title]] : []
+      }))
+      const html = source.replace(EARLY_TITLES, () => JSON.stringify(titles).replace(/</g, '\\u003c'))
       if (!wings.length) return html
       if (!MIRROR.test(html)) throw new Error('index.html carries no static mirror to replace')
       const rows = wings.flatMap((w) => [

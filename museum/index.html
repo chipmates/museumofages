@@ -15,6 +15,20 @@
   <meta property="og:type" content="website" />
   <meta property="og:locale" data-lobby="shareLocale" content="en_GB" />
   <script>
+    /* THE TAB'S TITLE BEFORE THE WORDS ARE IN. An address that names a
+       catalog language shows that language's title from the first moment,
+       not the English above until its catalog has loaded. The build writes
+       the titles from the catalogs; the museum's code says the same again. */
+    (function () {
+      try {
+        var titles = {} /* na-early-titles */
+        var code = (new URLSearchParams(location.search).get('lang') || '').toLowerCase()
+        var title = titles[code === 'pt' || code === 'pt-br' ? 'pt-BR' : code]
+        if (typeof title === 'string') document.title = title
+      } catch (e) { /* the title above stands */ }
+    })()
+  </script>
+  <script>
     /* THE DOOR'S FIRST PICTURE. A film address that opens at a wing's door
        fetches the release and paints its first still before the museum's own
        code has arrived; the wing adopts the same release and takes the
