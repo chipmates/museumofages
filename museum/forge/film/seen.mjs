@@ -169,3 +169,86 @@ export function seenSet(index, samples, { aspect, sun, mirror = [], mirrorLevel 
   }
   return Float64Array.from([...out].sort((a, b) => a - b))
 }
+
+/**
+ * THE NARROWED TEST: which of the cells `moved` a rendered picture can show,
+ * read off the cells its own frames recorded (`export.mjs`, the solid pass,
+ * dilated by one cell) in place of the frustum, with the stand-in's other two
+ * parts taken from them as `seenSet` takes them from the frustum:
+ *   (b) the casters toward the sun of every recorded surface inside the reach,
+ *   (c) the mirrored frustum of every frame, when a recorded cell reflects;
+ * both dilated by one cell. A surface is a cell a ray ended on a body in
+ * (`record.struck`, format 2), else a cell occupied in either tree. And one
+ * part the stand-in has not:
+ *   (d) `lit`, the cells of the rooms whose surfaces read a capture of the
+ *       scene (a cube probe, the hall floor's mirror) or a room light's
+ *       shadow: a record that enters one reaches every moved cell.
+ * `shadows` false leaves (b) out, for what casts no shadow (a plate);
+ * `farBox` ([lo, hi], world) the far cascade's own box, a reach of (b) beside the eyes'.
+ *   record     Set of the recorded cell numbers
+ *   moved      the cell numbers whose hash differs between the render's tree and now
+ *   samples    the track's frames (a still: its one pose)
+ *   occupied   Set: the cells occupied in either tree
+ *   index      buildIndex() over those cells, for the mirrored frustum
+ *   aspect, sun, mirror (the reflecting cells of either tree), mirrorLevel, top (the higher scene top), cell
+ * Returns the moved cells the picture can show, each with the part that reaches it.
+ */
+export function narrowedHits(record, moved, samples, { occupied, index, aspect, sun, mirror = [], mirrorLevel, top, cell, lit = null, shadows = true, farBox = null }) {
+  const hits = new Map()
+  const hit = (n, why) => { if (!hits.has(n)) hits.set(n, why) }
+  for (const n of moved) if (record.has(n)) hit(n, 'recorded')
+  // (d) a room whose surfaces read a capture of the scene or a room light's shadow: what it shows reaches anything moved
+  if (lit && [...lit].some((n) => record.has(n))) for (const n of moved) hit(n, 'lit room')
+  if (hits.size === moved.length) return [...hits].map(([n, why]) => ({ cell: n, why }))
+  // each moved cell and its neighbours: a part's cell within one of a moved cell reaches it
+  const near = new Map()
+  for (const n of moved) {
+    const [x, y, z] = cellCoords(n)
+    for (let dx = -1; dx <= 1; dx++) for (let dy = -1; dy <= 1; dy++) for (let dz = -1; dz <= 1; dz++) {
+      const m = cellNumber(x + dx, y + dy, z + dz)
+      if (!near.has(m)) near.set(m, [])
+      near.get(m).push(n)
+    }
+  }
+  const reach = (m, why) => { for (const n of near.get(m) ?? []) hit(n, why) }
+  // (c) the mirrored frustum, its surfaces taken as receivers too; a record
+  // of format 2 names the cells its rays ended on a body in, else the occupied ones stand in
+  const sources = record.struck ? [...record.struck] : [...record].filter((n) => occupied.has(n))
+  if (mirror.length && mirror.some((n) => record.has(n))) {
+    const camera = new THREE.PerspectiveCamera()
+    const seen = new Uint8Array(index.leaves.length)
+    const stamp = { full: new Int32Array(index.nodes.min.length), now: 1 }
+    for (const s of samples) cull(index, mirrorPlanes(planesOf(cameraOf(camera, s, aspect)), mirrorLevel), (a, b) => seen.fill(1, a, b), stamp)
+    for (let i = 0; i < index.leaves.length; i++) if (seen[i]) { reach(index.leaves[i], 'mirror'); sources.push(index.leaves[i]) }
+  }
+  if (!shadows) return [...hits].map(([n, why]) => ({ cell: n, why }))
+  // (b) the casters toward the sun, inside the far cascade's reach about the eyes
+  const lo = [0, 1, 2].map((k) => Math.min(...samples.map((s) => s[k])) - SHADOW_REACH_M)
+  const hi = [0, 1, 2].map((k) => Math.max(...samples.map((s) => s[k])) + SHADOW_REACH_M)
+  // the far cascade stands fixed over the site, whatever the eye: a receiver inside it takes its shadows at any distance
+  const inBox = (c, a, b) => c.every((v, k) => (v + 1) * cell >= a[k] && v * cell <= b[k])
+  const reached = (n) => { const c = cellCoords(n); return inBox(c, lo, hi) || (farBox !== null && inBox(c, farBox[0], farBox[1])) }
+  // a ray passes within a cell of a moved cell only if its source stands below that cell along the sun
+  const targets = moved.map((n) => cellCoords(n).map((v) => (v + .5) * cell))
+  const slack = 4 * cell
+  const aimed = (p) => targets.some((q) => {
+    const d = [q[0] - p[0], q[1] - p[1], q[2] - p[2]]
+    const t = d[0] * sun[0] + d[1] * sun[1] + d[2] * sun[2]
+    if (t < -slack) return false
+    const off = [d[0] - t * sun[0], d[1] - t * sun[1], d[2] - t * sun[2]]
+    return Math.hypot(off[0], off[1], off[2]) <= slack
+  })
+  for (const n of new Set(sources)) {
+    if (!reached(n)) continue
+    const [cx, cy, cz] = cellCoords(n)
+    const p = [(cx + .5) * cell, (cy + .5) * cell, (cz + .5) * cell]
+    if (!aimed(p)) continue
+    for (let k = 1; k < 4096; k++) {
+      const q = [p[0] + sun[0] * k * cell, p[1] + sun[1] * k * cell, p[2] + sun[2] * k * cell]
+      if (q[1] > top + cell) break
+      const m = cellNumber(Math.floor(q[0] / cell), Math.floor(q[1] / cell), Math.floor(q[2] / cell))
+      if (occupied.has(m) && reached(m)) reach(m, 'shadow ray')
+    }
+  }
+  return [...hits].map(([n, why]) => ({ cell: n, why }))
+}

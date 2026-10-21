@@ -306,7 +306,7 @@ export const libraryOf = (merged) => (Array.isArray(merged) ? merged : (merged.a
  * texts over it). A part whose every file reads as it did the last time is not
  * built again: a factory is a function of the files it reads.
  */
-export async function mountWorld({ rev = '', overlay = {}, tier = FILM_TIER, library, cell = CELL_M } = {}) {
+export async function mountWorld({ rev = '', overlay = {}, tier = FILM_TIER, library, cell = CELL_M, detail = false } = {}) {
   const check = await createLoader({ rev, overlay })
   const lib = library ?? libraryOf(mergeManifests())
   const libDigest = sha256(JSON.stringify(lib.map((e) => [e.id, e.path, e.sha256 ?? ''])))
@@ -352,9 +352,12 @@ export async function mountWorld({ rev = '', overlay = {}, tier = FILM_TIER, lib
   plateQuads(check, lib).traverse((o) => { if (o.isMesh) for (const e of o.material.userData.library) claimed.add(e) })
   return {
     tier, sun, parts: parts.map(({ id, reused, ms, contribution }) => ({ id, reused, ms, triangles: contribution.triangles, meshes: contribution.meshes })),
-    cells: { cell, hashes, top, mirror: [...mirror].sort((a, b) => a - b), mirrorLevel },
+    // `plates`: the cells a plate's quad meets, whose hash reads the store's records (not versioned anywhere)
+    cells: { cell, hashes, top, mirror: [...mirror].sort((a, b) => a - b), mirrorLevel, plates: [...(parts.find((p) => p.id === 'plates')?.contribution.acc.keys() ?? [])].sort((a, b) => a - b) },
     files: [...files.entries()].sort(([a], [b]) => (a < b ? -1 : 1)),
     library: lib, claimed,
+    // `detail`: each cell's lines (part, drawable, material, count, sums), so a moved cell can name what moved in it
+    ...(detail ? { lines: merged } : {}),
   }
 }
 
