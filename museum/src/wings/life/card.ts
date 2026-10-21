@@ -14,6 +14,7 @@
 import { LIFE_WORDS, fill } from './words'
 import { sayAs } from '../content'
 import { keepDates } from '../keep-dates.mjs'
+import { keepNames } from '../keep-names.mjs'
 import type { LifeEvent, LifeRecord } from './types'
 
 export interface LifeDateHost {
@@ -47,12 +48,12 @@ export function renderLifeDate(options: LifeDateHost): void {
   }
   if (event.date.disputed) head.append(make('span', 'wing-life-date-doubt', sayAs(LIFE_WORDS.disputed, language)))
   if (head.childElementCount) host.append(head)
-  host.append(make('p', 'wing-life-date-line', keepDates(sayAs(event.line, language))))
+  host.append(make('p', 'wing-life-date-line', keepNames(keepDates(sayAs(event.line, language)))))
   // Who set the year, or the style it is counted in, travels with the date.
-  if (event.date.note) host.append(make('p', 'wing-life-date-note', keepDates(sayAs(event.date.note, language))))
+  if (event.date.note) host.append(make('p', 'wing-life-date-note', keepNames(keepDates(sayAs(event.date.note, language)))))
 
   if (event.source) {
-    const source = make('p', 'wing-life-date-source', keepDates(sayAs(event.source, language)))
+    const source = make('p', 'wing-life-date-source', keepNames(keepDates(sayAs(event.source, language))))
     // The reading of where a sentence comes from is the record's own voice.
     source.dataset['register'] = 'drawer'
     host.append(source)

@@ -804,6 +804,7 @@ export function createWing(): WingModule {
     setRegister(full, 'record')
     full.append(make('p', 'vinci-statement', text(s.record ?? s.promise)), make('small', 'vinci-citation', text(shownCitation(s.promiseSource))))
     panel.append(full)
+    keepTogetherIn(panel)
     paintRoomAndWing()
   }
   /** a spoken statement with its word of certainty, and its record folded behind it */
@@ -861,6 +862,8 @@ export function createWing(): WingModule {
     wing.append(make('h3', '', text(vinciSourcesHeadings.counted)), make('p', 'vinci-statement', text(vinciWingCounts)))
     full.append(make('pre', 'vinci-arithmetic', text(vinciHourArithmetic)))
     fold(wing, full)
+    keepTogetherIn(room)
+    keepTogetherIn(wing)
   }
 
   /* ---- the phone's graded box ---- */
@@ -985,10 +988,10 @@ export function createWing(): WingModule {
     phone.name.textContent = ''
     phone.name.append(deskMark(stop?.certainty ?? 'reconstructed'), make('span', 'film-chapter', text(stop?.chapter ?? LIFE[card]!.name)))
     if (stop?.age && !atBirth(stop.age)) phone.name.append(make('span', 'film-clock', text(stop.age)))
-    phone.line.textContent = stop ? say(stop.line) : ''
+    phone.line.textContent = stop ? keepTogether(say(stop.line)) : ''
     phone.drawer.textContent = ''
     if (drawerOpen && stop?.drawer) {
-      for (const sentence of sentences(text(stop.drawer), lang())) phone.drawer.append(make('p', '', sentence))
+      for (const sentence of sentences(text(stop.drawer), lang())) phone.drawer.append(make('p', '', keepTogether(sentence)))
     }
     phone.more.textContent = ''
     phone.more.append(document.createTextNode(say(drawerOpen ? LOBBY_TEXT.close : deskControl('shared', 'read_more'))), icon(drawerOpen ? ARROW_DOWN : ARROW_UP))

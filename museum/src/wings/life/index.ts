@@ -22,6 +22,7 @@
 import css from './life.css?inline'
 import { windowOwnsTheScreen } from '../window-chrome'
 import { keepDates } from '../keep-dates.mjs'
+import { keepNames } from '../keep-names.mjs'
 import { deskAny } from '../desk-switches'
 import { renderLifeDate } from './card'
 import { isOne, sayAs } from '../content'
@@ -183,7 +184,7 @@ export function createWingLife(options: WingLifeOptions): WingLife {
     const tally = lifeCounts(record.events, record.works, record.span)
     if (!band || !(band === UNDATED || record.bands.some(entry => entry.id === band))) band = firstBand(record)
     dialog.setAttribute('aria-label', say(record.words.throughLine))
-    through.textContent = say(record.words.throughLine)
+    through.textContent = keepNames(say(record.words.throughLine))
     second.textContent = say(record.words.secondLine)
     close.textContent = say(LIFE_WORDS.close)
     shutMark.setAttribute('aria-label', say(LIFE_WORDS.close))
@@ -470,7 +471,7 @@ export function createWingLife(options: WingLifeOptions): WingLife {
       return
     }
     periodBody.append(make('h3', 'wing-life-period-name', sayAs(entry.name, language)),
-      make('p', 'wing-life-period-line', sayAs(entry.line, language)))
+      make('p', 'wing-life-period-line', keepNames(sayAs(entry.line, language))))
     const own = eventsOf(record, entry.id)
     periodBody.append(dates(record, own, entry, gaps, language))
     const stops = [...periodBody.querySelectorAll<HTMLElement>('.wing-life-date-name')]
@@ -511,7 +512,7 @@ export function createWingLife(options: WingLifeOptions): WingLife {
     /* A DATE HTML CAN STATE IS A `time`; an approximate, disputed or open one
        keeps its words and its EDTF, and publishes no machine date it is not. */
     const machine = machineDate(event.date)
-    const label = make(machine ? 'time' : 'span', 'wing-life-date-label', keepDates(sayAs(event.date.label, language)))
+    const label = make(machine ? 'time' : 'span', 'wing-life-date-label', keepNames(keepDates(sayAs(event.date.label, language))))
     if (machine) label.setAttribute('datetime', machine)
     label.dataset['edtf'] = event.date.edtf
     label.dataset['calendar'] = event.date.calendar
@@ -601,7 +602,7 @@ export function createWingLife(options: WingLifeOptions): WingLife {
       const item = make('li', 'wing-life-work-item')
       item.dataset['domain'] = work.domain
       item.append(make('span', 'wing-life-work-date', (work.date ? keepDates(sayAs(work.date.label, language)) : '')),
-        make('span', 'wing-life-work-title', sayAs(work.title, language)))
+        make('span', 'wing-life-work-title', keepNames(sayAs(work.title, language))))
       /* THE PICTURE IS REACHED FROM THE LIFE: the sheet closes and the museum
          walks to the wall it hangs on, which is where it can be looked at. */
       if (work.exhibit) {
@@ -643,7 +644,7 @@ export function createWingLife(options: WingLifeOptions): WingLife {
       const dot = make('span', 'wing-life-dot')
       dot.style.background = record.sure[person.certainty]?.colour ?? ''
       dot.setAttribute('aria-hidden', 'true')
-      item.append(dot, make('span', 'wing-life-person-name', sayAs(person.name, language)),
+      item.append(dot, make('span', 'wing-life-person-name', keepNames(sayAs(person.name, language))),
         make('span', 'wing-life-person-role', sayAs(person.role, language)),
         make('span', 'wing-life-person-sure', (record.sure[person.certainty] ? sayAs(record.sure[person.certainty]!.word, language) : '')))
       list.append(item)
