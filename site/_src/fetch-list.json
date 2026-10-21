@@ -3219,6 +3219,12 @@
    "sha256": "ccf4ae90b2db901debdc5a6d3bded3c7c41c6414ad475a64c19c9f9a5af92977"
   },
   {
+   "path": "pages/pics/img/vinci-lady-with-an-ermine-og-es-1200x630.png",
+   "url": "/static/img/vinci-lady-with-an-ermine-og-es-1200x630.png",
+   "bytes": 189352,
+   "sha256": "f03b43608868da75208d00e9eb6551584cea425fa050ce59e8445eaa9f0d624a"
+  },
+  {
    "path": "pages/pics/img/vinci-last-years-og-1200x630.jpg",
    "url": "/static/img/vinci-last-years-og-1200x630.jpg",
    "bytes": 108057,
