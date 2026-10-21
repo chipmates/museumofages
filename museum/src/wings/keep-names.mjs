@@ -4,11 +4,12 @@
 // as the site holds a long name by its last words. A particle binds only
 // between two capitalised words, so an article or a preposition of running
 // text stays free; "ser" and "il" (a notary's title, a byname's article: "ser
-// Piero", "il Moro") bind to a capitalised word wherever they stand. Display
+// Piero", "il Moro", "Сер Пиеро") bind to a capitalised word wherever they
+// stand; a capital "Il" opens an Italian sentence and stays free. Display
 // only; tested without a page (forge/keep-names.test.mjs).
 
-const PARTICLES = new Set(["de'", 'de’', 'de', 'del', 'della', 'delle', 'dei', 'degli', 'da', 'dal', 'dalla', 'di', 'да', 'де', 'ди'])
-const TITLES = new Set(['ser', 'il'])
+const PARTICLES = new Set(["de'", 'de’', 'de', 'del', 'della', 'delle', 'dei', 'degli', 'da', 'dal', 'dalla', 'di', 'да', 'де', 'ди', 'дел', 'дела', 'деле'])
+const TITLES = new Set(['ser', 'Ser', 'сер', 'Сер', 'il', 'ил'])
 const capital = (word) => /^[«“"‘'(\[¿¡]*\p{Lu}/u.test(word.split(' ').pop() ?? '')
 const leads = (word) => PARTICLES.has(word) || TITLES.has(word)
 

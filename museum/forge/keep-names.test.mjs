@@ -23,18 +23,24 @@ test('a particle holds to the name after it, in each language', () => {
     ['Леонардо да Винчи', `Леонардо да${NB}Винчи`],
     ['(Gualtiero da Bascapè) an Ludovico', `(Gualtiero da${NB}Bascapè) an Ludovico`],
     ['Leonardo da Vinci’s notebooks', `Leonardo da${NB}Vinci’s notebooks`],
+    ['портрет на Лиза дел Джокондо', `портрет на Лиза дел${NB}Джокондо`],
+    ['Маркантонио дела Торе', `Маркантонио дела${NB}Торе`],
+    ['почина Сер Пиеро', `почина Сер${NB}Пиеро`],
+    ['murió Ser Piero da Vinci', `murió Ser${NB}Piero da${NB}Vinci`],
+    ['Салаи и ил Фанфоя.', `Салаи и ил${NB}Фанфоя.`],
   ]
   for (const [said, kept] of cases) assert.equal(keepNames(said), kept, said)
 })
 
 test('an article or a preposition of running text stays free', () => {
   for (const said of ['Le portrait de Lisa', 'il a peint de Florence', 'il dipinto di Leonardo', 'Regierung von Florenz', 'Forschungsnotizen des Museums',
-    'Musée du Louvre', 'Dianne Dwyer Modestini', 'una donna da Firenze', 'Da Vinci', 'He went da capo', 'да види Леонардо'])
+    'Musée du Louvre', 'Dianne Dwyer Modestini', 'una donna da Firenze', 'Da Vinci', 'He went da capo', 'да види Леонардо',
+    'Il Codice Atlantico', 'Vinci. Il Louvre'])
     assert.equal(keepNames(said), said)
 })
 
 test('every named pair the walk shows holds, as the wing and each catalog say it', () => {
-  const PAIR = /(?<=\p{Lu}[\p{L}’'.]* |^|\s)(da Vinci|da Винчи|да Винчи|de’ Medici|de' Medici|del Giocondo|ser Piero|il Moro)(?![\p{L}])/gu
+  const PAIR = /(?<=\p{Lu}[\p{L}’'.]* |^|\s)(da Vinci|da Винчи|да Винчи|de’ Medici|de' Medici|де Медичи|del Giocondo|дел Джокондо|ser Piero|Ser Piero|Сер Пиеро|il Moro)(?![\p{L}])/gu
   const said = []
   const strings = (value) => typeof value === 'string' ? [value] : value && typeof value === 'object' ? Object.values(value).flatMap(strings) : []
   said.push(...strings(JSON.parse(read('../src/wings/vinci/line/data/timeline.json'))))
@@ -46,7 +52,7 @@ test('every named pair the walk shows holds, as the wing and each catalog say it
   for (const text of said) for (const m of text.matchAll(PAIR)) {
     const before = text.slice(0, m.index).trimEnd().split(' ').pop() ?? ''
     // a pair a lowercase word leads into is no name ("the da Vinci code"); the walk names none such
-    if (!m[1].startsWith('ser') && !m[1].startsWith('il') && before && !/\p{Lu}/u.test(before[0] ?? '')) continue
+    if (!/^(ser|Ser|Сер|il) /.test(m[1]) && before && !/\p{Lu}/u.test(before[0] ?? '')) continue
     assert.ok(keepNames(text).includes(m[1].replace(' ', NB)), `${m[1]} in: ${text.slice(Math.max(0, m.index - 40), m.index + 40)}`)
     held++
   }
