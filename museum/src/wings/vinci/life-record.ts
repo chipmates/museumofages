@@ -141,7 +141,7 @@ export function renderVinciLifeRecord(stud: Stud, host: HTMLElement): void {
   add(sayMaybe(stud.date_note_en, stud.date_note_de, here))
   const reading = SOURCE_READINGS[stud.id]
   add(reading ? sayAs(reading, here) : undefined)
-  add(stud.document); add(stud.holder)
+  add(sayMaybe(stud.document, stud.document_de ?? stud.document, here)); add(stud.holder)
   add(sayMaybe(stud.qualifications_en, stud.qualifications_de, here))
   const gaps = catalogPage() ? stud.gaps.map((gap, i) => sayAs({ en: gap, de: stud.gaps_de[i] ?? '' }, here)) : here === 'de' ? stud.gaps_de : stud.gaps
   for (const gap of gaps) add(gap)
