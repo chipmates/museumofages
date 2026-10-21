@@ -21,6 +21,7 @@
 
 import css from './life.css?inline'
 import { windowOwnsTheScreen } from '../window-chrome'
+import { keepDates } from '../keep-dates.mjs'
 import { deskAny } from '../desk-switches'
 import { renderLifeDate } from './card'
 import { isOne, sayAs } from '../content'
@@ -510,7 +511,7 @@ export function createWingLife(options: WingLifeOptions): WingLife {
     /* A DATE HTML CAN STATE IS A `time`; an approximate, disputed or open one
        keeps its words and its EDTF, and publishes no machine date it is not. */
     const machine = machineDate(event.date)
-    const label = make(machine ? 'time' : 'span', 'wing-life-date-label', sayAs(event.date.label, language))
+    const label = make(machine ? 'time' : 'span', 'wing-life-date-label', keepDates(sayAs(event.date.label, language)))
     if (machine) label.setAttribute('datetime', machine)
     label.dataset['edtf'] = event.date.edtf
     label.dataset['calendar'] = event.date.calendar
@@ -599,7 +600,7 @@ export function createWingLife(options: WingLifeOptions): WingLife {
     for (const work of own) {
       const item = make('li', 'wing-life-work-item')
       item.dataset['domain'] = work.domain
-      item.append(make('span', 'wing-life-work-date', (work.date ? sayAs(work.date.label, language) : '')),
+      item.append(make('span', 'wing-life-work-date', (work.date ? keepDates(sayAs(work.date.label, language)) : '')),
         make('span', 'wing-life-work-title', sayAs(work.title, language)))
       /* THE PICTURE IS REACHED FROM THE LIFE: the sheet closes and the museum
          walks to the wall it hangs on, which is where it can be looked at. */
