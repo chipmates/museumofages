@@ -12,6 +12,7 @@ import { cellNumber } from './scene.mjs'
 import { narrowedHits } from './seen.mjs'
 import { cellNumbers, cellSet } from './export.mjs'
 import { WING_DIR, createLoader } from './load.mjs'
+import { readFileSync } from 'node:fs'
 
 const CELL = 2
 const n = (x, y, z) => cellNumber(x, y, z)
@@ -49,9 +50,11 @@ test('a moved cell is hit when the record holds it, when it casts toward a recor
   assert.deepEqual(narrowedHits(new Set([n(0, 0, -1)]), [above], [[1, 1, 1, Math.sin(-Math.PI / 8), 0, 0, Math.cos(-Math.PI / 8), 60]], { ...withAbove, aspect }).filter((h) => h.why === 'mirror'), [], 'no reflection recorded, no mirror')
 })
 
-test('the cells moved between two worlds: a hash changed, a cell occupied in one of them only', () => {
+test('the cells moved between two worlds: a hash changed, a cell occupied in one of them only, a body\'s shadow flag changed', () => {
   const a = cellsOf([[1, 'x'], [2, 'y'], [3, 'z']]), b = cellsOf([[1, 'x'], [2, 'y2'], [4, 'w']])
   assert.deepEqual(movedCells(a, b), [2, 3, 4])
+  const f = (m) => cellsOf([[1, 'x'], [2, 'y']], { flags: new Map(m) })
+  assert.deepEqual(movedCells(f([[1, 'cast'], [2, 'cast']]), f([[1, 'cast'], [2, 'none']])), [2])
 })
 
 /* ---- the plan ---- */
@@ -61,8 +64,8 @@ const stillE = { id: 'still a wide', kind: 'still', framing: 'wide', node: 'a', 
 const job = { created: 'now', keys: { definition: GLOBAL_DEFINITION, global: G, delivery: D }, entries: [clipE, stillE] }
 const worldThen = cellsOf(base), worldNow = cellsOf(base.map(([c, h]) => [c, c === n(0, 0, -10) ? 'moved behind' : h]))
 const LIGHT_NONE = { lit: new Set(), captures: [], lights: [], unknown: [] }
-const treeOf = (world, clipPicture, stillPicture, exposure = [1, 1], lighting = LIGHT_NONE) => ({
-  global: { key: G }, world: { cells: world, sun: SUN }, lighting,
+const treeOf = (world, clipPicture, stillPicture, exposure = [1, 1], lighting = LIGHT_NONE, lights = 'L') => ({
+  global: { key: G }, world: { cells: world, sun: SUN, lighting: lights }, lighting,
   clips: new Map([['a>b wide', { motion: 'm', picture: clipPicture, exposure, samples: [EYE, EYE], cells: [n(0, 0, -3), n(0, 0, -10)] }]]),
   stills: new Map([['a wide', { motion: 'ms', picture: stillPicture, exposure: 1, sample: EYE, cells: [n(0, 0, -3), n(0, 0, -10)] }]]),
 })
@@ -204,4 +207,33 @@ test('a receiver beyond the eyes\' reach but inside the far cascade takes the ca
   const farBox = farBoxOf({ half: 90, light: 80, near: .5, far: 160 }, SUN)
   assert.deepEqual(farBox.map((c) => Math.round(c[0])), [-90, 90], 'the light\'s own x is the world\'s under this sun')
   assert.deepEqual(narrowedHits(record, [caster], [eye], { ...s, aspect, farBox }).map((h) => h.why), ['shadow ray'])
+})
+
+test('a light of the node world that moved refuses the carry', () => {
+  const records = new Map([[clipE.id, row(clipE, 'p-then')]])
+  const lit = narrowPlan({ ...job, entries: [clipE] }, records, now, new Map([['h0', treeOf(worldThen, 'p-then', 's-then', [1, 1], LIGHT_NONE, 'L2')]]), () => behindWall)
+  assert.deepEqual(lit.stale, [{ id: clipE.id, why: 'a light of the node world moved' }])
+  assert.equal(narrowPlan({ ...job, entries: [clipE] }, records, now, new Map([['h0', treeOf(worldThen, 'p-then', 's-then')]]), () => behindWall).carried.length, 1)
+})
+
+test('the node world names its lights and its bodies\' shadow flags apart from its cells\' hashes', async () => {
+  const { mountWorld } = await import('./scene.mjs')
+  const file = `${WING_DIR}/grave/diagram.ts`
+  const text = readFileSync(new URL(`../../${file}`, import.meta.url), 'utf8')
+  const world = await mountWorld()
+  assert.match(world.lighting, /^[0-9a-f]{32}$/)
+  const same = await mountWorld({ overlay: { [file]: `${text}\n// a comment\n` } })
+  assert.equal(same.lighting, world.lighting, 'a comment lights nothing')
+  assert.deepEqual([...same.cells.hashes], [...world.cells.hashes])
+  // the grave diagram's light is hidden from the scene's list: its ground's material reads it, and so its cells
+  const softer = await mountWorld({ overlay: { [file]: text.replace("light.name = 'vinci/grave/diagram-chosen-light'", "light.name = 'vinci/grave/diagram-chosen-light'; light.shadow.radius = 3") } })
+  assert.equal(softer.lighting, world.lighting)
+  assert.ok([...softer.cells.hashes].some(([n, h]) => world.cells.hashes.get(n) !== h), 'the diagram\'s cells move with its light')
+  // a body that stops casting moves its cells' flags, not their hashes: a narrowed carry reads it as a moved cell
+  const flat = await mountWorld({ overlay: { [file]: text.replace('caster.castShadow = true', 'caster.castShadow = false') } })
+  assert.equal(flat.lighting, world.lighting)
+  const flagged = [...flat.cells.flags].filter(([n, f]) => world.cells.flags.get(n) !== f).map(([n]) => n)
+  assert.ok(flagged.length > 0, 'a shadow flag')
+  assert.deepEqual(flagged.filter((n) => flat.cells.hashes.get(n) !== world.cells.hashes.get(n)), [], 'no cell hash moved with it')
+  assert.deepEqual(movedCells(world.cells, flat.cells), flagged.sort((a, b) => a - b))
 })

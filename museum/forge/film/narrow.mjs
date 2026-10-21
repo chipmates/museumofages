@@ -139,10 +139,11 @@ export async function lightingAt(rev = '') {
   return lighting
 }
 
-/** The cells whose hash differs between two worlds (`mountWorld().cells`), occupied in either. */
+/** The cells whose hash, or whose bodies' shadow flags and layers, differ between two worlds (`mountWorld().cells`), occupied in either. */
 export function movedCells(then, now) {
   const out = []
-  for (const n of new Set([...then.hashes.keys(), ...now.hashes.keys()])) if (then.hashes.get(n) !== now.hashes.get(n)) out.push(n)
+  const flag = (w, n) => (w.flags ? w.flags.get(n) ?? null : 'unread')
+  for (const n of new Set([...then.hashes.keys(), ...now.hashes.keys()])) if (then.hashes.get(n) !== now.hashes.get(n) || flag(then, n) !== flag(now, n)) out.push(n)
   return out.sort((a, b) => a - b)
 }
 
@@ -206,6 +207,8 @@ export function narrowPlan(job, records, now, heads, recordOf) {
     if (!tree) { stale('the tree it was rendered from cannot be read'); continue }
     const unknown = [...new Set([...unpinned(now), ...unpinned(tree)])]
     if (unknown.length) { stale(`a module lights the scene the narrowed test does not know: ${unknown.join(', ')}`); continue }
+    // a light of the scene's own list moved in the node world: no cell says where that shows
+    if (!tree.world.lighting || tree.world.lighting !== now.world.lighting) { stale('a light of the node world moved'); continue }
     const then = (e.kind === 'clip' ? tree.clips : tree.stills).get(at)
     if (!then || then.picture !== rendered.picture) { stale('the tree it was rendered from gives another picture key'); continue }
     if (JSON.stringify(then.exposure) !== JSON.stringify(own.exposure)) { stale('its exposure moved'); continue }

@@ -235,6 +235,21 @@ function contributionOf(part, group, cell) {
     else held.set(key, [1, a, b])
   }
   group.updateMatrixWorld(true)
+  // what lights the world, which the cells' hashes do not read: a light in the scene's own list. A hidden
+  // light lights only the materials whose own lights node reads it, and their digests (the cells) read it.
+  const lighting = []
+  // a body's shadow flags and layers, per cell it meets, apart from the cells' hashes
+  const flags = new Map()
+  const v = (p) => p.toArray().map(qp).join(',')
+  group.traverse((object) => {
+    if (!object.isLight || object.visible === false) return
+    {
+      object.updateMatrixWorld(true)
+      object.target?.updateMatrixWorld?.(true)
+      const at = new THREE.Vector3().setFromMatrixPosition(object.matrixWorld), aim = object.target ? new THREE.Vector3().setFromMatrixPosition(object.target.matrixWorld) : null
+      lighting.push(`${part}|light|${object.type}|${object.name}|${object.color?.getHexString?.() ?? ''}|${object.intensity}|${object.distance ?? ''}|${object.angle ?? ''}|${object.penumbra ?? ''}|${object.decay ?? ''}|${object.castShadow}|${v(at)}|${aim ? v(aim) : ''}|${object.shadow ? stableDigest({ camera: object.shadow.camera?.toJSON?.().object ?? null, mapSize: object.shadow.mapSize?.toArray?.(), bias: object.shadow.bias, normalBias: object.shadow.normalBias, radius: object.shadow.radius, intensity: object.shadow.intensity }) : ''}`)
+    }
+  })
   group.traverse((object) => {
     if (!(object.isMesh || object.isLine || object.isPoints) || !object.geometry || object.visible === false) return
     const materials = Array.isArray(object.material) ? object.material : [object.material]
@@ -253,6 +268,7 @@ function contributionOf(part, group, cell) {
     const groups = geometry.groups?.length ? geometry.groups : [{ start: 0, count, materialIndex: 0 }]
     const instances = object.isInstancedMesh ? object.count : 1
     const reflects = MIRROR.test(object.name)
+    const flagged = `${part}|${object.name}|${object.castShadow}|${object.receiveShadow}|${object.layers.mask}`
     const corners = object.isMesh ? 3 : object.isLine ? 2 : 1
     for (let k = 0; k < instances; k++) {
       if (object.isInstancedMesh) { object.getMatrixAt(k, instance); world.multiplyMatrices(object.matrixWorld, instance) }
@@ -284,6 +300,9 @@ function contributionOf(part, group, cell) {
           for (let x = x0; x <= x1; x++) for (let y = y0; y <= y1; y++) for (let z = z0; z <= z1; z++) {
             const n = cellNumber(x, y, z)
             add(n, key, a, b)
+            let f = flags.get(n)
+            if (!f) { f = new Set(); flags.set(n, f) }
+            f.add(flagged)
             if (reflects) mirror.add(n)
           }
           if (reflects && corners === 3) mirrorY.push((pA.y + pB.y + pC.y) / 3)
@@ -291,7 +310,7 @@ function contributionOf(part, group, cell) {
       }
     }
   })
-  return { acc, mirror: [...mirror], mirrorY, top, triangles, meshes }
+  return { acc, mirror: [...mirror], mirrorY, top, triangles, meshes, lighting, flags }
 }
 
 /* ---- the world: every part, memoised on the files it read ---- */
@@ -330,7 +349,7 @@ export async function mountWorld({ rev = '', overlay = {}, tier = FILM_TIER, lib
   // the key light's own direction (`stack/light.ts`)
   const sun = [Math.sin(azimuth) * Math.cos(elevation), Math.sin(elevation), -Math.cos(azimuth) * Math.cos(elevation)]
   /* the cells of all parts together */
-  const merged = new Map()
+  const merged = new Map(), flagLines = new Map()
   let top = -Infinity
   const mirror = new Set(), mirrorY = []
   for (const { contribution } of parts) {
@@ -341,7 +360,13 @@ export async function mountWorld({ rev = '', overlay = {}, tier = FILM_TIER, lib
       if (!merged.has(n)) merged.set(n, [])
       for (const [key, [c, a, b]] of held) merged.get(n).push(`${key}|${c}|${a}|${b}`)
     }
+    for (const [n, f] of contribution.flags ?? []) {
+      if (!flagLines.has(n)) flagLines.set(n, [])
+      flagLines.get(n).push(...f)
+    }
   }
+  const flagsOf = new Map()
+  for (const [n, lines] of flagLines) flagsOf.set(n, sha256(lines.sort().join('\n')).slice(0, 20))
   const hashes = new Map()
   for (const [n, lines] of merged) hashes.set(n, sha256(lines.sort().join('\n')).slice(0, 20))
   const mirrorLevel = mirrorY.length ? mirrorY.reduce((s, y) => s + y, 0) / mirrorY.length : undefined
@@ -352,8 +377,11 @@ export async function mountWorld({ rev = '', overlay = {}, tier = FILM_TIER, lib
   plateQuads(check, lib).traverse((o) => { if (o.isMesh) for (const e of o.material.userData.library) claimed.add(e) })
   return {
     tier, sun, parts: parts.map(({ id, reused, ms, contribution }) => ({ id, reused, ms, triangles: contribution.triangles, meshes: contribution.meshes })),
+    // `lighting`: the lights of every part in the scene's own list, which no cell's hash reads
+    lighting: sha256(parts.flatMap((p) => p.contribution.lighting ?? ['unread']).sort().join('\n')).slice(0, 32),
     // `plates`: the cells a plate's quad meets, whose hash reads the store's records (not versioned anywhere)
-    cells: { cell, hashes, top, mirror: [...mirror].sort((a, b) => a - b), mirrorLevel, plates: [...(parts.find((p) => p.id === 'plates')?.contribution.acc.keys() ?? [])].sort((a, b) => a - b) },
+    // `flags`: per cell, the shadow flags and layers of the bodies in it, which its hash does not read
+    cells: { cell, hashes, flags: flagsOf, top, mirror: [...mirror].sort((a, b) => a - b), mirrorLevel, plates: [...(parts.find((p) => p.id === 'plates')?.contribution.acc.keys() ?? [])].sort((a, b) => a - b) },
     files: [...files.entries()].sort(([a], [b]) => (a < b ? -1 : 1)),
     library: lib, claimed,
     // `detail`: each cell's lines (part, drawable, material, count, sums), so a moved cell can name what moved in it
