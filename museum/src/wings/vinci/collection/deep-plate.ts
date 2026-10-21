@@ -13,7 +13,7 @@ import { createDeepPlatePayload, type DeepPlateDetail, type DeepPlatePayload, ty
 import type { DeepTilePyramid } from '../../vitrine/deep-viewer'
 import type { VitrineExhibit, VitrineRect } from '../../vitrine'
 import { validatePaintingRecord } from '../pictures/policy'
-import { createWindowWorkLabel } from '../pictures/policy-label'
+import { createWindowWorkLabel, ORIGINAL_REGISTER } from '../pictures/policy-label'
 import type { HangCatalogue } from './catalogue'
 import { pictureDisplayUV, pictureDisplayWindow } from '../pictures/registration'
 import { plateArchGround } from '../pictures/arch-plate'
@@ -132,6 +132,11 @@ export function sayPictureRecord(full: HTMLElement): void {
   }
   const data = full.querySelector('.picture-machine-chain > summary')
   if (data) data.textContent = say(COMPLETE_DATA)
+  // the old register: its heading and its first line in the page's words, the German line gone with the column
+  const register = full.querySelector('.picture-historical-register > summary')
+  if (register) register.textContent = say(ORIGINAL_REGISTER)
+  const first = full.querySelector('.picture-register-first-en'), firstDe = full.querySelector('.picture-register-first-de')
+  if (first && firstDe) { pairNodes(first, firstDe); firstDe.remove() }
 }
 
 export function vinciDeepPlate(plate: ResolvedPicturePlate):

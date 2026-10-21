@@ -3,7 +3,7 @@
    Creative Commons licence keeps its own name. It imports only the page's
    words and is imported only by the display sites, so a word here moves no
    film key. */
-import { sayAs } from '../content'
+import { sayAs, sayIfKnown } from '../content'
 
 const SHOWN: Readonly<Record<string, { readonly en: string; readonly de: string }>> = {
   'Public domain': { en: 'Public domain', de: 'Gemeinfrei' },
@@ -11,7 +11,9 @@ const SHOWN: Readonly<Record<string, { readonly en: string; readonly de: string 
 
 export function shownLicence(raw: string, language: 'en' | 'de'): string {
   const shown = SHOWN[raw.trim()]
-  return shown ? sayAs(shown, language) : raw
+  if (shown) return sayAs(shown, language)
+  // a line German reads as written (no German side): a catalog language's own words where it holds them
+  return sayIfKnown({ en: raw.trim(), de: '' }) ?? raw
 }
 
 /** every licence line a record shows, in the page's language */

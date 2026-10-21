@@ -48,7 +48,8 @@ const sheetKey = (page: PageRecord): string => page.file.split('/').pop()!.repla
  * so every check that compares the manifest against its register still reads the source. */
 export function shelfInPageWords(codex: string, manifest: Promise<ManifestIndex>): Promise<ManifestIndex> {
   if (!catalogPage()) return manifest
-  sayDataInPlace([TABLE_UI, MIRROR_EXPLANATION, SHELF_BOOKS, CODEX_ENTRIES, CODEX_ABSENCES, codexSides(codex)])
+  // the titles too: the two manuscripts the volume binds are no book of the shelf, yet the record's list names them
+  sayDataInPlace([TABLE_UI, MIRROR_EXPLANATION, SHELF_BOOKS, CODEX_TITLES, CODEX_ENTRIES, CODEX_ABSENCES, codexSides(codex)])
   return manifest.then(index => ({ ...index, all: index.all.map(entry => {
     if (entry.role !== 'codex-page') return entry
     const page = { ...entry } as ManifestEntry & { honesty_en?: string; honesty_de?: string }

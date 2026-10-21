@@ -42,6 +42,12 @@ export function holderLine(work: Pick<PictureWork, 'holder' | 'holder_en' | 'hol
 /** The label's word for a documented work of more than one named hand. */
 export const JOINT_WORK: PictureBilingual = Object.freeze({ en: 'Collaborative work', de: 'Gemeinschaftswerk' })
 
+/** The historical register's heading. English and German read both sides on one line; a catalog page says the pair. */
+export const ORIGINAL_REGISTER: PictureBilingual = Object.freeze({
+  en: 'Original register · before the 9 September 2026 source policy',
+  de: 'Ursprüngliches Verzeichnis · vor der Quellenregelung vom 9. September 2026',
+})
+
 /** Attribution and reproduction permission are independent. A source licence
  * never changes the named work's attribution. Green on a copy documents the
  * stated category, not autograph Leonardo authorship.
@@ -307,11 +313,13 @@ export function createPolicyWorkLabel(work: PictureWork, entries: readonly Resol
       if (source.hash) evidence.append(node('p', 'picture-source-hash', `${source.id}\nSHA-256 ${source.hash}`))
     }
     if (work.de_beatis) {
-      evidence.append(node('p', 'picture-witness', work.de_beatis.quote_it),
-        node('p', 'picture-fact', work.de_beatis.note_en), node('p', 'picture-fact', work.de_beatis.note_de))
+      // each note carries its language, as the facts do, so a record keeps the reader's one
+      const noteEn = node('p', 'picture-fact', work.de_beatis.note_en); noteEn.lang = 'en'
+      const noteDe = node('p', 'picture-fact', work.de_beatis.note_de); noteDe.lang = 'de'
+      evidence.append(node('p', 'picture-witness', work.de_beatis.quote_it), noteEn, noteDe)
     }
     const historic = node('details', 'picture-historical-register')
-    historic.append(node('summary', '', 'Original register · before the 9 September 2026 source policy / Ursprüngliches Verzeichnis · vor der Quellenregelung vom 9. September 2026'))
+    historic.append(node('summary', '', `${ORIGINAL_REGISTER.en} / ${ORIGINAL_REGISTER.de}`))
     historic.append(node('p', 'picture-register-first-en', work.label_first_line_en),
       node('p', 'picture-register-first-de', work.label_first_line_de))
     // The historical class remains auditable, but is never restated as the
