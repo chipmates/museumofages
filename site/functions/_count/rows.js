@@ -21,7 +21,8 @@ export const STEPS = Object.freeze({
   museum_arrival: { needs: ['wing', 'language', 'hold'], source: true },
   // the welcome passed: its door closed and the walk began, once per wing per page load
   museum_welcome: { needs: ['wing', 'language', 'hold'] },
-  museum_stop: { needs: ['wing', 'stop', 'language', 'hold'] },
+  // a stop reached, by its number; only the third stop, the count's real use, may carry the source word
+  museum_stop: { needs: ['wing', 'stop', 'language', 'hold'], source: true, sourceStop: 3 },
   // a walk skipped, by its number (walk 0 is the walk-in, walk n leads to stop n + 1), once per walk per page load
   museum_skip: { needs: ['wing', 'walk', 'language', 'hold'] },
   museum_look: { needs: ['wing', 'look', 'language', 'hold'] },
@@ -86,6 +87,7 @@ export function rowOf(payload, edge) {
   let start = ''
   if (spec.source && payload.source !== undefined) {
     if (!has(SOURCES, payload.source)) return null
+    if (spec.sourceStop !== undefined && payload.stop !== spec.sourceStop) return null
     source = payload.source
   }
   if (spec.start) {

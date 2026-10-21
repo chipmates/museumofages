@@ -12,13 +12,13 @@
                      a look opened, whichever comes first, once per wing
    Every row says how the screen stood at that moment (upright, sideways,
    wide), read from the wing's own form test, and nothing else about it.
-   Arrival and use say where the visit came from, as one word worked out once
-   (sourceWord). Sent from the museum's own hosts only. For the count nothing
-   is stored, the dedup lives in this module's memory, and the one thing read
-   from storage is the probe flag our own test browsers carry. The arrival
-   also hands the wing to museum-entry.ts, which reports the entry only for a
-   tab that holds a yes to the question for visitors from our grant ads; the
-   count itself never reads that entry. */
+   Arrival, use and the third stop say where the visit came from, as one word
+   worked out once (sourceWord). Sent from the museum's own hosts only. For
+   the count nothing is stored, the dedup lives in this module's memory, and
+   the one thing read from storage is the probe flag our own test browsers
+   carry. The arrival also hands the wing to museum-entry.ts, which reports
+   the entry only for a tab that holds a yes to the question for visitors from
+   our grant ads; the count itself never reads that entry. */
 
 import { pageLang } from '../wings/content'
 import { filmForm } from '../wings/vinci/film-cinema'
@@ -105,7 +105,7 @@ function send(step: MuseumStep, fields: { stop?: number; walk?: number; look?: M
   try {
     const url = endpoint()
     if (!url) return
-    const from = step === 'museum_arrival' || step === 'museum_use' ? sourceField() : undefined
+    const from = step === 'museum_arrival' || step === 'museum_use' || (step === 'museum_stop' && fields.stop === 3) ? sourceField() : undefined
     const body = JSON.stringify({ step, wing, stop: fields.stop, walk: fields.walk, look: fields.look, hold: HOLD[filmForm()], language: pageLang(), source: from, probe: probeField() })
     // text/plain keeps both transports a simple request: no preflight, no answer read
     if (typeof navigator.sendBeacon === 'function' && navigator.sendBeacon(url, new Blob([body], { type: 'text/plain' }))) return

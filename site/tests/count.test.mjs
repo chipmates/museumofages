@@ -2,8 +2,10 @@
 //   node --test site/tests/
 import { test } from 'node:test'
 import assert from 'node:assert/strict'
-import { readFileSync } from 'node:fs'
+import { existsSync, readFileSync } from 'node:fs'
+import { createRequire } from 'node:module'
 import { fileURLToPath } from 'node:url'
+import vm from 'node:vm'
 import { onRequestPost } from '../functions/v1/funnel.js'
 import { DEVICES, DOORS, HOLDS, LOOKS, STEPS, deviceOf, rowOf } from '../functions/_count/rows.js'
 import { HOST_LISTS, SOURCES, prefixWord, sourceWord } from '../functions/_count/source.js'
@@ -128,6 +130,26 @@ test('the walk\'s source word is optional, and off its list it writes nothing', 
     await none({ ...GOOD[step], source: 'google' })
     await none({ ...GOOD[step], source: 'Search' })
   }
+})
+
+test('the third stop carries the source word, with or without one; any other stop with a word writes nothing', async () => {
+  const third = { ...GOOD.museum_stop, stop: 3 }
+  assert.deepEqual(await one(third), ROWS.museum_stop)
+  for (const source of SOURCES) {
+    assert.deepEqual(await one({ ...third, source }), ['museum_stop', 'vinci', '3', 'fr', 'sideways', source, '', 'desktop', 'DE', 'probe'])
+  }
+  for (const source of ['google', 'Search', 'search ', '', 'start', null, 1, ['search'], { search: 1 }, 'toString', '__proto__']) {
+    await none({ ...third, source })
+  }
+  for (const stop of [1, 2, 4, WING_STOPS.vinci]) {
+    assert.equal((await one({ ...GOOD.museum_stop, stop }))[5], '')
+    await none({ ...GOOD.museum_stop, stop, source: 'search' })
+    await none({ ...GOOD.museum_stop, stop, source: 'google' })
+  }
+  // the welcome, the skip and the look still take no word: one that rides along is not read
+  for (const step of ['museum_welcome', 'museum_skip', 'museum_look']) assert.equal((await one({ ...GOOD[step], source: 'search' }))[5], '')
+  assert.deepEqual(Object.keys(STEPS).filter((s) => STEPS[s].source === true).sort(), ['museum_arrival', 'museum_stop', 'museum_use'])
+  assert.deepEqual(Object.keys(STEPS).filter((s) => STEPS[s].sourceStop !== undefined), ['museum_stop'])
 })
 
 test('page_arrival: began here with its word, came from the site, or unknown', async () => {
@@ -284,6 +306,69 @@ test('the walk sends exactly the walk steps the function takes', () => {
 test('the walk names the holds and kinds of work the function takes', () => {
   assert.deepEqual(quoted(/export type MuseumHold = ([^\n]*)/.exec(walkModule)[1]), [...HOLDS])
   assert.deepEqual(quoted(/export type MuseumLook = ([^\n]*)/.exec(walkModule)[1]), [...LOOKS])
+})
+
+// the walk's sender itself, one page load per run, with its three imports stood in for
+const museumDir = at('../../museum')
+const walkTs = `${museumDir}/node_modules/typescript`
+const WALK_IMPORTS = { '../wings/content': { pageLang: () => 'de' }, '../wings/vinci/film-cinema': { filmForm: () => 'upright' }, './museum-entry': { sendEntry() {} } }
+
+function walkRun({ path = '/w/vinci', hash = '', edge = null } = {}) {
+  const ts = createRequire(`${museumDir}/package.json`)('typescript')
+  const js = ts.transpileModule(walkModule, { compilerOptions: { target: ts.ScriptTarget.ES2022, module: ts.ModuleKind.CommonJS } }).outputText
+  const sent = []
+  const required = []
+  const exports = {}
+  vm.runInNewContext(js, {
+    exports,
+    require: (name) => { required.push(name); assert.ok(Object.hasOwn(WALK_IMPORTS, name), `the walk's sender imports ${name}`); return WALK_IMPORTS[name] },
+    location: { hostname: 'museumofages.org', pathname: path, hash, search: '' },
+    document: { documentElement: { getAttribute: (n) => (n === 'data-source' ? edge : null) } },
+    localStorage: { getItem: () => null, setItem() {} },
+    navigator: { sendBeacon: (to, blob) => { sent.push(JSON.parse(blob.text)); return to === '/v1/funnel' } },
+    Blob: class { constructor(parts) { this.text = parts.join('') } },
+    URLSearchParams, URL,
+  })
+  assert.deepEqual(required.sort(), Object.keys(WALK_IMPORTS).sort())
+  return { walk: exports, sent }
+}
+const worded = (sent) => sent.map((b) => [b.step === 'museum_stop' ? `stop ${b.stop}` : b.step, b.source ?? null])
+
+test('the walk sends the source word with the arrival, the use and the third stop, and with no other step', { skip: !existsSync(walkTs) && 'the museum\'s typescript is not installed' }, async () => {
+  const { walk, sent } = walkRun({ hash: '#via=search' })
+  walk.countArrival('vinci')
+  walk.countWelcome()
+  walk.countStop(1)
+  walk.countStop(2)
+  walk.countStop(3)
+  walk.countStop(3)
+  walk.countStop(4)
+  walk.countSkip(4)
+  walk.countLook('picture/mona-lisa', 'picture')
+  walk.countStop(WING_STOPS.vinci)
+  assert.deepEqual(worded(sent), [['museum_arrival', 'search'], ['museum_welcome', null], ['stop 1', null], ['stop 2', null],
+    ['museum_use', 'search'], ['stop 3', 'search'], ['stop 4', null], ['museum_skip', null], ['museum_look', null], [`stop ${WING_STOPS.vinci}`, null]])
+  // each beacon makes its row through the real route: the word reaches blob 6 on the three rows that carry it
+  for (const b of sent) assert.equal((await one(b))[5], b.source ?? '', JSON.stringify(b))
+})
+
+test('the third stop takes the visit\'s word by any route: a placed address, the edge, a jump, or no word at all', { skip: !existsSync(walkTs) && 'the museum\'s typescript is not installed' }, async () => {
+  const placed = walkRun({ path: '/a/g/w/vinci', hash: '#via=search', edge: 'forum' })
+  placed.walk.countArrival('vinci')
+  placed.walk.countStop(3)
+  placed.walk.countStop(5)
+  assert.deepEqual(worded(placed.sent), [['museum_arrival', 'ad_grant'], ['stop 3', 'ad_grant'], ['stop 5', null], ['museum_use', 'ad_grant']])
+  const edge = walkRun({ edge: 'forum' })
+  edge.walk.countArrival('vinci')
+  edge.walk.countStop(3)
+  assert.deepEqual(worded(edge.sent), [['museum_arrival', 'forum'], ['stop 3', 'forum']])
+  // a walk opened from the site itself has no word: its third stop carries none and still makes a row
+  const inside = walkRun({ edge: '' })
+  inside.walk.countArrival('vinci')
+  inside.walk.countStop(3)
+  assert.deepEqual(worded(inside.sent), [['museum_arrival', null], ['stop 3', null]])
+  assert.ok(!('source' in inside.sent[1]))
+  assert.equal((await one(inside.sent[1]))[5], '')
 })
 
 test('the question seen and its answer: a word and the page, never the click id, the time, the country or the device', async () => {
@@ -513,7 +598,7 @@ test('a source word on a row of a step that takes none never reaches the row', a
     const row = await one({ ...GOOD[step], ...ride })
     // no step but the page's four carries a start mark
     assert.equal(row[6], '', step)
-    // the walk's arrival and use carry their own word; every other step carries none
+    // the walk's arrival, use and third stop (the sheet's stop) carry their own word; every other step carries none
     assert.equal(row[5], spec.source ? 'ad_grant' : '', step)
   }
   // the question's rows stay bare: the word, the start mark, the country and the device class never reach them
