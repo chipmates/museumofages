@@ -15,7 +15,7 @@
                "wings": {"vinci": "leonard-de-vinci"}, "topics": {"inventions": "inventions", "paintings": "tableaux"}}},
     {"code": "it", "folder": "it/", "html": "it", "name": "Italiano", "og": "it_IT", "deed": "deed.it", "status": "ai",
      "slugs": {"what": "cos-e-questo-museo", "imprint": null, "privacy": "privacy",
-               "wings": {"vinci": "leonardo-da-vinci"}, "topics": {"inventions": "invenzioni", "paintings": "opere", "salvator-mundi": "salvator-mundi", "last-supper": "ultima-cena"}}},
+               "wings": {"vinci": "leonardo-da-vinci"}, "topics": {"inventions": "invenzioni", "paintings": "opere", "salvator-mundi": "salvator-mundi", "lady-with-an-ermine": "dama-con-l-ermellino", "last-supper": "ultima-cena"}}},
     {"code": "es", "folder": "es/", "html": "es", "name": "Español", "og": "es_ES", "deed": "deed.es", "status": "ai",
      "slugs": {"what": "que-es-este-museo", "imprint": null, "privacy": "privacidad",
                "wings": {"vinci": "leonardo-da-vinci", "animals": "animales"},

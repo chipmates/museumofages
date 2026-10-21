@@ -1,0 +1,445 @@
+{
+ "_note": "LE PAROLE della pagina sulla Dama con l’ermellino, in italiano. Riscritte a partire dall’inglese e dal tedesco, con le stesse date, cifre, nomi, gradi di certezza e fonti. La riga di fonte della lastra è quella della pagina delle opere in italiano. Senza lineette, senza punto e virgola. Stato ai: nessuna persona le ha ancora rilette.",
+ "page": {
+  "id": "vinci-lady-with-an-ermine",
+  "wing": "vinci",
+  "topic": "lady-with-an-ermine",
+  "stop": "picture-room",
+  "published": "2026-10-22",
+  "checked": "2026-10-17",
+  "og_image": {
+   "file": "vinci-lady-with-an-ermine-og-{lang}-1200x630.png",
+   "width": 1200,
+   "height": 630,
+   "plate": "vinci-plate-lady-with-an-ermine"
+  }
+ },
+ "pics": {
+  "lady-with-an-ermine": {
+   "stem": "vinci-plate-lady-with-an-ermine",
+   "widths": [
+    320,
+    640
+   ],
+   "sizes": "(min-width: 960px) 320px, 260px"
+  }
+ },
+ "meta": {
+  "title": "Dama con l’ermellino: Cecilia Gallerani | Museum of Ages",
+  "description": "Chi era la Dama con l’ermellino? È quasi certo: Cecilia Gallerani. Cosa significa l’ermellino, dove si trova a Cracovia, il furto vero e la serie Netflix.",
+  "og_title": "Dama con l’ermellino: Cecilia Gallerani",
+  "og_image_alt": "Una riproduzione della Dama con l’ermellino. La giovane donna indossa un abito rosso, con un panno blu su una spalla e una collana di grani scuri, e volta la testa verso destra. Tiene in braccio un ermellino bianco, con la mano sul suo dorso. Lo sfondo è nero, con un’antica scritta nell’angolo in alto a sinistra."
+ },
+ "labels": {
+  "crumbs": "Sei qui",
+  "crumb_home": "Museo",
+  "crumb_here": "Dama con l’ermellino",
+  "toc": "In questa pagina",
+  "mark_documented": "documentato",
+  "mark_inferred": "dedotto",
+  "mark_report": "resoconto",
+  "col_sure": "Quanto è sicuro"
+ },
+ "top": {
+  "h1": "Chi era la Dama con l’ermellino?",
+  "answer": "È quasi certo che la donna sia Cecilia Gallerani, una ragazza di circa sedici o diciassette anni alla corte di Milano e amante del signore della città, Ludovico Sforza. Nessun documento noto la indica come la donna ritratta, ma una poesia e due lettere dell’epoca parlano di un ritratto che Leonardo le aveva fatto, e l’ermellino è interpretato come un gioco di parole sul nome di Cecilia. Leonardo da Vinci l’ha dipinta a Milano intorno al 1490, a olio su una tavola di noce. L’originale è a Cracovia, nel Museo Czartoryski, una sede del Museo nazionale di Cracovia.",
+  "jump": true,
+  "side": true,
+  "faq": true,
+  "plate": {
+   "pic": "lady-with-an-ermine",
+   "shape": "whole",
+   "title": "Dama con l’ermellino, dal 1489 al 1491 circa. Leonardo da Vinci. Muzeum Narodowe w Krakowie, Muzeum Książąt Czartoryskich, Cracovia. Una riproduzione.",
+   "alt": "Una riproduzione della Dama con l’ermellino. La giovane donna indossa un abito rosso, con un panno blu su una spalla e una collana di grani scuri, e volta la testa verso destra. Tiene in braccio un ermellino bianco, con la mano sul suo dorso. Lo sfondo è nero, con un’antica scritta nell’angolo in alto a sinistra.",
+   "src": [
+    "Immagine della collezione del Museo nazionale di Cracovia. Pubblico dominio, tramite ",
+    {
+     "text": "Wikimedia Commons",
+     "href": "https://commons.wikimedia.org/wiki/File:Leonardo_da_Vinci_(1452-1519)_-_Lady_with_an_Ermine_%E2%80%93_Portrait_of_Cecilia_Gallerani_(ca._1473%E2%80%931536)_-_MNK_XII-209_-_National_Museum_Krak%C3%B3w.jpg"
+    },
+    "."
+   ]
+  },
+  "door": {
+   "text": "Vedi la Dama con l’ermellino nell’ala",
+   "note": "Ingresso libero, senza account.",
+   "leads": "Da questa porta arrivi nella sala dei quadri dell’ala, dove la riproduzione del ritratto è appesa tra gli altri dipinti di Leonardo."
+  }
+ },
+ "blocks": [
+  {
+   "type": "question",
+   "id": "who",
+   "nav": "Chi era",
+   "h": "Chi era Cecilia Gallerani?",
+   "answer": "Una giovane donna della corte di Milano. È nata a Milano nel 1473, in una famiglia venuta da Siena, e dal 1489 al 1491 circa è stata l’amante di Ludovico Sforza, che governava Milano e ne è stato duca dal 1494.",
+   "known": [
+    "Suo padre, Fazio, serviva la corte degli Sforza come ambasciatore ed è morto quando lei aveva sette anni, lasciando una famiglia non ricca. Nel novembre 1490 un ambasciatore della corte estense ha riferito che era incinta, e nel gennaio 1491 Ludovico ha sposato Beatrice d’Este. Il figlio di Cecilia, Cesare, è nato nel maggio 1491, e più tardi Cecilia e il bambino sono stati allontanati dalla corte. Nel 1492, con un matrimonio combinato da Ludovico, Cecilia ha sposato il conte Lodovico Carminati, detto Bergamini, e ha vissuto con lui a Milano, nel Palazzo Carmagnola. Gli scrittori del suo tempo lodavano la sua cultura: scriveva poesie in latino e in italiano, nessuna delle quali ci è arrivata, e conosceva il poeta Bernardo Bellincioni e lo scrittore Matteo Bandello. Quando Ludovico è caduto, nel 1499, Cecilia e il marito hanno trovato rifugio presso Isabella d’Este a Mantova, e più tardi sono tornati a Milano."
+   ],
+   "open": "Non si sa con certezza quando sia morta. Sembra che sia vissuta fino al 1536 circa."
+  },
+  {
+   "type": "question",
+   "id": "how-we-know",
+   "nav": "Come lo sappiamo",
+   "h": "Come sappiamo che è Cecilia Gallerani?",
+   "answer": "Da indizi, non da una scritta: nessun documento noto nomina la donna di questa tavola. Che l’abbia dipinta Leonardo non è in dubbio, ma il nome della donna si basa su una poesia, due lettere e l’animale.",
+   "known": [
+    "Il poeta di corte Bernardo Bellincioni ha scritto un sonetto sul ritratto di «Madonna Cecilia» fatto da Leonardo, e vi loda il pittore perché la fa sembrare in ascolto più che intenta a parlare. Il sonetto è stato stampato nel 1493, un anno dopo la morte del poeta, e non nomina mai un ermellino, quindi mostra che Leonardo ha dipinto Cecilia, non che questa tavola sia quel ritratto. Nell’aprile 1498 Isabella d’Este, marchesa di Mantova, ha chiesto a Cecilia di prestarle il ritratto di Cecilia dipinto da Leonardo, per confrontarlo con ritratti di Giovanni Bellini. Cecilia l’ha mandato, scrivendo che non le somigliava più, perché quando era stato fatto lei era molto giovane. L’ermellino è interpretato come un gioco di parole sul nome di Cecilia e come un segno di Ludovico, e l’età che lei aveva intorno al 1490 corrisponde al volto giovane. Il nome è stato proposto per la prima volta intorno al 1900, oggi è l’identificazione accettata, e il museo di Cracovia la considera confermata."
+   ],
+   "open": "Nessun documento noto permette di seguire il ritratto di Cecilia fatto da Leonardo dalle mani di lei fino alla tavola comparsa in Italia intorno al 1800. Quindi il nome si basa su questi indizi, per quanto si accordino bene, e non su un documento.",
+   "end": [
+    [
+     "Quanto siamo sicuri di ciascun dipinto di Leonardo, e dove si trova ognuno: ",
+     {
+      "text": "Le opere di Leonardo da Vinci",
+      "page": "paintings"
+     },
+     "."
+    ]
+   ]
+  },
+  {
+   "type": "question",
+   "id": "where",
+   "nav": "Dove si trova",
+   "h": "Dove si trova la Dama con l’ermellino?",
+   "answer": "L’originale è a Cracovia, nel Museo Czartoryski, in ul. Pijarska 15, una sede del Museo nazionale di Cracovia. Fa parte dell’esposizione permanente ed è dietro un vetro.",
+   "known": [
+    [
+     "È l’unico dipinto di Leonardo in Polonia, e il Museo nazionale di Cracovia ne è proprietario da quando, nel 2016, lo Stato polacco ha comprato la collezione Czartoryski. Il Museo Czartoryski ha riaperto nel dicembre 2019 dopo quasi dieci anni di lavori, e il dipinto è tornato al suo vecchio posto. Orari e prezzi dei biglietti cambiano, quindi verificali sulla ",
+     {
+      "text": "pagina del museo",
+      "href": "https://mnk.pl/en/branches/czartoryski-museum/"
+     },
+     ". Nel dicembre 2019 il futuro direttore del Museo nazionale ha detto all’agenzia di stampa polacca PAP che il dipinto non va in prestito, e che non doveva lasciare il Museo Czartoryski durante il suo mandato di cinque anni."
+    ]
+   ],
+   "open": "Se questa regola valga ancora ora che il suo mandato è finito, non siamo riusciti a scoprirlo.",
+   "end": [
+    [
+     "Quanto alle dimensioni, la tavola di noce misura circa 55 per 40,5 centimetri secondo i restauratori del museo, mentre il catalogo del museo indica 53,4 per 39,3, perché le due cifre misurano cose diverse. Quanto è grande accanto alla Gioconda e alle altre opere di Leonardo: ",
+     {
+      "text": "la pagina delle misure, in inglese",
+      "page": "sizes"
+     }
+    ]
+   ]
+  },
+  {
+   "type": "question",
+   "id": "stolen",
+   "nav": "È stata rubata?",
+   "h": "La Dama con l’ermellino è stata rubata, come nella serie Netflix?",
+   "answer": "Non come racconta la serie: «Berlino e la Dama con l’ermellino» è un’opera di fantasia, e il dipinto è al sicuro a Cracovia. Il suo unico furto noto, però, è stato vero: i nazisti l’hanno portato via nel 1939, e nel 1946 è tornato a casa.",
+   "known": [
+    "La serie è uscita su Netflix il 15 maggio 2026: è il seguito di «Berlino», la serie nata da «La casa di carta», in otto episodi ambientati a Siviglia. Secondo Netflix, la banda finge soltanto di voler rubare il dipinto, mentre il suo vero obiettivo sono un duca e sua moglie. Il furto vero è arrivato con la guerra: la famiglia aveva di nuovo nascosto il dipinto a Sieniawa, e alla fine di settembre 1939 gli occupanti tedeschi l’hanno trovato e portato via. È stato esposto a Berlino ed era destinato al museo che Hitler progettava a Linz, e dal 1940 è rimasto appeso nel castello del Wawel a Cracovia, nella collezione di Hans Frank, il governatore generale tedesco. Alla fine della guerra è stato portato nella villa di Frank a Schliersee, in Baviera, dove le truppe americane l’hanno trovato nel 1945, e nel 1946 era di nuovo nel Museo Czartoryski."
+   ]
+  },
+  {
+   "type": "question",
+   "id": "meaning",
+   "nav": "Cosa significa l’ermellino",
+   "h": "Che cosa significa l’ermellino?",
+   "answer": "Nessun documento noto lo spiega, quindi ogni significato è un’interpretazione. Il museo di Cracovia e la National Gallery di Londra danno entrambi le due letture citate più spesso: l’ermellino rappresenta Ludovico Sforza, e il nome greco dell’animale, galê, richiama quello di Cecilia.",
+   "known": [
+    "Nel 1488 il re di Napoli ha conferito a Ludovico l’Ordine dell’Ermellino, e da allora lo hanno chiamato «Ermellino Bianco». Per il museo di Cracovia il quadro diventa così un doppio ritratto dei due amanti, Cecilia e l’uomo nell’animale. Il gioco di parole passa dal greco: galê, una parola per la donnola o l’ermellino, suona come l’inizio di Gallerani. Il Dizionario Biografico degli Italiani indica un gioco simile nel ritratto di Ginevra de’ Benci dipinto da Leonardo, con il suo ginepro. Entrambi i musei leggono l’ermellino bianco anche come segno di purezza, secondo un’antica credenza che Leonardo stesso ha annotato intorno al 1494: l’ermellino, scriveva, si lascia catturare dai cacciatori piuttosto che fuggire in una tana fangosa e sporcarsi la pelliccia. Il museo di Cracovia aggiunge una quarta lettura: si credeva che le donnole proteggessero le donne incinte, e nel novembre 1490 Cecilia aspettava un figlio da Ludovico."
+   ],
+   "open": "Quale di queste letture intendesse Leonardo, o se ne intendesse più d’una insieme, nessuna fonte può dircelo. Il sonetto di Bellincioni sul ritratto non nomina nemmeno l’animale."
+  },
+  {
+   "type": "question",
+   "id": "worth",
+   "nav": "Quanto vale",
+   "h": "Quanto vale la Dama con l’ermellino?",
+   "answer": "Non esiste un prezzo per il solo dipinto. Nel dicembre 2016 lo Stato polacco ha comprato la collezione Czartoryski, dipinto compreso, per 100 milioni di euro.",
+   "known": [
+    "L’accordo è stato firmato il 29 dicembre 2016 nel Castello Reale di Varsavia, dal ministro della Cultura per lo Stato e dal principe Adam Karol Czartoryski e dalla fondazione della sua famiglia. Per quella somma lo Stato ha ricevuto circa 86.000 oggetti da museo e circa 250.000 libri, manoscritti e stampe antiche, ha riferito l’agenzia di stampa polacca PAP, e un atto separato gli ha promesso in dono gli edifici della collezione a Cracovia. Le stime di allora valutavano l’intera collezione oltre 2 miliardi di euro, e la stampa indicava per il dipinto un valore assicurativo di circa 350 milioni di euro. Il principe ha definito la vendita una donazione, e l’intero consiglio della fondazione si è dimesso quando ha saputo che lui la stava negoziando."
+   ]
+  },
+  {
+   "type": "question",
+   "id": "ermine-or-ferret",
+   "nav": "Ermellino o furetto?",
+   "h": "L’animale è davvero un ermellino, o un furetto?",
+   "answer": "Il museo di Cracovia lo chiama ermellino, nel suo mantello bianco d’inverno. Per un ermellino sembra grande, quindi alcuni ci vedono un furetto, e la questione è ancora aperta.",
+   "known": [
+    "L’ermellino, Mustela erminea, è un piccolo predatore dal corpo allungato e dalle zampe corte, che misura tra i 17 e i 33 centimetri circa dal naso alla base della coda. D’estate è marrone sopra e chiaro sotto, e d’inverno diventa bianco, tranne la punta nera della coda. In un libro di Katarzyna Bik sul dipinto si cita Janusz Wałek, storico dell’arte del museo oggi scomparso, secondo cui l’animale non è preso dal vero, ma è una creazione di Leonardo. Lo studio del museo del 2012 ha anche trovato che Leonardo ha cambiato le dimensioni e la posa dell’animale mentre dipingeva."
+   ],
+   "open": "Non si sa se Leonardo avesse davanti un animale vivo, e non abbiamo trovato nessuno studio di uno zoologo sull’argomento."
+  },
+  {
+   "type": "question",
+   "id": "science",
+   "nav": "Cosa hanno trovato gli scienziati",
+   "h": "Che cosa hanno trovato gli scienziati sotto la pittura?",
+   "answer": "Che lo sfondo nero non è di Leonardo, e che Leonardo ha cambiato idea mentre dipingeva. Ha dipinto l’ermellino sopra la sua prima impostazione della donna e ha fatto il contorno dell’animale un po’ più piccolo.",
+   "known": [
+    "La prima radiografia è stata fatta nel 1945 a Monaco di Baviera, mentre il dipinto era nel deposito d’arte degli Alleati, e negli anni Cinquanta i restauratori di Cracovia e di Varsavia hanno aggiunto fotografie all’ultravioletto e all’infrarosso. Nel 1991 e nel 1992 David Bull, un restauratore che lavorava per la National Gallery of Art di Washington, ha trovato una fila di minuscoli punti di carboncino intorno alla testa e al viso di Cecilia. Mostrano che Leonardo ha riportato la composizione da un disegno a grandezza naturale, e Bull ha trovato anche impronte digitali nella pittura. Nel 2007 la società parigina Lumiere Technology ha scansionato il dipinto dall’ultravioletto all’infrarosso e ha trovato che Leonardo aveva coperto con il colore un nastro che teneva il velo sotto il mento. La squadra del museo lo ha studiato nel 2012 e ha pubblicato i risultati nel 2015 e nel 2024: sotto il nero c’è il fondo grigio scuro di Leonardo, senza finestra né paesaggio, e Leonardo ha cambiato anche la mano e l’abito di Cecilia mentre lavorava. Il nero è arrivato più tardi, in almeno due strati, nel XVIII o nel XIX secolo: lo studio del 2024 dice molto probabilmente il XVIII, la pagina della collezione del museo il XIX."
+   ],
+   "open": "Nel 2014 l’ingegnere francese Pascal Cotte, la cui società aveva fatto la scansione del 2007, ha sostenuto che Leonardo avesse dipinto il quadro in tre fasi: prima senza animale, poi con un ermellino più snello, poi con quello più massiccio che vediamo. Altri esperti non ne sono convinti, e lo studio del museo riporta solo cambiamenti minori nelle dimensioni e nella posa dell’animale.",
+   "end": [
+    "Nella nostra ala di Leonardo la riproduzione del ritratto è appesa nella sala dei quadri, vicina alle sue misure reali, con un primo piano di quel nero."
+   ],
+   "links": [
+    {
+     "text": "Vedi la Dama con l’ermellino nell’ala",
+     "stop": "picture-room"
+    }
+   ]
+  },
+  {
+   "type": "years",
+   "id": "story",
+   "nav": "La sua storia",
+   "h": "La storia del dipinto, da Milano a Cracovia",
+   "intro": "Ogni riga porta un segno. Documentato: lo mostra un documento dell’epoca, o la ricerca del museo stesso. Dedotto: gli studiosi lo deducono da altri indizi. Resoconto: si basa su un solo racconto pubblicato.",
+   "items": [
+    {
+     "id": "story-01",
+     "date": "Intorno al 1490",
+     "k": "mark_inferred",
+     "line": "Leonardo dipinge Cecilia a Milano, su incarico di Ludovico Sforza secondo il museo. L’anno si ricava dallo stile e dall’età di Cecilia."
+    },
+    {
+     "id": "story-02",
+     "date": "1493",
+     "k": "mark_documented",
+     "line": "Le poesie di Bellincioni escono a stampa, e tra queste il suo sonetto sul ritratto di Cecilia fatto da Leonardo."
+    },
+    {
+     "id": "story-03",
+     "date": "Aprile 1498",
+     "k": "mark_documented",
+     "line": "Cecilia presta a Isabella d’Este, a Mantova, il suo ritratto fatto da Leonardo."
+    },
+    {
+     "id": "story-04",
+     "date": "Dal 1498 al 1536 circa",
+     "k": "mark_inferred",
+     "line": "Il ritratto resta probabilmente presso Cecilia fino alla sua morte."
+    },
+    {
+     "id": "story-05",
+     "date": "Intorno al 1800",
+     "k": "mark_documented",
+     "line": "Dopo più di due secoli senza una traccia sicura, il principe Adam Jerzy Czartoryski compra il dipinto in Italia per sua madre, la principessa Izabela Czartoryska, che sta creando a Puławy il primo museo della Polonia."
+    },
+    {
+     "id": "story-06",
+     "date": "1809",
+     "k": "mark_documented",
+     "line": "È esposto nella Casa Gotica di Puławy. A quella data qualcuno ha già dipinto nell’angolo in alto a sinistra un titolo sbagliato, LA BELE FERONIERE, e la W di LEONARD D’AWINCI fa pensare a una mano polacca, dicono i restauratori del museo."
+    },
+    {
+     "id": "story-07",
+     "date": "Dopo il 1831",
+     "k": "mark_documented",
+     "line": "Quando fallisce la rivolta di novembre, la famiglia lo mura per otto anni in una nicchia del suo palazzo di Sieniawa, per sottrarlo alla confisca."
+    },
+    {
+     "id": "story-08",
+     "date": "Dagli anni Quaranta del XIX secolo",
+     "k": "mark_documented",
+     "line": "È custodito a Parigi, all’Hôtel Lambert, la casa della famiglia in esilio, e per decenni il pubblico non lo vede."
+    },
+    {
+     "id": "story-09",
+     "date": "1882",
+     "k": "mark_documented",
+     "line": "Arriva da Parigi a Cracovia ed è esposto nel Museo Czartoryski, che Władysław Czartoryski aveva fondato lì nel 1876."
+    },
+    {
+     "id": "story-10",
+     "date": "Dal 1914 al 1920",
+     "k": "mark_documented",
+     "line": "Per tutta la prima guerra mondiale è custodito nella Pinacoteca di Dresda, dove gli studiosi lo collegano al sonetto di Bellincioni. Nel 1920 torna a Cracovia."
+    },
+    {
+     "id": "story-11",
+     "date": "Settembre 1939",
+     "k": "mark_documented",
+     "line": "È di nuovo nascosto a Sieniawa, e gli occupanti tedeschi lo trovano e lo portano via."
+    },
+    {
+     "id": "story-12",
+     "date": "Dal 1939 al 1945",
+     "k": "mark_documented",
+     "line": "È esposto a Berlino, è destinato al museo di Hitler a Linz, poi è appeso al castello del Wawel, nella collezione di Hans Frank, e la guerra finisce mentre è nella villa di Frank a Schliersee."
+    },
+    {
+     "id": "story-13",
+     "date": "1945",
+     "k": "mark_documented",
+     "line": "Lo trovano le truppe americane. Nel deposito d’arte degli Alleati a Monaco di Baviera gli fanno la prima radiografia e gli incollano l’angolo rotto."
+    },
+    {
+     "id": "story-14",
+     "date": "30 aprile 1946",
+     "k": "mark_report",
+     "line": "Un treno di 27 vagoni con tesori polacchi razziati, tra cui il dipinto, arriva in Polonia sotto scorta statunitense. Poco dopo è di nuovo appeso nel Museo Czartoryski."
+    },
+    {
+     "id": "story-15",
+     "date": "2011",
+     "k": "mark_documented",
+     "line": "Va in prestito a Madrid, a Berlino e alla National Gallery di Londra. Un memorandum firmato in aprile stabilisce che, dopo il ritorno, non sarà prestato di nuovo per almeno dieci anni."
+    },
+    {
+     "id": "story-16",
+     "date": "2012",
+     "k": "mark_documented",
+     "line": "Di nuovo a Cracovia, lo studia la squadra del museo."
+    },
+    {
+     "id": "story-17",
+     "date": "29 dicembre 2016",
+     "k": "mark_documented",
+     "line": "La collezione Czartoryski passa allo Stato polacco, e il dipinto al Museo nazionale di Cracovia."
+    },
+    {
+     "id": "story-18",
+     "date": "Dicembre 2019",
+     "k": "mark_documented",
+     "line": "Il Museo Czartoryski riapre dopo i lavori, e il dipinto torna nella sua vecchia sala."
+    }
+   ],
+   "end": [
+    [
+     "Chi era Leonardo, e l’ala costruita intorno alla sua vita: ",
+     {
+      "text": "Leonardo da Vinci",
+      "wing": ""
+     },
+     "."
+    ]
+   ]
+  },
+  {
+   "type": "sources",
+   "id": "sources",
+   "nav": "",
+   "h": "Fonti",
+   "intro": "I fatti vengono dal Museo nazionale di Cracovia (le sue pagine sulla collezione, l’articolo dei suoi restauratori del 2013 e quello dei suoi scienziati in Technè, 2024), dal Dizionario Biografico degli Italiani, dagli Staatliche Museen zu Berlin, dalla National Gallery di Londra e dagli Archivi nazionali degli Stati Uniti, dalle poesie di Bellincioni e dalle note di Leonardo nelle loro edizioni a stampa, dall’Animal Diversity Web, dall’agenzia di stampa polacca PAP, da Notes from Poland, Euronews, Netflix, Lumiere Technology e Art History News.",
+   "notes": [
+    "Abbiamo letto tutte queste fonti il 17 ottobre 2026:"
+   ],
+   "read": [
+    {
+     "text": "Museo nazionale di Cracovia, la scheda del dipinto nella collezione",
+     "href": "https://mnk.pl/en/collections/lady-with-an-ermine/"
+    },
+    {
+     "text": "Museo nazionale di Cracovia, l’articolo sul dipinto, 2026 (in polacco)",
+     "href": "https://mnk.pl/artykul/leonardo-da-vinci-dama-z-gronostajem-mediolan-ok-1490/"
+    },
+    {
+     "text": "Museo nazionale di Cracovia, il Museo Czartoryski",
+     "href": "https://mnk.pl/en/branches/czartoryski-museum/"
+    },
+    {
+     "text": "Museo nazionale di Cracovia, i suoi restauratori sul dipinto, 2013 (PDF, in polacco)",
+     "href": "https://mnk.pl/wp-content/uploads/2026/05/R4-Chmielewska.pdf"
+    },
+    {
+     "text": "Museo nazionale di Cracovia, i suoi scienziati sui materiali e la tecnica di Leonardo, Technè, 2024",
+     "href": "https://journals.openedition.org/techne/21487?lang=en"
+    },
+    {
+     "text": "Museo nazionale di Cracovia su Google Arts & Culture, «Behind the Mystery of The Lady with an Ermine»",
+     "href": "https://artsandculture.google.com/story/LAWRkq8iKEKGJA"
+    },
+    {
+     "text": "Museo nazionale di Cracovia, i dati di catalogo della sua immagine, su Wikimedia Commons",
+     "href": "https://commons.wikimedia.org/wiki/File:Leonardo_da_Vinci_(1452-1519)_-_Lady_with_an_Ermine_%E2%80%93_Portrait_of_Cecilia_Gallerani_(ca._1473%E2%80%931536)_-_MNK_XII-209_-_National_Museum_Krak%C3%B3w.jpg"
+    },
+    {
+     "text": "Dizionario Biografico degli Italiani, «Gallerani, Cecilia», 1998",
+     "href": "https://www.treccani.it/enciclopedia/cecilia-gallerani_(Dizionario-Biografico)/"
+    },
+    {
+     "text": "National Gallery, Londra, sulla mostra del 2011",
+     "href": "https://www.nationalgallery.org.uk/about-us/press-and-media/press-releases-archive/leonardo-da-vinci-painter-at-the-court-of-milan"
+    },
+    {
+     "text": "Staatliche Museen zu Berlin, 2011 (in tedesco)",
+     "href": "https://www.smb.museum/nachrichten/detail/leonardo-da-vincis-meisterwerk-kommt-nach-berlin/"
+    },
+    {
+     "text": "Archivi nazionali degli Stati Uniti, sul treno del 1946",
+     "href": "https://text-message.blogs.archives.gov/2014/01/09/karol-estreicher-the-polish-monuments-man"
+    },
+    {
+     "text": "Bernardo Bellincioni, Rime, edizione del 1876, sonetto 45",
+     "href": "https://archive.org/details/rimebernardo01belluoft"
+    },
+    {
+     "text": "Julia Cartwright, Isabella d’Este, 1903, sulle lettere del 1498",
+     "href": "https://archive.org/details/isabelladestemar01cartuoft"
+    },
+    {
+     "text": "The Notebooks of Leonardo da Vinci, a cura di J. P. Richter",
+     "href": "https://www.gutenberg.org/ebooks/5000"
+    },
+    {
+     "text": "Animal Diversity Web, l’ermellino",
+     "href": "https://animaldiversity.org/accounts/Mustela_erminea/"
+    },
+    {
+     "text": "PAP su dzieje.pl, i prestiti del 2011 (in polacco)",
+     "href": "https://dzieje.pl/node/46491"
+    },
+    {
+     "text": "PAP su dzieje.pl, l’acquisto davanti al Senato, 2017 (in polacco)",
+     "href": "https://dzieje.pl/dziedzictwo-kulturowe/na-senackiej-komisji-o-zakupie-kolekcji-ksiazat-czartoryskich"
+    },
+    {
+     "text": "PAP su dzieje.pl, il direttore del museo sui prestiti, 2019 (in polacco)",
+     "href": "https://dzieje.pl/node/111510"
+    },
+    {
+     "text": "dzieje.pl, la recensione di un libro sul dipinto, 2019 (in polacco)",
+     "href": "https://dzieje.pl/node/108206"
+    },
+    {
+     "text": "Notes from Poland, sulla riapertura, 2019",
+     "href": "https://notesfrompoland.com/2019/12/21/polands-oldest-museum-reopens-after-ten-years-of-closure-and-controversy/"
+    },
+    {
+     "text": "stol.it, che riporta APA e AFP, sull’acquisto, 2016 (in tedesco)",
+     "href": "https://www.stol.it/artikel/kultur/kunst/polen-erwirbt-da-vincis-dame-mit-dem-hermelin-von-privatsammlung"
+    },
+    {
+     "text": "Euronews, sulla teca di vetro del dipinto, 2024",
+     "href": "https://www.euronews.com/culture/2024/06/28/stop-and-smell-the-art-polish-museum-captures-original-scent-of-da-vincis-lady-with-an-erm"
+    },
+    {
+     "text": "Lumiere Technology, sul suo libro dedicato al dipinto",
+     "href": "https://lumiere-technology.com/?p=770"
+    },
+    {
+     "text": "Art History News, sulla tesi del 2014",
+     "href": "https://arthistorynews.com/articles/3016_Secrets_of_Leonardo_revealed"
+    },
+    {
+     "text": "Netflix, sulla serie",
+     "href": "https://about.netflix.com/en/news/berlin-and-the-lady-with-an-ermine-arrives-to-netflix-on-may-15"
+    }
+   ],
+   "contact": "Se una data, un nome o una frase è sbagliata, scrivici e la correggiamo.",
+   "contact_link": "Vai alle note legali (in inglese)",
+   "what_link": "Che cos’è questo museo"
+  },
+  {
+   "type": "close",
+   "id": "enter",
+   "nav": "",
+   "h": "Vedi la Dama con l’ermellino nell’ala",
+   "p": "Da questa porta entri nella sala dei quadri della nostra ala di Leonardo. Lì la riproduzione del ritratto è appesa insieme agli altri dipinti di Leonardo, e un primo piano mostra il nero che una mano più tarda ha steso sopra il grigio del pittore.",
+   "door": {
+    "text": "Entra nel museo",
+    "note": "Ingresso libero, senza account."
+   }
+  }
+ ]
+}
