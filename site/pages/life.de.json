@@ -192,7 +192,7 @@
               "id": "life-08",
               "date": "7. Juni 1476",
               "k": "mark_documented",
-              "line": "Eine zweite Anzeige nennt dieselben vier. Beide Male werden sie vom Vorwurf losgesprochen, falls keine neue Anzeige kommt."
+              "line": "Eine zweite Anzeige nennt dieselben vier. Sie werden wieder losgesprochen, unter derselben Bedingung."
             },
             {
               "id": "life-09",
@@ -521,7 +521,7 @@
           "nav": "Verheiratet?",
           "q": "War Leonardo da Vinci verheiratet?",
           "a": "Eine Ehe ist nicht bekannt. Kein Dokument aus seinem Leben nennt eine Ehefrau.",
-          "known": "Sein Testament, im April 1519 in Cloux aufgesetzt, vermacht seinem Schüler Melzi seine Bücher und dazu die Instrumente und Bildnisse seiner Kunst als Maler. Es bedenkt Salaì, zwei Bedienstete und seine Halbbrüder. Eine Frau oder ein Kind nennt es nicht, und auch keine andere Quelle, die wir für diese Seite gelesen haben. Das zeigt, was in den Akten fehlt, nicht, wen er geliebt hat."
+          "known": "Sein Testament, im April 1519 in Cloux aufgesetzt, vermacht seinem Schüler Melzi seine Bücher und dazu die Instrumente und Bildnisse, die zu seiner Kunst als Maler gehören. Es bedenkt Salaì, zwei weitere Bedienstete und seine Halbbrüder. Eine Frau oder ein Kind nennt es nicht, und auch keine andere Quelle, die wir für diese Seite gelesen haben. Das zeigt, was in den Akten fehlt, nicht, wen er geliebt hat."
         },
         {
           "id": "children",
@@ -534,8 +534,8 @@
           "id": "sexuality",
           "nav": "Homosexuell?",
           "q": "War Leonardo da Vinci homosexuell?",
-          "a": "Kein Dokument entscheidet das. Die Quellen kennen ein Verfahren von 1476. Die vier Beschuldigten wurden vom Vorwurf losgesprochen, im April und wieder im Juni, jedes Mal unter der Bedingung, dass keine neue Anzeige kam. Eine Ehefrau oder ein Kind von ihm ist nicht bekannt. Viele Jahre teilte er einen Haushalt mit Salaì, später mit Melzi.",
-          "known": "Im April 1476 beschuldigte eine anonyme Anzeige in Florenz ihn und drei andere Männer der Sodomie. Die vier wurden vom Vorwurf losgesprochen, unter der Bedingung, dass keine neue Anzeige kam. Im Juni nannte eine zweite Anzeige dieselben vier. Sie wurden wieder losgesprochen, zu denselben Bedingungen. Eine Anzeige belegt keine Schuld. Mehrere Forscher, unter ihnen Frank Zöllner und Giovanni Dall'Orto, sehen in ihm einen Mann, der Männer liebte. Die Historikerin Elizabeth Abbott hält ihn nach heutigen Begriffen wohl für homosexuell, glaubt aber, er habe sich nach 1476 für ein enthaltsames Leben entschieden, und gibt zu bedenken, dass es Homosexualität als Identität zu seiner Zeit nicht gab. Einige wenige haben nach einer Frau in seinem Leben gesucht, auf sehr dünner Grundlage, und Sigmund Freuds berühmte Deutung von 1910 beruhte auf einem falsch übersetzten Wort. Kein Dokument entscheidet die Frage, weder in die eine noch in die andere Richtung."
+          "a": "Kein Dokument entscheidet das. Überliefert ist ein Verfahren von 1476. Die vier Beschuldigten wurden vom Vorwurf losgesprochen, im April und wieder im Juni, jedes Mal unter der Bedingung, dass sie nicht erneut angezeigt würden. Eine Ehefrau oder ein Kind von ihm ist nicht bekannt. Viele Jahre teilte er einen Haushalt mit Salaì, später mit Melzi.",
+          "known": "Im April 1476 beschuldigte eine anonyme Anzeige in Florenz ihn und drei andere Männer der Sodomie. Die vier wurden vom Vorwurf losgesprochen, unter der Bedingung, dass sie nicht erneut angezeigt würden. Eine neue Anzeige blieb damit möglich. Im Juni nannte eine zweite Anzeige dieselben vier. Sie wurden wieder losgesprochen, unter derselben Bedingung. Eine Anzeige belegt keine Schuld. Mehrere Forscher, unter ihnen Frank Zöllner und Giovanni Dall'Orto, sehen in ihm einen Mann, der Männer liebte. Die Historikerin Elizabeth Abbott hält ihn nach heutigen Begriffen wohl für homosexuell, glaubt aber, er habe sich nach 1476 für ein enthaltsames Leben entschieden, und gibt zu bedenken, dass es Homosexualität als Identität zu seiner Zeit nicht gab. Einige wenige haben nach einer Frau in seinem Leben gesucht, auf sehr dünner Grundlage, und Sigmund Freuds berühmte Deutung von 1910 beruhte auf einem falsch übersetzten Wort. Kein Dokument entscheidet die Frage, weder in die eine noch in die andere Richtung."
         },
         {
           "id": "parents",
@@ -556,7 +556,7 @@
           "nav": "Salaì und Melzi",
           "q": "Wer waren Salaì und Melzi?",
           "a": "Zwei junge Männer aus seinem Haushalt. Salaì kam 1490 als zehnjähriger Junge zu ihm und blieb etwa 25 Jahre, und Francesco Melzi, ein junger Mailänder Adliger, wurde sein Schüler und sein Erbe.",
-          "known": "Salaì hieß eigentlich Gian Giacomo Caprotti und stammte aus Oreno bei Mailand. In der Notiz über seine Ankunft listete Leonardo auch die Diebstähle des Jungen auf und nannte ihn einen Dieb, einen Lügner, einen Dickkopf und einen Vielfraß. Der Spitzname Salaì soll von einem Teufel in Pulcis Gedicht Morgante kommen. Sicher ist das nicht. Melzi kam während seiner zweiten Zeit in Mailand zu ihm, ging mit ihm nach Rom und Frankreich, schrieb den Brief, der seinen Tod meldete, und erbte seine Bücher und die Instrumente und Bildnisse seiner Kunst."
+          "known": "Salaì hieß eigentlich Gian Giacomo Caprotti und stammte aus Oreno bei Mailand. In der Notiz über seine Ankunft listete Leonardo auch die Diebstähle des Jungen auf und nannte ihn einen Dieb, einen Lügner, einen Dickkopf und einen Vielfraß. Der Spitzname Salaì soll von einem Teufel in Pulcis Gedicht Morgante stammen oder eine Kurzform von Saladino sein. Sicher ist das nicht. Melzi kam während seiner zweiten Zeit in Mailand zu ihm, ging mit ihm nach Rom und Frankreich, schrieb den Brief, der seinen Tod meldete, und erbte Leonardos Bücher, dazu die Instrumente und Bildnisse seiner Kunst."
         },
         {
           "id": "left-handed",
@@ -593,7 +593,7 @@
       "id": "sources",
       "nav": "Quellen",
       "h": "Quellen",
-      "intro": "Die Seite stützt sich auf die Dokumente seines Lebens, wie die Forschung sie veröffentlicht hat, von der Notiz seines Großvaters bis zu den Akten von 1476 im Staatsarchiv Florenz, gedruckt von Nino Smiraglia Scognamiglio im Archivio storico dell'arte 1896, auf seine eigenen Notizen in der Ausgabe von J. P. Richter von 1883, auf Vasaris Lebensbeschreibung Leonardos von 1568, auf Gustavo Uziellis Forschungen von 1896, das biografische Lexikon der Treccani, die Chronologie und die Seiten des Museo Galileo in Florenz, das Museo Leonardiano in Vinci, die Untersuchung des Opificio delle Pietre Dure von 2019 an seiner Zeichnung von 1473 in den Uffizien, Walter Isaacsons Biografie von 2017, Live Science und Finestre sull'Arte, den Bericht der Carleton University über einen Vortrag von Elizabeth Abbott und die Chronik des Leonardo-Flügels im Museum, alle gelesen am 17. Oktober 2026, der Druck von 1896 am 21. Oktober.",
+      "intro": "Die Seite stützt sich auf die Dokumente seines Lebens, wie die Forschung sie veröffentlicht hat, von der Notiz seines Großvaters bis zu den Akten von 1476 im Staatsarchiv Florenz, 1896 von Nino Smiraglia Scognamiglio im Archivio storico dell'arte veröffentlicht, auf seine eigenen Notizen in der Ausgabe von J. P. Richter von 1883, auf Vasaris Lebensbeschreibung Leonardos von 1568, auf Gustavo Uziellis Forschungen von 1896, das biografische Lexikon der Treccani, die Chronologie und die Seiten des Museo Galileo in Florenz, das Museo Leonardiano in Vinci, die Untersuchung des Opificio delle Pietre Dure von 2019 an seiner Zeichnung von 1473 in den Uffizien, Walter Isaacsons Biografie von 2017, Live Science und Finestre sull'Arte, den Bericht der Carleton University über einen Vortrag von Elizabeth Abbott und die Chronik des Leonardo-Flügels im Museum, alle am 17. Oktober 2026 gelesen, Smiraglia Scognamiglios Abdruck am 21. Oktober.",
       "notes": [],
       "contact": "Ist ein Datum, ein Name oder ein Satz hier falsch, schreib uns, und wir korrigieren es.",
       "contact_link": "Zum Impressum",

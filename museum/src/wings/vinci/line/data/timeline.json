@@ -307,8 +307,8 @@
       "certainty": "documented",
       "line_en": "An anonymous accusation names him and three others in a sodomy case. An accusation is not a finding of guilt.",
       "line_de": "Eine anonyme Anzeige nennt ihn und drei weitere Männer in einem Sodomieverfahren. Eine Anzeige belegt keine Schuld.",
-      "document": "the register of the Ufficiali di notte e monasteri, Deliberazioni 1475-1476, f. 41v, the entry of 9 April 1476 with the officers' note beside the names. Printed by Nino Smiraglia Scognamiglio, Archivio storico dell'arte, 2nd series, vol. 2 (1896), p. 315",
-      "document_de": "das Register der Ufficiali di notte e monasteri, Deliberazioni 1475-1476, f. 41v, der Eintrag vom 9. April 1476 mit dem Vermerk der Beamten neben den Namen. Gedruckt von Nino Smiraglia Scognamiglio, Archivio storico dell'arte, 2. Serie, Bd. 2 (1896), S. 315",
+      "document": "the register of the Ufficiali di notte e monasteri, Deliberazioni 1475-1476, f. 41v, the entry of 9 April 1476 with the note beside the names. Printed by Nino Smiraglia Scognamiglio, Archivio storico dell'arte, 2nd series, vol. 2 (1896), p. 315",
+      "document_de": "das Register der Ufficiali di notte e monasteri, Deliberazioni 1475-1476, Blatt 41v, der Eintrag vom 9. April 1476 mit dem Vermerk neben den Namen. Veröffentlicht von Nino Smiraglia Scognamiglio, Archivio storico dell'arte, 2. Serie, Bd. 2 (1896), S. 315",
       "holder": "Archivio di Stato di Firenze",
       "plate_file": null,
       "source_url": "https://archive.org/details/archiviostoricodellarte2s2",
@@ -325,7 +325,7 @@
       "sources": [
         {
           "url": "https://archive.org/details/archiviostoricodellarte2s2",
-          "supports": "Both entries of 1476 as printed from the register, with their folios and the officers' notes",
+          "supports": "Both entries of 1476 as printed from the register, with their folios and the notes beside the names",
           "local_source": "Smiraglia Scognamiglio, Nuovi documenti su Leonardo da Vinci, Archivio storico dell'arte, 2nd series, vol. 2 (1896), pp. 313-315",
           "name_en": "Internet Archive, Archivio storico dell’arte of 1896 with both entries",
           "name_de": "Internet Archive, Archivio storico dell’arte von 1896 mit beiden Einträgen"
@@ -356,10 +356,10 @@
       "date": "1476-06-07",
       "date_precision": "day",
       "certainty": "documented",
-      "line_en": "A second denunciation names the same four. Both times they are released from the charge, unless a new denunciation comes.",
-      "line_de": "Eine zweite Anzeige nennt dieselben vier. Beide Male werden sie vom Vorwurf losgesprochen, falls keine neue Anzeige kommt.",
-      "document": "the same register, f. 51r, the entry of 7 June 1476 with the officers' note beside the names. Printed by Nino Smiraglia Scognamiglio, Archivio storico dell'arte, 2nd series, vol. 2 (1896), p. 315",
-      "document_de": "dasselbe Register, f. 51r, der Eintrag vom 7. Juni 1476 mit dem Vermerk der Beamten neben den Namen. Gedruckt von Nino Smiraglia Scognamiglio, Archivio storico dell'arte, 2. Serie, Bd. 2 (1896), S. 315",
+      "line_en": "A second denunciation names the same four. They are released again on the same condition.",
+      "line_de": "Eine zweite Anzeige nennt dieselben vier. Sie werden wieder losgesprochen, unter derselben Bedingung.",
+      "document": "the same register, f. 51r, the entry of 7 June 1476 with the note beside the names. Printed by Nino Smiraglia Scognamiglio, Archivio storico dell'arte, 2nd series, vol. 2 (1896), p. 315",
+      "document_de": "dasselbe Register, Blatt 51r, der Eintrag vom 7. Juni 1476 mit dem Vermerk neben den Namen. Veröffentlicht von Nino Smiraglia Scognamiglio, Archivio storico dell'arte, 2. Serie, Bd. 2 (1896), S. 315",
       "holder": "Archivio di Stato di Firenze",
       "plate_file": null,
       "source_url": "https://archive.org/details/archiviostoricodellarte2s2",
@@ -376,7 +376,7 @@
       "sources": [
         {
           "url": "https://archive.org/details/archiviostoricodellarte2s2",
-          "supports": "Both entries of 1476 as printed from the register, with their folios and the officers' notes",
+          "supports": "Both entries of 1476 as printed from the register, with their folios and the notes beside the names",
           "local_source": "Smiraglia Scognamiglio, Nuovi documenti su Leonardo da Vinci, Archivio storico dell'arte, 2nd series, vol. 2 (1896), pp. 313-315",
           "name_en": "Internet Archive, Archivio storico dell’arte of 1896 with both entries",
           "name_de": "Internet Archive, Archivio storico dell’arte von 1896 mit beiden Einträgen"
@@ -411,8 +411,8 @@
       "display_order": 8,
       "gaps_de": [],
       "date_certainty": null,
-      "date_note_en": "The register's print reads 7 June. Gustavo Uzielli's extract of 1896 gives 9 June.",
-      "date_note_de": "Im Druck des Registers steht der 7. Juni, in Gustavo Uziellis Auszug von 1896 der 9. Juni.",
+      "date_note_en": "Smiraglia Scognamiglio's print reads 7 June. Gustavo Uzielli's extract of 1896 gives 9 June.",
+      "date_note_de": "Im Abdruck von Smiraglia Scognamiglio steht der 7. Juni, in Gustavo Uziellis Auszug von 1896 der 9. Juni.",
       "date_note_source": "Smiraglia Scognamiglio 1896, p. 315 (die vij Juni) · Uzielli, Ricerche, serie prima, 2nd ed. 1896, p. 201 n. 1 (9 di Giugno)"
     },
     {
