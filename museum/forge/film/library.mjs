@@ -36,6 +36,11 @@
 //            id alone: every read of it writes the page (the station card,
 //            the phone's box, the sources window's word of certainty), and
 //            every read of a property of that name in the app is audited.
+//   PAGE     (from library-placed-v5) three more words files, read the same
+//            way: a picture's label and its visitor copy, and the life
+//            record's source readings. A letter module of a bench page that
+//            only the bench opens, by import(), sets their words on the bench
+//            alone (`BENCH_LETTER_PAGES`).
 //
 // Everything else a record's text or bytes can reach stays in the global key.
 // What no wire can see: a page module that throws while the table is built
@@ -57,8 +62,11 @@ const git = (args, opts = {}) => execFileSync('git', ['-C', APP_ROOT, ...args], 
 /* ---- a revision's own files ---- */
 function commitOf(rev) {
   const top = git(['rev-parse', '--show-toplevel']).trim()
-  const prefix = path.relative(top, APP_ROOT).split(path.sep).join('/')
+  const here = path.relative(top, APP_ROOT).split(path.sep).join('/')
   const commit = git(['rev-parse', '--verify', `${rev}^{commit}`]).trim()
+  // before the app's folder was renamed, commits hold it in nightagora/ (as `load.mjs` reads them)
+  const holds = (dir) => git(['-C', top, 'ls-tree', '--name-only', commit, '--', `${dir}/src`]).trim() !== ''
+  const prefix = holds(here) || here === 'nightagora' || !holds('nightagora') ? here : 'nightagora'
   return { top, prefix, commit }
 }
 /** Every blob under `dir` (relative to the app) at a revision, read in one batch: path -> text. */
@@ -198,13 +206,17 @@ export function importGraph(sources) {
 /* ---- WORDS ---- */
 /** The words files whose display texts no frame can show, while the wire holds. */
 export const WORDS_FILES = [`${WING_DIR}/content.ts`, `${WING_DIR}/story.ts`, `${WING_DIR}/table/content.ts`]
+/** (from library-placed-v5) the files whose display texts the page shows beside the frames: a picture's
+    label and its visitor copy, and the life record's source readings. Each is the recipe of a record the
+    global key kept whole, so a word of theirs re-rendered every entry. */
+export const WORDS_FILES_V5 = [...WORDS_FILES, ...['pictures/policy-label.ts', 'pictures/visitor-copy.ts', 'line/bench/visitor-sources.ts'].map((f) => `${WING_DIR}/${f}`)]
 /** A property whose strings are displayed text and nothing else. */
 export const DISPLAY_KEY = /^(?:en|de)$|[a-z0-9](?:En|De)$|_(?:en|de)$/
 /** A property whose whole value is displayed text or its absence: a stop's second layer only shows or hides "Read more". */
 export const DISPLAY_WHOLE_KEY = /^drawer$/
 /** The letter modules: the only code that makes text into geometry. */
 export const LETTER_MODULES = ['words/index.ts', 'words/font.ts', 'words/outline.ts'].map((f) => `${WING_DIR}/${f}`)
-const CANVAS_TEXT = /\.(?:fillText|strokeText)\s*\(/
+export const CANVAS_TEXT = /\.(?:fillText|strokeText)\s*\(/
 /**
  * THE MODULES THROUGH WHICH A WORDS FILE'S VALUES MEET THE LETTER MODULES,
  * and why none of them hands a display text to a letter (audited 2026-09-30).
@@ -227,6 +239,16 @@ export const WORDS_BRIDGES = {
   'src/wings/vinci/collection/close-look.ts': "the close look (the interface): its words draw into the page; its one canvas is the machine island, built from a machine's slug",
   'src/wings/vinci/collection/exhibits.ts': 'calls the letter modules (grave, line floor, court plaque) with their own data; it holds no words-file value (its paths to the words files are the reading table and the strip, which hand it none)',
   [`${WING_DIR}/index.ts`]: 'reaches the letter modules only through the names in INDEX_LETTER_NAMES, none of which takes a text',
+}
+/**
+ * A LETTER MODULE OF A BENCH PAGE (from library-placed-v5): the bench opens it
+ * by import() when it opens it, which the wing never does, so what it draws
+ * from a words file is drawn on the bench alone (audited 2026-10-21). Its
+ * importers are held to that: a bench opener (`TABLE_BENCH_OPENERS`) importing
+ * it by import() only, or the wire trips.
+ */
+export const BENCH_LETTER_PAGES = {
+  [`${WING_DIR}/line/bench/index.ts`]: "the life line's bench: it sets the inscription carrier's letters and the source readings on the bench page",
 }
 /** What the wing's index imports from modules that reach a letter module; a new name trips the wire. */
 export const INDEX_LETTER_NAMES = {
@@ -482,17 +504,20 @@ export function wordsPlacement({ sources, graph, worldFiles = new Set(), stateme
     (LETTER_MODULES.includes(f) || (graph.edges.get(f) ?? []).some((e) => LETTER_MODULES.includes(e.to)) || CANVAS_TEXT.test(sources.get(f)))))
   const canvasText = [...sources].filter(([f, t]) => f.endsWith('.ts') && CANVAS_TEXT.test(t)).map(([f]) => f)
   const out = {}
-  for (const file of WORDS_FILES) {
+  for (const file of WORDS_FILES_V5) {
     const why = (() => {
       if (!sources.has(file)) return 'not in the tree'
       if (canvasText.length) return `text is drawn into a canvas in ${canvasText[0]}`
       if (worldFiles.has(file)) return 'a part of the world reads it'
       if (letters.has(file)) return 'it is a letter module'
       const importers = graph.importersOf(file)
-      const drawer = [...importers].find((f) => letters.has(f))
+      // a bench page counts only for the definition that knows it, and only while the bench alone opens it
+      const benchPage = (f) => !WORDS_FILES.includes(file) && Boolean(BENCH_LETTER_PAGES[f]) &&
+        [...(graph.importers.get(f) ?? [])].every((i) => TABLE_BENCH_OPENERS[i] && importsHere(sources, i).filter((x) => x.to === f).every((x) => x.dynamic))
+      const drawer = [...importers].find((f) => letters.has(f) && !benchPage(f))
       if (drawer) return `the letter module ${drawer} imports it`
       for (const bridge of importers) {
-        if (!graph.reaches(bridge, letters)) continue
+        if (!graph.reaches(bridge, letters) || benchPage(bridge)) continue
         if (!WORDS_BRIDGES[bridge]) return `${bridge} imports it and reaches a letter module`
       }
       // the index: only the audited names from modules that reach a letter module, and their audited parameters
@@ -508,9 +533,9 @@ export function wordsPlacement({ sources, graph, worldFiles = new Set(), stateme
         const now = parametersOf(sources.get(module), name)
         if (now !== params) return `${module}#${name} takes (${now}), audited (${params})`
       }
-      // the exhibits: only the audited names from modules that reach a words file
+      // the exhibits: only the audited names from modules that reach a words file (of the definition that reads this one)
       const exhibits = `${WING_DIR}/collection/exhibits.ts`
-      const words = new Set(WORDS_FILES)
+      const words = new Set(WORDS_FILES.includes(file) ? WORDS_FILES : WORDS_FILES_V5)
       for (const e of graph.edges.get(exhibits) ?? []) {
         if (!(words.has(e.to) || graph.reaches(e.to, words))) continue
         const allowed = EXHIBITS_WORDS_NAMES[e.to]

@@ -467,11 +467,12 @@ test("a release is held under its own definition: one planned before the library
 })
 
 test('a release under the definition now reads the tree under it; one under an older placed definition still reads the tree under its own', () => {
-  const V2 = 'library-placed-v2', V3 = 'library-placed-v3'
-  assert.equal(clean.global.definition, 'library-placed-v4')
+  const V2 = 'library-placed-v2', V3 = 'library-placed-v3', V4 = 'library-placed-v4'
+  assert.equal(clean.global.definition, 'library-placed-v5')
   assert.equal(clean.globals[clean.global.definition], clean.global)
   assert.notEqual(clean.globals[V2].key, clean.global.key)
   assert.notEqual(clean.globals[V3].key, clean.global.key)
+  assert.notEqual(clean.globals[V4].key, clean.global.key)
   assert.notEqual(clean.globals[V3].key, clean.globals[V2].key)
   const under = (definition, global) => {
     const store = release.fork()
@@ -490,7 +491,7 @@ test('a release under the definition now reads the tree under it; one under an o
   const now = under(clean.global.definition, clean.global.key)
   assert.deepEqual(now.red, [])
   assert.ok(!now.notes.some((n) => n.startsWith('the global key is read under')), 'the definition now needs no note')
-  for (const older of [V2, V3]) {
+  for (const older of [V2, V3, V4]) {
     const held = under(older, clean.globals[older].key)
     assert.deepEqual(held.red, [], `a release under ${older} is held against the tree under it`)
     assert.ok(held.notes.some((n) => n.startsWith(`the global key is read under ${older}`)))

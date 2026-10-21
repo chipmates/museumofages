@@ -18,7 +18,7 @@ import path from 'node:path'
 import { pathToFileURL } from 'node:url'
 import ts from 'typescript'
 import { GLOBAL_DEFINITION, GLOBAL_DEFINITIONS, addedParts, carriedElsewhere, drawable, globalKey, placeLibrary, recipeFilesOf } from './keys.mjs'
-import { BUILT_FLAGS, BUILT_READS, READER_ROLES, STATEMENT_HELPERS, STATEMENT_RECORD_READERS, TABLE_BENCH_FILES, TABLE_DOM_FILES, WORDS_FILES, benchPlacement, blankDisplay, builtPlacement, importGraph, libraryAt,
+import { BUILT_FLAGS, BUILT_READS, READER_ROLES, STATEMENT_HELPERS, STATEMENT_RECORD_READERS, TABLE_BENCH_FILES, TABLE_DOM_FILES, WORDS_FILES, WORDS_FILES_V5, benchPlacement, blankDisplay, builtPlacement, importGraph, libraryAt,
   panelStyleScoped, propertyReads, readerPlacement, sourcesAt, statementOf, statementShape, statementsPlacement, tablePlacement, wordsPlacement } from './library.mjs'
 import { APP_ROOT, WING_DIR, createLoader } from './load.mjs'
 import { libraryOf, mountWorld } from './scene.mjs'
@@ -36,7 +36,7 @@ const rerecord = (library, overlay) => library.map((e) => {
   return files.length === 1 && files[0] in overlay ? { ...e, sha256: sha256(overlay[files[0]]) } : e
 })
 const store = libraryAt()
-const V2 = 'library-placed-v2', V3 = 'library-placed-v3'
+const V2 = 'library-placed-v2', V3 = 'library-placed-v3', V4 = 'library-placed-v4'
 const CONTENT = `${WING_DIR}/content.ts`, STORY = `${WING_DIR}/story.ts`, TABLE = `${WING_DIR}/table/content.ts`
 let worldFiles, world
 before(async () => { world = await mountWorld({ library: store }); worldFiles = world.files.map(([f]) => f) })
@@ -45,7 +45,7 @@ before(async () => { world = await mountWorld({ library: store }); worldFiles = 
 async function keysAt(overlay = {}, library = store) {
   const loader = await createLoader({ overlay })
   const placement = placeLibrary({ overlay, loader, worldFiles })
-  return { now: globalKey(loader, { library, placement }), v3: globalKey(loader, { library, placement, definition: V3 }), v2: globalKey(loader, { library, placement, definition: V2 }),
+  return { now: globalKey(loader, { library, placement }), v4: globalKey(loader, { library, placement, definition: V4 }), v3: globalKey(loader, { library, placement, definition: V3 }), v2: globalKey(loader, { library, placement, definition: V2 }),
     before: globalKey(loader, { library, definition: 'v1' }), placement }
 }
 const movedParts = (a, b) => [...new Set([...Object.keys(a.parts), ...Object.keys(b.parts)])].filter((k) => a.parts[k] !== b.parts[k]).sort()
@@ -292,6 +292,9 @@ async function codeAt(rev) {
   try { return await import(pathToFileURL(path.join(dir, 'keys.mjs')).href) } finally { rmSync(dir, { recursive: true, force: true }) }
 }
 
+/** A placement with the words of the files the fourth definition knew alone, as the code before the fifth placed them. */
+const ownWords = (placement) => ({ ...placement, words: Object.fromEntries(Object.entries(placement.words).filter(([f]) => WORDS_FILES.includes(f))) })
+
 /* ---- the fourth definition: a statement's record sentences and a station's built flag ---- */
 const INDEX = `${WING_DIR}/index.ts`
 const WORDS_PART = 'words records, their display texts left out'
@@ -514,16 +517,14 @@ test("the built flag's wire trips for a reader that is not audited, and the flag
 })
 
 test('the fourth definition reads less of a words file than the third and the same of everything else: nothing is added', async () => {
-  assert.equal(GLOBAL_DEFINITION, 'library-placed-v4')
-  assert.deepEqual(GLOBAL_DEFINITIONS, ['v1', V2, V3, GLOBAL_DEFINITION])
   const loader = await createLoader()
-  assert.deepEqual(addedParts(loader, V3, GLOBAL_DEFINITION), {}, 'nothing is added since the third')
-  assert.deepEqual(addedParts(loader, V2, GLOBAL_DEFINITION), {}, 'nor since the second')
-  assert.deepEqual(addedParts(loader, 'v1', GLOBAL_DEFINITION), addedParts(loader, 'v1', V3), 'since the first, what the third added')
+  assert.deepEqual(addedParts(loader, V3, V4), {}, 'nothing is added since the third')
+  assert.deepEqual(addedParts(loader, V2, V4), {}, 'nor since the second')
+  assert.deepEqual(addedParts(loader, 'v1', V4), addedParts(loader, 'v1', V3), 'since the first, what the third added')
   // on the same tree the two keys differ by the words part and the name alone
   const base = await keysAt()
-  assert.deepEqual(movedParts(base.v3, base.now), ['definition', WORDS_PART])
-  assert.deepEqual(Object.keys(base.now.parts).sort(), Object.keys(base.v3.parts).sort(), 'the same parts by name')
+  assert.deepEqual(movedParts(base.v3, base.v4), ['definition', WORDS_PART])
+  assert.deepEqual(Object.keys(base.v4.parts).sort(), Object.keys(base.v3.parts).sort(), 'the same parts by name')
   // what the fourth reads of a words file is told by what the third reads of it: it can stand where the third moves, never move where the third stands
   for (const file of WORDS_FILES) {
     const text = read(file), out = { statement: STATEMENT_HELPERS[file] ?? null, built: BUILT_FLAGS[file] ?? null }
@@ -533,7 +534,23 @@ test('the fourth definition reads less of a words file than the third and the sa
   const sources = sourcesAt()
   const off = { ...base.placement, words: wordsPlacement({ sources, graph: importGraph(sources), worldFiles: new Set(worldFiles), statements: { placed: false, why: 'test' }, built: { placed: false, why: 'test' } }) }
   assert.equal(off.words[CONTENT].blanked4, off.words[CONTENT].blanked)
-  assert.equal(globalKey(loader, { library: store, placement: off }).parts[WORDS_PART], base.v3.parts[WORDS_PART])
+  assert.equal(globalKey(loader, { library: store, placement: off, definition: V4 }).parts[WORDS_PART], base.v3.parts[WORDS_PART])
+})
+
+test('the fifth definition reads three more files as words files and the same of everything else: nothing is added', async () => {
+  assert.equal(GLOBAL_DEFINITION, 'library-placed-v5')
+  assert.deepEqual(GLOBAL_DEFINITIONS, ['v1', V2, V3, V4, GLOBAL_DEFINITION])
+  assert.deepEqual(WORDS_FILES_V5.slice(0, WORDS_FILES.length), WORDS_FILES, 'the fourth\'s files first, as they were')
+  const loader = await createLoader()
+  assert.deepEqual(addedParts(loader, V4, GLOBAL_DEFINITION), {}, 'nothing is added since the fourth')
+  const base = await keysAt()
+  // the three files' records leave the kept records for the words part; nothing else moves
+  assert.deepEqual(movedParts(base.v4, base.now), ['definition', 'library sets no plate claims', WORDS_PART])
+  assert.deepEqual(Object.keys(base.now.parts).sort(), Object.keys(base.v4.parts).sort(), 'the same parts by name')
+  for (const f of WORDS_FILES_V5.slice(WORDS_FILES.length)) assert.equal(base.placement.words[f]?.placed, true, `${f}: placed on this tree`)
+  // with the three files not placed the fifth keys as the fourth, its name aside
+  const off = { ...base.placement, words: Object.fromEntries(Object.entries(base.placement.words).map(([f, w]) => [f, WORDS_FILES.includes(f) ? w : { ...w, placed: false }])) }
+  assert.deepEqual(movedParts(globalKey(loader, { library: store, placement: off, definition: V4 }), globalKey(loader, { library: store, placement: off })), ['definition'])
 })
 
 test('the older definitions key byte for byte as the code of 1401b3b9 keyed them', async () => {
@@ -541,8 +558,9 @@ test('the older definitions key byte for byte as the code of 1401b3b9 keyed them
   assert.equal(then.GLOBAL_DEFINITION, V2)
   const loader = await createLoader()
   const args = { library: world.library, claimed: world.claimed }
-  // both sides read today's wires: a newly audited bridge moves what is placed, never how a definition keys it
-  const placedNow = placeLibrary({ loader, worldFiles })
+  // both sides read today's wires: a newly audited bridge moves what is placed, never how a definition keys it;
+  // the files a later definition reads as words files are no words files to that code
+  const placedNow = ownWords(placeLibrary({ loader, worldFiles }))
   for (const definition of ['v1', V2]) {
     const was = then.globalKey(loader, { ...args, definition, placement: placedNow })
     const is = globalKey(loader, { ...args, definition, placement: placedNow })
@@ -558,7 +576,7 @@ test('the third definition, and the two before it, key byte for byte as the code
   assert.equal(then.GLOBAL_DEFINITION, V3)
   const loader = await createLoader()
   const args = { library: world.library, claimed: world.claimed }
-  const placedNow = placeLibrary({ loader, worldFiles })
+  const placedNow = ownWords(placeLibrary({ loader, worldFiles }))
   // the wires of that code read the tree as today's do
   const placedThen = then.placeLibrary({ loader, worldFiles })
   for (const wire of ['reader', 'table', 'bench']) assert.deepEqual(placedNow[wire], placedThen[wire], `${wire}: the same wire`)

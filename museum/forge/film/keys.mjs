@@ -10,7 +10,9 @@
 //             no frame can show (`library.mjs`): the display texts of the
 //             words records, the flat reader's records, the reading table's
 //             page and bench (the panel's shelf state stays), a statement's
-//             record sentences and a station's built flag
+//             record sentences, a station's built flag, and the display texts
+//             of a picture's label and visitor copy and of the life record's
+//             source readings
 //   DELIVERY  the job image, the encoder and the rungs; a clip exempt from
 //             its byte line says so
 //
@@ -23,20 +25,22 @@ import { FILM_PACE, FPS, FRAMINGS, buildGraph } from './graph.mjs'
 import { WING_DIR, createLoader } from './load.mjs'
 import { canonicalPrint, openReplay, replayEdge, trackKey } from './replay.mjs'
 import { mountWorld } from './scene.mjs'
-import { READER_ROLES, TABLE_BENCH_FILES, TABLE_DOM_FILES, benchPlacement, builtPlacement, fileAt, importGraph, libraryAt, readerPlacement, sourcesAt, statementsPlacement, tablePlacement, wordsPlacement } from './library.mjs'
+import { CANVAS_TEXT, DISPLAY_KEY, LETTER_MODULES, READER_ROLES, TABLE_BENCH_FILES, TABLE_DOM_FILES, WORDS_FILES, WORDS_FILES_V5, benchPlacement, builtPlacement, fileAt, importGraph, libraryAt, readerPlacement, sourcesAt, statementsPlacement, tablePlacement, wordsPlacement } from './library.mjs'
 import { buildIndex, seenSet } from './seen.mjs'
 import { eveningTrack } from './evening.mjs'
 
 export const KEYS_FORMAT = 'vinci-film-keys-v1'
 /** THE GLOBAL KEY'S DEFINITION. `v1` kept every library record no plate
     claims; `library-placed-v2` leaves out what no frame can show;
-    `library-placed-v3` the reading table's page and bench as well; this one
-    reads two more things of a words file as display: a statement's record
-    sentences and a station's built flag. A job and a release name the
-    definition their global key was taken under (`carry.mjs`); every
-    definition here stays computable, oldest first. */
-export const GLOBAL_DEFINITION = 'library-placed-v4'
-export const GLOBAL_DEFINITIONS = ['v1', 'library-placed-v2', 'library-placed-v3', GLOBAL_DEFINITION]
+    `library-placed-v3` the reading table's page and bench as well;
+    `library-placed-v4` reads two more things of a words file as display: a
+    statement's record sentences and a station's built flag; this one reads
+    three more files as words files (`WORDS_FILES_V5`: a picture's label and
+    visitor copy, the life record's source readings). A job and a release
+    name the definition their global key was taken under (`carry.mjs`);
+    every definition here stays computable, oldest first. */
+export const GLOBAL_DEFINITION = 'library-placed-v5'
+export const GLOBAL_DEFINITIONS = ['v1', 'library-placed-v2', 'library-placed-v3', 'library-placed-v4', GLOBAL_DEFINITION]
 const sha256 = (text) => createHash('sha256').update(text).digest('hex')
 const short = (text) => sha256(text).slice(0, 32)
 
@@ -103,8 +107,8 @@ export function foreignParts(loader, definition = GLOBAL_DEFINITION) {
 /** The parts a definition reads that an older one did not: a carry holds them
     equal between a record's render tree and the tree now. The table's shelf
     state is no such part: the older definitions read the whole panel. Nor is
-    anything of the fourth: it reads less of a words file than the third, and
-    the same of everything else. */
+    anything of the fourth or the fifth: each reads less of the words files
+    than the one before, and the same of everything else. */
 export function addedParts(loader, from = 'v1', to = GLOBAL_DEFINITION) {
   const before = foreignParts(loader, from)
   return Object.fromEntries(Object.entries(foreignParts(loader, to)).filter(([k]) => !(k in before)).sort())
@@ -278,7 +282,59 @@ export const INTERFACE_FILES = ['src/wings/content.ts', 'src/wings/frame.ts', 's
 export const isInterface = (file) => file.startsWith('src/content/') || INTERFACE_FILES.includes(file)
 /** every machine the island can build: the modules the machines' index builds from */
 export const machineSlugs = (loader) => [...loader.text(`${WING_DIR}/machines/index.ts`).matchAll(/import\s*\{\s*build\s+as\s+\w+\s*\}\s*from\s*'\.\/([a-z-]+)'/g)].map((m) => m[1])
-export function cycleKey(loader, slug) {
+/** THE CYCLE KEY'S DEFINITION. `cycle-v1` read every file whole; this one
+    reads a data file of the set other than the machine's own with its display
+    texts blanked (`DISPLAY_KEY`, as a words file's, and the prose fields
+    `CYCLE_PROSE` names), and a data file only the close look's payload
+    declarations read as the properties they take of it, while no module of
+    the set can put a text into the island: none draws text into a canvas,
+    none is or reaches a letter module. A job names the definition its cycle
+    keys were taken under (`carry.mjs`); every definition here stays
+    computable. */
+export const CYCLE_DEFINITION = 'cycle-display-v2'
+export const CYCLE_DEFINITIONS = ['cycle-v1', CYCLE_DEFINITION]
+/** Prose fields of a data file the island's set reads, audited 2026-10-21: the
+    machine record's sections, gaps and scope are written into the close
+    look's record page; the payload takes a record's title and folio alone. */
+export const CYCLE_PROSE = { [`${WING_DIR}/machines/data/records.json`]: ['body', 'gaps', 'scope'] }
+/** A JSON value with every string under a display property blanked and a named prose property's whole value, in a canonical form. */
+export function blankJsonDisplay(value, prose = []) {
+  const blank = (v) => (typeof v === 'string' ? '·' : Array.isArray(v) ? v.map(blank) : v && typeof v === 'object' ? Object.fromEntries(Object.entries(v).map(([k, x]) => [k, blank(x)])) : v)
+  const walk = (v) => (Array.isArray(v) ? v.map(walk) : v && typeof v === 'object' ? Object.fromEntries(Object.entries(v).map(([k, x]) => [k, prose.includes(k) ? '·' : DISPLAY_KEY.test(k) ? blank(x) : walk(x)])) : v)
+  return JSON.stringify(walk(typeof value === 'string' ? JSON.parse(value) : value))
+}
+/** THE PROPERTIES A MODULE'S DECLARATIONS TAKE OF THE DATA FILES IT IMPORTS:
+    every use of a data import's name inside `texts` must be `JSON.parse(name)`
+    read by one property, or the file is read whole. Map file -> Set | 'whole'. */
+export function dataSlices(loader, file, texts) {
+  const source = ts.createSourceFile(file, loader.text(file), ts.ScriptTarget.ES2022, true)
+  const bound = new Map()
+  for (const st of source.statements) {
+    if (!ts.isImportDeclaration(st) || !st.importClause?.name || !/\.json(\?raw)?$/.test(st.moduleSpecifier.text)) continue
+    const to = resolveImport(loader, file, st.moduleSpecifier.text)
+    if (to) bound.set(st.importClause.name.text, to)
+  }
+  const out = new Map()
+  const take = (to, prop) => { const now = out.get(to); if (now === 'whole') return; if (prop === null) out.set(to, 'whole'); else out.set(to, new Set([...(now ?? []), prop])) }
+  for (const text of texts) {
+    const visit = (n) => {
+      if (ts.isIdentifier(n) && bound.has(n.text) && !(ts.isPropertyAccessExpression(n.parent) && n.parent.name === n)) {
+        let at = n.parent
+        const parsed = at && ts.isCallExpression(at) && at.arguments.length === 1 && at.expression.getText() === 'JSON.parse'
+        if (parsed) {
+          at = at.parent
+          while (at && (ts.isParenthesizedExpression(at) || ts.isAsExpression(at) || ts.isNonNullExpression(at) || ts.isSatisfiesExpression?.(at))) at = at.parent
+        }
+        take(bound.get(n.text), parsed && at && ts.isPropertyAccessExpression(at) ? at.name.text : null)
+      }
+      ts.forEachChild(n, visit)
+    }
+    visit(ts.createSourceFile('decl.ts', text, ts.ScriptTarget.ES2022, true))
+  }
+  return out
+}
+export function cycleKey(loader, slug, definition = CYCLE_DEFINITION) {
+  if (!CYCLE_DEFINITIONS.includes(definition)) throw new Error(`no cycle key is defined as ${definition}`)
   const slugs = machineSlugs(loader)
   if (!slugs.includes(slug)) throw new Error(`the machines' index builds no ${slug}`)
   const own = (s) => [`${WING_DIR}/machines/${s}.ts`, `${WING_DIR}/machines/data/${s}.json`]
@@ -290,10 +346,28 @@ export function cycleKey(loader, slug) {
     for (const f of closure(loader, entry, 'src/', cut)) files.add(f)
   const live = declarations(loader.text(FILM_LOOK), ['makeLive']).get('makeLive')
   if (!live) throw new Error(`${FILM_LOOK} declares no makeLive`)
-  const lines = [...[...files].sort().map((f) => `${f} ${sha256(loader.text(f))}`),
+  // the wire: a text reaches the island's pixels only through a canvas's text or the vector letters
+  const lettered = [...files].find((f) => LETTER_MODULES.includes(f) || (f.endsWith('.ts') && CANVAS_TEXT.test(loader.text(f))))
+  const blanked = definition !== 'cycle-v1' && !lettered
+  const dossier = `${WING_DIR}/machines/data/${slug}.json`
+  // a data file no module of the set imports reaches the island only through the payload's declarations
+  const imported = new Set([...files].filter((f) => f.endsWith('.ts')).flatMap((f) =>
+    [...loader.text(f).matchAll(/^\s*import\s+(?!type\b)[^'"]*?from\s+'(\.[^']+\.json(?:\?raw)?)'/gm)].map((m) => resolveImport(loader, f, m[1]))))
+  const slices = blanked ? dataSlices(loader, CLOSE_LOOK, [...payload.texts.values()]) : new Map()
+  const read = (f) => {
+    if (!blanked || !f.endsWith('.json') || f === dossier) return `${f} ${sha256(loader.text(f))}`
+    const taken = !imported.has(f) && slices.get(f)
+    if (taken instanceof Set) {
+      const doc = JSON.parse(loader.text(f))
+      return `${f} taken ${[...taken].sort().join(',')} display-blank ${sha256(blankJsonDisplay(Object.fromEntries([...taken].sort().map((p) => [p, doc[p] ?? null])), CYCLE_PROSE[f]))}`
+    }
+    return `${f} display-blank ${sha256(blankJsonDisplay(loader.text(f), CYCLE_PROSE[f]))}`
+  }
+  const lines = [...[...files].sort().map(read),
     ...[...payload.texts].sort(([a], [b]) => (a < b ? -1 : 1)).map(([n, t]) => `${CLOSE_LOOK}#${n} ${sha256(t)}`),
-    `${FILM_LOOK}#makeLive ${sha256(live.getText())}`]
-  return { key: sha256(lines.join('\n')).slice(0, 32), files: [...files].sort(), declarations: [...payload.texts.keys()].sort() }
+    `${FILM_LOOK}#makeLive ${sha256(live.getText())}`,
+    ...(definition === 'cycle-v1' ? [] : [`definition ${definition}${blanked ? '' : ` read whole: ${lettered} can draw a text`}`])]
+  return { key: sha256(lines.join('\n')).slice(0, 32), files: [...files].sort(), declarations: [...payload.texts.keys()].sort(), definition, blanked, ...(lettered ? { lettered } : {}) }
 }
 
 /** WHAT NO FRAME CAN DRAW: time-based media (the world binds no video and no
@@ -327,10 +401,12 @@ export function globalKey(loader, { library = [], claimed = new Set(), definitio
   /* A WORDS RECORD keys its recipe file with the display texts blanked; the
      flat reader's records are keyed nowhere, while their wires hold; so,
      from v3, are the table's page and bench records; under v4 a words file
-     is read without its record sentences and its built flag as well */
-  const words = new Map(Object.entries(placement?.words ?? {}).filter(([, w]) => w.placed))
+     is read without its record sentences and its built flag as well; v5
+     reads three more files as words files */
+  const v5 = definition === 'library-placed-v5', v4 = v5 || definition === 'library-placed-v4', v3 = v4 || definition === 'library-placed-v3'
+  const wordsFiles = new Set(v5 ? WORDS_FILES_V5 : WORDS_FILES)
+  const words = new Map(Object.entries(placement?.words ?? {}).filter(([f, w]) => w.placed && wordsFiles.has(f)))
   const reader = placement?.reader?.placed ? new Set(READER_ROLES) : new Set()
-  const v4 = definition === 'library-placed-v4', v3 = v4 || definition === 'library-placed-v3'
   const blankedOf = (w) => (v4 ? w.blanked4 ?? w.blanked : w.blanked)
   const page = new Set([...(v3 && placement?.table?.placed ? TABLE_DOM_FILES : []), ...(v3 && placement?.bench?.placed ? TABLE_BENCH_FILES : [])])
   const kept = [], told = []
@@ -474,7 +550,7 @@ export async function treeKeys({ rev = '', overlay = {}, library, delivery = DEL
     stills.set(at, {
       node: r.node, framing: r.framing, print,
       motion: trackKey({ aspect: aspectOf(r.framing), fps: FPS, pace: FILM_PACE, prints: [print] }),
-      picture: pictureKey(cells, world.cells.hashes, [ex, ex]), exposure: ex, stations: [...r.stations], seen: cells.length, cells,
+      picture: pictureKey(cells, world.cells.hashes, [ex, ex]), exposure: ex, stations: [...r.stations], seen: cells.length, cells, sample: r.sample,
       /* law 3: a rest pose has one picture, whichever way it was reached */
       histories: { prints: r.prints.size, exposures: r.exposures.size },
     })

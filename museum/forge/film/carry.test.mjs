@@ -9,9 +9,9 @@ import assert from 'node:assert/strict'
 import { mkdtempSync, readFileSync, rmSync } from 'node:fs'
 import { tmpdir } from 'node:os'
 import { join } from 'node:path'
-import { carriedRecord, carryFrom, carryPlan } from './carry.mjs'
+import { carriedRecord, carryFrom, carryPlan, cyclesFrom } from './carry.mjs'
 import { carriedHolds } from './film-check.mjs'
-import { GLOBAL_DEFINITION, GLOBAL_DEFINITIONS } from './keys.mjs'
+import { CYCLE_DEFINITION, CYCLE_DEFINITIONS, GLOBAL_DEFINITION, GLOBAL_DEFINITIONS } from './keys.mjs'
 import { appendLedger, beforeOf, readLedger, stillCurrent, writeRecord } from './render-all.mjs'
 
 const G1 = 'a'.repeat(32), G2 = 'b'.repeat(32), D = 'd'.repeat(32)
@@ -87,7 +87,7 @@ test("the day dome's evening terms: a record rendered where they stood otherwise
 })
 
 /* ---- from an older placed definition to the one now ---- */
-const V2 = 'library-placed-v2', V3 = 'library-placed-v3', G3 = 'c'.repeat(32)
+const V2 = 'library-placed-v2', V3 = 'library-placed-v3', V4 = 'library-placed-v4', G3 = 'c'.repeat(32)
 const job3 = { ...job, keys: { ...job.keys, global: G3, before: { definition: V2, global: G2 } } }
 const tree3 = { ...tree, global: G3, globals: { v1: G1, [V2]: G2, [GLOBAL_DEFINITION]: G3 }, added: {}, addedAt: new Map() }
 /** a line as this afternoon's carry from v1 to v2 wrote it */
@@ -96,9 +96,11 @@ const afternoon = (e) => {
   return { ...r, rung: { file: 'stills/wide/1920x1080/x.png', bytes: 1, sha256: 'e' }, keys: { ...r.keys, global: G2 }, carried: { from: r.keys, fromDefinition: 'v1', definition: V2, globalBefore: G1, job: 'afternoon', at: 'noon', by: 'forge/film/carry.mjs' } }
 }
 
-test('the fourth definition is the one now, and every older one stays named', () => {
-  assert.equal(GLOBAL_DEFINITION, 'library-placed-v4')
-  assert.deepEqual(GLOBAL_DEFINITIONS, ['v1', V2, V3, GLOBAL_DEFINITION])
+test('the fifth definition is the one now, and every older one stays named', () => {
+  assert.equal(GLOBAL_DEFINITION, 'library-placed-v5')
+  assert.deepEqual(GLOBAL_DEFINITIONS, ['v1', V2, V3, V4, GLOBAL_DEFINITION])
+  assert.equal(CYCLE_DEFINITION, 'cycle-display-v2')
+  assert.deepEqual(CYCLE_DEFINITIONS, ['cycle-v1', CYCLE_DEFINITION])
 })
 
 test('a plan names the definition it replaced, and keeps it over a plan under the same one', () => {
@@ -210,4 +212,46 @@ test('a plan under the fourth definition over a job of the third names the third
   assert.equal(carryFrom(job4), V3)
   assert.equal(carryPlan(job4, new Map(), tree4, { from: V2 }).from, V2, 'an older one may still be named')
   assert.throws(() => carryPlan(job4, new Map(), { ...tree4, globals: { v1: G1, [GLOBAL_DEFINITION]: G4 } }), /under library-placed-v3 was not taken/)
+})
+
+/* ---- from the fourth definition to the fifth, the cycle keys from cycle-v1 to the display-blank one, in one pass ---- */
+const G5 = '5'.repeat(32)
+const job5 = { ...job, keys: { ...job.keys, global: G5, cycles: CYCLE_DEFINITION, before: { definition: V4, global: G4, cycles: 'cycle-v1' } }, entries: [clip, still, moved, { ...cycle, keys: { motion: null, picture: 'c2' } }] }
+const tree5 = { ...tree, global: G5, globals: { v1: G1, [V2]: G2, [V3]: G3, [V4]: G4, [GLOBAL_DEFINITION]: G5 }, cycles: new Map([['lathe', 'c2']]), cyclesBefore: new Map([['lathe', 'c1']]), added: {}, addedAt: new Map() }
+
+test('a plan names the cycle definition it replaced beside the global one, and only when it moved', () => {
+  assert.deepEqual(beforeOf({ definition: V4, global: G4 }, GLOBAL_DEFINITION, CYCLE_DEFINITION), { before: { definition: V4, global: G4, cycles: 'cycle-v1' } }, 'a job that named none was cycle-v1')
+  assert.deepEqual(beforeOf({ definition: GLOBAL_DEFINITION, global: G5, cycles: 'cycle-v1' }, GLOBAL_DEFINITION, CYCLE_DEFINITION),
+    { before: { definition: GLOBAL_DEFINITION, global: G5, cycles: 'cycle-v1' } }, 'the cycles alone moved')
+  assert.deepEqual(beforeOf({ definition: GLOBAL_DEFINITION, global: G5, cycles: CYCLE_DEFINITION }, GLOBAL_DEFINITION, CYCLE_DEFINITION), {})
+  assert.deepEqual(beforeOf({ definition: GLOBAL_DEFINITION, global: G5, cycles: CYCLE_DEFINITION, before: { definition: V4, global: G4, cycles: 'cycle-v1' } }, GLOBAL_DEFINITION, CYCLE_DEFINITION),
+    { before: { definition: V4, global: G4, cycles: 'cycle-v1' } }, 'kept over a plan under the same ones')
+  assert.equal(cyclesFrom(job5), 'cycle-v1')
+  assert.equal(cyclesFrom(job4), CYCLE_DEFINITION, 'a job that names none moved: no cycle carry')
+})
+
+test('from v4 and cycle-v1: a cycle whose old cycle key is the tree\'s own under cycle-v1 carries; one whose cycle moved stays', () => {
+  const rendered = old(clip, { global: G4 }, 'unreadable')
+  const records = new Map([[clip.id, rendered], [still.id, old(still, { global: G4 })], [moved.id, old(moved, { global: G4, picture: 'p-old' })], [cycle.id, old(cycle, { global: G4 })]])
+  const plan = carryPlan(job5, records, tree5)
+  assert.deepEqual([plan.from, plan.cycles], [V4, 'cycle-v1'])
+  assert.deepEqual(plan.carried.map((c) => c.e.id).sort(), [clip.id, still.id, cycle.id].sort())
+  assert.deepEqual(plan.stale, [{ id: moved.id, moved: ['picture'] }])
+  const c = carriedRecord(plan.carried.find((x) => x.e.id === cycle.id), { job: job5, at: 'night' })
+  assert.deepEqual(c.keys, { motion: null, picture: 'c2', global: G5, delivery: D })
+  assert.deepEqual(c.carried.cycles, { from: 'cycle-v1', definition: CYCLE_DEFINITION })
+  assert.equal(carriedRecord(plan.carried.find((x) => x.e.id === clip.id), { job: job5 }).carried.cycles, undefined, 'a clip names no cycle definition')
+  // the cycle's own files moved under the old definition: not carried
+  const movedCycle = carryPlan(job5, new Map([[cycle.id, old(cycle, { global: G4, picture: 'c0' })]]), tree5)
+  assert.deepEqual(movedCycle.stale, [{ id: cycle.id, moved: ['picture'] }])
+})
+
+test('the cycles alone moved: a carry under the same global definition is allowed, and refused without the old cycle keys', () => {
+  const jobC = { ...job5, keys: { ...job5.keys, before: { definition: GLOBAL_DEFINITION, global: G5, cycles: 'cycle-v1' } } }
+  const records = new Map([[cycle.id, old(cycle, { global: G5 })], [clip.id, old(clip, { global: G5, picture: 'p1' })]])
+  const plan = carryPlan(jobC, records, tree5)
+  assert.deepEqual(plan.carried.map((c) => c.e.id), [cycle.id])
+  assert.deepEqual(plan.current, [clip.id])
+  assert.throws(() => carryPlan(jobC, records, { ...tree5, cyclesBefore: undefined }), /cycle keys under cycle-v1 were not taken/)
+  assert.throws(() => carryPlan({ ...jobC, keys: { ...jobC.keys, before: { definition: GLOBAL_DEFINITION, global: G5 } } }, records, tree5), /no carry from/)
 })
