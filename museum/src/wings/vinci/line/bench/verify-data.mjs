@@ -20,7 +20,7 @@ export const COLLECTIONS = [
     // named source links, German gap sentences and the German document and holder lines.
     // The sealed original does not.
     originalSHA256: '01d568f9f6ddb2c1534d2cd73e061f07624b8eda484d718e84be57782b66ee1d',
-    normalizedSHA256: '02798703cb493a3359f6717c562d7a8576473ac6f4f91dcac5a4b30eda1f36c3',
+    normalizedSHA256: 'b82c8c967b1a0866a35770abef5ac13317127009b9fd664b8a0f7f72c0b673ae',
     expected: { studs: 56 },
   },
   {
