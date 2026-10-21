@@ -6,7 +6,13 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 
 ---
 
-## [0.1.0] - YYYY-MM-DD
+## [Unreleased]
+
+### Removed
+
+- **The site's Bulgarian pages.** museumofages.org no longer serves them, and each address they had forwards to the English page in its place.
+
+## [0.1.0] - 2026-10-08
 
 The first public version. One wing is open: Leonardo da Vinci's last house in Amboise, as it may have stood on 10 October 1517, rebuilt in code and walked in 17 stops.
 
@@ -18,6 +24,7 @@ The first public version. One wing is open: Leonardo da Vinci's last house in Am
 - **Labels with four grades.** Each stop has three layers of text: the line you read first, a drawer, and the record, which names the sources. The labels tell four grades apart: documented, reconstructed, conjectural and not known.
 - **A record for everything shown.** Every reproduction and every built thing has a record with its licence line. `pnpm build` runs the manifest check first and stops when something shown has no record.
 - **Working from a clone.** Without the museum's store, the dev server reads the pictures and the film from museumofages.org as you browse, read only. The build ships the licences of its bundled libraries as `third-party-licenses.md`.
-- **museumofages.org.** The start page, the wing's page, the page about the museum and the legal pages, in English, German, French, Italian, Spanish and Brazilian Portuguese, built by `site/_src/build.py`. The legal notice is in English and German, and the other four languages link the English one.
+- **museumofages.org.** The start page, the wing's page, the page about the museum and the legal pages, in English, German, French, Italian, Spanish, Brazilian Portuguese and Bulgarian, built by `site/_src/build.py`. The legal notice is in English and German, and the other five languages link the English one.
 
+[Unreleased]: https://github.com/chipmates/museumofages/compare/v0.1.0...HEAD
 [0.1.0]: https://github.com/chipmates/museumofages/releases/tag/v0.1.0

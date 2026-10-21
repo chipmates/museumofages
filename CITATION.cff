@@ -13,7 +13,7 @@ url: "https://museumofages.org"
 repository-code: "https://github.com/chipmates/museumofages"
 license: AGPL-3.0-or-later
 version: "0.1.0"
-# date-released: add the opening day here (YYYY-MM-DD, unquoted), the same date as the CHANGELOG's 0.1.0
+date-released: 2026-10-08
 keywords:
   - digital museum
   - cultural heritage
