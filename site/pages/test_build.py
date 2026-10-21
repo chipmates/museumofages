@@ -5086,7 +5086,22 @@ class LongNames(unittest.TestCase):
         self.assertEqual(day_month("3.5 May", "en"), "3.5 May")
         grave = self.page("leonardo-da-vinci/death-and-grave")
         self.assertIn("died on 2 May 1519", grave)
-        self.assertIn("16 octobre 2026", (SITE_BUILT / "fr" / "confidentialite" / "index.html").read_text(encoding="utf-8"))
+        # the privacy page's date line, whatever its day, keeps its day and month together
+        self.assertRegex((SITE_BUILT / "fr" / "confidentialite" / "index.html").read_text(encoding="utf-8"),
+                         r'class="statement__date">[^<]*\b\d{1,2}(?:er)?\u00a0[a-zéû]+ \d{4}<')
+        # every built privacy page dates itself with a day and a year, and no page carries the date's placeholder
+        table = json.loads((SITE_SRC / "languages.json").read_text(encoding="utf-8"))
+        for e in table["languages"]:
+            if e["code"] not in table["BUILT"]:
+                continue
+            page = (SITE_BUILT / (e["folder"] + e["slugs"]["privacy"]) / "index.html").read_text(encoding="utf-8")
+            line = re.search(r'class="statement__date">([^<]*)<', page)
+            self.assertIsNotNone(line, e["code"])
+            self.assertRegex(line.group(1), r"(?<!\d)\d{1,2}(?!\d).*(?<!\d)\d{4}(?!\d)", e["code"])
+        # the placeholder is spelled in parts, so that a search of the sources for it finds none
+        token = "-".join(("DEPLOY", "DAY", "UTC"))
+        for built in SITE_BUILT.rglob("*.html"):
+            self.assertNotIn(token, built.read_text(encoding="utf-8"), str(built.relative_to(SITE_BUILT)))
         # the structured data keeps the page's words as written
         for graph in re.findall(r'<script type="application/ld\+json">(.*?)</script>', grave, flags=re.S):
             self.assertNotIn("2 May", graph)
