@@ -4,7 +4,7 @@
 // and the gate's boxes, prisms and arches), seconds inside a body, and the landing against the walk's first
 // key (place, look, pace). Exit 1 on a red line.
 //
-//   node --experimental-strip-types --no-warnings forge/babylon-open/flight-check.mjs [--json <out>] [--plot <out.json>]
+//   node --experimental-strip-types --no-warnings forge/babylon-open/flight-check.mjs [--cams <open-cams.json>] [--json <out>] [--plot <out.json>]
 import { readFileSync, writeFileSync } from 'node:fs'
 import { dirname, join } from 'node:path'
 import { fileURLToPath } from 'node:url'
@@ -21,7 +21,7 @@ for (let i = 0; i < argv.length; i++) if (argv[i].startsWith('--')) opt[argv[i].
 const mapPlan = JSON.parse(readFileSync(join(W, 'map/map-plan.json'), 'utf8'))
 const gatePlan = JSON.parse(readFileSync(join(W, 'gate/gate-plan.json'), 'utf8'))
 const gateCams = JSON.parse(readFileSync(join(W, 'gate/gate-cams.json'), 'utf8'))
-const cams = JSON.parse(readFileSync(join(W, 'open/open-cams.json'), 'utf8'))
+const cams = JSON.parse(readFileSync(opt.cams ?? join(W, 'open/open-cams.json'), 'utf8'))
 const dropB = new Set(gatePlan.frame.mapBlocksReplaced), dropW = new Set(gatePlan.frame.mapWallsReplaced)
 const city = structuredClone(mapPlan)
 city.blocks = city.blocks.filter((b) => !dropB.has(b.id))
@@ -33,7 +33,7 @@ const GF = G.gateFrame(gatePlan)
 const L0 = gatePlan.frame.level0
 const g2s = (x, z) => { const [E, N] = GF.utm(x, z); return F.s(E, N) }
 const sFirst = Number(String(gateCams.stops[0].keys[0].at).slice(7))
-const streetAt = (s) => { const x = s * B.street.dir[0], z = s * B.street.dir[1]; const [sx, sz] = g2s(x, z); return { x: sx, z: sz, level: B.level(z) + L0, gz: z } }
+const streetAt = (s, t = 0) => { const x = s * B.street.dir[0] + t * B.street.dir[1], z = s * B.street.dir[1] - t * B.street.dir[0]; const [sx, sz] = g2s(x, z); return { x: sx, z: sz, level: B.level(z) + L0, gz: z } }
 const endStreet = streetAt(sFirst)
 const eyeG = B.level(endStreet.gz) + cams.eye
 const [wlx, wlz] = g2s(0, -20)
@@ -124,7 +124,13 @@ for (let i = 0; i < rows.length; i++) {
 }
 for (let i = 0; i < rows.length; i++) {
   const a = rows[Math.max(0, i - 1)], c = rows[Math.min(rows.length - 1, i + 1)], dt = c.t - a.t || 1
-  rows[i].acc = Math.hypot(...[0, 1, 2].map((k) => (c.vel[k] - a.vel[k]) / dt))
+  const av = [0, 1, 2].map((k) => (c.vel[k] - a.vel[k]) / dt)
+  const r = rows[i], v = Math.hypot(...r.vel)
+  r.acc = Math.hypot(...av)
+  // split: along the path (the speed's change, a lurch) and across it (the path's turn, felt as the heading's rate)
+  r.accAlong = v > 1e-6 ? (av[0] * r.vel[0] + av[1] * r.vel[1] + av[2] * r.vel[2]) / v : r.acc
+  r.accTurn = Math.sqrt(Math.max(0, r.acc * r.acc - r.accAlong * r.accAlong))
+  r.heading = v > 1 ? (r.accTurn / v) * D : 0
 }
 for (let i = 0; i < rows.length; i++) {
   const a = rows[Math.max(0, i - 2)], c = rows[Math.min(rows.length - 1, i + 2)], dt = c.t - a.t || 1
@@ -150,7 +156,11 @@ if (phYawMax > 25) red.push(`phone look turns ${phYawMax.toFixed(1)} deg/s`)
 if (pitchMax > 12 || phPitchMax > 12) red.push(`the look tilts ${Math.max(pitchMax, phPitchMax).toFixed(1)} deg/s`)
 const accMax = max('acc'), jerkMax = max('jerk')
 const accAt = rows.reduce((m, r) => (r.acc > m.acc ? r : m), rows[0])
-if (accMax > 35) red.push(`acceleration ${accMax.toFixed(1)} m/s2`)
+const alongMax = max('accAlong'), headingMax = max('heading')
+const alongAt = rows.reduce((m, r) => (Math.abs(r.accAlong) > Math.abs(m.accAlong) ? r : m), rows[0])
+const headingAt = rows.reduce((m, r) => (r.heading > m.heading ? r : m), rows[0])
+if (alongMax > 35) red.push(`the speed changes by ${alongMax.toFixed(1)} m/s2 at ${alongAt.t.toFixed(2)} s`)
+if (headingMax > 25) red.push(`the path turns ${headingMax.toFixed(1)} deg/s at ${headingAt.t.toFixed(2)} s`)
 const yawAccMax = max('yawAcc'), tiltAccMax = max('tiltAcc')
 const yawAccAt = rows.reduce((m, r) => (r.yawAcc > m.yawAcc ? r : m), rows[0])
 if (yawAccMax > 12) red.push(`the look's turn changes by ${yawAccMax.toFixed(1)} deg/s2 at ${yawAccAt.t.toFixed(2)} s`)
@@ -171,13 +181,14 @@ if (backward) red.push(`${backward} samples backward`)
 
 console.log(`length ${flight.length.toFixed(0)} m in ${flight.duration} s; cruise scale ${flight.cruise.toFixed(1)}; top speed ${max('speed').toFixed(1)} m/s; end speed ${last.speed.toFixed(2)} m/s`)
 console.log(`top acceleration ${accMax.toFixed(2)} m/s2 (at ${accAt.t.toFixed(2)} s), top jerk ${jerkMax.toFixed(2)} m/s3; look turns: desktop ${yawMax.toFixed(1)} deg/s yaw (at ${yawAt.t.toFixed(2)} s) ${pitchMax.toFixed(1)} tilt, phone ${phYawMax.toFixed(1)} yaw ${phPitchMax.toFixed(1)} tilt`)
+console.log(`acceleration split: along the path (speed change) ${alongMax.toFixed(2)} m/s2 (at ${alongAt.t.toFixed(2)} s, ${alongAt.over.toFixed(0)} m up); the path's turn ${headingMax.toFixed(1)} deg/s (at ${headingAt.t.toFixed(2)} s)`)
 console.log(`look acceleration: turn ${yawAccMax.toFixed(1)} deg/s2 (at ${yawAccAt.t.toFixed(2)} s), tilt ${tiltAccMax.toFixed(1)} deg/s2`)
 console.log(`nearest body in flight ${nearFly.near.toFixed(2)} m (${nearFly.nearId}, ${nearFly.t?.toFixed(2)} s); landing ${endGap.toFixed(3)} m and ${lookGap.toFixed(2)} deg from the walk's first key`)
-console.log('   t      E          N       level  over  speed  vy    acc   yaw/s  tilt/s  ph-yaw/s  nearest')
+console.log('   t      E          N       level  over  speed  vy    acc  along  turn/s  yaw/s  tilt/s  ph-yaw/s  nearest')
 for (let t = 0; t <= flight.duration + 1e-9; t += Number(opt.every ?? 1)) {
   const r = rows[Math.round(t * FPS)]
   const [E, N] = [r.x + F.E0, F.N0 - r.z]
-  console.log(`${t.toFixed(1).padStart(5)} ${E.toFixed(1).padStart(9)} ${N.toFixed(1).padStart(10)} ${r.y.toFixed(1).padStart(6)} ${r.over.toFixed(1).padStart(6)} ${r.speed.toFixed(1).padStart(6)} ${r.vy.toFixed(1).padStart(5)} ${r.acc.toFixed(2).padStart(6)} ${r.yawRate.toFixed(1).padStart(6)} ${r.pitchRate.toFixed(1).padStart(6)} ${r.phYawRate.toFixed(1).padStart(8)}   ${r.near.toFixed(1)} ${r.nearId}`)
+  console.log(`${t.toFixed(1).padStart(5)} ${E.toFixed(1).padStart(9)} ${N.toFixed(1).padStart(10)} ${r.y.toFixed(1).padStart(6)} ${r.over.toFixed(1).padStart(6)} ${r.speed.toFixed(1).padStart(6)} ${r.vy.toFixed(1).padStart(5)} ${r.acc.toFixed(2).padStart(6)} ${r.accAlong.toFixed(1).padStart(6)} ${r.heading.toFixed(1).padStart(6)} ${r.yawRate.toFixed(1).padStart(6)} ${r.pitchRate.toFixed(1).padStart(6)} ${r.phYawRate.toFixed(1).padStart(8)}   ${r.near.toFixed(1)} ${r.nearId}`)
 }
 console.log(red.length ? `RED\n- ${red.join('\n- ')}` : 'clean')
 if (opt.json) writeFileSync(opt.json, JSON.stringify({ length: flight.length, duration: flight.duration, red, rows }, null, 0))

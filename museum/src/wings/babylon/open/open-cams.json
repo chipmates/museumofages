@@ -4,38 +4,41 @@
   "hourSays": "one hour for the whole flight (30 s of real time): the map walk's hour on the lion street (map-cams.json stop 2, 17:32); the sun from gate-geom (20 days after the spring equinox, 32.54 N, local apparent solar time)",
   "eye": 1.65,
   "first": {
-    "says": "the first grey sketch's last view (window 1, stop 14): from over the west bank at +420, north-east over the tower to the whole city",
-    "desktop": {"at": [445150, 3599450], "y": 420, "look": [446000, 3600500, 0], "hfov": 58},
-    "phone": {"at": [445150, 3599450], "y": 420, "look": [445641, 3600034, 0], "hfov": 38}
+    "says": "the first grey sketch's last view (window 1, stop 14): from over the west bank at +420, north-east over the tower to the whole city; the look raised about 1.6 degrees so the horizon stands just inside the frame",
+    "desktop": {"at": [445150, 3599450], "y": 420, "look": [446000, 3600500, 40], "hfov": 58},
+    "phone": {"at": [445150, 3599450], "y": 420, "look": [445641, 3600034, 0], "hfov": 34}
   },
   "flight": {
     "duration": 30,
     "points": [
       {"utm": [445150, 3599450], "y": 420, "says": "the first frame"},
-      {"utm": [445195, 3599760], "y": 400},
-      {"utm": [445245, 3600160], "y": 330, "says": "over the west city's riverside, the river and the precinct ahead right"},
-      {"utm": [445270.1, 3600803.8], "y": 235, "says": "round the gate's west side over the river and the north moat, the look on the gate"},
-      {"utm": [445350.0, 3601002.3], "y": 172},
-      {"utm": [445479.7, 3601118.4], "y": 120},
-      {"utm": [445609.2, 3601167.6], "y": 80},
-      {"street": 300, "y": 54, "says": "on the street's line"},
-      {"street": 255, "y": 35},
-      {"street": 225, "y": 31.5, "says": "over the North Fortification (+21) and the North Gate (+19.5)"},
-      {"street": 197, "y": 30.0},
-      {"street": 178, "y": 27.0},
-      {"street": 166, "y": 16.5, "says": "down between the lion walls"},
-      {"street": 157, "y": 12.3},
+      {"street": -910.3, "across": 792.8, "y": 383.9},
+      {"street": -548.0, "across": 638.5, "y": 327.9, "says": "over the west city's riverside, the river and the precinct ahead right"},
+      {"street": 54.9, "across": 491.0, "y": 229.5, "says": "over the river west of the palaces, the look on the gate"},
+      {"street": 250.2, "across": 358.9, "y": 180.9},
+      {"street": 343.9, "across": 213.8, "y": 121.3},
+      {"street": 386.8, "across": 118.7, "y": 109.2, "says": "round over the north moat, the turn onto the street spread over about six seconds"},
+      {"street": 383.6, "across": 50.1, "y": 77.5},
+      {"street": 353.6, "across": 13.0, "y": 53.1},
+      {"street": 315.5, "across": -7.2, "y": 45.9, "says": "onto the lion street's line over the North Fortification (+21)"},
+      {"street": 268.0, "across": -13.3, "y": 34.0},
+      {"street": 230.1, "across": -7.3, "y": 35.2},
+      {"street": 197, "y": 30.0, "says": "over the North Gate (+19.5)"},
+      {"street": 178, "y": 27.1},
+      {"street": 166, "y": 18.7, "says": "down between the lion walls"},
+      {"street": 157, "y": 13.1},
       {"street": 150, "y": "eye", "says": "the walk's first key"}
     ],
     "speed": [
       {"t": 0, "v": 0},
-      {"t": 1.0, "v": 0},
-      {"t": 8.0, "v": 1},
-      {"t": 9.0, "v": 1},
-      {"t": 13.5, "v": 0.48},
-      {"t": 17, "v": 0.3},
-      {"t": 22, "v": 0.21},
-      {"t": 25, "v": 0.08},
+      {"t": 0.4, "v": 0},
+      {"t": 9.18, "v": 1},
+      {"t": 9.43, "v": 1},
+      {"t": 14.21, "v": 0.515},
+      {"t": 16.5, "v": 0.262},
+      {"t": 19.5, "v": 0.183},
+      {"t": 22, "v": 0.173},
+      {"t": 25, "v": 0.051},
       {"t": 27.5, "v": 0.025},
       {"t": 30, "v": 0}
     ],
@@ -43,8 +46,8 @@
     "walkSays": "the gate sketch's first leg: 84 m in 64 s",
     "walkFrom": 25,
     "look": [
-      {"t": 0, "utm": [446000, 3600500], "y": 0},
-      {"t": 1.5, "utm": [446000, 3600500], "y": 0},
+      {"t": 0, "utm": [446000, 3600500], "y": 40},
+      {"t": 1.5, "utm": [446000, 3600500], "y": 40},
       {"t": 11, "utm": [445770, 3600830], "y": 24, "says": "the gate"},
       {"t": 23, "utm": [445770, 3600830], "y": 22},
       {"t": 28.5, "walk": true, "says": "the walk's look: level at the gate's axis 20 m behind its face"},
@@ -54,7 +57,8 @@
       {"t": 0, "utm": [445641, 3600034], "y": 0},
       {"t": 1.5, "utm": [445641, 3600034], "y": 0},
       {"t": 11, "utm": [445770, 3600830], "y": 24},
-      {"t": 23, "utm": [445770, 3600830], "y": 22},
+      {"t": 15, "utm": [445770, 3600830], "y": 40, "says": "the phone's look raised in the descent, so the tall frame keeps the gate and the street, not the roof below"},
+      {"t": 22, "utm": [445770, 3600830], "y": 34},
       {"t": 28.5, "walk": true},
       {"t": 30, "walk": true}
     ],
@@ -62,8 +66,10 @@
       {"t": 0, "v": 58}
     ],
     "phoneHfov": [
-      {"t": 0, "v": 38},
-      {"t": 2, "v": 38},
+      {"t": 0, "v": 34},
+      {"t": 2, "v": 34},
+      {"t": 12, "v": 40},
+      {"t": 24, "v": 42},
       {"t": 28, "v": 46}
     ]
   }

@@ -178,7 +178,7 @@ export function makeFlight(spec: FlightSpec) {
 export interface Frames {
   scene: (E: number, N: number) => [number, number]
   /** s metres out on the street's line: scene x, z and the street's level there */
-  street: (s: number) => { x: number; z: number; level: number }
+  street: (s: number, t?: number) => { x: number; z: number; level: number }
   eye: number
   /** the walk's first look point, scene */
   walkLook: V3
@@ -191,7 +191,7 @@ type J = any
 export function resolveFlight(f: J, F: Frames): FlightSpec {
   const point = (p: J): V3 => {
     if (p.street !== undefined) {
-      const q = F.street(p.street)
+      const q = F.street(p.street, p.across ?? 0)
       return [q.x, p.y === 'eye' ? q.level + F.eye : p.y, q.z]
     }
     const [x, z] = F.scene(p.utm[0], p.utm[1])
