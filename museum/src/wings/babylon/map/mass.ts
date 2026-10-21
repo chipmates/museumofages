@@ -32,7 +32,7 @@ export function tonesFrom(plan: { classes: Record<string, { colour: string; valu
 /** the view switch: 0 grey, 1 classes; one uniform every material reads */
 export const uView = uniform(0)
 
-function classColour(t: ClassTones, cls: N, band: N): N {
+export function classColour(t: ClassTones, cls: N, band: N): N {
   const pick = (i: N): N => mix(mix(vec3(...t.M), vec3(...t.R), step(0.5, i)), vec3(...t.G), step(1.5, i))
   // under the band the plan's class, above it the height's
   return mix(pick(cls.x), pick(cls.y), step(positionWorld.y, band))
@@ -70,7 +70,7 @@ export function bodyMaterial(t: ClassTones, grey: number, passage?: Passage): Ma
 /** extruded prisms of one plan, merged into one geometry with their class attributes */
 function prismGeometry(built: Built): BufferGeometry {
   const parts: BufferGeometry[] = []
-  for (const p of built.prisms) {
+  built.prisms.forEach((p, pi) => {
     // shape in (x, -z) so that extruding along +z and turning up lands on (x, y, z)
     const sh = new Shape()
     sh.moveTo(p.poly[0]![0], -p.poly[0]![1])
@@ -96,9 +96,15 @@ function prismGeometry(built: Built): BufferGeometry {
     }
     g.setAttribute('cls', new Float32BufferAttribute(cls, 2))
     g.setAttribute('band', new Float32BufferAttribute(band, 1))
+    // which prism a vertex belongs to, so a page can tone each body on its own (-1 on the ramps)
+    g.setAttribute('pid', new Float32BufferAttribute(new Float32Array(n).fill(pi), 1))
+    parts.push(g)
+  })
+  for (const r of built.ramps) {
+    const g = rampGeometry(r.a, r.b, r.y0, r.y1, r.w, r.floor, CLS[r.plan], CLS[r.height], r.band)
+    g.setAttribute('pid', new Float32BufferAttribute(new Float32Array(g.getAttribute('position').count).fill(-1), 1))
     parts.push(g)
   }
-  for (const r of built.ramps) parts.push(rampGeometry(r.a, r.b, r.y0, r.y1, r.w, r.floor, CLS[r.plan], CLS[r.height], r.band))
   const merged = mergeGeometries(parts.map((g) => (g.index ? g.toNonIndexed() : g)))
   for (const g of parts) g.dispose()
   return merged
