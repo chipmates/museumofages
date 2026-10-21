@@ -1920,6 +1920,32 @@ class Case(unittest.TestCase):
             if data["page"]["id"] in ids:
                 self.assertIn((os.path.normpath(path.relative_to(out).parent.as_posix()), lang), named, path)
 
+    def test_a_link_to_a_page_of_another_wing_leads_where_that_page_is_built(self):
+        """A link inside a sentence (page) to another wing's page is built with the target's own wing, not with the
+        wing of the page that carries it: from an open wing's page to the list of a wing in the making, in each language."""
+        wing = lambda p: self.data("en", p)["page"]["wing"]
+        hub = next((p for p in self.pages if self.data("en", p)["page"].get("hub")), None)
+        mine = next((p for p in self.pages if hub and wing(p) != wing(hub)
+                     and any(b["type"] == "text" and b.get("paras") for b in self.data("en", p)["blocks"])), None)
+        if not mine:
+            self.skipTest("no list of a wing's pages, or no page of another wing with a section of paragraphs")
+        for lang in ("en", "de"):
+            data = self.data(lang, mine)
+            next(b for b in data["blocks"] if b["type"] == "text" and b.get("paras"))["paras"].append(
+                ["The same person stands beside the animals: ", {"text": "the list", "page": hub}, "."])
+            self.save(lang, data, page=mine)
+        out, written = self.build()
+        lists = {self.page_of(p)[1]: p.parent.resolve() for p in written if self.page_of(p)[0]["page"]["id"] == self.data("en", hub)["page"]["id"]}
+        found = 0
+        for path in written:
+            data, lang = self.page_of(path)
+            if data["page"]["id"] != self.data("en", mine)["page"]["id"]:
+                continue
+            href = re.search(r'<a href="([^"]+)">the list</a>', path.read_text(encoding="utf-8")).group(1)
+            self.assertEqual((path.parent / href).resolve(), lists[lang], (path, href))
+            found += 1
+        self.assertEqual(found, 2)
+
     def test_a_page_of_a_wing_in_the_making_has_no_door_and_its_link_out(self):
         page = self.scale_page()
         out, written = self.build()
@@ -4612,6 +4638,48 @@ class SiteWide(unittest.TestCase):
                 found["hub"] += 1
         self.assertGreaterEqual(found["topic"], 40)
         self.assertGreaterEqual(found["hub"], 4)
+
+    def test_a_wing_with_pages_only_is_linked_once_and_quietly_where_it_is_written(self):
+        """A wing in the making with pages only and a link: the landing names it in a list of its own with one quiet
+        link to its page, no card and no picture, and each open wing's last strip links it once, in every language
+        its link is written in. In the other languages no page of the site's own build links it."""
+        registry = json.loads(REGISTRY.read_text(encoding="utf-8"))
+        self.assertEqual(self.build.LANG.merge_registry(registry, SITE_SRC, self.build.L, self.build.LANGS), [])
+        paged = [e for e in registry.values() if isinstance(e, dict) and e.get("pages_only") and e.get("link")]
+        opened = [e for e in registry.values() if isinstance(e, dict) and e.get("state") == "open"]
+        if not paged:
+            self.skipTest("no wing with pages only carries a link")
+
+        def links_to(path, markup, targets):
+            return [m for m in re.finditer(r'<a\b[^>]*\bhref="([^"#]+)"[^>]*>(?:<span>)?(.*?)</', markup)
+                    if not m.group(1).startswith(("http", "/w/")) and (path.parent / html.unescape(m.group(1))).resolve() in targets]
+
+        found = 0
+        for e in paged:
+            every = {(SITE_BUILT / p.strip("/")).resolve() for p in e["page"].values()}
+            for code in self.build.LANGS:
+                home = SITE_BUILT / self.build.L.folder(code) / "index.html"
+                text = home.read_text(encoding="utf-8")
+                if code not in e["link"]["name"]:
+                    self.assertEqual(links_to(home, text, every), [], home)
+                    continue
+                target = {(SITE_BUILT / e["page"][code].strip("/")).resolve()}
+                main = text[text.index("<main"):text.index("</main>")]
+                wings = re.search(r'<section class="wings band".*?</section>', main, flags=re.S).group(0)
+                self.assertEqual(len(links_to(home, text, target)), 1, home)
+                part = re.search(r'<div class="wlists wlists--paged">(.*?)</div></div>', wings, flags=re.S)
+                self.assertTrue(part, home)
+                self.assertNotIn("<img", part.group(1))
+                (link,) = links_to(home, part.group(1), target)
+                self.assertEqual(html.unescape(link.group(2)), e["link"]["name"][code], home)
+                for w in opened:
+                    page = SITE_BUILT / w["page"][code].strip("/") / "index.html"
+                    text = page.read_text(encoding="utf-8")
+                    strip = re.search(r'<section class="after band" id="more".*?</section>', text, flags=re.S).group(0)
+                    self.assertEqual(len(links_to(page, text, target)), 1, page)
+                    self.assertEqual(len(links_to(page, strip, target)), 1, page)
+                found += 1
+        self.assertGreaterEqual(found, 4)
 
     def test_the_publisher_names_its_address_and_its_sign(self):
         found = 0

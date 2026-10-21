@@ -1628,11 +1628,12 @@ def render(page, lang, data, shared, out_root):
     def page_href(name, english=False):
         """Another page of this build in the page's language, from here. A way on (english) to a page written in
         fewer languages leads to the English one, as a language without a legal notice links the English notice."""
+        # the target's address is built with its own wing: a page may link a page of another wing
         if lang not in shared["data"].get(name, {}):
             if english and "en" in shared["data"].get(name, {}):
-                return f'{root}{page_path(shared["data"][name]["en"], wing, "en")}/'
+                return f'{root}{page_path(shared["data"][name]["en"], shared["wing"][name], "en")}/'
             raise SystemExit(f"{page}.{lang}: a link names the page {name!r}, which this build does not make in {lang}")
-        return f'{root}{page_path(shared["data"][name][lang], wing, lang)}/'
+        return f'{root}{page_path(shared["data"][name][lang], shared["wing"][name], lang)}/'
 
     def part_href(part):
         """A link's address: outside (href), another page (page), an entry of this page (at), a part of the wing's page (wing)."""

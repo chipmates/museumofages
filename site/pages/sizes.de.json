@@ -153,7 +153,15 @@
       "nav": "Annähernd in Originalgröße",
       "h": "Annähernd in Originalgröße",
       "paras": [
-        "Im Flügel hängen Reproduktionen. Jede ist annähernd in Originalgröße zu sehen, mit Quelle und Lizenz auf ihrer Beschriftung, und die Originale befinden sich in den Museen und Sammlungen, die diese Seite nennt. Die Größen hier sind die der Originale, wie ihre Häuser sie angeben, sofern ein Haus eigene Maße veröffentlicht."
+        "Im Flügel hängen Reproduktionen. Jede ist annähernd in Originalgröße zu sehen, mit Quelle und Lizenz auf ihrer Beschriftung, und die Originale befinden sich in den Museen und Sammlungen, die diese Seite nennt. Die Größen hier sind die der Originale, wie ihre Häuser sie angeben, sofern ein Haus eigene Maße veröffentlicht.",
+        [
+          "Auch neben unseren Tieren steht ein Mensch von 1,70 Metern, im selben Maßstab: ",
+          {
+            "text": "Dinosaurier im Größenvergleich",
+            "page": "wing-animals"
+          },
+          "."
+        ]
       ],
       "pic": {
         "pic": "lisa",

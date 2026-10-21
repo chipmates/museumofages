@@ -43,6 +43,10 @@
  },
  "animals": {
   "name": "Animais",
+  "link": {
+   "name": "Comparação de tamanho dos dinossauros",
+   "line": "Dinossauros, o megalodon, a baleia-azul e o mamute-lanoso em imagens nossas, cada animal ao lado de uma pessoa de 1,70 m, na mesma escala."
+  },
   "topics": [
    {
     "name": "Qual era o tamanho do megalodon?",

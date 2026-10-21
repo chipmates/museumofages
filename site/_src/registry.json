@@ -443,7 +443,7 @@
     "claim_phrase": "his machines|seine maschinen|his invention|seine erfindung|da vinci's inventions|da vincis erfindungen"
   },
   "animals": {
-    "_note": "A wing in the making that already has pages of its own: pages_only keeps it off the landing's wall, its film and the menu until it opens, so it needs no collection, door, dates or pictures yet. Its pages stand in its own languages only (langs), and every page of it shows a plain link to the newest open wing where a door would stand. A topic page may carry its own about and never_say: those rules hold for that page alone, the wing's for all of them.",
+    "_note": "A wing in the making that already has pages of its own: pages_only keeps it off the landing's wall, its film and the menu until it opens, so it needs no collection, door, dates or pictures yet. Its pages stand in its own languages only (langs), and every page of it shows a plain link to the newest open wing where a door would stand. A topic page may carry its own about and never_say: those rules hold for that page alone, the wing's for all of them. link, optional: the words the landing and each open wing's last strip link its own page with, a name in the searcher's words and a line, in each of its languages (the landing shows the name under the wing's, with no card and no picture).",
     "state": "making",
     "pages_only": true,
     "langs": ["en", "de", "es", "pt-BR"],
@@ -455,6 +455,16 @@
     "page": {
       "en": "animals",
       "de": "de/tiere"
+    },
+    "link": {
+      "name": {
+        "en": "Dinosaur size comparison",
+        "de": "Dinosaurier im Größenvergleich"
+      },
+      "line": {
+        "en": "Dinosaurs, megalodon, the blue whale and the woolly mammoth in our own pictures, each beside a person 1.70 m tall, to one scale.",
+        "de": "Dinosaurier, Megalodon, Blauwal und Wollhaarmammut in eigenen Bildern, jedes Tier neben einem Menschen von 1,70 m, im selben Maßstab."
+      }
     },
     "about": {
       "@type": "Thing",

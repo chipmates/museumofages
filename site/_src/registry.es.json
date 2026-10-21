@@ -46,6 +46,10 @@
  },
  "animals": {
   "name": "Animales",
+  "link": {
+   "name": "Comparación de tamaño de dinosaurios",
+   "line": "Dinosaurios, el megalodón, la ballena azul y el mamut lanudo en imágenes propias, cada animal junto a una persona de 1,70 m, a la misma escala."
+  },
   "topics": [
    {
     "name": "¿Cuánto medía el megalodón?",

@@ -290,6 +290,12 @@ def card(c, slug, size, level):
     )
 
 
+def linked_paged(c):
+    """The wings with pages only whose entry gives the words of a link to their own page (link) in the page's language:
+    a language they are not written in has no such words, and no link."""
+    return [e for e in c.wings.values() if e.get("pages_only") and c.lang in e.get("link", {}).get("name", {})]
+
+
 def wall(c):
     w, lang = c.w, c.lang
     many = len(c.collections) > 1
@@ -317,6 +323,12 @@ def wall(c):
         hang = f'<div class="wall" data-wall>{cards}</div>' if cards else ""
         rest = f'<div class="wlists">{rest}</div>' if rest else ""
         groups.append(f'<div class="wgroup" id="c-{coll["slug"]}">{head}{hang}{rest}</div>')
+    # a wing with pages only: no card and no picture, its name and one quiet link to its own page
+    paged = "".join(
+        f'<li><span class="wlist__name">{esc(e["name"][lang])}</span><a class="more" href="{c.to(e["page"][lang].strip("/") + "/")}">'
+        f'<span>{esc(e["link"]["name"][lang])}</span>{ARROW}</a></li>' for e in linked_paged(c))
+    if paged:
+        groups.append(f'<div class="wlists wlists--paged"><div class="wlist"><p class="key">{w["wings.making_h"]}</p><ul>{paged}</ul></div></div>')
     # what a wing is, in one sentence. No number of wings stands here, whatever the registry holds. While one wing
     # is open, a second line says so and that more are being made.
     now = f'<p class="wings__now">{w["wings.now"]}</p>' if len(c.open) == 1 else ""
@@ -847,6 +859,8 @@ def more(c, slug):
     items = [entry(topic_href(c, slug, t), esc(t["name"][lang]), esc(hold_names(day_month(bind(t["line"][lang], lang), lang), c.held))) for t in topics_here(c, slug)]
     if c.wd[slug].get("holders"):
         items.append(entry("#originals", w["wingpage.more_originals"], w["wingpage.more_originals_line"]))
+    items += [entry(c.to(e["page"][lang].strip("/") + "/"), esc(e["link"]["name"][lang]),
+                    esc(hold_names(day_month(bind(e["link"]["line"][lang], lang), lang), c.held))) for e in linked_paged(c)]
     items.append(entry(c.to(c.addr("what")), w["nav.what"], w["wingpage.more_what_line"]))
     go = "" if c.wd[slug].get("end") else go_in(c, slug)
     # side by side on a wide screen: up to four in one row, more in two rows

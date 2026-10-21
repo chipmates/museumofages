@@ -283,6 +283,7 @@ ON_EVERY_PAGE = NEVER[:5]
 # Length limits in characters, first match wins, set for German at 320 px. Paths of a wing's data file start with "wing:".
 # A trust line breaks only after a dot (trust_breaks), so it may run to three short rows.
 LIMITS = [
+    (r"^link\.name$", 40), (r"^link\.line$", 150),
     (r"^film\.(title|watch)$", 28), (r"^film\.(pause|play|sound_on|sound_off)$", 20), (r"^film\.music$", 140),
     (r"(^|:)meta\.title$|page_what\.title$|imprint\.title$", 76), (r"description$", 180), (r"alt$", 300), (r"alt_each$", 90),
     (r"a11y\.lang_switch$", 8), (r"a11y\.", 40), (r"brand\.descriptor$", 20), (r"project\.line$", 48), (r"nav\.enter$|hero\.enter$", 20), (r"nav\.", 22),
@@ -855,6 +856,15 @@ def check_pages_only(site, slug, e, pages):
         for t in e["topics"]:
             if lang in languages.topic_langs(t, own) and not all(t.get(k, {}).get(lang) for k in ("slug", "name", "line")):
                 problems.append(f"{where}: a topic page lacks its slug, name or line in {lang}")
+    # its link (optional): the words the landing and each open wing's page link its own page with, in each of its
+    # languages, read by the rules of both
+    link = e.get("link")
+    for lang in own if link is not None else ():
+        words = {k: (link.get(k) or {}).get(lang) for k in ("name", "line")}
+        if not all(words.values()):
+            problems.append(f"{where}: its link lacks its name or line in {lang}")
+            continue
+        problems += lint(site, f"{where}'s link", words, "link.", wing=slug, lang=lang) + lint(site, f"{where}'s link", words, "link.", lang=lang)
     for t in e["topics"]:
         if set(t.get("langs") or own) - set(own):
             problems.append(f"{where}: a topic page names a language its wing is not written in")
@@ -2568,6 +2578,9 @@ def crawl(out, site):
     # a test build leaves the topic pages out: their addresses stand in the registry and are built by their own build
     topics = {f'{e["page"][l].strip("/")}/{t["slug"][l]}' for e in site.wings.values() if e.get("state") == "open"
               for t in e.get("topics", []) for l in languages.topic_langs(t, LANGS)} if site.mark else set()
+    if site.mark:
+        # and the own page of a wing with pages only
+        topics |= {site.wings[s]["page"][l].strip("/") for s in paged(site) for l in languages.wing_langs(site.wings[s], LANGS)}
     for path in sorted(out.rglob("*.html")):
         text = path.read_text(encoding="utf-8")
         name = path.relative_to(out)

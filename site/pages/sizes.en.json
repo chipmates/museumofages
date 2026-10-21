@@ -153,7 +153,15 @@
       "nav": "Near real size",
       "h": "Near real size",
       "paras": [
-        "What hangs in the wing are reproductions. Each is shown close to its real size, with its source and its licence on its label, and the originals are in the museums and collections named on this page. The sizes here are the originals' own, as their holders give them, where a holder publishes one."
+        "What hangs in the wing are reproductions. Each is shown close to its real size, with its source and its licence on its label, and the originals are in the museums and collections named on this page. The sizes here are the originals' own, as their holders give them, where a holder publishes one.",
+        [
+          "A person 1.7 metres tall also stands beside our animals, to one scale: ",
+          {
+            "text": "Dinosaur size comparison",
+            "page": "wing-animals"
+          },
+          "."
+        ]
       ],
       "pic": {
         "pic": "lisa",

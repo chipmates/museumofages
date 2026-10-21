@@ -206,6 +206,11 @@
 .wlist ul{margin-top:8px;columns:8rem;column-gap:20px}
 .wlist li{break-inside:avoid;padding:6px 0;font-size:1.0625rem;line-height:1.25;color:var(--ink-soft)}
 .wlist__dates{display:block;font-family:var(--sans);font-size:.8125rem;line-height:1.4;color:var(--ink-quiet)}
+/* A wing with pages only: its name, under it one quiet link to its page across the full width, the arrow after the
+   last word when the link wraps. */
+.wlists--paged .wlist ul{columns:auto}
+.wlists--paged .more{display:block;width:fit-content;padding-block:12px}
+.wlists--paged .more .arrow{display:inline-block;margin-left:10px;vertical-align:-2px}
 
 /* ---------- 3. A wing's page: the head of its rooms, and the directory of what it holds ---------- */
 .wing__top{display:grid;gap:34px}
