@@ -344,12 +344,13 @@ class Names:
             code = entry.get("lang")
             # a names file's own hold wins, in every kind of text; running text holds a person's long name by its last words
             hold = entry.get("hold") or (LIB.held(name)[1] if run and entry.get("person") and kind == "nw nh" else None)
-            if hold and kind == "nw nh" and name.endswith(" " + hold):
-                # a language's names file may hold only a long name's last words together, so a narrow line wraps before them
+            if hold and kind in ("nw nh", "nh") and name.endswith(" " + hold):
+                # a language's names file may hold only a long name's last words together, so a narrow line wraps before them;
+                # a title that may break anywhere holds them as well where it ends in one (the wing's name)
                 lead = f' lang="{code}"' if code and code != self.lang else ""
                 out.append(f'<{tag} class="nh"{lead}>{esc(LIB.bound_lead(name[:-len(hold) - 1]))}</{tag}> ')
                 name = hold
-                if run:
+                if run or kind == "nh":
                     kind, name = "nh", name.replace(" ", LIB.NBSP)
             if code and code != self.lang:
                 # the ending is the page's own language and stays outside

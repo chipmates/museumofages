@@ -4924,6 +4924,17 @@ class LongNames(unittest.TestCase):
             for h in re.findall(r"<h[1-6][^>]*>.*?</h[1-6]>", path.read_text(encoding="utf-8"), flags=re.S):
                 self.assertNotRegex(h, r'<(span|i) class="nh"[^>]*>[^<]*</(span|i)> <(span|i) class="nh"[^>]*>[^< ]*\u00a0', path)
 
+    def test_a_title_that_ends_in_the_wings_name_holds_it(self):
+        # a painting's title is a listed name that may break anywhere, but the wing's name at its end keeps its hold
+        entries = [{"text": "François Ier reçoit les derniers soupirs de Léonard de Vinci", "lang": "fr", "hold": "de Vinci"}]
+        mark = self.build.Names(entries, "Leonardo da Vinci", "en").mark
+        held = ('<span class="nh" lang="fr">François Ier reçoit les derniers soupirs de\u00a0Léonard</span> '
+                '<span class="nh" lang="fr">de\u00a0Vinci</span>')
+        self.assertEqual(mark("Ingres, François Ier reçoit les derniers soupirs de Léonard de Vinci, 1818.", run=True), f"Ingres, {held}, 1818.")
+        self.assertEqual(mark("François Ier reçoit les derniers soupirs de Léonard de Vinci"), held)
+        self.assertIn(held, self.page("leonardo-da-vinci/death-and-grave"))
+        self.assertIn(held, self.page("de/leonardo-da-vinci/tod-und-grab"))
+
     def test_a_particle_never_ends_a_line_inside_a_name(self):
         held = self.build.LIB.held
         self.assertEqual(held("Lorenzo de' Medici"), ("Lorenzo", "de' Medici"))

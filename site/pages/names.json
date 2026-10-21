@@ -1,5 +1,5 @@
 {
-  "_note": "NAMES IN ANOTHER LANGUAGE, read by pages/build.py for every page. Wherever one of them stands in a displayed sentence, the build sets it in a span that is never hyphenated, and marks its language where one is given, so a screen reader says it right. German text hyphenates on a phone, and a holder's name must not break as 'Biblio-teca'. A name is matched as written here, whole words only, and a genitive s may follow it. Give 'lang' only where a screen reader has a voice for it (it, fr, es, en, pl): a Latin or mixed name gets none and is only kept whole. 'person' marks a person's full name: it never breaks across two lines either. 'whole' keeps a short place name, or an animal's name of two words, on one line the same way. 'taxon' sets a scientific name in italics. A wing's own name is not listed here: the build takes it from the wing's entry. Add a name when a new page brings one.",
+  "_note": "NAMES IN ANOTHER LANGUAGE, read by pages/build.py for every page. Wherever one of them stands in a displayed sentence, the build sets it in a span that is never hyphenated, and marks its language where one is given, so a screen reader says it right. German text hyphenates on a phone, and a holder's name must not break as 'Biblio-teca'. A name is matched as written here, whole words only, and a genitive s may follow it. Give 'lang' only where a screen reader has a voice for it (it, fr, es, en, pl): a Latin or mixed name gets none and is only kept whole. 'person' marks a person's full name: it never breaks across two lines either. 'whole' keeps a short place name, or an animal's name of two words, on one line the same way. 'taxon' sets a scientific name in italics. 'hold' keeps only a name's last words on one line, so a narrow line wraps before them: a title that ends in the wing's name holds that name's last words. A wing's own name is not listed here: the build takes it from the wing's entry. Add a name when a new page brings one.",
   "names": [
     { "text": "Veneranda Biblioteca Ambrosiana", "lang": "it" },
     { "text": "Ambrosiana", "lang": "it" },
@@ -142,7 +142,7 @@
     { "text": "Petit Palais", "lang": "fr", "whole": true },
     { "text": "contiendrait", "lang": "fr" },
     { "text": "tuffeau", "lang": "fr" },
-    { "text": "François Ier reçoit les derniers soupirs de Léonard de Vinci", "lang": "fr" },
+    { "text": "François Ier reçoit les derniers soupirs de Léonard de Vinci", "lang": "fr", "hold": "de Vinci" },
     { "text": "musée des Beaux-Arts de la Ville de Paris", "lang": "fr" },
     { "text": "Paris Musées", "lang": "fr" },
     { "text": "Smithsonian Magazine", "lang": "en" },
