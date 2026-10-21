@@ -29,6 +29,8 @@ import {
   RGBAFormat,
   RenderTarget,
   MeshBasicNodeMaterial,
+  NoBlending,
+  NormalBlending,
   type Camera,
   type Material,
   type PerspectiveCamera,
@@ -128,6 +130,32 @@ export function idPlanes(raw: Float32Array, w: number, h: number): { ids: Uint32
 export const isVolume = (mesh: Mesh): boolean =>
   (Array.isArray(mesh.material) ? mesh.material : [mesh.material]).some((m) => (m as { isVolumeNodeMaterial?: boolean } | undefined)?.isVolumeNodeMaterial === true)
 
+/* A BODY THE FRAME CAN SEE PAST: its shaded draw blends, writes no depth or
+   no colour, cuts by more than its own map's alpha, or moves its vertices on
+   the GPU, none of which an id material copies. The pass that names the cells
+   a frame shows leaves it out, so a ray runs on through it (and through its
+   cell) to the first body that hides what stands behind. */
+export function seeThrough(material: Material): boolean {
+  const m = material as Material & {
+    map?: { isTexture?: boolean } | null
+    alphaTest?: number
+    alphaHash?: boolean
+    transmission?: number
+    displacementMap?: unknown
+    positionNode?: unknown
+    colorNode?: unknown
+    opacityNode?: unknown
+    alphaTestNode?: unknown
+    maskNode?: unknown
+  }
+  if (m.transparent || m.depthWrite === false || m.colorWrite === false) return true
+  if ((m.opacity ?? 1) < 1 || m.alphaHash || (m.transmission ?? 0) > 0) return true
+  if (m.blending !== NormalBlending && m.blending !== NoBlending) return true
+  if (m.positionNode || m.displacementMap || m.opacityNode || m.alphaTestNode || m.maskNode) return true
+  // a leaf whose cut is its map's alpha alone is cut the same way in the id pass
+  return (m.alphaTest ?? 0) > 0 && !(m.map?.isTexture && !m.colorNode)
+}
+
 export interface IdSwap { mesh: Mesh; was: Material | Material[]; now: Material | Material[] }
 
 /** A body's id materials, one per material it draws with. */
@@ -140,14 +168,26 @@ export function idSwap(mesh: Mesh, index: number): IdSwap {
     draws without a depth test after everything else, so as an id body its
     box hides the room and in its own material it adds light into the ids
     and depths. A material the wing hides draws nothing in the frame, so
-    none in the ids. Everything is put back before this returns. */
-export function drawIdBodies(renderer: WebGPURenderer, scene: Scene, camera: Camera, target: RenderTarget, swaps: readonly IdSwap[]): void {
+    none in the ids. `solid` leaves out every body the frame can see past
+    (`seeThrough`). Everything is put back before this returns. */
+export function drawIdBodies(renderer: WebGPURenderer, scene: Scene, camera: Camera, target: RenderTarget, swaps: readonly IdSwap[], { solid = false } = {}): void {
   const air: Mesh[] = []
-  scene.traverseVisible((object) => { const mesh = object as Mesh; if (mesh.isMesh && isVolume(mesh)) air.push(mesh) })
+  /* `solid`: only the bodies nothing shows through. A line, a point, a sprite
+     and a mesh drawn without an id material write their own colours, not a
+     depth: none of them stops a ray */
+  const loose: Array<[Material, boolean]> = []
+  const swapped = solid ? new Set(swaps.map((s) => s.mesh)) : null
+  scene.traverseVisible((object) => {
+    const mesh = object as Mesh
+    if (mesh.isMesh && isVolume(mesh)) air.push(mesh)
+    else if (swapped && mesh.material && !(mesh.isMesh && swapped.has(mesh))) for (const m of Array.isArray(mesh.material) ? mesh.material : [mesh.material]) loose.push([m, m.visible])
+  })
   for (const mesh of air) mesh.visible = false
+  for (const [m] of loose) m.visible = false
+  const shown = (m: Material | undefined): boolean => m?.visible !== false && !(solid && m && seeThrough(m))
   for (const s of swaps) {
-    if (Array.isArray(s.now)) s.now.forEach((m, k) => { m.visible = (s.was as Material[])[k]?.visible !== false })
-    else s.now.visible = (s.was as Material).visible !== false
+    if (Array.isArray(s.now)) s.now.forEach((m, k) => { m.visible = shown((s.was as Material[])[k]) })
+    else s.now.visible = shown(s.was as Material)
     s.mesh.material = s.now
   }
   const was = renderer.getRenderTarget()
@@ -156,6 +196,7 @@ export function drawIdBodies(renderer: WebGPURenderer, scene: Scene, camera: Cam
   renderer.setRenderTarget(was)
   for (const s of swaps) s.mesh.material = s.was
   for (const mesh of air) mesh.visible = true
+  for (const [m, v] of loose) m.visible = v
 }
 
 export function installAudit(parts: AuditParts): void {

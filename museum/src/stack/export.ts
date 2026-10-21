@@ -7,8 +7,9 @@
    it, decoded to linear light and added; the sum is boxed to the delivered
    size, encoded back to sRGB and quantised once, and its bytes leave over a
    local socket to the harness, which pipes them into the encoder. Once per
-   delivered frame the same pose is drawn again as ids and depth, so the
-   harness can name the world cells the frame showed.
+   delivered frame the same pose is drawn again as ids and depth, and once
+   more with only the bodies nothing shows through, so the harness can name
+   the world cells the frame showed.
 
    The jitter is the projection's view offset, put on at the top of the draw
    and taken off at its bottom, so the rail's own projection law never meets
@@ -183,6 +184,8 @@ export function installExport(parts: ExportParts): void {
   let jitter: [number, number] = [0, 0]
   let idDue = false
   let idTarget: RenderTarget | null = null
+  /** the same pose with only the bodies nothing shows through (`seeThrough`): what the seen record reads */
+  let solidTarget: RenderTarget | null = null
   let swaps: IdSwap[] = []
   let bodies: string[] = []
   /** the bodies the last plates() listed, for plateShares() */
@@ -318,9 +321,13 @@ export function installExport(parts: ExportParts): void {
     const div = spec.idDiv * spec.scale
     const iw = Math.round(w / div)
     const ih = Math.round(h / div)
-    if (!idTarget) {
-      idTarget = new RenderTarget(iw, ih, { type: FloatType, format: RGBAFormat, depthBuffer: true, minFilter: NearestFilter, magFilter: NearestFilter, generateMipmaps: false, samples: 0 })
-    } else if (idTarget.width !== iw || idTarget.height !== ih) idTarget.setSize(iw, ih)
+    const sized = (t: RenderTarget | null): RenderTarget => {
+      if (!t) return new RenderTarget(iw, ih, { type: FloatType, format: RGBAFormat, depthBuffer: true, minFilter: NearestFilter, magFilter: NearestFilter, generateMipmaps: false, samples: 0 })
+      if (t.width !== iw || t.height !== ih) t.setSize(iw, ih)
+      return t
+    }
+    idTarget = sized(idTarget)
+    solidTarget = sized(solidTarget)
     const background = scene.background
     const fog = scene.fog
     const clear = renderer.getClearColor(new Color())
@@ -339,6 +346,7 @@ export function installExport(parts: ExportParts): void {
     scene.fog = null
     renderer.setClearColor(0x000000, 0)
     drawIdBodies(renderer, scene, camera, idTarget, swaps)
+    drawIdBodies(renderer, scene, camera, solidTarget, swaps, { solid: true })
     for (const [light, auto, needs] of held) {
       light.shadow.autoUpdate = auto
       light.shadow.needsUpdate = needs
@@ -550,15 +558,20 @@ export function installExport(parts: ExportParts): void {
       const t2 = performance.now()
       let depth = new Float32Array(0)
       let ids = new Uint32Array(0)
+      let solid = new Float32Array(0)
       let idSize: [number, number] = [0, 0]
-      if (plan.ids && idTarget) {
+      if (plan.ids && idTarget && solidTarget) {
         const raw = (await renderer.readRenderTargetPixelsAsync(idTarget, 0, 0, idTarget.width, idTarget.height)) as Float32Array
         idSize = [idTarget.width, idTarget.height]
         ;({ ids, depth } = idPlanes(raw, idSize[0], idSize[1]))
+        // the depth where a solid body stood, 0 where none did
+        const kept = idPlanes((await renderer.readRenderTargetPixelsAsync(solidTarget, 0, 0, idSize[0], idSize[1])) as Float32Array, idSize[0], idSize[1])
+        solid = kept.depth
+        for (let i = 0; i < solid.length; i++) if (!(kept.ids[i]! > 0)) solid[i] = 0
       }
       const t3 = performance.now()
       if (plan.send && socket) {
-        socket.send(pack({ t: 'frame', tag: plan.tag, i: plan.i, w: spec.width, h: spec.height, idSize, cam }, [rgb, depth, ids]))
+        socket.send(pack({ t: 'frame', tag: plan.tag, i: plan.i, w: spec.width, h: spec.height, idSize, cam }, [rgb, depth, ids, solid]))
         // the socket drains before the next frame is drawn: a queue of frames
         // in the page is memory the render does not have
         while (socket.bufferedAmount > 0) await new Promise((r) => setTimeout(r, 1))
@@ -582,6 +595,8 @@ export function installExport(parts: ExportParts): void {
       swaps = []
       idTarget?.dispose()
       idTarget = null
+      solidTarget?.dispose()
+      solidTarget = null
       acc = null
       socket?.close()
       socket = null

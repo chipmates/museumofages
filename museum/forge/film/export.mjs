@@ -85,6 +85,9 @@ export function vbvOf(rung, frames, graphSeconds, clip = '', v = X264.vbv, fps =
 }
 /** the ceiling of the world's own motion the joins may carry, of 255 */
 const SKY_REACH_M = 800
+/** THE SEEN RECORD'S FORMAT: from 2, every ray runs through the bodies the frame can see past */
+export const SEEN_FORMAT = 2
+export const SEEN_METHOD = 'each id pixel ray to the nearest body nothing shows through (the solid pass: blended, depth-less, cut, displaced, line, point and unswapped bodies left out), sky rays on every second pixel to the box; the cells a ray ended on a body in flagged 2; one cell dilated'
 const CELL_M = 2
 
 /** THE SIX PROOF CLIPS: two legs of the life (one out of doors, one in the
@@ -170,7 +173,10 @@ export function cellSet() {
   const inBox = (x, y, z) => x >= -R && x < R && z >= -R && z < R && y >= Y0 && y < Y0 + YN
   return {
     bounds: [[-R * CELL_M, Y0 * CELL_M, -R * CELL_M], [R * CELL_M, (Y0 + YN) * CELL_M, R * CELL_M]],
-    add(x, y, z) { if (inBox(x, y, z)) bits[idx(x, y, z)] = 1 },
+    /** the frames walked into the set, and of them the ones walked to the solid pass */
+    frames: 0, solidFrames: 0,
+    /** `flag` 1: a ray crossed the cell; 2: a ray ended on a body in it */
+    add(x, y, z, flag = 1) { if (inBox(x, y, z)) bits[idx(x, y, z)] |= flag },
     /** every cell and every neighbour of one: a body across a cell's edge, or
         between two rays, is never lost */
     dilated() {
@@ -183,7 +189,8 @@ export function cellSet() {
           for (let dx = -1; dx <= 1; dx++) for (let dy = -1; dy <= 1; dy++) for (let dz = -1; dz <= 1; dz++) {
             if (!inBox(x + dx, y + dy, z - R + dz)) continue
             const k = idx(x + dx, y + dy, z - R + dz)
-            if (!out[k]) { out[k] = 1; count++ }
+            if (!out[k]) count++
+            out[k] |= bits[base + z]
           }
         }
       }
@@ -192,21 +199,27 @@ export function cellSet() {
   }
 }
 
-/** a seen set's cells as the gate numbers them, out of its bits */
-export function cellNumbers(bits) {
+/** a seen set's cells as the gate numbers them, out of its bits; `flag` 2: only the cells a ray ended on a body in */
+export function cellNumbers(bits, flag = 3) {
   const { R, Y0, YN } = CELL_BOX
   const out = []
   for (let x = -R; x < R; x++) for (let y = Y0; y < Y0 + YN; y++) {
     const base = ((x + R) * YN + (y - Y0)) * 2 * R
-    for (let z = 0; z < 2 * R; z++) if (bits[base + z]) out.push(((x + 2048) * 4096 + (y + 2048)) * 4096 + (z - R + 2048))
+    for (let z = 0; z < 2 * R; z++) if (bits[base + z] & flag) out.push(((x + 2048) * 4096 + (y + 2048)) * 4096 + (z - R + 2048))
   }
   return out
 }
 
 /** THE CELLS ONE FRAME SAW: each id pixel's ray from the eye to what it hit (the
-    free air too), and the floor and ceiling share for the upright rule */
+    free air too), and the floor and ceiling share for the upright rule. A
+    frame that carries the solid pass (`solid`, the depth of the nearest body
+    nothing shows through, 0 where none stood) walks its rays to that body;
+    the floor and ceiling share reads the id pass as before. */
 export function frameCells(cells, frame) {
   const { depth, ids, idSize: [w, h], cam } = frame
+  const solid = frame.solid?.length === w * h ? frame.solid : null
+  cells.frames++
+  if (solid) cells.solidFrames++
   const P = cam.proj, M = cam.world
   // the inverse of a perspective projection, in closed form
   const ix = 1 / P[0], iy = 1 / P[5], ox = P[8], oy = P[9]
@@ -218,14 +231,18 @@ export function frameCells(cells, frame) {
     // WebGPU targets read top row first
     const nx = ((x + 0.5) / w) * 2 - 1, ny = 1 - ((y + 0.5) / h) * 2
     const vx = (nx + ox) * ix, vy = (ny + oy) * iy, vz = -1
-    const d = depth[i]
-    const sky = !(ids[i] > 0) || !(d > 0)
-    if (sky && (x % 2 || y % 2)) continue
-    const t = sky ? SKY_REACH_M / Math.hypot(vx, vy, vz) : d
     const dx = M[0] * vx + M[4] * vy + M[8] * vz, dy = M[1] * vx + M[5] * vy + M[9] * vz, dz = M[2] * vx + M[6] * vy + M[10] * vz
+    const d = depth[i]
+    const struck = ids[i] > 0 && d > 0
+    if (struck) { world.set([eye[0] + dx * d, eye[1] + dy * d, eye[2] + dz * d], i * 3); hit[i] = 1 }
+    const r = solid ? solid[i] : d
+    const sky = solid ? !(r > 0) : !struck
+    if (sky && (x % 2 || y % 2)) continue
+    const t = sky ? SKY_REACH_M / Math.hypot(vx, vy, vz) : r
     const end = [eye[0] + dx * t, eye[1] + dy * t, eye[2] + dz * t]
-    if (!sky) { world.set(end, i * 3); hit[i] = 1 }
     walkRay(cells, eye, end)
+    // the surface the ray ended on: a receiver of a shadow from outside the frame
+    if (!sky) cells.add(Math.floor(end[0] / CELL_M), Math.floor(end[1] / CELL_M), Math.floor(end[2] / CELL_M), 2)
   }
   // the share of a frame on surfaces facing straight up or down
   let flat = 0, seen = 0
@@ -643,7 +660,8 @@ export function inboxOf() {
       const { head, parts } = unpack(buf)
       if (head.t !== 'frame') return
       const key = `${head.tag}#${head.i}`
-      const frame = { head, rgb: parts[0], depth: new Float32Array(parts[1].buffer), ids: new Uint32Array(parts[2].buffer), idSize: head.idSize, cam: head.cam }
+      const frame = { head, rgb: parts[0], depth: new Float32Array(parts[1].buffer), ids: new Uint32Array(parts[2].buffer), idSize: head.idSize, cam: head.cam,
+        ...(parts[3] ? { solid: new Float32Array(parts[3].buffer) } : {}) }
       const w = waiting.get(key)
       if (w) { waiting.delete(key); w(frame) } else held.set(key, frame)
     },
@@ -1026,7 +1044,10 @@ function saveSeen(cells, dir, stem) {
   // whole or not at all: a job that stops mid-write finds no half set under the name
   writeFileSync(`${file}.part`, gzipSync(bits))
   renameSync(`${file}.part`, file)
-  return { cells: count, file, box: CELL_BOX, method: 'each id pixel ray to its hit, sky rays on every second pixel to the box, one cell dilated' }
+  // a record walked to the solid pass in every frame is the second format: the one a narrowed carry may read
+  const solid = cells.frames > 0 && cells.solidFrames === cells.frames
+  return { cells: count, file, box: CELL_BOX, format: solid ? SEEN_FORMAT : 1,
+    method: solid ? SEEN_METHOD : 'each id pixel ray to its hit, sky rays on every second pixel to the box, one cell dilated' }
 }
 
 /** the depth a frame's nearest tenth of its surfaces stands at */
