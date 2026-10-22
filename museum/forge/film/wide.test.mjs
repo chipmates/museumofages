@@ -11,6 +11,7 @@ import * as THREE from 'three/webgpu'
 import { pictureKey, wholeDigest } from './keys.mjs'
 import { cellCoords, cellNumber } from './scene.mjs'
 import { SEEN_DEFINITION, buildIndex, seenSet, wideSetting } from './seen.mjs'
+import { lightingOf } from './lit.mjs'
 
 const CELL = 2
 const n = (x, y, z) => cellNumber(x, y, z)
@@ -153,4 +154,10 @@ test('the picture key reads a seen cell\'s shadow flags; a seen set of every cel
   const moved = worldOf([[a, 'a']]); moved.cells.flags.set(a, 'g')
   assert.notEqual(wholeDigest(world), wholeDigest(moved))
   assert.notEqual(pictureKey(all, world.cells.hashes, [1, 1], { whole: wholeDigest(world) }), pictureKey(all, world.cells.hashes, [1, 1], { whole: wholeDigest(moved) }))
+})
+
+test('the pin knows a light or a capture made under a namespace or as a class of its own', () => {
+  const found = lightingOf([['a.ts', 'const l = new THREE.SpotLight(1); l.castShadow = true'], ['b.ts', 'class Washer extends SpotLight {}; w.shadow.mapSize'],
+    ['c.ts', 'const probe = new THREE.CubeCamera (.1, 99, t)'], ['d.ts', 'const l = new THREE.PointLight(1)']])
+  assert.deepEqual(found.unknown, ['a.ts', 'b.ts', 'c.ts'], 'a light with no shadow is the scene list\'s, not the pin\'s')
 })

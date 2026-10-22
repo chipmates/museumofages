@@ -19,8 +19,9 @@ export const KNOWN_CAPTURES = ['collection/body-wall-cabinet.ts', 'collection/ha
     light (made only to borrow a method, never in the scene). */
 export const KNOWN_SHADOW_LIGHTS = ['collection/body-wall-cabinet.ts', 'collection/hall-light.ts', 'collection/line-gallery.ts',
   'collection/picture-room.ts', 'collection/reading-room.ts', 'grave/diagram.ts', 'house-hall.ts', 'static-shadow-cache.ts']
-const CAPTURE = /\bCubeCamera\(|\.fromScene\(|\.reflector\(|createReflector\(/
-const LIGHT = /new (Directional|Spot|Point|RectArea)Light\(/
+const CAPTURE = /\bCubeCamera\s*\(|\.fromScene\s*\(|\.reflector\s*\(|createReflector\s*\(/
+// a light made under a namespace or a class of its own is one too
+const LIGHT = /new\s+(?:[\w$]+\.)*(?:Directional|Spot|Point|RectArea)Light\s*\(|extends\s+(?:[\w$]+\.)*(?:Directional|Spot|Point|RectArea)Light\b/
 const SHADOW = /\.shadow\.|castShadow\s*=\s*true/
 
 /** The wing's TypeScript files at a tree, by path under the wing; an overlay's files under the wing join them. */
