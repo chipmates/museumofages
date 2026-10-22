@@ -59,7 +59,7 @@ export interface BenchOptions {
 export interface BenchLamp { at: [number, number, number]; aim: [number, number, number]; lux: number; kelvin: number; angle: number; penumbra: number }
 /** Only the machines named here have a lamp; every other bench frame is lit by the key alone. */
 const BENCH_LAMP: Partial<Record<string, BenchLamp>> = {
-  'flying-machine': { at: [-7.5, 8.5, -6.5], aim: [0.2, 1.9, -0.4], lux: 150, kelvin: 4300, angle: .5, penumbra: .55 },
+  'flying-machine': { at: [3, 11, 4], aim: [0.2, 1.9, -0.4], lux: 400, kelvin: 4300, angle: .55, penumbra: .55 },
 };
 const el = <K extends keyof HTMLElementTagNameMap>(tag: K, cls: string, text?: string): HTMLElementTagNameMap[K] => { const n = document.createElement(tag); n.className = cls; if (text !== undefined)
   n.textContent = text; return n; };
