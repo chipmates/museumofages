@@ -78,8 +78,9 @@ const BENCH_LAMP: Partial<Record<string, BenchLamp[]>> = {
     { at: [0.3, 10.5, 4], aim: [0, 1.5, -0.75], lux: 450, kelvin: 4000, angle: .10, penumbra: .55, decay: 2 },
     // a low spot from the front, under the wings, onto the man
     { at: [1.2, 3.0, 6.5], aim: [0, 1.45, -0.5], lux: 450, kelvin: 4000, angle: .13, penumbra: .55, decay: 2, shadow: false },
-    // a low fill on the visitor's side for the faces the high lamps cannot reach
-    { at: [6.5, 0.6, 6.5], aim: [1.8, 3.4, -0.6], lux: 450, kelvin: 3800, angle: .5, penumbra: .6, decay: 2, shadow: false },
+    // a low fill on the visitor's side for the faces the high lamps cannot reach,
+    // two thirds of a stop under the lit face, so the cloth still turns under one light
+    { at: [6.5, 0.6, 6.5], aim: [1.8, 3.4, -0.6], lux: 200, kelvin: 3800, angle: .5, penumbra: .6, decay: 2, shadow: false },
   ],
 };
 /** A machine's plinth and posts given their own finish (a modern powder coat in place of bare

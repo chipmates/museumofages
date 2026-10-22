@@ -105,7 +105,7 @@ export async function flyingSurfaces(stack: Stack): Promise<FlyingSurfaces> {
   {
     const s = set['oak-veneer-light']
     const d = stack.detail(cane, { ...s, normalStrength: 0.12, scales: [0.3, 0.03, 0.0008], grain: s.grain ? { ...s.grain, relief: 0.06, shade: 0.1, sheen: 0.3 } : null }, { uv: uv(), count: 3, maps: dressed(s) ? 1 : 0, fade: [6, 40] })
-    cane.colorNode = lin('#ac9a76').mul(luma(d.albedo).mul(0.35).add(0.72)).mul(d.occlusion).mul(attribute('color', 'vec3')).mul(fibre()).mul(keyRim(0.7).add(1))
+    cane.colorNode = lin('#a69a80').mul(luma(d.albedo).mul(0.35).add(0.72)).mul(d.occlusion).mul(attribute('color', 'vec3')).mul(fibre()).mul(keyRim(0.7).add(1))
     cane.roughnessNode = d.roughness.mul(0.6).clamp(0.36, 0.55)
   }
   // FIR (74r's frame): pale, straight grained, planed
@@ -186,7 +186,7 @@ export async function flyingSurfaces(stack: Stack): Promise<FlyingSurfaces> {
   // man reads as the body in the cradle, not the brightest thing in it
   const figure = new MeshStandardNodeMaterial({ metalness: 0, roughness: 0.86 })
   figure.name = 'flying-machine:figure:plain'
-  figure.colorNode = lin('#5f5e5a')
+  figure.colorNode = lin('#555450')
   return {
     materials: { cane, fir, wood, ash, skin, lash, hem, cord, iron, leather, chamois, figure },
     sets,
