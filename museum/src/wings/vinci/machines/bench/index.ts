@@ -63,6 +63,8 @@ export interface BenchLamp {
   at: [number, number, number]; aim: [number, number, number]; lux: number; kelvin: number; angle: number; penumbra: number;
   /** 2: a real lamp's inverse square, its lux read at the aim; 0 (the default): the same lux at every distance */
   decay?: 0 | 2;
+  /** false: no shadow map; each shadowed lamp draws the whole machine again every frame the motion runs */
+  shadow?: false;
 }
 /** Only the machines named here have lamps; every other bench frame is lit by the key alone. */
 const BENCH_LAMP: Partial<Record<string, BenchLamp[]>> = {
@@ -237,7 +239,7 @@ export function createBench(stack: Stack, onExit: () => void) {
       lamp.name = `vinci/bench/lamp-${i}`;
       lamp.position.copy(at);
       lamp.target.position.copy(aim);
-      lamp.castShadow = true;
+      lamp.castShadow = spec.shadow !== false;
       lamp.shadow.mapSize.set(2048, 2048);
       lamp.shadow.camera.near = Math.max(.5, reach - 9);
       lamp.shadow.camera.far = reach + 12;
