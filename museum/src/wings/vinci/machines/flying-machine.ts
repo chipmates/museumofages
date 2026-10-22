@@ -31,6 +31,11 @@ const SLUG = 'flying-machine' as const
 /** the swept envelope over a whole beat, measured from the parts (r1 check) */
 const ENVELOPE = { min: [-5.9, 0, -2.0] as const, max: [5.9, 5.45, 1.25] as const }
 
+/** A hemp wrap stands 4 mm proud of its cane, under one texel of any shadow
+ * map here (7 to 14 mm), yet it is half the machine's triangles and every
+ * shadowed light draws it again. It takes shadows; it casts none. */
+const SHADOWLESS: ReadonlySet<Kind> = new Set<Kind>(['lash', 'hem'])
+
 /** the sheave's rim speed and the drum's, for their turning */
 const SHEAVE_R = SHEAVE.r - 0.005, DRUM_R = DRUM.r + 0.004
 
@@ -95,7 +100,7 @@ export function build(stack: Stack): ReadyMachineBuild {
       geometries.add(geometry)
       const mesh = new SkinnedMesh(geometry, mats[kind]!)
       mesh.name = `machine:${kind}`
-      mesh.castShadow = true
+      mesh.castShadow = !SHADOWLESS.has(kind)
       mesh.receiveShadow = true
       // the bones move the parts after the bounds are taken: the swept envelope holds them all
       mesh.frustumCulled = false
