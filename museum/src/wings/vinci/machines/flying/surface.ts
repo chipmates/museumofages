@@ -82,7 +82,7 @@ export async function flyingSurfaces(stack: Stack): Promise<FlyingSurfaces> {
     const s = set['linen']
     const d = stack.detail(skin, { ...s, normalStrength: 0.3, grain: s.grain ? { ...s.grain, pitch: 0.16, relief: 0.28, shade: 0.36, sheen: 0.025, fold: 0.9, tooth: 0.008 } : null }, { uv: uv(), count: 3, maps: dressed(s) ? 1 : 0, fade: [12, 100] })
     skin.side = DoubleSide
-    skin.colorNode = lin('#c6b796').mul(luma(d.albedo)).mul(d.occlusion).mul(attribute('color', 'vec3'))
+    skin.colorNode = lin('#d8cba9').mul(luma(d.albedo)).mul(d.occlusion).mul(attribute('color', 'vec3'))
   }
   // HEMP: the lashings, the hems and the running cords
   const hemp = (name: string, tint: string, toned = true): MeshStandardNodeMaterial => {

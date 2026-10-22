@@ -4,8 +4,8 @@
  * surface is a BufferGeometry in metres, so the checks build it in node. */
 import type { BufferGeometry } from 'three/webgpu'
 import {
-  AXIS, BODY, BOW, DRUM, FRAMES, GUIDE, HOOP, HUB, PIN, RAILS, RAIL_R, SHEAVE, SMALL_HOOP, WING,
-  railAt, hubCentre,
+  AXIS, BEAK, BODY, BOW, DRUM, FRAMES, GUIDE, HOOP, HUB, PIN, RAILS, RAIL_R, SHEAVE, SMALL_HOOP, WING,
+  railAt, hubCentre, twistEye,
 } from './plan'
 import { Mesher, caneBundle, hash, lashing, lath, line, ring, rod, bar, tube, v3, wheel, type V3 } from './shapes'
 
@@ -105,9 +105,11 @@ export function buildBody(): Batch {
     }
     // the bands that hold the cheeks to the crown
     for (const dx of [-0.045, 0, 0.045]) ring(iron, [dx, HOOP.crown, 0], [1, 0, 0], HOOP.r + 0.005, 0.0045, 6, 20, 0.9)
-    // the eyes the twist cords turn through, at the pin's fore end
-    for (const sx of [1, -1]) ring(iron, add(fore, [sx * 0.03, -0.004, 0.012]), [1, 0, 0], 0.012, 0.0035, 6, 14, 0.9)
-    bar(iron, add(fore, [-0.045, -0.004, 0.012]), add(fore, [0.045, -0.004, 0.012]), 0.016, 0.006, [0, 1, 0], 0.9)
+    // the beak: the pin's axis carried on forward, with the twist cords' eyes at its end
+    const tip = add(c, mul(AXIS, BEAK))
+    bar(iron, add(fore, mul(AXIS, 0.006)), add(tip, mul(AXIS, 0.012)), 0.018, 0.008, [1, 0, 0], 0.92)
+    for (const sx of [1, -1]) ring(iron, twistEye(sx as 1 | -1), [1, 0, 0], 0.011, 0.0032, 6, 14, 0.9)
+    bar(iron, add(tip, [-0.03, 0, 0]), add(tip, [0.03, 0, 0]), 0.014, 0.006, [0, 1, 0], 0.9)
   }
 
   // the guide eyes on the top rails, and the sheaves' iron straps

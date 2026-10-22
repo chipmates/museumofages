@@ -58,7 +58,7 @@ export const WING = {
   outer: { r0: 0.02, r1: 0.011 },
   eyeTip: 10 * BRACCIO - 0.22,
   /** where the lowering cord takes hold, the twist arm, the spring's ring */
-  lowerEye: 0.17, twistArm: 0.36, twistLength: 0.13, springRing: -0.25,
+  lowerEye: 0.17, twistArm: 0.36, twistLength: 0.2, springRing: -0.25,
   /** the ribs: distance out along the spar, length, fan angle from straight aft */
   ribs: [
     { s: 0.5, len: 0.8, fan: 0 },
@@ -147,12 +147,18 @@ export function twistTipLocal(side: 1 | -1): V3 { return [side * WING.twistArm, 
 /** where the lowering cord leaves the sheave's front, toward the spar */
 export function sheaveTop(side: 1 | -1): V3 { return [side * SHEAVE.x, SHEAVE.y + 0.012, SHEAVE.z + SHEAVE.r * 0.95] }
 const lowerSpan = (side: 1 | -1, t: number): number => distance3(wingPoint(side, lowerEyeLocal(side), t), sheaveTop(side))
+/** a span's least or most over one beat, per side: the hubs sit fore and aft
+ * on the pin, so the two sides differ by a few centimetres */
+const extreme = (f: (side: 1 | -1, t: number) => number, pick: (...v: number[]) => number): Record<1 | -1, number> => {
+  const over = (side: 1 | -1): number => pick(...Array.from({ length: 721 }, (_, i) => f(side, PERIOD * i / 720)))
+  return { 1: over(1), [-1]: over(-1) } as Record<1 | -1, number>
+}
 /** the lowering cord's span from the spar's eye to the sheave, at the bottom
  * of the stroke (the shortest) */
-const LOWER_MIN = Math.min(...Array.from({ length: 721 }, (_, i) => lowerSpan(1, PERIOD * i / 720)))
+const LOWER_MIN = extreme(lowerSpan, Math.min)
 /** how far the stirrup has come forward of its place at the bottom */
 export function stirrupTravel(t: number, side: 1 | -1 = 1): number {
-  return lowerSpan(side, t) - LOWER_MIN
+  return lowerSpan(side, t) - LOWER_MIN[side]
 }
 /** the stirrup's place: on the line from its bottom place toward the guide */
 export function stirrupAt(side: 1 | -1, t: number): V3 {
@@ -168,24 +174,26 @@ export function drumTop(side: 1 | -1): V3 { return [side * (DRUM.x + DRUM.r * 0.
 /** The lever over this side belongs to the other wing. */
 const springSpan = (side: 1 | -1, t: number): number =>
   distance3(wingPoint((-side) as 1 | -1, springRingLocal((-side) as 1 | -1), t), drumTop(side))
-const SPRING_MIN = Math.min(...Array.from({ length: 721 }, (_, i) => springSpan(1, PERIOD * i / 720)))
+const SPRING_MIN = extreme(springSpan, Math.min)
 /** the bow tip's lift on this side: a preload at the top, most at the bottom */
 export const BOW_PRELOAD = 0.025
 export function bowLift(t: number, side: 1 | -1 = 1): number {
-  return BOW_PRELOAD + springSpan(side, t) - SPRING_MIN
+  return BOW_PRELOAD + springSpan(side, t) - SPRING_MIN[side]
 }
 
-/** THE TWIST CORD runs from the arm under the spar to an eye at the pin's
- * fore end, near the axis, so the stroke hardly changes its length and the
- * hand alone works the twist; from there it drops to the hand. */
-export function twistEye(side: 1 | -1): V3 { return [side * 0.03, PIN.y + AXIS[1] * 0.125, AXIS[2] * 0.125] }
+/** THE TWIST CORD runs from the arm under the spar forward to an eye on an
+ * iron beak that carries the pin's axis on past its fore end. A point on the
+ * axis keeps its distance from everything the stroke turns, so the hand alone
+ * works the twist; from the eye the cord drops to the hand. */
+export const BEAK = 0.26
+export function twistEye(side: 1 | -1): V3 { return [side * 0.018, PIN.y + AXIS[1] * BEAK, AXIS[2] * BEAK] }
 /** where the hand rests, holding the cord, with the wing flat */
-export const HAND_REST: V3 = [0.15, 1.47, 0.43]
+export const HAND_REST: V3 = [0.16, 1.58, 0.37]
 const twistSpan = (side: 1 | -1, t: number): number => distance3(wingPoint(side, twistTipLocal(side), t), twistEye(side))
-const TWIST_SPAN_MAX = Math.max(...Array.from({ length: 721 }, (_, i) => twistSpan(1, PERIOD * i / 720)))
+const TWIST_SPAN_MAX = extreme(twistSpan, Math.max)
 /** the hand's pull on the twist cord, back from where it rests */
 export function handPull(t: number, side: 1 | -1 = 1): number {
-  return TWIST_SPAN_MAX - twistSpan(side, t)
+  return TWIST_SPAN_MAX[side] - twistSpan(side, t)
 }
 /** the hand's place: drawn back along the cord, away from the eye */
 export function handAt(side: 1 | -1, t: number): V3 {
