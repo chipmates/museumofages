@@ -252,8 +252,12 @@ function wells(k: Kit): void {
     const tread = [sz * HUB.z - WHEEL.width / 2 - 0.02, sz * HUB.z + WHEEL.width / 2 + 0.02].sort((p, q) => p - q) as [number, number]
     const cutX = 0.24
     const f = (j: number): Finish => ({ tone: 0.5 + 0.1 * hash(70, sx, sz, j), wear: 0 })
+    // the slot's far corners run into the wall, which closes them: every board stops 5 mm inside the floor's circle
+    const Rc = TUB.bottomR - TUB.wall - 0.008
     const slabAt = (x0: number, x1: number, y0: number, y1: number, z0: number, z1: number, j: number, grain: V3 = X): void => {
-      if (x1 - x0 < 0.005 || z1 - z0 < 0.005) return
+      const reach = Math.sqrt(Math.max(0, Rc * Rc - Math.max(z0 * z0, z1 * z1)))
+      x0 = Math.max(x0, -reach); x1 = Math.min(x1, reach)
+      if (x1 - x0 < 0.02 || z1 - z0 < 0.005) return
       k.box(v((x0 + x1) / 2, (y0 + y1) / 2, (z0 + z1) / 2), [X, Y, Z], v((x1 - x0) / 2, (y1 - y0) / 2, (z1 - z0) / 2), f(j), 0.003, grain)
     }
     const [y0, y1] = W.bottom
