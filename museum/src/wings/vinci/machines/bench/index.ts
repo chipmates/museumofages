@@ -51,17 +51,26 @@ export interface BenchOptions {
   /** a plain grey figure of 1.70 m standing for size: its feet, its turn about the vertical */
   figure?: { at: [number, number, number]; turn: number };
   ropeProbe?: 'baseline' | 'no-shadow' | 'flat-normal' | 'offset-2mm';
-  /** this jump's own exhibition lamp in place of the machine's (a probe) */
-  lamp?: BenchLamp | null;
+  /** this jump's own exhibition lamps in place of the machine's (a probe) */
+  lamp?: BenchLamp[] | null;
+  /** the hour's key switched off for this jump, its fill kept (a probe that separates the lights) */
+  keyProbe?: 'off';
 }
 /** An exhibition lamp on one machine, beside the hour's key: a spot in the
- * machine's metres, its illuminance in lux (no fall-off), its cone in radians.
+ * machine's metres, its illuminance in lux at its aim, its cone in radians.
  * It lights the machine and the figure beside it, not the room. */
-export interface BenchLamp { at: [number, number, number]; aim: [number, number, number]; lux: number; kelvin: number; angle: number; penumbra: number }
-/** Only the machines named here have a lamp; every other bench frame is lit by the key alone. */
-const BENCH_LAMP: Partial<Record<string, BenchLamp>> = {
-  'flying-machine': { at: [3, 11, 4], aim: [0.2, 1.9, -0.4], lux: 400, kelvin: 4300, angle: .55, penumbra: .55 },
+export interface BenchLamp {
+  at: [number, number, number]; aim: [number, number, number]; lux: number; kelvin: number; angle: number; penumbra: number;
+  /** 2: a real lamp's inverse square, its lux read at the aim; 0 (the default): the same lux at every distance */
+  decay?: 0 | 2;
+}
+/** Only the machines named here have lamps; every other bench frame is lit by the key alone. */
+const BENCH_LAMP: Partial<Record<string, BenchLamp[]>> = {
+  'flying-machine': [{ at: [3, 11, 4], aim: [0.2, 1.9, -0.4], lux: 400, kelvin: 4300, angle: .55, penumbra: .55 }],
 };
+/** A machine's plinth and posts given their own finish (a modern powder coat in place of bare
+ * iron): the bare iron's sheen under a low key outshines a dark machine at a close eye. */
+const BENCH_FINISH: Partial<Record<string, { roughness: number; metalness: number; tone: number }>> = {};
 const el = <K extends keyof HTMLElementTagNameMap>(tag: K, cls: string, text?: string): HTMLElementTagNameMap[K] => { const n = document.createElement(tag); n.className = cls; if (text !== undefined)
   n.textContent = text; return n; };
 const localText = (lang: Language, en: string, de: string): string => lang === 'de' ? de : en;
@@ -204,32 +213,34 @@ export function createBench(stack: Stack, onExit: () => void) {
   let metricsTier = metrics ? stack.tierName() : null;
   let closeUp = false;
   let eye: BenchOptions['eye'] | null = null;
-  let lamp: SpotLight | null = null;
-  function dropLamp() { if (figureMaterial.lightsNode) { figureMaterial.lightsNode = null; figureMaterial.needsUpdate = true; } if (!lamp) return; lamp.dispose(); lamp = null; }
-  function lampBench(spec: BenchLamp | undefined | null) {
+  let lamps: SpotLight[] = [];
+  function dropLamp() { if (figureMaterial.lightsNode) { figureMaterial.lightsNode = null; figureMaterial.needsUpdate = true; } for (const lamp of lamps) lamp.dispose(); lamps = []; }
+  function lampBench(specs: BenchLamp[] | undefined | null) {
     dropLamp();
-    if (!spec) return;
-    const at = new Vector3(...spec.at), aim = new Vector3(...spec.aim);
-    lamp = new SpotLight(kelvinToColour(spec.kelvin), spec.lux / 100, 0, spec.angle, spec.penumbra, 0);
-    lamp.name = 'vinci/bench/lamp';
-    lamp.position.copy(at);
-    lamp.target.position.copy(aim);
-    lamp.castShadow = true;
-    lamp.shadow.mapSize.set(2048, 2048);
-    lamp.shadow.camera.near = Math.max(.5, at.distanceTo(aim) - 9);
-    lamp.shadow.camera.far = at.distanceTo(aim) + 12;
-    lamp.shadow.bias = -.0002;
-    lamp.shadow.normalBias = .01;
-    lamp.updateMatrixWorld(true);
-    lamp.target.updateMatrixWorld(true);
+    for (const [i, spec] of (specs ?? []).entries()) {
+      const at = new Vector3(...spec.at), aim = new Vector3(...spec.aim), reach = at.distanceTo(aim), decay = spec.decay ?? 0;
+      const lamp = new SpotLight(kelvinToColour(spec.kelvin), spec.lux / 100 * (decay === 2 ? reach * reach : 1), 0, spec.angle, spec.penumbra, decay);
+      lamp.name = `vinci/bench/lamp-${i}`;
+      lamp.position.copy(at);
+      lamp.target.position.copy(aim);
+      lamp.castShadow = true;
+      lamp.shadow.mapSize.set(2048, 2048);
+      lamp.shadow.camera.near = Math.max(.5, reach - 9);
+      lamp.shadow.camera.far = reach + 12;
+      lamp.shadow.bias = -.0002;
+      lamp.shadow.normalBias = .01;
+      lamp.updateMatrixWorld(true);
+      lamp.target.updateMatrixWorld(true);
+      lamps.push(lamp);
+    }
   }
   /** the lamp joins the lights of the machine's own surfaces and the figure's,
    * so the room keeps the hour's key alone */
   function lampOnMachine() {
-    if (!lamp || !machine) return;
+    if (!lamps.length || !machine) return;
     const keyLights: Light[] = [];
     scene.traverse(node => { if ((node as Light).isLight) keyLights.push(node as Light); });
-    const lit = lights([...keyLights, lamp]);
+    const lit = lights([...keyLights, ...lamps]);
     const seen = new Set<Material>();
     for (const root of [machine.object, sizeFigure?.group]) root?.traverse(node => {
       if (!(node instanceof Mesh)) return;
@@ -522,6 +533,8 @@ export function createBench(stack: Stack, onExit: () => void) {
     // grazes, so the compass reads as an outline against nothing. The plate
     // is given the light its top face is standing in.
     if (slug === 'proportional-compass') supportMat.colorNode = supportMat.colorNode!.mul(1.7);
+    const finish = BENCH_FINISH[slug];
+    if (finish) { supportMat.roughnessNode = float(finish.roughness); supportMat.metalnessNode = float(finish.metalness); supportMat.colorNode = supportMat.colorNode!.mul(finish.tone); }
     if (slug === 'multi-barrel-gun') {
       // GENERATED indirect-contact approximation of the two exact wheel
       // cylinders. Shared GTAO is off; the existing key shadow remains.
@@ -587,7 +600,7 @@ export function createBench(stack: Stack, onExit: () => void) {
     const requestedEvidence = opts.evidence === undefined ? null : opts.evidence === requested ? recordOf(requested) : partialCatalog.find(record => record.slug === opts.evidence);
     if (opts.evidence !== undefined && !requestedEvidence) throw new Error(`No evidence record for ${requested}: ${opts.evidence}`);
     evidence.close(false);
-    const mine = ++serial; active = true; host.hidden = false; ready = false; loading.hidden = false; clearDisplay(); folioEntry = undefined; folio.replaceChildren(); slug = requested; evidenceRecord = recordOf(slug); lang = controlLanguage(location.search, opts.lang); schedule = playbackSchedule(recordOf(slug).dossier); playbackState = initialPlayback(schedule, { t: opts.t, fixed: document.body.classList.contains('forge'), reducedMotion: reduced.matches }); lastWall = performance.now(); stamp(); stack.setScene(scene, camera, { ...IDENTITY, name: 'vinci-machine-bench', exposure: .95, grain: .004, ao: { intensity: 1, distance: Math.max(...Object.values(recordOf(slug).dossier.scale_m).filter((v): v is number => typeof v === 'number')) * .025, thickness: 1 } }); lightBench(); lampBench(opts.lamp === undefined ? BENCH_LAMP[slug] : opts.lamp); machine = isShowcaseSlug(slug) ? buildShowcase(slug, stack) : buildMachine(slug, stack); eye = opts.eye ?? null;
+    const mine = ++serial; active = true; host.hidden = false; ready = false; loading.hidden = false; clearDisplay(); folioEntry = undefined; folio.replaceChildren(); slug = requested; evidenceRecord = recordOf(slug); lang = controlLanguage(location.search, opts.lang); schedule = playbackSchedule(recordOf(slug).dossier); playbackState = initialPlayback(schedule, { t: opts.t, fixed: document.body.classList.contains('forge'), reducedMotion: reduced.matches }); lastWall = performance.now(); stamp(); stack.setScene(scene, camera, { ...IDENTITY, name: 'vinci-machine-bench', exposure: .95, grain: .004, ao: { intensity: 1, distance: Math.max(...Object.values(recordOf(slug).dossier.scale_m).filter((v): v is number => typeof v === 'number')) * .025, thickness: 1 } }); lightBench(); if (opts.keyProbe === 'off' && key) key.light.intensity = 0; lampBench(opts.lamp === undefined ? BENCH_LAMP[slug] : opts.lamp); machine = isShowcaseSlug(slug) ? buildShowcase(slug, stack) : buildMachine(slug, stack); eye = opts.eye ?? null;
     if (opts.figure) { sizeFigure = makeFigure(figureMaterial, 'size-figure'); sizeFigure.pose(standingJoints(opts.figure.turn, opts.figure.at)); sizeFigure.group.userData['assetClass'] = 'GENERATED'; display.add(sizeFigure.group); } closeUp = opts.close ?? false; sectionEnabled = (slug === 'camera-obscura' || slug === 'mechanical-lion') && (opts.section ?? false); machine.section(sectionEnabled); display.add(machine.object); compose(); paint(); await Promise.all([machine.ready, supports(mine), plateFor(mine)]); if (mine !== serial)
     return; machine.animate(playbackState.clock, 0); lampOnMachine();
     if(key){

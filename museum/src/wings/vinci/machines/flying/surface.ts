@@ -2,8 +2,8 @@
  * it: cane bound with hemp (77v), fir laths and fustian (74r), forged iron,
  * turned oak, an ash bow, leather and chamois (79v). The tints are the
  * museum's; the grain is the library's photograph under them. */
-import { Color, DoubleSide, MeshStandardNodeMaterial, type Material } from 'three/webgpu'
-import { attribute, cameraPosition, cos, float, fwidth, mx_noise_float, normalWorld, positionWorld, uv, vec3 } from 'three/tsl'
+import { Color, DoubleSide, MeshStandardNodeMaterial, PhysicalLightingModel, type Material } from 'three/webgpu'
+import { attribute, cameraPosition, cos, diffuseColor, float, fwidth, mx_noise_float, normalView, normalWorld, positionWorld, uv, vec3 } from 'three/tsl'
 import type { MaterialSet, Stack } from '../../../../stack'
 import { loadMachineMaterial, materialDressed } from '../parts'
 import { benchKeyDirection } from '../key'
@@ -46,6 +46,26 @@ function fibre(): N {
   const n = mx_noise_float(at)
   return float(1).add(n.mul(fadeByPixel(uv().x.mul(620 * Math.PI), 0.09)))
 }
+
+/** A thin cloth's light: what falls on one face passes out of the other,
+ * scattered, so the face turned from a lamp shows the cloth lit from behind
+ * and the shadows of the ribs on it. Per light, with its own shadow. */
+class ClothLighting extends PhysicalLightingModel {
+  constructor(private readonly through: number) { super() }
+  override direct(input: N, builder: N): void {
+    const { lightDirection, lightColor, reflectedLight } = input
+    const behind = normalView.dot(lightDirection).negate().clamp(0, 1)
+    reflectedLight.directDiffuse.addAssign(behind.mul(lightColor).mul(diffuseColor.rgb).mul(this.through / Math.PI))
+    super.direct(input, builder)
+  }
+}
+class ClothMaterial extends MeshStandardNodeMaterial {
+  through = 0
+  override setupLightingModel(): N { return new ClothLighting(this.through) }
+}
+/** heavy unbleached cotton twill passes roughly a tenth to a quarter of the
+ * light through its weave; the middle of that */
+const FUSTIAN_THROUGH = 0
 
 export interface FlyingSurfaces {
   materials: Record<Kind | 'figure' | 'cord', Material>
@@ -98,7 +118,9 @@ export async function flyingSurfaces(stack: Stack): Promise<FlyingSurfaces> {
   }
   // FUSTIAN (74r B), unbleached: a heavy cloth whose folds sit in the
   // albedo as well as the normal, so the shaded face is not one value
-  const skin = surface('skin', set['linen'])
+  const skin = new ClothMaterial({ metalness: 0, roughness: set['linen'].roughness })
+  skin.name = `flying-machine:skin:${set['linen'].name}`
+  skin.through = FUSTIAN_THROUGH
   {
     const s = set['linen']
     const d = stack.detail(skin, { ...s, normalStrength: 0.3, grain: s.grain ? { ...s.grain, pitch: 0.16, relief: 0.28, shade: 0.36, sheen: 0.025, fold: 0.9, tooth: 0.008 } : null }, { uv: uv(), count: 3, maps: dressed(s) ? 1 : 0, fade: [12, 100] })
