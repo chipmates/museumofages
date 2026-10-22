@@ -27,7 +27,7 @@ export const SLOT = {
   z0: HUB.z - WHEEL.width / 2 - PEGS.stand - PEGS.r - 0.02, z1: HUB.z + WHEEL.width / 2 + 0.025,
 }
 
-const BEVEL = { w: 0.007, d: 0.005 } as const
+const BEVEL = { w: 0.01, d: 0.007 } as const
 const across = (a: number): V3 => [-Math.sin(a), 0, Math.cos(a)]
 
 /** The wall's outward normal at angle `a` and height `y`, from the slope of its profile. */
@@ -42,7 +42,8 @@ function stave(k: Kit, i: number): void {
   const n = TUB.staves, da = TAU / n, ac = i * da
   const gap = 0.0016
   const ported = i % (n / TUB.ports.count) === 0
-  const f = { tone: tone(1, i) }
+  // staves come from different boards, so they differ more than the other pieces
+  const f = { tone: 0.8 + 0.38 * hash(1, i) }
   const ys: number[] = []
   for (let y: number = TUB.bottomY; y < TUB.rimY - 1e-6; ) {
     ys.push(y)
