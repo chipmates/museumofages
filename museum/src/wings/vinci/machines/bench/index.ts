@@ -46,6 +46,8 @@ export interface BenchOptions {
   eye?: { at: [number, number, number]; look: [number, number, number]; fov?: number; frame?: [number, number, number, number] };
   /** a grey figure of 1.70 m for size, at (x, z) on the floor, turned by yaw degrees */
   figure?: { at: [number, number]; yaw?: number };
+  /** this jump's own lamps in place of the machine's (a probe) */
+  lamp?: BenchLamp[] | null;
 }
 /** An exhibition lamp on one machine, beside the hour's key: a spot in the
  * machine's metres, its illuminance in lux at its aim, its cone in radians.
@@ -530,13 +532,13 @@ export function createBench(stack: Stack, onExit: () => void) {
       closed: [{ at: [-3.4, 6.2, 6.4], aim: [0.6, 0.7, 1.4], lux: 210, kelvin: 4300, angle: .62, penumbra: .75, decay: 2 }],
     } },
   };
-  let lamps: SpotLight[] = [];
+  let lamps: SpotLight[] = [], lampProbe: BenchLamp[] | null | undefined;
   const lampLit = new Set<MeshStandardNodeMaterial>();
   function dropLamps() { for (const m of lampLit) { m.lightsNode = null; m.needsUpdate = true; } lampLit.clear(); for (const lamp of lamps) lamp.dispose(); lamps = []; }
   /** A machine's own lamps for the state it stands in: given to its own surfaces and the figure's, so the room
    * keeps the hour's key alone. */
   function lampMachine() {
-    const specs = OWN_LIGHT[slug]?.lamps?.[sectionEnabled ? 'section' : 'closed'] ?? [];
+    const specs = lampProbe !== undefined ? lampProbe ?? [] : OWN_LIGHT[slug]?.lamps?.[sectionEnabled ? 'section' : 'closed'] ?? [];
     if (!specs.length && !lamps.length) return;
     dropLamps();
     if (!specs.length || !machine) return;
@@ -586,7 +588,7 @@ export function createBench(stack: Stack, onExit: () => void) {
     const requestedEvidence = opts.evidence === undefined ? null : opts.evidence === requested ? benchCatalog[requested] : partialCatalog.find(record => record.slug === opts.evidence);
     if (opts.evidence !== undefined && !requestedEvidence) throw new Error(`No evidence record for ${requested}: ${opts.evidence}`);
     evidence.close(false);
-    const mine = ++serial; active = true; host.hidden = false; ready = false; loading.hidden = false; clearDisplay(); folioEntry = undefined; folio.replaceChildren(); slug = requested; evidenceRecord = benchCatalog[slug]; lang = controlLanguage(location.search, opts.lang); schedule = playbackSchedule(benchCatalog[slug].dossier); playbackState = initialPlayback(schedule, { t: opts.t, fixed: document.body.classList.contains('forge'), reducedMotion: reduced.matches }); lastWall = performance.now(); stamp(); stack.setScene(scene, camera, { ...IDENTITY, name: 'vinci-machine-bench', exposure: .95, grain: .004, ao: { intensity: 1, distance: Math.max(...Object.values(benchCatalog[slug].dossier.scale_m).filter((v): v is number => typeof v === 'number')) * .025, thickness: 1 } }); lightBench(); machine = buildBenchMachine(slug, stack); closeUp = opts.close ?? false; eye = opts.eye ?? null; figure = opts.figure ?? null; sectionEnabled = (slug === 'camera-obscura' || slug === 'mechanical-lion' || slug === 'armoured-car') && (opts.section ?? false); machine.section(sectionEnabled); display.add(machine.object); compose(); paint(); await Promise.all([machine.ready, supports(mine), plateFor(mine)]); if (mine !== serial)
+    const mine = ++serial; active = true; host.hidden = false; ready = false; loading.hidden = false; clearDisplay(); folioEntry = undefined; folio.replaceChildren(); slug = requested; evidenceRecord = benchCatalog[slug]; lang = controlLanguage(location.search, opts.lang); schedule = playbackSchedule(benchCatalog[slug].dossier); playbackState = initialPlayback(schedule, { t: opts.t, fixed: document.body.classList.contains('forge'), reducedMotion: reduced.matches }); lastWall = performance.now(); stamp(); stack.setScene(scene, camera, { ...IDENTITY, name: 'vinci-machine-bench', exposure: .95, grain: .004, ao: { intensity: 1, distance: Math.max(...Object.values(benchCatalog[slug].dossier.scale_m).filter((v): v is number => typeof v === 'number')) * .025, thickness: 1 } }); lightBench(); machine = buildBenchMachine(slug, stack); closeUp = opts.close ?? false; eye = opts.eye ?? null; figure = opts.figure ?? null; lampProbe = opts.lamp; sectionEnabled = (slug === 'camera-obscura' || slug === 'mechanical-lion' || slug === 'armoured-car') && (opts.section ?? false); machine.section(sectionEnabled); display.add(machine.object); compose(); paint(); await Promise.all([machine.ready, supports(mine), plateFor(mine)]); if (mine !== serial)
     return; machine.animate(playbackState.clock, 0); lampMachine();
     if(key){
       const towardKey=vec3(key.direction.x,key.direction.y,key.direction.z).mul(.03);
