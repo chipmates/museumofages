@@ -76,11 +76,11 @@ function toolStrokes(at: N): { shade: N; sheen: N } {
   const p: N = positionGeometry
   const across: N = at.y.div(0.024).add(mx_noise_float(vec3(at.x.mul(2.5), at.y.mul(0.5), 1.7)).mul(0.45))
   const scallop = across.fract().sub(0.5).mul(2).pow(2)
-  const stroke = mx_noise_float(vec3(across.floor().mul(3.1), 0.5, 4.2)).mul(0.06)
-  const chatter = at.x.div(0.009).add(mx_noise_float(vec3(at.y.mul(30), 2.2, 0.3))).fract().sub(0.5).abs().mul(0.05)
-  const grease = float(1).sub(float(1).sub(smoothstep(0.075, 0.15, p.yz.length())).mul(0.32))
+  const stroke = mx_noise_float(vec3(across.floor().mul(3.1), 0.5, 4.2)).mul(0.09)
+  const chatter = at.x.div(0.009).add(mx_noise_float(vec3(at.y.mul(30), 2.2, 0.3))).fract().sub(0.5).abs().mul(0.07)
+  const grease = float(1).sub(float(1).sub(smoothstep(0.075, 0.16, p.yz.length())).mul(0.4))
   return {
-    shade: float(1).sub(scallop.mul(0.13)).add(stroke).sub(chatter).mul(grease),
+    shade: float(1).sub(scallop.mul(0.22)).add(stroke).sub(chatter).mul(grease),
     sheen: float(1).sub(scallop.mul(0.12)),
   }
 }

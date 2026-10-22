@@ -530,10 +530,15 @@ export function createBench(stack: Stack, onExit: () => void) {
    * sky and a paler bounce off the stone it stands on. The hour, the sun's
    * place and every other machine's light stay as they are. */
   const OWN_LIGHT: Partial<Record<BenchSlug, { lux: number; ambient: number; ground: string; lamps?: { closed?: BenchLamp[]; section?: BenchLamp[] }; fill?: { closed?: number; section?: number }; sectionLux?: number }>> = {
-    'armoured-car': { lux: 240, ambient: 1.15, ground: '#6a604f', lamps: {
-      // high on the sun's side of the visitor: the near skirt and eave take the most, the cone's far side and its
-      // turn away from the visitor fall off, as under a lamp in a hall
-      closed: [{ at: [-3.4, 6.2, 6.4], aim: [0.6, 0.7, 1.4], lux: 210, kelvin: 4300, angle: .62, penumbra: .75, decay: 2 }],
+    'armoured-car': { lux: 240, ambient: 1.15, ground: '#6a604f', sectionLux: 140, fill: { closed: .4 }, lamps: {
+      // low on the sun's side of the visitor: the near skirt and eave take the most, the cone turns away from it
+      // into shade and its far side falls off, as under one lamp in a hall
+      closed: [{ at: [-5, 3.6, 4.6], aim: [.2, .8, 1.2], lux: 280, kelvin: 4300, angle: .7, penumbra: .8, decay: 2 }],
+      // opened, a narrow lamp over each far lantern, where the drive binds; the floor round them stays dim
+      section: [
+        { at: [.3, 3.8, 1.8], aim: [.75, .62, -.7], lux: 300, kelvin: 4300, angle: .22, penumbra: .6, decay: 2 },
+        { at: [-.3, 3.8, 1.8], aim: [-.75, .62, -.7], lux: 300, kelvin: 4300, angle: .22, penumbra: .6, decay: 2 },
+      ],
     } },
   };
   let lamps: SpotLight[] = [], lampProbe: BenchLamp[] | null | undefined, fillProbe: number | undefined, luxProbe: number | undefined;
