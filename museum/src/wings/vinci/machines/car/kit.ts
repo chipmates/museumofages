@@ -85,12 +85,12 @@ export class Kit {
     }
   }
 
-  /** A quad with its own per-vertex normals (a smooth surface), UVs given. */
-  smoothQuad(p: [V3, V3, V3, V3], n: [V3, V3, V3, V3], uvs: [number, number][], f: Finish, end = 0): void {
+  /** A quad with its own per-vertex normals (a smooth surface), UVs given; `fs` grades the finish corner by corner. */
+  smoothQuad(p: [V3, V3, V3, V3], n: [V3, V3, V3, V3], uvs: [number, number][], f: Finish, end = 0, fs?: [Finish, Finish, Finish, Finish]): void {
     // wound so the face looks along its normals, whichever order the corners came in
     const facing = dot(cross(sub(p[1], p[0]), sub(p[2], p[0])), add(add(n[0], n[1]), add(n[2], n[3]))) >= 0
     const order = facing ? [0, 1, 2, 0, 2, 3] : [0, 2, 1, 0, 3, 2]
-    for (const i of order) this.vertex(p[i]!, n[i]!, uvs[i]![0], uvs[i]![1], f, end)
+    for (const i of order) this.vertex(p[i]!, n[i]!, uvs[i]![0], uvs[i]![1], fs ? fs[i]! : f, end)
   }
 
   /** A hexahedron from eight corners (index = x + 2y + 4z), every edge eased by `c`. */
@@ -154,15 +154,19 @@ export class Kit {
       const slopeN = (dr: number, ds: number, k: number): V3 => norm(add(mul(radial(k), ds), mul(w, -dr)))
       const ds = s1 - s0, dr = r1 - r0
       if (Math.hypot(ds, dr) < 1e-9) continue
-      let finish = wearAt ? { ...f, wear: Math.max(f.wear ?? 0, wearAt((s0 + s1) / 2)) } : f
-      // dirt settles where a piece enters its neighbour: a darker tone, the same grain
-      if (grimeAt) finish = { ...finish, seed: f.seed ?? f.tone, tone: f.tone * grimeAt((s0 + s1) / 2) }
+      // wear and dirt graded ring by ring, so neither steps from one row to the next; the grain never moves
+      const at = (s: number): Finish => {
+        let g = wearAt ? { ...f, wear: Math.max(f.wear ?? 0, wearAt(s)) } : f
+        if (grimeAt) g = { ...g, seed: f.seed ?? f.tone, tone: f.tone * grimeAt(s) }
+        return g
+      }
+      const graded = wearAt || grimeAt ? [at(s0), at(s0), at(s1), at(s1)] as [Finish, Finish, Finish, Finish] : undefined
       for (let k = 0; k < segments; k++) {
         const p: [V3, V3, V3, V3] = [ring(s0, r0, k), ring(s0, r0, k + 1), ring(s1, r1, k + 1), ring(s1, r1, k)]
         const n: [V3, V3, V3, V3] = [slopeN(dr, ds, k), slopeN(dr, ds, k + 1), slopeN(dr, ds, k + 1), slopeN(dr, ds, k)]
         const circ = (kk: number, r: number): number => (kk / segments) * Math.PI * 2 * Math.max(r, 0.02)
         // the grain runs along the axis: U along, V around
-        this.smoothQuad(p, n, [[s0, circ(k, r0)], [s0, circ(k + 1, r0)], [s1, circ(k + 1, r1)], [s1, circ(k, r1)]], finish)
+        this.smoothQuad(p, n, [[s0, circ(k, r0)], [s0, circ(k + 1, r0)], [s1, circ(k + 1, r1)], [s1, circ(k, r1)]], f, 0, graded)
       }
     }
     if (!caps) return

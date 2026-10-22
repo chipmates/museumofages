@@ -5,10 +5,10 @@
  * joints turn them where they turn.
  */
 import {
-  COVER, CRANK, GUN, PORT_ANGLES_DEG, HUB, LANTERN, PEGS, POSTS, SHAFT, TAU, TUB, WHEEL,
+  COVER, CRANK, GUN, PORT_ANGLES_DEG, HUB, LANTERN, PEGS, POSTS, SHAFT, SPOKES, TAU, TUB, WHEEL,
   CONE_TOP_Y, SILL_TOP, CAP_FOOT, CAP_RING_TOP, KNOB_FOOT, capY, coneY, wallRadius,
 } from './plan'
-import { Kit, add, cross, dot, hash, len, mul, norm, sub, v, type V3 } from './kit'
+import { Kit, add, cross, dot, hash, len, mul, norm, sub, v, type Finish, type V3 } from './kit'
 
 export type Surface = 'rough' | 'fine' | 'iron' | 'bronze'
 export type Body = Record<Surface, Kit>
@@ -51,11 +51,13 @@ function stave(k: Kit, i: number): void {
   // the ground's dirt splashed up the skirt's foot, and grime in the joints between staves
   const dirt = (y: number): number => 0.74 + 0.26 * smooth(TUB.bottomY, TUB.bottomY + 0.24, y)
   const at_ = (y: number, k = 1): { tone: number; seed: number } => ({ tone: f.tone * dirt(y) * k, seed: f.tone })
-  const ys: number[] = []
-  for (let y: number = TUB.bottomY; y < TUB.rimY - 1e-6; ) {
+  // a row at the chime's top, so the corner the floor meets is in the mesh, then rows up the flare
+  const ys: number[] = [TUB.bottomY]
+  for (let y: number = TUB.floorTop; y < TUB.rimY - 1e-6; ) {
     ys.push(y)
     const inPort = ported && Math.abs(y - TUB.ports.y) < TUB.ports.r + 0.02
-    y = Math.min(TUB.rimY, y + (inPort ? 0.01 : 0.045))
+    const flare = y < TUB.floorTop + 0.06 ? 0.015 : 0.045
+    y = Math.min(TUB.rimY, y + (inPort ? 0.01 : flare))
   }
   ys.push(TUB.rimY)
   // positions across the stave by arc length s from its centre line
@@ -125,16 +127,47 @@ function collar(k: Kit, deg: number, j: number): void {
   k.lathe(origin, n, [[0, TUB.ports.r], [0, TUB.ports.collar], [0.026, TUB.ports.collar - 0.004], [0.03, TUB.ports.r + 0.012], [0.03, TUB.ports.r]], 24, { tone: tone(2, j) }, false, undefined, s => (s > 0.027 ? 0.62 : 1))
 }
 
+/** A floor board between z0 and z1 and the cuts xa..xb (an infinite cut runs to the wall), its ends sawn on the
+ * circle R so it meets the staves at the chime, its long top edges eased so the joints read. */
+function board(k: Kit, z0: number, z1: number, xa: number, xb: number, R: number, f: Finish): void {
+  const y0 = TUB.bottomY, y1 = TUB.floorTop, e = 0.004
+  const span = (z: number): [number, number] => {
+    const s = Math.sqrt(Math.max(0, R * R - z * z))
+    return [Math.max(xa, -s), Math.min(xb, s)]
+  }
+  // a board stands only where it is more than 3 cm wide: trim its z range to that
+  const wide = (z: number): boolean => { const [l, r] = span(z); return r - l > 0.03 }
+  let za = z0, zb = z1
+  while (za < zb && !wide(za)) za += 0.002
+  while (zb > za && !wide(zb)) zb -= 0.002
+  if (zb - za < 0.02) return
+  const n = Math.max(2, Math.ceil((zb - za) / 0.02))
+  const at_ = (z: number, y: number, side: 0 | 1): V3 => [span(z)[side], y, z]
+  const zs = Array.from({ length: n + 1 }, (_, i) => za + ((zb - za) * i) / n)
+  const zt = zs.map(z => Math.min(zb - e, Math.max(za + e, z)))
+  const centre: V3 = [(span((za + zb) / 2)[0] + span((za + zb) / 2)[1]) / 2, (y0 + y1) / 2, (za + zb) / 2]
+  // the outline at the shoulder (under the eased edge) and the top, point for point
+  const ring = (z: number[], y: number): V3[] => [...z.map(q => at_(q, y, 1)), ...[...z].reverse().map(q => at_(q, y, 0))]
+  const bottom = ring(zs, y0), shoulder = ring(zs, y1 - e), top = ring(zt, y1)
+  k.polygon(top, X, f, centre)
+  k.polygon(bottom, X, f, centre)
+  for (let i = 0; i < bottom.length; i++) {
+    const j = (i + 1) % bottom.length
+    k.polygon([bottom[i]!, bottom[j]!, shoulder[j]!, shoulder[i]!], X, f, centre)
+    k.polygon([shoulder[i]!, shoulder[j]!, top[j]!, top[i]!], X, f, centre)
+  }
+}
+
+/** The floor: boards along the car, laid out to the wall all round, ripped where the wheels pass through. */
 function floor(k: Kit): void {
-  const R = wallRadius(TUB.bottomY) - TUB.wall - 0.008
+  // the staves' inner face at the chime, less the joint's play
+  const R = TUB.bottomR - TUB.wall - 0.003
   const width = TUB.plank, pitch = width + 0.004
-  const y0 = TUB.bottomY, y1 = TUB.floorTop
-  const count = Math.floor((2 * R) / pitch)
-  // the floor's own slots: a plank is ripped where a slot crosses it
+  const count = Math.ceil((2 * R) / pitch)
   const slotsZ = [[SLOT.z0, SLOT.z1], [-SLOT.z1, -SLOT.z0]] as const
   for (let j = 0; j < count; j++) {
     const zc = (j - (count - 1) / 2) * pitch
-    let zs: [number, number][] = [[zc - width / 2, zc + width / 2]]
+    let zs: [number, number][] = [[Math.max(-R, zc - width / 2), Math.min(R, zc + width / 2)]]
     for (const [s0, s1] of slotsZ) {
       zs = zs.flatMap(([a, b]): [number, number][] => {
         if (b <= s0 || a >= s1) return [[a, b]]
@@ -146,18 +179,12 @@ function floor(k: Kit): void {
       })
     }
     for (const [z0, z1] of zs) {
-      const edge = Math.max(Math.abs(z0), Math.abs(z1))
-      if (edge >= R - 0.05) continue
-      const L = Math.sqrt(R * R - edge * edge)
+      if (z1 - z0 < 0.02) continue
       const inSlot = slotsZ.some(([s0, s1]) => z0 >= s0 - 1e-6 && z1 <= s1 + 1e-6)
       const xs: [number, number][] = inSlot
-        ? [[-L, -SLOT.x1], [-SLOT.x0, SLOT.x0], [SLOT.x1, L]]
-        : [[-L, L]]
-      for (const [x0, x1] of xs) {
-        if (x1 - x0 < 0.08) continue
-        const f = { tone: tone(3, j, z0), wear: 0 }
-        k.box(v((x0 + x1) / 2, (y0 + y1) / 2, (z0 + z1) / 2), [X, Y, Z], v((x1 - x0) / 2, (y1 - y0) / 2, (z1 - z0) / 2), f, 0.004)
-      }
+        ? [[-Infinity, -SLOT.x1], [-SLOT.x0, SLOT.x0], [SLOT.x1, Infinity]]
+        : [[-Infinity, Infinity]]
+      for (const [xa, xb] of xs) board(k, z0, z1, xa, xb, R, { tone: tone(3, j, z0, xa), wear: 0 })
     }
   }
 }
@@ -168,8 +195,8 @@ function rings(k: Kit, iron: Kit): void {
     const a0 = (j * TAU) / 8 + 0.002, a1 = ((j + 1) * TAU) / 8 - 0.002
     k.arc(v(0, 0, 0), Y, X, TUB.lip.inner, TUB.lip.outer, a0, a1, TUB.rimY, TUB.lip.top, 12, { tone: tone(4, j) })
   }
-  // an iron band round the bilge, where a cooper would drive one
-  const b0 = TUB.bottomY + 0.07, b1 = b0 + 0.045
+  // an iron hoop round the chime, where a cooper drives one over the bottom's groove
+  const b0 = TUB.bottomY + 0.006, b1 = TUB.floorTop - 0.004
   iron.lathe(v(0, 0, 0), Y, [[b0, wallRadius(b0) + 0.0008], [b0, wallRadius(b0) + 0.007], [b1, wallRadius(b1) + 0.007], [b1, wallRadius(b1) + 0.0008]], 120, { tone: 1 }, false)
 }
 
@@ -181,12 +208,16 @@ function bearings(k: Kit, fine: Kit, iron: Kit): void {
     const f = { tone: tone(5, sx, sz) }
     const top = HUB.y + 0.07
     k.box(v(hx, (TUB.floorTop + top) / 2 + 0.001, cz), [X, Y, Z], v(0.15, (top - TUB.floorTop) / 2, 0.06), f, 0.008, Y)
-    // braced to the wall above the guns' barrels, just under the rim
+    // braced to the wall above the guns' barrels, just under the rim, its end sawn to the flaring wall corner by corner
     const braceY = TUB.rimY - 0.05
-    const rIn = wallRadius(braceY) - TUB.wall
-    const zWall = Math.sqrt(rIn * rIn - hx * hx) - 0.01
-    const z0 = cz + sz * 0.06, z1 = sz * zWall
-    k.box(v(hx, braceY, (z0 + z1) / 2), [Z, Y, X], v(Math.abs(z1 - z0) / 2, 0.035, 0.05), { tone: tone(6, sx, sz) }, 0.008)
+    const z0 = cz + sz * 0.06
+    const c8: V3[] = []
+    for (let i = 0; i < 8; i++) {
+      const x = hx + (i & 1 ? 0.05 : -0.05), y = braceY + (i & 2 ? 0.035 : -0.035)
+      const rIn = wallRadius(y) - TUB.wall - 0.004
+      c8.push(v(x, y, i & 4 ? sz * Math.sqrt(rIn * rIn - x * x) : z0))
+    }
+    k.slab(c8, Z, { tone: tone(6, sx, sz) }, 0.008)
     // the axle, through the cheek and the hub, a linchpin past the hub
     const zOut = cz + sz * 0.06, zIn = hz - sz * (WHEEL.hubLen / 2 + 0.035)
     fine.rod(v(hx, HUB.y, zOut + sz * 0.02), v(hx, HUB.y, zIn), WHEEL.axleR, 14, { tone: tone(7, sx, sz), wear: 0.4 }, 0.006)
@@ -326,7 +357,7 @@ function guns(k: Kit, iron: Kit, bronze: Kit): void {
   PORT_ANGLES_DEG.forEach((deg, j) => {
     const a = portAngle(deg), g = radial(a), side = cross(Y, g)
     // the barrel lies low in its port: the collar is square to the leaning wall, the bore level, and its top would graze the collar's lip
-    const origin = add(mul(g, breech), mul(Y, TUB.ports.y - 0.005))
+    const origin = add(mul(g, breech), mul(Y, TUB.ports.y - 0.007))
     const shade = tone(22, j)
     // the muzzle end darkened by its own smoke, the breech dulled by hands
     bronze.lathe(origin, g, BARREL, 32, { tone: shade }, false, undefined, s => (s > GUN.length - 0.06 ? 0.7 : s < 0.04 ? 0.86 : 1))
@@ -344,8 +375,8 @@ function guns(k: Kit, iron: Kit, bronze: Kit): void {
 
 /* ── A WHEEL, about its own hub ──────────────────────────────────────────── */
 
-/** Each felloe is sawn from its own board, so a turning wheel shows its turn. */
-const FELLOE_TONES = [1.08, 0.58, 1.02, 0.94, 1.12] as const
+/** Each felloe is sawn from its own board. */
+const FELLOE_TONES = [1.0, 0.93, 1.05, 0.96, 1.02] as const
 
 export function wheel(sx: number, sz: number): Body {
   const b = body()
@@ -357,7 +388,7 @@ export function wheel(sx: number, sz: number): Body {
   ], 24, { tone: tone(30, seed) }, true, undefined, s => (s < 0.03 || s > WHEEL.hubLen - 0.03 ? 0.72 : 1))
   for (const s of [-0.115, 0.105]) b.iron.lathe(v(0, 0, s), Z, [[0, 0.107], [0, 0.116], [0.02, 0.116], [0.02, 0.107]], 24, { tone: 1 }, false)
   for (let k = 0; k < WHEEL.spokes; k++) {
-    const a = (k * TAU) / WHEEL.spokes
+    const a = (k * TAU) / WHEEL.spokes + SPOKES.zero
     const d: V3 = [Math.cos(a), Math.sin(a), 0], t: V3 = [-Math.sin(a), Math.cos(a), 0]
     const ends = [[0.1, 0.036, 0.028], [WHEEL.felloeIn + 0.03, 0.028, 0.022]] as const
     const c8: V3[] = []
@@ -365,11 +396,12 @@ export function wheel(sx: number, sz: number): Body {
       const [r, hw, hz] = ends[i & 1]!
       c8.push(add(mul(d, r), add(mul(t, i & 2 ? hw : -hw), v(0, 0, i & 4 ? hz : -hz))))
     }
-    // one spoke of paler ash among the oak, inside the dark felloe: a hand that shows the wheel's turn against the dark
-    b.rough.slab(c8, d, k === 3 ? { tone: 1.8, seed: 0.913 } : { tone: tone(31, seed, k) }, 0.007)
+    // one spoke of pale ash among darker oak, upright at rest on every wheel: the hand that shows the wheel's turn
+    if (k === SPOKES.marked) b.fine.slab(c8, d, { tone: 2.15, seed: 0.913 }, 0.007)
+    else b.rough.slab(c8, d, { tone: 0.8 + 0.12 * hash(31, seed, k) }, 0.007)
   }
   for (let j = 0; j < WHEEL.felloes; j++) {
-    const joint = (j * TAU) / WHEEL.felloes + TAU / (WHEEL.spokes * 2)
+    const joint = (j * TAU) / WHEEL.felloes
     const a0 = joint + 0.003, a1 = joint + TAU / WHEEL.felloes - 0.003
     const ft = FELLOE_TONES[j]! * (0.96 + 0.08 * hash(32, seed, j))
     b.rough.arc(v(0, 0, 0), Z, X, WHEEL.felloeIn, WHEEL.tread, a0, a1, -w2, w2, 14, { tone: ft, wear: 0 })
@@ -385,7 +417,7 @@ export function wheel(sx: number, sz: number): Body {
     // polished where the lantern's staves bear on the peg's outer half, grimed at its root
     const root = 0.02 / (0.02 + PEGS.stand)
     b.fine.rod(from, to, PEGS.r, 12, { tone: tone(33, seed, j), wear: 0.15 }, 0.007, {
-      rows: 6, wearAt: u => 0.95 * smooth(0.45, 0.8, u), grimeAt: u => 0.66 + 0.34 * smooth(root, root + 0.18, u),
+      rows: 10, wearAt: u => 0.95 * smooth(0.45, 0.8, u), grimeAt: u => 0.66 + 0.34 * smooth(root, root + 0.18, u),
     })
   }
   return b
@@ -397,13 +429,14 @@ export function shaft(sz: number): Body {
   const b = body()
   const seed = sz
   const half = SHAFT.half
+  // the shaft runs whole through the crank frame's feet: the frame's lower rail
+  b.rough.lathe(v(-SHAFT.end, 0, 0), X, [[0, half], [2 * SHAFT.end, half]], 16, { tone: tone(40, seed) }, true)
   for (const sx of [-1, 1]) {
-    const x0 = sx * CRANK.cheekX, x1 = sx * SHAFT.end
-    b.rough.lathe(v(Math.min(x0, x1), 0, 0), X, [[0, half], [Math.abs(x1 - x0), half]], 16, { tone: tone(40, seed, sx) }, true)
+    const x0 = sx * CRANK.cheekX
     // the crank's heavy cheek, from below the axis to past the grip
-    b.rough.box(v(x0, (CRANK.throw - 0.06) / 2 + 0.02, 0), [Y, X, Z], v((CRANK.throw + 0.1) / 2, CRANK.cheekT / 2, CRANK.cheekW / 2), { tone: tone(41, seed, sx) }, 0.01)
-    // an iron strap binding the cheek to the shaft, and a pin through it at the grip
-    b.iron.box(v(x0, 0, 0), [Y, X, Z], v(half + 0.014, CRANK.cheekT / 2 + 0.004, CRANK.cheekW / 2 + 0.006), { tone: 1 }, 0.003)
+    b.rough.box(v(x0, (CRANK.throw - 0.06) / 2 + 0.02, 0), [Y, X, Z], v((CRANK.throw + 0.1) / 2, CRANK.cheekT / 2, CRANK.cheekW / 2), { tone: tone(41, seed, sx) }, 0.012)
+    // iron straps binding the cheek to the shaft at its foot and to the grip at its head
+    for (const [y, h] of [[0, 0.05], [CRANK.throw - 0.005, 0.045]] as const) b.iron.box(v(x0, y, 0), [Y, X, Z], v(h, CRANK.cheekT / 2 + 0.004, CRANK.cheekW / 2 + 0.005), { tone: 1 }, 0.003)
     // the lantern: two thick discs bound with iron, ten staves between them
     const xl = sx * LANTERN.x
     for (const e of [-1, 1]) {
@@ -419,7 +452,7 @@ export function shaft(sz: number): Body {
       // turned about +X from the point nearest the wheel, so two staves straddle the contact
       const o: V3 = [0, Math.sin(beta) * LANTERN.pitch, Math.cos(beta) * sz * LANTERN.pitch]
       b.fine.rod(add(v(a, 0, 0), o), add(v(a + l, 0, 0), o), LANTERN.staveR, 12, { tone: tone(43, seed, sx, k), wear: 0.1 }, 0.003, {
-        rows: 9, wearAt: u => 0.95 * (1 - smooth(0.06, 0.16, Math.abs(u - contact))), grimeAt: u => 0.7 + 0.3 * smooth(0.04, 0.14, Math.min(u, 1 - u)),
+        rows: 18, wearAt: u => 0.8 * (1 - smooth(0.04, 0.17, Math.abs(u - contact))), grimeAt: u => 0.7 + 0.3 * smooth(0.04, 0.14, Math.min(u, 1 - u)),
       })
     }
   }
@@ -434,6 +467,19 @@ export interface Bodies {
   tub: Body
   cover: Body
   guns: Body
+}
+
+/** The tub's pieces apart, for the geometry checks: the wall (staves, collars, lip, hoop), the floor, the fittings. */
+export function tubPieces(): { wall: Kit; floor: Kit; fittings: Kit } {
+  const wall = new Kit(), boards = new Kit(), fittings = new Kit()
+  for (let i = 0; i < TUB.staves; i++) stave(wall, i)
+  PORT_ANGLES_DEG.forEach((deg, j) => collar(wall, deg, j))
+  rings(wall, wall)
+  floor(boards)
+  bearings(fittings, fittings, fittings)
+  forks(fittings, fittings)
+  places(fittings)
+  return { wall, floor: boards, fittings }
 }
 
 export function buildBodies(): Bodies {

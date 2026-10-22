@@ -18,7 +18,9 @@
 export const TAU = Math.PI * 2
 
 /** The basin the drive stands in, read as round in plan: a short skirt that
- * tapers in toward the ground, its rim under the cover's eave band. */
+ * tapers in toward the ground, its rim under the cover's eave band. The staves
+ * stand upright over the floor's thickness (the chime, where a cooper cuts the
+ * groove the bottom boards sit in) and flare above it. */
 export const TUB = {
   rimR: 2.3, rimY: 0.565,
   bottomR: 1.85, bottomY: 0.06,
@@ -29,9 +31,9 @@ export const TUB = {
   ports: { y: 0.36, r: 0.075, collar: 0.11 },
 } as const
 
-/** The wall's radius at a height: nearly upright under the rim, turning in at the bilge. */
+/** The wall's radius at a height: upright at the chime, turning out above the floor, nearly upright under the rim. */
 export function wallRadius(y: number): number {
-  const s = Math.min(1, Math.max(0, (y - TUB.bottomY) / (TUB.rimY - TUB.bottomY)))
+  const s = Math.min(1, Math.max(0, (y - TUB.floorTop) / (TUB.rimY - TUB.floorTop)))
   return TUB.bottomR + (TUB.rimR - TUB.bottomR) * Math.sqrt(s)
 }
 
@@ -86,16 +88,22 @@ export const WHEEL = {
   hubR: 0.12, hubLen: 0.28, axleR: 0.045,
 } as const
 export const PEGS = { count: 24, pitch: 0.52, r: 0.0225, stand: 0.11 } as const
-/** Ten staves on the pegs' own spacing: one crank turn is ten twenty-fourths of a wheel turn. */
-export const LANTERN = { staves: 10, pitch: (PEGS.pitch * 10) / 24, staveR: 0.024, discR: 0.255, discT: 0.06, half: 0.17, x: 0.65 } as const
+/** The spokes stand off the hub's zero so that one of them, the marked one, points straight up at rest on every
+ * wheel: the turns of a side's two wheels then read as mirror images. */
+export const SPOKES = { zero: Math.PI / 10, marked: 2 } as const
+/** Ten staves on the pegs' own spacing: one crank turn is ten twenty-fourths of a wheel turn. The drum runs from
+ * the hub's side to the fork post, as long as the space between them allows. */
+export const LANTERN = { staves: 10, pitch: (PEGS.pitch * 10) / 24, staveR: 0.026, discR: 0.262, discT: 0.07, half: 0.22, x: 0.715 } as const
 /** How far a peg's tip reaches past the near staves' circle. */
 const ENGAGE = 0.055
 export const SHAFT = {
   z: HUB.z - WHEEL.width / 2 - PEGS.stand + ENGAGE - LANTERN.pitch,
-  half: 0.06, end: 0.88,
+  half: 0.06, end: 0.95,
 } as const
-export const CRANK = { cheekX: 0.27, cheekT: 0.1, cheekW: 0.14, throw: 0.4, gripR: 0.036 } as const
-export const POSTS = { x: 0.385, w: 0.08 } as const
+/** The crank frame: two heavy cheeks, the shaft through their feet and the grip across their heads, one rigid
+ * rectangle as the sheet draws it. Its sweep clears the floor by about 3 cm. */
+export const CRANK = { cheekX: 0.29, cheekT: 0.13, cheekW: 0.16, throw: 0.42, gripR: 0.045 } as const
+export const POSTS = { x: 0.41, w: 0.07 } as const
 
 /** Where each wheel stands: sx -1 rear, +1 front; sz -1 far, +1 near. */
 export const WHEELS = [
@@ -112,27 +120,37 @@ export const SHAFTS = [
 export const PERIOD = 12
 const smoother = (u: number): number => { const x = Math.min(1, Math.max(0, u)); return x * x * x * (x * (x * 6 - 15) + 10) }
 const step = (a: number, b: number, x: number): number => { const u = Math.min(1, Math.max(0, (x - a) / (b - a))); return u * u * (3 - 2 * u) }
-/** The schedule: stand, one slow turn forward, the bind, back, stand. */
+/** The schedule: stand, one turn forward that jams dead, two shoves against the jam, back, stand. */
 export const PHASES = [
   { name: 'The crew stands at the cranks', start: 0, end: 1 },
-  { name: 'One slow turn forward: the front and rear wheels turn against each other', start: 1, end: 6 },
-  { name: 'The bind: the cranks shudder and stop', start: 6, end: 7.6 },
+  { name: 'One turn forward: the front and rear wheels turn against each other', start: 1, end: 5.4 },
+  { name: 'The bind: the drive stops dead, the crew shoves twice and it will not go', start: 5.4, end: 7.6 },
   { name: 'Turned back: the wheels fight the other way', start: 7.6, end: 11 },
   { name: 'At rest', start: 11, end: 12 },
 ] as const
 
-/** The bind: the men keep pushing into a drive that will not go, and the
- * crank jolts against the pegs and is thrown back, dying away. Radians. */
-function bindShudder(u: number): number {
-  return 0.11 * Math.sin(TAU * 3.2 * u) * Math.exp(-1.7 * u) * step(0, 0.05, u) * (1 - step(1.15, 1.6, u))
+/** One shove into the jam: the play taken up quickly, stopped dead, held, let go. Radians. */
+function shove(u: number, amount: number): number {
+  if (u <= 0 || u >= 0.5) return 0
+  if (u < 0.12) return amount * (u / 0.12) ** 2
+  if (u < 0.24) return amount
+  return amount * (1 - step(0.24, 0.5, u))
+}
+/** The bind, from the moment the drive jams: thrown back a hand's width by the stop, then held under strain while
+ * the crew shoves twice. Radians about the full turn. */
+function bind(u: number): number {
+  const recoil = u < 0.32 ? -0.075 * Math.sin((Math.PI * u) / 0.32) * Math.exp(-3 * u) : 0
+  const strain = 0.006 * Math.sin(TAU * 7 * u) * step(0.3, 0.4, u) * (1 - step(2.0, 2.2, u))
+  return recoil + strain + shove(u - 0.8, 0.11) + shove(u - 1.5, 0.08)
 }
 
-/** The far crank's angle about +X, radians, at any time (a 12 s loop). */
+/** The far crank's angle about +X, radians, at any time (a 12 s loop). The forward turn eases in and arrives at
+ * the jam still moving, so the stop reads as the drive's, not the crew's. */
 export function crankAngle(time: number): number {
   const t = ((time % PERIOD) + PERIOD) % PERIOD
   if (t < 1) return 0
-  if (t < 6) return TAU * smoother((t - 1) / 5)
-  if (t < 7.6) return TAU + bindShudder(t - 6)
+  if (t < 5.4) { const u = (t - 1) / 4.4; return TAU * u * u * (2 - u) }
+  if (t < 7.6) return TAU + bind(t - 5.4)
   if (t < 11) return TAU * (1 - smoother((t - 7.6) / 3.4))
   return 0
 }
