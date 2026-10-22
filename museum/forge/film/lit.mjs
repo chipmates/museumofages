@@ -9,9 +9,10 @@ import { join, relative } from 'node:path'
 import { APP_ROOT, WING_DIR, createLoader } from './load.mjs'
 import { CELL_M, cellNumber } from './scene.mjs'
 
-/** The wing's modules that capture the scene (a cube probe, a planar mirror), by path under the wing:
-    the water's mirror is the stand-in's own part; every other one lights a room inside `litRoomCells`. */
-export const KNOWN_CAPTURES = ['collection/body-wall-cabinet.ts', 'collection/hall-fabric.ts', 'collection/hall-light.ts',
+/** The wing's modules that capture the scene (a cube probe, a planar mirror, a render into a target), by path
+    under the wing: the water's mirror is the stand-in's own part; the hall air's depth is drawn from the frame's
+    own eye inside the hall; every other one lights a room inside `litRoomCells`. */
+export const KNOWN_CAPTURES = ['collection/body-wall-cabinet.ts', 'collection/hall-air.ts', 'collection/hall-fabric.ts', 'collection/hall-light.ts',
   'collection/line-gallery.ts', 'collection/picture-room.ts', 'collection/reading-room.ts', 'collection/supper-room.ts', 'water.ts']
 /** The wing's modules that make a light with a shadow: the collection's rooms (inside `litRoomCells`); the
     house hall's sun (the key light's own direction); the grave diagram's light (its map holds the
@@ -19,7 +20,7 @@ export const KNOWN_CAPTURES = ['collection/body-wall-cabinet.ts', 'collection/ha
     light (made only to borrow a method, never in the scene). */
 export const KNOWN_SHADOW_LIGHTS = ['collection/body-wall-cabinet.ts', 'collection/hall-light.ts', 'collection/line-gallery.ts',
   'collection/picture-room.ts', 'collection/reading-room.ts', 'grave/diagram.ts', 'house-hall.ts', 'static-shadow-cache.ts']
-const CAPTURE = /\bCubeCamera\s*\(|\.fromScene\s*\(|\.reflector\s*\(|createReflector\s*\(/
+const CAPTURE = /\bCubeCamera\s*\(|\.fromScene\s*\(|\.reflector\s*\(|createReflector\s*\(|\.setRenderTarget\s*\(/
 // a light made under a namespace or a class of its own is one too
 const LIGHT = /new\s+(?:[\w$]+\.)*(?:Directional|Spot|Point|RectArea)Light\s*\(|extends\s+(?:[\w$]+\.)*(?:Directional|Spot|Point|RectArea)Light\b/
 const SHADOW = /\.shadow\.|castShadow\s*=\s*true/

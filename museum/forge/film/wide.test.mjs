@@ -158,6 +158,6 @@ test('the picture key reads a seen cell\'s shadow flags; a seen set of every cel
 
 test('the pin knows a light or a capture made under a namespace or as a class of its own', () => {
   const found = lightingOf([['a.ts', 'const l = new THREE.SpotLight(1); l.castShadow = true'], ['b.ts', 'class Washer extends SpotLight {}; w.shadow.mapSize'],
-    ['c.ts', 'const probe = new THREE.CubeCamera (.1, 99, t)'], ['d.ts', 'const l = new THREE.PointLight(1)']])
-  assert.deepEqual(found.unknown, ['a.ts', 'b.ts', 'c.ts'], 'a light with no shadow is the scene list\'s, not the pin\'s')
+    ['c.ts', 'const probe = new THREE.CubeCamera (.1, 99, t)'], ['d.ts', 'const l = new THREE.PointLight(1)'], ['e.ts', 'renderer.setRenderTarget(target); renderer.render(scene, eye)']])
+  assert.deepEqual(found.unknown, ['a.ts', 'b.ts', 'c.ts', 'e.ts'], 'a light with no shadow is the scene list\'s, not the pin\'s')
 })
