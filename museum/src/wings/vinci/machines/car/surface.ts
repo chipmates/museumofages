@@ -59,22 +59,25 @@ function weathered(col: N): N {
   const w: N = attribute('aWeather', 'float')
   const p: N = positionGeometry
   const rho = p.xz.length(), theta = atan(p.z, p.x)
-  // nails sit near each board's middle line
-  const across = theta.mul(COVER.boards / (Math.PI * 2)).fract().sub(0.5).abs()
-  const underNail = float(1).sub(smoothstep(0.07, 0.2, across))
+  // nails sit near each board's middle line; only some of them bleed, each its own length
+  const turns = theta.mul(COVER.boards / (Math.PI * 2))
+  const board = turns.floor(), across = turns.fract().sub(0.5).abs()
+  const underNail = float(1).sub(smoothstep(0.05, 0.16, across))
   const r0 = COVER.eaveEdge, r1 = COVER.topR + COVER.sill.w / 2
   let run: N = float(0)
-  for (const s of COVER.nailRings) {
+  COVER.nailRings.forEach((s, i) => {
     const r = r0 + (r1 - r0) * s
-    run = run.add(smoothstep(r - 0.005, r + 0.01, rho).mul(float(1).sub(smoothstep(r + 0.03, r + 0.3, rho))))
-  }
-  const breakup = smoothstep(0.3, 0.75, mx_noise_float(vec3(theta.mul(170), rho.mul(5), 3.1)).mul(0.5).add(0.5))
-  const stain = run.mul(underNail).mul(breakup.mul(0.7).add(0.3)).mul(w)
+    const pick = smoothstep(0.08, 0.4, mx_noise_float(vec3(board.mul(1.37).add(0.43), i * 2.71 + 0.31, 0.7)))
+    const reach = mix(float(0.08), float(0.32), smoothstep(-0.5, 0.5, mx_noise_float(vec3(board.mul(0.91).add(0.17), i * 1.93 + 0.57, 2.3))))
+    run = run.add(smoothstep(r - 0.004, r + 0.01, rho).mul(float(1).sub(smoothstep(float(r + 0.015), reach.add(r), rho))).mul(pick))
+  })
+  const breakup = smoothstep(0.2, 0.7, mx_noise_float(vec3(theta.mul(170), rho.mul(6), 3.1)).mul(0.5).add(0.5))
+  const stain = run.mul(underNail).mul(breakup.mul(0.6).add(0.4)).mul(w)
   const wet = smoothstep(r0 - 0.5, r0, rho).mul(w)
   const sun: N = float(1).sub(smoothstep(r1 + 0.3, r1 + 1.1, rho)).mul(w)
   const grey: N = vec3(col.dot(vec3(0.2126, 0.7152, 0.0722)))
   const bleached: N = mix(col, grey.mul(1.08), sun.mul(0.3))
-  return bleached.mul(float(1).sub(wet.mul(0.16))).mul(float(1).sub(stain.mul(0.6)))
+  return bleached.mul(float(1).sub(wet.mul(0.16))).mul(float(1).sub(stain.mul(0.42)))
 }
 
 function iron(stack: Stack, set: MaterialSet): MeshStandardNodeMaterial {
