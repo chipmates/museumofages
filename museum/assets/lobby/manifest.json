@@ -469,7 +469,7 @@
       "verified_on": "2026-09-14",
       "source_verification": "Current source record and exact downloaded original checked on admission.",
       "derivation": "No embedded ICC profile. Source interpreted as sRGB. JPEG previews resized with Lanczos, quality 88, embedded sRGB profile. Original bytes unchanged.",
-      "licence_url": "https://www.sammlung.pinakothek.de/de/artwork/02LAY3QLyk",
+      "licence_url": "https://creativecommons.org/licenses/by-sa/4.0/",
       "rights_note": "Use the exact holder download and keep attribution plus ShareAlike if adapted. The Commons Stieler image has different dimensions/bytes and its own PD-Art claim; do not attribute the holder’s CC licence to that older file."
     },
     {
@@ -751,6 +751,7 @@
       "verified_on": "2026-09-14",
       "source_verification": "Current source record and exact downloaded original checked on admission.",
       "derivation": "No embedded ICC profile. Source interpreted as sRGB. JPEG previews resized with Lanczos, quality 88, embedded sRGB profile. Original bytes unchanged.",
+      "licence_url": "https://creativecommons.org/publicdomain/zero/1.0/",
       "rights_note": "Holder identifies Hans Olde, drypoint, subject and Public domain; exact record date is 1870–1917. This range is retained instead of silently substituting the often-cited 1899 series date. Maker died 1917. The holder marks its reproduction Public Domain; the exact Commons file additionally carries CC0. No claim this particular impression was printed during Nietzsche’s lifetime."
     },
     {
@@ -956,6 +957,7 @@
         "high_resolution_jpeg_alternative": "https://ids.si.edu/ids/download?id=NMAAHC-2017_30_47_001.jpg"
       },
       "derivation": "Converted embedded ICC profile to sRGB. JPEG previews resized with Lanczos, quality 88, embedded sRGB profile. Original bytes unchanged.",
+      "licence_url": "https://creativecommons.org/publicdomain/zero/1.0/",
       "rights_note": "Holder media access explicitly CC0, separate from metadata CC0. Holder Restrictions & Rights: Public domain. The Smithsonian front-of-card high-resolution TIFF is selected whole, including its border, rather than the later Commons crop.",
       "attribution": "Photograph by Benjamin F. Powelson, American, 1823 - 1885"
     },
