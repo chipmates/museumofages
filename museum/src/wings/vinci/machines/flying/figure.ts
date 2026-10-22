@@ -58,8 +58,12 @@ function footSurface(m: Mesher): void {
   const ns = 34, sides = 22, grid: V3[][] = []
   const at = (i: number): number => FOOT_A[FOOT_A.length - 1]! * (0.5 - 0.5 * Math.cos(Math.PI * i / (ns - 1)))
   for (let i = 0; i < ns; i++) {
-    const a = at(i), b = lerpTable(FOOT_A, FOOT_SOLE, a), t = lerpTable(FOOT_A, FOOT_TOP, a), hw = lerpTable(FOOT_A, FOOT_HALF, a)
-    const mid = (t + b) / 2, hh = (t - b) / 2, row: V3[] = []
+    const a = at(i), b = lerpTable(FOOT_A, FOOT_SOLE, a), t = lerpTable(FOOT_A, FOOT_TOP, a)
+    // the heel and the toes close round, not on a flat cap
+    const L = FOOT_A[FOOT_A.length - 1]!, round = (d: number, r: number): number => d >= r ? 1 : Math.sqrt(Math.max(0, 1 - ((r - d) / r) ** 2))
+    const f = Math.max(0.02, round(a, 0.024) * round(L - a, 0.016))
+    const hw = lerpTable(FOOT_A, FOOT_HALF, a) * f
+    const mid = (t + b) / 2, hh = (t - b) / 2 * f, row: V3[] = []
     for (let j = 0; j <= sides; j++) {
       const th = (j / sides) * Math.PI * 2, c = Math.cos(th), s = Math.sin(th)
       const x = hw * Math.sign(c) * Math.pow(Math.abs(c), 2 / 2.6)
@@ -74,7 +78,7 @@ function footSurface(m: Mesher): void {
   for (let i = 0; i < ns; i++) for (let j = 0; j <= sides; j++) {
     const du = sub3(P(Math.min(ns - 1, i + 1), j), P(Math.max(0, i - 1), j))
     const dv = sub3(P(i, (j + 1) % sides), P(i, (j - 1 + sides) % sides))
-    const n = norm3(cross3(du, dv))
+    const n = i === 0 ? [-1, 0, 0] as V3 : i === ns - 1 ? [1, 0, 0] as V3 : norm3(cross3(du, dv))
     const p = P(i, j)
     m.vertex(footPoint(p[0], p[1], p[2]), footDir(n), j / sides, p[0], 1)
   }

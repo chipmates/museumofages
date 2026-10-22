@@ -78,22 +78,31 @@ export function buildBody(): Batch {
   const small = hoopPath(SMALL_HOOP.z, halfAt(SMALL_HOOP.z), 1.3, BODY.topY, BODY.topY + SMALL_HOOP.rise, SMALL_HOOP.r, railR(SMALL_HOOP.z))
   caneBundle(cane, lash, small, { r0: SMALL_HOOP.r, r1: SMALL_HOOP.r, seed: 57, lashEvery: 0.15, up: [0, 0, 1], twist: 1 })
   // THE SMALL HOOP'S FITTING (drawn on 74v, its purpose not written): read
-  // here as the block the lowering cords turn under. A band round the crown
-  // for each cord, a swivel eye, a fork and the sheave's pin.
+  // here as the pulley block each lowering cord turns under. A band round the
+  // crown for each cord, a swivel eye with an iron hook, and the block: two oak
+  // cheeks round the sheave, an iron strap over them, the sheave's pin.
+  const wood = b.get('wood')
   for (const sx of [1, -1] as const) {
     const top: V3 = [sx * SHEAVE.x, CROWN.y, CROWN.z]
     ring(iron, top, [1, 0, 0], SMALL_HOOP.r + 0.004, 0.0045, 6, 18, 0.9)
     ring(iron, [sx * (SHEAVE.x + 0.016), CROWN.y, CROWN.z], [1, 0, 0], SMALL_HOOP.r + 0.004, 0.0045, 6, 18, 0.9)
     const c = sheaveCentre(sx), ax = sheaveAxis(sx)
-    const swivel: V3 = [c[0] + sx * 0.008, CROWN.y - SMALL_HOOP.r - 0.008, c[2]]
-    ring(iron, swivel, [0, 0, 1], 0.008, 0.0035, 6, 14, 0.9)
-    // the fork: two cheeks either side of the sheave, from the swivel to the pin
+    const swivel: V3 = [c[0] + sx * 0.008, CROWN.y - SMALL_HOOP.r - 0.009, c[2]]
+    ring(iron, swivel, [0, 0, 1], 0.009, 0.0038, 6, 14, 0.9)
     const up = unit(sub(swivel, c))
+    // the hook from the swivel's eye down to the strap's crown
+    const crown = add(c, mul(up, SHEAVE.r + 0.016))
+    rod(iron, add(swivel, mul(up, -0.008)), crown, 0.004, 8, 0.92)
+    // the cheeks: flat oak either side of the sheave, a little longer than the sheave is round
+    const reach = SHEAVE.r + 0.013, half = SHEAVE.r + 0.007
     for (const sgn of [-1, 1]) {
-      const off = mul(ax, sgn * (0.014 + 0.0035))
-      bar(iron, add(add(swivel, mul(up, -0.006)), mul(off, 0.6)), add(c, off), 0.014, 0.004, ax, 0.9)
+      const off = mul(ax, sgn * (0.012 + 0.002 + 0.006))
+      lath(wood, [add(add(c, mul(up, -reach)), off), add(c, off), add(add(c, mul(up, reach)), off)], 2 * half, 0.012, ax, 0.9)
+      // the strap: an iron band over the cheek's top end and down its edges
+      bar(iron, add(add(c, mul(up, reach - 0.004)), mul(off, 1.45)), add(add(c, mul(up, -0.004)), mul(off, 1.45)), 0.01, 0.003, ax, 0.88)
     }
-    rod(iron, add(c, mul(ax, -0.024)), add(c, mul(ax, 0.024)), 0.0045, 8, 0.95)
+    bar(iron, add(crown, mul(ax, -0.03)), add(crown, mul(ax, 0.03)), 0.014, 0.004, up, 0.88)
+    rod(iron, add(c, mul(ax, -0.031)), add(c, mul(ax, 0.031)), 0.005, 8, 0.95)
   }
   // two braces from the crown down to the head end's top corners (74v's lines from the hub)
   for (const sx of [1, -1]) {
@@ -332,9 +341,9 @@ function m4(m: Mesher, a: number, b: number, c: number, d: number): void { m.qua
 /** a sheave or a drum, turned in its own frame (centre at the origin) */
 export function buildSheave(): Batch {
   const b = new Batches()
-  wheel(b.get('wood'), [0, 0, 0], [1, 0, 0], SHEAVE.r, 0.024, 0.007, 28, 0.95)
+  wheel(b.get('wood'), [0, 0, 0], [1, 0, 0], SHEAVE.r, 0.024, 0.008, 32, 0.95)
   // the turner's mark, so a turning wheel is seen to turn
-  rod(b.get('iron'), [0.0141, SHEAVE.r * 0.5, 0], [0.0141, SHEAVE.r * 0.5 + 0.001, 0.001], 0.004, 6)
+  rod(b.get('iron'), [0.0141, SHEAVE.r * 0.5, 0], [0.0141, SHEAVE.r * 0.5 + 0.001, 0.001], 0.005, 6)
   return b.done()
 }
 export function buildDrum(): Batch {

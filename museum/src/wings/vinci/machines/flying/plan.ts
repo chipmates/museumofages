@@ -138,7 +138,7 @@ export function wingPoint(side: 1 | -1, local: readonly number[], t: number): V3
 export const CROWN = { y: BODY.topY + SMALL_HOOP.rise, z: SMALL_HOOP.z } as const
 /** a swivel sheave hung under the crown for each cord: it turns to lie in
  * its cord's plane */
-export const SHEAVE = { x: 0.032, y: CROWN.y - SMALL_HOOP.r - 0.05, z: SMALL_HOOP.z, r: 0.03 } as const
+export const SHEAVE = { x: 0.034, y: CROWN.y - SMALL_HOOP.r - 0.08, z: SMALL_HOOP.z, r: 0.036 } as const
 export const DRUM = { x: 0.395, y: 1.17, z: 0.47, r: 0.045, len: 0.12 } as const
 export const BOW = { half: 0.5, y: 1.06, z: 0.44 } as const
 
