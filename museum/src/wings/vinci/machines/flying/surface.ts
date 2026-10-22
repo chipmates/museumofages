@@ -82,7 +82,12 @@ export async function flyingSurfaces(stack: Stack): Promise<FlyingSurfaces> {
     const s = set['linen']
     const d = stack.detail(skin, { ...s, normalStrength: 0.3, grain: s.grain ? { ...s.grain, pitch: 0.16, relief: 0.28, shade: 0.36, sheen: 0.025, fold: 0.9, tooth: 0.008 } : null }, { uv: uv(), count: 3, maps: dressed(s) ? 1 : 0, fade: [12, 100] })
     skin.side = DoubleSide
-    skin.colorNode = lin('#d8cba9').mul(luma(d.albedo)).mul(d.occlusion).mul(attribute('color', 'vec3'))
+    const cloth = lin('#d8cba9').mul(luma(d.albedo)).mul(d.occlusion).mul(attribute('color', 'vec3'))
+    skin.colorNode = cloth
+    // a thin cloth passes some of the key through: the face turned from it
+    // glows a little instead of falling to the shade of a board
+    const key = benchKeyDirection()
+    if (key) skin.emissiveNode = cloth.mul(normalWorld.dot(vec3(key.x, key.y, key.z)).negate().clamp(0, 1).mul(0.16))
   }
   // HEMP: the lashings, the hems and the running cords
   const hemp = (name: string, tint: string, toned = true): MeshStandardNodeMaterial => {
