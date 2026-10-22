@@ -4225,6 +4225,45 @@ class LastYears(unittest.TestCase):
                 checked.append(lang)
         self.assertTrue({"en", "de"} <= set(checked) and len(checked) == len(table["BUILT"]), checked)
 
+    def test_the_paintings_credit_never_breaks_inside_its_number_or_before_its_slash(self):
+        # «inv. PDUT1165» and «Paris Musées / Petit Palais» are bound in the data by a no-break space: on the wing
+        # page's court and on every label of the death page that credits the painting, in every built language
+        table = json.loads((SITE_SRC / "languages.json").read_text(encoding="utf-8"))
+        wing = json.loads(REGISTRY.read_text(encoding="utf-8"))["vinci"]
+        topic = next(t for t in wing["topics"] if t.get("count") == "last-years")
+        held = (re.compile(r"\b[Ii]nv\.\u00a0PDUT1165\b"), re.compile(r"\bParis Musées(?:</span>)?\u00a0/ "))
+        loose = re.compile(r"\b[Ii]nv\.(?:\s|<[^>]+>)*(?<!\u00a0)PDUT1165|Musées(?:</span>)?(?!\u00a0)\s*/")
+        checked = []
+        for entry in (e for e in table["languages"] if e["code"] in table["BUILT"]):
+            lang = entry["code"]
+            pages = {"wing": entry["folder"] + entry["slugs"]["wings"]["vinci"]}
+            if lang in topic["langs"]:
+                pages["death"] = (wing["page"][lang] + "/" + topic["slug"][lang] if lang in wing["page"] else
+                                  entry["folder"] + entry["slugs"]["wings"]["vinci"] + "/"
+                                  + entry["slugs"]["topics"][topic["slug"]["en"]])
+            for kind, path in pages.items():
+                with self.subTest(lang=lang, page=kind):
+                    text = (SITE_BUILT / path / "index.html").read_text(encoding="utf-8")
+                    checked.append((lang, kind))
+                    if kind == "wing":
+                        figure = text[text.index('<figure class="plate close__grave">'):]
+                        labels = [re.search(r'<span class="label__src">(.*?)</figcaption>', figure, flags=re.S).group(1)]
+                    else:
+                        labels = [label for label in re.findall(r'<span class="label__src">(.*?)</figcaption>', text, flags=re.S)
+                                  if "PDUT1165" in re.sub(r'href="[^"]*"', "", label)]
+                    # the death page credits the painting twice: under its own plate and under the court's still
+                    self.assertEqual(len(labels), 1 if kind == "wing" else 2)
+                    for label in labels:
+                        for pair in held:
+                            self.assertEqual(len(pair.findall(label)), 1, pair.pattern)
+                        self.assertIsNone(loose.search(label))
+                    # no other words of the page carry the number or the holder with a space that may break
+                    words = re.sub(r"<(script|style)\b.*?</\1>", " ", re.sub(r'(?:href|src|content)="[^"]*"', "", text), flags=re.S)
+                    self.assertEqual(words.count("PDUT1165"), len(labels))
+                    self.assertIsNone(loose.search(words))
+        self.assertEqual(len(checked), len(table["BUILT"]) + len(set(topic["langs"]) & set(table["BUILT"])), checked)
+        self.assertTrue({("en", "wing"), ("de", "wing"), ("en", "death"), ("de", "death")} <= set(checked), checked)
+
     def test_every_date_the_wing_also_states_is_the_wings(self):
         for lang, rows in self.agreements().items():
             for what, anchor, held in rows:
