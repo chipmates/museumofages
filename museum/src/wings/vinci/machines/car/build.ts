@@ -365,7 +365,7 @@ export function wheel(sx: number, sz: number): Body {
       c8.push(add(mul(d, r), add(mul(t, i & 2 ? hw : -hw), v(0, 0, i & 4 ? hz : -hz))))
     }
     // one spoke of paler ash among the oak, inside the dark felloe: a hand that shows the wheel's turn against the dark
-    b.rough.slab(c8, d, k === 3 ? { tone: 1.55, seed: 0.913 } : { tone: tone(31, seed, k) }, 0.007)
+    b.rough.slab(c8, d, k === 3 ? { tone: 1.8, seed: 0.913 } : { tone: tone(31, seed, k) }, 0.007)
   }
   for (let j = 0; j < WHEEL.felloes; j++) {
     const joint = (j * TAU) / WHEEL.felloes + TAU / (WHEEL.spokes * 2)
