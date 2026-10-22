@@ -11,7 +11,7 @@ import * as THREE from 'three/webgpu'
 import { pictureKey, wholeDigest } from './keys.mjs'
 import { cellCoords, cellNumber } from './scene.mjs'
 import { SEEN_DEFINITION, buildIndex, seenSet, wideSetting } from './seen.mjs'
-import { lightingOf } from './lit.mjs'
+import { courtBoxes, lightingAt, lightingOf } from './lit.mjs'
 
 const CELL = 2
 const n = (x, y, z) => cellNumber(x, y, z)
@@ -160,4 +160,31 @@ test('the pin knows a light or a capture made under a namespace or as a class of
   const found = lightingOf([['a.ts', 'const l = new THREE.SpotLight(1); l.castShadow = true'], ['b.ts', 'class Washer extends SpotLight {}; w.shadow.mapSize'],
     ['c.ts', 'const probe = new THREE.CubeCamera (.1, 99, t)'], ['d.ts', 'const l = new THREE.PointLight(1)'], ['e.ts', 'renderer.setRenderTarget(target); renderer.render(scene, eye)']])
   assert.deepEqual(found.unknown, ['a.ts', 'b.ts', 'c.ts', 'e.ts'], 'a light with no shadow is the scene list\'s, not the pin\'s')
+})
+
+test('the court\'s machines the hall\'s rig lights stand in lit cells by their swept bound; a court machine the pin does not know is outside it', async () => {
+  const STANDS = {
+    'anemometer': { east: -42.28, north: -22.4, bearing: 8, plinth: .72, ground: 'court' },
+    'revolving-crane': { east: -44.9, north: -22.5, bearing: 0, plinth: 0, ground: 'court' },
+    'parachute': { east: -37, north: -23.1, bearing: 0, plinth: 0, ground: 'court' },
+  }
+  const dossiers = { 'anemometer': { scale_m: { x: .74, y: .86, z: .74 }, frame: {} }, 'revolving-crane': { scale_m: { x: 3.7, y: 2.9, z: 3.7 }, frame: { ground_y_m: -.05 } } }
+  const loadOf = (stands) => (file) => (file.endsWith('stands.ts') ? { STANDS: stands, standLevel: () => -6.44 } : { dossiers })
+  const { boxes, unknown } = courtBoxes(loadOf(STANDS))
+  assert.deepEqual(unknown, [])
+  // the crane's upper works slew through a radius of 1.703 m round its stand: its box holds that circle
+  const crane = boxes[1]
+  for (let a = 0; a < 2 * Math.PI; a += Math.PI / 36) {
+    const e = -44.9 + 1.703 * Math.cos(a), nn = -22.5 + 1.703 * Math.sin(a)
+    assert.ok(e >= crane.east[0] && e <= crane.east[1] && nn >= crane.north[0] && nn <= crane.north[1])
+  }
+  assert.deepEqual(crane.up.map((v) => +v.toFixed(3)), [-6.49, -3.59])
+  assert.deepEqual(courtBoxes(loadOf({ ...STANDS, 'flywheel': { ...STANDS.anemometer } })).unknown, ['a court machine the pin does not know: flywheel'])
+  assert.match(courtBoxes(() => { throw new Error('no such file') }).unknown[0], /stands\.ts/)
+  // on the working tree: every cell of the court bodies the capture service found reading the hall's probe
+  const lit = (await lightingAt()).lit
+  for (const box of [[-45.9, -6.44, 21.5, -43.9, -3.59, 24.2], [-42.628, -5.72, 21.997, -41.972, -4.897, 22.521]]) {
+    const lo = box.slice(0, 3).map((v) => Math.floor(v / CELL)), hi = box.slice(3).map((v) => Math.floor(v / CELL))
+    for (let x = lo[0]; x <= hi[0]; x++) for (let y = lo[1]; y <= hi[1]; y++) for (let z = lo[2]; z <= hi[2]; z++) assert.ok(lit.has(n(x, y, z)), `cell ${x},${y},${z} of a court reader`)
+  }
 })

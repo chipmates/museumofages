@@ -52,14 +52,46 @@ export function lightingOf(texts) {
   return { captures: captures.sort(), lights: lights.sort(), unknown: [...new Set(unknown)].sort() }
 }
 
-/** The cells of the rooms the pinned modules light: the collection's envelope, floor to the hall's roof, and the
-    supper room, floor to its bay's top, each by every cell its box meets. */
+/** The court's machines the hall's rig lights: `collection/exhibits.ts` hands every machine but the parachute
+    to the hall's rig wherever it stands, so their surfaces read the hall's probe out on the court. A court
+    machine named in neither list is outside the pin. */
+export const HALL_LIT_COURT = ['anemometer', 'revolving-crane']
+const COURT_APART = ['parachute']
+
+/** Each pinned court machine's box: its dossier's declared swept bound (both stand centred on their origin,
+    `stands.ts`), turned by its stand's bearing, on its plinth; or why the tree's stands cannot be read. */
+export function courtBoxes(load) {
+  let STANDS, standLevel, dossiers
+  try {
+    ({ STANDS, standLevel } = load(`${WING_DIR}/collection/stands.ts`))
+    ;({ dossiers } = load(`${WING_DIR}/machines/catalog.ts`))
+  } catch { return { boxes: [], unknown: ['the court\'s machines (collection/stands.ts, machines/catalog.ts)'] } }
+  const boxes = [], unknown = []
+  for (const [slug, s] of Object.entries(STANDS ?? {})) {
+    if (s.ground === 'court' && !HALL_LIT_COURT.includes(slug) && !COURT_APART.includes(slug)) unknown.push(`a court machine the pin does not know: ${slug}`)
+  }
+  for (const slug of HALL_LIT_COURT) {
+    const s = STANDS?.[slug], d = dossiers?.[slug]
+    if (!s || !d?.scale_m) { unknown.push(`the stand or dossier of ${slug}`); continue }
+    const { x, y, z } = d.scale_m
+    const a = s.bearing * Math.PI / 180, c = Math.abs(Math.cos(a)), n = Math.abs(Math.sin(a))
+    const half = [(x * c + z * n) / 2, (x * n + z * c) / 2]
+    const base = standLevel(s.ground) + s.plinth + (d.frame?.ground_y_m ?? 0)
+    boxes.push({ east: [s.east - half[0], s.east + half[0]], north: [s.north - half[1], s.north + half[1]], up: [base, base + y] })
+  }
+  return { boxes, unknown }
+}
+
+/** The cells of the rooms the pinned modules light: the collection's envelope, floor to the hall's roof, the
+    supper room, floor to its bay's top, and the court's machines the hall's rig lights, each by every cell its
+    box meets. */
 export function litRoomCells(load, cell = CELL_M) {
   const { FACE, FLOOR, HALL_CEILING_NORTH } = load(`${WING_DIR}/collection/layout.ts`)
   const { ROOM } = load(`${WING_DIR}/collection/supper-room-plan.ts`)
   const boxes = [
     { east: [FACE.wallWest, FACE.glazingEast], north: [FACE.wallSouth, FACE.glazingNorth], up: [FLOOR, HALL_CEILING_NORTH] },
     { east: [ROOM.west, ROOM.east], north: [ROOM.south, ROOM.north], up: [ROOM.floor, ROOM.bayTop] },
+    ...courtBoxes(load).boxes,
   ]
   const out = new Set()
   const span = ([a, b]) => { const lo = Math.floor(Math.min(a, b) / cell), hi = Math.floor(Math.max(a, b) / cell); return Array.from({ length: hi - lo + 1 }, (_, i) => lo + i) }
@@ -101,6 +133,7 @@ export async function lightingAt(rev = '', overlay = {}) {
   const files = wingFiles(rev, overlay)
   const texts = files.map((f) => [f, loader.text(`${WING_DIR}/${f}`)])
   const lighting = { lit: litRoomCells(loader.load), ...lightingOf(texts) }
+  lighting.unknown.push(...courtBoxes(loader.load).unknown)
   // the modules alone: the stand-in sends its sun's lines down to the ground whatever the cascades
   lighting.unpinned = [...lighting.unknown]
   lighting.far = farCascadeOf(loader.text(`${WING_DIR}/index.ts`), loader.text('src/stack/light.ts'))
