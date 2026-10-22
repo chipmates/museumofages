@@ -184,7 +184,8 @@ function floor(k: Kit): void {
       const xs: [number, number][] = inSlot
         ? [[-Infinity, -SLOT.x1], [-SLOT.x0, SLOT.x0], [SLOT.x1, Infinity]]
         : [[-Infinity, Infinity]]
-      for (const [xa, xb] of xs) board(k, z0, z1, xa, xb, R, { tone: tone(3, j, z0, xa), wear: 0 })
+      // the boards darkened by the dirt eight men carry in on their feet, a step under the walls
+      for (const [xa, xb] of xs) board(k, z0, z1, xa, xb, R, { tone: 0.6 + 0.14 * hash(3, j, z0, xa), wear: 0 })
     }
   }
 }
