@@ -9,6 +9,7 @@ import { buildMachine, type ReadyMachineBuild } from '..';
 import type { StoreCrane, StoreCraneReading } from '../crane-body';
 import { MACHINE_SLUGS, isMachineSlug, machineCatalog, partialCatalog, type Language, type MachineSlug, type EvidenceRecord } from '../catalog';
 import { buildScaleFigure } from './scale-figure';
+import { WORKING_LINES } from '../working-lines';
 import benchCss from './bench.css?inline';
 import titleSelectCss from './title-select.css?inline';
 import evidenceCss from './evidence-dialog.css?inline';
@@ -279,7 +280,9 @@ export function createBench(stack: Stack, onExit: () => void) {
     option.value = id;
     select.append(option);
   } const absence = BENCH_ABSENCE[slug]; if (absence) dimensions.textContent += '\n' + localText(lang, absence.en, absence.de); select.value = slug; chooser.refresh(); const lion = slug === 'mechanical-lion'; section.hidden = slug !== 'camera-obscura' && !lion; section.textContent = lion ? localText(lang, sectionEnabled ? 'Close the flank' : 'Open the flank', sectionEnabled ? 'Flanke schließen' : 'Flanke öffnen') : localText(lang, sectionEnabled ? 'Close chamber' : 'Open section', sectionEnabled ? 'Kammer schließen' : 'Schnitt öffnen'); section.setAttribute('aria-pressed', String(sectionEnabled)); sectionNote.hidden = !sectionEnabled; sectionNote.textContent = lion ? localText(lang, 'Section: the near flank panel is taken off so you can see the works. On the lion itself the panel is shut.', 'Schnitt: Die vordere Flankenplatte ist abgenommen, damit du das Werk siehst. Am Löwen selbst ist sie geschlossen.') : localText(lang, 'Section: one corner and the back wall are taken off so you can see in. In the real experiment the chamber is closed and dark.', 'Schnitt: Eine Ecke und die Rückwand sind abgenommen, damit du hineinsehen kannst. Im echten Versuch ist die Kammer geschlossen und dunkel.'); paintPlayback(); if (!source.hidden)
-    reading(evidenceRecord ?? record); }
+    reading(evidenceRecord ?? record);
+    // a label that is still a working line says so under it
+    const working = WORKING_LINES[slug]; if (working) { label.textContent = working[lang]; label.append(el('small', 'bench-working', localText(lang, 'working line', 'Arbeitszeile'))); } }
   function paintPlayback() {
     const view = playbackPresentation(schedule, playbackState, lang);
     play.textContent = view.playText;
