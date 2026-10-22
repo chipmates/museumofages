@@ -306,8 +306,8 @@ export function buildWing(side: 1 | -1): { turning: Batch; hub: Batch } {
 
   // the hub: a wooden boss on the pin, the spar through it
   wheel(hub.get('wood'), [0, 0, 0], AXIS, HUB.radius, HUB.thick, 0, 28, 0.95)
-  ring(hub.get('iron'), mul(AXIS, HUB.thick / 2 - 0.004), AXIS, HUB.radius - 0.003, 0.004, 6, 28, 0.9)
-  ring(hub.get('iron'), mul(AXIS, -HUB.thick / 2 + 0.004), AXIS, HUB.radius - 0.003, 0.004, 6, 28, 0.9)
+  ring(hub.get('iron'), mul(AXIS, HUB.thick / 2 - 0.005), AXIS, HUB.radius, 0.0045, 6, 28, 0.9)
+  ring(hub.get('iron'), mul(AXIS, -HUB.thick / 2 + 0.005), AXIS, HUB.radius, 0.0045, 6, 28, 0.9)
   return { turning: b.done(), hub: hub.done() }
 }
 function m4(m: Mesher, a: number, b: number, c: number, d: number): void { m.quad(a, b, c, d) }
