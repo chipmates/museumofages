@@ -88,6 +88,8 @@
   /* The kind word keeps a line of its own. Beside it, a beat that fits in one typeface and not in its stand-in
      jumps a line when the web font arrives, and that one jump is the page's layout shift. */
   .hero--wing .hero__plate[data-piece] .hero__label .tag{display:block;margin-right:0}
+  /* The museum's line under a wing's name keeps to one row in German: each row it takes comes off the plate. */
+  .hero--wing .hero__tagline{margin-top:8px;font-size:1.125rem;line-height:1.24}
 }
 /* A tall phone has room for more wall over the frame, so the lamp's arc shows under the bar. */
 @media (min-height:701px) and (max-width:599px){.hero__plate{padding-top:28px}}
@@ -112,6 +114,8 @@
   .hero__go{margin-top:13px}
   .hero__go .door{min-height:50px}
   .hero__note{margin-top:6px;font-size:.875rem;line-height:1.45}
+  /* Here the plate is already at its floor, so a wing's line would push the door down: it steps aside. */
+  .hero--wing .hero__tagline{display:none}
 }
 /* The narrowest short phone: the fold is the first screen's end, and every gap gives a little to the plate. */
 @media (max-height:600px) and (max-width:359px){

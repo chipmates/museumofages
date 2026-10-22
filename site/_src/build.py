@@ -1007,7 +1007,8 @@ def check_wing_data(site, slug):
             for key, text in strings(written).items():
                 if re.search(NOT_WORDS, key) or re.search(DIGITS_OK, key):
                     continue
-                plain = re.sub(r"\{(count|word|Word|shows|museum):\w+\}", "", text)
+                # "3D" names how a thing is made, not a count
+                plain = re.sub(r"\{(count|word|Word|shows|museum):\w+\}|\b3D\b", "", text)
                 if re.search(r"\d", plain):
                     problems.append(f"{where}.{lang}: {key} carries a number in digits. Write {{count:<name>}}: the number stands in the facts file")
                 for word in words:

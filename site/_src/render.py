@@ -259,6 +259,8 @@ def first(c, kind, slug):
             f'<nav class="hero__crumb" aria-label="{w["a11y.crumb"]}"><a href="{c.to(c.addr("home"))}">{w["hero.name"]}</a> '
             f'<span><a href="{c.to(c.addr("home"))}#wings">{w["nav.wings"]}</a></span></nav>'
             f'<h1 class="hero__title" id="hero-title"><span class="hero__name hero__name--wing">{esc(reg["name"][c.lang])}</span></h1>'
+            # the museum's locked line under the name: the wing's first screen says how it is made
+            f'<p class="hero__tagline">{w["hero.tagline_1"]}</p>'
         )
         text = (
             f'<dl class="hero__facts"><div><dt>{esc(coll["dates_key"][c.lang])}</dt><dd>{esc(reg["dates"][c.lang])}</dd></div>'
