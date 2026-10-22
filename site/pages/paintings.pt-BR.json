@@ -338,7 +338,12 @@
          "text": "Wikimedia Commons",
          "href": "https://commons.wikimedia.org/wiki/File:Verrocchio_and_Leonardo,_Baptism_of_Christ,_c1470-75,_Uffizi.jpg"
         },
-        ". A etiqueta do museu vale para a reprodução, não para a pintura. Uso cultural sem fins lucrativos. {museum:it108}"
+        ". A etiqueta do museu vale para a reprodução, não para a pintura. Uso cultural sem fins lucrativos. Foto: Armin Kleiner, ",
+        {
+         "text": "CC BY-SA 4.0",
+         "href": "https://creativecommons.org/licenses/by-sa/4.0/"
+        },
+        ". {museum:it108}"
        ]
       },
       {
@@ -414,12 +419,17 @@
        "pic": "madonna-of-the-carnation",
        "alt": "Madona do Cravo: Maria, de vermelho e azul, sentada, com o menino numa almofada à frente dela, segura um cravo, e atrás dela há duas janelas em arco com montanhas. Uma reprodução.",
        "src": [
-        "Obra em domínio público. Reprodução do ",
+        "Obra em domínio público. Imagem: Bayerische Staatsgemäldesammlungen, Alte Pinakothek München, ",
+        {
+         "text": "CC BY-SA 4.0",
+         "href": "https://creativecommons.org/licenses/by-sa/4.0/"
+        },
+        ", via ",
         {
          "text": "Wikimedia Commons",
          "href": "https://commons.wikimedia.org/wiki/File:LEONARDO-DA-VINCI_-_MADONNA-MIT-DER-NELKE-7779_917154_BSTGS.jpg"
         },
-        ". A etiqueta do museu vale para a reprodução, não para a pintura. Uso cultural sem fins lucrativos."
+        "."
        ]
       },
       {
@@ -580,7 +590,12 @@
        "pic": "lady-with-an-ermine",
        "alt": "Dama com Arminho: uma jovem de vestido vermelho e manto azul, olhando para a direita, segura um arminho branco junto ao peito, contra um fundo escuro. Uma reprodução.",
        "src": [
-        "Imagem da coleção do Museu Nacional de Cracóvia. Domínio público, via ",
+        "Imagem da coleção do Museu Nacional de Cracóvia, publicada sob ",
+        {
+         "text": "CC0",
+         "href": "https://creativecommons.org/publicdomain/zero/1.0/deed.en"
+        },
+        ". Domínio público, via ",
         {
          "text": "Wikimedia Commons",
          "href": "https://commons.wikimedia.org/wiki/File:Leonardo_da_Vinci_(1452-1519)_-_Lady_with_an_Ermine_%E2%80%93_Portrait_of_Cecilia_Gallerani_(ca._1473%E2%80%931536)_-_MNK_XII-209_-_National_Museum_Krak%C3%B3w.jpg"
@@ -777,7 +792,12 @@
          "text": "Europeana",
          "href": "https://www.europeana.eu/en/item/2024903/photography_ProvidedCHO_KU_Leuven_9991113610101488"
         },
-        ". Domínio público."
+        ". Domínio público, ",
+        {
+         "text": "Public Domain Mark 1.0",
+         "href": "https://creativecommons.org/publicdomain/mark/1.0/"
+        },
+        "."
        ]
       }
      ],

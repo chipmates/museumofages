@@ -174,7 +174,19 @@
     "tag": "tag_repro",
     "what": "el cuadro de 1818 de Jean-Auguste-Dominique Ingres, tal como está en el ala, ampliado, en el patio de la tumba. La escena es la historia de Vasari, pintada tres siglos después de la muerte.",
     "alt": "Un anciano moribundo de larga barba blanca yace en una cama, sostenido por un rey joven con ropa lujosa, y alrededor hay cortesanos en una habitación oscura. Una reproducción del cuadro de 1818 de Ingres.",
-    "src_from": "wing:end.plate.src",
+    "src": [
+     "Jean-Auguste-Dominique Ingres, François Ier reçoit les derniers soupirs de Léonard de Vinci, 1818. Petit Palais, musée des Beaux-Arts de la Ville de Paris, inv. PDUT1165. Imagen: ",
+     {
+      "text": "CC0",
+      "href": "https://creativecommons.org/publicdomain/zero/1.0/"
+     },
+     " Paris Musées / Petit Palais, musée des Beaux-Arts de la Ville de Paris. Dominio público, vía ",
+     {
+      "text": "Wikimedia Commons",
+      "href": "https://commons.wikimedia.org/wiki/File:Jean-Auguste-Dominique_Ingres_-_Fran%C3%A7ois_Ier_re%C3%A7oit_les_derniers_soupirs_de_L%C3%A9onard_de_Vinci_-_PDUT1165_-_Mus%C3%A9e_des_Beaux-Arts_de_la_ville_de_Paris.jpg"
+     },
+     "."
+    ],
     "shape": "whole"
    }
   },
@@ -213,7 +225,19 @@
     "tag": "tag_built",
     "what": "una imagen de la película del ala. El patio propio del museo, no la capilla de Amboise: una losa con el nombre de Leonardo, el modelo del sol bajo del 2 de mayo de 1519 y la piedra con el año de la excavación. A la izquierda, una reproducción del cuadro de Ingres.",
     "alt": "Sol bajo en un patio cerrado por muros, con un solo árbol joven. En el suelo hay una losa de piedra clara con el nombre Leonardo da Vinci grabado, y detrás un pequeño modelo sobre dos postes que proyecta una sombra larga, con un mojón al lado. En el muro de la izquierda cuelga un cuadro enmarcado. Una imagen de la película del ala, con el patio construido en código.",
-    "src_from": "wing:end.plate.src"
+    "src": [
+     "Jean-Auguste-Dominique Ingres, François Ier reçoit les derniers soupirs de Léonard de Vinci, 1818. Petit Palais, musée des Beaux-Arts de la Ville de Paris, inv. PDUT1165. Imagen: ",
+     {
+      "text": "CC0",
+      "href": "https://creativecommons.org/publicdomain/zero/1.0/"
+     },
+     " Paris Musées / Petit Palais, musée des Beaux-Arts de la Ville de Paris. Dominio público, vía ",
+     {
+      "text": "Wikimedia Commons",
+      "href": "https://commons.wikimedia.org/wiki/File:Jean-Auguste-Dominique_Ingres_-_Fran%C3%A7ois_Ier_re%C3%A7oit_les_derniers_soupirs_de_L%C3%A9onard_de_Vinci_-_PDUT1165_-_Mus%C3%A9e_des_Beaux-Arts_de_la_ville_de_Paris.jpg"
+     },
+     "."
+    ]
    },
    "links": [
     {

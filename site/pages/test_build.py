@@ -4104,15 +4104,22 @@ class LastYears(unittest.TestCase):
                 for host in ("https://www.vinci-closluce.com/", "https://www.chateau-amboise.com/"):
                     self.assertEqual(sum(h.startswith(host) for h in re.findall(r'href="([^"]+)"', outside)), 1, host)
 
-    def test_the_grave_court_wears_the_wing_pages_tag_and_line(self):
+    def test_the_grave_court_wears_the_wing_pages_tag_and_the_paintings_line(self):
+        def figure_of(own, stem):
+            figure = own[own.index(f"/{stem}-"):]
+            return figure[:figure.index("</figure>")]
+
+        def line_of(figure):
+            body = re.search(r'<span class="label__src">(.*?)</figcaption>', figure, flags=re.S).group(1)
+            return " ".join(html.unescape(re.sub(r"<[^>]+>", "", body)).replace("\u00a0", " ").split()), re.findall(r'href="([^"]+)"', body)
+
         for lang, own in self.own.items():
             with self.subTest(lang=lang):
                 plate = json.loads((SITE_SRC / "wings" / f"vinci.{lang}.json").read_text(encoding="utf-8"))["end"]["plate"]
-                figure = own[own.index("/grave-court-"):]
-                figure = figure[:figure.index("</figure>")]
+                figure = figure_of(own, "grave-court")
                 self.assertEqual(html.unescape(re.search(r'<span class="tag">(.*?)<span class="vh">', figure).group(1)), plate["kind"])
-                line = html.unescape(re.sub(r"<[^>]+>", "", re.search(r'<span class="label__src">(.*?)</figcaption>', figure, flags=re.S).group(1)))
-                self.assertEqual(" ".join(line.replace("\u00a0", " ").split()), " ".join(plate["src"].replace("\u00a0", " ").split()))
+                # the court shows the Ingres painting on its wall: it carries the painting's plate's line, links and all
+                self.assertEqual(line_of(figure), line_of(figure_of(own, "vinci-plate-deathbed-painting")))
 
     def test_every_date_the_wing_also_states_is_the_wings(self):
         for lang, rows in self.agreements().items():

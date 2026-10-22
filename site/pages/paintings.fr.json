@@ -338,7 +338,12 @@
          "text": "Wikimedia Commons",
          "href": "https://commons.wikimedia.org/wiki/File:Verrocchio_and_Leonardo,_Baptism_of_Christ,_c1470-75,_Uffizi.jpg"
         },
-        ". Les mentions du musée portent sur la reproduction, pas sur le tableau. Usage culturel à but non lucratif. {museum:it108}"
+        ". Les mentions du musée portent sur la reproduction, pas sur le tableau. Usage culturel à but non lucratif. Photo: Armin Kleiner, ",
+        {
+         "text": "CC BY-SA 4.0",
+         "href": "https://creativecommons.org/licenses/by-sa/4.0/"
+        },
+        ". {museum:it108}"
        ]
       },
       {
@@ -414,12 +419,17 @@
        "pic": "madonna-of-the-carnation",
        "alt": "La Madone à l’œillet: Marie, en rouge et bleu, est assise et tend un œillet. L’enfant est sur un coussin devant elle, et derrière elle, deux fenêtres en arc s’ouvrent sur des montagnes. Une reproduction.",
        "src": [
-        "Œuvre du domaine public. Reproduction issue de ",
+        "Œuvre du domaine public. Image: Bayerische Staatsgemäldesammlungen, Alte Pinakothek München, ",
+        {
+         "text": "CC BY-SA 4.0",
+         "href": "https://creativecommons.org/licenses/by-sa/4.0/"
+        },
+        ", via ",
         {
          "text": "Wikimedia Commons",
          "href": "https://commons.wikimedia.org/wiki/File:LEONARDO-DA-VINCI_-_MADONNA-MIT-DER-NELKE-7779_917154_BSTGS.jpg"
         },
-        ". Les mentions du musée portent sur la reproduction, pas sur le tableau. Usage culturel à but non lucratif."
+        "."
        ]
       },
       {
@@ -580,7 +590,12 @@
        "pic": "lady-with-an-ermine",
        "alt": "La Dame à l’hermine: une jeune femme en robe rouge et manteau bleu, le regard tourné vers la droite, tient une hermine blanche contre sa poitrine, sur un fond sombre. Une reproduction.",
        "src": [
-        "Image de la collection du Musée national de Cracovie. Domaine public, via ",
+        "Image de la collection du Musée national de Cracovie, publiée sous ",
+        {
+         "text": "CC0",
+         "href": "https://creativecommons.org/publicdomain/zero/1.0/deed.en"
+        },
+        ". Domaine public, via ",
         {
          "text": "Wikimedia Commons",
          "href": "https://commons.wikimedia.org/wiki/File:Leonardo_da_Vinci_(1452-1519)_-_Lady_with_an_Ermine_%E2%80%93_Portrait_of_Cecilia_Gallerani_(ca._1473%E2%80%931536)_-_MNK_XII-209_-_National_Museum_Krak%C3%B3w.jpg"
@@ -777,7 +792,12 @@
          "text": "Europeana",
          "href": "https://www.europeana.eu/en/item/2024903/photography_ProvidedCHO_KU_Leuven_9991113610101488"
         },
-        ". Domaine public."
+        ". Domaine public, ",
+        {
+         "text": "Public Domain Mark 1.0",
+         "href": "https://creativecommons.org/publicdomain/mark/1.0/"
+        },
+        "."
        ]
       }
      ],

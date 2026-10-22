@@ -338,7 +338,12 @@
          "text": "Wikimedia Commons",
          "href": "https://commons.wikimedia.org/wiki/File:Verrocchio_and_Leonardo,_Baptism_of_Christ,_c1470-75,_Uffizi.jpg"
         },
-        ". Le indicazioni del museo riguardano la riproduzione, non il dipinto. Uso culturale senza scopo di lucro. {museum:it108}"
+        ". Le indicazioni del museo riguardano la riproduzione, non il dipinto. Uso culturale senza scopo di lucro. Foto: Armin Kleiner, ",
+        {
+         "text": "CC BY-SA 4.0",
+         "href": "https://creativecommons.org/licenses/by-sa/4.0/"
+        },
+        ". {museum:it108}"
        ]
       },
       {
@@ -414,12 +419,17 @@
        "pic": "madonna-of-the-carnation",
        "alt": "Madonna del Garofano: Maria, vestita di rosso e di blu, è seduta e porge un garofano. Il bambino è su un cuscino davanti a lei, e dietro di lei due finestre ad arco si aprono su montagne. Una riproduzione.",
        "src": [
-        "Opera di pubblico dominio. Riproduzione da ",
+        "Opera di pubblico dominio. Immagine: Bayerische Staatsgemäldesammlungen, Alte Pinakothek München, ",
+        {
+         "text": "CC BY-SA 4.0",
+         "href": "https://creativecommons.org/licenses/by-sa/4.0/"
+        },
+        ", tramite ",
         {
          "text": "Wikimedia Commons",
          "href": "https://commons.wikimedia.org/wiki/File:LEONARDO-DA-VINCI_-_MADONNA-MIT-DER-NELKE-7779_917154_BSTGS.jpg"
         },
-        ". Le indicazioni del museo riguardano la riproduzione, non il dipinto. Uso culturale senza scopo di lucro."
+        "."
        ]
       },
       {
@@ -580,7 +590,12 @@
        "pic": "lady-with-an-ermine",
        "alt": "Dama con l’ermellino: una giovane donna con un abito rosso e un mantello blu, con lo sguardo rivolto a destra, tiene un ermellino bianco contro il petto, su un fondo scuro. Una riproduzione.",
        "src": [
-        "Immagine della collezione del Museo nazionale di Cracovia. Pubblico dominio, tramite ",
+        "Immagine della collezione del Museo nazionale di Cracovia, rilasciata con licenza ",
+        {
+         "text": "CC0",
+         "href": "https://creativecommons.org/publicdomain/zero/1.0/deed.en"
+        },
+        ". Pubblico dominio, tramite ",
         {
          "text": "Wikimedia Commons",
          "href": "https://commons.wikimedia.org/wiki/File:Leonardo_da_Vinci_(1452-1519)_-_Lady_with_an_Ermine_%E2%80%93_Portrait_of_Cecilia_Gallerani_(ca._1473%E2%80%931536)_-_MNK_XII-209_-_National_Museum_Krak%C3%B3w.jpg"
@@ -784,7 +799,12 @@
          "text": "Europeana",
          "href": "https://www.europeana.eu/en/item/2024903/photography_ProvidedCHO_KU_Leuven_9991113610101488"
         },
-        ". Pubblico dominio."
+        ". Pubblico dominio, ",
+        {
+         "text": "Public Domain Mark 1.0",
+         "href": "https://creativecommons.org/publicdomain/mark/1.0/"
+        },
+        "."
        ]
       }
      ],

@@ -338,7 +338,12 @@
          "text": "Wikimedia Commons",
          "href": "https://commons.wikimedia.org/wiki/File:Verrocchio_and_Leonardo,_Baptism_of_Christ,_c1470-75,_Uffizi.jpg"
         },
-        ". Das Museum kennzeichnet die Reproduktion, nicht das Gemälde. Kulturelle Nutzung ohne Gewinnabsicht. {museum:it108}"
+        ". Das Museum kennzeichnet die Reproduktion, nicht das Gemälde. Kulturelle Nutzung ohne Gewinnabsicht. Foto: Armin Kleiner, ",
+        {
+         "text": "CC BY-SA 4.0",
+         "href": "https://creativecommons.org/licenses/by-sa/4.0/"
+        },
+        ". {museum:it108}"
        ]
       },
       {
@@ -414,12 +419,17 @@
        "pic": "madonna-of-the-carnation",
        "alt": "Madonna mit der Nelke: Maria in Rot und Blau sitzt, vor ihr das Kind auf einem Kissen, sie hält eine Nelke hin, hinter ihr zwei Bogenfenster mit Bergen. Eine Reproduktion.",
        "src": [
-        "Gemeinfreies Werk. Reproduktion aus ",
+        "Gemeinfreies Werk. Bild: Bayerische Staatsgemäldesammlungen, Alte Pinakothek München, ",
+        {
+         "text": "CC BY-SA 4.0",
+         "href": "https://creativecommons.org/licenses/by-sa/4.0/"
+        },
+        ", über ",
         {
          "text": "Wikimedia Commons",
          "href": "https://commons.wikimedia.org/wiki/File:LEONARDO-DA-VINCI_-_MADONNA-MIT-DER-NELKE-7779_917154_BSTGS.jpg"
         },
-        ". Das Museum kennzeichnet die Reproduktion, nicht das Gemälde. Kulturelle Nutzung ohne Gewinnabsicht."
+        "."
        ]
       },
       {
@@ -580,7 +590,12 @@
        "pic": "lady-with-an-ermine",
        "alt": "Dame mit dem Hermelin: Eine junge Frau in rotem Kleid und blauem Umhang, nach rechts blickend, hält ein weißes Hermelin an die Brust, vor dunklem Grund. Eine Reproduktion.",
        "src": [
-        "Sammlungsbild des Nationalmuseums in Krakau. Gemeinfrei, über ",
+        "Sammlungsbild des Nationalmuseums in Krakau, freigegeben unter ",
+        {
+         "text": "CC0",
+         "href": "https://creativecommons.org/publicdomain/zero/1.0/deed.en"
+        },
+        ". Gemeinfrei, über ",
         {
          "text": "Wikimedia Commons",
          "href": "https://commons.wikimedia.org/wiki/File:Leonardo_da_Vinci_(1452-1519)_-_Lady_with_an_Ermine_%E2%80%93_Portrait_of_Cecilia_Gallerani_(ca._1473%E2%80%931536)_-_MNK_XII-209_-_National_Museum_Krak%C3%B3w.jpg"
@@ -791,7 +806,12 @@
          "text": "Europeana",
          "href": "https://www.europeana.eu/en/item/2024903/photography_ProvidedCHO_KU_Leuven_9991113610101488"
         },
-        ". Gemeinfrei."
+        ". Gemeinfrei, ",
+        {
+         "text": "Public Domain Mark 1.0",
+         "href": "https://creativecommons.org/publicdomain/mark/1.0/"
+        },
+        "."
        ]
       }
      ],
