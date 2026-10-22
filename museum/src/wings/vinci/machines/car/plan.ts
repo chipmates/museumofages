@@ -21,7 +21,7 @@ export const TAU = Math.PI * 2
  * tapers in toward the ground, its rim under the cover's eave band. */
 export const TUB = {
   rimR: 2.3, rimY: 0.565,
-  bottomR: 2.0, bottomY: 0.06,
+  bottomR: 1.85, bottomY: 0.06,
   wall: 0.05,
   staves: 72,
   floorTop: 0.11, floorT: 0.05, plank: 0.25,

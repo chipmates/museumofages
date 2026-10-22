@@ -13,11 +13,11 @@
   ],
   "scale_m": {
     "x": 5,
-    "y": 2.467,
+    "y": 2.492,
     "z": 5,
     "certainty": "C",
     "source": "museum choice",
-    "note": "Our size: 5 m across the eave, the spike 2.467 m over the ground. Seen as the sheet draws it, a little from above, the closed car is about 1.8 times as wide as it is tall, as on the sheet."
+    "note": "Our size: 5 m across the eave, the spike 2.492 m over the ground. Seen as the sheet draws it, a little from above, the closed car is about 1.8 times as wide as it is tall, as on the sheet."
   },
   "frame": {
     "handedness": "right",
@@ -35,12 +35,12 @@
       "shape": "box",
       "dimensions_m": {
         "x": 4.8,
-        "y": 0.56,
+        "y": 0.585,
         "z": 4.8
       },
       "position_m": [
         0,
-        0.34,
+        0.353,
         0
       ],
       "orientation_rad": [
@@ -55,7 +55,7 @@
       },
       "certainty": "C",
       "source": "British Museum 1860,0616.99 (the sheet): an oval shallow tub, read as round in plan; sizes ours",
-      "notes": "A shallow basin of 72 staves, rim 4.6 m across at 0.54 m, bottom 4 m at 0.06 m. Its wall is the short skirt under the eave band that the closed car shows. The wheel is about a quarter of its length, as on the sheet."
+      "notes": "A shallow basin of 72 staves, rim 4.6 m across at 0.565 m, bottom 3.7 m at 0.06 m. Its wall is the short skirt under the eave band that the closed car shows. The wheel is about a quarter of its length, as on the sheet."
     },
     {
       "id": "ports",
@@ -67,7 +67,7 @@
         "z": 0.03
       },
       "position_m": [
-        2.237,
+        2.197,
         0.36,
         0
       ],
@@ -90,9 +90,9 @@
       "parent": "tub",
       "shape": "box",
       "dimensions_m": {
-        "x": 3.9,
+        "x": 3.6,
         "y": 0.05,
-        "z": 3.9
+        "z": 3.6
       },
       "position_m": [
         0,
@@ -152,7 +152,7 @@
       },
       "position_m": [
         0,
-        1.543,
+        1.568,
         0
       ],
       "orientation_rad": [
@@ -180,7 +180,7 @@
       },
       "position_m": [
         0,
-        2.114,
+        2.139,
         0
       ],
       "orientation_rad": [
@@ -195,16 +195,16 @@
       },
       "certainty": "C",
       "source": "British Museum 1860,0616.99 (the sheet): a small cone of ribs over an open ring at the apex, a knob on top",
-      "notes": "A flat ring 1.6 m across, 12 posts leaving a sighting slot 0.07 m tall all round, a low cap of 16 boards and ribs; the spike's top 2.467 m over the ground."
+      "notes": "A flat ring 1.6 m across, 12 posts leaving a sighting slot 0.07 m tall all round, a low cap of 16 boards and ribs; the spike's top 2.492 m over the ground."
     },
     {
       "id": "guns",
       "parent": "tub",
       "shape": "box",
       "dimensions_m": {
-        "x": 4.794,
+        "x": 4.714,
         "y": 0.148,
-        "z": 4.794
+        "z": 4.714
       },
       "position_m": [
         0,
