@@ -69,10 +69,13 @@ const BENCH_LAMP: Partial<Record<string, BenchLamp[]>> = {
   'flying-machine': [
     // the wash, high on the visitor's side: falling off with distance, it
     // lights the near wing more than the far one, as a lamp in a hall does
-    { at: [7, 10, 7], aim: [1, 2.6, -0.4], lux: 300, kelvin: 4300, angle: .62, penumbra: .6, decay: 2 },
+    { at: [7, 10, 7], aim: [1, 2.6, -0.4], lux: 260, kelvin: 4300, angle: .62, penumbra: .6, decay: 2 },
     // a narrow spot from above the middle line onto the trough, where the man
-    // works the wings; it passes between the wings' roots
-    { at: [0.3, 10.5, 4], aim: [0, 1.5, -0.75], lux: 800, kelvin: 4000, angle: .13, penumbra: .55, decay: 2 },
+    // works the wings; it passes between the wings' roots (kept low: the root
+    // cloth in its cone would otherwise be the brightest thing in view)
+    { at: [0.3, 10.5, 4], aim: [0, 1.5, -0.75], lux: 450, kelvin: 4000, angle: .10, penumbra: .55, decay: 2 },
+    // a low spot from the front, under the wings, onto the man
+    { at: [1.2, 3.0, 6.5], aim: [0, 1.45, -0.5], lux: 450, kelvin: 4000, angle: .13, penumbra: .55, decay: 2 },
     // a low fill on the visitor's side for the faces the high lamps cannot reach
     { at: [6.5, 0.6, 6.5], aim: [1.8, 3.4, -0.6], lux: 450, kelvin: 3800, angle: .5, penumbra: .6, decay: 2 },
   ],
