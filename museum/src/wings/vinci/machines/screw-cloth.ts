@@ -5,8 +5,8 @@
  * built with is kept node for node; only the lighting model learns that the
  * cloth is thin. A property of the material class, not documented detail.
  */
-import { Color, MeshSSSNodeMaterial, type Material, type MeshStandardNodeMaterial } from 'three/webgpu'
-import { attribute, float, vec3 } from 'three/tsl'
+import { Color, MeshSSSNodeMaterial, type Material, type MeshStandardNodeMaterial, type Node } from 'three/webgpu'
+import { attribute, float, max, vec3 } from 'three/tsl'
 
 const KEPT = ['colorNode', 'normalNode', 'roughnessNode', 'metalnessNode', 'aoNode', 'emissiveNode', 'opacityNode',
   'positionNode', 'map', 'normalMap', 'roughnessMap', 'aoMap'] as const
@@ -25,6 +25,9 @@ export function thinStarchedLinen(from: MeshStandardNodeMaterial, layered: boole
   m.shadowSide = from.shadowSide
   m.name = `${from.name}:thin`
   m.userData = { ...from.userData }
+  // linen, even starched, is matte: a weave's single bright pixels under a
+  // grazing sun are glints the cloth cannot make, and they crawl as it turns
+  m.roughnessNode = max((from.roughnessNode ?? float(from.roughness)) as Node<'float'>, float(.84))
   // the stitch rows ride in the vertex colour, the doubled layers in `layers`
   let through = vec3(THROUGH.r, THROUGH.g, THROUGH.b).mul(attribute('color', 'vec3'))
   if (layered) through = through.mul(attribute('layers', 'float'))
