@@ -16,6 +16,7 @@ import re
 import shutil
 import unittest
 import urllib.parse
+from html.parser import HTMLParser
 from pathlib import Path
 
 HERE = Path(__file__).resolve().parent
@@ -4460,6 +4461,48 @@ def _graph(text):
     return nodes
 
 
+class _LabelLinks(HTMLParser):
+    """The links of a page's label source lines (.label__src): per link its address, what it holds directly (a tag with
+    its attributes, or words) and how many links its line holds."""
+    VOID = {"area", "base", "br", "col", "embed", "hr", "img", "input", "link", "meta", "source", "track", "wbr"}
+
+    def __init__(self, text):
+        super().__init__(convert_charrefs=True)
+        self.stack, self.lines, self.link = [], [], None
+        self.feed(text)
+        self.close()
+
+    def handle_starttag(self, tag, attrs):
+        attrs = dict(attrs)
+        line = next((ln for _, ln in reversed(self.stack) if ln is not None), None)
+        if self.link is not None and len(self.stack) == self.link["depth"] + 1:
+            self.link["holds"].append((tag, attrs))
+        if line is not None and tag == "a":
+            self.link = {"href": attrs.get("href", ""), "holds": [], "depth": len(self.stack), "line": line}
+            line.append(self.link)
+        own = None
+        if "label__src" in (attrs.get("class") or "").split():
+            own = []
+            self.lines.append(own)
+        if tag not in self.VOID:
+            self.stack.append((tag, own))
+
+    def handle_endtag(self, tag):
+        if tag in self.VOID or tag not in (t for t, _ in self.stack):
+            return
+        while self.stack.pop()[0] != tag:
+            pass
+        if self.link is not None and len(self.stack) == self.link["depth"]:
+            self.link = None
+
+    def handle_data(self, data):
+        if self.link is not None and len(self.stack) == self.link["depth"] + 1 and data.strip():
+            self.link["holds"].append(("#words", data))
+
+    def links(self):
+        return [link for line in self.lines for link in line]
+
+
 class SiteWide(unittest.TestCase):
     """What every page shares for search and AI answers, on the site as its own build wrote it."""
 
@@ -4543,6 +4586,26 @@ class SiteWide(unittest.TestCase):
         self.assertNotIn("/bg/", self.sitemap)
         for path, text in self.pages.items():
             self.assertNotRegex(text, r'hreflang="bg"|href="[^"]*/bg/|"bg_BG"|Български', path)
+
+    def test_a_label_link_holds_its_words_in_a_raised_span(self):
+        # a label link's target reaches 14 px past its line (base.css), so a later link on the next line would take the
+        # tap on an earlier one's words: the words sit in one span the sheet raises above every link's target. A jump
+        # within the page that stands alone in its line has no neighbour to cover it (the wing page's way to its originals).
+        raise_rule = re.compile(r"\.label__src a\s*>\s*span\s*\{\s*position:\s*relative;\s*z-index:\s*[1-9]")
+        links = 0
+        for path, text in self.pages.items():
+            found = _LabelLinks(text).links()
+            if not found:
+                continue
+            jump = lambda link: link["href"].startswith("#") and len(link["line"]) == 1
+            self.assertLessEqual(sum(map(jump, found)), 1, path)
+            for link in found:
+                links += 1
+                if not jump(link):
+                    self.assertEqual(link["holds"], [("span", {})], (path, link["href"]))
+            sheet = "".join(re.findall(r"<style[^>]*>(.*?)</style>", text, flags=re.S))
+            self.assertTrue(raise_rule.search(sheet), f"{path}: the sheet does not raise a label link's span")
+        self.assertGreaterEqual(links, 300)
 
     def test_a_first_stills_source_line_shows_on_a_phone_too(self):
         # it carries the picture's licence credit (the map data on the death and grave pages)

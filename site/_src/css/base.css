@@ -179,6 +179,7 @@ main>section,main>.wrap{isolation:isolate;overflow-x:clip}
 .tag{font-size:.75rem;letter-spacing:.1em;text-transform:uppercase;color:var(--ink);margin-right:.4em}
 .label__src,.label__hint,.label__music{font-family:var(--sans);font-size:.8125rem;line-height:1.45;color:var(--ink-quiet)}
 .label__src a,.label__music a{display:inline-block;padding:14px 0;margin:-14px 0}
+.label__src a>span{position:relative;z-index:1}
 /* A credit that comes and goes with one slide of a piece: its two lines are kept, so nothing under the label moves. */
 .label__src--slide{min-height:2.9em}
 .label__quote{margin:4px 0 2px;font-size:1.0625rem;line-height:1.4;color:var(--ink)}

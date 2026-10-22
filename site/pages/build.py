@@ -1143,6 +1143,11 @@ def plates():
     return {p["name"]: p for p in json.loads(PICTURES_FILE.read_text(encoding="utf-8")).get("plates", [])}
 
 
+def raised(markup):
+    """A label note's links with their words in a raised span, as source_line writes them (base.css)."""
+    return re.sub(r'(<a href="[^"]*"[^>]*>)((?:(?!</a>).)*)</a>', r"\1<span>\2</span></a>", markup)
+
+
 def source_line(parts, wing, lang, rich):
     """A plate's source line: its words with the museum's own filled in, and a link where a part gives one. A link to
     a Commons file is checked against the wing's record, where the repository holds it, or against a plate's record
@@ -1162,7 +1167,8 @@ def source_line(parts, wing, lang, rich):
             listed = urllib.parse.unquote(name.group(1)).replace("_", " ")
             if f"File:{listed}" not in record.read_text(encoding="utf-8"):
                 raise SystemExit(f"a plate names File:{listed}, which {RECORD.format(wing=wing)} does not name")
-        out.append(f'<a href="{esc(part["href"])}">{rich(part["text"])}</a>')
+        # the words in a raised span (base.css): a link's padded target on the next line never covers them
+        out.append(f'<a href="{esc(part["href"])}"><span>{rich(part["text"])}</span></a>')
     # the site's source link is an inline block (its touch target), which would let a line break before the
     # stop that follows it: the link and that stop stay together
     return re.sub(r'(<a href="[^"]*">(?:(?!</a>).)*</a>)([.,:)]+)', r'<span class="nw">\1\2</span>', "".join(out))
@@ -1719,7 +1725,7 @@ def render(page, lang, data, shared, out_root):
                                         "html.person": person_html(fig["pic"]), "tag": rich(labels[fig["tag"]]),
                                         "what": running(fig["what"]), "html.totable": to_table(),
                                         # a source line under the caption, with its links: a credit the picture owes
-                                        "html.note": f'<span class="label__src">{linked(fig["note"])}</span>' if fig.get("note") else "",
+                                        "html.note": f'<span class="label__src">{raised(linked(fig["note"]))}</span>' if fig.get("note") else "",
                                         "html.key": key_html(fig)})
         return out + (scale_fig(fig["close"]) if fig.get("close") else "")
 
@@ -2177,7 +2183,7 @@ def render(page, lang, data, shared, out_root):
         guess = data["top"].get("guess")
         frame_html = fill(parts["frame:scale"], {
             "html.picture": pics.picture(sc["pic"], esc(sc["alt"]), first=True), "html.person": person_html(sc["pic"]),
-            "tag": rich(labels[sc["tag"]]), "what": running(sc["what"]), "note": linked(sc["note"], running),
+            "tag": rich(labels[sc["tag"]]), "what": running(sc["what"]), "note": raised(linked(sc["note"], running)),
             "html.above": marks_html(sc, True), "html.bars": bars_html(sc) + marks_html(sc, False), "html.totable": to_table(),
             "html.close": scale_fig(sc["close"]) if sc.get("close") else "",
             "html.guess": fill(parts["guess"], {**{k: running(guess[k]) if k == "a" else rich(guess[k]) for k in ("h", "q", "button", "a")},
