@@ -1,7 +1,8 @@
 /** A PLAIN GREY FIGURE of 1.70 m: a marker for size and for where a body goes,
  * never a sculpture. Each segment is built along its own +Y from the joint
  * it hangs from, and posed by the two joints it spans and a facing hint. */
-import { BufferGeometry, Group, Matrix4, Mesh, Quaternion, Vector3, type Material } from 'three/webgpu'
+import { Bone, Float32BufferAttribute, Group, Matrix4, Quaternion, Skeleton, SkinnedMesh, Uint16BufferAttribute, Vector3, type BufferGeometry, type Material } from 'three/webgpu'
+import { mergeGeometries } from 'three/addons/utils/BufferGeometryUtils.js'
 import { Mesher, tube, type V3 } from './shapes'
 
 export interface FigureJoints {
@@ -179,28 +180,34 @@ function loft(m: Mesher, length: number, sections: readonly [number, number, num
   }
 }
 
-interface Segment { node: Group; length: number }
+interface Segment { node: Bone; length: number }
 export interface Figure {
   group: Group
   pose(j: FigureJoints): void
   dispose(): void
 }
 
-/** The figure: segments built once, posed from joint positions. */
+/** The figure: segments built once, posed from joint positions. Each segment
+ * is a bone of one skinned mesh, so the whole figure is one draw per pass. */
 export function makeFigure(material: Material, name = 'figure'): Figure {
   const group = new Group()
   group.name = name
-  const geometries: BufferGeometry[] = []
+  const parts: BufferGeometry[] = [], bones: Bone[] = []
+  const segment = (id: string, length: number, m: Mesher): Segment => {
+    const g = m.geometry()
+    const n = g.getAttribute('position').count, si = new Uint16Array(n * 4), sw = new Float32Array(n * 4)
+    for (let i = 0; i < n; i++) { si[i * 4] = bones.length; sw[i * 4] = 1 }
+    g.setAttribute('skinIndex', new Uint16BufferAttribute(si, 4))
+    g.setAttribute('skinWeight', new Float32BufferAttribute(sw, 4))
+    parts.push(g)
+    const node = new Bone(); node.name = `${name}:${id}`
+    bones.push(node); group.add(node)
+    return { node, length }
+  }
   const make = (id: string, length: number, sections: readonly [number, number, number][], sides = 18): Segment => {
     const m = new Mesher()
     loft(m, length, sections, sides)
-    const g = m.geometry()
-    geometries.push(g)
-    const node = new Group(); node.name = `${name}:${id}`
-    const mesh = new Mesh(g, material); mesh.name = `${name}:${id}:surface`
-    mesh.castShadow = true; mesh.receiveShadow = true
-    node.add(mesh); group.add(node)
-    return { node, length }
+    return segment(id, length, m)
   }
   // the trunk from pelvis to neck; sections (u, half width, half depth)
   const trunk = make('trunk', 0.52, [[0, 0.155, 0.1], [0.22, 0.145, 0.095], [0.42, 0.135, 0.09], [0.7, 0.165, 0.105], [0.9, 0.17, 0.095], [1, 0.08, 0.06]], 22)
@@ -213,19 +220,24 @@ export function makeFigure(material: Material, name = 'figure'): Figure {
   const built = (id: string, length: number, surface: (m: Mesher) => void): Segment => {
     const m = new Mesher()
     surface(m)
-    const g = m.geometry()
-    geometries.push(g)
-    const node = new Group(); node.name = `${name}:${id}`
-    const mesh = new Mesh(g, material); mesh.name = `${name}:${id}:surface`
-    mesh.castShadow = true; mesh.receiveShadow = true
-    node.add(mesh); group.add(node)
-    return { node, length }
+    return segment(id, length, m)
   }
   const hand = [built('hand-l', 0.1, fistSurface), built('hand-r', 0.1, fistSurface)]
   const thigh = [limb('thigh-l', 0.42, 0.075, 0.05, 1.04), limb('thigh-r', 0.42, 0.075, 0.05, 1.04)]
   const shin = [limb('shin-l', 0.42, 0.05, 0.033, 1.1), limb('shin-r', 0.42, 0.05, 0.033, 1.1)]
   const foot = [built('foot-l', FOOT_LENGTH, footSurface), built('foot-r', FOOT_LENGTH, footSurface)]
 
+  // bound with every bone at rest at the group's origin: each segment's own frame is the mesh's
+  const geometry = mergeGeometries(parts, false)
+  if (!geometry) throw new Error('the figure could not be merged')
+  for (const g of parts) g.dispose()
+  const mesh = new SkinnedMesh(geometry, material)
+  mesh.name = `${name}:surface`
+  mesh.castShadow = true; mesh.receiveShadow = true
+  mesh.frustumCulled = false
+  group.add(mesh)
+  group.updateWorldMatrix(true, true)
+  mesh.bind(new Skeleton(bones))
   const up = new Vector3(), side = new Vector3(), fwd = new Vector3(), hint = new Vector3(), q = new Quaternion(), mat = new Matrix4()
   /** place a segment from a toward b, its local +Z toward the facing hint */
   const place = (s: Segment, a: V3, b: V3, facing: V3, stretch = false): void => {
@@ -264,7 +276,7 @@ export function makeFigure(material: Material, name = 'figure'): Figure {
       }
       group.updateMatrixWorld(true)
     },
-    dispose() { for (const g of geometries) g.dispose() },
+    dispose() { geometry.dispose(); mesh.skeleton.dispose() },
   }
 }
 

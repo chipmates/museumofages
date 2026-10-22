@@ -7,7 +7,11 @@
  * primitives: the parts are built from flying/plan.ts. The object's origin
  * is on the floor under the pivot; the body needs the bench's support.
  */
-import { Box3, BufferAttribute, Group, Matrix4, Mesh, Quaternion, Vector3, type BufferGeometry, type Material, type Object3D } from 'three/webgpu'
+import {
+  Bone, Box3, BufferAttribute, Float32BufferAttribute, Group, Matrix4, Mesh, Quaternion, Skeleton, SkinnedMesh, Sphere, Uint16BufferAttribute, Vector3,
+  type BufferGeometry, type Material, type Object3D,
+} from 'three/webgpu'
+import { mergeGeometries } from 'three/addons/utils/BufferGeometryUtils.js'
 import type { MaterialSet, Stack } from '../../../stack'
 import { createMutableSweep, type MutableSweep } from './geometry'
 import { materialDressed, materialFailure } from './parts'
@@ -47,7 +51,7 @@ export function build(stack: Stack): ReadyMachineBuild {
   let mounted = false, disposed = false, failure: string | null = null
   let time = 0
 
-  const strokes: Group[] = [], rolls: Group[] = [], sheaves: Group[] = [], drums: Group[] = [], stirrups: Group[] = []
+  const strokes: Bone[] = [], rolls: Bone[] = [], sheaves: Bone[] = [], drums: Bone[] = [], stirrups: Bone[] = []
   const cords: { sweep: MutableSweep; points: () => V3[] }[] = []
   let bow: { geometry: BufferGeometry } | null = null
   let pilot: Figure | null = null
@@ -55,15 +59,50 @@ export function build(stack: Stack): ReadyMachineBuild {
   const qStroke = new Quaternion(), qRoll = new Quaternion(), axis = new Vector3(...AXIS), xAxis = new Vector3(1, 0, 0)
   const basis = new Matrix4(), fx = new Vector3(), fy = new Vector3(), fz = new Vector3()
 
-  function addBatch(parent: Object3D, batch: Batch, mats: Record<string, Material>, id: string): void {
-    for (const [kind, geometry] of Object.entries(batch) as [Kind, BufferGeometry][]) {
+  /** Every moving group is a bone, and each material is one skinned mesh over
+   * all of them: a draw per material per pass instead of one per part (the
+   * phone tier's budget counts draws, and each shadowed light draws again). */
+  const bones: Bone[] = []
+  const pieces: { bone: Bone; batch: Batch }[] = []
+  function bone(name: string, parent: Object3D): Bone {
+    const b = new Bone(); b.name = name
+    parent.add(b); bones.push(b)
+    return b
+  }
+  function skin(mats: Record<string, Material>): void {
+    object.updateWorldMatrix(true, true)
+    const toObject = new Matrix4().copy(object.matrixWorld).invert(), rel = new Matrix4()
+    const byKind = new Map<Kind, BufferGeometry[]>()
+    for (const { bone: b, batch } of pieces) {
+      const index = bones.indexOf(b)
+      rel.multiplyMatrices(toObject, b.matrixWorld)
+      for (const [kind, g] of Object.entries(batch) as [Kind, BufferGeometry][]) {
+        g.applyMatrix4(rel)
+        const n = g.getAttribute('position').count, si = new Uint16Array(n * 4), sw = new Float32Array(n * 4)
+        for (let i = 0; i < n; i++) { si[i * 4] = index; sw[i * 4] = 1 }
+        g.setAttribute('skinIndex', new Uint16BufferAttribute(si, 4))
+        g.setAttribute('skinWeight', new Float32BufferAttribute(sw, 4))
+        const list = byKind.get(kind) ?? []
+        list.push(g); byKind.set(kind, list)
+      }
+    }
+    const skeleton = new Skeleton(bones)
+    const sphere = bounds.getBoundingSphere(new Sphere())
+    for (const [kind, list] of byKind) {
+      const geometry = list.length === 1 ? list[0]! : mergeGeometries(list, false)
+      if (!geometry) throw new Error(`the ${kind} parts could not be merged`)
+      if (geometry !== list[0]) for (const g of list) g.dispose()
       geometries.add(geometry)
-      const mesh = new Mesh(geometry, mats[kind]!)
-      mesh.name = `${id}:${kind}`
+      const mesh = new SkinnedMesh(geometry, mats[kind]!)
+      mesh.name = `machine:${kind}`
       mesh.castShadow = true
       mesh.receiveShadow = true
-      parent.add(mesh)
-      if (!parts.has(`${id}:${kind}`)) parts.set(`${id}:${kind}`, { node: mesh, geometry })
+      // the bones move the parts after the bounds are taken: the swept envelope holds them all
+      mesh.frustumCulled = false
+      object.add(mesh)
+      mesh.bind(skeleton)
+      mesh.boundingBox = bounds.clone(); mesh.boundingSphere = sphere.clone()
+      parts.set(mesh.name, { node: mesh, geometry })
     }
   }
 
@@ -123,42 +162,35 @@ export function build(stack: Stack): ReadyMachineBuild {
     for (const m of Object.values(surfaces.materials)) materials.add(m)
     const mats = surfaces.materials as unknown as Record<string, Material>
 
-    const body = new Group(); body.name = 'body'; object.add(body)
-    addBatch(body, buildBody(), mats, 'body')
+    pieces.push({ bone: bone('body', object), batch: buildBody() })
 
     ;([1, -1] as const).forEach(side => {
       const name = side > 0 ? 'left' : 'right'
-      const stroke = new Group(); stroke.name = `wing-${name}`
+      const stroke = bone(`wing-${name}`, object)
       stroke.position.set(...hubCentre(side))
-      object.add(stroke)
-      const roll = new Group(); roll.name = `wing-${name}-roll`
-      stroke.add(roll)
+      const roll = bone(`wing-${name}-roll`, stroke)
       const wing = buildWing(side)
-      addBatch(stroke, wing.hub, mats, `hub-${name}`)
-      addBatch(roll, wing.turning, mats, `wing-${name}`)
+      pieces.push({ bone: stroke, batch: wing.hub }, { bone: roll, batch: wing.turning })
       strokes.push(stroke); rolls.push(roll)
 
       // the swivel sheave under the small hoop's crown, turned to its cord's plane
-      const block = new Group(); block.name = `sheave-block-${name}`
+      const block = bone(`sheave-block-${name}`, object)
       block.position.set(...sheaveCentre(side))
       block.quaternion.setFromUnitVectors(new Vector3(1, 0, 0), new Vector3(...sheaveAxis(side)))
-      object.add(block)
-      const sheave = new Group(); sheave.name = `sheave-${name}`
-      block.add(sheave)
-      addBatch(sheave, buildSheave(), mats, `sheave-${name}`)
+      const sheave = bone(`sheave-${name}`, block)
+      pieces.push({ bone: sheave, batch: buildSheave() })
       sheaves.push(sheave)
 
-      const drum = new Group(); drum.name = `drum-${name}`
+      const drum = bone(`drum-${name}`, object)
       drum.position.set(side * DRUM.x, DRUM.y, DRUM.z)
-      object.add(drum)
-      addBatch(drum, buildDrum(), mats, `drum-${name}`)
+      pieces.push({ bone: drum, batch: buildDrum() })
       drums.push(drum)
 
-      const stirrup = new Group(); stirrup.name = `stirrup-${side > 0 ? 'f' : 'd'}`
-      object.add(stirrup)
-      addBatch(stirrup, buildStirrup(), mats, stirrup.name)
+      const stirrup = bone(`stirrup-${side > 0 ? 'f' : 'd'}`, object)
+      pieces.push({ bone: stirrup, batch: buildStirrup() })
       stirrups.push(stirrup)
     })
+    skin(mats)
 
     const tier = stack.tierName()
     for (const side of [1, -1] as const) {
