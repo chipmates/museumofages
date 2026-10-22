@@ -33,6 +33,8 @@ export interface Finish {
   tone: number
   /** 0 new, 1 worn smooth by hands, feet or the ground */
   wear?: number
+  /** where the piece starts in the photograph; the tone when absent, so grime can darken a piece without moving its grain */
+  seed?: number
 }
 
 const pickAxis = (n: V3, grain: V3): [V3, V3, number] => {
@@ -57,7 +59,7 @@ export class Kit {
     this.position.push(p[0], p[1], p[2])
     this.normal.push(n[0], n[1], n[2])
     // each piece starts at its own place in the photograph, so a knot never repeats board to board
-    const t = f.tone * 7919.37
+    const t = (f.seed ?? f.tone) * 7919.37
     this.uv.push(u + (t - Math.floor(t)) * 3.7, w + ((t * 13.1) - Math.floor(t * 13.1)) * 0.9)
     this.tone.push(f.tone, f.wear ?? 0, end)
   }
@@ -138,7 +140,7 @@ export class Kit {
   /** A solid of revolution about the line from `origin` along `axis`: the
    * profile is (distance along the axis, radius) pairs; smooth around, flat
    * caps where the radius closes or `caps` is set. */
-  lathe(origin: V3, axis: V3, profile: [number, number][], segments: number, f: Finish, caps = true, wearAt?: (s: number) => number): void {
+  lathe(origin: V3, axis: V3, profile: [number, number][], segments: number, f: Finish, caps = true, wearAt?: (s: number) => number, grimeAt?: (s: number) => number): void {
     const w = norm(axis)
     const helper: V3 = Math.abs(w[1]) < 0.9 ? [0, 1, 0] : [1, 0, 0]
     const e1 = norm(cross(helper, w)), e2 = cross(w, e1)
@@ -152,7 +154,9 @@ export class Kit {
       const slopeN = (dr: number, ds: number, k: number): V3 => norm(add(mul(radial(k), ds), mul(w, -dr)))
       const ds = s1 - s0, dr = r1 - r0
       if (Math.hypot(ds, dr) < 1e-9) continue
-      const finish = wearAt ? { ...f, wear: Math.max(f.wear ?? 0, wearAt((s0 + s1) / 2)) } : f
+      let finish = wearAt ? { ...f, wear: Math.max(f.wear ?? 0, wearAt((s0 + s1) / 2)) } : f
+      // dirt settles where a piece enters its neighbour: a darker tone, the same grain
+      if (grimeAt) finish = { ...finish, seed: f.seed ?? f.tone, tone: f.tone * grimeAt((s0 + s1) / 2) }
       for (let k = 0; k < segments; k++) {
         const p: [V3, V3, V3, V3] = [ring(s0, r0, k), ring(s0, r0, k + 1), ring(s1, r1, k + 1), ring(s1, r1, k)]
         const n: [V3, V3, V3, V3] = [slopeN(dr, ds, k), slopeN(dr, ds, k + 1), slopeN(dr, ds, k + 1), slopeN(dr, ds, k)]
@@ -178,12 +182,17 @@ export class Kit {
     capAt(last[0], last[1], 1)
   }
 
-  /** A turned rod from a to b. */
-  rod(a: V3, b: V3, r: number, segments: number, f: Finish, ease = 0.0): void {
+  /** A turned rod from a to b; `along` splits it so wear and grime can vary along its length. */
+  rod(a: V3, b: V3, r: number, segments: number, f: Finish, ease = 0.0, along?: { rows: number; wearAt?: (u: number) => number; grimeAt?: (u: number) => number }): void {
     const d = sub(b, a), l = len(d)
     const e = Math.min(ease, l * 0.2)
-    const profile: [number, number][] = e > 0 ? [[0, r - e], [e, r], [l - e, r], [l, r - e]] : [[0, r], [l, r]]
-    this.lathe(a, d, profile, segments, f, true)
+    const profile: [number, number][] = e > 0 ? [[0, r - e], [e, r]] : [[0, r]]
+    const rows = along ? Math.max(1, along.rows) : 1
+    for (let i = 1; i < rows; i++) profile.push([e + ((l - 2 * e) * i) / rows, r])
+    profile.push(...(e > 0 ? [[l - e, r], [l, r - e]] as [number, number][] : [[l, r]] as [number, number][]))
+    const wearAt = along?.wearAt ? (s: number) => along.wearAt!(s / l) : undefined
+    const grimeAt = along?.grimeAt ? (s: number) => along.grimeAt!(s / l) : undefined
+    this.lathe(a, d, profile, segments, f, true, wearAt, grimeAt)
   }
 
   /** An arc of a ring about `axis` through `centre`: radii r0..r1, angles
