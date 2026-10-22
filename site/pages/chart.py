@@ -17,6 +17,7 @@ Standard library only. This file names no wing and no work.
 import hashlib
 import html
 import re
+import unicodedata
 
 # One em of a shape is one metre. A panel is this many metres wide, so the person and a wall of 8.8 metres share a row
 # (chart.css divides the chart's width by the same number).
@@ -842,6 +843,116 @@ def _picture_beside_svg(words, c, picture, size, person, W, H, m):
         parts.append(_text(ix + iw, H - 30, words["credit"], 20, c["text-2"], "end"))
     return (f'<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="{W}" height="{H}" '
             f'viewBox="0 0 {W} {H}"><rect width="{W}" height="{H}" fill="{c["page"]}"/>{"".join(parts)}</svg>\n')
+
+
+# Cardo's advance widths in thousandths of an em, for the printable ASCII characters from the space on, as its
+# TrueType cut gives them; a letter with an accent takes its base letter's. A column that a long name nearly fills
+# needs them: the stills' average measure (_wrap) is off by a fifth on a word of wide letters.
+CARDO_EM = (269, 238, 407, 580, 512, 855, 743, 227, 317, 318, 362, 512, 254, 446, 253, 324, 512, 512, 512, 512, 512, 512,
+            512, 512, 512, 512, 253, 254, 512, 512, 512, 379, 972, 711, 680, 764, 812, 617, 569, 791, 836, 341, 338, 744,
+            605, 942, 853, 865, 591, 863, 692, 501, 734, 816, 735, 1104, 786, 745, 713, 361, 325, 361, 512, 495, 342, 432,
+            537, 456, 532, 454, 305, 560, 549, 281, 282, 535, 254, 845, 568, 542, 533, 535, 365, 335, 316, 548, 506, 802,
+            497, 529, 447, 517, 210, 519, 512)
+CARDO_EM_OWN = {"ß": 596, "¿": 380, "¡": 238, " ": 269}
+# The share picture whose square picture fills its middle: the left edge of the words in the column at its left,
+# and their least gap before the picture.
+SQUARE_M, SQUARE_GAP = 26, 22
+
+
+def _cardo_px(text, size):
+    """A row's width set in Cardo at size, from the face's own advances (the renderer sets no kerning)."""
+    total = 0
+    for ch in text:
+        base = unicodedata.normalize("NFD", ch)[0]
+        total += CARDO_EM_OWN.get(ch) or (CARDO_EM[ord(base) - 32] if 32 <= ord(base) < 127 else 1000)
+    return total * size / 1000
+
+
+def _column_rows(text, size, width):
+    """A sentence's rows in Cardo at size in a column this wide: parted at its plain spaces (a number keeps its unit, a
+    range its ends, a short name its two parts, while an article may end a row) and after a hyphen only in a word
+    wider than the column; in as few rows as filling each in turn takes, those as even as they can be. None: a part is
+    wider than the column still."""
+    fits = lambda s: _cardo_px(s, size) <= width
+    units = []
+    for word in re.sub(r"\b(der|die|das|ein|eine) ", r"\1 ", _keep(text)).split(" "):
+        parts = [word] if fits(word) else re.findall(r"[^-]+-|[^-]+$", word)
+        if not all(fits(p) for p in parts):
+            return None
+        units += [(p, "") for p in parts[:-1]] + [(parts[-1], " ")]
+    joined = lambda i, j: "".join(units[k][0] + (units[k][1] if k < j - 1 else "") for k in range(i, j))
+    n, start = 1, 0
+    for j in range(1, len(units) + 1):
+        if not fits(joined(start, j)):
+            n, start = n + 1, j - 1
+    # every parting into those rows, costed by the square of each row's room left: the even one costs least
+    best = {(0, 0): (0, None)}
+    for k in range(1, n + 1):
+        for j in range(k, len(units) + 1):
+            for i in range(k - 1, j):
+                if (i, k - 1) in best and fits(joined(i, j)):
+                    cost = best[(i, k - 1)][0] + (width - _cardo_px(joined(i, j), size)) ** 2
+                    if (j, k) not in best or cost < best[(j, k)][0]:
+                        best[(j, k)] = (cost, i)
+    rows, j = [], len(units)
+    for k in range(n, 0, -1):
+        i = best[(j, k)][1]
+        rows.insert(0, joined(i, j).replace(" ", " "))
+        j = i
+    return rows
+
+
+def _column_fit(words, width, top, bottom):
+    """The heading's and its line's rows and sizes in the column: the heading as large as its longest word lets it
+    (44 at most), or up to 5 smaller, not under 36, where that takes fewer rows or leaves no short word alone on a
+    row; the line as large as the room under it lets it (30 at most, a fifth smaller than the heading), or up to 3
+    smaller where that leaves no short word alone; its last row at bottom or higher."""
+    lone = lambda rows, size: sum(" " not in r and _cardo_px(r, size) < 0.3 * width for r in rows)
+    heads = {hs: _column_rows(words["h1"], hs, width) for hs in range(44, 29, -1)}
+    sizes = [hs for hs, rows in heads.items() if rows is not None]
+    near = [hs for hs in sizes if hs >= max(sizes[0] - 5, min(sizes[0], 36))] if sizes else []
+    for hs in sorted(near, key=lambda hs: (len(heads[hs]), lone(heads[hs], hs))) + sizes[len(near):]:
+        head, found = heads[hs], []
+        for ls in range(min(30, round(hs * 0.8)), 21, -1):
+            line = _column_rows(words["line"], ls, width) if words.get("line") else []
+            if line is None:
+                continue
+            last = top + round(0.78 * hs) + round(1.16 * hs) * (len(head) - 1)
+            if line:
+                last += round(1.16 * hs) + 14 + round(1.29 * ls) * (len(line) - 1)
+            if last <= bottom:
+                found.append((ls, line))
+        if found:
+            ls, line = next((f for f in found if f[0] >= found[0][0] - 3 and not lone(f[1], f[0])), found[0])
+            return head, line, hs, ls
+    raise ValueError(f"the share picture's words do not fit its column: {words['h1']!r}, {words.get('line')!r}")
+
+
+def square_share_svg(words, colours, picture):
+    """A page's share picture with its square picture in the card's middle, 1200 by 630: the page's heading and its
+    line in the column at the left, as large as they fit; the picture filling the middle square, so the square a
+    messenger cuts from the card's centre is that picture alone; the stone of its ground on to the right edge; the
+    site's address under the words."""
+    c = colours
+    W, H = 1200, 630
+    col, m = (W - H) // 2, SQUARE_M
+    # the renderer sets each letter on a whole pixel: a row runs a little wider than the face's advances add up to
+    head, line, hs, ls = _column_fit(words, (col - m - SQUARE_GAP) * 0.95, 60, H - 62 - 36)
+    parts, y = [], 60 + round(0.78 * hs)
+    for row in head:
+        parts.append(_text(m, y, row, hs, c["linen"]))
+        y += round(1.16 * hs)
+    y += 14
+    for row in line:
+        parts.append(_text(m, y, row, ls, c["chalk-text"]))
+        y += round(1.29 * ls)
+    parts.append(_rect(m, H - 62, 48, 2, c["chalk"], c["chalk"], 0))
+    parts.append(_text(m, H - 30, words["site"], 20, c["text-3"]))
+    return (f'<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="{W}" height="{H}" '
+            f'viewBox="0 0 {W} {H}"><rect width="{W}" height="{H}" fill="{c["page"]}"/>'
+            f'<rect x="{col}" width="{W - col}" height="{H}" fill="{c["stone"]}"/>'
+            f'<image x="{col}" y="0" width="{H}" height="{H}" xlink:href="{PICS_MARK}/{esc(picture)}"/>'
+            f'{"".join(parts)}</svg>\n')
 
 
 def painting_share_svg(words, colours, picture, work, person_cm):

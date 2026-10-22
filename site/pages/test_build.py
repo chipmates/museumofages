@@ -1581,6 +1581,38 @@ class Case(unittest.TestCase):
             self.save(lang, data, page)
         self.fails(r"page\.og_image\.layout is 'below'")
 
+    def test_a_share_picture_may_set_a_square_picture_in_its_middle(self):
+        """A page with a square shape sets it in its share card's middle, 630 by 630 from the card's top, so the square a
+        messenger cuts from the card's centre is the picture alone. The heading and its line stand in the column at the
+        left, every row inside it with room before the picture, a number never parted from its unit, a word wider than
+        the column parted after its hyphen; no line under the picture; words that cannot fit stop the drawing."""
+        spec = importlib.util.spec_from_file_location("chart_square", self.dir / "chart.py")
+        chart = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(chart)
+        colours = {k: "#000000" for k in ("linen", "chalk-text", "stone", "chalk", "text-3", "page", "stone-text-2")}
+        cases = [{"h1": "How big was megalodon?", "line": "About 16 m (52 ft) long"},
+                 {"h1": "Qual era o tamanho do mamute-lanoso?", "line": "Um macho da Sibéria tinha cerca de 2,7 a 2,9 m no ombro"},
+                 {"h1": "Wie groß war ein Ankylosaurus?", "line": "Ein Ankylosaurus war etwa 6 bis 8 m lang, und die einzige "
+                                                                 "gefundene Schwanzkeule ist etwa einen halben Meter breit"}]
+        for words in cases:
+            svg = chart.square_share_svg({**words, "second": "Ours, a young one", "site": "museumofages.org"}, colours, "x.webp")
+            self.assertIn('<image x="285" y="0" width="630" height="630" xlink:href="@pics@/x.webp"/>', svg)
+            self.assertNotIn("Ours, a young one", svg)
+            texts = [(float(x), int(size), html.unescape(t)) for x, size, t in
+                     re.findall(r'<text x="([\d.]+)" y="[\d.]+" font-family="Cardo" font-size="(\d+)"[^>]*>([^<]*)</text>', svg)]
+            rows = texts[:-1]
+            self.assertEqual(texts[-1][2], "museumofages.org")
+            self.assertTrue(all(x == 26 and x + chart._cardo_px(t, size) <= 285 - 22 for x, size, t in rows), rows)
+            self.assertEqual(" ".join(t for _, _, t in rows).replace("- ", "-"), words["h1"] + " " + words["line"])
+            self.assertFalse([t for _, _, t in rows if re.search(r"\d$", t) or re.match(r"(m|ft|bis|to)\b", t)], rows)
+            self.assertTrue(36 <= rows[0][1] <= 44, rows[0])
+        svg = chart.square_share_svg({**cases[1], "site": "museumofages.org"}, colours, "x.webp")
+        heading = [html.unescape(t) for t in re.findall(r'font-size="(?:3[6-9]|4[0-4])"[^>]*>([^<]*)</text>', svg)]
+        self.assertIn("mamute-", heading)
+        self.assertEqual(heading[heading.index("mamute-") + 1], "lanoso?")
+        with self.assertRaises(ValueError):
+            chart.square_share_svg({"h1": "Pneumonoultramicroscopicsilicovolcanoconiosis?", "line": "x", "site": "s"}, colours, "x.webp")
+
     def test_a_key_leads_each_colour_with_a_swatch_of_the_pictures_colour(self):
         """A skeleton coloured by where its bones come from names each colour with a swatch in the colour the picture
         prints (pics.<name>.swatches): the key's square and the bones agree. A page without swatches carries no swatch
@@ -2311,9 +2343,12 @@ class Case(unittest.TestCase):
                     # a card that sets its words beside its picture wraps the line over several rows
                     said = " ".join(re.findall(r"<text [^>]*>([^<]*)</text>", job["svg"]))
                     self.assertIn(html.escape(line.replace("\u00a0", " "), quote=False), said)
-                    # and a second line, under the picture, where the page gives one
+                    # and a second line, under the picture, where the page gives one; a card with the page's square
+                    # shape in its middle leaves it off, since the line speaks of the first picture
                     second = self.data(job["lang"], page)["labels"].get("og_second")
-                    if second:
+                    if second and module.square_shape(self.data(job["lang"], page)):
+                        self.assertNotIn(html.escape(second.replace("\u00a0", " "), quote=False), said)
+                    elif second:
                         self.assertIn(html.escape(second.replace("\u00a0", " "), quote=False), said)
             # beside its words a picture whose person stands clear only on wider screens shows no height over it
             d = self.data("en", page)

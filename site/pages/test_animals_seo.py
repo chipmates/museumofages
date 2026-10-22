@@ -17,6 +17,7 @@ import struct
 import sys
 import unittest
 import urllib.parse
+import zlib
 from pathlib import Path
 
 HERE = Path(__file__).resolve().parent
@@ -399,6 +400,33 @@ class Share(Site):
             card_object = self.node(page, f"{page['address']}#card")
             self.assertEqual(card_object["contentUrl"], f"{ORIGIN}/static/img/{card}", page["path"])
 
+    def test_a_topic_pages_card_sets_its_square_shape_in_its_middle(self):
+        """Each topic page's card holds its 1:1 shape in the middle 630 by 630, so the square a messenger cuts from the
+        card's centre is that picture alone, and says it in og:image:alt; the question and the answer line stand in the
+        column at the left, nothing over the picture. The list of pages keeps its card."""
+        self.need_shapes()
+        jobs = {(j["page"], j["lang"]): j["svg"] for j in self.build.still_jobs() if j["kind"] == "share"}
+        plain = lambda t: t.replace(" ", " ")
+        held = 0
+        for page in self.pages:
+            d, svg = page["data"], jobs[(page["name"], page["lang"])]
+            if d["page"].get("hub"):
+                self.assertNotIn('<image x="285" y="0" width="630" height="630"', svg, page["path"])
+                continue
+            stem = d["pics"]["size_1x1"]["stem"]
+            self.assertIn(f'<image x="285" y="0" width="630" height="630" xlink:href="@pics@/{stem}-1600.webp"/>', svg)
+            texts = [(float(x), int(size), html.unescape(t)) for x, size, t in
+                     re.findall(r'<text x="([\d.]+)" y="[\d.]+" font-family="Cardo" font-size="(\d+)"[^>]*>([^<]*)</text>', svg)]
+            self.assertFalse([t for x, _, t in texts if x >= 285], page["path"])
+            for x, size, row in texts:
+                self.assertLessEqual(x + self.build.CHART._cardo_px(row, size), 285 - 22, (page["path"], row))
+            said = " ".join(t for _, _, t in texts[:-1]).replace("- ", "-")
+            self.assertEqual(said, plain(d["top"]["h1"]) + " " + plain(d["labels"]["og_answer"]), page["path"])
+            alt = re.search(r'<meta property="og:image:alt" content="([^"]*)"', page["text"]).group(1)
+            self.assertEqual(plain(html.unescape(alt)), plain(_shape_words(d)["alts"]["size_1x1"]), page["path"])
+            held += 1
+        self.assertEqual(held, 40)
+
 
 class Words(Site):
     """The words each batch brings, once a page's words for its shapes stand without "draft" (items 12 to 17)."""
@@ -522,6 +550,13 @@ def fake_jpeg(w, h):
     return b"\xff\xd8\xff\xc0" + struct.pack(">HBHHB", 17, 8, h, w, 3) + b"\x01\x11\x00\x02\x11\x00\x03\x11\x00\xff\xd9"
 
 
+def fake_png(w, h, mark):
+    """A PNG of the size given carrying a still's mark, without pixels: the build reads only those two."""
+    chunk = lambda kind, body: struct.pack(">I", len(body)) + kind + body + struct.pack(">I", zlib.crc32(kind + body))
+    return (b"\x89PNG\r\n\x1a\n" + chunk(b"IHDR", struct.pack(">IIBBBBB", w, h, 8, 2, 0, 0, 0))
+            + chunk(b"tEXt", b"comment\0" + mark.encode("latin-1")) + chunk(b"IEND", b""))
+
+
 class Machinery(unittest.TestCase):
     """The build's three shapes and its share switch, on a page and on the list of pages, before any picture exists."""
 
@@ -606,6 +641,17 @@ class Machinery(unittest.TestCase):
             if page == "megalodon":
                 module.LIB.PICTURE_CREDITS[stem] = owed
         module.LIB.PICTURE_CREDITS["animals-test-shark-size-comparison-og"] = owed
+        # a share card drawn from the stand-in pages (without their square shape, or with a stand-in one) is not the
+        # one cut for the pages: it gets a stand-in still with its drawing's mark, the link to the real one dropped
+        img = self.dir / "pics" / "img"
+        for job in module.still_jobs():
+            path, mark = img / job["file"], module.CHART.source_mark(job["svg"])
+            if path.is_file() and module.CHART.png_info(path)[1].get("comment") == mark:
+                continue
+            size = module.CHART.png_info(path)[0] if path.is_file() else (1200, 630)
+            if path.is_symlink():
+                path.unlink()
+            path.write_bytes(fake_png(*size, mark))
         out = self.dir / "out"
         module.build_pages(out, site_src=SITE_SRC, site_built=SITE_BUILT, quiet=True)
         self.module = module

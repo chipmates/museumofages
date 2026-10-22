@@ -2268,13 +2268,15 @@ def render(page, lang, data, shared, out_root):
             shapes.append({"id": shape_id(data, key), "file": f'{pics.defs[key]["stem"]}-{max(pics.defs[key]["widths"])}.webp',
                            "width": w, "height": h, "description": plain(sw["alts"][key]),
                            "caption": plain(sw["caption"] if key == shaped["figure"] else sw["alts"][key])})
-    og_file, og_size, og_alt = og["file"], (og["width"], og["height"]), data["meta"]["og_image_alt"]
+    # a card with its square shape in the middle shows that shape, and is described by the shape's own alt
+    card_alt = shape_words(data)["alts"][square_shape(data)] if making(wing) and square_shape(data) else data["meta"]["og_image_alt"]
+    og_file, og_size, og_alt = og["file"], (og["width"], og["height"]), card_alt
     if og.get("from"):
         # the share picture is cut from a shape, without words; the word card stays served and described
         og_file, og_alt = og_cut(data), shape_words(data)["alts"][og["from"]]
         og_size = jpeg_size(pics.find(og_file))
         card = {"file": og["file"], "width": og["width"], "height": og["height"],
-                "caption": plain(data["meta"]["og_title"]), "description": plain(data["meta"]["og_image_alt"])}
+                "caption": plain(data["meta"]["og_title"]), "description": plain(card_alt)}
     values = dict(base)
     values.update({
         "lang": L.html(lang),
@@ -2436,6 +2438,15 @@ def shown_pics(data):
 def og_cut(data):
     """The share picture cut from a shape (page.og_image.from): the shape's stem, og for its shape, 1200 x 630 JPEG."""
     return SHAPE_STEM.sub("-og", data["pics"][data["page"]["og_image"]["from"]]["stem"]) + "-1200x630.jpg"
+
+
+def square_shape(data):
+    """The square one of a topic page's shapes (page.shapes), which its share card sets in its middle; None for a list
+    of pages or a page without one."""
+    if data["page"].get("hub"):
+        return None
+    keys = (data["page"].get("shapes") or {}).get("list", [])
+    return next((k for k in keys if (m := SHAPE_KEY.fullmatch(k)) and m.group(1) == m.group(2)), None)
 
 
 def jpeg_size(path):
@@ -3172,8 +3183,28 @@ def scale_share(d, data, lang, colours):
     """The share picture of a page of a wing in the making: its heading, under it the page's answer line for the link
     preview (labels.og_answer) or else the line its share title adds to it, and its first picture at one scale (a list
     of pages: the first listed page's), with a quieter line under it where the page gives one (labels.og_second).
-    Returns {svg}."""
+    A topic page with a square shape sets that shape in the card's middle instead, its words in the column at its
+    left (chart.square_share_svg). Returns {svg}."""
     plain = lambda t: t.replace(LIB.NBSP, " ")
+    h1, og = plain(d["top"]["h1"]), plain(d["meta"]["og_title"])
+    answer = d["labels"].get("og_answer")
+    # a title that repeats the heading gives the rest as the line, without the colon that joined them
+    rest = og[len(h1):].lstrip(" :").strip() if og.startswith(h1) else ""
+    words = {"h1": h1, "line": plain(answer) if answer else rest[:1].upper() + rest[1:],
+             "second": plain(d["labels"].get("og_second") or ""),
+             "person": plain(d["labels"]["person"]),
+             "site": ORIGIN.split("://", 1)[1]}
+    key = square_shape(d)
+    if key:
+        # the square a messenger cuts from the card's centre is then the shape alone. The quieter line speaks of the
+        # first picture (what it shows of ours), so it stays off this card
+        square = d["pics"][key]
+        name = f'{square["stem"]}-{max(square["widths"])}.webp'
+        if not (PICS / name).is_file():
+            raise SystemExit(f"the picture {name} is not cut: python3 pages/make_pictures.py {square['stem']} (needs MOA_FILM_STILLS)")
+        if webp_size(PICS / name)[0] != webp_size(PICS / name)[1]:
+            raise SystemExit(f"{name} is not square: the share card sets its square shape in its middle")
+        return {"svg": CHART.square_share_svg(words, colours, name)}
     source = d
     if d["page"].get("hub"):
         first = next(x for b in d["blocks"] if b["type"] == "pages" for x in b["items"])
@@ -3185,14 +3216,6 @@ def scale_share(d, data, lang, colours):
     if not found:
         raise SystemExit(f"the picture {name} is not cut: python3 pages/make_pictures.py {pic['stem']} (needs MOA_FILM_STILLS)")
     place = re.fullmatch(r"([\d.]+)% ([\d.]+)%", pic.get("person") or "")
-    h1, og = plain(d["top"]["h1"]), plain(d["meta"]["og_title"])
-    answer = d["labels"].get("og_answer")
-    # a title that repeats the heading gives the rest as the line, without the colon that joined them
-    rest = og[len(h1):].lstrip(" :").strip() if og.startswith(h1) else ""
-    words = {"h1": h1, "line": plain(answer) if answer else rest[:1].upper() + rest[1:],
-             "second": plain(d["labels"].get("og_second") or ""),
-             "person": plain(d["labels"]["person"]),
-             "site": ORIGIN.split("://", 1)[1]}
     beside = source["page"]["og_image"].get("layout") == "beside"
     # beside its words the picture is narrow: a person whose picture leaves open stone over it only on wider screens
     # (pics.<name>.person_from) has no height there either
