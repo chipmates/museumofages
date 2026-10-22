@@ -27,6 +27,9 @@ export const SLOT = {
   z0: HUB.z - WHEEL.width / 2 - PEGS.stand - PEGS.r - 0.02, z1: HUB.z + WHEEL.width / 2 + 0.025,
 }
 
+const BEVEL = { w: 0.007, d: 0.005 } as const
+const across = (a: number): V3 => [-Math.sin(a), 0, Math.cos(a)]
+
 /** The wall's outward normal at angle `a` and height `y`, from the slope of its profile. */
 function wallNormal(a: number, y: number): V3 {
   const e = 0.004
@@ -51,6 +54,7 @@ function stave(k: Kit, i: number): void {
   const half = (r: number): number => (da / 2) * r - gap
   const outer = (s: number, y: number): V3 => { const r = wallRadius(y); return at(r, ac + s / r, y) }
   const inner = (s: number, y: number): V3 => { const r = wallRadius(y) - TUB.wall; return at(r, ac + s / wallRadius(y), y) }
+  const eased = (s: number, y: number): V3 => { const r = wallRadius(y) - BEVEL.d; return at(r, ac + s / wallRadius(y), y) }
   const holeHalf = (y: number): number => {
     if (!ported) return 0
     const d = y - TUB.ports.y
@@ -67,14 +71,26 @@ function stave(k: Kit, i: number): void {
     // flat across the stave, smooth up its curve, so the rows never show as facets
     const n0 = wallNormal(ac, y0), n1 = wallNormal(ac, y1), m0 = mul(n0, -1), m1 = mul(n1, -1)
     for (const [a0, b0, a1, b1] of spans) {
-      const uv: [number, number][] = [[y0, a0], [y0, b0], [y1, b1], [y1, a1]]
-      k.smoothQuad([outer(a0, y0), outer(b0, y0), outer(b1, y1), outer(a1, y1)], [n0, n0, n1, n1], uv, f)
-      k.smoothQuad([inner(a0, y0), inner(b0, y0), inner(b1, y1), inner(a1, y1)], [m0, m0, m1, m1], uv, f)
+      const ea = a0 === -h0, eb = b0 === h0
+      const [p0, q0, p1, q1] = [ea ? a0 + BEVEL.w : a0, eb ? b0 - BEVEL.w : b0, ea ? a1 + BEVEL.w : a1, eb ? b1 - BEVEL.w : b1]
+      const uv: [number, number][] = [[y0, p0], [y0, q0], [y1, q1], [y1, p1]]
+      k.smoothQuad([outer(p0, y0), outer(q0, y0), outer(q1, y1), outer(p1, y1)], [n0, n0, n1, n1], uv, f)
+      k.smoothQuad([inner(a0, y0), inner(b0, y0), inner(b1, y1), inner(a1, y1)], [m0, m0, m1, m1], [[y0, a0], [y0, b0], [y1, b1], [y1, a1]], f)
+      // the eased arris along each long edge, which is what shows the joint between staves
+      const t = across(ac)
+      if (ea) {
+        const e0 = norm(sub(n0, t)), e1 = norm(sub(n1, t))
+        k.smoothQuad([eased(-h0, y0), outer(p0, y0), outer(p1, y1), eased(-h1, y1)], [e0, e0, e1, e1], [[y0, -h0], [y0, p0], [y1, p1], [y1, -h1]], f)
+      }
+      if (eb) {
+        const e0 = norm(add(n0, t)), e1 = norm(add(n1, t))
+        k.smoothQuad([outer(q0, y0), eased(h0, y0), eased(h1, y1), outer(q1, y1)], [e0, e0, e1, e1], [[y0, q0], [y0, h0], [y1, h1], [y1, q1]], f)
+      }
     }
     // the stave's own two long edges
     const centre = mid(0, (y0 + y1) / 2)
-    k.polygon([outer(-h0, y0), outer(-h1, y1), inner(-h1, y1), inner(-h0, y0)], Y, f, centre)
-    k.polygon([outer(h0, y0), outer(h1, y1), inner(h1, y1), inner(h0, y0)], Y, f, centre)
+    k.polygon([eased(-h0, y0), eased(-h1, y1), inner(-h1, y1), inner(-h0, y0)], Y, f, centre)
+    k.polygon([eased(h0, y0), eased(h1, y1), inner(h1, y1), inner(h0, y0)], Y, f, centre)
     // the port's round wall, row by row
     if (w0 > 0 || w1 > 0) {
       for (const side of [-1, 1]) {
