@@ -28,14 +28,23 @@ export const PILOT = {
 /** the same for both sides: the left (+X) first */
 const pair = (f: (side: 1 | -1, k: 0 | 1) => V3): [V3, V3] => [f(1, 0), f(-1, 1)]
 
+function handReach(shoulder: V3, wrist: V3, cord: V3): V3 {
+  const r = sub(wrist, shoulder)
+  return unit(sub(r, scale(cord, dot(r, cord))))
+}
+/** where the twist cord ends, inside the closed hand */
+export function gripAt(side: 1 | -1, t: number): V3 {
+  const wrist = handAt(side, t), shoulder: V3 = [side * PILOT.shoulder, PILOT.shoulderY, PILOT.shoulderZ]
+  return add(wrist, scale(handReach(shoulder, wrist, unit(sub(wrist, twistEye(side)))), GRIP))
+}
+
 export function pilotJoints(t: number): FigureJoints {
   const shoulder = pair(s => [s * PILOT.shoulder, PILOT.shoulderY, PILOT.shoulderZ])
   // each hand closes round its twist cord's end: the cord runs through the
   // fist across the fingers, the knuckles point on from the arm, square to it
-  const held = pair(s => handAt(s, t))
-  const cord = pair((s, k) => unit(sub(held[k], twistEye(s))))
-  const reach = pair((_s, k) => { const r = sub(held[k], shoulder[k]); return unit(sub(r, scale(cord[k], dot(r, cord[k])))) })
-  const hand = pair((_s, k) => sub(held[k], scale(reach[k], GRIP)))
+  const hand = pair(s => handAt(s, t))
+  const cord = pair((s, k) => unit(sub(hand[k], twistEye(s))))
+  const reach = pair((_s, k) => handReach(shoulder[k], hand[k], cord[k]))
   const knuckle = pair((_s, k) => add(hand[k], scale(reach[k], 0.1)))
   const elbow = pair((s, k) => bend(shoulder[k], hand[k], UPPER, FORE, [s * 0.4, -1, 0.2]))
   const hip = pair(s => [s * PILOT.hip, PILOT.hipY, PILOT.hipZ])

@@ -14,13 +14,13 @@ import { materialDressed, materialFailure } from './parts'
 import type { ReadyMachineBuild } from './runtime'
 import { showcaseCatalog } from './showcase'
 import {
-  AXIS, DRUM, PERIOD, PLANTAR, SHEAVE, ankleAt, bowLift, drumTop, flyingJoints, handAt, hubCentre, lowerCord, sheaveAxis, sheaveCentre,
+  AXIS, DRUM, PERIOD, PLANTAR, SHEAVE, ankleAt, bowLift, drumTop, flyingJoints, hubCentre, lowerCord, sheaveAxis, sheaveCentre,
   shinLift, springRingLocal, stirrupTravel, strokeAt, toeDirection, twistAt, twistEye, twistTipLocal, wingPoint,
 } from './flying/plan'
 import { CORD, bowGeometryInto, bowTip, buildBody, buildDrum, buildSheave, buildStirrup, buildWing, type Batch, type Kind } from './flying/parts'
 import { Mesher, type V3 } from './flying/shapes'
 import { makeFigure, type Figure } from './flying/figure'
-import { pilotJoints } from './flying/pilot'
+import { gripAt, pilotJoints } from './flying/pilot'
 import { flyingSurfaces } from './flying/surface'
 
 const SLUG = 'flying-machine' as const
@@ -112,7 +112,7 @@ export function build(stack: Stack): ReadyMachineBuild {
       })
       return [ring, drumTop(side), ...wrap, bowTip(side, bowLift(time, side))]
     }
-    const twist = (): V3[] => [wingPoint(side, twistTipLocal(side), time), twistEye(side), handAt(side, time)]
+    const twist = (): V3[] => [wingPoint(side, twistTipLocal(side), time), twistEye(side), gripAt(side, time)]
     return [lower, spring, twist]
   }
 
