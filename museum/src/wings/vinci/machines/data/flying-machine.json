@@ -35,7 +35,7 @@
    "parent": "root",
    "shape": "six bound-cane rails",
    "dimensions_m": {
-    "x": 0.7,
+    "x": 0.72,
     "y": 0.3,
     "z": 2.25
    },
@@ -56,14 +56,14 @@
    },
    "certainty": "C",
    "source": "74v (form, drawn); 77v (bound cane)",
-   "notes": "Six rails, three a side, each three canes bound every 0.14 m; 0.70 wide and 0.30 deep at the head, 0.26 by 0.16 at the foot. Size scaled from a pilot of 1.70 m (ours)."
+   "notes": "Six rails, three a side, each three canes bound every 0.22 m; 0.72 wide and 0.30 deep at the head, 0.20 by 0.10 at the foot, so the trough narrows to the feet as 74v draws it. Size scaled from a pilot of 1.70 m (ours)."
   },
   {
    "id": "frames",
    "parent": "body",
    "shape": "four cross-frames",
    "dimensions_m": {
-    "x": 0.7,
+    "x": 0.72,
     "y": 0.3,
     "z": 0.03
    },
@@ -140,7 +140,7 @@
    },
    "certainty": "C",
    "source": "74v (drawn; purpose not written)",
-   "notes": "Its purpose is not written on the sheet."
+   "notes": "Its purpose is not written on the sheet. Here it carries the two swivel sheaves of the lowering cords under its crown (ours)."
   },
   {
    "id": "braces",
@@ -256,14 +256,14 @@
   {
    "id": "lowering-cords",
    "parent": "body",
-   "shape": "hemp cords over sheaves",
+   "shape": "hemp cords under swivel sheaves",
    "dimensions_m": {
-    "radius": 0.0045
+    "radius": 0.0056
    },
    "position_m": [
     0,
-    1.6,
-    -0.6
+    1.95,
+    -0.7
    ],
    "orientation_rad": [
     0,
@@ -277,21 +277,21 @@
    },
    "certainty": "C",
    "source": "74v (cords and pulleys drawn, the letter c); routing ours",
-   "notes": "From an eye 0.17 m out on each spar, over a sheave on that side's top rail, through a guide eye to the stirrup."
+   "notes": "From an eye 0.46 m out under each spar, down and back under a swivel sheave hung below the small hoop's crown, to a strap round the heel. The routing and the sheaves' place are ours."
   },
   {
    "id": "stirrups",
    "parent": "lowering-cords",
-   "shape": "leather foot straps",
+   "shape": "leather heel straps",
    "dimensions_m": {
     "x": 0.1,
-    "y": 0.034,
-    "z": 0.07
+    "y": 0.08,
+    "z": 0.09
    },
    "position_m": [
     0,
-    1.42,
-    -1.2
+    1.7,
+    -1.33
    ],
    "orientation_rad": [
     0,
@@ -305,7 +305,35 @@
    },
    "certainty": "C",
    "source": "74v (the feet at f and d); 73v (a stirrup on the foot lever)",
-   "notes": "Each foot lowers its own wing, so one can beat faster to balance (F09)."
+   "notes": "Each foot lowers its own wing, so one can beat faster to balance (F09). Each strap is knotted at the back of the heel, where its cord takes hold (ours)."
+  },
+  {
+   "id": "knee-bar",
+   "parent": "body",
+   "shape": "bound-cane bar with a leather pad",
+   "dimensions_m": {
+    "x": 0.35,
+    "y": 0.043,
+    "z": 0.043
+   },
+   "position_m": [
+    0,
+    1.418,
+    -1.14
+   ],
+   "orientation_rad": [
+    0,
+    0,
+    0
+   ],
+   "material": {
+    "class": "cane bound with hemp; leather",
+    "basis": "assumed",
+    "source": "ours: the sheet draws no rest for the knees"
+   },
+   "certainty": "C",
+   "source": "ours: the sheet draws no rest for the knees",
+   "notes": "Across the top rails under the knees, lashed to them; the thighs lie still on it while the shins swing."
   },
   {
    "id": "spring",
@@ -548,23 +576,23 @@
    "parent": "body",
    "child": "stirrups",
    "axis": [
-    0.17,
-    0.08,
-    0.98
+    -0.029,
+    0.132,
+    0.991
    ],
    "pivot_m": [
-    0.095,
-    1.4,
-    -1.27
+    0.05,
+    1.527,
+    -1.534
    ],
    "limits": [
     0,
-    0.15
+    0.29
    ],
    "ratio": null,
    "certainty": "C",
    "source": "follows the lowering cord",
-   "notes": "Metres forward of its place at the bottom of the stroke."
+   "notes": "Metres the heel's knot has come toward the sheave from its place at the bottom of the stroke; it rides on the shin's swing."
   },
   {
    "id": "stirrup-d",
@@ -572,22 +600,70 @@
    "parent": "body",
    "child": "stirrups",
    "axis": [
-    -0.17,
-    0.08,
-    0.98
+    0.029,
+    0.132,
+    0.991
    ],
    "pivot_m": [
-    -0.095,
-    1.4,
-    -1.27
+    -0.05,
+    1.527,
+    -1.534
    ],
    "limits": [
     0,
-    0.15
+    0.29
    ],
-   "ratio": 1,
+   "ratio": null,
    "certainty": "C",
    "source": "as stirrup-f",
+   "notes": ""
+  },
+  {
+   "id": "shin-f",
+   "type": "revolute",
+   "parent": "body",
+   "child": "pilot",
+   "axis": [
+    1,
+    0,
+    0
+   ],
+   "pivot_m": [
+    0.08,
+    1.49,
+    -1.14
+   ],
+   "limits": [
+    0,
+    1.52
+   ],
+   "ratio": null,
+   "certainty": "C",
+   "source": "follows the lowering cord; the knee on the bar is ours",
+   "notes": "The shin's lift above lying straight; the cord's length holds it."
+  },
+  {
+   "id": "shin-d",
+   "type": "revolute",
+   "parent": "body",
+   "child": "pilot",
+   "axis": [
+    1,
+    0,
+    0
+   ],
+   "pivot_m": [
+    -0.08,
+    1.49,
+    -1.14
+   ],
+   "limits": [
+    0,
+    1.57
+   ],
+   "ratio": null,
+   "certainty": "C",
+   "source": "follows the lowering cord; the knee on the bar is ours",
    "notes": ""
   },
   {
@@ -704,8 +780,8 @@
  "animation_notes": [
   "One beat in 3 s, looping: down fast and flat, up slower and edge on.",
   "Each wing turns about the leaning pin M; the twist rolls it about its own spar.",
-  "The stirrups follow the lowering cords, the bow bends as the levers rise, the sheaves and drums turn with their cords.",
-  "The pilot's legs straighten on the downstroke and bend on the upstroke; his hands take in the twist cords."
+  "The heel straps follow the lowering cords, the bow bends as the levers rise, the sheaves and drums turn with their cords.",
+  "The pilot's shins swing about his knees: the cords raise them as the wings rise and the feet push them back and down to beat; his hands take in the twist cords."
  ],
  "folio": [
   {
