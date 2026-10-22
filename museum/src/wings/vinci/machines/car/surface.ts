@@ -8,8 +8,9 @@
  * treads, where pegs and staves meet.
  */
 import { Color, MeshStandardNodeMaterial } from 'three/webgpu'
-import { attribute, float, mix, mx_noise_float, positionGeometry, smoothstep, uv, vec3 } from 'three/tsl'
+import { atan, attribute, float, mix, mx_noise_float, positionGeometry, smoothstep, uv, vec3 } from 'three/tsl'
 import type { MaterialSet, Stack } from '../../../../stack'
+import { COVER } from './plan'
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 type N = any
@@ -47,9 +48,33 @@ function wood(stack: Stack, set: MaterialSet, kind: 'rough' | 'fine'): MeshStand
   // worn wood loses its weathered skin and shows the paler fibre under it
   const worn = mix(grained, lin(spec.worn).mul(fibres.mul(0.4).add(0.66)), smoothstep(0.2, 1, wear).mul(0.75))
   const col = mix(worn, lin(spec.end).mul(fibres.mul(0.5).add(0.6)), end.mul(0.85))
-  m.colorNode = col.mul(tone).mul(nodes.occlusion)
+  m.colorNode = weathered(col).mul(tone).mul(nodes.occlusion)
   m.roughnessNode = mix(nodes.roughness.clamp(spec.rough[0], spec.rough[1]), float(0.5), smoothstep(0.4, 1, wear).mul(0.6))
   return m
+}
+
+/** The cover's boards in the weather, read from where a point sits on the cone: iron in wet oak leaves a black
+ * run below each nail (the tannin's stain), rain lingers longest at the eave, and the sun greys the upper boards. */
+function weathered(col: N): N {
+  const w: N = attribute('aWeather', 'float')
+  const p: N = positionGeometry
+  const rho = p.xz.length(), theta = atan(p.z, p.x)
+  // nails sit near each board's middle line
+  const across = theta.mul(COVER.boards / (Math.PI * 2)).fract().sub(0.5).abs()
+  const underNail = float(1).sub(smoothstep(0.07, 0.2, across))
+  const r0 = COVER.eaveEdge, r1 = COVER.topR + COVER.sill.w / 2
+  let run: N = float(0)
+  for (const s of COVER.nailRings) {
+    const r = r0 + (r1 - r0) * s
+    run = run.add(smoothstep(r - 0.005, r + 0.01, rho).mul(float(1).sub(smoothstep(r + 0.03, r + 0.3, rho))))
+  }
+  const breakup = smoothstep(0.3, 0.75, mx_noise_float(vec3(theta.mul(170), rho.mul(5), 3.1)).mul(0.5).add(0.5))
+  const stain = run.mul(underNail).mul(breakup.mul(0.7).add(0.3)).mul(w)
+  const wet = smoothstep(r0 - 0.5, r0, rho).mul(w)
+  const sun: N = float(1).sub(smoothstep(r1 + 0.3, r1 + 1.1, rho)).mul(w)
+  const grey: N = vec3(col.dot(vec3(0.2126, 0.7152, 0.0722)))
+  const bleached: N = mix(col, grey.mul(1.08), sun.mul(0.3))
+  return bleached.mul(float(1).sub(wet.mul(0.16))).mul(float(1).sub(stain.mul(0.6)))
 }
 
 function iron(stack: Stack, set: MaterialSet): MeshStandardNodeMaterial {
@@ -74,12 +99,12 @@ function bronze(stack: Stack, set: MaterialSet): MeshStandardNodeMaterial {
   const nodes = stack.detail(m, detailSet, { uv: uv(), count: 3, maps: 0.6, fade: [6, 35] })
   const T: N = attribute('aTone', 'vec3')
   const lum = nodes.albedo.dot(vec3(0.2126, 0.7152, 0.0722))
-  // cast bronze gone brown with handling, a dull green-grey patina low in its hollows
-  const patina = smoothstep(0.45, 0.75, mx_noise_float(positionGeometry.mul(6)).mul(0.5).add(0.5))
-  const col = mix(lin('#8f6a3c'), lin('#5d6150'), patina.mul(0.3)).mul(lum.mul(0.35).add(0.75))
+  // cast bronze gone dark with handling and weather, a green-grey patina over much of it, bright where it is rubbed
+  const patina = smoothstep(0.3, 0.7, mx_noise_float(positionGeometry.mul(6)).mul(0.5).add(0.5))
+  const col = mix(lin('#73603c'), lin('#4d5c4d'), patina.mul(0.65)).mul(lum.mul(0.35).add(0.75))
   m.colorNode = col.mul(T.x).mul(nodes.occlusion)
-  m.roughnessNode = mix(float(0.3), float(0.6), patina.mul(0.6)).add(nodes.roughness.mul(0.1))
-  m.metalnessNode = mix(float(0.85), float(0.35), patina.mul(0.5)).mul(smoothstep(0.05, 0.3, T.x))
+  m.roughnessNode = mix(float(0.26), float(0.62), patina.mul(0.8)).add(nodes.roughness.mul(0.1))
+  m.metalnessNode = mix(float(0.92), float(0.3), patina.mul(0.6)).mul(smoothstep(0.05, 0.3, T.x))
   return m
 }
 

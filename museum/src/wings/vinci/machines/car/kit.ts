@@ -35,6 +35,8 @@ export interface Finish {
   wear?: number
   /** where the piece starts in the photograph; the tone when absent, so grime can darken a piece without moving its grain */
   seed?: number
+  /** 1 where the piece stands out in the weather (the cover's boards), 0 elsewhere */
+  weather?: number
 }
 
 const pickAxis = (n: V3, grain: V3): [V3, V3, number] => {
@@ -54,6 +56,7 @@ export class Kit {
   readonly normal: number[] = []
   readonly uv: number[] = []
   readonly tone: number[] = []
+  readonly weather: number[] = []
 
   private vertex(p: V3, n: V3, u: number, w: number, f: Finish, end: number): void {
     this.position.push(p[0], p[1], p[2])
@@ -62,6 +65,7 @@ export class Kit {
     const t = (f.seed ?? f.tone) * 7919.37
     this.uv.push(u + (t - Math.floor(t)) * 3.7, w + ((t * 13.1) - Math.floor(t * 13.1)) * 0.9)
     this.tone.push(f.tone, f.wear ?? 0, end)
+    this.weather.push(f.weather ?? 0)
   }
 
   /** A flat convex polygon, its normal facing away from `inside`, its UVs along `grain`. */
@@ -240,6 +244,7 @@ export class Kit {
     g.setAttribute('normal', new Float32BufferAttribute(this.normal, 3))
     g.setAttribute('uv', new Float32BufferAttribute(this.uv, 2))
     g.setAttribute('aTone', new Float32BufferAttribute(this.tone, 3))
+    g.setAttribute('aWeather', new Float32BufferAttribute(this.weather, 1))
     g.computeBoundingBox()
     g.computeBoundingSphere()
     return g

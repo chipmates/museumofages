@@ -245,7 +245,8 @@ function forks(k: Kit, iron: Kit): void {
 function places(k: Kit): void {
   for (const sz of [-1, 1]) for (const side of [-1, 1]) for (const sx of [-1, 1]) {
     const z = sz * (SHAFT.z + side * 0.5)
-    k.box(v(sx * 0.2, TUB.floorTop + 0.016, z), [X, Y, Z], v(0.18, 0.015, 0.1), { tone: tone(9, sz, side, sx), wear: 0.85 }, 0.006)
+    // polished by knees and darkened by sweat and the floor's dirt, not paled
+    k.box(v(sx * 0.2, TUB.floorTop + 0.016, z), [X, Y, Z], v(0.18, 0.015, 0.1), { tone: 0.6 + 0.08 * hash(9, sz, side, sx), wear: 0.3 }, 0.006)
   }
 }
 
@@ -278,7 +279,7 @@ function cone(k: Kit, iron: Kit): void {
     // index = x + 2y + 4z: x across the board, y through it, z along it
     const c8 = [add(p00, d), add(p01, d), p00, p01, add(p10, d), add(p11, d), p10, p11]
     const grain = norm(sub(p10, p00))
-    k.slab(c8, grain, { tone: tone(13, i) }, 0.0045)
+    k.slab(c8, grain, { tone: tone(13, i), weather: 1 }, 0.0045)
     // the rings of nail heads where the hidden hoops lie under the boards
     COVER.nailRings.forEach((s, ring) => {
       const r = r0 + (r1 - r0) * s
