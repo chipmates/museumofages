@@ -142,7 +142,8 @@ export function caneBundle(cane: Mesher, lash: Mesher, path: readonly V3[], o: B
   const f = frames(path, o.up)
   const total = f.s[f.s.length - 1]!
   const R = (along: number): number => o.r0 + (o.r1 - o.r0) * (along / total)
-  const sides = o.sides ?? 10
+  // eight sides: a cane is under 25 px across in the closest view, where an octagon's flats are under a pixel
+  const sides = o.sides ?? 8
   const twist = o.twist ?? total / 3
   for (let k = 0; k < 3; k++) {
     // a node about every 0.3 m, each cane its own spacing
