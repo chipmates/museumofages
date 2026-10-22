@@ -10,9 +10,10 @@
  * in opposite senses: the car binds, and the motion shows it.
  *
  * THE CLOSED FORM. The sheet's shell is low and broad (about 1.8 to 1 in its
- * own view): a short skirt under a thick eave band, a cone of boards, and a
- * low ribbed cap over a ring at the top. The eave can only come down as far
- * as the wheels' upper outer quarter still clears the cone's underside.
+ * own view): a short skirt under the eave, a cone of boards, and a low ribbed
+ * cap over a ring at the top. Its eave overhangs the skirt and ends in a point
+ * at each side. The eave can only come down as far as the wheels' upper outer
+ * quarter still clears the cone's underside.
  */
 
 export const TAU = Math.PI * 2
@@ -53,10 +54,12 @@ export const GUN = { length: 0.92, breechR: 0.074, muzzleR: 0.052, bore: 0.022, 
 /** The cover: a cone of boards resting on its eave band, the lookout on top. */
 export const COVER = {
   band: { r0: 2.33, r1: 2.41, y0: 0.645, y1: 0.765 },
-  eaveEdge: 2.53, topR: 0.8, slope: (32 * Math.PI) / 180,
-  /** the thick rim the sheet draws at the eave: a fascia hung from the boards' ends, over the skirt */
-  fascia: { r0: 2.455, r1: 2.515, bottom: 0.525 },
+  eaveEdge: 2.7, topR: 0.8, slope: (32 * Math.PI) / 180,
+  /** the eave's kick: a course of short boards under the cone boards' feet, laid flatter, so the eave runs out
+   * over the skirt to a thin edge (a carpenter's sprocket, as on a conical roof); the boards above end at `from` */
+  kick: { from: 2.48, inner: 2.42, slope: (15 * Math.PI) / 180, t: 0.03 },
   boards: 64, boardT: 0.035,
+  /** where the hidden hoops lie under the boards, as fractions from the cone boards' feet to the lookout */
   nailRings: [0.14, 0.38, 0.62, 0.86],
   sill: { r: 0.8, w: 0.1, below: 0.04, above: 0.03 },
   posts: 12, postW: 0.055, slot: 0.07,

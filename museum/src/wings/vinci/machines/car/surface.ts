@@ -7,10 +7,11 @@
  * end grain. Wear lightens and smooths: the grip, the kneeling boards, the
  * treads, where pegs and staves meet.
  */
-import { Color, MeshStandardNodeMaterial } from 'three/webgpu'
-import { atan, attribute, float, mix, mx_noise_float, positionGeometry, smoothstep, uv, vec3 } from 'three/tsl'
+import { Color, DataTexture, MeshStandardNodeMaterial, NearestFilter, RGBAFormat, UnsignedByteType } from 'three/webgpu'
+import { atan, attribute, float, mix, mx_noise_float, positionGeometry, smoothstep, texture, uv, vec2, vec3 } from 'three/tsl'
 import type { MaterialSet, Stack } from '../../../../stack'
 import { COVER } from './plan'
+import { coverNails } from './build'
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 type N = any
@@ -53,26 +54,49 @@ function wood(stack: Stack, set: MaterialSet, kind: 'rough' | 'fine'): MeshStand
   return m
 }
 
+/** The nails as a table the cover's shader reads, one texel a nail (ring and slot across, board down): its radius
+ * in two bytes, where it sits across its board, how far it bleeds (0: it does not, or there is no second nail). */
+const NAIL_R = [0.8, 2.8] as const
+let nailTable: DataTexture | null = null
+function nails(): DataTexture {
+  if (nailTable) return nailTable
+  const w = COVER.nailRings.length * 2, h = COVER.boards
+  const data = new Uint8Array(w * h * 4)
+  for (const n of coverNails()) {
+    const i = (n.board * w + n.ring * 2 + n.slot) * 4
+    const q = Math.round(((n.r - NAIL_R[0]) / (NAIL_R[1] - NAIL_R[0])) * 65535)
+    data[i] = q >> 8; data[i + 1] = q & 255
+    data[i + 2] = Math.round((n.across + 0.5) * 255)
+    data[i + 3] = n.reach > 0 ? Math.max(1, Math.round((n.reach / 0.32) * 255)) : 0
+  }
+  const t = new DataTexture(data, w, h, RGBAFormat, UnsignedByteType)
+  t.magFilter = NearestFilter; t.minFilter = NearestFilter; t.generateMipmaps = false; t.needsUpdate = true
+  nailTable = t
+  return t
+}
+
 /** The cover's boards in the weather, read from where a point sits on the cone: iron in wet oak leaves a black
- * run below each nail (the tannin's stain), rain lingers longest at the eave, and the sun greys the upper boards. */
+ * run below some nails (the tannin's stain), rain lingers longest at the eave, and the sun greys the upper boards. */
 function weathered(col: N): N {
   const w: N = attribute('aWeather', 'float')
   const p: N = positionGeometry
   const rho = p.xz.length(), theta = atan(p.z, p.x)
-  // nails sit near each board's middle line; only some of them bleed, each its own length
-  const turns = theta.mul(COVER.boards / (Math.PI * 2))
-  const board = turns.floor(), across = turns.fract().sub(0.5).abs()
-  const underNail = float(1).sub(smoothstep(0.05, 0.16, across))
-  const r0 = COVER.eaveEdge, r1 = COVER.topR + COVER.sill.w / 2
+  const n = COVER.boards, cols = COVER.nailRings.length * 2
+  const turns = theta.mul(n / (Math.PI * 2))
+  const board = turns.floor().add(n).mod(n), across = turns.fract().sub(0.5)
+  const table = nails()
   let run: N = float(0)
-  COVER.nailRings.forEach((s, i) => {
-    const r = r0 + (r1 - r0) * s
-    const pick = smoothstep(0.08, 0.4, mx_noise_float(vec3(board.mul(1.37).add(0.43), i * 2.71 + 0.31, 0.7)))
-    const reach = mix(float(0.08), float(0.32), smoothstep(-0.5, 0.5, mx_noise_float(vec3(board.mul(0.91).add(0.17), i * 1.93 + 0.57, 2.3))))
-    run = run.add(smoothstep(r - 0.004, r + 0.01, rho).mul(float(1).sub(smoothstep(float(r + 0.015), reach.add(r), rho))).mul(pick))
-  })
+  for (let k = 0; k < cols; k++) {
+    const t: N = texture(table, vec2((k + 0.5) / cols, board.add(0.5).div(n)))
+    const r = t.x.mul(255 * 256).add(t.y.mul(255)).div(65535).mul(NAIL_R[1] - NAIL_R[0]).add(NAIL_R[0])
+    const reach = t.w.mul(0.32)
+    const side = float(1).sub(smoothstep(0.04, 0.12, across.sub(t.z.sub(0.5)).abs()))
+    const along = smoothstep(r.sub(0.004), r.add(0.01), rho).mul(float(1).sub(smoothstep(r.add(0.015), r.add(reach).add(0.016), rho)))
+    run = run.add(along.mul(side).mul(smoothstep(0, 0.01, t.w)))
+  }
+  const r0 = COVER.eaveEdge, r1 = COVER.topR + COVER.sill.w / 2
   const breakup = smoothstep(0.2, 0.7, mx_noise_float(vec3(theta.mul(170), rho.mul(6), 3.1)).mul(0.5).add(0.5))
-  const stain = run.mul(underNail).mul(breakup.mul(0.6).add(0.4)).mul(w)
+  const stain = run.min(1).mul(breakup.mul(0.6).add(0.4)).mul(w)
   const wet = smoothstep(r0 - 0.5, r0, rho).mul(w)
   const sun: N = float(1).sub(smoothstep(r1 + 0.3, r1 + 1.1, rho)).mul(w)
   const grey: N = vec3(col.dot(vec3(0.2126, 0.7152, 0.0722)))

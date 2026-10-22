@@ -253,6 +253,56 @@ function places(k: Kit): void {
 /* ── THE COVER ───────────────────────────────────────────────────────────── */
 
 const BAND = COVER.band
+const CONE_TOP_R = COVER.topR + COVER.sill.w / 2
+
+/** A cone board's outer end and thickness: each sawn and split a little differently. */
+function coneBoard(i: number): { r0: number; th: number } {
+  return { r0: COVER.kick.from + 0.008 * (hash(11, i) - 0.5), th: COVER.boardT * (0.92 + 0.16 * hash(12, i)) }
+}
+/** The kick course's top surface: a line at the kick's slope that passes just under every cone board's lower
+ * foot corner, so the boards above lap over it with no board running into it. */
+const KICK_TOP = (() => {
+  const { kick, slope } = COVER
+  let y0 = Infinity
+  for (let i = 0; i < COVER.boards; i++) {
+    const { r0, th } = coneBoard(i)
+    const rb = r0 - th * Math.sin(slope), yb = coneY(r0) - th * Math.cos(slope)
+    y0 = Math.min(y0, yb - 0.003 + (rb - kick.from) * Math.tan(kick.slope))
+  }
+  return (r: number): number => y0 - (r - kick.from) * Math.tan(kick.slope)
+})()
+
+export interface CoverNail { board: number; ring: number; slot: number; r: number; a: number; across: number; head: number; tilt: number; tone: number; reach: number }
+/** The nails through the cone boards into the hidden hoops, set by hand: each hoop bent a little out of round,
+ * each nail driven where the board took it (off its middle line, a little up or down the slope), a second nail
+ * beside it on some boards, each head its own size and lean; some bleed a black run down the wet oak below them. */
+export function coverNails(): CoverNail[] {
+  const out: CoverNail[] = []
+  const n = COVER.boards, da = TAU / n
+  for (let i = 0; i < n; i++) {
+    const { r0 } = coneBoard(i)
+    COVER.nailRings.forEach((s, ring) => {
+      const a0 = i * da
+      const bend = 0.014 * Math.sin(2 * (a0 + 0.9 * ring)) + 0.007 * Math.sin(5 * a0 + 2.1 * ring)
+      const base = r0 + (CONE_TOP_R - r0) * s + bend
+      const pair = hash(50, i, ring) < 0.28
+      for (let slot = 0; slot < (pair ? 2 : 1); slot++) {
+        const side = pair ? (slot === 0 ? -1 : 1) : 0
+        const across = side * (0.17 + 0.08 * hash(51, i, ring, slot)) + (hash(52, i, ring, slot) - 0.5) * (pair ? 0.12 : 0.44)
+        const r = base + (hash(53, i, ring, slot) - 0.5) * (pair ? 0.02 : 0.034)
+        const bleeds = hash(54, i, ring, slot) < 0.36
+        out.push({
+          board: i, ring, slot, r, a: a0 + (0.5 + across) * da, across,
+          head: 0.0082 + 0.0036 * hash(55, i, ring, slot),
+          tilt: hash(56, i, ring, slot) < 0.2 ? 0.08 + 0.14 * hash(57, i, ring, slot) : 0.03 * hash(58, i, ring, slot),
+          tone: 0.75 + 0.4 * hash(15, i, ring, slot),
+          reach: bleeds ? 0.08 + 0.24 * hash(59, i, ring, slot) : 0,
+        })
+      }
+    })
+  }
+  return out
+}
 
 function cone(k: Kit, iron: Kit): void {
   // the eave band, a thick rim of eight curved boards on the tub's lip
@@ -260,34 +310,44 @@ function cone(k: Kit, iron: Kit): void {
     const a0 = (j * TAU) / 8 + 0.0015, a1 = ((j + 1) * TAU) / 8 - 0.0015
     k.arc(v(0, 0, 0), Y, X, BAND.r0, BAND.r1, a0, a1, BAND.y0, BAND.y1, 16, { tone: tone(10, j) })
   }
-  // the fascia: eight curved boards hung from the boards' ends, the sheet's thick rim, an iron band round its foot
-  const F = COVER.fascia, under = coneY(F.r1) - (COVER.boardT * 1.09) / Math.cos(COVER.slope) - 0.002
-  for (let j = 0; j < 8; j++) {
-    const a0 = (j * TAU) / 8 + 0.0015, a1 = ((j + 1) * TAU) / 8 - 0.0015
-    k.arc(v(0, 0, 0), Y, X, F.r0, F.r1, a0 + 0.1, a1 + 0.1, F.bottom, under, 18, { tone: tone(9, j) })
+  const n = COVER.boards, da = TAU / n
+  // the kick: short boards laid flatter under the cone boards' feet, their joints between the boards above
+  const K = COVER.kick
+  for (let i = 0; i < n; i++) {
+    const a0 = (i + 0.5) * da, a1 = (i + 1.5) * da
+    const rOut = COVER.eaveEdge + 0.008 * (hash(60, i) - 0.5)
+    const p00 = at(rOut, a0, KICK_TOP(rOut)), p01 = at(rOut, a1, KICK_TOP(rOut)), p10 = at(K.inner, a0, KICK_TOP(K.inner)), p11 = at(K.inner, a1, KICK_TOP(K.inner))
+    const nOut = norm(cross(sub(p10, p00), sub(p01, p00)))
+    const outward = dot(nOut, radial((a0 + a1) / 2)) + nOut[1] > 0 ? nOut : mul(nOut, -1)
+    const d = mul(outward, -K.t * (0.93 + 0.14 * hash(61, i)))
+    const c8 = [add(p00, d), add(p01, d), p00, p01, add(p10, d), add(p11, d), p10, p11]
+    k.slab(c8, norm(sub(p10, p00)), { tone: tone(62, i), weather: 1 }, 0.004)
   }
-  iron.lathe(v(0, 0, 0), Y, [[F.bottom + 0.014, F.r1 + 0.0008], [F.bottom + 0.014, F.r1 + 0.007], [F.bottom + 0.056, F.r1 + 0.007], [F.bottom + 0.056, F.r1 + 0.0008]], 180, { tone: 1 }, false)
-  const n = COVER.boards, da = TAU / n, t = COVER.boardT
+  const nails = coverNails()
+  const faces: { p: V3; n: V3 }[] = []
   for (let i = 0; i < n; i++) {
     const a0 = i * da, a1 = (i + 1) * da
-    const r0 = COVER.eaveEdge + 0.01 * (hash(11, i) - 0.5), r1 = COVER.topR + COVER.sill.w / 2
+    const { r0, th } = coneBoard(i)
+    const r1 = CONE_TOP_R
     const p00 = at(r0, a0, coneY(r0)), p01 = at(r0, a1, coneY(r0)), p10 = at(r1, a0, coneY(r1)), p11 = at(r1, a1, coneY(r1))
     const nOut = norm(cross(sub(p10, p00), sub(p01, p00)))
     const outward = dot(nOut, radial((a0 + a1) / 2)) + nOut[1] > 0 ? nOut : mul(nOut, -1)
-    const th = t * (0.92 + 0.16 * hash(12, i))
     const d = mul(outward, -th)
     // index = x + 2y + 4z: x across the board, y through it, z along it
     const c8 = [add(p00, d), add(p01, d), p00, p01, add(p10, d), add(p11, d), p10, p11]
     const grain = norm(sub(p10, p00))
     k.slab(c8, grain, { tone: tone(13, i), weather: 1 }, 0.0045)
-    // the rings of nail heads where the hidden hoops lie under the boards
-    COVER.nailRings.forEach((s, ring) => {
-      const r = r0 + (r1 - r0) * s
-      const jitter = (hash(14, i, ring) - 0.5) * 0.4
-      const a = (a0 + a1) / 2 + jitter * da * 0.5
-      const p = add(at(r, a, coneY(r)), mul(outward, 0.0005))
-      iron.lathe(p, outward, [[0, 0.0095], [0.003, 0.0088], [0.006, 0.0058], [0.0074, 0]], 8, { tone: 0.85 + 0.3 * hash(15, i, ring) }, true)
-    })
+    faces.push({ p: p00, n: outward })
+  }
+  // each nail's head on its board's flat face, square to it but for the few that went in crooked
+  for (const nail of nails) {
+    const face = faces[nail.board]!
+    const onCone = at(nail.r, nail.a, coneY(nail.r))
+    const p = add(onCone, mul(face.n, 0.0004 - dot(sub(onCone, face.p), face.n)))
+    const sideways = norm(cross(face.n, radial(nail.a)))
+    const lean = norm(add(face.n, mul(sideways, nail.tilt * (hash(63, nail.board, nail.ring, nail.slot) < 0.5 ? -1 : 1))))
+    const h = nail.head
+    iron.lathe(p, lean, [[0, h], [0.003, h * 0.93], [0.0055 + 0.002 * hash(64, nail.board, nail.ring, nail.slot), h * 0.6], [0.0072, 0]], 8, { tone: nail.tone }, true)
   }
   // the lookout as the sheet draws it: a flat ring on the cone, a narrow
   // sighting slot all round, a low cap of boards and ribs, a spike on top
