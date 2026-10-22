@@ -12616,7 +12616,8 @@
           "crown_m": 0.25,
           "layer_m": 0.0035,
           "wire_r": 0.01,
-          "welt": 1
+          "welt": 1,
+          "seams_under": true
         }
       },
       "dimensions_m": {

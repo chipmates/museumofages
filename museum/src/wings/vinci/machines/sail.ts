@@ -43,6 +43,9 @@ export interface HelicoidSpec {
   /** share of a doubled layer's stand-off kept at a stitched column (0.6
    * when absent); 1 lays the stitches flat, so no welt tilts toward a low sun */
   welt?: number
+  /** the radial seams' doubled layer on the underside only: on the upper face
+   * a 22 mm strip seen from metres away is a part of a pixel, and it glints */
+  seams_under?: boolean
 }
 
 const count = (tier: TierName, hero: number, standard: number, calm: number): number =>
@@ -167,10 +170,10 @@ export function sailGeometry(h: HelicoidSpec, tier: TierName): BufferGeometry {
    * stitches pull the layers down, so the welt between catches the light. */
   const ribbon = (
     place: (a: number, b: number) => { s: number; t: number },
-    along: number, acrossMarks: readonly number[], stitched: readonly boolean[],
+    along: number, acrossMarks: readonly number[], stitched: readonly boolean[], faces: readonly number[] = [1, -1],
   ): void => {
     const cols = acrossMarks.length - 1
-    for (const side of [1, -1]) {
+    for (const side of faces) {
       const rows: { p: Vector3; s: number; t: number }[][] = []
       for (let i = 0; i <= along; i++) {
         rows.push([])
@@ -221,7 +224,7 @@ export function sailGeometry(h: HelicoidSpec, tier: TierName): BufferGeometry {
         const r = r0 + a * (r1 - r0)
         const t = Math.min(S.span, Math.max(0, t0 + ((b - .5) * h.seam_m) / r))
         return { s: sAt(r, t), t }
-      }, seamRows, [0, .005 / h.seam_m, 1 - .005 / h.seam_m, 1], [true, false, false, true])
+      }, seamRows, [0, .005 / h.seam_m, 1 - .005 / h.seam_m, 1], [true, false, false, true], h.seams_under ? [-1] : [1, -1])
     }
   }
 
