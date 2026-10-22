@@ -18,6 +18,7 @@ import { DELIVERY, deliveryKey, treeKeys } from './keys.mjs'
 import { MOTION_CAPS } from './motion.mjs'
 import { APP_ROOT, CERTIFICATE_FILE, WING_DIR, createLoader } from './load.mjs'
 import { CELL_M, cellCoords } from './scene.mjs'
+import { SEEN_DEFINITION } from './seen.mjs'
 
 const read = (file) => readFileSync(path.join(APP_ROOT, file), 'utf8')
 /** One text replaced once in one file, as an overlay. */
@@ -63,6 +64,14 @@ test('a clean tree is green on every line', () => {
   assert.equal(clean.clips.size, 714)
   assert.equal(clean.stills.size, 190)
   for (const s of clean.stills.values()) assert.deepEqual(s.histories, { prints: 1, exposures: 1 }, `${s.node} ${s.framing} has one picture`)
+})
+
+test('the wide stand-in on the tree: the look up and a frame in a lit room read every cell, a room of the house its own', () => {
+  for (const e of clean.evenings.values()) assert.equal(e.cells.whole, 'the evening moves the sun')
+  assert.equal(clean.stills.get('stop:hall wide').cells.whole, 'a frame meets a lit room')
+  const study = clean.stills.get('stop:study wide')
+  assert.equal(study.cells.definition, SEEN_DEFINITION)
+  assert.ok(!study.cells.whole && study.cells.length < clean.world.cells.hashes.size)
 })
 
 /** The keys line's reds for a planted tree, and that nothing else is red. */

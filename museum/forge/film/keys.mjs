@@ -3,8 +3,10 @@
 // release was rendered with against the keys the tree gives now.
 //
 //   MOTION    the camera track replayed on the harness clock (`replay.mjs`)
-//   PICTURE   the cells the clip can show, each by what is drawn in it
-//             (`scene.mjs`, `seen.mjs`), and the exposure at its two ends
+//   PICTURE   the cells the clip can show, each by what is drawn in it and
+//             by its bodies' shadow flags (`scene.mjs`, the wide stand-in of
+//             `seen.mjs`), the lights of the node world that reach it, and
+//             the exposure at its two ends
 //   GLOBAL    the stack, the print, the light, the sky, the recipe, and the
 //             library sets no plate claims that a frame can draw, save what
 //             no frame can show (`library.mjs`): the display texts of the
@@ -26,7 +28,8 @@ import { WING_DIR, createLoader } from './load.mjs'
 import { canonicalPrint, openReplay, replayEdge, trackKey } from './replay.mjs'
 import { mountWorld } from './scene.mjs'
 import { CANVAS_TEXT, DISPLAY_KEY, LETTER_MODULES, READER_ROLES, TABLE_BENCH_FILES, TABLE_DOM_FILES, WORDS_FILES, WORDS_FILES_V5, benchPlacement, builtPlacement, fileAt, importGraph, libraryAt, readerPlacement, sourcesAt, statementsPlacement, tablePlacement, wordsPlacement } from './library.mjs'
-import { buildIndex, seenSet } from './seen.mjs'
+import { SEEN_DEFINITION, buildIndex, seenSet, wholeWorld, wideSetting } from './seen.mjs'
+import { lightingAt } from './lit.mjs'
 import { eveningTrack } from './evening.mjs'
 
 export const KEYS_FORMAT = 'vinci-film-keys-v1'
@@ -472,10 +475,32 @@ export const clipDeliveryKey = (clip, delivery = DELIVERY) =>
 const SEEN_MEMO = new Map()
 
 /** THE PICTURE KEY: the exposure at both ends and every cell the clip can
-    show, by what is drawn in it now. */
-export function pictureKey(seen, hashes, exposurePair) {
+    show, by what is drawn in it now. A seen set of a named definition (the
+    wide stand-in) is keyed with that name, each cell's shadow flags and the
+    lights it reads; one that is every cell of the world by `whole`, the
+    digest of the world's every cell, flag and light (`wholeDigest`). */
+export function pictureKey(seen, hashes, exposurePair, { flags = null, whole = null } = {}) {
   const hash = createHash('sha256').update(`${KEYS_FORMAT} picture exposure=${exposurePair.join(',')}\n`)
-  for (const n of seen) hash.update(`${n}:${hashes.get(n) ?? '-'}\n`)
+  if (!seen.definition) {
+    for (const n of seen) hash.update(`${n}:${hashes.get(n) ?? '-'}\n`)
+    return hash.digest('hex').slice(0, 32)
+  }
+  hash.update(`seen ${seen.definition}\n`)
+  if (seen.whole) {
+    if (!whole) throw new Error('a seen set of every cell is keyed by the world\'s digest')
+    hash.update(`every cell ${whole}\n`)
+    return hash.digest('hex').slice(0, 32)
+  }
+  for (const n of seen) hash.update(`${n}:${hashes.get(n) ?? '-'}:${flags?.get(n) ?? '-'}\n`)
+  for (const line of seen.lights ?? []) hash.update(`light ${line}\n`)
+  return hash.digest('hex').slice(0, 32)
+}
+/** THE WORLD'S DIGEST for a seen set of every cell: each cell by its hash and
+    its flags, and every light of the scene's list. */
+export function wholeDigest(world) {
+  const hash = createHash('sha256')
+  for (const n of [...world.cells.hashes.keys()].sort((a, b) => a - b)) hash.update(`${n}:${world.cells.hashes.get(n)}:${world.cells.flags?.get(n) ?? '-'}\n`)
+  for (const l of world.lights ?? []) hash.update(`light ${l.line}\n`)
   return hash.digest('hex').slice(0, 32)
 }
 
@@ -502,17 +527,20 @@ export async function treeKeys({ rev = '', overlay = {}, library, delivery = DEL
     : globalKey(loader, { library: world.library, claimed: world.claimed, definition: d, placement: d === 'v1' ? null : placement })]))
   const globalBefore = globals.v1
   /* the stand-in's seen set is a function of the track, the occupied cells,
-     the sun and the water: held once per process for each */
+     the sun, the water and what the wide stand-in reads beside them (the lit
+     rooms, the lights, the casters by layer): held once per process for each */
+  const wide = wideSetting(world, await lightingAt(rev, overlay))
   const occupancy = sha256(Float64Array.from([...world.cells.hashes.keys()].sort((a, b) => a - b)))
-  const setting = `${occupancy}|${world.sun.join(',')}|${world.cells.mirror.length}|${world.cells.mirrorLevel}`
-  let index
+  const setting = `${occupancy}|${world.sun.join(',')}|${world.cells.mirror.length}|${world.cells.mirrorLevel}|${sha256(wide.key)}`
+  let index, whole
+  const keyOf = (cells, pair) => pictureKey(cells, world.cells.hashes, pair, { flags: world.cells.flags, whole: cells.whole ? (whole ??= wholeDigest(world)) : null })
   const seen = seenOf ?? ((id, framing, samples) => {
     const slot = `${setting}|${framing}|${sha256(Float64Array.from(samples.flat()))}`
     let cells = SEEN_MEMO.get(slot)
     if (!cells) {
       index ??= buildIndex(world.cells)
       cells = seenSet(index, samples, {
-        aspect: FRAMINGS[framing].width / FRAMINGS[framing].height, sun: world.sun, mirror: world.cells.mirror, mirrorLevel: world.cells.mirrorLevel,
+        aspect: FRAMINGS[framing].width / FRAMINGS[framing].height, sun: world.sun, mirror: world.cells.mirror, mirrorLevel: world.cells.mirrorLevel, wide,
       })
       SEEN_MEMO.set(slot, cells)
     }
@@ -528,7 +556,7 @@ export async function treeKeys({ rev = '', overlay = {}, library, delivery = DEL
     clips.set(`${edge.id} ${framing}`, {
       clip: edge.id, stem: edge.stem, framing, frames: r.arrivedAt, from: edge.from, to: edge.to, kinds: edge.kinds,
       seconds: edge.framings[framing].seconds[FILM_PACE], delivery: clipDeliveryKey(edge.id, delivery),
-      motion: r.key, picture: pictureKey(cells, world.cells.hashes, pair), exposure: pair, stations: [r.departed, r.completed], seen: cells.length,
+      motion: r.key, picture: keyOf(cells, pair), exposure: pair, stations: [r.departed, r.completed], seen: cells.length,
       first: canonicalPrint(r.prints[0]), last: canonicalPrint(r.prints[r.arrivedAt]), samples: r.samples,
       cells,
     })
@@ -541,7 +569,8 @@ export async function treeKeys({ rev = '', overlay = {}, library, delivery = DEL
     }
   }
   const sizes = [...clips.values()].map((c) => c.seen).sort((a, b) => a - b)
-  log(`${clips.size} tracks and their seen sets ${((Date.now() - t1) / 1000).toFixed(1)} s; cells seen a clip: median ${sizes[sizes.length >> 1]}, max ${sizes.at(-1)}, of ${world.cells.hashes.size}`)
+  const wholes = [...clips.values()].filter((c) => c.cells.whole).length
+  log(`${clips.size} tracks and their seen sets ${((Date.now() - t1) / 1000).toFixed(1)} s; cells seen a clip: median ${sizes[sizes.length >> 1]}, max ${sizes.at(-1)}, of ${world.cells.hashes.size}; every cell for ${wholes}`)
   const aspectOf = (framing) => Math.round(FRAMINGS[framing].width / FRAMINGS[framing].height * 1e6) / 1e6
   for (const [at, r] of rest) {
     const [print] = [...r.prints]
@@ -550,7 +579,7 @@ export async function treeKeys({ rev = '', overlay = {}, library, delivery = DEL
     stills.set(at, {
       node: r.node, framing: r.framing, print,
       motion: trackKey({ aspect: aspectOf(r.framing), fps: FPS, pace: FILM_PACE, prints: [print] }),
-      picture: pictureKey(cells, world.cells.hashes, [ex, ex]), exposure: ex, stations: [...r.stations], seen: cells.length, cells, sample: r.sample,
+      picture: keyOf(cells, [ex, ex]), exposure: ex, stations: [...r.stations], seen: cells.length, cells, sample: r.sample,
       /* law 3: a rest pose has one picture, whichever way it was reached */
       histories: { prints: r.prints.size, exposures: r.exposures.size },
     })
@@ -562,19 +591,20 @@ export async function treeKeys({ rev = '', overlay = {}, library, delivery = DEL
     const code = eveningCode(loader)
     for (const framing of Object.keys(FRAMINGS)) {
       const t = eveningTrack(replay.wing, graph, framing)
-      const cells = seen(graph.evening.id, framing, t.samples, world)
+      // the look up turns the key light down to the horizon: its shadows fall along every sun it passes
+      const cells = seenOf ? seen(graph.evening.id, framing, t.samples, world) : wholeWorld(index ??= buildIndex(world.cells), 'the evening moves the sun')
       const at = stills.get(`${graph.evening.from} ${framing}`)
       const station = graph.nodes.find((n) => n.id === graph.evening.from)?.station
       const ex = at?.exposure ?? exposure.of(station)
       evenings.set(`${graph.evening.id} ${framing}`, {
         evening: graph.evening.id, from: graph.evening.from, framing, frames: graph.evening.frames, fps: graph.evening.fps, seconds: graph.evening.seconds,
-        delivery: clipDeliveryKey(graph.evening.id, delivery), motion: t.key, picture: pictureKey(cells, world.cells.hashes, [ex, `evening ${code}`]),
+        delivery: clipDeliveryKey(graph.evening.id, delivery), motion: t.key, picture: keyOf(cells, [ex, `evening ${code}`]),
         exposure: [ex, ex], stations: at?.stations ?? [station], first: canonicalPrint(t.prints[0]), seen: cells.length, cells,
       })
     }
   }
   return {
-    format: KEYS_FORMAT, revision: replay.wing.loader.revision, graph, clips, stills, evenings,
+    format: KEYS_FORMAT, seen: seenOf ? 'given' : SEEN_DEFINITION, revision: replay.wing.loader.revision, graph, clips, stills, evenings,
     global, globalBefore, globals, delivery: { key: deliveryKey(delivery), settings: delivery }, exposure, world,
     seconds: (Date.now() - t0) / 1000,
   }
