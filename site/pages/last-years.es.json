@@ -134,7 +134,8 @@
     "title": "La sala grande",
     "tag": "tag_still",
     "what": "una imagen de la película del ala. La sala con el sol de la tarde, la mesa larga y el león mecánico junto a la ventana. La sala está reconstruida en código a partir de planos y fotografías. Los muebles son de la época, no suyos.",
-    "alt": "El sol de la tarde entra por ventanas de vidrios en rombo en una sala con techo de vigas y baldosas rojas, cruza una mesa larga sobre caballetes, y a la izquierda, junto a la ventana, hay un león de madera y metal. Una imagen de la película del ala, con la sala reconstruida en código."
+    "alt": "El sol de la tarde entra por ventanas de vidrios en rombo en una sala con techo de vigas y baldosas rojas, cruza una mesa larga sobre caballetes, y a la izquierda, junto a la ventana, hay un león de madera y metal. Una imagen de la película del ala, con la sala reconstruida en código.",
+    "src_from": "site:map"
    }
   },
   {

@@ -134,7 +134,8 @@
         "title": "Der Große Saal",
         "tag": "tag_still",
         "what": "ein Standbild aus dem Film des Flügels. Der Saal in der Nachmittagssonne, mit dem langen Tisch und dem mechanischen Löwen am Fenster. Der Raum ist eine Rekonstruktion, in Code gebaut nach Plänen und Fotografien. Die Möbel sind aus der Zeit, nicht seine.",
-        "alt": "Nachmittagssonne fällt durch Rautenfenster in einen Saal mit Balkendecke und roten Fliesen, über einen langen Tisch auf Böcken, und links am Fenster steht ein Löwe aus Holz und Metall. Ein Standbild aus dem Film des Flügels, der den Saal in Code nachgebaut hat."
+        "alt": "Nachmittagssonne fällt durch Rautenfenster in einen Saal mit Balkendecke und roten Fliesen, über einen langen Tisch auf Böcken, und links am Fenster steht ein Löwe aus Holz und Metall. Ein Standbild aus dem Film des Flügels, der den Saal in Code nachgebaut hat.",
+        "src_from": "site:map"
       }
     },
     {
