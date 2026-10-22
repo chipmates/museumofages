@@ -145,6 +145,16 @@ export function caneBundle(cane: Mesher, lash: Mesher, path: readonly V3[], o: B
   // eight sides: a cane is under 25 px across in the closest view, where an octagon's flats are under a pixel
   const sides = o.sides ?? 8
   const twist = o.twist ?? total / 3
+  const places: number[] = []
+  for (let at = o.lashStart ?? o.lashEvery * 0.5; at < total - 0.02; at += o.lashEvery) places.push(at)
+  for (const at of o.lashAt ?? []) places.push(at)
+  // where a wrap binds the cane, grime and hands have darkened and dulled it:
+  // fading out over 5 cm past each wrap's edge (a wrap is about 4 cm long)
+  const wear = (along: number): number => {
+    let w = 0
+    for (const at of places) { const d = Math.abs(along - at) - 0.02; w = Math.max(w, d <= 0 ? 1 : Math.max(0, 1 - d / 0.05)) }
+    return w * w * (3 - 2 * w)
+  }
   for (let k = 0; k < 3; k++) {
     // a node about every 0.3 m, each cane its own spacing
     const spacing = 0.24 + 0.12 * hash(o.seed, k)
@@ -152,10 +162,11 @@ export function caneBundle(cane: Mesher, lash: Mesher, path: readonly V3[], o: B
     // canes of one bundle differ: a few older and darker, the rest from straw
     // to a warmer brown, each its own girth inside the bundle's line
     const dark = hash(o.seed, k, 11) < 0.2
-    const shade = dark ? 0.6 + 0.1 * hash(o.seed, k, 5) : 0.8 + 0.32 * hash(o.seed, k, 5)
+    const shade = dark ? 0.62 + 0.1 * hash(o.seed, k, 5) : 0.8 + 0.22 * hash(o.seed, k, 5)
     const girth = 0.93 + 0.14 * hash(o.seed, k, 7), rr = 0.464 * girth, off = 1 - rr
-    const warm = hash(o.seed, k, 13)
-    cane.tint = [1 + 0.05 * warm, 1 - 0.015 * warm, 1 - 0.12 * warm]
+    // each cane its own age: from a greyed straw to a weathered brown
+    const age = hash(o.seed, k, 13)
+    cane.tint = [1 + 0.03 * age, 1 - 0.02 * age, 1.05 - 0.13 * age]
     const cPath: V3[] = path.map((p, i) => {
       const a = (k / 3) * Math.PI * 2 + (f.s[i]! / Math.max(total, 1e-6)) * twist * Math.PI * 2 + o.seed
       const d = add(mul(f.n[i]!, Math.cos(a)), mul(f.b[i]!, Math.sin(a)))
@@ -175,11 +186,22 @@ export function caneBundle(cane: Mesher, lash: Mesher, path: readonly V3[], o: B
     // between nodes the cane's skin varies a little in tone
     const internode = (along: number): number => 0.93 + 0.07 * Math.sin(Math.round((along + shift) / spacing) * 2.3 + k)
     const cr = (along: number): number => rr * R(along) * (1 + 0.24 * swell(along))
-    tube(cane, densify(cPath, 0.003, band, f.s), {
+    const dense = densify(cPath, 0.003, band, f.s), ds = frames(dense).s
+    const start = cane.count
+    tube(cane, dense, {
       sides, up: o.up, caps: true, capTone: 0.62,
       radius: (_i, along) => cr(along),
       tone: (_i, along, around) => shade * internode(along) * (1 - 0.55 * scar(along)) * (1 + 0.18 * pale(along)) * (0.96 + 0.04 * Math.cos(around * Math.PI * 2 * 3)),
     })
+    // darker and greyer toward each wrap: the wall ring by ring, then the two caps
+    const ring = sides + 1, wall = dense.length * ring
+    for (let v = start; v < cane.count; v++) {
+      const at = v - start < wall ? ds[Math.floor((v - start) / ring)]! : v - start < wall + ring + 1 ? 0 : total
+      const w = wear(at), c = cane.c
+      c[v * 3] = c[v * 3]! * (1 - 0.24 * w)
+      c[v * 3 + 1] = c[v * 3 + 1]! * (1 - 0.22 * w)
+      c[v * 3 + 2] = c[v * 3 + 2]! * (1 - 0.12 * w)
+    }
     // the cut ends split along the fibre: a few slivers splayed past the cap
     for (const end of [0, path.length - 1]) {
       const i1 = end === 0 ? 1 : path.length - 2
@@ -196,10 +218,6 @@ export function caneBundle(cane: Mesher, lash: Mesher, path: readonly V3[], o: B
       }
     }
   }
-  cane.tint = [1, 1, 1]
-  const places: number[] = []
-  for (let at = o.lashStart ?? o.lashEvery * 0.5; at < total - 0.02; at += o.lashEvery) places.push(at)
-  for (const at of o.lashAt ?? []) places.push(at)
   for (const at of places) {
     // the station nearest, then the frame there
     let i = 0

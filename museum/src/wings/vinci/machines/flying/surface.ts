@@ -98,13 +98,15 @@ export async function flyingSurfaces(stack: Stack): Promise<FlyingSurfaces> {
   }
   const dressed = (s: MaterialSet): boolean => materialDressed(s)
 
-  // CANE: a hard glassy skin of long fibres, its nodes in the vertex tone
+  // CANE: a hard skin of long fibres, its nodes, its age and its wear in the
+  // vertex tone. Years in use take its yellow toward a greyed straw and its
+  // gloss toward a dull sheen.
   const cane = surface('cane', set['oak-veneer-light'])
   {
     const s = set['oak-veneer-light']
     const d = stack.detail(cane, { ...s, normalStrength: 0.12, scales: [0.3, 0.03, 0.0008], grain: s.grain ? { ...s.grain, relief: 0.06, shade: 0.1, sheen: 0.3 } : null }, { uv: uv(), count: 3, maps: dressed(s) ? 1 : 0, fade: [6, 40] })
-    cane.colorNode = lin('#b39a66').mul(luma(d.albedo).mul(0.35).add(0.72)).mul(d.occlusion).mul(attribute('color', 'vec3')).mul(fibre()).mul(keyRim(0.7).add(1))
-    cane.roughnessNode = d.roughness.mul(0.45).clamp(0.26, 0.42)
+    cane.colorNode = lin('#ac9a76').mul(luma(d.albedo).mul(0.35).add(0.72)).mul(d.occlusion).mul(attribute('color', 'vec3')).mul(fibre()).mul(keyRim(0.7).add(1))
+    cane.roughnessNode = d.roughness.mul(0.6).clamp(0.36, 0.55)
   }
   // FIR (74r's frame): pale, straight grained, planed
   const fir = surface('fir', set['oak-veneer-light'])
@@ -180,10 +182,11 @@ export async function flyingSurfaces(stack: Stack): Promise<FlyingSurfaces> {
     chamois.colorNode = lin('#a98a64').mul(luma(d.albedo).mul(0.5).add(0.6)).mul(d.occlusion).mul(attribute('color', 'vec3'))
     chamois.roughnessNode = d.roughness.clamp(0.75, 0.95)
   }
-  // the grey figure: a marker, plain, no maps
-  const figure = new MeshStandardNodeMaterial({ metalness: 0, roughness: 0.82 })
+  // the grey figure: a marker, plain, no maps; a step under the cane, so the
+  // man reads as the body in the cradle, not the brightest thing in it
+  const figure = new MeshStandardNodeMaterial({ metalness: 0, roughness: 0.86 })
   figure.name = 'flying-machine:figure:plain'
-  figure.colorNode = lin('#7f7f7c')
+  figure.colorNode = lin('#5f5e5a')
   return {
     materials: { cane, fir, wood, ash, skin, lash, hem, cord, iron, leather, chamois, figure },
     sets,
