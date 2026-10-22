@@ -3,7 +3,7 @@
  * turned oak, an ash bow, leather and chamois (79v). The tints are the
  * museum's; the grain is the library's photograph under them. */
 import { Color, DoubleSide, MeshStandardNodeMaterial, PhysicalLightingModel, type Material } from 'three/webgpu'
-import { attribute, cameraPosition, cos, diffuseColor, float, fwidth, mx_noise_float, normalView, normalWorld, positionWorld, uv, vec3 } from 'three/tsl'
+import { attribute, cameraPosition, cos, diffuseColor, float, fwidth, mx_noise_float, normalView, normalWorld, positionView, positionWorld, uv, vec3 } from 'three/tsl'
 import type { MaterialSet, Stack } from '../../../../stack'
 import { loadMachineMaterial, materialDressed } from '../parts'
 import { benchKeyDirection } from '../key'
@@ -35,10 +35,24 @@ function fadeByPixel(phase: N, strength: number): N {
  * round (u) and along (v); every cord and wrap in the build is sized to hold
  * a whole number of strands round, so the pattern closes on its seam. */
 export const STRAND = 0.0088
+const LAY_ALONG = 0.017
 function lay(): N {
-  const phase = uv().x.div(STRAND).add(uv().y.div(0.017)).mul(Math.PI * 2)
+  const phase = uv().x.div(STRAND).add(uv().y.div(LAY_ALONG)).mul(Math.PI * 2)
   const groove = cos(phase).mul(0.5).add(0.5).pow(0.7)
   return float(1).sub(fadeByPixel(phase, 0.32).mul(float(1).sub(groove)))
+}
+/** the lay in the normal as well: each strand rounds up between its grooves.
+ * The slant's direction comes from the screen's own derivatives of position
+ * and uv (a cotangent frame), so no tangent attribute is needed. */
+function layNormal(base: N): N {
+  const n = base.normalize(), st = uv()
+  const dp1 = positionView.dFdx(), dp2 = positionView.dFdy(), duv1 = st.dFdx(), duv2 = st.dFdy()
+  const dp2perp = dp2.cross(n), dp1perp = n.cross(dp1)
+  const gu = dp2perp.mul(duv1.x).add(dp1perp.mul(duv2.x)), gv = dp2perp.mul(duv1.y).add(dp1perp.mul(duv2.y))
+  const across = gu.div(STRAND).add(gv.div(LAY_ALONG)).normalize()
+  const phase = st.x.div(STRAND).add(st.y.div(LAY_ALONG)).mul(Math.PI * 2)
+  // a groove 0.35 mm deep on strands 7.8 mm apart across their slant tilts the face up to 0.28
+  return n.add(across.mul(phase.sin().mul(fadeByPixel(phase, 0.28)))).normalize()
 }
 /** cane's hard skin: fine fibres along the stem, faded with the pixel */
 function fibre(): N {
@@ -136,6 +150,7 @@ export async function flyingSurfaces(stack: Stack): Promise<FlyingSurfaces> {
     const base = lin(tint).mul(luma(d.albedo).mul(0.6).add(0.5)).mul(d.occlusion).mul(lay()).mul(keyRim(0.6).add(1))
     m.colorNode = toned ? base.mul(attribute('color', 'vec3')) : base
     m.roughnessNode = d.roughness.max(0.62)
+    m.normalNode = layNormal(m.normalNode ?? normalView)
     return m
   }
   const lash = hemp('lash', '#8e7a55'), hem = hemp('hem', '#9a8762'), cord = hemp('cord', '#978360', false)
