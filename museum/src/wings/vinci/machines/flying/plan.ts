@@ -153,8 +153,10 @@ export function twistTipLocal(side: 1 | -1): V3 { return [side * WING.twistArm, 
  * beat it. The heel's strap carries the cord. */
 export const KNEE = { x: 0.08, y: 1.49, z: -1.14 } as const
 export const SHIN = 0.42
-/** the strap's knot sits this far behind the ankle, at the back of the heel */
-export const HEEL_BACK = 0.045
+/** the strap's knot at the back of the heel: this far back along the foot
+ * from the ankle and this far toward the sole (the figure's foot, figure.ts) */
+export const HEEL_BACK = 0.047
+export const HEEL_DOWN = 0.053
 /** how far the toes point past the shin's own line, radians */
 export const PLANTAR = 35 * DEG
 export function kneeAt(side: 1 | -1): V3 { return [side * KNEE.x, KNEE.y, KNEE.z] }
@@ -167,8 +169,13 @@ export function toeDirection(lift: number): V3 {
   const front: V3 = [0, -Math.cos(lift), -Math.sin(lift)], along: V3 = [0, Math.sin(lift), -Math.cos(lift)]
   return add(scale(front, Math.cos(PLANTAR)), scale(along, Math.sin(PLANTAR)))
 }
+/** the foot's instep side, square to the line from the ankle to the toes */
+export function instepDirection(lift: number): V3 {
+  const front: V3 = [0, -Math.cos(lift), -Math.sin(lift)], along: V3 = [0, Math.sin(lift), -Math.cos(lift)]
+  return unitV(add(scale(along, -Math.cos(PLANTAR)), scale(front, Math.sin(PLANTAR))))
+}
 export function heelKnot(side: 1 | -1, lift: number): V3 {
-  return add(ankleAt(side, lift), scale(toeDirection(lift), -HEEL_BACK))
+  return add(add(ankleAt(side, lift), scale(toeDirection(lift), -HEEL_BACK)), scale(instepDirection(lift), -HEEL_DOWN))
 }
 
 /** the sheave's plane: the swivel lies in the plane of its two cords at the

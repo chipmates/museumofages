@@ -65,7 +65,7 @@ class ClothMaterial extends MeshStandardNodeMaterial {
 }
 /** heavy unbleached cotton twill passes roughly a tenth to a quarter of the
  * light through its weave; the middle of that */
-const FUSTIAN_THROUGH = 0
+const FUSTIAN_THROUGH = 0.18
 
 export interface FlyingSurfaces {
   materials: Record<Kind | 'figure' | 'cord', Material>

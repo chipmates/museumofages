@@ -8,6 +8,7 @@ import {
   railAt, hubCentre, sheaveAxis, sheaveCentre, twistEye,
 } from './plan'
 import { Mesher, caneBundle, hash, lashTwo, lashing, lath, line, ring, rod, bar, tube, v3, wheel, type V3 } from './shapes'
+import { footPoint, footTopAt } from './figure'
 
 export type Kind = 'cane' | 'lash' | 'fir' | 'skin' | 'hem' | 'iron' | 'wood' | 'leather' | 'chamois' | 'ash'
 export type Batch = Partial<Record<Kind, BufferGeometry>>
@@ -350,9 +351,13 @@ export function buildDrum(): Batch {
  * instep's side, +Z toward the toes, origin at the ankle. */
 export function buildStirrup(): Batch {
   const b = new Batches()
-  const heel: V3 = [0, -0.006, -0.041], instep: V3 = [0, 0.044, 0.026]
+  // round the back of the heel 35 mm over the sole and over the instep 30 mm
+  // before the ankle, on the figure's own foot (its frame: +Y the toes, +Z the sole)
+  const strap = 0.003
+  const h = footPoint(-strap, 0.035), i = footPoint(0.085, footTopAt(0.085) + strap)
+  const heel: V3 = [0, -h[2], h[1]], instep: V3 = [0, -i[2], i[1]]
   const c = mul(add(heel, instep), 0.5), a = mul(sub(heel, instep), 0.5)
-  const side: V3 = [0.044, 0, 0]
+  const side: V3 = [0.037, 0, 0]
   const pts: V3[] = []
   for (let i = 0; i <= 36; i++) {
     const t = (i / 36) * Math.PI * 2

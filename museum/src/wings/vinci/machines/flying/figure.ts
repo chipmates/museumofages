@@ -8,9 +8,135 @@ export interface FigureJoints {
   pelvis: V3; chest: V3; neck: V3; head: V3
   /** which way the body's front faces */
   front: V3
-  shoulder: [V3, V3]; elbow: [V3, V3]; hand: [V3, V3]
-  hip: [V3, V3]; knee: [V3, V3]; ankle: [V3, V3]; toe: [V3, V3]
+  shoulder: [V3, V3]; elbow: [V3, V3]
+  /** the wrists */
+  hand: [V3, V3]
+  hip: [V3, V3]; knee: [V3, V3]; ankle: [V3, V3]
+  /** the tips of the toes, each FOOT_LENGTH from its ankle */
+  toe: [V3, V3]
+  /** the way each sole faces (else the body's back) */
+  sole?: [V3, V3]
+  /** where each closed hand's knuckles point (else on along the forearm) */
+  knuckle?: [V3, V3]
+  /** the line each hand closes round, a held cord's direction (else across the body) */
+  grip?: [V3, V3]
 }
+
+/** THE FOOT, a type of a man's foot of 1.70 m: 0.255 m from the heel to the
+ * toes. Profiles along the sole from the back of the heel (a, metres): the
+ * sole's lift, the top line and the half width; the ankle's joint stands
+ * 0.075 m over the sole, 0.055 m in front of the heel. */
+const FOOT_A = [0, 0.012, 0.025, 0.045, 0.07, 0.1, 0.13, 0.16, 0.19, 0.215, 0.235, 0.248, 0.255] as const
+const FOOT_SOLE = [0.026, 0.009, 0.003, 0.001, 0, 0, 0.002, 0.001, 0, 0.001, 0.003, 0.006, 0.011] as const
+const FOOT_TOP = [0.052, 0.068, 0.078, 0.086, 0.087, 0.078, 0.064, 0.05, 0.037, 0.03, 0.026, 0.022, 0.016] as const
+const FOOT_HALF = [0.017, 0.027, 0.03, 0.031, 0.032, 0.035, 0.041, 0.046, 0.048, 0.046, 0.04, 0.032, 0.02] as const
+const ANKLE = [0.055, 0.075] as const
+const TOE_TIP = [0.255, 0.019] as const
+/** the segment's own frame: +Y from the ankle to the toes' tip, +Z toward the sole */
+const footAxis = (() => {
+  const d = [TOE_TIP[0] - ANKLE[0], TOE_TIP[1] - ANKLE[1]], l = Math.hypot(d[0]!, d[1]!)
+  return { y: [d[0]! / l, d[1]! / l] as const, z: [d[1]! / l, -d[0]! / l] as const, length: l }
+})()
+export const FOOT_LENGTH = footAxis.length
+/** a point given along the sole and over it (a, h), across (w), in the segment's frame */
+export function footPoint(a: number, h: number, w = 0): V3 {
+  const r = [a - ANKLE[0], h - ANKLE[1]]
+  return [-w, r[0]! * footAxis.y[0] + r[1]! * footAxis.y[1], r[0]! * footAxis.z[0] + r[1]! * footAxis.z[1]]
+}
+function lerpTable(xs: readonly number[], ys: readonly number[], x: number): number {
+  if (x <= xs[0]!) return ys[0]!
+  for (let i = 1; i < xs.length; i++) if (x <= xs[i]!) {
+    const k = (x - xs[i - 1]!) / (xs[i]! - xs[i - 1]!), s = k * k * (3 - 2 * k)
+    return ys[i - 1]! + (ys[i]! - ys[i - 1]!) * s
+  }
+  return ys[ys.length - 1]!
+}
+/** the top of the foot over the sole, a metres from the back of the heel */
+export const footTopAt = (a: number): number => lerpTable(FOOT_A, FOOT_TOP, a)
+/** the foot's surface: rounded sections, flat under the sole, closed at heel and toe */
+function footSurface(m: Mesher): void {
+  const ns = 34, sides = 22, grid: V3[][] = []
+  const at = (i: number): number => FOOT_A[FOOT_A.length - 1]! * (0.5 - 0.5 * Math.cos(Math.PI * i / (ns - 1)))
+  for (let i = 0; i < ns; i++) {
+    const a = at(i), b = lerpTable(FOOT_A, FOOT_SOLE, a), t = lerpTable(FOOT_A, FOOT_TOP, a), hw = lerpTable(FOOT_A, FOOT_HALF, a)
+    const mid = (t + b) / 2, hh = (t - b) / 2, row: V3[] = []
+    for (let j = 0; j <= sides; j++) {
+      const th = (j / sides) * Math.PI * 2, c = Math.cos(th), s = Math.sin(th)
+      const x = hw * Math.sign(c) * Math.pow(Math.abs(c), 2 / 2.6)
+      const y = mid + hh * Math.sign(s) * Math.pow(Math.abs(s), 2 / (s < 0 ? 5 : 2.3))
+      row.push([a, y, x])
+    }
+    grid.push(row)
+  }
+  const ends = [[-0.004, 0], [FOOT_A[FOOT_A.length - 1]! + 0.003, ns - 1]] as const
+  const P = (i: number, j: number): V3 => grid[i]![j]!
+  const base = m.count, stride = sides + 1
+  for (let i = 0; i < ns; i++) for (let j = 0; j <= sides; j++) {
+    const du = sub3(P(Math.min(ns - 1, i + 1), j), P(Math.max(0, i - 1), j))
+    const dv = sub3(P(i, (j + 1) % sides), P(i, (j - 1 + sides) % sides))
+    const n = norm3(cross3(du, dv))
+    const p = P(i, j)
+    m.vertex(footPoint(p[0], p[1], p[2]), footDir(n), j / sides, p[0], 1)
+  }
+  for (let i = 0; i < ns - 1; i++) for (let j = 0; j < sides; j++) {
+    const a = base + i * stride + j
+    m.quad(a, a + stride, a + stride + 1, a + 1)
+  }
+  for (const [ax, i] of ends) {
+    const row = grid[i]!, cy = row.reduce((v, p) => v + p[1], 0) / row.length
+    const tip = m.vertex(footPoint(ax, cy, 0), footDir([i === 0 ? -1 : 1, 0, 0]), 0.5, ax, 1)
+    for (let j = 0; j < sides; j++) {
+      const a = base + i * stride + j
+      if (i === 0) m.tri(tip, a, a + 1); else m.tri(tip, a + 1, a)
+    }
+  }
+}
+/** a direction from the sole's frame (a, h, w) into the segment's */
+function footDir(n: readonly number[]): V3 {
+  return norm3([-n[2]!, n[0]! * footAxis.y[0] + n[1]! * footAxis.y[1], n[0]! * footAxis.z[0] + n[1]! * footAxis.z[1]])
+}
+/** THE CLOSED HAND: the fingers rolled into the palm, the thumb across them.
+ * +Y from the wrist to the knuckles, X across the four fingers (the line a
+ * held cord runs through the fist), the thumb on the -Z side. */
+function fistSurface(m: Mesher): void {
+  const ny = 26, sides = 24, base = m.count, stride = sides + 1
+  const cy = 0.05, ry = 0.05, rx = 0.043, rz = 0.033
+  const rows: { p: V3; n: V3 }[][] = []
+  for (let i = 0; i <= ny; i++) {
+    const v = -Math.PI / 2 + Math.PI * i / ny, sv = Math.sin(v), cv = Math.cos(v)
+    const row: { p: V3; n: V3 }[] = []
+    for (let j = 0; j <= sides; j++) {
+      const u = (j / sides) * Math.PI * 2, cu = Math.cos(u), su = Math.sin(u)
+      const e = (q: number, k: number): number => Math.sign(q) * Math.pow(Math.abs(q), 2 / k)
+      // the four rolled fingers ridge the palm's side, near the knuckles
+      const ridge = su < 0 && sv > -0.2 ? 0.0028 * Math.abs(Math.sin(4 * Math.PI * (e(cu, 3) * 0.5 + 0.5))) * (1 - sv * sv) : 0
+      const x = rx * e(cv, 3) * e(cu, 3), z = (rz + ridge) * e(cv, 3) * e(su, 3), y = cy + ry * e(sv, 2.6)
+      row.push({ p: [x, Math.max(y, 0.004), z + 0.004], n: [0, 0, 0] })
+    }
+    rows.push(row)
+  }
+  for (let i = 0; i <= ny; i++) for (let j = 0; j <= sides; j++) {
+    const du = sub3(rows[Math.min(ny, i + 1)]![j]!.p, rows[Math.max(0, i - 1)]![j]!.p)
+    const dv = sub3(rows[i]![(j + 1) % sides]!.p, rows[i]![(j - 1 + sides) % sides]!.p)
+    let n = norm3(cross3(du, dv))
+    const out = sub3(rows[i]![j]!.p, [0, cy, 0.004])
+    if (n[0] * out[0] + n[1] * out[1] + n[2] * out[2] < 0) n = [-n[0], -n[1], -n[2]]
+    if (i === 0) n = [0, -1, 0]
+    if (i === ny) n = [0, 1, 0]
+    m.vertex(rows[i]![j]!.p, n, j / sides, i / ny, 1)
+  }
+  for (let i = 0; i < ny; i++) for (let j = 0; j < sides; j++) {
+    const a = base + i * stride + j
+    m.quad(a, a + stride, a + stride + 1, a + 1)
+  }
+  // the thumb: from its root at the wrist's edge, laid over the first two fingers
+  tube(m, [[0.036, 0.018, -0.012], [0.03, 0.045, -0.03], [0.012, 0.068, -0.037], [-0.004, 0.074, -0.034]], {
+    sides: 12, caps: true, capTone: 1, radius: (i) => [0.014, 0.013, 0.0115, 0.0105][i]!,
+  })
+}
+const sub3 = (a: V3, b: V3): V3 => [a[0] - b[0], a[1] - b[1], a[2] - b[2]]
+const cross3 = (a: V3, b: V3): V3 => [a[1] * b[2] - a[2] * b[1], a[2] * b[0] - a[0] * b[2], a[0] * b[1] - a[1] * b[0]]
+const norm3 = (a: readonly number[]): V3 => { const l = Math.hypot(a[0]!, a[1]!, a[2]!) || 1; return [a[0]! / l, a[1]! / l, a[2]! / l] }
 
 /** a solid of revolution along +Y with elliptical sections: (u, rx, rz) */
 function loft(m: Mesher, length: number, sections: readonly [number, number, number][], sides = 18): void {
@@ -80,10 +206,21 @@ export function makeFigure(material: Material, name = 'figure'): Figure {
     make(id, len, [[0, r0, r0], [0.3, r0 * mid, r0 * mid], [1, r1, r1]], 14)
   const upperArm = [limb('upper-arm-l', 0.28, 0.048, 0.038), limb('upper-arm-r', 0.28, 0.048, 0.038)]
   const forearm = [limb('forearm-l', 0.25, 0.038, 0.028), limb('forearm-r', 0.25, 0.038, 0.028)]
-  const hand = [make('hand-l', 0.15, [[0, 0.026, 0.044], [0.6, 0.022, 0.045], [1, 0.016, 0.03]], 12), make('hand-r', 0.15, [[0, 0.026, 0.044], [0.6, 0.022, 0.045], [1, 0.016, 0.03]], 12)]
+  const built = (id: string, length: number, surface: (m: Mesher) => void): Segment => {
+    const m = new Mesher()
+    surface(m)
+    const g = m.geometry()
+    geometries.push(g)
+    const node = new Group(); node.name = `${name}:${id}`
+    const mesh = new Mesh(g, material); mesh.name = `${name}:${id}:surface`
+    mesh.castShadow = true; mesh.receiveShadow = true
+    node.add(mesh); group.add(node)
+    return { node, length }
+  }
+  const hand = [built('hand-l', 0.1, fistSurface), built('hand-r', 0.1, fistSurface)]
   const thigh = [limb('thigh-l', 0.42, 0.075, 0.05, 1.04), limb('thigh-r', 0.42, 0.075, 0.05, 1.04)]
   const shin = [limb('shin-l', 0.42, 0.05, 0.033, 1.1), limb('shin-r', 0.42, 0.05, 0.033, 1.1)]
-  const foot = [make('foot-l', 0.2, [[0, 0.035, 0.04], [0.5, 0.04, 0.03], [1, 0.035, 0.018]], 12), make('foot-r', 0.2, [[0, 0.035, 0.04], [0.5, 0.04, 0.03], [1, 0.035, 0.018]], 12)]
+  const foot = [built('foot-l', FOOT_LENGTH, footSurface), built('foot-r', FOOT_LENGTH, footSurface)]
 
   const up = new Vector3(), side = new Vector3(), fwd = new Vector3(), hint = new Vector3(), q = new Quaternion(), mat = new Matrix4()
   /** place a segment from a toward b, its local +Z toward the facing hint */
@@ -113,11 +250,13 @@ export function makeFigure(material: Material, name = 'figure'): Figure {
       for (const k of [0, 1] as const) {
         place(upperArm[k]!, j.shoulder[k], j.elbow[k], back, true)
         place(forearm[k]!, j.elbow[k], j.hand[k], back, true)
-        const reach: V3 = [j.hand[k][0] + (j.hand[k][0] - j.elbow[k][0]) * 0.55, j.hand[k][1] + (j.hand[k][1] - j.elbow[k][1]) * 0.55, j.hand[k][2] + (j.hand[k][2] - j.elbow[k][2]) * 0.55]
-        place(hand[k]!, j.hand[k], reach, j.front)
+        const reach: V3 = j.knuckle?.[k] ?? [j.hand[k][0] + (j.hand[k][0] - j.elbow[k][0]) * 0.55, j.hand[k][1] + (j.hand[k][1] - j.elbow[k][1]) * 0.55, j.hand[k][2] + (j.hand[k][2] - j.elbow[k][2]) * 0.55]
+        // the fist's -Z carries the thumb: toward the body's front unless a held line says where the fingers close
+        const along = norm3(sub3(reach, j.hand[k])), held = j.grip?.[k]
+        place(hand[k]!, j.hand[k], reach, held ? cross3(held, along) : back)
         place(thigh[k]!, j.hip[k], j.knee[k], j.front, true)
         place(shin[k]!, j.knee[k], j.ankle[k], j.front, true)
-        place(foot[k]!, j.ankle[k], j.toe[k], back, true)
+        place(foot[k]!, j.ankle[k], j.toe[k], j.sole?.[k] ?? back, true)
       }
       group.updateMatrixWorld(true)
     },
@@ -148,7 +287,9 @@ export function standingJoints(turn = 0, at: V3 = [0, 0, 0]): FigureJoints {
     shoulder: [P(0.19, 1.41, 0), P(-0.19, 1.41, 0)], elbow: [P(0.23, 1.13, -0.03), P(-0.23, 1.13, -0.03)],
     hand: [P(0.24, 0.88, 0.02), P(-0.24, 0.88, 0.02)],
     hip: [P(0.095, 0.92, 0), P(-0.095, 0.92, 0)], knee: [P(0.1, 0.52, 0.02), P(-0.1, 0.52, 0.02)],
-    ankle: [P(0.1, 0.105, -0.01), P(-0.1, 0.105, -0.01)], toe: [P(0.11, 0.05, 0.17), P(-0.11, 0.05, 0.17)],
+    ankle: [P(0.1, ANKLE[1], -0.01), P(-0.1, ANKLE[1], -0.01)],
+    toe: [P(0.115, TOE_TIP[1], TOE_TIP[0] - ANKLE[0] - 0.01), P(-0.115, TOE_TIP[1], TOE_TIP[0] - ANKLE[0] - 0.01)],
+    sole: [[0, -1, 0], [0, -1, 0]],
   }
 }
 /** keep tube reachable for the checks */

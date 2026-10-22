@@ -66,11 +66,19 @@ export interface BenchLamp {
 }
 /** Only the machines named here have lamps; every other bench frame is lit by the key alone. */
 const BENCH_LAMP: Partial<Record<string, BenchLamp[]>> = {
-  'flying-machine': [{ at: [3, 11, 4], aim: [0.2, 1.9, -0.4], lux: 400, kelvin: 4300, angle: .55, penumbra: .55 }],
+  'flying-machine': [
+    // the wash, high on the visitor's side: falling off with distance, it
+    // lights the near wing more than the far one, as a lamp in a hall does
+    { at: [5.5, 10.5, 6.5], aim: [0, 2.6, -0.4], lux: 330, kelvin: 4300, angle: .62, penumbra: .6, decay: 2 },
+    // a narrow spot on the trough, where the man works the wings
+    { at: [2.6, 10.5, 5.2], aim: [0, 1.5, -0.75], lux: 520, kelvin: 4000, angle: .13, penumbra: .55, decay: 2 },
+  ],
 };
 /** A machine's plinth and posts given their own finish (a modern powder coat in place of bare
  * iron): the bare iron's sheen under a low key outshines a dark machine at a close eye. */
-const BENCH_FINISH: Partial<Record<string, { roughness: number; metalness: number; tone: number }>> = {};
+const BENCH_FINISH: Partial<Record<string, { roughness: number; metalness: number; tone: number }>> = {
+  'flying-machine': { roughness: .86, metalness: 0, tone: .8 },
+};
 const el = <K extends keyof HTMLElementTagNameMap>(tag: K, cls: string, text?: string): HTMLElementTagNameMap[K] => { const n = document.createElement(tag); n.className = cls; if (text !== undefined)
   n.textContent = text; return n; };
 const localText = (lang: Language, en: string, de: string): string => lang === 'de' ? de : en;
