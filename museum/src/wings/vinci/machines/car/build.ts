@@ -185,7 +185,7 @@ function floor(k: Kit): void {
         ? [[-Infinity, -SLOT.x1], [-SLOT.x0, SLOT.x0], [SLOT.x1, Infinity]]
         : [[-Infinity, Infinity]]
       // the boards darkened by the dirt eight men carry in on their feet, a step under the walls
-      for (const [xa, xb] of xs) board(k, z0, z1, xa, xb, R, { tone: 0.6 + 0.14 * hash(3, j, z0, xa), wear: 0 })
+      for (const [xa, xb] of xs) board(k, z0, z1, xa, xb, R, { tone: 0.48 + 0.12 * hash(3, j, z0, xa), wear: 0 })
     }
   }
 }
