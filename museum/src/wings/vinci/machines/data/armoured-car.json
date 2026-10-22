@@ -13,11 +13,11 @@
   ],
   "scale_m": {
     "x": 4.96,
-    "y": 2.934,
+    "y": 2.814,
     "z": 4.96,
     "certainty": "C",
     "source": "museum choice",
-    "note": "Our size: 4.96 m across the eave, the knob 2.934 m over the ground. From knob to skirt foot the shell stands 0.557 of its width, as on the sheet (0.556)."
+    "note": "Our size: 4.96 m across the eave, the knob 2.814 m over the ground. From knob to skirt foot the shell stands 0.555 of its width, as on the sheet (0.556)."
   },
   "frame": {
     "handedness": "right",
@@ -34,13 +34,13 @@
       "parent": "root",
       "shape": "box",
       "dimensions_m": {
-        "x": 4.74,
-        "y": 0.71,
-        "z": 4.74
+        "x": 4.88,
+        "y": 0.7,
+        "z": 4.88
       },
       "position_m": [
         0,
-        0.525,
+        0.41,
         0
       ],
       "orientation_rad": [
@@ -55,7 +55,7 @@
       },
       "certainty": "C",
       "source": "British Museum 1860,0616.99 (the sheet): an oval shallow tub, read as round in plan; sizes ours",
-      "notes": "A shallow basin of 72 staves, rim 4.7 m across at 0.8 m, bottom 4.16 m at 0.17 m. Its upper wall is the skirt the closed car shows. The wheel is about a quarter of its length, as on the sheet."
+      "notes": "A shallow basin of 72 staves, rim 4.7 m across at 0.68 m, bottom 4.16 m at 0.06 m. Its upper wall is the skirt the closed car shows. The wheel is about a quarter of its length, as on the sheet."
     },
     {
       "id": "ports",
@@ -67,8 +67,8 @@
         "z": 0.03
       },
       "position_m": [
-        2.292,
-        0.56,
+        2.302,
+        0.48,
         0
       ],
       "orientation_rad": [
@@ -83,7 +83,7 @@
       },
       "certainty": "C",
       "source": "British Museum 1860,0616.99 (the sheet): openings in the skirt, about ten on the near half; the count is ours",
-      "notes": "24 round ports every 15 degrees, 0.16 m across, their centres 0.56 m over the ground."
+      "notes": "24 round ports every 15 degrees, 0.16 m across, their centres 0.48 m over the ground."
     },
     {
       "id": "floor",
@@ -96,7 +96,7 @@
       },
       "position_m": [
         0,
-        0.195,
+        0.085,
         0
       ],
       "orientation_rad": [
@@ -120,11 +120,11 @@
       "dimensions_m": {
         "x": 0.82,
         "y": 0.03,
-        "z": 2.882
+        "z": 2.932
       },
       "position_m": [
         0,
-        0.235,
+        0.125,
         0
       ],
       "orientation_rad": [
@@ -152,7 +152,7 @@
       },
       "position_m": [
         0,
-        1.907,
+        1.787,
         0
       ],
       "orientation_rad": [
@@ -180,7 +180,7 @@
       },
       "position_m": [
         0,
-        2.488,
+        2.368,
         0
       ],
       "orientation_rad": [
@@ -195,20 +195,20 @@
       },
       "certainty": "C",
       "source": "British Museum 1860,0616.99 (the sheet): a small cone of ribs over an open ring at the apex, a knob on top",
-      "notes": "A sill ring, 8 posts leaving a sighting slot 0.2 m tall all round, a cap of 12 boards and ribs; the knob's top 2.934 m over the ground."
+      "notes": "A sill ring, 8 posts leaving a sighting slot 0.2 m tall all round, a cap of 12 boards and ribs; the knob's top 2.814 m over the ground."
     },
     {
       "id": "guns",
       "parent": "tub",
       "shape": "box",
       "dimensions_m": {
-        "x": 4.785,
+        "x": 5.004,
         "y": 0.156,
         "z": 1.2
       },
       "position_m": [
         0,
-        0.56,
+        0.48,
         0
       ],
       "orientation_rad": [
@@ -349,7 +349,7 @@
       "position_m": [
         0,
         0.628,
-        -0.741
+        -0.766
       ],
       "orientation_rad": [
         0,
@@ -377,7 +377,7 @@
       "position_m": [
         0,
         0.628,
-        0.741
+        0.766
       ],
       "orientation_rad": [
         0,
@@ -436,7 +436,7 @@
       "pivot_m": [
         0,
         0.628,
-        -0.741
+        -0.766
       ],
       "limits": null,
       "ratio": null,
@@ -457,7 +457,7 @@
       "pivot_m": [
         0,
         0.628,
-        0.741
+        0.766
       ],
       "limits": null,
       "ratio": null,

@@ -14,13 +14,13 @@ export const TAU = Math.PI * 2
 
 /** The basin the drive stands in, read as round in plan. */
 export const TUB = {
-  rimR: 2.35, rimY: 0.8,
-  bottomR: 2.08, bottomY: 0.17,
+  rimR: 2.35, rimY: 0.68,
+  bottomR: 2.08, bottomY: 0.06,
   wall: 0.05,
   staves: 72,
-  floorTop: 0.22, floorT: 0.05, plank: 0.25,
-  lip: { inner: 2.27, outer: 2.37, top: 0.88 },
-  ports: { count: 24, y: 0.56, r: 0.08, collar: 0.115 },
+  floorTop: 0.11, floorT: 0.05, plank: 0.25,
+  lip: { inner: 2.29, outer: 2.44, top: 0.76 },
+  ports: { count: 24, y: 0.48, r: 0.08, collar: 0.115 },
 } as const
 
 /** The wall's radius at a height: nearly upright under the rim, turning in at the bilge. */
@@ -31,7 +31,7 @@ export function wallRadius(y: number): number {
 
 /** The cover: a cone of boards resting on its eave band, the lookout on top. */
 export const COVER = {
-  band: { r0: 2.36, r1: 2.42, y0: 0.88, y1: 0.98 },
+  band: { r0: 2.36, r1: 2.42, y0: 0.76, y1: 0.86 },
   eaveEdge: 2.48, topR: 0.62, slope: Math.PI / 6,
   boards: 64, boardT: 0.035,
   nailRings: [0.14, 0.38, 0.62, 0.84],
@@ -68,7 +68,7 @@ export const PEGS = { count: 24, pitch: 0.536, r: 0.0225, stand: 0.11 } as const
 /** A quarter of the peg circle, so one crank turn is a quarter wheel turn. */
 export const LANTERN = { staves: 6, pitch: PEGS.pitch / 4, staveR: 0.0175, discR: 0.17, discT: 0.04, half: 0.2, x: 0.66 } as const
 /** How far a peg's tip reaches past the near staves' circle. */
-const ENGAGE = 0.03
+const ENGAGE = 0.055
 export const SHAFT = {
   z: HUB.z - WHEEL.width / 2 - PEGS.stand + ENGAGE - LANTERN.pitch,
   half: 0.05, end: 0.88,
@@ -78,7 +78,7 @@ export const POSTS = { x: 0.38, w: 0.07 } as const
 
 /** The six guns: three at the front ports, three at the rear. The count is ours. */
 export const GUN_ANGLES_DEG = [0, 15, -15, 180, 165, 195] as const
-export const GUN = { length: 1.05, breechR: 0.078, muzzleR: 0.056, bore: 0.026, out: 0.1 } as const
+export const GUN = { length: 1.05, breechR: 0.078, muzzleR: 0.056, bore: 0.026, out: 0.2 } as const
 
 /** Where each wheel stands: sx -1 rear, +1 front; sz -1 far, +1 near. */
 export const WHEELS = [

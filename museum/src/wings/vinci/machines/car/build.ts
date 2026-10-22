@@ -23,7 +23,7 @@ const tone = (...seed: number[]): number => 0.86 + 0.26 * hash(...seed)
 
 /** Where the wheels pass through the floor: x from..to, z from..to, near side. */
 export const SLOT = {
-  x0: HUB.x - 0.52, x1: HUB.x + 0.52,
+  x0: HUB.x - 0.42, x1: HUB.x + 0.42,
   z0: HUB.z - WHEEL.width / 2 - PEGS.stand - PEGS.r - 0.02, z1: HUB.z + WHEEL.width / 2 + 0.025,
 }
 
@@ -133,7 +133,7 @@ function rings(k: Kit, iron: Kit): void {
     k.arc(v(0, 0, 0), Y, X, TUB.lip.inner, TUB.lip.outer, a0, a1, TUB.rimY, TUB.lip.top, 12, { tone: tone(4, j) })
   }
   // an iron band round the bilge, where a cooper would drive one
-  const b0 = 0.27, b1 = 0.315
+  const b0 = TUB.bottomY + 0.1, b1 = b0 + 0.045
   iron.lathe(v(0, 0, 0), Y, [[b0, wallRadius(b0) + 0.0008], [b0, wallRadius(b0) + 0.007], [b1, wallRadius(b1) + 0.007], [b1, wallRadius(b1) + 0.0008]], 120, { tone: 1 }, false)
 }
 
@@ -143,11 +143,11 @@ function bearings(k: Kit, fine: Kit, iron: Kit): void {
     const hx = sx * HUB.x, hz = sz * HUB.z
     const cz = hz + sz * (WHEEL.hubLen / 2 + 0.08)
     const f = { tone: tone(5, sx, sz) }
-    k.box(v(hx, (TUB.floorTop + 0.73) / 2 + 0.001, cz), [X, Y, Z], v(0.15, (0.73 - TUB.floorTop) / 2, 0.06), f, 0.008, Y)
-    const rIn = wallRadius(0.66) - TUB.wall
+    k.box(v(hx, (TUB.floorTop + 0.7) / 2 + 0.001, cz), [X, Y, Z], v(0.15, (0.7 - TUB.floorTop) / 2, 0.06), f, 0.008, Y)
+    const rIn = wallRadius(0.55) - TUB.wall
     const zWall = Math.sqrt(rIn * rIn - hx * hx) - 0.01
     const z0 = cz + sz * 0.06, z1 = sz * zWall
-    k.box(v(hx, 0.66, (z0 + z1) / 2), [Z, Y, X], v(Math.abs(z1 - z0) / 2, 0.045, 0.055), { tone: tone(6, sx, sz) }, 0.008)
+    k.box(v(hx, 0.55, (z0 + z1) / 2), [Z, Y, X], v(Math.abs(z1 - z0) / 2, 0.045, 0.055), { tone: tone(6, sx, sz) }, 0.008)
     // the axle, through the cheek and the hub, a linchpin past the hub
     const zOut = cz + sz * 0.06, zIn = hz - sz * (WHEEL.hubLen / 2 + 0.035)
     fine.rod(v(hx, HUB.y, zOut + sz * 0.02), v(hx, HUB.y, zIn), WHEEL.axleR, 14, { tone: tone(7, sx, sz), wear: 0.4 }, 0.006)
