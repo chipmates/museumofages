@@ -396,9 +396,11 @@ export function wheel(sx: number, sz: number): Body {
       const [r, hw, hz] = ends[i & 1]!
       c8.push(add(mul(d, r), add(mul(t, i & 2 ? hw : -hw), v(0, 0, i & 4 ? hz : -hz))))
     }
-    // one spoke of pale ash among darker oak, upright at rest on every wheel: the hand that shows the wheel's turn
-    if (k === SPOKES.marked) b.fine.slab(c8, d, { tone: 2.15, seed: 0.913 }, 0.007)
-    else b.rough.slab(c8, d, { tone: 0.8 + 0.12 * hash(31, seed, k) }, 0.007)
+    // one spoke of pale ash among darker oak: the hand that shows the wheel's turn
+    if (k === (sx < 0 ? SPOKES.rear : SPOKES.front)) {
+      const broad = c8.map((p, i): V3 => add(p, mul(t, (i & 2 ? 1 : -1) * (i & 1 ? 0.006 : 0.008))))
+      b.fine.slab(broad, d, { tone: 2.6, seed: 0.913 }, 0.007)
+    } else b.rough.slab(c8, d, { tone: 0.74 + 0.1 * hash(31, seed, k) }, 0.007)
   }
   for (let j = 0; j < WHEEL.felloes; j++) {
     const joint = (j * TAU) / WHEEL.felloes

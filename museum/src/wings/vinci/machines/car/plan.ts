@@ -88,9 +88,10 @@ export const WHEEL = {
   hubR: 0.12, hubLen: 0.28, axleR: 0.045,
 } as const
 export const PEGS = { count: 24, pitch: 0.52, r: 0.0225, stand: 0.11 } as const
-/** The spokes stand off the hub's zero so that one of them, the marked one, points straight up at rest on every
- * wheel: the turns of a side's two wheels then read as mirror images. */
-export const SPOKES = { zero: Math.PI / 10, marked: 2 } as const
+/** One spoke of each wheel is marked. At rest it points up and in, toward the car's middle (54 degrees on a rear
+ * wheel, 126 on a front one), so a side's two markers are mirror images, and at every quarter of the cycle they stay
+ * on the wheel's upper, outer part, clear of the lantern drum and the floor. */
+export const SPOKES = { zero: Math.PI / 10, rear: 1, front: 3 } as const
 /** Ten staves on the pegs' own spacing: one crank turn is ten twenty-fourths of a wheel turn. The drum runs from
  * the hub's side to the fork post, as long as the space between them allows. */
 export const LANTERN = { staves: 10, pitch: (PEGS.pitch * 10) / 24, staveR: 0.026, discR: 0.262, discT: 0.07, half: 0.22, x: 0.715 } as const
