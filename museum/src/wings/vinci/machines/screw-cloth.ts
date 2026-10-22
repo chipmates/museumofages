@@ -31,10 +31,10 @@ export function thinStarchedLinen(from: MeshStandardNodeMaterial, layered: boole
   Object.assign(m, {
     thicknessColorNode: through,
     thicknessDistortionNode: float(.3),
-    thicknessPowerNode: float(1.8),
-    thicknessScaleNode: float(3.2),
+    thicknessPowerNode: float(1),
+    thicknessScaleNode: float(2),
     thicknessAttenuationNode: float(.7),
-    thicknessAmbientNode: float(.06),
+    thicknessAmbientNode: float(.12),
   })
   return m
 }
