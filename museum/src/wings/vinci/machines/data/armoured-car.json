@@ -49,13 +49,13 @@
         0
       ],
       "material": {
-        "class": "sawn oak staves, an oak rim lip, an iron band at the bilge",
+        "class": "sawn oak staves, an oak rim lip, an iron hoop at the chime",
         "basis": "assumed",
         "source": "museum choice; the sheet gives no size"
       },
       "certainty": "C",
       "source": "British Museum 1860,0616.99 (the sheet): an oval shallow tub, read as round in plan; sizes ours",
-      "notes": "A shallow basin of 72 staves, rim 4.6 m across at 0.565 m, bottom 3.7 m at 0.06 m. Its wall is the short skirt under the eave band that the closed car shows. The wheel is about a quarter of its length, as on the sheet."
+      "notes": "A shallow basin of 72 staves, rim 4.6 m across at 0.565 m, bottom 3.7 m at 0.06 m. Its wall is the short skirt under the eave band that the closed car shows. The staves stand upright over the floor's thickness, where the bottom boards sit, and flare above it. The wheel is about a quarter of its length, as on the sheet."
     },
     {
       "id": "ports",
@@ -67,7 +67,7 @@
         "z": 0.03
       },
       "position_m": [
-        2.197,
+        2.184,
         0.36,
         0
       ],
@@ -111,7 +111,7 @@
       },
       "certainty": "C",
       "source": "museum choice; the sheet draws no floor",
-      "notes": "Planks along the car, slotted where the four wheels pass through to the ground."
+      "notes": "Planks along the car, sawn to the wall's circle so they meet the staves all round, slotted where the four wheels pass through to the ground, darkened by the dirt the crew carries in."
     },
     {
       "id": "crew-places",
@@ -139,7 +139,7 @@
       },
       "certainty": "C",
       "source": "British Museum 1860,0616.99 (the sheet): the note names eight men, the same men who turn the car; how they kneel is ours",
-      "notes": "Eight kneeling boards, four at each crank, two each side of it, worn where knees go."
+      "notes": "Eight kneeling boards, four at each crank, two each side of it, polished and darkened where knees go."
     },
     {
       "id": "cover",
@@ -202,9 +202,9 @@
       "parent": "tub",
       "shape": "box",
       "dimensions_m": {
-        "x": 4.874,
+        "x": 4.847,
         "y": 0.148,
-        "z": 4.874
+        "z": 4.847
       },
       "position_m": [
         0,
@@ -251,7 +251,7 @@
       },
       "certainty": "C",
       "source": "British Museum 1860,0616.99 (the sheet): four spoked wheels, each with a broad rim and a ring of round pegs on its face",
-      "notes": "1.2 m across, 10 spokes, 5 felloes, 24 pegs on a 1.04 m circle standing 0.11 m from the inner face. Iron strakes over the felloe joints: the trade of the time. One spoke in each wheel is paler than the rest and the felloe round it darker, ours, so a still shows how far the wheel has turned."
+      "notes": "1.2 m across, 10 spokes, 5 felloes, 24 pegs on a 1.04 m circle standing 0.11 m from the inner face. Iron strakes over the felloe joints: the trade of the time. One spoke in each wheel is paler than the rest, ours, so a still shows how far the wheel has turned: at rest it leans in toward the car's middle, so a side's two marked spokes are mirror images."
     },
     {
       "id": "wheel-front-far",
@@ -279,7 +279,7 @@
       },
       "certainty": "C",
       "source": "British Museum 1860,0616.99 (the sheet): four spoked wheels, each with a broad rim and a ring of round pegs on its face",
-      "notes": "1.2 m across, 10 spokes, 5 felloes, 24 pegs on a 1.04 m circle standing 0.11 m from the inner face. Iron strakes over the felloe joints: the trade of the time. One spoke in each wheel is paler than the rest and the felloe round it darker, ours, so a still shows how far the wheel has turned."
+      "notes": "1.2 m across, 10 spokes, 5 felloes, 24 pegs on a 1.04 m circle standing 0.11 m from the inner face. Iron strakes over the felloe joints: the trade of the time. One spoke in each wheel is paler than the rest, ours, so a still shows how far the wheel has turned: at rest it leans in toward the car's middle, so a side's two marked spokes are mirror images."
     },
     {
       "id": "wheel-rear-near",
@@ -307,7 +307,7 @@
       },
       "certainty": "C",
       "source": "British Museum 1860,0616.99 (the sheet): four spoked wheels, each with a broad rim and a ring of round pegs on its face",
-      "notes": "1.2 m across, 10 spokes, 5 felloes, 24 pegs on a 1.04 m circle standing 0.11 m from the inner face. Iron strakes over the felloe joints: the trade of the time. One spoke in each wheel is paler than the rest and the felloe round it darker, ours, so a still shows how far the wheel has turned."
+      "notes": "1.2 m across, 10 spokes, 5 felloes, 24 pegs on a 1.04 m circle standing 0.11 m from the inner face. Iron strakes over the felloe joints: the trade of the time. One spoke in each wheel is paler than the rest, ours, so a still shows how far the wheel has turned: at rest it leans in toward the car's middle, so a side's two marked spokes are mirror images."
     },
     {
       "id": "wheel-front-near",
@@ -335,16 +335,16 @@
       },
       "certainty": "C",
       "source": "British Museum 1860,0616.99 (the sheet): four spoked wheels, each with a broad rim and a ring of round pegs on its face",
-      "notes": "1.2 m across, 10 spokes, 5 felloes, 24 pegs on a 1.04 m circle standing 0.11 m from the inner face. Iron strakes over the felloe joints: the trade of the time. One spoke in each wheel is paler than the rest and the felloe round it darker, ours, so a still shows how far the wheel has turned."
+      "notes": "1.2 m across, 10 spokes, 5 felloes, 24 pegs on a 1.04 m circle standing 0.11 m from the inner face. Iron strakes over the felloe joints: the trade of the time. One spoke in each wheel is paler than the rest, ours, so a still shows how far the wheel has turned: at rest it leans in toward the car's middle, so a side's two marked spokes are mirror images."
     },
     {
       "id": "shaft-far",
       "parent": "tub",
       "shape": "box",
       "dimensions_m": {
-        "x": 1.76,
-        "y": 0.51,
-        "z": 0.51
+        "x": 1.9,
+        "y": 0.524,
+        "z": 0.524
       },
       "position_m": [
         0,
@@ -363,16 +363,16 @@
       },
       "certainty": "C",
       "source": "British Museum 1860,0616.99 (the sheet): a lengthwise shaft each side, a rectangular crank frame in its middle and a lantern at each end",
-      "notes": "A shaft at hub height, a heavy crank of throw 0.4 m with a grip 0.66 m long, and two lantern drums of 10 staves on a 0.433 m circle, 0.51 m across, each meeting its wheel's pegs on the side of the ring facing the car's middle, as drawn."
+      "notes": "A shaft at hub height running whole through a heavy rectangular crank frame (cheeks 0.13 by 0.16 m, throw 0.42 m, a grip 0.7 m long), and two lantern drums 0.51 m long of 10 staves on a 0.433 m circle, 0.524 m across, each meeting its wheel's pegs on the side of the ring facing the car's middle, as drawn."
     },
     {
       "id": "shaft-near",
       "parent": "tub",
       "shape": "box",
       "dimensions_m": {
-        "x": 1.76,
-        "y": 0.51,
-        "z": 0.51
+        "x": 1.9,
+        "y": 0.524,
+        "z": 0.524
       },
       "position_m": [
         0,
@@ -391,7 +391,7 @@
       },
       "certainty": "C",
       "source": "British Museum 1860,0616.99 (the sheet): a lengthwise shaft each side, a rectangular crank frame in its middle and a lantern at each end",
-      "notes": "A shaft at hub height, a heavy crank of throw 0.4 m with a grip 0.66 m long, and two lantern drums of 10 staves on a 0.433 m circle, 0.51 m across, each meeting its wheel's pegs on the side of the ring facing the car's middle, as drawn."
+      "notes": "A shaft at hub height running whole through a heavy rectangular crank frame (cheeks 0.13 by 0.16 m, throw 0.42 m, a grip 0.7 m long), and two lantern drums 0.51 m long of 10 staves on a 0.433 m circle, 0.524 m across, each meeting its wheel's pegs on the side of the ring facing the car's middle, as drawn."
     },
     {
       "id": "bearings",
@@ -570,18 +570,18 @@
         "interpolation": "hold"
       },
       {
-        "name": "One slow turn forward: the front and rear wheels turn against each other",
+        "name": "One turn forward: the front and rear wheels turn against each other",
         "start_s": 1,
-        "duration_s": 5,
+        "duration_s": 4.4,
         "joint_values": {},
-        "interpolation": "smootherstep"
+        "interpolation": "eased in, arriving moving"
       },
       {
-        "name": "The bind: the cranks shudder and stop",
-        "start_s": 6,
-        "duration_s": 1.6,
+        "name": "The bind: the drive stops dead, the crew shoves twice and it will not go",
+        "start_s": 5.4,
+        "duration_s": 2.2,
         "joint_values": {},
-        "interpolation": "shudder"
+        "interpolation": "jam and shoves"
       },
       {
         "name": "Turned back: the wheels fight the other way",
@@ -598,17 +598,17 @@
         "interpolation": "hold"
       }
     ],
-    "visitor_12s": "The crew turns the cranks one slow turn, and the front and rear wheels of each side turn against each other. The cranks bind and are thrown back. Turned back, the wheels fight the other way. The car never moves."
+    "visitor_12s": "The crew turns the cranks one turn, and the front and rear wheels of each side turn against each other. The drive stops dead, the crew shoves twice and it will not go. Turned back, the wheels fight the other way. The car never moves."
   },
   "drive": {
     "type": "eight men at two cranks",
     "input_joint": "shaft-far",
     "input_rate": {
-      "value": 0.2,
+      "value": 0.227,
       "unit": "turns per second, the mean of the forward turn",
       "certainty": "C",
       "source": "museum choice",
-      "note": "One turn in 5 s, eased in and out."
+      "note": "One turn in 4.4 s, eased in, stopped dead by the jam."
     },
     "justification": "The sheet's note names eight men who turn the car. The cranks, shafts, lanterns and pegs are drawn; the rate is ours.",
     "source": "British Museum 1860,0616.99 (the sheet)"

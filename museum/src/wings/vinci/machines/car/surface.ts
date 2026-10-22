@@ -77,7 +77,7 @@ function weathered(col: N): N {
   const sun: N = float(1).sub(smoothstep(r1 + 0.3, r1 + 1.1, rho)).mul(w)
   const grey: N = vec3(col.dot(vec3(0.2126, 0.7152, 0.0722)))
   const bleached: N = mix(col, grey.mul(1.08), sun.mul(0.3))
-  return bleached.mul(float(1).sub(wet.mul(0.16))).mul(float(1).sub(stain.mul(0.42)))
+  return bleached.mul(float(1).sub(wet.mul(0.16))).mul(float(1).sub(stain.mul(0.55)))
 }
 
 function iron(stack: Stack, set: MaterialSet): MeshStandardNodeMaterial {
