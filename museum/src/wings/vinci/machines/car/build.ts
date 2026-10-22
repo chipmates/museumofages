@@ -364,7 +364,8 @@ export function wheel(sx: number, sz: number): Body {
       const [r, hw, hz] = ends[i & 1]!
       c8.push(add(mul(d, r), add(mul(t, i & 2 ? hw : -hw), v(0, 0, i & 4 ? hz : -hz))))
     }
-    b.rough.slab(c8, d, { tone: tone(31, seed, k) }, 0.007)
+    // one spoke from a darker board, inside the dark felloe: a hand that shows the wheel's turn
+    b.rough.slab(c8, d, { tone: k === 3 ? 0.5 : tone(31, seed, k) }, 0.007)
   }
   for (let j = 0; j < WHEEL.felloes; j++) {
     const joint = (j * TAU) / WHEEL.felloes + TAU / (WHEEL.spokes * 2)

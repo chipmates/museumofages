@@ -25,8 +25,8 @@ export const SET_OF: Record<CarSurface, string> = {
 }
 
 const WOOD = {
-  rough: { base: '#86684a', worn: '#a88a66', end: '#5a4330', rough: [0.74, 0.9] as const, fibre: [0.62, 0.42] as const },
-  fine: { base: '#8c6a47', worn: '#b0906a', end: '#5e4632', rough: [0.6, 0.8] as const, fibre: [0.55, 0.5] as const },
+  rough: { base: '#93744f', worn: '#b3946e', end: '#5e4632', rough: [0.74, 0.9] as const, fibre: [0.62, 0.42] as const },
+  fine: { base: '#987551', worn: '#b9986f', end: '#624a34', rough: [0.6, 0.8] as const, fibre: [0.55, 0.5] as const },
 }
 
 function wood(stack: Stack, set: MaterialSet, kind: 'rough' | 'fine'): MeshStandardNodeMaterial {

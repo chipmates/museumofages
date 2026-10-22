@@ -511,8 +511,8 @@ export function createBench(stack: Stack, onExit: () => void) {
    * (the car's skirt, ports and the underside of its eave) takes more of the
    * sky and a paler bounce off the stone it stands on. The hour, the sun's
    * place and every other machine's light stay as they are. */
-  const OWN_LIGHT: Partial<Record<BenchSlug, { ambient: number; ground: string }>> = {
-    'armoured-car': { ambient: 1.15, ground: '#6a604f' },
+  const OWN_LIGHT: Partial<Record<BenchSlug, { lux: number; ambient: number; ground: string }>> = {
+    'armoured-car': { lux: 240, ambient: 1.15, ground: '#6a604f' },
   };
   function lightBench() {
     const scale = benchCatalog[slug].dossier.scale_m, span = Math.max(scale.x, scale.y, scale.z);
@@ -522,7 +522,7 @@ export function createBench(stack: Stack, onExit: () => void) {
     // as well as the machine, or the floor between them takes no shadow
     // lookup at all and draws as a hard edged quad.
     const reach = BENCH_BACK_PLANE ? Math.max(span * 3.4, BACK_PLANE_METRES * 1.45) : span * 3.4;
-    key = stack.light({ azimuth: BENCH_SUN_AZIMUTH_DEGREES, elevation: BENCH_SUN_ELEVATION_DEGREES, kelvin: 4800, lux: 185, ambient: own?.ambient ?? .72, reach: Math.max(24, span * 6, reach * 2.2), cascades: [span * 1.25, reach], sky: { zenith: '#707579', horizon: '#b1a895', ground: own?.ground ?? '#343532', stars: 0 } });
+    key = stack.light({ azimuth: BENCH_SUN_AZIMUTH_DEGREES, elevation: BENCH_SUN_ELEVATION_DEGREES, kelvin: 4800, lux: own?.lux ?? 185, ambient: own?.ambient ?? .72, reach: Math.max(24, span * 6, reach * 2.2), cascades: [span * 1.25, reach], sky: { zenith: '#707579', horizon: '#b1a895', ground: own?.ground ?? '#343532', stars: 0 } });
     key.light.shadow.normalBias = span * .0002;
     key.light.shadow.bias = -span * .00001;
     // the surfaces that give an edge its rim answer to the light that is
