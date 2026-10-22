@@ -1235,8 +1235,8 @@ MAP_LINK = "https://www.openstreetmap.org/copyright"
 
 def borrowed_line(spec, lang, wing_key):
     """A label's line taken word for word from where the site already says it (a picture's src_from): the wing page's
-    own words at a key (wing:<key>, the museum's own texts filled in) or the footer's credit for the map data
-    (site:map). Returns the line's parts as a data file writes them."""
+    own words at a key (wing:<key>, the museum's own texts filled in), a line or one given as parts with its links,
+    or the footer's credit for the map data (site:map). Returns the line's parts as a data file writes them."""
     kind, _, key = spec.partition(":")
     if kind == "wing" and key:
         value = json.loads((LANG.HERE / "wings" / f"{wing_key}.{lang}.json").read_text(encoding="utf-8"))
@@ -1247,9 +1247,12 @@ def borrowed_line(spec, lang, wing_key):
                 value = value[part]
             else:
                 raise SystemExit(f"src_from {spec!r}: the wing's {lang} page has no line at {key}")
-        if not isinstance(value, str) or re.search(r"\{(?!museum:)\w+:\w+\}", value):
+        parts = [value] if isinstance(value, str) else value
+        link = lambda p: isinstance(p, dict) and set(p) == {"text", "href"} and all(isinstance(v, str) for v in p.values())
+        if (not isinstance(parts, list) or not parts or not all(isinstance(p, str) or link(p) for p in parts)
+                or any(re.search(r"\{(?!museum:)\w+:\w+\}", p if isinstance(p, str) else p["text"]) for p in parts)):
             raise SystemExit(f"src_from {spec!r}: the wing's {lang} page holds no plain line at {key}")
-        parts = [value]
+        parts = [dict(p) if isinstance(p, dict) else p for p in parts]
     elif spec == "site:map":
         foot = json.loads((LANG.HERE / f"words.{lang}.json").read_text(encoding="utf-8"))["footer"]
         parts = [foot["data_a"] + " ", {"text": foot["data_osm"], "href": MAP_LINK}, " " + foot["data_b"]]

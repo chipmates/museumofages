@@ -306,7 +306,7 @@ LIMITS = [
     (r"wing:.*\.names\.[\w-]+$", 34), (r"wing:.*\.terms$", 240), (r"wing:.*\.close\.intro$", 300), (r"wing:.*\.source$", 160),
     (r"wing:.*piece\.(tag_a|tag_b|pause|play)$", 20), (r"wing:.*piece\.(hint|slider_label|canvas_label)$", 90),
     (r"wing:.*quote\.from$", 44), (r"wing:.*\.age$", 60), (r"wing:.*\.age_k$", 24), (r"wing:numbers\.\d+\.num$", 16),
-    (r"wing:.*\.src$", 290), (r"wing:.*\.what$", 190), (r"wing:.*\.key\.(full|quiet)$", 150),
+    (r"wing:.*\.src(\.\d+(\.text)?)?$", 290), (r"wing:.*\.what$", 190), (r"wing:.*\.key\.(full|quiet)$", 150),
     (r"wing:.*\.p\.\d+$|wing:end\.p$|wing:.*field\.p$", 490), (r"wing:.*rows\.\d+\.k$", 32), (r"wing:.*rows\.\d+\.v$", 190),
     (r"wing:.*places\.\w+$|wing:.*lists\.\d+\.h$", 28), (r"wing:holds\..*\.(after|unit)$", 14), (r"wing:.*\.(still|no_sheet)$", 60),
     (r"wing:numbers\.\d+\.term$", 22), (r"wing:numbers\.\d+\.text$", 110), (r"wing:out\.line$", 130), (r"page_what\.s6_p$", 460),
@@ -323,6 +323,9 @@ WING_KEYS = ("collection", "state", "name", "page", "door", "dates", "shows", "w
 NOT_WORDS = r"(^_|\.pic\.|\.crop\.|\.focus\.|\.loads\.\d+$|(?<!\.quote)\.from$|\.(id|form|show|n|stop|holder|count|script|clip|name|lang|hang|lamp|href|src_to|grade)$)"
 # The running text of a wing's data: a paragraph's last words are kept together, and a wing's name is never broken.
 PROSE = r"(^|\.)(p(\.\d+)?|lede|what|src|text|v|intro|line|terms|after|lead|stills|source)$"
+# The words of a credit line given as parts (words, and links as {"text", "href"}): running text, whose last words
+# are its last link's, which the page keeps together with the stop after it (render.credit).
+CREDIT_PARTS = r"\.src\.\d+(\.text)?$"
 # A key of the site's words that holds running text (a paragraph's _p, a line, a note): there a long name holds its
 # last words (hold_names); a heading, a button or a label keeps it whole.
 RUNNING_KEY = r"(^|[._])(p\d*|lede|lead|what|text|line|note|intro|after|src|terms|source|stills)$"
@@ -333,9 +336,9 @@ def person_names(lang):
     files = [SRC.parent / "pages" / "names.json", SRC.parent / "pages" / f"names.{lang}.json"]
     return sorted({e["text"] for f in files if f.is_file() for e in load(f)["names"] if e.get("person") and len(e["text"].split()) >= 3},
                   key=len, reverse=True)
-# Where a wing's sentence may carry digits: a credit line, a shelf mark, the explanation of a leaf number, the
-# rows that quote what a sheet gives, and a model's spoken name (it says 3D).
-DIGITS_OK = r"\.(src|source|terms|canvas_label)$|\.close\.rows\.\d+\.v$"
+# Where a wing's sentence may carry digits: a credit line (its parts too), a shelf mark, the explanation of a leaf
+# number, the rows that quote what a sheet gives, and a model's spoken name (it says 3D).
+DIGITS_OK = r"\.(src|source|terms|canvas_label)$|\.src\.\d+(\.text)?$|\.close\.rows\.\d+\.v$"
 DATA_KEYS = ("meta.title", "meta.description", "meta.share_alt", "first.lede", "first.piece.title", "first.piece.kind",
              "first.piece.what", "first.piece.alt", "card.kind", "card.what", "card.alt", "intro.p", "stop.title",
              "stop.stage.title", "stop.stage.alt", "end.h", "end.p")
@@ -560,7 +563,9 @@ class Site:
         where it is running text, with its last words kept together and every wing's name whole."""
         if not re.search(NOT_WORDS, path):
             text = day_month(bind(text, lang), lang)
-            if re.search(PROSE, path):
+            if re.search(CREDIT_PARTS, path):
+                text = hold_names(text, self.held[lang])
+            elif re.search(PROSE, path):
                 text = hold_names(tail(text), self.held[lang])
         return esc(text)
 
@@ -896,6 +901,7 @@ def check_wing_data(site, slug):
         for key in DATA_KEYS:
             if not flat.get(key, "").strip():
                 problems.append(f"{where}.{lang}: {key} is missing")
+        problems += [f"{where}.{lang}: {p}" for p in credit_parts_problems(written)]
         if not d.get("rooms") or len(d.get("stop", {}).get("layers", [])) != 3:
             problems.append(f"{where}.{lang}: a wing needs at least one room and a stop with three layers")
         named = [e["pictures"][k]["alt"] for k in ("hero", "landing", "card", "share") if k in e["pictures"]]
@@ -1011,6 +1017,32 @@ def check_wing_data(site, slug):
                 site.count(slug, it["count"])
     if facts is not None:
         problems += check_facts(site, slug)
+    return problems
+
+
+def credit_parts_problems(d, path=""):
+    """A credit line given as parts holds words and links ({"text", "href"} with an https address), and stands only
+    where the page writes one: under the plate at the walk's end (end.plate.src)."""
+    problems = []
+    if isinstance(d, dict):
+        for k, v in d.items():
+            at = f"{path}.{k}" if path else k
+            if k == "src" and isinstance(v, list):
+                if at != "end.plate.src":
+                    problems.append(f"{at} is given as parts, which the page writes only for end.plate.src")
+                for i, part in enumerate(v):
+                    if isinstance(part, str):
+                        continue
+                    if not (isinstance(part, dict) and set(part) == {"text", "href"} and isinstance(part["text"], str)
+                            and part["text"].strip() and isinstance(part["href"], str)):
+                        problems.append(f"{at}.{i} is neither words nor a link with text and href")
+                    elif not re.fullmatch(r"https://[^\s\"<>]+", part["href"]):
+                        problems.append(f"{at}.{i}.href is not a plain https address")
+            else:
+                problems += credit_parts_problems(v, at)
+    elif isinstance(d, list):
+        for i, v in enumerate(d):
+            problems += credit_parts_problems(v, f"{path}.{i}")
     return problems
 
 

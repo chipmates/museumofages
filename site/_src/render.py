@@ -104,6 +104,16 @@ def label(title, kind=None, what=None, src=None, quote=None, cls="", extra="", s
     return "".join(out) + extra + "</figcaption>"
 
 
+def credit(src):
+    """A credit line as the label writes it. One given as parts (words, and links as {"text", "href"}, escaped
+    already) holds each link's words in a span the sheet raises above a neighbour's target (base.css), and keeps a
+    link with the stop after it: the link's target is an inline block, which a line would break before."""
+    if not isinstance(src, list):
+        return src
+    out = "".join(p if isinstance(p, str) else f'<a href="{p["href"]}"><span>{p["text"]}</span></a>' for p in src)
+    return re.sub(r'(<a href="[^"]*">(?:(?!</a>).)*</a>)([.,:)]+)', r'<span class="nw">\1\2</span>', out)
+
+
 def door(c, href, words, place, small=False, watch=False):
     """A way into the walk. place is where it stands on the page, as the count names it: top, item or end."""
     k = "door door--small" if small else "door"
@@ -888,7 +898,7 @@ def end(c, slug):
     if p:
         hung_plate = ('<figure class="plate close__grave"><div class="hang">'
                       + picture(c, [(None, p["pic"], "(min-width: 960px) 40vw, 100vw")], p["alt"]) + "</div>"
-                      + label(p["title"], p["kind"], p["what"], src=p.get("src")) + "</figure>")
+                      + label(p["title"], p["kind"], p["what"], src=credit(p.get("src"))) + "</figure>")
     dusk = " data-dusk" if sky else ""
     cls = "close close--end" if sky else "close close--end close--plain"
     return (

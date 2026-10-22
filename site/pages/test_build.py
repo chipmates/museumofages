@@ -3670,7 +3670,70 @@ class Case(unittest.TestCase):
                         said = wing
                         for key in pic["src_from"].split(":", 1)[1].split("."):
                             said = said[int(key)] if isinstance(said, list) else said[key]
+                        # a line given as parts: its words, and each of its links
+                        if isinstance(said, list):
+                            for part in (p for p in said if isinstance(p, dict)):
+                                self.assertIn(f'<a href="{html.escape(part["href"])}"><span>', label)
+                            said = "".join(p if isinstance(p, str) else p["text"] for p in said)
                     self.assertEqual(shown, " ".join(said.replace(" ", " ").split()))
+
+    def test_a_wing_line_given_as_parts_is_borrowed_with_its_links(self):
+        # the wing's page gives the grave court's credit as parts, words and links: a page may borrow it again (src_from),
+        # links and all, and as for a plain line only the museum's own texts may be filled into its words
+        spec = importlib.util.spec_from_file_location("build_borrow", self.dir / "build.py")
+        module = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(module)
+        key, stem = "end.plate.src", "vinci-plate-deathbed-painting"
+        src = {lang: json.loads((SITE_SRC / "wings" / f"vinci.{lang}.json").read_text(encoding="utf-8"))["end"]["plate"]["src"]
+               for lang in ("en", "de")}
+        for lang in ("en", "de"):
+            self.assertEqual(sum(isinstance(p, dict) for p in src[lang]), 2, "the wing gives the line as parts with two links")
+            self.assertEqual(module.borrowed_line(f"wing:{key}", lang, "vinci"), src[lang])
+        link = {"text": "CC0", "href": "https://creativecommons.org/publicdomain/zero/1.0/"}
+        cases = [(["Its own words, {museum:it108} ", link, "."], None),
+                 (["Its {count:works} words ", link, "."], "holds no plain line"),
+                 (["Its own words ", {"text": "{word:works}", "href": link["href"]}, "."], "holds no plain line"),
+                 (["Its own words ", {"text": "CC0"}, "."], "holds no plain line"),
+                 ([], "holds no plain line")]
+        own = self.dir / "own"
+        (own / "wings").mkdir(parents=True)
+        here, module.LANG.HERE = module.LANG.HERE, own
+        try:
+            for parts, words in cases:
+                with self.subTest(parts=parts):
+                    (own / "wings" / "own.en.json").write_text(json.dumps({"end": {"plate": {"src": parts}}}), encoding="utf-8")
+                    if words is None:
+                        self.assertEqual(module.borrowed_line(f"wing:{key}", "en", "own"), parts)
+                    else:
+                        with self.assertRaisesRegex(SystemExit, words):
+                            module.borrowed_line(f"wing:{key}", "en", "own")
+        finally:
+            module.LANG.HERE = here
+        # the page on his last years borrows it for the painting, which the wing's page labels again (wing_line)
+        record = json.loads((self.dir / "pictures.json").read_text(encoding="utf-8"))
+        plate = next(p for p in record["plates"] if p["name"] == stem)
+        plate["wing_line"] = key
+        (self.dir / "pictures.json").write_text(json.dumps(record, ensure_ascii=False), encoding="utf-8")
+        for lang in ("en", "de"):
+            data = self.data(lang, "last-years")
+            shown = [b["pic"] for b in data["blocks"] if isinstance(b.get("pic"), dict) and data["pics"][b["pic"]["pic"]]["stem"] == stem]
+            self.assertTrue(shown, "the page shows the painting")
+            for pic in shown:
+                pic.pop("src", None)
+                pic["src_from"] = f"wing:{key}"
+            self.save(lang, data, "last-years")
+        out, _ = self.build()
+        for lang in ("en", "de"):
+            with self.subTest(lang=lang):
+                data = self.data(lang, "last-years")
+                text = next(t for t in (p.read_text(encoding="utf-8") for p in out.rglob("index.html"))
+                            if f'data-page="{data["page"]["id"]}"' in t and f'<html lang="{lang}"' in t)
+                at = text.index(f"/{stem}-")
+                label = text[text.index('<span class="label__src', at):text.index("</figcaption>", at)]
+                shown = " ".join(html.unescape(re.sub(r"<[^>]+>", "", label)).replace(" ", " ").split())
+                self.assertEqual(shown, " ".join("".join(p if isinstance(p, str) else p["text"] for p in src[lang]).split()))
+                self.assertEqual(re.findall(r'<a href="([^"]+)"><span>', label), [p["href"] for p in src[lang] if isinstance(p, dict)])
+                self.assertRegex(label, r'<span class="nw"><a href="[^"]+"><span>[^<]+</span></a>\.</span>')
 
     def test_a_plate_the_wing_labels_is_shown_only_with_the_wings_line(self):
         page = self.borrowing_page()
@@ -4128,6 +4191,39 @@ class LastYears(unittest.TestCase):
                 self.assertEqual(html.unescape(re.search(r'<span class="tag">(.*?)<span class="vh">', figure).group(1)), plate["kind"])
                 # the court shows the Ingres painting on its wall: it carries the painting's plate's line, links and all
                 self.assertEqual(line_of(figure), line_of(figure_of(own, "vinci-plate-deathbed-painting")))
+
+    def test_the_wing_pages_grave_court_credits_the_painting_with_both_links_in_every_language(self):
+        # the wing's page closes on the court with the painting on its wall: its label names the inventory number and
+        # the holder, and links the licence and the file of the painting's plate record, in every built language
+        plate = next(p for p in json.loads((HERE / "pictures.json").read_text(encoding="utf-8"))["plates"]
+                     if p["name"] == "vinci-plate-deathbed-painting")
+        table = json.loads((SITE_SRC / "languages.json").read_text(encoding="utf-8"))
+        lib = _buildlib()
+        plain = lambda text: " ".join(text.replace(" ", " ").replace(" ", " ").split())
+        checked = []
+        for entry in (e for e in table["languages"] if e["code"] in table["BUILT"]):
+            lang = entry["code"]
+            with self.subTest(lang=lang):
+                text = (SITE_BUILT / (entry["folder"] + entry["slugs"]["wings"]["vinci"]) / "index.html").read_text(encoding="utf-8")
+                figure = text[text.index('<figure class="plate close__grave">'):]
+                body = re.search(r'<span class="label__src">(.*?)</span></figcaption>', figure[:figure.index("</figure>")],
+                                 flags=re.S).group(1)
+                line = plain(html.unescape(re.sub(r"<[^>]+>", "", body)))
+                # each link's words in the span the sheet raises, the last link with its stop on one line
+                self.assertEqual(re.findall(r'<a href="([^"]+)"><span>[^<]+</span></a>', body), [plate["licence_url"], plate["source"]])
+                self.assertEqual(len(re.findall(r"<a\b", body)), 2)
+                self.assertRegex(body, r'<span class="nw"><a href="[^"]+"><span>[^<]+</span></a>\.</span>$')
+                self.assertRegex(line, r"\b[Ii]nv\. PDUT1165\. .*\bCC0 Paris Musées / Petit Palais, musée des Beaux-Arts de la Ville de Paris\. ")
+                src = json.loads((SITE_SRC / "wings" / f"vinci.{lang}.json").read_text(encoding="utf-8"))["end"]["plate"]["src"]
+                self.assertEqual(line, plain(lib.space("".join(p if isinstance(p, str) else p["text"] for p in src), lang)))
+                # where this class reads the death page, its court carries the same line and links
+                if lang in self.own:
+                    court = self.own[lang][self.own[lang].index("/vinci-plate-deathbed-painting-"):]
+                    court = re.search(r'<span class="label__src">(.*?)</figcaption>', court, flags=re.S).group(1)
+                    self.assertEqual(line, plain(html.unescape(re.sub(r"<[^>]+>", "", court))))
+                    self.assertEqual(re.findall(r'href="([^"]+)"', body), re.findall(r'href="([^"]+)"', court))
+                checked.append(lang)
+        self.assertTrue({"en", "de"} <= set(checked) and len(checked) == len(table["BUILT"]), checked)
 
     def test_every_date_the_wing_also_states_is_the_wings(self):
         for lang, rows in self.agreements().items():

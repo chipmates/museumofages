@@ -735,7 +735,19 @@
    "title": "O pátio do túmulo",
    "kind": "Construído em código",
    "what": "o pátio do próprio museu: a laje com o nome dele, uma placa com o sol baixo do dia da morte dele, num minuto que escolhemos, a pedra com o ano da escavação. À esquerda, um quadro de Ingres.",
-   "src": "Jean-Auguste Dominique Ingres, Morte de Leonardo da Vinci (François Ier reçoit les derniers soupirs de Léonard de Vinci), 1818. Petit Palais, musée des Beaux-Arts de la Ville de Paris. Imagem: CC0 Paris Musées.",
+   "src": [
+    "Jean-Auguste Dominique Ingres, Morte de Leonardo da Vinci (François Ier reçoit les derniers soupirs de Léonard de Vinci), 1818. Petit Palais, musée des Beaux-Arts de la Ville de Paris, inv. PDUT1165. Imagem: ",
+    {
+     "text": "CC0",
+     "href": "https://creativecommons.org/publicdomain/zero/1.0/"
+    },
+    " Paris Musées / Petit Palais, musée des Beaux-Arts de la Ville de Paris. Domínio público, via ",
+    {
+     "text": "Wikimedia Commons",
+     "href": "https://commons.wikimedia.org/wiki/File:Jean-Auguste-Dominique_Ingres_-_Fran%C3%A7ois_Ier_re%C3%A7oit_les_derniers_soupirs_de_L%C3%A9onard_de_Vinci_-_PDUT1165_-_Mus%C3%A9e_des_Beaux-Arts_de_la_ville_de_Paris.jpg"
+    },
+    "."
+   ],
    "alt": "Um pátio murado sob o sol baixo, uma árvore jovem com folhas de outono. No chão, uma laje clara com o nome Leonardo da Vinci. Atrás, uma placa em dois postes, com um bloco pequeno e a sombra longa dele, e uma pedra com um ano. À esquerda, um quadro em moldura escura. Uma imagem do filme do museu."
   },
   "sky": {
