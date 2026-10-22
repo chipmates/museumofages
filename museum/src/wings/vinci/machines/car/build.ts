@@ -440,7 +440,7 @@ export function shaft(sz: number): Body {
     // the crank's heavy cheek, from below the axis to past the grip
     b.rough.box(v(x0, (CRANK.throw - 0.06) / 2 + 0.02, 0), [Y, X, Z], v((CRANK.throw + 0.1) / 2, CRANK.cheekT / 2, CRANK.cheekW / 2), { tone: tone(41, seed, sx) }, 0.012)
     // iron straps binding the cheek to the shaft at its foot and to the grip at its head
-    for (const [y, h] of [[0, 0.05], [CRANK.throw - 0.005, 0.045]] as const) b.iron.box(v(x0, y, 0), [Y, X, Z], v(h, CRANK.cheekT / 2 + 0.004, CRANK.cheekW / 2 + 0.005), { tone: 1 }, 0.003)
+    for (const [y, h] of [[0, 0.05], [CRANK.throw - 0.01, 0.045]] as const) b.iron.box(v(x0, y, 0), [Y, X, Z], v(h, CRANK.cheekT / 2 + 0.004, CRANK.cheekW / 2 + 0.005), { tone: 1 }, 0.003)
     // the lantern: two thick discs bound with iron, ten staves between them
     const xl = sx * LANTERN.x
     for (const e of [-1, 1]) {
