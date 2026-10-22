@@ -3233,8 +3233,8 @@
   {
    "path": "pages/pics/img/vinci-last-years-og-1200x630.jpg",
    "url": "/static/img/vinci-last-years-og-1200x630.jpg",
-   "bytes": 108057,
-   "sha256": "a288f2cd90722fd440a78e0815c74349b6105a756c6d374eeecb2540d62ae8e0"
+   "bytes": 109774,
+   "sha256": "e764d391140c090f2b1e01a7be107f738a1614741672e2bc47283f49214a350c"
   },
   {
    "path": "pages/pics/img/vinci-life-og-de-1200x630.png",
@@ -3251,20 +3251,20 @@
   {
    "path": "pages/pics/img/vinci-mona-lisa-og-de-1200x630.png",
    "url": "/static/img/vinci-mona-lisa-og-de-1200x630.png",
-   "bytes": 326595,
-   "sha256": "1d5c503c1482e19198c06c6256d6944dcc3b2a642d15ef891788a91f65a1efb7"
+   "bytes": 334092,
+   "sha256": "e99ec14c02cdc3eb4007f96fe30eb95c1956ec742d3b32741caac1856c7c56f4"
   },
   {
    "path": "pages/pics/img/vinci-mona-lisa-og-en-1200x630.png",
    "url": "/static/img/vinci-mona-lisa-og-en-1200x630.png",
-   "bytes": 325527,
-   "sha256": "7002e83fee9d85c95f53d1e147f3acaeb48c59ce4f7e52371f0edad86a4de861"
+   "bytes": 331809,
+   "sha256": "269ddd4a8530d423bc5671ae340fff7689633649b1fb1fe41e93e96d0025af7c"
   },
   {
    "path": "pages/pics/img/vinci-mona-lisa-og-es-1200x630.png",
    "url": "/static/img/vinci-mona-lisa-og-es-1200x630.png",
-   "bytes": 319950,
-   "sha256": "a32efcc13a8438bf2e954ba9ac4db679baa2aa381861ad468f389f21f3dbb021"
+   "bytes": 326721,
+   "sha256": "1208a6ffa5ba9b40462baa4fbf4b27050ae08d6fa776cd274d81b06028f2674f"
   },
   {
    "path": "pages/pics/img/vinci-paintings-og-de-1200x630.png",

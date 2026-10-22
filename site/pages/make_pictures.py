@@ -187,9 +187,25 @@ def main():
         if (only and job["name"] not in only) or out.exists():
             continue
         run(["magick", str(source / job["file"]), "-crop", job["crop"], "+repage", "-filter", "Lanczos",
-             "-resize", "1200x630!", "-strip", "-interlace", "JPEG", "-quality", "82", str(out)])
+             "-resize", "1200x630!", *credit_args(job.get("credit")), "-strip", "-interlace", "JPEG", "-quality", "82", str(out)])
         made(out)
     charts(only)
+
+
+def credit_args(text):
+    """ImageMagick's steps that set a share picture's credit (pictures.json, share, credit) in its bottom right corner,
+    in the site's face and colours on a band of the page's colour, as a map credits its data. None: no steps."""
+    if not text:
+        return []
+    font_map()
+    face = str(Path(os.environ["MOA_FONT_TTF"]) / FACES["Cardo"])
+    colours = pages_build().CHART.tokens((HERE.parent / "_src" / "css" / "tokens.css").read_text(encoding="utf-8"))
+    size, pad, band = 20, 12, 36
+    width = int(subprocess.run(["magick", "-font", face, "-pointsize", str(size), f"label:{text}", "-format", "%w", "info:"],
+                               capture_output=True, text=True, check=True).stdout)
+    return ["-fill", colours["page"] + "c8", "-draw", f"rectangle {1200 - width - 2 * pad},{630 - band} 1200,630",
+            "-font", face, "-pointsize", str(size), "-fill", colours["text-2"], "-gravity", "SouthEast",
+            "-annotate", f"+{pad}+5", text, "-gravity", "NorthWest"]
 
 
 if __name__ == "__main__":

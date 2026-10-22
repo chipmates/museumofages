@@ -3113,6 +3113,9 @@ def still_jobs(pages=PAGES, loaded=None):
                 h1, og = unbound(d["top"]["h1"]), unbound(d["meta"]["og_title"])
                 rest = og[len(h1):].lstrip(" :").strip() if og.startswith(h1) else ""
                 words = {"h1": h1, "line": rest[:1].upper() + rest[1:], "site": ORIGIN.split("://", 1)[1]}
+                # a reproduction the card carries away from its label names its source on the card (meta.og_image_credit)
+                if d["meta"].get("og_image_credit"):
+                    words["credit"] = unbound(d["meta"]["og_image_credit"])
                 jobs.append({"file": d["page"]["og_image"]["file"].replace("{lang}", code), "page": page, "lang": lang, "kind": "share",
                              "raster": True, "svg": CHART.picture_still_svg(words, colours, name, size, None, beside=True)})
                 continue

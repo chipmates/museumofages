@@ -837,6 +837,9 @@ def _picture_beside_svg(words, c, picture, size, person, W, H, m):
             parts.append(_text(ix, iy + ih + 44 + 36 * i, row, 28, c["text-2"]))
     parts.append(_rect(m, H - 62, 48, 2, c["chalk"], c["chalk"], 0))
     parts.append(_text(m, H - 30, words["site"], 20, c["text-3"]))
+    # the picture's source, under its frame on the address's line, ending with the frame
+    if words.get("credit"):
+        parts.append(_text(ix + iw, H - 30, words["credit"], 20, c["text-2"], "end"))
     return (f'<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="{W}" height="{H}" '
             f'viewBox="0 0 {W} {H}"><rect width="{W}" height="{H}" fill="{c["page"]}"/>{"".join(parts)}</svg>\n')
 
