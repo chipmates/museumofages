@@ -49,9 +49,40 @@ function wood(stack: Stack, set: MaterialSet, kind: 'rough' | 'fine'): MeshStand
   // worn wood loses its weathered skin and shows the paler fibre under it
   const worn = mix(grained, lin(spec.worn).mul(fibres.mul(0.4).add(0.66)), smoothstep(0.2, 1, wear).mul(0.75))
   const col = mix(worn, lin(spec.end).mul(fibres.mul(0.5).add(0.6)), end.mul(0.85))
-  m.colorNode = weathered(col).mul(tone).mul(nodes.occlusion)
-  m.roughnessNode = mix(nodes.roughness.clamp(spec.rough[0], spec.rough[1]), float(0.5), smoothstep(0.4, 1, wear).mul(0.6))
+  const mark: N = attribute('aMark', 'float')
+  const [marked, dressed] = [smoothstep(0.5, 0.9, mark).mul(float(1).sub(smoothstep(1.1, 1.5, mark))), smoothstep(1.5, 1.9, mark)]
+  const strokes = toolStrokes(uv())
+  m.colorNode = limed(weathered(col), marked, fibres).mul(tone).mul(nodes.occlusion).mul(mix(float(1), strokes.shade, dressed))
+  m.roughnessNode = mix(nodes.roughness.clamp(spec.rough[0], spec.rough[1]), float(0.5), smoothstep(0.4, 1, wear).mul(0.6)).mul(mix(float(1), strokes.sheen, dressed))
   return m
+}
+
+/** A band of lime round one spoke, the wheel's mark: a hand's width between a third and two thirds of the spoke,
+ * its edges ragged, flaked where the wheel's turning wore it, the grain showing through and dirt in it. */
+function limed(col: N, marked: N, fibres: N): N {
+  const p: N = positionGeometry
+  const rad: N = p.xy.length()
+  const ragged: N = mx_noise_float(p.mul(38)).mul(0.012)
+  const band: N = smoothstep(0.19, 0.205, rad.add(ragged)).mul(float(1).sub(smoothstep(0.335, 0.35, rad.sub(ragged))))
+  const flaked = smoothstep(0.42, 0.68, mx_noise_float(p.mul(vec3(31, 31, 47))).mul(0.5).add(0.5))
+  const dirt = mx_noise_float(p.mul(9)).mul(0.08).add(0.86)
+  const lime: N = lin('#d9d1bc').mul(fibres.mul(0.22).add(0.8)).mul(dirt)
+  return mix(col, lime, band.mul(float(1).sub(flaked.mul(0.75))).mul(marked))
+}
+
+/** A face dressed by hand: the strokes of the knife along the grain, each a shallow scallop a little off the last,
+ * a faint chatter across them, and grease and dirt in a ring round the shaft. */
+function toolStrokes(at: N): { shade: N; sheen: N } {
+  const p: N = positionGeometry
+  const across: N = at.y.div(0.024).add(mx_noise_float(vec3(at.x.mul(2.5), at.y.mul(0.5), 1.7)).mul(0.45))
+  const scallop = across.fract().sub(0.5).mul(2).pow(2)
+  const stroke = mx_noise_float(vec3(across.floor().mul(3.1), 0.5, 4.2)).mul(0.06)
+  const chatter = at.x.div(0.009).add(mx_noise_float(vec3(at.y.mul(30), 2.2, 0.3))).fract().sub(0.5).abs().mul(0.05)
+  const grease = float(1).sub(float(1).sub(smoothstep(0.075, 0.15, p.yz.length())).mul(0.32))
+  return {
+    shade: float(1).sub(scallop.mul(0.13)).add(stroke).sub(chatter).mul(grease),
+    sheen: float(1).sub(scallop.mul(0.12)),
+  }
 }
 
 /** The nails as a table the cover's shader reads, one texel a nail (ring and slot across, board down): its radius

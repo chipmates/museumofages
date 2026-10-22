@@ -241,6 +241,43 @@ function forks(k: Kit, iron: Kit): void {
   }
 }
 
+/** Under each wheel's slot a boarded well, its bottom cut only where the tread meets the ground, and a curb round
+ * the slot on the floor, so wood shows through the floor where the stone did. */
+function wells(k: Kit): void {
+  const W = { t: 0.03, bottom: [0.012, 0.032] as const, curb: { w: 0.04, h: 0.024 } }
+  for (const sx of [-1, 1]) for (const sz of [-1, 1]) {
+    const hx = sx * HUB.x
+    const xa = sx > 0 ? SLOT.x0 : -SLOT.x1, xb = sx > 0 ? SLOT.x1 : -SLOT.x0
+    const za = sz > 0 ? SLOT.z0 : -SLOT.z1, zb = sz > 0 ? SLOT.z1 : -SLOT.z0
+    const tread = [sz * HUB.z - WHEEL.width / 2 - 0.02, sz * HUB.z + WHEEL.width / 2 + 0.02].sort((p, q) => p - q) as [number, number]
+    const cutX = 0.24
+    const f = (j: number): Finish => ({ tone: 0.5 + 0.1 * hash(70, sx, sz, j), wear: 0 })
+    const slabAt = (x0: number, x1: number, y0: number, y1: number, z0: number, z1: number, j: number, grain: V3 = X): void => {
+      if (x1 - x0 < 0.005 || z1 - z0 < 0.005) return
+      k.box(v((x0 + x1) / 2, (y0 + y1) / 2, (z0 + z1) / 2), [X, Y, Z], v((x1 - x0) / 2, (y1 - y0) / 2, (z1 - z0) / 2), f(j), 0.003, grain)
+    }
+    const [y0, y1] = W.bottom
+    const X0 = xa - W.t, X1 = xb + W.t, Z0 = za - W.t, Z1 = zb + W.t
+    // the bottom, in four boards round the tread's cut
+    slabAt(X0, hx - cutX, y0, y1, Z0, Z1, 0)
+    slabAt(hx + cutX, X1, y0, y1, Z0, Z1, 1)
+    slabAt(hx - cutX + 0.002, hx + cutX - 0.002, y0, y1, Z0, tread[0], 2)
+    slabAt(hx - cutX + 0.002, hx + cutX - 0.002, y0, y1, tread[1], Z1, 3)
+    // its four sides, from the bottom to the floor's underside
+    const top = TUB.bottomY - 0.002
+    slabAt(X0, X1, y1 + 0.001, top, Z0, za - 0.002, 4)
+    slabAt(X0, X1, y1 + 0.001, top, zb + 0.002, Z1, 5)
+    slabAt(X0, xa - 0.002, y1 + 0.001, top, za, zb, 6, Z)
+    slabAt(xb + 0.002, X1, y1 + 0.001, top, za, zb, 7, Z)
+    // the curb on the floor, its corners lapped
+    const c = W.curb, fy0 = TUB.floorTop + 0.001, fy1 = TUB.floorTop + c.h
+    slabAt(xa - c.w, xb + c.w, fy0, fy1, za - c.w - 0.003, za - 0.003, 8)
+    slabAt(xa - c.w, xb + c.w, fy0, fy1, zb + 0.003, zb + c.w + 0.003, 9)
+    slabAt(xa - c.w - 0.003, xa - 0.003, fy0, fy1 - 0.004, za - 0.002, zb + 0.002, 10, Z)
+    slabAt(xb + 0.003, xb + c.w + 0.003, fy0, fy1 - 0.004, za - 0.002, zb + 0.002, 11, Z)
+  }
+}
+
 /** Eight kneeling boards: four at each crank, two each side of it. */
 function places(k: Kit): void {
   for (const sz of [-1, 1]) for (const side of [-1, 1]) for (const sx of [-1, 1]) {
@@ -458,11 +495,9 @@ export function wheel(sx: number, sz: number): Body {
       const [r, hw, hz] = ends[i & 1]!
       c8.push(add(mul(d, r), add(mul(t, i & 2 ? hw : -hw), v(0, 0, i & 4 ? hz : -hz))))
     }
-    // one spoke of pale ash among darker oak: the hand that shows the wheel's turn
-    if (k === (sx < 0 ? SPOKES.rear : SPOKES.front)) {
-      const broad = c8.map((p, i): V3 => add(p, mul(t, (i & 2 ? 1 : -1) * (i & 1 ? 0.006 : 0.008))))
-      b.fine.slab(broad, d, { tone: 2.6, seed: 0.913 }, 0.007)
-    } else b.rough.slab(c8, d, { tone: 0.74 + 0.1 * hash(31, seed, k) }, 0.007)
+    // one spoke of each wheel carries a band of lime, worn by the turning: the mark that shows the wheel's turn
+    const marked = k === (sx < 0 ? SPOKES.rear : SPOKES.front)
+    b.rough.slab(c8, d, { tone: 0.74 + 0.1 * hash(31, seed, k), ...(marked ? { mark: 1 } : {}) }, 0.007)
   }
   for (let j = 0; j < WHEEL.felloes; j++) {
     const joint = (j * TAU) / WHEEL.felloes
@@ -489,6 +524,32 @@ export function wheel(sx: number, sz: number): Body {
 
 /* ── A SHAFT, about its own axis, with its crank and its two lanterns ────── */
 
+/** A lantern disc's two faces, each three boards across, their joints a hair open, the face grain dressed by
+ * hand so the tool's strokes show; a ring of grime round the shaft where the grease runs out. */
+function discFaces(k: Kit, xd: number, seed: number): void {
+  const R = LANTERN.discR - 0.012, T = LANTERN.discT
+  const cuts = [-R, -R / 3 + 0.03 * (hash(48, seed) - 0.5), R / 3 + 0.03 * (hash(49, seed) - 0.5), R]
+  for (const side of [-1, 1]) {
+    const x = xd + (side * T) / 2
+    for (let i = 0; i < 3; i++) {
+      const z0 = cuts[i]! + (i > 0 ? 0.0015 : 0), z1 = cuts[i + 1]! - (i < 2 ? 0.0015 : 0)
+      const pts: V3[] = []
+      const n = 14
+      // up one chord, round the arc, down the other: a convex segment of the circle
+      for (let j = 0; j <= n; j++) {
+        const z = z0 + ((z1 - z0) * j) / n
+        pts.push(v(x, Math.sqrt(Math.max(0, R * R - z * z)), z))
+      }
+      for (let j = n; j >= 0; j--) {
+        const z = z0 + ((z1 - z0) * j) / n
+        pts.push(v(x, -Math.sqrt(Math.max(0, R * R - z * z)), z))
+      }
+      const clean = pts.filter((p, j) => j === 0 || len(sub(p, pts[j - 1]!)) > 1e-5)
+      k.polygon(clean, Y, { tone: tone(42, seed, i) * (0.92 + 0.16 * hash(65, seed, side, i)), mark: 2 }, v(xd, 0, (z0 + z1) / 2))
+    }
+  }
+}
+
 export function shaft(sz: number): Body {
   const b = body()
   const seed = sz
@@ -505,18 +566,26 @@ export function shaft(sz: number): Body {
     const xl = sx * LANTERN.x
     for (const e of [-1, 1]) {
       const xd = xl + e * LANTERN.half
-      b.fine.lathe(v(xd - LANTERN.discT / 2, 0, 0), X, [[0, LANTERN.discR - 0.012], [0.01, LANTERN.discR], [LANTERN.discT - 0.01, LANTERN.discR], [LANTERN.discT, LANTERN.discR - 0.012]], 36, { tone: tone(42, seed, sx, e) }, true)
+      b.fine.lathe(v(xd - LANTERN.discT / 2, 0, 0), X, [[0, LANTERN.discR - 0.012], [0.01, LANTERN.discR], [LANTERN.discT - 0.01, LANTERN.discR], [LANTERN.discT, LANTERN.discR - 0.012]], 36, { tone: tone(42, seed, sx, e) }, false)
+      discFaces(b.fine, xd, seed * 10 + sx * 3 + e)
       b.iron.lathe(v(xd - 0.016, 0, 0), X, [[0, LANTERN.discR - 0.002], [0, LANTERN.discR + 0.004], [0.032, LANTERN.discR + 0.004], [0.032, LANTERN.discR - 0.002]], 36, { tone: 1 }, false)
+      // the band's nails, eight round it, none quite where the last smith would have put it
+      for (let j = 0; j < 8; j++) {
+        const g = ((j + 0.5 + 0.3 * (hash(45, seed, sx, e, j) - 0.5)) * TAU) / 8
+        const out: V3 = [0, Math.sin(g), Math.cos(g)]
+        b.iron.lathe(add(v(xd + 0.006 * (hash(46, seed, sx, e, j) - 0.5), 0, 0), mul(out, LANTERN.discR + 0.0035)), out, [[0, 0.0075], [0.0025, 0.007], [0.0045, 0.004], [0.0055, 0]], 8, { tone: 0.8 + 0.3 * hash(47, seed, sx, e, j) }, true)
+      }
     }
-    // where the pegs bear on the staves (the ring's side toward the car's middle), polished; grimed where they enter the discs
-    const a = xl - LANTERN.half - 0.01, l = 2 * LANTERN.half + 0.02
+    // the staves run through the discs and stand a little proud of their outer faces, as through-tenons;
+    // polished where the pegs bear on them (the ring's side toward the car's middle), grimed where they enter the discs
+    const a = xl - LANTERN.half - LANTERN.discT / 2 - 0.003, l = 2 * (LANTERN.half + LANTERN.discT / 2 + 0.003)
     const contact = (sx * (HUB.x - PEGS.pitch) - a) / l
     for (let k = 0; k < LANTERN.staves; k++) {
       const beta = ((k + 0.5) * TAU) / LANTERN.staves
       // turned about +X from the point nearest the wheel, so two staves straddle the contact
       const o: V3 = [0, Math.sin(beta) * LANTERN.pitch, Math.cos(beta) * sz * LANTERN.pitch]
       b.fine.rod(add(v(a, 0, 0), o), add(v(a + l, 0, 0), o), LANTERN.staveR, 12, { tone: tone(43, seed, sx, k), wear: 0.1 }, 0.003, {
-        rows: 18, wearAt: u => 0.8 * (1 - smooth(0.04, 0.17, Math.abs(u - contact))), grimeAt: u => 0.7 + 0.3 * smooth(0.04, 0.14, Math.min(u, 1 - u)),
+        rows: 18, wearAt: u => 0.8 * (1 - smooth(0.04, 0.17, Math.abs(u - contact))), grimeAt: u => 0.7 + 0.3 * smooth(0.12, 0.22, Math.min(u, 1 - u)),
       })
     }
   }
@@ -543,6 +612,7 @@ export function tubPieces(): { wall: Kit; floor: Kit; fittings: Kit } {
   bearings(fittings, fittings, fittings)
   forks(fittings, fittings)
   places(fittings)
+  wells(fittings)
   return { wall, floor: boards, fittings }
 }
 
@@ -555,6 +625,7 @@ export function buildBodies(): Bodies {
   bearings(tub.rough, tub.fine, tub.iron)
   forks(tub.rough, tub.iron)
   places(tub.rough)
+  wells(tub.rough)
   cone(cover.rough, cover.iron)
   guns(gun.rough, gun.iron, gun.bronze)
   return { tub, cover, guns: gun }
