@@ -12,12 +12,12 @@
     "The dots on the cone may be nail heads or holes. The sheet does not say."
   ],
   "scale_m": {
-    "x": 5.06,
+    "x": 5.4,
     "y": 2.492,
-    "z": 5.06,
+    "z": 5.4,
     "certainty": "C",
     "source": "museum choice",
-    "note": "Our size: 5.06 m across the eave, the spike 2.492 m over the ground. Seen as the sheet draws it, a little from above, the closed car is about 1.8 times as wide as it is tall, as on the sheet."
+    "note": "Our size: 5.4 m across the eave, the spike 2.492 m over the ground. Seen as the sheet draws it, a little from above, the closed car is about 1.9 times as wide as it is tall (the sheet: about 1.85)."
   },
   "frame": {
     "handedness": "right",
@@ -111,7 +111,7 @@
       },
       "certainty": "C",
       "source": "museum choice; the sheet draws no floor",
-      "notes": "Planks along the car, sawn to the wall's circle so they meet the staves all round, slotted where the four wheels pass through to the ground, darkened by the dirt the crew carries in."
+      "notes": "Planks along the car, sawn to the wall's circle so they meet the staves all round, slotted where the four wheels pass through to the ground, each slot curbed and boarded below as a well open only where the tread meets the ground (ours), darkened by the dirt the crew carries in."
     },
     {
       "id": "crew-places",
@@ -146,9 +146,9 @@
       "parent": "root",
       "shape": "box",
       "dimensions_m": {
-        "x": 5.06,
+        "x": 5.4,
         "y": 1.847,
-        "z": 5.06
+        "z": 5.4
       },
       "position_m": [
         0,
@@ -167,7 +167,7 @@
       },
       "certainty": "C",
       "source": "British Museum 1860,0616.99 (the sheet): a low cone of straight radial boards with rings of dots; sizes ours",
-      "notes": "64 tapered boards 0.035 m thick, a 32 degree cone 5.06 m across on an eave band 0.12 m deep. The rings of dots are read as nail heads where hidden hoops lie under the boards: our reading. Lifted off in the inspection view."
+      "notes": "64 tapered boards 0.035 m thick, a 32 degree cone 5.4 m across on an eave band 0.12 m deep. At their feet the boards lap over a course of short boards laid flatter (15 degrees, a carpenter's sprocket: ours), so the eave runs out over the skirt to a thin edge, as the sheet's eave ends in a point at each side. The rings of dots are read as nail heads where hidden hoops lie under the boards (our reading), each nail set by hand: off its board's middle, some in pairs, some bleeding a black run down the oak. Lifted off in the inspection view."
     },
     {
       "id": "lookout",
@@ -251,7 +251,7 @@
       },
       "certainty": "C",
       "source": "British Museum 1860,0616.99 (the sheet): four spoked wheels, each with a broad rim and a ring of round pegs on its face",
-      "notes": "1.2 m across, 10 spokes, 5 felloes, 24 pegs on a 1.04 m circle standing 0.11 m from the inner face. Iron strakes over the felloe joints: the trade of the time. One spoke in each wheel is paler than the rest, ours, so a still shows how far the wheel has turned: at rest it leans in toward the car's middle, so a side's two marked spokes are mirror images."
+      "notes": "1.2 m across, 10 spokes, 5 felloes, 24 pegs on a 1.04 m circle standing 0.11 m from the inner face. Iron strakes over the felloe joints: the trade of the time. One spoke in each wheel carries a worn band of lime, ours, so a still shows how far the wheel has turned: at rest it leans in toward the car's middle, so a side's two marked spokes are mirror images."
     },
     {
       "id": "wheel-front-far",
@@ -279,7 +279,7 @@
       },
       "certainty": "C",
       "source": "British Museum 1860,0616.99 (the sheet): four spoked wheels, each with a broad rim and a ring of round pegs on its face",
-      "notes": "1.2 m across, 10 spokes, 5 felloes, 24 pegs on a 1.04 m circle standing 0.11 m from the inner face. Iron strakes over the felloe joints: the trade of the time. One spoke in each wheel is paler than the rest, ours, so a still shows how far the wheel has turned: at rest it leans in toward the car's middle, so a side's two marked spokes are mirror images."
+      "notes": "1.2 m across, 10 spokes, 5 felloes, 24 pegs on a 1.04 m circle standing 0.11 m from the inner face. Iron strakes over the felloe joints: the trade of the time. One spoke in each wheel carries a worn band of lime, ours, so a still shows how far the wheel has turned: at rest it leans in toward the car's middle, so a side's two marked spokes are mirror images."
     },
     {
       "id": "wheel-rear-near",
@@ -307,7 +307,7 @@
       },
       "certainty": "C",
       "source": "British Museum 1860,0616.99 (the sheet): four spoked wheels, each with a broad rim and a ring of round pegs on its face",
-      "notes": "1.2 m across, 10 spokes, 5 felloes, 24 pegs on a 1.04 m circle standing 0.11 m from the inner face. Iron strakes over the felloe joints: the trade of the time. One spoke in each wheel is paler than the rest, ours, so a still shows how far the wheel has turned: at rest it leans in toward the car's middle, so a side's two marked spokes are mirror images."
+      "notes": "1.2 m across, 10 spokes, 5 felloes, 24 pegs on a 1.04 m circle standing 0.11 m from the inner face. Iron strakes over the felloe joints: the trade of the time. One spoke in each wheel carries a worn band of lime, ours, so a still shows how far the wheel has turned: at rest it leans in toward the car's middle, so a side's two marked spokes are mirror images."
     },
     {
       "id": "wheel-front-near",
@@ -335,7 +335,7 @@
       },
       "certainty": "C",
       "source": "British Museum 1860,0616.99 (the sheet): four spoked wheels, each with a broad rim and a ring of round pegs on its face",
-      "notes": "1.2 m across, 10 spokes, 5 felloes, 24 pegs on a 1.04 m circle standing 0.11 m from the inner face. Iron strakes over the felloe joints: the trade of the time. One spoke in each wheel is paler than the rest, ours, so a still shows how far the wheel has turned: at rest it leans in toward the car's middle, so a side's two marked spokes are mirror images."
+      "notes": "1.2 m across, 10 spokes, 5 felloes, 24 pegs on a 1.04 m circle standing 0.11 m from the inner face. Iron strakes over the felloe joints: the trade of the time. One spoke in each wheel carries a worn band of lime, ours, so a still shows how far the wheel has turned: at rest it leans in toward the car's middle, so a side's two marked spokes are mirror images."
     },
     {
       "id": "shaft-far",

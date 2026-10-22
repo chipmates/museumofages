@@ -536,8 +536,8 @@ export function createBench(stack: Stack, onExit: () => void) {
       closed: [{ at: [-5, 3.6, 4.6], aim: [.2, .8, 1.2], lux: 280, kelvin: 4300, angle: .7, penumbra: .8, decay: 2 }],
       // opened, a narrow lamp over each far lantern, where the drive binds; the floor round them stays dim
       section: [
-        { at: [.3, 3.8, 1.8], aim: [.75, .62, -.7], lux: 300, kelvin: 4300, angle: .22, penumbra: .6, decay: 2 },
-        { at: [-.3, 3.8, 1.8], aim: [-.75, .62, -.7], lux: 300, kelvin: 4300, angle: .22, penumbra: .6, decay: 2 },
+        { at: [.3, 3.8, 1.8], aim: [.75, .75, -.7], lux: 320, kelvin: 4300, angle: .16, penumbra: .6, decay: 2 },
+        { at: [-.3, 3.8, 1.8], aim: [-.75, .75, -.7], lux: 320, kelvin: 4300, angle: .16, penumbra: .6, decay: 2 },
       ],
     } },
   };
