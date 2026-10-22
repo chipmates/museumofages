@@ -21,8 +21,9 @@ export const HUB = { offset: 0.047, radius: 0.066, thick: 0.074 } as const
 
 export const BODY = {
   head: 0.45, foot: -1.8,
-  /** half widths of the top rails, head and foot */
-  headHalf: 0.35, footHalf: 0.13,
+  /** half widths of the top rails, head and foot: the trough narrows hard to
+   * the feet, as 74v draws it */
+  headHalf: 0.36, footHalf: 0.1,
   topY: 1.42,
 } as const
 export interface Rail { side: 1 | -1; level: 'top' | 'mid' | 'bottom' }
@@ -31,9 +32,10 @@ export function railAt(rail: Rail, z: number): [number, number, number] {
   const f = (BODY.head - z) / (BODY.head - BODY.foot)
   const half = BODY.headHalf + (BODY.footHalf - BODY.headHalf) * f
   const inset = rail.level === 'bottom' ? 0.86 : 1
+  // shallower toward the feet: 0.30 deep at the head, 0.10 at the foot
   const y = rail.level === 'top' ? BODY.topY
-    : rail.level === 'mid' ? 1.27 + (1.34 - 1.27) * f
-      : 1.12 + (1.26 - 1.12) * f
+    : rail.level === 'mid' ? 1.27 + (1.37 - 1.27) * f
+      : 1.12 + (1.32 - 1.12) * f
   return [rail.side * half * inset, y, z]
 }
 export const RAILS: readonly Rail[] = ([1, -1] as const).flatMap(side =>
@@ -58,7 +60,7 @@ export const WING = {
   outer: { r0: 0.02, r1: 0.011 },
   eyeTip: 10 * BRACCIO - 0.22,
   /** where the lowering cord takes hold, the twist arm, the spring's ring */
-  lowerEye: 0.17, twistArm: 0.36, twistLength: 0.2, springRing: -0.25,
+  lowerEye: 0.46, twistArm: 0.36, twistLength: 0.2, springRing: -0.25,
   /** the ribs: distance out along the spar, length, fan angle from straight aft */
   ribs: [
     { s: 0.5, len: 0.8, fan: 0 },
@@ -130,12 +132,13 @@ export function wingPoint(side: 1 | -1, local: readonly number[], t: number): V3
   return add(hubCentre(side), turn(rolled, AXIS, strokeAt(t) * side))
 }
 
-/** THE CORDS. Each wing has its lowering cord to one foot, its twist cord to
+/** THE CORDS. Each wing has its lowering cord to one heel, its twist cord to
  * one hand, and its spring cord from the far lever to the bow. */
-export const SHEAVE = { x: 0.255, y: 1.5, z: -0.2, r: 0.04 } as const
-export const GUIDE = { x: 0.205, y: 1.455, z: -0.7 } as const
-/** the stirrup at the bottom of the stroke (legs straight), left foot */
-export const STIRRUP_OUT: V3 = [0.095, 1.4, -1.27]
+/** the small hoop's crown, where the lowering cords turn (its fitting) */
+export const CROWN = { y: BODY.topY + SMALL_HOOP.rise, z: SMALL_HOOP.z } as const
+/** a swivel sheave hung under the crown for each cord: it turns to lie in
+ * its cord's plane */
+export const SHEAVE = { x: 0.032, y: CROWN.y - SMALL_HOOP.r - 0.05, z: SMALL_HOOP.z, r: 0.03 } as const
 export const DRUM = { x: 0.395, y: 1.17, z: 0.47, r: 0.045, len: 0.12 } as const
 export const BOW = { half: 0.5, y: 1.06, z: 0.44 } as const
 
@@ -144,28 +147,103 @@ export function lowerEyeLocal(side: 1 | -1): V3 { return [side * WING.lowerEye, 
 export function springRingLocal(side: 1 | -1): V3 { return [side * WING.springRing, -0.045, 0] }
 export function twistTipLocal(side: 1 | -1): V3 { return [side * WING.twistArm, -WING.root.r0 - WING.twistLength, 0] }
 
-/** where the lowering cord leaves the sheave's front, toward the spar */
-export function sheaveTop(side: 1 | -1): V3 { return [side * SHEAVE.x, SHEAVE.y + 0.012, SHEAVE.z + SHEAVE.r * 0.95] }
-const lowerSpan = (side: 1 | -1, t: number): number => distance3(wingPoint(side, lowerEyeLocal(side), t), sheaveTop(side))
+/** THE PILOT'S LEGS (the museums' reading of 74v: a man lying face down).
+ * The thighs lie still and the knees rest on a bar; each shin swings about
+ * its knee, raised by the cord as the wing rises and pushed back and down to
+ * beat it. The heel's strap carries the cord. */
+export const KNEE = { x: 0.08, y: 1.49, z: -1.14 } as const
+export const SHIN = 0.42
+/** the strap's knot sits this far behind the ankle, at the back of the heel */
+export const HEEL_BACK = 0.045
+/** how far the toes point past the shin's own line, radians */
+export const PLANTAR = 35 * DEG
+export function kneeAt(side: 1 | -1): V3 { return [side * KNEE.x, KNEE.y, KNEE.z] }
+export function ankleAt(side: 1 | -1, lift: number): V3 {
+  const k = kneeAt(side)
+  return [side * (KNEE.x - 0.03), k[1] + SHIN * Math.sin(lift), k[2] - SHIN * Math.cos(lift)]
+}
+/** the foot's own direction, heel to toe */
+export function toeDirection(lift: number): V3 {
+  const front: V3 = [0, -Math.cos(lift), -Math.sin(lift)], along: V3 = [0, Math.sin(lift), -Math.cos(lift)]
+  return add(scale(front, Math.cos(PLANTAR)), scale(along, Math.sin(PLANTAR)))
+}
+export function heelKnot(side: 1 | -1, lift: number): V3 {
+  return add(ankleAt(side, lift), scale(toeDirection(lift), -HEEL_BACK))
+}
+
+/** the sheave's plane: the swivel lies in the plane of its two cords at the
+ * middle of the beat, so the cord leaves the groove straight */
+function sheaveFrame(side: 1 | -1): { c: V3; e1: V3; e2: V3 } {
+  const c: V3 = [side * SHEAVE.x, SHEAVE.y, SHEAVE.z]
+  const eye = wingPoint(side, lowerEyeLocal(side), PERIOD * 0.21)
+  const heel = heelKnot(side, 35 * DEG)
+  const toEye = sub(eye, c), toHeel = sub(heel, c)
+  const n = unitV(cross(toEye, toHeel))
+  // e1 toward the head end in the plane, e2 up in it
+  const e1 = unitV(sub([0, 0, 1], scale(n, n[2])))
+  const e2 = cross(n, e1)
+  return { c, e1, e2: e2[1] < 0 ? scale(e2, -1) : e2 }
+}
+const unitV = (a: readonly number[]): V3 => { const l = length3(a) || 1; return [a[0]! / l, a[1]! / l, a[2]! / l] }
+const FRAME = { 1: sheaveFrame(1), [-1]: sheaveFrame(-1) } as Record<1 | -1, { c: V3; e1: V3; e2: V3 }>
+export function sheaveAxis(side: 1 | -1): V3 { const f = FRAME[side]; return cross(f.e1, f.e2) }
+export function sheaveCentre(side: 1 | -1): V3 { return FRAME[side].c }
+const onRim = (side: 1 | -1, a: number): V3 => {
+  const f = FRAME[side], r = SHEAVE.r - 0.004
+  return add(f.c, add(scale(f.e1, r * Math.cos(a)), scale(f.e2, r * Math.sin(a))))
+}
+/** The cord from the eye under the spar wraps under the sheave and runs on
+ * to the heel: the tangent points, the wrap and its length. */
+export function lowerCord(side: 1 | -1, t: number, lift: number): { points: V3[]; length: number } {
+  const f = FRAME[side], r = SHEAVE.r - 0.004
+  const eye = wingPoint(side, lowerEyeLocal(side), t), heel = heelKnot(side, lift)
+  const local = (p: V3): [number, number] => { const d = sub(p, f.c); return [dot(d, f.e1), dot(d, f.e2)] }
+  const [e1, e2] = local(eye), [h1, h2] = local(heel)
+  const aE = Math.atan2(e2, e1) - Math.acos(Math.min(1, r / Math.hypot(e1, e2)))
+  const aH = Math.atan2(h2, h1) + Math.acos(Math.min(1, r / Math.hypot(h1, h2)))
+  // from the eye's tangent clockwise under the sheave to the heel's
+  let wrap = aE - aH
+  while (wrap < 0) wrap += Math.PI * 2
+  while (wrap > Math.PI * 2) wrap -= Math.PI * 2
+  // a fixed count of nodes, so the cord's sweep keeps its size
+  const n = 8
+  const arc = Array.from({ length: n + 1 }, (_, i) => onRim(side, aE - wrap * i / n))
+  const length = distance3(eye, arc[0]!) + wrap * r + distance3(arc[n]!, heel)
+  return { points: [eye, ...arc, heel], length }
+}
+const LIFT_MAX = 95 * DEG
+/** the cord's whole length: the legs lie straight at the bottom of the stroke */
+const CORD_LENGTH = {
+  1: Math.min(...Array.from({ length: 721 }, (_, i) => lowerCord(1, PERIOD * i / 720, 0).length)),
+  [-1]: Math.min(...Array.from({ length: 721 }, (_, i) => lowerCord(-1, PERIOD * i / 720, 0).length)),
+} as Record<1 | -1, number>
+/** the shin's lift above straight, radians: the cord's length held */
+export function shinLift(t: number, side: 1 | -1 = 1): number {
+  let lo = 0, hi = LIFT_MAX
+  if (lowerCord(side, t, 0).length <= CORD_LENGTH[side]) return 0
+  for (let i = 0; i < 40; i++) {
+    const mid = (lo + hi) / 2
+    // raising the heel brings it nearer the sheave: the cord shortens
+    if (lowerCord(side, t, mid).length > CORD_LENGTH[side]) lo = mid
+    else hi = mid
+  }
+  return (lo + hi) / 2
+}
+/** how far the heel has come forward along the cord from its bottom place */
+export function stirrupTravel(t: number, side: 1 | -1 = 1): number {
+  return distance3(heelKnot(side, 0), onRim(side, -Math.PI / 2)) - distance3(heelKnot(side, shinLift(t, side)), onRim(side, -Math.PI / 2))
+}
+/** the cord's run over the sheave, for its turning */
+export function sheaveRun(t: number, side: 1 | -1 = 1): number {
+  const c = lowerCord(side, t, shinLift(t, side))
+  return distance3(c.points[0]!, c.points[1]!)
+}
+
 /** a span's least or most over one beat, per side: the hubs sit fore and aft
  * on the pin, so the two sides differ by a few centimetres */
 const extreme = (f: (side: 1 | -1, t: number) => number, pick: (...v: number[]) => number): Record<1 | -1, number> => {
   const over = (side: 1 | -1): number => pick(...Array.from({ length: 721 }, (_, i) => f(side, PERIOD * i / 720)))
   return { 1: over(1), [-1]: over(-1) } as Record<1 | -1, number>
-}
-/** the lowering cord's span from the spar's eye to the sheave, at the bottom
- * of the stroke (the shortest) */
-const LOWER_MIN = extreme(lowerSpan, Math.min)
-/** how far the stirrup has come forward of its place at the bottom */
-export function stirrupTravel(t: number, side: 1 | -1 = 1): number {
-  return lowerSpan(side, t) - LOWER_MIN[side]
-}
-/** the stirrup's place: on the line from its bottom place toward the guide */
-export function stirrupAt(side: 1 | -1, t: number): V3 {
-  const out: V3 = [STIRRUP_OUT[0] * side, STIRRUP_OUT[1], STIRRUP_OUT[2]]
-  const guide: V3 = [GUIDE.x * side, GUIDE.y, GUIDE.z]
-  const dir = sub(guide, out), d = length3(dir)
-  return add(out, scale(dir, stirrupTravel(t, side) / d))
 }
 
 /** the spring cord: from the lever's ring (the far wing's lever lies over
@@ -188,7 +266,7 @@ export function bowLift(t: number, side: 1 | -1 = 1): number {
 export const BEAK = 0.26
 export function twistEye(side: 1 | -1): V3 { return [side * 0.018, PIN.y + AXIS[1] * BEAK, AXIS[2] * BEAK] }
 /** where the hand rests, holding the cord, with the wing flat */
-export const HAND_REST: V3 = [0.16, 1.58, 0.37]
+export const HAND_REST: V3 = [0.16, 1.55, 0.21]
 const twistSpan = (side: 1 | -1, t: number): number => distance3(wingPoint(side, twistTipLocal(side), t), twistEye(side))
 const TWIST_SPAN_MAX = extreme(twistSpan, Math.max)
 /** the hand's pull on the twist cord, back from where it rests */
@@ -209,6 +287,7 @@ export function flyingJoints(t: number): Record<string, number> {
     'stroke-left': stroke, 'stroke-right': stroke,
     'twist-left': twist, 'twist-right': twist,
     'stirrup-f': stirrupTravel(t, 1), 'stirrup-d': stirrupTravel(t, -1),
+    'shin-f': shinLift(t, 1), 'shin-d': shinLift(t, -1),
     'spring-left': bowLift(t, 1), 'spring-right': bowLift(t, -1),
     'hand-left': handPull(t, 1), 'hand-right': handPull(t, -1),
   }

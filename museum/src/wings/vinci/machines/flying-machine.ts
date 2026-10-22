@@ -7,15 +7,15 @@
  * primitives: the parts are built from flying/plan.ts. The object's origin
  * is on the floor under the pivot; the body needs the bench's support.
  */
-import { Box3, BufferAttribute, Group, Mesh, Quaternion, Vector3, type BufferGeometry, type Material, type Object3D } from 'three/webgpu'
+import { Box3, BufferAttribute, Group, Matrix4, Mesh, Quaternion, Vector3, type BufferGeometry, type Material, type Object3D } from 'three/webgpu'
 import type { MaterialSet, Stack } from '../../../stack'
 import { createMutableSweep, type MutableSweep } from './geometry'
 import { materialDressed, materialFailure } from './parts'
 import type { ReadyMachineBuild } from './runtime'
 import { showcaseCatalog } from './showcase'
 import {
-  AXIS, DRUM, GUIDE, PERIOD, SHEAVE, bowLift, drumTop, flyingJoints, handAt, hubCentre, lowerEyeLocal, sheaveTop,
-  springRingLocal, stirrupAt, stirrupTravel, strokeAt, twistAt, twistEye, twistTipLocal, wingPoint,
+  AXIS, DRUM, PERIOD, PLANTAR, SHEAVE, ankleAt, bowLift, drumTop, flyingJoints, handAt, hubCentre, lowerCord, sheaveAxis, sheaveCentre,
+  shinLift, springRingLocal, stirrupTravel, strokeAt, toeDirection, twistAt, twistEye, twistTipLocal, wingPoint,
 } from './flying/plan'
 import { CORD, bowGeometryInto, bowTip, buildBody, buildDrum, buildSheave, buildStirrup, buildWing, type Batch, type Kind } from './flying/parts'
 import { Mesher, type V3 } from './flying/shapes'
@@ -53,6 +53,7 @@ export function build(stack: Stack): ReadyMachineBuild {
   let pilot: Figure | null = null
 
   const qStroke = new Quaternion(), qRoll = new Quaternion(), axis = new Vector3(...AXIS), xAxis = new Vector3(1, 0, 0)
+  const basis = new Matrix4(), fx = new Vector3(), fy = new Vector3(), fz = new Vector3()
 
   function addBatch(parent: Object3D, batch: Batch, mats: Record<string, Material>, id: string): void {
     for (const [kind, geometry] of Object.entries(batch) as [Kind, BufferGeometry][]) {
@@ -74,10 +75,16 @@ export function build(stack: Stack): ReadyMachineBuild {
       qRoll.setFromAxisAngle(xAxis, -twist)
       rolls[k]!.quaternion.copy(qRoll)
       // the sheave turns with the cord that runs over it, the drum with the bow's cord
-      sheaves[k]!.rotation.x = -stirrupTravel(t, side) / SHEAVE_R
+      sheaves[k]!.rotation.x = side * stirrupTravel(t, side) / SHEAVE_R
       drums[k]!.rotation.z = side * bowLift(t, side) / DRUM_R
-      const s = stirrupAt(side, t)
-      stirrups[k]!.position.set(s[0], s[1], s[2])
+      // the heel's strap rides on the foot: across, the instep's side, the toes
+      const lift = shinLift(t, side), toe = toeDirection(lift), ankle = ankleAt(side, lift)
+      const along: V3 = [0, Math.sin(lift), -Math.cos(lift)], front: V3 = [0, -Math.cos(lift), -Math.sin(lift)]
+      const c = Math.cos(PLANTAR), sn = Math.sin(PLANTAR)
+      fz.set(...toe); fy.set(-along[0] * c + front[0] * sn, -along[1] * c + front[1] * sn, -along[2] * c + front[2] * sn).normalize()
+      fx.crossVectors(fy, fz).normalize()
+      stirrups[k]!.quaternion.setFromRotationMatrix(basis.makeBasis(fx, fy, fz))
+      stirrups[k]!.position.set(ankle[0], ankle[1], ankle[2])
     })
     for (const cord of cords) cord.sweep.update(cord.points())
     if (bow) {
@@ -94,17 +101,7 @@ export function build(stack: Stack): ReadyMachineBuild {
 
   /** the three cords of each side, as polylines with a fixed count of nodes */
   function cordPaths(side: 1 | -1): (() => V3[])[] {
-    const lower = (): V3[] => {
-      const eye = wingPoint(side, lowerEyeLocal(side), time)
-      const top = sheaveTop(side)
-      const r = SHEAVE.r - 0.004
-      const wrap: V3[] = [-30, -60, -90].map(a => {
-        const rad = a * Math.PI / 180
-        return [side * SHEAVE.x, SHEAVE.y + r * Math.sin(rad), SHEAVE.z + r * Math.cos(rad)]
-      })
-      const guide: V3 = [side * GUIDE.x, GUIDE.y + 0.002, GUIDE.z]
-      return [eye, top, ...wrap, guide, stirrupAt(side, time)]
-    }
+    const lower = (): V3[] => lowerCord(side, time, shinLift(time, side)).points
     const spring = (): V3[] => {
       // the lever over this side is the other wing's
       const ring = wingPoint((-side) as 1 | -1, springRingLocal((-side) as 1 | -1), time)
@@ -141,9 +138,13 @@ export function build(stack: Stack): ReadyMachineBuild {
       addBatch(roll, wing.turning, mats, `wing-${name}`)
       strokes.push(stroke); rolls.push(roll)
 
+      // the swivel sheave under the small hoop's crown, turned to its cord's plane
+      const block = new Group(); block.name = `sheave-block-${name}`
+      block.position.set(...sheaveCentre(side))
+      block.quaternion.setFromUnitVectors(new Vector3(1, 0, 0), new Vector3(...sheaveAxis(side)))
+      object.add(block)
       const sheave = new Group(); sheave.name = `sheave-${name}`
-      sheave.position.set(side * SHEAVE.x, SHEAVE.y, SHEAVE.z)
-      object.add(sheave)
+      block.add(sheave)
       addBatch(sheave, buildSheave(), mats, `sheave-${name}`)
       sheaves.push(sheave)
 

@@ -3,7 +3,7 @@
  * turned oak, an ash bow, leather and chamois (79v). The tints are the
  * museum's; the grain is the library's photograph under them. */
 import { Color, DoubleSide, MeshStandardNodeMaterial, type Material } from 'three/webgpu'
-import { attribute, cameraPosition, float, normalWorld, positionWorld, uv, vec3 } from 'three/tsl'
+import { attribute, cameraPosition, cos, float, fwidth, mx_noise_float, normalWorld, positionWorld, uv, vec3 } from 'three/tsl'
 import type { MaterialSet, Stack } from '../../../../stack'
 import { loadMachineMaterial, materialDressed } from '../parts'
 import { benchKeyDirection } from '../key'
@@ -24,6 +24,27 @@ function keyRim(strength: number): N {
   const grazing = float(1).sub(normalWorld.dot(toEye).abs()).clamp(0, 1).pow(2.6)
   const lit = normalWorld.dot(vec3(key.x, key.y, key.z)).mul(0.5).add(0.5).pow(1.5)
   return grazing.mul(lit).mul(strength)
+}
+
+/** A pattern's contrast, faded as one pixel comes to hold more than a
+ * stripe of it, so a stripe never shimmers in motion. */
+function fadeByPixel(phase: N, strength: number): N {
+  return float(1).sub(fwidth(phase).div(Math.PI)).clamp(0, 1).mul(strength)
+}
+/** hemp's lay: the strands run round the cord at a slant. The metric uv goes
+ * round (u) and along (v); every cord and wrap in the build is sized to hold
+ * a whole number of strands round, so the pattern closes on its seam. */
+export const STRAND = 0.0088
+function lay(): N {
+  const phase = uv().x.div(STRAND).add(uv().y.div(0.017)).mul(Math.PI * 2)
+  const groove = cos(phase).mul(0.5).add(0.5).pow(0.7)
+  return float(1).sub(fadeByPixel(phase, 0.32).mul(float(1).sub(groove)))
+}
+/** cane's hard skin: fine fibres along the stem, faded with the pixel */
+function fibre(): N {
+  const at = vec3(uv().x.mul(620), uv().y.mul(14), 0)
+  const n = mx_noise_float(at)
+  return float(1).add(n.mul(fadeByPixel(uv().x.mul(620 * Math.PI), 0.09)))
 }
 
 export interface FlyingSurfaces {
@@ -48,7 +69,7 @@ export async function flyingSurfaces(stack: Stack): Promise<FlyingSurfaces> {
   {
     const s = set['oak-veneer-light']
     const d = stack.detail(cane, { ...s, normalStrength: 0.12, scales: [0.3, 0.03, 0.0008], grain: s.grain ? { ...s.grain, relief: 0.06, shade: 0.1, sheen: 0.3 } : null }, { uv: uv(), count: 3, maps: dressed(s) ? 1 : 0, fade: [6, 40] })
-    cane.colorNode = lin('#b39a66').mul(luma(d.albedo).mul(0.35).add(0.72)).mul(d.occlusion).mul(attribute('color', 'vec3')).mul(keyRim(0.7).add(1))
+    cane.colorNode = lin('#b39a66').mul(luma(d.albedo).mul(0.35).add(0.72)).mul(d.occlusion).mul(attribute('color', 'vec3')).mul(fibre()).mul(keyRim(0.7).add(1))
     cane.roughnessNode = d.roughness.mul(0.45).clamp(0.26, 0.42)
   }
   // FIR (74r's frame): pale, straight grained, planed
@@ -84,17 +105,13 @@ export async function flyingSurfaces(stack: Stack): Promise<FlyingSurfaces> {
     skin.side = DoubleSide
     const cloth = lin('#d8cba9').mul(luma(d.albedo)).mul(d.occlusion).mul(attribute('color', 'vec3'))
     skin.colorNode = cloth
-    // a thin cloth passes some of the key through: the face turned from it
-    // glows a little instead of falling to the shade of a board
-    const key = benchKeyDirection()
-    if (key) skin.emissiveNode = cloth.mul(normalWorld.dot(vec3(key.x, key.y, key.z)).negate().clamp(0, 1).mul(0.16))
   }
   // HEMP: the lashings, the hems and the running cords
   const hemp = (name: string, tint: string, toned = true): MeshStandardNodeMaterial => {
     const s = set['rope']
     const m = surface(name, s)
     const d = stack.detail(m, s, { uv: uv(), count: 3, maps: dressed(s) ? 1 : 0, fade: [6, 35] })
-    const base = lin(tint).mul(luma(d.albedo).mul(0.6).add(0.5)).mul(d.occlusion).mul(keyRim(0.6).add(1))
+    const base = lin(tint).mul(luma(d.albedo).mul(0.6).add(0.5)).mul(d.occlusion).mul(lay()).mul(keyRim(0.6).add(1))
     m.colorNode = toned ? base.mul(attribute('color', 'vec3')) : base
     m.roughnessNode = d.roughness.max(0.62)
     return m

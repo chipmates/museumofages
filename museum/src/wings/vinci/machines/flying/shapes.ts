@@ -143,24 +143,47 @@ export function caneBundle(cane: Mesher, lash: Mesher, path: readonly V3[], o: B
   const sides = o.sides ?? 10
   const twist = o.twist ?? total / 3
   for (let k = 0; k < 3; k++) {
-    const spacing = 0.24 + 0.1 * hash(o.seed, k)
+    // a node about every 0.3 m, each cane its own spacing
+    const spacing = 0.26 + 0.09 * hash(o.seed, k)
     const shift = spacing * hash(o.seed, k, 3)
-    const shade = 0.9 + 0.2 * hash(o.seed, k, 5)
+    // a few canes in a bundle are older and darker
+    const dark = hash(o.seed, k, 11) < 0.17
+    const shade = dark ? 0.62 + 0.1 * hash(o.seed, k, 5) : 0.88 + 0.22 * hash(o.seed, k, 5)
     const cPath: V3[] = path.map((p, i) => {
       const a = (k / 3) * Math.PI * 2 + (f.s[i]! / Math.max(total, 1e-6)) * twist * Math.PI * 2 + o.seed
       const d = add(mul(f.n[i]!, Math.cos(a)), mul(f.b[i]!, Math.sin(a)))
       return add(p, mul(d, 0.536 * R(f.s[i]!)))
     })
-    const nodeAt = (along: number): number => {
+    // signed distance past the nearest node: the ridge, then a waist below it
+    const nodeOff = (along: number): number => {
       const x = (along + shift) / spacing
-      const d = Math.abs(x - Math.round(x)) * spacing
-      return Math.max(0, 1 - d / 0.009)
+      return (x - Math.round(x)) * spacing
     }
-    tube(cane, cPath, {
+    const ridge = (along: number): number => Math.max(0, 1 - Math.abs(nodeOff(along)) / 0.005)
+    const waist = (along: number): number => { const d = nodeOff(along); return d > 0 ? Math.max(0, 1 - Math.abs(d - 0.016) / 0.012) : 0 }
+    // between nodes the cane's skin varies a little in tone
+    const internode = (along: number): number => 0.94 + 0.06 * Math.sin(Math.round((along + shift) / spacing) * 2.3 + k)
+    const cr = (along: number): number => 0.464 * R(along) * (1 + 0.16 * ridge(along) - 0.035 * waist(along))
+    tube(cane, densify(cPath, 0.0045, (along: number) => ridge(along) > 0, f.s), {
       sides, up: o.up, caps: true, capTone: 0.62,
-      radius: (_i, along) => 0.464 * R(along) * (1 + 0.07 * nodeAt(along)),
-      tone: (_i, along, around) => shade * (1 - 0.24 * nodeAt(along)) * (0.96 + 0.04 * Math.cos(around * Math.PI * 2 * 3)),
+      radius: (_i, along) => cr(along),
+      tone: (_i, along, around) => shade * internode(along) * (1 - 0.42 * ridge(along)) * (1 + 0.08 * waist(along)) * (0.96 + 0.04 * Math.cos(around * Math.PI * 2 * 3)),
     })
+    // the cut ends split along the fibre: a few slivers splayed past the cap
+    for (const end of [0, path.length - 1]) {
+      const i1 = end === 0 ? 1 : path.length - 2
+      const dir = unit(sub(cPath[end]!, cPath[i1]!))
+      const r = cr(f.s[end]!)
+      for (let q = 0; q < 3; q++) {
+        if (hash(o.seed, k, end, q) < 0.35) continue
+        const a = Math.PI * 2 * (q / 3 + hash(o.seed, k, end, q, 1) * 0.3)
+        const side = add(mul(f.n[end]!, Math.cos(a)), mul(f.b[end]!, Math.sin(a)))
+        const base = add(cPath[end]!, mul(side, r * 0.55))
+        const reach = 0.012 + 0.022 * hash(o.seed, k, end, q, 2)
+        const tip = add(add(base, mul(dir, reach)), mul(side, r * 0.25 + reach * 0.18))
+        lath(cane, [sub(base, mul(dir, 0.006)), add(base, mul(dir, reach * 0.5)), tip], r * 0.5, r * 0.18, side, shade * 0.86)
+      }
+    }
   }
   const places: number[] = []
   for (let at = o.lashStart ?? o.lashEvery * 0.5; at < total - 0.02; at += o.lashEvery) places.push(at)
@@ -171,8 +194,45 @@ export function caneBundle(cane: Mesher, lash: Mesher, path: readonly V3[], o: B
     while (i < f.s.length - 2 && f.s[i + 1]! < at) i++
     const k = (at - f.s[i]!) / Math.max(1e-6, f.s[i + 1]! - f.s[i]!)
     const centre = add(path[i]!, mul(sub(path[i + 1]!, path[i]!), k))
-    lashing(lash, centre, f.t[i]!, f.n[i]!, R(at) * 1.02, 3 + Math.round(hash(o.seed, at) * 2), hash(o.seed, at, 9))
+    lashing(lash, centre, f.t[i]!, f.n[i]!, R(at) * 1.004, 3 + Math.round(hash(o.seed, at) * 2), hash(o.seed, at, 9))
   }
+}
+
+/** a path with extra stations where a test along it holds (a node's ridge
+ * needs stations a few millimetres apart to show) */
+export function densify(path: readonly V3[], step: number, where: (along: number) => boolean, s: readonly number[]): V3[] {
+  const out: V3[] = [path[0]!]
+  for (let i = 1; i < path.length; i++) {
+    const a = path[i - 1]!, b = path[i]!, l = s[i]! - s[i - 1]!
+    const n = Math.max(1, Math.ceil(l / step))
+    for (let j = 1; j <= n; j++) {
+      const along = s[i - 1]! + l * j / n
+      if (j === n || where(along) || where(along - step) || where(along + step)) out.push(add(a, mul(sub(b, a), j / n)))
+    }
+  }
+  return out
+}
+
+/** a hemp wrapping laid tight round two members at once: each turn follows
+ * the hull of the two sections, so it sits on both and bridges between */
+export function lashTwo(m: Mesher, a: V3, ra: number, b: V3, rb: number, axis: V3, turns: number, phase = 0, rr = 0.0042): void {
+  const t = unit(axis)
+  const ref: V3 = Math.abs(t[1]) > 0.9 ? [1, 0, 0] : [0, 1, 0]
+  const n = unit(cross(t, ref)), bb = cross(t, n)
+  const mid = mul(add(a, b), 0.5)
+  const flat = (c: V3): M3 => sub(c, mul(t, dot(sub(c, mid), t)))
+  const A = flat(a), B = flat(b)
+  const pitch = rr * 2.1, per = 28, steps = Math.ceil(turns * per)
+  const pts: V3[] = []
+  for (let s = 0; s <= steps; s++) {
+    const ang = (s / per) * Math.PI * 2 + phase * 6.28
+    const d = add(mul(n, Math.cos(ang)), mul(bb, Math.sin(ang)))
+    const useA = dot(sub(A, mid), d) + ra >= dot(sub(B, mid), d) + rb
+    const c = useA ? A : B, r = useA ? ra : rb
+    const along = (s / steps - 0.5) * turns * pitch
+    pts.push(add(add(c, mul(t, along)), mul(d, r + rr)))
+  }
+  tube(m, pts, { sides: 6, radius: () => rr, caps: true, capTone: 0.8, tone: (_i, along) => 0.92 + 0.08 * Math.sin(along * 900) })
 }
 
 /** a hemp wrapping: a tight helix of a few turns round an axis */

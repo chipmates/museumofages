@@ -4,10 +4,10 @@
  * surface is a BufferGeometry in metres, so the checks build it in node. */
 import type { BufferGeometry } from 'three/webgpu'
 import {
-  AXIS, BEAK, BODY, BOW, DRUM, FRAMES, GUIDE, HOOP, HUB, PIN, RAILS, RAIL_R, SHEAVE, SMALL_HOOP, WING,
-  railAt, hubCentre, twistEye,
+  AXIS, BEAK, BODY, BOW, CROWN, DRUM, FRAMES, HOOP, HUB, KNEE, PIN, RAILS, RAIL_R, SHEAVE, SMALL_HOOP, WING,
+  railAt, hubCentre, sheaveAxis, sheaveCentre, twistEye,
 } from './plan'
-import { Mesher, caneBundle, hash, lashing, lath, line, ring, rod, bar, tube, v3, wheel, type V3 } from './shapes'
+import { Mesher, caneBundle, hash, lashTwo, lashing, lath, line, ring, rod, bar, tube, v3, wheel, type V3 } from './shapes'
 
 export type Kind = 'cane' | 'lash' | 'fir' | 'skin' | 'hem' | 'iron' | 'wood' | 'leather' | 'chamois' | 'ash'
 export type Batch = Partial<Record<Kind, BufferGeometry>>
@@ -70,20 +70,30 @@ export function buildBody(): Batch {
   // where each leg crosses the top and middle rails, a cross lashing
   for (const sx of [1, -1]) for (const level of ['top', 'mid'] as const) {
     const at = railAt({ side: sx as 1 | -1, level }, HOOP.z)
-    lashing(lash, [at[0] + sx * 0.022, at[1], at[2]], [0, 1, 0], [1, 0, 0], 0.03, 4, 0.2)
+    const rr = level === 'top' ? railR(HOOP.z) : railR(HOOP.z) * 0.9
+    const leg: V3 = [sx * (halfAt(HOOP.z) + railR(HOOP.z) + HOOP.r), at[1], at[2]]
+    lashTwo(lash, at, rr, leg, HOOP.r, [0, 0, 1], 4, 0.2)
   }
   const small = hoopPath(SMALL_HOOP.z, halfAt(SMALL_HOOP.z), 1.3, BODY.topY, BODY.topY + SMALL_HOOP.rise, SMALL_HOOP.r, railR(SMALL_HOOP.z))
   caneBundle(cane, lash, small, { r0: SMALL_HOOP.r, r1: SMALL_HOOP.r, seed: 57, lashEvery: 0.15, up: [0, 0, 1], twist: 1 })
-  // the small hoop's fitting, an iron eye on its near side (purpose not written)
-  {
-    const x0 = halfAt(SMALL_HOOP.z) + railR(SMALL_HOOP.z) + SMALL_HOOP.r
-    const a = Math.PI * 0.2
-    const p: V3 = [x0 * Math.cos(a), BODY.topY + SMALL_HOOP.rise * Math.sin(a), SMALL_HOOP.z]
-    const out = unit([Math.cos(a) * SMALL_HOOP.rise, Math.sin(a) * x0, 0])
-    ring(iron, p, unit([-Math.sin(a) * x0, Math.cos(a) * SMALL_HOOP.rise, 0]), SMALL_HOOP.r + 0.006, 0.004, 6, 16, 0.9)
-    ring(iron, add(p, mul(out, SMALL_HOOP.r + 0.026)), [0, 0, 1], 0.017, 0.0045, 6, 16, 0.9)
+  // THE SMALL HOOP'S FITTING (drawn on 74v, its purpose not written): read
+  // here as the block the lowering cords turn under. A band round the crown
+  // for each cord, a swivel eye, a fork and the sheave's pin.
+  for (const sx of [1, -1] as const) {
+    const top: V3 = [sx * SHEAVE.x, CROWN.y, CROWN.z]
+    ring(iron, top, [1, 0, 0], SMALL_HOOP.r + 0.004, 0.0045, 6, 18, 0.9)
+    ring(iron, [sx * (SHEAVE.x + 0.016), CROWN.y, CROWN.z], [1, 0, 0], SMALL_HOOP.r + 0.004, 0.0045, 6, 18, 0.9)
+    const c = sheaveCentre(sx), ax = sheaveAxis(sx)
+    const swivel: V3 = [c[0] + sx * 0.008, CROWN.y - SMALL_HOOP.r - 0.008, c[2]]
+    ring(iron, swivel, [0, 0, 1], 0.008, 0.0035, 6, 14, 0.9)
+    // the fork: two cheeks either side of the sheave, from the swivel to the pin
+    const up = unit(sub(swivel, c))
+    for (const sgn of [-1, 1]) {
+      const off = mul(ax, sgn * (0.014 + 0.0035))
+      bar(iron, add(add(swivel, mul(up, -0.006)), mul(off, 0.6)), add(c, off), 0.014, 0.004, ax, 0.9)
+    }
+    rod(iron, add(c, mul(ax, -0.024)), add(c, mul(ax, 0.024)), 0.0045, 8, 0.95)
   }
-
   // two braces from the crown down to the head end's top corners (74v's lines from the hub)
   for (const sx of [1, -1]) {
     const corner = railAt({ side: sx as 1 | -1, level: 'top' }, FRAMES.head)
@@ -112,26 +122,30 @@ export function buildBody(): Batch {
     bar(iron, add(tip, [-0.03, 0, 0]), add(tip, [0.03, 0, 0]), 0.014, 0.006, [0, 1, 0], 0.9)
   }
 
-  // the guide eyes on the top rails, and the sheaves' iron straps
+  // the drums' brackets on the head end's side posts
   for (const sx of [1, -1] as const) {
-    const g: V3 = [GUIDE.x * sx, GUIDE.y, GUIDE.z]
-    ring(iron, g, [0, 0, 1], 0.011, 0.0035, 6, 14, 0.9)
-    const r = railAt({ side: sx, level: 'top' }, GUIDE.z)
-    bar(iron, add(r, [0, railR(GUIDE.z), 0]), add(g, [0, -0.008, 0]), 0.012, 0.004, [0, 0, 1], 0.9)
-    const s: V3 = [SHEAVE.x * sx, SHEAVE.y, SHEAVE.z]
-    const rs = railAt({ side: sx, level: 'top' }, SHEAVE.z)
-    for (const dx of [-0.022, 0.022]) {
-      bar(iron, [s[0] + dx, s[1] + 0.006, s[2]], [rs[0] + dx * 0.6, rs[1] - railR(SHEAVE.z) * 0.2, rs[2]], 0.022, 0.005, [1, 0, 0], 0.9)
-    }
-    rod(iron, [s[0] - 0.03, s[1], s[2]], [s[0] + 0.03, s[1], s[2]], 0.005, 8, 0.95)
-    lashing(lash, rs, [0, 0, 1], [0, 1, 0], railR(SHEAVE.z) + 0.005, 4, 0.3)
-    // the drums' brackets on the head end's side posts
     const d: V3 = [DRUM.x * sx, DRUM.y, DRUM.z]
     const post: V3 = [railAt({ side: sx, level: 'top' }, FRAMES.head)[0] + sx * 0.035, DRUM.y, FRAMES.head]
     for (const dz of [-DRUM.len / 2 - 0.008, DRUM.len / 2 + 0.008]) {
       bar(iron, [post[0], post[1], d[2] + dz], [d[0], d[1], d[2] + dz], 0.026, 0.006, [0, 0, 1], 0.9)
     }
     rod(iron, [d[0], d[1], d[2] - DRUM.len / 2 - 0.02], [d[0], d[1], d[2] + DRUM.len / 2 + 0.02], 0.006, 8, 0.95)
+  }
+  // THE KNEE BAR (ours): bound cane across the top rails under the knees,
+  // padded with leather where they rest
+  {
+    const z = KNEE.z, y = BODY.topY - 0.002
+    const l = railAt({ side: 1, level: 'top' }, z), r = railAt({ side: -1, level: 'top' }, z)
+    // butted against the rails' inner sides and lashed there
+    const e = railR(z) + 0.001
+    caneBundle(cane, lash, line([l[0] - e, y, z], [r[0] + e, y, z], 0.03), { r0: 0.016, r1: 0.016, seed: 47, lashEvery: 1, lashAt: [], up: [0, 0, 1] })
+    for (const sx of [1, -1] as const) {
+      const at = railAt({ side: sx, level: 'top' }, z)
+      lashTwo(lash, at, railR(z), [at[0] - sx * (railR(z) + 0.016), y, z], 0.016, [0, 1, 1], 4, 0.4 + sx)
+    }
+    const pad = b.get('leather')
+    tube(pad, line([0.15, y, z], [-0.15, y, z], 0.02), { sides: 14, radius: () => 0.0215, caps: true, capTone: 0.8, tone: (_i, along) => 0.9 + 0.1 * Math.sin(along * 37) })
+    for (const x of [0.145, -0.145, 0]) lashing(lash, [x, y, z], [1, 0, 0], [0, 1, 0], 0.0215, 2, x, 0.0028)
   }
   // the bow's iron strap round the head end's bottom bar
   ring(iron, [0, railAt({ side: 1, level: 'bottom' }, FRAMES.head)[1] - 0.012, FRAMES.head], [1, 0, 0], 0.03, 0.005, 6, 18, 0.9)
@@ -143,7 +157,7 @@ export function buildBody(): Batch {
 /** THE SLING (79v): a chamois skin under the body from the throat to the
  * crotch, wrapped over the top rails and laced */
 function buildSling(m: Mesher, lash: Mesher): void {
-  const z0 = 0.14, z1 = -0.56, nz = 22, nx = 18
+  const z0 = -0.1, z1 = -0.8, nz = 22, nx = 18
   const base = m.count
   for (let i = 0; i <= nz; i++) {
     const z = z0 + (z1 - z0) * (i / nz)
@@ -165,7 +179,7 @@ function buildSling(m: Mesher, lash: Mesher): void {
   }
   for (let i = 1; i < 8; i++) {
     const z = z0 + (z1 - z0) * (i / 8)
-    for (const sx of [1, -1]) lashing(lash, railAt({ side: sx as 1 | -1, level: 'top' }, z), [0, 0, 1], [0, 1, 0], railR(z) + 0.004, 2, i * 0.13, 0.003)
+    for (const sx of [1, -1]) lashing(lash, railAt({ side: sx as 1 | -1, level: 'top' }, z), [0, 0, 1], [0, 1, 0], railR(z) + 0.0043, 2, i * 0.13, 0.0028)
   }
 }
 
@@ -221,8 +235,9 @@ export function buildWing(side: 1 | -1): { turning: Batch; hub: Batch } {
   const outerPath = line([WING.joint.at, WING.joint.lift, 0], [WING.tip, WING.joint.lift, 0], 0.04).map(X)
   caneBundle(cane, lash, outerPath, { r0: WING.outer.r0, r1: WING.outer.r1, seed: side > 0 ? 75 : 77, lashEvery: 0.26, lashStart: 0.5, up })
   // the joint's three wrappings round both pieces
+  const rootR = (x: number): number => WING.root.r0 + (WING.root.r1 - WING.root.r0) * (x + WING.lever) / (WING.root.end + WING.lever)
   for (const at of [WING.joint.at + 0.06, WING.joint.at + 0.18, WING.root.end - 0.05]) {
-    lashing(lash, X([at, WING.joint.lift * 0.5, 0]), [side, 0, 0], [0, 1, 0], WING.joint.lift * 0.5 + 0.022, 5, at)
+    lashTwo(lash, X([at, 0, 0]), rootR(at), X([at, WING.joint.lift, 0]), sparRadius(at), [side, 0, 0], 5, at)
   }
   // iron: bands either side of the hub, the lowering eye, the spring ring on
   // the lever, the twist arm, the eye near the tip
@@ -248,7 +263,8 @@ export function buildWing(side: 1 | -1): { turning: Batch; hub: Batch } {
     const pts: V3[] = []
     for (let k = 0; k <= 16; k++) pts.push(sub(ribTop(i, k / 16), [0, WING.rib.h / 2 + 0.0015, 0]))
     lath(fir, pts.map(X), WING.rib.w, WING.rib.h, [0, 1, 0], 0.92 + 0.12 * hash(i, side))
-    lashing(lash, X([rib.s, sparLift(rib.s), 0]), [side, 0, 0], [0, 1, 0], sparRadius(rib.s) + 0.006, 4, i * 0.21)
+    const root = sub(ribTop(i, 0.02), [0, WING.rib.h / 2, 0])
+    lashTwo(lash, X([rib.s, sparLift(rib.s), 0]), sparRadius(rib.s), X(root), WING.rib.h * 0.75, [side, 0, 0], 4, i * 0.21)
   })
 
   // THE SKIN (74r B, fustian): one Coons patch per bay, sagging between the
@@ -298,11 +314,11 @@ export function buildWing(side: 1 | -1): { turning: Batch; hub: Batch } {
     for (let c = 0; c <= nu; c++) if (!(i > 0 && c === 0)) hemPath.push(X(grid[nv]![c]!))
   }
   // the hem's bolt rope along the scallops, tied off at the tip eye
-  tube(hem, hemPath, { sides: 6, radius: () => 0.0048, caps: true, capTone: 0.8, tone: (_i, along) => 0.94 + 0.06 * Math.sin(along * 40) })
+  tube(hem, hemPath, { sides: 6, radius: () => 0.0042, caps: true, capTone: 0.8, tone: (_i, along) => 0.94 + 0.06 * Math.sin(along * 40) })
   // the inner edge's hem along the first rib
   const inner: V3[] = []
   for (let k = 0; k <= 16; k++) inner.push(X(add(ribTop(0, k / 16), [0, 0.006, 0])))
-  tube(hem, inner, { sides: 6, radius: () => 0.004, caps: true })
+  tube(hem, inner, { sides: 6, radius: () => 0.0042, caps: true })
 
   // the hub: a wooden boss on the pin, the spar through it
   wheel(hub.get('wood'), [0, 0, 0], AXIS, HUB.radius, HUB.thick, 0, 28, 0.95)
@@ -315,7 +331,7 @@ function m4(m: Mesher, a: number, b: number, c: number, d: number): void { m.qua
 /** a sheave or a drum, turned in its own frame (centre at the origin) */
 export function buildSheave(): Batch {
   const b = new Batches()
-  wheel(b.get('wood'), [0, 0, 0], [1, 0, 0], SHEAVE.r, 0.028, 0.008, 28, 0.95)
+  wheel(b.get('wood'), [0, 0, 0], [1, 0, 0], SHEAVE.r, 0.024, 0.007, 28, 0.95)
   // the turner's mark, so a turning wheel is seen to turn
   rod(b.get('iron'), [0.0141, SHEAVE.r * 0.5, 0], [0.0141, SHEAVE.r * 0.5 + 0.001, 0.001], 0.004, 6)
   return b.done()
@@ -328,22 +344,26 @@ export function buildDrum(): Batch {
   return b.done()
 }
 
-/** THE STIRRUP: a leather foot strap in its own frame, open toward the foot
- * (+Z), its cord's knot at the front */
+/** THE STIRRUP (74v names the feet at f and d; 73v draws a stirrup): a
+ * leather strap round the back of the heel and over the instep, its cord
+ * knotted at the heel. Built in the foot's frame: +X across the foot, +Y the
+ * instep's side, +Z toward the toes, origin at the ankle. */
 export function buildStirrup(): Batch {
   const b = new Batches()
+  const heel: V3 = [0, -0.006, -0.041], instep: V3 = [0, 0.044, 0.026]
+  const c = mul(add(heel, instep), 0.5), a = mul(sub(heel, instep), 0.5)
+  const side: V3 = [0.044, 0, 0]
   const pts: V3[] = []
-  // a strap standing on edge round the forefoot, the cord tied at its front
-  for (let i = 0; i <= 32; i++) {
-    const a = (i / 32) * Math.PI * 2 + Math.PI / 2
-    pts.push([0.05 * Math.cos(a), 0, -STIRRUP_LOOP + STIRRUP_LOOP * Math.sin(a)])
+  for (let i = 0; i <= 36; i++) {
+    const t = (i / 36) * Math.PI * 2
+    pts.push(add(c, add(mul(a, Math.cos(t)), mul(side, Math.sin(t)))))
   }
-  lath(b.get('leather'), pts, 0.005, 0.034, [0, 1, 0])
-  lashing(b.get('lash'), [0, 0, 0.004], [0, 0, 1], [1, 0, 0], 0.006, 3, 0.4, 0.004)
+  const normal = unit(cross(a, side))
+  lath(b.get('leather'), pts, 0.005, 0.024, normal)
+  // the knot at the back of the heel, where the cord takes hold
+  lashing(b.get('lash'), add(heel, [0, -0.002, -0.006]), [1, 0, 0], [0, 1, 0], 0.005, 2, 0.4, 0.0042)
   return b.done()
 }
-/** the loop's depth: the ball of the foot sits this far aft of the knot */
-export const STIRRUP_LOOP = 0.034
 
 /** THE BOW SPRING, bent: ash, its middle held, each tip lifted by its cord */
 export function bowGeometryInto(m: Mesher, liftLeft: number, liftRight: number): void {
@@ -361,7 +381,7 @@ export function bowTip(side: 1 | -1, lift: number): V3 {
 }
 /** the hub's centre, for the wing groups */
 export { hubCentre }
-/** a cord's radius in metres */
-export const CORD = { lower: 0.0045, spring: 0.0045, twist: 0.0035 } as const
+/** a cord's radius in metres: whole strands round (surface.ts STRAND) */
+export const CORD = { lower: 0.0056, spring: 0.0042, twist: 0.0042 } as const
 /** keep the shapes module's helpers reachable for the checks */
 export const shapes = { line }

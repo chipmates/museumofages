@@ -1,4 +1,5 @@
-import { Box3, type BufferGeometry, Color, Fog, Group, Mesh, MeshStandardNodeMaterial, PerspectiveCamera, type PlaneGeometry, Scene, Vector3 } from 'three/webgpu';
+import { Box3, type BufferGeometry, Color, Fog, Group, Mesh, MeshStandardNodeMaterial, PerspectiveCamera, type PlaneGeometry, Scene, SpotLight, Vector3 } from 'three/webgpu';
+import { kelvinToColour } from '../../../../stack/light';
 import type { Stack, KeyLight, MaterialSet } from '../../../../stack';
 import { float, fog, positionWorld, rangeFogFactor, smoothstep, uv, vec3 } from 'three/tsl';
 import { IDENTITY } from '../../../../stack/grade';
@@ -50,7 +51,16 @@ export interface BenchOptions {
   /** a plain grey figure of 1.70 m standing for size: its feet, its turn about the vertical */
   figure?: { at: [number, number, number]; turn: number };
   ropeProbe?: 'baseline' | 'no-shadow' | 'flat-normal' | 'offset-2mm';
+  /** this jump's own exhibition lamp in place of the machine's (a probe) */
+  lamp?: BenchLamp | null;
 }
+/** An exhibition lamp on one machine, beside the hour's key: a spot in the
+ * machine's metres, its illuminance in lux (no fall-off), its cone in radians. */
+export interface BenchLamp { at: [number, number, number]; aim: [number, number, number]; lux: number; kelvin: number; angle: number; penumbra: number }
+/** Only the machines named here have a lamp; every other bench frame is lit by the key alone. */
+const BENCH_LAMP: Partial<Record<string, BenchLamp>> = {
+  'flying-machine': { at: [-7.5, 8.5, -6.5], aim: [0.2, 1.9, -0.4], lux: 150, kelvin: 4300, angle: .5, penumbra: .55 },
+};
 const el = <K extends keyof HTMLElementTagNameMap>(tag: K, cls: string, text?: string): HTMLElementTagNameMap[K] => { const n = document.createElement(tag); n.className = cls; if (text !== undefined)
   n.textContent = text; return n; };
 const localText = (lang: Language, en: string, de: string): string => lang === 'de' ? de : en;
@@ -193,6 +203,24 @@ export function createBench(stack: Stack, onExit: () => void) {
   let metricsTier = metrics ? stack.tierName() : null;
   let closeUp = false;
   let eye: BenchOptions['eye'] | null = null;
+  let lamp: SpotLight | null = null;
+  function dropLamp() { if (!lamp) return; lamp.target.removeFromParent(); lamp.removeFromParent(); lamp.dispose(); lamp = null; }
+  function lampBench(spec: BenchLamp | undefined | null) {
+    dropLamp();
+    if (!spec) return;
+    const at = new Vector3(...spec.at), aim = new Vector3(...spec.aim);
+    lamp = new SpotLight(kelvinToColour(spec.kelvin), spec.lux / 100, 0, spec.angle, spec.penumbra, 0);
+    lamp.name = 'vinci/bench/lamp';
+    lamp.position.copy(at);
+    lamp.target.position.copy(aim);
+    lamp.castShadow = true;
+    lamp.shadow.mapSize.set(2048, 2048);
+    lamp.shadow.camera.near = Math.max(.5, at.distanceTo(aim) - 9);
+    lamp.shadow.camera.far = at.distanceTo(aim) + 12;
+    lamp.shadow.bias = -.0002;
+    lamp.shadow.normalBias = .01;
+    scene.add(lamp, lamp.target);
+  }
   let sizeFigure: Figure | null = null;
   const figureMaterial = new MeshStandardNodeMaterial({ metalness: 0, roughness: .82 });
   figureMaterial.name = 'vinci/bench/size-figure';
@@ -541,7 +569,7 @@ export function createBench(stack: Stack, onExit: () => void) {
     const requestedEvidence = opts.evidence === undefined ? null : opts.evidence === requested ? recordOf(requested) : partialCatalog.find(record => record.slug === opts.evidence);
     if (opts.evidence !== undefined && !requestedEvidence) throw new Error(`No evidence record for ${requested}: ${opts.evidence}`);
     evidence.close(false);
-    const mine = ++serial; active = true; host.hidden = false; ready = false; loading.hidden = false; clearDisplay(); folioEntry = undefined; folio.replaceChildren(); slug = requested; evidenceRecord = recordOf(slug); lang = controlLanguage(location.search, opts.lang); schedule = playbackSchedule(recordOf(slug).dossier); playbackState = initialPlayback(schedule, { t: opts.t, fixed: document.body.classList.contains('forge'), reducedMotion: reduced.matches }); lastWall = performance.now(); stamp(); stack.setScene(scene, camera, { ...IDENTITY, name: 'vinci-machine-bench', exposure: .95, grain: .004, ao: { intensity: 1, distance: Math.max(...Object.values(recordOf(slug).dossier.scale_m).filter((v): v is number => typeof v === 'number')) * .025, thickness: 1 } }); lightBench(); machine = isShowcaseSlug(slug) ? buildShowcase(slug, stack) : buildMachine(slug, stack); eye = opts.eye ?? null;
+    const mine = ++serial; active = true; host.hidden = false; ready = false; loading.hidden = false; clearDisplay(); folioEntry = undefined; folio.replaceChildren(); slug = requested; evidenceRecord = recordOf(slug); lang = controlLanguage(location.search, opts.lang); schedule = playbackSchedule(recordOf(slug).dossier); playbackState = initialPlayback(schedule, { t: opts.t, fixed: document.body.classList.contains('forge'), reducedMotion: reduced.matches }); lastWall = performance.now(); stamp(); stack.setScene(scene, camera, { ...IDENTITY, name: 'vinci-machine-bench', exposure: .95, grain: .004, ao: { intensity: 1, distance: Math.max(...Object.values(recordOf(slug).dossier.scale_m).filter((v): v is number => typeof v === 'number')) * .025, thickness: 1 } }); lightBench(); lampBench(opts.lamp === undefined ? BENCH_LAMP[slug] : opts.lamp); machine = isShowcaseSlug(slug) ? buildShowcase(slug, stack) : buildMachine(slug, stack); eye = opts.eye ?? null;
     if (opts.figure) { sizeFigure = makeFigure(figureMaterial, 'size-figure'); sizeFigure.pose(standingJoints(opts.figure.turn, opts.figure.at)); sizeFigure.group.userData['assetClass'] = 'GENERATED'; display.add(sizeFigure.group); } closeUp = opts.close ?? false; sectionEnabled = (slug === 'camera-obscura' || slug === 'mechanical-lion') && (opts.section ?? false); machine.section(sectionEnabled); display.add(machine.object); compose(); paint(); await Promise.all([machine.ready, supports(mine), plateFor(mine)]); if (mine !== serial)
     return; machine.animate(playbackState.clock, 0);
     if(key){
@@ -567,7 +595,7 @@ export function createBench(stack: Stack, onExit: () => void) {
     if (requestedEvidence) evidence.open(requestedEvidence, read);
     ready = true; loading.hidden = true; metrics?.reset(); stamp(); lastWall = performance.now(); console.log(`[bench] mounted ${slug} period=${recordOf(slug).dossier.motion.period_s} tier=${stack.tierName()}`); }
   function close() { if (!active)
-    return; setBenchKey(null); serial++; evidence.close(false); active = false; host.hidden = true; ready = false; clearDisplay(); key?.dispose(); key = null; }
+    return; dropLamp(); setBenchKey(null); serial++; evidence.close(false); active = false; host.hidden = true; ready = false; clearDisplay(); key?.dispose(); key = null; }
   function navigate(delta: number) { const id = BENCH_SLUGS[(BENCH_SLUGS.indexOf(slug) + delta + BENCH_SLUGS.length) % BENCH_SLUGS.length]; if (id) {
     history.pushState({}, '', `/bench/vinci/machines/${id}${location.search}`);
     void open({ slug: id });
