@@ -40,6 +40,9 @@ export interface HelicoidSpec {
   layer_m: number
   /** radius of the rim wire: the hem ends against it */
   wire_r: number
+  /** share of a doubled layer's stand-off kept at a stitched column (0.6
+   * when absent); 1 lays the stitches flat, so no welt tilts toward a low sun */
+  welt?: number
 }
 
 const count = (tier: TierName, hero: number, standard: number, calm: number): number =>
@@ -174,7 +177,7 @@ export function sailGeometry(h: HelicoidSpec, tier: TierName): BufferGeometry {
         for (let j = 0; j <= cols; j++) {
           const { s, t } = place(i / along, acrossMarks[j]!)
           const { p, n } = frame(s, t)
-          p.addScaledVector(n, side * h.layer_m * (stitched[j] ? .6 : 1))
+          p.addScaledVector(n, side * h.layer_m * (stitched[j] ? h.welt ?? .6 : 1))
           rows[i]!.push({ p, s, t })
         }
       }
