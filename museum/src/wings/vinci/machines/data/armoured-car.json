@@ -8,8 +8,8 @@
     "The sheet gives no size: no number, measure or unit but the crew's eight.",
     "The number of guns and who fires them are not on the sheet.",
     "How the wheels bear the load, how the crew gets in and how the car is steered are not drawn.",
-    "Whether the drive's mesh is drawn as meant cannot be told from a sketch this small; as drawn, the wheels of a side turn against each other.",
-    "The dots on the cone may be nail heads or holes; the sheet does not say."
+    "Whether the drive's mesh is drawn as meant cannot be told from a sketch this small. As drawn, the wheels of a side turn against each other.",
+    "The dots on the cone may be nail heads or holes. The sheet does not say."
   ],
   "scale_m": {
     "x": 4.96,
@@ -598,7 +598,7 @@
         "interpolation": "hold"
       }
     ],
-    "visitor_12s": "The crew turns the cranks one slow turn; the front and rear wheels of each side turn against each other; the cranks bind and shudder; turned back, the wheels fight the other way. The car never moves."
+    "visitor_12s": "The crew turns the cranks one slow turn, and the front and rear wheels of each side turn against each other. The cranks bind and shudder. Turned back, the wheels fight the other way. The car never moves."
   },
   "drive": {
     "type": "eight men at two cranks",
@@ -616,8 +616,8 @@
   "label_en": "Our reconstruction from his sheet in the British Museum, sizes ours. As drawn, its wheels turn against each other.",
   "label_de": "Unsere Rekonstruktion nach seinem Blatt im British Museum, die Maße sind unsere. Wie gezeichnet, drehen sich seine Räder gegeneinander.",
   "animation_notes": [
-    "A 12 s loop that starts and ends at rest; no hidden reset.",
-    "Built as drawn: the front and rear wheels of a side turn in opposite senses; the car never rolls.",
+    "A 12 s loop that starts and ends at rest, with no hidden reset.",
+    "Built as drawn: the front and rear wheels of a side turn in opposite senses, and the car never rolls.",
     "The inspection view lifts the cover and the guns off; the geometry is unchanged."
   ],
   "folio": [
@@ -631,8 +631,8 @@
   ],
   "research": {
     "physics": {
-      "verdict_en": "As drawn, one crank turn drives the front and rear wheels of a side in opposite senses, so they fight each other and the car does not roll. This is a blind reading of the drawing; no published analysis was found. No size, mass or speed is on the sheet.",
-      "verdict_de": "Wie gezeichnet, dreht eine Kurbelumdrehung das vordere und das hintere Rad einer Seite gegensinnig, sie arbeiten gegeneinander und der Wagen rollt nicht. Das ist eine blinde Lesung der Zeichnung; eine veröffentlichte Analyse wurde nicht gefunden. Größe, Masse und Tempo stehen nicht auf dem Blatt."
+      "verdict_en": "As drawn, one crank turn drives the front and rear wheels of a side in opposite senses, so they fight each other and the car does not roll. This is our own reading of the drawing. Published accounts also say the drive as drawn cannot move the car, but none of them shows which gears they mean. No size, mass or speed is on the sheet.",
+      "verdict_de": "Wie gezeichnet, dreht eine Kurbelumdrehung das vordere und das hintere Rad einer Seite gegensinnig, sie arbeiten gegeneinander und der Wagen rollt nicht. Das ist unsere eigene Lesung der Zeichnung. Auch veröffentlichte Darstellungen sagen, dass der Antrieb wie gezeichnet den Wagen nicht bewegen kann, aber keine zeigt, welche Zahnräder sie meint. Größe, Masse und Tempo stehen nicht auf dem Blatt."
     }
   }
 }
