@@ -359,7 +359,7 @@ function guns(k: Kit, iron: Kit, bronze: Kit): void {
   PORT_ANGLES_DEG.forEach((deg, j) => {
     const a = portAngle(deg), g = radial(a), side = cross(Y, g)
     // the barrel lies low in its port: the collar is square to the leaning wall, the bore level, and its top would graze the collar's lip
-    const origin = add(mul(g, breech), mul(Y, TUB.ports.y - 0.007))
+    const origin = add(mul(g, breech), mul(Y, TUB.ports.y - 0.005))
     const shade = tone(22, j)
     // the muzzle end darkened by its own smoke, the breech dulled by hands
     bronze.lathe(origin, g, BARREL, 32, { tone: shade }, false, undefined, s => (s > GUN.length - 0.06 ? 0.7 : s < 0.04 ? 0.86 : 1))

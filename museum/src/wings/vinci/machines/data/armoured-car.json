@@ -62,8 +62,8 @@
       "parent": "tub",
       "shape": "box",
       "dimensions_m": {
-        "x": 0.22,
-        "y": 0.22,
+        "x": 0.23,
+        "y": 0.23,
         "z": 0.03
       },
       "position_m": [
@@ -83,7 +83,7 @@
       },
       "certainty": "C",
       "source": "British Museum 1860,0616.99 (the sheet): openings in the skirt, about ten on the near half; the count is ours",
-      "notes": "24 round ports, 0.15 m across, their centres 0.36 m over the ground, every 10 degrees except over the four wheels, where the drive stands inside the wall."
+      "notes": "24 round ports, 0.16 m across, their centres 0.36 m over the ground, every 10 degrees except over the four wheels, where the drive stands inside the wall."
     },
     {
       "id": "floor",

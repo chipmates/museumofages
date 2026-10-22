@@ -28,7 +28,7 @@ export const TUB = {
   staves: 72,
   floorTop: 0.11, floorT: 0.05, plank: 0.25,
   lip: { inner: 2.21, outer: 2.4, top: 0.645 },
-  ports: { y: 0.36, r: 0.075, collar: 0.11 },
+  ports: { y: 0.36, r: 0.08, collar: 0.115 },
 } as const
 
 /** The wall's radius at a height: upright at the chime, turning out above the floor, nearly upright under the rim. */
