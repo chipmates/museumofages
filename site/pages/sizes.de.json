@@ -170,12 +170,12 @@
         "what": "ein Standbild aus dem Film des Flügels. Die Reproduktion hängt annähernd in Originalgröße zwischen den anderen Bildern, die Wand läuft links von ihr weiter. Das Original befindet sich im Louvre in Paris.",
         "alt": "Eine lange dunkelblaue Wand mit gerahmten Reproduktionen unter Strahlern. Die Mona Lisa hängt dazwischen, annähernd in Originalgröße, und links von ihr folgen weitere Rahmen. Ein Standbild aus dem Film des Flügels.",
         "src": [
-          "Reproduktion: Tafel 43 aus Corrado Riccis Tesori della pittura italiana, digitalisiert von der Polnischen Nationalbibliothek, gemeinfrei, über ",
+          "Reproduktion: eine hochauflösende Aufnahme des C2RMF, seit 2011 auf Wikimedia Commons, dort beschnitten und mit angepassten Tonwerten. Gemeinfreies Werk. Reproduktion aus ",
           {
             "text": "Wikimedia Commons",
-            "href": "https://commons.wikimedia.org/wiki/File:Tesori_della_pittura_italiana_1910_(146775587).jpg"
+            "href": "https://commons.wikimedia.org/wiki/File:Mona_Lisa,_by_Leonardo_da_Vinci,_from_C2RMF_retouched.jpg"
           },
-          ". Auch die anderen Rahmen tragen Reproduktionen, jede mit Quelle und Lizenz auf ihrer Beschriftung im Flügel."
+          ". Das Museum kennzeichnet die Reproduktion, nicht das Gemälde. Kulturelle Nutzung ohne Gewinnabsicht. Auch die anderen Rahmen tragen Reproduktionen, jede mit Quelle und Lizenz auf ihrer Beschriftung im Flügel. Für das Bildnis eines Musikers darunter, in Mailand: {museum:it108}"
         ]
       },
       "links": [
