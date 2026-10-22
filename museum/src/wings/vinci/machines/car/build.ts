@@ -227,8 +227,13 @@ function cone(k: Kit, iron: Kit): void {
     const a0 = (j * TAU) / 8 + 0.0015, a1 = ((j + 1) * TAU) / 8 - 0.0015
     k.arc(v(0, 0, 0), Y, X, BAND.r0, BAND.r1, a0, a1, BAND.y0, BAND.y1, 16, { tone: tone(10, j) })
   }
-  // an iron band round the eave band's foot, where the cover takes its knocks
-  iron.lathe(v(0, 0, 0), Y, [[BAND.y0 + 0.012, BAND.r1 + 0.0008], [BAND.y0 + 0.012, BAND.r1 + 0.007], [BAND.y0 + 0.052, BAND.r1 + 0.007], [BAND.y0 + 0.052, BAND.r1 + 0.0008]], 160, { tone: 1 }, false)
+  // the fascia: eight curved boards hung from the boards' ends, the sheet's thick rim, an iron band round its foot
+  const F = COVER.fascia, under = coneY(F.r1) - (COVER.boardT * 1.09) / Math.cos(COVER.slope) - 0.002
+  for (let j = 0; j < 8; j++) {
+    const a0 = (j * TAU) / 8 + 0.0015, a1 = ((j + 1) * TAU) / 8 - 0.0015
+    k.arc(v(0, 0, 0), Y, X, F.r0, F.r1, a0 + 0.1, a1 + 0.1, F.bottom, under, 18, { tone: tone(9, j) })
+  }
+  iron.lathe(v(0, 0, 0), Y, [[F.bottom + 0.014, F.r1 + 0.0008], [F.bottom + 0.014, F.r1 + 0.007], [F.bottom + 0.056, F.r1 + 0.007], [F.bottom + 0.056, F.r1 + 0.0008]], 180, { tone: 1 }, false)
   const n = COVER.boards, da = TAU / n, t = COVER.boardT
   for (let i = 0; i < n; i++) {
     const a0 = i * da, a1 = (i + 1) * da
@@ -339,7 +344,7 @@ function guns(k: Kit, iron: Kit, bronze: Kit): void {
 /* ── A WHEEL, about its own hub ──────────────────────────────────────────── */
 
 /** Each felloe is sawn from its own board, so a turning wheel shows its turn. */
-const FELLOE_TONES = [1.13, 0.8, 1.02, 0.9, 1.08] as const
+const FELLOE_TONES = [1.08, 0.58, 1.02, 0.94, 1.12] as const
 
 export function wheel(sx: number, sz: number): Body {
   const b = body()

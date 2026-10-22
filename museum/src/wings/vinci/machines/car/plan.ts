@@ -46,12 +46,14 @@ export const PORT_ANGLES_DEG = [
   240, 250, 260, 270, 280, 290, 300,
 ] as const
 /** A bronze piece of the 1480s as a type: a short barrel with its rings and a muzzle swell. */
-export const GUN = { length: 0.92, breechR: 0.074, muzzleR: 0.052, bore: 0.022, out: 0.16 } as const
+export const GUN = { length: 0.92, breechR: 0.074, muzzleR: 0.052, bore: 0.022, out: 0.24 } as const
 
 /** The cover: a cone of boards resting on its eave band, the lookout on top. */
 export const COVER = {
   band: { r0: 2.33, r1: 2.41, y0: 0.645, y1: 0.765 },
-  eaveEdge: 2.5, topR: 0.8, slope: (32 * Math.PI) / 180,
+  eaveEdge: 2.53, topR: 0.8, slope: (32 * Math.PI) / 180,
+  /** the thick rim the sheet draws at the eave: a fascia hung from the boards' ends, over the skirt */
+  fascia: { r0: 2.455, r1: 2.515, bottom: 0.525 },
   boards: 64, boardT: 0.035,
   nailRings: [0.14, 0.38, 0.62, 0.86],
   sill: { r: 0.8, w: 0.1, below: 0.04, above: 0.03 },

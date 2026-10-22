@@ -12,12 +12,12 @@
     "The dots on the cone may be nail heads or holes. The sheet does not say."
   ],
   "scale_m": {
-    "x": 5,
+    "x": 5.06,
     "y": 2.492,
-    "z": 5,
+    "z": 5.06,
     "certainty": "C",
     "source": "museum choice",
-    "note": "Our size: 5 m across the eave, the spike 2.492 m over the ground. Seen as the sheet draws it, a little from above, the closed car is about 1.8 times as wide as it is tall, as on the sheet."
+    "note": "Our size: 5.06 m across the eave, the spike 2.492 m over the ground. Seen as the sheet draws it, a little from above, the closed car is about 1.8 times as wide as it is tall, as on the sheet."
   },
   "frame": {
     "handedness": "right",
@@ -146,9 +146,9 @@
       "parent": "root",
       "shape": "box",
       "dimensions_m": {
-        "x": 5,
+        "x": 5.06,
         "y": 1.847,
-        "z": 5
+        "z": 5.06
       },
       "position_m": [
         0,
@@ -167,7 +167,7 @@
       },
       "certainty": "C",
       "source": "British Museum 1860,0616.99 (the sheet): a low cone of straight radial boards with rings of dots; sizes ours",
-      "notes": "64 tapered boards 0.035 m thick, a 32 degree cone 5 m across on an eave band 0.12 m deep. The rings of dots are read as nail heads where hidden hoops lie under the boards: our reading. Lifted off in the inspection view."
+      "notes": "64 tapered boards 0.035 m thick, a 32 degree cone 5.06 m across on an eave band 0.12 m deep. The rings of dots are read as nail heads where hidden hoops lie under the boards: our reading. Lifted off in the inspection view."
     },
     {
       "id": "lookout",
@@ -202,9 +202,9 @@
       "parent": "tub",
       "shape": "box",
       "dimensions_m": {
-        "x": 4.714,
+        "x": 4.874,
         "y": 0.148,
-        "z": 4.714
+        "z": 4.874
       },
       "position_m": [
         0,

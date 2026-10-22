@@ -512,7 +512,7 @@ export function createBench(stack: Stack, onExit: () => void) {
    * sky and a paler bounce off the stone it stands on. The hour, the sun's
    * place and every other machine's light stay as they are. */
   const OWN_LIGHT: Partial<Record<BenchSlug, { ambient: number; ground: string }>> = {
-    'armoured-car': { ambient: .98, ground: '#5d5546' },
+    'armoured-car': { ambient: 1.15, ground: '#6a604f' },
   };
   function lightBench() {
     const scale = benchCatalog[slug].dossier.scale_m, span = Math.max(scale.x, scale.y, scale.z);
