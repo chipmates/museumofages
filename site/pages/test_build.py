@@ -3588,6 +3588,13 @@ class Case(unittest.TestCase):
                 # a plate cut to the painting says so
                 (lambda p: p.get("crop"), lambda src: [x.replace(" Here it is cropped to the painting.", "") if isinstance(x, str) else x for x in src],
                  r"carries labels\.salvator_line")]
+        # every list-page plate's record carries a tier: the copy unties one, so the two cuts for a plate without a tier
+        # have one to cut
+        data = self.data("en", self.list_page)
+        stem = data["pics"][entry_of(data, lambda p: p["tier"] == "TIER2" and not p.get("read_as"))["pic"]]["stem"]
+        record = json.loads((self.dir / "pictures.json").read_text(encoding="utf-8"))
+        next(p for p in record["plates"] if p["name"] == stem)["tier"] = plates[stem]["tier"] = None
+        (self.dir / "pictures.json").write_text(json.dumps(record, ensure_ascii=False), encoding="utf-8")
         for test, cut, words in cuts:
             with self.subTest(words=words):
                 data = self.data("en", self.list_page)
