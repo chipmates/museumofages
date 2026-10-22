@@ -27,6 +27,17 @@ export function mountBoxes(slug: string): MountBox[] {
       ]
     })
   }
+  if (slug === 'flying-machine') {
+    // Two posts carry the body under its bottom rails at the big hoop and
+    // before the feet, each with a saddle across; nothing reaches a wing,
+    // a cord or the pilot's knees in any pose of the beat.
+    const posts: [number, number, number][] = [[0.0, 1.104, 0.6], [-1.2, 1.164, 0.4]]
+    return posts.flatMap(([z, top, saddle]): MountBox[] => [
+      {size: [0.24, 0.02, 0.24], centre: [0, 0.01, z]},
+      {size: [0.07, top - 0.02 - 0.03, 0.07], centre: [0, 0.02 + (top - 0.05) / 2, z]},
+      {size: [saddle, 0.03, 0.06], centre: [0, top - 0.015, z]},
+    ])
+  }
   if (slug === 'proportional-compass') {
     // The fixed pivot is centred at [0,.45,0], radius .009, extending
     // along Z to +/-.0175. The neck ends flush against its rear face.
