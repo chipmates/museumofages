@@ -29,7 +29,7 @@ export function buildBody(): Batch {
   const cane = b.get('cane'), lash = b.get('lash'), iron = b.get('iron')
   RAILS.forEach((rail, k) => {
     const path = line(railAt(rail, BODY.head + 0.03), railAt(rail, BODY.foot - 0.03), 0.05)
-    caneBundle(cane, lash, path, { r0: RAIL_R.head, r1: RAIL_R.foot, seed: 11 + k, lashEvery: 0.14, lashStart: 0.07, up: [0, 0, 1] })
+    caneBundle(cane, lash, path, { r0: RAIL_R.head, r1: RAIL_R.foot, seed: 11 + k, lashEvery: 0.22, lashStart: 0.08, up: [0, 0, 1] })
   })
   // the four frames across the body: top bar, bottom bar and side posts at the
   // two ends; a bottom bar at each hoop

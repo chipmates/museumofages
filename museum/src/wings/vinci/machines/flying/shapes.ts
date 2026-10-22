@@ -159,15 +159,15 @@ export function caneBundle(cane: Mesher, lash: Mesher, path: readonly V3[], o: B
       const x = (along + shift) / spacing
       return (x - Math.round(x)) * spacing
     }
-    const ridge = (along: number): number => Math.max(0, 1 - Math.abs(nodeOff(along)) / 0.005)
+    const ridge = (along: number): number => Math.max(0, 1 - Math.abs(nodeOff(along)) / 0.006)
     const waist = (along: number): number => { const d = nodeOff(along); return d > 0 ? Math.max(0, 1 - Math.abs(d - 0.016) / 0.012) : 0 }
     // between nodes the cane's skin varies a little in tone
     const internode = (along: number): number => 0.94 + 0.06 * Math.sin(Math.round((along + shift) / spacing) * 2.3 + k)
-    const cr = (along: number): number => 0.464 * R(along) * (1 + 0.16 * ridge(along) - 0.035 * waist(along))
+    const cr = (along: number): number => 0.464 * R(along) * (1 + 0.2 * ridge(along) - 0.035 * waist(along))
     tube(cane, densify(cPath, 0.0045, (along: number) => ridge(along) > 0, f.s), {
       sides, up: o.up, caps: true, capTone: 0.62,
       radius: (_i, along) => cr(along),
-      tone: (_i, along, around) => shade * internode(along) * (1 - 0.42 * ridge(along)) * (1 + 0.08 * waist(along)) * (0.96 + 0.04 * Math.cos(around * Math.PI * 2 * 3)),
+      tone: (_i, along, around) => shade * internode(along) * (1 - 0.5 * ridge(along)) * (1 + 0.1 * waist(along)) * (0.96 + 0.04 * Math.cos(around * Math.PI * 2 * 3)),
     })
     // the cut ends split along the fibre: a few slivers splayed past the cap
     for (const end of [0, path.length - 1]) {
