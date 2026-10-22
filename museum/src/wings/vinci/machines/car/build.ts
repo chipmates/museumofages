@@ -27,6 +27,14 @@ export const SLOT = {
   z0: HUB.z - WHEEL.width / 2 - PEGS.stand - PEGS.r - 0.02, z1: HUB.z + WHEEL.width / 2 + 0.025,
 }
 
+/** The wall's outward normal at angle `a` and height `y`, from the slope of its profile. */
+function wallNormal(a: number, y: number): V3 {
+  const e = 0.004
+  const lo = Math.max(TUB.bottomY + 0.0005, y - e), hi = Math.min(TUB.rimY, y + e)
+  const slope = (wallRadius(hi) - wallRadius(lo)) / (hi - lo)
+  return norm(add(radial(a), mul(Y, -slope)))
+}
+
 function stave(k: Kit, i: number): void {
   const n = TUB.staves, da = TAU / n, ac = i * da
   const gap = 0.0016
@@ -56,10 +64,12 @@ function stave(k: Kit, i: number): void {
     const spans: [number, number, number, number][] = w0 > 0 || w1 > 0
       ? [[-h0, -w0, -h1, -w1], [w0, h0, w1, h1]]
       : [[-h0, h0, -h1, h1]]
+    // flat across the stave, smooth up its curve, so the rows never show as facets
+    const n0 = wallNormal(ac, y0), n1 = wallNormal(ac, y1), m0 = mul(n0, -1), m1 = mul(n1, -1)
     for (const [a0, b0, a1, b1] of spans) {
-      const inside = mid((a0 + b0 + a1 + b1) / 4, (y0 + y1) / 2)
-      k.polygon([outer(a0, y0), outer(b0, y0), outer(b1, y1), outer(a1, y1)], Y, f, inside)
-      k.polygon([inner(a0, y0), inner(b0, y0), inner(b1, y1), inner(a1, y1)], Y, f, inside)
+      const uv: [number, number][] = [[y0, a0], [y0, b0], [y1, b1], [y1, a1]]
+      k.smoothQuad([outer(a0, y0), outer(b0, y0), outer(b1, y1), outer(a1, y1)], [n0, n0, n1, n1], uv, f)
+      k.smoothQuad([inner(a0, y0), inner(b0, y0), inner(b1, y1), inner(a1, y1)], [m0, m0, m1, m1], uv, f)
     }
     // the stave's own two long edges
     const centre = mid(0, (y0 + y1) / 2)

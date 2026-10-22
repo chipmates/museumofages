@@ -76,9 +76,9 @@ function bronze(stack: Stack, set: MaterialSet): MeshStandardNodeMaterial {
   const lum = nodes.albedo.dot(vec3(0.2126, 0.7152, 0.0722))
   // cast bronze gone brown with handling, a dull green-grey patina low in its hollows
   const patina = smoothstep(0.45, 0.75, mx_noise_float(positionGeometry.mul(6)).mul(0.5).add(0.5))
-  const col = mix(lin('#7a5a36'), lin('#5d6150'), patina.mul(0.3)).mul(lum.mul(0.35).add(0.75))
+  const col = mix(lin('#8f6a3c'), lin('#5d6150'), patina.mul(0.3)).mul(lum.mul(0.35).add(0.75))
   m.colorNode = col.mul(T.x).mul(nodes.occlusion)
-  m.roughnessNode = mix(float(0.38), float(0.6), patina.mul(0.6)).add(nodes.roughness.mul(0.1))
+  m.roughnessNode = mix(float(0.3), float(0.6), patina.mul(0.6)).add(nodes.roughness.mul(0.1))
   m.metalnessNode = mix(float(0.85), float(0.35), patina.mul(0.5)).mul(smoothstep(0.05, 0.3, T.x))
   return m
 }

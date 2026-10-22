@@ -56,7 +56,9 @@ export class Kit {
   private vertex(p: V3, n: V3, u: number, w: number, f: Finish, end: number): void {
     this.position.push(p[0], p[1], p[2])
     this.normal.push(n[0], n[1], n[2])
-    this.uv.push(u, w)
+    // each piece starts at its own place in the photograph, so a knot never repeats board to board
+    const t = f.tone * 7919.37
+    this.uv.push(u + (t - Math.floor(t)) * 3.7, w + ((t * 13.1) - Math.floor(t * 13.1)) * 0.9)
     this.tone.push(f.tone, f.wear ?? 0, end)
   }
 
@@ -83,7 +85,10 @@ export class Kit {
 
   /** A quad with its own per-vertex normals (a smooth surface), UVs given. */
   smoothQuad(p: [V3, V3, V3, V3], n: [V3, V3, V3, V3], uvs: [number, number][], f: Finish, end = 0): void {
-    for (const i of [0, 1, 2, 0, 2, 3]) this.vertex(p[i]!, n[i]!, uvs[i]![0], uvs[i]![1], f, end)
+    // wound so the face looks along its normals, whichever order the corners came in
+    const facing = dot(cross(sub(p[1], p[0]), sub(p[2], p[0])), add(add(n[0], n[1]), add(n[2], n[3]))) >= 0
+    const order = facing ? [0, 1, 2, 0, 2, 3] : [0, 2, 1, 0, 3, 2]
+    for (const i of order) this.vertex(p[i]!, n[i]!, uvs[i]![0], uvs[i]![1], f, end)
   }
 
   /** A hexahedron from eight corners (index = x + 2y + 4z), every edge eased by `c`. */
