@@ -5,9 +5,10 @@ import { IDENTITY } from '../../../../stack/grade';
 import { loadManifest, type ManifestEntry } from '../../../../manifest';
 import { assetAddress } from '../../../../stack/materials';
 import { loadMachineMaterial, materialDressed, materialFailure } from '../parts';
-import { buildMachine, type ReadyMachineBuild } from '..';
+import { buildBenchMachine, type ReadyMachineBuild } from '..';
 import type { StoreCrane, StoreCraneReading } from '../crane-body';
-import { MACHINE_SLUGS, isMachineSlug, machineCatalog, partialCatalog, type Language, type MachineSlug, type EvidenceRecord } from '../catalog';
+import { BENCH_SLUGS, COURT_SLUGS, isBenchSlug, benchCatalog, partialCatalog, type Language, type BenchSlug, type EvidenceRecord } from '../catalog';
+import { buildScaleFigure } from './scale-figure';
 import benchCss from './bench.css?inline';
 import titleSelectCss from './title-select.css?inline';
 import evidenceCss from './evidence-dialog.css?inline';
@@ -38,6 +39,12 @@ export interface BenchOptions {
   evidence?: string;
   clothProbe?: 'no-shadow' | 'flat-normal';
   ropeProbe?: 'baseline' | 'no-shadow' | 'flat-normal' | 'offset-2mm';
+  /** a fixed eye for a still, given by the rig: where it stands, what it
+   * looks at, the picture's vertical field in degrees, and the picture's own
+   * frame inside the canvas as fractions (left, top, width, height) */
+  eye?: { at: [number, number, number]; look: [number, number, number]; fov?: number; frame?: [number, number, number, number] };
+  /** a grey figure of 1.70 m for size, at (x, z) on the floor, turned by yaw degrees */
+  figure?: { at: [number, number]; yaw?: number };
 }
 const el = <K extends keyof HTMLElementTagNameMap>(tag: K, cls: string, text?: string): HTMLElementTagNameMap[K] => { const n = document.createElement(tag); n.className = cls; if (text !== undefined)
   n.textContent = text; return n; };
@@ -180,14 +187,15 @@ export function createBench(stack: Stack, onExit: () => void) {
   const metrics = createBenchMetrics(stack, host);
   let metricsTier = metrics ? stack.tierName() : null;
   let closeUp = false;
-  let active = false, serial = 0, slug: MachineSlug = 'aerial-screw', lang: Language = controlLanguage(location.search), machine: ReadyMachineBuild | null = null, key: KeyLight | null = null, ready = false, lastWall = performance.now(), folioEntry: ManifestEntry | undefined, evidenceRecord: EvidenceRecord | null = null, sectionEnabled = false, lastPlaybackPaint = 0;
-  let schedule = playbackSchedule(machineCatalog[slug].dossier);
+  let eye: BenchOptions['eye'] | null = null, figure: BenchOptions['figure'] | null = null;
+  let active = false, serial = 0, slug: BenchSlug = 'aerial-screw', lang: Language = controlLanguage(location.search), machine: ReadyMachineBuild | null = null, key: KeyLight | null = null, ready = false, lastWall = performance.now(), folioEntry: ManifestEntry | undefined, evidenceRecord: EvidenceRecord | null = null, sectionEnabled = false, lastPlaybackPaint = 0;
+  let schedule = playbackSchedule(benchCatalog[slug].dossier);
   let playbackState = initialPlayback(schedule, { fixed: true });
   const supportGeometries: BufferGeometry[] = [], supportMaterials: MeshStandardNodeMaterial[] = [], supportSets: MaterialSet[] = [];
   const reduced = matchMedia('(prefers-reduced-motion: reduce)');
   const evidence = createEvidenceDialog({
     host, source, page, closeButton: sourceClose, partialRecords: partialCatalog,
-    completeRecord: () => machineCatalog[slug], language: () => lang,
+    completeRecord: () => benchCatalog[slug], language: () => lang,
     render: reading, changeLanguage, onClose: () => metrics?.reset(),
   });
   const stamp = () => { document.body.dataset['forge'] = 'bench'; document.body.dataset['phase'] = 'bench'; };
@@ -257,7 +265,7 @@ export function createBench(stack: Stack, onExit: () => void) {
     // the bench and the count, which is the half that says how far along.
     const [wing, bench] = copy.subtitle.split(' · ');
     kickerWing.textContent = `${wing} · `;
-    kickerHere.textContent = `${bench} · ${String(MACHINE_SLUGS.indexOf(slug) + 1).padStart(2, '0')} / ${MACHINE_SLUGS.length}`;
+    kickerHere.textContent = `${bench} · ${String(BENCH_SLUGS.indexOf(slug) + 1).padStart(2, '0')} / ${BENCH_SLUGS.length}`;
     exit.textContent = copy.exitText;
     exit.setAttribute('aria-label', copy.exitLabel);
     exit.href = `/w/vinci${location.search}`;
@@ -266,11 +274,11 @@ export function createBench(stack: Stack, onExit: () => void) {
     en.setAttribute('aria-label', copy.english);
     de.setAttribute('aria-label', copy.german);
     loading.textContent = copy.loading;
-    const record = machineCatalog[slug]; host.lang = lang; host.dataset['slug'] = slug; title.textContent = record.title[lang]; label.textContent = record.label[lang]; label.dataset['naAnchor'] = `vinci/machine/${slug}`; certaintyWord.textContent = localText(lang, 'Reconstructed · assumed dimensions', 'Rekonstruiert · angenommene Maße'); const s = record.dossier.scale_m; dimensions.textContent = `${s.x.toFixed(2)} × ${s.y.toFixed(2)} × ${s.z.toFixed(2)} m · ${localText(lang, 'swept envelope', 'Bewegungsraum')}`; select.setAttribute('aria-label', `${localText(lang, 'Machine', 'Maschine')} ${MACHINE_SLUGS.indexOf(slug) + 1} / ${MACHINE_SLUGS.length}`); scope.textContent = withoutCitations(record.sections[lang][1]?.body ?? ''); en.setAttribute('aria-pressed', String(lang === 'en')); de.setAttribute('aria-pressed', String(lang === 'de')); read.textContent = localText(lang, 'Read the evidence ↗', 'Die Quellen lesen ↗'); select.replaceChildren(); for (const id of MACHINE_SLUGS) {
-    const option = el('option', '', machineCatalog[id].title[lang]);
+    const record = benchCatalog[slug]; host.lang = lang; host.dataset['slug'] = slug; title.textContent = record.title[lang]; label.textContent = record.label[lang]; if ((COURT_SLUGS as readonly string[]).includes(slug)) label.append(el('small', 'bench-working', localText(lang, 'working line', 'Arbeitszeile'))); label.dataset['naAnchor'] = `vinci/machine/${slug}`; certaintyWord.textContent = localText(lang, 'Reconstructed · assumed dimensions', 'Rekonstruiert · angenommene Maße'); const s = record.dossier.scale_m; dimensions.textContent = `${s.x.toFixed(2)} × ${s.y.toFixed(2)} × ${s.z.toFixed(2)} m · ${localText(lang, 'swept envelope', 'Bewegungsraum')}`; select.setAttribute('aria-label', `${localText(lang, 'Machine', 'Maschine')} ${BENCH_SLUGS.indexOf(slug) + 1} / ${BENCH_SLUGS.length}`); scope.textContent = withoutCitations(record.sections[lang][1]?.body ?? ''); en.setAttribute('aria-pressed', String(lang === 'en')); de.setAttribute('aria-pressed', String(lang === 'de')); read.textContent = localText(lang, 'Read the evidence ↗', 'Die Quellen lesen ↗'); select.replaceChildren(); for (const id of BENCH_SLUGS) {
+    const option = el('option', '', benchCatalog[id].title[lang]);
     option.value = id;
     select.append(option);
-  } const absence = BENCH_ABSENCE[slug]; if (absence) dimensions.textContent += '\n' + localText(lang, absence.en, absence.de); select.value = slug; chooser.refresh(); const lion = slug === 'mechanical-lion'; section.hidden = slug !== 'camera-obscura' && !lion; section.textContent = lion ? localText(lang, sectionEnabled ? 'Close the flank' : 'Open the flank', sectionEnabled ? 'Flanke schließen' : 'Flanke öffnen') : localText(lang, sectionEnabled ? 'Close chamber' : 'Open section', sectionEnabled ? 'Kammer schließen' : 'Schnitt öffnen'); section.setAttribute('aria-pressed', String(sectionEnabled)); sectionNote.hidden = !sectionEnabled; sectionNote.textContent = lion ? localText(lang, 'Section: the near flank panel is taken off so you can see the works. On the lion itself the panel is shut.', 'Schnitt: Die vordere Flankenplatte ist abgenommen, damit du das Werk siehst. Am Löwen selbst ist sie geschlossen.') : localText(lang, 'Section: one corner and the back wall are taken off so you can see in. In the real experiment the chamber is closed and dark.', 'Schnitt: Eine Ecke und die Rückwand sind abgenommen, damit du hineinsehen kannst. Im echten Versuch ist die Kammer geschlossen und dunkel.'); paintPlayback(); if (!source.hidden)
+  } const absence = BENCH_ABSENCE[slug]; if (absence) dimensions.textContent += '\n' + localText(lang, absence.en, absence.de); select.value = slug; chooser.refresh(); const lion = slug === 'mechanical-lion', car = slug === 'armoured-car'; section.hidden = slug !== 'camera-obscura' && !lion && !car; section.textContent = car ? localText(lang, sectionEnabled ? 'Put the cover on' : 'Lift the cover off', sectionEnabled ? 'Deckel aufsetzen' : 'Deckel abnehmen') : lion ? localText(lang, sectionEnabled ? 'Close the flank' : 'Open the flank', sectionEnabled ? 'Flanke schließen' : 'Flanke öffnen') : localText(lang, sectionEnabled ? 'Close chamber' : 'Open section', sectionEnabled ? 'Kammer schließen' : 'Schnitt öffnen'); section.setAttribute('aria-pressed', String(sectionEnabled)); sectionNote.hidden = !sectionEnabled; sectionNote.textContent = car ? localText(lang, 'Opened, as on his sheet: the cover and the guns are lifted off so you can see the drive. The car itself is closed.', 'Geöffnet wie auf seinem Blatt: Deckel und Geschütze sind abgenommen, damit du den Antrieb siehst. Der Wagen selbst ist geschlossen.') : lion ? localText(lang, 'Section: the near flank panel is taken off so you can see the works. On the lion itself the panel is shut.', 'Schnitt: Die vordere Flankenplatte ist abgenommen, damit du das Werk siehst. Am Löwen selbst ist sie geschlossen.') : localText(lang, 'Section: one corner and the back wall are taken off so you can see in. In the real experiment the chamber is closed and dark.', 'Schnitt: Eine Ecke und die Rückwand sind abgenommen, damit du hineinsehen kannst. Im echten Versuch ist die Kammer geschlossen und dunkel.'); paintPlayback(); if (!source.hidden)
     reading(evidenceRecord ?? record); }
   function paintPlayback() {
     const view = playbackPresentation(schedule, playbackState, lang);
@@ -283,14 +291,14 @@ export function createBench(stack: Stack, onExit: () => void) {
     holdNote.textContent = view.holdDetail;
     holdNote.hidden = !view.holdDetail;
   }
-  async function plateFor(mine: number) { let imageReady = Promise.resolve(); const record = machineCatalog[slug]; const id: Partial<Record<MachineSlug, string>> = { 'aerial-screw': 'vinci/ms-page/lesmanuscritsdel02lo__n0340', 'revolving-crane': 'vinci/ms-page/lesmanuscritsdel02lo__n0202', 'camera-obscura': 'vinci/ms-page/lesmanuscritsdel02lo__n0386' }; const manifest = await loadManifest(); if (mine !== serial)
+  async function plateFor(mine: number) { let imageReady = Promise.resolve(); const record = benchCatalog[slug]; const id: Partial<Record<BenchSlug, string>> = { 'armoured-car': 'vinci/folio-page/bm-1860-0616-99-recto', 'aerial-screw': 'vinci/ms-page/lesmanuscritsdel02lo__n0340', 'revolving-crane': 'vinci/ms-page/lesmanuscritsdel02lo__n0202', 'camera-obscura': 'vinci/ms-page/lesmanuscritsdel02lo__n0386' }; const manifest = await loadManifest(); if (mine !== serial)
     return; const entry = manifest.byId.get(id[slug] ?? ''); folioEntry = entry?.display && entry.class !== 'REFERENCE-ONLY' ? entry : undefined; folio.replaceChildren(); const cap = el('figcaption', ''); const folioName = record.folio.map(f => `${f.codex} ${localText(lang, 'f.', 'Blatt')} ${f.folio}`).join(', '); if (folioEntry) {
     const img = el('img', '');
     img.alt = folioName;
     img.src = assetAddress(folioEntry);
     folio.append(img);
     imageReady = img.decode().catch(() => { });
-    cap.textContent = `${folioName}\n${localText(lang, '1883 historical facsimile', 'Historisches Faksimile von 1883')}`;
+    cap.textContent = slug === 'armoured-car' ? `${localText(lang, 'His sheet', 'Sein Blatt')}, British Museum 1860,0616.99\n${localText(lang, 'Photograph of the sheet', 'Fotografie des Blatts')}` : `${folioName}\n${localText(lang, '1883 historical facsimile', 'Historisches Faksimile von 1883')}`;
     img.onerror = () => { if (mine !== serial)
       return; img.remove(); folio.prepend(el('div', 'bench-absence', localText(lang, 'Plate unavailable', 'Blatt nicht verfügbar'))); };
   }
@@ -317,7 +325,7 @@ export function createBench(stack: Stack, onExit: () => void) {
    * fittings are, framed alone so a 9 mm boss is not a 9 px boss. The pair
    * is (height from the top as a fraction of the object, box as a fraction
    * of its span); each one is where that machine's own fitting sits. */
-  const FOCUS: Partial<Record<MachineSlug, [number, number]>> = {
+  const FOCUS: Partial<Record<BenchSlug, [number, number]>> = {
     'proportional-compass': [.33, .26], 'camera-obscura': [.5, .3],
     'ball-bearing': [.42, .62], 'revolving-crane': [.52, .3], 'lathe': [.33, .34],
   };
@@ -337,6 +345,8 @@ export function createBench(stack: Stack, onExit: () => void) {
     if (slug === 'camera-obscura')
       direction.set(sectionEnabled ? 1.5 : 1.25, sectionEnabled ? .8 : .5, sectionEnabled ? -.35 : -1.6).normalize();
     if (slug === 'aerial-screw') direction.set(-1.6,.4,.7).normalize();
+    if (slug === 'armoured-car') direction.set(sectionEnabled ? .9 : 1.25, sectionEnabled ? 1.05 : .5, 1.3).normalize();
+    if (eye) direction.set(eye.at[0], eye.at[1], eye.at[2]).sub(frameBounds().getCenter(new Vector3())).normalize();
     if (slug === 'flywheel') direction.set(.8,1.2,1.7).normalize();
     if (slug === 'ball-bearing') direction.set(.82,.62,1.66).normalize();
     if (slug === 'rolling-mill') direction.set(-1.5,.75,1.5).normalize();
@@ -368,7 +378,7 @@ export function createBench(stack: Stack, onExit: () => void) {
     const box = closeUp ? focusBounds() : frameBounds(), size = box.getSize(new Vector3()), centre = box.getCenter(new Vector3()), span = Math.max(size.x, size.y, size.z), mobile = innerWidth <= 1280;
     const direction = viewDirection();
     const right = new Vector3().crossVectors(new Vector3(0, 1, 0), direction).normalize(), up = new Vector3().crossVectors(direction, right).normalize();
-    const distance = eyeDistance(box, direction, mobile);
+    const distance = eye ? new Vector3(...eye.at).distanceTo(centre) : eyeDistance(box, direction, mobile);
     camera.aspect = innerWidth / innerHeight;
     camera.fov = 34;
     camera.near = Math.max(.001, span / 1000);
@@ -376,6 +386,14 @@ export function createBench(stack: Stack, onExit: () => void) {
     camera.position.copy(centre).addScaledVector(direction, distance);
     camera.lookAt(centre);
     camera.setViewOffset(innerWidth, innerHeight, mobile ? 0 : innerWidth * .12, mobile ? innerHeight * .295 : slug === 'proportional-compass' ? innerHeight * .035 : 0, innerWidth, innerHeight);
+    if (eye) {
+      // the rig's own eye: its field spans the picture's frame, centred in it
+      const [, top, , tall] = eye.frame ?? [0, 0, 1, 1];
+      camera.fov = 2 * Math.atan(Math.tan(((eye.fov ?? 34) * Math.PI / 180) / 2) / tall) * 180 / Math.PI;
+      camera.position.set(...eye.at);
+      camera.lookAt(...eye.look);
+      camera.setViewOffset(innerWidth, innerHeight, 0, innerHeight * (.5 - (top + tall / 2)), innerWidth, innerHeight);
+    }
     camera.updateProjectionMatrix();
     // The far cascade is a box around the origin, so the floor beyond it took
     // no shadow at all and stood there as a hard edged dark quad. The air
@@ -457,13 +475,21 @@ export function createBench(stack: Stack, onExit: () => void) {
     });
     display.add(...made.meshes);
     supportGeometries.push(...made.geometries);
+    if (figure) {
+      const scale = buildScaleFigure();
+      scale.group.position.set(figure.at[0], machine.bounds.min.y, figure.at[1]);
+      scale.group.rotation.y = (figure.yaw ?? 0) * Math.PI / 180;
+      display.add(scale.group);
+      supportGeometries.push(scale.geometry);
+      supportMaterials.push(scale.material);
+    }
     if (BENCH_BACK_PLANE) {
       const box = displayBounds(), mobile = innerWidth <= 1280;
       const wall = buildBackPlane({
         centre: box.getCenter(new Vector3()),
         toward: viewDirection(),
         floorY: machine.bounds.min.y - Math.max(...box.getSize(new Vector3()).toArray()) * .034,
-        cameraDistance: eyeDistance(closeUp ? focusBounds() : frameBounds(), viewDirection(), mobile),
+        cameraDistance: eye ? new Vector3(...eye.at).distanceTo(box.getCenter(new Vector3())) : eyeDistance(closeUp ? focusBounds() : frameBounds(), viewDirection(), mobile),
       });
       const tuffeau = await loadMachineMaterial(stack, 'stone-tuffeau');
       if (mine !== serial) { wall.geometry.dispose(); return; }
@@ -482,7 +508,7 @@ export function createBench(stack: Stack, onExit: () => void) {
     return { mounted: state.mounted, dressed: state.dressed && bare.length === 0, error: [state.error, ...bare].filter(Boolean).join('; ') || null };
   }
   function lightBench() {
-    const scale = machineCatalog[slug].dossier.scale_m, span = Math.max(scale.x, scale.y, scale.z);
+    const scale = benchCatalog[slug].dossier.scale_m, span = Math.max(scale.x, scale.y, scale.z);
     key?.dispose();
     // The far cascade is a box around the origin. It has to contain the wall
     // as well as the machine, or the floor between them takes no shadow
@@ -495,12 +521,12 @@ export function createBench(stack: Stack, onExit: () => void) {
     // actually standing here, not to a second copy of the hour
     setBenchKey(key.direction);
   }
-  async function open(opts: BenchOptions = {}) { const requested = opts.slug ?? 'aerial-screw'; if (!isMachineSlug(requested))
+  async function open(opts: BenchOptions = {}) { const requested = opts.slug ?? 'aerial-screw'; if (!isBenchSlug(requested))
     throw new Error(`No complete machine: ${requested}`);
-    const requestedEvidence = opts.evidence === undefined ? null : opts.evidence === requested ? machineCatalog[requested] : partialCatalog.find(record => record.slug === opts.evidence);
+    const requestedEvidence = opts.evidence === undefined ? null : opts.evidence === requested ? benchCatalog[requested] : partialCatalog.find(record => record.slug === opts.evidence);
     if (opts.evidence !== undefined && !requestedEvidence) throw new Error(`No evidence record for ${requested}: ${opts.evidence}`);
     evidence.close(false);
-    const mine = ++serial; active = true; host.hidden = false; ready = false; loading.hidden = false; clearDisplay(); folioEntry = undefined; folio.replaceChildren(); slug = requested; evidenceRecord = machineCatalog[slug]; lang = controlLanguage(location.search, opts.lang); schedule = playbackSchedule(machineCatalog[slug].dossier); playbackState = initialPlayback(schedule, { t: opts.t, fixed: document.body.classList.contains('forge'), reducedMotion: reduced.matches }); lastWall = performance.now(); stamp(); stack.setScene(scene, camera, { ...IDENTITY, name: 'vinci-machine-bench', exposure: .95, grain: .004, ao: { intensity: 1, distance: Math.max(...Object.values(machineCatalog[slug].dossier.scale_m).filter((v): v is number => typeof v === 'number')) * .025, thickness: 1 } }); lightBench(); machine = buildMachine(slug, stack); closeUp = opts.close ?? false; sectionEnabled = (slug === 'camera-obscura' || slug === 'mechanical-lion') && (opts.section ?? false); machine.section(sectionEnabled); display.add(machine.object); compose(); paint(); await Promise.all([machine.ready, supports(mine), plateFor(mine)]); if (mine !== serial)
+    const mine = ++serial; active = true; host.hidden = false; ready = false; loading.hidden = false; clearDisplay(); folioEntry = undefined; folio.replaceChildren(); slug = requested; evidenceRecord = benchCatalog[slug]; lang = controlLanguage(location.search, opts.lang); schedule = playbackSchedule(benchCatalog[slug].dossier); playbackState = initialPlayback(schedule, { t: opts.t, fixed: document.body.classList.contains('forge'), reducedMotion: reduced.matches }); lastWall = performance.now(); stamp(); stack.setScene(scene, camera, { ...IDENTITY, name: 'vinci-machine-bench', exposure: .95, grain: .004, ao: { intensity: 1, distance: Math.max(...Object.values(benchCatalog[slug].dossier.scale_m).filter((v): v is number => typeof v === 'number')) * .025, thickness: 1 } }); lightBench(); machine = buildBenchMachine(slug, stack); closeUp = opts.close ?? false; eye = opts.eye ?? null; figure = opts.figure ?? null; sectionEnabled = (slug === 'camera-obscura' || slug === 'mechanical-lion' || slug === 'armoured-car') && (opts.section ?? false); machine.section(sectionEnabled); display.add(machine.object); compose(); paint(); await Promise.all([machine.ready, supports(mine), plateFor(mine)]); if (mine !== serial)
     return; machine.animate(playbackState.clock, 0);
     if(key){
       const towardKey=vec3(key.direction.x,key.direction.y,key.direction.z).mul(.03);
@@ -523,10 +549,10 @@ export function createBench(stack: Stack, onExit: () => void) {
       ropeExperiment = applyRopeShadowExperiment(machine.object, slug, ropeMode, key.direction);
     }
     if (requestedEvidence) evidence.open(requestedEvidence, read);
-    ready = true; loading.hidden = true; metrics?.reset(); stamp(); lastWall = performance.now(); console.log(`[bench] mounted ${slug} period=${machineCatalog[slug].dossier.motion.period_s} tier=${stack.tierName()}`); }
+    ready = true; loading.hidden = true; metrics?.reset(); stamp(); lastWall = performance.now(); console.log(`[bench] mounted ${slug} period=${benchCatalog[slug].dossier.motion.period_s} tier=${stack.tierName()}`); }
   function close() { if (!active)
     return; setBenchKey(null); serial++; evidence.close(false); active = false; host.hidden = true; ready = false; clearDisplay(); key?.dispose(); key = null; }
-  function navigate(delta: number) { const id = MACHINE_SLUGS[(MACHINE_SLUGS.indexOf(slug) + delta + MACHINE_SLUGS.length) % MACHINE_SLUGS.length]; if (id) {
+  function navigate(delta: number) { const id = BENCH_SLUGS[(BENCH_SLUGS.indexOf(slug) + delta + BENCH_SLUGS.length) % BENCH_SLUGS.length]; if (id) {
     history.pushState({}, '', `/bench/vinci/machines/${id}${location.search}`);
     void open({ slug: id });
   } }
@@ -558,7 +584,7 @@ export function createBench(stack: Stack, onExit: () => void) {
   });
   en.onclick = () => changeLanguage('en');
   de.onclick = () => changeLanguage('de');
-  read.onclick = () => { evidence.open(machineCatalog[slug], read); metrics?.reset(); };
+  read.onclick = () => { evidence.open(benchCatalog[slug], read); metrics?.reset(); };
   let wheelAt = 0;
   host.addEventListener('wheel', e => { if (!active || !source.hidden || e.target instanceof HTMLElement && e.target.closest('.bench-dock,.bench-footer,.bench-header'))
     return; if (Math.abs(e.deltaY) > 30 && performance.now() - wheelAt > 800) {
@@ -600,13 +626,13 @@ export function createBench(stack: Stack, onExit: () => void) {
     if (metrics) {
       const tier = stack.tierName();
       if (tier !== metricsTier) { metricsTier = tier; metrics.reset(); }
-      metrics.afterRender({ slug, t: playbackState.clock, ready, playing: playbackState.playing && !playbackState.fixed, section: sectionEnabled, period_s: machineCatalog[slug].dossier.motion.period_s });
+      metrics.afterRender({ slug, t: playbackState.clock, ready, playing: playbackState.playing && !playbackState.fixed, section: sectionEnabled, period_s: benchCatalog[slug].dossier.motion.period_s });
     }
   }, machine() {
     if (!machine) return null;
-    const snapshot = { slug, body: storeCrane ?? undefined, period: machineCatalog[slug].dossier.motion.period_s, period_s: machineCatalog[slug].dossier.motion.period_s, t: playbackState.clock, joints: machine.joints(), bounds: machine.bounds.getSize(new Vector3()).toArray(), occupied: new Box3().setFromObject(machine.object).getSize(new Vector3()).toArray(), ready: ready && parts().dressed && (metrics?.ready() ?? true), parts: parts(), playing: playbackState.playing, section: sectionEnabled, evidence: { open: evidence.isOpen(), recordSlug: evidence.isOpen() ? evidenceRecord?.slug ?? null : null } };
+    const snapshot = { slug, body: storeCrane ?? undefined, period: benchCatalog[slug].dossier.motion.period_s, period_s: benchCatalog[slug].dossier.motion.period_s, t: playbackState.clock, joints: machine.joints(), bounds: machine.bounds.getSize(new Vector3()).toArray(), occupied: new Box3().setFromObject(machine.object).getSize(new Vector3()).toArray(), ready: ready && parts().dressed && (metrics?.ready() ?? true), parts: parts(), playing: playbackState.playing, section: sectionEnabled, evidence: { open: evidence.isOpen(), recordSlug: evidence.isOpen() ? evidenceRecord?.slug ?? null : null } };
     return metrics ? { ...snapshot, metrics: metrics.reading() } : snapshot;
-  }, slug: () => slug, ids: () => MACHINE_SLUGS, station(id: string) { if (!isMachineSlug(id))
+  }, slug: () => slug, ids: () => BENCH_SLUGS, station(id: string) { if (!isBenchSlug(id))
       return false; void open({ slug: id }); return true; }, manifest() { return [folioEntry, storeCrane?.entry].filter((entry): entry is ManifestEntry => Boolean(entry)); }, relight() { if (active) {
       lightBench(); metrics?.reset(); } }, freeze(t: number) { playbackState = freezePlayback(t); machine?.animate(playbackState.clock, 0); if (active) metrics?.reset(); }, ready: () => ready && parts().dressed && (metrics?.ready() ?? true) };
 }

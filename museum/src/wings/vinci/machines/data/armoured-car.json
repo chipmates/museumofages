@@ -1,0 +1,638 @@
+{
+  "slug": "armoured-car",
+  "name_en": "Armoured car",
+  "name_de": "Gepanzerter Wagen",
+  "status": "reconstruction",
+  "scope": "The museum's reconstruction from the sheet in the British Museum (1860,0616.99), which draws the car closed and opened. The forms, the eight men and the drive are read off the sheet. Every size, the gun count, the materials, the floor, the axles and the crew's places are the museum's.",
+  "gaps": [
+    "The sheet gives no size: no number, measure or unit but the crew's eight.",
+    "The number of guns and who fires them are not on the sheet.",
+    "How the wheels bear the load, how the crew gets in and how the car is steered are not drawn.",
+    "Whether the drive's mesh is drawn as meant cannot be told from a sketch this small; as drawn, the wheels of a side turn against each other.",
+    "The dots on the cone may be nail heads or holes; the sheet does not say."
+  ],
+  "scale_m": {
+    "x": 4.96,
+    "y": 2.934,
+    "z": 4.96,
+    "certainty": "C",
+    "source": "museum choice",
+    "note": "Our size: 4.96 m across the eave, the knob 2.934 m over the ground. From knob to skirt foot the shell stands 0.557 of its width, as on the sheet (0.556)."
+  },
+  "frame": {
+    "handedness": "right",
+    "units": "m",
+    "up": "+Y",
+    "forward": "+X",
+    "ground_y_m": 0,
+    "origin": "On the ground under the centre. +X runs along the car, the way its wheels roll; +Z toward the viewer of the sheet's opened view.",
+    "transforms": "Every part's position_m is the centre of its envelope box in the car's frame. The pieces are built from car/plan.ts."
+  },
+  "parts": [
+    {
+      "id": "tub",
+      "parent": "root",
+      "shape": "box",
+      "dimensions_m": {
+        "x": 4.74,
+        "y": 0.71,
+        "z": 4.74
+      },
+      "position_m": [
+        0,
+        0.525,
+        0
+      ],
+      "orientation_rad": [
+        0,
+        0,
+        0
+      ],
+      "material": {
+        "class": "sawn oak staves, an oak rim lip, an iron band at the bilge",
+        "basis": "assumed",
+        "source": "museum choice; the sheet gives no size"
+      },
+      "certainty": "C",
+      "source": "British Museum 1860,0616.99 (the sheet): an oval shallow tub, read as round in plan; sizes ours",
+      "notes": "A shallow basin of 72 staves, rim 4.7 m across at 0.8 m, bottom 4.16 m at 0.17 m. Its upper wall is the skirt the closed car shows. The wheel is about a quarter of its length, as on the sheet."
+    },
+    {
+      "id": "ports",
+      "parent": "tub",
+      "shape": "box",
+      "dimensions_m": {
+        "x": 0.23,
+        "y": 0.23,
+        "z": 0.03
+      },
+      "position_m": [
+        2.292,
+        0.56,
+        0
+      ],
+      "orientation_rad": [
+        0,
+        0,
+        0
+      ],
+      "material": {
+        "class": "oak collars round openings in the staves",
+        "basis": "assumed",
+        "source": "museum choice; the sheet gives no size"
+      },
+      "certainty": "C",
+      "source": "British Museum 1860,0616.99 (the sheet): openings in the skirt, about ten on the near half; the count is ours",
+      "notes": "24 round ports every 15 degrees, 0.16 m across, their centres 0.56 m over the ground."
+    },
+    {
+      "id": "floor",
+      "parent": "tub",
+      "shape": "box",
+      "dimensions_m": {
+        "x": 4.06,
+        "y": 0.05,
+        "z": 4.06
+      },
+      "position_m": [
+        0,
+        0.195,
+        0
+      ],
+      "orientation_rad": [
+        0,
+        0,
+        0
+      ],
+      "material": {
+        "class": "oak planks",
+        "basis": "assumed",
+        "source": "museum choice; the sheet gives no size"
+      },
+      "certainty": "C",
+      "source": "museum choice; the sheet draws no floor",
+      "notes": "Planks along the car, slotted where the four wheels pass through to the ground."
+    },
+    {
+      "id": "crew-places",
+      "parent": "floor",
+      "shape": "box",
+      "dimensions_m": {
+        "x": 0.82,
+        "y": 0.03,
+        "z": 2.882
+      },
+      "position_m": [
+        0,
+        0.235,
+        0
+      ],
+      "orientation_rad": [
+        0,
+        0,
+        0
+      ],
+      "material": {
+        "class": "oak kneeling boards",
+        "basis": "assumed",
+        "source": "museum choice; the sheet gives no size"
+      },
+      "certainty": "C",
+      "source": "British Museum 1860,0616.99 (the sheet): the note names eight men, the same men who turn the car; how they kneel is ours",
+      "notes": "Eight kneeling boards, four at each crank, two each side of it, worn where knees go."
+    },
+    {
+      "id": "cover",
+      "parent": "root",
+      "shape": "box",
+      "dimensions_m": {
+        "x": 4.96,
+        "y": 2.054,
+        "z": 4.96
+      },
+      "position_m": [
+        0,
+        1.907,
+        0
+      ],
+      "orientation_rad": [
+        0,
+        0,
+        0
+      ],
+      "material": {
+        "class": "sawn oak boards on an oak eave band, iron nails",
+        "basis": "assumed",
+        "source": "museum choice; the sheet gives no size"
+      },
+      "certainty": "C",
+      "source": "British Museum 1860,0616.99 (the sheet): a low cone of straight radial boards with rings of dots; sizes ours",
+      "notes": "64 tapered boards 0.035 m thick, a 30 degree cone 4.96 m across. The rings of dots are read as nail heads where hidden hoops lie under the boards: our reading. Lifted off in the inspection view."
+    },
+    {
+      "id": "lookout",
+      "parent": "cover",
+      "shape": "box",
+      "dimensions_m": {
+        "x": 1.44,
+        "y": 0.931,
+        "z": 1.44
+      },
+      "position_m": [
+        0,
+        2.488,
+        0
+      ],
+      "orientation_rad": [
+        0,
+        0,
+        0
+      ],
+      "material": {
+        "class": "oak sill, posts, cap boards and ribs, a turned oak knob",
+        "basis": "assumed",
+        "source": "museum choice; the sheet gives no size"
+      },
+      "certainty": "C",
+      "source": "British Museum 1860,0616.99 (the sheet): a small cone of ribs over an open ring at the apex, a knob on top",
+      "notes": "A sill ring, 8 posts leaving a sighting slot 0.2 m tall all round, a cap of 12 boards and ribs; the knob's top 2.934 m over the ground."
+    },
+    {
+      "id": "guns",
+      "parent": "tub",
+      "shape": "box",
+      "dimensions_m": {
+        "x": 4.785,
+        "y": 0.156,
+        "z": 1.2
+      },
+      "position_m": [
+        0,
+        0.56,
+        0
+      ],
+      "orientation_rad": [
+        0,
+        0,
+        0
+      ],
+      "material": {
+        "class": "cast bronze barrels (a type of the 1480s) on oak stocks, iron straps",
+        "basis": "assumed",
+        "source": "museum choice; the sheet gives no size"
+      },
+      "certainty": "C",
+      "source": "British Museum 1860,0616.99 (the sheet): short barrels at the skirt's openings; no count on the sheet",
+      "notes": "Six guns, three at the front ports and three at the rear (0, 15, -15, 180, 165, 195 degrees). The count is ours, and bronze is a type, not his. Lifted off with the cover in the inspection view."
+    },
+    {
+      "id": "wheel-rear-far",
+      "parent": "tub",
+      "shape": "box",
+      "dimensions_m": {
+        "x": 1.24,
+        "y": 1.24,
+        "z": 0.2
+      },
+      "position_m": [
+        -1.12,
+        0.628,
+        -1
+      ],
+      "orientation_rad": [
+        0,
+        0,
+        0
+      ],
+      "material": {
+        "class": "oak hub, spokes and felloes; oak pegs; iron strakes and hub hoops",
+        "basis": "assumed",
+        "source": "museum choice; the sheet gives no size"
+      },
+      "certainty": "C",
+      "source": "British Museum 1860,0616.99 (the sheet): four spoked wheels, each with a broad rim and a ring of round pegs on its face",
+      "notes": "1.24 m across, 10 spokes, 5 felloes, 24 pegs on a 1.072 m circle standing 0.11 m from the inner face. Iron strakes over the felloe joints: the trade of the time."
+    },
+    {
+      "id": "wheel-front-far",
+      "parent": "tub",
+      "shape": "box",
+      "dimensions_m": {
+        "x": 1.24,
+        "y": 1.24,
+        "z": 0.2
+      },
+      "position_m": [
+        1.12,
+        0.628,
+        -1
+      ],
+      "orientation_rad": [
+        0,
+        0,
+        0
+      ],
+      "material": {
+        "class": "oak hub, spokes and felloes; oak pegs; iron strakes and hub hoops",
+        "basis": "assumed",
+        "source": "museum choice; the sheet gives no size"
+      },
+      "certainty": "C",
+      "source": "British Museum 1860,0616.99 (the sheet): four spoked wheels, each with a broad rim and a ring of round pegs on its face",
+      "notes": "1.24 m across, 10 spokes, 5 felloes, 24 pegs on a 1.072 m circle standing 0.11 m from the inner face. Iron strakes over the felloe joints: the trade of the time."
+    },
+    {
+      "id": "wheel-rear-near",
+      "parent": "tub",
+      "shape": "box",
+      "dimensions_m": {
+        "x": 1.24,
+        "y": 1.24,
+        "z": 0.2
+      },
+      "position_m": [
+        -1.12,
+        0.628,
+        1
+      ],
+      "orientation_rad": [
+        0,
+        0,
+        0
+      ],
+      "material": {
+        "class": "oak hub, spokes and felloes; oak pegs; iron strakes and hub hoops",
+        "basis": "assumed",
+        "source": "museum choice; the sheet gives no size"
+      },
+      "certainty": "C",
+      "source": "British Museum 1860,0616.99 (the sheet): four spoked wheels, each with a broad rim and a ring of round pegs on its face",
+      "notes": "1.24 m across, 10 spokes, 5 felloes, 24 pegs on a 1.072 m circle standing 0.11 m from the inner face. Iron strakes over the felloe joints: the trade of the time."
+    },
+    {
+      "id": "wheel-front-near",
+      "parent": "tub",
+      "shape": "box",
+      "dimensions_m": {
+        "x": 1.24,
+        "y": 1.24,
+        "z": 0.2
+      },
+      "position_m": [
+        1.12,
+        0.628,
+        1
+      ],
+      "orientation_rad": [
+        0,
+        0,
+        0
+      ],
+      "material": {
+        "class": "oak hub, spokes and felloes; oak pegs; iron strakes and hub hoops",
+        "basis": "assumed",
+        "source": "museum choice; the sheet gives no size"
+      },
+      "certainty": "C",
+      "source": "British Museum 1860,0616.99 (the sheet): four spoked wheels, each with a broad rim and a ring of round pegs on its face",
+      "notes": "1.24 m across, 10 spokes, 5 felloes, 24 pegs on a 1.072 m circle standing 0.11 m from the inner face. Iron strakes over the felloe joints: the trade of the time."
+    },
+    {
+      "id": "shaft-far",
+      "parent": "tub",
+      "shape": "box",
+      "dimensions_m": {
+        "x": 1.76,
+        "y": 0.34,
+        "z": 0.34
+      },
+      "position_m": [
+        0,
+        0.628,
+        -0.741
+      ],
+      "orientation_rad": [
+        0,
+        0,
+        0
+      ],
+      "material": {
+        "class": "turned oak shaft, oak crank frame, oak lantern discs and staves, iron disc bands",
+        "basis": "assumed",
+        "source": "museum choice; the sheet gives no size"
+      },
+      "certainty": "C",
+      "source": "British Museum 1860,0616.99 (the sheet): a lengthwise shaft each side, a rectangular crank frame in its middle and a lantern at each end",
+      "notes": "A shaft at hub height, a crank of throw 0.3 m with a grip 0.6 m long, and two lanterns of 6 staves on a 0.268 m circle, each meeting its wheel's pegs on the side of the ring facing the car's middle, as drawn."
+    },
+    {
+      "id": "shaft-near",
+      "parent": "tub",
+      "shape": "box",
+      "dimensions_m": {
+        "x": 1.76,
+        "y": 0.34,
+        "z": 0.34
+      },
+      "position_m": [
+        0,
+        0.628,
+        0.741
+      ],
+      "orientation_rad": [
+        0,
+        0,
+        0
+      ],
+      "material": {
+        "class": "turned oak shaft, oak crank frame, oak lantern discs and staves, iron disc bands",
+        "basis": "assumed",
+        "source": "museum choice; the sheet gives no size"
+      },
+      "certainty": "C",
+      "source": "British Museum 1860,0616.99 (the sheet): a lengthwise shaft each side, a rectangular crank frame in its middle and a lantern at each end",
+      "notes": "A shaft at hub height, a crank of throw 0.3 m with a grip 0.6 m long, and two lanterns of 6 staves on a 0.268 m circle, each meeting its wheel's pegs on the side of the ring facing the car's middle, as drawn."
+    },
+    {
+      "id": "bearings",
+      "parent": "tub",
+      "shape": "box",
+      "dimensions_m": {
+        "x": 2.54,
+        "y": 0.51,
+        "z": 2.6
+      },
+      "position_m": [
+        0,
+        0.475,
+        0
+      ],
+      "orientation_rad": [
+        0,
+        0,
+        0
+      ],
+      "material": {
+        "class": "oak stub axles in oak cheeks, oak braces, iron linchpins; forked oak posts under the shafts with iron caps",
+        "basis": "assumed",
+        "source": "museum choice; the sheet gives no size"
+      },
+      "certainty": "C",
+      "source": "museum choice; the sheet draws no axle; the forked posts are a reading of two Y-shaped strokes on the far shaft",
+      "notes": "Each wheel turns on a stub axle held in an outboard cheek braced to the wall. Each shaft lies in two forked posts."
+    }
+  ],
+  "joints": [
+    {
+      "id": "shaft-far",
+      "type": "revolute",
+      "parent": "tub",
+      "child": "shaft-far",
+      "axis": [
+        1,
+        0,
+        0
+      ],
+      "pivot_m": [
+        0,
+        0.628,
+        -0.741
+      ],
+      "limits": null,
+      "ratio": null,
+      "certainty": "C",
+      "source": "British Museum 1860,0616.99 (the sheet): the crank frame turns the shaft",
+      "notes": "Turned by the crew at its grip; the schedule is ours."
+    },
+    {
+      "id": "shaft-near",
+      "type": "revolute",
+      "parent": "tub",
+      "child": "shaft-near",
+      "axis": [
+        1,
+        0,
+        0
+      ],
+      "pivot_m": [
+        0,
+        0.628,
+        0.741
+      ],
+      "limits": null,
+      "ratio": null,
+      "certainty": "C",
+      "source": "British Museum 1860,0616.99 (the sheet): the crank frame turns the shaft",
+      "notes": "Turned as the far crank's mirror, so the two front wheels turn together."
+    },
+    {
+      "id": "wheel-rear-far",
+      "type": "revolute",
+      "parent": "tub",
+      "child": "wheel-rear-far",
+      "axis": [
+        0,
+        0,
+        1
+      ],
+      "pivot_m": [
+        -1.12,
+        0.628,
+        -1
+      ],
+      "limits": null,
+      "ratio": 0.25,
+      "driver_joint": "shaft-far",
+      "driven_joint": "wheel-rear-far",
+      "certainty": "C",
+      "source": "British Museum 1860,0616.99 (the sheet): a lantern meets the pegs on the ring's inner side; the blind read of the drawing",
+      "notes": "A lantern of six staves on a ring of 24 pegs: a quarter turn for each crank turn. The rear and front wheels of a side turn in opposite senses."
+    },
+    {
+      "id": "wheel-front-far",
+      "type": "revolute",
+      "parent": "tub",
+      "child": "wheel-front-far",
+      "axis": [
+        0,
+        0,
+        1
+      ],
+      "pivot_m": [
+        1.12,
+        0.628,
+        -1
+      ],
+      "limits": null,
+      "ratio": -0.25,
+      "driver_joint": "shaft-far",
+      "driven_joint": "wheel-front-far",
+      "certainty": "C",
+      "source": "British Museum 1860,0616.99 (the sheet): a lantern meets the pegs on the ring's inner side; the blind read of the drawing",
+      "notes": "A lantern of six staves on a ring of 24 pegs: a quarter turn for each crank turn. The rear and front wheels of a side turn in opposite senses."
+    },
+    {
+      "id": "wheel-rear-near",
+      "type": "revolute",
+      "parent": "tub",
+      "child": "wheel-rear-near",
+      "axis": [
+        0,
+        0,
+        1
+      ],
+      "pivot_m": [
+        -1.12,
+        0.628,
+        1
+      ],
+      "limits": null,
+      "ratio": 0.25,
+      "driver_joint": "shaft-near",
+      "driven_joint": "wheel-rear-near",
+      "certainty": "C",
+      "source": "British Museum 1860,0616.99 (the sheet): a lantern meets the pegs on the ring's inner side; the blind read of the drawing",
+      "notes": "A lantern of six staves on a ring of 24 pegs: a quarter turn for each crank turn. The rear and front wheels of a side turn in opposite senses."
+    },
+    {
+      "id": "wheel-front-near",
+      "type": "revolute",
+      "parent": "tub",
+      "child": "wheel-front-near",
+      "axis": [
+        0,
+        0,
+        1
+      ],
+      "pivot_m": [
+        1.12,
+        0.628,
+        1
+      ],
+      "limits": null,
+      "ratio": -0.25,
+      "driver_joint": "shaft-near",
+      "driven_joint": "wheel-front-near",
+      "certainty": "C",
+      "source": "British Museum 1860,0616.99 (the sheet): a lantern meets the pegs on the ring's inner side; the blind read of the drawing",
+      "notes": "A lantern of six staves on a ring of 24 pegs: a quarter turn for each crank turn. The rear and front wheels of a side turn in opposite senses."
+    }
+  ],
+  "motion": {
+    "period_s": 12,
+    "loop": true,
+    "phases": [
+      {
+        "name": "The crew stands at the cranks",
+        "start_s": 0,
+        "duration_s": 1,
+        "joint_values": {},
+        "interpolation": "hold"
+      },
+      {
+        "name": "One slow turn forward: the front and rear wheels turn against each other",
+        "start_s": 1,
+        "duration_s": 5,
+        "joint_values": {},
+        "interpolation": "smootherstep"
+      },
+      {
+        "name": "The bind: the cranks shudder and stop",
+        "start_s": 6,
+        "duration_s": 1.6,
+        "joint_values": {},
+        "interpolation": "shudder"
+      },
+      {
+        "name": "Turned back: the wheels fight the other way",
+        "start_s": 7.6,
+        "duration_s": 3.4,
+        "joint_values": {},
+        "interpolation": "smootherstep"
+      },
+      {
+        "name": "At rest",
+        "start_s": 11,
+        "duration_s": 1,
+        "joint_values": {},
+        "interpolation": "hold"
+      }
+    ],
+    "visitor_12s": "The crew turns the cranks one slow turn; the front and rear wheels of each side turn against each other; the cranks bind and shudder; turned back, the wheels fight the other way. The car never moves."
+  },
+  "drive": {
+    "type": "eight men at two cranks",
+    "input_joint": "shaft-far",
+    "input_rate": {
+      "value": 0.2,
+      "unit": "turns per second, the mean of the forward turn",
+      "certainty": "C",
+      "source": "museum choice",
+      "note": "One turn in 5 s, eased in and out."
+    },
+    "justification": "The sheet's note names eight men who turn the car. The cranks, shafts, lanterns and pegs are drawn; the rate is ours.",
+    "source": "British Museum 1860,0616.99 (the sheet)"
+  },
+  "label_en": "Our reconstruction from his sheet in the British Museum, sizes ours. As drawn, its wheels turn against each other.",
+  "label_de": "Unsere Rekonstruktion nach seinem Blatt im British Museum, die Maße sind unsere. Wie gezeichnet, drehen sich seine Räder gegeneinander.",
+  "animation_notes": [
+    "A 12 s loop that starts and ends at rest; no hidden reset.",
+    "Built as drawn: the front and rear wheels of a side turn in opposite senses; the car never rolls.",
+    "The inspection view lifts the cover and the guns off; the geometry is unchanged."
+  ],
+  "folio": [
+    {
+      "codex": "British Museum",
+      "folio": "1860,0616.99 recto",
+      "holder": "British Museum, London",
+      "catalogue_reference": "1860,0616.99; Popham 1946 no. 308; Berenson 1938 no. 1030",
+      "catalogue_url": "https://www.britishmuseum.org/collection/object/P_1860-0616-99"
+    }
+  ],
+  "research": {
+    "physics": {
+      "verdict_en": "As drawn, one crank turn drives the front and rear wheels of a side in opposite senses, so they fight each other and the car does not roll. This is a blind reading of the drawing; no published analysis was found. No size, mass or speed is on the sheet.",
+      "verdict_de": "Wie gezeichnet, dreht eine Kurbelumdrehung das vordere und das hintere Rad einer Seite gegensinnig, sie arbeiten gegeneinander und der Wagen rollt nicht. Das ist eine blinde Lesung der Zeichnung; eine veröffentlichte Analyse wurde nicht gefunden. Größe, Masse und Tempo stehen nicht auf dem Blatt."
+    }
+  }
+}

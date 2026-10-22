@@ -16,6 +16,7 @@ import water_lifting_screwJson from './data/water-lifting-screw.json?raw'
 import proportional_compassJson from './data/proportional-compass.json?raw'
 import camera_obscuraJson from './data/camera-obscura.json?raw'
 import mechanical_lionJson from './data/mechanical-lion.json?raw'
+import armoured_carJson from './data/armoured-car.json?raw'
 
 export const MACHINE_SLUGS = [
   "aerial-screw",
@@ -82,4 +83,36 @@ export const machineCatalog = Object.fromEntries(
 export const partialCatalog: readonly EvidenceRecord[] = records.partial
 export function isMachineSlug(value: string): value is MachineSlug {
   return (MACHINE_SLUGS as readonly string[]).includes(value)
+}
+
+/** THE COURT'S MACHINES, built to showcase. They stand on the machine bench
+ * until their place in the ducal court is chosen; no hall lists them, so the
+ * hall's fifteen above are untouched. */
+export const COURT_SLUGS = ['armoured-car'] as const
+export type CourtSlug = (typeof COURT_SLUGS)[number]
+export type BenchSlug = MachineSlug | CourtSlug
+export const BENCH_SLUGS: readonly BenchSlug[] = [...MACHINE_SLUGS, ...COURT_SLUGS]
+export interface BenchRecord extends EvidenceRecord { slug: BenchSlug; dossier: Dossier }
+const courtDossiers: Record<CourtSlug, Dossier> = {
+  'armoured-car': JSON.parse(armoured_carJson) as Dossier,
+}
+/** A court machine's record: its locked page and sources as the partial
+ * records hold them, with the build's own label, scope, gaps and sheet. */
+function courtRecord(slug: CourtSlug): BenchRecord {
+  const page = records.partial.find(record => record.slug === slug)
+  if (!page) throw new Error(`No page record for ${slug}`)
+  const dossier = courtDossiers[slug]
+  return {
+    ...page, slug, dossier, status: dossier.status,
+    label: { en: dossier.label_en, de: dossier.label_de },
+    scope: dossier.scope, gaps: [...dossier.gaps], folio: dossier.folio,
+    sourcePath: `machines/data/${slug}.json`, sourceSha256: '',
+  }
+}
+export const courtCatalog: Record<CourtSlug, BenchRecord> = {
+  'armoured-car': courtRecord('armoured-car'),
+}
+export const benchCatalog: Record<BenchSlug, BenchRecord> = { ...machineCatalog, ...courtCatalog }
+export function isBenchSlug(value: string): value is BenchSlug {
+  return (BENCH_SLUGS as readonly string[]).includes(value)
 }

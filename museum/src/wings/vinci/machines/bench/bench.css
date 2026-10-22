@@ -80,3 +80,4 @@ body[data-phase="bench"] #veil,body[data-phase="bench"] #rail,body[data-phase="b
 /* Window 6: the phone's reading column already closes on the evidence rule.
    A second line thirty pixels lower drew a band with nothing in it. */
 @media(max-width:1280px){.bench-footer{border-top:0}}
+.bench-working{display:block;margin-top:6px;font:10px Arial,sans-serif;letter-spacing:.06em;color:#8f8a7e}
