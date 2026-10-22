@@ -48,6 +48,8 @@ export interface BenchOptions {
   figure?: { at: [number, number]; yaw?: number };
   /** this jump's own lamps in place of the machine's (a probe) */
   lamp?: BenchLamp[] | null;
+  /** this jump's own share of the sky on the machine's surfaces (a probe) */
+  fill?: number;
 }
 /** An exhibition lamp on one machine, beside the hour's key: a spot in the
  * machine's metres, its illuminance in lux at its aim, its cone in radians.
@@ -525,23 +527,34 @@ export function createBench(stack: Stack, onExit: () => void) {
    * (the car's skirt, ports and the underside of its eave) takes more of the
    * sky and a paler bounce off the stone it stands on. The hour, the sun's
    * place and every other machine's light stay as they are. */
-  const OWN_LIGHT: Partial<Record<BenchSlug, { lux: number; ambient: number; ground: string; lamps?: { closed?: BenchLamp[]; section?: BenchLamp[] } }>> = {
+  const OWN_LIGHT: Partial<Record<BenchSlug, { lux: number; ambient: number; ground: string; lamps?: { closed?: BenchLamp[]; section?: BenchLamp[] }; fill?: { closed?: number; section?: number } }>> = {
     'armoured-car': { lux: 240, ambient: 1.15, ground: '#6a604f', lamps: {
       // high on the sun's side of the visitor: the near skirt and eave take the most, the cone's far side and its
       // turn away from the visitor fall off, as under a lamp in a hall
       closed: [{ at: [-3.4, 6.2, 6.4], aim: [0.6, 0.7, 1.4], lux: 210, kelvin: 4300, angle: .62, penumbra: .75, decay: 2 }],
     } },
   };
-  let lamps: SpotLight[] = [], lampProbe: BenchLamp[] | null | undefined;
-  const lampLit = new Set<MeshStandardNodeMaterial>();
-  function dropLamps() { for (const m of lampLit) { m.lightsNode = null; m.needsUpdate = true; } lampLit.clear(); for (const lamp of lamps) lamp.dispose(); lamps = []; }
+  let lamps: SpotLight[] = [], lampProbe: BenchLamp[] | null | undefined, fillProbe: number | undefined;
+  const lampLit = new Set<MeshStandardNodeMaterial>(), filled = new Set<MeshStandardNodeMaterial>();
+  function dropLamps() { for (const m of lampLit) { m.lightsNode = null; m.needsUpdate = true; } lampLit.clear(); for (const m of filled) { m.envMap = null; m.envMapIntensity = 1; m.needsUpdate = true; } filled.clear(); for (const lamp of lamps) lamp.dispose(); lamps = []; }
   /** A machine's own lamps for the state it stands in: given to its own surfaces and the figure's, so the room
    * keeps the hour's key alone. */
   function lampMachine() {
-    const specs = lampProbe !== undefined ? lampProbe ?? [] : OWN_LIGHT[slug]?.lamps?.[sectionEnabled ? 'section' : 'closed'] ?? [];
-    if (!specs.length && !lamps.length) return;
+    const state = sectionEnabled ? 'section' : 'closed';
+    const specs = lampProbe !== undefined ? lampProbe ?? [] : OWN_LIGHT[slug]?.lamps?.[state] ?? [];
+    const fill = fillProbe ?? OWN_LIGHT[slug]?.fill?.[state];
+    if (!specs.length && !lamps.length && fill === undefined && !filled.size) return;
     dropLamps();
-    if (!specs.length || !machine) return;
+    if (!machine) return;
+    // the sky's share on the machine's own surfaces: less of it lets the one light model a form's turn
+    if (fill !== undefined && scene.environment) machine.object.traverse(node => {
+      if (!(node instanceof Mesh)) return;
+      for (const m of Array.isArray(node.material) ? node.material : [node.material]) {
+        if (!(m instanceof MeshStandardNodeMaterial) || filled.has(m)) continue;
+        m.envMap = scene.environment; m.envMapIntensity = fill; m.needsUpdate = true; filled.add(m);
+      }
+    });
+    if (!specs.length) return;
     for (const spec of specs) {
       const at = new Vector3(...spec.at), aim = new Vector3(...spec.aim), reach = at.distanceTo(aim), decay = spec.decay ?? 0;
       const lamp = new SpotLight(kelvinToColour(spec.kelvin), spec.lux / 100 * (decay === 2 ? reach * reach : 1), 0, spec.angle, spec.penumbra, decay);
@@ -588,7 +601,7 @@ export function createBench(stack: Stack, onExit: () => void) {
     const requestedEvidence = opts.evidence === undefined ? null : opts.evidence === requested ? benchCatalog[requested] : partialCatalog.find(record => record.slug === opts.evidence);
     if (opts.evidence !== undefined && !requestedEvidence) throw new Error(`No evidence record for ${requested}: ${opts.evidence}`);
     evidence.close(false);
-    const mine = ++serial; active = true; host.hidden = false; ready = false; loading.hidden = false; clearDisplay(); folioEntry = undefined; folio.replaceChildren(); slug = requested; evidenceRecord = benchCatalog[slug]; lang = controlLanguage(location.search, opts.lang); schedule = playbackSchedule(benchCatalog[slug].dossier); playbackState = initialPlayback(schedule, { t: opts.t, fixed: document.body.classList.contains('forge'), reducedMotion: reduced.matches }); lastWall = performance.now(); stamp(); stack.setScene(scene, camera, { ...IDENTITY, name: 'vinci-machine-bench', exposure: .95, grain: .004, ao: { intensity: 1, distance: Math.max(...Object.values(benchCatalog[slug].dossier.scale_m).filter((v): v is number => typeof v === 'number')) * .025, thickness: 1 } }); lightBench(); machine = buildBenchMachine(slug, stack); closeUp = opts.close ?? false; eye = opts.eye ?? null; figure = opts.figure ?? null; lampProbe = opts.lamp; sectionEnabled = (slug === 'camera-obscura' || slug === 'mechanical-lion' || slug === 'armoured-car') && (opts.section ?? false); machine.section(sectionEnabled); display.add(machine.object); compose(); paint(); await Promise.all([machine.ready, supports(mine), plateFor(mine)]); if (mine !== serial)
+    const mine = ++serial; active = true; host.hidden = false; ready = false; loading.hidden = false; clearDisplay(); folioEntry = undefined; folio.replaceChildren(); slug = requested; evidenceRecord = benchCatalog[slug]; lang = controlLanguage(location.search, opts.lang); schedule = playbackSchedule(benchCatalog[slug].dossier); playbackState = initialPlayback(schedule, { t: opts.t, fixed: document.body.classList.contains('forge'), reducedMotion: reduced.matches }); lastWall = performance.now(); stamp(); stack.setScene(scene, camera, { ...IDENTITY, name: 'vinci-machine-bench', exposure: .95, grain: .004, ao: { intensity: 1, distance: Math.max(...Object.values(benchCatalog[slug].dossier.scale_m).filter((v): v is number => typeof v === 'number')) * .025, thickness: 1 } }); lightBench(); machine = buildBenchMachine(slug, stack); closeUp = opts.close ?? false; eye = opts.eye ?? null; figure = opts.figure ?? null; lampProbe = opts.lamp; fillProbe = opts.fill; sectionEnabled = (slug === 'camera-obscura' || slug === 'mechanical-lion' || slug === 'armoured-car') && (opts.section ?? false); machine.section(sectionEnabled); display.add(machine.object); compose(); paint(); await Promise.all([machine.ready, supports(mine), plateFor(mine)]); if (mine !== serial)
     return; machine.animate(playbackState.clock, 0); lampMachine();
     if(key){
       const towardKey=vec3(key.direction.x,key.direction.y,key.direction.z).mul(.03);
