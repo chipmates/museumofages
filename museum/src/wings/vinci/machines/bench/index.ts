@@ -650,5 +650,5 @@ export function createBench(stack: Stack, onExit: () => void) {
     return metrics ? { ...snapshot, metrics: metrics.reading() } : snapshot;
   }, slug: () => slug, ids: () => BENCH_SLUGS, station(id: string) { if (!isBenchSlug(id))
       return false; void open({ slug: id }); return true; }, manifest() { return [folioEntry, storeCrane?.entry].filter((entry): entry is ManifestEntry => Boolean(entry)); }, relight() { if (active) {
-      lightBench(); metrics?.reset(); } }, freeze(t: number) { playbackState = freezePlayback(t); machine?.animate(playbackState.clock, 0); if (active) metrics?.reset(); }, ready: () => ready && parts().dressed && (metrics?.ready() ?? true) };
+      lightBench(); metrics?.reset(); } }, freeze(t: number) { playbackState = freezePlayback(t); machine?.animate(playbackState.clock, 0); paintPlayback(); if (active) metrics?.reset(); }, ready: () => ready && parts().dressed && (metrics?.ready() ?? true) };
 }

@@ -101,13 +101,13 @@ export async function flyingSurfaces(stack: Stack): Promise<FlyingSurfaces> {
   }
   const lash = hemp('lash', '#8e7a55'), hem = hemp('hem', '#9a8762'), cord = hemp('cord', '#978360', false)
   // IRON off the smith's hammer: dark, a soft skin, the key on its edges
-  const iron = surface('iron', set['iron-forged'], 0.45)
+  const iron = surface('iron', set['iron-forged'], 0.3)
   {
     const s = set['iron-forged']
     const d = stack.detail(iron, { ...s, normalStrength: 0.3, scale: [0.3, 0.3], scales: [0.25, 0.045, 0.0012], detail: { ...s.detail, macro: 0.25, macroContrast: 0.2, mid: 0.45, micro: 0.2 } }, { uv: uv(), count: 3, maps: dressed(s) ? 1 : 0, fade: [12, 100] })
-    const edge = keyRim(0.8)
+    const edge = keyRim(0.5)
     iron.colorNode = lin('#6f7272').mul(luma(d.albedo).mul(0.6).add(0.34)).mul(d.occlusion).mul(attribute('color', 'vec3')).mul(edge.add(1))
-    iron.roughnessNode = d.roughness.mul(0.8).clamp(0.38, 0.7)
+    iron.roughnessNode = d.roughness.mul(0.8).clamp(0.52, 0.78)
   }
   // LEATHER, the stirrups: tanned, creased where the foot bends it
   const leather = surface('leather', set['leather-worn'])
