@@ -189,14 +189,16 @@ export function caneBundle(cane: Mesher, lash: Mesher, path: readonly V3[], o: B
     const dense = densify(cPath, 0.003, band, f.s), ds = frames(dense).s
     const start = cane.count
     tube(cane, dense, {
-      sides, up: o.up, caps: true, capTone: 0.62,
+      sides, up: o.up,
       radius: (_i, along) => cr(along),
       tone: (_i, along, around) => shade * internode(along) * (1 - 0.55 * scar(along)) * (1 + 0.18 * pale(along)) * (0.96 + 0.04 * Math.cos(around * Math.PI * 2 * 3)),
     })
-    // darker and greyer toward each wrap: the wall ring by ring, then the two caps
-    const ring = sides + 1, wall = dense.length * ring
+    const wallEnd = cane.count
+    hollowEnds(cane, dense, sides, cr(0), cr(total), shade, o.up)
+    // darker and greyer toward each wrap: the wall ring by ring, then the two cut ends
+    const ring = sides + 1, wall = dense.length * ring, half = (cane.count - wallEnd) / 2
     for (let v = start; v < cane.count; v++) {
-      const at = v - start < wall ? ds[Math.floor((v - start) / ring)]! : v - start < wall + ring + 1 ? 0 : total
+      const at = v < wallEnd ? ds[Math.floor((v - start) / ring)]! : v - wallEnd < half ? 0 : total
       const w = wear(at), c = cane.c
       c[v * 3] = c[v * 3]! * (1 - 0.24 * w)
       c[v * 3 + 1] = c[v * 3 + 1]! * (1 - 0.22 * w)
@@ -225,6 +227,36 @@ export function caneBundle(cane: Mesher, lash: Mesher, path: readonly V3[], o: B
     const k = (at - f.s[i]!) / Math.max(1e-6, f.s[i + 1]! - f.s[i]!)
     const centre = add(path[i]!, mul(sub(path[i + 1]!, path[i]!), k))
     lashing(lash, centre, f.t[i]!, f.n[i]!, R(at) * 1.004, 3 + Math.round(hash(o.seed, at) * 2), hash(o.seed, at, 9))
+  }
+}
+
+/** A cane's cut ends: cane is hollow between its nodes, so each end shows its
+ * wall as a ring round a dark bore, not a pale disc that a lamp burns white */
+const BORE = 0.66
+function hollowEnds(m: Mesher, path: readonly V3[], sides: number, r0: number, r1: number, shade: number, up?: V3): void {
+  const f = frames(path, up)
+  for (const end of [0, path.length - 1]) {
+    const tn = end === 0 ? mul(f.t[0]!, -1) : f.t[end]!, r = end === 0 ? r0 : r1, c = path[end]!
+    const at = (k: number, rr: number): M3 => {
+      const a = (k / sides) * Math.PI * 2
+      return add(c, mul(add(mul(f.n[end]!, Math.cos(a)), mul(f.b[end]!, Math.sin(a))), rr))
+    }
+    const outer: number[] = [], inner: number[] = [], bore: number[] = []
+    for (let k = 0; k <= sides; k++) {
+      outer.push(m.vertex(at(k, r), tn, 0, 0, shade * 0.62))
+      inner.push(m.vertex(at(k, r * BORE), tn, 0, 0, shade * 0.62))
+      bore.push(m.vertex(at(k, r * BORE), tn, 0, 0, 0.12))
+    }
+    const centre = m.vertex(c, tn, 0, 0, 0.08)
+    // wound to face along tn
+    const face = (a: number, b: number, d: number): void => {
+      const pa = [m.p[a * 3]!, m.p[a * 3 + 1]!, m.p[a * 3 + 2]!] as V3, pb = [m.p[b * 3]!, m.p[b * 3 + 1]!, m.p[b * 3 + 2]!] as V3, pd = [m.p[d * 3]!, m.p[d * 3 + 1]!, m.p[d * 3 + 2]!] as V3
+      if (dot(cross(sub(pb, pa), sub(pd, pa)), tn) >= 0) m.tri(a, b, d); else m.tri(a, d, b)
+    }
+    for (let k = 0; k < sides; k++) {
+      face(outer[k]!, outer[k + 1]!, inner[k + 1]!); face(outer[k]!, inner[k + 1]!, inner[k]!)
+      face(centre, bore[k]!, bore[k + 1]!)
+    }
   }
 }
 
