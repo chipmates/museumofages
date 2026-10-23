@@ -115,6 +115,7 @@ export function createCloserPayload(options: {
     const view = plate.view()
     const home = plate.home()
     locator.dataset['home'] = String(home || !view)
+    locator.dataset['placed'] = String(plate.placed())
     if (!view || home) return
     let { x, y, w, h } = view
     // a view turned a quarter shows the source's width down the glass

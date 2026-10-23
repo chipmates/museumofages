@@ -102,6 +102,8 @@ export interface DeepPlatePayload extends VitrinePayload {
   view(): DeepPlateView | null
   /** Centre the view on a point of the source, in fractions. */
   centre(x: number, y: number): void
+  /** True while a place `go()` framed stands and the visitor has not moved since. */
+  placed(): boolean
 }
 
 /** Tiles a viewer may hold, by tier. A 256 px tile is 0.25 MB as RGBA8, so
@@ -624,6 +626,10 @@ export function createDeepPlatePayload(options: {
     if (options.state !== undefined) made.world.addHandler('add-item', event => { if (!states.has(event.item)) states.set(event.item, options.state!) })
     made.world.addHandler('remove-item', event => { states.delete(event.item) })
     made.addHandler('canvas-key', event => { event.preventDefaultAction = true })
+    // a framed place is the visitor's again at their first touch or wheel
+    const unplace = (): void => { if (placed) { placed = null; readout() } }
+    made.addHandler('canvas-press', unplace)
+    made.addHandler('canvas-scroll', unplace)
     // ON A PHONE A FINGER'S DOUBLE TAP goes in toward the finger at the whole
     // and back to the whole anywhere else; a mouse keeps the library's own
     made.addHandler('canvas-double-click', event => {
@@ -708,6 +714,7 @@ export function createDeepPlatePayload(options: {
   function zoom(factor: number): void {
     if (!viewer || !host) return
     const now = host.reducedMotion
+    placed = null
     viewer.viewport.zoomBy(factor, undefined, now)
     viewer.viewport.applyConstraints(now)
   }
@@ -887,10 +894,12 @@ export function createDeepPlatePayload(options: {
     },
     centre(x, y) {
       if (!viewer || !library || !host) return
+      placed = null
       viewer.viewport.panTo(new library.Point(x, y * height / width), host.reducedMotion)
       viewer.viewport.applyConstraints(host.reducedMotion)
     },
     drawn() { return drawn },
+    placed() { return placed !== null },
     aspect() {
       const across = width * (cut.right - cut.left), down = height * (cut.bottom - cut.top)
       return across > 0 && down > 0 ? across / down : null
@@ -911,6 +920,7 @@ export function createDeepPlatePayload(options: {
       // nothing to pan, so left and right are the wall's and step the works.
       const mine = ['ArrowLeft', 'ArrowRight', 'ArrowUp', 'ArrowDown', '+', '=', '-', '0']
       if (!mine.includes(event.key)) return false
+      placed = null
       const home = !viewer || !homeZoom || viewer.viewport.getZoom(true) <= homeZoom * 1.02
       if ((event.key === 'ArrowLeft' || event.key === 'ArrowRight') && home) return false
       if (!viewer || !library || !host) return true
