@@ -48,7 +48,7 @@ export interface BenchOptions {
   /** a grey figure of 1.70 m for size, at (x, z) on the floor, turned by yaw degrees */
   figure?: { at: [number, number]; yaw?: number };
   /** forge only: the key's near cascade half-width, its map size and the screw's wide filter, for a probe */
-  shadowProbe?: { near?: number; map?: number; wide?: boolean };
+  shadowProbe?: { near?: number; map?: number; wide?: boolean; lift?: number };
 }
 const el = <K extends keyof HTMLElementTagNameMap>(tag: K, cls: string, text?: string): HTMLElementTagNameMap[K] => { const n = document.createElement(tag); n.className = cls; if (text !== undefined)
   n.textContent = text; return n; };
@@ -516,12 +516,15 @@ export function createBench(stack: Stack, onExit: () => void) {
    * takes more of the sky and a paler bounce off the stone it stands on. The
    * hour, the sun's place and every other machine's light stay as they are.
    * The screw's cloth and frame are seen from below at eye height. */
-  const OWN_LIGHT: Partial<Record<MachineSlug, { lux: number; ambient: number; ground: string; near?: number; map?: number; wide?: boolean }>> = {
+  const OWN_LIGHT: Partial<Record<MachineSlug, { lux: number; ambient: number; ground: string; near?: number; map?: number; wide?: boolean; lift?: number }>> = {
     'aerial-screw': { lux: 210, ambient: 1.0, ground: '#5e5546' },
   };
+  /** how far toward the key a cloth looks up its shadow */
+  let clothLift = .03;
   function lightBench(probe?: BenchOptions['shadowProbe']) {
     const scale = machineCatalog[slug].dossier.scale_m, span = Math.max(scale.x, scale.y, scale.z);
     const own = OWN_LIGHT[slug] && probe ? { ...OWN_LIGHT[slug]!, ...probe } : OWN_LIGHT[slug];
+    clothLift = own?.lift ?? .03;
     key?.dispose();
     // The far cascade is a box around the origin. It has to contain the wall
     // as well as the machine, or the floor between them takes no shadow
@@ -544,7 +547,7 @@ export function createBench(stack: Stack, onExit: () => void) {
     const mine = ++serial; active = true; host.hidden = false; ready = false; loading.hidden = false; clearDisplay(); folioEntry = undefined; folio.replaceChildren(); slug = requested; evidenceRecord = machineCatalog[slug]; lang = controlLanguage(location.search, opts.lang); schedule = playbackSchedule(machineCatalog[slug].dossier); playbackState = initialPlayback(schedule, { t: opts.t, fixed: document.body.classList.contains('forge'), reducedMotion: reduced.matches }); lastWall = performance.now(); stamp(); stack.setScene(scene, camera, { ...IDENTITY, name: 'vinci-machine-bench', exposure: .95, grain: .004, ao: { intensity: 1, distance: Math.max(...Object.values(machineCatalog[slug].dossier.scale_m).filter((v): v is number => typeof v === 'number')) * .025, thickness: 1 } }); lightBench(opts.shadowProbe); machine = buildMachine(slug, stack); closeUp = opts.close ?? false; eye = opts.eye ?? null; figure = opts.figure ?? null; sectionEnabled = (slug === 'camera-obscura' || slug === 'mechanical-lion') && (opts.section ?? false); machine.section(sectionEnabled); display.add(machine.object); compose(); paint(); await Promise.all([machine.ready, supports(mine), plateFor(mine)]); if (mine !== serial)
     return; machine.animate(playbackState.clock, 0);
     if(key){
-      const towardKey=vec3(key.direction.x,key.direction.y,key.direction.z).mul(.03);
+      const towardKey=vec3(key.direction.x,key.direction.y,key.direction.z).mul(clothLift);
       machine.object.traverse(node=>{
         if(!(node instanceof Mesh))return;
         const materials=Array.isArray(node.material)?node.material:[node.material];
