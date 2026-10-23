@@ -286,7 +286,7 @@ export async function buildParts(stack: Stack, dossier: Dossier): Promise<Dresse
       // starch stiffens the cloth: its folds are the panels' own hang, built
       // in the geometry, so the painted fold is held low
       ...set, normalStrength: .22,
-      grain: set.grain ? {...set.grain, pitch: .16, relief: .18, shade: .2, sheen: .03, fold: .3, tooth: .008} : null,
+      grain: set.grain ? {...set.grain, pitch: .16, relief: .05, shade: .1, sheen: .03, fold: 0, tooth: .008} : null,
     } : /linen/.test(name) && !/thread/.test(name) ? {
       // The shaded face of a canopy is lit by the room, not by the sun, so
       // its folds have to be in the albedo as well as in the normal or the
