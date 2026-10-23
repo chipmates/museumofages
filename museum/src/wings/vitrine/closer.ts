@@ -61,7 +61,8 @@ export function createCloserPayload(options: {
   /** another state stands: the caller's card says its own sentence */
   onState?(state: CloserPayloadState): void
 }): CloserPayload {
-  let at = 0
+  // the state chosen, and the state whose picture stands: the words follow the picture
+  let at = 0, seen = 0
   let host: VitrinePayloadHost | undefined
   let depth: DeepPlateDepth = 'whole'
   let row: HTMLDivElement | undefined, zoomRow: HTMLDivElement | undefined
@@ -70,6 +71,7 @@ export function createCloserPayload(options: {
   let locator: HTMLDivElement | undefined, locatorView: HTMLDivElement | undefined
   let style: HTMLStyleElement | undefined
   const standing = (): CloserPayloadState => options.states[at]!
+  const shown = (): CloserPayloadState => options.states[seen]!
 
   const plate: DeepPlatePayload = createDeepPlatePayload({
     title: options.title,
@@ -90,19 +92,19 @@ export function createCloserPayload(options: {
 
   /** the name row, the line and the mark follow the state and the depth */
   function speak(): void {
-    const now = standing()
+    const now = shown()
     host?.rename?.(options.title, now.lines[depth], now.certainty, { at: 1, of: 1, clock: now.date }, null, null)
+    if (said) said.textContent = options.showing.replace('{0}', now.word)
   }
 
   function paintChoice(): void {
-    const now = standing(), other = options.states[at === 0 ? 1 : 0]
+    const other = options.states[at === 0 ? 1 : 0]
     for (const [index, segment] of segments.entries()) segment.setAttribute('aria-pressed', String(index === at))
-    if (turn && said) {
+    if (turn) {
       turn.textContent = other?.turn ?? ''
       turn.hidden = !other
-      said.textContent = options.showing.replace('{0}', now.word)
     }
-    if (row) row.dataset['state'] = now.id
+    if (row) row.dataset['state'] = standing().id
   }
 
   /** THE LOCATOR shows where the view stands on the whole, once it has gone
@@ -125,19 +127,22 @@ export function createCloserPayload(options: {
     Object.assign(locatorView.style, { left: `${left * 100}%`, top: `${top * 100}%`,
       width: `${Math.max(0, right - left) * 100}%`, height: `${Math.max(0, bottom - top) * 100}%` })
   }
-  const width = (): number => standing().source.width
-  const height = (): number => standing().source.height
+  const width = (): number => shown().source.width
+  const height = (): number => shown().source.height
 
   function choose(id: string): void {
     const to = options.states.findIndex(state => state.id === id)
     if (to < 0 || to === at) return
     at = to
     const now = standing()
-    plate.swap({ source: now.source, title: options.title, description: options.description }, now.id)
-    if (locator) locator.style.backgroundImage = now.thumb ? `url("${now.thumb}")` : ''
     paintChoice()
-    speak()
-    options.onState?.(now)
+    plate.swap({ source: now.source, title: options.title, description: options.description }, now.id, () => {
+      if (standing() !== now) return
+      seen = to
+      if (locator) locator.style.backgroundImage = now.thumb ? `url("${now.thumb}")` : ''
+      speak()
+      options.onState?.(now)
+    })
   }
 
   function make<K extends keyof HTMLElementTagNameMap>(tag: K, cls: string, text?: string): HTMLElementTagNameMap[K] {
@@ -164,6 +169,7 @@ export function createCloserPayload(options: {
     mount(next) {
       host = next
       depth = 'whole'
+      seen = at
       style = make('style', '')
       style.textContent = css
       zoomRow = make('div', 'closer-zoom')

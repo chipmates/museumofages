@@ -93,8 +93,9 @@ export interface DeepPlatePayload extends VitrinePayload {
   home(): boolean
   /** ANOTHER STATE OF THE SAME PLACE at the same spot and depth: the next
    * source fades in over the one standing, and only its tiles are held
-   * once it stands. Both sources share one pixel frame. */
-  swap(next: DeepPlateShow, state?: string): void
+   * once it stands. Both sources share one pixel frame. `shows` runs as
+   * the next source starts to show, so words can follow the picture. */
+  swap(next: DeepPlateShow, state?: string, shows?: () => void): void
   /** Frame a rectangle of the source, turned clockwise by `turn` degrees. */
   go(detail: DeepPlateDetail, turn?: number): void
   /** The view standing now, or null before the viewer stands. */
@@ -796,8 +797,8 @@ export function createDeepPlatePayload(options: {
       corner.replaceChildren(...nodes)
       corner.hidden = nodes.length === 0
     },
-    swap(next, state = '') {
-      if (!viewer || !library) { shown = next; return }
+    swap(next, state = '', shows) {
+      if (!viewer || !library) { shown = next; shows?.(); return }
       shown = next
       cut = next.window ?? { left: 0, top: 0, right: 1, bottom: 1 }
       width = next.source.width
@@ -821,6 +822,7 @@ export function createDeepPlatePayload(options: {
               faded = true
               clearTimeout(swapping)
               mark(item.getFullyLoaded() ? 'fade-loaded' : 'fade-waited')
+              shows?.()
               const others = (): import('openseadragon').TiledImage[] => {
                 const out: import('openseadragon').TiledImage[] = []
                 for (let i = 0; i < made.world.getItemCount(); i++) { const other = made.world.getItemAt(i); if (other !== item) out.push(other) }
