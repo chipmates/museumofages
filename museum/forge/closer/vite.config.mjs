@@ -4,7 +4,7 @@
 // working words, its closer look record attaches there, and the held frame is
 // laid over with a still of the room. Nothing here reaches a build.
 //
-//   NA_CLOSER_HOST=<stop id>              the live stop that lends its rest (default oratory)
+//   NA_CLOSER_HOST=<stop id>              the live stop that lends its rest (default courtyard, a stop with no set)
 //   NA_CLOSER_STILL_DESK=<png>            the held frame on the desk, the picture's own rows only
 //   NA_CLOSER_STILL_PHONE=<png>           the held frame upright on a phone
 //   pnpm exec vite --config forge/closer/vite.config.mjs --port <p> --strictPort
@@ -12,7 +12,7 @@ import { readFileSync, existsSync } from 'node:fs'
 import { mergeConfig } from 'vite'
 import base from '../../vite.config.ts'
 
-const HOST = process.env.NA_CLOSER_HOST || 'oratory'
+const HOST = process.env.NA_CLOSER_HOST || 'courtyard'
 const STILLS = { desk: process.env.NA_CLOSER_STILL_DESK, phone: process.env.NA_CLOSER_STILL_PHONE }
 
 /** the stop's words while it stands for the room, working lines as the closer look's are */

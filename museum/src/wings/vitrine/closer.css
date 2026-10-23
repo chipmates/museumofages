@@ -25,4 +25,5 @@
 .vitrine[data-narrow='true'] .closer-places-head {margin:0;padding-bottom:6px;border-bottom:1px solid var(--ui-line);}
 .vitrine[data-narrow='true'] .closer-places .closer-place {display:flex;width:100%;margin:0;padding:0;justify-content:space-between;
   box-shadow:none;border-bottom:1px solid var(--ui-line);border-radius:0;font:400 .9375rem/20px var(--sans);text-align:left;white-space:normal;}
+.vitrine[data-narrow='true'] .closer-places .closer-place:last-child {border-bottom:0;}
 .vitrine[data-narrow='true'] .closer-places .closer-place::after {content:'\203A';flex:0 0 auto;margin-left:12px;font:400 1.375rem/1 var(--sans);color:var(--ui-text-quiet);}

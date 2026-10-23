@@ -412,7 +412,7 @@ export function createFilmLook(h: FilmLookHost) {
     own.textContent = text(standing.sentence)
     // WHERE TO LOOK: each row frames its place and folds the card over it
     const places = make('div', 'closer-places')
-    places.append(make('p', 'closer-places-head', text(look.placesHead)))
+    places.append(make('h3', 'closer-places-head', text(look.placesHead)))
     const payload = createCloserPayload({ title, description: text(look.describe), states, words: vinciPlateWords(),
       showing: text(CLOSER_WORDS.showing), locator: text(CLOSER_WORDS.locator), tier, standing: h.standing, narrow: h.narrow(),
       onState: next => {
