@@ -680,8 +680,8 @@ export const vinciWelcomeBlocks: readonly VinciWelcomeBlock[] = [
       {
         certainty: 'reconstructed',
         text: {
-          en: 'That the king gave him a pension and the use of this manor is reported rather than shown. The royal accounts are not in front of us.',
-          de: 'Dass der König ihm eine Pension und dieses Haus überließ, ist überliefert und nicht belegt. Die königlichen Rechnungsbücher liegen uns nicht vor.',
+          en: 'The royal accounts record his pension. That the king also gave him this house is reported, not documented.',
+          de: 'Leonardos Pension steht in den Rechnungsbüchern des Königs. Dass der König ihm auch dieses Haus gab, ist überliefert, nicht belegt.',
         },
       },
     ],
