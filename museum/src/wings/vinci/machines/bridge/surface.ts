@@ -69,10 +69,11 @@ export async function bridgeSurfaces(stack: Stack): Promise<BridgeSurfaces> {
   pole.name = `bridge-of-poles:pole:${set['oak-beams'].name}`
   {
     const s = set['oak-beams']
-    const d = stack.detail(pole, { ...s, normalStrength: 0.22, grain: s.grain ? { ...s.grain, relief: 0.1, shade: 0.14, sheen: 0.04 } : null }, { uv: uv(), count: 3, maps: maps(s), fade: [6, 40] })
+    const d = stack.detail(pole, { ...s, normalStrength: 0.4, grain: s.grain ? { ...s.grain, relief: 0.1, shade: 0.14, sheen: 0.04 } : null }, { uv: uv(), count: 3, maps: maps(s), fade: [6, 40] })
     const T: N = attribute('aTone', 'vec3'), seed: N = attribute('aSeed', 'float')
     const tone = T.x, peeled = T.y, end = T.z
-    const u = uv().x, v = uv().y
+    // the stem's UVs: along it (the photograph's grain) and round it; the cut ends carry their own face coordinates
+    const v = uv().x, u = uv().y
     const o = seed.mul(37.1)
     // BARK: shallow fissures running along the stem and wandering, plates between, lenticels across
     // chestnut coppice bark at about twenty years: long shallow fissures along the stem, flat grey ridges between,
@@ -91,8 +92,10 @@ export async function bridgeSurfaces(stack: Stack): Promise<BridgeSurfaces> {
     const plate = mx_noise_float(vec3(u.mul(5).add(o), v.mul(1.3), 2.3)).mul(0.5).add(0.5)
     const mottle = mx_noise_float(vec3(u.mul(1.6).add(o), v.mul(0.45), 9.1)).mul(0.5).add(0.5)
     const lichen = smoothstep(0.64, 0.8, mx_noise_float(vec3(u.mul(3.5).add(o), v.mul(1.2), 4.9)).mul(0.5).add(0.5))
-    const ridgeTop = mx(mx(lin('#5c5248'), lin('#736b60'), plate.mul(0.7)), lin('#5f4e3e'), mottle.mul(0.45))
-    const barkCol = mx(mx(ridgeTop, lin('#7f7d70'), lichen.mul(0.3)).mul(micro.mul(microFade).mul(0.1).add(1)), lin('#2c241d'), fissure.mul(0.8))
+    // the photograph's own checks and grain along the stem give the bark its texture; greyed and darkened
+    const rel = luma(d.albedo).div(Math.max(0.05, 0.2126 * s.albedo.r + 0.7152 * s.albedo.g + 0.0722 * s.albedo.b)).clamp(0.2, 2.2)
+    const ridgeTop = mx(mx(lin('#554b41'), lin('#6c645a'), plate.mul(0.7)), lin('#5a4a3b'), mottle.mul(0.45)).mul(rel.pow(1.35))
+    const barkCol = mx(mx(ridgeTop, lin('#7a786b'), lichen.mul(0.28)).mul(micro.mul(microFade).mul(0.18).add(1)), lin('#2a221b'), fissure.mul(0.75))
       .mul(float(1).sub(shoulder.mul(0.12))).mul(float(1).add(lent.mul(0.25)))
     const barkH = fissure.negate().mul(0.0025).sub(shoulder.mul(0.0008)).add(micro.mul(microFade).mul(0.00035)).add(lent.mul(0.0002))
     // PEELED: pale wood under the drawknife, its strokes as narrow facets along the stem, bark left in the hollows
@@ -115,7 +118,7 @@ export async function bridgeSurfaces(stack: Stack): Promise<BridgeSurfaces> {
     pole.colorNode = mx(sideCol, endCol, end).mul(d.occlusion).mul(keyRim(0.45).add(1))
     pole.roughnessNode = mx(mx(float(0.86).add(fissure.mul(0.1)), d.roughness.clamp(0.6, 0.8), peeled), float(0.82), end)
     const h = mx(mx(barkH, facetH, peeled), float(0), end)
-    pole.normalNode = bumped(mx(normalView, pole.normalNode ?? normalView, peeled), h, 1)
+    pole.normalNode = bumped(pole.normalNode ?? normalView, h, 1)
   }
 
   // ---------------------------------------------------------------- HEMP

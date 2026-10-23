@@ -3,7 +3,7 @@
  * slow wander in its girth. A lashing is three square-lashing turns of hemp
  * round a rod and the support it crosses, each turn a closed loop swept with
  * the rope's round section. Every vertex carries what the surfaces need:
- * UVs in metres (U round the stem, V along it), `aTone` (the piece's own
+ * UVs in metres (U along the stem, as the library's grain runs, V round it), `aTone` (the piece's own
  * tone, peeled or in its bark, end grain), `aSeed`.
  */
 import { BufferGeometry, Float32BufferAttribute } from 'three/webgpu'
@@ -64,7 +64,7 @@ export function stem(sheet: Sheet, length: number, r: (s: number) => number, see
       const rr = (r(s) + wander(seed, s, a)) * scale
       const p: V3 = [x0 + s, rr * c, rr * sn]
       if (cap !== 0) sheet.vertex(p, [cap, 0, 0], rr * c, rr * sn, [tone, peeled, 1], seed)
-      else sheet.vertex(p, norm([-slope, c, sn]), (k / around) * girth, s, [tone, peeled, 0], seed)
+      else sheet.vertex(p, norm([-slope, c, sn]), s, (k / around) * girth, [tone, peeled, 0], seed)
     }
     return start
   }
