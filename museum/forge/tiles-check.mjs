@@ -4,8 +4,9 @@
 //
 //   node forge/tiles-check.mjs [--json] [--quiet]
 //
-// Two families stand under the same rule: a hung face's plate
-// (`painting-tiles`) and a manuscript leaf's scan (`leaf-tiles`). A leaf's
+// Every family stands under the same rule: a hung face's plate
+// (`painting-tiles`), a manuscript leaf's scan (`leaf-tiles`) and a room's
+// plate (`room-tiles`), each beside its own kind of source. A leaf's
 // record does not carry its pixels in its path, so the source file's own
 // JPEG header is read and the pyramid measured against it.
 //
@@ -50,6 +51,11 @@ export const CODEX_ROLE = 'codex-tiles'
 const CODEX_ID = /^vinci\/codex-tiles\/([a-z0-9-]+)__p(\d{4})$/
 const CODEX_PATH = /^codices\/([a-z0-9-]+)\/tiles\/([a-f0-9]{12})\/$/
 const CODEX_FILE = /^codices\/([a-z0-9-]+)\/p(\d{4})\.jpg$/
+export const ROOM_ROLE = 'room-tiles'
+const ROOM_ID = /^vinci\/room-tiles\/([a-z0-9-]+)$/
+const ROOM_TILES = /^rooms\/([a-z0-9-]+)\/tiles\/([a-f0-9]{12})\/$/
+/** a room's plate names its room in its folder and its pixels in its name */
+export const ROOM_FILE = /^rooms\/([a-z0-9-]+)\/([a-z0-9-]+)__([1-9]\d*)x([1-9]\d*)\.jpg$/
 
 /** THE THREE FAMILIES, and the source role each is cut from. A hung face's
  * plate carries its pixels in its path and its name among the faces of its
@@ -62,6 +68,8 @@ export const FAMILIES = {
   [DEEP_ROLE]: { prefix: 'vinci/deep-tiles/', from: ['painting-deep'] },
   // a side of a codex on the shelf: the scan the library or the facsimile gave
   [CODEX_ROLE]: { prefix: 'vinci/codex-tiles/', from: ['codex-page'] },
+  // a place's own surface, flat and whole: a photograph of it or our drawing of it
+  [ROOM_ROLE]: { prefix: 'vinci/room-tiles/', from: ['room-plate'] },
 }
 
 /** Which family a source record's pyramid belongs to, or nothing when no
@@ -191,11 +199,15 @@ export function checkTiles() {
     const leaf = record.id.startsWith(FAMILIES[LEAF_ROLE].prefix)
     const deep = record.id.startsWith(FAMILIES[DEEP_ROLE].prefix)
     const codex = record.id.startsWith(FAMILIES[CODEX_ROLE].prefix)
+    const room = record.id.startsWith(FAMILIES[ROOM_ROLE].prefix)
     // a leaf and a codex side are both scans measured by their own header
     const scanned = leaf || codex
-    const mine = leaf ? LEAF_ROLE : deep ? DEEP_ROLE : codex ? CODEX_ROLE : TILES_ROLE
-    const path = (leaf ? LEAF_PATH : deep ? DEEP_PATH : codex ? CODEX_PATH : TILES_PATH).exec(record.path ?? '')
-    if (codex) {
+    const mine = leaf ? LEAF_ROLE : deep ? DEEP_ROLE : codex ? CODEX_ROLE : room ? ROOM_ROLE : TILES_ROLE
+    const path = (leaf ? LEAF_PATH : deep ? DEEP_PATH : codex ? CODEX_PATH : room ? ROOM_TILES : TILES_PATH).exec(record.path ?? '')
+    if (room) {
+      if (!ROOM_ID.test(record.id)) { say('an id is vinci/room-tiles/<the plate\'s own file name>'); continue }
+      if (!path) { say('a path is rooms/<room>/tiles/<twelve of the source hash>/'); continue }
+    } else if (codex) {
       if (!CODEX_ID.test(record.id)) { say('an id is vinci/codex-tiles/<folder>__p<scan>'); continue }
       if (!path) { say('a path is codices/<folder>/tiles/<twelve of the source hash>/'); continue }
     } else if (leaf) {
@@ -213,7 +225,16 @@ export function checkTiles() {
     const family = familyOfSource(plate)
     if (family !== mine) say(`derived_from is a ${plate.role ?? 'record with no role'}, which this family is not cut from`)
     if (record.role !== mine) say(`a pyramid of this family carries role ${mine}`)
-    if (codex) {
+    if (room) {
+      const named = ROOM_FILE.exec(plate.path ?? '')
+      if (!named) say(`the source ${plate.id} does not stand at rooms/<room>/<name>__<w>x<h>.jpg`)
+      else {
+        if (record.id !== `vinci/room-tiles/${named[2]}`) say(`the id does not name the plate's own file, which is ${named[2]}`)
+        if (named[1] !== path[1]) say(`the folder says ${path[1]}, the plate stands in ${named[1]}`)
+        if ((record.room ?? null) !== named[1]) say('room is not the plate\'s own room folder')
+      }
+      if (plate.display !== true) say('derived_from is not a displayed plate record')
+    } else if (codex) {
       const named = CODEX_FILE.exec(plate.path ?? '')
       if (!named) say(`the source ${plate.id} does not stand at codices/<folder>/p<scan>.jpg`)
       else {
@@ -305,7 +326,7 @@ if (import.meta.url === `file://${process.argv[1]}`) {
     }
     const count = family => report.checked.filter(row => row.family === family).length
     console.log(`${report.pyramids} pyramid(s) checked: ${count(TILES_ROLE)} plate(s), `
-      + `${count(LEAF_ROLE)} leaf/leaves, ${count(DEEP_ROLE)} deep, ${count(CODEX_ROLE)} codex side(s)`)
+      + `${count(LEAF_ROLE)} leaf/leaves, ${count(DEEP_ROLE)} deep, ${count(CODEX_ROLE)} codex side(s), ${count(ROOM_ROLE)} room plate(s)`)
     if (report.errors.length) {
       console.log('TILES CHECK FAILED:')
       for (const error of report.errors) console.log(' ·', error)

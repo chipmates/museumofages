@@ -212,6 +212,31 @@ export function vinciLeafSource(index: ManifestIndex, page: string,
   }
 }
 
+/** A ROOM'S PLATE AND ITS PYRAMID, for a closer look at a stop: the plate is
+ * read only where the store admits it for display, and its pyramid only where
+ * it was cut from that very file at its own size. A plate whose pyramid is not
+ * cut opens as the file itself; a plate the store does not admit opens nothing.
+ * The thumb is the pyramid's coarsest level, the whole at its smallest. */
+export function vinciRoomSource(index: ManifestIndex, plateId: string, tilesId: string):
+{ source: DeepPlateSource; plate: ManifestEntry; tiles: TilesRecord | null; thumb: string | null } | null {
+  const plate = index.byId.get(plateId) as (ManifestEntry & { role?: string; width?: number; height?: number }) | undefined
+  if (!plate || plate.role !== 'room-plate' || plate.display !== true || !plate.width || !plate.height) return null
+  const file = assetAddress(plate)
+  const tiles = index.byId.get(tilesId) as TilesRecord | undefined
+  const cut = tiles && tiles.role === 'room-tiles' && tiles.display === true && tiles.derived_from === plate.id
+    && tiles.source_sha256 === plate.sha256 && tiles.width === plate.width && tiles.height === plate.height
+    && tiles.tile_size && tiles.scale_factors?.length && tiles.path.endsWith('/') ? tiles : null
+  if (!cut) return { source: { pyramid: null, file, width: plate.width, height: plate.height }, plate, tiles: null, thumb: file }
+  const base = assetPyramidBase(cut)
+  const coarsest = Math.max(...cut.scale_factors!)
+  const thumb = `${base}/full/${Math.ceil(plate.width / coarsest)},${Math.ceil(plate.height / coarsest)}/0/default.jpg`
+  return {
+    source: { pyramid: { base, width: plate.width, height: plate.height, tileSize: cut.tile_size!, scaleFactors: cut.scale_factors! },
+      file, width: plate.width, height: plate.height },
+    plate, tiles: cut, thumb,
+  }
+}
+
 /** PIXELS OF THE SOURCE ACROSS ONE CENTIMETRE OF THE WORK. The display
  * window is the extent the museum hangs the work by and the register holds
  * its size in centimetres; a work missing either has no rule. The window's

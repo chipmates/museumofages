@@ -21,7 +21,7 @@ export const FILM_PLACES: ReadonlySet<string> = new Set(['grave', 'grave-diagram
 export const FILM_EDITION = 'codex/paris-B'
 export const FILM_EDITION_WHOLE = 'codex/edition'
 
-export type FilmLookKind = 'edition' | 'whole-edition' | 'topic' | 'book' | 'life' | 'study-leaf' | 'sheet' | 'place' | 'picture' | 'machine'
+export type FilmLookKind = 'edition' | 'whole-edition' | 'topic' | 'book' | 'life' | 'study-leaf' | 'sheet' | 'place' | 'picture' | 'machine' | 'closer'
 
 /** the look a mark's id opens, or null for an id no look answers */
 export function filmLookKind(id: string): FilmLookKind | null {
@@ -35,5 +35,7 @@ export function filmLookKind(id: string): FilmLookKind | null {
   if (FILM_PLACES.has(id) || id === FILM_DEATHBED) return 'place'
   if (id.startsWith('picture/')) return 'picture'
   if (id.startsWith('machine/')) return 'machine'
+  // a stop's closer look (`closer.ts`), opened by its own word at the stop and never by a mark
+  if (id.startsWith('closer/')) return 'closer'
   return null
 }

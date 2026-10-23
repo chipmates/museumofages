@@ -1,0 +1,30 @@
+/* A CLOSER LOOK'S OWN PARTS: the choice of state and the locator. Everything
+   else is the deep plate's and the window's. */
+.closer-zoom, .closer-states {display:flex;align-items:center;gap:10px;}
+.closer-zoom:empty, .closer-states:empty {display:none;}
+/* THE LOCATOR: the whole, small, and the view standing on it in gold. At Home
+   it keeps its place empty, so the choice beside it never moves. */
+.closer-locator {position:relative;flex:0 0 60px;width:60px;height:60px;box-sizing:border-box;
+  background:var(--ui-ground-deep) center/contain no-repeat;border:1px solid var(--ui-line);border-radius:var(--ui-r-square);cursor:pointer;overflow:hidden;}
+.closer-locator[data-home='true'] {visibility:hidden;}
+.closer-locator-view {position:absolute;box-sizing:border-box;min-width:3px;min-height:3px;border:1.5px solid var(--na-gold);pointer-events:none;}
+/* ON THE PHONE it is a picture only, on the glass at its top left: the close
+   stands at the top right. At Home it is not there at all, nor over a framed
+   place until the visitor moves. */
+.vitrine[data-narrow='true'] .closer-locator {position:absolute;left:10px;top:10px;z-index:2;cursor:default;pointer-events:none;
+  box-shadow:0 1px 10px var(--ui-ground-deep);}
+.vitrine[data-narrow='true'] .closer-locator:is([data-home='true'],[data-placed='true']) {display:none;}
+/* WHERE TO LOOK, after the card's sentences and before the record: each row
+   frames its place. On the desk a row of the band's own keys; on the phone a
+   list, one place a row. */
+.closer-places {margin:16px 0 0;}
+.closer-places-head {margin:0 0 8px;font:500 .8125rem/1.3 var(--sans);letter-spacing:.12em;text-transform:uppercase;color:var(--ui-text-quiet);}
+.closer-places .closer-place {display:inline-flex;align-items:center;min-height:44px;margin:0 10px 0 0;padding:0 14px;box-sizing:border-box;
+  border:0;border-radius:var(--ui-r-square);background:none;box-shadow:inset 0 0 0 1px var(--ui-line-strong,var(--ui-line));
+  font:500 .9375rem/1 var(--sans);color:var(--ui-text);white-space:nowrap;cursor:pointer;}
+.closer-places .closer-place:focus-visible {outline:2px solid var(--na-gold);outline-offset:3px;}
+.vitrine[data-narrow='true'] .closer-places-head {margin:0;padding-bottom:6px;border-bottom:1px solid var(--ui-line);}
+.vitrine[data-narrow='true'] .closer-places .closer-place {display:flex;width:100%;margin:0;padding:0;justify-content:space-between;
+  box-shadow:none;border-bottom:1px solid var(--ui-line);border-radius:0;font:400 .9375rem/20px var(--sans);text-align:left;white-space:normal;}
+.vitrine[data-narrow='true'] .closer-places .closer-place:last-child {border-bottom:0;}
+.vitrine[data-narrow='true'] .closer-places .closer-place::after {content:'\203A';flex:0 0 auto;margin-left:12px;font:400 1.375rem/1 var(--sans);color:var(--ui-text-quiet);}

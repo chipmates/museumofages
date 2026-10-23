@@ -390,3 +390,6 @@
 .vitrine[data-narrow='true'][data-read='true'] .vitrine-payload-controls .reader-row > :not(.vitrine-step) {display:none;}
 .vitrine[data-narrow='true'][data-read='true'] .vitrine-payload-controls {padding-top:12px;}
 .vitrine[data-narrow='true'][data-read='true'] .vitrine-payload-controls:not(:has(> .reader-row:not([hidden]) > .vitrine-step:not([hidden]))) {display:none;}
+/* a date in the clock's place, after the name */
+.vitrine-name-clock {flex:0 0 auto;font:400 .875rem/1 var(--sans);letter-spacing:.02em;color:var(--ui-text-quiet);white-space:nowrap;}
+.vitrine-name-clock[hidden] {display:none;}

@@ -30,6 +30,7 @@ import { createFilmSource, FILM_FORMAT, loadFilmRelease, LEAN_MS, type FilmEveni
 import { walkedClip } from '../../../forge/film/walks.mjs'
 import { createVinciWelcome, markVinciWelcomeSeen, vinciWelcomeSeen, type VinciWelcome } from './welcome'
 import type { FilmLook, FilmLookWays } from './film-look'
+import { closerAtStop, CLOSER_WORDS } from './closer'
 import type { VitrineOnward } from '../vitrine'
 import { createPictureWords, type PictureWordsLayer } from './picture-words'
 import { createDeskOverview, type DeskOverview, type DeskOverviewCell } from '../overview'
@@ -85,11 +86,21 @@ function keepLast(node: HTMLElement, said: string, least = 3): void {
 }
 /** the story's clock at his birth repeats what its heading already says */
 const atBirth = (age: VinciText): boolean => text(age) === text(deskControl('date', 'age_birth'))
+/** THE UPRIGHT CLOCK BESIDE ITS HEADING drops the figure's name in front of
+    it (the first word of the age's own pattern), so a short phone's name row
+    keeps one line: "mit Anfang 20" where the desktop reads "Leonardo mit Anfang 20" */
+function bareAge(age: string): string {
+  const name = /^[^\s,]+/u.exec(text(deskControl('date', 'age')))?.[0]
+  if (!name || !age.startsWith(name)) return age
+  return age.slice(name.length).replace(/^,?\s+/u, '') || age
+}
 const ARROW_ON = 'M3 8h10M9 4l4 4-4 4', ARROW_UP = 'M8 13V3M4 7l4-4 4 4', ARROW_DOWN = 'M8 3v10M4 9l4 4 4-4'
 /** the Menu's sign: three short lines, read as a menu where a circled plus read as add or zoom */
 const MENU = 'M3 3.5h10M3 8h10M3 12.5h10'
 const TRIANGLE_BACK = 'M11 3.5L4.5 8 11 12.5z'
 const STEP_BACK = 'M10 3L5 8l5 5'
+/** a closer look's sign: the circled plus that reads as nearer */
+const NEARER = 'M8 2.5a5.5 5.5 0 1 0 0 11a5.5 5.5 0 1 0 0-11M8 5.6v4.8M5.6 8h4.8'
 const RING = 2 * Math.PI * 20.5
 /** the most a mark is lifted to stand clear of the phone's box: sideways
     takes 28; upright the Baptism's mark needs 37 at 390x664 and 41 at 375x667 */
@@ -659,6 +670,13 @@ export function createWing(): WingModule {
 
   /* ---- the close look, loaded after the first picture ---- */
   const standing = (): boolean => picture?.state().kind === 'rest'
+  /** THE CLOSER LOOK the stop at rest carries, its word and its press; none
+      while the eye walks or a look stands */
+  function closerHere(): { word: VinciText; open: (from: HTMLElement) => void } | null {
+    if (!standing() || look?.id) return null
+    const near = closerAtStop(LIFE[card]?.id ?? '')
+    return near ? { word: CLOSER_WORDS.open, open: from => { if (standing() && !look?.id) openExhibit(near.id, from) } } : null
+  }
   /* ONE TEXT AT A TIME: on the phone the box keeps only its foot row while a
      close look stands (the way back, the work before, gold on to the work
      after), so the work takes the glass and the vitrine's card is the text */
@@ -869,7 +887,7 @@ export function createWing(): WingModule {
   /* ---- the phone's graded box ---- */
   let phone: {
     root: HTMLElement; name: HTMLElement; line: HTMLElement; drawer: HTMLElement; keys: HTMLElement
-    more: HTMLButtonElement; from: HTMLButtonElement; count: HTMLButtonElement
+    more: HTMLButtonElement; from: HTMLButtonElement; count: HTMLButtonElement; closer: HTMLButtonElement
     back: HTMLButtonElement; book: HTMLButtonElement; earlier: HTMLButtonElement; talk: HTMLButtonElement; gold: HTMLButtonElement; goldName: HTMLElement; ringLine: SVGCircleElement
     goldPath: SVGPathElement
   } | undefined
@@ -899,7 +917,11 @@ export function createWing(): WingModule {
     const count = make('button', 'film-key film-count')
     count.type = 'button'
     count.setAttribute('aria-haspopup', 'dialog')
-    keys.append(more, count)
+    // a stop's closer look, in the slot a stop with a set names its count (paintPhone)
+    const closer = make('button', 'film-key film-closer')
+    closer.type = 'button'
+    closer.hidden = true
+    keys.append(more, closer, count)
     const foot = make('div', 'film-foot')
     const back = make('button', 'film-back')
     back.type = 'button'
@@ -950,6 +972,7 @@ export function createWing(): WingModule {
     signal.addEventListener('abort', () => rows.disconnect())
     watchGoldName(goldName, signal)
     more.addEventListener('click', () => setDrawer(!drawerOpen))
+    closer.addEventListener('click', () => closerHere()?.open(closer))
     from.addEventListener('click', () => { paintSources(null); sources?.select('station'); sources?.setOpen(true) })
     count.addEventListener('click', () => dispatchEvent(new Event('na-wing-plan')))
     back.addEventListener('click', () => { if (look?.id) { look.back(); return } if (backFromHold() || up()) return; const to = backIndex(); if (to !== null) h.navigate(to) })
@@ -968,7 +991,7 @@ export function createWing(): WingModule {
       if (dy < -24 && !drawerOpen) setDrawer(true)
       else if (dy > 24 && drawerOpen) setDrawer(false)
     }, { signal })
-    phone = { root, name, line, drawer, keys, more, from, count, back, book, earlier, talk, gold, goldName, ringLine, goldPath: goldIcon.querySelector('path')! }
+    phone = { root, name, line, drawer, keys, more, from, count, closer, back, book, earlier, talk, gold, goldName, ringLine, goldPath: goldIcon.querySelector('path')! }
   }
   function setDrawer(open: boolean): void {
     if (!phone) return
@@ -987,7 +1010,7 @@ export function createWing(): WingModule {
     const stop = deskStoryStop(id)
     phone.name.textContent = ''
     phone.name.append(deskMark(stop?.certainty ?? 'reconstructed'), make('span', 'film-chapter', text(stop?.chapter ?? LIFE[card]!.name)))
-    if (stop?.age && !atBirth(stop.age)) phone.name.append(make('span', 'film-clock', text(stop.age)))
+    if (stop?.age && !atBirth(stop.age)) phone.name.append(make('span', 'film-clock', form === 'upright' ? bareAge(text(stop.age)) : text(stop.age)))
     phone.line.textContent = stop ? keepTogether(say(stop.line)) : ''
     phone.drawer.textContent = ''
     if (drawerOpen && stop?.drawer) {
@@ -1006,6 +1029,9 @@ export function createWing(): WingModule {
       else phone.from.remove()
     } else if (phone.from.parentElement !== phone.keys) phone.keys.insertBefore(phone.from, phone.count)
     phoneList?.paint()
+    const near = closerHere()
+    phone.closer.hidden = !near
+    if (near) phone.closer.replaceChildren(document.createTextNode(say(near.word)), icon(NEARER))
     phone.count.textContent = `${String(card + 1).padStart(2, '0')} / ${LIFE.length}`
     phone.count.setAttribute('aria-label', `${text(deskControl('ways', 'chapters'))} ${card + 1} / ${LIFE.length}`)
     const back = backIndex()
@@ -1402,6 +1428,7 @@ export function createWing(): WingModule {
       walk,
       held: () => walkMotion() === 'held',
       goOn: goOnWalk,
+      closer: closerHere,
     })
     if (form !== 'desk') {
       buildPhone(h)

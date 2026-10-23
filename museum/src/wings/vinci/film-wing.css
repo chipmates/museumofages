@@ -228,15 +228,25 @@
 
 /* WALKING: nothing but the way back and gold as a ring that is the leg; a
    held walk has the book back in its seat, the way to the plan */
-#wing[data-film='upright'][data-walking] .film-name,
-#wing[data-film='upright'][data-walking] .film-line,
-#wing[data-film='upright'][data-walking] .film-drawer,
-#wing[data-film='upright'][data-walking] .film-keys,
 #wing[data-film='upright'][data-walking]:not([data-walk='held']) .film-book { visibility: hidden; }
-#wing[data-film='upright'][data-walking] .film-box > .film-name,
-#wing[data-film='upright'][data-walking] .film-box > .film-line,
-#wing[data-film='upright'][data-walking] .film-box > .film-drawer,
-#wing[data-film='upright'][data-walking] .film-box > .film-keys { background: none; }
+/* THE WORDS AND THEIR GROUND leave in 160 ms as the walk begins, and come back
+   half a second after the eye stands, rising 8 px over 240 ms (the frozen
+   form's motion table); under Reduce Motion they go and come at once */
+#wing[data-film='upright'] .film-box > :is(.film-name, .film-line, .film-drawer, .film-keys) {
+  transition: opacity 240ms ease-out 500ms, translate 240ms ease-out 500ms, visibility 0s linear 500ms;
+}
+#wing[data-film='upright']:is([data-walking], [data-cut]) .film-box > :is(.film-name, .film-line, .film-drawer, .film-keys) {
+  opacity: 0; translate: 0 8px; visibility: hidden;
+  transition: opacity 160ms ease-in, translate 0s linear 160ms, visibility 0s linear 160ms;
+}
+/* the walk's own words stand once the place's have gone: one text at a time */
+@keyframes film-walk-words-in { from { opacity: 0; } to { opacity: 1; } }
+#wing[data-film='upright'] .film-box > .walk-panel:not([hidden]) { animation: film-walk-words-in 120ms linear 160ms both; }
+@media (prefers-reduced-motion: reduce) {
+  #wing[data-film='upright'] .film-box > :is(.film-name, .film-line, .film-drawer, .film-keys),
+  #wing[data-film='upright']:is([data-walking], [data-cut]) .film-box > :is(.film-name, .film-line, .film-drawer, .film-keys) { transition: none; translate: none; }
+  #wing[data-film='upright'] .film-box > .walk-panel:not([hidden]) { animation: none; }
+}
 /* while a leg runs gold is the leg's ring, a circle in every corner language */
 .film-gold[data-leg='true'] {
   left: auto;
@@ -252,11 +262,7 @@
 .film-gold[data-leg='true'] .film-gold-arrow { background: none; }
 .film-gold[data-leg='true'] .film-gold-ring,
 .film-gold[data-wait='true'] .film-gold-ring { opacity: 1; }
-/* a dip keeps the gold and the way back over the dark, and nothing of the place */
-#wing[data-film='upright'][data-cut] .film-name,
-#wing[data-film='upright'][data-cut] .film-line,
-#wing[data-film='upright'][data-cut] .film-drawer,
-#wing[data-film='upright'][data-cut] .film-keys,
+/* a dip keeps the gold and the way back over the dark, and nothing of the place (its words go as a walk's do) */
 #wing[data-film='upright'][data-cut]:not([data-walk='held']) .film-book { visibility: hidden; }
 
 /* the marks of the film stand where the live marks stand, and go with the walk */
@@ -536,6 +542,8 @@ html:has(#wing[data-film='upright']) #instruments:not([hidden])::after {
 #wing[data-film][data-evening] .wing-stage > :not(.na-film) { opacity: 0; pointer-events: none; transition: opacity .9s ease; }
 body:has(#wing[data-film][data-evening]) :is(#rail-instruments, #rail-sound) { opacity: 0; visibility: hidden; }
 body:has(#wing[data-film][data-evening]) .brand { opacity: 0; transition: opacity .9s ease; }
+/* no wordmark on the picture inside a wing, upright: the masthead stood under the picture at 10 px, unseen and still read */
+:root:has(#wing[data-film='upright']:not([hidden])) .brand { visibility: hidden; }
 
 /* THE ROOM'S COUNT IN THE KEY ROW AT REST, a key as its neighbours are, the
    band's word look taken off; the four small plates of a set after its words,
@@ -901,3 +909,43 @@ html:has(#wing[data-film='upright']) #instruments .inst-source {
 .film-box > .walk-panel .walk-skip { font: 400 .9375rem/1 var(--sans); min-height: 44px; }
 /* held, gold is the way on again: its name and its arrow, as at rest */
 .film-gold[data-held='true'] .film-gold-ring { opacity: 1; }
+/* A STOP'S CLOSER LOOK IN THE KEY ROW AT REST, in the slot a set's count takes, in the same gold */
+.film-keys .film-closer { color: var(--na-gold); text-decoration-color: var(--na-gold); }
+.film-keys .film-closer .film-ic { color: var(--na-gold); }
+.film-keys .film-closer:focus-visible { outline: 1px solid var(--gold); outline-offset: 2px; }
+/* a closer look's further reading in its record: a link a finger can take */
+.vinci-record .closer-reading { display: inline-flex; align-items: center; min-height: 44px; color: var(--ui-text); }
+
+/* ---- THE SHORT PHONE'S ROWS, upright: the key row and the foot give back 4 px each.
+   The seats rise with the foot's top, so the dead band under them stays as it was ---- */
+:where(#wing[data-film='upright']) .film-box > .film-keys { padding-bottom: 4px; }
+:where(#wing[data-film='upright']) .film-box > .film-foot { height: 76px; }
+:where(#wing[data-film='upright']) .film-foot > :is(.film-back, .film-plan, .film-book, .film-hold) { top: 10px; }
+:where(#wing[data-film='upright']) .film-foot > .film-gold { top: 8px; }
+:where(#wing[data-film='upright']) .film-box:not([data-end='true']) .film-gold:has(> .film-gold-name[data-rows='4']) { top: 32px; }
+#wing[data-film='upright'] .film-box[data-end='true'] .film-foot,
+#wing[data-film='upright'] .film-box[data-look='true'] .film-foot:has(> .reader-turn:not([hidden])) { padding-top: 8px; }
+:where(#wing[data-film='upright']) .film-box > .walk-panel { bottom: calc(76px + env(safe-area-inset-bottom)); }
+/* gold's reach above its pill ends where the keys' begins */
+:where(#wing[data-film='upright']) .film-foot > .film-gold::after { top: -2px; }
+
+/* ---- THE KEYS ARE 44 PX TO THE HAND and 32 to the eye: the box runs from the row's top
+   to the foot's edge, the words stay where they stood, and no target overlaps another ---- */
+:where(#wing:is([data-film='upright'], [data-phone-form])) .film-keys > .film-key {
+  box-sizing: border-box; min-height: 44px; margin-top: -2px; margin-bottom: -10px; padding-top: 2px; padding-bottom: 10px;
+}
+:where(#wing:is([data-film='upright'], [data-phone-form])) .film-keys > .film-key::after { top: 0; bottom: 0; }
+@media (max-width: 370px) { :where(#wing:is([data-film='upright'], [data-phone-form])) .film-keys > .film-key::after { left: -4px; right: -4px; } }
+
+/* ---- NOTHING UNDER 14 PX, upright: a gold name of three or four rows, the last stop's
+   "where it leads", the walk's kicker, a machine's steps ---- */
+:where(#wing[data-film='upright']) .film-gold-name[data-rows] { font-size: .875rem; line-height: 15px; }
+/* three rows at 14 px grow the pill by 3 px about the seats' centre line, as four rows do, so no row meets its edge;
+   a grown pill's reach is its own box, which ends where the keys' begins */
+:where(#wing[data-film='upright']) .film-box:not([data-end='true']) .film-gold:has(> .film-gold-name[data-rows='3']) {
+  top: 32px; translate: 0 -50%; height: auto; min-height: 48px; padding-block: 3px;
+}
+:where(#wing[data-film='upright']) .film-foot > .film-gold:has(> .film-gold-name[data-rows])::after { top: 0; }
+:where(#wing[data-film='upright']) .film-gold-to { font-size: .875rem; line-height: 16px; }
+:where(#wing[data-film='upright']) .film-box > .walk-panel .walk-to-kicker { font-size: .875rem; line-height: 1.125rem; }
+#wing[data-film='upright'] .vitrine[data-narrow='true'] .vitrine-step-item { font-size: .875rem; }

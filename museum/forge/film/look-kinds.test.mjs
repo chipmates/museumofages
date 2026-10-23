@@ -20,6 +20,7 @@ const register = loader.load('src/wings/vinci/pictures/register.ts')
 const catalog = loader.load('src/wings/vinci/machines/catalog.ts')
 const grave = loader.load('src/wings/vinci/grave/index.ts')
 const bench = loader.load('src/wings/vinci/line/bench/assets.ts')
+const closer = loader.load('src/wings/vinci/closer.ts')
 
 /** every id a mark of the live wing can carry: each exhibit with a view, the floor and the book on the table */
 const liveIds = [...approaches.vinciExhibitRecords().map((r) => r.id), approaches.LINE_FLOOR_PICK, shelf.EDITION_EXHIBIT]
@@ -58,4 +59,35 @@ test('every exhibit the live wing can mark opens a film look', () => {
   for (const [id, kind] of [['grave', 'place'], ['grave-diagram', 'place'], ['line/floor', 'life'], ['study-sheet/deluge', 'study-leaf'], ['sheet/rcin-919006', 'sheet']])
     assert.equal(kinds.filmLookKind(id), kind, id)
   if (marksFile) assert.ok(readIds.length > 0, `the marks file ${marksFile} carries marks`)
+})
+
+test('a stop\'s closer look opens its own kind, and its record stands whole', () => {
+  const looks = closer.closerLooks()
+  assert.ok(looks.length > 0, 'the wing carries a closer look')
+  const said = (value) => typeof value?.en === 'string' && value.en.length > 0 && typeof value?.de === 'string' && value.de.length > 0
+  for (const look of looks) {
+    assert.equal(kinds.filmLookKind(look.id), 'closer', look.id)
+    assert.equal(closer.closerById(look.id), look)
+    assert.equal(closer.closerAtStop(look.stop), look)
+    // no mark carries a closer look: it opens from its own word at the stop
+    assert.ok(!liveIds.includes(look.id), `${look.id} is not a mark`)
+    for (const key of ['room', 'name', 'more', 'describe', 'placesHead', 'readingHead']) assert.ok(said(look[key]), `${look.id} ${key}`)
+    assert.ok(look.states.length === 2, `${look.id} has the two states the toggle names`)
+    for (const state of look.states) {
+      assert.match(state.plate, /^vinci\/room-plate\//, state.plate)
+      assert.match(state.tiles, /^vinci\/room-tiles\//, state.tiles)
+      for (const key of ['word', 'turn', 'date', 'sentence']) assert.ok(said(state[key]), `${look.id} ${state.id} ${key}`)
+      for (const band of ['whole', 'near', 'ceiling']) assert.ok(said(state.lines[band]), `${look.id} ${state.id} ${band}`)
+      assert.ok(['documented', 'reconstructed', 'conjectural', 'unknown'].includes(state.certainty), state.certainty)
+    }
+    assert.equal(look.card.filter((line) => line === null).length, 1, 'one sentence is the standing state\'s')
+    for (const line of look.card) if (line) assert.ok(said(line))
+    for (const place of look.places) {
+      assert.ok(said(place.name), place.id)
+      for (const v of [place.x, place.y, place.x + place.w, place.y + place.h]) assert.ok(v >= 0 && v <= 1, `${place.id} inside the plate`)
+    }
+    for (const read of look.reading) {
+      assert.ok(said(read.label) && /^https:\/\//.test(read.href) && read.lang, 'further reading names its language')
+    }
+  }
 })
