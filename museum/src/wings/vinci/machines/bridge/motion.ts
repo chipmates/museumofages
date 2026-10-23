@@ -8,7 +8,8 @@
 import { FLY, LIFT, MOVE, ORDER, PILE_AT, POLES, SETTLE, buildClock, startOf, type Pole, type V3 } from './plan'
 
 const KIND: Record<string, Pole['kind']> = Object.fromEntries(POLES.map(p => [p.id, p.kind]))
-/** a carried rod's centre stays this high over the work until it turns into its slope (the crown's top is 2.9 m) */
+/** the carry's control points stand 1 m over this or over the rod's approach, whichever is higher: the carried rod
+ * then peaks near 4.15 m, over the crown's top at 2.9 m */
 const CARRY = 3.6
 /** seconds of a joist's move given from the carry to the threading */
 const JOIST_THREAD = 0.6
