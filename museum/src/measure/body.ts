@@ -43,7 +43,8 @@ export const tube = (knots: Knot[], up: V3, step = 0): Field => {
 export const flip = (knots: Knot[], s: 1 | -1): Knot[] => knots.map(([x, y, z, a, b]) => [x, y, z * s, a, b])
 
 // the trunk from the seat to the neck's foot, depth along x and width along z. The front rises evenly from the belly
-// to the chest with no overhang a light from above could print as a band; the top runs on into the neck's foot
+// to the chest with no overhang a light from above could print as a band; it ends under the neck's foot, so its
+// rounded end never reaches the jaw
 const TORSO: Knot[] = [
   [-0.02, 0.88, 0, 0.104, 0.157],
   [-0.016, 0.93, 0, 0.107, 0.154],
@@ -54,21 +55,21 @@ const TORSO: Knot[] = [
   [0.009, 1.215, 0, 0.108, 0.15],
   [0.004, 1.29, 0, 0.104, 0.156],
   [-0.006, 1.345, 0, 0.094, 0.154],
-  [-0.014, 1.39, 0, 0.083, 0.14],
-  [-0.019, 1.425, 0, 0.074, 0.112],
-  [-0.021, 1.44, 0, 0.072, 0.106],
+  [-0.013, 1.375, 0, 0.082, 0.135],
+  [-0.016, 1.39, 0, 0.072, 0.12],
 ]
-// the trapezius, falling from the side of the neck to the shoulder: thickness up, depth across
+// the trapezius, from the neck's side a hand under the jaw to the shoulder: thickness up, depth across
 const TRAP: Knot[] = [
-  [-0.026, 1.445, 0.04, 0.036, 0.048],
-  [-0.018, 1.415, 0.1, 0.034, 0.047],
-  [-0.01, 1.385, 0.162, 0.033, 0.046],
+  [-0.026, 1.4, 0.06, 0.034, 0.046],
+  [-0.018, 1.392, 0.11, 0.034, 0.047],
+  [-0.01, 1.38, 0.162, 0.033, 0.046],
 ]
-// a neck as wide as a man's (about 0.12 m), its front meeting the jaw so the chin throws no hood over it
+// a neck as wide as a man's (about 0.12 m), its sides upright from the jaw to the trapezius, so the chin's
+// shadow falls on a neck and never hoods the head
 const NECK: Knot[] = [
-  [-0.02, 1.4, 0, 0.062, 0.064],
-  [-0.008, 1.47, 0, 0.058, 0.06],
-  [0.006, 1.54, 0, 0.054, 0.056],
+  [-0.02, 1.38, 0, 0.062, 0.062],
+  [-0.006, 1.46, 0, 0.057, 0.058],
+  [0.006, 1.535, 0, 0.053, 0.055],
 ]
 // right side (z > 0); the left is its mirror. Upper arm 8 degrees forward, forearm 18, hand 10: the hand hangs clear
 // in front of the thigh. The arm starts inside the shoulder's mass, so its end never stands up as a pad
@@ -120,7 +121,7 @@ const FOOT: Knot[] = [
 
 /** the drawn figure at about 1.70 m, soles on y = 0 */
 export function drawnBody(): Field {
-  // the skull with a back to it over the neck, a plain face mass and a slight jaw; no features
+  // the skull with a back to it over the neck, a plain face mass and a jaw; no features
   const head: Field = {
     k: 'u',
     s: 0.035,
@@ -128,20 +129,23 @@ export function drawnBody(): Field {
       { k: 'ellipsoid', c: [-0.012, 1.6, 0], r: [0.097, 0.1, 0.076] },
       { k: 'ellipsoid', c: [0.03, 1.56, 0], r: [0.062, 0.075, 0.06] },
       // the jaw, falling from under the ear to the chin
-      { k: 'ellipsoid', c: [0.03, 1.524, 0], r: [0.058, 0.026, 0.052], basis: [[0.883, -0.469, 0], [0.469, 0.883, 0], [0, 0, 1]] },
+      { k: 'ellipsoid', c: [0.03, 1.524, 0], r: [0.062, 0.028, 0.056], basis: [[0.883, -0.469, 0], [0.469, 0.883, 0], [0, 0, 1]] },
     ],
   }
-  // the shoulder's round mass: the trapezius runs onto it and the arm hangs out of it, with no step at either
-  const deltoid = (s: 1 | -1): Field => ({ k: 'ellipsoid', c: [-0.004, 1.352, 0.168 * s], r: [0.05, 0.062, 0.047] })
-  // the lower belly carried down between the thighs' tops, so the groin shows no V where the thighs leave the seat
-  const groin: Field = { k: 'ellipsoid', c: [0.0, 0.85, 0], r: [0.078, 0.07, 0.118] }
+  // the shoulder's round mass: the trapezius runs onto it and the arm hangs out of it, so its top is no pad
+  const deltoid = (s: 1 | -1): Field => ({ k: 'ellipsoid', c: [-0.004, 1.35, 0.17 * s], r: [0.052, 0.066, 0.05] })
+  // the lower belly carried down between the thighs, its front flush with theirs: no V where they leave the seat
+  const groin: Field = { k: 'box', c: [0.025, 0.86, 0], h: [0.05, 0.07, 0.08], round: 0.04 }
   const legs = (s: 1 | -1): Field => ({ k: 'u', s: 0.025, of: [tube(flip(LEG, s), FWD, 0.015), tube(flip(FOOT, s), UP, 0.015)] })
   const arm = (s: 1 | -1): Field => ({ k: 'u', s: 0.012, of: [tube(flip(ARM, s), FWD, 0.015), tube(flip(HAND, s), FWD, 0.012), tube(flip(THUMB, s), FWD)] })
-  const chest: Field = { k: 'u', s: 0.05, of: [tube(TORSO, FWD, 0.015), tube(TRAP, UP, 0.015), tube(flip(TRAP, -1), UP, 0.015), deltoid(1), deltoid(-1)] }
-  const pelvis: Field = { k: 'u', s: 0.05, of: [chest, groin] }
-  const trunk: Field = { k: 'u', s: 0.045, of: [pelvis, tube(NECK, FWD, 0.015), legs(1), legs(-1)] }
-  const body: Field = { k: 'u', s: 0.02, of: [trunk, arm(1), arm(-1)] }
-  const whole: Field = { k: 'u', s: 0.04, of: [body, head] }
+  // the chest's panel edges go in one wide fillet over trunk, trapezius and shoulders
+  const chest: Field = { k: 'u', s: 0.06, of: [tube(TORSO, FWD, 0.015), tube(TRAP, UP, 0.015), tube(flip(TRAP, -1), UP, 0.015), deltoid(1), deltoid(-1)] }
+  const pelvis: Field = { k: 'u', s: 0.075, of: [chest, groin] }
+  // the neck takes a small fillet of its own: a wide one turns it into a cowl
+  const upper: Field = { k: 'u', s: 0.03, of: [pelvis, tube(NECK, FWD, 0.015)] }
+  const trunk: Field = { k: 'u', s: 0.06, of: [upper, legs(1), legs(-1)] }
+  const body: Field = { k: 'u', s: 0.028, of: [trunk, arm(1), arm(-1)] }
+  const whole: Field = { k: 'u', s: 0.028, of: [body, head] }
   // the floor: everything below y = 0 cut away, so the soles stand flat on the level line
   return { k: 'i', s: 0.004, of: [whole, { k: 'box', c: [0, 1, 0], h: [1, 1, 1] }] }
 }
