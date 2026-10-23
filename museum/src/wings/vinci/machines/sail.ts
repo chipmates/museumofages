@@ -33,6 +33,13 @@ export interface HelicoidSpec {
   /** the cloth lies flat this far either side of a rib's line, over the cane
    * and its fellow, before it starts to hang (0 when absent) */
   held_m?: number
+  /** how steeply the free cloth falls from a held edge: the power of the
+   * sine it hangs on (0.6 when absent) */
+  hang_power?: number
+  /** the share of the light a doubled layer passes, and the tone of a row of
+   * stitches (0.38 and 0.7 when absent): a lighter linen passes more */
+  doubled?: number
+  stitch?: number
   /** widest cloth at the rim before a seam */
   panel_m: number
   seam_m: number
@@ -60,11 +67,10 @@ const count = (tier: TierName, hero: number, standard: number, calm: number): nu
 
 /** The stitches at a doubled layer's edge darken the cloth by this much, and
  * the doubled cloth itself a little. */
-const probe = (): Record<string, number> => (globalThis as { __screwProbe?: Record<string, number> }).__screwProbe || {}
-const STITCH = probe()['stitch'] ?? .7
+const STITCH = .7
 const BODY = .86
 /** A doubled layer passes this share of the light a single one does. */
-const DOUBLED = probe()['doubled'] ?? .38
+const DOUBLED = .38
 
 export interface SailSurface {
   /** the point of the cloth at radial share s (mast 0, rim 1) and turn t */
@@ -87,7 +93,7 @@ export function sailSurface(h: HelicoidSpec): SailSurface {
   const rim = (t: number): number => h.r0 + (h.r1 - h.r0) * t / span
   const height = (t: number): number => h.y0 + (h.y1 - h.y0) * t / span
   const azimuth = (t: number): number => h.phase_rad + h.hand * t
-  const held = h.held_m ?? probe()['held'] ?? 0
+  const held = h.held_m ?? 0, power = h.hang_power ?? .6
   const at = (s: number, t: number): Vector3 => {
     const r = h.r_in + s * (rim(t) - h.r_in)
     const g = Math.min(gores - 1, Math.max(0, Math.floor(t / gore)))
@@ -96,7 +102,7 @@ export function sailSurface(h: HelicoidSpec): SailSurface {
     if (held > 0) { const wide = r * gore; u = wide > 2 * held ? Math.min(1, Math.max(0, (u * wide - held) / (wide - 2 * held))) : 0 }
     // a panel held on four sides hangs deepest where its supports are farthest,
     // and falls away steeply from the cane it is stretched over
-    const hang = h.sag * r * gore * Math.sin(Math.PI * u) ** (probe()['power'] ?? .6) * Math.sin(Math.PI * s)
+    const hang = h.sag * r * gore * Math.sin(Math.PI * u) ** power * Math.sin(Math.PI * s)
     const a = azimuth(t)
     return new Vector3(r * Math.cos(a), height(t) - hang, r * Math.sin(a))
   }
@@ -108,7 +114,8 @@ export function sailSurface(h: HelicoidSpec): SailSurface {
  * of light each layer lets through (`layers`). */
 export function sailGeometry(h: HelicoidSpec, tier: TierName): BufferGeometry {
   const S = sailSurface(h)
-  const gores = h.ribs - 1, gore = S.span / gores, held = h.held_m ?? probe()['held'] ?? 0
+  const gores = h.ribs - 1, gore = S.span / gores, held = h.held_m ?? 0
+  const doubled = h.doubled ?? DOUBLED, stitch = h.stitch ?? STITCH
   const ns = count(tier, 18, 11, 7)
   const perGore = count(tier, 20, 12, 8)
   const nt = gores * perGore
@@ -160,7 +167,7 @@ export function sailGeometry(h: HelicoidSpec, tier: TierName): BufferGeometry {
   }
 
   /** how many cloths a gore is sewn from: none wider than a bolt at the rim */
-  const across = h.cloths === 'across' || Boolean(probe()['across'])
+  const across = h.cloths === 'across'
   const panelsOf = (g: number): number => across ? 1 : Math.max(1, Math.ceil(S.rim((g + .5) * gore) * gore / h.panel_m))
 
   // THE CLOTH, single, from the mast to the rim wire, one grid to each cloth
@@ -220,7 +227,7 @@ export function sailGeometry(h: HelicoidSpec, tier: TierName): BufferGeometry {
         const n = new Vector3().crossVectors(down, across).normalize()
         const cloth = frame(here.s, here.t).n
         if (n.dot(cloth) * side < 0) n.negate()
-        return push(here.p, n, here.s, here.t, grey(stitched[j] ? STITCH : BODY), DOUBLED, weave)
+        return push(here.p, n, here.s, here.t, grey(stitched[j] ? stitch : BODY), doubled, weave)
       })
     }
   }

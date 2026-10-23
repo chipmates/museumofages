@@ -1,7 +1,7 @@
 import { Box3, type BufferGeometry, Color, Fog, Group, type Light, Mesh, MeshStandardNodeMaterial, PerspectiveCamera, type PlaneGeometry, Scene, SpotLight, Vector3 } from 'three/webgpu';
 import { kelvinToColour } from '../../../../stack/light';
 import type { Stack, KeyLight, MaterialSet } from '../../../../stack';
-import { float, fog, lights, positionWorld, rangeFogFactor, smoothstep, uv, vec3 } from 'three/tsl';
+import { float, fog, lights, positionWorld, rangeFogFactor, smoothstep, uv, vec2, vec3 } from 'three/tsl';
 import { IDENTITY } from '../../../../stack/grade';
 import { loadManifest, type ManifestEntry } from '../../../../manifest';
 import { assetAddress } from '../../../../stack/materials';
@@ -485,6 +485,14 @@ export function createBench(stack: Stack, onExit: () => void) {
       };
       supportMat.aoNode = float(1).sub(contact(-1.08).max(contact(1.08)).mul(.75));
     }
+    // GENERATED contact shade under the size figure, for a machine whose
+    // figure stands where no sun reaches the floor
+    const contact = OWN_LIGHT[slug]?.contact;
+    if (figure && contact) {
+      const away = positionWorld.xz.sub(vec2(figure.at[0], figure.at[1])).length();
+      const shade = float(1).sub(float(1).sub(smoothstep(.1, .55, away)).mul(contact));
+      supportMat.aoNode = supportMat.aoNode ? (supportMat.aoNode as unknown as ReturnType<typeof float>).mul(shade) : shade;
+    }
     supportMaterials.push(groundMat, supportMat);
     const made = buildBenchSupports({
       slug,
@@ -535,8 +543,12 @@ export function createBench(stack: Stack, onExit: () => void) {
    * cloth under a 17 degree sun needs its shadow looked up 15 cm toward the key
    * (at 3 cm the texel's depth slope made acne that read as moire) and a wider
    * filter, or the upper whorl's edge on the lower steps. */
-  const OWN_LIGHT: Partial<Record<MachineSlug, { lux: number; ambient: number; ground: string; lift?: number; wide?: boolean; lamps?: { closed?: BenchLamp[]; section?: BenchLamp[] }; fill?: { closed?: number; section?: number }; sectionLux?: number }>> = {
-    'aerial-screw': { lux: 210, ambient: 1.0, ground: '#5e5546', lift: .15, wide: true },
+  const OWN_LIGHT: Partial<Record<MachineSlug, { lux: number; ambient: number; ground: string; lift?: number; wide?: boolean; lamps?: { closed?: BenchLamp[]; section?: BenchLamp[] }; fill?: { closed?: number; section?: number }; sectionLux?: number; contact?: number }>> = {
+    'aerial-screw': { lux: 210, ambient: 1.0, ground: '#5e5546', lift: .15, wide: true, contact: .55, lamps: {
+      // the grey figure stands in the canopy's shade with the low sun behind it: a lamp from the visitor's side lights
+      // the figure alone (the screw's own surfaces refuse it), and its contact shade holds it to the floor
+      closed: [{ at: [9, 4.5, 13], aim: [2.35, .95, .9], lux: 330, kelvin: 4300, angle: .25, penumbra: .9, shadow: false }],
+    } },
   };
   let lamps: SpotLight[] = [], lampProbe: BenchLamp[] | null | undefined, fillProbe: number | undefined, luxProbe: number | undefined;
   const lampLit = new Set<MeshStandardNodeMaterial>(), filled = new Set<MeshStandardNodeMaterial>();

@@ -178,7 +178,7 @@ export function loadMachineMaterial(stack: Stack, name: string): Promise<Materia
 
 const libraryName = (material: string): string => {
   // new work in planed and hewn oak, not weathered timber
-  if (/planed oak|hewn oak|oak peg|oak grip/.test(material)) return 'oak-veneer-light'
+  if (/planed oak|hewn oak|oak peg|oak grip|planed ash|ash grip/.test(material)) return 'oak-veneer-light'
   // a cane's skin runs in fine straight fibres, as the veneer's grain does
   if (/cane/.test(material)) return 'oak-veneer-light'
   // a hide sealed with pitch, and the pitch the tube is bedded in
@@ -528,11 +528,13 @@ export async function buildParts(stack: Stack, dossier: Dossier): Promise<Dresse
         material.roughnessNode = sheen.add(.2).add(brushed.mul(.12)).add(welt.mul(.08)).add(craze.mul(.1)).clamp(.62, .92)
       }
     }
-    if (/planed oak|hewn oak|oak peg|oak grip/.test(name)) {
+    if (/planed oak|hewn oak|oak peg|oak grip|planed ash|ash grip/.test(name)) {
       // GENERATED tint: new planed oak, paler and greyer than the museum's
       // oiled oak, over the CC0 veneer's own grain at half its colour and a
       // little over half its contrast; the grip is darkened by the hand.
-      const oak = new Color(/grip/.test(name) ? '#5f4a37' : /hewn/.test(name) ? '#8f7c64' : '#897a66')
+      // Ash, the pale wood of poles and handles, is the oak's veneer tinted
+      // to its own cream; its grip is honey where the hands have been.
+      const oak = new Color(/ash grip/.test(name) ? '#8e7454' : /planed ash/.test(name) ? '#b8a684' : /grip/.test(name) ? '#5f4a37' : /hewn/.test(name) ? '#8f7c64' : '#897a66')
       const lum = detail.albedo.dot(vec3(.2126, .7152, .0722))
       // the hewn core is the largest face on the machine and shows its run of grain
       const grain = mix(vec3(lum, lum, lum), detail.albedo, .35).sub(1).mul(/hewn/.test(name) ? .9 : .62).add(1)
@@ -576,7 +578,7 @@ export async function buildParts(stack: Stack, dossier: Dossier): Promise<Dresse
     return material
   }
   await Promise.all(names.map(async name => {
-    const key = /ink|glass|water|lead|paper|oak peg|hewn oak|oak grip|bedding|lining|scoured|cane/.test(name) ? name : libraryName(name)
+    const key = /ink|glass|water|lead|paper|oak peg|hewn oak|oak grip|planed ash|ash grip|bedding|lining|scoured|cane/.test(name) ? name : libraryName(name)
     let surface = surfaceCache.get(key)
     if (!surface) { surface = makeSurface(name); surfaceCache.set(key, surface) }
     materials.set(name, await surface)
