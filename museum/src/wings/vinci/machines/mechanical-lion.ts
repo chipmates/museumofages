@@ -234,6 +234,9 @@ export function build(stack: Stack): ReadyMachineBuild {
     if (probe.includes('mane:dark')) look.giltMane = false
     if (probe.includes('rim')) look.doorRim = true
     if (probe.includes('unlined')) look.lined = false
+    const hair = /hair([0-9.]+)/.exec(probe); if (hair) look.hair = Number(hair[1])
+    const bump = /hbump([0-9.]+)/.exec(probe); if (bump) look.hairBump = Number(bump[1]) / 1000
+    if (probe.includes('calmface')) look.calmFace = true
     const straps = probe.includes('straps')
     if (look.lined) lilyTexture = lilyMask()
     const paint = own(paintedMaterial(inside, look, lilyTexture)), gild = own(gildMaterial(inside)), brass = own(brassMaterial())

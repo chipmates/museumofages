@@ -121,8 +121,8 @@ function clawTips(P0: N, fore: N, hind: N): N {
  * on most of the mane's crests, the claws' tips
  * and the doors' rims; the gesso and a fine crackle where hands have rubbed. */
 /** The paint's choices that round 1 tries one at a time (a probe while it is tried). */
-export interface LionLook { palette: 'base' | 'ochre' | 'gold'; giltMane: boolean; doorRim: boolean; lined: boolean }
-export const LION_LOOK: LionLook = { palette: 'ochre', giltMane: true, doorRim: false, lined: true }
+export interface LionLook { palette: 'base' | 'ochre' | 'gold'; giltMane: boolean; doorRim: boolean; lined: boolean; hair: number; hairBump: number; calmFace: boolean }
+export const LION_LOOK: LionLook = { palette: 'ochre', giltMane: true, doorRim: false, lined: true, hair: 0, hairBump: 0, calmFace: false }
 
 /** A heraldic lily, white on black, for the painted ground the doors are lined
  * with: drawn once on a canvas at load (no image file), its edges soft. */
@@ -248,7 +248,7 @@ export function paintedMaterial(chest: ChestLight, look: LionLook = LION_LOOK, l
 
   let col: N = body.mul(paint).add(blue.mul(W.x.add(lining))).add(mane.mul(W.y)).add(iron.mul(W.z)).add(wood.mul(W.w.sub(lining)))
   // the face's colours, owned with its carving by head.ts (face.calm: where the face's planes carry the shading)
-  const face = faceColour(P, col, paint, n1, n2)
+  const face = faceColour(P, col, paint, n1, n2, look.calmFace)
   col = face.col
   const eyeW = face.eye
   // rubbed through to the gesso at the high points of the worn places
@@ -263,6 +263,18 @@ export function paintedMaterial(chest: ChestLight, look: LionLook = LION_LOOK, l
   const fine = float(1).sub(smoothstep(0.0012, 0.0035, positionView.dFdx().length().max(positionView.dFdy().length())))
   const crack = smoothstep(0.05, 0.0, cell.y.sub(cell.x)).mul(fine).mul(wear.mul(0.8)).mul(float(1).sub(W.z)).mul(float(1).sub(eyeW)).mul(float(1).sub(calm))
   col = col.mul(float(1).sub(crack.mul(0.4)))
+  // CARVED HAIR: short gouge strokes along the coat's flow (back and a little
+  // down on the trunk, down the breast and the legs), not on the face, the
+  // mane, the paws or the iron; gone where a pixel spans a stroke
+  const breast = smoothstep(0.3, 0.45, P.z).mul(smoothstep(0.86, 0.72, P.y))
+  const down = clamp(onLeg.add(breast).add(smoothstep(0.72, 0.56, P.y).mul(0.5)), 0, 1)
+  const flow = mix(vec3(0, -0.42, -1).normalize(), vec3(0, -1, 0.12).normalize(), down).normalize()
+  const across = flow.cross(Ng).add(vec3(1e-4, 0, 0)).normalize()
+  const strand = mx_noise_float(vec3(P.dot(flow).mul(9), P.dot(across).mul(46), P.x.mul(2.3)))
+  const hairFade = float(1).sub(smoothstep(0.002, 0.005, positionView.dFdx().length().max(positionView.dFdy().length())))
+  const hairOn = paint.mul(float(1).sub(calm)).mul(float(1).sub(forePaw)).mul(float(1).sub(hindPaw)).mul(float(1).sub(eyeW)).mul(look.hair)
+  const groove = smoothstep(0.3, -0.3, strand).mul(hairOn)
+  col = col.mul(float(1).sub(groove.mul(hairFade).mul(0.16)))
   // an umber glaze pools in the hollows and under the overhangs
   col = mix(col, col.mul(lin('#6b4424')).mul(1.2), grime.mul(float(1).sub(W.z)).mul(0.7))
   col = col.mul(mix(float(1), float(0.42), grime.mul(float(1).sub(W.z))))
@@ -302,7 +314,7 @@ export function paintedMaterial(chest: ChestLight, look: LionLook = LION_LOOK, l
   // gouge marks under the paint, longer along the grain than across; hammer dents in the iron
   const cups = mx_worley_noise_float(vec3(P.x.mul(46), P.y.mul(30), P.z.mul(40)))
   const dents = mx_worley_noise_float(P.mul(70))
-  m.normalNode = carvedNormal(cups.mul(cups).mul(0.0007).mul(float(1).sub(W.z)).add(dents.mul(dents).mul(0.0005).mul(W.z)))
+  m.normalNode = carvedNormal(cups.mul(cups).mul(0.0007).mul(float(1).sub(W.z)).add(dents.mul(dents).mul(0.0005).mul(W.z)).sub(groove.mul(look.hairBump)))
   return m
 }
 
