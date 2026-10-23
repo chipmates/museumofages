@@ -428,9 +428,11 @@ export function createFilmLook(h: FilmLookHost) {
     const record = (): void => h.openRecord(id, look.name, standing.certainty, host => {
       for (const { state, room } of read) {
         const plate = room!.plate as StudySheetRecord
-        host.append(make('p', 'vinci-statement closer-record-state', `${text(state.word)} · ${text(state.date)}`))
-        for (const line of [sayMaybe(plate.honesty_en, plate.honesty_de, lang()), plate.licence])
-          if (line) host.append(make('p', 'vinci-statement', line))
+        // each state under the word its toggle names it by, then the store's own lines for that plate
+        host.append(make('p', 'vinci-statement closer-record-state', text(state.turn)))
+        const honesty = sayMaybe(plate.honesty_en, plate.honesty_de, lang())
+        if (honesty) host.append(make('p', 'vinci-statement', honesty))
+        if (plate.licence && !honesty?.includes(plate.licence)) host.append(make('p', 'vinci-statement', plate.licence))
       }
       if (!look.reading.length) return
       host.append(make('p', 'vinci-statement closer-record-head', text(look.readingHead)))
