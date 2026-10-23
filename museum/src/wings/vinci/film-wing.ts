@@ -86,6 +86,14 @@ function keepLast(node: HTMLElement, said: string, least = 3): void {
 }
 /** the story's clock at his birth repeats what its heading already says */
 const atBirth = (age: VinciText): boolean => text(age) === text(deskControl('date', 'age_birth'))
+/** THE UPRIGHT CLOCK BESIDE ITS HEADING drops the figure's name in front of
+    it (the first word of the age's own pattern), so a short phone's name row
+    keeps one line: "mit Anfang 20" where the desktop reads "Leonardo mit Anfang 20" */
+function bareAge(age: string): string {
+  const name = /^[^\s,]+/u.exec(text(deskControl('date', 'age')))?.[0]
+  if (!name || !age.startsWith(name)) return age
+  return age.slice(name.length).replace(/^,?\s+/u, '') || age
+}
 const ARROW_ON = 'M3 8h10M9 4l4 4-4 4', ARROW_UP = 'M8 13V3M4 7l4-4 4 4', ARROW_DOWN = 'M8 3v10M4 9l4 4 4-4'
 /** the Menu's sign: three short lines, read as a menu where a circled plus read as add or zoom */
 const MENU = 'M3 3.5h10M3 8h10M3 12.5h10'
@@ -1002,7 +1010,7 @@ export function createWing(): WingModule {
     const stop = deskStoryStop(id)
     phone.name.textContent = ''
     phone.name.append(deskMark(stop?.certainty ?? 'reconstructed'), make('span', 'film-chapter', text(stop?.chapter ?? LIFE[card]!.name)))
-    if (stop?.age && !atBirth(stop.age)) phone.name.append(make('span', 'film-clock', text(stop.age)))
+    if (stop?.age && !atBirth(stop.age)) phone.name.append(make('span', 'film-clock', form === 'upright' ? bareAge(text(stop.age)) : text(stop.age)))
     phone.line.textContent = stop ? keepTogether(say(stop.line)) : ''
     phone.drawer.textContent = ''
     if (drawerOpen && stop?.drawer) {
