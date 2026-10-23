@@ -1,7 +1,7 @@
 /* THE MEASURE ALONE: a dev page (not in the build) that stands baked bodies
    side by side on a flat ground of a given lightness, for proof sheets.
 
-     /measure.html?figs=<url>:front,<url>:tq&ground=56&tall=0.8&mode=lit|sil
+     /measure.html?figs=<url>:front,<url>:tq&ground=56&tall=0.8&aim=0.85&mode=lit|sil
 
    ground is the page's CIE L*; tall the figures' share of the frame height;
    sil draws plain black silhouettes on white for the outline tests. */
@@ -18,6 +18,8 @@ const groundL = Number(q.get('ground') ?? 56)
 const tall = Number(q.get('tall') ?? 0.8)
 const sil = q.get('mode') === 'sil'
 const gap = Number(q.get('gap') ?? 0.9)
+// the height the camera aims at, metres (the figure's middle unless a close look asks for the chest)
+const aim = Number(q.get('aim') ?? MEASURE_HEIGHT * 0.5)
 
 /** the sRGB grey of a CIE L* */
 function greyOf(L: number): number {
@@ -42,8 +44,8 @@ scene.background = new Color().setRGB(g, g, g, SRGBColorSpace)
 const distance = 14
 const camera = new PerspectiveCamera(1, innerWidth / innerHeight, 1, 100)
 camera.fov = (2 * Math.atan(MEASURE_HEIGHT / tall / 2 / distance) * 180) / Math.PI
-camera.position.set(0, MEASURE_HEIGHT * 0.5, distance)
-camera.lookAt(0, MEASURE_HEIGHT * 0.5, 0)
+camera.position.set(0, aim, distance)
+camera.lookAt(0, aim, 0)
 camera.updateProjectionMatrix()
 
 const material = sil ? new MeshBasicNodeMaterial({ color: 0x000000 }) : measureMaterial()
@@ -76,9 +78,9 @@ if (!sil) {
   scene.add(floor)
 }
 
-await renderer.renderAsync(scene, camera)
+renderer.render(scene, camera)
 ;(window as unknown as { __measure: unknown }).__measure = {
   ready: true,
   figures: meshes.map((m) => ({ tris: (m.geometry.index?.count ?? 0) / 3, verts: m.geometry.getAttribute('position').count })),
-  render: () => renderer.renderAsync(scene, camera),
+  render: () => renderer.render(scene, camera),
 }
