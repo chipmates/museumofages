@@ -105,7 +105,7 @@ export const LANTERN = { staves: 10, pitch: (PEGS.pitch * 10) / 24, staveR: 0.02
 /** The staves' hand finish: facets round (segments), and the worn flats on both flanks where the pegs bear: `depth`
  * deep at the middle of a band `half` either side of the pegs' line, its middle `shift` outboard of the ring's
  * innermost point (the pegs at 0 and 15 degrees both bear there). */
-export const RUNDLE = { segments: 30, wear: { depth: 0.0035, half: 0.04, shift: 0.009 } } as const
+export const RUNDLE = { segments: 18, wear: { depth: 0.0035, half: 0.04, shift: 0.009 } } as const
 /** How far a peg's tip reaches past the near staves' circle. */
 const ENGAGE = 0.055
 export const SHAFT = {

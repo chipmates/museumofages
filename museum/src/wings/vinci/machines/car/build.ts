@@ -609,8 +609,8 @@ function rundle(k: Kit, x0: number, l: number, o: V3, contact: number, f: Finish
   }
   const at_ = (phi: number, x: number): V3 => add(v(x, 0, 0), add(o, add(mul(side, Math.cos(phi) * radius(phi, x)), mul(out, Math.sin(phi) * radius(phi, x)))))
   const xs = new Set<number>()
-  for (let i = 0; i <= 14; i++) xs.add(x0 + (l * i) / 14)
-  for (let d = -RUNDLE.wear.half - 0.01; d <= RUNDLE.wear.half + 0.0101; d += 0.008) {
+  for (let i = 0; i <= 10; i++) xs.add(x0 + (l * i) / 10)
+  for (let d = -RUNDLE.wear.half - 0.01; d <= RUNDLE.wear.half + 0.0101; d += 0.01) {
     const x = contact + d
     if (x > x0 && x < x0 + l) xs.add(x)
   }
