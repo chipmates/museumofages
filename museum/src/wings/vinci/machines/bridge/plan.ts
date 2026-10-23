@@ -62,10 +62,11 @@ export const JOIST_HALF = 1.7
 export const SEAT_HALF = 1.8
 /** how far a rod runs past the joist it rests on */
 export const OVERHANG = 0.3
-/** at a foot the rod rests in a scrape in the bank: shorter past the seat */
-export const FOOT_OVERHANG = 0.16
 export const ROPE_R = 0.0068
 export const TURNS = 4
+/** at a foot the rod rests in a scrape in the bank, shorter past the seat, but long enough to hold the seat's outer
+ * lashing turns (the seat's radius and four turns of rope) with a hand's width to spare */
+export const FOOT_OVERHANG = 0.12 + 2 * TURNS * 0.0068 + 0.04
 
 /** A hash in [0, 1), the same on every load. */
 export function hash(...values: number[]): number {

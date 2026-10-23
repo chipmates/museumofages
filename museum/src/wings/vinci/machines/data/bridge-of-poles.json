@@ -35,23 +35,23 @@
       "parent": "root",
       "shape": "round pole, end rod",
       "dimensions_m": {
-        "x": 2.3664,
+        "x": 2.4208,
         "radius": 0.075,
         "axis": [
-          0.8117,
-          0.5841,
+          0.8116,
+          0.5843,
           0
         ]
       },
       "position_m": [
-        -4.262,
-        0.7261,
+        -4.284,
+        0.7101,
         -1.1
       ],
       "orientation_rad": [
         0,
         0,
-        0.6238
+        0.624
       ],
       "material": {
         "class": "chestnut pole in its bark",
@@ -67,23 +67,23 @@
       "parent": "root",
       "shape": "round pole, end rod",
       "dimensions_m": {
-        "x": 2.3664,
+        "x": 2.4208,
         "radius": 0.075,
         "axis": [
-          0.8117,
-          0.5841,
+          0.8115,
+          0.5843,
           0
         ]
       },
       "position_m": [
-        -4.2614,
-        0.7252,
+        -4.2833,
+        0.7092,
         1.1
       ],
       "orientation_rad": [
         0,
         0,
-        0.6238
+        0.624
       ],
       "material": {
         "class": "chestnut pole in its bark",
@@ -99,7 +99,7 @@
       "parent": "root",
       "shape": "round pole, arch rod",
       "dimensions_m": {
-        "x": 4.2729,
+        "x": 4.3273,
         "radius": 0.075,
         "axis": [
           0.8143,
@@ -108,8 +108,8 @@
         ]
       },
       "position_m": [
-        -3.4841,
-        1.277,
+        -3.5062,
+        1.2611,
         -1.37
       ],
       "orientation_rad": [
@@ -131,7 +131,7 @@
       "parent": "root",
       "shape": "round pole, arch rod",
       "dimensions_m": {
-        "x": 4.2729,
+        "x": 4.3273,
         "radius": 0.075,
         "axis": [
           0.8092,
@@ -140,8 +140,8 @@
         ]
       },
       "position_m": [
-        -3.4841,
-        1.277,
+        -3.5062,
+        1.2611,
         1.37
       ],
       "orientation_rad": [
@@ -483,23 +483,23 @@
       "parent": "root",
       "shape": "round pole, arch rod",
       "dimensions_m": {
-        "x": 4.2729,
+        "x": 4.3273,
         "radius": 0.075,
         "axis": [
           0.8144,
-          -0.5803,
+          -0.5804,
           0
         ]
       },
       "position_m": [
-        3.4841,
-        1.277,
+        3.5062,
+        1.2611,
         -0.83
       ],
       "orientation_rad": [
         0,
         0,
-        -0.6191
+        -0.6192
       ],
       "material": {
         "class": "chestnut pole in its bark",
@@ -515,23 +515,23 @@
       "parent": "root",
       "shape": "round pole, arch rod",
       "dimensions_m": {
-        "x": 4.2729,
+        "x": 4.3273,
         "radius": 0.075,
         "axis": [
           0.8081,
-          -0.5891,
+          -0.589,
           0
         ]
       },
       "position_m": [
-        3.4841,
-        1.277,
+        3.5062,
+        1.2611,
         0.83
       ],
       "orientation_rad": [
         0,
         0,
-        -0.6299
+        -0.6298
       ],
       "material": {
         "class": "chestnut pole in its bark",
@@ -547,23 +547,23 @@
       "parent": "root",
       "shape": "round pole, end rod",
       "dimensions_m": {
-        "x": 2.3664,
+        "x": 2.4208,
         "radius": 0.075,
         "axis": [
-          0.8109,
-          -0.5851,
+          0.8111,
+          -0.5849,
           0
         ]
       },
       "position_m": [
-        4.2521,
-        0.7123,
+        4.2743,
+        0.6966,
         -1.1
       ],
       "orientation_rad": [
         0,
         0,
-        -0.625
+        -0.6248
       ],
       "material": {
         "class": "chestnut pole in its bark",
@@ -579,23 +579,23 @@
       "parent": "root",
       "shape": "round pole, end rod",
       "dimensions_m": {
-        "x": 2.3664,
+        "x": 2.4208,
         "radius": 0.075,
         "axis": [
-          0.8117,
-          -0.5841,
+          0.8115,
+          -0.5843,
           0
         ]
       },
       "position_m": [
-        4.2614,
-        0.7252,
+        4.2834,
+        0.7092,
         1.1
       ],
       "orientation_rad": [
         0,
         0,
-        -0.6238
+        -0.624
       ],
       "material": {
         "class": "chestnut pole, peeled with a drawknife",
@@ -699,13 +699,13 @@
       "parent": "root",
       "child": "E0A",
       "axis": [
-        0.5841,
-        -0.8117,
+        0.5843,
+        -0.8116,
         0
       ],
       "pivot_m": [
-        -4.262,
-        0.7261,
+        -4.284,
+        0.7101,
         -1.1
       ],
       "limits": [
@@ -723,13 +723,13 @@
       "parent": "root",
       "child": "E0B",
       "axis": [
-        0.5841,
-        -0.8117,
+        0.5843,
+        -0.8115,
         0
       ],
       "pivot_m": [
-        -4.2614,
-        0.7252,
+        -4.2833,
+        0.7092,
         1.1
       ],
       "limits": [
@@ -752,8 +752,8 @@
         0
       ],
       "pivot_m": [
-        -3.4841,
-        1.277,
+        -3.5062,
+        1.2611,
         -1.37
       ],
       "limits": [
@@ -776,8 +776,8 @@
         0
       ],
       "pivot_m": [
-        -3.4841,
-        1.277,
+        -3.5062,
+        1.2611,
         1.37
       ],
       "limits": [
@@ -1035,13 +1035,13 @@
       "parent": "root",
       "child": "R5A",
       "axis": [
-        -0.5803,
+        -0.5804,
         -0.8144,
         0
       ],
       "pivot_m": [
-        3.4841,
-        1.277,
+        3.5062,
+        1.2611,
         -0.83
       ],
       "limits": [
@@ -1059,13 +1059,13 @@
       "parent": "root",
       "child": "R5B",
       "axis": [
-        -0.5891,
+        -0.589,
         -0.8081,
         0
       ],
       "pivot_m": [
-        3.4841,
-        1.277,
+        3.5062,
+        1.2611,
         0.83
       ],
       "limits": [
@@ -1083,13 +1083,13 @@
       "parent": "root",
       "child": "E6A",
       "axis": [
-        -0.5851,
-        -0.8109,
+        -0.5849,
+        -0.8111,
         0
       ],
       "pivot_m": [
-        4.2521,
-        0.7123,
+        4.2743,
+        0.6966,
         -1.1
       ],
       "limits": [
@@ -1107,13 +1107,13 @@
       "parent": "root",
       "child": "E6B",
       "axis": [
-        -0.5841,
-        -0.8117,
+        -0.5843,
+        -0.8115,
         0
       ],
       "pivot_m": [
-        4.2614,
-        0.7252,
+        4.2834,
+        0.7092,
         1.1
       ],
       "limits": [
