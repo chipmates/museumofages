@@ -264,10 +264,12 @@ function wells(k: Kit): void {
     const tread = [sz * HUB.z - WHEEL.width / 2 - 0.02, sz * HUB.z + WHEEL.width / 2 + 0.02].sort((p, q) => p - q) as [number, number]
     const cutX = 0.24
     const f = (j: number): Finish => ({ tone: 0.5 + 0.1 * hash(70, sx, sz, j), wear: 0 })
-    // the slot's far corners run into the wall, which closes them: every board stops 5 mm inside the floor's circle
-    const Rc = TUB.bottomR - TUB.wall - 0.008
+    // the slot's far corners run into the wall, which closes them: on the floor a board stops 5 mm short of the
+    // staves; under the floor, where the staves end, the well runs on under their foot, inside the skirt
+    const Rc = TUB.bottomR - TUB.wall - 0.005, Rb = TUB.bottomR - 0.01
     const slabAt = (x0: number, x1: number, y0: number, y1: number, z0: number, z1: number, j: number, grain: V3 = X): void => {
-      const reach = Math.sqrt(Math.max(0, Rc * Rc - Math.max(z0 * z0, z1 * z1)))
+      const R = y1 <= TUB.bottomY ? Rb : Rc
+      const reach = Math.sqrt(Math.max(0, R * R - Math.max(z0 * z0, z1 * z1)))
       x0 = Math.max(x0, -reach); x1 = Math.min(x1, reach)
       if (x1 - x0 < 0.02 || z1 - z0 < 0.005) return
       k.box(v((x0 + x1) / 2, (y0 + y1) / 2, (z0 + z1) / 2), [X, Y, Z], v((x1 - x0) / 2, (y1 - y0) / 2, (z1 - z0) / 2), f(j), 0.003, grain)
@@ -275,7 +277,7 @@ function wells(k: Kit): void {
     const [y0, y1] = W.bottom
     const X0 = xa - W.t, X1 = xb + W.t, Z0 = za - W.t, Z1 = zb + W.t
     // the bottom, in four boards round the tread's cut; the one toward the wall sawn on the wall's curve
-    const reachAt = (z: number): number => Math.sqrt(Math.max(0, Rc * Rc - z * z))
+    const reachAt = (z: number): number => Math.sqrt(Math.max(0, Rb * Rb - z * z))
     const curved = (inner: number, outer: number, j: number): void => {
       const n = 12, pts: [number, number][] = [[inner, Z0]]
       for (let i = 0; i <= n; i++) { const z = Z0 + ((Z1 - Z0) * i) / n; pts.push([sx * Math.min(Math.abs(outer), reachAt(z)), z]) }
