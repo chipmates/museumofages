@@ -10,7 +10,7 @@ import { buildBenchMachine, buildShowcase, type ReadyMachineBuild } from '..';
 import { SHOWCASE_SLUGS, isShowcaseSlug, showcaseCatalog, type ShowcaseSlug } from '../showcase';
 import { makeFigure, standingJoints, type Figure } from '../flying/figure';
 import type { StoreCrane, StoreCraneReading } from '../crane-body';
-import { BENCH_SLUGS as HALL_AND_COURT_SLUGS, COURT_SLUGS, isBenchSlug as isHallOrCourtSlug, benchCatalog, partialCatalog, type Language, type BenchSlug as HallOrCourtSlug, type EvidenceRecord } from '../catalog';
+import { BENCH_SLUGS as HALL_AND_COURT_SLUGS, isBenchSlug as isHallOrCourtSlug, benchCatalog, partialCatalog, type Language, type BenchSlug as HallOrCourtSlug, type EvidenceRecord } from '../catalog';
 /** the fifteen and the court's, then the pieces built to showcase, which stand on the bench alone */
 type BenchSlug = HallOrCourtSlug | ShowcaseSlug;
 const BENCH_SLUGS: readonly BenchSlug[] = [...HALL_AND_COURT_SLUGS, ...SHOWCASE_SLUGS];
@@ -326,7 +326,7 @@ export function createBench(stack: Stack, onExit: () => void) {
     en.setAttribute('aria-label', copy.english);
     de.setAttribute('aria-label', copy.german);
     loading.textContent = copy.loading;
-    const record = recordOf(slug); host.lang = lang; host.dataset['slug'] = slug; title.textContent = record.title[lang]; label.textContent = record.label[lang]; if ((COURT_SLUGS as readonly string[]).includes(slug)) label.append(el('small', 'bench-working', localText(lang, 'working line', 'Arbeitszeile'))); label.dataset['naAnchor'] = `vinci/machine/${slug}`; certaintyWord.textContent = localText(lang, 'Reconstructed · assumed dimensions', 'Rekonstruiert · angenommene Maße'); const s = record.dossier.scale_m; dimensions.textContent = `${s.x.toFixed(2)} × ${s.y.toFixed(2)} × ${s.z.toFixed(2)} m · ${localText(lang, 'swept envelope', 'Bewegungsraum')}`; select.setAttribute('aria-label', `${localText(lang, 'Machine', 'Maschine')} ${BENCH_SLUGS.indexOf(slug) + 1} / ${BENCH_SLUGS.length}`); scope.textContent = withoutCitations(record.sections[lang][1]?.body ?? ''); en.setAttribute('aria-pressed', String(lang === 'en')); de.setAttribute('aria-pressed', String(lang === 'de')); read.textContent = localText(lang, 'Read the evidence ↗', 'Die Quellen lesen ↗'); select.replaceChildren(); for (const id of BENCH_SLUGS) {
+    const record = recordOf(slug); host.lang = lang; host.dataset['slug'] = slug; title.textContent = record.title[lang]; label.textContent = record.label[lang]; label.dataset['naAnchor'] = `vinci/machine/${slug}`; certaintyWord.textContent = localText(lang, 'Reconstructed · assumed dimensions', 'Rekonstruiert · angenommene Maße'); const s = record.dossier.scale_m; dimensions.textContent = `${s.x.toFixed(2)} × ${s.y.toFixed(2)} × ${s.z.toFixed(2)} m · ${localText(lang, 'swept envelope', 'Bewegungsraum')}`; select.setAttribute('aria-label', `${localText(lang, 'Machine', 'Maschine')} ${BENCH_SLUGS.indexOf(slug) + 1} / ${BENCH_SLUGS.length}`); scope.textContent = withoutCitations(record.sections[lang][1]?.body ?? ''); en.setAttribute('aria-pressed', String(lang === 'en')); de.setAttribute('aria-pressed', String(lang === 'de')); read.textContent = localText(lang, 'Read the evidence ↗', 'Die Quellen lesen ↗'); select.replaceChildren(); for (const id of BENCH_SLUGS) {
     const option = el('option', '', recordOf(id).title[lang]);
     option.value = id;
     select.append(option);
