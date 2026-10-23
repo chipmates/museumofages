@@ -94,9 +94,11 @@ export async function bridgeSurfaces(stack: Stack): Promise<BridgeSurfaces> {
     const crackFade = float(1).sub(smoothstep(0.08, 0.3, fwidth(edge))).mul(float(1).sub(smoothstep(0.12, 0.3, fwidth(q0.y).add(fwidth(q0.z)))))
     const fissure = float(1).sub(smoothstep(width.mul(0.2), width, edge)).mul(open.mul(0.85).add(0.15)).mul(crackFade)
     const shoulder = float(1).sub(smoothstep(width, width.mul(4), edge)).mul(open).mul(crackFade)
+    // a pixel's span round the stem: both of the cylinder's cross coordinates, or one of them misses the silhouette
+    const roundFw = fwidth(C.y).add(fwidth(C.z))
     const microQ = vec3(C.x.mul(40), C.y.mul(190), C.z.mul(190))
     const micro = mx_noise_float(microQ)
-    const microFade = float(1).sub(smoothstep(0.15, 0.6, fwidth(C.y.mul(190)).add(fwidth(C.x.mul(40)))))
+    const microFade = float(1).sub(smoothstep(0.15, 0.6, roundFw.mul(190).add(fwidth(C.x.mul(40)))))
     const plate = mx_noise_float(q.mul(0.5).add(4.2)).mul(0.5).add(0.5)
     const lent = smoothstep(0.7, 0.84, mx_noise_float(vec3(C.x.mul(60), C.y.mul(40), C.z.mul(40)))).mul(float(1).sub(smoothstep(0.15, 0.5, fwidth(C.x.mul(60)).add(fwidth(C.y.mul(40))).add(fwidth(C.z.mul(40))))))
     const mottle = mx_noise_float(vec3(C.x.mul(1.6).add(o), C.y.mul(8), C.z.mul(8))).mul(0.5).add(0.5)
@@ -106,7 +108,7 @@ export async function bridgeSurfaces(stack: Stack): Promise<BridgeSurfaces> {
       .mul(float(1).sub(shoulder.mul(0.2))).mul(float(1).add(lent.mul(0.22)))
     // the plates' own scaly skin, finer than the net and long along the stem
     const scaleQ = vec3(C.x.mul(14), C.y.mul(75), C.z.mul(75))
-    const scaly = mx_noise_float(scaleQ.add(o)).mul(float(1).sub(smoothstep(0.2, 0.7, fwidth(C.x.mul(14)).add(fwidth(C.y.mul(75))))))
+    const scaly = mx_noise_float(scaleQ.add(o)).mul(float(1).sub(smoothstep(0.2, 0.7, fwidth(C.x.mul(14)).add(roundFw.mul(75)))))
     const barkH = fissure.negate().mul(0.005).sub(shoulder.mul(0.0022)).add(micro.mul(microFade).mul(0.0009)).add(scaly.mul(0.0011)).add(plate.mul(0.0006)).add(lent.mul(0.0002))
     // PEELED: pale wood under the drawknife, its strokes as narrow facets along the stem, bark left in the hollows
     const fibres = luma(d.albedo)
