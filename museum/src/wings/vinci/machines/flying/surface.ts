@@ -60,19 +60,20 @@ function fibre(): N {
   const n = mx_noise_float(at)
   return float(1).add(n.mul(fadeByPixel(uv().x.mul(620 * Math.PI), 0.09)))
 }
-/** cane's grain: the stem's skin shows darker fibre lines along it, a line
- * every 13 mm round the stem, each line's strength drifting along its length,
- * and the bands between them lighter or darker over a hand's length. Lines
- * hold full strength while one is 4 px from the next and are gone at 2 px,
- * so they never shimmer. */
+/** cane's grain: the stem's skin shows darker, browner fibre lines along it,
+ * a line every 13 mm round the stem, each line's strength drifting along its
+ * length, and the bands between them lighter or darker over a hand's length.
+ * Lines hold full strength while one is 4 px from the next and are gone at
+ * 2 px, so they never shimmer. */
 const GRAIN = 0.013
 function grain(): N {
   const p = uv().x.div(GRAIN), y = uv().y, at = p.round()
-  const strength = mx_noise_float(vec3(at.mul(1.7), y.mul(6), 0.5)).mul(0.9).add(0.55).clamp(0, 1)
-  const line = float(1).sub(p.sub(at).abs().div(0.16).clamp(0, 1))
-  const band = mx_noise_float(vec3(p.floor().mul(2.3), y.mul(9), 3.1)).mul(1.4).clamp(-1, 1)
+  const strength = mx_noise_float(vec3(at.mul(1.7), y.mul(6), 0.5)).mul(0.7).add(0.75).clamp(0, 1)
+  const line = float(1).sub(p.sub(at).abs().div(0.28).clamp(0, 1)).pow(0.8)
+  const band = mx_noise_float(vec3(p.floor().mul(2.3), y.mul(9), 3.1)).mul(1.6).clamp(-1, 1)
   const fade = float(1).sub(fwidth(p).sub(0.25).div(0.25)).clamp(0, 1)
-  return float(1).sub(line.mul(strength).mul(fade).mul(0.34)).mul(band.mul(fade).mul(0.16).add(1))
+  const k = line.mul(strength).mul(fade)
+  return vec3(float(1).sub(k.mul(0.4)), float(1).sub(k.mul(0.44)), float(1).sub(k.mul(0.5))).mul(band.mul(fade).mul(0.2).add(1))
 }
 
 /** A thin cloth's light: what falls on one face passes out of the other,
