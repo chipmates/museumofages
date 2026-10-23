@@ -307,7 +307,8 @@ export function makeFigure(material: Material, name = 'figure'): Figure {
   }
   // the trunk from pelvis to neck: (u, half width, depth to the front, to the back)
   const trunk = make('trunk', 0.52, [[0, 0.158, 0.088, 0.098], [0.12, 0.152, 0.09, 0.095], [0.3, 0.138, 0.09, 0.084], [0.45, 0.134, 0.092, 0.084], [0.65, 0.15, 0.1, 0.09], [0.86, 0.166, 0.098, 0.092], [1, 0.07, 0.055, 0.05]], 28, trunkRelief)
-  const neck = make('neck', 0.09, [[0, 0.058, 0.054, 0.056], [1, 0.053, 0.05, 0.052]], 16, undefined, 6)
+  // the neck rises out of the trunk's top inside its section, so the two meet on the trunk's rounded end
+  const neck = make('neck', 0.09, [[0, 0.048, 0.045, 0.046], [0.5, 0.054, 0.05, 0.052], [1, 0.053, 0.05, 0.052]], 16, undefined, 6)
   const head = built('head', 0.13, headSurface)
   // the arms: the shoulder's round, the forearm full under the elbow and flat at the wrist
   const upperArm = (['l', 'r'] as const).map(k => make(`upper-arm-${k}`, 0.28, [[0, 0.05, 0.047, 0.047], [0.2, 0.049, 0.046, 0.046], [0.55, 0.043, 0.042, 0.04], [0.88, 0.037, 0.034, 0.034], [1, 0.036, 0.033, 0.033]], 16, undefined, 14))
