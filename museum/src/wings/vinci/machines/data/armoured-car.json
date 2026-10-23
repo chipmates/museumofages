@@ -613,8 +613,8 @@
     "justification": "The sheet's note names eight men who turn the car. The cranks, shafts, lanterns and pegs are drawn; the rate is ours.",
     "source": "British Museum 1860,0616.99 (the sheet)"
   },
-  "label_en": "Our reconstruction from his sheet in the British Museum, sizes ours. As drawn, its wheels turn against each other.",
-  "label_de": "Unsere Rekonstruktion nach seinem Blatt im British Museum, die Maße sind unsere. Wie gezeichnet, drehen sich seine Räder gegeneinander.",
+  "label_en": "Our reconstruction from his sheet in the British Museum, sizes ours. As drawn, its wheels turn against each other. The red band on each wheel is our mark, so you can see it turn.",
+  "label_de": "Unsere Rekonstruktion nach seinem Blatt im British Museum, die Maße stammen von uns. Wie gezeichnet, drehen sich seine Räder gegeneinander. Das rote Band an jedem Rad ist von uns, damit du siehst, wie es sich dreht.",
   "animation_notes": [
     "A 12 s loop that starts and ends at rest, with no hidden reset.",
     "Built as drawn: the front and rear wheels of a side turn in opposite senses, and the car never rolls.",

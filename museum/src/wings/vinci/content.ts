@@ -173,10 +173,10 @@ const visitorWords: Record<string, VisitorWords> = {
     sourceDe: 'Fotografien des reliefgeschmückten Hofportals.',
   },
   'hall-arrangement': {
-    en: 'The hall is rebuilt with a chimneypiece of about 1500, because the one there today was altered in the eighteenth century.',
-    de: 'Der Saal ist mit einem Kamin um 1500 nachgebaut, denn der heutige wurde im achtzehnten Jahrhundert verändert.',
-    sourceEn: 'Photographs of the great hall and the history of its alterations.',
-    sourceDe: 'Fotografien des großen Saals und die Geschichte seiner Umbauten.',
+    en: 'The hall is rebuilt with a hooded chimneypiece of the Loire type of about 1500. The date of the one in the room today is not known.',
+    de: 'Der Saal ist mit einem Kamin in der Form der Loire um 1500 nachgebaut. Wann der heutige Kamin entstand, ist nicht bekannt.',
+    sourceEn: 'Photographs of the great hall, and the chimneypiece type of the region about 1500.',
+    sourceDe: 'Fotografien des großen Saals und der Kamintyp der Region um 1500.',
   },
   'oratory-date': {
     en: 'Tradition dates Anne of Brittany’s oratory to 1492.',
@@ -410,8 +410,8 @@ const courtyard = statement('carved-inscription-record',
   'documented', 'document', 'brief/CONCEPT-OPUS.md §3 S2; Q015');
 const hall: VinciStatement = {
   ...statement('hall-arrangement',
-  'The great hall is rebuilt to the proposed plan. Today\u2019s panelling and chimneypiece were altered in the eighteenth century, so the rebuilt chimneypiece takes the Loire form of the years around 1500.',
-  'Der große Saal ist nach dem vorgeschlagenen Grundriss nachgebaut. Vertäfelung und Kamin von heute wurden im achtzehnten Jahrhundert verändert, deshalb hat der nachgebaute Kamin die Form der Loire um 1500.',
+  'The great hall is rebuilt to the proposed plan. The chimneypiece takes the hooded Loire form of the years around 1500, a type of the period. The date of the one in the room today is not known.',
+  'Der große Saal ist nach dem vorgeschlagenen Grundriss nachgebaut. Der Kamin hat die Form der Loire um 1500, ein Typ der Zeit. Wann der heutige Kamin entstand, ist nicht bekannt.',
   'reconstructed', 'carrier', 'brief/CONCEPT-OPUS.md §3 S3; house-hall.ts, the great hall as built'),
   carrier: 'vinci/house-hall',
 };
@@ -512,8 +512,8 @@ const stationCards: Record<VinciStationId, VinciText> = {
     de: 'Der Hof zwischen dem Haus und seinem Tor. Über der Tür trägt ein Vogel mit ausgebreiteten Flügeln die Worte DIEV AVANT TOVT, Gott vor allem, und Fotografien dieses Reliefs sind unsere Vorlage. Die Nachmittagssonne steht im Westen und streicht über diesen Hof.',
   },
   hall: {
-    en: 'The great hall, rebuilt for this museum from the house\u2019s plan and photographs. The chimneypiece in the room today was changed in the eighteenth century, so ours takes a Loire form of about 1500. The table, the chest and the stools are types of the period. None of them was his.',
-    de: 'Der große Saal, für dieses Museum nach dem Grundriss des Hauses und nach Fotografien nachgebaut. Der Kamin im heutigen Raum wurde im achtzehnten Jahrhundert verändert, deshalb hat unserer eine Form der Loire um 1500. Tisch, Truhe und Hocker sind Typen der Zeit. Keines der Stücke gehörte ihm.',
+    en: 'The great hall, rebuilt for this museum from the house\u2019s plan and photographs. Our chimneypiece takes a hooded Loire form of about 1500, a type of the period. The lion is our reconstruction from old accounts, and no account puts it in this house. The table, the chest and the stools are types of the period. None of them was his.',
+    de: 'Der große Saal, für dieses Museum nach dem Grundriss des Hauses und nach Fotografien nachgebaut. Unser Kamin hat die Form der Loire um 1500, ein Typ der Zeit. Der Löwe ist unsere Rekonstruktion nach alten Berichten, und kein Bericht nennt dieses Haus. Tisch, Truhe und Hocker sind Typen der Zeit. Keines der Stücke gehörte ihm.',
   },
   oratory: {
     en: 'A small stone chapel set into the south end of the house. Tradition gives it to Anne of Brittany and the year 1492, and no building survey has confirmed that date. Its wall paintings are attributed to Leonardo’s pupils, and that attribution is not settled. The room is not open, so the house is shown from outside.',

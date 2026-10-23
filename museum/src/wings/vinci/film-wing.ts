@@ -86,13 +86,16 @@ function keepLast(node: HTMLElement, said: string, least = 3): void {
 }
 /** the story's clock at his birth repeats what its heading already says */
 const atBirth = (age: VinciText): boolean => text(age) === text(deskControl('date', 'age_birth'))
-/** THE UPRIGHT CLOCK BESIDE ITS HEADING drops the figure's name in front of
-    it (the first word of the age's own pattern), so a short phone's name row
-    keeps one line: "mit Anfang 20" where the desktop reads "Leonardo mit Anfang 20" */
+/** THE UPRIGHT CLOCK BESIDE ITS HEADING keeps the figure's name (the tag
+    says whose age it is) and turns the age pattern's joining word into a
+    comma, so a short phone's name row holds it: "Leonardo, 51" where the
+    desktop reads "Leonardo at 51" */
 function bareAge(age: string): string {
-  const name = /^[^\s,]+/u.exec(text(deskControl('date', 'age')))?.[0]
-  if (!name || !age.startsWith(name)) return age
-  return age.slice(name.length).replace(/^,?\s+/u, '') || age
+  const pattern = text(deskControl('date', 'age'))
+  const name = /^[^\s,]+/u.exec(pattern)?.[0]
+  const joiner = name ? pattern.slice(name.length).split('{')[0] ?? '' : ''
+  if (!name || !joiner.trim() || !age.startsWith(name + joiner)) return age
+  return `${name}, ${age.slice(name.length + joiner.length)}`
 }
 const ARROW_ON = 'M3 8h10M9 4l4 4-4 4', ARROW_UP = 'M8 13V3M4 7l4-4 4 4', ARROW_DOWN = 'M8 3v10M4 9l4 4 4-4'
 /** the Menu's sign: three short lines, read as a menu where a circled plus read as add or zoom */

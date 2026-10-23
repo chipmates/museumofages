@@ -94,10 +94,6 @@ export const CLOSER_WORDS = {
 
 const asse = (key: string): VinciText => word('closer_asse', key)
 const ASSE_ROOM = 'sala-delle-asse'
-/** A WORKING LINE THE RECORD HOLDS ITSELF, for the writer to word into the
-    card data: the drawn rope does not follow the design up close, so the
-    1498 near line claims the trees and the arms, and calls the rope ours */
-const ASSE_NEAR_1498_HELD: VinciText = { en: 'Trees and arms as designed, the rope by us.', de: 'Bäume, Wappen nach Entwurf, Seil von uns.' }
 
 /* THE SALA DELLE ASSE, the first. About 1498 is our drawing in code, after
    the layout the 1902 repaint keeps; 2012 is the photograph before the
@@ -114,7 +110,7 @@ const ASSE: CloserLook = {
   states: [
     { id: '1498', plate: `vinci/room-plate/${ASSE_ROOM}-vault-1498`, tiles: `vinci/room-tiles/${ASSE_ROOM}-vault-1498`,
       word: asse('state_1498'), turn: asse('turn_1498'), date: asse('date_1498'), certainty: 'reconstructed',
-      lines: { whole: asse('whole_1498'), near: ASSE_NEAR_1498_HELD, ceiling: asse('ceiling_1498') }, sentence: asse('card_1498'),
+      lines: { whole: asse('whole_1498'), near: asse('near_1498'), ceiling: asse('ceiling_1498') }, sentence: asse('card_1498'),
       // one level short of the plate's own pixels, where the drawn rope loops: the plate that passes its 1:1 check lifts it to 1
       deepest: 0.5 },
     { id: '2012', plate: `vinci/room-plate/${ASSE_ROOM}-vault-2012`, tiles: `vinci/room-tiles/${ASSE_ROOM}-vault-2012`,
