@@ -533,7 +533,10 @@ export function createBench(stack: Stack, onExit: () => void) {
     'armoured-car': { lux: 240, ambient: 1.15, ground: '#6a604f', sectionLux: 140, fill: { closed: .4 }, lamps: {
       // low on the sun's side of the visitor: the near skirt and eave take the most, the cone turns away from it
       // into shade and its far side falls off, as under one lamp in a hall
-      closed: [{ at: [-5, 3.6, 4.6], aim: [.2, .8, 1.2], lux: 280, kelvin: 4300, angle: .7, penumbra: .8, decay: 2 }],
+      closed: [{ at: [-5, 3.6, 4.6], aim: [.2, .8, 1.2], lux: 280, kelvin: 4300, angle: .7, penumbra: .8, decay: 2 },
+        // and one low under the eave on the same side, so the skirt turns from lit to shade across the front; low enough
+        // to pass under the eave, it needs no shadow map
+        { at: [-3.5, 1.2, 5.5], aim: [.5, .35, 2.2], lux: 170, kelvin: 4300, angle: .5, penumbra: .9, decay: 2, shadow: false }],
       // opened, a narrow lamp high over each far lantern, steep enough to reach between the drum and its wheel, where
       // the pegs enter the staves and the drive binds; the floor round them stays dim
       section: [
