@@ -16,8 +16,11 @@ import { build as water_lifting_screw } from './water-lifting-screw'
 import { build as proportional_compass } from './proportional-compass'
 import { build as camera_obscura } from './camera-obscura'
 import { build as mechanical_lion } from './mechanical-lion'
+import { build as flying_machine } from './flying-machine'
+import type { ShowcaseSlug } from './showcase'
 
 export * from './catalog'
+export { SHOWCASE_SLUGS, isShowcaseSlug, showcaseCatalog, type ShowcaseSlug, type ShowcaseRecord } from './showcase'
 export type { ReadyMachineBuild, MachinesStanding, MachineStanding } from './runtime'
 export { machineBuildOf, machinesStanding, onMachineStanding } from './runtime'
 export type { Dossier, MachineBuild, Certainty } from './types'
@@ -42,4 +45,12 @@ export const builders: Record<MachineSlug, (stack: Stack) => ReadyMachineBuild> 
 
 export function buildMachine(slug: MachineSlug, stack: Stack): ReadyMachineBuild {
   return registerMachineBuild(builders[slug](stack))
+}
+
+/** The showcase pieces, built for the bench alone until they have a place. */
+export const showcaseBuilders: Record<ShowcaseSlug, (stack: Stack) => ReadyMachineBuild> = {
+  'flying-machine': flying_machine,
+}
+export function buildShowcase(slug: ShowcaseSlug, stack: Stack): ReadyMachineBuild {
+  return registerMachineBuild(showcaseBuilders[slug](stack))
 }
