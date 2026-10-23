@@ -801,6 +801,19 @@ export function createBench(stack: Stack, onExit: () => void) {
   });
   addEventListener('resize', () => { if (active) {
     compose(); metrics?.reset(); } });
+  // a rig's moving eye for a still machine's clip: only an eye a rig set moves; the air stays as the first eye set it,
+  // since a new fog node recompiles every surface
+  (window as unknown as Record<string, unknown>)['__benchEye'] = (next: BenchOptions['eye']): boolean => {
+    if (!active || !eye || !next) return false;
+    eye = next;
+    const [, top, , tall] = eye.frame ?? [0, 0, 1, 1];
+    camera.fov = 2 * Math.atan(Math.tan(((eye.fov ?? 34) * Math.PI / 180) / 2) / tall) * 180 / Math.PI;
+    camera.position.set(...eye.at);
+    camera.lookAt(...eye.look);
+    camera.setViewOffset(innerWidth, innerHeight, 0, innerHeight * (.5 - (top + tall / 2)), innerWidth, innerHeight);
+    camera.updateProjectionMatrix();
+    return true;
+  };
   return { open, close, active: () => active, frame(dt: number) { if (!active)
       return; const now = performance.now(); if (ready)
       playbackState = advancePlayback(schedule, playbackState, (now - lastWall) / 1000); lastWall = now; if (ready) {
