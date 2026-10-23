@@ -1,0 +1,1310 @@
+{
+  "slug": "bridge-of-poles",
+  "name_en": "Bridge of poles",
+  "name_de": "Brücke aus Stangen",
+  "status": "reconstruction",
+  "scope": "The museum's reconstruction from the sketch on Codex Atlanticus folio 71 recto. The sketch draws an arch of straight poles across water, poles along the span and across it, crossing at the crown. The form follows one engineering reading of it: two arch frames of straight rods on three staggered planes, joined by cross joists and lashed. Every size, the number of poles, the lashings' form, the bank seats and the order of building are modern choices.",
+  "gaps": [
+    "f. 71 recto gives no size, no count of poles and no unit.",
+    "Whether the crossings are lashed or held by the weave alone is not written; the readings disagree.",
+    "The second sketch, probably on f. 69a recto, is not seen; no clean plate of it was found.",
+    "No deck is drawn; a deck of planks is a later model's reading.",
+    "How it was to be put up is not drawn; the order of building here is ours.",
+    "No record that one was built in his lifetime."
+  ],
+  "scale_m": {
+    "x": 10.45,
+    "y": 2.86,
+    "z": 3.6,
+    "certainty": "C",
+    "source": "museum choice",
+    "note": "The bridge standing, from the bank: span 10 m between the feet, poles 0.15 m across, frames 2.2 m apart, planes 0.27 m apart; the rise (2.5288 m, joist axes) follows from the span, the six parts and the poles' diameter. The assembly's paths and the display bank lie outside it."
+  },
+  "frame": {
+    "handedness": "right",
+    "units": "m",
+    "up": "+Y",
+    "forward": "+X",
+    "ground_y_m": 0,
+    "origin": "On the bank's level midway between the feet; +X along the span toward the far bank, +Z toward the viewer.",
+    "transforms": "Built from bridge/plan.ts; positions are the poles' centres in place."
+  },
+  "parts": [
+    {
+      "id": "E0A",
+      "parent": "root",
+      "shape": "round pole, end rod",
+      "dimensions_m": {
+        "x": 2.3664,
+        "radius": 0.075,
+        "axis": [
+          0.8117,
+          0.5841,
+          0
+        ]
+      },
+      "position_m": [
+        -4.262,
+        0.7261,
+        -1.1
+      ],
+      "orientation_rad": [
+        0,
+        0,
+        0.6238
+      ],
+      "material": {
+        "class": "chestnut pole, peeled with a drawknife",
+        "basis": "ours",
+        "source": "f. 71 recto draws round poles; the species is ours"
+      },
+      "certainty": "C",
+      "source": "Ceraldi and Russo Ermolli 2004 (one end rod; read here as one at each foot)",
+      "notes": "frame A, taper 0.0385 m in diameter end to end; placed at 0.6 s, standing by 3.05 s"
+    },
+    {
+      "id": "E0B",
+      "parent": "root",
+      "shape": "round pole, end rod",
+      "dimensions_m": {
+        "x": 2.3664,
+        "radius": 0.075,
+        "axis": [
+          0.8117,
+          0.5841,
+          0
+        ]
+      },
+      "position_m": [
+        -4.2614,
+        0.7252,
+        1.1
+      ],
+      "orientation_rad": [
+        0,
+        0,
+        0.6238
+      ],
+      "material": {
+        "class": "chestnut pole in its bark",
+        "basis": "ours",
+        "source": "f. 71 recto draws round poles; the species is ours"
+      },
+      "certainty": "C",
+      "source": "Ceraldi and Russo Ermolli 2004 (one end rod; read here as one at each foot)",
+      "notes": "frame B, taper 0.0329 m in diameter end to end; placed at 1.6 s, standing by 4.05 s"
+    },
+    {
+      "id": "R1A",
+      "parent": "root",
+      "shape": "round pole, arch rod",
+      "dimensions_m": {
+        "x": 4.2729,
+        "radius": 0.075,
+        "axis": [
+          0.8143,
+          0.5805,
+          0
+        ]
+      },
+      "position_m": [
+        -3.4841,
+        1.277,
+        -1.37
+      ],
+      "orientation_rad": [
+        0,
+        0,
+        0.6193
+      ],
+      "material": {
+        "class": "chestnut pole, peeled with a drawknife",
+        "basis": "ours",
+        "source": "f. 71 recto draws round poles; the species is ours"
+      },
+      "certainty": "C",
+      "source": "Ceraldi and Russo Ermolli 2004 (five rods to an arch, staggered planes)",
+      "notes": "frame A, taper 0.0431 m in diameter end to end; placed at 2.6 s, standing by 5.05 s"
+    },
+    {
+      "id": "R1B",
+      "parent": "root",
+      "shape": "round pole, arch rod",
+      "dimensions_m": {
+        "x": 4.2729,
+        "radius": 0.075,
+        "axis": [
+          0.8092,
+          0.5876,
+          0
+        ]
+      },
+      "position_m": [
+        -3.4841,
+        1.277,
+        1.37
+      ],
+      "orientation_rad": [
+        0,
+        0,
+        0.6281
+      ],
+      "material": {
+        "class": "chestnut pole, peeled with a drawknife",
+        "basis": "ours",
+        "source": "f. 71 recto draws round poles; the species is ours"
+      },
+      "certainty": "C",
+      "source": "Ceraldi and Russo Ermolli 2004 (five rods to an arch, staggered planes)",
+      "notes": "frame B, taper 0.032 m in diameter end to end; placed at 3.6 s, standing by 6.05 s"
+    },
+    {
+      "id": "J1",
+      "parent": "root",
+      "shape": "round pole, cross joist",
+      "dimensions_m": {
+        "x": 3.4,
+        "radius": 0.075,
+        "axis": [
+          0,
+          0,
+          1
+        ]
+      },
+      "position_m": [
+        -3.6286,
+        1.3578,
+        0
+      ],
+      "orientation_rad": [
+        0,
+        0,
+        0
+      ],
+      "material": {
+        "class": "chestnut pole in its bark",
+        "basis": "ours",
+        "source": "f. 71 recto draws round poles; the species is ours"
+      },
+      "certainty": "C",
+      "source": "f. 71 recto (poles across the span); the reading of Ceraldi and Russo Ermolli 2004 (cross joists)",
+      "notes": "taper 0 m in diameter end to end; placed at 4.6 s, standing by 7.05 s"
+    },
+    {
+      "id": "R2A",
+      "parent": "root",
+      "shape": "round pole, arch rod",
+      "dimensions_m": {
+        "x": 4.4129,
+        "radius": 0.075,
+        "axis": [
+          0.9535,
+          0.3013,
+          0
+        ]
+      },
+      "position_m": [
+        -1.8604,
+        2.0861,
+        -0.83
+      ],
+      "orientation_rad": [
+        0,
+        0,
+        0.3061
+      ],
+      "material": {
+        "class": "chestnut pole in its bark",
+        "basis": "ours",
+        "source": "f. 71 recto draws round poles; the species is ours"
+      },
+      "certainty": "C",
+      "source": "Ceraldi and Russo Ermolli 2004 (five rods to an arch, staggered planes)",
+      "notes": "frame A, taper 0.0539 m in diameter end to end; placed at 5.6 s, standing by 8.05 s"
+    },
+    {
+      "id": "R2B",
+      "parent": "root",
+      "shape": "round pole, arch rod",
+      "dimensions_m": {
+        "x": 4.4129,
+        "radius": 0.075,
+        "axis": [
+          0.9502,
+          0.3116,
+          0
+        ]
+      },
+      "position_m": [
+        -1.8604,
+        2.0861,
+        0.83
+      ],
+      "orientation_rad": [
+        0,
+        0,
+        0.3169
+      ],
+      "material": {
+        "class": "chestnut pole in its bark",
+        "basis": "ours",
+        "source": "f. 71 recto draws round poles; the species is ours"
+      },
+      "certainty": "C",
+      "source": "Ceraldi and Russo Ermolli 2004 (five rods to an arch, staggered planes)",
+      "notes": "frame B, taper 0.0413 m in diameter end to end; placed at 6.6 s, standing by 9.05 s"
+    },
+    {
+      "id": "J2",
+      "parent": "root",
+      "shape": "round pole, cross joist",
+      "dimensions_m": {
+        "x": 3.4,
+        "radius": 0.075,
+        "axis": [
+          0,
+          0,
+          1
+        ]
+      },
+      "position_m": [
+        -1.9064,
+        2.2288,
+        0
+      ],
+      "orientation_rad": [
+        0,
+        0,
+        0
+      ],
+      "material": {
+        "class": "chestnut pole, peeled with a drawknife",
+        "basis": "ours",
+        "source": "f. 71 recto draws round poles; the species is ours"
+      },
+      "certainty": "C",
+      "source": "f. 71 recto (poles across the span); the reading of Ceraldi and Russo Ermolli 2004 (cross joists)",
+      "notes": "taper 0 m in diameter end to end; placed at 7.6 s, standing by 10.05 s"
+    },
+    {
+      "id": "R3A",
+      "parent": "root",
+      "shape": "round pole, arch rod",
+      "dimensions_m": {
+        "x": 4.4129,
+        "radius": 0.075,
+        "axis": [
+          1,
+          0.0038,
+          0
+        ]
+      },
+      "position_m": [
+        0,
+        2.3788,
+        -1.1
+      ],
+      "orientation_rad": [
+        0,
+        0,
+        0.0038
+      ],
+      "material": {
+        "class": "chestnut pole in its bark",
+        "basis": "ours",
+        "source": "f. 71 recto draws round poles; the species is ours"
+      },
+      "certainty": "C",
+      "source": "Ceraldi and Russo Ermolli 2004 (five rods to an arch, staggered planes)",
+      "notes": "frame A, taper 0.0336 m in diameter end to end; placed at 8.6 s, standing by 11.05 s"
+    },
+    {
+      "id": "R3B",
+      "parent": "root",
+      "shape": "round pole, arch rod",
+      "dimensions_m": {
+        "x": 4.4129,
+        "radius": 0.075,
+        "axis": [
+          1,
+          0.005,
+          0
+        ]
+      },
+      "position_m": [
+        0,
+        2.3788,
+        1.1
+      ],
+      "orientation_rad": [
+        0,
+        0,
+        0.005
+      ],
+      "material": {
+        "class": "chestnut pole in its bark",
+        "basis": "ours",
+        "source": "f. 71 recto draws round poles; the species is ours"
+      },
+      "certainty": "C",
+      "source": "Ceraldi and Russo Ermolli 2004 (five rods to an arch, staggered planes)",
+      "notes": "frame B, taper 0.0442 m in diameter end to end; placed at 9.6 s, standing by 12.05 s"
+    },
+    {
+      "id": "J3",
+      "parent": "root",
+      "shape": "round pole, cross joist",
+      "dimensions_m": {
+        "x": 3.4,
+        "radius": 0.075,
+        "axis": [
+          0,
+          0,
+          1
+        ]
+      },
+      "position_m": [
+        0,
+        2.5288,
+        0
+      ],
+      "orientation_rad": [
+        0,
+        0,
+        0
+      ],
+      "material": {
+        "class": "chestnut pole in its bark",
+        "basis": "ours",
+        "source": "f. 71 recto draws round poles; the species is ours"
+      },
+      "certainty": "C",
+      "source": "f. 71 recto (poles across the span); the reading of Ceraldi and Russo Ermolli 2004 (cross joists)",
+      "notes": "taper 0 m in diameter end to end; placed at 10.6 s, standing by 13.05 s"
+    },
+    {
+      "id": "R4A",
+      "parent": "root",
+      "shape": "round pole, arch rod",
+      "dimensions_m": {
+        "x": 4.4129,
+        "radius": 0.075,
+        "axis": [
+          0.953,
+          -0.303,
+          0
+        ]
+      },
+      "position_m": [
+        1.8604,
+        2.0861,
+        -1.37
+      ],
+      "orientation_rad": [
+        0,
+        0,
+        -0.3078
+      ],
+      "material": {
+        "class": "chestnut pole, peeled with a drawknife",
+        "basis": "ours",
+        "source": "f. 71 recto draws round poles; the species is ours"
+      },
+      "certainty": "C",
+      "source": "Ceraldi and Russo Ermolli 2004 (five rods to an arch, staggered planes)",
+      "notes": "frame A, taper 0.0379 m in diameter end to end; placed at 11.6 s, standing by 14.05 s"
+    },
+    {
+      "id": "R4B",
+      "parent": "root",
+      "shape": "round pole, arch rod",
+      "dimensions_m": {
+        "x": 4.4129,
+        "radius": 0.075,
+        "axis": [
+          0.9528,
+          -0.3036,
+          0
+        ]
+      },
+      "position_m": [
+        1.8604,
+        2.0861,
+        1.37
+      ],
+      "orientation_rad": [
+        0,
+        0,
+        -0.3085
+      ],
+      "material": {
+        "class": "chestnut pole in its bark",
+        "basis": "ours",
+        "source": "f. 71 recto draws round poles; the species is ours"
+      },
+      "certainty": "C",
+      "source": "Ceraldi and Russo Ermolli 2004 (five rods to an arch, staggered planes)",
+      "notes": "frame B, taper 0.033 m in diameter end to end; placed at 12.6 s, standing by 15.05 s"
+    },
+    {
+      "id": "J4",
+      "parent": "root",
+      "shape": "round pole, cross joist",
+      "dimensions_m": {
+        "x": 3.4,
+        "radius": 0.075,
+        "axis": [
+          0,
+          0,
+          1
+        ]
+      },
+      "position_m": [
+        1.9064,
+        2.2288,
+        0
+      ],
+      "orientation_rad": [
+        0,
+        0,
+        0
+      ],
+      "material": {
+        "class": "chestnut pole, peeled with a drawknife",
+        "basis": "ours",
+        "source": "f. 71 recto draws round poles; the species is ours"
+      },
+      "certainty": "C",
+      "source": "f. 71 recto (poles across the span); the reading of Ceraldi and Russo Ermolli 2004 (cross joists)",
+      "notes": "taper 0 m in diameter end to end; placed at 13.6 s, standing by 16.05 s"
+    },
+    {
+      "id": "R5A",
+      "parent": "root",
+      "shape": "round pole, arch rod",
+      "dimensions_m": {
+        "x": 4.2729,
+        "radius": 0.075,
+        "axis": [
+          0.8144,
+          -0.5803,
+          0
+        ]
+      },
+      "position_m": [
+        3.4841,
+        1.277,
+        -0.83
+      ],
+      "orientation_rad": [
+        0,
+        0,
+        -0.6191
+      ],
+      "material": {
+        "class": "chestnut pole, peeled with a drawknife",
+        "basis": "ours",
+        "source": "f. 71 recto draws round poles; the species is ours"
+      },
+      "certainty": "C",
+      "source": "Ceraldi and Russo Ermolli 2004 (five rods to an arch, staggered planes)",
+      "notes": "frame A, taper 0.0445 m in diameter end to end; placed at 14.6 s, standing by 17.05 s"
+    },
+    {
+      "id": "R5B",
+      "parent": "root",
+      "shape": "round pole, arch rod",
+      "dimensions_m": {
+        "x": 4.2729,
+        "radius": 0.075,
+        "axis": [
+          0.8081,
+          -0.5891,
+          0
+        ]
+      },
+      "position_m": [
+        3.4841,
+        1.277,
+        0.83
+      ],
+      "orientation_rad": [
+        0,
+        0,
+        -0.6299
+      ],
+      "material": {
+        "class": "chestnut pole, peeled with a drawknife",
+        "basis": "ours",
+        "source": "f. 71 recto draws round poles; the species is ours"
+      },
+      "certainty": "C",
+      "source": "Ceraldi and Russo Ermolli 2004 (five rods to an arch, staggered planes)",
+      "notes": "frame B, taper 0.048 m in diameter end to end; placed at 15.6 s, standing by 18.05 s"
+    },
+    {
+      "id": "J5",
+      "parent": "root",
+      "shape": "round pole, cross joist",
+      "dimensions_m": {
+        "x": 3.4,
+        "radius": 0.075,
+        "axis": [
+          0,
+          0,
+          1
+        ]
+      },
+      "position_m": [
+        3.6286,
+        1.3578,
+        0
+      ],
+      "orientation_rad": [
+        0,
+        0,
+        0
+      ],
+      "material": {
+        "class": "chestnut pole in its bark",
+        "basis": "ours",
+        "source": "f. 71 recto draws round poles; the species is ours"
+      },
+      "certainty": "C",
+      "source": "f. 71 recto (poles across the span); the reading of Ceraldi and Russo Ermolli 2004 (cross joists)",
+      "notes": "taper 0 m in diameter end to end; placed at 16.6 s, standing by 19.05 s"
+    },
+    {
+      "id": "E6A",
+      "parent": "root",
+      "shape": "round pole, end rod",
+      "dimensions_m": {
+        "x": 2.3664,
+        "radius": 0.075,
+        "axis": [
+          0.8109,
+          -0.5851,
+          0
+        ]
+      },
+      "position_m": [
+        4.2521,
+        0.7123,
+        -1.1
+      ],
+      "orientation_rad": [
+        0,
+        0,
+        -0.625
+      ],
+      "material": {
+        "class": "chestnut pole, peeled with a drawknife",
+        "basis": "ours",
+        "source": "f. 71 recto draws round poles; the species is ours"
+      },
+      "certainty": "C",
+      "source": "Ceraldi and Russo Ermolli 2004 (one end rod; read here as one at each foot)",
+      "notes": "frame A, taper 0.0461 m in diameter end to end; placed at 17.6 s, standing by 20.05 s"
+    },
+    {
+      "id": "E6B",
+      "parent": "root",
+      "shape": "round pole, end rod",
+      "dimensions_m": {
+        "x": 2.3664,
+        "radius": 0.075,
+        "axis": [
+          0.8117,
+          -0.5841,
+          0
+        ]
+      },
+      "position_m": [
+        4.2614,
+        0.7252,
+        1.1
+      ],
+      "orientation_rad": [
+        0,
+        0,
+        -0.6238
+      ],
+      "material": {
+        "class": "chestnut pole, peeled with a drawknife",
+        "basis": "ours",
+        "source": "f. 71 recto draws round poles; the species is ours"
+      },
+      "certainty": "C",
+      "source": "Ceraldi and Russo Ermolli 2004 (one end rod; read here as one at each foot)",
+      "notes": "frame B, taper 0.0333 m in diameter end to end; placed at 18.6 s, standing by 21.05 s"
+    },
+    {
+      "id": "bank-seats",
+      "parent": "root",
+      "shape": "two logs bedded across the feet, three stakes each",
+      "dimensions_m": {
+        "x": 3.6,
+        "radius": 0.12
+      },
+      "position_m": [
+        0,
+        -0.04,
+        0
+      ],
+      "orientation_rad": [
+        0,
+        0,
+        0
+      ],
+      "material": {
+        "class": "chestnut log in its bark",
+        "basis": "ours",
+        "source": "f. 71 recto: the ends rest on the banks"
+      },
+      "certainty": "C",
+      "source": "f. 71 recto (footing)",
+      "notes": "set in so a rod resting on a seat stands as on a joist"
+    },
+    {
+      "id": "lashings",
+      "parent": "root",
+      "shape": "38 square lashings, 3 turns each",
+      "dimensions_m": {
+        "radius": 0.008
+      },
+      "position_m": [
+        0,
+        1.4,
+        0
+      ],
+      "orientation_rad": [
+        0,
+        0,
+        0
+      ],
+      "material": {
+        "class": "hemp rope, laid three strand, served with a tarred line where it bears",
+        "basis": "ours",
+        "source": "Ceraldi and Russo Ermolli 2004: rods connected by lashings, essential against sliding"
+      },
+      "certainty": "C",
+      "source": "the reading (C11, C16); a tied bundle on the same sheet",
+      "notes": "the second state takes them off: the weave alone"
+    }
+  ],
+  "joints": [
+    {
+      "id": "place-E0A",
+      "type": "prismatic",
+      "parent": "root",
+      "child": "E0A",
+      "axis": [
+        0.5841,
+        -0.8117,
+        0
+      ],
+      "pivot_m": [
+        -4.262,
+        0.7261,
+        -1.1
+      ],
+      "limits": [
+        0,
+        0.8
+      ],
+      "ratio": null,
+      "certainty": "C",
+      "source": "museum choice: the order and the paths of placing",
+      "notes": "lowered onto the joist it rests on"
+    },
+    {
+      "id": "place-E0B",
+      "type": "prismatic",
+      "parent": "root",
+      "child": "E0B",
+      "axis": [
+        0.5841,
+        -0.8117,
+        0
+      ],
+      "pivot_m": [
+        -4.2614,
+        0.7252,
+        1.1
+      ],
+      "limits": [
+        0,
+        0.8
+      ],
+      "ratio": null,
+      "certainty": "C",
+      "source": "museum choice: the order and the paths of placing",
+      "notes": "lowered onto the joist it rests on"
+    },
+    {
+      "id": "place-R1A",
+      "type": "prismatic",
+      "parent": "root",
+      "child": "R1A",
+      "axis": [
+        0.5805,
+        -0.8143,
+        0
+      ],
+      "pivot_m": [
+        -3.4841,
+        1.277,
+        -1.37
+      ],
+      "limits": [
+        0,
+        0.8
+      ],
+      "ratio": null,
+      "certainty": "C",
+      "source": "museum choice: the order and the paths of placing",
+      "notes": "lowered onto the joist it rests on"
+    },
+    {
+      "id": "place-R1B",
+      "type": "prismatic",
+      "parent": "root",
+      "child": "R1B",
+      "axis": [
+        0.5876,
+        -0.8092,
+        0
+      ],
+      "pivot_m": [
+        -3.4841,
+        1.277,
+        1.37
+      ],
+      "limits": [
+        0,
+        0.8
+      ],
+      "ratio": null,
+      "certainty": "C",
+      "source": "museum choice: the order and the paths of placing",
+      "notes": "lowered onto the joist it rests on"
+    },
+    {
+      "id": "place-J1",
+      "type": "prismatic",
+      "parent": "root",
+      "child": "J1",
+      "axis": [
+        0,
+        0,
+        -1
+      ],
+      "pivot_m": [
+        -3.6286,
+        1.3578,
+        0
+      ],
+      "limits": [
+        0,
+        3.3
+      ],
+      "ratio": null,
+      "certainty": "C",
+      "source": "museum choice: the order and the paths of placing",
+      "notes": "threaded between the rods along its own axis"
+    },
+    {
+      "id": "place-R2A",
+      "type": "prismatic",
+      "parent": "root",
+      "child": "R2A",
+      "axis": [
+        0.3013,
+        -0.9535,
+        0
+      ],
+      "pivot_m": [
+        -1.8604,
+        2.0861,
+        -0.83
+      ],
+      "limits": [
+        0,
+        0.8
+      ],
+      "ratio": null,
+      "certainty": "C",
+      "source": "museum choice: the order and the paths of placing",
+      "notes": "lowered onto the joist it rests on"
+    },
+    {
+      "id": "place-R2B",
+      "type": "prismatic",
+      "parent": "root",
+      "child": "R2B",
+      "axis": [
+        0.3116,
+        -0.9502,
+        0
+      ],
+      "pivot_m": [
+        -1.8604,
+        2.0861,
+        0.83
+      ],
+      "limits": [
+        0,
+        0.8
+      ],
+      "ratio": null,
+      "certainty": "C",
+      "source": "museum choice: the order and the paths of placing",
+      "notes": "lowered onto the joist it rests on"
+    },
+    {
+      "id": "place-J2",
+      "type": "prismatic",
+      "parent": "root",
+      "child": "J2",
+      "axis": [
+        0,
+        0,
+        -1
+      ],
+      "pivot_m": [
+        -1.9064,
+        2.2288,
+        0
+      ],
+      "limits": [
+        0,
+        3.3
+      ],
+      "ratio": null,
+      "certainty": "C",
+      "source": "museum choice: the order and the paths of placing",
+      "notes": "threaded between the rods along its own axis"
+    },
+    {
+      "id": "place-R3A",
+      "type": "prismatic",
+      "parent": "root",
+      "child": "R3A",
+      "axis": [
+        0.0038,
+        -1,
+        0
+      ],
+      "pivot_m": [
+        0,
+        2.3788,
+        -1.1
+      ],
+      "limits": [
+        0,
+        0.8
+      ],
+      "ratio": null,
+      "certainty": "C",
+      "source": "museum choice: the order and the paths of placing",
+      "notes": "lowered onto the joist it rests on"
+    },
+    {
+      "id": "place-R3B",
+      "type": "prismatic",
+      "parent": "root",
+      "child": "R3B",
+      "axis": [
+        0.005,
+        -1,
+        0
+      ],
+      "pivot_m": [
+        0,
+        2.3788,
+        1.1
+      ],
+      "limits": [
+        0,
+        0.8
+      ],
+      "ratio": null,
+      "certainty": "C",
+      "source": "museum choice: the order and the paths of placing",
+      "notes": "lowered onto the joist it rests on"
+    },
+    {
+      "id": "place-J3",
+      "type": "prismatic",
+      "parent": "root",
+      "child": "J3",
+      "axis": [
+        0,
+        0,
+        -1
+      ],
+      "pivot_m": [
+        0,
+        2.5288,
+        0
+      ],
+      "limits": [
+        0,
+        3.3
+      ],
+      "ratio": null,
+      "certainty": "C",
+      "source": "museum choice: the order and the paths of placing",
+      "notes": "threaded between the rods along its own axis"
+    },
+    {
+      "id": "place-R4A",
+      "type": "prismatic",
+      "parent": "root",
+      "child": "R4A",
+      "axis": [
+        -0.303,
+        -0.953,
+        0
+      ],
+      "pivot_m": [
+        1.8604,
+        2.0861,
+        -1.37
+      ],
+      "limits": [
+        0,
+        0.8
+      ],
+      "ratio": null,
+      "certainty": "C",
+      "source": "museum choice: the order and the paths of placing",
+      "notes": "lowered onto the joist it rests on"
+    },
+    {
+      "id": "place-R4B",
+      "type": "prismatic",
+      "parent": "root",
+      "child": "R4B",
+      "axis": [
+        -0.3036,
+        -0.9528,
+        0
+      ],
+      "pivot_m": [
+        1.8604,
+        2.0861,
+        1.37
+      ],
+      "limits": [
+        0,
+        0.8
+      ],
+      "ratio": null,
+      "certainty": "C",
+      "source": "museum choice: the order and the paths of placing",
+      "notes": "lowered onto the joist it rests on"
+    },
+    {
+      "id": "place-J4",
+      "type": "prismatic",
+      "parent": "root",
+      "child": "J4",
+      "axis": [
+        0,
+        0,
+        -1
+      ],
+      "pivot_m": [
+        1.9064,
+        2.2288,
+        0
+      ],
+      "limits": [
+        0,
+        3.3
+      ],
+      "ratio": null,
+      "certainty": "C",
+      "source": "museum choice: the order and the paths of placing",
+      "notes": "threaded between the rods along its own axis"
+    },
+    {
+      "id": "place-R5A",
+      "type": "prismatic",
+      "parent": "root",
+      "child": "R5A",
+      "axis": [
+        -0.5803,
+        -0.8144,
+        0
+      ],
+      "pivot_m": [
+        3.4841,
+        1.277,
+        -0.83
+      ],
+      "limits": [
+        0,
+        0.8
+      ],
+      "ratio": null,
+      "certainty": "C",
+      "source": "museum choice: the order and the paths of placing",
+      "notes": "lowered onto the joist it rests on"
+    },
+    {
+      "id": "place-R5B",
+      "type": "prismatic",
+      "parent": "root",
+      "child": "R5B",
+      "axis": [
+        -0.5891,
+        -0.8081,
+        0
+      ],
+      "pivot_m": [
+        3.4841,
+        1.277,
+        0.83
+      ],
+      "limits": [
+        0,
+        0.8
+      ],
+      "ratio": null,
+      "certainty": "C",
+      "source": "museum choice: the order and the paths of placing",
+      "notes": "lowered onto the joist it rests on"
+    },
+    {
+      "id": "place-J5",
+      "type": "prismatic",
+      "parent": "root",
+      "child": "J5",
+      "axis": [
+        0,
+        0,
+        -1
+      ],
+      "pivot_m": [
+        3.6286,
+        1.3578,
+        0
+      ],
+      "limits": [
+        0,
+        3.3
+      ],
+      "ratio": null,
+      "certainty": "C",
+      "source": "museum choice: the order and the paths of placing",
+      "notes": "threaded between the rods along its own axis"
+    },
+    {
+      "id": "place-E6A",
+      "type": "prismatic",
+      "parent": "root",
+      "child": "E6A",
+      "axis": [
+        -0.5851,
+        -0.8109,
+        0
+      ],
+      "pivot_m": [
+        4.2521,
+        0.7123,
+        -1.1
+      ],
+      "limits": [
+        0,
+        0.8
+      ],
+      "ratio": null,
+      "certainty": "C",
+      "source": "museum choice: the order and the paths of placing",
+      "notes": "lowered onto the joist it rests on"
+    },
+    {
+      "id": "place-E6B",
+      "type": "prismatic",
+      "parent": "root",
+      "child": "E6B",
+      "axis": [
+        -0.5841,
+        -0.8117,
+        0
+      ],
+      "pivot_m": [
+        4.2614,
+        0.7252,
+        1.1
+      ],
+      "limits": [
+        0,
+        0.8
+      ],
+      "ratio": null,
+      "certainty": "C",
+      "source": "museum choice: the order and the paths of placing",
+      "notes": "lowered onto the joist it rests on"
+    }
+  ],
+  "motion": {
+    "period_s": 40,
+    "loop": true,
+    "phases": [
+      {
+        "name": "The poles lie in the pile on the near bank",
+        "start_s": 0,
+        "duration_s": 0.6,
+        "joint_values": {},
+        "interpolation": "hold"
+      },
+      {
+        "name": "Set one by one from the near bank to the far one; each lashing winds on as its crossing closes",
+        "start_s": 0.6,
+        "duration_s": 21.6,
+        "joint_values": {
+          "place-E0A": "to 0 from 0.6 s",
+          "place-E0B": "to 0 from 1.6 s",
+          "place-R1A": "to 0 from 2.6 s",
+          "place-R1B": "to 0 from 3.6 s",
+          "place-J1": "to 0 from 4.6 s",
+          "place-R2A": "to 0 from 5.6 s",
+          "place-R2B": "to 0 from 6.6 s",
+          "place-J2": "to 0 from 7.6 s",
+          "place-R3A": "to 0 from 8.6 s",
+          "place-R3B": "to 0 from 9.6 s",
+          "place-J3": "to 0 from 10.6 s",
+          "place-R4A": "to 0 from 11.6 s",
+          "place-R4B": "to 0 from 12.6 s",
+          "place-J4": "to 0 from 13.6 s",
+          "place-R5A": "to 0 from 14.6 s",
+          "place-R5B": "to 0 from 15.6 s",
+          "place-J5": "to 0 from 16.6 s",
+          "place-E6A": "to 0 from 17.6 s",
+          "place-E6B": "to 0 from 18.6 s"
+        },
+        "interpolation": "smootherstep"
+      },
+      {
+        "name": "The bridge stands whole",
+        "start_s": 22.2,
+        "duration_s": 8.8,
+        "joint_values": {},
+        "interpolation": "hold"
+      },
+      {
+        "name": "Back to the pile in the reverse order, 2.5 times as fast",
+        "start_s": 31,
+        "duration_s": 8.88,
+        "joint_values": {},
+        "interpolation": "the same paths reversed"
+      },
+      {
+        "name": "The pile again",
+        "start_s": 39.88,
+        "duration_s": 0.12,
+        "joint_values": {},
+        "interpolation": "hold"
+      }
+    ],
+    "visitor_12s": "From the pile on the near bank the first poles are set: an end rod and the first rod of each frame, the first joist threaded between them, the next rods resting on it."
+  },
+  "drive": {
+    "type": "hands, not shown: the order of building",
+    "input_joint": "place-E0A",
+    "input_rate": {
+      "value": 1,
+      "unit": "poles per second",
+      "certainty": "C",
+      "source": "museum choice",
+      "note": "Slow enough to follow each pole to its place."
+    },
+    "justification": "The bridge has no moving part in use; the only motion is its building, which no sheet of his draws. The order (near bank to far, each joist threaded between the rod over it and the rod under it) is ours."
+  },
+  "label_en": "Our reconstruction from his sheet in the Ambrosiana, sizes ours. The woven arch is older than him.",
+  "label_de": "Unsere Rekonstruktion nach seinem Blatt in der Ambrosiana, die Maße stammen von uns. Der geflochtene Bogen ist älter als er.",
+  "animation_notes": [
+    "One cycle in 40 s, looping: the pile, the building (0.6 to 22.2 s), the whole bridge, then back to the pile.",
+    "A rod comes over the work and is lowered onto the joist it rests on; a joist is drawn from the pile along its length and threaded between the rods.",
+    "Each lashing winds on, turn by turn, once both its poles stand.",
+    "The second state shows the same poles with the lashings off."
+  ],
+  "folio": [
+    {
+      "codex": "Codex Atlanticus",
+      "folio": "71 recto",
+      "holder": "Veneranda Biblioteca Ambrosiana, Milan",
+      "catalogue_reference": "CA f. 71r",
+      "catalogue_url": "https://www.ambrosiana.it/en/discover/masterpieces/codex-atlanticus/"
+    }
+  ],
+  "research": {
+    "physics": {
+      "verdict_en": "A woven arch carries by each pole bearing on the next. In the one engineering reading of this sketch the lashings stop the cross joists sliding along the sloping rods.",
+      "verdict_de": "Ein geflochtener Bogen trägt, weil jede Stange auf der nächsten liegt. In der einen ingenieurwissenschaftlichen Lesart dieser Skizze verhindern die Bünde, dass die Querstangen an den schrägen Stangen abgleiten."
+    }
+  },
+  "record": {
+    "title": {
+      "en": "Bridge of poles",
+      "de": "Brücke aus Stangen"
+    },
+    "label": {
+      "en": "Our reconstruction from his sheet in the Ambrosiana, sizes ours. The woven arch is older than him.",
+      "de": "Unsere Rekonstruktion nach seinem Blatt in der Ambrosiana, die Maße stammen von uns. Der geflochtene Bogen ist älter als er."
+    },
+    "arithmetic": {
+      "en": "His sketch gives no size. Ours spans 10 m with poles 0.15 m thick, and its crown stands 2.5 m over its feet: once the span, the number of parts and the poles' thickness are fixed, the rise follows.",
+      "de": "Seine Skizze nennt keine Maße. Unsere spannt 10 m mit Stangen von 0,15 m Dicke, ihr Scheitel steht 2,5 m über den Füßen: Sind Spannweite, Zahl der Teile und Dicke der Stangen festgelegt, folgt die Höhe."
+    },
+    "sections": {
+      "en": [
+        {
+          "title": "The sheet",
+          "body": "A quick pen sketch in the lower half of folio 71 recto of the Codex Atlanticus, in the Biblioteca Ambrosiana in Milan, drawn in the late 1480s or by 1495 (the sources differ). Seen from above at an angle, an arched bridge of many straight poles crosses water, poles along the span and across it, crossing at the crown. There are no people, no size and no words beside it."
+        },
+        {
+          "title": "How it holds",
+          "body": "One engineering study reads the sketch as two arches of straight rods on staggered planes, joined by cross poles and lashed where they meet. Each rod rests on a cross pole at each end and passes under the next one at its middle, so each pole holds the next. Built today, it can stand without rope or nails."
+        },
+        {
+          "title": "Older than him",
+          "body": "A timber arch without piers, woven the same way, stands at the centre of a 12th-century Song painting, Along the River During the Qingming Festival. A 13th-century French sketchbook, Villard de Honnecourt's, lays timbers too short for a span each on the next. The idea did not start with him."
+        },
+        {
+          "title": "What is ours",
+          "body": "Every size, the number of poles, the form of the lashings, the bank seats and the order of building are ours. We found no record that one was built in his lifetime."
+        },
+        {
+          "title": "Sources",
+          "body": "1. Veneranda Biblioteca Ambrosiana, [Codex Atlanticus, f. 71 recto](https://www.ambrosiana.it/en/discover/masterpieces/codex-atlanticus/).\n2. Ceraldi and Russo Ermolli, [Timber arch bridges: a design by Leonardo](https://caminstech.upc.edu/sites/default/files/Timber%20Arch%20Bridges%20A%20Design%20by%20Leonardo.pdf), ARCH'04, 2004.\n3. Columbia University, Asia for Educators, [the rainbow bridge](https://afe.easia.columbia.edu/songdynasty-module/cities-bridge.html).\n4. Robert Willis, [Facsimile of the sketch-book of Wilars de Honecort](https://archive.org/details/facsimileofsketc00vill), 1859, plate XLIV."
+        }
+      ],
+      "de": [
+        {
+          "title": "Das Blatt",
+          "body": "Eine schnelle Federskizze in der unteren Hälfte von Blatt 71 recto des Codex Atlanticus, in der Biblioteca Ambrosiana in Mailand, gezeichnet in den späten 1480er Jahren oder bis 1495 (die Quellen weichen ab). Schräg von oben gesehen führt eine Bogenbrücke aus vielen geraden Stangen über Wasser, Stangen längs und quer, die sich am Scheitel kreuzen. Keine Menschen, keine Maße und keine Worte stehen daneben."
+        },
+        {
+          "title": "Wie sie hält",
+          "body": "Eine ingenieurwissenschaftliche Studie liest die Skizze als zwei Bögen aus geraden Stangen auf versetzten Ebenen, quer verbunden und an den Kreuzungen gebunden. Jede Stange liegt mit beiden Enden auf einer Querstange und läuft in ihrer Mitte unter der nächsten hindurch, so hält eine die andere. Heute nachgebaut, kann sie ohne Seil und Nagel stehen."
+        },
+        {
+          "title": "Älter als er",
+          "body": "Ein Holzbogen ohne Pfeiler, auf dieselbe Weise geflochten, steht in der Mitte eines Song-Gemäldes aus dem 12. Jahrhundert, Am Fluss beim Qingming-Fest. Ein französisches Skizzenbuch des 13. Jahrhunderts, das des Villard de Honnecourt, legt Balken, die für eine Spannweite zu kurz sind, jeden auf den nächsten. Die Idee beginnt nicht mit ihm."
+        },
+        {
+          "title": "Was von uns ist",
+          "body": "Alle Maße, die Zahl der Stangen, die Form der Bünde, die Uferschwellen und die Reihenfolge des Aufbaus sind unsere. Wir haben keinen Beleg gefunden, dass zu seinen Lebzeiten eine gebaut wurde."
+        },
+        {
+          "title": "Quellen",
+          "body": "1. Veneranda Biblioteca Ambrosiana, [Codex Atlanticus, Blatt 71 recto](https://www.ambrosiana.it/en/discover/masterpieces/codex-atlanticus/).\n2. Ceraldi und Russo Ermolli, [Timber arch bridges: a design by Leonardo](https://caminstech.upc.edu/sites/default/files/Timber%20Arch%20Bridges%20A%20Design%20by%20Leonardo.pdf), ARCH'04, 2004.\n3. Columbia University, Asia for Educators, [die Regenbogenbrücke](https://afe.easia.columbia.edu/songdynasty-module/cities-bridge.html).\n4. Robert Willis, [Facsimile of the sketch-book of Wilars de Honecort](https://archive.org/details/facsimileofsketc00vill), 1859, Tafel XLIV."
+        }
+      ]
+    }
+  }
+}

@@ -4,8 +4,9 @@
 import type { Dossier } from './types'
 import type { EvidenceRecord, Language } from './catalog'
 import flyingJson from './data/flying-machine.json?raw'
+import bridgeJson from './data/bridge-of-poles.json?raw'
 
-export const SHOWCASE_SLUGS = ['flying-machine'] as const
+export const SHOWCASE_SLUGS = ['flying-machine', 'bridge-of-poles'] as const
 export type ShowcaseSlug = (typeof SHOWCASE_SLUGS)[number]
 export function isShowcaseSlug(value: string): value is ShowcaseSlug {
   return (SHOWCASE_SLUGS as readonly string[]).includes(value)
@@ -39,4 +40,5 @@ function recordOf(slug: ShowcaseSlug, raw: string): ShowcaseRecord {
 
 export const showcaseCatalog: Record<ShowcaseSlug, ShowcaseRecord> = {
   'flying-machine': recordOf('flying-machine', flyingJson),
+  'bridge-of-poles': recordOf('bridge-of-poles', bridgeJson),
 }

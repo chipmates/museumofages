@@ -18,6 +18,7 @@ import { build as camera_obscura } from './camera-obscura'
 import { build as mechanical_lion } from './mechanical-lion'
 import { build as flying_machine } from './flying-machine'
 import { build as armoured_car } from './armoured-car'
+import { build as bridge_of_poles } from './bridge'
 import type { ShowcaseSlug } from './showcase'
 
 export * from './catalog'
@@ -51,6 +52,7 @@ export function buildMachine(slug: MachineSlug, stack: Stack): ReadyMachineBuild
 /** The showcase pieces, built for the bench alone until they have a place. */
 export const showcaseBuilders: Record<ShowcaseSlug, (stack: Stack) => ReadyMachineBuild> = {
   'flying-machine': flying_machine,
+  'bridge-of-poles': bridge_of_poles,
 }
 export function buildShowcase(slug: ShowcaseSlug, stack: Stack): ReadyMachineBuild {
   return registerMachineBuild(showcaseBuilders[slug](stack))
