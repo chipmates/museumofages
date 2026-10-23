@@ -42,6 +42,8 @@ export interface CloserPayload extends VitrinePayload {
 
 /** the tiles a closer look holds: the worst view of every depth plus a third */
 const CAPS = { phone: 80, canvas: 160, webgl: 200 } as const
+/** frames a folding card or drawer takes to hand the glass back to the viewer */
+const FOLD_FRAMES = 6
 
 export function createCloserPayload(options: {
   title: string
@@ -151,8 +153,12 @@ export function createCloserPayload(options: {
     state: () => standing().id,
     choose,
     go(place) {
-      plate.go(place, place.turn ?? 0)
+      // THE CARD FOLDS FIRST and the place is framed in the glass it leaves:
+      // a desk's drawer gives the stage back over a few frames
       host?.raise?.(false)
+      let frames = FOLD_FRAMES
+      const step = (): void => { if (--frames > 0) requestAnimationFrame(step); else if (host) plate.go(place, place.turn ?? 0) }
+      requestAnimationFrame(step)
     },
     aspect: () => plate.aspect?.() ?? null,
     mount(next) {

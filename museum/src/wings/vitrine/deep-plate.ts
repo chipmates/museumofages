@@ -638,6 +638,8 @@ export function createDeepPlatePayload(options: {
     // view the visitor made stays. Sideways the work steps aside when its
     // words open, and stands whole there too.
     made.addHandler('resize', () => {
+      // a glass that grew under a view at the ceiling would show the source larger than itself
+      if (options.depth && seated) queueMicrotask(() => { if (magnification() > 1.0005) made.viewport.applyConstraints(true) })
       if (!seated || framed || !homeZoom) return
       if (Math.abs(made.viewport.getZoom(false) - homeZoom) > homeZoom * .02) return
       queueMicrotask(() => fitHome(true))
@@ -801,13 +803,16 @@ export function createDeepPlatePayload(options: {
       width = next.source.width
       height = next.source.height
       host?.describe(next.description ?? next.title)
-      const opening = next, made = viewer
+      const opening = next, made = viewer, asked = performance.now()
+      const mark = (what: string): void => { if (root) root.dataset['swap'] = `${root.dataset['swap'] && what !== 'asked' ? `${root.dataset['swap']} ` : ''}${what}:${Math.round(performance.now() - asked)}` }
+      mark('asked')
       void sourceOf(next.source).then(source => {
         if (!live || viewer !== made || shown !== opening) return
         made.addTiledImage({ tileSource: source as never, x: 0, y: 0, width: 1, opacity: 0, index: made.world.getItemCount(),
           success: (event: { item: import('openseadragon').TiledImage }) => {
             const item = event.item
             states.set(item, state)
+            mark('added')
             if (!live || viewer !== made || shown !== opening) { made.world.removeItem(item); return }
             clearTimeout(swapping)
             let faded = false
@@ -815,12 +820,14 @@ export function createDeepPlatePayload(options: {
               if (faded || !live || viewer !== made) return
               faded = true
               clearTimeout(swapping)
+              mark(item.getFullyLoaded() ? 'fade-loaded' : 'fade-waited')
               const others = (): import('openseadragon').TiledImage[] => {
                 const out: import('openseadragon').TiledImage[] = []
                 for (let i = 0; i < made.world.getItemCount(); i++) { const other = made.world.getItemAt(i); if (other !== item) out.push(other) }
                 return out
               }
               const done = (): void => {
+                mark('done')
                 item.setOpacity(1)
                 // what the state before held goes with it: only the standing state's tiles are kept
                 for (const other of others()) made.world.removeItem(other)
