@@ -343,28 +343,45 @@ const readingLens = (size: number, reach: number): number =>
  * inclinometer's own axis, and the step from one piece to the other is a
  * step sideways along the table. */
 const TABLE_READING_M = 1.85
+/** THE PHONE READS A PIECE ABOVE THE WORDS, as every close look: its foot at
+ * half the height and its middle at a third (RULES 4, rules 1 and 2), by the
+ * lens and the shift together, the eye ten degrees down. The foot's front
+ * edge stands half the piece's depth nearer than its crown. */
+const PIECE_PHONE = { foot: .51, middle: .34, pitch: 10 }
 function tablePiecePose(slug: HallTablePiece, narrow: boolean): ApproachPose {
   const place = HALL_TABLE_PIECES[slug], { x, y, z } = dossiers[slug].scale_m
   const eye = [place.east + HALL_TABLE.across[0] * TABLE_READING_M, place.north + HALL_TABLE.across[1] * TABLE_READING_M] as const
-  const top = HALL_TABLE.floor + HALL_TABLE.top
-  return pose([eye[0], eye[1], HALL_TABLE.floor + 1.62], [place.east, place.north, top + y / 2],
+  const top = HALL_TABLE.floor + HALL_TABLE.top, eyeY = HALL_TABLE.floor + 1.62
+  if (narrow) {
+    const t = PIECE_PHONE.pitch * Math.PI / 180
+    const above = (height: number, reach: number): number => Math.tan(Math.atan2(height - eyeY, reach) + t)
+    const foot = above(top, TABLE_READING_M - Math.max(x, z) / 2), crown = above(top + y, TABLE_READING_M)
+    const half = (crown - foot) / (2 * 2 * (PIECE_PHONE.foot - PIECE_PHONE.middle))
+    const shift = 2 * (PIECE_PHONE.foot - .5 + foot / (2 * half))
+    const at = world(place.east, place.north, eyeY - TABLE_READING_M * Math.tan(t))
+    return { eye: world(eye[0], eye[1], eyeY), at, fov: 2 * Math.atan(half) * 180 / Math.PI, shift }
+  }
+  return pose([eye[0], eye[1], eyeY], [place.east, place.north, top + y / 2],
     readingLens(Math.max(y, x, z), TABLE_READING_M), narrow)
 }
 
-/** THE LION IS READ FROM ITS LEFT SHOULDER, where the open flank and the
- * chest show together, three and a quarter metres off on a straight leg in
- * from the hall's door that keeps to the doorway's middle. The phone keeps
- * the whole lion above the words: a 40 degree field across, aimed a little
- * toward the head, six degrees down, its shift lens lifting the body's
- * middle to a third of the height.
+/** THE LION'S CLOSE LOOK. The desktop walks straight in from the hall's door
+ * along the doorway's axis, the lion's chest and open flank at a
+ * three-quarter turn. The phone, whose field across stays at 40 degrees,
+ * holds the whole lion only from three metres or more: in front of it the
+ * room's south-east corner leaves no such eye, so the phone walks round to
+ * its left and reads its open flank from a little behind the shoulder,
+ * three degrees down, its shift lens lifting the body's middle to about a
+ * third of the height.
  * In the lion's own frame, +z its nose and +x its left. */
-const LION_EYE = { x: 2.7, z: 1.8 }
-const LION_PHONE = { fov: 76.45, pitch: 6, shift: -.58, aimZ: .25 }
+const LION_EYE = { desktop: { x: 2.278, z: .868 }, phone: { x: 3.2, z: -1.2 } }
+const LION_PHONE = { fov: 76.45, pitch: 3, shift: -.589, aimZ: -.05 }
 function lionPose(narrow: boolean): ApproachPose {
   const b = HALL_LION.bearing * Math.PI / 180, cos = Math.cos(b), sin = Math.sin(b)
   const on = (x: number, z: number): [number, number] => [HALL_LION.east + x * cos + z * sin, HALL_LION.north + x * sin - z * cos]
   const { min, max } = HALL_LION_REST
-  const [eyeEast, eyeNorth] = on(LION_EYE.x, LION_EYE.z)
+  const eye = LION_EYE[narrow ? 'phone' : 'desktop']
+  const [eyeEast, eyeNorth] = on(eye.x, eye.z)
   const [atEast, atNorth] = on((min[0] + max[0]) / 2, (min[2] + max[2]) / 2)
   const eyeY = HALL_LION.floor + 1.65
   if (narrow) {
@@ -373,7 +390,7 @@ function lionPose(narrow: boolean): ApproachPose {
     return { eye: world(eyeEast, eyeNorth, eyeY), at: world(aimEast, aimNorth, atY), fov: LION_PHONE.fov, shift: LION_PHONE.shift }
   }
   const size = Math.max(max[0] - min[0], max[1] - min[1], max[2] - min[2])
-  const lens = 2 * Math.atan(1.2 * size / 2 / Math.hypot(LION_EYE.x, LION_EYE.z)) * 180 / Math.PI
+  const lens = 2 * Math.atan(1.2 * size / 2 / Math.hypot(eye.x, eye.z)) * 180 / Math.PI
   return pose([eyeEast, eyeNorth, eyeY], [atEast, atNorth, HALL_LION.floor + max[1] / 2], lens, false)
 }
 
