@@ -46,6 +46,10 @@ export interface HelicoidSpec {
   /** share of a doubled layer's stand-off kept at a stitched column (0.6
    * when absent); 1 lays the stitches flat, so no welt tilts toward a low sun */
   welt?: number
+  /** 'across': each gore's cloths run across it, parallel to the chord at
+   * its rim, so the seams cross the gore and none runs in to the mast; the
+   * cloths lie side by side out from the mast otherwise */
+  cloths?: 'across'
   /** the radial seams' doubled layer on the underside only: on the upper face
    * a 22 mm strip seen from metres away is a part of a pixel, and it glints */
   seams_under?: boolean
@@ -156,7 +160,8 @@ export function sailGeometry(h: HelicoidSpec, tier: TierName): BufferGeometry {
   }
 
   /** how many cloths a gore is sewn from: none wider than a bolt at the rim */
-  const panelsOf = (g: number): number => Math.max(1, Math.ceil(S.rim((g + .5) * gore) * gore / h.panel_m))
+  const across = h.cloths === 'across' || Boolean(probe()['across'])
+  const panelsOf = (g: number): number => across ? 1 : Math.max(1, Math.ceil(S.rim((g + .5) * gore) * gore / h.panel_m))
 
   // THE CLOTH, single, from the mast to the rim wire, one grid to each cloth
   // so a cloth's tone stops at its seam.
@@ -253,6 +258,21 @@ export function sailGeometry(h: HelicoidSpec, tier: TierName): BufferGeometry {
         const t = Math.min(S.span, Math.max(0, t0 + ((b - .5) * h.seam_m) / r))
         return { s: sAt(r, t), t }
       }, seamRows, [0, .005 / h.seam_m, 1 - .005 / h.seam_m, 1], [true, false, false, true], from(t0), h.seams_under ? [-1] : [1, -1])
+    }
+  }
+
+  // THE SEAMS ACROSS: in each gore, straight seams parallel to its rim's
+  // chord, a bolt's width apart from the rim inward, from cane to cane
+  if (across) for (let g = 0; g < gores; g++) {
+    const mid = (g + .5) * gore
+    for (let k = 1; ; k++) {
+      const d0 = S.rim(mid) - k * h.panel_m
+      if (d0 < h.crown_m + h.panel_m / 2) break
+      ribbon((a, b) => {
+        const t = (g + a) * gore
+        const r = Math.min(S.rim(t) - h.hem_m, (d0 + (b - .5) * h.seam_m) / Math.cos(t - mid))
+        return { s: sAt(r, t), t }
+      }, 24, [0, .005 / h.seam_m, 1 - .005 / h.seam_m, 1], [true, false, false, true], (r, t) => r * Math.sin(t - mid), h.seams_under ? [-1] : [1, -1])
     }
   }
 
