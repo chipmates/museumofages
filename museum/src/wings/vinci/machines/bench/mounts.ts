@@ -9,21 +9,21 @@ export interface MountBox {
 
 export function mountBoxes(slug: string): MountBox[] {
   if (slug === 'parachute') {
-    // The frame centre is Y=3.300 with radius .018: underside Y=3.282.
-    // Forty-millimetre uprights sit .015 outward in X and Z, with aligned
-    // feet. The top cap seats two .005 m runs of the wooden beam bottoms.
-    // Minimum distance from a suspension centreline to an upright is
-    // .012903691 m; subtracting the rope's full .007 radius leaves
-    // .005903691 m clearance. No support passes through a suspension rope.
+    // Each 40 mm upright stands under its Z pole 0.25 m in from the corner,
+    // its cap against the 48 mm pole's underside (Y=3.276): the corner's
+    // lashing and the cord's eye on the X pole stand clear of it, and the
+    // hem's lacing ends 0.35 m from the corner. Its nearest suspension
+    // passes about 0.24 m away.
     const frameCorner = 3.5016
-    const outward = 0.015
+    const underside = 3.3 - 0.024
+    const inset = 0.25
     const positions: [number, number][] = [[-1, -1], [1, -1], [1, 1], [-1, 1]]
     return positions.flatMap(([sx, sz]): MountBox[] => {
-      const x = sx * (frameCorner + outward)
-      const z = sz * (frameCorner + outward)
+      const x = sx * frameCorner
+      const z = sz * (frameCorner - inset)
       return [
         {size: [0.160, 0.025, 0.160], centre: [x, 0.0125, z]},
-        {size: [0.040, 3.257, 0.040], centre: [x, 1.6535, z]},
+        {size: [0.040, underside - 0.025, 0.040], centre: [x, (underside + 0.025) / 2, z]},
       ]
     })
   }
