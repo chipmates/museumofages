@@ -544,10 +544,10 @@ export function createBench(stack: Stack, onExit: () => void) {
    * (at 3 cm the texel's depth slope made acne that read as moire) and a wider
    * filter, or the upper whorl's edge on the lower steps. */
   const OWN_LIGHT: Partial<Record<MachineSlug, { lux: number; ambient: number; ground: string; lift?: number; wide?: boolean; lamps?: { closed?: BenchLamp[]; section?: BenchLamp[] }; fill?: { closed?: number; section?: number }; sectionLux?: number; contact?: number }>> = {
-    'aerial-screw': { lux: 210, ambient: 1.0, ground: '#5e5546', lift: .15, wide: true, contact: .55, lamps: {
+    'aerial-screw': { lux: 210, ambient: 1.0, ground: '#5e5546', lift: .15, wide: true, contact: .9, lamps: {
       // the grey figure stands in the canopy's shade with the low sun behind it: a lamp from the visitor's side lights
       // the figure alone (the screw's own surfaces refuse it), and its contact shade holds it to the floor
-      closed: [{ at: [9, 4.5, 13], aim: [2.35, .95, .9], lux: 330, kelvin: 4300, angle: .25, penumbra: .9, shadow: false }],
+      closed: [{ at: [9, 4.5, 13], aim: [2.35, .95, .9], lux: 330, kelvin: 5200, angle: .25, penumbra: .9, shadow: false }],
     } },
   };
   let lamps: SpotLight[] = [], lampProbe: BenchLamp[] | null | undefined, fillProbe: number | undefined, luxProbe: number | undefined;

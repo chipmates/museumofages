@@ -318,7 +318,7 @@ function exactMesh(part: PartSpec, helical = false, tier: TierName = 'standard')
  * A colour and not a shader branch, so a baked or exported surface keeps it. */
 export const END_GRAIN_TONE = .42
 /** The classes whose timbers show their end grain. */
-const endGrainClass = (material: string): boolean => /planed oak|hewn oak|oak peg/.test(material)
+const endGrainClass = (material: string): boolean => /planed oak|hewn oak|oak peg|planed ash/.test(material)
 const toneAttribute = (tones: number[]): Float32BufferAttribute =>
   new Float32BufferAttribute(Float32Array.from(tones.flatMap(t => [t, t, t])), 3)
 
@@ -501,7 +501,7 @@ export function geometryForPart(part: PartSpec, tier: TierName = 'standard', slu
   geometry.clearGroups()
   // Each oak piece carries its own tone in a vertex colour, white until the
   // part's own phase is laid on it, so every piece of a welded draw has one.
-  if ((endGrainClass(part.material.class) || /oak grip/.test(part.material.class)) && !geometry.getAttribute('color')) {
+  if ((endGrainClass(part.material.class) || /oak grip|ash grip/.test(part.material.class)) && !geometry.getAttribute('color')) {
     geometry.setAttribute('color', toneAttribute(new Array<number>(geometry.getAttribute('position').count).fill(1)))
   }
   geometry.computeBoundingBox()
