@@ -684,6 +684,11 @@ body.forge .desk-cap, body.forge .desk-on { transition: none !important; }
 /* a hand on it lights the word as the door's gold links do; the line stays gold and thickens */
 #wing[data-desk~='stage'] .desk-foot .desk-ov-open:is(:hover, :focus-visible) { color: var(--na-starlight); }
 #wing[data-desk~='stage'] .desk-foot .desk-ov-open:is(:hover, :focus-visible)::after { background: var(--na-gold); }
+/* a stop's closer look is the thing to press next in the same way: the count's gold, its place in the row */
+#wing[data-desk~='stage'] .desk-foot .desk-closer { color: var(--na-gold); }
+#wing[data-desk~='stage'] .desk-foot .desk-closer::after { background: var(--na-gold); }
+#wing[data-desk~='stage'] .desk-foot .desk-closer .desk-key { box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--na-gold) 60%, transparent); }
+#wing[data-desk~='stage'] .desk-foot .desk-closer:is(:hover, :focus-visible) { color: var(--na-starlight); }
 
 /* THE WAYS THROUGH THIS WING KEEP THE BAND'S TOP RIGHT until the museum's
    own control takes them into its panel. Off the picture, on the wall, and

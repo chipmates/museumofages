@@ -45,6 +45,8 @@ export interface CloseLookView {
   room: string
   /** the module's own sentences, which the drawer holds */
   words: readonly HTMLElement[]
+  /** the drawer's own word, where the work names what it holds */
+  more?: string | null
   /** the wing's own controls, by the role the wing gave them */
   record: HTMLElement | null
   /** a way of reading the whole text, standing between the drawer's word and the record */
@@ -77,6 +79,8 @@ export interface CloseLookBand {
   measure(): void
   /** True when the key was the band's. */
   key(event: KeyboardEvent): boolean
+  /** the drawer folds, where a press in it moved the work */
+  fold(): void
   dispose(): void
 }
 
@@ -234,7 +238,7 @@ export function createCloseLookBand(options: {
     more.textContent = ''
     more.setAttribute('aria-expanded', String(open))
     if (!open) {
-      more.textContent = say(WORD.more())
+      more.textContent = view?.more || say(WORD.more())
       more.removeAttribute('aria-keyshortcuts')
       return
     }
@@ -309,7 +313,7 @@ export function createCloseLookBand(options: {
       title.textContent = next.title
       title.lang = langTag(language)
       // a page by topic names its folio where a catalogue names a date
-      const date = entry?.date ?? next.set?.seat ?? ''
+      const date = entry?.date ?? next.set?.seat ?? next.set?.clock ?? ''
       clock.textContent = date
       clock.hidden = !date
       // A COUNT OF ONE IS NOISE: a work alone in its set carries no count
@@ -380,6 +384,9 @@ export function createCloseLookBand(options: {
       // SPACE IS THE GOLD CONTROL, here as at a station: one meaning everywhere.
       if (event.key === ' ' || event.key === 'Spacebar') { on.click(); return true }
       return false
+    },
+    fold() {
+      if (!drawer.hidden) openDrawer(false)
     },
     dispose() {
       sized.disconnect()

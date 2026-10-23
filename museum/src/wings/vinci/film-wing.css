@@ -901,3 +901,7 @@ html:has(#wing[data-film='upright']) #instruments .inst-source {
 .film-box > .walk-panel .walk-skip { font: 400 .9375rem/1 var(--sans); min-height: 44px; }
 /* held, gold is the way on again: its name and its arrow, as at rest */
 .film-gold[data-held='true'] .film-gold-ring { opacity: 1; }
+/* A STOP'S CLOSER LOOK IN THE KEY ROW AT REST, in the slot a set's count takes, in the same gold */
+.film-keys .film-closer { color: var(--na-gold); text-decoration-color: var(--na-gold); }
+.film-keys .film-closer .film-ic { color: var(--na-gold); }
+.film-keys .film-closer:focus-visible { outline: 1px solid var(--gold); outline-offset: 2px; }

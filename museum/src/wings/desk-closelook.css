@@ -518,3 +518,20 @@ body:has(dialog[open]) #wing[data-desk~='closelook'] .desk-clb {
 #wing[data-desk~='closelook'] .desk-clb-foot .vitrine-control[aria-pressed='true'] { color: var(--desk-title); }
 /* a chosen word is marked in the text colour: gold never stands as a marker beside a certainty mark */
 #wing[data-desk~='closelook'] .desk-clb-foot .vitrine-control[aria-pressed='true']::after { height: 1.5px; background: var(--ui-text); }
+
+/* A CLOSER LOOK'S INSTRUMENTS STAND IN TWO ROWS, as a book's do: the locator
+   and the choice of state on top, the viewer's three steps beside the ways
+   under them. The locator's slot is held at Home, so the choice never moves. */
+#wing[data-desk~='closelook'] .vitrine:has(.closer-states) .desk-clb-right {
+  display: grid;
+  grid-template-columns: auto auto;
+  grid-template-areas: 'inst inst' 'zoom ways';
+  justify-content: end;
+  align-content: space-between;
+  column-gap: 24px;
+  row-gap: 12px;
+}
+#wing[data-desk~='closelook'] .vitrine:has(.closer-states) :is(.desk-clb-inst, .desk-clb-inst .vitrine-payload-controls) { display: contents; }
+#wing[data-desk~='closelook'] .vitrine:has(.closer-states) .desk-clb-inst .closer-states { grid-area: inst; justify-self: end; }
+#wing[data-desk~='closelook'] .vitrine:has(.closer-states) .desk-clb-inst .closer-zoom { grid-area: zoom; align-self: center; margin-bottom: 9px; }
+#wing[data-desk~='closelook'] .vitrine:has(.closer-states) .desk-clb-ways { grid-area: ways; }

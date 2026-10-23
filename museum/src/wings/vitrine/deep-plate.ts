@@ -68,6 +68,14 @@ export interface DeepPlateShow {
   ground?: readonly (readonly [number, number])[] | null
 }
 
+/** How deep the view stands: the work whole, nearer than that, or at the
+ * source's own pixels. */
+export type DeepPlateDepth = 'whole' | 'near' | 'ceiling'
+
+/** The view's rectangle in fractions of the source, as if it were not
+ * turned, and its turn in degrees clockwise. */
+export interface DeepPlateView { x: number; y: number; w: number; h: number; turn: number }
+
 export interface DeepPlatePayload extends VitrinePayload {
   /** The work's rectangle on the held frame while the viewer seats itself
    * on it, and null once it has: the window dims the room behind a plate
@@ -83,6 +91,16 @@ export interface DeepPlatePayload extends VitrinePayload {
   drawn(): boolean
   /** True while the view stands at Home, where there is nothing to pan. */
   home(): boolean
+  /** ANOTHER STATE OF THE SAME PLACE at the same spot and depth: the next
+   * source fades in over the one standing, and only its tiles are held
+   * once it stands. Both sources share one pixel frame. */
+  swap(next: DeepPlateShow, state?: string): void
+  /** Frame a rectangle of the source, turned clockwise by `turn` degrees. */
+  go(detail: DeepPlateDetail, turn?: number): void
+  /** The view standing now, or null before the viewer stands. */
+  view(): DeepPlateView | null
+  /** Centre the view on a point of the source, in fractions. */
+  centre(x: number, y: number): void
 }
 
 /** Tiles a viewer may hold, by tier. A 256 px tile is 0.25 MB as RGBA8, so
@@ -95,6 +113,13 @@ export type DeepPlateTier = 'hero' | 'standard' | 'calm'
  * pixel of the screen, and no further. A spring settles on its target rather
  * than reaching it, so this is what counts as standing there. */
 const AT_THE_CEILING = .999
+/** THE WHOLE, AS A LINE SAYS IT: while the view shows at least this share of
+ * the source's width, it still reads as the whole thing. */
+const DEPTH_WHOLE = .6
+/** A state crossfades in place, the versions' rule of the phone's design. */
+const SWAP_FADE_MS = 160
+/** A state whose tiles for the view have not all arrived fades in anyway. */
+const SWAP_WAIT_MS = 1200
 
 /** What a cached tile costs as RGBA8, in megabytes. A pyramid's tile is its
  * own square; a plate with no pyramid is one tile and that tile is the
@@ -167,6 +192,19 @@ export function createDeepPlatePayload(options: {
    * room draws the walk up to the work and the viewer seats itself on the
    * frame the walk lands on; absent, it seats at once on the frame held now. */
   standing?(): boolean
+  /** THE LINE BY DEPTH. Given, the view writes nothing on the glass: it
+   * names the band it stands in as the band changes, and the caller's own
+   * line says it. */
+  depth?(band: DeepPlateDepth): void
+  /** The least device pixels a level is drawn at per pixel of the source,
+   * where the library's own half asks for more tiles than the cap holds. */
+  minPixelRatio?: number
+  /** The tiles held, where this payload sets its own; a phone's is not halved. */
+  caps?: { phone: number; canvas: number; webgl: number }
+  /** The name the first source's tiles are counted under in the readout. */
+  state?: string
+  /** The view moved. */
+  onView?(): void
 }): DeepPlatePayload {
   let host: VitrinePayloadHost | undefined
   let root: HTMLDivElement | undefined, stage: HTMLDivElement | undefined
@@ -179,6 +217,10 @@ export function createDeepPlatePayload(options: {
   let strict = false
   let grown = false, drawn = false, waiting = 0, homeZoom = 0, settled = 0, arrived = false
   let seat: VitrineRect | null = null
+  /** the depth band last named, and each source standing in the viewer by the state it shows */
+  let banded: DeepPlateDepth | null = null
+  const states = new Map<import('openseadragon').TiledImage, string>()
+  let swapping = 0
   /** Where the caption's words last stood on the screen, and the magnification
    * they stood at: a pan that drops the words leaves the rule as it was. */
   let spoke: { zoom: number; left: number; top: number; right: number; bottom: number } | null = null
@@ -220,6 +262,11 @@ export function createDeepPlatePayload(options: {
     // Our scene already holds a WebGL context on this engine, and a second
     // one beside it is what the phone lane cannot carry.
     const webkit = /apple/i.test(navigator.vendor)
+    const own = options.caps
+    if (own) {
+      if (host?.narrow) return { drawer: ['canvas'], cap: own.phone }
+      return tier === 'calm' || webkit ? { drawer: ['canvas'], cap: own.canvas } : { drawer: ['webgl', 'canvas'], cap: own.webgl }
+    }
     return tier === 'calm' || webkit ? { drawer: ['canvas'], cap: Math.round(cap / 2) } : { drawer: ['webgl', 'canvas'], cap }
   }
 
@@ -232,9 +279,14 @@ export function createDeepPlatePayload(options: {
     root.dataset['tiles'] = String(tiles)
     root.dataset['cacheMb'] = (tiles * tileMB(tilePixels)).toFixed(1)
     root.dataset['zoom'] = magnification().toFixed(3)
+    if (states.size) {
+      root.dataset['stateTiles'] = [...states].map(([item, state]) => `${state}:${viewer!.tileCache.getLoadedTilesFor(item).length}`).join(' ')
+      root.dataset['turn'] = String(Math.round(viewer.viewport.getRotation(true)))
+    }
     speak()
     measure()
     stand()
+    options.onView?.()
   }
 
   /** THE RULE MEASURES THE WORK, NOT THE SCREEN. Ten centimetres of the
@@ -369,10 +421,33 @@ export function createDeepPlatePayload(options: {
    * to look at. */
   function speak(): void {
     if (!host) return
+    if (options.depth) {
+      const band = depthNow()
+      if (root && band) root.dataset['depth'] = band
+      if (band && band !== banded) { banded = band; options.depth(band) }
+      return
+    }
     const wanted = magnification() >= AT_THE_CEILING ? shown.ceiling ?? options.words.ceiling : standingOn()
     if (said === wanted) return
     said = wanted
     host.caption.textContent = wanted
+  }
+
+  /** WHOLE, NEARER, OR AT THE CEILING. The share is read across the source's
+   * width as the glass shows it, so a view turned upright reads it down the glass. */
+  function depthNow(): DeepPlateDepth | null {
+    if (!viewer || !stage || !viewer.world.getItemAt(0)) return null
+    const zoom = magnification()
+    if (!(zoom > 0)) return null
+    if (zoom >= AT_THE_CEILING) return 'ceiling'
+    const turned = Math.round(viewer.viewport.getRotation(true) / 90) % 2 !== 0
+    const across = (turned ? stage.clientHeight : stage.clientWidth) / (width * (cut.right - cut.left) * zoom)
+    return across >= DEPTH_WHOLE ? 'whole' : 'near'
+  }
+
+  /** The view turned back upright, where a place had turned it. */
+  function unturn(immediate: boolean): void {
+    if (viewer && viewer.viewport.getRotation(false) !== 0) viewer.viewport.setRotation(0, immediate)
   }
 
   /** The framed detail's name while its middle is still in the view, and
@@ -461,6 +536,7 @@ export function createDeepPlatePayload(options: {
   function fitHome(immediate: boolean): void {
     if (!viewer || !library) return
     framed = null
+    unturn(immediate)
     viewer.viewport.fitBounds(windowBounds(), immediate)
     homeZoom = viewer.viewport.getZoom(false)
   }
@@ -515,6 +591,7 @@ export function createDeepPlatePayload(options: {
       // No pixel of the source may be shown larger than itself: what a
       // visitor reaches here is the whole of what the museum holds.
       maxZoomPixelRatio: 1,
+      ...(options.minPixelRatio ? { minPixelRatio: options.minPixelRatio } : {}),
       springStiffness: 8,
       // Home is the display window and the pan is bounded by the source.
       minZoomImageRatio: 1,
@@ -530,8 +607,10 @@ export function createDeepPlatePayload(options: {
     // drawer is chosen while the viewer is built, before a tile is read.
     const landed = made.drawer.getType()
     if (landed === 'canvas' && drawer[0] === 'webgl') {
-      made.tileCache = new loaded.TileCache({ maxImageCacheCount: Math.round(cap / 2) })
+      made.tileCache = new loaded.TileCache({ maxImageCacheCount: options.caps ? options.caps.canvas : Math.round(cap / 2) })
     }
+    if (options.state !== undefined) made.world.addHandler('add-item', event => { if (!states.has(event.item)) states.set(event.item, options.state!) })
+    made.world.addHandler('remove-item', event => { states.delete(event.item) })
     made.addHandler('canvas-key', event => { event.preventDefaultAction = true })
     // ON A PHONE A FINGER'S DOUBLE TAP goes in toward the finger at the whole
     // and back to the whole anywhere else; a mouse keeps the library's own
@@ -681,6 +760,7 @@ export function createDeepPlatePayload(options: {
       // register already carries, in both languages.
       for (const detail of shown.details ?? []) next.controls.append(press(detail.name, () => frame(detail), 'detail'))
       settled = 0
+      banded = null
       arrived = !options.standing
       if (arrived) arrive()
       else next.surface('room')
@@ -713,6 +793,80 @@ export function createDeepPlatePayload(options: {
       if (!corner) return
       corner.replaceChildren(...nodes)
       corner.hidden = nodes.length === 0
+    },
+    swap(next, state = '') {
+      if (!viewer || !library) { shown = next; return }
+      shown = next
+      cut = next.window ?? { left: 0, top: 0, right: 1, bottom: 1 }
+      width = next.source.width
+      height = next.source.height
+      host?.describe(next.description ?? next.title)
+      const opening = next, made = viewer
+      void sourceOf(next.source).then(source => {
+        if (!live || viewer !== made || shown !== opening) return
+        made.addTiledImage({ tileSource: source as never, x: 0, y: 0, width: 1, opacity: 0, index: made.world.getItemCount(),
+          success: (event: { item: import('openseadragon').TiledImage }) => {
+            const item = event.item
+            states.set(item, state)
+            if (!live || viewer !== made || shown !== opening) { made.world.removeItem(item); return }
+            clearTimeout(swapping)
+            let faded = false
+            const fade = (): void => {
+              if (faded || !live || viewer !== made) return
+              faded = true
+              clearTimeout(swapping)
+              const others = (): import('openseadragon').TiledImage[] => {
+                const out: import('openseadragon').TiledImage[] = []
+                for (let i = 0; i < made.world.getItemCount(); i++) { const other = made.world.getItemAt(i); if (other !== item) out.push(other) }
+                return out
+              }
+              const done = (): void => {
+                item.setOpacity(1)
+                // what the state before held goes with it: only the standing state's tiles are kept
+                for (const other of others()) made.world.removeItem(other)
+                made.viewport.applyConstraints(host?.reducedMotion ?? true)
+                readout()
+              }
+              if (host?.reducedMotion) { done(); return }
+              const from = performance.now()
+              const step = (): void => {
+                if (!live || viewer !== made) return
+                const share = Math.min(1, (performance.now() - from) / SWAP_FADE_MS)
+                item.setOpacity(share)
+                if (share < 1) requestAnimationFrame(step)
+                else done()
+              }
+              requestAnimationFrame(step)
+            }
+            item.whenFullyLoaded(fade)
+            swapping = setTimeout(fade, SWAP_WAIT_MS) as unknown as number
+          },
+        } as never)
+      })
+    },
+    go(detail, turn = 0) {
+      if (!viewer || !library || !host) return
+      const now = host.reducedMotion
+      framed = null
+      const bounds = detailBounds(detail)
+      const margin = .12
+      const box = new library.Rect(bounds.x - bounds.width * margin, bounds.y - bounds.height * margin,
+        bounds.width * (1 + margin * 2), bounds.height * (1 + margin * 2))
+      keep(true)
+      if (viewer.viewport.getRotation(false) !== turn) viewer.viewport.setRotation(turn, now)
+      viewer.viewport.fitBoundsWithConstraints(box, now)
+      keep()
+    },
+    view() {
+      if (!viewer || !viewer.world.getItemAt(0)) return null
+      const bounds = viewer.viewport.getBoundsNoRotate(true)
+      const across = height / width
+      return { x: bounds.x, y: bounds.y / across, w: bounds.width, h: bounds.height / across, turn: viewer.viewport.getRotation(true) }
+    },
+    centre(x, y) {
+      if (!viewer || !library || !host) return
+      viewer.viewport.panTo(new library.Point(x, y * height / width), host.reducedMotion)
+      viewer.viewport.applyConstraints(host.reducedMotion)
     },
     drawn() { return drawn },
     aspect() {
@@ -748,7 +902,7 @@ export function createDeepPlatePayload(options: {
       else if (event.key === 'ArrowRight') pan(step, 0)
       else if (event.key === 'ArrowUp') pan(0, -step)
       else if (event.key === 'ArrowDown') pan(0, step)
-      else if (event.key === '0') { framed = null; viewer.viewport.fitBounds(windowBounds(), now) }
+      else if (event.key === '0') { framed = null; unturn(now); viewer.viewport.fitBounds(windowBounds(), now) }
       else zoom(event.key === '-' ? 1 / ZOOM_STEP : ZOOM_STEP)
       return true
     },
@@ -767,6 +921,9 @@ export function createDeepPlatePayload(options: {
       root = undefined; stage = undefined; host = undefined; library = undefined; ground = undefined
       rule = undefined; ruleBar = undefined; ruleLabel = undefined; corner = undefined
       seat = null; seated = false; framed = null
+      clearTimeout(swapping)
+      states.clear()
+      banded = null
     },
   }
 }

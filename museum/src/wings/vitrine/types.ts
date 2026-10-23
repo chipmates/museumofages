@@ -92,6 +92,8 @@ export interface VitrinePlace {
   seat?: string
   /** the count as the set says it, `Flight, 2 of 18` */
   said?: string
+  /** a date in the clock's place of the name row, on every form */
+  clock?: string
 }
 
 /** WHAT A FOLDED CARD SAYS AT REST, where the raised card says more. */
@@ -176,6 +178,8 @@ export interface VitrineExhibit {
   catalogue?: { number: string; date: string; where: string } | null
   /** The museum's own four marks, for the label that carries one. */
   certainty?: 'documented' | 'reconstructed' | 'conjectural' | 'unknown' | null
+  /** the drawer's own word, where the exhibit names what it holds */
+  more?: string | null
   payload: VitrinePayload | null
   /** The work's rectangle at the frame the room stands at. */
   work?: () => VitrineRect | null

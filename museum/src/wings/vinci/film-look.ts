@@ -16,7 +16,9 @@ import { createVinciCloseLook, createVinciMachinePayload, createVinciShowpiecePa
   vinciLine, vinciLimits, vinciMachineCard, vinciMachineClockWords, vinciMachineSheet, vinciMachineSteps, vinciManuscriptWords, vinciPlaceCard,
   vinciFolioLabel, vinciMachineWordsInPlace, vinciPlaceTitle, vinciRoomName, vinciSheetRecords, vinciSheetSides, vinciShowpiece, vinciWorkTitle,
   VINCI_EXHIBIT_CARD, VINCI_PAGE_HONESTY, VINCI_VITRINE_WORDS, type VinciPlaceCertainty, type VinciPlaceId, type VinciShowpiece } from './collection/close-look'
-import { createVinciPaintingView, sayPictureRecord as sayRecord, vinciPlateWords, windowWorkLabel } from './collection/deep-plate'
+import { createVinciPaintingView, sayPictureRecord as sayRecord, vinciPlateWords, vinciRoomSource, windowWorkLabel } from './collection/deep-plate'
+import { closerById, CLOSER_WORDS } from './closer'
+import { createCloserPayload, type CloserPayloadState } from '../vitrine/closer'
 import { hangCatalogue } from './collection/catalogue'
 import { filmLookKind, FILM_DEATHBED as DEATHBED, FILM_DEATHBED_PLATE, FILM_EDITION_WHOLE as EDITION_WHOLE, FILM_PLACES as PLACES, FILM_STUDY_LEAF as VINCI_STUDY_LEAF, FILM_STUDY_SHEET } from './film-look-kinds'
 import { countLook } from '../../core/museum-count'
@@ -268,6 +270,7 @@ export function createFilmLook(h: FilmLookHost) {
       return
     }
     if (kind === 'place') { openPlace(id, from, how); return }
+    if (kind === 'closer') { openCloser(id, from, how); return }
     if (kind === 'picture') {
       const [, workId, face] = id.split('/') as [string, string, 'front' | 'reverse']
       const work = getWork(workId)
@@ -383,6 +386,75 @@ export function createFilmLook(h: FilmLookHost) {
     h.standDown(true)
     openLook({ id, title: place.title, line: vinciLine(id), card: place.card, after: place.after, payload,
       controls: [control(VINCI_VITRINE_WORDS.provenance, record, 'record'), shut()], walk, ...vinciLimits(id), set, certainty: place.certainty }, from, how)
+  }
+  /** A STOP'S CLOSER LOOK: the room's own plate flat and whole, in the states
+      its record names, opened from the stop's own word. The card says the
+      standing state's sentence, its places frame the view, and the record
+      reads each plate's own lines from the store. A state the store does not
+      admit opens nothing. */
+  function openCloser(id: string, from: HTMLElement | null, how: 'enter' | 'advance'): void {
+    const look = closerById(id)
+    if (!look || !assets) return
+    const index = assets
+    const read = look.states.map(state => ({ state, room: vinciRoomSource(index, state.plate, state.tiles) }))
+    if (read.some(entry => !entry.room)) return
+    const states: CloserPayloadState[] = read.map(({ state, room }) => ({
+      id: state.id, source: room!.source, word: text(state.word), turn: text(state.turn), date: text(state.date),
+      certainty: state.certainty, thumb: room!.thumb,
+      lines: { whole: text(state.lines.whole), near: text(state.lines.near), ceiling: text(state.lines.ceiling) },
+    }))
+    let standing = look.states[0]!
+    const title = text(look.name)
+    // THE CARD: its sentences, one a row, the standing state's own in its place
+    const description = make('div', 'vitrine-description')
+    const own = make('p', 'closer-sentence')
+    for (const line of look.card) description.append(line ? make('p', '', text(line)) : own)
+    own.textContent = text(standing.sentence)
+    // WHERE TO LOOK: each row frames its place and folds the card over it
+    const places = make('div', 'closer-places')
+    places.append(make('p', 'closer-places-head', text(look.placesHead)))
+    const payload = createCloserPayload({ title, description: text(look.describe), states, words: vinciPlateWords(),
+      showing: text(CLOSER_WORDS.showing), locator: text(CLOSER_WORDS.locator), tier, standing: h.standing, narrow: h.narrow(),
+      onState: next => {
+        standing = look.states.find(state => state.id === next.id) ?? standing
+        own.textContent = text(standing.sentence)
+      } })
+    for (const place of look.places) {
+      const row = make('button', 'vitrine-control closer-place', text(place.name))
+      row.type = 'button'
+      row.addEventListener('click', () => payload.go({ ...place, name: text(place.name) }))
+      places.append(row)
+    }
+    const record = (): void => h.openRecord(id, look.name, standing.certainty, host => {
+      for (const { state, room } of read) {
+        const plate = room!.plate as StudySheetRecord
+        host.append(make('p', 'vinci-statement closer-record-state', `${text(state.word)} · ${text(state.date)}`))
+        for (const line of [sayMaybe(plate.honesty_en, plate.honesty_de, lang()), plate.licence])
+          if (line) host.append(make('p', 'vinci-statement', line))
+      }
+      if (!look.reading.length) return
+      host.append(make('p', 'vinci-statement closer-record-head', text(look.readingHead)))
+      for (const reading of look.reading) {
+        const row = make('p', 'vinci-statement')
+        const link = make('a', 'closer-reading', text(reading.label))
+        link.href = reading.href
+        link.target = '_blank'
+        link.rel = 'noopener noreferrer'
+        link.hreflang = reading.lang
+        const out = make('span', 'closer-reading-out', ' \u2197')
+        out.setAttribute('aria-hidden', 'true')
+        link.append(out)
+        row.append(link)
+        host.append(row)
+      }
+    })
+    h.standDown(true)
+    openLook({ id, title, line: states[0]!.lines.whole, card: [description, places], payload,
+      controls: [control(VINCI_VITRINE_WORDS.provenance, record, 'record'), shut()],
+      // no set: the way back stands dimmed, and gold is the stop's own way on
+      walk: [stepControl('\u2039', null), stepControl('\u203a', null)],
+      set: { at: 1, of: 1, clock: states[0]!.date }, certainty: standing.certainty,
+      upLabel: text(look.room), more: text(look.more) }, from, how)
   }
   /** THE OPEN LOOK'S WAYS ALONG ITS SET, for the phone's foot row: the band's
       own reading (the set's two steps, else the payload's own page steps)
