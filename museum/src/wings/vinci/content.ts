@@ -512,8 +512,8 @@ const stationCards: Record<VinciStationId, VinciText> = {
     de: 'Der Hof zwischen dem Haus und seinem Tor. Über der Tür trägt ein Vogel mit ausgebreiteten Flügeln die Worte DIEV AVANT TOVT, Gott vor allem, und Fotografien dieses Reliefs sind unsere Vorlage. Die Nachmittagssonne steht im Westen und streicht über diesen Hof.',
   },
   hall: {
-    en: 'The great hall, rebuilt for this museum from the house\u2019s plan and photographs. Our chimneypiece takes a hooded Loire form of about 1500, a type of the period. The lion is our reconstruction from old accounts, and no account puts it in this house. The table, the chest and the stools are types of the period. None of them was his.',
-    de: 'Der große Saal, für dieses Museum nach dem Grundriss des Hauses und nach Fotografien nachgebaut. Unser Kamin hat die Form der Loire um 1500, ein Typ der Zeit. Der Löwe ist unsere Rekonstruktion nach alten Berichten, und kein Bericht nennt dieses Haus. Tisch, Truhe und Hocker sind Typen der Zeit. Keines der Stücke gehörte ihm.',
+    en: 'The great hall, rebuilt for this museum from photographs and to a plan we propose. Our chimneypiece takes a hooded Loire form of about 1500, a type of the period. The lion is our reconstruction from old accounts, and no account puts it in this house. The table, the chest and the stools are types of the period. None of them was his.',
+    de: 'Der große Saal, nach Fotografien und nach einem Grundriss, den wir vorschlagen, für dieses Museum nachgebaut. Unser Kamin hat die Form der Loire um 1500, ein Typ der Zeit. Der Löwe ist unsere Rekonstruktion nach alten Berichten, und nach keinem Bericht stand er in diesem Haus. Tisch, Truhe und Hocker sind Typen der Zeit. Keines der Stücke gehörte ihm.',
   },
   oratory: {
     en: 'A small stone chapel set into the south end of the house. Tradition gives it to Anne of Brittany and the year 1492, and no building survey has confirmed that date. Its wall paintings are attributed to Leonardo’s pupils, and that attribution is not settled. The room is not open, so the house is shown from outside.',
