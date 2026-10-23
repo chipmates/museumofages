@@ -30,6 +30,9 @@ export interface HelicoidSpec {
   ribs: number
   /** depth the cloth hangs between two ribs, per metre of span */
   sag: number
+  /** the cloth lies flat this far either side of a rib's line, over the cane
+   * and its fellow, before it starts to hang (0 when absent) */
+  held_m?: number
   /** widest cloth at the rim before a seam */
   panel_m: number
   seam_m: number
@@ -53,10 +56,11 @@ const count = (tier: TierName, hero: number, standard: number, calm: number): nu
 
 /** The stitches at a doubled layer's edge darken the cloth by this much, and
  * the doubled cloth itself a little. */
-const STITCH = .7
+const probe = (): Record<string, number> => (globalThis as { __screwProbe?: Record<string, number> }).__screwProbe || {}
+const STITCH = probe()['stitch'] ?? .7
 const BODY = .86
 /** A doubled layer passes this share of the light a single one does. */
-const DOUBLED = .38
+const DOUBLED = probe()['doubled'] ?? .38
 
 export interface SailSurface {
   /** the point of the cloth at radial share s (mast 0, rim 1) and turn t */
@@ -79,10 +83,13 @@ export function sailSurface(h: HelicoidSpec): SailSurface {
   const rim = (t: number): number => h.r0 + (h.r1 - h.r0) * t / span
   const height = (t: number): number => h.y0 + (h.y1 - h.y0) * t / span
   const azimuth = (t: number): number => h.phase_rad + h.hand * t
+  const held = h.held_m ?? probe()['held'] ?? 0
   const at = (s: number, t: number): Vector3 => {
     const r = h.r_in + s * (rim(t) - h.r_in)
     const g = Math.min(gores - 1, Math.max(0, Math.floor(t / gore)))
-    const u = t / gore - g
+    let u = t / gore - g
+    // flat over the canes, then the free cloth between them
+    if (held > 0) { const wide = r * gore; u = wide > 2 * held ? Math.min(1, Math.max(0, (u * wide - held) / (wide - 2 * held))) : 0 }
     // a panel held on four sides hangs deepest where its supports are farthest,
     // and falls away steeply from the cane it is stretched over
     const hang = h.sag * r * gore * Math.sin(Math.PI * u) ** .6 * Math.sin(Math.PI * s)
@@ -97,7 +104,7 @@ export function sailSurface(h: HelicoidSpec): SailSurface {
  * of light each layer lets through (`layers`). */
 export function sailGeometry(h: HelicoidSpec, tier: TierName): BufferGeometry {
   const S = sailSurface(h)
-  const gores = h.ribs - 1, gore = S.span / gores
+  const gores = h.ribs - 1, gore = S.span / gores, held = h.held_m ?? probe()['held'] ?? 0
   const ns = count(tier, 18, 11, 7)
   const perGore = count(tier, 20, 12, 8)
   const nt = gores * perGore
@@ -162,7 +169,18 @@ export function sailGeometry(h: HelicoidSpec, tier: TierName): BufferGeometry {
       const shift = hash(g + 3, m + 11) * 7
       const centre = from((g + (m + .5) / panels) * gore)
       grid(cols, ns, (i, j) => {
-        const t = (g + (m + i / cols) / panels) * gore, s = j / ns
+        const s = j / ns
+        // the first column off a rib stands where the held cloth ends, so the
+        // hang starts there and not across the cane
+        let f = i / cols
+        if (held > 0) {
+          const r = h.r_in + s * (S.rim((g + (m + .5) / panels) * gore) - h.r_in)
+          const edge = Math.min(.45, held / Math.max(1e-6, r * gore / panels))
+          const lo = m === 0 ? edge : 0, hi = m === panels - 1 ? 1 - edge : 1
+          const first = m === 0 ? 1 : 0, last = m === panels - 1 ? cols - 1 : cols
+          if (i > 0 && i < cols) f = lo + (hi - lo) * (i - first) / Math.max(1, last - first)
+        }
+        const t = (g + (m + f) / panels) * gore
         const { p, n } = frame(s, t)
         return push(p, n, s, t, tone, 1, centre, shift)
       })
