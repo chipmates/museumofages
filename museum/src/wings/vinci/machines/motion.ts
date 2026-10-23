@@ -19,7 +19,12 @@ const seconds = (t: number): number => Math.max(0, Number.isFinite(t) ? t : 0)
 export function jointValuesAt(slug: string, time: number): JointValues {
   const t = seconds(time)
   switch (slug) {
-    case 'aerial-screw': return { spin: PI * t / 6 }
+    case 'aerial-screw': {
+      // the frame's eight rollers run on the standing track, 22 turns to one
+      const q: JointValues = { spin: PI * t / 6 }
+      for (let i = 0; i < 8; i++) q[`roll-${i}`] = -22 * PI * t / 6
+      return q
+    }
     case 'parachute':
     case 'camera-obscura': return {}
     case 'anemometer': return { 'plate-tilt': (PI / 12) * (1 - Math.cos(2 * PI * (t % 12) / 12)) }

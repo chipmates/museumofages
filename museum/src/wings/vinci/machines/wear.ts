@@ -146,7 +146,8 @@ const AERIAL_SCREW: WearRule[] = [
     tint: (p, n) => {
       if (n.y < .5) return ONE
       const d = Math.hypot(p.x, p.z)
-      return mix(ONE, [.84, .82, .78], smooth(.72, .95, d) * (1 - smooth(1.3, 1.52, d)))
+      // the ring the walkers tread, outside the frame's legs
+      return mix(ONE, [.84, .82, .78], smooth(1.68, 1.86, d) * (1 - smooth(2.04, 2.16, d)))
     },
   },
   {
