@@ -6,7 +6,7 @@
  * cloth is thin. A property of the material class, not documented detail.
  */
 import { Color, MeshSSSNodeMaterial, type Material, type MeshStandardNodeMaterial, type Node } from 'three/webgpu'
-import { attribute, dFdx, dFdy, float, max, mix, mx_noise_float, normalWorldGeometry, smoothstep, uv, vec2, vec3 } from 'three/tsl'
+import { attribute, dFdx, dFdy, faceDirection, float, max, mix, mx_noise_float, normalWorldGeometry, positionLocal, smoothstep, step, uv, vec2, vec3 } from 'three/tsl'
 import { benchKeyDirection } from './key'
 
 const KEPT = ['colorNode', 'normalNode', 'roughnessNode', 'metalnessNode', 'aoNode', 'emissiveNode', 'opacityNode',
@@ -86,6 +86,19 @@ export function thinStarchedLinen(from: MeshStandardNodeMaterial, layered: boole
     const tint = vec3(THROUGH.r / l, THROUGH.g / l, THROUGH.b / l).mul(share)
     // three calls this with the shadow it computed; its declared type takes no argument
     ;(m as unknown as { receivedShadowNode: (shadow: Node<'float'>) => Node<'vec3'> }).receivedShadowNode = shadow => mix(tint, vec3(1, 1, 1), shadow)
+  }
+  // the turn above hides part of the sky from the upper face of the turn below
+  if (typeof p['sky'] === 'number') {
+    const k = p['sky'] as number
+    const y0 = -.625, y1 = 1.875, r0 = 4.6688, r1 = 2.6
+    const share = positionLocal.y.sub(y0).div(y1 - y0)
+    const under = float(1).sub(smoothstep(.42, .56, share))
+    const above = share.add(.5).mul(r1 - r0).add(r0)
+    const r = vec2(positionLocal.x, positionLocal.z).length()
+    const covered = under.mul(float(1).sub(smoothstep(above.sub(.3), above.add(.6), r)))
+    const up = step(0, normalWorldGeometry.y.mul(faceDirection))
+    const open = mix(float(1), float(k), covered.mul(up))
+    m.aoNode = from.aoNode ? (from.aoNode as F).mul(open) : open
   }
   if (typeof p['sheen'] === 'number') {
     m.sheen = p['sheen'] as number
