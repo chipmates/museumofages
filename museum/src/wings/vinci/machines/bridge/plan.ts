@@ -204,7 +204,7 @@ export function supportOf(id: string): { xy: [number, number]; r: number; half: 
 // ---------------------------------------------------------------- the ground
 
 /** the bank's level falls into the channel: |x| from the middle to its height */
-export const BANK = { lip: 4.45, edge: 4.1, toe: 3.05, bed: -1.0, top: 0, water: -0.45, bottom: -1.25, halfX: 12, zMin: -6, zMax: 15 } as const
+export const BANK = { lip: 4.45, edge: 4.1, toe: 3.05, bed: -1.0, top: 0, water: -0.45, bottom: -1.25, halfX: 12, zMin: -12, zMax: 15 } as const
 export function groundY(x: number, z: number): number {
   const ax = Math.abs(x)
   // the bank's edge wanders a little along the stream

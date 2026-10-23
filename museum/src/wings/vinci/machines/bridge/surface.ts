@@ -173,7 +173,7 @@ export async function bridgeSurfaces(stack: Stack): Promise<BridgeSurfaces> {
   earth.name = `bridge-of-poles:earth:${set['earth-packed'].name}`
   {
     const se = set['earth-packed'], sg = set['grass-short']
-    const ground = stack.detail(earth, se, { uv: uv(), count: 3, maps: maps(se), fade: [12, 90] })
+    const ground = stack.detail(earth, { ...se, normalStrength: 0.35 }, { uv: uv(), count: 3, maps: maps(se), fade: [12, 90] })
     const grassMat = new MeshStandardNodeMaterial()
     const grass = stack.detail(grassMat, sg, { uv: uv().mul(1.3), count: 3, maps: maps(sg), fade: [12, 90] })
     const p: N = positionWorld
@@ -182,7 +182,7 @@ export async function bridgeSurfaces(stack: Stack): Promise<BridgeSurfaces> {
     const lip = smoothstep(BANK.lip - 0.15, BANK.lip + 0.5, p.x.abs())
     const tufts = mx_noise_float(vec3(p.x.mul(6.5), p.z.mul(6.5), 4.4)).mul(0.22).add(mx_noise_float(vec3(p.x.mul(0.9), p.z.mul(0.9), 1.4)).mul(0.18)).add(0.5)
     const trodden = float(1).sub(smoothstep(1.2, 2.4, vec2(p.x.add(6.3), p.z.mul(0.6)).length()).mul(0.5).add(0.5)).clamp(0, 1)
-    const grassy = smoothstep(0.82, 0.95, up).mul(lip).mul(smoothstep(0.2, 0.55, tufts).mul(0.75).add(0.2)).mul(float(1).sub(trodden.mul(0.6)))
+    const grassy = smoothstep(0.82, 0.95, up).mul(lip).mul(smoothstep(0.2, 0.55, tufts).mul(0.35).add(0.55)).mul(float(1).sub(trodden.mul(0.6)))
     const wet = float(1).sub(smoothstep(BANK.water - 0.02, BANK.water + 0.18, p.y))
     const earthCol = lin('#6a5843').mul(luma(ground.albedo).mul(0.4).add(0.68)).mul(float(1).sub(wet.mul(0.42)))
     // the cut face: a section through the bank, darker with depth, its layers
@@ -190,7 +190,7 @@ export async function bridgeSurfaces(stack: Stack): Promise<BridgeSurfaces> {
     const strata = sin(p.y.mul(23).add(mx_noise_float(vec3(p.x.mul(0.8), p.y.mul(2), p.z.mul(0.8))).mul(1.3))).mul(0.5).add(0.5)
     const sectionCol = mx(lin('#4f4031'), lin('#6b5a44'), strata.mul(0.5)).mul(luma(ground.albedo).mul(0.5).add(0.6)).mul(smoothstep(BANK.bottom, 0, p.y).mul(0.35).add(0.65))
     const grassCol = mx(lin('#5d6141'), lin('#6c6847'), tufts).mul(luma(grass.albedo).mul(0.35).add(0.72))
-    earth.colorNode = mx(mx(earthCol, grassCol, grassy), sectionCol, cut).mul(ground.occlusion)
+    earth.colorNode = mx(mx(earthCol, grassCol, grassy), sectionCol, cut).mul(mx(float(1), ground.occlusion, 0.55))
     earth.roughnessNode = mx(ground.roughness.max(0.85), float(0.55), wet.mul(0.6))
     grassMat.dispose()
   }
