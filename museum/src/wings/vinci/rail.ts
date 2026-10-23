@@ -490,8 +490,9 @@ const RAIL_TERRACE_LOOK:Readonly<Record<string,{keys:readonly (readonly [RailWay
 /** Stretches walked without a stand, never backward. */
 const RAIL_FLIGHTS:readonly (readonly [RailWaypoint,RailWaypoint])[]=[[railAccessWaypoints[1]!,railAccessWaypoints[2]!]]
 /** An exhibit whose viewing eye stands outside its station's room is walked
- * to and from as a route: out of the room's door facing it. */
-const RAIL_WALKED_APPROACHES:ReadonlySet<string>=new Set(['machine/proportional-compass'])
+ * to and from as a route: out of the room's door facing it. None does: the
+ * compass, the last, stands on the hall's table, read as the inclinometer is. */
+const RAIL_WALKED_APPROACHES:ReadonlySet<string>=new Set<string>()
 /** THE LINKS WALKED LOOKING AT WHERE THEY GO, by their pair of exhibits: the
  * view turns toward the next object as the walk sets off and holds it in the
  * frame all the way. A pan between the two held views walked sideways past

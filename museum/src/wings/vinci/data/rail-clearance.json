@@ -636,8 +636,8 @@
   },
   {
    "file": "src/wings/vinci/rail.ts",
-   "sha256": "b9875d1fb5d36ac3e6f6db0e5837cb005c1aabd05b371be06d8723f9ebe86a1e",
-   "bytes": 84579,
+   "sha256": "005263523253b8de44f0759d7a3a0db91ae96842b39440e2cd379ae612ae08ac",
+   "bytes": 84649,
    "unchangedDuringAudit": true
   },
   {
