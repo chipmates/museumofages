@@ -140,6 +140,9 @@ function crossingFrame(c: Crossing): { o: V3; d: V3; w: V3; m: V3; rr: number; r
 /** The closed centreline of one square-lashing turn: over the rod beside the support on one side, round the
  * support beside the rod, over the rod on the other side, round the support on the other: side by side with the
  * turns before it. */
+/** the serving runs where the turn bears, its ends whipped short rather than cut */
+const served = (t: number): number => Math.min(1, Math.max(0, (Math.sin(t) - 0.25) / 0.2))
+
 function turnPath(c: Crossing, i: number): { p: V3; serve: number }[] {
   const { o, d, w, m, rr, rs } = crossingFrame(c)
   const gap = 0.0006
@@ -156,7 +159,7 @@ function turnPath(c: Crossing, i: number): { p: V3; serve: number }[] {
       const t = Math.PI * (j / N)
       const ang = dir > 0 ? Math.PI - t : t
       const rad = rr + rRope + gap
-      path.push({ p: at(side * a, rad * Math.cos(ang), hRod + rad * Math.sin(ang)), serve: Math.sin(t) > 0.35 ? 1 : 0 })
+      path.push({ p: at(side * a, rad * Math.cos(ang), hRod + rad * Math.sin(ang)), serve: served(t) })
     }
   }
   // round the support (its axis at the origin) at w = side*b, from d = +from to -from over its far face
@@ -165,7 +168,7 @@ function turnPath(c: Crossing, i: number): { p: V3; serve: number }[] {
       const t = Math.PI * (j / N)
       const ang = dir > 0 ? t : Math.PI - t
       const rad = rs + rRope + gap
-      path.push({ p: at(rad * Math.cos(ang), side * b, -rad * Math.sin(ang)), serve: Math.sin(t) > 0.35 ? 1 : 0 })
+      path.push({ p: at(rad * Math.cos(ang), side * b, -rad * Math.sin(ang)), serve: served(t) })
     }
   }
   overRod(1, 1)
@@ -182,7 +185,7 @@ function chaikin(path: { p: V3; serve: number }[], passes: number): { p: V3; ser
     const next: { p: V3; serve: number }[] = []
     for (let i = 0; i < cur.length; i++) {
       const A = cur[i]!, B = cur[(i + 1) % cur.length]!
-      next.push({ p: add(mul(A.p, 0.75), mul(B.p, 0.25)), serve: A.serve }, { p: add(mul(A.p, 0.25), mul(B.p, 0.75)), serve: B.serve })
+      next.push({ p: add(mul(A.p, 0.75), mul(B.p, 0.25)), serve: A.serve * 0.75 + B.serve * 0.25 }, { p: add(mul(A.p, 0.25), mul(B.p, 0.75)), serve: A.serve * 0.25 + B.serve * 0.75 })
     }
     cur = next
   }

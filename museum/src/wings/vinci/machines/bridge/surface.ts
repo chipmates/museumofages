@@ -97,13 +97,16 @@ export async function bridgeSurfaces(stack: Stack): Promise<BridgeSurfaces> {
     const micro = mx_noise_float(microQ)
     const microFade = float(1).sub(smoothstep(0.15, 0.6, fwidth(C.y.mul(190)).add(fwidth(C.x.mul(40)))))
     const plate = mx_noise_float(q.mul(0.5).add(4.2)).mul(0.5).add(0.5)
-    const lent = smoothstep(0.7, 0.84, mx_noise_float(vec3(C.x.mul(60), C.y.mul(40), C.z.mul(40)))).mul(float(1).sub(smoothstep(0.15, 0.5, fwidth(C.x.mul(60)))))
+    const lent = smoothstep(0.7, 0.84, mx_noise_float(vec3(C.x.mul(60), C.y.mul(40), C.z.mul(40)))).mul(float(1).sub(smoothstep(0.15, 0.5, fwidth(C.x.mul(60)).add(fwidth(C.y.mul(40))).add(fwidth(C.z.mul(40))))))
     const mottle = mx_noise_float(vec3(C.x.mul(1.6).add(o), C.y.mul(8), C.z.mul(8))).mul(0.5).add(0.5)
     const lichen = smoothstep(0.62, 0.8, mx_noise_float(vec3(C.x.mul(1.2).add(o), C.y.mul(14), C.z.mul(14)).add(2.7)).mul(0.5).add(0.5))
     const plateTop = mx(mx(lin('#4a433c'), lin('#66615a'), plate), lin('#54473a'), mottle.mul(0.35)).mul(float(1).sub(cells.x.mul(0.15)))
     const barkCol = mx(mx(plateTop, lin('#7d7b6c'), lichen.mul(0.3)).mul(micro.mul(microFade).mul(0.34).add(1)), lin('#251e18'), fissure.mul(0.78))
       .mul(float(1).sub(shoulder.mul(0.2))).mul(float(1).add(lent.mul(0.22)))
-    const barkH = fissure.negate().mul(0.005).sub(shoulder.mul(0.0022)).add(micro.mul(microFade).mul(0.0009)).add(plate.mul(0.0006)).add(lent.mul(0.0002))
+    // the plates' own scaly skin, finer than the net and long along the stem
+    const scaleQ = vec3(C.x.mul(14), C.y.mul(75), C.z.mul(75))
+    const scaly = mx_noise_float(scaleQ.add(o)).mul(float(1).sub(smoothstep(0.2, 0.7, fwidth(C.x.mul(14)).add(fwidth(C.y.mul(75))))))
+    const barkH = fissure.negate().mul(0.005).sub(shoulder.mul(0.0022)).add(micro.mul(microFade).mul(0.0009)).add(scaly.mul(0.0011)).add(plate.mul(0.0006)).add(lent.mul(0.0002))
     // PEELED: pale wood under the drawknife, its strokes as narrow facets along the stem, bark left in the hollows
     const fibres = luma(d.albedo)
     const facetPhase = u.div(0.026).add(mx_noise_float(vec3(v.mul(0.9), o, 1.1)).mul(1.4))
@@ -127,7 +130,9 @@ export async function bridgeSurfaces(stack: Stack): Promise<BridgeSurfaces> {
     pole.colorNode = mx(sideCol, endCol, end).mul(d.occlusion).mul(keyRim(0.45).add(1))
     pole.roughnessNode = mx(mx(float(0.84).add(fissure.mul(0.12)).add(micro.mul(microFade).mul(0.05)), d.roughness.clamp(0.6, 0.8), peeled), float(0.82), end)
     const h = mx(mx(barkH, facetH, peeled), float(0), end)
-    pole.normalNode = bumped(pole.normalNode ?? normalView, h, 1)
+    // the photograph's grain belongs to the wood: on the bark only a trace of it is kept
+    const grainN: N = pole.normalNode ?? normalViewGeometry
+    pole.normalNode = bumped(mx(normalViewGeometry, grainN, peeled.max(end).max(0.25)), h, 1)
   }
 
   // ---------------------------------------------------------------- HEMP
