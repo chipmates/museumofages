@@ -42,9 +42,9 @@ export const tube = (knots: Knot[], up: V3, step = 0): Field => {
 }
 export const flip = (knots: Knot[], s: 1 | -1): Knot[] => knots.map(([x, y, z, a, b]) => [x, y, z * s, a, b])
 
-// the trunk from the seat to the neck's foot, depth along x and width along z. The front rises evenly from the belly
-// to the chest with no overhang a light from above could print as a band; it ends under the neck's foot, so its
-// rounded end never reaches the jaw
+// the trunk from the seat into the neck, depth along x and width along z. The front rises evenly from the belly to
+// the chest with no overhang a light from above could print as a band; above the chest it narrows into the neck, so
+// its rounded end lies hidden inside the neck and draws no line across the chest
 const TORSO: Knot[] = [
   [-0.02, 0.88, 0, 0.104, 0.157],
   [-0.016, 0.93, 0, 0.107, 0.154],
@@ -54,9 +54,11 @@ const TORSO: Knot[] = [
   [0.007, 1.14, 0, 0.104, 0.14],
   [0.009, 1.215, 0, 0.108, 0.15],
   [0.004, 1.29, 0, 0.104, 0.156],
-  [-0.006, 1.345, 0, 0.094, 0.154],
-  [-0.013, 1.375, 0, 0.082, 0.135],
-  [-0.016, 1.39, 0, 0.072, 0.12],
+  [-0.006, 1.345, 0, 0.094, 0.152],
+  [-0.013, 1.385, 0, 0.08, 0.128],
+  [-0.018, 1.42, 0, 0.068, 0.088],
+  [-0.02, 1.45, 0, 0.061, 0.066],
+  [-0.02, 1.47, 0, 0.06, 0.062],
 ]
 // the trapezius, from the neck's side a hand under the jaw to the shoulder: thickness up, depth across
 const TRAP: Knot[] = [
@@ -145,7 +147,8 @@ export function drawnBody(): Field {
   const upper: Field = { k: 'u', s: 0.03, of: [pelvis, tube(NECK, FWD, 0.015)] }
   const trunk: Field = { k: 'u', s: 0.06, of: [upper, legs(1), legs(-1)] }
   const body: Field = { k: 'u', s: 0.028, of: [trunk, arm(1), arm(-1)] }
-  const whole: Field = { k: 'u', s: 0.028, of: [body, head] }
+  // the jaw's fillet is wide enough for 4k triangles to carry: a narrower one leaves a dark facet under the chin
+  const whole: Field = { k: 'u', s: 0.04, of: [body, head] }
   // the floor: everything below y = 0 cut away, so the soles stand flat on the level line
   return { k: 'i', s: 0.004, of: [whole, { k: 'box', c: [0, 1, 0], h: [1, 1, 1] }] }
 }
