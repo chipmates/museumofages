@@ -145,8 +145,8 @@ const served = (t: number): number => Math.min(1, Math.max(0, (Math.sin(t) - 0.2
 
 /** a lashing's fineness: the samples round each wrap, the corner-cutting passes and the sides round the rope */
 export interface LashDetail { wrap: number; passes: number; around: number }
-/** the close look's lashings; the standard tier's keep a tenth of the poles' weight in rope (every pass draws them) */
-export const LASH_FINE: LashDetail = { wrap: 14, passes: 2, around: 8 }
+/** the bench draws the rope about five times a frame (measured): fine for the hero tier, coarse below it, each tier under its budget */
+export const LASH_FINE: LashDetail = { wrap: 16, passes: 1, around: 8 }
 export const LASH_COARSE: LashDetail = { wrap: 8, passes: 1, around: 6 }
 
 function turnPath(c: Crossing, i: number, detail: LashDetail): { p: V3; serve: number }[] {
