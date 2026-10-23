@@ -62,7 +62,7 @@ function wood(stack: Stack, set: MaterialSet, kind: 'rough' | 'fine'): MeshStand
  * a piece, its two edges straight but for the brush, the paint thin enough that the grain shows faintly, rubbed
  * through in a few small spots where hands took hold of it. Ours, so a still shows how far the wheel has turned;
  * it reads by its darkness against the oak more than by its hue. */
-const PAINT = '#4d2216'
+const PAINT = '#691f1b'
 function painted(col: N, marked: N, fibres: N): N {
   const p: N = positionGeometry
   const rad: N = p.xy.length()
