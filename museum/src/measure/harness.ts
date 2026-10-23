@@ -84,7 +84,7 @@ if (!sil) {
 
 const t1 = performance.now()
 renderer.render(scene, camera)
-await renderer.waitForGPU?.()
+await (renderer.backend as unknown as { device?: { queue: { onSubmittedWorkDone(): Promise<void> } } }).device?.queue.onSubmittedWorkDone()
 timing.firstFrame = performance.now() - t1
 ;(window as unknown as { __measure: unknown }).__measure = {
   ready: true,
