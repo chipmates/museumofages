@@ -109,7 +109,9 @@ export async function bridgeSurfaces(stack: Stack): Promise<BridgeSurfaces> {
     // the plates' own scaly skin, finer than the net and long along the stem
     const scaleQ = vec3(C.x.mul(14), C.y.mul(75), C.z.mul(75))
     const scaly = mx_noise_float(scaleQ.add(o)).mul(float(1).sub(smoothstep(0.2, 0.7, fwidth(C.x.mul(14)).add(roundFw.mul(75)))))
-    const barkH = fissure.negate().mul(0.005).sub(shoulder.mul(0.0022)).add(micro.mul(microFade).mul(0.0009)).add(scaly.mul(0.0011)).add(plate.mul(0.0006)).add(lent.mul(0.0002))
+    // the screen's derivatives step in 2x2 blocks: a crack under two pixels wide keeps its colour and drops its relief
+    const crackBump = float(1).sub(smoothstep(width.mul(0.25), width, fwidth(edge)))
+    const barkH = fissure.negate().mul(0.005).sub(shoulder.mul(0.0022)).mul(crackBump).add(micro.mul(microFade).mul(0.0009)).add(scaly.mul(0.0011)).add(plate.mul(0.0006)).add(lent.mul(0.0002))
     // PEELED: pale wood under the drawknife, its strokes as narrow facets along the stem, bark left in the hollows
     const fibres = luma(d.albedo)
     const facetPhase = u.div(0.026).add(mx_noise_float(vec3(v.mul(0.9), o, 1.1)).mul(1.4))
