@@ -75,14 +75,19 @@ export async function bridgeSurfaces(stack: Stack): Promise<BridgeSurfaces> {
     const u = uv().x, v = uv().y
     const o = seed.mul(37.1)
     // BARK: shallow fissures running along the stem and wandering, plates between, lenticels across
-    const fis = mx_noise_float(vec3(u.mul(16).add(o), v.mul(1.4), o.mul(0.3)))
-    const ridge = float(1).sub(fis.abs().mul(3.2)).clamp(0, 1).pow(2)
-    const fissure = ridge.mul(fade(u.mul(16), 1))
-    const plate = mx_noise_float(vec3(u.mul(5).add(o), v.mul(0.7), 2.3)).mul(0.5).add(0.5)
-    const lent = smoothstep(0.62, 0.8, mx_noise_float(vec3(u.mul(4).add(o), v.mul(48), 7.7))).mul(fade(v.mul(48), 1))
-    const mottle = mx_noise_float(vec3(u.mul(1.3).add(o), v.mul(0.35), 9.1)).mul(0.5).add(0.5)
-    const barkCol = mx(mx(lin('#4f463e'), lin('#6e675c'), plate.mul(0.8)), lin('#5a4a3a'), mottle.mul(0.45)).mul(float(1).sub(fissure.mul(0.55))).mul(float(1).add(lent.mul(0.3)))
-    const barkH = fissure.negate().mul(0.004).add(plate.mul(0.0012))
+    // a young stem's bark: smooth grey skin in patches, a net of short shallow cracks mostly along it, lenticels across
+    const warp = mx_noise_float(vec3(u.mul(3.1).add(o), v.mul(0.9), 3.7)).mul(0.9)
+    const fis = mx_noise_float(vec3(u.mul(11).add(warp).add(o), v.mul(2.6), o.mul(0.3)))
+    const ridge = float(1).sub(fis.abs().mul(4.2)).clamp(0, 1).pow(3)
+    const crackRun = smoothstep(0.35, 0.7, mx_noise_float(vec3(u.mul(2.2).add(o), v.mul(1.1), 6.6)).mul(0.5).add(0.5))
+    const fissure = ridge.mul(crackRun).mul(fade(u.mul(11), 1))
+    const plate = mx_noise_float(vec3(u.mul(6).add(o), v.mul(1.6), 2.3)).mul(0.5).add(0.5)
+    const lent = smoothstep(0.68, 0.82, mx_noise_float(vec3(u.mul(5).add(o), v.mul(55), 7.7))).mul(fade(v.mul(55), 1))
+    const mottle = mx_noise_float(vec3(u.mul(1.6).add(o), v.mul(0.45), 9.1)).mul(0.5).add(0.5)
+    const lichen = smoothstep(0.62, 0.78, mx_noise_float(vec3(u.mul(3.5).add(o), v.mul(1.2), 4.9)).mul(0.5).add(0.5))
+    const skin = mx(mx(lin('#544b42'), lin('#6c665d'), plate.mul(0.7)), lin('#5c4b3b'), mottle.mul(0.5))
+    const barkCol = mx(skin, lin('#7c7a6c'), lichen.mul(0.35)).mul(float(1).sub(fissure.mul(0.6))).mul(float(1).add(lent.mul(0.28)))
+    const barkH = fissure.negate().mul(0.003).add(plate.mul(0.0008)).add(lent.mul(0.0003))
     // PEELED: pale wood under the drawknife, its strokes as narrow facets along the stem, bark left in the hollows
     const fibres = luma(d.albedo)
     const facetPhase = u.div(0.026).add(mx_noise_float(vec3(v.mul(0.9), o, 1.1)).mul(1.4))
@@ -95,10 +100,11 @@ export async function bridgeSurfaces(stack: Stack): Promise<BridgeSurfaces> {
     const rr = vec2(u, v).length()
     const rings = sin(rr.add(mx_noise_float(vec3(u.mul(30), v.mul(30), o)).mul(0.0018)).div(0.0042).mul(Math.PI * 2)).mul(0.5).add(0.5)
     const ringFade = fade(rr.div(0.0042).mul(Math.PI * 2), 1)
-    const heart = smoothstep(0.045, 0.055, rr)
+    // chestnut: a brown heart, a narrow pale sapwood, the bark a dark rim; the rings show across both
+    const heart = smoothstep(0.05, 0.058, rr)
     const cutStroke = mx_noise_float(vec3(u.mul(4), v.mul(70), o)).mul(0.5).add(0.5)
-    const endCol = mx(lin('#8a6a46'), lin('#c2a57a'), heart).mul(float(1).sub(rings.mul(ringFade).mul(0.16))).mul(cutStroke.mul(0.14).add(0.9))
-      .mul(float(1).sub(smoothstep(0.06, 0.07, rr).mul(0.55)))
+    const endCol = mx(lin('#a78560'), lin('#bc9f78'), heart).mul(float(1).sub(rings.mul(ringFade).mul(0.22))).mul(cutStroke.mul(0.12).add(0.9))
+      .mul(float(1).sub(smoothstep(0.066, 0.072, rr).mul(0.6))).mul(smoothstep(0, 0.004, rr).mul(0.25).add(0.75))
     pole.colorNode = mx(sideCol, endCol, end).mul(d.occlusion).mul(keyRim(0.45).add(1))
     pole.roughnessNode = mx(mx(float(0.9), d.roughness.clamp(0.6, 0.8), peeled), float(0.82), end)
     const h = mx(mx(barkH, facetH, peeled), float(0), end)
@@ -145,7 +151,7 @@ export async function bridgeSurfaces(stack: Stack): Promise<BridgeSurfaces> {
     const up = normalWorld.y.clamp(0, 1)
     // grass keeps to the level bank, thins toward the lip and the trodden ground by the pile, never on the cut face
     const lip = smoothstep(BANK.lip - 0.15, BANK.lip + 0.5, p.x.abs())
-    const tufts = mx_noise_float(vec3(p.x.mul(6.5), p.z.mul(6.5), 4.4)).mul(0.35).add(mx_noise_float(vec3(p.x.mul(0.9), p.z.mul(0.9), 1.4)).mul(0.25)).add(0.5)
+    const tufts = mx_noise_float(vec3(p.x.mul(6.5), p.z.mul(6.5), 4.4)).mul(0.22).add(mx_noise_float(vec3(p.x.mul(0.9), p.z.mul(0.9), 1.4)).mul(0.18)).add(0.5)
     const trodden = float(1).sub(smoothstep(1.2, 2.4, vec2(p.x.add(6.3), p.z.mul(0.6)).length()).mul(0.5).add(0.5)).clamp(0, 1)
     const grassy = smoothstep(0.82, 0.95, up).mul(lip).mul(smoothstep(0.2, 0.55, tufts).mul(0.75).add(0.2)).mul(float(1).sub(trodden.mul(0.6)))
     const wet = float(1).sub(smoothstep(BANK.water - 0.02, BANK.water + 0.18, p.y))
@@ -168,14 +174,14 @@ export async function bridgeSurfaces(stack: Stack): Promise<BridgeSurfaces> {
     const p: N = positionWorld
     // a slow stream along Z, its ripples broad enough never to shimmer at the bench's distances
     const flow = vec3(p.x.mul(0.9), p.z.mul(0.5).sub(streamClock.mul(0.12)), streamClock.mul(0.05))
-    const ripple = mx_noise_float(flow.mul(1.6)).mul(0.6).add(mx_noise_float(flow.mul(4.1).add(3.3)).mul(0.25))
+    const ripple = mx_noise_float(flow.mul(vec3(1.1, 0.7, 1)).mul(1.3)).mul(0.6).add(mx_noise_float(flow.mul(3.3).add(3.3)).mul(0.22))
     // the bank's toe runs under the surface: the shallows show its earth, the middle is deep and dark
     const shallow = smoothstep(3.2, 3.85, p.x.abs()).mul(smoothstep(-0.2, 0.2, p.y.sub(BANK.water - 0.1)))
     const cut = smoothstep(BANK.water - 0.03, BANK.water - 0.3, p.y)
-    water.colorNode = mx(mx(lin('#202319'), lin('#3d3a2a'), shallow), lin('#0e110d'), cut)
-    water.normalNode = bumped(normalView, ripple.mul(0.05), 1)
+    water.colorNode = mx(mx(lin('#2b2d22'), lin('#423e2d'), shallow), lin('#11140f'), cut)
+    water.normalNode = bumped(normalView, ripple.mul(0.022), 1)
     water.roughnessNode = float(0.07)
-    water.envMapIntensity = 0.6
+    water.envMapIntensity = 0.42
   }
   return { pole, hemp, earth, water, lashClock: lashClock as unknown as { value: number }, streamClock: streamClock as unknown as { value: number }, sets }
 }
