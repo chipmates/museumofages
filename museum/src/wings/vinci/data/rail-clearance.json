@@ -54,8 +54,8 @@
   },
   {
    "file": "src/wings/vinci/collection/approaches.ts",
-   "sha256": "67e6f22dc4e108dfdf184dcd05eab8f05df5a1c120211d6a67e86d6f7767df39",
-   "bytes": 37063,
+   "sha256": "ade89ea59d58ca61c8463f785142f4f2b40056674bfaa54fcb09e780a1774595",
+   "bytes": 37106,
    "unchangedDuringAudit": true
   },
   {
@@ -330,8 +330,8 @@
   },
   {
    "file": "src/wings/vinci/house-hall.ts",
-   "sha256": "ce3eca4a4a9a2416f487b7486e448672186115570976a469cf778bd67789de47",
-   "bytes": 180221,
+   "sha256": "654ad872c76a88f249330e9b9c566f4d24f6ad28eea88f620d6aeb25ca0f303f",
+   "bytes": 180334,
    "unchangedDuringAudit": true
   },
   {
@@ -20810,8 +20810,8 @@
      2.0937950856893397,
      13.767958
     ],
-    "fov": 74.81888243319425,
-    "shift": -0.49448052978040724
+    "fov": 69.95972790056011,
+    "shift": -0.47907199784974636
    },
    "points": [
     [
@@ -25897,8 +25897,8 @@
      2.0937950856893397,
      13.767958
     ],
-    "fov": 74.81888243319425,
-    "shift": -0.49448052978040724
+    "fov": 69.95972790056011,
+    "shift": -0.47907199784974636
    },
    "toPose": {
     "eye": [
@@ -25927,7 +25927,7 @@
     ]
    ],
    "roundedLength": 0.40872157450797236,
-   "maxNearRadius": 0.403458558777395,
+   "maxNearRadius": 0.383937239409473,
    "certifiedBalls": []
   }
  ]
