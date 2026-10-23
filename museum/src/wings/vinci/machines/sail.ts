@@ -92,7 +92,7 @@ export function sailSurface(h: HelicoidSpec): SailSurface {
     if (held > 0) { const wide = r * gore; u = wide > 2 * held ? Math.min(1, Math.max(0, (u * wide - held) / (wide - 2 * held))) : 0 }
     // a panel held on four sides hangs deepest where its supports are farthest,
     // and falls away steeply from the cane it is stretched over
-    const hang = h.sag * r * gore * Math.sin(Math.PI * u) ** .6 * Math.sin(Math.PI * s)
+    const hang = h.sag * r * gore * Math.sin(Math.PI * u) ** (probe()['power'] ?? .6) * Math.sin(Math.PI * s)
     const a = azimuth(t)
     return new Vector3(r * Math.cos(a), height(t) - hang, r * Math.sin(a))
   }
