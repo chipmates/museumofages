@@ -37,7 +37,7 @@ export interface Finish {
   seed?: number
   /** 1 where the piece stands out in the weather (the cover's boards), 0 elsewhere */
   weather?: number
-  /** 1: the lime band that marks a spoke; 2: a face dressed by hand, its tool marks showing */
+  /** 1: the painted band that marks a spoke; 2: a face dressed by hand, its tool marks showing */
   mark?: number
 }
 

@@ -62,8 +62,10 @@ export const COVER = {
   /** where the hidden hoops lie under the boards, as fractions from the cone boards' feet to the lookout */
   nailRings: [0.14, 0.38, 0.62, 0.86],
   sill: { r: 0.8, w: 0.1, below: 0.04, above: 0.03 },
-  posts: 12, postW: 0.055, slot: 0.07,
-  cap: { r: 0.85, ringR: 0.8, ringH: 0.03, slope: (28 * Math.PI) / 180, boards: 16, t: 0.03 },
+  /** the posts stand back under the cap's ring, so the sighting slot reads as the sheet's dark open ring */
+  posts: 8, postW: 0.055, postR: 0.775, slot: 0.07,
+  /** the cap's boards end flush with its ring, as the sheet's small cone ends on the ring */
+  cap: { r: 0.83, ringR: 0.8, ringH: 0.03, slope: (28 * Math.PI) / 180, boards: 16, t: 0.03 },
   knob: { r: 0.045, h: 0.15 },
 } as const
 /** The cone's outer surface at a radius: its underside rests on the band's middle. */
@@ -90,7 +92,9 @@ export const WHEEL = {
   spokes: 10, felloes: 5,
   hubR: 0.12, hubLen: 0.28, axleR: 0.045,
 } as const
-export const PEGS = { count: 24, pitch: 0.52, r: 0.0225, stand: 0.11 } as const
+/** The pegs run through the felloe and stand `proud` of its outer face; `endTone` darkens the whole peg a little,
+ * so its end grain on the outer face reads as the sheet's ring of dots (the standing part is lifted back by its grime). */
+export const PEGS = { count: 24, pitch: 0.52, r: 0.0225, stand: 0.11, proud: 0.004, endTone: 0.8 } as const
 /** One spoke of each wheel is marked. At rest it points up and in, toward the car's middle (54 degrees on a rear
  * wheel, 126 on a front one), so a side's two markers are mirror images, and at every quarter of the cycle they stay
  * on the wheel's upper, outer part, clear of the lantern drum and the floor. */
@@ -98,6 +102,10 @@ export const SPOKES = { zero: Math.PI / 10, rear: 1, front: 3 } as const
 /** Ten staves on the pegs' own spacing: one crank turn is ten twenty-fourths of a wheel turn. The drum runs from
  * the hub's side to the fork post, as long as the space between them allows. */
 export const LANTERN = { staves: 10, pitch: (PEGS.pitch * 10) / 24, staveR: 0.026, discR: 0.262, discT: 0.07, half: 0.22, x: 0.715 } as const
+/** The staves' hand finish: facets round (segments), and the worn flats on both flanks where the pegs bear: `depth`
+ * deep at the middle of a band `half` either side of the pegs' line, its middle `shift` outboard of the ring's
+ * innermost point (the pegs at 0 and 15 degrees both bear there). */
+export const RUNDLE = { segments: 30, wear: { depth: 0.0035, half: 0.04, shift: 0.009 } } as const
 /** How far a peg's tip reaches past the near staves' circle. */
 const ENGAGE = 0.055
 export const SHAFT = {

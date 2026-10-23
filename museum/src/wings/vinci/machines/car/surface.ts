@@ -52,22 +52,23 @@ function wood(stack: Stack, set: MaterialSet, kind: 'rough' | 'fine'): MeshStand
   const mark: N = attribute('aMark', 'float')
   const [marked, dressed] = [smoothstep(0.5, 0.9, mark).mul(float(1).sub(smoothstep(1.1, 1.5, mark))), smoothstep(1.5, 1.9, mark)]
   const strokes = toolStrokes(uv())
-  m.colorNode = limed(weathered(col), marked, fibres).mul(tone).mul(nodes.occlusion).mul(mix(float(1), strokes.shade, dressed))
+  m.colorNode = painted(weathered(col), marked, fibres).mul(tone).mul(nodes.occlusion).mul(mix(float(1), strokes.shade, dressed))
   m.roughnessNode = mix(nodes.roughness.clamp(spec.rough[0], spec.rough[1]), float(0.5), smoothstep(0.4, 1, wear).mul(0.6)).mul(mix(float(1), strokes.sheen, dressed))
   return m
 }
 
-/** A band of lime round one spoke, the wheel's mark: a hand's width between a third and two thirds of the spoke,
- * its edges ragged, flaked where the wheel's turning wore it, the grain showing through and dirt in it. */
-function limed(col: N, marked: N, fibres: N): N {
+/** The wheel's mark: one spoke painted round in a clean band of red ochre, as a wheelwright marks a piece, its two
+ * edges straight but for the brush, the paint thin enough that the grain shows faintly, rubbed through in a few
+ * small spots where hands took hold of it. Ours, so a still shows how far the wheel has turned. */
+const PAINT = '#8a3522'
+function painted(col: N, marked: N, fibres: N): N {
   const p: N = positionGeometry
   const rad: N = p.xy.length()
-  const ragged: N = mx_noise_float(p.mul(38)).mul(0.012)
-  const band: N = smoothstep(0.19, 0.205, rad.add(ragged)).mul(float(1).sub(smoothstep(0.335, 0.35, rad.sub(ragged))))
-  const flaked = smoothstep(0.42, 0.68, mx_noise_float(p.mul(vec3(31, 31, 47))).mul(0.5).add(0.5))
-  const dirt = mx_noise_float(p.mul(9)).mul(0.08).add(0.86)
-  const lime: N = lin('#d9d1bc').mul(fibres.mul(0.22).add(0.8)).mul(dirt)
-  return mix(col, lime, band.mul(float(1).sub(flaked.mul(0.75))).mul(marked))
+  const brush: N = mx_noise_float(p.mul(vec3(9, 9, 40))).mul(0.0025)
+  const band: N = smoothstep(0.17, 0.1735, rad.add(brush)).mul(float(1).sub(smoothstep(0.3765, 0.38, rad.sub(brush))))
+  const rubbed = smoothstep(0.72, 0.86, mx_noise_float(p.mul(vec3(26, 26, 60))).mul(0.5).add(0.5)).mul(0.6)
+  const paint: N = lin(PAINT).mul(fibres.mul(0.16).add(0.88))
+  return mix(col, paint, band.mul(float(0.94).sub(rubbed)).mul(marked))
 }
 
 /** A face dressed by hand: the strokes of the knife along the grain, each a shallow scallop a little off the last,

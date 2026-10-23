@@ -534,10 +534,11 @@ export function createBench(stack: Stack, onExit: () => void) {
       // low on the sun's side of the visitor: the near skirt and eave take the most, the cone turns away from it
       // into shade and its far side falls off, as under one lamp in a hall
       closed: [{ at: [-5, 3.6, 4.6], aim: [.2, .8, 1.2], lux: 280, kelvin: 4300, angle: .7, penumbra: .8, decay: 2 }],
-      // opened, a narrow lamp over each far lantern, where the drive binds; the floor round them stays dim
+      // opened, a narrow lamp high over each far lantern, steep enough to reach between the drum and its wheel, where
+      // the pegs enter the staves and the drive binds; the floor round them stays dim
       section: [
-        { at: [.3, 3.8, 1.8], aim: [.75, .75, -.7], lux: 320, kelvin: 4300, angle: .16, penumbra: .6, decay: 2 },
-        { at: [-.3, 3.8, 1.8], aim: [-.75, .75, -.7], lux: 320, kelvin: 4300, angle: .16, penumbra: .6, decay: 2 },
+        { at: [.6, 3.9, .7], aim: [.68, .74, -.8], lux: 320, kelvin: 4300, angle: .16, penumbra: .6, decay: 2 },
+        { at: [-.6, 3.9, .7], aim: [-.68, .74, -.8], lux: 320, kelvin: 4300, angle: .16, penumbra: .6, decay: 2 },
       ],
     } },
   };

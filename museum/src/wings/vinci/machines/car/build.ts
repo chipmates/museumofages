@@ -5,7 +5,7 @@
  * joints turn them where they turn.
  */
 import {
-  COVER, CRANK, GUN, PORT_ANGLES_DEG, HUB, LANTERN, PEGS, POSTS, SHAFT, SPOKES, TAU, TUB, WHEEL,
+  COVER, CRANK, GUN, PORT_ANGLES_DEG, HUB, LANTERN, PEGS, POSTS, RUNDLE, SHAFT, SPOKES, TAU, TUB, WHEEL,
   CONE_TOP_Y, SILL_TOP, CAP_FOOT, CAP_RING_TOP, KNOB_FOOT, capY, coneY, wallRadius,
 } from './plan'
 import { Kit, add, cross, dot, hash, len, mul, norm, sub, v, type Finish, type V3 } from './kit'
@@ -420,7 +420,7 @@ function cone(k: Kit, iron: Kit): void {
   }
   for (let j = 0; j < COVER.posts; j++) {
     const a = ((j + 0.5) * TAU) / COVER.posts
-    const p = at(COVER.sill.r, a, (SILL_TOP + CAP_FOOT) / 2)
+    const p = at(COVER.postR, a, (SILL_TOP + CAP_FOOT) / 2)
     k.box(p, [Y, radial(a), cross(radial(a), Y)], v(COVER.slot / 2 + 0.006, COVER.postW / 2, COVER.postW / 2), { tone: tone(17, j) }, 0.005)
   }
   const cap = COVER.cap
@@ -439,9 +439,9 @@ function cone(k: Kit, iron: Kit): void {
     const d = mul(outward, -cap.t)
     const c8 = [add(p00, d), add(p01, d), p00, p01, add(p10, d), add(p11, d), p10, p11]
     k.slab(c8, norm(sub(p10, p00)), { tone: tone(19, i) }, 0.004)
-    // a rib over the joint, as the sheet's cap is drawn in ribs, standing past the eave
+    // a rib over the joint, as the sheet's cap is drawn in ribs, ending with the boards
     const a = a0, w = 0.02 / r0
-    const b0 = at(r0 + 0.03, a - w, capY(r0 + 0.03)), b1 = at(r0 + 0.03, a + w, capY(r0 + 0.03))
+    const b0 = at(r0, a - w, capY(r0)), b1 = at(r0, a + w, capY(r0))
     const e0 = at(0.06, a - 0.02 / 0.06 * 0.5, capY(0.06)), e1 = at(0.06, a + 0.02 / 0.06 * 0.5, capY(0.06))
     const up = mul(norm(add(radial(a), mul(Y, 1 / Math.tan(cap.slope)))), 0.03)
     const lift = mul(up, 0.04)
@@ -520,7 +520,7 @@ export function wheel(sx: number, sz: number): Body {
       const [r, hw, hz] = ends[i & 1]!
       c8.push(add(mul(d, r), add(mul(t, i & 2 ? hw : -hw), v(0, 0, i & 4 ? hz : -hz))))
     }
-    // one spoke of each wheel carries a band of lime, worn by the turning: the mark that shows the wheel's turn
+    // one spoke of each wheel carries a painted band: the mark that shows the wheel's turn
     const marked = k === (sx < 0 ? SPOKES.rear : SPOKES.front)
     b.rough.slab(c8, d, { tone: 0.74 + 0.1 * hash(31, seed, k), ...(marked ? { mark: 1 } : {}) }, 0.007)
   }
@@ -537,11 +537,15 @@ export function wheel(sx: number, sz: number): Body {
   for (let j = 0; j < PEGS.count; j++) {
     const a = (j * TAU) / PEGS.count
     const p: V3 = [PEGS.pitch * Math.cos(a), PEGS.pitch * Math.sin(a), 0]
-    const from = add(p, v(0, 0, inward * (w2 - 0.02))), to = add(p, v(0, 0, inward * (w2 + PEGS.stand)))
-    // polished where the lantern's staves bear on the peg's outer half, grimed at its root
-    const root = 0.02 / (0.02 + PEGS.stand)
-    b.fine.rod(from, to, PEGS.r, 12, { tone: tone(33, seed, j), wear: 0.15 }, 0.007, {
-      rows: 10, wearAt: u => 0.95 * smooth(0.45, 0.8, u), grimeAt: u => 0.66 + 0.34 * smooth(root, root + 0.18, u),
+    // each peg driven right through the felloe, its end standing a little proud of the outer face, as a mill's
+    // cogs are mortised through the rim: the ring of round ends the sheet draws on the face it shows
+    const back = w2 + PEGS.proud, length = back + w2 + PEGS.stand
+    const from = add(p, v(0, 0, -inward * back)), to = add(p, v(0, 0, inward * (w2 + PEGS.stand)))
+    // polished where the lantern's staves bear on the peg's outer half, grimed at its root and at its outer end
+    const past = (u: number): number => u * length - back - w2
+    b.fine.rod(from, to, PEGS.r, 12, { tone: tone(33, seed, j) * PEGS.endTone, wear: 0.15 }, 0.004, {
+      rows: 12, wearAt: u => 0.95 * smooth(0.05, 0.09, past(u)),
+      grimeAt: u => (0.66 + 0.34 * smooth(0, 0.028, past(u))) / PEGS.endTone,
     })
   }
   return b
@@ -575,6 +579,67 @@ function discFaces(k: Kit, xd: number, seed: number): void {
   }
 }
 
+/** A lantern stave as a wheelwright shaves it: seven to nine flat facets of their own widths, eased where they meet,
+ * thinning a little toward its tenons; and where the pegs bear on it, on both its flanks since the drive turns both
+ * ways, a shallow worn flat, polished. Never fuller than the turned stave it replaces, so no clearance shrinks. */
+function rundle(k: Kit, x0: number, l: number, o: V3, contact: number, f: Finish, seed: number[]): void {
+  const R = LANTERN.staveR, n = 7 + Math.floor(3 * hash(80, ...seed))
+  const out = norm(o), side = norm(cross(X, out))
+  // the facets' edges, each facet its own width
+  const edges: number[] = []
+  let acc = 0
+  for (let i = 0; i < n; i++) { edges.push(acc); acc += 0.75 + 0.5 * hash(81, ...seed, i) }
+  const turn = TAU * hash(82, ...seed)
+  const ang = edges.map(e => turn + (e / acc) * TAU)
+  const faceted = (phi: number): number => {
+    let p = phi - turn; p -= Math.floor(p / TAU) * TAU
+    let i = 0; while (i + 1 < n && turn + p >= ang[i + 1]!) i++
+    const lo = ang[i]! - turn, hi = (i + 1 < n ? ang[i + 1]! - turn : TAU), half = (hi - lo) / 2
+    return Math.cos(half) / Math.cos(p - lo - half)
+  }
+  const { depth, half: bandHalf } = RUNDLE.wear
+  const band = (x: number): number => 1 - smooth(bandHalf * 0.6, bandHalf, Math.abs(x - contact))
+  // the flanks face along `side`; the wear takes a flat off each
+  const flank = (phi: number): number => Math.max(0, Math.abs(Math.cos(phi)) - 0.55) / 0.45
+  const thin = 0.02 * hash(83, ...seed)
+  const radius = (phi: number, x: number): number => {
+    const u = (x - x0) / l
+    const r = R * (0.32 + 0.68 * faceted(phi)) * (1 - thin * (1 - Math.sin(Math.PI * u)))
+    return Math.min(r, R) - depth * band(x) * flank(phi)
+  }
+  const at_ = (phi: number, x: number): V3 => add(v(x, 0, 0), add(o, add(mul(side, Math.cos(phi) * radius(phi, x)), mul(out, Math.sin(phi) * radius(phi, x)))))
+  const xs = new Set<number>()
+  for (let i = 0; i <= 14; i++) xs.add(x0 + (l * i) / 14)
+  for (let d = -RUNDLE.wear.half - 0.01; d <= RUNDLE.wear.half + 0.0101; d += 0.008) {
+    const x = contact + d
+    if (x > x0 && x < x0 + l) xs.add(x)
+  }
+  const rows = [...xs].sort((p, q) => p - q)
+  const segs = RUNDLE.segments
+  const phis = Array.from({ length: segs + 1 }, (_, j) => (j / segs) * TAU)
+  const normalAt = (phi: number, x: number): V3 => {
+    const e = 1e-3
+    const t = sub(at_(phi + e, x), at_(phi - e, x)), a2 = sub(at_(phi, x + e), at_(phi, x - e))
+    const n2 = norm(cross(a2, t))
+    const radial2 = sub(at_(phi, x), add(v(x, 0, 0), o))
+    return dot(n2, radial2) < 0 ? mul(n2, -1) : n2
+  }
+  const grime = (x: number): number => { const u = (x - x0) / l; return 0.7 + 0.3 * smooth(0.12, 0.22, Math.min(u, 1 - u)) }
+  const finishAt = (phi: number, x: number): Finish => ({ ...f, seed: f.tone, tone: f.tone * grime(x), wear: Math.max(f.wear ?? 0, 0.9 * band(x) * flank(phi)) })
+  for (let i = 0; i + 1 < rows.length; i++) {
+    const xa = rows[i]!, xb = rows[i + 1]!
+    for (let j = 0; j < segs; j++) {
+      const pa = phis[j]!, pb = phis[j + 1]!
+      const p: [V3, V3, V3, V3] = [at_(pa, xa), at_(pb, xa), at_(pb, xb), at_(pa, xb)]
+      const nn: [V3, V3, V3, V3] = [normalAt(pa, xa), normalAt(pb, xa), normalAt(pb, xb), normalAt(pa, xb)]
+      const uvs: [number, number][] = [[xa, pa * R], [xa, pb * R], [xb, pb * R], [xb, pa * R]]
+      k.smoothQuad(p, nn, uvs, f, 0, [finishAt(pa, xa), finishAt(pb, xa), finishAt(pb, xb), finishAt(pa, xb)])
+    }
+  }
+  // the tenons' end grain, flat across each end
+  for (const x of [x0, x0 + l]) k.polygon(phis.slice(0, segs).map(phi => at_(phi, x)), X, { ...f, tone: f.tone * grime(x) }, add(v(x0 + l / 2, 0, 0), o))
+}
+
 export function shaft(sz: number): Body {
   const b = body()
   const seed = sz
@@ -602,16 +667,14 @@ export function shaft(sz: number): Body {
       }
     }
     // the staves run through the discs and stand a little proud of their outer faces, as through-tenons;
-    // polished where the pegs bear on them (the ring's side toward the car's middle), grimed where they enter the discs
+    // shaved by hand, each worn on both flanks where the pegs bear on it, grimed where it enters the discs
     const a = xl - LANTERN.half - LANTERN.discT / 2 - 0.003, l = 2 * (LANTERN.half + LANTERN.discT / 2 + 0.003)
-    const contact = (sx * (HUB.x - PEGS.pitch) - a) / l
+    const contact = sx * (HUB.x - PEGS.pitch + RUNDLE.wear.shift)
     for (let k = 0; k < LANTERN.staves; k++) {
       const beta = ((k + 0.5) * TAU) / LANTERN.staves
       // turned about +X from the point nearest the wheel, so two staves straddle the contact
       const o: V3 = [0, Math.sin(beta) * LANTERN.pitch, Math.cos(beta) * sz * LANTERN.pitch]
-      b.fine.rod(add(v(a, 0, 0), o), add(v(a + l, 0, 0), o), LANTERN.staveR, 12, { tone: tone(43, seed, sx, k), wear: 0.1 }, 0.003, {
-        rows: 18, wearAt: u => 0.8 * (1 - smooth(0.04, 0.17, Math.abs(u - contact))), grimeAt: u => 0.7 + 0.3 * smooth(0.12, 0.22, Math.min(u, 1 - u)),
-      })
+      rundle(b.fine, a, l, o, contact, { tone: tone(43, seed, sx, k), wear: 0.1 }, [seed, sx, k])
     }
   }
   // the grip, worn smooth by the crew's hands
