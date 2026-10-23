@@ -962,19 +962,32 @@ function tiledFloor(s: Sink, outline: V2[], z: number): void {
     // the corner square at this edge's start
     strip(Math.min(0, s0 - pitch), s0, -1)
   }
-  // the straight bands: square tiles laid along each band, one at each crossing
+  // the straight bands: square tiles laid along each band from the crossings
+  // outward, one square at each crossing, a cut tile where a run meets the
+  // field's edge or the next band, so every band joint is a tile's edge
   const half = pitch / 2, big = 40
-  const bandTile = (cu: number, cv: number, key: number): void => {
-    const quad: V2[] = [[cu - half, cv - half], [cu + half, cv - half], [cu + half, cv + half], [cu - half, cv + half]]
-    const clipped = clipConvex(quad, field)
-    if (clipped.length >= 3 && Math.abs(signedArea(clipped)) > pitch * pitch * .12) tile(s, clipped, z, rand(key, cu * 7.1 + cv, 4.7), [cu, cv], [1, 0])
+  const bandTile = (u0: number, u1: number, v0: number, v1: number, key: number): void => {
+    const clipped = clipConvex([[u0, v0], [u1, v0], [u1, v1], [u0, v1]], field)
+    if (clipped.length >= 3 && Math.abs(signedArea(clipped)) > pitch * pitch * .04)
+      tile(s, clipped, z, rand(key, u0 * 7.1 + v0, 4.7), [(u0 + u1) / 2, (v0 + v1) / 2], [1, 0], [(u1 - u0) / 2, (v1 - v0) / 2])
   }
   const fu0 = Math.min(...field.map(p => p[0])), fu1 = Math.max(...field.map(p => p[0])), fv0 = Math.min(...field.map(p => p[1])), fv1 = Math.max(...field.map(p => p[1]))
-  for (const [k, bu] of FLOOR_BANDS.u.entries()) for (let v = fv0 + half; v < fv1 + half; v += pitch) bandTile(bu, v, k)
-  for (const [k, bv] of FLOOR_BANDS.v.entries()) for (let u = fu0 + half; u < fu1 + half; u += pitch) {
-    if (FLOOR_BANDS.u.some(bu => Math.abs(u - bu) < pitch)) continue
-    bandTile(u, bv, 10 + k)
+  // a run of tiles from a to b along one band, laid from the end that meets a crossing
+  const run = (a: number, b: number, fromB: boolean, at: (x0: number, x1: number) => void): void => {
+    const n = Math.ceil((b - a) / pitch - 1e-6)
+    for (let i = 0; i < n; i++) fromB ? at(Math.max(a, b - (i + 1) * pitch), b - i * pitch) : at(a + i * pitch, Math.min(b, a + (i + 1) * pitch))
   }
+  const cutsOf = (bands: number[], lo: number, hi: number): [number, number, boolean][] => {
+    const edges = [lo, ...bands.flatMap(b => [b - half, b + half]), hi], out: [number, number, boolean][] = []
+    for (let i = 0; i < edges.length; i += 2) out.push([edges[i]!, edges[i + 1]!, i === 0])
+    return out
+  }
+  for (const [k, bu] of FLOOR_BANDS.u.entries()) {
+    for (const [a, b, first] of cutsOf(FLOOR_BANDS.v, fv0 - half, fv1 + half)) run(a, b, first, (v0, v1) => bandTile(bu - half, bu + half, v0, v1, k))
+    for (const bv of FLOOR_BANDS.v) bandTile(bu - half, bu + half, bv - half, bv + half, 20 + k)
+  }
+  for (const [k, bv] of FLOOR_BANDS.v.entries())
+    for (const [a, b, first] of cutsOf(FLOOR_BANDS.u, fu0 - half, fu1 + half)) run(a, b, first, (u0, u1) => bandTile(u0, u1, bv - half, bv + half, 10 + k))
   // between the bands, the fields on the diagonal, one lattice centred on the room
   const cells: V2[][] = []
   const us = [-big, ...FLOOR_BANDS.u.flatMap(b => [b - half, b + half]), big], vs = [-big, ...FLOOR_BANDS.v.flatMap(b => [b - half, b + half]), big]
