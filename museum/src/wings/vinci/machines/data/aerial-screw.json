@@ -24958,6 +24958,5431 @@
       "notes": "[geometry] Hemp turns binding the cane to the cloth above it; the spacing is the museum's."
     },
     {
+      "id": "rim-whipping-0",
+      "parent": "mast",
+      "shape": "profile of revolution",
+      "dimensions_m": {
+        "closed_axial_radial_profile": [
+          [0.0, 0.0],
+          [0.0, 0.006],
+          [0.00325, 0.0155],
+          [0.0065, 0.0141],
+          [0.00975, 0.0155],
+          [0.013, 0.0141],
+          [0.01625, 0.0155],
+          [0.0195, 0.0141],
+          [0.02275, 0.0155],
+          [0.026, 0.006],
+          [0.026, 0.0]
+        ],
+        "segments": 10
+      },
+      "position_m": [-4.654093, -0.614721, 0.240685],
+      "orientation_rad": [0.0, 1.660615, 1.528155],
+      "material": {
+        "class": "hemp cord",
+        "basis": "assumed",
+        "source": "a-geometry"
+      },
+      "certainty": "C",
+      "source": "a-geometry",
+      "notes": "[geometry] Hemp turns whipping the hem round the iron wire of the rim; their spacing is the museum's."
+    },
+    {
+      "id": "rim-whipping-1",
+      "parent": "mast",
+      "shape": "profile of revolution",
+      "dimensions_m": {
+        "closed_axial_radial_profile": [
+          [0.0, 0.0],
+          [0.0, 0.006],
+          [0.00325, 0.0155],
+          [0.0065, 0.0141],
+          [0.00975, 0.0155],
+          [0.013, 0.0141],
+          [0.01625, 0.0155],
+          [0.0195, 0.0141],
+          [0.02275, 0.0155],
+          [0.026, 0.006],
+          [0.026, 0.0]
+        ],
+        "segments": 10
+      },
+      "position_m": [-4.625184, -0.603889, 0.492664],
+      "orientation_rad": [0.0, 1.715137, 1.528073],
+      "material": {
+        "class": "hemp cord",
+        "basis": "assumed",
+        "source": "a-geometry"
+      },
+      "certainty": "C",
+      "source": "a-geometry",
+      "notes": "[geometry] Hemp turns whipping the hem round the iron wire of the rim; their spacing is the museum's."
+    },
+    {
+      "id": "rim-whipping-2",
+      "parent": "mast",
+      "shape": "profile of revolution",
+      "dimensions_m": {
+        "closed_axial_radial_profile": [
+          [0.0, 0.0],
+          [0.0, 0.006],
+          [0.00325, 0.0155],
+          [0.0065, 0.0141],
+          [0.00975, 0.0155],
+          [0.013, 0.0141],
+          [0.01625, 0.0155],
+          [0.0195, 0.0141],
+          [0.02275, 0.0155],
+          [0.026, 0.006],
+          [0.026, 0.0]
+        ],
+        "segments": 10
+      },
+      "position_m": [-4.582669, -0.593056, 0.742213],
+      "orientation_rad": [0.0, 1.76966, 1.527991],
+      "material": {
+        "class": "hemp cord",
+        "basis": "assumed",
+        "source": "a-geometry"
+      },
+      "certainty": "C",
+      "source": "a-geometry",
+      "notes": "[geometry] Hemp turns whipping the hem round the iron wire of the rim; their spacing is the museum's."
+    },
+    {
+      "id": "rim-whipping-3",
+      "parent": "mast",
+      "shape": "profile of revolution",
+      "dimensions_m": {
+        "closed_axial_radial_profile": [
+          [0.0, 0.0],
+          [0.0, 0.006],
+          [0.00325, 0.0155],
+          [0.0065, 0.0141],
+          [0.00975, 0.0155],
+          [0.013, 0.0141],
+          [0.01625, 0.0155],
+          [0.0195, 0.0141],
+          [0.02275, 0.0155],
+          [0.026, 0.006],
+          [0.026, 0.0]
+        ],
+        "segments": 10
+      },
+      "position_m": [-4.526728, -0.582224, 0.988598],
+      "orientation_rad": [0.0, 1.824183, 1.527909],
+      "material": {
+        "class": "hemp cord",
+        "basis": "assumed",
+        "source": "a-geometry"
+      },
+      "certainty": "C",
+      "source": "a-geometry",
+      "notes": "[geometry] Hemp turns whipping the hem round the iron wire of the rim; their spacing is the museum's."
+    },
+    {
+      "id": "rim-whipping-4",
+      "parent": "mast",
+      "shape": "profile of revolution",
+      "dimensions_m": {
+        "closed_axial_radial_profile": [
+          [0.0, 0.0],
+          [0.0, 0.006],
+          [0.00325, 0.0155],
+          [0.0065, 0.0141],
+          [0.00975, 0.0155],
+          [0.013, 0.0141],
+          [0.01625, 0.0155],
+          [0.0195, 0.0141],
+          [0.02275, 0.0155],
+          [0.026, 0.006],
+          [0.026, 0.0]
+        ],
+        "segments": 10
+      },
+      "position_m": [-4.457577, -0.571392, 1.2311],
+      "orientation_rad": [0.0, 1.878706, 1.527826],
+      "material": {
+        "class": "hemp cord",
+        "basis": "assumed",
+        "source": "a-geometry"
+      },
+      "certainty": "C",
+      "source": "a-geometry",
+      "notes": "[geometry] Hemp turns whipping the hem round the iron wire of the rim; their spacing is the museum's."
+    },
+    {
+      "id": "rim-whipping-5",
+      "parent": "mast",
+      "shape": "profile of revolution",
+      "dimensions_m": {
+        "closed_axial_radial_profile": [
+          [0.0, 0.0],
+          [0.0, 0.006],
+          [0.00325, 0.0155],
+          [0.0065, 0.0141],
+          [0.00975, 0.0155],
+          [0.013, 0.0141],
+          [0.01625, 0.0155],
+          [0.0195, 0.0141],
+          [0.02275, 0.0155],
+          [0.026, 0.006],
+          [0.026, 0.0]
+        ],
+        "segments": 10
+      },
+      "position_m": [-4.375475, -0.56056, 1.469013],
+      "orientation_rad": [0.0, 1.933229, 1.527742],
+      "material": {
+        "class": "hemp cord",
+        "basis": "assumed",
+        "source": "a-geometry"
+      },
+      "certainty": "C",
+      "source": "a-geometry",
+      "notes": "[geometry] Hemp turns whipping the hem round the iron wire of the rim; their spacing is the museum's."
+    },
+    {
+      "id": "rim-whipping-6",
+      "parent": "mast",
+      "shape": "profile of revolution",
+      "dimensions_m": {
+        "closed_axial_radial_profile": [
+          [0.0, 0.0],
+          [0.0, 0.006],
+          [0.00325, 0.0155],
+          [0.0065, 0.0141],
+          [0.00975, 0.0155],
+          [0.013, 0.0141],
+          [0.01625, 0.0155],
+          [0.0195, 0.0141],
+          [0.02275, 0.0155],
+          [0.026, 0.006],
+          [0.026, 0.0]
+        ],
+        "segments": 10
+      },
+      "position_m": [-4.280714, -0.549727, 1.701646],
+      "orientation_rad": [0.0, 1.987753, 1.527659],
+      "material": {
+        "class": "hemp cord",
+        "basis": "assumed",
+        "source": "a-geometry"
+      },
+      "certainty": "C",
+      "source": "a-geometry",
+      "notes": "[geometry] Hemp turns whipping the hem round the iron wire of the rim; their spacing is the museum's."
+    },
+    {
+      "id": "rim-whipping-7",
+      "parent": "mast",
+      "shape": "profile of revolution",
+      "dimensions_m": {
+        "closed_axial_radial_profile": [
+          [0.0, 0.0],
+          [0.0, 0.006],
+          [0.00325, 0.0155],
+          [0.0065, 0.0141],
+          [0.00975, 0.0155],
+          [0.013, 0.0141],
+          [0.01625, 0.0155],
+          [0.0195, 0.0141],
+          [0.02275, 0.0155],
+          [0.026, 0.006],
+          [0.026, 0.0]
+        ],
+        "segments": 10
+      },
+      "position_m": [-4.173626, -0.538895, 1.928329],
+      "orientation_rad": [0.0, 2.042277, 1.527575],
+      "material": {
+        "class": "hemp cord",
+        "basis": "assumed",
+        "source": "a-geometry"
+      },
+      "certainty": "C",
+      "source": "a-geometry",
+      "notes": "[geometry] Hemp turns whipping the hem round the iron wire of the rim; their spacing is the museum's."
+    },
+    {
+      "id": "rim-whipping-8",
+      "parent": "mast",
+      "shape": "profile of revolution",
+      "dimensions_m": {
+        "closed_axial_radial_profile": [
+          [0.0, 0.0],
+          [0.0, 0.006],
+          [0.00325, 0.0155],
+          [0.0065, 0.0141],
+          [0.00975, 0.0155],
+          [0.013, 0.0141],
+          [0.01625, 0.0155],
+          [0.0195, 0.0141],
+          [0.02275, 0.0155],
+          [0.026, 0.006],
+          [0.026, 0.0]
+        ],
+        "segments": 10
+      },
+      "position_m": [-4.054577, -0.528063, 2.148411],
+      "orientation_rad": [0.0, 2.096801, 1.527491],
+      "material": {
+        "class": "hemp cord",
+        "basis": "assumed",
+        "source": "a-geometry"
+      },
+      "certainty": "C",
+      "source": "a-geometry",
+      "notes": "[geometry] Hemp turns whipping the hem round the iron wire of the rim; their spacing is the museum's."
+    },
+    {
+      "id": "rim-whipping-9",
+      "parent": "mast",
+      "shape": "profile of revolution",
+      "dimensions_m": {
+        "closed_axial_radial_profile": [
+          [0.0, 0.0],
+          [0.0, 0.006],
+          [0.00325, 0.0155],
+          [0.0065, 0.0141],
+          [0.00975, 0.0155],
+          [0.013, 0.0141],
+          [0.01625, 0.0155],
+          [0.0195, 0.0141],
+          [0.02275, 0.0155],
+          [0.026, 0.006],
+          [0.026, 0.0]
+        ],
+        "segments": 10
+      },
+      "position_m": [-3.918719, -0.516814, 2.369297],
+      "orientation_rad": [0.0, 2.153422, 1.527403],
+      "material": {
+        "class": "hemp cord",
+        "basis": "assumed",
+        "source": "a-geometry"
+      },
+      "certainty": "C",
+      "source": "a-geometry",
+      "notes": "[geometry] Hemp turns whipping the hem round the iron wire of the rim; their spacing is the museum's."
+    },
+    {
+      "id": "rim-whipping-10",
+      "parent": "mast",
+      "shape": "profile of revolution",
+      "dimensions_m": {
+        "closed_axial_radial_profile": [
+          [0.0, 0.0],
+          [0.0, 0.006],
+          [0.00325, 0.0155],
+          [0.0065, 0.0141],
+          [0.00975, 0.0155],
+          [0.013, 0.0141],
+          [0.01625, 0.0155],
+          [0.0195, 0.0141],
+          [0.02275, 0.0155],
+          [0.026, 0.006],
+          [0.026, 0.0]
+        ],
+        "segments": 10
+      },
+      "position_m": [-3.770879, -0.505565, 2.58171],
+      "orientation_rad": [0.0, 2.210044, 1.527315],
+      "material": {
+        "class": "hemp cord",
+        "basis": "assumed",
+        "source": "a-geometry"
+      },
+      "certainty": "C",
+      "source": "a-geometry",
+      "notes": "[geometry] Hemp turns whipping the hem round the iron wire of the rim; their spacing is the museum's."
+    },
+    {
+      "id": "rim-whipping-11",
+      "parent": "mast",
+      "shape": "profile of revolution",
+      "dimensions_m": {
+        "closed_axial_radial_profile": [
+          [0.0, 0.0],
+          [0.0, 0.006],
+          [0.00325, 0.0155],
+          [0.0065, 0.0141],
+          [0.00975, 0.0155],
+          [0.013, 0.0141],
+          [0.01625, 0.0155],
+          [0.0195, 0.0141],
+          [0.02275, 0.0155],
+          [0.026, 0.006],
+          [0.026, 0.0]
+        ],
+        "segments": 10
+      },
+      "position_m": [-3.611582, -0.494316, 2.785002],
+      "orientation_rad": [0.0, 2.266666, 1.527226],
+      "material": {
+        "class": "hemp cord",
+        "basis": "assumed",
+        "source": "a-geometry"
+      },
+      "certainty": "C",
+      "source": "a-geometry",
+      "notes": "[geometry] Hemp turns whipping the hem round the iron wire of the rim; their spacing is the museum's."
+    },
+    {
+      "id": "rim-whipping-12",
+      "parent": "mast",
+      "shape": "profile of revolution",
+      "dimensions_m": {
+        "closed_axial_radial_profile": [
+          [0.0, 0.0],
+          [0.0, 0.006],
+          [0.00325, 0.0155],
+          [0.0065, 0.0141],
+          [0.00975, 0.0155],
+          [0.013, 0.0141],
+          [0.01625, 0.0155],
+          [0.0195, 0.0141],
+          [0.02275, 0.0155],
+          [0.026, 0.006],
+          [0.026, 0.0]
+        ],
+        "segments": 10
+      },
+      "position_m": [-3.441384, -0.483067, 2.97856],
+      "orientation_rad": [0.0, 2.323289, 1.527137],
+      "material": {
+        "class": "hemp cord",
+        "basis": "assumed",
+        "source": "a-geometry"
+      },
+      "certainty": "C",
+      "source": "a-geometry",
+      "notes": "[geometry] Hemp turns whipping the hem round the iron wire of the rim; their spacing is the museum's."
+    },
+    {
+      "id": "rim-whipping-13",
+      "parent": "mast",
+      "shape": "profile of revolution",
+      "dimensions_m": {
+        "closed_axial_radial_profile": [
+          [0.0, 0.0],
+          [0.0, 0.006],
+          [0.00325, 0.0155],
+          [0.0065, 0.0141],
+          [0.00975, 0.0155],
+          [0.013, 0.0141],
+          [0.01625, 0.0155],
+          [0.0195, 0.0141],
+          [0.02275, 0.0155],
+          [0.026, 0.006],
+          [0.026, 0.0]
+        ],
+        "segments": 10
+      },
+      "position_m": [-3.149293, -0.465153, 3.265298],
+      "orientation_rad": [0.0, 2.413466, 1.526995],
+      "material": {
+        "class": "hemp cord",
+        "basis": "assumed",
+        "source": "a-geometry"
+      },
+      "certainty": "C",
+      "source": "a-geometry",
+      "notes": "[geometry] Hemp turns whipping the hem round the iron wire of the rim; their spacing is the museum's."
+    },
+    {
+      "id": "rim-whipping-14",
+      "parent": "mast",
+      "shape": "profile of revolution",
+      "dimensions_m": {
+        "closed_axial_radial_profile": [
+          [0.0, 0.0],
+          [0.0, 0.006],
+          [0.00325, 0.0155],
+          [0.0065, 0.0141],
+          [0.00975, 0.0155],
+          [0.013, 0.0141],
+          [0.01625, 0.0155],
+          [0.0195, 0.0141],
+          [0.02275, 0.0155],
+          [0.026, 0.006],
+          [0.026, 0.0]
+        ],
+        "segments": 10
+      },
+      "position_m": [-2.953656, -0.453904, 3.431],
+      "orientation_rad": [0.0, 2.470089, 1.526905],
+      "material": {
+        "class": "hemp cord",
+        "basis": "assumed",
+        "source": "a-geometry"
+      },
+      "certainty": "C",
+      "source": "a-geometry",
+      "notes": "[geometry] Hemp turns whipping the hem round the iron wire of the rim; their spacing is the museum's."
+    },
+    {
+      "id": "rim-whipping-15",
+      "parent": "mast",
+      "shape": "profile of revolution",
+      "dimensions_m": {
+        "closed_axial_radial_profile": [
+          [0.0, 0.0],
+          [0.0, 0.006],
+          [0.00325, 0.0155],
+          [0.0065, 0.0141],
+          [0.00975, 0.0155],
+          [0.013, 0.0141],
+          [0.01625, 0.0155],
+          [0.0195, 0.0141],
+          [0.02275, 0.0155],
+          [0.026, 0.006],
+          [0.026, 0.0]
+        ],
+        "segments": 10
+      },
+      "position_m": [-2.749376, -0.442655, 3.585049],
+      "orientation_rad": [0.0, 2.526713, 1.526815],
+      "material": {
+        "class": "hemp cord",
+        "basis": "assumed",
+        "source": "a-geometry"
+      },
+      "certainty": "C",
+      "source": "a-geometry",
+      "notes": "[geometry] Hemp turns whipping the hem round the iron wire of the rim; their spacing is the museum's."
+    },
+    {
+      "id": "rim-whipping-16",
+      "parent": "mast",
+      "shape": "profile of revolution",
+      "dimensions_m": {
+        "closed_axial_radial_profile": [
+          [0.0, 0.0],
+          [0.0, 0.006],
+          [0.00325, 0.0155],
+          [0.0065, 0.0141],
+          [0.00975, 0.0155],
+          [0.013, 0.0141],
+          [0.01625, 0.0155],
+          [0.0195, 0.0141],
+          [0.02275, 0.0155],
+          [0.026, 0.006],
+          [0.026, 0.0]
+        ],
+        "segments": 10
+      },
+      "position_m": [-2.537143, -0.431406, 3.727],
+      "orientation_rad": [0.0, 2.583336, 1.526724],
+      "material": {
+        "class": "hemp cord",
+        "basis": "assumed",
+        "source": "a-geometry"
+      },
+      "certainty": "C",
+      "source": "a-geometry",
+      "notes": "[geometry] Hemp turns whipping the hem round the iron wire of the rim; their spacing is the museum's."
+    },
+    {
+      "id": "rim-whipping-17",
+      "parent": "mast",
+      "shape": "profile of revolution",
+      "dimensions_m": {
+        "closed_axial_radial_profile": [
+          [0.0, 0.0],
+          [0.0, 0.006],
+          [0.00325, 0.0155],
+          [0.0065, 0.0141],
+          [0.00975, 0.0155],
+          [0.013, 0.0141],
+          [0.01625, 0.0155],
+          [0.0195, 0.0141],
+          [0.02275, 0.0155],
+          [0.026, 0.006],
+          [0.026, 0.0]
+        ],
+        "segments": 10
+      },
+      "position_m": [-2.317671, -0.420157, 3.856445],
+      "orientation_rad": [0.0, 2.639961, 1.526633],
+      "material": {
+        "class": "hemp cord",
+        "basis": "assumed",
+        "source": "a-geometry"
+      },
+      "certainty": "C",
+      "source": "a-geometry",
+      "notes": "[geometry] Hemp turns whipping the hem round the iron wire of the rim; their spacing is the museum's."
+    },
+    {
+      "id": "rim-whipping-18",
+      "parent": "mast",
+      "shape": "profile of revolution",
+      "dimensions_m": {
+        "closed_axial_radial_profile": [
+          [0.0, 0.0],
+          [0.0, 0.006],
+          [0.00325, 0.0155],
+          [0.0065, 0.0141],
+          [0.00975, 0.0155],
+          [0.013, 0.0141],
+          [0.01625, 0.0155],
+          [0.0195, 0.0141],
+          [0.02275, 0.0155],
+          [0.026, 0.006],
+          [0.026, 0.0]
+        ],
+        "segments": 10
+      },
+      "position_m": [-2.091693, -0.408908, 3.973023],
+      "orientation_rad": [0.0, 2.696585, 1.526542],
+      "material": {
+        "class": "hemp cord",
+        "basis": "assumed",
+        "source": "a-geometry"
+      },
+      "certainty": "C",
+      "source": "a-geometry",
+      "notes": "[geometry] Hemp turns whipping the hem round the iron wire of the rim; their spacing is the museum's."
+    },
+    {
+      "id": "rim-whipping-19",
+      "parent": "mast",
+      "shape": "profile of revolution",
+      "dimensions_m": {
+        "closed_axial_radial_profile": [
+          [0.0, 0.0],
+          [0.0, 0.006],
+          [0.00325, 0.0155],
+          [0.0065, 0.0141],
+          [0.00975, 0.0155],
+          [0.013, 0.0141],
+          [0.01625, 0.0155],
+          [0.0195, 0.0141],
+          [0.02275, 0.0155],
+          [0.026, 0.006],
+          [0.026, 0.0]
+        ],
+        "segments": 10
+      },
+      "position_m": [-1.859961, -0.39766, 4.076412],
+      "orientation_rad": [0.0, 2.75321, 1.52645],
+      "material": {
+        "class": "hemp cord",
+        "basis": "assumed",
+        "source": "a-geometry"
+      },
+      "certainty": "C",
+      "source": "a-geometry",
+      "notes": "[geometry] Hemp turns whipping the hem round the iron wire of the rim; their spacing is the museum's."
+    },
+    {
+      "id": "rim-whipping-20",
+      "parent": "mast",
+      "shape": "profile of revolution",
+      "dimensions_m": {
+        "closed_axial_radial_profile": [
+          [0.0, 0.0],
+          [0.0, 0.006],
+          [0.00325, 0.0155],
+          [0.0065, 0.0141],
+          [0.00975, 0.0155],
+          [0.013, 0.0141],
+          [0.01625, 0.0155],
+          [0.0195, 0.0141],
+          [0.02275, 0.0155],
+          [0.026, 0.006],
+          [0.026, 0.0]
+        ],
+        "segments": 10
+      },
+      "position_m": [-1.623241, -0.386411, 4.166335],
+      "orientation_rad": [0.0, 2.809835, 1.526358],
+      "material": {
+        "class": "hemp cord",
+        "basis": "assumed",
+        "source": "a-geometry"
+      },
+      "certainty": "C",
+      "source": "a-geometry",
+      "notes": "[geometry] Hemp turns whipping the hem round the iron wire of the rim; their spacing is the museum's."
+    },
+    {
+      "id": "rim-whipping-21",
+      "parent": "mast",
+      "shape": "profile of revolution",
+      "dimensions_m": {
+        "closed_axial_radial_profile": [
+          [0.0, 0.0],
+          [0.0, 0.006],
+          [0.00325, 0.0155],
+          [0.0065, 0.0141],
+          [0.00975, 0.0155],
+          [0.013, 0.0141],
+          [0.01625, 0.0155],
+          [0.0195, 0.0141],
+          [0.02275, 0.0155],
+          [0.026, 0.006],
+          [0.026, 0.0]
+        ],
+        "segments": 10
+      },
+      "position_m": [-1.382313, -0.375162, 4.24256],
+      "orientation_rad": [0.0, 2.86646, 1.526266],
+      "material": {
+        "class": "hemp cord",
+        "basis": "assumed",
+        "source": "a-geometry"
+      },
+      "certainty": "C",
+      "source": "a-geometry",
+      "notes": "[geometry] Hemp turns whipping the hem round the iron wire of the rim; their spacing is the museum's."
+    },
+    {
+      "id": "rim-whipping-22",
+      "parent": "mast",
+      "shape": "profile of revolution",
+      "dimensions_m": {
+        "closed_axial_radial_profile": [
+          [0.0, 0.0],
+          [0.0, 0.006],
+          [0.00325, 0.0155],
+          [0.0065, 0.0141],
+          [0.00975, 0.0155],
+          [0.013, 0.0141],
+          [0.01625, 0.0155],
+          [0.0195, 0.0141],
+          [0.02275, 0.0155],
+          [0.026, 0.006],
+          [0.026, 0.0]
+        ],
+        "segments": 10
+      },
+      "position_m": [-1.137967, -0.363913, 4.304898],
+      "orientation_rad": [0.0, 2.923086, 1.526173],
+      "material": {
+        "class": "hemp cord",
+        "basis": "assumed",
+        "source": "a-geometry"
+      },
+      "certainty": "C",
+      "source": "a-geometry",
+      "notes": "[geometry] Hemp turns whipping the hem round the iron wire of the rim; their spacing is the museum's."
+    },
+    {
+      "id": "rim-whipping-23",
+      "parent": "mast",
+      "shape": "profile of revolution",
+      "dimensions_m": {
+        "closed_axial_radial_profile": [
+          [0.0, 0.0],
+          [0.0, 0.006],
+          [0.00325, 0.0155],
+          [0.0065, 0.0141],
+          [0.00975, 0.0155],
+          [0.013, 0.0141],
+          [0.01625, 0.0155],
+          [0.0195, 0.0141],
+          [0.02275, 0.0155],
+          [0.026, 0.006],
+          [0.026, 0.0]
+        ],
+        "segments": 10
+      },
+      "position_m": [-0.891002, -0.352664, 4.353208],
+      "orientation_rad": [0.0, 2.979712, 1.526079],
+      "material": {
+        "class": "hemp cord",
+        "basis": "assumed",
+        "source": "a-geometry"
+      },
+      "certainty": "C",
+      "source": "a-geometry",
+      "notes": "[geometry] Hemp turns whipping the hem round the iron wire of the rim; their spacing is the museum's."
+    },
+    {
+      "id": "rim-whipping-24",
+      "parent": "mast",
+      "shape": "profile of revolution",
+      "dimensions_m": {
+        "closed_axial_radial_profile": [
+          [0.0, 0.0],
+          [0.0, 0.006],
+          [0.00325, 0.0155],
+          [0.0065, 0.0141],
+          [0.00975, 0.0155],
+          [0.013, 0.0141],
+          [0.01625, 0.0155],
+          [0.0195, 0.0141],
+          [0.02275, 0.0155],
+          [0.026, 0.006],
+          [0.026, 0.0]
+        ],
+        "segments": 10
+      },
+      "position_m": [-0.642219, -0.341416, 4.387394],
+      "orientation_rad": [0.0, 3.036338, 1.525986],
+      "material": {
+        "class": "hemp cord",
+        "basis": "assumed",
+        "source": "a-geometry"
+      },
+      "certainty": "C",
+      "source": "a-geometry",
+      "notes": "[geometry] Hemp turns whipping the hem round the iron wire of the rim; their spacing is the museum's."
+    },
+    {
+      "id": "rim-whipping-25",
+      "parent": "mast",
+      "shape": "profile of revolution",
+      "dimensions_m": {
+        "closed_axial_radial_profile": [
+          [0.0, 0.0],
+          [0.0, 0.006],
+          [0.00325, 0.0155],
+          [0.0065, 0.0141],
+          [0.00975, 0.0155],
+          [0.013, 0.0141],
+          [0.01625, 0.0155],
+          [0.0195, 0.0141],
+          [0.02275, 0.0155],
+          [0.026, 0.006],
+          [0.026, 0.0]
+        ],
+        "segments": 10
+      },
+      "position_m": [-0.392425, -0.330167, 4.407404],
+      "orientation_rad": [0.0, 3.092965, 1.525892],
+      "material": {
+        "class": "hemp cord",
+        "basis": "assumed",
+        "source": "a-geometry"
+      },
+      "certainty": "C",
+      "source": "a-geometry",
+      "notes": "[geometry] Hemp turns whipping the hem round the iron wire of the rim; their spacing is the museum's."
+    },
+    {
+      "id": "rim-whipping-26",
+      "parent": "mast",
+      "shape": "profile of revolution",
+      "dimensions_m": {
+        "closed_axial_radial_profile": [
+          [0.0, 0.0],
+          [0.0, 0.006],
+          [0.00325, 0.0155],
+          [0.0065, 0.0141],
+          [0.00975, 0.0155],
+          [0.013, 0.0141],
+          [0.01625, 0.0155],
+          [0.0195, 0.0141],
+          [0.02275, 0.0155],
+          [0.026, 0.006],
+          [0.026, 0.0]
+        ],
+        "segments": 10
+      },
+      "position_m": [-0.142425, -0.318918, 4.413233],
+      "orientation_rad": [0.0, -3.133593, 1.525797],
+      "material": {
+        "class": "hemp cord",
+        "basis": "assumed",
+        "source": "a-geometry"
+      },
+      "certainty": "C",
+      "source": "a-geometry",
+      "notes": "[geometry] Hemp turns whipping the hem round the iron wire of the rim; their spacing is the museum's."
+    },
+    {
+      "id": "rim-whipping-27",
+      "parent": "mast",
+      "shape": "profile of revolution",
+      "dimensions_m": {
+        "closed_axial_radial_profile": [
+          [0.0, 0.0],
+          [0.0, 0.006],
+          [0.00325, 0.0155],
+          [0.0065, 0.0141],
+          [0.00975, 0.0155],
+          [0.013, 0.0141],
+          [0.01625, 0.0155],
+          [0.0195, 0.0141],
+          [0.02275, 0.0155],
+          [0.026, 0.006],
+          [0.026, 0.0]
+        ],
+        "segments": 10
+      },
+      "position_m": [0.116194, -0.307253, 4.404345],
+      "orientation_rad": [0.0, -3.074869, 1.525699],
+      "material": {
+        "class": "hemp cord",
+        "basis": "assumed",
+        "source": "a-geometry"
+      },
+      "certainty": "C",
+      "source": "a-geometry",
+      "notes": "[geometry] Hemp turns whipping the hem round the iron wire of the rim; their spacing is the museum's."
+    },
+    {
+      "id": "rim-whipping-28",
+      "parent": "mast",
+      "shape": "profile of revolution",
+      "dimensions_m": {
+        "closed_axial_radial_profile": [
+          [0.0, 0.0],
+          [0.0, 0.006],
+          [0.00325, 0.0155],
+          [0.0065, 0.0141],
+          [0.00975, 0.0155],
+          [0.013, 0.0141],
+          [0.01625, 0.0155],
+          [0.0195, 0.0141],
+          [0.02275, 0.0155],
+          [0.026, 0.006],
+          [0.026, 0.0]
+        ],
+        "segments": 10
+      },
+      "position_m": [0.373283, -0.295587, 4.380348],
+      "orientation_rad": [0.0, -3.016144, 1.5256],
+      "material": {
+        "class": "hemp cord",
+        "basis": "assumed",
+        "source": "a-geometry"
+      },
+      "certainty": "C",
+      "source": "a-geometry",
+      "notes": "[geometry] Hemp turns whipping the hem round the iron wire of the rim; their spacing is the museum's."
+    },
+    {
+      "id": "rim-whipping-29",
+      "parent": "mast",
+      "shape": "profile of revolution",
+      "dimensions_m": {
+        "closed_axial_radial_profile": [
+          [0.0, 0.0],
+          [0.0, 0.006],
+          [0.00325, 0.0155],
+          [0.0065, 0.0141],
+          [0.00975, 0.0155],
+          [0.013, 0.0141],
+          [0.01625, 0.0155],
+          [0.0195, 0.0141],
+          [0.02275, 0.0155],
+          [0.026, 0.006],
+          [0.026, 0.0]
+        ],
+        "segments": 10
+      },
+      "position_m": [0.627961, -0.283922, 4.34139],
+      "orientation_rad": [0.0, -2.957418, 1.525501],
+      "material": {
+        "class": "hemp cord",
+        "basis": "assumed",
+        "source": "a-geometry"
+      },
+      "certainty": "C",
+      "source": "a-geometry",
+      "notes": "[geometry] Hemp turns whipping the hem round the iron wire of the rim; their spacing is the museum's."
+    },
+    {
+      "id": "rim-whipping-30",
+      "parent": "mast",
+      "shape": "profile of revolution",
+      "dimensions_m": {
+        "closed_axial_radial_profile": [
+          [0.0, 0.0],
+          [0.0, 0.006],
+          [0.00325, 0.0155],
+          [0.0065, 0.0141],
+          [0.00975, 0.0155],
+          [0.013, 0.0141],
+          [0.01625, 0.0155],
+          [0.0195, 0.0141],
+          [0.02275, 0.0155],
+          [0.026, 0.006],
+          [0.026, 0.0]
+        ],
+        "segments": 10
+      },
+      "position_m": [0.879361, -0.272257, 4.287672],
+      "orientation_rad": [0.0, -2.898692, 1.525401],
+      "material": {
+        "class": "hemp cord",
+        "basis": "assumed",
+        "source": "a-geometry"
+      },
+      "certainty": "C",
+      "source": "a-geometry",
+      "notes": "[geometry] Hemp turns whipping the hem round the iron wire of the rim; their spacing is the museum's."
+    },
+    {
+      "id": "rim-whipping-31",
+      "parent": "mast",
+      "shape": "profile of revolution",
+      "dimensions_m": {
+        "closed_axial_radial_profile": [
+          [0.0, 0.0],
+          [0.0, 0.006],
+          [0.00325, 0.0155],
+          [0.0065, 0.0141],
+          [0.00975, 0.0155],
+          [0.013, 0.0141],
+          [0.01625, 0.0155],
+          [0.0195, 0.0141],
+          [0.02275, 0.0155],
+          [0.026, 0.006],
+          [0.026, 0.0]
+        ],
+        "segments": 10
+      },
+      "position_m": [1.126629, -0.260591, 4.219444],
+      "orientation_rad": [0.0, -2.839966, 1.525301],
+      "material": {
+        "class": "hemp cord",
+        "basis": "assumed",
+        "source": "a-geometry"
+      },
+      "certainty": "C",
+      "source": "a-geometry",
+      "notes": "[geometry] Hemp turns whipping the hem round the iron wire of the rim; their spacing is the museum's."
+    },
+    {
+      "id": "rim-whipping-32",
+      "parent": "mast",
+      "shape": "profile of revolution",
+      "dimensions_m": {
+        "closed_axial_radial_profile": [
+          [0.0, 0.0],
+          [0.0, 0.006],
+          [0.00325, 0.0155],
+          [0.0065, 0.0141],
+          [0.00975, 0.0155],
+          [0.013, 0.0141],
+          [0.01625, 0.0155],
+          [0.0195, 0.0141],
+          [0.02275, 0.0155],
+          [0.026, 0.006],
+          [0.026, 0.0]
+        ],
+        "segments": 10
+      },
+      "position_m": [1.368932, -0.248926, 4.137004],
+      "orientation_rad": [0.0, -2.78124, 1.525201],
+      "material": {
+        "class": "hemp cord",
+        "basis": "assumed",
+        "source": "a-geometry"
+      },
+      "certainty": "C",
+      "source": "a-geometry",
+      "notes": "[geometry] Hemp turns whipping the hem round the iron wire of the rim; their spacing is the museum's."
+    },
+    {
+      "id": "rim-whipping-33",
+      "parent": "mast",
+      "shape": "profile of revolution",
+      "dimensions_m": {
+        "closed_axial_radial_profile": [
+          [0.0, 0.0],
+          [0.0, 0.006],
+          [0.00325, 0.0155],
+          [0.0065, 0.0141],
+          [0.00975, 0.0155],
+          [0.013, 0.0141],
+          [0.01625, 0.0155],
+          [0.0195, 0.0141],
+          [0.02275, 0.0155],
+          [0.026, 0.006],
+          [0.026, 0.0]
+        ],
+        "segments": 10
+      },
+      "position_m": [1.605455, -0.237261, 4.040699],
+      "orientation_rad": [0.0, -2.722513, 1.5251],
+      "material": {
+        "class": "hemp cord",
+        "basis": "assumed",
+        "source": "a-geometry"
+      },
+      "certainty": "C",
+      "source": "a-geometry",
+      "notes": "[geometry] Hemp turns whipping the hem round the iron wire of the rim; their spacing is the museum's."
+    },
+    {
+      "id": "rim-whipping-34",
+      "parent": "mast",
+      "shape": "profile of revolution",
+      "dimensions_m": {
+        "closed_axial_radial_profile": [
+          [0.0, 0.0],
+          [0.0, 0.006],
+          [0.00325, 0.0155],
+          [0.0065, 0.0141],
+          [0.00975, 0.0155],
+          [0.013, 0.0141],
+          [0.01625, 0.0155],
+          [0.0195, 0.0141],
+          [0.02275, 0.0155],
+          [0.026, 0.006],
+          [0.026, 0.0]
+        ],
+        "segments": 10
+      },
+      "position_m": [1.835409, -0.225595, 3.930924],
+      "orientation_rad": [0.0, -2.663786, 1.524998],
+      "material": {
+        "class": "hemp cord",
+        "basis": "assumed",
+        "source": "a-geometry"
+      },
+      "certainty": "C",
+      "source": "a-geometry",
+      "notes": "[geometry] Hemp turns whipping the hem round the iron wire of the rim; their spacing is the museum's."
+    },
+    {
+      "id": "rim-whipping-35",
+      "parent": "mast",
+      "shape": "profile of revolution",
+      "dimensions_m": {
+        "closed_axial_radial_profile": [
+          [0.0, 0.0],
+          [0.0, 0.006],
+          [0.00325, 0.0155],
+          [0.0065, 0.0141],
+          [0.00975, 0.0155],
+          [0.013, 0.0141],
+          [0.01625, 0.0155],
+          [0.0195, 0.0141],
+          [0.02275, 0.0155],
+          [0.026, 0.006],
+          [0.026, 0.0]
+        ],
+        "segments": 10
+      },
+      "position_m": [2.058028, -0.21393, 3.808115],
+      "orientation_rad": [0.0, -2.605058, 1.524897],
+      "material": {
+        "class": "hemp cord",
+        "basis": "assumed",
+        "source": "a-geometry"
+      },
+      "certainty": "C",
+      "source": "a-geometry",
+      "notes": "[geometry] Hemp turns whipping the hem round the iron wire of the rim; their spacing is the museum's."
+    },
+    {
+      "id": "rim-whipping-36",
+      "parent": "mast",
+      "shape": "profile of revolution",
+      "dimensions_m": {
+        "closed_axial_radial_profile": [
+          [0.0, 0.0],
+          [0.0, 0.006],
+          [0.00325, 0.0155],
+          [0.0065, 0.0141],
+          [0.00975, 0.0155],
+          [0.013, 0.0141],
+          [0.01625, 0.0155],
+          [0.0195, 0.0141],
+          [0.02275, 0.0155],
+          [0.026, 0.006],
+          [0.026, 0.0]
+        ],
+        "segments": 10
+      },
+      "position_m": [2.272578, -0.202264, 3.672756],
+      "orientation_rad": [0.0, -2.54633, 1.524794],
+      "material": {
+        "class": "hemp cord",
+        "basis": "assumed",
+        "source": "a-geometry"
+      },
+      "certainty": "C",
+      "source": "a-geometry",
+      "notes": "[geometry] Hemp turns whipping the hem round the iron wire of the rim; their spacing is the museum's."
+    },
+    {
+      "id": "rim-whipping-37",
+      "parent": "mast",
+      "shape": "profile of revolution",
+      "dimensions_m": {
+        "closed_axial_radial_profile": [
+          [0.0, 0.0],
+          [0.0, 0.006],
+          [0.00325, 0.0155],
+          [0.0065, 0.0141],
+          [0.00975, 0.0155],
+          [0.013, 0.0141],
+          [0.01625, 0.0155],
+          [0.0195, 0.0141],
+          [0.02275, 0.0155],
+          [0.026, 0.006],
+          [0.026, 0.0]
+        ],
+        "segments": 10
+      },
+      "position_m": [2.478354, -0.190599, 3.525367],
+      "orientation_rad": [0.0, -2.487602, 1.524691],
+      "material": {
+        "class": "hemp cord",
+        "basis": "assumed",
+        "source": "a-geometry"
+      },
+      "certainty": "C",
+      "source": "a-geometry",
+      "notes": "[geometry] Hemp turns whipping the hem round the iron wire of the rim; their spacing is the museum's."
+    },
+    {
+      "id": "rim-whipping-38",
+      "parent": "mast",
+      "shape": "profile of revolution",
+      "dimensions_m": {
+        "closed_axial_radial_profile": [
+          [0.0, 0.0],
+          [0.0, 0.006],
+          [0.00325, 0.0155],
+          [0.0065, 0.0141],
+          [0.00975, 0.0155],
+          [0.013, 0.0141],
+          [0.01625, 0.0155],
+          [0.0195, 0.0141],
+          [0.02275, 0.0155],
+          [0.026, 0.006],
+          [0.026, 0.0]
+        ],
+        "segments": 10
+      },
+      "position_m": [2.674686, -0.178934, 3.366512],
+      "orientation_rad": [0.0, -2.428873, 1.524588],
+      "material": {
+        "class": "hemp cord",
+        "basis": "assumed",
+        "source": "a-geometry"
+      },
+      "certainty": "C",
+      "source": "a-geometry",
+      "notes": "[geometry] Hemp turns whipping the hem round the iron wire of the rim; their spacing is the museum's."
+    },
+    {
+      "id": "rim-whipping-39",
+      "parent": "mast",
+      "shape": "profile of revolution",
+      "dimensions_m": {
+        "closed_axial_radial_profile": [
+          [0.0, 0.0],
+          [0.0, 0.006],
+          [0.00325, 0.0155],
+          [0.0065, 0.0141],
+          [0.00975, 0.0155],
+          [0.013, 0.0141],
+          [0.01625, 0.0155],
+          [0.0195, 0.0141],
+          [0.02275, 0.0155],
+          [0.026, 0.006],
+          [0.026, 0.0]
+        ],
+        "segments": 10
+      },
+      "position_m": [2.860938, -0.167269, 3.196789],
+      "orientation_rad": [0.0, -2.370144, 1.524484],
+      "material": {
+        "class": "hemp cord",
+        "basis": "assumed",
+        "source": "a-geometry"
+      },
+      "certainty": "C",
+      "source": "a-geometry",
+      "notes": "[geometry] Hemp turns whipping the hem round the iron wire of the rim; their spacing is the museum's."
+    },
+    {
+      "id": "rim-whipping-40",
+      "parent": "mast",
+      "shape": "profile of revolution",
+      "dimensions_m": {
+        "closed_axial_radial_profile": [
+          [0.0, 0.0],
+          [0.0, 0.006],
+          [0.00325, 0.0155],
+          [0.0065, 0.0141],
+          [0.00975, 0.0155],
+          [0.013, 0.0141],
+          [0.01625, 0.0155],
+          [0.0195, 0.0141],
+          [0.02275, 0.0155],
+          [0.026, 0.006],
+          [0.026, 0.0]
+        ],
+        "segments": 10
+      },
+      "position_m": [3.084638, -0.15227, 2.96363],
+      "orientation_rad": [0.0, -2.294634, 1.52435],
+      "material": {
+        "class": "hemp cord",
+        "basis": "assumed",
+        "source": "a-geometry"
+      },
+      "certainty": "C",
+      "source": "a-geometry",
+      "notes": "[geometry] Hemp turns whipping the hem round the iron wire of the rim; their spacing is the museum's."
+    },
+    {
+      "id": "rim-whipping-41",
+      "parent": "mast",
+      "shape": "profile of revolution",
+      "dimensions_m": {
+        "closed_axial_radial_profile": [
+          [0.0, 0.0],
+          [0.0, 0.006],
+          [0.00325, 0.0155],
+          [0.0065, 0.0141],
+          [0.00975, 0.0155],
+          [0.013, 0.0141],
+          [0.01625, 0.0155],
+          [0.0195, 0.0141],
+          [0.02275, 0.0155],
+          [0.026, 0.006],
+          [0.026, 0.0]
+        ],
+        "segments": 10
+      },
+      "position_m": [3.245672, -0.140605, 2.7715],
+      "orientation_rad": [0.0, -2.235904, 1.524246],
+      "material": {
+        "class": "hemp cord",
+        "basis": "assumed",
+        "source": "a-geometry"
+      },
+      "certainty": "C",
+      "source": "a-geometry",
+      "notes": "[geometry] Hemp turns whipping the hem round the iron wire of the rim; their spacing is the museum's."
+    },
+    {
+      "id": "rim-whipping-42",
+      "parent": "mast",
+      "shape": "profile of revolution",
+      "dimensions_m": {
+        "closed_axial_radial_profile": [
+          [0.0, 0.0],
+          [0.0, 0.006],
+          [0.00325, 0.0155],
+          [0.0065, 0.0141],
+          [0.00975, 0.0155],
+          [0.013, 0.0141],
+          [0.01625, 0.0155],
+          [0.0195, 0.0141],
+          [0.02275, 0.0155],
+          [0.026, 0.006],
+          [0.026, 0.0]
+        ],
+        "segments": 10
+      },
+      "position_m": [3.394816, -0.12894, 2.570704],
+      "orientation_rad": [0.0, -2.177174, 1.52414],
+      "material": {
+        "class": "hemp cord",
+        "basis": "assumed",
+        "source": "a-geometry"
+      },
+      "certainty": "C",
+      "source": "a-geometry",
+      "notes": "[geometry] Hemp turns whipping the hem round the iron wire of the rim; their spacing is the museum's."
+    },
+    {
+      "id": "rim-whipping-43",
+      "parent": "mast",
+      "shape": "profile of revolution",
+      "dimensions_m": {
+        "closed_axial_radial_profile": [
+          [0.0, 0.0],
+          [0.0, 0.006],
+          [0.00325, 0.0155],
+          [0.0065, 0.0141],
+          [0.00975, 0.0155],
+          [0.013, 0.0141],
+          [0.01625, 0.0155],
+          [0.0195, 0.0141],
+          [0.02275, 0.0155],
+          [0.026, 0.006],
+          [0.026, 0.0]
+        ],
+        "segments": 10
+      },
+      "position_m": [3.536259, -0.116858, 2.354383],
+      "orientation_rad": [0.0, -2.116346, 1.524031],
+      "material": {
+        "class": "hemp cord",
+        "basis": "assumed",
+        "source": "a-geometry"
+      },
+      "certainty": "C",
+      "source": "a-geometry",
+      "notes": "[geometry] Hemp turns whipping the hem round the iron wire of the rim; their spacing is the museum's."
+    },
+    {
+      "id": "rim-whipping-44",
+      "parent": "mast",
+      "shape": "profile of revolution",
+      "dimensions_m": {
+        "closed_axial_radial_profile": [
+          [0.0, 0.0],
+          [0.0, 0.006],
+          [0.00325, 0.0155],
+          [0.0065, 0.0141],
+          [0.00975, 0.0155],
+          [0.013, 0.0141],
+          [0.01625, 0.0155],
+          [0.0195, 0.0141],
+          [0.02275, 0.0155],
+          [0.026, 0.006],
+          [0.026, 0.0]
+        ],
+        "segments": 10
+      },
+      "position_m": [3.663991, -0.104776, 2.130391],
+      "orientation_rad": [0.0, -2.055517, 1.523921],
+      "material": {
+        "class": "hemp cord",
+        "basis": "assumed",
+        "source": "a-geometry"
+      },
+      "certainty": "C",
+      "source": "a-geometry",
+      "notes": "[geometry] Hemp turns whipping the hem round the iron wire of the rim; their spacing is the museum's."
+    },
+    {
+      "id": "rim-whipping-45",
+      "parent": "mast",
+      "shape": "profile of revolution",
+      "dimensions_m": {
+        "closed_axial_radial_profile": [
+          [0.0, 0.0],
+          [0.0, 0.006],
+          [0.00325, 0.0155],
+          [0.0065, 0.0141],
+          [0.00975, 0.0155],
+          [0.013, 0.0141],
+          [0.01625, 0.0155],
+          [0.0195, 0.0141],
+          [0.02275, 0.0155],
+          [0.026, 0.006],
+          [0.026, 0.0]
+        ],
+        "segments": 10
+      },
+      "position_m": [3.777604, -0.092694, 1.899594],
+      "orientation_rad": [0.0, -1.994688, 1.52381],
+      "material": {
+        "class": "hemp cord",
+        "basis": "assumed",
+        "source": "a-geometry"
+      },
+      "certainty": "C",
+      "source": "a-geometry",
+      "notes": "[geometry] Hemp turns whipping the hem round the iron wire of the rim; their spacing is the museum's."
+    },
+    {
+      "id": "rim-whipping-46",
+      "parent": "mast",
+      "shape": "profile of revolution",
+      "dimensions_m": {
+        "closed_axial_radial_profile": [
+          [0.0, 0.0],
+          [0.0, 0.006],
+          [0.00325, 0.0155],
+          [0.0065, 0.0141],
+          [0.00975, 0.0155],
+          [0.013, 0.0141],
+          [0.01625, 0.0155],
+          [0.0195, 0.0141],
+          [0.02275, 0.0155],
+          [0.026, 0.006],
+          [0.026, 0.0]
+        ],
+        "segments": 10
+      },
+      "position_m": [3.876743, -0.080612, 1.662877],
+      "orientation_rad": [0.0, -1.933858, 1.523699],
+      "material": {
+        "class": "hemp cord",
+        "basis": "assumed",
+        "source": "a-geometry"
+      },
+      "certainty": "C",
+      "source": "a-geometry",
+      "notes": "[geometry] Hemp turns whipping the hem round the iron wire of the rim; their spacing is the museum's."
+    },
+    {
+      "id": "rim-whipping-47",
+      "parent": "mast",
+      "shape": "profile of revolution",
+      "dimensions_m": {
+        "closed_axial_radial_profile": [
+          [0.0, 0.0],
+          [0.0, 0.006],
+          [0.00325, 0.0155],
+          [0.0065, 0.0141],
+          [0.00975, 0.0155],
+          [0.013, 0.0141],
+          [0.01625, 0.0155],
+          [0.0195, 0.0141],
+          [0.02275, 0.0155],
+          [0.026, 0.006],
+          [0.026, 0.0]
+        ],
+        "segments": 10
+      },
+      "position_m": [3.96111, -0.06853, 1.421145],
+      "orientation_rad": [0.0, -1.873028, 1.523588],
+      "material": {
+        "class": "hemp cord",
+        "basis": "assumed",
+        "source": "a-geometry"
+      },
+      "certainty": "C",
+      "source": "a-geometry",
+      "notes": "[geometry] Hemp turns whipping the hem round the iron wire of the rim; their spacing is the museum's."
+    },
+    {
+      "id": "rim-whipping-48",
+      "parent": "mast",
+      "shape": "profile of revolution",
+      "dimensions_m": {
+        "closed_axial_radial_profile": [
+          [0.0, 0.0],
+          [0.0, 0.006],
+          [0.00325, 0.0155],
+          [0.0065, 0.0141],
+          [0.00975, 0.0155],
+          [0.013, 0.0141],
+          [0.01625, 0.0155],
+          [0.0195, 0.0141],
+          [0.02275, 0.0155],
+          [0.026, 0.006],
+          [0.026, 0.0]
+        ],
+        "segments": 10
+      },
+      "position_m": [4.030463, -0.056448, 1.175315],
+      "orientation_rad": [0.0, -1.812198, 1.523476],
+      "material": {
+        "class": "hemp cord",
+        "basis": "assumed",
+        "source": "a-geometry"
+      },
+      "certainty": "C",
+      "source": "a-geometry",
+      "notes": "[geometry] Hemp turns whipping the hem round the iron wire of the rim; their spacing is the museum's."
+    },
+    {
+      "id": "rim-whipping-49",
+      "parent": "mast",
+      "shape": "profile of revolution",
+      "dimensions_m": {
+        "closed_axial_radial_profile": [
+          [0.0, 0.0],
+          [0.0, 0.006],
+          [0.00325, 0.0155],
+          [0.0065, 0.0141],
+          [0.00975, 0.0155],
+          [0.013, 0.0141],
+          [0.01625, 0.0155],
+          [0.0195, 0.0141],
+          [0.02275, 0.0155],
+          [0.026, 0.006],
+          [0.026, 0.0]
+        ],
+        "segments": 10
+      },
+      "position_m": [4.084616, -0.044366, 0.926317],
+      "orientation_rad": [0.0, -1.751367, 1.523363],
+      "material": {
+        "class": "hemp cord",
+        "basis": "assumed",
+        "source": "a-geometry"
+      },
+      "certainty": "C",
+      "source": "a-geometry",
+      "notes": "[geometry] Hemp turns whipping the hem round the iron wire of the rim; their spacing is the museum's."
+    },
+    {
+      "id": "rim-whipping-50",
+      "parent": "mast",
+      "shape": "profile of revolution",
+      "dimensions_m": {
+        "closed_axial_radial_profile": [
+          [0.0, 0.0],
+          [0.0, 0.006],
+          [0.00325, 0.0155],
+          [0.0065, 0.0141],
+          [0.00975, 0.0155],
+          [0.013, 0.0141],
+          [0.01625, 0.0155],
+          [0.0195, 0.0141],
+          [0.02275, 0.0155],
+          [0.026, 0.006],
+          [0.026, 0.0]
+        ],
+        "segments": 10
+      },
+      "position_m": [4.12344, -0.032285, 0.675087],
+      "orientation_rad": [0.0, -1.690535, 1.52325],
+      "material": {
+        "class": "hemp cord",
+        "basis": "assumed",
+        "source": "a-geometry"
+      },
+      "certainty": "C",
+      "source": "a-geometry",
+      "notes": "[geometry] Hemp turns whipping the hem round the iron wire of the rim; their spacing is the museum's."
+    },
+    {
+      "id": "rim-whipping-51",
+      "parent": "mast",
+      "shape": "profile of revolution",
+      "dimensions_m": {
+        "closed_axial_radial_profile": [
+          [0.0, 0.0],
+          [0.0, 0.006],
+          [0.00325, 0.0155],
+          [0.0065, 0.0141],
+          [0.00975, 0.0155],
+          [0.013, 0.0141],
+          [0.01625, 0.0155],
+          [0.0195, 0.0141],
+          [0.02275, 0.0155],
+          [0.026, 0.006],
+          [0.026, 0.0]
+        ],
+        "segments": 10
+      },
+      "position_m": [4.146865, -0.020203, 0.422566],
+      "orientation_rad": [0.0, -1.629703, 1.523136],
+      "material": {
+        "class": "hemp cord",
+        "basis": "assumed",
+        "source": "a-geometry"
+      },
+      "certainty": "C",
+      "source": "a-geometry",
+      "notes": "[geometry] Hemp turns whipping the hem round the iron wire of the rim; their spacing is the museum's."
+    },
+    {
+      "id": "rim-whipping-52",
+      "parent": "mast",
+      "shape": "profile of revolution",
+      "dimensions_m": {
+        "closed_axial_radial_profile": [
+          [0.0, 0.0],
+          [0.0, 0.006],
+          [0.00325, 0.0155],
+          [0.0065, 0.0141],
+          [0.00975, 0.0155],
+          [0.013, 0.0141],
+          [0.01625, 0.0155],
+          [0.0195, 0.0141],
+          [0.02275, 0.0155],
+          [0.026, 0.006],
+          [0.026, 0.0]
+        ],
+        "segments": 10
+      },
+      "position_m": [4.154877, -0.008121, 0.169695],
+      "orientation_rad": [0.0, -1.568871, 1.523022],
+      "material": {
+        "class": "hemp cord",
+        "basis": "assumed",
+        "source": "a-geometry"
+      },
+      "certainty": "C",
+      "source": "a-geometry",
+      "notes": "[geometry] Hemp turns whipping the hem round the iron wire of the rim; their spacing is the museum's."
+    },
+    {
+      "id": "rim-whipping-53",
+      "parent": "mast",
+      "shape": "profile of revolution",
+      "dimensions_m": {
+        "closed_axial_radial_profile": [
+          [0.0, 0.0],
+          [0.0, 0.006],
+          [0.00325, 0.0155],
+          [0.0065, 0.0141],
+          [0.00975, 0.0155],
+          [0.013, 0.0141],
+          [0.01625, 0.0155],
+          [0.0195, 0.0141],
+          [0.02275, 0.0155],
+          [0.026, 0.006],
+          [0.026, 0.0]
+        ],
+        "segments": 10
+      },
+      "position_m": [4.147521, 0.003961, -0.082589],
+      "orientation_rad": [0.0, -1.508038, 1.522907],
+      "material": {
+        "class": "hemp cord",
+        "basis": "assumed",
+        "source": "a-geometry"
+      },
+      "certainty": "C",
+      "source": "a-geometry",
+      "notes": "[geometry] Hemp turns whipping the hem round the iron wire of the rim; their spacing is the museum's."
+    },
+    {
+      "id": "rim-whipping-54",
+      "parent": "mast",
+      "shape": "profile of revolution",
+      "dimensions_m": {
+        "closed_axial_radial_profile": [
+          [0.0, 0.0],
+          [0.0, 0.006],
+          [0.00325, 0.0155],
+          [0.0065, 0.0141],
+          [0.00975, 0.0155],
+          [0.013, 0.0141],
+          [0.01625, 0.0155],
+          [0.0195, 0.0141],
+          [0.02275, 0.0155],
+          [0.026, 0.006],
+          [0.026, 0.0]
+        ],
+        "segments": 10
+      },
+      "position_m": [4.124897, 0.016043, -0.333355],
+      "orientation_rad": [0.0, -1.447205, 1.522792],
+      "material": {
+        "class": "hemp cord",
+        "basis": "assumed",
+        "source": "a-geometry"
+      },
+      "certainty": "C",
+      "source": "a-geometry",
+      "notes": "[geometry] Hemp turns whipping the hem round the iron wire of the rim; their spacing is the museum's."
+    },
+    {
+      "id": "rim-whipping-55",
+      "parent": "mast",
+      "shape": "profile of revolution",
+      "dimensions_m": {
+        "closed_axial_radial_profile": [
+          [0.0, 0.0],
+          [0.0, 0.006],
+          [0.00325, 0.0155],
+          [0.0065, 0.0141],
+          [0.00975, 0.0155],
+          [0.013, 0.0141],
+          [0.01625, 0.0155],
+          [0.0195, 0.0141],
+          [0.02275, 0.0155],
+          [0.026, 0.006],
+          [0.026, 0.0]
+        ],
+        "segments": 10
+      },
+      "position_m": [4.087162, 0.028125, -0.581683],
+      "orientation_rad": [0.0, -1.386371, 1.522676],
+      "material": {
+        "class": "hemp cord",
+        "basis": "assumed",
+        "source": "a-geometry"
+      },
+      "certainty": "C",
+      "source": "a-geometry",
+      "notes": "[geometry] Hemp turns whipping the hem round the iron wire of the rim; their spacing is the museum's."
+    },
+    {
+      "id": "rim-whipping-56",
+      "parent": "mast",
+      "shape": "profile of revolution",
+      "dimensions_m": {
+        "closed_axial_radial_profile": [
+          [0.0, 0.0],
+          [0.0, 0.006],
+          [0.00325, 0.0155],
+          [0.0065, 0.0141],
+          [0.00975, 0.0155],
+          [0.013, 0.0141],
+          [0.01625, 0.0155],
+          [0.0195, 0.0141],
+          [0.02275, 0.0155],
+          [0.026, 0.006],
+          [0.026, 0.0]
+        ],
+        "segments": 10
+      },
+      "position_m": [4.03453, 0.040206, -0.826664],
+      "orientation_rad": [0.0, -1.325537, 1.522559],
+      "material": {
+        "class": "hemp cord",
+        "basis": "assumed",
+        "source": "a-geometry"
+      },
+      "certainty": "C",
+      "source": "a-geometry",
+      "notes": "[geometry] Hemp turns whipping the hem round the iron wire of the rim; their spacing is the museum's."
+    },
+    {
+      "id": "rim-whipping-57",
+      "parent": "mast",
+      "shape": "profile of revolution",
+      "dimensions_m": {
+        "closed_axial_radial_profile": [
+          [0.0, 0.0],
+          [0.0, 0.006],
+          [0.00325, 0.0155],
+          [0.0065, 0.0141],
+          [0.00975, 0.0155],
+          [0.013, 0.0141],
+          [0.01625, 0.0155],
+          [0.0195, 0.0141],
+          [0.02275, 0.0155],
+          [0.026, 0.006],
+          [0.026, 0.0]
+        ],
+        "segments": 10
+      },
+      "position_m": [3.967265, 0.052288, -1.067408],
+      "orientation_rad": [0.0, -1.264703, 1.522442],
+      "material": {
+        "class": "hemp cord",
+        "basis": "assumed",
+        "source": "a-geometry"
+      },
+      "certainty": "C",
+      "source": "a-geometry",
+      "notes": "[geometry] Hemp turns whipping the hem round the iron wire of the rim; their spacing is the museum's."
+    },
+    {
+      "id": "rim-whipping-58",
+      "parent": "mast",
+      "shape": "profile of revolution",
+      "dimensions_m": {
+        "closed_axial_radial_profile": [
+          [0.0, 0.0],
+          [0.0, 0.006],
+          [0.00325, 0.0155],
+          [0.0065, 0.0141],
+          [0.00975, 0.0155],
+          [0.013, 0.0141],
+          [0.01625, 0.0155],
+          [0.0195, 0.0141],
+          [0.02275, 0.0155],
+          [0.026, 0.006],
+          [0.026, 0.0]
+        ],
+        "segments": 10
+      },
+      "position_m": [3.882625, 0.064787, -1.311069],
+      "orientation_rad": [0.0, -1.20177, 1.522321],
+      "material": {
+        "class": "hemp cord",
+        "basis": "assumed",
+        "source": "a-geometry"
+      },
+      "certainty": "C",
+      "source": "a-geometry",
+      "notes": "[geometry] Hemp turns whipping the hem round the iron wire of the rim; their spacing is the museum's."
+    },
+    {
+      "id": "rim-whipping-59",
+      "parent": "mast",
+      "shape": "profile of revolution",
+      "dimensions_m": {
+        "closed_axial_radial_profile": [
+          [0.0, 0.0],
+          [0.0, 0.006],
+          [0.00325, 0.0155],
+          [0.0065, 0.0141],
+          [0.00975, 0.0155],
+          [0.013, 0.0141],
+          [0.01625, 0.0155],
+          [0.0195, 0.0141],
+          [0.02275, 0.0155],
+          [0.026, 0.006],
+          [0.026, 0.0]
+        ],
+        "segments": 10
+      },
+      "position_m": [3.783081, 0.077285, -1.548326],
+      "orientation_rad": [0.0, -1.138836, 1.522198],
+      "material": {
+        "class": "hemp cord",
+        "basis": "assumed",
+        "source": "a-geometry"
+      },
+      "certainty": "C",
+      "source": "a-geometry",
+      "notes": "[geometry] Hemp turns whipping the hem round the iron wire of the rim; their spacing is the museum's."
+    },
+    {
+      "id": "rim-whipping-60",
+      "parent": "mast",
+      "shape": "profile of revolution",
+      "dimensions_m": {
+        "closed_axial_radial_profile": [
+          [0.0, 0.0],
+          [0.0, 0.006],
+          [0.00325, 0.0155],
+          [0.0065, 0.0141],
+          [0.00975, 0.0155],
+          [0.013, 0.0141],
+          [0.01625, 0.0155],
+          [0.0195, 0.0141],
+          [0.02275, 0.0155],
+          [0.026, 0.006],
+          [0.026, 0.0]
+        ],
+        "segments": 10
+      },
+      "position_m": [3.669103, 0.089784, -1.778272],
+      "orientation_rad": [0.0, -1.075902, 1.522075],
+      "material": {
+        "class": "hemp cord",
+        "basis": "assumed",
+        "source": "a-geometry"
+      },
+      "certainty": "C",
+      "source": "a-geometry",
+      "notes": "[geometry] Hemp turns whipping the hem round the iron wire of the rim; their spacing is the museum's."
+    },
+    {
+      "id": "rim-whipping-61",
+      "parent": "mast",
+      "shape": "profile of revolution",
+      "dimensions_m": {
+        "closed_axial_radial_profile": [
+          [0.0, 0.0],
+          [0.0, 0.006],
+          [0.00325, 0.0155],
+          [0.0065, 0.0141],
+          [0.00975, 0.0155],
+          [0.013, 0.0141],
+          [0.01625, 0.0155],
+          [0.0195, 0.0141],
+          [0.02275, 0.0155],
+          [0.026, 0.006],
+          [0.026, 0.0]
+        ],
+        "segments": 10
+      },
+      "position_m": [3.541215, 0.102282, -2.000033],
+      "orientation_rad": [0.0, -1.012968, 1.521952],
+      "material": {
+        "class": "hemp cord",
+        "basis": "assumed",
+        "source": "a-geometry"
+      },
+      "certainty": "C",
+      "source": "a-geometry",
+      "notes": "[geometry] Hemp turns whipping the hem round the iron wire of the rim; their spacing is the museum's."
+    },
+    {
+      "id": "rim-whipping-62",
+      "parent": "mast",
+      "shape": "profile of revolution",
+      "dimensions_m": {
+        "closed_axial_radial_profile": [
+          [0.0, 0.0],
+          [0.0, 0.006],
+          [0.00325, 0.0155],
+          [0.0065, 0.0141],
+          [0.00975, 0.0155],
+          [0.013, 0.0141],
+          [0.01625, 0.0155],
+          [0.0195, 0.0141],
+          [0.02275, 0.0155],
+          [0.026, 0.006],
+          [0.026, 0.0]
+        ],
+        "segments": 10
+      },
+      "position_m": [3.399994, 0.11478, -2.212772],
+      "orientation_rad": [0.0, -0.950033, 1.521828],
+      "material": {
+        "class": "hemp cord",
+        "basis": "assumed",
+        "source": "a-geometry"
+      },
+      "certainty": "C",
+      "source": "a-geometry",
+      "notes": "[geometry] Hemp turns whipping the hem round the iron wire of the rim; their spacing is the museum's."
+    },
+    {
+      "id": "rim-whipping-63",
+      "parent": "mast",
+      "shape": "profile of revolution",
+      "dimensions_m": {
+        "closed_axial_radial_profile": [
+          [0.0, 0.0],
+          [0.0, 0.006],
+          [0.00325, 0.0155],
+          [0.0065, 0.0141],
+          [0.00975, 0.0155],
+          [0.013, 0.0141],
+          [0.01625, 0.0155],
+          [0.0195, 0.0141],
+          [0.02275, 0.0155],
+          [0.026, 0.006],
+          [0.026, 0.0]
+        ],
+        "segments": 10
+      },
+      "position_m": [3.246066, 0.127279, -2.415691],
+      "orientation_rad": [0.0, -0.887098, 1.521703],
+      "material": {
+        "class": "hemp cord",
+        "basis": "assumed",
+        "source": "a-geometry"
+      },
+      "certainty": "C",
+      "source": "a-geometry",
+      "notes": "[geometry] Hemp turns whipping the hem round the iron wire of the rim; their spacing is the museum's."
+    },
+    {
+      "id": "rim-whipping-64",
+      "parent": "mast",
+      "shape": "profile of revolution",
+      "dimensions_m": {
+        "closed_axial_radial_profile": [
+          [0.0, 0.0],
+          [0.0, 0.006],
+          [0.00325, 0.0155],
+          [0.0065, 0.0141],
+          [0.00975, 0.0155],
+          [0.013, 0.0141],
+          [0.01625, 0.0155],
+          [0.0195, 0.0141],
+          [0.02275, 0.0155],
+          [0.026, 0.006],
+          [0.026, 0.0]
+        ],
+        "segments": 10
+      },
+      "position_m": [3.080106, 0.139777, -2.608038],
+      "orientation_rad": [0.0, -0.824162, 1.521577],
+      "material": {
+        "class": "hemp cord",
+        "basis": "assumed",
+        "source": "a-geometry"
+      },
+      "certainty": "C",
+      "source": "a-geometry",
+      "notes": "[geometry] Hemp turns whipping the hem round the iron wire of the rim; their spacing is the museum's."
+    },
+    {
+      "id": "rim-whipping-65",
+      "parent": "mast",
+      "shape": "profile of revolution",
+      "dimensions_m": {
+        "closed_axial_radial_profile": [
+          [0.0, 0.0],
+          [0.0, 0.006],
+          [0.00325, 0.0155],
+          [0.0065, 0.0141],
+          [0.00975, 0.0155],
+          [0.013, 0.0141],
+          [0.01625, 0.0155],
+          [0.0195, 0.0141],
+          [0.02275, 0.0155],
+          [0.026, 0.006],
+          [0.026, 0.0]
+        ],
+        "segments": 10
+      },
+      "position_m": [2.785053, 0.160191, -2.897642],
+      "orientation_rad": [0.0, -0.721365, 1.521371],
+      "material": {
+        "class": "hemp cord",
+        "basis": "assumed",
+        "source": "a-geometry"
+      },
+      "certainty": "C",
+      "source": "a-geometry",
+      "notes": "[geometry] Hemp turns whipping the hem round the iron wire of the rim; their spacing is the museum's."
+    },
+    {
+      "id": "rim-whipping-66",
+      "parent": "mast",
+      "shape": "profile of revolution",
+      "dimensions_m": {
+        "closed_axial_radial_profile": [
+          [0.0, 0.0],
+          [0.0, 0.006],
+          [0.00325, 0.0155],
+          [0.0065, 0.0141],
+          [0.00975, 0.0155],
+          [0.013, 0.0141],
+          [0.01625, 0.0155],
+          [0.0195, 0.0141],
+          [0.02275, 0.0155],
+          [0.026, 0.006],
+          [0.026, 0.0]
+        ],
+        "segments": 10
+      },
+      "position_m": [2.590953, 0.172689, -3.058885],
+      "orientation_rad": [0.0, -0.658428, 1.521244],
+      "material": {
+        "class": "hemp cord",
+        "basis": "assumed",
+        "source": "a-geometry"
+      },
+      "certainty": "C",
+      "source": "a-geometry",
+      "notes": "[geometry] Hemp turns whipping the hem round the iron wire of the rim; their spacing is the museum's."
+    },
+    {
+      "id": "rim-whipping-67",
+      "parent": "mast",
+      "shape": "profile of revolution",
+      "dimensions_m": {
+        "closed_axial_radial_profile": [
+          [0.0, 0.0],
+          [0.0, 0.006],
+          [0.00325, 0.0155],
+          [0.0065, 0.0141],
+          [0.00975, 0.0155],
+          [0.013, 0.0141],
+          [0.01625, 0.0155],
+          [0.0195, 0.0141],
+          [0.02275, 0.0155],
+          [0.026, 0.006],
+          [0.026, 0.0]
+        ],
+        "segments": 10
+      },
+      "position_m": [2.387622, 0.185188, -3.207221],
+      "orientation_rad": [0.0, -0.59549, 1.521116],
+      "material": {
+        "class": "hemp cord",
+        "basis": "assumed",
+        "source": "a-geometry"
+      },
+      "certainty": "C",
+      "source": "a-geometry",
+      "notes": "[geometry] Hemp turns whipping the hem round the iron wire of the rim; their spacing is the museum's."
+    },
+    {
+      "id": "rim-whipping-68",
+      "parent": "mast",
+      "shape": "profile of revolution",
+      "dimensions_m": {
+        "closed_axial_radial_profile": [
+          [0.0, 0.0],
+          [0.0, 0.006],
+          [0.00325, 0.0155],
+          [0.0065, 0.0141],
+          [0.00975, 0.0155],
+          [0.013, 0.0141],
+          [0.01625, 0.0155],
+          [0.0195, 0.0141],
+          [0.02275, 0.0155],
+          [0.026, 0.006],
+          [0.026, 0.0]
+        ],
+        "segments": 10
+      },
+      "position_m": [2.175913, 0.197686, -3.342126],
+      "orientation_rad": [0.0, -0.532551, 1.520988],
+      "material": {
+        "class": "hemp cord",
+        "basis": "assumed",
+        "source": "a-geometry"
+      },
+      "certainty": "C",
+      "source": "a-geometry",
+      "notes": "[geometry] Hemp turns whipping the hem round the iron wire of the rim; their spacing is the museum's."
+    },
+    {
+      "id": "rim-whipping-69",
+      "parent": "mast",
+      "shape": "profile of revolution",
+      "dimensions_m": {
+        "closed_axial_radial_profile": [
+          [0.0, 0.0],
+          [0.0, 0.006],
+          [0.00325, 0.0155],
+          [0.0065, 0.0141],
+          [0.00975, 0.0155],
+          [0.013, 0.0141],
+          [0.01625, 0.0155],
+          [0.0195, 0.0141],
+          [0.02275, 0.0155],
+          [0.026, 0.006],
+          [0.026, 0.0]
+        ],
+        "segments": 10
+      },
+      "position_m": [1.956707, 0.210184, -3.463137],
+      "orientation_rad": [0.0, -0.469612, 1.520859],
+      "material": {
+        "class": "hemp cord",
+        "basis": "assumed",
+        "source": "a-geometry"
+      },
+      "certainty": "C",
+      "source": "a-geometry",
+      "notes": "[geometry] Hemp turns whipping the hem round the iron wire of the rim; their spacing is the museum's."
+    },
+    {
+      "id": "rim-whipping-70",
+      "parent": "mast",
+      "shape": "profile of revolution",
+      "dimensions_m": {
+        "closed_axial_radial_profile": [
+          [0.0, 0.0],
+          [0.0, 0.006],
+          [0.00325, 0.0155],
+          [0.0065, 0.0141],
+          [0.00975, 0.0155],
+          [0.013, 0.0141],
+          [0.01625, 0.0155],
+          [0.0195, 0.0141],
+          [0.02275, 0.0155],
+          [0.026, 0.006],
+          [0.026, 0.0]
+        ],
+        "segments": 10
+      },
+      "position_m": [1.730912, 0.222683, -3.569845],
+      "orientation_rad": [0.0, -0.406673, 1.520729],
+      "material": {
+        "class": "hemp cord",
+        "basis": "assumed",
+        "source": "a-geometry"
+      },
+      "certainty": "C",
+      "source": "a-geometry",
+      "notes": "[geometry] Hemp turns whipping the hem round the iron wire of the rim; their spacing is the museum's."
+    },
+    {
+      "id": "rim-whipping-71",
+      "parent": "mast",
+      "shape": "profile of revolution",
+      "dimensions_m": {
+        "closed_axial_radial_profile": [
+          [0.0, 0.0],
+          [0.0, 0.006],
+          [0.00325, 0.0155],
+          [0.0065, 0.0141],
+          [0.00975, 0.0155],
+          [0.013, 0.0141],
+          [0.01625, 0.0155],
+          [0.0195, 0.0141],
+          [0.02275, 0.0155],
+          [0.026, 0.006],
+          [0.026, 0.0]
+        ],
+        "segments": 10
+      },
+      "position_m": [1.491654, 0.235598, -3.664714],
+      "orientation_rad": [0.0, -0.341634, 1.520594],
+      "material": {
+        "class": "hemp cord",
+        "basis": "assumed",
+        "source": "a-geometry"
+      },
+      "certainty": "C",
+      "source": "a-geometry",
+      "notes": "[geometry] Hemp turns whipping the hem round the iron wire of the rim; their spacing is the museum's."
+    },
+    {
+      "id": "rim-whipping-72",
+      "parent": "mast",
+      "shape": "profile of revolution",
+      "dimensions_m": {
+        "closed_axial_radial_profile": [
+          [0.0, 0.0],
+          [0.0, 0.006],
+          [0.00325, 0.0155],
+          [0.0065, 0.0141],
+          [0.00975, 0.0155],
+          [0.013, 0.0141],
+          [0.01625, 0.0155],
+          [0.0195, 0.0141],
+          [0.02275, 0.0155],
+          [0.026, 0.006],
+          [0.026, 0.0]
+        ],
+        "segments": 10
+      },
+      "position_m": [1.247397, 0.248513, -3.743622],
+      "orientation_rad": [0.0, -0.276596, 1.520459],
+      "material": {
+        "class": "hemp cord",
+        "basis": "assumed",
+        "source": "a-geometry"
+      },
+      "certainty": "C",
+      "source": "a-geometry",
+      "notes": "[geometry] Hemp turns whipping the hem round the iron wire of the rim; their spacing is the museum's."
+    },
+    {
+      "id": "rim-whipping-73",
+      "parent": "mast",
+      "shape": "profile of revolution",
+      "dimensions_m": {
+        "closed_axial_radial_profile": [
+          [0.0, 0.0],
+          [0.0, 0.006],
+          [0.00325, 0.0155],
+          [0.0065, 0.0141],
+          [0.00975, 0.0155],
+          [0.013, 0.0141],
+          [0.01625, 0.0155],
+          [0.0195, 0.0141],
+          [0.02275, 0.0155],
+          [0.026, 0.006],
+          [0.026, 0.0]
+        ],
+        "segments": 10
+      },
+      "position_m": [0.9992, 0.261427, -3.80632],
+      "orientation_rad": [0.0, -0.211556, 1.520322],
+      "material": {
+        "class": "hemp cord",
+        "basis": "assumed",
+        "source": "a-geometry"
+      },
+      "certainty": "C",
+      "source": "a-geometry",
+      "notes": "[geometry] Hemp turns whipping the hem round the iron wire of the rim; their spacing is the museum's."
+    },
+    {
+      "id": "rim-whipping-74",
+      "parent": "mast",
+      "shape": "profile of revolution",
+      "dimensions_m": {
+        "closed_axial_radial_profile": [
+          [0.0, 0.0],
+          [0.0, 0.006],
+          [0.00325, 0.0155],
+          [0.0065, 0.0141],
+          [0.00975, 0.0155],
+          [0.013, 0.0141],
+          [0.01625, 0.0155],
+          [0.0195, 0.0141],
+          [0.02275, 0.0155],
+          [0.026, 0.006],
+          [0.026, 0.0]
+        ],
+        "segments": 10
+      },
+      "position_m": [0.748136, 0.274342, -3.852631],
+      "orientation_rad": [0.0, -0.146516, 1.520185],
+      "material": {
+        "class": "hemp cord",
+        "basis": "assumed",
+        "source": "a-geometry"
+      },
+      "certainty": "C",
+      "source": "a-geometry",
+      "notes": "[geometry] Hemp turns whipping the hem round the iron wire of the rim; their spacing is the museum's."
+    },
+    {
+      "id": "rim-whipping-75",
+      "parent": "mast",
+      "shape": "profile of revolution",
+      "dimensions_m": {
+        "closed_axial_radial_profile": [
+          [0.0, 0.0],
+          [0.0, 0.006],
+          [0.00325, 0.0155],
+          [0.0065, 0.0141],
+          [0.00975, 0.0155],
+          [0.013, 0.0141],
+          [0.01625, 0.0155],
+          [0.0195, 0.0141],
+          [0.02275, 0.0155],
+          [0.026, 0.006],
+          [0.026, 0.0]
+        ],
+        "segments": 10
+      },
+      "position_m": [0.495281, 0.287257, -3.882447],
+      "orientation_rad": [0.0, -0.081476, 1.520047],
+      "material": {
+        "class": "hemp cord",
+        "basis": "assumed",
+        "source": "a-geometry"
+      },
+      "certainty": "C",
+      "source": "a-geometry",
+      "notes": "[geometry] Hemp turns whipping the hem round the iron wire of the rim; their spacing is the museum's."
+    },
+    {
+      "id": "rim-whipping-76",
+      "parent": "mast",
+      "shape": "profile of revolution",
+      "dimensions_m": {
+        "closed_axial_radial_profile": [
+          [0.0, 0.0],
+          [0.0, 0.006],
+          [0.00325, 0.0155],
+          [0.0065, 0.0141],
+          [0.00975, 0.0155],
+          [0.013, 0.0141],
+          [0.01625, 0.0155],
+          [0.0195, 0.0141],
+          [0.02275, 0.0155],
+          [0.026, 0.006],
+          [0.026, 0.0]
+        ],
+        "segments": 10
+      },
+      "position_m": [0.241715, 0.300172, -3.895732],
+      "orientation_rad": [0.0, -0.016434, 1.519909],
+      "material": {
+        "class": "hemp cord",
+        "basis": "assumed",
+        "source": "a-geometry"
+      },
+      "certainty": "C",
+      "source": "a-geometry",
+      "notes": "[geometry] Hemp turns whipping the hem round the iron wire of the rim; their spacing is the museum's."
+    },
+    {
+      "id": "rim-whipping-77",
+      "parent": "mast",
+      "shape": "profile of revolution",
+      "dimensions_m": {
+        "closed_axial_radial_profile": [
+          [0.0, 0.0],
+          [0.0, 0.006],
+          [0.00325, 0.0155],
+          [0.0065, 0.0141],
+          [0.00975, 0.0155],
+          [0.013, 0.0141],
+          [0.01625, 0.0155],
+          [0.0195, 0.0141],
+          [0.02275, 0.0155],
+          [0.026, 0.006],
+          [0.026, 0.0]
+        ],
+        "segments": 10
+      },
+      "position_m": [-0.084773, 0.316836, -3.88851],
+      "orientation_rad": [0.0, 0.067491, 1.519729],
+      "material": {
+        "class": "hemp cord",
+        "basis": "assumed",
+        "source": "a-geometry"
+      },
+      "certainty": "C",
+      "source": "a-geometry",
+      "notes": "[geometry] Hemp turns whipping the hem round the iron wire of the rim; their spacing is the museum's."
+    },
+    {
+      "id": "rim-whipping-78",
+      "parent": "mast",
+      "shape": "profile of revolution",
+      "dimensions_m": {
+        "closed_axial_radial_profile": [
+          [0.0, 0.0],
+          [0.0, 0.006],
+          [0.00325, 0.0155],
+          [0.0065, 0.0141],
+          [0.00975, 0.0155],
+          [0.013, 0.0141],
+          [0.01625, 0.0155],
+          [0.0195, 0.0141],
+          [0.02275, 0.0155],
+          [0.026, 0.006],
+          [0.026, 0.0]
+        ],
+        "segments": 10
+      },
+      "position_m": [-0.335922, 0.329751, -3.864173],
+      "orientation_rad": [0.0, 0.132534, 1.519589],
+      "material": {
+        "class": "hemp cord",
+        "basis": "assumed",
+        "source": "a-geometry"
+      },
+      "certainty": "C",
+      "source": "a-geometry",
+      "notes": "[geometry] Hemp turns whipping the hem round the iron wire of the rim; their spacing is the museum's."
+    },
+    {
+      "id": "rim-whipping-79",
+      "parent": "mast",
+      "shape": "profile of revolution",
+      "dimensions_m": {
+        "closed_axial_radial_profile": [
+          [0.0, 0.0],
+          [0.0, 0.006],
+          [0.00325, 0.0155],
+          [0.0065, 0.0141],
+          [0.00975, 0.0155],
+          [0.013, 0.0141],
+          [0.01625, 0.0155],
+          [0.0195, 0.0141],
+          [0.02275, 0.0155],
+          [0.026, 0.006],
+          [0.026, 0.0]
+        ],
+        "segments": 10
+      },
+      "position_m": [-0.584275, 0.342666, -3.823677],
+      "orientation_rad": [0.0, 0.197577, 1.519448],
+      "material": {
+        "class": "hemp cord",
+        "basis": "assumed",
+        "source": "a-geometry"
+      },
+      "certainty": "C",
+      "source": "a-geometry",
+      "notes": "[geometry] Hemp turns whipping the hem round the iron wire of the rim; their spacing is the museum's."
+    },
+    {
+      "id": "rim-whipping-80",
+      "parent": "mast",
+      "shape": "profile of revolution",
+      "dimensions_m": {
+        "closed_axial_radial_profile": [
+          [0.0, 0.0],
+          [0.0, 0.006],
+          [0.00325, 0.0155],
+          [0.0065, 0.0141],
+          [0.00975, 0.0155],
+          [0.013, 0.0141],
+          [0.01625, 0.0155],
+          [0.0195, 0.0141],
+          [0.02275, 0.0155],
+          [0.026, 0.006],
+          [0.026, 0.0]
+        ],
+        "segments": 10
+      },
+      "position_m": [-0.828795, 0.355581, -3.767283],
+      "orientation_rad": [0.0, 0.262621, 1.519306],
+      "material": {
+        "class": "hemp cord",
+        "basis": "assumed",
+        "source": "a-geometry"
+      },
+      "certainty": "C",
+      "source": "a-geometry",
+      "notes": "[geometry] Hemp turns whipping the hem round the iron wire of the rim; their spacing is the museum's."
+    },
+    {
+      "id": "rim-whipping-81",
+      "parent": "mast",
+      "shape": "profile of revolution",
+      "dimensions_m": {
+        "closed_axial_radial_profile": [
+          [0.0, 0.0],
+          [0.0, 0.006],
+          [0.00325, 0.0155],
+          [0.0065, 0.0141],
+          [0.00975, 0.0155],
+          [0.013, 0.0141],
+          [0.01625, 0.0155],
+          [0.0195, 0.0141],
+          [0.02275, 0.0155],
+          [0.026, 0.006],
+          [0.026, 0.0]
+        ],
+        "segments": 10
+      },
+      "position_m": [-1.06847, 0.368496, -3.695316],
+      "orientation_rad": [0.0, 0.327666, 1.519163],
+      "material": {
+        "class": "hemp cord",
+        "basis": "assumed",
+        "source": "a-geometry"
+      },
+      "certainty": "C",
+      "source": "a-geometry",
+      "notes": "[geometry] Hemp turns whipping the hem round the iron wire of the rim; their spacing is the museum's."
+    },
+    {
+      "id": "rim-whipping-82",
+      "parent": "mast",
+      "shape": "profile of revolution",
+      "dimensions_m": {
+        "closed_axial_radial_profile": [
+          [0.0, 0.0],
+          [0.0, 0.006],
+          [0.00325, 0.0155],
+          [0.0065, 0.0141],
+          [0.00975, 0.0155],
+          [0.013, 0.0141],
+          [0.01625, 0.0155],
+          [0.0195, 0.0141],
+          [0.02275, 0.0155],
+          [0.026, 0.006],
+          [0.026, 0.0]
+        ],
+        "segments": 10
+      },
+      "position_m": [-1.309746, 0.381827, -3.605107],
+      "orientation_rad": [0.0, 0.394809, 1.519015],
+      "material": {
+        "class": "hemp cord",
+        "basis": "assumed",
+        "source": "a-geometry"
+      },
+      "certainty": "C",
+      "source": "a-geometry",
+      "notes": "[geometry] Hemp turns whipping the hem round the iron wire of the rim; their spacing is the museum's."
+    },
+    {
+      "id": "rim-whipping-83",
+      "parent": "mast",
+      "shape": "profile of revolution",
+      "dimensions_m": {
+        "closed_axial_radial_profile": [
+          [0.0, 0.0],
+          [0.0, 0.006],
+          [0.00325, 0.0155],
+          [0.0065, 0.0141],
+          [0.00975, 0.0155],
+          [0.013, 0.0141],
+          [0.01625, 0.0155],
+          [0.0195, 0.0141],
+          [0.02275, 0.0155],
+          [0.026, 0.006],
+          [0.026, 0.0]
+        ],
+        "segments": 10
+      },
+      "position_m": [-1.543754, 0.395159, -3.499221],
+      "orientation_rad": [0.0, 0.461953, 1.518867],
+      "material": {
+        "class": "hemp cord",
+        "basis": "assumed",
+        "source": "a-geometry"
+      },
+      "certainty": "C",
+      "source": "a-geometry",
+      "notes": "[geometry] Hemp turns whipping the hem round the iron wire of the rim; their spacing is the museum's."
+    },
+    {
+      "id": "rim-whipping-84",
+      "parent": "mast",
+      "shape": "profile of revolution",
+      "dimensions_m": {
+        "closed_axial_radial_profile": [
+          [0.0, 0.0],
+          [0.0, 0.006],
+          [0.00325, 0.0155],
+          [0.0065, 0.0141],
+          [0.00975, 0.0155],
+          [0.013, 0.0141],
+          [0.01625, 0.0155],
+          [0.0195, 0.0141],
+          [0.02275, 0.0155],
+          [0.026, 0.006],
+          [0.026, 0.0]
+        ],
+        "segments": 10
+      },
+      "position_m": [-1.769481, 0.40849, -3.378224],
+      "orientation_rad": [0.0, 0.529098, 1.518717],
+      "material": {
+        "class": "hemp cord",
+        "basis": "assumed",
+        "source": "a-geometry"
+      },
+      "certainty": "C",
+      "source": "a-geometry",
+      "notes": "[geometry] Hemp turns whipping the hem round the iron wire of the rim; their spacing is the museum's."
+    },
+    {
+      "id": "rim-whipping-85",
+      "parent": "mast",
+      "shape": "profile of revolution",
+      "dimensions_m": {
+        "closed_axial_radial_profile": [
+          [0.0, 0.0],
+          [0.0, 0.006],
+          [0.00325, 0.0155],
+          [0.0065, 0.0141],
+          [0.00975, 0.0155],
+          [0.013, 0.0141],
+          [0.01625, 0.0155],
+          [0.0195, 0.0141],
+          [0.02275, 0.0155],
+          [0.026, 0.006],
+          [0.026, 0.0]
+        ],
+        "segments": 10
+      },
+      "position_m": [-1.985956, 0.421821, -3.242749],
+      "orientation_rad": [0.0, 0.596244, 1.518566],
+      "material": {
+        "class": "hemp cord",
+        "basis": "assumed",
+        "source": "a-geometry"
+      },
+      "certainty": "C",
+      "source": "a-geometry",
+      "notes": "[geometry] Hemp turns whipping the hem round the iron wire of the rim; their spacing is the museum's."
+    },
+    {
+      "id": "rim-whipping-86",
+      "parent": "mast",
+      "shape": "profile of revolution",
+      "dimensions_m": {
+        "closed_axial_radial_profile": [
+          [0.0, 0.0],
+          [0.0, 0.006],
+          [0.00325, 0.0155],
+          [0.0065, 0.0141],
+          [0.00975, 0.0155],
+          [0.013, 0.0141],
+          [0.01625, 0.0155],
+          [0.0195, 0.0141],
+          [0.02275, 0.0155],
+          [0.026, 0.006],
+          [0.026, 0.0]
+        ],
+        "segments": 10
+      },
+      "position_m": [-2.192257, 0.435153, -3.093489],
+      "orientation_rad": [0.0, 0.663391, 1.518415],
+      "material": {
+        "class": "hemp cord",
+        "basis": "assumed",
+        "source": "a-geometry"
+      },
+      "certainty": "C",
+      "source": "a-geometry",
+      "notes": "[geometry] Hemp turns whipping the hem round the iron wire of the rim; their spacing is the museum's."
+    },
+    {
+      "id": "rim-whipping-87",
+      "parent": "mast",
+      "shape": "profile of revolution",
+      "dimensions_m": {
+        "closed_axial_radial_profile": [
+          [0.0, 0.0],
+          [0.0, 0.006],
+          [0.00325, 0.0155],
+          [0.0065, 0.0141],
+          [0.00975, 0.0155],
+          [0.013, 0.0141],
+          [0.01625, 0.0155],
+          [0.0195, 0.0141],
+          [0.02275, 0.0155],
+          [0.026, 0.006],
+          [0.026, 0.0]
+        ],
+        "segments": 10
+      },
+      "position_m": [-2.387511, 0.448484, -2.931198],
+      "orientation_rad": [0.0, 0.730538, 1.518263],
+      "material": {
+        "class": "hemp cord",
+        "basis": "assumed",
+        "source": "a-geometry"
+      },
+      "certainty": "C",
+      "source": "a-geometry",
+      "notes": "[geometry] Hemp turns whipping the hem round the iron wire of the rim; their spacing is the museum's."
+    },
+    {
+      "id": "rim-whipping-88",
+      "parent": "mast",
+      "shape": "profile of revolution",
+      "dimensions_m": {
+        "closed_axial_radial_profile": [
+          [0.0, 0.0],
+          [0.0, 0.006],
+          [0.00325, 0.0155],
+          [0.0065, 0.0141],
+          [0.00975, 0.0155],
+          [0.013, 0.0141],
+          [0.01625, 0.0155],
+          [0.0195, 0.0141],
+          [0.02275, 0.0155],
+          [0.026, 0.006],
+          [0.026, 0.0]
+        ],
+        "segments": 10
+      },
+      "position_m": [-2.570903, 0.461815, -2.756682],
+      "orientation_rad": [0.0, 0.797686, 1.518109],
+      "material": {
+        "class": "hemp cord",
+        "basis": "assumed",
+        "source": "a-geometry"
+      },
+      "certainty": "C",
+      "source": "a-geometry",
+      "notes": "[geometry] Hemp turns whipping the hem round the iron wire of the rim; their spacing is the museum's."
+    },
+    {
+      "id": "rim-whipping-89",
+      "parent": "mast",
+      "shape": "profile of revolution",
+      "dimensions_m": {
+        "closed_axial_radial_profile": [
+          [0.0, 0.0],
+          [0.0, 0.006],
+          [0.00325, 0.0155],
+          [0.0065, 0.0141],
+          [0.00975, 0.0155],
+          [0.013, 0.0141],
+          [0.01625, 0.0155],
+          [0.0195, 0.0141],
+          [0.02275, 0.0155],
+          [0.026, 0.006],
+          [0.026, 0.0]
+        ],
+        "segments": 10
+      },
+      "position_m": [-2.741674, 0.475147, -2.5708],
+      "orientation_rad": [0.0, 0.864834, 1.517955],
+      "material": {
+        "class": "hemp cord",
+        "basis": "assumed",
+        "source": "a-geometry"
+      },
+      "certainty": "C",
+      "source": "a-geometry",
+      "notes": "[geometry] Hemp turns whipping the hem round the iron wire of the rim; their spacing is the museum's."
+    },
+    {
+      "id": "rim-whipping-90",
+      "parent": "mast",
+      "shape": "profile of revolution",
+      "dimensions_m": {
+        "closed_axial_radial_profile": [
+          [0.0, 0.0],
+          [0.0, 0.006],
+          [0.00325, 0.0155],
+          [0.0065, 0.0141],
+          [0.00975, 0.0155],
+          [0.013, 0.0141],
+          [0.01625, 0.0155],
+          [0.0195, 0.0141],
+          [0.02275, 0.0155],
+          [0.026, 0.006],
+          [0.026, 0.0]
+        ],
+        "segments": 10
+      },
+      "position_m": [-2.899128, 0.488478, -2.374457],
+      "orientation_rad": [0.0, 0.931984, 1.5178],
+      "material": {
+        "class": "hemp cord",
+        "basis": "assumed",
+        "source": "a-geometry"
+      },
+      "certainty": "C",
+      "source": "a-geometry",
+      "notes": "[geometry] Hemp turns whipping the hem round the iron wire of the rim; their spacing is the museum's."
+    },
+    {
+      "id": "rim-whipping-91",
+      "parent": "mast",
+      "shape": "profile of revolution",
+      "dimensions_m": {
+        "closed_axial_radial_profile": [
+          [0.0, 0.0],
+          [0.0, 0.006],
+          [0.00325, 0.0155],
+          [0.0065, 0.0141],
+          [0.00975, 0.0155],
+          [0.013, 0.0141],
+          [0.01625, 0.0155],
+          [0.0195, 0.0141],
+          [0.02275, 0.0155],
+          [0.026, 0.006],
+          [0.026, 0.0]
+        ],
+        "segments": 10
+      },
+      "position_m": [-3.042632, 0.501809, -2.168598],
+      "orientation_rad": [0.0, 0.999134, 1.517644],
+      "material": {
+        "class": "hemp cord",
+        "basis": "assumed",
+        "source": "a-geometry"
+      },
+      "certainty": "C",
+      "source": "a-geometry",
+      "notes": "[geometry] Hemp turns whipping the hem round the iron wire of the rim; their spacing is the museum's."
+    },
+    {
+      "id": "rim-whipping-92",
+      "parent": "mast",
+      "shape": "profile of revolution",
+      "dimensions_m": {
+        "closed_axial_radial_profile": [
+          [0.0, 0.0],
+          [0.0, 0.006],
+          [0.00325, 0.0155],
+          [0.0065, 0.0141],
+          [0.00975, 0.0155],
+          [0.013, 0.0141],
+          [0.01625, 0.0155],
+          [0.0195, 0.0141],
+          [0.02275, 0.0155],
+          [0.026, 0.006],
+          [0.026, 0.0]
+        ],
+        "segments": 10
+      },
+      "position_m": [-3.171621, 0.515141, -1.954209],
+      "orientation_rad": [0.0, 1.066285, 1.517487],
+      "material": {
+        "class": "hemp cord",
+        "basis": "assumed",
+        "source": "a-geometry"
+      },
+      "certainty": "C",
+      "source": "a-geometry",
+      "notes": "[geometry] Hemp turns whipping the hem round the iron wire of the rim; their spacing is the museum's."
+    },
+    {
+      "id": "rim-whipping-93",
+      "parent": "mast",
+      "shape": "profile of revolution",
+      "dimensions_m": {
+        "closed_axial_radial_profile": [
+          [0.0, 0.0],
+          [0.0, 0.006],
+          [0.00325, 0.0155],
+          [0.0065, 0.0141],
+          [0.00975, 0.0155],
+          [0.013, 0.0141],
+          [0.01625, 0.0155],
+          [0.0195, 0.0141],
+          [0.02275, 0.0155],
+          [0.026, 0.006],
+          [0.026, 0.0]
+        ],
+        "segments": 10
+      },
+      "position_m": [-3.288914, 0.528889, -1.725261],
+      "orientation_rad": [0.0, 1.135535, 1.517325],
+      "material": {
+        "class": "hemp cord",
+        "basis": "assumed",
+        "source": "a-geometry"
+      },
+      "certainty": "C",
+      "source": "a-geometry",
+      "notes": "[geometry] Hemp turns whipping the hem round the iron wire of the rim; their spacing is the museum's."
+    },
+    {
+      "id": "rim-whipping-94",
+      "parent": "mast",
+      "shape": "profile of revolution",
+      "dimensions_m": {
+        "closed_axial_radial_profile": [
+          [0.0, 0.0],
+          [0.0, 0.006],
+          [0.00325, 0.0155],
+          [0.0065, 0.0141],
+          [0.00975, 0.0155],
+          [0.013, 0.0141],
+          [0.01625, 0.0155],
+          [0.0195, 0.0141],
+          [0.02275, 0.0155],
+          [0.026, 0.006],
+          [0.026, 0.0]
+        ],
+        "segments": 10
+      },
+      "position_m": [-3.389777, 0.542636, -1.489469],
+      "orientation_rad": [0.0, 1.204786, 1.517161],
+      "material": {
+        "class": "hemp cord",
+        "basis": "assumed",
+        "source": "a-geometry"
+      },
+      "certainty": "C",
+      "source": "a-geometry",
+      "notes": "[geometry] Hemp turns whipping the hem round the iron wire of the rim; their spacing is the museum's."
+    },
+    {
+      "id": "rim-whipping-95",
+      "parent": "mast",
+      "shape": "profile of revolution",
+      "dimensions_m": {
+        "closed_axial_radial_profile": [
+          [0.0, 0.0],
+          [0.0, 0.006],
+          [0.00325, 0.0155],
+          [0.0065, 0.0141],
+          [0.00975, 0.0155],
+          [0.013, 0.0141],
+          [0.01625, 0.0155],
+          [0.0195, 0.0141],
+          [0.02275, 0.0155],
+          [0.026, 0.006],
+          [0.026, 0.0]
+        ],
+        "segments": 10
+      },
+      "position_m": [-3.473827, 0.556384, -1.248006],
+      "orientation_rad": [0.0, 1.274038, 1.516996],
+      "material": {
+        "class": "hemp cord",
+        "basis": "assumed",
+        "source": "a-geometry"
+      },
+      "certainty": "C",
+      "source": "a-geometry",
+      "notes": "[geometry] Hemp turns whipping the hem round the iron wire of the rim; their spacing is the museum's."
+    },
+    {
+      "id": "rim-whipping-96",
+      "parent": "mast",
+      "shape": "profile of revolution",
+      "dimensions_m": {
+        "closed_axial_radial_profile": [
+          [0.0, 0.0],
+          [0.0, 0.006],
+          [0.00325, 0.0155],
+          [0.0065, 0.0141],
+          [0.00975, 0.0155],
+          [0.013, 0.0141],
+          [0.01625, 0.0155],
+          [0.0195, 0.0141],
+          [0.02275, 0.0155],
+          [0.026, 0.006],
+          [0.026, 0.0]
+        ],
+        "segments": 10
+      },
+      "position_m": [-3.540763, 0.570132, -1.002064],
+      "orientation_rad": [0.0, 1.343291, 1.516831],
+      "material": {
+        "class": "hemp cord",
+        "basis": "assumed",
+        "source": "a-geometry"
+      },
+      "certainty": "C",
+      "source": "a-geometry",
+      "notes": "[geometry] Hemp turns whipping the hem round the iron wire of the rim; their spacing is the museum's."
+    },
+    {
+      "id": "rim-whipping-97",
+      "parent": "mast",
+      "shape": "profile of revolution",
+      "dimensions_m": {
+        "closed_axial_radial_profile": [
+          [0.0, 0.0],
+          [0.0, 0.006],
+          [0.00325, 0.0155],
+          [0.0065, 0.0141],
+          [0.00975, 0.0155],
+          [0.013, 0.0141],
+          [0.01625, 0.0155],
+          [0.0195, 0.0141],
+          [0.02275, 0.0155],
+          [0.026, 0.006],
+          [0.026, 0.0]
+        ],
+        "segments": 10
+      },
+      "position_m": [-3.590369, 0.58388, -0.752851],
+      "orientation_rad": [0.0, 1.412544, 1.516664],
+      "material": {
+        "class": "hemp cord",
+        "basis": "assumed",
+        "source": "a-geometry"
+      },
+      "certainty": "C",
+      "source": "a-geometry",
+      "notes": "[geometry] Hemp turns whipping the hem round the iron wire of the rim; their spacing is the museum's."
+    },
+    {
+      "id": "rim-whipping-98",
+      "parent": "mast",
+      "shape": "profile of revolution",
+      "dimensions_m": {
+        "closed_axial_radial_profile": [
+          [0.0, 0.0],
+          [0.0, 0.006],
+          [0.00325, 0.0155],
+          [0.0065, 0.0141],
+          [0.00975, 0.0155],
+          [0.013, 0.0141],
+          [0.01625, 0.0155],
+          [0.0195, 0.0141],
+          [0.02275, 0.0155],
+          [0.026, 0.006],
+          [0.026, 0.0]
+        ],
+        "segments": 10
+      },
+      "position_m": [-3.622514, 0.597628, -0.501582],
+      "orientation_rad": [0.0, 1.481799, 1.516496],
+      "material": {
+        "class": "hemp cord",
+        "basis": "assumed",
+        "source": "a-geometry"
+      },
+      "certainty": "C",
+      "source": "a-geometry",
+      "notes": "[geometry] Hemp turns whipping the hem round the iron wire of the rim; their spacing is the museum's."
+    },
+    {
+      "id": "rim-whipping-99",
+      "parent": "mast",
+      "shape": "profile of revolution",
+      "dimensions_m": {
+        "closed_axial_radial_profile": [
+          [0.0, 0.0],
+          [0.0, 0.006],
+          [0.00325, 0.0155],
+          [0.0065, 0.0141],
+          [0.00975, 0.0155],
+          [0.013, 0.0141],
+          [0.01625, 0.0155],
+          [0.0195, 0.0141],
+          [0.02275, 0.0155],
+          [0.026, 0.006],
+          [0.026, 0.0]
+        ],
+        "segments": 10
+      },
+      "position_m": [-3.637152, 0.611376, -0.249475],
+      "orientation_rad": [0.0, 1.551054, 1.516327],
+      "material": {
+        "class": "hemp cord",
+        "basis": "assumed",
+        "source": "a-geometry"
+      },
+      "certainty": "C",
+      "source": "a-geometry",
+      "notes": "[geometry] Hemp turns whipping the hem round the iron wire of the rim; their spacing is the museum's."
+    },
+    {
+      "id": "rim-whipping-100",
+      "parent": "mast",
+      "shape": "profile of revolution",
+      "dimensions_m": {
+        "closed_axial_radial_profile": [
+          [0.0, 0.0],
+          [0.0, 0.006],
+          [0.00325, 0.0155],
+          [0.0065, 0.0141],
+          [0.00975, 0.0155],
+          [0.013, 0.0141],
+          [0.01625, 0.0155],
+          [0.0195, 0.0141],
+          [0.02275, 0.0155],
+          [0.026, 0.006],
+          [0.026, 0.0]
+        ],
+        "segments": 10
+      },
+      "position_m": [-3.63003, 0.629289, 0.078279],
+      "orientation_rad": [0.0, 1.641297, 1.516106],
+      "material": {
+        "class": "hemp cord",
+        "basis": "assumed",
+        "source": "a-geometry"
+      },
+      "certainty": "C",
+      "source": "a-geometry",
+      "notes": "[geometry] Hemp turns whipping the hem round the iron wire of the rim; their spacing is the museum's."
+    },
+    {
+      "id": "rim-whipping-101",
+      "parent": "mast",
+      "shape": "profile of revolution",
+      "dimensions_m": {
+        "closed_axial_radial_profile": [
+          [0.0, 0.0],
+          [0.0, 0.006],
+          [0.00325, 0.0155],
+          [0.0065, 0.0141],
+          [0.00975, 0.0155],
+          [0.013, 0.0141],
+          [0.01625, 0.0155],
+          [0.0195, 0.0141],
+          [0.02275, 0.0155],
+          [0.026, 0.006],
+          [0.026, 0.0]
+        ],
+        "segments": 10
+      },
+      "position_m": [-3.604632, 0.643037, 0.327712],
+      "orientation_rad": [0.0, 1.710554, 1.515934],
+      "material": {
+        "class": "hemp cord",
+        "basis": "assumed",
+        "source": "a-geometry"
+      },
+      "certainty": "C",
+      "source": "a-geometry",
+      "notes": "[geometry] Hemp turns whipping the hem round the iron wire of the rim; their spacing is the museum's."
+    },
+    {
+      "id": "rim-whipping-102",
+      "parent": "mast",
+      "shape": "profile of revolution",
+      "dimensions_m": {
+        "closed_axial_radial_profile": [
+          [0.0, 0.0],
+          [0.0, 0.006],
+          [0.00325, 0.0155],
+          [0.0065, 0.0141],
+          [0.00975, 0.0155],
+          [0.013, 0.0141],
+          [0.01625, 0.0155],
+          [0.0195, 0.0141],
+          [0.02275, 0.0155],
+          [0.026, 0.006],
+          [0.026, 0.0]
+        ],
+        "segments": 10
+      },
+      "position_m": [-3.562169, 0.656785, 0.574015],
+      "orientation_rad": [0.0, 1.779813, 1.515762],
+      "material": {
+        "class": "hemp cord",
+        "basis": "assumed",
+        "source": "a-geometry"
+      },
+      "certainty": "C",
+      "source": "a-geometry",
+      "notes": "[geometry] Hemp turns whipping the hem round the iron wire of the rim; their spacing is the museum's."
+    },
+    {
+      "id": "rim-whipping-103",
+      "parent": "mast",
+      "shape": "profile of revolution",
+      "dimensions_m": {
+        "closed_axial_radial_profile": [
+          [0.0, 0.0],
+          [0.0, 0.006],
+          [0.00325, 0.0155],
+          [0.0065, 0.0141],
+          [0.00975, 0.0155],
+          [0.013, 0.0141],
+          [0.01625, 0.0155],
+          [0.0195, 0.0141],
+          [0.02275, 0.0155],
+          [0.026, 0.006],
+          [0.026, 0.0]
+        ],
+        "segments": 10
+      },
+      "position_m": [-3.5009, 0.670949, 0.823282],
+      "orientation_rad": [0.0, 1.851171, 1.515583],
+      "material": {
+        "class": "hemp cord",
+        "basis": "assumed",
+        "source": "a-geometry"
+      },
+      "certainty": "C",
+      "source": "a-geometry",
+      "notes": "[geometry] Hemp turns whipping the hem round the iron wire of the rim; their spacing is the museum's."
+    },
+    {
+      "id": "rim-whipping-104",
+      "parent": "mast",
+      "shape": "profile of revolution",
+      "dimensions_m": {
+        "closed_axial_radial_profile": [
+          [0.0, 0.0],
+          [0.0, 0.006],
+          [0.00325, 0.0155],
+          [0.0065, 0.0141],
+          [0.00975, 0.0155],
+          [0.013, 0.0141],
+          [0.01625, 0.0155],
+          [0.0195, 0.0141],
+          [0.02275, 0.0155],
+          [0.026, 0.006],
+          [0.026, 0.0]
+        ],
+        "segments": 10
+      },
+      "position_m": [-3.422274, 0.685114, 1.066754],
+      "orientation_rad": [0.0, 1.922529, 1.515403],
+      "material": {
+        "class": "hemp cord",
+        "basis": "assumed",
+        "source": "a-geometry"
+      },
+      "certainty": "C",
+      "source": "a-geometry",
+      "notes": "[geometry] Hemp turns whipping the hem round the iron wire of the rim; their spacing is the museum's."
+    },
+    {
+      "id": "rim-whipping-105",
+      "parent": "mast",
+      "shape": "profile of revolution",
+      "dimensions_m": {
+        "closed_axial_radial_profile": [
+          [0.0, 0.0],
+          [0.0, 0.006],
+          [0.00325, 0.0155],
+          [0.0065, 0.0141],
+          [0.00975, 0.0155],
+          [0.013, 0.0141],
+          [0.01625, 0.0155],
+          [0.0195, 0.0141],
+          [0.02275, 0.0155],
+          [0.026, 0.006],
+          [0.026, 0.0]
+        ],
+        "segments": 10
+      },
+      "position_m": [-3.326804, 0.699278, 1.303228],
+      "orientation_rad": [0.0, 1.993889, 1.515222],
+      "material": {
+        "class": "hemp cord",
+        "basis": "assumed",
+        "source": "a-geometry"
+      },
+      "certainty": "C",
+      "source": "a-geometry",
+      "notes": "[geometry] Hemp turns whipping the hem round the iron wire of the rim; their spacing is the museum's."
+    },
+    {
+      "id": "rim-whipping-106",
+      "parent": "mast",
+      "shape": "profile of revolution",
+      "dimensions_m": {
+        "closed_axial_radial_profile": [
+          [0.0, 0.0],
+          [0.0, 0.006],
+          [0.00325, 0.0155],
+          [0.0065, 0.0141],
+          [0.00975, 0.0155],
+          [0.013, 0.0141],
+          [0.01625, 0.0155],
+          [0.0195, 0.0141],
+          [0.02275, 0.0155],
+          [0.026, 0.006],
+          [0.026, 0.0]
+        ],
+        "segments": 10
+      },
+      "position_m": [-3.215085, 0.713442, 1.531546],
+      "orientation_rad": [0.0, 2.06525, 1.51504],
+      "material": {
+        "class": "hemp cord",
+        "basis": "assumed",
+        "source": "a-geometry"
+      },
+      "certainty": "C",
+      "source": "a-geometry",
+      "notes": "[geometry] Hemp turns whipping the hem round the iron wire of the rim; their spacing is the museum's."
+    },
+    {
+      "id": "rim-whipping-107",
+      "parent": "mast",
+      "shape": "profile of revolution",
+      "dimensions_m": {
+        "closed_axial_radial_profile": [
+          [0.0, 0.0],
+          [0.0, 0.006],
+          [0.00325, 0.0155],
+          [0.0065, 0.0141],
+          [0.00975, 0.0155],
+          [0.013, 0.0141],
+          [0.01625, 0.0155],
+          [0.0195, 0.0141],
+          [0.02275, 0.0155],
+          [0.026, 0.006],
+          [0.026, 0.0]
+        ],
+        "segments": 10
+      },
+      "position_m": [-3.087793, 0.727606, 1.750597],
+      "orientation_rad": [0.0, 2.136612, 1.514857],
+      "material": {
+        "class": "hemp cord",
+        "basis": "assumed",
+        "source": "a-geometry"
+      },
+      "certainty": "C",
+      "source": "a-geometry",
+      "notes": "[geometry] Hemp turns whipping the hem round the iron wire of the rim; their spacing is the museum's."
+    },
+    {
+      "id": "rim-whipping-108",
+      "parent": "mast",
+      "shape": "profile of revolution",
+      "dimensions_m": {
+        "closed_axial_radial_profile": [
+          [0.0, 0.0],
+          [0.0, 0.006],
+          [0.00325, 0.0155],
+          [0.0065, 0.0141],
+          [0.00975, 0.0155],
+          [0.013, 0.0141],
+          [0.01625, 0.0155],
+          [0.0195, 0.0141],
+          [0.02275, 0.0155],
+          [0.026, 0.006],
+          [0.026, 0.0]
+        ],
+        "segments": 10
+      },
+      "position_m": [-2.945679, 0.741771, 1.959328],
+      "orientation_rad": [0.0, 2.207975, 1.514672],
+      "material": {
+        "class": "hemp cord",
+        "basis": "assumed",
+        "source": "a-geometry"
+      },
+      "certainty": "C",
+      "source": "a-geometry",
+      "notes": "[geometry] Hemp turns whipping the hem round the iron wire of the rim; their spacing is the museum's."
+    },
+    {
+      "id": "rim-whipping-109",
+      "parent": "mast",
+      "shape": "profile of revolution",
+      "dimensions_m": {
+        "closed_axial_radial_profile": [
+          [0.0, 0.0],
+          [0.0, 0.006],
+          [0.00325, 0.0155],
+          [0.0065, 0.0141],
+          [0.00975, 0.0155],
+          [0.013, 0.0141],
+          [0.01625, 0.0155],
+          [0.0195, 0.0141],
+          [0.02275, 0.0155],
+          [0.026, 0.006],
+          [0.026, 0.0]
+        ],
+        "segments": 10
+      },
+      "position_m": [-2.789562, 0.755935, 2.156742],
+      "orientation_rad": [0.0, 2.279339, 1.514486],
+      "material": {
+        "class": "hemp cord",
+        "basis": "assumed",
+        "source": "a-geometry"
+      },
+      "certainty": "C",
+      "source": "a-geometry",
+      "notes": "[geometry] Hemp turns whipping the hem round the iron wire of the rim; their spacing is the museum's."
+    },
+    {
+      "id": "rim-whipping-110",
+      "parent": "mast",
+      "shape": "profile of revolution",
+      "dimensions_m": {
+        "closed_axial_radial_profile": [
+          [0.0, 0.0],
+          [0.0, 0.006],
+          [0.00325, 0.0155],
+          [0.0065, 0.0141],
+          [0.00975, 0.0155],
+          [0.013, 0.0141],
+          [0.01625, 0.0155],
+          [0.0195, 0.0141],
+          [0.02275, 0.0155],
+          [0.026, 0.006],
+          [0.026, 0.0]
+        ],
+        "segments": 10
+      },
+      "position_m": [-2.620331, 0.770099, 2.341909],
+      "orientation_rad": [0.0, 2.350704, 1.514299],
+      "material": {
+        "class": "hemp cord",
+        "basis": "assumed",
+        "source": "a-geometry"
+      },
+      "certainty": "C",
+      "source": "a-geometry",
+      "notes": "[geometry] Hemp turns whipping the hem round the iron wire of the rim; their spacing is the museum's."
+    },
+    {
+      "id": "rim-whipping-111",
+      "parent": "mast",
+      "shape": "profile of revolution",
+      "dimensions_m": {
+        "closed_axial_radial_profile": [
+          [0.0, 0.0],
+          [0.0, 0.006],
+          [0.00325, 0.0155],
+          [0.0065, 0.0141],
+          [0.00975, 0.0155],
+          [0.013, 0.0141],
+          [0.01625, 0.0155],
+          [0.0195, 0.0141],
+          [0.02275, 0.0155],
+          [0.026, 0.006],
+          [0.026, 0.0]
+        ],
+        "segments": 10
+      },
+      "position_m": [-2.41684, 0.78593, 2.533308],
+      "orientation_rad": [0.0, 2.430466, 1.514089],
+      "material": {
+        "class": "hemp cord",
+        "basis": "assumed",
+        "source": "a-geometry"
+      },
+      "certainty": "C",
+      "source": "a-geometry",
+      "notes": "[geometry] Hemp turns whipping the hem round the iron wire of the rim; their spacing is the museum's."
+    },
+    {
+      "id": "rim-whipping-112",
+      "parent": "mast",
+      "shape": "profile of revolution",
+      "dimensions_m": {
+        "closed_axial_radial_profile": [
+          [0.0, 0.0],
+          [0.0, 0.006],
+          [0.00325, 0.0155],
+          [0.0065, 0.0141],
+          [0.00975, 0.0155],
+          [0.013, 0.0141],
+          [0.01625, 0.0155],
+          [0.0195, 0.0141],
+          [0.02275, 0.0155],
+          [0.026, 0.006],
+          [0.026, 0.0]
+        ],
+        "segments": 10
+      },
+      "position_m": [-2.217182, 0.800511, 2.694165],
+      "orientation_rad": [0.0, 2.503932, 1.513893],
+      "material": {
+        "class": "hemp cord",
+        "basis": "assumed",
+        "source": "a-geometry"
+      },
+      "certainty": "C",
+      "source": "a-geometry",
+      "notes": "[geometry] Hemp turns whipping the hem round the iron wire of the rim; their spacing is the museum's."
+    },
+    {
+      "id": "rim-whipping-113",
+      "parent": "mast",
+      "shape": "profile of revolution",
+      "dimensions_m": {
+        "closed_axial_radial_profile": [
+          [0.0, 0.0],
+          [0.0, 0.006],
+          [0.00325, 0.0155],
+          [0.0065, 0.0141],
+          [0.00975, 0.0155],
+          [0.013, 0.0141],
+          [0.01625, 0.0155],
+          [0.0195, 0.0141],
+          [0.02275, 0.0155],
+          [0.026, 0.006],
+          [0.026, 0.0]
+        ],
+        "segments": 10
+      },
+      "position_m": [-2.006984, 0.815091, 2.839433],
+      "orientation_rad": [0.0, 2.577399, 1.513697],
+      "material": {
+        "class": "hemp cord",
+        "basis": "assumed",
+        "source": "a-geometry"
+      },
+      "certainty": "C",
+      "source": "a-geometry",
+      "notes": "[geometry] Hemp turns whipping the hem round the iron wire of the rim; their spacing is the museum's."
+    },
+    {
+      "id": "rim-whipping-114",
+      "parent": "mast",
+      "shape": "profile of revolution",
+      "dimensions_m": {
+        "closed_axial_radial_profile": [
+          [0.0, 0.0],
+          [0.0, 0.006],
+          [0.00325, 0.0155],
+          [0.0065, 0.0141],
+          [0.00975, 0.0155],
+          [0.013, 0.0141],
+          [0.01625, 0.0155],
+          [0.0195, 0.0141],
+          [0.02275, 0.0155],
+          [0.026, 0.006],
+          [0.026, 0.0]
+        ],
+        "segments": 10
+      },
+      "position_m": [-1.787453, 0.829672, 2.968436],
+      "orientation_rad": [0.0, 2.650867, 1.513499],
+      "material": {
+        "class": "hemp cord",
+        "basis": "assumed",
+        "source": "a-geometry"
+      },
+      "certainty": "C",
+      "source": "a-geometry",
+      "notes": "[geometry] Hemp turns whipping the hem round the iron wire of the rim; their spacing is the museum's."
+    },
+    {
+      "id": "rim-whipping-115",
+      "parent": "mast",
+      "shape": "profile of revolution",
+      "dimensions_m": {
+        "closed_axial_radial_profile": [
+          [0.0, 0.0],
+          [0.0, 0.006],
+          [0.00325, 0.0155],
+          [0.0065, 0.0141],
+          [0.00975, 0.0155],
+          [0.013, 0.0141],
+          [0.01625, 0.0155],
+          [0.0195, 0.0141],
+          [0.02275, 0.0155],
+          [0.026, 0.006],
+          [0.026, 0.0]
+        ],
+        "segments": 10
+      },
+      "position_m": [-1.55984, 0.844253, 3.080589],
+      "orientation_rad": [0.0, 2.724337, 1.513299],
+      "material": {
+        "class": "hemp cord",
+        "basis": "assumed",
+        "source": "a-geometry"
+      },
+      "certainty": "C",
+      "source": "a-geometry",
+      "notes": "[geometry] Hemp turns whipping the hem round the iron wire of the rim; their spacing is the museum's."
+    },
+    {
+      "id": "rim-whipping-116",
+      "parent": "mast",
+      "shape": "profile of revolution",
+      "dimensions_m": {
+        "closed_axial_radial_profile": [
+          [0.0, 0.0],
+          [0.0, 0.006],
+          [0.00325, 0.0155],
+          [0.0065, 0.0141],
+          [0.00975, 0.0155],
+          [0.013, 0.0141],
+          [0.01625, 0.0155],
+          [0.0195, 0.0141],
+          [0.02275, 0.0155],
+          [0.026, 0.006],
+          [0.026, 0.0]
+        ],
+        "segments": 10
+      },
+      "position_m": [-1.325428, 0.858834, 3.175404],
+      "orientation_rad": [0.0, 2.797808, 1.513099],
+      "material": {
+        "class": "hemp cord",
+        "basis": "assumed",
+        "source": "a-geometry"
+      },
+      "certainty": "C",
+      "source": "a-geometry",
+      "notes": "[geometry] Hemp turns whipping the hem round the iron wire of the rim; their spacing is the museum's."
+    },
+    {
+      "id": "rim-whipping-117",
+      "parent": "mast",
+      "shape": "profile of revolution",
+      "dimensions_m": {
+        "closed_axial_radial_profile": [
+          [0.0, 0.0],
+          [0.0, 0.006],
+          [0.00325, 0.0155],
+          [0.0065, 0.0141],
+          [0.00975, 0.0155],
+          [0.013, 0.0141],
+          [0.01625, 0.0155],
+          [0.0195, 0.0141],
+          [0.02275, 0.0155],
+          [0.026, 0.006],
+          [0.026, 0.0]
+        ],
+        "segments": 10
+      },
+      "position_m": [-1.085531, 0.873414, 3.252489],
+      "orientation_rad": [0.0, 2.87128, 1.512896],
+      "material": {
+        "class": "hemp cord",
+        "basis": "assumed",
+        "source": "a-geometry"
+      },
+      "certainty": "C",
+      "source": "a-geometry",
+      "notes": "[geometry] Hemp turns whipping the hem round the iron wire of the rim; their spacing is the museum's."
+    },
+    {
+      "id": "rim-whipping-118",
+      "parent": "mast",
+      "shape": "profile of revolution",
+      "dimensions_m": {
+        "closed_axial_radial_profile": [
+          [0.0, 0.0],
+          [0.0, 0.006],
+          [0.00325, 0.0155],
+          [0.0065, 0.0141],
+          [0.00975, 0.0155],
+          [0.013, 0.0141],
+          [0.01625, 0.0155],
+          [0.0195, 0.0141],
+          [0.02275, 0.0155],
+          [0.026, 0.006],
+          [0.026, 0.0]
+        ],
+        "segments": 10
+      },
+      "position_m": [-0.841482, 0.887995, 3.311551],
+      "orientation_rad": [0.0, 2.944753, 1.512693],
+      "material": {
+        "class": "hemp cord",
+        "basis": "assumed",
+        "source": "a-geometry"
+      },
+      "certainty": "C",
+      "source": "a-geometry",
+      "notes": "[geometry] Hemp turns whipping the hem round the iron wire of the rim; their spacing is the museum's."
+    },
+    {
+      "id": "rim-whipping-119",
+      "parent": "mast",
+      "shape": "profile of revolution",
+      "dimensions_m": {
+        "closed_axial_radial_profile": [
+          [0.0, 0.0],
+          [0.0, 0.006],
+          [0.00325, 0.0155],
+          [0.0065, 0.0141],
+          [0.00975, 0.0155],
+          [0.013, 0.0141],
+          [0.01625, 0.0155],
+          [0.0195, 0.0141],
+          [0.02275, 0.0155],
+          [0.026, 0.006],
+          [0.026, 0.0]
+        ],
+        "segments": 10
+      },
+      "position_m": [-0.594628, 0.902576, 3.352399],
+      "orientation_rad": [0.0, 3.018227, 1.512488],
+      "material": {
+        "class": "hemp cord",
+        "basis": "assumed",
+        "source": "a-geometry"
+      },
+      "certainty": "C",
+      "source": "a-geometry",
+      "notes": "[geometry] Hemp turns whipping the hem round the iron wire of the rim; their spacing is the museum's."
+    },
+    {
+      "id": "rim-whipping-120",
+      "parent": "mast",
+      "shape": "profile of revolution",
+      "dimensions_m": {
+        "closed_axial_radial_profile": [
+          [0.0, 0.0],
+          [0.0, 0.006],
+          [0.00325, 0.0155],
+          [0.0065, 0.0141],
+          [0.00975, 0.0155],
+          [0.013, 0.0141],
+          [0.01625, 0.0155],
+          [0.0195, 0.0141],
+          [0.02275, 0.0155],
+          [0.026, 0.006],
+          [0.026, 0.0]
+        ],
+        "segments": 10
+      },
+      "position_m": [-0.339219, 0.917573, 3.375312],
+      "orientation_rad": [0.0, 3.093802, 1.512275],
+      "material": {
+        "class": "hemp cord",
+        "basis": "assumed",
+        "source": "a-geometry"
+      },
+      "certainty": "C",
+      "source": "a-geometry",
+      "notes": "[geometry] Hemp turns whipping the hem round the iron wire of the rim; their spacing is the museum's."
+    },
+    {
+      "id": "rim-whipping-121",
+      "parent": "mast",
+      "shape": "profile of revolution",
+      "dimensions_m": {
+        "closed_axial_radial_profile": [
+          [0.0, 0.0],
+          [0.0, 0.006],
+          [0.00325, 0.0155],
+          [0.0065, 0.0141],
+          [0.00975, 0.0155],
+          [0.013, 0.0141],
+          [0.01625, 0.0155],
+          [0.0195, 0.0141],
+          [0.02275, 0.0155],
+          [0.026, 0.006],
+          [0.026, 0.0]
+        ],
+        "segments": 10
+      },
+      "position_m": [0.078839, 0.942152, 3.371054],
+      "orientation_rad": [0.0, -3.065522, 1.511924],
+      "material": {
+        "class": "hemp cord",
+        "basis": "assumed",
+        "source": "a-geometry"
+      },
+      "certainty": "C",
+      "source": "a-geometry",
+      "notes": "[geometry] Hemp turns whipping the hem round the iron wire of the rim; their spacing is the museum's."
+    },
+    {
+      "id": "rim-whipping-122",
+      "parent": "mast",
+      "shape": "profile of revolution",
+      "dimensions_m": {
+        "closed_axial_radial_profile": [
+          [0.0, 0.0],
+          [0.0, 0.006],
+          [0.00325, 0.0155],
+          [0.0065, 0.0141],
+          [0.00975, 0.0155],
+          [0.013, 0.0141],
+          [0.01625, 0.0155],
+          [0.0195, 0.0141],
+          [0.02275, 0.0155],
+          [0.026, 0.006],
+          [0.026, 0.0]
+        ],
+        "segments": 10
+      },
+      "position_m": [0.331275, 0.957149, 3.343193],
+      "orientation_rad": [0.0, -2.989944, 1.511707],
+      "material": {
+        "class": "hemp cord",
+        "basis": "assumed",
+        "source": "a-geometry"
+      },
+      "certainty": "C",
+      "source": "a-geometry",
+      "notes": "[geometry] Hemp turns whipping the hem round the iron wire of the rim; their spacing is the museum's."
+    },
+    {
+      "id": "rim-whipping-123",
+      "parent": "mast",
+      "shape": "profile of revolution",
+      "dimensions_m": {
+        "closed_axial_radial_profile": [
+          [0.0, 0.0],
+          [0.0, 0.006],
+          [0.00325, 0.0155],
+          [0.0065, 0.0141],
+          [0.00975, 0.0155],
+          [0.013, 0.0141],
+          [0.01625, 0.0155],
+          [0.0195, 0.0141],
+          [0.02275, 0.0155],
+          [0.026, 0.006],
+          [0.026, 0.0]
+        ],
+        "segments": 10
+      },
+      "position_m": [0.579968, 0.972146, 3.296526],
+      "orientation_rad": [0.0, -2.914364, 1.511489],
+      "material": {
+        "class": "hemp cord",
+        "basis": "assumed",
+        "source": "a-geometry"
+      },
+      "certainty": "C",
+      "source": "a-geometry",
+      "notes": "[geometry] Hemp turns whipping the hem round the iron wire of the rim; their spacing is the museum's."
+    },
+    {
+      "id": "rim-whipping-124",
+      "parent": "mast",
+      "shape": "profile of revolution",
+      "dimensions_m": {
+        "closed_axial_radial_profile": [
+          [0.0, 0.0],
+          [0.0, 0.006],
+          [0.00325, 0.0155],
+          [0.0065, 0.0141],
+          [0.00975, 0.0155],
+          [0.013, 0.0141],
+          [0.01625, 0.0155],
+          [0.0195, 0.0141],
+          [0.02275, 0.0155],
+          [0.026, 0.006],
+          [0.026, 0.0]
+        ],
+        "segments": 10
+      },
+      "position_m": [0.823526, 0.987143, 3.231459],
+      "orientation_rad": [0.0, -2.838783, 1.511269],
+      "material": {
+        "class": "hemp cord",
+        "basis": "assumed",
+        "source": "a-geometry"
+      },
+      "certainty": "C",
+      "source": "a-geometry",
+      "notes": "[geometry] Hemp turns whipping the hem round the iron wire of the rim; their spacing is the museum's."
+    },
+    {
+      "id": "rim-whipping-125",
+      "parent": "mast",
+      "shape": "profile of revolution",
+      "dimensions_m": {
+        "closed_axial_radial_profile": [
+          [0.0, 0.0],
+          [0.0, 0.006],
+          [0.00325, 0.0155],
+          [0.0065, 0.0141],
+          [0.00975, 0.0155],
+          [0.013, 0.0141],
+          [0.01625, 0.0155],
+          [0.0195, 0.0141],
+          [0.02275, 0.0155],
+          [0.026, 0.006],
+          [0.026, 0.0]
+        ],
+        "segments": 10
+      },
+      "position_m": [1.060594, 1.00214, 3.148499],
+      "orientation_rad": [0.0, -2.763201, 1.511048],
+      "material": {
+        "class": "hemp cord",
+        "basis": "assumed",
+        "source": "a-geometry"
+      },
+      "certainty": "C",
+      "source": "a-geometry",
+      "notes": "[geometry] Hemp turns whipping the hem round the iron wire of the rim; their spacing is the museum's."
+    },
+    {
+      "id": "rim-whipping-126",
+      "parent": "mast",
+      "shape": "profile of revolution",
+      "dimensions_m": {
+        "closed_axial_radial_profile": [
+          [0.0, 0.0],
+          [0.0, 0.006],
+          [0.00325, 0.0155],
+          [0.0065, 0.0141],
+          [0.00975, 0.0155],
+          [0.013, 0.0141],
+          [0.01625, 0.0155],
+          [0.0195, 0.0141],
+          [0.02275, 0.0155],
+          [0.026, 0.006],
+          [0.026, 0.0]
+        ],
+        "segments": 10
+      },
+      "position_m": [1.289867, 1.017138, 3.048253],
+      "orientation_rad": [0.0, -2.687617, 1.510825],
+      "material": {
+        "class": "hemp cord",
+        "basis": "assumed",
+        "source": "a-geometry"
+      },
+      "certainty": "C",
+      "source": "a-geometry",
+      "notes": "[geometry] Hemp turns whipping the hem round the iron wire of the rim; their spacing is the museum's."
+    },
+    {
+      "id": "rim-whipping-127",
+      "parent": "mast",
+      "shape": "profile of revolution",
+      "dimensions_m": {
+        "closed_axial_radial_profile": [
+          [0.0, 0.0],
+          [0.0, 0.006],
+          [0.00325, 0.0155],
+          [0.0065, 0.0141],
+          [0.00975, 0.0155],
+          [0.013, 0.0141],
+          [0.01625, 0.0155],
+          [0.0195, 0.0141],
+          [0.02275, 0.0155],
+          [0.026, 0.006],
+          [0.026, 0.0]
+        ],
+        "segments": 10
+      },
+      "position_m": [1.516067, 1.032551, 2.927946],
+      "orientation_rad": [0.0, -2.609933, 1.510594],
+      "material": {
+        "class": "hemp cord",
+        "basis": "assumed",
+        "source": "a-geometry"
+      },
+      "certainty": "C",
+      "source": "a-geometry",
+      "notes": "[geometry] Hemp turns whipping the hem round the iron wire of the rim; their spacing is the museum's."
+    },
+    {
+      "id": "rim-whipping-128",
+      "parent": "mast",
+      "shape": "profile of revolution",
+      "dimensions_m": {
+        "closed_axial_radial_profile": [
+          [0.0, 0.0],
+          [0.0, 0.006],
+          [0.00325, 0.0155],
+          [0.0065, 0.0141],
+          [0.00975, 0.0155],
+          [0.013, 0.0141],
+          [0.01625, 0.0155],
+          [0.0195, 0.0141],
+          [0.02275, 0.0155],
+          [0.026, 0.006],
+          [0.026, 0.0]
+        ],
+        "segments": 10
+      },
+      "position_m": [1.731418, 1.047965, 2.79098],
+      "orientation_rad": [0.0, -2.532246, 1.510361],
+      "material": {
+        "class": "hemp cord",
+        "basis": "assumed",
+        "source": "a-geometry"
+      },
+      "certainty": "C",
+      "source": "a-geometry",
+      "notes": "[geometry] Hemp turns whipping the hem round the iron wire of the rim; their spacing is the museum's."
+    },
+    {
+      "id": "rim-whipping-129",
+      "parent": "mast",
+      "shape": "profile of revolution",
+      "dimensions_m": {
+        "closed_axial_radial_profile": [
+          [0.0, 0.0],
+          [0.0, 0.006],
+          [0.00325, 0.0155],
+          [0.0065, 0.0141],
+          [0.00975, 0.0155],
+          [0.013, 0.0141],
+          [0.01625, 0.0155],
+          [0.0195, 0.0141],
+          [0.02275, 0.0155],
+          [0.026, 0.006],
+          [0.026, 0.0]
+        ],
+        "segments": 10
+      },
+      "position_m": [1.934703, 1.063378, 2.63831],
+      "orientation_rad": [0.0, -2.454559, 1.510127],
+      "material": {
+        "class": "hemp cord",
+        "basis": "assumed",
+        "source": "a-geometry"
+      },
+      "certainty": "C",
+      "source": "a-geometry",
+      "notes": "[geometry] Hemp turns whipping the hem round the iron wire of the rim; their spacing is the museum's."
+    },
+    {
+      "id": "rim-whipping-130",
+      "parent": "mast",
+      "shape": "profile of revolution",
+      "dimensions_m": {
+        "closed_axial_radial_profile": [
+          [0.0, 0.0],
+          [0.0, 0.006],
+          [0.00325, 0.0155],
+          [0.0065, 0.0141],
+          [0.00975, 0.0155],
+          [0.013, 0.0141],
+          [0.01625, 0.0155],
+          [0.0195, 0.0141],
+          [0.02275, 0.0155],
+          [0.026, 0.006],
+          [0.026, 0.0]
+        ],
+        "segments": 10
+      },
+      "position_m": [2.124787, 1.078792, 2.470979],
+      "orientation_rad": [0.0, -2.37687, 1.50989],
+      "material": {
+        "class": "hemp cord",
+        "basis": "assumed",
+        "source": "a-geometry"
+      },
+      "certainty": "C",
+      "source": "a-geometry",
+      "notes": "[geometry] Hemp turns whipping the hem round the iron wire of the rim; their spacing is the museum's."
+    },
+    {
+      "id": "rim-whipping-131",
+      "parent": "mast",
+      "shape": "profile of revolution",
+      "dimensions_m": {
+        "closed_axial_radial_profile": [
+          [0.0, 0.0],
+          [0.0, 0.006],
+          [0.00325, 0.0155],
+          [0.0065, 0.0141],
+          [0.00975, 0.0155],
+          [0.013, 0.0141],
+          [0.01625, 0.0155],
+          [0.0195, 0.0141],
+          [0.02275, 0.0155],
+          [0.026, 0.006],
+          [0.026, 0.0]
+        ],
+        "segments": 10
+      },
+      "position_m": [2.350013, 1.098788, 2.233903],
+      "orientation_rad": [0.0, -2.276081, 1.509581],
+      "material": {
+        "class": "hemp cord",
+        "basis": "assumed",
+        "source": "a-geometry"
+      },
+      "certainty": "C",
+      "source": "a-geometry",
+      "notes": "[geometry] Hemp turns whipping the hem round the iron wire of the rim; their spacing is the museum's."
+    },
+    {
+      "id": "rim-whipping-132",
+      "parent": "mast",
+      "shape": "profile of revolution",
+      "dimensions_m": {
+        "closed_axial_radial_profile": [
+          [0.0, 0.0],
+          [0.0, 0.006],
+          [0.00325, 0.0155],
+          [0.0065, 0.0141],
+          [0.00975, 0.0155],
+          [0.013, 0.0141],
+          [0.01625, 0.0155],
+          [0.0195, 0.0141],
+          [0.02275, 0.0155],
+          [0.026, 0.006],
+          [0.026, 0.0]
+        ],
+        "segments": 10
+      },
+      "position_m": [2.505969, 1.114202, 2.037266],
+      "orientation_rad": [0.0, -2.198389, 1.50934],
+      "material": {
+        "class": "hemp cord",
+        "basis": "assumed",
+        "source": "a-geometry"
+      },
+      "certainty": "C",
+      "source": "a-geometry",
+      "notes": "[geometry] Hemp turns whipping the hem round the iron wire of the rim; their spacing is the museum's."
+    },
+    {
+      "id": "rim-whipping-133",
+      "parent": "mast",
+      "shape": "profile of revolution",
+      "dimensions_m": {
+        "closed_axial_radial_profile": [
+          [0.0, 0.0],
+          [0.0, 0.006],
+          [0.00325, 0.0155],
+          [0.0065, 0.0141],
+          [0.00975, 0.0155],
+          [0.013, 0.0141],
+          [0.01625, 0.0155],
+          [0.0195, 0.0141],
+          [0.02275, 0.0155],
+          [0.026, 0.006],
+          [0.026, 0.0]
+        ],
+        "segments": 10
+      },
+      "position_m": [2.645644, 1.129615, 1.829938],
+      "orientation_rad": [0.0, -2.120694, 1.509098],
+      "material": {
+        "class": "hemp cord",
+        "basis": "assumed",
+        "source": "a-geometry"
+      },
+      "certainty": "C",
+      "source": "a-geometry",
+      "notes": "[geometry] Hemp turns whipping the hem round the iron wire of the rim; their spacing is the museum's."
+    },
+    {
+      "id": "rim-whipping-134",
+      "parent": "mast",
+      "shape": "profile of revolution",
+      "dimensions_m": {
+        "closed_axial_radial_profile": [
+          [0.0, 0.0],
+          [0.0, 0.006],
+          [0.00325, 0.0155],
+          [0.0065, 0.0141],
+          [0.00975, 0.0155],
+          [0.013, 0.0141],
+          [0.01625, 0.0155],
+          [0.0195, 0.0141],
+          [0.02275, 0.0155],
+          [0.026, 0.006],
+          [0.026, 0.0]
+        ],
+        "segments": 10
+      },
+      "position_m": [2.771397, 1.145445, 1.607283],
+      "orientation_rad": [0.0, -2.040898, 1.508847],
+      "material": {
+        "class": "hemp cord",
+        "basis": "assumed",
+        "source": "a-geometry"
+      },
+      "certainty": "C",
+      "source": "a-geometry",
+      "notes": "[geometry] Hemp turns whipping the hem round the iron wire of the rim; their spacing is the museum's."
+    },
+    {
+      "id": "rim-whipping-135",
+      "parent": "mast",
+      "shape": "profile of revolution",
+      "dimensions_m": {
+        "closed_axial_radial_profile": [
+          [0.0, 0.0],
+          [0.0, 0.006],
+          [0.00325, 0.0155],
+          [0.0065, 0.0141],
+          [0.00975, 0.0155],
+          [0.013, 0.0141],
+          [0.01625, 0.0155],
+          [0.0195, 0.0141],
+          [0.02275, 0.0155],
+          [0.026, 0.006],
+          [0.026, 0.0]
+        ],
+        "segments": 10
+      },
+      "position_m": [2.878568, 1.161275, 1.376258],
+      "orientation_rad": [0.0, -1.961101, 1.508594],
+      "material": {
+        "class": "hemp cord",
+        "basis": "assumed",
+        "source": "a-geometry"
+      },
+      "certainty": "C",
+      "source": "a-geometry",
+      "notes": "[geometry] Hemp turns whipping the hem round the iron wire of the rim; their spacing is the museum's."
+    },
+    {
+      "id": "rim-whipping-136",
+      "parent": "mast",
+      "shape": "profile of revolution",
+      "dimensions_m": {
+        "closed_axial_radial_profile": [
+          [0.0, 0.0],
+          [0.0, 0.006],
+          [0.00325, 0.0155],
+          [0.0065, 0.0141],
+          [0.00975, 0.0155],
+          [0.013, 0.0141],
+          [0.01625, 0.0155],
+          [0.0195, 0.0141],
+          [0.02275, 0.0155],
+          [0.026, 0.006],
+          [0.026, 0.0]
+        ],
+        "segments": 10
+      },
+      "position_m": [2.966624, 1.177105, 1.138403],
+      "orientation_rad": [0.0, -1.881301, 1.508338],
+      "material": {
+        "class": "hemp cord",
+        "basis": "assumed",
+        "source": "a-geometry"
+      },
+      "certainty": "C",
+      "source": "a-geometry",
+      "notes": "[geometry] Hemp turns whipping the hem round the iron wire of the rim; their spacing is the museum's."
+    },
+    {
+      "id": "rim-whipping-137",
+      "parent": "mast",
+      "shape": "profile of revolution",
+      "dimensions_m": {
+        "closed_axial_radial_profile": [
+          [0.0, 0.0],
+          [0.0, 0.006],
+          [0.00325, 0.0155],
+          [0.0065, 0.0141],
+          [0.00975, 0.0155],
+          [0.013, 0.0141],
+          [0.01625, 0.0155],
+          [0.0195, 0.0141],
+          [0.02275, 0.0155],
+          [0.026, 0.006],
+          [0.026, 0.0]
+        ],
+        "segments": 10
+      },
+      "position_m": [3.03516, 1.192935, 0.895289],
+      "orientation_rad": [0.0, -1.8015, 1.508081],
+      "material": {
+        "class": "hemp cord",
+        "basis": "assumed",
+        "source": "a-geometry"
+      },
+      "certainty": "C",
+      "source": "a-geometry",
+      "notes": "[geometry] Hemp turns whipping the hem round the iron wire of the rim; their spacing is the museum's."
+    },
+    {
+      "id": "rim-whipping-138",
+      "parent": "mast",
+      "shape": "profile of revolution",
+      "dimensions_m": {
+        "closed_axial_radial_profile": [
+          [0.0, 0.0],
+          [0.0, 0.006],
+          [0.00325, 0.0155],
+          [0.0065, 0.0141],
+          [0.00975, 0.0155],
+          [0.013, 0.0141],
+          [0.01625, 0.0155],
+          [0.0195, 0.0141],
+          [0.02275, 0.0155],
+          [0.026, 0.006],
+          [0.026, 0.0]
+        ],
+        "segments": 10
+      },
+      "position_m": [3.083901, 1.208765, 0.648508],
+      "orientation_rad": [0.0, -1.721698, 1.507822],
+      "material": {
+        "class": "hemp cord",
+        "basis": "assumed",
+        "source": "a-geometry"
+      },
+      "certainty": "C",
+      "source": "a-geometry",
+      "notes": "[geometry] Hemp turns whipping the hem round the iron wire of the rim; their spacing is the museum's."
+    },
+    {
+      "id": "rim-whipping-139",
+      "parent": "mast",
+      "shape": "profile of revolution",
+      "dimensions_m": {
+        "closed_axial_radial_profile": [
+          [0.0, 0.0],
+          [0.0, 0.006],
+          [0.00325, 0.0155],
+          [0.0065, 0.0141],
+          [0.00975, 0.0155],
+          [0.013, 0.0141],
+          [0.01625, 0.0155],
+          [0.0195, 0.0141],
+          [0.02275, 0.0155],
+          [0.026, 0.006],
+          [0.026, 0.0]
+        ],
+        "segments": 10
+      },
+      "position_m": [3.112698, 1.224595, 0.39966],
+      "orientation_rad": [0.0, -1.641893, 1.50756],
+      "material": {
+        "class": "hemp cord",
+        "basis": "assumed",
+        "source": "a-geometry"
+      },
+      "certainty": "C",
+      "source": "a-geometry",
+      "notes": "[geometry] Hemp turns whipping the hem round the iron wire of the rim; their spacing is the museum's."
+    },
+    {
+      "id": "rim-whipping-140",
+      "parent": "mast",
+      "shape": "profile of revolution",
+      "dimensions_m": {
+        "closed_axial_radial_profile": [
+          [0.0, 0.0],
+          [0.0, 0.006],
+          [0.00325, 0.0155],
+          [0.0065, 0.0141],
+          [0.00975, 0.0155],
+          [0.013, 0.0141],
+          [0.01625, 0.0155],
+          [0.0195, 0.0141],
+          [0.02275, 0.0155],
+          [0.026, 0.006],
+          [0.026, 0.0]
+        ],
+        "segments": 10
+      },
+      "position_m": [3.121532, 1.240425, 0.15035],
+      "orientation_rad": [0.0, -1.562087, 1.507296],
+      "material": {
+        "class": "hemp cord",
+        "basis": "assumed",
+        "source": "a-geometry"
+      },
+      "certainty": "C",
+      "source": "a-geometry",
+      "notes": "[geometry] Hemp turns whipping the hem round the iron wire of the rim; their spacing is the museum's."
+    },
+    {
+      "id": "rim-whipping-141",
+      "parent": "mast",
+      "shape": "profile of revolution",
+      "dimensions_m": {
+        "closed_axial_radial_profile": [
+          [0.0, 0.0],
+          [0.0, 0.006],
+          [0.00325, 0.0155],
+          [0.0065, 0.0141],
+          [0.00975, 0.0155],
+          [0.013, 0.0141],
+          [0.01625, 0.0155],
+          [0.0195, 0.0141],
+          [0.02275, 0.0155],
+          [0.026, 0.006],
+          [0.026, 0.0]
+        ],
+        "segments": 10
+      },
+      "position_m": [3.109957, 1.256672, -0.104332],
+      "orientation_rad": [0.0, -1.480178, 1.507024],
+      "material": {
+        "class": "hemp cord",
+        "basis": "assumed",
+        "source": "a-geometry"
+      },
+      "certainty": "C",
+      "source": "a-geometry",
+      "notes": "[geometry] Hemp turns whipping the hem round the iron wire of the rim; their spacing is the museum's."
+    },
+    {
+      "id": "rim-whipping-142",
+      "parent": "mast",
+      "shape": "profile of revolution",
+      "dimensions_m": {
+        "closed_axial_radial_profile": [
+          [0.0, 0.0],
+          [0.0, 0.006],
+          [0.00325, 0.0155],
+          [0.0065, 0.0141],
+          [0.00975, 0.0155],
+          [0.013, 0.0141],
+          [0.01625, 0.0155],
+          [0.0195, 0.0141],
+          [0.02275, 0.0155],
+          [0.026, 0.006],
+          [0.026, 0.0]
+        ],
+        "segments": 10
+      },
+      "position_m": [3.077727, 1.272918, -0.356127],
+      "orientation_rad": [0.0, -1.398267, 1.506748],
+      "material": {
+        "class": "hemp cord",
+        "basis": "assumed",
+        "source": "a-geometry"
+      },
+      "certainty": "C",
+      "source": "a-geometry",
+      "notes": "[geometry] Hemp turns whipping the hem round the iron wire of the rim; their spacing is the museum's."
+    },
+    {
+      "id": "rim-whipping-143",
+      "parent": "mast",
+      "shape": "profile of revolution",
+      "dimensions_m": {
+        "closed_axial_radial_profile": [
+          [0.0, 0.0],
+          [0.0, 0.006],
+          [0.00325, 0.0155],
+          [0.0065, 0.0141],
+          [0.00975, 0.0155],
+          [0.013, 0.0141],
+          [0.01625, 0.0155],
+          [0.0195, 0.0141],
+          [0.02275, 0.0155],
+          [0.026, 0.006],
+          [0.026, 0.0]
+        ],
+        "segments": 10
+      },
+      "position_m": [3.025236, 1.289164, -0.603369],
+      "orientation_rad": [0.0, -1.316355, 1.50647],
+      "material": {
+        "class": "hemp cord",
+        "basis": "assumed",
+        "source": "a-geometry"
+      },
+      "certainty": "C",
+      "source": "a-geometry",
+      "notes": "[geometry] Hemp turns whipping the hem round the iron wire of the rim; their spacing is the museum's."
+    },
+    {
+      "id": "rim-whipping-144",
+      "parent": "mast",
+      "shape": "profile of revolution",
+      "dimensions_m": {
+        "closed_axial_radial_profile": [
+          [0.0, 0.0],
+          [0.0, 0.006],
+          [0.00325, 0.0155],
+          [0.0065, 0.0141],
+          [0.00975, 0.0155],
+          [0.013, 0.0141],
+          [0.01625, 0.0155],
+          [0.0195, 0.0141],
+          [0.02275, 0.0155],
+          [0.026, 0.006],
+          [0.026, 0.0]
+        ],
+        "segments": 10
+      },
+      "position_m": [2.95301, 1.305411, -0.844438],
+      "orientation_rad": [0.0, -1.23444, 1.50619],
+      "material": {
+        "class": "hemp cord",
+        "basis": "assumed",
+        "source": "a-geometry"
+      },
+      "certainty": "C",
+      "source": "a-geometry",
+      "notes": "[geometry] Hemp turns whipping the hem round the iron wire of the rim; their spacing is the museum's."
+    },
+    {
+      "id": "rim-whipping-145",
+      "parent": "mast",
+      "shape": "profile of revolution",
+      "dimensions_m": {
+        "closed_axial_radial_profile": [
+          [0.0, 0.0],
+          [0.0, 0.006],
+          [0.00325, 0.0155],
+          [0.0065, 0.0141],
+          [0.00975, 0.0155],
+          [0.013, 0.0141],
+          [0.01625, 0.0155],
+          [0.0195, 0.0141],
+          [0.02275, 0.0155],
+          [0.026, 0.006],
+          [0.026, 0.0]
+        ],
+        "segments": 10
+      },
+      "position_m": [2.861705, 1.321657, -1.077769],
+      "orientation_rad": [0.0, -1.152524, 1.505908],
+      "material": {
+        "class": "hemp cord",
+        "basis": "assumed",
+        "source": "a-geometry"
+      },
+      "certainty": "C",
+      "source": "a-geometry",
+      "notes": "[geometry] Hemp turns whipping the hem round the iron wire of the rim; their spacing is the museum's."
+    },
+    {
+      "id": "rim-whipping-146",
+      "parent": "mast",
+      "shape": "profile of revolution",
+      "dimensions_m": {
+        "closed_axial_radial_profile": [
+          [0.0, 0.0],
+          [0.0, 0.006],
+          [0.00325, 0.0155],
+          [0.0065, 0.0141],
+          [0.00975, 0.0155],
+          [0.013, 0.0141],
+          [0.01625, 0.0155],
+          [0.0195, 0.0141],
+          [0.02275, 0.0155],
+          [0.026, 0.006],
+          [0.026, 0.0]
+        ],
+        "segments": 10
+      },
+      "position_m": [2.752099, 1.337903, -1.301864],
+      "orientation_rad": [0.0, -1.070605, 1.505623],
+      "material": {
+        "class": "hemp cord",
+        "basis": "assumed",
+        "source": "a-geometry"
+      },
+      "certainty": "C",
+      "source": "a-geometry",
+      "notes": "[geometry] Hemp turns whipping the hem round the iron wire of the rim; their spacing is the museum's."
+    },
+    {
+      "id": "rim-whipping-147",
+      "parent": "mast",
+      "shape": "profile of revolution",
+      "dimensions_m": {
+        "closed_axial_radial_profile": [
+          [0.0, 0.0],
+          [0.0, 0.006],
+          [0.00325, 0.0155],
+          [0.0065, 0.0141],
+          [0.00975, 0.0155],
+          [0.013, 0.0141],
+          [0.01625, 0.0155],
+          [0.0195, 0.0141],
+          [0.02275, 0.0155],
+          [0.026, 0.006],
+          [0.026, 0.0]
+        ],
+        "segments": 10
+      },
+      "position_m": [2.621612, 1.354566, -1.520618],
+      "orientation_rad": [0.0, -0.986584, 1.505328],
+      "material": {
+        "class": "hemp cord",
+        "basis": "assumed",
+        "source": "a-geometry"
+      },
+      "certainty": "C",
+      "source": "a-geometry",
+      "notes": "[geometry] Hemp turns whipping the hem round the iron wire of the rim; their spacing is the museum's."
+    },
+    {
+      "id": "rim-whipping-148",
+      "parent": "mast",
+      "shape": "profile of revolution",
+      "dimensions_m": {
+        "closed_axial_radial_profile": [
+          [0.0, 0.0],
+          [0.0, 0.006],
+          [0.00325, 0.0155],
+          [0.0065, 0.0141],
+          [0.00975, 0.0155],
+          [0.013, 0.0141],
+          [0.01625, 0.0155],
+          [0.0195, 0.0141],
+          [0.02275, 0.0155],
+          [0.026, 0.006],
+          [0.026, 0.0]
+        ],
+        "segments": 10
+      },
+      "position_m": [2.473902, 1.371229, -1.726716],
+      "orientation_rad": [0.0, -0.902561, 1.50503],
+      "material": {
+        "class": "hemp cord",
+        "basis": "assumed",
+        "source": "a-geometry"
+      },
+      "certainty": "C",
+      "source": "a-geometry",
+      "notes": "[geometry] Hemp turns whipping the hem round the iron wire of the rim; their spacing is the museum's."
+    },
+    {
+      "id": "rim-whipping-149",
+      "parent": "mast",
+      "shape": "profile of revolution",
+      "dimensions_m": {
+        "closed_axial_radial_profile": [
+          [0.0, 0.0],
+          [0.0, 0.006],
+          [0.00325, 0.0155],
+          [0.0065, 0.0141],
+          [0.00975, 0.0155],
+          [0.013, 0.0141],
+          [0.01625, 0.0155],
+          [0.0195, 0.0141],
+          [0.02275, 0.0155],
+          [0.026, 0.006],
+          [0.026, 0.0]
+        ],
+        "segments": 10
+      },
+      "position_m": [2.310169, 1.387892, -1.918816],
+      "orientation_rad": [0.0, -0.818535, 1.50473],
+      "material": {
+        "class": "hemp cord",
+        "basis": "assumed",
+        "source": "a-geometry"
+      },
+      "certainty": "C",
+      "source": "a-geometry",
+      "notes": "[geometry] Hemp turns whipping the hem round the iron wire of the rim; their spacing is the museum's."
+    },
+    {
+      "id": "rim-whipping-150",
+      "parent": "mast",
+      "shape": "profile of revolution",
+      "dimensions_m": {
+        "closed_axial_radial_profile": [
+          [0.0, 0.0],
+          [0.0, 0.006],
+          [0.00325, 0.0155],
+          [0.0065, 0.0141],
+          [0.00975, 0.0155],
+          [0.013, 0.0141],
+          [0.01625, 0.0155],
+          [0.0195, 0.0141],
+          [0.02275, 0.0155],
+          [0.026, 0.006],
+          [0.026, 0.0]
+        ],
+        "segments": 10
+      },
+      "position_m": [2.05175, 1.411636, -2.16597],
+      "orientation_rad": [0.0, -0.698794, 1.504297],
+      "material": {
+        "class": "hemp cord",
+        "basis": "assumed",
+        "source": "a-geometry"
+      },
+      "certainty": "C",
+      "source": "a-geometry",
+      "notes": "[geometry] Hemp turns whipping the hem round the iron wire of the rim; their spacing is the museum's."
+    },
+    {
+      "id": "rim-whipping-151",
+      "parent": "mast",
+      "shape": "profile of revolution",
+      "dimensions_m": {
+        "closed_axial_radial_profile": [
+          [0.0, 0.0],
+          [0.0, 0.006],
+          [0.00325, 0.0155],
+          [0.0065, 0.0141],
+          [0.00975, 0.0155],
+          [0.013, 0.0141],
+          [0.01625, 0.0155],
+          [0.0195, 0.0141],
+          [0.02275, 0.0155],
+          [0.026, 0.006],
+          [0.026, 0.0]
+        ],
+        "segments": 10
+      },
+      "position_m": [1.854745, 1.428299, -2.319254],
+      "orientation_rad": [0.0, -0.614763, 1.50399],
+      "material": {
+        "class": "hemp cord",
+        "basis": "assumed",
+        "source": "a-geometry"
+      },
+      "certainty": "C",
+      "source": "a-geometry",
+      "notes": "[geometry] Hemp turns whipping the hem round the iron wire of the rim; their spacing is the museum's."
+    },
+    {
+      "id": "rim-whipping-152",
+      "parent": "mast",
+      "shape": "profile of revolution",
+      "dimensions_m": {
+        "closed_axial_radial_profile": [
+          [0.0, 0.0],
+          [0.0, 0.006],
+          [0.00325, 0.0155],
+          [0.0065, 0.0141],
+          [0.00975, 0.0155],
+          [0.013, 0.0141],
+          [0.01625, 0.0155],
+          [0.0195, 0.0141],
+          [0.02275, 0.0155],
+          [0.026, 0.006],
+          [0.026, 0.0]
+        ],
+        "segments": 10
+      },
+      "position_m": [1.641204, 1.445378, -2.457992],
+      "orientation_rad": [0.0, -0.528628, 1.503672],
+      "material": {
+        "class": "hemp cord",
+        "basis": "assumed",
+        "source": "a-geometry"
+      },
+      "certainty": "C",
+      "source": "a-geometry",
+      "notes": "[geometry] Hemp turns whipping the hem round the iron wire of the rim; their spacing is the museum's."
+    },
+    {
+      "id": "rim-whipping-153",
+      "parent": "mast",
+      "shape": "profile of revolution",
+      "dimensions_m": {
+        "closed_axial_radial_profile": [
+          [0.0, 0.0],
+          [0.0, 0.006],
+          [0.00325, 0.0155],
+          [0.0065, 0.0141],
+          [0.00975, 0.0155],
+          [0.013, 0.0141],
+          [0.01625, 0.0155],
+          [0.0195, 0.0141],
+          [0.02275, 0.0155],
+          [0.026, 0.006],
+          [0.026, 0.0]
+        ],
+        "segments": 10
+      },
+      "position_m": [1.41759, 1.462457, -2.577279],
+      "orientation_rad": [0.0, -0.442491, 1.503352],
+      "material": {
+        "class": "hemp cord",
+        "basis": "assumed",
+        "source": "a-geometry"
+      },
+      "certainty": "C",
+      "source": "a-geometry",
+      "notes": "[geometry] Hemp turns whipping the hem round the iron wire of the rim; their spacing is the museum's."
+    },
+    {
+      "id": "rim-whipping-154",
+      "parent": "mast",
+      "shape": "profile of revolution",
+      "dimensions_m": {
+        "closed_axial_radial_profile": [
+          [0.0, 0.0],
+          [0.0, 0.006],
+          [0.00325, 0.0155],
+          [0.0065, 0.0141],
+          [0.00975, 0.0155],
+          [0.013, 0.0141],
+          [0.01625, 0.0155],
+          [0.0195, 0.0141],
+          [0.02275, 0.0155],
+          [0.026, 0.006],
+          [0.026, 0.0]
+        ],
+        "segments": 10
+      },
+      "position_m": [1.18566, 1.479536, -2.676415],
+      "orientation_rad": [0.0, -0.356351, 1.503028],
+      "material": {
+        "class": "hemp cord",
+        "basis": "assumed",
+        "source": "a-geometry"
+      },
+      "certainty": "C",
+      "source": "a-geometry",
+      "notes": "[geometry] Hemp turns whipping the hem round the iron wire of the rim; their spacing is the museum's."
+    },
+    {
+      "id": "rim-whipping-155",
+      "parent": "mast",
+      "shape": "profile of revolution",
+      "dimensions_m": {
+        "closed_axial_radial_profile": [
+          [0.0, 0.0],
+          [0.0, 0.006],
+          [0.00325, 0.0155],
+          [0.0065, 0.0141],
+          [0.00975, 0.0155],
+          [0.013, 0.0141],
+          [0.01625, 0.0155],
+          [0.0195, 0.0141],
+          [0.02275, 0.0155],
+          [0.026, 0.006],
+          [0.026, 0.0]
+        ],
+        "segments": 10
+      },
+      "position_m": [0.947213, 1.496615, -2.754856],
+      "orientation_rad": [0.0, -0.270208, 1.502701],
+      "material": {
+        "class": "hemp cord",
+        "basis": "assumed",
+        "source": "a-geometry"
+      },
+      "certainty": "C",
+      "source": "a-geometry",
+      "notes": "[geometry] Hemp turns whipping the hem round the iron wire of the rim; their spacing is the museum's."
+    },
+    {
+      "id": "rim-whipping-156",
+      "parent": "mast",
+      "shape": "profile of revolution",
+      "dimensions_m": {
+        "closed_axial_radial_profile": [
+          [0.0, 0.0],
+          [0.0, 0.006],
+          [0.00325, 0.0155],
+          [0.0065, 0.0141],
+          [0.00975, 0.0155],
+          [0.013, 0.0141],
+          [0.01625, 0.0155],
+          [0.0195, 0.0141],
+          [0.02275, 0.0155],
+          [0.026, 0.006],
+          [0.026, 0.0]
+        ],
+        "segments": 10
+      },
+      "position_m": [0.704082, 1.513694, -2.812218],
+      "orientation_rad": [0.0, -0.184063, 1.502371],
+      "material": {
+        "class": "hemp cord",
+        "basis": "assumed",
+        "source": "a-geometry"
+      },
+      "certainty": "C",
+      "source": "a-geometry",
+      "notes": "[geometry] Hemp turns whipping the hem round the iron wire of the rim; their spacing is the museum's."
+    },
+    {
+      "id": "rim-whipping-157",
+      "parent": "mast",
+      "shape": "profile of revolution",
+      "dimensions_m": {
+        "closed_axial_radial_profile": [
+          [0.0, 0.0],
+          [0.0, 0.006],
+          [0.00325, 0.0155],
+          [0.0065, 0.0141],
+          [0.00975, 0.0155],
+          [0.013, 0.0141],
+          [0.01625, 0.0155],
+          [0.0195, 0.0141],
+          [0.02275, 0.0155],
+          [0.026, 0.006],
+          [0.026, 0.0]
+        ],
+        "segments": 10
+      },
+      "position_m": [0.452097, 1.53119, -2.84889],
+      "orientation_rad": [0.0, -0.095815, 1.50203],
+      "material": {
+        "class": "hemp cord",
+        "basis": "assumed",
+        "source": "a-geometry"
+      },
+      "certainty": "C",
+      "source": "a-geometry",
+      "notes": "[geometry] Hemp turns whipping the hem round the iron wire of the rim; their spacing is the museum's."
+    },
+    {
+      "id": "rim-whipping-158",
+      "parent": "mast",
+      "shape": "profile of revolution",
+      "dimensions_m": {
+        "closed_axial_radial_profile": [
+          [0.0, 0.0],
+          [0.0, 0.006],
+          [0.00325, 0.0155],
+          [0.0065, 0.0141],
+          [0.00975, 0.0155],
+          [0.013, 0.0141],
+          [0.01625, 0.0155],
+          [0.0195, 0.0141],
+          [0.02275, 0.0155],
+          [0.026, 0.006],
+          [0.026, 0.0]
+        ],
+        "segments": 10
+      },
+      "position_m": [0.199131, 1.548686, -2.863145],
+      "orientation_rad": [0.0, -0.007563, 1.501685],
+      "material": {
+        "class": "hemp cord",
+        "basis": "assumed",
+        "source": "a-geometry"
+      },
+      "certainty": "C",
+      "source": "a-geometry",
+      "notes": "[geometry] Hemp turns whipping the hem round the iron wire of the rim; their spacing is the museum's."
+    },
+    {
+      "id": "rim-whipping-159",
+      "parent": "mast",
+      "shape": "profile of revolution",
+      "dimensions_m": {
+        "closed_axial_radial_profile": [
+          [0.0, 0.0],
+          [0.0, 0.006],
+          [0.00325, 0.0155],
+          [0.0065, 0.0141],
+          [0.00975, 0.0155],
+          [0.013, 0.0141],
+          [0.01625, 0.0155],
+          [0.0195, 0.0141],
+          [0.02275, 0.0155],
+          [0.026, 0.006],
+          [0.026, 0.0]
+        ],
+        "segments": 10
+      },
+      "position_m": [-0.082674, 1.568264, -2.852663],
+      "orientation_rad": [0.0, 0.091199, 1.501295],
+      "material": {
+        "class": "hemp cord",
+        "basis": "assumed",
+        "source": "a-geometry"
+      },
+      "certainty": "C",
+      "source": "a-geometry",
+      "notes": "[geometry] Hemp turns whipping the hem round the iron wire of the rim; their spacing is the museum's."
+    },
+    {
+      "id": "rim-whipping-160",
+      "parent": "mast",
+      "shape": "profile of revolution",
+      "dimensions_m": {
+        "closed_axial_radial_profile": [
+          [0.0, 0.0],
+          [0.0, 0.006],
+          [0.00325, 0.0155],
+          [0.0065, 0.0141],
+          [0.00975, 0.0155],
+          [0.013, 0.0141],
+          [0.01625, 0.0155],
+          [0.0195, 0.0141],
+          [0.02275, 0.0155],
+          [0.026, 0.006],
+          [0.026, 0.0]
+        ],
+        "segments": 10
+      },
+      "position_m": [-0.33121, 1.585759, -2.819999],
+      "orientation_rad": [0.0, 0.179457, 1.500942],
+      "material": {
+        "class": "hemp cord",
+        "basis": "assumed",
+        "source": "a-geometry"
+      },
+      "certainty": "C",
+      "source": "a-geometry",
+      "notes": "[geometry] Hemp turns whipping the hem round the iron wire of the rim; their spacing is the museum's."
+    },
+    {
+      "id": "rim-whipping-161",
+      "parent": "mast",
+      "shape": "profile of revolution",
+      "dimensions_m": {
+        "closed_axial_radial_profile": [
+          [0.0, 0.0],
+          [0.0, 0.006],
+          [0.00325, 0.0155],
+          [0.0065, 0.0141],
+          [0.00975, 0.0155],
+          [0.013, 0.0141],
+          [0.01625, 0.0155],
+          [0.0195, 0.0141],
+          [0.02275, 0.0155],
+          [0.026, 0.006],
+          [0.026, 0.0]
+        ],
+        "segments": 10
+      },
+      "position_m": [-0.574661, 1.603255, -2.765837],
+      "orientation_rad": [0.0, 0.267718, 1.500587],
+      "material": {
+        "class": "hemp cord",
+        "basis": "assumed",
+        "source": "a-geometry"
+      },
+      "certainty": "C",
+      "source": "a-geometry",
+      "notes": "[geometry] Hemp turns whipping the hem round the iron wire of the rim; their spacing is the museum's."
+    },
+    {
+      "id": "rim-whipping-162",
+      "parent": "mast",
+      "shape": "profile of revolution",
+      "dimensions_m": {
+        "closed_axial_radial_profile": [
+          [0.0, 0.0],
+          [0.0, 0.006],
+          [0.00325, 0.0155],
+          [0.0065, 0.0141],
+          [0.00975, 0.0155],
+          [0.013, 0.0141],
+          [0.01625, 0.0155],
+          [0.0195, 0.0141],
+          [0.02275, 0.0155],
+          [0.026, 0.006],
+          [0.026, 0.0]
+        ],
+        "segments": 10
+      },
+      "position_m": [-0.816711, 1.621167, -2.688782],
+      "orientation_rad": [0.0, 0.358083, 1.500219],
+      "material": {
+        "class": "hemp cord",
+        "basis": "assumed",
+        "source": "a-geometry"
+      },
+      "certainty": "C",
+      "source": "a-geometry",
+      "notes": "[geometry] Hemp turns whipping the hem round the iron wire of the rim; their spacing is the museum's."
+    },
+    {
+      "id": "rim-whipping-163",
+      "parent": "mast",
+      "shape": "profile of revolution",
+      "dimensions_m": {
+        "closed_axial_radial_profile": [
+          [0.0, 0.0],
+          [0.0, 0.006],
+          [0.00325, 0.0155],
+          [0.0065, 0.0141],
+          [0.00975, 0.0155],
+          [0.013, 0.0141],
+          [0.01625, 0.0155],
+          [0.0195, 0.0141],
+          [0.02275, 0.0155],
+          [0.026, 0.006],
+          [0.026, 0.0]
+        ],
+        "segments": 10
+      },
+      "position_m": [-1.049594, 1.639078, -2.590721],
+      "orientation_rad": [0.0, 0.448452, 1.499847],
+      "material": {
+        "class": "hemp cord",
+        "basis": "assumed",
+        "source": "a-geometry"
+      },
+      "certainty": "C",
+      "source": "a-geometry",
+      "notes": "[geometry] Hemp turns whipping the hem round the iron wire of the rim; their spacing is the museum's."
+    },
+    {
+      "id": "rim-whipping-164",
+      "parent": "mast",
+      "shape": "profile of revolution",
+      "dimensions_m": {
+        "closed_axial_radial_profile": [
+          [0.0, 0.0],
+          [0.0, 0.006],
+          [0.00325, 0.0155],
+          [0.0065, 0.0141],
+          [0.00975, 0.0155],
+          [0.013, 0.0141],
+          [0.01625, 0.0155],
+          [0.0195, 0.0141],
+          [0.02275, 0.0155],
+          [0.026, 0.006],
+          [0.026, 0.0]
+        ],
+        "segments": 10
+      },
+      "position_m": [-1.271504, 1.65699, -2.472674],
+      "orientation_rad": [0.0, 0.538824, 1.499471],
+      "material": {
+        "class": "hemp cord",
+        "basis": "assumed",
+        "source": "a-geometry"
+      },
+      "certainty": "C",
+      "source": "a-geometry",
+      "notes": "[geometry] Hemp turns whipping the hem round the iron wire of the rim; their spacing is the museum's."
+    },
+    {
+      "id": "rim-whipping-165",
+      "parent": "mast",
+      "shape": "profile of revolution",
+      "dimensions_m": {
+        "closed_axial_radial_profile": [
+          [0.0, 0.0],
+          [0.0, 0.006],
+          [0.00325, 0.0155],
+          [0.0065, 0.0141],
+          [0.00975, 0.0155],
+          [0.013, 0.0141],
+          [0.01625, 0.0155],
+          [0.0195, 0.0141],
+          [0.02275, 0.0155],
+          [0.026, 0.006],
+          [0.026, 0.0]
+        ],
+        "segments": 10
+      },
+      "position_m": [-1.480743, 1.674902, -2.335815],
+      "orientation_rad": [0.0, 0.6292, 1.499091],
+      "material": {
+        "class": "hemp cord",
+        "basis": "assumed",
+        "source": "a-geometry"
+      },
+      "certainty": "C",
+      "source": "a-geometry",
+      "notes": "[geometry] Hemp turns whipping the hem round the iron wire of the rim; their spacing is the museum's."
+    },
+    {
+      "id": "rim-whipping-166",
+      "parent": "mast",
+      "shape": "profile of revolution",
+      "dimensions_m": {
+        "closed_axial_radial_profile": [
+          [0.0, 0.0],
+          [0.0, 0.006],
+          [0.00325, 0.0155],
+          [0.0065, 0.0141],
+          [0.00975, 0.0155],
+          [0.013, 0.0141],
+          [0.01625, 0.0155],
+          [0.0195, 0.0141],
+          [0.02275, 0.0155],
+          [0.026, 0.006],
+          [0.026, 0.0]
+        ],
+        "segments": 10
+      },
+      "position_m": [-1.680088, 1.69323, -2.177677],
+      "orientation_rad": [0.0, 0.72168, 1.498698],
+      "material": {
+        "class": "hemp cord",
+        "basis": "assumed",
+        "source": "a-geometry"
+      },
+      "certainty": "C",
+      "source": "a-geometry",
+      "notes": "[geometry] Hemp turns whipping the hem round the iron wire of the rim; their spacing is the museum's."
+    },
+    {
+      "id": "rim-whipping-167",
+      "parent": "mast",
+      "shape": "profile of revolution",
+      "dimensions_m": {
+        "closed_axial_radial_profile": [
+          [0.0, 0.0],
+          [0.0, 0.006],
+          [0.00325, 0.0155],
+          [0.0065, 0.0141],
+          [0.00975, 0.0155],
+          [0.013, 0.0141],
+          [0.01625, 0.0155],
+          [0.0195, 0.0141],
+          [0.02275, 0.0155],
+          [0.026, 0.006],
+          [0.026, 0.0]
+        ],
+        "segments": 10
+      },
+      "position_m": [-1.981185, 1.724471, -1.870383],
+      "orientation_rad": [0.0, 0.879327, 1.498018],
+      "material": {
+        "class": "hemp cord",
+        "basis": "assumed",
+        "source": "a-geometry"
+      },
+      "certainty": "C",
+      "source": "a-geometry",
+      "notes": "[geometry] Hemp turns whipping the hem round the iron wire of the rim; their spacing is the museum's."
+    },
+    {
+      "id": "rim-whipping-168",
+      "parent": "mast",
+      "shape": "profile of revolution",
+      "dimensions_m": {
+        "closed_axial_radial_profile": [
+          [0.0, 0.0],
+          [0.0, 0.006],
+          [0.00325, 0.0155],
+          [0.0065, 0.0141],
+          [0.00975, 0.0155],
+          [0.013, 0.0141],
+          [0.01625, 0.0155],
+          [0.0195, 0.0141],
+          [0.02275, 0.0155],
+          [0.026, 0.006],
+          [0.026, 0.0]
+        ],
+        "segments": 10
+      },
+      "position_m": [-2.132913, 1.742799, -1.670836],
+      "orientation_rad": [0.0, 0.971817, 1.497614],
+      "material": {
+        "class": "hemp cord",
+        "basis": "assumed",
+        "source": "a-geometry"
+      },
+      "certainty": "C",
+      "source": "a-geometry",
+      "notes": "[geometry] Hemp turns whipping the hem round the iron wire of the rim; their spacing is the museum's."
+    },
+    {
+      "id": "rim-whipping-169",
+      "parent": "mast",
+      "shape": "profile of revolution",
+      "dimensions_m": {
+        "closed_axial_radial_profile": [
+          [0.0, 0.0],
+          [0.0, 0.006],
+          [0.00325, 0.0155],
+          [0.0065, 0.0141],
+          [0.00975, 0.0155],
+          [0.013, 0.0141],
+          [0.01625, 0.0155],
+          [0.0195, 0.0141],
+          [0.02275, 0.0155],
+          [0.026, 0.006],
+          [0.026, 0.0]
+        ],
+        "segments": 10
+      },
+      "position_m": [-2.26483, 1.761128, -1.459315],
+      "orientation_rad": [0.0, 1.064312, 1.497205],
+      "material": {
+        "class": "hemp cord",
+        "basis": "assumed",
+        "source": "a-geometry"
+      },
+      "certainty": "C",
+      "source": "a-geometry",
+      "notes": "[geometry] Hemp turns whipping the hem round the iron wire of the rim; their spacing is the museum's."
+    },
+    {
+      "id": "rim-whipping-170",
+      "parent": "mast",
+      "shape": "profile of revolution",
+      "dimensions_m": {
+        "closed_axial_radial_profile": [
+          [0.0, 0.0],
+          [0.0, 0.006],
+          [0.00325, 0.0155],
+          [0.0065, 0.0141],
+          [0.00975, 0.0155],
+          [0.013, 0.0141],
+          [0.01625, 0.0155],
+          [0.0195, 0.0141],
+          [0.02275, 0.0155],
+          [0.026, 0.006],
+          [0.026, 0.0]
+        ],
+        "segments": 10
+      },
+      "position_m": [-2.378306, 1.779872, -1.232628],
+      "orientation_rad": [0.0, 1.158912, 1.496781],
+      "material": {
+        "class": "hemp cord",
+        "basis": "assumed",
+        "source": "a-geometry"
+      },
+      "certainty": "C",
+      "source": "a-geometry",
+      "notes": "[geometry] Hemp turns whipping the hem round the iron wire of the rim; their spacing is the museum's."
+    },
+    {
+      "id": "rim-whipping-171",
+      "parent": "mast",
+      "shape": "profile of revolution",
+      "dimensions_m": {
+        "closed_axial_radial_profile": [
+          [0.0, 0.0],
+          [0.0, 0.006],
+          [0.00325, 0.0155],
+          [0.0065, 0.0141],
+          [0.00975, 0.0155],
+          [0.013, 0.0141],
+          [0.01625, 0.0155],
+          [0.0195, 0.0141],
+          [0.02275, 0.0155],
+          [0.026, 0.006],
+          [0.026, 0.0]
+        ],
+        "segments": 10
+      },
+      "position_m": [-2.469342, 1.798616, -0.997598],
+      "orientation_rad": [0.0, 1.253517, 1.496353],
+      "material": {
+        "class": "hemp cord",
+        "basis": "assumed",
+        "source": "a-geometry"
+      },
+      "certainty": "C",
+      "source": "a-geometry",
+      "notes": "[geometry] Hemp turns whipping the hem round the iron wire of the rim; their spacing is the museum's."
+    },
+    {
+      "id": "rim-whipping-172",
+      "parent": "mast",
+      "shape": "profile of revolution",
+      "dimensions_m": {
+        "closed_axial_radial_profile": [
+          [0.0, 0.0],
+          [0.0, 0.006],
+          [0.00325, 0.0155],
+          [0.0065, 0.0141],
+          [0.00975, 0.0155],
+          [0.013, 0.0141],
+          [0.01625, 0.0155],
+          [0.0195, 0.0141],
+          [0.02275, 0.0155],
+          [0.026, 0.006],
+          [0.026, 0.0]
+        ],
+        "segments": 10
+      },
+      "position_m": [-2.537379, 1.817361, -0.756426],
+      "orientation_rad": [0.0, 1.348126, 1.49592],
+      "material": {
+        "class": "hemp cord",
+        "basis": "assumed",
+        "source": "a-geometry"
+      },
+      "certainty": "C",
+      "source": "a-geometry",
+      "notes": "[geometry] Hemp turns whipping the hem round the iron wire of the rim; their spacing is the museum's."
+    },
+    {
+      "id": "rim-whipping-173",
+      "parent": "mast",
+      "shape": "profile of revolution",
+      "dimensions_m": {
+        "closed_axial_radial_profile": [
+          [0.0, 0.0],
+          [0.0, 0.006],
+          [0.00325, 0.0155],
+          [0.0065, 0.0141],
+          [0.00975, 0.0155],
+          [0.013, 0.0141],
+          [0.01625, 0.0155],
+          [0.0195, 0.0141],
+          [0.02275, 0.0155],
+          [0.026, 0.006],
+          [0.026, 0.0]
+        ],
+        "segments": 10
+      },
+      "position_m": [-2.582801, 1.836522, -0.505868],
+      "orientation_rad": [0.0, 1.444842, 1.495472],
+      "material": {
+        "class": "hemp cord",
+        "basis": "assumed",
+        "source": "a-geometry"
+      },
+      "certainty": "C",
+      "source": "a-geometry",
+      "notes": "[geometry] Hemp turns whipping the hem round the iron wire of the rim; their spacing is the museum's."
+    },
+    {
+      "id": "rim-whipping-174",
+      "parent": "mast",
+      "shape": "profile of revolution",
+      "dimensions_m": {
+        "closed_axial_radial_profile": [
+          [0.0, 0.0],
+          [0.0, 0.006],
+          [0.00325, 0.0155],
+          [0.0065, 0.0141],
+          [0.00975, 0.0155],
+          [0.013, 0.0141],
+          [0.01625, 0.0155],
+          [0.0195, 0.0141],
+          [0.02275, 0.0155],
+          [0.026, 0.006],
+          [0.026, 0.0]
+        ],
+        "segments": 10
+      },
+      "position_m": [-2.603696, 1.855683, -0.253614],
+      "orientation_rad": [0.0, 1.541562, 1.495019],
+      "material": {
+        "class": "hemp cord",
+        "basis": "assumed",
+        "source": "a-geometry"
+      },
+      "certainty": "C",
+      "source": "a-geometry",
+      "notes": "[geometry] Hemp turns whipping the hem round the iron wire of the rim; their spacing is the museum's."
+    },
+    {
       "id": "frame-crown",
       "parent": "mast",
       "shape": "profile",
