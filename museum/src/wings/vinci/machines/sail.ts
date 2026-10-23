@@ -120,12 +120,17 @@ export function sailGeometry(h: HelicoidSpec, tier: TierName): BufferGeometry {
     x = Math.imul(x ^ (x >>> 13), 1274126177)
     return ((x ^ (x >>> 16)) >>> 0) / 4294967296
   }
-  const push = (p: Vector3, n: Vector3, s: number, t: number, tone: readonly number[], pass: number, shift = 0): number => {
+  /** where a piece's weave is measured across from: a cloth's centre line,
+   * a seam's own line; a strip along the spiral measures along itself */
+  type Across = (r: number, t: number) => number
+  const from = (t0: number): Across => (r, t) => r * (t - t0)
+  const push = (p: Vector3, n: Vector3, s: number, t: number, tone: readonly number[], pass: number, across: Across, shift = 0): number => {
     const r = h.r_in + s * (S.rim(t) - h.r_in)
     position.push(p.x, p.y, p.z)
     normal.push(n.x, n.y, n.z)
-    // the warp runs out from the mast, along each cloth
-    uv.push(r * t + shift, r + shift * .37)
+    // in each piece's own flat pattern, metres: a global r*t shears the weave
+    // by the turn, and the pixel gate, measured in world metres, cannot hold it
+    uv.push(across(r, t) + shift, r + shift * .37)
     colour.push(tone[0]!, tone[1]!, tone[2]!)
     layers.push(pass)
     return position.length / 3 - 1
@@ -155,10 +160,11 @@ export function sailGeometry(h: HelicoidSpec, tier: TierName): BufferGeometry {
       const value = .9 + hash(g, m) * .1, warmth = (hash(m, g + 7) - .5) * .05
       const tone = [value * (1 + warmth), value, value * (1 - warmth)]
       const shift = hash(g + 3, m + 11) * 7
+      const centre = from((g + (m + .5) / panels) * gore)
       grid(cols, ns, (i, j) => {
         const t = (g + (m + i / cols) / panels) * gore, s = j / ns
         const { p, n } = frame(s, t)
-        return push(p, n, s, t, tone, 1, shift)
+        return push(p, n, s, t, tone, 1, centre, shift)
       })
     }
   }
@@ -170,7 +176,7 @@ export function sailGeometry(h: HelicoidSpec, tier: TierName): BufferGeometry {
    * stitches pull the layers down, so the welt between catches the light. */
   const ribbon = (
     place: (a: number, b: number) => { s: number; t: number },
-    along: number, acrossMarks: readonly number[], stitched: readonly boolean[], faces: readonly number[] = [1, -1],
+    along: number, acrossMarks: readonly number[], stitched: readonly boolean[], weave: Across, faces: readonly number[] = [1, -1],
   ): void => {
     const cols = acrossMarks.length - 1
     for (const side of faces) {
@@ -191,7 +197,7 @@ export function sailGeometry(h: HelicoidSpec, tier: TierName): BufferGeometry {
         const n = new Vector3().crossVectors(down, across).normalize()
         const cloth = frame(here.s, here.t).n
         if (n.dot(cloth) * side < 0) n.negate()
-        return push(here.p, n, here.s, here.t, grey(stitched[j] ? STITCH : BODY), DOUBLED)
+        return push(here.p, n, here.s, here.t, grey(stitched[j] ? STITCH : BODY), DOUBLED, weave)
       })
     }
   }
@@ -203,13 +209,17 @@ export function sailGeometry(h: HelicoidSpec, tier: TierName): BufferGeometry {
     const t = S.span * a
     const r = S.rim(t) - h.wire_r - (1 - b) * (h.hem_m - h.wire_r)
     return { s: sAt(r, t), t }
-  }, nt, hemMarks, [true, false, false])
+  }, nt, hemMarks, [true, false, false], (_r, t) => {
+    // the hem's length, measured along its middle
+    const mid = h.r0 - h.wire_r - (h.hem_m - h.wire_r) / 2
+    return mid * t + (h.r1 - h.r0) / S.span * t * t / 2
+  })
 
   // THE CROWN: a doubled band laced to the mast, stitched along its outer edge.
   ribbon((a, b) => {
     const t = S.span * a
     return { s: sAt(h.r_in + b * (h.crown_m - h.r_in), t), t }
-  }, nt, [0, 1 - .005 / (h.crown_m - h.r_in), 1], [false, false, true])
+  }, nt, [0, 1 - .005 / (h.crown_m - h.r_in), 1], [false, false, true], (_r, t) => (h.r_in + h.crown_m) / 2 * t)
 
   // THE SEAMS: radial, between the crown and the hem, between every two
   // cloths, over every cane and along both ends of the cloth.
@@ -224,7 +234,7 @@ export function sailGeometry(h: HelicoidSpec, tier: TierName): BufferGeometry {
         const r = r0 + a * (r1 - r0)
         const t = Math.min(S.span, Math.max(0, t0 + ((b - .5) * h.seam_m) / r))
         return { s: sAt(r, t), t }
-      }, seamRows, [0, .005 / h.seam_m, 1 - .005 / h.seam_m, 1], [true, false, false, true], h.seams_under ? [-1] : [1, -1])
+      }, seamRows, [0, .005 / h.seam_m, 1 - .005 / h.seam_m, 1], [true, false, false, true], from(t0), h.seams_under ? [-1] : [1, -1])
     }
   }
 
