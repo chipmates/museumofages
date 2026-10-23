@@ -54,7 +54,7 @@
         0.6238
       ],
       "material": {
-        "class": "chestnut pole, peeled with a drawknife",
+        "class": "chestnut pole in its bark",
         "basis": "ours",
         "source": "f. 71 recto draws round poles; the species is ours"
       },
@@ -118,7 +118,7 @@
         0.6193
       ],
       "material": {
-        "class": "chestnut pole, peeled with a drawknife",
+        "class": "chestnut pole in its bark",
         "basis": "ours",
         "source": "f. 71 recto draws round poles; the species is ours"
       },
@@ -470,7 +470,7 @@
         0
       ],
       "material": {
-        "class": "chestnut pole, peeled with a drawknife",
+        "class": "chestnut pole in its bark",
         "basis": "ours",
         "source": "f. 71 recto draws round poles; the species is ours"
       },
@@ -502,7 +502,7 @@
         -0.6191
       ],
       "material": {
-        "class": "chestnut pole, peeled with a drawknife",
+        "class": "chestnut pole in its bark",
         "basis": "ours",
         "source": "f. 71 recto draws round poles; the species is ours"
       },
@@ -534,45 +534,13 @@
         -0.6299
       ],
       "material": {
-        "class": "chestnut pole, peeled with a drawknife",
+        "class": "chestnut pole in its bark",
         "basis": "ours",
         "source": "f. 71 recto draws round poles; the species is ours"
       },
       "certainty": "C",
       "source": "Ceraldi and Russo Ermolli 2004 (five rods to an arch, staggered planes)",
       "notes": "frame B, taper 0.048 m in diameter end to end; placed at 15.6 s, standing by 18.05 s"
-    },
-    {
-      "id": "J5",
-      "parent": "root",
-      "shape": "round pole, cross joist",
-      "dimensions_m": {
-        "x": 3.4,
-        "radius": 0.075,
-        "axis": [
-          0,
-          0,
-          1
-        ]
-      },
-      "position_m": [
-        3.6286,
-        1.3578,
-        0
-      ],
-      "orientation_rad": [
-        0,
-        0,
-        0
-      ],
-      "material": {
-        "class": "chestnut pole in its bark",
-        "basis": "ours",
-        "source": "f. 71 recto draws round poles; the species is ours"
-      },
-      "certainty": "C",
-      "source": "f. 71 recto (poles across the span); the reading of Ceraldi and Russo Ermolli 2004 (cross joists)",
-      "notes": "taper 0 m in diameter end to end; placed at 16.6 s, standing by 19.05 s"
     },
     {
       "id": "E6A",
@@ -598,13 +566,13 @@
         -0.625
       ],
       "material": {
-        "class": "chestnut pole, peeled with a drawknife",
+        "class": "chestnut pole in its bark",
         "basis": "ours",
         "source": "f. 71 recto draws round poles; the species is ours"
       },
       "certainty": "C",
       "source": "Ceraldi and Russo Ermolli 2004 (one end rod; read here as one at each foot)",
-      "notes": "frame A, taper 0.0461 m in diameter end to end; placed at 17.6 s, standing by 20.05 s"
+      "notes": "frame A, taper 0.0461 m in diameter end to end; placed at 16.6 s, standing by 19.05 s"
     },
     {
       "id": "E6B",
@@ -636,7 +604,39 @@
       },
       "certainty": "C",
       "source": "Ceraldi and Russo Ermolli 2004 (one end rod; read here as one at each foot)",
-      "notes": "frame B, taper 0.0333 m in diameter end to end; placed at 18.6 s, standing by 21.05 s"
+      "notes": "frame B, taper 0.0333 m in diameter end to end; placed at 17.6 s, standing by 20.05 s"
+    },
+    {
+      "id": "J5",
+      "parent": "root",
+      "shape": "round pole, cross joist",
+      "dimensions_m": {
+        "x": 3.4,
+        "radius": 0.075,
+        "axis": [
+          0,
+          0,
+          1
+        ]
+      },
+      "position_m": [
+        3.6286,
+        1.3578,
+        0
+      ],
+      "orientation_rad": [
+        0,
+        0,
+        0
+      ],
+      "material": {
+        "class": "chestnut pole in its bark",
+        "basis": "ours",
+        "source": "f. 71 recto draws round poles; the species is ours"
+      },
+      "certainty": "C",
+      "source": "f. 71 recto (poles across the span); the reading of Ceraldi and Russo Ermolli 2004 (cross joists)",
+      "notes": "taper 0 m in diameter end to end; placed at 18.6 s, standing by 21.05 s"
     },
     {
       "id": "bank-seats",
@@ -668,9 +668,9 @@
     {
       "id": "lashings",
       "parent": "root",
-      "shape": "38 square lashings, 3 turns each",
+      "shape": "38 square lashings, 4 turns each",
       "dimensions_m": {
-        "radius": 0.008
+        "radius": 0.0068
       },
       "position_m": [
         0,
@@ -710,12 +710,12 @@
       ],
       "limits": [
         0,
-        0.8
+        1.2
       ],
       "ratio": null,
       "certainty": "C",
       "source": "museum choice: the order and the paths of placing",
-      "notes": "lowered onto the joist it rests on"
+      "notes": "carried high and level, turned into its slope over its place, lowered onto the joist it rests on"
     },
     {
       "id": "place-E0B",
@@ -734,12 +734,12 @@
       ],
       "limits": [
         0,
-        0.8
+        1.2
       ],
       "ratio": null,
       "certainty": "C",
       "source": "museum choice: the order and the paths of placing",
-      "notes": "lowered onto the joist it rests on"
+      "notes": "carried high and level, turned into its slope over its place, lowered onto the joist it rests on"
     },
     {
       "id": "place-R1A",
@@ -758,12 +758,12 @@
       ],
       "limits": [
         0,
-        0.8
+        1.2
       ],
       "ratio": null,
       "certainty": "C",
       "source": "museum choice: the order and the paths of placing",
-      "notes": "lowered onto the joist it rests on"
+      "notes": "carried high and level, turned into its slope over its place, lowered onto the joist it rests on"
     },
     {
       "id": "place-R1B",
@@ -782,12 +782,12 @@
       ],
       "limits": [
         0,
-        0.8
+        1.2
       ],
       "ratio": null,
       "certainty": "C",
       "source": "museum choice: the order and the paths of placing",
-      "notes": "lowered onto the joist it rests on"
+      "notes": "carried high and level, turned into its slope over its place, lowered onto the joist it rests on"
     },
     {
       "id": "place-J1",
@@ -806,7 +806,7 @@
       ],
       "limits": [
         0,
-        3.3
+        3.6
       ],
       "ratio": null,
       "certainty": "C",
@@ -830,12 +830,12 @@
       ],
       "limits": [
         0,
-        0.8
+        1.2
       ],
       "ratio": null,
       "certainty": "C",
       "source": "museum choice: the order and the paths of placing",
-      "notes": "lowered onto the joist it rests on"
+      "notes": "carried high and level, turned into its slope over its place, lowered onto the joist it rests on"
     },
     {
       "id": "place-R2B",
@@ -854,12 +854,12 @@
       ],
       "limits": [
         0,
-        0.8
+        1.2
       ],
       "ratio": null,
       "certainty": "C",
       "source": "museum choice: the order and the paths of placing",
-      "notes": "lowered onto the joist it rests on"
+      "notes": "carried high and level, turned into its slope over its place, lowered onto the joist it rests on"
     },
     {
       "id": "place-J2",
@@ -878,7 +878,7 @@
       ],
       "limits": [
         0,
-        3.3
+        3.6
       ],
       "ratio": null,
       "certainty": "C",
@@ -902,12 +902,12 @@
       ],
       "limits": [
         0,
-        0.8
+        1.2
       ],
       "ratio": null,
       "certainty": "C",
       "source": "museum choice: the order and the paths of placing",
-      "notes": "lowered onto the joist it rests on"
+      "notes": "carried high and level, turned into its slope over its place, lowered onto the joist it rests on"
     },
     {
       "id": "place-R3B",
@@ -926,12 +926,12 @@
       ],
       "limits": [
         0,
-        0.8
+        1.2
       ],
       "ratio": null,
       "certainty": "C",
       "source": "museum choice: the order and the paths of placing",
-      "notes": "lowered onto the joist it rests on"
+      "notes": "carried high and level, turned into its slope over its place, lowered onto the joist it rests on"
     },
     {
       "id": "place-J3",
@@ -950,7 +950,7 @@
       ],
       "limits": [
         0,
-        3.3
+        3.6
       ],
       "ratio": null,
       "certainty": "C",
@@ -974,12 +974,12 @@
       ],
       "limits": [
         0,
-        0.8
+        1.2
       ],
       "ratio": null,
       "certainty": "C",
       "source": "museum choice: the order and the paths of placing",
-      "notes": "lowered onto the joist it rests on"
+      "notes": "carried high and level, turned into its slope over its place, lowered onto the joist it rests on"
     },
     {
       "id": "place-R4B",
@@ -998,12 +998,12 @@
       ],
       "limits": [
         0,
-        0.8
+        1.2
       ],
       "ratio": null,
       "certainty": "C",
       "source": "museum choice: the order and the paths of placing",
-      "notes": "lowered onto the joist it rests on"
+      "notes": "carried high and level, turned into its slope over its place, lowered onto the joist it rests on"
     },
     {
       "id": "place-J4",
@@ -1022,7 +1022,7 @@
       ],
       "limits": [
         0,
-        3.3
+        3.6
       ],
       "ratio": null,
       "certainty": "C",
@@ -1046,12 +1046,12 @@
       ],
       "limits": [
         0,
-        0.8
+        1.2
       ],
       "ratio": null,
       "certainty": "C",
       "source": "museum choice: the order and the paths of placing",
-      "notes": "lowered onto the joist it rests on"
+      "notes": "carried high and level, turned into its slope over its place, lowered onto the joist it rests on"
     },
     {
       "id": "place-R5B",
@@ -1070,36 +1070,12 @@
       ],
       "limits": [
         0,
-        0.8
+        1.2
       ],
       "ratio": null,
       "certainty": "C",
       "source": "museum choice: the order and the paths of placing",
-      "notes": "lowered onto the joist it rests on"
-    },
-    {
-      "id": "place-J5",
-      "type": "prismatic",
-      "parent": "root",
-      "child": "J5",
-      "axis": [
-        0,
-        0,
-        -1
-      ],
-      "pivot_m": [
-        3.6286,
-        1.3578,
-        0
-      ],
-      "limits": [
-        0,
-        3.3
-      ],
-      "ratio": null,
-      "certainty": "C",
-      "source": "museum choice: the order and the paths of placing",
-      "notes": "threaded between the rods along its own axis"
+      "notes": "carried high and level, turned into its slope over its place, lowered onto the joist it rests on"
     },
     {
       "id": "place-E6A",
@@ -1118,12 +1094,12 @@
       ],
       "limits": [
         0,
-        0.8
+        1.2
       ],
       "ratio": null,
       "certainty": "C",
       "source": "museum choice: the order and the paths of placing",
-      "notes": "lowered onto the joist it rests on"
+      "notes": "carried high and level, turned into its slope over its place, lowered onto the joist it rests on"
     },
     {
       "id": "place-E6B",
@@ -1142,12 +1118,36 @@
       ],
       "limits": [
         0,
-        0.8
+        1.2
       ],
       "ratio": null,
       "certainty": "C",
       "source": "museum choice: the order and the paths of placing",
-      "notes": "lowered onto the joist it rests on"
+      "notes": "carried high and level, turned into its slope over its place, lowered onto the joist it rests on"
+    },
+    {
+      "id": "place-J5",
+      "type": "prismatic",
+      "parent": "root",
+      "child": "J5",
+      "axis": [
+        0,
+        0,
+        -1
+      ],
+      "pivot_m": [
+        3.6286,
+        1.3578,
+        0
+      ],
+      "limits": [
+        0,
+        3.6
+      ],
+      "ratio": null,
+      "certainty": "C",
+      "source": "museum choice: the order and the paths of placing",
+      "notes": "threaded between the rods along its own axis"
     }
   ],
   "motion": {
@@ -1182,9 +1182,9 @@
           "place-J4": "to 0 from 13.6 s",
           "place-R5A": "to 0 from 14.6 s",
           "place-R5B": "to 0 from 15.6 s",
-          "place-J5": "to 0 from 16.6 s",
-          "place-E6A": "to 0 from 17.6 s",
-          "place-E6B": "to 0 from 18.6 s"
+          "place-E6A": "to 0 from 16.6 s",
+          "place-E6B": "to 0 from 17.6 s",
+          "place-J5": "to 0 from 18.6 s"
         },
         "interpolation": "smootherstep"
       },
@@ -1228,7 +1228,7 @@
   "label_de": "Unsere Rekonstruktion nach seinem Blatt in der Ambrosiana, die Maße stammen von uns. Der geflochtene Bogen ist älter als er.",
   "animation_notes": [
     "One cycle in 40 s, looping: the pile, the building (0.6 to 22.2 s), the whole bridge, then back to the pile.",
-    "A rod comes over the work and is lowered onto the joist it rests on; a joist is drawn from the pile along its length and threaded between the rods.",
+    "A rod is carried high over the work, still lying across as in the pile, turned into its slope above its place and lowered onto the joist it rests on; a joist is drawn from the pile along its length, carried along the front and threaded between the rods.",
     "Each lashing winds on, turn by turn, once both its poles stand.",
     "The second state shows the same poles with the lashings off."
   ],
