@@ -7,7 +7,7 @@
  * here, each faded as one pixel comes to hold more than a stroke of it.
  */
 import { Color, MeshStandardNodeMaterial, type Material } from 'three/webgpu'
-import { attribute, cameraPosition, cos, float, fwidth, mix, mx_noise_float, normalView, normalWorld, positionLocal, positionView, positionWorld, sin, smoothstep, step, uniform, uv, vec2, vec3 } from 'three/tsl'
+import { attribute, cameraPosition, cos, float, fwidth, mix, mx_noise_float, mx_worley_noise_vec2, normalView, normalWorld, positionLocal, positionView, positionWorld, sin, smoothstep, step, uniform, uv, vec2, vec3 } from 'three/tsl'
 import type { MaterialSet, Stack } from '../../../../stack'
 import { loadMachineMaterial, materialDressed } from '../parts'
 import { benchKeyDirection } from '../key'
@@ -76,28 +76,27 @@ export async function bridgeSurfaces(stack: Stack): Promise<BridgeSurfaces> {
     const v = uv().x, u = uv().y
     const o = seed.mul(37.1)
     // BARK: shallow fissures running along the stem and wandering, plates between, lenticels across
-    // chestnut coppice bark at about twenty years: long shallow fissures along the stem, flat grey ridges between,
-    // their tops rough; lenticels across where it is still smooth; a little lichen. Each line fades before a pixel
-    // holds it, so the bark settles to its mean tone at a distance instead of shimmering.
-    const warp = mx_noise_float(vec3(u.mul(4.1).add(o), v.mul(0.8), 3.7)).mul(0.55)
-    const fPhase = u.mul(26).add(warp.mul(2)).add(o)
-    const fis = mx_noise_float(vec3(fPhase, v.mul(2.4), o.mul(0.3)))
-    const lineFade = float(1).sub(smoothstep(0.03, 0.12, fwidth(fPhase)))
-    const crackRun = smoothstep(0.3, 0.62, mx_noise_float(vec3(u.mul(3.0).add(o), v.mul(0.9), 6.6)).mul(0.5).add(0.5))
-    const fissure = float(1).sub(smoothstep(0.006, 0.035, fis.abs())).mul(crackRun).mul(lineFade)
-    const shoulder = float(1).sub(smoothstep(0.03, 0.09, fis.abs())).mul(crackRun).mul(lineFade)
-    const micro = mx_noise_float(vec3(u.mul(70).add(o), v.mul(26), 1.9))
-    const microFade = float(1).sub(smoothstep(0.15, 0.5, fwidth(u.mul(70))))
-    const lent = smoothstep(0.7, 0.84, mx_noise_float(vec3(u.mul(6).add(o), v.mul(60), 7.7))).mul(float(1).sub(crackRun.mul(0.7))).mul(float(1).sub(smoothstep(0.15, 0.5, fwidth(v.mul(60)))))
-    const plate = mx_noise_float(vec3(u.mul(5).add(o), v.mul(1.3), 2.3)).mul(0.5).add(0.5)
-    const mottle = mx_noise_float(vec3(u.mul(1.6).add(o), v.mul(0.45), 9.1)).mul(0.5).add(0.5)
-    const lichen = smoothstep(0.64, 0.8, mx_noise_float(vec3(u.mul(3.5).add(o), v.mul(1.2), 4.9)).mul(0.5).add(0.5))
-    // the photograph's own checks and grain along the stem give the bark its texture; greyed and darkened
-    const rel = luma(d.albedo).div(Math.max(0.05, 0.2126 * s.albedo.r + 0.7152 * s.albedo.g + 0.0722 * s.albedo.b)).clamp(0.2, 2.2)
-    const ridgeTop = mx(mx(lin('#554b41'), lin('#6c645a'), plate.mul(0.7)), lin('#5a4a3b'), mottle.mul(0.45)).mul(rel.pow(1.35))
-    const barkCol = mx(mx(ridgeTop, lin('#7a786b'), lichen.mul(0.28)).mul(micro.mul(microFade).mul(0.18).add(1)), lin('#2a221b'), fissure.mul(0.75))
-      .mul(float(1).sub(shoulder.mul(0.12))).mul(float(1).add(lent.mul(0.25)))
-    const barkH = fissure.negate().mul(0.0025).sub(shoulder.mul(0.0008)).add(micro.mul(microFade).mul(0.00035)).add(lent.mul(0.0002))
+    // chestnut coppice bark at about twenty years: flat grey plates between a net of shallow cracks, the net long
+    // along the stem; the plates rough and a little lighter at their middles; lenticels across; some lichen. Drawn on
+    // the stem's own cylinder, so no seam runs along it, and faded before a pixel holds a crack.
+    const C: N = attribute('aCyl', 'vec3')
+    const q = vec3(C.x.mul(3.4).add(o), C.y.mul(21), C.z.mul(21))
+    const cells = mx_worley_noise_vec2(q)
+    const edge = cells.y.sub(cells.x)
+    const crackFade = float(1).sub(smoothstep(0.08, 0.3, fwidth(edge)))
+    const fissure = float(1).sub(smoothstep(0.015, 0.09, edge)).mul(crackFade)
+    const shoulder = float(1).sub(smoothstep(0.05, 0.22, edge)).mul(crackFade)
+    const microQ = vec3(C.x.mul(55), C.y.mul(260), C.z.mul(260))
+    const micro = mx_noise_float(microQ)
+    const microFade = float(1).sub(smoothstep(0.15, 0.6, fwidth(C.y.mul(260)).add(fwidth(C.x.mul(55)))))
+    const plate = mx_noise_float(q.mul(0.5).add(4.2)).mul(0.5).add(0.5)
+    const lent = smoothstep(0.7, 0.84, mx_noise_float(vec3(C.x.mul(60), C.y.mul(40), C.z.mul(40)))).mul(float(1).sub(smoothstep(0.15, 0.5, fwidth(C.x.mul(60)))))
+    const mottle = mx_noise_float(vec3(C.x.mul(1.6).add(o), C.y.mul(8), C.z.mul(8))).mul(0.5).add(0.5)
+    const lichen = smoothstep(0.62, 0.8, mx_noise_float(vec3(C.x.mul(1.2).add(o), C.y.mul(14), C.z.mul(14)).add(2.7)).mul(0.5).add(0.5))
+    const plateTop = mx(mx(lin('#4f463d'), lin('#6a6258'), plate), lin('#584736'), mottle.mul(0.4)).mul(float(1).sub(cells.x.mul(0.18)))
+    const barkCol = mx(mx(plateTop, lin('#7d7b6c'), lichen.mul(0.3)).mul(micro.mul(microFade).mul(0.22).add(1)), lin('#221b15'), fissure.mul(0.85))
+      .mul(float(1).sub(shoulder.mul(0.1))).mul(float(1).add(lent.mul(0.22)))
+    const barkH = fissure.negate().mul(0.003).sub(shoulder.mul(0.001)).add(micro.mul(microFade).mul(0.0005)).add(lent.mul(0.0002))
     // PEELED: pale wood under the drawknife, its strokes as narrow facets along the stem, bark left in the hollows
     const fibres = luma(d.albedo)
     const facetPhase = u.div(0.026).add(mx_noise_float(vec3(v.mul(0.9), o, 1.1)).mul(1.4))
@@ -116,7 +115,7 @@ export async function bridgeSurfaces(stack: Stack): Promise<BridgeSurfaces> {
     const endCol = mx(lin('#a78560'), lin('#bc9f78'), heart).mul(float(1).sub(rings.mul(ringFade).mul(0.22))).mul(cutStroke.mul(0.12).add(0.9))
       .mul(float(1).sub(smoothstep(0.066, 0.072, rr).mul(0.6))).mul(smoothstep(0, 0.004, rr).mul(0.25).add(0.75))
     pole.colorNode = mx(sideCol, endCol, end).mul(d.occlusion).mul(keyRim(0.45).add(1))
-    pole.roughnessNode = mx(mx(float(0.86).add(fissure.mul(0.1)), d.roughness.clamp(0.6, 0.8), peeled), float(0.82), end)
+    pole.roughnessNode = mx(mx(float(0.84).add(fissure.mul(0.12)).add(micro.mul(microFade).mul(0.05)), d.roughness.clamp(0.6, 0.8), peeled), float(0.82), end)
     const h = mx(mx(barkH, facetH, peeled), float(0), end)
     pole.normalNode = bumped(pole.normalNode ?? normalView, h, 1)
   }

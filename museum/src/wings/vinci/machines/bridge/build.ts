@@ -25,9 +25,12 @@ export class Sheet {
   readonly seed: number[] = []
   readonly index: number[] = []
   extra: Record<string, { size: number; data: number[] }> = {}
-  vertex(p: V3, n: V3, u: number, v: number, tone: V3, seed: number): number {
+  /** a stem's own cylinder coordinates at each vertex (along, then the round at the mean radius) */
+  readonly cyl: number[] = []
+  vertex(p: V3, n: V3, u: number, v: number, tone: V3, seed: number, cyl?: V3): number {
     this.position.push(p[0], p[1], p[2]); this.normal.push(n[0], n[1], n[2]); this.uv.push(u, v)
     this.tone.push(tone[0], tone[1], tone[2]); this.seed.push(seed)
+    if (cyl) this.cyl.push(cyl[0], cyl[1], cyl[2])
     return this.position.length / 3 - 1
   }
   geometry(): BufferGeometry {
@@ -38,6 +41,7 @@ export class Sheet {
     g.setAttribute('aTone', new Float32BufferAttribute(this.tone, 3))
     g.setAttribute('aSeed', new Float32BufferAttribute(this.seed, 1))
     for (const [name, { size, data }] of Object.entries(this.extra)) g.setAttribute(name, new Float32BufferAttribute(data, size))
+    if (this.cyl.length) g.setAttribute('aCyl', new Float32BufferAttribute(this.cyl, 3))
     g.setIndex(this.index)
     g.computeBoundingBox(); g.computeBoundingSphere()
     return g
@@ -63,8 +67,9 @@ export function stem(sheet: Sheet, length: number, r: (s: number) => number, see
       const a = (k / around) * TAU, c = Math.cos(a), sn = Math.sin(a)
       const rr = (r(s) + wander(seed, s, a)) * scale
       const p: V3 = [x0 + s, rr * c, rr * sn]
-      if (cap !== 0) sheet.vertex(p, [cap, 0, 0], rr * c, rr * sn, [tone, peeled, 1], seed)
-      else sheet.vertex(p, norm([-slope, c, sn]), s, (k / around) * girth, [tone, peeled, 0], seed)
+      const cyl: V3 = [s, (girth / TAU) * c, (girth / TAU) * sn]
+      if (cap !== 0) sheet.vertex(p, [cap, 0, 0], rr * c, rr * sn, [tone, peeled, 1], seed, cyl)
+      else sheet.vertex(p, norm([-slope, c, sn]), s, (k / around) * girth, [tone, peeled, 0], seed, cyl)
     }
     return start
   }
