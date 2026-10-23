@@ -940,7 +940,7 @@ export function faceCalm(P: N): N {
  * spots, pale only along their lowest third, a dark red-brown line along the
  * lip's edge to the mouth's corner, cream on the chin under it. Every edge is
  * feathered and follows a carved line, never a straight one of the frame. */
-export function faceColour(P: N, col: N, paint: N, n1: N, n2: N): { col: N; eye: N; calm: N } {
+export function faceColour(P: N, col: N, paint: N, n1: N, n2: N, calmPaint = false): { col: N; eye: N; calm: N } {
   const f = faceFeatures(P)
   const qs: N = f.q.div(HS)
   const M = MUZZLE, Lp = M.lip
@@ -992,8 +992,9 @@ export function faceColour(P: N, col: N, paint: N, n1: N, n2: N): { col: N; eye:
   c = mix(c, c.mul(1.06), pad.mul(paint))
   c = mix(c, lin('#cdb48c').mul(mix(0.92, 1.04, n2)), low.mul(paint))
   c = mix(c, lin('#3a2415').mul(mix(0.9, 1.08, n1)), spots.mul(paint).mul(0.6))
-  c = mix(c, lin('#e4d0aa').mul(mix(0.94, 1.04, n2)), chin.mul(paint).mul(0.95))
-  c = mix(c, lin('#34160f').mul(mix(1.3, 2.4, smoothstep(-0.01, -0.035, dy))).mul(mix(0.9, 1.1, n1)), lower.mul(paint).mul(0.85))
+  // (calm: the chin a step paler than the coat and the lower lip in the nose's umber, as a carver's painter keeps them)
+  c = mix(c, calmPaint ? c.mul(1.18) : lin('#e4d0aa').mul(mix(0.94, 1.04, n2)), chin.mul(paint).mul(0.95))
+  c = mix(c, calmPaint ? lin('#4a3020').mul(mix(0.9, 1.1, n1)) : lin('#34160f').mul(mix(1.3, 2.4, smoothstep(-0.01, -0.035, dy))).mul(mix(0.9, 1.1, n1)), lower.mul(paint).mul(calmPaint ? 0.7 : 0.85))
   c = mix(c, lin('#34160f').mul(mix(0.9, 1.1, n1)), lip.max(stem).mul(paint).mul(0.88))
   c = mix(c, lin('#a5712a').mul(mix(0.9, 1.08, n1)), f.eye.mul(paint))
   c = mix(c, lin('#120b07'), f.pupil.mul(paint))

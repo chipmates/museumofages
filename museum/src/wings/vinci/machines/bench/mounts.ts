@@ -9,23 +9,35 @@ export interface MountBox {
 
 export function mountBoxes(slug: string): MountBox[] {
   if (slug === 'parachute') {
-    // The frame centre is Y=3.300 with radius .018: underside Y=3.282.
-    // Forty-millimetre uprights sit .015 outward in X and Z, with aligned
-    // feet. The top cap seats two .005 m runs of the wooden beam bottoms.
-    // Minimum distance from a suspension centreline to an upright is
-    // .012903691 m; subtracting the rope's full .007 radius leaves
-    // .005903691 m clearance. No support passes through a suspension rope.
+    // Each 40 mm upright stands under its Z pole 0.25 m in from the corner,
+    // its cap against the 48 mm pole's underside (Y=3.276): the corner's
+    // lashing and the cord's eye on the X pole stand clear of it, and the
+    // hem's lacing ends 0.35 m from the corner. Its nearest suspension
+    // passes about 0.24 m away.
     const frameCorner = 3.5016
-    const outward = 0.015
+    const underside = 3.3 - 0.024
+    const inset = 0.25
     const positions: [number, number][] = [[-1, -1], [1, -1], [1, 1], [-1, 1]]
     return positions.flatMap(([sx, sz]): MountBox[] => {
-      const x = sx * (frameCorner + outward)
-      const z = sz * (frameCorner + outward)
+      const x = sx * frameCorner
+      const z = sz * (frameCorner - inset)
       return [
         {size: [0.160, 0.025, 0.160], centre: [x, 0.0125, z]},
-        {size: [0.040, 3.257, 0.040], centre: [x, 1.6535, z]},
+        {size: [0.040, underside - 0.025, 0.040], centre: [x, (underside + 0.025) / 2, z]},
       ]
     })
+  }
+  if (slug === 'flying-machine') {
+    // Two posts carry the body: one under the big hoop's bottom bar (its
+    // underside 1.145 m), one under both bottom rails before the feet (their
+    // undersides 1.249 m); each saddle meets the cane, and nothing reaches a
+    // wing, a cord or the pilot in any pose of the beat.
+    const posts: [number, number, number][] = [[0.0, 1.145, 0.6], [-1.2, 1.249, 0.4]]
+    return posts.flatMap(([z, top, saddle]): MountBox[] => [
+      {size: [0.24, 0.02, 0.24], centre: [0, 0.01, z]},
+      {size: [0.07, top - 0.02 - 0.03, 0.07], centre: [0, 0.02 + (top - 0.05) / 2, z]},
+      {size: [saddle, 0.03, 0.06], centre: [0, top - 0.015, z]},
+    ])
   }
   if (slug === 'proportional-compass') {
     // The fixed pivot is centred at [0,.45,0], radius .009, extending

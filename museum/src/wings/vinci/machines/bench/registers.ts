@@ -87,6 +87,7 @@ export const BENCH_ABSENCE: Record<string, { en: string; de: string }> = {
   'parachute': { en: 'Modern exhibition supports', de: 'Moderne Ausstellungshalterungen' },
   'proportional-compass': { en: 'Modern exhibition supports', de: 'Moderne Ausstellungshalterungen' },
   'miter-lock-gates': { en: 'The lock chamber and its water are not shown', de: 'Schleusenkammer und Wasser sind nicht dargestellt' },
+  'flying-machine': { en: 'Modern exhibition supports', de: 'Moderne Ausstellungshalterungen' },
   'water-lifting-screw': { en: 'The water is not shown', de: 'Das Wasser ist nicht dargestellt' },
 }
 

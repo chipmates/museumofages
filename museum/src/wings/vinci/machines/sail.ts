@@ -30,6 +30,16 @@ export interface HelicoidSpec {
   ribs: number
   /** depth the cloth hangs between two ribs, per metre of span */
   sag: number
+  /** the cloth lies flat this far either side of a rib's line, over the cane
+   * and its fellow, before it starts to hang (0 when absent) */
+  held_m?: number
+  /** how steeply the free cloth falls from a held edge: the power of the
+   * sine it hangs on (0.6 when absent) */
+  hang_power?: number
+  /** the share of the light a doubled layer passes, and the tone of a row of
+   * stitches (0.38 and 0.7 when absent): a lighter linen passes more */
+  doubled?: number
+  stitch?: number
   /** widest cloth at the rim before a seam */
   panel_m: number
   seam_m: number
@@ -40,6 +50,16 @@ export interface HelicoidSpec {
   layer_m: number
   /** radius of the rim wire: the hem ends against it */
   wire_r: number
+  /** share of a doubled layer's stand-off kept at a stitched column (0.6
+   * when absent); 1 lays the stitches flat, so no welt tilts toward a low sun */
+  welt?: number
+  /** 'across': each gore's cloths run across it, parallel to the chord at
+   * its rim, so the seams cross the gore and none runs in to the mast; the
+   * cloths lie side by side out from the mast otherwise */
+  cloths?: 'across'
+  /** the radial seams' doubled layer on the underside only: on the upper face
+   * a 22 mm strip seen from metres away is a part of a pixel, and it glints */
+  seams_under?: boolean
 }
 
 const count = (tier: TierName, hero: number, standard: number, calm: number): number =>
@@ -73,13 +93,16 @@ export function sailSurface(h: HelicoidSpec): SailSurface {
   const rim = (t: number): number => h.r0 + (h.r1 - h.r0) * t / span
   const height = (t: number): number => h.y0 + (h.y1 - h.y0) * t / span
   const azimuth = (t: number): number => h.phase_rad + h.hand * t
+  const held = h.held_m ?? 0, power = h.hang_power ?? .6
   const at = (s: number, t: number): Vector3 => {
     const r = h.r_in + s * (rim(t) - h.r_in)
     const g = Math.min(gores - 1, Math.max(0, Math.floor(t / gore)))
-    const u = t / gore - g
+    let u = t / gore - g
+    // flat over the canes, then the free cloth between them
+    if (held > 0) { const wide = r * gore; u = wide > 2 * held ? Math.min(1, Math.max(0, (u * wide - held) / (wide - 2 * held))) : 0 }
     // a panel held on four sides hangs deepest where its supports are farthest,
     // and falls away steeply from the cane it is stretched over
-    const hang = h.sag * r * gore * Math.sin(Math.PI * u) ** .6 * Math.sin(Math.PI * s)
+    const hang = h.sag * r * gore * Math.sin(Math.PI * u) ** power * Math.sin(Math.PI * s)
     const a = azimuth(t)
     return new Vector3(r * Math.cos(a), height(t) - hang, r * Math.sin(a))
   }
@@ -91,7 +114,8 @@ export function sailSurface(h: HelicoidSpec): SailSurface {
  * of light each layer lets through (`layers`). */
 export function sailGeometry(h: HelicoidSpec, tier: TierName): BufferGeometry {
   const S = sailSurface(h)
-  const gores = h.ribs - 1, gore = S.span / gores
+  const gores = h.ribs - 1, gore = S.span / gores, held = h.held_m ?? 0
+  const doubled = h.doubled ?? DOUBLED, stitch = h.stitch ?? STITCH
   const ns = count(tier, 18, 11, 7)
   const perGore = count(tier, 20, 12, 8)
   const nt = gores * perGore
@@ -114,12 +138,17 @@ export function sailGeometry(h: HelicoidSpec, tier: TierName): BufferGeometry {
     x = Math.imul(x ^ (x >>> 13), 1274126177)
     return ((x ^ (x >>> 16)) >>> 0) / 4294967296
   }
-  const push = (p: Vector3, n: Vector3, s: number, t: number, tone: readonly number[], pass: number, shift = 0): number => {
+  /** where a piece's weave is measured across from: a cloth's centre line,
+   * a seam's own line; a strip along the spiral measures along itself */
+  type Across = (r: number, t: number) => number
+  const from = (t0: number): Across => (r, t) => r * (t - t0)
+  const push = (p: Vector3, n: Vector3, s: number, t: number, tone: readonly number[], pass: number, across: Across, shift = 0): number => {
     const r = h.r_in + s * (S.rim(t) - h.r_in)
     position.push(p.x, p.y, p.z)
     normal.push(n.x, n.y, n.z)
-    // the warp runs out from the mast, along each cloth
-    uv.push(r * t + shift, r + shift * .37)
+    // in each piece's own flat pattern, metres: a global r*t shears the weave
+    // by the turn, and the pixel gate, measured in world metres, cannot hold it
+    uv.push(across(r, t) + shift, r + shift * .37)
     colour.push(tone[0]!, tone[1]!, tone[2]!)
     layers.push(pass)
     return position.length / 3 - 1
@@ -138,7 +167,8 @@ export function sailGeometry(h: HelicoidSpec, tier: TierName): BufferGeometry {
   }
 
   /** how many cloths a gore is sewn from: none wider than a bolt at the rim */
-  const panelsOf = (g: number): number => Math.max(1, Math.ceil(S.rim((g + .5) * gore) * gore / h.panel_m))
+  const across = h.cloths === 'across'
+  const panelsOf = (g: number): number => across ? 1 : Math.max(1, Math.ceil(S.rim((g + .5) * gore) * gore / h.panel_m))
 
   // THE CLOTH, single, from the mast to the rim wire, one grid to each cloth
   // so a cloth's tone stops at its seam.
@@ -149,10 +179,22 @@ export function sailGeometry(h: HelicoidSpec, tier: TierName): BufferGeometry {
       const value = .9 + hash(g, m) * .1, warmth = (hash(m, g + 7) - .5) * .05
       const tone = [value * (1 + warmth), value, value * (1 - warmth)]
       const shift = hash(g + 3, m + 11) * 7
+      const centre = from((g + (m + .5) / panels) * gore)
       grid(cols, ns, (i, j) => {
-        const t = (g + (m + i / cols) / panels) * gore, s = j / ns
+        const s = j / ns
+        // the first column off a rib stands where the held cloth ends, so the
+        // hang starts there and not across the cane
+        let f = i / cols
+        if (held > 0) {
+          const r = h.r_in + s * (S.rim((g + (m + .5) / panels) * gore) - h.r_in)
+          const edge = Math.min(.45, held / Math.max(1e-6, r * gore / panels))
+          const lo = m === 0 ? edge : 0, hi = m === panels - 1 ? 1 - edge : 1
+          const first = m === 0 ? 1 : 0, last = m === panels - 1 ? cols - 1 : cols
+          if (i > 0 && i < cols) f = lo + (hi - lo) * (i - first) / Math.max(1, last - first)
+        }
+        const t = (g + (m + f) / panels) * gore
         const { p, n } = frame(s, t)
-        return push(p, n, s, t, tone, 1, shift)
+        return push(p, n, s, t, tone, 1, centre, shift)
       })
     }
   }
@@ -164,17 +206,17 @@ export function sailGeometry(h: HelicoidSpec, tier: TierName): BufferGeometry {
    * stitches pull the layers down, so the welt between catches the light. */
   const ribbon = (
     place: (a: number, b: number) => { s: number; t: number },
-    along: number, acrossMarks: readonly number[], stitched: readonly boolean[],
+    along: number, acrossMarks: readonly number[], stitched: readonly boolean[], weave: Across, faces: readonly number[] = [1, -1],
   ): void => {
     const cols = acrossMarks.length - 1
-    for (const side of [1, -1]) {
+    for (const side of faces) {
       const rows: { p: Vector3; s: number; t: number }[][] = []
       for (let i = 0; i <= along; i++) {
         rows.push([])
         for (let j = 0; j <= cols; j++) {
           const { s, t } = place(i / along, acrossMarks[j]!)
           const { p, n } = frame(s, t)
-          p.addScaledVector(n, side * h.layer_m * (stitched[j] ? .6 : 1))
+          p.addScaledVector(n, side * h.layer_m * (stitched[j] ? h.welt ?? .6 : 1))
           rows[i]!.push({ p, s, t })
         }
       }
@@ -185,7 +227,7 @@ export function sailGeometry(h: HelicoidSpec, tier: TierName): BufferGeometry {
         const n = new Vector3().crossVectors(down, across).normalize()
         const cloth = frame(here.s, here.t).n
         if (n.dot(cloth) * side < 0) n.negate()
-        return push(here.p, n, here.s, here.t, grey(stitched[j] ? STITCH : BODY), DOUBLED)
+        return push(here.p, n, here.s, here.t, grey(stitched[j] ? stitch : BODY), doubled, weave)
       })
     }
   }
@@ -197,13 +239,17 @@ export function sailGeometry(h: HelicoidSpec, tier: TierName): BufferGeometry {
     const t = S.span * a
     const r = S.rim(t) - h.wire_r - (1 - b) * (h.hem_m - h.wire_r)
     return { s: sAt(r, t), t }
-  }, nt, hemMarks, [true, false, false])
+  }, nt, hemMarks, [true, false, false], (_r, t) => {
+    // the hem's length, measured along its middle
+    const mid = h.r0 - h.wire_r - (h.hem_m - h.wire_r) / 2
+    return mid * t + (h.r1 - h.r0) / S.span * t * t / 2
+  })
 
   // THE CROWN: a doubled band laced to the mast, stitched along its outer edge.
   ribbon((a, b) => {
     const t = S.span * a
     return { s: sAt(h.r_in + b * (h.crown_m - h.r_in), t), t }
-  }, nt, [0, 1 - .005 / (h.crown_m - h.r_in), 1], [false, false, true])
+  }, nt, [0, 1 - .005 / (h.crown_m - h.r_in), 1], [false, false, true], (_r, t) => (h.r_in + h.crown_m) / 2 * t)
 
   // THE SEAMS: radial, between the crown and the hem, between every two
   // cloths, over every cane and along both ends of the cloth.
@@ -218,7 +264,22 @@ export function sailGeometry(h: HelicoidSpec, tier: TierName): BufferGeometry {
         const r = r0 + a * (r1 - r0)
         const t = Math.min(S.span, Math.max(0, t0 + ((b - .5) * h.seam_m) / r))
         return { s: sAt(r, t), t }
-      }, seamRows, [0, .005 / h.seam_m, 1 - .005 / h.seam_m, 1], [true, false, false, true])
+      }, seamRows, [0, .005 / h.seam_m, 1 - .005 / h.seam_m, 1], [true, false, false, true], from(t0), h.seams_under ? [-1] : [1, -1])
+    }
+  }
+
+  // THE SEAMS ACROSS: in each gore, straight seams parallel to its rim's
+  // chord, a bolt's width apart from the rim inward, from cane to cane
+  if (across) for (let g = 0; g < gores; g++) {
+    const mid = (g + .5) * gore
+    for (let k = 1; ; k++) {
+      const d0 = S.rim(mid) - k * h.panel_m
+      if (d0 < h.crown_m + h.panel_m / 2) break
+      ribbon((a, b) => {
+        const t = (g + a) * gore
+        const r = Math.min(S.rim(t) - h.hem_m, (d0 + (b - .5) * h.seam_m) / Math.cos(t - mid))
+        return { s: sAt(r, t), t }
+      }, 24, [0, .005 / h.seam_m, 1 - .005 / h.seam_m, 1], [true, false, false, true], (r, t) => r * Math.sin(t - mid), h.seams_under ? [-1] : [1, -1])
     }
   }
 

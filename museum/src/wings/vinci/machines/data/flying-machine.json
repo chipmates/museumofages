@@ -1,0 +1,853 @@
+{
+ "slug": "flying-machine",
+ "name_en": "Flying machine with beating wings",
+ "name_de": "Flugmaschine mit Schlagflügeln",
+ "status": "reconstruction",
+ "scope": "The museum's reconstruction from Manuscript B, folio 74 verso. The sheet draws the frame, the pivot M, cords and pulleys and the two spars, and names the moves. Every size, the skin, the cord routing, the spring's form and the pilot are modern choices, each named with its sheet.",
+ "gaps": [
+  "74v gives no size, no wing outline and no skin.",
+  "The cord routing and the places of the pulleys are not written.",
+  "The sheet names a spring for the upstroke and does not draw it.",
+  "Whether a (twist) and b (turn) were worked by hand or by foot is not written.",
+  "The purpose of the small hoop and its fitting is not written.",
+  "No build and no flight in his lifetime is documented."
+ ],
+ "scale_m": {
+  "x": 11.8,
+  "y": 5.45,
+  "z": 3.25,
+  "certainty": "C",
+  "source": "museum choice",
+  "note": "The span is 20 braccia (about 11.67 m), chosen at 88v's test wing; the body is scaled from a pilot of 1.70 m. The envelope holds the whole beat: the wings 35 degrees up and forward to 15 degrees down and back."
+ },
+ "frame": {
+  "handedness": "right",
+  "units": "m",
+  "up": "+Y",
+  "forward": "+Z",
+  "ground_y_m": 0.0,
+  "origin": "On the floor under the pivot M; +X is the machine's left. The body stands on the bench's support.",
+  "transforms": "Built from flying/plan.ts; positions here are centres of the parts' envelopes."
+ },
+ "parts": [
+  {
+   "id": "body",
+   "parent": "root",
+   "shape": "six bound-cane rails",
+   "dimensions_m": {
+    "x": 0.72,
+    "y": 0.3,
+    "z": 2.25
+   },
+   "position_m": [
+    0,
+    1.27,
+    -0.675
+   ],
+   "orientation_rad": [
+    0,
+    0,
+    0
+   ],
+   "material": {
+    "class": "cane bound with hemp",
+    "basis": "borrowed",
+    "source": "74v (form, drawn); 77v (bound cane)"
+   },
+   "certainty": "C",
+   "source": "74v (form, drawn); 77v (bound cane)",
+   "notes": "Six rails, three a side, each three canes bound every 0.22 m; 0.72 wide and 0.30 deep at the head, 0.20 by 0.10 at the foot, so the trough narrows to the feet as 74v draws it. Size scaled from a pilot of 1.70 m (ours)."
+  },
+  {
+   "id": "frames",
+   "parent": "body",
+   "shape": "four cross-frames",
+   "dimensions_m": {
+    "x": 0.72,
+    "y": 0.3,
+    "z": 0.03
+   },
+   "position_m": [
+    0,
+    1.27,
+    0.45
+   ],
+   "orientation_rad": [
+    0,
+    0,
+    0
+   ],
+   "material": {
+    "class": "cane bound with hemp",
+    "basis": "assumed",
+    "source": "74v (head and foot ends drawn); the two between ours"
+   },
+   "certainty": "C",
+   "source": "74v (head and foot ends drawn); the two between ours",
+   "notes": "Head end, at the big hoop, at the small hoop, foot end."
+  },
+  {
+   "id": "half-hoop",
+   "parent": "body",
+   "shape": "bent bound cane",
+   "dimensions_m": {
+    "x": 0.79,
+    "y": 0.77,
+    "z": 0.044
+   },
+   "position_m": [
+    0,
+    1.64,
+    0
+   ],
+   "orientation_rad": [
+    0,
+    0,
+    0
+   ],
+   "material": {
+    "class": "cane bound with hemp, bent",
+    "basis": "borrowed",
+    "source": "74v (place, drawn); 77v (canes bent by wedges)"
+   },
+   "certainty": "C",
+   "source": "74v (place, drawn); 77v (canes bent by wedges)",
+   "notes": "Crown 0.6 m over the top rails; carries the pivot M."
+  },
+  {
+   "id": "small-hoop",
+   "parent": "body",
+   "shape": "bent bound cane with an iron eye",
+   "dimensions_m": {
+    "x": 0.52,
+    "y": 0.43,
+    "z": 0.03
+   },
+   "position_m": [
+    0,
+    1.5,
+    -0.92
+   ],
+   "orientation_rad": [
+    0,
+    0,
+    0
+   ],
+   "material": {
+    "class": "cane bound with hemp; iron",
+    "basis": "assumed",
+    "source": "74v (drawn; purpose not written)"
+   },
+   "certainty": "C",
+   "source": "74v (drawn; purpose not written)",
+   "notes": "Its purpose is not written on the sheet. Here it carries the two swivel sheaves of the lowering cords under its crown (ours)."
+  },
+  {
+   "id": "braces",
+   "parent": "body",
+   "shape": "two bound-cane struts",
+   "dimensions_m": {
+    "x": 0.7,
+    "y": 0.6,
+    "z": 0.45
+   },
+   "position_m": [
+    0,
+    1.72,
+    0.22
+   ],
+   "orientation_rad": [
+    0,
+    0,
+    0
+   ],
+   "material": {
+    "class": "cane bound with hemp",
+    "basis": "assumed",
+    "source": "74v (lines from the hub to the head end, read by eye)"
+   },
+   "certainty": "C",
+   "source": "74v (lines from the hub to the head end, read by eye)",
+   "notes": ""
+  },
+  {
+   "id": "pivot-m",
+   "parent": "half-hoop",
+   "shape": "iron pin in an iron fork",
+   "dimensions_m": {
+    "radius": 0.011,
+    "height": 0.24
+   },
+   "position_m": [
+    0,
+    2.2,
+    0
+   ],
+   "orientation_rad": [
+    0,
+    0,
+    0
+   ],
+   "material": {
+    "class": "forged iron",
+    "basis": "assumed",
+    "source": "74v (the letter M and the hub, drawn); F08: the pivot hangs off its perpendicular"
+   },
+   "certainty": "C",
+   "source": "74v (the letter M and the hub, drawn); F08: the pivot hangs off its perpendicular",
+   "notes": "The pin leans 18 degrees, its front end down, so a wing going down also swings back toward the feet. The angle is ours."
+  },
+  {
+   "id": "wing-left",
+   "parent": "pivot-m",
+   "shape": "stepped spar of bound cane, ribs, skin",
+   "dimensions_m": {
+    "x": 5.836,
+    "y": 0.08,
+    "z": 1.7
+   },
+   "position_m": [
+    0,
+    2.2,
+    0
+   ],
+   "orientation_rad": [
+    0,
+    0,
+    0
+   ],
+   "material": {
+    "class": "cane; fir laths; fustian; hemp",
+    "basis": "borrowed",
+    "source": "74v (spar, joint, eye, lever); 77v (stepped bound cane); 74r (ribs of fir, fustian skin, scalloped edge)"
+   },
+   "certainty": "C",
+   "source": "74v (spar, joint, eye, lever); 77v (stepped bound cane); 74r (ribs of fir, fustian skin, scalloped edge)",
+   "notes": "Span of both wings 20 braccia (about 11.67 m at 0.5836 m), ours. Spar 5.84 m from M, a step joint 2.9 m out, an iron eye 0.22 m from the tip, an inboard lever 0.62 m past M. Eight fir ribs. The feathers and the starched taffeta of 74r and the flaps of 73v are not built."
+  },
+  {
+   "id": "wing-right",
+   "parent": "pivot-m",
+   "shape": "mirror of wing-left",
+   "dimensions_m": {
+    "x": 5.836,
+    "y": 0.08,
+    "z": 1.7
+   },
+   "position_m": [
+    0,
+    2.2,
+    0
+   ],
+   "orientation_rad": [
+    0,
+    0,
+    0
+   ],
+   "material": {
+    "class": "cane; fir laths; fustian; hemp",
+    "basis": "borrowed",
+    "source": "as wing-left"
+   },
+   "certainty": "C",
+   "source": "as wing-left",
+   "notes": ""
+  },
+  {
+   "id": "lowering-cords",
+   "parent": "body",
+   "shape": "hemp cords under swivel sheaves",
+   "dimensions_m": {
+    "radius": 0.0056
+   },
+   "position_m": [
+    0,
+    1.95,
+    -0.7
+   ],
+   "orientation_rad": [
+    0,
+    0,
+    0
+   ],
+   "material": {
+    "class": "hemp",
+    "basis": "assumed",
+    "source": "74v (cords and pulleys drawn, the letter c); routing ours"
+   },
+   "certainty": "C",
+   "source": "74v (cords and pulleys drawn, the letter c); routing ours",
+   "notes": "From an eye 0.46 m out under each spar, down and back under a swivel sheave hung below the small hoop's crown, to a strap round the heel. The routing and the sheaves' place are ours."
+  },
+  {
+   "id": "stirrups",
+   "parent": "lowering-cords",
+   "shape": "leather heel straps",
+   "dimensions_m": {
+    "x": 0.1,
+    "y": 0.08,
+    "z": 0.09
+   },
+   "position_m": [
+    0,
+    1.7,
+    -1.33
+   ],
+   "orientation_rad": [
+    0,
+    0,
+    0
+   ],
+   "material": {
+    "class": "leather",
+    "basis": "borrowed",
+    "source": "74v (the feet at f and d); 73v (a stirrup on the foot lever)"
+   },
+   "certainty": "C",
+   "source": "74v (the feet at f and d); 73v (a stirrup on the foot lever)",
+   "notes": "Each foot lowers its own wing, so one can beat faster to balance (F09). Each strap is knotted at the back of the heel, where its cord takes hold (ours)."
+  },
+  {
+   "id": "knee-bar",
+   "parent": "body",
+   "shape": "bound-cane bar with a leather pad",
+   "dimensions_m": {
+    "x": 0.35,
+    "y": 0.043,
+    "z": 0.043
+   },
+   "position_m": [
+    0,
+    1.418,
+    -1.14
+   ],
+   "orientation_rad": [
+    0,
+    0,
+    0
+   ],
+   "material": {
+    "class": "cane bound with hemp; leather",
+    "basis": "assumed",
+    "source": "ours: the sheet draws no rest for the knees"
+   },
+   "certainty": "C",
+   "source": "ours: the sheet draws no rest for the knees",
+   "notes": "Across the top rails under the knees, lashed to them; the thighs lie still on it while the shins swing."
+  },
+  {
+   "id": "spring",
+   "parent": "body",
+   "shape": "ash bow under the head end",
+   "dimensions_m": {
+    "x": 1.0,
+    "y": 0.022,
+    "z": 0.038
+   },
+   "position_m": [
+    0,
+    1.06,
+    0.44
+   ],
+   "orientation_rad": [
+    0,
+    0,
+    0
+   ],
+   "material": {
+    "class": "ash",
+    "basis": "assumed",
+    "source": "74v names a spring for the upstroke and does not draw it"
+   },
+   "certainty": "C",
+   "source": "74v names a spring for the upstroke and does not draw it",
+   "notes": "Its two cords run over the drums to the levers past M; bending as the wings go down, it brings them up."
+  },
+  {
+   "id": "drums",
+   "parent": "body",
+   "shape": "two turned drums",
+   "dimensions_m": {
+    "radius": 0.045,
+    "height": 0.12
+   },
+   "position_m": [
+    0,
+    1.17,
+    0.47
+   ],
+   "orientation_rad": [
+    0,
+    0,
+    0
+   ],
+   "material": {
+    "class": "oak; iron",
+    "basis": "assumed",
+    "source": "74v (a drum with cord at the head end's lower corner, drawn)"
+   },
+   "certainty": "C",
+   "source": "74v (a drum with cord at the head end's lower corner, drawn)",
+   "notes": ""
+  },
+  {
+   "id": "twist-cords",
+   "parent": "wing-left",
+   "shape": "hemp cords from the twist arms to the hands",
+   "dimensions_m": {
+    "radius": 0.0042
+   },
+   "position_m": [
+    0,
+    1.8,
+    0.2
+   ],
+   "orientation_rad": [
+    0,
+    0,
+    0
+   ],
+   "material": {
+    "class": "hemp; iron arm",
+    "basis": "assumed",
+    "source": "74v (the letter a: a twists the wing); the drive is not written"
+   },
+   "certainty": "C",
+   "source": "74v (the letter a: a twists the wing); the drive is not written",
+   "notes": "Each through an eye at the pin's fore end, so the stroke hardly changes its length."
+  },
+  {
+   "id": "sling",
+   "parent": "body",
+   "shape": "chamois sling",
+   "dimensions_m": {
+    "x": 0.6,
+    "y": 0.1,
+    "z": 0.83
+   },
+   "position_m": [
+    0,
+    1.38,
+    -0.145
+   ],
+   "orientation_rad": [
+    0,
+    0,
+    0
+   ],
+   "material": {
+    "class": "chamois leather",
+    "basis": "borrowed",
+    "source": "79v (a chamois skin from the throat to the crotch)"
+   },
+   "certainty": "C",
+   "source": "79v (a chamois skin from the throat to the crotch)",
+   "notes": ""
+  },
+  {
+   "id": "pilot",
+   "parent": "sling",
+   "shape": "grey figure, 1.70 m, lying face down",
+   "dimensions_m": {
+    "height": 1.7
+   },
+   "position_m": [
+    0,
+    1.45,
+    -0.3
+   ],
+   "orientation_rad": [
+    0,
+    0,
+    0
+   ],
+   "material": {
+    "class": "none (a marker)",
+    "basis": "assumed",
+    "source": "the museums' reading of 74v (F07); 79r draws a man lying"
+   },
+   "certainty": "C",
+   "source": "the museums' reading of 74v (F07); 79r draws a man lying",
+   "notes": "A marker for where the man lies and what his feet and hands do, not a sculpture."
+  }
+ ],
+ "joints": [
+  {
+   "id": "stroke-left",
+   "type": "revolute",
+   "parent": "pivot-m",
+   "child": "wing-left",
+   "axis": [
+    0,
+    -0.3090169943749474,
+    0.9510565162951535
+   ],
+   "pivot_m": [
+    0,
+    2.2,
+    0.04469965626587222
+   ],
+   "limits": [
+    -0.2617993877991494,
+    0.6108652381980153
+   ],
+   "ratio": null,
+   "certainty": "C",
+   "source": "74v: c lowers, d raises; F08 the lean of M",
+   "notes": "Positive up."
+  },
+  {
+   "id": "stroke-right",
+   "type": "revolute",
+   "parent": "pivot-m",
+   "child": "wing-right",
+   "axis": [
+    0,
+    0.3090169943749474,
+    -0.9510565162951535
+   ],
+   "pivot_m": [
+    0,
+    2.2,
+    -0.04469965626587222
+   ],
+   "limits": [
+    -0.2617993877991494,
+    0.6108652381980153
+   ],
+   "ratio": 1,
+   "driver_joint": "stroke-left",
+   "certainty": "C",
+   "source": "74v F09: both feet at once",
+   "notes": ""
+  },
+  {
+   "id": "twist-left",
+   "type": "revolute",
+   "parent": "wing-left",
+   "child": "wing-left",
+   "axis": [
+    -1,
+    0,
+    0
+   ],
+   "pivot_m": [
+    0,
+    2.2,
+    0
+   ],
+   "limits": [
+    0,
+    0.5934119456780721
+   ],
+   "ratio": null,
+   "certainty": "C",
+   "source": "74v: a twists the wing",
+   "notes": "Trailing edge down; the amount and the timing are ours."
+  },
+  {
+   "id": "twist-right",
+   "type": "revolute",
+   "parent": "wing-right",
+   "child": "wing-right",
+   "axis": [
+    -1,
+    0,
+    0
+   ],
+   "pivot_m": [
+    0,
+    2.2,
+    0
+   ],
+   "limits": [
+    0,
+    0.5934119456780721
+   ],
+   "ratio": 1,
+   "driver_joint": "twist-left",
+   "certainty": "C",
+   "source": "as twist-left",
+   "notes": ""
+  },
+  {
+   "id": "stirrup-f",
+   "type": "prismatic",
+   "parent": "body",
+   "child": "stirrups",
+   "axis": [
+    -0.029,
+    0.132,
+    0.991
+   ],
+   "pivot_m": [
+    0.05,
+    1.527,
+    -1.534
+   ],
+   "limits": [
+    0,
+    0.29
+   ],
+   "ratio": null,
+   "certainty": "C",
+   "source": "follows the lowering cord",
+   "notes": "Metres the heel's knot has come toward the sheave from its place at the bottom of the stroke; it rides on the shin's swing."
+  },
+  {
+   "id": "stirrup-d",
+   "type": "prismatic",
+   "parent": "body",
+   "child": "stirrups",
+   "axis": [
+    0.029,
+    0.132,
+    0.991
+   ],
+   "pivot_m": [
+    -0.05,
+    1.527,
+    -1.534
+   ],
+   "limits": [
+    0,
+    0.29
+   ],
+   "ratio": null,
+   "certainty": "C",
+   "source": "as stirrup-f",
+   "notes": ""
+  },
+  {
+   "id": "shin-f",
+   "type": "revolute",
+   "parent": "body",
+   "child": "pilot",
+   "axis": [
+    1,
+    0,
+    0
+   ],
+   "pivot_m": [
+    0.08,
+    1.49,
+    -1.14
+   ],
+   "limits": [
+    0,
+    1.52
+   ],
+   "ratio": null,
+   "certainty": "C",
+   "source": "follows the lowering cord; the knee on the bar is ours",
+   "notes": "The shin's lift above lying straight; the cord's length holds it."
+  },
+  {
+   "id": "shin-d",
+   "type": "revolute",
+   "parent": "body",
+   "child": "pilot",
+   "axis": [
+    1,
+    0,
+    0
+   ],
+   "pivot_m": [
+    -0.08,
+    1.49,
+    -1.14
+   ],
+   "limits": [
+    0,
+    1.57
+   ],
+   "ratio": null,
+   "certainty": "C",
+   "source": "follows the lowering cord; the knee on the bar is ours",
+   "notes": ""
+  },
+  {
+   "id": "spring-left",
+   "type": "bend",
+   "parent": "body",
+   "child": "spring",
+   "axis": [
+    0,
+    1,
+    0
+   ],
+   "pivot_m": [
+    0.5,
+    1.06,
+    0.44
+   ],
+   "limits": [
+    0.02,
+    0.2
+   ],
+   "ratio": null,
+   "certainty": "C",
+   "source": "follows the spring cord",
+   "notes": "The bow tip's lift in metres."
+  },
+  {
+   "id": "spring-right",
+   "type": "bend",
+   "parent": "body",
+   "child": "spring",
+   "axis": [
+    0,
+    1,
+    0
+   ],
+   "pivot_m": [
+    -0.5,
+    1.06,
+    0.44
+   ],
+   "limits": [
+    0.02,
+    0.2
+   ],
+   "ratio": null,
+   "certainty": "C",
+   "source": "follows the spring cord",
+   "notes": ""
+  }
+ ],
+ "motion": {
+  "period_s": 3.0,
+  "loop": true,
+  "initial_states": {
+   "stroke-left": 0.6108652381980153,
+   "twist-left": 0
+  },
+  "phases": [
+   {
+    "name": "The feet push: the wings beat down and back, flat",
+    "start_s": 0,
+    "duration_s": 1.26,
+    "joint_values": {
+     "stroke-left": "35 to -15 degrees"
+    },
+    "interpolation": "smootherstep"
+   },
+   {
+    "name": "Near the bottom the wings turn edge on",
+    "start_s": 1.02,
+    "duration_s": 0.48,
+    "joint_values": {
+     "twist-left": "0 to 34 degrees"
+    },
+    "interpolation": "smoothstep"
+   },
+   {
+    "name": "The spring brings them up, edge on",
+    "start_s": 1.26,
+    "duration_s": 1.7399999999999998,
+    "joint_values": {
+     "stroke-left": "-15 to 35 degrees"
+    },
+    "interpolation": "smootherstep"
+   },
+   {
+    "name": "Near the top they turn flat again",
+    "start_s": 2.64,
+    "duration_s": 0.36,
+    "joint_values": {
+     "twist-left": "34 to 0 degrees"
+    },
+    "interpolation": "smoothstep"
+   }
+  ],
+  "visitor_12s": "Four beats: the feet push, the wings go down and back flat, turn edge on, the bow brings them up."
+ },
+ "drive": {
+  "type": "the pilot's feet (down) and a bow spring (up)",
+  "input_joint": "stroke-left",
+  "input_rate": {
+   "value": 0.3333333333333333,
+   "unit": "beats per second",
+   "certainty": "C",
+   "source": "museum choice",
+   "note": "Slow enough to read at the bench."
+  },
+  "justification": "74v: foot f lowers, foot d raises; better, both feet lower at once and a spring, a hand or drawing the feet back raises. A spring is used here.",
+  "source": "Manuscript B 74v (Ravaisson-Mollien 1883)"
+ },
+ "label_en": "Our reconstruction from Manuscript B, folio 74 verso; sizes ours.",
+ "label_de": "Unsere Rekonstruktion nach Manuskript B, Blatt 74 verso; die Maße stammen von uns.",
+ "animation_notes": [
+  "One beat in 3 s, looping: down fast and flat, up slower and edge on.",
+  "Each wing turns about the leaning pin M; the twist rolls it about its own spar.",
+  "The heel straps follow the lowering cords, the bow bends as the levers rise, the sheaves and drums turn with their cords.",
+  "The pilot's shins swing about his knees: the cords raise them as the wings rise and the feet push them back and down to beat; his hands take in the twist cords."
+ ],
+ "folio": [
+  {
+   "codex": "Manuscript B",
+   "folio": "74v",
+   "holder": "Bibliothèque de l’Institut de France",
+   "catalogue_reference": "Ms 2173, f. 74v",
+   "catalogue_url": null
+  }
+ ],
+ "research": {
+  "physics": {
+   "verdict_en": "No mass or speed of a build is known. A man's muscles could not have lifted such a machine, as later scholars found.",
+   "verdict_de": "Masse und Tempo eines Baus sind unbekannt. Die Muskeln eines Menschen hätten eine solche Maschine nicht heben können, wie spätere Forscher fanden."
+  }
+ },
+ "record": {
+  "title": {
+   "en": "Flying machine with beating wings",
+   "de": "Flugmaschine mit Schlagflügeln"
+  },
+  "label": {
+   "en": "Our reconstruction from Manuscript B, folio 74 verso; sizes ours.",
+   "de": "Unsere Rekonstruktion nach Manuskript B, Blatt 74 verso; die Maße stammen von uns."
+  },
+  "arithmetic": {
+   "en": "No mass or speed of a build is known. This one beats once every 3 s, 35 degrees up and 15 down, its pivot 2.2 m over the floor. These are the museum's values.",
+   "de": "Masse und Tempo eines Baus sind unbekannt. Diese schlägt alle 3 s einmal, 35 Grad hoch und 15 tief, ihr Drehpunkt 2,2 m über dem Boden. Das sind Werte des Museums."
+  },
+  "sections": {
+   "en": [
+    {
+     "title": "The sheet",
+     "body": "Manuscript B, folio 74 verso, from the late 1480s in Milan. It draws a frame of poles that narrows toward the feet, a half-hoop with the pivot M on top, cords and pulleys, and the wings as bare spars. It gives no size and no wing outline."
+    },
+    {
+     "title": "How it moves",
+     "body": "The man at the controls keeps his feet at f and d and pulls the wings down by cords. The pivot M leans, so they swing back toward his feet. For the upstroke the sheet names a spring, a hand or the feet. Here a spring raises them, turned edge on (our reading). Their ribs and scalloped cloth follow the bat wing of folio 74 recto."
+    },
+    {
+     "title": "What is ours",
+     "body": "Every size is ours, with a span of 20 braccia, about 11.7 m. The wing's outline, ribs and skin follow folio 74 recto, the spars of bound cane folio 77 verso, the chamois sling folio 79 verso. The man lying face down is how museums read the sheet. 74v draws no man."
+    },
+    {
+     "title": "Was it built?",
+     "body": "No build and no flight in his lifetime is documented. He wrote down how to test it: over a lake, with a long wineskin tied round the waist."
+    }
+   ],
+   "de": [
+    {
+     "title": "Das Blatt",
+     "body": "Manuskript B, Blatt 74 verso, Ende der 1480er Jahre in Mailand. Es zeigt ein Gestell aus Stangen, das zu den Füßen hin schmal wird, einen Halbbogen mit dem Drehpunkt M oben, Seile und Rollen und die Flügel als bloße Holme. Ein Maß und einen Umriss der Flügel gibt es nicht an."
+    },
+    {
+     "title": "Wie sie sich bewegt",
+     "body": "Der Mann, der sie lenkt, hat die Füße bei f und d und zieht die Flügel über Seile nach unten. Der Drehpunkt M ist geneigt, darum schwingen sie dabei zu seinen Füßen. Für den Aufschlag nennt das Blatt eine Feder, die Hand oder die Füße. Hier hebt sie eine Feder, hochkant gestellt (unsere Lesart). Rippen und bogige Bespannung folgen dem Fledermausflügel auf Blatt 74 recto."
+    },
+    {
+     "title": "Was von uns ist",
+     "body": "Alle Maße sind von uns, die Spannweite 20 Braccia, etwa 11,7 m. Umriss, Rippen und Bespannung der Flügel folgen Blatt 74 recto, die Holme aus gebundenem Rohr Blatt 77 verso, das Gurtband aus Gämsleder Blatt 79 verso. Dass der Mann bäuchlings liegt, ist die Lesart der Museen. Auf 74v ist kein Mensch gezeichnet."
+    },
+    {
+     "title": "Wurde sie gebaut?",
+     "body": "Ein Bau oder ein Flug zu seinen Lebzeiten ist nicht belegt. Er schrieb auf, wie man sie erproben soll: über einem See, mit einem langen Weinschlauch um die Hüfte."
+    }
+   ]
+  }
+ }
+}
