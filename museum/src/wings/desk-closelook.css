@@ -537,9 +537,10 @@ body:has(dialog[open]) #wing[data-desk~='closelook'] .desk-clb {
 #wing[data-desk~='closelook'] .vitrine:has(.closer-states) .desk-clb-ways { grid-area: ways; }
 /* the places a closer look frames, in the drawer after its sentences: the
    head as the drawer's quiet facts, each place one of the band's own keys */
-#wing[data-desk~='closelook'] .desk-clb-words .closer-places { margin: 12px 0 0; }
+#wing[data-desk~='closelook'] .desk-clb-words .closer-places { display: flex; flex-wrap: wrap; gap: 10px; margin: 12px 0 0; }
 #wing[data-desk~='closelook'] .desk-clb-words .closer-places-head {
-  margin: 0 0 8px;
+  flex: 0 0 100%;
+  margin: 0 0 -2px;
   font: 500 0.875rem/1.4 var(--sans);
   letter-spacing: 0.08em;
   text-transform: uppercase;
@@ -547,7 +548,7 @@ body:has(dialog[open]) #wing[data-desk~='closelook'] .desk-clb {
 }
 #wing[data-desk~='closelook'] .desk-clb-words .closer-place {
   height: 44px;
-  margin: 0 10px 0 0;
+  margin: 0;
   padding: 0 14px;
   border: 0;
   border-radius: var(--ui-r-control-look);

@@ -808,7 +808,7 @@ export function createDeepPlatePayload(options: {
       mark('asked')
       void sourceOf(next.source).then(source => {
         if (!live || viewer !== made || shown !== opening) return
-        made.addTiledImage({ tileSource: source as never, x: 0, y: 0, width: 1, opacity: 0, index: made.world.getItemCount(),
+        made.addTiledImage({ tileSource: source as never, x: 0, y: 0, width: 1, opacity: 0, preload: true, index: made.world.getItemCount(),
           success: (event: { item: import('openseadragon').TiledImage }) => {
             const item = event.item
             states.set(item, state)
