@@ -241,6 +241,18 @@ function forks(k: Kit, iron: Kit): void {
   }
 }
 
+/** A board of thickness y0..y1 on a convex outline in plan (x, z), its grain along x. */
+function prism(k: Kit, outline: [number, number][], y0: number, y1: number, f: Finish): void {
+  const pts = outline.filter((p, i) => i === 0 || Math.hypot(p[0] - outline[i - 1]![0], p[1] - outline[i - 1]![1]) > 1e-4)
+  const c: V3 = [pts.reduce((a, p) => a + p[0], 0) / pts.length, (y0 + y1) / 2, pts.reduce((a, p) => a + p[1], 0) / pts.length]
+  k.polygon(pts.map(([x, z]) => v(x, y1, z)), X, f, c)
+  k.polygon(pts.map(([x, z]) => v(x, y0, z)), X, f, c)
+  for (let i = 0; i < pts.length; i++) {
+    const [ax, az] = pts[i]!, [bx, bz] = pts[(i + 1) % pts.length]!
+    k.polygon([v(ax, y0, az), v(bx, y0, bz), v(bx, y1, bz), v(ax, y1, az)], X, f, c)
+  }
+}
+
 /** Under each wheel's slot a boarded well, its bottom cut only where the tread meets the ground, and a curb round
  * the slot on the floor, so wood shows through the floor where the stone did. */
 function wells(k: Kit): void {
@@ -262,9 +274,16 @@ function wells(k: Kit): void {
     }
     const [y0, y1] = W.bottom
     const X0 = xa - W.t, X1 = xb + W.t, Z0 = za - W.t, Z1 = zb + W.t
-    // the bottom, in four boards round the tread's cut
-    slabAt(X0, hx - cutX, y0, y1, Z0, Z1, 0)
-    slabAt(hx + cutX, X1, y0, y1, Z0, Z1, 1)
+    // the bottom, in four boards round the tread's cut; the one toward the wall sawn on the wall's curve
+    const reachAt = (z: number): number => Math.sqrt(Math.max(0, Rc * Rc - z * z))
+    const curved = (inner: number, outer: number, j: number): void => {
+      const n = 12, pts: [number, number][] = [[inner, Z0]]
+      for (let i = 0; i <= n; i++) { const z = Z0 + ((Z1 - Z0) * i) / n; pts.push([sx * Math.min(Math.abs(outer), reachAt(z)), z]) }
+      pts.push([inner, Z1])
+      prism(k, pts, y0, y1, f(j))
+    }
+    if (sx > 0) { slabAt(X0, hx - cutX, y0, y1, Z0, Z1, 0); curved(hx + cutX, X1, 1) }
+    else { curved(hx - cutX, X0, 0); slabAt(hx + cutX, X1, y0, y1, Z0, Z1, 1) }
     slabAt(hx - cutX + 0.002, hx + cutX - 0.002, y0, y1, Z0, tread[0], 2)
     slabAt(hx - cutX + 0.002, hx + cutX - 0.002, y0, y1, tread[1], Z1, 3)
     // its four sides, from the bottom to the floor's underside
