@@ -248,11 +248,12 @@ export function createCollectionStandSolids(material: Material): Mesh {
 /** THE LION IN THE GREAT HALL stands on the hall's own floor, carried by the
  * house as the table's pieces are, so it has no plinth and no row in the
  * table above. It stands a little in front of the table, at its left end as
- * the hall's door sees it, turned toward the door's left with its open left
- * flank to the door, its rump by the table's south-east corner, where the
- * hour's sun through the south-west window reaches its hindquarters, and
- * clear of the walk to the table's pieces. `floor` is the hall's tiles. */
-export const HALL_LION = { east: -6.514, north: -13.948, bearing: 82, floor: .8 } as const
+ * the hall's door sees it, its head toward the kitchen wall and its open left
+ * flank to the door; its hindquarters stand in the hour's sun through the
+ * south-west window, which lays its legs' shadows on the tiles, and its
+ * haunch keeps half a metre off the inclinometer's reading eye. `floor` is
+ * the hall's tiles. */
+export const HALL_LION = { east: -6.6939, north: -13.9098, bearing: 55, floor: .8 } as const
 /** Its body at rest in its own frame, the flank open, measured off the build:
  * the walk runs only in its close look, so this is all the hall must clear. */
 export const HALL_LION_REST = { min: [-.32, 0, -1.04], max: [.4, 1.42, 1.16] } as const

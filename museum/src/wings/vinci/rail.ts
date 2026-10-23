@@ -91,8 +91,8 @@ function aimedFrom(pose:Pose,heading:number,pitch:number,fov:number):Pose {
 const standing=(e:number,n:number):Pose=>{const h=groundHeight(e,n)+1.65;return p(e,n,h,e,n,h)}
 /** The eye in the great hall's door, on the axis of the three doors. */
 const HALL_DOOR=p(-4.2388,-11.0992,2.45,-4.2388,-11.0992,2.45)
-/** The phone's eye in the hall, a step inside the door and to its left. */
-const HALL_PHONE_EYE=p(-4.3001,-12.7487,2.45,-4.3001,-12.7487,2.45)
+/** The phone's eye in the hall, in its south-east corner. */
+const HALL_PHONE_EYE=p(-4.0672,-13.2175,2.45,-4.0672,-13.2175,2.45)
 /** The body wall's phone eye, on the grid's axis 6.7 m off the frames: at a
  * 64 degree lens the grid takes four fifths of a 390 px stage and the sheet
  * apart is the next stop, not a speck at the frame's edge. The lens is the
@@ -164,15 +164,16 @@ export function stationPose(id:VinciStationId, narrow:boolean):Pose {
   // axis, and the eye stands forty centimetres inside the last of them, looking
   // down it at the west windows the hour's sun comes through; the wide frame
   // turns onto the table with the lion whole at its left. THE PHONE'S ONE
-  // HERO IS THE LION, with its room behind it: from a step inside the door
-  // and to its left, the south-west window stands over the lion's back and
-  // the table's sunlit end with the inclinometer at its tail, the lion six
-  // tenths of a 52 degree field, the eye half a metre off the wall. Its
-  // window above the words is the master's band 0.11 to 0.57 on every phone,
-  // so the eye looks three degrees down and its shift lens lifts the lion's
-  // middle to about a third of the height, its feet just under the half;
-  // pitched further, the room's verticals leaned past a degree and a half.
-  if(id==='hall') return narrow?{...aimedFrom(HALL_PHONE_EYE,-124.69,-3,93.09),shift:-.679}:aimedFrom(HALL_DOOR,-124,-8,58)
+  // HERO IS THE LION, with its room behind it: from the hall's south-east
+  // corner the lion turns its chest and open flank to the eye, the two west
+  // windows behind it and the table with both its pieces whole past its
+  // sunlit hindquarters, the lion two thirds of a 52 degree field, the eye
+  // six tenths of a metre off both walls. Its window above the words is the master's band 0.11 to 0.57
+  // on every phone, so the eye looks two degrees down and its shift lens
+  // lifts the lion's middle to about a third of the height, its feet just
+  // under the half; pitched further, the room's verticals leaned past a
+  // degree and a half.
+  if(id==='hall') return narrow?{...aimedFrom(HALL_PHONE_EYE,-110.14,-2,93.09),shift:-.623}:aimedFrom(HALL_DOOR,-124,-8,58)
   // THE CHAPEL IS THE ONE HERO. Square on from the court it was a wall of
   // ashlar in the house's shadow with nothing behind it; from the foot of the
   // raised lawn the gable took the left half of the frame, the gable the study

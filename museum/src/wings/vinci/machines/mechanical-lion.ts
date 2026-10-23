@@ -91,6 +91,30 @@ const addMesh = (parent: Object3D, name: string, geometry: BufferGeometry, mater
   return m
 }
 const flip = (p: V3, side: number): V3 => [p[0]! * side, p[1]!, p[2]!]
+/** The +x door's outer face, z at (x, y) in the rest frame, from its baked
+ * vertices (the forward-facing ones, the highest z in each 4 mm cell). */
+function doorFaceLookup(b: Baked): (x: number, y: number) => number {
+  const cell = 0.004, top = new Map<number, number>()
+  const key = (i: number, j: number): number => i * 4096 + j
+  for (let i = 0; i < b.position.length; i += 3) {
+    if (b.normal[i + 2]! < 0.2) continue
+    const k = key(Math.round(b.position[i]! / cell), Math.round(b.position[i + 1]! / cell))
+    const z = b.position[i + 2]!
+    if (z > (top.get(k) ?? -Infinity)) top.set(k, z)
+  }
+  return (x, y) => {
+    const i0 = Math.round(x / cell), j0 = Math.round(y / cell)
+    // the nearest cell that holds the face, searching outward
+    for (let r = 0; r <= 4; r++) {
+      let best = -Infinity
+      for (let di = -r; di <= r; di++) for (let dj = -r; dj <= r; dj++) best = Math.max(best, top.get(key(i0 + di, j0 + dj)) ?? -Infinity)
+      if (best > -Infinity) return best
+    }
+    return K.HINGE[2]!
+  }
+}
+
+
 interface Leg { upper: Group; lower: Group; paw: Group; side: number; fore: boolean }
 
 export function build(stack: Stack): ReadyMachineBuild {
@@ -255,13 +279,15 @@ export function build(stack: Stack): ReadyMachineBuild {
     const latch = new Group(); latch.name = 'latch'; latch.position.set(0, works.W.latch.y, works.W.latch.z); body.add(latch); nodes['latch'] = latch
     named('latch', latch, addMesh(latch, 'latch', keep(works.latchGeometry()), iron).geometry)
 
-    // the doors on their iron hinges
+    // the doors on their iron hinges, the straps (when the look has them) on their outer faces read off the carving
+    const doorSurf = look.straps ? doorFaceLookup(baked['door']!) : null
     for (const side of [1, -1]) {
       const id = side > 0 ? 'door-left' : 'door-right'
       const H = flip(K.HINGE, side)
       const door = pivotGroup(body, id, H); nodes[id] = door
       named(id, door, addMesh(door, id, carved('door', side < 0), paint, H).geometry)
       addMesh(door, `${id}-hinge`, keep(works.hingeGeometry()), iron)
+      if (doorSurf) addMesh(door, `${id}-straps`, keep(works.doorStrapGeometry(doorSurf, side)), iron, H)
     }
 
     // the lily carriage on its rack, and the pinion that drives it

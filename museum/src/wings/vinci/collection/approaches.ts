@@ -366,16 +366,17 @@ function tablePiecePose(slug: HallTablePiece, narrow: boolean): ApproachPose {
 }
 
 /** THE LION'S CLOSE LOOK. The desktop walks straight in from the hall's door
- * along the doorway's axis, the lion's chest and open flank at a
- * three-quarter turn. The phone, whose field across stays at 40 degrees,
- * holds the whole lion only from three metres or more: in front of it the
- * room's south-east corner leaves no such eye, so the phone walks round to
- * its left and reads its open flank from a little behind the shoulder,
- * three degrees down, its shift lens lifting the body's middle to about a
- * third of the height.
+ * along the doorway's axis to the lion's open flank, square on, the
+ * south-west window behind it. The phone, whose field across stays at 40
+ * degrees, holds the whole lion only from three metres or more, which the
+ * room gives only in its south-east corner: it narrows its field there to
+ * the lion's chest and open flank at a three-quarter turn, the eye a little
+ * lower as a visitor bends to it, four degrees down (more and the room's
+ * verticals lean past a degree and a half), its shift lens lifting the
+ * body's middle to about a third of the height.
  * In the lion's own frame, +z its nose and +x its left. */
-const LION_EYE = { desktop: { x: 2.278, z: .868 }, phone: { x: 3.2, z: -1.2 } }
-const LION_PHONE = { fov: 76.45, pitch: 3, shift: -.589, aimZ: -.05 }
+const LION_EYE = { desktop: { x: 2.496, z: -.092 }, phone: { x: 2.075, z: 1.938 } }
+const LION_PHONE = { fov: 76.45, pitch: 4, shift: -.69, aimZ: .35, eye: 1.55 }
 function lionPose(narrow: boolean): ApproachPose {
   const b = HALL_LION.bearing * Math.PI / 180, cos = Math.cos(b), sin = Math.sin(b)
   const on = (x: number, z: number): [number, number] => [HALL_LION.east + x * cos + z * sin, HALL_LION.north + x * sin - z * cos]
@@ -383,7 +384,7 @@ function lionPose(narrow: boolean): ApproachPose {
   const eye = LION_EYE[narrow ? 'phone' : 'desktop']
   const [eyeEast, eyeNorth] = on(eye.x, eye.z)
   const [atEast, atNorth] = on((min[0] + max[0]) / 2, (min[2] + max[2]) / 2)
-  const eyeY = HALL_LION.floor + 1.65
+  const eyeY = HALL_LION.floor + (narrow ? LION_PHONE.eye : 1.65)
   if (narrow) {
     const [aimEast, aimNorth] = on((min[0] + max[0]) / 2, LION_PHONE.aimZ)
     const atY = eyeY - Math.hypot(eyeEast - aimEast, eyeNorth - aimNorth) * Math.tan(LION_PHONE.pitch * Math.PI / 180)

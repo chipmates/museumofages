@@ -717,17 +717,17 @@ function keptLimePlaster(T: N, base: N, seed: number): N {
   const sweep = mx_noise_float(vec3(T.x.mul(.7).add(T.y.mul(.5)).div(.35), T.y.mul(.7).sub(T.x.mul(.5)).div(.09), seed + 19)).mul(fade(.09))
   const stroke = (c: number, sn: number, key: number): N => mx_noise_float(vec3(T.x.mul(c).add(T.y.mul(sn)).div(.3), T.y.mul(c).sub(T.x.mul(sn)).div(.014), seed + key))
   const brush = stroke(.8, .6, 43).add(stroke(.8, -.6, 47)).mul(fade(.014))
-  return base.mul(nL.mul(.06).add(nP.mul(.035)).add(nM.mul(.014)).add(sweep.mul(.018)).add(brush.mul(.012)).add(nF.mul(.03)).add(1))
+  return base.mul(nL.mul(.09).add(nP.mul(.05)).add(nM.mul(.016)).add(sweep.mul(.03)).add(brush.mul(.014)).add(nF.mul(.03)).add(1))
     .mul(mix(vec3(1, 1, 1), vec3(1.015, 1, .97), smoothstep(-.3, .5, nL)))
 }
 
-/** THE TROWEL'S UNDULATION. A hand-laid lime coat rises and falls a few
- * millimetres over a metre and less over a hand's breadth, and the windows'
- * raking day draws it on a wall. Its slope by differences in the wall's own
- * metres (along the wall, then up). */
+/** THE TROWEL'S UNDULATION. A hand-laid lime coat over old masonry rises and
+ * falls a centimetre or two over a metre and a few millimetres over a hand's
+ * breadth, and the windows' raking day draws it on a wall. Its slope by
+ * differences in the wall's own metres (along the wall, then up). */
 function plasterRelief(T: N, Ng: N): N {
-  const h = (x: N, y: N): N => mx_noise_float(vec3(x.div(.85), y.div(.6), 3.3)).mul(.007)
-    .add(mx_noise_float(vec3(x.div(.24), y.div(.2), 8.1)).mul(.0016))
+  const h = (x: N, y: N): N => mx_noise_float(vec3(x.div(.85), y.div(.6), 3.3)).mul(.02)
+    .add(mx_noise_float(vec3(x.div(.24), y.div(.2), 8.1)).mul(.004))
   const e = .025
   const dx = h(T.x.add(e), T.y).sub(h(T.x.sub(e), T.y)).div(2 * e)
   const dy = h(T.x, T.y.add(e)).sub(h(T.x, T.y.sub(e))).div(2 * e)
@@ -756,14 +756,23 @@ const LION_SPHERES: [number, number, number, number][] = [
 ]
 function lionShade(Nw: N): N {
   const b = HALL_LION.bearing * Math.PI / 180, c = Math.cos(b), sn = Math.sin(b)
+  // most of the day reaching the floor round it comes through the south-west
+  // window, low and from the west: a sphere between a point and that window
+  // holds more of it, so the shade runs out on the side away from the light
+  const win = P(0, (LION_WINDOW.v0 + LION_WINDOW.v1) / 2, FLOOR_Z + LION_WINDOW.h)
+  const toWin = vec3(win[0], win[2], -win[1]).sub(positionWorld).normalize()
   let held: N = float(0)
   for (const [x, y, z, r] of LION_SPHERES) {
     const centre = vec3(HALL_LION.east + x * c + z * sn, HALL_LION.floor + y, -(HALL_LION.north + x * sn - z * c))
-    const d = centre.sub(positionWorld), l = d.length().max(r)
-    held = held.add(Nw.dot(d).div(l).max(0).mul(float(r).div(l).pow(2)))
+    const d = centre.sub(positionWorld), l = d.length().max(r), dn = d.div(l)
+    const along = dn.dot(toWin).max(0)
+    held = held.add(Nw.dot(dn).max(0).mul(float(r).div(l).pow(2)).mul(along.mul(along).mul(1.6).add(.5)))
   }
   return float(1).sub(held.min(.85))
 }
+/** The south-west window's light as the lion's shade reckons it: its span
+ * along the west wall and the height of its middle over the floor. */
+const LION_WINDOW = { v0: 1.48, v1: 3.03, h: 1.7 }
 
 export const houseHallProvenance = {
   manifestId: 'vinci/house-hall',
@@ -2253,7 +2262,7 @@ function hallMaterial(perPixel: boolean, library?: MaterialLibrary, sunShadow?: 
     const [cu0, cv0] = hallUVNode(positionWorld)
     const along = max(min(cu0, float(HALL_W).sub(cu0)), min(cv0, float(HALL_D).sub(cv0)))
     const fromBoards = float(CEIL_Z).sub(positionWorld.y)
-    const corner = float(1).sub(float(1).sub(smoothstep(0, .7, along)).mul(.22)).mul(float(1).sub(float(1).sub(smoothstep(0, .45, fromBoards)).mul(.16)))
+    const corner = float(1).sub(float(1).sub(smoothstep(0, .8, along)).mul(.3)).mul(float(1).sub(float(1).sub(smoothstep(0, .6, fromBoards)).mul(.22)))
     const roomShade = mix(float(1), corner, is(K.PLASTER)).mul(lionShade(Nw))
     ambient = ambient.mul(roomShade); bounce = bounce.mul(roomShade); westSky = westSky.mul(roomShade)
   }
@@ -2404,11 +2413,13 @@ function hallMaterial(perPixel: boolean, library?: MaterialLibrary, sunShadow?: 
   // the furniture's oak: darker, waxed, handled; its growth rings fine dark
   // lines along the board and its rays pale flecks, each held only while a
   // pixel can carry it, so a top seen at a slant does not smear into streaks
+  // (a year's ring is one to five millimetres: the spacing wanders across the board)
   const ringAt = T.y.add(mx_noise_float(vec3(T.x.mul(.9), seed.mul(5.3), 2.1)).mul(.02)).add(mx_noise_float(vec3(T.x.mul(4.1), T.y.mul(3), seed)).mul(.003))
+    .add(mx_noise_float(vec3(T.x.mul(.5), T.y.mul(90), seed.mul(1.9))).mul(.0016))
   const ringPx = ringAt.dFdx().abs().add(ringAt.dFdy().abs())
-  const ring = smoothstep(.55, .9, fract(ringAt.div(.0032))).mul(float(1).sub(smoothstep(.0009, .0028, ringPx)))
-  const fleck = smoothstep(.6, .72, mx_noise_float(vec3(T.x.mul(16), T.y.mul(130), seed.mul(2.7)))).mul(float(1).sub(smoothstep(.0012, .004, ringPx)))
-  const wax = vec3(.12, .07, .038).mul(grain.mul(.55).add(1)).mul(fract(seed.mul(3.17)).mul(.16).add(.92)).mul(float(1).sub(ring.mul(.3))).mul(fleck.mul(.22).add(1))
+  const ring = smoothstep(.6, .9, fract(ringAt.div(.0036))).mul(float(1).sub(smoothstep(.0007, .0018, ringPx)))
+  const fleck = smoothstep(.6, .72, mx_noise_float(vec3(T.x.mul(16), T.y.mul(130), seed.mul(2.7)))).mul(float(1).sub(smoothstep(.001, .003, ringPx)))
+  const wax = vec3(.12, .07, .038).mul(grain.mul(.55).add(1)).mul(fract(seed.mul(3.17)).mul(.16).add(.92)).mul(float(1).sub(ring.mul(.22))).mul(fleck.mul(.22).add(1))
   const brass = vec3(.50, .36, .16).mul(mx_noise_float(Wp.mul(60)).mul(.08).add(.95))
   // beeswax, bleached, never lit: an ivory that yellows toward the socket
   const candle = mix(vec3(.62, .56, .43), vec3(.54, .46, .32), mx_noise_float(Wp.mul(24)).mul(.5).add(.5)).mul(mx_noise_float(Wp.mul(90)).mul(.04).add(1))
@@ -2478,7 +2489,7 @@ function hallMaterial(perPixel: boolean, library?: MaterialLibrary, sunShadow?: 
   const colour = mix(mix(mix(clean, hearthStone, onSlab), vec3(.07, .045, .03), scorch.mul(tileHearth).mul(.55)).mul(float(1).sub(crumbs.mul(tileHearth).mul(.7))), vec3(.012, .011, .010), sootField)
   m.colorNode = colour
   m.roughnessNode = float(.9).sub(is(K.TILE).mul(float(.22).add(wear.mul(.28))).mul(float(1).sub(jointCover))).sub(is(K.OAK).mul(.12)).add(is(K.JOINT).mul(.05)).sub(is(K.IRON).mul(.08))
-    .sub(is(K.WAX).mul(float(.26).sub(ring.mul(.1)))).sub(is(K.CANDLE).mul(.38)).sub(is(K.BRASS).mul(.55)).sub(is(K.GLAZE).add(is(K.EARTH)).mul(.72)).add(is(K.CLOTH).mul(.08)).add(is(K.WEATHERED).mul(.05)).sub(is(K.BRICK).mul(brickSoot).mul(.3))
+    .sub(is(K.WAX).mul(float(.2).sub(ring.mul(.08)))).sub(is(K.CANDLE).mul(.38)).sub(is(K.BRASS).mul(.55)).sub(is(K.GLAZE).add(is(K.EARTH)).mul(.72)).add(is(K.CLOTH).mul(.08)).add(is(K.WEATHERED).mul(.05)).sub(is(K.BRICK).mul(brickSoot).mul(.3))
   m.metalnessNode = is(K.BRASS)
   m.aoNode = clamp(ambient, 0, 1)
   // A surface of the passage takes no direct sun: nothing faces it.
@@ -2498,8 +2509,10 @@ function hallMaterial(perPixel: boolean, library?: MaterialLibrary, sunShadow?: 
   // waxed oak and glaze mirror the windows at a graze: the sheen a shaded
   // table top holds where the eye catches the day in it; the wax lies a
   // little unevenly, and the rings' open pores hold less of it
-  const waxed = mx_noise_float(Wp.mul(1.7)).mul(.2).add(.85).mul(float(1).sub(ring.mul(.35)))
-  m.emissiveNode = perPixel ? diffuseReturn.add(windowGloss().mul(is(K.WAX).mul(waxed).add(is(K.GLAZE).add(is(K.EARTH)).mul(1.4))).mul(inSunBox)) : diffuseReturn
+  const waxed = mx_noise_float(Wp.mul(1.7)).mul(.15).add(.7).mul(float(1).sub(ring.mul(.35))).mul(grain.mul(1.2).add(1))
+  // only a top mirrors the window: a leg's round would draw it as a pale bar down its length
+  const flatTop = smoothstep(.5, .9, normalWorldGeometry.y)
+  m.emissiveNode = perPixel ? diffuseReturn.add(windowGloss().mul(is(K.WAX).mul(waxed).mul(flatTop).add(is(K.GLAZE).add(is(K.EARTH)).mul(1.4))).mul(inSunBox)) : diffuseReturn
   m.userData['engineBounce'] = true
   m.name = 'vinci/house-hall/fabric'
   return m

@@ -413,7 +413,7 @@
       "prompt": "Regenerable actual geometry certificate for40 directed routes across five pose families and two viewport families. Includes foundation, entry, vegetation and all dressing; no sky, DOM or shadow-only duplicate.",
       "model": "Deterministic TypeScript and TSL procedural geometry",
       "date": "2026-09-10",
-      "sha256": "8dc3ebd55030c2b2dad305ebfce0c6dfb2efe0f681a638d0f1f4244368c05152",
+      "sha256": "1e919cc73b42d77bf67093c5819a43bb49a836eceadc04ba3b3b7273b685e2e6",
       "note": "recipe_file=src/wings/vinci/data/rail-clearance.json; source_generator=src/wings/vinci/rail-certify.mjs; runtime dependency of vinci/rail; companion_file=src/wings/vinci/collection/approaches.ts"
     },
     {
