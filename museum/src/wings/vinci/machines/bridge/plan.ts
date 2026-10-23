@@ -64,8 +64,8 @@ export const SEAT_HALF = 1.8
 export const OVERHANG = 0.3
 /** at a foot the rod rests in a scrape in the bank: shorter past the seat */
 export const FOOT_OVERHANG = 0.16
-export const ROPE_R = 0.008
-export const TURNS = 3
+export const ROPE_R = 0.0068
+export const TURNS = 4
 
 /** A hash in [0, 1), the same on every load. */
 export function hash(...values: number[]): number {
