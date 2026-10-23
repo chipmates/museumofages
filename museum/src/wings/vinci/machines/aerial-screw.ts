@@ -40,7 +40,7 @@ export function build(stack: Stack): ReadyMachineBuild {
       // would catch it as specks along their length; under it they stand as
       // the dark ribs the cloth is stretched on.
       const lit = ((globalThis as { __screwProbe?: Record<string, unknown> }).__screwProbe || {})['hempLamp']
-      if (!lit && cloth instanceof MeshStandardNodeMaterial && /:cane:|hemp/.test(cloth.name)) cloth.userData['benchLamp'] = false
+      if (cloth instanceof MeshStandardNodeMaterial && /:cane:|hemp/.test(cloth.name)) { if (lit) delete cloth.userData['benchLamp']; else cloth.userData['benchLamp'] = false }
       // the rim's wire is black iron and its whippings tarred, so the edge reads as one dark wire "as thick as a cord"
       const probe = (globalThis as { __screwProbe?: Record<string, unknown> }).__screwProbe || {}
       const dark = probe['dark'] && cloth instanceof MeshStandardNodeMaterial ? /tarred/.test(cloth.name) ? vec3(.3, .25, .2) : /forged wire/.test(cloth.name) ? vec3(.42, .42, .42) : null : null
