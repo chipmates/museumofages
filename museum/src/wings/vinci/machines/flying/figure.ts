@@ -30,7 +30,7 @@ export interface FigureJoints {
 const FOOT_A = [0, 0.012, 0.025, 0.045, 0.07, 0.1, 0.13, 0.16, 0.19, 0.215, 0.235, 0.248, 0.255] as const
 const FOOT_SOLE = [0.026, 0.009, 0.003, 0.001, 0, 0, 0.002, 0.001, 0, 0.001, 0.003, 0.006, 0.011] as const
 const FOOT_TOP = [0.052, 0.068, 0.078, 0.086, 0.087, 0.078, 0.064, 0.05, 0.037, 0.03, 0.026, 0.022, 0.016] as const
-const FOOT_HALF = [0.017, 0.027, 0.03, 0.031, 0.032, 0.035, 0.041, 0.046, 0.048, 0.046, 0.04, 0.032, 0.02] as const
+const FOOT_HALF = [0.019, 0.029, 0.033, 0.034, 0.034, 0.036, 0.041, 0.046, 0.048, 0.046, 0.04, 0.032, 0.02] as const
 const ANKLE = [0.055, 0.075] as const
 const TOE_TIP = [0.255, 0.019] as const
 /** the segment's own frame: +Y from the ankle to the toes' tip, +Z toward the sole */
@@ -54,8 +54,9 @@ function lerpTable(xs: readonly number[], ys: readonly number[], x: number): num
 }
 /** the top of the foot over the sole, a metres from the back of the heel */
 export const footTopAt = (a: number): number => lerpTable(FOOT_A, FOOT_TOP, a)
-/** the foot's surface: rounded sections, flat under the sole, closed at heel and toe */
-function footSurface(m: Mesher): void {
+/** the foot's surface: rounded sections, flatter under the sole, closed at heel and toe;
+ * medial names the side of the big toe and the arch (+1: the segment's -X) */
+function footSurface(m: Mesher, medial: 1 | -1): void {
   const ns = 34, sides = 22, grid: V3[][] = []
   const at = (i: number): number => FOOT_A[FOOT_A.length - 1]! * (0.5 - 0.5 * Math.cos(Math.PI * i / (ns - 1)))
   for (let i = 0; i < ns; i++) {
@@ -65,11 +66,14 @@ function footSurface(m: Mesher): void {
     const f = Math.max(0.02, round(a, 0.024) * round(L - a, 0.016))
     const hw = lerpTable(FOOT_A, FOOT_HALF, a) * f
     const mid = (t + b) / 2, hh = (t - b) / 2 * f, row: V3[] = []
+    // the big toe's side runs straighter to the tip; the arch lifts the sole's inner edge under the midfoot
+    const toe = medial * 0.006 * smooth01((a - 0.17) / 0.08), arch = 0.008 * Math.exp(-(((a - 0.125) / 0.045) ** 2))
     for (let j = 0; j <= sides; j++) {
       const th = (j / sides) * Math.PI * 2, c = Math.cos(th), s = Math.sin(th)
-      const x = hw * Math.sign(c) * Math.pow(Math.abs(c), 2 / 2.6)
-      const y = mid + hh * Math.sign(s) * Math.pow(Math.abs(s), 2 / (s < 0 ? 5 : 2.3))
-      row.push([a, y, x])
+      const x = hw * Math.sign(c) * Math.pow(Math.abs(c), 2 / 2.2)
+      const inner = Math.max(0, x * medial / Math.max(hw, 1e-4))
+      const y = mid + hh * Math.sign(s) * Math.pow(Math.abs(s), 2 / (s < 0 ? 3.4 : 2.1)) + (s < 0 ? arch * inner * inner * Math.abs(s) : 0)
+      row.push([a, y, x + toe])
     }
     grid.push(row)
   }
@@ -88,8 +92,8 @@ function footSurface(m: Mesher): void {
     m.quad(a, a + stride, a + stride + 1, a + 1)
   }
   for (const [ax, i] of ends) {
-    const row = grid[i]!, cy = row.reduce((v, p) => v + p[1], 0) / row.length
-    const tip = m.vertex(footPoint(ax, cy, 0), footDir([i === 0 ? -1 : 1, 0, 0]), 0.5, ax, 1)
+    const row = grid[i]!, cy = row.reduce((v, p) => v + p[1], 0) / row.length, cx = row.reduce((v, p) => v + p[2], 0) / row.length
+    const tip = m.vertex(footPoint(ax, cy, cx), footDir([i === 0 ? -1 : 1, 0, 0]), 0.5, ax, 1)
     for (let j = 0; j < sides; j++) {
       const a = base + i * stride + j
       if (i === 0) m.tri(tip, a, a + 1); else m.tri(tip, a + 1, a)
@@ -105,7 +109,7 @@ function footDir(n: readonly number[]): V3 {
  * held cord runs through the fist), the thumb on the -Z side. */
 function fistSurface(m: Mesher): void {
   const ny = 26, sides = 24, base = m.count, stride = sides + 1
-  const cy = 0.05, ry = 0.05, rx = 0.043, rz = 0.033
+  const cy = 0.052, ry = 0.052, rx = 0.045, rz = 0.034
   const rows: { p: V3; n: V3 }[][] = []
   for (let i = 0; i <= ny; i++) {
     const v = -Math.PI / 2 + Math.PI * i / ny, sv = Math.sin(v), cv = Math.cos(v)
@@ -114,7 +118,9 @@ function fistSurface(m: Mesher): void {
       const u = (j / sides) * Math.PI * 2, cu = Math.cos(u), su = Math.sin(u)
       const e = (q: number, k: number): number => Math.sign(q) * Math.pow(Math.abs(q), 2 / k)
       // the four rolled fingers ridge the palm's side, near the knuckles
-      const ridge = su < 0 && sv > -0.2 ? 0.0028 * Math.abs(Math.sin(4 * Math.PI * (e(cu, 3) * 0.5 + 0.5))) * (1 - sv * sv) : 0
+      const ridge = su < 0 && sv > -0.2 ? 0.0045 * Math.abs(Math.sin(4 * Math.PI * (e(cu, 3) * 0.5 + 0.5))) * (1 - sv * sv)
+        // the four knuckles stand on the back of the hand where it turns over the fingers
+        : su > 0 && sv > 0.3 ? 0.004 * Math.pow(Math.abs(Math.sin(4 * Math.PI * (e(cu, 3) * 0.5 + 0.5))), 2) * Math.sin(Math.PI * (sv - 0.3) / 0.7) * su : 0
       const x = rx * e(cv, 3) * e(cu, 3), z = (rz + ridge) * e(cv, 3) * e(su, 3), y = cy + ry * e(sv, 2.6)
       row.push({ p: [x, Math.max(y, 0.004), z + 0.004], n: [0, 0, 0] })
     }
@@ -135,49 +141,119 @@ function fistSurface(m: Mesher): void {
     m.quad(a, a + stride, a + stride + 1, a + 1)
   }
   // the thumb: from its root at the wrist's edge, laid over the first two fingers
-  tube(m, [[0.036, 0.018, -0.012], [0.03, 0.045, -0.03], [0.012, 0.068, -0.037], [-0.004, 0.074, -0.034]], {
-    sides: 12, caps: true, capTone: 1, radius: (i) => [0.014, 0.013, 0.0115, 0.0105][i]!,
+  tube(m, [[0.038, 0.018, -0.012], [0.032, 0.047, -0.031], [0.013, 0.07, -0.039], [-0.004, 0.077, -0.036]], {
+    sides: 12, caps: true, capTone: 1, radius: (i) => [0.015, 0.014, 0.0125, 0.011][i]!,
   })
 }
+const smooth01 = (x: number): number => { const u = Math.min(1, Math.max(0, x)); return u * u * (3 - 2 * u) }
 const sub3 = (a: V3, b: V3): V3 => [a[0] - b[0], a[1] - b[1], a[2] - b[2]]
 const cross3 = (a: V3, b: V3): V3 => [a[1] * b[2] - a[2] * b[1], a[2] * b[0] - a[0] * b[2], a[0] * b[1] - a[1] * b[0]]
 const norm3 = (a: readonly number[]): V3 => { const l = Math.hypot(a[0]!, a[1]!, a[2]!) || 1; return [a[0]! / l, a[1]! / l, a[2]! / l] }
 
-/** a solid of revolution along +Y with elliptical sections: (u, rx, rz) */
-function loft(m: Mesher, length: number, sections: readonly [number, number, number][], sides = 18): void {
-  const ring = (u: number): [number, number] => {
+/** A body form's section: along (0 to 1), half width, depth to the front (+Z)
+ * and depth to the back (-Z), in metres */
+type Section = readonly [number, number, number, number]
+/** a form's relief: an outward offset in metres by along, across (x) and side (+1 front, -1 back) */
+type Relief = (u: number, x: number, side: 1 | -1) => number
+const gauss = (d: number, w: number): number => Math.exp(-((d / w) ** 2))
+
+/** A form along +Y with rounded ends: sections eased between, a little squarer
+ * than an ellipse, and a relief laid over the front or the back */
+function form(m: Mesher, length: number, sections: readonly Section[], sides = 18, relief?: Relief): void {
+  const at = (u: number): [number, number, number] => {
     for (let i = 0; i < sections.length - 1; i++) {
       const a = sections[i]!, b = sections[i + 1]!
-      if (u <= b[0]) { const k = (u - a[0]) / Math.max(1e-6, b[0] - a[0]); const s = k * k * (3 - 2 * k); return [a[1] + (b[1] - a[1]) * s, a[2] + (b[2] - a[2]) * s] }
+      if (u <= b[0]) { const k = smooth01((u - a[0]) / Math.max(1e-6, b[0] - a[0])); return [a[1] + (b[1] - a[1]) * k, a[2] + (b[2] - a[2]) * k, a[3] + (b[3] - a[3]) * k] }
     }
-    const l = sections[sections.length - 1]!; return [l[1], l[2]]
+    const l = sections[sections.length - 1]!; return [l[1], l[2], l[3]]
   }
-  const r0 = ring(0), r1 = ring(1)
-  const cap0 = Math.min(r0[0], r0[1]), cap1 = Math.min(r1[0], r1[1])
-  const path: V3[] = [], radii: [number, number][] = []
-  for (let k = 0; k <= 6; k++) { const a = (k / 6) * Math.PI / 2; path.push([0, -cap0 * Math.cos(a), 0]); radii.push([r0[0] * Math.sin(a) + 1e-4, r0[1] * Math.sin(a) + 1e-4]) }
-  for (let k = 1; k < 20; k++) { const u = k / 20; path.push([0, u * length, 0]); radii.push(ring(u)) }
-  for (let k = 0; k <= 6; k++) { const a = (k / 6) * Math.PI / 2; path.push([0, length + cap1 * Math.sin(a), 0]); radii.push([r1[0] * Math.cos(a) + 1e-4, r1[1] * Math.cos(a) + 1e-4]) }
-  // an elliptical tube: the shared tube with x scaled per station
-  const base = m.count, stride = sides + 1
-  for (let i = 0; i < path.length; i++) {
-    const [rx, rz] = radii[i]!
-    const prev = radii[Math.max(0, i - 1)]!, next = radii[Math.min(path.length - 1, i + 1)]!
-    const dy = path[Math.min(path.length - 1, i + 1)]![1] - path[Math.max(0, i - 1)]![1]
+  const r0 = at(0), r1 = at(1), cap0 = Math.min(...r0), cap1 = Math.min(...r1)
+  const rows: { y: number; k: number; u: number }[] = []
+  for (let q = 0; q <= 6; q++) { const a = (q / 6) * Math.PI / 2; rows.push({ y: -cap0 * Math.cos(a), k: Math.sin(a), u: 0 }) }
+  for (let q = 1; q < 24; q++) rows.push({ y: (q / 24) * length, k: 1, u: q / 24 })
+  for (let q = 0; q <= 6; q++) { const a = (q / 6) * Math.PI / 2; rows.push({ y: length + cap1 * Math.sin(a), k: Math.cos(a), u: 1 }) }
+  const e = (q: number): number => Math.sign(q) * Math.pow(Math.abs(q), 2 / 2.2)
+  const grid: V3[][] = rows.map(({ y, k, u }) => {
+    const [rx, rf, rb] = at(u), row: V3[] = []
     for (let j = 0; j <= sides; j++) {
-      const a = (j / sides) * Math.PI * 2
-      const c = Math.cos(a), s = Math.sin(a)
-      const drx = (next[0] - prev[0]) / Math.max(1e-6, dy), drz = (next[1] - prev[1]) / Math.max(1e-6, dy)
-      const nx = c / Math.max(rx, 1e-4), nz = s / Math.max(rz, 1e-4)
-      const ny = -(c * c * drx / Math.max(rx, 1e-4) + s * s * drz / Math.max(rz, 1e-4))
-      const l = Math.hypot(nx, ny, nz) || 1
-      m.vertex([c * rx, path[i]![1], s * rz], [nx / l, ny / l, nz / l], j / sides, path[i]![1], 1)
+      const a = (j / sides) * Math.PI * 2, c = Math.cos(a), sn = Math.sin(a), side: 1 | -1 = sn >= 0 ? 1 : -1
+      const x = rx * e(c) * k
+      const z = (side > 0 ? rf : rb) * e(sn) * k + (relief ? side * relief(u, x, side) * Math.abs(sn) * k : 0)
+      row.push([x, y, z])
     }
+    return row
+  })
+  const base = m.count, stride = sides + 1, last = rows.length - 1
+  for (let i = 0; i <= last; i++) for (let j = 0; j <= sides; j++) {
+    const p = grid[i]![j]!
+    let n: V3
+    if (i === 0) n = [0, -1, 0]
+    else if (i === last) n = [0, 1, 0]
+    else {
+      const du = sub3(grid[i + 1]![j]!, grid[i - 1]![j]!), dv = sub3(grid[i]![(j + 1) % sides]!, grid[i]![(j - 1 + sides) % sides]!)
+      n = norm3(cross3(du, dv))
+      if (n[0] * p[0] + n[2] * p[2] < 0) n = [-n[0], -n[1], -n[2]]
+    }
+    m.vertex(p, n, j / sides, p[1], 1)
   }
-  for (let i = 0; i < path.length - 1; i++) for (let j = 0; j < sides; j++) {
+  for (let i = 0; i < last; i++) for (let j = 0; j < sides; j++) {
     const a = base + i * stride + j, b = a + stride
     m.quad(a, b, b + 1, a + 1)
   }
+}
+
+/** THE HEAD, a type: the skull's dome and the jaw narrowing to the chin, no
+ * face drawn on it. +Y from the neck up the head, +Z the face; a distance
+ * field of three ellipsoids, met by rays from inside. */
+function headSurface(m: Mesher): void {
+  const ell = (p: V3, c: V3, r: V3): number => {
+    const q = [(p[0] - c[0]) / r[0], (p[1] - c[1]) / r[1], (p[2] - c[2]) / r[2]]
+    const k0 = Math.hypot(q[0]!, q[1]!, q[2]!), k1 = Math.hypot(q[0]! / r[0], q[1]! / r[1], q[2]! / r[2])
+    return k0 * (k0 - 1) / Math.max(k1, 1e-6)
+  }
+  const smin = (a: number, b: number, k: number): number => { const h = Math.max(k - Math.abs(a - b), 0) / k; return Math.min(a, b) - h * h * k / 4 }
+  const field = (p: V3): number => {
+    const skull = ell(p, [0, 0.091, -0.012], [0.074, 0.099, 0.094])
+    // the jaw narrows from the cheekbones down to the chin
+    const narrow = 0.62 + 0.38 * smooth01((p[1] + 0.045) / 0.095)
+    const jaw = ell([p[0] / narrow, p[1], p[2]], [0, 0.022, 0.03], [0.058, 0.066, 0.06])
+    const chin = ell(p, [0, -0.03, 0.066], [0.024, 0.021, 0.02])
+    return smin(smin(skull, jaw, 0.028), chin, 0.014)
+  }
+  const c: V3 = [0, 0.06, 0], ny = 24, sides = 28, base = m.count, stride = sides + 1
+  const surface = (d: V3): V3 => {
+    let lo = 0, hi = 0.2
+    for (let k = 0; k < 40; k++) { const mid = (lo + hi) / 2; if (field([c[0] + d[0] * mid, c[1] + d[1] * mid, c[2] + d[2] * mid]) < 0) lo = mid; else hi = mid }
+    const r = (lo + hi) / 2
+    return [c[0] + d[0] * r, c[1] + d[1] * r, c[2] + d[2] * r]
+  }
+  const h = 1e-4
+  for (let i = 0; i <= ny; i++) {
+    const th = Math.PI * i / ny
+    for (let j = 0; j <= sides; j++) {
+      const a = (j / sides) * Math.PI * 2
+      const p = surface([Math.sin(th) * Math.cos(a), -Math.cos(th), Math.sin(th) * Math.sin(a)])
+      const n = norm3([
+        field([p[0] + h, p[1], p[2]]) - field([p[0] - h, p[1], p[2]]),
+        field([p[0], p[1] + h, p[2]]) - field([p[0], p[1] - h, p[2]]),
+        field([p[0], p[1], p[2] + h]) - field([p[0], p[1], p[2] - h]),
+      ])
+      m.vertex(p, n, j / sides, i / ny, 1)
+    }
+  }
+  for (let i = 0; i < ny; i++) for (let j = 0; j < sides; j++) {
+    const a = base + i * stride + j, b = a + stride
+    m.quad(a, b, b + 1, a + 1)
+  }
+}
+
+/** the back's relief: the spine's furrow, the shoulder blades, the buttocks and their cleft */
+const trunkRelief: Relief = (u, x, side) => {
+  if (side > 0) return 0
+  const ax = Math.abs(x)
+  return -0.007 * gauss(x, 0.02) * smooth01((u - 0.12) / 0.18) * (1 - smooth01((u - 0.88) / 0.1))
+    + 0.009 * gauss(ax - 0.085, 0.04) * gauss(u - 0.8, 0.09)
+    + 0.02 * gauss(ax - 0.07, 0.055) * gauss(u, 0.12) - 0.012 * gauss(x, 0.012) * gauss(u + 0.02, 0.12)
 }
 
 interface Segment { node: Bone; length: number }
@@ -204,28 +280,29 @@ export function makeFigure(material: Material, name = 'figure'): Figure {
     bones.push(node); group.add(node)
     return { node, length }
   }
-  const make = (id: string, length: number, sections: readonly [number, number, number][], sides = 18): Segment => {
-    const m = new Mesher()
-    loft(m, length, sections, sides)
-    return segment(id, length, m)
-  }
-  // the trunk from pelvis to neck; sections (u, half width, half depth)
-  const trunk = make('trunk', 0.52, [[0, 0.155, 0.1], [0.22, 0.145, 0.095], [0.42, 0.135, 0.09], [0.7, 0.165, 0.105], [0.9, 0.17, 0.095], [1, 0.08, 0.06]], 22)
-  const neck = make('neck', 0.09, [[0, 0.055, 0.055], [1, 0.05, 0.052]])
-  const head = make('head', 0.13, [[0, 0.07, 0.08], [0.45, 0.08, 0.095], [1, 0.06, 0.07]], 20)
-  const limb = (id: string, len: number, r0: number, r1: number, mid = 1.08): Segment =>
-    make(id, len, [[0, r0, r0], [0.3, r0 * mid, r0 * mid], [1, r1, r1]], 14)
-  const upperArm = [limb('upper-arm-l', 0.28, 0.048, 0.038), limb('upper-arm-r', 0.28, 0.048, 0.038)]
-  const forearm = [limb('forearm-l', 0.25, 0.038, 0.028), limb('forearm-r', 0.25, 0.038, 0.028)]
   const built = (id: string, length: number, surface: (m: Mesher) => void): Segment => {
     const m = new Mesher()
     surface(m)
     return segment(id, length, m)
   }
+  const make = (id: string, length: number, sections: readonly Section[], sides = 18, relief?: Relief): Segment => {
+    const m = new Mesher()
+    form(m, length, sections, sides, relief)
+    return segment(id, length, m)
+  }
+  // the trunk from pelvis to neck: (u, half width, depth to the front, to the back)
+  const trunk = make('trunk', 0.52, [[0, 0.158, 0.088, 0.098], [0.12, 0.152, 0.09, 0.095], [0.3, 0.138, 0.09, 0.084], [0.45, 0.134, 0.092, 0.084], [0.65, 0.15, 0.1, 0.09], [0.86, 0.166, 0.098, 0.092], [1, 0.07, 0.055, 0.05]], 28, trunkRelief)
+  const neck = make('neck', 0.09, [[0, 0.05, 0.047, 0.047], [1, 0.044, 0.042, 0.044]], 16)
+  const head = built('head', 0.13, headSurface)
+  // the arms: the shoulder's round, the forearm full under the elbow and flat at the wrist
+  const upperArm = (['l', 'r'] as const).map(k => make(`upper-arm-${k}`, 0.28, [[0, 0.05, 0.047, 0.047], [0.2, 0.049, 0.046, 0.046], [0.55, 0.043, 0.042, 0.04], [0.88, 0.037, 0.034, 0.034], [1, 0.036, 0.033, 0.033]], 16))
+  const forearm = (['l', 'r'] as const).map(k => make(`forearm-${k}`, 0.25, [[0, 0.036, 0.034, 0.034], [0.2, 0.042, 0.037, 0.036], [0.62, 0.034, 0.027, 0.027], [1, 0.028, 0.019, 0.019]], 16))
   const hand = [built('hand-l', 0.1, fistSurface), built('hand-r', 0.1, fistSurface)]
-  const thigh = [limb('thigh-l', 0.42, 0.075, 0.05, 1.04), limb('thigh-r', 0.42, 0.075, 0.05, 1.04)]
-  const shin = [limb('shin-l', 0.42, 0.05, 0.033, 1.1), limb('shin-r', 0.42, 0.05, 0.033, 1.1)]
-  const foot = [built('foot-l', FOOT_LENGTH, footSurface), built('foot-r', FOOT_LENGTH, footSurface)]
+  // the legs: the thigh full at the top, the calf behind the shin, the ankle slim
+  const thigh = (['l', 'r'] as const).map(k => make(`thigh-${k}`, 0.42, [[0, 0.078, 0.072, 0.075], [0.3, 0.07, 0.068, 0.066], [0.75, 0.056, 0.052, 0.05], [1, 0.047, 0.046, 0.044]], 18))
+  const shin = (['l', 'r'] as const).map(k => make(`shin-${k}`, 0.42, [[0, 0.047, 0.046, 0.044], [0.22, 0.05, 0.04, 0.058], [0.55, 0.042, 0.034, 0.042], [0.88, 0.028, 0.027, 0.029], [1, 0.03, 0.03, 0.03]], 18))
+  // the left foot's big toe toward -X, the right's toward +X: the same side of the body's middle
+  const foot = [built('foot-l', FOOT_LENGTH, m => footSurface(m, 1)), built('foot-r', FOOT_LENGTH, m => footSurface(m, -1))]
 
   // bound with every bone at rest at the group's origin: each segment's own frame is the mesh's
   const geometry = mergeGeometries(parts, false)
@@ -265,11 +342,11 @@ export function makeFigure(material: Material, name = 'figure'): Figure {
       place(head, mid(j.neck, j.head, 0.42), [j.head[0] + (j.head[0] - j.neck[0]) * 0.3, j.head[1] + (j.head[1] - j.neck[1]) * 0.3, j.head[2] + (j.head[2] - j.neck[2]) * 0.3], j.front, true)
       for (const k of [0, 1] as const) {
         place(upperArm[k]!, j.shoulder[k], j.elbow[k], back, true)
-        place(forearm[k]!, j.elbow[k], j.hand[k], back, true)
         const reach: V3 = j.knuckle?.[k] ?? [j.hand[k][0] + (j.hand[k][0] - j.elbow[k][0]) * 0.55, j.hand[k][1] + (j.hand[k][1] - j.elbow[k][1]) * 0.55, j.hand[k][2] + (j.hand[k][2] - j.elbow[k][2]) * 0.55]
         // the fist's -Z carries the thumb: toward the body's front unless a held line says where the fingers close
-        const along = norm3(sub3(reach, j.hand[k])), held = j.grip?.[k]
-        place(hand[k]!, j.hand[k], reach, held ? cross3(held, along) : back)
+        const along = norm3(sub3(reach, j.hand[k])), held = j.grip?.[k], palm = held ? cross3(held, along) : back
+        place(forearm[k]!, j.elbow[k], j.hand[k], palm, true)
+        place(hand[k]!, j.hand[k], reach, palm)
         place(thigh[k]!, j.hip[k], j.knee[k], j.front, true)
         place(shin[k]!, j.knee[k], j.ankle[k], j.front, true)
         place(foot[k]!, j.ankle[k], j.toe[k], j.sole?.[k] ?? back, true)

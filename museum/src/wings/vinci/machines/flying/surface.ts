@@ -183,10 +183,11 @@ export async function flyingSurfaces(stack: Stack): Promise<FlyingSurfaces> {
     chamois.roughnessNode = d.roughness.clamp(0.75, 0.95)
   }
   // the grey figure: a marker, plain, no maps; a step under the cane, so the
-  // man reads as the body in the cradle, not the brightest thing in it
+  // man reads as the body in the cradle, not the brightest thing in it, yet
+  // apart from the cane's own dark on a small screen
   const figure = new MeshStandardNodeMaterial({ metalness: 0, roughness: 0.86 })
   figure.name = 'flying-machine:figure:plain'
-  figure.colorNode = lin('#555450')
+  figure.colorNode = lin('#6a6964')
   return {
     materials: { cane, fir, wood, ash, skin, lash, hem, cord, iron, leather, chamois, figure },
     sets,
