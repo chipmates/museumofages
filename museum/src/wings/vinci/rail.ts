@@ -91,8 +91,8 @@ function aimedFrom(pose:Pose,heading:number,pitch:number,fov:number):Pose {
 const standing=(e:number,n:number):Pose=>{const h=groundHeight(e,n)+1.65;return p(e,n,h,e,n,h)}
 /** The eye in the great hall's door, on the axis of the three doors. */
 const HALL_DOOR=p(-4.2388,-11.0992,2.45,-4.2388,-11.0992,2.45)
-/** The phone's eye in the hall, on the same axis half a metre inside the door. */
-const HALL_PHONE_EYE=p(-5.0018,-11.5947,2.45,-5.0018,-11.5947,2.45)
+/** The phone's eye in the hall, on the same axis 0.7 m inside the door. */
+const HALL_PHONE_EYE=p(-5.1695,-11.7036,2.45,-5.1695,-11.7036,2.45)
 /** The body wall's phone eye, on the grid's axis 6.7 m off the frames: at a
  * 64 degree lens the grid takes four fifths of a 390 px stage and the sheet
  * apart is the next stop, not a speck at the frame's edge. The lens is the
@@ -166,13 +166,13 @@ export function stationPose(id:VinciStationId, narrow:boolean):Pose {
   // turns onto the table with the lion whole at its left. THE PHONE'S ONE
   // HERO IS THE LION, alone: the models stand off its right edge, since no
   // turn held them whole beside a lion over half the width. Its own eye
-  // stands half a metre inside the door, where a 40 degree field across
-  // holds the lion at three fifths of the width. Its window above the words
+  // stands 0.7 m inside the door, where a 40 degree field across holds the
+  // lion at seven tenths of the width. Its window above the words
   // is the master's band 0.11 to 0.57 on every phone, so the eye looks four
   // degrees down and its shift lens lifts the lion's middle to about a
   // third of the height, its feet just under the half; pitched instead, the
   // room's verticals leaned.
-  if(id==='hall') return narrow?{...aimedFrom(HALL_PHONE_EYE,-150.44,-4,76.45),shift:-.56}:aimedFrom(HALL_DOOR,-124,-8,58)
+  if(id==='hall') return narrow?{...aimedFrom(HALL_PHONE_EYE,-152.1,-4,76.45),shift:-.61}:aimedFrom(HALL_DOOR,-124,-8,58)
   // THE CHAPEL IS THE ONE HERO. Square on from the court it was a wall of
   // ashlar in the house's shadow with nothing behind it; from the foot of the
   // raised lawn the gable took the left half of the frame, the gable the study

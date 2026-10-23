@@ -1062,7 +1062,7 @@ function ceiling(s: Sink): void {
   const trimU = HALL_W - hoodOut - .03 - TRIM_W / 2
   const cut = (v: number): boolean => Math.abs(v - HEARTH.v) < hoodHalf + JOIST_W / 2 + .03
   // joists along u, from the window wall onto the plate, stepped along v
-  const PLATE_W = .16, PLATE_D = .2
+  const PLATE_W = .18, PLATE_D = .2
   const vs: number[] = []
   for (let i = 0; i <= HALL_JOIST_N; i++) vs.push(HALL_JOIST_FIRST + i * HALL_JOIST_STEP)
   for (const [i, v] of vs.entries()) {
@@ -1074,7 +1074,8 @@ function ceiling(s: Sink): void {
   const below = vs.filter(v => !cut(v) && v < HEARTH.v).pop(), above = vs.find(v => !cut(v) && v > HEARTH.v)
   if (below !== undefined && above !== undefined) member(s, P(trimU, below, CEIL_Z), P(trimU, above, CEIL_Z), acrossU, [0, 0, 1], TRIM_W, JOIST_D, .022, K.OAK, 6.1)
   // the wall plate along the chimneypiece's wall, its ends in the hood's sides
-  const plateU = HALL_W - PLATE_W / 2
+  // and its back 2 cm in the wall, so no face of it lies in the lining's plane
+  const plateU = HALL_W - PLATE_W / 2 + .02
   const runs: V2[] = [[-.02, HEARTH.v - hoodHalf + .02], [HEARTH.v + hoodHalf - .02, ne[1] + .02]]
   for (const [k, [v0, v1]] of runs.entries()) member(s, P(plateU, v0, CEIL_Z - PLATE_D), P(plateU, v1, CEIL_Z - PLATE_D), acrossU, [0, 0, 1], PLATE_W, PLATE_D, .015, K.OAK, 6.4 + k)
   // a quarter-round tuffeau corbel below a fillet, tailed into the wall
