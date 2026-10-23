@@ -238,6 +238,7 @@ export function build(stack: Stack): ReadyMachineBuild {
     const bump = /hbump([0-9.]+)/.exec(probe); if (bump) look.hairBump = Number(bump[1]) / 1000
     if (probe.includes('calmface')) look.calmFace = true
     const straps = probe.includes('straps')
+    if (probe.includes('dump')) (globalThis as Record<string, unknown>)['__lionObject'] = object
     if (look.lined) lilyTexture = lilyMask()
     const paint = own(paintedMaterial(inside, look, lilyTexture)), gild = own(gildMaterial(inside)), brass = own(brassMaterial())
     const oak = own(materialDressed(oakSet) ? librarySurface(stack, oakSet, 'oak') : plainSurface('oak'))
