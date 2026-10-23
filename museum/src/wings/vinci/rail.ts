@@ -61,12 +61,15 @@ const NARROW_LENS=1.26, NARROW_AIM_SHARE=.21
  * SCREW, the machine its line names. Held whole at 104 degrees, the sail,
  * three machines and a ceiling band shared the picture and none came first;
  * at 82, seventeen degrees down, the screw stands large in the middle and the
- * sail is its background, cut at the left. It keeps the room's own eye.
+ * sail is its background, cut at the left. It keeps the room's own eye and
+ * turns three degrees north of the room's aim, so the platform's north end
+ * stands clear of the right edge. The rolling mill's plinth, nearer, stays
+ * cut there: from this eye its corner overlaps the platform's end.
  * Heading from north and pitch, in degrees. */
 const FLIGHT_EYE=[-47.5,-49.3] as const
 const HALL_PHONE:Partial<Record<VinciStationId,HallAim>>={
   flight:{heading:-74,pitch:-7,fov:88,eye:FLIGHT_EYE},
-  works:{heading:-71,pitch:-17,fov:82},
+  works:{heading:-68,pitch:-17,fov:82},
 }
 /** THE HALL'S WIDE FRAMES. From the room's eye the water screw's crank
  * frame stood cut at the flight frame's right edge, and no turn cleared it
@@ -117,9 +120,13 @@ const SUPPER_DESK_EYE={east:-38.4,north:SUPPER_WALL.north-.4,fov:56}
  * stays in it. The phone's sheet covers the frame's lowest third: from 1.2 m
  * further north the first 1452 lay under it at any aim that kept the line,
  * so the phone stands at the desktop's eye and looks down until that year
- * and its disc stand above the sheet, the line running up to the far wall. */
+ * and its disc stand above the sheet. It carries its own shift lens, which
+ * the upright fit keeps: at 44 degrees across, slid by 0.44, 1452 and 1466
+ * stand whole between the trim and the words on every phone and the next
+ * years stand whole under the tall phone's top edge or wholly beyond it;
+ * levelled to the shift's ceiling, 1503 stood half cut by that edge. */
 const LINE_EYE_NORTH_M=.6,LINE_TILT_DESKTOP=4*Math.PI/180
-const LINE_PHONE={heading:5,pitch:-43,fov:92}
+const LINE_PHONE={heading:5,pitch:-43,fov:82.33,shift:-.44}
 /** The chamber's eye, on the lawn under the court's south-west corner. */
 const CHAMBER_LAWN=standing(-4,-38)
 function narrowRoomPose(pose:Pose,share=NARROW_AIM_SHARE):Pose {
@@ -191,12 +198,12 @@ function authoredStationPose(id:VinciStationId, narrow:boolean):Pose {
   if(id==='oratory') return narrow?aimedFrom(standing(5.5,-25),-18,10,72):aimedFrom(standing(7.5,-25),-32,13,56)
   // The study holds two things at once now: the window of the room the visit
   // was written in, and the support under it the page is read at. The phone
-  // stands 2.8 m east of the desktop's eye, where its frame holds the whole
-  // gable and the trees past the house's west corner instead of brick alone,
-  // turned onto the gable until both its slopes stand inside the frame. It
-  // looks up ten degrees at a 102 degree lens: at eighteen the gable leaned
-  // back over the eye, its right slope left the frame, and its lowest window
-  // and the support's mark stood under the sheet. The desktop steps down off
+  // stands on the lawn seventeen metres off the gable, on the line it looks
+  // along, turned onto the gable until both its slopes stand inside the
+  // frame, at 55 degrees across: the gable is half again as tall as it is
+  // wide, and from ten metres no lens the phone allows held its finial, its
+  // east quoins and its lowest window between the trim and the words. The
+  // desktop steps down off
   // the terrace's edge, twelve metres from the gable, which is as far back as
   // a straight walk in from the gate stays clear of the raised lawn east of
   // it. It lifts
@@ -204,7 +211,7 @@ function authoredStationPose(id:VinciStationId, narrow:boolean):Pose {
   // than at the old twenty-one, and the gravel in front of the plinth is a
   // fifth of the frame, not a third. At 80 degrees the walk in from the gate
   // carried a lens too wide for the meadow beside the bank.
-  if(id==='study') return narrow?aimedFrom(p(5.2,-29.8,1.65,5.2,-29.8,1.65),-46,10,102):aimedFrom(standing(.5,-34),-14,16,70)
+  if(id==='study') return narrow?aimedFrom(standing(10.24,-34.66),-46,0,96.81):aimedFrom(standing(.5,-34),-14,16,70)
   // THE HOUSE HE DIED IN, SEEN WHOLE. From the court's west end the chamber
   // showed the gable the study stands square to, with the same windows and
   // plaque. It steps down onto the lawn under the court's south-west corner
@@ -250,17 +257,18 @@ function authoredStationPose(id:VinciStationId, narrow:boolean):Pose {
   // gallery's end wall, every walk in turned round with that wall filling the frame.
   if(id==='line-early'){const pose=collectionView(room!,narrow)!,step=new Vector3(0,0,-LINE_EYE_NORTH_M)
     const eye=pose.eye.clone().add(step),aim=pose.at.clone().sub(pose.eye)
-    if(narrow)return aimedFrom({eye,at:eye,fov:LINE_PHONE.fov},LINE_PHONE.heading,LINE_PHONE.pitch,LINE_PHONE.fov)
+    if(narrow)return {...aimedFrom({eye,at:eye,fov:LINE_PHONE.fov},LINE_PHONE.heading,LINE_PHONE.pitch,LINE_PHONE.fov),shift:LINE_PHONE.shift}
     const flat=Math.hypot(aim.x,aim.z),far=aim.length(),pitch=Math.atan2(aim.y,flat)-LINE_TILT_DESKTOP
     return {eye,at:eye.clone().add(new Vector3(aim.x/flat*Math.cos(pitch)*far,Math.sin(pitch)*far,aim.z/flat*Math.cos(pitch)*far)),fov:pose.fov}}
   // Floor subjects and the wall read end-on have a measured phone composition
   // of their own; the generic room adjustment below is for upright exhibits
   // and architecture, and a subject that runs away from the eye is neither.
   if(room?.startsWith('collection-room-line')||room?.startsWith('collection-room-picture')){const pose=collectionView(room,narrow);if(pose)return pose}
-  // THE GRAVE'S PHONE LOOKS LESS FAR DOWN than the generic lift asks: the
-  // sheet takes the lower third, so the slab and the board stand just above
-  // it and the boardwalk runs on under it.
-  if(id==='grave'&&narrow){const pose=collectionView(room!,false);if(pose)return aimedFrom(pose,headingOf(pose),-6,72)}
+  // THE GRAVE'S PHONE HOLDS THE SLAB WITH THE LIGHT MODEL'S BOARD OVER IT
+  // (the upright fit keeps the board whole): level, at 40 degrees across and
+  // turned a degree onto the slab, the deathbed painting and the 1863 stone
+  // stand clear of both edges and the boardwalk is a strip under the slab.
+  if(id==='grave'&&narrow){const pose=collectionView(room!,false);if(pose)return aimedFrom(pose,headingOf(pose)-1,0,76.45)}
   if(room){const pose=collectionView(room,false),hall=HALL_PHONE[id],desk=HALL_DESK[id]
     if(pose)return narrow?hall?hallAim(pose,hall):narrowRoomPose(pose):desk?hallAim(pose,desk):pose}
   // A future station without a room keeps the held terrace composition.
