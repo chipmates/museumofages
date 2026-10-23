@@ -1,5 +1,5 @@
 /** THE LION'S SURFACES. The carved shell is tempera over gesso on limewood:
- * a tawny body, a darker mane, bare wood where panels part and inside, iron
+ * a sienna body, a gilt mane, bare wood where panels part and inside, iron
  * bands at the joints, the chest lined in blue (1509, 1517 letters) with its
  * lilies in gold. The colours of the outside are the museum's choice. The
  * frame is oak and the works iron and brass, from the library's own sets.
@@ -111,18 +111,11 @@ function clawTips(P0: N, fore: N, hind: N): N {
   return f.mul(fore).add(h.mul(hind))
 }
 
-/** The painted carved parts: one material for every baked body. aAttr is
- * (normal occlusion, hemisphere occlusion, convexity, the part's code); aMat
- * is the one-hot weight of (blue, mane, iron, bare wood), paint where all are
- * zero. Tempera over gesso, matte with a satin where it is rubbed: a tawny
- * hide with a mottle a hand across, an umber band down the spine, darker down
- * the backs of the legs, paler under the belly and inside the legs; the mane
- * dark umber, near black in its hollows, the cheek ruff a step lighter; gold
- * on most of the mane's crests, the claws' tips
- * and the doors' rims; the gesso and a fine crackle where hands have rubbed. */
-/** The paint's choices that round 1 tries one at a time (a probe while it is tried). */
-export interface LionLook { palette: 'base' | 'ochre' | 'gold' | 'sienna'; giltMane: boolean; doorRim: boolean; lined: boolean; hair: number; hairBump: number; calmFace: boolean }
-export const LION_LOOK: LionLook = { palette: 'sienna', giltMane: true, doorRim: false, lined: true, hair: 1.3, hairBump: 0, calmFace: true }
+/** The paint's choices: the hide's palette ('base' the first build's), a gilt
+ * or a dark mane, gilt rims on the doors, the doors lined inside, carved hair
+ * strokes (their depth), a calm mouth. LION_LOOK is the one shown. */
+export interface LionLook { palette: 'base' | 'sienna'; giltMane: boolean; doorRim: boolean; lined: boolean; hair: number; calmFace: boolean }
+export const LION_LOOK: LionLook = { palette: 'sienna', giltMane: true, doorRim: false, lined: true, hair: 1.3, calmFace: true }
 
 /** A heraldic lily, white on black, for the painted ground the doors are lined
  * with: drawn once on a canvas at load (no image file), its edges soft. */
@@ -163,6 +156,15 @@ export function lilyMask(): Texture {
   return t
 }
 
+/** The painted carved parts: one material for every baked body. aAttr is
+ * (normal occlusion, hemisphere occlusion, convexity, the part's code); aMat
+ * is the one-hot weight of (blue, mane, iron, bare wood), paint where all are
+ * zero. Tempera over gesso, matte with a satin where it is rubbed: a sienna
+ * hide cut in short hair strokes, with a mottle a hand across, an umber band
+ * down the spine, darker down the backs of the legs, paler under the belly
+ * and inside the legs; the mane water gilt over bole, toned in its hollows;
+ * gold on the claws' tips; the doors lined inside in the chest's blue, strewn
+ * with gold lilies; the gesso and a fine crackle where hands have rubbed. */
 export function paintedMaterial(chest: ChestLight, look: LionLook = LION_LOOK, lily: Texture | null = null): MeshStandardNodeMaterial {
   const m = new MeshStandardNodeMaterial({ roughness: 0.8, metalness: 0 })
   m.name = 'mechanical-lion:tempera'
@@ -209,7 +211,7 @@ export function paintedMaterial(chest: ChestLight, look: LionLook = LION_LOOK, l
   const innerLegs = smoothstep(0.15, 0.6, inward).mul(smoothstep(0.7, 0.5, P.y))
   // blotches 6 to 10 cm across, some 24 percent in value, none on the face
   const mottle = mx_fractal_noise_float(P.mul(11).add(vec3(3.1, 7.7, 1.3)), 2, 2, 0.5).mul(float(1).sub(calm))
-  const HIDE = look.palette === 'sienna' ? ['#7a5a38', '#86653f', '#a88a62'] : look.palette === 'ochre' ? ['#7f6644', '#8b7149', '#ab9370'] : look.palette === 'gold' ? ['#8d7547', '#9b8150', '#b9a073'] : ['#86603c', '#936a41', '#b59269']
+  const HIDE = look.palette === 'sienna' ? ['#7a5a38', '#86653f', '#a88a62'] : ['#86603c', '#936a41', '#b59269']
   const hide0 = mix(lin(HIDE[0]!), lin(HIDE[1]!), n2).mul(mix(0.93, 1.05, stroke)).mul(mottle.mul(0.24).add(1))
   const pale = lin(HIDE[2]!).mul(mix(0.94, 1.04, n2))
   // (the band some 40 percent darker in value, warmer)
@@ -314,7 +316,7 @@ export function paintedMaterial(chest: ChestLight, look: LionLook = LION_LOOK, l
   // gouge marks under the paint, longer along the grain than across; hammer dents in the iron
   const cups = mx_worley_noise_float(vec3(P.x.mul(46), P.y.mul(30), P.z.mul(40)))
   const dents = mx_worley_noise_float(P.mul(70))
-  m.normalNode = carvedNormal(cups.mul(cups).mul(0.0007).mul(float(1).sub(W.z)).add(dents.mul(dents).mul(0.0005).mul(W.z)).sub(groove.mul(look.hairBump)))
+  m.normalNode = carvedNormal(cups.mul(cups).mul(0.0007).mul(float(1).sub(W.z)).add(dents.mul(dents).mul(0.0005).mul(W.z)))
   return m
 }
 
