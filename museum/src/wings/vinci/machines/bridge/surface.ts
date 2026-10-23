@@ -90,7 +90,8 @@ export async function bridgeSurfaces(stack: Stack): Promise<BridgeSurfaces> {
     const edge = cells.y.sub(cells.x)
     const open = smoothstep(0.38, 0.62, mx_noise_float(q0.mul(vec3(0.6, 0.35, 0.35)).add(5.5)).mul(0.5).add(0.5))
     const width = mx_noise_float(q0.mul(1.7).add(9.9)).mul(0.04).add(0.07)
-    const crackFade = float(1).sub(smoothstep(0.08, 0.3, fwidth(edge)))
+    // gone before a pixel spans a fifth of a plate across the stem, where a grazing view packs the net into a zipper
+    const crackFade = float(1).sub(smoothstep(0.08, 0.3, fwidth(edge))).mul(float(1).sub(smoothstep(0.12, 0.3, fwidth(q0.y).add(fwidth(q0.z)))))
     const fissure = float(1).sub(smoothstep(width.mul(0.2), width, edge)).mul(open.mul(0.85).add(0.15)).mul(crackFade)
     const shoulder = float(1).sub(smoothstep(width, width.mul(4), edge)).mul(open).mul(crackFade)
     const microQ = vec3(C.x.mul(40), C.y.mul(190), C.z.mul(190))
@@ -125,9 +126,9 @@ export async function bridgeSurfaces(stack: Stack): Promise<BridgeSurfaces> {
     // the checks a drying end opens, a few along the rays
     const ang = atan(v, u)
     const check = smoothstep(0.986, 0.998, cos(ang.mul(5).add(o).add(mx_noise_float(vec3(rr.mul(60), o, 2.2)).mul(0.5)))).mul(smoothstep(0.012, 0.03, rr)).mul(fade(ang.mul(5), 1))
-    const endCol = mx(lin('#86705a'), lin('#a3927a'), heart).mul(float(1).sub(check.mul(0.55))).mul(float(1).sub(rings.mul(ringFade).mul(0.3))).mul(cutStroke.mul(0.12).add(0.9))
+    const endCol = mx(lin('#7f6c58'), lin('#9c8c76'), heart).mul(float(1).sub(check.mul(0.55))).mul(float(1).sub(rings.mul(ringFade).mul(0.3))).mul(cutStroke.mul(0.12).add(0.9))
       .mul(float(1).sub(smoothstep(0.066, 0.072, rr).mul(0.6))).mul(smoothstep(0, 0.004, rr).mul(0.25).add(0.75))
-    pole.colorNode = mx(sideCol, endCol, end).mul(d.occlusion).mul(keyRim(0.45).add(1))
+    pole.colorNode = mx(sideCol, endCol, end).mul(mx(float(1), d.occlusion, peeled.max(end).max(0.3))).mul(keyRim(0.45).add(1))
     pole.roughnessNode = mx(mx(float(0.84).add(fissure.mul(0.12)).add(micro.mul(microFade).mul(0.05)), d.roughness.clamp(0.6, 0.8), peeled), float(0.82), end)
     const h = mx(mx(barkH, facetH, peeled), float(0), end)
     // the photograph's grain belongs to the wood: on the bark only a trace of it is kept
