@@ -57,7 +57,7 @@
       },
       "certainty": "C",
       "source": "museum choice; no source gives it",
-      "notes": "The torso: a carved shell two fingers thick in panels, the seams cut and pegged, hung over the oak frame. Tempera over gesso, darker in the hollows, gold on some of the mane's crests and the doors' rims. The colours are the museum's."
+      "notes": "The torso: a carved shell two fingers thick in panels, the seams cut and pegged, hung over the oak frame. Tempera over gesso in a warm ochre, the hair cut in short strokes, darker in the hollows. The colours are the museum's."
     },
     {
       "id": "flank-panel",
@@ -107,13 +107,13 @@
         0.0
       ],
       "material": {
-        "class": "carved limewood, tempera over gesso, gilded crests",
+        "class": "carved limewood, tempera over gesso, the mane gilt",
         "basis": "assumed",
         "source": "museum choice"
       },
       "certainty": "C",
       "source": "museum choice; no source gives it",
-      "notes": "Carved from one block with its mane; it does not move. No old text says the head moved. The face follows the carved lions of Florence of the time: a heavy brow, deep-set eyes, a long bridge and a closed mouth."
+      "notes": "Carved from one block with its mane; it does not move. No old text says the head moved. The face follows the carved lions of Florence of the time: a heavy brow, deep-set eyes, a long bridge and a closed mouth. The mane is water gilt over bole and toned in its hollows; the gilding is the museum's choice."
     },
     {
       "id": "tail",
@@ -555,13 +555,13 @@
         0.0
       ],
       "material": {
-        "class": "carved limewood, bare inside, iron straps and hinges",
+        "class": "carved limewood, painted outside, lined in blue with gold lilies inside, iron hinges",
         "basis": "reported",
         "source": "Vasari, Lives 1550 and 1568; Lomazzo, Trattato 1584: it walked, stopped and its chest opened full of lilies"
       },
       "certainty": "B",
       "source": "Vasari, Lives 1550 and 1568; Lomazzo, Trattato 1584: it walked, stopped and its chest opened full of lilies",
-      "notes": "One of the two chest doors on iron hinges. Outside, the mane ends above it. The chest opening is in the accounts. Two doors, their hinges and straps are the museum's."
+      "notes": "One of the two chest doors on iron hinges. Outside it is painted like the coat and the mane ends above it; inside it is lined in the board's blue, strewn with painted gold lilies. The chest opening is in the accounts. Two doors, their hinges and their lining are the museum's."
     },
     {
       "id": "door-right",
@@ -583,13 +583,13 @@
         0.0
       ],
       "material": {
-        "class": "carved limewood, bare inside, iron straps and hinges",
+        "class": "carved limewood, painted outside, lined in blue with gold lilies inside, iron hinges",
         "basis": "reported",
         "source": "Vasari, Lives 1550 and 1568; Lomazzo, Trattato 1584: it walked, stopped and its chest opened full of lilies"
       },
       "certainty": "B",
       "source": "Vasari, Lives 1550 and 1568; Lomazzo, Trattato 1584: it walked, stopped and its chest opened full of lilies",
-      "notes": "One of the two chest doors on iron hinges. Outside, the mane ends above it. The chest opening is in the accounts. Two doors, their hinges and straps are the museum's."
+      "notes": "One of the two chest doors on iron hinges. Outside it is painted like the coat and the mane ends above it; inside it is lined in the board's blue, strewn with painted gold lilies. The chest opening is in the accounts. Two doors, their hinges and their lining are the museum's."
     },
     {
       "id": "lily-rack",
@@ -953,7 +953,7 @@
       },
       "certainty": "C",
       "source": "museum choice; no source gives it",
-      "notes": "The paw, held level through each step."
+      "notes": "The paw, flat on the floor while it carries; in the swing it lifts and folds back on its pin, toes down."
     },
     {
       "id": "fore-left-lever",
@@ -1093,7 +1093,7 @@
       },
       "certainty": "C",
       "source": "museum choice; no source gives it",
-      "notes": "The paw, held level through each step."
+      "notes": "The paw, flat on the floor while it carries; in the swing it lifts and folds back on its pin, toes down."
     },
     {
       "id": "fore-right-lever",
@@ -1233,7 +1233,7 @@
       },
       "certainty": "C",
       "source": "museum choice; no source gives it",
-      "notes": "The long hind foot from the hock and its paw, held level through each step."
+      "notes": "The long hind foot from the hock and its paw, flat while it carries; in the swing it lifts and folds back a little."
     },
     {
       "id": "hind-left-lever",
@@ -1373,7 +1373,7 @@
       },
       "certainty": "C",
       "source": "museum choice; no source gives it",
-      "notes": "The long hind foot from the hock and its paw, held level through each step."
+      "notes": "The long hind foot from the hock and its paw, flat while it carries; in the swing it lifts and folds back a little."
     },
     {
       "id": "hind-right-lever",
@@ -1777,7 +1777,7 @@
       "ratio": null,
       "certainty": "C",
       "source": "museum choice; no source gives it",
-      "notes": "Solved each moment so the planted paw never slides and the lifted one clears the floor by 70 mm."
+      "notes": "Solved each moment so the planted paw never slides and the lifted one lifts 110 mm at the wrist (the hock behind)."
     },
     {
       "id": "fore-left-lower",
@@ -1798,7 +1798,7 @@
       "ratio": null,
       "certainty": "C",
       "source": "museum choice; no source gives it",
-      "notes": "Solved each moment so the planted paw never slides and the lifted one clears the floor by 70 mm."
+      "notes": "Solved each moment so the planted paw never slides and the lifted one lifts 110 mm at the wrist (the hock behind)."
     },
     {
       "id": "fore-left-paw",
@@ -1819,7 +1819,7 @@
       "ratio": null,
       "certainty": "C",
       "source": "museum choice; no source gives it",
-      "notes": "Solved each moment so the planted paw never slides and the lifted one clears the floor by 70 mm."
+      "notes": "Solved each moment so the planted paw never slides and the lifted one lifts 110 mm at the wrist (the hock behind)."
     },
     {
       "id": "fore-left-rod",
@@ -1861,7 +1861,7 @@
       "ratio": null,
       "certainty": "C",
       "source": "museum choice; no source gives it",
-      "notes": "Solved each moment so the planted paw never slides and the lifted one clears the floor by 70 mm."
+      "notes": "Solved each moment so the planted paw never slides and the lifted one lifts 110 mm at the wrist (the hock behind)."
     },
     {
       "id": "fore-right-lower",
@@ -1882,7 +1882,7 @@
       "ratio": null,
       "certainty": "C",
       "source": "museum choice; no source gives it",
-      "notes": "Solved each moment so the planted paw never slides and the lifted one clears the floor by 70 mm."
+      "notes": "Solved each moment so the planted paw never slides and the lifted one lifts 110 mm at the wrist (the hock behind)."
     },
     {
       "id": "fore-right-paw",
@@ -1903,7 +1903,7 @@
       "ratio": null,
       "certainty": "C",
       "source": "museum choice; no source gives it",
-      "notes": "Solved each moment so the planted paw never slides and the lifted one clears the floor by 70 mm."
+      "notes": "Solved each moment so the planted paw never slides and the lifted one lifts 110 mm at the wrist (the hock behind)."
     },
     {
       "id": "fore-right-rod",
@@ -1945,7 +1945,7 @@
       "ratio": null,
       "certainty": "C",
       "source": "museum choice; no source gives it",
-      "notes": "Solved each moment so the planted paw never slides and the lifted one clears the floor by 70 mm."
+      "notes": "Solved each moment so the planted paw never slides and the lifted one lifts 100 mm at the wrist (the hock behind)."
     },
     {
       "id": "hind-left-lower",
@@ -1966,7 +1966,7 @@
       "ratio": null,
       "certainty": "C",
       "source": "museum choice; no source gives it",
-      "notes": "Solved each moment so the planted paw never slides and the lifted one clears the floor by 70 mm."
+      "notes": "Solved each moment so the planted paw never slides and the lifted one lifts 100 mm at the wrist (the hock behind)."
     },
     {
       "id": "hind-left-paw",
@@ -1987,7 +1987,7 @@
       "ratio": null,
       "certainty": "C",
       "source": "museum choice; no source gives it",
-      "notes": "Solved each moment so the planted paw never slides and the lifted one clears the floor by 70 mm."
+      "notes": "Solved each moment so the planted paw never slides and the lifted one lifts 100 mm at the wrist (the hock behind)."
     },
     {
       "id": "hind-left-rod",
@@ -2029,7 +2029,7 @@
       "ratio": null,
       "certainty": "C",
       "source": "museum choice; no source gives it",
-      "notes": "Solved each moment so the planted paw never slides and the lifted one clears the floor by 70 mm."
+      "notes": "Solved each moment so the planted paw never slides and the lifted one lifts 100 mm at the wrist (the hock behind)."
     },
     {
       "id": "hind-right-lower",
@@ -2050,7 +2050,7 @@
       "ratio": null,
       "certainty": "C",
       "source": "museum choice; no source gives it",
-      "notes": "Solved each moment so the planted paw never slides and the lifted one clears the floor by 70 mm."
+      "notes": "Solved each moment so the planted paw never slides and the lifted one lifts 100 mm at the wrist (the hock behind)."
     },
     {
       "id": "hind-right-paw",
@@ -2071,7 +2071,7 @@
       "ratio": null,
       "certainty": "C",
       "source": "museum choice; no source gives it",
-      "notes": "Solved each moment so the planted paw never slides and the lifted one clears the floor by 70 mm."
+      "notes": "Solved each moment so the planted paw never slides and the lifted one lifts 100 mm at the wrist (the hock behind)."
     },
     {
       "id": "hind-right-rod",
