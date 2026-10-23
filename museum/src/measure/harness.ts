@@ -50,8 +50,12 @@ camera.updateProjectionMatrix()
 
 const material = sil ? new MeshBasicNodeMaterial({ color: 0x000000 }) : measureMaterial()
 const meshes: Mesh[] = []
+// what a load costs: the fetch and the parse of each file, then the first frame (the upload and the compile)
+const timing: { load: number[]; firstFrame: number } = { load: [], firstFrame: 0 }
 for (const [i, f] of figs.entries()) {
+  const t0 = performance.now()
   const geometry = await loadMeasureGeometry(f.url)
+  timing.load.push(performance.now() - t0)
   const m = measure(geometry, { material: material as ReturnType<typeof measureMaterial> })
   m.position.x = (i - (figs.length - 1) / 2) * gap
   // three-quarter: the figure turned 40 degrees to its left, so its right side comes toward the camera
@@ -78,9 +82,13 @@ if (!sil) {
   scene.add(floor)
 }
 
+const t1 = performance.now()
 renderer.render(scene, camera)
+await renderer.waitForGPU?.()
+timing.firstFrame = performance.now() - t1
 ;(window as unknown as { __measure: unknown }).__measure = {
   ready: true,
+  timing,
   figures: meshes.map((m) => ({ tris: (m.geometry.index?.count ?? 0) / 3, verts: m.geometry.getAttribute('position').count })),
   render: () => renderer.render(scene, camera),
 }
