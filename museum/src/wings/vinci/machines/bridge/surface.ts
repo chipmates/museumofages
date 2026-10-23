@@ -6,8 +6,8 @@
  * and the earth; the bark, the facets, the lay and the serving are drawn
  * here, each faded as one pixel comes to hold more than a stroke of it.
  */
-import { Color, MeshStandardNodeMaterial, type Material } from 'three/webgpu'
-import { attribute, cameraPosition, cos, float, fwidth, mix, mx_noise_float, mx_worley_noise_vec2, normalView, normalWorld, positionLocal, positionView, positionWorld, screenUV, sin, smoothstep, step, uniform, uv, vec2, vec3 } from 'three/tsl'
+import { Color, MeshPhysicalNodeMaterial, MeshStandardNodeMaterial, type Material } from 'three/webgpu'
+import { attribute, cameraPosition, cos, float, fwidth, mix, mx_noise_float, mx_worley_noise_vec2, normalView, normalViewGeometry, normalWorld, positionLocal, positionView, positionWorld, screenUV, sin, smoothstep, step, uniform, uv, vec2, vec3 } from 'three/tsl'
 import type { MaterialSet, Stack } from '../../../../stack'
 import { loadMachineMaterial, materialDressed } from '../parts'
 import { benchKeyDirection } from '../key'
@@ -110,7 +110,7 @@ export async function bridgeSurfaces(stack: Stack): Promise<BridgeSurfaces> {
     const facet = facetPhase.fract().sub(0.5)
     const facetH = facet.mul(facet).negate().mul(0.006).mul(fade(facetPhase, 1))
     const remnant = smoothstep(0.55, 0.75, mx_noise_float(vec3(u.mul(9).add(o), v.mul(2.2), 5.1)).mul(0.5).add(0.5)).mul(0.8)
-    const woodCol = mx(lin('#9c8466').mul(fibres.mul(0.45).add(0.66)), barkCol, remnant)
+    const woodCol = mx(lin('#8b7860').mul(fibres.mul(0.45).add(0.66)), barkCol, remnant)
     const sideCol = mx(barkCol, woodCol, peeled).mul(tone)
     // END GRAIN: an axe's cut, the rings round the pith, the sapwood paler, the bark a dark rim
     const rr = vec2(u, v).length()
@@ -200,16 +200,19 @@ export async function bridgeSurfaces(stack: Stack): Promise<BridgeSurfaces> {
     water.envMapIntensity = 0.42
   }
   // the level face: the same water, and the bridge and its banks mirrored in it at grazing angles
-  const waterTop = water.clone() as MeshStandardNodeMaterial
+  // the sky's own sheen is cut low: the planar pass carries the mirror and its Fresnel, never both
+  const waterTop = new MeshPhysicalNodeMaterial({ metalness: 0, roughness: 0.07, specularIntensity: 0.15 })
   waterTop.name = 'bridge-of-poles:water-top:plain'
+  waterTop.colorNode = water.colorNode
+  waterTop.normalNode = water.normalNode
+  waterTop.roughnessNode = water.roughnessNode
   const mirror = (reflection: N): void => {
     const view = cameraPosition.sub(positionWorld).normalize()
     const fresnel = float(1).sub(normalWorld.dot(view).abs()).pow(5).mul(0.978).add(0.022)
     // the ripples shift the mirrored picture a little, as a stream's surface does
-    reflection.uvNode = screenUV.flipX().add(normalView.xy.mul(0.035))
+    reflection.uvNode = screenUV.flipX().add(normalView.xy.sub(normalViewGeometry.xy).mul(0.08))
     waterTop.colorNode = (water.colorNode as N).mul(float(1).sub(fresnel))
     waterTop.emissiveNode = reflection.rgb.mul(fresnel.mul(0.8))
-    waterTop.envMapIntensity = 0.1
     waterTop.needsUpdate = true
   }
   return { pole, hemp, earth, water, waterTop, mirror, lashClock: lashClock as unknown as { value: number }, streamClock: streamClock as unknown as { value: number }, sets }
