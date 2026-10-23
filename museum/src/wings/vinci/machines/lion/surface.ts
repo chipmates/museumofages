@@ -121,7 +121,7 @@ function clawTips(P0: N, fore: N, hind: N): N {
  * on most of the mane's crests, the claws' tips
  * and the doors' rims; the gesso and a fine crackle where hands have rubbed. */
 /** The paint's choices that round 1 tries one at a time (a probe while it is tried). */
-export interface LionLook { palette: 'base' | 'ochre' | 'gold'; giltMane: boolean; doorRim: boolean; lined: boolean; hair: number; hairBump: number; calmFace: boolean }
+export interface LionLook { palette: 'base' | 'ochre' | 'gold' | 'sienna'; giltMane: boolean; doorRim: boolean; lined: boolean; hair: number; hairBump: number; calmFace: boolean }
 export const LION_LOOK: LionLook = { palette: 'ochre', giltMane: true, doorRim: false, lined: true, hair: 1.3, hairBump: 0, calmFace: true }
 
 /** A heraldic lily, white on black, for the painted ground the doors are lined
@@ -209,7 +209,7 @@ export function paintedMaterial(chest: ChestLight, look: LionLook = LION_LOOK, l
   const innerLegs = smoothstep(0.15, 0.6, inward).mul(smoothstep(0.7, 0.5, P.y))
   // blotches 6 to 10 cm across, some 24 percent in value, none on the face
   const mottle = mx_fractal_noise_float(P.mul(11).add(vec3(3.1, 7.7, 1.3)), 2, 2, 0.5).mul(float(1).sub(calm))
-  const HIDE = look.palette === 'ochre' ? ['#7f6644', '#8b7149', '#ab9370'] : look.palette === 'gold' ? ['#8d7547', '#9b8150', '#b9a073'] : ['#86603c', '#936a41', '#b59269']
+  const HIDE = look.palette === 'sienna' ? ['#7a5a38', '#86653f', '#a88a62'] : look.palette === 'ochre' ? ['#7f6644', '#8b7149', '#ab9370'] : look.palette === 'gold' ? ['#8d7547', '#9b8150', '#b9a073'] : ['#86603c', '#936a41', '#b59269']
   const hide0 = mix(lin(HIDE[0]!), lin(HIDE[1]!), n2).mul(mix(0.93, 1.05, stroke)).mul(mottle.mul(0.24).add(1))
   const pale = lin(HIDE[2]!).mul(mix(0.94, 1.04, n2))
   // (the band some 40 percent darker in value, warmer)

@@ -231,6 +231,7 @@ export function build(stack: Stack): ReadyMachineBuild {
     const look: LionLook = { ...LION_LOOK }
     if (probe.includes('p:base')) look.palette = 'base'
     if (probe.includes('p:gold')) look.palette = 'gold'
+    if (probe.includes('p:sienna')) look.palette = 'sienna'
     if (probe.includes('mane:dark')) look.giltMane = false
     if (probe.includes('rim')) look.doorRim = true
     if (probe.includes('unlined')) look.lined = false
