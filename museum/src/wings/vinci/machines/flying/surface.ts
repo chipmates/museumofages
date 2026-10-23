@@ -202,6 +202,9 @@ export async function flyingSurfaces(stack: Stack): Promise<FlyingSurfaces> {
   const figure = new MeshStandardNodeMaterial({ metalness: 0, roughness: 0.86 })
   figure.name = 'flying-machine:figure:plain'
   figure.colorNode = lin('#605e59')
+  // a lamp grazing his rounded body would cut the facets of its shadow map into
+  // a stepped edge: he reads his shadows 2 cm out along his surface's normal
+  figure.receivedShadowPositionNode = positionWorld.add(normalWorld.mul(0.02))
   return {
     materials: { cane, fir, wood, ash, skin, lash, hem, cord, iron, leather, chamois, figure },
     sets,
