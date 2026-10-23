@@ -122,7 +122,7 @@ function clawTips(P0: N, fore: N, hind: N): N {
  * and the doors' rims; the gesso and a fine crackle where hands have rubbed. */
 /** The paint's choices that round 1 tries one at a time (a probe while it is tried). */
 export interface LionLook { palette: 'base' | 'ochre' | 'gold'; giltMane: boolean; doorRim: boolean; lined: boolean; hair: number; hairBump: number; calmFace: boolean }
-export const LION_LOOK: LionLook = { palette: 'ochre', giltMane: true, doorRim: false, lined: true, hair: 0, hairBump: 0, calmFace: false }
+export const LION_LOOK: LionLook = { palette: 'ochre', giltMane: true, doorRim: false, lined: true, hair: 1.3, hairBump: 0, calmFace: true }
 
 /** A heraldic lily, white on black, for the painted ground the doors are lined
  * with: drawn once on a canvas at load (no image file), its edges soft. */
