@@ -221,6 +221,8 @@ export function createDeepPlatePayload(options: {
   /** the depth band last named, and each source standing in the viewer by the state it shows */
   let banded: DeepPlateDepth | null = null
   const states = new Map<import('openseadragon').TiledImage, string>()
+  /** the place `go()` framed, for the readout only */
+  let placed: DeepPlateDetail | null = null
   let swapping = 0
   /** Where the caption's words last stood on the screen, and the magnification
    * they stood at: a pan that drops the words leaves the rule as it was. */
@@ -283,6 +285,14 @@ export function createDeepPlatePayload(options: {
     if (states.size) {
       root.dataset['stateTiles'] = [...states].map(([item, state]) => `${state}:${viewer!.tileCache.getLoadedTilesFor(item).length}`).join(' ')
       root.dataset['turn'] = String(Math.round(viewer.viewport.getRotation(true)))
+      // the framed place's box in the page's pixels, turned as the view is
+      if (placed && library) {
+        const rect = detailBounds(placed), at = viewer.element.getBoundingClientRect()
+        const corners = [[rect.x, rect.y], [rect.x + rect.width, rect.y], [rect.x, rect.y + rect.height], [rect.x + rect.width, rect.y + rect.height]]
+          .map(([x, y]) => viewer!.viewport.pixelFromPoint(new library!.Point(x!, y!), true))
+        const xs = corners.map(c => c.x + at.left), ys = corners.map(c => c.y + at.top)
+        root.dataset['placed'] = [Math.min(...xs), Math.min(...ys), Math.max(...xs) - Math.min(...xs), Math.max(...ys) - Math.min(...ys)].map(v => Math.round(v)).join(',')
+      } else delete root.dataset['placed']
     }
     speak()
     measure()
@@ -537,6 +547,7 @@ export function createDeepPlatePayload(options: {
   function fitHome(immediate: boolean): void {
     if (!viewer || !library) return
     framed = null
+    placed = null
     unturn(immediate)
     viewer.viewport.fitBounds(windowBounds(), immediate)
     homeZoom = viewer.viewport.getZoom(false)
@@ -725,6 +736,7 @@ export function createDeepPlatePayload(options: {
       seated = false
       said = ''
       framed = null
+      placed = null
       drawn = false
       const document = next.element.ownerDocument
       root = document.createElement('div')
@@ -857,6 +869,7 @@ export function createDeepPlatePayload(options: {
       if (!viewer || !library || !host) return
       const now = host.reducedMotion
       framed = null
+      placed = detail
       const bounds = detailBounds(detail)
       const margin = .12
       const box = new library.Rect(bounds.x - bounds.width * margin, bounds.y - bounds.height * margin,
@@ -911,7 +924,7 @@ export function createDeepPlatePayload(options: {
       else if (event.key === 'ArrowRight') pan(step, 0)
       else if (event.key === 'ArrowUp') pan(0, -step)
       else if (event.key === 'ArrowDown') pan(0, step)
-      else if (event.key === '0') { framed = null; unturn(now); viewer.viewport.fitBounds(windowBounds(), now) }
+      else if (event.key === '0') { framed = null; placed = null; unturn(now); viewer.viewport.fitBounds(windowBounds(), now) }
       else zoom(event.key === '-' ? 1 / ZOOM_STEP : ZOOM_STEP)
       return true
     },

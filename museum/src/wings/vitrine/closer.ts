@@ -104,7 +104,8 @@ export function createCloserPayload(options: {
       turn.textContent = other?.turn ?? ''
       turn.hidden = !other
     }
-    if (row) row.dataset['state'] = standing().id
+    const marked = row ?? turn
+    if (marked) marked.dataset['state'] = standing().id
   }
 
   /** THE LOCATOR shows where the view stands on the whole, once it has gone
@@ -172,10 +173,15 @@ export function createCloserPayload(options: {
       seen = at
       style = make('style', '')
       style.textContent = css
-      zoomRow = make('div', 'closer-zoom')
-      row = make('div', 'closer-states')
-      // the plate builds its three steps into the zoom's own row
-      plate.mount({ ...next, controls: zoomRow })
+      if (next.narrow) {
+        // the window's own row, as a painting's: its steps and the toggle are lent from there and leave it empty
+        plate.mount(next)
+      } else {
+        zoomRow = make('div', 'closer-zoom')
+        row = make('div', 'closer-states')
+        // the plate builds its three steps into the zoom's own row
+        plate.mount({ ...next, controls: zoomRow })
+      }
       locator = make('div', 'closer-locator')
       locator.setAttribute('role', 'img')
       locator.setAttribute('aria-label', options.locator)
@@ -194,7 +200,7 @@ export function createCloserPayload(options: {
       segments = []
       if (next.narrow) {
         // ONE TOGGLE NAMES THE OTHER STATE, lent to the foot row as a page's other way is
-        turn = make('button', 'vitrine-control reader-turn')
+        turn = make('button', 'vitrine-control reader-turn closer-turn')
         turn.type = 'button'
         turn.dataset['tool'] = 'turn'
         said = make('span', 'reader-turn-said')
@@ -202,10 +208,11 @@ export function createCloserPayload(options: {
         said.setAttribute('role', 'status')
         turn.setAttribute('aria-describedby', said.id)
         turn.addEventListener('click', () => choose(options.states[at === 0 ? 1 : 0]?.id ?? ''))
-        row.append(turn)
+        next.controls.append(turn)
         // on the glass, at its top left: the close stands at the top right
         next.element.append(style, locator, said)
       } else {
+        row = row!
         row.append(locator)
         for (const state of options.states) {
           const segment = make('button', 'vitrine-control closer-state', state.word)
@@ -215,8 +222,8 @@ export function createCloserPayload(options: {
           row.append(segment)
         }
         next.element.append(style)
+        next.controls.append(zoomRow!, row)
       }
-      next.controls.append(zoomRow, row)
       paintChoice()
       speak()
     },
@@ -225,7 +232,7 @@ export function createCloserPayload(options: {
     key(event) { return plate.key?.(event) ?? false },
     unmount() {
       plate.unmount()
-      for (const node of [row, zoomRow, locator, said, style]) node?.remove()
+      for (const node of [row, zoomRow, turn, locator, said, style]) node?.remove()
       row = undefined; zoomRow = undefined; locator = undefined; locatorView = undefined
       turn = undefined; said = undefined; style = undefined; segments = []
       host = undefined
