@@ -31,6 +31,12 @@ export function thinStarchedLinen(from: MeshStandardNodeMaterial, layered: boole
   // the stitch rows ride in the vertex colour, the doubled layers in `layers`
   let through = vec3(THROUGH.r, THROUGH.g, THROUGH.b).mul(attribute('color', 'vec3'))
   if (layered) through = through.mul(attribute('layers', 'float'))
+  // PROBE (temporary): separate the weave's beat
+  const probe = (globalThis as { __screwProbe?: string }).__screwProbe ?? ''
+  if (probe.includes('flat-colour')) m.colorNode = vec3(.769, .722, .612).mul(attribute('color', 'vec3'))
+  if (probe.includes('no-normal')) m.normalNode = null
+  if (probe.includes('const-rough')) m.roughnessNode = float(.9)
+  if (probe.includes('no-transmit')) through = vec3(0, 0, 0)
   Object.assign(m, {
     thicknessColorNode: through,
     thicknessDistortionNode: float(.3),
