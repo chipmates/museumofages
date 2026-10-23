@@ -229,12 +229,12 @@ export function build(stack: Stack): ReadyMachineBuild {
     // PROBE (round 1's arms; removed before landing)
     const probe = String((globalThis as Record<string, unknown>)['__lionProbe'] ?? '')
     const look: LionLook = { ...LION_LOOK }
-    if (probe.includes('ochre')) look.palette = 'ochre'
-    if (probe.includes('goldhide')) look.palette = 'gold'
-    if (probe.includes('gilt')) look.giltMane = true
-    if (probe.includes('norim')) look.doorRim = false
-    if (probe.includes('lined')) look.lined = true
-    const straps = !probe.includes('nostrap')
+    if (probe.includes('p:base')) look.palette = 'base'
+    if (probe.includes('p:gold')) look.palette = 'gold'
+    if (probe.includes('mane:dark')) look.giltMane = false
+    if (probe.includes('rim')) look.doorRim = true
+    if (probe.includes('unlined')) look.lined = false
+    const straps = probe.includes('straps')
     if (look.lined) lilyTexture = lilyMask()
     const paint = own(paintedMaterial(inside, look, lilyTexture)), gild = own(gildMaterial(inside)), brass = own(brassMaterial())
     const oak = own(materialDressed(oakSet) ? librarySurface(stack, oakSet, 'oak') : plainSurface('oak'))

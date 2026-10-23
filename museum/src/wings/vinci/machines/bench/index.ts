@@ -533,6 +533,13 @@ export function createBench(stack: Stack, onExit: () => void) {
    * its own exhibition lamps. The hour, the sun's place and every other
    * machine's light stay as they are. */
   const OWN_LIGHT: Partial<Record<MachineSlug, { lux: number; ambient: number; ground: string; lamps?: { closed?: BenchLamp[]; section?: BenchLamp[] }; fill?: { closed?: number; section?: number }; sectionLux?: number }>> = {
+    // the hour's sun takes the lion's right; one lamp high on its left front models the carving and the gilt mane,
+    // and with the flank off a second one, lower, reaches in on the works through the whole walk
+    'mechanical-lion': { lux: 185, ambient: .72, ground: '#343532', lamps: {
+      closed: [{ at: [2.6, 3.4, 3.4], aim: [.1, .7, .4], lux: 140, kelvin: 4000, angle: .6, penumbra: .9, decay: 2 }],
+      section: [{ at: [2.6, 3.4, 3.4], aim: [.1, .7, .4], lux: 140, kelvin: 4000, angle: .6, penumbra: .9, decay: 2 },
+        { at: [2, 1.7, 1], aim: [.1, .78, .55], lux: 200, kelvin: 4000, angle: .5, penumbra: .7, decay: 2 }],
+    } },
   };
   let lamps: SpotLight[] = [], lampProbe: BenchLamp[] | null | undefined, fillProbe: number | undefined, luxProbe: number | undefined;
   const lampLit = new Set<MeshStandardNodeMaterial>(), filled = new Set<MeshStandardNodeMaterial>();
