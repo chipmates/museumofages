@@ -515,9 +515,13 @@ export function createBench(stack: Stack, onExit: () => void) {
   /** A machine whose working faces turn down or away from the hour's sun
    * takes more of the sky and a paler bounce off the stone it stands on. The
    * hour, the sun's place and every other machine's light stay as they are.
-   * The screw's cloth and frame are seen from below at eye height. */
+   * The screw's cloth and frame are seen from below at eye height. Its near-flat
+   * cloth under a 17 degree sun looks its shadow up 15 cm toward the key (at
+   * 3 cm the depth slope across a texel made acne that read as a weave's
+   * moire) and through a wider filter, so the upper whorl's edge on the
+   * lower is a soft line and not steps. */
   const OWN_LIGHT: Partial<Record<MachineSlug, { lux: number; ambient: number; ground: string; near?: number; map?: number; wide?: boolean; lift?: number }>> = {
-    'aerial-screw': { lux: 210, ambient: 1.0, ground: '#5e5546' },
+    'aerial-screw': { lux: 210, ambient: 1.0, ground: '#5e5546', lift: .15, wide: true },
   };
   /** how far toward the key a cloth looks up its shadow */
   let clothLift = .03;
