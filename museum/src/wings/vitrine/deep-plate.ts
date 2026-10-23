@@ -66,6 +66,8 @@ export interface DeepPlateShow {
   /** An outline in fractions of the whole source the plate covers with its
    * own ground: a cut-out scan's shoulders outside a round top. */
   ground?: readonly (readonly [number, number])[] | null
+  /** The most screen pixels one pixel of this source may take; absent, one. */
+  deepest?: number
 }
 
 /** How deep the view stands: the work whole, nearer than that, or at the
@@ -93,9 +95,14 @@ export interface DeepPlatePayload extends VitrinePayload {
   home(): boolean
   /** ANOTHER STATE OF THE SAME PLACE at the same spot and depth: the next
    * source fades in over the one standing, and only its tiles are held
-   * once it stands. Both sources share one pixel frame. `shows` runs as
-   * the next source starts to show, so words can follow the picture. */
+   * once it stands. Both sources share one pixel frame. `shows` runs at the
+   * fade's middle, where the next source comes to stand over the one before,
+   * so words follow the picture. Only the newest swap shows: one asked
+   * since, before this one showed, takes its place and this one says nothing. */
   swap(next: DeepPlateShow, state?: string, shows?: () => void): void
+  /** Keep this many CSS pixels at the glass's foot clear: the viewer's box
+   * ends above them, and a plate at Home is fitted again to what is left. */
+  lift(px: number): void
   /** Frame a rectangle of the source, turned clockwise by `turn` degrees. */
   go(detail: DeepPlateDetail, turn?: number): void
   /** The view standing now, or null before the viewer stands. */
@@ -121,8 +128,11 @@ const AT_THE_CEILING = .999
 const DEPTH_WHOLE = .6
 /** A state crossfades in place, the versions' rule of the phone's design. */
 const SWAP_FADE_MS = 160
-/** A state whose tiles for the view have not all arrived fades in anyway. */
-const SWAP_WAIT_MS = 1200
+/** A STATE COMES WHEN ITS TILES FOR THE VIEW ARE IN, so its words never stand
+ * over a picture that has not come; one whose tiles never all arrive (a tile
+ * that fails) comes after this, over the one before, which stays under it
+ * until the last tile is in. */
+const SWAP_GIVE_UP_MS = 5000
 
 /** What a cached tile costs as RGBA8, in megabytes. A pyramid's tile is its
  * own square; a plate with no pyramid is one tile and that tile is the
@@ -206,6 +216,8 @@ export function createDeepPlatePayload(options: {
   caps?: { phone: number; canvas: number; webgl: number }
   /** The name the first source's tiles are counted under in the readout. */
   state?: string
+  /** The most screen pixels one pixel of the first source may take; absent, one. */
+  deepest?: number
   /** The view moved. */
   onView?(): void
 }): DeepPlatePayload {
@@ -225,14 +237,20 @@ export function createDeepPlatePayload(options: {
   const states = new Map<import('openseadragon').TiledImage, string>()
   /** the place `go()` framed, for the readout only */
   let placed: DeepPlateDetail | null = null
-  let swapping = 0
+  /** the newest swap's number, and the waits of the swaps still loading */
+  let swaps = 0
+  const waits = new Set<number>()
   /** Where the caption's words last stood on the screen, and the magnification
    * they stood at: a pan that drops the words leaves the rule as it was. */
   let spoke: { zoom: number; left: number; top: number; right: number; bottom: number } | null = null
   /** The source standing in the viewer now. A reading replaces it; a plate
    * never does. */
   let shown: DeepPlateShow = { source: options.source, window: options.window, title: options.title,
-    description: options.description, details: options.details, ground: options.ground }
+    description: options.description, details: options.details, ground: options.ground,
+    ...(options.deepest ? { deepest: options.deepest } : {}) }
+  /** THE CEILING: the viewer's own, never past the source standing or coming,
+   * and the one the words name, which follows the picture */
+  let limit = shown.deepest ?? 1, ceilingNow = limit
   let ground: HTMLDivElement | undefined
   let cut = shown.window ?? { left: 0, top: 0, right: 1, bottom: 1 }
   let { width, height } = shown.source
@@ -286,6 +304,7 @@ export function createDeepPlatePayload(options: {
     root.dataset['zoom'] = magnification().toFixed(3)
     if (states.size) {
       root.dataset['stateTiles'] = [...states].map(([item, state]) => `${state}:${viewer!.tileCache.getLoadedTilesFor(item).length}`).join(' ')
+      paintShow()
       root.dataset['turn'] = String(Math.round(viewer.viewport.getRotation(true)))
       // the framed place's box in the page's pixels, turned as the view is
       if (placed && library) {
@@ -300,6 +319,19 @@ export function createDeepPlatePayload(options: {
     measure()
     stand()
     options.onView?.()
+  }
+
+  /** What a rig reads of a swap frame by frame: each source in the viewer,
+   * bottom first, by its state and how opaque it stands, and the limit. */
+  function paintShow(): void {
+    if (!root || !viewer || !states.size) return
+    const items: string[] = []
+    for (let i = 0; i < viewer.world.getItemCount(); i++) {
+      const item = viewer.world.getItemAt(i)
+      items.push(`${states.get(item) ?? '?'}:${item.getOpacity().toFixed(2)}`)
+    }
+    root.dataset['stateShow'] = items.join(' ')
+    root.dataset['limit'] = String(limit)
   }
 
   /** THE RULE MEASURES THE WORK, NOT THE SCREEN. Ten centimetres of the
@@ -440,7 +472,7 @@ export function createDeepPlatePayload(options: {
       if (band && band !== banded) { banded = band; options.depth(band) }
       return
     }
-    const wanted = magnification() >= AT_THE_CEILING ? shown.ceiling ?? options.words.ceiling : standingOn()
+    const wanted = magnification() >= ceilingNow * AT_THE_CEILING ? shown.ceiling ?? options.words.ceiling : standingOn()
     if (said === wanted) return
     said = wanted
     host.caption.textContent = wanted
@@ -452,7 +484,7 @@ export function createDeepPlatePayload(options: {
     if (!viewer || !stage || !viewer.world.getItemAt(0)) return null
     const zoom = magnification()
     if (!(zoom > 0)) return null
-    if (zoom >= AT_THE_CEILING) return 'ceiling'
+    if (zoom >= ceilingNow * AT_THE_CEILING) return 'ceiling'
     const turned = Math.round(viewer.viewport.getRotation(true) / 90) % 2 !== 0
     const across = (turned ? stage.clientHeight : stage.clientWidth) / (width * (cut.right - cut.left) * zoom)
     return across >= DEPTH_WHOLE ? 'whole' : 'near'
@@ -604,7 +636,7 @@ export function createDeepPlatePayload(options: {
       animationTime: host.reducedMotion ? 0 : 0.4,
       // No pixel of the source may be shown larger than itself: what a
       // visitor reaches here is the whole of what the museum holds.
-      maxZoomPixelRatio: 1,
+      maxZoomPixelRatio: limit,
       ...(options.minPixelRatio ? { minPixelRatio: options.minPixelRatio } : {}),
       springStiffness: 8,
       // Home is the display window and the pan is bounded by the source.
@@ -656,8 +688,12 @@ export function createDeepPlatePayload(options: {
     // view the visitor made stays. Sideways the work steps aside when its
     // words open, and stands whole there too.
     made.addHandler('resize', () => {
-      // a glass that grew under a view at the ceiling would show the source larger than itself
-      if (options.depth && seated) queueMicrotask(() => { if (magnification() > 1.0005) made.viewport.applyConstraints(true) })
+      // a glass that grew under a view at the ceiling would show the source larger than itself, and one
+      // that grew under a view fitted to a smaller glass would show less than the whole
+      if (options.depth && seated) queueMicrotask(() => {
+        const view = made.viewport
+        if (magnification() > limit * 1.0005 || view.getZoom(false) < view.getMinZoom() * .9995) view.applyConstraints(true)
+      })
       if (!seated || framed || !homeZoom) return
       if (Math.abs(made.viewport.getZoom(false) - homeZoom) > homeZoom * .02) return
       queueMicrotask(() => fitHome(true))
@@ -817,60 +853,96 @@ export function createDeepPlatePayload(options: {
       corner.hidden = nodes.length === 0
     },
     swap(next, state = '', shows) {
-      if (!viewer || !library) { shown = next; shows?.(); return }
+      const token = ++swaps
+      const deepest = next.deepest ?? 1
+      if (!viewer || !library) { shown = next; limit = ceilingNow = deepest; shows?.(); return }
       shown = next
       cut = next.window ?? { left: 0, top: 0, right: 1, bottom: 1 }
       width = next.source.width
       height = next.source.height
       host?.describe(next.description ?? next.title)
-      const opening = next, made = viewer, asked = performance.now()
+      const made = viewer, asked = performance.now()
       const mark = (what: string): void => { if (root) root.dataset['swap'] = `${root.dataset['swap'] && what !== 'asked' ? `${root.dataset['swap']} ` : ''}${what}:${Math.round(performance.now() - asked)}` }
       mark('asked')
+      // the view never stands deeper than the state coming may go: it steps back first, on the picture it has
+      if (deepest < limit) {
+        limit = deepest
+        made.viewport.setMaxZoomPixelRatio(limit, false)
+        made.viewport.applyConstraints(host?.reducedMotion ?? true)
+      }
       void sourceOf(next.source).then(source => {
-        if (!live || viewer !== made || shown !== opening) return
+        if (!live || viewer !== made || token !== swaps) return
         made.addTiledImage({ tileSource: source as never, x: 0, y: 0, width: 1, opacity: 0, preload: true, index: made.world.getItemCount(),
           success: (event: { item: import('openseadragon').TiledImage }) => {
             const item = event.item
             states.set(item, state)
             mark('added')
-            if (!live || viewer !== made || shown !== opening) { made.world.removeItem(item); return }
-            clearTimeout(swapping)
-            let faded = false
+            if (!live || viewer !== made || token !== swaps) { made.world.removeItem(item); return }
+            const here = (): boolean => made.world.getIndexOfItem(item) >= 0
+            let faded = false, said = false
+            /** the words turn where the picture does, at the fade's middle, under the new state's own ceiling */
+            const turn = (): void => {
+              if (said) return
+              said = true
+              ceilingNow = deepest
+              shows?.()
+              speak()
+            }
+            /** a swap asked since, before this one showed: this one goes and says nothing */
+            const drop = (): void => {
+              if (here()) made.world.removeItem(item)
+              mark('dropped')
+              paintShow()
+            }
+            /** what stood under it goes with it; a state asked since, standing over it, stays */
+            const clear = (): void => {
+              if (!live || viewer !== made || !here()) return
+              const at = made.world.getIndexOfItem(item)
+              const under: import('openseadragon').TiledImage[] = []
+              for (let i = 0; i < at; i++) under.push(made.world.getItemAt(i))
+              for (const other of under) made.world.removeItem(other)
+              readout()
+            }
+            const done = (): void => {
+              if (!live || viewer !== made || !here()) return
+              mark('done')
+              item.setOpacity(1)
+              if (token === swaps && limit !== deepest) { limit = deepest; made.viewport.setMaxZoomPixelRatio(limit, false) }
+              made.viewport.applyConstraints(host?.reducedMotion ?? true)
+              if (item.getFullyLoaded()) clear()
+              else item.whenFullyLoaded(clear)
+              readout()
+            }
             const fade = (): void => {
               if (faded || !live || viewer !== made) return
               faded = true
-              clearTimeout(swapping)
-              mark(item.getFullyLoaded() ? 'fade-loaded' : 'fade-waited')
-              shows?.()
-              const others = (): import('openseadragon').TiledImage[] => {
-                const out: import('openseadragon').TiledImage[] = []
-                for (let i = 0; i < made.world.getItemCount(); i++) { const other = made.world.getItemAt(i); if (other !== item) out.push(other) }
-                return out
-              }
-              const done = (): void => {
-                mark('done')
-                item.setOpacity(1)
-                // what the state before held goes with it: only the standing state's tiles are kept
-                for (const other of others()) made.world.removeItem(other)
-                made.viewport.applyConstraints(host?.reducedMotion ?? true)
-                readout()
-              }
-              if (host?.reducedMotion) { done(); return }
+              clearTimeout(wait)
+              waits.delete(wait)
+              if (token !== swaps) { drop(); return }
+              mark(item.getFullyLoaded() ? 'fade-loaded' : 'fade-gave-up')
+              if (host?.reducedMotion) { turn(); done(); return }
               const from = performance.now()
               const step = (): void => {
-                if (!live || viewer !== made) return
+                if (!live || viewer !== made || !here()) return
+                if (token !== swaps && !said) { drop(); return }
                 const share = Math.min(1, (performance.now() - from) / SWAP_FADE_MS)
                 item.setOpacity(share)
+                if (share >= .5) turn()
+                paintShow()
                 if (share < 1) requestAnimationFrame(step)
                 else done()
               }
               requestAnimationFrame(step)
             }
+            const wait = setTimeout(fade, SWAP_GIVE_UP_MS) as unknown as number
+            waits.add(wait)
             item.whenFullyLoaded(fade)
-            swapping = setTimeout(fade, SWAP_WAIT_MS) as unknown as number
           },
         } as never)
       })
+    },
+    lift(px) {
+      if (root) root.style.bottom = px > 0 ? `${px}px` : ''
     },
     go(detail, turn = 0) {
       if (!viewer || !library || !host) return
@@ -953,7 +1025,8 @@ export function createDeepPlatePayload(options: {
       root = undefined; stage = undefined; host = undefined; library = undefined; ground = undefined
       rule = undefined; ruleBar = undefined; ruleLabel = undefined; corner = undefined
       seat = null; seated = false; framed = null
-      clearTimeout(swapping)
+      for (const wait of waits) clearTimeout(wait)
+      waits.clear()
       states.clear()
       banded = null
     },

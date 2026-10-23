@@ -400,7 +400,7 @@ export function createFilmLook(h: FilmLookHost) {
     if (read.some(entry => !entry.room)) return
     const states: CloserPayloadState[] = read.map(({ state, room }) => ({
       id: state.id, source: room!.source, word: text(state.word), turn: text(state.turn), date: text(state.date),
-      certainty: state.certainty, thumb: room!.thumb,
+      certainty: state.certainty, thumb: room!.thumb, ...(state.deepest ? { deepest: state.deepest } : {}),
       lines: { whole: text(state.lines.whole), near: text(state.lines.near), ceiling: text(state.lines.ceiling) },
     }))
     let standing = look.states[0]!
@@ -413,18 +413,24 @@ export function createFilmLook(h: FilmLookHost) {
     // WHERE TO LOOK: each row frames its place and folds the card over it
     const places = make('div', 'closer-places')
     places.append(make('h3', 'closer-places-head', text(look.placesHead)))
+    // a place stands only in the states whose picture shows it, and changes with the picture
+    const rows: { place: (typeof look.places)[number]; row: HTMLButtonElement }[] = []
+    const showPlaces = (): void => { for (const { place, row } of rows) row.hidden = Boolean(place.states && !place.states.includes(standing.id)) }
     const payload = createCloserPayload({ title, description: text(look.describe), states, words: vinciPlateWords(),
       showing: text(CLOSER_WORDS.showing), locator: text(CLOSER_WORDS.locator), tier, standing: h.standing, narrow: h.narrow(),
       onState: next => {
         standing = look.states.find(state => state.id === next.id) ?? standing
         own.textContent = text(standing.sentence)
+        showPlaces()
       } })
     for (const place of look.places) {
       const row = make('button', 'vitrine-control closer-place', text(place.name))
       row.type = 'button'
       row.addEventListener('click', () => payload.go({ ...place, name: text(place.name) }))
       places.append(row)
+      rows.push({ place, row })
     }
+    showPlaces()
     const record = (): void => h.openRecord(id, look.name, standing.certainty, host => {
       // a record block per state, as every plate's record stands: its name, then the store's own lines for it
       for (const { state, room } of read) {
