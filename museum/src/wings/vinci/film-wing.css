@@ -940,6 +940,12 @@ html:has(#wing[data-film='upright']) #instruments .inst-source {
 /* ---- NOTHING UNDER 14 PX, upright: a gold name of three or four rows, the last stop's
    "where it leads", the walk's kicker, a machine's steps ---- */
 :where(#wing[data-film='upright']) .film-gold-name[data-rows] { font-size: .875rem; line-height: 15px; }
+/* three rows at 14 px grow the pill by 3 px about the seats' centre line, as four rows do, so no row meets its edge;
+   a grown pill's reach is its own box, which ends where the keys' begins */
+:where(#wing[data-film='upright']) .film-box:not([data-end='true']) .film-gold:has(> .film-gold-name[data-rows='3']) {
+  top: 32px; translate: 0 -50%; height: auto; min-height: 48px; padding-block: 3px;
+}
+:where(#wing[data-film='upright']) .film-foot > .film-gold:has(> .film-gold-name[data-rows])::after { top: 0; }
 :where(#wing[data-film='upright']) .film-gold-to { font-size: .875rem; line-height: 16px; }
 :where(#wing[data-film='upright']) .film-box > .walk-panel .walk-to-kicker { font-size: .875rem; line-height: 1.125rem; }
 #wing[data-film='upright'] .vitrine[data-narrow='true'] .vitrine-step-item { font-size: .875rem; }
