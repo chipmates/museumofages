@@ -272,7 +272,9 @@ export function paintedMaterial(chest: ChestLight, look: LionLook = LION_LOOK, l
   const down = clamp(onLeg.add(breast).add(smoothstep(0.72, 0.56, P.y).mul(0.5)), 0, 1)
   const flow = mix(vec3(0, -0.42, -1).normalize(), vec3(0, -1, 0.12).normalize(), down).normalize()
   const across = flow.cross(Ng).add(vec3(1e-4, 0, 0)).normalize()
-  const strand = mx_noise_float(vec3(P.dot(flow).mul(9), P.dot(across).mul(46), P.x.mul(2.3)))
+  // strands as long narrow cells (about 36 by 7 mm), the gouge on their borders
+  const cellPair = mx_worley_noise_vec2(vec3(P.dot(flow).mul(28), P.dot(across).mul(140), P.x.mul(0.5)))
+  const strand = cellPair.y.sub(cellPair.x).sub(0.16).mul(3.5)
   const hairFade = float(1).sub(smoothstep(0.002, 0.005, positionView.dFdx().length().max(positionView.dFdy().length())))
   const hairOn = paint.mul(float(1).sub(calm)).mul(float(1).sub(forePaw)).mul(float(1).sub(hindPaw)).mul(float(1).sub(eyeW)).mul(look.hair)
   const groove = smoothstep(0.3, -0.3, strand).mul(hairOn)
