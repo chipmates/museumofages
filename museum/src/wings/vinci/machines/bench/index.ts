@@ -44,8 +44,8 @@ export interface BenchOptions {
    * looks at, the picture's vertical field in degrees, and the picture's own
    * frame inside the canvas as fractions (left, top, width, height) */
   eye?: { at: [number, number, number]; look: [number, number, number]; fov?: number; frame?: [number, number, number, number] };
-  /** a grey figure of 1.70 m for size, at (x, z) on the floor, turned by yaw degrees */
-  figure?: { at: [number, number]; yaw?: number };
+  /** a grey figure of 1.70 m for size, at (x, z) on the plinth or (x, y, z) on a lower floor, turned by yaw degrees */
+  figure?: { at: [number, number] | [number, number, number]; yaw?: number };
 }
 const el = <K extends keyof HTMLElementTagNameMap>(tag: K, cls: string, text?: string): HTMLElementTagNameMap[K] => { const n = document.createElement(tag); n.className = cls; if (text !== undefined)
   n.textContent = text; return n; };
@@ -479,7 +479,8 @@ export function createBench(stack: Stack, onExit: () => void) {
     supportGeometries.push(...made.geometries);
     if (figure) {
       const scale = buildScaleFigure();
-      scale.group.position.set(figure.at[0], machine.bounds.min.y, figure.at[1]);
+      const [fx, fy, fz] = figure.at.length === 3 ? figure.at : [figure.at[0], machine.bounds.min.y, figure.at[1]];
+      scale.group.position.set(fx, fy, fz);
       scale.group.rotation.y = (figure.yaw ?? 0) * Math.PI / 180;
       display.add(scale.group);
       supportGeometries.push(scale.geometry);
