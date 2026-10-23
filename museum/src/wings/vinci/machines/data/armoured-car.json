@@ -55,7 +55,7 @@
       },
       "certainty": "C",
       "source": "British Museum 1860,0616.99 (the sheet): an oval shallow tub, read as round in plan; sizes ours",
-      "notes": "A shallow basin of 72 staves, rim 4.6 m across at 0.565 m, bottom 3.7 m at 0.06 m. Its wall is the short skirt under the eave band that the closed car shows. The staves stand upright over the floor's thickness, where the bottom boards sit, and flare above it. The wheel is about a quarter of its length, as on the sheet."
+      "notes": "A shallow basin of 72 staves, rim 4.6 m across at 0.565 m, bottom 3.7 m at 0.06 m. Its wall is the short skirt under the eave band that the closed car shows. The staves stand upright over the floor's thickness, where the bottom boards sit, and lean out straight above it to the rim, a cone, as the sheet's opened bowl is drawn in straight strokes. The wheel is about a quarter of its length, as on the sheet."
     },
     {
       "id": "ports",
@@ -67,7 +67,7 @@
         "z": 0.03
       },
       "position_m": [
-        2.184,
+        2.097,
         0.36,
         0
       ],
@@ -83,7 +83,7 @@
       },
       "certainty": "C",
       "source": "British Museum 1860,0616.99 (the sheet): openings in the skirt, about ten on the near half; the count is ours",
-      "notes": "24 round ports, 0.16 m across, their centres 0.36 m over the ground, every 10 degrees except over the four wheels, where the drive stands inside the wall."
+      "notes": "24 round ports, 0.16 m across, their centres 0.36 m over the ground, every 10 degrees except over the four wheels, where the drive stands inside the wall. Each collar is oval up the leaning wall, as a hole cut level through a leaning board is, so it reads round seen level."
     },
     {
       "id": "floor",
@@ -202,9 +202,9 @@
       "parent": "tub",
       "shape": "box",
       "dimensions_m": {
-        "x": 4.847,
+        "x": 4.675,
         "y": 0.148,
-        "z": 4.847
+        "z": 4.675
       },
       "position_m": [
         0,
@@ -251,7 +251,7 @@
       },
       "certainty": "C",
       "source": "British Museum 1860,0616.99 (the sheet): four spoked wheels, each with a broad rim and a ring of round pegs on its face",
-      "notes": "1.2 m across, 10 spokes, 5 felloes, 24 pegs on a 1.04 m circle, each driven through the felloe (its end shows on the outer face, as the sheet draws a ring of dots there; the joint is ours) and standing 0.11 m from the inner face. Iron strakes over the felloe joints: the trade of the time. One spoke in each wheel carries a band of red ochre paint, ours, so a still shows how far the wheel has turned: at rest it leans in toward the car's middle, so a side's two marked spokes are mirror images."
+      "notes": "1.2 m across, 10 spokes, 5 felloes, 24 pegs on a 1.04 m circle, each driven through the felloe (its end shows on the outer face, as the sheet draws a ring of dots there; the joint is ours) and standing 0.11 m from the inner face. Iron strakes over the felloe joints: the trade of the time. One spoke in each wheel carries a band of dark red earth paint, ours, so a still shows how far the wheel has turned: at rest it leans in toward the car's middle, so a side's two marked spokes are mirror images."
     },
     {
       "id": "wheel-front-far",
@@ -279,7 +279,7 @@
       },
       "certainty": "C",
       "source": "British Museum 1860,0616.99 (the sheet): four spoked wheels, each with a broad rim and a ring of round pegs on its face",
-      "notes": "1.2 m across, 10 spokes, 5 felloes, 24 pegs on a 1.04 m circle, each driven through the felloe (its end shows on the outer face, as the sheet draws a ring of dots there; the joint is ours) and standing 0.11 m from the inner face. Iron strakes over the felloe joints: the trade of the time. One spoke in each wheel carries a band of red ochre paint, ours, so a still shows how far the wheel has turned: at rest it leans in toward the car's middle, so a side's two marked spokes are mirror images."
+      "notes": "1.2 m across, 10 spokes, 5 felloes, 24 pegs on a 1.04 m circle, each driven through the felloe (its end shows on the outer face, as the sheet draws a ring of dots there; the joint is ours) and standing 0.11 m from the inner face. Iron strakes over the felloe joints: the trade of the time. One spoke in each wheel carries a band of dark red earth paint, ours, so a still shows how far the wheel has turned: at rest it leans in toward the car's middle, so a side's two marked spokes are mirror images."
     },
     {
       "id": "wheel-rear-near",
@@ -307,7 +307,7 @@
       },
       "certainty": "C",
       "source": "British Museum 1860,0616.99 (the sheet): four spoked wheels, each with a broad rim and a ring of round pegs on its face",
-      "notes": "1.2 m across, 10 spokes, 5 felloes, 24 pegs on a 1.04 m circle, each driven through the felloe (its end shows on the outer face, as the sheet draws a ring of dots there; the joint is ours) and standing 0.11 m from the inner face. Iron strakes over the felloe joints: the trade of the time. One spoke in each wheel carries a band of red ochre paint, ours, so a still shows how far the wheel has turned: at rest it leans in toward the car's middle, so a side's two marked spokes are mirror images."
+      "notes": "1.2 m across, 10 spokes, 5 felloes, 24 pegs on a 1.04 m circle, each driven through the felloe (its end shows on the outer face, as the sheet draws a ring of dots there; the joint is ours) and standing 0.11 m from the inner face. Iron strakes over the felloe joints: the trade of the time. One spoke in each wheel carries a band of dark red earth paint, ours, so a still shows how far the wheel has turned: at rest it leans in toward the car's middle, so a side's two marked spokes are mirror images."
     },
     {
       "id": "wheel-front-near",
@@ -335,7 +335,7 @@
       },
       "certainty": "C",
       "source": "British Museum 1860,0616.99 (the sheet): four spoked wheels, each with a broad rim and a ring of round pegs on its face",
-      "notes": "1.2 m across, 10 spokes, 5 felloes, 24 pegs on a 1.04 m circle, each driven through the felloe (its end shows on the outer face, as the sheet draws a ring of dots there; the joint is ours) and standing 0.11 m from the inner face. Iron strakes over the felloe joints: the trade of the time. One spoke in each wheel carries a band of red ochre paint, ours, so a still shows how far the wheel has turned: at rest it leans in toward the car's middle, so a side's two marked spokes are mirror images."
+      "notes": "1.2 m across, 10 spokes, 5 felloes, 24 pegs on a 1.04 m circle, each driven through the felloe (its end shows on the outer face, as the sheet draws a ring of dots there; the joint is ours) and standing 0.11 m from the inner face. Iron strakes over the felloe joints: the trade of the time. One spoke in each wheel carries a band of dark red earth paint, ours, so a still shows how far the wheel has turned: at rest it leans in toward the car's middle, so a side's two marked spokes are mirror images."
     },
     {
       "id": "shaft-far",
