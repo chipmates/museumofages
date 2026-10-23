@@ -528,7 +528,7 @@ export function wheel(sx: number, sz: number): Body {
     const joint = (j * TAU) / WHEEL.felloes
     const a0 = joint + 0.003, a1 = joint + TAU / WHEEL.felloes - 0.003
     const ft = FELLOE_TONES[j]! * (0.96 + 0.08 * hash(32, seed, j))
-    b.rough.arc(v(0, 0, 0), Z, X, WHEEL.felloeIn, WHEEL.tread, a0, a1, -w2, w2, 14, { tone: ft, wear: 0 })
+    b.rough.arc(v(0, 0, 0), Z, X, WHEEL.felloeIn, WHEEL.tread, a0, a1, -w2, w2, 14, { tone: ft, wear: 0, mark: 3 })
     // the tread, worn by the ground, a skin over the felloe's face
     b.rough.arc(v(0, 0, 0), Z, X, WHEEL.tread - 0.002, WHEEL.tread + 0.0012, a0, a1, -w2 + 0.0015, w2 - 0.0015, 14, { tone: ft * 0.82, wear: 0.9, seed: ft }, false)
     // an iron strake nailed over the joint

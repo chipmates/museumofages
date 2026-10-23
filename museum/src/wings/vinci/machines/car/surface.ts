@@ -10,7 +10,7 @@
 import { Color, DataTexture, MeshStandardNodeMaterial, NearestFilter, RGBAFormat, UnsignedByteType } from 'three/webgpu'
 import { atan, attribute, float, mix, mx_noise_float, positionGeometry, smoothstep, texture, uv, vec2, vec3 } from 'three/tsl'
 import type { MaterialSet, Stack } from '../../../../stack'
-import { COVER } from './plan'
+import { COVER, PEGS } from './plan'
 import { coverNails } from './build'
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -50,9 +50,10 @@ function wood(stack: Stack, set: MaterialSet, kind: 'rough' | 'fine'): MeshStand
   const worn = mix(grained, lin(spec.worn).mul(fibres.mul(0.4).add(0.66)), smoothstep(0.2, 1, wear).mul(0.75))
   const col = mix(worn, lin(spec.end).mul(fibres.mul(0.5).add(0.6)), end.mul(0.85))
   const mark: N = attribute('aMark', 'float')
-  const [marked, dressed] = [smoothstep(0.5, 0.9, mark).mul(float(1).sub(smoothstep(1.1, 1.5, mark))), smoothstep(1.5, 1.9, mark)]
+  const band = (k: number): N => smoothstep(k - 0.5, k - 0.1, mark).mul(float(1).sub(smoothstep(k + 0.1, k + 0.5, mark)))
+  const [marked, dressed, felloe] = [band(1), band(2), band(3)]
   const strokes = toolStrokes(uv())
-  m.colorNode = painted(weathered(col), marked, fibres).mul(tone).mul(nodes.occlusion).mul(mix(float(1), strokes.shade, dressed))
+  m.colorNode = painted(weathered(col), marked, fibres).mul(tone).mul(nodes.occlusion).mul(mix(float(1), strokes.shade, dressed)).mul(mortises(felloe))
   m.roughnessNode = mix(nodes.roughness.clamp(spec.rough[0], spec.rough[1]), float(0.5), smoothstep(0.4, 1, wear).mul(0.6)).mul(mix(float(1), strokes.sheen, dressed))
   return m
 }
@@ -69,6 +70,17 @@ function painted(col: N, marked: N, fibres: N): N {
   const rubbed = smoothstep(0.72, 0.86, mx_noise_float(p.mul(vec3(26, 26, 60))).mul(0.5).add(0.5)).mul(0.6)
   const paint: N = lin(PAINT).mul(fibres.mul(0.16).add(0.88))
   return mix(col, paint, band.mul(float(0.94).sub(rubbed)).mul(marked))
+}
+
+/** On a felloe's faces, the dark lip of each peg's mortise: a narrow ring of grime and shadow round every peg, so
+ * the ring of peg ends reads as the sheet's ring of dots. */
+function mortises(felloe: N): N {
+  const p: N = positionGeometry
+  const step = (Math.PI * 2) / PEGS.count
+  const a: N = atan(p.y, p.x).div(step).round().mul(step)
+  const d: N = p.xy.sub(vec2(a.cos(), a.sin()).mul(PEGS.pitch)).length()
+  const lip = smoothstep(PEGS.r - 0.0015, PEGS.r + 0.0005, d).mul(float(1).sub(smoothstep(PEGS.r + 0.0035, PEGS.r + 0.0055, d)))
+  return float(1).sub(lip.mul(felloe).mul(0.62))
 }
 
 /** A face dressed by hand: the strokes of the knife along the grain, each a shallow scallop a little off the last,
