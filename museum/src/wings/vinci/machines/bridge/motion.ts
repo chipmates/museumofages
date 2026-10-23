@@ -5,7 +5,13 @@
  * bridge and threaded between the rods along its axis, so the weave closes
  * as a hand would close it. Pure arithmetic, no renderer: a check sweeps it.
  */
-import { FLY, LIFT, ORDER, PILE_AT, POLES, SETTLE, buildClock, startOf, type Pole, type V3 } from './plan'
+import { FLY, LIFT, MOVE, ORDER, PILE_AT, POLES, SETTLE, buildClock, startOf, type Pole, type V3 } from './plan'
+
+const KIND: Record<string, Pole['kind']> = Object.fromEntries(POLES.map(p => [p.id, p.kind]))
+/** a carried rod's centre stays this high over the work until it turns into its slope (the crown's top is 2.9 m) */
+const CARRY = 3.6
+/** seconds of a joist's move given from the carry to the threading */
+const JOIST_THREAD = 0.6
 
 export type Q = [number, number, number, number]
 const add = (a: V3, b: V3): V3 => [a[0] + b[0], a[1] + b[1], a[2] + b[2]]
@@ -66,7 +72,8 @@ export const PLACING: Record<string, Placing> = Object.fromEntries(POLES.map((p:
   // in the pile every pole lies along Z; the turn from there is the short one, with no roll
   const pileQ = qmul(arc(dir, [0, 0, 1]), q)
   const approach: V3 = p.kind === 'joist' ? [0, 0, 1] : up
-  const reach = p.kind === 'joist' ? 3.3 : 0.8
+  // a joist starts its threading clear of every joist already set (they reach 1.7 m each side); a rod comes down onto its place square
+  const reach = p.kind === 'joist' ? 3.6 : 1.2
   return [p.id, { centre, dir, up, q, pileQ, pile: PILE_AT[p.id]!, approach, reach }]
 }))
 
@@ -78,26 +85,30 @@ export function poseAt(id: string, u: number): Pose {
   const s = u - startOf(id)
   const lifted = add(P.pile, [0, LIFT, 0])
   const S = add(P.centre, mul(P.approach, P.reach))
+  const joist = KIND[id] === 'joist'
+  // a joist spends longer threading along its own length than a rod spends coming down: the move's total is the same
+  const fly = joist ? FLY - JOIST_THREAD : FLY, settle = joist ? SETTLE + JOIST_THREAD : SETTLE
   let at: V3, q: Q
   if (s <= 0) { at = P.pile; q = P.pileQ }
   else if (s < LIFT) { at = lerp(P.pile, lifted, smoother(s / LIFT)); q = P.pileQ }
-  else if (s < LIFT + FLY) {
-    const f = (s - LIFT) / FLY
-    if (POLES.find(p => p.id === id)!.kind === 'joist') {
+  else if (s < LIFT + fly) {
+    const f = (s - LIFT) / fly
+    if (joist) {
       // out of the pile along its own length, then along the front of the bridge, rising to its height
       const front: V3 = [lifted[0], lifted[1] + 0.25, S[2]]
       if (f < 0.35) at = lerp(lifted, front, smoother(f / 0.35))
       else at = lerp(front, S, smoother((f - 0.35) / 0.65))
       q = P.q
     } else {
-      // over the work: a high arc, turned into its slope on the way
+      // carried high over the work still lying across it as it lay in the pile, turned into its slope only above its place
       const g = smoother(f)
-      const B1 = add(lifted, [0, 2.9, 0]), B2 = add(S, mul(P.approach, 1.4))
+      const high = Math.max(S[1], CARRY) + 1.0
+      const B1: V3 = [lifted[0], high, lifted[2]], B2: V3 = [S[0], high, S[2]]
       const k = 1 - g
       at = add(add(mul(lifted, k * k * k), mul(B1, 3 * k * k * g)), add(mul(B2, 3 * k * g * g), mul(S, g * g * g)))
-      q = slerp(P.pileQ, P.q, smoother((f - 0.05) / 0.6))
+      q = slerp(P.pileQ, P.q, smoother((f - 0.55) / 0.4))
     }
-  } else if (s < LIFT + FLY + SETTLE) { at = lerp(S, P.centre, smoother((s - LIFT - FLY) / SETTLE)); q = P.q }
+  } else if (s < MOVE) { at = lerp(S, P.centre, smoother((s - LIFT - fly) / settle)); q = P.q }
   else { at = P.centre; q = P.q }
   const d = sub(at, P.centre)
   return { at, q, off: Math.hypot(d[0], d[1], d[2]) }

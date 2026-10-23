@@ -167,7 +167,7 @@ function joist(k: number): Pole {
 /** The order of placing (ours): from the near bank to the far one, each frame's rod in turn, the joist threaded
  * between the rods as soon as the rod over it and the rod under it stand. */
 export const ORDER: string[] = [
-  'E0A', 'E0B', 'R1A', 'R1B', 'J1', 'R2A', 'R2B', 'J2', 'R3A', 'R3B', 'J3', 'R4A', 'R4B', 'J4', 'R5A', 'R5B', 'J5', 'E6A', 'E6B',
+  'E0A', 'E0B', 'R1A', 'R1B', 'J1', 'R2A', 'R2B', 'J2', 'R3A', 'R3B', 'J3', 'R4A', 'R4B', 'J4', 'R5A', 'R5B', 'E6A', 'E6B', 'J5',
 ]
 
 export const POLES: Pole[] = (() => {
@@ -217,7 +217,7 @@ export function groundY(x: number, z: number): number {
 }
 
 /** the pile on the near bank: two sleepers along X, the poles across them along Z, three layers */
-export const PILE = { x: -6.75, sleeperZ: 1.45, sleeperR: 0.06, pitch: 0.17 } as const
+export const PILE = { x: -6.75, sleeperZ: 1.45, sleeperR: 0.06, pitch: 0.19 } as const
 /** where each pole lies in the pile, the first placed on top */
 export const PILE_AT: Record<string, V3> = (() => {
   const at: Record<string, V3> = {}
