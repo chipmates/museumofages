@@ -180,13 +180,15 @@ function authoredStationPose(id:VinciStationId, narrow:boolean):Pose {
   // HERO IS THE LION, with its room behind it: from the hall's south-east
   // corner the lion turns its chest and open flank to the eye, the two west
   // windows behind it and the table with both its pieces whole past its
-  // sunlit hindquarters, the lion two thirds of a 52 degree field, the eye
-  // six tenths of a metre off both walls. Its window above the words is the master's band 0.11 to 0.57
-  // on every phone, so the eye looks two degrees down and its shift lens
-  // lifts the lion's middle to about a third of the height, its feet just
-  // under the half; pitched further, the room's verticals leaned past a
-  // degree and a half.
-  if(id==='hall') return narrow?{...aimedFrom(HALL_PHONE_EYE,-110.14,-2,93.09),shift:-.623}:aimedFrom(HALL_DOOR,-124,-8,58)
+  // sunlit hindquarters, the lion two thirds of a 55 degree field, the eye
+  // six tenths of a metre off both walls. The drawer's card, opened in
+  // German, rises to 0.48 of the height, so the paws stand well above it: a
+  // 55 degree field, the eye 2.7 degrees down and the shift lens at 0.69 put
+  // the lion's middle at 0.32 and its feet at 0.45. Pitched further, the
+  // room's verticals leaned past a degree and a half. The wider field turns
+  // a degree and a half further south, so the table's jug stays out of its
+  // right edge.
+  if(id==='hall') return narrow?{...aimedFrom(HALL_PHONE_EYE,-111.8,-2.7,96.81),shift:-.69}:aimedFrom(HALL_DOOR,-124,-8,58)
   // THE CHAPEL IS THE ONE HERO. Square on from the court it was a wall of
   // ashlar in the house's shadow with nothing behind it; from the foot of the
   // raised lawn the gable took the left half of the frame, the gable the study

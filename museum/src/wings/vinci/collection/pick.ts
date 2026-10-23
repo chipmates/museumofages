@@ -18,7 +18,7 @@ import { studySupport } from '../inner-court'
 import { LINE_FLOOR_PICK, VINCI_LINE_STATION, VINCI_STUDY_LEAF, vinciApproachPose, vinciApproachStation, vinciMachineRowIndex, vinciPlateExhibitId, type VinciExhibitKind } from './approaches'
 import { vinciWallOrderOf } from './wall'
 import { hangPlacements } from './hang'
-import { STANDS } from './stands'
+import { STANDS, isHallTablePiece } from './stands'
 import type { MachineSlug } from '../machines/catalog'
 import { FRAME_FRONT, mountedSheets, sheetFace } from './body-wall-plan'
 
@@ -35,6 +35,8 @@ export interface VinciPickEntry {
   /** Where the dot sits: just off the object's own face, so the occlusion
    * test does not read the object as its own occluder. */
   anchor: Vector3
+  /** Where it sits on an upright frame, where that differs. */
+  anchorNarrow?: Vector3
   /** An exhibit with a certified viewing pose at both viewports. */
   openable: boolean
   workId: string | null
@@ -105,8 +107,12 @@ export function vinciMachineRoom(station: VinciStationId | null): readonly Vinci
   return station === 'flight' || station === 'works' ? ['flight', 'works'] : station ? [station] : []
 }
 /** A MACHINE'S MARK STANDS LOW ON ITS OWN BODY, above the plinth it stands
- * on, so the plinth is never read as the mark's own occluder. */
-const MACHINE_MARK_SHARE = .12
+ * on, so the plinth is never read as the mark's own occluder. A small model
+ * on the hall's table has no plinth, and from the door a mark that low
+ * covers its stand: on a wide frame its mark stands over its crown. The
+ * upright frame keeps the low mark, since over the crown it would stand in
+ * the short phone's top band, where no mark is drawn. */
+const MACHINE_MARK_SHARE = .12, TABLE_MARK_OVER_M = .22
 
 function proxy(object: Object3D): { centre: Vector3; radiusM: number; corner: Vector3 } {
   // A BODY THE REGISTRY READS BEFORE ITS FIRST FRAME still has to be measured
@@ -262,9 +268,10 @@ export function readVinciExhibits(root: Object3D): VinciPickEntry[] {
     const placed = placedAt('machine', `machine/${slug}`, null, null, slug)
     const anchor = box.getCenter(new Vector3())
     anchor.y = box.min.y + (box.max.y - box.min.y) * MACHINE_MARK_SHARE
+    const crown = isHallTablePiece(slug) ? anchor.clone().setY(box.max.y + TABLE_MARK_OVER_M) : null
     entries.push({ id: `machine/${slug}`, kind: 'machine', station: placed.station, order: placed.order,
       object: body, centre: sphere.center.clone(),
-      radiusM: Math.max(PROXY_FLOOR_M, sphere.radius), anchor,
+      radiusM: Math.max(PROXY_FLOOR_M, sphere.radius), anchor: crown ?? anchor, ...(crown ? { anchorNarrow: anchor } : {}),
       openable: placed.station !== null, workId: null, face: null })
   }
   return entries
