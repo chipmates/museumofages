@@ -142,8 +142,8 @@ function fistSurface(m: Mesher): void {
     m.quad(a, a + stride, a + stride + 1, a + 1)
   }
   // the thumb: from its root at the wrist's edge, laid over the first two fingers
-  const thumb: V3[] = [[0.04, 0.02, -0.016], [0.034, 0.045, -0.035], [0.018, 0.066, -0.043], [0.001, 0.074, -0.04]]
-  const girth = [0.0145, 0.0135, 0.012, 0.0105]
+  const thumb: V3[] = [[0.036, 0.03, -0.019], [0.027, 0.052, -0.033], [0.012, 0.066, -0.038], [-0.002, 0.071, -0.036]]
+  const girth = [0.015, 0.0135, 0.012, 0.011]
   for (let k = 0; k < 3; k++) capsule(m, thumb[k]!, thumb[k + 1]!, girth[k]!, girth[k + 1]!)
 }
 /** a rounded rod from a to b, its radius eased from ra to rb */
@@ -151,7 +151,7 @@ function capsule(m: Mesher, a: V3, b: V3, ra: number, rb: number): void {
   const d = sub3(b, a), l = Math.hypot(d[0], d[1], d[2]), y = norm3(d)
   const x = norm3(cross3(y, Math.abs(y[1]) > 0.9 ? [1, 0, 0] : [0, 1, 0])), z = cross3(x, y)
   const t = new Mesher()
-  form(t, l, [[0, ra, ra, ra], [1, rb, rb, rb]], 10, undefined, 3, 3)
+  form(t, l, [[0, ra, ra, ra], [1, rb, rb, rb]], 12, undefined, 3, 4)
   const to = (v: number[], k: number, w: number): V3 => [x[0] * v[k]! + y[0] * v[k + 1]! + z[0] * v[k + 2]! + w * a[0], x[1] * v[k]! + y[1] * v[k + 1]! + z[1] * v[k + 2]! + w * a[1], x[2] * v[k]! + y[2] * v[k + 1]! + z[2] * v[k + 2]! + w * a[2]]
   const base = m.count
   for (let k = 0; k < t.count; k++) m.vertex(to(t.p, k * 3, 1), to(t.n, k * 3, 0), t.uv[k * 2]!, t.uv[k * 2 + 1]!, 1)
@@ -226,12 +226,13 @@ function headSurface(m: Mesher): void {
   const smin = (a: number, b: number, k: number): number => { const h = Math.max(k - Math.abs(a - b), 0) / k; return Math.min(a, b) - h * h * k / 4 }
   const field = (p: V3): number => {
     const skull = ell(p, [0, 0.091, -0.012], [0.074, 0.099, 0.094])
-    // the face runs down from the brow, narrowing from the cheekbones to the chin
-    const narrow = 0.68 + 0.32 * smooth01((p[1] + 0.04) / 0.12)
-    const face = ell([p[0] / narrow, p[1], p[2]], [0, 0.045, 0.018], [0.062, 0.086, 0.072])
+    // the face runs down from the brow a little behind its line, narrowing
+    // from the cheekbones to the chin
+    const narrow = 0.72 + 0.28 * smooth01((p[1] + 0.03) / 0.11)
+    const face = ell([p[0] / narrow, p[1], p[2]], [0, 0.046, 0.008], [0.063, 0.084, 0.066])
     // the jaw's angles under the ears, and the point of the chin
-    const angle = ell(p, [0, 0.004, -0.008], [0.058, 0.036, 0.05])
-    const chin = ell(p, [0, -0.026, 0.058], [0.027, 0.021, 0.022])
+    const angle = ell(p, [0, 0.004, -0.01], [0.06, 0.036, 0.05])
+    const chin = ell(p, [0, -0.026, 0.047], [0.028, 0.021, 0.021])
     return smin(smin(smin(skull, face, 0.03), angle, 0.025), chin, 0.016)
   }
   const c: V3 = [0, 0.06, 0], ny = 24, sides = 28, base = m.count, stride = sides + 1
