@@ -2,7 +2,7 @@ import { Box3, Group, Vector3, type BufferGeometry, type Object3D } from 'three/
 import type { Stack } from '../../../stack'
 import { buildParts, materialDressed, materialFailure, type DressedAssembly } from './parts'
 import { applyMotion, jointValuesAt } from './motion'
-import type { MachineRecord, MachineSlug } from './catalog'
+import type { BenchSlug, MachineRecord, MachineSlug } from './catalog'
 import type { ShowcaseSlug } from './showcase'
 import type { MachineBuild } from './types'
 
@@ -17,7 +17,7 @@ export interface MachineStanding {
 }
 
 export interface ReadyMachineBuild extends MachineBuild {
-  readonly slug: MachineSlug | ShowcaseSlug
+  readonly slug: BenchSlug | ShowcaseSlug
   readonly period: number | null
   /** Wait before the first measured frame. Materials and geometry are then ready. */
   readonly ready: Promise<void>

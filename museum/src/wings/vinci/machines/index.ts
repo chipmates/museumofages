@@ -1,5 +1,5 @@
 import type { Stack } from '../../../stack'
-import type { MachineSlug } from './catalog'
+import type { BenchSlug, CourtSlug, MachineSlug } from './catalog'
 import { registerMachineBuild, type ReadyMachineBuild } from './runtime'
 import { build as aerial_screw } from './aerial-screw'
 import { build as parachute } from './parachute'
@@ -17,6 +17,7 @@ import { build as proportional_compass } from './proportional-compass'
 import { build as camera_obscura } from './camera-obscura'
 import { build as mechanical_lion } from './mechanical-lion'
 import { build as flying_machine } from './flying-machine'
+import { build as armoured_car } from './armoured-car'
 import type { ShowcaseSlug } from './showcase'
 
 export * from './catalog'
@@ -53,4 +54,13 @@ export const showcaseBuilders: Record<ShowcaseSlug, (stack: Stack) => ReadyMachi
 }
 export function buildShowcase(slug: ShowcaseSlug, stack: Stack): ReadyMachineBuild {
   return registerMachineBuild(showcaseBuilders[slug](stack))
+}
+
+/** The court's machines, built for the bench until their place is chosen. */
+export const courtBuilders: Record<CourtSlug, (stack: Stack) => ReadyMachineBuild> = {
+  'armoured-car': armoured_car,
+}
+export function buildBenchMachine(slug: BenchSlug, stack: Stack): ReadyMachineBuild {
+  const make = slug in courtBuilders ? courtBuilders[slug as CourtSlug] : builders[slug as MachineSlug]
+  return registerMachineBuild(make(stack))
 }
