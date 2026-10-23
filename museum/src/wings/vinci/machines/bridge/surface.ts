@@ -80,7 +80,8 @@ export async function bridgeSurfaces(stack: Stack): Promise<BridgeSurfaces> {
     const fissure = ridge.mul(fade(u.mul(16), 1))
     const plate = mx_noise_float(vec3(u.mul(5).add(o), v.mul(0.7), 2.3)).mul(0.5).add(0.5)
     const lent = smoothstep(0.62, 0.8, mx_noise_float(vec3(u.mul(4).add(o), v.mul(48), 7.7))).mul(fade(v.mul(48), 1))
-    const barkCol = mx(mx(lin('#5b4c3e'), lin('#757063'), plate.mul(0.75)), lin('#2f251d'), fissure.mul(0.75)).mul(float(1).add(lent.mul(0.35)))
+    const mottle = mx_noise_float(vec3(u.mul(1.3).add(o), v.mul(0.35), 9.1)).mul(0.5).add(0.5)
+    const barkCol = mx(mx(lin('#4f463e'), lin('#6e675c'), plate.mul(0.8)), lin('#5a4a3a'), mottle.mul(0.45)).mul(float(1).sub(fissure.mul(0.55))).mul(float(1).add(lent.mul(0.3)))
     const barkH = fissure.negate().mul(0.004).add(plate.mul(0.0012))
     // PEELED: pale wood under the drawknife, its strokes as narrow facets along the stem, bark left in the hollows
     const fibres = luma(d.albedo)
@@ -88,7 +89,7 @@ export async function bridgeSurfaces(stack: Stack): Promise<BridgeSurfaces> {
     const facet = facetPhase.fract().sub(0.5)
     const facetH = facet.mul(facet).negate().mul(0.006).mul(fade(facetPhase, 1))
     const remnant = smoothstep(0.55, 0.75, mx_noise_float(vec3(u.mul(9).add(o), v.mul(2.2), 5.1)).mul(0.5).add(0.5)).mul(0.8)
-    const woodCol = mx(lin('#b7996c').mul(fibres.mul(0.5).add(0.62)), barkCol, remnant)
+    const woodCol = mx(lin('#9c8466').mul(fibres.mul(0.45).add(0.66)), barkCol, remnant)
     const sideCol = mx(barkCol, woodCol, peeled).mul(tone)
     // END GRAIN: an axe's cut, the rings round the pith, the sapwood paler, the bark a dark rim
     const rr = vec2(u, v).length()
@@ -101,7 +102,7 @@ export async function bridgeSurfaces(stack: Stack): Promise<BridgeSurfaces> {
     pole.colorNode = mx(sideCol, endCol, end).mul(d.occlusion).mul(keyRim(0.45).add(1))
     pole.roughnessNode = mx(mx(float(0.9), d.roughness.clamp(0.6, 0.8), peeled), float(0.82), end)
     const h = mx(mx(barkH, facetH, peeled), float(0), end)
-    pole.normalNode = bumped(pole.normalNode ?? normalView, h, 1)
+    pole.normalNode = bumped(mx(normalView, pole.normalNode ?? normalView, peeled), h, 1)
   }
 
   // ---------------------------------------------------------------- HEMP
@@ -144,16 +145,16 @@ export async function bridgeSurfaces(stack: Stack): Promise<BridgeSurfaces> {
     const up = normalWorld.y.clamp(0, 1)
     // grass keeps to the level bank, thins toward the lip and the trodden ground by the pile, never on the cut face
     const lip = smoothstep(BANK.lip - 0.15, BANK.lip + 0.5, p.x.abs())
-    const tufts = mx_noise_float(vec3(p.x.mul(1.7), p.z.mul(1.7), 4.4)).mul(0.5).add(0.5)
+    const tufts = mx_noise_float(vec3(p.x.mul(6.5), p.z.mul(6.5), 4.4)).mul(0.35).add(mx_noise_float(vec3(p.x.mul(0.9), p.z.mul(0.9), 1.4)).mul(0.25)).add(0.5)
     const trodden = float(1).sub(smoothstep(1.2, 2.4, vec2(p.x.add(6.3), p.z.mul(0.6)).length()).mul(0.5).add(0.5)).clamp(0, 1)
-    const grassy = smoothstep(0.82, 0.95, up).mul(lip).mul(smoothstep(0.25, 0.6, tufts)).mul(float(1).sub(trodden.mul(0.7)))
+    const grassy = smoothstep(0.82, 0.95, up).mul(lip).mul(smoothstep(0.2, 0.55, tufts).mul(0.75).add(0.2)).mul(float(1).sub(trodden.mul(0.6)))
     const wet = float(1).sub(smoothstep(BANK.water - 0.02, BANK.water + 0.18, p.y))
     const earthCol = lin('#6a5843').mul(luma(ground.albedo).mul(0.6).add(0.55)).mul(float(1).sub(wet.mul(0.42)))
     // the cut face: a section through the bank, darker with depth, its layers
     const cut = float(1).sub(smoothstep(0.2, 0.5, up))
     const strata = sin(p.y.mul(23).add(mx_noise_float(vec3(p.x.mul(0.8), p.y.mul(2), p.z.mul(0.8))).mul(1.3))).mul(0.5).add(0.5)
     const sectionCol = mx(lin('#4f4031'), lin('#6b5a44'), strata.mul(0.5)).mul(luma(ground.albedo).mul(0.5).add(0.6)).mul(smoothstep(BANK.bottom, 0, p.y).mul(0.35).add(0.65))
-    const grassCol = lin('#5f6440').mul(luma(grass.albedo).mul(0.7).add(0.45))
+    const grassCol = mx(lin('#5d6141'), lin('#6f6a48'), tufts).mul(luma(grass.albedo).mul(0.6).add(0.5))
     earth.colorNode = mx(mx(earthCol, grassCol, grassy), sectionCol, cut).mul(ground.occlusion)
     earth.roughnessNode = mx(ground.roughness.max(0.85), float(0.55), wet.mul(0.6))
     grassMat.dispose()
@@ -168,10 +169,13 @@ export async function bridgeSurfaces(stack: Stack): Promise<BridgeSurfaces> {
     // a slow stream along Z, its ripples broad enough never to shimmer at the bench's distances
     const flow = vec3(p.x.mul(0.9), p.z.mul(0.5).sub(streamClock.mul(0.12)), streamClock.mul(0.05))
     const ripple = mx_noise_float(flow.mul(1.6)).mul(0.6).add(mx_noise_float(flow.mul(4.1).add(3.3)).mul(0.25))
-    const depth = smoothstep(BANK.water - 0.05, BANK.bed, p.y)
-    water.colorNode = mx(lin('#2a2b22'), lin('#141814'), depth.max(0.6))
-    water.normalNode = bumped(normalView, ripple.mul(0.012), 1)
-    water.roughnessNode = float(0.12)
+    // the bank's toe runs under the surface: the shallows show its earth, the middle is deep and dark
+    const shallow = smoothstep(3.2, 3.85, p.x.abs()).mul(smoothstep(-0.2, 0.2, p.y.sub(BANK.water - 0.1)))
+    const cut = smoothstep(BANK.water - 0.03, BANK.water - 0.3, p.y)
+    water.colorNode = mx(mx(lin('#202319'), lin('#3d3a2a'), shallow), lin('#0e110d'), cut)
+    water.normalNode = bumped(normalView, ripple.mul(0.05), 1)
+    water.roughnessNode = float(0.07)
+    water.envMapIntensity = 0.6
   }
   return { pole, hemp, earth, water, lashClock: lashClock as unknown as { value: number }, streamClock: streamClock as unknown as { value: number }, sets }
 }

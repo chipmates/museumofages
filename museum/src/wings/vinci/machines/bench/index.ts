@@ -373,7 +373,10 @@ export function createBench(stack: Stack, onExit: () => void) {
   function frameBounds(){
     return slug==='proportional-compass'
       ? new Box3(new Vector3(-.19,.046,-.042),new Vector3(.19,.652,.042))
-      : displayBounds();
+      : slug==='bridge-of-poles'
+        // the bridge standing, not its bank and the paths of its building
+        ? new Box3(new Vector3(-5.6,-.3,-1.8),new Vector3(5.6,3,1.8))
+        : displayBounds();
   }
   /** The working end of the machine: the part of the object where its
    * fittings are, framed alone so a 9 mm boss is not a 9 px boss. The pair

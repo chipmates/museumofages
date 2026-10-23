@@ -120,6 +120,9 @@ export function radiusAt(p: Pole, s: number): number {
   return p.r + p.taper * (0.5 - s / p.length)
 }
 
+/** the few poles peeled with a drawknife; the rest keep their bark */
+const PEELED = new Set(['1B', '4A', 'J2', '6B'])
+
 /** A rod's line: the chord's normal, through each end support at its own touch. */
 function rodLine(k: number, frame: 'A' | 'B'): Pole {
   const seed = hash(k, frame === 'A' ? 1 : 2, 3.3)
@@ -149,7 +152,7 @@ function rodLine(k: number, frame: 'A' | 'B'): Pole {
   const kind: PoleKind = k === 0 || k === 6 ? 'end' : 'rod'
   return {
     id: `${kind === 'end' ? 'E' : 'R'}${k}${frame}`, kind, frame, k, a, b, length, r: POLE_R, taper,
-    peeled: hash(k, frame === 'A' ? 11 : 12) > 0.6 ? 1 : 0, tone: 0.9 + 0.2 * hash(k, frame === 'A' ? 13 : 14), seed,
+    peeled: PEELED.has(`${k}${frame}`) ? 1 : 0, tone: 0.9 + 0.2 * hash(k, frame === 'A' ? 13 : 14), seed,
   }
 }
 
@@ -157,7 +160,7 @@ function joist(k: number): Pole {
   const [x, y] = JOIST_XY[k]!
   return {
     id: `J${k}`, kind: 'joist', frame: null, k, a: [x, y, -JOIST_HALF], b: [x, y, JOIST_HALF], length: 2 * JOIST_HALF,
-    r: POLE_R, taper: 0, peeled: hash(k, 21) > 0.55 ? 1 : 0, tone: 0.88 + 0.2 * hash(k, 23), seed: hash(k, 25),
+    r: POLE_R, taper: 0, peeled: PEELED.has(`J${k}`) ? 1 : 0, tone: 0.88 + 0.2 * hash(k, 23), seed: hash(k, 25),
   }
 }
 
@@ -201,7 +204,7 @@ export function supportOf(id: string): { xy: [number, number]; r: number; half: 
 // ---------------------------------------------------------------- the ground
 
 /** the bank's level falls into the channel: |x| from the middle to its height */
-export const BANK = { lip: 4.45, edge: 4.1, toe: 3.05, bed: -1.0, top: 0, water: -0.45, bottom: -1.25, halfX: 7.8, halfZ: 3.0 } as const
+export const BANK = { lip: 4.45, edge: 4.1, toe: 3.05, bed: -1.0, top: 0, water: -0.45, bottom: -1.25, halfX: 12, zMin: -6, zMax: 15 } as const
 export function groundY(x: number, z: number): number {
   const ax = Math.abs(x)
   // the bank's edge wanders a little along the stream

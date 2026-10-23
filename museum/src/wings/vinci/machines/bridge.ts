@@ -30,7 +30,7 @@ export function build(stack: Stack): ReadyMachineBuild {
   object.userData['dossier'] = record.sourcePath
   object.userData['certainty'] = 'C'
   // the swept envelope: the cut bank, the bridge, and every path a pole takes to it
-  const bounds = new Box3(new Vector3(-BANK.halfX, BANK.bottom, -BANK.halfZ), new Vector3(BANK.halfX, 4.6, 5.05))
+  const bounds = new Box3(new Vector3(-BANK.halfX, BANK.bottom, BANK.zMin), new Vector3(BANK.halfX, 4.6, BANK.zMax))
 
   const geometries = new Set<BufferGeometry>()
   const materials = new Set<Material>()
