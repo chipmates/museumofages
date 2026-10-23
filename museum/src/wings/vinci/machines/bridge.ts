@@ -9,14 +9,15 @@
  * cycle ends where it began. `section(true)` takes the lashings off: the
  * same poles held by the weave alone, as most builds of it today stand.
  */
-import { Box3, Group, Mesh, Vector3, type BufferGeometry, type Material, type Object3D } from 'three/webgpu'
+import { Box3, Group, Mesh, PlaneGeometry, Vector3, type BufferGeometry, type Material, type Object3D } from 'three/webgpu'
+import type { Reflection } from '../../../stack/reflector'
 import type { MaterialSet, Stack } from '../../../stack'
 import { showcaseCatalog } from './showcase'
 import { materialDressed, materialFailure } from './parts'
 import type { ReadyMachineBuild } from './runtime'
 import { BANK, ORDER, PERIOD, PILE, POLES, SEAT_HALF, SEAT_R, SEAT_XY, STAKES, buildClock, hash, type V3 } from './bridge/plan'
 import { bridgePoses } from './bridge/motion'
-import { bankGeometry, groundworkGeometry, lashingGeometry, poleGeometry, waterGeometry } from './bridge/build'
+import { STREAM_HALF, bankGeometry, groundworkGeometry, lashingGeometry, poleGeometry, waterGeometry } from './bridge/build'
 import { bridgeSurfaces } from './bridge/surface'
 
 const SLUG = 'bridge-of-poles' as const
@@ -40,6 +41,7 @@ export function build(stack: Stack): ReadyMachineBuild {
   let lashings: Mesh | null = null
   let surfaces: Awaited<ReturnType<typeof bridgeSurfaces>> | null = null
   let lashed = true
+  let reflection: Reflection | null = null
   let mounted = false, disposed = false, failure: string | null = null
   let time = 0
 
@@ -58,7 +60,7 @@ export function build(stack: Stack): ReadyMachineBuild {
     surfaces = await bridgeSurfaces(stack)
     if (disposed) return
     for (const set of surfaces.sets) sets.add(set)
-    for (const m of [surfaces.pole, surfaces.hemp, surfaces.earth, surfaces.water]) materials.add(m)
+    for (const m of [surfaces.pole, surfaces.hemp, surfaces.earth, surfaces.water, surfaces.waterTop]) materials.add(m)
     const hang = (id: string, geometry: BufferGeometry, material: Material, cast = true): Mesh => {
       geometries.add(geometry)
       const mesh = new Mesh(geometry, material)
@@ -85,6 +87,15 @@ export function build(stack: Stack): ReadyMachineBuild {
     lashings.visible = lashed
     hang('bank', bankGeometry(), surfaces.earth)
     hang('stream', waterGeometry(), surfaces.water, false)
+    // the stream's level face: one planar pass at half resolution, as the wing's own stream; calm keeps the sky alone
+    const level = hang('stream-level', new PlaneGeometry(2 * STREAM_HALF, BANK.zMax - BANK.zMin, 1, 1), surfaces.waterTop, false)
+    level.rotation.x = -Math.PI / 2
+    level.position.set(0, BANK.water, (BANK.zMin + BANK.zMax) / 2)
+    level.updateMatrixWorld(true)
+    if (stack.tierName() !== 'calm') {
+      reflection = stack.reflector(level, { resolutionScale: 0.5, bounces: false, generateMipmaps: false })
+      surfaces.mirror(reflection.node)
+    }
     mounted = true
     applyPose(time)
     object.updateMatrixWorld(true)
@@ -133,6 +144,7 @@ export function build(stack: Stack): ReadyMachineBuild {
     dispose() {
       if (disposed) return
       disposed = true
+      reflection?.dispose()
       for (const g of geometries) g.dispose()
       for (const m of materials) m.dispose()
       object.clear()

@@ -7,7 +7,7 @@
  * here, each faded as one pixel comes to hold more than a stroke of it.
  */
 import { Color, MeshStandardNodeMaterial, type Material } from 'three/webgpu'
-import { attribute, cameraPosition, cos, float, fwidth, mix, mx_noise_float, mx_worley_noise_vec2, normalView, normalWorld, positionLocal, positionView, positionWorld, sin, smoothstep, step, uniform, uv, vec2, vec3 } from 'three/tsl'
+import { attribute, cameraPosition, cos, float, fwidth, mix, mx_noise_float, mx_worley_noise_vec2, normalView, normalWorld, positionLocal, positionView, positionWorld, screenUV, sin, smoothstep, step, uniform, uv, vec2, vec3 } from 'three/tsl'
 import type { MaterialSet, Stack } from '../../../../stack'
 import { loadMachineMaterial, materialDressed } from '../parts'
 import { benchKeyDirection } from '../key'
@@ -50,6 +50,9 @@ export interface BridgeSurfaces {
   hemp: Material
   earth: Material
   water: Material
+  waterTop: Material
+  /** hand the level face its planar reflection */
+  mirror: (reflection: unknown) => void
   /** the build clock the lashings wind by; below zero every lashing is off */
   lashClock: { value: number }
   /** the stream's own time */
@@ -168,12 +171,12 @@ export async function bridgeSurfaces(stack: Stack): Promise<BridgeSurfaces> {
     const trodden = float(1).sub(smoothstep(1.2, 2.4, vec2(p.x.add(6.3), p.z.mul(0.6)).length()).mul(0.5).add(0.5)).clamp(0, 1)
     const grassy = smoothstep(0.82, 0.95, up).mul(lip).mul(smoothstep(0.2, 0.55, tufts).mul(0.75).add(0.2)).mul(float(1).sub(trodden.mul(0.6)))
     const wet = float(1).sub(smoothstep(BANK.water - 0.02, BANK.water + 0.18, p.y))
-    const earthCol = lin('#6a5843').mul(luma(ground.albedo).mul(0.6).add(0.55)).mul(float(1).sub(wet.mul(0.42)))
+    const earthCol = lin('#6a5843').mul(luma(ground.albedo).mul(0.4).add(0.68)).mul(float(1).sub(wet.mul(0.42)))
     // the cut face: a section through the bank, darker with depth, its layers
     const cut = float(1).sub(smoothstep(0.2, 0.5, up))
     const strata = sin(p.y.mul(23).add(mx_noise_float(vec3(p.x.mul(0.8), p.y.mul(2), p.z.mul(0.8))).mul(1.3))).mul(0.5).add(0.5)
     const sectionCol = mx(lin('#4f4031'), lin('#6b5a44'), strata.mul(0.5)).mul(luma(ground.albedo).mul(0.5).add(0.6)).mul(smoothstep(BANK.bottom, 0, p.y).mul(0.35).add(0.65))
-    const grassCol = mx(lin('#5d6141'), lin('#6f6a48'), tufts).mul(luma(grass.albedo).mul(0.6).add(0.5))
+    const grassCol = mx(lin('#5d6141'), lin('#6c6847'), tufts).mul(luma(grass.albedo).mul(0.35).add(0.72))
     earth.colorNode = mx(mx(earthCol, grassCol, grassy), sectionCol, cut).mul(ground.occlusion)
     earth.roughnessNode = mx(ground.roughness.max(0.85), float(0.55), wet.mul(0.6))
     grassMat.dispose()
@@ -196,5 +199,18 @@ export async function bridgeSurfaces(stack: Stack): Promise<BridgeSurfaces> {
     water.roughnessNode = float(0.07)
     water.envMapIntensity = 0.42
   }
-  return { pole, hemp, earth, water, lashClock: lashClock as unknown as { value: number }, streamClock: streamClock as unknown as { value: number }, sets }
+  // the level face: the same water, and the bridge and its banks mirrored in it at grazing angles
+  const waterTop = water.clone() as MeshStandardNodeMaterial
+  waterTop.name = 'bridge-of-poles:water-top:plain'
+  const mirror = (reflection: N): void => {
+    const view = cameraPosition.sub(positionWorld).normalize()
+    const fresnel = float(1).sub(normalWorld.dot(view).abs()).pow(5).mul(0.978).add(0.022)
+    // the ripples shift the mirrored picture a little, as a stream's surface does
+    reflection.uvNode = screenUV.flipX().add(normalView.xy.mul(0.035))
+    waterTop.colorNode = (water.colorNode as N).mul(float(1).sub(fresnel))
+    waterTop.emissiveNode = reflection.rgb.mul(fresnel.mul(0.8))
+    waterTop.envMapIntensity = 0.1
+    waterTop.needsUpdate = true
+  }
+  return { pole, hemp, earth, water, waterTop, mirror, lashClock: lashClock as unknown as { value: number }, streamClock: streamClock as unknown as { value: number }, sets }
 }

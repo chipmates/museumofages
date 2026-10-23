@@ -287,20 +287,14 @@ export function bankGeometry(): BufferGeometry {
   return sheet.geometry()
 }
 
-/** The stream: its level face over the channel and its two cut faces where the bank is cut. */
+/** the stream's half width at its level: the level face is a plane of its own, for the mirror */
+export const STREAM_HALF = 4.3
+
+/** The stream's two cut faces where the bank is cut. */
 export function waterGeometry(): BufferGeometry {
   const sheet = new Sheet()
   const zero: V3 = [0, 0, 0]
-  const W = 4.3, nx = 34, nz = 84
-  const start = sheet.position.length / 3
-  for (let j = 0; j <= nz; j++) for (let i = 0; i <= nx; i++) {
-    const x = -W + (2 * W * i) / nx, z = BANK.zMin + ((BANK.zMax - BANK.zMin) * j) / nz
-    sheet.vertex([x, BANK.water, z], [0, 1, 0], x, z, zero, 0)
-  }
-  for (let j = 0; j < nz; j++) for (let i = 0; i < nx; i++) {
-    const a = start + j * (nx + 1) + i, b = a + 1, c = a + nx + 1, d = c + 1
-    sheet.index.push(a, c, b, b, c, d)
-  }
+  const W = STREAM_HALF
   for (const side of [1, -1]) {
     const n = 120, first = sheet.position.length / 3, Z = side > 0 ? BANK.zMax : BANK.zMin
     for (let i = 0; i <= n; i++) {
