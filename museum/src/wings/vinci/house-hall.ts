@@ -1003,7 +1003,8 @@ function tiledFloor(s: Sink, outline: V2[], z: number): void {
     for (const cell of cells) {
       if (cell.length < 3) continue
       const clipped = clipConvex(quad, cell)
-      if (clipped.length < 3 || Math.abs(signedArea(clipped)) < pitch * pitch * .12) continue
+      // small cut pieces are laid too: a missing one shows the dark bed as a notch
+      if (clipped.length < 3 || Math.abs(signedArea(clipped)) < pitch * pitch * .01) continue
       tile(s, clipped, z, rand(i, j, 3.3), c, A)
     }
   }

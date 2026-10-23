@@ -330,8 +330,8 @@
   },
   {
    "file": "src/wings/vinci/house-hall.ts",
-   "sha256": "08ffec859b529ce512220029b37138d1fbae95394596752988ef904f490e0d8c",
-   "bytes": 174575,
+   "sha256": "0177152fcea1eac2a3fb93586ccf3ea1cbd56fe754637a7f8903039c97607d3a",
+   "bytes": 174659,
    "unchangedDuringAudit": true
   },
   {
