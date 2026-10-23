@@ -548,6 +548,10 @@ html:has(#wing[data-phone-form]) #instruments .inst-close {
 .film-box[data-look='true'] .film-book.vinci-phone-earlier {display:flex;}
 .film-box[data-look='true'] .film-book:not(.vinci-phone-earlier) {display:none;}
 .vinci-phone-earlier:disabled {opacity:.45;cursor:default;}
+/* a close look's one close stands at its top, as on the film's upright phone: the way back's seat stands down
+   (its triangle is hidden in a look, and this form has no cross to show) and the work before takes it */
+#wing[data-phone-form] .film-box[data-look='true'] .film-foot > .film-back {display:none;}
+#wing[data-phone-form] .film-box[data-look='true']:not([data-end='true']) .film-foot > .vinci-phone-earlier {left:16px;}
 /* the panel's own sound and plan rows stand down in the wing, as on the desk:
    the wing plays no sound, and the plan is one of the wing's rows */
 html:has(#wing[data-phone-form]) :is(#inst-sound,#inst-plan) {display:none;}

@@ -92,6 +92,8 @@ function aimedFrom(pose:Pose,heading:number,pitch:number,fov:number):Pose {
 const standing=(e:number,n:number):Pose=>{const h=groundHeight(e,n)+1.65;return p(e,n,h,e,n,h)}
 /** The eye in the great hall's door, on the axis of the three doors. */
 const HALL_DOOR=p(-4.2388,-11.0992,2.45,-4.2388,-11.0992,2.45)
+/** The phone's eye in the hall, in its south-east corner. */
+const HALL_PHONE_EYE=p(-4.0672,-13.2175,2.45,-4.0672,-13.2175,2.45)
 /** The body wall's phone eye, on the grid's axis 6.7 m off the frames: at a
  * 64 degree lens the grid takes four fifths of a 390 px stage and the sheet
  * apart is the next stop, not a speck at the frame's edge. The lens is the
@@ -167,13 +169,17 @@ function authoredStationPose(id:VinciStationId, narrow:boolean):Pose {
   // passage's side door, the service passage and the hall's door stand on one
   // axis, and the eye stands forty centimetres inside the last of them, looking
   // down it at the west windows the hour's sun comes through; the wide frame
-  // turns four degrees onto the table and holds the whole west wall. THE
-  // PHONE'S HERO IS THE LION. From the door the lion, the inclinometer and
-  // the compass span 25 degrees: turned onto their middle at a 60 degree
-  // lens all three stand whole, the lion largest at the left; turned onto the
-  // table alone the lion stood outside the frame. It looks down 18 degrees,
-  // which stands the three above the card on a 664 px stage too.
-  if(id==='hall') return narrow?aimedFrom(HALL_DOOR,-128,-18,60):aimedFrom(HALL_DOOR,-119,-4,52)
+  // turns onto the table with the lion whole at its left. THE PHONE'S ONE
+  // HERO IS THE LION, with its room behind it: from the hall's south-east
+  // corner the lion turns its chest and open flank to the eye, the two west
+  // windows behind it and the table with both its pieces whole past its
+  // sunlit hindquarters, the lion two thirds of a 52 degree field, the eye
+  // six tenths of a metre off both walls. Its window above the words is the master's band 0.11 to 0.57
+  // on every phone, so the eye looks two degrees down and its shift lens
+  // lifts the lion's middle to about a third of the height, its feet just
+  // under the half; pitched further, the room's verticals leaned past a
+  // degree and a half.
+  if(id==='hall') return narrow?{...aimedFrom(HALL_PHONE_EYE,-110.14,-2,93.09),shift:-.623}:aimedFrom(HALL_DOOR,-124,-8,58)
   // THE CHAPEL IS THE ONE HERO. Square on from the court it was a wall of
   // ashlar in the house's shadow with nothing behind it; from the foot of the
   // raised lawn the gable took the left half of the frame, the gable the study
@@ -490,8 +496,9 @@ const RAIL_TERRACE_LOOK:Readonly<Record<string,{keys:readonly (readonly [RailWay
 /** Stretches walked without a stand, never backward. */
 const RAIL_FLIGHTS:readonly (readonly [RailWaypoint,RailWaypoint])[]=[[railAccessWaypoints[1]!,railAccessWaypoints[2]!]]
 /** An exhibit whose viewing eye stands outside its station's room is walked
- * to and from as a route: out of the room's door facing it. */
-const RAIL_WALKED_APPROACHES:ReadonlySet<string>=new Set(['machine/proportional-compass'])
+ * to and from as a route: out of the room's door facing it. None does: the
+ * compass, the last, stands on the hall's table, read as the inclinometer is. */
+const RAIL_WALKED_APPROACHES:ReadonlySet<string>=new Set<string>()
 /** THE LINKS WALKED LOOKING AT WHERE THEY GO, by their pair of exhibits: the
  * view turns toward the next object as the walk sets off and holds it in the
  * frame all the way. A pan between the two held views walked sideways past

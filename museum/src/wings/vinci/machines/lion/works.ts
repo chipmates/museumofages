@@ -367,6 +367,84 @@ export const LILIES: readonly { x: number; y: number; z: number; s: number; back
   { x: 0.088, y: 0.594, z: 0.001, s: 0.34, back: true },
 ]
 
+/** A forged strap along a path in the xz plane at height y, lying on its
+ * outer side: t thick, w wide (y) times the profile at each station's share of its length. */
+function strapRibbon(path: readonly (readonly [number, number])[], y: number, w: number, t: number, prof: (u: number) => number): Geo {
+  const n = path.length, pos: number[] = [], idx: number[] = []
+  const len: number[] = [0]
+  for (let i = 1; i < n; i++) len.push(len[i - 1]! + Math.hypot(path[i]![0] - path[i - 1]![0], path[i]![1] - path[i - 1]![1]))
+  const L = len[n - 1]!
+  // per station: the outward normal in xz (the path's tangent turned a quarter), the half width
+  const st = path.map((p, i) => {
+    const a = path[Math.max(i - 1, 0)]!, b = path[Math.min(i + 1, n - 1)]!
+    const tx = b[0] - a[0], tz = b[1] - a[1], tl = Math.hypot(tx, tz) || 1
+    const hw = (w / 2) * prof(len[i]! / L)
+    return { x: p[0], z: p[1], nx: tz / tl, nz: -tx / tl, hw }
+  })
+  // four sides, each with its own vertices so the edges stay crisp: outer, top, inner, bottom
+  const corner = (s: typeof st[number], o: number, u: number): [number, number, number] =>
+    [s.x + s.nx * o * t / 2, y + u * s.hw, s.z + s.nz * o * t / 2]
+  const sides: [number, number, number, number][] = [[1, -1, 1, 1], [1, 1, -1, 1], [-1, 1, -1, -1], [-1, -1, 1, -1]]
+  for (const [o0, u0, o1, u1] of sides) {
+    const base = pos.length / 3
+    for (const s of st) pos.push(...corner(s, o0, u0), ...corner(s, o1, u1))
+    for (let i = 0; i + 1 < n; i++) { const k = base + i * 2; idx.push(k, k + 2, k + 1, k + 1, k + 2, k + 3) }
+  }
+  // the two ends
+  for (const [i, flip] of [[0, true], [n - 1, false]] as const) {
+    const s = st[i]!, base = pos.length / 3
+    pos.push(...corner(s, 1, -1), ...corner(s, 1, 1), ...corner(s, -1, 1), ...corner(s, -1, -1))
+    if (flip) idx.push(base, base + 1, base + 2, base, base + 2, base + 3)
+    else idx.push(base, base + 2, base + 1, base, base + 3, base + 2)
+  }
+  const g = new BufferGeometry()
+  g.setAttribute('position', new Float32BufferAttribute(pos, 3))
+  g.setIndex(idx)
+  const flat = g.toNonIndexed()
+  flat.computeVertexNormals()
+  return flat
+}
+/** The doors' strap hinges, on their outer faces: from each outer knuckle a
+ * forged strap runs in across the breast, lying on the carving (surfZ: the
+ * +x door's outer face at (x, y), rest frame), three nails along it. In the
+ * rest frame, for the door on side. */
+export function doorStrapGeometry(surfZ: (x: number, y: number) => number, side: number): Geo {
+  const out: Geo[] = []
+  const w = 0.016, t = 0.0032, reach = 0.088
+  const [hx, hy, hz] = K.HINGE
+  // drawn down from the knuckle, then a spade: a swelling and a blunt point
+  const spade = (u: number): number => u < 0.78 ? 1 - 0.4 * u / 0.78
+    : u < 0.88 ? 0.6 + 0.3 * Math.sin(Math.PI / 2 * (u - 0.78) / 0.1)
+      : 0.9 - 0.72 * Math.pow((u - 0.88) / 0.12, 0.8)
+  for (const dy of [-0.056, 0.056]) {
+    const y = hy + dy
+    // the face across the strap's width, its upper envelope smoothed so the strap
+    // bends with the carving and not with the lookup's 4 mm cells
+    const xs: number[] = []
+    for (let x = hx - 0.008; x >= hx - reach - 1e-6; x -= 0.002) xs.push(x)
+    const raw = xs.map(x => Math.max(surfZ(x, y - w / 2), surfZ(x, y), surfZ(x, y + w / 2)))
+    const env = raw.map((_, i) => Math.max(...raw.slice(Math.max(i - 2, 0), i + 3)))
+    const smooth = env.map((_, i) => { const win = env.slice(Math.max(i - 3, 0), i + 4); return win.reduce((a, b) => a + b, 0) / win.length })
+    const path: [number, number][] = [[hx, hz]]
+    xs.forEach((x, i) => path.push([x, Math.max(smooth[i]!, raw[i]!) + t / 2 + 0.0005]))
+    const strap = strapRibbon(path, y, w, t, spade)
+    out.push(strap)
+    // nails, domed, standing on the strap's outer face, the last in the spade
+    for (const k of [0.3, 0.56, 0.86]) {
+      const i = Math.round(k * (path.length - 1)), p = path[i]!, q = path[Math.min(i + 1, path.length - 1)]!, o = path[Math.max(i - 1, 0)]!
+      const tx = q[0] - o[0], tz = q[1] - o[1], tl = Math.hypot(tx, tz) || 1
+      const nrm = new Vector3(tz / tl, 0, -tx / tl)
+      const d = new SphereGeometry(0.0032, 10, 5, 0, Math.PI * 2, 0, Math.PI / 2)
+      d.scale(1, 0.6, 1)
+      d.applyQuaternion(new Quaternion().setFromUnitVectors(new Vector3(0, 1, 0), nrm))
+      d.translate(p[0] + nrm.x * t / 2, y, p[1] + nrm.z * t / 2)
+      out.push(d)
+    }
+  }
+  const g = merge(out.map(x => x.index ? x.toNonIndexed() : x))
+  return side > 0 ? g : mirrorX(g)
+}
+/** Iron hinge pins and knuckles for a door, about the hinge axis. */
 /** Iron hinge pins and knuckles for a door, about the hinge axis. */
 export function hingeGeometry(): Geo {
   const out: Geo[] = [new CylinderGeometry(0.0075, 0.0075, 0.16, 12)]

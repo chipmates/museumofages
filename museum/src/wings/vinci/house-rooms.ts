@@ -22,7 +22,7 @@ interface DossierOpening { id: string; type: string; from_m: number; width_m: nu
 interface DossierFacade { id: string; from: V2; to: V2; length_m: number; render: boolean; openings: DossierOpening[] }
 interface DossierWall { facade_id?: string; thickness_m: number; render: boolean }
 interface DossierRoom { id: string; polygon: V2[]; height_m: number; floor_material: string; wall_material: string
-  ceiling: { type: string; beam_spacing_m: number; beam_section_m: V2 }; openings: { id: string; type: string; facade_opening?: string }[] }
+  ceiling: { type: string; beam_spacing_m: number; beam_section_m: V2 }; openings: { id: string; type: string; facade_opening?: string; connects_to?: string; wall?: string; from_m?: number; width_m?: number; height_m?: number }[] }
 interface DossierFloor { id: string; level_m: number; rooms: DossierRoom[] }
 function values(x: unknown): unknown {
   if (!x || typeof x !== 'object') return x
@@ -143,7 +143,7 @@ class Sink {
   }
 }
 
-interface RoomBuild { id: string; level: number; edges: WallEdge[]; apertures: Aperture[]; patches: V3[][]; ceilingZ: number; vault: boolean; start: number; end: number }
+interface RoomBuild { id: string; level: number; edges: WallEdge[]; apertures: Aperture[]; patches: V3[][]; ceilingZ: number; vault: boolean; start: number; end: number; doors: HallDoor['light'][] }
 
 function apertureOf(edge: WallEdge, opening: DossierOpening, level: number): Aperture | null {
   const f = edge.facade!, fr = frame(f), t = edge.thickness!
@@ -223,8 +223,9 @@ export function createHouseRooms(cell = CELL): HouseRooms {
     const patches = apertures.map(ap => sunPatch(ap, level, polygon2)).filter((p): p is V3[] => p !== null)
     const start = sink.pending.length
     const ceilingZ = level + height
-    buildRoom(sink, room, edges, level, ceilingZ, vault, cell)
-    builds.push({ id: room.id, level, edges, apertures, patches, ceilingZ, vault, start, end: sink.pending.length })
+    const hallDoors = hallDoorsOf(room, edges, level)
+    buildRoom(sink, room, edges, level, ceilingZ, vault, cell, hallDoors)
+    builds.push({ id: room.id, level, edges, apertures, patches, ceilingZ, vault, start, end: sink.pending.length, doors: hallDoors.map(d => d.light) })
   }
   // BAKE, once: what each vertex sees of the windows of its own room, and
   // what the floor's sun patches send it.
@@ -237,7 +238,7 @@ export function createHouseRooms(cell = CELL): HouseRooms {
       let light = baked.get(key)
       if (!light) {
         let sky = 0, ground = 0
-        for (const ap of b.apertures) {
+        for (const ap of [...b.apertures, ...b.doors]) {
           const f = formFactor(v.p, v.n, ap.corners, ap.inward, 2) * ap.transmit
           // Looking down through a window a surface sees the court, not the sky.
           if (ap.centre[2] > v.p[2]) sky += f; else ground += f
@@ -274,8 +275,39 @@ export function createHouseRooms(cell = CELL): HouseRooms {
   return { group, rooms: builds.map(b => b.id), openedBacks, triangles }
 }
 
+/** A door of this room into the great hall: where it stands on which of the
+ * room's edges, and the opening as a light, the lit hall seen through it. */
+interface HallDoor { edge: WallEdge; s0: number; s1: number; z1: number; light: { corners: V3[]; centre: V3; inward: V3; transmit: number } }
+/** The hall is lit by its sun patches: seen through its door it is a dim
+ * window's worth of light. */
+const HALL_DOOR_TRANSMIT = .3
+function hallDoorsOf(room: DossierRoom, edges: WallEdge[], level: number): HallDoor[] {
+  const out: HallDoor[] = []
+  for (const o of room.openings) {
+    if (o.type !== 'door' || o.connects_to !== 'hall' || !o.wall || o.from_m === undefined || !o.width_m || !o.height_m) continue
+    const k = 'ABCD'.indexOf(o.wall.slice(-1)), p0 = room.polygon[k], p1 = room.polygon[(k + 1) % room.polygon.length]
+    if (k < 0 || !p0 || !p1) continue
+    const wl = Math.hypot(p1[0] - p0[0], p1[1] - p0[1]), wd: V2 = [(p1[0] - p0[0]) / wl, (p1[1] - p0[1]) / wl]
+    const ends = [o.from_m, o.from_m + o.width_m].map(t => [p0[0] + wd[0] * t, p0[1] + wd[1] * t] as V2)
+    for (const edge of edges) {
+      if (edge.facade) continue
+      const dx = edge.b[0] - edge.a[0], dy = edge.b[1] - edge.a[1], l = Math.hypot(dx, dy)
+      if (l < .05) continue
+      const inward: V3 = [-dy / l, dx / l, 0]
+      if (ends.some(q => Math.abs((q[0] - edge.a[0]) * inward[0] + (q[1] - edge.a[1]) * inward[1]) > .05)) continue
+      const along = ends.map(q => (q[0] - edge.a[0]) * dx / l + (q[1] - edge.a[1]) * dy / l).sort((x, y) => x - y)
+      if (along[0]! < -.05 || along[1]! > l + .05) continue
+      const s0 = Math.max(0, along[0]!), s1 = Math.min(l, along[1]!), z1 = level + o.height_m
+      const at = (t: number, z: number): V3 => [edge.a[0] + dx / l * t, edge.a[1] + dy / l * t, z]
+      const corners = [at(s0, level), at(s1, level), at(s1, z1), at(s0, z1)]
+      out.push({ edge, s0, s1, z1, light: { corners, centre: scale(corners.reduce(add, [0, 0, 0] as V3), .25), inward, transmit: HALL_DOOR_TRANSMIT } })
+    }
+  }
+  return out
+}
+
 const CELL = .45
-function buildRoom(sink: Sink, room: DossierRoom, edges: WallEdge[], level: number, ceilingZ: number, vault: boolean, cell: number): void {
+function buildRoom(sink: Sink, room: DossierRoom, edges: WallEdge[], level: number, ceilingZ: number, vault: boolean, cell: number, hallDoors: HallDoor[] = []): void {
   const seed = rand(room.polygon[0]![0], room.polygon[0]![1])
   const poly = edges.map(e => e.a)
   const e0 = edges[0]!, u: V2 = [e0.b[0] - e0.a[0], e0.b[1] - e0.a[1]], ul = Math.hypot(u[0], u[1]), ud: V2 = [u[0] / ul, u[1] / ul], vd: V2 = [-ud[1], ud[0]]
@@ -311,6 +343,8 @@ function buildRoom(sink: Sink, room: DossierRoom, edges: WallEdge[], level: numb
     if (l < .05) continue
     const inward: V3 = [-dy / l, dx / l, 0]
     const holes: [number, number, number, number][] = []
+    // THE HALL'S DOOR stands open, so the partition it passes through is cut
+    for (const d of hallDoors) if (d.edge === edge) holes.push([d.s0, d.s1, level, d.z1])
     if (edge.facade) {
       const fr = frame(edge.facade), sa = (edge.a[0] - edge.facade.from[0]) * fr.dir[0] + (edge.a[1] - edge.facade.from[1]) * fr.dir[1]
       // an aperture within a hand of the room's corner or floor takes that

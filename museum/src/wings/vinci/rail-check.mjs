@@ -216,7 +216,7 @@ for(const phone of [false,true]) {
    * here, against the standing station's own plate. */
   check(viewport,'Only the latest shared-pose station completes without resetting the settled gaze',()=>{
     const h=harness(phone,'hall'),plate=h.pose('hall')
-    const share=id=>h.rail.set(id,{eye:plate.eye.clone(),at:plate.at.clone(),fov:plate.fov},false,phone)
+    const share=id=>h.rail.set(id,{eye:plate.eye.clone(),at:plate.at.clone(),fov:plate.fov,...(plate.shift!==undefined?{shift:plate.shift}:{})},false,phone)
     const stands=id=>{
       ensure(h.rail.navigation.completed===id,'Wrong actual completed semantic station: '+id)
       ensure(h.camera.position.distanceTo(plate.eye)<1e-8,'The shared plate was left: '+id)
