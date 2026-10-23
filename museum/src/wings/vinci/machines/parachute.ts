@@ -1,4 +1,5 @@
-import { Mesh, type Material } from 'three/webgpu'
+import { Mesh, MeshStandardNodeMaterial, type Material, type Node } from 'three/webgpu'
+import { vec3 } from 'three/tsl'
 import type { Stack } from '../../../stack'
 import { sealedLinen } from '../collection/court-linen'
 import { machineCatalog } from './catalog'
@@ -14,6 +15,13 @@ export function build(stack: Stack): ReadyMachineBuild {
   const restore: (() => void)[] = []
   void machine.ready.then(() => {
     machine.object.traverse(child => {
+      // shaved fir is new work, paler and warmer than the library's weathered beams
+      const wood = child instanceof Mesh ? child.material : null
+      if (wood instanceof MeshStandardNodeMaterial && /:fir pole/.test(wood.name) && wood.colorNode && !wood.userData['fir']) {
+        wood.colorNode = (wood.colorNode as Node<'vec3'>).mul(vec3(1.35, 1.16, .86))
+        wood.userData['fir'] = true
+        wood.needsUpdate = true
+      }
       if (!(child instanceof Mesh) || child.userData['partId'] !== 'canopy') return
       const built = child.material as Material, cloth = sealedLinen('vinci/machine/parachute/sealed-linen', 1)
       child.material = cloth
