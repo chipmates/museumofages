@@ -299,7 +299,8 @@ export function waterGeometry(): BufferGeometry {
   const zero: V3 = [0, 0, 0]
   const W = STREAM_HALF
   for (const side of [1, -1]) {
-    const n = 120, first = sheet.position.length / 3, Z = side > 0 ? BANK.zMax : BANK.zMin
+    // 4 mm inside the bank's own cut: where their edges cross, the earth's face stands in front, never in one plane with it
+    const n = 120, first = sheet.position.length / 3, Z = side > 0 ? BANK.zMax - 0.004 : BANK.zMin + 0.004
     for (let i = 0; i <= n; i++) {
       const x = -W + (2 * W * i) / n
       const floor = Math.min(BANK.water, groundY(x, Z))
