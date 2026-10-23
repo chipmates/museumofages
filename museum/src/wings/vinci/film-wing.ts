@@ -91,8 +91,8 @@ const ARROW_ON = 'M3 8h10M9 4l4 4-4 4', ARROW_UP = 'M8 13V3M4 7l4-4 4 4', ARROW_
 const MENU = 'M3 3.5h10M3 8h10M3 12.5h10'
 const TRIANGLE_BACK = 'M11 3.5L4.5 8 11 12.5z'
 const STEP_BACK = 'M10 3L5 8l5 5'
-/** a closer look's sign: the circled plus that reads as nearer */
-const NEARER = 'M8 2.5a5.5 5.5 0 1 0 0 11a5.5 5.5 0 1 0 0-11M8 5.6v4.8M5.6 8h4.8'
+/** a closer look's sign: the plus in a square, the desk's own key; gold and round is the way on's alone */
+const NEARER = 'M3 3h10v10H3zM8 5.6v4.8M5.6 8h4.8'
 const RING = 2 * Math.PI * 20.5
 /** the most a mark is lifted to stand clear of the phone's box: sideways
     takes 28; upright the Baptism's mark needs 37 at 390x664 and 41 at 375x667 */
