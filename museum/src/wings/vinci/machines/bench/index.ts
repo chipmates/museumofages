@@ -1,6 +1,7 @@
-import { Box3, type BufferGeometry, Color, Fog, Group, Mesh, MeshStandardNodeMaterial, PerspectiveCamera, type PlaneGeometry, Scene, Vector3 } from 'three/webgpu';
+import { Box3, type BufferGeometry, Color, Fog, Group, type Light, Mesh, MeshStandardNodeMaterial, PerspectiveCamera, type PlaneGeometry, Scene, SpotLight, Vector3 } from 'three/webgpu';
+import { kelvinToColour } from '../../../../stack/light';
 import type { Stack, KeyLight, MaterialSet } from '../../../../stack';
-import { float, fog, positionWorld, rangeFogFactor, smoothstep, uv, vec3 } from 'three/tsl';
+import { float, fog, lights, positionWorld, rangeFogFactor, smoothstep, uv, vec3 } from 'three/tsl';
 import { IDENTITY } from '../../../../stack/grade';
 import { loadManifest, type ManifestEntry } from '../../../../manifest';
 import { assetAddress } from '../../../../stack/materials';
@@ -46,6 +47,22 @@ export interface BenchOptions {
   eye?: { at: [number, number, number]; look: [number, number, number]; fov?: number; frame?: [number, number, number, number] };
   /** a grey figure of 1.70 m for size, at (x, z) on the plinth or (x, y, z) on a lower floor, turned by yaw degrees */
   figure?: { at: [number, number] | [number, number, number]; yaw?: number };
+  /** this jump's own lamps in place of the machine's (a probe) */
+  lamp?: BenchLamp[] | null;
+  /** this jump's own share of the sky on the machine's surfaces (a probe) */
+  fill?: number;
+  /** this jump's own strength of the hour's sun, in lux (a probe) */
+  lux?: number;
+}
+/** An exhibition lamp on one machine, beside the hour's key: a spot in the
+ * machine's metres, its illuminance in lux at its aim, its cone in radians.
+ * It lights the machine and the figure beside it, not the room. */
+export interface BenchLamp {
+  at: [number, number, number]; aim: [number, number, number]; lux: number; kelvin: number; angle: number; penumbra: number;
+  /** 2: a real lamp's inverse square, its lux read at the aim; 0 (the default): the same lux at every distance */
+  decay?: 0 | 2;
+  /** false: no shadow map; each shadowed lamp draws the scene again every frame */
+  shadow?: false;
 }
 const el = <K extends keyof HTMLElementTagNameMap>(tag: K, cls: string, text?: string): HTMLElementTagNameMap[K] => { const n = document.createElement(tag); n.className = cls; if (text !== undefined)
   n.textContent = text; return n; };
@@ -188,7 +205,7 @@ export function createBench(stack: Stack, onExit: () => void) {
   const metrics = createBenchMetrics(stack, host);
   let metricsTier = metrics ? stack.tierName() : null;
   let closeUp = false;
-  let eye: BenchOptions['eye'] | null = null, figure: BenchOptions['figure'] | null = null;
+  let eye: BenchOptions['eye'] | null = null, figure: BenchOptions['figure'] | null = null, figureGroup: Group | null = null;
   let active = false, serial = 0, slug: MachineSlug = 'aerial-screw', lang: Language = controlLanguage(location.search), machine: ReadyMachineBuild | null = null, key: KeyLight | null = null, ready = false, lastWall = performance.now(), folioEntry: ManifestEntry | undefined, evidenceRecord: EvidenceRecord | null = null, sectionEnabled = false, lastPlaybackPaint = 0;
   let schedule = playbackSchedule(machineCatalog[slug].dossier);
   let playbackState = initialPlayback(schedule, { fixed: true });
@@ -202,7 +219,7 @@ export function createBench(stack: Stack, onExit: () => void) {
   const stamp = () => { document.body.dataset['forge'] = 'bench'; document.body.dataset['phase'] = 'bench'; };
   let ropeExperiment: ReturnType<typeof applyRopeShadowExperiment> | null = null;
   let storeCrane: StoreCraneReading | null = null;
-  function clearDisplay() { storeCrane = null; ropeExperiment?.restore(); ropeExperiment = null; metrics?.close(); machine?.dispose(); machine = null; display.clear(); for (const g of supportGeometries)
+  function clearDisplay() { dropLamps(); figureGroup = null; storeCrane = null; ropeExperiment?.restore(); ropeExperiment = null; metrics?.close(); machine?.dispose(); machine = null; display.clear(); for (const g of supportGeometries)
     g.dispose(); for (const m of supportMaterials)
     m.dispose(); supportGeometries.length = 0; supportMaterials.length = 0; supportSets.length = 0; }
   function reading(record: EvidenceRecord) {
@@ -483,6 +500,7 @@ export function createBench(stack: Stack, onExit: () => void) {
       scale.group.position.set(fx, fy, fz);
       scale.group.rotation.y = (figure.yaw ?? 0) * Math.PI / 180;
       display.add(scale.group);
+      figureGroup = scale.group;
       supportGeometries.push(scale.geometry);
       supportMaterials.push(scale.material);
     }
@@ -510,14 +528,71 @@ export function createBench(stack: Stack, onExit: () => void) {
     const bare = supportSets.filter(set => !materialDressed(set)).map(set => `${set.name} undressed (${materialFailure(set) ?? 'no maps yet'})`);
     return { mounted: state.mounted, dressed: state.dressed && bare.length === 0, error: [state.error, ...bare].filter(Boolean).join('; ') || null };
   }
+  /** A machine whose working faces turn down or away from the hour's sun
+   * takes more of the sky and a paler bounce off the stone it stands on, or
+   * its own exhibition lamps. The hour, the sun's place and every other
+   * machine's light stay as they are. */
+  const OWN_LIGHT: Partial<Record<MachineSlug, { lux: number; ambient: number; ground: string; lamps?: { closed?: BenchLamp[]; section?: BenchLamp[] }; fill?: { closed?: number; section?: number }; sectionLux?: number }>> = {
+  };
+  let lamps: SpotLight[] = [], lampProbe: BenchLamp[] | null | undefined, fillProbe: number | undefined, luxProbe: number | undefined;
+  const lampLit = new Set<MeshStandardNodeMaterial>(), filled = new Set<MeshStandardNodeMaterial>();
+  function dropLamps() { for (const m of lampLit) { m.lightsNode = null; m.needsUpdate = true; } lampLit.clear(); for (const m of filled) { m.envMap = null; m.envMapIntensity = 1; m.needsUpdate = true; } filled.clear(); for (const lamp of lamps) lamp.dispose(); lamps = []; }
+  /** A machine's own lamps for the state it stands in: given to its own surfaces and the figure's, so the room
+   * keeps the hour's key alone. */
+  function lampMachine() {
+    const state = sectionEnabled ? 'section' : 'closed';
+    const specs = lampProbe !== undefined ? lampProbe ?? [] : OWN_LIGHT[slug]?.lamps?.[state] ?? [];
+    const fill = fillProbe ?? OWN_LIGHT[slug]?.fill?.[state];
+    const own = OWN_LIGHT[slug], lux = luxProbe ?? (sectionEnabled ? own?.sectionLux : undefined) ?? own?.lux;
+    // the hour's sun at this machine's own strength for the state it stands in
+    if (key && own && lux !== undefined) key.light.intensity = lux / 100;
+    if (!specs.length && !lamps.length && fill === undefined && !filled.size) return;
+    dropLamps();
+    if (!machine) return;
+    // the sky's share on the machine's own surfaces: less of it lets the one light model a form's turn
+    if (fill !== undefined && scene.environment) machine.object.traverse(node => {
+      if (!(node instanceof Mesh)) return;
+      for (const m of Array.isArray(node.material) ? node.material : [node.material]) {
+        if (!(m instanceof MeshStandardNodeMaterial) || filled.has(m)) continue;
+        m.envMap = scene.environment; m.envMapIntensity = fill; m.needsUpdate = true; filled.add(m);
+      }
+    });
+    if (!specs.length) return;
+    for (const spec of specs) {
+      const at = new Vector3(...spec.at), aim = new Vector3(...spec.aim), reach = at.distanceTo(aim), decay = spec.decay ?? 0;
+      const lamp = new SpotLight(kelvinToColour(spec.kelvin), spec.lux / 100 * (decay === 2 ? reach * reach : 1), 0, spec.angle, spec.penumbra, decay);
+      lamp.position.copy(at);
+      lamp.target.position.copy(aim);
+      lamp.castShadow = spec.shadow !== false;
+      lamp.shadow.mapSize.set(2048, 2048);
+      lamp.shadow.camera.near = Math.max(.5, reach - 9);
+      lamp.shadow.camera.far = reach + 12;
+      lamp.shadow.bias = -.0002;
+      lamp.shadow.normalBias = .01;
+      lamp.updateMatrixWorld(true);
+      lamp.target.updateMatrixWorld(true);
+      lamps.push(lamp);
+    }
+    const hour: Light[] = [];
+    scene.traverse(node => { if ((node as Light).isLight) hour.push(node as Light); });
+    const lit = lights([...hour, ...lamps]);
+    for (const root of [machine.object, figureGroup]) root?.traverse(node => {
+      if (!(node instanceof Mesh)) return;
+      for (const m of Array.isArray(node.material) ? node.material : [node.material]) {
+        if (!(m instanceof MeshStandardNodeMaterial) || lampLit.has(m)) continue;
+        m.lightsNode = lit; m.needsUpdate = true; lampLit.add(m);
+      }
+    });
+  }
   function lightBench() {
     const scale = machineCatalog[slug].dossier.scale_m, span = Math.max(scale.x, scale.y, scale.z);
+    const own = OWN_LIGHT[slug];
     key?.dispose();
     // The far cascade is a box around the origin. It has to contain the wall
     // as well as the machine, or the floor between them takes no shadow
     // lookup at all and draws as a hard edged quad.
     const reach = BENCH_BACK_PLANE ? Math.max(span * 3.4, BACK_PLANE_METRES * 1.45) : span * 3.4;
-    key = stack.light({ azimuth: BENCH_SUN_AZIMUTH_DEGREES, elevation: BENCH_SUN_ELEVATION_DEGREES, kelvin: 4800, lux: 185, ambient: .72, reach: Math.max(24, span * 6, reach * 2.2), cascades: [span * 1.25, reach], sky: { zenith: '#707579', horizon: '#b1a895', ground: '#343532', stars: 0 } });
+    key = stack.light({ azimuth: BENCH_SUN_AZIMUTH_DEGREES, elevation: BENCH_SUN_ELEVATION_DEGREES, kelvin: 4800, lux: own?.lux ?? 185, ambient: own?.ambient ?? .72, reach: Math.max(24, span * 6, reach * 2.2), cascades: [span * 1.25, reach], sky: { zenith: '#707579', horizon: '#b1a895', ground: own?.ground ?? '#343532', stars: 0 } });
     key.light.shadow.normalBias = span * .0002;
     key.light.shadow.bias = -span * .00001;
     // the surfaces that give an edge its rim answer to the light that is
@@ -529,8 +604,8 @@ export function createBench(stack: Stack, onExit: () => void) {
     const requestedEvidence = opts.evidence === undefined ? null : opts.evidence === requested ? machineCatalog[requested] : partialCatalog.find(record => record.slug === opts.evidence);
     if (opts.evidence !== undefined && !requestedEvidence) throw new Error(`No evidence record for ${requested}: ${opts.evidence}`);
     evidence.close(false);
-    const mine = ++serial; active = true; host.hidden = false; ready = false; loading.hidden = false; clearDisplay(); folioEntry = undefined; folio.replaceChildren(); slug = requested; evidenceRecord = machineCatalog[slug]; lang = controlLanguage(location.search, opts.lang); schedule = playbackSchedule(machineCatalog[slug].dossier); playbackState = initialPlayback(schedule, { t: opts.t, fixed: document.body.classList.contains('forge'), reducedMotion: reduced.matches }); lastWall = performance.now(); stamp(); stack.setScene(scene, camera, { ...IDENTITY, name: 'vinci-machine-bench', exposure: .95, grain: .004, ao: { intensity: 1, distance: Math.max(...Object.values(machineCatalog[slug].dossier.scale_m).filter((v): v is number => typeof v === 'number')) * .025, thickness: 1 } }); lightBench(); machine = buildMachine(slug, stack); closeUp = opts.close ?? false; eye = opts.eye ?? null; figure = opts.figure ?? null; sectionEnabled = (slug === 'camera-obscura' || slug === 'mechanical-lion') && (opts.section ?? false); machine.section(sectionEnabled); display.add(machine.object); compose(); paint(); await Promise.all([machine.ready, supports(mine), plateFor(mine)]); if (mine !== serial)
-    return; machine.animate(playbackState.clock, 0);
+    const mine = ++serial; active = true; host.hidden = false; ready = false; loading.hidden = false; clearDisplay(); folioEntry = undefined; folio.replaceChildren(); slug = requested; evidenceRecord = machineCatalog[slug]; lang = controlLanguage(location.search, opts.lang); schedule = playbackSchedule(machineCatalog[slug].dossier); playbackState = initialPlayback(schedule, { t: opts.t, fixed: document.body.classList.contains('forge'), reducedMotion: reduced.matches }); lastWall = performance.now(); stamp(); stack.setScene(scene, camera, { ...IDENTITY, name: 'vinci-machine-bench', exposure: .95, grain: .004, ao: { intensity: 1, distance: Math.max(...Object.values(machineCatalog[slug].dossier.scale_m).filter((v): v is number => typeof v === 'number')) * .025, thickness: 1 } }); lightBench(); machine = buildMachine(slug, stack); closeUp = opts.close ?? false; eye = opts.eye ?? null; figure = opts.figure ?? null; lampProbe = opts.lamp; fillProbe = opts.fill; luxProbe = opts.lux; sectionEnabled = (slug === 'camera-obscura' || slug === 'mechanical-lion') && (opts.section ?? false); machine.section(sectionEnabled); display.add(machine.object); compose(); paint(); await Promise.all([machine.ready, supports(mine), plateFor(mine)]); if (mine !== serial)
+    return; machine.animate(playbackState.clock, 0); lampMachine();
     if(key){
       const towardKey=vec3(key.direction.x,key.direction.y,key.direction.z).mul(.03);
       machine.object.traverse(node=>{
@@ -559,7 +634,7 @@ export function createBench(stack: Stack, onExit: () => void) {
     history.pushState({}, '', `/bench/vinci/machines/${id}${location.search}`);
     void open({ slug: id });
   } }
-  section.onclick = () => { sectionEnabled = !sectionEnabled; machine?.section(sectionEnabled); compose(); paint(); metrics?.reset(); };
+  section.onclick = () => { sectionEnabled = !sectionEnabled; machine?.section(sectionEnabled); lampMachine(); compose(); paint(); metrics?.reset(); };
   previous.onclick = () => navigate(-1);
   next.onclick = () => navigate(1);
   select.onchange = () => { history.pushState({}, '', `/bench/vinci/machines/${select.value}${location.search}`); void open({ slug: select.value }); };

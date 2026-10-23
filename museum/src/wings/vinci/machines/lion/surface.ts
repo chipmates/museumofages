@@ -5,10 +5,10 @@
  * frame is oak and the works iron and brass, from the library's own sets.
  * Per-vertex occlusion and convexity come from the baker.
  */
-import { Color, MeshStandardNodeMaterial, type UniformNode } from 'three/webgpu'
+import { CanvasTexture, Color, LinearMipmapLinearFilter, MeshStandardNodeMaterial, RepeatWrapping, type Texture, type UniformNode } from 'three/webgpu'
 import {
   atan, attribute, clamp, faceDirection, float, mix, mx_fractal_noise_float, mx_noise_float, mx_worley_noise_float, mx_worley_noise_vec2, normalGeometry,
-  normalView, positionGeometry, positionView, smoothstep, uniform, uv, vec3,
+  normalView, positionGeometry, positionView, smoothstep, texture, uniform, uv, vec2, vec3,
 } from 'three/tsl'
 import type { MaterialSet, Stack } from '../../../../stack'
 import { FACE, faceCalm, faceColour } from './head'
@@ -120,7 +120,50 @@ function clawTips(P0: N, fore: N, hind: N): N {
  * dark umber, near black in its hollows, the cheek ruff a step lighter; gold
  * on most of the mane's crests, the claws' tips
  * and the doors' rims; the gesso and a fine crackle where hands have rubbed. */
-export function paintedMaterial(chest: ChestLight): MeshStandardNodeMaterial {
+/** The paint's choices that round 1 tries one at a time (a probe while it is tried). */
+export interface LionLook { palette: 'base' | 'ochre' | 'gold'; giltMane: boolean; doorRim: boolean; lined: boolean }
+export const LION_LOOK: LionLook = { palette: 'base', giltMane: false, doorRim: true, lined: false }
+
+/** A heraldic lily, white on black, for the painted ground the doors are lined
+ * with: drawn once on a canvas at load (no image file), its edges soft. */
+export function lilyMask(): Texture {
+  const c = document.createElement('canvas')
+  c.width = c.height = 128
+  const g = c.getContext('2d')!
+  g.fillStyle = '#000'; g.fillRect(0, 0, 128, 128)
+  g.fillStyle = '#fff'
+  g.save(); g.translate(64, 64); g.scale(0.42, 0.42); g.translate(-128, -128)
+  const petal = (sx: number): void => {
+    g.beginPath()
+    g.moveTo(128 + sx * 10, 150)
+    g.bezierCurveTo(128 + sx * 22, 96, 128 + sx * 74, 66, 128 + sx * 96, 100)
+    g.bezierCurveTo(128 + sx * 106, 122, 128 + sx * 88, 146, 128 + sx * 68, 138)
+    g.bezierCurveTo(128 + sx * 84, 122, 128 + sx * 70, 104, 128 + sx * 54, 114)
+    g.bezierCurveTo(128 + sx * 40, 124, 128 + sx * 34, 140, 128 + sx * 30, 150)
+    g.closePath(); g.fill()
+  }
+  g.beginPath()
+  g.moveTo(128, 14)
+  g.bezierCurveTo(160, 48, 162, 112, 140, 150)
+  g.lineTo(116, 150)
+  g.bezierCurveTo(94, 112, 96, 48, 128, 14)
+  g.closePath(); g.fill()
+  petal(1); petal(-1)
+  g.fillRect(88, 148, 80, 18)
+  for (const sx of [1, -1]) {
+    g.beginPath(); g.moveTo(128 + sx * 6, 166); g.bezierCurveTo(128 + sx * 30, 168, 128 + sx * 48, 180, 128 + sx * 44, 204)
+    g.bezierCurveTo(128 + sx * 34, 190, 128 + sx * 20, 184, 128 + sx * 4, 184); g.closePath(); g.fill()
+  }
+  g.beginPath(); g.moveTo(118, 166); g.lineTo(138, 166); g.lineTo(128, 214); g.closePath(); g.fill()
+  g.restore()
+  const t = new CanvasTexture(c)
+  t.wrapS = t.wrapT = RepeatWrapping
+  t.minFilter = LinearMipmapLinearFilter
+  t.generateMipmaps = true
+  return t
+}
+
+export function paintedMaterial(chest: ChestLight, look: LionLook = LION_LOOK, lily: Texture | null = null): MeshStandardNodeMaterial {
   const m = new MeshStandardNodeMaterial({ roughness: 0.8, metalness: 0 })
   m.name = 'mechanical-lion:tempera'
   const A: N = attribute('aAttr', 'vec4'), W: N = attribute('aMat', 'vec4')
@@ -132,6 +175,7 @@ export function paintedMaterial(chest: ChestLight): MeshStandardNodeMaterial {
   const code = A.w, side = code.sign()
   const forePaw = smoothstep(0.5, 0.0, code.abs().sub(1).abs()), hindPaw = smoothstep(0.5, 0.0, code.abs().sub(2).abs())
   const onLeg = smoothstep(0.5, 0.0, code.abs().sub(6).abs())
+  const onDoor = smoothstep(0.5, 0.0, code.abs().sub(7).abs())
   const P0 = positionGeometry
   const P = P0.add(vec3(side.mul(K.WF[0]), K.WF[1], K.WF[2]).mul(forePaw)).add(vec3(side.mul(K.WH[0]), K.WH[1], K.WH[2]).mul(hindPaw))
   const Ng = normalGeometry
@@ -165,8 +209,9 @@ export function paintedMaterial(chest: ChestLight): MeshStandardNodeMaterial {
   const innerLegs = smoothstep(0.15, 0.6, inward).mul(smoothstep(0.7, 0.5, P.y))
   // blotches 6 to 10 cm across, some 24 percent in value, none on the face
   const mottle = mx_fractal_noise_float(P.mul(11).add(vec3(3.1, 7.7, 1.3)), 2, 2, 0.5).mul(float(1).sub(calm))
-  const hide0 = mix(lin('#86603c'), lin('#936a41'), n2).mul(mix(0.93, 1.05, stroke)).mul(mottle.mul(0.24).add(1))
-  const pale = lin('#b59269').mul(mix(0.94, 1.04, n2))
+  const HIDE = look.palette === 'ochre' ? ['#7f6644', '#8b7149', '#ab9370'] : look.palette === 'gold' ? ['#8d7547', '#9b8150', '#b9a073'] : ['#86603c', '#936a41', '#b59269']
+  const hide0 = mix(lin(HIDE[0]!), lin(HIDE[1]!), n2).mul(mix(0.93, 1.05, stroke)).mul(mottle.mul(0.24).add(1))
+  const pale = lin(HIDE[2]!).mul(mix(0.94, 1.04, n2))
   // (the band some 40 percent darker in value, warmer)
   const hide = mix(mix(hide0, pale, clamp(under.mul(0.6).add(innerLegs.mul(0.35)), 0, 0.7)), hide0.mul(lin('#9a8f86')),
     clamp(spine.mul(0.9).add(legBacks.mul(0.4)), 0, 0.9))
@@ -191,9 +236,17 @@ export function paintedMaterial(chest: ChestLight): MeshStandardNodeMaterial {
   const wood = mix(lin('#9c7a52'), lin('#b08d62'), mx_noise_float(vec3(P.x.mul(60), P.y.mul(5), P.z.mul(60)).add(n2.mul(1.5))).mul(0.5).add(0.5))
     .mul(mix(float(0.36), float(1), smoothstep(0.25, 0.85, aoH)))
   const blue = lin('#233f86').mul(mix(0.82, 1.08, n2)).mul(mix(0.9, 1.04, n3)).mul(mix(float(0.06), float(1), chest))
+  // the doors' bare insides lined in the chest's blue, strewn with painted gold lilies
+  const lining: N = look.lined ? W.w.mul(onDoor) : float(0)
+  let strewn: N = float(0)
+  if (look.lined && lily) {
+    const S = 0.042, ax0 = P.x.abs().sub(0.004), row = P.y.sub(0.53).div(S).floor()
+    const cu = ax0.div(S).add(row.mod(2).mul(0.5)).fract(), cv = P.y.sub(0.53).div(S).fract()
+    strewn = texture(lily, vec2(cu, float(1).sub(cv))).r.mul(lining)
+  }
   const iron = lin('#3f3a35').mul(mix(0.82, 1.14, n1))
 
-  let col: N = body.mul(paint).add(blue.mul(W.x)).add(mane.mul(W.y)).add(iron.mul(W.z)).add(wood.mul(W.w))
+  let col: N = body.mul(paint).add(blue.mul(W.x.add(lining))).add(mane.mul(W.y)).add(iron.mul(W.z)).add(wood.mul(W.w.sub(lining)))
   // the face's colours, owned with its carving by head.ts (face.calm: where the face's planes carry the shading)
   const face = faceColour(P, col, paint, n1, n2)
   col = face.col
@@ -222,10 +275,16 @@ export function paintedMaterial(chest: ChestLight): MeshStandardNodeMaterial {
   // (none on the hood's lip over the shoulder, inside the shoulder's circle where no lock lies: gilt, its rims framed it as a panel)
   const lip = float(1).sub(smoothstep(0.1, 0.12, vec3(0, P.y.sub(K.SH[1]), P.z.sub(K.SH[2])).length())).mul(smoothstep(0.885, 0.83, P.y))
   const maneGilt = crest.mul(most).mul(W.y).mul(smoothstep(-0.55, -0.45, P.z)).mul(smoothstep(0.06, 0.1, zone)).mul(float(1).sub(lip))
-  const gilt: N = clamp(maneGilt.add(clawTips(P0, forePaw, hindPaw)).add(doorRim(P).mul(paint)), 0, 1).mul(float(1).sub(eyeW))
+  const rim: N = look.doorRim ? doorRim(P).mul(paint) : float(0)
+  const maneAll: N = look.giltMane ? W.y : float(0)
+  const gilt: N = clamp(maneGilt.add(clawTips(P0, forePaw, hindPaw)).add(rim).add(maneAll).add(strewn), 0, 1).mul(float(1).sub(eyeW))
   // the doors' rims worn through in places, so they read as a gilt edge and not a drawn frame
-  const giltWorn = smoothstep(0.56, 0.74, n2.add(n1.sub(0.5).mul(0.3))).max(wear).max(doorRim(P).mul(smoothstep(0.45, 0.6, n2)))
+  const giltWorn = smoothstep(0.56, 0.74, n2.add(n1.sub(0.5).mul(0.3))).max(wear).max(rim.mul(smoothstep(0.45, 0.6, n2)))
+    .mul(float(1).sub(maneAll.mul(0.7))).mul(float(1).sub(strewn))
+  // toned gilding on a gilt mane: an umber glaze left in the locks' hollows and roots
   const gold = mix(lin('#c9a24a'), lin('#dcb45c'), n1).mul(mix(float(1), float(0.68), grime))
+    .mul(mix(float(1), mix(float(0.42), float(1), smoothstep(0.25, 0.85, aoH)).mul(mix(float(0.7), float(1), top3)), maneAll))
+    .mul(mix(float(1), mix(float(0.06), float(1), chest), strewn))
   const giltCol: N = mix(gold, lin('#7c3421'), giltWorn.mul(0.8))
   col = mix(col, giltCol, gilt)
   m.colorNode = col
