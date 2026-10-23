@@ -31,6 +31,11 @@ const FILMS = 'src/wings/vinci/data/films.json'
    numbers are measured on the wing's own drawings and hold in either
    language, because German runs longer in characters than English here. */
 const STATION_LINE_CHARS = 120
+/* THE PHONE: a station line holds three rows at 360 x 640. Rendered rows, not
+   characters, decide; but no line over 100 characters held three rows in the
+   measured lines of either language, and from 91 the word breaks decide. */
+const PHONE_LINE_CHARS = 100
+const PHONE_LINE_MEASURE = 91
 const EXHIBIT_LINE_CHARS = 90
 /* A FILM'S LINES stand under its picture on the station line's measure, two
    rows of the line's type, so they hold the station line's characters. */
@@ -42,6 +47,7 @@ const RULES = {
   'line-sentence': ['§5', 'no sentence of a line runs over fourteen words'],
   'line-chars-en': ['§5', `a station line holds ${STATION_LINE_CHARS} characters, the English included`],
   'line-chars-de': ['§6', `a station line holds ${STATION_LINE_CHARS} characters, the German included`],
+  'line-phone': ['§5', `a station line holds three rows on the narrowest phone: over ${PHONE_LINE_CHARS} characters never did`],
   'exhibit-chars': ['§5', `an exhibit line holds ${EXHIBIT_LINE_CHARS} characters at the close look`],
   'exhibit-debt': ['§5', 'a line inside the band has no place on the re-authoring list'],
   'film-chars': ['§5', `a film's line holds ${FILM_LINE_CHARS} characters under its picture`],
@@ -120,6 +126,8 @@ export function judgeStop(stop, canonKeys) {
       refuse('line-sentence', `line.${language}`, `${longestSentence(line, language)} words in one sentence`)
     if (characters(line) > LINE_CHARS[language])
       refuse(`line-chars-${language}`, `line.${language}`, `${characters(line)} characters`)
+    if (stop.kind === 'station' && characters(line) > PHONE_LINE_CHARS)
+      refuse('line-phone', `line.${language}`, `${characters(line)} characters`)
   }
   if (stop.drawer) {
     for (const language of ['en', 'de']) {
@@ -266,6 +274,11 @@ function run() {
       return en === de ? null : { stop: stop.id, section: '§6', says: `the ${field} reads ${en || 'no digits'} in the English and ${de || 'no digits'} in the German` }
     }
     for (const field of ['line', 'drawer']) { const said = numbers(field); if (said) warnings.push(said) }
+    for (const language of ['en', 'de']) {
+      const n = stop.kind === 'station' ? characters(stop.line?.[language] ?? '') : 0
+      if (n >= PHONE_LINE_MEASURE && n <= PHONE_LINE_CHARS)
+        warnings.push({ stop: stop.id, section: '§5', says: `the ${language} line has ${n} characters: count its rows at 360 x 640` })
+    }
     table.push({
       id: stop.id, kind: stop.kind, order: stop.order, certainty: stop.certainty,
       line: {
