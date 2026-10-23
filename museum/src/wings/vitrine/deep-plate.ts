@@ -128,8 +128,11 @@ const AT_THE_CEILING = .999
 const DEPTH_WHOLE = .6
 /** A state crossfades in place, the versions' rule of the phone's design. */
 const SWAP_FADE_MS = 160
-/** A state whose tiles for the view have not all arrived fades in anyway. */
-const SWAP_WAIT_MS = 1200
+/** A STATE COMES WHEN ITS TILES FOR THE VIEW ARE IN, so its words never stand
+ * over a picture that has not come; one whose tiles never all arrive (a tile
+ * that fails) comes after this, over the one before, which stays under it
+ * until the last tile is in. */
+const SWAP_GIVE_UP_MS = 5000
 
 /** What a cached tile costs as RGBA8, in megabytes. A pyramid's tile is its
  * own square; a plate with no pyramid is one tile and that tile is the
@@ -891,17 +894,23 @@ export function createDeepPlatePayload(options: {
               mark('dropped')
               paintShow()
             }
-            const done = (): void => {
+            /** what stood under it goes with it; a state asked since, standing over it, stays */
+            const clear = (): void => {
               if (!live || viewer !== made || !here()) return
-              mark('done')
-              item.setOpacity(1)
-              // what stood under it goes with it; a state asked since, standing over it, stays
               const at = made.world.getIndexOfItem(item)
               const under: import('openseadragon').TiledImage[] = []
               for (let i = 0; i < at; i++) under.push(made.world.getItemAt(i))
               for (const other of under) made.world.removeItem(other)
+              readout()
+            }
+            const done = (): void => {
+              if (!live || viewer !== made || !here()) return
+              mark('done')
+              item.setOpacity(1)
               if (token === swaps && limit !== deepest) { limit = deepest; made.viewport.setMaxZoomPixelRatio(limit, false) }
               made.viewport.applyConstraints(host?.reducedMotion ?? true)
+              if (item.getFullyLoaded()) clear()
+              else item.whenFullyLoaded(clear)
               readout()
             }
             const fade = (): void => {
@@ -910,7 +919,7 @@ export function createDeepPlatePayload(options: {
               clearTimeout(wait)
               waits.delete(wait)
               if (token !== swaps) { drop(); return }
-              mark(item.getFullyLoaded() ? 'fade-loaded' : 'fade-waited')
+              mark(item.getFullyLoaded() ? 'fade-loaded' : 'fade-gave-up')
               if (host?.reducedMotion) { turn(); done(); return }
               const from = performance.now()
               const step = (): void => {
@@ -925,7 +934,7 @@ export function createDeepPlatePayload(options: {
               }
               requestAnimationFrame(step)
             }
-            const wait = setTimeout(fade, SWAP_WAIT_MS) as unknown as number
+            const wait = setTimeout(fade, SWAP_GIVE_UP_MS) as unknown as number
             waits.add(wait)
             item.whenFullyLoaded(fade)
           },

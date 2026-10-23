@@ -108,7 +108,12 @@ export function createCloserPayload(options: {
   function paintChoice(): void {
     for (const [index, segment] of segments.entries()) segment.setAttribute('aria-pressed', String(index === at))
     const marked = row ?? turn
-    if (marked) { marked.dataset['state'] = standing().id; marked.dataset['shown'] = shown().id }
+    if (marked) {
+      marked.dataset['state'] = standing().id
+      marked.dataset['shown'] = shown().id
+      // a state asked for and still coming: said to a screen reader, never drawn
+      marked.setAttribute('aria-busy', String(at !== seen))
+    }
     if (!turn) return
     const other = seen === 0 ? 1 : 0
     turn.hidden = !options.states[other]
