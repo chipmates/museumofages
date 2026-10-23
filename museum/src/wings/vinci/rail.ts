@@ -171,7 +171,7 @@ export function stationPose(id:VinciStationId, narrow:boolean):Pose {
   // is the master's band 0.11 to 0.57 on every phone, so the eye looks four
   // degrees down and its shift lens lifts the lion's middle to a third of
   // the height; pitched instead, the room's verticals leaned.
-  if(id==='hall') return narrow?{...aimedFrom(HALL_PHONE_EYE,-149.44,-4,76.45),shift:-.6}:aimedFrom(HALL_DOOR,-128,-8,58)
+  if(id==='hall') return narrow?{...aimedFrom(HALL_PHONE_EYE,-149.44,-4,76.45),shift:-.6}:aimedFrom(HALL_DOOR,-124,-8,58)
   // THE CHAPEL IS THE ONE HERO. Square on from the court it was a wall of
   // ashlar in the house's shadow with nothing behind it; from the foot of the
   // raised lawn the gable took the left half of the frame, the gable the study

@@ -714,7 +714,7 @@ function keptLimePlaster(T: N, base: N, seed: number): N {
   const sweep = mx_noise_float(vec3(T.x.mul(.7).add(T.y.mul(.5)).div(.35), T.y.mul(.7).sub(T.x.mul(.5)).div(.09), seed + 19)).mul(fade(.09))
   const stroke = (c: number, sn: number, key: number): N => mx_noise_float(vec3(T.x.mul(c).add(T.y.mul(sn)).div(.3), T.y.mul(c).sub(T.x.mul(sn)).div(.014), seed + key))
   const brush = stroke(.8, .6, 43).add(stroke(.8, -.6, 47)).mul(fade(.014))
-  return base.mul(nL.mul(.035).add(nP.mul(.022)).add(nM.mul(.012)).add(sweep.mul(.014)).add(brush.mul(.01)).add(nF.mul(.03)).add(1))
+  return base.mul(nL.mul(.06).add(nP.mul(.035)).add(nM.mul(.014)).add(sweep.mul(.018)).add(brush.mul(.012)).add(nF.mul(.03)).add(1))
     .mul(mix(vec3(1, 1, 1), vec3(1.015, 1, .97), smoothstep(-.3, .5, nL)))
 }
 
