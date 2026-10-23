@@ -142,14 +142,29 @@ const toUV = (p: V2): V2 => [(p[0] - SW[0]) * U[0] + (p[1] - SW[1]) * U[1], (p[0
 const fromUV = (u: number, v: number): V2 => [SW[0] + U[0] * u + V[0] * v, SW[1] + U[1] * u + V[1] * v]
 const P = (u: number, v: number, z: number): V3 => { const q = fromUV(u, v); return [q[0], q[1], z] }
 const HALL_W = toUV(SE)[0], HALL_D = toUV(NW)[1]
-/** the joists' count past the first and the first's centre along u */
-const JOIST_N = Math.floor((HALL_W - JOIST_W) / JOIST_STEP), JOIST_FIRST = (HALL_W - JOIST_N * JOIST_STEP) / 2
+/** THE HALL'S JOISTS run along u, close set as the photographs show them:
+ * the gap about a joist's width (the dossier's 0.60 m spacing is the service
+ * passage's). Their count past the first and the first's centre along v. */
+const HALL_JOIST_STEP = 2 * JOIST_W
+const HALL_JOIST_N = Math.floor((HALL_D - JOIST_W - .4) / HALL_JOIST_STEP), HALL_JOIST_FIRST = (HALL_D - HALL_JOIST_N * HALL_JOIST_STEP) / 2
+/** The main beams' lines along u, clear of the back windows' heads and the
+ * kitchen door. */
+const HALL_BEAMS_U = [2.95, 7.05] as const
 /** The diagonal field's outline, a border row in from the walls: the joint the
  * border and the field share runs along it. Each edge as a point and its
  * inward normal in the hall's frame. */
 const FIELD_EDGES: { a: V2; n: V2 }[] = (() => {
   const f = inset(hallOutline.map(toUV), PITCH)
   return f.map((a, i) => { const b = f[(i + 1) % f.length]!, l = Math.hypot(b[0] - a[0], b[1] - a[1]); return { a, n: [-(b[1] - a[1]) / l, (b[0] - a[0]) / l] as V2 } })
+})()
+/** THE STRAIGHT BANDS across the diagonal, as today's floor lays them: one
+ * square tile wide, dividing the field into three by three large fields.
+ * Their centre lines in the hall's frame, u then v. */
+const FLOOR_BANDS: { u: number[]; v: number[] } = (() => {
+  const f = inset(hallOutline.map(toUV), PITCH)
+  const u0 = Math.max(f[0]![0], f[3]![0]), u1 = Math.min(f[1]![0], f[2]![0]), v0 = Math.max(f[0]![1], f[1]![1]), v1 = Math.min(f[2]![1], f[3]![1])
+  const thirds = (a: number, b: number): number[] => [1, 2].map(k => a + (b - a) * k / 3)
+  return { u: thirds(u0, u1), v: thirds(v0, v1) }
 })()
 /** The service passage between the entrance and the hall, dossier outline. */
 const LINK_OUTLINE: V2[] = (() => { const p = LINK.polygon as V2[]; return signedArea(p) < 0 ? [...p].reverse() : p })()
@@ -684,6 +699,25 @@ export function limewashOverBrick(T: N, floorZ: number, base: N, seed: number, w
   return { albedo: aged, bare }
 }
 
+/** LIME PLASTER UNDER A LIMEWASH, KEPT: the hall's walls as a household in
+ * use keeps them, whole and even, no brick showing, no fallen wash, no smoke
+ * on the upper walls. What remains is the hand's work: the coats a little
+ * thicker and thinner over the metres, the trowel's broad sweeps, the wash's
+ * brush and the lime's grain, each faded out before a pixel can hold less
+ * than a sixth of it. `T` is the surface's uv in metres (along, height). */
+function keptLimePlaster(T: N, base: N, seed: number): N {
+  const rho = T.dFdx().length().max(T.dFdy().length()).max(1e-6)
+  const fade = (L: number): N => float(1).sub(smoothstep(L / 6, L / 2.5, rho))
+  const n = (sx: number, sy: number, k: number): N => mx_noise_float(vec3(T.x.div(sx), T.y.div(sy), seed + k))
+  const nL = n(1.6, 1.2, 0), nP = n(.6, .45, 5).mul(fade(.45)), nM = n(.15, .12, 3).mul(fade(.12)), nF = n(.006, .005, 11).mul(fade(.005))
+  // the trowel's sweeps: long shallow arcs, each a slightly different polish
+  const sweep = mx_noise_float(vec3(T.x.mul(.7).add(T.y.mul(.5)).div(.35), T.y.mul(.7).sub(T.x.mul(.5)).div(.09), seed + 19)).mul(fade(.09))
+  const stroke = (c: number, sn: number, key: number): N => mx_noise_float(vec3(T.x.mul(c).add(T.y.mul(sn)).div(.3), T.y.mul(c).sub(T.x.mul(sn)).div(.014), seed + key))
+  const brush = stroke(.8, .6, 43).add(stroke(.8, -.6, 47)).mul(fade(.014))
+  return base.mul(nL.mul(.035).add(nP.mul(.022)).add(nM.mul(.012)).add(sweep.mul(.014)).add(brush.mul(.01)).add(nF.mul(.03)).add(1))
+    .mul(mix(vec3(1, 1, 1), vec3(1.015, 1, .97), smoothstep(-.3, .5, nL)))
+}
+
 export const houseHallProvenance = {
   manifestId: 'vinci/house-hall',
   assetClass: 'GENERATED',
@@ -901,8 +935,8 @@ function squareFloor(s: Sink, outline: V2[], z: number): void {
   }
 }
 
-/** The tiled floor: a square border row and the diagonal field, each tile a
- * low prism with a worn arris, standing on its lime bed. */
+/** The tiled floor: a square border row, straight bands across, and the
+ * diagonal fields between them, each tile a low face on its lime bed. */
 function tiledFloor(s: Sink, outline: V2[], z: number): void {
   const room = outline.map(toUV)
   // the lime bed under everything, a few millimetres down and on under the linings
@@ -928,18 +962,36 @@ function tiledFloor(s: Sink, outline: V2[], z: number): void {
     // the corner square at this edge's start
     strip(Math.min(0, s0 - pitch), s0, -1)
   }
-  // the field on the diagonal, centred on the room
-  const cu = (Math.min(...field.map(p => p[0])) + Math.max(...field.map(p => p[0]))) / 2
-  const cv = (Math.min(...field.map(p => p[1])) + Math.max(...field.map(p => p[1]))) / 2
+  // the straight bands: square tiles laid along each band, one at each crossing
+  const half = pitch / 2, big = 40
+  const bandTile = (cu: number, cv: number, key: number): void => {
+    const quad: V2[] = [[cu - half, cv - half], [cu + half, cv - half], [cu + half, cv + half], [cu - half, cv + half]]
+    const clipped = clipConvex(quad, field)
+    if (clipped.length >= 3 && Math.abs(signedArea(clipped)) > pitch * pitch * .12) tile(s, clipped, z, rand(key, cu * 7.1 + cv, 4.7), [cu, cv], [1, 0])
+  }
+  const fu0 = Math.min(...field.map(p => p[0])), fu1 = Math.max(...field.map(p => p[0])), fv0 = Math.min(...field.map(p => p[1])), fv1 = Math.max(...field.map(p => p[1]))
+  for (const [k, bu] of FLOOR_BANDS.u.entries()) for (let v = fv0 + half; v < fv1 + half; v += pitch) bandTile(bu, v, k)
+  for (const [k, bv] of FLOOR_BANDS.v.entries()) for (let u = fu0 + half; u < fu1 + half; u += pitch) {
+    if (FLOOR_BANDS.u.some(bu => Math.abs(u - bu) < pitch)) continue
+    bandTile(u, bv, 10 + k)
+  }
+  // between the bands, the fields on the diagonal, one lattice centred on the room
+  const cells: V2[][] = []
+  const us = [-big, ...FLOOR_BANDS.u.flatMap(b => [b - half, b + half]), big], vs = [-big, ...FLOOR_BANDS.v.flatMap(b => [b - half, b + half]), big]
+  for (let i = 0; i < us.length; i += 2) for (let j = 0; j < vs.length; j += 2)
+    cells.push(clipConvex([[us[i]!, vs[j]!], [us[i + 1]!, vs[j]!], [us[i + 1]!, vs[j + 1]!], [us[i]!, vs[j + 1]!]], field))
+  const cu = (fu0 + fu1) / 2, cv = (fv0 + fv1) / 2
   const A: V2 = [Math.cos(TILE_TURN), Math.sin(TILE_TURN)], B: V2 = [-A[1], A[0]]
   const reach = Math.ceil(Math.hypot(HALL_W, HALL_D) / pitch / 2) + 2
-  const half = pitch / 2
   for (let i = -reach; i <= reach; i++) for (let j = -reach; j <= reach; j++) {
     const c: V2 = [cu + (A[0] * i + B[0] * j) * pitch, cv + (A[1] * i + B[1] * j) * pitch]
     const quad: V2[] = [[-half, -half], [half, -half], [half, half], [-half, half]].map(([x, y]) => [c[0] + A[0] * x! + B[0] * y!, c[1] + A[1] * x! + B[1] * y!])
-    const clipped = clipConvex(quad, field)
-    if (clipped.length < 3 || Math.abs(signedArea(clipped)) < pitch * pitch * .12) continue
-    tile(s, clipped, z, rand(i, j, 3.3), c, A)
+    for (const cell of cells) {
+      if (cell.length < 3) continue
+      const clipped = clipConvex(quad, cell)
+      if (clipped.length < 3 || Math.abs(signedArea(clipped)) < pitch * pitch * .12) continue
+      tile(s, clipped, z, rand(i, j, 3.3), c, A)
+    }
   }
 }
 
@@ -970,44 +1022,70 @@ function tile(s: Sink, poly: V2[], z: number, seed: number, centre: V2, side: V2
   s.fixed = null; s.wear = 0
 }
 
-/** Joists across the shorter span, the main beam under them at mid-span on
- * two corbels, the boards between. */
+/** THE CEILING AS THE HALL'S PHOTOGRAPHS SHOW IT: close-set joists, the gap
+ * about a joist's width, on two main beams that land on plain tuffeau corbels
+ * in the kitchen and back walls, and on a wall plate carried by small corbels
+ * along the chimneypiece's wall. The beams stand clear of the back windows
+ * and the kitchen door; over the hood the joists end on a trimmer. The boards
+ * of the floor above run across the joists. */
 function ceiling(s: Sink): void {
   const room = hallOutline.map(toUV)
-  // boards: the underside of the floor above, planks along u
+  const [, , ne, nw] = room as [V2, V2, V2, V2]
+  const westU = (v: number): number => nw[0] * v / nw[1]
+  const northV = (u: number): number => nw[1] + (ne[1] - nw[1]) * (u - nw[0]) / (ne[0] - nw[0])
+  // boards: the underside of the floor above, planks along v
   const plank = .26
-  for (let v = 0; v < HALL_D; v += plank) {
-    const v1 = Math.min(HALL_D + .5, v + plank)
-    const strip = clipConvex([[-1, v], [HALL_W + 1, v], [HALL_W + 1, v1], [-1, v1]], room)
+  for (let u = Math.min(0, nw[0]); u < HALL_W; u += plank) {
+    const u1 = Math.min(HALL_W + .5, u + plank)
+    const strip = clipConvex([[u, -1], [u1, -1], [u1, HALL_D + 1], [u, HALL_D + 1]], room)
     if (strip.length < 3) continue
-    const board = rand(v, 9.2)
-    s.poly(strip.map(q => P(q[0], q[1], BOARD_Z)), [0, 0, -1], p => { const q = toUV([p[0], p[1]]); return [q[0], q[1]] }, K.OAK, 2 + board)
+    const board = rand(u, 9.2)
+    s.poly(strip.map(q => P(q[0], q[1], BOARD_Z)), [0, 0, -1], p => { const q = toUV([p[0], p[1]]); return [q[1], q[0]] }, K.OAK, 2 + board)
   }
-  // joists: along v, stepped along u, from the kitchen wall to the back wall
-  const jn = JOIST_N, first = JOIST_FIRST
-  // each member's two lower arrises taken off and worn round, as the
-  // carpenter finished a timber left in view and the years eased it; the
-  // rounds face down to the floor's light
-  const across: V3 = [U[0], U[1], 0], alongV: V3 = [V[0], V[1], 0]
-  for (let i = 0; i <= jn; i++) {
-    const u = first + i * JOIST_STEP
-    const seed = 3 + rand(i, 4.4)
-    const sag = rand(i, 5.5) * .008
-    member(s, P(u, 0, CEIL_Z + sag), P(u, HALL_D, CEIL_Z + sag), across, [0, 0, 1], JOIST_W, JOIST_D, .026 + rand(i, 6.6) * .01, K.OAK, seed)
+  const acrossU: V3 = [U[0], U[1], 0], acrossV: V3 = [V[0], V[1], 0]
+  // the hood's top, and the trimmer in front of it that takes the joists it cuts
+  const hoodOut = HEARTH.depth - .24, hoodHalf = HEARTH.width / 2 - .22, TRIM_W = .2
+  const trimU = HALL_W - hoodOut - .03 - TRIM_W / 2
+  const cut = (v: number): boolean => Math.abs(v - HEARTH.v) < hoodHalf + JOIST_W / 2 + .03
+  // joists along u, from the window wall onto the plate, stepped along v
+  const PLATE_W = .16, PLATE_D = .2
+  const vs: number[] = []
+  for (let i = 0; i <= HALL_JOIST_N; i++) vs.push(HALL_JOIST_FIRST + i * HALL_JOIST_STEP)
+  for (const [i, v] of vs.entries()) {
+    const seed = 3 + rand(i, 4.4), sag = rand(i, 5.5) * .008
+    const u1 = cut(v) ? trimU - TRIM_W / 2 + .01 : HALL_W + .02
+    member(s, P(westU(v) - .02, v, CEIL_Z + sag), P(u1, v, CEIL_Z + sag), acrossV, [0, 0, 1], JOIST_W, JOIST_D, .022 + rand(i, 6.6) * .008, K.OAK, seed)
   }
-  // the main beam, across the joists near mid-span, set off the chimney: a
-  // beam bears on plain wall, never on the hood or into the flue's masonry
-  const MB_W = .34, MB_D = .38, vm = mainBeamV()
-  member(s, P(0, vm, CEIL_Z - MB_D), P(HALL_W, vm, CEIL_Z - MB_D), alongV, [0, 0, 1], MB_W, MB_D, .045, K.OAK, 7.7)
-  // its two corbels: one tuffeau block each, cut in a quarter round below a
-  // fillet and tailed into the wall
-  const D = .30, H = .44, f = .07, tail = .03
-  const section: V2[] = [[-tail, 0], [D, 0], [D, -f]]
-  for (let k = 1; k < 7; k++) { const t = k / 7 * Math.PI / 2; section.push([D * Math.cos(t), -f - (H - f) * Math.sin(t)]) }
-  section.push([0, -H], [-tail, -H])
-  for (const [u, dirU] of [[0, 1], [HALL_W, -1]] as [number, number][]) {
-    const w = (MB_W + .06) / 2, side: V3 = [U[0] * dirU, U[1] * dirU, 0]
-    s.extrude(P(u, vm - w, CEIL_Z - MB_D), P(u, vm + w, CEIL_Z - MB_D), side, [0, 0, 1], section, K.STONE, 11 + u, [0, section.length - 2, section.length - 1])
+  // the trimmer, from the last whole joist below the hood to the first above
+  const below = vs.filter(v => !cut(v) && v < HEARTH.v).pop(), above = vs.find(v => !cut(v) && v > HEARTH.v)
+  if (below !== undefined && above !== undefined) member(s, P(trimU, below, CEIL_Z), P(trimU, above, CEIL_Z), acrossU, [0, 0, 1], TRIM_W, JOIST_D, .022, K.OAK, 6.1)
+  // the wall plate along the chimneypiece's wall, its ends in the hood's sides
+  const plateU = HALL_W - PLATE_W / 2
+  const runs: V2[] = [[-.02, HEARTH.v - hoodHalf + .02], [HEARTH.v + hoodHalf - .02, ne[1] + .02]]
+  for (const [k, [v0, v1]] of runs.entries()) member(s, P(plateU, v0, CEIL_Z - PLATE_D), P(plateU, v1, CEIL_Z - PLATE_D), acrossU, [0, 0, 1], PLATE_W, PLATE_D, .015, K.OAK, 6.4 + k)
+  // a quarter-round tuffeau corbel below a fillet, tailed into the wall
+  const corbel = (D: number, H: number, f: number): V2[] => {
+    const tail = .03, sec: V2[] = [[-tail, 0], [D, 0], [D, -f]]
+    for (let k = 1; k < 7; k++) { const t = k / 7 * Math.PI / 2; sec.push([D * Math.cos(t), -f - (H - f) * Math.sin(t)]) }
+    sec.push([0, -H], [-tail, -H])
+    return sec
+  }
+  const small = corbel(.13, .2, .035), into: V3 = [-U[0], -U[1], 0]
+  for (const [v0, v1] of runs) {
+    const span = Math.min(v1, HALL_D) - Math.max(v0, 0) - .7, n = Math.max(1, Math.round(span / 1.25))
+    for (let k = 0; k <= n; k++) {
+      const v = Math.max(v0, 0) + .35 + span * k / n
+      s.extrude(P(HALL_W, v - .09, CEIL_Z - PLATE_D), P(HALL_W, v + .09, CEIL_Z - PLATE_D), into, [0, 0, 1], small, K.STONE, 12 + v, [0, small.length - 2, small.length - 1])
+    }
+  }
+  // the two main beams under the joists, along v, each on two corbels
+  const MB_W = .32, MB_D = .36, big = corbel(.28, .42, .07)
+  for (const [k, u] of HALL_BEAMS_U.entries()) {
+    const vn = northV(u)
+    member(s, P(u, -.02, CEIL_Z - MB_D), P(u, vn + .02, CEIL_Z - MB_D), acrossU, [0, 0, 1], MB_W, MB_D, .04, K.OAK, 7.7 + k)
+    const w = (MB_W + .06) / 2
+    for (const [v, dir] of [[0, 1], [vn, -1]] as [number, number][])
+      s.extrude(P(u - w, v, CEIL_Z - MB_D), P(u + w, v, CEIL_Z - MB_D), [V[0] * dir, V[1] * dir, 0], [0, 0, 1], big, K.STONE, 11 + u + v, [0, big.length - 2, big.length - 1])
   }
 }
 /** A timber of w by d from a to b, its two lower arrises worn round to r. The
@@ -1030,13 +1108,6 @@ function member(s: Sink, a: V3, b: V3, side: V3, up: V3, w: number, d: number, r
     run += wl
   }
 }
-/** Where the main beam crosses: mid-span, unless that lands its corbel within
- * a hand's breadth and more of the chimneypiece's shelf. */
-function mainBeamV(): number {
-  const shelfEnd = HEARTH.v - HEARTH.width / 2 - .06
-  return Math.min(HALL_D / 2, shelfEnd - .45 - (.34 + .06) / 2)
-}
-
 /** WHERE FEET HAVE GONE for forty-six years: from each door to the table's
  * sides and on to the hearth, and the ground in front of the fire. */
 let paths: [V2, V2][] | null = null
@@ -1076,7 +1147,8 @@ function furnish(s: Sink, hero: boolean): void {
   chest(s, hero)
   boxChair(s)
   stool(s, TABLE.u + .78, TABLE.v - .75, .12, 91)
-  stool(s, TABLE.u + .8, TABLE.v + .6, -.2, 92)
+  // the second stool stands clear of the trestle's stretcher as the door sees it
+  stool(s, TABLE.u + .8, TABLE.v + .3, -.2, 92)
   // on the table: two brass candlesticks, their candles never lit, a jug,
   // and a glazed dish at the table's north end; its sunlit south end carries
   // the two instruments the house builds (hall-table-pieces.ts)
@@ -1380,7 +1452,7 @@ function hearth(s: Sink, hero: boolean): void {
   for (const side of [-1, 1]) {
     const x0 = side < 0 ? -W2 : open, x1 = side < 0 ? -open : W2
     box(x0 - .025, x1 + .025, 0, depth + .03, .028, .17, K.STONE, 52, '-z')
-    s.soot = .18
+    s.soot = .06
     // the face toward the fire is the brick cheek's, which lines the jamb
     box(x0, x1, 0, depth, .17, jambTop - .16, K.STONE, 53, side < 0 ? '-z+z+x' : '-z+z-x')
     s.soot = 0
@@ -1389,16 +1461,16 @@ function hearth(s: Sink, hero: boolean): void {
   }
   // the lintel, its lower front arris taken off in a broad chamfer
   const ch = .07
-  s.soot = .55
+  s.soot = .4
   // its soffit over the opening is the throat's, drawn below with the firebox
   box(-W2, W2, 0, depth - ch, jambTop, jambTop + ch, K.STONE, 56, '+z+x-x-z')
-  s.soot = .2
+  s.soot = .08
   box(-W2, W2, 0, depth, jambTop + ch, lintelTop, K.STONE, 56, '-z')
   s.soot = 0
   {
     const a = L(-W2, depth - ch, jambTop), b = L(W2, depth - ch, jambTop), c = L(W2, depth, jambTop + ch), d = L(-W2, depth, jambTop + ch)
     const n = unit(add(scale([Y[0], Y[1], 0], 1), [0, 0, -1]))
-    s.soot = .45
+    s.soot = .25
     s.quad(a, b, c, d, n, [-W2, 0], [W2, 0], [W2, ch * 1.41], [-W2, ch * 1.41], K.STONE, 56)
     s.soot = 0
   }
@@ -1410,7 +1482,7 @@ function hearth(s: Sink, hero: boolean): void {
   const front = [L(-wb, hb, z0), L(wb, hb, z0), L(wt, ht, z1), L(-wt, ht, z1)]
   const fn = unit(cross(sub(front[1]!, front[0]!), sub(front[3]!, front[0]!)))
   const uvF = (p: V3): V2 => { const q = toUV([p[0], p[1]]); return [q[1] - vc, p[2] - FLOOR_Z] }
-  s.soot = .12
+  s.soot = .03
   s.poly(front, dot(fn, [Y[0], Y[1], 0]) > 0 ? fn : scale(fn, -1), uvF, K.STONE, 58)
   for (const side of [-1, 1]) {
     const sx = side
@@ -1532,12 +1604,11 @@ function doorReveal(s: Sink, to: 'kitchen' | 'service-link'): void {
   s.quad(P3(a, z1), P3(far(a), z1), P3(far(b), z1), P3(b, z1), [0, 0, -1], [0, 0], [0, depth], [hall.width_m, depth], [hall.width_m, 0], K.OAK, seed)
   // THE THRESHOLD. The service passage's is a worn tuffeau slab in the
   // passage's light: the sun's patch ends at the wall's line. The kitchen's
-  // leaf stands shut at the kitchen's face, and the hall's tiles run on
-  // through the doorway to it, square-laid, the most trodden of the floor
+  // leaf stands open, and the hall's tiles run on through the doorway to the
+  // kitchen's face, square-laid, the most trodden of the floor
   if (to === 'kitchen') {
-    // the tiles run on under the shut leaf to the kitchen's face, and their bed
-    // on under the cheeks and a stride into the kitchen, so the gap under the
-    // leaf shows floor
+    // the tiles run on to the kitchen's face, and their bed on under the
+    // cheeks and a stride into the kitchen
     const [k0, k1] = kitchenDoorU
     s.poly([P(k0 - BED_UNDER, -BED_UNDER, z0 - .006), P(k1 + BED_UNDER, -BED_UNDER, z0 - .006), P(k1 + BED_UNDER, -depth - .3, z0 - .006), P(k0 - BED_UNDER, -depth - .3, z0 - .006)], [0, 0, 1], q => toUV([q[0], q[1]]), K.JOINT, .7)
     const pitch = PITCH, across = Math.round((k1 - k0) / pitch), step = (k1 - k0) / across
@@ -1545,14 +1616,21 @@ function doorReveal(s: Sink, to: 'kitchen' | 'service-link'): void {
       const u0 = k0 + i * step, u1 = k0 + (i + 1) * step, v1 = -j * pitch, v0 = Math.max(-depth, v1 - pitch)
       tile(s, [[u0, v0], [u1, v0], [u1, v1], [u0, v1]], z0, rand(i, j, 6.7), [(u0 + u1) / 2, v1 - pitch / 2], [1, 0], [step / 2, pitch / 2])
     }
-    doorLeaf(s, a, b, dir, [-outward[0], -outward[1]], depth - .045, z0, z1)
+    // THE LEAF STANDS OPEN into the kitchen, a hundred degrees on its hinges at
+    // the jamb nearer the hall's door, so the doorway shows the room beyond
+    const back = depth - .045, w = hall.width_m, turn = 100 * Math.PI / 180
+    const rot = (q: V2): V2 => [q[0] * Math.cos(turn) - q[1] * Math.sin(turn), q[0] * Math.sin(turn) + q[1] * Math.cos(turn)]
+    const hinge: V2 = [b[0] + outward[0] * back, b[1] + outward[1] * back]
+    const dirO = rot(dir), intoO = rot([-outward[0], -outward[1]])
+    const aO: V2 = [hinge[0] - dirO[0] * w + intoO[0] * back, hinge[1] - dirO[1] * w + intoO[1] * back]
+    doorLeaf(s, aO, [aO[0] + dirO[0] * w, aO[1] + dirO[1] * w], dirO, intoO, back, z0, z1)
     return
   }
   s.lit = 0; s.wear = 1
   s.quad(P3(a, z0 + .004), P3(b, z0 + .004), P3(far(b), z0 + .004), P3(far(a), z0 + .004), [0, 0, 1], [0, 0], [1, 0], [1, depth], [0, depth], K.STONE, seed + .5)
   s.lit = lit; s.wear = 0
 }
-/** A LEDGED DOOR OF THE PERIOD, shut in its opening: five oak boards on the
+/** A LEDGED DOOR OF THE PERIOD: five oak boards on the
  * face the hall sees, the clout nails of the ledges behind them in three
  * rows, a ring on its plate and a latch. From a to b along the wall, its
  * back `back` metres into the reveal, `into` pointing back to the hall. */
@@ -1892,7 +1970,7 @@ const BOUNCE_K = .16 * TO_SUN[2] * 3.2 * 5.2 / Math.PI
 const ROOM_RETURN: number[] = (() => {
   const [sw, se, ne, nw] = hallOutline as [V2, V2, V2, V2], z0 = FLOOR_Z, z1 = BOARD_Z
   const at = (q: V2, z: number): V3 => [q[0], q[1], z]
-  // reflectances as the material draws them: tile, aged oak, aged limewash
+  // reflectances as the material draws them: tile, aged oak, kept limewash
   const surfaces: { poly: V3[]; n: V3; albedo: number }[] = [
     { poly: [at(sw, z0), at(se, z0), at(ne, z0), at(nw, z0)], n: [0, 0, 1], albedo: .15 },
     { poly: [at(sw, z1), at(nw, z1), at(ne, z1), at(se, z1)], n: [0, 0, -1], albedo: .105 },
@@ -1900,7 +1978,7 @@ const ROOM_RETURN: number[] = (() => {
   const outline = [sw, se, ne, nw]
   for (let i = 0; i < 4; i++) {
     const a = outline[i]!, b = outline[(i + 1) % 4]!, l = Math.hypot(b[0] - a[0], b[1] - a[1])
-    surfaces.push({ poly: [at(a, z0), at(b, z0), at(b, z1), at(a, z1)], n: [-(b[1] - a[1]) / l, (b[0] - a[0]) / l, 0], albedo: .5 })
+    surfaces.push({ poly: [at(a, z0), at(b, z0), at(b, z1), at(a, z1)], n: [-(b[1] - a[1]) / l, (b[0] - a[0]) / l, 0], albedo: .6 })
   }
   const first = (p: V3, n: V3): number => {
     let e = ROOM_FILL
@@ -2106,8 +2184,8 @@ function hallMaterial(perPixel: boolean, library?: MaterialLibrary, sunShadow?: 
     // A board sees the room only through the gap between its two joists: the
     // view factor of that slot, about two thirds in the middle of a bay and
     // under half beside a joist
-    const gap = (JOIST_STEP - JOIST_W) / 2
-    const off = fract(hallUVNode(positionWorld)[0].sub(JOIST_FIRST).div(JOIST_STEP)).sub(.5).abs().mul(JOIST_STEP).min(gap)
+    const gap = (HALL_JOIST_STEP - JOIST_W) / 2
+    const off = fract(hallUVNode(positionWorld)[1].sub(HALL_JOIST_FIRST).div(HALL_JOIST_STEP)).sub(.5).abs().mul(HALL_JOIST_STEP).min(gap)
     const near = float(gap).sub(off), far = float(gap).add(off)
     const slot = near.div(near.mul(near).add(JOIST_D * JOIST_D).sqrt()).add(far.div(far.mul(far).add(JOIST_D * JOIST_D).sqrt())).mul(.5)
     const bay = mix(float(1), mix(mix(float(1), slot, smoothstep(.02, .2, hb)), exp(hb.max(0).div(-.045)).mul(.8).add(.2), sideways), is(K.OAK).mul(smoothstep(-.004, .004, hb)))
@@ -2178,6 +2256,12 @@ function hallMaterial(perPixel: boolean, library?: MaterialLibrary, sunShadow?: 
   const footprint = (x: N): N => x.dFdx().abs().add(x.dFdy().abs()).mul(1.15).max(1e-5)
   let fieldEdge: N = float(1e3)
   for (const e of FIELD_EDGES) fieldEdge = min(fieldEdge, hu0.sub(e.a[0]).mul(e.n[0]).add(hv0.sub(e.a[1]).mul(e.n[1])))
+  // and the straight bands' edges inside the field, where a field's cut tiles
+  // meet a band's
+  let bandEdge: N = float(1e3)
+  for (const b of FLOOR_BANDS.u) for (const e of [b - PITCH / 2, b + PITCH / 2]) bandEdge = min(bandEdge, hu0.sub(e).abs())
+  for (const b of FLOOR_BANDS.v) for (const e of [b - PITCH / 2, b + PITCH / 2]) bandEdge = min(bandEdge, hv0.sub(e).abs())
+  fieldEdge = min(fieldEdge, fieldEdge.greaterThan(0).select(bandEdge, float(1e3)))
   const jx = band(float(PITCH / 2).sub(ax), footprint(T.x)), jy = band(float(PITCH / 2).sub(ay), footprint(T.y)), jf = band(fieldEdge.abs(), footprint(fieldEdge))
   const jointCover = float(1).sub(float(1).sub(jx).mul(float(1).sub(jy)).mul(float(1).sub(jf))).mul(faced)
   tileColour = mix(tileColour, joint.mul(mix(float(.62), float(.5), wear)), jointCover)
@@ -2189,10 +2273,12 @@ function hallMaterial(perPixel: boolean, library?: MaterialLibrary, sunShadow?: 
   // the chimneypiece's own frame: along its wall, out into the room, up
   const hx = hv.sub(HEARTH.v), hy = float(HALL_W).sub(hu), hz = Wp.y.sub(FLOOR_Z)
   const overHearth = float(1).sub(smoothstep(.2, 1.2, float(HALL_W).sub(hu).abs())).mul(float(1).sub(smoothstep(HEARTH.width * .4, HEARTH.width * .8, hv.sub(HEARTH.v).abs())))
-  const age = smoothstep(FLOOR_Z + 2.1, FLOOR_Z + 3.3, Wp.y).mul(float(.11).add(overHearth.mul(.16)))
+  // the walls are kept: only a little warm toning over the chimneypiece
+  const warmth = smoothstep(FLOOR_Z + 2.2, FLOOR_Z + 3.2, Wp.y).mul(overHearth).mul(.06)
   // each of the hall's four linings carries its own seed, so no two walls
-  // fail alike; the doorways' cheeks keep their own field
-  const plaster = limewashOverBrick(vec2(T.x.add(seed.lessThan(10).select(seed.mul(6.1), float(0))), T.y), FLOOR_Z, vec3(.60, .55, .46), 1.7, doorWear(Wp), { contrast: 1.35, layered: true }).albedo.mul(float(1).sub(age))
+  // were laid alike; the doorways' cheeks keep their own field
+  const plaster = keptLimePlaster(vec2(T.x.add(seed.lessThan(10).select(seed.mul(6.1), float(0))), T.y), vec3(.70, .65, .55), 1.7)
+    .mul(mix(vec3(1, 1, 1), vec3(.97, .93, .86), warmth.mul(10)))
   // oak: grain along the member
   const grain = mx_noise_float(vec3(T.x.mul(2.2), T.y.mul(38), seed.mul(13))).mul(.14).add(mx_noise_float(vec3(T.x.mul(9), T.y.mul(120), seed)).mul(.05))
   // the timbers' history along their length: the adze's long waves, grime
@@ -2294,8 +2380,9 @@ function hallMaterial(perPixel: boolean, library?: MaterialLibrary, sunShadow?: 
   // widening and thinning until the hood's courses show through it
   const streaks = mx_noise_float(vec3(hx.mul(11), hz.mul(.9), 6.3)).mul(.45).add(mx_noise_float(vec3(hx.mul(3.2), hz.mul(.5), 2.9)).mul(.3)).add(.75)
   const tongue = exp(hx.div(above.mul(.55).add(.5)).pow(2).negate()).mul(exp(above.div(-1.3))).mul(.5).mul(streaks)
+  // a kept chimneypiece: the plume is washed back to a breath over the lintel
   const plume = sheet.add(tongue).mul(smoothstep(1.5, 1.66, hz)).mul(smoothstep(HEARTH.depth - .5, HEARTH.depth - .25, hy))
-    .mul(mx_noise_float(vec3(hx.mul(4.5), hz.mul(.8), 5.1)).mul(.35).add(.85)).mul(is(K.STONE))
+    .mul(mx_noise_float(vec3(hx.mul(4.5), hz.mul(.8), 5.1)).mul(.35).add(.85)).mul(is(K.STONE)).mul(.35)
   const sootField = mix(soot.mul(mx_noise_float(vec3(Wp.x.mul(3), Wp.y.mul(1.2), Wp.z.mul(3))).mul(.35).add(.8)), brickSoot, is(K.BRICK).mul(soot.greaterThan(.8).select(float(0), float(1)))).add(plume).clamp(0, 1)
   // THE HEARTHSTONE, as the fires have used it: three slabs, each its own
   // stone, their front worn pale and hollow where feet stood to tend the fire;

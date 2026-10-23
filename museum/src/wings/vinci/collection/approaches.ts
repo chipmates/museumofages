@@ -352,19 +352,29 @@ function tablePiecePose(slug: HallTablePiece, narrow: boolean): ApproachPose {
 }
 
 /** THE LION IS READ FROM ITS LEFT SHOULDER, where the open flank and the
- * chest show together: an eye three metres off, a short straight leg in from
- * the hall's door that passes in front of the table's south end. In the
- * lion's own frame, +z its nose and +x its left. */
-const LION_EYE = { x: 1.63, z: 2.52 }
+ * chest show together, three and a quarter metres off on a straight leg in
+ * from the hall's door that keeps to the doorway's middle. The phone keeps
+ * the whole lion above the words: a 40 degree field across, aimed a little
+ * toward the head, six degrees down, its shift lens lifting the body's
+ * middle to a third of the height.
+ * In the lion's own frame, +z its nose and +x its left. */
+const LION_EYE = { x: 2.7, z: 1.8 }
+const LION_PHONE = { fov: 76.45, pitch: 6, shift: -.62, aimZ: .25 }
 function lionPose(narrow: boolean): ApproachPose {
   const b = HALL_LION.bearing * Math.PI / 180, cos = Math.cos(b), sin = Math.sin(b)
   const on = (x: number, z: number): [number, number] => [HALL_LION.east + x * cos + z * sin, HALL_LION.north + x * sin - z * cos]
   const { min, max } = HALL_LION_REST
   const [eyeEast, eyeNorth] = on(LION_EYE.x, LION_EYE.z)
   const [atEast, atNorth] = on((min[0] + max[0]) / 2, (min[2] + max[2]) / 2)
+  const eyeY = HALL_LION.floor + 1.65
+  if (narrow) {
+    const [aimEast, aimNorth] = on((min[0] + max[0]) / 2, LION_PHONE.aimZ)
+    const atY = eyeY - Math.hypot(eyeEast - aimEast, eyeNorth - aimNorth) * Math.tan(LION_PHONE.pitch * Math.PI / 180)
+    return { eye: world(eyeEast, eyeNorth, eyeY), at: world(aimEast, aimNorth, atY), fov: LION_PHONE.fov, shift: LION_PHONE.shift }
+  }
   const size = Math.max(max[0] - min[0], max[1] - min[1], max[2] - min[2])
   const lens = 2 * Math.atan(1.2 * size / 2 / Math.hypot(LION_EYE.x, LION_EYE.z)) * 180 / Math.PI
-  return pose([eyeEast, eyeNorth, HALL_LION.floor + 1.65], [atEast, atNorth, HALL_LION.floor + max[1] / 2], lens, narrow)
+  return pose([eyeEast, eyeNorth, eyeY], [atEast, atNorth, HALL_LION.floor + max[1] / 2], lens, false)
 }
 
 /** The one station the gallery's cut line is read from. */
