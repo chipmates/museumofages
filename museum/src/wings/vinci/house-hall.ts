@@ -1,8 +1,9 @@
 /** THE GREAT HALL, as the dossier proposes it (A-LAYOUT room `hall`), and the
  * inner service passage that leads to it from the entrance. The fabric is the
  * dossier's: plan, levels, clear height, the four windows and two doors, the
- * 45 degree tile lay read from Q144, oak joists at 0.60 m under a main beam,
- * the tuffeau chimneypiece with a brick fireback where A-FURNITURE puts it.
+ * 45 degree tile lay read from Q144, the tuffeau chimneypiece with a brick
+ * fireback where A-FURNITURE puts it. The ceiling's layout and the floor's
+ * straight bands follow the room's photographs; the walls are kept whole.
  * The things in the hall are types of the period, each built from its own
  * recipe and labelled as a type; none is claimed as his.
  * Light: the hour's sun enters through the registered west windows by the
@@ -864,8 +865,8 @@ function buildHallShell(s: Sink, hero: boolean): void {
   const west = { a: NW, b: SW, holes: WINDOWS.filter(w => w.west).map(w => hole(NW, SW, WEST, w.o)) }
   walls.push(south, east, north, west)
   walls.forEach((w, i) => lining(s, w.a, w.b, FLOOR_Z - FOOT, BOARD_Z, w.holes, cell, K.PLASTER, seed + i))
-  // THE CEILING: boards between oak joists that run across the shorter span,
-  // carried at mid-span by a main beam on two tuffeau corbels. It casts: the
+  // THE CEILING: close-set oak joists on two main beams and a wall plate,
+  // the boards of the floor above across them (`ceiling`). It casts: the
   // rooms above take the sun through their own windows, and their floors
   // cast nothing.
   s.cast = true
@@ -2278,10 +2279,7 @@ function hallMaterial(perPixel: boolean, library?: MaterialLibrary, sunShadow?: 
   const jx = band(float(PITCH / 2).sub(ax), footprint(T.x)), jy = band(float(PITCH / 2).sub(ay), footprint(T.y)), jf = band(fieldEdge.abs(), footprint(fieldEdge))
   const jointCover = float(1).sub(float(1).sub(jx).mul(float(1).sub(jy)).mul(float(1).sub(jf))).mul(faced)
   tileColour = mix(tileColour, joint.mul(mix(float(.62), float(.5), wear)), jointCover)
-  // limewash: a broad wash, a trowel's drag, the brick's courses ghosting
-  // through, the smoke of forty-six winters darkening its upper reach
-  // the smoke gathers under the boards and climbs over the hearth; hands and
-  // shoulders wear the wash at the doors' jambs
+  // lime plaster under a limewash, kept whole (`keptLimePlaster`)
   const [hu, hv] = hallUVNode(Wp)
   // the chimneypiece's own frame: along its wall, out into the room, up
   const hx = hv.sub(HEARTH.v), hy = float(HALL_W).sub(hu), hz = Wp.y.sub(FLOOR_Z)
