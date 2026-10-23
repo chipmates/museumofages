@@ -18,7 +18,8 @@ import { LionBaker, type Baked } from './lion/bake'
 import { CARVED, K, SDF_LIB } from './lion/sdf'
 import { LEGS, LION_PERIOD, RACK_RUN, TRAVEL, lionJoints, lionPose, type LegId } from './lion/gait'
 import * as works from './lion/works'
-import { brassMaterial, chestLight, gildMaterial, librarySurface, paintedMaterial, plainSurface } from './lion/surface'
+import { LION_LOOK, brassMaterial, chestLight, gildMaterial, librarySurface, lilyMask, paintedMaterial, plainSurface } from './lion/surface'
+import type { Texture } from 'three/webgpu'
 
 type V3 = readonly number[]
 const SLUG = 'mechanical-lion' as const
@@ -32,7 +33,7 @@ function carvingScale(stack: Stack): number {
 
 /** The part's code in aAttr.w, read by the paint (surface.ts): the paws are
  * baked in their own frames, negative when mirrored. */
-const PART_CODE: Record<string, number> = { paw: 1, hindPaw: 2, face: 3, head: 4, tail: 5, foreUpper: 6, foreLower: 6, hindUpper: 6, hindLower: 6 }
+const PART_CODE: Record<string, number> = { paw: 1, hindPaw: 2, face: 3, head: 4, tail: 5, foreUpper: 6, foreLower: 6, hindUpper: 6, hindLower: 6, door: 7 }
 
 function carvedGeometry(b: Baked, mirror = false, code = 0): BufferGeometry {
   const n = b.position.length / 3
@@ -90,29 +91,6 @@ const addMesh = (parent: Object3D, name: string, geometry: BufferGeometry, mater
   return m
 }
 const flip = (p: V3, side: number): V3 => [p[0]! * side, p[1]!, p[2]!]
-/** The +x door's outer face, z at (x, y) in the rest frame, from its baked
- * vertices (the forward-facing ones, the highest z in each 4 mm cell). */
-function doorFaceLookup(b: Baked): (x: number, y: number) => number {
-  const cell = 0.004, top = new Map<number, number>()
-  const key = (i: number, j: number): number => i * 4096 + j
-  for (let i = 0; i < b.position.length; i += 3) {
-    if (b.normal[i + 2]! < 0.2) continue
-    const k = key(Math.round(b.position[i]! / cell), Math.round(b.position[i + 1]! / cell))
-    const z = b.position[i + 2]!
-    if (z > (top.get(k) ?? -Infinity)) top.set(k, z)
-  }
-  return (x, y) => {
-    const i0 = Math.round(x / cell), j0 = Math.round(y / cell)
-    // the nearest cell that holds the face, searching outward
-    for (let r = 0; r <= 4; r++) {
-      let best = -Infinity
-      for (let di = -r; di <= r; di++) for (let dj = -r; dj <= r; dj++) best = Math.max(best, top.get(key(i0 + di, j0 + dj)) ?? -Infinity)
-      if (best > -Infinity) return best
-    }
-    return K.HINGE[2]!
-  }
-}
-
 interface Leg { upper: Group; lower: Group; paw: Group; side: number; fore: boolean }
 
 export function build(stack: Stack): ReadyMachineBuild {
@@ -141,6 +119,7 @@ export function build(stack: Stack): ReadyMachineBuild {
   let mounted = false, disposed = false, failure: string | null = null
   let time = 0
   const inside = chestLight()
+  let lilyTexture: Texture | null = null
 
   const keep = (g: BufferGeometry): BufferGeometry => { geometries.add(g); return g }
   const own = <T extends Material>(m: T): T => { materials.add(m); return m }
@@ -224,7 +203,9 @@ export function build(stack: Stack): ReadyMachineBuild {
     const [oakSet, ironSet] = await Promise.all([loadMachineMaterial(stack, 'oak-veneer-light'), loadMachineMaterial(stack, 'iron-forged')])
     if (disposed) return
     sets.add(oakSet); sets.add(ironSet)
-    const paint = own(paintedMaterial(inside)), gild = own(gildMaterial(inside)), brass = own(brassMaterial())
+    const look = LION_LOOK
+    if (look.lined) lilyTexture = lilyMask()
+    const paint = own(paintedMaterial(inside, look, lilyTexture)), gild = own(gildMaterial(inside)), brass = own(brassMaterial())
     const oak = own(materialDressed(oakSet) ? librarySurface(stack, oakSet, 'oak') : plainSurface('oak'))
     const iron = own(materialDressed(ironSet) ? librarySurface(stack, ironSet, 'iron') : plainSurface('iron'))
     const carved = (name: string, mirror = false): BufferGeometry => keep(carvedGeometry(baked[name]!, mirror, PART_CODE[name] ?? 0))
@@ -274,15 +255,13 @@ export function build(stack: Stack): ReadyMachineBuild {
     const latch = new Group(); latch.name = 'latch'; latch.position.set(0, works.W.latch.y, works.W.latch.z); body.add(latch); nodes['latch'] = latch
     named('latch', latch, addMesh(latch, 'latch', keep(works.latchGeometry()), iron).geometry)
 
-    // the doors on their iron hinges, the straps on their outer faces read off the carving
-    const doorSurf = doorFaceLookup(baked['door']!)
+    // the doors on their iron hinges
     for (const side of [1, -1]) {
       const id = side > 0 ? 'door-left' : 'door-right'
       const H = flip(K.HINGE, side)
       const door = pivotGroup(body, id, H); nodes[id] = door
       named(id, door, addMesh(door, id, carved('door', side < 0), paint, H).geometry)
       addMesh(door, `${id}-hinge`, keep(works.hingeGeometry()), iron)
-      addMesh(door, `${id}-straps`, keep(works.doorStrapGeometry(doorSurf, side)), iron, H)
     }
 
     // the lily carriage on its rack, and the pinion that drives it
@@ -399,6 +378,7 @@ export function build(stack: Stack): ReadyMachineBuild {
       disposed = true
       for (const g of geometries) g.dispose()
       for (const m of materials) m.dispose()
+      lilyTexture?.dispose()
       object.clear()
       object.removeFromParent()
     },

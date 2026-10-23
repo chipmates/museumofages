@@ -53,7 +53,7 @@ export interface BenchOptions {
    * looks at, the picture's vertical field in degrees, and the picture's own
    * frame inside the canvas as fractions (left, top, width, height) */
   eye?: { at: [number, number, number]; look: [number, number, number]; fov?: number; frame?: [number, number, number, number] };
-  /** a grey figure of 1.70 m for size, at (x, z) on the floor, turned by yaw degrees; on a posed rig
+  /** a grey figure of 1.70 m for size, at (x, z) on the plinth or (x, y, z) on a lower floor, turned by yaw degrees; on a posed rig
    * (POSED_RIG) its feet at (x, y, z) and its turn about the vertical in radians */
   figure?: { at: [number, number] | [number, number, number]; yaw?: number; turn?: number };
   /** this jump's own lamps in place of the machine's (a probe) */
@@ -561,7 +561,8 @@ export function createBench(stack: Stack, onExit: () => void) {
     if (figure) {
       const scale = buildScaleFigure();
       figureGroup = scale.group;
-      scale.group.position.set(figure.at[0], machine.bounds.min.y, figure.at[1]);
+      const [fx, fy, fz] = figure.at.length === 3 ? figure.at : [figure.at[0], machine.bounds.min.y, figure.at[1]];
+      scale.group.position.set(fx, fy, fz);
       scale.group.rotation.y = (figure.yaw ?? 0) * Math.PI / 180;
       display.add(scale.group);
       supportGeometries.push(scale.geometry);
@@ -598,7 +599,8 @@ export function createBench(stack: Stack, onExit: () => void) {
    * The screw's cloth and frame are seen from below at eye height. Its near-flat
    * cloth under a 17 degree sun needs its shadow looked up 15 cm toward the key
    * (at 3 cm the texel's depth slope made acne that read as moire) and a wider
-   * filter, or the upper whorl's edge on the lower steps. */
+   * filter, or the upper whorl's edge on the lower steps. A machine may also
+   * carry its own exhibition lamps. */
   // lux, ambient and ground left out keep the hour's own (185, .72, #343532)
   const OWN_LIGHT: Partial<Record<BenchSlug, { lux?: number; ambient?: number; ground?: string; lift?: number; wide?: boolean; lamps?: { closed?: BenchLamp[]; section?: BenchLamp[] }; fill?: { closed?: number; section?: number }; sectionLux?: number; contact?: number }>> = {
     'aerial-screw': { lux: 210, ambient: 1.0, ground: '#5e5546', lift: .15, wide: true, contact: .9, lamps: {
@@ -621,6 +623,13 @@ export function createBench(stack: Stack, onExit: () => void) {
       // two thirds of a stop under the lit face, so the cloth still turns under one light
       { at: [6.5, 0.6, 6.5], aim: [1.8, 3.4, -0.6], lux: 200, kelvin: 3800, angle: .5, penumbra: .6, decay: 2, shadow: false },
     ] } },
+    // the hour's sun takes the lion's right; one lamp high on its left front models the carving and the gilt mane,
+    // and with the flank off a second one, lower and casting no shadow (a second pass of every part), reaches in on the works
+    'mechanical-lion': { lux: 185, ambient: .72, ground: '#343532', lamps: {
+      closed: [{ at: [2.6, 3.4, 3.4], aim: [.1, .7, .4], lux: 140, kelvin: 4000, angle: .6, penumbra: .9, decay: 2 }],
+      section: [{ at: [2.6, 3.4, 3.4], aim: [.1, .7, .4], lux: 140, kelvin: 4000, angle: .6, penumbra: .9, decay: 2 },
+        { at: [2, 1.7, 1], aim: [.1, .78, .55], lux: 200, kelvin: 4000, angle: .5, penumbra: .7, decay: 2, shadow: false }],
+    } },
     'armoured-car': { lux: 240, ambient: 1.15, ground: '#6a604f', sectionLux: 140, fill: { closed: .4 }, lamps: {
       // low on the sun's side of the visitor: the near skirt and eave take the most, the cone turns away from it
       // into shade and its far side falls off, as under one lamp in a hall

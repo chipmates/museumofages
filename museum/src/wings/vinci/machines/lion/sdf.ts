@@ -923,7 +923,7 @@ float map(vec3 p) {
 #if BREAST_ARM == 1
   shell = min(shell, max(breastLocks(p, s), -(s + DOOR_T)));
 #endif
-  // the hinges' straps are iron on the outer face (works.ts), the back of the panel plain
+  // the door hangs on iron knuckles at its outer edge (works.ts), the back of the panel plain
   float d = smax(shell, region, 0.004);
   d = smax(d, 0.001 - doorLip(p, s), 0.003);
   return smax(d, swingRelief(p), 0.006);

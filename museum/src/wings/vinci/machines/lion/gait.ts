@@ -19,8 +19,11 @@ export const BEAT = {
 } as const
 /** Body travel per gait cycle: two steps, one per diagonal pair. */
 export const STRIDE = 0.4
-/** How far each paw lifts in its swing. */
-export const LIFT = 0.07
+/** How far each paw's wrist (the hock behind) lifts in its swing, and how far
+ * the paw folds back on its pin at the swing's middle, radians: a lifted paw
+ * hangs toes down, so each step reads from across the room. */
+export const LIFT = { fore: 0.11, hind: 0.1 } as const
+export const FOLD = { fore: 0.85, hind: 0.35 } as const
 /** The count wheel's teeth: one shallow notch per step, a deep one at the end. */
 export const STEPS = 2 * BEAT.cycles
 /** Where the walk ends, in seconds: the train is caught at the last step. */
@@ -93,7 +96,7 @@ function legIK(S: readonly number[], Kn: readonly number[], W: readonly number[]
 
 /** Where one paw's wrist stands on the ground, on the lion's own z, and how
  * high it is lifted, at gait phase p. */
-function paw(leg: LegId, p: number): { z: number; lift: number } {
+function paw(leg: LegId, p: number): { z: number; lift: number; fold: number } {
   const { fore, pair } = LEG[leg]
   const W = fore ? K.WF : K.WH
   const off = pair * 0.5
@@ -102,16 +105,18 @@ function paw(leg: LegId, p: number): { z: number; lift: number } {
   const k = Math.floor(q)
   const inSwing = q >= 0 && q - k < 0.5 && k < BEAT.cycles && p < BEAT.cycles
   const start = (kk: number): number => (kk <= 0 ? 0 : plant(kk - 1))
-  let dz: number, lift = 0
+  let dz: number, lift = 0, fold = 0
   if (inSwing) {
     const s = (q - k) / 0.5
     dz = start(k) + (plant(k) - start(k)) * smoother(s)
-    lift = LIFT * Math.sin(Math.PI * smooth(s))
+    lift = (fore ? LIFT.fore : LIFT.hind) * Math.sin(Math.PI * smooth(s))
+    // the fold leads the lift a little and is gone before the paw comes down
+    fold = (fore ? FOLD.fore : FOLD.hind) * Math.pow(Math.sin(Math.PI * Math.min(1, smooth(s) * 1.12)), 1.4)
   } else {
     const last = q < 0 ? -1 : (q - k < 0.5 && p < BEAT.cycles ? k - 1 : k)
     dz = last < 0 ? 0 : plant(Math.min(last, BEAT.cycles - 1))
   }
-  return { z: W[2] + dz, lift }
+  return { z: W[2] + dz, lift, fold }
 }
 
 export interface LionPose {
@@ -155,7 +160,8 @@ export function lionPose(time: number): LionPose {
     const S = fore ? K.SH : K.HP, Kn = fore ? K.KF : K.KH, W = fore ? K.WF : K.WH
     const f = paw(leg, p)
     const ty = W[1] + f.lift - bob, tz = f.z - z
-    legs[leg] = legIK(S, Kn, W, [ty, tz])
+    const a = legIK(S, Kn, W, [ty, tz])
+    legs[leg] = [a[0], a[1], a[2] + f.fold]
   }
   // The crank shafts turn once per cycle; the great wheel and the barrel
   // turn RATIO times slower, the other way.
