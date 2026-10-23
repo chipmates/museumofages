@@ -46,18 +46,22 @@ const WALL_VALUE = 0.3
 const BLOCK = 0.86
 
 /** the wall's own surface: the wing's stone, coursed, with three scales on it
- * and a density that thins with distance, so the plane is never flat colour. */
-export function backPlaneMaterial(stack: Stack, stone: MaterialSet, height = BACK_PLANE_HEIGHT): MeshStandardNodeMaterial {
+ * and a density that thins with distance, so the plane is never flat colour.
+ * `focus` (0 to 1) softens the joints and the fine scales as a lens focused on
+ * the machine would, for a machine whose eye stands far enough off that the
+ * wall falls outside its depth of field; 0 is the wall every bench had. */
+export function backPlaneMaterial(stack: Stack, stone: MaterialSet, height = BACK_PLANE_HEIGHT, focus = 0): MeshStandardNodeMaterial {
   const material = new MeshStandardNodeMaterial({ roughness: stone.roughness, metalness: 0 })
   material.name = 'vinci/bench/back-plane'
   material.side = DoubleSide
   // the wall's own uv is in metres: along it, and up from its foot
   const along = uv().x, up = uv().y
+  const sharp = 1 - focus, blur = 1 + 3 * focus
   const detail = stack.detail(material, {
     ...stone,
-    scale: [1.2, 1.2], scales: [2.4, .21, .004], normalStrength: .34,
-    detail: { ...stone.detail, macro: 2.4, macroContrast: .07, mid: .42, micro: .45 },
-  }, { count: 3, uv: vec2(along, up), maps: .45, fade: [30, 190] })
+    scale: [1.2, 1.2], scales: [2.4, .21, .004], normalStrength: .34 * (1 - .6 * focus),
+    detail: { ...stone.detail, macro: 2.4, macroContrast: .07, mid: .42 * (1 - .5 * focus), micro: .45 * sharp },
+  }, { count: 3, uv: vec2(along, up), maps: .45 * (1 - .6 * focus), fade: [30, 190] })
   // the courses. A joint is a line of shadow, not a drawn line: it darkens,
   // it roughens, and the block above it sits a hair proud of the one below.
   const row = up.div(COURSE)
@@ -67,7 +71,7 @@ export function backPlaneMaterial(stack: Stack, stone: MaterialSet, height = BAC
   const bed = row.fract().min(float(1).sub(row.fract()))
   const perpend = block.fract().min(float(1).sub(block.fract()))
   const joint = float(1)
-    .sub(smoothstep(0, .05, bed).mul(smoothstep(0, .032, perpend)))
+    .sub(smoothstep(0, .05 * blur, bed).mul(smoothstep(0, .032 * blur, perpend)))
     .clamp(0, 1)
   // every block is cut from its own stone, so no two are the same value
   const cut = mx_noise_float(vec3(block.floor().mul(.37), course.mul(.71), 2.13)).clamp(-1, 1)
