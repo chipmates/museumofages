@@ -68,7 +68,7 @@
     },
     {
       "id": "a-attachment-review",
-      "statement": "The mast stands in an oak bearing block on the platform: its turned foot runs in an iron-lined hole at the top of the block and its iron pivot on an iron step at the bottom, 0.6 m apart. A frame of eight oak legs turns with the mast, from an oak crown wedged on the mast at 2.24 to 2.35 m down to a foot ring of eight felloes 1.55 m out, 0.38 to 0.46 m over the floor; four push bars are shipped into an oak head at 1.05 m, pinned, and run on through every second leg. The spiral starts at 2.5 m, so the bars, the frame and the people who walk the bars stay under the cloth. Rib roots are set 12 mm into the mast.",
+      "statement": "The mast stands in an oak bearing block on the platform: its turned foot runs in an iron-lined hole at the top of the block and its iron pivot on an iron step at the bottom, 0.6 m apart. A frame of eight oak legs turns with the mast, from an oak crown wedged on the mast at 2.24 to 2.35 m down to a foot ring of eight felloes 1.55 m out, 0.38 to 0.46 m over the floor; four push bars are shipped into an oak head at 1.05 m, pinned, and run on through every second leg, which is left full round a through-mortise there, the bar pinned through its cheeks and wedged on the outside, so the bars, the legs and the mast turn as one body while the deck and the bearing block stand. The spiral starts at 2.5 m, so the bars, the frame and the people who walk the bars stay under the cloth. Rib roots are set 12 mm into the mast.",
       "reason": "The sheet draws a cone of members from a round base up to the spiral; how it is made, that it turns, and the drive are C choices, so the drive four people walk on the deck holds the bars and the mast upright."
     }
   ],
@@ -12684,7 +12684,7 @@
       },
       "certainty": "C",
       "source": "a-geometry",
-      "notes": "[folio] Linen with its pores stopped with starch, eight braccia from the rim to the centre (4.6688 m), drawn on 83v as a flat spiral of about two whorls, the upper narrower. [geometry] Two turns from 2.5 m to 5.0 m over the floor, the rim falling from 4.6688 m to 2.9 m: the turns, the rise of 1.25 m a turn and the end radius are read off the drawing's proportions, the metres are the museum's. The spiral winds so that the turn the mast is given drives the air down. The cloth is sewn from radial panels no wider than 62 cm at the rim, doubled into a hem round the iron wire and a band at the mast, and hangs up to 1.2 per cent of its span between the ribs. The listed vertices sample the surface coarsely; the helicoid entry is its full definition."
+      "notes": "[folio] Linen with its pores stopped with starch, eight braccia from the rim to the centre (4.6688 m), drawn on 83v as a flat spiral of about two whorls, the upper narrower. [geometry] Two turns from 2.5 m to 5.0 m over the floor, the rim falling from 4.6688 m to 2.6 m, so the upper whorl is about three quarters of the lower's width as the sheet draws it: the turns, the rise of 1.25 m a turn and the end radius are read off the drawing's proportions, the metres are the museum's. The spiral winds so that the turn the mast is given drives the air down. The cloth is sewn from radial panels no wider than 62 cm at the rim, doubled into a hem round the iron wire and a band at the mast, and hangs up to 1.2 per cent of its span between the ribs. The listed vertices sample the surface coarsely; the helicoid entry is its full definition."
     },
     {
       "id": "rib-0",
