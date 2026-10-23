@@ -86,6 +86,8 @@ interface ClothLight {
   faces: N[]
   /** the cloth's own colour */
   albedo: N
+  /** the share of the sun-facing cloth the key reaches where it stands */
+  lit: number
 }
 
 /** THE CLOTH IS THIN. What arrives on the far side of a face comes through
@@ -100,7 +102,7 @@ class LinenLight extends PhysicalLightingModel {
     const lightDirection = input.lightDirection as N, lightColor = input.lightColor as N
     const reflected = input.reflectedLight as unknown as { directDiffuse: N }
     const node = input.lightNode as unknown as { baseColorNode?: N | null }
-    const { outward, outside, through, tint, faces, albedo } = this.cloth
+    const { outward, outside, through, tint, faces, albedo, lit } = this.cloth
     const T = SEALED_LINEN.through
     const facing = outward.dot(lightDirection)
     // the tent's inside, filled by what its sunlit faces pass: unshadowed
@@ -108,7 +110,7 @@ class LinenLight extends PhysicalLightingModel {
     // what the enclosure keeps of it
     const open = node.baseColorNode ?? lightColor
     const inside = open.mul(faces.map(n => n.dot(lightDirection).max(0)).reduce((a, b) => a.add(b))
-      .mul(T * SEALED_LINEN.lit * .25))
+      .mul(T * lit * .25))
     // from inside, the key reaches a face only through the face it lit
     super.direct({ ...input, lightColor: lightColor.mul(mix(float(T), float(1), outside)) }, builder)
     const forward = positionViewDirection.dot(lightDirection).negate().max(0)
@@ -127,8 +129,9 @@ class SealedLinenMaterial extends MeshStandardNodeMaterial {
   }
 }
 
-/** The canopy's surface: its making, its give, and the light through it. */
-export function sealedLinen(name: string): MeshStandardNodeMaterial {
+/** The canopy's surface: its making, its give, and the light through it.
+ * `lit` is the share of its sun-facing cloth the key reaches where it stands. */
+export function sealedLinen(name: string, lit: number = SEALED_LINEN.lit): MeshStandardNodeMaterial {
   const m = new SealedLinenMaterial({ roughness: .9, metalness: 0 })
   m.name = name
   m.side = DoubleSide
@@ -234,7 +237,7 @@ export function sealedLinen(name: string): MeshStandardNodeMaterial {
   const lum = LINEN.r * .2126 + LINEN.g * .7152 + LINEN.b * .0722
   const tint = vec3((LINEN.r / lum) ** 1.5, (LINEN.g / lum) ** 1.5, (LINEN.b / lum) ** 1.5).mul(tone)
   const faces = FACES.map(n => transformNormalToView(vec3(n[0], n[1], n[2])).normalize())
-  m.cloth = { outward, outside, through, tint, faces, albedo }
+  m.cloth = { outward, outside, through, tint, faces, albedo, lit }
 
   // WHERE THE KEY ENTERS. A face turned from the sun is lit through the
   // faces that take it, so its shadow is read where the ray from it toward
