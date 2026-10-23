@@ -58,8 +58,8 @@ for (const [i, f] of figs.entries()) {
   timing.load.push(performance.now() - t0)
   const m = measure(geometry, { material: material as ReturnType<typeof measureMaterial> })
   m.position.x = (i - (figs.length - 1) / 2) * gap
-  // three-quarter: the figure turned 40 degrees to its left, so its right side comes toward the camera
-  m.rotation.y = f.view === 'tq' ? (-40 * Math.PI) / 180 : 0
+  // three-quarter: turned 40 degrees, its right side toward the camera; side: in profile
+  m.rotation.y = f.view === 'tq' ? (-40 * Math.PI) / 180 : f.view === 'side' ? -Math.PI / 2 : 0
   scene.add(m)
   meshes.push(m)
 }
