@@ -905,3 +905,5 @@ html:has(#wing[data-film='upright']) #instruments .inst-source {
 .film-keys .film-closer { color: var(--na-gold); text-decoration-color: var(--na-gold); }
 .film-keys .film-closer .film-ic { color: var(--na-gold); }
 .film-keys .film-closer:focus-visible { outline: 1px solid var(--gold); outline-offset: 2px; }
+/* a closer look's further reading in its record: a link a finger can take */
+.vinci-record .closer-reading { display: inline-flex; align-items: center; min-height: 44px; color: var(--ui-text); }

@@ -426,16 +426,19 @@ export function createFilmLook(h: FilmLookHost) {
       places.append(row)
     }
     const record = (): void => h.openRecord(id, look.name, standing.certainty, host => {
+      // a record block per state, as every plate's record stands: its name, then the store's own lines for it
       for (const { state, room } of read) {
         const plate = room!.plate as StudySheetRecord
-        // each state under the word its toggle names it by, then the store's own lines for that plate
-        host.append(make('p', 'vinci-statement closer-record-state', text(state.turn)))
-        const honesty = sayMaybe(plate.honesty_en, plate.honesty_de, lang())
-        if (honesty) host.append(make('p', 'vinci-statement', honesty))
-        if (plate.licence && !honesty?.includes(plate.licence)) host.append(make('p', 'vinci-statement', plate.licence))
+        const block = make('div', 'vinci-record')
+        block.dataset['register'] = 'record'
+        block.append(make('h3', 'closer-record-state', text(state.turn)))
+        for (const line of [sayMaybe(plate.honesty_en, plate.honesty_de, lang()), plate.licence]) if (line) block.append(make('p', 'vinci-statement', line))
+        host.append(block)
       }
       if (!look.reading.length) return
-      host.append(make('p', 'vinci-statement closer-record-head', text(look.readingHead)))
+      const further = make('div', 'vinci-record')
+      further.append(make('h3', 'closer-record-head', text(look.readingHead)))
+      host.append(further)
       for (const reading of look.reading) {
         const row = make('p', 'vinci-statement')
         const link = make('a', 'closer-reading', text(reading.label))
@@ -447,7 +450,7 @@ export function createFilmLook(h: FilmLookHost) {
         out.setAttribute('aria-hidden', 'true')
         link.append(out)
         row.append(link)
-        host.append(row)
+        further.append(row)
       }
     })
     h.standDown(true)
