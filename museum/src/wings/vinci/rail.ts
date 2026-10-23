@@ -263,6 +263,10 @@ function authoredStationPose(id:VinciStationId, narrow:boolean):Pose {
   // Floor subjects and the wall read end-on have a measured phone composition
   // of their own; the generic room adjustment below is for upright exhibits
   // and architecture, and a subject that runs away from the eye is neither.
+  // THE BAPTISM'S PHONE TURNS 2.25 DEGREES AWAY FROM THE NEXT PICTURE: the
+  // lens that holds its whole frame in the short phone's window brought the
+  // Annunciation's frame in at the right edge.
+  if(id==='picture-room'&&narrow){const pose=collectionView(room!,true);if(pose)return aimedFrom(pose,headingOf(pose)-2.25,0,pose.fov)}
   if(room?.startsWith('collection-room-line')||room?.startsWith('collection-room-picture')){const pose=collectionView(room,narrow);if(pose)return pose}
   // THE GRAVE'S PHONE HOLDS THE SLAB WITH THE LIGHT MODEL'S BOARD OVER IT
   // (the upright fit keeps the board whole): level, at 40 degrees across and
