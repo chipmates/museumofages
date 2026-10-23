@@ -85,9 +85,9 @@ const BENCH_LAMP: Partial<Record<string, BenchLamp[]>> = {
     { at: [6.5, 0.6, 6.5], aim: [1.8, 3.4, -0.6], lux: 200, kelvin: 3800, angle: .5, penumbra: .6, decay: 2, shadow: false },
   ],
 };
-/** How far the wall behind falls out of focus for a machine seen from far off:
- * a lens focused on the machine at 18 m holds a wall 12 m beyond it 1 to 2 px
- * soft, and the machine's own far parts under half a pixel. */
+/** How far the wall behind falls out of focus for a machine seen from far off,
+ * as a fast lens (about f/1.4) focused on the machine 18 m away would hold a
+ * wall 12 m beyond it: its joints a few pixels soft. The machine is untouched. */
 const BENCH_WALL_FOCUS: Partial<Record<string, number>> = {
   'flying-machine': .6,
 };
