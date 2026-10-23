@@ -612,6 +612,8 @@ export function createBench(stack: Stack, onExit: () => void) {
   });
   addEventListener('resize', () => { if (active) {
     compose(); metrics?.reset(); } });
+  // a rig's moving eye for a still machine's clip: only an eye a rig set moves, and nothing is rebuilt
+  (window as unknown as Record<string, unknown>)['__benchEye'] = (next: BenchOptions['eye']): boolean => { if (!active || !eye || !next) return false; eye = next; compose(); return true; };
   return { open, close, active: () => active, frame(dt: number) { if (!active)
       return; const now = performance.now(); if (ready)
       playbackState = advancePlayback(schedule, playbackState, (now - lastWall) / 1000); lastWall = now; if (ready) {
