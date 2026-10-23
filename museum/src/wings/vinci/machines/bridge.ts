@@ -17,7 +17,7 @@ import { materialDressed, materialFailure } from './parts'
 import type { ReadyMachineBuild } from './runtime'
 import { BANK, ORDER, PERIOD, PILE, POLES, SEAT_HALF, SEAT_R, SEAT_XY, STAKES, buildClock, hash, type V3 } from './bridge/plan'
 import { bridgePoses } from './bridge/motion'
-import { STREAM_HALF, bankGeometry, groundworkGeometry, lashingGeometry, poleGeometry, waterGeometry } from './bridge/build'
+import { LASH_COARSE, LASH_FINE, STREAM_HALF, bankGeometry, groundworkGeometry, lashingGeometry, poleGeometry, waterGeometry } from './bridge/build'
 import { bridgeSurfaces } from './bridge/surface'
 
 const SLUG = 'bridge-of-poles' as const
@@ -82,7 +82,7 @@ export function build(stack: Stack): ReadyMachineBuild {
     STAKES.forEach(([x, , z], i) => groundwork.push({ a: [x, -0.4, z], b: [x, 0.19 + 0.04 * hash(i, 63), z], r: 0.042, taper: 0.004, seed: hash(i, 64), tone: 0.9 + 0.15 * hash(i, 65) }))
     for (const side of [-1, 1]) groundwork.push({ a: [PILE.x - 0.85, PILE.sleeperR - 0.02, side * PILE.sleeperZ], b: [PILE.x + 0.85, PILE.sleeperR - 0.02, side * PILE.sleeperZ], r: PILE.sleeperR, taper: 0.006, seed: hash(side, 66), tone: 0.92 })
     hang('groundwork', groundworkGeometry(groundwork), surfaces.pole)
-    lashings = hang('lashings', lashingGeometry(), surfaces.hemp)
+    lashings = hang('lashings', lashingGeometry(stack.tierName() === 'hero' ? LASH_FINE : LASH_COARSE), surfaces.hemp)
     lashings.frustumCulled = false
     lashings.visible = lashed
     hang('bank', bankGeometry(), surfaces.earth)

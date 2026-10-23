@@ -143,7 +143,13 @@ function crossingFrame(c: Crossing): { o: V3; d: V3; w: V3; m: V3; rr: number; r
 /** the serving runs where the turn bears, its ends whipped short rather than cut */
 const served = (t: number): number => Math.min(1, Math.max(0, (Math.sin(t) - 0.25) / 0.2))
 
-function turnPath(c: Crossing, i: number): { p: V3; serve: number }[] {
+/** a lashing's fineness: the samples round each wrap, the corner-cutting passes and the sides round the rope */
+export interface LashDetail { wrap: number; passes: number; around: number }
+/** the close look's lashings; the standard tier's keep a tenth of the poles' weight in rope (every pass draws them) */
+export const LASH_FINE: LashDetail = { wrap: 14, passes: 2, around: 8 }
+export const LASH_COARSE: LashDetail = { wrap: 8, passes: 1, around: 6 }
+
+function turnPath(c: Crossing, i: number, detail: LashDetail): { p: V3; serve: number }[] {
   const { o, d, w, m, rr, rs } = crossingFrame(c)
   const gap = 0.0006
   const rRope = ROPE_R
@@ -151,7 +157,7 @@ function turnPath(c: Crossing, i: number): { p: V3; serve: number }[] {
   const b = rr + rRope * (1 + 2 * i) + gap
   const hRod = dot(sub(add(o, mul(m, rs + rr)), o), m)
   const at = (du: number, dw: number, dm: number): V3 => add(o, add(mul(d, du), add(mul(w, dw), mul(m, dm))))
-  const N = 14
+  const N = detail.wrap
   const path: { p: V3; serve: number }[] = []
   // round the rod (its axis at height hRod along m) at d = side*a, from w = -from to +from over its far face
   const overRod = (side: number, dir: number): void => {
@@ -175,7 +181,7 @@ function turnPath(c: Crossing, i: number): { p: V3; serve: number }[] {
   roundSupport(1, 1)
   overRod(-1, -1)
   roundSupport(-1, -1)
-  return chaikin(path, 2)
+  return chaikin(path, detail.passes)
 }
 
 /** Corner cutting on a closed path: rounds the turns where one wrap hands over to the next. */
@@ -194,13 +200,13 @@ function chaikin(path: { p: V3; serve: number }[], passes: number): { p: V3; ser
 
 /** Every lashing as one surface: each vertex knows the centre of the rope where it lies (`aSpine`), the moment
  * it is wound (`aBorn`) and whether it is served there (`aServe`). */
-export function lashingGeometry(): BufferGeometry {
+export function lashingGeometry(detail: LashDetail = LASH_FINE): BufferGeometry {
   const sheet = new Sheet()
   const spine: number[] = [], born: number[] = [], serve: number[] = []
-  const around = 8
+  const around = detail.around
   CROSSINGS.forEach((c, ci) => {
     const start = lashStart(c)
-    const turns = Array.from({ length: TURNS }, (_, i) => turnPath(c, i))
+    const turns = Array.from({ length: TURNS }, (_, i) => turnPath(c, i, detail))
     const lengths = turns.map(t => t.reduce((sum, q, j) => sum + len(sub(t[(j + 1) % t.length]!.p, q.p)), 0))
     const total = lengths.reduce((s, l) => s + l, 0)
     let done = 0
