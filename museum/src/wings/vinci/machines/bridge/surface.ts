@@ -7,7 +7,7 @@
  * here, each faded as one pixel comes to hold more than a stroke of it.
  */
 import { Color, MeshPhysicalNodeMaterial, MeshStandardNodeMaterial, type Material } from 'three/webgpu'
-import { attribute, cameraPosition, cos, float, fwidth, mix, mx_noise_float, mx_worley_noise_vec2, normalView, normalViewGeometry, normalWorld, positionLocal, positionView, positionWorld, screenUV, sin, smoothstep, step, uniform, uv, vec2, vec3 } from 'three/tsl'
+import { atan, attribute, cameraPosition, cos, float, fwidth, mix, mx_noise_float, mx_worley_noise_vec2, normalView, normalViewGeometry, normalWorld, positionLocal, positionView, positionWorld, screenUV, sin, smoothstep, step, uniform, uv, vec2, vec3 } from 'three/tsl'
 import type { MaterialSet, Stack } from '../../../../stack'
 import { loadMachineMaterial, materialDressed } from '../parts'
 import { benchKeyDirection } from '../key'
@@ -89,10 +89,10 @@ export async function bridgeSurfaces(stack: Stack): Promise<BridgeSurfaces> {
     const cells = mx_worley_noise_vec2(q)
     const edge = cells.y.sub(cells.x)
     const open = smoothstep(0.38, 0.62, mx_noise_float(q0.mul(vec3(0.6, 0.35, 0.35)).add(5.5)).mul(0.5).add(0.5))
-    const width = mx_noise_float(q0.mul(1.7).add(9.9)).mul(0.035).add(0.05)
+    const width = mx_noise_float(q0.mul(1.7).add(9.9)).mul(0.04).add(0.07)
     const crackFade = float(1).sub(smoothstep(0.08, 0.3, fwidth(edge)))
     const fissure = float(1).sub(smoothstep(width.mul(0.2), width, edge)).mul(open.mul(0.85).add(0.15)).mul(crackFade)
-    const shoulder = float(1).sub(smoothstep(width, width.mul(3.5), edge)).mul(open).mul(crackFade)
+    const shoulder = float(1).sub(smoothstep(width, width.mul(4), edge)).mul(open).mul(crackFade)
     const microQ = vec3(C.x.mul(40), C.y.mul(190), C.z.mul(190))
     const micro = mx_noise_float(microQ)
     const microFade = float(1).sub(smoothstep(0.15, 0.6, fwidth(C.y.mul(190)).add(fwidth(C.x.mul(40)))))
@@ -102,8 +102,8 @@ export async function bridgeSurfaces(stack: Stack): Promise<BridgeSurfaces> {
     const lichen = smoothstep(0.62, 0.8, mx_noise_float(vec3(C.x.mul(1.2).add(o), C.y.mul(14), C.z.mul(14)).add(2.7)).mul(0.5).add(0.5))
     const plateTop = mx(mx(lin('#4a433c'), lin('#66615a'), plate), lin('#54473a'), mottle.mul(0.35)).mul(float(1).sub(cells.x.mul(0.15)))
     const barkCol = mx(mx(plateTop, lin('#7d7b6c'), lichen.mul(0.3)).mul(micro.mul(microFade).mul(0.34).add(1)), lin('#251e18'), fissure.mul(0.78))
-      .mul(float(1).sub(shoulder.mul(0.1))).mul(float(1).add(lent.mul(0.22)))
-    const barkH = fissure.negate().mul(0.0028).sub(shoulder.mul(0.0012)).add(micro.mul(microFade).mul(0.0009)).add(plate.mul(0.0006)).add(lent.mul(0.0002))
+      .mul(float(1).sub(shoulder.mul(0.2))).mul(float(1).add(lent.mul(0.22)))
+    const barkH = fissure.negate().mul(0.005).sub(shoulder.mul(0.0022)).add(micro.mul(microFade).mul(0.0009)).add(plate.mul(0.0006)).add(lent.mul(0.0002))
     // PEELED: pale wood under the drawknife, its strokes as narrow facets along the stem, bark left in the hollows
     const fibres = luma(d.albedo)
     const facetPhase = u.div(0.026).add(mx_noise_float(vec3(v.mul(0.9), o, 1.1)).mul(1.4))
@@ -119,7 +119,10 @@ export async function bridgeSurfaces(stack: Stack): Promise<BridgeSurfaces> {
     // chestnut: a brown heart, a narrow pale sapwood, the bark a dark rim; the rings show across both
     const heart = smoothstep(0.05, 0.058, rr)
     const cutStroke = mx_noise_float(vec3(u.mul(4), v.mul(70), o)).mul(0.5).add(0.5)
-    const endCol = mx(lin('#a78560'), lin('#bc9f78'), heart).mul(float(1).sub(rings.mul(ringFade).mul(0.22))).mul(cutStroke.mul(0.12).add(0.9))
+    // the checks a drying end opens, a few along the rays
+    const ang = atan(v, u)
+    const check = smoothstep(0.986, 0.998, cos(ang.mul(5).add(o).add(mx_noise_float(vec3(rr.mul(60), o, 2.2)).mul(0.5)))).mul(smoothstep(0.012, 0.03, rr)).mul(fade(ang.mul(5), 1))
+    const endCol = mx(lin('#86705a'), lin('#a3927a'), heart).mul(float(1).sub(check.mul(0.55))).mul(float(1).sub(rings.mul(ringFade).mul(0.3))).mul(cutStroke.mul(0.12).add(0.9))
       .mul(float(1).sub(smoothstep(0.066, 0.072, rr).mul(0.6))).mul(smoothstep(0, 0.004, rr).mul(0.25).add(0.75))
     pole.colorNode = mx(sideCol, endCol, end).mul(d.occlusion).mul(keyRim(0.45).add(1))
     pole.roughnessNode = mx(mx(float(0.84).add(fissure.mul(0.12)).add(micro.mul(microFade).mul(0.05)), d.roughness.clamp(0.6, 0.8), peeled), float(0.82), end)
@@ -147,7 +150,7 @@ export async function bridgeSurfaces(stack: Stack): Promise<BridgeSurfaces> {
     const servePhase = v.div(0.0032).mul(Math.PI * 2)
     const serveShade = float(1).sub(fade(servePhase, 0.22).mul(cos(servePhase).mul(-0.5).add(0.5)))
     const T: N = attribute('aTone', 'vec3')
-    const laid = lin('#9a8661').mul(luma(d.albedo).mul(0.55).add(0.55)).mul(layShade)
+    const laid = lin('#8c7d60').mul(luma(d.albedo).mul(0.55).add(0.55)).mul(layShade)
     const tarred = lin('#4c4030').mul(luma(d.albedo).mul(0.3).add(0.8)).mul(serveShade)
     hemp.colorNode = mx(laid, tarred, served).mul(T.x).mul(d.occlusion).mul(keyRim(0.5).add(1))
     hemp.roughnessNode = mx(d.roughness.max(0.66), float(0.55), served)
