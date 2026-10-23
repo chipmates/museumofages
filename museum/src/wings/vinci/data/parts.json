@@ -503,10 +503,6 @@
         "en": "Grip of the push bar",
         "de": "Griff der Schubstange"
       },
-      "stay-hitch-0": {
-        "en": "Hitch of the rope brace",
-        "de": "Knoten der Seilstrebe"
-      },
       "push-bar-1": {
         "en": "Push bar",
         "de": "Schubstange"
@@ -514,10 +510,6 @@
       "grip-1": {
         "en": "Grip of the push bar",
         "de": "Griff der Schubstange"
-      },
-      "stay-hitch-1": {
-        "en": "Hitch of the rope brace",
-        "de": "Knoten der Seilstrebe"
       },
       "push-bar-2": {
         "en": "Push bar",
@@ -527,10 +519,6 @@
         "en": "Grip of the push bar",
         "de": "Griff der Schubstange"
       },
-      "stay-hitch-2": {
-        "en": "Hitch of the rope brace",
-        "de": "Knoten der Seilstrebe"
-      },
       "push-bar-3": {
         "en": "Push bar",
         "de": "Schubstange"
@@ -538,46 +526,6 @@
       "grip-3": {
         "en": "Grip of the push bar",
         "de": "Griff der Schubstange"
-      },
-      "stay-hitch-3": {
-        "en": "Hitch of the rope brace",
-        "de": "Knoten der Seilstrebe"
-      },
-      "brace-collar": {
-        "en": "Iron band for the rope braces",
-        "de": "Eisenband für die Seilstreben"
-      },
-      "brace-eye-0": {
-        "en": "Eye for a rope brace",
-        "de": "Öse für eine Seilstrebe"
-      },
-      "stay-0": {
-        "en": "Rope brace",
-        "de": "Seilstrebe"
-      },
-      "brace-eye-1": {
-        "en": "Eye for a rope brace",
-        "de": "Öse für eine Seilstrebe"
-      },
-      "stay-1": {
-        "en": "Rope brace",
-        "de": "Seilstrebe"
-      },
-      "brace-eye-2": {
-        "en": "Eye for a rope brace",
-        "de": "Öse für eine Seilstrebe"
-      },
-      "stay-2": {
-        "en": "Rope brace",
-        "de": "Seilstrebe"
-      },
-      "brace-eye-3": {
-        "en": "Eye for a rope brace",
-        "de": "Öse für eine Seilstrebe"
-      },
-      "stay-3": {
-        "en": "Rope brace",
-        "de": "Seilstrebe"
       },
       "rib-0": {
         "en": "Cane rib",
@@ -790,6 +738,2142 @@
       "sail": {
         "en": "Starched linen spiral",
         "de": "Spirale aus gestärktem Leinen"
+      },
+      "rib-4-outer": {
+        "en": "Cane rib",
+        "de": "Rohrstab"
+      },
+      "rib-4-splice-0": {
+        "en": "Binding of the splice",
+        "de": "Bund der Verlängerung"
+      },
+      "rib-4-splice-1": {
+        "en": "Binding of the splice",
+        "de": "Bund der Verlängerung"
+      },
+      "rib-5-outer": {
+        "en": "Cane rib",
+        "de": "Rohrstab"
+      },
+      "rib-5-splice-0": {
+        "en": "Binding of the splice",
+        "de": "Bund der Verlängerung"
+      },
+      "rib-5-splice-1": {
+        "en": "Binding of the splice",
+        "de": "Bund der Verlängerung"
+      },
+      "rib-6-outer": {
+        "en": "Cane rib",
+        "de": "Rohrstab"
+      },
+      "rib-6-splice-0": {
+        "en": "Binding of the splice",
+        "de": "Bund der Verlängerung"
+      },
+      "rib-6-splice-1": {
+        "en": "Binding of the splice",
+        "de": "Bund der Verlängerung"
+      },
+      "rib-7-outer": {
+        "en": "Cane rib",
+        "de": "Rohrstab"
+      },
+      "rib-7-splice-0": {
+        "en": "Binding of the splice",
+        "de": "Bund der Verlängerung"
+      },
+      "rib-7-splice-1": {
+        "en": "Binding of the splice",
+        "de": "Bund der Verlängerung"
+      },
+      "rib-8-outer": {
+        "en": "Cane rib",
+        "de": "Rohrstab"
+      },
+      "rib-8-splice-0": {
+        "en": "Binding of the splice",
+        "de": "Bund der Verlängerung"
+      },
+      "rib-8-splice-1": {
+        "en": "Binding of the splice",
+        "de": "Bund der Verlängerung"
+      },
+      "rib-9-outer": {
+        "en": "Cane rib",
+        "de": "Rohrstab"
+      },
+      "rib-9-splice-0": {
+        "en": "Binding of the splice",
+        "de": "Bund der Verlängerung"
+      },
+      "rib-9-splice-1": {
+        "en": "Binding of the splice",
+        "de": "Bund der Verlängerung"
+      },
+      "rib-13": {
+        "en": "Cane rib",
+        "de": "Rohrstab"
+      },
+      "rib-root-13": {
+        "en": "Whipping at the cane's root",
+        "de": "Bund am Fuß des Rohrstabs"
+      },
+      "rib-tip-13": {
+        "en": "Lashing to the iron rim",
+        "de": "Bund am Eisenrand"
+      },
+      "rib-14": {
+        "en": "Cane rib",
+        "de": "Rohrstab"
+      },
+      "rib-root-14": {
+        "en": "Whipping at the cane's root",
+        "de": "Bund am Fuß des Rohrstabs"
+      },
+      "rib-tip-14": {
+        "en": "Lashing to the iron rim",
+        "de": "Bund am Eisenrand"
+      },
+      "rib-15": {
+        "en": "Cane rib",
+        "de": "Rohrstab"
+      },
+      "rib-root-15": {
+        "en": "Whipping at the cane's root",
+        "de": "Bund am Fuß des Rohrstabs"
+      },
+      "rib-tip-15": {
+        "en": "Lashing to the iron rim",
+        "de": "Bund am Eisenrand"
+      },
+      "rib-16": {
+        "en": "Cane rib",
+        "de": "Rohrstab"
+      },
+      "rib-root-16": {
+        "en": "Whipping at the cane's root",
+        "de": "Bund am Fuß des Rohrstabs"
+      },
+      "rib-tip-16": {
+        "en": "Lashing to the iron rim",
+        "de": "Bund am Eisenrand"
+      },
+      "rib-0-node-0": {
+        "en": "Node of the cane",
+        "de": "Knoten des Rohrstabs"
+      },
+      "rib-0-node-1": {
+        "en": "Node of the cane",
+        "de": "Knoten des Rohrstabs"
+      },
+      "rib-0-node-2": {
+        "en": "Node of the cane",
+        "de": "Knoten des Rohrstabs"
+      },
+      "rib-0-node-3": {
+        "en": "Node of the cane",
+        "de": "Knoten des Rohrstabs"
+      },
+      "rib-0-node-4": {
+        "en": "Node of the cane",
+        "de": "Knoten des Rohrstabs"
+      },
+      "rib-0-node-5": {
+        "en": "Node of the cane",
+        "de": "Knoten des Rohrstabs"
+      },
+      "rib-0-node-6": {
+        "en": "Node of the cane",
+        "de": "Knoten des Rohrstabs"
+      },
+      "rib-0-node-7": {
+        "en": "Node of the cane",
+        "de": "Knoten des Rohrstabs"
+      },
+      "rib-0-node-8": {
+        "en": "Node of the cane",
+        "de": "Knoten des Rohrstabs"
+      },
+      "rib-0-node-9": {
+        "en": "Node of the cane",
+        "de": "Knoten des Rohrstabs"
+      },
+      "rib-0-node-10": {
+        "en": "Node of the cane",
+        "de": "Knoten des Rohrstabs"
+      },
+      "rib-0-seizing-0": {
+        "en": "Seizing to the cloth",
+        "de": "Bund am Tuch"
+      },
+      "rib-0-seizing-1": {
+        "en": "Seizing to the cloth",
+        "de": "Bund am Tuch"
+      },
+      "rib-0-seizing-2": {
+        "en": "Seizing to the cloth",
+        "de": "Bund am Tuch"
+      },
+      "rib-0-outer-node-0": {
+        "en": "Node of the cane",
+        "de": "Knoten des Rohrstabs"
+      },
+      "rib-0-outer-node-1": {
+        "en": "Node of the cane",
+        "de": "Knoten des Rohrstabs"
+      },
+      "rib-0-outer-node-2": {
+        "en": "Node of the cane",
+        "de": "Knoten des Rohrstabs"
+      },
+      "rib-0-outer-node-3": {
+        "en": "Node of the cane",
+        "de": "Knoten des Rohrstabs"
+      },
+      "rib-0-outer-node-4": {
+        "en": "Node of the cane",
+        "de": "Knoten des Rohrstabs"
+      },
+      "rib-0-outer-node-5": {
+        "en": "Node of the cane",
+        "de": "Knoten des Rohrstabs"
+      },
+      "rib-0-outer-node-6": {
+        "en": "Node of the cane",
+        "de": "Knoten des Rohrstabs"
+      },
+      "rib-0-outer-node-7": {
+        "en": "Node of the cane",
+        "de": "Knoten des Rohrstabs"
+      },
+      "rib-0-outer-seizing-0": {
+        "en": "Seizing to the cloth",
+        "de": "Bund am Tuch"
+      },
+      "rib-0-outer-seizing-1": {
+        "en": "Seizing to the cloth",
+        "de": "Bund am Tuch"
+      },
+      "rib-1-node-0": {
+        "en": "Node of the cane",
+        "de": "Knoten des Rohrstabs"
+      },
+      "rib-1-node-1": {
+        "en": "Node of the cane",
+        "de": "Knoten des Rohrstabs"
+      },
+      "rib-1-node-2": {
+        "en": "Node of the cane",
+        "de": "Knoten des Rohrstabs"
+      },
+      "rib-1-node-3": {
+        "en": "Node of the cane",
+        "de": "Knoten des Rohrstabs"
+      },
+      "rib-1-node-4": {
+        "en": "Node of the cane",
+        "de": "Knoten des Rohrstabs"
+      },
+      "rib-1-node-5": {
+        "en": "Node of the cane",
+        "de": "Knoten des Rohrstabs"
+      },
+      "rib-1-node-6": {
+        "en": "Node of the cane",
+        "de": "Knoten des Rohrstabs"
+      },
+      "rib-1-node-7": {
+        "en": "Node of the cane",
+        "de": "Knoten des Rohrstabs"
+      },
+      "rib-1-node-8": {
+        "en": "Node of the cane",
+        "de": "Knoten des Rohrstabs"
+      },
+      "rib-1-node-9": {
+        "en": "Node of the cane",
+        "de": "Knoten des Rohrstabs"
+      },
+      "rib-1-seizing-0": {
+        "en": "Seizing to the cloth",
+        "de": "Bund am Tuch"
+      },
+      "rib-1-seizing-1": {
+        "en": "Seizing to the cloth",
+        "de": "Bund am Tuch"
+      },
+      "rib-1-seizing-2": {
+        "en": "Seizing to the cloth",
+        "de": "Bund am Tuch"
+      },
+      "rib-1-outer-node-0": {
+        "en": "Node of the cane",
+        "de": "Knoten des Rohrstabs"
+      },
+      "rib-1-outer-node-1": {
+        "en": "Node of the cane",
+        "de": "Knoten des Rohrstabs"
+      },
+      "rib-1-outer-node-2": {
+        "en": "Node of the cane",
+        "de": "Knoten des Rohrstabs"
+      },
+      "rib-1-outer-node-3": {
+        "en": "Node of the cane",
+        "de": "Knoten des Rohrstabs"
+      },
+      "rib-1-outer-node-4": {
+        "en": "Node of the cane",
+        "de": "Knoten des Rohrstabs"
+      },
+      "rib-1-outer-node-5": {
+        "en": "Node of the cane",
+        "de": "Knoten des Rohrstabs"
+      },
+      "rib-1-outer-node-6": {
+        "en": "Node of the cane",
+        "de": "Knoten des Rohrstabs"
+      },
+      "rib-1-outer-node-7": {
+        "en": "Node of the cane",
+        "de": "Knoten des Rohrstabs"
+      },
+      "rib-1-outer-seizing-0": {
+        "en": "Seizing to the cloth",
+        "de": "Bund am Tuch"
+      },
+      "rib-1-outer-seizing-1": {
+        "en": "Seizing to the cloth",
+        "de": "Bund am Tuch"
+      },
+      "rib-1-outer-seizing-2": {
+        "en": "Seizing to the cloth",
+        "de": "Bund am Tuch"
+      },
+      "rib-2-node-0": {
+        "en": "Node of the cane",
+        "de": "Knoten des Rohrstabs"
+      },
+      "rib-2-node-1": {
+        "en": "Node of the cane",
+        "de": "Knoten des Rohrstabs"
+      },
+      "rib-2-node-2": {
+        "en": "Node of the cane",
+        "de": "Knoten des Rohrstabs"
+      },
+      "rib-2-node-3": {
+        "en": "Node of the cane",
+        "de": "Knoten des Rohrstabs"
+      },
+      "rib-2-node-4": {
+        "en": "Node of the cane",
+        "de": "Knoten des Rohrstabs"
+      },
+      "rib-2-node-5": {
+        "en": "Node of the cane",
+        "de": "Knoten des Rohrstabs"
+      },
+      "rib-2-node-6": {
+        "en": "Node of the cane",
+        "de": "Knoten des Rohrstabs"
+      },
+      "rib-2-node-7": {
+        "en": "Node of the cane",
+        "de": "Knoten des Rohrstabs"
+      },
+      "rib-2-node-8": {
+        "en": "Node of the cane",
+        "de": "Knoten des Rohrstabs"
+      },
+      "rib-2-node-9": {
+        "en": "Node of the cane",
+        "de": "Knoten des Rohrstabs"
+      },
+      "rib-2-seizing-0": {
+        "en": "Seizing to the cloth",
+        "de": "Bund am Tuch"
+      },
+      "rib-2-seizing-1": {
+        "en": "Seizing to the cloth",
+        "de": "Bund am Tuch"
+      },
+      "rib-2-seizing-2": {
+        "en": "Seizing to the cloth",
+        "de": "Bund am Tuch"
+      },
+      "rib-2-outer-node-0": {
+        "en": "Node of the cane",
+        "de": "Knoten des Rohrstabs"
+      },
+      "rib-2-outer-node-1": {
+        "en": "Node of the cane",
+        "de": "Knoten des Rohrstabs"
+      },
+      "rib-2-outer-node-2": {
+        "en": "Node of the cane",
+        "de": "Knoten des Rohrstabs"
+      },
+      "rib-2-outer-node-3": {
+        "en": "Node of the cane",
+        "de": "Knoten des Rohrstabs"
+      },
+      "rib-2-outer-node-4": {
+        "en": "Node of the cane",
+        "de": "Knoten des Rohrstabs"
+      },
+      "rib-2-outer-node-5": {
+        "en": "Node of the cane",
+        "de": "Knoten des Rohrstabs"
+      },
+      "rib-2-outer-node-6": {
+        "en": "Node of the cane",
+        "de": "Knoten des Rohrstabs"
+      },
+      "rib-2-outer-node-7": {
+        "en": "Node of the cane",
+        "de": "Knoten des Rohrstabs"
+      },
+      "rib-2-outer-seizing-0": {
+        "en": "Seizing to the cloth",
+        "de": "Bund am Tuch"
+      },
+      "rib-2-outer-seizing-1": {
+        "en": "Seizing to the cloth",
+        "de": "Bund am Tuch"
+      },
+      "rib-2-outer-seizing-2": {
+        "en": "Seizing to the cloth",
+        "de": "Bund am Tuch"
+      },
+      "rib-3-node-0": {
+        "en": "Node of the cane",
+        "de": "Knoten des Rohrstabs"
+      },
+      "rib-3-node-1": {
+        "en": "Node of the cane",
+        "de": "Knoten des Rohrstabs"
+      },
+      "rib-3-node-2": {
+        "en": "Node of the cane",
+        "de": "Knoten des Rohrstabs"
+      },
+      "rib-3-node-3": {
+        "en": "Node of the cane",
+        "de": "Knoten des Rohrstabs"
+      },
+      "rib-3-node-4": {
+        "en": "Node of the cane",
+        "de": "Knoten des Rohrstabs"
+      },
+      "rib-3-node-5": {
+        "en": "Node of the cane",
+        "de": "Knoten des Rohrstabs"
+      },
+      "rib-3-node-6": {
+        "en": "Node of the cane",
+        "de": "Knoten des Rohrstabs"
+      },
+      "rib-3-node-7": {
+        "en": "Node of the cane",
+        "de": "Knoten des Rohrstabs"
+      },
+      "rib-3-node-8": {
+        "en": "Node of the cane",
+        "de": "Knoten des Rohrstabs"
+      },
+      "rib-3-node-9": {
+        "en": "Node of the cane",
+        "de": "Knoten des Rohrstabs"
+      },
+      "rib-3-seizing-0": {
+        "en": "Seizing to the cloth",
+        "de": "Bund am Tuch"
+      },
+      "rib-3-seizing-1": {
+        "en": "Seizing to the cloth",
+        "de": "Bund am Tuch"
+      },
+      "rib-3-seizing-2": {
+        "en": "Seizing to the cloth",
+        "de": "Bund am Tuch"
+      },
+      "rib-3-outer-node-0": {
+        "en": "Node of the cane",
+        "de": "Knoten des Rohrstabs"
+      },
+      "rib-3-outer-node-1": {
+        "en": "Node of the cane",
+        "de": "Knoten des Rohrstabs"
+      },
+      "rib-3-outer-node-2": {
+        "en": "Node of the cane",
+        "de": "Knoten des Rohrstabs"
+      },
+      "rib-3-outer-node-3": {
+        "en": "Node of the cane",
+        "de": "Knoten des Rohrstabs"
+      },
+      "rib-3-outer-node-4": {
+        "en": "Node of the cane",
+        "de": "Knoten des Rohrstabs"
+      },
+      "rib-3-outer-node-5": {
+        "en": "Node of the cane",
+        "de": "Knoten des Rohrstabs"
+      },
+      "rib-3-outer-node-6": {
+        "en": "Node of the cane",
+        "de": "Knoten des Rohrstabs"
+      },
+      "rib-3-outer-seizing-0": {
+        "en": "Seizing to the cloth",
+        "de": "Bund am Tuch"
+      },
+      "rib-3-outer-seizing-1": {
+        "en": "Seizing to the cloth",
+        "de": "Bund am Tuch"
+      },
+      "rib-4-node-0": {
+        "en": "Node of the cane",
+        "de": "Knoten des Rohrstabs"
+      },
+      "rib-4-node-1": {
+        "en": "Node of the cane",
+        "de": "Knoten des Rohrstabs"
+      },
+      "rib-4-node-2": {
+        "en": "Node of the cane",
+        "de": "Knoten des Rohrstabs"
+      },
+      "rib-4-node-3": {
+        "en": "Node of the cane",
+        "de": "Knoten des Rohrstabs"
+      },
+      "rib-4-node-4": {
+        "en": "Node of the cane",
+        "de": "Knoten des Rohrstabs"
+      },
+      "rib-4-node-5": {
+        "en": "Node of the cane",
+        "de": "Knoten des Rohrstabs"
+      },
+      "rib-4-node-6": {
+        "en": "Node of the cane",
+        "de": "Knoten des Rohrstabs"
+      },
+      "rib-4-node-7": {
+        "en": "Node of the cane",
+        "de": "Knoten des Rohrstabs"
+      },
+      "rib-4-node-8": {
+        "en": "Node of the cane",
+        "de": "Knoten des Rohrstabs"
+      },
+      "rib-4-node-9": {
+        "en": "Node of the cane",
+        "de": "Knoten des Rohrstabs"
+      },
+      "rib-4-seizing-0": {
+        "en": "Seizing to the cloth",
+        "de": "Bund am Tuch"
+      },
+      "rib-4-seizing-1": {
+        "en": "Seizing to the cloth",
+        "de": "Bund am Tuch"
+      },
+      "rib-4-seizing-2": {
+        "en": "Seizing to the cloth",
+        "de": "Bund am Tuch"
+      },
+      "rib-4-outer-node-0": {
+        "en": "Node of the cane",
+        "de": "Knoten des Rohrstabs"
+      },
+      "rib-4-outer-node-1": {
+        "en": "Node of the cane",
+        "de": "Knoten des Rohrstabs"
+      },
+      "rib-4-outer-node-2": {
+        "en": "Node of the cane",
+        "de": "Knoten des Rohrstabs"
+      },
+      "rib-4-outer-node-3": {
+        "en": "Node of the cane",
+        "de": "Knoten des Rohrstabs"
+      },
+      "rib-4-outer-node-4": {
+        "en": "Node of the cane",
+        "de": "Knoten des Rohrstabs"
+      },
+      "rib-4-outer-node-5": {
+        "en": "Node of the cane",
+        "de": "Knoten des Rohrstabs"
+      },
+      "rib-4-outer-node-6": {
+        "en": "Node of the cane",
+        "de": "Knoten des Rohrstabs"
+      },
+      "rib-4-outer-seizing-0": {
+        "en": "Seizing to the cloth",
+        "de": "Bund am Tuch"
+      },
+      "rib-4-outer-seizing-1": {
+        "en": "Seizing to the cloth",
+        "de": "Bund am Tuch"
+      },
+      "rib-5-node-0": {
+        "en": "Node of the cane",
+        "de": "Knoten des Rohrstabs"
+      },
+      "rib-5-node-1": {
+        "en": "Node of the cane",
+        "de": "Knoten des Rohrstabs"
+      },
+      "rib-5-node-2": {
+        "en": "Node of the cane",
+        "de": "Knoten des Rohrstabs"
+      },
+      "rib-5-node-3": {
+        "en": "Node of the cane",
+        "de": "Knoten des Rohrstabs"
+      },
+      "rib-5-node-4": {
+        "en": "Node of the cane",
+        "de": "Knoten des Rohrstabs"
+      },
+      "rib-5-node-5": {
+        "en": "Node of the cane",
+        "de": "Knoten des Rohrstabs"
+      },
+      "rib-5-node-6": {
+        "en": "Node of the cane",
+        "de": "Knoten des Rohrstabs"
+      },
+      "rib-5-node-7": {
+        "en": "Node of the cane",
+        "de": "Knoten des Rohrstabs"
+      },
+      "rib-5-seizing-0": {
+        "en": "Seizing to the cloth",
+        "de": "Bund am Tuch"
+      },
+      "rib-5-seizing-1": {
+        "en": "Seizing to the cloth",
+        "de": "Bund am Tuch"
+      },
+      "rib-5-outer-node-0": {
+        "en": "Node of the cane",
+        "de": "Knoten des Rohrstabs"
+      },
+      "rib-5-outer-node-1": {
+        "en": "Node of the cane",
+        "de": "Knoten des Rohrstabs"
+      },
+      "rib-5-outer-node-2": {
+        "en": "Node of the cane",
+        "de": "Knoten des Rohrstabs"
+      },
+      "rib-5-outer-node-3": {
+        "en": "Node of the cane",
+        "de": "Knoten des Rohrstabs"
+      },
+      "rib-5-outer-node-4": {
+        "en": "Node of the cane",
+        "de": "Knoten des Rohrstabs"
+      },
+      "rib-5-outer-node-5": {
+        "en": "Node of the cane",
+        "de": "Knoten des Rohrstabs"
+      },
+      "rib-5-outer-node-6": {
+        "en": "Node of the cane",
+        "de": "Knoten des Rohrstabs"
+      },
+      "rib-5-outer-seizing-0": {
+        "en": "Seizing to the cloth",
+        "de": "Bund am Tuch"
+      },
+      "rib-5-outer-seizing-1": {
+        "en": "Seizing to the cloth",
+        "de": "Bund am Tuch"
+      },
+      "rib-6-node-0": {
+        "en": "Node of the cane",
+        "de": "Knoten des Rohrstabs"
+      },
+      "rib-6-node-1": {
+        "en": "Node of the cane",
+        "de": "Knoten des Rohrstabs"
+      },
+      "rib-6-node-2": {
+        "en": "Node of the cane",
+        "de": "Knoten des Rohrstabs"
+      },
+      "rib-6-node-3": {
+        "en": "Node of the cane",
+        "de": "Knoten des Rohrstabs"
+      },
+      "rib-6-node-4": {
+        "en": "Node of the cane",
+        "de": "Knoten des Rohrstabs"
+      },
+      "rib-6-node-5": {
+        "en": "Node of the cane",
+        "de": "Knoten des Rohrstabs"
+      },
+      "rib-6-node-6": {
+        "en": "Node of the cane",
+        "de": "Knoten des Rohrstabs"
+      },
+      "rib-6-node-7": {
+        "en": "Node of the cane",
+        "de": "Knoten des Rohrstabs"
+      },
+      "rib-6-seizing-0": {
+        "en": "Seizing to the cloth",
+        "de": "Bund am Tuch"
+      },
+      "rib-6-seizing-1": {
+        "en": "Seizing to the cloth",
+        "de": "Bund am Tuch"
+      },
+      "rib-6-outer-node-0": {
+        "en": "Node of the cane",
+        "de": "Knoten des Rohrstabs"
+      },
+      "rib-6-outer-node-1": {
+        "en": "Node of the cane",
+        "de": "Knoten des Rohrstabs"
+      },
+      "rib-6-outer-node-2": {
+        "en": "Node of the cane",
+        "de": "Knoten des Rohrstabs"
+      },
+      "rib-6-outer-node-3": {
+        "en": "Node of the cane",
+        "de": "Knoten des Rohrstabs"
+      },
+      "rib-6-outer-node-4": {
+        "en": "Node of the cane",
+        "de": "Knoten des Rohrstabs"
+      },
+      "rib-6-outer-node-5": {
+        "en": "Node of the cane",
+        "de": "Knoten des Rohrstabs"
+      },
+      "rib-6-outer-seizing-0": {
+        "en": "Seizing to the cloth",
+        "de": "Bund am Tuch"
+      },
+      "rib-6-outer-seizing-1": {
+        "en": "Seizing to the cloth",
+        "de": "Bund am Tuch"
+      },
+      "rib-7-node-0": {
+        "en": "Node of the cane",
+        "de": "Knoten des Rohrstabs"
+      },
+      "rib-7-node-1": {
+        "en": "Node of the cane",
+        "de": "Knoten des Rohrstabs"
+      },
+      "rib-7-node-2": {
+        "en": "Node of the cane",
+        "de": "Knoten des Rohrstabs"
+      },
+      "rib-7-node-3": {
+        "en": "Node of the cane",
+        "de": "Knoten des Rohrstabs"
+      },
+      "rib-7-node-4": {
+        "en": "Node of the cane",
+        "de": "Knoten des Rohrstabs"
+      },
+      "rib-7-node-5": {
+        "en": "Node of the cane",
+        "de": "Knoten des Rohrstabs"
+      },
+      "rib-7-node-6": {
+        "en": "Node of the cane",
+        "de": "Knoten des Rohrstabs"
+      },
+      "rib-7-node-7": {
+        "en": "Node of the cane",
+        "de": "Knoten des Rohrstabs"
+      },
+      "rib-7-seizing-0": {
+        "en": "Seizing to the cloth",
+        "de": "Bund am Tuch"
+      },
+      "rib-7-seizing-1": {
+        "en": "Seizing to the cloth",
+        "de": "Bund am Tuch"
+      },
+      "rib-7-outer-node-0": {
+        "en": "Node of the cane",
+        "de": "Knoten des Rohrstabs"
+      },
+      "rib-7-outer-node-1": {
+        "en": "Node of the cane",
+        "de": "Knoten des Rohrstabs"
+      },
+      "rib-7-outer-node-2": {
+        "en": "Node of the cane",
+        "de": "Knoten des Rohrstabs"
+      },
+      "rib-7-outer-node-3": {
+        "en": "Node of the cane",
+        "de": "Knoten des Rohrstabs"
+      },
+      "rib-7-outer-node-4": {
+        "en": "Node of the cane",
+        "de": "Knoten des Rohrstabs"
+      },
+      "rib-7-outer-node-5": {
+        "en": "Node of the cane",
+        "de": "Knoten des Rohrstabs"
+      },
+      "rib-7-outer-node-6": {
+        "en": "Node of the cane",
+        "de": "Knoten des Rohrstabs"
+      },
+      "rib-7-outer-seizing-0": {
+        "en": "Seizing to the cloth",
+        "de": "Bund am Tuch"
+      },
+      "rib-7-outer-seizing-1": {
+        "en": "Seizing to the cloth",
+        "de": "Bund am Tuch"
+      },
+      "rib-8-node-0": {
+        "en": "Node of the cane",
+        "de": "Knoten des Rohrstabs"
+      },
+      "rib-8-node-1": {
+        "en": "Node of the cane",
+        "de": "Knoten des Rohrstabs"
+      },
+      "rib-8-node-2": {
+        "en": "Node of the cane",
+        "de": "Knoten des Rohrstabs"
+      },
+      "rib-8-node-3": {
+        "en": "Node of the cane",
+        "de": "Knoten des Rohrstabs"
+      },
+      "rib-8-node-4": {
+        "en": "Node of the cane",
+        "de": "Knoten des Rohrstabs"
+      },
+      "rib-8-node-5": {
+        "en": "Node of the cane",
+        "de": "Knoten des Rohrstabs"
+      },
+      "rib-8-node-6": {
+        "en": "Node of the cane",
+        "de": "Knoten des Rohrstabs"
+      },
+      "rib-8-node-7": {
+        "en": "Node of the cane",
+        "de": "Knoten des Rohrstabs"
+      },
+      "rib-8-seizing-0": {
+        "en": "Seizing to the cloth",
+        "de": "Bund am Tuch"
+      },
+      "rib-8-seizing-1": {
+        "en": "Seizing to the cloth",
+        "de": "Bund am Tuch"
+      },
+      "rib-8-outer-node-0": {
+        "en": "Node of the cane",
+        "de": "Knoten des Rohrstabs"
+      },
+      "rib-8-outer-node-1": {
+        "en": "Node of the cane",
+        "de": "Knoten des Rohrstabs"
+      },
+      "rib-8-outer-node-2": {
+        "en": "Node of the cane",
+        "de": "Knoten des Rohrstabs"
+      },
+      "rib-8-outer-node-3": {
+        "en": "Node of the cane",
+        "de": "Knoten des Rohrstabs"
+      },
+      "rib-8-outer-node-4": {
+        "en": "Node of the cane",
+        "de": "Knoten des Rohrstabs"
+      },
+      "rib-8-outer-node-5": {
+        "en": "Node of the cane",
+        "de": "Knoten des Rohrstabs"
+      },
+      "rib-8-outer-seizing-0": {
+        "en": "Seizing to the cloth",
+        "de": "Bund am Tuch"
+      },
+      "rib-8-outer-seizing-1": {
+        "en": "Seizing to the cloth",
+        "de": "Bund am Tuch"
+      },
+      "rib-9-node-0": {
+        "en": "Node of the cane",
+        "de": "Knoten des Rohrstabs"
+      },
+      "rib-9-node-1": {
+        "en": "Node of the cane",
+        "de": "Knoten des Rohrstabs"
+      },
+      "rib-9-node-2": {
+        "en": "Node of the cane",
+        "de": "Knoten des Rohrstabs"
+      },
+      "rib-9-node-3": {
+        "en": "Node of the cane",
+        "de": "Knoten des Rohrstabs"
+      },
+      "rib-9-node-4": {
+        "en": "Node of the cane",
+        "de": "Knoten des Rohrstabs"
+      },
+      "rib-9-node-5": {
+        "en": "Node of the cane",
+        "de": "Knoten des Rohrstabs"
+      },
+      "rib-9-node-6": {
+        "en": "Node of the cane",
+        "de": "Knoten des Rohrstabs"
+      },
+      "rib-9-node-7": {
+        "en": "Node of the cane",
+        "de": "Knoten des Rohrstabs"
+      },
+      "rib-9-seizing-0": {
+        "en": "Seizing to the cloth",
+        "de": "Bund am Tuch"
+      },
+      "rib-9-seizing-1": {
+        "en": "Seizing to the cloth",
+        "de": "Bund am Tuch"
+      },
+      "rib-9-outer-node-0": {
+        "en": "Node of the cane",
+        "de": "Knoten des Rohrstabs"
+      },
+      "rib-9-outer-node-1": {
+        "en": "Node of the cane",
+        "de": "Knoten des Rohrstabs"
+      },
+      "rib-9-outer-node-2": {
+        "en": "Node of the cane",
+        "de": "Knoten des Rohrstabs"
+      },
+      "rib-9-outer-node-3": {
+        "en": "Node of the cane",
+        "de": "Knoten des Rohrstabs"
+      },
+      "rib-9-outer-node-4": {
+        "en": "Node of the cane",
+        "de": "Knoten des Rohrstabs"
+      },
+      "rib-9-outer-node-5": {
+        "en": "Node of the cane",
+        "de": "Knoten des Rohrstabs"
+      },
+      "rib-9-outer-seizing-0": {
+        "en": "Seizing to the cloth",
+        "de": "Bund am Tuch"
+      },
+      "rib-9-outer-seizing-1": {
+        "en": "Seizing to the cloth",
+        "de": "Bund am Tuch"
+      },
+      "rib-10-node-0": {
+        "en": "Node of the cane",
+        "de": "Knoten des Rohrstabs"
+      },
+      "rib-10-node-1": {
+        "en": "Node of the cane",
+        "de": "Knoten des Rohrstabs"
+      },
+      "rib-10-node-2": {
+        "en": "Node of the cane",
+        "de": "Knoten des Rohrstabs"
+      },
+      "rib-10-node-3": {
+        "en": "Node of the cane",
+        "de": "Knoten des Rohrstabs"
+      },
+      "rib-10-node-4": {
+        "en": "Node of the cane",
+        "de": "Knoten des Rohrstabs"
+      },
+      "rib-10-node-5": {
+        "en": "Node of the cane",
+        "de": "Knoten des Rohrstabs"
+      },
+      "rib-10-node-6": {
+        "en": "Node of the cane",
+        "de": "Knoten des Rohrstabs"
+      },
+      "rib-10-node-7": {
+        "en": "Node of the cane",
+        "de": "Knoten des Rohrstabs"
+      },
+      "rib-10-node-8": {
+        "en": "Node of the cane",
+        "de": "Knoten des Rohrstabs"
+      },
+      "rib-10-node-9": {
+        "en": "Node of the cane",
+        "de": "Knoten des Rohrstabs"
+      },
+      "rib-10-node-10": {
+        "en": "Node of the cane",
+        "de": "Knoten des Rohrstabs"
+      },
+      "rib-10-node-11": {
+        "en": "Node of the cane",
+        "de": "Knoten des Rohrstabs"
+      },
+      "rib-10-seizing-0": {
+        "en": "Seizing to the cloth",
+        "de": "Bund am Tuch"
+      },
+      "rib-10-seizing-1": {
+        "en": "Seizing to the cloth",
+        "de": "Bund am Tuch"
+      },
+      "rib-10-seizing-2": {
+        "en": "Seizing to the cloth",
+        "de": "Bund am Tuch"
+      },
+      "rib-10-seizing-3": {
+        "en": "Seizing to the cloth",
+        "de": "Bund am Tuch"
+      },
+      "rib-11-node-0": {
+        "en": "Node of the cane",
+        "de": "Knoten des Rohrstabs"
+      },
+      "rib-11-node-1": {
+        "en": "Node of the cane",
+        "de": "Knoten des Rohrstabs"
+      },
+      "rib-11-node-2": {
+        "en": "Node of the cane",
+        "de": "Knoten des Rohrstabs"
+      },
+      "rib-11-node-3": {
+        "en": "Node of the cane",
+        "de": "Knoten des Rohrstabs"
+      },
+      "rib-11-node-4": {
+        "en": "Node of the cane",
+        "de": "Knoten des Rohrstabs"
+      },
+      "rib-11-node-5": {
+        "en": "Node of the cane",
+        "de": "Knoten des Rohrstabs"
+      },
+      "rib-11-node-6": {
+        "en": "Node of the cane",
+        "de": "Knoten des Rohrstabs"
+      },
+      "rib-11-node-7": {
+        "en": "Node of the cane",
+        "de": "Knoten des Rohrstabs"
+      },
+      "rib-11-node-8": {
+        "en": "Node of the cane",
+        "de": "Knoten des Rohrstabs"
+      },
+      "rib-11-node-9": {
+        "en": "Node of the cane",
+        "de": "Knoten des Rohrstabs"
+      },
+      "rib-11-node-10": {
+        "en": "Node of the cane",
+        "de": "Knoten des Rohrstabs"
+      },
+      "rib-11-node-11": {
+        "en": "Node of the cane",
+        "de": "Knoten des Rohrstabs"
+      },
+      "rib-11-seizing-0": {
+        "en": "Seizing to the cloth",
+        "de": "Bund am Tuch"
+      },
+      "rib-11-seizing-1": {
+        "en": "Seizing to the cloth",
+        "de": "Bund am Tuch"
+      },
+      "rib-11-seizing-2": {
+        "en": "Seizing to the cloth",
+        "de": "Bund am Tuch"
+      },
+      "rib-11-seizing-3": {
+        "en": "Seizing to the cloth",
+        "de": "Bund am Tuch"
+      },
+      "rib-12-node-0": {
+        "en": "Node of the cane",
+        "de": "Knoten des Rohrstabs"
+      },
+      "rib-12-node-1": {
+        "en": "Node of the cane",
+        "de": "Knoten des Rohrstabs"
+      },
+      "rib-12-node-2": {
+        "en": "Node of the cane",
+        "de": "Knoten des Rohrstabs"
+      },
+      "rib-12-node-3": {
+        "en": "Node of the cane",
+        "de": "Knoten des Rohrstabs"
+      },
+      "rib-12-node-4": {
+        "en": "Node of the cane",
+        "de": "Knoten des Rohrstabs"
+      },
+      "rib-12-node-5": {
+        "en": "Node of the cane",
+        "de": "Knoten des Rohrstabs"
+      },
+      "rib-12-node-6": {
+        "en": "Node of the cane",
+        "de": "Knoten des Rohrstabs"
+      },
+      "rib-12-node-7": {
+        "en": "Node of the cane",
+        "de": "Knoten des Rohrstabs"
+      },
+      "rib-12-node-8": {
+        "en": "Node of the cane",
+        "de": "Knoten des Rohrstabs"
+      },
+      "rib-12-node-9": {
+        "en": "Node of the cane",
+        "de": "Knoten des Rohrstabs"
+      },
+      "rib-12-node-10": {
+        "en": "Node of the cane",
+        "de": "Knoten des Rohrstabs"
+      },
+      "rib-12-node-11": {
+        "en": "Node of the cane",
+        "de": "Knoten des Rohrstabs"
+      },
+      "rib-12-seizing-0": {
+        "en": "Seizing to the cloth",
+        "de": "Bund am Tuch"
+      },
+      "rib-12-seizing-1": {
+        "en": "Seizing to the cloth",
+        "de": "Bund am Tuch"
+      },
+      "rib-12-seizing-2": {
+        "en": "Seizing to the cloth",
+        "de": "Bund am Tuch"
+      },
+      "rib-12-seizing-3": {
+        "en": "Seizing to the cloth",
+        "de": "Bund am Tuch"
+      },
+      "rib-13-node-0": {
+        "en": "Node of the cane",
+        "de": "Knoten des Rohrstabs"
+      },
+      "rib-13-node-1": {
+        "en": "Node of the cane",
+        "de": "Knoten des Rohrstabs"
+      },
+      "rib-13-node-2": {
+        "en": "Node of the cane",
+        "de": "Knoten des Rohrstabs"
+      },
+      "rib-13-node-3": {
+        "en": "Node of the cane",
+        "de": "Knoten des Rohrstabs"
+      },
+      "rib-13-node-4": {
+        "en": "Node of the cane",
+        "de": "Knoten des Rohrstabs"
+      },
+      "rib-13-node-5": {
+        "en": "Node of the cane",
+        "de": "Knoten des Rohrstabs"
+      },
+      "rib-13-node-6": {
+        "en": "Node of the cane",
+        "de": "Knoten des Rohrstabs"
+      },
+      "rib-13-node-7": {
+        "en": "Node of the cane",
+        "de": "Knoten des Rohrstabs"
+      },
+      "rib-13-node-8": {
+        "en": "Node of the cane",
+        "de": "Knoten des Rohrstabs"
+      },
+      "rib-13-node-9": {
+        "en": "Node of the cane",
+        "de": "Knoten des Rohrstabs"
+      },
+      "rib-13-node-10": {
+        "en": "Node of the cane",
+        "de": "Knoten des Rohrstabs"
+      },
+      "rib-13-seizing-0": {
+        "en": "Seizing to the cloth",
+        "de": "Bund am Tuch"
+      },
+      "rib-13-seizing-1": {
+        "en": "Seizing to the cloth",
+        "de": "Bund am Tuch"
+      },
+      "rib-13-seizing-2": {
+        "en": "Seizing to the cloth",
+        "de": "Bund am Tuch"
+      },
+      "rib-14-node-0": {
+        "en": "Node of the cane",
+        "de": "Knoten des Rohrstabs"
+      },
+      "rib-14-node-1": {
+        "en": "Node of the cane",
+        "de": "Knoten des Rohrstabs"
+      },
+      "rib-14-node-2": {
+        "en": "Node of the cane",
+        "de": "Knoten des Rohrstabs"
+      },
+      "rib-14-node-3": {
+        "en": "Node of the cane",
+        "de": "Knoten des Rohrstabs"
+      },
+      "rib-14-node-4": {
+        "en": "Node of the cane",
+        "de": "Knoten des Rohrstabs"
+      },
+      "rib-14-node-5": {
+        "en": "Node of the cane",
+        "de": "Knoten des Rohrstabs"
+      },
+      "rib-14-node-6": {
+        "en": "Node of the cane",
+        "de": "Knoten des Rohrstabs"
+      },
+      "rib-14-node-7": {
+        "en": "Node of the cane",
+        "de": "Knoten des Rohrstabs"
+      },
+      "rib-14-node-8": {
+        "en": "Node of the cane",
+        "de": "Knoten des Rohrstabs"
+      },
+      "rib-14-node-9": {
+        "en": "Node of the cane",
+        "de": "Knoten des Rohrstabs"
+      },
+      "rib-14-seizing-0": {
+        "en": "Seizing to the cloth",
+        "de": "Bund am Tuch"
+      },
+      "rib-14-seizing-1": {
+        "en": "Seizing to the cloth",
+        "de": "Bund am Tuch"
+      },
+      "rib-14-seizing-2": {
+        "en": "Seizing to the cloth",
+        "de": "Bund am Tuch"
+      },
+      "rib-15-node-0": {
+        "en": "Node of the cane",
+        "de": "Knoten des Rohrstabs"
+      },
+      "rib-15-node-1": {
+        "en": "Node of the cane",
+        "de": "Knoten des Rohrstabs"
+      },
+      "rib-15-node-2": {
+        "en": "Node of the cane",
+        "de": "Knoten des Rohrstabs"
+      },
+      "rib-15-node-3": {
+        "en": "Node of the cane",
+        "de": "Knoten des Rohrstabs"
+      },
+      "rib-15-node-4": {
+        "en": "Node of the cane",
+        "de": "Knoten des Rohrstabs"
+      },
+      "rib-15-node-5": {
+        "en": "Node of the cane",
+        "de": "Knoten des Rohrstabs"
+      },
+      "rib-15-node-6": {
+        "en": "Node of the cane",
+        "de": "Knoten des Rohrstabs"
+      },
+      "rib-15-node-7": {
+        "en": "Node of the cane",
+        "de": "Knoten des Rohrstabs"
+      },
+      "rib-15-node-8": {
+        "en": "Node of the cane",
+        "de": "Knoten des Rohrstabs"
+      },
+      "rib-15-node-9": {
+        "en": "Node of the cane",
+        "de": "Knoten des Rohrstabs"
+      },
+      "rib-15-seizing-0": {
+        "en": "Seizing to the cloth",
+        "de": "Bund am Tuch"
+      },
+      "rib-15-seizing-1": {
+        "en": "Seizing to the cloth",
+        "de": "Bund am Tuch"
+      },
+      "rib-15-seizing-2": {
+        "en": "Seizing to the cloth",
+        "de": "Bund am Tuch"
+      },
+      "rib-16-node-0": {
+        "en": "Node of the cane",
+        "de": "Knoten des Rohrstabs"
+      },
+      "rib-16-node-1": {
+        "en": "Node of the cane",
+        "de": "Knoten des Rohrstabs"
+      },
+      "rib-16-node-2": {
+        "en": "Node of the cane",
+        "de": "Knoten des Rohrstabs"
+      },
+      "rib-16-node-3": {
+        "en": "Node of the cane",
+        "de": "Knoten des Rohrstabs"
+      },
+      "rib-16-node-4": {
+        "en": "Node of the cane",
+        "de": "Knoten des Rohrstabs"
+      },
+      "rib-16-node-5": {
+        "en": "Node of the cane",
+        "de": "Knoten des Rohrstabs"
+      },
+      "rib-16-node-6": {
+        "en": "Node of the cane",
+        "de": "Knoten des Rohrstabs"
+      },
+      "rib-16-node-7": {
+        "en": "Node of the cane",
+        "de": "Knoten des Rohrstabs"
+      },
+      "rib-16-node-8": {
+        "en": "Node of the cane",
+        "de": "Knoten des Rohrstabs"
+      },
+      "rib-16-seizing-0": {
+        "en": "Seizing to the cloth",
+        "de": "Bund am Tuch"
+      },
+      "rib-16-seizing-1": {
+        "en": "Seizing to the cloth",
+        "de": "Bund am Tuch"
+      },
+      "rib-16-seizing-2": {
+        "en": "Seizing to the cloth",
+        "de": "Bund am Tuch"
+      },
+      "rim-whipping-0": {
+        "en": "Tarred whipping of the hem",
+        "de": "Geteerter Bund am Saum"
+      },
+      "rim-whipping-1": {
+        "en": "Tarred whipping of the hem",
+        "de": "Geteerter Bund am Saum"
+      },
+      "rim-whipping-2": {
+        "en": "Tarred whipping of the hem",
+        "de": "Geteerter Bund am Saum"
+      },
+      "rim-whipping-3": {
+        "en": "Tarred whipping of the hem",
+        "de": "Geteerter Bund am Saum"
+      },
+      "rim-whipping-4": {
+        "en": "Tarred whipping of the hem",
+        "de": "Geteerter Bund am Saum"
+      },
+      "rim-whipping-5": {
+        "en": "Tarred whipping of the hem",
+        "de": "Geteerter Bund am Saum"
+      },
+      "rim-whipping-6": {
+        "en": "Tarred whipping of the hem",
+        "de": "Geteerter Bund am Saum"
+      },
+      "rim-whipping-7": {
+        "en": "Tarred whipping of the hem",
+        "de": "Geteerter Bund am Saum"
+      },
+      "rim-whipping-8": {
+        "en": "Tarred whipping of the hem",
+        "de": "Geteerter Bund am Saum"
+      },
+      "rim-whipping-9": {
+        "en": "Tarred whipping of the hem",
+        "de": "Geteerter Bund am Saum"
+      },
+      "rim-whipping-10": {
+        "en": "Tarred whipping of the hem",
+        "de": "Geteerter Bund am Saum"
+      },
+      "rim-whipping-11": {
+        "en": "Tarred whipping of the hem",
+        "de": "Geteerter Bund am Saum"
+      },
+      "rim-whipping-12": {
+        "en": "Tarred whipping of the hem",
+        "de": "Geteerter Bund am Saum"
+      },
+      "rim-whipping-13": {
+        "en": "Tarred whipping of the hem",
+        "de": "Geteerter Bund am Saum"
+      },
+      "rim-whipping-14": {
+        "en": "Tarred whipping of the hem",
+        "de": "Geteerter Bund am Saum"
+      },
+      "rim-whipping-15": {
+        "en": "Tarred whipping of the hem",
+        "de": "Geteerter Bund am Saum"
+      },
+      "rim-whipping-16": {
+        "en": "Tarred whipping of the hem",
+        "de": "Geteerter Bund am Saum"
+      },
+      "rim-whipping-17": {
+        "en": "Tarred whipping of the hem",
+        "de": "Geteerter Bund am Saum"
+      },
+      "rim-whipping-18": {
+        "en": "Tarred whipping of the hem",
+        "de": "Geteerter Bund am Saum"
+      },
+      "rim-whipping-19": {
+        "en": "Tarred whipping of the hem",
+        "de": "Geteerter Bund am Saum"
+      },
+      "rim-whipping-20": {
+        "en": "Tarred whipping of the hem",
+        "de": "Geteerter Bund am Saum"
+      },
+      "rim-whipping-21": {
+        "en": "Tarred whipping of the hem",
+        "de": "Geteerter Bund am Saum"
+      },
+      "rim-whipping-22": {
+        "en": "Tarred whipping of the hem",
+        "de": "Geteerter Bund am Saum"
+      },
+      "rim-whipping-23": {
+        "en": "Tarred whipping of the hem",
+        "de": "Geteerter Bund am Saum"
+      },
+      "rim-whipping-24": {
+        "en": "Tarred whipping of the hem",
+        "de": "Geteerter Bund am Saum"
+      },
+      "rim-whipping-25": {
+        "en": "Tarred whipping of the hem",
+        "de": "Geteerter Bund am Saum"
+      },
+      "rim-whipping-26": {
+        "en": "Tarred whipping of the hem",
+        "de": "Geteerter Bund am Saum"
+      },
+      "rim-whipping-27": {
+        "en": "Tarred whipping of the hem",
+        "de": "Geteerter Bund am Saum"
+      },
+      "rim-whipping-28": {
+        "en": "Tarred whipping of the hem",
+        "de": "Geteerter Bund am Saum"
+      },
+      "rim-whipping-29": {
+        "en": "Tarred whipping of the hem",
+        "de": "Geteerter Bund am Saum"
+      },
+      "rim-whipping-30": {
+        "en": "Tarred whipping of the hem",
+        "de": "Geteerter Bund am Saum"
+      },
+      "rim-whipping-31": {
+        "en": "Tarred whipping of the hem",
+        "de": "Geteerter Bund am Saum"
+      },
+      "rim-whipping-32": {
+        "en": "Tarred whipping of the hem",
+        "de": "Geteerter Bund am Saum"
+      },
+      "rim-whipping-33": {
+        "en": "Tarred whipping of the hem",
+        "de": "Geteerter Bund am Saum"
+      },
+      "rim-whipping-34": {
+        "en": "Tarred whipping of the hem",
+        "de": "Geteerter Bund am Saum"
+      },
+      "rim-whipping-35": {
+        "en": "Tarred whipping of the hem",
+        "de": "Geteerter Bund am Saum"
+      },
+      "rim-whipping-36": {
+        "en": "Tarred whipping of the hem",
+        "de": "Geteerter Bund am Saum"
+      },
+      "rim-whipping-37": {
+        "en": "Tarred whipping of the hem",
+        "de": "Geteerter Bund am Saum"
+      },
+      "rim-whipping-38": {
+        "en": "Tarred whipping of the hem",
+        "de": "Geteerter Bund am Saum"
+      },
+      "rim-whipping-39": {
+        "en": "Tarred whipping of the hem",
+        "de": "Geteerter Bund am Saum"
+      },
+      "rim-whipping-40": {
+        "en": "Tarred whipping of the hem",
+        "de": "Geteerter Bund am Saum"
+      },
+      "rim-whipping-41": {
+        "en": "Tarred whipping of the hem",
+        "de": "Geteerter Bund am Saum"
+      },
+      "rim-whipping-42": {
+        "en": "Tarred whipping of the hem",
+        "de": "Geteerter Bund am Saum"
+      },
+      "rim-whipping-43": {
+        "en": "Tarred whipping of the hem",
+        "de": "Geteerter Bund am Saum"
+      },
+      "rim-whipping-44": {
+        "en": "Tarred whipping of the hem",
+        "de": "Geteerter Bund am Saum"
+      },
+      "rim-whipping-45": {
+        "en": "Tarred whipping of the hem",
+        "de": "Geteerter Bund am Saum"
+      },
+      "rim-whipping-46": {
+        "en": "Tarred whipping of the hem",
+        "de": "Geteerter Bund am Saum"
+      },
+      "rim-whipping-47": {
+        "en": "Tarred whipping of the hem",
+        "de": "Geteerter Bund am Saum"
+      },
+      "rim-whipping-48": {
+        "en": "Tarred whipping of the hem",
+        "de": "Geteerter Bund am Saum"
+      },
+      "rim-whipping-49": {
+        "en": "Tarred whipping of the hem",
+        "de": "Geteerter Bund am Saum"
+      },
+      "rim-whipping-50": {
+        "en": "Tarred whipping of the hem",
+        "de": "Geteerter Bund am Saum"
+      },
+      "rim-whipping-51": {
+        "en": "Tarred whipping of the hem",
+        "de": "Geteerter Bund am Saum"
+      },
+      "rim-whipping-52": {
+        "en": "Tarred whipping of the hem",
+        "de": "Geteerter Bund am Saum"
+      },
+      "rim-whipping-53": {
+        "en": "Tarred whipping of the hem",
+        "de": "Geteerter Bund am Saum"
+      },
+      "rim-whipping-54": {
+        "en": "Tarred whipping of the hem",
+        "de": "Geteerter Bund am Saum"
+      },
+      "rim-whipping-55": {
+        "en": "Tarred whipping of the hem",
+        "de": "Geteerter Bund am Saum"
+      },
+      "rim-whipping-56": {
+        "en": "Tarred whipping of the hem",
+        "de": "Geteerter Bund am Saum"
+      },
+      "rim-whipping-57": {
+        "en": "Tarred whipping of the hem",
+        "de": "Geteerter Bund am Saum"
+      },
+      "rim-whipping-58": {
+        "en": "Tarred whipping of the hem",
+        "de": "Geteerter Bund am Saum"
+      },
+      "rim-whipping-59": {
+        "en": "Tarred whipping of the hem",
+        "de": "Geteerter Bund am Saum"
+      },
+      "rim-whipping-60": {
+        "en": "Tarred whipping of the hem",
+        "de": "Geteerter Bund am Saum"
+      },
+      "rim-whipping-61": {
+        "en": "Tarred whipping of the hem",
+        "de": "Geteerter Bund am Saum"
+      },
+      "rim-whipping-62": {
+        "en": "Tarred whipping of the hem",
+        "de": "Geteerter Bund am Saum"
+      },
+      "rim-whipping-63": {
+        "en": "Tarred whipping of the hem",
+        "de": "Geteerter Bund am Saum"
+      },
+      "rim-whipping-64": {
+        "en": "Tarred whipping of the hem",
+        "de": "Geteerter Bund am Saum"
+      },
+      "rim-whipping-65": {
+        "en": "Tarred whipping of the hem",
+        "de": "Geteerter Bund am Saum"
+      },
+      "rim-whipping-66": {
+        "en": "Tarred whipping of the hem",
+        "de": "Geteerter Bund am Saum"
+      },
+      "rim-whipping-67": {
+        "en": "Tarred whipping of the hem",
+        "de": "Geteerter Bund am Saum"
+      },
+      "rim-whipping-68": {
+        "en": "Tarred whipping of the hem",
+        "de": "Geteerter Bund am Saum"
+      },
+      "rim-whipping-69": {
+        "en": "Tarred whipping of the hem",
+        "de": "Geteerter Bund am Saum"
+      },
+      "rim-whipping-70": {
+        "en": "Tarred whipping of the hem",
+        "de": "Geteerter Bund am Saum"
+      },
+      "rim-whipping-71": {
+        "en": "Tarred whipping of the hem",
+        "de": "Geteerter Bund am Saum"
+      },
+      "rim-whipping-72": {
+        "en": "Tarred whipping of the hem",
+        "de": "Geteerter Bund am Saum"
+      },
+      "rim-whipping-73": {
+        "en": "Tarred whipping of the hem",
+        "de": "Geteerter Bund am Saum"
+      },
+      "rim-whipping-74": {
+        "en": "Tarred whipping of the hem",
+        "de": "Geteerter Bund am Saum"
+      },
+      "rim-whipping-75": {
+        "en": "Tarred whipping of the hem",
+        "de": "Geteerter Bund am Saum"
+      },
+      "rim-whipping-76": {
+        "en": "Tarred whipping of the hem",
+        "de": "Geteerter Bund am Saum"
+      },
+      "rim-whipping-77": {
+        "en": "Tarred whipping of the hem",
+        "de": "Geteerter Bund am Saum"
+      },
+      "rim-whipping-78": {
+        "en": "Tarred whipping of the hem",
+        "de": "Geteerter Bund am Saum"
+      },
+      "rim-whipping-79": {
+        "en": "Tarred whipping of the hem",
+        "de": "Geteerter Bund am Saum"
+      },
+      "rim-whipping-80": {
+        "en": "Tarred whipping of the hem",
+        "de": "Geteerter Bund am Saum"
+      },
+      "rim-whipping-81": {
+        "en": "Tarred whipping of the hem",
+        "de": "Geteerter Bund am Saum"
+      },
+      "rim-whipping-82": {
+        "en": "Tarred whipping of the hem",
+        "de": "Geteerter Bund am Saum"
+      },
+      "rim-whipping-83": {
+        "en": "Tarred whipping of the hem",
+        "de": "Geteerter Bund am Saum"
+      },
+      "rim-whipping-84": {
+        "en": "Tarred whipping of the hem",
+        "de": "Geteerter Bund am Saum"
+      },
+      "rim-whipping-85": {
+        "en": "Tarred whipping of the hem",
+        "de": "Geteerter Bund am Saum"
+      },
+      "rim-whipping-86": {
+        "en": "Tarred whipping of the hem",
+        "de": "Geteerter Bund am Saum"
+      },
+      "rim-whipping-87": {
+        "en": "Tarred whipping of the hem",
+        "de": "Geteerter Bund am Saum"
+      },
+      "rim-whipping-88": {
+        "en": "Tarred whipping of the hem",
+        "de": "Geteerter Bund am Saum"
+      },
+      "frame-crown": {
+        "en": "Crown of the frame",
+        "de": "Kopf des Gestells"
+      },
+      "frame-crown-hoop-0": {
+        "en": "Iron hoop",
+        "de": "Eisenreif"
+      },
+      "frame-crown-hoop-1": {
+        "en": "Iron hoop",
+        "de": "Eisenreif"
+      },
+      "frame-crown-wedge-0": {
+        "en": "Wedge",
+        "de": "Keil"
+      },
+      "frame-crown-wedge-1": {
+        "en": "Wedge",
+        "de": "Keil"
+      },
+      "frame-crown-wedge-2": {
+        "en": "Wedge",
+        "de": "Keil"
+      },
+      "frame-crown-wedge-3": {
+        "en": "Wedge",
+        "de": "Keil"
+      },
+      "frame-leg-0": {
+        "en": "Leg of the frame",
+        "de": "Bein des Gestells"
+      },
+      "frame-leg-1": {
+        "en": "Leg of the frame",
+        "de": "Bein des Gestells"
+      },
+      "frame-leg-2": {
+        "en": "Leg of the frame",
+        "de": "Bein des Gestells"
+      },
+      "frame-leg-3": {
+        "en": "Leg of the frame",
+        "de": "Bein des Gestells"
+      },
+      "frame-leg-4": {
+        "en": "Leg of the frame",
+        "de": "Bein des Gestells"
+      },
+      "frame-leg-5": {
+        "en": "Leg of the frame",
+        "de": "Bein des Gestells"
+      },
+      "frame-leg-6": {
+        "en": "Leg of the frame",
+        "de": "Bein des Gestells"
+      },
+      "frame-leg-7": {
+        "en": "Leg of the frame",
+        "de": "Bein des Gestells"
+      },
+      "frame-ring-0": {
+        "en": "Felloe of the foot ring",
+        "de": "Felge des Fußrings"
+      },
+      "frame-ring-trenail-0": {
+        "en": "Oak peg through the foot ring",
+        "de": "Eichennagel durch den Fußring"
+      },
+      "frame-ring-dog-0": {
+        "en": "Iron dog across the joint",
+        "de": "Eisenklammer über der Fuge"
+      },
+      "frame-ring-1": {
+        "en": "Felloe of the foot ring",
+        "de": "Felge des Fußrings"
+      },
+      "frame-ring-trenail-1": {
+        "en": "Oak peg through the foot ring",
+        "de": "Eichennagel durch den Fußring"
+      },
+      "frame-ring-dog-1": {
+        "en": "Iron dog across the joint",
+        "de": "Eisenklammer über der Fuge"
+      },
+      "frame-ring-2": {
+        "en": "Felloe of the foot ring",
+        "de": "Felge des Fußrings"
+      },
+      "frame-ring-trenail-2": {
+        "en": "Oak peg through the foot ring",
+        "de": "Eichennagel durch den Fußring"
+      },
+      "frame-ring-dog-2": {
+        "en": "Iron dog across the joint",
+        "de": "Eisenklammer über der Fuge"
+      },
+      "frame-ring-3": {
+        "en": "Felloe of the foot ring",
+        "de": "Felge des Fußrings"
+      },
+      "frame-ring-trenail-3": {
+        "en": "Oak peg through the foot ring",
+        "de": "Eichennagel durch den Fußring"
+      },
+      "frame-ring-dog-3": {
+        "en": "Iron dog across the joint",
+        "de": "Eisenklammer über der Fuge"
+      },
+      "frame-ring-4": {
+        "en": "Felloe of the foot ring",
+        "de": "Felge des Fußrings"
+      },
+      "frame-ring-trenail-4": {
+        "en": "Oak peg through the foot ring",
+        "de": "Eichennagel durch den Fußring"
+      },
+      "frame-ring-dog-4": {
+        "en": "Iron dog across the joint",
+        "de": "Eisenklammer über der Fuge"
+      },
+      "frame-ring-5": {
+        "en": "Felloe of the foot ring",
+        "de": "Felge des Fußrings"
+      },
+      "frame-ring-trenail-5": {
+        "en": "Oak peg through the foot ring",
+        "de": "Eichennagel durch den Fußring"
+      },
+      "frame-ring-dog-5": {
+        "en": "Iron dog across the joint",
+        "de": "Eisenklammer über der Fuge"
+      },
+      "frame-ring-6": {
+        "en": "Felloe of the foot ring",
+        "de": "Felge des Fußrings"
+      },
+      "frame-ring-trenail-6": {
+        "en": "Oak peg through the foot ring",
+        "de": "Eichennagel durch den Fußring"
+      },
+      "frame-ring-dog-6": {
+        "en": "Iron dog across the joint",
+        "de": "Eisenklammer über der Fuge"
+      },
+      "frame-ring-7": {
+        "en": "Felloe of the foot ring",
+        "de": "Felge des Fußrings"
+      },
+      "frame-ring-trenail-7": {
+        "en": "Oak peg through the foot ring",
+        "de": "Eichennagel durch den Fußring"
+      },
+      "frame-ring-dog-7": {
+        "en": "Iron dog across the joint",
+        "de": "Eisenklammer über der Fuge"
+      },
+      "deck-track-0": {
+        "en": "Track for the rollers",
+        "de": "Laufbahn der Rollen"
+      },
+      "deck-track-peg-0-0": {
+        "en": "Oak peg",
+        "de": "Eichennagel"
+      },
+      "deck-track-peg-0-1": {
+        "en": "Oak peg",
+        "de": "Eichennagel"
+      },
+      "frame-roller-0": {
+        "en": "Roller under the foot ring",
+        "de": "Rolle unter dem Fußring"
+      },
+      "frame-roller-cheek-0-0": {
+        "en": "Cheek of the roller",
+        "de": "Wange der Rolle"
+      },
+      "frame-roller-cheek-0-1": {
+        "en": "Cheek of the roller",
+        "de": "Wange der Rolle"
+      },
+      "frame-roller-axle-0": {
+        "en": "Iron axle of the roller",
+        "de": "Eisenachse der Rolle"
+      },
+      "deck-track-1": {
+        "en": "Track for the rollers",
+        "de": "Laufbahn der Rollen"
+      },
+      "deck-track-peg-1-0": {
+        "en": "Oak peg",
+        "de": "Eichennagel"
+      },
+      "deck-track-peg-1-1": {
+        "en": "Oak peg",
+        "de": "Eichennagel"
+      },
+      "frame-roller-1": {
+        "en": "Roller under the foot ring",
+        "de": "Rolle unter dem Fußring"
+      },
+      "frame-roller-cheek-1-0": {
+        "en": "Cheek of the roller",
+        "de": "Wange der Rolle"
+      },
+      "frame-roller-cheek-1-1": {
+        "en": "Cheek of the roller",
+        "de": "Wange der Rolle"
+      },
+      "frame-roller-axle-1": {
+        "en": "Iron axle of the roller",
+        "de": "Eisenachse der Rolle"
+      },
+      "deck-track-2": {
+        "en": "Track for the rollers",
+        "de": "Laufbahn der Rollen"
+      },
+      "deck-track-peg-2-0": {
+        "en": "Oak peg",
+        "de": "Eichennagel"
+      },
+      "deck-track-peg-2-1": {
+        "en": "Oak peg",
+        "de": "Eichennagel"
+      },
+      "frame-roller-2": {
+        "en": "Roller under the foot ring",
+        "de": "Rolle unter dem Fußring"
+      },
+      "frame-roller-cheek-2-0": {
+        "en": "Cheek of the roller",
+        "de": "Wange der Rolle"
+      },
+      "frame-roller-cheek-2-1": {
+        "en": "Cheek of the roller",
+        "de": "Wange der Rolle"
+      },
+      "frame-roller-axle-2": {
+        "en": "Iron axle of the roller",
+        "de": "Eisenachse der Rolle"
+      },
+      "deck-track-3": {
+        "en": "Track for the rollers",
+        "de": "Laufbahn der Rollen"
+      },
+      "deck-track-peg-3-0": {
+        "en": "Oak peg",
+        "de": "Eichennagel"
+      },
+      "deck-track-peg-3-1": {
+        "en": "Oak peg",
+        "de": "Eichennagel"
+      },
+      "frame-roller-3": {
+        "en": "Roller under the foot ring",
+        "de": "Rolle unter dem Fußring"
+      },
+      "frame-roller-cheek-3-0": {
+        "en": "Cheek of the roller",
+        "de": "Wange der Rolle"
+      },
+      "frame-roller-cheek-3-1": {
+        "en": "Cheek of the roller",
+        "de": "Wange der Rolle"
+      },
+      "frame-roller-axle-3": {
+        "en": "Iron axle of the roller",
+        "de": "Eisenachse der Rolle"
+      },
+      "deck-track-4": {
+        "en": "Track for the rollers",
+        "de": "Laufbahn der Rollen"
+      },
+      "deck-track-peg-4-0": {
+        "en": "Oak peg",
+        "de": "Eichennagel"
+      },
+      "deck-track-peg-4-1": {
+        "en": "Oak peg",
+        "de": "Eichennagel"
+      },
+      "frame-roller-4": {
+        "en": "Roller under the foot ring",
+        "de": "Rolle unter dem Fußring"
+      },
+      "frame-roller-cheek-4-0": {
+        "en": "Cheek of the roller",
+        "de": "Wange der Rolle"
+      },
+      "frame-roller-cheek-4-1": {
+        "en": "Cheek of the roller",
+        "de": "Wange der Rolle"
+      },
+      "frame-roller-axle-4": {
+        "en": "Iron axle of the roller",
+        "de": "Eisenachse der Rolle"
+      },
+      "deck-track-5": {
+        "en": "Track for the rollers",
+        "de": "Laufbahn der Rollen"
+      },
+      "deck-track-peg-5-0": {
+        "en": "Oak peg",
+        "de": "Eichennagel"
+      },
+      "deck-track-peg-5-1": {
+        "en": "Oak peg",
+        "de": "Eichennagel"
+      },
+      "frame-roller-5": {
+        "en": "Roller under the foot ring",
+        "de": "Rolle unter dem Fußring"
+      },
+      "frame-roller-cheek-5-0": {
+        "en": "Cheek of the roller",
+        "de": "Wange der Rolle"
+      },
+      "frame-roller-cheek-5-1": {
+        "en": "Cheek of the roller",
+        "de": "Wange der Rolle"
+      },
+      "frame-roller-axle-5": {
+        "en": "Iron axle of the roller",
+        "de": "Eisenachse der Rolle"
+      },
+      "deck-track-6": {
+        "en": "Track for the rollers",
+        "de": "Laufbahn der Rollen"
+      },
+      "deck-track-peg-6-0": {
+        "en": "Oak peg",
+        "de": "Eichennagel"
+      },
+      "deck-track-peg-6-1": {
+        "en": "Oak peg",
+        "de": "Eichennagel"
+      },
+      "frame-roller-6": {
+        "en": "Roller under the foot ring",
+        "de": "Rolle unter dem Fußring"
+      },
+      "frame-roller-cheek-6-0": {
+        "en": "Cheek of the roller",
+        "de": "Wange der Rolle"
+      },
+      "frame-roller-cheek-6-1": {
+        "en": "Cheek of the roller",
+        "de": "Wange der Rolle"
+      },
+      "frame-roller-axle-6": {
+        "en": "Iron axle of the roller",
+        "de": "Eisenachse der Rolle"
+      },
+      "deck-track-7": {
+        "en": "Track for the rollers",
+        "de": "Laufbahn der Rollen"
+      },
+      "deck-track-peg-7-0": {
+        "en": "Oak peg",
+        "de": "Eichennagel"
+      },
+      "deck-track-peg-7-1": {
+        "en": "Oak peg",
+        "de": "Eichennagel"
+      },
+      "frame-roller-7": {
+        "en": "Roller under the foot ring",
+        "de": "Rolle unter dem Fußring"
+      },
+      "frame-roller-cheek-7-0": {
+        "en": "Cheek of the roller",
+        "de": "Wange der Rolle"
+      },
+      "frame-roller-cheek-7-1": {
+        "en": "Cheek of the roller",
+        "de": "Wange der Rolle"
+      },
+      "frame-roller-axle-7": {
+        "en": "Iron axle of the roller",
+        "de": "Eisenachse der Rolle"
+      },
+      "frame-leg-0-boss": {
+        "en": "Boss of the leg",
+        "de": "Verdickung des Beins"
+      },
+      "push-bar-0-trenail": {
+        "en": "Oak peg through the push bar",
+        "de": "Eichennagel durch die Schubstange"
+      },
+      "push-bar-0-wedge": {
+        "en": "Wedge over the push bar",
+        "de": "Keil über der Schubstange"
+      },
+      "frame-leg-2-boss": {
+        "en": "Boss of the leg",
+        "de": "Verdickung des Beins"
+      },
+      "push-bar-1-trenail": {
+        "en": "Oak peg through the push bar",
+        "de": "Eichennagel durch die Schubstange"
+      },
+      "push-bar-1-wedge": {
+        "en": "Wedge over the push bar",
+        "de": "Keil über der Schubstange"
+      },
+      "frame-leg-4-boss": {
+        "en": "Boss of the leg",
+        "de": "Verdickung des Beins"
+      },
+      "push-bar-2-trenail": {
+        "en": "Oak peg through the push bar",
+        "de": "Eichennagel durch die Schubstange"
+      },
+      "push-bar-2-wedge": {
+        "en": "Wedge over the push bar",
+        "de": "Keil über der Schubstange"
+      },
+      "frame-leg-6-boss": {
+        "en": "Boss of the leg",
+        "de": "Verdickung des Beins"
+      },
+      "push-bar-3-trenail": {
+        "en": "Oak peg through the push bar",
+        "de": "Eichennagel durch die Schubstange"
+      },
+      "push-bar-3-wedge": {
+        "en": "Wedge over the push bar",
+        "de": "Keil über der Schubstange"
       }
     },
     "parachute": {
@@ -832,6 +2916,150 @@
       "suspension-3": {
         "en": "Suspension rope",
         "de": "Tragseil"
+      },
+      "ridge-0": {
+        "en": "Ridge pole",
+        "de": "Gratstange"
+      },
+      "lashing-0": {
+        "en": "Lashing at the corner",
+        "de": "Bund an der Ecke"
+      },
+      "ridge-1": {
+        "en": "Ridge pole",
+        "de": "Gratstange"
+      },
+      "lashing-1": {
+        "en": "Lashing at the corner",
+        "de": "Bund an der Ecke"
+      },
+      "ridge-2": {
+        "en": "Ridge pole",
+        "de": "Gratstange"
+      },
+      "lashing-2": {
+        "en": "Lashing at the corner",
+        "de": "Bund an der Ecke"
+      },
+      "ridge-3": {
+        "en": "Ridge pole",
+        "de": "Gratstange"
+      },
+      "lashing-3": {
+        "en": "Lashing at the corner",
+        "de": "Bund an der Ecke"
+      },
+      "apex-boss": {
+        "en": "Boss at the apex",
+        "de": "Kopfstück an der Spitze"
+      },
+      "lacing-0": {
+        "en": "Lacing of the hem",
+        "de": "Schnürung des Saums"
+      },
+      "lacing-1": {
+        "en": "Lacing of the hem",
+        "de": "Schnürung des Saums"
+      },
+      "lacing-2": {
+        "en": "Lacing of the hem",
+        "de": "Schnürung des Saums"
+      },
+      "lacing-3": {
+        "en": "Lacing of the hem",
+        "de": "Schnürung des Saums"
+      },
+      "eye-top-0": {
+        "en": "Eye round the pole",
+        "de": "Auge um die Stange"
+      },
+      "eye-ring-0": {
+        "en": "Eye round the ring",
+        "de": "Auge um den Ring"
+      },
+      "serve-top-0": {
+        "en": "Wrapping below the eye",
+        "de": "Umwicklung unter dem Auge"
+      },
+      "serve-ring-0": {
+        "en": "Wrapping above the ring",
+        "de": "Umwicklung über dem Ring"
+      },
+      "eye-top-1": {
+        "en": "Eye round the pole",
+        "de": "Auge um die Stange"
+      },
+      "eye-ring-1": {
+        "en": "Eye round the ring",
+        "de": "Auge um den Ring"
+      },
+      "serve-top-1": {
+        "en": "Wrapping below the eye",
+        "de": "Umwicklung unter dem Auge"
+      },
+      "serve-ring-1": {
+        "en": "Wrapping above the ring",
+        "de": "Umwicklung über dem Ring"
+      },
+      "eye-top-2": {
+        "en": "Eye round the pole",
+        "de": "Auge um die Stange"
+      },
+      "eye-ring-2": {
+        "en": "Eye round the ring",
+        "de": "Auge um den Ring"
+      },
+      "serve-top-2": {
+        "en": "Wrapping below the eye",
+        "de": "Umwicklung unter dem Auge"
+      },
+      "serve-ring-2": {
+        "en": "Wrapping above the ring",
+        "de": "Umwicklung über dem Ring"
+      },
+      "eye-top-3": {
+        "en": "Eye round the pole",
+        "de": "Auge um die Stange"
+      },
+      "eye-ring-3": {
+        "en": "Eye round the ring",
+        "de": "Auge um den Ring"
+      },
+      "serve-top-3": {
+        "en": "Wrapping below the eye",
+        "de": "Umwicklung unter dem Auge"
+      },
+      "serve-ring-3": {
+        "en": "Wrapping above the ring",
+        "de": "Umwicklung über dem Ring"
+      },
+      "apex-line": {
+        "en": "Middle line",
+        "de": "Mittelseil"
+      },
+      "apex-leg-0": {
+        "en": "Leg of the middle line",
+        "de": "Strang des Mittelseils"
+      },
+      "eye-apex-0": {
+        "en": "Eye round the ring",
+        "de": "Auge um den Ring"
+      },
+      "apex-leg-1": {
+        "en": "Leg of the middle line",
+        "de": "Strang des Mittelseils"
+      },
+      "eye-apex-1": {
+        "en": "Eye round the ring",
+        "de": "Auge um den Ring"
+      },
+      "serve-apex-top": {
+        "en": "Wrapping below the apex",
+        "de": "Umwicklung unter der Spitze"
+      },
+      "serve-apex-split": {
+        "en": "Seizing at the split",
+        "de": "Bund an der Gabelung"
       }
     },
     "anemometer": {
