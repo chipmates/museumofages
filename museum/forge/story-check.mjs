@@ -63,6 +63,9 @@ const LINE_WORDS = 20
 const SENTENCE_WORDS = 14
 const LINE_CHARS = { en: STATION_LINE_CHARS, de: STATION_LINE_CHARS }
 const DRAWER_WORDS = [40, 60]
+/** Stops whose drawer carries one more beat than the house's 60; each stays
+ *  inside the rows the tallest drawers take at 360 px. */
+const DRAWER_ALLOWANCE = { arrival: { en: 70, de: 74 } }
 /** The exhibit lines still waiting for their own re-authoring window. A line
  *  leaves this list when its words are written again from its catalogue fact,
  *  and an id whose line is already inside the band is refused, so the list can
@@ -122,7 +125,8 @@ export function judgeStop(stop, canonKeys) {
     for (const language of ['en', 'de']) {
       const drawer = stop.drawer[language]
       if (typeof drawer !== 'string' || !drawer.trim()) continue
-      if (words(drawer) < DRAWER_WORDS[0] || words(drawer) > DRAWER_WORDS[1])
+      const most = DRAWER_ALLOWANCE[stop.id]?.[language] ?? DRAWER_WORDS[1]
+      if (words(drawer) < DRAWER_WORDS[0] || words(drawer) > most)
         refuse('drawer-words', `drawer.${language}`, `${words(drawer)} words`)
       if (longestSentence(drawer, language) > SENTENCE_WORDS)
         refuse('drawer-sentence', `drawer.${language}`, `${longestSentence(drawer, language)} words in one sentence`)
@@ -401,6 +405,10 @@ const CASES = [
     broken({ line: { en: WHOLE.line.en, de: 'Er zeichnete die Wasserräder, die Windmühlen und die Flussufer. Danach vermaß er die Schulterblätter und die Schlüsselbeine genau.' } }), ['line-chars-de']],
   ['a drawer under forty words',
     broken({ drawer: { en: 'The page in front of you is a printed copy.', de: 'Die Seite vor dir ist ein Nachdruck.' } }), ['drawer-words', 'drawer-words']],
+  ['a drawer of 66 words at a stop with an allowance',
+    broken({ id: 'arrival', drawer: { en: Array(66).fill('word').join(' ') + '.', de: Array(66).fill('Wort').join(' ') + '.' } }), ['drawer-sentence', 'drawer-sentence']],
+  ['a drawer of 66 words at a stop without one',
+    broken({ drawer: { en: Array(66).fill('word').join(' ') + '.', de: Array(66).fill('Wort').join(' ') + '.' } }), ['drawer-words', 'drawer-sentence', 'drawer-words', 'drawer-sentence']],
   ['a sentence of a drawer over fourteen words',
     broken({ drawer: { ...WHOLE.drawer, en: WHOLE.drawer.en.replace('The page in front of you is a printed copy.', 'The page in front of you on the table under the lamp is a printed copy of his own.') } }), ['drawer-sentence']],
   ['a dash on the path', broken({ line: { en: 'He drew what he saw \u2014 and wrote it backwards.', de: WHOLE.line.de } }), ['dash']],
