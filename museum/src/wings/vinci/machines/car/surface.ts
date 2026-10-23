@@ -58,10 +58,11 @@ function wood(stack: Stack, set: MaterialSet, kind: 'rough' | 'fine'): MeshStand
   return m
 }
 
-/** The wheel's mark: one spoke painted round in a clean band of red ochre, as a wheelwright marks a piece, its two
- * edges straight but for the brush, the paint thin enough that the grain shows faintly, rubbed through in a few
- * small spots where hands took hold of it. Ours, so a still shows how far the wheel has turned. */
-const PAINT = '#8a3522'
+/** The wheel's mark: one spoke painted round in a clean band of a dark red earth (a sinopia), as a wheelwright marks
+ * a piece, its two edges straight but for the brush, the paint thin enough that the grain shows faintly, rubbed
+ * through in a few small spots where hands took hold of it. Ours, so a still shows how far the wheel has turned;
+ * it reads by its darkness against the oak more than by its hue. */
+const PAINT = '#5c2a1f'
 function painted(col: N, marked: N, fibres: N): N {
   const p: N = positionGeometry
   const rad: N = p.xy.length()

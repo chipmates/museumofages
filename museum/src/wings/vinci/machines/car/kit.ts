@@ -148,10 +148,12 @@ export class Kit {
   /** A solid of revolution about the line from `origin` along `axis`: the
    * profile is (distance along the axis, radius) pairs; smooth around, flat
    * caps where the radius closes or `caps` is set. */
-  lathe(origin: V3, axis: V3, profile: [number, number][], segments: number, f: Finish, caps = true, wearAt?: (s: number) => number, grimeAt?: (s: number) => number): void {
+  lathe(origin: V3, axis: V3, profile: [number, number][], segments: number, f: Finish, caps = true, wearAt?: (s: number) => number, grimeAt?: (s: number) => number, oval = 1): void {
     const w = norm(axis)
     const helper: V3 = Math.abs(w[1]) < 0.9 ? [0, 1, 0] : [1, 0, 0]
-    const e1 = norm(cross(helper, w)), e2 = cross(w, e1)
+    // `oval` stretches the second direction (for an axis off the level, the one up its slope): a ring on a leaning
+    // face that reads round seen level
+    const e1 = norm(cross(helper, w)), e2 = mul(cross(w, e1), oval)
     const ring = (s: number, r: number, k: number): V3 => {
       const a = (k / segments) * Math.PI * 2
       return add(origin, add(mul(w, s), add(mul(e1, Math.cos(a) * r), mul(e2, Math.sin(a) * r))))

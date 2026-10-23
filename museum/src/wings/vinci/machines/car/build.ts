@@ -123,8 +123,9 @@ function collar(k: Kit, deg: number, j: number): void {
   const dr = (wallRadius(y + 0.01) - wallRadius(y - 0.01)) / 0.02
   const n = norm(add(radial(a), mul(Y, -dr)))
   const origin = add(at(r, a, y), mul(n, -0.004))
-  // the collar's face blackened round the muzzle by the guns' smoke
-  k.lathe(origin, n, [[0, TUB.ports.r], [0, TUB.ports.collar], [0.026, TUB.ports.collar - 0.004], [0.03, TUB.ports.r + 0.012], [0.03, TUB.ports.r]], 24, { tone: tone(2, j) }, false, undefined, s => (s > 0.027 ? 0.62 : 1))
+  // the collar's face blackened round the muzzle by the guns' smoke; oval up the leaning wall, as the hole is cut
+  // level through it, so the level barrel clears its lips
+  k.lathe(origin, n, [[0, TUB.ports.r], [0, TUB.ports.collar], [0.026, TUB.ports.collar - 0.004], [0.03, TUB.ports.r + 0.012], [0.03, TUB.ports.r]], 24, { tone: tone(2, j) }, false, undefined, s => (s > 0.027 ? 0.62 : 1), Math.hypot(1, dr))
 }
 
 /** A floor board between z0 and z1 and the cuts xa..xb (an infinite cut runs to the wall), its ends sawn on the
@@ -667,14 +668,15 @@ export function shaft(sz: number): Body {
       }
     }
     // the staves run through the discs and stand a little proud of their outer faces, as through-tenons;
-    // shaved by hand, each worn on both flanks where the pegs bear on it, grimed where it enters the discs
+    // shaved by hand, each worn on both flanks where the pegs bear on it, grimed where it enters the discs; in the
+    // hewn oak, whose photograph runs its grain along the stave (the veneer's figure lies across a rod)
     const a = xl - LANTERN.half - LANTERN.discT / 2 - 0.003, l = 2 * (LANTERN.half + LANTERN.discT / 2 + 0.003)
     const contact = sx * (HUB.x - PEGS.pitch + RUNDLE.wear.shift)
     for (let k = 0; k < LANTERN.staves; k++) {
       const beta = ((k + 0.5) * TAU) / LANTERN.staves
       // turned about +X from the point nearest the wheel, so two staves straddle the contact
       const o: V3 = [0, Math.sin(beta) * LANTERN.pitch, Math.cos(beta) * sz * LANTERN.pitch]
-      rundle(b.fine, a, l, o, contact, { tone: tone(43, seed, sx, k), wear: 0.1 }, [seed, sx, k])
+      rundle(b.rough, a, l, o, contact, { tone: tone(43, seed, sx, k), wear: 0.1 }, [seed, sx, k])
     }
   }
   // the grip, worn smooth by the crew's hands

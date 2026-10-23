@@ -21,7 +21,7 @@ export const TAU = Math.PI * 2
 /** The basin the drive stands in, read as round in plan: a short skirt that
  * tapers in toward the ground, its rim under the cover's eave band. The staves
  * stand upright over the floor's thickness (the chime, where a cooper cuts the
- * groove the bottom boards sit in) and flare above it. */
+ * groove the bottom boards sit in) and lean out straight above it. */
 export const TUB = {
   rimR: 2.3, rimY: 0.565,
   bottomR: 1.85, bottomY: 0.06,
@@ -32,10 +32,11 @@ export const TUB = {
   ports: { y: 0.36, r: 0.08, collar: 0.115 },
 } as const
 
-/** The wall's radius at a height: upright at the chime, turning out above the floor, nearly upright under the rim. */
+/** The wall's radius at a height: upright at the chime, then straight staves leaning out to the rim, a cone, as a
+ * cooper's staves are straight and as the sheet's opened bowl is drawn. */
 export function wallRadius(y: number): number {
   const s = Math.min(1, Math.max(0, (y - TUB.floorTop) / (TUB.rimY - TUB.floorTop)))
-  return TUB.bottomR + (TUB.rimR - TUB.bottomR) * Math.sqrt(s)
+  return TUB.bottomR + (TUB.rimR - TUB.bottomR) * s
 }
 
 /** A gun at every port. The ports leave out the four arcs where a wheel, its
