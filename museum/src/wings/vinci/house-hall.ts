@@ -717,7 +717,7 @@ function keptLimePlaster(T: N, base: N, seed: number): N {
   const sweep = mx_noise_float(vec3(T.x.mul(.7).add(T.y.mul(.5)).div(.35), T.y.mul(.7).sub(T.x.mul(.5)).div(.09), seed + 19)).mul(fade(.09))
   const stroke = (c: number, sn: number, key: number): N => mx_noise_float(vec3(T.x.mul(c).add(T.y.mul(sn)).div(.3), T.y.mul(c).sub(T.x.mul(sn)).div(.014), seed + key))
   const brush = stroke(.8, .6, 43).add(stroke(.8, -.6, 47)).mul(fade(.014))
-  return base.mul(nL.mul(.09).add(nP.mul(.05)).add(nM.mul(.016)).add(sweep.mul(.03)).add(brush.mul(.014)).add(nF.mul(.03)).add(1))
+  return base.mul(nL.mul(.12).add(nP.mul(.05)).add(nM.mul(.016)).add(sweep.mul(.04)).add(brush.mul(.014)).add(nF.mul(.03)).add(1))
     .mul(mix(vec3(1, 1, 1), vec3(1.015, 1, .97), smoothstep(-.3, .5, nL)))
 }
 
@@ -2263,7 +2263,13 @@ function hallMaterial(perPixel: boolean, library?: MaterialLibrary, sunShadow?: 
     const along = max(min(cu0, float(HALL_W).sub(cu0)), min(cv0, float(HALL_D).sub(cv0)))
     const fromBoards = float(CEIL_Z).sub(positionWorld.y)
     const corner = float(1).sub(float(1).sub(smoothstep(0, .8, along)).mul(.3)).mul(float(1).sub(float(1).sub(smoothstep(0, .6, fromBoards)).mul(.22)))
-    const roomShade = mix(float(1), corner, is(K.PLASTER)).mul(lionShade(Nw))
+    // a room lit from one side falls off across its depth: along the two
+    // walls that run away from the windows the return is strongest by the
+    // window wall and weakest at the far end, where the uniform return by
+    // direction held them flat
+    const sideOn = Nw.x.mul(V[0]).sub(Nw.z.mul(V[1])).pow(2)
+    const depth = mix(float(1), float(1.2).sub(smoothstep(.3, HALL_W, cu0).mul(.45)), sideOn)
+    const roomShade = mix(float(1), corner.mul(depth), is(K.PLASTER)).mul(lionShade(Nw))
     ambient = ambient.mul(roomShade); bounce = bounce.mul(roomShade); westSky = westSky.mul(roomShade)
   }
   // THE CEILING OVERHEAD. One bounce leaves its oak near black; the room's
@@ -2510,8 +2516,13 @@ function hallMaterial(perPixel: boolean, library?: MaterialLibrary, sunShadow?: 
   // table top holds where the eye catches the day in it; the wax lies a
   // little unevenly, and the rings' open pores hold less of it
   const waxed = mx_noise_float(Wp.mul(1.7)).mul(.15).add(.7).mul(float(1).sub(ring.mul(.35))).mul(grain.mul(1.2).add(1))
-  // only a top mirrors the window: a leg's round would draw it as a pale bar down its length
-  const flatTop = smoothstep(.5, .9, normalWorldGeometry.y)
+  // only a top in the open mirrors the window: under the table's boards the
+  // reflected ray meets their underside (a trestle's stretcher, seen end on
+  // down the table's width, drew it as a pale bar), and an upright face is no top
+  const underBoards = float(1).sub(smoothstep(TABLE.size[0] / 2 - .02, TABLE.size[0] / 2, hu.sub(TABLE.u).abs()))
+    .mul(float(1).sub(smoothstep(TABLE.size[1] / 2 - .02, TABLE.size[1] / 2, hv.sub(TABLE.v).abs())))
+    .mul(float(1).sub(smoothstep(FLOOR_Z + TABLE.size[2] - .08, FLOOR_Z + TABLE.size[2] - .06, Wp.y)))
+  const flatTop = smoothstep(.5, .9, normalWorldGeometry.y).mul(float(1).sub(underBoards))
   m.emissiveNode = perPixel ? diffuseReturn.add(windowGloss().mul(is(K.WAX).mul(waxed).mul(flatTop).add(is(K.GLAZE).add(is(K.EARTH)).mul(1.4))).mul(inSunBox)) : diffuseReturn
   m.userData['engineBounce'] = true
   m.name = 'vinci/house-hall/fabric'
