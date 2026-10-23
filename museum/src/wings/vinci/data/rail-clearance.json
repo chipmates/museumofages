@@ -54,7 +54,7 @@
   },
   {
    "file": "src/wings/vinci/collection/approaches.ts",
-   "sha256": "825709b2cb20d110c13208838356c03f8a2b2d5c501123cf273bf05eb3c3eaa0",
+   "sha256": "5188e926c09318b4bb8dfcaf0dd12ed4e01eb5fe8ea6e539edeb22788c294e40",
    "bytes": 34683,
    "unchangedDuringAudit": true
   },
@@ -636,8 +636,8 @@
   },
   {
    "file": "src/wings/vinci/rail.ts",
-   "sha256": "c71b40f1724a6e143aa25c594ca02b7fd610ea8fbfa337d3a61ea92609a54c4b",
-   "bytes": 84461,
+   "sha256": "22252fba2dea0d9521fa03cf522244f81d2919b21839450498a0ef1340797ee4",
+   "bytes": 84503,
    "unchangedDuringAudit": true
   },
   {
@@ -7386,9 +7386,9 @@
     "hall"
    ],
    "fov": 76.45,
-   "radius": 0.4123546596299241,
+   "radius": 0.4063687039341775,
    "fullBall": {
-    "distance": 0.4623546596299241,
+    "distance": 0.4563687039341775,
     "mesh": null,
     "triangle": null
    },
@@ -20797,7 +20797,7 @@
      20.27190668626276
     ],
     "fov": 76.45,
-    "shift": -0.6
+    "shift": -0.56
    },
    "toPose": {
     "eye": [
@@ -20825,7 +20825,7 @@
     ]
    ],
    "roundedLength": 2.1404510288920426,
-   "maxNearRadius": 0.4231713134563161,
+   "maxNearRadius": 0.4171853577605695,
    "certifiedBalls": []
   },
   {
@@ -20844,7 +20844,7 @@
      20.27190668626276
     ],
     "fov": 76.45,
-    "shift": -0.6
+    "shift": -0.56
    },
    "toPose": {
     "eye": [
@@ -20872,7 +20872,7 @@
     ]
    ],
    "roundedLength": 2.22295288678033,
-   "maxNearRadius": 0.4231713134563161,
+   "maxNearRadius": 0.4171853577605695,
    "certifiedBalls": []
   },
   {
@@ -20891,7 +20891,7 @@
      20.27190668626276
     ],
     "fov": 76.45,
-    "shift": -0.6
+    "shift": -0.56
    },
    "toPose": {
     "eye": [
@@ -20905,7 +20905,7 @@
      14.567195645462778
     ],
     "fov": 76.45,
-    "shift": -0.62
+    "shift": -0.58
    },
    "points": [
     [
@@ -20920,7 +20920,7 @@
     ]
    ],
    "roundedLength": 0.6521960456957353,
-   "maxNearRadius": 0.42618794940196647,
+   "maxNearRadius": 0.4201703339550161,
    "certifiedBalls": []
   },
   {

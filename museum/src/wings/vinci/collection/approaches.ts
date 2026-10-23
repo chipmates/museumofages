@@ -359,7 +359,7 @@ function tablePiecePose(slug: HallTablePiece, narrow: boolean): ApproachPose {
  * middle to a third of the height.
  * In the lion's own frame, +z its nose and +x its left. */
 const LION_EYE = { x: 2.7, z: 1.8 }
-const LION_PHONE = { fov: 76.45, pitch: 6, shift: -.62, aimZ: .25 }
+const LION_PHONE = { fov: 76.45, pitch: 6, shift: -.58, aimZ: .25 }
 function lionPose(narrow: boolean): ApproachPose {
   const b = HALL_LION.bearing * Math.PI / 180, cos = Math.cos(b), sin = Math.sin(b)
   const on = (x: number, z: number): [number, number] => [HALL_LION.east + x * cos + z * sin, HALL_LION.north + x * sin - z * cos]

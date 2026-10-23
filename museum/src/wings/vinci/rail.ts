@@ -169,9 +169,10 @@ export function stationPose(id:VinciStationId, narrow:boolean):Pose {
   // stands half a metre inside the door, where a 40 degree field across
   // holds the lion at three fifths of the width. Its window above the words
   // is the master's band 0.11 to 0.57 on every phone, so the eye looks four
-  // degrees down and its shift lens lifts the lion's middle to a third of
-  // the height; pitched instead, the room's verticals leaned.
-  if(id==='hall') return narrow?{...aimedFrom(HALL_PHONE_EYE,-150.44,-4,76.45),shift:-.6}:aimedFrom(HALL_DOOR,-124,-8,58)
+  // degrees down and its shift lens lifts the lion's middle to about a
+  // third of the height, its feet just under the half; pitched instead, the
+  // room's verticals leaned.
+  if(id==='hall') return narrow?{...aimedFrom(HALL_PHONE_EYE,-150.44,-4,76.45),shift:-.56}:aimedFrom(HALL_DOOR,-124,-8,58)
   // THE CHAPEL IS THE ONE HERO. Square on from the court it was a wall of
   // ashlar in the house's shadow with nothing behind it; from the foot of the
   // raised lawn the gable took the left half of the frame, the gable the study
