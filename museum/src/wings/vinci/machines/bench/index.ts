@@ -47,8 +47,6 @@ export interface BenchOptions {
   eye?: { at: [number, number, number]; look: [number, number, number]; fov?: number; frame?: [number, number, number, number] };
   /** a grey figure of 1.70 m for size, at (x, z) on the floor, turned by yaw degrees */
   figure?: { at: [number, number]; yaw?: number };
-  /** forge only: the key's near cascade half-width, its map size and the screw's wide filter, for a probe */
-  shadowProbe?: { near?: number; map?: number; wide?: boolean; lift?: number };
 }
 const el = <K extends keyof HTMLElementTagNameMap>(tag: K, cls: string, text?: string): HTMLElementTagNameMap[K] => { const n = document.createElement(tag); n.className = cls; if (text !== undefined)
   n.textContent = text; return n; };
@@ -516,28 +514,26 @@ export function createBench(stack: Stack, onExit: () => void) {
    * takes more of the sky and a paler bounce off the stone it stands on. The
    * hour, the sun's place and every other machine's light stay as they are.
    * The screw's cloth and frame are seen from below at eye height. Its near-flat
-   * cloth under a 17 degree sun looks its shadow up 15 cm toward the key (at
-   * 3 cm the depth slope across a texel made acne that read as a weave's
-   * moire) and through a wider filter, so the upper whorl's edge on the
-   * lower is a soft line and not steps. */
-  const OWN_LIGHT: Partial<Record<MachineSlug, { lux: number; ambient: number; ground: string; near?: number; map?: number; wide?: boolean; lift?: number }>> = {
+   * cloth under a 17 degree sun needs its shadow looked up 15 cm toward the key
+   * (at 3 cm the texel's depth slope made acne that read as moire) and a wider
+   * filter, or the upper whorl's edge on the lower steps. */
+  const OWN_LIGHT: Partial<Record<MachineSlug, { lux: number; ambient: number; ground: string; lift?: number; wide?: boolean }>> = {
     'aerial-screw': { lux: 210, ambient: 1.0, ground: '#5e5546', lift: .15, wide: true },
   };
   /** how far toward the key a cloth looks up its shadow */
   let clothLift = .03;
-  function lightBench(probe?: BenchOptions['shadowProbe']) {
+  function lightBench() {
     const scale = machineCatalog[slug].dossier.scale_m, span = Math.max(scale.x, scale.y, scale.z);
-    const own = OWN_LIGHT[slug] && probe ? { ...OWN_LIGHT[slug]!, ...probe } : OWN_LIGHT[slug];
+    const own = OWN_LIGHT[slug];
     clothLift = own?.lift ?? .03;
     key?.dispose();
     // The far cascade is a box around the origin. It has to contain the wall
     // as well as the machine, or the floor between them takes no shadow
     // lookup at all and draws as a hard edged quad.
     const reach = BENCH_BACK_PLANE ? Math.max(span * 3.4, BACK_PLANE_METRES * 1.45) : span * 3.4;
-    key = stack.light({ azimuth: BENCH_SUN_AZIMUTH_DEGREES, elevation: BENCH_SUN_ELEVATION_DEGREES, kelvin: 4800, lux: own?.lux ?? 185, ambient: own?.ambient ?? .72, reach: Math.max(24, span * 6, reach * 2.2), cascades: [own?.near ?? span * 1.25, reach], sky: { zenith: '#707579', horizon: '#b1a895', ground: own?.ground ?? '#343532', stars: 0 } });
+    key = stack.light({ azimuth: BENCH_SUN_AZIMUTH_DEGREES, elevation: BENCH_SUN_ELEVATION_DEGREES, kelvin: 4800, lux: own?.lux ?? 185, ambient: own?.ambient ?? .72, reach: Math.max(24, span * 6, reach * 2.2), cascades: [span * 1.25, reach], sky: { zenith: '#707579', horizon: '#b1a895', ground: own?.ground ?? '#343532', stars: 0 } });
     key.light.shadow.normalBias = span * .0002;
     key.light.shadow.bias = -span * .00001;
-    if (own?.map) key.light.shadow.mapSize.setScalar(own.map);
     if (own?.wide) (key.light.shadow as unknown as { filterNode: unknown }).filterNode = wideShadowFilter;
     // the surfaces that give an edge its rim answer to the light that is
     // actually standing here, not to a second copy of the hour
@@ -548,7 +544,7 @@ export function createBench(stack: Stack, onExit: () => void) {
     const requestedEvidence = opts.evidence === undefined ? null : opts.evidence === requested ? machineCatalog[requested] : partialCatalog.find(record => record.slug === opts.evidence);
     if (opts.evidence !== undefined && !requestedEvidence) throw new Error(`No evidence record for ${requested}: ${opts.evidence}`);
     evidence.close(false);
-    const mine = ++serial; active = true; host.hidden = false; ready = false; loading.hidden = false; clearDisplay(); folioEntry = undefined; folio.replaceChildren(); slug = requested; evidenceRecord = machineCatalog[slug]; lang = controlLanguage(location.search, opts.lang); schedule = playbackSchedule(machineCatalog[slug].dossier); playbackState = initialPlayback(schedule, { t: opts.t, fixed: document.body.classList.contains('forge'), reducedMotion: reduced.matches }); lastWall = performance.now(); stamp(); stack.setScene(scene, camera, { ...IDENTITY, name: 'vinci-machine-bench', exposure: .95, grain: .004, ao: { intensity: 1, distance: Math.max(...Object.values(machineCatalog[slug].dossier.scale_m).filter((v): v is number => typeof v === 'number')) * .025, thickness: 1 } }); lightBench(opts.shadowProbe); machine = buildMachine(slug, stack); closeUp = opts.close ?? false; eye = opts.eye ?? null; figure = opts.figure ?? null; sectionEnabled = (slug === 'camera-obscura' || slug === 'mechanical-lion') && (opts.section ?? false); machine.section(sectionEnabled); display.add(machine.object); compose(); paint(); await Promise.all([machine.ready, supports(mine), plateFor(mine)]); if (mine !== serial)
+    const mine = ++serial; active = true; host.hidden = false; ready = false; loading.hidden = false; clearDisplay(); folioEntry = undefined; folio.replaceChildren(); slug = requested; evidenceRecord = machineCatalog[slug]; lang = controlLanguage(location.search, opts.lang); schedule = playbackSchedule(machineCatalog[slug].dossier); playbackState = initialPlayback(schedule, { t: opts.t, fixed: document.body.classList.contains('forge'), reducedMotion: reduced.matches }); lastWall = performance.now(); stamp(); stack.setScene(scene, camera, { ...IDENTITY, name: 'vinci-machine-bench', exposure: .95, grain: .004, ao: { intensity: 1, distance: Math.max(...Object.values(machineCatalog[slug].dossier.scale_m).filter((v): v is number => typeof v === 'number')) * .025, thickness: 1 } }); lightBench(); machine = buildMachine(slug, stack); closeUp = opts.close ?? false; eye = opts.eye ?? null; figure = opts.figure ?? null; sectionEnabled = (slug === 'camera-obscura' || slug === 'mechanical-lion') && (opts.section ?? false); machine.section(sectionEnabled); display.add(machine.object); compose(); paint(); await Promise.all([machine.ready, supports(mine), plateFor(mine)]); if (mine !== serial)
     return; machine.animate(playbackState.clock, 0);
     if(key){
       const towardKey=vec3(key.direction.x,key.direction.y,key.direction.z).mul(clothLift);
