@@ -371,7 +371,7 @@ for (const phone of VIEWPORTS) {
     }
     rail.set(stops[0].station, vinciWalkPose(stops[0], phone), true, phone)
     now = 0; rail.update()
-    let standing = stops[0].id, standingVertex
+    let standing = stops[0].id, standingVertex, standingShift = Math.abs(vinciWalkPose(stops[0], phone).shift ?? 0)
     for (let n = 1; n < stops.length; n++) for (const move of movesTo(stops[n])) {
       if (move.id === standing) continue
       rail.set(move.station, move.pose, false, phone, move.vertex)
@@ -383,7 +383,8 @@ for (const phone of VIEWPORTS) {
         for (let step = 1; step <= STEPS; step++) {
           now = step * seconds / STEPS
           rail.update()
-          assertRailProjection(camera)
+          // the bound the rail itself walks a leg under: the larger shift lens of its two ends
+          assertRailProjection(camera, Math.max(standingShift, Math.abs(move.pose.shift ?? 0)))
           const frame = step % 4 === 0 && step / STEPS >= WALKED.from && step / STEPS <= WALKED.to ? readFrame(camera) : {}
           look.set(0, 0, -1).applyQuaternion(camera.quaternion)
           const bearing = (Math.atan2(look.x, -look.z) * 180 / Math.PI + 360) % 360, pitch = Math.asin(Math.max(-1, Math.min(1, look.y))) * 180 / Math.PI
@@ -425,11 +426,13 @@ for (const phone of VIEWPORTS) {
         now += 1e-6; rail.update()
         standing = move.id
         standingVertex = move.vertex
+        standingShift = Math.abs(move.pose.shift ?? 0)
         continue
       }
       const from = standing, onWall = standingVertex !== undefined || move.vertex !== undefined
       standing = move.id
       standingVertex = move.vertex
+      standingShift = Math.abs(move.pose.shift ?? 0)
       if (TRACE === `${from}>${move.id}`) for (const sample of samples) {
         console.error([phone ? 'phone' : 'desktop', order, sample.share.toFixed(3), sample.at.x.toFixed(2), (-sample.at.z).toFixed(2),
           'bearing', sample.bearing.toFixed(1), 'pitch', sample.pitch.toFixed(1), 'centre', sample.body ?? '-', sample.nearest,
