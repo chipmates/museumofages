@@ -365,9 +365,9 @@ function tablePiecePose(slug: HallTablePiece, narrow: boolean): ApproachPose {
   if (narrow) {
     const t = PIECE_PHONE.pitch * Math.PI / 180
     const above = (height: number, at: number): number => Math.tan(Math.atan2(height - eyeY, at) + t)
-    // the dossier's envelope is wider than the piece's own board: its front
-    // edge square on stands where a turned look sees the board's near corner
-    const foot = above(top, reach - Math.max(x, z) / 2), crown = above(top + y, reach)
+    // the depth toward the eye is the dossier's z (the compass is wide and
+    // thin); a turned look sees the inclinometer's board corner about there
+    const foot = above(top, reach - z / 2), crown = above(top + y, reach)
     const half = (crown - foot) / (2 * 2 * (PIECE_PHONE.foot - PIECE_PHONE.middle))
     const shift = 2 * (PIECE_PHONE.foot - .5 + foot / (2 * half))
     const at = world(place.east, place.north, eyeY - reach * Math.tan(t))
