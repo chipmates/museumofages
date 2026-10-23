@@ -97,7 +97,7 @@ const ASSE_ROOM = 'sala-delle-asse'
 /** A WORKING LINE THE RECORD HOLDS ITSELF, for the writer to word into the
     card data: the drawn rope does not follow the design up close, so the
     1498 near line claims the trees and the arms, and calls the rope ours */
-const ASSE_NEAR_1498_HELD: VinciText = { en: 'Trees and arms as designed, the rope by us.', de: 'Bäume und Wappen nach Entwurf, Seil von uns.' }
+const ASSE_NEAR_1498_HELD: VinciText = { en: 'Trees and arms as designed, the rope by us.', de: 'Bäume, Wappen nach Entwurf, Seil von uns.' }
 
 /* THE SALA DELLE ASSE, the first. About 1498 is our drawing in code, after
    the layout the 1902 repaint keeps; 2012 is the photograph before the
