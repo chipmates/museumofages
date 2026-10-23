@@ -22,10 +22,11 @@ import { vinciApproachPose } from './collection/approaches'
 import { FRAME_FRONT, mountedSheets } from './collection/body-wall-plan'
 import { VINCI_VALVE, type VinciWalkPoseId } from './walk-places'
 import { railCollectionStairWaypoints } from './rail-waypoints'
+import { uprightPose } from './upright'
 
 export { VINCI_HOUSE_DOOR, VINCI_STAIR_HEAD, VINCI_VALVE, VINCI_WALK_POSE_IDS, isVinciWalkPose, type VinciWalkPoseId } from './walk-places'
 
-interface WalkPose { eye: Vector3; at: Vector3; fov: number }
+interface WalkPose { eye: Vector3; at: Vector3; fov: number; shift?: number }
 
 /** The rail reads a place's id for the wall it ends and the side it stands
  * on; a pose of the walk ends no wall, so it is handed over under the
@@ -116,7 +117,7 @@ export function vinciWalkPoseOf(id: VinciWalkPoseId, narrow: boolean): WalkPose 
   if (id === 'body-valve') {
     const pose = vinciApproachPose(VINCI_VALVE.exhibit, narrow)
     if (!pose) throw new Error(`${VINCI_VALVE.exhibit}: no viewing eye for the valve's stop`)
-    return narrow ? pose : valveDesktopPose(pose)
+    return narrow ? uprightPose(id, pose) : valveDesktopPose(pose)
   }
   return doorPose(id, narrow)
 }

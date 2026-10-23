@@ -27,6 +27,7 @@ import { world } from './site'
 import { gaitPace } from './gait'
 import { VINCI_HOUSE_DOOR, VINCI_VALVE, vinciWalkPoseOf, type VinciWalkPoseId } from './walk-poses'
 import { VINCI_LISA_STOP, VINCI_OFF_THE_WALK } from './walk-places'
+import { uprightPose } from './upright'
 
 /** The address that names an order, and the values it takes. */
 export const VINCI_ORDER_PARAM = 'order', VINCI_LIFE_ORDER = 'life', VINCI_ROOM_ORDER = 'room'
@@ -147,7 +148,8 @@ export function vinciLisaPose(narrow: boolean): Pose {
   // portrait to the right, clear of the words, with its neighbour beside it.
   const rise = LISA_RISE_M[viewport]
   const at = world(field.east + LISA_SWING_M[viewport], field.north, rise === null ? eye.y : field.datum - rise)
-  return { eye: eye.clone(), at, fov: LISA_FOV[viewport] }
+  const pose = { eye: eye.clone(), at, fov: LISA_FOV[viewport] }
+  return narrow ? uprightPose(LISA_STOP, pose) : pose
 }
 
 /** The pose a stop of the walk stands at. */

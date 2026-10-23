@@ -17,6 +17,7 @@ import { railAccessWaypoints, railCollectionStairWaypoints, railDoorTurns, railG
 import { fittedRailFov, assertRailProjection, setRailShift } from './rail-projection'
 import type { RailGeometryAuthority } from './rail-proof'
 import { hallView } from './house-hall'
+import { uprightPose } from './upright'
 
 /** `shift` is the phone's shift lens (`rail-projection.ts`), absent where the
  * look is not shifted. */
@@ -133,7 +134,12 @@ export const HOUSE_STATIONS_IN_PLACE:readonly VinciStationId[]=['hall','oratory'
 /** The stations whose frame is a place, not a plate the card may cover. */
 export const vinciStandsInRoom=(id:VinciStationId):boolean=>
   COLLECTION_STATION_ROOMS[id]!==undefined||HOUSE_STATIONS_IN_PLACE.includes(id)
+/** A station's pose; the phone's is stood in the short phone's window (`upright.ts`). */
 export function stationPose(id:VinciStationId, narrow:boolean):Pose {
+  const pose=authoredStationPose(id,narrow)
+  return narrow?uprightPose(id,pose):pose
+}
+function authoredStationPose(id:VinciStationId, narrow:boolean):Pose {
   // The eye stood 0.26 m off the retaining wall, inside its own near plane,
   // and the wall filled the right third of the lower cone. It now stands
   // 0.86 m off it, out toward the middle of the road. The phone's lens came
