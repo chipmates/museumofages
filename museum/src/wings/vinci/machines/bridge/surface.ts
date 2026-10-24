@@ -74,7 +74,7 @@ export async function bridgeSurfaces(stack: Stack): Promise<BridgeSurfaces> {
   {
     const s = set['oak-beams']
     const d = stack.detail(pole, { ...s, normalStrength: 0.4, grain: s.grain ? { ...s.grain, relief: 0.1, shade: 0.14, sheen: 0.04 } : null }, { uv: uv(), count: 3, maps: maps(s), fade: [6, 40] })
-    const T: N = attribute('aTone', 'vec3'), seed: N = attribute('aSeed', 'float')
+    const T: N = attribute('aTone', 'vec4'), seed: N = T.w
     const tone = T.x, peeled = T.y, end = T.z
     // the stem's UVs: along it (the photograph's grain) and round it; the cut ends carry their own face coordinates
     const v = uv().x, u = uv().y
@@ -148,7 +148,7 @@ export async function bridgeSurfaces(stack: Stack): Promise<BridgeSurfaces> {
   {
     const s = set['rope']
     const d = stack.detail(hemp, s, { uv: uv(), count: 3, maps: maps(s), fade: [6, 35] })
-    const spine: N = attribute('aSpine', 'vec3'), born: N = attribute('aBorn', 'float'), served: N = attribute('aServe', 'float')
+    const spine: N = attribute('aSpine', 'vec3'), ropeAt: N = attribute('aRope', 'vec3'), born: N = ropeAt.x, served: N = ropeAt.y
     // a rope not yet wound lies on its own centre: nothing to see, nothing to cast
     hemp.positionNode = mx(spine, positionLocal, step(born, lashClock))
     const u = uv().x, v = uv().y
@@ -160,12 +160,11 @@ export async function bridgeSurfaces(stack: Stack): Promise<BridgeSurfaces> {
     // served: a thin tarred line wound close round the rope where it bears
     const servePhase = v.div(0.0032).mul(Math.PI * 2)
     const serveShade = float(1).sub(fade(servePhase, 0.22).mul(cos(servePhase).mul(-0.5).add(0.5)))
-    const T: N = attribute('aTone', 'vec3')
+    const T: N = attribute('aTone', 'vec4')
     const laid = lin('#8c7d60').mul(luma(d.albedo).mul(0.55).add(0.55)).mul(layShade)
     const tarred = lin('#4c4030').mul(luma(d.albedo).mul(0.3).add(0.8)).mul(serveShade)
     // the rope's side that lies on a pole is in the pole's shade
-    const ropeShade: N = attribute('aShade', 'vec2')
-    const onPole = float(1).sub(ropeShade.x)
+    const onPole = float(1).sub(ropeAt.z)
     hemp.colorNode = mx(laid, tarred, served).mul(T.x).mul(d.occlusion).mul(onPole).mul(keyRim(0.5).add(1))
     hemp.roughnessNode = mx(d.roughness.max(0.66), float(0.55), served)
     const hLay = cos(layPhase).mul(fade(layPhase, 0.0009)), hServe = cos(servePhase).mul(fade(servePhase, 0.0004))

@@ -8,7 +8,7 @@
  * frapping turns round the turns between the poles. Every vertex carries
  * what the surfaces need: UVs in metres (U along the stem, V round it; a
  * cut face its own cross-section), `aTone` (the piece's tone, peeled wood
- * or bark, end grain), `aSeed`, `aCyl` (the stem's own cylinder
+ * or bark, end grain, its seed), `aCyl` (the stem's own cylinder
  * coordinates) and `aShade` (how dark it lies where another part bears on
  * it, and the build-clock moment that part arrives).
  */
@@ -50,15 +50,22 @@ export class Sheet {
     for (const i of [a, b, c]) { n[0] += this.normal[i * 3]!; n[1] += this.normal[i * 3 + 1]!; n[2] += this.normal[i * 3 + 2]! }
     if (dot(f, n) >= 0) this.index.push(a, b, c); else this.index.push(a, c, b)
   }
-  geometry(): BufferGeometry {
+  /** `wood`: the tone with the seed in its fourth place, the cylinder and the shade (a skinned pole adds two buffers of its
+   * own: eight in all, the most a pipeline takes); `plain`: the ground's and the stream's place alone */
+  geometry(kind: 'wood' | 'rope' | 'plain' = 'wood'): BufferGeometry {
     const g = new BufferGeometry()
     g.setAttribute('position', new Float32BufferAttribute(this.position, 3))
     g.setAttribute('normal', new Float32BufferAttribute(this.normal, 3))
     g.setAttribute('uv', new Float32BufferAttribute(this.uv, 2))
-    g.setAttribute('aTone', new Float32BufferAttribute(this.tone, 3))
-    g.setAttribute('aSeed', new Float32BufferAttribute(this.seed, 1))
-    g.setAttribute('aCyl', new Float32BufferAttribute(this.cyl, 3))
-    g.setAttribute('aShade', new Float32BufferAttribute(this.shade, 2))
+    if (kind !== 'plain') {
+      const tone: number[] = []
+      for (let i = 0; i < this.seed.length; i++) tone.push(this.tone[i * 3]!, this.tone[i * 3 + 1]!, this.tone[i * 3 + 2]!, this.seed[i]!)
+      g.setAttribute('aTone', new Float32BufferAttribute(tone, 4))
+    }
+    if (kind === 'wood') {
+      g.setAttribute('aCyl', new Float32BufferAttribute(this.cyl, 3))
+      g.setAttribute('aShade', new Float32BufferAttribute(this.shade, 2))
+    }
     for (const [name, { size, data }] of Object.entries(this.extra)) g.setAttribute(name, new Float32BufferAttribute(data, size))
     g.setIndex(this.index)
     g.computeBoundingBox(); g.computeBoundingSphere()
@@ -483,8 +490,8 @@ function chaikin(path: PathPt[], passes: number): PathPt[] {
   return cur
 }
 
-/** Every lashing as one surface: each vertex knows the centre of the rope where it lies (`aSpine`), the moment
- * it is wound (`aBorn`), whether it is served there (`aServe`) and how close it lies on a pole (`aShade`). */
+/** Every lashing as one surface: each vertex knows the centre of the rope where it lies (`aSpine`), and in `aRope` the
+ * moment it is wound, whether it is served there and how close it lies on a pole. */
 export function lashingGeometry(detail: LashDetail = LASH_FINE): BufferGeometry {
   const sheet = new Sheet()
   const spine: number[] = [], born: number[] = [], serve: number[] = []
@@ -539,8 +546,11 @@ export function lashingGeometry(detail: LashDetail = LASH_FINE): BufferGeometry 
       done += lengths[ti]!
     })
   })
-  sheet.extra = { aSpine: { size: 3, data: spine }, aBorn: { size: 1, data: born }, aServe: { size: 1, data: serve } }
-  return sheet.geometry()
+  // the moment each piece is wound, whether it is served there, how close it lies on a pole
+  const rope: number[] = []
+  for (let i = 0; i < born.length; i++) rope.push(born[i]!, serve[i]!, sheet.shade[i * 2]!)
+  sheet.extra = { aSpine: { size: 3, data: spine }, aRope: { size: 3, data: rope } }
+  return sheet.geometry('rope')
 }
 
 // ---------------------------------------------------------------- the bank and the stream
@@ -584,7 +594,7 @@ export function bankGeometry(): BufferGeometry {
   face(xs.map(x => [x, groundY(x, Z0), Z0] as V3), [0, 0, -1], p => p[0], true)
   face(zs.map(z => [X, groundY(X, z), z] as V3), [1, 0, 0], p => p[2], true)
   face(zs.map(z => [-X, groundY(-X, z), z] as V3), [-1, 0, 0], p => p[2], false)
-  return sheet.geometry()
+  return sheet.geometry('plain')
 }
 
 /** the stream's half width at its level: the level face is a plane of its own, for the mirror; it runs into the bank's
@@ -610,5 +620,5 @@ export function waterGeometry(): BufferGeometry {
       if (side > 0) sheet.index.push(a, b, c, b, d, c); else sheet.index.push(a, c, b, b, c, d)
     }
   }
-  return sheet.geometry()
+  return sheet.geometry('plain')
 }
