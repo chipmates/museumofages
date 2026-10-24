@@ -259,7 +259,7 @@ function authoredStationPose(id:VinciStationId, narrow:boolean):Pose {
     // a third of the way down the short phone's window. Closed to 55 and stood
     // higher to put the next room's pier out of the right edge, it left plain
     // floor under a third of the short phone.
-    return {...aimedFrom(p(-35.5,-31,COURT.level+1.66,-35.5,-31,COURT.level+1.66),-82.5,0,100),shift:-.2004}
+    return {...aimedFrom(p(-35.5,-31,COURT.level+1.66,-35.5,-31,COURT.level+1.66),-82.5,0,100),shift:-.200427}
   }
   // THE BODY WALL'S PHONE STANDS SQUARE ON THE HANG. Looking eight degrees
   // down, the soffit takes a tenth of the picture over the lining's head and
