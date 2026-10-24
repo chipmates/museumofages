@@ -217,6 +217,8 @@ export async function bridgeSurfaces(stack: Stack): Promise<BridgeSurfaces> {
     water.normalNode = bumped(normalView, ripple.mul(0.022), 1)
     water.roughnessNode = float(0.07)
     water.envMapIntensity = 0.42
+    // the bench's lamp is for the poles: on the stream it would stand as a hot spot
+    water.userData['benchLamp'] = false
   }
   // the level face: the same water, and the bridge and its banks mirrored in it at grazing angles
   // the sky's own sheen is cut low: the planar pass carries the mirror and its Fresnel, never both
@@ -225,6 +227,7 @@ export async function bridgeSurfaces(stack: Stack): Promise<BridgeSurfaces> {
   waterTop.colorNode = water.colorNode
   waterTop.normalNode = water.normalNode
   waterTop.roughnessNode = water.roughnessNode
+  waterTop.userData['benchLamp'] = false
   const mirror = (reflection: N): void => {
     const view = cameraPosition.sub(positionWorld).normalize()
     const fresnel = float(1).sub(normalWorld.dot(view).abs()).pow(5).mul(0.978).add(0.022)
