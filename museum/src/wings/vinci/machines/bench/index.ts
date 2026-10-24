@@ -639,12 +639,13 @@ export function createBench(stack: Stack, onExit: () => void) {
       section: [{ at: [2.6, 3.4, 3.4], aim: [.1, .7, .4], lux: 140, kelvin: 4000, angle: .6, penumbra: .9, decay: 2 },
         { at: [2, 1.7, 1], aim: [.1, .78, .55], lux: 200, kelvin: 4000, angle: .5, penumbra: .7, decay: 2, shadow: false }],
     } },
-    // the bridge on its bank: the sun a little stronger, the bank's earth in the bounce, and one broad lamp high on the
-    // visitor's side, falling off with distance, so the near frame's poles turn from lit to shade across their round
-    'bridge-of-poles': { lux: 230, ambient: 1.0, ground: '#5a5040', lamps: { closed: [
-      { at: [-6, 9, 10], aim: [0, 1.4, 0], lux: 150, kelvin: 4300, angle: .55, penumbra: .8, decay: 2 },
+    // the bridge on its bank: the low sun from the near bank's side is its key, stronger, the sky's share on its own
+    // surfaces cut so each pole turns from lit to shade across its round; the bank's earth in the bounce; and one broad
+    // lamp high over the far bank's back, falling off with distance, for the tops of the poles and their far edges
+    'bridge-of-poles': { lux: 300, ambient: .55, ground: '#5a5040', fill: { closed: .5, section: .5 }, lamps: { closed: [
+      { at: [4, 10, -6], aim: [0, 1.4, 0], lux: 130, kelvin: 4300, angle: .6, penumbra: .8, decay: 2 },
     ], section: [
-      { at: [-6, 9, 10], aim: [0, 1.4, 0], lux: 150, kelvin: 4300, angle: .55, penumbra: .8, decay: 2 },
+      { at: [4, 10, -6], aim: [0, 1.4, 0], lux: 130, kelvin: 4300, angle: .6, penumbra: .8, decay: 2 },
     ] } },
     'armoured-car': { lux: 240, ambient: 1.15, ground: '#6a604f', sectionLux: 140, fill: { closed: .4 }, lamps: {
       // low on the sun's side of the visitor: the near skirt and eave take the most, the cone turns away from it

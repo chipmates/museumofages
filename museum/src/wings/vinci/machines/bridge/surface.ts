@@ -85,17 +85,16 @@ export async function bridgeSurfaces(stack: Stack): Promise<BridgeSurfaces> {
     // of it, and the fissures are relief and shade, never a drawn line.
     const C: N = attribute('aCyl', 'vec3')
     const roundFw = fwidth(C.y).add(fwidth(C.z))
-    const theta = atan(C.z, C.y)
-    // a whole number of ridges round a 0.15 m pole, their phase wandering with the stem
-    const wobble = mx_noise_float(vec3(C.x.mul(1.7).add(o), C.y.mul(9), C.z.mul(9))).mul(1.9).add(mx_noise_float(vec3(C.x.mul(5.3), C.y.mul(24), C.z.mul(24)).add(3.1)).mul(0.5))
-    const ridgePhase = theta.mul(22).add(wobble).add(C.x.mul(0.9))
-    const across = cos(ridgePhase)
-    // how far a fissure is open here: it runs a while, closes, opens again beside
-    const opening = smoothstep(-0.35, 0.45, mx_noise_float(vec3(C.x.mul(3.2).add(o), C.y.mul(16), C.z.mul(16)).add(5.5)))
-    // gone before a pixel spans a third of a ridge
-    const ridgeFade = float(1).sub(smoothstep(0.004, 0.009, roundFw))
-    const fissure = smoothstep(-0.55, -0.92, across).mul(opening).mul(ridgeFade)
-    const shoulder = smoothstep(-0.1, -0.6, across).mul(opening).mul(ridgeFade)
+    // the fissures are where a field stretched along the stem crosses zero: long, wavy, branching, unevenly spaced
+    const fq = vec3(C.x.mul(2.4).add(o), C.y.mul(15), C.z.mul(15))
+    const field = mx_noise_float(fq).add(mx_noise_float(fq.mul(vec3(1.9, 2.3, 2.3)).add(3.3)).mul(0.45))
+    const opening = smoothstep(-0.3, 0.5, mx_noise_float(vec3(C.x.mul(1.3).add(o), C.y.mul(7), C.z.mul(7)).add(5.5)))
+    const width = opening.mul(0.1).add(0.035)
+    // gone before a pixel holds a whole fissure and its shoulders
+    const ridgeFade = float(1).sub(smoothstep(width.mul(0.5), width.mul(1.6), fwidth(field)))
+    const fissure = float(1).sub(smoothstep(width.mul(0.35), width, field.abs())).mul(ridgeFade)
+    const shoulder = float(1).sub(smoothstep(width, width.mul(3.2), field.abs())).mul(ridgeFade)
+    const ridgeTop = smoothstep(0.15, 0.55, field.abs()).mul(ridgeFade)
     const microQ = vec3(C.x.mul(40), C.y.mul(190), C.z.mul(190))
     const micro = mx_noise_float(microQ)
     const microFade = float(1).sub(smoothstep(0.15, 0.6, roundFw.mul(190).add(fwidth(C.x.mul(40)))))
@@ -103,14 +102,13 @@ export async function bridgeSurfaces(stack: Stack): Promise<BridgeSurfaces> {
     const lent = smoothstep(0.72, 0.86, mx_noise_float(vec3(C.x.mul(55), C.y.mul(36), C.z.mul(36)))).mul(float(1).sub(smoothstep(0.15, 0.5, fwidth(C.x.mul(55)).add(roundFw.mul(36))))).mul(float(1).sub(fissure))
     const mottle = mx_noise_float(vec3(C.x.mul(1.6).add(o), C.y.mul(8), C.z.mul(8))).mul(0.5).add(0.5)
     const lichen = smoothstep(0.6, 0.8, mx_noise_float(vec3(C.x.mul(1.2).add(o), C.y.mul(14), C.z.mul(14)).add(2.7)).mul(0.5).add(0.5))
-    const ridgeTop = smoothstep(0.2, 0.95, across).mul(ridgeFade)
     const plateTop = mx(mx(lin('#4c453d'), lin('#6a645c'), plate), lin('#57493b'), mottle.mul(0.35)).mul(ridgeTop.mul(0.12).add(0.94))
-    const barkCol = mx(mx(plateTop, lin('#7f7d6d'), lichen.mul(0.32)).mul(micro.mul(microFade).mul(0.3).add(1)), lin('#2a221b'), fissure.mul(0.62))
-      .mul(float(1).sub(shoulder.mul(0.16))).mul(float(1).add(lent.mul(0.18)))
+    const barkCol = mx(mx(plateTop, lin('#7f7d6d'), lichen.mul(0.32)).mul(micro.mul(microFade).mul(0.3).add(1)), lin('#30271f'), fissure.mul(0.55))
+      .mul(float(1).sub(shoulder.mul(0.12))).mul(float(1).add(lent.mul(0.18)))
     // the ridges' own scaly skin, finer than the ridges and long along the stem
     const scaleQ = vec3(C.x.mul(14), C.y.mul(75), C.z.mul(75))
     const scaly = mx_noise_float(scaleQ.add(o)).mul(float(1).sub(smoothstep(0.2, 0.7, fwidth(C.x.mul(14)).add(roundFw.mul(75)))))
-    const barkH = fissure.negate().mul(0.0042).sub(shoulder.mul(0.0016)).add(micro.mul(microFade).mul(0.0008)).add(scaly.mul(0.0010)).add(plate.mul(0.0005)).add(lent.mul(0.0002))
+    const barkH = fissure.negate().mul(0.0045).sub(shoulder.mul(0.0018)).add(ridgeTop.mul(0.0008)).add(micro.mul(microFade).mul(0.0008)).add(scaly.mul(0.0010)).add(plate.mul(0.0005)).add(lent.mul(0.0002))
     // PEELED: pale wood under the drawknife, its strokes as narrow facets along the stem, bark left in the hollows
     const fibres = luma(d.albedo)
     const facetPhase = u.div(0.026).add(mx_noise_float(vec3(v.mul(0.9), o, 1.1)).mul(1.4))

@@ -453,27 +453,37 @@ function turnPath(c: Crossing, i: number, detail: LashDetail): PathPt[] {
   return chaikin(path, detail.passes)
 }
 
-/** A frapping turn: round the lashing between the two poles, under the rod and over the support, outside the turns'
- * corners, pulling them in. */
+/** A frapping turn: round the lashing between the two poles, under the rod and over the support, tight round the
+ * outside of the turns' four corners where they cross from one pole to the other, pulling them in. */
 function frapPath(c: Crossing, j: number, detail: LashDetail): PathPt[] {
   const { o, d, w, m, rr, rs } = crossingFrame(c)
   const gap = 0.0006, rope = ROPE_R
-  const D = rs + rope * (2 * TURNS + 1) + rope * 2 * j + gap, W = rr + rope * (2 * TURNS + 1) + rope * 2 * j + gap
-  const C = 0.82 * (D + W) / 2
+  const rodRad = rr + rope + gap, supRad = rs + rope + gap
+  const last = TURNS - 1, crotch = 0.45 * Math.min(rodRad, supRad) + rope * 1.5 * last
+  // the outermost turn's corner runs from (a, crotch) to (crotch, b): the frap passes round the middle of it
+  const a = rs + rope * (1 + 2 * last) + gap, b = rr + rope * (1 + 2 * last) + gap
+  const out = rope * (2 + 2 * j) * Math.SQRT1_2
+  const cd = (a + crotch) / 2 + out, cw = (b + crotch) / 2 + out
+  const D = cd + out * 0.6, W = cw + out * 0.6
   const at = (du: number, dw: number, dm: number): V3 => add(o, add(mul(d, du), add(mul(w, dw), mul(m, dm))))
-  const under = rs - rope - gap, over = rs + rope + gap
+  const under = rs - rope - gap - rope * 2 * j, over = rs + rope + gap + rope * 2 * j
   const keys: V3[] = [
-    at(D, 0, under), at(C, C, rs), at(0, W, over), at(-C, C, rs),
-    at(-D, 0, under), at(-C, -C, rs), at(0, -W, over), at(C, -C, rs),
+    at(D, 0, under), at(cd, cw, rs), at(0, W, over), at(-cd, cw, rs),
+    at(-D, 0, under), at(-cd, -cw, rs), at(0, -W, over), at(cd, -cw, rs),
   ]
-  // a closed curve through the keys: each span split, then the corners cut
+  // a closed Catmull-Rom curve through the keys
   const pts: PathPt[] = []
-  const per = Math.max(2, Math.round(detail.wrap / 3))
-  for (let k = 0; k < keys.length; k++) {
-    const A = keys[k]!, B = keys[(k + 1) % keys.length]!
-    for (let s = 0; s < per; s++) pts.push({ p: add(A, mul(sub(B, A), s / per)), serve: 0 })
+  const per = Math.max(3, Math.round(detail.wrap / 2))
+  const n = keys.length
+  for (let k = 0; k < n; k++) {
+    const P0 = keys[(k - 1 + n) % n]!, P1 = keys[k]!, P2 = keys[(k + 1) % n]!, P3 = keys[(k + 2) % n]!
+    for (let s = 0; s < per; s++) {
+      const t = s / per, t2 = t * t, t3 = t2 * t
+      const q = [0, 1, 2].map(i => 0.5 * (2 * P1[i]! + (-P0[i]! + P2[i]!) * t + (2 * P0[i]! - 5 * P1[i]! + 4 * P2[i]! - P3[i]!) * t2 + (-P0[i]! + 3 * P1[i]! - 3 * P2[i]! + P3[i]!) * t3)) as V3
+      pts.push({ p: q, serve: 0 })
+    }
   }
-  return chaikin(pts, detail.passes + (detail.wrap >= 10 ? 1 : 0))
+  return pts
 }
 
 /** Corner cutting on a closed path: rounds the turns where one wrap hands over to the next. */
