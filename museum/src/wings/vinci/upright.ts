@@ -2,13 +2,15 @@ import { Vector3 } from 'three/webgpu'
 import type { Pose } from './rail'
 import { RAIL_SHIFT_CEILING } from './rail-projection'
 
-/** THE SHORT PHONE'S WINDOW, on the upright master (v from 0 at the top). On
- * a 390 by 664 or 360 by 640 screen the words start at 58 to 60% of the
- * glass and the trim takes the master's top tenth, so a hero must stand whole
- * between v 0.154 and 0.545 with its middle near 0.34; a hero with a foot on
- * the ground may stand lower, its base at 0.48, its middle at most 0.39. The
- * top keeps 6% of the short phone's height clear over the hero: a hero at
- * the trim's 21 px margin read as pressed against the edge. */
+/** THE SHORT PHONE'S WINDOW, on the upright master (v from 0 at the top). The
+ * trim takes the master's top tenth on a 390 by 664 or 360 by 640 screen, so
+ * a hero stands whole between v 0.154 and 0.545 with its middle near 0.34; a
+ * hero with a foot on the ground may stand lower, its base at 0.48, its
+ * middle at most 0.39. The top keeps 6% of the short phone's height clear
+ * over the hero: a hero at the trim's 21 px margin read as pressed against
+ * the edge. The foot is the older, higher sheet's line: the words now start
+ * at 433 and 401 to 409 CSS px, so a hero whose whole height needs it may
+ * stand to v 0.58 (`foot`) and still keep 21 px over them. */
 const WINDOW = { top: .154, foot: .545, middle: .34, middleLow: .39, base: .48, slack: .05 }
 /** The upright lens may open to hold a tall hero, no wider than this across. */
 const ACROSS_MOST_DEG = 55
@@ -19,14 +21,17 @@ const PITCH_STEP_DEG = .25
  * it: the four corners of its outline on the phone's frame (top left, top
  * right, foot left, foot right) as headings east of north and elevations, in
  * degrees. Read off the upright frames of 23 Oct, a painting to its frame's
- * outer edge, the aerial screw and the grave from their own numbers; a hero
+ * outer edge, the aerial screw, the grave and the two house fronts (arrival,
+ * chamber; the dossier's facades) from their own numbers; a hero
  * stays where it is in the world, so an aim or a lens changed later keeps it,
  * an eye moved does not. `standing`: it has a foot on the ground. `with`: neighbours the frame
  * keeps whole beside the hero. `inset`: how far inside the window the hero
- * stands; a frame read to its outer edge needs the trim's margin exactly. */
+ * stands; a frame read to its outer edge needs the trim's margin exactly.
+ * `foot`: the window's foot for this hero. `middle`: where its middle stands;
+ * the Supper stands higher so the tall phone shows less blank wall over it. */
 type Corners = readonly (readonly [number, number])[]
-const UPRIGHT_HEROES: Readonly<Record<string, { corners: Corners; standing?: true; with?: Corners; inset?: number }>> = {
-  'picture-room': { corners: [[-158.76, 13.26], [-138.86, 10.85], [-158.76, -15.07], [-138.82, -12.37]], inset: .006 },
+const UPRIGHT_HEROES: Readonly<Record<string, { corners: Corners; standing?: true; with?: Corners; inset?: number; foot?: number; middle?: number }>> = {
+  'picture-room': { corners: [[-158.76, 13.26], [-138.86, 10.85], [-158.76, -15.07], [-138.82, -12.37]], inset: .006, foot: .57 },
   'picture-room-lisa': { corners: [[-172.31, 8.89], [172.31, 8.89], [-172.31, -11.8], [172.31, -11.8]] },
   'picture-room-west': { corners: [[170.9, 13.64], [152.47, 12.29], [170.9, -15.65], [152.47, -14.12]] },
   flight: { corners: [[-92.61, 20.28], [-47.2, 20.25], [-92.61, -9.71], [-47.2, -9.69]], standing: true },
@@ -35,13 +40,13 @@ const UPRIGHT_HEROES: Readonly<Record<string, { corners: Corners; standing?: tru
   body: { corners: [[-102.99, 9.79], [-77.24, 9.80], [-103.46, -4.53], [-76.78, -4.53]] },
   'body-valve': { corners: [[-96.42, 26.72], [-83.37, 26.71], [-96.09, 13.06], [-83.71, 13.05]] },
   'line-early': { corners: [[-15.40, -45.29], [26.45, -45.09], [-20.42, -56.54], [31.66, -56.26]] },
-  'supper-wall': { corners: [[-105.90, 20.27], [-58.71, 20.22], [-106.28, -6.13], [-58.33, -6.12]] },
-  arrival: { corners: [[-90.24, 34.58], [-36.76, 34.58], [-86.64, -6.60], [-40.36, -6.60]], standing: true },
+  'supper-wall': { corners: [[-105.90, 20.27], [-58.71, 20.22], [-106.28, -6.13], [-58.33, -6.12]], middle: .30 },
+  arrival: { corners: [[-75.6, 33.72], [-82.98, 19.88], [-63.57, -7.98], [-47.05, 12.75], [-47.05, -3.63]], standing: true },
   courtyard: { corners: [[-45.13, 12.66], [-37.86, 12.67], [-44.81, -4.20], [-38.11, -4.20]], standing: true },
   hall: { corners: [[-139.86, -2.88], [-129.46, -2.94], [-140.61, -13.98], [-129.56, -14.31]], standing: true },
   oratory: { corners: [[-31.37, 24.37], [-6.9, 24.56], [-31.37, -13.73], [-6.9, -13.84]], standing: true },
   study: { corners: [[-60.91, 33.72], [-28.98, 33.44], [-60.91, -6.6], [-28.98, -6.53]], standing: true },
-  chamber: { corners: [[-28.06, 43.21], [23.19, 44.37], [-22.81, -0.30], [18.68, -0.31]], standing: true },
+  chamber: { corners: [[7.74, 43.48], [-10.69, 32.12], [-10.69, .46], [19.67, 22.31], [19.67, .3], [-24.1, 15.07], [-24.1, .2]], standing: true, foot: .58 },
   grave: { corners: [[-66.47, -7.82], [-37.11, -7.83], [-66.47, -15.88], [-37.11, -15.91]], with: [[-58.77, 12.85], [-43.64, 12.83], [-58.77, -2.97], [-43.64, -2.96]] },
 }
 
@@ -67,9 +72,9 @@ function heroBox(pose: Pose, corners: readonly Vector3[]): [number, number, numb
   return [u0, u1, v0, v1]
 }
 /** Where the hero's middle is stood: 0.34, or lower for a small hero on the ground, never past the window's edges. */
-function middleFor(box: readonly number[], standing: boolean, top: number, foot: number): number {
+function middleFor(box: readonly number[], standing: boolean, top: number, foot: number, own = WINDOW.middle): number {
   const height = box[3]! - box[2]!
-  const middle = standing ? Math.min(WINDOW.middleLow, Math.max(WINDOW.middle, WINDOW.base - height / 2)) : WINDOW.middle
+  const middle = standing ? Math.min(WINDOW.middleLow, Math.max(own, WINDOW.base - height / 2)) : own
   return height <= foot - top + 1e-4 ? Math.max(top + height / 2, Math.min(foot - height / 2, middle)) : middle
 }
 
@@ -85,9 +90,9 @@ export function uprightPose(stop: string, pose: Pose): Pose {
   const hero = UPRIGHT_HEROES[stop]
   if (!hero || pose.shift !== undefined) return pose
   const corners = [...hero.corners, ...(hero.with ?? [])].map(direction)
-  const top = WINDOW.top + (hero.inset ?? 0), foot = WINDOW.foot - (hero.inset ?? 0)
+  const top = WINDOW.top + (hero.inset ?? 0), foot = (hero.foot ?? WINDOW.foot) - (hero.inset ?? 0)
   const held = heroBox(pose, corners)
-  if (held && held[2] >= top && held[3] <= foot && Math.abs((held[2] + held[3]) / 2 - WINDOW.middle) <= WINDOW.slack) return pose
+  if (held && held[2] >= top && held[3] <= foot && Math.abs((held[2] + held[3]) / 2 - (hero.middle ?? WINDOW.middle)) <= WINDOW.slack) return pose
   const widest = 2 * Math.atan(Math.tan(ACROSS_MOST_DEG * RAD / 2) / UPRIGHT_ASPECT) / RAD
   const level = heroBox(aimed(pose, 0, pose.fov), corners)
   const toward = level && (level[2] + level[3]) / 2 < WINDOW.middle ? 1 : -1
@@ -100,7 +105,7 @@ export function uprightPose(stop: string, pose: Pose): Pose {
       fov = Math.min(widest, 2 * Math.atan(Math.tan(fov * RAD / 2) * tall) / RAD)
       box = heroBox(aimed(pose, pitch, fov), corners) ?? box
     }
-    const shift = 2 * (middleFor(box, hero.standing === true, top, foot) - (box[2] + box[3]) / 2)
+    const shift = 2 * (middleFor(box, hero.standing === true, top, foot, hero.middle) - (box[2] + box[3]) / 2)
     if (Math.abs(shift) <= RAIL_SHIFT_CEILING || Math.abs(pitch) >= 60)
       return { ...aimed(pose, pitch, fov), shift: Math.max(-RAIL_SHIFT_CEILING, Math.min(RAIL_SHIFT_CEILING, shift)) }
   }

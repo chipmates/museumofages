@@ -155,16 +155,18 @@ function authoredStationPose(id:VinciStationId, narrow:boolean):Pose {
   // 0.86 m off it, out toward the middle of the road. The phone's lens came
   // down from 116 degrees: at that width the top of its frame looked 68
   // degrees above the gaze and nothing but sky can stand there.
-  // The phone turns fifteen degrees up the street and lifts eleven: level at
-  // a hundred degrees, the lower half of its frame was the road, and turned
-  // less far the gate's jamb stood cut at the left edge; 2.5 degrees further
-  // its last sliver leaves that edge. The walnut over the street takes the
-  // sky's corner.
+  // The phone stands two metres further down the road, as far off the wall:
+  // from the desktop's eye the gate's jamb and the gable's left eave stand in
+  // one line, so no turn kept the gable whole without the jamb's sliver, and
+  // the house was taller than the short phone's window at 55 across. Here the
+  // pier stands a sixth of the width in at the left, the gable whole, the far
+  // wing whole at the right. The walnut over the street takes the sky's
+  // corner.
   // The desktop holds the house front as its one hero: at 70 degrees the road
   // took the lower two fifths, so it closes to 54 on the dormer gable and
   // lifts ten degrees, the gate whole at the left and the road a strip under
   // the house. Turned further up the street the gate's jamb left the frame.
-  if(id==='arrival') return narrow?aimedFrom(standing(24.98,-16.13),-61,11,88):aimedFrom(standing(24.98,-16.13),-80,10,54)
+  if(id==='arrival') return narrow?aimedFrom(standing(26.04,-17.82),-59.1,0,96.81):aimedFrom(standing(24.98,-16.13),-80,10,54)
   // The phone keeps its gaze on the door and opens the lens instead: at 70
   // degrees the cone's right half fell between the court corner and the east
   // range's windows and held neither.
@@ -274,11 +276,15 @@ function authoredStationPose(id:VinciStationId, narrow:boolean):Pose {
   // and architecture, and a subject that runs away from the eye is neither.
   // THE BAPTISM'S PHONE TURNS 2.25 DEGREES AWAY FROM THE NEXT PICTURE: the
   // lens that holds its whole frame in the short phone's window brought the
-  // Annunciation's frame in at the right edge.
+  // Annunciation's frame in at the right edge. Its frame stands to the lower
+  // foot (upright.ts) so the lens stays this narrow under the lower top.
   if(id==='picture-room'&&narrow){const pose=collectionView(room!,true);if(pose)return aimedFrom(pose,headingOf(pose)-2.25,0,pose.fov)}
   // THE BACCHUS'S PHONE TURNS ONTO ITS FRAME'S MIDDLE: the room's own aim
-  // stood it right of the frame's middle, the Scapigliata a sliver at the left.
-  if(id==='picture-room-west'&&narrow){const pose=collectionView(room!,true);if(pose)return aimedFrom(pose,headingOf(pose)+4.25,0,pose.fov)}
+  // stood it right of the frame's middle, the Scapigliata a sliver at the
+  // left. Centred, the Scapigliata stands about half out at the left edge:
+  // whole it needs the Bacchus under half the width, out over two thirds,
+  // which the window's height cannot hold.
+  if(id==='picture-room-west'&&narrow){const pose=collectionView(room!,true);if(pose)return aimedFrom(pose,headingOf(pose)+4.9,0,pose.fov)}
   if(room?.startsWith('collection-room-line')||room?.startsWith('collection-room-picture')){const pose=collectionView(room,narrow);if(pose)return pose}
   // THE GRAVE'S ONE HERO IS THE SLAB. From the room's eye the light model's
   // board stood straight over it, two thirds as wide and brighter, and the
