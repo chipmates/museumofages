@@ -1266,9 +1266,6 @@ export function createWing(): WingModule {
     // a night strip under the foot's veil while risen, so the picture's lifted edge never reads through it
     if (rise > 0) wing.dataset['risen'] = ''
     else delete wing.dataset['risen']
-    // from its first rise the picture keeps a layer of its own: Chromium rasters a moved picture again, softer
-    // than its first raster, and the same again once the layer is given up
-    if (rise > 0) wing.dataset['lifted'] = ''
     if (glide && !matchMedia('(prefers-reduced-motion: reduce)').matches) {
       wing.dataset['rising'] = ''
       riseSettles = performance.now() + RISE_MS + 40
@@ -1996,7 +1993,7 @@ export function createWing(): WingModule {
       if (hosts) {
         const wing = hosts.stage.parentElement!
         delete wing.dataset['wing']; delete wing.dataset['film']; delete wing.dataset['cut']; delete wing.dataset['evening']
-        clearTimeout(riseTimer); rise = 0; delete wing.dataset['rising']; delete wing.dataset['risen']; delete wing.dataset['lifted']
+        clearTimeout(riseTimer); rise = 0; delete wing.dataset['rising']; delete wing.dataset['risen']
         delete hosts.labels.dataset['keepsFoot']
         if (labelsHidden !== null) hosts.labels.setAttribute('aria-hidden', labelsHidden)
         hosts.stage.textContent = ''
