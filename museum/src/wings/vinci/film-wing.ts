@@ -120,8 +120,6 @@ const PLATE = 32
 const RISE_MOST = 81 / 844
 /** the air between the hero's foot and the drawer's top */
 const RISE_AIR = 8
-/** the thumb's reach line, as a share of the glass: a mark under it is in reach */
-const REACH = 0.4
 /** the rise settles as the frozen motion table's sheet does */
 const RISE_MS = 320
 
