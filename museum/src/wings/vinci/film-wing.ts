@@ -34,7 +34,7 @@ import { closerAtStop, CLOSER_WORDS } from './closer'
 import type { VitrineOnward } from '../vitrine'
 import { createPictureWords, type PictureWordsLayer } from './picture-words'
 import { createDeskOverview, type DeskOverview, type DeskOverviewCell } from '../overview'
-import { markCut, type PictureMark, type PictureNode, type PictureSource, type PictureState } from '../picture/seam'
+import { markCut, type PictureMark, type PictureNode, type PictureRegion, type PictureSource, type PictureState } from '../picture/seam'
 import wingCss from './wing.css?inline'
 import deskCss from '../desk-chrome.css?inline'
 import deskTypeCss from '../desk-type.css?inline'
@@ -110,6 +110,18 @@ const RING = 2 * Math.PI * 20.5
 const MARK_LIFT = 44
 /** the thumb's reach upright: a control's centre stands at or below 40 % of the glass */
 const REACH = 0.4
+/** THE DRAWER'S PLATE, upright: the way on through a drawer taller than its window, and back to its first sentence */
+const READ_ON = { en: 'Read on', de: 'Weiterlesen' }
+const BACK_TO_TOP = { en: 'Back to top', de: 'Zum Anfang' }
+/** the window's last 48 px while rows wait below it: a 24 px fade over the 24 px plate */
+const PAGE_FOOT = 48
+const PLATE = 24
+/** the picture's rise while the drawer stands: at most the first stop's 81 px at 844, as a share of the glass */
+const RISE_MOST = 81 / 844
+/** the air between the hero's foot and the drawer's top */
+const RISE_AIR = 8
+/** the rise settles as the frozen motion table's sheet does */
+const RISE_MS = 320
 
 /** The release the address names (`?film=<name>`), else the build's own, under the origin's `/film/`. */
 export function filmReleaseBase(): string {
@@ -395,11 +407,13 @@ export function createWing(): WingModule {
   /** the phone's picture is sized once, to the large viewport */
   let tall: HTMLDivElement | undefined
   let cycleLayer: HTMLDivElement | undefined
+  /** how far the upright picture stands risen while the drawer stands (paintRise) */
+  let rise = 0
   function box() {
     if (form === 'cinema') return { left: 0, top: 0, width: innerWidth, height: innerHeight }
     if (wide) return { left: 0, top: 0, width: innerWidth, height: doorStanding || eveningFull ? innerHeight : deskStageHeight() }
     const height = Math.max(innerHeight, tall?.getBoundingClientRect().height ?? 0)
-    return { left: 0, top: 0, width: innerWidth, height }
+    return { left: 0, top: -rise, width: innerWidth, height }
   }
 
   /* ---- the dip's words: the wing's own chapter card ---- */
@@ -466,7 +480,7 @@ export function createWing(): WingModule {
     if (!hosts || !picture) return
     const node = here()
     const b = picture.box()
-    const key = `${node}|${lang()}|${b.width}x${b.height}|${look?.id ?? ''}|${drawerOpen}|${lookCard}`
+    const key = `${node}|${lang()}|${b.width}x${b.height}|${b.top}|${look?.id ?? ''}|${drawerOpen}|${lookCard}`
     if (key === marksAt) return
     marksAt = key
     clearMarks()
@@ -689,7 +703,7 @@ export function createWing(): WingModule {
     if (!phone) return
     phone.root.dataset['look'] = String(down)
     paintBackSeat()
-    if (down && drawerOpen) setDrawer(false)
+    if (down && drawerOpen) setDrawer(false, false)
     if (down) requestAnimationFrame(nameLookDown)
     paintGold()
   }
@@ -1012,11 +1026,14 @@ export function createWing(): WingModule {
   /* ---- the phone's graded box ---- */
   let phone: {
     root: HTMLElement; name: HTMLElement; line: HTMLElement; drawer: HTMLElement; keys: HTMLElement
+    read: HTMLElement; space: HTMLElement; page: HTMLElement; pageKey: HTMLButtonElement
     more: HTMLButtonElement; from: HTMLButtonElement; count: HTMLButtonElement; closer: HTMLButtonElement
     back: HTMLButtonElement; down: HTMLButtonElement; book: HTMLButtonElement; earlier: HTMLButtonElement; talk: HTMLButtonElement; gold: HTMLButtonElement; goldName: HTMLElement; ringLine: SVGCircleElement
     goldPath: SVGPathElement
   } | undefined
   let drawerOpen = false
+  /** the stop, language and form the drawer's sentences were laid for */
+  let drawn = ''
   /* THE ROOM'S LIST ON THE PHONE: its count stands in the key row at rest,
      between "Mehr lesen" and the stop's number, as the desktop's band stands
      it beside "Mehr lesen"; the record takes the drawer's foot, one step
@@ -1031,6 +1048,32 @@ export function createWing(): WingModule {
     drawer.id = 'film-drawer'
     setRegister(drawer, 'drawer')
     drawer.hidden = true
+    // upright the sentences stand in a window of their own, which pages (paintPage)
+    const read = make('div', 'film-read')
+    read.id = 'film-read'
+    const space = make('div', 'film-read-space')
+    space.setAttribute('aria-hidden', 'true')
+    const page = make('div', 'film-page')
+    const pageKey = make('button', 'film-page-key')
+    pageKey.type = 'button'
+    pageKey.setAttribute('aria-controls', read.id)
+    page.append(pageKey)
+    pageKey.addEventListener('click', () => turnPage())
+    let pageFrame = 0
+    read.addEventListener('scroll', () => { pageFrame ||= requestAnimationFrame(() => { pageFrame = 0; paintPage() }) }, { passive: true, signal })
+    // a finger scrolls the window; a swipe down that starts on its first rows folds the drawer, as on the box
+    let readFrom: { x: number; y: number } | null = null
+    read.addEventListener('touchstart', e => {
+      const t = e.touches[0]
+      readFrom = e.touches.length === 1 && t && read.scrollTop <= 0 ? { x: t.clientX, y: t.clientY } : null
+    }, { passive: true, signal })
+    read.addEventListener('touchend', e => {
+      const t = e.changedTouches[0], was = readFrom
+      readFrom = null
+      if (!was || !t || !drawerOpen) return
+      const dy = t.clientY - was.y, dx = t.clientX - was.x
+      if (dy > 24 && dy > Math.abs(dx) * 1.5) setDrawer(false)
+    }, { passive: true, signal })
     const keys = make('div', 'film-keys')
     const more = make('button', 'film-key film-more')
     more.type = 'button'
@@ -1106,9 +1149,9 @@ export function createWing(): WingModule {
     book.addEventListener('click', () => document.getElementById('rail-instruments')?.click())
     talk.addEventListener('click', () => { endWith('talk') })
     gold.addEventListener('click', () => pressOn())
-    // a swipe up raises the words, a swipe down or a tap on the picture folds them
-    let fromX = 0, fromY = 0, held = false
-    root.addEventListener('pointerdown', e => { held = true; fromX = e.clientX; fromY = e.clientY }, { signal })
+    // a swipe up raises the words, a swipe down or a tap on the picture folds them; a drag in a scrolled window scrolls it
+    let fromX = 0, fromY = 0, held = false, scrolled = false
+    root.addEventListener('pointerdown', e => { held = true; fromX = e.clientX; fromY = e.clientY; scrolled = read.contains(e.target as Node) && read.scrollTop > 0 }, { signal })
     root.addEventListener('pointerup', e => {
       if (!held) return
       held = false
@@ -1116,11 +1159,12 @@ export function createWing(): WingModule {
       // sideways in a close look it steps the set, as the foot row's two ways do
       if (look?.id && Math.abs(dx) > 40 && Math.abs(dx) > Math.abs(dy) * 1.5) { look.ways()?.step(dx < 0 ? 1 : -1); return }
       if (dy < -24 && !drawerOpen) setDrawer(true)
-      else if (dy > 24 && drawerOpen) setDrawer(false)
+      else if (dy > 24 && drawerOpen && !scrolled) setDrawer(false)
     }, { signal })
-    phone = { root, name, line, drawer, keys, more, from, count, closer, back, down, book, earlier, talk, gold, goldName, ringLine, goldPath: goldIcon.querySelector('path')! }
+    phone = { root, name, line, drawer, keys, read, space, page, pageKey, more, from, count, closer, back, down, book, earlier, talk, gold, goldName, ringLine, goldPath: goldIcon.querySelector('path')! }
   }
-  function setDrawer(open: boolean): void {
+  /** the words raised or folded; `glide`: the picture's rise moves with them (a visitor's own press), else it stands at once */
+  function setDrawer(open: boolean, glide = true): void {
     if (!phone) return
     const stop = deskStoryStop(LIFE[card]!.id)
     drawerOpen = open && Boolean(stop?.drawer)
@@ -1128,8 +1172,106 @@ export function createWing(): WingModule {
     phone.drawer.hidden = !drawerOpen
     phone.line.hidden = drawerOpen
     phone.more.setAttribute('aria-expanded', String(drawerOpen))
+    // laid again on every press, so a drawer opens at its first sentence and a folded one holds nothing
+    drawn = '-'
     paintPhone()
     marksAt = ''
+    paintRise(glide)
+  }
+  /* THE DRAWER'S WINDOW PAGES, upright. The drawer stands as tall as its text
+     up to its top 28 px under the reach line (film-wing.css); a longer text
+     scrolls in the window, which runs down to the record's rule. While rows
+     wait below, the window's foot is a fade over a plate whose key brings the
+     first row not wholly shown to the window's top; once the last sentence
+     shows, the key brings the first back. */
+  function readRows(): { top: number; bottom: number }[] {
+    const rows: { top: number; bottom: number }[] = []
+    for (const p of phone?.read.querySelectorAll<HTMLElement>('p') ?? []) {
+      const lh = parseFloat(getComputedStyle(p).lineHeight) || 26
+      for (let i = 0, n = Math.max(1, Math.round(p.offsetHeight / lh)); i < n; i++) rows.push({ top: p.offsetTop + i * lh, bottom: p.offsetTop + (i + 1) * lh })
+    }
+    return rows
+  }
+  /** whether the window pages, read with its plate down so the answer never feeds itself */
+  function measurePages(): void {
+    if (!phone) return
+    const { drawer, read } = phone
+    if (form !== 'upright' || !drawerOpen || !read.isConnected) { delete drawer.dataset['pages']; delete drawer.dataset['end']; return }
+    drawer.dataset['pages'] = 'false'
+    drawer.dataset['pages'] = String(read.scrollHeight > read.clientHeight + 1)
+    paintPage()
+  }
+  function paintPage(): void {
+    if (!phone || phone.drawer.dataset['pages'] !== 'true') return
+    const { drawer, read, pageKey } = phone
+    const last = readRows().pop()
+    const end = !last || last.bottom - read.scrollTop <= read.clientHeight - PLATE + 0.5
+    drawer.dataset['end'] = String(end)
+    const to = end ? 'top' : 'on'
+    if (pageKey.dataset['to'] === to && pageKey.dataset['lang'] === lang()) return
+    pageKey.dataset['to'] = to
+    pageKey.dataset['lang'] = lang()
+    pageKey.replaceChildren(make('span', 'film-page-word', say(end ? BACK_TO_TOP : READ_ON)), icon(end ? ARROW_UP : ARROW_DOWN))
+  }
+  function turnPage(): void {
+    if (!phone) return
+    const { read, space, pageKey } = phone
+    const behavior = matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth'
+    if (pageKey.dataset['to'] === 'top') { read.scrollTo({ top: 0, behavior }); return }
+    const next = readRows().find(r => r.bottom - read.scrollTop > read.clientHeight - PAGE_FOOT + 0.5)
+    if (!next) return
+    // room under the last sentence, so the row can stand at the window's top
+    space.style.height = `${Math.max(0, Math.ceil(next.top + read.clientHeight - (read.scrollHeight - space.offsetHeight)))}px`
+    read.scrollTo({ top: next.top, behavior })
+  }
+  /* THE PICTURE RISES WHILE THE DRAWER STANDS, upright: no render and no
+     camera, the film's picture moves up in the page until the stop's hero
+     stands RISE_AIR over the drawer's top, by no more than RISE_MOST of the
+     glass. The hero is the stop's own work where the release names one, else
+     the largest of its upright regions in the stop's own set, else the
+     largest; no region, no rise. It settles with the visitor's press, returns
+     as the drawer folds, and stands at once under Reduce Motion or when the
+     eye walks on. The marks and the words wait for it to settle. */
+  let riseTimer = 0
+  let riseSettles = 0
+  const areaOf = (r: PictureRegion): number => Math.abs(r.points.reduce((a, [x, y], i, p) => { const [nx, ny] = p[(i + 1) % p.length]!; return a + x * ny - nx * y }, 0)) / 2
+  function heroOf(node: PictureNode): PictureRegion | null {
+    const regions = picture?.regions(node) ?? []
+    const named = release?.nodes[node]?.exhibit
+    const own = named ? regions.find(r => r.id === named) : undefined
+    if (own) return own
+    const station = release?.nodes[node]?.station ?? ''
+    const set = new Set(release?.sets?.[station === 'picture-room-west' ? 'picture-room' : station] ?? [])
+    const pool = regions.some(r => set.has(r.id)) ? regions.filter(r => set.has(r.id)) : regions
+    return pool.reduce<PictureRegion | null>((best, r) => (!best || areaOf(r) > areaOf(best) ? r : best), null)
+  }
+  function riseWanted(): number {
+    if (!picture || !phone || form !== 'upright' || !drawerOpen || look?.id || picture.state().kind !== 'rest') return 0
+    const hero = heroOf(here())
+    if (!hero?.points.length) return 0
+    const foot = Math.max(...hero.points.map(([, y]) => y))
+    const top = phone.root.getBoundingClientRect().top
+    return Math.round(Math.max(0, Math.min(foot - (top - RISE_AIR), RISE_MOST * innerHeight)))
+  }
+  function paintRise(glide: boolean): void {
+    const want = riseWanted()
+    const wing = hosts?.stage.parentElement
+    if (want === rise || !wing) return
+    rise = want
+    clearTimeout(riseTimer)
+    if (glide && !matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      wing.dataset['rising'] = ''
+      riseSettles = performance.now() + RISE_MS + 40
+      riseTimer = window.setTimeout(() => { delete wing.dataset['rising']; marksAt = '' }, RISE_MS + 40)
+    } else {
+      delete wing.dataset['rising']
+      riseSettles = 0
+    }
+    clearMarks()
+    words?.hide()
+    wordsAt = ''
+    marksAt = ''
+    picture?.update()
   }
   function paintPhone(): void {
     if (!phone || !hosts) return
@@ -1139,9 +1281,21 @@ export function createWing(): WingModule {
     phone.name.append(deskMark(stop?.certainty ?? 'reconstructed'), make('span', 'film-chapter', text(stop?.chapter ?? LIFE[card]!.name)))
     if (stop?.age && !atBirth(stop.age)) phone.name.append(make('span', 'film-clock', form === 'upright' ? bareAge(text(stop.age)) : text(stop.age)))
     phone.line.textContent = stop ? keepTogether(say(stop.line)) : ''
-    phone.drawer.textContent = ''
-    if (drawerOpen && stop?.drawer) {
-      for (const sentence of sentences(text(stop.drawer), lang())) phone.drawer.append(make('p', '', keepTogether(sentence)))
+    // the sentences are laid again only for another stop, language or form, so a paged window keeps its place
+    const reading = drawerOpen && stop?.drawer ? `${id}|${lang()}|${form}` : ''
+    const laid = reading !== drawn
+    if (laid) {
+      drawn = reading
+      phone.drawer.textContent = ''
+      if (reading && stop?.drawer) {
+        const rows = sentences(text(stop.drawer), lang()).map(sentence => make('p', '', keepTogether(sentence)))
+        if (form === 'upright') {
+          phone.space.style.height = ''
+          phone.read.replaceChildren(...rows, phone.space, phone.page)
+          phone.drawer.append(phone.read)
+          phone.read.scrollTop = 0
+        } else phone.drawer.append(...rows)
+      }
     }
     phone.more.textContent = ''
     phone.more.append(document.createTextNode(say(drawerOpen ? LOBBY_TEXT.close : deskControl('shared', 'read_more'))), icon(drawerOpen ? ARROW_DOWN : ARROW_UP))
@@ -1155,6 +1309,7 @@ export function createWing(): WingModule {
       if (drawerOpen) phone.drawer.append(phone.from)
       else phone.from.remove()
     } else if (phone.from.parentElement !== phone.keys) phone.keys.insertBefore(phone.from, phone.count)
+    if (laid) measurePages()
     phoneList?.paint()
     const near = closerHere()
     phone.closer.hidden = !near
@@ -1308,6 +1463,7 @@ export function createWing(): WingModule {
     paintPhone()
     paintSources()
     marksAt = ''
+    paintRise(false)
   }
   function ahead(): void {
     if (above) { picture?.ahead([stopNode(LIFE[0]!.id)]); return }
@@ -1351,7 +1507,7 @@ export function createWing(): WingModule {
     if (!hosts || !evening?.here()) return false
     const wing = hosts.stage.parentElement!
     eveningOn = true
-    if (drawerOpen) setDrawer(false)
+    if (drawerOpen) setDrawer(false, false)
     clearMarks()
     words?.hide(); wordsAt = ''
     wing.dataset['evening'] = ''
@@ -1441,6 +1597,7 @@ export function createWing(): WingModule {
     marksAt = ''; wordsAt = ''
     look?.layout()
     paintPhone()
+    paintRise(false)
     walk?.paint()
     // the list's lead and the Menu's fade are the upright form's own
     placeList()
@@ -1510,7 +1667,7 @@ export function createWing(): WingModule {
     picture.element.after(cycleLayer)
     words?.dispose()
     words = createPictureWords(layer => cycleLayer!.after(layer))
-    picture.on('state', state => { paintDip(state); if (state.kind === 'rest') marksAt = ''; else h.stage.style.cursor = ''; walkState(state) })
+    picture.on('state', state => { paintDip(state); if (state.kind === 'rest') marksAt = ''; else h.stage.style.cursor = ''; walkState(state); paintRise(false) })
     picture.on('rest', state => {
       if (state.kind !== 'rest') return
       // a work of a wall belongs to the story stop before it along the wall
@@ -1699,7 +1856,7 @@ export function createWing(): WingModule {
     h.stage.addEventListener('pointermove', e => { h.stage.style.cursor = pictureAt(e) ? 'pointer' : '' }, { signal })
     // a press on the picture folds the phone's words back to the one line
     h.stage.addEventListener('click', e => { if (drawerOpen && !(e.target as Element).closest('.film-box')) setDrawer(false) }, { signal })
-    addEventListener('resize', () => { marksAt = ''; look?.layout() }, { signal })
+    addEventListener('resize', () => { marksAt = ''; look?.layout(); measurePages(); paintRise(false) }, { signal })
     /* A PHONE TURNED KEEPS ITS PLACE: between upright and sideways the same
        controls stand in the other form and the picture is picked again in the
        other framing, the stop and an open look kept. A window that crosses to
@@ -1748,7 +1905,7 @@ export function createWing(): WingModule {
       if (!picture || !carried(index)) return
       lookLeaving = true
       try { look?.close() } finally { lookLeaving = false }
-      if (drawerOpen) setDrawer(false)
+      if (drawerOpen) setDrawer(false, false)
       // ONLY THE NEXT AND THE PREVIOUS STOP ARE WALKED: a press on the plan
       // or on a far stop fades there, as the live wing's does
       above = false
@@ -1800,7 +1957,7 @@ export function createWing(): WingModule {
       if (answering) setWalkingLeg(answering.dot, s.kind === 'walk' ? s.share : 0)
       desk?.update()
       const courtWalk = inGraveCourt(s) && !eveningOn
-      if (s.kind === 'rest' && performance.now() > doorLeaving && !eveningOn) { paintMarks(); paintWords() }
+      if (s.kind === 'rest' && performance.now() > doorLeaving && performance.now() > riseSettles && !eveningOn) { paintMarks(); paintWords() }
       else if (s.kind === 'wait' && dots.length) clearMarks()
       if (courtWalk) paintWords(true)
       else if (s.kind !== 'rest' && wordsAt) { words?.hide(); wordsAt = '' }

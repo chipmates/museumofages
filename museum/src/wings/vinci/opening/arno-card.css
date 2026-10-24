@@ -174,6 +174,91 @@
 .arno-lang-list a[aria-current] { color: var(--na-gold); }
 .arno-lang-list a:focus-visible { outline: 1px solid var(--na-gold); outline-offset: -4px; }
 
+/* THE LIST AS A SHEET, upright (arno-lang.ts): it rises from the foot over the
+   card under a scrim, its word and a close at its head, one column of full
+   rows, every one in the thumb's reach. Elsewhere the sheet is no box and the
+   list stands where it always stood. */
+.arno-lang-sheet { display: contents; }
+.arno-lang-sheet[hidden] { display: none; }
+.arno-lang-head, .arno-lang-scrim { display: none; }
+.arno-lang-row[data-where='sheet'] .arno-lang-scrim:not([hidden]) {
+  display: block;
+  position: fixed;
+  inset: 0;
+  z-index: 1;
+  background: color-mix(in srgb, var(--ui-ground-deep) 65%, transparent);
+  animation: arno-lang-scrim 200ms var(--arno-ease) both;
+}
+.arno-lang-row[data-where='sheet'] .arno-lang-sheet:not([hidden]) {
+  display: flex;
+  flex-direction: column;
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 2;
+  max-height: calc(100dvh - 8px);
+  padding-bottom: calc(16px + env(safe-area-inset-bottom));
+  border-radius: var(--ui-r-sheet) var(--ui-r-sheet) 0 0;
+  background: var(--ui-ground-sheet);
+  box-shadow: 0 -1px 0 var(--ui-line-strong);
+  animation: arno-lang-rise 260ms var(--arno-ease) both;
+}
+.arno-lang-row[data-where='sheet'] .arno-lang-head {
+  display: flex;
+  flex: none;
+  align-items: center;
+  gap: 12px;
+  height: 56px;
+  padding: 0 12px 0 16px;
+  box-shadow: inset 0 -1px 0 var(--ui-line);
+}
+.arno-lang-row[data-where='sheet'] .arno-lang-title { flex: 1; margin: 0; font: 400 1.1875rem/24px var(--serif); color: var(--ui-text); }
+.arno-lang-row[data-where='sheet'] .arno-lang-close {
+  position: relative;
+  flex: none;
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  border: 0;
+  border-radius: var(--ui-r-seat-phone);
+  background: var(--ui-ground-raised);
+  box-shadow: inset 0 0 0 1px var(--ui-line-strong);
+  color: var(--ui-text);
+  cursor: pointer;
+}
+.arno-lang-row[data-where='sheet'] .arno-lang-close::before {
+  content: '';
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 10px;
+  height: 10px;
+  translate: -50% -50%;
+  background:
+    linear-gradient(45deg, transparent calc(50% - .625px), currentColor calc(50% - .625px) calc(50% + .625px), transparent calc(50% + .625px)),
+    linear-gradient(-45deg, transparent calc(50% - .625px), currentColor calc(50% - .625px) calc(50% + .625px), transparent calc(50% + .625px));
+}
+.arno-lang-row[data-where='sheet'] .arno-lang-close:focus-visible { outline: 1px solid var(--na-gold); outline-offset: 2px; }
+.arno-lang-row[data-where='sheet'] .arno-lang-list {
+  position: static;
+  display: block;
+  min-width: 0;
+  max-height: none;
+  padding: 0;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  border-radius: 0;
+  background: none;
+  box-shadow: none;
+}
+.arno-lang-row[data-where='sheet'] .arno-lang-list a { height: 44px; padding: 0 16px; }
+@keyframes arno-lang-rise { from { translate: 0 100%; } }
+@keyframes arno-lang-scrim { from { opacity: 0; } }
+@media (prefers-reduced-motion: reduce) {
+  .arno-lang-row[data-where='sheet'] :is(.arno-lang-sheet, .arno-lang-scrim) { animation: none; }
+}
+
 /* THE CREDIT IS A WORD, with a hairline under it; it opens the label. Its
    words flow inline, so a credit that wraps keeps its mark beside the last
    word, and the padding makes a 44 px target of a 20 px row. */
@@ -299,6 +384,11 @@
      takes a little of that air for the gap under it */
   .arno-card[data-language-row='airy'] .arno-lang-row { margin: -27px 0 7px; }
   .arno-card[data-label='open'] .arno-lang-row { display: none; }
+  /* the switch is 44 px to the hand and its words stand where they stood: the
+     target grows upward and ends where the sentence's box begins (the row
+     stands 2 px over the sentence, 7 px in the airy row) */
+  .arno-lang { padding: 20px 12px 4px 0; margin-top: -20px; }
+  .arno-card[data-language-row='airy'] .arno-lang { padding: 15px 12px 9px 0; margin-top: -10px; }
   .arno-line { min-height: 0; font: 400 1.375rem/29px var(--serif); }
   .arno-credit { margin-top: 4px; }
   /* the share of the screen's height lands between two pixels: a label that fits by less than one must not scroll */
