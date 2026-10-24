@@ -120,6 +120,8 @@ const PLATE = 32
 const RISE_MOST = 81 / 844
 /** the air between the hero's foot and the drawer's top */
 const RISE_AIR = 8
+/** the thumb's reach line, as a share of the glass: a mark under it is in reach */
+const REACH = 0.4
 /** the rise settles as the frozen motion table's sheet does */
 const RISE_MS = 320
 
@@ -1229,9 +1231,10 @@ export function createWing(): WingModule {
      stands RISE_AIR over the drawer's top, by no more than RISE_MOST of the
      glass. The hero is the stop's own work where the release names one, else
      the largest of its upright regions in the stop's own set, else the
-     largest; no region, no rise. It settles with the visitor's press, returns
-     as the drawer folds, and stands at once under Reduce Motion or when the
-     eye walks on. The marks and the words wait for it to settle. */
+     largest; no region, no rise. A mark in the thumb's reach stays in it.
+     It settles with the visitor's press, returns as the drawer folds, and
+     stands at once under Reduce Motion or when the eye walks on. The marks
+     and the words wait for it to settle. */
   let riseTimer = 0
   let riseSettles = 0
   const areaOf = (r: PictureRegion): number => Math.abs(r.points.reduce((a, [x, y], i, p) => { const [nx, ny] = p[(i + 1) % p.length]!; return a + x * ny - nx * y }, 0)) / 2
@@ -1251,7 +1254,10 @@ export function createWing(): WingModule {
     if (!hero?.points.length) return 0
     const foot = Math.max(...hero.points.map(([, y]) => y))
     const top = phone.root.getBoundingClientRect().top
-    return Math.round(Math.max(0, Math.min(foot - (top - RISE_AIR), RISE_MOST * innerHeight)))
+    // the phone's law keeps every control in reach: no mark that stands under the reach line is lifted over it
+    const reach = REACH * innerHeight
+    const kept = picture.marks(here(), lang(), true).reduce((most, m) => (m.y >= reach ? Math.min(most, Math.floor(m.y - reach)) : most), Infinity)
+    return Math.max(0, Math.min(Math.ceil(foot - (top - RISE_AIR) - 0.01), Math.round(RISE_MOST * innerHeight), kept))
   }
   function paintRise(glide: boolean): void {
     const want = riseWanted()
