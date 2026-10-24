@@ -240,16 +240,17 @@ export function growPole(sheet: Sheet, p: Pole, detail: PoleDetail, shading?: Sh
   // branch stubs: short stems out of the knots, cut off square
   for (const st of p.stubs) {
     const { from, dir, t0, t1 } = stubAxis(p, st)
-    twig(sheet, add([x0, 0, 0], from), dir, t0, t1, st.r, st.r * 0.8, detail.twig, tone * 0.97, seed, shadeOf)
+    twig(sheet, add([x0, 0, 0], from), dir, t0, t1, st.r, st.r * 0.65, detail.twig, tone * 0.97, seed, shadeOf, 0.55)
   }
   // a strut's tines out of its crotch
   for (const t of p.tines) {
     const { from, dir } = tineAxis(p, t)
-    twig(sheet, add([x0, 0, 0], from), dir, -t.back, t.len, t.r, t.r * 0.7, detail.twig + 2, tone, seed, shadeOf)
+    twig(sheet, add([x0, 0, 0], from), dir, -t.back, t.len, t.r, t.r * 0.7, detail.twig + 2, tone, seed, shadeOf, 1)
   }
 }
-/** a short round stem from `from` along `dir`, between t0 and t1, its far end cut square: a stub or a tine */
-function twig(sheet: Sheet, from: V3, dir: V3, t0: number, t1: number, r0: number, r1: number, around: number, tone: number, seed: number, shadeOf: (q: V3) => [number, number]): void {
+/** a short round stem from `from` along `dir`, between t0 and t1, its far end cut: a stub (an old cut, weathered grey:
+ * `fresh` under 1) or a tine */
+function twig(sheet: Sheet, from: V3, dir: V3, t0: number, t1: number, r0: number, r1: number, around: number, tone: number, seed: number, shadeOf: (q: V3) => [number, number], fresh: number): void {
   const helper: V3 = Math.abs(dir[1]) < 0.9 ? [0, 1, 0] : [1, 0, 0]
   const e1 = norm(cross(dir, helper)), e2 = cross(dir, e1)
   const rings = 4
@@ -269,12 +270,12 @@ function twig(sheet: Sheet, from: V3, dir: V3, t0: number, t1: number, r0: numbe
   }
   // the cut: the end grain square across
   const tip = add(from, mul(dir, t1)), scale = 0.075 / r1
-  const c = sheet.vertex(tip, dir, 0, 0, [tone, 1, 1], seed, [t1, 0, 0], shadeOf(tip))
+  const c = sheet.vertex(tip, dir, 0, 0, [tone, 1, fresh], seed, [t1, 0, 0], shadeOf(tip))
   const rim: number[] = []
   for (let k = 0; k < around; k++) {
     const a = (k / around) * TAU, y = r1 * Math.cos(a), z = r1 * Math.sin(a)
     const q = add(tip, add(mul(e1, y), mul(e2, z)))
-    rim.push(sheet.vertex(q, dir, y * scale, z * scale, [tone, 1, 1], seed, [t1, y, z], shadeOf(q)))
+    rim.push(sheet.vertex(q, dir, y * scale, z * scale, [tone, 1, fresh], seed, [t1, y, z], shadeOf(q)))
   }
   for (let k = 0; k < around; k++) sheet.tri(c, rim[k]!, rim[(k + 1) % around]!)
 }

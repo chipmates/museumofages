@@ -335,8 +335,8 @@ function dress(p: Pole): void {
   spots.forEach((s, i) => {
     const ang = side + 0.45 * (h(70 + i) - 0.5)
     const stubbed = i < 2
-    p.knots.push({ s, ang, amp: stubbed ? 0.011 + 0.006 * h(80 + i) : 0.007 + 0.004 * h(80 + i), w: 0.045 + 0.02 * h(90 + i) })
-    if (stubbed) p.stubs.push({ s: s - tipward * 0.012, ang, lean: tipward * (0.5 + 0.25 * h(100 + i)), len: 0.035 + 0.04 * h(110 + i), r: 0.014 + 0.007 * h(120 + i) })
+    p.knots.push({ s, ang, amp: stubbed ? 0.015 + 0.007 * h(80 + i) : 0.008 + 0.004 * h(80 + i), w: 0.055 + 0.02 * h(90 + i) })
+    if (stubbed) p.stubs.push({ s: s - tipward * 0.012, ang, lean: tipward * (0.55 + 0.25 * h(100 + i)), len: 0.025 + 0.035 * h(110 + i), r: 0.013 + 0.006 * h(120 + i) })
   })
   // a scar on a side, healed over
   for (let i = 0; i < 30; i++) {

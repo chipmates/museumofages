@@ -90,9 +90,9 @@ export async function bridgeSurfaces(stack: Stack): Promise<BridgeSurfaces> {
     const theta = atan(C.z, C.y)
     const warp = mx_noise_float(vec3(C.x.mul(1.1).add(o), C.y.mul(5), C.z.mul(5))).mul(3.2).add(mx_noise_float(vec3(C.x.mul(3.4), C.y.mul(13), C.z.mul(13)).add(3.1)).mul(1.1))
     const across = cos(theta.mul(12).add(warp).add(C.x.mul(1.3)))
-    const opening = smoothstep(-0.45, 0.35, mx_noise_float(vec3(C.x.mul(2.6).add(o), C.y.mul(9), C.z.mul(9)).add(5.5)))
+    const opening = smoothstep(-0.45, 0.35, mx_noise_float(vec3(C.x.mul(4.2).add(o), C.y.mul(9), C.z.mul(9)).add(5.5)))
     // gone before a pixel spans a quarter of a plate round the stem
-    const ridgeFade = float(1).sub(smoothstep(0.007, 0.014, roundFw))
+    const ridgeFade = float(1).sub(smoothstep(0.0035, 0.008, roundFw))
     const fissure = smoothstep(-0.35, -0.85, across).mul(opening).mul(ridgeFade)
     const shoulder = smoothstep(0.15, -0.5, across).mul(opening).mul(ridgeFade)
     const ridgeTop = smoothstep(0.3, 0.95, across).mul(ridgeFade)
@@ -103,7 +103,7 @@ export async function bridgeSurfaces(stack: Stack): Promise<BridgeSurfaces> {
     const lent = smoothstep(0.72, 0.86, mx_noise_float(vec3(C.x.mul(55), C.y.mul(36), C.z.mul(36)))).mul(float(1).sub(smoothstep(0.15, 0.5, fwidth(C.x.mul(55)).add(roundFw.mul(36))))).mul(float(1).sub(fissure))
     const mottle = mx_noise_float(vec3(C.x.mul(1.6).add(o), C.y.mul(8), C.z.mul(8))).mul(0.5).add(0.5)
     const lichen = smoothstep(0.6, 0.8, mx_noise_float(vec3(C.x.mul(1.2).add(o), C.y.mul(14), C.z.mul(14)).add(2.7)).mul(0.5).add(0.5))
-    const plateTop = mx(mx(lin('#4a433b'), lin('#69635a'), plate), lin('#57493b'), mottle.mul(0.35)).mul(ridgeTop.mul(0.16).add(0.92))
+    const plateTop = mx(mx(lin('#544c43'), lin('#777066'), plate), lin('#5f5042'), mottle.mul(0.35)).mul(ridgeTop.mul(0.16).add(0.92))
     const barkCol = mx(mx(plateTop, lin('#7f7d6d'), lichen.mul(0.32)).mul(micro.mul(microFade).mul(0.3).add(1)), lin('#2b231c'), fissure.mul(0.7))
       .mul(float(1).sub(shoulder.mul(0.18))).mul(float(1).add(lent.mul(0.18)))
     // the ridges' own scaly skin, finer than the ridges and long along the stem

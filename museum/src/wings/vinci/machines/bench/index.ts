@@ -642,7 +642,7 @@ export function createBench(stack: Stack, onExit: () => void) {
     // the bridge on its bank: the low sun from the near bank's side is its key, stronger, the sky's share on its own
     // surfaces cut so each pole turns from lit to shade across its round; the bank's earth in the bounce; and one broad
     // lamp high over the far bank's back, falling off with distance, for the tops of the poles and their far edges
-    'bridge-of-poles': { lux: 300, ambient: .55, ground: '#5a5040', fill: { closed: .5, section: .5 }, lamps: { closed: [
+    'bridge-of-poles': { lux: 360, ambient: .55, ground: '#5a5040', fill: { closed: .5, section: .5 }, lamps: { closed: [
       { at: [4, 10, -6], aim: [0, 1.4, 0], lux: 130, kelvin: 4300, angle: .6, penumbra: .8, decay: 2 },
     ], section: [
       { at: [4, 10, -6], aim: [0, 1.4, 0], lux: 130, kelvin: 4300, angle: .6, penumbra: .8, decay: 2 },
