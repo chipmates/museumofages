@@ -120,7 +120,7 @@ export function growPole(sheet: Sheet, p: Pole, detail: PoleDetail, shading?: Sh
   const normalAt = (s: number, a: number, bark: boolean): V3 => {
     const h = 1e-4
     const ds = sub(point(s + h, a, bark), point(s - h, a, bark)), da = sub(point(s, a + h, bark), point(s, a - h, bark))
-    return norm(cross(ds, da))
+    return norm(cross(da, ds))
   }
   const angle = (k: number): number => (k / n) * TAU
   const girthV = TAU * R0
