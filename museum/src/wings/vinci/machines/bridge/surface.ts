@@ -93,7 +93,7 @@ export async function bridgeSurfaces(stack: Stack): Promise<BridgeSurfaces> {
     const opening = smoothstep(-0.45, 0.35, mx_noise_float(vec3(C.x.mul(4.2).add(o), C.y.mul(9), C.z.mul(9)).add(5.5)))
     // gone before a pixel spans a quarter of a plate round the stem
     const ridgeFade = float(1).sub(smoothstep(0.0035, 0.008, roundFw))
-    const fissure = smoothstep(-0.35, -0.85, across).mul(opening).mul(ridgeFade)
+    const fissure = smoothstep(-0.2, -0.95, across).mul(opening).mul(ridgeFade)
     const shoulder = smoothstep(0.15, -0.5, across).mul(opening).mul(ridgeFade)
     const ridgeTop = smoothstep(0.3, 0.95, across).mul(ridgeFade)
     const microQ = vec3(C.x.mul(40), C.y.mul(190), C.z.mul(190))
@@ -104,12 +104,12 @@ export async function bridgeSurfaces(stack: Stack): Promise<BridgeSurfaces> {
     const mottle = mx_noise_float(vec3(C.x.mul(1.6).add(o), C.y.mul(8), C.z.mul(8))).mul(0.5).add(0.5)
     const lichen = smoothstep(0.6, 0.8, mx_noise_float(vec3(C.x.mul(1.2).add(o), C.y.mul(14), C.z.mul(14)).add(2.7)).mul(0.5).add(0.5))
     const plateTop = mx(mx(lin('#544c43'), lin('#777066'), plate), lin('#5f5042'), mottle.mul(0.35)).mul(ridgeTop.mul(0.16).add(0.92))
-    const barkCol = mx(mx(plateTop, lin('#7f7d6d'), lichen.mul(0.32)).mul(micro.mul(microFade).mul(0.3).add(1)), lin('#2b231c'), fissure.mul(0.7))
+    const barkCol = mx(mx(plateTop, lin('#7f7d6d'), lichen.mul(0.32)).mul(micro.mul(microFade).mul(0.3).add(1)), lin('#2b231c'), fissure.mul(0.55))
       .mul(float(1).sub(shoulder.mul(0.18))).mul(float(1).add(lent.mul(0.18)))
     // the ridges' own scaly skin, finer than the ridges and long along the stem
     const scaleQ = vec3(C.x.mul(14), C.y.mul(75), C.z.mul(75))
     const scaly = mx_noise_float(scaleQ.add(o)).mul(float(1).sub(smoothstep(0.2, 0.7, fwidth(C.x.mul(14)).add(roundFw.mul(75)))))
-    const barkH = fissure.negate().mul(0.005).sub(shoulder.mul(0.002)).add(ridgeTop.mul(0.0008)).add(micro.mul(microFade).mul(0.0008)).add(scaly.mul(0.0010)).add(plate.mul(0.0005)).add(lent.mul(0.0002))
+    const barkH = fissure.negate().mul(0.003).sub(shoulder.mul(0.0012)).add(ridgeTop.mul(0.0008)).add(micro.mul(microFade).mul(0.0008)).add(scaly.mul(0.0010)).add(plate.mul(0.0005)).add(lent.mul(0.0002))
     // PEELED: pale wood under the drawknife, its strokes as narrow facets along the stem, bark left in the hollows
     const fibres = luma(d.albedo)
     const facetPhase = u.div(0.026).add(mx_noise_float(vec3(v.mul(0.9), o, 1.1)).mul(1.4))
@@ -135,7 +135,9 @@ export async function bridgeSurfaces(stack: Stack): Promise<BridgeSurfaces> {
     const contact = float(1).sub(S.x.mul(1.25).clamp(0, 0.82).mul(smoothstep(S.y, S.y.add(0.35), lashClock)))
     pole.colorNode = mx(sideCol, endCol, end).mul(mx(float(1), d.occlusion, peeled.max(end).max(0.3))).mul(contact).mul(keyRim(0.45).add(1))
     pole.roughnessNode = mx(mx(float(0.84).add(fissure.mul(0.1)).add(micro.mul(microFade).mul(0.05)), d.roughness.clamp(0.6, 0.8), peeled), float(0.82), end)
-    const h = mx(mx(barkH, facetH, peeled), float(0), end)
+    // relief gone where the stem turns away from the eye: a bump at its edge reads as a dotted line
+    const facing = smoothstep(0.08, 0.4, normalViewGeometry.dot(positionView.normalize().negate()))
+    const h = mx(mx(barkH, facetH, peeled), float(0), end).mul(facing)
     // the photograph's grain belongs to the wood: on the bark only a trace of it is kept
     const grainN: N = pole.normalNode ?? normalViewGeometry
     pole.normalNode = bumped(mx(normalViewGeometry, grainN, peeled.max(end).max(0.25)), h, 1)
