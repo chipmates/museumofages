@@ -13,7 +13,7 @@ import { pathToFileURL } from 'node:url'
 import * as THREE from 'three/webgpu'
 import { FRAMINGS, buildGraph } from './graph.mjs'
 import { WING_DIR } from './load.mjs'
-import { camPrint, openReplay, trackKey } from './replay.mjs'
+import { camPrint, openReplay, shiftOfCamera, trackKey } from './replay.mjs'
 
 /** what the evening's key names as its pace: it plays at its own clock, never at the visitor's */
 export const EVENING_PACE = 'the farewell\'s own clock'
@@ -36,9 +36,10 @@ export function eveningTrack(wing, graph, framingName) {
   const pose = node.pose[framingName]
   const camera = new THREE.PerspectiveCamera(50, aspect, 0.25, 4000)
   const rail = wing.rail.createRail(camera, () => 0, wing.authority)
-  rail.set(node.railId ?? node.station, { eye: vec(pose.eye), at: vec(pose.at), fov: pose.fov }, true, phone)
+  // the stop's shift lens stays on the camera through the look up, as on the wing's
+  rail.set(node.railId ?? node.station, { eye: vec(pose.eye), at: vec(pose.at), fov: pose.fov, ...(pose.shift ? { shift: pose.shift } : {}) }, true, phone)
   rail.update()
-  const sample = () => [...camera.position.toArray(), ...camera.quaternion.toArray(), camera.fov]
+  const sample = () => { const shift = shiftOfCamera(camera); return [...camera.position.toArray(), ...camera.quaternion.toArray(), camera.fov, ...(shift ? [shift] : [])] }
   const prints = [camPrint(camera)], samples = [sample()]
   // the farewell starts from the eye as it stands, the stop's own lens unfitted (`lookUp()`)
   const ahead = camera.getWorldDirection(new THREE.Vector3())
