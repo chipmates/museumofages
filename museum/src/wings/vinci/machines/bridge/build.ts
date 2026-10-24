@@ -465,7 +465,9 @@ function frapPath(c: Crossing, j: number, detail: LashDetail): PathPt[] {
   const a = rs + rope * (1 + 2 * last) + gap, b = rr + rope * (1 + 2 * last) + gap
   const out = rope * (2 + 2 * j) * Math.SQRT1_2
   const cd = (a + crotch) / 2 + out, cw = (b + crotch) / 2 + out
-  const D = cd + out * 0.6, W = cw + out * 0.6
+  // beside each pole the second frap lies on the first, one rope out from the pole, never further along it
+  const out0 = rope * 2 * Math.SQRT1_2
+  const D = (a + crotch) / 2 + out0 * 1.6, W = (b + crotch) / 2 + out0 * 1.6
   const at = (du: number, dw: number, dm: number): V3 => add(o, add(mul(d, du), add(mul(w, dw), mul(m, dm))))
   const under = rs - rope - gap - rope * 2 * j, over = rs + rope + gap + rope * 2 * j
   const keys: V3[] = [
