@@ -418,8 +418,8 @@ function turnPath(c: Crossing, i: number, detail: LashDetail): PathPt[] {
   const a = rs + rope * (1 + 2 * i) + gap, b = rr + rope * (1 + 2 * i) + gap
   const rodRad = rr + rope + gap, supRad = rs + rope + gap
   const hRod = rs + rr
-  // how far into the crotch each turn is drawn: the first tight in it, the next a rope's width further out
-  const crotch = 0.45 * Math.min(rodRad, supRad) + rope * 1.5 * i
+  // how far into the crotch each turn is drawn: the first tight in it, each next one bearing on the one before
+  const crotch = 0.45 * Math.min(rodRad, supRad) + rope * 1.2 * i
   const at = (du: number, dw: number, dm: number): V3 => add(o, add(mul(d, du), add(mul(w, dw), mul(m, dm))))
   const N = detail.wrap
   const phi1 = Math.acos(Math.min(0.99, crotch / rodRad)), psi2 = Math.acos(Math.min(0.99, crotch / supRad))
