@@ -44,7 +44,7 @@ const same = (a, b) => Boolean(a && b) && KEYS.every((k) => (a[k] ?? null) === (
 export const renderedKeys = (r) => (r.carried ? r.carried.rendered?.keys ?? r.carried.from : r.keys)
 
 /* ---- the rooms lit by what the node world does not hold: `lit.mjs`, read by the stand-in too ---- */
-export { KNOWN_CAPTURES, KNOWN_SHADOW_LIGHTS, farBoxOf, farCascadeOf, lightingAt, lightingOf, litRoomCells } from './lit.mjs'
+export { BENCH_ONLY, KNOWN_CAPTURES, KNOWN_SHADOW_LIGHTS, farBoxOf, farCascadeOf, lightingAt, lightingOf, litRoomCells } from './lit.mjs'
 
 /** The cells whose hash, or whose bodies' shadow flags and layers, differ between two worlds (`mountWorld().cells`), occupied in either. */
 export function movedCells(then, now) {
