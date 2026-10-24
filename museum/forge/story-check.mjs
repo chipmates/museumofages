@@ -32,8 +32,10 @@ const FILMS = 'src/wings/vinci/data/films.json'
    language, because German runs longer in characters than English here. */
 const STATION_LINE_CHARS = 120
 /* THE PHONE: a station line holds three rows at 360 x 640. Rendered rows, not
-   characters, decide; but no line over 100 characters held three rows in the
-   measured lines of either language, and from 91 the word breaks decide. */
+   characters, decide (forge/row-check.mjs counts them in a running page); this
+   offline stand-in refuses what never held: no line over 100 characters held
+   three rows in the measured lines of either language, and from 91 the word
+   breaks decide. */
 const PHONE_LINE_CHARS = 100
 const PHONE_LINE_MEASURE = 91
 const EXHIBIT_LINE_CHARS = 90
