@@ -3,21 +3,24 @@
  * contract (a dossier, joints, a deterministic schedule, a second state) and
  * is built from its own numbers (`bridge/plan.ts`).
  *
- * What moves is the building of it: the poles are set one by one from the
- * pile on the near bank, the lashings wind on as each crossing closes, the
- * bridge holds whole, then goes back to the pile in the reverse order so the
- * cycle ends where it began. `section(true)` takes the lashings off: the
- * same poles held by the weave alone, as most builds of it today stand.
+ * What moves is the building of it: from both banks at once, each pole is
+ * carried low from its bank's pile and set from the work already standing,
+ * a forked strut rising from the stream under each free end until the next
+ * joist takes it; the lashings wind on as each crossing closes, the bridge
+ * holds whole, then goes back to the piles in the reverse order so the cycle
+ * ends where it began. `section(true)` takes the lashings off: the same
+ * poles held by the weave alone, as most builds of it today stand.
  */
-import { Box3, Group, Mesh, PlaneGeometry, Vector3, type BufferGeometry, type Material, type Object3D } from 'three/webgpu'
+import { Bone, Box3, Float32BufferAttribute, Group, Mesh, PlaneGeometry, Skeleton, SkinnedMesh, Sphere, Uint16BufferAttribute, Vector3, type BufferGeometry, type Material, type Object3D } from 'three/webgpu'
+import { mergeGeometries } from 'three/addons/utils/BufferGeometryUtils.js'
 import type { Reflection } from '../../../stack/reflector'
 import type { MaterialSet, Stack } from '../../../stack'
 import { showcaseCatalog } from './showcase'
 import { materialDressed, materialFailure } from './parts'
 import type { ReadyMachineBuild } from './runtime'
-import { BANK, ORDER, PERIOD, PILE, POLES, SEAT_HALF, SEAT_R, SEAT_XY, STAKES, buildClock, hash, type V3 } from './bridge/plan'
+import { BANK, ORDER, PERIOD, POLES, buildClock } from './bridge/plan'
 import { bridgePoses } from './bridge/motion'
-import { LASH_COARSE, LASH_FINE, STREAM_HALF, bankGeometry, groundworkGeometry, lashingGeometry, poleGeometry, waterGeometry } from './bridge/build'
+import { LASH_COARSE, LASH_FINE, POLE_COARSE, POLE_FINE, STREAM_HALF, bankGeometry, groundworkGeometry, lashingGeometry, poleGeometry, waterGeometry } from './bridge/build'
 import { bridgeSurfaces } from './bridge/surface'
 
 const SLUG = 'bridge-of-poles' as const
@@ -31,12 +34,12 @@ export function build(stack: Stack): ReadyMachineBuild {
   object.userData['dossier'] = record.sourcePath
   object.userData['certainty'] = 'C'
   // the swept envelope: the cut bank, the bridge, and every path a pole takes to it
-  const bounds = new Box3(new Vector3(-BANK.halfX, BANK.bottom, BANK.zMin), new Vector3(BANK.halfX, 4.6, BANK.zMax))
+  const bounds = new Box3(new Vector3(-BANK.halfX, BANK.bottom, BANK.zMin), new Vector3(BANK.halfX, 3.4, BANK.zMax))
 
   const geometries = new Set<BufferGeometry>()
   const materials = new Set<Material>()
   const sets = new Set<MaterialSet>()
-  const poles = new Map<string, Mesh>()
+  const bones = new Map<string, Bone>()
   const parts = new Map<string, { node: Object3D; geometry: BufferGeometry }>()
   let lashings: Mesh | null = null
   let surfaces: Awaited<ReturnType<typeof bridgeSurfaces>> | null = null
@@ -48,10 +51,10 @@ export function build(stack: Stack): ReadyMachineBuild {
   function applyPose(t: number): void {
     const poses = bridgePoses(t)
     for (const [id, pose] of Object.entries(poses)) {
-      const mesh = poles.get(id)
-      if (!mesh) continue
-      mesh.position.set(...pose.at)
-      mesh.quaternion.set(...pose.q)
+      const bone = bones.get(id)
+      if (!bone) continue
+      bone.position.set(...pose.at)
+      bone.quaternion.set(...pose.q)
     }
     if (surfaces) { surfaces.lashClock.value = buildClock(t); surfaces.streamClock.value = t }
   }
@@ -61,6 +64,7 @@ export function build(stack: Stack): ReadyMachineBuild {
     if (disposed) return
     for (const set of surfaces.sets) sets.add(set)
     for (const m of [surfaces.pole, surfaces.hemp, surfaces.earth, surfaces.water, surfaces.waterTop]) materials.add(m)
+    const hero = stack.tierName() === 'hero'
     const hang = (id: string, geometry: BufferGeometry, material: Material, cast = true): Mesh => {
       geometries.add(geometry)
       const mesh = new Mesh(geometry, material)
@@ -71,18 +75,38 @@ export function build(stack: Stack): ReadyMachineBuild {
       parts.set(id, { node: mesh, geometry })
       return mesh
     }
-    for (const p of POLES) {
-      const mesh = hang(p.id, poleGeometry(p), surfaces.pole)
-      // a pole on its way stands outside its geometry's resting sphere
-      mesh.frustumCulled = false
-      poles.set(p.id, mesh)
-    }
-    const groundwork: { a: V3; b: V3; r: number; taper: number; seed: number; tone: number }[] = []
-    SEAT_XY.forEach(([x, y], i) => groundwork.push({ a: [x, y, -SEAT_HALF], b: [x, y, SEAT_HALF], r: SEAT_R, taper: 0.012 * (i ? 1 : -1), seed: hash(i, 61), tone: 0.95 + 0.1 * hash(i, 62) }))
-    STAKES.forEach(([x, , z], i) => groundwork.push({ a: [x, -0.4, z], b: [x, 0.19 + 0.04 * hash(i, 63), z], r: 0.042, taper: 0.004, seed: hash(i, 64), tone: 0.9 + 0.15 * hash(i, 65) }))
-    for (const side of [-1, 1]) groundwork.push({ a: [PILE.x - 0.85, PILE.sleeperR - 0.02, side * PILE.sleeperZ], b: [PILE.x + 0.85, PILE.sleeperR - 0.02, side * PILE.sleeperZ], r: PILE.sleeperR, taper: 0.006, seed: hash(side, 66), tone: 0.92 })
-    hang('groundwork', groundworkGeometry(groundwork), surfaces.pole)
-    lashings = hang('lashings', lashingGeometry(stack.tierName() === 'hero' ? LASH_FINE : LASH_COARSE), surfaces.hemp)
+    // every pole one bone of one skinned surface: one draw a pass for all of them, each moving on its own
+    object.updateWorldMatrix(true, false)
+    const pieces: BufferGeometry[] = []
+    POLES.forEach((p, index) => {
+      const bone = new Bone()
+      bone.name = p.id
+      object.add(bone)
+      bones.set(p.id, bone)
+      const g = poleGeometry(p, hero ? POLE_FINE : POLE_COARSE)
+      const n = g.getAttribute('position').count, si = new Uint16Array(n * 4), sw = new Float32Array(n * 4)
+      for (let i = 0; i < n; i++) { si[i * 4] = index; sw[i * 4] = 1 }
+      g.setAttribute('skinIndex', new Uint16BufferAttribute(si, 4))
+      g.setAttribute('skinWeight', new Float32BufferAttribute(sw, 4))
+      pieces.push(g)
+      geometries.add(g)
+      parts.set(p.id, { node: bone, geometry: g })
+    })
+    object.updateWorldMatrix(false, true)
+    const merged = mergeGeometries(pieces, false)
+    if (!merged) throw new Error('the poles could not be merged')
+    geometries.add(merged)
+    const poles = new SkinnedMesh(merged, surfaces.pole)
+    poles.name = 'poles'
+    poles.castShadow = true
+    poles.receiveShadow = true
+    // the bones carry the poles far from where their geometry was made: the swept envelope holds them all
+    poles.frustumCulled = false
+    object.add(poles)
+    poles.bind(new Skeleton([...bones.values()]))
+    poles.boundingBox = bounds.clone(); poles.boundingSphere = bounds.getBoundingSphere(new Sphere())
+    hang('groundwork', groundworkGeometry(hero ? POLE_FINE : POLE_COARSE), surfaces.pole)
+    lashings = hang('lashings', lashingGeometry(hero ? LASH_FINE : LASH_COARSE), surfaces.hemp)
     lashings.frustumCulled = false
     lashings.visible = lashed
     hang('bank', bankGeometry(), surfaces.earth)
