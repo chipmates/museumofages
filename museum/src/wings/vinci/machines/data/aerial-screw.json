@@ -29137,7 +29137,7 @@
         "height": 0.08
       },
       "position_m": [1.096016, -2.838545, 1.096016],
-      "orientation_rad": [0, -0.785398, -1.570796],
+      "orientation_rad": [0, -0.7853981634, -1.570796],
       "material": {
         "class": "wood, planed oak",
         "basis": "assumed",
@@ -29196,7 +29196,7 @@
         "height": 0.16
       },
       "position_m": [1.096016, -2.838545, 1.096016],
-      "orientation_rad": [0, -0.785398, -1.570796],
+      "orientation_rad": [0, -0.7853981634, -1.570796],
       "material": {
         "class": "iron, forged",
         "basis": "assumed",
@@ -29455,7 +29455,7 @@
         "height": 0.08
       },
       "position_m": [-1.096016, -2.838545, 1.096016],
-      "orientation_rad": [0, -2.356194, -1.570796],
+      "orientation_rad": [0, -2.3561944902, -1.570796],
       "material": {
         "class": "wood, planed oak",
         "basis": "assumed",
@@ -29514,7 +29514,7 @@
         "height": 0.16
       },
       "position_m": [-1.096016, -2.838545, 1.096016],
-      "orientation_rad": [0, -2.356194, -1.570796],
+      "orientation_rad": [0, -2.3561944902, -1.570796],
       "material": {
         "class": "iron, forged",
         "basis": "assumed",
@@ -29773,7 +29773,7 @@
         "height": 0.08
       },
       "position_m": [-1.096016, -2.838545, -1.096016],
-      "orientation_rad": [0, -3.926991, -1.570796],
+      "orientation_rad": [0, -3.9269908170, -1.570796],
       "material": {
         "class": "wood, planed oak",
         "basis": "assumed",
@@ -29832,7 +29832,7 @@
         "height": 0.16
       },
       "position_m": [-1.096016, -2.838545, -1.096016],
-      "orientation_rad": [0, -3.926991, -1.570796],
+      "orientation_rad": [0, -3.9269908170, -1.570796],
       "material": {
         "class": "iron, forged",
         "basis": "assumed",
@@ -30091,7 +30091,7 @@
         "height": 0.08
       },
       "position_m": [1.096016, -2.838545, -1.096016],
-      "orientation_rad": [0, -5.497787, -1.570796],
+      "orientation_rad": [0, -5.4977871438, -1.570796],
       "material": {
         "class": "wood, planed oak",
         "basis": "assumed",
@@ -30150,7 +30150,7 @@
         "height": 0.16
       },
       "position_m": [1.096016, -2.838545, -1.096016],
-      "orientation_rad": [0, -5.497787, -1.570796],
+      "orientation_rad": [0, -5.4977871438, -1.570796],
       "material": {
         "class": "iron, forged",
         "basis": "assumed",
@@ -30453,7 +30453,7 @@
       "type": "revolute",
       "parent": "mast",
       "child": "frame-roller-1",
-      "axis": [0.707107, 0, 0.707107],
+      "axis": [0.7071067812, 0, 0.7071067812],
       "pivot_m": [1.096016, -2.838545, 1.096016],
       "limits": null,
       "ratio": null,
@@ -30479,7 +30479,7 @@
       "type": "revolute",
       "parent": "mast",
       "child": "frame-roller-3",
-      "axis": [-0.707107, 0, 0.707107],
+      "axis": [-0.7071067812, 0, 0.7071067812],
       "pivot_m": [-1.096016, -2.838545, 1.096016],
       "limits": null,
       "ratio": null,
@@ -30505,7 +30505,7 @@
       "type": "revolute",
       "parent": "mast",
       "child": "frame-roller-5",
-      "axis": [-0.707107, 0, -0.707107],
+      "axis": [-0.7071067812, 0, -0.7071067812],
       "pivot_m": [-1.096016, -2.838545, -1.096016],
       "limits": null,
       "ratio": null,
@@ -30531,7 +30531,7 @@
       "type": "revolute",
       "parent": "mast",
       "child": "frame-roller-7",
-      "axis": [0.707107, 0, -0.707107],
+      "axis": [0.7071067812, 0, -0.7071067812],
       "pivot_m": [1.096016, -2.838545, -1.096016],
       "limits": null,
       "ratio": null,
