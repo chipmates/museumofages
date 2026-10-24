@@ -108,6 +108,8 @@ const RING = 2 * Math.PI * 20.5
 /** the most a mark is lifted to stand clear of the phone's box: sideways
     takes 28; upright the Baptism's mark needs 37 at 390x664 and 41 at 375x667 */
 const MARK_LIFT = 44
+/** the thumb's reach upright: a control's centre stands at or below 40 % of the glass */
+const REACH = 0.4
 
 /** The release the address names (`?film=<name>`), else the build's own, under the origin's `/film/`. */
 export function filmReleaseBase(): string {
@@ -688,6 +690,7 @@ export function createWing(): WingModule {
     phone.root.dataset['look'] = String(down)
     paintBackSeat()
     if (down && drawerOpen) setDrawer(false)
+    if (down) requestAnimationFrame(nameLookDown)
     paintGold()
   }
   let look: FilmLook | undefined
@@ -887,11 +890,130 @@ export function createWing(): WingModule {
     keepTogetherIn(wing)
   }
 
+  /* ---- the round seat under a tall sheet ---- */
+  /** ONE HEIGHT DOWN, IN THE THUMB'S REACH: the first seat of the foot under
+      the record, the room's list, the Menu and a close look, upright. Its press
+      is the press of the sheet's own close at its top, so the two never part. */
+  function downSeat(act: () => void): HTMLButtonElement {
+    const seat = make('button', 'film-down')
+    seat.type = 'button'
+    seat.append(icon(ARROW_DOWN))
+    seat.addEventListener('click', act)
+    return seat
+  }
+  /** the seats under the record, the list and the Menu, named as their closes are */
+  const sheetSeats: HTMLButtonElement[] = []
+  function nameSheetSeats(): void {
+    for (const seat of sheetSeats) seat.setAttribute('aria-label', say(LOBBY_TEXT.close))
+  }
+  /** a close look's raised card: its fold key, the one that lowers it to its peek */
+  function lookFold(): HTMLElement | null {
+    const grab = hosts?.labels.querySelector<HTMLElement>('.vitrine .vitrine-grab[aria-expanded="true"]')
+    return grab && !grab.hidden && grab.getClientRects().length ? grab : null
+  }
+  function lookShut(): HTMLElement | null {
+    const shut = hosts?.labels.querySelector<HTMLElement>('.vitrine .vitrine-shut')
+    return shut && !shut.hidden ? shut : null
+  }
+  /** A CLOSE LOOK ONE HEIGHT DOWN: a raised card folds to its peek, as its own
+      key and the swipe down fold it; at the peek the look's top close leaves */
+  function lookDown(): void {
+    if (!look?.id) return
+    const fold = lookFold()
+    if (fold) fold.click()
+    else if (lookShut()) lookShut()!.click()
+    else look.back()
+    requestAnimationFrame(nameLookDown)
+  }
+  /** the seat says what its next press does, in the words of the key that does the same */
+  function nameLookDown(): void {
+    if (!phone || !look?.id) return
+    const said = lookFold()?.getAttribute('aria-label') || lookShut()?.getAttribute('aria-label') || say(LOBBY_TEXT.close)
+    if (phone.down.getAttribute('aria-label') !== said) phone.down.setAttribute('aria-label', said)
+  }
+  let downFrames = 0
+
+  /* ---- the room's list and the Menu, upright ---- */
+  /** THE STANDING STATION'S OWN CELLS where its room's list holds the sets of
+      more than one station (the hall): upright, the list marks them "here" */
+  function hereCells(): readonly string[] {
+    if (form !== 'upright') return []
+    const station = stationOf(LIFE[card]!.station).id
+    const own = release?.sets?.[station] ?? []
+    return own.length && own.length < setOf(station).length ? own : []
+  }
+  /** THE LIST OPENS WITH ITS FIRST ROW OF PICTURES CENTRED ON THE REACH LINE,
+      and where the first marked cell stands lower, scrolled so that cell's row
+      stands where the first row stands. Measured in the page as it opens. */
+  function placeList(): void {
+    const view = phoneList?.element
+    if (!view?.open) return
+    if (form !== 'upright') { view.style.removeProperty('--film-list-lead'); return }
+    const first = view.querySelector<HTMLElement>('.desk-ov-plate')
+    if (!first) return
+    view.style.setProperty('--film-list-lead', '0px')
+    const top = (plate: HTMLElement): number => plate.getBoundingClientRect().top + view.scrollTop
+    const lead = Math.max(0, Math.round(REACH * innerHeight - first.offsetHeight / 2 - top(first)))
+    view.style.setProperty('--film-list-lead', `${lead}px`)
+    const here = view.querySelector<HTMLElement>('.desk-ov-cell[data-here] .desk-ov-plate')
+    view.scrollTop = here ? Math.round(top(here) - top(first)) : 0
+  }
+  /** the Menu's foot, with its round seat, while the wing stands on a phone */
+  let menuFoot: HTMLElement | undefined
+  /** THE MENU'S NOTE stands open where the whole column fits the sheet and
+      folded where it would scroll, read in the page each time the Menu opens;
+      a column too tall even folded opens at its end, its hand rows on the foot */
+  function menuOpened(panel: HTMLElement): void {
+    if (panel.hidden || form !== 'upright') return
+    // the pace's words stand over its choices: the row keeps their height free
+    const words = panel.querySelector<HTMLElement>('.inst-pace small')
+    if (words) panel.style.setProperty('--film-pace-words', `${words.offsetHeight}px`)
+    const note = panel.querySelector<HTMLDetailsElement>('.inst-labels')
+    if (note) {
+      note.open = true
+      if (panel.scrollHeight > panel.clientHeight + 1) note.open = false
+    }
+    panel.scrollTop = panel.scrollHeight - panel.clientHeight
+    menuMore(panel)
+  }
+  /** the note opens downward from its "+": a "+" scrolled part under the head comes whole under it first */
+  function noteInView(panel: HTMLElement, target: EventTarget | null): void {
+    if (form !== 'upright' || !(target instanceof HTMLDetailsElement) || !target.open || !target.classList.contains('inst-labels')) return
+    const head = panel.querySelector<HTMLElement>('.inst-kicker')
+    const summary = target.querySelector<HTMLElement>('summary')
+    if (!head || !summary) return
+    const under = head.getBoundingClientRect().bottom - summary.getBoundingClientRect().top
+    if (under > 0) panel.scrollTop -= Math.ceil(under)
+  }
+  /** rows waiting under the Menu's foot: its fade stands while they do */
+  function menuMore(panel: HTMLElement): void {
+    const more = form === 'upright' && !panel.hidden && panel.scrollTop + panel.clientHeight < panel.scrollHeight - 1
+    if (more === ('more' in panel.dataset)) return
+    if (more) panel.dataset['more'] = ''
+    else delete panel.dataset['more']
+  }
+  function mountMenu(): void {
+    const panel = document.getElementById('instruments')
+    if (!panel) return
+    menuFoot = make('div', 'film-menu-foot')
+    const seat = downSeat(() => panel.querySelector<HTMLElement>('.inst-close')?.click())
+    menuFoot.append(seat)
+    sheetSeats.push(seat)
+    panel.append(menuFoot)
+    const watch = new MutationObserver(() => menuOpened(panel))
+    watch.observe(panel, { attributes: true, attributeFilter: ['hidden'] })
+    signal.addEventListener('abort', () => { watch.disconnect(); delete panel.dataset['more']; panel.style.removeProperty('--film-pace-words') })
+    panel.addEventListener('scroll', () => menuMore(panel), { passive: true, signal })
+    // the note's toggle and the language's list change the column's height
+    panel.addEventListener('toggle', (event) => { noteInView(panel, event.target); menuMore(panel) }, { capture: true, signal })
+    panel.addEventListener('click', () => requestAnimationFrame(() => menuMore(panel)), { signal })
+  }
+
   /* ---- the phone's graded box ---- */
   let phone: {
     root: HTMLElement; name: HTMLElement; line: HTMLElement; drawer: HTMLElement; keys: HTMLElement
     more: HTMLButtonElement; from: HTMLButtonElement; count: HTMLButtonElement; closer: HTMLButtonElement
-    back: HTMLButtonElement; book: HTMLButtonElement; earlier: HTMLButtonElement; talk: HTMLButtonElement; gold: HTMLButtonElement; goldName: HTMLElement; ringLine: SVGCircleElement
+    back: HTMLButtonElement; down: HTMLButtonElement; book: HTMLButtonElement; earlier: HTMLButtonElement; talk: HTMLButtonElement; gold: HTMLButtonElement; goldName: HTMLElement; ringLine: SVGCircleElement
     goldPath: SVGPathElement
   } | undefined
   let drawerOpen = false
@@ -957,7 +1079,9 @@ export function createWing(): WingModule {
     earlier.type = 'button'
     earlier.append(icon(STEP_BACK))
     earlier.addEventListener('click', () => look?.ways()?.step(-1))
-    foot.append(back, ...(walk ? [walk.plan] : []), book, ...(walk ? [walk.hold] : []), earlier, talk, gold)
+    // upright, a close look's first seat is the round one, one height down
+    const down = downSeat(lookDown)
+    foot.append(down, back, ...(walk ? [walk.plan] : []), book, ...(walk ? [walk.hold] : []), earlier, talk, gold)
     root.append(name, line, drawer, keys, ...(walk ? [walk.element] : []), foot)
     // the hold takes the book's seat while the eye walks, where the book stands down
     walk?.hold.classList.add('film-hold')
@@ -994,7 +1118,7 @@ export function createWing(): WingModule {
       if (dy < -24 && !drawerOpen) setDrawer(true)
       else if (dy > 24 && drawerOpen) setDrawer(false)
     }, { signal })
-    phone = { root, name, line, drawer, keys, more, from, count, closer, back, book, earlier, talk, gold, goldName, ringLine, goldPath: goldIcon.querySelector('path')! }
+    phone = { root, name, line, drawer, keys, more, from, count, closer, back, down, book, earlier, talk, gold, goldName, ringLine, goldPath: goldIcon.querySelector('path')! }
   }
   function setDrawer(open: boolean): void {
     if (!phone) return
@@ -1318,6 +1442,10 @@ export function createWing(): WingModule {
     look?.layout()
     paintPhone()
     walk?.paint()
+    // the list's lead and the Menu's fade are the upright form's own
+    placeList()
+    const panel = document.getElementById('instruments')
+    if (panel) menuMore(panel)
     void whenFraming(picture, () => (wide ? 'wide' : 'upright'), signal).then(() => { marksAt = ''; wordsAt = ''; look?.layout() })
   }
 
@@ -1436,9 +1564,16 @@ export function createWing(): WingModule {
     if (form !== 'desk') {
       buildPhone(h)
       // the phone counts only the room it stands in: walking into the next room the key waits for that room's cells
-      phoneList = createDeskOverview({ ...listHost(), cells: () => (cellsAt === roomKey() ? cellsNow : []), columns: () => 2, lang, mark: deskMark, sheet: true })
+      phoneList = createDeskOverview({ ...listHost(), cells: () => (cellsAt === roomKey() ? cellsNow : []), columns: () => 2, lang, mark: deskMark, sheet: true, here: hereCells })
       h.labels.append(phoneList.element)
       phoneList.control.classList.add('film-key')
+      // the list's foot carries the round seat, its press the list's own close
+      const listSeat = downSeat(() => phoneList?.element.querySelector<HTMLElement>('.desk-ov-shut')?.click())
+      phoneList.element.append(listSeat)
+      sheetSeats.push(listSeat)
+      // after the list's own press has opened it
+      phoneList.control.addEventListener('click', () => requestAnimationFrame(placeList), { signal })
+      mountMenu()
       phone!.keys.insertBefore(phoneList.control, phone!.count)
       // the panel's rows are the film's ways' own where the phone stood upright at the mount
       cinema = createFilmCinema({ wing, box: phone!.root, stop: () => LIFE[card]!.id, rows: form === 'cinema',
@@ -1469,6 +1604,13 @@ export function createWing(): WingModule {
     sourceButton.addEventListener('click', () => { paintSources(null); sources?.select('station'); sources?.setOpen(true) })
     wing.querySelector('.wing-rail-group')?.append(sourceButton)
     sources = createVinciSourcesWindow(h.labels, sourceButton, () => { sources?.setOpen(false); recordOf = null })
+    if (form !== 'desk') {
+      // the record's foot carries the round seat before its tabs, its press the record's own close
+      const recordSeat = downSeat(() => sources?.element.querySelector<HTMLElement>('.vinci-sources-close')?.click())
+      sources.element.querySelector('.vinci-sources-toolbar')?.prepend(recordSeat)
+      sheetSeats.push(recordSeat)
+    }
+    nameSheetSeats()
     // THE PLAN AND THE LIFE, the live wing's two ways through it, pressed the film's way
     // the plan and the life open as the desktop's dialogs sideways: the phone's tall sheets need its height
     mountFilmWays({ hosts: h, narrow: () => form === 'upright', stops: LIFE, carried, standing: () => card, stood: () => [...stood],
@@ -1622,6 +1764,7 @@ export function createWing(): WingModule {
     language() {
       module.stations = LIFE.map(s => ({ id: s.id, name: text(s.name), question: text(stationOf(s.station).door), door: stationOf(s.station).door.station }))
       if (sourceButton) sourceButton.textContent = say(SOURCES_WORD)
+      nameSheetSeats()
       paint()
       walk?.paint()
     },
@@ -1648,6 +1791,8 @@ export function createWing(): WingModule {
       if (phone && (goldWalking !== underWay || phone.gold.dataset['wait'] !== String(s.kind === 'wait'))) paintGold()
       // a look that stepped in place (a page turned, a topic on) renames gold
       else if (phone && look?.id && ++lookFrames % 8 === 0) { if (waysKey(look.ways()) !== lookWays) paintGold() }
+      // the card raised or folded by its own key renames the round seat
+      if (phone && look?.id && form === 'upright' && ++downFrames % 8 === 0) nameLookDown()
       if (phone) {
         const share = s.kind === 'walk' || s.kind === 'wait' ? s.share : 0
         phone.ringLine.setAttribute('stroke-dasharray', `${(RING * share).toFixed(1)} ${RING.toFixed(1)}`)
@@ -1667,6 +1812,8 @@ export function createWing(): WingModule {
       phone?.root.remove(); phone = undefined
       phoneList?.dispose(); phoneList = undefined
       sources?.dispose(); sources = undefined
+      menuFoot?.remove(); menuFoot = undefined
+      sheetSeats.length = 0
       sourceButton?.remove(); sourceButton = undefined
       picture?.dispose(); picture = undefined
       clearMarks(); chip?.remove(); marksGlass?.remove(); answering?.dot.remove(); answering = null

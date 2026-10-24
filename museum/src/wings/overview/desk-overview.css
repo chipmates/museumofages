@@ -301,6 +301,10 @@
 .desk-ov[data-sheet] .desk-ov-plate { height: 136px; }
 .desk-ov[data-sheet] :is(.desk-ov-books, .desk-ov-absent) { width: 100%; margin-top: 22px; }
 .desk-ov[data-sheet] .desk-ov-absent-list { grid-template-columns: minmax(0, 1fr); gap: 8px; }
+/* the sheet's head and a picture's box lay out as their contents, and the "here" mark stands down,
+   wherever the upright phone does not stand them (film-wing.css) */
+.desk-ov-head, .desk-ov-pic { display: contents; }
+.desk-ov-here { display: none; }
 /* the selector is the desk's hand; on the phone a press walks, so no cell stands selected */
 .desk-ov[data-sheet] .desk-ov-cell[aria-current='true']:not(:focus-visible) .desk-ov-thumb { box-shadow: 0 1px 4px color-mix(in srgb, var(--na-abyss) 70%, transparent); }
 .desk-ov[data-sheet] .desk-ov-cell[aria-current='true']:not(:focus-visible) .desk-ov-cellname { color: var(--na-mist); }
