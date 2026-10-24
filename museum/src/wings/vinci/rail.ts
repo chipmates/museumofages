@@ -119,13 +119,12 @@ const SUPPER_DESK_EYE={east:-38.4,north:SUPPER_WALL.north-.4,fov:56}
  * further north the first 1452 lay under it at any aim that kept the line,
  * so the phone stands at the desktop's eye and looks down until that year
  * and its disc stand above the sheet. It carries its own shift lens, which
- * the upright fit keeps: at 45 degrees across, 39 down and slid to the
- * shift's ceiling, 1452 stands alone in the short phone's window and 1466
- * wholly beyond its top edge; the tall phone shows 1466 whole under its own.
- * At 44 across and 43 down 1466 stood at the short phone's top edge;
- * levelled to the shift's ceiling, 1503 stood half cut by the tall one's. */
+ * the upright fit keeps: at 44 degrees across, slid by 0.44, 1452 and 1466
+ * stand whole between the trim and the words on every phone, so the floor
+ * reads as a line of dates; with 1452 alone, lifted over bare stone, it did
+ * not. Levelled to the shift's ceiling, 1503 stood half cut by the top edge. */
 const LINE_EYE_NORTH_M=.6,LINE_TILT_DESKTOP=4*Math.PI/180
-const LINE_PHONE={heading:5,pitch:-39,fov:83.75,shift:-.7}
+const LINE_PHONE={heading:5,pitch:-43,fov:82.33,shift:-.44}
 const READING_PHONE_FOV=45.8
 const GRAVE_PHONE={eye:[-48.704,-30.521] as const,heading:-51.56,fov:87.87,shift:-.446}
 /** The chamber's eye, on the lawn under the court's south-west corner. */
@@ -255,9 +254,12 @@ function authoredStationPose(id:VinciStationId, narrow:boolean):Pose {
     // south of the axis, where the line to that corner passes the beam's west
     // end, and turns seven and a half degrees off square onto the field: its
     // far end stands about a tenth shorter than its near end, and the whole
-    // outline stands above the sheet. At 55 degrees across the next room's
-    // edge stands outside the frame's right edge.
-    return aimedFrom(p(-35.5,-31,COURT.level+1.66,-35.5,-31,COURT.level+1.66),-82.5,-2,96.81)
+    // outline stands above the sheet. The pose carries its own shift, so the
+    // upright fit keeps it: level, 57.7 degrees across, the field's middle near
+    // a third of the way down the short phone's window. Closed to 55 and stood
+    // higher to put the next room's pier out of the right edge, it left plain
+    // floor under a third of the short phone.
+    return {...aimedFrom(p(-35.5,-31,COURT.level+1.66,-35.5,-31,COURT.level+1.66),-82.5,0,100),shift:-.2004}
   }
   // THE BODY WALL'S PHONE STANDS SQUARE ON THE HANG. Looking eight degrees
   // down, the soffit takes a tenth of the picture over the lining's head and

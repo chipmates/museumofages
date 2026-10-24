@@ -28,8 +28,8 @@ const PITCH_STEP_DEG = .25
  * keeps whole beside the hero. `inset`: how far inside the window the hero
  * stands; a frame read to its outer edge needs the trim's margin exactly.
  * `foot`: the window's foot for this hero. `middle`: where its middle stands;
- * the Supper stands higher so the tall phone shows less blank wall over it,
- * the book so the lamp over it stays out of the narrow phone's top edge. */
+ * the book stands higher so the lamp over it stays out of the narrow phone's
+ * top edge. */
 type Corners = readonly (readonly [number, number])[]
 const UPRIGHT_HEROES: Readonly<Record<string, { corners: Corners; standing?: true; with?: Corners; inset?: number; foot?: number; middle?: number }>> = {
   'picture-room': { corners: [[-158.76, 13.26], [-138.86, 10.85], [-158.76, -15.07], [-138.82, -12.37]], inset: .006, foot: .57 },
@@ -41,7 +41,7 @@ const UPRIGHT_HEROES: Readonly<Record<string, { corners: Corners; standing?: tru
   body: { corners: [[-102.99, 9.79], [-77.24, 9.80], [-103.46, -4.53], [-76.78, -4.53]] },
   'body-valve': { corners: [[-96.42, 26.72], [-83.37, 26.71], [-96.09, 13.06], [-83.71, 13.05]] },
   'line-early': { corners: [[-15.40, -45.29], [26.45, -45.09], [-20.42, -56.54], [31.66, -56.26]] },
-  'supper-wall': { corners: [[-105.90, 20.27], [-58.71, 20.22], [-106.28, -6.13], [-58.33, -6.12]], middle: .30 },
+  'supper-wall': { corners: [[-105.90, 20.27], [-58.71, 20.22], [-106.28, -6.13], [-58.33, -6.12]] },
   arrival: { corners: [[-75.6, 33.72], [-82.98, 19.88], [-63.57, -7.98], [-47.05, 12.75], [-47.05, -3.63]], standing: true },
   courtyard: { corners: [[-45.13, 12.66], [-37.86, 12.67], [-44.81, -4.20], [-38.11, -4.20]], standing: true },
   hall: { corners: [[-139.86, -2.88], [-129.46, -2.94], [-140.61, -13.98], [-129.56, -14.31]], standing: true },
