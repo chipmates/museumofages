@@ -387,8 +387,8 @@
   /* the switch is 44 px to the hand and its words stand where they stood: the
      target grows upward and ends where the sentence's box begins (the row
      stands 2 px over the sentence, 7 px in the airy row) */
-  .arno-lang { padding: 20px 12px 4px 0; margin-top: -20px; }
-  .arno-card[data-language-row='airy'] .arno-lang { padding: 15px 12px 9px 0; margin-top: -10px; }
+  .arno-lang { padding: 20px 12px 0 0; margin-top: -20px; }
+  .arno-card[data-language-row='airy'] .arno-lang { padding: 15px 12px 5px 0; margin-top: -10px; }
   .arno-line { min-height: 0; font: 400 1.375rem/29px var(--serif); }
   .arno-credit { margin-top: 4px; }
   /* the share of the screen's height lands between two pixels: a label that fits by less than one must not scroll */

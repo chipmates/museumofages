@@ -113,9 +113,9 @@ const REACH = 0.4
 /** THE DRAWER'S PLATE, upright: the way on through a drawer taller than its window, and back to its first sentence */
 const READ_ON = { en: 'Read on', de: 'Weiterlesen' }
 const BACK_TO_TOP = { en: 'Back to top', de: 'Zum Anfang' }
-/** the window's last 48 px while rows wait below it: a 24 px fade over the 24 px plate */
-const PAGE_FOOT = 48
-const PLATE = 24
+/** the window's foot while rows wait below it: a 24 px fade over the 24 px plate and the record's 8 px of air */
+const PAGE_FOOT = 56
+const PLATE = 32
 /** the picture's rise while the drawer stands: at most the first stop's 81 px at 844, as a share of the glass */
 const RISE_MOST = 81 / 844
 /** the air between the hero's foot and the drawer's top */
@@ -1259,6 +1259,9 @@ export function createWing(): WingModule {
     if (want === rise || !wing) return
     rise = want
     clearTimeout(riseTimer)
+    // a night strip under the foot's veil while risen, so the picture's lifted edge never reads through it
+    if (rise > 0) wing.dataset['risen'] = ''
+    else delete wing.dataset['risen']
     if (glide && !matchMedia('(prefers-reduced-motion: reduce)').matches) {
       wing.dataset['rising'] = ''
       riseSettles = performance.now() + RISE_MS + 40
@@ -1986,6 +1989,7 @@ export function createWing(): WingModule {
       if (hosts) {
         const wing = hosts.stage.parentElement!
         delete wing.dataset['wing']; delete wing.dataset['film']; delete wing.dataset['cut']; delete wing.dataset['evening']
+        clearTimeout(riseTimer); rise = 0; delete wing.dataset['rising']; delete wing.dataset['risen']
         delete hosts.labels.dataset['keepsFoot']
         if (labelsHidden !== null) hosts.labels.setAttribute('aria-hidden', labelsHidden)
         hosts.stage.textContent = ''

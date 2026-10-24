@@ -95,15 +95,16 @@
 .film-page, .film-read-space { display: none; }
 #wing[data-film='upright'] .film-drawer[data-pages='true'] .film-read { padding-bottom: 0; }
 #wing[data-film='upright'] .film-drawer[data-pages='true'] .film-read-space { display: block; }
-/* the plate stands at the window's foot while the text scrolls under it; while rows wait below, a fade over them */
-#wing[data-film='upright'] .film-drawer[data-pages='true'] .film-page { display: block; position: sticky; bottom: 0; height: 24px; background: var(--plate); }
+/* the plate stands at the window's foot while the text scrolls under it, 24 px over the record's 8 px of air; while rows
+   wait below, a fade over them */
+#wing[data-film='upright'] .film-drawer[data-pages='true'] .film-page { display: block; position: sticky; bottom: 0; height: 32px; background: var(--plate); }
 #wing[data-film='upright'] .film-drawer[data-pages='true']:not([data-end='true']) .film-page::before {
   content: ''; position: absolute; left: 0; right: 0; bottom: 100%; height: 24px; pointer-events: none;
   background: linear-gradient(to bottom, color-mix(in srgb, var(--plate) 0%, transparent), var(--plate));
 }
 /* its key is the key row's word, 44 px to the hand, ending on the record's rule */
 .film-page-key {
-  position: absolute; right: 0; bottom: 0; box-sizing: border-box; min-width: 95px; height: 44px; padding: 20px 0 0;
+  position: absolute; right: 0; bottom: 0; box-sizing: border-box; min-width: 95px; height: 44px; padding: 12px 0 8px;
   display: flex; align-items: center; justify-content: flex-end; gap: 6px;
   border: 0; background: none; font: 400 .9375rem/24px var(--sans); color: var(--key); white-space: nowrap; cursor: pointer;
 }
@@ -115,6 +116,8 @@
 @media (prefers-reduced-motion: reduce) {
   #wing[data-film='upright'][data-rising] .na-film { transition: none; }
 }
+/* under the foot's veil while risen: night, not the picture's lifted edge; above the foot the drawer is solid */
+#wing[data-film='upright'][data-risen] .wing-stage::after { content: ''; position: fixed; left: 0; right: 0; bottom: 0; height: calc(120px + env(safe-area-inset-bottom)); background: var(--na-abyss); pointer-events: none; }
 .film-ask {
   display: flex;
   align-items: center;
