@@ -971,6 +971,7 @@ export function createWing(): WingModule {
     view.style.setProperty('--film-list-lead', `${lead}px`)
     const here = view.querySelector<HTMLElement>('.desk-ov-cell[data-here] .desk-ov-plate')
     view.scrollTop = here ? Math.round(top(here) - top(first)) : 0
+    sheetMore(view)
   }
   /** the Menu's foot, with its round seat, while the wing stands on a phone */
   let menuFoot: HTMLElement | undefined
@@ -998,6 +999,22 @@ export function createWing(): WingModule {
     if (!head || !summary) return
     const under = head.getBoundingClientRect().bottom - summary.getBoundingClientRect().top
     if (under > 0) panel.scrollTop -= Math.ceil(under)
+  }
+  /** ROWS WAITING UNDER A TALL SHEET'S FOOT, upright: the record's and the room's list's foot fades over them while
+      they do, as the Menu's does (film-wing.css); at the scroll's end no fade */
+  function sheetMore(sheet: HTMLElement): void {
+    const more = form === 'upright' && sheet.scrollTop + sheet.clientHeight < sheet.scrollHeight - 1
+    if (more === ('more' in sheet.dataset)) return
+    if (more) sheet.dataset['more'] = ''
+    else delete sheet.dataset['more']
+  }
+  /** read again at each scroll and whenever the sheet or a part of it changes height */
+  function watchMore(sheet: HTMLElement, parts: Iterable<Element>): void {
+    const more = (): void => sheetMore(sheet)
+    sheet.addEventListener('scroll', more, { passive: true, signal })
+    const sized = new ResizeObserver(more)
+    for (const part of [sheet, ...parts]) sized.observe(part)
+    signal.addEventListener('abort', () => { sized.disconnect(); delete sheet.dataset['more'] })
   }
   /** rows waiting under the Menu's foot: its fade stands while they do */
   function menuMore(panel: HTMLElement): void {
@@ -1735,6 +1752,7 @@ export function createWing(): WingModule {
       const listSeat = downSeat(() => phoneList?.element.querySelector<HTMLElement>('.desk-ov-shut')?.click())
       phoneList.element.append(listSeat)
       sheetSeats.push(listSeat)
+      watchMore(phoneList.element, phoneList.element.children)
       // after the list's own press has opened it
       phoneList.control.addEventListener('click', () => requestAnimationFrame(placeList), { signal })
       mountMenu()
@@ -1773,6 +1791,7 @@ export function createWing(): WingModule {
       const recordSeat = downSeat(() => sources?.element.querySelector<HTMLElement>('.vinci-sources-close')?.click())
       sources.element.querySelector('.vinci-sources-toolbar')?.prepend(recordSeat)
       sheetSeats.push(recordSeat)
+      watchMore(sources.element, Object.values(sources.panels))
     }
     nameSheetSeats()
     // THE PLAN AND THE LIFE, the live wing's two ways through it, pressed the film's way
