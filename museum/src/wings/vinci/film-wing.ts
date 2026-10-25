@@ -513,9 +513,13 @@ export function createWing(): WingModule {
     const field = glass && { left: Math.max(glass.left, b.left + 22), top: Math.max(glass.top, b.top + 22), right: Math.min(glass.right, b.left + b.width - 22), bottom: Math.min(glass.bottom, b.top + b.height - 22) }
     const cut = (x: number, y: number): boolean => field ? x < field.left || x > field.right || y < field.top || y > field.bottom : markCut(x - b.left, y - b.top, b)
     const late: PictureMark[] = []
+    // where the picture rose toward the station's own work, a mark the rise carried out of reach is laid in reach
+    const reachY = REACH * innerHeight
+    const laid: PictureMark[] | null = form === 'upright' && rise > 0 && stationMark(node) ? [] : null
     for (const mark of ordered) {
       const x = b.left + mark.x
       let y = b.top + mark.y
+      if (laid && mark.y >= reachY && y < reachY) { laid.push(mark); continue }
       // no mark stands under the museum's own words; sideways it keeps clear of the row's controls, lifted where that is short
       if (sideways) {
         const clear = cut(x, y) ? null : cinema ? cinema.clear(x, y, MARK_TARGET / 2) : y
@@ -532,11 +536,15 @@ export function createWing(): WingModule {
       }
       placeMark(mark, x, y)
     }
-    if (!late.length || !field) return
+    if ((!late.length && !laid?.length) || !field) return
     const blocks = markBlocks(sideways, avoid)
     for (const mark of late) {
       if (own !== mark.id && onWork(mark, true)) continue
       const at = nearestFree(b.left + mark.x, b.top + mark.y, field, blocks)
+      if (at) placeMark(mark, at.x, at.y)
+    }
+    for (const mark of laid ?? []) {
+      const at = nearestFree(b.left + mark.x, b.top + mark.y, { ...field, top: Math.max(field.top, Math.ceil(reachY)) }, blocks)
       if (at) placeMark(mark, at.x, at.y)
     }
   }
@@ -1247,8 +1255,9 @@ export function createWing(): WingModule {
      camera, the film's picture moves up in the page until the stop's hero
      stands RISE_AIR over the drawer's top, by no more than RISE_MOST of the
      glass. The hero is the stop's own work where the release names one, else
-     the largest of its upright regions in the stop's own set, else the
-     largest; no region, no rise. A mark in the thumb's reach stays in it.
+     the work named after its station by its mark, else the largest of its
+     upright regions in the stop's own set, else the largest; no region, no
+     rise. A mark in the thumb's reach stays in it.
      It settles with the visitor's press, returns as the drawer folds, and
      stands at once under Reduce Motion or when the eye walks on. The marks
      and the words wait for it to settle. */
@@ -1265,15 +1274,23 @@ export function createWing(): WingModule {
     const pool = regions.some(r => set.has(r.id)) ? regions.filter(r => set.has(r.id)) : regions
     return pool.reduce<PictureRegion | null>((best, r) => (!best || areaOf(r) > areaOf(best) ? r : best), null)
   }
+  /** the work named after the stop's station, by its mark: a stop's own work with no region (the grave's slab) */
+  function stationMark(node: PictureNode): PictureMark | undefined {
+    const station = release?.nodes[node]?.station ?? ''
+    if (!picture || !station || !(release?.sets?.[station] ?? []).includes(station)) return undefined
+    return picture.marks(node, lang(), true).find(m => m.id === station)
+  }
   function riseWanted(): number {
     if (!picture || !phone || form !== 'upright' || !drawerOpen || look?.id || picture.state().kind !== 'rest') return 0
-    const hero = heroOf(here())
-    if (!hero?.points.length) return 0
-    const foot = Math.max(...hero.points.map(([, y]) => y))
+    // a stop with a work named after its station rises toward that work, and its marks are laid in reach after the rise
+    const own = stationMark(here())
+    const hero = own ? null : heroOf(here())
+    if (!own && !hero?.points.length) return 0
+    const foot = own ? own.y : Math.max(...hero!.points.map(([, y]) => y))
     const top = phone.root.getBoundingClientRect().top
     // the phone's law keeps every control in reach: no mark that stands under the reach line is lifted over it
     const reach = REACH * innerHeight
-    const kept = picture.marks(here(), lang(), true).reduce((most, m) => (m.y >= reach ? Math.min(most, Math.floor(m.y - reach)) : most), Infinity)
+    const kept = own ? Infinity : picture.marks(here(), lang(), true).reduce((most, m) => (m.y >= reach ? Math.min(most, Math.floor(m.y - reach)) : most), Infinity)
     return Math.max(0, Math.min(Math.ceil(foot - (top - RISE_AIR) - 0.01), Math.round(RISE_MOST * innerHeight), kept))
   }
   function paintRise(glide: boolean): void {
