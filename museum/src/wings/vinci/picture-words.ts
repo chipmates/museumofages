@@ -117,8 +117,10 @@ export interface PictureWordsLayer {
   /** Draw the runs the station holds, projected; `null` takes them down.
    * False when the station holds runs and not one of them could be projected:
    * the picture's camera is not known yet, and the caller asks again. A
-   * catalog language comes with the page's `word` lookup. */
-  paint(station: string | null, language: Language, project: PictureProjector, word?: Words): boolean
+   * catalog language comes with the page's `word` lookup. A run that an
+   * `edge` (a page row the host's sheet stands from) would cut is left out
+   * whole, as a run behind the eye is. */
+  paint(station: string | null, language: Language, project: PictureProjector, word?: Words, edge?: number): boolean
   hide(): void
   dispose(): void
 }
@@ -127,21 +129,25 @@ const SVG = 'http://www.w3.org/2000/svg'
 /** the page may hold more than one layer: each names its masks apart */
 let layers = 0
 
-/** The projected contours as one path, or null when a point is behind the eye. */
-function trace(contours: readonly Float32Array[], project: PictureProjector): string | null {
+/** The projected contours as one path, or null when a point is behind the eye;
+ * empty where, given an `edge` row, the run stands across it. */
+function trace(contours: readonly Float32Array[], project: PictureProjector, edge?: number): string | null {
   const point: [number, number, number] = [0, 0, 0]
   let out = ''
+  let top = Infinity, bottom = -Infinity
   for (const contour of contours) {
     let part = ''
     for (let i = 0; i < contour.length; i += 3) {
       point[0] = contour[i]!; point[1] = contour[i + 1]!; point[2] = contour[i + 2]!
       const at = project(point)
       if (!at) return null
+      if (at.y < top) top = at.y
+      if (at.y > bottom) bottom = at.y
       part += `${part ? 'L' : 'M'}${at.x.toFixed(1)} ${at.y.toFixed(1)}`
     }
     out += part + 'Z'
   }
-  return out
+  return edge !== undefined && top < edge && bottom > edge ? '' : out
 }
 
 /** The faces turned to the eye, projected. Wound counter-clockwise seen from
@@ -218,7 +224,7 @@ export function createPictureWords(place: (layer: SVGSVGElement) => void): Pictu
     delete svg.dataset['shown']
   }
   return {
-    paint(station, language, project, word) {
+    paint(station, language, project, word, edge) {
       if (!station) { hide(); return true }
       const d = new Map<PictureWordFinish, string[]>()
       const screened = new Set<string>()
@@ -226,8 +232,8 @@ export function createPictureWords(place: (layer: SVGSVGElement) => void): Pictu
       for (const run of pictureWords(language, word)) {
         if (!run.stations.includes(station)) continue
         held++
-        const traced = trace(run.contours, project)
-        // a run that reaches behind the eye is left out whole, never cut
+        const traced = trace(run.contours, project, edge)
+        // a run that reaches behind the eye, or across the sheet's edge (traced empty), is left out whole, never cut
         if (traced === null) continue
         drawn++
         if (run.behind) {

@@ -660,13 +660,15 @@ export function createWing(): WingModule {
     const b = picture.box()
     // the station is read into the key: a release that lands after the first rest paints then
     const station = veiled ? null : release?.nodes[node]?.station ?? null
-    const key = `${node}|${station}|${lang()}|${b.left},${b.top},${b.width}x${b.height}`
+    // upright, a run of words the standing drawer's top would cut waits whole under it
+    const edge = form === 'upright' && drawerOpen && phone ? Math.round(phone.root.getBoundingClientRect().top) : undefined
+    const key = `${node}|${station}|${lang()}|${b.left},${b.top},${b.width}x${b.height}|${edge ?? ''}`
     if (!walking && key === wordsAt) return
     const seam = picture
     const drawn = words.paint(station, pageLang(), point => {
       const at = seam.project(point)
       return at ? { x: b.left + at.x, y: b.top + at.y } : null
-    }, say)
+    }, say, edge)
     // a rest whose print is not read yet is asked again, for a second at most;
     // a walk's key never stands for a rest, so the rest after it paints again
     if (drawn || ++wordsTries > 60) { wordsAt = walking ? `${key}|walk` : key; wordsTries = 0 }
