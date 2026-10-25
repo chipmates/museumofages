@@ -897,8 +897,8 @@ export function createVitrine(options: {
 
   /** THE DRAWER'S LAST LINE FADES OUT, IT NEVER BREAKS OFF. On the phone the
    * words' box ends where the controls begin. While words wait below, the
-   * lower edge fades from the top of the lowest line it shows, so that line
-   * dissolves as the sign of more, and the rest scrolls. */
+   * lower edge fades from the top of the lowest whole line it shows, so that
+   * line dissolves as the sign of more, and the rest scrolls. */
   function fadeWords(): void {
     body.style.removeProperty('--fade')
     if (!open || !options.narrow() || body.scrollHeight <= body.clientHeight + 1) return
@@ -914,7 +914,8 @@ export function createVitrine(options: {
     }
     if (!lines.some(r => r.bottom > floor + .5)) return
     let last = -Infinity
-    for (const r of lines) if (r.top > top + .5 && r.top < floor - 4) last = Math.max(last, r.top)
+    // a line the edge cuts fades with the whole line above it, so the cut never reads as a slice
+    for (const r of lines) if (r.top > top + .5 && r.bottom <= floor + .5) last = Math.max(last, r.top)
     if (last > top) body.style.setProperty('--fade', `${Math.round(Math.min(44, Math.max(16, floor - last)))}px`)
   }
   /* the words change after the layout that placed them: a payload lays in its
