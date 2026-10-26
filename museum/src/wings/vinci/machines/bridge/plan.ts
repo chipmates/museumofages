@@ -157,6 +157,13 @@ export function radiusAt(p: Pole, s: number): number {
   return p.r + p.taper * (0.5 - s / p.length)
 }
 
+/** a pole's centre of weight, metres from end a */
+export function weightFromA(p: Pole): number {
+  let m = 0, w = 0
+  for (let i = 0; i <= 40; i++) { const t = (p.length * i) / 40, r = radiusAt(p, t); m += t * r * r; w += r * r }
+  return m / w
+}
+
 const bare = (): Pick<Pole, 'bow' | 'knots' | 'stubs' | 'cuts' | 'bands' | 'tines'> => ({ bow: [0, 0], knots: [], stubs: [], cuts: [[], []], bands: [], tines: [] })
 
 /** the few poles peeled with a drawknife; the rest keep their bark */
@@ -408,27 +415,30 @@ export function capsules(p: Pole): Capsule[] {
 
 /** a floating pole's axis lies this far under the stream's level */
 export const WATER_AXIS = BANK.water - 0.02
-/** behind each seat two sleeper logs lie across the bank, as high as the seat: the rods lie ready across them, each in
- * the plane it is pushed out along, and go out over the seat from there */
-export const SLEEPER_X = [4.85, 6.55] as const
-export const SLEEPER_HALF = 1.75
-export const SLEEPERS: [number, number][] = ([-1, 1] as const).flatMap(side => SLEEPER_X.map(x => [side * x, SEAT_XY[0][1]] as [number, number]))
-/** where each rod lies in its yard: the plane it lies in and how far out from the middle its bank end lies; the crown
- * rods lie between the frames, the rest in their own planes */
-export const YARD: Record<string, { z: number; foot: number }> = Object.fromEntries(ORDER_RODS().map(p => {
+/** THE KIT. Each bank's first bay is lashed together on the bank before it goes out: its two first rods, its two end
+ * rods under the first joist and the first joist across them all. It goes out over the seat and is raised as one; its
+ * own lashings are on from the start and move with it. */
+export const KITS: Record<string, string[]> = { R1A: ['R1B', 'E0A', 'E0B', 'J1'], R5A: ['R5B', 'E6A', 'E6B', 'J5'] }
+/** the kit a pole belongs to, by its leading rod */
+export const kitOf = (id: string): string | null => (KITS[id] ? id : Object.keys(KITS).find(k => KITS[k]!.includes(id)) ?? null)
+/** where each rod lies on its bank before it goes: the plane it lies in and how far out from the middle its bank end
+ * lies. The kit lies across its seat with its foot on the bank; the other rods lie on the bank behind it, clear of the
+ * kit's joist, the crown rods between the frames, the rest in their own planes. */
+export const KIT_FOOT = 5.95
+export const STOCK_FOOT = 8.22
+export const YARD: Record<string, { z: number; foot: number }> = Object.fromEntries(ALL.filter(p => p.kind === 'rod' && !kitOf(p.id) || KITS[p.id]).map(p => {
   const crown = p.k === 3
-  const foot = p.kind === 'end' ? 6.8 : p.k === 1 || p.k === 5 ? 8.12 : 8.22
-  return [p.id, { z: crown ? (p.frame === 'A' ? -0.4 : 0.4) : p.a[2], foot }]
+  return [p.id, { z: crown ? (p.frame === 'A' ? -0.4 : 0.4) : p.a[2], foot: KITS[p.id] ? KIT_FOOT : STOCK_FOOT }]
 }))
-function ORDER_RODS(): Pole[] { return ALL.filter(p => p.kind !== 'joist') }
-/** the joists that go by water lie on the bank in front of the bridge, the crown joist behind the near one */
-export const JOIST_PILE: Record<string, [number, number]> = { J2: [-4.6, 8.9], J3: [4.95, 4.7], J4: [4.6, 9.0] }
-/** where a joist that goes by water waits, floating in front of the bridge */
+/** the joists that go by water lie on the bank in front of the bridge, one on each bank; the crown joist waits on two
+ * logs on the far bank, back from its edge */
+export const JOIST_PILE: Record<string, [number, number]> = { J2: [-4.6, 8.9], J3: [5.8, 4.7], J4: [4.6, 9.0] }
+/** where a joist that goes by water waits, floating in front of the bridge; the crown joist waits where it is raised */
 export const JOIST_WAIT_Z: Record<string, number> = { J2: 5.0, J4: 5.0 }
 /** the crown joist is raised from its two logs on the bank this far down the stream, then threaded in */
 export const THREAD_Z = 4.7
 /** the crown joist's logs: across the bank under it, x and z of their middles, their half length */
-export const J3_LOGS: [number, number, number][] = [[4.95, 3.4, 0.5], [4.95, 6.0, 0.5]]
+export const J3_LOGS: [number, number, number][] = [[5.8, 3.7, 0.5], [5.8, 5.7, 0.5]]
 export const J3_REST = SEAT_XY[0][1] + SEAT_R + 0.075
 /** the bank each pole comes from (the crown's from the near bank) and its end there: a near rod's end a, a far rod's end b */
 export const sideOf = (p: Pole): -1 | 1 => (p.k === 3 || (p.a[0] + p.b[0]) / 2 < 0 ? -1 : 1)
@@ -532,17 +542,18 @@ export type Step = readonly [number, number]
 /** a pole's moves, seconds of the build clock (ours): pushed out of its yard, tipped over the seat, slid on, floated
  * along the stream and across it, its bank end set on a joist, rolled off the bank, raised, threaded */
 export interface Moves { push?: Step; tip?: Step; slide?: Step; float?: Step; drift?: Step; foot?: Step; roll?: Step; lift?: Step; thread?: Step }
-/** the near bank's; the far bank's start a quarter second later. The first joists ride up on the first rods. */
+/** the near bank's; the far bank's start a quarter second later. Each kit goes out on its first rod. The second rods go
+ * up one bank after the other, so the one never crosses the other on its way. */
 const NEAR_MOVES: Record<string, Moves> = {
-  R1: { push: [0.3, 2.0], tip: [2.0, 2.45], slide: [2.45, 3.2], lift: [3.8, 5.5] },
-  R3: { push: [3.7, 5.3], tip: [5.3, 5.75], slide: [5.75, 7.1], float: [7.1, 7.6], drift: [7.6, 8.3], lift: [8.9, 10.6] },
-  E0: { push: [4.6, 6.0], tip: [6.0, 6.45], slide: [6.45, 6.9], lift: [7.5, 8.7] },
-  J2: { roll: [3.0, 4.6], float: [4.6, 6.5], drift: [9.6, 10.4], lift: [10.6, 12.2] },
-  R2: { push: [10.8, 12.4], tip: [12.4, 12.85], slide: [12.85, 14.1], float: [14.1, 14.5], foot: [15.1, 16.2], lift: [16.8, 18.3] },
-  J3: { lift: [18.0, 19.6], thread: [19.6, 20.8] },
+  R1: { push: [0.3, 1.1], tip: [1.1, 1.55], slide: [1.55, 2.3], lift: [2.9, 4.6] },
+  R3: { push: [2.7, 4.6], tip: [4.6, 5.05], slide: [5.05, 6.4], float: [6.4, 6.9], drift: [6.9, 7.6], lift: [7.9, 9.4] },
+  J2: { roll: [3.0, 4.6], float: [4.6, 6.5], drift: [8.4, 9.2], lift: [9.4, 11.0] },
+  R2: { push: [8.5, 10.1], tip: [10.1, 10.55], slide: [10.55, 11.8], float: [11.8, 12.2], foot: [13.95, 14.95], lift: [15.45, 16.75] },
+  R4: { push: [8.75, 10.35], tip: [10.35, 10.8], slide: [10.8, 12.05], float: [12.05, 12.45], foot: [17.35, 18.35], lift: [18.85, 20.15] },
+  J3: { lift: [18.2, 20.2], thread: [20.25, 21.45] },
 }
 export const FAR_LAG = 0.25
-const TWIN: Record<string, string> = { R5: 'R1', E6: 'E0', R4: 'R2', J4: 'J2' }
+const TWIN: Record<string, string> = { R5: 'R1', J4: 'J2' }
 const shift = (m: Moves, by: number): Moves => Object.fromEntries(Object.entries(m).map(([k, v]) => [k, [v[0] + by, v[1] + by]])) as Moves
 const MOVES_OF = (id: string): Moves => { const key = id.replace(/[AB]$/, ''); return NEAR_MOVES[key] ?? shift(NEAR_MOVES[TWIN[key]!]!, FAR_LAG) }
 
@@ -570,14 +581,22 @@ export const PROPS: Prop[] = (() => {
     }
     return s
   }
+  // a fork that holds a pole balanced holds it at its centre of weight, the nearest bare wood within a few centimetres
+  const balance = (p: Pole): number => {
+    const c = weightFromA(p)
+    for (let k = 0; k <= 5; k++) for (const sign of [1, -1]) {
+      const t = c + sign * k * 0.015
+      if (p.stubs.every(st => Math.abs(st.s - t) >= 0.12) && p.knots.every(kn => Math.abs(kn.s - t) >= 0.08)) return t
+    }
+    return c
+  }
   for (const frame of ['A', 'B'] as const) {
     const out: [number, number] = [0, frame === 'A' ? -1 : 1]
-    // the near rod's prop leans flatter, clear of the second rod pushed out under it
+    // each kit stands on a prop under each first rod; the near one leans flatter, clear of the second rod pushed out under it
     for (const [k, s, angle] of [[1, 3.17, 1.22], [5, 2.95, 1.0]] as const) { const p = byId(`R${k}${frame}`); add(`F${p.id}`, p.id, fromFoot(p, s), out, angle) }
-    for (const k of [0, 6]) { const p = byId(`E${k}${frame}`); add(`F${p.id}`, p.id, fromFoot(p, 1.6), out, 1.08) }
+    // a crown rod is raised level on one fork under its centre of weight
     const r3 = byId(`R3${frame}`)
-    add(`FR3${frame}`, r3.id, 1.46, out, 1.19)
-    add(`GR3${frame}`, r3.id, 2.36, out, 1.19)
+    add(`FR3${frame}`, r3.id, balance(r3), out, 1.19)
     // a second rod's one prop: under its bank end while that goes onto its first joist, then the rod slides along the
     // fork until the prop stands beyond its centre of weight, and it is raised
     for (const [k, first, then] of [[2, 1.1, 2.2], [4, 1.7, 2.62]] as const) {
@@ -587,14 +606,14 @@ export const PROPS: Prop[] = (() => {
       list[list.length - 1] = { ...last, s: fromFoot(p, first), slide: { s: fromFoot(p, then), at: [m.foot![1] + 0.05, m.lift![0] - 0.05] } }
     }
   }
+  // a second joist is raised out of the stream on two forks between the frames, the far one's either side of the near one's
   for (const [k, off, x] of [[2, 0.45, 1], [4, 0.72, -1]] as const) {
     add(`FJ${k}`, `J${k}`, JOIST_HALF - off, [x, 0], 1.15)
     add(`GJ${k}`, `J${k}`, JOIST_HALF + off, [x, 0], 1.15)
   }
-  // the crown joist's props stand on the bank behind it and walk it out over the stream
-  // threaded in, it lies on both props, then on the near one and the far frame's crown rod, then on that rod held down
-  // by the rods over it, each in turn on the side its weight lifts
-  add('FJ3', 'J3', JOIST_HALF + (3.0 - THREAD_Z), [1, 0], 1.15, 'thread')
+  // the crown joist's props stand on the bank behind it and walk it out over the stream; threaded in, it lies on both
+  // props, then on the near one and the far frame's crown rod, then on that rod held down by the rods over it
+  add('FJ3', 'J3', JOIST_HALF + (3.4 - THREAD_Z), [1, 0], 1.15, 'thread')
   add('GJ3', 'J3', JOIST_HALF + (4.9 - THREAD_Z), [1, 0], 1.15, 'thread')
   return list
 })()
@@ -623,44 +642,49 @@ export const POLES: Pole[] = [...ORDER.map(byId), ...PROPS.map(propPole)]
 
 export const PERIOD = 40
 export const HOLD_END = 31
-export const REWIND = 2.6
+export const REWIND = 2.8
 
-/** which pole a riding joist rides up on */
-export const RIDES: Record<string, string> = { J1: 'R1A', J5: 'R5A' }
+/** which pole a kit's member rides on: its leading rod */
+export const RIDES: Record<string, string> = Object.fromEntries(Object.entries(KITS).flatMap(([lead, members]) => members.map(m => [m, lead])))
 export const MOVES: Record<string, Moves> = Object.fromEntries(ORDER.filter(id => !RIDES[id]).map(id => {
   return [id, MOVES_OF(id)]
 }))
+/** a pole's moves, a kit's member by its leading rod's */
+export const movesOf = (id: string): Moves => MOVES[RIDES[id] ?? id]!
 /** when a pole comes to rest in its place */
 export function landOf(id: string): number {
-  const m = MOVES[RIDES[id] ?? id]!
+  const m = movesOf(id)
   return (m.thread ?? m.lift)![1]
 }
 
 export const LASH_DELAY = 0.15, LASH_TIME = 0.9
+/** a kit's own lashings were wound on the bank before the clock starts */
+export const KIT_LASHED = -2
+export const inKit = (c: Crossing): boolean => kitOf(c.rod) !== null && kitOf(c.rod) === kitOf(c.support)
 /** when a crossing's lashing starts winding: both its poles stand */
 export function lashStart(c: Crossing): number {
+  if (inKit(c)) return KIT_LASHED
   const support = c.support.startsWith('S') ? 0 : landOf(c.support)
   return Math.max(landOf(c.rod), support) + LASH_DELAY
 }
 export function lashEnd(c: Crossing): number { return lashStart(c) + LASH_TIME }
-const lashOf = (rod: string, support: string): number => lashEnd(CROSSINGS.find(c => c.rod === rod && c.support === support)!)
 
 /** a prop's day: it slides in along the bed from where it lies up or down the stream, rises to meet its load as the
- * load's raising starts, holds it until what the load comes to rest on is lashed, is laid back down and slides back out.
- * The last ones up stay where they are laid down. */
+ * load's raising starts and holds it. The props go out in two moves: the kits' and the crown rods' together once the
+ * second joists under them are lashed (they are slid away), the rest together once the last lashing is wound (they lie
+ * where they are laid); the crown joist's let go as it slides off them. */
 export const PROP_RISE = 0.6, PROP_DOWN = 1.0, PARK_SLIDE = 1.2
 /** idle props lie with their heads at least this far up the stream from the bridge's middle, or down it (beyond where
  * the crown joist's props work) */
 export const PARK_UP = 5.6, PARK_DOWN = 9.0
 export interface PropTimes { rise: Step; release: number; down: Step; parkIn?: Step; parkOut?: Step }
-/** props that lie idle up or down the stream: those standing in a plane across the bridge, but the end rods' */
+/** props that stand in a plane across the bridge: idle up or down the stream */
 const across = (s: Prop): boolean => Math.abs(s.away[1]) > 0.5
-const secondRod = (load: Pole): boolean => load.kind === 'rod' && (load.k === 2 || load.k === 4)
-/** the props that lie idle away from the bridge before their work (the end rods' lie by it) and after it (the second
- * rods' are laid down where they stood, the last at work) */
-export const parksBefore = (s: Prop): boolean => across(s) && byId(s.load).kind !== 'end'
-export const parksAfter = (s: Prop): boolean => across(s) && !secondRod(byId(s.load))
-/** laid down outward, swung over its foot away from the bridge; the joists' props go back the way they came */
+/** the first move's props: those under the kits and the crown rods */
+const firstOut = (s: Prop): boolean => kitOf(s.load) !== null || byId(s.load).k === 3 && byId(s.load).kind === 'rod'
+export const parksBefore = (s: Prop): boolean => across(s)
+export const parksAfter = (s: Prop): boolean => across(s) && firstOut(s)
+/** laid down outward, swung over its foot away from the bridge; the crown joist's go back the way they came */
 export const laysOutward = (s: Prop): boolean => across(s) && s.load !== 'J3'
 /** the crown joist slides off its props as it is threaded: each lets go while its trailing end is still 0.3 m short
  * of the fork (the thread runs on the motion's smootherstep, inverted here) */
@@ -672,16 +696,15 @@ function threadRelease(s: Prop, load: Pole, thread: Step): number {
   for (let i = 0; i < 30; i++) { const mid = (lo + hi) / 2; if (ease(mid) < need) lo = mid; else hi = mid }
   return thread[0] + (thread[1] - thread[0]) * lo
 }
+/** the first move: the kits' rods and the crown rods lashed onto the second joists */
+const FIRST_OUT = Math.max(...CROSSINGS.filter(c => (c.support === 'J2' || c.support === 'J4') && c.over && (kitOf(c.rod) || c.rod.startsWith('R3'))).map(lashEnd))
+/** the last: every lashing wound */
+const LAST_OUT = Math.max(...CROSSINGS.map(lashEnd))
 export const PROP_TIMES: Record<string, PropTimes> = Object.fromEntries(PROPS.map(s => {
-  const load = byId(s.load), m = MOVES[s.load]!
-  const second = load.k === 2 || load.k === 4
-  const start = second && load.kind === 'rod' ? m.foot![0] : m.lift![0]
-  let release: number
-  if (load.kind === 'joist') release = load.k === 3 ? threadRelease(s, load, m.thread!) : Math.max(...CROSSINGS.filter(c => c.support === load.id && c.over === false).map(c => lashOf(c.rod, c.support)))
-  else if (load.kind === 'end') release = lashOf(load.id, `J${load.k === 0 ? 1 : 5}`)
-  else if (load.k === 1 || load.k === 5) release = lashOf(load.id, `J${load.k === 1 ? 2 : 4}`)
-  else if (load.k === 3) release = Math.max(lashOf(load.id, 'J2'), lashOf(load.id, 'J4'))
-  else release = lashOf(load.id, 'J3')
+  const load = byId(s.load), m = movesOf(s.load)
+  const second = load.kind === 'rod' && (load.k === 2 || load.k === 4)
+  const start = second ? m.foot![0] : m.lift![0]
+  const release = load.id === 'J3' ? threadRelease(s, load, m.thread!) : firstOut(s) ? FIRST_OUT : LAST_OUT
   const rise: Step = [start - PROP_RISE, start], down: Step = [release + 0.05, release + 0.05 + PROP_DOWN]
   return [s.id, {
     rise, release, down,

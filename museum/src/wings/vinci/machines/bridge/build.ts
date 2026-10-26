@@ -12,12 +12,12 @@
  * coordinates) and `aShade` (how dark it lies where another part bears on
  * it, and the build-clock moment that part arrives).
  */
-import { BufferGeometry, Float32BufferAttribute } from 'three/webgpu'
+import { BufferGeometry, Float32BufferAttribute, Uint16BufferAttribute } from 'three/webgpu'
 import {
-  BAND_RAG, BANK, BARK, CROSSINGS, J3_LOGS, LASH_TIME, POLES, ROPE_R, SEAT_HALF, SEAT_R, SEAT_XY, SLEEPERS, SLEEPER_HALF, STAKES, TAU, TURNS, bandEdge, bowAt, groundY, hash, inBand, landOf,
+  BAND_RAG, BANK, BARK, CROSSINGS, J3_LOGS, LASH_TIME, POLES, ROPE_R, SEAT_HALF, SEAT_R, SEAT_XY, STAKES, TAU, TURNS, bandEdge, bowAt, groundY, hash, inBand, inKit, landOf,
   lashStart, radiusAt, stubAxis, supportOf, tineAxis, type Crossing, type Facet, type Pole, type V3,
 } from './plan'
-import { PLACED, rotate } from './motion'
+import { PLACED, rotate, type Q } from './motion'
 
 const add = (a: V3, b: V3): V3 => [a[0] + b[0], a[1] + b[1], a[2] + b[2]]
 const sub = (a: V3, b: V3): V3 => [a[0] - b[0], a[1] - b[1], a[2] - b[2]]
@@ -299,15 +299,16 @@ export function poleShading(p: Pole): Shading | undefined {
   if (p.kind === 'strut') return undefined
   const pose = PLACED[p.id]!
   const mine = CROSSINGS.filter(c => c.rod === p.id || c.support === p.id)
-  const near = mine.map(c => ({ other: bodyOf(c.rod === p.id ? c.support : c.rod), lash: lashStart(c) + LASH_TIME * 0.5, frame: crossingFrame(c) }))
+  const near = mine.map(c => ({ other: bodyOf(c.rod === p.id ? c.support : c.rod), lash: lashStart(c) + LASH_TIME * 0.5, frame: crossingFrame(c), kit: inKit(c) }))
   const landed = landOf(p.id)
   return local => {
     const w = add(pose.at, rotate(pose.q, local))
     let best = 0, born = 0
-    for (const { other, lash, frame } of near) {
+    for (const { other, lash, frame, kit } of near) {
       const gap = Math.max(0, axisGap(w, other))
       const touch = 0.55 * Math.exp(-gap / 0.02)
-      const tb = Math.max(landed, other.born) + 0.15
+      // a kit's poles lie on one another from the start
+      const tb = kit ? lash : Math.max(landed, other.born) + 0.15
       if (touch > best) { best = touch; born = tb }
       // under and beside the turns: the rope's own shadow on the pole
       const rel = sub(w, frame.o), dd = Math.abs(dot(rel, frame.d)), ww = Math.abs(dot(rel, frame.w))
@@ -357,11 +358,8 @@ export function groundworkPoles(): Pole[] {
     p.cuts = [[], [{ az: TAU * hash(i, 66), tilt: 0.55, c: 0.012 }]]
     parts.push(p)
   })
-  // the yard's sleepers under the rods, and the two logs the crown joist waits on
-  const logs: [V3, V3][] = [
-    ...SLEEPERS.map(([x, y]): [V3, V3] => [[x, y, -SLEEPER_HALF], [x, y, SLEEPER_HALF]]),
-    ...J3_LOGS.map(([x, z, h]): [V3, V3] => [[x - h, SEAT_XY[0][1], z], [x + h, SEAT_XY[0][1], z]]),
-  ]
+  // the two logs the crown joist waits on
+  const logs: [V3, V3][] = J3_LOGS.map(([x, z, h]): [V3, V3] => [[x - h, SEAT_XY[0][1], z], [x + h, SEAT_XY[0][1], z]])
   logs.forEach(([a, b], i) => {
     const p = base(`L${i}`, a, b, SEAT_R, 0.01 * (hash(i, 67) > 0.5 ? 1 : -1), hash(i, 68), 0.92 + 0.12 * hash(i, 69))
     p.cuts = [0, 1].map(e => [0, 1].map(j => ({ az: TAU * hash(i, e, j, 70) + j * Math.PI, tilt: 0.45 + 0.15 * hash(i, e, j, 71), c: 0.01 + 0.02 * hash(i, e, j, 72) }))) as [Facet[], Facet[]]
@@ -539,12 +537,15 @@ function chaikin(path: PathPt[], passes: number): PathPt[] {
 }
 
 /** Every lashing as one surface: each vertex knows the centre of the rope where it lies (`aSpine`), and in `aRope` the
- * moment it is wound, whether it is served there and how close it lies on a pole. */
-export function lashingGeometry(detail: LashDetail = LASH_FINE): BufferGeometry {
+ * moment it is wound, whether it is served there and how close it lies on a pole. `kit`: the lashings of the kits
+ * alone, each in its joist's own frame and bound to that joist's bone, so they go out and up with the kit; else every
+ * other lashing, in place. */
+export function lashingGeometry(detail: LashDetail = LASH_FINE, kit = false): BufferGeometry {
   const sheet = new Sheet()
-  const spine: number[] = [], born: number[] = [], serve: number[] = []
+  const spine: number[] = [], born: number[] = [], serve: number[] = [], bone: number[] = []
   const around = detail.around
   CROSSINGS.forEach((c, ci) => {
+    if (inKit(c) !== kit) return
     const start = lashStart(c)
     const rod = bodyOf(c.rod), sup = bodyOf(c.support)
     const loops = [...Array.from({ length: TURNS }, (_, i) => turnPath(c, i, detail)), ...[0, 1].map(j => frapPath(c, j, detail))]
@@ -584,7 +585,7 @@ export function lashingGeometry(detail: LashDetail = LASH_FINE): BufferGeometry 
           // the rope's side that lies on a pole is in its shade
           const onPole = Math.max(0, Math.min(axisGap(pos, rod), axisGap(pos, sup)))
           sheet.vertex(pos, nrm, (k / around) * TAU * ROPE_R, s, [0.92 + 0.16 * seed, 0, 0], seed, [0, 0, 0], [0.5 * Math.exp(-onPole / 0.006), bornAt])
-          spine.push(q.p[0], q.p[1], q.p[2]); born.push(bornAt); serve.push(q.serve)
+          spine.push(q.p[0], q.p[1], q.p[2]); born.push(bornAt); serve.push(q.serve); bone.push(BONE[c.support] ?? 0)
         }
       }
       for (let j = 0; j < n; j++) {
@@ -597,9 +598,26 @@ export function lashingGeometry(detail: LashDetail = LASH_FINE): BufferGeometry 
   // the moment each piece is wound, whether it is served there, how close it lies on a pole
   const rope: number[] = []
   for (let i = 0; i < born.length; i++) rope.push(born[i]!, serve[i]!, sheet.shade[i * 2]!)
+  if (kit) {
+    // into the frame of the joist each is bound to: the bone that carries it puts it back in place
+    for (let i = 0; i < born.length; i++) {
+      const pose = PLACED[POLES[bone[i]!]!.id]!, back: Q = [-pose.q[0], -pose.q[1], -pose.q[2], pose.q[3]]
+      const at = rotate(back, sub(sheet.at(i), pose.at)), n = rotate(back, [sheet.normal[i * 3]!, sheet.normal[i * 3 + 1]!, sheet.normal[i * 3 + 2]!])
+      const sp = rotate(back, sub([spine[i * 3]!, spine[i * 3 + 1]!, spine[i * 3 + 2]!], pose.at))
+      sheet.position.splice(i * 3, 3, ...at); sheet.normal.splice(i * 3, 3, ...n); spine.splice(i * 3, 3, ...sp)
+    }
+    sheet.extra = { aSpine: { size: 3, data: spine }, aRope: { size: 3, data: rope } }
+    const g = sheet.geometry('rope'), index = new Uint16Array(bone.length * 4), weight = new Float32Array(bone.length * 4)
+    bone.forEach((b, i) => { index[i * 4] = b; weight[i * 4] = 1 })
+    g.setAttribute('skinIndex', new Uint16BufferAttribute(index, 4))
+    g.setAttribute('skinWeight', new Float32BufferAttribute(weight, 4))
+    return g
+  }
   sheet.extra = { aSpine: { size: 3, data: spine }, aRope: { size: 3, data: rope } }
   return sheet.geometry('rope')
 }
+/** each pole's bone: its place in the skeleton, the order of `POLES` */
+const BONE: Record<string, number> = Object.fromEntries(POLES.map((p, i) => [p.id, i]))
 
 // ---------------------------------------------------------------- the bank and the stream
 

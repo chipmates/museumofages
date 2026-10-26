@@ -4,14 +4,16 @@
  * is built from its own numbers (`bridge/plan.ts`).
  *
  * What moves is the building of it, from both banks at once, with no pole
- * ever in the air on its own: each rod is pushed out of its bank's yard over
- * the seat, slides into the stream and floats; joists roll off the bank and
- * float, the first two ride up on the first rods, the crown joist waits on
- * logs on the bank; forked props slide in along the stream bed, rise under
- * each load and walk in as it is raised, and are laid down and slid away
- * once what the load rests on is lashed. The lashings wind on as each
- * crossing closes, the bridge holds whole, then goes back in the reverse
- * order so the cycle ends where it began. `section(true)` takes the lashings off: the same
+ * ever in the air on its own: each bank's first bay goes out over its seat as
+ * one kit lashed on the bank and is raised on its props; every other rod is
+ * pushed off the bank over the seat, slides into the stream and floats;
+ * joists roll off the bank and float, the crown joist waits on logs on the
+ * bank; forked props slide in along the stream bed, rise under each load and
+ * walk in as it is raised, and go out in two moves: the first once the
+ * second joists under the kits and the crown rods are lashed, the last once
+ * the last lashing is wound. The lashings wind on as each crossing closes,
+ * the bridge holds whole, then goes back in the reverse order so the cycle
+ * ends where it began. `section(true)` takes the lashings off: the same
  * poles held by the weave alone, as most builds of it today stand.
  */
 import { Bone, Box3, Float32BufferAttribute, Group, Mesh, PlaneGeometry, Skeleton, SkinnedMesh, Sphere, Uint16BufferAttribute, Vector3, type BufferGeometry, type Material, type Object3D } from 'three/webgpu'
@@ -44,7 +46,7 @@ export function build(stack: Stack): ReadyMachineBuild {
   const sets = new Set<MaterialSet>()
   const bones = new Map<string, Bone>()
   const parts = new Map<string, { node: Object3D; geometry: BufferGeometry }>()
-  let lashings: Mesh | null = null
+  let lashings: Mesh | null = null, kitLashings: SkinnedMesh | null = null
   let surfaces: Awaited<ReturnType<typeof bridgeSurfaces>> | null = null
   let lashed = true
   let reflection: Reflection | null = null
@@ -106,12 +108,26 @@ export function build(stack: Stack): ReadyMachineBuild {
     // the bones carry the poles far from where their geometry was made: the swept envelope holds them all
     poles.frustumCulled = false
     object.add(poles)
-    poles.bind(new Skeleton([...bones.values()]))
+    const skeleton = new Skeleton([...bones.values()])
+    poles.bind(skeleton)
     poles.boundingBox = bounds.clone(); poles.boundingSphere = bounds.getBoundingSphere(new Sphere())
     hang('groundwork', groundworkGeometry(hero ? POLE_FINE : POLE_COARSE), surfaces.pole)
     lashings = hang('lashings', lashingGeometry(hero ? LASH_FINE : LASH_COARSE), surfaces.hemp)
     lashings.frustumCulled = false
     lashings.visible = lashed
+    // the kits' own lashings, wound on the bank, ride on their joists' bones
+    const kitGeometry = lashingGeometry(hero ? LASH_FINE : LASH_COARSE, true)
+    geometries.add(kitGeometry)
+    kitLashings = new SkinnedMesh(kitGeometry, surfaces.hemp)
+    kitLashings.name = 'kit-lashings'
+    kitLashings.castShadow = true
+    kitLashings.receiveShadow = true
+    kitLashings.frustumCulled = false
+    object.add(kitLashings)
+    kitLashings.bind(skeleton)
+    kitLashings.boundingBox = bounds.clone(); kitLashings.boundingSphere = bounds.getBoundingSphere(new Sphere())
+    kitLashings.visible = lashed
+    parts.set('kit-lashings', { node: kitLashings, geometry: kitGeometry })
     hang('bank', bankGeometry(), surfaces.earth)
     hang('stream', waterGeometry(), surfaces.water, false)
     // the stream's level face: one planar pass at half resolution, as the wing's own stream; calm keeps the sky alone
@@ -158,6 +174,7 @@ export function build(stack: Stack): ReadyMachineBuild {
       if (disposed) return
       lashed = !enabled
       if (lashings) lashings.visible = lashed
+      if (kitLashings) kitLashings.visible = lashed
     },
     part(id) {
       return parts.get(id) ?? null

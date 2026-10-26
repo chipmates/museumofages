@@ -1,18 +1,19 @@
 /** THE ASSEMBLY'S PATHS (the order, the paths and the means are ours). No
- * pole moves through the air on its own. A rod is pushed out of its yard
- * over the seat log, tips into the stream, slides on, floats; a joist rolls
- * off the bank into the stream; each is raised on forked props whose feet
- * slide on the ground, a seat rod pivoting on its seat, a second-bay rod on
- * its first joist; a first joist rides up on the rods under it; the crown
- * joist is threaded in along its length. Every resting pose is solved from
- * what holds the pole (the ground, the sleepers and the seats, the stream's
- * level, the joist it pivots on) and sampled once into a table the clock
- * reads. Pure arithmetic, no renderer: a check sweeps it.
+ * pole moves through the air on its own. Each bank's first bay goes out as
+ * one lashed kit over its seat log and is raised on its props, pivoting on
+ * the seat; every other rod is pushed off the bank over the seat, tips into
+ * the stream, slides on and floats; a joist rolls off the bank into the
+ * stream; each is raised on forked props whose feet slide on the ground, a
+ * second-bay rod pivoting on its first joist; the crown joist is threaded in
+ * along its length. Every resting pose is solved from what holds the pole
+ * (the ground, the seats, the stream's level, the joist it pivots on) and
+ * sampled once into a table the clock reads. Pure arithmetic, no renderer: a
+ * check sweeps it.
  */
 import {
-  J3_REST, JOIST_HALF, JOIST_PILE, JOIST_WAIT_Z, JOIST_XY, MOVES, ORDER, PARK_DOWN, PARK_UP, POLES, PROPS, PROP_TIMES, RIDES, SEAT_HALF, SEAT_R,
-  SEAT_XY, SLEEPERS, SLEEPER_HALF, STRUT_R, capsules, THREAD_Z, footHeight, laysOutward, WATER_AXIS, YARD, bowAt, buildClock, crotchDepth, floatTurn, footEnd, groundY, radiusAt,
-  sideOf, type Moves, type Pole, type Prop, type Step, type V3,
+  J3_REST, JOIST_HALF, JOIST_PILE, JOIST_WAIT_Z, JOIST_XY, KITS, MOVES, PARK_DOWN, PARK_UP, POLES, PROPS, PROP_TIMES, RIDES, SEAT_HALF, SEAT_R,
+  SEAT_XY, STRUT_R, THREAD_Z, footHeight, laysOutward, WATER_AXIS, YARD, bowAt, buildClock, crotchDepth, floatTurn, footEnd, groundY, landOf, movesOf, radiusAt,
+  sideOf, ORDER, type Moves, type Pole, type Prop, type Step, type V3,
 } from './plan'
 
 export type Q = [number, number, number, number]
@@ -85,15 +86,17 @@ function groundFloor(x: number, z: number, r: number): number {
   const g = groundY(x, z), slope = (groundY(x + 0.02, z) - g) / 0.02
   return Math.max(g + r * Math.sqrt(1 + slope * slope), WATER_AXIS)
 }
-/** the logs a rod may lie across: the seats and the sleepers */
-const LOGS: { o: [number, number]; half: number }[] = [...SEAT_XY.map(o => ({ o, half: SEAT_HALF })), ...SLEEPERS.map(o => ({ o, half: SLEEPER_HALF }))]
+/** the logs a rod may lie across: the seats */
+const LOGS: { o: [number, number]; half: number }[] = SEAT_XY.map(o => ({ o, half: SEAT_HALF }))
 
 /** A rod's line in its plane: its bank end's x and y and its rise toward the stream. Rods pushed as one share it. */
 interface Line { x: number; y: number; phi: number }
-interface Gang { poles: Pole[]; zs: number[]; side: -1 | 1; length: number }
-const gangOf = (ids: string[], zs?: number[]): Gang => {
+/** rods pushed as one, from one bank end: each lies along the leading rod's line in its own plane, to its own length;
+ * `cm` the whole's centre of weight from the bank end */
+interface Gang { poles: Pole[]; zs: number[]; side: -1 | 1; length: number; cm: number }
+const gangOf = (ids: string[], zs?: number[], cm?: number): Gang => {
   const poles = ids.map(id => byId[id]!)
-  return { poles, zs: zs ?? poles.map(p => p.a[2]), side: sideOf(poles[0]!), length: poles[0]!.length }
+  return { poles, zs: zs ?? poles.map(p => p.a[2]), side: sideOf(poles[0]!), length: poles[0]!.length, cm: cm ?? weightAt(poles[0]!) }
 }
 /** distance from the bank end to s from end a */
 const fromFoot = (p: Pole, t: number): number => (footEnd(p) === 0 ? t : p.length - t)
@@ -117,25 +120,28 @@ const SAMPLES = 32
 /** the line on which the gang lies lowest with its bank end at x: the ground and the stream sampled along it, each log it
  * may lie across met exactly where the line touches it */
 function restLine(g: Gang, x: number): Line {
-  const L = g.length, ts = Array.from({ length: SAMPLES + 1 }, (_, i) => (L * i) / SAMPLES)
-  const rs = g.poles.map(p => ts.map(t => radiusAt(p, fromFoot(p, t))))
-  const cm = weightAt(g.poles[0]!)
+  const L = g.length
+  const ts = g.poles.map(p => Array.from({ length: SAMPLES + 1 }, (_, i) => (p.length * i) / SAMPLES))
+  const rs = g.poles.map((p, k) => ts[k]!.map(t => radiusAt(p, fromFoot(p, t))))
+  const cm = g.cm
   const logs = LOGS.filter(l => Math.abs(l.o[0] - x) < L + 0.5 && g.zs.some(z => Math.abs(z) <= l.half))
   const lift = (phi: number): number => {
     const c = Math.cos(phi), s = Math.sin(phi)
     let y = -Infinity
-    for (let i = 0; i <= SAMPLES; i++) {
-      const t = ts[i]!, px = x - g.side * t * c
-      for (let k = 0; k < g.poles.length; k++) y = Math.max(y, groundFloor(px, g.zs[k]!, rs[k]![i]!) - t * s)
+    for (let k = 0; k < g.poles.length; k++) for (let i = 0; i <= SAMPLES; i++) {
+      const t = ts[k]![i]!, px = x - g.side * t * c
+      y = Math.max(y, groundFloor(px, g.zs[k]!, rs[k]![i]!) - t * s)
     }
     for (const { o } of logs) for (const p of g.poles) {
+      const L = p.length
       // the line touching the log from above, if it touches within the rod; else the end that lies over it
       const r0 = radiusAt(p, fromFoot(p, Math.min(L, Math.max(0, (o[0] - x) * -g.side * c))))
       const need = o[1] + (SEAT_R + r0 - (x - o[0]) * g.side * s) / c
       const at = (o[0] - x) * -g.side * c + (o[1] - need) * s
-      if (at >= 0 && at <= L) { y = Math.max(y, o[1] + (SEAT_R + radiusAt(p, fromFoot(p, at)) + outgrowth(p, at, g.side) + 0.003 - (x - o[0]) * g.side * s) / c); continue }
+      // the line over the log within the rod, and each end that comes over it (a rod climbing the log end first)
+      if (at >= 0 && at <= L) y = Math.max(y, o[1] + (SEAT_R + radiusAt(p, fromFoot(p, at)) + outgrowth(p, at, g.side) + 0.003 - (x - o[0]) * g.side * s) / c)
       for (const t of [0, L]) {
-        const reach = SEAT_R + radiusAt(p, fromFoot(p, t)) + 0.003, dx = x - g.side * t * c - o[0]
+        const reach = SEAT_R + radiusAt(p, fromFoot(p, t)) + 0.006, dx = x - g.side * t * c - o[0]
         if (Math.abs(dx) < reach) y = Math.max(y, o[1] + Math.sqrt(reach * reach - dx * dx) - t * s)
       }
     }
@@ -196,7 +202,7 @@ const OVER_LOGS = 0.012
  * pieces for each of its rods and the line it ends on. */
 function outOfTheYard(g: Gang, m: Moves, intoStream: boolean): { segs: Seg[][]; end: Line } {
   const seat = SEAT_XY[g.side < 0 ? 0 : 1], O: [number, number] = [seat[0], seat[1]]
-  const p0 = g.poles[0]!, cm = weightAt(p0)
+  const p0 = g.poles[0]!, cm = g.cm
   const start = g.side * YARD[p0.id]!.foot
   // the push ends with the weight over the seat's axis
   const tipX = seat[0] + g.side * cm
@@ -213,9 +219,9 @@ function outOfTheYard(g: Gang, m: Moves, intoStream: boolean): { segs: Seg[][]; 
   }
   // it tips until it lies on the stream or on the bank's edge, whichever it meets first
   const clear = (l: Line): boolean => {
-    for (let i = 4; i <= SAMPLES; i++) {
-      const t = (p0.length * i) / SAMPLES, px = l.x - g.side * t * Math.cos(l.phi), py = l.y + t * Math.sin(l.phi)
-      for (let k = 0; k < g.poles.length; k++) if (py < groundFloor(px, g.zs[k]!, radiusAt(g.poles[k]!, fromFoot(g.poles[k]!, t)))) return false
+    for (let k = 0; k < g.poles.length; k++) for (let i = 4; i <= SAMPLES; i++) {
+      const t = (g.poles[k]!.length * i) / SAMPLES, px = l.x - g.side * t * Math.cos(l.phi), py = l.y + t * Math.sin(l.phi)
+      if (py < groundFloor(px, g.zs[k]!, radiusAt(g.poles[k]!, fromFoot(g.poles[k]!, t)))) return false
     }
     return true
   }
@@ -238,7 +244,7 @@ function outOfTheYard(g: Gang, m: Moves, intoStream: boolean): { segs: Seg[][]; 
   const segs = g.poles.map((p, k) => {
     const z = g.zs[k]!
     return [
-      tabled(m.push![0], m.push![1], f => poseOnLine(p, pushed(f), z, g.side), steps(m.push!, 0.03)),
+      tabled(m.push![0], m.push![1], f => poseOnLine(p, pushed(f), z, g.side), steps(m.push!, OVER_LOGS)),
       tabled(m.tip![0], m.tip![1], f => poseOnLine(p, tipLine(dTip * f), z, g.side), 12),
       tabled(m.slide![0], m.slide![1], f => poseOnLine(p, slid(f), z, g.side), steps(m.slide!, OVER_LOGS)),
     ]
@@ -249,11 +255,27 @@ function outOfTheYard(g: Gang, m: Moves, intoStream: boolean): { segs: Seg[][]; 
 const tracks: Record<string, Track> = {}
 const yardPose: Record<string, Pose> = {}
 
-/** a seat rod: out of its yard, then raised on its prop, pivoting on the seat log */
+/** a kit's centre of weight from its bank end, along its leading rod: every member's weight where it lies */
+function kitWeight(lead: string): number {
+  const p0 = byId[lead]!, f = finalPose(p0), o = place(f, [(footEnd(p0) === 0 ? -1 : 1) * p0.length / 2, 0, 0]), d = norm(sub(place(f, [0, 0, 0]), o))
+  let m = 0, w = 0
+  for (const id of [lead, ...KITS[lead]!]) {
+    const p = byId[id]!, pf = finalPose(p)
+    for (let i = 0; i <= 40; i++) {
+      const s = (p.length * i) / 40, r = radiusAt(p, s), q = place(pf, [s - p.length / 2, 0, 0])
+      m += dot(sub(q, o), d) * r * r; w += r * r
+    }
+  }
+  return m / w
+}
+/** a kit: out of its yard on its leading rod's line, its other rods lying along that line in their planes, then
+ * raised on its props, pivoting on the seat log; its members ride on the leading rod */
 function seatRods(ids: string[]): void {
-  const g = gangOf(ids), m = MOVES[ids[0]!]!
+  const lead = ids[0]!
+  const rods = [lead, ...KITS[lead]!.filter(id => byId[id]!.kind !== 'joist')]
+  const g = gangOf(rods, undefined, kitWeight(lead)), m = MOVES[lead]!
   const { segs, end } = outOfTheYard(g, m, false)
-  g.poles.forEach((p, k) => {
+  g.poles.slice(0, 1).forEach((p, k) => {
     const seat = SEAT_XY[g.side < 0 ? 0 : 1], O: V3 = [seat[0], seat[1], g.zs[k]!]
     const f = finalPose(p), d = norm(sub(p.b, p.a))
     const phiFinal = Math.asin(footEnd(p) === 0 ? d[1] : -d[1])
@@ -365,8 +387,8 @@ function waterJoist(id: string): void {
   tracks[id] = track
 }
 
-/** the crown joist: lifted from its logs on the bank on its props and walked out over the stream beside the far frame,
- * then threaded in along its length */
+/** the crown joist: lifted from its logs on the bank on its props and walked out over the stream in front of the
+ * bridge, then threaded in along its length */
 function bankJoist(id: string): void {
   const p = byId[id]!, m = MOVES[id]!, f = finalPose(p)
   const [px, pz] = JOIST_PILE[id]!
@@ -383,45 +405,21 @@ let solved = false
 function solve(): void {
   if (solved) return
   solved = true
-  // the first rods go out as a pair, their joist across them; the rest each on its own line
-  for (const id of ['R1A', 'R5A']) seatRods([id, id.replace('A', 'B')])
-  for (const id of ['E0A', 'E0B', 'E6A', 'E6B']) seatRods([id])
+  // each kit goes out on its leading rod; the rest each on its own line
+  for (const id of Object.keys(KITS)) seatRods([id])
   for (const id of ['R3A', 'R3B']) crownRods([id])
   for (const id of ['R2A', 'R2B', 'R4A', 'R4B']) secondRods([id])
   for (const id of ['J2', 'J4']) waterJoist(id)
   bankJoist('J3')
 }
 
-/** a yard rod's capsules where it lies in the yard */
-const yardCapsCache: Record<string, { a: V3; b: V3; ra: number; rb: number }[]> = {}
-function yardCaps(id: string): { a: V3; b: V3; ra: number; rb: number }[] {
-  const known = yardCapsCache[id]
-  if (known) return known
-  const op = yardPose[id]!
-  return (yardCapsCache[id] = capsules(byId[id]!).map(c => ({ a: place(op, c.a), b: place(op, c.b), ra: c.ra, rb: c.rb })))
-}
-/** a first joist rides on the first rod under it: placed on it in the yard, raised with it, lifted clear of any thicker
- * rod it passes over in the yard */
+/** a kit's member rides on its leading rod, held to it by the kit's lashings */
 function ridingPose(id: string, u: number): Pose {
   const rod = RIDES[id]!, p = byId[id]!, rp = byId[rod]!
   const rel = qmul(inverse(finalPose(rp).q), finalPose(p).q)
   const relAt = rotate(inverse(finalPose(rp).q), sub(finalPose(p).at, finalPose(rp).at))
   const base = poseOn(tracks[rod]!, u)
-  const pose: Pose = { at: add(base.at, rotate(base.q, relAt)), q: qmul(base.q, rel) }
-  // the other rods still lying in the yard under it
-  let lift = 0
-  for (const other of ORDER) {
-    const o = byId[other]!
-    if (o.kind === 'joist' || other === rod || !YARD[other]) continue
-    const start = MOVES[other]?.push?.[0] ?? 0
-    if (u >= start) continue
-    // the joist lies along the stream's way: clear of every point of the rod's capsules in its own cross-section
-    for (const c of yardCaps(other)) for (let i = 0; i <= 8; i++) {
-      const f = i / 8, x = c.a[0] + (c.b[0] - c.a[0]) * f, r = c.ra + (c.rb - c.ra) * f + p.r, dx = Math.abs(pose.at[0] - x)
-      if (dx < r) lift = Math.max(lift, c.a[1] + (c.b[1] - c.a[1]) * f + Math.sqrt(r * r - dx * dx) + 0.003 - pose.at[1])
-    }
-  }
-  return lift > 0 ? moved(pose, [0, lift, 0]) : pose
+  return { at: add(base.at, rotate(base.q, relAt)), q: qmul(base.q, rel) }
 }
 
 // ---------------------------------------------------------------- the props
@@ -429,7 +427,7 @@ function ridingPose(id: string, u: number): Pose {
 /** the point a prop holds on its load, and the load's way there, at the build clock u; the crown joist's props hold still
  * while it is threaded over them */
 function heldAt(s: Prop, u: number): { P: V3; D: V3 } {
-  const load = byId[s.load]!, m = MOVES[s.load]!
+  const load = byId[s.load]!, m = movesOf(s.load)
   const v = m.thread ? Math.min(u, m.lift![1]) : u
   const pose = poseAtClock(s.load, v), at = holdAt(s, u)
   const P = place(pose, [at - load.length / 2, 0, bowAt(load, at)])
@@ -538,7 +536,7 @@ const releases: Record<string, Approach> = {}
 function releaseOf(s: Prop): Approach {
   const known = releases[s.id]
   if (known) return known
-  const T = PROP_TIMES[s.id]!, m = MOVES[s.load]!, v = Math.min(T.release, m.thread ? m.lift![1] : poleLand(s.load))
+  const T = PROP_TIMES[s.id]!, m = movesOf(s.load), v = Math.min(T.release, m.thread ? m.lift![1] : poleLand(s.load))
   const { P, D } = heldAt(s, v), st = stanceUnder(s, P, D, holdAt(s, v))
   const crotch = add(st.foot, mul(st.u, s.length)), backCrotch = sub(crotch, mul(st.u, SLIDE_OUT))
   const back = footUnder(s, backCrotch)
@@ -595,12 +593,12 @@ function propAt(s: Prop, u: number): Pose {
   }
   // laid down: its head goes back the way its load's point came up, it slides out from under, then it lies on the bed
   const f = (u - T.down[0]) / (T.down[1] - T.down[0])
-  const m = MOVES[s.load]!, from = Math.min(T.release, m.thread ? m.lift![1] : land)
+  const m = movesOf(s.load), from = Math.min(T.release, m.thread ? m.lift![1] : land)
   if (f < 0.5) return holding(from - (from - T.rise[1]) * ease(f / 0.5))
   if (f < 0.65) return slidingIn(s, a, 1 - ease((f - 0.5) / 0.15))
   return aboutFoot(s, a.backFoot, back(), lying(), ease((f - 0.65) / 0.35))
 }
-const poleLand = (id: string): number => { const m = MOVES[id]!; return (m.thread ?? m.lift)![1] }
+const poleLand = landOf
 
 // ---------------------------------------------------------------- the clock
 
