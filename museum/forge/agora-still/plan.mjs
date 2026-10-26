@@ -7,7 +7,7 @@
 //   node --experimental-strip-types forge/agora-still/plan.mjs [wide|tall] [seed]
 // prints a layout block for layout.json.
 import { CONSTELLATIONS } from '../../src/content/constellations.ts'
-import { fireBox, inside, lens, namePenalty, safeArea, skyFloor, solveSides } from './geometry.mjs'
+import { drawnSegments, fireBox, inside, lens, namePenalty, overlaps, overPlume, safeArea, skyFloor, solveSides } from './geometry.mjs'
 import { writeFileSync } from 'node:fs'
 import LAYOUT from './layout.json' with { type: 'json' }
 
@@ -25,15 +25,29 @@ const margin = frame.margin ?? 16
 const fire = fireBox(frame, frame.plume)
 const fireKeep = { x0: fire.x0 - 12, y0: fire.y0 - 12, x1: fire.x1 + 12, y1: fire.y1 }
 const inner = { x0: safe.x0 + margin, y0: safe.y0 + margin, x1: safe.x1 - margin, y1: safe.y1 - margin }
+/** the open sky over the plume: no star in its column, and no name in the
+    band right over it where the page sets its line */
+const column = { x0: fire.x0 - (frame.columnPad ?? 0), x1: fire.x1 + (frame.columnPad ?? 0) }
+const over = overPlume(fire)
+/** nearest stars of two houses, and the gap between their outlines (css px) */
+const SEP = Number(process.env.PLAN_SEP ?? frame.houseSep ?? 60)
+const BOXGAP = Number(process.env.PLAN_BOXGAP ?? frame.houseBoxGap ?? 0)
+/** a figure star's disc in patch units, as the atlas sizes it (FIGURE_MAG 0.82) */
+const DISC = 0.21 + 0.33 * 0.82 * 0.82
 
 /** stars of house h at centre (cx, cy) and scale k, in CSS px */
 function starsOf(h, cx, cy, k) {
   const c = CONSTELLATIONS[h]
-  return c.stars.map((s) => ({ x: cx + s.x * k, y: cy - s.y * k, group: h, slug: s.slug }))
+  return c.stars.map((s) => ({ x: cx + s.x * k, y: cy - s.y * k, group: h, slug: s.slug, alpha: Boolean(s.alpha) }))
+}
+/** the drawn hairlines of a set of stars at scale k */
+function segsOf(all, k) {
+  return drawnSegments(all, LINES, (i) => (DISC * (all[i]?.alpha ? frame.alpha ?? 1 : 1) * 0.34 + 0.02) * k)
 }
 
 function keepBox(b) {
   if (!inside(b, inner)) return false
+  if (frame.columnPad != null && overlaps(b, over)) return false
   if (b.y1 > skyFloor(frame, b.x0) - 10 || b.y1 > skyFloor(frame, b.x1) - 10) return false
   return !(b.x0 < fireKeep.x1 && fireKeep.x0 < b.x1 && b.y0 < fireKeep.y1 && fireKeep.y0 < b.y1)
 }
@@ -59,14 +73,23 @@ function penalty(centres, k) {
       p += Math.max(0, inner.x0 - (s.x - pad)) + Math.max(0, s.x + pad - inner.x1)
       p += Math.max(0, inner.y0 - (s.y - pad)) + Math.max(0, s.y + pad - Math.min(inner.y1, skyFloor(frame, s.x) - 22))
       if (s.x > fireKeep.x0 - 10 && s.x < fireKeep.x1 + 10 && s.y > fireKeep.y0 - 10) p += 30
+      if (frame.columnPad != null) p += Math.max(0, Math.min(s.x + 14 - column.x0, column.x1 - (s.x - 14)))
     }
     boxes.push({ x0, y0, x1, y1 })
   })
   if (shape === 'wide') {
+    if (BOXGAP)
+      for (let a = 0; a < boxes.length; a++)
+        for (let b = a + 1; b < boxes.length; b++) {
+          const A = boxes[a]
+          const B = boxes[b]
+          const gap = Math.hypot(Math.max(B.x0 - A.x1, A.x0 - B.x1, 0), Math.max(B.y0 - A.y1, A.y0 - B.y1, 0))
+          p += Math.max(0, BOXGAP - gap)
+        }
     for (let i = 0; i < all.length; i++)
       for (let j = i + 1; j < all.length; j++) {
         const d = Math.hypot(all[i].x - all[j].x, all[i].y - all[j].y)
-        if (all[i].group !== all[j].group) p += Math.max(0, 60 - d) * 0.5
+        if (all[i].group !== all[j].group) p += Math.max(0, SEP - d) * 0.5
         else p += Math.max(0, 45 - d)
       }
   } else {
@@ -89,7 +112,7 @@ function penalty(centres, k) {
   return { p, all }
 }
 
-function sides(all, count = false) {
+function sides(all, k, count = false) {
   const lines = []
   let base = 0
   const cent = CONSTELLATIONS.map(() => [0, 0, 0])
@@ -110,7 +133,7 @@ function sides(all, count = false) {
     const n = Math.hypot(dx, dy) || 1
     return { ...s, outward: [dx / n, dy / n] }
   })
-  return solveSides(stars, lines, keepBox, count ? { count: true, steps: 20000 } : {})
+  return solveSides(stars, lines, keepBox, { segs: segsOf(all, k), ...(count ? { count: true, steps: 20000 } : {}) })
 }
 
 /** what a name box costs where it stands: off the safe area, into the court, on the fire */
@@ -121,6 +144,7 @@ function boxCost(b) {
   v += Math.max(0, b.y1 - (skyFloor(frame, b.x0) - 10)) * 85 + Math.max(0, b.y1 - (skyFloor(frame, b.x1) - 10)) * 85
   const fx = Math.max(0, Math.min(b.x1, fireKeep.x1) - Math.max(b.x0, fireKeep.x0))
   const fy = Math.max(0, Math.min(b.y1, fireKeep.y1) - Math.max(b.y0, fireKeep.y0))
+  if (frame.columnPad != null && overlaps(b, over)) v += Math.min(b.x1 - over.x0, over.x1 - b.x0, b.y1 - over.y0, over.y1 - b.y0) * 24
   return v + fx * fy
 }
 
@@ -139,7 +163,7 @@ const LINES = lineList()
 function score(centres, k) {
   const g = penalty(centres, k)
   if (shape !== 'wide') return g.p
-  return g.p + namePenalty(g.all, LINES, boxCost) / 40
+  return g.p + namePenalty(g.all, LINES, boxCost, undefined, segsOf(g.all, k)) / 40
 }
 
 function anneal(k, start) {
@@ -161,17 +185,93 @@ function anneal(k, start) {
   return { cur, p }
 }
 
-const template = frame.template.map(([u, v]) => [u * L.w, v * L.h])
+// PLAN_CENTRES='[[u, v], ...]' starts (or, with PLAN_EXPLAIN, reads) a layout of one's own
+const startUV = process.env.PLAN_CENTRES ? JSON.parse(process.env.PLAN_CENTRES) : frame.template
+const template = startUV.map(([u, v]) => [u * L.w, v * L.h])
 if (process.env.PLAN_EXPLAIN) {
   const k = Number(process.env.PLAN_EXPLAIN)
-  const centres = frame.template.map(([u, v]) => [u * L.w, v * L.h])
+  const centres = template
   const { all } = penalty(centres, k)
+  const geo = penalty(centres, k).p
+  const names = namePenalty(all, LINES, boxCost, undefined, segsOf(all, k))
+  console.log(`parts: geometry ${geo.toFixed(2)} names ${names.toFixed(2)} (score adds names / 40)`)
   const r = solveSides(all.map((s) => ({ ...s, outward: [1, 0] })), LINES, keepBox, { explain: true })
   console.log(JSON.stringify(r))
   const t0 = Date.now()
-  const full = sides(all)
+  const full = sides(all, k)
   console.log('dfs', full ? 'solved' : 'none', Date.now() - t0, 'ms', 'geometry penalty', penalty(centres, k).p, 'score', score(centres, k))
   if (process.env.PLAN_DRAW) draw(k, centres, full, process.env.PLAN_DRAW)
+  process.exit(0)
+}
+/* PLAN_SEARCH: an exact search from PLAN_CENTRES at one scale. It first moves
+   the houses until every name seats (the solver itself, not its smooth
+   stand-in), then widens the gaps between houses while every name still
+   seats: the nearest stars of two houses, and the gap between their outlines. */
+if (process.env.PLAN_SEARCH) {
+  const k = Number(process.env.PLAN_SEARCH)
+  const steps = Number(process.env.PLAN_STEPS ?? 3000)
+  const sepAim = Number(process.env.PLAN_SEP_AIM ?? 95)
+  const gapAim = Number(process.env.PLAN_GAP_AIM ?? 45)
+  const movable = (process.env.PLAN_MOVE ?? '0,1,2,3,4,5').split(',').map(Number)
+  const spread = (centres) => {
+    const { all } = penalty(centres, k)
+    let near = Infinity
+    let gap = Infinity
+    for (let a = 0; a < 6; a++)
+      for (let b = a + 1; b < 6; b++) {
+        const A = all.filter((q) => q.group === a)
+        const B = all.filter((q) => q.group === b)
+        for (const p of A) for (const q of B) near = Math.min(near, Math.hypot(p.x - q.x, p.y - q.y))
+        const box = (S) => ({ x0: Math.min(...S.map((q) => q.x)), x1: Math.max(...S.map((q) => q.x)), y0: Math.min(...S.map((q) => q.y)), y1: Math.max(...S.map((q) => q.y)) })
+        const P = box(A)
+        const Q = box(B)
+        gap = Math.min(gap, Math.hypot(Math.max(Q.x0 - P.x1, P.x0 - Q.x1, 0), Math.max(Q.y0 - P.y1, P.y0 - Q.y1, 0)))
+      }
+    return { near, gap, f: Math.min(near / sepAim, gap / gapAim) }
+  }
+  const trouble = (centres) => {
+    const g = penalty(centres, k)
+    if (g.p > 0) return 100 + g.p
+    const r = sides(g.all, k, true)
+    return r.open
+  }
+  let cur = template.map((c) => c.slice())
+  let bad = trouble(cur)
+  let it = 0
+  for (; it < steps && bad > 0; it++) {
+    const h = movable[Math.floor(rand() * movable.length)]
+    const next = cur.map((c) => c.slice())
+    next[h][0] += (rand() - 0.5) * 30
+    next[h][1] += (rand() - 0.5) * 30
+    const t = trouble(next)
+    if (t <= bad) {
+      cur = next
+      bad = t
+    }
+  }
+  if (bad > 0) {
+    console.log(`no seated layout found in ${it} steps; trouble ${bad}`)
+    process.exit(1)
+  }
+  console.log(`seated after ${it} steps`, JSON.stringify(spread(cur)))
+  let sc = spread(cur)
+  for (let j = 0; j < steps; j++) {
+    const h = movable[Math.floor(rand() * movable.length)]
+    const next = cur.map((c) => c.slice())
+    const step = j < steps / 2 ? 24 : 10
+    next[h][0] += (rand() - 0.5) * step
+    next[h][1] += (rand() - 0.5) * step
+    const s2 = spread(next)
+    if (s2.f < sc.f) continue
+    if (trouble(next) > 0) continue
+    cur = next
+    sc = s2
+  }
+  const sd = sides(penalty(cur, k).all, k)
+  console.log(`spread: nearest stars of two houses ${sc.near.toFixed(1)} css px, outline gap ${sc.gap.toFixed(1)}`)
+  console.log(JSON.stringify(cur.map(([x, y], h) => ({ key: CONSTELLATIONS[h].key, u: +(x / L.w).toFixed(4), v: +(y / L.h).toFixed(4) }))))
+  if (sd) console.log(sd.map((s) => s.side[0] + (s.align === 'center' ? '' : s.align[0]) + (s.gap === 9 ? '' : s.gap)).join(' '))
+  if (process.env.PLAN_DRAW) draw(k, cur, sd, process.env.PLAN_DRAW)
   process.exit(0)
 }
 let best = null
@@ -191,7 +291,7 @@ for (const k of ks) {
     if (!closest || p < closest.p) closest = { k, cur, p }
     if (penalty(cur, k).p > 0) continue
     if (shape === 'wide') {
-      const sd = sides(penalty(cur, k).all)
+      const sd = sides(penalty(cur, k).all, k)
       if (!sd) continue
       found = { k, cur, sides: sd }
     } else found = { k, cur }
