@@ -160,8 +160,10 @@ section('source assets and existing library dependencies', () => {
     return { id, class: entry?.class, display: entry?.display, licence: entry?.licence, valid };
   });
   for (const reference of manifestReferences) {
-    const entry = assets.find(asset => asset.id === reference.id);
-    if (!entry) fail('manifest-reference', 'Literal manifest/anchor ID has no local manifest entry.', reference.file, reference.id);
+    // a shared store asset is recorded in the store's own scope, so it is found in the merged public manifest
+    const shared = reference.id.startsWith('shared/') ? libraryEntries.filter(entry => entry.id === reference.id && entry.wing === 'shared' && textPresent(entry.sha256)) : null;
+    const entry = shared ? (shared.length === 1 ? shared[0] : undefined) : assets.find(asset => asset.id === reference.id);
+    if (!entry) fail('manifest-reference', shared ? 'Literal shared ID needs exactly one hashed shared entry in public/na-manifest.json.' : 'Literal manifest/anchor ID has no local manifest entry.', reference.file, reference.id);
     else if (entry.display !== true || entry.class === 'REFERENCE-ONLY') fail('hidden-asset-reference', 'A displayed source reference points at a nondisplayable manifest entry.', reference.file, reference.id);
   }
   report.source = { inventoryFiles: inventory.length, sourceFiles, binaryFiles, imports, literalResourceOperations: assetReferences, libraryDependencies: dependencies, manifestReferences };
