@@ -64,6 +64,9 @@ REDRAWN = {"animals-t-rex-side", "animals-t-rex-close", "animals-t-rex-og", "ani
            "animals-spinosaurus-beside-t-rex-narrow", "animals-triceratops-beside-t-rex",
            "animals-stegosaurus-beside-triceratops-t-rex", "animals-ankylosaurus-beside", "animals-biggest-dinosaurs-row",
            "animals-biggest-dinosaurs-close", "animals-biggest-dinosaurs-og", "animals-biggest-dinosaurs-size-comparison-16x9"}
+# The share cards drawn again with the square picture in the card's middle: their hashes follow the new card.
+REDRAWN |= {f"animals-{animal}-og" for animal in ("ankylosaurus", "blue-whale", "brachiosaurus", "megalodon",
+                                                   "spinosaurus", "stegosaurus", "triceratops", "woolly-mammoth")}
 
 
 def _redrawn_stem(path):
