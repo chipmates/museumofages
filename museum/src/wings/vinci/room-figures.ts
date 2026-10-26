@@ -54,13 +54,13 @@ export interface RoomFigure {
 }
 
 export const VINCI_ROOM_FIGURES: readonly RoomFigure[] = [
-  { room: 'house', stop: 'stop:arrival', framing: 'wide', shape: 'clip', at: [15.35, 1, 12.7], yaw: 1.2286, tone: 0.65, sky: 0.731, litter: 0.025, contact: 1.5 },
+  { room: 'house', stop: 'stop:arrival', framing: 'wide', shape: 'clip', at: [14.95, 1, 10.1], yaw: 1.0295, tone: 0.65, sky: 0.709, litter: 0.025, contact: 1.5 },
   { room: 'house', stop: 'stop:arrival', framing: 'upright', shape: 'clip', at: [16.5, 1, 14.25], yaw: 1.2827, tone: 0.65, sky: 0.844, litter: 0.025, contact: 1.5 },
-  { room: 'grave-court', stop: 'stop:grave', framing: 'wide', shape: 'clip', at: [-55.25, -6.42, 29.75], yaw: 1.6366, tone: 0.45, contact: 1.4 },
+  { room: 'grave-court', stop: 'stop:grave', framing: 'wide', shape: 'clip', at: [-54.8125, -6.42, 29.25], yaw: 1.5771, tone: 0.45, contact: 1.4 },
   { room: 'mechanism-hall', stop: 'stop:flight', framing: 'wide', shape: 'fade', at: [-55.25, -6.3, 48.5], yaw: 1.4565, tone: 0.36, tint: [0.7938, 1.032, 1.29] },
   { room: 'mechanism-hall', stop: 'stop:flight', framing: 'upright', shape: 'fade', at: [-55.25, -6.3, 48.5], yaw: 1.4565, tone: 0.36, tint: [0.7938, 1.032, 1.29] },
   { room: 'picture-room', stop: 'stop:picture-room', framing: 'wide', shape: 'fade', at: [-35.625, -6.292, 37.6875], yaw: 1.5442, tone: 0.5 },
-  { room: 'long-gallery', stop: 'stop:line-early', framing: 'wide', shape: 'fade', at: [-34.75, -6.297, 53.125], yaw: 0.502, tone: 0.6 },
+  { room: 'long-gallery', stop: 'stop:line-early', framing: 'wide', shape: 'fade', at: [-32.6875, -6.297, 52.625], yaw: 0.2808, tone: 0.6 },
 ]
 
 /** the scene flag: every room figure in (the default) or none */
