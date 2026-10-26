@@ -151,6 +151,9 @@ export function solveSides(stars, lines, keep, opts = {}) {
       // type has side bearings: a hairline that only grazes a corner of the
       // box passes beside the letters
       const t = { x0: b.x0 + 4, y0: b.y0 + 3, x1: b.x1 - 4, y1: b.y1 - 3 }
+      // houses in the frame whose names are not asked for still keep their room
+      for (const o of opts.others ?? []) if (o.x > b.x0 - groupPad && o.x < b.x1 + groupPad && o.y > b.y0 - groupPad && o.y < b.y1 + groupPad) bad = true
+      for (const [ax, ay, cx, cy] of opts.otherLines ?? []) if (!bad && segmentHits(t, ax, ay, cx, cy)) bad = true
       for (const [a, c] of lines) {
         if (bad) break
         const A = stars[a]

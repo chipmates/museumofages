@@ -173,7 +173,7 @@ function groupsOf(stars, s, info) {
 }
 
 /** every star's free name side in this frame, judged on its pixels too */
-function seatNames(stars, groups, frame, shape, fireBox, raw, info, s, cssBox, allowBright = false, widths = null) {
+function seatNames(stars, groups, frame, shape, fireBox, raw, info, s, cssBox, allowBright = false, widths = null, others = []) {
   const safe = cssBox ?? safeArea(frame, shape)
   const m = 8
   const inner = { x0: safe.x0 + m, y0: safe.y0 + m, x1: safe.x1 - m, y1: safe.y1 - m }
@@ -217,7 +217,16 @@ function seatNames(stars, groups, frame, shape, fireBox, raw, info, s, cssBox, a
     }
     base += c.stars.length
   }
-  const seated = solveSides(pts, lines, keep)
+  const otherAt = Object.fromEntries(others.map((st) => [st.slug, st.css]))
+  const otherLines = []
+  for (const c of CONSTELLATIONS)
+    for (const [a, b] of c.lines) {
+      const A = otherAt[c.stars[a]]
+      const B = otherAt[c.stars[b]]
+      if (A && B) otherLines.push([A[0], A[1], B[0], B[1]])
+    }
+  const near = { others: others.map((st) => ({ x: st.css[0], y: st.css[1] })), otherLines }
+  const seated = solveSides(pts, lines, keep, near)
   if (!seated && process.env.SEAT_EXPLAIN) {
     const why = (b) => {
       if (!inside(b, inner)) return 'o'
@@ -399,8 +408,9 @@ async function zoomFrames({ page, groups, frame, info, out, shootZoom }) {
       proj = await project(page, shot.raw, shot.info, frame.css[0], frame.plume)
       const seatOwn = (allow) => {
         const o = proj.stars.filter((st) => st.group === g.key)
+        const rest = proj.stars.filter((st) => st.group !== g.key)
         const q = groupsOf(proj.stars, proj.s, shot.info).filter((x) => x.key === g.key)
-        return { own: o, gz: q, seats: seatNames(o, q, frame, 'tall', proj.fire.plume, shot.raw, shot.info, proj.s, view, allow, widths) }
+        return { own: o, gz: q, seats: seatNames(o, q, frame, 'tall', proj.fire.plume, shot.raw, shot.info, proj.s, view, allow, widths, rest) }
       }
       ;({ own, gz, seats } = seatOwn(false))
       reserved = []
