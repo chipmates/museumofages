@@ -115,6 +115,8 @@ const READ_ON = { en: 'Read on', de: 'Weiterlesen' }
 const BACK_TO_TOP = { en: 'Back to top', de: 'Zum Anfang' }
 /** the window's foot while rows wait below it: a 24 px fade over the 24 px plate and the record's 8 px of air */
 const PAGE_FADE = 24
+/** the record's head band fades over its last 10.4 px (film-wing.css) */
+const SHEET_HEAD_FADE = 10.4
 const PLATE = 32
 /** the picture's rise while the drawer stands: at most the first stop's 81 px at 844, as a share of the glass */
 const RISE_MOST = 81 / 844
@@ -1018,9 +1020,44 @@ export function createWing(): WingModule {
     if (more) sheet.dataset['more'] = ''
     else delete sheet.dataset['more']
   }
+  /** WHOLE ROWS UNDER THE RECORD'S HEAD AND OVER ITS FOOT, upright: where a cover's edge would slice a row, that
+      cover's ground runs on to the gap beside it, so the row waits wholly under it and the cover's fade lies over the
+      next whole row (--sheet-cover-top, --sheet-cover-foot, film-wing.css) */
+  function sheetRows(sheet: HTMLElement): void {
+    const bar = sheet.querySelector<HTMLElement>('.vinci-sources-toolbar')
+    sheet.style.removeProperty('--sheet-cover-top')
+    sheet.style.removeProperty('--sheet-cover-foot')
+    if (form !== 'upright' || !bar || !sheet.hasAttribute('open')) return
+    const rows: { top: number; bottom: number }[] = []
+    const range = document.createRange()
+    const walker = document.createTreeWalker(sheet, NodeFilter.SHOW_TEXT)
+    for (let node = walker.nextNode(); node; node = walker.nextNode()) {
+      if (!node.textContent?.trim() || bar.contains(node)) continue
+      range.selectNodeContents(node)
+      for (const r of range.getClientRects()) if (r.height > 0 && r.width > 0) rows.push({ top: r.top, bottom: r.bottom })
+    }
+    // the head's solid edge: its band as drawn without a cover (taken off above; the rows keep their place), less its fade
+    const band = parseFloat(getComputedStyle(sheet, '::before').height) || 0
+    const head = sheet.getBoundingClientRect().top + sheet.clientTop + band - SHEET_HEAD_FADE
+    const under = rows.filter(r => r.top < head - .5 && r.bottom > head + .5)
+    if (under.length) {
+      const low = Math.max(...under.map(r => r.bottom))
+      const next = rows.filter(r => r.top >= low - .5).map(r => r.top)
+      sheet.style.setProperty('--sheet-cover-top', `${Math.ceil((next.length ? (low + Math.min(...next)) / 2 : low) - head)}px`)
+    }
+    if (!('more' in sheet.dataset)) return
+    const foot = bar.getBoundingClientRect().top
+    const over = rows.filter(r => r.top < foot - .5 && r.bottom > foot + .5)
+    if (!over.length) return
+    const high = Math.min(...over.map(r => r.top))
+    const prior = rows.filter(r => r.bottom <= high + .5).map(r => r.bottom)
+    sheet.style.setProperty('--sheet-cover-foot', `${Math.ceil(foot - (prior.length ? (Math.max(...prior) + high) / 2 : high))}px`)
+  }
   /** read again at each scroll and whenever the sheet or a part of it changes height */
-  function watchMore(sheet: HTMLElement, parts: Iterable<Element>): void {
-    const more = (): void => sheetMore(sheet)
+  function watchMore(sheet: HTMLElement, parts: Iterable<Element>, wholeRows = false): void {
+    let asked = false
+    const rows = (): void => { asked = false; sheetRows(sheet) }
+    const more = (): void => { sheetMore(sheet); if (wholeRows && !asked) { asked = true; requestAnimationFrame(rows) } }
     sheet.addEventListener('scroll', more, { passive: true, signal })
     const sized = new ResizeObserver(more)
     for (const part of [sheet, ...parts]) sized.observe(part)
@@ -1823,7 +1860,7 @@ export function createWing(): WingModule {
       const recordSeat = downSeat(() => sources?.element.querySelector<HTMLElement>('.vinci-sources-close')?.click())
       sources.element.querySelector('.vinci-sources-toolbar')?.prepend(recordSeat)
       sheetSeats.push(recordSeat)
-      watchMore(sources.element, Object.values(sources.panels))
+      watchMore(sources.element, Object.values(sources.panels), true)
     }
     nameSheetSeats()
     // THE PLAN AND THE LIFE, the live wing's two ways through it, pressed the film's way

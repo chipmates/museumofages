@@ -408,10 +408,11 @@
 }
 /* the record's band grows four times as fast as the first scroll until its solid part reaches below the
    close, ahead of the first full-width line, so nothing passes under the close; at the top it is the band
-   above, and the reading keeps its place (the room's list keeps a solid head instead) */
+   above, and the reading keeps its place (the room's list keeps a solid head instead). Where its edge would
+   slice a row, its ground runs on to the gap under that row (--sheet-cover-top, film-wing.ts) */
 #wing[data-film='upright'] :is(.vinci-dock, .desk-ov[data-sheet])[open]::before {
   --sheet-head: min(calc(var(--film-shut-top) + var(--film-shut) + 12px - 16px), calc(4 * var(--sheet-scrolled, 0px)));
-  height: calc(16px + var(--sheet-head)); margin-bottom: calc(-1 * var(--sheet-head));
+  height: calc(16px + var(--sheet-head) + var(--sheet-cover-top, 0px)); margin-bottom: calc(-1 * (var(--sheet-head) + var(--sheet-cover-top, 0px)));
   background: linear-gradient(to bottom, var(--ui-ground-sheet) calc(100% - 10.4px), color-mix(in srgb, var(--ui-ground-sheet) 0%, transparent));
 }
 /* THE RECORD'S THREE TABS STAND AT ITS FOOT, in the thumb's reach, after the
@@ -422,10 +423,11 @@
   height: calc(88px + env(safe-area-inset-bottom)); padding: 0 12px env(safe-area-inset-bottom) 68px; gap: 0;
   align-items: center; background: var(--ui-ground-sheet); border-top: 1px solid var(--ui-line); border-bottom: 0;
 }
-/* while the reading runs on under the foot, a 24 px fade over its rule, as the Menu's foot has (film-wing.ts) */
+/* while the reading runs on under the foot, a 24 px fade over its rule, as the Menu's foot has (film-wing.ts); where
+   the rule would slice a row, the foot's ground runs up to the gap over that row and the fade lies over the row before */
 #wing[data-film='upright'] .vinci-dock .vinci-sources-toolbar::before {
-  content: ''; position: absolute; left: 0; right: 0; bottom: calc(100% + 1px); height: 24px; pointer-events: none; visibility: hidden;
-  background: linear-gradient(to bottom, color-mix(in srgb, var(--ui-ground-sheet) 0%, transparent), var(--ui-ground-sheet));
+  content: ''; position: absolute; left: 0; right: 0; bottom: calc(100% + 1px); height: calc(24px + var(--sheet-cover-foot, 0px)); pointer-events: none; visibility: hidden;
+  background: linear-gradient(to bottom, color-mix(in srgb, var(--ui-ground-sheet) 0%, transparent), var(--ui-ground-sheet) 24px);
 }
 #wing[data-film='upright'] .vinci-dock[data-more] .vinci-sources-toolbar::before { visibility: visible; }
 #wing[data-film='upright'] .vinci-dock .vinci-sources-tabs { gap: 0; align-self: center; }
