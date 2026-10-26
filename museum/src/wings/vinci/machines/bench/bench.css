@@ -81,3 +81,5 @@ body[data-phase="bench"] #veil,body[data-phase="bench"] #rail,body[data-phase="b
    A second line thirty pixels lower drew a band with nothing in it. */
 @media(max-width:1280px){.bench-footer{border-top:0}}
 .bench-working{display:block;margin-top:6px;font:10px Arial,sans-serif;letter-spacing:.06em;color:#8f8a7e}
+/* The bridge's label carries a working line and its tag: its panel starts a little higher so the German state button closes above the panel's edge. */
+@media(max-width:1280px){.bench[data-slug="bridge-of-poles"] .bench-dock{top:calc(42.7% - 10px)}.bench[data-slug="bridge-of-poles"] .bench-lang{top:calc(42.7% - 56px)}}
