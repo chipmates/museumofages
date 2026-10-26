@@ -54,7 +54,7 @@ export interface RoomFigure {
 }
 
 export const VINCI_ROOM_FIGURES: readonly RoomFigure[] = [
-  { room: 'house', stop: 'stop:arrival', framing: 'wide', shape: 'clip', at: [14.95, 1, 10.1], yaw: 1.0295, tone: 0.65, sky: 0.709, litter: 0.025, contact: 1.5 },
+  { room: 'house', stop: 'stop:arrival', framing: 'wide', shape: 'clip', at: [13.95, 1, 9.4], yaw: 1.0229, tone: 0.65, sky: 0.638, litter: 0.025, contact: 1.5 },
   { room: 'house', stop: 'stop:arrival', framing: 'upright', shape: 'clip', at: [16.5, 1, 14.25], yaw: 1.2827, tone: 0.65, sky: 0.844, litter: 0.025, contact: 1.5 },
   { room: 'grave-court', stop: 'stop:grave', framing: 'wide', shape: 'clip', at: [-54.8125, -6.42, 29.25], yaw: 1.5771, tone: 0.45, contact: 1.4 },
   { room: 'mechanism-hall', stop: 'stop:flight', framing: 'wide', shape: 'fade', at: [-55.25, -6.3, 48.5], yaw: 1.4565, tone: 0.36, tint: [0.7938, 1.032, 1.29] },
