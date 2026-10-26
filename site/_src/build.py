@@ -116,10 +116,19 @@ COUNT_KINDS = {"home": "home", "what": "statement", "privacy": "privacy", "impri
 DOOR_PLACES = ("top", "item", "end")
 # IndexNow: the key a search engine fetches from the site's root to trust our pings (public by design).
 INDEXNOW_KEY = "f8c88732c7bce7f2bf169a1877ed44e2"
+# RFC 9116: where to report a flaw. Expires must stay under a year ahead, so the date is renewed by hand each autumn.
+SECURITY_TXT = ("# When we confirm your report, we credit you in a published security advisory and in CHANGELOG.md,\n"
+                "# unless you would rather stay unnamed. On request we also send a signed letter of acknowledgment.\n"
+                "# As a nonprofit we pay no bug bounties.\n"
+                "Contact: mailto:contact@museumofages.org?subject=Security\n"
+                "Expires: 2027-10-25T23:00:00.000Z\n"
+                "Preferred-Languages: en, de\n"
+                "Policy: https://github.com/chipmates/museumofages/blob/main/SECURITY.md\n"
+                "Canonical: https://museumofages.org/.well-known/security.txt\n")
 # Where the host runs the functions: every address but the files of the pages and of the walk's bundle, so a
 # picture or a script never costs a function's run. The count's edge needs the pages, the count its own route.
 ROUTES = {"version": 1, "include": ["/*"], "exclude": [f"/{STATIC}/*", "/assets/*", "/basis/*", "/favicon.svg", "/sitemap.xml",
-                                                       "/robots.txt", f"/{INDEXNOW_KEY}.txt", "/na-manifest.json",
+                                                       "/robots.txt", f"/{INDEXNOW_KEY}.txt", "/.well-known/*", "/na-manifest.json",
                                                        "/third-party-licenses.md"]}
 # The licence of the museum's own texts and pictures, named in the footer once the code is open.
 CC_BY_SA = "https://creativecommons.org/licenses/by-sa/4.0/"
@@ -2253,6 +2262,8 @@ def write_sitemap(out, site, listed):
         "User-agent: *\nDisallow: /\n" if closed else f"User-agent: *\nAllow: /\n\nSitemap: {ORIGIN}/sitemap.xml\n", encoding="utf-8")
     if not closed:
         (out / f"{INDEXNOW_KEY}.txt").write_text(INDEXNOW_KEY, encoding="utf-8")
+        (out / ".well-known").mkdir(exist_ok=True)
+        (out / ".well-known" / "security.txt").write_text(SECURITY_TXT, encoding="utf-8")
 
 
 def pages_by_twin(out, listed):

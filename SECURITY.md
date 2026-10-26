@@ -10,7 +10,7 @@ Say what you found, where it is, and how we can see it for ourselves. A screensh
 
 ## What happens next
 
-We confirm that your report arrived within three working days, and tell you within two weeks what we make of it. When it is fixed, we tell you, and we say what was fixed in [CHANGELOG.md](CHANGELOG.md). If you want, we name you there. If you would rather stay unnamed, we keep it that way.
+We confirm that your report arrived within three working days, and tell you within two weeks what we make of it. When it is fixed, we tell you, publish a security advisory on GitHub and say what was fixed in [CHANGELOG.md](CHANGELOG.md). We name you in both, unless you would rather stay unnamed. On request we also send you a signed letter of acknowledgment. As a nonprofit we pay no bug bounties.
 
 ## What is in scope
 
