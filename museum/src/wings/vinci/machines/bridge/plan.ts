@@ -430,15 +430,16 @@ export const YARD: Record<string, { z: number; foot: number }> = Object.fromEntr
   const crown = p.k === 3
   return [p.id, { z: crown ? (p.frame === 'A' ? -0.4 : 0.4) : p.a[2], foot: KITS[p.id] ? KIT_FOOT : STOCK_FOOT }]
 }))
-/** the joists that go by water lie on the bank in front of the bridge, one on each bank; the crown joist waits on two
- * logs on the far bank, back from its edge */
-export const JOIST_PILE: Record<string, [number, number]> = { J2: [-4.6, 8.9], J3: [5.8, 4.7], J4: [4.6, 9.0] }
-/** where a joist that goes by water waits, floating in front of the bridge; the crown joist waits where it is raised */
-export const JOIST_WAIT_Z: Record<string, number> = { J2: 5.0, J4: 5.0 }
-/** the crown joist is raised from its two logs on the bank this far down the stream, then threaded in */
-export const THREAD_Z = 4.7
+/** the joists that go by water lie on the banks up the stream, behind the bridge, one on each bank; the crown joist
+ * waits on two logs on the far bank behind the bridge, back from its edge */
+export const JOIST_PILE: Record<string, [number, number]> = { J2: [-4.6, -8.9], J3: [5.8, -4.7], J4: [4.6, -9.0] }
+/** where a joist that goes by water waits, floating behind the bridge */
+export const JOIST_WAIT_Z: Record<string, number> = { J2: -5.0, J4: -5.0 }
+/** the crown joist is raised from its two logs on the bank this far up the stream, then threaded in toward the
+ * visitor's side */
+export const THREAD_Z = -4.7
 /** the crown joist's logs: across the bank under it, x and z of their middles, their half length */
-export const J3_LOGS: [number, number, number][] = [[5.8, 3.7, 0.5], [5.8, 5.7, 0.5]]
+export const J3_LOGS: [number, number, number][] = [[5.8, -3.7, 0.5], [5.8, -5.7, 0.5]]
 export const J3_REST = SEAT_XY[0][1] + SEAT_R + 0.075
 /** the bank each pole comes from (the crown's from the near bank) and its end there: a near rod's end a, a far rod's end b */
 export const sideOf = (p: Pole): -1 | 1 => (p.k === 3 || (p.a[0] + p.b[0]) / 2 < 0 ? -1 : 1)
@@ -548,9 +549,9 @@ const NEAR_MOVES: Record<string, Moves> = {
   R1: { push: [0.3, 1.1], tip: [1.1, 1.55], slide: [1.55, 2.3], lift: [2.9, 4.6] },
   R3: { push: [2.7, 4.6], tip: [4.6, 5.05], slide: [5.05, 6.4], float: [6.4, 6.9], drift: [6.9, 7.6], lift: [7.9, 9.4] },
   J2: { roll: [3.0, 4.6], float: [4.6, 6.5], drift: [8.4, 9.2], lift: [9.4, 11.0] },
-  R2: { push: [8.5, 10.1], tip: [10.1, 10.55], slide: [10.55, 11.8], float: [11.8, 12.2], foot: [13.95, 14.95], lift: [15.45, 16.75] },
-  R4: { push: [8.75, 10.35], tip: [10.35, 10.8], slide: [10.8, 12.05], float: [12.05, 12.45], foot: [17.35, 18.35], lift: [18.85, 20.15] },
-  J3: { lift: [18.2, 20.2], thread: [20.25, 21.45] },
+  R2: { push: [11.9, 13.5], tip: [13.5, 13.95], slide: [13.95, 15.2], float: [15.2, 15.6], foot: [15.6, 16.6], lift: [17.1, 18.4] },
+  R4: { push: [12.15, 13.75], tip: [13.75, 14.2], slide: [14.2, 15.45], float: [15.45, 15.85], foot: [18.4, 19.4], lift: [19.9, 21.2] },
+  J3: { lift: [19.2, 21.2], thread: [21.3, 22.5] },
 }
 export const FAR_LAG = 0.25
 const TWIN: Record<string, string> = { R5: 'R1', J4: 'J2' }
@@ -613,8 +614,8 @@ export const PROPS: Prop[] = (() => {
   }
   // the crown joist's props stand on the bank behind it and walk it out over the stream; threaded in, it lies on both
   // props, then on the near one and the far frame's crown rod, then on that rod held down by the rods over it
-  add('FJ3', 'J3', JOIST_HALF + (3.4 - THREAD_Z), [1, 0], 1.15, 'thread')
-  add('GJ3', 'J3', JOIST_HALF + (4.9 - THREAD_Z), [1, 0], 1.15, 'thread')
+  add('FJ3', 'J3', JOIST_HALF + (-3.4 - THREAD_Z), [1, 0], 1.15, 'thread')
+  add('GJ3', 'J3', JOIST_HALF + (-4.9 - THREAD_Z), [1, 0], 1.15, 'thread')
   return list
 })()
 
@@ -674,9 +675,8 @@ export function lashEnd(c: Crossing): number { return lashStart(c) + LASH_TIME }
  * second joists under them are lashed (they are slid away), the rest together once the last lashing is wound (they lie
  * where they are laid); the crown joist's let go as it slides off them. */
 export const PROP_RISE = 0.6, PROP_DOWN = 1.0, PARK_SLIDE = 1.2
-/** idle props lie with their heads at least this far up the stream from the bridge's middle, or down it (beyond where
- * the crown joist's props work) */
-export const PARK_UP = 5.6, PARK_DOWN = 9.0
+/** idle props lie with their heads at least this far up the stream from the bridge's middle, or down it */
+export const PARK_UP = 5.6, PARK_DOWN = 6.8
 export interface PropTimes { rise: Step; release: number; down: Step; parkIn?: Step; parkOut?: Step }
 /** props that stand in a plane across the bridge: idle up or down the stream */
 const across = (s: Prop): boolean => Math.abs(s.away[1]) > 0.5
@@ -684,13 +684,16 @@ const across = (s: Prop): boolean => Math.abs(s.away[1]) > 0.5
 const firstOut = (s: Prop): boolean => kitOf(s.load) !== null || byId(s.load).k === 3 && byId(s.load).kind === 'rod'
 export const parksBefore = (s: Prop): boolean => across(s)
 export const parksAfter = (s: Prop): boolean => across(s) && firstOut(s)
-/** laid down outward, swung over its foot away from the bridge; the crown joist's go back the way they came */
-export const laysOutward = (s: Prop): boolean => across(s) && s.load !== 'J3'
+/** the last move's props are laid down outward, swung over the foot away from the bridge; the first move's go back
+ * down the way their loads came up, under the bridge, and are slid away along the bed, as the crown joist's are laid */
+export const laysOutward = (s: Prop): boolean => across(s) && !firstOut(s) && s.load !== 'J3'
 /** the crown joist slides off its props as it is threaded: each lets go while its trailing end is still 0.3 m short
  * of the fork (the thread runs on the motion's smootherstep, inverted here) */
 function threadRelease(s: Prop, load: Pole, thread: Step): number {
   const ease = (x: number): number => x * x * x * (x * (x * 6 - 15) + 10)
-  const holdZ = load.a[2] + THREAD_Z + s.s, need = (load.b[2] + THREAD_Z - holdZ - 0.3) / THREAD_Z
+  // the way it is threaded, and its trailing end's place when raised
+  const way = -Math.sign(THREAD_Z), holdZ = load.a[2] + THREAD_Z + s.s
+  const need = 1 - (holdZ - way * 0.3 + way * JOIST_HALF) / THREAD_Z
   if (need >= 1) return thread[1]
   let lo = 0, hi = 1
   for (let i = 0; i < 30; i++) { const mid = (lo + hi) / 2; if (ease(mid) < need) lo = mid; else hi = mid }
