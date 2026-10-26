@@ -36,6 +36,7 @@ import {
   Mesh,
   MeshBasicNodeMaterial,
   PointsNodeMaterial,
+  type Quaternion,
   Scene,
   SphereGeometry,
   Sprite,
@@ -257,6 +258,18 @@ export interface AtlasHandles {
   /** and the lines the page itself sets, so no star sits in a glyph */
   reservePage(rects: LabelBounds[], heights: number[], width: number, height: number): void
   visible(v: boolean): void
+}
+
+/** A still picture's own arrangement of the six houses; the live wheel never
+    passes one. Each house stands where the still puts it, all six at full
+    presence with their hairlines. */
+export interface AtlasStill {
+  /** in CONSTELLATIONS order: the patch's world position, pose and scale */
+  houses: Array<{ position: Vector3; quaternion: Quaternion; scale: number }>
+  /** the disc of a house's alpha star against its equals (1 keeps them equal) */
+  alpha?: number
+  /** the direction the choir leans toward; absent, it leans nowhere */
+  gaze?: Vector3
 }
 
 // ---------------------------------------------------------------- helpers
@@ -1666,7 +1679,7 @@ function buildCompanionField(seeds: Companion[], page: PageReserve): CompanionFi
 }
 
 // ------------------------------------------------------------- the atlas
-export function createAtlas(scene: Scene): AtlasHandles {
+export function createAtlas(scene: Scene, still?: AtlasStill): AtlasHandles {
   const dome = new Group()
   dome.visible = false
   scene.add(dome)
@@ -1786,17 +1799,23 @@ export function createAtlas(scene: Scene): AtlasHandles {
     const c = CONSTELLATIONS[ci]
     if (!c) continue
     const patch = new Group()
-    // the patch hangs on the dome in its azimuth/elevation direction and
-    // faces the visitor at the center
-    patch.position.copy(houseDir(c, dirTmp)).multiplyScalar(RADIUS)
-    patch.lookAt(0, 0, 0)
-    patch.scale.setScalar(WIDE_SCALE)
+    const placed = still?.houses[ci]
+    if (placed) {
+      patch.position.copy(placed.position)
+      patch.quaternion.copy(placed.quaternion)
+    } else {
+      // the patch hangs on the dome in its azimuth/elevation direction and
+      // faces the visitor at the center
+      patch.position.copy(houseDir(c, dirTmp)).multiplyScalar(RADIUS)
+      patch.lookAt(0, 0, 0)
+    }
+    patch.scale.setScalar(placed ? placed.scale : WIDE_SCALE)
 
     const fit = Math.pow(meanReach / (reach[ci] ?? meanReach), 0.55)
     const mag = magnitudes(c)
     // one disc for every name (the ruling above), so a house reads as a
     // register of equals and not as one flare with five witnesses
-    const sizes = mag.map((m) => 0.21 + 0.33 * m * m)
+    const sizes = mag.map((m, si) => (0.21 + 0.33 * m * m) * (still?.alpha && c.stars[si]?.alpha ? still.alpha : 1))
 
     // the companions are seeded here and seated on the dome below, so all
     // six houses share one field
@@ -1846,7 +1865,7 @@ export function createAtlas(scene: Scene): AtlasHandles {
       cutU,
       azimuth: c.azimuth,
       fit,
-      focus: ci === 0 ? 1 : 0,
+      focus: still || ci === 0 ? 1 : 0,
     })
   }
 
@@ -1905,7 +1924,8 @@ export function createAtlas(scene: Scene): AtlasHandles {
 
     // the sky leans toward the focused house
     const focused = CONSTELLATIONS[chapter]
-    if (focused) {
+    if (still) choir.uGaze.value.copy(still.gaze ?? dirTmp.set(0, -1, 0)).normalize()
+    else if (focused) {
       houseDir(focused, dirTmp)
       gaze.lerp(dirTmp, Math.min(1, step * 2.4))
       choir.uGaze.value.copy(gaze).normalize()
@@ -1920,12 +1940,13 @@ export function createAtlas(scene: Scene): AtlasHandles {
     for (let i = 0; i < patches.length; i++) {
       const p = patches[i]
       if (!p) continue
-      p.group.scale.setScalar(scale * p.fit)
-      const want = i === chapter ? 1 : 0
+      const placed = still?.houses[i]
+      p.group.scale.setScalar(placed ? placed.scale : scale * p.fit)
+      const want = still || i === chapter ? 1 : 0
       p.focus += (want - p.focus) * Math.min(1, step * 2.2)
       // a house far from the gaze is still a real house on the dome, it is
       // simply far: presence falls with the angle it sits at
-      const near = smooth01((1.35 - Math.abs(wrapPi(p.azimuth - wheel))) / 1.05)
+      const near = still ? 1 : smooth01((1.35 - Math.abs(wrapPi(p.azimuth - wheel))) / 1.05)
       const stand = near * (0.18 + 0.82 * p.focus)
       const pres = stand * reveal
       // a receding star gives up its disc as well as its light. Dimming
