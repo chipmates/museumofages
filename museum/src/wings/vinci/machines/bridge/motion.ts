@@ -551,7 +551,15 @@ function swungOver(s: Prop, a: Approach, q: number): Pose {
   const th = th0 + (th1 - th0) * q
   const u: V3 = [-s.away[0] * Math.cos(th), Math.sin(th), -s.away[1] * Math.cos(th)]
   const pose = propPose(s, a.backFoot, u, a.D)
-  return q < 0.7 ? pose : { at: pose.at, q: slerp(pose.q, out.q, ease((q - 0.7) / 0.3)) }
+  if (q < 0.7) return pose
+  // turned onto its side about its foot, which stays on the ground
+  const turned = slerp(pose.q, out.q, ease((q - 0.7) / 0.3))
+  return { at: add(a.backFoot, mul(rotate(turned, [1, 0, 0]), s.length / 2)), q: turned }
+}
+/** turned about its foot from one pose to another that stand on the same foot, the foot staying put */
+function aboutFoot(s: Prop, foot: V3, a: Pose, b: Pose, f: number): Pose {
+  const q = slerp(a.q, b.q, f)
+  return { at: add(foot, mul(rotate(q, [1, 0, 0]), s.length / 2)), q }
 }
 function propAt(s: Prop, u: number): Pose {
   const T = PROP_TIMES[s.id]!, land = poleLand(s.load), a = approachOf(s)
@@ -566,7 +574,7 @@ function propAt(s: Prop, u: number): Pose {
   }
   if (u < T.rise[1]) {
     const f = (u - T.rise[0]) / (T.rise[1] - T.rise[0])
-    return f < 0.7 ? blend(lying(), back(), ease(f / 0.7)) : slidingIn(s, a, ease((f - 0.7) / 0.3))
+    return f < 0.7 ? aboutFoot(s, a.backFoot, lying(), back(), ease(f / 0.7)) : slidingIn(s, a, ease((f - 0.7) / 0.3))
   }
   if (u < T.down[0]) return holding(u)
   if (outward) {
@@ -590,7 +598,7 @@ function propAt(s: Prop, u: number): Pose {
   const m = MOVES[s.load]!, from = Math.min(T.release, m.thread ? m.lift![1] : land)
   if (f < 0.5) return holding(from - (from - T.rise[1]) * ease(f / 0.5))
   if (f < 0.65) return slidingIn(s, a, 1 - ease((f - 0.5) / 0.15))
-  return blend(back(), lying(), ease((f - 0.65) / 0.35))
+  return aboutFoot(s, a.backFoot, back(), lying(), ease((f - 0.65) / 0.35))
 }
 const poleLand = (id: string): number => { const m = MOVES[id]!; return (m.thread ?? m.lift)![1] }
 

@@ -441,10 +441,19 @@ export const footEnd = (p: Pole): 0 | 1 => (sideOf(p) < 0 ? 0 : 1)
  * stands on the bank, its slope or the stream's bed and slides there, in under the load as the prop raises it and out
  * again as it is laid back down. Laid down, it lies on the bed. */
 export const STRUT_R = 0.06
-/** a prop's axis over the ground where its foot stands, its girth there tilted with the slope */
+/** a prop's axis over the ground where its foot stands: the height a ball of the foot's girth rests at, the ground
+ * sampled under it, since the bank's profile has creases a slope taken at one point misreads */
 export function footHeight(x: number, z: number): number {
-  const g = groundY(x, z), gx = (groundY(x + 0.02, z) - g) / 0.02, gz = (groundY(x, z + 0.02) - g) / 0.02
-  return g + (STRUT_R + 0.014) * Math.sqrt(1 + gx * gx + gz * gz)
+  const R = STRUT_R + 0.014
+  let h = groundY(x, z) + R
+  for (const f of [0.45, 0.7, 0.9]) {
+    const lift = R * Math.sqrt(1 - f * f)
+    for (let k = 0; k < 8; k++) {
+      const a = (k * TAU) / 8
+      h = Math.max(h, groundY(x + R * f * Math.cos(a), z + R * f * Math.sin(a)) + lift)
+    }
+  }
+  return h
 }
 export const TINE_SPREAD = 0.56
 export const TINE_R = 0.03
@@ -571,7 +580,7 @@ export const PROPS: Prop[] = (() => {
     add(`GR3${frame}`, r3.id, 2.36, out, 1.19)
     // a second rod's one prop: under its bank end while that goes onto its first joist, then the rod slides along the
     // fork until the prop stands beyond its centre of weight, and it is raised
-    for (const [k, first, then] of [[2, 1.1, 2.2], [4, 0.7, 2.62]] as const) {
+    for (const [k, first, then] of [[2, 1.1, 2.2], [4, 1.7, 2.62]] as const) {
       const p = byId(`R${k}${frame}`), m = MOVES_OF(p.id)
       add(`F${p.id}`, p.id, fromFoot(p, then), out, 1.22)
       const last = list[list.length - 1]!
@@ -653,12 +662,22 @@ export const parksBefore = (s: Prop): boolean => across(s) && byId(s.load).kind 
 export const parksAfter = (s: Prop): boolean => across(s) && !secondRod(byId(s.load))
 /** laid down outward, swung over its foot away from the bridge; the joists' props go back the way they came */
 export const laysOutward = (s: Prop): boolean => across(s) && s.load !== 'J3'
+/** the crown joist slides off its props as it is threaded: each lets go while its trailing end is still 0.3 m short
+ * of the fork (the thread runs on the motion's smootherstep, inverted here) */
+function threadRelease(s: Prop, load: Pole, thread: Step): number {
+  const ease = (x: number): number => x * x * x * (x * (x * 6 - 15) + 10)
+  const holdZ = load.a[2] + THREAD_Z + s.s, need = (load.b[2] + THREAD_Z - holdZ - 0.3) / THREAD_Z
+  if (need >= 1) return thread[1]
+  let lo = 0, hi = 1
+  for (let i = 0; i < 30; i++) { const mid = (lo + hi) / 2; if (ease(mid) < need) lo = mid; else hi = mid }
+  return thread[0] + (thread[1] - thread[0]) * lo
+}
 export const PROP_TIMES: Record<string, PropTimes> = Object.fromEntries(PROPS.map(s => {
   const load = byId(s.load), m = MOVES[s.load]!
   const second = load.k === 2 || load.k === 4
   const start = second && load.kind === 'rod' ? m.foot![0] : m.lift![0]
   let release: number
-  if (load.kind === 'joist') release = load.k === 3 ? m.thread![1] : Math.max(...CROSSINGS.filter(c => c.support === load.id && c.over === false).map(c => lashOf(c.rod, c.support)))
+  if (load.kind === 'joist') release = load.k === 3 ? threadRelease(s, load, m.thread!) : Math.max(...CROSSINGS.filter(c => c.support === load.id && c.over === false).map(c => lashOf(c.rod, c.support)))
   else if (load.kind === 'end') release = lashOf(load.id, `J${load.k === 0 ? 1 : 5}`)
   else if (load.k === 1 || load.k === 5) release = lashOf(load.id, `J${load.k === 1 ? 2 : 4}`)
   else if (load.k === 3) release = Math.max(lashOf(load.id, 'J2'), lashOf(load.id, 'J4'))

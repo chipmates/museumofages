@@ -643,7 +643,7 @@
       "parent": "root",
       "shape": "forked pole, a prop while the bridge goes up",
       "dimensions_m": {
-        "x": 3.114,
+        "x": 3.1141,
         "radius": 0.06,
         "axis": [
           0,
@@ -653,7 +653,7 @@
       },
       "position_m": [
         -1.9279,
-        0.5569,
+        0.5568,
         -2.1262
       ],
       "orientation_rad": [
@@ -675,7 +675,7 @@
       "parent": "root",
       "shape": "forked pole, a prop while the bridge goes up",
       "dimensions_m": {
-        "x": 3.2154,
+        "x": 3.272,
         "radius": 0.06,
         "axis": [
           0,
@@ -685,8 +685,8 @@
       },
       "position_m": [
         2.1363,
-        0.501,
-        -1.9595
+        0.4772,
+        -1.9748
       ],
       "orientation_rad": [
         0,
@@ -707,7 +707,7 @@
       "parent": "root",
       "shape": "forked pole, a prop while the bridge goes up",
       "dimensions_m": {
-        "x": 1.1793,
+        "x": 1.1841,
         "radius": 0.06,
         "axis": [
           0,
@@ -717,8 +717,8 @@
       },
       "position_m": [
         -3.1009,
-        0.4649,
-        -1.6268
+        0.4627,
+        -1.628
       ],
       "orientation_rad": [
         0,
@@ -739,7 +739,7 @@
       "parent": "root",
       "shape": "forked pole, a prop while the bridge goes up",
       "dimensions_m": {
-        "x": 1.1871,
+        "x": 1.1889,
         "radius": 0.06,
         "axis": [
           0,
@@ -749,8 +749,8 @@
       },
       "position_m": [
         3.1018,
-        0.4641,
-        -1.6278
+        0.4633,
+        -1.6282
       ],
       "orientation_rad": [
         0,
@@ -771,7 +771,7 @@
       "parent": "root",
       "shape": "forked pole, a prop while the bridge goes up",
       "dimensions_m": {
-        "x": 3.4529,
+        "x": 3.453,
         "radius": 0.06,
         "axis": [
           0,
@@ -781,7 +781,7 @@
       },
       "position_m": [
         -0.4516,
-        0.6637,
+        0.6636,
         -1.969
       ],
       "orientation_rad": [
@@ -803,7 +803,7 @@
       "parent": "root",
       "shape": "forked pole, a prop while the bridge goes up",
       "dimensions_m": {
-        "x": 3.4687,
+        "x": 3.4688,
         "radius": 0.06,
         "axis": [
           0,
@@ -835,7 +835,7 @@
       "parent": "root",
       "shape": "forked pole, a prop while the bridge goes up",
       "dimensions_m": {
-        "x": 3.1672,
+        "x": 3.1673,
         "radius": 0.06,
         "axis": [
           0,
@@ -867,7 +867,7 @@
       "parent": "root",
       "shape": "forked pole, a prop while the bridge goes up",
       "dimensions_m": {
-        "x": 3.3858,
+        "x": 3.3859,
         "radius": 0.06,
         "axis": [
           0,
@@ -877,8 +877,8 @@
       },
       "position_m": [
         0.858,
-        0.6552,
-        -2.1707
+        0.6551,
+        -2.1708
       ],
       "orientation_rad": [
         0,
@@ -899,7 +899,7 @@
       "parent": "root",
       "shape": "forked pole, a prop while the bridge goes up",
       "dimensions_m": {
-        "x": 3.1647,
+        "x": 3.1648,
         "radius": 0.06,
         "axis": [
           0,
@@ -931,7 +931,7 @@
       "parent": "root",
       "shape": "forked pole, a prop while the bridge goes up",
       "dimensions_m": {
-        "x": 3.3619,
+        "x": 3.3621,
         "radius": 0.06,
         "axis": [
           0,
@@ -963,7 +963,7 @@
       "parent": "root",
       "shape": "forked pole, a prop while the bridge goes up",
       "dimensions_m": {
-        "x": 1.191,
+        "x": 1.1957,
         "radius": 0.06,
         "axis": [
           0,
@@ -973,8 +973,8 @@
       },
       "position_m": [
         -3.1002,
-        0.4577,
-        1.6302
+        0.4557,
+        1.6313
       ],
       "orientation_rad": [
         0,
@@ -995,7 +995,7 @@
       "parent": "root",
       "shape": "forked pole, a prop while the bridge goes up",
       "dimensions_m": {
-        "x": 1.1772,
+        "x": 1.1798,
         "radius": 0.06,
         "axis": [
           0,
@@ -1005,8 +1005,8 @@
       },
       "position_m": [
         3.1003,
-        0.464,
-        1.6269
+        0.4628,
+        1.6275
       ],
       "orientation_rad": [
         0,
@@ -1059,7 +1059,7 @@
       "parent": "root",
       "shape": "forked pole, a prop while the bridge goes up",
       "dimensions_m": {
-        "x": 3.4277,
+        "x": 3.4278,
         "radius": 0.06,
         "axis": [
           0,
@@ -1091,7 +1091,7 @@
       "parent": "root",
       "shape": "forked pole, a prop while the bridge goes up",
       "dimensions_m": {
-        "x": 3.224,
+        "x": 3.2241,
         "radius": 0.06,
         "axis": [
           0,
@@ -1123,7 +1123,7 @@
       "parent": "root",
       "shape": "forked pole, a prop while the bridge goes up",
       "dimensions_m": {
-        "x": 3.3754,
+        "x": 3.3755,
         "radius": 0.06,
         "axis": [
           0,
@@ -1133,7 +1133,7 @@
       },
       "position_m": [
         0.8955,
-        0.6451,
+        0.645,
         2.1694
       ],
       "orientation_rad": [
@@ -1155,7 +1155,7 @@
       "parent": "root",
       "shape": "forked pole, a prop while the bridge goes up",
       "dimensions_m": {
-        "x": 3.3572,
+        "x": 3.3573,
         "radius": 0.06,
         "axis": [
           -0.4085,
@@ -1165,7 +1165,7 @@
       },
       "position_m": [
         -0.8424,
-        0.589,
+        0.5889,
         -0.45
       ],
       "orientation_rad": [
@@ -1187,7 +1187,7 @@
       "parent": "root",
       "shape": "forked pole, a prop while the bridge goes up",
       "dimensions_m": {
-        "x": 3.3381,
+        "x": 3.3383,
         "radius": 0.06,
         "axis": [
           -0.4085,
@@ -1197,7 +1197,7 @@
       },
       "position_m": [
         -0.8463,
-        0.5977,
+        0.5976,
         0.45
       ],
       "orientation_rad": [
@@ -1219,7 +1219,7 @@
       "parent": "root",
       "shape": "forked pole, a prop while the bridge goes up",
       "dimensions_m": {
-        "x": 3.3446,
+        "x": 3.3448,
         "radius": 0.06,
         "axis": [
           0.4085,
@@ -1229,7 +1229,7 @@
       },
       "position_m": [
         0.845,
-        0.5947,
+        0.5946,
         -0.72
       ],
       "orientation_rad": [
@@ -1251,7 +1251,7 @@
       "parent": "root",
       "shape": "forked pole, a prop while the bridge goes up",
       "dimensions_m": {
-        "x": 3.3139,
+        "x": 3.314,
         "radius": 0.06,
         "axis": [
           0.4085,
@@ -1293,7 +1293,7 @@
       },
       "position_m": [
         0.8385,
-        0.7339,
+        0.7338,
         3
       ],
       "orientation_rad": [
@@ -1308,14 +1308,14 @@
       },
       "certainty": "C",
       "source": "museum choice: the order of building is not drawn",
-      "notes": "holds J3 from 18.00 s to 20.80 s; slides in along the stream bed, rises under it and walks in as it is raised, then is laid down"
+      "notes": "holds J3 from 18.00 s to 20.33 s; slides in along the stream bed, rises under it and walks in as it is raised, then is laid down"
     },
     {
       "id": "GJ3",
       "parent": "root",
       "shape": "forked pole, a prop while the bridge goes up",
       "dimensions_m": {
-        "x": 3.6621,
+        "x": 3.6622,
         "radius": 0.06,
         "axis": [
           -0.4085,
@@ -1340,7 +1340,7 @@
       },
       "certainty": "C",
       "source": "museum choice: the order of building is not drawn",
-      "notes": "holds J3 from 18.00 s to 20.80 s; slides in along the stream bed, rises under it and walks in as it is raised, then is laid down"
+      "notes": "holds J3 from 18.00 s to 20.06 s; slides in along the stream bed, rises under it and walks in as it is raised, then is laid down"
     },
     {
       "id": "bank-seats",
