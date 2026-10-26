@@ -70,11 +70,14 @@ async function shoot(page, file, sub) {
   return { info, raw }
 }
 
-/** the three encodings of a master, the WebP held under its cap */
+/** the three encodings of a master. The sky sits a few sRGB steps above black and
+    the master carries the scene's dither there: below WebP q88, AVIF q68 or JPEG
+    q88 the encoders flatten it into bands, so the WebP takes the highest quality
+    from q90 its cap allows. */
 async function encode(master, cap) {
   const base = master.replace(/\.png$/, '')
   const made = {}
-  let q = 86
+  let q = 90
   for (;;) {
     const buf = await sharp(master).withIccProfile('srgb').webp({ quality: q, effort: 6, smartSubsample: true }).toBuffer()
     if (buf.length <= cap || q <= 40) {
@@ -82,14 +85,14 @@ async function encode(master, cap) {
       made.webp = { bytes: buf.length, quality: q }
       break
     }
-    q -= 4
+    q -= 1
   }
-  const avif = await sharp(master).withIccProfile('srgb').avif({ quality: 56, effort: 6, chromaSubsampling: '4:4:4' }).toBuffer()
+  const avif = await sharp(master).withIccProfile('srgb').avif({ quality: 68, effort: 6, chromaSubsampling: '4:4:4' }).toBuffer()
   writeFileSync(`${base}.avif`, avif)
-  made.avif = { bytes: avif.length, quality: 56 }
-  const jpg = await sharp(master).withIccProfile('srgb').jpeg({ quality: 84, mozjpeg: true }).toBuffer()
+  made.avif = { bytes: avif.length, quality: 68 }
+  const jpg = await sharp(master).withIccProfile('srgb').jpeg({ quality: 88, mozjpeg: true, chromaSubsampling: '4:4:4' }).toBuffer()
   writeFileSync(`${base}.jpg`, jpg)
-  made.jpg = { bytes: jpg.length, quality: 84 }
+  made.jpg = { bytes: jpg.length, quality: 88 }
   console.log(`${base}: webp ${made.webp.bytes} (q${made.webp.quality}) avif ${made.avif.bytes} jpg ${made.jpg.bytes}`)
   return made
 }
