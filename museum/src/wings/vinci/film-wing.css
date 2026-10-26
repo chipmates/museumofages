@@ -641,10 +641,11 @@ body:has(#wing[data-film][data-evening]) .brand { opacity: 0; transition: opacit
 /* the certainty word in capitals reads small at 13 px: 14, as the record's */
 #wing[data-film='upright'] .vitrine[data-narrow='true'] .vitrine-certainty { font-size: .875rem; }
 #wing[data-film='upright'] .vitrine[data-narrow='true'] .vitrine-folio { font-size: .8125rem; }
-/* the card's words fade over 24 px at least while more waits below, as the Menu's rows do: 16 read as a cut */
+/* the card's words fade over 24 px at least while more waits below, as the Menu's rows do: 16 read as a cut;
+   a line the edge would slice waits under the mask's end (--fade-cover, vitrine/index.ts) */
 #wing[data-film='upright'] .vitrine[data-narrow='true'] .vitrine-body[data-more='true'] {
-  -webkit-mask-image: linear-gradient(to bottom, #000 calc(100% - max(var(--fade, 16px), 24px)), transparent);
-  mask-image: linear-gradient(to bottom, #000 calc(100% - max(var(--fade, 16px), 24px)), transparent);
+  -webkit-mask-image: linear-gradient(to bottom, #000 calc(100% - var(--fade-cover, 0px) - max(var(--fade, 16px), 24px)), transparent calc(100% - var(--fade-cover, 0px)));
+  mask-image: linear-gradient(to bottom, #000 calc(100% - var(--fade-cover, 0px) - max(var(--fade, 16px), 24px)), transparent calc(100% - var(--fade-cover, 0px)));
 }
 
 /* THE PLAN AND THE LIFE AS THE PHONE'S TALL SHEETS, the record's and the
