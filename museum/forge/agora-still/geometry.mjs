@@ -202,6 +202,102 @@ export function inColumn(b, side, x, y, column = PHONE.column) {
   return x > b.x0 - column.margin && x < b.x1 + column.margin && y > b.y0 - reach && y < b.y1 + reach
 }
 
+/** the line of type the page sets in a name box: the front's 15 px at a line
+    height of 1.2, centred in the box's height */
+export const TEXT_LINE = 18
+
+/** where the page sets a name of width tw in its box: flush to the star's side
+    beside it, at the box's start or end over or under it, else centred */
+export function textRect(b, side, align, tw, line = TEXT_LINE) {
+  const cy = (b.y0 + b.y1) / 2
+  const toStart = side === 'right' || (side !== 'left' && align === 'start')
+  const toEnd = side === 'left' || align === 'end'
+  const x0 = toStart ? b.x0 : toEnd ? b.x1 - tw : (b.x0 + b.x1 - tw) / 2
+  return { x0, y0: cy - line / 2, x1: x0 + tw, y1: cy + line / 2 }
+}
+
+/** the distance from a point to a rectangle (0 inside it) */
+export const rectPointDist = (r, x, y) => Math.hypot(Math.max(r.x0 - x, 0, x - r.x1), Math.max(r.y0 - y, 0, y - r.y1))
+
+/** The wide's names as a reader takes them, measured on the text the page
+    sets: each name's nearest figure star is its own by `near` (ratio and plus,
+    whichever asks more); no other star stands level with the text within
+    `row.reach` of its ends, nor over or under it within `column.reach`; the
+    text stays within `close` of its star where the sky allows, beside the star
+    first, over or under it next, a diagonal last (`kind`); two names' tap
+    targets (the text and the link's padding, at least `hit.size` square)
+    keep `hit.gap` between them, any two houses' names too. The hit size is
+    44 page px where the frame shows smallest among the desk sizes checked
+    (1280 x 800 shows it at 0.906, so 48.5 design px). */
+export const READ = {
+  near: { ratio: 2, plus: 16, must: 4 },
+  price: { near: 4, row: 4, column: 3, far: 0.5 },
+  /* two targets keep hit.gap at the 1280 x 800 page; where the stars stand too
+     close for that, they may come nearer at hit.price a design px, never
+     nearer than `least` (two 44 px targets touching where the frame shows at
+     1, about the 1440 x 900 page) */
+  row: { half: 12, reach: 60 },
+  column: { margin: 4, reach: 36 },
+  close: 14,
+  kind: { side: 0, centre: 0.6, diagonal: 1.2 },
+  /** the wide steps a box out from its star by 3 px at a time */
+  gaps: [9, 12, 15, 18, 21, 24, 27, 30, 33],
+  hit: { size: 44 / 0.9064, gap: 4 / 0.9064, pad: 6, least: 44 / 1.0299 + 4 / 1.0299 - 44 / 0.9064, price: 0.3 },
+}
+
+/** The phone's open houses read the same way, on the short names at 14 px
+    (a 16.8 px line); their tap rules are PHONE's, and every name steps out
+    past the glows, so `close` counts from the least seat a side allows */
+export const READ_PHONE = {
+  near: READ.near,
+  price: READ.price,
+  row: READ.row,
+  column: READ.column,
+  close: 6,
+  kind: READ.kind,
+  gaps: [0, 3, 6, 9, 12, 15, 18, 21, 24, 27, 30],
+  hit: null,
+  line: 16.8,
+}
+
+/** the gap between two tap targets (negative where they overlap) */
+export const hitGap = (a, b) => Math.max(b.x0 - a.x1, a.x0 - b.x1, b.y0 - a.y1, a.y0 - b.y1)
+
+/** where a name's text stands from its star at the least gap a side allows:
+    beside it the gap, over or under it the gap and half the type's spare
+    height, a diagonal that past the star's vertical; the reading's `close` is
+    measured from there when glows push every name out */
+function hypotClose(gap, side, align, plus, line = TEXT_LINE) {
+  if (side === 'right' || side === 'left') return gap + plus
+  const dy = gap + (NAME_BOX.h - line) / 2
+  return (align === 'center' ? dy : Math.hypot(8, dy)) + plus
+}
+
+/** what another star at (x, y) costs a name's reading: Infinity when it stands
+    nearer the text than the name's own star does (by READ.near.must), else
+    the share of the margin, the row and the column it takes away */
+export function readCost(t, own, x, y, cy, r = READ) {
+  const d = rectPointDist(t, x, y)
+  if (d < own + r.near.must) return Infinity
+  let v = 0
+  const want = Math.max(r.near.ratio * own, own + r.near.plus)
+  if (d < want) v += r.price.near * (want - d) / want
+  const gx = Math.max(t.x0 - x, 0, x - t.x1)
+  if (Math.abs(y - cy) <= r.row.half && gx < r.row.reach) v += r.price.row * (1 - gx / r.row.reach)
+  const gy = Math.max(t.y0 - y, 0, y - t.y1)
+  if (x > t.x0 - r.column.margin && x < t.x1 + r.column.margin && gy < r.column.reach) v += r.price.column * (1 - gy / r.column.reach)
+  return v
+}
+
+/** a name's tap target on the wide: the link pads its text by 0.4 em each side
+    and is at least hit.size square, centred on its text */
+export function textHit(t, hit = READ.hit) {
+  const cx = (t.x0 + t.x1) / 2
+  const cy = (t.y0 + t.y1) / 2
+  const hw = Math.max(t.x1 - t.x0 + 2 * hit.pad, hit.size) / 2
+  return { x0: cx - hw, y0: cy - hit.size / 2, x1: cx + hw, y1: cy + hit.size / 2 }
+}
+
 /**
  * The name side of every star: no box over another star or another name, none
  * within LINE_CLEAR of a drawn hairline, none on the fire or the court, all
@@ -211,6 +307,11 @@ export function inColumn(b, side, x, y, column = PHONE.column) {
  *   keep(box) -> true when the box stands in the open sky
  *   opts.segs: every drawn hairline in the frame, this house's and the others'
  *   opts.hit, opts.column: the phone's tap rules (PHONE)
+ *   opts.read: the wide's reading rules (READ), with each star's text width
+ *     as s.tw; the cost becomes the reading order and the text's distance
+ *   opts.glow: { radius(j), share, gap } no text (with opts.read, else no box)
+ *     nearer a star's centre than share times its glow's reach and gap (j over
+ *     stars, then others); the own star's name steps out past it
  */
 export function solveSides(stars, lines, keep, opts = {}) {
   const budget = opts.steps ?? 200000
@@ -219,16 +320,51 @@ export function solveSides(stars, lines, keep, opts = {}) {
   const boxPad = opts.boxPad ?? 14
   const box = opts.box ?? NAME_BOX
   const clear = opts.clear ?? LINE_CLEAR
-  const gaps = opts.segs ? GAPS : [(box ?? NAME_BOX).gap]
+  const others = opts.others ?? []
+  const glowR = (j) => (opts.glow ? opts.glow.radius(j) : 0)
+  /** how far a box keeps from a star's centre when glows are kept */
+  const clearOf = (j) => glowR(j) * (opts.glow.share ?? 1) + (opts.glow.gap ?? 0)
+  /** over or under its star the text stands this far inside its box */
+  const insetOf = (side) => (opts.read && (side === 'above' || side === 'below') ? (NAME_BOX.h - (opts.read.line ?? TEXT_LINE)) / 2 : 0)
+  /** the gaps a star's box may stand at: its text past its own glow when glows are kept */
+  const gapsOf = (i, side) => {
+    const steps = opts.read?.gaps ?? GAPS
+    if (!opts.glow) return opts.read ? steps : opts.segs ? GAPS : [(box ?? NAME_BOX).gap]
+    const g0 = Math.max(steps[0], Math.ceil(clearOf(i) - insetOf(side)))
+    return steps.map((g) => g0 + (g - steps[0]))
+  }
   const cands = stars.map((s, i) => {
     const out = []
-    for (const cand of SIDES) for (const gap of gaps) {
+    for (const cand of SIDES) for (const gap of gapsOf(i, cand.side)) {
       const { side, align } = cand
+      const gaps = gapsOf(i, side)
       const b = nameBox(s.x, s.y, cand, { ...(s.box ?? box), gap })
+      if (opts.allow && !opts.allow(i, side, align, gap)) continue
       const kept = keep(b)
       if (kept === false) continue
       const extra = typeof kept === 'number' ? kept : 0
       let bad = false
+      const t = opts.read ? textRect(b, side, align, s.tw ?? b.x1 - b.x0, opts.read.line) : null
+      if (opts.glow) {
+        // every glow in the frame, the own star's too, stays clear of the text
+        // (of the box when no text is read)
+        const g = t ?? b
+        for (let j = 0; j < stars.length && !bad; j++) if (rectPointDist(g, stars[j].x, stars[j].y) < clearOf(j)) bad = true
+        for (let j = 0; j < others.length && !bad; j++) if (rectPointDist(g, others[j].x, others[j].y) < clearOf(stars.length + j)) bad = true
+      }
+      const own = t ? rectPointDist(t, s.x, s.y) : 0
+      // the reading rules: the own star nearest is a rule, its margin and the
+      // row and the column are priced, so a crowded sky still seats every name
+      let misread = 0
+      if (t && !bad) {
+        const cy = (t.y0 + t.y1) / 2
+        for (const o of [...stars.filter((_, j) => j !== i), ...others]) {
+          const v = readCost(t, own, o.x, o.y, cy, opts.read)
+          if (v === Infinity) bad = true
+          misread += v
+          if (bad) break
+        }
+      }
       for (let j = 0; j < stars.length && !bad; j++) {
         if (j === i) continue
         const o = stars[j]
@@ -270,57 +406,88 @@ export function solveSides(stars, lines, keep, opts = {}) {
       const sx = align === 'start' ? 0.7 : align === 'end' ? -0.7 : 0
       const dir = side === 'right' ? [1, 0] : side === 'left' ? [-1, 0] : side === 'above' ? [sx, -1] : [sx, 1]
       const level = side === 'right' || side === 'left' ? 0 : align === 'center' ? 0.6 : 0.35
-      const cost = level - 0.8 * (dir[0] * ox + dir[1] * oy) + extra + (gap - gaps[0]) * 0.06
-      out.push({ side, align, gap, b, cost })
+      let cost = level - 0.8 * (dir[0] * ox + dir[1] * oy) + extra + (gap - gaps[0]) * 0.06
+      if (t) {
+        // the reading order first, then the text's distance past `close`; a
+        // bright pixel to clear costs less than a worse side
+        const r = opts.read
+        const kind = side === 'right' || side === 'left' ? r.kind.side : align === 'center' ? r.kind.centre : r.kind.diagonal
+        const close = opts.glow ? hypotClose(gaps[0], side, align, r.close, r.line) : r.close
+        cost = kind + r.price.far * Math.max(0, own - close) + misread - 0.3 * (dir[0] * ox + dir[1] * oy) + extra / 4
+      }
+      out.push({ side, align, gap, b, cost, ...(t ? { t, h: opts.read.hit ? textHit(t, opts.read.hit) : null, own } : {}) })
     }
     return out.sort((p, q) => p.cost - q.cost)
   })
-  if (opts.explain) return cands.map((c, i) => `${stars[i].slug}:${c.map((x) => x.side[0] + x.align[0] + (x.gap === gaps[0] ? '' : x.gap)).join(',')}`)
+  if (opts.explain) return cands.map((c, i) => `${stars[i].slug}:${c.map((x) => x.side[0] + x.align[0] + (x.gap === GAPS[0] ? '' : x.gap)).join(',')}`)
+  const pairCost = (a, b) => {
+    if (!opts.read?.hit) return 0
+    const g = hitGap(a.h, b.h)
+    return g >= opts.read.hit.gap ? 0 : opts.read.hit.price * (opts.read.hit.gap - g)
+  }
   const clashes = (i, a, j, b) =>
-    stars[j].group === stars[i].group
+    (opts.read?.hit && hitGap(a.h, b.h) < opts.read.hit.least) ||
+    (stars[j].group === stars[i].group
       ? overlaps(a.b, b.b, 2) || Boolean(opts.hit && hitsClash(a.b, b.b, opts.hit))
-      : opts.segs ? housesClash(a.b, b.b) : overlaps(a.b, b.b, boxPad)
+      : opts.segs ? housesClash(a.b, b.b) : overlaps(a.b, b.b, boxPad))
   if (cands.some((c) => c.length === 0)) return opts.count ? { open: cands.filter((c) => c.length === 0).length } : null
   // stars whose boxes can never meet are searched apart: two independent
   // parts of the sky would otherwise multiply each other's dead ends
   const root = stars.map((_, i) => i)
   const find = (i) => (root[i] === i ? i : (root[i] = find(root[i])))
+  const meets = []
   for (let i = 0; i < stars.length; i++)
     for (let j = i + 1; j < stars.length; j++) {
-      if (find(i) === find(j)) continue
-      if (cands[i].some((a) => cands[j].some((b) => clashes(i, a, j, b)))) root[find(i)] = find(j)
+      if (cands[i].some((a) => cands[j].some((b) => clashes(i, a, j, b) || pairCost(a, b) > 0))) {
+        meets.push([i, j])
+        root[find(i)] = find(j)
+      }
     }
   const parts = new Map()
   for (let i = 0; i < stars.length; i++) parts.set(find(i), [...(parts.get(find(i)) ?? []), i])
-  const chosen = new Array(stars.length).fill(null)
   const result = new Array(stars.length).fill(null)
   let unreached = 0
-  for (const members of parts.values()) {
-    // the next star is the one with the fewest sides still free, and a branch
-    // ends the moment any unseated star has none left
+  let searchCut = 0
+  /* the next star is the one with the fewest seats still free, and a branch
+     ends the moment any unseated star has none left. Seats of `fixed` stars
+     (in result) stand: every seat is checked and priced against them. */
+  const search = (members, fixed, bound0 = Infinity, steps0 = budget) => {
+    const chosen = new Map()
     let best = null
-    let bestCost = Infinity
+    let bestCost = bound0
     let steps = 0
     let deepest = 0
-    const live = new Map(members.map((i) => [i, cands[i]]))
+    const live = new Map(
+      members.map((i) => [
+        i,
+        cands[i]
+          .filter((c) => fixed.every((j) => !clashes(i, c, j, result[j])))
+          .map((c) => ({ c, k: c.cost + fixed.reduce((v, j) => v + pairCost(c, result[j]), 0) }))
+          .sort((p, q) => p.k - q.k),
+      ])
+    )
     const dfs = (left, cost) => {
-      if (++steps > budget) return
-      if (cost >= bestCost) return
+      if (++steps > steps0) return
+      // every star still to seat pays at least its cheapest live seat; a seat
+      // may cost less than nothing, so the running cost alone bounds nothing
+      let bound = cost
+      for (const j of left) bound += live.get(j)?.[0]?.k ?? 0
+      if (bound >= bestCost) return
       deepest = Math.max(deepest, members.length - left.length)
       if (!left.length) {
-        best = members.map((i) => chosen[i])
+        best = members.map((i) => chosen.get(i))
         bestCost = cost
         return
       }
       let pick = -1
       for (const j of left) if (pick < 0 || (live.get(j)?.length ?? 0) < (live.get(pick)?.length ?? 0)) pick = j
       const rest = left.filter((j) => j !== pick)
-      for (const c of live.get(pick) ?? []) {
+      for (const w of live.get(pick) ?? []) {
         const saved = []
         let dead = false
         for (const j of rest) {
           const was = live.get(j) ?? []
-          const now = was.filter((d) => !clashes(pick, c, j, d))
+          const now = was.filter((d) => !clashes(pick, w.c, j, d.c))
           saved.push([j, was])
           live.set(j, now)
           if (!now.length) {
@@ -329,24 +496,135 @@ export function solveSides(stars, lines, keep, opts = {}) {
           }
         }
         if (!dead) {
-          chosen[pick] = c
-          dfs(rest, cost + c.cost)
-          chosen[pick] = null
+          let pc = 0
+          if (opts.read) for (const d of chosen.values()) pc += pairCost(w.c, d)
+          chosen.set(pick, w.c)
+          dfs(rest, cost + w.k + pc)
+          chosen.delete(pick)
         }
         for (const [j, was] of saved) live.set(j, was)
       }
     }
     dfs(members.slice(), 0)
-    if (!best) {
-      unreached += members.length - deepest
+    return { best, cost: bestCost, cut: steps > steps0, deepest }
+  }
+  for (const members of parts.values()) {
+    const got = search(members, [])
+    if (got.cut) searchCut++
+    if (!got.best) {
+      unreached += members.length - got.deepest
       if (!opts.count) return null
       continue
     }
-    members.forEach((i, q) => (result[i] = best[q]))
+    members.forEach((i, q) => (result[i] = got.best[q]))
+  }
+  if (opts.read && !opts.count) {
+    // a search too large to finish is followed by exact searches of one star
+    // and every star whose seats can meet its seats, then of one house and
+    // its neighbours, the rest standing, until no such search lowers the total
+    const near = stars.map(() => new Set())
+    for (const [i, j] of meets) {
+      near[i].add(j)
+      near[j].add(i)
+    }
+    const groups = [...new Set(stars.map((st) => st.group))]
+    const hoods = [
+      ...stars.map((_, i) => [i, ...near[i]].sort((p, q) => p - q)),
+      ...groups.map((g) => {
+        const own = stars.map((st, i) => (st.group === g ? i : -1)).filter((i) => i >= 0)
+        return stars.map((_, i) => i).filter((i) => own.includes(i) || own.some((k) => near[k].has(i) && Math.hypot(stars[i].x - stars[k].x, stars[i].y - stars[k].y) < (opts.read.redo ?? 110)))
+      }),
+      // two houses whose seats meet, whole
+      ...groups.flatMap((g, a) =>
+        groups.slice(a + 1).filter((h) => meets.some(([i, j]) => (stars[i].group === g && stars[j].group === h) || (stars[i].group === h && stars[j].group === g)))
+          .map((h) => stars.map((st, i) => (st.group === g || st.group === h ? i : -1)).filter((i) => i >= 0))),
+    ]
+    const priced = (members, fixed) => {
+      let v = 0
+      members.forEach((i, q) => {
+        v += result[i].cost
+        for (const j of fixed) v += pairCost(result[i], result[j])
+        for (const k of members.slice(q + 1)) v += pairCost(result[i], result[k])
+      })
+      return v
+    }
+    for (let round = 0; round < 8; round++) {
+      let moved = false
+      for (const members of hoods) {
+        const fixed = stars.map((_, i) => i).filter((i) => !members.includes(i))
+        const now = priced(members, fixed)
+        const got = search(members, fixed)
+        if (got.cut) searchCut++
+        if (got.best && got.cost < now - 1e-9) {
+          members.forEach((i, q) => (result[i] = got.best[q]))
+          moved = true
+        }
+      }
+      if (!moved) break
+    }
+    // the polished total bounds an exact search of each part once more
+    if (opts.read.prove) {
+      for (const members of parts.values()) {
+        const now = priced(members, [])
+        const got = search(members, [], now - 1e-9, opts.read.prove)
+        searchCut += got.cut ? 1 : 0
+        if (got.best) members.forEach((i, q) => (result[i] = got.best[q]))
+        Object.defineProperty(result, 'proved', { value: [...(result.proved ?? []), got.cut ? 'cut' : got.best ? 'better' : 'best'], enumerable: false, configurable: true })
+      }
+    }
   }
   // a failed search says how many names it could not reach, as a fraction of one
   if (opts.count) return unreached === 0 ? { open: 0, sides: result } : { open: 0.05 + (0.9 * unreached) / stars.length }
-  return result.map((c) => ({ side: c.side, align: c.align, gap: c.gap, box: c.b }))
+  if (opts.read) polish(result, cands, meets, clashes, pairCost)
+  const seated = result.map((c) => ({ side: c.side, align: c.align, gap: c.gap, box: c.b, cost: c.cost, ...(c.t ? { text: c.t, hit: c.h, own: c.own } : {}) }))
+  // a search its budget cut short holds a seating, not the best one
+  Object.defineProperty(seated, 'cut', { value: searchCut, enumerable: false })
+  Object.defineProperty(seated, 'proved', { value: result.proved ?? null, enumerable: false })
+  return seated
+}
+
+/** After the search: move one seat, then two seats that meet, whenever the
+    total falls and every rule still holds, until nothing moves. A search its
+    budget stopped early still ends where no such move is left. */
+function polish(result, cands, meets, clashes, pairCost) {
+  const n = result.length
+  const free = (i, c, skip) => {
+    for (let j = 0; j < n; j++) if (j !== i && j !== skip && clashes(i, c, j, result[j])) return false
+    return true
+  }
+  const paid = (i, c, skip) => {
+    let v = c.cost
+    for (let j = 0; j < n; j++) if (j !== i && j !== skip) v += pairCost(c, result[j])
+    return v
+  }
+  for (let round = 0; round < 50; round++) {
+    let moved = false
+    for (let i = 0; i < n; i++) {
+      let best = paid(i, result[i], -1) - 1e-9
+      for (const c of cands[i]) {
+        if (c === result[i] || !free(i, c, -1)) continue
+        const v = paid(i, c, -1)
+        if (v < best) [best, result[i], moved] = [v, c, true]
+      }
+    }
+    for (const [i, j] of meets) {
+      let best = paid(i, result[i], j) + paid(j, result[j], i) + pairCost(result[i], result[j]) - 1e-9
+      const ci = cands[i].filter((c) => free(i, c, j))
+      const cj = cands[j].filter((c) => free(j, c, i))
+      const pi = ci.map((c) => paid(i, c, j))
+      const pj = cj.map((c) => paid(j, c, i))
+      let pick = null
+      for (let a = 0; a < ci.length; a++)
+        for (let b = 0; b < cj.length; b++) {
+          if (pi[a] + pj[b] >= best || clashes(i, ci[a], j, cj[b])) continue
+          const v = pi[a] + pj[b] + pairCost(ci[a], cj[b])
+          if (v < best) [best, pick] = [v, [ci[a], cj[b]]]
+        }
+      if (pick) [result[i], result[j], moved] = [pick[0], pick[1], true]
+    }
+    if (!moved) return round
+  }
+  return 50
 }
 
 const area = (a, b) => Math.max(0, Math.min(a.x1, b.x1) - Math.max(a.x0, b.x0)) * Math.max(0, Math.min(a.y1, b.y1) - Math.max(a.y0, b.y0))

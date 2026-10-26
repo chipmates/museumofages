@@ -4,7 +4,8 @@
 // the contrast under it, and (tall) the zoom that parts a group's stars.
 import { join } from 'node:path'
 import sharp from 'sharp'
-import { boxSegDist, drawnSegments, hitBox, housesClash, inColumn, inside, nameBox, overlaps, overPlume, safeArea, skyFloor, solveSides, HOUSE_PLATE, LINE_CLEAR, NAME_BOX, PHONE, SIDES } from './geometry.mjs'
+import { boxSegDist, drawnSegments, hitBox, hitGap, housesClash, inColumn, inside, nameBox, overlaps, overPlume, rectPointDist, safeArea, skyFloor, solveSides, textHit, textRect, HOUSE_PLATE, LINE_CLEAR, NAME_BOX, PHONE, READ, READ_PHONE, SIDES } from './geometry.mjs'
+import NAMES from './names.json' with { type: 'json' }
 const nameBoxFor = (p, k) => nameBox(p.x, p.y, SIDES[k])
 /** the hairline's inset from its star, as atlas.ts figureGeometry draws it,
     from the star's disc in patch units */
@@ -15,6 +16,17 @@ const NAME_LUM = 0.83
 /** a pixel brighter than this under a name leaves under 4.5:1 for it */
 const BRIGHT = (NAME_LUM + 0.05) / 4.5 - 0.05
 const TAP = 44
+/** each name's text width as the front sets it (names.json, the wider of
+    English and German): the wide's at 15 px, the phone's short name at 14 */
+const WIDE_TEXT = Object.fromEntries(Object.entries(NAMES.names).map(([k, v]) => [k, v.wide.css]))
+const HOUSE_TEXT = Object.fromEntries(Object.entries(NAMES.names).map(([k, v]) => [k, v.house.css]))
+/** a name box is its text and a pixel either side */
+const boxOf = (tw) => ({ ...NAME_BOX, w: Math.ceil(tw) + 2 })
+/** a house frame's names keep this clear of every star's glow (css px): the
+    name's own shadow (0.55 em of 14 px, about 8) and a gap the eye sees */
+const HALO = 12
+/** a house frame lets its house lead: every other house at this presence */
+const LEAD = 0.4
 /** the six houses as the page knows them: key, star slugs, hairlines */
 let CONSTELLATIONS = []
 
@@ -221,7 +233,7 @@ function groupsOf(stars, s, info) {
 }
 
 /** every star's free name side in this frame, judged on its pixels too */
-function seatNames(stars, groups, frame, shape, fireBox, raw, info, s, cssBox, allowBright = false, widths = null, others = [], kCss = frame.k, ring = null) {
+function seatNames(stars, groups, frame, shape, fireBox, raw, info, s, cssBox, allowBright = false, widths = null, others = [], kCss = frame.k, ring = null, more = {}) {
   const safe = cssBox ?? safeArea(frame, shape)
   const m = 8
   const inner = { x0: safe.x0 + m, y0: safe.y0 + m, x1: safe.x1 - m, y1: safe.y1 - m }
@@ -260,7 +272,7 @@ function seatNames(stars, groups, frame, shape, fireBox, raw, info, s, cssBox, a
     const dy = y - gy
     const n = Math.hypot(dx, dy) || 1
     const w = widths?.[st.slug]
-    return { x, y, group: st.group, slug: st.slug, outward: [dx / n, dy / n], ...(w ? { box: { ...NAME_BOX, w } } : {}) }
+    return { x, y, group: st.group, slug: st.slug, outward: [dx / n, dy / n], ...(w ? { box: boxOf(w), tw: w } : {}) }
   })
   const lines = []
   const order = stars.map((st) => st.slug)
@@ -270,7 +282,7 @@ function seatNames(stars, groups, frame, shape, fireBox, raw, info, s, cssBox, a
       const j = order.indexOf(c.stars[b])
       if (i >= 0 && j >= 0) lines.push([i, j])
     }
-  const near = { others: others.map((st) => ({ x: st.css[0], y: st.css[1] })), segs, ...(shape === 'tall' ? { hit: PHONE.hit, column: PHONE.column } : {}) }
+  const near = { others: others.map((st) => ({ x: st.css[0], y: st.css[1], slug: st.slug })), segs, ...(shape === 'tall' ? { hit: PHONE.hit, column: PHONE.column } : {}), ...more }
   const seated = solveSides(pts, lines, keep, near)
   if (!seated && process.env.SEAT_EXPLAIN) {
     const why = (b) => {
@@ -410,16 +422,22 @@ const writeMaster = (raw, info, file) =>
 /**
  * Seat the names on a frame with no pixel over the C8 line under any of them:
  * seat strictly; failing that, seat at a price per bright box, clear what
- * stands under those boxes, and seat again on the cleared frame.
+ * stands under those boxes, and seat again on the cleared frame. With
+ * `priced` the priced seats are asked first, so a field star to clear weighs
+ * against a name pushed farther from its star.
  */
-async function seatClean({ page, seat, raw, info, s, file, shootFn, reproject, ring = null }) {
+async function seatClean({ page, seat, raw, info, s, file, shootFn, reproject, ring = null, priced = false }) {
   const base = Buffer.from(raw)
   let seats = seat(false)
   let cleared = []
   let rects = []
-  for (let round = 0; !seats && round < 4; round++) {
+  for (let round = 0; (priced || !seats) && round < 4; round++) {
     const loose = seat(true)
     if (!loose) break
+    if (priced && !loose.some((x) => x.under.bright || x.ringPx > 0)) {
+      seats = loose
+      break
+    }
     const more = brightPoints(raw, info.width, info.height, loose.filter((x) => x.under.bright || x.ringPx > 0).map((x) => x.box), s, loose.segs, ring)
     if (!more.length) break
     cleared = [...cleared, ...more]
@@ -499,8 +517,8 @@ export async function buildStars({ page, name, frame, shot, master, out, samples
   let reserved = crowded
   if (shape === 'wide') {
     const got = await seatClean({
-      page, raw, info, s, file: master, shootFn: redraw,
-      seat: (allow) => seatNames(stars, groups, frame, shape, fire.plume, raw, info, s, undefined, allow),
+      page, raw, info, s, file: master, shootFn: redraw, priced: true,
+      seat: (allow) => seatNames(stars, groups, frame, shape, fire.plume, raw, info, s, undefined, allow, WIDE_TEXT, [], frame.k, null, { read: READ }),
       reproject: async () => {
         const proj = await project(page, raw, info, cssW, frame.plume)
         stars.splice(0, stars.length, ...proj.stars)
@@ -552,6 +570,7 @@ export async function buildStars({ page, name, frame, shot, master, out, samples
   const extra = {
     props: props.map((p) => ({ name: p.name, box: [r2(p.x0), r2(p.y0), r2(p.x1), r2(p.y1)], state: cutState(p, info.width, info.height) })),
     ...(seats ? nameChecks(seats, stars) : {}),
+    ...(seats ? { read: readChecks(seats, stars) } : {}),
     ...(shape === 'tall' ? { plates: plateChecks(groups, stars, s) } : {}),
     zooms: (data.zooms ?? []).map((z) => z.extra),
   }
@@ -598,6 +617,44 @@ function nameChecks(seats, stars, others = null) {
     for (const o of [...stars, ...others]) if (o !== stars[i] && inColumn(x.box, x.side, o.css[0], o.css[1])) crossings.push(`${stars[i].slug} over ${o.slug}`)
   })
   return { ...out, hitGapCss: { min: r2(gap), between: pair, rule: PHONE.hit }, columnCrossings: crossings, columnRule: PHONE.column }
+}
+
+/** the front's desk pages and the scale it shows the wide at there (its
+    stage: the height between 16:9 and 16:10 of the width, under a 65.8 px bar) */
+const DESKS = { 1280: 0.90642, 1440: 1.02988, 1920: 4 / 3 }
+
+/** the wide's names as a reader takes them, on the text the front sets:
+    each text's distance to its own star, the nearest other star, and the
+    nearest other name's tap target at each desk size (page px; a target is
+    the text, 0.4 em either side, at least 44 px square) */
+function readChecks(seats, stars) {
+  const css = stars.map((st) => st.css)
+  const rows = seats.map((x, i) => {
+    let near = { d: Infinity, slug: null }
+    css.forEach(([sx, sy], j) => {
+      const d = rectPointDist(x.text, sx, sy)
+      if (j !== i && d < near.d) near = { d, slug: stars[j].slug }
+    })
+    const targets = Object.fromEntries(Object.entries(DESKS).map(([w, p]) => {
+      let g = { gap: Infinity, slug: null }
+      const hit = { ...READ.hit, size: 44 / p }
+      seats.forEach((y, j) => {
+        const d = hitGap(textHit(x.text, hit), textHit(y.text, hit)) * p
+        if (j !== i && d < g.gap) g = { gap: d, slug: stars[j].slug }
+      })
+      return [w, { gapPx: r2(g.gap), with: g.slug }]
+    }))
+    return { slug: stars[i].slug, side: `${x.side}/${x.align}`, textToOwnStarCss: r2(x.own), nearestOtherStar: { slug: near.slug, css: r2(near.d) }, targets }
+  })
+  const least = (w) => Math.min(...rows.map((r) => r.targets[w].gapPx))
+  return {
+    rule: { near: READ.near, close: READ.close, hitAt1280: r2(READ.hit.size), hitGapAt1280: r2(READ.hit.gap), leastAt1280: r2(READ.hit.least) },
+    farthestTextCss: r2(Math.max(...rows.map((r) => r.textToOwnStarCss))),
+    withinClose: rows.filter((r) => r.textToOwnStarCss <= READ.close + 0.5).length,
+    leastMarginCss: r2(Math.min(...rows.map((r) => r.nearestOtherStar.css - r.textToOwnStarCss))),
+    leastTargetGapPx: Object.fromEntries(Object.keys(DESKS).map((w) => [w, least(w)])),
+    names: rows,
+  }
 }
 
 /** the phone overview's house plates (each figure's box grown by the pad):
@@ -822,10 +879,42 @@ export function planFrames({ groups, stars, radius, segs, W, H, floor, s0, css, 
  * names seated as in the wide. A crop whose names will not seat on its drawn
  * pixels is set aside and the six are chosen again.
  */
+/** the band an open house's way back and title row cover (sky.ts): the front
+    shows the stage's height of the frame from the highest window that keeps
+    every name's 48 px target under the 44 px bar (8 below the stage's top, 6
+    clear), at most the safe area's height from the bottom; the bar is
+    tallest in design px on a 360 px stage. css px of the house frame. */
+const BAR = { hit: 48, inset: 8, height: 44, clear: 6, narrowest: 360 / 390 }
+function titleBand(seats, frame) {
+  const safe = safeArea(frame, 'tall')
+  const safeH = safe.y1 - safe.y0
+  const maxTop = frame.css[1] - safeH
+  const cys = seats.map((x) => (x.box.y0 + x.box.y1) / 2)
+  const top = Math.min(...cys) - BAR.hit / 2
+  const bottom = Math.max(...cys) + BAR.hit / 2
+  let w0 = null
+  for (let t = Math.floor(maxTop); t >= 0 && w0 === null; t -= 1)
+    if (top >= t + BAR.inset + BAR.height + BAR.clear && bottom <= t + safeH - BAR.clear) w0 = t
+  if (w0 === null) w0 = Math.min(Math.max(top - BAR.inset - BAR.height - BAR.clear, 0), maxTop)
+  const foot = w0 + (BAR.inset + BAR.height) / BAR.narrowest + BAR.clear
+  // the clip reaches above the stage's top, so a glow it cuts there is gone too
+  return { windowTop: w0, foot: r2(foot), clip: [-20, w0 - 30, frame.css[0] + 20, r2(foot)] }
+}
+
+/** the seats of two passes, side for side */
+const sameSeats = (a, b) => a.length === b.length && a.every((x, i) => x.side === b[i].side && x.align === b[i].align && x.gap === b[i].gap)
+
+/**
+ * Every house drawn once more on the phone, cropped from the tall and drawn at
+ * full resolution: the six crops chosen together (planFrames), each bottom on
+ * one line of the scene just over the flame (the fire out, its sparks and glow
+ * in, the near ring's beams and capitals across the foot of every frame); the
+ * names seated as in the wide, clear of every glow. A crop whose names will
+ * not seat on its drawn pixels is set aside and the six are chosen again. The
+ * frame's own house leads: the others at LEAD, and none of their ink or stars
+ * in the band the page's title row covers, read from the seats.
+ */
 async function zoomFrames({ page, groups, frame, info, out, shootZoom, tallStars, flame, plume }) {
-  // the phone's stage calls a name by its short form; its box is sized to it
-  const names = await page.evaluate(() => window.__still.names())
-  const widths = Object.fromEntries(names.map((n) => [n.slug, Math.max(56, Math.round(n.short.length * 8.5 + 14))]))
   const W = info.width
   const H = info.height
   const s0 = W / frame.css[0]
@@ -833,6 +922,8 @@ async function zoomFrames({ page, groups, frame, info, out, shootZoom, tallStars
   // a disc's reach in the tall's own pixels: past three quarters of the
   // sprite's half width its glow has fallen to the sky's own level (measured)
   const radius = Object.fromEntries(tallStars.map((st) => [st.slug, GLOW * (st.disc / 2) * frame.k * s0]))
+  // a led frame draws the other houses' stars smaller, as the lobby does
+  const shrink = 0.56 + 0.44 * LEAD
   const safeTop = safeArea(frame, 'tall').y0
   const view = { x0: 0, y0: safeTop, x1: frame.css[0], y1: safeArea(frame, 'tall').y1 }
   const inner = { x0: view.x0 + 8, y0: view.y0 + 8, x1: view.x1 - 8, y1: view.y1 - 8 }
@@ -846,15 +937,15 @@ async function zoomFrames({ page, groups, frame, info, out, shootZoom, tallStars
     const css = (x, y) => [((x - x0) * z) / s0, ((y - y0) * z) / s0]
     const all = tallStars.map((st) => {
       const [x, y] = css(st.x, st.y)
-      return { x, y, group: st.group, slug: st.slug }
+      return { x, y, group: st.group, slug: st.slug, disc: st.disc * (st.group === key ? 1 : shrink) }
     })
-    const segs = drawnSegments(all, pairs, (i) => insetOf(tallStars[i].disc) * frame.k * z)
+    const segs = drawnSegments(all, pairs, (i) => insetOf(all[i].disc) * frame.k * z)
     const own = all.filter((st) => st.group === key)
     const gx = own.reduce((a, q) => a + q.x, 0) / own.length
     const gy = own.reduce((a, q) => a + q.y, 0) / own.length
     const pts = own.map((q) => {
       const n = Math.hypot(q.x - gx, q.y - gy) || 1
-      return { ...q, outward: [(q.x - gx) / n, (q.y - gy) / n], box: { ...NAME_BOX, w: widths[q.slug] } }
+      return { ...q, outward: [(q.x - gx) / n, (q.y - gy) / n], box: boxOf(HOUSE_TEXT[q.slug]), tw: HOUSE_TEXT[q.slug] }
     })
     const idx = Object.fromEntries(pts.map((q, i) => [q.slug, i]))
     const lines = []
@@ -863,10 +954,55 @@ async function zoomFrames({ page, groups, frame, info, out, shootZoom, tallStars
     const [px1, py1] = css(plume.x1, plume.y1)
     const keep = (b) => inside(b, inner) && !(b.x0 < px1 + 12 && px0 - 12 < b.x1 && b.y0 < py1 && py0 - 12 < b.y1) && 0
     const others = all.filter((st) => st.group !== key)
-    return Boolean(solveSides(pts, lines, (b) => (keep(b) === false ? false : 0), { others, segs, hit: PHONE.hit, column: PHONE.column }))
+    const ring = [...pts, ...others].map((q) => GLOW * (q.disc / 2) * frame.k * z)
+    return Boolean(solveSides(pts, lines, (b) => (keep(b) === false ? false : 0), { others, segs, hit: PHONE.hit, column: PHONE.column, glow: { radius: (j) => ring[j], gap: HALO }, read: READ_PHONE }))
   }
   const partsOf = (g) => Math.max(1, Math.ceil((TAP / g.closestCss) * 20) / 20)
   const safe = safeArea(frame, 'tall')
+
+  /** one house frame drawn, its sky cleared beside its stars and under its
+      names, and its names seated clear of every glow; null when they will not */
+  async function drawHouse(g, c, file) {
+    await page.evaluate(([a, b, z]) => window.__still.zoom(a, b, z), [c.x0, c.y0, c.z])
+    const shot = await shootZoom(file)
+    let proj = await project(page, shot.raw, shot.info, frame.css[0], frame.plume)
+    const crowded = await clearCrowders({
+      page, stars: proj.stars.filter((st) => st.group === g.key), raw: shot.raw, info: shot.info, s: proj.s, file, shootFn: () => shootZoom(file),
+      reproject: async () => {
+        proj = await project(page, shot.raw, shot.info, frame.css[0], frame.plume)
+      },
+    })
+    // a figure star's own light is no field star; a field star in the glow
+    // of a named star, or touching a name's letters, is cleared
+    const reach = (st) => GLOW * (st.disc / 2) * frame.k * c.z * s0
+    const mask = ownLight(shot.raw, W, H, proj.stars, reach)
+    const segsZ = drawnSegments(proj.stars.map((st) => ({ x: st.css[0], y: st.css[1] })), pairs, (i) => insetOf(proj.stars[i].disc) * frame.k * c.z)
+    const beside = await clearBeside({
+      page, stars: proj.stars.filter((st) => st.group === g.key), raw: shot.raw, info: shot.info, s: proj.s, file, shootFn: () => shootZoom(file), mask, reach, segs: segsZ,
+      reproject: async () => {
+        proj = await project(page, shot.raw, shot.info, frame.css[0], frame.plume)
+      },
+    })
+    const ring = { margin: LINE_CLEAR, mask }
+    const seatOwn = (allow) => {
+      const o = proj.stars.filter((st) => st.group === g.key)
+      const rest = proj.stars.filter((st) => st.group !== g.key)
+      const q = groupsOf(proj.stars, proj.s, shot.info).filter((x) => x.key === g.key)
+      const glowCss = [...o, ...rest].map((st) => GLOW * (st.disc / 2) * frame.k * c.z)
+      return { own: o, rest, gz: q, glowCss, seats: seatNames(o, q, frame, 'tall', proj.fire.plume, shot.raw, shot.info, proj.s, view, allow, HOUSE_TEXT, rest, frame.k * c.z, ring, { glow: { radius: (j) => glowCss[j], gap: HALO }, read: READ_PHONE }) }
+    }
+    const got = await seatClean({
+      page, raw: shot.raw, info: shot.info, s: proj.s, file, shootFn: () => shootZoom(file), ring, priced: true,
+      seat: (allow) => seatOwn(allow).seats,
+      reproject: async () => {
+        proj = await project(page, shot.raw, shot.info, frame.css[0], frame.plume)
+      },
+    })
+    if (!got.seats) return null
+    const { own, rest, gz, glowCss } = seatOwn(false)
+    return { c, shot, proj, own, rest, gz, glowCss, seats: got.seats, reserved: [...crowded, ...beside, ...got.rects], file, beside: beside.length }
+  }
+
   const exclude = new Set()
   const drawn = {}
   let plan = null
@@ -880,59 +1016,47 @@ async function zoomFrames({ page, groups, frame, info, out, shootZoom, tallStars
     for (const g of groups) {
       const c = plan.frames[g.key]
       if (drawn[g.key]?.c.id === c.id) continue
-      if (++renders > 12) throw new Error('house frames: more than 12 renders without six seated frames')
       const file = join(out, `sky-tall-${g.key}.png`)
-      await page.evaluate(([a, b, z]) => window.__still.zoom(a, b, z), [c.x0, c.y0, c.z])
-      const shot = await shootZoom(file)
-      let proj = await project(page, shot.raw, shot.info, frame.css[0], frame.plume)
-      const crowded = await clearCrowders({
-        page, stars: proj.stars.filter((st) => st.group === g.key), raw: shot.raw, info: shot.info, s: proj.s, file, shootFn: () => shootZoom(file),
-        reproject: async () => {
-          proj = await project(page, shot.raw, shot.info, frame.css[0], frame.plume)
-        },
-      })
-      // a figure star's own light is no field star; a field star in the glow
-      // of a named star, or touching a name's letters, is cleared
-      const reach = (st) => GLOW * (st.disc / 2) * frame.k * c.z * s0
-      const mask = ownLight(shot.raw, W, H, proj.stars, reach)
-      const segsZ = drawnSegments(proj.stars.map((st) => ({ x: st.css[0], y: st.css[1] })), pairs, (i) => insetOf(proj.stars[i].disc) * frame.k * c.z)
-      const beside = await clearBeside({
-        page, stars: proj.stars.filter((st) => st.group === g.key), raw: shot.raw, info: shot.info, s: proj.s, file, shootFn: () => shootZoom(file), mask, reach, segs: segsZ,
-        reproject: async () => {
-          proj = await project(page, shot.raw, shot.info, frame.css[0], frame.plume)
-        },
-      })
-      const ring = { margin: LINE_CLEAR, mask }
-      const seatOwn = (allow) => {
-        const o = proj.stars.filter((st) => st.group === g.key)
-        const rest = proj.stars.filter((st) => st.group !== g.key)
-        const q = groupsOf(proj.stars, proj.s, shot.info).filter((x) => x.key === g.key)
-        return { own: o, gz: q, seats: seatNames(o, q, frame, 'tall', proj.fire.plume, shot.raw, shot.info, proj.s, view, allow, widths, rest, frame.k * c.z, ring) }
+      // the house leads; its names seat first, then the band their window
+      // leaves for the title row is cleared of the others and it is drawn again
+      let d = null
+      let band = null
+      let hide = []
+      for (let pass = 0; pass < 3; pass++) {
+        if (++renders > 30) throw new Error('house frames: more than 30 renders without six seated frames')
+        await page.evaluate(([k, f, h, clip]) => window.__still.lead(k, f, h, clip), [g.key, LEAD, hide, band?.clip ?? null])
+        const next = await drawHouse(g, c, file)
+        if (!next) {
+          d = null
+          break
+        }
+        const settled = d && band && sameSeats(d.seats, next.seats)
+        d = { ...next, band, hide }
+        if (settled) break
+        band = titleBand(next.seats, frame)
+        const [bx0, by0, bx1, by1] = band.clip
+        hide = next.rest.filter((st, j) => {
+          const r = next.glowCss[next.own.length + j]
+          return st.css[0] + r > bx0 && st.css[0] - r < bx1 && st.css[1] + r > by0 && st.css[1] - r < by1
+        }).map((st) => st.slug)
       }
-      const got = await seatClean({
-        page, raw: shot.raw, info: shot.info, s: proj.s, file, shootFn: () => shootZoom(file), ring,
-        seat: (allow) => seatOwn(allow).seats,
-        reproject: async () => {
-          proj = await project(page, shot.raw, shot.info, frame.css[0], frame.plume)
-        },
-      })
-      if (!got.seats) {
+      if (!d || !d.band) {
         console.log(`[tall ${g.key}] names do not seat on the drawn crop ${c.id}; choosing the six again`)
         exclude.add(c.id)
         delete drawn[g.key]
         failed = true
         break
       }
-      const { own, gz } = seatOwn(false)
-      drawn[g.key] = { c, shot, proj, own, gz, seats: got.seats, reserved: [...crowded, ...beside, ...got.rects], file, beside: beside.length }
+      drawn[g.key] = d
     }
     if (!failed) break
     plan = null
   }
   if (!plan) throw new Error('house frames: no six seated frames in six rounds')
+  await page.evaluate(() => window.__still.lead(null))
   const res = []
   for (const g of groups) {
-    const { c, shot, proj, own, gz, seats, reserved, file, beside } = drawn[g.key]
+    const { c, shot, proj, own, rest, gz, glowCss, seats, reserved, file, beside, band, hide } = drawn[g.key]
     const { z, x0, y0, cw, ch } = c
     await proofSheet(file, join(out, `stars-proof-tall-${g.key}.png`), own, seats, shot.info, proj.fire.plume, safe, proj.s)
     const cutStars = tallStars.filter((st) => !wholeOrOut(st.x, st.y, radius[st.slug] ?? 0, x0, y0, cw, ch)).map((st) => st.slug)
@@ -952,6 +1076,23 @@ async function zoomFrames({ page, groups, frame, info, out, shootZoom, tallStars
     }
     await page.evaluate(([a, b, zz]) => window.__still.zoom(a, b, zz), [x0, y0, z])
     const propsZ = await page.evaluate(() => window.__still.props())
+    // every glow against every name's text as the page sets it: its distance past the glow
+    const everyone = [...own, ...rest]
+    const halo = seats.map((x, i) => {
+      let gap = Infinity
+      let star = null
+      everyone.forEach((st, j) => {
+        const d = rectPointDist(x.text, st.css[0], st.css[1]) - glowCss[j]
+        if (d < gap) [gap, star] = [d, st.slug]
+      })
+      return { slug: own[i].slug, haloGapCss: r2(gap), nearestGlow: star, toOwnStarCss: r2(rectPointDist(x.text, own[i].css[0], own[i].css[1])), ownGlowCss: r2(glowCss[i]) }
+    })
+    // the other houses' drawn lines inside the title band, before its clip
+    const [bx0, by0, bx1, by1] = band.clip
+    const inBand = drawnSegments(everyone.map((st) => ({ x: st.css[0], y: st.css[1] })), pairs.map(([a, b]) => [everyone.findIndex((q) => q.slug === tallStars[a].slug), everyone.findIndex((q) => q.slug === tallStars[b].slug)]), () => 0)
+      .map((q, k) => ({ q, group: tallStars[pairs[k][0]].group }))
+      .filter((x) => x.group !== g.key)
+      .reduce((v, x) => v + shareInside(...x.q, { x0: bx0, y0: Math.max(by0, band.windowTop), x1: bx1, y1: by1 }) * Math.hypot(x.q[2] - x.q[0], x.q[3] - x.q[1]), 0)
     const extra = {
       group: g.key,
       zoom: z,
@@ -964,7 +1105,9 @@ async function zoomFrames({ page, groups, frame, info, out, shootZoom, tallStars
       starsCutByAnEdge: cutStars,
       footOverFire: { maxLum: +foot.toFixed(3), widestRunOver025: footWide },
       props: propsZ.map((p) => ({ name: p.name, state: cutState(p, W, H) })),
-      ...(seats ? nameChecks(seats, own, proj.stars.filter((st) => st.group !== g.key)) : {}),
+      lead: { others: LEAD, titleBand: { windowTop: band.windowTop, foot: band.foot, clip: band.clip }, hidden: hide, otherLinesInBandCss: r2(inBand) },
+      halo: { rule: HALO, least: r2(Math.min(...halo.map((x) => x.haloGapCss))), names: halo },
+      ...(seats ? nameChecks(seats, own, rest) : {}),
     }
     if (g === groups[0]) extra.plan = { rule: { apartCss: plan.apart, centreCss: r2(CENTRE * frame.css[0]), weigh: WEIGH }, cost: r2(plan.cost), crops: plan.pools, renders }
     res.push({
@@ -975,7 +1118,7 @@ async function zoomFrames({ page, groups, frame, info, out, shootZoom, tallStars
       closestBeforeCss: g.closestCss,
       closestCss: gz[0]?.closestCss,
       crop: { px: [r2(x0), r2(y0), r2(x0 + cw), r2(y0 + ch)], x0: frac(x0 / W), y0: frac(y0 / H), x1: frac((x0 + cw) / W), y1: frac((y0 + ch) / H) },
-      nameBoxes: 'the short name, about 8.5 css px a letter plus 14, at least 56 wide, 24 high',
+      nameBoxes: 'the short name as the front sets it at 14 css px, a pixel either side, 24 high',
       namesSeated: Boolean(seats),
       reservedNameBoxes: reserved.map((b) => [r2(b.x0), r2(b.y0), r2(b.x1), r2(b.y1)]),
       worstNameContrast: seats ? Math.min(...seats.map((x) => x.under.contrast)) : null,
