@@ -13,7 +13,7 @@ import { PerspectiveCamera, Quaternion, RenderTarget, Scene, Vector3 } from 'thr
 import { createStack } from '../../src/stack'
 import { samplesFor } from '../../src/stack/post'
 import { createEclipse } from '../../src/scenes/eclipse'
-import { createAgora } from '../../src/scenes/agora'
+import { BASIN_AT, createAgora, FLOOR_Y, SEATS, seatsAt, WOODPILE_AT } from '../../src/scenes/agora'
 import { createAtlas, type AtlasStill } from '../../src/scenes/atlas'
 import { CONSTELLATIONS } from '../../src/content/constellations'
 import { WANDERERS } from '../../src/content/wanderers'
@@ -39,6 +39,13 @@ interface FrameSpec {
   skyBirth?: number
   depth?: number
   columnFire?: number
+  columnFall?: number
+  /** the Milky Way's plane normal for this frame (world) */
+  band?: [number, number, number]
+  woodpile?: { x: number; z: number }
+  basin?: { x: number; z: number }
+  seats?: number[]
+  riverWash?: boolean
 }
 
 const q = new URLSearchParams(location.search)
@@ -98,11 +105,18 @@ function housePlacement(): AtlasStill | undefined {
       scale: (k * DEPTH * 2 * F.tx) / innerWidth,
     }
   })
-  return { houses, alpha: F.alpha ?? 1, gaze: new Vector3(0, -1, 0) }
+  return { houses, alpha: F.alpha ?? 1, gaze: new Vector3(0, -1, 0), ...(F.band ? { band: new Vector3(...F.band) } : {}) }
 }
 
-const eclipse = createEclipse(scene)
-const agora = createAgora(scene, { key, stack, eager: true, ...(mode === 'still' && F.columnFire ? { still: { columnFire: F.columnFire } } : {}) })
+const eclipse = createEclipse(scene, mode === 'still' && F.riverWash === false ? { riverWash: false } : undefined)
+const stillAgora = {
+  ...(F.columnFire ? { columnFire: F.columnFire } : {}),
+  ...(F.columnFall ? { columnFall: F.columnFall } : {}),
+  ...(F.woodpile ? { woodpile: F.woodpile } : {}),
+  ...(F.basin ? { basin: F.basin } : {}),
+  ...(F.seats ? { seats: F.seats } : {}),
+}
+const agora = createAgora(scene, { key, stack, eager: true, ...(mode === 'still' ? { still: stillAgora } : {}) })
 const atlas = createAtlas(scene, housePlacement())
 atlas.visible(true)
 if (mode === 'lobby') atlas.snap(0)
@@ -314,6 +328,18 @@ const api = {
   stars: projectStars,
   names: () => WANDERERS.map((w) => ({ slug: w.slug, name: w.name, short: w.short ?? w.name })),
   houses: () => CONSTELLATIONS.map((c) => ({ key: c.key, stars: c.stars.map((x) => x.slug), lines: c.lines })),
+  /** the court's loose things as boxes in the frame, so an edge takes each
+      whole or not at all: the wood with its bark, the krater, the four seats */
+  props: () => {
+    const wood = F.woodpile ?? WOODPILE_AT
+    const basin = F.basin ?? BASIN_AT
+    const box = (x: number, z: number, r: number, h: number) => projectBox(x - r, x + r, FLOOR_Y, FLOOR_Y + h, z - r, z + r)
+    return [
+      { name: 'woodpile', ...box(wood.x, wood.z, 0.5, 0.3) },
+      { name: 'krater', ...box(basin.x, basin.z, 0.3, 0.25) },
+      ...(F.seats ? seatsAt(F.seats) : SEATS).map((st, i) => ({ name: `seat${i}`, ...box(st.x, st.z, 0.42, 0.36) })),
+    ]
+  },
   /** the fire, bowl to flame tip, and the air its embers climb through */
   fire: (plume: number) => ({
     flame: projectBox(-0.7, 0.7, -0.9, 0.75, -6.15, -5.05),

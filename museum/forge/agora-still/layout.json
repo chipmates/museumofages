@@ -93,38 +93,53 @@
   "houses": [
    {
     "key": "philosophers",
-    "u": 0.2388,
-    "v": 0.5008
+    "u": 0.2361,
+    "v": 0.5044
    },
    {
     "key": "teachers",
-    "u": 0.2811,
-    "v": 0.3534
+    "u": 0.2648,
+    "v": 0.3321
    },
    {
     "key": "activists",
-    "u": 0.3318,
-    "v": 0.1333
+    "u": 0.3601,
+    "v": 0.1126
    },
    {
     "key": "artists",
-    "u": 0.641,
-    "v": 0.1164
+    "u": 0.6059,
+    "v": 0.106
    },
    {
     "key": "writers",
-    "u": 0.6888,
-    "v": 0.2926
+    "u": 0.644,
+    "v": 0.3559
    },
    {
     "key": "scientists",
-    "u": 0.7663,
-    "v": 0.4611
+    "u": 0.7749,
+    "v": 0.4668
    }
   ],
   "alpha": 1.35,
-  "columnFire": 2.4,
-  "grade": "lapis-ember"
+  "columnFire": 2.6,
+  "grade": "lapis-ember",
+  "columnPad": 0,
+  "houseSep": 95,
+  "houseBoxGap": 40,
+  "band": [
+   0,
+   0.4226,
+   -0.9063
+  ],
+  "woodpile": {
+   "x": -1.78,
+   "z": -5.3
+  },
+  "columnFall": 2,
+  "riverWash": false,
+  "searched": "PLAN_SEARCH=62 PLAN_SEP=0 PLAN_BOXGAP=0 from round 1's houses, seed 31 (plan.mjs)"
  },
  "tall": {
   "css": [
@@ -241,6 +256,26 @@
   ],
   "alpha": 1.35,
   "columnFire": 2.4,
-  "grade": "lapis-ember"
+  "grade": "lapis-ember",
+  "band": [
+   0,
+   0.4226,
+   -0.9063
+  ],
+  "woodpile": {
+   "x": -1.2,
+   "z": -5.0
+  },
+  "basin": {
+   "x": 1.45,
+   "z": -5.0
+  },
+  "seats": [
+   130,
+   160,
+   -130,
+   -160
+  ],
+  "riverWash": false
  }
 }
