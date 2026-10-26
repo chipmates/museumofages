@@ -152,7 +152,10 @@ export function drawnBody(): Field {
   const pelvis: Field = { k: 'u', s: 0.075, of: [chest, groin] }
   // the neck takes a small fillet of its own: a wide one turns it into a cowl
   const upper: Field = { k: 'u', s: 0.03, of: [pelvis, tube(NECK, FWD, 0.015)] }
-  const trunk: Field = { k: 'u', s: 0.06, of: [upper, legs(1), legs(-1)] }
+  // a web between the thighs' tops: the gap between the legs opens below it as a plain arch, where the seat's
+  // downward face once printed a dark notch that read as anatomy under a light from above
+  const web: Field = { k: 'ellipsoid', c: [0.03, 0.78, 0], r: [0.045, 0.08, 0.045] }
+  const trunk: Field = { k: 'u', s: 0.06, of: [upper, legs(1), legs(-1), web] }
   const body: Field = { k: 'u', s: 0.028, of: [trunk, arm(1), arm(-1)] }
   // the jaw's fillet is wide enough for 4k triangles to carry: a narrower one leaves a dark facet under the chin
   const whole: Field = { k: 'u', s: 0.04, of: [body, head] }

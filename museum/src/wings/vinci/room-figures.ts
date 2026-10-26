@@ -19,7 +19,7 @@ import { loadMeasureGeometry, measure, measureMaterial } from '../../measure'
 import { assetAddress } from '../../stack/materials'
 
 /** the baked measure in the store; the digest is the bytes' own */
-export const MEASURE_RECORD = { wing: 'shared', path: 'measure/measure-170.glb', sha256: '5b3155519640dfe65704758360afed8244d66223dec58d0abee0a2283cab4a7a' } as const
+export const MEASURE_RECORD = { wing: 'shared', path: 'measure/measure-170.glb', sha256: '00c4671267b4ec09725daa2224c7cdfa3330f86fbd62bf8e54405a3698ad49de' } as const
 
 export type FigureRoom = 'house' | 'grave-court' | 'mechanism-hall' | 'picture-room' | 'long-gallery'
 export type FigureShape = 'clip' | 'fade'
