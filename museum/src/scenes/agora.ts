@@ -246,15 +246,20 @@ export function bayCentre(radius: number, mid: number, half: number): [number, n
 
 /** the empty seats around the fire, in world space. The circle has one gap,
     at the near side, and the gap is where the visitor is sitting. */
-const SEATS: Array<{ x: number; z: number; yaw: number }> = [112, 156, -112, -156].map((deg) => {
-  const a = (deg * Math.PI) / 180
-  const r = 2.62 // inside the outer engraved ring: these belong to the fire
-  const x = Math.sin(a) * r
-  const z = FIRE.z + Math.cos(a) * r
-  return { x, z, yaw: a + Math.PI }
-})
-const WOODPILE = { x: -1.78, z: -4.28 }
-const BASIN = { x: 2.06, z: -4.86 }
+export const seatsAt = (degrees: number[]): Array<{ x: number; z: number; yaw: number }> =>
+  degrees.map((deg) => {
+    const a = (deg * Math.PI) / 180
+    const r = 2.62 // inside the outer engraved ring: these belong to the fire
+    const x = Math.sin(a) * r
+    const z = FIRE.z + Math.cos(a) * r
+    return { x, z, yaw: a + Math.PI }
+  })
+export const SEATS = seatsAt([112, 156, -112, -156])
+export const WOODPILE_AT = { x: -1.78, z: -4.28 }
+export const BASIN_AT = { x: 2.06, z: -4.86 }
+/** squared distance (plus the light's softness) from the fire's anchor to the
+    nearest shaft faces: inside it a still's fall-off leaves the light alone */
+const FALL_NEAR = 26
 
 /** what the room needs from the stack: the one key, and the tier's own budget */
 export interface AgoraRig {
@@ -265,7 +270,18 @@ export interface AgoraRig {
   eager?: boolean
   /** a still picture's own light on the colonnade, as a factor on the fire's
       share; the live lobby never passes it */
-  still?: { columnFire?: number }
+  still?: {
+    columnFire?: number
+    /** how much faster than the fire's own law its light dies along the
+        colonnade, as a power on the squared distance past the nearest shafts */
+    columnFall?: number
+    /** where the wood and the krater stand, floor x and z, so a frame's edge
+        takes each whole or not at all */
+    woodpile?: { x: number; z: number }
+    basin?: { x: number; z: number }
+    /** the four seats' places on their circle round the fire, in degrees */
+    seats?: number[]
+  }
 }
 
 /** the library's sets the court, the bowl and the colonnade are dressed in */
@@ -307,6 +323,10 @@ export function createAgora(scene: Scene, rig: AgoraRig) {
     rig.eager === false && rig.stack.materials.defer ? rig.stack.materials.defer(name) : name
 
   const COLUMN_FIRE = rig.still?.columnFire ?? 1
+  const COLUMN_FALL = rig.still?.columnFall ?? 0
+  const WOODPILE = rig.still?.woodpile ?? WOODPILE_AT
+  const BASIN = rig.still?.basin ?? BASIN_AT
+  const SEATS_HERE = rig.still?.seats ? seatsAt(rig.still.seats) : SEATS
   const narrow = window.innerWidth < 760
   const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches
   /** counts scale with the frame: a phone is a narrow slot, not a small desktop */
@@ -438,6 +458,11 @@ export function createAgora(scene: Scene, rig: AgoraRig) {
   function firelight(w: N, k: number, soft: number): N {
     const d = vec3(FIRE.x, FIRE.y, FIRE.z).sub(w)
     return float(k).div(dot(d, d).add(soft)).mul(uFlick)
+  }
+  /** a still's steeper fall of the fire's light, 1 out to the nearest shafts */
+  function fireFall(w: N, p: number): N {
+    const d = vec3(FIRE.x, FIRE.y, FIRE.z).sub(w)
+    return pow(min(float(1), float(FALL_NEAR).div(dot(d, d).add(2.0))), p)
   }
   /** how squarely a surface faces the fire */
   function facing(w: N, n: N, p: number): N {
@@ -681,7 +706,7 @@ export function createAgora(scene: Scene, rig: AgoraRig) {
     const shade = (cx: number, cz: number, r0: number, r1: number, k: number): N =>
       oneMinus(smoothstep(r0, r1, length(P.xz.sub(vec2(cx, cz))))).mul(k)
     let ao: N = shade(FIRE.x, FIRE.z, 0.28, 1.4, 0.52)
-    for (const s of SEATS) ao = ao.add(shade(s.x, s.z, 0.2, 0.95, 0.34))
+    for (const s of SEATS_HERE) ao = ao.add(shade(s.x, s.z, 0.2, 0.95, 0.34))
     /* the krater and the log pile stand ON the paving, and a bowl whose
        body overhangs its own foot lets less sky under it than a plinth
        does: their cores are tighter than the fire's and they go deeper.
@@ -704,7 +729,7 @@ export function createAgora(scene: Scene, rig: AgoraRig) {
         .mul(smoothstep(-0.1, 0.1, along))
         .mul(oneMinus(smoothstep(0.12, reach, along)))
     }
-    for (const s of SEATS) ao = ao.add(cast(s.x, s.z, 0.29, 1.7).mul(0.24))
+    for (const s of SEATS_HERE) ao = ao.add(cast(s.x, s.z, 0.29, 1.7).mul(0.24))
     ao = ao.add(cast(WOODPILE.x, WOODPILE.z, 0.27, 1.05).mul(0.34))
     ao = ao.add(cast(BASIN.x, BASIN.z, 0.21, 1.05).mul(0.34))
     colr = colr.mul(oneMinus(clamp(ao, 0, 0.72)))
@@ -877,6 +902,8 @@ export function createAgora(scene: Scene, rig: AgoraRig) {
     baseK?: number
     bounce?: number
     near?: boolean
+    /** a still's fall-off of the fire's light (see fireFall) */
+    fall?: number
     /** where the air takes this stone, in metres from the seat */
     air?: [number, number]
   }): MeshBasicNodeMaterial {
@@ -896,9 +923,8 @@ export function createAgora(scene: Scene, rig: AgoraRig) {
           .mul(tint)
           .mul(float(0.42).add(max(normal.y, 0).mul(0.58)))
       )
-    colr = colr.add(
-      alb.mul(c3(FIRE_LIT)).mul(firelight(world, 5.6, 2.0)).mul(facing(world, normal, opts.facePow ?? 2.4)).mul(opts.rim)
-    )
+    const fireOn = alb.mul(c3(FIRE_LIT)).mul(firelight(world, 5.6, 2.0)).mul(facing(world, normal, opts.facePow ?? 2.4)).mul(opts.rim)
+    colr = colr.add(opts.fall ? fireOn.mul(fireFall(world, opts.fall)) : fireOn)
     // the same one key that draws the shafts finds the trim it carries
     colr = colr.add(
       alb
@@ -1192,7 +1218,8 @@ export function createAgora(scene: Scene, rig: AgoraRig) {
     // The base mouldings sit closest of all and would blaze on their own,
     // so they keep two thirds of what the shaft gets.
     const foot = float(0.6).add(smoothstep(0.1, 0.85, hLocal).mul(0.4))
-    const glow = firelight(world, 7.0, 2.0).mul(facing(world, nF, 2.2)).mul(oneMinus(lift.mul(0.73)).add(0.055))
+    const glowAll = firelight(world, 7.0, 2.0).mul(facing(world, nF, 2.2)).mul(oneMinus(lift.mul(0.73)).add(0.055))
+    const glow = COLUMN_FALL ? glowAll.mul(fireFall(world, COLUMN_FALL)) : glowAll
     colr = colr.add(alb.mul(c3(FIRE_LIT)).mul(glow).mul(0.66 * COLUMN_FIRE).mul(hollow).mul(foot))
     // Quiet drum beds and quarry grain catch the low light as stone.
     const bed = abs(fract(hLocal.sub(0.32).div(0.59)).sub(0.5))
@@ -1217,7 +1244,7 @@ export function createAgora(scene: Scene, rig: AgoraRig) {
     shaftMat.colorNode = shoulder(haze(colr, dCam, 9, 32)).add(dith(0.0022)).mul(uR)
   }
 
-  const dressMat = dressedStone({ albedo: DRESS_ALB, rim: 0.28 * COLUMN_FIRE, facePow: 1.5, baseK: 0.42, ambK: 0.014, near: true })
+  const dressMat = dressedStone({ albedo: DRESS_ALB, rim: 0.28 * COLUMN_FIRE, facePow: 1.5, baseK: 0.42, ambK: 0.014, near: true, ...(COLUMN_FALL ? { fall: COLUMN_FALL } : {}) })
 
   const MID_ANGLES = [-71, -53, -37, -24.5, -14, 14, 24.5, 37, 53, 71]
   const STOA_ANGLES: number[] = []
@@ -1501,7 +1528,7 @@ export function createAgora(scene: Scene, rig: AgoraRig) {
     // four blocks, none of them the same block: identical stools four times
     // over read as props, and nobody has ever left four stones square
     const rnd = mulberry32(FOUNDING_SEED + 117)
-    const seatItems: Item[] = SEATS.map((s) => ({
+    const seatItems: Item[] = SEATS_HERE.map((s) => ({
       p: [s.x, FLOOR_Y, s.z],
       s: [0.86 + rnd() * 0.3, 0.82 + rnd() * 0.28, 0.9 + rnd() * 0.24],
       r: s.yaw + (rnd() - 0.5) * 0.5,
