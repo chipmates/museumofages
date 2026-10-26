@@ -36,6 +36,9 @@ export interface RoomFigure {
   /** the grey's lightness as a share of the measure's own, where the room behind the body prints the measure's own
    * value: it separates by value, never by a glow or an outline */
   tone?: number
+  /** a cool cast on the grey, luminance kept (linear r, g, b over 1), where the room's light is warm enough to turn a
+   * neutral grey into a skin tone: it holds the marker nearer neutral and still takes the room's light */
+  tint?: readonly [r: number, g: number, b: number]
   /** outdoors: the share of the fill and the environment the body's front keeps, by the house walls' own law
    * (`surface.ts`: the share of sky a face sees past the house's walls, as `house-weather.ts` bakes it, squared,
    * times 0.8, plus 0.2), taken at its place and facing. Every street surface carries its occlusion; a body without
@@ -54,8 +57,8 @@ export const VINCI_ROOM_FIGURES: readonly RoomFigure[] = [
   { room: 'house', stop: 'stop:arrival', framing: 'wide', shape: 'clip', at: [15.35, 1, 12.7], yaw: 1.2286, tone: 0.45, sky: 0.731, litter: 0.025, contact: 1.5 },
   { room: 'house', stop: 'stop:arrival', framing: 'upright', shape: 'clip', at: [16.5, 1, 14.25], yaw: 1.2827, tone: 0.45, sky: 0.844, litter: 0.025, contact: 1.5 },
   { room: 'grave-court', stop: 'stop:grave', framing: 'wide', shape: 'clip', at: [-55.25, -6.42, 29.75], yaw: 1.6366, tone: 0.45, contact: 1.4 },
-  { room: 'mechanism-hall', stop: 'stop:flight', framing: 'wide', shape: 'fade', at: [-55.25, -6.3, 48.5], yaw: 1.4565, tone: 0.36 },
-  { room: 'mechanism-hall', stop: 'stop:flight', framing: 'upright', shape: 'fade', at: [-55.25, -6.3, 48.5], yaw: 1.4565, tone: 0.36 },
+  { room: 'mechanism-hall', stop: 'stop:flight', framing: 'wide', shape: 'fade', at: [-55.25, -6.3, 48.5], yaw: 1.4565, tone: 0.36, tint: [0.7938, 1.032, 1.29] },
+  { room: 'mechanism-hall', stop: 'stop:flight', framing: 'upright', shape: 'fade', at: [-55.25, -6.3, 48.5], yaw: 1.4565, tone: 0.36, tint: [0.7938, 1.032, 1.29] },
   { room: 'picture-room', stop: 'stop:picture-room', framing: 'wide', shape: 'fade', at: [-35.625, -6.292, 37.6875], yaw: 1.5442, tone: 0.5 },
   { room: 'long-gallery', stop: 'stop:line-early', framing: 'wide', shape: 'fade', at: [-34.75, -6.297, 53.125], yaw: 0.502, tone: 0.6 },
 ]
@@ -103,6 +106,7 @@ export function createRoomFigures(light: (room: FigureRoom, body: Mesh) => void,
     for (const figure of figures) {
       const material = measureMaterial()
       if (figure.tone !== undefined) material.color.multiplyScalar(figure.tone)
+      if (figure.tint !== undefined) { material.color.r *= figure.tint[0]; material.color.g *= figure.tint[1]; material.color.b *= figure.tint[2] }
       if (figure.sky !== undefined) material.aoNode = float(figure.sky)
       materials.push(material)
       const body = measure(geometry, { material })
