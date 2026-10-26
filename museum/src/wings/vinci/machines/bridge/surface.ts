@@ -7,7 +7,7 @@
  * here, each faded as one pixel comes to hold more than a stroke of it.
  */
 import { Color, MeshPhysicalNodeMaterial, MeshStandardNodeMaterial, type Material } from 'three/webgpu'
-import { atan, attribute, cameraPosition, cos, float, fwidth, mix, mx_noise_float, normalView, normalViewGeometry, normalWorld, positionLocal, positionView, positionWorld, screenUV, sin, smoothstep, step, uniform, uv, vec2, vec3 } from 'three/tsl'
+import { atan, attribute, cameraPosition, cos, float, fwidth, mix, mx_noise_float, mx_worley_noise_vec2, normalView, normalViewGeometry, normalWorld, positionLocal, positionView, positionWorld, screenUV, sin, smoothstep, step, uniform, uv, vec2, vec3 } from 'three/tsl'
 import type { MaterialSet, Stack } from '../../../../stack'
 import { loadMachineMaterial, materialDressed } from '../parts'
 import { benchKeyDirection } from '../key'
@@ -33,6 +33,17 @@ function bumped(base: N, height: N, strength: number): N {
   const det = dpx.dot(r1)
   const grad = r1.mul(height.dFdx()).add(r2.mul(height.dFdy())).mul(det.sign())
   return n.mul(det.abs()).sub(grad.mul(strength)).normalize()
+}
+
+/** the same tilt from a height whose slope is known on the stem's own cylinder: its screen slope by the chain rule, one
+ * per pixel, where the screen's 2x2 derivative of a fine height steps in blocks along a fissure */
+function bumpedBy(base: N, dhdx: N, dhdy: N): N {
+  const n = base.normalize()
+  const dpx = positionView.dFdx(), dpy = positionView.dFdy()
+  const r1 = dpy.cross(n), r2 = n.cross(dpx)
+  const det = dpx.dot(r1)
+  const grad = r1.mul(dhdx).add(r2.mul(dhdy)).mul(det.sign())
+  return n.mul(det.abs()).sub(grad).normalize()
 }
 
 /** the bench's key finds a pole's edge at a distance */
@@ -79,43 +90,95 @@ export async function bridgeSurfaces(stack: Stack): Promise<BridgeSurfaces> {
     // the stem's UVs: along it (the photograph's grain) and round it; the cut ends carry their own face coordinates
     const v = uv().x, u = uv().y
     const o = seed.mul(37.1)
-    // BARK: chestnut coppice at about twenty years: grey-brown ridges running along the stem and wandering a little round
-    // it, shallow fissures between them that open and close along their length, the ridge tops lighter and rough, some
-    // lichen. Drawn on the stem's own cylinder, so no seam runs along it; each scale fades before a pixel holds a stripe
-    // of it, and the fissures are relief and shade, never a drawn line.
+    // BARK: chestnut coppice at about twenty years: grey-brown plates between long fissures that wander, merge and part
+    // along the stem, a few short cross-checks on the plates, the lenticels as small pale dashes across it, a fine
+    // scaly skin; some lichen. Drawn on the stem's own cylinder, so no seam runs along it; each scale is gone before a
+    // pixel holds less than a third of it.
     const C: N = attribute('aCyl', 'vec3')
-    const roundFw = fwidth(C.y).add(fwidth(C.z))
-    // a dozen furrows round a 0.15 m pole, wandering, merging and parting along it as chestnut's do; each one opens and
-    // closes along its length, so the plates between run long and narrow
-    const theta = atan(C.z, C.y)
-    const warp = mx_noise_float(vec3(C.x.mul(1.1).add(o), C.y.mul(5), C.z.mul(5))).mul(3.2).add(mx_noise_float(vec3(C.x.mul(3.4), C.y.mul(13), C.z.mul(13)).add(3.1)).mul(1.1))
-    const across = cos(theta.mul(12).add(warp).add(C.x.mul(1.3)))
-    const opening = smoothstep(-0.45, 0.35, mx_noise_float(vec3(C.x.mul(4.2).add(o), C.y.mul(9), C.z.mul(9)).add(5.5)))
-    // gone before a pixel spans a quarter of a plate round the stem
-    const ridgeFade = float(1).sub(smoothstep(0.0035, 0.008, roundFw))
-    const fissure = smoothstep(-0.2, -0.95, across).mul(opening).mul(ridgeFade)
-    const shoulder = smoothstep(0.15, -0.5, across).mul(opening).mul(ridgeFade)
-    const ridgeTop = smoothstep(0.3, 0.95, across).mul(ridgeFade)
-    const microQ = vec3(C.x.mul(40), C.y.mul(190), C.z.mul(190))
-    const micro = mx_noise_float(microQ)
-    const microFade = float(1).sub(smoothstep(0.15, 0.6, roundFw.mul(190).add(fwidth(C.x.mul(40)))))
-    const plate = mx_noise_float(vec3(C.x.mul(1.1).add(o), C.y.mul(6), C.z.mul(6)).add(4.2)).mul(0.5).add(0.5)
-    const lent = smoothstep(0.72, 0.86, mx_noise_float(vec3(C.x.mul(55), C.y.mul(36), C.z.mul(36)))).mul(float(1).sub(smoothstep(0.15, 0.5, fwidth(C.x.mul(55)).add(roundFw.mul(36))))).mul(float(1).sub(fissure))
+    const px = C.dFdx().length().max(C.dFdy().length())
+    const shows = (period: number): N => float(1).sub(smoothstep(period / 6, period / 2.5, px))
+    const around: N = vec3(0, C.z.negate(), C.y).normalize()
+    // the bark's fields at the pixel and 0.6 mm along the stem and round it: their slopes on the cylinder, and by the
+    // chain rule their change across one pixel, exact per pixel where the screen's 2x2 derivatives step in blocks
+    const EPS = 0.0006
+    const twist = seed.mul(7).fract().mul(1.4).add(0.8).mul(seed.mul(2).sub(1).sign())
+    const fieldsAt = (Q: N): Record<'net' | 'open' | 'line' | 'check' | 'patch' | 'skin' | 'lent', N> => ({
+      // the plates: cells long along the stem (about 28 cm) and narrow round it (about 2.6 cm), their borders the fissures,
+      // as far from a border as half the gap between the nearest two cells' distances (in metres round the stem)
+      net: (() => {
+        // the plates run in a slow spiral round the stem, as chestnut's do, each pole its own way, and wander off it
+        const a = Q.x.mul(twist).add(mx_noise_float(vec3(Q.x.mul(1.5).add(o), Q.y.mul(3), Q.z.mul(3)).add(2.9)).mul(0.25))
+        const ca = cos(a), sa = sin(a)
+        const f = mx_worley_noise_vec2(vec3(Q.x.mul(3.5).add(o), Q.y.mul(ca).sub(Q.z.mul(sa)).mul(38), Q.y.mul(sa).add(Q.z.mul(ca)).mul(38))).sqrt()
+        return f.y.sub(f.x).mul(0.5 / 38)
+      })(),
+      open: smoothstep(-0.3, 0.4, mx_noise_float(vec3(Q.x.mul(3).add(o), Q.y.mul(10), Q.z.mul(10)).add(5.5))),
+      line: mx_noise_float(vec3(Q.x.mul(5).add(o), Q.y.mul(45), Q.z.mul(45)).add(4.4)),
+      check: mx_noise_float(vec3(Q.x.mul(28).add(o), Q.y.mul(7), Q.z.mul(7)).add(3.3)),
+      patch: smoothstep(0.1, 0.5, mx_noise_float(vec3(Q.x.mul(9), Q.y.mul(20), Q.z.mul(20)).add(9.1))),
+      skin: mx_noise_float(vec3(Q.x.mul(60), Q.y.mul(210), Q.z.mul(210))).mul(shows(0.006))
+        .add(mx_noise_float(vec3(Q.x.mul(28), Q.y.mul(90), Q.z.mul(90)).add(1.7)).mul(shows(0.013)).mul(0.6)),
+      lent: mx_noise_float(vec3(Q.x.mul(95), Q.y.mul(32), Q.z.mul(32)).add(6.6)),
+    })
+    const F0 = fieldsAt(C), FX = fieldsAt(C.add(vec3(EPS, 0, 0))), FT = fieldsAt(C.add(around.mul(EPS)))
+    const dCx = C.dFdx(), dCy = C.dFdy()
+    const slopeFrom = (v0: N, vx: N, vt: N): N => vec3(1, 0, 0).mul(vx.sub(v0)).add(around.mul(vt.sub(v0))).div(EPS)
+    // each line drawn by its distance from the field's zero, the field over its own slope (held above a floor where the
+    // field runs flat): a line keeps its width in millimetres, so a fissure never spreads into a blot
+    const lineOf = (k: keyof typeof F0, floor: number): { slope: N; px: N } => {
+      const g = slopeFrom(F0[k], FX[k], FT[k]), gl = g.length().max(1e-3)
+      // a pixel's width along the field's slope, in metres
+      return { slope: gl.max(floor), px: g.dot(dCx).abs().add(g.dot(dCy).abs()).div(gl) }
+    }
+    const NET = lineOf('net', 0.3), LINE = lineOf('line', 25), CHECK = lineOf('check', 15), LENT = lineOf('lent', 40)
+    // a line w metres wide at a distance d from it, never drawn narrower than a pixel and a half; widened, it pales by
+    // as much, so a fine line thins out and never steps. Its colour has a pixel's edge; its groove slopes across its
+    // whole width, so the relief never turns on one pixel
+    const band = (d: N, w: N, p: N): { ink: N; groove: N } => {
+      const we = w.max(p.mul(1.5)), pale = w.div(we)
+      const ink = float(1).sub(smoothstep(we.mul(0.5).sub(p.mul(0.5)), we.mul(0.5).add(p.mul(0.5)), d)).mul(pale)
+      const groove = float(1).sub(smoothstep(float(0), we.add(p), d)).mul(pale)
+      return { ink, groove }
+    }
+    const barkOf = (f: typeof F0): { h: N; fissure: N; shoulder: N; check: N; skin: N; lent: N; line: N } => {
+      // each fissure opens and closes along its length, 1.2 to 4.7 mm wide
+      const d = f.net, w = f.open.mul(0.0035).add(0.0012)
+      const fis = band(d, w, NET.px), sh = band(d, w.mul(1.8), NET.px)
+      const fissure = fis.ink, shoulder = sh.ink
+      // the plates' own fine lines along the stem, a few millimetres apart, and short checks across them
+      const ln = band(f.line.abs().div(LINE.slope), float(0.0007), LINE.px), plate = float(1).sub(fis.groove)
+      const ck = band(f.check.abs().div(CHECK.slope), float(0.0009), CHECK.px)
+      const line = ln.ink.mul(plate), check = ck.ink.mul(f.patch).mul(plate)
+      const edge = LENT.px.mul(LENT.slope).max(0.08)
+      const lent = smoothstep(float(0.7).sub(edge), float(0.7).add(edge), f.lent).mul(plate).mul(shows(0.008))
+      const skin = f.skin
+      const h = fis.groove.mul(-0.003).sub(sh.groove.mul(0.0012)).sub(ln.groove.mul(plate).mul(0.0003)).sub(ck.groove.mul(f.patch).mul(plate).mul(0.0003))
+        .add(skin.mul(0.00025)).add(lent.mul(0.0003))
+      return { h, fissure, shoulder, check, skin, lent, line }
+    }
+    const b = barkOf(F0)
+    const barkSlope = slopeFrom(b.h, barkOf(FX).h, barkOf(FT).h)
+    const slopeOf = (at: (Q: N) => N): N => slopeFrom(at(C), at(C.add(vec3(EPS, 0, 0))), at(C.add(around.mul(EPS))))
+    const plate = mx_noise_float(vec3(C.x.mul(1.3).add(o), C.y.mul(7), C.z.mul(7)).add(4.2)).mul(0.5).add(0.5)
     const mottle = mx_noise_float(vec3(C.x.mul(1.6).add(o), C.y.mul(8), C.z.mul(8))).mul(0.5).add(0.5)
     const lichen = smoothstep(0.6, 0.8, mx_noise_float(vec3(C.x.mul(1.2).add(o), C.y.mul(14), C.z.mul(14)).add(2.7)).mul(0.5).add(0.5))
-    const plateTop = mx(mx(lin('#544c43'), lin('#777066'), plate), lin('#5f5042'), mottle.mul(0.35)).mul(ridgeTop.mul(0.16).add(0.92))
-    const barkCol = mx(mx(plateTop, lin('#7f7d6d'), lichen.mul(0.32)).mul(micro.mul(microFade).mul(0.3).add(1)), lin('#2b231c'), fissure.mul(0.55))
-      .mul(float(1).sub(shoulder.mul(0.18))).mul(float(1).add(lent.mul(0.18)))
-    // the ridges' own scaly skin, finer than the ridges and long along the stem
-    const scaleQ = vec3(C.x.mul(14), C.y.mul(75), C.z.mul(75))
-    const scaly = mx_noise_float(scaleQ.add(o)).mul(float(1).sub(smoothstep(0.2, 0.7, fwidth(C.x.mul(14)).add(roundFw.mul(75)))))
-    const barkH = fissure.negate().mul(0.003).sub(shoulder.mul(0.0012)).add(ridgeTop.mul(0.0008)).add(micro.mul(microFade).mul(0.0008)).add(scaly.mul(0.0010)).add(plate.mul(0.0005)).add(lent.mul(0.0002))
-    // PEELED: pale wood under the drawknife, its strokes as narrow facets along the stem, bark left in the hollows
+    const plateTop = mx(mx(lin('#544c43'), lin('#777066'), plate), lin('#5f5042'), mottle.mul(0.35))
+    const barkCol = mx(mx(plateTop, lin('#7f7d6d'), lichen.mul(0.32)), lin('#2b231c'), b.fissure.mul(0.72))
+      .mul(float(1).sub(b.shoulder.mul(0.06))).mul(float(1).sub(b.line.mul(0.12))).mul(float(1).sub(b.check.mul(0.1))).mul(b.skin.mul(0.14).add(1)).mul(float(1).add(b.lent.mul(0.22)))
+    // PEELED: pale wood under the drawknife, its strokes as facets along the stem, each of its own width and depth and
+    // wandering round as the knife did; bark left in the hollows. A whole number of facets round, so the angle's own
+    // turn leaves no seam.
     const fibres = luma(d.albedo)
-    const facetPhase = u.div(0.026).add(mx_noise_float(vec3(v.mul(0.9), o, 1.1)).mul(1.4))
-    const facet = facetPhase.fract().sub(0.5)
-    const facetH = facet.mul(facet).negate().mul(0.006).mul(fade(facetPhase, 1))
-    const remnant = smoothstep(0.7, 0.86, mx_noise_float(vec3(u.mul(9).add(o), v.mul(2.2), 5.1)).mul(0.5).add(0.5)).mul(0.4)
+    const FACETS = 9
+    const facetAt = (Q: N): N => {
+      const phase = atan(Q.z, Q.y).mul(FACETS / (Math.PI * 2))
+        .add(mx_noise_float(vec3(Q.x.mul(2.4).add(o), Q.y.mul(4), Q.z.mul(4))).mul(0.7)).add(mx_noise_float(vec3(Q.x.mul(6.5), Q.y.mul(9), Q.z.mul(9)).add(2.2)).mul(0.25))
+      // flat in the middle, a rounded ridge where two strokes meet
+      const ridge = cos(phase.mul(Math.PI * 2)).mul(0.5).add(0.5).pow(3)
+      const depth = mx_noise_float(vec3(Q.x.mul(1.7), Q.y.mul(5), Q.z.mul(5)).add(o).add(8.8)).mul(0.4).add(0.6)
+      return ridge.mul(0.004).mul(depth).mul(shows(0.05))
+    }
+    const remnant = smoothstep(0.7, 0.86, mx_noise_float(vec3(C.x.mul(9).add(o), C.y.mul(15), C.z.mul(15)).add(5.1)).mul(0.5).add(0.5)).mul(0.4)
     const woodCol = mx(lin('#8b7860').mul(fibres.mul(0.45).add(0.66)), barkCol, remnant)
     const sideCol = mx(barkCol, woodCol, peeled).mul(tone)
     // END GRAIN: an axe's cut, the rings round the pith, the sapwood paler, the bark a dark rim
@@ -133,14 +196,14 @@ export async function bridgeSurfaces(stack: Stack): Promise<BridgeSurfaces> {
     // where another part bears on it and under its lashings, from the moment that part arrives
     const S: N = attribute('aShade', 'vec2')
     const contact = float(1).sub(S.x.mul(1.25).clamp(0, 0.82).mul(smoothstep(S.y, S.y.add(0.35), lashClock)))
-    pole.colorNode = mx(sideCol, endCol, end).mul(mx(float(1), d.occlusion, peeled.max(end).max(0.3))).mul(contact).mul(keyRim(0.45).add(1))
-    pole.roughnessNode = mx(mx(float(0.84).add(fissure.mul(0.1)).add(micro.mul(microFade).mul(0.05)), d.roughness.clamp(0.6, 0.8), peeled), float(0.82), end)
+    pole.colorNode = mx(sideCol, endCol, end).mul(mx(float(1), d.occlusion, peeled.max(end))).mul(contact).mul(keyRim(0.45).add(1))
+    pole.roughnessNode = mx(mx(float(0.84).add(b.fissure.mul(0.1)).add(b.skin.mul(0.04)), d.roughness.clamp(0.6, 0.8), peeled), float(0.82), end)
     // relief gone where the stem turns away from the eye: a bump at its edge reads as a dotted line
     const facing = smoothstep(0.08, 0.4, normalViewGeometry.dot(positionView.normalize().negate()))
-    const h = mx(mx(barkH, facetH, peeled), float(0), end).mul(facing)
-    // the photograph's grain belongs to the wood: on the bark only a trace of it is kept
+    const slope = mx(barkSlope, slopeOf(facetAt), peeled).mul(float(1).sub(end)).mul(facing)
+    // the photograph's grain belongs to the wood, never to the bark
     const grainN: N = pole.normalNode ?? normalViewGeometry
-    pole.normalNode = bumped(mx(normalViewGeometry, grainN, peeled.max(end).max(0.25)), h, 1)
+    pole.normalNode = bumpedBy(mx(normalViewGeometry, grainN, peeled.max(end)), slope.dot(dCx), slope.dot(dCy))
   }
 
   // ---------------------------------------------------------------- HEMP
