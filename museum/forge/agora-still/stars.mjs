@@ -388,6 +388,21 @@ async function seatClean({ page, seat, raw, info, s, file, shootFn, reproject })
   return { seats, rects }
 }
 
+/** a field star brighter than a figure star inside its glow reads as a
+    double and fails the proof: clear it, so each figure star is the
+    brightest point at its own place */
+async function clearCrowders({ page, stars, raw, info, s, file, shootFn, reproject }) {
+  const inside = (st) => st.x >= 0 && st.y >= 0 && st.x < info.width && st.y < info.height
+  const pts = stars.filter((st) => inside(st) && st.proof.off > 2).map((st) => ({ x: st.proof.peak[0] / s, y: st.proof.peak[1] / s }))
+  if (!pts.length) return []
+  const done = await clearPoints(page, pts, shootFn, raw)
+  raw.set(done.raw)
+  summed = null
+  await writeMaster(raw, info, file)
+  await reproject()
+  return done.rects
+}
+
 export async function buildStars({ page, name, frame, shot, master, out, samples, sub, zoom, shootZoom, redraw }) {
   const { info, raw } = shot
   CONSTELLATIONS = await page.evaluate(() => window.__still.houses())
@@ -399,7 +414,14 @@ export async function buildStars({ page, name, frame, shot, master, out, samples
   const inSafe = (x, y) => x >= safe.x0 && x <= safe.x1 && y >= safe.y0 && y <= safe.y1
   const fireCss = { x0: fire.flame.x0 / s, y0: fire.flame.y0 / s, x1: fire.flame.x1 / s, y1: fire.flame.y1 / s }
   let seats = null
-  let reserved = []
+  const crowded = await clearCrowders({
+    page, stars, raw, info, s, file: master, shootFn: redraw,
+    reproject: async () => {
+      const proj = await project(page, raw, info, cssW, frame.plume)
+      stars.splice(0, stars.length, ...proj.stars)
+    },
+  })
+  let reserved = crowded
   if (shape === 'wide') {
     const got = await seatClean({
       page, raw, info, s, file: master, shootFn: redraw,
@@ -410,7 +432,7 @@ export async function buildStars({ page, name, frame, shot, master, out, samples
       },
     })
     seats = got.seats
-    reserved = got.rects
+    reserved = [...crowded, ...got.rects]
   }
   const data = {
     size: [info.width, info.height],
@@ -582,6 +604,12 @@ async function zoomFrames({ page, groups, frame, info, out, shootZoom, tallStars
       await page.evaluate(([a, b, c]) => window.__still.zoom(a, b, c), [x0, y0, z])
       shot = await shootZoom(file)
       proj = await project(page, shot.raw, shot.info, frame.css[0], frame.plume)
+      const crowded = await clearCrowders({
+        page, stars: proj.stars.filter((st) => st.group === g.key), raw: shot.raw, info: shot.info, s: proj.s, file, shootFn: () => shootZoom(file),
+        reproject: async () => {
+          proj = await project(page, shot.raw, shot.info, frame.css[0], frame.plume)
+        },
+      })
       const seatOwn = (allow) => {
         const o = proj.stars.filter((st) => st.group === g.key)
         const rest = proj.stars.filter((st) => st.group !== g.key)
@@ -597,7 +625,7 @@ async function zoomFrames({ page, groups, frame, info, out, shootZoom, tallStars
       })
       ;({ own, gz } = seatOwn(false))
       seats = got.seats
-      reserved = got.rects
+      reserved = [...crowded, ...got.rects]
       if (seats) break
     }
     if (!shot) throw new Error(`no house frame for ${g.key}: no zoom keeps every star whole`)
