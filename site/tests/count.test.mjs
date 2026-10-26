@@ -25,15 +25,13 @@ async function post(payload, { url = 'https://museumofages.org/v1/funnel?gclid=a
   const env = new Proxy({ COUNT: { writeDataPoint: (p) => points.push(p) } }, {
     get(target, key) { touched.push(key); return target[key] },
   })
-  const request = new Request(url, {
-    method: 'POST',
-    body: raw ?? JSON.stringify(payload),
-    headers: {
-      'User-Agent': DESK, 'Content-Type': 'text/plain;charset=UTF-8', Origin: 'https://museumofages.org',
-      'CF-Connecting-IP': '203.0.113.9', 'CF-IPCountry': 'DE',
-      Referer: 'https://museumofages.org/de/?gclid=abc&utm_source=x', ...headers,
-    },
-  })
+  // a header given as null is left out of the request
+  const sent = Object.entries({
+    'User-Agent': DESK, 'Content-Type': 'text/plain;charset=UTF-8', Origin: 'https://museumofages.org',
+    'CF-Connecting-IP': '203.0.113.9', 'CF-IPCountry': 'DE',
+    Referer: 'https://museumofages.org/de/?gclid=abc&utm_source=x', ...headers,
+  }).filter(([, v]) => v !== null)
+  const request = new Request(url, { method: 'POST', body: raw ?? JSON.stringify(payload), headers: Object.fromEntries(sent) })
   const answer = await onRequestPost({ request, env })
   assert.equal(answer.status, 204)
   assert.equal(await answer.text(), '')
@@ -209,7 +207,6 @@ test('what the server adds: country from Cloudflare, device class from the user 
 test('a beacon from another site, a broken body or a long one writes nothing', async () => {
   await none(GOOD.page_read, { headers: { Origin: 'https://example.com' } })
   await none(GOOD.page_read, { headers: { Origin: 'https://museumofages.org.example.com' } })
-  await one(GOOD.page_read, { headers: { Origin: '' } })
   await one(GOOD.page_read, { url: 'https://www.museumofages.org/v1/funnel', headers: { Origin: 'https://www.museumofages.org' } })
   await none(null, { raw: 'step=page_read' })
   await none(null, { raw: '' })
@@ -218,6 +215,22 @@ test('a beacon from another site, a broken body or a long one writes nothing', a
   await none(null, { raw: JSON.stringify({ ...GOOD.page_read, pad: 'x'.repeat(1100) }) })
   await none({ ...GOOD.page_read, step: 'page_view' })
   await none({ ...GOOD.page_read, step: 'constructor' })
+})
+
+test('only a beacon with this site\'s own Origin writes: none, an empty or opaque one, another site\'s or a near miss writes nothing, for every step', async () => {
+  for (const payload of Object.values(GOOD)) {
+    await none(payload, { headers: { Origin: null } })
+    await none(payload, { headers: { Origin: 'https://example.com' } })
+    await one(payload)
+  }
+  for (const Origin of ['', 'null', 'http://museumofages.org', 'https://museumofages.org:8443', 'https://museumofages.org/',
+    'https://www.museumofages.org', 'https://museumofages.org.example.com', 'https://example.com/https://museumofages.org', 'HTTPS://MUSEUMOFAGES.ORG']) {
+    await none(GOOD.page_read, { headers: { Origin } })
+  }
+  await none(GOOD.page_read, { url: 'https://www.museumofages.org/v1/funnel', headers: { Origin: 'https://museumofages.org' } })
+  await one(GOOD.page_read, { url: 'https://www.museumofages.org/v1/funnel', headers: { Origin: 'https://www.museumofages.org' } })
+  // what a beacon on a preview or a local serve sends: its own origin
+  await one(GOOD.page_read, { url: 'http://127.0.0.1:5284/v1/funnel', headers: { Origin: 'http://127.0.0.1:5284' } })
 })
 
 test('a browser that sends Global Privacy Control writes nothing, for every step', async () => {

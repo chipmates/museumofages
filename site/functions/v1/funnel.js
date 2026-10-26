@@ -2,7 +2,7 @@
 // fields (_count/rows.js). The function adds the country and the device class, writes one row to the museum's own
 // dataset when every field is on its list, and answers 204 either way, so a sender learns nothing.
 // Nothing about the request is kept: not its address, not its user agent, not its referrer. There is no limiter
-// here, since a limiter would have to hold an address.
+// here, since a limiter would have to hold an address: the edge's rate rule on this path is the brake.
 
 import { countryOf, deviceOf, rowOf } from '../_count/rows.js'
 
@@ -13,9 +13,9 @@ const quiet = () => new Response(null, { status: 204, headers: { 'Cache-Control'
 
 export async function onRequestPost({ request, env }) {
   try {
-    // a browser on another site may not count here: its Origin, when it sends one, must be this site's own
-    const origin = request.headers.get('Origin')
-    if (origin && origin !== new URL(request.url).origin) return quiet()
+    // Only this site's own pages count. Every engine sends Origin on these beacons (measured in Chromium, Firefox and
+    // WebKit), so a request without one, or with another site's, comes from no page of ours and writes nothing.
+    if (request.headers.get('Origin') !== new URL(request.url).origin) return quiet()
     // a browser that sends Global Privacy Control is not counted at all
     if (request.headers.get('Sec-GPC') === '1') return quiet()
     const text = await request.text()
