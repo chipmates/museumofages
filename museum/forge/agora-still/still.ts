@@ -14,7 +14,7 @@ import { createStack } from '../../src/stack'
 import { samplesFor } from '../../src/stack/post'
 import { createEclipse } from '../../src/scenes/eclipse'
 import { BASIN_AT, createAgora, FLOOR_Y, SEATS, seatsAt, WOODPILE_AT } from '../../src/scenes/agora'
-import { createAtlas, type AtlasStill } from '../../src/scenes/atlas'
+import { createAtlas, type AtlasLead, type AtlasStill } from '../../src/scenes/atlas'
 import { CONSTELLATIONS } from '../../src/content/constellations'
 import { WANDERERS } from '../../src/content/wanderers'
 import type { GradeName } from '../../src/stack/grade'
@@ -105,8 +105,10 @@ function housePlacement(): AtlasStill | undefined {
       scale: (k * DEPTH * 2 * F.tx) / innerWidth,
     }
   })
-  return { houses, alpha: F.alpha ?? 1, gaze: new Vector3(0, -1, 0), ...(F.band ? { band: new Vector3(...F.band) } : {}) }
+  return { houses, alpha: F.alpha ?? 1, gaze: new Vector3(0, -1, 0), ...(F.band ? { band: new Vector3(...F.band) } : {}), lead }
 }
+/** which house leads a frame (none for the wide and the tall) */
+const lead: AtlasLead = { house: -1, presence: 1, hide: [], clip: null }
 
 const eclipse = createEclipse(scene, mode === 'still' && F.riverWash === false ? { riverWash: false } : undefined)
 const stillAgora = {
@@ -301,6 +303,14 @@ const api = {
     camera: { fov: camera.fov, aspect: camera.aspect, position: camera.position.toArray(), view: camera.view },
   }),
   samples,
+  /** let one house lead the frame: every other house at presence, the stars
+      named in hide dark, none of their ink inside clip (CSS px of the frame) */
+  lead(house: string | null, presence = 1, hide: string[] = [], clip: [number, number, number, number] | null = null) {
+    lead.house = house ? CONSTELLATIONS.findIndex((c) => c.key === house) : -1
+    lead.presence = presence
+    lead.hide = hide
+    lead.clip = clip
+  },
   /** crop the lens to a part of the frame, zoomed so it fills the frame */
   zoom(x0: number, y0: number, z: number) {
     zoom = z > 1 ? { x0, y0, z } : null

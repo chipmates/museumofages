@@ -273,6 +273,18 @@ export interface AtlasStill {
   /** the normal of the Milky Way's plane, so a still can turn the band and its
       dust out of its frame; absent, the band stands where the lobby has it */
   band?: Vector3
+  /** a still's frame of one house: the others' lines, glows and stars at
+      `presence`, those named in `hide` dark, and no ink of theirs inside
+      `clip` (CSS px of the frame: x0, y0, x1, y1). Read every update; house
+      -1 leads none. */
+  lead?: AtlasLead
+}
+
+export interface AtlasLead {
+  house: number
+  presence: number
+  hide: string[]
+  clip: [number, number, number, number] | null
 }
 
 // ---------------------------------------------------------------- helpers
@@ -505,7 +517,8 @@ function figureMaterial(
   uLine: N,
   uDraw: N,
   uCut: N,
-  reserve: Reserve
+  reserve: Reserve,
+  clip?: N
 ): MeshBasicNodeMaterial {
   const mat = new MeshBasicNodeMaterial()
   mat.transparent = true
@@ -545,9 +558,10 @@ function figureMaterial(
   const hairColour = vec3(LINE_GOLD.r, LINE_GOLD.g, LINE_GOLD.b).mul(
     float(0.8).add(core.mul(0.45))
   )
+  const keep: N = clip ? reserve.node.mul(clip) : reserve.node
   if (!ENGRAVED_FIGURES) {
     mat.colorNode = hairColour
-    mat.opacityNode = hairOpacity.mul(reserve.node)
+    mat.opacityNode = hairOpacity.mul(keep)
     return mat
   }
 
@@ -559,7 +573,7 @@ function figureMaterial(
   const cutColour = mix(vec3(PAPER.r, PAPER.g, PAPER.b), vec3(GOLD.r, GOLD.g, GOLD.b), gildN)
 
   mat.colorNode = mix(hairColour, cutColour, kindN)
-  mat.opacityNode = mix(hairOpacity, cutOpacity, kindN).mul(reserve.node)
+  mat.opacityNode = mix(hairOpacity, cutOpacity, kindN).mul(keep)
   return mat
 }
 
@@ -1778,6 +1792,8 @@ export function createAtlas(scene: Scene, still?: AtlasStill): AtlasHandles {
   interface Patch {
     group: Group
     stars: Star[]
+    /** a still's clip rectangle for this house's ink (centre, half size) */
+    clipU: N | null
     lineU: N
     drawU: N
     /** how present the burin is: the drawing belongs to the focused house */
@@ -1803,6 +1819,8 @@ export function createAtlas(scene: Scene, still?: AtlasStill): AtlasHandles {
 
   const patches: Patch[] = []
   const stars: AtlasStarRef[] = []
+  /** the frame's CSS size, for a still's clip */
+  const clipExtent: N = uniform(new Vector2(1, 1))
   const companionSeeds: Companion[] = []
   const dirTmp = new Vector3()
 
@@ -1835,7 +1853,15 @@ export function createAtlas(scene: Scene, still?: AtlasStill): AtlasHandles {
     const lineU: N = uniform(0)
     const drawU: N = uniform(1)
     const cutU: N = uniform(0)
-    const house = new Mesh(figureGeometry(c, mag, sizes), figureMaterial(lineU, drawU, cutU, reserve))
+    // only a still's houses carry a clip: the live wheel's material is as before
+    const clipU: N | null = still ? uniform(new Vector4(-1e4, -1e4, 0, 0)) : null
+    const clipN: N | undefined = clipU
+      ? (() => {
+          const d = abs(screenUV.mul(clipExtent).sub(clipU.xy)).sub(clipU.zw)
+          return smoothstep(0, 4, max(d.x, d.y))
+        })()
+      : undefined
+    const house = new Mesh(figureGeometry(c, mag, sizes), figureMaterial(lineU, drawU, cutU, reserve, clipN))
     house.frustumCulled = false
     patch.add(house)
 
@@ -1871,6 +1897,7 @@ export function createAtlas(scene: Scene, still?: AtlasStill): AtlasHandles {
     patches.push({
       group: patch,
       stars: list,
+      clipU,
       lineU,
       drawU,
       cutU,
@@ -1958,7 +1985,9 @@ export function createAtlas(scene: Scene, still?: AtlasStill): AtlasHandles {
       // a house far from the gaze is still a real house on the dome, it is
       // simply far: presence falls with the angle it sits at
       const near = still ? 1 : smooth01((1.35 - Math.abs(wrapPi(p.azimuth - wheel))) / 1.05)
-      const stand = near * (0.18 + 0.82 * p.focus)
+      const lead = still?.lead
+      const led = lead && lead.house >= 0 && lead.house !== i ? lead.presence : 1
+      const stand = near * (0.18 + 0.82 * p.focus) * led
       const pres = stand * reveal
       // a receding star gives up its disc as well as its light. Dimming
       // alone left the neighbours as brown smudges, because a wide sprite
@@ -1971,14 +2000,20 @@ export function createAtlas(scene: Scene, still?: AtlasStill): AtlasHandles {
         s.mat.opacity = pres * s.bright * (1 - s.scint * sh)
         s.sprite.scale.setScalar(s.size * shrink)
       }
+      if (lead && led !== 1) {
+        for (const s of p.stars) if (lead.hide.includes(stars.find((r) => r.sprite === s.sprite)?.slug ?? '')) s.mat.opacity = 0
+        const [x0, y0, x1, y1] = lead.clip ?? [-2e4, -2e4, -2e4, -2e4]
+        p.clipU?.value.set((x0 + x1) / 2, (y0 + y1) / 2, (x1 - x0) / 2, (y1 - y0) / 2)
+        clipExtent.value.set(window.innerWidth, window.innerHeight)
+      } else p.clipU?.value.set(-1e4, -1e4, 0, 0)
       // a neighbour keeps the ghost of its own figure at the frame edge:
       // enough to say the sky goes on around you, far too little to read
-      p.lineU.value = near * (0.045 + 0.955 * p.focus) * reveal * HAIR_LIFT
+      p.lineU.value = near * (0.045 + 0.955 * p.focus) * reveal * HAIR_LIFT * led
       p.drawU.value = draw
       // the engraving belongs to the house you are looking at: a neighbour
       // keeps a whisper of it, so the sky reads as one drawn plate
       p.cutU.value = pres * (0.025 + p.focus * 0.42)
-      housePresence[i] = near * (0.12 + 0.88 * p.focus) * reveal * 0.8
+      housePresence[i] = near * (0.12 + 0.88 * p.focus) * reveal * 0.8 * led
     }
     // the grains are re-seated only when the stage changes width
     if (Math.abs(scale - seatedScale) > 1e-4) {
