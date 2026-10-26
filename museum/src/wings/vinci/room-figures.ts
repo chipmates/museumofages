@@ -42,8 +42,8 @@ export const VINCI_ROOM_FIGURES: readonly RoomFigure[] = [
   { room: 'house', stop: 'stop:arrival', framing: 'wide', shape: 'clip', at: [16.5, 1, 14.25], yaw: 1.2827 },
   { room: 'house', stop: 'stop:arrival', framing: 'upright', shape: 'clip', at: [16.5, 1, 14.25], yaw: 1.2827 },
   { room: 'grave-court', stop: 'stop:grave', framing: 'wide', shape: 'clip', at: [-55.25, -6.42, 29.75], yaw: 1.6366, tone: 0.45 },
-  { room: 'mechanism-hall', stop: 'stop:flight', framing: 'wide', shape: 'fade', at: [-55.25, -6.3, 48.5], yaw: 1.4565 },
-  { room: 'mechanism-hall', stop: 'stop:flight', framing: 'upright', shape: 'fade', at: [-55.25, -6.3, 48.5], yaw: 1.4565 },
+  { room: 'mechanism-hall', stop: 'stop:flight', framing: 'wide', shape: 'fade', at: [-55.25, -6.3, 48.5], yaw: 1.4565, tone: 0.36 },
+  { room: 'mechanism-hall', stop: 'stop:flight', framing: 'upright', shape: 'fade', at: [-55.25, -6.3, 48.5], yaw: 1.4565, tone: 0.36 },
   { room: 'picture-room', stop: 'stop:picture-room', framing: 'wide', shape: 'fade', at: [-36, -6.292, 38], yaw: 1.57, tone: 0.5 },
   { room: 'long-gallery', stop: 'stop:line-early', framing: 'wide', shape: 'fade', at: [-32.75, -6.297, 56.25], yaw: 0.4602 },
 ]

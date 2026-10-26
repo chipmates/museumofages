@@ -475,7 +475,9 @@ export function mountCollectionExhibits(host: Group, stack: Stack): CollectionEx
   return {
     lightBody(room, body) {
       const material = body.material as Material
-      if (room === 'mechanism-hall') { if (hallRig) hallRig.adopt(material); else hallBodies.push(material) }
+      // the spots' maps hold the body itself, so a body receiving them prints its own hand on its thigh and a
+      // machine's strut on its shin: in the hall it casts onto the floor and receives none
+      if (room === 'mechanism-hall') { body.receiveShadow = false; if (hallRig) hallRig.adopt(material); else hallBodies.push(material) }
       else if (room === 'picture-room') pictureRoom.lightBody(body)
       else if (room === 'long-gallery') gallery.lightBody(body)
     },
