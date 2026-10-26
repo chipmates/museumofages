@@ -411,11 +411,12 @@ function crossingFrame(c: Crossing): { o: V3; d: V3; w: V3; m: V3; rr: number; r
 /** the serving runs where the turn bears, its ends whipped short rather than cut */
 const served = (t: number): number => Math.min(1, Math.max(0, (Math.sin(t) - 0.25) / 0.2))
 
-/** a lashing's fineness: the samples round each wrap, the corner-cutting passes and the sides round the rope */
-export interface LashDetail { wrap: number; passes: number; around: number }
+/** a lashing's fineness: the samples round each wrap, the corner-cutting passes, the sides round the rope and the steps
+ * of each corner's run in to the crotch */
+export interface LashDetail { wrap: number; passes: number; around: number; corner: number }
 /** the bench draws the rope about five times a frame (measured): fine for the hero tier, coarse below it, each tier under its budget */
-export const LASH_FINE: LashDetail = { wrap: 11, passes: 1, around: 7 }
-export const LASH_COARSE: LashDetail = { wrap: 6, passes: 1, around: 5 }
+export const LASH_FINE: LashDetail = { wrap: 11, passes: 1, around: 7, corner: 2 }
+export const LASH_COARSE: LashDetail = { wrap: 6, passes: 1, around: 4, corner: 1 }
 
 type PathPt = { p: V3; serve: number }
 
@@ -475,9 +476,9 @@ function turnPath(c: Crossing, i: number, detail: LashDetail): PathPt[] {
     return at(u, v, h)
   }
   const corner = (su: number, sw: number, from: V3, to: V3): void => {
-    const apex = at(su * k, sw * k, apexH), STEPS = 4
-    for (let s = 1; s <= STEPS; s++) path.push({ p: lift(add(from, mul(sub(apex, from), s / STEPS))), serve: 0 })
-    for (let s = 1; s < STEPS; s++) path.push({ p: lift(add(apex, mul(sub(to, apex), s / STEPS))), serve: 0 })
+    const apex = at(su * k, sw * k, apexH), steps = detail.corner
+    for (let s = 1; s <= steps; s++) path.push({ p: lift(add(from, mul(sub(apex, from), s / steps))), serve: 0 })
+    for (let s = 1; s < steps; s++) path.push({ p: lift(add(apex, mul(sub(to, apex), s / steps))), serve: 0 })
   }
   const sections: PathPt[][] = []
   const take = (wind: () => void): void => { const n = path.length; wind(); sections.push(path.splice(n)) }
@@ -512,7 +513,7 @@ function frapPath(c: Crossing, j: number, detail: LashDetail): PathPt[] {
   const { k } = apexOf(c, TURNS - 1)
   const out = k + rope * 2 * Math.SQRT1_2 + rope * 2 * j
   const under = rs - rope - gap, over = rs + rope + gap
-  const n = 8 * Math.max(3, Math.round(detail.wrap / 2)), SQ = 4
+  const n = 8 * Math.max(2, Math.round(detail.wrap / 3)), SQ = 4
   const pts: PathPt[] = []
   for (let s = 0; s < n; s++) {
     const t = (s / n) * TAU, cu = Math.cos(t), cw = Math.sin(t)
