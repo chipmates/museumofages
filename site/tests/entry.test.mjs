@@ -814,14 +814,12 @@ test('the moment: the script and the build name the same words of the card, and 
   assert.ok(page.includes('var VISIBLE_MS = 45 * 1000;'))
 })
 
-test('the moment: the built script carries the card in English and German only, until the other languages are written', () => {
+test('the moment: the built script carries the whole card in every built language', () => {
   const built = at('../dist/static/ask.js')
   if (!existsSync(built)) return
   const words = JSON.parse(readFileSync(built, 'utf8').match(/var WORDS = (\{.*?\});\n/s)[1])
   for (const [lang, w] of Object.entries(words)) {
-    for (const k of ['held', 'none', 'undo', 'undone']) assert.ok(w[k], `${lang} ${k}`)
-    if (lang === 'en' || lang === 'de') for (const k of ASK_KEYS) assert.ok(w[k], `${lang} ${k}`)
-    else assert.equal(w.question, undefined, lang)
+    for (const k of ASK_KEYS) assert.ok(w[k], `${lang} ${k}`)
     for (const k of ['q', 'why', 'what', 'whom', 'age', 'yes', 'no', 'thanks', 'visit_what', 'visit_whom', 'visit_thanks']) assert.equal(w[k], undefined, `${lang} ${k}`)
   }
 })
