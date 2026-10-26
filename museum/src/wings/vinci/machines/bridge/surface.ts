@@ -46,6 +46,13 @@ function bumpedBy(base: N, dhdx: N, dhdy: N): N {
   return n.mul(det.abs()).sub(grad).normalize()
 }
 
+/** the air between the bridge and the wall: what lies well behind the bridge's middle, as the eye sees it, loses its
+ * value and its colour toward the dusk, so the far bank falls off toward the wall */
+function airBehind(col: N): N {
+  const behind = positionWorld.sub(cameraPosition).length().sub(cameraPosition.sub(vec3(0, 1.35, 0)).length())
+  return mx(col, vec3(luma(col)).mul(vec3(0.62, 0.68, 0.76)), smoothstep(2.5, 13, behind).mul(0.5))
+}
+
 /** the bench's key finds a pole's edge at a distance */
 function keyRim(strength: number): N {
   const key = benchKeyDirection()
@@ -102,19 +109,25 @@ export async function bridgeSurfaces(stack: Stack): Promise<BridgeSurfaces> {
     // chain rule their change across one pixel, exact per pixel where the screen's 2x2 derivatives step in blocks
     const EPS = 0.0006
     const twist = seed.mul(7).fract().mul(1.4).add(0.8).mul(seed.mul(2).sub(1).sign())
+    // each pole's own bark: its plates' length (0.7 to 1.45 of the mean) and width round it (0.75 to 1.3), its fissures'
+    // width, and where round the stem its pattern starts, so no two poles repeat one rhythm
+    const along = seed.mul(13.7).fract().mul(0.75).add(0.7), round = seed.mul(5.3).add(0.37).fract().mul(0.55).add(0.75).mul(38)
+    const wide = seed.mul(9.1).add(0.61).fract().mul(0.7).add(0.65), turn = seed.mul(23.9).fract().mul(Math.PI * 2)
     const fieldsAt = (Q: N): Record<'net' | 'open' | 'line' | 'check' | 'patch' | 'skin' | 'lent', N> => ({
       // the plates: cells long along the stem (about 28 cm) and narrow round it (about 2.6 cm), their borders the fissures,
       // as far from a border as half the gap between the nearest two cells' distances (in metres round the stem)
       net: (() => {
-        // the plates run in a slow spiral round the stem, as chestnut's do, each pole its own way, and wander off it
-        const a = Q.x.mul(twist).add(mx_noise_float(vec3(Q.x.mul(1.5).add(o), Q.y.mul(3), Q.z.mul(3)).add(2.9)).mul(0.25))
+        // the plates run in a slow spiral round the stem, as chestnut's do, each pole its own way, and wander off it;
+        // the same slow field shifts the cells along the stem, so the lattice never reads as one diamond repeated
+        const wander = mx_noise_float(vec3(Q.x.mul(1.5).add(o), Q.y.mul(3), Q.z.mul(3)).add(2.9))
+        const a = Q.x.mul(twist).add(wander.mul(0.25)).add(turn)
         const ca = cos(a), sa = sin(a)
-        const f = mx_worley_noise_vec2(vec3(Q.x.mul(3.5).add(o), Q.y.mul(ca).sub(Q.z.mul(sa)).mul(38), Q.y.mul(sa).add(Q.z.mul(ca)).mul(38))).sqrt()
-        return f.y.sub(f.x).mul(0.5 / 38)
+        const f = mx_worley_noise_vec2(vec3(Q.x.mul(along.mul(3.5)).add(o).add(wander.mul(0.45)), Q.y.mul(ca).sub(Q.z.mul(sa)).mul(round), Q.y.mul(sa).add(Q.z.mul(ca)).mul(round))).sqrt()
+        return f.y.sub(f.x).mul(0.5).div(round)
       })(),
       open: smoothstep(-0.3, 0.4, mx_noise_float(vec3(Q.x.mul(3).add(o), Q.y.mul(10), Q.z.mul(10)).add(5.5))),
       line: mx_noise_float(vec3(Q.x.mul(5).add(o), Q.y.mul(45), Q.z.mul(45)).add(4.4)),
-      check: mx_noise_float(vec3(Q.x.mul(28).add(o), Q.y.mul(7), Q.z.mul(7)).add(3.3)),
+      check: mx_noise_float(vec3(Q.x.mul(along.mul(28)).add(o), Q.y.mul(7), Q.z.mul(7)).add(3.3)),
       patch: smoothstep(0.1, 0.5, mx_noise_float(vec3(Q.x.mul(9), Q.y.mul(20), Q.z.mul(20)).add(9.1))),
       skin: mx_noise_float(vec3(Q.x.mul(60), Q.y.mul(210), Q.z.mul(210))).mul(shows(0.006))
         .add(mx_noise_float(vec3(Q.x.mul(28), Q.y.mul(90), Q.z.mul(90)).add(1.7)).mul(shows(0.013)).mul(0.6)),
@@ -141,8 +154,8 @@ export async function bridgeSurfaces(stack: Stack): Promise<BridgeSurfaces> {
       return { ink, groove }
     }
     const barkOf = (f: typeof F0): { h: N; fissure: N; shoulder: N; check: N; skin: N; lent: N; line: N } => {
-      // each fissure opens and closes along its length, 1.2 to 4.7 mm wide
-      const d = f.net, w = f.open.mul(0.0035).add(0.0012)
+      // each fissure opens and closes along its length, 1.2 to 4.7 mm wide on a mean pole
+      const d = f.net, w = f.open.mul(0.0035).add(0.0012).mul(wide)
       const fis = band(d, w, NET.px), sh = band(d, w.mul(1.8), NET.px)
       const fissure = fis.ink, shoulder = sh.ink
       // the plates' own fine lines along the stem, a few millimetres apart, and short checks across them
@@ -196,7 +209,7 @@ export async function bridgeSurfaces(stack: Stack): Promise<BridgeSurfaces> {
     // where another part bears on it and under its lashings, from the moment that part arrives
     const S: N = attribute('aShade', 'vec2')
     const contact = float(1).sub(S.x.mul(1.25).clamp(0, 0.82).mul(smoothstep(S.y, S.y.add(0.35), lashClock)))
-    pole.colorNode = mx(sideCol, endCol, end).mul(mx(float(1), d.occlusion, peeled.max(end))).mul(contact).mul(keyRim(0.45).add(1))
+    pole.colorNode = airBehind(mx(sideCol, endCol, end).mul(mx(float(1), d.occlusion, peeled.max(end))).mul(contact).mul(keyRim(0.45).add(1)))
     pole.roughnessNode = mx(mx(float(0.84).add(b.fissure.mul(0.1)).add(b.skin.mul(0.04)), d.roughness.clamp(0.6, 0.8), peeled), float(0.82), end)
     // relief gone where the stem turns away from the eye: a bump at its edge reads as a dotted line
     const facing = smoothstep(0.08, 0.4, normalViewGeometry.dot(positionView.normalize().negate()))
@@ -261,7 +274,7 @@ export async function bridgeSurfaces(stack: Stack): Promise<BridgeSurfaces> {
     const seatGap = (x: number, y: number): N => vec2(p.x.sub(x), p.y.sub(y)).length().sub(SEAT_R)
     const onSeat = smoothstep(0.0, 0.16, seatGap(SEAT_XY[0][0], SEAT_XY[0][1]).min(seatGap(SEAT_XY[1][0], SEAT_XY[1][1]))).mul(0.5).add(0.5)
     const seatShade = mx(onSeat, float(1), smoothstep(SEAT_HALF - 0.05, SEAT_HALF + 0.12, p.z.abs()))
-    earth.colorNode = mx(mx(earthCol, grassCol, grassy), sectionCol, cut).mul(mx(float(1), ground.occlusion, 0.55)).mul(seatShade)
+    earth.colorNode = airBehind(mx(mx(earthCol, grassCol, grassy), sectionCol, cut).mul(mx(float(1), ground.occlusion, 0.55)).mul(seatShade))
     earth.roughnessNode = mx(ground.roughness.max(0.85), float(0.55), wet.mul(0.6))
     grassMat.dispose()
   }

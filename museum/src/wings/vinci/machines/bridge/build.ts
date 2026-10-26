@@ -109,7 +109,7 @@ function clip(poly: [number, number][], g: (y: number, z: number) => number): [n
 export interface Shading { (local: V3): [number, number] }
 
 /** One grown pole in its own frame: along +X, centred; `shading` gives each vertex its contact shade. */
-export function growPole(sheet: Sheet, p: Pole, detail: PoleDetail, shading?: Shading): void {
+export function growPole(sheet: Sheet, p: Pole, detail: PoleDetail, shading?: Shading, lashAt: number[] = []): void {
   const L = p.length, x0 = -L / 2, n = detail.around, seed = p.seed, tone = p.tone
   const R0 = p.r
   const shadeOf = (q: V3): [number, number] => (shading ? shading(q) : [0, 0])
@@ -146,6 +146,7 @@ export function growPole(sheet: Sheet, p: Pole, detail: PoleDetail, shading?: Sh
   for (let s = z0; s < L - z1; s += detail.row) cuts.push(s)
   cuts.push(L - z1)
   for (const k of p.knots) for (const f of [-1, -0.55, -0.24, 0, 0.24, 0.55, 1]) { const s = k.s + f * k.w * 1.1; if (s > z0 + 0.01 && s < L - z1 - 0.01) cuts.push(s) }
+  for (const s of lashAt) if (s > z0 + 0.01 && s < L - z1 - 0.01) cuts.push(s)
   const edges = p.peeled ? p.bands.map(b => {
     const range = [b.reach - BAND_RAG - 0.004, b.reach + BAND_RAG + 0.004]
     return { b, lo: b.end === 0 ? range[0]! : L - range[1]!, hi: b.end === 0 ? range[1]! : L - range[0]! }
@@ -312,8 +313,9 @@ export function poleShading(p: Pole): Shading | undefined {
       if (touch > best) { best = touch; born = tb }
       // under and beside the turns: the rope's own shadow on the pole
       const rel = sub(w, frame.o), dd = Math.abs(dot(rel, frame.d)), ww = Math.abs(dot(rel, frame.w))
-      const outside = Math.max(0, dd - frame.halfD, 0) + Math.max(0, ww - frame.halfW)
-      const rope = 0.42 * Math.exp(-outside / 0.018)
+      // from the outermost turn's own side (the frame's half widths hold a few millimetres more)
+      const outside = Math.max(0, dd - frame.halfD + 0.006) + Math.max(0, ww - frame.halfW + 0.006)
+      const rope = Math.max(0.55 * Math.exp(-outside / 0.007), 0.28 * Math.exp(-outside / 0.03))
       if (rope > best) { best = rope; born = lash }
     }
     const ground = 0.4 * Math.exp(-Math.max(0, w[1] - groundY(w[0], w[2])) / 0.06)
@@ -336,8 +338,23 @@ function groundworkShading(local: V3): [number, number] {
 /** One pole's geometry in its own frame: along +X, centred. */
 export function poleGeometry(p: Pole, detail: PoleDetail = POLE_FINE): BufferGeometry {
   const sheet = new Sheet()
-  growPole(sheet, p, detail, poleShading(p))
+  growPole(sheet, p, detail, poleShading(p), lashRows(p))
   return sheet.geometry()
+}
+
+/** Rows where a pole's lashings end along it, each side: the shade the turns lay on the wood is drawn per vertex, and
+ * the stem's own rows (6.5 cm apart) would smear its crease over a hand's width. */
+function lashRows(p: Pole): number[] {
+  const pose = PLACED[p.id]
+  if (!pose) return []
+  const back: Q = [-pose.q[0], -pose.q[1], -pose.q[2], pose.q[3]], rows: number[] = []
+  for (const c of CROSSINGS) {
+    if (c.rod !== p.id && c.support !== p.id) continue
+    const f = crossingFrame(c), half = c.rod === p.id ? f.halfD : f.halfW
+    const at = rotate(back, sub(f.o, pose.at))[0] + p.length / 2
+    for (const side of [-1, 1]) for (const k of [-0.006, -0.002, 0.004, 0.014, 0.03]) rows.push(at + side * (half + k))
+  }
+  return rows
 }
 
 /** the seats and stakes, as poles that never move: logs across the feet and the stakes behind them */
@@ -406,6 +423,9 @@ function crossingFrame(c: Crossing): { o: V3; d: V3; w: V3; m: V3; rr: number; r
   return { o, d, w, m, rr, rs: s.r, halfD: s.r + ROPE_R * 2 * TURNS + 0.004, halfW: rr + ROPE_R * 2 * TURNS + 0.004 }
 }
 
+/** how far a drawn-up turn sinks into the bark it bears on (about a quarter of the rope's width) */
+const BITE = 0.0018
+
 /** the serving runs where the turn bears, its ends whipped short rather than cut */
 const served = (t: number): number => Math.min(1, Math.max(0, (Math.sin(t) - 0.25) / 0.2))
 
@@ -423,7 +443,7 @@ type PathPt = { p: V3; serve: number }
  * rope's width out from the one before it. */
 function turnPath(c: Crossing, i: number, detail: LashDetail): PathPt[] {
   const { o, d, w, m, rr, rs } = crossingFrame(c)
-  const gap = 0.0006, rope = ROPE_R
+  const gap = -BITE, rope = ROPE_R
   const a = rs + rope * (1 + 2 * i) + gap, b = rr + rope * (1 + 2 * i) + gap
   const rodRad = rr + rope + gap, supRad = rs + rope + gap
   const hRod = rs + rr
@@ -494,7 +514,7 @@ function turnPath(c: Crossing, i: number, detail: LashDetail): PathPt[] {
  * meet wherever the gap leaves it room. */
 function apexOf(c: Crossing, i: number): { k: number; h: number } {
   const { rr, rs } = crossingFrame(c)
-  const gap = 0.0006, rodRad = rr + ROPE_R + gap, supRad = rs + ROPE_R + gap
+  const gap = -BITE, rodRad = rr + ROPE_R + gap, supRad = rs + ROPE_R + gap
   const k = Math.sqrt(2 * ROPE_R * Math.max(rr, rs)) * 1.1 + ROPE_R * 2 * i
   const top = rs + rr - Math.sqrt(Math.max(0, rodRad * rodRad - k * k)), low = Math.sqrt(Math.max(0, supRad * supRad - k * k))
   return { k, h: Math.min(Math.max(rs, low), top) }
@@ -584,7 +604,7 @@ export function lashingGeometry(detail: LashDetail = LASH_FINE, kit = false): Bu
           const pos = add(q.p, mul(nrm, ROPE_R))
           // the rope's side that lies on a pole is in its shade
           const onPole = Math.max(0, Math.min(axisGap(pos, rod), axisGap(pos, sup)))
-          sheet.vertex(pos, nrm, (k / around) * TAU * ROPE_R, s, [0.92 + 0.16 * seed, 0, 0], seed, [0, 0, 0], [0.5 * Math.exp(-onPole / 0.006), bornAt])
+          sheet.vertex(pos, nrm, (k / around) * TAU * ROPE_R, s, [0.92 + 0.16 * seed, 0, 0], seed, [0, 0, 0], [0.6 * Math.exp(-onPole / 0.005), bornAt])
           spine.push(q.p[0], q.p[1], q.p[2]); born.push(bornAt); serve.push(q.serve); bone.push(BONE[c.support] ?? 0)
         }
       }

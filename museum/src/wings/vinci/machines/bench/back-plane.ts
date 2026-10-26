@@ -50,7 +50,7 @@ const BLOCK = 0.86
  * `focus` (0 to 1) softens the joints and the fine scales as a lens focused on
  * the machine would, for a machine whose eye stands far enough off that the
  * wall falls outside its depth of field; 0 is the wall every bench had. */
-export function backPlaneMaterial(stack: Stack, stone: MaterialSet, height = BACK_PLANE_HEIGHT, focus = 0): MeshStandardNodeMaterial {
+export function backPlaneMaterial(stack: Stack, stone: MaterialSet, height = BACK_PLANE_HEIGHT, focus = 0, value = WALL_VALUE): MeshStandardNodeMaterial {
   const material = new MeshStandardNodeMaterial({ roughness: stone.roughness, metalness: 0 })
   material.name = 'vinci/bench/back-plane'
   material.side = DoubleSide
@@ -88,7 +88,7 @@ export function backPlaneMaterial(stack: Stack, stone: MaterialSet, height = BAC
   material.opacityNode = crown
   // A hall's wall at twelve metres is not the subject. It is held a full
   // stop under the object it stands behind, so the frame keeps one hero.
-  material.colorNode = vec3(stone.albedo.r * WALL_VALUE, stone.albedo.g * WALL_VALUE, stone.albedo.b * WALL_VALUE).mul(albedo).mul(detail.occlusion)
+  material.colorNode = vec3(stone.albedo.r * value, stone.albedo.g * value, stone.albedo.b * value).mul(albedo).mul(detail.occlusion)
   material.roughnessNode = mix(detail.roughness, float(.97), joint).clamp(.55, .99)
   // the floor closes the ambient at the foot of a wall the way a corner does
   material.aoNode = float(1).sub(foot.mul(.6)).mul(float(1).sub(joint.mul(.3)))
