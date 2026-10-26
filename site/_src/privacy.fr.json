@@ -113,7 +113,7 @@
    "h": "Données hors de l’Union européenne",
    "body": [
     "Cloudflare, une entreprise des États-Unis, répond aux requêtes depuis des serveurs du monde entier, en général depuis un serveur proche de vous. Pour les transferts vers les États-Unis, Cloudflare est certifiée selon le cadre de protection des données UE-États-Unis (Data Privacy Framework), que la Commission européenne a jugé adéquat le 10 juillet 2023. Notre contrat avec Cloudflare contient aussi les clauses contractuelles types européennes, pour tout transfert que ce cadre ne couvre pas. Le contrat est public: [l’avenant de Cloudflare sur le traitement des données](https://www.cloudflare.com/cloudflare-customer-dpa/).",
-    "Après un oui à la question liée à nos annonces, le numéro de clic part de notre serveur vers Google et peut, en chemin, arriver aux États-Unis. Google est certifiée selon le Data Privacy Framework, comme décrit sous «Si vous venez par l’une de nos annonces»."
+    "Après un oui à la question liée à nos annonces, le numéro de clic part de notre serveur vers Google et peut, en chemin, arriver aux États-Unis. Google est certifié selon le Data Privacy Framework, comme décrit sous «Si vous venez par l’une de nos annonces»."
    ]
   },
   {
