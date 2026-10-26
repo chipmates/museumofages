@@ -89,7 +89,8 @@ class Case(unittest.TestCase):
     def save(self, lang, data, page=None):
         (self.dir / f"{page or self.page}.{lang}.json").write_text(json.dumps(data, ensure_ascii=False), encoding="utf-8")
 
-    def build(self, site_src=SITE_SRC, site_built=SITE_BUILT):
+    def builder(self):
+        """This test's copy of build.py, loaded fresh and pointed at the test's registry."""
         spec = importlib.util.spec_from_file_location(f"build_{self.dir.name}", self.dir / "build.py")
         module = importlib.util.module_from_spec(spec)
         spec.loader.exec_module(module)
@@ -97,6 +98,10 @@ class Case(unittest.TestCase):
         # the fixtures are written in English and German: the build runs in those two, whatever else is built
         module.LANGS = tuple(c for c in module.LANGS if c in ("en", "de"))
         module.LISTED = tuple(c for c in module.LISTED if c in ("en", "de"))
+        return module
+
+    def build(self, site_src=SITE_SRC, site_built=SITE_BUILT):
+        module = self.builder()
         out = self.dir / "out"
         written = module.build_pages(out, site_src=site_src, site_built=site_built, quiet=True)
         return out, written
@@ -129,6 +134,32 @@ class Case(unittest.TestCase):
             self.build()
         self.assertRegex(str(caught.exception), words)
         self.assertFalse((self.dir / "out").exists(), "a failed build wrote files")
+        return str(caught.exception)
+
+    def refused(self, lang, data, page, words, whole=False):
+        """Saves data as the page's file and expects the build's check of a page's words (lint) to refuse it with words.
+        The check is called as build_pages calls it, on the page's words as load_pages reads them, with the page's wing,
+        names and topic: one page in one language, so a list of many phrases needs no whole build per phrase. whole
+        also runs the whole build, which must stop with every problem the check found, so a build that stops calling
+        the check is seen."""
+        self.save(lang, data, page)
+        if not hasattr(self, "checker"):
+            self.checker = self.builder()
+        module = self.checker
+        found, wings, info, _ = module.load_pages([page])
+        wing = module.wing_of(page, found[page]["en"], wings)
+        # the names build_pages gives the page in this language (its kept)
+        names = json.loads(module.NAMES_FILE.read_text(encoding="utf-8"))["names"]
+        own = module.HERE / f"names.{lang}.json"
+        names += json.loads(own.read_text(encoding="utf-8"))["names"] if own.is_file() else []
+        kept = module.Names(names, wing["name"][lang], lang, taxa=found[page][lang]["page"].get("taxa", ()))
+        problems = module.lint(page, lang, found[page][lang], wing, kept, info[page]["topic"])
+        self.assertRegex("\n".join(problems), words)
+        if whole:
+            stopped = self.fails(words).split("\n")
+            for line in problems:
+                self.assertIn(line, stopped)
+        return problems
 
     # ---- the build as it stands ----
 
@@ -359,20 +390,19 @@ class Case(unittest.TestCase):
         page = self.scale_page()
         for lang, phrases in self.NEVER.items():
             original = self.data(lang, page)
-            for phrase in phrases:
+            for n, phrase in enumerate(phrases):
                 with self.subTest(lang=lang, phrase=phrase):
                     sentence = f" {phrase[0].upper()}{phrase[1:]}."
+                    # each phrase by the check, the first of each language by the whole build too
                     for key in ("answer", "answer_more"):
                         data = json.loads(json.dumps(original))
                         data["top"][key] += sentence
-                        self.save(lang, data, page)
-                        self.fails(r"top\.%s (matches|carries the wing's claim phrase)" % key)
+                        self.refused(lang, data, page, r"top\.%s (matches|carries the wing's claim phrase)" % key, whole=not n)
                     # and in a paragraph of the page's body the same
                     data = json.loads(json.dumps(original))
                     at = next(i for i, b in enumerate(data["blocks"]) if b.get("paras"))
                     data["blocks"][at]["paras"][0] += sentence
-                    self.save(lang, data, page)
-                    self.fails(r"blocks\.%d\.paras\.0 (matches|carries)" % at)
+                    self.refused(lang, data, page, r"blocks\.%d\.paras\.0 (matches|carries)" % at, whole=not n)
                     self.save(lang, original, page)
 
     def test_its_large_number_stands_only_with_its_condition(self):
@@ -420,15 +450,15 @@ class Case(unittest.TestCase):
             self.assertTrue(any(re.search(pattern, x.lower()) for xs in self.NEVER_MARKS.values() for x in xs), pattern)
         for lang, phrases in self.NEVER_MARKS.items():
             original = self.data(lang, page)
-            for phrase in phrases:
+            for n, phrase in enumerate(phrases):
                 with self.subTest(lang=lang, phrase=phrase):
                     # each phrase on its own: a phrase let through must not fail the next one
                     shutil.rmtree(self.dir / "out", ignore_errors=True)
                     self.save(lang, original, page)
                     data = json.loads(json.dumps(original))
                     data["top"]["answer"] += f" {phrase}."
-                    self.save(lang, data, page)
-                    self.fails(r"top\.answer matches")
+                    # each phrase by the check, the first of each language by the whole build too
+                    self.refused(lang, data, page, r"top\.answer matches", whole=not n)
                     self.save(lang, original, page)
 
     def test_a_famous_number_stands_where_the_page_says_whose_it_is(self):
@@ -451,11 +481,11 @@ class Case(unittest.TestCase):
         for lang in ("en", "de"):
             original = self.data(lang, page)
             text = json.dumps(original, ensure_ascii=False)
-            for condition, instead, rule in cases:
+            for n, (condition, instead, rule) in enumerate(cases):
                 with self.subTest(lang=lang, rule=rule):
                     self.assertRegex(text, condition)
-                    self.save(lang, json.loads(re.sub(condition, instead, text)), page)
-                    self.fails(re.escape(rule))
+                    # each case by the check, the first of each language by the whole build too
+                    self.refused(lang, json.loads(re.sub(condition, instead, text)), page, re.escape(rule), whole=not n)
                     self.save(lang, original, page)
 
     def test_a_rule_that_names_its_languages_holds_only_there(self):
@@ -505,14 +535,14 @@ class Case(unittest.TestCase):
             self.assertTrue(any(re.search(pattern, x.lower()) for xs in self.NEVER_TREX.values() for x in xs), pattern)
         for lang, phrases in self.NEVER_TREX.items():
             original = self.data(lang, page)
-            for phrase in phrases:
+            for n, phrase in enumerate(phrases):
                 with self.subTest(lang=lang, phrase=phrase):
                     # the line under the answer carries none of the words a rule lets a number stand with
                     shutil.rmtree(self.dir / "out", ignore_errors=True)
                     data = json.loads(json.dumps(original))
                     data["top"]["out"]["text"] += f" {phrase}."
-                    self.save(lang, data, page)
-                    self.fails(r"top\.out\.text matches")
+                    # each phrase by the check, the first of each language by the whole build too
+                    self.refused(lang, data, page, r"top\.out\.text matches", whole=not n)
                     self.save(lang, original, page)
 
     def test_a_page_that_asks_holds_its_names_by_no_break_spaces(self):
@@ -573,14 +603,14 @@ class Case(unittest.TestCase):
         ]
         out, _ = self.build()
         shutil.rmtree(out)
-        for subs, rule in cases:
+        for n, (subs, rule) in enumerate(cases):
             for lang, (condition, instead) in subs.items():
                 with self.subTest(lang=lang, rule=rule):
                     original = self.data(lang, page)
                     text = json.dumps(original, ensure_ascii=False)
                     self.assertRegex(text, condition)
-                    self.save(lang, json.loads(re.sub(condition, instead, text)), page)
-                    self.fails(re.escape(rule))
+                    # each case by the check, the first of each language by the whole build too
+                    self.refused(lang, json.loads(re.sub(condition, instead, text)), page, re.escape(rule), whole=not n)
                     self.save(lang, original, page)
 
     # Each claim the Spinosaurus page must never make, by its topic's rules: the canon's NEVER SAY and the facts sheet's.
@@ -622,14 +652,14 @@ class Case(unittest.TestCase):
                                 for x in xs), pattern)
         for lang, phrases in self.NEVER_SPINO.items():
             original = self.data(lang, page)
-            for phrase in phrases:
+            for n, phrase in enumerate(phrases):
                 with self.subTest(lang=lang, phrase=phrase):
                     # the line under the answer carries none of the words a rule lets a number stand with
                     shutil.rmtree(self.dir / "out", ignore_errors=True)
                     data = json.loads(json.dumps(original))
                     data["top"]["out"]["text"] += f" {phrase}."
-                    self.save(lang, data, page)
-                    self.fails(r"top\.out\.text matches")
+                    # each phrase by the check, the first of each language by the whole build too
+                    self.refused(lang, data, page, r"top\.out\.text matches", whole=not n)
                     self.save(lang, original, page)
 
     def test_a_spinosaurus_number_stands_only_with_the_words_that_say_whose_it_is(self):
@@ -650,14 +680,14 @@ class Case(unittest.TestCase):
         ]
         out, _ = self.build()
         shutil.rmtree(out)
-        for subs, rule in cases:
+        for n, (subs, rule) in enumerate(cases):
             for lang, (condition, instead) in subs.items():
                 with self.subTest(lang=lang, rule=rule):
                     original = self.data(lang, page)
                     text = json.dumps(original, ensure_ascii=False)
                     self.assertRegex(text, condition)
-                    self.save(lang, json.loads(re.sub(condition, instead, text)), page)
-                    self.fails(re.escape(rule))
+                    # each case by the check, the first of each language by the whole build too
+                    self.refused(lang, json.loads(re.sub(condition, instead, text)), page, re.escape(rule), whole=not n)
                     self.save(lang, original, page)
 
     # Each claim the woolly mammoth page must never make, by its topic's rules: the canon's NEVER SAY and the facts sheet's.
@@ -704,14 +734,14 @@ class Case(unittest.TestCase):
                                 for x in xs), pattern)
         for lang, phrases in self.NEVER_MAMMOTH.items():
             original = self.data(lang, page)
-            for phrase in phrases:
+            for n, phrase in enumerate(phrases):
                 with self.subTest(lang=lang, phrase=phrase):
                     # the line under the answer carries none of the words a rule lets a number stand with
                     shutil.rmtree(self.dir / "out", ignore_errors=True)
                     data = json.loads(json.dumps(original))
                     data["top"]["out"]["text"] += f" {phrase}."
-                    self.save(lang, data, page)
-                    self.fails(r"top\.out\.text matches")
+                    # each phrase by the check, the first of each language by the whole build too
+                    self.refused(lang, data, page, r"top\.out\.text matches", whole=not n)
                     self.save(lang, original, page)
 
     def test_a_woolly_mammoth_number_stands_only_with_the_words_that_say_whose_it_is(self):
@@ -757,14 +787,14 @@ class Case(unittest.TestCase):
         ]
         out, _ = self.build()
         shutil.rmtree(out)
-        for subs, rule in cases:
+        for n, (subs, rule) in enumerate(cases):
             for lang, (condition, instead) in subs.items():
                 with self.subTest(lang=lang, rule=rule):
                     original = self.data(lang, page)
                     text = json.dumps(original, ensure_ascii=False)
                     self.assertRegex(text, condition)
-                    self.save(lang, json.loads(re.sub(condition, instead, text)), page)
-                    self.fails(re.escape(rule))
+                    # each case by the check, the first of each language by the whole build too
+                    self.refused(lang, json.loads(re.sub(condition, instead, text)), page, re.escape(rule), whole=not n)
                     self.save(lang, original, page)
 
     # Each claim the Brachiosaurus page must never make, by its topic's rules: the canon's NEVER SAY and the facts sheet's.
@@ -830,14 +860,14 @@ class Case(unittest.TestCase):
                                 for x in xs), pattern)
         for lang, phrases in self.NEVER_BRACHIO.items():
             original = self.data(lang, page)
-            for phrase in phrases:
+            for n, phrase in enumerate(phrases):
                 with self.subTest(lang=lang, phrase=phrase):
                     # the line under the answer carries none of the words a rule lets a number stand with
                     shutil.rmtree(self.dir / "out", ignore_errors=True)
                     data = json.loads(json.dumps(original))
                     data["top"]["out"]["text"] += f" {phrase}."
-                    self.save(lang, data, page)
-                    self.fails(r"top\.out\.text matches")
+                    # each phrase by the check, the first of each language by the whole build too
+                    self.refused(lang, data, page, r"top\.out\.text matches", whole=not n)
                     self.save(lang, original, page)
 
     def test_the_brachiosaurus_page_asks_about_the_tallest_dinosaur_but_never_says_it(self):
@@ -894,14 +924,14 @@ class Case(unittest.TestCase):
         ]
         out, _ = self.build()
         shutil.rmtree(out)
-        for subs, rule in cases:
+        for n, (subs, rule) in enumerate(cases):
             for lang, (condition, instead) in subs.items():
                 with self.subTest(lang=lang, rule=rule):
                     original = self.data(lang, page)
                     text = json.dumps(original, ensure_ascii=False)
                     self.assertRegex(text, condition)
-                    self.save(lang, json.loads(re.sub(condition, instead, text)), page)
-                    self.fails(re.escape(rule))
+                    # each case by the check, the first of each language by the whole build too
+                    self.refused(lang, json.loads(re.sub(condition, instead, text)), page, re.escape(rule), whole=not n)
                     self.save(lang, original, page)
 
     # Each claim the Triceratops page must never make, by its topic's rules: the canon's NEVER SAY and the facts sheet's.
@@ -967,14 +997,14 @@ class Case(unittest.TestCase):
                                 for x in xs), pattern)
         for lang, phrases in self.NEVER_TRICERA.items():
             original = self.data(lang, page)
-            for phrase in phrases:
+            for n, phrase in enumerate(phrases):
                 with self.subTest(lang=lang, phrase=phrase):
                     # the line under the answer carries none of the words a rule lets a number stand with
                     shutil.rmtree(self.dir / "out", ignore_errors=True)
                     data = json.loads(json.dumps(original))
                     data["top"]["out"]["text"] += f" {phrase}."
-                    self.save(lang, data, page)
-                    self.fails(r"top\.out\.text matches")
+                    # each phrase by the check, the first of each language by the whole build too
+                    self.refused(lang, data, page, r"top\.out\.text matches", whole=not n)
                     self.save(lang, original, page)
 
     def test_a_triceratops_number_stands_only_with_the_words_that_say_whose_it_is(self):
@@ -1013,14 +1043,14 @@ class Case(unittest.TestCase):
         ]
         out, _ = self.build()
         shutil.rmtree(out)
-        for subs, rule in cases:
+        for n, (subs, rule) in enumerate(cases):
             for lang, (condition, instead) in subs.items():
                 with self.subTest(lang=lang, rule=rule):
                     original = self.data(lang, page)
                     text = json.dumps(original, ensure_ascii=False)
                     self.assertRegex(text, condition)
-                    self.save(lang, json.loads(re.sub(condition, instead, text)), page)
-                    self.fails(re.escape(rule))
+                    # each case by the check, the first of each language by the whole build too
+                    self.refused(lang, json.loads(re.sub(condition, instead, text)), page, re.escape(rule), whole=not n)
                     self.save(lang, original, page)
 
     # Each claim the Ankylosaurus page must never make, by its topic's rules: the canon's NEVER SAY and the facts sheet's.
@@ -1101,14 +1131,14 @@ class Case(unittest.TestCase):
                                 for x in xs), pattern)
         for lang, phrases in self.NEVER_ANKY.items():
             original = self.data(lang, page)
-            for phrase in phrases:
+            for n, phrase in enumerate(phrases):
                 with self.subTest(lang=lang, phrase=phrase):
                     # the line under the answer carries none of the words a rule lets a number stand with
                     shutil.rmtree(self.dir / "out", ignore_errors=True)
                     data = json.loads(json.dumps(original))
                     data["top"]["out"]["text"] += f" {phrase}."
-                    self.save(lang, data, page)
-                    self.fails(r"top\.out\.text matches")
+                    # each phrase by the check, the first of each language by the whole build too
+                    self.refused(lang, data, page, r"top\.out\.text matches", whole=not n)
                     self.save(lang, original, page)
 
     # Each claim the Stegosaurus page must never make, by its topic's rules: the canon's NEVER SAY and the facts sheet's.
@@ -1182,14 +1212,14 @@ class Case(unittest.TestCase):
                                 for x in xs), pattern)
         for lang, phrases in self.NEVER_STEGO.items():
             original = self.data(lang, page)
-            for phrase in phrases:
+            for n, phrase in enumerate(phrases):
                 with self.subTest(lang=lang, phrase=phrase):
                     # the line under the answer carries none of the words a rule lets a number stand with
                     shutil.rmtree(self.dir / "out", ignore_errors=True)
                     data = json.loads(json.dumps(original))
                     data["top"]["out"]["text"] += f" {phrase}."
-                    self.save(lang, data, page)
-                    self.fails(r"top\.out\.text matches")
+                    # each phrase by the check, the first of each language by the whole build too
+                    self.refused(lang, data, page, r"top\.out\.text matches", whole=not n)
                     self.save(lang, original, page)
 
     def test_an_ankylosaurus_number_stands_only_with_the_words_that_say_whose_it_is(self):
@@ -1252,14 +1282,14 @@ class Case(unittest.TestCase):
         ]
         out, _ = self.build()
         shutil.rmtree(out)
-        for subs, rule in cases:
+        for n, (subs, rule) in enumerate(cases):
             for lang, (condition, instead) in subs.items():
                 with self.subTest(lang=lang, rule=rule):
                     original = self.data(lang, page)
                     text = json.dumps(original, ensure_ascii=False)
                     self.assertRegex(text, condition)
-                    self.save(lang, json.loads(re.sub(condition, instead, text)), page)
-                    self.fails(re.escape(rule))
+                    # each case by the check, the first of each language by the whole build too
+                    self.refused(lang, json.loads(re.sub(condition, instead, text)), page, re.escape(rule), whole=not n)
                     self.save(lang, original, page)
 
     def test_a_stegosaurus_number_stands_only_with_the_words_that_say_whose_it_is(self):
@@ -1311,14 +1341,14 @@ class Case(unittest.TestCase):
         ]
         out, _ = self.build()
         shutil.rmtree(out)
-        for subs, rule in cases:
+        for n, (subs, rule) in enumerate(cases):
             for lang, (condition, instead) in subs.items():
                 with self.subTest(lang=lang, rule=rule):
                     original = self.data(lang, page)
                     text = json.dumps(original, ensure_ascii=False)
                     self.assertRegex(text, condition)
-                    self.save(lang, json.loads(re.sub(condition, instead, text)), page)
-                    self.fails(re.escape(rule))
+                    # each case by the check, the first of each language by the whole build too
+                    self.refused(lang, json.loads(re.sub(condition, instead, text)), page, re.escape(rule), whole=not n)
                     self.save(lang, original, page)
 
     def test_a_credit_a_picture_owes_stands_under_that_picture(self):
@@ -1457,14 +1487,14 @@ class Case(unittest.TestCase):
                                 for x in xs), pattern)
         for lang, phrases in self.NEVER_WHALE.items():
             original = self.data(lang, page)
-            for phrase in phrases:
+            for n, phrase in enumerate(phrases):
                 with self.subTest(lang=lang, phrase=phrase):
                     # the line under the answer carries none of the words a rule lets a number stand with
                     shutil.rmtree(self.dir / "out", ignore_errors=True)
                     data = json.loads(json.dumps(original))
                     data["top"]["out"]["text"] += f" {phrase}."
-                    self.save(lang, data, page)
-                    self.fails(r"top\.out\.text matches")
+                    # each phrase by the check, the first of each language by the whole build too
+                    self.refused(lang, data, page, r"top\.out\.text matches", whole=not n)
                     self.save(lang, original, page)
 
     def test_a_blue_whale_number_stands_only_with_the_words_that_say_whose_it_is(self):
@@ -1528,14 +1558,14 @@ class Case(unittest.TestCase):
         ]
         out, written = self.build()
         shutil.rmtree(out)
-        for subs, rule in cases:
+        for n, (subs, rule) in enumerate(cases):
             for lang, (condition, instead) in subs.items():
                 with self.subTest(lang=lang, rule=rule):
                     original = self.data(lang, page)
                     text = json.dumps(original, ensure_ascii=False)
                     self.assertRegex(text, condition)
-                    self.save(lang, json.loads(re.sub(condition, instead, text)), page)
-                    self.fails(re.escape(rule))
+                    # each case by the check, the first of each language by the whole build too
+                    self.refused(lang, json.loads(re.sub(condition, instead, text)), page, re.escape(rule), whole=not n)
                     self.save(lang, original, page)
 
     def test_a_share_picture_may_set_its_words_beside_the_picture(self):
