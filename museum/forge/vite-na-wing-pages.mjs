@@ -70,7 +70,9 @@ export function naWingPages({ read, words, languages = () => ['en', 'de'], names
         return { ...w, name: entry.name }
       })
     },
-    transformIndexHtml(source) {
+    transformIndexHtml(source, ctx) {
+      // the museum's own page only: the dev server passes every page here (the benches, the castle sketch), the build only it
+      if (ctx.filename !== join(root, 'index.html')) return source
       // every build: each catalog language's page title for the head's first script, which acts before the code arrives
       const marks = source.split(EARLY_TITLES).length - 1
       if (marks !== 1) throw new Error(`index.html carries the early titles' mark ${marks} times, not once`)
