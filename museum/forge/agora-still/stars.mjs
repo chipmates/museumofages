@@ -137,6 +137,50 @@ function underBox(raw, w, h, b, s, segs = []) {
   }
 }
 
+/** the ring round a name box (css px wide) where a field star would touch the
+    letters: pixels over the C8 line there that are no hairline's and no
+    figure star's own light. mask marks each figure star's own light. */
+function ringPoints(raw, w, h, b, s, segs, ring) {
+  const m = ring.margin
+  const near = segs.filter(([ax, ay, bx, by]) => Math.max(ax, bx) > b.x0 - m - 4 && Math.min(ax, bx) < b.x1 + m + 4 && Math.max(ay, by) > b.y0 - m - 4 && Math.min(ay, by) < b.y1 + m + 4)
+  let n = 0
+  for (let y = Math.max(0, Math.floor((b.y0 - m) * s)); y < Math.min(h, Math.ceil((b.y1 + m) * s)); y++)
+    for (let x = Math.max(0, Math.floor((b.x0 - m) * s)); x < Math.min(w, Math.ceil((b.x1 + m) * s)); x++) {
+      const cx = (x + 0.5) / s
+      const cy = (y + 0.5) / s
+      if (cx > b.x0 && cx < b.x1 && cy > b.y0 && cy < b.y1) continue
+      if (ring.mask[y * w + x] || lum(raw, w, x, y) <= BRIGHT) continue
+      if (near.some(([ax, ay, bx, by]) => segDist(cx, cy, ax, ay, bx, by) < 2.5)) continue
+      n++
+    }
+  return n
+}
+
+/** each figure star's own light: the pixels over the C8 line joined to its
+    brightest pixel, as far as its glow reaches */
+function ownLight(raw, w, h, stars, reach) {
+  const mask = new Uint8Array(w * h)
+  for (const st of stars) {
+    const [px, py] = st.proof.peak.map(Math.floor)
+    if (px < 0 || py < 0 || px >= w || py >= h) continue
+    const r = reach(st)
+    const todo = [[px, py]]
+    mask[py * w + px] = 1
+    while (todo.length) {
+      const [x, y] = todo.pop()
+      for (const [dx, dy] of [[1, 0], [-1, 0], [0, 1], [0, -1]]) {
+        const nx = x + dx
+        const ny = y + dy
+        if (nx < 0 || ny < 0 || nx >= w || ny >= h || mask[ny * w + nx]) continue
+        if ((nx - px) ** 2 + (ny - py) ** 2 > r * r || lum(raw, w, nx, ny) <= BRIGHT) continue
+        mask[ny * w + nx] = 1
+        todo.push([nx, ny])
+      }
+    }
+  }
+  return mask
+}
+
 const r2 = (v) => +v.toFixed(2)
 
 const frac = (v) => +v.toFixed(5)
@@ -177,7 +221,7 @@ function groupsOf(stars, s, info) {
 }
 
 /** every star's free name side in this frame, judged on its pixels too */
-function seatNames(stars, groups, frame, shape, fireBox, raw, info, s, cssBox, allowBright = false, widths = null, others = [], kCss = frame.k) {
+function seatNames(stars, groups, frame, shape, fireBox, raw, info, s, cssBox, allowBright = false, widths = null, others = [], kCss = frame.k, ring = null) {
   const safe = cssBox ?? safeArea(frame, shape)
   const m = 8
   const inner = { x0: safe.x0 + m, y0: safe.y0 + m, x1: safe.x1 - m, y1: safe.y1 - m }
@@ -191,9 +235,10 @@ function seatNames(stars, groups, frame, shape, fireBox, raw, info, s, cssBox, a
     if (!cssBox && (b.y1 > skyFloor(frame, b.x0) - 6 || b.y1 > skyFloor(frame, b.x1) - 6)) return false
     const u = underBox(raw, info.width, info.height, b, s, segs)
     if (u.contrast < 4.5) return false
-    // a bright star under a name is allowed only at a price: it costs one of
-    // the sky's eight reserved rectangles
-    return u.bright ? (allowBright ? 4 : false) : 0
+    // a bright star under a name (or, on the phone, touching it) is allowed
+    // only at a price: it costs one of the sky's eight reserved rectangles
+    const bright = u.bright || (ring ? ringPoints(raw, info.width, info.height, b, s, segs, ring) > 0 : false)
+    return bright ? (allowBright ? 4 : false) : 0
   }
   // every hairline in the frame as the atlas draws it, this house's and the
   // others', inset from both its stars
@@ -240,7 +285,7 @@ function seatNames(stars, groups, frame, shape, fireBox, raw, info, s, cssBox, a
     for (const p of pts) console.log(p.slug, ['right', 'left', 'above', 'below', 'above-s', 'below-s', 'above-e', 'below-e'].map((_, k) => why(nameBoxFor(p, k))).join(''))
   }
   if (!seated) return null
-  const out = seated.map((x) => ({ ...x, under: underBox(raw, info.width, info.height, x.box, s, segs) }))
+  const out = seated.map((x) => ({ ...x, under: underBox(raw, info.width, info.height, x.box, s, segs), ringPx: ring ? ringPoints(raw, info.width, info.height, x.box, s, segs, ring) : 0 }))
   // what the checks read: the nearest hairline to every box, own lines too
   Object.defineProperty(out, 'clear', { value: out.map((x) => Math.min(Infinity, ...segs.map((q) => boxSegDist(x.box, ...q)))), enumerable: false })
   Object.defineProperty(out, 'segs', { value: segs, enumerable: false })
@@ -327,13 +372,14 @@ async function proofSheet(master, file, stars, seats, info, fireBox, safe, s, ov
 
 /** the points over the C8 line under the given boxes (css px), a hairline's
     own pixels aside: field stars, companions, embers */
-function brightPoints(raw, w, h, boxes, s, segs) {
+function brightPoints(raw, w, h, boxes, s, segs, ring = null) {
   const pts = []
+  const m = Math.max(2, ring?.margin ?? 0)
   for (const b of boxes) {
-    const near = segs.filter(([ax, ay, bx, by]) => Math.max(ax, bx) > b.x0 - 6 && Math.min(ax, bx) < b.x1 + 6 && Math.max(ay, by) > b.y0 - 6 && Math.min(ay, by) < b.y1 + 6)
-    for (let y = Math.max(0, Math.floor((b.y0 - 2) * s)); y < Math.min(h, Math.ceil((b.y1 + 2) * s)); y++)
-      for (let x = Math.max(0, Math.floor((b.x0 - 2) * s)); x < Math.min(w, Math.ceil((b.x1 + 2) * s)); x++) {
-        if (lum(raw, w, x, y) <= BRIGHT) continue
+    const near = segs.filter(([ax, ay, bx, by]) => Math.max(ax, bx) > b.x0 - m - 4 && Math.min(ax, bx) < b.x1 + m + 4 && Math.max(ay, by) > b.y0 - m - 4 && Math.min(ay, by) < b.y1 + m + 4)
+    for (let y = Math.max(0, Math.floor((b.y0 - m) * s)); y < Math.min(h, Math.ceil((b.y1 + m) * s)); y++)
+      for (let x = Math.max(0, Math.floor((b.x0 - m) * s)); x < Math.min(w, Math.ceil((b.x1 + m) * s)); x++) {
+        if (ring?.mask[y * w + x] || lum(raw, w, x, y) <= BRIGHT) continue
         const cx = (x + 0.5) / s
         const cy = (y + 0.5) / s
         if (near.some(([ax, ay, bx, by]) => segDist(cx, cy, ax, ay, bx, by) < 2.5)) continue
@@ -366,7 +412,7 @@ const writeMaster = (raw, info, file) =>
  * seat strictly; failing that, seat at a price per bright box, clear what
  * stands under those boxes, and seat again on the cleared frame.
  */
-async function seatClean({ page, seat, raw, info, s, file, shootFn, reproject }) {
+async function seatClean({ page, seat, raw, info, s, file, shootFn, reproject, ring = null }) {
   const base = Buffer.from(raw)
   let seats = seat(false)
   let cleared = []
@@ -374,7 +420,7 @@ async function seatClean({ page, seat, raw, info, s, file, shootFn, reproject })
   for (let round = 0; !seats && round < 4; round++) {
     const loose = seat(true)
     if (!loose) break
-    const more = brightPoints(raw, info.width, info.height, loose.filter((x) => x.under.bright).map((x) => x.box), s, loose.segs)
+    const more = brightPoints(raw, info.width, info.height, loose.filter((x) => x.under.bright || x.ringPx > 0).map((x) => x.box), s, loose.segs, ring)
     if (!more.length) break
     cleared = [...cleared, ...more]
     const done = await clearPoints(page, cleared, shootFn, base)
@@ -394,6 +440,35 @@ async function seatClean({ page, seat, raw, info, s, file, shootFn, reproject })
 async function clearCrowders({ page, stars, raw, info, s, file, shootFn, reproject }) {
   const inside = (st) => st.x >= 0 && st.y >= 0 && st.x < info.width && st.y < info.height
   const pts = stars.filter((st) => inside(st) && st.proof.off > 2).map((st) => ({ x: st.proof.peak[0] / s, y: st.proof.peak[1] / s }))
+  if (!pts.length) return []
+  const done = await clearPoints(page, pts, shootFn, raw)
+  raw.set(done.raw)
+  summed = null
+  await writeMaster(raw, info, file)
+  await reproject()
+  return done.rects
+}
+
+/** a field star inside the glow of a named star crowds it, which the scene's
+    own companions never do (they keep 0.34 patch units off the thirty): clear
+    the points over the C8 line there that are no figure star's own light and
+    no hairline's */
+async function clearBeside({ page, stars, raw, info, s, file, shootFn, reproject, mask, reach, segs }) {
+  const w = info.width
+  const h = info.height
+  const pts = []
+  for (const st of stars) {
+    const [cx, cy] = st.proof.peak
+    const r = reach(st)
+    for (let y = Math.max(0, Math.floor(cy - r)); y < Math.min(h, Math.ceil(cy + r)); y++)
+      for (let x = Math.max(0, Math.floor(cx - r)); x < Math.min(w, Math.ceil(cx + r)); x++) {
+        if ((x + 0.5 - cx) ** 2 + (y + 0.5 - cy) ** 2 > r * r) continue
+        if (mask[y * w + x] || lum(raw, w, x, y) <= BRIGHT) continue
+        const p = { x: (x + 0.5) / s, y: (y + 0.5) / s }
+        if (segs.some(([ax, ay, bx, by]) => segDist(p.x, p.y, ax, ay, bx, by) < 2.5)) continue
+        if (!pts.some((q) => Math.abs(q.x - p.x) < 4 && Math.abs(q.y - p.y) < 4)) pts.push(p)
+      }
+  }
   if (!pts.length) return []
   const done = await clearPoints(page, pts, shootFn, raw)
   raw.set(done.raw)
@@ -503,6 +578,7 @@ function nameChecks(seats, stars, others = null) {
     lineClearRule: LINE_CLEAR,
     steppedAway: seats.filter((x) => x.gap > NAME_BOX.gap).length,
     boxesWithBrightPixels: seats.filter((x) => x.under.starPx > 0).length,
+    ...(seats.some((x) => 'ringPx' in x) ? { boxesWithBrightRing: seats.filter((x) => x.ringPx > 0).length } : {}),
     hairlinePxUnderNames: Math.max(...seats.map((x) => x.under.hairlinePx)),
     houseLineUps: clashes,
   }
@@ -557,6 +633,18 @@ function plateChecks(groups, stars, s) {
 const OVER_FLAME = 6
 /** the share of a star sprite's half width its glow is seen to (measured) */
 const GLOW = 0.75
+/** two house frames are alike when a tap from one to the other leaves the
+    figure stars both show near where they were: their median move must reach
+    this share of the frame's width, or the frames share no figure star */
+const APART = 0.25
+/** a house's middle stays within this share of the frame's width of the
+    frame's middle */
+const CENTRE = 1 / 8
+/** what the joint choice weighs: a neighbour in part, one of its stars inside
+    the frame, a star whose glow a 9:16 screen's edge would cut, one css px off
+    centre, and (between equals) one unit of zoom, so a frame stays as close to
+    the overview as its rules allow */
+const WEIGH = { part: 1000, star: 10, trim: 10, off: 0.5, zoom: 1 }
 
 /** where a crop of the tall at zoom z cuts a figure star: true when the star
     stands whole inside the crop or wholly outside it (its disc radius r) */
@@ -567,14 +655,172 @@ function wholeOrOut(x, y, r, x0, y0, cw, ch) {
   return (inX && inY) || outside
 }
 
+/** the share of a segment's length inside a box */
+function shareInside(ax, ay, bx, by, b) {
+  let t0 = 0
+  let t1 = 1
+  const p = [ax - bx, bx - ax, ay - by, by - ay]
+  const q = [ax - b.x0, b.x1 - ax, ay - b.y0, b.y1 - ay]
+  for (let i = 0; i < 4; i++) {
+    if (p[i] === 0) {
+      if (q[i] < 0) return 0
+    } else {
+      const r = q[i] / p[i]
+      if (p[i] < 0) t0 = Math.max(t0, r)
+      else t1 = Math.min(t1, r)
+      if (t0 > t1) return 0
+    }
+  }
+  return t1 - t0
+}
+
+/** every other house against a crop (px of the tall): whole (its stars and
+    glows inside), out (no star, glow or hairline inside), or in part with the
+    count of its stars and the share of its hairlines inside */
+function neighbourStates(key, crop, stars, radius, segs) {
+  const out = {}
+  for (const other of new Set(stars.map((st) => st.group))) {
+    if (other === key) continue
+    const c = { key: other }
+    const own = stars.filter((st) => st.group === c.key)
+    const ins = own.filter((st) => {
+      const r = radius[st.slug]
+      return st.x - r >= crop.x0 && st.x + r <= crop.x1 && st.y - r >= crop.y0 && st.y + r <= crop.y1
+    }).length
+    const lines = segs.filter((q) => q.group === c.key)
+    const len = lines.reduce((a, q) => a + Math.hypot(q.s[2] - q.s[0], q.s[3] - q.s[1]), 0)
+    const inLen = lines.reduce((a, q) => a + shareInside(...q.s, crop) * Math.hypot(q.s[2] - q.s[0], q.s[3] - q.s[1]), 0)
+    if (ins === own.length) out[c.key] = 'whole'
+    else if (ins === 0 && inLen === 0) out[c.key] = 'out'
+    else out[c.key] = { stars: ins, of: own.length, lines: +(inLen / (len || 1)).toFixed(3) }
+  }
+  return out
+}
+
+/** the median move (css px) of the figure stars two crops both show, when a
+    tap goes from one to the other; null when they share none */
+function medianMove(a, b, stars, s0, css) {
+  const at = (c, st) => [((st.x - c.x0) * c.z) / s0, ((st.y - c.y0) * c.z) / s0]
+  const shown = ([x, y]) => x >= 0 && x <= css[0] && y >= 0 && y <= css[1]
+  const d = []
+  for (const st of stars) {
+    const p = at(a, st)
+    const q = at(b, st)
+    if (shown(p) && shown(q)) d.push(Math.hypot(p[0] - q[0], p[1] - q[1]))
+  }
+  if (!d.length) return null
+  d.sort((u, v) => u - v)
+  const m = d.length >> 1
+  return d.length % 2 ? d[m] : (d[m - 1] + d[m]) / 2
+}
+
+/**
+ * The six house frames chosen together, before any is drawn. Each is a crop of
+ * the tall at zoom z with its bottom on one line just over the flame: its own
+ * house whole, inside the safe area and centred within CENTRE; no figure star
+ * of any house cut by an edge; no two frames alike (APART). Among those, the
+ * set with the fewest other houses in part, then the fewest of their stars
+ * inside, then the most centred. seatOk(key, crop) says whether the names seat.
+ */
+export function planFrames({ groups, stars, radius, segs, W, H, floor, s0, css, safeTop, safeBottom, partsOf, seatOk, exclude }) {
+  const apart = APART * css[0]
+  const pools = {}
+  for (const g of groups) {
+    const own = stars.filter((st) => st.group === g.key)
+    const ox0 = Math.min(...own.map((st) => st.x - radius[st.slug]))
+    const ox1 = Math.max(...own.map((st) => st.x + radius[st.slug]))
+    const mid = (Math.min(...own.map((st) => st.x)) + Math.max(...own.map((st) => st.x))) / 2
+    const zLo = Math.max(partsOf(g), H / floor)
+    const zHi = W / (ox1 - ox0)
+    const best = new Map()
+    for (let zi = Math.ceil(zLo * 500); zi / 500 <= zHi; zi++) {
+      const z = zi / 500
+      const cw = W / z
+      const ch = H / z
+      const y0 = floor - ch
+      if (y0 < 0) continue
+      // the house inside the safe area: each star by half a name, each glow whole
+      if (!own.every((st) => ((st.y - y0) * z) / s0 >= safeTop + 12 && ((st.y - radius[st.slug] - y0) * z) / s0 >= safeTop)) continue
+      for (let x0 = Math.max(0, Math.ceil((ox1 - cw) * 2) / 2); x0 <= Math.min(W - cw, ox0); x0 += 0.5) {
+        if (!stars.every((st) => wholeOrOut(st.x, st.y, radius[st.slug], x0, y0, cw, ch))) continue
+        const off = (Math.abs(mid - (x0 + cw / 2)) * z) / s0
+        if (off > CENTRE * css[0]) continue
+        const id = `${g.key}:${z}:${x0}`
+        if (exclude.has(id)) continue
+        const crop = { x0, y0, x1: x0 + cw, y1: floor }
+        const nb = neighbourStates(g.key, crop, stars, radius, segs)
+        const parts = Object.values(nb).filter((v) => typeof v === 'object')
+        const inside = parts.reduce((a, v) => a + v.stars, 0)
+        // the safe area's top and bottom are a 9:16 screen's edges
+        const trim = stars.filter((st) => {
+          const y = ((st.y - y0) * z) / s0
+          const r = (radius[st.slug] * z) / s0
+          return st.x > x0 && st.x < x0 + cw && [safeTop, safeBottom].some((line) => y - r < line && line < y + r)
+        }).map((st) => st.slug)
+        const cost = WEIGH.part * parts.length + WEIGH.star * inside + WEIGH.trim * trim.length + WEIGH.off * off + WEIGH.zoom * z
+        // one crop per hundredth of zoom and state, the most centred
+        const k = `${z.toFixed(2)}|${parts.length}|${inside}|${trim.length}`
+        if (!best.has(k) || best.get(k).cost > cost) best.set(k, { id, key: g.key, z, x0, y0, cw, ch, off, nb, trim, cost })
+      }
+    }
+    pools[g.key] = [...best.values()].sort((a, b) => a.cost - b.cost)
+    if (!pools[g.key].length) throw new Error(`no house frame for ${g.key}: no crop keeps its house whole and centred`)
+  }
+  const like = new Map()
+  const apartOk = (a, b) => {
+    const k = a.id < b.id ? `${a.id}|${b.id}` : `${b.id}|${a.id}`
+    if (!like.has(k)) {
+      const m = medianMove(a, b, stars, s0, css)
+      like.set(k, m == null || m >= apart)
+    }
+    return like.get(k)
+  }
+  const seated = new Map()
+  const seats = (c) => {
+    if (!seated.has(c.id)) seated.set(c.id, seatOk(c.key, c))
+    return seated.get(c.id)
+  }
+  // search the six together: the house with the fewest crops first, every
+  // later pool narrowed to what stays apart from the choice so far
+  const keys = Object.keys(pools).sort((a, b) => pools[a].length - pools[b].length)
+  let best = null
+  let bestCost = Infinity
+  const pick = {}
+  const rec = (i, live, acc) => {
+    if (i === keys.length) {
+      bestCost = acc
+      best = { ...pick }
+      return
+    }
+    let rest = 0
+    for (let j = i + 1; j < keys.length; j++) rest += live[keys[j]][0]?.cost ?? Infinity
+    for (const c of live[keys[i]]) {
+      if (acc + c.cost + rest >= bestCost) break
+      if (!seats(c)) continue
+      const next = { ...live }
+      let dead = false
+      for (let j = i + 1; j < keys.length && !dead; j++) {
+        next[keys[j]] = live[keys[j]].filter((d) => apartOk(c, d))
+        dead = next[keys[j]].length === 0
+      }
+      if (dead) continue
+      pick[keys[i]] = c
+      rec(i + 1, next, acc + c.cost)
+      delete pick[keys[i]]
+    }
+  }
+  rec(0, pools, 0)
+  if (!best) throw new Error('no six house frames stand apart under the rules')
+  return { frames: best, cost: bestCost, pools: Object.fromEntries(Object.entries(pools).map(([k, v]) => [k, v.length])), apart }
+}
+
 /**
  * Every house drawn once more on the phone, cropped from the tall and drawn at
- * full resolution, by one rule set: the bottom edge on one line of the scene
- * just over the flame (the fire out, its sparks and glow in, the near ring's
- * beams and capitals across the foot of every frame); the zoom from the one
- * that parts the house's closest pair to 44 css px upward; the crop slid
- * sideways only as far as it takes for every figure star of every house to
- * stand whole or wholly outside; the names seated as in the wide.
+ * full resolution: the six crops chosen together (planFrames), each bottom on
+ * one line of the scene just over the flame (the fire out, its sparks and glow
+ * in, the near ring's beams and capitals across the foot of every frame); the
+ * names seated as in the wide. A crop whose names will not seat on its drawn
+ * pixels is set aside and the six are chosen again.
  */
 async function zoomFrames({ page, groups, frame, info, out, shootZoom, tallStars, flame, plume }) {
   // the phone's stage calls a name by its short form; its box is sized to it
@@ -594,6 +840,8 @@ async function zoomFrames({ page, groups, frame, info, out, shootZoom, tallStars
   const pairs = []
   for (const c of CONSTELLATIONS)
     for (const [a, b] of c.lines) if (at[c.stars[a]] != null && at[c.stars[b]] != null) pairs.push([at[c.stars[a]], at[c.stars[b]]])
+  // the tall's hairlines as drawn, inset from both stars, with their house
+  const segsTall = pairs.map(([a, b]) => ({ s: drawnSegments(tallStars, [[a, b]], (i) => insetOf(tallStars[i].disc) * frame.k * s0)[0], group: tallStars[a].group }))
   function seatsPossible(key, x0, y0, z) {
     const css = (x, y) => [((x - x0) * z) / s0, ((y - y0) * z) / s0]
     const all = tallStars.map((st) => {
@@ -617,64 +865,75 @@ async function zoomFrames({ page, groups, frame, info, out, shootZoom, tallStars
     const others = all.filter((st) => st.group !== key)
     return Boolean(solveSides(pts, lines, (b) => (keep(b) === false ? false : 0), { others, segs, hit: PHONE.hit, column: PHONE.column }))
   }
-  const res = []
-  for (const g of groups) {
-    const parts = Math.max(1, Math.ceil((TAP / g.closestCss) * 20) / 20)
-    const zFloor = Math.max(parts, Math.ceil((H / floor) * 100) / 100)
-    let z, shot, proj, own, gz, seats, reserved, x0, y0, cw, ch, kept
-    const file = join(out, `sky-tall-${g.key}.png`)
-    const safe = safeArea(frame, 'tall')
-    let tries = 0
-    for (let zz = zFloor; zz <= zFloor + 1.5 && tries < 8; zz = +(zz + 0.01).toFixed(2)) {
-      z = zz
-      cw = W / z
-      ch = H / z
-      y0 = floor - ch
-      if (y0 < 0) continue
-      const [cx] = g.centre.px
-      const centred = Math.min(Math.max(0, cx - cw / 2), W - cw)
-      // the nearest sideways place where no figure star is cut by an edge,
-      // with the house inside the safe area by half a name
-      kept = null
-      for (let x = 0; x <= W - cw; x += 1) {
-        if (!tallStars.every((st) => wholeOrOut(st.x, st.y, radius[st.slug] ?? 0, x, y0, cw, ch))) continue
-        const room = tallStars.filter((st) => st.group === g.key).every((st) => st.x - x >= (radius[st.slug] ?? 0) && x + cw - st.x >= (radius[st.slug] ?? 0) && st.y - y0 >= ((safeTop + 12) * s0) / z)
-        if (room && (kept == null || Math.abs(x - centred) < Math.abs(kept - centred))) kept = x
-      }
-      if (kept == null) continue
-      // a crop of the same camera puts every star where the tall has it,
-      // scaled: seat the names on that geometry first and draw only if they can
-      if (!seatsPossible(g.key, kept, y0, z)) continue
-      tries++
-      x0 = kept
-      await page.evaluate(([a, b, c]) => window.__still.zoom(a, b, c), [x0, y0, z])
-      shot = await shootZoom(file)
-      proj = await project(page, shot.raw, shot.info, frame.css[0], frame.plume)
+  const partsOf = (g) => Math.max(1, Math.ceil((TAP / g.closestCss) * 20) / 20)
+  const safe = safeArea(frame, 'tall')
+  const exclude = new Set()
+  const drawn = {}
+  let plan = null
+  let renders = 0
+  for (let round = 0; round < 6; round++) {
+    plan = planFrames({
+      groups, stars: tallStars, radius, segs: segsTall, W, H, floor, s0, css: frame.css, safeTop, safeBottom: view.y1, partsOf, exclude,
+      seatOk: (key, c) => seatsPossible(key, c.x0, c.y0, c.z),
+    })
+    let failed = false
+    for (const g of groups) {
+      const c = plan.frames[g.key]
+      if (drawn[g.key]?.c.id === c.id) continue
+      if (++renders > 12) throw new Error('house frames: more than 12 renders without six seated frames')
+      const file = join(out, `sky-tall-${g.key}.png`)
+      await page.evaluate(([a, b, z]) => window.__still.zoom(a, b, z), [c.x0, c.y0, c.z])
+      const shot = await shootZoom(file)
+      let proj = await project(page, shot.raw, shot.info, frame.css[0], frame.plume)
       const crowded = await clearCrowders({
         page, stars: proj.stars.filter((st) => st.group === g.key), raw: shot.raw, info: shot.info, s: proj.s, file, shootFn: () => shootZoom(file),
         reproject: async () => {
           proj = await project(page, shot.raw, shot.info, frame.css[0], frame.plume)
         },
       })
+      // a figure star's own light is no field star; a field star in the glow
+      // of a named star, or touching a name's letters, is cleared
+      const reach = (st) => GLOW * (st.disc / 2) * frame.k * c.z * s0
+      const mask = ownLight(shot.raw, W, H, proj.stars, reach)
+      const segsZ = drawnSegments(proj.stars.map((st) => ({ x: st.css[0], y: st.css[1] })), pairs, (i) => insetOf(proj.stars[i].disc) * frame.k * c.z)
+      const beside = await clearBeside({
+        page, stars: proj.stars.filter((st) => st.group === g.key), raw: shot.raw, info: shot.info, s: proj.s, file, shootFn: () => shootZoom(file), mask, reach, segs: segsZ,
+        reproject: async () => {
+          proj = await project(page, shot.raw, shot.info, frame.css[0], frame.plume)
+        },
+      })
+      const ring = { margin: LINE_CLEAR, mask }
       const seatOwn = (allow) => {
         const o = proj.stars.filter((st) => st.group === g.key)
         const rest = proj.stars.filter((st) => st.group !== g.key)
         const q = groupsOf(proj.stars, proj.s, shot.info).filter((x) => x.key === g.key)
-        return { own: o, gz: q, seats: seatNames(o, q, frame, 'tall', proj.fire.plume, shot.raw, shot.info, proj.s, view, allow, widths, rest, frame.k * z) }
+        return { own: o, gz: q, seats: seatNames(o, q, frame, 'tall', proj.fire.plume, shot.raw, shot.info, proj.s, view, allow, widths, rest, frame.k * c.z, ring) }
       }
       const got = await seatClean({
-        page, raw: shot.raw, info: shot.info, s: proj.s, file, shootFn: () => shootZoom(file),
+        page, raw: shot.raw, info: shot.info, s: proj.s, file, shootFn: () => shootZoom(file), ring,
         seat: (allow) => seatOwn(allow).seats,
         reproject: async () => {
           proj = await project(page, shot.raw, shot.info, frame.css[0], frame.plume)
         },
       })
-      ;({ own, gz } = seatOwn(false))
-      seats = got.seats
-      reserved = [...crowded, ...got.rects]
-      if (seats) break
+      if (!got.seats) {
+        console.log(`[tall ${g.key}] names do not seat on the drawn crop ${c.id}; choosing the six again`)
+        exclude.add(c.id)
+        delete drawn[g.key]
+        failed = true
+        break
+      }
+      const { own, gz } = seatOwn(false)
+      drawn[g.key] = { c, shot, proj, own, gz, seats: got.seats, reserved: [...crowded, ...beside, ...got.rects], file, beside: beside.length }
     }
-    if (!shot) throw new Error(`no house frame for ${g.key}: no zoom keeps every star whole`)
+    if (!failed) break
+    plan = null
+  }
+  if (!plan) throw new Error('house frames: no six seated frames in six rounds')
+  const res = []
+  for (const g of groups) {
+    const { c, shot, proj, own, gz, seats, reserved, file, beside } = drawn[g.key]
+    const { z, x0, y0, cw, ch } = c
     await proofSheet(file, join(out, `stars-proof-tall-${g.key}.png`), own, seats, shot.info, proj.fire.plume, safe, proj.s)
     const cutStars = tallStars.filter((st) => !wholeOrOut(st.x, st.y, radius[st.slug] ?? 0, x0, y0, cw, ch)).map((st) => st.slug)
     // the frame's last rows over the fire hold no flame, only sparks and glow
@@ -691,21 +950,28 @@ async function zoomFrames({ page, groups, frame, info, out, shootZoom, tallStars
         footWide = Math.max(footWide, run)
       }
     }
+    await page.evaluate(([a, b, zz]) => window.__still.zoom(a, b, zz), [x0, y0, z])
     const propsZ = await page.evaluate(() => window.__still.props())
     const extra = {
       group: g.key,
       zoom: z,
       crop: [r2(x0), r2(y0), r2(x0 + cw), r2(y0 + ch)],
+      offCentreCss: r2(c.off),
+      cutBy916: c.trim,
+      fieldPointsClearedBesideStars: beside,
+      neighbours: c.nb,
+      medianMoveCss: Object.fromEntries(groups.filter((h) => h.key !== g.key).map((h) => [h.key, ((m) => (m == null ? null : r2(m)))(medianMove(c, plan.frames[h.key], tallStars, s0, frame.css))])),
       starsCutByAnEdge: cutStars,
       footOverFire: { maxLum: +foot.toFixed(3), widestRunOver025: footWide },
       props: propsZ.map((p) => ({ name: p.name, state: cutState(p, W, H) })),
       ...(seats ? nameChecks(seats, own, proj.stars.filter((st) => st.group !== g.key)) : {}),
     }
+    if (g === groups[0]) extra.plan = { rule: { apartCss: plan.apart, centreCss: r2(CENTRE * frame.css[0]), weigh: WEIGH }, cost: r2(plan.cost), crops: plan.pools, renders }
     res.push({
       group: g.key,
       file: `sky-tall-${g.key}`,
       zoom: z,
-      partsAt: parts,
+      partsAt: partsOf(g),
       closestBeforeCss: g.closestCss,
       closestCss: gz[0]?.closestCss,
       crop: { px: [r2(x0), r2(y0), r2(x0 + cw), r2(y0 + ch)], x0: frac(x0 / W), y0: frac(y0 / H), x1: frac((x0 + cw) / W), y1: frac((y0 + ch) / H) },
