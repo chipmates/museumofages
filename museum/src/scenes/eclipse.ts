@@ -126,7 +126,14 @@ export interface EclipseState {
   elapsed: number
 }
 
-export function createEclipse(scene: Scene) {
+/** a still picture's own sky: the live lobby never passes it */
+export interface EclipseStill {
+  /** false sets the firmament's river wash aside, so a frame that sees only
+      the edge of the band keeps no lone smudge of it (its stars stay) */
+  riverWash?: boolean
+}
+
+export function createEclipse(scene: Scene, still?: EclipseStill) {
   const rand = mulberry32(FOUNDING_SEED)
   // tier by viewport, not by guess: a phone draws the same composition with
   // fewer wedges, and nothing in the frame is allowed to go missing
@@ -679,6 +686,10 @@ export function createEclipse(scene: Scene) {
     rand,
   })
   scene.add(firmament.points)
+  if (still?.riverWash === false) {
+    const wash = firmament.points.children.find((c) => c instanceof Mesh && c.geometry instanceof SphereGeometry)
+    if (wash) firmament.points.remove(wash)
+  }
 
   // ------------------------------------------------------- THE WANDERERS
   /* Thirty anonymous sparks, and they stay a MURMUR. One instanced quad
