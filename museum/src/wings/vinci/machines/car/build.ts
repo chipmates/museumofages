@@ -116,7 +116,8 @@ function stave(k: Kit, i: number): void {
   k.polygon([outer(-hb, bottom), outer(hb, bottom), inner(hb, bottom), inner(-hb, bottom)], radial(ac), at_(bottom), mid(0, bottom + 0.05))
 }
 
-/** The port's oak collar on the skirt, square to the wall. */
+/** The port's oak collar on the skirt, square to the wall: a low, plain ring that stands 14 mm proud, as a board
+ * thickened round a hole, not a ship's porthole. */
 function collar(k: Kit, deg: number, j: number): void {
   const a = portAngle(deg), y = TUB.ports.y
   const r = wallRadius(y)
@@ -125,7 +126,7 @@ function collar(k: Kit, deg: number, j: number): void {
   const origin = add(at(r, a, y), mul(n, -0.004))
   // the collar's face blackened round the muzzle by the guns' smoke; oval up the leaning wall, as the hole is cut
   // level through it, so the level barrel clears its lips
-  k.lathe(origin, n, [[0, TUB.ports.r], [0, TUB.ports.collar], [0.026, TUB.ports.collar - 0.004], [0.03, TUB.ports.r + 0.012], [0.03, TUB.ports.r]], 24, { tone: tone(2, j) }, false, undefined, s => (s > 0.027 ? 0.62 : 1), Math.hypot(1, dr))
+  k.lathe(origin, n, [[0, TUB.ports.r], [0, TUB.ports.collar - 0.008], [0.011, TUB.ports.collar - 0.012], [0.014, TUB.ports.r + 0.008], [0.014, TUB.ports.r]], 24, { tone: tone(2, j) }, false, undefined, s => (s > 0.011 ? 0.62 : 1), Math.hypot(1, dr))
 }
 
 /** A floor board between z0 and z1 and the cuts xa..xb (an infinite cut runs to the wall), its ends sawn on the
@@ -264,10 +265,12 @@ function wells(k: Kit): void {
     const za = sz > 0 ? SLOT.z0 : -SLOT.z1, zb = sz > 0 ? SLOT.z1 : -SLOT.z0
     const tread = [sz * HUB.z - WHEEL.width / 2 - 0.02, sz * HUB.z + WHEEL.width / 2 + 0.02].sort((p, q) => p - q) as [number, number]
     const cutX = 0.24
-    const f = (j: number): Finish => ({ tone: 0.5 + 0.1 * hash(70, sx, sz, j), wear: 0 })
+    // under the floor, out of the light and in the ground's dirt: darker than the floor
+    const f = (j: number): Finish => ({ tone: 0.36 + 0.08 * hash(70, sx, sz, j), wear: 0 })
     // the slot's far corners run into the wall, which closes them: on the floor a board stops 5 mm short of the
-    // staves; under the floor, where the staves end, the well runs on under their foot, inside the skirt
-    const Rc = TUB.bottomR - TUB.wall - 0.005, Rb = TUB.bottomR - 0.01
+    // staves; under the floor, where the staves end, the well runs 1 cm on under their foot and no further, so no
+    // board shows under the skirt's foot from outside
+    const Rc = TUB.bottomR - TUB.wall - 0.005, Rb = TUB.bottomR - TUB.wall + 0.01
     const slabAt = (x0: number, x1: number, y0: number, y1: number, z0: number, z1: number, j: number, grain: V3 = X): void => {
       const R = y1 <= TUB.bottomY ? Rb : Rc
       const reach = Math.sqrt(Math.max(0, R * R - Math.max(z0 * z0, z1 * z1)))
@@ -511,7 +514,7 @@ export function wheel(sx: number, sz: number): Body {
   b.fine.lathe(v(0, 0, -WHEEL.hubLen / 2), Z, [
     [0, 0.094], [0.02, 0.108], [0.09, WHEEL.hubR], [0.19, WHEEL.hubR], [0.26, 0.108], [WHEEL.hubLen, 0.094],
   ], 24, { tone: tone(30, seed) }, true, undefined, s => (s < 0.03 || s > WHEEL.hubLen - 0.03 ? 0.72 : 1))
-  for (const s of [-0.115, 0.105]) b.iron.lathe(v(0, 0, s), Z, [[0, 0.107], [0, 0.116], [0.02, 0.116], [0.02, 0.107]], 24, { tone: 1 }, false)
+  for (const s of [-0.115, 0.105]) forgedBand(b.iron, v(0, 0, s), Z, 0.107, 0.116, 0.02, 32, [34, seed, s])
   for (let k = 0; k < WHEEL.spokes; k++) {
     const a = (k * TAU) / WHEEL.spokes + SPOKES.zero
     const d: V3 = [Math.cos(a), Math.sin(a), 0], t: V3 = [-Math.sin(a), Math.cos(a), 0]
@@ -542,27 +545,27 @@ export function wheel(sx: number, sz: number): Body {
     // cogs are mortised through the rim: the ring of round ends the sheet draws on the face it shows
     const back = w2 + PEGS.proud, length = back + w2 + PEGS.stand
     const from = add(p, v(0, 0, -inward * back)), to = add(p, v(0, 0, inward * (w2 + PEGS.stand)))
-    // polished where the lantern's staves bear on the peg's outer half, grimed at its root and at its outer end
+    // shaved from riven oak as the staves are, its grain along it; polished where the lantern's staves bear on the
+    // peg's outer half, grimed at its root and at its outer end
     const past = (u: number): number => u * length - back - w2
-    b.fine.rod(from, to, PEGS.r, 12, { tone: tone(33, seed, j) * PEGS.endTone, wear: 0.15 }, 0.004, {
-      rows: 12, wearAt: u => 0.95 * smooth(0.05, 0.09, past(u)),
-      grimeAt: u => (0.66 + 0.34 * smooth(0, 0.028, past(u))) / PEGS.endTone,
-    })
+    shaved(b.rough, from, to, PEGS.r, 7, { tone: tone(33, seed, j) * PEGS.endTone, wear: 0.15 }, [35, seed, j], 12, 0.004,
+      u => 0.95 * smooth(0.05, 0.09, past(u)), u => (0.66 + 0.34 * smooth(0, 0.028, past(u))) / PEGS.endTone)
   }
   return b
 }
 
 /* ── A SHAFT, about its own axis, with its crank and its two lanterns ────── */
 
-/** A lantern disc's two faces, each three boards across, their joints a hair open, the face grain dressed by
- * hand so the tool's strokes show; a ring of grime round the shaft where the grease runs out. */
+/** A lantern disc's two faces, each three boards across, their joints closed tight (the boards told apart by their
+ * tone, as glued and pinned boards are; an open joint showed straight through the hollow disc), the face grain
+ * dressed by hand so the tool's strokes show; a ring of grime round the shaft where the grease runs out. */
 function discFaces(k: Kit, xd: number, seed: number): void {
   const R = LANTERN.discR - 0.012, T = LANTERN.discT
   const cuts = [-R, -R / 3 + 0.03 * (hash(48, seed) - 0.5), R / 3 + 0.03 * (hash(49, seed) - 0.5), R]
   for (const side of [-1, 1]) {
     const x = xd + (side * T) / 2
     for (let i = 0; i < 3; i++) {
-      const z0 = cuts[i]! + (i > 0 ? 0.0015 : 0), z1 = cuts[i + 1]! - (i < 2 ? 0.0015 : 0)
+      const z0 = cuts[i]!, z1 = cuts[i + 1]!
       const pts: V3[] = []
       const n = 14
       // up one chord, round the arc, down the other: a convex segment of the circle
@@ -576,6 +579,82 @@ function discFaces(k: Kit, xd: number, seed: number): void {
       }
       const clean = pts.filter((p, j) => j === 0 || len(sub(p, pts[j - 1]!)) > 1e-5)
       k.polygon(clean, Y, { tone: tone(42, seed, i) * (0.92 + 0.16 * hash(65, seed, side, i)), mark: 2 }, v(xd, 0, (z0 + z1) / 2))
+    }
+  }
+}
+
+/** A rod shaved from riven stock: `facets` flat faces of their own widths round its axis, each face's corners on the
+ * circle of radius `r` (so it is never fuller than the round rod it stands for) and every corner eased by a narrow
+ * face; rows along it so wear and grime grade; flat end grain, the far end chamfered by `tip`. */
+function shaved(k: Kit, a: V3, b: V3, r: number, facets: number, f: Finish, seed: number[], rows: number, tip = 0, wearAt?: (u: number) => number, grimeAt?: (u: number) => number): void {
+  const d = sub(b, a), l = len(d), w = norm(d)
+  const helper: V3 = Math.abs(w[1]) < 0.9 ? [0, 1, 0] : [1, 0, 0]
+  const e1 = norm(cross(helper, w)), e2 = cross(w, e1)
+  // the corners' angles: each facet its own width, the set turned by its own amount
+  const widths = Array.from({ length: facets }, (_, i) => 0.7 + 0.6 * hash(84, ...seed, i))
+  const total = widths.reduce((s, x) => s + x, 0), turn = TAU * hash(85, ...seed)
+  const corners: number[] = []
+  let acc = 0
+  for (const x of widths) { corners.push(turn + (acc / total) * TAU); acc += x }
+  const ease = 0.16
+  const angles = corners.flatMap(c => [c - ease / 2, c + ease / 2])
+  const ring = (s: number, rr: number): V3[] => angles.map(t => add(add(a, mul(w, s)), add(mul(e1, Math.cos(t) * rr), mul(e2, Math.sin(t) * rr))))
+  const faceNormal = (i: number): V3 => { const m = (angles[i]! + (angles[(i + 1) % angles.length]! + (i + 1 === angles.length ? TAU : 0))) / 2; return add(mul(e1, Math.cos(m)), mul(e2, Math.sin(m))) }
+  const finishAt = (s: number): Finish => {
+    let g: Finish = wearAt ? { ...f, wear: Math.max(f.wear ?? 0, wearAt(s / l)) } : f
+    if (grimeAt) g = { ...g, seed: f.seed ?? f.tone, tone: f.tone * grimeAt(s / l) }
+    return g
+  }
+  const body = l - tip
+  const ss = Array.from({ length: rows + 1 }, (_, j) => (body * j) / rows)
+  const n = angles.length
+  const arc = (i: number): number => angles[i]! * r
+  for (let j = 0; j < rows; j++) {
+    const s0 = ss[j]!, s1 = ss[j + 1]!, p0 = ring(s0, r), p1 = ring(s1, r), f0 = finishAt(s0), f1 = finishAt(s1)
+    for (let i = 0; i < n; i++) {
+      const q = (i + 1) % n, nn = faceNormal(i), v1 = arc(i), v2 = q === 0 ? (angles[0]! + TAU) * r : arc(q)
+      k.smoothQuad([p0[i]!, p0[q]!, p1[q]!, p1[i]!], [nn, nn, nn, nn], [[s0, v1], [s0, v2], [s1, v2], [s1, v1]], f, 0, [f0, f0, f1, f1])
+    }
+  }
+  const inside = add(a, mul(w, l / 2))
+  k.polygon(ring(0, r), w, finishAt(0), inside)
+  if (tip > 0) {
+    const pa = ring(body, r), pb = ring(l, r - tip), fa = finishAt(body), fb = finishAt(l)
+    for (let i = 0; i < n; i++) {
+      const q = (i + 1) % n, nn = norm(add(faceNormal(i), w))
+      k.smoothQuad([pa[i]!, pa[q]!, pb[q]!, pb[i]!], [nn, nn, nn, nn], [[body, arc(i)], [body, arc(i) + 0.01], [l, arc(i) + 0.01], [l, arc(i)]], f, 0, [fa, fa, fb, fb])
+    }
+    k.polygon(pb, w, fb, inside)
+  } else k.polygon(ring(l, r), w, finishAt(l), inside)
+}
+
+/** An iron band forged round a turned piece: drawn out under the hammer, so its face wanders a little in and its
+ * edges a little in from true, its tone goes in patches where the hammer and the fire left it, and its two ends lap
+ * where the smith welded it. Never fuller than the true band from `r0` to `r1` and `s0` to `s1` along `axis`. */
+function forgedBand(k: Kit, origin: V3, axis: V3, r0: number, r1: number, width: number, segments: number, seed: number[]): void {
+  const w = norm(axis)
+  const helper: V3 = Math.abs(w[1]) < 0.9 ? [0, 1, 0] : [1, 0, 0]
+  const e1 = norm(cross(helper, w)), e2 = cross(w, e1)
+  const ph = [0, 1, 2, 3, 4, 5].map(i => TAU * hash(86, ...seed, i))
+  const wave = (t: number, o: number): number => 0.5 + 0.25 * Math.sin(3 * t + ph[o]!) + 0.15 * Math.sin(7 * t + ph[o + 1]!) + 0.1 * Math.sin(13 * t + ph[o + 2]!)
+  const lap = TAU * hash(87, ...seed), lapLen = 0.22
+  const inLap = (t: number): boolean => { let u = t - lap; u -= Math.floor(u / TAU) * TAU; return u < lapLen }
+  // the face 0.4 to 1.2 mm in, but where the lapped end lies over the band; the edges 0 to 1.2 mm in
+  const rOut = (t: number): number => (inLap(t) ? r1 : r1 - 0.0004 - 0.0008 * wave(t, 0))
+  const sA = (t: number): number => 0.0012 * wave(t, 1), sB = (t: number): number => width - 0.0012 * wave(t, 3)
+  const tone = (t: number): number => 0.8 + 0.34 * hash(88, ...seed, Math.floor((t / TAU) * 11)) * 0.6 + 0.2 * wave(t, 2)
+  const at = (t: number, r: number, s: number): V3 => add(origin, add(mul(w, s), add(mul(e1, Math.cos(t) * r), mul(e2, Math.sin(t) * r))))
+  const radial = (t: number): V3 => add(mul(e1, Math.cos(t)), mul(e2, Math.sin(t)))
+  // two samples a hair apart where the lapped end stops, so its edge is a step, not a ramp
+  const end = (((lap + lapLen) % TAU) + TAU) % TAU
+  const ts = [...Array.from({ length: segments + 1 }, (_, i) => (i / segments) * TAU), end - 1e-4, end + 1e-4].filter(t => t >= 0 && t <= TAU).sort((p, q) => p - q)
+  for (let i = 0; i + 1 < ts.length; i++) {
+    const ta = ts[i]!, tb = ts[i + 1]!, fa = { tone: tone(ta) }, fb = { tone: tone(tb) }
+    const ua = (ta * (r0 + r1)) / 2, ub = (tb * (r0 + r1)) / 2
+    k.smoothQuad([at(ta, rOut(ta), sA(ta)), at(tb, rOut(tb), sA(tb)), at(tb, rOut(tb), sB(tb)), at(ta, rOut(ta), sB(ta))], [radial(ta), radial(tb), radial(tb), radial(ta)], [[ua, 0], [ub, 0], [ub, width], [ua, width]], fa, 0, [fa, fb, fb, fa])
+    for (const [s, sign] of [[sA, -1], [sB, 1]] as const) {
+      const n = mul(w, sign)
+      k.smoothQuad([at(ta, r0, s(ta)), at(tb, r0, s(tb)), at(tb, rOut(tb), s(tb)), at(ta, rOut(ta), s(ta))], [n, n, n, n], [[ua, 0], [ub, 0], [ub, r1 - r0], [ua, r1 - r0]], fa, 0, [fa, fb, fb, fa])
     }
   }
 }
@@ -645,8 +724,15 @@ export function shaft(sz: number): Body {
   const b = body()
   const seed = sz
   const half = SHAFT.half
-  // the shaft runs whole through the crank frame's feet: the frame's lower rail
-  b.rough.lathe(v(-SHAFT.end, 0, 0), X, [[0, half], [2 * SHAFT.end, half]], 16, { tone: tone(40, seed) }, true)
+  // the shaft runs whole through the crank frame's feet: the frame's lower rail, hewn eight-square from one oak and
+  // turned round only where it runs in the fork posts' iron caps
+  const journal = POSTS.w / 2 + 0.03
+  const cuts = [-SHAFT.end, -POSTS.x - journal, -POSTS.x + journal, POSTS.x - journal, POSTS.x + journal, SHAFT.end]
+  for (let i = 0; i + 1 < cuts.length; i++) {
+    const x0 = cuts[i]!, x1 = cuts[i + 1]!, f = { tone: tone(40, seed) }
+    if (i % 2 === 1) b.rough.lathe(v(x0, 0, 0), X, [[0, half - 0.004], [0.004, half], [x1 - x0 - 0.004, half], [x1 - x0, half - 0.004]], 16, { ...f, wear: 0.5 }, false)
+    else shaved(b.rough, v(x0, 0, 0), v(x1, 0, 0), half, 8, f, [41, seed, i], 3)
+  }
   for (const sx of [-1, 1]) {
     const x0 = sx * CRANK.cheekX
     // the crank's heavy cheek, from below the axis to past the grip
@@ -659,12 +745,15 @@ export function shaft(sz: number): Body {
       const xd = xl + e * LANTERN.half
       b.fine.lathe(v(xd - LANTERN.discT / 2, 0, 0), X, [[0, LANTERN.discR - 0.012], [0.01, LANTERN.discR], [LANTERN.discT - 0.01, LANTERN.discR], [LANTERN.discT, LANTERN.discR - 0.012]], 36, { tone: tone(42, seed, sx, e) }, false)
       discFaces(b.fine, xd, seed * 10 + sx * 3 + e)
-      b.iron.lathe(v(xd - 0.016, 0, 0), X, [[0, LANTERN.discR - 0.002], [0, LANTERN.discR + 0.004], [0.032, LANTERN.discR + 0.004], [0.032, LANTERN.discR - 0.002]], 36, { tone: 1 }, false)
-      // the band's nails, eight round it, none quite where the last smith would have put it
+      forgedBand(b.iron, v(xd - 0.016, 0, 0), X, LANTERN.discR - 0.002, LANTERN.discR + 0.004, 0.032, 48, [42, seed, sx, e])
+      // the band's nails, eight round it, none quite where the last smith would have put it, each headed by hand to
+      // its own size and height, some driven in crooked
       for (let j = 0; j < 8; j++) {
-        const g = ((j + 0.5 + 0.3 * (hash(45, seed, sx, e, j) - 0.5)) * TAU) / 8
+        const g = ((j + 0.5 + 0.55 * (hash(45, seed, sx, e, j) - 0.5)) * TAU) / 8
         const out: V3 = [0, Math.sin(g), Math.cos(g)]
-        b.iron.lathe(add(v(xd + 0.006 * (hash(46, seed, sx, e, j) - 0.5), 0, 0), mul(out, LANTERN.discR + 0.0035)), out, [[0, 0.0075], [0.0025, 0.007], [0.0045, 0.004], [0.0055, 0]], 8, { tone: 0.8 + 0.3 * hash(47, seed, sx, e, j) }, true)
+        const h = 0.0055 + 0.002 * hash(89, seed, sx, e, j), up = 0.0035 + 0.002 * hash(90, seed, sx, e, j)
+        const lean = norm(add(out, v(0.25 * (hash(91, seed, sx, e, j) - 0.5), 0, 0)))
+        b.iron.lathe(add(v(xd + 0.008 * (hash(46, seed, sx, e, j) - 0.5), 0, 0), mul(out, LANTERN.discR + 0.0035)), lean, [[0, h], [0.0025, h * 0.93], [up - 0.001, h * 0.55], [up, 0]], 8, { tone: 0.7 + 0.45 * hash(47, seed, sx, e, j) }, true)
       }
     }
     // the staves run through the discs and stand a little proud of their outer faces, as through-tenons;

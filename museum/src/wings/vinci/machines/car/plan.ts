@@ -7,7 +7,8 @@
  * THE DRIVE AS DRAWN. Each side's shaft carries a lantern at each end, and
  * each lantern meets its wheel's pegs on the side of the ring facing the
  * car's middle. One crank turn so drives the front and rear wheels of a side
- * in opposite senses: the car binds, and the motion shows it.
+ * in opposite senses: the car cannot roll, and the motion shows the two
+ * wheels of a side turning against each other.
  *
  * THE CLOSED FORM. The sheet's shell is low and broad (about 1.8 to 1 in its
  * own view): a short skirt under the eave, a cone of boards, and a low ribbed
@@ -41,12 +42,14 @@ export function wallRadius(y: number): number {
 
 /** A gun at every port. The ports leave out the four arcs where a wheel, its
  * pegs or its axle cheek stand inside the wall, so no barrel or stock meets
- * the drive. The count (24) is ours; the sheet shows ports and muzzles all
- * along the skirt and gives no number. Degrees from +X toward +Z. */
+ * the drive. The count (20) is ours; the sheet shows ports and muzzles all
+ * along the skirt and gives no number. Along the sides one every 10 degrees;
+ * at the front and the rear one every 20, since seen across a side those
+ * barrels stack up at the skirt's ends. Degrees from +X toward +Z. */
 export const PORT_ANGLES_DEG = [
-  -20, -10, 0, 10, 20,
+  -20, 0, 20,
   60, 70, 80, 90, 100, 110, 120,
-  160, 170, 180, 190, 200,
+  160, 180, 200,
   240, 250, 260, 270, 280, 290, 300,
 ] as const
 /** A bronze piece of the 1480s as a type: a short barrel with its rings and a muzzle swell. */
@@ -97,8 +100,7 @@ export const WHEEL = {
  * so its end grain on the outer face reads as the sheet's ring of dots (the standing part is lifted back by its grime). */
 export const PEGS = { count: 24, pitch: 0.52, r: 0.0225, stand: 0.11, proud: 0.004, endTone: 0.8 } as const
 /** One spoke of each wheel is marked. At rest it points up and in, toward the car's middle (54 degrees on a rear
- * wheel, 126 on a front one), so a side's two markers are mirror images, and at every quarter of the cycle they stay
- * on the wheel's upper, outer part, clear of the lantern drum and the floor. */
+ * wheel, 126 on a front one), so a side's two markers are mirror images as the wheels turn against each other. */
 export const SPOKES = { zero: Math.PI / 10, rear: 1, front: 3 } as const
 /** Ten staves on the pegs' own spacing: one crank turn is ten twenty-fourths of a wheel turn. The drum runs from
  * the hub's side to the fork post, as long as the space between them allows. */
@@ -130,17 +132,30 @@ export const SHAFTS = [
   { id: 'shaft-near', sz: 1 },
 ] as const
 
-export const PERIOD = 12
+/** How the drive is shown. Built as drawn and standing on its wheels, the crank jams, or at best the two wheels of a
+ * side scrub and skid against each other (the blind read of the sheet). 'scrub' turns the cranks steadily and the
+ * wheels steadily against each other; 'jam' is the schedule that turns once into the jam and back. Never a roll. */
+export type DriveReading = 'scrub' | 'jam'
+export const DRIVE_READING = 'scrub' as DriveReading
+/** The scrub: a third of a crank turn a second. A wheel turns 10/24 of a crank turn and shows its turn by one marked
+ * spoke, so the loop closes only on whole turns of both: twelve crank turns, five wheel turns. */
+export const SCRUB = { turns: 12, period: 36 } as const
+export const periodOf = (reading: DriveReading): number => (reading === 'scrub' ? SCRUB.period : 12)
+export const PERIOD = periodOf(DRIVE_READING)
 const smoother = (u: number): number => { const x = Math.min(1, Math.max(0, u)); return x * x * x * (x * (x * 6 - 15) + 10) }
 const step = (a: number, b: number, x: number): number => { const u = Math.min(1, Math.max(0, (x - a) / (b - a))); return u * u * (3 - 2 * u) }
-/** The schedule: stand, one turn forward that jams dead, two shoves against the jam, back, stand. */
-export const PHASES = [
+export const SCRUB_PHASES = [
+  { name: 'The crew turns the cranks steadily: the front and rear wheels of each side turn against each other and scrub, and the car stands', start: 0, end: SCRUB.period },
+] as const
+/** The jam's schedule: stand, one turn forward that jams dead, two shoves against the jam, back, stand. */
+export const JAM_PHASES = [
   { name: 'The crew stands at the cranks', start: 0, end: 1 },
   { name: 'One turn forward: the front and rear wheels turn against each other', start: 1, end: 5.4 },
   { name: 'The bind: the drive stops dead, the crew shoves twice and it will not go', start: 5.4, end: 7.6 },
   { name: 'Turned back: the wheels fight the other way', start: 7.6, end: 11 },
   { name: 'At rest', start: 11, end: 12 },
 ] as const
+export const PHASES = DRIVE_READING === 'scrub' ? SCRUB_PHASES : JAM_PHASES
 
 /** One shove into the jam: the play taken up quickly, stopped dead, held, let go. Radians. */
 function shove(u: number, amount: number): number {
@@ -157,10 +172,9 @@ function bind(u: number): number {
   return recoil + strain + shove(u - 0.8, 0.11) + shove(u - 1.5, 0.08)
 }
 
-/** The far crank's angle about +X, radians, at any time (a 12 s loop). The forward turn eases in and arrives at
- * the jam still moving, so the stop reads as the drive's, not the crew's. */
-export function crankAngle(time: number): number {
-  const t = ((time % PERIOD) + PERIOD) % PERIOD
+/** The jam's crank angle in its 12 s loop. The forward turn eases in and arrives at the jam still moving, so the stop
+ * reads as the drive's, not the crew's. */
+function jamAngle(t: number): number {
   if (t < 1) return 0
   if (t < 5.4) { const u = (t - 1) / 4.4; return TAU * u * u * (2 - u) }
   if (t < 7.6) return TAU + bind(t - 5.4)
@@ -168,10 +182,17 @@ export function crankAngle(time: number): number {
   return 0
 }
 
+/** The far crank's angle about +X, radians, at any time of its reading's loop. */
+export function crankAngle(time: number, reading: DriveReading = DRIVE_READING): number {
+  const period = periodOf(reading)
+  const t = ((time % period) + period) % period
+  return reading === 'scrub' ? (TAU * SCRUB.turns * t) / period : jamAngle(t)
+}
+
 /** Every joint: the near crank is turned as the far one's mirror, so both
  * front wheels turn together and both rear wheels together, against them. */
-export function carJoints(time: number): Record<string, number> {
-  const phi = crankAngle(time)
+export function carJoints(time: number, reading: DriveReading = DRIVE_READING): Record<string, number> {
+  const phi = crankAngle(time, reading)
   const ratio = LANTERN.pitch / PEGS.pitch
   return {
     'shaft-far': phi,
