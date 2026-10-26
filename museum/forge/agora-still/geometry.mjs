@@ -178,6 +178,30 @@ export function housesClash(a, b) {
   return shareY > 0 && gx < HOUSE_GAP.x
 }
 
+/** the phone's house plates: the page's tap area of a house is its figure's
+    box grown by pad; two plates keep margin between them (css px of the tall) */
+export const HOUSE_PLATE = { pad: 14, margin: 28 }
+export const PLATE_GAP = 2 * HOUSE_PLATE.pad + HOUSE_PLATE.margin
+
+/** the phone's names are tap targets: each hit box (the name box grown to 44
+    css px, centred on it) keeps hit.gap from every other, and a name never
+    stands in another star's column (its x within the box, its y within reach
+    of the box: over or under a star a name reads as that star's) */
+export const PHONE = { hit: { size: 44, gap: 4 }, column: { margin: 4, reach: 48, reachSide: 24 } }
+export function hitBox(b, size = PHONE.hit.size) {
+  const cx = (b.x0 + b.x1) / 2
+  const cy = (b.y0 + b.y1) / 2
+  const hw = Math.max(b.x1 - b.x0, size) / 2
+  const hh = Math.max(b.y1 - b.y0, size) / 2
+  return { x0: cx - hw, y0: cy - hh, x1: cx + hw, y1: cy + hh }
+}
+export const hitsClash = (a, b, hit = PHONE.hit) => overlaps(hitBox(a, hit.size), hitBox(b, hit.size), hit.gap)
+/** does a name box of the given side stand in the column of a star at (x, y) */
+export function inColumn(b, side, x, y, column = PHONE.column) {
+  const reach = side === 'above' || side === 'below' ? column.reach : column.reachSide
+  return x > b.x0 - column.margin && x < b.x1 + column.margin && y > b.y0 - reach && y < b.y1 + reach
+}
+
 /**
  * The name side of every star: no box over another star or another name, none
  * within LINE_CLEAR of a drawn hairline, none on the fire or the court, all
@@ -186,6 +210,7 @@ export function housesClash(a, b) {
  *   stars: [{ x, y, group, outward: [dx, dy] }], lines: [[i, j]] in star indices
  *   keep(box) -> true when the box stands in the open sky
  *   opts.segs: every drawn hairline in the frame, this house's and the others'
+ *   opts.hit, opts.column: the phone's tap rules (PHONE)
  */
 export function solveSides(stars, lines, keep, opts = {}) {
   const budget = opts.steps ?? 200000
@@ -213,6 +238,10 @@ export function solveSides(stars, lines, keep, opts = {}) {
       }
       // houses in the frame whose names are not asked for still keep their room
       for (const o of opts.others ?? []) if (o.x > b.x0 - groupPad && o.x < b.x1 + groupPad && o.y > b.y0 - groupPad && o.y < b.y1 + groupPad) bad = true
+      if (opts.column && !bad) {
+        for (let j = 0; j < stars.length && !bad; j++) if (j !== i && inColumn(b, side, stars[j].x, stars[j].y, opts.column)) bad = true
+        for (const o of opts.others ?? []) if (!bad && inColumn(b, side, o.x, o.y, opts.column)) bad = true
+      }
       if (opts.segs) {
         // every drawn hairline, its own star's too, stays clear of the box
         for (const [ax, ay, cx, cy] of opts.segs) if (!bad && boxSegDist(b, ax, ay, cx, cy) < clear) bad = true
@@ -248,7 +277,9 @@ export function solveSides(stars, lines, keep, opts = {}) {
   })
   if (opts.explain) return cands.map((c, i) => `${stars[i].slug}:${c.map((x) => x.side[0] + x.align[0] + (x.gap === gaps[0] ? '' : x.gap)).join(',')}`)
   const clashes = (i, a, j, b) =>
-    stars[j].group === stars[i].group ? overlaps(a.b, b.b, 2) : opts.segs ? housesClash(a.b, b.b) : overlaps(a.b, b.b, boxPad)
+    stars[j].group === stars[i].group
+      ? overlaps(a.b, b.b, 2) || Boolean(opts.hit && hitsClash(a.b, b.b, opts.hit))
+      : opts.segs ? housesClash(a.b, b.b) : overlaps(a.b, b.b, boxPad)
   if (cands.some((c) => c.length === 0)) return opts.count ? { open: cands.filter((c) => c.length === 0).length } : null
   // stars whose boxes can never meet are searched apart: two independent
   // parts of the sky would otherwise multiply each other's dead ends

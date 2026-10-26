@@ -7,7 +7,7 @@
 //   node --experimental-strip-types forge/agora-still/plan.mjs [wide|tall] [seed]
 // prints a layout block for layout.json.
 import { CONSTELLATIONS } from '../../src/content/constellations.ts'
-import { drawnSegments, fireBox, inside, lens, namePenalty, overlaps, overPlume, safeArea, skyFloor, solveSides } from './geometry.mjs'
+import { drawnSegments, fireBox, inside, lens, namePenalty, overlaps, overPlume, PLATE_GAP, safeArea, skyFloor, solveSides } from './geometry.mjs'
 import { writeFileSync } from 'node:fs'
 import LAYOUT from './layout.json' with { type: 'json' }
 
@@ -100,7 +100,7 @@ function penalty(centres, k) {
         const gx = Math.max(B.x0 - A.x1, A.x0 - B.x1)
         const gy = Math.max(B.y0 - A.y1, A.y0 - B.y1)
         const gap = Math.max(gx, gy)
-        p += Math.max(0, 56 - gap)
+        p += Math.max(0, PLATE_GAP - gap)
       }
   }
   // the order around the fire

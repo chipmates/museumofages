@@ -4,7 +4,7 @@
 // the contrast under it, and (tall) the zoom that parts a group's stars.
 import { join } from 'node:path'
 import sharp from 'sharp'
-import { boxSegDist, drawnSegments, housesClash, inside, nameBox, overlaps, overPlume, safeArea, skyFloor, solveSides, LINE_CLEAR, NAME_BOX, SIDES } from './geometry.mjs'
+import { boxSegDist, drawnSegments, hitBox, housesClash, inColumn, inside, nameBox, overlaps, overPlume, safeArea, skyFloor, solveSides, HOUSE_PLATE, LINE_CLEAR, NAME_BOX, PHONE, SIDES } from './geometry.mjs'
 const nameBoxFor = (p, k) => nameBox(p.x, p.y, SIDES[k])
 /** the hairline's inset from its star, as atlas.ts figureGeometry draws it,
     from the star's disc in patch units */
@@ -225,7 +225,7 @@ function seatNames(stars, groups, frame, shape, fireBox, raw, info, s, cssBox, a
       const j = order.indexOf(c.stars[b])
       if (i >= 0 && j >= 0) lines.push([i, j])
     }
-  const near = { others: others.map((st) => ({ x: st.css[0], y: st.css[1] })), segs }
+  const near = { others: others.map((st) => ({ x: st.css[0], y: st.css[1] })), segs, ...(shape === 'tall' ? { hit: PHONE.hit, column: PHONE.column } : {}) }
   const seated = solveSides(pts, lines, keep, near)
   if (!seated && process.env.SEAT_EXPLAIN) {
     const why = (b) => {
@@ -477,6 +477,7 @@ export async function buildStars({ page, name, frame, shot, master, out, samples
   const extra = {
     props: props.map((p) => ({ name: p.name, box: [r2(p.x0), r2(p.y0), r2(p.x1), r2(p.y1)], state: cutState(p, info.width, info.height) })),
     ...(seats ? nameChecks(seats, stars) : {}),
+    ...(shape === 'tall' ? { plates: plateChecks(groups, stars, s) } : {}),
     zooms: (data.zooms ?? []).map((z) => z.extra),
   }
   Object.defineProperty(data, 'extra', { value: extra, enumerable: false })
@@ -493,17 +494,62 @@ function cutState(b, W, H) {
 /** the seated names against the rules: the nearest hairline to any box, the
     boxes that stepped away from their star, pixels over the C8 line, and any
     two houses' names that line up */
-function nameChecks(seats, stars) {
+function nameChecks(seats, stars, others = null) {
   let clashes = 0
   for (let i = 0; i < seats.length; i++)
     for (let j = i + 1; j < seats.length; j++) if (stars[i].group !== stars[j].group && housesClash(seats[i].box, seats[j].box)) clashes++
-  return {
+  const out = {
     nearestHairlineCss: r2(Math.min(...seats.clear)),
     lineClearRule: LINE_CLEAR,
     steppedAway: seats.filter((x) => x.gap > NAME_BOX.gap).length,
     boxesWithBrightPixels: seats.filter((x) => x.under.starPx > 0).length,
     hairlinePxUnderNames: Math.max(...seats.map((x) => x.under.hairlinePx)),
     houseLineUps: clashes,
+  }
+  if (!others) return out
+  // the phone's tap rules, read back from the seats
+  let gap = Infinity
+  let pair = null
+  for (let i = 0; i < seats.length; i++)
+    for (let j = i + 1; j < seats.length; j++) {
+      const a = hitBox(seats[i].box)
+      const b = hitBox(seats[j].box)
+      const g = Math.max(b.x0 - a.x1, a.x0 - b.x1, b.y0 - a.y1, a.y0 - b.y1)
+      if (g < gap) [gap, pair] = [g, [stars[i].slug, stars[j].slug]]
+    }
+  const crossings = []
+  seats.forEach((x, i) => {
+    for (const o of [...stars, ...others]) if (o !== stars[i] && inColumn(x.box, x.side, o.css[0], o.css[1])) crossings.push(`${stars[i].slug} over ${o.slug}`)
+  })
+  return { ...out, hitGapCss: { min: r2(gap), between: pair, rule: PHONE.hit }, columnCrossings: crossings, columnRule: PHONE.column }
+}
+
+/** the phone overview's house plates (each figure's box grown by the pad):
+    the narrowest gap between two plates, and between a plate and another
+    house's star (css px of the tall) */
+function plateChecks(groups, stars, s) {
+  const { pad, margin } = HOUSE_PLATE
+  const plate = (g) => ({ x0: g.box.px[0] / s - pad, y0: g.box.px[1] / s - pad, x1: g.box.px[2] / s + pad, y1: g.box.px[3] / s + pad })
+  const sep = (a, b) => Math.max(b.x0 - a.x1, a.x0 - b.x1, b.y0 - a.y1, a.y0 - b.y1)
+  let plates = { min: Infinity }
+  let toStar = { min: Infinity }
+  for (const a of groups) {
+    const A = plate(a)
+    for (const b of groups) {
+      if (b === a) continue
+      const g = sep(A, plate(b))
+      if (a.key < b.key && g < plates.min) plates = { min: g, between: [a.key, b.key] }
+      for (const st of stars.filter((x) => x.group === b.key)) {
+        const d = sep(A, { x0: st.css[0], y0: st.css[1], x1: st.css[0], y1: st.css[1] })
+        if (d < toStar.min) toStar = { min: d, plate: a.key, star: st.slug }
+      }
+    }
+  }
+  return {
+    rule: HOUSE_PLATE,
+    plateGapCss: { ...plates, min: r2(plates.min) },
+    plateToOtherStarCss: { ...toStar, min: r2(toStar.min) },
+    pass: plates.min >= margin && toStar.min >= margin,
   }
 }
 
@@ -569,7 +615,7 @@ async function zoomFrames({ page, groups, frame, info, out, shootZoom, tallStars
     const [px1, py1] = css(plume.x1, plume.y1)
     const keep = (b) => inside(b, inner) && !(b.x0 < px1 + 12 && px0 - 12 < b.x1 && b.y0 < py1 && py0 - 12 < b.y1) && 0
     const others = all.filter((st) => st.group !== key)
-    return Boolean(solveSides(pts, lines, (b) => (keep(b) === false ? false : 0), { others, segs }))
+    return Boolean(solveSides(pts, lines, (b) => (keep(b) === false ? false : 0), { others, segs, hit: PHONE.hit, column: PHONE.column }))
   }
   const res = []
   for (const g of groups) {
@@ -653,7 +699,7 @@ async function zoomFrames({ page, groups, frame, info, out, shootZoom, tallStars
       starsCutByAnEdge: cutStars,
       footOverFire: { maxLum: +foot.toFixed(3), widestRunOver025: footWide },
       props: propsZ.map((p) => ({ name: p.name, state: cutState(p, W, H) })),
-      ...(seats ? nameChecks(seats, own) : {}),
+      ...(seats ? nameChecks(seats, own, proj.stars.filter((st) => st.group !== g.key)) : {}),
     }
     res.push({
       group: g.key,
