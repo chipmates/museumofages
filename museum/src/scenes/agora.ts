@@ -263,6 +263,9 @@ export interface AgoraRig {
   /** false when the page opens on another address: the library's sets are
       asked for with the room and their bytes wait for `fetchSets` */
   eager?: boolean
+  /** a still picture's own light on the colonnade, as a factor on the fire's
+      share; the live lobby never passes it */
+  still?: { columnFire?: number }
 }
 
 /** the library's sets the court, the bowl and the colonnade are dressed in */
@@ -303,6 +306,7 @@ export function createAgora(scene: Scene, rig: AgoraRig) {
   const library = (name: (typeof LIBRARY)[number]): MaterialSet | string =>
     rig.eager === false && rig.stack.materials.defer ? rig.stack.materials.defer(name) : name
 
+  const COLUMN_FIRE = rig.still?.columnFire ?? 1
   const narrow = window.innerWidth < 760
   const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches
   /** counts scale with the frame: a phone is a narrow slot, not a small desktop */
@@ -1189,7 +1193,7 @@ export function createAgora(scene: Scene, rig: AgoraRig) {
     // so they keep two thirds of what the shaft gets.
     const foot = float(0.6).add(smoothstep(0.1, 0.85, hLocal).mul(0.4))
     const glow = firelight(world, 7.0, 2.0).mul(facing(world, nF, 2.2)).mul(oneMinus(lift.mul(0.73)).add(0.055))
-    colr = colr.add(alb.mul(c3(FIRE_LIT)).mul(glow).mul(0.66).mul(hollow).mul(foot))
+    colr = colr.add(alb.mul(c3(FIRE_LIT)).mul(glow).mul(0.66 * COLUMN_FIRE).mul(hollow).mul(foot))
     // Quiet drum beds and quarry grain catch the low light as stone.
     const bed = abs(fract(hLocal.sub(0.32).div(0.59)).sub(0.5))
     const joint = oneMinus(smoothstep(0.008, 0.025, bed)).mul(shaftMask)
@@ -1213,7 +1217,7 @@ export function createAgora(scene: Scene, rig: AgoraRig) {
     shaftMat.colorNode = shoulder(haze(colr, dCam, 9, 32)).add(dith(0.0022)).mul(uR)
   }
 
-  const dressMat = dressedStone({ albedo: DRESS_ALB, rim: 0.28, facePow: 1.5, baseK: 0.42, ambK: 0.014, near: true })
+  const dressMat = dressedStone({ albedo: DRESS_ALB, rim: 0.28 * COLUMN_FIRE, facePow: 1.5, baseK: 0.42, ambK: 0.014, near: true })
 
   const MID_ANGLES = [-71, -53, -37, -24.5, -14, 14, 24.5, 37, 53, 71]
   const STOA_ANGLES: number[] = []
