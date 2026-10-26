@@ -13,7 +13,7 @@
 
    `?figures=off` leaves every room figure out: the switch's second version. */
 
-import { CircleGeometry, Group, Mesh, MeshBasicNodeMaterial, type Material } from 'three/webgpu'
+import { CircleGeometry, CustomBlending, Group, Mesh, MeshBasicNodeMaterial, OneFactor, OneMinusSrcAlphaFactor, SrcAlphaFactor, ZeroFactor, type Material } from 'three/webgpu'
 import { float, length, max, positionGeometry, smoothstep, vec2, vec3 } from 'three/tsl'
 import { loadMeasureGeometry, measure, measureMaterial } from '../../measure'
 import { assetAddress } from '../../stack/materials'
@@ -41,14 +41,18 @@ export interface RoomFigure {
    * times 0.8, plus 0.2), taken at its place and facing. Every street surface carries its occlusion; a body without
    * one is lit as an open field */
   sky?: number
-  /** the leaf litter's height where the figure stands, metres (`leaf-litter.ts` lays its leaves up to about 2.5 cm
-   * over the ground): the contact lies over it, so the leaves under the soles darken with the ground */
+  /** where the figure stands in leaf litter, the contact's lift, metres: over the litter's lower layers
+   * (`leaf-litter.ts` lays them 3 to 13 mm over the ground, 12 mm more on grass), so the leaves round the soles
+   * darken with the ground */
   litter?: number
+  /** the contact's strength as a multiple of the shared one: in open shade every light the ground takes is the sky's,
+   * and the body hides a larger share of it near the soles than in a room lit by a key */
+  contact?: number
 }
 
 export const VINCI_ROOM_FIGURES: readonly RoomFigure[] = [
-  { room: 'house', stop: 'stop:arrival', framing: 'wide', shape: 'clip', at: [15.35, 1, 12.7], yaw: 1.2286, tone: 0.45, sky: 0.731, litter: 0.025 },
-  { room: 'house', stop: 'stop:arrival', framing: 'upright', shape: 'clip', at: [16.5, 1, 14.25], yaw: 1.2827, tone: 0.45, sky: 0.844, litter: 0.025 },
+  { room: 'house', stop: 'stop:arrival', framing: 'wide', shape: 'clip', at: [15.35, 1, 12.7], yaw: 1.2286, tone: 0.45, sky: 0.731, litter: 0.025, contact: 1.5 },
+  { room: 'house', stop: 'stop:arrival', framing: 'upright', shape: 'clip', at: [16.5, 1, 14.25], yaw: 1.2827, tone: 0.45, sky: 0.844, litter: 0.025, contact: 1.5 },
   { room: 'grave-court', stop: 'stop:grave', framing: 'wide', shape: 'clip', at: [-55.25, -6.42, 29.75], yaw: 1.6366, tone: 0.45 },
   { room: 'mechanism-hall', stop: 'stop:flight', framing: 'wide', shape: 'fade', at: [-55.25, -6.3, 48.5], yaw: 1.4565, tone: 0.36 },
   { room: 'mechanism-hall', stop: 'stop:flight', framing: 'upright', shape: 'fade', at: [-55.25, -6.3, 48.5], yaw: 1.4565, tone: 0.36 },
@@ -106,13 +110,17 @@ export function createRoomFigures(light: (room: FigureRoom, body: Mesh) => void,
       // a ray picks the work behind it, never the marker
       body.raycast = () => {}
       // THE CONTACT: the soles' own darkening of the floor, an engine term like the rooms' bounce
-      const shade = new MeshBasicNodeMaterial({ transparent: true, depthWrite: false, fog: false })
+      // drawn among the opaque surfaces, after the ground and before the body (`renderOrder`), so the body covers it
+      // where the disc lies in front of the soles' lowest centimetres; it keeps the target's alpha
+      const shade = new MeshBasicNodeMaterial({ transparent: false, depthWrite: false, fog: false, blending: CustomBlending,
+        blendSrc: SrcAlphaFactor, blendDst: OneMinusSrcAlphaFactor, blendSrcAlpha: ZeroFactor, blendDstAlpha: OneFactor })
       const r = length(positionGeometry.xz), S = CONTACT.sole
       // the disc's own metres in the body's frame (across, forward of the soles' middle)
       const at = positionGeometry.xz.mul(vec2(CONTACT.across, CONTACT.along)).add(vec2(0, CONTACT.forward))
       const sole = (side: number) => float(1).sub(smoothstep(S.rim[0], S.rim[1], length(at.sub(vec2(side, S.toe)).div(vec2(S.half[0], S.half[1]))))).mul(S.depth)
       shade.colorNode = vec3(0, 0, 0)
       shade.opacityNode = max(float(1).sub(smoothstep(0, 1, r)).pow(CONTACT.fall).mul(CONTACT.pool), max(sole(S.side), sole(-S.side)))
+        .mul(figure.contact ?? 1).min(1)
       shade.polygonOffset = true
       shade.polygonOffsetFactor = -2
       shade.polygonOffsetUnits = -4
@@ -122,7 +130,8 @@ export function createRoomFigures(light: (room: FigureRoom, body: Mesh) => void,
       foot.name = `vinci/room-figures/${figure.room}/${figure.framing}/contact`
       foot.position.set(0, figure.litter ?? CONTACT.lift, CONTACT.forward)
       foot.scale.set(CONTACT.across, 1, CONTACT.along)
-      foot.renderOrder = 2
+      foot.renderOrder = 1
+      body.renderOrder = 2
       foot.raycast = () => {}
       foot.userData['manifestId'] = 'shared/measure'
       const root = new Group()
