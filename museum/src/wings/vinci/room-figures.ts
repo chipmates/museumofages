@@ -14,7 +14,7 @@
    `?figures=off` leaves every room figure out: the switch's second version. */
 
 import { CircleGeometry, CustomBlending, Group, Mesh, MeshBasicNodeMaterial, OneFactor, OneMinusSrcAlphaFactor, SrcAlphaFactor, ZeroFactor, type Material } from 'three/webgpu'
-import { float, length, max, positionGeometry, smoothstep, vec2, vec3 } from 'three/tsl'
+import { abs, float, length, max, min, positionGeometry, smoothstep, vec2, vec3 } from 'three/tsl'
 import { loadMeasureGeometry, measure, measureMaterial } from '../../measure'
 import { assetAddress } from '../../stack/materials'
 
@@ -53,7 +53,7 @@ export interface RoomFigure {
 export const VINCI_ROOM_FIGURES: readonly RoomFigure[] = [
   { room: 'house', stop: 'stop:arrival', framing: 'wide', shape: 'clip', at: [15.35, 1, 12.7], yaw: 1.2286, tone: 0.45, sky: 0.731, litter: 0.025, contact: 1.5 },
   { room: 'house', stop: 'stop:arrival', framing: 'upright', shape: 'clip', at: [16.5, 1, 14.25], yaw: 1.2827, tone: 0.45, sky: 0.844, litter: 0.025, contact: 1.5 },
-  { room: 'grave-court', stop: 'stop:grave', framing: 'wide', shape: 'clip', at: [-55.25, -6.42, 29.75], yaw: 1.6366, tone: 0.45 },
+  { room: 'grave-court', stop: 'stop:grave', framing: 'wide', shape: 'clip', at: [-55.25, -6.42, 29.75], yaw: 1.6366, tone: 0.45, contact: 1.4 },
   { room: 'mechanism-hall', stop: 'stop:flight', framing: 'wide', shape: 'fade', at: [-55.25, -6.3, 48.5], yaw: 1.4565, tone: 0.36 },
   { room: 'mechanism-hall', stop: 'stop:flight', framing: 'upright', shape: 'fade', at: [-55.25, -6.3, 48.5], yaw: 1.4565, tone: 0.36 },
   { room: 'picture-room', stop: 'stop:picture-room', framing: 'wide', shape: 'fade', at: [-35.625, -6.292, 37.6875], yaw: 1.5442, tone: 0.5 },
@@ -64,11 +64,13 @@ export const VINCI_ROOM_FIGURES: readonly RoomFigure[] = [
 export const roomFiguresShown = (): boolean => typeof location === 'undefined' || new URLSearchParams(location.search).get('figures') !== 'off'
 
 /** the contact shadow, drawn on a disc round the feet (half widths across and along, metres, centred `forward` of the
- * soles' middle) and lifted over the finished floor (never under its finish): a soft pool under the stance, and a
- * darker rim round each sole, whose footprint is centred `side` either way and `toe` forward with half widths `half`;
- * the rim fades between `rim` times that footprint. Each sole's own rim is what reads as a foot on the ground */
-const CONTACT = { across: 0.26, along: 0.26, forward: 0.06, lift: 0.006, pool: 0.4, fall: 1.5,
-  sole: { side: 0.11, toe: 0.06, half: [0.055, 0.15] as const, rim: [0.7, 1.5] as const, depth: 0.5 } }
+ * soles' middle) and lifted over the finished floor (never under its finish): a soft pool of `radius` metres under
+ * the stance, and round each sole a darkening that falls with the distance from its footprint (a rounded rectangle
+ * centred `side` either way and `toe` forward, half widths `half`), from `depth` at its edge to none `reach` metres
+ * out. Measured from the footprint in metres, it reaches past the feet's sides and toes as far at a grazing eye as at
+ * a high one, where a fall scaled to the disc printed only between the feet */
+const CONTACT = { across: 0.36, along: 0.4, forward: 0.06, lift: 0.006, pool: 0.4, radius: 0.26, fall: 1.5,
+  sole: { side: 0.11, toe: 0.07, half: [0.045, 0.115] as const, round: 0.035, depth: 0.5, reach: 0.12 } }
 
 export interface RoomFigures {
   group: Group
@@ -114,13 +116,18 @@ export function createRoomFigures(light: (room: FigureRoom, body: Mesh) => void,
       // where the disc lies in front of the soles' lowest centimetres; it keeps the target's alpha
       const shade = new MeshBasicNodeMaterial({ transparent: false, depthWrite: false, fog: false, blending: CustomBlending,
         blendSrc: SrcAlphaFactor, blendDst: OneMinusSrcAlphaFactor, blendSrcAlpha: ZeroFactor, blendDstAlpha: OneFactor })
-      const r = length(positionGeometry.xz), S = CONTACT.sole
+      const S = CONTACT.sole
       // the disc's own metres in the body's frame (across, forward of the soles' middle)
       const at = positionGeometry.xz.mul(vec2(CONTACT.across, CONTACT.along)).add(vec2(0, CONTACT.forward))
-      const sole = (side: number) => float(1).sub(smoothstep(S.rim[0], S.rim[1], length(at.sub(vec2(side, S.toe)).div(vec2(S.half[0], S.half[1]))))).mul(S.depth)
+      // each sole's footprint as a rounded rectangle's signed distance, metres
+      const out = (side: number) => {
+        const q = abs(at.sub(vec2(side, S.toe))).sub(vec2(S.half[0] - S.round, S.half[1] - S.round))
+        return length(max(q, vec2(0, 0))).add(min(max(q.x, q.y), 0)).sub(S.round)
+      }
+      const soles = float(1).sub(smoothstep(0, S.reach, min(out(S.side), out(-S.side)))).pow(2).mul(S.depth)
+      const pool = float(1).sub(smoothstep(0, 1, length(at.sub(vec2(0, CONTACT.forward))).div(CONTACT.radius))).pow(CONTACT.fall).mul(CONTACT.pool)
       shade.colorNode = vec3(0, 0, 0)
-      shade.opacityNode = max(float(1).sub(smoothstep(0, 1, r)).pow(CONTACT.fall).mul(CONTACT.pool), max(sole(S.side), sole(-S.side)))
-        .mul(figure.contact ?? 1).min(1)
+      shade.opacityNode = max(pool, soles).mul(figure.contact ?? 1).min(1)
       shade.polygonOffset = true
       shade.polygonOffsetFactor = -2
       shade.polygonOffsetUnits = -4
