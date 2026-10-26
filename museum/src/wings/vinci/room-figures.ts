@@ -36,11 +36,19 @@ export interface RoomFigure {
   /** the grey's lightness as a share of the measure's own, where the room behind the body prints the measure's own
    * value: it separates by value, never by a glow or an outline */
   tone?: number
+  /** outdoors: the share of the fill and the environment the body's front keeps, by the house walls' own law
+   * (`surface.ts`: the share of sky a face sees past the house's walls, as `house-weather.ts` bakes it, squared,
+   * times 0.8, plus 0.2), taken at its place and facing. Every street surface carries its occlusion; a body without
+   * one is lit as an open field */
+  sky?: number
+  /** the leaf litter's height where the figure stands, metres (`leaf-litter.ts` lays its leaves up to about 2.5 cm
+   * over the ground): the contact lies over it, so the leaves under the soles darken with the ground */
+  litter?: number
 }
 
 export const VINCI_ROOM_FIGURES: readonly RoomFigure[] = [
-  { room: 'house', stop: 'stop:arrival', framing: 'wide', shape: 'clip', at: [16.5, 1, 14.25], yaw: 1.2827 },
-  { room: 'house', stop: 'stop:arrival', framing: 'upright', shape: 'clip', at: [16.5, 1, 14.25], yaw: 1.2827 },
+  { room: 'house', stop: 'stop:arrival', framing: 'wide', shape: 'clip', at: [16.5, 1, 14.25], yaw: 1.2827, tone: 0.45, sky: 0.844, litter: 0.025 },
+  { room: 'house', stop: 'stop:arrival', framing: 'upright', shape: 'clip', at: [16.5, 1, 14.25], yaw: 1.2827, tone: 0.45, sky: 0.844, litter: 0.025 },
   { room: 'grave-court', stop: 'stop:grave', framing: 'wide', shape: 'clip', at: [-55.25, -6.42, 29.75], yaw: 1.6366, tone: 0.45 },
   { room: 'mechanism-hall', stop: 'stop:flight', framing: 'wide', shape: 'fade', at: [-55.25, -6.3, 48.5], yaw: 1.4565, tone: 0.36 },
   { room: 'mechanism-hall', stop: 'stop:flight', framing: 'upright', shape: 'fade', at: [-55.25, -6.3, 48.5], yaw: 1.4565, tone: 0.36 },
@@ -86,6 +94,7 @@ export function createRoomFigures(light: (room: FigureRoom, body: Mesh) => void,
     for (const figure of figures) {
       const material = measureMaterial()
       if (figure.tone !== undefined) material.color.multiplyScalar(figure.tone)
+      if (figure.sky !== undefined) material.aoNode = float(figure.sky)
       materials.push(material)
       const body = measure(geometry, { material })
       light(figure.room, body)
@@ -105,7 +114,7 @@ export function createRoomFigures(light: (room: FigureRoom, body: Mesh) => void,
       materials.push(shade)
       const foot = new Mesh(contact, shade)
       foot.name = `vinci/room-figures/${figure.room}/${figure.framing}/contact`
-      foot.position.set(0, CONTACT.lift, CONTACT.forward)
+      foot.position.set(0, figure.litter ?? CONTACT.lift, CONTACT.forward)
       foot.scale.set(CONTACT.across, 1, CONTACT.along)
       foot.renderOrder = 2
       foot.raycast = () => {}
