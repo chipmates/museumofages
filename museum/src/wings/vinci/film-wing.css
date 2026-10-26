@@ -440,6 +440,8 @@
 #wing[data-film='upright'] .vinci-dock .vinci-certainty-word { margin-bottom: 4px; }
 #wing[data-film='upright'] .vinci-dock :is(.vinci-citation, .vinci-record .vinci-statement, .vinci-record-fold summary, .vinci-arithmetic) { font-size: .875rem; }
 #wing[data-film='upright'] .vinci-dock .vinci-record-fold summary { min-height: 44px; display: flex; align-items: center; }
+/* the room's and the wing's lists at the phone's 14 px floor, on the pitch of the record's sans statements */
+#wing[data-film='upright'] .vinci-dock :is(.vinci-room-list, .vinci-absence-list) { font-size: .875rem; line-height: 1.6; }
 /* the Menu is a tall sheet on the record's ground; its rows end 4 px over its 80 px foot and scroll under it */
 html:has(#wing[data-film='upright']) #instruments {
   left: 0; right: 0; top: 44px; bottom: 0; width: auto; max-width: none; max-height: none;
