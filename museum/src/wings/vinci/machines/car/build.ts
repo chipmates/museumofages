@@ -274,7 +274,7 @@ function wells(k: Kit): void {
     // a board that runs out to where an eye outside sees in under the skirt's foot (about 17 cm in from it) lies in the
     // ground's mud and the skirt's shadow, so it never shows pale through the gap under the foot
     const MUD = TUB.bottomR - 0.17
-    const mud = (j: number): Finish => ({ tone: 0.22 + 0.05 * hash(71, sx, sz, j), wear: 0 })
+    const mud = (j: number): Finish => ({ tone: 0.12 + 0.03 * hash(71, sx, sz, j), wear: 0 })
     const slabAt = (x0: number, x1: number, y0: number, y1: number, z0: number, z1: number, j: number, grain: V3 = X): void => {
       const R = y1 <= TUB.bottomY ? Rb : Rc
       const reach = Math.sqrt(Math.max(0, R * R - Math.max(z0 * z0, z1 * z1)))
@@ -776,7 +776,7 @@ export function shaft(sz: number): Body {
     }
   }
   // the grip, shaved from riven oak as the staves are and worn by the crew's hands, palest where the hands go
-  shaved(b.rough, v(-CRANK.cheekX - 0.06, CRANK.throw, 0), v(CRANK.cheekX + 0.06, CRANK.throw, 0), CRANK.gripR, 11, { tone: tone(44, seed), wear: 0.6 }, [44, seed], 8, 0,
+  shaved(b.rough, v(-CRANK.cheekX - 0.06, CRANK.throw, 0), v(CRANK.cheekX + 0.06, CRANK.throw, 0), CRANK.gripR, 9, { tone: tone(44, seed), wear: 0.6 }, [44, seed], 8, 0,
     u => 0.6 + 0.4 * smooth(0.1, 0.25, Math.min(u, 1 - u)))
   return b
 }
