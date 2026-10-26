@@ -1,4 +1,6 @@
 {
+ "4a13efa3ec0edaf2": "Continue lendo",
+ "26f1262b59e1152a": "Voltar ao início",
  "535f9f048111d6fc": "Neste dia, um visitante viu três quadros dele. Da mulher de Florença, ele não anotou nenhum nome.",
  "332ad88ad30f75af": "Ele morreu na casa acima de você, e o túmulo dele fica rua acima. Ninguém tem certeza de que seja ele.",
  "715c14b5c493e325": "A última casa dele fica acima de você. Neste dia, ele contou a um visitante que tinha aberto mais de trinta cadáveres.",
@@ -516,7 +518,7 @@
  "2ccccfb3380a61c6": "{0} × {1} × {2} m",
  "15653d500329c09d": "O castelo diz que os restos mortais foram levados para a capela de São Humberto no século XIX. O museu ainda não conferiu dois outros detalhes nos registros originais da escavação e da transferência: o ano de 1874 para a transferência e os pedaços de pedra com letras.",
  "ae4a5f3f8c4a6969": "Luz calculada · 2 de maio de 1519 · 18h50 UT. Um minuto escolhido, não um momento testemunhado.",
- "12a899670a561cbd": "Arsène Houssaye escavou a antiga igreja Saint-Florentin em 1863 e relatou um esqueleto quase completo. A identificação não foi comprovada.",
+ "12a899670a561cbd": "Arsène Houssaye escavou a antiga igreja Saint-Florentin em 1863 e relatou ter encontrado um esqueleto quase completo. A identificação não foi comprovada.",
  "efaa9f60b6939e90": "A placa da própria capela fala em restos mortais presumidos. Essas palavras estão em uma placa separada, não na laje.",
  "d128bcd0e08ca694": "O Paris Musées fornece esta pintura de Ingres, do Petit Palais. O original é pequeno e foi ampliado aqui para que você possa olhar com calma a conhecida história do leito de morte. Vasari a contou muito depois da morte de Leonardo, e a carta de Melzi não coloca o rei à cabeceira.",
  "3d66a5b6f8e53698": "Ficha completa",
@@ -538,5 +540,6 @@
  "4da0fd05d3b4d6d8": "O ícone de mapa abre a planta. Ela leva a qualquer parada.",
  "a08085012edc1c0e": "Aperte o círculo dourado sob uma obra para vê-la de perto.",
  "5414d3654d2d3c52": "CLOS LUCÉ, AMBOISE · 10 DE OUTUBRO DE 1517, 15h19, HORA SOLAR",
- "09cb8967594b1e2c": "Leonardo da Vinci morava na casa acima de você. Neste dia, um visitante veio vê-lo. O que o secretário do visitante anotou espera por você lá dentro. Atrás de você há um museu do que Leonardo deixou."
+ "09cb8967594b1e2c": "Leonardo da Vinci morava na casa acima de você. Neste dia, um visitante veio vê-lo. O que o secretário do visitante anotou espera por você lá dentro. Atrás de você há um museu do que Leonardo deixou.",
+ "9b5550836a60886a": "aqui"
 }

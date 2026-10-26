@@ -3,19 +3,15 @@
  * written. */
 export const WORKING_LINES: Partial<Record<string, { en: string; de: string }>> = {
   'aerial-screw': {
-    en: 'Our reconstruction from Manuscript B, folio 83 verso. Every size but the radius is ours.',
-    de: 'Unsere Rekonstruktion nach Manuskript B, Blatt 83 verso. Alle Maße außer dem Radius sind unsere.',
-  },
-  'parachute': {
-    en: 'Our reconstruction from the Codex Atlanticus, folio 1058 verso. Every size but the cloth\'s is ours.',
-    de: 'Unsere Rekonstruktion nach dem Codex Atlanticus, Blatt 1058 verso. Alle Maße außer denen des Tuchs sind unsere.',
+    en: 'Our reconstruction from Manuscript B, folio 83 verso. The sheet gives one size, the radius. Every other size is ours.',
+    de: 'Unsere Rekonstruktion nach Manuskript B, Blatt 83 verso. Das Blatt nennt ein Maß, den Radius. Alle anderen stammen von uns.',
   },
   'bridge-of-poles': {
     en: 'Our reconstruction from his sheet in the Ambrosiana, sizes ours. The woven arch is older than him.',
     de: 'Unsere Rekonstruktion nach seinem Blatt in der Ambrosiana, die Maße stammen von uns. Der geflochtene Bogen ist älter als er.',
   },
   'mechanical-lion': {
-    en: 'Our reconstruction from the old accounts. No drawing of it survives; its works are ours.',
-    de: 'Unsere Rekonstruktion nach den alten Berichten. Keine Zeichnung des Löwen ist erhalten; sein Werk im Inneren ist unseres.',
+    en: 'Our reconstruction from old accounts. No drawing survives, so its works are ours.',
+    de: 'Unsere Rekonstruktion nach alten Berichten. Keine Zeichnung ist erhalten, darum stammt sein Räderwerk von uns.',
   },
 }

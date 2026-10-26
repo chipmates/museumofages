@@ -25,11 +25,13 @@ const keysAt = async (overlay = {}) => {
 const moved = (a, b) => Object.keys(a).filter((s) => a[s] !== b[s]).sort()
 const clean = await keysAt()
 const TURNTABLE = 'src/wings/vitrine/turntable.ts'
+/** the machines the island builds today; a machine joining it changes this count */
+const ISLAND = 17
 
 test('the machines the island builds, each keyed apart', async () => {
-  assert.equal(Object.keys(clean).length, 15)
+  assert.equal(Object.keys(clean).length, ISLAND)
   assert.ok(Object.keys(clean).includes('aerial-screw') && Object.keys(clean).includes('mechanical-lion'))
-  assert.equal(new Set(Object.values(clean)).size, 15, 'no two machines share a key')
+  assert.equal(new Set(Object.values(clean)).size, ISLAND, 'no two machines share a key')
 })
 
 test('(1) a copy edit in the interface words or the disclosures leaves every cycle key', async () => {
@@ -52,15 +54,15 @@ test('(2) a phone-form or film-wing edit leaves every cycle key, even imported b
   base = { ...base, [printFile]: `import { createWing } from './film-wing'\n${read(printFile)}` }
   assert.ok(isInterface(PHONE) && isInterface(FILM_WING))
   const planted = await keysAt(base)
-  assert.equal(moved(clean, planted).length, 15, 'the planted imports themselves are edits of drawing modules')
+  assert.equal(moved(clean, planted).length, ISLAND, 'the planted imports themselves are edits of drawing modules')
   assert.deepEqual(moved(planted, await keysAt({ ...base, [PHONE]: "export const PHONE_FORM = { rows: 3 }\n" })), [], 'a phone-form edit moves no cycle')
   assert.deepEqual(moved(planted, await keysAt(plant(FILM_WING, 'export function createWing', '/* planted */\nexport function createWing', base))), [], 'a film-wing edit moves no cycle')
 })
 
 test("(3) an edit to a machine's own module or dossier moves that machine's cycle, and only it", async () => {
   const screw = `${WING_DIR}/machines/aerial-screw.ts`
-  assert.deepEqual(moved(clean, await keysAt(plant(screw, "return makeMachine(stack, machineCatalog['aerial-screw'])",
-    "const record = machineCatalog['aerial-screw']\n  return makeMachine(stack, record)"))), ['aerial-screw'])
+  assert.deepEqual(moved(clean, await keysAt(plant(screw, "const machine = makeMachine(stack, record)",
+    "const planted = record\n  const machine = makeMachine(stack, planted)"))), ['aerial-screw'])
   const crane = `${WING_DIR}/machines/data/revolving-crane.json`
   const dossier = JSON.parse(read(crane))
   assert.deepEqual(moved(clean, await keysAt({ [crane]: JSON.stringify({ ...dossier, planted: true }, null, 2) })), ['revolving-crane'])
@@ -92,7 +94,7 @@ test('the definition now is the display-blank one; cycle-v1 still reads every fi
   assert.equal(CYCLE_DEFINITION, 'cycle-display-v2')
   const v1 = await keysUnder('cycle-v1')
   const card = jsonPlant(CARDS, (d) => { d.controls.machine.play.en = `${d.controls.machine.play.en} (planted)` })
-  assert.equal(moved(v1, await keysUnder('cycle-v1', card)).length, 15, 'under cycle-v1 a card word moves every cycle')
+  assert.equal(moved(v1, await keysUnder('cycle-v1', card)).length, ISLAND, 'under cycle-v1 a card word moves every cycle')
   assert.notDeepEqual(v1, clean, 'the two definitions never share a key')
 })
 
@@ -138,7 +140,7 @@ test('a module of the set that can draw a text reads every data file whole again
   const card = jsonPlant(CARDS, (d) => { d.controls.machine.play.en = `${d.controls.machine.play.en} (planted)` })
   const lettered = plant(TURNTABLE, "import { islandFit } from './fit'\n", "import { islandFit } from './fit'\nconst PLANTED_TEXT = (c: CanvasRenderingContext2D) => c.fillText('x', 0, 0)\n")
   const before = await keysUnder(CYCLE_DEFINITION, lettered)
-  assert.equal(moved(before, await keysUnder(CYCLE_DEFINITION, { ...lettered, ...card })).length, 15)
+  assert.equal(moved(before, await keysUnder(CYCLE_DEFINITION, { ...lettered, ...card })).length, ISLAND)
   const loader = await createLoader({ overlay: lettered })
   assert.equal(cycleKey(loader, 'lathe').blanked, false)
 })

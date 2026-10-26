@@ -338,33 +338,82 @@ function machinePose(slug: keyof typeof MACHINE_EYES, narrow: boolean): Approach
 const readingLens = (size: number, reach: number): number =>
   Math.max(35, Math.min(75, 2 * Math.atan(1.2 * size / 2 / reach) * 180 / Math.PI))
 
-/** THE HALL TABLE'S PIECES ARE READ SQUARE ON, each from the same distance
- * in front of its own face: the walk in from the door's eye runs down the
- * inclinometer's own axis, and the step from one piece to the other is a
- * step sideways along the table. */
+/** THE HALL TABLE'S PIECES ARE READ from the same distance in front of their
+ * faces, the compass square on. The inclinometer's eye turns toward the
+ * table's north end: the lion's hindquarters stand in the sun between the door
+ * and the table's south end, and square on its tail would stand in the look.
+ * The desktop's wider field steps nearer, turns less (its walk leaves the
+ * hall's doorway near its axis) and aims along the table toward the compass,
+ * a little under the piece's middle. The phone's inclinometer aims 11 cm
+ * along the table toward the south end, so the compass stands wholly past
+ * its right edge. The compass is thin: the phone stands it tall in the whole
+ * window, turned ten degrees toward the north end and aimed 3 cm south, so
+ * the candlestick beside it stands half out of the frame. Turns in degrees,
+ * the aim's offsets in metres along the table and down. */
 const TABLE_READING_M = 1.85
+const PIECE_READ: Record<HallTablePiece, Record<'phone' | 'desktop', { turn: number; reach: number; aim: number; drop: number }>> = {
+  'inclinometer': { phone: { turn: 30, reach: TABLE_READING_M, aim: -.11, drop: 0 }, desktop: { turn: 25, reach: 1.6, aim: .24, drop: .06 } },
+  'proportional-compass': { phone: { turn: 10, reach: TABLE_READING_M, aim: -.03, drop: 0 }, desktop: { turn: 0, reach: TABLE_READING_M, aim: 0, drop: 0 } },
+}
+/** THE PHONE READS A PIECE ABOVE THE WORDS, as every close look: its foot at
+ * half the height and its middle at a third (RULES 4, rules 1 and 2), by the
+ * lens and the shift together, the eye ten degrees down. The foot's front
+ * edge stands half the piece's depth nearer than its crown. The compass
+ * fills the window from its top to the band's foot. */
+const PIECE_PHONE: Record<HallTablePiece, { foot: number; middle: number }> = {
+  'inclinometer': { foot: .51, middle: .34 }, 'proportional-compass': { foot: .54, middle: .335 },
+}
+const PIECE_PHONE_PITCH = 10
 function tablePiecePose(slug: HallTablePiece, narrow: boolean): ApproachPose {
   const place = HALL_TABLE_PIECES[slug], { x, y, z } = dossiers[slug].scale_m
-  const eye = [place.east + HALL_TABLE.across[0] * TABLE_READING_M, place.north + HALL_TABLE.across[1] * TABLE_READING_M] as const
-  const top = HALL_TABLE.floor + HALL_TABLE.top
-  return pose([eye[0], eye[1], HALL_TABLE.floor + 1.62], [place.east, place.north, top + y / 2],
-    readingLens(Math.max(y, x, z), TABLE_READING_M), narrow)
+  const { turn, reach, aim, drop } = PIECE_READ[slug][narrow ? 'phone' : 'desktop'], a = turn * Math.PI / 180
+  const dir = [0, 1].map(i => HALL_TABLE.across[i]! * Math.cos(a) + HALL_TABLE.along[i]! * Math.sin(a))
+  const eye = [place.east + dir[0]! * reach, place.north + dir[1]! * reach] as const
+  const top = HALL_TABLE.floor + HALL_TABLE.top, eyeY = HALL_TABLE.floor + 1.62
+  if (narrow) {
+    const t = PIECE_PHONE_PITCH * Math.PI / 180, fit = PIECE_PHONE[slug]
+    const above = (height: number, at: number): number => Math.tan(Math.atan2(height - eyeY, at) + t)
+    // the depth toward the eye is the dossier's z (the compass is wide and
+    // thin); a turned look sees the inclinometer's board corner about there
+    const foot = above(top, reach - z / 2), crown = above(top + y, reach)
+    const half = (crown - foot) / (2 * 2 * (fit.foot - fit.middle))
+    const shift = 2 * (fit.foot - .5 + foot / (2 * half))
+    const at = world(place.east + HALL_TABLE.along[0] * aim, place.north + HALL_TABLE.along[1] * aim, eyeY - reach * Math.tan(t))
+    return { eye: world(eye[0], eye[1], eyeY), at, fov: 2 * Math.atan(half) * 180 / Math.PI, shift }
+  }
+  return pose([eye[0], eye[1], eyeY], [place.east + HALL_TABLE.along[0] * aim, place.north + HALL_TABLE.along[1] * aim, top + y / 2 - drop],
+    readingLens(Math.max(y, x, z), reach), narrow)
 }
 
-/** THE LION IS READ FROM ITS LEFT SHOULDER, where the open flank and the
- * chest show together: an eye three metres off, a short straight leg in from
- * the hall's door that passes in front of the table's south end. In the
- * lion's own frame, +z its nose and +x its left. */
-const LION_EYE = { x: 1.63, z: 2.52 }
+/** THE LION'S CLOSE LOOK. The desktop walks straight in from the hall's door
+ * along the doorway's axis to the lion's open flank, square on, the
+ * south-west window behind it. The phone, whose field across stays at 40
+ * degrees, holds the whole lion only from three metres or more, which the
+ * room gives only in its south-east corner: it narrows its field there to
+ * the lion's chest and open flank at a three-quarter turn, the eye a little
+ * lower as a visitor bends to it, four degrees down (more and the room's
+ * verticals lean past a degree and a half), its shift lens lifting the
+ * body's middle to about a third of the height. Its eye stands 0.58 m off
+ * both walls of the corner, outside the walk's envelope from the held frame.
+ * In the lion's own frame, +z its nose and +x its left. */
+const LION_EYE = { desktop: { x: 2.496, z: -.092 }, phone: { x: 2.044, z: 1.909 } }
+const LION_PHONE = { fov: 76.45, pitch: 4, shift: -.69, aimZ: .35, eye: 1.55 }
 function lionPose(narrow: boolean): ApproachPose {
   const b = HALL_LION.bearing * Math.PI / 180, cos = Math.cos(b), sin = Math.sin(b)
   const on = (x: number, z: number): [number, number] => [HALL_LION.east + x * cos + z * sin, HALL_LION.north + x * sin - z * cos]
   const { min, max } = HALL_LION_REST
-  const [eyeEast, eyeNorth] = on(LION_EYE.x, LION_EYE.z)
+  const eye = LION_EYE[narrow ? 'phone' : 'desktop']
+  const [eyeEast, eyeNorth] = on(eye.x, eye.z)
   const [atEast, atNorth] = on((min[0] + max[0]) / 2, (min[2] + max[2]) / 2)
+  const eyeY = HALL_LION.floor + (narrow ? LION_PHONE.eye : 1.65)
+  if (narrow) {
+    const [aimEast, aimNorth] = on((min[0] + max[0]) / 2, LION_PHONE.aimZ)
+    const atY = eyeY - Math.hypot(eyeEast - aimEast, eyeNorth - aimNorth) * Math.tan(LION_PHONE.pitch * Math.PI / 180)
+    return { eye: world(eyeEast, eyeNorth, eyeY), at: world(aimEast, aimNorth, atY), fov: LION_PHONE.fov, shift: LION_PHONE.shift }
+  }
   const size = Math.max(max[0] - min[0], max[1] - min[1], max[2] - min[2])
-  const lens = 2 * Math.atan(1.2 * size / 2 / Math.hypot(LION_EYE.x, LION_EYE.z)) * 180 / Math.PI
-  return pose([eyeEast, eyeNorth, HALL_LION.floor + 1.65], [atEast, atNorth, HALL_LION.floor + max[1] / 2], lens, narrow)
+  const lens = 2 * Math.atan(1.2 * size / 2 / Math.hypot(eye.x, eye.z)) * 180 / Math.PI
+  return pose([eyeEast, eyeNorth, eyeY], [atEast, atNorth, HALL_LION.floor + max[1] / 2], lens, false)
 }
 
 /** The one station the gallery's cut line is read from. */

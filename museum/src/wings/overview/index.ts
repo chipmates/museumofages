@@ -60,6 +60,9 @@ export interface DeskOverviewHost {
   /** ON THE PHONE THE VIEW IS A SHEET at the glass's tall height, as the
       record and the panel are, and a press on a cell walks there */
   sheet?: boolean
+  /** the works of the station the visitor stands at, where the set holds more
+      than that station's: each such cell says "here", and the view opens on the first */
+  here?: () => readonly string[]
 }
 
 export interface DeskOverview {
@@ -88,6 +91,8 @@ const WORD = {
 
 /** kept here, not in the card data, which the machine films' key reads whole */
 const TOPICS: VinciText = { en: '{n} topics to see', de: '{n} Themen zu sehen' }
+/** the mark on a cell of the station the visitor stands at */
+const HERE: VinciText = { en: 'here', de: 'hier' }
 
 const SVG = 'http://www.w3.org/2000/svg'
 const STEP_BACK = 'M10 3L5 8l5 5'
@@ -181,7 +186,10 @@ export function createDeskOverview(host: DeskOverviewHost): DeskOverview {
   onArrow.append(icon(ARROW_ON))
   on.append(onWords, onArrow)
   foot.append(named, on)
-  view.append(stepBack, shut, title, sub, grid, books, absent, foot)
+  // the sheet's name and measure stand in one head, which the upright phone keeps over the rows
+  const head = make('div', 'desk-ov-head')
+  if (host.sheet) head.append(title, sub)
+  view.append(stepBack, shut, ...(host.sheet ? [head] : [title, sub]), grid, books, absent, foot)
   if (host.sheet) {
     view.dataset['sheet'] = ''
     // how far the list has scrolled, up to where the phone sheet's head has grown past its close (film-wing.css)
@@ -248,6 +256,7 @@ export function createDeskOverview(host: DeskOverviewHost): DeskOverview {
     grid.textContent = ''
     grid.style.setProperty('--desk-ov-columns', String(columns()))
     buttons = []
+    const here = host.here?.() ?? []
     shown.forEach((cell, index) => {
       const item = document.createElement('li')
       const button = make('button', 'desk-ov-cell')
@@ -264,7 +273,18 @@ export function createDeskOverview(host: DeskOverviewHost): DeskOverview {
       thumb.decoding = 'async'
       thumb.alt = ''
       thumb.src = cell.preview ?? ''
-      plate.append(thumb)
+      if (host.sheet) {
+        // the picture and its mark share one box, so the mark sits on the picture's own corner
+        const picture = make('span', 'desk-ov-pic')
+        picture.append(thumb)
+        if (here.includes(cell.id)) {
+          button.dataset['here'] = ''
+          const mark = make('span', 'desk-ov-here', say(HERE))
+          mark.setAttribute('aria-hidden', 'true')
+          picture.append(mark)
+        }
+        plate.append(picture)
+      } else plate.append(thumb)
       const word = make('span', 'desk-ov-cellname')
       word.append(host.mark(cell.certainty), document.createTextNode(cell.short ?? cell.title))
       button.append(plate, word)
@@ -272,6 +292,7 @@ export function createDeskOverview(host: DeskOverviewHost): DeskOverview {
         button.append(make('span', 'desk-ov-cellsub', cell.sub))
         button.setAttribute('aria-label', `${cell.title}, ${cell.sub}`)
       }
+      if (button.dataset['here'] !== undefined) button.setAttribute('aria-label', `${button.getAttribute('aria-label')}, ${say(HERE)}`)
       button.addEventListener('click', () => walk(index))
       // ONE SELECTOR IN THE VIEW, moved by both hands: the pointer and the
       // arrows each move the foot line one work at a time.
@@ -437,6 +458,9 @@ export function createDeskOverview(host: DeskOverviewHost): DeskOverview {
     open = true
     if (!view.open) view.showModal()
     fill(set)
+    const here = host.here?.() ?? []
+    const first = shown.findIndex(cell => here.includes(cell.id))
+    if (first >= 0) at = first
     select(at, true)
   }
 

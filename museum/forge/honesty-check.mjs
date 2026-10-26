@@ -14,7 +14,8 @@
 //   · a `documented` label anchors a GENERATED, CC0, CC-BY or CC-BY-SA
 //     object (only what was captured, what is old enough to be nobody's,
 //     and procedural architecture built from plans may carry green)
-//   · any interactive target is under 44 px on either frame
+//   · any interactive target is under 44 px on either frame, or answers a
+//     tap over only part of the 44 px circle round its centre (the phone)
 //   · a station shows more than one brand line, or more than three
 //     persistent marks
 //   · a disclosure on the frame differs from src/content/disclosures.ts by
@@ -170,6 +171,52 @@ function judge(labels, where, canon, langOf) {
     persistent: persistent.length,
     smallest: targets.length ? Math.min(...targets.map((l) => l.targetPx)) : null,
   }
+}
+
+/** THE CIRCLE A THUMB TAPS. A control's box can measure 44 px while another
+    box lies over part of it (a foot row over a key's lowest pixels), so the
+    44 px circle round each control's centre (the circle WCAG's spacing rule
+    draws, at our 44) is tapped at its grid points in the page: every point
+    must land on the control or inside it. A control whose centre lands
+    elsewhere stands under something and is not read; a control under 44 px
+    is already a failure of its own. The phone's frame only: a thumb taps
+    there, while the desktop's pointer is one pixel and its marks on works
+    hung closer than 44 px share their edges by design. */
+function tappedShort(reach) {
+  const CONTROLS = 'a[href], button, [role="button"], input, select, textarea, summary'
+  const shown = (el) => {
+    for (let n = el; n; n = n.parentElement) {
+      const cs = getComputedStyle(n)
+      if ((n instanceof HTMLElement && n.hidden) || cs.display === 'none' || cs.visibility === 'hidden' || Number(cs.opacity) <= 0.02) return false
+    }
+    return true
+  }
+  const nameOf = (e) => (e ? `${e.tagName.toLowerCase()}${e.classList.length ? `.${[...e.classList].slice(0, 2).join('.')}` : ''}` : 'nothing')
+  const out = []
+  for (const el of document.querySelectorAll(CONTROLS)) {
+    const r = el.getBoundingClientRect()
+    if (Math.min(r.width, r.height) < reach - 0.5 || r.bottom <= 0 || r.top >= innerHeight || r.right <= 0 || r.left >= innerWidth || !shown(el)) continue
+    const own = (e) => !!e && (e === el || el.contains(e))
+    const cx = r.left + r.width / 2, cy = r.top + r.height / 2
+    if (!own(document.elementFromPoint(cx, cy))) continue
+    const half = (reach - 1) / 2, step = (reach - 1) / 8
+    let missed = 0, tapped = 0, rows = new Set(), over = null
+    for (let dy = -half; dy <= half + 0.01; dy += step) for (let dx = -half; dx <= half + 0.01; dx += step) {
+      if (dx * dx + dy * dy > half * half + 0.01) continue
+      tapped++
+      const x = cx + dx, y = cy + dy
+      const hit = x < 0 || y < 0 || x >= innerWidth || y >= innerHeight ? null : document.elementFromPoint(x, y)
+      if (own(hit)) continue
+      missed++; rows.add(Math.round(dy)); over ??= nameOf(hit)
+    }
+    if (missed) out.push({ text: (el.getAttribute('aria-label') || el.textContent || '').replace(/\s+/g, ' ').trim(), missed, tapped, rows: rows.size, over })
+  }
+  return out
+}
+
+function judgeTaps(missed, where) {
+  for (const m of missed ?? [])
+    failures.push(`${where}: "${short(m.text)}" answers a tap over part of its ${REACH} px circle only (${m.missed} of ${m.tapped} points, in ${m.rows} rows, land on ${m.over})`)
 }
 
 /** The close looks the standing station carries, off the row the wing paints:
@@ -334,6 +381,11 @@ try {
       if (labels === null) continue
       stations.push({ station: where, labels })
       const read = judge(labels, where, canon, langOf)
+      try {
+        if (vp.tag === 'mobile') judgeTaps(await within(`${where} taps`, 20000, () => page.evaluate(tappedShort, REACH)), where)
+      } catch (err) {
+        failures.push(err instanceof Stalled ? err.message : `${where} taps: ${err.message}`)
+      }
 
       say(
         `${where.padEnd(22)}${String(labels.length).padStart(3)} labels  ` +
@@ -363,6 +415,7 @@ try {
             const shown = await page.evaluate(() => window.__forge.labels())
             exhibits.push({ station: inside, labels: shown })
             const card = judge(shown, inside, canon, langOf)
+            if (vp.tag === 'mobile') judgeTaps(await page.evaluate(tappedShort, REACH), inside)
             say(
               `  ${inside.padEnd(44)}${String(shown.length).padStart(3)} labels  ` +
                 `${String(card.claims).padStart(2)} claims  ` +

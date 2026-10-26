@@ -190,7 +190,10 @@ export function createVitrine(options: {
   // the number cast on the work's frame, before its name
   const namingNumber = make('span', 'vitrine-name-number')
   namingNumber.hidden = true
-  naming.append(namingDot, namingNumber, namingText, stripName)
+  // a date in the clock's place, after the name, where the set names one
+  const namingClock = make('span', 'vitrine-name-clock')
+  namingClock.hidden = true
+  naming.append(namingDot, namingNumber, namingText, namingClock, stripName)
   // the catalogue's own row under the name: the date and where the original is
   const entryRow = make('p', 'vitrine-catalogue')
   entryRow.hidden = true
@@ -591,7 +594,7 @@ export function createVitrine(options: {
     sheet.style.cssText = ''
     payloadControls.style.cssText = ''
     paintLine(null)
-    nameIt(namingText.textContent ?? '', named.certainty ?? sureOf(exhibit?.certainty))
+    nameIt(namingText.textContent ?? '', named.mark ? sureOf(named.mark) : named.certainty ?? sureOf(exhibit?.certainty))
     rects.view = form === 'under' ? under : beside
     place(stage, rects.view)
     // a filmed machine beside its words says its step in the label column, over the column's keys
@@ -881,7 +884,7 @@ export function createVitrine(options: {
     returnTools()
     pager.remove()
     cinemaFrame = null
-    nameIt(namingText.textContent ?? '', named.certainty)
+    nameIt(namingText.textContent ?? '', named.mark ? sureOf(named.mark) : named.certainty)
   }
 
   /** The drawer's lower edge fades while more of its words waits below. */
@@ -894,8 +897,8 @@ export function createVitrine(options: {
 
   /** THE DRAWER'S LAST LINE FADES OUT, IT NEVER BREAKS OFF. On the phone the
    * words' box ends where the controls begin. While words wait below, the
-   * lower edge fades from the top of the lowest line it shows, so that line
-   * dissolves as the sign of more, and the rest scrolls. */
+   * lower edge fades from the top of the lowest whole line it shows, so that
+   * line dissolves as the sign of more, and the rest scrolls. */
   function fadeWords(): void {
     body.style.removeProperty('--fade')
     if (!open || !options.narrow() || body.scrollHeight <= body.clientHeight + 1) return
@@ -911,7 +914,8 @@ export function createVitrine(options: {
     }
     if (!lines.some(r => r.bottom > floor + .5)) return
     let last = -Infinity
-    for (const r of lines) if (r.top > top + .5 && r.top < floor - 4) last = Math.max(last, r.top)
+    // a line the edge cuts fades with the whole line above it, so the cut never reads as a slice
+    for (const r of lines) if (r.top > top + .5 && r.bottom <= floor + .5) last = Math.max(last, r.top)
     if (last > top) body.style.setProperty('--fade', `${Math.round(Math.min(44, Math.max(16, floor - last)))}px`)
   }
   /* the words change after the layout that placed them: a payload lays in its
@@ -925,8 +929,10 @@ export function createVitrine(options: {
   })
   for (const part of [naming, seat, entryRow, line, note, words, aside, after]) wordsResized.observe(part)
 
-  /** the certainty a payload named the card with, where it renamed it */
-  const named: { certainty: string | null } = { certainty: null }
+  /** the certainty a payload named the card with, where it renamed it, and
+   * the mark the band draws for it where the payload named one of the four */
+  const named: { certainty: string | null; mark: VitrineExhibit['certainty'] } = { certainty: null, mark: null }
+  const MARKS = new Set(['documented', 'reconstructed', 'conjectural', 'unknown'])
   /** sideways the label column has the room for the exhibit's own mark, as the desktop's band shows it */
   const sureOf = (key?: string | null): string | null => (key ? `var(--ui-sure-${key})` : null)
   /** The name at the head of the card, and the card's accessible name with
@@ -965,6 +971,8 @@ export function createVitrine(options: {
     seat.lang = langTag(options.lang())
     seatWords.textContent = place?.seat ?? ''
     seatWords.hidden = !place?.seat
+    namingClock.textContent = place?.clock ?? ''
+    namingClock.hidden = !place?.clock
     countButton.textContent = count
     countButton.hidden = !count
     countButton.disabled = !exhibit?.onCount
@@ -1133,12 +1141,15 @@ export function createVitrine(options: {
     work: () => (inBand() ? null : exhibit?.work?.() ?? null),
     surface: setSurface,
     describe: text => payloadEl.setAttribute('aria-label', text),
-    raise: open => setRaised(open),
+    // the desk's band folds its drawer where the phone folds its card
+    raise: open => { if (inBand()) { if (!open) band?.fold() } else setRaised(open) },
     peeked: () => !raised,
     step: (at, of) => band?.step(at, of),
     rename: (title, head, certainty, place, said, peek) => {
       named.certainty = certainty ?? null
-      nameIt(title, certainty ?? (cinemaFrame ? sureOf(exhibit?.certainty) : null))
+      // one of the four marks by its name: the band draws it, the phone's dot takes its colour
+      named.mark = certainty && MARKS.has(certainty) ? certainty as VitrineExhibit['certainty'] : null
+      nameIt(title, named.mark ? sureOf(named.mark) : certainty ?? (cinemaFrame ? sureOf(exhibit?.certainty) : null))
       const was = { ...spoken }
       if (head !== undefined) spoken = { ...spoken, head, short: peek?.line ?? null, restNote: peek?.note ?? null, restSource: peek?.source ?? null,
         own: peek?.own ?? null }
@@ -1199,7 +1210,8 @@ export function createVitrine(options: {
       line: spoken.head || next.line,
       note: next.note ?? null,
       kind: next.payload?.kind ?? '',
-      certainty: next.certainty ?? null,
+      certainty: named.mark ?? next.certainty ?? null,
+      more: next.more ?? null,
       set: next.set ?? null,
       catalogue: next.catalogue ?? null,
       room: next.upLabel ?? options.room?.() ?? '',
@@ -1378,6 +1390,7 @@ export function createVitrine(options: {
       root.dataset['exhibit'] = next.id
       card.dataset['exhibit'] = next.id
       named.certainty = null
+      named.mark = null
       nameIt(next.title)
       const entry = next.catalogue ?? null
       namingNumber.textContent = entry?.number ?? ''
@@ -1388,7 +1401,7 @@ export function createVitrine(options: {
       spoken = { head: next.line ?? null, note: null, short: next.peek?.line ?? null, restNote: next.peek?.note ?? null,
         restSource: next.peek?.source ?? null, own: next.peek?.own ?? null }
       line.lang = langTag(options.lang())
-      paintPlace(next.set?.said || next.set?.seat ? next.set : null, next.note)
+      paintPlace(next.set?.said || next.set?.seat || next.set?.clock ? next.set : null, next.note)
       paintLine(null)
       words.replaceChildren(...next.card)
       after.replaceChildren(...next.after ?? [])

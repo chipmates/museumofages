@@ -9,6 +9,20 @@
 const rowsOf = (name: HTMLElement): number =>
   Math.round(name.getBoundingClientRect().height / (parseFloat(getComputedStyle(name).lineHeight) || 18))
 
+/** the pill's contents reach past its own right padding: a kept last pair
+    wider than the room beside the arrow pushes the disc out of the pill */
+function overruns(name: HTMLElement): boolean {
+  const pill = name.parentElement
+  if (!pill) return false
+  const edge = pill.getBoundingClientRect().right - (parseFloat(getComputedStyle(pill).paddingRight) || 0)
+  let reach = name.getBoundingClientRect().right
+  for (const part of pill.children) {
+    const box = part.getBoundingClientRect()
+    if (box.width > 0) reach = Math.max(reach, box.right)
+  }
+  return reach > edge + 0.5
+}
+
 /** Read again wherever the name or the foot changes size. A name already read
     at this width stands, so the answer never reads itself, unless the pill it
     was read in has since changed and now cuts it. */
@@ -17,8 +31,11 @@ export function fitGoldName(name: HTMLElement): void {
   // hidden (the walking ring): read when it shows
   if (!width || !(name.getBoundingClientRect().height > 0)) return
   const key = `${name.textContent ?? ''}|${width}`
-  if (name.dataset['fit'] === key && (name.dataset['rows'] || rowsOf(name) <= 2)) return
+  if (name.dataset['fit'] === key && (name.dataset['rows'] || rowsOf(name) <= 2) && !overruns(name)) return
   delete name.dataset['rows']
+  delete name.dataset['loose']
+  // the kept pair parts where it cannot stand beside the arrow, so the name wraps before the disc
+  if (name.querySelector('.film-keep') && overruns(name)) name.dataset['loose'] = 'true'
   if (rowsOf(name) > 2) name.dataset['rows'] = '3'
   if (name.dataset['rows'] === '3' && rowsOf(name) > 3) name.dataset['rows'] = '4'
   name.dataset['fit'] = key

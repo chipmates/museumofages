@@ -30,10 +30,11 @@ import { createFilmSource, FILM_FORMAT, loadFilmRelease, LEAN_MS, type FilmEveni
 import { walkedClip } from '../../../forge/film/walks.mjs'
 import { createVinciWelcome, markVinciWelcomeSeen, vinciWelcomeSeen, type VinciWelcome } from './welcome'
 import type { FilmLook, FilmLookWays } from './film-look'
+import { closerAtStop, CLOSER_WORDS } from './closer'
 import type { VitrineOnward } from '../vitrine'
 import { createPictureWords, type PictureWordsLayer } from './picture-words'
 import { createDeskOverview, type DeskOverview, type DeskOverviewCell } from '../overview'
-import { markCut, type PictureMark, type PictureNode, type PictureSource, type PictureState } from '../picture/seam'
+import { markCut, type PictureMark, type PictureNode, type PictureRegion, type PictureSource, type PictureState } from '../picture/seam'
 import wingCss from './wing.css?inline'
 import deskCss from '../desk-chrome.css?inline'
 import deskTypeCss from '../desk-type.css?inline'
@@ -85,15 +86,42 @@ function keepLast(node: HTMLElement, said: string, least = 3): void {
 }
 /** the story's clock at his birth repeats what its heading already says */
 const atBirth = (age: VinciText): boolean => text(age) === text(deskControl('date', 'age_birth'))
+/** THE UPRIGHT CLOCK BESIDE ITS HEADING keeps the figure's name (the tag
+    says whose age it is) and turns the age pattern's joining word into a
+    comma, so a short phone's name row holds it: "Leonardo, 51" where the
+    desktop reads "Leonardo at 51" */
+function bareAge(age: string): string {
+  const pattern = text(deskControl('date', 'age'))
+  const name = /^[^\s,]+/u.exec(pattern)?.[0]
+  const joiner = name ? pattern.slice(name.length).split('{')[0] ?? '' : ''
+  if (!name || !joiner.trim() || !age.startsWith(name + joiner)) return age
+  return `${name}, ${age.slice(name.length + joiner.length)}`
+}
 const ARROW_ON = 'M3 8h10M9 4l4 4-4 4', ARROW_UP = 'M8 13V3M4 7l4-4 4 4', ARROW_DOWN = 'M8 3v10M4 9l4 4 4-4'
 /** the Menu's sign: three short lines, read as a menu where a circled plus read as add or zoom */
 const MENU = 'M3 3.5h10M3 8h10M3 12.5h10'
 const TRIANGLE_BACK = 'M11 3.5L4.5 8 11 12.5z'
 const STEP_BACK = 'M10 3L5 8l5 5'
+/** a closer look's sign: the plus in a square, the desk's own key; gold and round is the way on's alone */
+const NEARER = 'M3 3h10v10H3zM8 5.6v4.8M5.6 8h4.8'
 const RING = 2 * Math.PI * 20.5
 /** the most a mark is lifted to stand clear of the phone's box: sideways
     takes 28; upright the Baptism's mark needs 37 at 390x664 and 41 at 375x667 */
 const MARK_LIFT = 44
+/** the thumb's reach upright: a control's centre stands at or below 40 % of the glass */
+const REACH = 0.4
+/** THE DRAWER'S PLATE, upright: the way on through a drawer taller than its window, and back to its first sentence */
+const READ_ON = { en: 'Read on', de: 'Weiterlesen' }
+const BACK_TO_TOP = { en: 'Back to top', de: 'Zum Anfang' }
+/** the window's foot while rows wait below it: a 24 px fade over the 24 px plate and the record's 8 px of air */
+const PAGE_FOOT = 56
+const PLATE = 32
+/** the picture's rise while the drawer stands: at most the first stop's 81 px at 844, as a share of the glass */
+const RISE_MOST = 81 / 844
+/** the air between the hero's foot and the drawer's top */
+const RISE_AIR = 8
+/** the rise settles as the frozen motion table's sheet does */
+const RISE_MS = 320
 
 /** The release the address names (`?film=<name>`), else the build's own, under the origin's `/film/`. */
 export function filmReleaseBase(): string {
@@ -379,11 +407,13 @@ export function createWing(): WingModule {
   /** the phone's picture is sized once, to the large viewport */
   let tall: HTMLDivElement | undefined
   let cycleLayer: HTMLDivElement | undefined
+  /** how far the upright picture stands risen while the drawer stands (paintRise) */
+  let rise = 0
   function box() {
     if (form === 'cinema') return { left: 0, top: 0, width: innerWidth, height: innerHeight }
     if (wide) return { left: 0, top: 0, width: innerWidth, height: doorStanding || eveningFull ? innerHeight : deskStageHeight() }
     const height = Math.max(innerHeight, tall?.getBoundingClientRect().height ?? 0)
-    return { left: 0, top: 0, width: innerWidth, height }
+    return { left: 0, top: -rise, width: innerWidth, height }
   }
 
   /* ---- the dip's words: the wing's own chapter card ---- */
@@ -450,7 +480,7 @@ export function createWing(): WingModule {
     if (!hosts || !picture) return
     const node = here()
     const b = picture.box()
-    const key = `${node}|${lang()}|${b.width}x${b.height}|${look?.id ?? ''}|${drawerOpen}|${lookCard}`
+    const key = `${node}|${lang()}|${b.width}x${b.height}|${b.top}|${look?.id ?? ''}|${drawerOpen}|${lookCard}`
     if (key === marksAt) return
     marksAt = key
     clearMarks()
@@ -483,9 +513,13 @@ export function createWing(): WingModule {
     const field = glass && { left: Math.max(glass.left, b.left + 22), top: Math.max(glass.top, b.top + 22), right: Math.min(glass.right, b.left + b.width - 22), bottom: Math.min(glass.bottom, b.top + b.height - 22) }
     const cut = (x: number, y: number): boolean => field ? x < field.left || x > field.right || y < field.top || y > field.bottom : markCut(x - b.left, y - b.top, b)
     const late: PictureMark[] = []
+    // where the picture rose toward the station's own work, a mark the rise carried out of reach is laid in reach
+    const reachY = REACH * innerHeight
+    const laid: PictureMark[] | null = form === 'upright' && rise > 0 && stationMark(node) ? [] : null
     for (const mark of ordered) {
       const x = b.left + mark.x
       let y = b.top + mark.y
+      if (laid && mark.y >= reachY && y < reachY) { laid.push(mark); continue }
       // no mark stands under the museum's own words; sideways it keeps clear of the row's controls, lifted where that is short
       if (sideways) {
         const clear = cut(x, y) ? null : cinema ? cinema.clear(x, y, MARK_TARGET / 2) : y
@@ -502,11 +536,15 @@ export function createWing(): WingModule {
       }
       placeMark(mark, x, y)
     }
-    if (!late.length || !field) return
+    if ((!late.length && !laid?.length) || !field) return
     const blocks = markBlocks(sideways, avoid)
     for (const mark of late) {
       if (own !== mark.id && onWork(mark, true)) continue
       const at = nearestFree(b.left + mark.x, b.top + mark.y, field, blocks)
+      if (at) placeMark(mark, at.x, at.y)
+    }
+    for (const mark of laid ?? []) {
+      const at = nearestFree(b.left + mark.x, b.top + mark.y, { ...field, top: Math.max(field.top, Math.ceil(reachY)) }, blocks)
       if (at) placeMark(mark, at.x, at.y)
     }
   }
@@ -630,13 +668,15 @@ export function createWing(): WingModule {
     const b = picture.box()
     // the station is read into the key: a release that lands after the first rest paints then
     const station = veiled ? null : release?.nodes[node]?.station ?? null
-    const key = `${node}|${station}|${lang()}|${b.left},${b.top},${b.width}x${b.height}`
+    // upright, a run of words the standing drawer's top would cut waits whole under it
+    const edge = form === 'upright' && drawerOpen && phone ? Math.round(phone.root.getBoundingClientRect().top) : undefined
+    const key = `${node}|${station}|${lang()}|${b.left},${b.top},${b.width}x${b.height}|${edge ?? ''}`
     if (!walking && key === wordsAt) return
     const seam = picture
     const drawn = words.paint(station, pageLang(), point => {
       const at = seam.project(point)
       return at ? { x: b.left + at.x, y: b.top + at.y } : null
-    }, say)
+    }, say, edge)
     // a rest whose print is not read yet is asked again, for a second at most;
     // a walk's key never stands for a rest, so the rest after it paints again
     if (drawn || ++wordsTries > 60) { wordsAt = walking ? `${key}|walk` : key; wordsTries = 0 }
@@ -659,6 +699,13 @@ export function createWing(): WingModule {
 
   /* ---- the close look, loaded after the first picture ---- */
   const standing = (): boolean => picture?.state().kind === 'rest'
+  /** THE CLOSER LOOK the stop at rest carries, its word and its press; none
+      while the eye walks or a look stands */
+  function closerHere(): { word: VinciText; open: (from: HTMLElement) => void } | null {
+    if (!standing() || look?.id) return null
+    const near = closerAtStop(LIFE[card]?.id ?? '')
+    return near ? { word: CLOSER_WORDS.open, open: from => { if (standing() && !look?.id) openExhibit(near.id, from) } } : null
+  }
   /* ONE TEXT AT A TIME: on the phone the box keeps only its foot row while a
      close look stands (the way back, the work before, gold on to the work
      after), so the work takes the glass and the vitrine's card is the text */
@@ -666,7 +713,8 @@ export function createWing(): WingModule {
     if (!phone) return
     phone.root.dataset['look'] = String(down)
     paintBackSeat()
-    if (down && drawerOpen) setDrawer(false)
+    if (down && drawerOpen) setDrawer(false, false)
+    if (down) requestAnimationFrame(nameLookDown)
     paintGold()
   }
   let look: FilmLook | undefined
@@ -866,14 +914,153 @@ export function createWing(): WingModule {
     keepTogetherIn(wing)
   }
 
+  /* ---- the round seat under a tall sheet ---- */
+  /** ONE HEIGHT DOWN, IN THE THUMB'S REACH: the first seat of the foot under
+      the record, the room's list, the Menu and a close look, upright. Its press
+      is the press of the sheet's own close at its top, so the two never part. */
+  function downSeat(act: () => void): HTMLButtonElement {
+    const seat = make('button', 'film-down')
+    seat.type = 'button'
+    seat.append(icon(ARROW_DOWN))
+    seat.addEventListener('click', act)
+    return seat
+  }
+  /** the seats under the record, the list and the Menu, named as their closes are */
+  const sheetSeats: HTMLButtonElement[] = []
+  function nameSheetSeats(): void {
+    for (const seat of sheetSeats) seat.setAttribute('aria-label', say(LOBBY_TEXT.close))
+  }
+  /** a close look's raised card: its fold key, the one that lowers it to its peek */
+  function lookFold(): HTMLElement | null {
+    const grab = hosts?.labels.querySelector<HTMLElement>('.vitrine .vitrine-grab[aria-expanded="true"]')
+    return grab && !grab.hidden && grab.getClientRects().length ? grab : null
+  }
+  function lookShut(): HTMLElement | null {
+    const shut = hosts?.labels.querySelector<HTMLElement>('.vitrine .vitrine-shut')
+    return shut && !shut.hidden ? shut : null
+  }
+  /** A CLOSE LOOK ONE HEIGHT DOWN: a raised card folds to its peek, as its own
+      key and the swipe down fold it; at the peek the look's top close leaves */
+  function lookDown(): void {
+    if (!look?.id) return
+    const fold = lookFold()
+    if (fold) fold.click()
+    else if (lookShut()) lookShut()!.click()
+    else look.back()
+    requestAnimationFrame(nameLookDown)
+  }
+  /** the seat says what its next press does, in the words of the key that does the same */
+  function nameLookDown(): void {
+    if (!phone || !look?.id) return
+    const said = lookFold()?.getAttribute('aria-label') || lookShut()?.getAttribute('aria-label') || say(LOBBY_TEXT.close)
+    if (phone.down.getAttribute('aria-label') !== said) phone.down.setAttribute('aria-label', said)
+  }
+  let downFrames = 0
+
+  /* ---- the room's list and the Menu, upright ---- */
+  /** THE STANDING STATION'S OWN CELLS where its room's list holds the sets of
+      more than one station (the hall): upright, the list marks them "here" */
+  function hereCells(): readonly string[] {
+    if (form !== 'upright') return []
+    const station = stationOf(LIFE[card]!.station).id
+    const own = release?.sets?.[station] ?? []
+    return own.length && own.length < setOf(station).length ? own : []
+  }
+  /** THE LIST OPENS WITH ITS FIRST ROW OF PICTURES CENTRED ON THE REACH LINE,
+      and where the first marked cell stands lower, scrolled so that cell's row
+      stands where the first row stands. Measured in the page as it opens. */
+  function placeList(): void {
+    const view = phoneList?.element
+    if (!view?.open) return
+    if (form !== 'upright') { view.style.removeProperty('--film-list-lead'); return }
+    const first = view.querySelector<HTMLElement>('.desk-ov-plate')
+    if (!first) return
+    view.style.setProperty('--film-list-lead', '0px')
+    const top = (plate: HTMLElement): number => plate.getBoundingClientRect().top + view.scrollTop
+    const lead = Math.max(0, Math.round(REACH * innerHeight - first.offsetHeight / 2 - top(first)))
+    view.style.setProperty('--film-list-lead', `${lead}px`)
+    const here = view.querySelector<HTMLElement>('.desk-ov-cell[data-here] .desk-ov-plate')
+    view.scrollTop = here ? Math.round(top(here) - top(first)) : 0
+    sheetMore(view)
+  }
+  /** the Menu's foot, with its round seat, while the wing stands on a phone */
+  let menuFoot: HTMLElement | undefined
+  /** THE MENU'S NOTE stands open where the whole column fits the sheet and
+      folded where it would scroll, read in the page each time the Menu opens;
+      a column too tall even folded opens at its end, its hand rows on the foot */
+  function menuOpened(panel: HTMLElement): void {
+    if (panel.hidden || form !== 'upright') return
+    // the pace's words stand over its choices: the row keeps their height free
+    const words = panel.querySelector<HTMLElement>('.inst-pace small')
+    if (words) panel.style.setProperty('--film-pace-words', `${words.offsetHeight}px`)
+    const note = panel.querySelector<HTMLDetailsElement>('.inst-labels')
+    if (note) {
+      note.open = true
+      if (panel.scrollHeight > panel.clientHeight + 1) note.open = false
+    }
+    panel.scrollTop = panel.scrollHeight - panel.clientHeight
+    menuMore(panel)
+  }
+  /** the note opens downward from its "+": a "+" scrolled part under the head comes whole under it first */
+  function noteInView(panel: HTMLElement, target: EventTarget | null): void {
+    if (form !== 'upright' || !(target instanceof HTMLDetailsElement) || !target.open || !target.classList.contains('inst-labels')) return
+    const head = panel.querySelector<HTMLElement>('.inst-kicker')
+    const summary = target.querySelector<HTMLElement>('summary')
+    if (!head || !summary) return
+    const under = head.getBoundingClientRect().bottom - summary.getBoundingClientRect().top
+    if (under > 0) panel.scrollTop -= Math.ceil(under)
+  }
+  /** ROWS WAITING UNDER A TALL SHEET'S FOOT, upright: the record's and the room's list's foot fades over them while
+      they do, as the Menu's does (film-wing.css); at the scroll's end no fade */
+  function sheetMore(sheet: HTMLElement): void {
+    const more = form === 'upright' && sheet.scrollTop + sheet.clientHeight < sheet.scrollHeight - 1
+    if (more === ('more' in sheet.dataset)) return
+    if (more) sheet.dataset['more'] = ''
+    else delete sheet.dataset['more']
+  }
+  /** read again at each scroll and whenever the sheet or a part of it changes height */
+  function watchMore(sheet: HTMLElement, parts: Iterable<Element>): void {
+    const more = (): void => sheetMore(sheet)
+    sheet.addEventListener('scroll', more, { passive: true, signal })
+    const sized = new ResizeObserver(more)
+    for (const part of [sheet, ...parts]) sized.observe(part)
+    signal.addEventListener('abort', () => { sized.disconnect(); delete sheet.dataset['more'] })
+  }
+  /** rows waiting under the Menu's foot: its fade stands while they do */
+  function menuMore(panel: HTMLElement): void {
+    const more = form === 'upright' && !panel.hidden && panel.scrollTop + panel.clientHeight < panel.scrollHeight - 1
+    if (more === ('more' in panel.dataset)) return
+    if (more) panel.dataset['more'] = ''
+    else delete panel.dataset['more']
+  }
+  function mountMenu(): void {
+    const panel = document.getElementById('instruments')
+    if (!panel) return
+    menuFoot = make('div', 'film-menu-foot')
+    const seat = downSeat(() => panel.querySelector<HTMLElement>('.inst-close')?.click())
+    menuFoot.append(seat)
+    sheetSeats.push(seat)
+    panel.append(menuFoot)
+    const watch = new MutationObserver(() => menuOpened(panel))
+    watch.observe(panel, { attributes: true, attributeFilter: ['hidden'] })
+    signal.addEventListener('abort', () => { watch.disconnect(); delete panel.dataset['more']; panel.style.removeProperty('--film-pace-words') })
+    panel.addEventListener('scroll', () => menuMore(panel), { passive: true, signal })
+    // the note's toggle and the language's list change the column's height
+    panel.addEventListener('toggle', (event) => { noteInView(panel, event.target); menuMore(panel) }, { capture: true, signal })
+    panel.addEventListener('click', () => requestAnimationFrame(() => menuMore(panel)), { signal })
+  }
+
   /* ---- the phone's graded box ---- */
   let phone: {
     root: HTMLElement; name: HTMLElement; line: HTMLElement; drawer: HTMLElement; keys: HTMLElement
-    more: HTMLButtonElement; from: HTMLButtonElement; count: HTMLButtonElement
-    back: HTMLButtonElement; book: HTMLButtonElement; earlier: HTMLButtonElement; talk: HTMLButtonElement; gold: HTMLButtonElement; goldName: HTMLElement; ringLine: SVGCircleElement
+    read: HTMLElement; space: HTMLElement; page: HTMLElement; pageKey: HTMLButtonElement
+    more: HTMLButtonElement; from: HTMLButtonElement; count: HTMLButtonElement; closer: HTMLButtonElement
+    back: HTMLButtonElement; down: HTMLButtonElement; book: HTMLButtonElement; earlier: HTMLButtonElement; talk: HTMLButtonElement; gold: HTMLButtonElement; goldName: HTMLElement; ringLine: SVGCircleElement
     goldPath: SVGPathElement
   } | undefined
   let drawerOpen = false
+  /** the stop, language and form the drawer's sentences were laid for */
+  let drawn = ''
   /* THE ROOM'S LIST ON THE PHONE: its count stands in the key row at rest,
      between "Mehr lesen" and the stop's number, as the desktop's band stands
      it beside "Mehr lesen"; the record takes the drawer's foot, one step
@@ -888,6 +1075,32 @@ export function createWing(): WingModule {
     drawer.id = 'film-drawer'
     setRegister(drawer, 'drawer')
     drawer.hidden = true
+    // upright the sentences stand in a window of their own, which pages (paintPage)
+    const read = make('div', 'film-read')
+    read.id = 'film-read'
+    const space = make('div', 'film-read-space')
+    space.setAttribute('aria-hidden', 'true')
+    const page = make('div', 'film-page')
+    const pageKey = make('button', 'film-page-key')
+    pageKey.type = 'button'
+    pageKey.setAttribute('aria-controls', read.id)
+    page.append(pageKey)
+    pageKey.addEventListener('click', () => turnPage())
+    let pageFrame = 0
+    read.addEventListener('scroll', () => { pageFrame ||= requestAnimationFrame(() => { pageFrame = 0; paintPage() }) }, { passive: true, signal })
+    // a finger scrolls the window; a swipe down that starts on its first rows folds the drawer, as on the box
+    let readFrom: { x: number; y: number } | null = null
+    read.addEventListener('touchstart', e => {
+      const t = e.touches[0]
+      readFrom = e.touches.length === 1 && t && read.scrollTop <= 0 ? { x: t.clientX, y: t.clientY } : null
+    }, { passive: true, signal })
+    read.addEventListener('touchend', e => {
+      const t = e.changedTouches[0], was = readFrom
+      readFrom = null
+      if (!was || !t || !drawerOpen) return
+      const dy = t.clientY - was.y, dx = t.clientX - was.x
+      if (dy > 24 && dy > Math.abs(dx) * 1.5) setDrawer(false)
+    }, { passive: true, signal })
     const keys = make('div', 'film-keys')
     const more = make('button', 'film-key film-more')
     more.type = 'button'
@@ -899,7 +1112,11 @@ export function createWing(): WingModule {
     const count = make('button', 'film-key film-count')
     count.type = 'button'
     count.setAttribute('aria-haspopup', 'dialog')
-    keys.append(more, count)
+    // a stop's closer look, in the slot a stop with a set names its count (paintPhone)
+    const closer = make('button', 'film-key film-closer')
+    closer.type = 'button'
+    closer.hidden = true
+    keys.append(more, closer, count)
     const foot = make('div', 'film-foot')
     const back = make('button', 'film-back')
     back.type = 'button'
@@ -932,7 +1149,9 @@ export function createWing(): WingModule {
     earlier.type = 'button'
     earlier.append(icon(STEP_BACK))
     earlier.addEventListener('click', () => look?.ways()?.step(-1))
-    foot.append(back, ...(walk ? [walk.plan] : []), book, ...(walk ? [walk.hold] : []), earlier, talk, gold)
+    // upright, a close look's first seat is the round one, one height down
+    const down = downSeat(lookDown)
+    foot.append(down, back, ...(walk ? [walk.plan] : []), book, ...(walk ? [walk.hold] : []), earlier, talk, gold)
     root.append(name, line, drawer, keys, ...(walk ? [walk.element] : []), foot)
     // the hold takes the book's seat while the eye walks, where the book stands down
     walk?.hold.classList.add('film-hold')
@@ -950,15 +1169,16 @@ export function createWing(): WingModule {
     signal.addEventListener('abort', () => rows.disconnect())
     watchGoldName(goldName, signal)
     more.addEventListener('click', () => setDrawer(!drawerOpen))
+    closer.addEventListener('click', () => closerHere()?.open(closer))
     from.addEventListener('click', () => { paintSources(null); sources?.select('station'); sources?.setOpen(true) })
     count.addEventListener('click', () => dispatchEvent(new Event('na-wing-plan')))
     back.addEventListener('click', () => { if (look?.id) { look.back(); return } if (backFromHold() || up()) return; const to = backIndex(); if (to !== null) h.navigate(to) })
     book.addEventListener('click', () => document.getElementById('rail-instruments')?.click())
     talk.addEventListener('click', () => { endWith('talk') })
     gold.addEventListener('click', () => pressOn())
-    // a swipe up raises the words, a swipe down or a tap on the picture folds them
-    let fromX = 0, fromY = 0, held = false
-    root.addEventListener('pointerdown', e => { held = true; fromX = e.clientX; fromY = e.clientY }, { signal })
+    // a swipe up raises the words, a swipe down or a tap on the picture folds them; a drag in a scrolled window scrolls it
+    let fromX = 0, fromY = 0, held = false, scrolled = false
+    root.addEventListener('pointerdown', e => { held = true; fromX = e.clientX; fromY = e.clientY; scrolled = read.contains(e.target as Node) && read.scrollTop > 0 }, { signal })
     root.addEventListener('pointerup', e => {
       if (!held) return
       held = false
@@ -966,11 +1186,12 @@ export function createWing(): WingModule {
       // sideways in a close look it steps the set, as the foot row's two ways do
       if (look?.id && Math.abs(dx) > 40 && Math.abs(dx) > Math.abs(dy) * 1.5) { look.ways()?.step(dx < 0 ? 1 : -1); return }
       if (dy < -24 && !drawerOpen) setDrawer(true)
-      else if (dy > 24 && drawerOpen) setDrawer(false)
+      else if (dy > 24 && drawerOpen && !scrolled) setDrawer(false)
     }, { signal })
-    phone = { root, name, line, drawer, keys, more, from, count, back, book, earlier, talk, gold, goldName, ringLine, goldPath: goldIcon.querySelector('path')! }
+    phone = { root, name, line, drawer, keys, read, space, page, pageKey, more, from, count, closer, back, down, book, earlier, talk, gold, goldName, ringLine, goldPath: goldIcon.querySelector('path')! }
   }
-  function setDrawer(open: boolean): void {
+  /** the words raised or folded; `glide`: the picture's rise moves with them (a visitor's own press), else it stands at once */
+  function setDrawer(open: boolean, glide = true): void {
     if (!phone) return
     const stop = deskStoryStop(LIFE[card]!.id)
     drawerOpen = open && Boolean(stop?.drawer)
@@ -978,8 +1199,122 @@ export function createWing(): WingModule {
     phone.drawer.hidden = !drawerOpen
     phone.line.hidden = drawerOpen
     phone.more.setAttribute('aria-expanded', String(drawerOpen))
+    // laid again on every press, so a drawer opens at its first sentence and a folded one holds nothing
+    drawn = '-'
     paintPhone()
     marksAt = ''
+    paintRise(glide)
+  }
+  /* THE DRAWER'S WINDOW PAGES, upright. The drawer stands as tall as its text
+     up to its top 28 px under the reach line (film-wing.css); a longer text
+     scrolls in the window, which runs down to the record's rule. While rows
+     wait below, the window's foot is a fade over a plate whose key brings the
+     first row not wholly shown to the window's top; once the last sentence
+     shows, the key brings the first back. */
+  function readRows(): { top: number; bottom: number }[] {
+    const rows: { top: number; bottom: number }[] = []
+    for (const p of phone?.read.querySelectorAll<HTMLElement>('p') ?? []) {
+      const lh = parseFloat(getComputedStyle(p).lineHeight) || 26
+      for (let i = 0, n = Math.max(1, Math.round(p.offsetHeight / lh)); i < n; i++) rows.push({ top: p.offsetTop + i * lh, bottom: p.offsetTop + (i + 1) * lh })
+    }
+    return rows
+  }
+  /** whether the window pages, read with its plate down so the answer never feeds itself */
+  function measurePages(): void {
+    if (!phone) return
+    const { drawer, read } = phone
+    if (form !== 'upright' || !drawerOpen || !read.isConnected) { delete drawer.dataset['pages']; delete drawer.dataset['end']; return }
+    drawer.dataset['pages'] = 'false'
+    drawer.dataset['pages'] = String(read.scrollHeight > read.clientHeight + 1)
+    paintPage()
+  }
+  function paintPage(): void {
+    if (!phone || phone.drawer.dataset['pages'] !== 'true') return
+    const { drawer, read, pageKey } = phone
+    const last = readRows().pop()
+    const end = !last || last.bottom - read.scrollTop <= read.clientHeight - PLATE + 0.5
+    drawer.dataset['end'] = String(end)
+    const to = end ? 'top' : 'on'
+    if (pageKey.dataset['to'] === to && pageKey.dataset['lang'] === lang()) return
+    pageKey.dataset['to'] = to
+    pageKey.dataset['lang'] = lang()
+    pageKey.replaceChildren(make('span', 'film-page-word', say(end ? BACK_TO_TOP : READ_ON)), icon(end ? ARROW_UP : ARROW_DOWN))
+  }
+  function turnPage(): void {
+    if (!phone) return
+    const { read, space, pageKey } = phone
+    const behavior = matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth'
+    if (pageKey.dataset['to'] === 'top') { read.scrollTo({ top: 0, behavior }); return }
+    const next = readRows().find(r => r.bottom - read.scrollTop > read.clientHeight - PAGE_FOOT + 0.5)
+    if (!next) return
+    // room under the last sentence, so the row can stand at the window's top
+    space.style.height = `${Math.max(0, Math.ceil(next.top + read.clientHeight - (read.scrollHeight - space.offsetHeight)))}px`
+    read.scrollTo({ top: next.top, behavior })
+  }
+  /* THE PICTURE RISES WHILE THE DRAWER STANDS, upright: no render and no
+     camera, the film's picture moves up in the page until the stop's hero
+     stands RISE_AIR over the drawer's top, by no more than RISE_MOST of the
+     glass. The hero is the stop's own work where the release names one, else
+     the work named after its station by its mark, else the largest of its
+     upright regions in the stop's own set, else the largest; no region, no
+     rise. A mark in the thumb's reach stays in it.
+     It settles with the visitor's press, returns as the drawer folds, and
+     stands at once under Reduce Motion or when the eye walks on. The marks
+     and the words wait for it to settle. */
+  let riseTimer = 0
+  let riseSettles = 0
+  const areaOf = (r: PictureRegion): number => Math.abs(r.points.reduce((a, [x, y], i, p) => { const [nx, ny] = p[(i + 1) % p.length]!; return a + x * ny - nx * y }, 0)) / 2
+  function heroOf(node: PictureNode): PictureRegion | null {
+    const regions = picture?.regions(node) ?? []
+    const named = release?.nodes[node]?.exhibit
+    const own = named ? regions.find(r => r.id === named) : undefined
+    if (own) return own
+    const station = release?.nodes[node]?.station ?? ''
+    const set = new Set(release?.sets?.[station === 'picture-room-west' ? 'picture-room' : station] ?? [])
+    const pool = regions.some(r => set.has(r.id)) ? regions.filter(r => set.has(r.id)) : regions
+    return pool.reduce<PictureRegion | null>((best, r) => (!best || areaOf(r) > areaOf(best) ? r : best), null)
+  }
+  /** the work named after the stop's station, by its mark: a stop's own work with no region (the grave's slab) */
+  function stationMark(node: PictureNode): PictureMark | undefined {
+    const station = release?.nodes[node]?.station ?? ''
+    if (!picture || !station || !(release?.sets?.[station] ?? []).includes(station)) return undefined
+    return picture.marks(node, lang(), true).find(m => m.id === station)
+  }
+  function riseWanted(): number {
+    if (!picture || !phone || form !== 'upright' || !drawerOpen || look?.id || picture.state().kind !== 'rest') return 0
+    // a stop with a work named after its station rises toward that work, and its marks are laid in reach after the rise
+    const own = stationMark(here())
+    const hero = own ? null : heroOf(here())
+    if (!own && !hero?.points.length) return 0
+    const foot = own ? own.y : Math.max(...hero!.points.map(([, y]) => y))
+    const top = phone.root.getBoundingClientRect().top
+    // the phone's law keeps every control in reach: no mark that stands under the reach line is lifted over it
+    const reach = REACH * innerHeight
+    const kept = own ? Infinity : picture.marks(here(), lang(), true).reduce((most, m) => (m.y >= reach ? Math.min(most, Math.floor(m.y - reach)) : most), Infinity)
+    return Math.max(0, Math.min(Math.ceil(foot - (top - RISE_AIR) - 0.01), Math.round(RISE_MOST * innerHeight), kept))
+  }
+  function paintRise(glide: boolean): void {
+    const want = riseWanted()
+    const wing = hosts?.stage.parentElement
+    if (want === rise || !wing) return
+    rise = want
+    clearTimeout(riseTimer)
+    // a night strip under the foot's veil while risen, so the picture's lifted edge never reads through it
+    if (rise > 0) wing.dataset['risen'] = ''
+    else delete wing.dataset['risen']
+    if (glide && !matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      wing.dataset['rising'] = ''
+      riseSettles = performance.now() + RISE_MS + 40
+      riseTimer = window.setTimeout(() => { delete wing.dataset['rising']; marksAt = '' }, RISE_MS + 40)
+    } else {
+      delete wing.dataset['rising']
+      riseSettles = 0
+    }
+    clearMarks()
+    words?.hide()
+    wordsAt = ''
+    marksAt = ''
+    picture?.update()
   }
   function paintPhone(): void {
     if (!phone || !hosts) return
@@ -987,11 +1322,23 @@ export function createWing(): WingModule {
     const stop = deskStoryStop(id)
     phone.name.textContent = ''
     phone.name.append(deskMark(stop?.certainty ?? 'reconstructed'), make('span', 'film-chapter', text(stop?.chapter ?? LIFE[card]!.name)))
-    if (stop?.age && !atBirth(stop.age)) phone.name.append(make('span', 'film-clock', text(stop.age)))
+    if (stop?.age && !atBirth(stop.age)) phone.name.append(make('span', 'film-clock', form === 'upright' ? bareAge(text(stop.age)) : text(stop.age)))
     phone.line.textContent = stop ? keepTogether(say(stop.line)) : ''
-    phone.drawer.textContent = ''
-    if (drawerOpen && stop?.drawer) {
-      for (const sentence of sentences(text(stop.drawer), lang())) phone.drawer.append(make('p', '', keepTogether(sentence)))
+    // the sentences are laid again only for another stop, language or form, so a paged window keeps its place
+    const reading = drawerOpen && stop?.drawer ? `${id}|${lang()}|${form}` : ''
+    const laid = reading !== drawn
+    if (laid) {
+      drawn = reading
+      phone.drawer.textContent = ''
+      if (reading && stop?.drawer) {
+        const rows = sentences(text(stop.drawer), lang()).map(sentence => make('p', '', keepTogether(sentence)))
+        if (form === 'upright') {
+          phone.space.style.height = ''
+          phone.read.replaceChildren(...rows, phone.space, phone.page)
+          phone.drawer.append(phone.read)
+          phone.read.scrollTop = 0
+        } else phone.drawer.append(...rows)
+      }
     }
     phone.more.textContent = ''
     phone.more.append(document.createTextNode(say(drawerOpen ? LOBBY_TEXT.close : deskControl('shared', 'read_more'))), icon(drawerOpen ? ARROW_DOWN : ARROW_UP))
@@ -1005,7 +1352,11 @@ export function createWing(): WingModule {
       if (drawerOpen) phone.drawer.append(phone.from)
       else phone.from.remove()
     } else if (phone.from.parentElement !== phone.keys) phone.keys.insertBefore(phone.from, phone.count)
+    if (laid) measurePages()
     phoneList?.paint()
+    const near = closerHere()
+    phone.closer.hidden = !near
+    if (near) phone.closer.replaceChildren(document.createTextNode(say(near.word)), icon(NEARER))
     phone.count.textContent = `${String(card + 1).padStart(2, '0')} / ${LIFE.length}`
     phone.count.setAttribute('aria-label', `${text(deskControl('ways', 'chapters'))} ${card + 1} / ${LIFE.length}`)
     const back = backIndex()
@@ -1155,6 +1506,7 @@ export function createWing(): WingModule {
     paintPhone()
     paintSources()
     marksAt = ''
+    paintRise(false)
   }
   function ahead(): void {
     if (above) { picture?.ahead([stopNode(LIFE[0]!.id)]); return }
@@ -1198,7 +1550,7 @@ export function createWing(): WingModule {
     if (!hosts || !evening?.here()) return false
     const wing = hosts.stage.parentElement!
     eveningOn = true
-    if (drawerOpen) setDrawer(false)
+    if (drawerOpen) setDrawer(false, false)
     clearMarks()
     words?.hide(); wordsAt = ''
     wing.dataset['evening'] = ''
@@ -1288,7 +1640,12 @@ export function createWing(): WingModule {
     marksAt = ''; wordsAt = ''
     look?.layout()
     paintPhone()
+    paintRise(false)
     walk?.paint()
+    // the list's lead and the Menu's fade are the upright form's own
+    placeList()
+    const panel = document.getElementById('instruments')
+    if (panel) menuMore(panel)
     void whenFraming(picture, () => (wide ? 'wide' : 'upright'), signal).then(() => { marksAt = ''; wordsAt = ''; look?.layout() })
   }
 
@@ -1353,7 +1710,7 @@ export function createWing(): WingModule {
     picture.element.after(cycleLayer)
     words?.dispose()
     words = createPictureWords(layer => cycleLayer!.after(layer))
-    picture.on('state', state => { paintDip(state); if (state.kind === 'rest') marksAt = ''; else h.stage.style.cursor = ''; walkState(state) })
+    picture.on('state', state => { paintDip(state); if (state.kind === 'rest') marksAt = ''; else h.stage.style.cursor = ''; walkState(state); paintRise(false) })
     picture.on('rest', state => {
       if (state.kind !== 'rest') return
       // a work of a wall belongs to the story stop before it along the wall
@@ -1402,13 +1759,22 @@ export function createWing(): WingModule {
       walk,
       held: () => walkMotion() === 'held',
       goOn: goOnWalk,
+      closer: closerHere,
     })
     if (form !== 'desk') {
       buildPhone(h)
       // the phone counts only the room it stands in: walking into the next room the key waits for that room's cells
-      phoneList = createDeskOverview({ ...listHost(), cells: () => (cellsAt === roomKey() ? cellsNow : []), columns: () => 2, lang, mark: deskMark, sheet: true })
+      phoneList = createDeskOverview({ ...listHost(), cells: () => (cellsAt === roomKey() ? cellsNow : []), columns: () => 2, lang, mark: deskMark, sheet: true, here: hereCells })
       h.labels.append(phoneList.element)
       phoneList.control.classList.add('film-key')
+      // the list's foot carries the round seat, its press the list's own close
+      const listSeat = downSeat(() => phoneList?.element.querySelector<HTMLElement>('.desk-ov-shut')?.click())
+      phoneList.element.append(listSeat)
+      sheetSeats.push(listSeat)
+      watchMore(phoneList.element, phoneList.element.children)
+      // after the list's own press has opened it
+      phoneList.control.addEventListener('click', () => requestAnimationFrame(placeList), { signal })
+      mountMenu()
       phone!.keys.insertBefore(phoneList.control, phone!.count)
       // the panel's rows are the film's ways' own where the phone stood upright at the mount
       cinema = createFilmCinema({ wing, box: phone!.root, stop: () => LIFE[card]!.id, rows: form === 'cinema',
@@ -1439,6 +1805,14 @@ export function createWing(): WingModule {
     sourceButton.addEventListener('click', () => { paintSources(null); sources?.select('station'); sources?.setOpen(true) })
     wing.querySelector('.wing-rail-group')?.append(sourceButton)
     sources = createVinciSourcesWindow(h.labels, sourceButton, () => { sources?.setOpen(false); recordOf = null })
+    if (form !== 'desk') {
+      // the record's foot carries the round seat before its tabs, its press the record's own close
+      const recordSeat = downSeat(() => sources?.element.querySelector<HTMLElement>('.vinci-sources-close')?.click())
+      sources.element.querySelector('.vinci-sources-toolbar')?.prepend(recordSeat)
+      sheetSeats.push(recordSeat)
+      watchMore(sources.element, Object.values(sources.panels))
+    }
+    nameSheetSeats()
     // THE PLAN AND THE LIFE, the live wing's two ways through it, pressed the film's way
     // the plan and the life open as the desktop's dialogs sideways: the phone's tall sheets need its height
     mountFilmWays({ hosts: h, narrow: () => form === 'upright', stops: LIFE, carried, standing: () => card, stood: () => [...stood],
@@ -1527,7 +1901,7 @@ export function createWing(): WingModule {
     h.stage.addEventListener('pointermove', e => { h.stage.style.cursor = pictureAt(e) ? 'pointer' : '' }, { signal })
     // a press on the picture folds the phone's words back to the one line
     h.stage.addEventListener('click', e => { if (drawerOpen && !(e.target as Element).closest('.film-box')) setDrawer(false) }, { signal })
-    addEventListener('resize', () => { marksAt = ''; look?.layout() }, { signal })
+    addEventListener('resize', () => { marksAt = ''; look?.layout(); measurePages(); paintRise(false) }, { signal })
     /* A PHONE TURNED KEEPS ITS PLACE: between upright and sideways the same
        controls stand in the other form and the picture is picked again in the
        other framing, the stop and an open look kept. A window that crosses to
@@ -1576,7 +1950,7 @@ export function createWing(): WingModule {
       if (!picture || !carried(index)) return
       lookLeaving = true
       try { look?.close() } finally { lookLeaving = false }
-      if (drawerOpen) setDrawer(false)
+      if (drawerOpen) setDrawer(false, false)
       // ONLY THE NEXT AND THE PREVIOUS STOP ARE WALKED: a press on the plan
       // or on a far stop fades there, as the live wing's does
       above = false
@@ -1592,6 +1966,7 @@ export function createWing(): WingModule {
     language() {
       module.stations = LIFE.map(s => ({ id: s.id, name: text(s.name), question: text(stationOf(s.station).door), door: stationOf(s.station).door.station }))
       if (sourceButton) sourceButton.textContent = say(SOURCES_WORD)
+      nameSheetSeats()
       paint()
       walk?.paint()
     },
@@ -1618,6 +1993,8 @@ export function createWing(): WingModule {
       if (phone && (goldWalking !== underWay || phone.gold.dataset['wait'] !== String(s.kind === 'wait'))) paintGold()
       // a look that stepped in place (a page turned, a topic on) renames gold
       else if (phone && look?.id && ++lookFrames % 8 === 0) { if (waysKey(look.ways()) !== lookWays) paintGold() }
+      // the card raised or folded by its own key renames the round seat
+      if (phone && look?.id && form === 'upright' && ++downFrames % 8 === 0) nameLookDown()
       if (phone) {
         const share = s.kind === 'walk' || s.kind === 'wait' ? s.share : 0
         phone.ringLine.setAttribute('stroke-dasharray', `${(RING * share).toFixed(1)} ${RING.toFixed(1)}`)
@@ -1625,7 +2002,7 @@ export function createWing(): WingModule {
       if (answering) setWalkingLeg(answering.dot, s.kind === 'walk' ? s.share : 0)
       desk?.update()
       const courtWalk = inGraveCourt(s) && !eveningOn
-      if (s.kind === 'rest' && performance.now() > doorLeaving && !eveningOn) { paintMarks(); paintWords() }
+      if (s.kind === 'rest' && performance.now() > doorLeaving && performance.now() > riseSettles && !eveningOn) { paintMarks(); paintWords() }
       else if (s.kind === 'wait' && dots.length) clearMarks()
       if (courtWalk) paintWords(true)
       else if (s.kind !== 'rest' && wordsAt) { words?.hide(); wordsAt = '' }
@@ -1637,6 +2014,8 @@ export function createWing(): WingModule {
       phone?.root.remove(); phone = undefined
       phoneList?.dispose(); phoneList = undefined
       sources?.dispose(); sources = undefined
+      menuFoot?.remove(); menuFoot = undefined
+      sheetSeats.length = 0
       sourceButton?.remove(); sourceButton = undefined
       picture?.dispose(); picture = undefined
       clearMarks(); chip?.remove(); marksGlass?.remove(); answering?.dot.remove(); answering = null
@@ -1652,6 +2031,7 @@ export function createWing(): WingModule {
       if (hosts) {
         const wing = hosts.stage.parentElement!
         delete wing.dataset['wing']; delete wing.dataset['film']; delete wing.dataset['cut']; delete wing.dataset['evening']
+        clearTimeout(riseTimer); rise = 0; delete wing.dataset['rising']; delete wing.dataset['risen']
         delete hosts.labels.dataset['keepsFoot']
         if (labelsHidden !== null) hosts.labels.setAttribute('aria-hidden', labelsHidden)
         hosts.stage.textContent = ''

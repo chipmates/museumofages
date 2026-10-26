@@ -6,8 +6,8 @@
 //   node --test forge/film/narrow.test.mjs
 import { test } from 'node:test'
 import assert from 'node:assert/strict'
-import { GLOBAL_DEFINITION } from './keys.mjs'
-import { KNOWN_CAPTURES, KNOWN_SHADOW_LIGHTS, farBoxOf, lightingAt, lightingOf, litRoomCells, movedCells, narrowPlan, renderedKeys, settingOf } from './narrow.mjs'
+import { GLOBAL_DEFINITION, closure } from './keys.mjs'
+import { BENCH_ONLY, KNOWN_CAPTURES, KNOWN_SHADOW_LIGHTS, farBoxOf, lightingAt, lightingOf, litRoomCells, movedCells, narrowPlan, renderedKeys, settingOf } from './narrow.mjs'
 import { cellNumber } from './scene.mjs'
 import { narrowedHits } from './seen.mjs'
 import { cellNumbers, cellSet } from './export.mjs'
@@ -183,7 +183,11 @@ test('the working tree: the pin is whole, and every room probe stands in a lit c
   assert.deepEqual(lighting.captures, [...KNOWN_CAPTURES].sort())
   assert.deepEqual(lighting.lights, [...KNOWN_SHADOW_LIGHTS].sort())
   assert.deepEqual(lighting.far, { half: 90, light: 80, near: .5, far: 160 }, 'the far cascade as the wing stands it')
-  const { load } = await createLoader()
+  const loader = await createLoader(), { load } = loader
+  for (const entry of [`${WING_DIR}/index.ts`, `${WING_DIR}/film-wing.ts`]) {
+    const reached = closure(loader, entry, 'src/')
+    assert.deepEqual(BENCH_ONLY.filter((f) => reached.includes(`${WING_DIR}/${f}`)), [], `${entry} reaches no light the pin leaves to the bench`)
+  }
   const lit = litRoomCells(load)
   const { FLOOR } = load(`${WING_DIR}/collection/layout.ts`)
   const probes = [

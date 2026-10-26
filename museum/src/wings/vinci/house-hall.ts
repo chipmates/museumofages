@@ -1,8 +1,9 @@
 /** THE GREAT HALL, as the dossier proposes it (A-LAYOUT room `hall`), and the
  * inner service passage that leads to it from the entrance. The fabric is the
  * dossier's: plan, levels, clear height, the four windows and two doors, the
- * 45 degree tile lay read from Q144, oak joists at 0.60 m under a main beam,
- * the tuffeau chimneypiece with a brick fireback where A-FURNITURE puts it.
+ * 45 degree tile lay read from Q144, the tuffeau chimneypiece with a brick
+ * fireback where A-FURNITURE puts it. The ceiling's layout and the floor's
+ * straight bands follow the room's photographs; the walls are kept whole.
  * The things in the hall are types of the period, each built from its own
  * recipe and labelled as a type; none is claimed as his.
  * Light: the hour's sun enters through the registered west windows by the
@@ -17,10 +18,11 @@ import { hourKey } from './site'
 import { SHADOW_ONLY_LAYER } from '../../stack/light'
 import type { TierName } from '../../stack/tier'
 import type { MaterialLibrary } from '../../stack/materials'
+import { HALL_LION } from './collection/stands'
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 type N = any
-const { Fn, abs, acos, attribute, cameraPosition, clamp, exp, float, floor, fract, max, min, mix, mx_noise_float, normalWorld, normalWorldGeometry, positionWorld, smoothstep, step, uv, vec2, vec3 } = TSL as unknown as Record<string, N>
+const { Fn, abs, acos, attribute, cameraPosition, cameraViewMatrix, clamp, exp, float, floor, fract, max, min, mix, mx_noise_float, normalWorld, normalWorldGeometry, positionWorld, smoothstep, step, uv, vec2, vec3 } = TSL as unknown as Record<string, N>
 
 type V2 = [number, number]
 type V3 = [number, number, number]
@@ -142,14 +144,29 @@ const toUV = (p: V2): V2 => [(p[0] - SW[0]) * U[0] + (p[1] - SW[1]) * U[1], (p[0
 const fromUV = (u: number, v: number): V2 => [SW[0] + U[0] * u + V[0] * v, SW[1] + U[1] * u + V[1] * v]
 const P = (u: number, v: number, z: number): V3 => { const q = fromUV(u, v); return [q[0], q[1], z] }
 const HALL_W = toUV(SE)[0], HALL_D = toUV(NW)[1]
-/** the joists' count past the first and the first's centre along u */
-const JOIST_N = Math.floor((HALL_W - JOIST_W) / JOIST_STEP), JOIST_FIRST = (HALL_W - JOIST_N * JOIST_STEP) / 2
+/** THE HALL'S JOISTS run along u, close set as the photographs show them:
+ * the gap about a joist's width (the dossier's 0.60 m spacing is the service
+ * passage's). Their count past the first and the first's centre along v. */
+const HALL_JOIST_STEP = 2 * JOIST_W
+const HALL_JOIST_N = Math.floor((HALL_D - JOIST_W - .4) / HALL_JOIST_STEP), HALL_JOIST_FIRST = (HALL_D - HALL_JOIST_N * HALL_JOIST_STEP) / 2
+/** The main beams' lines along u, clear of the back windows' heads and the
+ * kitchen door. */
+const HALL_BEAMS_U = [2.95, 7.05] as const
 /** The diagonal field's outline, a border row in from the walls: the joint the
  * border and the field share runs along it. Each edge as a point and its
  * inward normal in the hall's frame. */
 const FIELD_EDGES: { a: V2; n: V2 }[] = (() => {
   const f = inset(hallOutline.map(toUV), PITCH)
   return f.map((a, i) => { const b = f[(i + 1) % f.length]!, l = Math.hypot(b[0] - a[0], b[1] - a[1]); return { a, n: [-(b[1] - a[1]) / l, (b[0] - a[0]) / l] as V2 } })
+})()
+/** THE STRAIGHT BANDS across the diagonal, as today's floor lays them: one
+ * square tile wide, dividing the field into three by three large fields.
+ * Their centre lines in the hall's frame, u then v. */
+const FLOOR_BANDS: { u: number[]; v: number[] } = (() => {
+  const f = inset(hallOutline.map(toUV), PITCH)
+  const u0 = Math.max(f[0]![0], f[3]![0]), u1 = Math.min(f[1]![0], f[2]![0]), v0 = Math.max(f[0]![1], f[1]![1]), v1 = Math.min(f[2]![1], f[3]![1])
+  const thirds = (a: number, b: number): number[] => [1, 2].map(k => a + (b - a) * k / 3)
+  return { u: thirds(u0, u1), v: thirds(v0, v1) }
 })()
 /** The service passage between the entrance and the hall, dossier outline. */
 const LINK_OUTLINE: V2[] = (() => { const p = LINK.polygon as V2[]; return signedArea(p) < 0 ? [...p].reverse() : p })()
@@ -201,17 +218,18 @@ class Sink {
     for (let k = 1; k < pts.length - 1; k++) this.tri(pts[0]!, pts[k]!, pts[k + 1]!, n, uvOf(pts[0]!), uvOf(pts[k]!), uvOf(pts[k + 1]!), kind, seed)
   }
   /** A turned body: a profile of [radius, height] revolved about an upright
-   * axis at c, n facets round. */
+   * axis at c, n facets round. Each corner carries the round's own normal, so
+   * the facets do not show; the profile's corners stay sharp. */
   lathe(c: V3, profile: V2[], n: number, kind: number, seed: number): void {
     for (let i = 0; i < profile.length - 1; i++) {
       const [r0, z0] = profile[i]!, [r1, z1] = profile[i + 1]!
+      if (r0 < 1e-5 && r1 < 1e-5) continue
+      const dz = z1 - z0, dr = r1 - r0, l = Math.hypot(dz, dr) || 1
+      const P0 = (r: number, z: number, t: number): V3 => [c[0] + Math.cos(t) * r, c[1] + Math.sin(t) * r, c[2] + z]
+      const N0 = (t: number): V3 => [Math.cos(t) * dz / l, Math.sin(t) * dz / l, -dr / l]
       for (let k = 0; k < n; k++) {
         const t0 = k / n * Math.PI * 2, t1 = (k + 1) / n * Math.PI * 2
-        const P0 = (r: number, z: number, t: number): V3 => [c[0] + Math.cos(t) * r, c[1] + Math.sin(t) * r, c[2] + z]
-        const tm = (t0 + t1) / 2, dz = z1 - z0, dr = r1 - r0, l = Math.hypot(dz, dr) || 1
-        const nrm: V3 = [Math.cos(tm) * dz / l, Math.sin(tm) * dz / l, -dr / l]
-        if (r0 < 1e-5 && r1 < 1e-5) continue
-        this.quad(P0(r0, z0, t0), P0(r0, z0, t1), P0(r1, z1, t1), P0(r1, z1, t0), dot(nrm, nrm) > 0 ? nrm : null, [k / n, z0], [(k + 1) / n, z0], [(k + 1) / n, z1], [k / n, z1], kind, seed)
+        this.quadN(P0(r0, z0, t0), P0(r0, z0, t1), P0(r1, z1, t1), P0(r1, z1, t0), N0(t0), N0(t1), N0(t1), N0(t0), [k / n, z0], [(k + 1) / n, z0], [(k + 1) / n, z1], [k / n, z1], kind, seed)
       }
     }
   }
@@ -534,8 +552,8 @@ function windFront(poly: V3[], front: V3): V3[] {
   const n = cross(sub(poly[1]!, poly[0]!), sub(poly[2]!, poly[0]!))
   return dot(n, sub(front, poly[0]!)) > 0 ? [...poly].reverse() : poly
 }
-function formFactorNode(poly: V3[], front: V3): N {
-  const P = positionWorld, Nw = normalWorld
+function formFactorNode(poly: V3[], front: V3, Nw: N = normalWorld): N {
+  const P = positionWorld
   const pts = windFront(poly, front).map(p => vec3(p[0], p[2], -p[1]).sub(P).normalize())
   let sum: N = float(0)
   for (let i = 0; i < pts.length; i++) {
@@ -684,6 +702,78 @@ export function limewashOverBrick(T: N, floorZ: number, base: N, seed: number, w
   return { albedo: aged, bare }
 }
 
+/** LIME PLASTER UNDER A LIMEWASH, KEPT: the hall's walls as a household in
+ * use keeps them, whole and even, no brick showing, no fallen wash, no smoke
+ * on the upper walls. What remains is the hand's work: the coats a little
+ * thicker and thinner over the metres, the trowel's broad sweeps, the wash's
+ * brush and the lime's grain, each faded out before a pixel can hold less
+ * than a sixth of it. `T` is the surface's uv in metres (along, height). */
+function keptLimePlaster(T: N, base: N, seed: number): N {
+  const rho = T.dFdx().length().max(T.dFdy().length()).max(1e-6)
+  const fade = (L: number): N => float(1).sub(smoothstep(L / 6, L / 2.5, rho))
+  const n = (sx: number, sy: number, k: number): N => mx_noise_float(vec3(T.x.div(sx), T.y.div(sy), seed + k))
+  const nL = n(1.6, 1.2, 0), nP = n(.6, .45, 5).mul(fade(.45)), nM = n(.15, .12, 3).mul(fade(.12)), nF = n(.006, .005, 11).mul(fade(.005))
+  // the trowel's sweeps: long shallow arcs, each a slightly different polish
+  const sweep = mx_noise_float(vec3(T.x.mul(.7).add(T.y.mul(.5)).div(.35), T.y.mul(.7).sub(T.x.mul(.5)).div(.09), seed + 19)).mul(fade(.09))
+  const stroke = (c: number, sn: number, key: number): N => mx_noise_float(vec3(T.x.mul(c).add(T.y.mul(sn)).div(.3), T.y.mul(c).sub(T.x.mul(sn)).div(.014), seed + key))
+  const brush = stroke(.8, .6, 43).add(stroke(.8, -.6, 47)).mul(fade(.014))
+  return base.mul(nL.mul(.12).add(nP.mul(.05)).add(nM.mul(.016)).add(sweep.mul(.04)).add(brush.mul(.014)).add(nF.mul(.03)).add(1))
+    .mul(mix(vec3(1, 1, 1), vec3(1.015, 1, .97), smoothstep(-.3, .5, nL)))
+}
+
+/** THE TROWEL'S UNDULATION. A hand-laid lime coat over old masonry rises and
+ * falls a centimetre or two over a metre and a few millimetres over a hand's
+ * breadth, and the windows' raking day draws it on a wall. Its slope by
+ * differences in the wall's own metres (along the wall, then up). */
+function plasterRelief(T: N, Ng: N): N {
+  const h = (x: N, y: N): N => mx_noise_float(vec3(x.div(.85), y.div(.6), 3.3)).mul(.02)
+    .add(mx_noise_float(vec3(x.div(.24), y.div(.2), 8.1)).mul(.004))
+  const e = .025
+  const dx = h(T.x.add(e), T.y).sub(h(T.x.sub(e), T.y)).div(2 * e)
+  const dy = h(T.x, T.y.add(e)).sub(h(T.x, T.y.sub(e))).div(2 * e)
+  const up = vec3(0, 1, 0), along = up.cross(Ng)
+  return Ng.sub(along.div(along.length().max(1e-4)).mul(dx)).sub(up.mul(dy)).normalize()
+}
+
+/** A THIN PAINTED BAND just under the joists, as the house's one painted
+ * plaster shows it (weak; the tone ours): 6 cm of red ochre, 12 cm under
+ * them, its edges as a brush leaves them. `y` the height, as the renderer's. */
+const PAINTED_BAND = { below: .12, wide: .06 }
+function paintedBand(T: N, y: N): N {
+  const d = float(CEIL_Z - PAINTED_BAND.below).sub(y).add(mx_noise_float(vec3(T.x.mul(7), 1.7, 2.9)).mul(.004))
+  const px = d.dFdx().abs().add(d.dFdy().abs()).max(1e-5)
+  return smoothstep(px.negate(), px, d).mul(float(1).sub(smoothstep(float(PAINTED_BAND.wide).sub(px), float(PAINTED_BAND.wide).add(px), d)))
+}
+
+/** THE LION'S HOLD ON THE ROOM'S LIGHT: its body and paws as spheres in its
+ * own frame (+z its nose, +x its left, measured off its build at rest), each
+ * taking the share of the room's day a sphere takes from a face that sees
+ * it. In the hall it stands still; it walks only in its close look's island. */
+const LION_SPHERES: [number, number, number, number][] = [
+  [0, .82, -.45, .3], [0, .85, 0, .32], [0, .85, .45, .3], [0, 1, .62, .28],
+  [.16, .28, .37, .07], [-.16, .28, .37, .07], [.15, .06, .42, .085], [-.15, .06, .42, .085],
+  [.17, .38, -.44, .08], [-.17, .38, -.44, .08], [.16, .08, -.54, .09], [-.16, .08, -.54, .09],
+]
+function lionShade(Nw: N): N {
+  const b = HALL_LION.bearing * Math.PI / 180, c = Math.cos(b), sn = Math.sin(b)
+  // most of the day reaching the floor round it comes through the south-west
+  // window, low and from the west: a sphere between a point and that window
+  // holds more of it, so the shade runs out on the side away from the light
+  const win = P(0, (LION_WINDOW.v0 + LION_WINDOW.v1) / 2, FLOOR_Z + LION_WINDOW.h)
+  const toWin = vec3(win[0], win[2], -win[1]).sub(positionWorld).normalize()
+  let held: N = float(0)
+  for (const [x, y, z, r] of LION_SPHERES) {
+    const centre = vec3(HALL_LION.east + x * c + z * sn, HALL_LION.floor + y, -(HALL_LION.north + x * sn - z * c))
+    const d = centre.sub(positionWorld), l = d.length().max(r), dn = d.div(l)
+    const along = dn.dot(toWin).max(0)
+    held = held.add(Nw.dot(dn).max(0).mul(float(r).div(l).pow(2)).mul(along.mul(along).mul(1.6).add(.5)))
+  }
+  return float(1).sub(held.min(.85))
+}
+/** The south-west window's light as the lion's shade reckons it: its span
+ * along the west wall and the height of its middle over the floor. */
+const LION_WINDOW = { v0: 1.48, v1: 3.03, h: 1.7 }
+
 export const houseHallProvenance = {
   manifestId: 'vinci/house-hall',
   assetClass: 'GENERATED',
@@ -692,13 +782,13 @@ export const houseHallProvenance = {
   recipe: 'The dossier\'s great hall (A-LAYOUT room hall) and the inner service passage beside it: fabric, chimneypiece, types of the period, the light of the hour.',
   /** the record behind the hall's drawer paragraph */
   record: {
-    en: 'Proposed great hall, A-LAYOUT room hall: 8.65 by 8.05 m clear, floor +0.80 m, clear height 3.20 m (A-HEIGHT). Terracotta tiles of 0.22 m with 8 mm joints laid at 45 degrees (read from Q144) inside a square border row, each tile its own firing and bed. Limewash on the walls, oak joists 0.18 by 0.23 m at 0.60 m (A-MASONRY) resting on a 0.34 by 0.38 m main beam carried by two tuffeau corbels. Chimneypiece in A-FURNITURE\'s 2.80 by 0.65 by 3.00 m envelope at its registered place: moulded jambs, a chamfered lintel and shelf, a coursed tuffeau hood, a brick fireback, a banked fire\'s ash and two charred ends on a pair of andirons of a generic type. Window seats in the embrasures. The inner service passage (A-LAYOUT room service-link) as fabric only. The entrance\'s leaf is drawn again in its certified volume, planked, with strap hinges, clout nails, a ring and a lock plate of the period\'s type. Light at 15:19 on 10 October 1517: the sun through the two west windows by the key light, with the windows\' stone cross, saddle bars and leads read in the sun patches; the room\'s return from the windows and the patches and the shafts of lit dust are engine terms the film replaces.',
-    de: 'Vorgeschlagener großer Saal, A-LAYOUT Raum hall: 8,65 mal 8,05 m lichte Weite, Boden +0,80 m, lichte Höhe 3,20 m (A-HEIGHT). Terrakottafliesen von 0,22 m mit 8 mm Fugen, im Winkel von 45 Grad verlegt (nach Q144) innerhalb einer geraden Randreihe, jede Fliese mit eigenem Brand und Bett. Kalktünche an den Wänden, Eichenbalken 0,18 mal 0,23 m im Abstand von 0,60 m (A-MASONRY) auf einem Unterzug von 0,34 mal 0,38 m über zwei Tuffeaukonsolen. Kamin im Umriss von A-FURNITURE, 2,80 mal 0,65 mal 3,00 m, an seiner registrierten Stelle: profilierte Wangen, ein gefaster Sturz mit Sims, ein geschichteter Rauchfang aus Tuffeau, eine Rückwand aus Ziegel, die Asche eines abgedeckten Feuers und zwei verkohlte Scheite auf einem Paar Feuerböcke allgemeiner Art. Fenstersitze in den Laibungen. Der innere Dienstgang (A-LAYOUT Raum service-link) nur als Baukörper. Der Türflügel des Eingangs ist in seinem zertifizierten Volumen neu gezeichnet, aus Bohlen, mit Langbändern, Ziernägeln, einem Ring und einem Schlossblech von der Art der Zeit. Licht um 15:19 am 10. Oktober 1517: die Sonne durch die beiden Westfenster als Hauptlicht, mit dem Steinkreuz, den Windeisen und den Bleiruten der Fenster in den Sonnenflecken; die Rückstrahlung des Raums von Fenstern und Flecken und die Bahnen beleuchteten Staubs sind Terme der Engine, die der Film ersetzt.',
+    en: 'Proposed great hall, A-LAYOUT room hall: 8.65 by 8.05 m clear, floor +0.80 m, clear height 3.20 m (A-HEIGHT). Terracotta tiles of 0.22 m with 8 mm joints laid at 45 degrees (read from Q144) inside a square border row. Each tile has its own firing and bed. Straight bands one tile wide cross the field and divide it into three by three, as today\'s floor lays them. Lime plaster under a limewash on the walls. A band of red ochre 6 cm wide runs 12 cm under the joists, the sizes and the tone ours. A painted band is seen in this house. Oak joists 0.18 by 0.23 m, set at twice their width, on two main beams 0.32 by 0.36 m carried by four tuffeau corbels. A wall plate on small corbels along the chimneypiece\'s wall, and a trimmer before the hood. Chimneypiece in A-FURNITURE\'s 2.80 by 0.65 by 3.00 m envelope at its registered place. Moulded jambs, a chamfered lintel and shelf, a coursed tuffeau hood and a brick fireback. On the hearth a banked fire\'s ash and two charred ends on a pair of andirons of a generic type. The hooded Loire type is right for about 1500. The date of the chimneypiece in the room today is not known. Window seats in the embrasures. The inner service passage (A-LAYOUT room service-link) as fabric only. The hall\'s door to the kitchen stands open, its leaf a hundred degrees on its hinges. The entrance\'s leaf is drawn again in its certified volume. It is planked, with strap hinges, clout nails, a ring and a lock plate of the period\'s type. Light at 15:19 on 10 October 1517: the sun through the two west windows by the key light. The windows\' stone cross, saddle bars and leads read in the sun patches. The room\'s return from the windows and the patches, and the shafts of lit dust, are engine terms the film replaces.',
+    de: 'Vorgeschlagener großer Saal, A-LAYOUT Raum hall: 8,65 mal 8,05 m lichte Weite, Boden +0,80 m, lichte Höhe 3,20 m (A-HEIGHT). Terrakottafliesen von 0,22 m mit 8 mm Fugen, im Winkel von 45 Grad verlegt (nach Q144) innerhalb einer geraden Randreihe. Jede Fliese hat ihren eigenen Brand und ihr eigenes Bett. Gerade Bänder von einer Fliese Breite teilen das Feld in drei mal drei Felder, wie der heutige Boden verlegt ist. Kalkputz unter Kalktünche an den Wänden. Ein 6 cm breites Band aus rotem Ocker läuft 12 cm unter den Balken, Maße und Ton sind von uns. Ein gemaltes Band ist in diesem Haus zu sehen. Eichenbalken 0,18 mal 0,23 m im Abstand ihrer doppelten Breite auf zwei Unterzügen von 0,32 mal 0,36 m über vier Tuffeaukonsolen. Eine Mauerlatte auf kleinen Konsolen entlang der Kaminwand und ein Wechsel vor dem Rauchfang. Kamin im Umriss von A-FURNITURE, 2,80 mal 0,65 mal 3,00 m, an seiner registrierten Stelle. Profilierte Wangen, ein gefaster Sturz mit Sims, ein geschichteter Rauchfang aus Tuffeau und eine Rückwand aus Ziegel. Auf dem Herd die Asche eines abgedeckten Feuers und zwei verkohlte Scheite auf einem Paar Feuerböcke allgemeiner Art. Der Typ mit hohem Rauchfang passt zur Loire um 1500. Wann der heutige Kamin entstand, ist nicht bekannt. Fenstersitze in den Laibungen. Der innere Dienstgang (A-LAYOUT Raum service-link) nur als Baukörper. Die Tür des Saals zur Küche steht offen, ihr Flügel hundert Grad in den Angeln. Der Türflügel des Eingangs ist in seinem zertifizierten Volumen neu gezeichnet. Er besteht aus Bohlen, mit Langbändern, Ziernägeln, einem Ring und einem Schlossblech von der Art der Zeit. Licht um 15:19 am 10. Oktober 1517: die Sonne durch die beiden Westfenster als Hauptlicht. Steinkreuz, Windeisen und Bleiruten der Fenster zeichnen sich in den Sonnenflecken ab. Die Rückstrahlung des Raums von Fenstern und Flecken und die Bahnen beleuchteten Staubs sind Terme der Engine, die der Film ersetzt.',
   },
   /** the record behind the drawer paragraph on the things in the hall */
   thingsRecord: {
-    en: 'Types of the period, none documented at Cloux (MADE-THINGS, Part A). Table and bench: A-FURNITURE\'s envelopes, 3.40 by 1.00 m at 0.78 m and 2.80 by 0.40 m at 0.48 m, as boards on two trestles and a plank on slab ends. Chest after V&A W.38-1938 (carved oak, French, 1520; 0.776 by 1.355 by 0.605 m), frame and panels with linenfold, lock plate after V&A 1319-1901 (France, about 1500 to 1530). Box chair after V&A 740-1895 (France, about 1515; 1.11 m high). Stools after V&A 968-1897 (oak, Normandy, late fifteenth century; 0.455 m high). Candlesticks after V&A M.435-1926 (brass, Flemish, late fifteenth to early sixteenth century), unlit. Jug after V&A C.185-1909 (Beauvais, dark green glaze). Andirons of a generic type: no French museum object of 1500 to 1520 was found for them. The will of 23 April 1519 leaves the furniture and utensils of the house at Cloux to Battista de Vilanis and names no piece.',
-    de: 'Typen der Zeit, keiner in Cloux belegt (MADE-THINGS, Teil A). Tisch und Bank: die Umrisse von A-FURNITURE, 3,40 mal 1,00 m bei 0,78 m und 2,80 mal 0,40 m bei 0,48 m, als Bretter auf zwei Böcken und als Bohle auf Brettwangen. Truhe nach V&A W.38-1938 (geschnitzte Eiche, französisch, 1520; 0,776 mal 1,355 mal 0,605 m), Rahmen und Füllungen mit Faltwerk, Schlossblech nach V&A 1319-1901 (Frankreich, um 1500 bis 1530). Kastenstuhl nach V&A 740-1895 (Frankreich, um 1515; 1,11 m hoch). Hocker nach V&A 968-1897 (Eiche, Normandie, spätes fünfzehntes Jahrhundert; 0,455 m hoch). Leuchter nach V&A M.435-1926 (Messing, flämisch, spätes fünfzehntes bis frühes sechzehntes Jahrhundert), nicht entzündet. Krug nach V&A C.185-1909 (Beauvais, dunkelgrüne Glasur). Feuerböcke allgemeiner Art: für sie fand sich kein französisches Museumsstück von 1500 bis 1520. Das Testament vom 23. April 1519 vermacht Battista de Vilanis die Möbel und Geräte des Hauses in Cloux und nennt kein Stück.',
+    en: 'Types of the period, none documented at Cloux (MADE-THINGS, Part A). Table and bench: A-FURNITURE\'s envelopes, 3.40 by 1.00 m at 0.78 m and 2.80 by 0.40 m at 0.48 m. The table is boards on two trestles, the bench a plank on slab ends. Chest after V&A W.38-1938 (carved oak, French, 1520, 0.776 by 1.355 by 0.605 m), frame and panels with linenfold. Its lock plate after V&A 1319-1901 (France, about 1500 to 1530). Box chair after V&A 740-1895 (France, about 1515, 1.11 m high). Stools after V&A 968-1897 (oak, Normandy, late fifteenth century, 0.455 m high). Candlesticks after V&A M.435-1926 (brass, Flemish, late fifteenth to early sixteenth century), unlit. Jug after V&A C.185-1909 (Beauvais, dark green glaze). Andirons of a generic type: no French museum object of 1500 to 1520 was found for them. Dish after V&A 4010-1901 (earthenware, probably Beauvais, about 1510 to 1520). Basin after the Flemish brass dishes of the V&A (for example M.124-1937). Ewer after V&A 539-1869 (Flemish, fifteenth century). Both stand on the chest between the windows. A cushion on the bench, of the kind the box chair\'s own was. On the table\'s south end stand the museum\'s two instruments, the pendulum inclinometer and the proportional compass. Both are built from his sheets, as the exhibition shows them (their own records). The mechanical lion stands on the floor before the table, the museum\'s reconstruction from old accounts (its own record). No source puts it in this house. The will of 23 April 1519 leaves the furniture and utensils of the house at Cloux to Battista de Vilanis and names no piece.',
+    de: 'Typen der Zeit, keiner in Cloux belegt (MADE-THINGS, Teil A). Tisch und Bank: die Umrisse von A-FURNITURE, 3,40 mal 1,00 m bei 0,78 m und 2,80 mal 0,40 m bei 0,48 m. Der Tisch ist aus Brettern auf zwei Böcken, die Bank eine Bohle auf Brettwangen. Truhe nach V&A W.38-1938 (geschnitzte Eiche, französisch, 1520, 0,776 mal 1,355 mal 0,605 m), Rahmen und Füllungen mit Faltwerk. Ihr Schlossblech nach V&A 1319-1901 (Frankreich, um 1500 bis 1530). Kastenstuhl nach V&A 740-1895 (Frankreich, um 1515, 1,11 m hoch). Hocker nach V&A 968-1897 (Eiche, Normandie, spätes fünfzehntes Jahrhundert, 0,455 m hoch). Leuchter nach V&A M.435-1926 (Messing, flämisch, spätes fünfzehntes bis frühes sechzehntes Jahrhundert), nicht entzündet. Krug nach V&A C.185-1909 (Beauvais, dunkelgrüne Glasur). Feuerböcke allgemeiner Art: für sie fand sich kein französisches Museumsstück von 1500 bis 1520. Schale nach V&A 4010-1901 (Irdenware, wohl Beauvais, um 1510 bis 1520). Becken nach den flämischen Messingschüsseln des V&A (etwa M.124-1937). Kanne nach V&A 539-1869 (flämisch, fünfzehntes Jahrhundert). Beide stehen auf der Truhe zwischen den Fenstern. Ein Kissen auf der Bank, von der Art, wie sie der Kastenstuhl hatte. Am Südende des Tischs stehen die zwei Instrumente des Museums, der Neigungsmesser mit Lot und der Proportionalzirkel. Beide sind nach seinen Blättern gebaut, wie die Ausstellung sie zeigt (eigene Einträge). Der mechanische Löwe steht auf dem Boden vor dem Tisch, die Rekonstruktion des Museums nach alten Berichten (eigener Eintrag). Nach keiner Quelle stand er in diesem Haus. Das Testament vom 23. April 1519 vermacht Battista de Vilanis die Möbel und Geräte des Hauses in Cloux und nennt kein Stück.',
   },
 } as const
 
@@ -810,9 +900,9 @@ function hallSun(): HallSun {
 function buildHallShell(s: Sink, hero: boolean): void {
   const seed = .37
   // THE FLOOR. A border row laid square along the walls, the field on the
-  // diagonal inside it (Q144), each tile its own firing, its own bed.
-  if (hero) tiledFloor(s, hallOutline, FLOOR_Z)
-  else flatFloor(s, hallOutline, FLOOR_Z, .6)
+  // diagonal inside it (Q144), each tile its own firing, its own bed, on
+  // every tier: a plain sheet left the phone's floor one flat colour.
+  tiledFloor(s, hallOutline, FLOOR_Z)
   // THE LININGS: limewash from the tiles to the boards, cut at every opening.
   const cell = hero ? .32 : .7
   const walls: { a: V2; b: V2; holes: [number, number, number, number][] }[] = []
@@ -830,8 +920,8 @@ function buildHallShell(s: Sink, hero: boolean): void {
   const west = { a: NW, b: SW, holes: WINDOWS.filter(w => w.west).map(w => hole(NW, SW, WEST, w.o)) }
   walls.push(south, east, north, west)
   walls.forEach((w, i) => lining(s, w.a, w.b, FLOOR_Z - FOOT, BOARD_Z, w.holes, cell, K.PLASTER, seed + i))
-  // THE CEILING: boards between oak joists that run across the shorter span,
-  // carried at mid-span by a main beam on two tuffeau corbels. It casts: the
+  // THE CEILING: close-set oak joists on two main beams and a wall plate,
+  // the boards of the floor above across them (`ceiling`). It casts: the
   // rooms above take the sun through their own windows, and their floors
   // cast nothing.
   s.cast = true
@@ -872,20 +962,6 @@ function lining(s: Sink, a: V2, b: V2, z0: number, z1: number, holes: [number, n
   }
 }
 
-/** A plain floor on a grid, for the tier that cannot afford the tiles. */
-function flatFloor(s: Sink, outline: V2[], z: number, cell: number): void {
-  const uvs = outline.map(toUV), us = uvs.map(p => p[0]), vs = uvs.map(p => p[1])
-  const u0 = Math.min(...us), u1 = Math.max(...us), v0 = Math.min(...vs), v1 = Math.max(...vs)
-  const nu = Math.ceil((u1 - u0) / cell), nv = Math.ceil((v1 - v0) / cell)
-  const room = outline.map(toUV)
-  for (let i = 0; i < nu; i++) for (let j = 0; j < nv; j++) {
-    const c = clipConvex([[u0 + (u1 - u0) * i / nu, v0 + (v1 - v0) * j / nv], [u0 + (u1 - u0) * (i + 1) / nu, v0 + (v1 - v0) * j / nv],
-      [u0 + (u1 - u0) * (i + 1) / nu, v0 + (v1 - v0) * (j + 1) / nv], [u0 + (u1 - u0) * i / nu, v0 + (v1 - v0) * (j + 1) / nv]], room)
-    if (c.length < 3 || Math.abs(signedArea(c)) < 1e-4) continue
-    s.poly(c.map(q => P(q[0], q[1], z)), [0, 0, 1], p => toUV([p[0], p[1]]), K.TILE, -1)
-  }
-}
-
 /** A floor of square tiles on their lime bed, laid along the room's walls,
  * as the passages are paved. */
 function squareFloor(s: Sink, outline: V2[], z: number): void {
@@ -901,8 +977,8 @@ function squareFloor(s: Sink, outline: V2[], z: number): void {
   }
 }
 
-/** The tiled floor: a square border row and the diagonal field, each tile a
- * low prism with a worn arris, standing on its lime bed. */
+/** The tiled floor: a square border row, straight bands across, and the
+ * diagonal fields between them, each tile a low face on its lime bed. */
 function tiledFloor(s: Sink, outline: V2[], z: number): void {
   const room = outline.map(toUV)
   // the lime bed under everything, a few millimetres down and on under the linings
@@ -928,18 +1004,50 @@ function tiledFloor(s: Sink, outline: V2[], z: number): void {
     // the corner square at this edge's start
     strip(Math.min(0, s0 - pitch), s0, -1)
   }
-  // the field on the diagonal, centred on the room
-  const cu = (Math.min(...field.map(p => p[0])) + Math.max(...field.map(p => p[0]))) / 2
-  const cv = (Math.min(...field.map(p => p[1])) + Math.max(...field.map(p => p[1]))) / 2
+  // the straight bands: square tiles laid along each band from the crossings
+  // outward, one square at each crossing, a cut tile where a run meets the
+  // field's edge or the next band, so every band joint is a tile's edge
+  const half = pitch / 2, big = 40
+  const bandTile = (u0: number, u1: number, v0: number, v1: number, key: number): void => {
+    const clipped = clipConvex([[u0, v0], [u1, v0], [u1, v1], [u0, v1]], field)
+    if (clipped.length >= 3 && Math.abs(signedArea(clipped)) > pitch * pitch * .04)
+      tile(s, clipped, z, rand(key, u0 * 7.1 + v0, 4.7), [(u0 + u1) / 2, (v0 + v1) / 2], [1, 0], [(u1 - u0) / 2, (v1 - v0) / 2])
+  }
+  const fu0 = Math.min(...field.map(p => p[0])), fu1 = Math.max(...field.map(p => p[0])), fv0 = Math.min(...field.map(p => p[1])), fv1 = Math.max(...field.map(p => p[1]))
+  // a run of tiles from a to b along one band, laid from the end that meets a crossing
+  const run = (a: number, b: number, fromB: boolean, at: (x0: number, x1: number) => void): void => {
+    const n = Math.ceil((b - a) / pitch - 1e-6)
+    for (let i = 0; i < n; i++) fromB ? at(Math.max(a, b - (i + 1) * pitch), b - i * pitch) : at(a + i * pitch, Math.min(b, a + (i + 1) * pitch))
+  }
+  const cutsOf = (bands: number[], lo: number, hi: number): [number, number, boolean][] => {
+    const edges = [lo, ...bands.flatMap(b => [b - half, b + half]), hi], out: [number, number, boolean][] = []
+    for (let i = 0; i < edges.length; i += 2) out.push([edges[i]!, edges[i + 1]!, i === 0])
+    return out
+  }
+  for (const [k, bu] of FLOOR_BANDS.u.entries()) {
+    for (const [a, b, first] of cutsOf(FLOOR_BANDS.v, fv0 - half, fv1 + half)) run(a, b, first, (v0, v1) => bandTile(bu - half, bu + half, v0, v1, k))
+    for (const bv of FLOOR_BANDS.v) bandTile(bu - half, bu + half, bv - half, bv + half, 20 + k)
+  }
+  for (const [k, bv] of FLOOR_BANDS.v.entries())
+    for (const [a, b, first] of cutsOf(FLOOR_BANDS.u, fu0 - half, fu1 + half)) run(a, b, first, (u0, u1) => bandTile(u0, u1, bv - half, bv + half, 10 + k))
+  // between the bands, the fields on the diagonal, one lattice centred on the room
+  const cells: V2[][] = []
+  const us = [-big, ...FLOOR_BANDS.u.flatMap(b => [b - half, b + half]), big], vs = [-big, ...FLOOR_BANDS.v.flatMap(b => [b - half, b + half]), big]
+  for (let i = 0; i < us.length; i += 2) for (let j = 0; j < vs.length; j += 2)
+    cells.push(clipConvex([[us[i]!, vs[j]!], [us[i + 1]!, vs[j]!], [us[i + 1]!, vs[j + 1]!], [us[i]!, vs[j + 1]!]], field))
+  const cu = (fu0 + fu1) / 2, cv = (fv0 + fv1) / 2
   const A: V2 = [Math.cos(TILE_TURN), Math.sin(TILE_TURN)], B: V2 = [-A[1], A[0]]
   const reach = Math.ceil(Math.hypot(HALL_W, HALL_D) / pitch / 2) + 2
-  const half = pitch / 2
   for (let i = -reach; i <= reach; i++) for (let j = -reach; j <= reach; j++) {
     const c: V2 = [cu + (A[0] * i + B[0] * j) * pitch, cv + (A[1] * i + B[1] * j) * pitch]
     const quad: V2[] = [[-half, -half], [half, -half], [half, half], [-half, half]].map(([x, y]) => [c[0] + A[0] * x! + B[0] * y!, c[1] + A[1] * x! + B[1] * y!])
-    const clipped = clipConvex(quad, field)
-    if (clipped.length < 3 || Math.abs(signedArea(clipped)) < pitch * pitch * .12) continue
-    tile(s, clipped, z, rand(i, j, 3.3), c, A)
+    for (const cell of cells) {
+      if (cell.length < 3) continue
+      const clipped = clipConvex(quad, cell)
+      // small cut pieces are laid too: a missing one shows the dark bed as a notch
+      if (clipped.length < 3 || Math.abs(signedArea(clipped)) < pitch * pitch * .01) continue
+      tile(s, clipped, z, rand(i, j, 3.3), c, A)
+    }
   }
 }
 
@@ -970,44 +1078,71 @@ function tile(s: Sink, poly: V2[], z: number, seed: number, centre: V2, side: V2
   s.fixed = null; s.wear = 0
 }
 
-/** Joists across the shorter span, the main beam under them at mid-span on
- * two corbels, the boards between. */
+/** THE CEILING AS THE HALL'S PHOTOGRAPHS SHOW IT: close-set joists, the gap
+ * about a joist's width, on two main beams that land on plain tuffeau corbels
+ * in the kitchen and back walls, and on a wall plate carried by small corbels
+ * along the chimneypiece's wall. The beams stand clear of the back windows
+ * and the kitchen door; over the hood the joists end on a trimmer. The boards
+ * of the floor above run across the joists. */
 function ceiling(s: Sink): void {
   const room = hallOutline.map(toUV)
-  // boards: the underside of the floor above, planks along u
+  const [, , ne, nw] = room as [V2, V2, V2, V2]
+  const westU = (v: number): number => nw[0] * v / nw[1]
+  const northV = (u: number): number => nw[1] + (ne[1] - nw[1]) * (u - nw[0]) / (ne[0] - nw[0])
+  // boards: the underside of the floor above, planks along v
   const plank = .26
-  for (let v = 0; v < HALL_D; v += plank) {
-    const v1 = Math.min(HALL_D + .5, v + plank)
-    const strip = clipConvex([[-1, v], [HALL_W + 1, v], [HALL_W + 1, v1], [-1, v1]], room)
+  for (let u = Math.min(0, nw[0]); u < HALL_W; u += plank) {
+    const u1 = Math.min(HALL_W + .5, u + plank)
+    const strip = clipConvex([[u, -1], [u1, -1], [u1, HALL_D + 1], [u, HALL_D + 1]], room)
     if (strip.length < 3) continue
-    const board = rand(v, 9.2)
-    s.poly(strip.map(q => P(q[0], q[1], BOARD_Z)), [0, 0, -1], p => { const q = toUV([p[0], p[1]]); return [q[0], q[1]] }, K.OAK, 2 + board)
+    const board = rand(u, 9.2)
+    s.poly(strip.map(q => P(q[0], q[1], BOARD_Z)), [0, 0, -1], p => { const q = toUV([p[0], p[1]]); return [q[1], q[0]] }, K.OAK, 2 + board)
   }
-  // joists: along v, stepped along u, from the kitchen wall to the back wall
-  const jn = JOIST_N, first = JOIST_FIRST
-  // each member's two lower arrises taken off and worn round, as the
-  // carpenter finished a timber left in view and the years eased it; the
-  // rounds face down to the floor's light
-  const across: V3 = [U[0], U[1], 0], alongV: V3 = [V[0], V[1], 0]
-  for (let i = 0; i <= jn; i++) {
-    const u = first + i * JOIST_STEP
-    const seed = 3 + rand(i, 4.4)
-    const sag = rand(i, 5.5) * .008
-    member(s, P(u, 0, CEIL_Z + sag), P(u, HALL_D, CEIL_Z + sag), across, [0, 0, 1], JOIST_W, JOIST_D, .026 + rand(i, 6.6) * .01, K.OAK, seed)
+  const acrossU: V3 = [U[0], U[1], 0], acrossV: V3 = [V[0], V[1], 0]
+  // the hood's top, and the trimmer in front of it that takes the joists it cuts
+  const hoodOut = HEARTH.depth - .24, hoodHalf = HEARTH.width / 2 - .22, TRIM_W = .2
+  const trimU = HALL_W - hoodOut - .03 - TRIM_W / 2
+  const cut = (v: number): boolean => Math.abs(v - HEARTH.v) < hoodHalf + JOIST_W / 2 + .03
+  // joists along u, from the window wall onto the plate, stepped along v
+  const PLATE_W = .18, PLATE_D = .2
+  const vs: number[] = []
+  for (let i = 0; i <= HALL_JOIST_N; i++) vs.push(HALL_JOIST_FIRST + i * HALL_JOIST_STEP)
+  for (const [i, v] of vs.entries()) {
+    const seed = 3 + rand(i, 4.4), sag = rand(i, 5.5) * .008
+    const u1 = cut(v) ? trimU - TRIM_W / 2 + .01 : HALL_W + .02
+    member(s, P(westU(v) - .02, v, CEIL_Z + sag), P(u1, v, CEIL_Z + sag), acrossV, [0, 0, 1], JOIST_W, JOIST_D, .022 + rand(i, 6.6) * .008, K.OAK, seed)
   }
-  // the main beam, across the joists near mid-span, set off the chimney: a
-  // beam bears on plain wall, never on the hood or into the flue's masonry
-  const MB_W = .34, MB_D = .38, vm = mainBeamV()
-  member(s, P(0, vm, CEIL_Z - MB_D), P(HALL_W, vm, CEIL_Z - MB_D), alongV, [0, 0, 1], MB_W, MB_D, .045, K.OAK, 7.7)
-  // its two corbels: one tuffeau block each, cut in a quarter round below a
-  // fillet and tailed into the wall
-  const D = .30, H = .44, f = .07, tail = .03
-  const section: V2[] = [[-tail, 0], [D, 0], [D, -f]]
-  for (let k = 1; k < 7; k++) { const t = k / 7 * Math.PI / 2; section.push([D * Math.cos(t), -f - (H - f) * Math.sin(t)]) }
-  section.push([0, -H], [-tail, -H])
-  for (const [u, dirU] of [[0, 1], [HALL_W, -1]] as [number, number][]) {
-    const w = (MB_W + .06) / 2, side: V3 = [U[0] * dirU, U[1] * dirU, 0]
-    s.extrude(P(u, vm - w, CEIL_Z - MB_D), P(u, vm + w, CEIL_Z - MB_D), side, [0, 0, 1], section, K.STONE, 11 + u, [0, section.length - 2, section.length - 1])
+  // the trimmer, from the last whole joist below the hood to the first above
+  const below = vs.filter(v => !cut(v) && v < HEARTH.v).pop(), above = vs.find(v => !cut(v) && v > HEARTH.v)
+  if (below !== undefined && above !== undefined) member(s, P(trimU, below, CEIL_Z), P(trimU, above, CEIL_Z), acrossU, [0, 0, 1], TRIM_W, JOIST_D, .022, K.OAK, 6.1)
+  // the wall plate along the chimneypiece's wall, its ends in the hood's sides
+  // and its back 2 cm in the wall, so no face of it lies in the lining's plane
+  const plateU = HALL_W - PLATE_W / 2 + .02
+  const runs: V2[] = [[-.02, HEARTH.v - hoodHalf + .02], [HEARTH.v + hoodHalf - .02, ne[1] + .02]]
+  for (const [k, [v0, v1]] of runs.entries()) member(s, P(plateU, v0, CEIL_Z - PLATE_D), P(plateU, v1, CEIL_Z - PLATE_D), acrossU, [0, 0, 1], PLATE_W, PLATE_D, .015, K.OAK, 6.4 + k)
+  // a quarter-round tuffeau corbel below a fillet, tailed into the wall
+  const corbel = (D: number, H: number, f: number): V2[] => {
+    const tail = .03, sec: V2[] = [[-tail, 0], [D, 0], [D, -f]]
+    for (let k = 1; k < 7; k++) { const t = k / 7 * Math.PI / 2; sec.push([D * Math.cos(t), -f - (H - f) * Math.sin(t)]) }
+    sec.push([0, -H], [-tail, -H])
+    return sec
+  }
+  const small = corbel(.13, .2, .035), into: V3 = [-U[0], -U[1], 0]
+  for (const [v0, v1] of runs) {
+    const span = Math.min(v1, HALL_D) - Math.max(v0, 0) - .7, n = Math.max(1, Math.round(span / 1.25))
+    for (let k = 0; k <= n; k++) {
+      const v = Math.max(v0, 0) + .35 + span * k / n
+      s.extrude(P(HALL_W, v - .09, CEIL_Z - PLATE_D), P(HALL_W, v + .09, CEIL_Z - PLATE_D), into, [0, 0, 1], small, K.STONE, 12 + v, [0, small.length - 2, small.length - 1])
+    }
+  }
+  // the two main beams under the joists, along v, each on two corbels
+  const MB_W = .32, MB_D = .36, big = corbel(.28, .42, .07)
+  for (const [k, u] of HALL_BEAMS_U.entries()) {
+    const vn = northV(u)
+    member(s, P(u, -.02, CEIL_Z - MB_D), P(u, vn + .02, CEIL_Z - MB_D), acrossU, [0, 0, 1], MB_W, MB_D, .04, K.OAK, 7.7 + k)
+    const w = (MB_W + .06) / 2
+    for (const [v, dir] of [[0, 1], [vn, -1]] as [number, number][])
+      s.extrude(P(u - w, v, CEIL_Z - MB_D), P(u + w, v, CEIL_Z - MB_D), [V[0] * dir, V[1] * dir, 0], [0, 0, 1], big, K.STONE, 11 + u + v, [0, big.length - 2, big.length - 1])
   }
 }
 /** A timber of w by d from a to b, its two lower arrises worn round to r. The
@@ -1030,13 +1165,6 @@ function member(s: Sink, a: V3, b: V3, side: V3, up: V3, w: number, d: number, r
     run += wl
   }
 }
-/** Where the main beam crosses: mid-span, unless that lands its corbel within
- * a hand's breadth and more of the chimneypiece's shelf. */
-function mainBeamV(): number {
-  const shelfEnd = HEARTH.v - HEARTH.width / 2 - .06
-  return Math.min(HALL_D / 2, shelfEnd - .45 - (.34 + .06) / 2)
-}
-
 /** WHERE FEET HAVE GONE for forty-six years: from each door to the table's
  * sides and on to the hearth, and the ground in front of the fire. */
 let paths: [V2, V2][] | null = null
@@ -1076,7 +1204,8 @@ function furnish(s: Sink, hero: boolean): void {
   chest(s, hero)
   boxChair(s)
   stool(s, TABLE.u + .78, TABLE.v - .75, .12, 91)
-  stool(s, TABLE.u + .8, TABLE.v + .6, -.2, 92)
+  // the second stool stands clear of the trestle's stretcher as the door sees it
+  stool(s, TABLE.u + .8, TABLE.v + .3, -.2, 92)
   // on the table: two brass candlesticks, their candles never lit, a jug,
   // and a glazed dish at the table's north end; its sunlit south end carries
   // the two instruments the house builds (hall-table-pieces.ts)
@@ -1119,17 +1248,17 @@ function cushion(s: Sink, c: V3, X: V3, Y: V3, hx: number, hy: number, h: number
 /** A DISH OF THE PERIOD, after V&A 4010-1901 (probably Beauvais, about 1510
  * to 1520): a footed earthenware dish with a broad rim, lead-glazed. */
 function dish(s: Sink, base: V3, seed: number): void {
-  s.lathe(base, [[0, .006], [.068, .002], [.072, 0], [.078, .006], [.13, .038], [.158, .047], [.162, .053], [.156, .056], [.128, .049], [.08, .016], [0, .013]], 20, K.EARTH, seed)
+  s.lathe(base, [[0, .006], [.068, .002], [.072, 0], [.078, .006], [.13, .038], [.158, .047], [.162, .053], [.156, .056], [.128, .049], [.08, .016], [0, .013]], 32, K.EARTH, seed)
 }
 /** A BRASS BASIN OF THE PERIOD, after the Flemish dishes of the V&A (for
  * example M.124-1937): a broad rim and a raised boss at its centre. */
 function basin(s: Sink, base: V3, seed: number): void {
-  s.lathe(base, [[0, .002], [.11, 0], [.16, .035], [.185, .05], [.205, .056], [.208, .062], [.2, .062], [.18, .054], [.15, .04], [.105, .01], [.035, .009], [.028, .02], [0, .024]], 22, K.BRASS, seed)
+  s.lathe(base, [[0, .002], [.11, 0], [.16, .035], [.185, .05], [.205, .056], [.208, .062], [.2, .062], [.18, .054], [.15, .04], [.105, .01], [.035, .009], [.028, .02], [0, .024]], 32, K.BRASS, seed)
 }
 /** A BRASS EWER OF THE PERIOD, after V&A 539-1869 (Flemish, fifteenth
  * century): a round body on a spreading foot, a tall neck and a strap handle. */
 function ewer(s: Sink, base: V3, seed: number): void {
-  s.lathe(base, [[0, 0], [.052, 0], [.054, .008], [.034, .02], [.03, .035], [.06, .07], [.068, .1], [.06, .135], [.035, .16], [.024, .19], [.026, .225], [.034, .245], [.03, .25], [0, .25]], 16, K.BRASS, seed)
+  s.lathe(base, [[0, 0], [.052, 0], [.054, .008], [.034, .02], [.03, .035], [.06, .07], [.068, .1], [.06, .135], [.035, .16], [.024, .19], [.026, .225], [.034, .245], [.03, .25], [0, .25]], 28, K.BRASS, seed)
   const side: V2 = [U[0], U[1]]
   const q = (o: number, z: number): V3 => [base[0] + side[0] * o, base[1] + side[1] * o, base[2] + z]
   const pts: [number, number][] = [[.026, .23], [.07, .235], [.09, .2], [.085, .14], [.062, .105]]
@@ -1139,7 +1268,7 @@ function ewer(s: Sink, base: V3, seed: number): void {
     s.quad(add(a, w), sub(a, w), sub(b, w), add(b, w), null, [0, 0], [1, 0], [1, 1], [0, 1], K.BRASS, seed)
   }
   // the spout, a short tapering tube out of the belly's shoulder
-  s.lathe(q(-.07, .115), [[.012, 0], [.009, .06], [0, .062]], 8, K.BRASS, seed)
+  s.lathe(q(-.07, .115), [[.012, 0], [.009, .06], [0, .062]], 12, K.BRASS, seed)
 }
 /** Local boxes in the hall's frame: u, v across and along, z up from the floor. */
 function hbox(s: Sink, u0: number, u1: number, v0: number, v1: number, z0: number, z1: number, kind: number, seed: number, skip = ''): void {
@@ -1333,14 +1462,14 @@ function candlestick(s: Sink, base: V3, seed: number): void {
   const prof: V2[] = [[0, 0], [.068, 0], [.07, .01], [.05, .022], [.02, .035], [.016, .05],
     [.024, .058], [.014, .068], [.022, .083], [.013, .094], [.021, .108], [.013, .119], [.022, .133], [.013, .144], [.02, .156],
     [.014, .166], [.032, .176], [.030, .215], [.022, .217], [0, .217]]
-  s.lathe(base, prof, 14, K.BRASS, seed)
-  s.lathe([base[0], base[1], base[2] + .205], [[0, 0], [.012, 0], [.012, .11], [.009, .118], [0, .12]], 10, K.CANDLE, 150)
+  s.lathe(base, prof, 28, K.BRASS, seed)
+  s.lathe([base[0], base[1], base[2] + .205], [[0, 0], [.012, 0], [.012, .11], [.009, .118], [0, .12]], 18, K.CANDLE, 150)
 }
 /** A JUG OF THE PERIOD, after the Beauvais jug V&A C.185-1909: a round belly
  * under a narrow neck, a dark green glaze over the clay, a strap handle. */
 function jug(s: Sink, base: V3, seed: number): void {
   const prof: V2[] = [[0, 0], [.045, 0], [.05, .01], [.07, .05], [.074, .085], [.066, .12], [.045, .15], [.03, .175], [.028, .2], [.034, .225], [.03, .23], [0, .23]]
-  s.lathe(base, prof, 16, K.GLAZE, seed)
+  s.lathe(base, prof, 28, K.GLAZE, seed)
   const side: V2 = [-U[0], -U[1]]
   const q = (o: number, z: number): V3 => [base[0] + side[0] * o, base[1] + side[1] * o, base[2] + z]
   const pts: [number, number][] = [[.03, .2], [.07, .205], [.085, .17], [.08, .12], [.065, .09]]
@@ -1380,7 +1509,7 @@ function hearth(s: Sink, hero: boolean): void {
   for (const side of [-1, 1]) {
     const x0 = side < 0 ? -W2 : open, x1 = side < 0 ? -open : W2
     box(x0 - .025, x1 + .025, 0, depth + .03, .028, .17, K.STONE, 52, '-z')
-    s.soot = .18
+    s.soot = .06
     // the face toward the fire is the brick cheek's, which lines the jamb
     box(x0, x1, 0, depth, .17, jambTop - .16, K.STONE, 53, side < 0 ? '-z+z+x' : '-z+z-x')
     s.soot = 0
@@ -1389,16 +1518,16 @@ function hearth(s: Sink, hero: boolean): void {
   }
   // the lintel, its lower front arris taken off in a broad chamfer
   const ch = .07
-  s.soot = .55
+  s.soot = .4
   // its soffit over the opening is the throat's, drawn below with the firebox
   box(-W2, W2, 0, depth - ch, jambTop, jambTop + ch, K.STONE, 56, '+z+x-x-z')
-  s.soot = .2
+  s.soot = .08
   box(-W2, W2, 0, depth, jambTop + ch, lintelTop, K.STONE, 56, '-z')
   s.soot = 0
   {
     const a = L(-W2, depth - ch, jambTop), b = L(W2, depth - ch, jambTop), c = L(W2, depth, jambTop + ch), d = L(-W2, depth, jambTop + ch)
     const n = unit(add(scale([Y[0], Y[1], 0], 1), [0, 0, -1]))
-    s.soot = .45
+    s.soot = .25
     s.quad(a, b, c, d, n, [-W2, 0], [W2, 0], [W2, ch * 1.41], [-W2, ch * 1.41], K.STONE, 56)
     s.soot = 0
   }
@@ -1410,7 +1539,7 @@ function hearth(s: Sink, hero: boolean): void {
   const front = [L(-wb, hb, z0), L(wb, hb, z0), L(wt, ht, z1), L(-wt, ht, z1)]
   const fn = unit(cross(sub(front[1]!, front[0]!), sub(front[3]!, front[0]!)))
   const uvF = (p: V3): V2 => { const q = toUV([p[0], p[1]]); return [q[1] - vc, p[2] - FLOOR_Z] }
-  s.soot = .12
+  s.soot = .03
   s.poly(front, dot(fn, [Y[0], Y[1], 0]) > 0 ? fn : scale(fn, -1), uvF, K.STONE, 58)
   for (const side of [-1, 1]) {
     const sx = side
@@ -1532,12 +1661,11 @@ function doorReveal(s: Sink, to: 'kitchen' | 'service-link'): void {
   s.quad(P3(a, z1), P3(far(a), z1), P3(far(b), z1), P3(b, z1), [0, 0, -1], [0, 0], [0, depth], [hall.width_m, depth], [hall.width_m, 0], K.OAK, seed)
   // THE THRESHOLD. The service passage's is a worn tuffeau slab in the
   // passage's light: the sun's patch ends at the wall's line. The kitchen's
-  // leaf stands shut at the kitchen's face, and the hall's tiles run on
-  // through the doorway to it, square-laid, the most trodden of the floor
+  // leaf stands open, and the hall's tiles run on through the doorway to the
+  // kitchen's face, square-laid, the most trodden of the floor
   if (to === 'kitchen') {
-    // the tiles run on under the shut leaf to the kitchen's face, and their bed
-    // on under the cheeks and a stride into the kitchen, so the gap under the
-    // leaf shows floor
+    // the tiles run on to the kitchen's face, and their bed on under the
+    // cheeks and a stride into the kitchen
     const [k0, k1] = kitchenDoorU
     s.poly([P(k0 - BED_UNDER, -BED_UNDER, z0 - .006), P(k1 + BED_UNDER, -BED_UNDER, z0 - .006), P(k1 + BED_UNDER, -depth - .3, z0 - .006), P(k0 - BED_UNDER, -depth - .3, z0 - .006)], [0, 0, 1], q => toUV([q[0], q[1]]), K.JOINT, .7)
     const pitch = PITCH, across = Math.round((k1 - k0) / pitch), step = (k1 - k0) / across
@@ -1545,14 +1673,21 @@ function doorReveal(s: Sink, to: 'kitchen' | 'service-link'): void {
       const u0 = k0 + i * step, u1 = k0 + (i + 1) * step, v1 = -j * pitch, v0 = Math.max(-depth, v1 - pitch)
       tile(s, [[u0, v0], [u1, v0], [u1, v1], [u0, v1]], z0, rand(i, j, 6.7), [(u0 + u1) / 2, v1 - pitch / 2], [1, 0], [step / 2, pitch / 2])
     }
-    doorLeaf(s, a, b, dir, [-outward[0], -outward[1]], depth - .045, z0, z1)
+    // THE LEAF STANDS OPEN into the kitchen, a hundred degrees on its hinges at
+    // the jamb nearer the hall's door, so the doorway shows the room beyond
+    const back = depth - .045, w = hall.width_m, turn = 100 * Math.PI / 180
+    const rot = (q: V2): V2 => [q[0] * Math.cos(turn) - q[1] * Math.sin(turn), q[0] * Math.sin(turn) + q[1] * Math.cos(turn)]
+    const hinge: V2 = [b[0] + outward[0] * back, b[1] + outward[1] * back]
+    const dirO = rot(dir), intoO = rot([-outward[0], -outward[1]])
+    const aO: V2 = [hinge[0] - dirO[0] * w + intoO[0] * back, hinge[1] - dirO[1] * w + intoO[1] * back]
+    doorLeaf(s, aO, [aO[0] + dirO[0] * w, aO[1] + dirO[1] * w], dirO, intoO, back, z0, z1)
     return
   }
   s.lit = 0; s.wear = 1
   s.quad(P3(a, z0 + .004), P3(b, z0 + .004), P3(far(b), z0 + .004), P3(far(a), z0 + .004), [0, 0, 1], [0, 0], [1, 0], [1, depth], [0, depth], K.STONE, seed + .5)
   s.lit = lit; s.wear = 0
 }
-/** A LEDGED DOOR OF THE PERIOD, shut in its opening: five oak boards on the
+/** A LEDGED DOOR OF THE PERIOD: five oak boards on the
  * face the hall sees, the clout nails of the ledges behind them in three
  * rows, a ring on its plate and a latch. From a to b along the wall, its
  * back `back` metres into the reveal, `into` pointing back to the hall. */
@@ -1744,8 +1879,7 @@ function dustBeams(): Mesh | null {
 function buildLink(s: Sink, hero: boolean): void {
   s.lit = 0
   const room = LINK_OUTLINE
-  if (hero) squareFloor(s, room, FLOOR_Z)
-  else flatFloor(s, room, FLOOR_Z, .9)
+  squareFloor(s, room, FLOOR_Z)
   const cell = hero ? .4 : .9
   for (let e = 0; e < room.length; e++) {
     const a = room[e]!, b = room[(e + 1) % room.length]!
@@ -1892,7 +2026,7 @@ const BOUNCE_K = .16 * TO_SUN[2] * 3.2 * 5.2 / Math.PI
 const ROOM_RETURN: number[] = (() => {
   const [sw, se, ne, nw] = hallOutline as [V2, V2, V2, V2], z0 = FLOOR_Z, z1 = BOARD_Z
   const at = (q: V2, z: number): V3 => [q[0], q[1], z]
-  // reflectances as the material draws them: tile, aged oak, aged limewash
+  // reflectances as the material draws them: tile, aged oak, kept limewash
   const surfaces: { poly: V3[]; n: V3; albedo: number }[] = [
     { poly: [at(sw, z0), at(se, z0), at(ne, z0), at(nw, z0)], n: [0, 0, 1], albedo: .15 },
     { poly: [at(sw, z1), at(nw, z1), at(ne, z1), at(se, z1)], n: [0, 0, -1], albedo: .105 },
@@ -1900,7 +2034,7 @@ const ROOM_RETURN: number[] = (() => {
   const outline = [sw, se, ne, nw]
   for (let i = 0; i < 4; i++) {
     const a = outline[i]!, b = outline[(i + 1) % 4]!, l = Math.hypot(b[0] - a[0], b[1] - a[1])
-    surfaces.push({ poly: [at(a, z0), at(b, z0), at(b, z1), at(a, z1)], n: [-(b[1] - a[1]) / l, (b[0] - a[0]) / l, 0], albedo: .5 })
+    surfaces.push({ poly: [at(a, z0), at(b, z0), at(b, z1), at(a, z1)], n: [-(b[1] - a[1]) / l, (b[0] - a[0]) / l, 0], albedo: .6 })
   }
   const first = (p: V3, n: V3): number => {
     let e = ROOM_FILL
@@ -2073,6 +2207,12 @@ function hallMaterial(perPixel: boolean, library?: MaterialLibrary, sunShadow?: 
   const A = attribute('hallA', 'vec4'), B = attribute('hallB', 'vec4')
   const kind = A.x, seed = A.w, wear = B.x, soot = B.y, lit = B.z, inHallShade = B.w
   const is = (k: number): N => float(1).sub(smoothstep(.2, .45, kind.sub(k).abs()))
+  // the plaster's own relief, which the windows' day draws on it; each lining
+  // carries its own seed, so no two walls were laid alike
+  const T0 = uv(), Tw = vec2(T0.x.add(seed.lessThan(10).select(seed.mul(6.1), float(0))), T0.y)
+  const Ng = normalWorldGeometry.normalize()
+  const Nw = mix(Ng, plasterRelief(Tw, Ng), is(K.PLASTER).add(is(K.REVEAL)).min(1).mul(float(1).sub(Ng.y.abs()))).normalize()
+  m.normalNode = Nw.transformDirection(cameraViewMatrix).normalize()
   let ambient: N = A.y, bounce: N = A.z, westSky: N = A.y.mul(.6)
   // the sky a point sees before the ceiling's bays close it, and that share
   let skyOpen: N = A.y, occluded: N = float(1)
@@ -2080,18 +2220,18 @@ function hallMaterial(perPixel: boolean, library?: MaterialLibrary, sunShadow?: 
     // the same light as the vertex bake, per point: the hall's windows and
     // sun patches, the passage's hall door, the entrance's court
     const centre = P(HALL_W / 2, HALL_D / 2, FLOOR_Z + 1.6)
-    let sky: N = float(0), sun: N = roomReturnNode().add(ROOM_FILL)
+    let sky: N = float(0), sun: N = roomReturnNode(Nw).add(ROOM_FILL)
     for (const w of WINDOWS) {
-      const f = formFactorNode(w.ap.corners, centre).mul(TRANSMIT * w.ap.radiance)
+      const f = formFactorNode(w.ap.corners, centre, Nw).mul(TRANSMIT * w.ap.radiance)
       sky = sky.add(f)
       if (w.west) westSky = westSky.add(f)
     }
     for (const e of EMBRASURES) {
       let back: N = float(0)
-      for (const [poly, normal] of e.cheeks) back = back.add(formFactorNode(poly, add(e.centreOf(poly), normal)))
+      for (const [poly, normal] of e.cheeks) back = back.add(formFactorNode(poly, add(e.centreOf(poly), normal), Nw))
       sky = sky.add(back.mul(e.holdsNode()).mul(TRANSMIT * e.radiance * CHEEK_RETURN))
     }
-    for (const patch of PATCHES) sun = sun.add(formFactorNode(patch, add(patch[0]!, [0, 0, 1.5])))
+    for (const patch of PATCHES) sun = sun.add(formFactorNode(patch, add(patch[0]!, [0, 0, 1.5]), Nw))
     const linkCentre: V3 = [LINK_OUTLINE.reduce((a, q) => a + q[0], 0) / 4, LINK_OUTLINE.reduce((a, q) => a + q[1], 0) / 4, FLOOR_Z + 1.5]
     const side = formFactorNode(PASSAGE_DOOR.corners, linkCentre)
     const door = formFactorNode(linkDoorAp, linkCentre).mul(mix(float(1), float(REVEAL_GAIN), is(K.REVEAL)))
@@ -2106,8 +2246,8 @@ function hallMaterial(perPixel: boolean, library?: MaterialLibrary, sunShadow?: 
     // A board sees the room only through the gap between its two joists: the
     // view factor of that slot, about two thirds in the middle of a bay and
     // under half beside a joist
-    const gap = (JOIST_STEP - JOIST_W) / 2
-    const off = fract(hallUVNode(positionWorld)[0].sub(JOIST_FIRST).div(JOIST_STEP)).sub(.5).abs().mul(JOIST_STEP).min(gap)
+    const gap = (HALL_JOIST_STEP - JOIST_W) / 2
+    const off = fract(hallUVNode(positionWorld)[1].sub(HALL_JOIST_FIRST).div(HALL_JOIST_STEP)).sub(.5).abs().mul(HALL_JOIST_STEP).min(gap)
     const near = float(gap).sub(off), far = float(gap).add(off)
     const slot = near.div(near.mul(near).add(JOIST_D * JOIST_D).sqrt()).add(far.div(far.mul(far).add(JOIST_D * JOIST_D).sqrt())).mul(.5)
     const bay = mix(float(1), mix(mix(float(1), slot, smoothstep(.02, .2, hb)), exp(hb.max(0).div(-.045)).mul(.8).add(.2), sideways), is(K.OAK).mul(smoothstep(-.004, .004, hb)))
@@ -2115,6 +2255,22 @@ function hallMaterial(perPixel: boolean, library?: MaterialLibrary, sunShadow?: 
     ambient = skyOpen.mul(bay).add(door.mul(.3 * 2.4).add(side.mul(.2 * 2.4)).add(.07).mul(isLink)).add(entrance.x.mul(isEntrance))
     westSky = westSky.mul(2.4).mul(inHallShade).mul(bay)
     bounce = sun.mul(inHallShade).mul(bay).add(door.mul(LINK_DOOR_GAIN).add(side.mul(LINK_SIDE_GAIN)).add(LINK_FILL).mul(isLink)).add(entrance.y.mul(3.2).mul(isEntrance))
+  }
+  // THE ROOM'S LIGHT FALLS OFF into its corners and under its ceiling, and
+  // the lion holds it off the floor under its body and round its paws
+  {
+    const [cu0, cv0] = hallUVNode(positionWorld)
+    const along = max(min(cu0, float(HALL_W).sub(cu0)), min(cv0, float(HALL_D).sub(cv0)))
+    const fromBoards = float(CEIL_Z).sub(positionWorld.y)
+    const corner = float(1).sub(float(1).sub(smoothstep(0, .8, along)).mul(.3)).mul(float(1).sub(float(1).sub(smoothstep(0, .6, fromBoards)).mul(.22)))
+    // a room lit from one side falls off across its depth: along the two
+    // walls that run away from the windows the return is strongest by the
+    // window wall and weakest at the far end, where the uniform return by
+    // direction held them flat
+    const sideOn = Nw.x.mul(V[0]).sub(Nw.z.mul(V[1])).pow(2)
+    const depth = mix(float(1), float(1.2).sub(smoothstep(.3, HALL_W, cu0).mul(.45)), sideOn)
+    const roomShade = mix(float(1), corner.mul(depth), is(K.PLASTER)).mul(lionShade(Nw))
+    ambient = ambient.mul(roomShade); bounce = bounce.mul(roomShade); westSky = westSky.mul(roomShade)
   }
   // THE CEILING OVERHEAD. One bounce leaves its oak near black; the room's
   // later bounces off the limewash reach it too. An exhibition lift, not a
@@ -2178,21 +2334,26 @@ function hallMaterial(perPixel: boolean, library?: MaterialLibrary, sunShadow?: 
   const footprint = (x: N): N => x.dFdx().abs().add(x.dFdy().abs()).mul(1.15).max(1e-5)
   let fieldEdge: N = float(1e3)
   for (const e of FIELD_EDGES) fieldEdge = min(fieldEdge, hu0.sub(e.a[0]).mul(e.n[0]).add(hv0.sub(e.a[1]).mul(e.n[1])))
+  // and the straight bands' edges inside the field, where a field's cut tiles
+  // meet a band's
+  let bandEdge: N = float(1e3)
+  for (const b of FLOOR_BANDS.u) for (const e of [b - PITCH / 2, b + PITCH / 2]) bandEdge = min(bandEdge, hu0.sub(e).abs())
+  for (const b of FLOOR_BANDS.v) for (const e of [b - PITCH / 2, b + PITCH / 2]) bandEdge = min(bandEdge, hv0.sub(e).abs())
+  fieldEdge = min(fieldEdge, fieldEdge.greaterThan(0).select(bandEdge, float(1e3)))
   const jx = band(float(PITCH / 2).sub(ax), footprint(T.x)), jy = band(float(PITCH / 2).sub(ay), footprint(T.y)), jf = band(fieldEdge.abs(), footprint(fieldEdge))
   const jointCover = float(1).sub(float(1).sub(jx).mul(float(1).sub(jy)).mul(float(1).sub(jf))).mul(faced)
   tileColour = mix(tileColour, joint.mul(mix(float(.62), float(.5), wear)), jointCover)
-  // limewash: a broad wash, a trowel's drag, the brick's courses ghosting
-  // through, the smoke of forty-six winters darkening its upper reach
-  // the smoke gathers under the boards and climbs over the hearth; hands and
-  // shoulders wear the wash at the doors' jambs
+  // lime plaster under a limewash, kept whole (`keptLimePlaster`)
   const [hu, hv] = hallUVNode(Wp)
   // the chimneypiece's own frame: along its wall, out into the room, up
   const hx = hv.sub(HEARTH.v), hy = float(HALL_W).sub(hu), hz = Wp.y.sub(FLOOR_Z)
   const overHearth = float(1).sub(smoothstep(.2, 1.2, float(HALL_W).sub(hu).abs())).mul(float(1).sub(smoothstep(HEARTH.width * .4, HEARTH.width * .8, hv.sub(HEARTH.v).abs())))
-  const age = smoothstep(FLOOR_Z + 2.1, FLOOR_Z + 3.3, Wp.y).mul(float(.11).add(overHearth.mul(.16)))
+  // the walls are kept: only a little warm toning over the chimneypiece
+  const warmth = smoothstep(FLOOR_Z + 2.2, FLOOR_Z + 3.2, Wp.y).mul(overHearth).mul(.06)
   // each of the hall's four linings carries its own seed, so no two walls
-  // fail alike; the doorways' cheeks keep their own field
-  const plaster = limewashOverBrick(vec2(T.x.add(seed.lessThan(10).select(seed.mul(6.1), float(0))), T.y), FLOOR_Z, vec3(.60, .55, .46), 1.7, doorWear(Wp), { contrast: 1.35, layered: true }).albedo.mul(float(1).sub(age))
+  // were laid alike; the doorways' cheeks keep their own field
+  const plaster = mix(keptLimePlaster(Tw, vec3(.70, .65, .55), 1.7).mul(mix(vec3(1, 1, 1), vec3(.97, .93, .86), warmth.mul(10))),
+    vec3(.43, .19, .11).mul(mx_noise_float(vec3(Tw.x.mul(3.1), Tw.y.mul(9), 6.6)).mul(.08).add(1)), paintedBand(Tw, positionWorld.y).mul(is(K.PLASTER)))
   // oak: grain along the member
   const grain = mx_noise_float(vec3(T.x.mul(2.2), T.y.mul(38), seed.mul(13))).mul(.14).add(mx_noise_float(vec3(T.x.mul(9), T.y.mul(120), seed)).mul(.05))
   // the timbers' history along their length: the adze's long waves, grime
@@ -2255,8 +2416,16 @@ function hallMaterial(perPixel: boolean, library?: MaterialLibrary, sunShadow?: 
   const iron = mix(vec3(.082, .056, .04), vec3(.13, .066, .034), smoothstep(.1, .6, mx_noise_float(Wp.mul(55)))).mul(mx_noise_float(Wp.mul(140)).mul(.2).add(1))
   const ashC = vec3(.34, .33, .31).mul(mx_noise_float(Wp.mul(25)).mul(.25).add(1)).mul(float(1).sub(smoothstep(.62, .7, mx_noise_float(Wp.mul(48))).mul(.8)))
   const charC = mix(vec3(.018, .016, .015), vec3(.20, .19, .18), smoothstep(.2, .7, mx_noise_float(Wp.mul(30))).mul(.5))
-  // the furniture's oak: darker, waxed, handled
-  const wax = vec3(.11, .065, .036).mul(grain.mul(1.1).add(1)).mul(fract(seed.mul(3.17)).mul(.16).add(.92))
+  // the furniture's oak: darker, waxed, handled; its growth rings fine dark
+  // lines along the board and its rays pale flecks, each held only while a
+  // pixel can carry it, so a top seen at a slant does not smear into streaks
+  // (a year's ring is one to five millimetres: the spacing wanders across the board)
+  const ringAt = T.y.add(mx_noise_float(vec3(T.x.mul(.9), seed.mul(5.3), 2.1)).mul(.02)).add(mx_noise_float(vec3(T.x.mul(4.1), T.y.mul(3), seed)).mul(.003))
+    .add(mx_noise_float(vec3(T.x.mul(.5), T.y.mul(90), seed.mul(1.9))).mul(.0016))
+  const ringPx = ringAt.dFdx().abs().add(ringAt.dFdy().abs())
+  const ring = smoothstep(.6, .9, fract(ringAt.div(.0036))).mul(float(1).sub(smoothstep(.0007, .0018, ringPx)))
+  const fleck = smoothstep(.6, .72, mx_noise_float(vec3(T.x.mul(16), T.y.mul(130), seed.mul(2.7)))).mul(float(1).sub(smoothstep(.001, .003, ringPx)))
+  const wax = vec3(.12, .07, .038).mul(grain.mul(.55).add(1)).mul(fract(seed.mul(3.17)).mul(.16).add(.92)).mul(float(1).sub(ring.mul(.22))).mul(fleck.mul(.22).add(1))
   const brass = vec3(.50, .36, .16).mul(mx_noise_float(Wp.mul(60)).mul(.08).add(.95))
   // beeswax, bleached, never lit: an ivory that yellows toward the socket
   const candle = mix(vec3(.62, .56, .43), vec3(.54, .46, .32), mx_noise_float(Wp.mul(24)).mul(.5).add(.5)).mul(mx_noise_float(Wp.mul(90)).mul(.04).add(1))
@@ -2294,8 +2463,9 @@ function hallMaterial(perPixel: boolean, library?: MaterialLibrary, sunShadow?: 
   // widening and thinning until the hood's courses show through it
   const streaks = mx_noise_float(vec3(hx.mul(11), hz.mul(.9), 6.3)).mul(.45).add(mx_noise_float(vec3(hx.mul(3.2), hz.mul(.5), 2.9)).mul(.3)).add(.75)
   const tongue = exp(hx.div(above.mul(.55).add(.5)).pow(2).negate()).mul(exp(above.div(-1.3))).mul(.5).mul(streaks)
+  // a kept chimneypiece: the plume is washed back to a breath over the lintel
   const plume = sheet.add(tongue).mul(smoothstep(1.5, 1.66, hz)).mul(smoothstep(HEARTH.depth - .5, HEARTH.depth - .25, hy))
-    .mul(mx_noise_float(vec3(hx.mul(4.5), hz.mul(.8), 5.1)).mul(.35).add(.85)).mul(is(K.STONE))
+    .mul(mx_noise_float(vec3(hx.mul(4.5), hz.mul(.8), 5.1)).mul(.35).add(.85)).mul(is(K.STONE)).mul(.35)
   const sootField = mix(soot.mul(mx_noise_float(vec3(Wp.x.mul(3), Wp.y.mul(1.2), Wp.z.mul(3))).mul(.35).add(.8)), brickSoot, is(K.BRICK).mul(soot.greaterThan(.8).select(float(0), float(1)))).add(plume).clamp(0, 1)
   // THE HEARTHSTONE, as the fires have used it: three slabs, each its own
   // stone, their front worn pale and hollow where feet stood to tend the fire;
@@ -2325,7 +2495,7 @@ function hallMaterial(perPixel: boolean, library?: MaterialLibrary, sunShadow?: 
   const colour = mix(mix(mix(clean, hearthStone, onSlab), vec3(.07, .045, .03), scorch.mul(tileHearth).mul(.55)).mul(float(1).sub(crumbs.mul(tileHearth).mul(.7))), vec3(.012, .011, .010), sootField)
   m.colorNode = colour
   m.roughnessNode = float(.9).sub(is(K.TILE).mul(float(.22).add(wear.mul(.28))).mul(float(1).sub(jointCover))).sub(is(K.OAK).mul(.12)).add(is(K.JOINT).mul(.05)).sub(is(K.IRON).mul(.08))
-    .sub(is(K.WAX).mul(float(.3).sub(grain.mul(1.4)))).sub(is(K.CANDLE).mul(.38)).sub(is(K.BRASS).mul(.55)).sub(is(K.GLAZE).add(is(K.EARTH)).mul(.72)).add(is(K.CLOTH).mul(.08)).add(is(K.WEATHERED).mul(.05)).sub(is(K.BRICK).mul(brickSoot).mul(.3))
+    .sub(is(K.WAX).mul(float(.2).sub(ring.mul(.08)))).sub(is(K.CANDLE).mul(.38)).sub(is(K.BRASS).mul(.55)).sub(is(K.GLAZE).add(is(K.EARTH)).mul(.72)).add(is(K.CLOTH).mul(.08)).add(is(K.WEATHERED).mul(.05)).sub(is(K.BRICK).mul(brickSoot).mul(.3))
   m.metalnessNode = is(K.BRASS)
   m.aoNode = clamp(ambient, 0, 1)
   // A surface of the passage takes no direct sun: nothing faces it.
@@ -2343,10 +2513,17 @@ function hallMaterial(perPixel: boolean, library?: MaterialLibrary, sunShadow?: 
   const northSky = ambient.sub(westSky).max(0)
   const diffuseReturn = colour.mul(vec3(1, .73, .545).mul(bounce.mul(BOUNCE_K)).add(vec3(.19, .155, .115).mul(westSky)).add(vec3(.12, .13, .14).mul(northSky)))
   // waxed oak and glaze mirror the windows at a graze: the sheen a shaded
-  // table top holds where the eye catches the day in it
-  // the wax lies unevenly: the grain opens it, and hands have rubbed it up
-  const waxed = grain.mul(3).add(1).max(.3).mul(mx_noise_float(Wp.mul(2.3)).mul(.3).add(.8))
-  m.emissiveNode = perPixel ? diffuseReturn.add(windowGloss().mul(is(K.WAX).mul(waxed).add(is(K.GLAZE).add(is(K.EARTH)).mul(1.4))).mul(inSunBox)) : diffuseReturn
+  // table top holds where the eye catches the day in it; the wax lies a
+  // little unevenly, and the rings' open pores hold less of it
+  const waxed = mx_noise_float(Wp.mul(1.7)).mul(.15).add(.7).mul(float(1).sub(ring.mul(.35))).mul(grain.mul(1.2).add(1))
+  // only a top in the open mirrors the window: under the table's boards the
+  // reflected ray meets their underside (a trestle's stretcher, seen end on
+  // down the table's width, drew it as a pale bar), and an upright face is no top
+  const underBoards = float(1).sub(smoothstep(TABLE.size[0] / 2 - .02, TABLE.size[0] / 2, hu.sub(TABLE.u).abs()))
+    .mul(float(1).sub(smoothstep(TABLE.size[1] / 2 - .02, TABLE.size[1] / 2, hv.sub(TABLE.v).abs())))
+    .mul(float(1).sub(smoothstep(FLOOR_Z + TABLE.size[2] - .08, FLOOR_Z + TABLE.size[2] - .06, Wp.y)))
+  const flatTop = smoothstep(.5, .9, normalWorldGeometry.y).mul(float(1).sub(underBoards))
+  m.emissiveNode = perPixel ? diffuseReturn.add(windowGloss().mul(is(K.WAX).mul(waxed).mul(flatTop).add(is(K.GLAZE).add(is(K.EARTH)).mul(1.4))).mul(inSunBox)) : diffuseReturn
   m.userData['engineBounce'] = true
   m.name = 'vinci/house-hall/fabric'
   return m

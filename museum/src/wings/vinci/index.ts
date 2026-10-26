@@ -1971,7 +1971,7 @@ export function createWing():VinciWingModule {
       if(entry.kind==='stud'&&entry.id!==LINE_FLOOR_PICK)continue
       if(entry.kind==='machine'){
         const slug=entry.id.slice('machine/'.length)
-        if(isMachineSlug(slug))marks.push({id:entry.id,anchor:entry.anchor,object:entry.object,label:machineCatalog[slug].title[lang()],colour:PICTURE_CERTAINTY_KEY[2]!.colour,...sign(entry)})
+        if(isMachineSlug(slug))marks.push({id:entry.id,anchor:entry.anchor,...(entry.anchorNarrow?{anchorNarrow:entry.anchorNarrow}:{}),object:entry.object,label:machineCatalog[slug].title[lang()],colour:PICTURE_CERTAINTY_KEY[2]!.colour,...sign(entry)})
         continue
       }
       /* A SHEET TAKES A MARK ONLY WHERE THE STORE CARRIES ITS FILM: the press

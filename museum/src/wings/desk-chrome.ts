@@ -105,6 +105,10 @@ export interface DeskChromeHost {
   // desk.sheet: the host fields its step needs stand here
 
   // desk.opening: the host fields its step needs stand here
+
+  /** A STOP'S CLOSER LOOK, at rest where the stop carries one: its word, and
+      the press that opens it. Null at every other stop and while a leg runs. */
+  closer?: () => { word: VinciText; open: (from: HTMLElement) => void } | null
 }
 
 export interface DeskChrome {
@@ -239,6 +243,12 @@ export function createDeskChrome(host: DeskChromeHost): DeskChrome {
   more.type = 'button'
   const tell = make('button', 'desk-word-control desk-tell')
   tell.type = 'button'
+  /* A STOP'S CLOSER LOOK takes the reading row's gold, where a stop with a
+     set names its count; its key is the one that means nearer in every look */
+  const closer = make('button', 'desk-word-control desk-closer')
+  closer.type = 'button'
+  closer.setAttribute('aria-keyshortcuts', '+')
+  closer.addEventListener('click', () => host.closer?.()?.open(closer))
   /* THE TWO WAYS DEEPER FROM A STATION stand in their place from this step
      on, and answer from their own steps: the drawer is desk.drawer and the
      guided visit is desk.opening. Until then each names itself and refuses. */
@@ -520,6 +530,12 @@ export function createDeskChrome(host: DeskChromeHost): DeskChrome {
       tell.textContent = ''
       tell.append(icon(PLAY), document.createTextNode(say(WORD.tell())))
       foot.append(more)
+      const near = host.closer?.() ?? null
+      if (near) {
+        closer.textContent = ''
+        closer.append(document.createTextNode(say(near.word)), make('span', 'desk-key', '+'))
+        foot.append(closer)
+      }
       if (DESK_TELL) foot.append(tell)
       paintDrawer()
     }
@@ -704,6 +720,10 @@ export function createDeskChrome(host: DeskChromeHost): DeskChrome {
     const onControl = Boolean(target?.closest('button,a,[role="button"]'))
     if (drawer && event.key === 'ArrowDown' && plate.hidden
       && more.getAttribute('aria-disabled') !== 'true') { openDrawer(true); return true }
+    if (words && (event.key === '+' || event.key === '=')) {
+      const near = host.closer?.() ?? null
+      if (near) { near.open(closer); return true }
+    }
     if (!ways || onControl) return false
     if (event.key === ' ' || event.key === 'Spacebar') { pressOn(); return true }
     return false

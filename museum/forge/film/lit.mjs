@@ -20,6 +20,9 @@ export const KNOWN_CAPTURES = ['collection/body-wall-cabinet.ts', 'collection/ha
     light (made only to borrow a method, never in the scene). */
 export const KNOWN_SHADOW_LIGHTS = ['collection/body-wall-cabinet.ts', 'collection/hall-light.ts', 'collection/line-gallery.ts',
   'collection/picture-room.ts', 'collection/reading-room.ts', 'grave/diagram.ts', 'house-hall.ts', 'static-shadow-cache.ts']
+/** Wing files whose lights light only the machine bench's own page (`src/bench`), never a frame of the
+    film: the wing's modules reach none of them (`narrow.test.mjs` refuses a tree where one does). */
+export const BENCH_ONLY = ['machines/bench/index.ts']
 const CAPTURE = /\bCubeCamera\s*\(|\.fromScene\s*\(|\.reflector\s*\(|createReflector\s*\(|\.setRenderTarget\s*\(/
 // a light made under a namespace or a class of its own is one too
 const LIGHT = /new\s+(?:[\w$]+\.)*(?:Directional|Spot|Point|RectArea)Light\s*\(|extends\s+(?:[\w$]+\.)*(?:Directional|Spot|Point|RectArea)Light\b/
@@ -130,7 +133,7 @@ export function farBoxOf(far, sun) {
     `unknown` every module or cascade outside the pin, `unpinned` the modules alone. */
 export async function lightingAt(rev = '', overlay = {}) {
   const loader = await createLoader({ rev, overlay })
-  const files = wingFiles(rev, overlay)
+  const files = wingFiles(rev, overlay).filter((f) => !BENCH_ONLY.includes(f))
   const texts = files.map((f) => [f, loader.text(`${WING_DIR}/${f}`)])
   const lighting = { lit: litRoomCells(loader.load), ...lightingOf(texts) }
   lighting.unknown.push(...courtBoxes(loader.load).unknown)

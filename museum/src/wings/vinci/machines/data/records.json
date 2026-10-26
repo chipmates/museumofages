@@ -1077,8 +1077,8 @@
         "de": "Pyramidenfallschirm"
       },
       "label": {
-        "en": "The sheet wants a cloth roof big enough to hold a falling body up on the air.",
-        "de": "Das Blatt will ein Tuchdach, groß genug, um einen fallenden Körper in der Luft zu halten."
+        "en": "Our reconstruction from the Codex Atlanticus, folio 1058 verso. The sheet gives the cloth’s size. The rest is ours.",
+        "de": "Unsere Rekonstruktion nach Codex Atlanticus, Blatt 1058 verso. Das Blatt nennt die Größe des Tuchs. Alles andere stammt von uns."
       },
       "arithmetic": {
         "en": "Use v=sqrt(2 mg/(ρCdA)). For 100 kg, 49 m², 1.225 kg/m³ and assumed Cd 1.2, the result is 5.2 m/s. With Cd 0.8 to 1.6 it is 6.4 to 4.5 m/s. At 165 kg it is 6.7 m/s. These are descent estimates, not safe landing speeds. [7]",

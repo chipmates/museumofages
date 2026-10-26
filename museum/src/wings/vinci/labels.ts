@@ -226,6 +226,8 @@ export interface VinciExhibitMark {
   id: string
   /** Just off the object's own face, so it is not its own occluder. */
   anchor: Readonly<Vector3>
+  /** The anchor an upright frame uses, where it differs. */
+  anchorNarrow?: Readonly<Vector3>
   /** The exhibit's own name. A mark names, it never claims. */
   label: string
   /** The certainty colour of this object, which is a fact, not a style. */
@@ -677,11 +679,12 @@ export function createVinciExhibitDots(options: {
       }
       // the picture's own box, which is the window where no band stands
       const width = view.innerWidth, height = deskStageHeight()
-      const centreX = width / 2, centreY = height / 2
+      const centreX = width / 2, centreY = height / 2, narrow = height > width
+      const anchorOf = (mark: VinciExhibitMark): Readonly<Vector3> => (narrow && mark.anchorNarrow) || mark.anchor
       const candidates: { mark: VinciExhibitMark; x: number; y: number; from: number; beside: string; seen: Vector3 | null }[] = []
       for (const mark of marks) {
         if (!mark.object.visible) continue
-        projected.copy(mark.anchor as Vector3).project(camera)
+        projected.copy(anchorOf(mark) as Vector3).project(camera)
         if (projected.z <= -1 || projected.z >= 1) continue
         const at = { x: (projected.x * .5 + .5) * width, y: (-projected.y * .5 + .5) * height, beside: '' }
         const fits = (px: number, py: number): boolean => vinciMarkInBand(px, py, width, height, foot) && !underPanel(px, py, panels)
@@ -696,11 +699,12 @@ export function createVinciExhibitDots(options: {
       const shown: typeof candidates = []
       for (const candidate of candidates) {
         if (shown.length >= limit) break
-        let clear = sight.get(candidate.mark.id)
+        const key = narrow && candidate.mark.anchorNarrow ? `${candidate.mark.id}|narrow` : candidate.mark.id
+        let clear = sight.get(key)
         if (clear === undefined) {
           // a mark worn on the work is in sight where the work's own point under it is
-          clear = !vinciSightBlocked(eye, candidate.seen ?? candidate.mark.anchor, occluders, ray, hits)
-          sight.set(candidate.mark.id, clear)
+          clear = !vinciSightBlocked(eye, candidate.seen ?? anchorOf(candidate.mark), occluders, ray, hits)
+          sight.set(key, clear)
         }
         if (clear) shown.push(candidate)
       }

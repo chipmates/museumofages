@@ -402,6 +402,17 @@ export function vinciStoryStop(id: string): VinciStoryStop | undefined {
 }
 `
 
+/* story.ts is revised by hand between passes of the card, so an import that
+   would drop a shown string refuses unless told to replace the revisions */
+const shownStrings = (source) =>
+  new Set([...source.matchAll(/"((?:[^"\\]|\\.)*)"/g)].map((m) => m[1]).filter((s) => /\s/.test(s)))
+if (!args.includes('--replace-revised') && fs.existsSync(path.join(ROOT, OUT))) {
+  const next = shownStrings(file)
+  const dropped = [...shownStrings(fs.readFileSync(path.join(ROOT, OUT), 'utf8'))].filter((s) => !next.has(s))
+  if (dropped.length)
+    refuse('revised', OUT, `${dropped.length} shown strings are not in this card (revised after it), the first: ${dropped[0].slice(0, 80)}; pass --replace-revised to drop them`)
+}
+
 const report = {
   checker: 'vinci-story-import',
   card: path.basename(cardPath),

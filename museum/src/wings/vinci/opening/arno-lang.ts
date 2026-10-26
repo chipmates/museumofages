@@ -9,11 +9,11 @@
    · A CHOICE IS KEPT ON THE DEVICE (browser-lang.ts), so a later visit by
      an address that names no language opens in it.
    · THE LIST IS LAID OVER THE CARD, never in its flow, and never on the
-     gold way in. It takes a place that covers no words where the glass has
-     one (over the night above the desktop's band, over the drawing on a
-     phone), in two columns where one is too tall. On a long upright card no
-     such place is left: there it covers the words' whole column down to the
-     gold, so no word stands cut beside or under it.
+     gold way in: over the night above the desktop's band, beside the
+     drawing held sideways. Upright it rises from the foot as a sheet under a
+     scrim, its word and a close at its head, one column of full rows, every
+     one in the thumb's reach; the close, Escape, a press on the scrim and a
+     swipe down fold it.
    · ESCAPE IS THE CARD'S. A modal answers Escape itself, so the card folds
      the list through `close()` before it reads Escape as its way in. */
 
@@ -42,13 +42,10 @@ export interface ArnoLanguages {
 const SVG = 'http://www.w3.org/2000/svg'
 const CHEVRON_DOWN = 'M4 6l4 4 4-4'
 const CHECK = 'M3.5 8.5l3 3L12.5 5'
-/** the control's words stand this far inside its target (arno-card.css) */
-const INSET = 12
-/** the list's air to those words, to the gold way in and to the glass's edge */
-const NEAR = 8
+/** the list's air to the glass's edge */
 const EDGE = 8
-/** the phone's list starts on the drawing's edge, this far left of the words; its names keep their place */
-const OUTSET = 4
+/** a swipe down this long folds the upright sheet */
+const SWIPE = 60
 
 function mark(document_: Document, path: string, cls: string): SVGSVGElement {
   const svg = document_.createElementNS(SVG, 'svg')
@@ -116,7 +113,28 @@ export function createArnoLanguages(document_: Document, signal: AbortSignal, gr
     list.append(item)
     return link
   })
-  row.append(control, list)
+  /* upright the list stands in a sheet with its own head, over a scrim (place());
+     elsewhere the sheet is no box and the list is placed as it always was */
+  const scrim = document_.createElement('div')
+  scrim.className = 'arno-lang-scrim'
+  scrim.hidden = true
+  const sheet = document_.createElement('div')
+  sheet.className = 'arno-lang-sheet'
+  sheet.hidden = true
+  const head = document_.createElement('div')
+  head.className = 'arno-lang-head'
+  const title = document_.createElement('p')
+  title.className = 'arno-lang-title'
+  // the list carries the same word as its name
+  title.setAttribute('aria-hidden', 'true')
+  title.textContent = word
+  const shut = document_.createElement('button')
+  shut.type = 'button'
+  shut.className = 'arno-lang-close'
+  shut.setAttribute('aria-label', say(LOBBY_TEXT.close))
+  head.append(title, shut)
+  sheet.append(head, list)
+  row.append(control, scrim, sheet)
 
   /** each language at the address the visitor stands at now */
   function address(): void {
@@ -152,41 +170,19 @@ export function createArnoLanguages(document_: Document, signal: AbortSignal, gr
       top = Math.min(glass.h - EDGE - one, sheet.top)
       where = 'beside'
     } else {
-      const words = at.top + INSET
-      const over = words - NEAR - EDGE
-      const sentence = ground.line.getBoundingClientRect().top
-      const under = ground.start.getBoundingClientRect().top - NEAR - sentence
-      left = at.left - OUTSET
-      list.style.setProperty('--arno-lang-inset', `${16 + OUTSET}px`)
-      const whole = `${Math.round(glass.w - left * 2)}px`
-      const one = tall(1)
-      if (one <= over) top = words - NEAR - one
-      else {
-        // every other place spans the glass from the drawing's one edge to the other
-        list.style.width = whole
-        const two = tall(2)
-        if (two <= over) top = words - NEAR - two
-        else if (Math.min(one, two) <= under) {
-          // no room over the words: their whole column down to the gold, so nothing stands cut
-          tall(one <= under ? 1 : 2)
-          list.style.height = `${Math.floor(under)}px`
-          top = sentence
-          where = 'under'
-        } else {
-          // a glass too short for either: over the words, as tall as the room is
-          list.style.maxHeight = `${Math.floor(over)}px`
-          top = words - NEAR - tall(1)
-          where = 'fitted'
-        }
-      }
+      // upright the sheet stands at the foot in one column, laid by arno-card.css
+      tall(1)
+      where = 'sheet'
     }
     list.dataset['where'] = where
+    row.dataset['where'] = where
+    if (where === 'sheet') { list.style.removeProperty('left'); list.style.removeProperty('top'); return }
     list.style.left = `${Math.round(Math.max(EDGE, Math.min(glass.w - EDGE - list.offsetWidth, left)))}px`
     list.style.top = `${Math.round(Math.max(EDGE, top))}px`
   }
   function open(): void {
     address()
-    list.hidden = false
+    list.hidden = sheet.hidden = scrim.hidden = false
     control.setAttribute('aria-expanded', 'true')
     place()
     const here = links.find(link => link.hasAttribute('aria-current')) ?? links[0]
@@ -196,7 +192,7 @@ export function createArnoLanguages(document_: Document, signal: AbortSignal, gr
   }
   function fold(): boolean {
     if (list.hidden) return false
-    list.hidden = true
+    list.hidden = sheet.hidden = scrim.hidden = true
     control.setAttribute('aria-expanded', 'false')
     return true
   }
@@ -207,6 +203,21 @@ export function createArnoLanguages(document_: Document, signal: AbortSignal, gr
   }
 
   control.addEventListener('click', () => { if (list.hidden) open(); else close() })
+  shut.addEventListener('click', () => { close() })
+  scrim.addEventListener('click', () => { close() })
+  // a swipe down on the sheet folds it, read from touches, and only from a list scrolled to its top
+  let swipe: { x: number; y: number } | null = null
+  sheet.addEventListener('touchstart', event => {
+    const touch = event.touches[0]
+    swipe = event.touches.length === 1 && touch && list.scrollTop <= 0 ? { x: touch.clientX, y: touch.clientY } : null
+  }, { passive: true, signal })
+  sheet.addEventListener('touchend', event => {
+    const touch = event.changedTouches[0], from = swipe
+    swipe = null
+    if (!from || !touch) return
+    const dy = touch.clientY - from.y, dx = touch.clientX - from.x
+    if (dy > SWIPE && dy > Math.abs(dx) * 1.5) close()
+  }, { passive: true, signal })
   list.addEventListener('keydown', event => {
     const at = links.indexOf(document_.activeElement as HTMLAnchorElement)
     const to = event.key === 'ArrowDown' ? (at + 1) % links.length
