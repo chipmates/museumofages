@@ -642,8 +642,9 @@ export function createBench(stack: Stack, onExit: () => void) {
       section: [
         { at: [.6, 3.9, .7], aim: [.68, .74, -.8], lux: 320, kelvin: 4300, angle: .16, penumbra: .6, decay: 2 },
         { at: [-.6, 3.9, .7], aim: [-.68, .74, -.8], lux: 320, kelvin: 4300, angle: .16, penumbra: .6, decay: 2 },
-        // and a broad soft one over the near rim, so the tub's floor, the near wheels and both cranks read from above
-        { at: [0, 4.8, 3.2], aim: [0, .15, .2], lux: 70, kelvin: 4300, angle: .75, penumbra: 1, decay: 2, shadow: false },
+        // and a broad soft one over the near rim, so the tub's floor, the near wheels and both cranks read from above;
+        // soft enough that the floor stays quiet under the phone's dock
+        { at: [0, 4.8, 3.2], aim: [0, .15, .2], lux: 40, kelvin: 4300, angle: .75, penumbra: 1, decay: 2, shadow: false },
       ],
     } },
   };

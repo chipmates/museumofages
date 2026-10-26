@@ -116,8 +116,8 @@ function stave(k: Kit, i: number): void {
   k.polygon([outer(-hb, bottom), outer(hb, bottom), inner(hb, bottom), inner(-hb, bottom)], radial(ac), at_(bottom), mid(0, bottom + 0.05))
 }
 
-/** The port's oak collar on the skirt, square to the wall: a low, plain ring that stands 14 mm proud, as a board
- * thickened round a hole, not a ship's porthole. */
+/** The port's oak collar on the skirt, square to the wall: a low, plain ring 2 cm wide that stands 1 cm proud, as a
+ * board thickened round a hole, not a ship's porthole. */
 function collar(k: Kit, deg: number, j: number): void {
   const a = portAngle(deg), y = TUB.ports.y
   const r = wallRadius(y)
@@ -126,7 +126,7 @@ function collar(k: Kit, deg: number, j: number): void {
   const origin = add(at(r, a, y), mul(n, -0.004))
   // the collar's face blackened round the muzzle by the guns' smoke; oval up the leaning wall, as the hole is cut
   // level through it, so the level barrel clears its lips
-  k.lathe(origin, n, [[0, TUB.ports.r], [0, TUB.ports.collar - 0.008], [0.011, TUB.ports.collar - 0.012], [0.014, TUB.ports.r + 0.008], [0.014, TUB.ports.r]], 24, { tone: tone(2, j) }, false, undefined, s => (s > 0.011 ? 0.62 : 1), Math.hypot(1, dr))
+  k.lathe(origin, n, [[0, TUB.ports.r], [0, TUB.ports.collar - 0.015], [0.008, TUB.ports.collar - 0.018], [0.01, TUB.ports.r + 0.008], [0.01, TUB.ports.r]], 24, { tone: tone(2, j) }, false, undefined, s => (s > 0.007 ? 0.55 : 0.85), Math.hypot(1, dr))
 }
 
 /** A floor board between z0 and z1 and the cuts xa..xb (an infinite cut runs to the wall), its ends sawn on the
@@ -271,12 +271,17 @@ function wells(k: Kit): void {
     // staves; under the floor, where the staves end, the well runs 1 cm on under their foot and no further, so no
     // board shows under the skirt's foot from outside
     const Rc = TUB.bottomR - TUB.wall - 0.005, Rb = TUB.bottomR - TUB.wall + 0.01
+    // a board that runs out to where an eye outside sees in under the skirt's foot (about 17 cm in from it) lies in the
+    // ground's mud and the skirt's shadow, so it never shows pale through the gap under the foot
+    const MUD = TUB.bottomR - 0.17
+    const mud = (j: number): Finish => ({ tone: 0.22 + 0.05 * hash(71, sx, sz, j), wear: 0 })
     const slabAt = (x0: number, x1: number, y0: number, y1: number, z0: number, z1: number, j: number, grain: V3 = X): void => {
       const R = y1 <= TUB.bottomY ? Rb : Rc
       const reach = Math.sqrt(Math.max(0, R * R - Math.max(z0 * z0, z1 * z1)))
       x0 = Math.max(x0, -reach); x1 = Math.min(x1, reach)
       if (x1 - x0 < 0.02 || z1 - z0 < 0.005) return
-      k.box(v((x0 + x1) / 2, (y0 + y1) / 2, (z0 + z1) / 2), [X, Y, Z], v((x1 - x0) / 2, (y1 - y0) / 2, (z1 - z0) / 2), f(j), 0.003, grain)
+      const out = Math.hypot(Math.max(Math.abs(x0), Math.abs(x1)), Math.max(Math.abs(z0), Math.abs(z1)))
+      k.box(v((x0 + x1) / 2, (y0 + y1) / 2, (z0 + z1) / 2), [X, Y, Z], v((x1 - x0) / 2, (y1 - y0) / 2, (z1 - z0) / 2), y1 <= TUB.bottomY && out > MUD ? mud(j) : f(j), 0.003, grain)
     }
     const [y0, y1] = W.bottom
     const X0 = xa - W.t, X1 = xb + W.t, Z0 = za - W.t, Z1 = zb + W.t
@@ -286,7 +291,7 @@ function wells(k: Kit): void {
       const n = 12, pts: [number, number][] = [[inner, Z0]]
       for (let i = 0; i <= n; i++) { const z = Z0 + ((Z1 - Z0) * i) / n; pts.push([sx * Math.min(Math.abs(outer), reachAt(z)), z]) }
       pts.push([inner, Z1])
-      prism(k, pts, y0, y1, f(j))
+      prism(k, pts, y0, y1, mud(j))
     }
     if (sx > 0) { slabAt(X0, hx - cutX, y0, y1, Z0, Z1, 0); curved(hx + cutX, X1, 1) }
     else { curved(hx - cutX, X0, 0); slabAt(hx + cutX, X1, y0, y1, Z0, Z1, 1) }
@@ -642,7 +647,7 @@ function forgedBand(k: Kit, origin: V3, axis: V3, r0: number, r1: number, width:
   // the face 0.4 to 1.2 mm in, but where the lapped end lies over the band; the edges 0 to 1.2 mm in
   const rOut = (t: number): number => (inLap(t) ? r1 : r1 - 0.0004 - 0.0008 * wave(t, 0))
   const sA = (t: number): number => 0.0012 * wave(t, 1), sB = (t: number): number => width - 0.0012 * wave(t, 3)
-  const tone = (t: number): number => 0.8 + 0.34 * hash(88, ...seed, Math.floor((t / TAU) * 11)) * 0.6 + 0.2 * wave(t, 2)
+  const tone = (t: number): number => 0.62 + 0.42 * hash(88, ...seed, Math.floor((t / TAU) * 11)) + 0.22 * wave(t, 2)
   const at = (t: number, r: number, s: number): V3 => add(origin, add(mul(w, s), add(mul(e1, Math.cos(t) * r), mul(e2, Math.sin(t) * r))))
   const radial = (t: number): V3 => add(mul(e1, Math.cos(t)), mul(e2, Math.sin(t)))
   // two samples a hair apart where the lapped end stops, so its edge is a step, not a ramp
@@ -651,7 +656,9 @@ function forgedBand(k: Kit, origin: V3, axis: V3, r0: number, r1: number, width:
   for (let i = 0; i + 1 < ts.length; i++) {
     const ta = ts[i]!, tb = ts[i + 1]!, fa = { tone: tone(ta) }, fb = { tone: tone(tb) }
     const ua = (ta * (r0 + r1)) / 2, ub = (tb * (r0 + r1)) / 2
-    k.smoothQuad([at(ta, rOut(ta), sA(ta)), at(tb, rOut(tb), sA(tb)), at(tb, rOut(tb), sB(tb)), at(ta, rOut(ta), sB(ta))], [radial(ta), radial(tb), radial(tb), radial(ta)], [[ua, 0], [ub, 0], [ub, width], [ua, width]], fa, 0, [fa, fb, fb, fa])
+    // each hammer blow leaves a flat: the face is flat between samples, tilted its own way along the band
+    const tilt = 0.22 * (hash(92, ...seed, i) - 0.5), mid = (ta + tb) / 2, fn = norm(add(radial(mid), mul(w, tilt)))
+    k.smoothQuad([at(ta, rOut(ta), sA(ta)), at(tb, rOut(tb), sA(tb)), at(tb, rOut(tb), sB(tb)), at(ta, rOut(ta), sB(ta))], [fn, fn, fn, fn], [[ua, 0], [ub, 0], [ub, width], [ua, width]], fa, 0, [fa, fb, fb, fa])
     for (const [s, sign] of [[sA, -1], [sB, 1]] as const) {
       const n = mul(w, sign)
       k.smoothQuad([at(ta, r0, s(ta)), at(tb, r0, s(tb)), at(tb, rOut(tb), s(tb)), at(ta, rOut(ta), s(ta))], [n, n, n, n], [[ua, 0], [ub, 0], [ub, r1 - r0], [ua, r1 - r0]], fa, 0, [fa, fb, fb, fa])
@@ -768,8 +775,9 @@ export function shaft(sz: number): Body {
       rundle(b.rough, a, l, o, contact, { tone: tone(43, seed, sx, k), wear: 0.1 }, [seed, sx, k])
     }
   }
-  // the grip, worn smooth by the crew's hands
-  b.fine.rod(v(-CRANK.cheekX - 0.06, CRANK.throw, 0), v(CRANK.cheekX + 0.06, CRANK.throw, 0), CRANK.gripR, 18, { tone: tone(44, seed), wear: 1 }, 0.008)
+  // the grip, shaved from riven oak as the staves are and worn by the crew's hands, palest where the hands go
+  shaved(b.rough, v(-CRANK.cheekX - 0.06, CRANK.throw, 0), v(CRANK.cheekX + 0.06, CRANK.throw, 0), CRANK.gripR, 11, { tone: tone(44, seed), wear: 0.6 }, [44, seed], 8, 0,
+    u => 0.6 + 0.4 * smooth(0.1, 0.25, Math.min(u, 1 - u)))
   return b
 }
 
