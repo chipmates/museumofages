@@ -223,7 +223,7 @@
       },
       "certainty": "C",
       "source": "British Museum 1860,0616.99 (the sheet): short barrels at the skirt's openings; no count on the sheet",
-      "notes": "24 guns, one at every port, each 0.92 m long with its rings and a swelling muzzle. The count is ours, and bronze is a type, not his. Lifted off with the cover in the inspection view."
+      "notes": "20 guns, one at every port, each 0.92 m long with its rings and a swelling muzzle. The count is ours, and bronze is a type, not his. Lifted off with the cover in the inspection view."
     },
     {
       "id": "wheel-rear-far",
@@ -559,56 +559,28 @@
     }
   ],
   "motion": {
-    "period_s": 12,
+    "period_s": 36,
     "loop": true,
     "phases": [
       {
-        "name": "The crew stands at the cranks",
+        "name": "The crew turns the cranks steadily: the front and rear wheels of each side turn against each other and scrub, and the car stands",
         "start_s": 0,
-        "duration_s": 1,
+        "duration_s": 36,
         "joint_values": {},
-        "interpolation": "hold"
-      },
-      {
-        "name": "One turn forward: the front and rear wheels turn against each other",
-        "start_s": 1,
-        "duration_s": 4.4,
-        "joint_values": {},
-        "interpolation": "eased in, arriving moving"
-      },
-      {
-        "name": "The bind: the drive stops dead, the crew shoves twice and it will not go",
-        "start_s": 5.4,
-        "duration_s": 2.2,
-        "joint_values": {},
-        "interpolation": "jam and shoves"
-      },
-      {
-        "name": "Turned back: the wheels fight the other way",
-        "start_s": 7.6,
-        "duration_s": 3.4,
-        "joint_values": {},
-        "interpolation": "smootherstep"
-      },
-      {
-        "name": "At rest",
-        "start_s": 11,
-        "duration_s": 1,
-        "joint_values": {},
-        "interpolation": "hold"
+        "interpolation": "steady"
       }
     ],
-    "visitor_12s": "The crew turns the cranks one turn, and the front and rear wheels of each side turn against each other. The drive stops dead, the crew shoves twice and it will not go. Turned back, the wheels fight the other way. The car never moves."
+    "visitor_12s": "The crew turns the cranks steadily. The front and rear wheels of each side turn against each other at the same speed and scrub on the ground, so the car stands where it is."
   },
   "drive": {
     "type": "eight men at two cranks",
     "input_joint": "shaft-far",
     "input_rate": {
-      "value": 0.227,
-      "unit": "turns per second, the mean of the forward turn",
+      "value": 0.333,
+      "unit": "turns per second",
       "certainty": "C",
       "source": "museum choice",
-      "note": "One turn in 4.4 s, eased in, stopped dead by the jam."
+      "note": "A third of a turn a second, steady: 12 crank turns are 5 wheel turns, so the 36 s loop closes with no reset."
     },
     "justification": "The sheet's note names eight men who turn the car. The cranks, shafts, lanterns and pegs are drawn; the rate is ours.",
     "source": "British Museum 1860,0616.99 (the sheet)"
@@ -616,8 +588,8 @@
   "label_en": "Our reconstruction from his sheet in the British Museum, sizes ours. As drawn, its wheels turn against each other.",
   "label_de": "Unsere Rekonstruktion nach seinem Blatt im British Museum, die Maße stammen von uns. Wie gezeichnet, drehen sich seine Räder gegeneinander.",
   "animation_notes": [
-    "A 12 s loop that starts and ends at rest, with no hidden reset.",
-    "Built as drawn: the front and rear wheels of a side turn in opposite senses, and the car never rolls.",
+    "A 36 s loop of a steady turn: 12 crank turns, 5 wheel turns, so it closes on itself with no reset.",
+    "Built as drawn: the front and rear wheels of a side turn in opposite senses at the same speed. Working words: we show the drive verdict's second reading, the scrub, in which the crank turns, the two wheels skid against each other on the ground and the car stands. Its first reading, the jam (the crank stops dead), stays in the code as the other reading. The car never rolls.",
     "The inspection view lifts the cover and the guns off; the geometry is unchanged."
   ],
   "folio": [

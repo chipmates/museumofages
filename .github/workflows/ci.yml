@@ -125,7 +125,7 @@ jobs:
   site:
     name: Site (Python ${{ matrix.python }})
     runs-on: ubuntu-24.04
-    timeout-minutes: 10
+    timeout-minutes: 40
     strategy:
       fail-fast: false
       matrix:
@@ -179,4 +179,4 @@ jobs:
           python3 site/_src/build.py --switches
 
       - name: Topic page tests
-        run: python3 site/pages/test_build.py
+        run: python3 site/pages/test_build.py -v

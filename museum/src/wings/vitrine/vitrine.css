@@ -44,7 +44,8 @@
    over the lowest line shown while more waits below (--fade from the host) */
 .vitrine[data-narrow='true'] .vitrine-body {scroll-padding-bottom:16px;}
 .vitrine[data-narrow='true'] .vitrine-body[data-more='true'] {
-  -webkit-mask-image:linear-gradient(to bottom,#000 calc(100% - var(--fade,16px)),transparent);mask-image:linear-gradient(to bottom,#000 calc(100% - var(--fade,16px)),transparent);}
+  -webkit-mask-image:linear-gradient(to bottom,#000 calc(100% - var(--fade-cover,0px) - var(--fade,16px)),transparent calc(100% - var(--fade-cover,0px)));
+  mask-image:linear-gradient(to bottom,#000 calc(100% - var(--fade-cover,0px) - var(--fade,16px)),transparent calc(100% - var(--fade-cover,0px)));}
 /* ONE NAME TYPE FOR EVERY KIND. A machine, a work, a sheet and a leaf are
    named in the same place and the same type, so a visitor reads the name
    before the sentence about it. */
@@ -382,9 +383,10 @@
 .vitrine[data-narrow='true'][data-read='true'] .vitrine-body {padding-bottom:12px;scroll-padding-top:60px;}
 .vitrine[data-narrow='true'][data-read='true'] .vitrine-name {position:sticky;top:0;z-index:2;margin:0 -12px 6px;padding:22px 56px 8px 12px;
   background:var(--ui-ground-sheet);touch-action:none;}
-/* a line passing under the head fades into it, it never breaks off at its edge */
-.vitrine[data-narrow='true'][data-read='true'] .vitrine-name::after {content:'';position:absolute;left:0;right:0;top:100%;height:10px;pointer-events:none;
-  background:linear-gradient(to bottom,var(--ui-ground-sheet),color-mix(in srgb, var(--ui-ground-sheet) 0%, transparent));}
+/* a line passing under the head fades into it, it never breaks off at its edge: a line the edge would slice waits
+   under the head's ground, which runs on to the gap under it (--name-cover, index.ts) */
+.vitrine[data-narrow='true'][data-read='true'] .vitrine-name::after {content:'';position:absolute;left:0;right:0;top:100%;height:calc(10px + var(--name-cover,0px));pointer-events:none;
+  background:linear-gradient(to bottom,var(--ui-ground-sheet) var(--name-cover,0px),color-mix(in srgb, var(--ui-ground-sheet) 0%, transparent));}
 /* while it is read, what belongs to the work stands down; a book keeps the two that turn its page, after the words */
 .vitrine[data-narrow='true'][data-read='true'] .vitrine-payload-controls > :not(.reader-row) {display:none;}
 .vitrine[data-narrow='true'][data-read='true'] .vitrine-payload-controls .reader-row > :not(.vitrine-step) {display:none;}

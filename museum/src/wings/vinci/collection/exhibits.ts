@@ -49,6 +49,11 @@ const HALL_KEEP_M = 10
 const GROUNDS: readonly StandGround[] = ['court', 'hall', 'house']
 
 export interface CollectionExhibits {
+  /** Light a body standing in one of these rooms as that room lights its own
+   * surfaces; a room not built here leaves it to the scene's own lights. */
+  lightBody(room: string, body: Mesh): void
+  /** the collection's rooms are drawn this frame (they are not from the house's far stations) */
+  roomsDrawn(): boolean
   update(seconds: number, delta: number, eye: Vector3): void
   /** Build the hall before the camera is in it (an inspection eye). */
   warm(): void
@@ -99,6 +104,8 @@ export function mountCollectionExhibits(host: Group, stack: Stack): CollectionEx
   let hallHeld = false, hallKept = false
   /** the hall's rig, once it stands; a machine is only ever ready after it */
   let hallRig: { adopt(surface: Material): void; release(surface: Material): void } | undefined
+  /** bodies asked to be lit by the hall before its rig stood */
+  const hallBodies: Material[] = []
   /** which hall machines are lit by the hall's rig right now */
   const hallLit = new Map<ReadyMachineBuild, boolean>()
   function lightHallMachine(machine: ReadyMachineBuild, inHall: boolean): void {
@@ -410,6 +417,7 @@ export function mountCollectionExhibits(host: Group, stack: Stack): CollectionEx
   while (root.parent) root = root.parent
   const hallLight = mountHallLight(host, [], stack.renderer, root as Scene)
   hallRig = hallLight
+  for (const body of hallBodies.splice(0)) hallLight.adopt(body)
   teardown.push(() => { hallLight.dispose() })
   // The hall's finish rides with the rooms, so it is drawn when they are.
   const hallFabric = mountHallFabric(stack, hallLight.adopt)
@@ -465,6 +473,15 @@ export function mountCollectionExhibits(host: Group, stack: Stack): CollectionEx
   }
 
   return {
+    lightBody(room, body) {
+      const material = body.material as Material
+      // the spots' maps hold the body itself, so a body receiving them prints its own hand on its thigh and a
+      // machine's strut on its shin: in the hall it casts onto the floor and receives none
+      if (room === 'mechanism-hall') { body.receiveShadow = false; if (hallRig) hallRig.adopt(material); else hallBodies.push(material) }
+      else if (room === 'picture-room') pictureRoom.lightBody(body)
+      else if (room === 'long-gallery') gallery.lightBody(body)
+    },
+    roomsDrawn() { return rooms?.visible !== false },
     bodies() {
       const plates = pictureBodies()
       return {

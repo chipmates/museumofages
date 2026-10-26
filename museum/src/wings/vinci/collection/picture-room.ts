@@ -411,6 +411,9 @@ export interface PictureRoom {
   /** How many takes of the room's bounce are still owed. A take is drawn in
    * a frame of its own, with the bodies it must see shown for its length. */
   tick(bodies: readonly Object3D[]): void
+  /** light a body standing in the room as the room lights its benches, and let
+   * it cast in the room's daylight */
+  lightBody(body: Mesh): void
   dispose(): void
 }
 
@@ -747,6 +750,13 @@ export function mountPictureRoom(stack: Stack): PictureRoom {
       if (owed <= 0) return
       owed--
       take([group, ...bodies])
+    },
+    lightBody(body) {
+      const m = body.material as MeshStandardNodeMaterial
+      adopt(m, rig.floor)
+      // the heads' own light, without the frames' halo and shadow, which are the wall's
+      if (m.isMeshStandardNodeMaterial) m.emissiveNode = hangSurfaceLight(vec3(m.color.r, m.color.g, m.color.b), float(m.roughness), float(m.metalness), PICTURE_LOOKS, false)
+      body.layers.enable(PICTURE_SHADOW_LAYER)
     },
     dispose() {
       live = false

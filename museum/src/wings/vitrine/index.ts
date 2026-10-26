@@ -18,6 +18,7 @@ import { noteOpened } from '../visit'
 import { uiSure } from '../ui-sure'
 import css from './vitrine.css?inline'
 import { maskWholeLines, unmaskLines, wholeLines, type LineCut } from './whole-lines'
+import { CAPTION_BOX } from './fit'
 import type { VitrineCinema, VitrineExhibit, VitrinePayloadHost, VitrinePeek, VitrinePlace, VitrineRect, VitrineSurface } from './types'
 
 export type { VitrineCinema, VitrineExhibit, VitrinePayload, VitrinePayloadHost, VitrinePlace, VitrineRect, VitrineSurface } from './types'
@@ -405,6 +406,10 @@ export function createVitrine(options: {
     }
     if (as !== 'narrow') { delete root.dataset['read']; delete root.dataset['restLine'] }
     cinemaFrame = frame
+    /* A RAISED CARD NEVER HIDES ITS MACHINE: the machine is fitted into the glass
+       over the card. The island's fit keeps a caption's box at its viewport's foot
+       and that caption waits under the card, so the viewport runs as far under it. */
+    let over: { left: number; top: number; right: number; bottom: number } | null = null
     if (frame) layCinema(frame)
     else if (narrow) {
       // THE WINDOW OWNS THE PHONE. The station's chrome stands down while a
@@ -429,8 +434,10 @@ export function createVitrine(options: {
       // gets the two lines: the card is placed once to be measured in its
       // own width, and then at the height its own peek needs.
       let peek = raised && restPeek !== null ? restPeek : Math.min(PEEK, Math.round(tall * .34))
+      let cardAt = bottom
       const place2 = (height: number): void => {
         const at = bottom - height
+        cardAt = at
         place(sheet, { left, top: at, width: right - left, height })
         place(card, { left, top: at, width: right - left, height })
       }
@@ -472,6 +479,11 @@ export function createVitrine(options: {
       // a card that rises stands OVER the work rather than resizing it.
       root.style.setProperty('--vitrine-peek', `${fill ? peek : 0}px`)
       shutMark.hidden = false
+      if (fill && raised && exhibit?.payload?.kind === 'machine') {
+        // insets from the stage's padding box, which its hairline border shifts by a pixel
+        const head = Math.max(left, Math.round(shutMark.getBoundingClientRect().top)), edge = stage.clientLeft, rim = stage.clientTop
+        over = { left: -left - edge, right: -(width - right) - edge, top: head - top - rim, bottom: bottom - Math.round(cardAt) - CAPTION_BOX }
+      }
       // the unseen steps' place while a keyboard holds one: the work's lower left, over the card
       const low = fill ? bottom - peek : top + viewHeight
       Object.assign(tools.style, { left: `${left + 8}px`, top: `${Math.round(low - 52)}px` })
@@ -519,6 +531,10 @@ export function createVitrine(options: {
       row.style.width = `${Math.round(rects.view.width)}px`
       row.style.top = 'auto'
       row.style.bottom = `${Math.round(height - bottom)}px`
+    }
+    for (const side of ['left', 'top', 'right', 'bottom'] as const) {
+      if (over) payloadEl.style[side] = `${over[side]}px`
+      else payloadEl.style.removeProperty(side)
     }
     // ONE ATTRIBUTE CARRIES THE RULE. While a window stands on the phone the
     // station's chrome stands down, and the page's own frame reads this to
@@ -893,14 +909,21 @@ export function createVitrine(options: {
     body.dataset['top'] = String(open && body.scrollTop < 1)
     if (cinemaFrame) askClamp()
   }
-  body.addEventListener('scroll', markMore, { passive: true })
+  /** the lines move under a fixed edge as the words scroll: the cut is read again each frame */
+  let fadeAsked = false
+  const askFade = (): void => { if (fadeAsked) return; fadeAsked = true; requestAnimationFrame(() => { fadeAsked = false; if (!cinemaFrame) fadeWords() }) }
+  body.addEventListener('scroll', () => { markMore(); if (!cinemaFrame && options.narrow()) askFade() }, { passive: true })
 
   /** THE DRAWER'S LAST LINE FADES OUT, IT NEVER BREAKS OFF. On the phone the
    * words' box ends where the controls begin. While words wait below, the
    * lower edge fades from the top of the lowest whole line it shows, so that
-   * line dissolves as the sign of more, and the rest scrolls. */
+   * line dissolves as the sign of more, and the rest scrolls. A line the
+   * box's edge would slice waits wholly under the mask: the mask ends midway
+   * in the gap above it (--fade-cover, from the box's foot). */
   function fadeWords(): void {
+    coverHead()
     body.style.removeProperty('--fade')
+    body.style.removeProperty('--fade-cover')
     if (!open || !options.narrow() || body.scrollHeight <= body.clientHeight + 1) return
     const top = body.getBoundingClientRect().top + body.clientTop
     const floor = top + body.clientHeight
@@ -913,10 +936,36 @@ export function createVitrine(options: {
       for (const rect of range.getClientRects()) if (rect.height > 0) lines.push(rect)
     }
     if (!lines.some(r => r.bottom > floor + .5)) return
+    const sliced = lines.filter(r => r.top < floor - .5 && r.bottom > floor + .5)
+    const cut = sliced.length ? Math.min(...sliced.map(r => r.top)) : floor
+    const whole = lines.filter(r => r.bottom <= cut + .5).map(r => r.bottom)
+    const foot = cut < floor && whole.length ? Math.max(top, (Math.max(...whole) + cut) / 2) : floor
+    if (foot < floor) body.style.setProperty('--fade-cover', `${Math.ceil(floor - foot)}px`)
     let last = -Infinity
-    // a line the edge cuts fades with the whole line above it, so the cut never reads as a slice
-    for (const r of lines) if (r.top > top + .5 && r.bottom <= floor + .5) last = Math.max(last, r.top)
-    if (last > top) body.style.setProperty('--fade', `${Math.round(Math.min(44, Math.max(16, floor - last)))}px`)
+    // the fade lies over the lowest whole line, so the words end on it
+    for (const r of lines) if (r.top > top + .5 && r.bottom <= foot + .5) last = Math.max(last, r.top)
+    if (last > top) body.style.setProperty('--fade', `${Math.round(Math.min(44, Math.max(16, foot - last)))}px`)
+  }
+  /** READ ON, A LINE PASSING UNDER THE NAME NEVER SHOWS CUT: where the name's
+   * edge would slice a line, its ground runs on to the gap under that line
+   * (--name-cover) and its fade lies over the next whole line. */
+  function coverHead(): void {
+    naming.style.removeProperty('--name-cover')
+    if (!open || !raised || !options.narrow() || cinemaFrame || naming.hidden || body.scrollTop <= .5) return
+    const edge = naming.getBoundingClientRect().bottom
+    const lines: DOMRect[] = []
+    const range = document.createRange()
+    const text = document.createTreeWalker(body, NodeFilter.SHOW_TEXT)
+    for (let node = text.nextNode(); node; node = text.nextNode()) {
+      if (!node.textContent?.trim() || naming.contains(node)) continue
+      range.selectNodeContents(node)
+      for (const rect of range.getClientRects()) if (rect.height > 0) lines.push(rect)
+    }
+    const under = lines.filter(r => r.top < edge - .5 && r.bottom > edge + .5)
+    if (!under.length) return
+    const low = Math.max(...under.map(r => r.bottom))
+    const next = lines.filter(r => r.top >= low - .5).map(r => r.top)
+    naming.style.setProperty('--name-cover', `${Math.ceil((next.length ? (low + Math.min(...next)) / 2 : low) - edge)}px`)
   }
   /* the words change after the layout that placed them: a payload lays in its
      steps, a label opens, a face arrives; a peek measured before them is

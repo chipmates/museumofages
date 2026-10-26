@@ -96,11 +96,11 @@
 #wing[data-film='upright'] .film-drawer[data-pages='true'] .film-read { padding-bottom: 0; }
 #wing[data-film='upright'] .film-drawer[data-pages='true'] .film-read-space { display: block; }
 /* the plate stands at the window's foot while the text scrolls under it, 24 px over the record's 8 px of air; while rows
-   wait below, a fade over them */
+   wait below, its ground runs up to the last whole row (--page-cover, film-wing.ts) and a fade lies over that row */
 #wing[data-film='upright'] .film-drawer[data-pages='true'] .film-page { display: block; position: sticky; bottom: 0; height: 32px; background: var(--plate); }
 #wing[data-film='upright'] .film-drawer[data-pages='true']:not([data-end='true']) .film-page::before {
-  content: ''; position: absolute; left: 0; right: 0; bottom: 100%; height: 24px; pointer-events: none;
-  background: linear-gradient(to bottom, color-mix(in srgb, var(--plate) 0%, transparent), var(--plate));
+  content: ''; position: absolute; left: 0; right: 0; bottom: 100%; height: calc(24px + var(--page-cover, 0px)); pointer-events: none;
+  background: linear-gradient(to bottom, color-mix(in srgb, var(--plate) 0%, transparent), var(--plate) 24px);
 }
 /* its key is the key row's word, 44 px to the hand, ending on the record's rule */
 .film-page-key {
@@ -248,13 +248,15 @@
 /* the name keeps one line where the pill has the room, and wraps whole words where it has not;
    its last two words stay together, so no word stands alone on the last row */
 .film-gold-name { display: block; font: 400 .9375rem/18px var(--serif); text-align: left; white-space: normal; text-wrap: balance; }
-/* a name that would take a third row steps to the small type (gold-fit.ts): three rows inside the same 48 px;
-   one that still takes four grows the pill about the seats' centre line, inside the 80 px foot */
+/* a name that would take a third row steps to the small type (gold-fit.ts), on two rows, its long word broken where
+   it must; three rows or four grow the pill about the seats' centre line, inside the 80 px foot */
 .film-gold-name[data-rows] { font-size: .8125rem; line-height: 15px; }
 .film-box:not([data-end='true']) .film-gold:has(> .film-gold-name[data-rows='4']) { top: 36px; translate: 0 -50%; height: auto; min-height: 48px; padding-block: 4px; }
 .film-keep { white-space: nowrap; }
 /* a kept pair wider than the room beside the arrow parts (gold-fit.ts): the name wraps before the disc */
 .film-gold-name[data-loose] .film-keep { white-space: normal; }
+/* upright, a name that cannot stand on two rows whole breaks its long word at a syllable first (gold-fit.ts) */
+:where(#wing[data-film='upright']) .film-gold-name[data-hyphens] { -webkit-hyphens: auto; hyphens: auto; }
 /* THE LAST STOP'S GOLD SAYS WHERE IT LEADS, over its call: two rows that never wrap */
 .film-gold-to { display: block; font: 600 .8125rem/15px var(--sans); white-space: nowrap; opacity: .8; }
 .film-gold-call { display: block; white-space: nowrap; }
@@ -408,10 +410,11 @@
 }
 /* the record's band grows four times as fast as the first scroll until its solid part reaches below the
    close, ahead of the first full-width line, so nothing passes under the close; at the top it is the band
-   above, and the reading keeps its place (the room's list keeps a solid head instead) */
+   above, and the reading keeps its place (the room's list keeps a solid head instead). Where its edge would
+   slice a row, its ground runs on to the gap under that row (--sheet-cover-top, film-wing.ts) */
 #wing[data-film='upright'] :is(.vinci-dock, .desk-ov[data-sheet])[open]::before {
   --sheet-head: min(calc(var(--film-shut-top) + var(--film-shut) + 12px - 16px), calc(4 * var(--sheet-scrolled, 0px)));
-  height: calc(16px + var(--sheet-head)); margin-bottom: calc(-1 * var(--sheet-head));
+  height: calc(16px + var(--sheet-head) + var(--sheet-cover-top, 0px)); margin-bottom: calc(-1 * (var(--sheet-head) + var(--sheet-cover-top, 0px)));
   background: linear-gradient(to bottom, var(--ui-ground-sheet) calc(100% - 10.4px), color-mix(in srgb, var(--ui-ground-sheet) 0%, transparent));
 }
 /* THE RECORD'S THREE TABS STAND AT ITS FOOT, in the thumb's reach, after the
@@ -422,10 +425,11 @@
   height: calc(88px + env(safe-area-inset-bottom)); padding: 0 12px env(safe-area-inset-bottom) 68px; gap: 0;
   align-items: center; background: var(--ui-ground-sheet); border-top: 1px solid var(--ui-line); border-bottom: 0;
 }
-/* while the reading runs on under the foot, a 24 px fade over its rule, as the Menu's foot has (film-wing.ts) */
+/* while the reading runs on under the foot, a 24 px fade over its rule, as the Menu's foot has (film-wing.ts); where
+   the rule would slice a row, the foot's ground runs up to the gap over that row and the fade lies over the row before */
 #wing[data-film='upright'] .vinci-dock .vinci-sources-toolbar::before {
-  content: ''; position: absolute; left: 0; right: 0; bottom: calc(100% + 1px); height: 24px; pointer-events: none; visibility: hidden;
-  background: linear-gradient(to bottom, color-mix(in srgb, var(--ui-ground-sheet) 0%, transparent), var(--ui-ground-sheet));
+  content: ''; position: absolute; left: 0; right: 0; bottom: calc(100% + 1px); height: calc(24px + var(--sheet-cover-foot, 0px)); pointer-events: none; visibility: hidden;
+  background: linear-gradient(to bottom, color-mix(in srgb, var(--ui-ground-sheet) 0%, transparent), var(--ui-ground-sheet) 24px);
 }
 #wing[data-film='upright'] .vinci-dock[data-more] .vinci-sources-toolbar::before { visibility: visible; }
 #wing[data-film='upright'] .vinci-dock .vinci-sources-tabs { gap: 0; align-self: center; }
@@ -440,6 +444,8 @@
 #wing[data-film='upright'] .vinci-dock .vinci-certainty-word { margin-bottom: 4px; }
 #wing[data-film='upright'] .vinci-dock :is(.vinci-citation, .vinci-record .vinci-statement, .vinci-record-fold summary, .vinci-arithmetic) { font-size: .875rem; }
 #wing[data-film='upright'] .vinci-dock .vinci-record-fold summary { min-height: 44px; display: flex; align-items: center; }
+/* the room's and the wing's lists at the phone's 14 px floor, on the pitch of the record's sans statements */
+#wing[data-film='upright'] .vinci-dock :is(.vinci-room-list, .vinci-absence-list) { font-size: .875rem; line-height: 1.6; }
 /* the Menu is a tall sheet on the record's ground; its rows end 4 px over its 80 px foot and scroll under it */
 html:has(#wing[data-film='upright']) #instruments {
   left: 0; right: 0; top: 44px; bottom: 0; width: auto; max-width: none; max-height: none;
@@ -639,10 +645,11 @@ body:has(#wing[data-film][data-evening]) .brand { opacity: 0; transition: opacit
 /* the certainty word in capitals reads small at 13 px: 14, as the record's */
 #wing[data-film='upright'] .vitrine[data-narrow='true'] .vitrine-certainty { font-size: .875rem; }
 #wing[data-film='upright'] .vitrine[data-narrow='true'] .vitrine-folio { font-size: .8125rem; }
-/* the card's words fade over 24 px at least while more waits below, as the Menu's rows do: 16 read as a cut */
+/* the card's words fade over 24 px at least while more waits below, as the Menu's rows do: 16 read as a cut;
+   a line the edge would slice waits under the mask's end (--fade-cover, vitrine/index.ts) */
 #wing[data-film='upright'] .vitrine[data-narrow='true'] .vitrine-body[data-more='true'] {
-  -webkit-mask-image: linear-gradient(to bottom, #000 calc(100% - max(var(--fade, 16px), 24px)), transparent);
-  mask-image: linear-gradient(to bottom, #000 calc(100% - max(var(--fade, 16px), 24px)), transparent);
+  -webkit-mask-image: linear-gradient(to bottom, #000 calc(100% - var(--fade-cover, 0px) - max(var(--fade, 16px), 24px)), transparent calc(100% - var(--fade-cover, 0px)));
+  mask-image: linear-gradient(to bottom, #000 calc(100% - var(--fade-cover, 0px) - max(var(--fade, 16px), 24px)), transparent calc(100% - var(--fade-cover, 0px)));
 }
 
 /* THE PLAN AND THE LIFE AS THE PHONE'S TALL SHEETS, the record's and the
@@ -1054,13 +1061,16 @@ html:has(#wing[data-film='upright']) #instruments .film-menu-foot .film-down { t
 :where(#wing:is([data-film='upright'], [data-phone-form])) .film-keys > .film-key { z-index: 1; }
 @media (max-width: 370px) { :where(#wing:is([data-film='upright'], [data-phone-form])) .film-keys > .film-key::after { left: -4px; right: -4px; } }
 
-/* ---- NOTHING UNDER 14 PX, upright: a gold name of three or four rows, the last stop's
+/* ---- NOTHING UNDER 14 PX, upright: a gold name in the small type, the last stop's
    "where it leads", the walk's kicker, a machine's steps ---- */
 :where(#wing[data-film='upright']) .film-gold-name[data-rows] { font-size: .875rem; line-height: 15px; }
-/* three rows at 14 px grow the pill by 3 px about the seats' centre line, as four rows do, so no row meets its edge;
-   a grown pill's reach is its own box, which ends where the keys' begins */
+/* the small type's two rows keep the pitch of the pill's own type, 1.2 times the size, 7 px of air over and under in
+   the 48 px; three rows stand 16 px apart in a pill grown about the seats' centre line, as four rows do, with the
+   two rows' air; a grown pill's reach is its own box, which ends where the keys' begins */
+:where(#wing[data-film='upright']) .film-gold-name[data-rows='2'] { line-height: 17px; }
+:where(#wing[data-film='upright']) .film-gold-name[data-rows='3'] { line-height: 16px; }
 :where(#wing[data-film='upright']) .film-box:not([data-end='true']) .film-gold:has(> .film-gold-name[data-rows='3']) {
-  top: 32px; translate: 0 -50%; height: auto; min-height: 48px; padding-block: 3px;
+  top: 32px; translate: 0 -50%; height: auto; min-height: 48px; padding-block: 6px;
 }
 :where(#wing[data-film='upright']) .film-foot > .film-gold:has(> .film-gold-name[data-rows])::after { top: 0; }
 :where(#wing[data-film='upright']) .film-gold-to { font-size: .875rem; line-height: 16px; }

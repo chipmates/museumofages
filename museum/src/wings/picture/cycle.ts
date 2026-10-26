@@ -128,6 +128,14 @@ export function softSides(frame: PictureBox, cover: PictureBox): SoftSides {
     bottom: bare(cover.top + cover.height - frame.top - frame.height, frame.height),
   }
 }
+/** each soft side no broader than the air between the frame's edge and the machine's run on that side */
+function shortOfMachine(soft: SoftSides, fit: CycleFit, frame: FilmCycleFraming): SoftSides {
+  const box = frame.extent?.box
+  if (!box) return NO_SOFT
+  const W = frame.master[0] / frame.dpr, H = frame.master[1] / frame.dpr, k = fit.scale
+  return { left: Math.min(soft.left, Math.floor(box[0] * k)), right: Math.min(soft.right, Math.floor((W - box[2]) * k)),
+    top: Math.min(soft.top, Math.floor(box[1] * k)), bottom: Math.min(soft.bottom, Math.floor((H - box[3]) * k)) }
+}
 /** a fade's stops, eased so its inner end shows no band: from `from` px to `to` px, or none */
 function fadeStops(at: (px: number) => string, from: number, to: number, out: boolean): string[] {
   if (from === to) return []
@@ -339,10 +347,13 @@ export function createCyclePayload(options: {
     else if (!host.narrow || sideways) groundAt = cover
     else {
       const top = Math.min(cover.top, Math.max(0, fitted.top))
-      const bottom = Math.max(cover.top + cover.height, Math.min(innerHeight, fitted.top + fitted.height))
+      // over a raised card the frame ends above the glass's foot: the ground runs on behind the card and the foot row
+      const bottom = host.peeked?.() === false ? innerHeight : Math.max(cover.top + cover.height, Math.min(innerHeight, fitted.top + fitted.height))
       groundAt = { left: cover.left, top, width: cover.width, height: bottom - top }
     }
-    soft = sideways && groundAt ? softSides(fitted, groundAt) : NO_SOFT
+    // upright over a raised card the frame stands narrower than the glass: its sides fade into the ground as sideways, short of the machine
+    soft = !groundAt ? NO_SOFT : sideways ? softSides(fitted, groundAt)
+      : host.narrow && host.peeked?.() === false ? shortOfMachine(softSides(fitted, groundAt), fitted, f) : NO_SOFT
     // sideways the frame ends where its field does: beside an open label column it never runs on behind the words
     if (sideways && cover) {
       const inset = [cover.top - fitted.top, fitted.left + fitted.width - cover.left - cover.width,

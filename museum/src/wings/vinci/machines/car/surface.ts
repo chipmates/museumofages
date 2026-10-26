@@ -156,9 +156,10 @@ function iron(stack: Stack, set: MaterialSet): MeshStandardNodeMaterial {
   const nodes = stack.detail(m, detailSet, { uv: uv(), count: 3, maps: 1, fade: [6, 35] })
   const T: N = attribute('aTone', 'vec3')
   const grain = nodes.albedo.dot(vec3(0.2126, 0.7152, 0.0722))
-  // forged iron, dark but not black, a little rust where it is never touched
+  // forged iron, dark but not black, a little rust where it is never touched, dimpled in tone by the hammer's blows
   const rust = smoothstep(0.55, 0.8, mx_noise_float(positionGeometry.mul(9)).mul(0.5).add(0.5))
-  const col = mix(lin('#56504a'), lin('#6a4a34'), rust.mul(0.35)).mul(grain.mul(0.55).add(0.42))
+  const blows = mx_noise_float(positionGeometry.mul(85)).mul(0.5).add(0.5)
+  const col = mix(lin('#56504a'), lin('#6a4a34'), rust.mul(0.35)).mul(grain.mul(0.55).add(0.42)).mul(mix(float(0.8), float(1.08), blows))
   m.colorNode = col.mul(T.x).mul(nodes.occlusion)
   m.roughnessNode = nodes.roughness.mul(0.9).clamp(0.58, 0.88)
   return m
