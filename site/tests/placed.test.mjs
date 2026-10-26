@@ -72,7 +72,11 @@ test('each letter answers with the real path\'s own answer, its question and hea
     assert.equal(asked[0].method, 'GET')
     assert.equal(asked[0].headers.get('If-None-Match'), '"e"')
     assert.equal(asked[0].headers.get('Range'), 'bytes=0-9')
-    assert.equal(response, real, 'a page is answered as the host answers it, not rewritten')
+    assert.equal(response.status, 200)
+    assert.equal(await response.text(), 'the page', 'a page is answered as the host answers it, not rewritten')
+    assert.equal(response.headers.get('X-Frame-Options'), 'DENY')
+    assert.equal(response.headers.get('Content-Type'), 'text/html; charset=utf-8')
+    assert.equal(response.headers.get('Link'), '<https://museumofages.org/de/leonardo-da-vinci/erfindungen/>; rel="canonical"')
   }
 })
 
@@ -132,6 +136,7 @@ test('the walk\'s page gets the one script first in its head; no other page is t
     assert.deepEqual(seen, [{ selector: 'head', content: `<script src="${PLACED_SCRIPT}"></script>`, options: { html: true } }])
     assert.equal(response.headers.get('ETag'), null, 'the rewritten page is no longer the entity its tag named')
     assert.equal(response.headers.get('Content-Type'), 'text/html; charset=utf-8')
+    assert.equal(response.headers.get('Link'), '<https://museumofages.org/w/vinci>; rel="canonical"')
     seen.length = 0
     for (const path of ['/a/g/', '/a/g/de/leonardo-da-vinci/', '/a/g/w/', '/a/g/w/vinci/x', '/a/g/de/w/vinci']) await ask(path)
     await ask('/a/g/w/vinci', { method: 'HEAD' })
@@ -168,4 +173,16 @@ test('the walk\'s script, the function and the walk\'s count name the same lette
   const walk = readFileSync(at('../../museum/src/core/museum-count.ts'), 'utf8')
   const prefixes = /const PREFIXES[^=]*= \{([^}]*)\}/.exec(walk)[1]
   assert.deepEqual([...prefixes.matchAll(/\b([a-z]): '/g)].map((m) => m[1]).sort(), LETTERS)
+})
+
+test('a page names its real address in a Link header; a file, a forward or a missing page does not', async () => {
+  const html = () => new Response('<html></html>', { headers: { 'Content-Type': 'text/html; charset=utf-8' } })
+  for (const [path, method, want] of [['/a/g/', 'GET', '/'], ['/a/p/de/', 'HEAD', '/de/'], ['/a/f/leonardo-da-vinci/mona-lisa/', 'GET', '/leonardo-da-vinci/mona-lisa/']]) {
+    const { response } = await ask(path, { method, answer: html })
+    assert.equal(response.headers.get('Link'), `<https://museumofages.org${want}>; rel="canonical"`, `${method} ${path}`)
+  }
+  const css = await ask('/a/g/static/site.css', { answer: () => new Response('a{}', { headers: { 'Content-Type': 'text/css' } }) })
+  const gone = await ask('/a/g/fr/nowhere/', { answer: () => new Response('404', { status: 404, headers: { 'Content-Type': 'text/html' } }) })
+  const moved = await ask('/a/g/de/leonardo-da-vinci', { answer: () => new Response(null, { status: 308, headers: { Location: '/de/leonardo-da-vinci/' } }) })
+  for (const { response } of [css, gone, moved]) assert.equal(response.headers.get('Link'), null)
 })
