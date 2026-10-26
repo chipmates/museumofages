@@ -627,7 +627,8 @@ def expected_keys(site, lang):
         keys -= TWO_ONLY
     if L.entries[lang]["status"] == "ai":
         keys |= {AI_TAG}
-    return keys
+    # the question's words are ask.py's to check: a language holds the card's new set or, until it is translated, the old
+    return {k for k in keys if not k.startswith("ask.")} | {k for k in site.words[lang] if k.startswith("ask.")}
 
 
 def check_words(site):

@@ -18,11 +18,23 @@ RULES = SRC.parent / "functions" / "_entry" / "rules.js"
 WALK_SENDER = SRC.parent.parent / "museum" / "src" / "core" / "museum-entry.ts"
 # The privacy section the card links to, and the place of its button.
 SECTION = "question"
-KEYS = ("kicker", "q", "why", "what", "whom", "age", "yes", "no", "more", "google", "newtab", "close", "dismiss", "thanks",
-        "undo", "undone", "held", "none")
-# The card on a page of a wing in the making, where a yes counts the visit alone: its own words for what a yes sends,
-# for the rest of the fine print and for the line after a yes. Needed in the languages those pages stand in.
-VISIT_KEYS = ("visit_what", "visit_whom", "visit_thanks")
+# What every language holds: the privacy page's button and its lines work in each, card or none.
+KEYS = ("held", "none", "undo", "undone")
+# The card asks only in a language that holds every one of these. The first layer is the question, the two paragraphs,
+# the line on age, the two answers and the two visible links; the second layer (how_*) opens inside the card, and its
+# last line links to the privacy page.
+CARD_KEYS = ("kicker", "question", "text", "text2", "under16", "tell", "decline", "more", "google", "newtab", "close",
+             "dismiss", "how_number", "how_sent", "how_account", "how_age", "full", "told")
+# The card on a topic page of a wing in the making, where a yes counts the visit alone: its own words for what a yes
+# sends, for the second layer and for the line after a yes.
+VISIT_KEYS = ("visit_text", "visit_text2", "visit_how_sent", "visit_how_account", "visit_how_age", "visit_told")
+# The keys of the card that asked on arrival, which lacked the lines the legal read requires: a language still
+# holding them shows no card until its translator writes the keys above in their place.
+RETIRED_KEYS = ("q", "why", "what", "whom", "age", "yes", "no", "thanks", "visit_what", "visit_whom", "visit_thanks")
+# Of the card's keys, those the old card held too, with the same words: they alone do not make a card.
+KEPT_KEYS = ("kicker", "more", "google", "newtab", "close", "dismiss")
+# The two languages the card's words are written in first: the build stops if either lacks the card.
+CARD_FIRST = ("en", "de")
 
 
 def section_extra(section):
@@ -46,12 +58,17 @@ def write(out, static, words, privacy_pages, visit_langs=()):
     for lang, w in words.items():
         missing = [k for k in KEYS if not (w.get(k) or "").strip()]
         if missing:
-            problems.append(f"words ({lang}): the question lacks ask.{', ask.'.join(missing)}")
-        if lang in visit_langs:
-            missing = [k for k in VISIT_KEYS if not (w.get(k) or "").strip()]
-            if missing:
-                problems.append(f"words ({lang}): the question on the pages of a wing in the making lacks ask.{', ask.'.join(missing)}")
-        table[lang] = {k: w.get(k, "") for k in KEYS + VISIT_KEYS if w.get(k) is not None} | {"privacy": "/" + privacy_pages[lang]}
+            problems.append(f"words ({lang}): the privacy page's button lacks ask.{', ask.'.join(missing)}")
+        new = [k for k in CARD_KEYS + VISIT_KEYS if k in w and k not in KEPT_KEYS]
+        card = [k for k in CARD_KEYS + (VISIT_KEYS if lang in visit_langs else ()) if not (w.get(k) or "").strip()]
+        if lang in CARD_FIRST and card:
+            problems.append(f"words ({lang}): the question lacks ask.{', ask.'.join(card)}")
+        elif new and card:
+            problems.append(f"words ({lang}): the question is half written, it lacks ask.{', ask.'.join(card)}")
+        old = [k for k in RETIRED_KEYS if k in w]
+        if new and old:
+            problems.append(f"words ({lang}): the question's new words stand beside the old ask.{', ask.'.join(old)}")
+        table[lang] = {k: w[k] for k in KEYS + CARD_KEYS + VISIT_KEYS if w.get(k) is not None} | {"privacy": "/" + privacy_pages[lang]}
     if source.count(WORDS_MARK) != 1:
         problems.append(f"js/{SCRIPT}: the place of the words ({WORDS_MARK}) stands {source.count(WORDS_MARK)} times, not once")
     text = source.replace(WORDS_MARK, json.dumps(table, ensure_ascii=False, separators=(",", ":")), 1)

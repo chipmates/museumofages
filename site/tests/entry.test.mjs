@@ -331,21 +331,60 @@ test('every built page of a wing in the making carries its mark: the wing\'s own
   }
 })
 
-/* ---- the page's script, run in a stand-in page: what a yes, a no and the X send and keep ---- */
+/* ---- the page's script, run in a stand-in page: when it asks, and what a yes, a no and the X send and keep ---- */
 
-const ASK_KEYS = ['kicker', 'q', 'what', 'whom', 'why', 'age', 'yes', 'no', 'more', 'google', 'newtab', 'close', 'dismiss', 'thanks',
+const ASK_KEYS = ['kicker', 'question', 'text', 'text2', 'under16', 'tell', 'decline', 'more', 'google', 'newtab', 'close', 'dismiss',
+  'how_number', 'how_sent', 'how_account', 'how_age', 'full', 'told', 'held', 'none', 'undo', 'undone',
+  'visit_text', 'visit_text2', 'visit_how_sent', 'visit_how_account', 'visit_how_age', 'visit_told']
+// what the build writes for a language whose card is not translated yet: the privacy page's button and the old shared words
+const UNTRANSLATED = ['held', 'none', 'undo', 'undone', 'kicker', 'more', 'google', 'newtab', 'close', 'dismiss']
+// the old card's whole set, should a table ever carry it
+const OLD_CARD = ['kicker', 'q', 'why', 'what', 'whom', 'age', 'yes', 'no', 'more', 'google', 'newtab', 'close', 'dismiss', 'thanks',
   'undo', 'undone', 'held', 'none', 'visit_what', 'visit_whom', 'visit_thanks']
-const ASK_WORDS = { en: { ...Object.fromEntries(ASK_KEYS.map((k) => [k, `<${k}>`])), privacy: '/privacy/' } }
+const marked = (keys) => Object.fromEntries(keys.map((k) => [k, `<${k}>`]))
+const ASK_WORDS = {
+  en: { ...marked(ASK_KEYS), privacy: '/privacy/' },
+  fr: { ...marked(UNTRANSLATED), privacy: '/fr/confidentialite/' },
+  it: { ...marked(OLD_CARD), privacy: '/it/privacy/' },
+  // the wing's words written, the visit pages' words not yet
+  es: { ...marked(ASK_KEYS.filter((k) => !k.startsWith('visit_'))), privacy: '/es/privacidad/' },
+}
 const ASK_SOURCE = readFileSync(at('../_src/js/ask.js'), 'utf8').replace('{/*words*/}', JSON.stringify(ASK_WORDS))
+const VISIBLE_MS = 45_000
+const SETTLE_MS = 400
+const STILL_MS = 700
 
-/** Runs ask.js once in a small stand-in page. The tab's storage is passed in, so two runs can share one tab. */
-function askPage({ path, visit = false, gpc = false, tab = new Map(), storage = true } = {}) {
+/**
+ * Runs ask.js once in a small stand-in page with a clock of its own: timers and frames run only when the test moves
+ * time on (wait). The page's text is 4000 px tall in an 800 px screen, its middle out of view until scrollTo moves it.
+ * The tab's storage is passed in, so two runs can share one tab; every touch of either storage is recorded.
+ * asked: bring the moment at once (the middle of the text in view, the page still) and let the card stand long
+ * enough to take a tap, so a test of the answers starts at the card.
+ */
+function askPage({ path, visit = false, gpc = false, tab = new Map(), storage = true, lang = 'en', hidden = false, onArrival = false,
+  asked = true, undo = false } = {}) {
   const [pathname, search = ''] = path.split('?')
-  const made = [], posts = [], events = [], addresses = []
-  const doc = { activeElement: null }
+  const made = [], posts = [], events = [], addresses = [], touched = []
+  let now = Date.now(), id = 0
+  const timers = new Map()
+  const setTimer = (fn, ms = 0) => { timers.set(++id, { fn, at: now + Math.max(0, ms) }); return id }
+  const clearTimer = (n) => { timers.delete(n) }
+  function wait(ms) {
+    const until = now + ms
+    for (;;) {
+      let next = null
+      for (const [n, t] of timers) if (t.at <= until && (!next || t.at < next[1].at)) next = [n, t]
+      if (!next) break
+      timers.delete(next[0])
+      now = next[1].at
+      next[1].fn()
+    }
+    now = until
+  }
+  const doc = { activeElement: null, visibilityState: hidden ? 'hidden' : 'visible', on: {} }
   class El {
-    constructor(tag) { Object.assign(this, { tag, children: [], attrs: {}, on: {}, className: '', _text: '', isConnected: true,
-      offsetHeight: 300, scrollHeight: 0, clientHeight: 0, scrollTop: 0, style: { setProperty() {}, removeProperty() {} },
+    constructor(tag) { Object.assign(this, { tag, children: [], attrs: {}, on: {}, className: '', _text: '', isConnected: true, hidden: false,
+      offsetHeight: 300, offsetTop: 0, scrollHeight: 0, clientHeight: 0, scrollTop: 0, style: { setProperty() {}, removeProperty() {} },
       classList: { add() {}, remove() {}, toggle() {} } }); made.push(this) }
     get textContent() { return this._text }
     set textContent(v) { this._text = String(v); if (v === '') this.children = [] }
@@ -356,54 +395,82 @@ function askPage({ path, visit = false, gpc = false, tab = new Map(), storage = 
     appendChild(c) { this.children.push(c); c.parentNode = this; if (typeof c.onload === 'function') c.onload(); return c }
     insertBefore(c) { return this.appendChild(c) }
     addEventListener(type, fn) { (this.on[type] ||= []).push(fn) }
-    click() { for (const fn of this.on.click || []) fn() }
+    click() { const e = { type: 'click', target: this, defaultPrevented: false, preventDefault() { this.defaultPrevented = true } }; for (const fn of this.on.click || []) fn(e); return e }
+    closest(sel) { return sel === 'a[data-door]' && 'data-door' in this.attrs ? this : null }
     remove() { this.isConnected = false; this.removed = true }
     focus() { doc.activeElement = this }
     contains() { return false }
   }
-  const body = new El('body'), main = new El('main'), head = new El('head')
+  const body = new El('body'), main = new El('main'), head = new El('head'), mount = new El('div')
   body.appendChild(main)
+  // the page's text: its middle at 2000 px from the top, 800 px of screen
+  let top = onArrival ? -1700 : 0
+  main.getBoundingClientRect = () => ({ top, height: 4000 })
   const html = new El('html')
-  html.attrs.lang = 'en'
+  html.attrs.lang = lang
+  const listen = (on) => (type, fn, opt) => { (on[type] ||= []).push({ fn, capture: opt === true || !!(opt && opt.capture) }) }
+  const unlisten = (on) => (type, fn) => { on[type] = (on[type] || []).filter((l) => l.fn !== fn) }
+  const fire = (on, type, e = { type }) => { for (const l of (on[type] || []).slice()) l.fn(e) }
   Object.assign(doc, {
     documentElement: html, head, body, currentScript: null, prerendering: false,
     createElement: (tag) => new El(tag),
-    getElementById: (id) => (id === 'main' ? main : null),
-    querySelector: (sel) => (sel === 'main[data-asks="visit"]' ? (visit ? main : null) : sel === 'main' ? main : null),
-    addEventListener() {},
+    getElementById: (name) => (name === 'main' ? main : null),
+    querySelector: (sel) => (sel === 'main[data-asks="visit"]' ? (visit ? main : null) : sel === 'main' ? main : sel === '[data-undo]' && undo ? mount : null),
+    addEventListener: listen(doc.on), removeEventListener: unlisten(doc.on),
     dispatchEvent: (e) => { events.push(e.detail === undefined ? e.type : `${e.type} ${e.detail}`); return true },
   })
   const session = {
-    getItem: (k) => (tab.has(k) ? tab.get(k) : null),
-    setItem: (k, v) => { tab.set(k, String(v)) },
-    removeItem: (k) => { tab.delete(k) },
+    getItem: (k) => { touched.push(`get ${k}`); return tab.has(k) ? tab.get(k) : null },
+    setItem: (k, v) => { touched.push(`set ${k}`); tab.set(k, String(v)) },
+    removeItem: (k) => { touched.push(`remove ${k}`); tab.delete(k) },
   }
-  const window = {
+  const win = { on: {} }
+  Object.assign(win, {
     location: { hostname: 'museumofages.org', pathname, search: search ? `?${search}` : '', hash: '' },
     history: { state: null, replaceState: (s, _, url) => addresses.push(url) },
     fetch: (url, init) => { posts.push({ url, init, body: JSON.parse(init.body) }); return Promise.resolve(new Response(null, { status: 204 })) },
     getComputedStyle: () => ({ bottom: '0px' }),
-    addEventListener() {}, removeEventListener() {}, requestAnimationFrame: () => 1, cancelAnimationFrame() {},
-    setTimeout, clearTimeout,
-  }
-  Object.defineProperty(window, 'sessionStorage', { get() { if (!storage) throw new Error('blocked'); return session } })
+    addEventListener: listen(win.on), removeEventListener: unlisten(win.on),
+    requestAnimationFrame: (fn) => setTimer(fn, 16), cancelAnimationFrame: clearTimer,
+    setTimeout: setTimer, clearTimeout: clearTimer, innerHeight: 800,
+  })
+  Object.defineProperty(win, 'sessionStorage', { get() { touched.push('session'); if (!storage) throw new Error('blocked'); return session } })
+  Object.defineProperty(win, 'localStorage', { get() { touched.push('local'); return { getItem() { return null }, setItem() {} } } })
   class CustomEvent { constructor(type, init = {}) { this.type = type; this.detail = init.detail } }
-  vm.runInNewContext(ASK_SOURCE, { document: doc, window, navigator: { globalPrivacyControl: gpc }, CustomEvent, JSON, Date })
-  const find = (text) => made.find((n) => n.tag === 'button' && n._text === text)
-  const card = made.find((n) => n.tag === 'section' && n.className.startsWith('ask'))
-  const words = () => made.filter((n) => n._text && !n.removed).map((n) => n._text)
-  return { made, tab, posts, events, addresses, card, find, words, yes: () => find('<yes>').click(), no: () => find('<no>').click(),
-    x: () => made.find((n) => n.className === 'ask__close').click() }
+  vm.runInNewContext(ASK_SOURCE, { document: doc, window: win, navigator: { globalPrivacyControl: gpc }, CustomEvent, JSON, Date: { now: () => now } })
+  const find = (text) => made.find((n) => n.tag === 'button' && n._text === text && !n.removed)
+  const p = {
+    made, tab, posts, events, addresses, touched, wait, mount,
+    get card() { return made.find((n) => n.tag === 'section' && n.className.startsWith('ask') && !n.removed) },
+    get now() { return now },
+    find, words: () => made.filter((n) => n._text && !n.removed).map((n) => n._text),
+    yes: () => find('<tell>').click(), no: () => find('<decline>').click(),
+    x: () => made.find((n) => n.className === 'ask__close' && !n.removed).click(),
+    /** the page moves: each step a scroll event and a frame */
+    scrollTo(y) { top = -y; fire(win.on, 'scroll'); wait(16) },
+    /** the tab hidden or shown again, as the browser tells it */
+    show(visible) { doc.visibilityState = visible ? 'visible' : 'hidden'; fire(doc.on, 'visibilitychange') },
+    /** a press inside the page: on a way into the walk (door) or anywhere else */
+    press(door, type = 'click', button = 0) {
+      const target = new El('a')
+      if (door) target.attrs['data-door'] = door
+      for (const l of (doc.on[type] || []).slice()) if (l.capture) l.fn({ type, button, target })
+    },
+    /** the middle of the text into view, then the page stands still */
+    reach() { p.scrollTo(1700); wait(SETTLE_MS + 20) },
+  }
+  if (asked) { p.reach(); wait(STILL_MS) }
+  return p
 }
 const LEO = `/a/g/leonardo-da-vinci/?gclid=${GCLID}`
 const ANIMAL = `/a/g/animals/megalodon/?gclid=${GCLID}`
 
 test('the page\'s script: a yes on a Leonardo page sends one visit at once and keeps the entry for the walk', () => {
-  const before = Date.now()
   const p = askPage({ path: LEO })
   assert.ok(p.card, 'the card stands')
   assert.deepEqual(p.addresses, ['/a/g/leonardo-da-vinci/'])
   assert.equal(p.posts.length, 0)
+  const before = p.now
   p.yes()
   assert.equal(p.posts.length, 1)
   const [{ url, init, body }] = p.posts
@@ -411,7 +478,7 @@ test('the page\'s script: a yes on a Leonardo page sends one visit at once and k
   assert.deepEqual(Object.keys(body), ['gclid', 'yes', 'kind'])
   assert.equal(body.gclid, GCLID)
   assert.equal(body.kind, VISIT_KIND)
-  assert.ok(body.yes >= before && body.yes <= Date.now())
+  assert.equal(body.yes, before)
   assert.equal(init.method, 'POST')
   assert.equal(init.keepalive, true)
   assert.equal(init.credentials, 'omit')
@@ -419,7 +486,7 @@ test('the page\'s script: a yes on a Leonardo page sends one visit at once and k
   const kept = JSON.parse(p.tab.get(ENTRY_KEY))
   assert.deepEqual(Object.keys(kept), ['gclid', 'yes'])
   assert.equal(kept.gclid, GCLID)
-  assert.ok(p.words().includes('<thanks>'))
+  assert.ok(p.words().includes('<told>'))
   assert.ok(p.find('<undo>'), 'the yes can be taken back for the entry')
   // a second press, from any button left in the page, sends nothing more
   p.yes()
@@ -428,11 +495,12 @@ test('the page\'s script: a yes on a Leonardo page sends one visit at once and k
   // taking it back stops the entry, the visit has gone
   p.find('<undo>').click()
   assert.equal(p.tab.has(ENTRY_KEY), false)
+  assert.ok(p.words().includes('<undone>'))
 })
 
 test('the page\'s script: a second yes in the same tab for the same click sends nothing new, a new click counts once', () => {
   const tab = new Map()
-  assert.equal(askPage({ path: LEO, tab }).yes() ?? 1, 1)
+  askPage({ path: LEO, tab }).yes()
   const first = JSON.parse(tab.get(ENTRY_KEY))
   const again = askPage({ path: `/a/g/de/leonardo-da-vinci/?gclid=${GCLID}`, tab })
   again.yes()
@@ -448,15 +516,16 @@ test('the page\'s script: a second yes in the same tab for the same click sends 
 
 test('the page\'s script: a yes on an animal page sends the visit once and keeps nothing, with nothing to take back', () => {
   const p = askPage({ path: ANIMAL, visit: true })
-  assert.ok(p.words().includes('<visit_what>') && p.words().includes('<visit_whom>'))
-  assert.ok(!p.words().includes('<what>') && !p.words().includes('<whom>'))
+  assert.ok(p.words().includes('<visit_text>') && p.words().includes('<visit_text2>'))
+  assert.ok(!p.words().includes('<text>') && !p.words().includes('<text2>'))
+  assert.ok(p.words().includes('<visit_how_sent>') && !p.words().includes('<how_sent>'))
   p.yes()
   p.yes()
   assert.equal(p.posts.length, 1)
   assert.deepEqual(p.posts[0].body.kind, 'visit')
   assert.equal(p.posts[0].body.gclid, GCLID)
   assert.equal(p.tab.size, 0, 'nothing in the tab')
-  assert.ok(p.words().includes('<visit_thanks>'))
+  assert.ok(p.words().includes('<visit_told>'))
   assert.equal(p.find('<undo>'), undefined)
   // a tab whose storage is blocked is still asked here, since nothing is kept
   const blocked = askPage({ path: ANIMAL, visit: true, storage: false })
@@ -467,17 +536,61 @@ test('the page\'s script: a yes on an animal page sends the visit once and keeps
   assert.equal(askPage({ path: LEO, storage: false }).card, undefined)
 })
 
-test('the page\'s script: the age line stands right above the answers on every card, outside the words that scroll', () => {
+test('the page\'s script: the first layer is the question, two paragraphs, the age line, two answers and two visible links', () => {
   for (const [path, visit] of [[LEO, false], [ANIMAL, true]]) {
     const p = askPage({ path, visit })
-    const age = p.made.find((n) => n._text === '<age>')
-    const act = age.parentNode
+    const [close, headPart, words, act] = p.made.find((n) => n.className === 'ask__in').children
+    assert.equal(close.className, 'ask__close')
+    assert.equal(close.attrs['aria-label'], '<close>')
+    assert.deepEqual(headPart.children.map((n) => [n.tag, n._text]), [['h2', '<question>']])
+    const first = visit ? ['<visit_text>', '<visit_text2>'] : ['<text>', '<text2>']
+    assert.deepEqual(words.children.slice(0, 2).map((n) => n._text), first)
+    // the age line stands right above the answers on every card and outside the words that scroll
+    const [age, answers, links] = act.children
     assert.equal(act.className, 'ask__act', path)
-    assert.equal(act.children[0], age)
-    assert.equal(act.children[1].className, 'ask__answers')
-    assert.ok(act.children[1].children.some((b) => b._text === '<yes>') && act.children[1].children.some((b) => b._text === '<no>'))
-    assert.equal(p.made.filter((n) => n._text === '<age>').length, 1)
-    assert.ok(!p.made.find((n) => n.className === 'ask__body').children.includes(age))
+    assert.equal(age._text, '<under16>')
+    assert.deepEqual(answers.children.map((b) => [b.tag, b._text]), [['button', '<tell>'], ['button', '<decline>']])
+    assert.equal(p.made.filter((n) => n._text === '<under16>').length, 1)
+    // the two answers differ in their words alone
+    assert.equal(answers.children[0].className, answers.children[1].className)
+    // the two visible links: the second layer, opened in the card, and Google's page in a new tab
+    const [more, google] = links.children
+    assert.equal(more.tag, 'button')
+    assert.equal(more._text, '<more>')
+    assert.equal(more.attrs['aria-expanded'], 'false')
+    assert.equal(google.tag, 'a')
+    assert.equal(google._text, '<google>')
+    assert.equal(google.href, 'https://business.safety.google/privacy')
+    assert.equal(google.target, '_blank')
+    assert.equal(google.children[0]._text, ' (<newtab>)')
+    // no word of the old card
+    for (const old of ['<q>', '<why>', '<what>', '<whom>', '<age>', '<yes>', '<no>', '<thanks>']) assert.ok(!p.words().includes(old), old)
+  }
+})
+
+test('the page\'s script: "How this works" opens the second layer in the card, and its privacy link stays in this tab', () => {
+  for (const [path, visit] of [[LEO, false], [ANIMAL, true]]) {
+    const p = askPage({ path, visit })
+    const how = p.made.find((n) => n.id === 'ask-how')
+    const more = p.find('<more>')
+    assert.equal(how.hidden, true)
+    assert.equal(more.attrs['aria-controls'], 'ask-how')
+    more.click()
+    assert.equal(how.hidden, false)
+    assert.equal(more.attrs['aria-expanded'], 'true')
+    const v = visit ? 'visit_' : ''
+    assert.deepEqual(how.children.slice(0, 4).map((n) => n._text), ['<how_number>', `<${v}how_sent>`, `<${v}how_account>`, `<${v}how_age>`])
+    const full = how.children[4]
+    assert.equal(full.tag, 'a')
+    assert.equal(full._text, '<full>')
+    assert.equal(full.href, '/privacy/#question')
+    assert.equal(full.target, undefined, 'the privacy page opens in this tab')
+    more.click()
+    assert.equal(how.hidden, true)
+    assert.equal(more.attrs['aria-expanded'], 'false')
+    // reading the second layer answers nothing
+    assert.deepEqual(p.events, ['moa:shown'])
+    assert.equal(p.posts.length + p.tab.size, 0)
   }
 })
 
@@ -491,11 +604,16 @@ test('the page\'s script: a no, the X, no click id, a broken one, Global Privacy
     for (const p of [no, x]) {
       assert.equal(p.posts.length, 0)
       assert.equal(p.tab.size, 0)
+      assert.equal(p.card, undefined, 'the card is gone and never comes back on this page')
+      p.reach()
+      p.wait(VISIBLE_MS * 2)
+      assert.equal(p.card, undefined)
     }
     assert.deepEqual(no.events, ['moa:shown', 'moa:answer no'])
     assert.deepEqual(x.events, ['moa:shown', 'moa:answer close'])
     for (const quiet of [askPage({ path: path.split('?')[0], visit }), askPage({ path: path.replace(GCLID, 'short'), visit }),
       askPage({ path, visit, gpc: true }), askPage({ path: path.replace('/a/g/', '/a/p/'), visit }), askPage({ path: path.replace('/a/g/', '/'), visit })]) {
+      quiet.wait(VISIBLE_MS * 2)
       assert.equal(quiet.card, undefined)
       assert.equal(quiet.posts.length, 0)
       assert.equal(quiet.tab.size, 0)
@@ -503,6 +621,209 @@ test('the page\'s script: a no, the X, no click id, a broken one, Global Privacy
   }
   // with Global Privacy Control the click id is not even read from the address
   assert.deepEqual(askPage({ path: ANIMAL, visit: true, gpc: true }).addresses, [])
+})
+
+/* ---- the moment: never on arrival, at the read or after 45 seconds in view, never after a door ---- */
+
+test('the moment: no card on arrival, nor before the middle of the text or 45 seconds in view', () => {
+  for (const [path, visit] of [[LEO, false], [ANIMAL, true]]) {
+    const p = askPage({ path, visit, asked: false })
+    assert.equal(p.card, undefined, 'never on arrival')
+    // the click id has left the address at once
+    assert.deepEqual(p.addresses, [visit ? '/a/g/animals/megalodon/' : '/a/g/leonardo-da-vinci/'])
+    p.wait(10_000)
+    p.scrollTo(600)
+    p.scrollTo(1100)
+    p.wait(VISIBLE_MS - 10_000 - 1000)
+    assert.equal(p.card, undefined, 'a scroll short of the middle and 44 seconds bring no card')
+  }
+})
+
+test('the moment (a): the card comes when the middle of the text is in view and the page has stood still', () => {
+  for (const [path, visit] of [[LEO, false], [ANIMAL, true]]) {
+    const p = askPage({ path, visit, asked: false })
+    const t0 = p.now
+    p.wait(3000)
+    p.scrollTo(1100)
+    p.wait(SETTLE_MS * 2)
+    assert.equal(p.card, undefined)
+    // the middle in view: the read; a page still moving keeps the card waiting
+    p.scrollTo(1300)
+    for (let i = 0; i < 5; i++) { p.wait(200); p.scrollTo(1350 + i * 40) }
+    assert.equal(p.card, undefined, 'not while the page moves')
+    p.wait(SETTLE_MS - 50)
+    assert.equal(p.card, undefined)
+    p.wait(100)
+    assert.ok(p.card, 'once the page has stood still')
+    assert.deepEqual(p.events, ['moa:shown'])
+    assert.ok(p.now - t0 < VISIBLE_MS / 4)
+  }
+})
+
+test('the moment (b): 45 seconds with the page in view; hidden time does not count', () => {
+  for (const [path, visit] of [[LEO, false], [ANIMAL, true]]) {
+    const idle = askPage({ path, visit, asked: false })
+    idle.wait(VISIBLE_MS - 1)
+    assert.equal(idle.card, undefined)
+    idle.wait(SETTLE_MS + 1)
+    assert.ok(idle.card, 'after 45 seconds in view, without a scroll')
+
+    const away = askPage({ path, visit, asked: false })
+    away.wait(10_000)
+    away.show(false)
+    away.wait(30_000)
+    away.show(true)
+    away.wait(5_000 + SETTLE_MS)
+    assert.equal(away.card, undefined, '45 seconds since arrival, 30 of them hidden: 15 in view')
+    away.wait(VISIBLE_MS - 15_000 - 1)
+    assert.equal(away.card, undefined)
+    away.wait(SETTLE_MS + 2)
+    assert.ok(away.card, '45 seconds in view in all')
+
+    // a page opened behind another tab starts its time when it is first shown
+    const behind = askPage({ path, visit, asked: false, hidden: true })
+    behind.wait(VISIBLE_MS * 3)
+    assert.equal(behind.card, undefined)
+    behind.show(true)
+    behind.wait(VISIBLE_MS + SETTLE_MS + 1)
+    assert.ok(behind.card)
+
+    // the moment that comes while the page is hidden waits for the page to be seen
+    const late = askPage({ path, visit, asked: false })
+    late.scrollTo(1700)
+    late.show(false)
+    late.wait(VISIBLE_MS * 2)
+    assert.equal(late.card, undefined)
+    late.show(true)
+    late.wait(SETTLE_MS + 1)
+    assert.ok(late.card)
+  }
+})
+
+test('the moment: the middle of the text in view on arrival is no read; the time alone brings the card', () => {
+  const p = askPage({ path: LEO, asked: false, onArrival: true })
+  p.scrollTo(1710)
+  p.wait(10_000)
+  assert.equal(p.card, undefined)
+  p.wait(VISIBLE_MS)
+  assert.ok(p.card)
+})
+
+test('the moment: a press on a way into the walk before it means no question on this visit', () => {
+  for (const [type, button] of [['click', 0], ['auxclick', 1]]) {
+    const p = askPage({ path: LEO, asked: false })
+    p.wait(5000)
+    p.press('end', type, button)
+    p.reach()
+    p.wait(VISIBLE_MS * 2)
+    assert.equal(p.card, undefined, type)
+    assert.equal(p.posts.length + p.tab.size, 0)
+  }
+  // a press elsewhere, or a right click on the door, changes nothing
+  const other = askPage({ path: LEO, asked: false })
+  other.press(null)
+  other.press('top', 'auxclick', 2)
+  other.reach()
+  assert.ok(other.card)
+  // once the card stands, a door press leaves it as it is: the visit goes on in the walk or here
+  const after = askPage({ path: LEO })
+  after.press('end')
+  assert.ok(after.card)
+})
+
+test('the moment: a tap already on its way when the card appears answers nothing', () => {
+  const p = askPage({ path: LEO, asked: false })
+  p.reach()
+  assert.ok(p.card)
+  for (const press of [() => p.yes(), () => p.no(), () => p.x(), () => p.find('<more>').click()]) press()
+  const google = p.made.find((n) => n._text === '<google>')
+  assert.equal(google.click().defaultPrevented, true)
+  assert.ok(p.card)
+  assert.equal(p.made.find((n) => n.id === 'ask-how').hidden, true)
+  assert.deepEqual(p.events, ['moa:shown'])
+  assert.equal(p.posts.length + p.tab.size, 0)
+  p.wait(STILL_MS)
+  assert.equal(google.click().defaultPrevented, false)
+  p.yes()
+  assert.equal(p.posts.length, 1)
+})
+
+test('the moment: until the answer nothing is stored, read from storage or sent, on any path to it', () => {
+  for (const [path, visit] of [[LEO, false], [ANIMAL, true]]) {
+    const p = askPage({ path, visit, asked: false })
+    p.wait(20_000)
+    p.show(false)
+    p.wait(20_000)
+    p.show(true)
+    p.scrollTo(900)
+    p.reach()
+    p.wait(STILL_MS)
+    p.find('<more>').click()
+    assert.ok(p.card)
+    // a Leonardo page tests once that the tab can hold a yes (the storage object, no item); nothing more
+    assert.deepEqual(p.touched, visit ? [] : ['session'])
+    assert.equal(p.tab.size, 0)
+    assert.equal(p.posts.length, 0)
+    p.no()
+    assert.deepEqual(p.touched, visit ? [] : ['session'])
+    const door = askPage({ path, visit, asked: false })
+    door.press('end')
+    door.wait(VISIBLE_MS * 2)
+    assert.deepEqual(door.touched, visit ? [] : ['session'])
+    assert.equal(door.posts.length, 0)
+  }
+})
+
+test('the moment: a language without every word of the card shows none, and its privacy button still works', () => {
+  for (const lang of ['fr', 'it']) {
+    for (const [path, visit] of [[LEO, false], [ANIMAL, true]]) {
+      const p = askPage({ path, visit, lang })
+      p.wait(VISIBLE_MS * 2)
+      assert.equal(p.card, undefined, `${lang} ${path}`)
+      assert.equal(p.made.filter((n) => n.tag === 'section').length, 0)
+      // the click id still leaves the address, and goes nowhere
+      assert.equal(p.addresses.length, 1)
+      assert.equal(p.posts.length + p.tab.size, 0)
+    }
+  }
+  // the wing's words written, the visit pages' not yet: the card on a Leonardo page, none on an animal page
+  assert.ok(askPage({ path: LEO, lang: 'es' }).card)
+  assert.equal(askPage({ path: ANIMAL, visit: true, lang: 'es' }).card, undefined)
+  // the privacy page's button takes back a kept yes in a language without the card
+  const tab = new Map([[ENTRY_KEY, JSON.stringify({ gclid: GCLID, yes: Date.now() - 60_000 })]])
+  const privacy = askPage({ path: '/fr/confidentialite/', lang: 'fr', tab, undo: true })
+  assert.equal(privacy.mount.hidden, false)
+  assert.ok(privacy.words().includes('<held>'))
+  privacy.find('<undo>').click()
+  assert.equal(tab.has(ENTRY_KEY), false)
+  assert.ok(privacy.words().includes('<undone>'))
+})
+
+test('the moment: the script and the build name the same words of the card, and the old card\'s words are not among them', () => {
+  const page = readFileSync(at('../_src/js/ask.js'), 'utf8')
+  const build = readFileSync(at('../_src/ask.py'), 'utf8')
+  const py = (name) => [...build.match(new RegExp(`^${name} = \\(([^)]*)\\)`, 'm'))[1].matchAll(/"([\w]+)"/g)].map((m) => m[1])
+  const js = (name) => [...page.match(new RegExp(`var ${name} = \\[([^\\]]*)\\]`))[1].matchAll(/'([\w]+)'/g)].map((m) => m[1])
+  assert.deepEqual(js('CARD'), py('CARD_KEYS'))
+  assert.deepEqual(js('VISIT'), py('VISIT_KEYS'))
+  for (const old of py('RETIRED_KEYS')) assert.ok(!js('CARD').includes(old) && !js('VISIT').includes(old), old)
+  assert.deepEqual([...py('KEYS'), ...py('CARD_KEYS'), ...py('VISIT_KEYS')].sort(), [...new Set(ASK_KEYS)].sort())
+  // the moment is the count's read: the same middle of main between the screen's top and its foot
+  assert.ok(page.includes('var r = main.getBoundingClientRect(), mid = r.top + r.height / 2;'))
+  assert.ok(readFileSync(at('../_src/js/count.js'), 'utf8').includes('var r = main.getBoundingClientRect(), mid = r.top + r.height / 2;'))
+  assert.ok(page.includes('var VISIBLE_MS = 45 * 1000;'))
+})
+
+test('the moment: the built script carries the card in English and German only, until the other languages are written', () => {
+  const built = at('../dist/static/ask.js')
+  if (!existsSync(built)) return
+  const words = JSON.parse(readFileSync(built, 'utf8').match(/var WORDS = (\{.*?\});\n/s)[1])
+  for (const [lang, w] of Object.entries(words)) {
+    for (const k of ['held', 'none', 'undo', 'undone']) assert.ok(w[k], `${lang} ${k}`)
+    if (lang === 'en' || lang === 'de') for (const k of ASK_KEYS) assert.ok(w[k], `${lang} ${k}`)
+    else assert.equal(w.question, undefined, lang)
+    for (const k of ['q', 'why', 'what', 'whom', 'age', 'yes', 'no', 'thanks', 'visit_what', 'visit_whom', 'visit_thanks']) assert.equal(w[k], undefined, `${lang} ${k}`)
+  }
 })
 
 /* ---- the function: every check, one by one ---- */
