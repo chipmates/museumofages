@@ -1,0 +1,493 @@
+{
+ "type": {
+  "family": "Space Grotesk",
+  "weight": 500,
+  "letterSpacing": 0.01,
+  "lineHeight": 1.2,
+  "wide": 15,
+  "house": 14
+ },
+ "wideMaxChars": 22,
+ "names": {
+  "angelou": {
+   "wide": {
+    "en": "Maya Angelou",
+    "de": "Maya Angelou",
+    "css": 104.2,
+    "enCss": 104.2,
+    "deCss": 104.2
+   },
+   "house": {
+    "en": "Angelou",
+    "de": "Angelou",
+    "css": 56.36,
+    "enCss": 56.36,
+    "deCss": 56.36
+   }
+  },
+  "aurelius": {
+   "wide": {
+    "en": "Marcus Aurelius",
+    "de": "Mark Aurel",
+    "css": 116.91,
+    "enCss": 116.91,
+    "deCss": 77.78
+   },
+   "house": {
+    "en": "Marcus Aurelius",
+    "de": "Mark Aurel",
+    "css": 109.11,
+    "enCss": 109.11,
+    "deCss": 72.59
+   }
+  },
+  "austen": {
+   "wide": {
+    "en": "Jane Austen",
+    "de": "Jane Austen",
+    "css": 91.52,
+    "enCss": 91.52,
+    "deCss": 91.52
+   },
+   "house": {
+    "en": "Austen",
+    "de": "Austen",
+    "css": 48.45,
+    "enCss": 48.45,
+    "deCss": 48.45
+   }
+  },
+  "beauvoir": {
+   "wide": {
+    "en": "Simone de Beauvoir",
+    "de": "Simone de Beauvoir",
+    "css": 144.91,
+    "enCss": 144.91,
+    "deCss": 144.91
+   },
+   "house": {
+    "en": "Beauvoir",
+    "de": "Beauvoir",
+    "css": 60.05,
+    "enCss": 60.05,
+    "deCss": 60.05
+   }
+  },
+  "bingen": {
+   "wide": {
+    "en": "Hildegard von Bingen",
+    "de": "Hildegard von Bingen",
+    "css": 156.86,
+    "enCss": 156.86,
+    "deCss": 156.86
+   },
+   "house": {
+    "en": "Hildegard",
+    "de": "Hildegard",
+    "css": 65.92,
+    "enCss": 65.92,
+    "deCss": 65.92
+   }
+  },
+  "blake": {
+   "wide": {
+    "en": "William Blake",
+    "de": "William Blake",
+    "css": 94.95,
+    "enCss": 94.95,
+    "deCss": 94.95
+   },
+   "house": {
+    "en": "Blake",
+    "de": "Blake",
+    "css": 37.14,
+    "enCss": 37.14,
+    "deCss": 37.14
+   }
+  },
+  "campbell": {
+   "wide": {
+    "en": "Joseph Campbell",
+    "de": "Joseph Campbell",
+    "css": 126.14,
+    "enCss": 126.14,
+    "deCss": 126.14
+   },
+   "house": {
+    "en": "Campbell",
+    "de": "Campbell",
+    "css": 63.47,
+    "enCss": 63.47,
+    "deCss": 63.47
+   }
+  },
+  "dickinson": {
+   "wide": {
+    "en": "Emily Dickinson",
+    "de": "Emily Dickinson",
+    "css": 114.52,
+    "enCss": 114.52,
+    "deCss": 114.52
+   },
+   "house": {
+    "en": "Dickinson",
+    "de": "Dickinson",
+    "css": 66.91,
+    "enCss": 66.91,
+    "deCss": 66.91
+   }
+  },
+  "eckhart": {
+   "wide": {
+    "en": "Meister Eckhart",
+    "de": "Meister Eckhart",
+    "css": 116.73,
+    "enCss": 116.73,
+    "deCss": 116.73
+   },
+   "house": {
+    "en": "Eckhart",
+    "de": "Eckhart",
+    "css": 53.31,
+    "enCss": 53.31,
+    "deCss": 53.31
+   }
+  },
+  "einstein": {
+   "wide": {
+    "en": "Albert Einstein",
+    "de": "Albert Einstein",
+    "css": 108.02,
+    "enCss": 108.02,
+    "deCss": 108.02
+   },
+   "house": {
+    "en": "Einstein",
+    "de": "Einstein",
+    "css": 54.86,
+    "enCss": 54.86,
+    "deCss": 54.86
+   }
+  },
+  "galilei": {
+   "wide": {
+    "en": "Galileo Galilei",
+    "de": "Galileo Galilei",
+    "css": 96.8,
+    "enCss": 96.8,
+    "deCss": 96.8
+   },
+   "house": {
+    "en": "Galileo",
+    "de": "Galileo",
+    "css": 45.83,
+    "enCss": 45.83,
+    "deCss": 45.83
+   }
+  },
+  "gandhi": {
+   "wide": {
+    "en": "Mohandas Gandhi",
+    "de": "Mohandas Gandhi",
+    "css": 132.03,
+    "enCss": 132.03,
+    "deCss": 132.03
+   },
+   "house": {
+    "en": "Gandhi",
+    "de": "Gandhi",
+    "css": 47.94,
+    "enCss": 47.94,
+    "deCss": 47.94
+   }
+  },
+  "gautama": {
+   "wide": {
+    "en": "Siddhartha Gautama",
+    "de": "Siddhartha Gautama",
+    "css": 151.72,
+    "enCss": 151.72,
+    "deCss": 151.72
+   },
+   "house": {
+    "en": "Gautama",
+    "de": "Gautama",
+    "css": 61.27,
+    "enCss": 61.27,
+    "deCss": 61.27
+   }
+  },
+  "goethe": {
+   "wide": {
+    "en": "Goethe",
+    "de": "Goethe",
+    "css": 53.41,
+    "enCss": 53.41,
+    "deCss": 53.41
+   },
+   "house": {
+    "en": "Goethe",
+    "de": "Goethe",
+    "css": 49.84,
+    "enCss": 49.84,
+    "deCss": 49.84
+   }
+  },
+  "jung": {
+   "wide": {
+    "en": "Carl Gustav Jung",
+    "de": "Carl Gustav Jung",
+    "css": 124.7,
+    "enCss": 124.7,
+    "deCss": 124.7
+   },
+   "house": {
+    "en": "Jung",
+    "de": "Jung",
+    "css": 34.75,
+    "enCss": 34.75,
+    "deCss": 34.75
+   }
+  },
+  "kahlo": {
+   "wide": {
+    "en": "Frida Kahlo",
+    "de": "Frida Kahlo",
+    "css": 81.63,
+    "enCss": 81.63,
+    "deCss": 81.63
+   },
+   "house": {
+    "en": "Kahlo",
+    "de": "Kahlo",
+    "css": 38.22,
+    "enCss": 38.22,
+    "deCss": 38.22
+   }
+  },
+  "king": {
+   "wide": {
+    "en": "Martin Luther King Jr.",
+    "de": "Martin Luther King Jr.",
+    "css": 159.64,
+    "enCss": 159.64,
+    "deCss": 159.64
+   },
+   "house": {
+    "en": "King",
+    "de": "King",
+    "css": 30.36,
+    "enCss": 30.36,
+    "deCss": 30.36
+   }
+  },
+  "laozi": {
+   "wide": {
+    "en": "Laozi",
+    "de": "Laozi",
+    "css": 38.03,
+    "enCss": 38.03,
+    "deCss": 38.03
+   },
+   "house": {
+    "en": "Laozi",
+    "de": "Laozi",
+    "css": 35.5,
+    "enCss": 35.5,
+    "deCss": 35.5
+   }
+  },
+  "lovelace": {
+   "wide": {
+    "en": "Ada Lovelace",
+    "de": "Ada Lovelace",
+    "css": 97.09,
+    "enCss": 97.09,
+    "deCss": 97.09
+   },
+   "house": {
+    "en": "Lovelace",
+    "de": "Lovelace",
+    "css": 60.59,
+    "enCss": 60.59,
+    "deCss": 60.59
+   }
+  },
+  "mandela": {
+   "wide": {
+    "en": "Nelson Mandela",
+    "de": "Nelson Mandela",
+    "css": 116.69,
+    "enCss": 116.69,
+    "deCss": 116.69
+   },
+   "house": {
+    "en": "Mandela",
+    "de": "Mandela",
+    "css": 58.7,
+    "enCss": 58.7,
+    "deCss": 58.7
+   }
+  },
+  "mozart": {
+   "wide": {
+    "en": "Mozart",
+    "de": "Mozart",
+    "css": 52.13,
+    "enCss": 52.13,
+    "deCss": 52.13
+   },
+   "house": {
+    "en": "Mozart",
+    "de": "Mozart",
+    "css": 48.66,
+    "enCss": 48.66,
+    "deCss": 48.66
+   }
+  },
+  "nietzsche": {
+   "wide": {
+    "en": "Friedrich Nietzsche",
+    "de": "Friedrich Nietzsche",
+    "css": 142.22,
+    "enCss": 142.22,
+    "deCss": 142.22
+   },
+   "house": {
+    "en": "Nietzsche",
+    "de": "Nietzsche",
+    "css": 68.22,
+    "enCss": 68.22,
+    "deCss": 68.22
+   }
+  },
+  "plato": {
+   "wide": {
+    "en": "Plato",
+    "de": "Platon",
+    "css": 46.97,
+    "enCss": 37.59,
+    "deCss": 46.97
+   },
+   "house": {
+    "en": "Plato",
+    "de": "Platon",
+    "css": 43.83,
+    "enCss": 35.09,
+    "deCss": 43.83
+   }
+  },
+  "rumi": {
+   "wide": {
+    "en": "Rumi",
+    "de": "Rumi",
+    "css": 35.98,
+    "enCss": 35.98,
+    "deCss": 35.98
+   },
+   "house": {
+    "en": "Rumi",
+    "de": "Rumi",
+    "css": 33.58,
+    "enCss": 33.58,
+    "deCss": 33.58
+   }
+  },
+  "schopenhauer": {
+   "wide": {
+    "en": "Arthur Schopenhauer",
+    "de": "Arthur Schopenhauer",
+    "css": 158.45,
+    "enCss": 158.45,
+    "deCss": 158.45
+   },
+   "house": {
+    "en": "Schopenhauer",
+    "de": "Schopenhauer",
+    "css": 100.16,
+    "enCss": 100.16,
+    "deCss": 100.16
+   }
+  },
+  "shakespeare": {
+   "wide": {
+    "en": "William Shakespeare",
+    "de": "William Shakespeare",
+    "css": 149.64,
+    "enCss": 149.64,
+    "deCss": 149.64
+   },
+   "house": {
+    "en": "Shakespeare",
+    "de": "Shakespeare",
+    "css": 88.17,
+    "enCss": 88.17,
+    "deCss": 88.17
+   }
+  },
+  "tubman": {
+   "wide": {
+    "en": "Harriet Tubman",
+    "de": "Harriet Tubman",
+    "css": 112.06,
+    "enCss": 112.06,
+    "deCss": 112.06
+   },
+   "house": {
+    "en": "Tubman",
+    "de": "Tubman",
+    "css": 54.28,
+    "enCss": 54.28,
+    "deCss": 54.28
+   }
+  },
+  "vinci": {
+   "wide": {
+    "en": "Leonardo da Vinci",
+    "de": "Leonardo da Vinci",
+    "css": 131.69,
+    "enCss": 131.69,
+    "deCss": 131.69
+   },
+   "house": {
+    "en": "Leonardo",
+    "de": "Leonardo",
+    "css": 64.92,
+    "enCss": 64.92,
+    "deCss": 64.92
+   }
+  },
+  "woolf": {
+   "wide": {
+    "en": "Virginia Woolf",
+    "de": "Virginia Woolf",
+    "css": 101.63,
+    "enCss": 101.63,
+    "deCss": 101.63
+   },
+   "house": {
+    "en": "Woolf",
+    "de": "Woolf",
+    "css": 39.92,
+    "enCss": 39.92,
+    "deCss": 39.92
+   }
+  },
+  "zenji": {
+   "wide": {
+    "en": "Dōgen Zenji",
+    "de": "Dōgen Zenji",
+    "css": 86.42,
+    "enCss": 86.42,
+    "deCss": 86.42
+   },
+   "house": {
+    "en": "Dōgen",
+    "de": "Dōgen",
+    "css": 44.36,
+    "enCss": 44.36,
+    "deCss": 44.36
+   }
+  }
+ }
+}
