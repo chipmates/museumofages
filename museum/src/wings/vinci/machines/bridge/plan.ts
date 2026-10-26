@@ -169,7 +169,8 @@ function support(i: number): { xy: [number, number]; r: number } {
 /** A rod's line: the chord's normal, through each end support at its own touch. */
 function rodLine(k: number, frame: 'A' | 'B'): Pole {
   const seed = hash(k, frame === 'A' ? 1 : 2, 3.3)
-  const taper = (0.016 + 0.012 * hash(k, frame === 'A' ? 5 : 6)) * (hash(k, frame === 'A' ? 7 : 8) > 0.5 ? 1 : -1)
+  // each rod's butt at its bank end, where it is pushed from and stands: the pair that goes out together balances alike
+  const taper = (0.016 + 0.012 * hash(k, frame === 'A' ? 5 : 6)) * (k <= 3 ? 1 : -1)
   const plane = ROD_PLANE[k]!, z = planeZ(frame, plane)
   // supports: the joist index at each end (0 and 6 are the seats) and whether the rod lies over (+1) or under (-1) it
   let i0: number, i1: number, f: { d: [number, number]; n: [number, number] }
@@ -259,12 +260,13 @@ export function groundY(x: number, z: number): number {
 /** the stakes that hold each seat from the land side, between the rods' planes */
 export const STAKES: V3[] = [-(JOIST_HALF - 0.05), 0, JOIST_HALF - 0.05].flatMap(z => [[SEAT_XY[0][0] - 0.24, 0, z] as V3, [SEAT_XY[1][0] + 0.24, 0, z] as V3])
 
-// ---------------------------------------------------------------- the build (the order and the paths are ours)
+// ---------------------------------------------------------------- the build (the order, the paths and the means are ours)
 
-/** Built from both banks at once toward the crown: each bank's feet first, its second bay, then the crown rods and the
- * crown joist close it. Each pile lies on its own bank. */
-export const NEAR = ['R1A', 'R1B', 'J1', 'E0A', 'E0B', 'R2A', 'R2B', 'J2', 'R3A', 'R3B', 'J3'] as const
-export const FAR = ['R5A', 'R5B', 'J5', 'E6A', 'E6B', 'R4A', 'R4B', 'J4'] as const
+/** Built from both banks at once toward the crown: each bank's first bay with its first joist riding on it, its end
+ * rods, the crown rods, the second joists, the second bay, then the crown joist closes it. The crown rods and the crown
+ * joist come from the near bank. */
+export const NEAR = ['R1A', 'R1B', 'J1', 'E0A', 'E0B', 'R3A', 'R3B', 'J2', 'R2A', 'R2B', 'J3'] as const
+export const FAR = ['R5A', 'R5B', 'J5', 'E6A', 'E6B', 'J4', 'R4A', 'R4B'] as const
 
 const ALL: Pole[] = (() => {
   const all: Pole[] = []
@@ -402,99 +404,211 @@ export function capsules(p: Pole): Capsule[] {
   return out
 }
 
-/** the struts: a forked pole under each rod's free end while it has nothing to rest on, raised from the stream and laid back
- * in it when the joist that carries that end is lashed. Four on each side: the first bay's hold the rods from the
- * seats until the second bay's joist takes their ends, the second bay's hold the rods to the crown until the crown
- * joist does. Each stands on its own bank's slope under the water and swings up and down inside its rod's plane.
- * The rod lies in the fork between its two tines, touching both. */
+// ---------------------------------------------------------------- the yard, the joist pile, the stream
+
+/** a floating pole's axis lies this far under the stream's level */
+export const WATER_AXIS = BANK.water - 0.02
+/** behind each seat two sleeper logs lie across the bank, as high as the seat: the rods lie ready across them, each in
+ * the plane it is pushed out along, and go out over the seat from there */
+export const SLEEPER_X = [4.85, 6.55] as const
+export const SLEEPER_HALF = 1.75
+export const SLEEPERS: [number, number][] = ([-1, 1] as const).flatMap(side => SLEEPER_X.map(x => [side * x, SEAT_XY[0][1]] as [number, number]))
+/** where each rod lies in its yard: the plane it lies in and how far out from the middle its bank end lies; the crown
+ * rods lie between the frames, the rest in their own planes */
+export const YARD: Record<string, { z: number; foot: number }> = Object.fromEntries(ORDER_RODS().map(p => {
+  const crown = p.k === 3
+  const foot = p.kind === 'end' ? 6.8 : p.k === 1 || p.k === 5 ? 8.12 : 8.22
+  return [p.id, { z: crown ? (p.frame === 'A' ? -0.4 : 0.4) : p.a[2], foot }]
+}))
+function ORDER_RODS(): Pole[] { return ALL.filter(p => p.kind !== 'joist') }
+/** the joists that go by water lie on the bank in front of the bridge, the crown joist behind the near one */
+export const JOIST_PILE: Record<string, [number, number]> = { J2: [-4.6, 8.9], J3: [4.95, 4.7], J4: [4.6, 9.0] }
+/** where a joist that goes by water waits, floating in front of the bridge */
+export const JOIST_WAIT_Z: Record<string, number> = { J2: 5.0, J4: 5.0 }
+/** the crown joist is raised from its two logs on the bank this far down the stream, then threaded in */
+export const THREAD_Z = 4.7
+/** the crown joist's logs: across the bank under it, x and z of their middles, their half length */
+export const J3_LOGS: [number, number, number][] = [[4.95, 3.4, 0.5], [4.95, 6.0, 0.5]]
+export const J3_REST = SEAT_XY[0][1] + SEAT_R + 0.075
+/** the bank each pole comes from (the crown's from the near bank) and its end there: a near rod's end a, a far rod's end b */
+export const sideOf = (p: Pole): -1 | 1 => (p.k === 3 || (p.a[0] + p.b[0]) / 2 < 0 ? -1 : 1)
+export const footEnd = (p: Pole): 0 | 1 => (sideOf(p) < 0 ? 0 : 1)
+
+// ---------------------------------------------------------------- the props
+
+/** THE PROPS. A forked pole stands under each pole while it is raised and until what it comes to rest on is lashed: its
+ * fork holds one point of its load, the load lying across the fork between its two tines and touching both; its foot
+ * stands on the bank, its slope or the stream's bed and slides there, in under the load as the prop raises it and out
+ * again as it is laid back down. Laid down, it lies on the bed. */
 export const STRUT_R = 0.06
-const TINE_SPREAD = 0.56
-const TINE_R = 0.03
-/** a tine's girth where the rod lies on it, as a share of its girth at the crotch */
-export const TINE_TOUCH = 0.85
-export interface Strut { id: string; frame: 'A' | 'B'; side: -1 | 1; bay: 1 | 2; rod: string; joist: string; foot: V3; fork: V3; length: number; lie: V3; lieZ: number; held: V3; touchAt: number }
-
-/** a strut's place: the rod's axis held in its fork a hand's width short of the joist that will carry it, its foot on its
- * own bank's slope under the water; lying, it rests along the bed toward the stream's middle, beside its plane */
-function strut(frame: 'A' | 'B', side: -1 | 1, bay: 1 | 2): Strut {
-  const rodId = side < 0 ? `R${bay}${frame}` : `R${6 - bay}${frame}`
-  const endJoist = side < 0 ? bay + 1 : 5 - bay
-  const rod = byId(rodId)
-  const d = norm2([rod.b[0] - rod.a[0], rod.b[1] - rod.a[1]])
-  const j = JOIST_XY[endJoist]!
-  const atJoist = (j[0] - rod.a[0]) * d[0] + (j[1] - rod.a[1]) * d[1]
-  // a near rod's free end is its b end, a far rod's its a end
-  const along = side < 0 ? atJoist - 0.3 : atJoist + 0.3
-  const held: V3 = [rod.a[0] + d[0] * along, rod.a[1] + d[1] * along, rod.a[2] + bowAt(rod, along)]
-  const fx = side * STRUT_FOOT
-  // an outer plane's strut lies outside its plane, an inner plane's inside it, the far bank's a step further: all eight
-  // lie apart on the bed
-  const lieZ = held[2] + Math.sign(held[2]) * (ROD_PLANE[rod.k] === 0 ? 1 : -1) * (side < 0 ? 0.2 : 0.42)
-  const foot: V3 = [fx, Math.max(groundY(fx, held[2]), groundY(fx, lieZ)) + 0.045, held[2]]
-  // the crotch stands below the rod's axis so far that each tine, leaning out of the plane, touches the rod
-  const u = norm2([held[0] - foot[0], held[1] - foot[1]])
-  const sinPhi = Math.abs(u[0] * d[1] - u[1] * d[0])
-  const sa = Math.sin(TINE_SPREAD), ca = Math.cos(TINE_SPREAD)
-  const touch = radiusAt(rod, along) + TINE_R * TINE_TOUCH + 0.0015
-  const h = (touch * Math.sqrt(ca * ca * sinPhi * sinPhi + sa * sa)) / (sa * sinPhi)
-  const fork: V3 = [held[0] - u[0] * h, held[1] - u[1] * h, held[2]]
-  // how far along a tine the rod touches it: the closest points of the tine's axis and the rod's
-  const t3: V3 = [u[0] * ca, u[1] * ca, sa], d3: V3 = [d[0], d[1], 0], w0: V3 = [fork[0] - held[0], fork[1] - held[1], 0]
-  const B = t3[0] * d3[0] + t3[1] * d3[1], Dd = t3[0] * w0[0] + t3[1] * w0[1], Ee = d3[0] * w0[0] + d3[1] * w0[1]
-  const touchAt = (B * Ee - Dd) / (1 - B * B)
-  const length = Math.hypot(fork[0] - foot[0], fork[1] - foot[1])
-  // lying: its far end on the bed above its bumps, toward the middle
-  const endY = BANK.bed + 0.035 + STRUT_R, dy = foot[1] - endY
-  const lie: V3 = [foot[0] - side * Math.sqrt(length * length - dy * dy), endY, 0]
-  return { id: `S${side < 0 ? 'N' : 'F'}${bay}${frame}`, frame, side, bay, rod: rodId, joist: `J${endJoist}`, foot, fork, length, lie, lieZ, held, touchAt }
+/** a prop's axis over the ground where its foot stands, its girth there tilted with the slope */
+export function footHeight(x: number, z: number): number {
+  const g = groundY(x, z), gx = (groundY(x + 0.02, z) - g) / 0.02, gz = (groundY(x, z + 0.02) - g) / 0.02
+  return g + (STRUT_R + 0.014) * Math.sqrt(1 + gx * gx + gz * gz)
 }
-/** the struts' feet stand this far out on each bank's slope, under the water */
-export const STRUT_FOOT = 2.6
+export const TINE_SPREAD = 0.56
+export const TINE_R = 0.03
+/** a tine's girth where the load lies on it, as a share of its girth at the crotch */
+export const TINE_TOUCH = 0.85
+/** from a load's axis to the crotch, along the prop, when prop and load meet at the angle phi and each tine touches it */
+export function crotchDepth(rLoad: number, phi: number): number {
+  const touch = rLoad + TINE_R * TINE_TOUCH + 0.008
+  const sa = Math.sin(TINE_SPREAD), ca = Math.cos(TINE_SPREAD), sp = Math.max(0.25, Math.abs(Math.sin(phi)))
+  return (touch * Math.sqrt(ca * ca * sp * sp + sa * sa)) / (sa * sp)
+}
+/** how far along a tine the load touches it */
+export function touchAlong(rLoad: number, phi: number): number {
+  const ca = Math.cos(TINE_SPREAD), c = Math.cos(phi), s = Math.sin(phi)
+  return (crotchDepth(rLoad, phi) * ca * s * s) / (1 - ca * ca * c * c)
+}
+export interface Prop {
+  id: string
+  /** the pole it carries, and where: metres from that pole's end a */
+  load: string
+  s: number
+  /** the level way from its head to its foot */
+  away: [number, number]
+  /** its angle above the level where it holds its load still */
+  angle: number
+  length: number
+  frame: 'A' | 'B' | null
+  /** its foot and crotch where it holds its load still */
+  foot: V3
+  crotch: V3
+  /** its load slid along its fork to a second hold, metres from end a, between two times */
+  slide?: { s: number; at: Step }
+}
 
-export const STRUTS: Strut[] = ([-1, 1] as const).flatMap(side => ([1, 2] as const).flatMap(bay => (['A', 'B'] as const).map(frame => strut(frame, side, bay))))
+const mapPt = (c: [number, number], d: number, q: [number, number]): [number, number] => {
+  const x = q[0] - c[0], y = q[1] - c[1], cs = Math.cos(d), sn = Math.sin(d)
+  return [c[0] + x * cs - y * sn, c[1] + x * sn + y * cs]
+}
+/** a second-bay rod laid on its first joist with its far end floating: the turn about the joist that brings it there */
+export function floatTurn(p: Pole): number {
+  const side = sideOf(p), j = JOIST_XY[side < 0 ? 1 : 5]!
+  const far: [number, number] = footEnd(p) === 0 ? [p.b[0], p.b[1]] : [p.a[0], p.a[1]]
+  let lo = 0, hi = 1.5
+  for (let i = 0; i < 60; i++) {
+    const m = (lo + hi) / 2
+    if (mapPt(j, side * m, far)[1] > WATER_AXIS) lo = m; else hi = m
+  }
+  return side * (lo + hi) / 2
+}
 
-function strutPole(s: Strut): Pole {
-  const seed = hash(s.side, s.bay, s.frame === 'A' ? 33 : 34)
+/** the point at s of a pole lying on its own line from a to b (its bend left out) */
+const along = (p: Pole, a: V3, b: V3, s: number): V3 => {
+  const f = s / p.length
+  return [a[0] + (b[0] - a[0]) * f, a[1] + (b[1] - a[1]) * f, a[2] + (b[2] - a[2]) * f]
+}
+/** a prop's stance under a still load: its length chosen so it stands at its angle there with its foot on the ground */
+function stance(load: Pole, a: V3, b: V3, s: number, away: [number, number], angle: number): { length: number; foot: V3; crotch: V3 } {
+  const P = along(load, a, b, s)
+  const D = (() => { const d: V3 = [b[0] - a[0], b[1] - a[1], b[2] - a[2]]; const l = Math.hypot(...d); return [d[0] / l, d[1] / l, d[2] / l] as V3 })()
+  const u: V3 = [-away[0] * Math.cos(angle), Math.sin(angle), -away[1] * Math.cos(angle)]
+  const phi = Math.acos(Math.min(1, Math.abs(u[0] * D[0] + u[1] * D[1] + u[2] * D[2])))
+  const h = crotchDepth(radiusAt(load, s), phi)
+  let reach = 2
+  for (let i = 0; i < 8; i++) {
+    const f: V3 = [P[0] - u[0] * reach, P[1] - u[1] * reach, P[2] - u[2] * reach]
+    reach = (P[1] - footHeight(f[0], f[2])) / Math.sin(angle)
+  }
+  const crotch: V3 = [P[0] - u[0] * h, P[1] - u[1] * h, P[2] - u[2] * h]
+  const foot: V3 = [P[0] - u[0] * reach, P[1] - u[1] * reach, P[2] - u[2] * reach]
+  return { length: reach - h, foot, crotch }
+}
+
+// ---------------------------------------------------------------- the moves
+
+export type Step = readonly [number, number]
+/** a pole's moves, seconds of the build clock (ours): pushed out of its yard, tipped over the seat, slid on, floated
+ * along the stream and across it, its bank end set on a joist, rolled off the bank, raised, threaded */
+export interface Moves { push?: Step; tip?: Step; slide?: Step; float?: Step; drift?: Step; foot?: Step; roll?: Step; lift?: Step; thread?: Step }
+/** the near bank's; the far bank's start a quarter second later. The first joists ride up on the first rods. */
+const NEAR_MOVES: Record<string, Moves> = {
+  R1: { push: [0.3, 2.0], tip: [2.0, 2.45], slide: [2.45, 3.2], lift: [3.8, 5.5] },
+  R3: { push: [3.7, 5.3], tip: [5.3, 5.75], slide: [5.75, 7.1], float: [7.1, 7.6], drift: [7.6, 8.3], lift: [8.9, 10.6] },
+  E0: { push: [4.6, 6.0], tip: [6.0, 6.45], slide: [6.45, 6.9], lift: [7.5, 8.7] },
+  J2: { roll: [3.0, 4.6], float: [4.6, 6.5], drift: [9.6, 10.4], lift: [10.6, 12.2] },
+  R2: { push: [10.8, 12.4], tip: [12.4, 12.85], slide: [12.85, 14.1], float: [14.1, 14.5], foot: [15.1, 16.2], lift: [16.8, 18.3] },
+  J3: { lift: [18.0, 19.6], thread: [19.6, 20.8] },
+}
+export const FAR_LAG = 0.25
+const TWIN: Record<string, string> = { R5: 'R1', E6: 'E0', R4: 'R2', J4: 'J2' }
+const shift = (m: Moves, by: number): Moves => Object.fromEntries(Object.entries(m).map(([k, v]) => [k, [v[0] + by, v[1] + by]])) as Moves
+const MOVES_OF = (id: string): Moves => { const key = id.replace(/[AB]$/, ''); return NEAR_MOVES[key] ?? shift(NEAR_MOVES[TWIN[key]!]!, FAR_LAG) }
+
+export const PROPS: Prop[] = (() => {
+  const list: Prop[] = []
+  const add = (id: string, load: string, s: number, away: [number, number], angle: number, where: 'placed' | 'floatTurn' | 'thread' = 'placed'): void => {
+    const p = byId(load)
+    let a = p.a, b = p.b
+    if (where === 'floatTurn') {
+      const side = sideOf(p), j = JOIST_XY[side < 0 ? 1 : 5]!, d = floatTurn(p)
+      const A = mapPt(j, d, [p.a[0], p.a[1]]), B = mapPt(j, d, [p.b[0], p.b[1]])
+      a = [A[0], A[1], p.a[2]]; b = [B[0], B[1], p.b[2]]
+    } else if (where === 'thread') {
+      a = [p.a[0], p.a[1], p.a[2] + THREAD_Z]; b = [p.b[0], p.b[1], p.b[2] + THREAD_Z]
+    }
+    const st = stance(p, a, b, s, away, angle)
+    list.push({ id, load, s, away, angle, length: st.length, frame: p.frame, foot: st.foot, crotch: st.crotch })
+  }
+  // a fork holds a stretch of bare wood: the requested place nudged clear of the load's stubs and knots
+  const fromFoot = (p: Pole, d: number): number => {
+    const s = footEnd(p) === 0 ? d : p.length - d
+    for (let k = 0; k <= 30; k++) for (const sign of [1, -1]) {
+      const t = s + sign * k * 0.02
+      if (p.stubs.every(st => Math.abs(st.s - t) >= 0.12) && p.knots.every(kn => Math.abs(kn.s - t) >= 0.08)) return t
+    }
+    return s
+  }
+  for (const frame of ['A', 'B'] as const) {
+    const out: [number, number] = [0, frame === 'A' ? -1 : 1]
+    // the near rod's prop leans flatter, clear of the second rod pushed out under it
+    for (const [k, s, angle] of [[1, 3.17, 1.22], [5, 2.95, 1.0]] as const) { const p = byId(`R${k}${frame}`); add(`F${p.id}`, p.id, fromFoot(p, s), out, angle) }
+    for (const k of [0, 6]) { const p = byId(`E${k}${frame}`); add(`F${p.id}`, p.id, fromFoot(p, 1.6), out, 1.08) }
+    const r3 = byId(`R3${frame}`)
+    add(`FR3${frame}`, r3.id, 1.46, out, 1.19)
+    add(`GR3${frame}`, r3.id, 2.36, out, 1.19)
+    // a second rod's one prop: under its bank end while that goes onto its first joist, then the rod slides along the
+    // fork until the prop stands beyond its centre of weight, and it is raised
+    for (const [k, first, then] of [[2, 1.1, 2.2], [4, 0.7, 2.62]] as const) {
+      const p = byId(`R${k}${frame}`), m = MOVES_OF(p.id)
+      add(`F${p.id}`, p.id, fromFoot(p, then), out, 1.22)
+      const last = list[list.length - 1]!
+      list[list.length - 1] = { ...last, s: fromFoot(p, first), slide: { s: fromFoot(p, then), at: [m.foot![1] + 0.05, m.lift![0] - 0.05] } }
+    }
+  }
+  for (const [k, off, x] of [[2, 0.45, 1], [4, 0.72, -1]] as const) {
+    add(`FJ${k}`, `J${k}`, JOIST_HALF - off, [x, 0], 1.15)
+    add(`GJ${k}`, `J${k}`, JOIST_HALF + off, [x, 0], 1.15)
+  }
+  // the crown joist's props stand on the bank behind it and walk it out over the stream
+  // threaded in, it lies on both props, then on the near one and the far frame's crown rod, then on that rod held down
+  // by the rods over it, each in turn on the side its weight lifts
+  add('FJ3', 'J3', JOIST_HALF + (3.0 - THREAD_Z), [1, 0], 1.15, 'thread')
+  add('GJ3', 'J3', JOIST_HALF + (4.9 - THREAD_Z), [1, 0], 1.15, 'thread')
+  return list
+})()
+
+function propPole(s: Prop): Pole {
+  const seed = hash(s.s * 7, s.length * 3, s.away[0] + 2 * s.away[1], s.id.charCodeAt(1), s.id.charCodeAt(2))
   const p: Pole = {
-    id: s.id, kind: 'strut', frame: s.frame, k: s.bay, a: s.foot, b: s.fork, length: s.length, r: STRUT_R, taper: 0.014,
-    peeled: 0, tone: 0.86 + 0.18 * hash(s.side, s.bay, s.frame === 'A' ? 31 : 32), seed, bears: [s.length], ...bare(),
+    id: s.id, kind: 'strut', frame: s.frame, k: 0, a: s.foot, b: s.crotch, length: s.length, r: STRUT_R, taper: 0.014,
+    peeled: 0, tone: 0.86 + 0.18 * hash(seed, 31), seed, bears: [s.length], ...bare(),
   }
   dress(p)
   const h = (k: number): number => hash(seed * 991, k)
   p.bow = [0.012 * (h(1) > 0.5 ? 1 : -1), 0]
-  // the stem runs a little past the crotch, the two tines leave it there, out of the plane to either side
-  // each tine runs a little past where the rod lies on it
-  p.tines = [-1, 1].map((side, i) => ({ ang: (side * Math.PI) / 2, spread: TINE_SPREAD, len: s.touchAt + 0.05 + 0.03 * h(4 + i), r: TINE_R, back: 0.06 }))
+  // each tine runs a little past where the load lies on it at its widest
+  const reach = touchAlong(POLE_R + 0.012, Math.PI / 2)
+  p.tines = [-1, 1].map((side, i) => ({ ang: (side * Math.PI) / 2, spread: TINE_SPREAD, len: reach + 0.05 + 0.03 * h(4 + i), r: TINE_R, back: 0.06 }))
   p.knots.push({ s: s.length * (0.45 + 0.2 * h(6)), ang: Math.PI * (h(7) > 0.5 ? 0.5 : -0.5), amp: 0.008, w: 0.05 })
   return p
 }
 
-/** every pole of the bridge, the near bank's in their order, then the far bank's, then the struts */
+/** every pole of the bridge, the near bank's in their order, then the far bank's, then the props */
 export const ORDER: string[] = [...NEAR, ...FAR]
-export const POLES: Pole[] = [...ORDER.map(byId), ...STRUTS.map(strutPole)]
-
-/** the piles: each bank's poles lie across its bank behind the seat, along Z, the first to be taken on top */
-export const PILE_X = 5.75
-export const PILE_PITCH = 0.28
-export const PILE_AT: Record<string, V3> = (() => {
-  const at: Record<string, V3> = {}
-  // each layer nests in the one below, one pole fewer; the widest butt sets the layers' rise
-  const rise = Math.sqrt((2 * (POLE_R + 0.0135)) ** 2 - (PILE_PITCH / 2) ** 2) + 0.004
-  const stack = (ids: readonly string[], x0: number, per: number[]): void => {
-    let i = 0
-    // the bottom layer first: the last poles to be taken lie lowest
-    const order = [...ids].reverse()
-    per.forEach((count, layer) => {
-      for (let c = 0; c < count && i < order.length; c++, i++) {
-        const offset = (c - (count - 1) / 2) * PILE_PITCH
-        at[order[i]!] = [x0 + offset, POLE_R + 0.0135 + 0.006 + layer * rise, 0]
-      }
-    })
-  }
-  stack(NEAR, -PILE_X, [5, 4, 3])
-  stack(FAR, PILE_X, [4, 3, 2])
-  return at
-})()
+export const POLES: Pole[] = [...ORDER.map(byId), ...PROPS.map(propPole)]
 
 // ---------------------------------------------------------------- the clock
 
@@ -502,21 +616,16 @@ export const PERIOD = 40
 export const HOLD_END = 31
 export const REWIND = 2.6
 
-/** when each pole leaves its pile and how long its move takes, in seconds of the build clock (ours) */
-export const SCHEDULE: Record<string, { start: number; move: number }> = (() => {
-  const s: Record<string, { start: number; move: number }> = {}
-  // each pair of rods leaves its pile a second apart, so the first has turned and gone before the second rises
-  const near: [string, number, number][] = [
-    ['R1A', 0.4, 3.3], ['R1B', 1.5, 3.3], ['J1', 4.0, 2.5], ['E0A', 5.0, 3.3], ['E0B', 6.1, 3.3],
-    ['R2A', 7.5, 4.2], ['R2B', 8.6, 4.2], ['J2', 11.5, 2.5], ['R3A', 13.0, 4.25], ['R3B', 14.8, 4.25], ['J3', 17.4, 2.5],
-  ]
-  const far: [string, number, number][] = near.slice(0, 8).map(([id, start, move]) => [FAR[NEAR.indexOf(id as typeof NEAR[number])]!, start + 0.25, move])
-  for (const [id, start, move] of [...near, ...far]) s[id] = { start, move }
-  return s
-})()
-
-export function startOf(id: string): number { return SCHEDULE[id]!.start }
-export function landOf(id: string): number { return SCHEDULE[id]!.start + SCHEDULE[id]!.move }
+/** which pole a riding joist rides up on */
+export const RIDES: Record<string, string> = { J1: 'R1A', J5: 'R5A' }
+export const MOVES: Record<string, Moves> = Object.fromEntries(ORDER.filter(id => !RIDES[id]).map(id => {
+  return [id, MOVES_OF(id)]
+}))
+/** when a pole comes to rest in its place */
+export function landOf(id: string): number {
+  const m = MOVES[RIDES[id] ?? id]!
+  return (m.thread ?? m.lift)![1]
+}
 
 export const LASH_DELAY = 0.15, LASH_TIME = 0.9
 /** when a crossing's lashing starts winding: both its poles stand */
@@ -525,21 +634,46 @@ export function lashStart(c: Crossing): number {
   return Math.max(landOf(c.rod), support) + LASH_DELAY
 }
 export function lashEnd(c: Crossing): number { return lashStart(c) + LASH_TIME }
+const lashOf = (rod: string, support: string): number => lashEnd(CROSSINGS.find(c => c.rod === rod && c.support === support)!)
 
-/** a strut's day: it rises from the stream while its rod settles onto it, and goes back down once the joist that carries
- * the rod's free end is lashed to it */
-export const STRUT_SWING = 1.0
-export interface StrutTimes { up: number; down: number }
-export const STRUT_TIMES: Record<string, StrutTimes> = Object.fromEntries(STRUTS.map(s => {
-  const held = CROSSINGS.find(c => c.rod === s.rod && c.support === s.joist)!
-  // it rises while its rod comes onto it: tipped down onto it (the first bay) or pushed along into its fork (the second)
-  const up = landOf(s.rod) - STRUT_SWING
-  return [s.id, { up, down: lashEnd(held) + 0.1 }]
+/** a prop's day: it slides in along the bed from where it lies up or down the stream, rises to meet its load as the
+ * load's raising starts, holds it until what the load comes to rest on is lashed, is laid back down and slides back out.
+ * The last ones up stay where they are laid down. */
+export const PROP_RISE = 0.6, PROP_DOWN = 1.0, PARK_SLIDE = 1.2
+/** idle props lie with their heads at least this far up the stream from the bridge's middle, or down it (beyond where
+ * the crown joist's props work) */
+export const PARK_UP = 5.6, PARK_DOWN = 9.0
+export interface PropTimes { rise: Step; release: number; down: Step; parkIn?: Step; parkOut?: Step }
+/** props that lie idle up or down the stream: those standing in a plane across the bridge, but the end rods' */
+const across = (s: Prop): boolean => Math.abs(s.away[1]) > 0.5
+const secondRod = (load: Pole): boolean => load.kind === 'rod' && (load.k === 2 || load.k === 4)
+/** the props that lie idle away from the bridge before their work (the end rods' lie by it) and after it (the second
+ * rods' are laid down where they stood, the last at work) */
+export const parksBefore = (s: Prop): boolean => across(s) && byId(s.load).kind !== 'end'
+export const parksAfter = (s: Prop): boolean => across(s) && !secondRod(byId(s.load))
+/** laid down outward, swung over its foot away from the bridge; the joists' props go back the way they came */
+export const laysOutward = (s: Prop): boolean => across(s) && s.load !== 'J3'
+export const PROP_TIMES: Record<string, PropTimes> = Object.fromEntries(PROPS.map(s => {
+  const load = byId(s.load), m = MOVES[s.load]!
+  const second = load.k === 2 || load.k === 4
+  const start = second && load.kind === 'rod' ? m.foot![0] : m.lift![0]
+  let release: number
+  if (load.kind === 'joist') release = load.k === 3 ? m.thread![1] : Math.max(...CROSSINGS.filter(c => c.support === load.id && c.over === false).map(c => lashOf(c.rod, c.support)))
+  else if (load.kind === 'end') release = lashOf(load.id, `J${load.k === 0 ? 1 : 5}`)
+  else if (load.k === 1 || load.k === 5) release = lashOf(load.id, `J${load.k === 1 ? 2 : 4}`)
+  else if (load.k === 3) release = Math.max(lashOf(load.id, 'J2'), lashOf(load.id, 'J4'))
+  else release = lashOf(load.id, 'J3')
+  const rise: Step = [start - PROP_RISE, start], down: Step = [release + 0.05, release + 0.05 + PROP_DOWN]
+  return [s.id, {
+    rise, release, down,
+    ...(parksBefore(s) ? { parkIn: [rise[0] - PARK_SLIDE, rise[0]] as Step } : {}),
+    ...(parksAfter(s) ? { parkOut: [down[1], down[1] + PARK_SLIDE] as Step } : {}),
+  }]
 }))
 
-export const BUILT = Math.max(...CROSSINGS.map(lashEnd), ...Object.values(STRUT_TIMES).map(t => t.down + STRUT_SWING)) + 0.1
+export const BUILT = Math.max(...CROSSINGS.map(lashEnd), ...Object.values(PROP_TIMES).map(t => (t.parkOut ?? t.down)[1])) + 0.1
 
-/** the build's own clock for a time in the cycle: forward, held, run back faster, then the pile */
+/** the build's own clock for a time in the cycle: forward, held, run back faster, then the yard */
 export function buildClock(time: number): number {
   const t = ((time % PERIOD) + PERIOD) % PERIOD
   if (t < HOLD_END) return Math.min(t, BUILT)

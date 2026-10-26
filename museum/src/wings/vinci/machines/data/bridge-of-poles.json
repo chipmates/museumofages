@@ -60,7 +60,7 @@
       },
       "certainty": "C",
       "source": "Ceraldi and Russo Ermolli 2004 (five rods to an arch, staggered planes)",
-      "notes": "frame A, taper 0.0431 m in diameter end to end, its own bend, knots and axe-cut ends; placed from 0.4 s, standing by 3.70 s"
+      "notes": "frame A, butt at its bank end, 0.0431 m thicker there; its own bend, knots and axe-cut ends; pushed out of its yard over the seat, tipped into the stream and raised about its seat on a prop; moving from 0.30 s, standing by 5.50 s"
     },
     {
       "id": "R1B",
@@ -70,8 +70,8 @@
         "x": 3.7676,
         "radius": 0.075,
         "axis": [
-          0.7382,
-          0.6746,
+          0.7439,
+          0.6683,
           0
         ]
       },
@@ -83,7 +83,7 @@
       "orientation_rad": [
         0,
         0,
-        0.7404
+        0.7319
       ],
       "material": {
         "class": "chestnut pole, peeled with a drawknife",
@@ -92,7 +92,7 @@
       },
       "certainty": "C",
       "source": "Ceraldi and Russo Ermolli 2004 (five rods to an arch, staggered planes)",
-      "notes": "frame B, taper 0.032 m in diameter end to end, its own bend, knots and axe-cut ends; placed from 1.5 s, standing by 4.80 s"
+      "notes": "frame B, butt at its bank end, 0.032 m thicker there; its own bend, knots and axe-cut ends; pushed out of its yard over the seat, tipped into the stream and raised about its seat on a prop; moving from 0.30 s, standing by 5.50 s"
     },
     {
       "id": "J1",
@@ -124,7 +124,7 @@
       },
       "certainty": "C",
       "source": "f. 71 recto (poles across the span); the reading of Ceraldi and Russo Ermolli 2004 (cross joists)",
-      "notes": "taper 0 m in diameter end to end, its own bend, knots and axe-cut ends; placed from 4.0 s, standing by 6.50 s"
+      "notes": "its own bend, knots and axe-cut ends; rides up on the first rods it lies across in the yard; moving from 0.30 s, standing by 5.50 s"
     },
     {
       "id": "E0A",
@@ -156,7 +156,7 @@
       },
       "certainty": "C",
       "source": "Ceraldi and Russo Ermolli 2004 (one end rod; read here as one at each foot)",
-      "notes": "frame A, taper 0.0385 m in diameter end to end, its own bend, knots and axe-cut ends; placed from 5.0 s, standing by 8.30 s"
+      "notes": "frame A, butt at its bank end, 0.0385 m thicker there; its own bend, knots and axe-cut ends; pushed out of its yard over the seat, tipped into the stream and raised about its seat on a prop; moving from 4.60 s, standing by 8.70 s"
     },
     {
       "id": "E0B",
@@ -188,30 +188,30 @@
       },
       "certainty": "C",
       "source": "Ceraldi and Russo Ermolli 2004 (one end rod; read here as one at each foot)",
-      "notes": "frame B, taper 0.0329 m in diameter end to end, its own bend, knots and axe-cut ends; placed from 6.1 s, standing by 9.40 s"
+      "notes": "frame B, butt at its bank end, 0.0329 m thicker there; its own bend, knots and axe-cut ends; pushed out of its yard over the seat, tipped into the stream and raised about its seat on a prop; moving from 4.60 s, standing by 8.70 s"
     },
     {
-      "id": "R2A",
+      "id": "R3A",
       "parent": "root",
       "shape": "round pole, arch rod",
       "dimensions_m": {
         "x": 3.8232,
         "radius": 0.075,
         "axis": [
-          0.9355,
-          0.3532,
+          1,
+          -0.0044,
           0
         ]
       },
       "position_m": [
-        -1.5576,
-        2.1676,
-        -0.98
+        0,
+        2.4576,
+        -1.25
       ],
       "orientation_rad": [
         0,
         0,
-        0.361
+        -0.0044
       ],
       "material": {
         "class": "chestnut pole in its bark",
@@ -220,30 +220,30 @@
       },
       "certainty": "C",
       "source": "Ceraldi and Russo Ermolli 2004 (five rods to an arch, staggered planes)",
-      "notes": "frame A, taper 0.0539 m in diameter end to end, its own bend, knots and axe-cut ends; placed from 7.5 s, standing by 11.70 s"
+      "notes": "frame A, butt at its bank end, 0.0336 m thicker there; its own bend, knots and axe-cut ends; pushed out of its yard, slid into the stream, floated into its plane and raised level on two props; moving from 3.70 s, standing by 10.60 s"
     },
     {
-      "id": "R2B",
+      "id": "R3B",
       "parent": "root",
       "shape": "round pole, arch rod",
       "dimensions_m": {
         "x": 3.8232,
         "radius": 0.075,
         "axis": [
-          0.9311,
-          0.3649,
+          1,
+          -0.0058,
           0
         ]
       },
       "position_m": [
-        -1.5576,
-        2.1676,
-        0.98
+        0,
+        2.4576,
+        1.25
       ],
       "orientation_rad": [
         0,
         0,
-        0.3735
+        -0.0058
       ],
       "material": {
         "class": "chestnut pole in its bark",
@@ -252,7 +252,7 @@
       },
       "certainty": "C",
       "source": "Ceraldi and Russo Ermolli 2004 (five rods to an arch, staggered planes)",
-      "notes": "frame B, taper 0.0413 m in diameter end to end, its own bend, knots and axe-cut ends; placed from 8.6 s, standing by 12.80 s"
+      "notes": "frame B, butt at its bank end, 0.0442 m thicker there; its own bend, knots and axe-cut ends; pushed out of its yard, slid into the stream, floated into its plane and raised level on two props; moving from 3.70 s, standing by 10.60 s"
     },
     {
       "id": "J2",
@@ -284,30 +284,30 @@
       },
       "certainty": "C",
       "source": "f. 71 recto (poles across the span); the reading of Ceraldi and Russo Ermolli 2004 (cross joists)",
-      "notes": "taper 0 m in diameter end to end, its own bend, knots and axe-cut ends; placed from 11.5 s, standing by 14.00 s"
+      "notes": "its own bend, knots and axe-cut ends; rolls off the bank into the stream, floats out, drifts in under its place and is raised on two props; moving from 3.00 s, standing by 12.20 s"
     },
     {
-      "id": "R3A",
+      "id": "R2A",
       "parent": "root",
       "shape": "round pole, arch rod",
       "dimensions_m": {
         "x": 3.8232,
         "radius": 0.075,
         "axis": [
-          1,
-          0.0044,
+          0.9355,
+          0.3532,
           0
         ]
       },
       "position_m": [
-        0,
-        2.4576,
-        -1.25
+        -1.5576,
+        2.1676,
+        -0.98
       ],
       "orientation_rad": [
         0,
         0,
-        0.0044
+        0.361
       ],
       "material": {
         "class": "chestnut pole in its bark",
@@ -316,30 +316,30 @@
       },
       "certainty": "C",
       "source": "Ceraldi and Russo Ermolli 2004 (five rods to an arch, staggered planes)",
-      "notes": "frame A, taper 0.0336 m in diameter end to end, its own bend, knots and axe-cut ends; placed from 13.0 s, standing by 17.25 s"
+      "notes": "frame A, butt at its bank end, 0.0539 m thicker there; its own bend, knots and axe-cut ends; pushed out of its yard over the seat into the stream, its bank end raised onto the first joist on a prop, slid along the fork, then raised about that joist; moving from 10.80 s, standing by 18.30 s"
     },
     {
-      "id": "R3B",
+      "id": "R2B",
       "parent": "root",
       "shape": "round pole, arch rod",
       "dimensions_m": {
         "x": 3.8232,
         "radius": 0.075,
         "axis": [
-          1,
-          0.0058,
+          0.9349,
+          0.3548,
           0
         ]
       },
       "position_m": [
-        0,
-        2.4576,
-        1.25
+        -1.5576,
+        2.1676,
+        0.98
       ],
       "orientation_rad": [
         0,
         0,
-        0.0058
+        0.3627
       ],
       "material": {
         "class": "chestnut pole in its bark",
@@ -348,7 +348,7 @@
       },
       "certainty": "C",
       "source": "Ceraldi and Russo Ermolli 2004 (five rods to an arch, staggered planes)",
-      "notes": "frame B, taper 0.0442 m in diameter end to end, its own bend, knots and axe-cut ends; placed from 14.8 s, standing by 19.05 s"
+      "notes": "frame B, butt at its bank end, 0.0413 m thicker there; its own bend, knots and axe-cut ends; pushed out of its yard over the seat into the stream, its bank end raised onto the first joist on a prop, slid along the fork, then raised about that joist; moving from 10.80 s, standing by 18.30 s"
     },
     {
       "id": "J3",
@@ -380,7 +380,7 @@
       },
       "certainty": "C",
       "source": "f. 71 recto (poles across the span); the reading of Ceraldi and Russo Ermolli 2004 (cross joists)",
-      "notes": "taper 0 m in diameter end to end, its own bend, knots and axe-cut ends; placed from 17.4 s, standing by 19.90 s"
+      "notes": "its own bend, knots and axe-cut ends; waits on two logs on the bank, is raised on two props and walked out beside the far frame, then threaded in along its length; moving from 18.00 s, standing by 20.80 s"
     },
     {
       "id": "R5A",
@@ -412,7 +412,7 @@
       },
       "certainty": "C",
       "source": "Ceraldi and Russo Ermolli 2004 (five rods to an arch, staggered planes)",
-      "notes": "frame A, taper 0.0445 m in diameter end to end, its own bend, knots and axe-cut ends; placed from 0.7 s, standing by 3.95 s"
+      "notes": "frame A, butt at its bank end, 0.0445 m thicker there; its own bend, knots and axe-cut ends; pushed out of its yard over the seat, tipped into the stream and raised about its seat on a prop; moving from 0.55 s, standing by 5.75 s"
     },
     {
       "id": "R5B",
@@ -422,8 +422,8 @@
         "x": 3.7676,
         "radius": 0.075,
         "axis": [
-          0.7367,
-          -0.6762,
+          0.7453,
+          -0.6667,
           0
         ]
       },
@@ -435,7 +435,7 @@
       "orientation_rad": [
         0,
         0,
-        -0.7426
+        -0.7298
       ],
       "material": {
         "class": "chestnut pole in its bark",
@@ -444,7 +444,7 @@
       },
       "certainty": "C",
       "source": "Ceraldi and Russo Ermolli 2004 (five rods to an arch, staggered planes)",
-      "notes": "frame B, taper 0.048 m in diameter end to end, its own bend, knots and axe-cut ends; placed from 1.8 s, standing by 5.05 s"
+      "notes": "frame B, butt at its bank end, 0.048 m thicker there; its own bend, knots and axe-cut ends; pushed out of its yard over the seat, tipped into the stream and raised about its seat on a prop; moving from 0.55 s, standing by 5.75 s"
     },
     {
       "id": "J5",
@@ -476,7 +476,7 @@
       },
       "certainty": "C",
       "source": "f. 71 recto (poles across the span); the reading of Ceraldi and Russo Ermolli 2004 (cross joists)",
-      "notes": "taper 0 m in diameter end to end, its own bend, knots and axe-cut ends; placed from 4.3 s, standing by 6.75 s"
+      "notes": "its own bend, knots and axe-cut ends; rides up on the first rods it lies across in the yard; moving from 0.55 s, standing by 5.75 s"
     },
     {
       "id": "E6A",
@@ -486,20 +486,20 @@
         "x": 2.156,
         "radius": 0.075,
         "axis": [
-          0.7408,
-          -0.6717,
+          0.7413,
+          -0.6712,
           0
         ]
       },
       "position_m": [
-        3.4772,
-        0.8078,
+        3.4888,
+        0.8206,
         -1.25
       ],
       "orientation_rad": [
         0,
         0,
-        -0.7365
+        -0.7358
       ],
       "material": {
         "class": "chestnut pole in its bark",
@@ -508,7 +508,7 @@
       },
       "certainty": "C",
       "source": "Ceraldi and Russo Ermolli 2004 (one end rod; read here as one at each foot)",
-      "notes": "frame A, taper 0.0461 m in diameter end to end, its own bend, knots and axe-cut ends; placed from 5.3 s, standing by 8.55 s"
+      "notes": "frame A, butt at its bank end, 0.0461 m thicker there; its own bend, knots and axe-cut ends; pushed out of its yard over the seat, tipped into the stream and raised about its seat on a prop; moving from 4.85 s, standing by 8.95 s"
     },
     {
       "id": "E6B",
@@ -540,71 +540,7 @@
       },
       "certainty": "C",
       "source": "Ceraldi and Russo Ermolli 2004 (one end rod; read here as one at each foot)",
-      "notes": "frame B, taper 0.0333 m in diameter end to end, its own bend, knots and axe-cut ends; placed from 6.3 s, standing by 9.65 s"
-    },
-    {
-      "id": "R4A",
-      "parent": "root",
-      "shape": "round pole, arch rod",
-      "dimensions_m": {
-        "x": 3.8232,
-        "radius": 0.075,
-        "axis": [
-          0.9348,
-          -0.3552,
-          0
-        ]
-      },
-      "position_m": [
-        1.5576,
-        2.1676,
-        -1.52
-      ],
-      "orientation_rad": [
-        0,
-        0,
-        -0.3631
-      ],
-      "material": {
-        "class": "chestnut pole, peeled with a drawknife",
-        "basis": "ours",
-        "source": "f. 71 recto draws round poles; the species is ours"
-      },
-      "certainty": "C",
-      "source": "Ceraldi and Russo Ermolli 2004 (five rods to an arch, staggered planes)",
-      "notes": "frame A, taper 0.0379 m in diameter end to end, its own bend, knots and axe-cut ends; placed from 7.8 s, standing by 11.95 s"
-    },
-    {
-      "id": "R4B",
-      "parent": "root",
-      "shape": "round pole, arch rod",
-      "dimensions_m": {
-        "x": 3.8232,
-        "radius": 0.075,
-        "axis": [
-          0.9346,
-          -0.3558,
-          0
-        ]
-      },
-      "position_m": [
-        1.5576,
-        2.1676,
-        1.52
-      ],
-      "orientation_rad": [
-        0,
-        0,
-        -0.3638
-      ],
-      "material": {
-        "class": "chestnut pole in its bark",
-        "basis": "ours",
-        "source": "f. 71 recto draws round poles; the species is ours"
-      },
-      "certainty": "C",
-      "source": "Ceraldi and Russo Ermolli 2004 (five rods to an arch, staggered planes)",
-      "notes": "frame B, taper 0.033 m in diameter end to end, its own bend, knots and axe-cut ends; placed from 8.8 s, standing by 13.05 s"
+      "notes": "frame B, butt at its bank end, 0.0333 m thicker there; its own bend, knots and axe-cut ends; pushed out of its yard over the seat, tipped into the stream and raised about its seat on a prop; moving from 4.85 s, standing by 8.95 s"
     },
     {
       "id": "J4",
@@ -636,30 +572,62 @@
       },
       "certainty": "C",
       "source": "f. 71 recto (poles across the span); the reading of Ceraldi and Russo Ermolli 2004 (cross joists)",
-      "notes": "taper 0 m in diameter end to end, its own bend, knots and axe-cut ends; placed from 11.8 s, standing by 14.25 s"
+      "notes": "its own bend, knots and axe-cut ends; rolls off the bank into the stream, floats out, drifts in under its place and is raised on two props; moving from 3.25 s, standing by 12.45 s"
     },
     {
-      "id": "SN1A",
+      "id": "R4A",
       "parent": "root",
-      "shape": "forked pole, a strut while the bridge goes up",
+      "shape": "round pole, arch rod",
       "dimensions_m": {
-        "x": 2.7226,
-        "radius": 0.06,
+        "x": 3.8232,
+        "radius": 0.075,
         "axis": [
-          0.2277,
-          0.9737,
+          0.9348,
+          -0.3552,
           0
         ]
       },
       "position_m": [
-        -2.29,
-        0.669,
-        -1.5098
+        1.5576,
+        2.1676,
+        -1.52
       ],
       "orientation_rad": [
         0,
         0,
-        1.3411
+        -0.3631
+      ],
+      "material": {
+        "class": "chestnut pole, peeled with a drawknife",
+        "basis": "ours",
+        "source": "f. 71 recto draws round poles; the species is ours"
+      },
+      "certainty": "C",
+      "source": "Ceraldi and Russo Ermolli 2004 (five rods to an arch, staggered planes)",
+      "notes": "frame A, butt at its bank end, 0.0379 m thicker there; its own bend, knots and axe-cut ends; pushed out of its yard over the seat into the stream, its bank end raised onto the first joist on a prop, slid along the fork, then raised about that joist; moving from 11.05 s, standing by 18.55 s"
+    },
+    {
+      "id": "R4B",
+      "parent": "root",
+      "shape": "round pole, arch rod",
+      "dimensions_m": {
+        "x": 3.8232,
+        "radius": 0.075,
+        "axis": [
+          0.9346,
+          -0.3558,
+          0
+        ]
+      },
+      "position_m": [
+        1.5576,
+        2.1676,
+        1.52
+      ],
+      "orientation_rad": [
+        0,
+        0,
+        -0.3638
       ],
       "material": {
         "class": "chestnut pole in its bark",
@@ -667,232 +635,712 @@
         "source": "f. 71 recto draws round poles; the species is ours"
       },
       "certainty": "C",
-      "source": "museum choice: the order of building is not drawn",
-      "notes": "stands on its bank's slope under the water from 2.70 s, its fork under a rod's free end, and lies back in the stream from 15.15 s, when the joist that carries that end is lashed"
+      "source": "Ceraldi and Russo Ermolli 2004 (five rods to an arch, staggered planes)",
+      "notes": "frame B, butt at its bank end, 0.033 m thicker there; its own bend, knots and axe-cut ends; pushed out of its yard over the seat into the stream, its bank end raised onto the first joist on a prop, slid along the fork, then raised about that joist; moving from 11.05 s, standing by 18.55 s"
     },
     {
-      "id": "SN1B",
+      "id": "FR1A",
       "parent": "root",
-      "shape": "forked pole, a strut while the bridge goes up",
+      "shape": "forked pole, a prop while the bridge goes up",
       "dimensions_m": {
-        "x": 2.7465,
+        "x": 3.114,
         "radius": 0.06,
         "axis": [
-          0.2203,
-          0.9754,
-          0
+          0,
+          0.9391,
+          0.3436
         ]
       },
       "position_m": [
-        -2.2974,
-        0.6332,
-        1.5105
+        -1.9279,
+        0.5569,
+        -2.1262
       ],
       "orientation_rad": [
         0,
         0,
-        1.3487
+        1.5708
       ],
       "material": {
         "class": "chestnut pole in its bark",
         "basis": "ours",
-        "source": "f. 71 recto draws round poles; the species is ours"
+        "source": "museum choice"
       },
       "certainty": "C",
       "source": "museum choice: the order of building is not drawn",
-      "notes": "stands on its bank's slope under the water from 3.80 s, its fork under a rod's free end, and lies back in the stream from 15.15 s, when the joist that carries that end is lashed"
+      "notes": "holds R1A from 3.80 s to 13.25 s; slides in along the stream bed, rises under it and walks in as it is raised, then is laid down and slid away"
     },
     {
-      "id": "SN2A",
+      "id": "FR5A",
       "parent": "root",
-      "shape": "forked pole, a strut while the bridge goes up",
+      "shape": "forked pole, a prop while the bridge goes up",
       "dimensions_m": {
-        "x": 3.7536,
+        "x": 3.2154,
         "radius": 0.06,
         "axis": [
-          0.5713,
-          0.8208,
-          0
+          0,
+          0.8415,
+          0.5403
         ]
       },
       "position_m": [
-        -1.5279,
-        0.9097,
-        -0.9747
+        2.1363,
+        0.501,
+        -1.9595
       ],
       "orientation_rad": [
         0,
         0,
-        0.9627
+        1.5708
       ],
       "material": {
         "class": "chestnut pole in its bark",
         "basis": "ours",
-        "source": "f. 71 recto draws round poles; the species is ours"
+        "source": "museum choice"
       },
       "certainty": "C",
       "source": "museum choice: the order of building is not drawn",
-      "notes": "stands on its bank's slope under the water from 10.70 s, its fork under a rod's free end, and lies back in the stream from 21.05 s, when the joist that carries that end is lashed"
+      "notes": "holds R5A from 4.05 s to 13.50 s; slides in along the stream bed, rises under it and walks in as it is raised, then is laid down and slid away"
     },
     {
-      "id": "SN2B",
+      "id": "FE0A",
       "parent": "root",
-      "shape": "forked pole, a strut while the bridge goes up",
+      "shape": "forked pole, a prop while the bridge goes up",
       "dimensions_m": {
-        "x": 3.7987,
+        "x": 1.1793,
         "radius": 0.06,
         "axis": [
-          0.5577,
-          0.8301,
-          0
+          0,
+          0.882,
+          0.4713
         ]
       },
       "position_m": [
-        -1.5408,
-        0.8545,
-        0.9756
+        -3.1009,
+        0.4649,
+        -1.6268
       ],
       "orientation_rad": [
         0,
         0,
-        0.9792
+        1.5708
       ],
       "material": {
         "class": "chestnut pole in its bark",
         "basis": "ours",
-        "source": "f. 71 recto draws round poles; the species is ours"
+        "source": "museum choice"
       },
       "certainty": "C",
       "source": "museum choice: the order of building is not drawn",
-      "notes": "stands on its bank's slope under the water from 11.80 s, its fork under a rod's free end, and lies back in the stream from 21.05 s, when the joist that carries that end is lashed"
+      "notes": "holds E0A from 7.50 s to 9.75 s; slides in along the stream bed, rises under it and walks in as it is raised, then is laid down and slid away"
     },
     {
-      "id": "SF1A",
+      "id": "FE6A",
       "parent": "root",
-      "shape": "forked pole, a strut while the bridge goes up",
+      "shape": "forked pole, a prop while the bridge goes up",
       "dimensions_m": {
-        "x": 2.7568,
+        "x": 1.1871,
         "radius": 0.06,
         "axis": [
-          -0.2252,
-          0.9743,
-          0
+          0,
+          0.882,
+          0.4713
         ]
       },
       "position_m": [
-        2.2895,
-        0.6523,
-        -0.9857
+        3.1018,
+        0.4641,
+        -1.6278
       ],
       "orientation_rad": [
         0,
         0,
-        1.7979
+        1.5708
       ],
       "material": {
         "class": "chestnut pole in its bark",
         "basis": "ours",
-        "source": "f. 71 recto draws round poles; the species is ours"
+        "source": "museum choice"
       },
       "certainty": "C",
       "source": "museum choice: the order of building is not drawn",
-      "notes": "stands on its bank's slope under the water from 2.95 s, its fork under a rod's free end, and lies back in the stream from 15.40 s, when the joist that carries that end is lashed"
+      "notes": "holds E6A from 7.75 s to 10.00 s; slides in along the stream bed, rises under it and walks in as it is raised, then is laid down and slid away"
     },
     {
-      "id": "SF1B",
+      "id": "FR3A",
       "parent": "root",
-      "shape": "forked pole, a strut while the bridge goes up",
+      "shape": "forked pole, a prop while the bridge goes up",
       "dimensions_m": {
-        "x": 2.7162,
+        "x": 3.4529,
         "radius": 0.06,
         "axis": [
-          -0.2214,
-          0.9752,
-          0
+          0,
+          0.9284,
+          0.3717
         ]
       },
       "position_m": [
-        2.2994,
-        0.6432,
-        0.9884
+        -0.4516,
+        0.6637,
+        -1.969
       ],
       "orientation_rad": [
         0,
         0,
-        1.794
+        1.5708
       ],
       "material": {
         "class": "chestnut pole in its bark",
         "basis": "ours",
-        "source": "f. 71 recto draws round poles; the species is ours"
+        "source": "museum choice"
       },
       "certainty": "C",
       "source": "museum choice: the order of building is not drawn",
-      "notes": "stands on its bank's slope under the water from 4.05 s, its fork under a rod's free end, and lies back in the stream from 15.40 s, when the joist that carries that end is lashed"
+      "notes": "holds R3A from 8.90 s to 13.50 s; slides in along the stream bed, rises under it and walks in as it is raised, then is laid down and slid away"
     },
     {
-      "id": "SF2A",
+      "id": "GR3A",
       "parent": "root",
-      "shape": "forked pole, a strut while the bridge goes up",
+      "shape": "forked pole, a prop while the bridge goes up",
       "dimensions_m": {
-        "x": 3.7864,
+        "x": 3.4687,
         "radius": 0.06,
         "axis": [
-          -0.5655,
-          0.8248,
-          0
+          0,
+          0.9284,
+          0.3717
         ]
       },
       "position_m": [
-        1.5294,
-        0.8856,
-        -1.5119
+        0.4484,
+        0.6593,
+        -1.9691
       ],
       "orientation_rad": [
         0,
         0,
-        2.1718
+        1.5708
       ],
       "material": {
         "class": "chestnut pole in its bark",
         "basis": "ours",
-        "source": "f. 71 recto draws round poles; the species is ours"
+        "source": "museum choice"
       },
       "certainty": "C",
       "source": "museum choice: the order of building is not drawn",
-      "notes": "stands on its bank's slope under the water from 10.95 s, its fork under a rod's free end, and lies back in the stream from 21.05 s, when the joist that carries that end is lashed"
+      "notes": "holds R3A from 8.90 s to 13.50 s; slides in along the stream bed, rises under it and walks in as it is raised, then is laid down and slid away"
     },
     {
-      "id": "SF2B",
+      "id": "FR2A",
       "parent": "root",
-      "shape": "forked pole, a strut while the bridge goes up",
+      "shape": "forked pole, a prop while the bridge goes up",
       "dimensions_m": {
-        "x": 3.7598,
+        "x": 3.1672,
         "radius": 0.06,
         "axis": [
-          -0.5687,
-          0.8225,
-          0
+          0,
+          0.9391,
+          0.3436
         ]
       },
       "position_m": [
-        1.5308,
-        0.8997,
-        1.5257
+        -1.3065,
+        0.5835,
+        -1.5944
       ],
       "orientation_rad": [
         0,
         0,
-        2.1757
+        1.5708
       ],
       "material": {
         "class": "chestnut pole in its bark",
         "basis": "ours",
-        "source": "f. 71 recto draws round poles; the species is ours"
+        "source": "museum choice"
       },
       "certainty": "C",
       "source": "museum choice: the order of building is not drawn",
-      "notes": "stands on its bank's slope under the water from 12.05 s, its fork under a rod's free end, and lies back in the stream from 21.05 s, when the joist that carries that end is lashed"
+      "notes": "holds R2A from 15.10 s to 21.85 s; slides in along the stream bed, rises under it and walks in as it is raised, then is laid down"
+    },
+    {
+      "id": "FR4A",
+      "parent": "root",
+      "shape": "forked pole, a prop while the bridge goes up",
+      "dimensions_m": {
+        "x": 3.3858,
+        "radius": 0.06,
+        "axis": [
+          0,
+          0.9391,
+          0.3436
+        ]
+      },
+      "position_m": [
+        0.858,
+        0.6552,
+        -2.1707
+      ],
+      "orientation_rad": [
+        0,
+        0,
+        1.5708
+      ],
+      "material": {
+        "class": "chestnut pole in its bark",
+        "basis": "ours",
+        "source": "museum choice"
+      },
+      "certainty": "C",
+      "source": "museum choice: the order of building is not drawn",
+      "notes": "holds R4A from 15.35 s to 21.85 s; slides in along the stream bed, rises under it and walks in as it is raised, then is laid down"
+    },
+    {
+      "id": "FR1B",
+      "parent": "root",
+      "shape": "forked pole, a prop while the bridge goes up",
+      "dimensions_m": {
+        "x": 3.1647,
+        "radius": 0.06,
+        "axis": [
+          0,
+          0.9391,
+          -0.3436
+        ]
+      },
+      "position_m": [
+        -1.9291,
+        0.5307,
+        2.1363
+      ],
+      "orientation_rad": [
+        0,
+        0,
+        1.5708
+      ],
+      "material": {
+        "class": "chestnut pole in its bark",
+        "basis": "ours",
+        "source": "museum choice"
+      },
+      "certainty": "C",
+      "source": "museum choice: the order of building is not drawn",
+      "notes": "holds R1B from 3.80 s to 13.25 s; slides in along the stream bed, rises under it and walks in as it is raised, then is laid down and slid away"
+    },
+    {
+      "id": "FR5B",
+      "parent": "root",
+      "shape": "forked pole, a prop while the bridge goes up",
+      "dimensions_m": {
+        "x": 3.3619,
+        "radius": 0.06,
+        "axis": [
+          0,
+          0.8415,
+          -0.5403
+        ]
+      },
+      "position_m": [
+        2.0913,
+        0.4804,
+        1.9982
+      ],
+      "orientation_rad": [
+        0,
+        0,
+        1.5708
+      ],
+      "material": {
+        "class": "chestnut pole in its bark",
+        "basis": "ours",
+        "source": "museum choice"
+      },
+      "certainty": "C",
+      "source": "museum choice: the order of building is not drawn",
+      "notes": "holds R5B from 4.05 s to 13.50 s; slides in along the stream bed, rises under it and walks in as it is raised, then is laid down and slid away"
+    },
+    {
+      "id": "FE0B",
+      "parent": "root",
+      "shape": "forked pole, a prop while the bridge goes up",
+      "dimensions_m": {
+        "x": 1.191,
+        "radius": 0.06,
+        "axis": [
+          0,
+          0.882,
+          -0.4713
+        ]
+      },
+      "position_m": [
+        -3.1002,
+        0.4577,
+        1.6302
+      ],
+      "orientation_rad": [
+        0,
+        0,
+        1.5708
+      ],
+      "material": {
+        "class": "chestnut pole in its bark",
+        "basis": "ours",
+        "source": "museum choice"
+      },
+      "certainty": "C",
+      "source": "museum choice: the order of building is not drawn",
+      "notes": "holds E0B from 7.50 s to 9.75 s; slides in along the stream bed, rises under it and walks in as it is raised, then is laid down and slid away"
+    },
+    {
+      "id": "FE6B",
+      "parent": "root",
+      "shape": "forked pole, a prop while the bridge goes up",
+      "dimensions_m": {
+        "x": 1.1772,
+        "radius": 0.06,
+        "axis": [
+          0,
+          0.882,
+          -0.4713
+        ]
+      },
+      "position_m": [
+        3.1003,
+        0.464,
+        1.6269
+      ],
+      "orientation_rad": [
+        0,
+        0,
+        1.5708
+      ],
+      "material": {
+        "class": "chestnut pole in its bark",
+        "basis": "ours",
+        "source": "museum choice"
+      },
+      "certainty": "C",
+      "source": "museum choice: the order of building is not drawn",
+      "notes": "holds E6B from 7.75 s to 10.00 s; slides in along the stream bed, rises under it and walks in as it is raised, then is laid down and slid away"
+    },
+    {
+      "id": "FR3B",
+      "parent": "root",
+      "shape": "forked pole, a prop while the bridge goes up",
+      "dimensions_m": {
+        "x": 3.4118,
+        "radius": 0.06,
+        "axis": [
+          0,
+          0.9284,
+          -0.3717
+        ]
+      },
+      "position_m": [
+        -0.4516,
+        0.6823,
+        1.9618
+      ],
+      "orientation_rad": [
+        0,
+        0,
+        1.5708
+      ],
+      "material": {
+        "class": "chestnut pole in its bark",
+        "basis": "ours",
+        "source": "museum choice"
+      },
+      "certainty": "C",
+      "source": "museum choice: the order of building is not drawn",
+      "notes": "holds R3B from 8.90 s to 13.50 s; slides in along the stream bed, rises under it and walks in as it is raised, then is laid down and slid away"
+    },
+    {
+      "id": "GR3B",
+      "parent": "root",
+      "shape": "forked pole, a prop while the bridge goes up",
+      "dimensions_m": {
+        "x": 3.4277,
+        "radius": 0.06,
+        "axis": [
+          0,
+          0.9284,
+          -0.3717
+        ]
+      },
+      "position_m": [
+        0.4484,
+        0.6788,
+        1.9611
+      ],
+      "orientation_rad": [
+        0,
+        0,
+        1.5708
+      ],
+      "material": {
+        "class": "chestnut pole in its bark",
+        "basis": "ours",
+        "source": "museum choice"
+      },
+      "certainty": "C",
+      "source": "museum choice: the order of building is not drawn",
+      "notes": "holds R3B from 8.90 s to 13.50 s; slides in along the stream bed, rises under it and walks in as it is raised, then is laid down and slid away"
+    },
+    {
+      "id": "FR2B",
+      "parent": "root",
+      "shape": "forked pole, a prop while the bridge goes up",
+      "dimensions_m": {
+        "x": 3.224,
+        "radius": 0.06,
+        "axis": [
+          0,
+          0.9391,
+          -0.3436
+        ]
+      },
+      "position_m": [
+        -1.2879,
+        0.5637,
+        1.6044
+      ],
+      "orientation_rad": [
+        0,
+        0,
+        1.5708
+      ],
+      "material": {
+        "class": "chestnut pole in its bark",
+        "basis": "ours",
+        "source": "museum choice"
+      },
+      "certainty": "C",
+      "source": "museum choice: the order of building is not drawn",
+      "notes": "holds R2B from 15.10 s to 21.85 s; slides in along the stream bed, rises under it and walks in as it is raised, then is laid down"
+    },
+    {
+      "id": "FR4B",
+      "parent": "root",
+      "shape": "forked pole, a prop while the bridge goes up",
+      "dimensions_m": {
+        "x": 3.3754,
+        "radius": 0.06,
+        "axis": [
+          0,
+          0.9391,
+          -0.3436
+        ]
+      },
+      "position_m": [
+        0.8955,
+        0.6451,
+        2.1694
+      ],
+      "orientation_rad": [
+        0,
+        0,
+        1.5708
+      ],
+      "material": {
+        "class": "chestnut pole in its bark",
+        "basis": "ours",
+        "source": "museum choice"
+      },
+      "certainty": "C",
+      "source": "museum choice: the order of building is not drawn",
+      "notes": "holds R4B from 15.35 s to 21.85 s; slides in along the stream bed, rises under it and walks in as it is raised, then is laid down"
+    },
+    {
+      "id": "FJ2",
+      "parent": "root",
+      "shape": "forked pole, a prop while the bridge goes up",
+      "dimensions_m": {
+        "x": 3.3572,
+        "radius": 0.06,
+        "axis": [
+          -0.4085,
+          0.9128,
+          0
+        ]
+      },
+      "position_m": [
+        -0.8424,
+        0.589,
+        -0.45
+      ],
+      "orientation_rad": [
+        0,
+        0,
+        1.9916
+      ],
+      "material": {
+        "class": "chestnut pole in its bark",
+        "basis": "ours",
+        "source": "museum choice"
+      },
+      "certainty": "C",
+      "source": "museum choice: the order of building is not drawn",
+      "notes": "holds J2 from 10.60 s to 19.35 s; slides in along the stream bed, rises under it and walks in as it is raised, then is laid down"
+    },
+    {
+      "id": "GJ2",
+      "parent": "root",
+      "shape": "forked pole, a prop while the bridge goes up",
+      "dimensions_m": {
+        "x": 3.3381,
+        "radius": 0.06,
+        "axis": [
+          -0.4085,
+          0.9128,
+          0
+        ]
+      },
+      "position_m": [
+        -0.8463,
+        0.5977,
+        0.45
+      ],
+      "orientation_rad": [
+        0,
+        0,
+        1.9916
+      ],
+      "material": {
+        "class": "chestnut pole in its bark",
+        "basis": "ours",
+        "source": "museum choice"
+      },
+      "certainty": "C",
+      "source": "museum choice: the order of building is not drawn",
+      "notes": "holds J2 from 10.60 s to 19.35 s; slides in along the stream bed, rises under it and walks in as it is raised, then is laid down"
+    },
+    {
+      "id": "FJ4",
+      "parent": "root",
+      "shape": "forked pole, a prop while the bridge goes up",
+      "dimensions_m": {
+        "x": 3.3446,
+        "radius": 0.06,
+        "axis": [
+          0.4085,
+          0.9128,
+          0
+        ]
+      },
+      "position_m": [
+        0.845,
+        0.5947,
+        -0.72
+      ],
+      "orientation_rad": [
+        0,
+        0,
+        1.15
+      ],
+      "material": {
+        "class": "chestnut pole in its bark",
+        "basis": "ours",
+        "source": "museum choice"
+      },
+      "certainty": "C",
+      "source": "museum choice: the order of building is not drawn",
+      "notes": "holds J4 from 10.85 s to 19.60 s; slides in along the stream bed, rises under it and walks in as it is raised, then is laid down"
+    },
+    {
+      "id": "GJ4",
+      "parent": "root",
+      "shape": "forked pole, a prop while the bridge goes up",
+      "dimensions_m": {
+        "x": 3.3139,
+        "radius": 0.06,
+        "axis": [
+          0.4085,
+          0.9128,
+          0
+        ]
+      },
+      "position_m": [
+        0.8513,
+        0.6087,
+        0.72
+      ],
+      "orientation_rad": [
+        0,
+        0,
+        1.15
+      ],
+      "material": {
+        "class": "chestnut pole in its bark",
+        "basis": "ours",
+        "source": "museum choice"
+      },
+      "certainty": "C",
+      "source": "museum choice: the order of building is not drawn",
+      "notes": "holds J4 from 10.85 s to 19.60 s; slides in along the stream bed, rises under it and walks in as it is raised, then is laid down"
+    },
+    {
+      "id": "FJ3",
+      "parent": "root",
+      "shape": "forked pole, a prop while the bridge goes up",
+      "dimensions_m": {
+        "x": 3.6971,
+        "radius": 0.06,
+        "axis": [
+          -0.4085,
+          0.9128,
+          0
+        ]
+      },
+      "position_m": [
+        0.8385,
+        0.7339,
+        3
+      ],
+      "orientation_rad": [
+        0,
+        0,
+        1.9916
+      ],
+      "material": {
+        "class": "chestnut pole in its bark",
+        "basis": "ours",
+        "source": "museum choice"
+      },
+      "certainty": "C",
+      "source": "museum choice: the order of building is not drawn",
+      "notes": "holds J3 from 18.00 s to 20.80 s; slides in along the stream bed, rises under it and walks in as it is raised, then is laid down"
+    },
+    {
+      "id": "GJ3",
+      "parent": "root",
+      "shape": "forked pole, a prop while the bridge goes up",
+      "dimensions_m": {
+        "x": 3.6621,
+        "radius": 0.06,
+        "axis": [
+          -0.4085,
+          0.9128,
+          0
+        ]
+      },
+      "position_m": [
+        0.8314,
+        0.7498,
+        4.9
+      ],
+      "orientation_rad": [
+        0,
+        0,
+        1.9916
+      ],
+      "material": {
+        "class": "chestnut pole in its bark",
+        "basis": "ours",
+        "source": "museum choice"
+      },
+      "certainty": "C",
+      "source": "museum choice: the order of building is not drawn",
+      "notes": "holds J3 from 18.00 s to 20.80 s; slides in along the stream bed, rises under it and walks in as it is raised, then is laid down"
     },
     {
       "id": "bank-seats",
@@ -920,6 +1368,32 @@
       "certainty": "C",
       "source": "f. 71 recto (footing)",
       "notes": "set in so a rod resting on a seat stands as on a joist"
+    },
+    {
+      "id": "yard-logs",
+      "parent": "root",
+      "shape": "4 sleepers under the yard rods, two logs under the crown joist",
+      "dimensions_m": {
+        "radius": 0.12
+      },
+      "position_m": [
+        0,
+        0.11,
+        0
+      ],
+      "orientation_rad": [
+        0,
+        0,
+        0
+      ],
+      "material": {
+        "class": "chestnut log in its bark",
+        "basis": "ours",
+        "source": "museum choice"
+      },
+      "certainty": "C",
+      "source": "museum choice: the yard is not drawn",
+      "notes": "sleepers 3.5 m long; the crown joist's logs 1 m"
     },
     {
       "id": "lashings",
@@ -971,7 +1445,7 @@
       "ratio": null,
       "certainty": "C",
       "source": "museum choice: the order and the paths of placing",
-      "notes": "carried low to its seat, laid across it and tipped up over it, rolling on the log, until its free end lies in a strut's fork or under the joist"
+      "notes": "pushed out of its yard over the seat, tipped into the stream and raised about its seat on a prop"
     },
     {
       "id": "place-R1B",
@@ -995,7 +1469,7 @@
       "ratio": null,
       "certainty": "C",
       "source": "museum choice: the order and the paths of placing",
-      "notes": "carried low to its seat, laid across it and tipped up over it, rolling on the log, until its free end lies in a strut's fork or under the joist"
+      "notes": "pushed out of its yard over the seat, tipped into the stream and raised about its seat on a prop"
     },
     {
       "id": "place-J1",
@@ -1019,7 +1493,7 @@
       "ratio": null,
       "certainty": "C",
       "source": "museum choice: the order and the paths of placing",
-      "notes": "drawn from its pile, carried along the front at its own height and threaded between the rods along its own axis"
+      "notes": "rides up on the first rods it lies across in the yard"
     },
     {
       "id": "place-E0A",
@@ -1043,7 +1517,7 @@
       "ratio": null,
       "certainty": "C",
       "source": "museum choice: the order and the paths of placing",
-      "notes": "carried low to its seat, laid across it and tipped up over it, rolling on the log, until its free end lies in a strut's fork or under the joist"
+      "notes": "pushed out of its yard over the seat, tipped into the stream and raised about its seat on a prop"
     },
     {
       "id": "place-E0B",
@@ -1067,7 +1541,7 @@
       "ratio": null,
       "certainty": "C",
       "source": "museum choice: the order and the paths of placing",
-      "notes": "carried low to its seat, laid across it and tipped up over it, rolling on the log, until its free end lies in a strut's fork or under the joist"
+      "notes": "pushed out of its yard over the seat, tipped into the stream and raised about its seat on a prop"
     },
     {
       "id": "place-R2A",
@@ -1091,7 +1565,7 @@
       "ratio": null,
       "certainty": "C",
       "source": "museum choice: the order and the paths of placing",
-      "notes": "laid across the first joist from the bank, tipped over it and pushed up along its own line until its end lies in a strut's fork"
+      "notes": "pushed out of its yard over the seat into the stream, its bank end raised onto the first joist on a prop, slid along the fork, then raised about that joist"
     },
     {
       "id": "place-R2B",
@@ -1115,7 +1589,7 @@
       "ratio": null,
       "certainty": "C",
       "source": "museum choice: the order and the paths of placing",
-      "notes": "laid across the first joist from the bank, tipped over it and pushed up along its own line until its end lies in a strut's fork"
+      "notes": "pushed out of its yard over the seat into the stream, its bank end raised onto the first joist on a prop, slid along the fork, then raised about that joist"
     },
     {
       "id": "place-J2",
@@ -1139,7 +1613,7 @@
       "ratio": null,
       "certainty": "C",
       "source": "museum choice: the order and the paths of placing",
-      "notes": "drawn from its pile, carried along the front at its own height and threaded between the rods along its own axis"
+      "notes": "rolls off the bank into the stream, floats out, drifts in under its place and is raised on two props"
     },
     {
       "id": "place-R3A",
@@ -1163,7 +1637,7 @@
       "ratio": null,
       "certainty": "C",
       "source": "museum choice: the order and the paths of placing",
-      "notes": "lifted over its bank to the crown's height and pushed out level onto the joists"
+      "notes": "pushed out of its yard, slid into the stream, floated into its plane and raised level on two props"
     },
     {
       "id": "place-R3B",
@@ -1187,7 +1661,7 @@
       "ratio": null,
       "certainty": "C",
       "source": "museum choice: the order and the paths of placing",
-      "notes": "lifted over its bank to the crown's height and pushed out level onto the joists"
+      "notes": "pushed out of its yard, slid into the stream, floated into its plane and raised level on two props"
     },
     {
       "id": "place-J3",
@@ -1211,7 +1685,7 @@
       "ratio": null,
       "certainty": "C",
       "source": "museum choice: the order and the paths of placing",
-      "notes": "drawn from its pile, carried along the front at its own height and threaded between the rods along its own axis"
+      "notes": "waits on two logs on the bank, is raised on two props and walked out beside the far frame, then threaded in along its length"
     },
     {
       "id": "place-R5A",
@@ -1235,7 +1709,7 @@
       "ratio": null,
       "certainty": "C",
       "source": "museum choice: the order and the paths of placing",
-      "notes": "carried low to its seat, laid across it and tipped up over it, rolling on the log, until its free end lies in a strut's fork or under the joist"
+      "notes": "pushed out of its yard over the seat, tipped into the stream and raised about its seat on a prop"
     },
     {
       "id": "place-R5B",
@@ -1259,7 +1733,7 @@
       "ratio": null,
       "certainty": "C",
       "source": "museum choice: the order and the paths of placing",
-      "notes": "carried low to its seat, laid across it and tipped up over it, rolling on the log, until its free end lies in a strut's fork or under the joist"
+      "notes": "pushed out of its yard over the seat, tipped into the stream and raised about its seat on a prop"
     },
     {
       "id": "place-J5",
@@ -1283,7 +1757,7 @@
       "ratio": null,
       "certainty": "C",
       "source": "museum choice: the order and the paths of placing",
-      "notes": "drawn from its pile, carried along the front at its own height and threaded between the rods along its own axis"
+      "notes": "rides up on the first rods it lies across in the yard"
     },
     {
       "id": "place-E6A",
@@ -1307,7 +1781,7 @@
       "ratio": null,
       "certainty": "C",
       "source": "museum choice: the order and the paths of placing",
-      "notes": "carried low to its seat, laid across it and tipped up over it, rolling on the log, until its free end lies in a strut's fork or under the joist"
+      "notes": "pushed out of its yard over the seat, tipped into the stream and raised about its seat on a prop"
     },
     {
       "id": "place-E6B",
@@ -1331,7 +1805,7 @@
       "ratio": null,
       "certainty": "C",
       "source": "museum choice: the order and the paths of placing",
-      "notes": "carried low to its seat, laid across it and tipped up over it, rolling on the log, until its free end lies in a strut's fork or under the joist"
+      "notes": "pushed out of its yard over the seat, tipped into the stream and raised about its seat on a prop"
     },
     {
       "id": "place-R4A",
@@ -1355,7 +1829,7 @@
       "ratio": null,
       "certainty": "C",
       "source": "museum choice: the order and the paths of placing",
-      "notes": "laid across the first joist from the bank, tipped over it and pushed up along its own line until its end lies in a strut's fork"
+      "notes": "pushed out of its yard over the seat into the stream, its bank end raised onto the first joist on a prop, slid along the fork, then raised about that joist"
     },
     {
       "id": "place-R4B",
@@ -1379,7 +1853,7 @@
       "ratio": null,
       "certainty": "C",
       "source": "museum choice: the order and the paths of placing",
-      "notes": "laid across the first joist from the bank, tipped over it and pushed up along its own line until its end lies in a strut's fork"
+      "notes": "pushed out of its yard over the seat into the stream, its bank end raised onto the first joist on a prop, slid along the fork, then raised about that joist"
     },
     {
       "id": "place-J4",
@@ -1403,7 +1877,7 @@
       "ratio": null,
       "certainty": "C",
       "source": "museum choice: the order and the paths of placing",
-      "notes": "drawn from its pile, carried along the front at its own height and threaded between the rods along its own axis"
+      "notes": "rolls off the bank into the stream, floats out, drifts in under its place and is raised on two props"
     }
   ],
   "motion": {
@@ -1411,62 +1885,62 @@
     "loop": true,
     "phases": [
       {
-        "name": "The poles lie in a pile on each bank",
+        "name": "The poles lie in their yards on each bank, the joists in piles, the props on the stream bed up and down the stream",
         "start_s": 0,
-        "duration_s": 0.4,
+        "duration_s": 0.3,
         "joint_values": {},
         "interpolation": "hold"
       },
       {
-        "name": "Set from both banks at once toward the crown, nothing carried higher than the crown; a forked strut rises from the stream under each free end (8 in all) and lies back once the next joist is lashed; each lashing winds on as its crossing closes",
-        "start_s": 0.4,
-        "duration_s": 21.75,
+        "name": "Built from both banks at once toward the crown; no pole is ever in the air on its own: rods are pushed over the seats into the stream, joists roll in and float or ride on the rods under them, and each is raised on forked props (22 in all) whose feet slide on the bed; each lashing winds on as its crossing closes and the props are laid down once what their load rests on is lashed",
+        "start_s": 0.3,
+        "duration_s": 22.7,
         "joint_values": {
-          "place-R1A": "to 0 from 0.40 s",
-          "place-R1B": "to 0 from 1.50 s",
-          "place-J1": "to 0 from 4.00 s",
-          "place-E0A": "to 0 from 5.00 s",
-          "place-E0B": "to 0 from 6.10 s",
-          "place-R2A": "to 0 from 7.50 s",
-          "place-R2B": "to 0 from 8.60 s",
-          "place-J2": "to 0 from 11.50 s",
-          "place-R3A": "to 0 from 13.00 s",
-          "place-R3B": "to 0 from 14.80 s",
-          "place-J3": "to 0 from 17.40 s",
-          "place-R5A": "to 0 from 0.65 s",
-          "place-R5B": "to 0 from 1.75 s",
-          "place-J5": "to 0 from 4.25 s",
-          "place-E6A": "to 0 from 5.25 s",
-          "place-E6B": "to 0 from 6.35 s",
-          "place-R4A": "to 0 from 7.75 s",
-          "place-R4B": "to 0 from 8.85 s",
-          "place-J4": "to 0 from 11.75 s"
+          "place-R1A": "to 0 from 0.30 s",
+          "place-R1B": "to 0 from 0.30 s",
+          "place-J1": "to 0 from 0.30 s",
+          "place-E0A": "to 0 from 4.60 s",
+          "place-E0B": "to 0 from 4.60 s",
+          "place-R3A": "to 0 from 3.70 s",
+          "place-R3B": "to 0 from 3.70 s",
+          "place-J2": "to 0 from 3.00 s",
+          "place-R2A": "to 0 from 10.80 s",
+          "place-R2B": "to 0 from 10.80 s",
+          "place-J3": "to 0 from 18.00 s",
+          "place-R5A": "to 0 from 0.55 s",
+          "place-R5B": "to 0 from 0.55 s",
+          "place-J5": "to 0 from 0.55 s",
+          "place-E6A": "to 0 from 4.85 s",
+          "place-E6B": "to 0 from 4.85 s",
+          "place-J4": "to 0 from 3.25 s",
+          "place-R4A": "to 0 from 11.05 s",
+          "place-R4B": "to 0 from 11.05 s"
         },
         "interpolation": "smootherstep"
       },
       {
         "name": "The bridge stands whole",
-        "start_s": 22.15,
-        "duration_s": 8.85,
+        "start_s": 23,
+        "duration_s": 8,
         "joint_values": {},
         "interpolation": "hold"
       },
       {
-        "name": "Back to the pile in the reverse order, 2.6 times as fast",
+        "name": "Back in the reverse order, 2.6 times as fast",
         "start_s": 31,
-        "duration_s": 8.5192,
+        "duration_s": 8.8462,
         "joint_values": {},
         "interpolation": "the same paths reversed"
       },
       {
-        "name": "The piles again",
-        "start_s": 39.5192,
-        "duration_s": 0.4808,
+        "name": "The yards again",
+        "start_s": 39.8462,
+        "duration_s": 0.1538,
         "joint_values": {},
         "interpolation": "hold"
       }
     ],
-    "visitor_12s": "From the pile on each bank the first rods are tipped up over their seats, each free end coming down in the fork of a strut that rises from the stream; the first joist is threaded across them, the end rods set under it, and the next rods are pushed up over it."
+    "visitor_12s": "The first rods are pushed out over their seats and tip into the stream; forked props slide in along the bed and raise them, the first joists riding up on them; the other joists float in and are raised, the crown joist is threaded in last, and each crossing is lashed as it closes."
   },
   "drive": {
     "type": "hands, not shown: the order of building",
@@ -1478,14 +1952,15 @@
       "source": "museum choice",
       "note": "Slow enough to follow each pole to its place."
     },
-    "justification": "The bridge has no moving part in use; the only motion is its building, which no sheet of his draws. The order (from both banks toward the crown, each free end held by a strut until a joist takes it) is ours."
+    "justification": "The bridge has no moving part in use; the only motion is its building, which no sheet of his draws. The order (from both banks toward the crown) and the means (yards, seats, the stream, forked props) are ours."
   },
   "label_en": "Our reconstruction from his sheet in the Ambrosiana, sizes ours. The woven arch is older than him.",
   "label_de": "Unsere Rekonstruktion nach seinem Blatt in der Ambrosiana, die Maße stammen von uns. Der geflochtene Bogen ist älter als er.",
   "animation_notes": [
-    "One cycle in 40 s, looping: the piles, the building (0.4 to 22.15 s), the whole bridge, then back to the piles.",
-    "No pole is carried higher than the crown and one pole's width. A foot rod is carried low to its seat, laid across it and tipped up over it; a second rod is laid across the first joist and pushed up along its own line; a crown rod is pushed out level onto the joists; a joist is drawn from its pile, carried along the front and threaded between the rods.",
-    "Every placed pole is held: by its seat and a strut, by the poles already lashed, or by both. A strut stands on its bank's slope under the water and swings up in its rod's plane in 1 s.",
+    "One cycle in 40 s, looping: the yards, the building (0.3 to 23 s), the whole bridge, then back.",
+    "No pole is ever in the air on its own: every pole in transit rests on or slides along the ground, a log, the stream, a placed pole or a prop, on both sides of its weight, or is held down from above where it is threaded (a sweep proves it at 1/48 s).",
+    "No pole is carried higher than the crown and one pole's width.",
+    "22 forked props raise the loads; each slides in along the stream bed, rises under its load, walks in as the load is raised, and is laid down and slid away once what the load rests on is lashed.",
     "Each lashing winds on, four turns and two frapping turns, once both its poles stand.",
     "The second state shows the same poles with the lashings off."
   ],

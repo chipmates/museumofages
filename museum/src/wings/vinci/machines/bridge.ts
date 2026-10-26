@@ -3,12 +3,15 @@
  * contract (a dossier, joints, a deterministic schedule, a second state) and
  * is built from its own numbers (`bridge/plan.ts`).
  *
- * What moves is the building of it: from both banks at once, each pole is
- * carried low from its bank's pile and set from the work already standing,
- * a forked strut rising from the stream under each free end until the next
- * joist takes it; the lashings wind on as each crossing closes, the bridge
- * holds whole, then goes back to the piles in the reverse order so the cycle
- * ends where it began. `section(true)` takes the lashings off: the same
+ * What moves is the building of it, from both banks at once, with no pole
+ * ever in the air on its own: each rod is pushed out of its bank's yard over
+ * the seat, slides into the stream and floats; joists roll off the bank and
+ * float, the first two ride up on the first rods, the crown joist waits on
+ * logs on the bank; forked props slide in along the stream bed, rise under
+ * each load and walk in as it is raised, and are laid down and slid away
+ * once what the load rests on is lashed. The lashings wind on as each
+ * crossing closes, the bridge holds whole, then goes back in the reverse
+ * order so the cycle ends where it began. `section(true)` takes the lashings off: the same
  * poles held by the weave alone, as most builds of it today stand.
  */
 import { Bone, Box3, Float32BufferAttribute, Group, Mesh, PlaneGeometry, Skeleton, SkinnedMesh, Sphere, Uint16BufferAttribute, Vector3, type BufferGeometry, type Material, type Object3D } from 'three/webgpu'

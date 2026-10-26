@@ -14,7 +14,7 @@
  */
 import { BufferGeometry, Float32BufferAttribute } from 'three/webgpu'
 import {
-  BAND_RAG, BANK, BARK, CROSSINGS, LASH_TIME, POLES, ROPE_R, SEAT_HALF, SEAT_R, SEAT_XY, STAKES, TAU, TURNS, bandEdge, bowAt, groundY, hash, inBand, landOf,
+  BAND_RAG, BANK, BARK, CROSSINGS, J3_LOGS, LASH_TIME, POLES, ROPE_R, SEAT_HALF, SEAT_R, SEAT_XY, SLEEPERS, SLEEPER_HALF, STAKES, TAU, TURNS, bandEdge, bowAt, groundY, hash, inBand, landOf,
   lashStart, radiusAt, stubAxis, supportOf, tineAxis, type Crossing, type Facet, type Pole, type V3,
 } from './plan'
 import { PLACED, rotate } from './motion'
@@ -355,6 +355,16 @@ export function groundworkPoles(): Pole[] {
     const p = base(`K${i}`, [x, -0.4, z], [x, 0.19 + 0.04 * hash(i, 63), z], 0.042, 0.004, hash(i, 64), 0.9 + 0.15 * hash(i, 65))
     // driven: its head battered flat, a facet or two where the maul glanced
     p.cuts = [[], [{ az: TAU * hash(i, 66), tilt: 0.55, c: 0.012 }]]
+    parts.push(p)
+  })
+  // the yard's sleepers under the rods, and the two logs the crown joist waits on
+  const logs: [V3, V3][] = [
+    ...SLEEPERS.map(([x, y]): [V3, V3] => [[x, y, -SLEEPER_HALF], [x, y, SLEEPER_HALF]]),
+    ...J3_LOGS.map(([x, z, h]): [V3, V3] => [[x - h, SEAT_XY[0][1], z], [x + h, SEAT_XY[0][1], z]]),
+  ]
+  logs.forEach(([a, b], i) => {
+    const p = base(`L${i}`, a, b, SEAT_R, 0.01 * (hash(i, 67) > 0.5 ? 1 : -1), hash(i, 68), 0.92 + 0.12 * hash(i, 69))
+    p.cuts = [0, 1].map(e => [0, 1].map(j => ({ az: TAU * hash(i, e, j, 70) + j * Math.PI, tilt: 0.45 + 0.15 * hash(i, e, j, 71), c: 0.01 + 0.02 * hash(i, e, j, 72) }))) as [Facet[], Facet[]]
     parts.push(p)
   })
   return parts
