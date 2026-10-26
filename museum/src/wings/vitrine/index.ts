@@ -18,6 +18,7 @@ import { noteOpened } from '../visit'
 import { uiSure } from '../ui-sure'
 import css from './vitrine.css?inline'
 import { maskWholeLines, unmaskLines, wholeLines, type LineCut } from './whole-lines'
+import { CAPTION_BOX } from './fit'
 import type { VitrineCinema, VitrineExhibit, VitrinePayloadHost, VitrinePeek, VitrinePlace, VitrineRect, VitrineSurface } from './types'
 
 export type { VitrineCinema, VitrineExhibit, VitrinePayload, VitrinePayloadHost, VitrinePlace, VitrineRect, VitrineSurface } from './types'
@@ -405,6 +406,10 @@ export function createVitrine(options: {
     }
     if (as !== 'narrow') { delete root.dataset['read']; delete root.dataset['restLine'] }
     cinemaFrame = frame
+    /* A RAISED CARD NEVER HIDES ITS MACHINE: the machine is fitted into the glass
+       over the card. The island's fit keeps a caption's box at its viewport's foot
+       and that caption waits under the card, so the viewport runs as far under it. */
+    let over: { left: number; top: number; right: number; bottom: number } | null = null
     if (frame) layCinema(frame)
     else if (narrow) {
       // THE WINDOW OWNS THE PHONE. The station's chrome stands down while a
@@ -429,8 +434,10 @@ export function createVitrine(options: {
       // gets the two lines: the card is placed once to be measured in its
       // own width, and then at the height its own peek needs.
       let peek = raised && restPeek !== null ? restPeek : Math.min(PEEK, Math.round(tall * .34))
+      let cardAt = bottom
       const place2 = (height: number): void => {
         const at = bottom - height
+        cardAt = at
         place(sheet, { left, top: at, width: right - left, height })
         place(card, { left, top: at, width: right - left, height })
       }
@@ -472,6 +479,11 @@ export function createVitrine(options: {
       // a card that rises stands OVER the work rather than resizing it.
       root.style.setProperty('--vitrine-peek', `${fill ? peek : 0}px`)
       shutMark.hidden = false
+      if (fill && raised && exhibit?.payload?.kind === 'machine') {
+        // insets from the stage's padding box, which its hairline border shifts by a pixel
+        const head = Math.max(left, Math.round(shutMark.getBoundingClientRect().top)), edge = stage.clientLeft, rim = stage.clientTop
+        over = { left: -left - edge, right: -(width - right) - edge, top: head - top - rim, bottom: bottom - Math.round(cardAt) - CAPTION_BOX }
+      }
       // the unseen steps' place while a keyboard holds one: the work's lower left, over the card
       const low = fill ? bottom - peek : top + viewHeight
       Object.assign(tools.style, { left: `${left + 8}px`, top: `${Math.round(low - 52)}px` })
@@ -519,6 +531,10 @@ export function createVitrine(options: {
       row.style.width = `${Math.round(rects.view.width)}px`
       row.style.top = 'auto'
       row.style.bottom = `${Math.round(height - bottom)}px`
+    }
+    for (const side of ['left', 'top', 'right', 'bottom'] as const) {
+      if (over) payloadEl.style[side] = `${over[side]}px`
+      else payloadEl.style.removeProperty(side)
     }
     // ONE ATTRIBUTE CARRIES THE RULE. While a window stands on the phone the
     // station's chrome stands down, and the page's own frame reads this to
