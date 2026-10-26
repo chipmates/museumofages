@@ -86,12 +86,12 @@ const POSED_RIG: ReadonlySet<string> = new Set(['flying-machine']);
  * wall 12 m beyond it: its joints a few pixels soft. The machine is untouched. */
 const BENCH_WALL_FOCUS: Partial<Record<string, number>> = {
   'flying-machine': .6,
-  'bridge-of-poles': .6,
 };
-/** What the wall keeps of the stone's value behind a machine whose own ground runs back to it (the bridge's far bank):
- * the wall a step further down, so the air reads between the subject and the wall. */
+/** What the wall keeps of the stone's value behind a machine whose own key is far above the hour's (the bridge's 360
+ * against 185): scaled back by as much, so its wall stands at the value every other machine's has and the air reads
+ * between the subject and the wall. */
 const BENCH_WALL_VALUE: Partial<Record<string, number>> = {
-  'bridge-of-poles': .22,
+  'bridge-of-poles': .3 * 185 / 360,
 };
 /** A machine's plinth and posts given their own finish (a modern powder coat in place of bare
  * iron): the bare iron's sheen under a low key outshines a dark machine at a close eye. */

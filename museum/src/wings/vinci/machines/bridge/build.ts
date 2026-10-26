@@ -315,7 +315,7 @@ export function poleShading(p: Pole): Shading | undefined {
       const rel = sub(w, frame.o), dd = Math.abs(dot(rel, frame.d)), ww = Math.abs(dot(rel, frame.w))
       // from the outermost turn's own side (the frame's half widths hold a few millimetres more)
       const outside = Math.max(0, dd - frame.halfD + 0.006) + Math.max(0, ww - frame.halfW + 0.006)
-      const rope = Math.max(0.55 * Math.exp(-outside / 0.007), 0.28 * Math.exp(-outside / 0.03))
+      const rope = Math.max(0.62 * Math.exp(-outside / 0.006), 0.3 * Math.exp(-outside / 0.025))
       if (rope > best) { best = rope; born = lash }
     }
     const ground = 0.4 * Math.exp(-Math.max(0, w[1] - groundY(w[0], w[2])) / 0.06)
@@ -604,7 +604,7 @@ export function lashingGeometry(detail: LashDetail = LASH_FINE, kit = false): Bu
           const pos = add(q.p, mul(nrm, ROPE_R))
           // the rope's side that lies on a pole is in its shade
           const onPole = Math.max(0, Math.min(axisGap(pos, rod), axisGap(pos, sup)))
-          sheet.vertex(pos, nrm, (k / around) * TAU * ROPE_R, s, [0.92 + 0.16 * seed, 0, 0], seed, [0, 0, 0], [0.6 * Math.exp(-onPole / 0.005), bornAt])
+          sheet.vertex(pos, nrm, (k / around) * TAU * ROPE_R, s, [0.92 + 0.16 * seed, 0, 0], seed, [0, 0, 0], [0.7 * Math.exp(-onPole / 0.004), bornAt])
           spine.push(q.p[0], q.p[1], q.p[2]); born.push(bornAt); serve.push(q.serve); bone.push(BONE[c.support] ?? 0)
         }
       }

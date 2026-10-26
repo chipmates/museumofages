@@ -50,7 +50,7 @@ function bumpedBy(base: N, dhdx: N, dhdy: N): N {
  * value and its colour toward the dusk, so the far bank falls off toward the wall */
 function airBehind(col: N): N {
   const behind = positionWorld.sub(cameraPosition).length().sub(cameraPosition.sub(vec3(0, 1.35, 0)).length())
-  return mx(col, vec3(luma(col)).mul(vec3(0.62, 0.68, 0.76)), smoothstep(2.5, 13, behind).mul(0.5))
+  return mx(col, vec3(luma(col)).mul(vec3(0.62, 0.68, 0.76)), smoothstep(1, 9, behind).mul(0.55))
 }
 
 /** the bench's key finds a pole's edge at a distance */
@@ -113,6 +113,8 @@ export async function bridgeSurfaces(stack: Stack): Promise<BridgeSurfaces> {
     // width, and where round the stem its pattern starts, so no two poles repeat one rhythm
     const along = seed.mul(13.7).fract().mul(0.75).add(0.7), round = seed.mul(5.3).add(0.37).fract().mul(0.55).add(0.75).mul(38)
     const wide = seed.mul(9.1).add(0.61).fract().mul(0.7).add(0.65), turn = seed.mul(23.9).fract().mul(Math.PI * 2)
+    // and how deep its fissures run: a younger stem's shallow, an older one's deep
+    const deep = seed.mul(17.3).add(0.21).fract().mul(0.6).add(0.6)
     const fieldsAt = (Q: N): Record<'net' | 'open' | 'line' | 'check' | 'patch' | 'skin' | 'lent', N> => ({
       // the plates: cells long along the stem (about 28 cm) and narrow round it (about 2.6 cm), their borders the fissures,
       // as far from a border as half the gap between the nearest two cells' distances (in metres round the stem)
@@ -122,7 +124,7 @@ export async function bridgeSurfaces(stack: Stack): Promise<BridgeSurfaces> {
         const wander = mx_noise_float(vec3(Q.x.mul(1.5).add(o), Q.y.mul(3), Q.z.mul(3)).add(2.9))
         const a = Q.x.mul(twist).add(wander.mul(0.25)).add(turn)
         const ca = cos(a), sa = sin(a)
-        const f = mx_worley_noise_vec2(vec3(Q.x.mul(along.mul(3.5)).add(o).add(wander.mul(0.45)), Q.y.mul(ca).sub(Q.z.mul(sa)).mul(round), Q.y.mul(sa).add(Q.z.mul(ca)).mul(round))).sqrt()
+        const f = mx_worley_noise_vec2(vec3(Q.x.mul(along.mul(3.5)).add(o).add(wander.mul(0.8)), Q.y.mul(ca).sub(Q.z.mul(sa)).mul(round), Q.y.mul(sa).add(Q.z.mul(ca)).mul(round))).sqrt()
         return f.y.sub(f.x).mul(0.5).div(round)
       })(),
       open: smoothstep(-0.3, 0.4, mx_noise_float(vec3(Q.x.mul(3).add(o), Q.y.mul(10), Q.z.mul(10)).add(5.5))),
@@ -165,7 +167,7 @@ export async function bridgeSurfaces(stack: Stack): Promise<BridgeSurfaces> {
       const edge = LENT.px.mul(LENT.slope).max(0.08)
       const lent = smoothstep(float(0.7).sub(edge), float(0.7).add(edge), f.lent).mul(plate).mul(shows(0.008))
       const skin = f.skin
-      const h = fis.groove.mul(-0.003).sub(sh.groove.mul(0.0012)).sub(ln.groove.mul(plate).mul(0.0003)).sub(ck.groove.mul(f.patch).mul(plate).mul(0.0003))
+      const h = fis.groove.mul(deep.mul(-0.003)).sub(sh.groove.mul(deep.mul(0.0012))).sub(ln.groove.mul(plate).mul(0.0003)).sub(ck.groove.mul(f.patch).mul(plate).mul(0.0003))
         .add(skin.mul(0.00025)).add(lent.mul(0.0003))
       return { h, fissure, shoulder, check, skin, lent, line }
     }
@@ -176,7 +178,7 @@ export async function bridgeSurfaces(stack: Stack): Promise<BridgeSurfaces> {
     const mottle = mx_noise_float(vec3(C.x.mul(1.6).add(o), C.y.mul(8), C.z.mul(8))).mul(0.5).add(0.5)
     const lichen = smoothstep(0.6, 0.8, mx_noise_float(vec3(C.x.mul(1.2).add(o), C.y.mul(14), C.z.mul(14)).add(2.7)).mul(0.5).add(0.5))
     const plateTop = mx(mx(lin('#544c43'), lin('#777066'), plate), lin('#5f5042'), mottle.mul(0.35))
-    const barkCol = mx(mx(plateTop, lin('#7f7d6d'), lichen.mul(0.32)), lin('#2b231c'), b.fissure.mul(0.72))
+    const barkCol = mx(mx(plateTop, lin('#7f7d6d'), lichen.mul(0.32)), lin('#2b231c'), b.fissure.mul(deep.mul(0.72).min(0.86)))
       .mul(float(1).sub(b.shoulder.mul(0.06))).mul(float(1).sub(b.line.mul(0.12))).mul(float(1).sub(b.check.mul(0.1))).mul(b.skin.mul(0.14).add(1)).mul(float(1).add(b.lent.mul(0.22)))
     // PEELED: pale wood under the drawknife, its strokes as facets along the stem, each of its own width and depth and
     // wandering round as the knife did; bark left in the hollows. A whole number of facets round, so the angle's own
