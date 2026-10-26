@@ -428,8 +428,8 @@ function turnPath(c: Crossing, i: number, detail: LashDetail): PathPt[] {
   const a = rs + rope * (1 + 2 * i) + gap, b = rr + rope * (1 + 2 * i) + gap
   const rodRad = rr + rope + gap, supRad = rs + rope + gap
   const hRod = rs + rr
-  // how far into the crotch each turn is drawn: the first tight in it, each next one bearing on the one before
-  const crotch = 0.45 * Math.min(rodRad, supRad) + rope * 1.2 * i
+  // how far into the crotch each turn is wound: the first tight in it, each next one a rope further out
+  const crotch = 0.45 * Math.min(rodRad, supRad) + rope * 2 * i
   const at = (du: number, dw: number, dm: number): V3 => add(o, add(mul(d, du), add(mul(w, dw), mul(m, dm))))
   const N = detail.wrap
   const phi1 = Math.acos(Math.min(0.99, crotch / rodRad)), psi2 = Math.acos(Math.min(0.99, crotch / supRad))
@@ -457,44 +457,68 @@ function turnPath(c: Crossing, i: number, detail: LashDetail): PathPt[] {
       path.push({ p: at(supRad * Math.cos(ang), sw * b, -supRad * Math.sin(ang)), serve: served(Math.min(Math.PI, Math.max(0, t))) })
     }
   }
-  overRod(1, 1)
-  roundSupport(1, 1)
-  overRod(-1, -1)
-  roundSupport(-1, -1)
+  // at each corner the frapping turns draw the rope in to the crotch: each turn's corner a rope further out than the one
+  // inside it, and where it crosses the inner turns on a pole it lies on them
+  const { k, h: apexH } = apexOf(c, i)
+  const a0 = rs + rope + gap, b0 = rr + rope + gap
+  const lift = (p: V3): V3 => {
+    const r = sub(p, o)
+    let u = dot(r, d), v = dot(r, w), h = dot(r, m)
+    if (i > 0 && Math.abs(u) > a0 - rope && Math.abs(u) < a - rope) {
+      const y = h - hRod, q = Math.hypot(v, y), need = rodRad + 2 * rope
+      if (q < need) { v *= need / q; h = hRod + (y * need) / q }
+    }
+    if (i > 0 && Math.abs(v) > b0 - rope && Math.abs(v) < b - rope) {
+      const q = Math.hypot(u, h), need = supRad + 2 * rope
+      if (q < need) { u *= need / q; h *= need / q }
+    }
+    return at(u, v, h)
+  }
+  const corner = (su: number, sw: number, from: V3, to: V3): void => {
+    const apex = at(su * k, sw * k, apexH), STEPS = 4
+    for (let s = 1; s <= STEPS; s++) path.push({ p: lift(add(from, mul(sub(apex, from), s / STEPS))), serve: 0 })
+    for (let s = 1; s < STEPS; s++) path.push({ p: lift(add(apex, mul(sub(to, apex), s / STEPS))), serve: 0 })
+  }
+  const sections: PathPt[][] = []
+  const take = (wind: () => void): void => { const n = path.length; wind(); sections.push(path.splice(n)) }
+  take(() => overRod(1, 1)); take(() => roundSupport(1, 1)); take(() => overRod(-1, -1)); take(() => roundSupport(-1, -1))
+  const quads = [[1, 1], [-1, 1], [-1, -1], [1, -1]] as const
+  sections.forEach((sec, n) => {
+    path.push(...sec)
+    corner(quads[n]![0], quads[n]![1], sec[sec.length - 1]!.p, sections[(n + 1) % 4]![0]!.p)
+  })
   return chaikin(path, detail.passes)
+}
+
+/** Where a turn passes at a corner: how far out from the poles' meeting along each (the first where the gap between the
+ * two round poles has room for the rope, each next one a rope further out), and its height, in the plane where the poles
+ * meet wherever the gap leaves it room. */
+function apexOf(c: Crossing, i: number): { k: number; h: number } {
+  const { rr, rs } = crossingFrame(c)
+  const gap = 0.0006, rodRad = rr + ROPE_R + gap, supRad = rs + ROPE_R + gap
+  const k = Math.sqrt(2 * ROPE_R * Math.max(rr, rs)) * 1.1 + ROPE_R * 2 * i
+  const top = rs + rr - Math.sqrt(Math.max(0, rodRad * rodRad - k * k)), low = Math.sqrt(Math.max(0, supRad * supRad - k * k))
+  return { k, h: Math.min(Math.max(rs, low), top) }
 }
 
 /** A frapping turn: round the lashing between the two poles, under the rod and over the support, tight round the
  * outside of the turns' four corners where they cross from one pole to the other, pulling them in. */
 function frapPath(c: Crossing, j: number, detail: LashDetail): PathPt[] {
-  const { o, d, w, m, rr, rs } = crossingFrame(c)
+  const { o, d, w, m, rs } = crossingFrame(c)
   const gap = 0.0006, rope = ROPE_R
-  const rodRad = rr + rope + gap, supRad = rs + rope + gap
-  const last = TURNS - 1, crotch = 0.45 * Math.min(rodRad, supRad) + rope * 1.5 * last
-  // the outermost turn's corner runs from (a, crotch) to (crotch, b): the frap passes round the middle of it
-  const a = rs + rope * (1 + 2 * last) + gap, b = rr + rope * (1 + 2 * last) + gap
-  const out = rope * (2 + 2 * j) * Math.SQRT1_2
-  const cd = (a + crotch) / 2 + out, cw = (b + crotch) / 2 + out
-  // beside each pole the second frap lies on the first, one rope out from the pole, never further along it
-  const out0 = rope * 2 * Math.SQRT1_2
-  const D = (a + crotch) / 2 + out0 * 1.6, W = (b + crotch) / 2 + out0 * 1.6
-  const at = (du: number, dw: number, dm: number): V3 => add(o, add(mul(d, du), add(mul(w, dw), mul(m, dm))))
-  const under = rs - rope - gap - rope * 2 * j, over = rs + rope + gap + rope * 2 * j
-  const keys: V3[] = [
-    at(D, 0, under), at(cd, cw, rs), at(0, W, over), at(-cd, cw, rs),
-    at(-D, 0, under), at(-cd, -cw, rs), at(0, -W, over), at(cd, -cw, rs),
-  ]
-  // a closed Catmull-Rom curve through the keys
+  // a rounded square round the outermost turn where it is drawn in at each corner, under the rod beside the support and
+  // over the support beside the rod, rising smoothly between; the second frap beside the first, a rope further out, so
+  // the two lie as one flat band
+  const { k } = apexOf(c, TURNS - 1)
+  const out = k + rope * 2 * Math.SQRT1_2 + rope * 2 * j
+  const under = rs - rope - gap, over = rs + rope + gap
+  const n = 8 * Math.max(3, Math.round(detail.wrap / 2)), SQ = 4
   const pts: PathPt[] = []
-  const per = Math.max(3, Math.round(detail.wrap / 2))
-  const n = keys.length
-  for (let k = 0; k < n; k++) {
-    const P0 = keys[(k - 1 + n) % n]!, P1 = keys[k]!, P2 = keys[(k + 1) % n]!, P3 = keys[(k + 2) % n]!
-    for (let s = 0; s < per; s++) {
-      const t = s / per, t2 = t * t, t3 = t2 * t
-      const q = [0, 1, 2].map(i => 0.5 * (2 * P1[i]! + (-P0[i]! + P2[i]!) * t + (2 * P0[i]! - 5 * P1[i]! + 4 * P2[i]! - P3[i]!) * t2 + (-P0[i]! + 3 * P1[i]! - 3 * P2[i]! + P3[i]!) * t3)) as V3
-      pts.push({ p: q, serve: 0 })
-    }
+  for (let s = 0; s < n; s++) {
+    const t = (s / n) * TAU, cu = Math.cos(t), cw = Math.sin(t)
+    const r = out / Math.pow(Math.abs(cu) ** SQ + Math.abs(cw) ** SQ, 1 / SQ)
+    const h = (under + over) / 2 + ((under - over) / 2) * Math.cos(2 * t)
+    pts.push({ p: add(o, add(mul(d, r * cu), add(mul(w, r * cw), mul(m, h)))), serve: 0 })
   }
   return pts
 }
