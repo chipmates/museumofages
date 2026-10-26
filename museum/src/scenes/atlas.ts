@@ -36,7 +36,7 @@ import {
   Mesh,
   MeshBasicNodeMaterial,
   PointsNodeMaterial,
-  type Quaternion,
+  Quaternion,
   Scene,
   SphereGeometry,
   Sprite,
@@ -270,6 +270,9 @@ export interface AtlasStill {
   alpha?: number
   /** the direction the choir leans toward; absent, it leans nowhere */
   gaze?: Vector3
+  /** the normal of the Milky Way's plane, so a still can turn the band and its
+      dust out of its frame; absent, the band stands where the lobby has it */
+  band?: Vector3
 }
 
 // ---------------------------------------------------------------- helpers
@@ -1212,7 +1215,7 @@ interface Plate {
   update(reveal: number): void
 }
 
-function createPlate(reserve: Reserve): Plate {
+function createPlate(reserve: Reserve, band?: Vector3): Plate {
   const group = new Group()
   const uReveal: N = uniform(0)
 
@@ -1225,11 +1228,9 @@ function createPlate(reserve: Reserve): Plate {
   })
   {
     const d: N = normalize(positionLocal)
-    const bn = new Vector3(
-      Math.cos(BAND_AZ) * Math.cos(BAND_EL),
-      Math.sin(BAND_EL),
-      Math.sin(BAND_AZ) * Math.cos(BAND_EL)
-    )
+    const bn = band
+      ? band.clone().normalize()
+      : new Vector3(Math.cos(BAND_AZ) * Math.cos(BAND_EL), Math.sin(BAND_EL), Math.sin(BAND_AZ) * Math.cos(BAND_EL))
     const bu = new Vector3().crossVectors(bn, new Vector3(0, 1, 0)).normalize()
     const bv = new Vector3().crossVectors(bn, bu).normalize()
     const plane = dot(d, vec3(bn.x, bn.y, bn.z))
@@ -1373,10 +1374,10 @@ interface Choir {
   uGaze: N
 }
 
-function buildChoir(rand: () => number, count: number, page: PageReserve): Choir {
+function buildChoir(rand: () => number, count: number, page: PageReserve, band?: Vector3): Choir {
   const heroes = narrow ? 26 : 30
-  const band = Math.round(count * 0.31)
-  const plain = Math.max(0, count - heroes - band)
+  const bandCount = Math.round(count * 0.31)
+  const plain = Math.max(0, count - heroes - bandCount)
 
   const dirFrom = (y: number, th: number): [number, number, number] => {
     const cl = Math.max(-1, Math.min(1, y))
@@ -1447,12 +1448,22 @@ function buildChoir(rand: () => number, count: number, page: PageReserve): Choir
   }
 
   // 2 · the river, dense faint dust hugging the band plane
-  for (let k = 0; k < band; k++) {
+  const dustFrom = i
+  for (let k = 0; k < bandCount; k++) {
     let d = dirFrom(-0.15 + rand() * 1.15, rand() * Math.PI * 2)
     for (let t = 0; t < 8 && Math.abs(dot3(d, bandN)) > 0.15; t++)
       d = dirFrom(-0.15 + rand() * 1.15, rand() * Math.PI * 2)
     if (inVoid(d)) continue
     put(d, 118 + rand() * 46, rand() < 0.55 ? CHOIR_DUST : CHOIR_COOL, 0.15 + rand() * 0.2, 1.55 + rand() * 0.7)
+  }
+  // a still's own band carries its dust along, turned after the seeding so
+  // every other population keeps its draw from the sequence
+  if (band) {
+    const turn = new Quaternion().setFromUnitVectors(new Vector3(...bandN), band.clone().normalize())
+    const v = new Vector3()
+    for (let k = dustFrom; k < i; k++) {
+      v.fromArray(pos, k * 3).applyQuaternion(turn).toArray(pos, k * 3)
+    }
   }
 
   /* THERE IS NO HAZE. Two rounds went into a nebular wash and both times
@@ -1686,7 +1697,7 @@ export function createAtlas(scene: Scene, still?: AtlasStill): AtlasHandles {
   const rand = mulberry32(FOUNDING_SEED)
   const reserve = createLetteringReserve()
   const page = createPageReserve()
-  const plate = createPlate(reserve)
+  const plate = createPlate(reserve, still?.band)
   dome.add(plate.group)
 
   const starMap = starTexture()
@@ -1694,7 +1705,7 @@ export function createAtlas(scene: Scene, still?: AtlasStill): AtlasHandles {
   // a phone sees a much narrower slice of the dome than a desk, so an
   // equal budget is a much emptier frame: the narrow tier keeps almost the
   // whole count and spends it on a smaller sky (round 2)
-  const choir = buildChoir(rand, narrow ? 1450 : 1750, page)
+  const choir = buildChoir(rand, narrow ? 1450 : 1750, page, still?.band)
   dome.add(choir.sprite)
 
   /* THE TWO WANDERERS — the sky has a mechanism. Two lights that never
