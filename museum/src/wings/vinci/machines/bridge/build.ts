@@ -313,9 +313,10 @@ export function poleShading(p: Pole): Shading | undefined {
       if (touch > best) { best = touch; born = tb }
       // under and beside the turns: the rope's own shadow on the pole
       const rel = sub(w, frame.o), dd = Math.abs(dot(rel, frame.d)), ww = Math.abs(dot(rel, frame.w))
-      // from the outermost turn's own side (the frame's half widths hold a few millimetres more)
+      // from the outermost turn's own side (the frame's half widths hold a few millimetres more); the dark runs about a
+      // rope's width out, as the sky's light is shut out beside a round rope bearing on a round pole
       const outside = Math.max(0, dd - frame.halfD + 0.006) + Math.max(0, ww - frame.halfW + 0.006)
-      const rope = Math.max(0.62 * Math.exp(-outside / 0.006), 0.3 * Math.exp(-outside / 0.025))
+      const rope = Math.max(0.62 * Math.exp(-outside / 0.012), 0.3 * Math.exp(-outside / 0.03))
       if (rope > best) { best = rope; born = lash }
     }
     const ground = 0.4 * Math.exp(-Math.max(0, w[1] - groundY(w[0], w[2])) / 0.06)
