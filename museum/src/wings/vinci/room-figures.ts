@@ -57,7 +57,7 @@ export const VINCI_ROOM_FIGURES: readonly RoomFigure[] = [
   { room: 'mechanism-hall', stop: 'stop:flight', framing: 'wide', shape: 'fade', at: [-55.25, -6.3, 48.5], yaw: 1.4565, tone: 0.36 },
   { room: 'mechanism-hall', stop: 'stop:flight', framing: 'upright', shape: 'fade', at: [-55.25, -6.3, 48.5], yaw: 1.4565, tone: 0.36 },
   { room: 'picture-room', stop: 'stop:picture-room', framing: 'wide', shape: 'fade', at: [-35.625, -6.292, 37.6875], yaw: 1.5442, tone: 0.5 },
-  { room: 'long-gallery', stop: 'stop:line-early', framing: 'wide', shape: 'fade', at: [-34.75, -6.297, 53.125], yaw: 0.502 },
+  { room: 'long-gallery', stop: 'stop:line-early', framing: 'wide', shape: 'fade', at: [-34.75, -6.297, 53.125], yaw: 0.502, tone: 0.6 },
 ]
 
 /** the scene flag: every room figure in (the default) or none */
