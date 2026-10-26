@@ -86,19 +86,23 @@ const ARM: Knot[] = [
   [0.088, 0.926, 0.205, 0.031, 0.027],
   [0.118, 0.833, 0.207, 0.026, 0.02],
 ]
-// a mitten seen flat from the side, width along x, thickness along z; the fingers curl a little toward the thigh
+// the hand turned 30 degrees about the wrist, its back toward the front as a hand hangs at ease, and hung a little
+// out from the thigh: seen from the front its palm is wider than the wrist, which a straight taper never is, and the
+// thumb stands off its inner edge. Width along `HAND_UP`, thickness across it; the fingers curl toward the thigh
 const HAND: Knot[] = [
-  [0.118, 0.833, 0.207, 0.026, 0.018],
-  [0.127, 0.774, 0.208, 0.035, 0.016],
-  [0.134, 0.733, 0.206, 0.034, 0.014],
-  [0.139, 0.694, 0.2, 0.028, 0.012],
-  [0.141, 0.671, 0.193, 0.019, 0.01],
+  [0.118, 0.833, 0.214, 0.026, 0.015],
+  [0.1263, 0.774, 0.2174, 0.035, 0.021],
+  [0.1314, 0.733, 0.2121, 0.034, 0.0193],
+  [0.1327, 0.694, 0.2044, 0.028, 0.0164],
+  [0.1309, 0.671, 0.1974, 0.019, 0.01],
 ]
 const THUMB: Knot[] = [
-  [0.136, 0.822, 0.203, 0.0125, 0.0125],
-  [0.157, 0.768, 0.197, 0.0115, 0.0115],
-  [0.162, 0.746, 0.195, 0.0095, 0.0095],
+  [0.1316, 0.822, 0.2041, 0.0125, 0.0125],
+  [0.1468, 0.768, 0.1928, 0.0115, 0.0115],
+  [0.1501, 0.746, 0.1886, 0.0095, 0.0095],
 ]
+/** the hand's width axis on the right side: forward turned 30 degrees in toward the thigh */
+const HAND_UP: V3 = [0.866, 0, -0.5]
 // the thigh starts inside the seat's dome and leaves it from below, as a leg leaves the pelvis
 const LEG: Knot[] = [
   [-0.004, 0.86, 0.083, 0.083, 0.07],
@@ -139,7 +143,10 @@ export function drawnBody(): Field {
   // the lower belly carried down between the thighs, its front flush with theirs: no V where they leave the seat
   const groin: Field = { k: 'box', c: [0.025, 0.86, 0], h: [0.05, 0.07, 0.08], round: 0.04 }
   const legs = (s: 1 | -1): Field => ({ k: 'u', s: 0.025, of: [tube(flip(LEG, s), FWD, 0.015), tube(flip(FOOT, s), UP, 0.015)] })
-  const arm = (s: 1 | -1): Field => ({ k: 'u', s: 0.012, of: [tube(flip(ARM, s), FWD, 0.015), tube(flip(HAND, s), FWD, 0.012), tube(flip(THUMB, s), FWD)] })
+  const arm = (s: 1 | -1): Field => {
+    const up: V3 = [HAND_UP[0], HAND_UP[1], HAND_UP[2] * s]
+    return { k: 'u', s: 0.012, of: [tube(flip(ARM, s), FWD, 0.015), tube(flip(HAND, s), up, 0.012), tube(flip(THUMB, s), up)] }
+  }
   // the chest's panel edges go in one wide fillet over trunk, trapezius and shoulders
   const chest: Field = { k: 'u', s: 0.06, of: [tube(TORSO, FWD, 0.015), tube(TRAP, UP, 0.015), tube(flip(TRAP, -1), UP, 0.015), deltoid(1), deltoid(-1)] }
   const pelvis: Field = { k: 'u', s: 0.075, of: [chest, groin] }

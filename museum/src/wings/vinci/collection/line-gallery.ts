@@ -341,6 +341,8 @@ export interface LineGallery {
   stones: LineMaterials
   /** light the line's own surfaces, the certainty discs among them */
   adoptLine(line: Object3D): void
+  /** light a body standing in the gallery as its floor and benches are lit, and let it cast in the gallery's own maps */
+  lightBody(body: Mesh): void
   /** every set on the GPU */
   ready: Promise<void>
   /** How many takes of the room's bounce are still owed. A take is drawn in
@@ -579,6 +581,10 @@ export function mountLineGallery(stack: Stack): LineGallery {
           if (surface.userData['owned'] === true) adopt(surface, lineLights)
         }
       })
+    },
+    lightBody(body) {
+      adopt(body.material as Material, floorLights)
+      body.layers.enable(GALLERY_SHADOW_LAYER)
     },
     ready: ready.then(() => undefined),
     tick(bodies) {

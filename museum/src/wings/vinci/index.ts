@@ -53,6 +53,7 @@ import { createStudySheet, type StudySheet } from './study-sheet'
 import { STUDY_SHEET_WORDS } from './study-sheet-words'
 import { createEntryPassage, entryPassageProvenance, hallLedgeProvenance } from './entry-passage'
 import { createHallTablePieces } from './hall-table-pieces'
+import { createRoomFigures, roomFiguresShown, type RoomFigures } from './room-figures'
 import { createGround } from './ground'
 import { planVegetation, VEGETATION_STEPS } from './vegetation'
 import { windClock } from './wind'
@@ -650,6 +651,7 @@ export function createWing():VinciWingModule {
   /** THE CLOSE LOOK. The registry is a read over the collection's own group,
    * the dots live in the label layer, and one owner holds the open exhibit. */
   let collectionRoot:Group|undefined, houseRoot:Group|undefined, courtRoot:Group|undefined, occluders:readonly Mesh[]=[]
+  let roomFigures:RoomFigures|undefined
   let pictureWordsLayer:PictureWordsLayer|undefined, wordsPrint='', wordsSince=0, wordsDrawn=''
   let dots:VinciExhibitDots|undefined, closeLook:ReturnType<typeof createVinciCloseLook>|undefined
   let strip:ReturnType<typeof createVinciHangStrip>|undefined
@@ -1144,6 +1146,9 @@ export function createWing():VinciWingModule {
     shadowBody=createWingShadowBody(scene);scene.add(shadowBody.group)
     authority=createRailGeometryAuthority(collectRailSolids(scene))
     rail=createRail(camera,clock,authority);measurement=createMeasurement(h.labels,stack)
+    // THE ROOM FIGURES stand after the rail has read its solids: a marker is no wall
+    roomFigures?.dispose();roomFigures=roomFiguresShown()?createRoomFigures((room,body)=>exhibits?.lightBody(room,body)):undefined
+    if(roomFigures){scene.add(roomFigures.group);roomFigures.frame(narrow());void roomFigures.ready.then(()=>{if(hosts&&standing&&!warm)standShadowCache()})}
     // the film's hand on the rail, fetched only by the export's own address
     if(FILM_EXPORT)void import('./film').then(m=>m.installFilm({rail:()=>rail,walk:WALK,narrow,walkPose:vinciWalkPose,approachPose:vinciApproachPose,placePose:vinciWalkPoseOf}))
     yield
@@ -1369,7 +1374,7 @@ export function createWing():VinciWingModule {
       if(want!==sheetOpen){sheetOpen=want;paintSheet()}
     },options)
     header.addEventListener('pointercancel',()=>{sheetHeld=false},options)
-    window.addEventListener('resize',()=>{placeAfterResize();paintDock()},options)
+    window.addEventListener('resize',()=>{placeAfterResize();paintDock();roomFigures?.frame(narrow())},options)
     standing=true
     card=station
     const stop=stopAt(card),s=stationOf(stop.station)
@@ -3689,7 +3694,7 @@ export function createWing():VinciWingModule {
       // along the wall the near rule measures from the stop it will land on,
       // so a run past twenty-five works costs one request and not twenty-five.
       exhibits?.aimPlates(rail.navigation.aimEye??null)
-      if(exhibits){const now=hosts.world.clock();exhibits.holdHall(HALL_STATIONS.has(rail.navigation.active??''));exhibits.update(now,Math.max(0,Math.min(.25,now-exhibitClock)),hosts.world.camera.position);exhibitClock=now}
+      if(exhibits){const now=hosts.world.clock();exhibits.holdHall(HALL_STATIONS.has(rail.navigation.active??''));exhibits.update(now,Math.max(0,Math.min(.25,now-exhibitClock)),hosts.world.camera.position);roomFigures?.follow(exhibits.roomsDrawn());exhibitClock=now}
       // THE CARD NAMES THE STATION THE WALKER IS IN. It hands over at the
       // half of the leg, by walked distance: before that the walker is still
       // in the room they left, after it they are in the one they are entering,
@@ -3782,7 +3787,7 @@ export function createWing():VinciWingModule {
       dots?.update(panels,undefined,name&&name.width>0?[{left:name.left,top:name.top,right:name.right,bottom:name.bottom}]:null)
       paintPictureWords()},
     // the evening's uniforms and the scene's light outlive a visit: the hour goes back before they are let go
-    stop(){if(hosts){delete hosts.stage.parentElement!.dataset['farewell'];delete hosts.stage.parentElement!.dataset['phoneForm'];delete hosts.labels.dataset['keepsFoot']}phone?.dispose();phone=undefined;phoneList?.dispose();phoneList=undefined;phoneStop?.abort();phoneStop=undefined;farewellRun=null;farewellHeld=null;if(farewellShare!==null)applyEvening(null);pictureWordsLayer?.dispose();pictureWordsLayer=undefined;wordsPrint=wordsDrawn="";studySheet?.dispose();studySheet=undefined;releaseSheetMemory?.();releaseSheetMemory=undefined;desk?.dispose();desk=undefined;visit?.close();visit=undefined;plan?.dispose();plan=undefined;planControl?.remove();planControl=undefined;life?.dispose();life=undefined;lifeControl?.remove();lifeControl=undefined;closeLook?.dispose();closeLook=undefined;if(scheduled)cancelAnimationFrame(scheduled);scheduled=0;house=undefined;houseUp=0;standing=false;warm?.abort();warm=undefined;announceBuilt();exhibits?.dispose();exhibits=undefined;shadowBody?.dispose();shadowBody=undefined;shadowCache?.dispose();shadowCache=undefined;hallSun=undefined;restoreEnvironmentRotation?.();restoreEnvironmentRotation=null;clearSky?.dispose();clearSky=undefined;controller?.abort();strip?.dispose();strip=undefined;dots?.dispose();dots=undefined;picks=[];picksTier='';occluders=[];collectionRoot=undefined;welcome?.dispose();welcome=undefined;sources?.dispose();source?.remove();labels?.dispose();measurement?.dispose();water?.dispose();hosts?.world.scene.traverse(o=>{if(o instanceof DirectionalLight&&o!==key?.light)o.dispose()});key?.dispose();if(hosts){hosts.world.scene.traverse(o=>{if(o instanceof Mesh){o.geometry.dispose();for(const m of Array.isArray(o.material)?o.material:[o.material])m.dispose()}});hosts.world.scene.clear();delete hosts.stage.parentElement!.dataset['wing'];if(labelHostHidden===null)hosts.labels.removeAttribute('aria-hidden');else hosts.labels.setAttribute('aria-hidden',labelHostHidden)}hosts=undefined},
+    stop(){if(hosts){delete hosts.stage.parentElement!.dataset['farewell'];delete hosts.stage.parentElement!.dataset['phoneForm'];delete hosts.labels.dataset['keepsFoot']}phone?.dispose();phone=undefined;phoneList?.dispose();phoneList=undefined;phoneStop?.abort();phoneStop=undefined;farewellRun=null;farewellHeld=null;if(farewellShare!==null)applyEvening(null);pictureWordsLayer?.dispose();pictureWordsLayer=undefined;wordsPrint=wordsDrawn="";studySheet?.dispose();studySheet=undefined;releaseSheetMemory?.();releaseSheetMemory=undefined;desk?.dispose();desk=undefined;visit?.close();visit=undefined;plan?.dispose();plan=undefined;planControl?.remove();planControl=undefined;life?.dispose();life=undefined;lifeControl?.remove();lifeControl=undefined;closeLook?.dispose();closeLook=undefined;if(scheduled)cancelAnimationFrame(scheduled);scheduled=0;house=undefined;houseUp=0;standing=false;warm?.abort();warm=undefined;announceBuilt();exhibits?.dispose();exhibits=undefined;roomFigures?.dispose();roomFigures=undefined;shadowBody?.dispose();shadowBody=undefined;shadowCache?.dispose();shadowCache=undefined;hallSun=undefined;restoreEnvironmentRotation?.();restoreEnvironmentRotation=null;clearSky?.dispose();clearSky=undefined;controller?.abort();strip?.dispose();strip=undefined;dots?.dispose();dots=undefined;picks=[];picksTier='';occluders=[];collectionRoot=undefined;welcome?.dispose();welcome=undefined;sources?.dispose();source?.remove();labels?.dispose();measurement?.dispose();water?.dispose();hosts?.world.scene.traverse(o=>{if(o instanceof DirectionalLight&&o!==key?.light)o.dispose()});key?.dispose();if(hosts){hosts.world.scene.traverse(o=>{if(o instanceof Mesh){o.geometry.dispose();for(const m of Array.isArray(o.material)?o.material:[o.material])m.dispose()}});hosts.world.scene.clear();delete hosts.stage.parentElement!.dataset['wing'];if(labelHostHidden===null)hosts.labels.removeAttribute('aria-hidden');else hosts.labels.setAttribute('aria-hidden',labelHostHidden)}hosts=undefined},
   }
   return wingModule
 }
