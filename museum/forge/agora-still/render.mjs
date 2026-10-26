@@ -1,9 +1,11 @@
 // The front's still, made again from nothing but this tree: every frame, its
 // three encodings and stars.json.
 //
-//   node forge/agora-still/render.mjs <port> <outDir> [--look] [--only wide,tall] [--sub 16]
+//   node forge/agora-still/render.mjs <port> <outDir> [--look] [--only wide,tall] [--sub 16] [--report file]
 //
 // --look draws half-size frames for a look round (PNG only, no data).
+// --report writes the run's own checks (props, hairline clearance, the house
+// frames' edges and feet) to a file of its own; stars.json keeps its keys.
 // The frames come from still.html at the film tier; the star data is projected
 // in the same page through the same camera, then proved on the pixels.
 import { chromium } from 'playwright'
@@ -127,6 +129,14 @@ try {
     sheet.made = { head: said.head, tool: 'museum/forge/agora-still/render.mjs', sub: SUB }
     writeFileSync(join(out, 'stars.json'), JSON.stringify(sheet, null, 1))
     console.log(`${join(out, 'stars.json')} written`)
+    const checks = Object.fromEntries(Object.entries(sheet.frames).map(([k, v]) => [k, v.extra]))
+    for (const [k, v] of Object.entries(checks)) {
+      const { zooms, ...rest } = v ?? {}
+      console.log(`[${k}] checks ${JSON.stringify(rest)}`)
+      for (const z of zooms ?? []) console.log(`[${k} ${z.group}] checks ${JSON.stringify(z)}`)
+    }
+    const report = flag('--report', null)
+    if (report) writeFileSync(resolve(report), JSON.stringify({ head: said.head, checks }, null, 1))
   }
   await browser.close()
 } finally {
