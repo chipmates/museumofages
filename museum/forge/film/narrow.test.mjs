@@ -9,6 +9,7 @@ import assert from 'node:assert/strict'
 import { GLOBAL_DEFINITION, closure } from './keys.mjs'
 import { BENCH_ONLY, KNOWN_CAPTURES, KNOWN_SHADOW_LIGHTS, farBoxOf, lightingAt, lightingOf, litRoomCells, movedCells, narrowPlan, renderedKeys, settingOf } from './narrow.mjs'
 import { cellNumber } from './scene.mjs'
+import { wingFiles } from './lit.mjs'
 import { narrowedHits } from './seen.mjs'
 import { cellNumbers, cellSet } from './export.mjs'
 import { WING_DIR, createLoader } from './load.mjs'
@@ -188,6 +189,9 @@ test('the working tree: the pin is whole, and every room probe stands in a lit c
     const reached = closure(loader, entry, 'src/')
     assert.deepEqual(BENCH_ONLY.filter((f) => reached.includes(`${WING_DIR}/${f}`)), [], `${entry} reaches no light the pin leaves to the bench`)
   }
+  // a showcase piece's capture is pinned as lighting no frame: only the bench builds one
+  const builders = wingFiles().filter((f) => !BENCH_ONLY.includes(f) && f !== 'machines/index.ts' && /\bbuildShowcase\b|\bshowcaseBuilders\b/.test(loader.text(`${WING_DIR}/${f}`)))
+  assert.deepEqual(builders, [], 'no module but the bench builds a showcase piece')
   const lit = litRoomCells(load)
   const { FLOOR } = load(`${WING_DIR}/collection/layout.ts`)
   const probes = [

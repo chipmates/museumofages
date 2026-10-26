@@ -26,7 +26,7 @@ const moved = (a, b) => Object.keys(a).filter((s) => a[s] !== b[s]).sort()
 const clean = await keysAt()
 const TURNTABLE = 'src/wings/vitrine/turntable.ts'
 /** the machines the island builds today; a machine joining it changes this count */
-const ISLAND = 17
+const ISLAND = 18
 
 test('the machines the island builds, each keyed apart', async () => {
   assert.equal(Object.keys(clean).length, ISLAND)

@@ -11,9 +11,11 @@ import { CELL_M, cellNumber } from './scene.mjs'
 
 /** The wing's modules that capture the scene (a cube probe, a planar mirror, a render into a target), by path
     under the wing: the water's mirror is the stand-in's own part; the hall air's depth is drawn from the frame's
-    own eye inside the hall; every other one lights a room inside `litRoomCells`. */
+    own eye inside the hall; the bridge of poles' mirror lights only its own stream, and only the machine bench
+    builds a showcase piece, never a frame (`narrow.test.mjs` refuses a tree where another module does); every
+    other one lights a room inside `litRoomCells`. */
 export const KNOWN_CAPTURES = ['collection/body-wall-cabinet.ts', 'collection/hall-air.ts', 'collection/hall-fabric.ts', 'collection/hall-light.ts',
-  'collection/line-gallery.ts', 'collection/picture-room.ts', 'collection/reading-room.ts', 'collection/supper-room.ts', 'water.ts']
+  'collection/line-gallery.ts', 'collection/picture-room.ts', 'collection/reading-room.ts', 'collection/supper-room.ts', 'machines/bridge-of-poles.ts', 'water.ts']
 /** The wing's modules that make a light with a shadow: the collection's rooms (inside `litRoomCells`); the
     house hall's sun (the key light's own direction); the grave diagram's light (its map holds the
     diagram's own building, its receiver the diagram's plate: both the grave's cells); the static cache's

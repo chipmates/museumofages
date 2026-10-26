@@ -21,6 +21,7 @@ import { GLOBAL_DEFINITION, GLOBAL_DEFINITIONS, addedParts, carriedElsewhere, dr
 import { BUILT_FLAGS, BUILT_READS, READER_ROLES, STATEMENT_HELPERS, STATEMENT_RECORD_READERS, TABLE_BENCH_FILES, TABLE_DOM_FILES, WORDS_FILES, WORDS_FILES_V5, benchPlacement, blankDisplay, builtPlacement, importGraph, libraryAt,
   panelStyleScoped, propertyReads, readerPlacement, sourcesAt, statementOf, statementShape, statementsPlacement, tablePlacement, wordsPlacement } from './library.mjs'
 import { APP_ROOT, WING_DIR, createLoader } from './load.mjs'
+import { BENCH_ONLY } from './lit.mjs'
 import { libraryOf, mountWorld } from './scene.mjs'
 import { mergeManifests, storeKind } from '../vite-na-assets.mjs'
 
@@ -579,7 +580,12 @@ test('the third definition, and the two before it, key byte for byte as the code
   const placedNow = ownWords(placeLibrary({ loader, worldFiles }))
   // the wires of that code read the tree as today's do
   const placedThen = then.placeLibrary({ loader, worldFiles })
-  for (const wire of ['reader', 'table', 'bench']) assert.deepEqual(placedNow[wire], placedThen[wire], `${wire}: the same wire`)
+  // since then the reader's wire skips the machine bench's own page (`BENCH_ONLY`): that code's red naming it is that change alone
+  const benchRed = (w) => !w.placed && BENCH_ONLY.some((f) => w.why === `${WING_DIR}/${f} names the reader or its register and reaches a texture maker`)
+  for (const wire of ['reader', 'table', 'bench']) {
+    if (wire === 'reader' && placedNow.reader.placed && benchRed(placedThen.reader)) continue
+    assert.deepEqual(placedNow[wire], placedThen[wire], `${wire}: the same wire`)
+  }
   for (const f of WORDS_FILES) assert.deepEqual({ placed: placedNow.words[f].placed, blanked: placedNow.words[f].blanked }, placedThen.words[f], `${f}: read as that code read it`)
   for (const definition of ['v1', V2, V3]) {
     for (const placement of [placedNow, placedThen]) {

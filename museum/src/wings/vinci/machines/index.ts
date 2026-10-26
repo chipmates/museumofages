@@ -18,7 +18,7 @@ import { build as camera_obscura } from './camera-obscura'
 import { build as mechanical_lion } from './mechanical-lion'
 import { build as flying_machine } from './flying-machine'
 import { build as armoured_car } from './armoured-car'
-import { build as bridge_of_poles } from './bridge'
+import { build as bridge_of_poles } from './bridge-of-poles'
 import type { ShowcaseSlug } from './showcase'
 
 export * from './catalog'
