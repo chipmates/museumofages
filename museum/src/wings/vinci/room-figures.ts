@@ -14,7 +14,7 @@
    `?figures=off` leaves every room figure out: the switch's second version. */
 
 import { CircleGeometry, Group, Mesh, MeshBasicNodeMaterial, type Material } from 'three/webgpu'
-import { float, length, positionGeometry, smoothstep, vec3 } from 'three/tsl'
+import { float, length, max, positionGeometry, smoothstep, vec2, vec3 } from 'three/tsl'
 import { loadMeasureGeometry, measure, measureMaterial } from '../../measure'
 import { assetAddress } from '../../stack/materials'
 
@@ -59,9 +59,12 @@ export const VINCI_ROOM_FIGURES: readonly RoomFigure[] = [
 /** the scene flag: every room figure in (the default) or none */
 export const roomFiguresShown = (): boolean => typeof location === 'undefined' || new URLSearchParams(location.search).get('figures') !== 'off'
 
-/** the contact shadow: an ellipse round the soles (half widths across and along, metres), its darkest share, its
- * falloff, and its lift over the finished floor (drawn over the floor, never under its finish) */
-const CONTACT = { across: 0.24, along: 0.2, forward: 0.04, depth: 0.55, fall: 1.5, lift: 0.006 }
+/** the contact shadow, drawn on a disc round the feet (half widths across and along, metres, centred `forward` of the
+ * soles' middle) and lifted over the finished floor (never under its finish): a soft pool under the stance, and a
+ * darker rim round each sole, whose footprint is centred `side` either way and `toe` forward with half widths `half`;
+ * the rim fades between `rim` times that footprint. Each sole's own rim is what reads as a foot on the ground */
+const CONTACT = { across: 0.26, along: 0.26, forward: 0.06, lift: 0.006, pool: 0.4, fall: 1.5,
+  sole: { side: 0.11, toe: 0.06, half: [0.055, 0.15] as const, rim: [0.7, 1.5] as const, depth: 0.5 } }
 
 export interface RoomFigures {
   group: Group
@@ -104,9 +107,12 @@ export function createRoomFigures(light: (room: FigureRoom, body: Mesh) => void,
       body.raycast = () => {}
       // THE CONTACT: the soles' own darkening of the floor, an engine term like the rooms' bounce
       const shade = new MeshBasicNodeMaterial({ transparent: true, depthWrite: false, fog: false })
-      const r = length(positionGeometry.xz)
+      const r = length(positionGeometry.xz), S = CONTACT.sole
+      // the disc's own metres in the body's frame (across, forward of the soles' middle)
+      const at = positionGeometry.xz.mul(vec2(CONTACT.across, CONTACT.along)).add(vec2(0, CONTACT.forward))
+      const sole = (side: number) => float(1).sub(smoothstep(S.rim[0], S.rim[1], length(at.sub(vec2(side, S.toe)).div(vec2(S.half[0], S.half[1]))))).mul(S.depth)
       shade.colorNode = vec3(0, 0, 0)
-      shade.opacityNode = float(1).sub(smoothstep(0, 1, r)).pow(CONTACT.fall).mul(CONTACT.depth)
+      shade.opacityNode = max(float(1).sub(smoothstep(0, 1, r)).pow(CONTACT.fall).mul(CONTACT.pool), max(sole(S.side), sole(-S.side)))
       shade.polygonOffset = true
       shade.polygonOffsetFactor = -2
       shade.polygonOffsetUnits = -4
