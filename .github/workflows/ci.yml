@@ -125,7 +125,7 @@ jobs:
   site:
     name: Site (Python ${{ matrix.python }})
     runs-on: ubuntu-24.04
-    timeout-minutes: 10
+    timeout-minutes: 25
     strategy:
       fail-fast: false
       matrix:
