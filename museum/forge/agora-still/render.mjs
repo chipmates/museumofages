@@ -118,7 +118,7 @@ try {
     if (!look) {
       const data = await buildStars({ page, name, frame: LAYOUT[name], shot, master, out, samples, sub: SUB, zoom: only.includes('zoom'), shootZoom: (file) => shoot(page, file, SUB), redraw: () => shoot(page, master, SUB) })
       data.files = { master: `sky-${name}.png`, encodings: await encode(master, CAP[name]) }
-      for (const z of data.zooms ?? []) if (z) z.encodings = await encode(join(out, `${z.file}.png`), CAP.tall)
+      for (const z of data.zooms ?? []) if (z && z.file !== `sky-${name}`) z.encodings = await encode(join(out, `${z.file}.png`), CAP.tall)
       sheet.frames[name] = data
     }
     await page.close()

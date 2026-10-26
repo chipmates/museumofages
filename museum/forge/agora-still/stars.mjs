@@ -2,6 +2,7 @@
 // star projected through the frame's own camera and proved on its pixels, the
 // six groups, the fire, the safe area, a free name box beside every star with
 // the contrast under it, and (tall) the zoom that parts a group's stars.
+import { unlinkSync } from 'node:fs'
 import { join } from 'node:path'
 import sharp from 'sharp'
 import { inside, nameBox, safeArea, skyFloor, solveSides, NAME_BOX, SIDES } from './geometry.mjs'
@@ -376,9 +377,9 @@ async function zoomFrames({ page, groups, frame, info, out, shootZoom }) {
   const names = await page.evaluate(() => window.__still.names())
   const widths = Object.fromEntries(names.map((n) => [n.slug, Math.max(56, Math.round(n.short.length * 8.5 + 14))]))
   const res = []
+  // every house gets its names seated: the phone names a house once it is opened
   for (const g of groups) {
-    if (g.closestCss >= TAP) continue
-    const parts = Math.ceil((TAP / g.closestCss) * 20) / 20
+    const parts = Math.max(1, Math.ceil((TAP / g.closestCss) * 20) / 20)
     // the zoom that parts the closest pair; a step further only when the
     // names need it
     let z = parts
@@ -417,9 +418,12 @@ async function zoomFrames({ page, groups, frame, info, out, shootZoom }) {
       if (seats) break
     }
     await proofSheet(file, join(out, `stars-proof-tall-${g.key}.png`), own, seats, shot.info, proj.fire.plume, safe, proj.s)
+    // a house whose names seat on the tall frame as it is needs no frame of its own
+    const same = z === 1 && reserved.length === 0
+    if (same) unlinkSync(file)
     res.push({
       group: g.key,
-      file: `sky-tall-${g.key}`,
+      file: same ? 'sky-tall' : `sky-tall-${g.key}`,
       zoom: z,
       partsAt: parts,
       closestBeforeCss: g.closestCss,
