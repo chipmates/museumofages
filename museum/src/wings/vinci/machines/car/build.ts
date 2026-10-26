@@ -591,7 +591,7 @@ function discFaces(k: Kit, xd: number, seed: number): void {
 /** A rod shaved from riven stock: `facets` flat faces of their own widths round its axis, each face's corners on the
  * circle of radius `r` (so it is never fuller than the round rod it stands for) and every corner eased by a narrow
  * face; rows along it so wear and grime grade; flat end grain, the far end chamfered by `tip`. */
-function shaved(k: Kit, a: V3, b: V3, r: number, facets: number, f: Finish, seed: number[], rows: number, tip = 0, wearAt?: (u: number) => number, grimeAt?: (u: number) => number): void {
+function shaved(k: Kit, a: V3, b: V3, r: number, facets: number, f: Finish, seed: number[], rows: number, tip = 0, wearAt?: (u: number) => number, grimeAt?: (u: number) => number, around = 0): void {
   const d = sub(b, a), l = len(d), w = norm(d)
   const helper: V3 = Math.abs(w[1]) < 0.9 ? [0, 1, 0] : [1, 0, 0]
   const e1 = norm(cross(helper, w)), e2 = cross(w, e1)
@@ -613,11 +613,11 @@ function shaved(k: Kit, a: V3, b: V3, r: number, facets: number, f: Finish, seed
   const body = l - tip
   const ss = Array.from({ length: rows + 1 }, (_, j) => (body * j) / rows)
   const n = angles.length
-  const arc = (i: number): number => angles[i]! * r
+  const arc = (i: number): number => angles[i]! * r + around
   for (let j = 0; j < rows; j++) {
     const s0 = ss[j]!, s1 = ss[j + 1]!, p0 = ring(s0, r), p1 = ring(s1, r), f0 = finishAt(s0), f1 = finishAt(s1)
     for (let i = 0; i < n; i++) {
-      const q = (i + 1) % n, nn = faceNormal(i), v1 = arc(i), v2 = q === 0 ? (angles[0]! + TAU) * r : arc(q)
+      const q = (i + 1) % n, nn = faceNormal(i), v1 = arc(i), v2 = q === 0 ? (angles[0]! + TAU) * r + around : arc(q)
       k.smoothQuad([p0[i]!, p0[q]!, p1[q]!, p1[i]!], [nn, nn, nn, nn], [[s0, v1], [s0, v2], [s1, v2], [s1, v1]], f, 0, [f0, f0, f1, f1])
     }
   }
@@ -738,7 +738,8 @@ export function shaft(sz: number): Body {
   for (let i = 0; i + 1 < cuts.length; i++) {
     const x0 = cuts[i]!, x1 = cuts[i + 1]!, f = { tone: tone(40, seed) }
     if (i % 2 === 1) b.rough.lathe(v(x0, 0, 0), X, [[0, half - 0.004], [0.004, half], [x1 - x0 - 0.004, half], [x1 - x0, half - 0.004]], 16, { ...f, wear: 0.5 }, false)
-    else shaved(b.rough, v(x0, 0, 0), v(x1, 0, 0), half, 8, f, [41, seed, i], 3)
+    // the photograph's cross-grain checks laid on the shaft's underside, out of the drive's views
+    else shaved(b.rough, v(x0, 0, 0), v(x1, 0, 0), half, 8, f, [41, seed, i], 3, 0, undefined, undefined, 0.19)
   }
   for (const sx of [-1, 1]) {
     const x0 = sx * CRANK.cheekX
