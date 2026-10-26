@@ -114,7 +114,7 @@ const REACH = 0.4
 const READ_ON = { en: 'Read on', de: 'Weiterlesen' }
 const BACK_TO_TOP = { en: 'Back to top', de: 'Zum Anfang' }
 /** the window's foot while rows wait below it: a 24 px fade over the 24 px plate and the record's 8 px of air */
-const PAGE_FOOT = 56
+const PAGE_FADE = 24
 const PLATE = 32
 /** the picture's rise while the drawer stands: at most the first stop's 81 px at 844, as a share of the glass */
 const RISE_MOST = 81 / 844
@@ -1210,7 +1210,9 @@ export function createWing(): WingModule {
      scrolls in the window, which runs down to the record's rule. While rows
      wait below, the window's foot is a fade over a plate whose key brings the
      first row not wholly shown to the window's top; once the last sentence
-     shows, the key brings the first back. */
+     shows, the key brings the first back. The plate's ground runs up to the
+     foot of the last row the window shows whole, so the fade lies over that
+     row and no letter of the next shows under it. */
   function readRows(): { top: number; bottom: number }[] {
     const rows: { top: number; bottom: number }[] = []
     for (const p of phone?.read.querySelectorAll<HTMLElement>('p') ?? []) {
@@ -1228,12 +1230,21 @@ export function createWing(): WingModule {
     drawer.dataset['pages'] = String(read.scrollHeight > read.clientHeight + 1)
     paintPage()
   }
+  /** the top of the plate's ground in the window, under the last whole row; the plate's own top at the end */
+  function pageFoot(rows: { top: number; bottom: number }[], end: boolean): number {
+    const { read } = phone!
+    const plate = read.clientHeight - PLATE
+    const whole = end ? undefined : rows.filter(r => r.bottom - read.scrollTop <= plate + 0.5).pop()
+    return whole ? Math.ceil(whole.bottom - read.scrollTop) : plate
+  }
   function paintPage(): void {
     if (!phone || phone.drawer.dataset['pages'] !== 'true') return
-    const { drawer, read, pageKey } = phone
-    const last = readRows().pop()
+    const { drawer, read, page, pageKey } = phone
+    const rows = readRows()
+    const last = rows[rows.length - 1]
     const end = !last || last.bottom - read.scrollTop <= read.clientHeight - PLATE + 0.5
     drawer.dataset['end'] = String(end)
+    page.style.setProperty('--page-cover', `${Math.max(0, read.clientHeight - PLATE - pageFoot(rows, end))}px`)
     const to = end ? 'top' : 'on'
     if (pageKey.dataset['to'] === to && pageKey.dataset['lang'] === lang()) return
     pageKey.dataset['to'] = to
@@ -1245,7 +1256,9 @@ export function createWing(): WingModule {
     const { read, space, pageKey } = phone
     const behavior = matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth'
     if (pageKey.dataset['to'] === 'top') { read.scrollTo({ top: 0, behavior }); return }
-    const next = readRows().find(r => r.bottom - read.scrollTop > read.clientHeight - PAGE_FOOT + 0.5)
+    const rows = readRows()
+    const foot = pageFoot(rows, false)
+    const next = rows.find(r => r.top > read.scrollTop + 0.5 && r.bottom - read.scrollTop > foot - PAGE_FADE + 0.5)
     if (!next) return
     // room under the last sentence, so the row can stand at the window's top
     space.style.height = `${Math.max(0, Math.ceil(next.top + read.clientHeight - (read.scrollHeight - space.offsetHeight)))}px`

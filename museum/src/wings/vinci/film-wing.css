@@ -96,11 +96,11 @@
 #wing[data-film='upright'] .film-drawer[data-pages='true'] .film-read { padding-bottom: 0; }
 #wing[data-film='upright'] .film-drawer[data-pages='true'] .film-read-space { display: block; }
 /* the plate stands at the window's foot while the text scrolls under it, 24 px over the record's 8 px of air; while rows
-   wait below, a fade over them */
+   wait below, its ground runs up to the last whole row (--page-cover, film-wing.ts) and a fade lies over that row */
 #wing[data-film='upright'] .film-drawer[data-pages='true'] .film-page { display: block; position: sticky; bottom: 0; height: 32px; background: var(--plate); }
 #wing[data-film='upright'] .film-drawer[data-pages='true']:not([data-end='true']) .film-page::before {
-  content: ''; position: absolute; left: 0; right: 0; bottom: 100%; height: 24px; pointer-events: none;
-  background: linear-gradient(to bottom, color-mix(in srgb, var(--plate) 0%, transparent), var(--plate));
+  content: ''; position: absolute; left: 0; right: 0; bottom: 100%; height: calc(24px + var(--page-cover, 0px)); pointer-events: none;
+  background: linear-gradient(to bottom, color-mix(in srgb, var(--plate) 0%, transparent), var(--plate) 24px);
 }
 /* its key is the key row's word, 44 px to the hand, ending on the record's rule */
 .film-page-key {
