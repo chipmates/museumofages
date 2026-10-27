@@ -2451,7 +2451,7 @@
       "prompt": "The machine bench's second plane. A modern hall wall for one object: the wing's stone, coursed at 42 cm with 86 cm blocks and staggered perpends, standing 12 metres behind the platform's centre on the bench's own floor, square to the eye, 3.2 metres high or as high as the frame's own top edge reaches at that bearing and never above 4.4, lit by the bench's own key and standing in the bench's own air. Its surface carries the library set's photograph at a reduced weight under three procedural scales with a density that thins with distance, a per-block value so no two blocks are the same, a joint that darkens and roughens rather than being drawn, and a closed ambient at its foot where the floor meets it. It is held a stop under the object it stands behind, so the frame keeps one hero. The wall is exhibition dressing and claims nothing about where any machine stood; it is reached through one constant and this bench is the only surface that sets it.",
       "model": "Opus 5 build seat",
       "date": "2026-09-12",
-      "sha256": "b8e730d7fb59b1ba2151b754853ce9f3bc581b2acdb9958f9509c5dd3e27b8ae",
+      "sha256": "909025191e3c64b463ea2d480922713c3f2148d9f0fb6719f260594982302b18",
       "recipe_files": [
         {
           "path": "src/wings/vinci/machines/bench/back-plane.ts",
@@ -2475,7 +2475,7 @@
       "prompt": "The da Vinci machine bench. Restrained museum typography, folio mounts, named absence panels, certainty marks, navigation, finite-demonstration status and evidence reading furniture, plus an optional diagnostic card displaying observed runtime measurements. Reuse the locked bilingual pages verbatim. No unapproved folio or reconstruction photograph is displayed. Window 5: three registers of text. The label speaks the hour (15:19 by the sun, 10 October 1517) and says the day is documented and the hour chosen, and it names what the bench does not show; the drawer explains without bracket citations; the record behind Read the evidence carries the arithmetic, the place, the method and the sources. The same computed 10 October 1517 Julian 15:19:00 LAT hour and geographic sun A=231.9005 degrees h=17.3882 degrees drive the bench key. The hour is chosen, not historical observation. Window 6: the phone drops the footer's top rule so one line closes the reading column; the compass is staged as an object (three-quarter view, full frame height on the wide frame, .35 on the phone) and every machine is fitted at .80 of the half height and .70 of the half width, .31 on the phone; a close state frames the working end of a machine alone. No locked copy changed.",
       "model": "GPT-6 Codex, with a Claude Opus 5 harvest seat",
       "date": "2026-09-11",
-      "sha256": "ab42ebabfc2782b4f38cdf7bbba93857a91c2ee02116497d84b236f4745ab431",
+      "sha256": "e5e5656009e6b4faa4f733018fa7cc14207b978fe727f02fb8f6b30696eb8838",
       "recipe_files": [
         {
           "path": "src/wings/vinci/machines/bench/bench.css",
