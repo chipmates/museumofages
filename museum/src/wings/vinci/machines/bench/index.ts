@@ -1,7 +1,7 @@
-import { Box3, type BufferGeometry, Color, Fog, Group, type Light, Mesh, MeshStandardNodeMaterial, PerspectiveCamera, type PlaneGeometry, Scene, SpotLight, Vector3 } from 'three/webgpu';
+import { Box3, type BufferGeometry, Color, Fog, Group, type Light, Mesh, MeshStandardNodeMaterial, type Node, PerspectiveCamera, type PlaneGeometry, Scene, SpotLight, Vector3 } from 'three/webgpu';
 import { kelvinToColour } from '../../../../stack/light';
 import type { Stack, KeyLight, MaterialSet } from '../../../../stack';
-import { float, fog, lights, positionWorld, rangeFogFactor, smoothstep, uv, vec2, vec3 } from 'three/tsl';
+import { float, fog, lights, mix, normalView, positionWorld, rangeFogFactor, smoothstep, uv, vec2, vec3 } from 'three/tsl';
 import { IDENTITY } from '../../../../stack/grade';
 import { loadManifest, type ManifestEntry } from '../../../../manifest';
 import { assetAddress } from '../../../../stack/materials';
@@ -18,6 +18,7 @@ const isBenchSlug = (value: string): value is BenchSlug => isHallOrCourtSlug(val
 const recordOf = (id: BenchSlug) => isShowcaseSlug(id) ? showcaseCatalog[id] : benchCatalog[id];
 import { buildScaleFigure } from './scale-figure';
 import { WORKING_LINES } from '../working-lines';
+import { BENCH_SIZE_LINES } from './size-lines';
 import { wideShadowFilter } from '../screw-shadow';
 import benchCss from './bench.css?inline';
 import titleSelectCss from './title-select.css?inline';
@@ -103,6 +104,8 @@ const BENCH_FINISH: Partial<Record<string, { roughness: number; metalness: numbe
 const BENCH_SIZE_WORD: Partial<Record<string, { en: string; de: string }>> = {
   'bridge-of-poles': { en: 'as it stands', de: 'stehend' },
 };
+/** The parachute's uprights alone (not its plinth): a plain grey powder coat in linear albedo. */
+const PARACHUTE_POST = { tone: .16, roughness: .55 };
 const el = <K extends keyof HTMLElementTagNameMap>(tag: K, cls: string, text?: string): HTMLElementTagNameMap[K] => { const n = document.createElement(tag); n.className = cls; if (text !== undefined)
   n.textContent = text; return n; };
 const localText = (lang: Language, en: string, de: string): string => lang === 'de' ? de : en;
@@ -343,6 +346,8 @@ export function createBench(stack: Stack, onExit: () => void) {
     select.append(option);
   } const absence = BENCH_ABSENCE[slug]; if (absence) dimensions.textContent += '\n' + localText(lang, absence.en, absence.de); select.value = slug; chooser.refresh(); const lion = slug === 'mechanical-lion', car = slug === 'armoured-car', bridge = slug === 'bridge-of-poles'; section.hidden = slug !== 'camera-obscura' && !lion && !car && !bridge; section.textContent = bridge ? localText(lang, sectionEnabled ? 'Tie the lashings' : 'Take the lashings off', sectionEnabled ? 'Bünde anlegen' : 'Bünde abnehmen') : car ? localText(lang, sectionEnabled ? 'Put the cover on' : 'Lift the cover off', sectionEnabled ? 'Deckel aufsetzen' : 'Deckel abnehmen') : lion ? localText(lang, sectionEnabled ? 'Close the flank' : 'Open the flank', sectionEnabled ? 'Flanke schließen' : 'Flanke öffnen') : localText(lang, sectionEnabled ? 'Close chamber' : 'Open section', sectionEnabled ? 'Kammer schließen' : 'Schnitt öffnen'); section.setAttribute('aria-pressed', String(sectionEnabled)); sectionNote.hidden = !sectionEnabled; sectionNote.textContent = bridge ? localText(lang, 'Without its lashings: the same poles held by the weave alone, as most builds of it today stand. The one engineering reading of his sketch lashes them.', 'Ohne Bünde: dieselben Stangen, nur vom Geflecht gehalten, wie die meisten heutigen Nachbauten stehen. Die eine ingenieurwissenschaftliche Lesart seiner Skizze bindet sie.') : car ? localText(lang, 'Opened, as on his sheet: the cover and the guns are lifted off so you can see the drive. The car itself is closed. The red band on each wheel is our mark, so you can see it turn.', 'Geöffnet wie auf seinem Blatt: Deckel und Geschütze sind abgenommen, damit du den Antrieb siehst. Der Wagen selbst ist geschlossen. Das rote Band an jedem Rad ist unsere Markierung, damit du siehst, wie es sich dreht.') : lion ? localText(lang, 'Section: the near flank panel is taken off so you can see the works. On the lion itself the panel is shut.', 'Schnitt: Die vordere Flankenplatte ist abgenommen, damit du das Werk siehst. Am Löwen selbst ist sie geschlossen.') : localText(lang, 'Section: one corner and the back wall are taken off so you can see in. In the real experiment the chamber is closed and dark.', 'Schnitt: Eine Ecke und die Rückwand sind abgenommen, damit du hineinsehen kannst. Im echten Versuch ist die Kammer geschlossen und dunkel.'); paintPlayback(); if (!source.hidden)
     reading(evidenceRecord ?? record);
+    // a machine whose sheet gives some of its sizes says which, in place of the envelope's numbers
+    const sized = BENCH_SIZE_LINES[slug]; if (sized) { certaintyWord.textContent = localText(lang, sized.badge.en, sized.badge.de); dimensions.textContent = localText(lang, sized.size.en, sized.size.de) + (absence ? '\n' + localText(lang, absence.en, absence.de) : ''); }
     // a label that is still a working line says so under it
     const working = WORKING_LINES[slug]; if (working) { label.textContent = working[lang]; label.append(el('small', 'bench-working', localText(lang, 'working line', 'Arbeitszeile'))); } }
   function paintPlayback() {
@@ -356,14 +361,14 @@ export function createBench(stack: Stack, onExit: () => void) {
     holdNote.textContent = view.holdDetail;
     holdNote.hidden = !view.holdDetail;
   }
-  async function plateFor(mine: number) { let imageReady = Promise.resolve(); const record = recordOf(slug); const id: Partial<Record<BenchSlug, string>> = { 'flying-machine': 'vinci/folio-page/paris-b-74v', 'armoured-car': 'vinci/folio-page/bm-1860-0616-99-recto', 'bridge-of-poles': 'vinci/codex-page/atlanticus__p0029', 'aerial-screw': 'vinci/ms-page/lesmanuscritsdel02lo__n0340', 'revolving-crane': 'vinci/ms-page/lesmanuscritsdel02lo__n0202', 'camera-obscura': 'vinci/ms-page/lesmanuscritsdel02lo__n0386' }; const manifest = await loadManifest(); if (mine !== serial)
+  async function plateFor(mine: number) { let imageReady = Promise.resolve(); const record = recordOf(slug); const id: Partial<Record<BenchSlug, string>> = { 'flying-machine': 'vinci/folio-page/paris-b-74v', 'armoured-car': 'vinci/folio-page/bm-1860-0616-99-recto', 'bridge-of-poles': 'vinci/codex-page/atlanticus__p0029', 'aerial-screw': 'vinci/ms-page/lesmanuscritsdel02lo__n0340', 'revolving-crane': 'vinci/ms-page/lesmanuscritsdel02lo__n0202', 'camera-obscura': 'vinci/ms-page/lesmanuscritsdel02lo__n0386', 'parachute': 'vinci/folio-page/ca-1058v' }; const manifest = await loadManifest(); if (mine !== serial)
     return; const entry = manifest.byId.get(id[slug] ?? ''); folioEntry = entry?.display && entry.class !== 'REFERENCE-ONLY' ? entry : undefined; folio.replaceChildren(); const cap = el('figcaption', ''); const folioName = record.folio.map(f => `${f.codex} ${localText(lang, 'f.', 'Blatt')} ${f.folio}`).join(', '); if (folioEntry) {
     const img = el('img', '');
     img.alt = folioName;
     img.src = assetAddress(folioEntry);
     folio.append(img);
     imageReady = img.decode().catch(() => { });
-    cap.textContent = slug === 'armoured-car' ? `${localText(lang, 'His sheet', 'Sein Blatt')}, British Museum 1860,0616.99\n${localText(lang, 'Photograph of the sheet', 'Fotografie des Blatts')}` : slug === 'bridge-of-poles' ? `${localText(lang, 'His sheet', 'Sein Blatt')}, ${folioName}, Biblioteca Ambrosiana\n${localText(lang, 'Photograph of the sheet', 'Fotografie des Blatts')}` : `${folioName}\n${localText(lang, '1883 historical facsimile', 'Historisches Faksimile von 1883')}`;
+    cap.textContent = slug === 'armoured-car' ? `${localText(lang, 'His sheet', 'Sein Blatt')}, British Museum 1860,0616.99\n${localText(lang, 'Photograph of the sheet', 'Fotografie des Blatts')}` : slug === 'bridge-of-poles' ? `${localText(lang, 'His sheet', 'Sein Blatt')}, ${folioName}, Biblioteca Ambrosiana\n${localText(lang, 'Photograph of the sheet', 'Fotografie des Blatts')}` : slug === 'parachute' ? `${localText(lang, 'His sheet', 'Sein Blatt')}, ${folioName}\n${holderName(String(record.dossier.folio[0]?.holder ?? ''))}\n${localText(lang, 'Photograph of the sheet', 'Fotografie des Blatts')}` : `${folioName}\n${localText(lang, '1883 historical facsimile', 'Historisches Faksimile von 1883')}`;
     img.onerror = () => { if (mine !== serial)
       return; img.remove(); folio.prepend(el('div', 'bench-absence', localText(lang, 'Plate unavailable', 'Blatt nicht verfügbar'))); };
   }
@@ -537,6 +542,14 @@ export function createBench(stack: Stack, onExit: () => void) {
     // The parachute's harness ring is a dark iron loop hanging over the deck.
     // At the deck's inherited value the two were the same colour.
     if (slug === 'parachute') supportMat.colorNode = supportMat.colorNode!.mul(1.45)
+    if (slug === 'parachute') {
+      // the uprights over the plinth are today's hardware under the period wood: a plain powder coat, no iron grain
+      const post = smoothstep(.001, .004, positionWorld.y.sub(machine.bounds.min.y));
+      supportMat.colorNode = mix(supportMat.colorNode as Node<'vec3'>, vec3(PARACHUTE_POST.tone, PARACHUTE_POST.tone, PARACHUTE_POST.tone * 1.04), post);
+      supportMat.roughnessNode = mix((supportMat.roughnessNode as Node<'float'> | null) ?? float(supportMat.roughness), float(PARACHUTE_POST.roughness), post);
+      supportMat.metalnessNode = mix((supportMat.metalnessNode as Node<'float'> | null) ?? float(supportMat.metalness), float(0), post);
+      if (supportMat.normalNode) supportMat.normalNode = mix(supportMat.normalNode as Node<'vec3'>, normalView, post).normalize();
+    }
     // The smallest object on the bench stands on a plate the key barely
     // grazes, so the compass reads as an outline against nothing. The plate
     // is given the light its top face is standing in.
@@ -623,6 +636,11 @@ export function createBench(stack: Stack, onExit: () => void) {
       // the figure alone (the screw's own surfaces refuse it), and its contact shade holds it to the floor
       closed: [{ at: [9, 4.5, 13], aim: [2.35, .95, .9], lux: 330, kelvin: 5200, angle: .25, penumbra: .9, shadow: false }],
     } },
+    'parachute': { lamps: { closed: [
+      // a wash from high on the visitor's left onto the face the hour's sun already takes: that face glows from the
+      // front while the shaded face beside it keeps its value, so the two split; no shadow map
+      { at: [-2.2, 12, 15.8], aim: [0, 5.6, 2.3], lux: 220, kelvin: 4300, angle: .5, penumbra: .7, decay: 2, shadow: false },
+    ] } },
     'flying-machine': { lamps: { closed: [
       // the wash, high on the visitor's side: falling off with distance, it
       // lights the near wing more than the far one, as a lamp in a hall does

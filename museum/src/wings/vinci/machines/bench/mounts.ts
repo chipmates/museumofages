@@ -9,14 +9,14 @@ export interface MountBox {
 
 export function mountBoxes(slug: string): MountBox[] {
   if (slug === 'parachute') {
-    // Each 40 mm upright stands under its Z pole 0.25 m in from the corner,
+    // Each 40 mm upright stands under its Z pole 1.2 m in from the corner,
     // its cap against the 48 mm pole's underside (Y=3.276): the corner's
-    // lashing and the cord's eye on the X pole stand clear of it, and the
-    // hem's lacing ends 0.35 m from the corner. Its nearest suspension
-    // passes about 0.24 m away.
+    // lashing, the cord's eye and the hem's lacing stand clear of it, and a
+    // close look at the corner keeps the upright out of its foreground. Its
+    // nearest suspension passes about 0.85 m away.
     const frameCorner = 3.5016
     const underside = 3.3 - 0.024
-    const inset = 0.25
+    const inset = 1.2
     const positions: [number, number][] = [[-1, -1], [1, -1], [1, 1], [-1, 1]]
     return positions.flatMap(([sx, sz]): MountBox[] => {
       const x = sx * frameCorner
