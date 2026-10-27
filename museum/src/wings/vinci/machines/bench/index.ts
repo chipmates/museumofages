@@ -426,7 +426,8 @@ export function createBench(stack: Stack, onExit: () => void) {
     if (slug === 'ball-bearing') direction.set(.82,.62,1.66).normalize();
     if (slug === 'rolling-mill') direction.set(-1.5,.75,1.5).normalize();
     if (slug === 'lathe') direction.set(.65,.42,1.9).normalize();
-    if (slug === 'parachute') direction.set(1.05,.27,1.6).normalize();
+    // a rig's eye round the parachute keeps the wall behind the machine as that eye sees it
+    if (slug === 'parachute' && !eye) direction.set(1.05,.27,1.6).normalize();
     if (slug === 'revolving-crane') direction.set(2.6,.85,.8).normalize();
     if (slug === 'water-lifting-screw') direction.set(-2.3,1.1,-.3).normalize();
     if (slug === 'proportional-compass') direction.set(1.2,.3,1.75).normalize();
