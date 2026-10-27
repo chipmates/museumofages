@@ -77,7 +77,7 @@ export function buildBenchSupports(options: BenchSupportOptions): BenchSupports 
     size: [size.x * 1.08, thick, size.z * 1.08],
     centre: [centre.x, machineBounds.min.y - thick / 2, centre.z],
   }
-  const boxes: MountBox[] = [plinth, ...mountBoxes(slug)]
+  const boxes: MountBox[] = [plinth, ...mountBoxes(slug, 'bench')]
   const inputs: BufferGeometry[] = []
   let merged: BufferGeometry | null = null
   try {

@@ -7,16 +7,19 @@ export interface MountBox {
   centre: [number, number, number]
 }
 
-export function mountBoxes(slug: string): MountBox[] {
+/** `on` is where the hardware stands: the bench, or the court that builds its
+ * stand solids from the same boxes. Only the parachute's differ between them. */
+export function mountBoxes(slug: string, on: 'court' | 'bench' = 'court'): MountBox[] {
   if (slug === 'parachute') {
-    // Each 40 mm upright stands under its Z pole 1.2 m in from the corner,
-    // its cap against the 48 mm pole's underside (Y=3.276): the corner's
-    // lashing, the cord's eye and the hem's lacing stand clear of it, and a
-    // close look at the corner keeps the upright out of its foreground. Its
-    // nearest suspension passes about 0.85 m away.
+    // Each 40 mm upright stands under its Z pole, its cap against the 48 mm
+    // pole's underside (Y=3.276), clear of the corner's lashing and the
+    // cord's eye. On the bench it stands 1.2 m in, where the hem's lacing
+    // leaves it a gap, so a close look at the corner keeps it out of the
+    // foreground; in the court it stays 0.25 m in, past the lacing's end,
+    // where the film's route was proved round it.
     const frameCorner = 3.5016
     const underside = 3.3 - 0.024
-    const inset = 1.2
+    const inset = on === 'bench' ? 1.2 : 0.25
     const positions: [number, number][] = [[-1, -1], [1, -1], [1, 1], [-1, 1]]
     return positions.flatMap(([sx, sz]): MountBox[] => {
       const x = sx * frameCorner
