@@ -988,25 +988,25 @@ test('the route hands the upload to waitUntil and answers before it ends', async
   assert.equal(waits.length, 1)
 })
 
-/* ---- the yes itself: an Ad Question Yes, at once, on every page that asks ---- */
+/* ---- the yes itself: a Page read, at once, on every page that asks ---- */
 
 const VISIT_ACTION = 'customers/4445556666/conversionActions/123123123'
 const ENV_BOTH = Object.freeze({ ...ENV, MOA_VISIT_ACTION: VISIT_ACTION })
 const visit = (over = {}) => ({ gclid: GCLID, yes: Date.now() - 1_000, kind: 'visit', ...over })
 
 test('the two actions and their settings: the visit and the entry, each a name and a setting of its own', () => {
-  assert.equal(VISIT_ACTION_NAME, 'Ad Question Yes')
+  assert.equal(VISIT_ACTION_NAME, 'Page read')
   assert.equal(VISIT_ACTION_SETTING, 'MOA_VISIT_ACTION')
   assert.equal(ENTRY_ACTION_NAME, 'Museum Entry')
   assert.equal(ENTRY_ACTION_SETTING, 'MOA_ENTRY_ACTION')
   assert.equal(VISIT_KIND, 'visit')
   assert.deepEqual([...VISIT_SETTINGS], [...SETTINGS.slice(0, -1), 'MOA_VISIT_ACTION'])
   assert.equal(SETTINGS.at(-1), 'MOA_ENTRY_ACTION')
-  assert.deepEqual(actionOf({ gclid: GCLID, kind: 'visit' }).name, 'Ad Question Yes')
+  assert.deepEqual(actionOf({ gclid: GCLID, kind: 'visit' }).name, 'Page read')
   assert.deepEqual(actionOf({ gclid: GCLID, wing: 'vinci' }).name, 'Museum Entry')
 })
 
-test('a yes is reported as an Ad Question Yes to its own action, with an order id of the click and the word visit', async () => {
+test('a yes is reported as a Page read to its own action, with an order id of the click and the word visit', async () => {
   const calls = await sent(visit(), { env: ENV_BOTH })
   const body = JSON.parse(calls[1].init.body)
   const order = 'moa-' + createHash('sha256').update(`${GCLID}:visit`).digest('hex').slice(0, 32)
@@ -1059,8 +1059,8 @@ test('until its action is set, a visit sends nothing and its log line says so, w
   await silent(visit(), { env: { ...ENV, MOA_VISIT_ACTION: '   ' } })
   await silent(visit(), { env: { ...ENV_BOTH, GADS_CUSTOMER_ID: '' } })
   const said = lines.slice(from)
-  assert.deepEqual(said, ['[entry] Ad Question Yes not sent: MOA_VISIT_ACTION is not set', '[entry] Ad Question Yes not sent: MOA_VISIT_ACTION is not set',
-    '[entry] Ad Question Yes not sent: a setting is missing or off its shape'])
+  assert.deepEqual(said, ['[entry] Page read not sent: MOA_VISIT_ACTION is not set', '[entry] Page read not sent: MOA_VISIT_ACTION is not set',
+    '[entry] Page read not sent: a setting is missing or off its shape'])
   // the entry without its settings stays silent, as it was
   const quiet = lines.length
   await silent(good(), { env: {} })
@@ -1092,9 +1092,9 @@ test('a visit\'s errors from Google are logged under its name, without the click
   await post(visit(), { env: ENV_BOTH, answer: { upload: () => Response.json({ partialFailureError: { message: `exists ${GCLID}` } }) } })
   await post(visit(), { env: ENV_BOTH })
   const said = lines.slice(from)
-  assert.match(said[0], /^\[entry\] Ad Question Yes upload http 400: bad \[redacted\]$/)
-  assert.match(said[1], /^\[entry\] Ad Question Yes not counted: exists \[redacted\]$/)
-  assert.equal(said[2], '[entry] Ad Question Yes counted')
+  assert.match(said[0], /^\[entry\] Page read upload http 400: bad \[redacted\]$/)
+  assert.match(said[1], /^\[entry\] Page read not counted: exists \[redacted\]$/)
+  assert.equal(said[2], '[entry] Page read counted')
   assert.ok(said.every((l) => !l.includes(GCLID)))
 })
 

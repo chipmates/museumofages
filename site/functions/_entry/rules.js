@@ -22,7 +22,7 @@ export const ASK_SCRIPT = '/static/ask.js'
 /** The two conversions, each its own action in the ads account, its resource name in a setting of its own: the yes on
  *  any page that asks (sent at once by the page), and the entry into a wing after a yes (sent by the walk). Each
  *  counts once per click. */
-export const VISIT_ACTION_NAME = 'Ad Question Yes'
+export const VISIT_ACTION_NAME = 'Page read'
 export const VISIT_ACTION_SETTING = 'MOA_VISIT_ACTION'
 export const ENTRY_ACTION_NAME = 'Museum Entry'
 export const ENTRY_ACTION_SETTING = 'MOA_ENTRY_ACTION'
