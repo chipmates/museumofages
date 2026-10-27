@@ -129,9 +129,13 @@ class SealedLinenMaterial extends MeshStandardNodeMaterial {
   }
 }
 
+/** How the cloth hangs where it stands, in metres; the court keeps SEALED_LINEN's give and the draw and
+ * scallop below. `belly` is each cloth's inward sag between its two seams, held by the hem and the ridge tapes. */
+export interface ClothHang { give: number; belly: number; draw: number; scallop: number }
+
 /** The canopy's surface: its making, its give, and the light through it.
  * `lit` is the share of its sun-facing cloth the key reaches where it stands. */
-export function sealedLinen(name: string, lit: number = SEALED_LINEN.lit): MeshStandardNodeMaterial {
+export function sealedLinen(name: string, lit: number = SEALED_LINEN.lit, hang?: ClothHang): MeshStandardNodeMaterial {
   const m = new SealedLinenMaterial({ roughness: .9, metalness: 0 })
   m.name = name
   m.side = DoubleSide
@@ -202,9 +206,14 @@ export function sealedLinen(name: string, lit: number = SEALED_LINEN.lit): MeshS
   const seamRidge = float(1).sub(smoothstep(0, L.seam * 1.6, toSeam)).mul(resolved(L.seam * 3, pixelAcross))
   const pucker = sin(up.mul(Math.PI * 2 / .05).add(panel.mul(1.3))).mul(float(1).sub(smoothstep(0, .03, toSeam)))
     .mul(resolved(.05, pixelUp)).mul(resolved(.03, pixelAcross))
-  const height = bump.mul(-L.give).add(folds.mul(.03)).add(rays.mul(.006)).sub(scallop.mul(.003))
+  let height = bump.mul(-(hang?.give ?? L.give)).add(folds.mul(.03)).add(rays.mul(hang?.draw ?? .006)).sub(scallop.mul(hang?.scallop ?? .003))
     .add(seamRidge.mul(.0022)).add(pucker.mul(.0007)).add(hem.mul(.0025)).add(tape.mul(.0015))
     .add(runs.mul(.0003)).add(beat.mul(.0003))
+  if (hang?.belly) {
+    // each cloth sags between its seams, the stiffer felled seams standing as the lines it hangs from
+    const held = smoothstep(0, .45, up).mul(smoothstep(0, .35, toRidge))
+    height = height.sub(sin(q.fract().mul(Math.PI)).mul(held).mul(hang.belly).mul(resolved(L.cloth / 2, pixelAcross)))
+  }
 
   // THE OUTWARD NORMAL, from the face and not from the triangle's winding
   const nLocal = mix(vec3(sign.mul(OUT), UP, 0), vec3(0, UP, sign.mul(OUT)), onZ)
