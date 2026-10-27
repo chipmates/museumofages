@@ -54,6 +54,7 @@ import path from 'node:path'
 import ts from 'typescript'
 import { APP_ROOT, WING_DIR } from './load.mjs'
 import { libraryOf } from './scene.mjs'
+import { BENCH_ONLY } from './lit.mjs'
 import { APP_ASSETS, STORE, mergeManifests, storeScopes } from '../vite-na-assets.mjs'
 
 const sha256 = (text) => createHash('sha256').update(text).digest('hex')
@@ -589,7 +590,9 @@ export function readerPlacement({ sources, graph, frameShaping = [] }) {
     const namingData = new Set([...naming.filter((f) => f.endsWith('.json')), ...READER_REGISTER])
     const touching = new Set(naming.filter((f) => f.endsWith('.ts')))
     for (const data of namingData) for (const f of graph.importers.get(data) ?? []) if (!READER_REGISTER.includes(f)) touching.add(f)
-    for (const f of touching) if (!READER_BRIDGES[f] && pictures(f)) return `${f} names the reader or its register and reaches a texture maker`
+    // the machine bench's page names a sheet beside its build; the wing's modules reach none of it (`lit.mjs`, checked)
+    const benchOnly = (f) => BENCH_ONLY.some((b) => f === `${WING_DIR}/${b}`)
+    for (const f of touching) if (!READER_BRIDGES[f] && !benchOnly(f) && pictures(f)) return `${f} names the reader or its register and reaches a texture maker`
     for (const f of READER_REGISTER) if (f.endsWith('.ts') && sources.has(f) && pictures(f)) return `${f} (the register) reaches a texture maker`
     const registerNames = new Set((graph.edges.get(`${WING_DIR}/index.ts`) ?? []).filter((e) => READER_REGISTER.includes(e.to)).flatMap((e) => e.names))
     for (const text of frameShaping) {
