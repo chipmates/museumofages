@@ -58,8 +58,9 @@ export const BASE = SEAT_R - SEAT_BED + SEAT_SHIFT * norm2(sub2(ARC[2]!, ARC[0]!
 /** the joists' axes in the span's plane, 0 and 6 the feet */
 export const JOIST_XY: [number, number][] = ARC.map(([x, y]) => [x, y + BASE])
 
-/** the two frames' centre planes and the three planes of each; the card's upper guess */
-export const FRAME_Z = 1.25
+/** the two frames' centre planes and the three planes of each: 2.9 m apart, a little past the card's guess, so the
+ * crown stands over the feet as on the sheet (M2: 1.34 against the sketch's 1.29) */
+export const FRAME_Z = 1.45
 export const PLANE_STEP = 0.27
 /** plane 0 outer, 1 centre, 2 inner; frame A at -Z, B at +Z, mirrored */
 export function planeZ(frame: 'A' | 'B', plane: number): number {
