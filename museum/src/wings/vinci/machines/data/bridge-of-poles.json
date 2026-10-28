@@ -15,10 +15,10 @@
   "scale_m": {
     "x": 8.75,
     "y": 2.98,
-    "z": 3.9,
+    "z": 4.3,
     "certainty": "C",
     "source": "museum choice",
-    "note": "The bridge as it stands, from the bank: span 8 m between the feet, poles 0.15 m across, frames 2.5 m apart, planes 0.27 m apart; the rise (2.4642 m, joist axes) follows from the span, the six parts and the poles' diameter. The assembly's paths, its struts and the display bank lie outside it."
+    "note": "The bridge as it stands, from the bank: span 8 m between the feet, poles 0.15 m across, frames 2.9 m apart, planes 0.27 m apart; the rise (2.4642 m, joist axes) follows from the span, the six parts and the poles' diameter. The assembly's paths, its struts and the display bank lie outside it."
   },
   "frame": {
     "handedness": "right",
