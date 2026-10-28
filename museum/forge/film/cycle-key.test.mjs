@@ -35,10 +35,10 @@ test('the machines the island builds, each keyed apart', async () => {
 })
 
 test('(1) a copy edit in the interface words or the disclosures leaves every cycle key', async () => {
-  // both reached the old key through the close look's closure
+  // the interface words reach the old key through the close look's closure; the disclosures no longer do
   const old = closure(await createLoader(), `${WING_DIR}/film-look.ts`, 'src/')
+  assert.ok(old.includes('src/wings/content.ts'), 'src/wings/content.ts was in the old island closure')
   for (const file of ['src/wings/content.ts', 'src/content/disclosures.ts']) {
-    assert.ok(old.includes(file), `${file} was in the old island closure`)
     const overlay = { [file]: `${read(file)}\n// planted copy edit\nexport const PLANTED_LINE = { en: 'A door to learn', de: 'Eine Tür zum Lernen' }\n` }
     assert.deepEqual(moved(clean, await keysAt(overlay)), [], `${file}: no cycle moved`)
   }
