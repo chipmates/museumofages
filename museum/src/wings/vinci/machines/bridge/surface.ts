@@ -56,7 +56,7 @@ function airBehind(col: N): N {
 /** the air in front of the far half: the lit picture of whatever lies behind the bridge's middle turns toward the
  * dusk's own value, a little more with every metre, so the far frame stands softer than the near one; the bench's air
  * takes over only past the far bank */
-const AIR = { colour: '#454a52', most: 0.6, from: -1.5, to: 6 }
+const AIR = { colour: '#4f4a44', most: 0.45, from: -1, to: 8 }
 function airOut(m: MeshStandardNodeMaterial): void {
   const behind = positionWorld.sub(cameraPosition).length().sub(cameraPosition.sub(vec3(0, 1.35, 0)).length())
   const f = smoothstep(AIR.from, AIR.to, behind).mul(AIR.most), air = lin(AIR.colour)
