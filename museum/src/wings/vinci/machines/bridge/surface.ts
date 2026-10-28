@@ -7,7 +7,7 @@
  * here, each faded as one pixel comes to hold more than a stroke of it.
  */
 import { Color, MeshPhysicalNodeMaterial, MeshStandardNodeMaterial, type Material } from 'three/webgpu'
-import { atan, attribute, cameraPosition, cos, float, fwidth, mix, mx_noise_float, mx_worley_noise_vec2, normalGeometry, normalView, normalViewGeometry, normalWorld, positionLocal, positionView, positionWorld, screenUV, sin, smoothstep, step, uniform, uv, vec2, vec3 } from 'three/tsl'
+import { atan, attribute, cameraPosition, cos, float, fwidth, mix, mx_noise_float, mx_worley_noise_vec2, normalGeometry, normalView, normalViewGeometry, normalWorld, positionLocal, positionView, positionWorld, screenUV, sin, smoothstep, step, uniform, uv, vec2, vec3, vec4 } from 'three/tsl'
 import type { MaterialSet, Stack } from '../../../../stack'
 import { loadMachineMaterial, materialDressed } from '../parts'
 import { benchKeyDirection } from '../key'
@@ -51,6 +51,17 @@ function bumpedBy(base: N, dhdx: N, dhdy: N): N {
 function airBehind(col: N): N {
   const behind = positionWorld.sub(cameraPosition).length().sub(cameraPosition.sub(vec3(0, 1.35, 0)).length())
   return mx(col, vec3(luma(col)).mul(vec3(0.62, 0.68, 0.76)), smoothstep(1, 9, behind).mul(0.55))
+}
+
+/** the air in front of the far half: the lit picture of whatever lies behind the bridge's middle turns toward the
+ * dusk's own value, a little more with every metre, so the far frame stands softer than the near one; the bench's air
+ * takes over only past the far bank */
+const AIR = { colour: '#3a3e44', most: 0.4, from: -1, to: 7 }
+function airOut(m: MeshStandardNodeMaterial): void {
+  const behind = positionWorld.sub(cameraPosition).length().sub(cameraPosition.sub(vec3(0, 1.35, 0)).length())
+  const f = smoothstep(AIR.from, AIR.to, behind).mul(AIR.most), air = lin(AIR.colour)
+  const own = (m as N).setupOutput.bind(m)
+  ;(m as N).setupOutput = (builder: N, out: N): N => own(builder, vec4(mx(out.rgb, air, f), out.a))
 }
 
 /** the bench's key finds a pole's edge at a distance */
@@ -329,5 +340,6 @@ export async function bridgeSurfaces(stack: Stack): Promise<BridgeSurfaces> {
     waterTop.emissiveNode = reflection.rgb.mul(fresnel.mul(0.8))
     waterTop.needsUpdate = true
   }
+  for (const m of [pole, hemp, earth, water, waterTop]) airOut(m)
   return { pole, hemp, earth, water, waterTop, mirror, lashClock: lashClock as unknown as { value: number }, streamClock: streamClock as unknown as { value: number }, sets }
 }
