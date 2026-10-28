@@ -358,22 +358,22 @@ export function poleShading(p: Pole): Shading | undefined {
   if (p.kind === 'strut') return undefined
   const pose = PLACED[p.id]!
   const mine = CROSSINGS.filter(c => c.rod === p.id || c.support === p.id)
-  const near = mine.map(c => ({ other: bodyOf(c.rod === p.id ? c.support : c.rod), lash: lashStart(c) + LASH_TIME * 0.5, frame: crossingFrame(c), kit: inKit(c) }))
+  const near = mine.map(c => ({ other: bodyOf(c.rod === p.id ? c.support : c.rod), lash: lashStart(c) + LASH_TIME * 0.5, band: ropeBand(c, c.rod === p.id), kit: inKit(c) }))
   const landed = landOf(p.id)
   return local => {
     const w = add(pose.at, rotate(pose.q, local))
     let best = 0, born = 0
-    for (const { other, lash, frame, kit } of near) {
+    for (const { other, lash, band, kit } of near) {
       const gap = Math.max(0, axisGap(w, other))
       const touch = 0.55 * Math.exp(-gap / 0.02)
       // a kit's poles lie on one another from the start
       const tb = kit ? lash : Math.max(landed, other.born) + 0.15
       if (touch > best) { best = touch; born = tb }
-      // under and beside the turns: the rope's own shadow on the pole
-      const rel = sub(w, frame.o), dd = Math.abs(dot(rel, frame.d)), ww = Math.abs(dot(rel, frame.w))
-      // from the outermost turn's own side (the frame's half widths hold a few millimetres more); the dark runs about a
-      // rope's width out, as the sky's light is shut out beside a round rope bearing on a round pole
-      const outside = Math.max(0, dd - frame.halfD + 0.006) + Math.max(0, ww - frame.halfW + 0.006)
+      // under and beside the turns: the rope's own shadow on the pole, from either side of its band; the dark runs about a
+      // rope's width out, as the sky's light is shut out beside a round rope bearing on a round pole. Between the two
+      // bands the wood is bare (a rod's top over its support, a support's underside under the rod) and open to the sky.
+      const at = Math.abs(dot(sub(w, band.o), band.way))
+      const outside = Math.max(0, band.inner - 0.002 - at, at - band.outer - 0.002)
       const rope = Math.max(0.62 * Math.exp(-outside / 0.012), 0.3 * Math.exp(-outside / 0.03))
       if (rope > best) { best = rope; born = lash }
     }
@@ -401,17 +401,24 @@ export function poleGeometry(p: Pole, detail: PoleDetail = POLE_FINE): BufferGeo
   return sheet.geometry()
 }
 
-/** Rows where a pole's lashings end along it, each side: the shade the turns lay on the wood is drawn per vertex, and
- * the stem's own rows (6.5 cm apart) would smear its crease over a hand's width. */
+/** Where a lashing's turns lie on one of its two poles: on the rod, over it either side of the support; on the support,
+ * round it either side of the rod. Each band runs from `inner` to `outer` along `way` from the crossing's middle `o`. */
+function ropeBand(c: Crossing, onRod: boolean): { o: V3; way: V3; inner: number; outer: number } {
+  const f = crossingFrame(c), inner = (onRod ? f.rs : f.rr) - BITE
+  return { o: f.o, way: onRod ? f.d : f.w, inner, outer: inner + ROPE_R * 2 * TURNS }
+}
+
+/** Rows at each band's two edges, each side: the shade the turns lay on the wood is drawn per vertex, and the stem's own
+ * rows (6.5 cm apart) would smear its crease over a hand's width. */
 function lashRows(p: Pole): number[] {
   const pose = PLACED[p.id]
   if (!pose) return []
   const back: Q = [-pose.q[0], -pose.q[1], -pose.q[2], pose.q[3]], rows: number[] = []
   for (const c of CROSSINGS) {
     if (c.rod !== p.id && c.support !== p.id) continue
-    const f = crossingFrame(c), half = c.rod === p.id ? f.halfD : f.halfW
-    const at = rotate(back, sub(f.o, pose.at))[0] + p.length / 2
-    for (const side of [-1, 1]) for (const k of [-0.006, -0.002, 0.004, 0.014, 0.03]) rows.push(at + side * (half + k))
+    const band = ropeBand(c, c.rod === p.id)
+    const at = rotate(back, sub(band.o, pose.at))[0] + p.length / 2
+    for (const side of [-1, 1]) for (const k of [band.inner - 0.008, band.inner + 0.002, band.outer - 0.002, band.outer + 0.004, band.outer + 0.016]) rows.push(at + side * k)
   }
   return rows
 }
