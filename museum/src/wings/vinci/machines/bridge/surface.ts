@@ -7,11 +7,11 @@
  * here, each faded as one pixel comes to hold more than a stroke of it.
  */
 import { Color, MeshPhysicalNodeMaterial, MeshStandardNodeMaterial, type Material } from 'three/webgpu'
-import { atan, attribute, cameraPosition, cos, float, fwidth, mix, mx_noise_float, mx_worley_noise_vec2, normalView, normalViewGeometry, normalWorld, positionLocal, positionView, positionWorld, screenUV, sin, smoothstep, step, uniform, uv, vec2, vec3 } from 'three/tsl'
+import { atan, attribute, cameraPosition, cos, float, fwidth, mix, mx_noise_float, mx_worley_noise_vec2, normalGeometry, normalView, normalViewGeometry, normalWorld, positionLocal, positionView, positionWorld, screenUV, sin, smoothstep, step, uniform, uv, vec2, vec3 } from 'three/tsl'
 import type { MaterialSet, Stack } from '../../../../stack'
 import { loadMachineMaterial, materialDressed } from '../parts'
 import { benchKeyDirection } from '../key'
-import { BANK, ROPE_R, SEAT_HALF, SEAT_R, SEAT_XY } from './plan'
+import { BANK, ROPE_R, SEAT_HALF, SEAT_R, SEAT_XY, VALLEY } from './plan'
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 type N = any
@@ -155,6 +155,9 @@ export async function bridgeSurfaces(stack: Stack): Promise<BridgeSurfaces> {
       const groove = float(1).sub(smoothstep(float(0), we.add(p), d)).mul(pale)
       return { ink, groove }
     }
+    // the valley along each fissure, as the hero tier cuts it into the stem (`build.ts`, `valleyOf`): here its slope
+    // shades it at every tier
+    const valleyOf = (f: typeof F0): N => float(-VALLEY.depth).mul(deep).mul(f.open.mul(0.55).add(0.45)).mul(cos(f.net.div(VALLEY.w).min(1).mul(Math.PI)).mul(0.5).add(0.5))
     const barkOf = (f: typeof F0): { h: N; fissure: N; shoulder: N; check: N; skin: N; lent: N; line: N } => {
       // each fissure opens and closes along its length, 1.2 to 4.7 mm wide on a mean pole
       const d = f.net, w = f.open.mul(0.0035).add(0.0012).mul(wide)
@@ -168,7 +171,7 @@ export async function bridgeSurfaces(stack: Stack): Promise<BridgeSurfaces> {
       const lent = smoothstep(float(0.7).sub(edge), float(0.7).add(edge), f.lent).mul(plate).mul(shows(0.008))
       const skin = f.skin
       const h = fis.groove.mul(deep.mul(-0.003)).sub(sh.groove.mul(deep.mul(0.0012))).sub(ln.groove.mul(plate).mul(0.0003)).sub(ck.groove.mul(f.patch).mul(plate).mul(0.0003))
-        .add(skin.mul(0.00025)).add(lent.mul(0.0003))
+        .add(skin.mul(0.00025)).add(lent.mul(0.0003)).add(valleyOf(f))
       return { h, fissure, shoulder, check, skin, lent, line }
     }
     const b = barkOf(F0)
@@ -178,7 +181,9 @@ export async function bridgeSurfaces(stack: Stack): Promise<BridgeSurfaces> {
     const mottle = mx_noise_float(vec3(C.x.mul(1.6).add(o), C.y.mul(8), C.z.mul(8))).mul(0.5).add(0.5)
     const lichen = smoothstep(0.6, 0.8, mx_noise_float(vec3(C.x.mul(1.2).add(o), C.y.mul(14), C.z.mul(14)).add(2.7)).mul(0.5).add(0.5))
     const plateTop = mx(mx(lin('#544c43'), lin('#777066'), plate), lin('#5f5042'), mottle.mul(0.35))
-    const barkCol = mx(mx(plateTop, lin('#7f7d6d'), lichen.mul(0.32)), lin('#2b231c'), b.fissure.mul(deep.mul(0.72).min(0.86)))
+    // the valleys hold less of the sky
+    const hollow = valleyOf(F0).div(-VALLEY.depth * 1.2).clamp(0, 1)
+    const barkCol = mx(mx(plateTop, lin('#7f7d6d'), lichen.mul(0.32)), lin('#2b231c'), b.fissure.mul(deep.mul(0.72).min(0.86))).mul(float(1).sub(hollow.mul(0.3)))
       .mul(float(1).sub(b.shoulder.mul(0.06))).mul(float(1).sub(b.line.mul(0.12))).mul(float(1).sub(b.check.mul(0.1))).mul(b.skin.mul(0.14).add(1)).mul(float(1).add(b.lent.mul(0.22)))
     // PEELED: pale wood under the drawknife, its strokes as facets along the stem, each of its own width and depth and
     // wandering round as the knife did; bark left in the hollows. A whole number of facets round, so the angle's own
@@ -206,19 +211,27 @@ export async function bridgeSurfaces(stack: Stack): Promise<BridgeSurfaces> {
     // the checks a drying end opens, a few along the rays
     const ang = atan(v, u)
     const check = smoothstep(0.986, 0.998, cos(ang.mul(5).add(o).add(mx_noise_float(vec3(rr.mul(60), o, 2.2)).mul(0.5)))).mul(smoothstep(0.012, 0.03, rr)).mul(fade(ang.mul(5), 1))
-    const endCol = mx(lin('#7f6c58'), lin('#9c8c76'), heart).mul(float(1).sub(check.mul(0.55))).mul(float(1).sub(rings.mul(ringFade).mul(0.3))).mul(cutStroke.mul(0.12).add(0.9))
+    const endCol = mx(lin('#7f6c58'), lin('#9c8c76'), heart).mul(float(1).sub(check.mul(0.55))).mul(float(1).sub(rings.mul(ringFade).mul(0.18))).mul(cutStroke.mul(0.12).add(0.9))
       .mul(float(1).sub(smoothstep(0.066, 0.072, rr).mul(0.6))).mul(smoothstep(0, 0.004, rr).mul(0.25).add(0.75))
+    // the cut face in relief, in the shading: the latewood a hair proud of the earlywood, the checks open, each stroke's
+    // scoop across the face it cut (its way down the face from the face's own tilt), the torn hinge between the faces rough
+    const tilt = vec2(normalGeometry.y, normalGeometry.z), tl = tilt.length(), faced = smoothstep(0.05, 0.2, tl)
+    const down = vec2(C.y, C.z).dot(tilt.div(tl.max(1e-4)))
+    const scoop = down.div(0.011).add(mx_noise_float(vec3(C.y.mul(60), C.z.mul(60), o)).mul(0.35)).fract().mul(2).sub(1)
+    const hEnd = float(1).sub(scoop.mul(scoop)).mul(-0.0006).mul(faced).add(rings.mul(ringFade).mul(0.00022)).sub(check.mul(0.0012))
+      .add(mx_noise_float(vec3(C.y.mul(220), C.z.mul(220), o.add(3))).mul(0.0004).mul(float(1).sub(faced)))
     // where another part bears on it and under its lashings, from the moment that part arrives
     const S: N = attribute('aShade', 'vec2')
     const contact = float(1).sub(S.x.mul(1.25).clamp(0, 0.82).mul(smoothstep(S.y, S.y.add(0.35), lashClock)))
-    pole.colorNode = airBehind(mx(sideCol, endCol, end).mul(mx(float(1), d.occlusion, peeled.max(end))).mul(contact).mul(keyRim(0.45).add(1)))
+    // the photograph's occlusion runs along its grain: the side of peeled wood only, never the cut face
+    pole.colorNode = airBehind(mx(sideCol, endCol, end).mul(mx(float(1), d.occlusion, peeled.mul(float(1).sub(end)))).mul(contact).mul(keyRim(0.45).add(1)))
     pole.roughnessNode = mx(mx(float(0.84).add(b.fissure.mul(0.1)).add(b.skin.mul(0.04)), d.roughness.clamp(0.6, 0.8), peeled), float(0.82), end)
     // relief gone where the stem turns away from the eye: a bump at its edge reads as a dotted line
     const facing = smoothstep(0.08, 0.4, normalViewGeometry.dot(positionView.normalize().negate()))
     const slope = mx(barkSlope, slopeOf(facetAt), peeled).mul(float(1).sub(end)).mul(facing)
     // the photograph's grain belongs to the wood, never to the bark
     const grainN: N = pole.normalNode ?? normalViewGeometry
-    pole.normalNode = bumpedBy(mx(normalViewGeometry, grainN, peeled.max(end)), slope.dot(dCx), slope.dot(dCy))
+    pole.normalNode = mx(bumpedBy(mx(normalViewGeometry, grainN, peeled), slope.dot(dCx), slope.dot(dCy)), bumped(normalViewGeometry, hEnd, 1), end)
   }
 
   // ---------------------------------------------------------------- HEMP

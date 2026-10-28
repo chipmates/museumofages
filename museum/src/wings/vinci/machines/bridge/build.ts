@@ -14,10 +14,11 @@
  */
 import { BufferGeometry, Float32BufferAttribute, Uint16BufferAttribute } from 'three/webgpu'
 import {
-  BAND_RAG, BANK, BARK, CROSSINGS, J3_LOGS, LASH_TIME, POLES, ROPE_R, SEAT_HALF, SEAT_R, SEAT_XY, STAKES, TAU, TURNS, bandEdge, bowAt, groundY, hash, inBand, inKit, landOf,
-  lashStart, radiusAt, stubAxis, supportOf, tineAxis, type Crossing, type Facet, type Pole, type V3,
+  BAND_RAG, BANK, BARK, CROSSINGS, J3_LOGS, LASH_TIME, POLES, ROPE_R, SEAT_HALF, SEAT_R, SEAT_XY, STAKES, TAU, TURNS, VALLEY, bandEdge, bowAt, groundY, hash, inBand,
+  inKit, landOf, lashStart, radiusAt, stubAxis, supportOf, tineAxis, type Crossing, type Facet, type Pole, type V3,
 } from './plan'
 import { PLACED, rotate, type Q } from './motion'
+import { perlin3, worley3 } from './noise'
 
 const add = (a: V3, b: V3): V3 => [a[0] + b[0], a[1] + b[1], a[2] + b[2]]
 const sub = (a: V3, b: V3): V3 => [a[0] - b[0], a[1] - b[1], a[2] - b[2]]
@@ -73,15 +74,39 @@ export class Sheet {
   }
 }
 
-/** a pole's fineness: the sides round it, the spacing of its rings, the sides round a stub or a tine */
-export interface PoleDetail { around: number; row: number; twig: number }
-/** the hero tier reads the knots and the axe's facets close; the tiers below draw the same shapes coarser, under their budget */
-export const POLE_FINE: PoleDetail = { around: 24, row: 0.065, twig: 10 }
-export const POLE_COARSE: PoleDetail = { around: 14, row: 0.12, twig: 6 }
+/** a pole's fineness: the sides round it, the spacing of its rings, the sides round a stub or a tine, and whether its bark's
+ * relief is cut into the stem (sides enough round it to hold a valley a centimetre wide) */
+export interface PoleDetail { around: number; row: number; twig: number; relief: boolean }
+/** the hero tier reads the knots, the bark's relief and the axe's facets close; the tiers below draw the same shapes
+ * coarser and the bark's relief in the shading alone, under their budget */
+export const POLE_FINE: PoleDetail = { around: 40, row: 0.065, twig: 10, relief: true }
+export const POLE_COARSE: PoleDetail = { around: 14, row: 0.12, twig: 6, relief: false }
+/** a prop is seen standing in the stream or lying on its bed: its stem stays plain, its sides fewer at the hero tier */
+const PROP_AROUND = 18
 
-/** the girth's slow wander, a millimetre or two, kept off the bearings */
+/** the girth's slow wander, a few millimetres, kept off the bearings */
 function wander(seed: number, s: number, a: number): number {
-  return 0.0012 * Math.sin(s * 2.3 + seed * 40) + 0.0008 * Math.sin(s * 5.9 + a * 2 + seed * 17) + 0.0006 * Math.sin(a * 3 + s * 1.1 + seed * 9)
+  return 0.0024 * Math.sin(s * 2.3 + seed * 40) + 0.0014 * Math.sin(s * 5.9 + a * 2 + seed * 17) + 0.0009 * Math.sin(a * 3 + s * 1.1 + seed * 9)
+}
+
+const fract = (x: number): number => x - Math.floor(x)
+const smooth = (a: number, b: number, x: number): number => { const t = Math.min(1, Math.max(0, (x - a) / (b - a))); return t * t * (3 - 2 * t) }
+/** The bark's net at a point of the stem's own cylinder (metres: along it, then round it), exactly as `surface.ts` draws
+ * it from the pole's seed: how far from the nearest fissure, in metres round the stem, and how open the fissures run there. */
+export function barkField(seed: number, q: V3): { net: number; open: number } {
+  const o = seed * 37.1
+  const twist = (fract(seed * 7) * 1.4 + 0.8) * Math.sign(seed * 2 - 1)
+  const along = fract(seed * 13.7) * 0.75 + 0.7, round = (fract(seed * 5.3 + 0.37) * 0.55 + 0.75) * 38
+  const turn = fract(seed * 23.9) * TAU
+  const wander = perlin3(q[0] * 1.5 + o + 2.9, q[1] * 3 + 2.9, q[2] * 3 + 2.9)
+  const a = q[0] * twist + wander * 0.25 + turn, ca = Math.cos(a), sa = Math.sin(a)
+  const [f1, f2] = worley3(q[0] * along * 3.5 + o + wander * 0.8, (q[1] * ca - q[2] * sa) * round, (q[1] * sa + q[2] * ca) * round)
+  return { net: ((Math.sqrt(f2) - Math.sqrt(f1)) * 0.5) / round, open: smooth(-0.3, 0.4, perlin3(q[0] * 3 + o + 5.5, q[1] * 10 + 5.5, q[2] * 10 + 5.5)) }
+}
+/** the valley along a fissure: how far the stem falls in there, from the field's two values (zero on a plate) */
+export function valleyOf(seed: number, net: number, open: number): number {
+  const deep = fract(seed * 17.3 + 0.21) * 0.6 + 0.6, x = Math.min(1, net / VALLEY.w)
+  return -VALLEY.depth * deep * (0.45 + 0.55 * open) * (0.5 + 0.5 * Math.cos(Math.PI * x))
 }
 /** the stem's girth without the bark a drawknife left: the taper, the knots, the wander */
 function baseGirth(p: Pole, s: number, a: number): number {
@@ -113,13 +138,25 @@ export function growPole(sheet: Sheet, p: Pole, detail: PoleDetail, shading?: Sh
   const L = p.length, x0 = -L / 2, n = detail.around, seed = p.seed, tone = p.tone
   const R0 = p.r
   const shadeOf = (q: V3): [number, number] => (shading ? shading(q) : [0, 0])
-  const point = (s: number, a: number, bark: boolean): V3 => {
+  // the bark's valleys on a stem in its bark, where the tier cuts them; the shading draws them at every tier
+  const relief = detail.relief && !p.peeled && p.kind !== 'strut'
+  const valley = (s: number, a: number): number => {
+    if (!relief) return 0
+    const f = barkField(seed, [s, R0 * Math.cos(a), R0 * Math.sin(a)])
+    return valleyOf(seed, f.net, f.open)
+  }
+  const smoothPoint = (s: number, a: number, bark: boolean): V3 => {
     const g = baseGirth(p, s, a) + (bark ? BARK : 0)
     return [x0 + s, g * Math.cos(a), g * Math.sin(a) + bowAt(p, s)]
   }
+  const point = (s: number, a: number, bark: boolean): V3 => {
+    const g = baseGirth(p, s, a) + (bark ? BARK : 0) + valley(s, a)
+    return [x0 + s, g * Math.cos(a), g * Math.sin(a) + bowAt(p, s)]
+  }
+  // the stem's own round: the valleys' slopes are the surface's to draw, per pixel
   const normalAt = (s: number, a: number, bark: boolean): V3 => {
     const h = 1e-4
-    const ds = sub(point(s + h, a, bark), point(s - h, a, bark)), da = sub(point(s, a + h, bark), point(s, a - h, bark))
+    const ds = sub(smoothPoint(s + h, a, bark), smoothPoint(s - h, a, bark)), da = sub(smoothPoint(s, a + h, bark), smoothPoint(s, a - h, bark))
     return norm(cross(da, ds))
   }
   const angle = (k: number): number => (k / n) * TAU
@@ -185,7 +222,8 @@ export function growPole(sheet: Sheet, p: Pole, detail: PoleDetail, shading?: Sh
     const R = endR(e), facets = p.cuts[e]
     const depth = (y: number, z: number): number => Math.max(0, ...facets.map(f => facetDepth(f, y, z)))
     const sAt = (sigma: number): number => (e === 0 ? sigma : L - sigma)
-    const ngon: [number, number][] = Array.from({ length: n }, (_, k) => [R * Math.cos(angle(k)), R * Math.sin(angle(k))])
+    // the round at the cut follows the bark's valleys, so the end shows the bark's own outline
+    const ngon: [number, number][] = Array.from({ length: n }, (_, k) => { const g = R + valley(e ? L : 0, angle(k)); return [g * Math.cos(angle(k)), g * Math.sin(angle(k))] })
     const bark = p.peeled ? p.bands.some(b => b.end === e) : false
     const edgeTone: V3 = [tone, p.peeled && !bark ? 1 : 0, 0]
     const lift = (y: number, z: number, sigma: number): V3 => { const s = sAt(sigma); return [x0 + s, y, z + bowAt(p, s)] }
@@ -224,6 +262,8 @@ export function growPole(sheet: Sheet, p: Pole, detail: PoleDetail, shading?: Sh
     for (const f of facets) breakPoly = clip(breakPoly, (y, z) => -facetDepth(f, y, z))
     regions.push({ poly: breakPoly, normal: [sgn, 0, 0], sigma: () => 0 })
     const scale = 0.075 / R
+    // the hinge the strokes left between them: fibres torn rather than cut, standing proud of the break by up to 8 mm
+    const tear = (y: number, z: number): number => 0.008 * smooth(-0.15, 0.55, perlin3(y * 95 + seed * 31, z * 95 + e * 7, seed * 17))
     for (const r of regions) {
       if (r.poly.length < 3) continue
       let cy = 0, cz = 0
@@ -233,8 +273,26 @@ export function growPole(sheet: Sheet, p: Pole, detail: PoleDetail, shading?: Sh
         const sigma = Math.max(0, r.sigma(y, z)), q = lift(y, z, sigma)
         return sheet.vertex(q, r.normal, y * scale, z * scale, [tone, 1, 1], seed, [sAt(sigma), y, z], shadeOf(q))
       }
-      const c = vert(cy, cz), rim = r.poly.map(([y, z]) => vert(y, z))
-      for (let i = 0; i < rim.length; i++) sheet.tri(c, rim[i]!, rim[(i + 1) % rim.length]!)
+      const torn = detail.relief && r.normal[1] === 0 && r.normal[2] === 0
+      if (!torn) {
+        const c = vert(cy, cz), rim = r.poly.map(([y, z]) => vert(y, z))
+        for (let i = 0; i < rim.length; i++) sheet.tri(c, rim[i]!, rim[(i + 1) % rim.length]!)
+        continue
+      }
+      // the rim stays on the facets' edges; two rings inside it and the middle rise with the torn fibres
+      const fibre = (y: number, z: number, w: number): number => {
+        const h = 2e-4, t = tear(y, z) * w
+        const ty = (tear(y + h, z) - tear(y - h, z)) * w / (2 * h), tz = (tear(y, z + h) - tear(y, z - h)) * w / (2 * h)
+        const q = lift(y, z, -t)
+        return sheet.vertex(q, norm([sgn, -ty, -tz]), y * scale, z * scale, [tone, 1, 1], seed, [sAt(-t), y, z], shadeOf(q))
+      }
+      const rings = [1, 0.66, 0.33].map((f, i) => r.poly.map(([y, z]) => (i === 0 ? vert(y, z) : fibre(cy + (y - cy) * f, cz + (z - cz) * f, i === 1 ? 0.7 : 1))))
+      for (let j = 0; j + 1 < rings.length; j++) {
+        const A = rings[j]!, B = rings[j + 1]!
+        for (let i = 0; i < A.length; i++) { const i1 = (i + 1) % A.length; sheet.tri(A[i]!, B[i]!, B[i1]!); sheet.tri(A[i]!, B[i1]!, A[i1]!) }
+      }
+      const c = fibre(cy, cz, 1), last = rings[rings.length - 1]!
+      for (let i = 0; i < last.length; i++) sheet.tri(c, last[i]!, last[(i + 1) % last.length]!)
     }
   }
 
@@ -339,7 +397,7 @@ function groundworkShading(local: V3): [number, number] {
 /** One pole's geometry in its own frame: along +X, centred. */
 export function poleGeometry(p: Pole, detail: PoleDetail = POLE_FINE): BufferGeometry {
   const sheet = new Sheet()
-  growPole(sheet, p, detail, poleShading(p), lashRows(p))
+  growPole(sheet, p, p.kind === 'strut' ? { ...detail, around: Math.min(detail.around, PROP_AROUND), relief: false } : detail, poleShading(p), lashRows(p))
   return sheet.geometry()
 }
 
@@ -396,7 +454,9 @@ export function groundworkGeometry(detail: PoleDetail = POLE_FINE): BufferGeomet
     const zAxis = norm(cross(dir, helper)), yAxis = cross(zAxis, dir)
     const centre = mul(add(part.a, part.b), 0.5)
     const place = (q: V3): V3 => add(centre, add(mul(dir, q[0]), add(mul(yAxis, q[1]), mul(zAxis, q[2]))))
-    growPole(sheet, part, { ...detail, around: Math.max(12, detail.around - 4) }, q => groundworkShading(place(q)))
+    // the seats and the logs in their bark as the poles are, the stakes plain
+    const stake = part.id.startsWith('K')
+    growPole(sheet, part, { ...detail, around: stake ? 12 : detail.relief ? 28 : Math.max(12, detail.around - 4), relief: detail.relief && !stake }, q => groundworkShading(place(q)))
     for (let i = from; i < sheet.position.length / 3; i++) {
       const q = sheet.at(i)
       const nn: V3 = [sheet.normal[i * 3]!, sheet.normal[i * 3 + 1]!, sheet.normal[i * 3 + 2]!]
@@ -433,8 +493,9 @@ const served = (t: number): number => Math.min(1, Math.max(0, (Math.sin(t) - 0.2
 /** a lashing's fineness: the samples round each wrap, the corner-cutting passes, the sides round the rope and the steps
  * of each corner's run in to the crotch */
 export interface LashDetail { wrap: number; passes: number; around: number; corner: number }
-/** the bench draws the rope about five times a frame (measured): fine for the hero tier, coarse below it, each tier under its budget */
-export const LASH_FINE: LashDetail = { wrap: 11, passes: 1, around: 7, corner: 2 }
+/** the bench draws the rope about five times a frame (measured): fine for the hero tier, coarse below it, each tier under its
+ * budget; six sides round a rope 13.6 mm thick stand within 0.9 mm of its round, and pay for the poles' bark relief */
+export const LASH_FINE: LashDetail = { wrap: 11, passes: 1, around: 6, corner: 2 }
 export const LASH_COARSE: LashDetail = { wrap: 6, passes: 1, around: 4, corner: 1 }
 
 type PathPt = { p: V3; serve: number }

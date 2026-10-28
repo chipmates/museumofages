@@ -152,6 +152,9 @@ export interface Band { end: 0 | 1; reach: number; seed: number }
 export interface Tine { ang: number; spread: number; len: number; r: number; back: number }
 /** bark stands this proud of the peeled wood */
 export const BARK = 0.004
+/** the bark's relief cut into a stem in its bark: a valley along each fissure of its surface's net, its half width round
+ * the stem and its depth on a mean pole (each pole's own depth scales it, as its surface scales the fissures) */
+export const VALLEY = { w: 0.012, depth: 0.003 } as const
 
 /** a pole's radius at s metres from end a */
 export function radiusAt(p: Pole, s: number): number {
@@ -178,7 +181,7 @@ function support(i: number): { xy: [number, number]; r: number } {
 function rodLine(k: number, frame: 'A' | 'B'): Pole {
   const seed = hash(k, frame === 'A' ? 1 : 2, 3.3)
   // each rod's butt at its bank end, where it is pushed from and stands: the pair that goes out together balances alike
-  const taper = (0.016 + 0.012 * hash(k, frame === 'A' ? 5 : 6)) * (k <= 3 ? 1 : -1)
+  const taper = (0.019 + 0.012 * hash(k, frame === 'A' ? 5 : 6)) * (k <= 3 ? 1 : -1)
   const plane = ROD_PLANE[k]!, z = planeZ(frame, plane)
   // supports: the joist index at each end (0 and 6 are the seats) and whether the rod lies over (+1) or under (-1) it
   let i0: number, i1: number, f: { d: [number, number]; n: [number, number] }
@@ -329,6 +332,23 @@ function dress(p: Pole): void {
   if (p.kind === 'joist') {
     // threaded in a-end first along the rods, so only its trailing end keeps its bark
     if (p.peeled) p.bands = [{ end: 1, reach: 0.12, seed: h(51) }]
+    // the crown joist slides along its rods and over its forks: a clean stem
+    if (p.k === 3) return
+    // knots between the frames' inner planes, clear of them by 0.4 m and of where a fork holds a second joist; a kit's
+    // joist keeps a branch cut short on its top, a second joist is rolled off its bank, so its knots stay flush
+    const mid = L / 2, half = FRAME_Z - PLANE_STEP - 0.4, forks = p.k === 2 ? [0.45] : p.k === 4 ? [0.72] : []
+    const clear = (s: number): boolean => Math.abs(s - mid) < half && forks.every(f => Math.abs(Math.abs(s - mid) - f) > 0.14)
+    const kit = p.k === 1 || p.k === 5, spots: number[] = []
+    for (let i = 0; i < 40 && spots.length < 2; i++) {
+      const s = mid - half + 2 * half * h(60 + i)
+      if (clear(s) && spots.every(o => Math.abs(o - s) > 0.3)) spots.push(s)
+    }
+    spots.forEach((s, i) => {
+      const stubbed = kit && i === 0
+      const ang = stubbed ? 0.4 * (h(70 + i) - 0.5) : (h(72 + i) > 0.5 ? 1 : -1) * (1.3 + 0.3 * h(74 + i))
+      p.knots.push({ s, ang, amp: stubbed ? 0.016 : 0.006, w: 0.06 })
+      if (stubbed) p.stubs.push({ s, ang, lean: (h(76) > 0.5 ? 1 : -1) * 0.6, len: 0.03 + 0.02 * h(77), r: 0.014 })
+    })
     return
   }
   if (p.kind === 'strut') return
