@@ -154,7 +154,7 @@ export interface Tine { ang: number; spread: number; len: number; r: number; bac
 export const BARK = 0.004
 /** the bark's relief cut into a stem in its bark: a valley along each fissure of its surface's net, its half width round
  * the stem and its depth on a mean pole (each pole's own depth scales it, as its surface scales the fissures) */
-export const VALLEY = { w: 0.012, depth: 0.003 } as const
+export const VALLEY = { w: 0.011, depth: 0.006 } as const
 
 /** a pole's radius at s metres from end a */
 export function radiusAt(p: Pole, s: number): number {
@@ -352,7 +352,7 @@ function dress(p: Pole): void {
     return
   }
   if (p.kind === 'strut') return
-  p.bow = [(0.009 + 0.012 * h(1)) * (h(2) > 0.5 ? 1 : -1), 0.006 * (h(3) - 0.5)]
+  p.bow = [(0.018 + 0.02 * h(1)) * (h(2) > 0.5 ? 1 : -1), 0.012 * (h(3) - 0.5)]
   // the free stretches: clear of every bearing by 0.4 m and of the ends by 0.35 m
   const free = (s: number): boolean => s > 0.35 && s < L - 0.35 && p.bears.every(b => Math.abs(s - b) > 0.4)
   const spots: number[] = []

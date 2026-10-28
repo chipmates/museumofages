@@ -262,8 +262,8 @@ export function growPole(sheet: Sheet, p: Pole, detail: PoleDetail, shading?: Sh
     for (const f of facets) breakPoly = clip(breakPoly, (y, z) => -facetDepth(f, y, z))
     regions.push({ poly: breakPoly, normal: [sgn, 0, 0], sigma: () => 0 })
     const scale = 0.075 / R
-    // the hinge the strokes left between them: fibres torn rather than cut, standing proud of the break by up to 8 mm
-    const tear = (y: number, z: number): number => 0.008 * smooth(-0.15, 0.55, perlin3(y * 95 + seed * 31, z * 95 + e * 7, seed * 17))
+    // the hinge the strokes left between them: fibres torn rather than cut, standing proud of the break by up to 7 mm
+    const tear = (y: number, z: number): number => 0.007 * smooth(-0.25, 0.5, perlin3(y * 55 + seed * 31, z * 55 + e * 7, seed * 17))
     for (const r of regions) {
       if (r.poly.length < 3) continue
       let cy = 0, cz = 0

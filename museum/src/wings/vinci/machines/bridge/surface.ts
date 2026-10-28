@@ -211,15 +211,14 @@ export async function bridgeSurfaces(stack: Stack): Promise<BridgeSurfaces> {
     // the checks a drying end opens, a few along the rays
     const ang = atan(v, u)
     const check = smoothstep(0.986, 0.998, cos(ang.mul(5).add(o).add(mx_noise_float(vec3(rr.mul(60), o, 2.2)).mul(0.5)))).mul(smoothstep(0.012, 0.03, rr)).mul(fade(ang.mul(5), 1))
-    const endCol = mx(lin('#7f6c58'), lin('#9c8c76'), heart).mul(float(1).sub(check.mul(0.55))).mul(float(1).sub(rings.mul(ringFade).mul(0.18))).mul(cutStroke.mul(0.12).add(0.9))
+    const endCol = mx(lin('#74604d'), lin('#8c7a64'), heart).mul(float(1).sub(check.mul(0.55))).mul(float(1).sub(rings.mul(ringFade).mul(0.18))).mul(cutStroke.mul(0.12).add(0.9))
       .mul(float(1).sub(smoothstep(0.066, 0.072, rr).mul(0.6))).mul(smoothstep(0, 0.004, rr).mul(0.25).add(0.75))
     // the cut face in relief, in the shading: the latewood a hair proud of the earlywood, the checks open, each stroke's
     // scoop across the face it cut (its way down the face from the face's own tilt), the torn hinge between the faces rough
     const tilt = vec2(normalGeometry.y, normalGeometry.z), tl = tilt.length(), faced = smoothstep(0.05, 0.2, tl)
     const down = vec2(C.y, C.z).dot(tilt.div(tl.max(1e-4)))
-    const scoop = down.div(0.011).add(mx_noise_float(vec3(C.y.mul(60), C.z.mul(60), o)).mul(0.35)).fract().mul(2).sub(1)
-    const hEnd = float(1).sub(scoop.mul(scoop)).mul(-0.0006).mul(faced).add(rings.mul(ringFade).mul(0.00022)).sub(check.mul(0.0012))
-      .add(mx_noise_float(vec3(C.y.mul(220), C.z.mul(220), o.add(3))).mul(0.0004).mul(float(1).sub(faced)))
+    const scoop = down.div(0.016).add(mx_noise_float(vec3(C.y.mul(45), C.z.mul(45), o)).mul(0.3)).fract().mul(2).sub(1)
+    const hEnd = float(1).sub(scoop.abs().pow(1.4)).mul(-0.0013).mul(faced).add(rings.mul(ringFade).mul(0.0003)).sub(check.mul(0.0012))
     // where another part bears on it and under its lashings, from the moment that part arrives
     const S: N = attribute('aShade', 'vec2')
     const contact = float(1).sub(S.x.mul(1.25).clamp(0, 0.82).mul(smoothstep(S.y, S.y.add(0.35), lashClock)))
