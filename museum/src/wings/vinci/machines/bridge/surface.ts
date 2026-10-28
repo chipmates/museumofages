@@ -53,13 +53,13 @@ function airBehind(col: N): N {
   return mx(col, vec3(luma(col)).mul(vec3(0.62, 0.68, 0.76)), smoothstep(1, 9, behind).mul(0.55))
 }
 
-/** the air in front of the far half: the lit picture of whatever lies behind the bridge's middle turns toward the
- * dusk's own value, a little more with every metre, so the far frame stands softer than the near one; the bench's air
- * takes over only past the far bank */
-const AIR = { colour: '#4f4a44', most: 0.45, from: -1, to: 8 }
+/** the air between the bridge's two frames: the lit picture of its poles and rope turns toward the dusk's own value
+ * from its near frame to its far one, as the eye sees them, and lets go again past the far joists' ends, so the far
+ * frame stands back from the near one while the bank and the props laid on it keep their edges */
+const AIR = { colour: '#4f4a44', most: 0.38, from: -1.2, to: 1.1, past: [2.6, 3.6] } as const
 function airOut(m: MeshStandardNodeMaterial): void {
   const behind = positionWorld.sub(cameraPosition).length().sub(cameraPosition.sub(vec3(0, 1.35, 0)).length())
-  const f = smoothstep(AIR.from, AIR.to, behind).mul(AIR.most), air = lin(AIR.colour)
+  const f = smoothstep(AIR.from, AIR.to, behind).mul(float(1).sub(smoothstep(AIR.past[0], AIR.past[1], behind))).mul(AIR.most), air = lin(AIR.colour)
   const own = (m as N).setupOutput.bind(m)
   ;(m as N).setupOutput = (builder: N, out: N): N => own(builder, vec4(mx(out.rgb, air, f), out.a))
 }
@@ -156,7 +156,7 @@ export async function bridgeSurfaces(stack: Stack): Promise<BridgeSurfaces> {
       // a pixel's width along the field's slope, in metres
       return { slope: gl.max(floor), px: g.dot(dCx).abs().add(g.dot(dCy).abs()).div(gl) }
     }
-    const NET = lineOf('net', 0.3), LINE = lineOf('line', 25), CHECK = lineOf('check', 15), LENT = lineOf('lent', 40)
+    const NET = lineOf('net', 0.08), LINE = lineOf('line', 25), CHECK = lineOf('check', 15), LENT = lineOf('lent', 40)
     // a line w metres wide at a distance d from it, never drawn narrower than a pixel and a half; widened, it pales by
     // as much, so a fine line thins out and never steps. Its colour has a pixel's edge; its groove slopes across its
     // whole width, so the relief never turns on one pixel
@@ -170,8 +170,10 @@ export async function bridgeSurfaces(stack: Stack): Promise<BridgeSurfaces> {
     // shades it at every tier
     const valleyOf = (f: typeof F0): N => float(-VALLEY.depth).mul(deep).mul(f.open.mul(0.55).add(0.45)).mul(cos(f.net.div(VALLEY.w).min(1).mul(Math.PI)).mul(0.5).add(0.5))
     const barkOf = (f: typeof F0): { h: N; fissure: N; shoulder: N; check: N; skin: N; lent: N; line: N } => {
-      // each fissure opens and closes along its length, 1.2 to 4.7 mm wide on a mean pole
-      const d = f.net, w = f.open.mul(0.0035).add(0.0012).mul(wide)
+      // each fissure opens and closes along its length, 1.2 to 4.7 mm wide on a mean pole. The net's value is a distance
+      // round the stem; across the stem its cells are stretched about elevenfold, so the distance is the value over its
+      // own slope, as the plates' other lines are, or a fissure crossing the stem is drawn many times its width
+      const d = f.net.div(NET.slope), w = f.open.mul(0.0035).add(0.0012).mul(wide)
       const fis = band(d, w, NET.px), sh = band(d, w.mul(1.8), NET.px)
       const fissure = fis.ink, shoulder = sh.ink
       // the plates' own fine lines along the stem, a few millimetres apart, and short checks across them
@@ -192,9 +194,7 @@ export async function bridgeSurfaces(stack: Stack): Promise<BridgeSurfaces> {
     const mottle = mx_noise_float(vec3(C.x.mul(1.6).add(o), C.y.mul(8), C.z.mul(8))).mul(0.5).add(0.5)
     const lichen = smoothstep(0.6, 0.8, mx_noise_float(vec3(C.x.mul(1.2).add(o), C.y.mul(14), C.z.mul(14)).add(2.7)).mul(0.5).add(0.5))
     const plateTop = mx(mx(lin('#544c43'), lin('#777066'), plate), lin('#5f5042'), mottle.mul(0.35))
-    // the valleys hold less of the sky
-    const hollow = valleyOf(F0).div(-VALLEY.depth * 1.2).clamp(0, 1)
-    const barkCol = mx(mx(plateTop, lin('#7f7d6d'), lichen.mul(0.32)), lin('#2b231c'), b.fissure.mul(deep.mul(0.72).min(0.86))).mul(float(1).sub(hollow.mul(0.3)))
+    const barkCol = mx(mx(plateTop, lin('#7f7d6d'), lichen.mul(0.32)), lin('#2b231c'), b.fissure.mul(deep.mul(0.72).min(0.86)))
       .mul(float(1).sub(b.shoulder.mul(0.06))).mul(float(1).sub(b.line.mul(0.12))).mul(float(1).sub(b.check.mul(0.1))).mul(b.skin.mul(0.14).add(1)).mul(float(1).add(b.lent.mul(0.22)))
     // PEELED: pale wood under the drawknife, its strokes as facets along the stem, each of its own width and depth and
     // wandering round as the knife did; bark left in the hollows. A whole number of facets round, so the angle's own
@@ -340,6 +340,6 @@ export async function bridgeSurfaces(stack: Stack): Promise<BridgeSurfaces> {
     waterTop.emissiveNode = reflection.rgb.mul(fresnel.mul(0.8))
     waterTop.needsUpdate = true
   }
-  for (const m of [pole, hemp, earth, water, waterTop]) airOut(m)
+  for (const m of [pole, hemp]) airOut(m)
   return { pole, hemp, earth, water, waterTop, mirror, lashClock: lashClock as unknown as { value: number }, streamClock: streamClock as unknown as { value: number }, sets }
 }

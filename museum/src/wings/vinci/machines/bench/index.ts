@@ -667,10 +667,10 @@ export function createBench(stack: Stack, onExit: () => void) {
     // the bridge on its bank: the low sun from the near bank's side is its key, stronger, the sky's share on its own
     // surfaces cut so each pole turns from lit to shade across its round; the bank's earth in the bounce; and one broad
     // lamp high over the far bank's back, falling off with distance, for the tops of the poles and their far edges
-    'bridge-of-poles': { lux: 360, ambient: .55, ground: '#5a5040', wide: true, fill: { closed: .5, section: .5 }, lamps: { closed: [
-      { at: [4, 10, -6], aim: [0, 1.4, 0], lux: 130, kelvin: 4300, angle: .6, penumbra: .8, decay: 2 },
+    'bridge-of-poles': { lux: 480, ambient: .55, ground: '#5a5040', wide: true, fill: { closed: .5, section: .5 }, lamps: { closed: [
+      { at: [4, 10, -6], aim: [0, 1.4, 0], lux: 220, kelvin: 4300, angle: .6, penumbra: .8, decay: 2 },
     ], section: [
-      { at: [4, 10, -6], aim: [0, 1.4, 0], lux: 130, kelvin: 4300, angle: .6, penumbra: .8, decay: 2 },
+      { at: [4, 10, -6], aim: [0, 1.4, 0], lux: 220, kelvin: 4300, angle: .6, penumbra: .8, decay: 2 },
     ] } },
     'armoured-car': { lux: 240, ambient: 1.15, ground: '#6a604f', sectionLux: 140, fill: { closed: .4 }, lamps: {
       // low on the sun's side of the visitor: the near skirt and eave take the most, the cone turns away from it
