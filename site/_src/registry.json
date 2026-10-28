@@ -456,7 +456,7 @@
     ],
     "out": {
       "name": "Agora Cosmica",
-      "href": "https://agoracosmica.org/app?figure=leonardo-da-vinci&lang={lang}",
+      "href": {"en": "https://agoracosmica.org/figures/leonardo-da-vinci/", "de": "https://agoracosmica.org/de/figures/leonardo-da-vinci/", "fr": "https://agoracosmica.org/figures/leonardo-da-vinci/", "it": "https://agoracosmica.org/figures/leonardo-da-vinci/", "es": "https://agoracosmica.org/figures/leonardo-da-vinci/", "pt-BR": "https://agoracosmica.org/figures/leonardo-da-vinci/", "bg": "https://agoracosmica.org/figures/leonardo-da-vinci/"},
       "speaks": ["en", "de"]
     },
     "about": {

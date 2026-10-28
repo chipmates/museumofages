@@ -930,8 +930,10 @@ def other_sites(c):
     for slug in c.open:
         link, line = c.wings[slug].get("out"), c.wd[slug].get("out", {}).get("line")
         if link and line:
-            # the other site in the page's language where it speaks it (speaks), else in English
-            href = esc(link["href"].replace("{lang}", c.lang if c.lang in link.get("speaks", [c.lang]) else "en"))
+            # the other site in the page's language where it speaks it (speaks), else in English; an href per
+            # language where the other site's addresses differ by more than a language code
+            to = c.lang if c.lang in link.get("speaks", [c.lang]) else "en"
+            href = esc(link["href"][to] if isinstance(link["href"], dict) else link["href"].replace("{lang}", to))
             out.append(f'<p class="other"><a class="more" href="{href}" rel="noopener"><span>{esc(link["name"])}</span>{ARROW}</a>'
                        f'<span class="other__line">{line}</span></p>')
     return "".join(out)
