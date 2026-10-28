@@ -1881,7 +1881,7 @@
     }
   ],
   "motion": {
-    "period_s": 40,
+    "period_s": 73,
     "loop": true,
     "phases": [
       {
@@ -1892,50 +1892,50 @@
         "interpolation": "hold"
       },
       {
-        "name": "Built from both banks at once toward the crown; no pole is ever in the air on its own: rods are pushed over the seats into the stream, joists roll in and float or ride on the rods under them, and each is raised on forked props (22 in all) whose feet slide on the bed; each lashing winds on as its crossing closes and the props are laid down once what their load rests on is lashed",
+        "name": "Built from both banks at once toward the crown; no pole is ever in the air on its own: rods are pushed over the seats into the stream, joists roll in and float or ride on the rods under them, and each is raised on forked props (22 in all) whose feet slide on the bed; each lashing winds on as its crossing closes and the props are laid down once what their load rests on is lashed, the last a pair at a time",
         "start_s": 0.3,
-        "duration_s": 22.7,
+        "duration_s": 33,
         "joint_values": {
           "place-R1A": "to 0 from 0.30 s",
           "place-R1B": "to 0 from 0.30 s",
           "place-J1": "to 0 from 0.30 s",
-          "place-E0A": "to 0 from 4.60 s",
-          "place-E0B": "to 0 from 4.60 s",
-          "place-R3A": "to 0 from 3.70 s",
-          "place-R3B": "to 0 from 3.70 s",
+          "place-E0A": "to 0 from 0.30 s",
+          "place-E0B": "to 0 from 0.30 s",
+          "place-R3A": "to 0 from 2.70 s",
+          "place-R3B": "to 0 from 2.70 s",
           "place-J2": "to 0 from 3.00 s",
-          "place-R2A": "to 0 from 10.80 s",
-          "place-R2B": "to 0 from 10.80 s",
-          "place-J3": "to 0 from 18.00 s",
+          "place-R2A": "to 0 from 11.90 s",
+          "place-R2B": "to 0 from 11.90 s",
+          "place-J3": "to 0 from 19.90 s",
           "place-R5A": "to 0 from 0.55 s",
           "place-R5B": "to 0 from 0.55 s",
           "place-J5": "to 0 from 0.55 s",
-          "place-E6A": "to 0 from 4.85 s",
-          "place-E6B": "to 0 from 4.85 s",
+          "place-E6A": "to 0 from 0.55 s",
+          "place-E6B": "to 0 from 0.55 s",
           "place-J4": "to 0 from 3.25 s",
-          "place-R4A": "to 0 from 11.05 s",
-          "place-R4B": "to 0 from 11.05 s"
+          "place-R4A": "to 0 from 12.15 s",
+          "place-R4B": "to 0 from 12.15 s"
         },
         "interpolation": "smootherstep"
       },
       {
         "name": "The bridge stands whole",
-        "start_s": 23,
-        "duration_s": 8,
+        "start_s": 33.3,
+        "duration_s": 6.2,
         "joint_values": {},
         "interpolation": "hold"
       },
       {
-        "name": "Back in the reverse order, 2.6 times as fast",
-        "start_s": 31,
-        "duration_s": 8.8462,
+        "name": "Back in the reverse order, at the pace it was built",
+        "start_s": 39.5,
+        "duration_s": 33.3,
         "joint_values": {},
         "interpolation": "the same paths reversed"
       },
       {
         "name": "The yards again",
-        "start_s": 39.8462,
-        "duration_s": 0.1538,
+        "start_s": 72.8,
+        "duration_s": 0.2,
         "joint_values": {},
         "interpolation": "hold"
       }

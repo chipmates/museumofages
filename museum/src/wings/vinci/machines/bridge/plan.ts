@@ -518,6 +518,8 @@ export interface Prop {
   crotch: V3
   /** its load slid along its fork to a second hold, metres from end a, between two times */
   slide?: { s: number; at: Step }
+  /** how far along each tine its load touches it, at the widest it holds */
+  touch: number
 }
 
 const mapPt = (c: [number, number], d: number, q: [number, number]): [number, number] => {
@@ -542,7 +544,7 @@ const along = (p: Pole, a: V3, b: V3, s: number): V3 => {
   return [a[0] + (b[0] - a[0]) * f, a[1] + (b[1] - a[1]) * f, a[2] + (b[2] - a[2]) * f]
 }
 /** a prop's stance under a still load: its length chosen so it stands at its angle there with its foot on the ground */
-function stance(load: Pole, a: V3, b: V3, s: number, away: [number, number], angle: number): { length: number; foot: V3; crotch: V3 } {
+function stance(load: Pole, a: V3, b: V3, s: number, away: [number, number], angle: number): { length: number; foot: V3; crotch: V3; touch: number } {
   const P = along(load, a, b, s)
   const D = (() => { const d: V3 = [b[0] - a[0], b[1] - a[1], b[2] - a[2]]; const l = Math.hypot(...d); return [d[0] / l, d[1] / l, d[2] / l] as V3 })()
   const u: V3 = [-away[0] * Math.cos(angle), Math.sin(angle), -away[1] * Math.cos(angle)]
@@ -555,7 +557,7 @@ function stance(load: Pole, a: V3, b: V3, s: number, away: [number, number], ang
   }
   const crotch: V3 = [P[0] - u[0] * h, P[1] - u[1] * h, P[2] - u[2] * h]
   const foot: V3 = [P[0] - u[0] * reach, P[1] - u[1] * reach, P[2] - u[2] * reach]
-  return { length: reach - h, foot, crotch }
+  return { length: reach - h, foot, crotch, touch: touchAlong(radiusAt(load, s), phi) }
 }
 
 // ---------------------------------------------------------------- the moves
@@ -592,7 +594,7 @@ export const PROPS: Prop[] = (() => {
       a = [p.a[0], p.a[1], p.a[2] + THREAD_Z]; b = [p.b[0], p.b[1], p.b[2] + THREAD_Z]
     }
     const st = stance(p, a, b, s, away, angle)
-    list.push({ id, load, s, away, angle, length: st.length, frame: p.frame, foot: st.foot, crotch: st.crotch })
+    list.push({ id, load, s, away, angle, length: st.length, frame: p.frame, foot: st.foot, crotch: st.crotch, touch: st.touch })
   }
   // a fork holds a stretch of bare wood: the requested place nudged clear of the load's stubs and knots
   const fromFoot = (p: Pole, d: number): number => {
@@ -625,7 +627,8 @@ export const PROPS: Prop[] = (() => {
       const p = byId(`R${k}${frame}`), m = MOVES_OF(p.id)
       add(`F${p.id}`, p.id, fromFoot(p, then), out, 1.22)
       const last = list[list.length - 1]!
-      list[list.length - 1] = { ...last, s: fromFoot(p, first), slide: { s: fromFoot(p, then), at: [m.foot![1] + 0.05, m.lift![0] - 0.05] } }
+      const s0 = fromFoot(p, first)
+      list[list.length - 1] = { ...last, s: s0, slide: { s: fromFoot(p, then), at: [m.foot![1] + 0.05, m.lift![0] - 0.05] }, touch: Math.max(last.touch, last.touch + touchAlong(radiusAt(p, s0), Math.PI / 2) - touchAlong(radiusAt(p, last.s), Math.PI / 2)) }
     }
   }
   // a second joist is raised out of the stream on two forks between the frames, the far one's either side of the near one's
@@ -649,9 +652,9 @@ function propPole(s: Prop): Pole {
   dress(p)
   const h = (k: number): number => hash(seed * 991, k)
   p.bow = [0.012 * (h(1) > 0.5 ? 1 : -1), 0]
-  // each tine runs a little past where the load lies on it at its widest
-  const reach = touchAlong(POLE_R + 0.012, Math.PI / 2)
-  p.tines = [-1, 1].map((side, i) => ({ ang: (side * Math.PI) / 2, spread: TINE_SPREAD, len: reach + 0.05 + 0.03 * h(4 + i), r: TINE_R, back: 0.06 }))
+  // each tine ends two or three centimetres past where its own load lies on it at its widest, so seen across the load
+  // the near tine cradles it and never stands up over its face
+  p.tines = [-1, 1].map((side, i) => ({ ang: (side * Math.PI) / 2, spread: TINE_SPREAD, len: s.touch + 0.02 + 0.01 * h(4 + i), r: TINE_R, back: 0.06 }))
   p.knots.push({ s: s.length * (0.45 + 0.2 * h(6)), ang: Math.PI * (h(7) > 0.5 ? 0.5 : -0.5), amp: 0.008, w: 0.05 })
   return p
 }
@@ -662,9 +665,6 @@ export const POLES: Pole[] = [...ORDER.map(byId), ...PROPS.map(propPole)]
 
 // ---------------------------------------------------------------- the clock
 
-export const PERIOD = 40
-export const HOLD_END = 31
-export const REWIND = 2.8
 
 /** which pole a kit's member rides on: its leading rod */
 export const RIDES: Record<string, string> = Object.fromEntries(Object.entries(KITS).flatMap(([lead, members]) => members.map(m => [m, lead])))
@@ -696,6 +696,11 @@ export function lashEnd(c: Crossing): number { return lashStart(c) + LASH_TIME }
  * second joists under them are lashed (they are slid away), the rest together once the last lashing is wound (they lie
  * where they are laid); the crown joist's let go as it slides off them. */
 export const PROP_RISE = 0.6, PROP_DOWN = 1.0, PARK_SLIDE = 1.2
+/** THE STRIKE. Once the last lashing is wound the last props come out a pair at a time, each pair laid down slowly
+ * while the rest still stand: the forks under the near second joist, then the far one's, then the props under the near
+ * second rods, then the far ones', next to the crown, so the arch is seen taking its weight onto its weave pair by pair */
+export const STRIKE: readonly (readonly [string, string])[] = [['FJ2', 'GJ2'], ['FJ4', 'GJ4'], ['FR2A', 'FR2B'], ['FR4A', 'FR4B']]
+export const STRIKE_GAP = 2.6, STRIKE_DOWN = 1.8
 /** idle props lie with their heads at least this far up the stream from the bridge's middle, or down it */
 export const PARK_UP = 5.6, PARK_DOWN = 6.8
 export interface PropTimes { rise: Step; release: number; down: Step; parkIn?: Step; parkOut?: Step }
@@ -728,8 +733,10 @@ export const PROP_TIMES: Record<string, PropTimes> = Object.fromEntries(PROPS.ma
   const load = byId(s.load), m = movesOf(s.load)
   const second = load.kind === 'rod' && (load.k === 2 || load.k === 4)
   const start = second ? m.foot![0] : m.lift![0]
-  const release = load.id === 'J3' ? threadRelease(s, load, m.thread!) : firstOut(s) ? FIRST_OUT : LAST_OUT
-  const rise: Step = [start - PROP_RISE, start], down: Step = [release + 0.05, release + 0.05 + PROP_DOWN]
+  const pair = STRIKE.findIndex(p => p.includes(s.id))
+  if (load.id !== 'J3' && !firstOut(s) && pair < 0) throw new Error(`the prop ${s.id} has no turn in the strike`)
+  const release = load.id === 'J3' ? threadRelease(s, load, m.thread!) : firstOut(s) ? FIRST_OUT : LAST_OUT + pair * STRIKE_GAP
+  const rise: Step = [start - PROP_RISE, start], down: Step = [release + 0.05, release + 0.05 + (pair >= 0 ? STRIKE_DOWN : PROP_DOWN)]
   return [s.id, {
     rise, release, down,
     ...(parksBefore(s) ? { parkIn: [rise[0] - PARK_SLIDE, rise[0]] as Step } : {}),
@@ -739,7 +746,15 @@ export const PROP_TIMES: Record<string, PropTimes> = Object.fromEntries(PROPS.ma
 
 export const BUILT = Math.max(...CROSSINGS.map(lashEnd), ...Object.values(PROP_TIMES).map(t => (t.parkOut ?? t.down)[1])) + 0.1
 
-/** the build's own clock for a time in the cycle: forward, held, run back faster, then the yard */
+/** the bridge stands whole this long once its last prop is laid, then is taken down at the build's own pace and the
+ * cycle ends a moment after the yard is whole again */
+export const HOLD = 6.2
+export const HOLD_END = BUILT + HOLD
+export const REWIND = 1
+export const PERIOD = 73
+if (HOLD_END + BUILT / REWIND > PERIOD - 0.1) throw new Error(`the bridge's cycle overruns its period: ${(HOLD_END + BUILT / REWIND).toFixed(2)} s`)
+
+/** the build's own clock for a time in the cycle: forward, held, run back at the same pace, then the yard */
 export function buildClock(time: number): number {
   const t = ((time % PERIOD) + PERIOD) % PERIOD
   if (t < HOLD_END) return Math.min(t, BUILT)
