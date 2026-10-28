@@ -14,8 +14,7 @@
      overture. */
 
 import { PerspectiveCamera, Scene } from 'three/webgpu'
-import { WING_TEXT, lang, say, type Bilingual } from './content'
-import { DISCLOSURES } from '../content/disclosures'
+import { WING_TEXT, agoraFigureUrl, lang, say, type Bilingual } from './content'
 import { LOBBY_TEXT } from '../content/lobby'
 import plateCss from './title-plate.css?inline'
 import { windowOwnsTheScreen } from './window-chrome'
@@ -26,7 +25,6 @@ import type { WingEntry } from './registry'
 import type { Stack } from '../stack'
 import type { ManifestEntry } from '../manifest'
 
-const APP_ORIGIN = 'https://agoracosmica.org'
 
 /** how often a standing station keeps a still of itself */
 const STILL_EVERY_S = 4
@@ -222,14 +220,10 @@ export interface WingModesWords {
   go: Bilingual
 }
 
-/** The figure's mode choice in the app: the figure alone, no question. The
-    fragment names the arrival's class for the app's counts and never travels
-    with the request. */
+/** The figure's stories page in Agora. The fragment names the arrival's
+    class for the counts and never travels with the request. */
 function modesUrl(entry: WingEntry): string {
-  const p = new URLSearchParams()
-  p.set('figure', entry.publicSlug ?? entry.slug)
-  p.set('lang', lang())
-  return `${APP_ORIGIN}/app?${p.toString()}#src=museum`
+  return `${agoraFigureUrl(entry.publicSlug ?? entry.slug)}#src=museum`
 }
 
 let toTheModes: ((words: WingModesWords) => string) | null = null
@@ -463,13 +457,8 @@ export function createWingFrame(
      drawer nothing can open would be read as unopened rather than as absent. */
   const doorWords = el('div', 'wing-door-words')
   doorWords.id = 'wing-door-words'
-  const doorLead = el('p', 'wing-door-word wing-door-lead')
-  /* THE CANON'S OWN SENTENCE, never a second telling of it: the museum says
-     once what an Echo is, and the honesty check reads this one against it. */
-  const doorEcho = el('p', 'wing-door-word')
-  doorEcho.dataset['naDisclosure'] = 'stone'
   const doorTerms = el('p', 'wing-door-word wing-door-terms')
-  doorWords.append(doorLead, doorEcho, doorTerms)
+  doorWords.append(doorTerms)
   const continueDoor = el('a', 'na-plate-primary')
   continueDoor.target = '_blank'; continueDoor.rel = 'noopener'
   const closeDisclosure = el('button', 'na-plate-second')
@@ -489,8 +478,6 @@ export function createWingFrame(
     // heading in the centred plate
     disclosure.setAttribute('aria-labelledby', band ? doorAsked.id : doorTitle.id)
     doorTitle.textContent = plateWords ? say(plateWords.title).replace('{name}', entry?.name ?? '') : ''
-    doorLead.textContent = say(WING_TEXT.doorLead)
-    doorEcho.textContent = say(DISCLOSURES.stone)
     doorTerms.textContent = say(WING_TEXT.doorTerms)
     continueDoor.textContent = plateWords ? say(plateWords.go) : ''
     closeDisclosure.textContent = say(WING_TEXT.doorStay)

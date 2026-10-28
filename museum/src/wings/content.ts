@@ -18,6 +18,12 @@ export function lang(): Lang {
   return document.documentElement.lang.slice(0, 2) === 'de' ? 'de' : 'en'
 }
 
+/** A figure's stories page in Agora, in the world language (its pages are
+    English and German only). */
+export function agoraFigureUrl(slug: string, language: Lang = lang()): string {
+  return `https://agoracosmica.org/${language === 'de' ? 'de/' : ''}figures/${slug}/`
+}
+
 export interface Bilingual {
   en: string
   de: string
@@ -317,18 +323,11 @@ export const WING_TEXT = {
     en: 'Opens the library in a new tab. 30 free messages a day. No signup needed.',
     de: 'Öffnet die Bibliothek in einem neuen Tab. 30 kostenlose Nachrichten pro Tag. Ohne Anmeldung.',
   },
-  /* THE PLATE IN FRONT OF THE LIBRARY. A first time visitor has never heard
-     of the library, so the plate says what it leads to before it opens; its
-     heading and its way in are the wing's own words. What an Echo is comes
-     from the disclosure canon and is never written twice. */
-  /** one row on the desktop's band, German included */
-  doorLead: {
-    en: 'Behind this door is the Agora Cosmica library: learn from thirty lives, in chapters and conversations.',
-    de: 'Die Tür führt zur Bibliothek Agora Cosmica: Lerne aus dreißig Leben, in Kapiteln und Gesprächen.',
-  },
+  /* THE PLATE IN FRONT OF THE LIBRARY: its heading and its way in are the
+     wing's own words. */
   doorTerms: {
-    en: 'Nonprofit and Open Source. Opens in a new tab. 30 free messages a day. No signup needed.',
-    de: 'Non-Profit und Open Source. Öffnet sich in einem neuen Tab. 30 kostenlose Nachrichten pro Tag. Ohne Anmeldung.',
+    en: 'Nonprofit and Open Source. Opens in a new tab. No signup needed.',
+    de: 'Non-Profit und Open Source. Öffnet sich in einem neuen Tab. Ohne Anmeldung.',
   },
   doorStay: {
     en: 'Stay in the museum',

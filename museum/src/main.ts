@@ -21,7 +21,7 @@ import type { DeskPanelRow } from './wings/desk-panel'
 import { readLabels, type ForgeLabel } from './core/labels'
 import { DISCLOSURES } from './content/disclosures'
 import { WINGS, wingBySlug, wingsOpen, wingsPreparing } from './wings/registry'
-import { catalogPage, lang, pageLang, say, sayNamed, wingCount, wordsReady } from './wings/content'
+import { agoraFigureUrl, catalogPage, lang, pageLang, say, sayNamed, wingCount, wordsReady } from './wings/content'
 import { publishedLangs } from './wings/languages'
 import { adoptBrowserLanguage } from './wings/browser-lang'
 import { sitePage, wayOut, type Settings } from './wings/way-out'
@@ -1317,7 +1317,7 @@ function syncInstruments(): void {
   for (const control of instrumentsEl.querySelectorAll<HTMLElement>('[data-pace-choice]'))
     control.setAttribute('aria-pressed', String(control.dataset['paceChoice'] === gaitPace()))
   const library = instrumentsEl.querySelector<HTMLAnchorElement>('.inst-library')
-  if (library) library.href = `https://agoracosmica.org/app?lang=${lang()}`
+  if (library) library.href = agoraFigureUrl(wingBySlug('vinci')?.publicSlug ?? 'leonardo-da-vinci')
   syncSoundLabel()
   paintHandle()
 }

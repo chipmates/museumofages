@@ -1,4 +1,4 @@
-import { WING_TEXT, type Lang } from '../../../content'
+import { WING_TEXT, agoraFigureUrl, type Lang } from '../../../content'
 import { wingBySlug } from '../../../registry'
 import { vinciContent, vinciHourArithmetic, vinciHourIntegrity, vinciHourLabel } from '../../content'
 import orientationCss from './orientation.css?raw'
@@ -183,10 +183,7 @@ export function createTableOrientation(options: TableOrientationOptions) {
     sourceButton.setAttribute('aria-expanded', String(drawer.open))
     question.textContent = station.door[language]
     door.textContent = WING_TEXT.door[language]
-    const query = new URLSearchParams({ figure: wing.publicSlug ?? wing.slug })
-    if (wing.askTag) query.set('ask', wing.askTag)
-    query.set('lang', language)
-    door.href = `https://agoracosmica.org/?${query.toString()}`
+    door.href = agoraFigureUrl(wing.publicSlug ?? wing.slug, language)
     doorNote.textContent = WING_TEXT.doorNote[language]
     doorScope.textContent = copy.doorScope
     if (drawer.open) refreshSources()
