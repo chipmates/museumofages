@@ -41,6 +41,9 @@ export const STAGE = Object.freeze({
     wide: 1.6,
     /** a dither of this share of the value, so an 8-bit gradient of a few levels never bands */
     dither: .05,
+    /** how much of its fall the pool keeps below its centre (0: all of it): a lamp's spill on a cove stays on the
+     * cove down to the floor, so a low eye finds the field no darker just above the floor than beside the machine */
+    below: 0,
   },
   /** the floor: matte, a dark warm grey, its own value falling from the machine's foot by radii of the machine */
   floor: { albedo: [.05, .048, .045] as const, roughness: .93, pool: [.3, 1.8] as const, keep: .2,
@@ -153,7 +156,8 @@ export function createStageSetting(options: {
   const poolCentre = uniform(vec2(.5, .45)), poolRadius = uniform(float(S.field.radius))
   const edge = vec3(...S.field.edge), pool = vec3(...S.field.pool)
   const aspect = viewportSize.x.div(viewportSize.y.max(1))
-  const offset = viewportUV.sub(poolCentre).mul(vec2(aspect.div(S.field.wide), 1)).div(poolRadius)
+  const toward = viewportUV.sub(poolCentre).mul(vec2(aspect.div(S.field.wide), 1)).div(poolRadius)
+  const offset = S.field.below > 0 ? vec2(toward.x, mix(toward.y, toward.y.min(0), S.field.below)) : toward
   const glow = exp(offset.dot(offset).mul(-1.7))
   const top = mix(float(1 - S.field.top), float(1), smoothstep(0, .55, viewportUV.y))
   const dither = float(1).add(interleavedGradientNoise(screenCoordinate.xy).sub(.5).mul(S.field.dither))
