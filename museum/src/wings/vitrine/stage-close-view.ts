@@ -52,19 +52,22 @@ function gatherAt(depthTexture: N, shadowCoord: N, of: N, depthLayer: N, ref: N,
 
 /** A SHAPE'S RADIUS OF TURN: on a tube or a ball a point is its centre plus the radius along its normal, so over any edge
  * the change of position along the change of normal, over that change squared, is the radius; the median over the
- * curved edges is a cord's or a rod's radius (its own metres), NaN for a shape with no curved edge */
-const radii = new WeakMap<object, { count: number; r: number }>()
-function radiusOf(geometry: import('three/webgpu').BufferGeometry): number {
+ * curved edges is a cord's or a rod's radius (its own metres), NaN for a shape with no curved edge. `curved` is the
+ * share of the edges walked that turn: most of a tube's do, few of a sheet's (a cloth's flat field round its rolled hem) */
+const radii = new WeakMap<object, { count: number; r: number; curved: number }>()
+function roundOf(geometry: import('three/webgpu').BufferGeometry): { r: number; curved: number } {
   const position = geometry.getAttribute('position'), normal = geometry.getAttribute('normal')
-  if (!position || !normal) return NaN
+  if (!position || !normal) return { r: NaN, curved: 0 }
   const kept = radii.get(geometry)
-  if (kept && kept.count === position.count) return kept.r
+  if (kept && kept.count === position.count) return kept
   const index = geometry.getIndex(), corners = index ? index.count : position.count
   const vertex = (i: number): number => index ? index.getX(i) : i
   const found: number[] = []
+  let walked = 0
   const step = Math.max(3, Math.floor(corners / 3 / 4000) * 3)
   for (let t = 0; t + 2 < corners; t += step) for (let e = 0; e < 3; e++) {
     const a = vertex(t + e), b = vertex(t + (e + 1) % 3)
+    walked++
     const nx = normal.getX(b) - normal.getX(a), ny = normal.getY(b) - normal.getY(a), nz = normal.getZ(b) - normal.getZ(a)
     const dn2 = nx * nx + ny * ny + nz * nz
     if (dn2 < .04 || dn2 > 3.6) continue
@@ -72,8 +75,9 @@ function radiusOf(geometry: import('three/webgpu').BufferGeometry): number {
   }
   found.sort((x, y) => x - y)
   const r = found.length >= 6 ? found[found.length >> 1]! : NaN
-  radii.set(geometry, { count: position.count, r })
-  return r
+  const round = { count: position.count, r, curved: found.length / Math.max(1, walked) }
+  radii.set(geometry, round)
+  return round
 }
 
 /** A CORD THAT WINDS ALONG A LINE (a lacing through a hem's eyelets, a whipping): its path, its surface over its own
@@ -134,7 +138,11 @@ export const STAGE = Object.freeze({
     /** the key's shadow on the floor gives back this share of the light it holds off, from this many radii of the
      * machine's centre to this many (from, to, share): under the machine it keeps its weight, toward the frame's edge
      * it thins as a broad source's shadow of a high part does, never a dark shape cut by the frame */
-    thin: [1.1, 2.4, .7] as readonly [number, number, number] },
+    thin: [1.1, 2.4, .7] as readonly [number, number, number],
+    /** and gives back all of it toward the picture's side edges (shares of its width from the edge: wholly given back
+     * within the first, whole past the second): a high part's shadow on a narrow upright frame would run out of the
+     * frame's side as a dark shape cut by it; it ends inside, soft, as a broad source's shadow ends */
+    edge: [.015, .13] as readonly [number, number] },
   /** the shade under the machine where it stands: the cells a hand's width round every point near the floor */
   contact: { cells: 96, reach: .14, strength: .55, height: .1,
     /** and a tight line where a foot or a skirt meets the floor: a finer map, a few centimetres of tent, the points
@@ -173,10 +181,13 @@ export const STAGE = Object.freeze({
     bands: [.07, .3] as readonly [number, number] },
   /** the fill: the sky's and the floor's share, and a weak lamp from the eye itself */
   fill: { sky: '#6d7682', ground: '#40362c', intensity: .36, environment: .2, front: .12, frontHeight: 14, frontKelvin: 5600,
-    /** the scale figure's own fill (a reflector by the eye, as a photographer sets one for a figure in shade): its bearing
-     * from the eye's (positive: the eye's right, across from the key), its height and its share of the key; the figure
-     * alone takes it, so in a machine's shade it keeps a lit side and a shade side */
-    figure: { turn: 40, height: 28, share: .3 } },
+    /** the thin parts' card (a reflector by the eye): its bearing from the eye's (positive: the eye's right, across from
+     * the key), its height and its share of the key; the thin parts alone take it (`cord`) */
+    card: { turn: 40, height: 28, share: .3 },
+    /** the scale figure's own fill: a lamp on the key's side that no machine shades, so the figure in a machine's shade
+     * keeps the key's lit side and its shade side (form, never a grey silhouette), and in the open adds to the key's side
+     * without filling the shade side; the figure alone takes it */
+    figure: { turn: -35, height: 30, share: .55 } },
   /** the edge lights from behind, each at its bearing from the eye's: weaker than the key, cool, never on the floor;
    * a thin translucent cloth takes them at `cloth` of their strength (a scrim on the lamp), since from behind they light
    * it through as a lamp lights a shade */
@@ -188,19 +199,26 @@ export const STAGE = Object.freeze({
   room: { softbox: .04, strips: 1, stripTurn: 115, stripWide: 8, stripTop: 32, boxRadius: 34, intensity: 5, kelvin: 5000, figure: .7 },
   /** A MACHINE'S OWN CARD, where nothing else lets it read: a reflector on the eye's side (its bearing from the eye's,
    * positive the eye's right, its height, its share of the key) that its forged iron alone takes. The compass is all
-   * near-black iron on a dark field: under the setting's light its faces and the field meet at one value. */
-  own: { 'proportional-compass': { turn: 45, height: 22, share: 1.2 } } as Readonly<Record<string, { turn: number; height: number; share: number }>>,
+   * near-black iron on a dark field: under the setting's light its faces and the field meet at one value. Metal reads
+   * by what it mirrors, so the card stands in its room too (`reflect`: a soft white card by the eye, its bearing from
+   * the eye's, its height, its width and height in degrees and its strength): faces turned toward the eye mirror it and
+   * read as grey iron with a sheen across them, while the field, which mirrors nothing, keeps its value */
+  own: { 'proportional-compass': { turn: 45, height: 22, share: 1.2, reflect: { turn: 22, height: 14, wide: 64, tall: 44, strength: .55 } } } as
+    Readonly<Record<string, { turn: number; height: number; share: number; reflect?: RoomCard }>>,
   /** THE THINNEST PARTS: a cord, a wire or a slender rod drawn under `px` pixels across falls between the pixels and
    * breaks into dots that crawl in motion; its surface is pushed out along its normal to that width, by as much as it is
    * thinner, so it reads as one line. A part counts as thin under `most` of the span in radius, read off its own shape.
-   * Thin parts take the scale figure's fill card (`fill.figure`) too: a cord a pixel or two across shows only the face
+   * Thin parts take a fill card of their own (`fill.card`) too: a cord a pixel or two across shows only the face
    * toward the eye, which an edge light from behind does not reach, and sinks into the field where the key leaves it */
   cord: { px: 1.5, most: .004,
     /** a cord that winds along a line keeps its own width (`windingOf`): widened, each turn draws a bead */
     winds: 1.25,
     /** a cord under the first width (px) is shaded as a line facing the eye, and from the second as its own round: its
      * lobes, turning along it, lit in turn by the key, would draw a line a few pixels wide as dashes */
-    face: [3, 6] as readonly [number, number] },
+    face: [3, 6] as readonly [number, number],
+    /** a thin shape with fewer of its edges turning than this share is a sheet (a wing's cloth, a sail), not a cord: it
+     * never winds and keeps its own normals, since a sheet shaded as a line facing the eye stands as one flat lamp */
+    tube: .2 },
   /** the vertical lens in degrees: a long lens on the desktop, the phone's upright frame narrower still across */
   lens: { desktop: 24, phone: 40 },
   /** the machine's swept outline's share of its fit box, across and upright, per device: the box keeps room for the
@@ -218,6 +236,9 @@ export const STAGE = Object.freeze({
   print: { exposure: 1.0, toe: .012, shoulder: .35, vignette: .1, grain: .005 },
 })
 
+/** a soft card in the room metal mirrors: its bearing from the eye's (positive: the eye's right) and height, its width
+ * and height in degrees, and its strength (the canvas's own share, as the strips') */
+interface RoomCard { turn: number; height: number; wide: number; tall: number; strength: number }
 type Numbers = typeof STAGE
 /** THE NUMBERS A LOOK ROUND TRIES, on the dev server only: `globalThis.__stageProbe` laid over `STAGE` part by part */
 export function stageNumbers(): Numbers {
@@ -404,12 +425,16 @@ export function createStageSetting(options: {
     l.castShadow = false
     return l
   }) : []
-  /** the card of a machine that needs one (`STAGE.own`), made when that machine is dressed */
+  /** the card of a machine that needs one (`STAGE.own`), made when that machine is dressed, and the room its iron mirrors */
   let card: { lamp: DirectionalLight; turn: number; height: number } | null = null
-  // the scale figure's own fill: a lamp outside the scene, so no other surface sees it
-  const figureLamp = new DirectionalLight(kelvinToColour(S.fill.frontKelvin).getHex(), S.key.lux / 100 * S.fill.figure.share)
+  let ownRoom: Texture | null = null
+  // the scale figure's own fill and the thin parts' card: lamps outside the scene, so no other surface sees them
+  const figureLamp = new DirectionalLight(kelvinToColour(S.key.kelvin).getHex(), S.key.lux / 100 * S.fill.figure.share)
   figureLamp.name = 'stage/figure-fill'
   figureLamp.castShadow = false
+  const cordLamp = new DirectionalLight(kelvinToColour(S.fill.frontKelvin).getHex(), S.key.lux / 100 * S.fill.card.share)
+  cordLamp.name = 'stage/cord-card'
+  cordLamp.castShadow = false
   const distance = Math.max(24, span * 6) * .8
   const place = (light: DirectionalLight, bearing: number, height: number): void => {
     const cos = Math.cos(height)
@@ -454,13 +479,14 @@ export function createStageSetting(options: {
     // THE SHADE GOES WITH THE FLOOR INTO THE FIELD: where a low eye's floor is mostly field, the field there is darkened as
     // the floor is, by the key's shadow and the painted contact, so a machine never floats on a shadowless floor
     const near = float(1).sub(smoothstep(radius * S.air.shadeReach[0], radius * S.air.shadeReach[1], along))
-    const kept = mix(float(1), groundShadow.mul(shade), near.mul(S.air.shade).mul(holdFar))
+    const side = float(1).sub(smoothstep(S.floor.edge[0], S.floor.edge[1], viewportUV.x.min(viewportUV.x.oneMinus())))
+    const kept = mix(float(1), groundShadow.mul(shade), near.mul(S.air.shade).mul(holdFar).mul(side.oneMinus()))
     horizonOut = vec4(mix(output.rgb, field.mul(kept), float(1).sub(smoothstep(0, horizonSine, below))), output.a)
     // a machine's own ground hands itself over only where the eye grazes it: a close eye looks down on the bank it stands over
     groundOut = vec4(mix(output.rgb.mul(shade), field.mul(kept), float(1).sub(smoothstep(S.air.graze[0], S.air.graze[1], below))), output.a)
     floorMaterial.colorNode = albedo
     // the shadow thins away from the machine: the light it holds off there, given back in part
-    const thin = smoothstep(radius * S.floor.thin[0], radius * S.floor.thin[1], along).mul(S.floor.thin[2])
+    const thin = smoothstep(radius * S.floor.thin[0], radius * S.floor.thin[1], along).mul(S.floor.thin[2]).max(side)
     floorMaterial.emissiveNode = albedo.mul(S.floor.bounce).add(albedo.mul(groundLight).mul(float(1).sub(groundShadow)).mul(thin))
     floorMaterial.aoNode = shade
     // the edge light from behind would lay a second sheen on the floor toward the eye: the floor takes the key and the fills
@@ -599,19 +625,22 @@ export function createStageSetting(options: {
   const swapped: { mesh: Mesh; was: MeshStandardNodeMaterial }[] = []
   function thinParts(root: Object3D): void {
     const most = S.cord.most * span, seen = new Map<MeshStandardNodeMaterial, number>(), thick = new Set<MeshStandardNodeMaterial>()
+    /** the thin parts' materials a sheet draws with: widened and carded as a cord is, never shaded as a line */
+    const sheets = new Set<MeshStandardNodeMaterial>()
     /** the cords that wind, each with the material it shares with the straight ones */
     const wound: { mesh: Mesh; material: MeshStandardNodeMaterial; r: number }[] = []
     root.updateMatrixWorld(true)
     root.traverse(node => {
       const mesh = node as Mesh
       if (!mesh.isMesh || node.userData['vitrineOverlay'] || node.userData['vitrineTarget']) return
-      const local = radiusOf(mesh.geometry), r = local * node.matrixWorld.getMaxScaleOnAxis()
-      const one = !Array.isArray(mesh.material)
+      const round = roundOf(mesh.geometry), local = round.r, r = local * node.matrixWorld.getMaxScaleOnAxis()
+      const one = !Array.isArray(mesh.material), sheet = round.curved < S.cord.tube
       for (const material of [mesh.material].flat()) {
         const m = material as MeshStandardNodeMaterial
         if (!m.isNodeMaterial || m.positionNode) continue
         if (!(Number.isFinite(r) && r < most)) { thick.add(m); continue }
-        if (one && !plain.has(m) && windingOf(mesh.geometry, local, S.cord.winds)) wound.push({ mesh, material: m, r })
+        if (sheet) sheets.add(m)
+        if (one && !sheet && !plain.has(m) && windingOf(mesh.geometry, local, S.cord.winds)) wound.push({ mesh, material: m, r })
         else seen.set(m, Math.min(seen.get(m) ?? Infinity, r))
       }
     })
@@ -645,7 +674,7 @@ export function createStageSetting(options: {
       }
       // A LINE A FEW PIXELS WIDE IS SHADED AS ONE: toward the eye where it is narrow, its own round where it is wide
       const [full, none] = S.cord.face
-      if (none > 0) {
+      if (none > 0 && !sheets.has(m)) {
         const wide = float(r * 2).div(positionView.length().mul(pixelAngle).max(1e-9))
         const facing = float(1).sub(smoothstep(full, none, wide))
         const own = (m.normalNode as N | null) ?? normalView
@@ -654,10 +683,10 @@ export function createStageSetting(options: {
       m.needsUpdate = true
     }
     // the card, again after a machine's own lamps relit its surfaces
-    if (S.fill.figure.share > 0) for (const m of cords.keys()) {
+    if (S.fill.card.share > 0) for (const m of cords.keys()) {
       const under = (m.lightsNode as unknown as { getLights?(): Light[] } | null)?.getLights?.() ?? sceneLights()
-      if (under.includes(figureLamp)) continue
-      m.lightsNode = lights([...under, figureLamp])
+      if (under.includes(cordLamp)) continue
+      m.lightsNode = lights([...under, cordLamp])
       m.needsUpdate = true
     }
   }
@@ -674,8 +703,10 @@ export function createStageSetting(options: {
           m.lightsNode = cloth
           m.needsUpdate = true
         } else if (studio && (m.metalness >= .3 || (m.transparent && 'transmission' in m) || (m.transmission ?? 0) > 0)) {
-          mirror(m)
-          if (own && !m.transparent && /iron/.test(m.name)) {
+          const iron = Boolean(own && !m.transparent && /iron/.test(m.name))
+          if (iron && own!.reflect) ownRoom ??= bakeRoom(S.room, sky, S.fill.environment / S.room.intensity, own!.reflect)
+          mirror(m, 1, iron && ownRoom ? ownRoom : studio)
+          if (own && iron) {
             card ??= ownCard(own)
             const under = (m.lightsNode as unknown as { getLights?(): Light[] } | null)?.getLights?.() ?? sceneLights()
             if (!under.includes(card.lamp)) { m.lightsNode = lights([...under, card.lamp]); m.needsUpdate = true }
@@ -685,10 +716,10 @@ export function createStageSetting(options: {
     })
   }
   /** iron, bronze and glass read on a dark field only by the lamps they mirror */
-  function mirror(material: MeshStandardNodeMaterial, share = 1): void {
-    if (!studio) return
+  function mirror(material: MeshStandardNodeMaterial, share = 1, room: Texture | null = studio): void {
+    if (!room) return
     keep(material)
-    material.envMap = studio
+    material.envMap = room
     material.envMapIntensity = S.room.intensity * share
     if (!Number.isNaN(lastYawSet)) material.envMapRotation.set(0, lastYawSet, 0)
     mirrors.add(material)
@@ -741,6 +772,7 @@ export function createStageSetting(options: {
       rims.forEach((rim, i) => place(rim, o.yaw + S.rim.turns[i]! * DEG, S.rim.height * DEG))
       scrimmed.forEach((rim, i) => place(rim, o.yaw + S.rim.turns[i]! * DEG, S.rim.height * DEG))
       place(figureLamp, o.yaw + S.fill.figure.turn * DEG, S.fill.figure.height * DEG)
+      place(cordLamp, o.yaw + S.fill.card.turn * DEG, S.fill.card.height * DEG)
       if (card) place(card.lamp, o.yaw + card.turn * DEG, card.height * DEG)
       // the studio's lamps stand round the eye as the rig does
       for (const material of mirrors) material.envMapRotation.set(0, o.yaw, 0)
@@ -773,6 +805,7 @@ export function createStageSetting(options: {
     for (const copy of plain) copy.dispose()
     plain.clear()
     studio?.dispose()
+    ownRoom?.dispose()
     for (const l of [front, ...rims, ...scrimmed]) { l.removeFromParent(); l.target.removeFromParent(); l.dispose() }
     dropVeil()
     floor.removeFromParent()
@@ -781,6 +814,7 @@ export function createStageSetting(options: {
     contactTexture.dispose()
     tightTexture.dispose()
     figureLamp.dispose()
+    cordLamp.dispose()
     for (const l of [groundKey, highKey]) { l.shadow.dispose(); l.dispose() }
     card?.lamp.dispose()
   }
@@ -848,7 +882,7 @@ export function onCanvas(point: Vector3, camera: Camera): { x: number; y: number
  * machine, either side of the eye's back (the eye at bearing 0; the scene turns the room with the eye). Iron and glass
  * mirror what stands round them, so on a dark field they read only by the lamps they reflect. */
 function bakeRoom(room: { softbox: number; strips: number; stripTurn: number; stripWide: number; stripTop: number; boxRadius: number; kelvin: number },
-  sky: { zenith: string; horizon: string; ground: string }, keep: number): Texture {
+  sky: { zenith: string; horizon: string; ground: string }, keep: number, card?: RoomCard): Texture {
   const W = 512, H = 256
   const canvas = document.createElement('canvas')
   canvas.width = W; canvas.height = H
@@ -887,6 +921,21 @@ function bakeRoom(room: { softbox: number; strips: number; stripTurn: number; st
         ctx.fillStyle = g
         ctx.fillRect(x - half * 1.6, top, half * 3.2, bottom - top)
       }
+    }
+  }
+  // a machine's own card: a soft oval, brightest at its middle, falling off over its outer half
+  if (card && card.strength > 0) {
+    const cx = ((.75 - card.turn / 360) % 1 + 1) % 1 * W, cy = H * (.5 - card.height / 180)
+    const rx = W * card.wide / 360 / 2, ry = H * card.tall / 180 / 2, a = Math.min(1, card.strength)
+    for (const x of [cx, cx - W, cx + W]) {
+      ctx.save()
+      ctx.translate(x, cy)
+      ctx.scale(rx, ry)
+      const g = ctx.createRadialGradient(0, 0, 0, 0, 0, 1)
+      g.addColorStop(0, `rgba(${tone},${a})`); g.addColorStop(.45, `rgba(${tone},${a * .8})`); g.addColorStop(1, `rgba(${tone},0)`)
+      ctx.fillStyle = g
+      ctx.fillRect(-1, -1, 2, 2)
+      ctx.restore()
     }
   }
   const tex = new CanvasTexture(canvas)

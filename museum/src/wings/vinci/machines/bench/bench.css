@@ -84,5 +84,6 @@ body[data-phase="bench"] #veil,body[data-phase="bench"] #rail,body[data-phase="b
 /* The bridge's label carries a working line and its tag: its panel starts a little higher so the German state button closes above the panel's edge. */
 @media(max-width:1280px){.bench[data-slug="bridge-of-poles"] .bench-dock{top:calc(42.7% - 10px)}.bench[data-slug="bridge-of-poles"] .bench-lang{top:calc(42.7% - 56px)}}
 /* The phone's picture runs up under the brand line: a machine that fills the close eye's frame (a canopy) puts the words
-   on bright cloth. A soft dark of the field's own value stands behind them, falling away under the line. */
-@media(max-width:1280px){.bench-header::before{content:'';position:absolute;left:-20px;right:-20px;top:-15px;height:76px;background:linear-gradient(to bottom,#0d0e10d9 0%,#0d0e10a6 55%,#0d0e1000 100%);pointer-events:none;z-index:-1}.bench-header{isolation:isolate}}
+   on bright cloth. A soft dark of the field's own value stands behind each block of words alone, so a machine rising
+   between them (an apex) keeps its light. */
+@media(max-width:1280px){.bench-header{isolation:isolate}.bench-mark,.bench-header>a{position:relative}.bench-mark::before,.bench-header>a::before{content:'';position:absolute;inset:-12px -18px;background:radial-gradient(closest-side,#0d0e10d9 50%,#0d0e1080 75%,#0d0e1000 100%);pointer-events:none;z-index:-1}.bench-brand,.bench-header .bench-kicker,.bench-header>a{text-shadow:0 0 2px #0d0e10,0 0 6px #0d0e10cc}}
