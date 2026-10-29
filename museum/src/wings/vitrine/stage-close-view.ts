@@ -36,7 +36,10 @@ export const STAGE = Object.freeze({
     pool: [.052, .048, .044] as const,
     /** the pool's radius as a share of the picture's height, how far above the machine's centre it stands (the same
      * share), and how much darker the frame's top runs */
-    radius: .8, lift: .1, top: .35,
+    radius: .8, lift: .1, top: .4,
+    /** how much of the top's darkening the pool gives back where it glows (0: none): the top and the corners deepen,
+     * the field beside a dark machine that stands up into the top keeps the value it reads against */
+    spare: .8,
     /** the pool is wider than it is tall, as a lamp's spill on a sweep spreads along the floor's line */
     wide: 1.3,
     /** a dither of this share of the value, so an 8-bit gradient of a few levels never bands */
@@ -163,7 +166,7 @@ export function createStageSetting(options: {
   const hold = float(S.field.below).mul(smoothstep(poolCentre.y, poolCentre.y.add(.05), horizonRow))
   const offset = S.field.below > 0 ? vec2(toward.x, mix(toward.y, toward.y.min(0), hold)) : toward
   const glow = exp(offset.dot(offset).mul(-1.7))
-  const top = mix(float(1 - S.field.top), float(1), smoothstep(0, .55, viewportUV.y))
+  const top = mix(float(1 - S.field.top), float(1), smoothstep(0, .55, viewportUV.y).max(glow.mul(S.field.spare)))
   const dither = float(1).add(interleavedGradientNoise(screenCoordinate.xy).sub(.5).mul(S.field.dither))
   const field = mix(edge, pool, glow).mul(top).mul(dither)
   scene.background = new Color().setRGB(S.field.edge[0], S.field.edge[1], S.field.edge[2])
