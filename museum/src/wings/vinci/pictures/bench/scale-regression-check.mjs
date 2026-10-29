@@ -161,8 +161,8 @@ test('Every main-hang panel shares the production camera calibration at each vie
   }
 })
 
-test('The judged 48.3 cm and 199.5 cm works preserve their physical height ratio', () => {
-  const small = register.MAIN_HANG.find(work => work.height_cm === 48.3)
+test('The judged 48.4 cm and 199.5 cm works preserve their physical height ratio', () => {
+  const small = register.MAIN_HANG.find(work => work.height_cm === 48.4)
   const tall = register.MAIN_HANG.find(work => work.height_cm === 199.5)
   assert.ok(small && tall, 'The judged physical dimensions must remain in the locked register')
   for (const viewport of [{ width: 390, height: 844 }, { width: 1512, height: 950 }]) {

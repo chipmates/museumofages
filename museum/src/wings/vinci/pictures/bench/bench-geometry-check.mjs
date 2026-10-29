@@ -247,12 +247,12 @@ test('Explicit comparison camera gives all 28 real module apertures one common p
     rows.push(...current)
   }
 })
-test('The judged 48.3 cm and 199.5 cm physical fields preserve their real height ratio', () => {
+test('The judged 48.4 cm and 199.5 cm physical fields preserve their real height ratio', () => {
   for (const viewport of viewports) {
     const match = rows.filter(row => row.viewport === `${viewport.width}x${viewport.height}`)
-    const small = match.find(row => row.heightCm === 48.3), large = match.find(row => row.heightCm === 199.5)
+    const small = match.find(row => row.heightCm === 48.4), large = match.find(row => row.heightCm === 199.5)
     assert(small && large)
-    close(large.physicalFieldHeightPx / small.physicalFieldHeightPx, 199.5 / 48.3, '199.5/48.3 physical ratio')
+    close(large.physicalFieldHeightPx / small.physicalFieldHeightPx, 199.5 / 48.4, '199.5/48.4 physical ratio')
   }
 })
 test('Actual named routes preserve each field while the mural camera exception is reported separately', () => {

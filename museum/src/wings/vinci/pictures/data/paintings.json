@@ -2526,12 +2526,12 @@
       "title_de": "Madonna mit der Spindel, Buccleuch-Fassung",
       "short_title_en": "The Yarnwinder, Buccleuch",
       "short_title_de": "Die Spindel, Buccleuch",
-      "holder": "Buccleuch collection, on loan to National Galleries of Scotland",
-      "holder_en": "Buccleuch collection, on loan to National Galleries of Scotland",
-      "holder_de": "Sammlung Buccleuch, Leihgabe an die National Galleries of Scotland",
+      "holder": "The Buccleuch Living Heritage Trust, on loan to the National Galleries of Scotland",
+      "holder_en": "The Buccleuch Living Heritage Trust, on loan to the National Galleries of Scotland",
+      "holder_de": "The Buccleuch Living Heritage Trust, Leihgabe an die National Galleries of Scotland",
       "inventory": "NGL 002.08",
-      "height_cm": 48.3,
-      "width_cm": 36.9,
+      "height_cm": 48.4,
+      "width_cm": 36.8,
       "medium": "Oil",
       "support": "Panel",
       "medium_de": "Öl",
@@ -2570,7 +2570,7 @@
       ],
       "sources": [
         {
-          "url": "https://art.nationalgalleries.org/art-and-artists/94762/",
+          "url": "https://www.nationalgalleries.org/art-and-artists/94762/madonna-yarnwinder",
           "supports": [
             "inventory",
             "height_cm",
@@ -2582,7 +2582,7 @@
             "attribution"
           ],
           "local_source": "refs/MINING-CATALOG-PAINTINGS.md §23",
-          "verification": "holder record as transcribed in catalog"
+          "verification": "holder record, read on the holder's page 2026-10-23"
         },
         {
           "url": "https://commons.wikimedia.org/wiki/File:Leonardo_da_Vinci_-_Madonna_of_the_Yarnwinder,_Buccleuch_version.jpg",
@@ -2607,7 +2607,7 @@
       "additional_plates": [],
       "display_mode": "reproduction_card_beside_measured_outline",
       "measurement": {
-        "source_url": "https://art.nationalgalleries.org/art-and-artists/94762/",
+        "source_url": "https://www.nationalgalleries.org/art-and-artists/94762/madonna-yarnwinder",
         "status": "holder_record",
         "extent": "object",
         "alternatives": [],

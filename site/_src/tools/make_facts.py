@@ -64,8 +64,8 @@ HOLDERS = [
 # Two of the hung works are drawings, by their holders' own words: the count of
 # paintings leaves them out, so a page can say how many works hang, how many are paintings and how many drawings.
 DRAWINGS = ("burlington-house-cartoon", "anghiari-copy")
-# Two frames keep the place on the wall of an earlier record of their size (the wing's hang says why).
-SLOTS = {"adoration-of-the-magi": 240.0, "yarnwinder-lansdowne": 36.4}
+# Three frames keep the place on the wall of an earlier record of their size (the wing's hang says why).
+SLOTS = {"adoration-of-the-magi": 240.0, "yarnwinder-buccleuch": 36.9, "yarnwinder-lansdowne": 36.4}
 # Works whose holder measures them otherwise than the wing's hang: the page shows the holder's height and width,
 # the hang keeps its own until the wing's next film render takes the holder's. None at present.
 HELD = {}

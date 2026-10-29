@@ -48,10 +48,11 @@ export const COLLECTIONS = [
     // over from the mining catalogue, one fact reworded plainly, short titles, the Ginevra reverse's
     // own name, a German form of every holder line, the nineteen historic RC decisions
     // restated as superseded by Tier 2, the Last Supper's credit naming the scan its
-    // reproduction copies and the Salvator Mundi's owner as not publicly confirmed; the sealed
-    // original does not.
+    // reproduction copies, the Salvator Mundi's owner as not publicly confirmed and the
+    // Buccleuch Yarnwinder's size, holder and record from its holder; the sealed original
+    // does not.
     originalSHA256: '7e78e1a73fa55cdd58c75c495332ebe0617387e6b72babbea2695bbb8a3a5d02',
-    normalizedSHA256: '4b1e64df241252c390db1575a411dfc0be508b30df9cbd66ecad4bfe26e4a1ef',
+    normalizedSHA256: 'f8c82e2438d776a924355a39ce8a17f18ddf1d7494736c818467f1fa1913b10f',
     expected: { works: 30, held_assets: 32, catalogue_mentions: 9 },
   },
 ]

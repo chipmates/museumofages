@@ -183,7 +183,7 @@ const HOLDERS: Readonly<Record<string, PictureBilingual>> = {
   'Castello Sforzesco, Milan': { en: 'Sala delle Asse, Castello Sforzesco, Milan.', de: 'Sala delle Asse, Castello Sforzesco, Mailand.' },
   'Galleria Nazionale di Parma, Complesso della Pilotta': { en: 'From the National Gallery of Parma’s collection, Pilotta.', de: 'Aus der Sammlung der Nationalgalerie von Parma in der Pilotta.' },
   'Owner not publicly confirmed, present location unconfirmed': { en: 'Its owner is not publicly confirmed. Its present location is unconfirmed.', de: 'Wem das Gemälde gehört, ist nicht öffentlich bestätigt. Der heutige Aufenthaltsort ist unbestätigt.' },
-  'Buccleuch collection, on loan to National Galleries of Scotland': { en: 'From the Buccleuch collection, on loan to the National Galleries of Scotland.', de: 'Aus der Sammlung Buccleuch, als Leihgabe an die National Galleries of Scotland.' },
+  'The Buccleuch Living Heritage Trust, on loan to the National Galleries of Scotland': { en: 'From the Buccleuch Living Heritage Trust, on loan to the National Galleries of Scotland.', de: 'Aus dem Buccleuch Living Heritage Trust, als Leihgabe an die National Galleries of Scotland.' },
   'Kenneth C. Griffin Collection, on loan to The Metropolitan Museum of Art': { en: 'From the Kenneth C. Griffin Collection, on loan to the Met.', de: 'Aus der Kenneth C. Griffin Collection, als Leihgabe an das Metropolitan Museum.' },
   'Earl of Pembroke collection, Wilton House': { en: 'The copy belongs to the Earl of Pembroke’s collection at Wilton House.', de: 'Die Kopie gehört zur Sammlung des Earl of Pembroke in Wilton House.' },
 }

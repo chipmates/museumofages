@@ -161,7 +161,9 @@ assert.equal(lansdowne.width * 100, getWork(lansdowne.id).width_cm)
 // and width were untransposed: its own eleven boxes, and no others, moved.
 // Re-taken at the reversal, where the wall is laid from its east end instead
 // of its west: every field is mirrored about the span, so every box moved and
-// the loop above is what proves the spacing between them did not.
+// the loop above is what proves the spacing between them did not. Re-taken
+// when the Buccleuch Yarnwinder took its holder's 48.4 by 36.8 cm in its old
+// slot: its own boxes, and no others, moved.
 const boxes = [], retainedBoxes = []
 buildHang({ box: (...args) => boxes.push(args) })
 let offset = 0
@@ -172,7 +174,7 @@ for (const field of HANG) {
 assert.equal(boxes.length, 275)
 assert.equal(retainedBoxes.length, 264)
 assert.equal(createHash('sha256').update(JSON.stringify(retainedBoxes)).digest('hex'),
-  'f11d88b8dcf1d3dc5601b86777635feaf47a60cf3a8e7ff823d3ce52e244a8dc')
+  '530e5948f2f1e747d9952048ab440ec92128d279ea10df02cc152552b2eb9787')
 // The body wall builds one carrier per admitted sheet, and nothing else.
 const bodyBoxes = []
 buildBodyWall({ box: (...args) => bodyBoxes.push(args) })

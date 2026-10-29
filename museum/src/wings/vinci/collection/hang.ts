@@ -36,7 +36,10 @@ export const HANG: readonly Work[] = [
   w('annunciation-predella', 60, 16), w('virgin-of-the-rocks-louvre', 122, 199.5),
   w('portrait-of-a-musician', 32, 44.7), w('lady-with-an-ermine', 40.3, 54.8),
   w('la-belle-ferronniere', 45, 63), w('madonna-litta', 33, 42),
-  w('burlington-house-cartoon', 104.6, 141.5), w('yarnwinder-buccleuch', 36.9, 48.3),
+  // The holder's record gives 48.4 by 36.8 cm; the old layout slot keeps
+  // every neighbouring frame and batten in place.
+  // https://www.nationalgalleries.org/art-and-artists/94762/madonna-yarnwinder
+  w('burlington-house-cartoon', 104.6, 141.5), w('yarnwinder-buccleuch', 36.8, 48.4, 'front', 36.9),
   // Current holder record L.2026.5 supersedes the concept's 50.2 by 36.4 cm.
   // Its old layout slot keeps every neighbouring frame and batten in place.
   // https://www.metmuseum.org/art/collection/search/941909
