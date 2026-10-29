@@ -483,23 +483,35 @@ export function createTurntablePayload(options: TurntableOptions): TurntablePayl
     const tanY = Math.tan(camera!.fov * DEG / 2) * fit.height / h
     const tanX = Math.tan(camera!.fov * DEG / 2) * (w / h) * fit.width / w
     const cos = Math.cos(at.pitch)
-    const toward = new Vector3(Math.sin(at.yaw) * cos, Math.sin(at.pitch), Math.cos(at.yaw) * cos)
-    const right = new Vector3().crossVectors(new Vector3(0, 1, 0), toward).normalize()
-    const up = new Vector3().crossVectors(toward, right).normalize()
+    // A MACHINE THAT WALKS IS FITTED AT ITS WIDEST BEARING: a hand's turn keeps the whole view's distance and shows its
+    // walk broadside, which a fit to the three-quarter view alone would press against the window's sides
+    const turns = options.travels ? 12 : 1
+    const axes = Array.from({ length: turns }, (_, i) => {
+      const yaw = at.yaw + i * 2 * Math.PI / turns
+      const toward = new Vector3(Math.sin(yaw) * cos, Math.sin(at.pitch), Math.cos(yaw) * cos)
+      const right = new Vector3().crossVectors(new Vector3(0, 1, 0), toward).normalize()
+      return { toward, right, up: new Vector3().crossVectors(toward, right).normalize() }
+    })
     const corner = new Vector3()
     const points = hull.length ? hull : [rest.min.x, rest.max.x].flatMap(x => [rest.min.y, rest.max.y].flatMap(y => [rest.min.z, rest.max.z].map(z => new Vector3(x, y, z))))
-    const { share } = stageNumbers(), [across, upright] = host?.narrow ? share.phone : share.desktop
-    /** the run's outline on the canvas from this bearing at a distance, against its share of the fit box across and up */
+    const { share } = stageNumbers(), [across, tall] = host?.narrow ? share.phone : share.desktop
+    // on the desk the machine stands at most at `most` of the picture's height, where its box is the whole picture
+    const upright = host?.narrow ? tall : Math.min(tall, share.most * h / fit.height)
+    /** the run's outline on the canvas from these bearings at a distance, against its share of the fit box across and up */
     const filled = (distance: number): number => {
-      let left = Infinity, rightmost = -Infinity, low = Infinity, high = -Infinity
-      for (const point of points) {
-        corner.copy(point).sub(centre)
-        const ahead = distance - corner.dot(toward)
-        if (ahead <= 1e-3) return Infinity
-        const u = corner.dot(right) / ahead, v = corner.dot(up) / ahead
-        left = Math.min(left, u); rightmost = Math.max(rightmost, u); low = Math.min(low, v); high = Math.max(high, v)
+      let most = 0
+      for (const { toward, right, up } of axes) {
+        let left = Infinity, rightmost = -Infinity, low = Infinity, high = -Infinity
+        for (const point of points) {
+          corner.copy(point).sub(centre)
+          const ahead = distance - corner.dot(toward)
+          if (ahead <= 1e-3) return Infinity
+          const u = corner.dot(right) / ahead, v = corner.dot(up) / ahead
+          left = Math.min(left, u); rightmost = Math.max(rightmost, u); low = Math.min(low, v); high = Math.max(high, v)
+        }
+        most = Math.max(most, (rightmost - left) / (2 * tanX * across), (high - low) / (2 * tanY * upright))
       }
-      return Math.max((rightmost - left) / (2 * tanX * across), (high - low) / (2 * tanY * upright))
+      return most
     }
     // THE ONE RULE: the outline's own box takes the setting's share of the fit box (its place is evened in placeCamera)
     const want = 1

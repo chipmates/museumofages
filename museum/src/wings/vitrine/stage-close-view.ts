@@ -73,9 +73,12 @@ export const STAGE = Object.freeze({
   room: { softbox: .04, strips: 1, stripTurn: 115, stripWide: 8, stripTop: 32, boxRadius: 34, intensity: 5, kelvin: 5000, figure: .7 },
   /** the vertical lens in degrees: a long lens on the desktop, the phone's upright frame narrower still across */
   lens: { desktop: 24, phone: 40 },
-  /** the machine's swept outline's share of its fit box, across and upright, per device: the phone's box keeps room for a
-   * four-row caption and is near square, so an upright machine takes more of its height to stand as large in the glass */
-  share: { desktop: [.86, .86] as readonly [number, number], phone: [.86, .94] as readonly [number, number] },
+  /** the machine's swept outline's share of its fit box, across and upright, per device: the box keeps room for the
+   * machine's own longest caption, and the phone's is near square, so an upright machine takes more of its height to
+   * stand as large in the glass */
+  share: { desktop: [.86, .86] as readonly [number, number], phone: [.86, .94] as readonly [number, number],
+    /** on the desk a machine with no step stands in the whole picture: its height at most this share of it */
+    most: .82 },
   /** the print: the museum's neutral curve, no split, a light vignette, a tooth that dithers */
   print: { exposure: 1.0, toe: .012, shoulder: .35, vignette: .1, grain: .005 },
 })
