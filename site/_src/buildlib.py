@@ -55,6 +55,21 @@ def esc(text):
     return html.escape(text, quote=True)
 
 
+def upper(text, lang):
+    """Upper case as the language writes it: Turkish gives i its dot, so "iki" is "İKİ", never "IKI"."""
+    return (text.replace("i", "İ") if lang == "tr" else text).upper()
+
+
+def lower(text, lang):
+    """Lower case as the language writes it: in Turkish İ is i and I is ı (Python's own makes İ an i and a dot)."""
+    return (text.replace("İ", "i").replace("I", "ı") if lang == "tr" else text).lower()
+
+
+def upper_first(text, lang):
+    """A text that begins with a capital: "iki" is "İki" in Turkish."""
+    return upper(text[:1], lang) + text[1:]
+
+
 # The layers behind disclosures stand closed in the HTML, as the phone wants them. The desktop opens them
 # here, straight after the block and before it is ever painted. Without scripts they open on a click.
 LAYERS_SCRIPT = (
@@ -99,6 +114,8 @@ UNITS_MORE = {
     "es": "metros?|centímetros?|kilómetros?|segundos?|días?|años?|horas?|por ciento",
     "pt-BR": "metros?|centímetros?|quilômetros?|segundos?|dias?|anos?|horas?|por cento",
     "bg": "метра|метър|сантиметра|километра|секунди|секунда|дни|ден|години|година|часа|процента|м|см|км",
+    # whole words only: this string is read for a loose pair on every page of every language
+    "tr": "metre|santimetre|milimetre|kilometre|kilovat|saniye|dakika|saat|gün|yıl|yaşında|yüzyıl|derece",
 }
 UNIT = (r"(?:Metern?|metres?|meters?|Zentimetern?|centimetres?|Kilometern?|kilometres?|cm|mm|km|m|Kilowatt|kilowatts?|"
         r"Sekunden?|seconds?|Tagen?|days?|Jahren?|years?|Uhr|Prozent|percent)")
@@ -132,10 +149,11 @@ MONTHS = {
     "fr": "janvier février mars avril mai juin juillet août septembre octobre novembre décembre",
     "it": "gennaio febbraio marzo aprile maggio giugno luglio agosto settembre ottobre novembre dicembre",
     "bg": "януари февруари март април май юни юли август септември октомври ноември декември",
+    "tr": "Ocak Şubat Mart Nisan Mayıs Haziran Temmuz Ağustos Eylül Ekim Kasım Aralık",
 }
 # A day and its month as the language joins them: 17 October, 17. Oktober, 1er mai, 1º maggio, 2 de mayo, 2 май.
 DAY_FORM = {"en": r"(\d{1,2}) ", "de": r"(\d{1,2}\.) ", "fr": r"(\d{1,2}|1er) ", "it": r"(\d{1,2}|1º) ",
-            "es": r"(\d{1,2}) (de) ", "pt-BR": r"(\d{1,2}|1º) (de) ", "bg": r"(\d{1,2}) "}
+            "es": r"(\d{1,2}) (de) ", "pt-BR": r"(\d{1,2}|1º) (de) ", "bg": r"(\d{1,2}) ", "tr": r"(\d{1,2}) "}
 DAY_MONTH = {lang: re.compile(r"(?<![\w.,])" + DAY_FORM[lang] + r"(?=(?:" + MONTHS[lang].replace(" ", "|") + r")(?!\w))")
              for lang in MONTHS}
 
@@ -240,7 +258,7 @@ WORDS = {
 # How each language writes a number: the mark between thousands, the decimal mark, and the fewest digits the
 # whole part needs before it takes the mark (Spanish groups from five).
 NUMBERS = {"en": (",", ".", 4), "de": (".", ",", 4), "fr": (NNBSP, ",", 4), "it": (".", ",", 4), "es": (NNBSP, ",", 5),
-           "pt-BR": (".", ",", 4), "bg": (NBSP, ",", 4)}
+           "pt-BR": (".", ",", 4), "bg": (NBSP, ",", 4), "tr": (".", ",", 4)}
 
 
 def number(value, lang, places=None):
@@ -410,8 +428,20 @@ def css(*names):
 # The faces a language sets instead of the site's two: files in fonts/<code>/, set under :lang() by css/langs.css.
 # Bulgarian: cuts of Source Serif 4 (text and headings) and Source Sans 3 (labels) with the Cyrillic letters and
 # their Bulgarian forms, under names of their own (the licence reserves the name Source).
+# Turkish: Cardo and the site's Marcellus cut with the Turkish letters the site's cuts lack (Ğ ğ İ Ş ş), every other
+# letter the same; its figures come from its own serif, so a Turkish page loads two files.
 LANG_FACES = {"bg": (("Museum Bulgarian Serif", "bg/bulgarian-serif-400.woff2", "bg_serif"),
-                     ("Museum Bulgarian Sans", "bg/bulgarian-sans-400.woff2", "bg_sans"))}
+                     ("Museum Bulgarian Sans", "bg/bulgarian-sans-400.woff2", "bg_sans")),
+              "tr": (("Museum Turkish Serif", "tr/turkish-serif-400.woff2", "tr_serif"),
+                     ("Museum Turkish Sans", "tr/turkish-sans-400.woff2", "tr_sans"))}
+LANG_FIGURES = {"tr": "tr/turkish-serif-400.woff2"}
+
+
+def lang_sheet(lang):
+    """A language's own rules (css/lang-<code>.css), which travel with its faces on its own pages only: they name
+    its faces, and no page of another language loads them for a link in the switcher."""
+    path = SRC / "css" / f"lang-{lang}.css"
+    return css(f"lang-{lang}") if lang and path.is_file() else ""
 
 
 def faces(static, lang=None):
@@ -423,12 +453,12 @@ def faces(static, lang=None):
     # The sans draws its zero as a round O. Its digits come from the serif instead, which has lining
     # figures and a narrow zero: the same file, so no further request. 108% lifts them to the sans's cap height.
     figures = (
-        '@font-face{{font-family:"Moa figures";src:url("{static}fonts/cardo-400.woff2") format("woff2");'
+        '@font-face{{font-family:"Moa figures";src:url("{static}fonts/{file}") format("woff2");'
         "font-weight:400;font-style:normal;font-display:swap;unicode-range:U+30-39;size-adjust:108%}}"
-    ).format(static=static)
+    ).format(static=static, file=LANG_FIGURES.get(lang, "cardo-400.woff2"))
     return rule.format(name="Cardo", static=static, file="cardo-400.woff2") + rule.format(
         name="Marcellus", static=static, file="marcellus-400.woff2"
-    ) + figures + own
+    ) + figures + own + lang_sheet(lang)
 
 
 def grain(static):

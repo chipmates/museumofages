@@ -224,7 +224,7 @@ def frame_rules(d):
 
 # The tagline's note is "this and that": where it runs to two rows it breaks before its last "and", never inside a
 # clause. A language not named here sets the note as one text.
-NOTE_AND = {"en": " and ", "de": " und ", "fr": " et ", "it": " e ", "es": " y ", "pt-BR": " e ", "bg": " и "}
+NOTE_AND = {"en": " and ", "de": " und ", "fr": " et ", "it": " e ", "es": " y ", "pt-BR": " e ", "bg": " и ", "tr": " ve "}
 
 
 def note_halves(text, lang):

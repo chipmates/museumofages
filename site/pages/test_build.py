@@ -5067,6 +5067,20 @@ class SoftChecks(unittest.TestCase):
         # an Italian sentence opening on its article is no pronoun
         self.assertEqual(soft({"top": {"answer": "Il Cenacolo è a Milano. Il dipinto misura 8,8 m."}, "labels": {}}, "it"), [])
 
+    def test_turkish_capitals_numbers_and_roman_ordinals(self):
+        lib, build = self.build.LIB, self.build
+        # Turkish gives i its dot in upper case and I none in lower case; the other languages keep Python's own
+        self.assertEqual(lib.upper("dijital bir müze", "tr"), "DİJİTAL BİR MÜZE")
+        self.assertEqual(lib.upper("dijital", "en"), "DIJITAL")
+        self.assertEqual(lib.lower("IŞIK İtalya", "tr"), "ışık italya")
+        self.assertEqual(lib.upper_first("iki", "tr"), "İki")
+        self.assertEqual((lib.number(1158, "tr"), lib.number(8.8, "tr"), lib.number(158, "tr")), ("1.158", "8,8", "158"))
+        self.assertEqual(build.date_words("2026-11-02", "tr"), ("", "2\u00a0Kasım 2026"))
+        # a Roman ordinal before a capital ends no Turkish sentence, and a Turkish capital opens one
+        self.assertEqual(build.sentences("Kral VIII. Charles geldi. İtalya uzaktı. Şato yıkıldı.", "tr"),
+                         ["Kral VIII. Charles geldi.", "İtalya uzaktı.", "Şato yıkıldı."])
+        self.assertEqual(build.sentences("He met Henry VIII. Then he left.", "en"), ["He met Henry VIII.", "Then he left."])
+
     def test_the_warnings_never_stop_a_build_and_name_their_page(self):
         build = self.build
         data, wings, info, _ = build.load_pages()

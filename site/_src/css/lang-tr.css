@@ -1,0 +1,7 @@
+/* Museum of Ages: Turkish. Set inline with the faces, on Turkish pages only (buildlib.lang_sheet), so no other page
+   loads a Turkish face for its switcher's link. Its two faces are Cardo and the site's sans with the Turkish letters
+   the site's cuts lack, every other letter the same (buildlib.LANG_FACES); its figures come from its own serif. */
+:lang(tr){
+  --serif:"Museum Turkish Serif","Cardo fallback",serif;
+  --sans:"Moa figures","Museum Turkish Sans","Marcellus fallback",sans-serif;
+}

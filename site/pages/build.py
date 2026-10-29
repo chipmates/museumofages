@@ -232,15 +232,18 @@ TIER_LINE["TIER2"].update({
     "fr": ("Œuvre du domaine public.", "Reproduction issue de ",
            "Les mentions du musée portent sur la reproduction, pas sur le tableau.", "Usage culturel à but non lucratif."),
     "it": ("Opera di pubblico dominio.", "Riproduzione da ",
-           "Le indicazioni del museo riguardano la riproduzione, non il dipinto.", "Uso culturale senza scopo di lucro.")})
+           "Le indicazioni del museo riguardano la riproduzione, non il dipinto.", "Uso culturale senza scopo di lucro."),
+    "tr": ("Kamu malı eser.", "Reprodüksiyonun kaynağı: ", "Müzenin etiketi tablo için değil, reprodüksiyon için geçerlidir.",
+           "Kâr amacı gütmeyen kültürel kullanım.")})
 TIER_LINE["TIER1"].update({"es": ("dominio público",), "pt-BR": ("domínio público",), "fr": ("domaine public",),
-                           "it": ("pubblico dominio",)})
+                           "it": ("pubblico dominio",), "tr": ("kamu malı",)})
 BARE_LINE = {"en": re.compile(r"\bpublic domain reproductions? from\b", re.I),
              "de": re.compile(r"\bgemeinfreie reproduktion(?:en)? aus\b", re.I),
              "es": re.compile(r"\breproducci(?:ón|ones) de dominio público de\b", re.I),
              "pt-BR": re.compile(r"\breproduç(?:ão|ões) em domínio público d[oa]\b", re.I),
              "fr": re.compile(r"\breproductions? du domaine public issues? de\b", re.I),
-             "it": re.compile(r"\briproduzion[ei] di pubblico dominio da\b", re.I)}
+             "it": re.compile(r"\briproduzion[ei] di pubblico dominio da\b", re.I),
+             "tr": re.compile(r"\bkamu malı (?:bir )?reprodüksiyon", re.I)}
 # Units an animal's numbers carry beside the site's own (buildlib.UNIT), and the things they count: a number keeps
 # them on its line.
 MORE_UNITS = r"(?:ft|in|t|feet|tonnes|Tonnen|kg|million|Millionen|discs|Wirbeln?)"
@@ -256,7 +259,9 @@ DATE_MORE = {"es": ({"Sixteenth century, reworked in the early seventeenth centu
              "fr": ({"Sixteenth century, reworked in the early seventeenth century": "XVIe siècle, reprise au début du XVIIe siècle"},
                     "Vers {0}", "Entre {0} et {1} environ"),
              "it": ({"Sixteenth century, reworked in the early seventeenth century": "XVI secolo, rielaborata all’inizio del XVII secolo"},
-                    "{0} circa", "Dal {0} al {1} circa")}
+                    "{0} circa", "Dal {0} al {1} circa"),
+             "tr": ({"Sixteenth century, reworked in the early seventeenth century": "XVI. yüzyıl, XVII. yüzyılın başında rötuşlanmış"},
+                    "Yaklaşık {0}", "Yaklaşık {0} ile {1} arası")}
 # The line at the top of a topic page's sources that says when its facts were last checked against them (page.checked),
 # its structured data's dateModified unless the page went live later. {date} is the day in the language's own form.
 CHECKED_LINE = {
@@ -267,6 +272,8 @@ CHECKED_LINE = {
     "fr": "Faits vérifiés auprès des sources le {date}.",
     "it": "Dati verificati sulle fonti {date}.",
     "bg": "Фактите са проверени спрямо източниците на {date}.",
+    # "tarihinde" keeps the day free of a case ending
+    "tr": "Bilgiler {date} tarihinde kaynaklarla karşılaştırıldı.",
 }
 MONTHS = LIB.MONTHS
 
@@ -615,7 +622,7 @@ def lint(page, lang, data, wing, names, topic=None):
             continue
         if not text.strip() and not key.endswith(".nav") and not re.search(MAY_BE_EMPTY, key):
             problems.append(f"{where} is empty")
-        low = text.lower()
+        low = LIB.lower(text, lang)
         for bad in banned:
             if bad in low:
                 problems.append(f"{where} contains {bad!r}")
@@ -623,7 +630,7 @@ def lint(page, lang, data, wing, names, topic=None):
             # a rule may name the languages it holds for: German "her" is not the English pronoun
             if only and lang not in only[0]:
                 continue
-            if re.search(pattern, low) and (pair is None or re.search(pattern, f"{low}\n{pair.lower()}")):
+            if re.search(pattern, low) and (pair is None or re.search(pattern, f"{low}\n{LIB.lower(pair, lang)}")):
                 problems.append(f"{where} matches /{pattern}/ ({instead})")
         if wing["claim_phrase"] and re.search(wing["claim_phrase"], low) and not any(re.search(ok, key) for ok in CLAIM_ALLOWED):
             problems.append(f"{where} carries the wing's claim phrase outside a heading people search for")
@@ -701,7 +708,9 @@ LEANING = {"en": "It Its They Their He His She Her",
            "de": "Er Sie Es Sein Seine Seinen Seinem Seiner Ihr Ihre Ihren Ihrem Ihrer",
            "es": "Él Ella Ellos Ellas Su Sus", "pt-BR": "Ele Ela Eles Elas Seu Sua Seus Suas",
            "fr": "Il Elle Ils Elles Son Sa Ses Leur Leurs", "it": "Lui Lei Esso Essa Suo Sua Suoi Sue",
-           "bg": "Той Тя То Те Неговият Нейният Техният Неговата Нейната Тяхната"}
+           "bg": "Той Тя То Те Неговият Нейният Техният Неговата Нейната Тяхната",
+           # Turkish says "its" and "his" in an ending, which no word list sees
+           "tr": "O Onu Ona Onun Onda Ondan Onunla Onlar Onları Onlara Onların"}
 
 
 def number_of(text):
@@ -715,8 +724,7 @@ def sentences(text, lang):
         cut = None
         for m in LEAD_END.finditer(text):
             word = re.search(r"([^\s.]+)[.!?]$", text[:m.start()])
-            word = word.group(1) if word else ""
-            if not ((len(word) == 1 and word.isupper()) or word in LEAD_ABBR or (lang != "en" and word.isdigit() and len(word) <= 2)):
+            if not no_end(word.group(1) if word else "", lang):
                 cut = m
                 break
         if not cut:
@@ -821,8 +829,8 @@ def faces(root, lang=None):
     own = "".join(rule.format(name=name, root=root, static=STATIC, file=file, extra="") for name, file, _ in LIB.LANG_FACES.get(lang, ()))
     return own + (rule.format(name="Cardo", root=root, static=STATIC, file="cardo-400.woff2", extra="")
             + rule.format(name="Marcellus", root=root, static=STATIC, file="marcellus-400.woff2", extra="")
-            + rule.format(name="Moa figures", root=root, static=STATIC, file="cardo-400.woff2",
-                          extra=";unicode-range:U+30-39;size-adjust:108%"))
+            + rule.format(name="Moa figures", root=root, static=STATIC, file=LIB.LANG_FIGURES.get(lang, "cardo-400.woff2"),
+                          extra=";unicode-range:U+30-39;size-adjust:108%")) + LIB.lang_sheet(lang)
 
 
 def person_rules(defs):
@@ -1215,7 +1223,7 @@ def plate_problems(src, names, lang, labels=None):
         if tier == "TIER2" and plate.get("tier_line"):
             want[2] = labels.get(plate["tier_line"]) or f"labels.{plate['tier_line']}"
         for line in want:
-            if (line.lower() not in own.lower()) if tier == "TIER1" else (line not in own):
+            if (LIB.lower(line, lang) not in LIB.lower(own, lang)) if tier == "TIER1" else (line not in own):
                 problems.append(f"{name}: a plate of tier {plate['tier'] or 'none'} carries {line!r} in its source line")
         bare = BARE_LINE[lang].search(own)
         if bare and tier == "TIER2":
@@ -1340,6 +1348,8 @@ def date_words(iso, lang):
         return ("l’" if d in (8, 11) else "il "), f"{'1º' if d == 1 else d}{nb}{month} {y}"
     if lang == "bg":
         return "", f"{d}{nb}{month} {y}{nb}г."
+    if lang == "tr":
+        return "", f"{d}{nb}{month} {y}"
     raise SystemExit(f"no date form for {lang!r}: add its month names and its line to MONTHS and CHECKED_LINE")
 
 
@@ -1883,7 +1893,7 @@ def render(page, lang, data, shared, out_root):
                 "html.worth": f'\n    <p>{running(item["worth_knowing"])}</p>' if item.get("worth_knowing") else "",
                 "href.go": esc(CHART.door_href(door, it["stop"])),
                 # the door's line names the work, and a line begins with a capital in every language
-                "go": rich(go[:1].upper() + go[1:]),
+                "go": rich(LIB.upper_first(go, lang)),
                 "html.more": ways(item.get("links", [])),
             })
             items.append(fill(parts["work"], values))
@@ -2237,7 +2247,7 @@ def render(page, lang, data, shared, out_root):
             frame = {"pic": plate["pic"], "alt": plate["alt"], "description": plate["alt"], "caption": plate["title"]}
         if data["page"].get("primary"):
             # a picture the page shows further down, without the card's words
-            frame = primary_frame(data)
+            frame = primary_frame(data, lang)
         after_html = "\n" + fill(parts["toc_top"], dict(base, **{"html.toc": toc}))
         # a page about one work may hang its plate there, after the answer on a phone and beside it on a desktop; only a
         # plate open at its source may stand there (check_tier)
@@ -2254,7 +2264,7 @@ def render(page, lang, data, shared, out_root):
         if data["page"].get("primary"):
             # the page names a picture further down as its own: the structured data describes it in the words of its
             # place on the page, and the first screen keeps its picture
-            frame = primary_frame(data)
+            frame = primary_frame(data, lang)
     if data["page"].get("primary_from"):
         # the page's own picture is one the site shows elsewhere, in the words it shows it with there
         frame = borrowed_frame(data["page"]["primary_from"], lang, wing.get("_data", data["page"]["wing"]))
@@ -2380,11 +2390,11 @@ def primary_words(data):
     return found
 
 
-def primary_frame(data):
+def primary_frame(data, lang):
     """The structured data's words for the picture a page names as its own (page.primary): its place on the page."""
     shown = primary_words(data)
     words = shown.get("what") or shown["title"]
-    return {"pic": shown["pic"], "alt": shown["alt"], "description": shown["alt"], "caption": words[:1].upper() + words[1:]}
+    return {"pic": shown["pic"], "alt": shown["alt"], "description": shown["alt"], "caption": LIB.upper_first(words, lang)}
 
 
 def borrowed_frame(spec, lang, wing_key):
@@ -2505,10 +2515,16 @@ def answer_text(answer):
 
 # The answer's first sentence is set as its lead. A stop ends a sentence where a capital follows, never after an initial,
 # a short abbreviation or (outside English) a number of one or two digits, which there is an ordinal or a date ("am 2.
-# Mai"); a year ends one ("nach einer Studie von 2017.").
-LEAD_END = re.compile(r"(?<=[.!?])\s+(?=[„\"(]?[A-ZÄÖÜÀ-ÞА-Я])")
+# Mai"); a year ends one ("nach einer Studie von 2017."). In Turkish a Roman ordinal ends none ("VIII. Charles").
+LEAD_END = re.compile(r"(?<=[.!?])\s+(?=[„\"(]?[A-ZÄÖÜÀ-ÞĞİŞА-Я])")
 LEAD_ABBR = {"ca", "Nr", "St", "Dr", "Mr", "Mrs", "Ms", "vs", "bzw", "usw", "etc", "Chr", "Abb", "inkl", "z", "B", "u", "a", "d", "h"}
 LEAD_MAX = 240
+
+
+def no_end(word, lang):
+    """Whether a stop after this word leaves its sentence open (LEAD_END)."""
+    return ((len(word) == 1 and word.isupper()) or word in LEAD_ABBR or (lang != "en" and word.isdigit() and len(word) <= 2)
+            or (lang == "tr" and re.fullmatch(r"[IVXLC]+", word) is not None))
 
 
 def lead_split(text, lang):
@@ -2516,8 +2532,7 @@ def lead_split(text, lang):
     for m in LEAD_END.finditer(text):
         lead, rest = text[:m.start()], text[m.end():]
         word = re.search(r"([^\s.]+)[.!?]$", lead)
-        word = word.group(1) if word else ""
-        if (len(word) == 1 and word.isupper()) or word in LEAD_ABBR or (lang != "en" and word.isdigit() and len(word) <= 2):
+        if no_end(word.group(1) if word else "", lang):
             continue
         return (lead, rest) if 8 <= len(lead) <= LEAD_MAX and rest.strip() else None
     return None
@@ -3109,7 +3124,7 @@ def still_jobs(pages=PAGES, loaded=None):
             unbound = lambda s: s.replace(LIB.NBSP, " ")
             if "tally" in d["top"] and works:
                 ta = d["top"]["tally"]
-                words = {"h1": unbound(d["top"]["h1"]), "site": ORIGIN.split("://", 1)[1],
+                words = {"h1": unbound(d["top"]["h1"]), "site": ORIGIN.split("://", 1)[1], "lang": lang,
                          "key": [(k, unbound(ta["key"][k])) for k in TALLY_KINDS if ta["key"].get(k)]}
                 rows = [(unbound(h), kinds) for h, kinds in tally_rows(d, works)]
                 jobs.append({"file": d["page"]["og_image"]["file"].replace("{lang}", code), "page": page, "lang": lang, "kind": "share",
@@ -3119,7 +3134,7 @@ def still_jobs(pages=PAGES, loaded=None):
                 # a fact box's card: the box's rows marked for it (card), its words as the box gives them
                 fa = d["top"]["facts"]
                 said = lambda t: unbound(t if isinstance(t, str) else "".join(p if isinstance(p, str) else p["text"] for p in t))
-                words = {"h1": unbound(d["top"]["h1"]), "h": unbound(fa["h"]), "site": ORIGIN.split("://", 1)[1]}
+                words = {"h1": unbound(d["top"]["h1"]), "h": unbound(fa["h"]), "site": ORIGIN.split("://", 1)[1], "lang": lang}
                 jobs.append({"file": d["page"]["og_image"]["file"].replace("{lang}", code), "page": page, "lang": lang, "kind": "share",
                              "svg": CHART.facts_still_svg([(said(r["term"]), said(r["text"])) for r in fa["rows"] if r.get("card")],
                                                           words, colours)})
@@ -3133,7 +3148,7 @@ def still_jobs(pages=PAGES, loaded=None):
                 name, size = plate_cut(stem)
                 h1, og = unbound(d["top"]["h1"]), unbound(d["meta"]["og_title"])
                 rest = og[len(h1):].lstrip(" :").strip() if og.startswith(h1) else ""
-                words = {"h1": h1, "line": rest[:1].upper() + rest[1:], "site": ORIGIN.split("://", 1)[1]}
+                words = {"h1": h1, "line": LIB.upper_first(rest, lang), "site": ORIGIN.split("://", 1)[1]}
                 # a reproduction the card carries away from its label names its source on the card (meta.og_image_credit)
                 if d["meta"].get("og_image_credit"):
                     words["credit"] = unbound(d["meta"]["og_image_credit"])
@@ -3190,7 +3205,7 @@ def scale_share(d, data, lang, colours):
     answer = d["labels"].get("og_answer")
     # a title that repeats the heading gives the rest as the line, without the colon that joined them
     rest = og[len(h1):].lstrip(" :").strip() if og.startswith(h1) else ""
-    words = {"h1": h1, "line": plain(answer) if answer else rest[:1].upper() + rest[1:],
+    words = {"h1": h1, "line": plain(answer) if answer else LIB.upper_first(rest, lang),
              "second": plain(d["labels"].get("og_second") or ""),
              "person": plain(d["labels"]["person"]),
              "site": ORIGIN.split("://", 1)[1]}

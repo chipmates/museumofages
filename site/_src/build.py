@@ -30,7 +30,7 @@ import languages
 import placed
 import render as R
 from buildlib import (ARROW, BANNED, CSP_MARK, FACES_SCRIPT, LANG_FACES, LOOSE_PAIR, NBSP, NNBSP, REST_SCRIPT, WORDS, bind, css,
-                      dump, esc, faces, fill, flatten, grain, keep_whole, number, number_word, shown_text, space, tail,
+                      dump, esc, faces, fill, flatten, grain, keep_whole, lower, number, number_word, shown_text, space, tail, upper_first,
                       whole_names, hold_names, held, day_month, with_policy, LD_BLOCK, free_pictures_of, image_objects, licence_problems, picture_terms,
                       with_picture_rights)
 
@@ -600,7 +600,7 @@ class Site:
             if kind == "count":
                 return number(value, lang)
             word = number_word(value, lang)
-            return word.capitalize() if kind == "Word" else word
+            return upper_first(lower(word, lang), lang) if kind == "Word" else word
         return re.sub(r"\{(count|word|Word|shows|museum):(\w+)\}", sub, text)
 
     def media(self, name):
@@ -683,7 +683,7 @@ def check_words(site):
         for i, word in enumerate(lock["grades"], 1):
             if raw[f"page_what.s2_four_{i}"] != word:
                 problems.append(f"{lang}: page_what.s2_four_{i} is not the decided grade {word!r}")
-            if word.lower() not in raw["sure.text"].lower():
+            if lower(word, lang) not in lower(raw["sure.text"], lang):
                 problems.append(f"{lang}: sure.text does not say the grade {word!r} that stands beside it")
         if raw["page_what.s4_made"] != lock["made"]:
             problems.append(f"{lang}: page_what.s4_made is not the locked sentence on how the words are made")
@@ -696,7 +696,7 @@ def check_words(site):
         problems += lint(site, f"words.{lang}", {k: v for k, v in raw.items() if not k.startswith("hero.tagline_")}, "", lang=lang)
         for key in ("page_what.description",):
             for pattern, what in FOR_THE_WRITER + RULES[lang]["for_the_writer"]:
-                if re.search(pattern, raw[key].lower()):
+                if re.search(pattern, lower(raw[key], lang)):
                     site.notes.append(f"words.{lang}: {key}: {what}")
     for lang in LANGS:
         for key, text in strings(site.museum.get(lang, {})).items():
@@ -738,7 +738,7 @@ def lint(site, where, flat, prefix, limits=True, wing=None, lang="en"):
     for slug in ([wing] if wing else site.open):
         never += [tuple(x) for x in site.wings[slug].get("never_say", [])]
     for key, text in flat.items():
-        low = text.lower()
+        low = lower(text, lang)
         for bad in BANNED + RULES[lang]["banned"]:
             if bad in low and not (bad == ";" and key.startswith("sections")):
                 problems.append(f"{where}: {key} contains {bad!r}")
@@ -2568,7 +2568,7 @@ def check_gone(out, site):
         for line in GONE + tuple(x for code in L.order for x in RULES[code]["gone"]):
             if line in text or line in plain:
                 problems.append(f"{path.relative_to(out)}: the page still carries {line!r}")
-        low = plain.lower()
+        low = lower(plain, page_lang(text))
         for pattern, instead in ON_EVERY_PAGE:
             # a test's stand-in wings carry stand-in words: they are read for the real wings' statements only
             found = re.search(pattern, low)

@@ -475,6 +475,11 @@ def tokens(css_text):
     return dict(re.findall(r"--([\w-]+):\s*(#[0-9a-fA-F]{3,8})", css_text))
 
 
+def _upper(text, lang):
+    """Upper case as the language writes it (buildlib.upper): Turkish gives i its dot."""
+    return (text.replace("i", "İ") if lang == "tr" else text).upper()
+
+
 def _text(x, y, words, size, fill, anchor="start", face="Cardo"):
     return (f'<text x="{x:g}" y="{y:g}" font-family="{face}" font-size="{size}" fill="{fill}" '
             f'text-anchor="{anchor}">{esc(words)}</text>')
@@ -707,7 +712,7 @@ def tally_still_svg(rows, words, c):
     parts.append(_rect(m, y, W - 2 * m, 1.5, c["line-strong"], c["line-strong"], 0))
     x, ky = m, y + 48
     for kind, text in words["key"]:
-        text = text[:1].upper() + text[1:]
+        text = _upper(text[:1], words.get("lang")) + text[1:]
         width = 56 if kind == "field" else 22
         if x + width + 12 + len(text) * 20 * 0.5 > W - m:
             x, ky = m, ky + 42
@@ -739,7 +744,7 @@ def facts_still_svg(rows, words, c):
     parts = [_text(m, 104 + round(head_size * 1.16) * i, row, head_size, c["linen"]) for i, row in enumerate(head)]
     parts.append(_rect(m, top, W - 2 * m, bottom - top, c["wall"], c["wall"], 0))
     parts.append(_rect(m, top, W - 2 * m, 2, c["chalk"], c["chalk"], 0))
-    parts.append(_text(m + pad, top + 40, words["h"].upper(), 17, c["text-2"], face="Marcellus"))
+    parts.append(_text(m + pad, top + 40, _upper(words["h"], words.get("lang")), 17, c["text-2"], face="Marcellus"))
     y = top + 52
     for (term, _), wrapped in zip(rows, lines):
         parts.append(_rect(m + pad, y, W - 2 * m - 2 * pad, 1.5, c["line-row-wall"], c["line-row-wall"], 0))
@@ -853,7 +858,7 @@ CARDO_EM = (269, 238, 407, 580, 512, 855, 743, 227, 317, 318, 362, 512, 254, 446
             605, 942, 853, 865, 591, 863, 692, 501, 734, 816, 735, 1104, 786, 745, 713, 361, 325, 361, 512, 495, 342, 432,
             537, 456, 532, 454, 305, 560, 549, 281, 282, 535, 254, 845, 568, 542, 533, 535, 365, 335, 316, 548, 506, 802,
             497, 529, 447, 517, 210, 519, 512)
-CARDO_EM_OWN = {"ß": 596, "¿": 380, "¡": 238, " ": 269}
+CARDO_EM_OWN = {"ß": 596, "¿": 380, "¡": 238, " ": 269, "ı": 281}
 # The share picture whose square picture fills its middle: the left edge of the words in the column at its left,
 # and their least gap before the picture.
 SQUARE_M, SQUARE_GAP = 26, 22

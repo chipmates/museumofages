@@ -10,7 +10,8 @@ window.MoaSky = {"tIce":-30000.0,"seven":{"4301":"Dubhe","4295":"Merak","4554":"
   var RAD = Math.PI / 180;
   F.RAD = RAD;
   // the faces the film's words are set in: a language with faces of its own names them first (buildlib.LANG_FACES)
-  var OWN = /^bg\b/i.test(document.documentElement.lang || '') ? ['"Museum Bulgarian Serif"', '"Museum Bulgarian Sans"'] : ['', ''];
+  var HL = document.documentElement.lang || '';
+  var OWN = /^bg\b/i.test(HL) ? ['"Museum Bulgarian Serif"', '"Museum Bulgarian Sans"'] : /^tr\b/i.test(HL) ? ['"Museum Turkish Serif"', '"Museum Turkish Sans"'] : ['', ''];
   F.SERIF = (OWN[0] ? OWN[0] + ', ' : '') + 'Cardo, Georgia, serif';
   F.SANS = (OWN[1] ? OWN[1] + ', ' : '') + 'Marcellus, Georgia, serif';
   F.FACES = (OWN[0] ? [OWN[0], OWN[1]] : []).concat(['Marcellus', 'Cardo']);
@@ -1249,10 +1250,10 @@ window.MoaFilm.plates.oil.markR = 2.3; window.MoaFilm.plates.oil.strokes = { len
           prev: 'Fr\xfcher auf der Linie der Jahre', next: 'Sp\xe4ter auf der Linie der Jahre', film: 'Der Film der sieben Sterne',
           more: 'Den ganzen Film ansehen', caption: 'Der Film des Museums' },
     // the other languages' words, written by the museum's writer: a word not written yet is said in English
-    fr: {}, it: {}, es: {}, 'pt-BR': {}, bg: {}
+    fr: {}, it: {}, es: {}, 'pt-BR': {}, bg: {}, tr: {}
   };
-  var LANGS = ['en', 'de', 'fr', 'it', 'es', 'pt-BR', 'bg'];
-  // the page's language among the seven, from its lang attribute (pt-BR, or any language's first part)
+  var LANGS = ['en', 'de', 'fr', 'it', 'es', 'pt-BR', 'bg', 'tr'];
+  // the page's language among the film's, from its lang attribute (pt-BR, or any language's first part)
   function pageLang() {
     var h = (document.documentElement.lang || 'en').toLowerCase(), i;
     for (i = 0; i < LANGS.length; i++) if (LANGS[i].toLowerCase() === h) return LANGS[i];
@@ -1268,7 +1269,7 @@ window.MoaFilm.plates.oil.markR = 2.3; window.MoaFilm.plates.oil.strokes = { len
     return (SAID[lang] = out);
   }
   // the mark between thousands, from five digits on
-  var MARK = { en: ',', de: '.', fr: '\u202f', it: '.', es: '\u202f', 'pt-BR': '.', bg: '\u00a0' };
+  var MARK = { en: ',', de: '.', fr: '\u202f', it: '.', es: '\u202f', 'pt-BR': '.', bg: '\u00a0', tr: '.' };
   var OLDEST = -40000, ARRIVAL_MAX = 19.6, CENTURY = 100, HAND = 2.1;
   F.PLATES = PLATES; F.WORDS = WORDS;
 
