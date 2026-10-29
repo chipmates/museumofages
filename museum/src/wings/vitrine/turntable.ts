@@ -396,6 +396,23 @@ export function createTurntablePayload(options: TurntableOptions): TurntablePayl
     body.object.updateMatrixWorld(true)
     return union
   }
+  /** THE OUTLINE'S EXTREMES: its farthest point in each of a few dozen directions, enough to find its box on the
+   * canvas from any eye every frame */
+  let hull: Vector3[] = []
+  function hullOf(points: readonly Vector3[]): Vector3[] {
+    const n = 48, best: { at: number; point: Vector3 | null }[] = [], toward: Vector3[] = []
+    for (let i = 0; i < n; i++) {
+      const y = 1 - (i + .5) / n * 2, r = Math.sqrt(1 - y * y), a = i * 2.399963
+      toward.push(new Vector3(Math.cos(a) * r, y, Math.sin(a) * r)); best.push({ at: -Infinity, point: null })
+    }
+    for (const point of points) for (let k = 0; k < n; k++) {
+      const at = point.dot(toward[k]!)
+      if (at > best[k]!.at) best[k] = { at, point }
+    }
+    return [...new Set(best.map(b => b.point).filter((p): p is Vector3 => p !== null))]
+  }
+  /** the whole view's distance, kept so the even margin is given to the whole view alone */
+  let wholeRef = 0
   function wholeDistance(at: { yaw: number; pitch: number } = WHOLE): number {
     if (rest.isEmpty()) return fitDistance(radius) * WHOLE_FIT
     const fit = viewportFit(), w = innerWidth, h = deskStageHeight()
@@ -406,18 +423,29 @@ export function createTurntablePayload(options: TurntableOptions): TurntablePayl
     const right = new Vector3().crossVectors(new Vector3(0, 1, 0), toward).normalize()
     const up = new Vector3().crossVectors(toward, right).normalize()
     const corner = new Vector3()
-    let distance = radius * .5
-    const measure = (point: Vector3): void => {
-      corner.copy(point).sub(centre)
-      const depth = corner.dot(toward)
-      distance = Math.max(distance, depth + Math.abs(corner.dot(right)) / tanX, depth + Math.abs(corner.dot(up)) / tanY)
+    const points = hull.length ? hull : [rest.min.x, rest.max.x].flatMap(x => [rest.min.y, rest.max.y].flatMap(y => [rest.min.z, rest.max.z].map(z => new Vector3(x, y, z))))
+    /** the run's outline on the canvas from this bearing at a distance, as its box's share of the fit box */
+    const filled = (distance: number): number => {
+      let left = Infinity, rightmost = -Infinity, low = Infinity, high = -Infinity
+      for (const point of points) {
+        corner.copy(point).sub(centre)
+        const ahead = distance - corner.dot(toward)
+        if (ahead <= 1e-3) return Infinity
+        const u = corner.dot(right) / ahead, v = corner.dot(up) / ahead
+        left = Math.min(left, u); rightmost = Math.max(rightmost, u); low = Math.min(low, v); high = Math.max(high, v)
+      }
+      return Math.max((rightmost - left) / (2 * tanX), (high - low) / (2 * tanY))
     }
-    if (outline.length) for (const point of outline) measure(point)
-    else for (const x of [rest.min.x, rest.max.x]) for (const y of [rest.min.y, rest.max.y]) for (const z of [rest.min.z, rest.max.z]) measure(new Vector3(x, y, z))
-    // the air round the box the whole view fits: the outline takes the setting's share of the picture, every machine by
-    // the same rule (a sphere's fit stands a long or flat machine nearer than its own outline asks)
-    const { share } = stageNumbers()
-    return distance / (host?.narrow ? share.phone : share.desktop)
+    // THE ONE RULE: the outline's own box takes the setting's share of the fit box (its place is evened in placeCamera)
+    const { share } = stageNumbers(), want = host?.narrow ? share.phone : share.desktop
+    let near = radius * .05, far = radius * 400
+    for (let i = 0; i < 40; i++) {
+      const mid = Math.sqrt(near * far)
+      if (filled(mid) > want) near = mid
+      else far = mid
+    }
+    wholeRef = far
+    return far
   }
   /** The eye and its aim, from the body's own metres onto the table, and the
    * point on the eye's own side, past the body and at the eye's height, that
@@ -578,9 +606,27 @@ export function createTurntablePayload(options: TurntableOptions): TurntablePayl
     camera.aspect = w / h
     if (camera.view?.enabled) camera.clearViewOffset()
     camera.updateProjectionMatrix()
-    camera.projectionMatrix.elements[8] = -2 * (fit.left + fit.width / 2 - w / 2) / w
-    camera.projectionMatrix.elements[9] = 2 * (fit.top + fit.height / 2 - h / 2) / h
-    camera.projectionMatrixInverse.copy(camera.projectionMatrix).invert()
+    const shift = (sx: number, sy: number): void => {
+      camera!.projectionMatrix.elements[8] = -2 * (fit.left + fit.width / 2 - w / 2 + sx) / w
+      camera!.projectionMatrix.elements[9] = 2 * (fit.top + fit.height / 2 - h / 2 + sy) / h
+      camera!.projectionMatrixInverse.copy(camera!.projectionMatrix).invert()
+    }
+    shift(0, 0)
+    // AN EVEN MARGIN: in the whole view the outline's own box, not the body's centre, stands in the viewport's middle;
+    // a view stepping in toward a part hands that back smoothly
+    const whole = wholeRef > 0 && hull.length ? Math.min(1, Math.max(0, (view.distance / wholeRef - .75) / .2)) : 0
+    if (whole > 0) {
+      camera.updateMatrixWorld()
+      const at = new Vector3()
+      let left = Infinity, right = -Infinity, top = Infinity, bottom = -Infinity
+      for (const point of hull) {
+        at.copy(point).project(camera)
+        const x = (at.x * .5 + .5) * w, y = (.5 - at.y * .5) * h
+        left = Math.min(left, x); right = Math.max(right, x); top = Math.min(top, y); bottom = Math.max(bottom, y)
+      }
+      const k = whole * whole * (3 - 2 * whole)
+      shift((fit.left + fit.width / 2 - (left + right) / 2) * k, (fit.top + fit.height / 2 - (top + bottom) / 2) * k)
+    }
     // the rig turns with the eye, and the field's pool stands behind the machine where the picture puts it
     camera.updateMatrixWorld()
     stage?.follow({ yaw: view.yaw, centre: onCanvas(view.target, camera), picture: fit.height / h, eye: camera.position })
@@ -897,6 +943,7 @@ export function createTurntablePayload(options: TurntableOptions): TurntablePayl
     }
     if (options.travels) centre.set((rest.min.x + rest.max.x) / 2, centre.y, (rest.min.z + rest.max.z) / 2)
     outline = outlineOver(whole ? (period ? RUN_SAMPLES : 1) : 1)
+    hull = hullOf(outline)
     const span = Math.max(size.x, size.y, size.z)
     object.traverse(child => {
       if (!(child instanceof Mesh) || child.userData['vitrineOverlay']) return
@@ -1038,7 +1085,7 @@ export function createTurntablePayload(options: TurntableOptions): TurntablePayl
       }
       standing = false
       stage = undefined; scene = undefined; camera = undefined
-      outline = []
+      outline = []; hull = []; wholeRef = 0
       host = undefined
     },
   }
