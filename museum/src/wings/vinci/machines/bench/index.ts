@@ -111,6 +111,9 @@ const BRIDGE_MERGE = [.2, 2.0] as const, BRIDGE_MERGE_ABOVE = .03;
  * (`BANK.lip` 3.5 in the bridge's plan, wandering .2), since a floor laid over the slope hovers above it and cuts its
  * top into a band */
 const BRIDGE_CHANNEL = 3.6;
+/** The bridge's own eye, with no rig's eye given: it opens in its yard, its rods on both banks out to the stock's bank
+ * ends (`STOCK_FOOT` 8.22 in its plan), so the frame takes the yard whole and the bridge rises in its middle. */
+const BRIDGE_YARD = new Box3(new Vector3(-8.5, -.6, -2.3), new Vector3(8.5, 3, 2.3));
 /** The parachute's uprights alone (not its plinth): a plain grey powder coat in linear albedo. */
 const PARACHUTE_POST = { tone: .16, roughness: .55 };
 /** The compass's stand alone (not its plate): a mid grey powder coat in linear albedo, lighter than the iron it holds. */
@@ -462,7 +465,7 @@ export function createBench(stack: Stack, onExit: () => void) {
     if (!machine)
       return;
     if (eye && POSED_RIG.has(slug)) { composeEye(eye); return; }
-    const box = closeUp ? focusBounds() : frameBounds(), size = box.getSize(new Vector3()), centre = box.getCenter(new Vector3()), span = Math.max(size.x, size.y, size.z), mobile = innerWidth <= 1280;
+    const box = closeUp ? focusBounds() : slug === 'bridge-of-poles' && !eye ? BRIDGE_YARD : frameBounds(), size = box.getSize(new Vector3()), centre = box.getCenter(new Vector3()), span = Math.max(size.x, size.y, size.z), mobile = innerWidth <= 1280;
     const direction = viewDirection();
     const right = new Vector3().crossVectors(new Vector3(0, 1, 0), direction).normalize(), up = new Vector3().crossVectors(direction, right).normalize();
     const distance = eye ? new Vector3(...eye.at).distanceTo(centre) : eyeDistance(box, direction, mobile);

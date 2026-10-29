@@ -78,13 +78,13 @@ function radiusOf(geometry: import('three/webgpu').BufferGeometry): number {
 
 /** A CORD THAT WINDS ALONG A LINE (a lacing through a hem's eyelets, a whipping): its path, its surface over its own
  * round, runs longer than its box's diagonal by more than `winds`, and its box is a line (its least side under a tenth
- * of its longest). Its length in its own metres beside: a material takes the rule of its longest cord */
-const windings = new WeakMap<object, { count: number; length: number; winds: boolean }>()
-function windingOf(geometry: import('three/webgpu').BufferGeometry, r: number, winds: number): { length: number; winds: boolean } {
+ * of its longest) */
+const windings = new WeakMap<object, { count: number; winds: boolean }>()
+function windingOf(geometry: import('three/webgpu').BufferGeometry, r: number, winds: number): boolean {
   const position = geometry.getAttribute('position')
-  if (!position || !(r > 0)) return { length: 0, winds: false }
+  if (!position || !(r > 0)) return false
   const kept = windings.get(geometry)
-  if (kept && kept.count === position.count) return kept
+  if (kept && kept.count === position.count) return kept.winds
   const index = geometry.getIndex(), corners = index ? index.count : position.count
   const at = (i: number, out: Vector3): Vector3 => out.fromBufferAttribute(position, index ? index.getX(i) : i)
   const a = new Vector3(), b = new Vector3(), c = new Vector3()
@@ -96,9 +96,9 @@ function windingOf(geometry: import('three/webgpu').BufferGeometry, r: number, w
   if (!geometry.boundingBox) geometry.computeBoundingBox()
   const size = geometry.boundingBox!.getSize(new Vector3()), sides = [size.x, size.y, size.z].sort((x, y) => x - y)
   const length = area / (2 * Math.PI * r), diagonal = Math.max(1e-6, size.length())
-  const found = { count: position.count, length, winds: length / diagonal > winds && sides[0]! < sides[2]! * .1 }
+  const found = { count: position.count, winds: length / diagonal > winds && sides[0]! < sides[2]! * .1 }
   windings.set(geometry, found)
-  return found
+  return found.winds
 }
 
 const DEG = Math.PI / 180
@@ -165,8 +165,8 @@ export const STAGE = Object.freeze({
     /** the shadow's soft edge as a share of the machine's span, as a broad source high over it gives */
     soft: .01,
     /** the edge on the ground (the floor, a machine's own bank) from its highest parts: a broad source's shadow widens
-     * with the height of what casts it */
-    ground: .12,
+     * with the height of what casts it, but a slender part high up (a flywheel's arm, a gate's frame) keeps its weight */
+    ground: .07,
     /** the heights over the ground (shares of the span) that part its shadow: under the first a part casts the key's
      * own edge (a pole lying on a bank stands on its shadow), up to the second half the ground's, above it all. A broad
      * surface across a band's edge shows a seam in its shadow: the parachute's canopy lies wholly above the second */
@@ -207,7 +207,7 @@ export const STAGE = Object.freeze({
    * machine's own longest caption, and the phone's is near square, so an upright machine takes more of its height to
    * stand as large in the glass; on the desk the margin over the machine is what a caption leaves under it, a picture's
    * twelfth, so its top never stands tight under the window's edge */
-  share: { desktop: [.83, .83] as readonly [number, number], phone: [.86, .94] as readonly [number, number],
+  share: { desktop: [.83, .83] as readonly [number, number], phone: [.885, 1] as readonly [number, number],
     /** on the desk a machine with no step stands in the whole picture: its height at most this share of it */
     most: .82 },
   /** the print: the museum's neutral curve, no split, a light vignette, a tooth that dithers */
@@ -590,32 +590,49 @@ export function createStageSetting(options: {
   }
   /** a material used by thin parts alone, and the least radius among them (world metres) */
   const cords = new Map<MeshStandardNodeMaterial, number>()
+  /** the copies the winding cords draw from, and every mesh lent one, with the material it is given back */
+  const plain = new Set<MeshStandardNodeMaterial>()
+  const swapped: { mesh: Mesh; was: MeshStandardNodeMaterial }[] = []
   function thinParts(root: Object3D): void {
     const most = S.cord.most * span, seen = new Map<MeshStandardNodeMaterial, number>(), thick = new Set<MeshStandardNodeMaterial>()
-    /** each thin material's longest cord, by its length in world metres, and whether that cord winds */
-    const longest = new Map<MeshStandardNodeMaterial, { length: number; winds: boolean }>()
+    /** the cords that wind, each with the material it shares with the straight ones */
+    const wound: { mesh: Mesh; material: MeshStandardNodeMaterial; r: number }[] = []
     root.updateMatrixWorld(true)
     root.traverse(node => {
       const mesh = node as Mesh
       if (!mesh.isMesh || node.userData['vitrineOverlay'] || node.userData['vitrineTarget']) return
-      const local = radiusOf(mesh.geometry), grow = node.matrixWorld.getMaxScaleOnAxis(), r = local * grow
+      const local = radiusOf(mesh.geometry), r = local * node.matrixWorld.getMaxScaleOnAxis()
+      const one = !Array.isArray(mesh.material)
       for (const material of [mesh.material].flat()) {
         const m = material as MeshStandardNodeMaterial
         if (!m.isNodeMaterial || m.positionNode) continue
-        if (Number.isFinite(r) && r < most) {
-          seen.set(m, Math.min(seen.get(m) ?? Infinity, r))
-          const wound = windingOf(mesh.geometry, local, S.cord.winds), length = wound.length * grow
-          if (length > (longest.get(m)?.length ?? -1)) longest.set(m, { length, winds: wound.winds })
-        } else thick.add(m)
+        if (!(Number.isFinite(r) && r < most)) { thick.add(m); continue }
+        if (one && !plain.has(m) && windingOf(mesh.geometry, local, S.cord.winds)) wound.push({ mesh, material: m, r })
+        else seen.set(m, Math.min(seen.get(m) ?? Infinity, r))
       }
     })
+    // A WINDING CORD DRAWS FROM ITS OWN COPY of the material it shares, so the straight cords alone are widened
+    const copies = new Map<MeshStandardNodeMaterial, MeshStandardNodeMaterial>()
+    for (const { mesh, material, r } of wound) {
+      if (thick.has(material)) continue
+      let copy = copies.get(material)
+      if (!copy) {
+        copy = material.clone() as MeshStandardNodeMaterial
+        copy.name = `${material.name}:winding`
+        copies.set(material, copy)
+        plain.add(copy)
+      }
+      swapped.push({ mesh, was: material })
+      mesh.material = copy
+      seen.set(copy, Math.min(seen.get(copy) ?? Infinity, r))
+    }
     for (const [m, r] of seen) {
       if (thick.has(m) || cords.has(m)) continue
       cords.set(m, r)
       keep(m)
       const world = modelWorldMatrix.mul(vec4(positionLocal, 1)).xyz
       const across = world.sub(eyeAt).length().mul(pixelAngle)
-      if (!longest.get(m)?.winds) {
+      if (!plain.has(m)) {
         const scale = modelWorldMatrix.mul(vec4(normalLocal, 0)).xyz.length().max(1e-6)
         const push = across.mul(S.cord.px / 2).sub(r).max(0)
         m.positionNode = positionLocal.add(normalLocal.mul(push.div(scale)))
@@ -746,6 +763,9 @@ export function createStageSetting(options: {
       material.needsUpdate = true
     }
     kept.clear()
+    for (const { mesh, was } of swapped.splice(0)) mesh.material = was
+    for (const copy of plain) copy.dispose()
+    plain.clear()
     studio?.dispose()
     for (const l of [front, ...rims, ...scrimmed]) { l.removeFromParent(); l.target.removeFromParent(); l.dispose() }
     dropVeil()
