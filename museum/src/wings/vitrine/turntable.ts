@@ -416,7 +416,8 @@ export function createTurntablePayload(options: TurntableOptions): TurntablePayl
     else for (const x of [rest.min.x, rest.max.x]) for (const y of [rest.min.y, rest.max.y]) for (const z of [rest.min.z, rest.max.z]) measure(new Vector3(x, y, z))
     // the air round the box the whole view fits: the outline takes the setting's share of the picture, every machine by
     // the same rule (a sphere's fit stands a long or flat machine nearer than its own outline asks)
-    return distance / stageNumbers().share
+    const { share } = stageNumbers()
+    return distance / (host?.narrow ? share.phone : share.desktop)
   }
   /** The eye and its aim, from the body's own metres onto the table, and the
    * point on the eye's own side, past the body and at the eye's height, that

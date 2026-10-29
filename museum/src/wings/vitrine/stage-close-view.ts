@@ -58,16 +58,17 @@ export const STAGE = Object.freeze({
   /** the fill: the sky's and the floor's share, and a weak lamp from the eye itself */
   fill: { sky: '#6d7682', ground: '#40362c', intensity: .36, environment: .2, front: .12, frontHeight: 14, frontKelvin: 5600 },
   /** the edge lights from behind, each at its bearing from the eye's: weaker than the key, cool, never on the floor;
-   * `cloth` false keeps them off a thin translucent cloth, which they would light through as a lamp lights a shade */
-  rim: { turns: [155] as readonly number[], height: 36, kelvin: 7200, share: .5, cloth: true },
+   * a thin translucent cloth takes them at `cloth` of their strength (a scrim on the lamp), since from behind they light
+   * it through as a lamp lights a shade */
+  rim: { turns: [155] as readonly number[], height: 36, kelvin: 7200, share: .5, cloth: 1 },
   /** the room metal and glass mirror: the fill's dark sky alone at 0; else a softbox overhead and two strips behind at
    * `stripTurn` either side of the eye's back, their radiance over the sky's, turning with the eye; the floor keeps the
    * dark sky */
   room: { softbox: 0, strips: 0, stripTurn: 145, stripWide: 14, boxRadius: 34, intensity: .2 },
   /** the vertical lens in degrees: a long lens on the desktop, the phone's upright frame narrower still across */
   lens: { desktop: 24, phone: 40 },
-  /** the machine's swept outline's share of the picture's limiting side */
-  share: .8,
+  /** the machine's swept outline's share of its fit box's limiting side, per device */
+  share: { desktop: .8, phone: .8 },
   /** the print: the museum's neutral curve, no split, a light vignette, a tooth that dithers */
   print: { exposure: 1.0, toe: .012, shoulder: .35, vignette: .1, grain: .005 },
 })
@@ -178,6 +179,13 @@ export function createStageSetting(options: {
   }
   const front = lamp(S.fill.frontKelvin, S.key.lux / 100 * S.fill.front, 'stage/front')
   const rims = S.rim.turns.map((_, i) => lamp(S.rim.kelvin, S.key.lux / 100 * S.rim.share, `stage/rim-${i}`))
+  // the scrimmed edge lights a translucent cloth takes instead: lamps outside the scene, so no other surface sees them
+  const scrimmed = S.rim.cloth < 1 ? S.rim.turns.map((_, i) => {
+    const l = new DirectionalLight(kelvinToColour(S.rim.kelvin).getHex(), S.key.lux / 100 * S.rim.share * S.rim.cloth)
+    l.name = `stage/rim-cloth-${i}`
+    l.castShadow = false
+    return l
+  }) : []
   const distance = Math.max(24, span * 6) * .8
   const place = (light: DirectionalLight, bearing: number, height: number): void => {
     const cos = Math.cos(height)
@@ -300,10 +308,15 @@ export function createStageSetting(options: {
     material.needsUpdate = true
   }
   function machine(root: Object3D): void {
-    if (S.rim.cloth) return
+    if (S.rim.cloth >= 1) return
+    const cloth = lights([key.light, key.fill, front, ...scrimmed])
     root.traverse(node => {
       const materials = (node as Mesh).isMesh ? [(node as Mesh).material].flat() : []
-      for (const material of materials) if ((material as { thicknessColorNode?: unknown }).thicknessColorNode) offRim(material as MeshStandardNodeMaterial)
+      for (const material of materials) {
+        if (!(material as { thicknessColorNode?: unknown }).thicknessColorNode) continue
+        ;(material as MeshStandardNodeMaterial).lightsNode = cloth
+        material.needsUpdate = true
+      }
     })
   }
 
@@ -315,6 +328,7 @@ export function createStageSetting(options: {
       key.direction.copy(cascadesOf[0]!.position).sub(centre).normalize()
       place(front, o.yaw, S.fill.frontHeight * DEG)
       rims.forEach((rim, i) => place(rim, o.yaw + S.rim.turns[i]! * DEG, S.rim.height * DEG))
+      scrimmed.forEach((rim, i) => place(rim, o.yaw + S.rim.turns[i]! * DEG, S.rim.height * DEG))
       // the studio's lamps stand round the eye as the rig does
       if (studio) scene.environmentRotation.set(0, o.yaw, 0)
     }
@@ -329,7 +343,7 @@ export function createStageSetting(options: {
     key.dispose()
     studio?.dispose()
     floorSky?.dispose()
-    for (const l of [front, ...rims]) { l.removeFromParent(); l.target.removeFromParent(); l.dispose() }
+    for (const l of [front, ...rims, ...scrimmed]) { l.removeFromParent(); l.target.removeFromParent(); l.dispose() }
     dropVeil()
     floor.removeFromParent()
     floor.geometry.dispose()
