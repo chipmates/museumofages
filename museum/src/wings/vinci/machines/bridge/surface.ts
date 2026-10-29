@@ -7,7 +7,7 @@
  * here, each faded as one pixel comes to hold more than a stroke of it.
  */
 import { Color, MeshPhysicalNodeMaterial, MeshStandardNodeMaterial, type Material } from 'three/webgpu'
-import { atan, attribute, cameraPosition, cos, float, fwidth, mix, mx_noise_float, mx_worley_noise_vec2, normalGeometry, normalView, normalViewGeometry, normalWorld, positionLocal, positionView, positionWorld, screenUV, sin, smoothstep, step, uniform, uv, vec2, vec3, vec4 } from 'three/tsl'
+import { atan, attribute, cameraPosition, cos, float, fwidth, mix, mx_noise_float, mx_worley_noise_vec2, normalGeometry, normalView, normalViewGeometry, normalWorld, positionLocal, positionView, positionWorld, screenSize, screenUV, sin, smoothstep, step, uniform, uv, vec2, vec3, vec4 } from 'three/tsl'
 import type { MaterialSet, Stack } from '../../../../stack'
 import { loadMachineMaterial, materialDressed } from '../parts'
 import { benchKeyDirection } from '../key'
@@ -75,8 +75,10 @@ function keyRim(strength: number): N {
 }
 
 /** the stream's mirror: its least share facing the eye, the gain on what it mirrors (the poles over a dark stream mirror
- * dimly, so their shapes show only lifted), and how far the ripples shift the mirrored picture, so the poles waver */
-const MIRROR_BASE = { least: 0.08, gain: 1.6, wave: 0.18 }
+ * dimly, so their shapes show only lifted), how far the ripples shift the mirrored picture, so the poles waver, how
+ * soft the moving face makes it far off (half its height, a share of the screen's), and the eye's distance in metres
+ * over which it softens (the rigs' eyes stand nearer than its start: their mirror stays as it was) */
+const MIRROR_BASE = { least: 0.08, gain: 1.6, wave: 0.18, soft: 0.008, near: 16, far: 23 }
 /** a look round's numbers for the stream (`globalThis.__stageProbe.stream`), on the dev server only */
 function streamNumbers(): typeof MIRROR_BASE & { ripple?: number; absorb?: number; caustic?: number } {
   const probe = import.meta.env.DEV ? (globalThis as { __stageProbe?: { stream?: Record<string, number> } }).__stageProbe?.stream : undefined
@@ -403,9 +405,27 @@ export async function bridgeSurfaces(stack: Stack): Promise<BridgeSurfaces> {
     const MIRROR = streamNumbers()
     const fresnel = float(1).sub(normalWorld.dot(view).abs()).pow(5).mul(1 - MIRROR.least).add(MIRROR.least)
     // the ripples shift the mirrored picture a little, as a stream's surface does
-    reflection.uvNode = screenUV.flipX().add(normalView.xy.sub(normalViewGeometry.xy).mul(MIRROR.wave))
+    const at = screenUV.flipX().add(normalView.xy.sub(normalViewGeometry.xy).mul(MIRROR.wave))
+    reflection.uvNode = at
+    // SEEN FROM FAR OFF, A MOVING FACE MIRRORS SOFTLY, most along the eye's way: there a thin pole, mirrored sharp and
+    // shifted by ripples finer than itself, broke into a jagged dark sliver with a lit rim, a tear in the water. Five
+    // looks down the screen, each from the picture's level as wide as their spacing (so no copy of a pole shows),
+    // weighed as a bell; nearer than `near` the one sharp look as before
+    let picture: N = reflection.rgb
+    if (MIRROR.soft > 0) {
+      // the picture's levels: the reflector makes its target with them on its first pass, after this
+      reflection.reflector.generateMipmaps = true
+      const far = smoothstep(MIRROR.near, MIRROR.far, positionWorld.sub(cameraPosition).length())
+      const gap = far.mul(MIRROR.soft / 2), level = screenSize.y.mul(gap).max(1).log2()
+      const sharp = reflection.sample(at).level(0).rgb
+      const soft = [-2, -1, 0, 1, 2].reduce((sum: N, k, i) => {
+        const look = reflection.sample(at.add(vec2(0, gap.mul(k)))).level(level).rgb.mul([1, 4, 6, 4, 1][i]! / 16)
+        return sum === null ? look : sum.add(look)
+      }, null)
+      picture = mx(sharp, soft, step(1e-4, far))
+    }
     waterTop.colorNode = (waterTop.colorNode as N).mul(float(1).sub(fresnel))
-    waterTop.emissiveNode = reflection.rgb.mul(fresnel.mul(MIRROR.gain))
+    waterTop.emissiveNode = picture.mul(fresnel.mul(MIRROR.gain))
     waterTop.needsUpdate = true
   }
   for (const m of [pole, hemp]) airOut(m)
