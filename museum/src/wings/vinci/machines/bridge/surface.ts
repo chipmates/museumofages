@@ -336,8 +336,12 @@ export async function bridgeSurfaces(stack: Stack): Promise<BridgeSurfaces> {
     const ripple = mx_noise_float(flow.mul(vec3(1.1, 0.7, 1)).mul(1.3)).mul(0.6).add(mx_noise_float(flow.mul(3.3).add(3.3)).mul(0.22))
     // the bank's toe runs under the surface: the shallows show its earth, the middle is deep and dark
     const shallow = smoothstep(3.2, 3.85, p.x.abs()).mul(smoothstep(-0.2, 0.2, p.y.sub(BANK.water - 0.1)))
+    // the section through the water reads with the bank's own section beside it: a far eye sees the model's cut end,
+    // and a black slot there stands out of the dusk as a hole
     const cut = smoothstep(BANK.water - 0.03, BANK.water - 0.3, p.y)
-    water.colorNode = mx(mx(lin('#2b2d22'), lin('#423e2d'), shallow), lin('#11140f'), cut)
+    water.colorNode = mx(mx(lin('#2b2d22'), lin('#423e2d'), shallow), lin('#2c261b'), cut)
+    // the cut faces stand away from every lamp: they keep the dusk's own value, so the end reads as ground, not a slot
+    water.emissiveNode = lin('#2c261b').mul(0.7)
     water.normalNode = bumped(normalView, ripple.mul(streamNumbers().ripple ?? 0.022), 1)
     water.roughnessNode = float(0.07)
     water.envMapIntensity = 0.42
