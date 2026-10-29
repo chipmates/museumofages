@@ -59,7 +59,7 @@ export const STAGE = Object.freeze({
   air: { near: 1.0, far: 2.8, horizon: 1.4,
     /** the hand-off spans at least this share of the picture's own height in angle: a low eye sees the floor behind
      * the machine in a few rows, and a hand-off of a few rows reads as a band */
-    least: .3 },
+    least: .5 },
   /** the key: turned from the eye's bearing (negative: the eye's left) and raised, warm, soft */
   key: { turn: -50, height: 52, kelvin: 4500, lux: 280, ambient: .55,
     /** the shadow's soft edge as a share of the machine's span, as a broad source high over it gives */
