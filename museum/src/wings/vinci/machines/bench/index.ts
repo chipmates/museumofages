@@ -776,26 +776,9 @@ export function createBench(stack: Stack, onExit: () => void) {
     setBenchKey(new Vector3(Math.sin(turn) * Math.cos(up), Math.sin(up), Math.cos(turn) * Math.cos(up)));
     if (machine) standStage();
   }
-  /** Once the body stands: the island's setting round it, its floor at the machine's foot, its rig on the eye. */
-  function standStage() {
-    if (!machine) return;
-    stage?.dispose();
-    // the setting is fitted to what the eye frames: the bridge standing, not its whole bank
-    const box = frameBounds(), size = box.getSize(new Vector3()), span = Math.max(size.x, size.y, size.z);
-    const radius = box.getBoundingSphere(new Sphere()).radius;
-    stage = createStageSetting({ stack, scene, span, radius, centre: box.getCenter(new Vector3()), floorY: floorLevel(), footprint: box });
-    key = stage.key;
-    stage.follow({ yaw: rigYaw() });
-    setBenchKey(key.direction);
-  }
-  async function open(opts: BenchOptions = {}) { const requested = opts.slug ?? 'aerial-screw'; if (!isBenchSlug(requested))
-    throw new Error(`No complete machine: ${requested}`);
-    const requestedEvidence = opts.evidence === undefined ? null : opts.evidence === requested ? recordOf(requested) : partialCatalog.find(record => record.slug === opts.evidence);
-    if (opts.evidence !== undefined && !requestedEvidence) throw new Error(`No evidence record for ${requested}: ${opts.evidence}`);
-    evidence.close(false);
-    const mine = ++serial; active = true; host.hidden = false; ready = false; loading.hidden = false; clearDisplay(); folioEntry = undefined; folio.replaceChildren(); slug = requested; evidenceRecord = recordOf(slug); lang = controlLanguage(location.search, opts.lang); schedule = playbackSchedule(recordOf(slug).dossier); playbackState = initialPlayback(schedule, { t: opts.t, fixed: document.body.classList.contains('forge'), reducedMotion: reduced.matches }); lastWall = performance.now(); stamp(); closeUp = opts.close ?? false; eye = opts.eye ?? null; sectionEnabled = (slug === 'camera-obscura' || slug === 'mechanical-lion' || slug === 'armoured-car' || slug === 'bridge-of-poles') && (opts.section ?? false); stack.setScene(scene, camera, stageGrade(Math.max(...Object.values(recordOf(slug).dossier.scale_m).filter((v): v is number => typeof v === 'number')))); lightBench(); machine = isShowcaseSlug(slug) ? buildShowcase(slug, stack) : buildBenchMachine(slug, stack); wallFocus = opts.wallFocus; figure = POSED_RIG.has(slug) ? null : opts.figure ?? null; lampProbe = opts.lamp; fillProbe = opts.fill; luxProbe = opts.lux;
-    if (opts.figure && POSED_RIG.has(slug)) { sizeFigure = makeFigure(figureMaterial, 'size-figure'); sizeFigure.pose(standingJoints(opts.figure.turn ?? 0, opts.figure.at as [number, number, number])); sizeFigure.group.userData['assetClass'] = 'GENERATED'; figureGroup = sizeFigure.group; display.add(sizeFigure.group); } machine.section(sectionEnabled); display.add(machine.object); standStage(); if (opts.keyProbe === 'off' && key) key.light.intensity = 0; compose(); paint(); await Promise.all([machine.ready, supports(mine), plateFor(mine)]); if (mine !== serial)
-    return; machine.animate(playbackState.clock, 0); lampMachine();
+  /** Once the body is dressed: the setting's rules on its surfaces, the bridge's ground merged, the contact shade */
+  function dressStage() {
+    if (!machine || !stage) return;
     // the bridge's banks and stream run out into the setting's floor
     if (slug === 'bridge-of-poles' && stage) {
       machine.object.traverse(node => {
@@ -809,8 +792,32 @@ export function createBench(stack: Stack, onExit: () => void) {
       stage.merge(frameBounds(), BRIDGE_MERGE[0], BRIDGE_MERGE[1], BRIDGE_MERGE_ABOVE);
     }
     // the shade where it stands: the machine, its mounts and the figure, as they stand at this eye's moment
-    stage?.contact(surfacePoints(display));
-    stage?.machine(machine.object);
+    stage.contact(surfacePoints(display));
+    stage.machine(machine.object);
+    if (figureGroup) stage.figure(figureGroup);
+  }
+  /** Once the body stands: the island's setting round it, its floor at the machine's foot, its rig on the eye. */
+  function standStage() {
+    if (!machine) return;
+    stage?.dispose();
+    // the setting is fitted to what the eye frames: the bridge standing, not its whole bank
+    const box = frameBounds(), size = box.getSize(new Vector3()), span = Math.max(size.x, size.y, size.z);
+    const radius = box.getBoundingSphere(new Sphere()).radius;
+    stage = createStageSetting({ stack, scene, span, radius, centre: box.getCenter(new Vector3()), floorY: floorLevel(), footprint: box });
+    key = stage.key;
+    stage.follow({ yaw: rigYaw() });
+    setBenchKey(key.direction);
+    if (ready) dressStage();
+  }
+  async function open(opts: BenchOptions = {}) { const requested = opts.slug ?? 'aerial-screw'; if (!isBenchSlug(requested))
+    throw new Error(`No complete machine: ${requested}`);
+    const requestedEvidence = opts.evidence === undefined ? null : opts.evidence === requested ? recordOf(requested) : partialCatalog.find(record => record.slug === opts.evidence);
+    if (opts.evidence !== undefined && !requestedEvidence) throw new Error(`No evidence record for ${requested}: ${opts.evidence}`);
+    evidence.close(false);
+    const mine = ++serial; active = true; host.hidden = false; ready = false; loading.hidden = false; clearDisplay(); folioEntry = undefined; folio.replaceChildren(); slug = requested; evidenceRecord = recordOf(slug); lang = controlLanguage(location.search, opts.lang); schedule = playbackSchedule(recordOf(slug).dossier); playbackState = initialPlayback(schedule, { t: opts.t, fixed: document.body.classList.contains('forge'), reducedMotion: reduced.matches }); lastWall = performance.now(); stamp(); closeUp = opts.close ?? false; eye = opts.eye ?? null; sectionEnabled = (slug === 'camera-obscura' || slug === 'mechanical-lion' || slug === 'armoured-car' || slug === 'bridge-of-poles') && (opts.section ?? false); stack.setScene(scene, camera, stageGrade(Math.max(...Object.values(recordOf(slug).dossier.scale_m).filter((v): v is number => typeof v === 'number')))); lightBench(); machine = isShowcaseSlug(slug) ? buildShowcase(slug, stack) : buildBenchMachine(slug, stack); wallFocus = opts.wallFocus; figure = POSED_RIG.has(slug) ? null : opts.figure ?? null; lampProbe = opts.lamp; fillProbe = opts.fill; luxProbe = opts.lux;
+    if (opts.figure && POSED_RIG.has(slug)) { sizeFigure = makeFigure(figureMaterial, 'size-figure'); sizeFigure.pose(standingJoints(opts.figure.turn ?? 0, opts.figure.at as [number, number, number])); sizeFigure.group.userData['assetClass'] = 'GENERATED'; figureGroup = sizeFigure.group; display.add(sizeFigure.group); } machine.section(sectionEnabled); display.add(machine.object); standStage(); if (opts.keyProbe === 'off' && key) key.light.intensity = 0; compose(); paint(); await Promise.all([machine.ready, supports(mine), plateFor(mine)]); if (mine !== serial)
+    return; machine.animate(playbackState.clock, 0); lampMachine();
+    dressStage();
     if(key){
       const towardKey=vec3(key.direction.x,key.direction.y,key.direction.z).mul(clothLift);
       machine.object.traverse(node=>{
