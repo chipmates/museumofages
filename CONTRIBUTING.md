@@ -11,7 +11,7 @@ How to help with the museum's code, its words and its records, and what a change
 | A screen reader report: how far you got, where it stopped making sense | The bug report form in the same picker |
 | A life and a place you would like to see as a wing | "A wing you'd like to see" in the same picker |
 | A picture the museum should show | "Something else" in the same picker, with the work, its holder, the page that offers the file and its licence line |
-| A read of a translation, or another language | "Something else" in the same picker. French, Italian, Spanish, Brazilian Portuguese and Bulgarian are machine translations until a person has read them |
+| A read of a translation, or another language | "Something else" in the same picker. French, Italian, Spanish, Brazilian Portuguese, Bulgarian and Turkish are machine translations until a person has read them |
 | A change to the code | A pull request, after the setup and the checks below |
 | Anything else | "Something else" in the same picker |
 | Your institution holds a work shown here | Mail to [contact@museumofages.org](mailto:contact@museumofages.org) |
