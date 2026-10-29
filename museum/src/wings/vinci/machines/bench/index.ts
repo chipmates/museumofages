@@ -107,6 +107,8 @@ const BRIDGE_BANK_FLOOR = -.02;
 /** metres past the standing bridge where the floor starts over its banks and where it is whole: the bank's own edges
  * lie 7.5 m out and more; laid just over the bank's highest swell. Near, so the banks' lit tops never outshine the poles */
 const BRIDGE_MERGE = [.4, 3.5] as const, BRIDGE_MERGE_ABOVE = .03;
+/** the stream's half width at its level (`STREAM_HALF` in the bridge's build): the setting's floor stays off the water */
+const BRIDGE_CHANNEL = 3.0;
 /** The parachute's uprights alone (not its plinth): a plain grey powder coat in linear albedo. */
 const PARACHUTE_POST = { tone: .16, roughness: .55 };
 const el = <K extends keyof HTMLElementTagNameMap>(tag: K, cls: string, text?: string): HTMLElementTagNameMap[K] => { const n = document.createElement(tag); n.className = cls; if (text !== undefined)
@@ -493,7 +495,7 @@ export function createBench(stack: Stack, onExit: () => void) {
     const { air } = stageNumbers();
     stage.air(distance + radius * air.near, distance + radius * air.far);
     camera.updateMatrixWorld();
-    stage.follow({ yaw: rigYaw(), centre: onCanvas(frameBounds().getCenter(new Vector3()), camera), picture, eye: camera.position });
+    stage.follow({ yaw: rigYaw(), centre: onCanvas(frameBounds().getCenter(new Vector3()), camera), picture, eye: camera.position, lens: camera.fov * Math.PI / 180 * picture });
   }
   /** the posed rig's fixed eye: the bench's lens, its dock offset and its air, from a given place */
   function composeEye(fixed: NonNullable<BenchOptions['eye']>) {
@@ -789,7 +791,7 @@ export function createBench(stack: Stack, onExit: () => void) {
         // water shows the poles mirrored, not their shadow: a dark stream takes no crisp lattice on its face
         if (/^stream/.test(node.name)) node.receiveShadow = false;
       });
-      stage.merge(frameBounds(), BRIDGE_MERGE[0], BRIDGE_MERGE[1], BRIDGE_MERGE_ABOVE);
+      stage.merge(frameBounds(), BRIDGE_MERGE[0], BRIDGE_MERGE[1], BRIDGE_MERGE_ABOVE, BRIDGE_CHANNEL);
     }
     // the shade where it stands: the machine, its mounts and the figure, as they stand at this eye's moment
     stage.contact(surfacePoints(display));

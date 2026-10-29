@@ -8,7 +8,7 @@
 import cycleCss from './cycle.css?inline'
 import type { PictureBox, PictureFraming } from './seam'
 import type { VitrinePayload, VitrinePayloadHost } from '../vitrine/types'
-import { islandFit } from '../vitrine/fit'
+import { captionRoom, islandFit } from '../vitrine/fit'
 import { deskStageHeight } from '../desk-stage'
 import { paintSlider } from '../vitrine/slider'
 import { folioDoor, type FolioSheet } from '../vitrine/folio'
@@ -337,7 +337,7 @@ export function createCyclePayload(options: {
     }
     if (!sideways) host.caption.style.removeProperty('min-height')
     const cover = sideways ? host.field?.() ?? { left: 0, top: 0, width: innerWidth, height: innerHeight } : grounded ? null : coverOf(host)
-    const next = cycleFit(f, sideways ? clearOf(host) : islandFit(host), cover)
+    const next = cycleFit(f, sideways ? clearOf(host) : islandFit(host, captionRoom(host, steps.map(step => step.text))), cover)
     const key = [framing, next.left, next.top, next.width, next.height, cover?.left, cover?.top, cover?.width, cover?.height].join()
     if (key === laid) return
     laid = key

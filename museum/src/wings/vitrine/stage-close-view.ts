@@ -52,7 +52,10 @@ export const STAGE = Object.freeze({
    * floor also hands itself to the field toward the horizon, over this share of the angle from the horizon down to the
    * machine's foot (0: by distance alone), so a low eye finds no band where a far floor meets the field; past 1 the
    * hand-off runs on under the machine's foot, a fifth of the field there, so the ramp has no knee where the floor is lit */
-  air: { near: 1.0, far: 2.8, horizon: 1.4 },
+  air: { near: 1.0, far: 2.8, horizon: 1.4,
+    /** the hand-off spans at least this share of the picture's own height in angle: a low eye sees the floor behind
+     * the machine in a few rows, and a hand-off of a few rows reads as a band */
+    least: 0 },
   /** the key: turned from the eye's bearing (negative: the eye's left) and raised, warm, soft */
   key: { turn: -50, height: 52, kelvin: 4500, lux: 280, ambient: .55,
     /** the shadow's soft edge as a share of the machine's span, as a broad source high over it gives */
@@ -72,7 +75,7 @@ export const STAGE = Object.freeze({
   lens: { desktop: 24, phone: 40 },
   /** the machine's swept outline's share of its fit box, across and upright, per device: the phone's box keeps room for a
    * four-row caption and is near square, so an upright machine takes more of its height to stand as large in the glass */
-  share: { desktop: [.92, .92] as readonly [number, number], phone: [.86, .94] as readonly [number, number] },
+  share: { desktop: [.86, .86] as readonly [number, number], phone: [.86, .94] as readonly [number, number] },
   /** the print: the museum's neutral curve, no split, a light vignette, a tooth that dithers */
   print: { exposure: 1.0, toe: .012, shoulder: .35, vignette: .1, grain: .005 },
 })
@@ -105,14 +108,17 @@ export interface StageSetting {
   key: KeyLight
   /** the eye's bearing (radians, the eye at sin/cos of it round the machine) turns the rig; the machine's centre on the
    * canvas (shares, top-left origin) and the picture's height as a share of the canvas's place the pool */
-  follow(o: { yaw: number; centre?: { x: number; y: number }; picture?: number; eye?: Vector3 }): void
+  follow(o: { yaw: number; centre?: { x: number; y: number }; picture?: number; eye?: Vector3; lens?: number }): void
   /** the air's ramp, in metres from the eye */
   air(near: number, far: number): void
   /** the contact shade from points of the machine's surfaces, in world metres */
   contact(points: readonly Vector3[]): void
+  /** a machine that walks carries its shade: how far it stands from where the shade was painted, metres */
+  carry(by: Vector3): void
   /** a machine that brings its own ground (the bridge's banks): the floor laid over it at `above` metres, clear within
-   * `from` metres of the box and whole from `to`, so that ground ends in the setting's with no edge */
-  merge(box: Box3, from: number, to: number, above: number): void
+   * `from` metres of the box and whole from `to`, so that ground ends in the setting's with no edge; a channel (its
+   * half width across x, metres) keeps the floor off the water that runs out along it */
+  merge(box: Box3, from: number, to: number, above: number, channel?: number): void
   /** a mirror-like surface the edge light must not reach: from behind the machine it stands as a hot spot in a mirror
    * the eye looks down on */
   offRim(material: MeshStandardNodeMaterial): void
@@ -212,6 +218,7 @@ export function createStageSetting(options: {
   const grow = radius * S.contact.reach * 2
   const x0 = box.min.x - grow, z0 = box.min.z - grow
   const wide = Math.max(box.max.x - box.min.x, box.max.z - box.min.z) + grow * 2
+  const walkedBy = uniform(vec2(0, 0))
   const floorMaterial = new MeshStandardNodeMaterial({ roughness: S.floor.roughness, metalness: 0 })
   floorMaterial.name = 'stage/floor'
   // the floor seen at a grazing angle hands its colour to the field's at the same pixel
@@ -222,7 +229,7 @@ export function createStageSetting(options: {
   {
     const along = positionWorld.xz.sub(vec2(centre.x, centre.z)).length()
     const fall = mix(float(1), float(S.floor.keep), smoothstep(radius * S.floor.pool[0], radius * S.floor.pool[1], along))
-    const cell = vec2(positionWorld.x.sub(x0).div(wide), positionWorld.z.sub(z0).div(wide))
+    const cell = vec2(positionWorld.x.sub(walkedBy.x).sub(x0).div(wide), positionWorld.z.sub(walkedBy.y).sub(z0).div(wide))
     const inside = smoothstep(0, .02, cell.x).mul(smoothstep(1, .98, cell.x)).mul(smoothstep(0, .02, cell.y)).mul(smoothstep(1, .98, cell.y))
     shade = float(1).sub(texture(contactTexture, cell).r.mul(inside).mul(S.contact.strength))
     albedo = vec3(...S.floor.albedo).mul(fall).mul(shade)
@@ -279,7 +286,7 @@ export function createStageSetting(options: {
   }
 
   let veil: Mesh | null = null
-  function merge(area: Box3, from: number, to: number, above: number): void {
+  function merge(area: Box3, from: number, to: number, above: number, channel = 0): void {
     dropVeil()
     const c = area.getCenter(new Vector3()), half = area.getSize(new Vector3()).multiplyScalar(.5)
     const material = new MeshStandardNodeMaterial({ roughness: S.floor.roughness, metalness: 0 })
@@ -290,7 +297,8 @@ export function createStageSetting(options: {
     material.lightsNode = floorMaterial.lightsNode
     // how far a point lies outside the box, along the floor
     const outside = positionWorld.xz.sub(vec2(c.x, c.z)).abs().sub(vec2(half.x, half.z)).max(0).length()
-    material.opacityNode = smoothstep(from, to, outside)
+    const opacity = smoothstep(from, to, outside)
+    material.opacityNode = channel > 0 ? opacity.mul(smoothstep(channel * .92, channel * 1.08, positionWorld.x.sub(c.x).abs())) : opacity
     if (S.air.horizon > 0) material.outputNode = horizonOut
     material.transparent = true
     material.depthWrite = false
@@ -352,10 +360,10 @@ export function createStageSetting(options: {
   let lastYaw = NaN, lastYawSet = NaN
   const mirrors = new Set<MeshStandardNodeMaterial>()
   const kept = new Map<MeshStandardNodeMaterial, Partial<MeshStandardNodeMaterial>>()
-  function follow(o: { yaw: number; centre?: { x: number; y: number }; picture?: number; eye?: Vector3 }): void {
+  function follow(o: { yaw: number; centre?: { x: number; y: number }; picture?: number; eye?: Vector3; lens?: number }): void {
     if (o.eye && S.air.horizon > 0) {
       const down = Math.atan2(Math.max(.01, o.eye.y - floorY), Math.hypot(o.eye.x - centre.x, o.eye.z - centre.z))
-      horizonSine.value = Math.max(1e-4, Math.sin(down * S.air.horizon))
+      horizonSine.value = Math.max(1e-4, Math.sin(Math.max(down * S.air.horizon, (o.lens ?? 0) * S.air.least)))
     }
     if (o.yaw !== lastYaw) {
       lastYaw = o.yaw
@@ -392,7 +400,10 @@ export function createStageSetting(options: {
     floorMaterial.dispose()
     contactTexture.dispose()
   }
-  return { field, floor, key, follow, air, contact, merge, offRim, machine, figure, dispose }
+  function carry(by: Vector3): void {
+    walkedBy.value.set(by.x, by.z)
+  }
+  return { field, floor, key, follow, air, contact, carry, merge, offRim, machine, figure, dispose }
 }
 
 /** the points of a body's surfaces, a few hundred a mesh, in world metres: what the contact shade is painted from */

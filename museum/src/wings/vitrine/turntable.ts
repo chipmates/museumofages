@@ -8,7 +8,7 @@
  * tap on the model names the part it lands on.
  */
 import {
-  AdditiveBlending, Box3, BoxGeometry, Color, CustomBlending, DstColorFactor, Group, Mesh,
+  AdditiveBlending, Box3, BoxGeometry, Color, CustomBlending, DstColorFactor, Group, Matrix4, Mesh,
   MeshBasicNodeMaterial, OneFactor, PerspectiveCamera, Raycaster, Scene,
   InstancedMesh, Sphere, Vector2, Vector3, ZeroFactor, type BufferGeometry, type Object3D,
 } from 'three/webgpu'
@@ -22,6 +22,7 @@ import { LOOK_RULE } from '../vinci/input'
 import { deskStageHeight } from '../desk-stage'
 import type { VitrinePayload, VitrinePayloadHost } from './types'
 import { islandFit } from './fit'
+import { captionRoom } from './fit'
 import { paintSlider } from './slider'
 import { folioDoor } from './folio'
 
@@ -217,6 +218,8 @@ export function createTurntablePayload(options: TurntableOptions): TurntablePayl
    * stands for the second half of the way from the step before it, so the
    * end of a turn is read before the turn begins again. */
   const starts = steps.map((step, i) => step.at >= 1 && i > 0 ? (steps[i - 1]!.at + 1) / 2 : step.at)
+  /** every line the caption will carry: the box the machine is fitted in keeps the longest of them clear */
+  const captionTexts = steps.map(step => step.text)
   function stepAt(u: number): number {
     let found = -1
     for (let i = 0; i < steps.length; i++) if (u + 1e-6 >= starts[i]!) found = i
@@ -333,7 +336,7 @@ export function createTurntablePayload(options: TurntableOptions): TurntablePayl
   function viewportFit(): { left: number; top: number; width: number; height: number } {
     // a recording names its own box, centred on the stage, so no lens shift is needed to draw it
     if (framed) return { left: (innerWidth - framed.width) / 2, top: (deskStageHeight() - framed.height) / 2, ...framed }
-    return islandFit(host!)
+    return islandFit(host!, captionRoom(host!, captionTexts))
   }
   function fitDistance(r: number): number {
     const fit = viewportFit(), w = innerWidth, h = deskStageHeight()
@@ -353,16 +356,68 @@ export function createTurntablePayload(options: TurntableOptions): TurntablePayl
    * part, in the table's metres. */
   let outline: Vector3[] = []
   const OUTLINE_PER_PART = 360
+  const instance = new Matrix4()
+  /** the outline over the run; a machine that walks, round the place it has walked to at each moment */
   function outlineOver(moments: number): Vector3[] {
-    const points: Vector3[] = []
+    const points: Vector3[] = [], at = new Vector3()
     for (let i = 0; i < moments; i++) {
       body.animate(period * i / moments, 0)
+      const from = points.length
       outlineNow(points)
+      if (walk) {
+        walkAt(period * i / moments, at)
+        for (let k = from; k < points.length; k++) points[k]!.sub(at)
+      }
     }
     body.animate(0, 0)
     body.object.updateMatrixWorld(true)
     return points
   }
+  /** A MACHINE THAT WALKS IS FOLLOWED. Where its body stands on the floor at moments of its run, against the run's
+   * middle, eased over a stride each side so the eye glides and never steps with a leg: the whole view stands on it,
+   * so the machine keeps the middle of its window and its share while it walks, and its fit is the box it takes
+   * round that place. */
+  let walk: { x: Float32Array; z: Float32Array } | null = null
+  const WALK = { samples: 64, ease: 4, passes: 2 }
+  function walkOf(): void {
+    walk = null
+    if (!options.travels || !period) return
+    const n = WALK.samples + 1, x = new Float32Array(n), z = new Float32Array(n), box = new Box3()
+    for (let i = 0; i < n; i++) {
+      body.animate(period * i / WALK.samples, 0)
+      box.setFromPoints(outlineNow())
+      x[i] = (box.min.x + box.max.x) / 2 - centre.x
+      z[i] = (box.min.z + box.max.z) / 2 - centre.z
+    }
+    body.animate(0, 0)
+    body.object.updateMatrixWorld(true)
+    const loop = schedule.kind === 'loop'
+    for (const line of [x, z]) for (let pass = 0; pass < WALK.passes; pass++) {
+      const was = line.slice()
+      for (let i = 0; i < n; i++) {
+        let sum = 0
+        for (let k = -WALK.ease; k <= WALK.ease; k++) {
+          const j = loop ? ((i + k) % WALK.samples + WALK.samples) % WALK.samples : Math.min(n - 1, Math.max(0, i + k))
+          sum += was[j]!
+        }
+        line[i] = sum / (2 * WALK.ease + 1)
+      }
+    }
+    walk = { x, z }
+  }
+  /** where the walking body stands at a clock of its run, against the run's middle; nought for any other machine */
+  function walkAt(clock: number, out: Vector3): Vector3 {
+    if (!walk) return out.set(0, 0, 0)
+    const u = schedule.kind === 'loop' ? (clock % period) / period : Math.min(1, Math.max(0, clock / period))
+    const f = u * WALK.samples, i = Math.min(WALK.samples - 1, Math.floor(f)), k = f - i
+    return out.set(walk.x[i]! + (walk.x[i + 1]! - walk.x[i]!) * k, 0, walk.z[i]! + (walk.z[i + 1]! - walk.z[i]!) * k)
+  }
+  /** how far the eye stands in the whole view (1) or stepped in toward a part (0), eased */
+  function wholeness(): number {
+    const whole = wholeRef > 0 && hull.length ? Math.min(1, Math.max(0, (view.distance / wholeRef - .75) / .2)) : 0
+    return whole * whole * (3 - 2 * whole)
+  }
+  const walked = new Vector3(), aim = new Vector3(), rested = new Vector3(), started = new Vector3()
   /** the outline's points of the pose the body holds now */
   function outlineNow(points: Vector3[] = []): Vector3[] {
     const box = new Box3(), at = new Vector3()
@@ -370,8 +425,17 @@ export function createTurntablePayload(options: TurntableOptions): TurntablePayl
     body.object.traverseVisible(child => {
       if (!(child instanceof Mesh) || child.userData['vitrineOverlay'] || child.userData['vitrineTarget']) return
       if (child instanceof InstancedMesh) {
-        box.setFromObject(child, true)
-        for (const x of [box.min.x, box.max.x]) for (const y of [box.min.y, box.max.y]) for (const z of [box.min.z, box.max.z]) points.push(new Vector3(x, y, z))
+        // EACH INSTANCE BY ITS OWN BOX: the box of them all stands off the machine at its corners (a ring of
+        // whippings round a sail has a square box whose corners lie far outside the ring)
+        const geometry = child.geometry as BufferGeometry
+        if (!geometry.boundingBox) geometry.computeBoundingBox()
+        box.copy(geometry.boundingBox!)
+        const stride = Math.max(1, Math.ceil(child.count / OUTLINE_PER_PART))
+        for (let i = 0; i < child.count; i += stride) {
+          child.getMatrixAt(i, instance)
+          instance.premultiply(child.matrixWorld)
+          for (const x of [box.min.x, box.max.x]) for (const y of [box.min.y, box.max.y]) for (const z of [box.min.z, box.max.z]) points.push(new Vector3(x, y, z).applyMatrix4(instance))
+        }
         return
       }
       const position = (child.geometry as BufferGeometry).getAttribute('position')
@@ -593,12 +657,18 @@ export function createTurntablePayload(options: TurntableOptions): TurntablePayl
       blend(from, goal, eased * eased * (3 - 2 * eased))
       if (eased >= 1) goal = null
     } else if (carrying && standing) carry(dt)
+    // the whole view stands where the walking machine has walked to; a view stepping in hands that back
+    const whole = wholeness()
+    walkAt(state.clock, walked).multiplyScalar(whole)
+    aim.copy(view.target).add(walked)
     const cos = Math.cos(view.pitch)
     camera.position.set(Math.sin(view.yaw) * cos, Math.sin(view.pitch), Math.cos(view.yaw) * cos)
-      .multiplyScalar(view.distance).add(view.target)
-    camera.lookAt(view.target)
+      .multiplyScalar(view.distance).add(aim)
+    camera.lookAt(aim)
+    // the shade where it stands walks with it
+    if (walk) stage?.carry(walkAt(state.clock, rested).sub(walkAt(0, started)))
     // the air is measured from the eye it has now, so a view that steps in keeps the machine clear
-    const reach = camera.position.distanceTo(centre)
+    const reach = camera.position.distanceTo(started.copy(centre).add(walked))
     const { air } = stageNumbers()
     stage?.air(reach + radius * air.near, reach + radius * air.far)
     const w = innerWidth, h = deskStageHeight(), fit = viewportFit()
@@ -615,22 +685,20 @@ export function createTurntablePayload(options: TurntableOptions): TurntablePayl
     shift(0, 0)
     // AN EVEN MARGIN: in the whole view the outline's own box, not the body's centre, stands in the viewport's middle;
     // a view stepping in toward a part hands that back smoothly
-    const whole = wholeRef > 0 && hull.length ? Math.min(1, Math.max(0, (view.distance / wholeRef - .75) / .2)) : 0
     if (whole > 0) {
       camera.updateMatrixWorld()
       const at = new Vector3()
       let left = Infinity, right = -Infinity, top = Infinity, bottom = -Infinity
       for (const point of hull) {
-        at.copy(point).project(camera)
+        at.copy(point).add(walked).project(camera)
         const x = (at.x * .5 + .5) * w, y = (.5 - at.y * .5) * h
         left = Math.min(left, x); right = Math.max(right, x); top = Math.min(top, y); bottom = Math.max(bottom, y)
       }
-      const k = whole * whole * (3 - 2 * whole)
-      shift((fit.left + fit.width / 2 - (left + right) / 2) * k, (fit.top + fit.height / 2 - (top + bottom) / 2) * k)
+      shift((fit.left + fit.width / 2 - (left + right) / 2) * whole, (fit.top + fit.height / 2 - (top + bottom) / 2) * whole)
     }
     // the rig turns with the eye, and the field's pool stands behind the machine where the picture puts it
     camera.updateMatrixWorld()
-    stage?.follow({ yaw: view.yaw, centre: onCanvas(view.target, camera), picture: fit.height / h, eye: camera.position })
+    stage?.follow({ yaw: view.yaw, centre: onCanvas(aim, camera), picture: fit.height / h, eye: camera.position, lens: camera.fov * DEG })
   }
 
   // ---- the words that follow the clock
@@ -943,6 +1011,7 @@ export function createTurntablePayload(options: TurntableOptions): TurntablePayl
       radius = Math.max(radius, rest.getBoundingSphere(new Sphere()).radius)
     }
     if (options.travels) centre.set((rest.min.x + rest.max.x) / 2, centre.y, (rest.min.z + rest.max.z) / 2)
+    walkOf()
     outline = outlineOver(whole ? (period ? RUN_SAMPLES : 1) : 1)
     hull = hullOf(outline)
     const span = Math.max(size.x, size.y, size.z)
@@ -1004,8 +1073,9 @@ export function createTurntablePayload(options: TurntableOptions): TurntablePayl
         }
         return { left, top, right, bottom }
       }
+      walkAt(state.clock, walked).multiplyScalar(wholeness())
       return { stage: { width: w, height: h }, fit: viewportFit(), now: boxOf(outlineNow()),
-        sweep: boxOf(outline), fov: camera.fov, distance: view.distance }
+        sweep: boxOf(outline.map(point => point.clone().add(walked))), fov: camera.fov, distance: view.distance }
     },
   }
 
@@ -1086,7 +1156,7 @@ export function createTurntablePayload(options: TurntableOptions): TurntablePayl
       }
       standing = false
       stage = undefined; scene = undefined; camera = undefined
-      outline = []; hull = []; wholeRef = 0
+      outline = []; hull = []; wholeRef = 0; walk = null
       host = undefined
     },
   }
