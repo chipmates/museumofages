@@ -66,9 +66,9 @@ HOLDERS = [
 DRAWINGS = ("burlington-house-cartoon", "anghiari-copy")
 # Two frames keep the place on the wall of an earlier record of their size (the wing's hang says why).
 SLOTS = {"adoration-of-the-magi": 240.0, "yarnwinder-lansdowne": 36.4}
-# Two works whose holder measures them otherwise than the wing's hang: the page shows the holder's height and
-# width, the hang keeps its own until the wing's next film render takes the holder's.
-HELD = {"annunciation": (90, 222), "adoration-of-the-magi": (244, 240)}
+# Works whose holder measures them otherwise than the wing's hang: the page shows the holder's height and width,
+# the hang keeps its own until the wing's next film render takes the holder's. None at present.
+HELD = {}
 # The stop a painting is seen from, where it is not the room's first.
 PAINTING_STOP = {"mona-lisa": "picture-room-lisa"}
 ROOM_OF = (("The court", "court"), ("The mechanism hall", "hall"), ("The house", "house"))
