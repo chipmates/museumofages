@@ -61,7 +61,7 @@ export const STAGE = Object.freeze({
   contact: { cells: 96, reach: .14, strength: .55, height: .1,
     /** and a tight line where a foot or a skirt meets the floor: a finer map, a few centimetres of tent, the points
      * within `height` (shares of the radius) of the floor */
-    tight: { cells: 320, reach: .006, strength: .55, height: .04 } },
+    tight: { cells: 320, reach: .01, strength: .5, height: .04 } },
   /** the air begins this many radii past the machine's centre and is the field's own colour this many further; the
    * floor also hands itself to the field toward the horizon, over this share of the angle from the horizon down to the
    * machine's foot (0: by distance alone), so a low eye finds no band where a far floor meets the field; past 1 the
@@ -72,7 +72,7 @@ export const STAGE = Object.freeze({
     least: .5,
     /** how much of the floor's shade (the key's shadow, the painted contact) the field the floor hands itself to keeps:
      * a low eye's floor is mostly field at the machine's foot, and its shadow must not go with it */
-    shade: .6,
+    shade: .45,
     /** and keeps it within this many radii of the machine's centre (from, to): further out a shadow on a floor that is
      * all field reads as a dark wall behind the machine */
     shadeReach: [1.2, 2.2] as readonly [number, number] },
@@ -94,21 +94,18 @@ export const STAGE = Object.freeze({
    * `stripTurn` either side of the eye's back, turning with the eye. Every other surface keeps the fill's dark sky (wood
    * under the strips slides grey), but the scale figure, which takes the room at `figure` of its strength so that in a
    * machine's shade it keeps its form and stays under the lit wood */
-  room: { softbox: .04, strips: 1, stripTurn: 115, stripWide: 8, stripTop: 32, boxRadius: 34, intensity: 5, kelvin: 5000, figure: .7,
-    /** the lit floor round the machine as metal mirrors it: a soft warm glow under the horizon on the eye's side (its
-     * strength, its half width in bearing and its depth under the horizon, degrees), so an iron face turned to the eye
-     * reads grey, as the floor's pool would show in it */
-    floor: 0, floorWide: 60, floorDown: 22,
-    /** a reflector on the eye's side for forged iron alone (its bearing from the eye's, positive the eye's right, its
-     * height, its share of the key): a dark iron face turned from the key keeps a grey value, as a card by the camera
-     * gives it, and the wood beside it takes none of it */
-    iron: { turn: 45, height: 22, share: .35 } },
+  room: { softbox: .04, strips: 1, stripTurn: 115, stripWide: 8, stripTop: 32, boxRadius: 34, intensity: 5, kelvin: 5000, figure: .7 },
+  /** A MACHINE'S OWN CARD, where nothing else lets it read: a reflector on the eye's side (its bearing from the eye's,
+   * positive the eye's right, its height, its share of the key) that its forged iron alone takes. The compass is all
+   * near-black iron on a dark field: under the setting's light its faces and the field meet at one value. */
+  own: { 'proportional-compass': { turn: 45, height: 22, share: 1.2 } } as Readonly<Record<string, { turn: number; height: number; share: number }>>,
   /** the vertical lens in degrees: a long lens on the desktop, the phone's upright frame narrower still across */
   lens: { desktop: 24, phone: 40 },
   /** the machine's swept outline's share of its fit box, across and upright, per device: the box keeps room for the
    * machine's own longest caption, and the phone's is near square, so an upright machine takes more of its height to
-   * stand as large in the glass */
-  share: { desktop: [.86, .86] as readonly [number, number], phone: [.86, .94] as readonly [number, number],
+   * stand as large in the glass; on the desk the margin over the machine is what a caption leaves under it, a picture's
+   * twelfth, so its top never stands tight under the window's edge */
+  share: { desktop: [.83, .83] as readonly [number, number], phone: [.86, .94] as readonly [number, number],
     /** on the desk a machine with no step stands in the whole picture: its height at most this share of it */
     most: .82 },
   /** the print: the museum's neutral curve, no split, a light vignette, a tooth that dithers */
@@ -239,9 +236,8 @@ export function createStageSetting(options: {
     l.castShadow = false
     return l
   }) : []
-  const ironLamp = new DirectionalLight(kelvinToColour(S.fill.frontKelvin).getHex(), S.key.lux / 100 * S.room.iron.share)
-  ironLamp.name = 'stage/iron-card'
-  ironLamp.castShadow = false
+  /** the card of a machine that needs one (`STAGE.own`), made when that machine is dressed */
+  let card: { lamp: DirectionalLight; turn: number; height: number } | null = null
   // the scale figure's own fill: a lamp outside the scene, so no other surface sees it
   const figureLamp = new DirectionalLight(kelvinToColour(S.fill.frontKelvin).getHex(), S.key.lux / 100 * S.fill.figure.share)
   figureLamp.name = 'stage/figure-fill'
@@ -407,7 +403,15 @@ export function createStageSetting(options: {
     material.lightsNode = floorMaterial.lightsNode
     material.needsUpdate = true
   }
+  function ownCard(own: { turn: number; height: number; share: number }): { lamp: DirectionalLight; turn: number; height: number } {
+    const lamp = new DirectionalLight(kelvinToColour(S.fill.frontKelvin).getHex(), S.key.lux / 100 * own.share)
+    lamp.name = 'stage/own-card'
+    lamp.castShadow = false
+    if (!Number.isNaN(lastYawSet)) place(lamp, lastYawSet + own.turn * DEG, own.height * DEG)
+    return { lamp, turn: own.turn, height: own.height }
+  }
   function machine(root: Object3D): void {
+    const own = S.own[root.name]
     const cloth = S.rim.cloth < 1 ? lights([key.light, key.fill, front, ...scrimmed]) : null
     root.traverse(node => {
       const materials = (node as Mesh).isMesh ? [(node as Mesh).material].flat() : []
@@ -419,9 +423,10 @@ export function createStageSetting(options: {
           m.needsUpdate = true
         } else if (studio && (m.metalness >= .3 || (m.transparent && 'transmission' in m) || (m.transmission ?? 0) > 0)) {
           mirror(m)
-          if (S.room.iron.share > 0 && !m.transparent && /iron/.test(m.name)) {
+          if (own && !m.transparent && /iron/.test(m.name)) {
+            card ??= ownCard(own)
             const under = (m.lightsNode as unknown as { getLights?(): Light[] } | null)?.getLights?.() ?? sceneLights()
-            if (!under.includes(ironLamp)) { m.lightsNode = lights([...under, ironLamp]); m.needsUpdate = true }
+            if (!under.includes(card.lamp)) { m.lightsNode = lights([...under, card.lamp]); m.needsUpdate = true }
           }
         }
       }
@@ -484,7 +489,7 @@ export function createStageSetting(options: {
       rims.forEach((rim, i) => place(rim, o.yaw + S.rim.turns[i]! * DEG, S.rim.height * DEG))
       scrimmed.forEach((rim, i) => place(rim, o.yaw + S.rim.turns[i]! * DEG, S.rim.height * DEG))
       place(figureLamp, o.yaw + S.fill.figure.turn * DEG, S.fill.figure.height * DEG)
-      place(ironLamp, o.yaw + S.room.iron.turn * DEG, S.room.iron.height * DEG)
+      if (card) place(card.lamp, o.yaw + card.turn * DEG, card.height * DEG)
       // the studio's lamps stand round the eye as the rig does
       for (const material of mirrors) material.envMapRotation.set(0, o.yaw, 0)
       lastYawSet = o.yaw
@@ -514,7 +519,7 @@ export function createStageSetting(options: {
     contactTexture.dispose()
     tightTexture.dispose()
     figureLamp.dispose()
-    ironLamp.dispose()
+    card?.lamp.dispose()
   }
   function carry(by: Vector3): void {
     walkedBy.value.set(by.x, by.z)
@@ -522,27 +527,49 @@ export function createStageSetting(options: {
   return { field, floor, key, follow, air, contact, carry, merge, offRim, machine, figure, dispose }
 }
 
-/** the points of a body's surfaces, a few hundred a mesh, in world metres: what the contact shade is painted from */
-export function surfacePoints(root: Object3D, perMesh = 600, low = -Infinity): Vector3[] {
-  const points: Vector3[] = [], at = new Vector3()
+/** the points of a body's surfaces, a few hundred a mesh, in world metres: what the contact shade is painted from; under
+ * `low` (world y) every edge of every triangle is walked at `step` metres, so a skirt's rim paints an unbroken line */
+export function surfacePoints(root: Object3D, perMesh = 600, low = -Infinity, step = .02): Vector3[] {
+  const points: Vector3[] = [], at = new Vector3(), a = new Vector3(), b = new Vector3()
   root.updateMatrixWorld(true)
   root.traverseVisible(child => {
     const mesh = child as Mesh
     // a machine's own ground is where it stands, not what stands
     if (!mesh.isMesh || child.userData['vitrineOverlay'] || child.userData['vitrineTarget'] || child.userData['stageGround']) return
     if ((mesh as InstancedMesh).isInstancedMesh) {
-      const b = new Box3().setFromObject(mesh, true)
-      for (const x of [b.min.x, b.max.x]) for (const z of [b.min.z, b.max.z]) points.push(new Vector3(x, b.min.y, z))
+      const box = new Box3().setFromObject(mesh, true)
+      for (const x of [box.min.x, box.max.x]) for (const z of [box.min.z, box.max.z]) points.push(new Vector3(x, box.min.y, z))
       return
     }
     const position = mesh.geometry?.getAttribute('position')
     if (!position) return
     const stride = Math.max(1, Math.ceil(position.count / perMesh))
+    for (let k = 0; k < position.count; k += stride) points.push(at.fromBufferAttribute(position, k).applyMatrix4(mesh.matrixWorld).clone())
+    if (!(low > -Infinity)) return
+    const world = new Float32Array(position.count * 3)
+    let any = false
     for (let k = 0; k < position.count; k++) {
-      // every vertex under `low` (a foot's or a skirt's edge, for the tight line), a sample of the rest
-      if (k % stride !== 0 && !(low > -Infinity)) continue
       at.fromBufferAttribute(position, k).applyMatrix4(mesh.matrixWorld)
-      if (k % stride === 0 || at.y < low) points.push(at.clone())
+      world[k * 3] = at.x; world[k * 3 + 1] = at.y; world[k * 3 + 2] = at.z
+      if (at.y < low) any = true
+    }
+    if (!any) return
+    const index = mesh.geometry.getIndex()
+    const corners = index ? index.count : position.count
+    const vertex = (i: number): number => index ? index.getX(i) : i
+    for (let t = 0; t + 2 < corners; t += 3) {
+      const tri = [vertex(t), vertex(t + 1), vertex(t + 2)]
+      if (Math.min(world[tri[0]! * 3 + 1]!, world[tri[1]! * 3 + 1]!, world[tri[2]! * 3 + 1]!) >= low) continue
+      for (let e = 0; e < 3; e++) {
+        const i = tri[e]!, j = tri[(e + 1) % 3]!
+        a.set(world[i * 3]!, world[i * 3 + 1]!, world[i * 3 + 2]!)
+        b.set(world[j * 3]!, world[j * 3 + 1]!, world[j * 3 + 2]!)
+        const n = Math.min(64, Math.max(1, Math.ceil(a.distanceTo(b) / step)))
+        for (let k = 0; k <= n; k++) {
+          at.lerpVectors(a, b, k / n)
+          if (at.y < low) points.push(at.clone())
+        }
+      }
     }
   })
   return points
@@ -557,8 +584,7 @@ export function onCanvas(point: Vector3, camera: Camera): { x: number; y: number
 /** THE STUDIO AS METAL AND GLASS SEE IT: the fill's dark sky with a softbox overhead and two upright strips behind the
  * machine, either side of the eye's back (the eye at bearing 0; the scene turns the room with the eye). Iron and glass
  * mirror what stands round them, so on a dark field they read only by the lamps they reflect. */
-function bakeRoom(room: { softbox: number; strips: number; stripTurn: number; stripWide: number; stripTop: number; boxRadius: number; kelvin: number
-  floor: number; floorWide: number; floorDown: number },
+function bakeRoom(room: { softbox: number; strips: number; stripTurn: number; stripWide: number; stripTop: number; boxRadius: number; kelvin: number },
   sky: { zenith: string; horizon: string; ground: string }, keep: number): Texture {
   const W = 512, H = 256
   const canvas = document.createElement('canvas')
@@ -599,19 +625,6 @@ function bakeRoom(room: { softbox: number; strips: number; stripTurn: number; st
         ctx.fillRect(x - half * 1.6, top, half * 3.2, bottom - top)
       }
     }
-  }
-  // the floor's pool on the eye's side, under the horizon: brightest just under it, soft to its sides and its depth
-  const pool = Math.min(1, room.floor)
-  if (pool > 0) {
-    const cx = .75 * W, cy = H * (.5 + room.floorDown / 2 / 180), rx = W * room.floorWide / 360, ry = H * room.floorDown / 2 / 180
-    ctx.save()
-    ctx.translate(cx, cy)
-    ctx.scale(rx, ry)
-    const g = ctx.createRadialGradient(0, -.4, 0, 0, -.4, 1.4)
-    g.addColorStop(0, `rgba(255,236,214,${pool})`); g.addColorStop(.55, `rgba(255,236,214,${pool * .45})`); g.addColorStop(1, 'rgba(255,236,214,0)')
-    ctx.fillStyle = g
-    ctx.fillRect(-1.5, -1, 3, 2)
-    ctx.restore()
   }
   const tex = new CanvasTexture(canvas)
   tex.mapping = EquirectangularReflectionMapping
