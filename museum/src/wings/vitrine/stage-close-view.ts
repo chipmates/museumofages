@@ -24,8 +24,31 @@ import { wideShadowFilter } from '../vinci/machines/screw-shadow'
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 type N = any
-const { cameraPosition, exp, float, fog, interleavedGradientNoise, lights, mix, modelWorldMatrix, normalLocal, output, positionLocal, positionWorld,
-  rangeFogFactor, screenCoordinate, shadow, smoothstep, texture, uniform, vec2, vec3, vec4, viewportSize, viewportUV } = TSL as unknown as Record<string, N>
+const { cameraPosition, exp, float, fog, Fn, fract, interleavedGradientNoise, ivec2, lights, mix, modelWorldMatrix, normalLocal, output, positionLocal,
+  positionWorld, rangeFogFactor, reference, renderGroup, screenCoordinate, shadow, smoothstep, texture, uniform, vec2, vec3, vec4, viewportSize,
+  viewportUV } = TSL as unknown as Record<string, N>
+
+/** a shadow map's lit share at the depth `ref` through gathers at these texel offsets (each four texels, the outer rows
+ * and columns weighted by the bilinear remainder so the filter moves smoothly): the tent covers six texels, the box three */
+const TENT = { at: [-2, 0, 2], weight: 1 / 25 }, BOX = { at: [-1, 1], weight: 1 / 9 }
+function gatherAt(depthTexture: N, shadowCoord: N, of: N, depthLayer: N, ref: N, filter: { at: number[]; weight: number }): N {
+  const mapSize = reference('mapSize', 'vec2', of).setGroup(renderGroup)
+  const f = fract(shadowCoord.xy.mul(mapSize).add(.5)).toConst()
+  const uv = shadowCoord.xy.sub(f.sub(.5).div(mapSize)).toConst()
+  const lo = filter.at[0]!, hi = filter.at[filter.at.length - 1]!
+  let sum: N = float(0)
+  for (const oy of [...filter.at].reverse()) {
+    for (const ox of filter.at) {
+      let t = texture(depthTexture, uv).offset(ivec2(ox, oy)).gather()
+      if (depthTexture.isArrayTexture) t = t.depth(depthLayer)
+      const c = t.compare(ref).toConst()
+      const left = ox === lo ? f.x.oneMinus() : float(1), right = ox === hi ? f.x : float(1)
+      const top = oy === hi ? f.y : float(1), bottom = oy === lo ? f.y.oneMinus() : float(1)
+      sum = sum.add(c.x.mul(left).mul(top)).add(c.y.mul(right).mul(top)).add(c.z.mul(right).mul(bottom)).add(c.w.mul(left).mul(bottom))
+    }
+  }
+  return sum.mul(filter.weight)
+}
 
 /** A SHAPE'S RADIUS OF TURN: on a tube or a ball a point is its centre plus the radius along its normal, so over any edge
  * the change of position along the change of normal, over that change squared, is the radius; the median over the
@@ -115,10 +138,12 @@ export const STAGE = Object.freeze({
   key: { turn: -50, height: 52, kelvin: 4500, lux: 280, ambient: .55,
     /** the shadow's soft edge as a share of the machine's span, as a broad source high over it gives */
     soft: .01,
-    /** the same edge on the ground (the floor, a machine's own bank): a broad source's shadow widens with the height of
-     * what casts it, and on the ground most of it falls from parts high over the floor; where a part meets the floor
-     * the painted contact holds the tight line */
-    ground: .12 },
+    /** the edge on the ground (the floor, a machine's own bank) from its highest parts: a broad source's shadow widens
+     * with the height of what casts it */
+    ground: .12,
+    /** the heights over the ground (shares of the span) that part its shadow: under the first a part casts the key's
+     * own edge (a pole lying on a bank stands on its shadow), up to the second a third of the ground's, above it all */
+    bands: [.07, .3] as readonly [number, number] },
   /** the fill: the sky's and the floor's share, and a weak lamp from the eye itself */
   fill: { sky: '#6d7682', ground: '#40362c', intensity: .36, environment: .2, front: .12, frontHeight: 14, frontKelvin: 5600,
     /** the scale figure's own fill (a reflector by the eye, as a photographer sets one for a figure in shade): its bearing
@@ -265,27 +290,48 @@ export function createStageSetting(options: {
   key.light.shadow.bias = -span * .00001
   // a soft key's edge: the five-texel tent in place of the stock three
   ;(key.light.shadow as unknown as { filterNode: unknown }).filterNode = wideShadowFilter
-  // THE KEY ON THE GROUND: the same lamp, its shadow read from a coarser map through the same tent, so the edge is
-  // `key.ground` of the span wide; a lamp outside the scene, which only the ground takes
-  const groundKey = new DirectionalLight()
+  // THE KEY ON THE GROUND: a broad source's edge widens with the height of what casts it, so the ground reads its
+  // shadow in bands by that height (`key.bands`): from parts near it through a fine map's tent (the key's own edge),
+  // from higher ones through a coarse map, a three-texel box for the middle band and the tent above it, the tent's
+  // edge `key.ground` of the span wide. Each band is the share of a filter's taps whose blocker lies in it, read by
+  // comparing at depths moved toward the lamp. Lamps outside the scene, which only the ground takes
+  const groundKey = new DirectionalLight(), highKey = new DirectionalLight()
   groundKey.name = 'stage/ground-key'
+  highKey.name = 'stage/ground-key-high'
   groundKey.color = key.light.color
   // a machine's own level for the key (the car opened) reaches the ground too
   Object.defineProperty(groundKey, 'intensity', { get: () => key.light.intensity, set: () => undefined, configurable: true })
   groundKey.castShadow = true
+  highKey.castShadow = true
+  const from = key.light.shadow.camera, half = from.right
   {
-    const from = key.light.shadow.camera, half = from.right
-    const map = Math.min(2048, Math.max(256, 2 ** Math.round(Math.log2(2 * half * 6 / (S.key.ground * span)))))
-    groundKey.shadow.mapSize.setScalar(map)
-    const cam = groundKey.shadow.camera
-    cam.left = -half; cam.right = half; cam.top = half; cam.bottom = -half; cam.near = from.near; cam.far = from.far
-    cam.updateProjectionMatrix()
-    groundKey.shadow.bias = key.light.shadow.bias
-    groundKey.shadow.normalBias = 2 * half / map
-    ;(groundKey.shadow as unknown as { filterNode: unknown }).filterNode = wideShadowFilter
+    const fine = key.light.shadow.mapSize.x
+    const coarse = Math.min(2048, Math.max(256, 2 ** Math.round(Math.log2(2 * half * 6 / (S.key.ground * span)))))
+    for (const [l, map] of [[groundKey, fine], [highKey, coarse]] as const) {
+      l.shadow.mapSize.setScalar(map)
+      const cam = l.shadow.camera
+      cam.left = -half; cam.right = half; cam.top = half; cam.bottom = -half; cam.near = from.near; cam.far = from.far
+      cam.updateProjectionMatrix()
+      l.shadow.bias = key.light.shadow.bias
+      // the high bands compare well above the ground, where the coarse map's texel leaves no acne
+      l.shadow.normalBias = l === groundKey ? 2 * half / map : 0
+    }
   }
+  // a band's depths in the maps' own (a share of the camera's depth range, moved toward the lamp)
+  const lampward = (stack.renderer as unknown as { reversedDepthBuffer?: boolean }).reversedDepthBuffer ? 1 : -1
+  const bandNear = uniform(float(lampward * S.key.bands[0] * span / (from.far - from.near)))
+  const bandHigh = uniform(float(lampward * S.key.bands[1] * span / (from.far - from.near)))
+  ;(groundKey.shadow as unknown as { filterNode: unknown }).filterNode = Fn(({ depthTexture, shadowCoord, shadow: of, depthLayer }: Record<string, N>) =>
+    float(1).sub(gatherAt(depthTexture, shadowCoord, of, depthLayer, shadowCoord.z.add(bandNear), TENT))
+      .add(gatherAt(depthTexture, shadowCoord, of, depthLayer, shadowCoord.z, TENT)))
+  ;(highKey.shadow as unknown as { filterNode: unknown }).filterNode = Fn(({ depthTexture, shadowCoord, shadow: of, depthLayer }: Record<string, N>) => {
+    const middle = gatherAt(depthTexture, shadowCoord, of, depthLayer, shadowCoord.z.add(bandHigh), BOX)
+      .sub(gatherAt(depthTexture, shadowCoord, of, depthLayer, shadowCoord.z.add(bandNear), BOX))
+    const high = float(1).sub(gatherAt(depthTexture, shadowCoord, of, depthLayer, shadowCoord.z.add(bandHigh), TENT))
+    return float(1).sub(middle.max(high))
+  })
   // one shadow node for the lamp's own light and for the shade the floor hands the field: two would each keep a map
-  const groundShadow = shadow(groundKey)
+  const groundShadow = shadow(groundKey).min(shadow(highKey))
   ;(groundKey.shadow as unknown as { shadowNode: unknown }).shadowNode = groundShadow
   /** the key's light on a level floor (linear, Lambert's share), for the shadow's thinning */
   const groundLight = uniform(new Color(0, 0, 0))
@@ -606,7 +652,7 @@ export function createStageSetting(options: {
     }
     if (o.yaw !== lastYaw) {
       lastYaw = o.yaw
-      for (const l of [...cascadesOf, groundKey]) place(l, o.yaw + S.key.turn * DEG, S.key.height * DEG)
+      for (const l of [...cascadesOf, groundKey, highKey]) place(l, o.yaw + S.key.turn * DEG, S.key.height * DEG)
       key.direction.copy(cascadesOf[0]!.position).sub(centre).normalize()
       place(front, o.yaw, S.fill.frontHeight * DEG)
       rims.forEach((rim, i) => place(rim, o.yaw + S.rim.turns[i]! * DEG, S.rim.height * DEG))
@@ -649,8 +695,7 @@ export function createStageSetting(options: {
     contactTexture.dispose()
     tightTexture.dispose()
     figureLamp.dispose()
-    groundKey.shadow.dispose()
-    groundKey.dispose()
+    for (const l of [groundKey, highKey]) { l.shadow.dispose(); l.dispose() }
     card?.lamp.dispose()
   }
   function carry(by: Vector3): void {
