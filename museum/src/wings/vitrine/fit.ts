@@ -8,7 +8,7 @@ import type { VitrinePayloadHost, VitrineRect } from './types'
 export const CAPTION_BOX = 104
 
 /** the desk band's island: the box's top in the picture and the caption's foot over the viewport's bottom, px */
-export const DESK_FIT = Object.freeze({ top: 27, foot: 52 })
+export const DESK_FIT = Object.freeze({ top: 10, foot: 72 })
 
 export function islandFit(host: VitrinePayloadHost): VitrineRect {
   const rect = host.narrow ? host.element.getBoundingClientRect() : host.viewport()

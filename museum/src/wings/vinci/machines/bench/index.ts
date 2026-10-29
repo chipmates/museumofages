@@ -105,8 +105,8 @@ const BENCH_SIZE_WORD: Partial<Record<string, { en: string; de: string }>> = {
 /** The bridge stands on its own banks, whose top is at 0: the setting's floor runs a hair under them. */
 const BRIDGE_BANK_FLOOR = -.02;
 /** metres past the standing bridge where the floor starts over its banks and where it is whole: the bank's own edges
- * lie 7.5 m out and more; laid just over the bank's highest swell */
-const BRIDGE_MERGE = [1.5, 6] as const, BRIDGE_MERGE_ABOVE = .03;
+ * lie 7.5 m out and more; laid just over the bank's highest swell. Near, so the banks' lit tops never outshine the poles */
+const BRIDGE_MERGE = [.4, 3.5] as const, BRIDGE_MERGE_ABOVE = .03;
 /** The parachute's uprights alone (not its plinth): a plain grey powder coat in linear albedo. */
 const PARACHUTE_POST = { tone: .16, roughness: .55 };
 const el = <K extends keyof HTMLElementTagNameMap>(tag: K, cls: string, text?: string): HTMLElementTagNameMap[K] => { const n = document.createElement(tag); n.className = cls; if (text !== undefined)
@@ -493,7 +493,7 @@ export function createBench(stack: Stack, onExit: () => void) {
     const { air } = stageNumbers();
     stage.air(distance + radius * air.near, distance + radius * air.far);
     camera.updateMatrixWorld();
-    stage.follow({ yaw: rigYaw(), centre: onCanvas(frameBounds().getCenter(new Vector3()), camera), picture });
+    stage.follow({ yaw: rigYaw(), centre: onCanvas(frameBounds().getCenter(new Vector3()), camera), picture, eye: camera.position });
   }
   /** the posed rig's fixed eye: the bench's lens, its dock offset and its air, from a given place */
   function composeEye(fixed: NonNullable<BenchOptions['eye']>) {
@@ -698,8 +698,9 @@ export function createBench(stack: Stack, onExit: () => void) {
     } },
   };
   /** What a machine keeps of its own light under the setting, each with its reason in the round's record. */
-  const SETTING_KEEPS: Partial<Record<BenchSlug, { lamps?: boolean; fill?: boolean }>> = {
-    'armoured-car': { lamps: true, fill: true },
+  const SETTING_KEEPS: Partial<Record<BenchSlug, { lamps?: boolean; fill?: boolean; sectionLux?: boolean }>> = {
+    // its key at its own level with the cover off: the deck fills the phone under the label column and must stay darker
+    'armoured-car': { lamps: true, fill: true, sectionLux: true },
     'flying-machine': { lamps: true },
     'mechanical-lion': { lamps: true },
   };
@@ -714,8 +715,8 @@ export function createBench(stack: Stack, onExit: () => void) {
     const kept = SETTING_KEEPS[slug];
     const specs = lampProbe !== undefined ? lampProbe ?? [] : kept?.lamps ? OWN_LIGHT[slug]?.lamps?.[state] ?? [] : [];
     const fill = fillProbe ?? (kept?.fill ? OWN_LIGHT[slug]?.fill?.[state] : undefined);
-    const lux = luxProbe;
-    if (key && lux !== undefined) key.light.intensity = lux / 100;
+    const lux = luxProbe ?? (kept?.sectionLux && sectionEnabled ? OWN_LIGHT[slug]?.sectionLux : undefined);
+    if (key && (lux !== undefined || kept?.sectionLux)) key.light.intensity = (lux ?? stageNumbers().key.lux) / 100;
     if (!specs.length && !lamps.length && fill === undefined && !filled.size) return;
     dropLamps();
     if (!machine) return;
@@ -799,7 +800,11 @@ export function createBench(stack: Stack, onExit: () => void) {
     if (slug === 'bridge-of-poles' && stage) {
       machine.object.traverse(node => {
         if (/^(bank|stream|stream-level)$/.test(node.name)) node.userData['stageGround'] = true;
-        if (/^stream/.test(node.name) && node instanceof Mesh && node.material instanceof MeshStandardNodeMaterial) stage!.offRim(node.material);
+        if (/^stream/.test(node.name) && node instanceof Mesh && node.material instanceof MeshStandardNodeMaterial) {
+          stage!.offRim(node.material);
+          // water shows the poles mirrored, not their shadow: a dark stream takes no crisp lattice on its face
+          node.receiveShadow = false;
+        }
       });
       stage.merge(frameBounds(), BRIDGE_MERGE[0], BRIDGE_MERGE[1], BRIDGE_MERGE_ABOVE);
     }

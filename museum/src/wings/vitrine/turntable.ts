@@ -583,7 +583,7 @@ export function createTurntablePayload(options: TurntableOptions): TurntablePayl
     camera.projectionMatrixInverse.copy(camera.projectionMatrix).invert()
     // the rig turns with the eye, and the field's pool stands behind the machine where the picture puts it
     camera.updateMatrixWorld()
-    stage?.follow({ yaw: view.yaw, centre: onCanvas(view.target, camera), picture: fit.height / h })
+    stage?.follow({ yaw: view.yaw, centre: onCanvas(view.target, camera), picture: fit.height / h, eye: camera.position })
   }
 
   // ---- the words that follow the clock
