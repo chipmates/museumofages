@@ -358,6 +358,7 @@ export function createTurntablePayload(options: TurntableOptions): TurntablePayl
       }
     }
     overlays.set(id, meshes)
+    scene?.updateMatrixWorld()
   }
 
   // ---- the eye on its bounded orbit
@@ -757,6 +758,8 @@ export function createTurntablePayload(options: TurntableOptions): TurntablePayl
     stirred(camera)
   }
   const drawnAt = new Float64Array(21).fill(NaN)
+  /** the clock the table's matrices were last worked out at */
+  let posedAt = NaN
   function stirred(eye: PerspectiveCamera): void {
     const m = eye.matrixWorld.elements, p = eye.projectionMatrix.elements
     const now = [...m, p[0]!, p[5]!, p[8]!, p[9]!, state.clock]
@@ -1103,6 +1106,10 @@ export function createTurntablePayload(options: TurntableOptions): TurntablePayl
     view.distance = wholeDistance()
     view.yaw = WHOLE.yaw; view.pitch = WHOLE.pitch
     placeCamera(0)
+    // THE TABLE'S MATRICES ARE WORKED OUT WHEN SOMETHING ON IT MOVES (the clock, a light laid on a part), never every
+    // frame: a still machine of a few hundred parts is the island's largest steady cost on a phone's slow core
+    scene.matrixWorldAutoUpdate = false
+    scene.updateMatrixWorld()
     standing = true
     host.surface('own')
     active = -2
@@ -1123,7 +1130,7 @@ export function createTurntablePayload(options: TurntableOptions): TurntablePayl
         carried = runViewAt(state.clock)
         standCarried()
       }
-      if (standing) { body.animate(state.clock, 0); stage?.stir(); paint() }
+      if (standing) { body.animate(state.clock, 0); scene?.updateMatrixWorld(); stage?.stir(); paint() }
     },
     frame(box) {
       framed = box
@@ -1173,6 +1180,7 @@ export function createTurntablePayload(options: TurntableOptions): TurntablePayl
       if (!standing || !host) return
       if (!press || press.orbit) state = advancePlayback(schedule, state, Math.min(.1, dt))
       body.animate(state.clock, dt)
+      if (state.clock !== posedAt) { scene?.updateMatrixWorld(); posedAt = state.clock }
       placeCamera(dt)
       paint()
     },
