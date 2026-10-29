@@ -2,7 +2,7 @@
   "kind": "picture-policy-store-audit",
   "source": "forge/vite-na-assets.mjs mergeManifests()",
   "rightsPolicy": "brief/RIGHTS-POLICY.md v1, 2026-09-09",
-  "recordSha256": "e6d17c2cd4e0163a8c0024298d69e09b48f4a84457d3d9a15d4648005d3222ad",
+  "recordSha256": "577367e6b2e4b98fdcbe60344cc3431d480506d4d283775b2072da9c3a2efa05",
   "counts": {
     "records": 78,
     "plates": 39,
@@ -1025,7 +1025,7 @@
       "role": "painting-plate",
       "plate_id": "last-supper",
       "work_id": "last-supper",
-      "note": "Reproduction prepared from File:Last Supper by Leonardo da Vinci.jpg at 4096x2275. Fetched through the Commons thumbnail service at 4096 px because the upload host walls the original with HTTP 429, so the source SHA-1 was not re-verified; the rights review records it as 7068119497c0f47bc10113b21b7be5a7b6091a07. Tier 2 under RIGHTS-POLICY.md v1: Paris Orlando’s 2019 PD-Art photograph of the mural; reject the untraceable “32x16 restored” files. This is the Milan mural, not a painted copy. Attribution: Paris Orlando; Own work Preparation: 4096x2275 to 4096x2275; no upscaling; LANCZOS; JPEG quality 92, 4:4:4. Untagged source: sRGB assigned, not a recovered capture profile.",
+      "note": "Reproduction prepared from File:Last Supper by Leonardo da Vinci.jpg at 4096x2275. Fetched through the Commons thumbnail service at 4096 px because the upload host walls the original with HTTP 429, so the source SHA-1 was not re-verified; the rights review records it as 7068119497c0f47bc10113b21b7be5a7b6091a07. Tier 2 under RIGHTS-POLICY.md v1; reject the untraceable “32x16 restored” files. This is the Milan mural, not a painted copy. Attribution, corrected 29 Oct 2026 after a rights check: not an independent 2019 photograph, whatever its file page says. It is a later, enlarged copy of the high-resolution scan that Wikimedia Commons attributes to Haltadefinizione with the Italian Ministry of Culture, File:Última Cena - Da Vinci 5.jpg, first put on Commons in 2007. Preparation: 4096x2275 to 4096x2275; no upscaling; LANCZOS; JPEG quality 92, 4:4:4. Untagged source: sRGB assigned, not a recovered capture profile.",
       "origin": "store"
     },
     {
@@ -1050,7 +1050,7 @@
       "role": "painting-preview",
       "plate_id": "last-supper",
       "work_id": "last-supper",
-      "note": "Reproduction prepared from File:Last Supper by Leonardo da Vinci.jpg at 4096x2275. Fetched through the Commons thumbnail service at 4096 px because the upload host walls the original with HTTP 429, so the source SHA-1 was not re-verified; the rights review records it as 7068119497c0f47bc10113b21b7be5a7b6091a07. Tier 2 under RIGHTS-POLICY.md v1: Paris Orlando’s 2019 PD-Art photograph of the mural; reject the untraceable “32x16 restored” files. This is the Milan mural, not a painted copy. Attribution: Paris Orlando; Own work Preparation: 4096x2275 to 1024x569; no upscaling; LANCZOS; JPEG quality 92, 4:4:4. Untagged source: sRGB assigned, not a recovered capture profile.",
+      "note": "Reproduction prepared from File:Last Supper by Leonardo da Vinci.jpg at 4096x2275. Fetched through the Commons thumbnail service at 4096 px because the upload host walls the original with HTTP 429, so the source SHA-1 was not re-verified; the rights review records it as 7068119497c0f47bc10113b21b7be5a7b6091a07. Tier 2 under RIGHTS-POLICY.md v1; reject the untraceable “32x16 restored” files. This is the Milan mural, not a painted copy. Attribution, corrected 29 Oct 2026 after a rights check: not an independent 2019 photograph, whatever its file page says. It is a later, enlarged copy of the high-resolution scan that Wikimedia Commons attributes to Haltadefinizione with the Italian Ministry of Culture, File:Última Cena - Da Vinci 5.jpg, first put on Commons in 2007. Preparation: 4096x2275 to 1024x569; no upscaling; LANCZOS; JPEG quality 92, 4:4:4. Untagged source: sRGB assigned, not a recovered capture profile.",
       "origin": "store"
     },
     {

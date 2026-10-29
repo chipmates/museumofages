@@ -46,10 +46,11 @@ export const COLLECTIONS = [
     name: 'paintings', file: 'src/wings/vinci/pictures/data/paintings.json',
     // The public copy carries the Adoration's corrected height and width, three facts rows taken
     // over from the mining catalogue, one fact reworded plainly, short titles, the Ginevra reverse's
-    // own name, a German form of every holder line and the nineteen historic RC decisions
-    // restated as superseded by Tier 2; the sealed original does not.
+    // own name, a German form of every holder line, the nineteen historic RC decisions
+    // restated as superseded by Tier 2 and the Last Supper's credit naming the scan its
+    // reproduction copies; the sealed original does not.
     originalSHA256: '7e78e1a73fa55cdd58c75c495332ebe0617387e6b72babbea2695bbb8a3a5d02',
-    normalizedSHA256: '1cbb5bb1fde43386ffc3fa5864efcf00d78380aa920a6aa4aa5f052e6c2f5d7a',
+    normalizedSHA256: '27624d15bedc3922e349f178ba369be7cccab97566a81d22c19f37ea461a89d5',
     expected: { works: 30, held_assets: 32, catalogue_mentions: 9 },
   },
 ]

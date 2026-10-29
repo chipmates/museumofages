@@ -1514,7 +1514,7 @@
       "rights_class": "RC",
       "plate_file": null,
       "plate_pixels": null,
-      "licence_line": "Photo Paris Orlando, released into the public domain, via Wikimedia Commons",
+      "licence_line": "A high-resolution scan that Wikimedia Commons attributes to Haltadefinizione with the Italian Ministry of Culture, first put on Commons in 2007. The museum uses a later, enlarged copy of it. Public domain work.",
       "absence_reason_en": "Held by Museo del Cenacolo Vinciano, Santa Maria delle Grazie, Milan. Available file: last-supper__santa-maria-delle-grazie__8000x4443.jpg. The museum classified this scan as RC. The supplied terms have not been cleared for this exhibition. Obtain written permission for this reproduction from the holder and the image supplier.",
       "absence_reason_de": "Sammlung: Museo del Cenacolo Vinciano, Santa Maria delle Grazie, Mailand. Vorhandene Datei: last-supper__santa-maria-delle-grazie__8000x4443.jpg. Dieses Museum hat den Scan als RC eingestuft. Seine Nutzungsbedingungen sind für diese Ausstellung nicht geklärt. Eine schriftliche Freigabe des besitzenden Museums und des Bildanbieters würde diese Reproduktion ermöglichen.",
       "label_first_line_en": "Absent. The Last Supper. Leonardo da Vinci.",
@@ -3667,7 +3667,7 @@
       },
       "sha256": "814e9d4bf0cd58240f2caba1872652b4f39963ebe4d263dd5ce1728259e09981",
       "bytes": 16052942,
-      "licence_line": "Photo Paris Orlando, released into the public domain, via Wikimedia Commons",
+      "licence_line": "A high-resolution scan that Wikimedia Commons attributes to Haltadefinizione with the Italian Ministry of Culture, first put on Commons in 2007. The museum uses a later, enlarged copy of it. Public domain work.",
       "logged_licence": "Public domain",
       "source_url": "https://commons.wikimedia.org/wiki/File:Last_Supper_by_Leonardo_da_Vinci.jpg",
       "decision": "Historic RC (row P15). Superseded: the same Commons source hangs through the store’s TIER2 record vinci/painting-plate/last-supper; this held file stays reference evidence."
