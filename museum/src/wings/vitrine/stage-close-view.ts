@@ -142,8 +142,8 @@ export const STAGE = Object.freeze({
      * with the height of what casts it */
     ground: .12,
     /** the heights over the ground (shares of the span) that part its shadow: under the first a part casts the key's
-     * own edge (a pole lying on a bank stands on its shadow), up to the second a third of the ground's, above it all */
-    bands: [.07, .3] as readonly [number, number] },
+     * own edge (a pole lying on a bank stands on its shadow), up to the second half the ground's, above it all */
+    bands: [.1, .4] as readonly [number, number] },
   /** the fill: the sky's and the floor's share, and a weak lamp from the eye itself */
   fill: { sky: '#6d7682', ground: '#40362c', intensity: .36, environment: .2, front: .12, frontHeight: 14, frontKelvin: 5600,
     /** the scale figure's own fill (a reflector by the eye, as a photographer sets one for a figure in shade): its bearing
@@ -321,17 +321,19 @@ export function createStageSetting(options: {
   const lampward = (stack.renderer as unknown as { reversedDepthBuffer?: boolean }).reversedDepthBuffer ? 1 : -1
   const bandNear = uniform(float(lampward * S.key.bands[0] * span / (from.far - from.near)))
   const bandHigh = uniform(float(lampward * S.key.bands[1] * span / (from.far - from.near)))
+  // each filter gives one less its bands' shadow (the share of taps occluded), so a point outside its map stays lit; a
+  // surface that runs through the bands (a canopy from its rim to its peak) is shared out among them, so the shares add
   ;(groundKey.shadow as unknown as { filterNode: unknown }).filterNode = Fn(({ depthTexture, shadowCoord, shadow: of, depthLayer }: Record<string, N>) =>
     float(1).sub(gatherAt(depthTexture, shadowCoord, of, depthLayer, shadowCoord.z.add(bandNear), TENT))
       .add(gatherAt(depthTexture, shadowCoord, of, depthLayer, shadowCoord.z, TENT)))
   ;(highKey.shadow as unknown as { filterNode: unknown }).filterNode = Fn(({ depthTexture, shadowCoord, shadow: of, depthLayer }: Record<string, N>) => {
     const middle = gatherAt(depthTexture, shadowCoord, of, depthLayer, shadowCoord.z.add(bandHigh), BOX)
       .sub(gatherAt(depthTexture, shadowCoord, of, depthLayer, shadowCoord.z.add(bandNear), BOX))
-    const high = float(1).sub(gatherAt(depthTexture, shadowCoord, of, depthLayer, shadowCoord.z.add(bandHigh), TENT))
-    return float(1).sub(middle.max(high))
+    return gatherAt(depthTexture, shadowCoord, of, depthLayer, shadowCoord.z.add(bandHigh), TENT).sub(middle)
   })
+  const occluded = (node: N): N => float(1).sub(node)
   // one shadow node for the lamp's own light and for the shade the floor hands the field: two would each keep a map
-  const groundShadow = shadow(groundKey).min(shadow(highKey))
+  const groundShadow = float(1).sub(occluded(shadow(groundKey)).add(occluded(shadow(highKey))).min(1))
   ;(groundKey.shadow as unknown as { shadowNode: unknown }).shadowNode = groundShadow
   /** the key's light on a level floor (linear, Lambert's share), for the shadow's thinning */
   const groundLight = uniform(new Color(0, 0, 0))
