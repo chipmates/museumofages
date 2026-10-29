@@ -710,6 +710,22 @@ const BONE: Record<string, number> = Object.fromEntries(POLES.map((p, i) => [p.i
 
 // ---------------------------------------------------------------- the bank and the stream
 
+/** THE BANK AWAY FROM THE BRIDGE MEANDERS: past the bridge's own reach along the stream the slope stands into the
+ * stream by up to this many metres, so the far bank reads as a stream's bank and not as one turned profile; where the
+ * bridge, its seats and its building stand (|z| under `calm`, metres) the ground is the plan's own. Only ever inward:
+ * the level face's edge then always lies under the earth, never beside it. */
+const MEANDER = { most: 0.25, calm: 3.2, full: 4.8 }
+function meander(z: number): number {
+  const az = Math.abs(z)
+  const k = Math.min(1, Math.max(0, (az - MEANDER.calm) / (MEANDER.full - MEANDER.calm)))
+  const w = 0.55 * Math.sin(z * 0.83 + 0.6) + 0.3 * Math.sin(z * 2.1 + 2.2) + 0.15 * Math.sin(z * 4.7 + 1.1)
+  return -MEANDER.most * k * k * (3 - 2 * k) * (0.5 + 0.5 * w)
+}
+/** the bank's own height: the plan's ground, its slope moved along x by the meander away from the bridge */
+function bankY(x: number, z: number): number {
+  return groundY(x - Math.sign(x) * meander(z), z)
+}
+
 /** The bank, cut square at its edges as a model's ground is: the level banks and the channel on top, the section
  * through the earth on the four sides. UVs in metres. */
 export function bankGeometry(): BufferGeometry {
@@ -726,8 +742,8 @@ export function bankGeometry(): BufferGeometry {
   const nx = xs.length - 1, nz = zs.length - 1
   const top = sheet.position.length / 3
   for (const z of zs) for (const x of xs) {
-    const y = groundY(x, z)
-    const n = norm([groundY(x - h, z) - groundY(x + h, z), 2 * h, groundY(x, z - h) - groundY(x, z + h)])
+    const y = bankY(x, z)
+    const n = norm([bankY(x - h, z) - bankY(x + h, z), 2 * h, bankY(x, z - h) - bankY(x, z + h)])
     sheet.vertex([x, y, z], n, x, z, zero, 0)
   }
   for (let j = 0; j < nz; j++) for (let i = 0; i < nx; i++) {
@@ -745,10 +761,10 @@ export function bankGeometry(): BufferGeometry {
       if (flip) sheet.index.push(a, c, b, b, c, d); else sheet.index.push(a, b, c, b, d, c)
     }
   }
-  face(xs.map(x => [x, groundY(x, Z1), Z1] as V3), [0, 0, 1], p => p[0], false)
-  face(xs.map(x => [x, groundY(x, Z0), Z0] as V3), [0, 0, -1], p => p[0], true)
-  face(zs.map(z => [X, groundY(X, z), z] as V3), [1, 0, 0], p => p[2], true)
-  face(zs.map(z => [-X, groundY(-X, z), z] as V3), [-1, 0, 0], p => p[2], false)
+  face(xs.map(x => [x, bankY(x, Z1), Z1] as V3), [0, 0, 1], p => p[0], false)
+  face(xs.map(x => [x, bankY(x, Z0), Z0] as V3), [0, 0, -1], p => p[0], true)
+  face(zs.map(z => [X, bankY(X, z), z] as V3), [1, 0, 0], p => p[2], true)
+  face(zs.map(z => [-X, bankY(-X, z), z] as V3), [-1, 0, 0], p => p[2], false)
   return sheet.geometry('plain')
 }
 
@@ -766,7 +782,7 @@ export function waterGeometry(): BufferGeometry {
     const n = 120, first = sheet.position.length / 3, Z = side > 0 ? BANK.zMax - 0.004 : BANK.zMin + 0.004
     for (let i = 0; i <= n; i++) {
       const x = -W + (2 * W * i) / n
-      const floor = Math.min(BANK.water, groundY(x, Z))
+      const floor = Math.min(BANK.water, bankY(x, Z))
       sheet.vertex([x, BANK.water, Z], [0, 0, side], x, BANK.water, zero, 0)
       sheet.vertex([x, floor, Z], [0, 0, side], x, floor, zero, 0)
     }
