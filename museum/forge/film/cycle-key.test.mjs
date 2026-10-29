@@ -48,8 +48,8 @@ test('(2) a phone-form or film-wing edit leaves every cycle key, even imported b
   const PHONE = `${WING_DIR}/phone-form.ts`, FILM_WING = `${WING_DIR}/film-wing.ts`
   // the phone form written and reached from the island's stage, the film wing reached from the print
   let base = { [PHONE]: "export const PHONE_FORM = { rows: 2 }\n" }
-  base = plant(TURNTABLE, "import { createBenchBackdrop } from '../vinci/machines/bench/backdrop'\n",
-    "import { createBenchBackdrop } from '../vinci/machines/bench/backdrop'\nimport { PHONE_FORM } from '../vinci/phone-form'\n", base)
+  base = plant(TURNTABLE, "import { deskStageHeight } from '../desk-stage'\n",
+    "import { deskStageHeight } from '../desk-stage'\nimport { PHONE_FORM } from '../vinci/phone-form'\n", base)
   const printFile = `${WING_DIR}/print.ts`
   base = { ...base, [printFile]: `import { createWing } from './film-wing'\n${read(printFile)}` }
   assert.ok(isInterface(PHONE) && isInterface(FILM_WING))
