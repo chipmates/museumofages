@@ -27,8 +27,9 @@ type N = any
 const { cameraPosition, exp, float, fog, interleavedGradientNoise, lights, mix, modelWorldMatrix, normalLocal, output, positionLocal, positionWorld,
   rangeFogFactor, screenCoordinate, shadow, smoothstep, texture, uniform, vec2, vec3, vec4, viewportSize, viewportUV } = TSL as unknown as Record<string, N>
 
-/** A SHAPE'S RADIUS OF TURN: along a tube the normal turns by an edge's length over the radius, so the median of that
- * ratio over its curved edges is a cord's or a rod's radius (its own metres); NaN for a shape with no curved edge */
+/** A SHAPE'S RADIUS OF TURN: on a tube or a ball a point is its centre plus the radius along its normal, so over any edge
+ * the change of position along the change of normal, over that change squared, is the radius; the median over the
+ * curved edges is a cord's or a rod's radius (its own metres), NaN for a shape with no curved edge */
 const radii = new WeakMap<object, { count: number; r: number }>()
 function radiusOf(geometry: import('three/webgpu').BufferGeometry): number {
   const position = geometry.getAttribute('position'), normal = geometry.getAttribute('normal')
@@ -41,9 +42,10 @@ function radiusOf(geometry: import('three/webgpu').BufferGeometry): number {
   const step = Math.max(3, Math.floor(corners / 3 / 4000) * 3)
   for (let t = 0; t + 2 < corners; t += step) for (let e = 0; e < 3; e++) {
     const a = vertex(t + e), b = vertex(t + (e + 1) % 3)
-    const dn = Math.hypot(normal.getX(a) - normal.getX(b), normal.getY(a) - normal.getY(b), normal.getZ(a) - normal.getZ(b))
-    if (dn < .3 || dn > 1.9) continue
-    found.push(Math.hypot(position.getX(a) - position.getX(b), position.getY(a) - position.getY(b), position.getZ(a) - position.getZ(b)) / dn)
+    const nx = normal.getX(b) - normal.getX(a), ny = normal.getY(b) - normal.getY(a), nz = normal.getZ(b) - normal.getZ(a)
+    const dn2 = nx * nx + ny * ny + nz * nz
+    if (dn2 < .04 || dn2 > 3.6) continue
+    found.push(Math.abs((position.getX(b) - position.getX(a)) * nx + (position.getY(b) - position.getY(a)) * ny + (position.getZ(b) - position.getZ(a)) * nz) / dn2)
   }
   found.sort((x, y) => x - y)
   const r = found.length >= 6 ? found[found.length >> 1]! : NaN
@@ -104,7 +106,11 @@ export const STAGE = Object.freeze({
     /** and keeps it within this many radii of the machine's centre (from, to): further out a shadow on a floor that is
      * all field reads as a dark wall behind the machine. The far eye's alone (as `field.near`): a close eye looking up
      * into a broad machine finds its shadow's edge carried into the field as an arc across the floor */
-    shadeReach: [1.2, 2.2] as readonly [number, number] },
+    shadeReach: [1.2, 2.2] as readonly [number, number],
+    /** a floor laid over a machine's own ground gives way to that ground where the eye grazes it (the sine of the angle
+     * under the horizon: gone below the first, whole from the second): the ground's far top runs on as ground behind
+     * its lip, and hands itself to the field as the floor does */
+    graze: [.09, .24] as readonly [number, number] },
   /** the key: turned from the eye's bearing (negative: the eye's left) and raised, warm, soft */
   key: { turn: -50, height: 52, kelvin: 4500, lux: 280, ambient: .55,
     /** the shadow's soft edge as a share of the machine's span, as a broad source high over it gives */
@@ -446,7 +452,8 @@ export function createStageSetting(options: {
     // how far a point lies outside the box, along the floor
     const outside = positionWorld.xz.sub(vec2(c.x, c.z)).abs().sub(vec2(half.x, half.z)).max(0).length()
     const opacity = smoothstep(from, to, outside)
-    material.opacityNode = channel > 0 ? opacity.mul(smoothstep(channel * .92, channel * 1.08, positionWorld.x.sub(c.x).abs())) : opacity
+    const graze = smoothstep(S.air.graze[0], S.air.graze[1], below)
+    material.opacityNode = (channel > 0 ? opacity.mul(smoothstep(channel * .92, channel * 1.08, positionWorld.x.sub(c.x).abs())) : opacity).mul(graze)
     if (S.air.horizon > 0) material.outputNode = horizonOut
     material.transparent = true
     material.depthWrite = false

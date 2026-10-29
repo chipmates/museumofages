@@ -77,7 +77,7 @@ function keyRim(strength: number): N {
 /** the stream's mirror: its least share facing the eye, and the gain on what it mirrors */
 const MIRROR_BASE = { least: 0.05, gain: 1 }
 /** a look round's numbers for the stream (`globalThis.__stageProbe.stream`), on the dev server only */
-function streamNumbers(): typeof MIRROR_BASE & { ripple?: number; sheen?: number } {
+function streamNumbers(): typeof MIRROR_BASE & { ripple?: number; absorb?: number; caustic?: number } {
   const probe = import.meta.env.DEV ? (globalThis as { __stageProbe?: { stream?: Record<string, number> } }).__stageProbe?.stream : undefined
   return { ...MIRROR_BASE, ...probe }
 }
@@ -347,7 +347,29 @@ export async function bridgeSurfaces(stack: Stack): Promise<BridgeSurfaces> {
   // the sky's own sheen is cut low: the planar pass carries the mirror and its Fresnel, never both
   const waterTop = new MeshPhysicalNodeMaterial({ metalness: 0, roughness: 0.07, specularIntensity: 0.15 })
   waterTop.name = 'bridge-of-poles:water-top:plain'
-  waterTop.colorNode = water.colorNode
+  // THE BED THROUGH THE WATER: a clear slow stream seen from above shows its bed more than its mirror (the mirror's share
+  // falls as the eye looks down): the bed's earth, seen along the eye's way as the surface bends it, darkened by the
+  // water it is seen through, under the slow broad cells of light the moving surface gathers on it. At a grazing eye the
+  // way through is long and the mirror takes the rest, so the far water stays the dark mirror it was
+  {
+    const p: N = positionWorld
+    const S = streamNumbers()
+    const toEye = cameraPosition.sub(p).normalize()
+    const sinT = toEye.xz.length().div(1.33), cosT = float(1).sub(sinT.mul(sinT)).sqrt()
+    // the bed's depth under the level face, the bank's slope rising to it at the waterline
+    const depth = float(BANK.water - BANK.bed).mul(float(1).sub(smoothstep(BANK.toe, BANK.toe + 0.6, p.x.abs())))
+    const seen = p.xz.sub(toEye.xz.normalize().mul(depth.mul(sinT.div(cosT))))
+    const clear = depth.mul(float(1).add(float(1).div(cosT))).mul(-(S.absorb ?? 1.6)).exp()
+    const grain = mx_noise_float(vec3(seen.x.mul(1.7), seen.y.mul(1.7), 7.7)).mul(0.5).add(0.5)
+    const bed = mx(lin('#3a3126'), lin('#55473a'), grain)
+    // the light the surface gathers: a slow net drifting with the stream, its lines kept a few pixels wide and paled as
+    // they would thin, so it never shimmers
+    const cells = mx_worley_noise_vec2(vec3(seen.x.mul(2.2), seen.y.mul(1.4).sub(streamClock.mul(0.1)), streamClock.mul(0.04)))
+    const edge = cells.y.sub(cells.x), w = fwidth(edge).mul(2).max(0.09)
+    const net = float(1).sub(smoothstep(float(0), w, edge)).mul(float(0.09).div(w).min(1))
+    const body = water.colorNode as N
+    waterTop.colorNode = mx(body, bed.mul(net.mul(S.caustic ?? 0.6).add(1)), clear)
+  }
   waterTop.normalNode = water.normalNode
   waterTop.roughnessNode = water.roughnessNode
   waterTop.userData['benchLamp'] = false
@@ -358,7 +380,7 @@ export async function bridgeSurfaces(stack: Stack): Promise<BridgeSurfaces> {
     const fresnel = float(1).sub(normalWorld.dot(view).abs()).pow(5).mul(1 - MIRROR.least).add(MIRROR.least)
     // the ripples shift the mirrored picture a little, as a stream's surface does
     reflection.uvNode = screenUV.flipX().add(normalView.xy.sub(normalViewGeometry.xy).mul(0.08))
-    waterTop.colorNode = (water.colorNode as N).mul(float(1).sub(fresnel))
+    waterTop.colorNode = (waterTop.colorNode as N).mul(float(1).sub(fresnel))
     waterTop.emissiveNode = reflection.rgb.mul(fresnel.mul(MIRROR.gain))
     waterTop.needsUpdate = true
   }
