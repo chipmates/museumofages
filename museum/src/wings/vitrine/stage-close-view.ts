@@ -56,10 +56,7 @@ export const STAGE = Object.freeze({
   /** the key: turned from the eye's bearing (negative: the eye's left) and raised, warm, soft */
   key: { turn: -50, height: 52, kelvin: 4500, lux: 280, ambient: .55,
     /** the shadow's soft edge as a share of the machine's span, as a broad source high over it gives */
-    soft: .01,
-    /** thin cloth reads its shadow this share of the machine's radius toward the key: its doubled seams stand a hair off
-     * the cloth and would catch its own shadow in single dark pixels */
-    clothLift: .03 },
+    soft: .01 },
   /** the fill: the sky's and the floor's share, and a weak lamp from the eye itself */
   fill: { sky: '#6d7682', ground: '#40362c', intensity: .36, environment: .2, front: .12, frontHeight: 14, frontKelvin: 5600 },
   /** the edge lights from behind, each at its bearing from the eye's: weaker than the key, cool, never on the floor;
@@ -325,10 +322,9 @@ export function createStageSetting(options: {
       const materials = (node as Mesh).isMesh ? [(node as Mesh).material].flat() : []
       for (const material of materials) {
         const m = material as MeshStandardNodeMaterial & { thicknessColorNode?: unknown; transmission?: number }
-        if (m.thicknessColorNode) {
+        if (cloth && m.thicknessColorNode) {
           keep(m)
-          if (cloth) m.lightsNode = cloth
-          if (S.key.clothLift > 0) m.receivedShadowPositionNode = positionWorld.add(towardKey)
+          m.lightsNode = cloth
           m.needsUpdate = true
         } else if (studio && (m.metalness >= .3 || (m.transparent && 'transmission' in m) || (m.transmission ?? 0) > 0)) mirror(m)
       }
@@ -345,7 +341,7 @@ export function createStageSetting(options: {
     material.needsUpdate = true
   }
   function keep(material: MeshStandardNodeMaterial): void {
-    if (!kept.has(material)) kept.set(material, { lightsNode: material.lightsNode, envMap: material.envMap, envMapIntensity: material.envMapIntensity, envMapRotation: material.envMapRotation.clone(), receivedShadowPositionNode: material.receivedShadowPositionNode })
+    if (!kept.has(material)) kept.set(material, { lightsNode: material.lightsNode, envMap: material.envMap, envMapIntensity: material.envMapIntensity, envMapRotation: material.envMapRotation.clone() })
   }
   function figure(root: Object3D): void {
     root.traverse(node => {
@@ -354,7 +350,6 @@ export function createStageSetting(options: {
   }
 
   let lastYaw = NaN, lastYawSet = NaN
-  const towardKey = uniform(vec3(0, 0, 0))
   const mirrors = new Set<MeshStandardNodeMaterial>()
   const kept = new Map<MeshStandardNodeMaterial, Partial<MeshStandardNodeMaterial>>()
   function follow(o: { yaw: number; centre?: { x: number; y: number }; picture?: number; eye?: Vector3 }): void {
@@ -366,7 +361,6 @@ export function createStageSetting(options: {
       lastYaw = o.yaw
       for (const l of cascadesOf) place(l, o.yaw + S.key.turn * DEG, S.key.height * DEG)
       key.direction.copy(cascadesOf[0]!.position).sub(centre).normalize()
-      towardKey.value.copy(key.direction).multiplyScalar(S.key.clothLift * radius)
       place(front, o.yaw, S.fill.frontHeight * DEG)
       rims.forEach((rim, i) => place(rim, o.yaw + S.rim.turns[i]! * DEG, S.rim.height * DEG))
       scrimmed.forEach((rim, i) => place(rim, o.yaw + S.rim.turns[i]! * DEG, S.rim.height * DEG))
