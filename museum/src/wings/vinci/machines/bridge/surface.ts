@@ -325,7 +325,7 @@ export async function bridgeSurfaces(stack: Stack): Promise<BridgeSurfaces> {
     const rootLine = mx_noise_float(vec3(along.mul(1.6), p.y.mul(2.4), 2.2)).abs()
     const root = float(1).sub(smoothstep(0.015, 0.04, rootLine)).mul(smoothstep(0.35, 0.6, mx_noise_float(vec3(along.mul(0.5), 1.1, 4.4))))
       .mul(slope).mul(smoothstep(BANK.edge - 0.7, BANK.edge - 0.2, ax)).mul(float(1).sub(stone))
-    const formed = mx(float(1), bare.mul(0.22).add(0.86).mul(slump.mul(0.18).add(1)), shoulder).mul(float(1).sub(under.mul(0.42))).mul(float(1).sub(root.mul(0.45)))
+    const formed = mx(float(1), bare.mul(0.2).add(0.92).mul(slump.mul(0.14).add(1)), shoulder).mul(float(1).sub(under.mul(0.3))).mul(float(1).sub(root.mul(0.45)))
     const earthCol = lin('#6a5843').mul(luma(ground.albedo).mul(0.4).add(0.68)).mul(float(1).sub(wet.mul(0.42))).mul(worn).mul(formed)
     const stoneCol = mx(lin('#5f584c'), lin('#7a7264'), mx_noise_float(vec3(cell.y.mul(9.0), along.mul(3.0), 6.6)).mul(0.5).add(0.5)).mul(stoneDome.mul(0.25).add(0.8))
     // the cut face: a section through the bank, darker with depth, its layers
@@ -341,7 +341,7 @@ export async function bridgeSurfaces(stack: Stack): Promise<BridgeSurfaces> {
     earth.colorNode = airBehind(mx(mx(mx(earthCol, grassCol, grassy.mul(float(1).sub(stone))), stoneCol, stone), sectionCol, cut).mul(mx(float(1), ground.occlusion, 0.55)).mul(seatShade))
     earth.roughnessNode = mx(ground.roughness.max(0.85), float(0.55), wet.mul(0.6))
     earth.normalNode = bumped(earth.normalNode ?? normalView, runnel.mul(0.035).add(patch.mul(0.06)).mul(slope)
-      .add(slump.mul(0.07).mul(shoulder)).add(stoneDome.mul(0.05)).add(overhang.mul(0.025)).add(root.mul(0.012)), 1)
+      .add(slump.mul(0.1).mul(shoulder)).add(stoneDome.mul(0.05)).add(overhang.mul(0.025)).add(root.mul(0.012)), 1)
     grassMat.dispose()
   }
 

@@ -187,7 +187,7 @@ export const STAGE = Object.freeze({
     /** the scale figure's own fill: a lamp on the key's side that no machine shades, so the figure in a machine's shade
      * keeps the key's lit side and its shade side (form, never a grey silhouette), and in the open adds to the key's side
      * without filling the shade side; the figure alone takes it */
-    figure: { turn: -80, height: 24, share: .6 } },
+    figure: { turn: -55, height: 30, share: .8 } },
   /** the edge lights from behind, each at its bearing from the eye's: weaker than the key, cool, never on the floor;
    * a thin translucent cloth takes them at `cloth` of their strength (a scrim on the lamp), since from behind they light
    * it through as a lamp lights a shade */
@@ -196,14 +196,14 @@ export const STAGE = Object.freeze({
    * `stripTurn` either side of the eye's back, turning with the eye. Every other surface keeps the fill's dark sky (wood
    * under the strips slides grey), but the scale figure, which takes the room at `figure` of its strength so that in a
    * machine's shade it keeps its form and stays under the lit wood */
-  room: { softbox: .04, strips: 1, stripTurn: 115, stripWide: 8, stripTop: 32, boxRadius: 34, intensity: 5, kelvin: 5000, figure: .7 },
+  room: { softbox: .04, strips: 1, stripTurn: 115, stripWide: 8, stripTop: 32, boxRadius: 34, intensity: 5, kelvin: 5000, figure: .5 },
   /** A MACHINE'S OWN CARD, where nothing else lets it read: a reflector on the eye's side (its bearing from the eye's,
    * positive the eye's right, its height, its share of the key) that its forged iron alone takes. The compass is all
    * near-black iron on a dark field: under the setting's light its faces and the field meet at one value. Metal reads
    * by what it mirrors, so the card stands in its room too (`reflect`: a soft white card by the eye, its bearing from
    * the eye's, its height, its width and height in degrees and its strength): faces turned toward the eye mirror it and
    * read as grey iron with a sheen across them, while the field, which mirrors nothing, keeps its value */
-  own: { 'proportional-compass': { turn: 45, height: 22, share: 1.2, reflect: { turn: 22, height: 14, wide: 64, tall: 44, strength: .55 } } } as
+  own: { 'proportional-compass': { turn: 45, height: 22, share: 1.2, reflect: { turn: 22, height: 14, wide: 64, tall: 44, strength: .65 } } } as
     Readonly<Record<string, { turn: number; height: number; share: number; reflect?: RoomCard }>>,
   /** THE THINNEST PARTS: a cord, a wire or a slender rod drawn under `px` pixels across falls between the pixels and
    * breaks into dots that crawl in motion; its surface is pushed out along its normal to that width, by as much as it is
@@ -231,7 +231,10 @@ export const STAGE = Object.freeze({
     most: .82,
     /** on the phone the share across is the machine's at rest; the sweep of its turning parts (a sail's circle, an
      * arm) may run this much wider, so a turning machine does not stand smaller than a still one */
-    sweep: 1.05 },
+    sweep: 1.05,
+    /** on the phone a tall machine stands smaller so its top clears the close button's row, but never under this share
+     * of the window's width */
+    shut: .76 },
   /** the print: the museum's neutral curve, no split, a light vignette, a tooth that dithers */
   print: { exposure: 1.0, toe: .012, shoulder: .35, vignette: .1, grain: .005 },
 })

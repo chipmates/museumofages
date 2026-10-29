@@ -22,7 +22,7 @@ import { LOOK_RULE } from '../vinci/input'
 import { deskStageHeight } from '../desk-stage'
 import type { VitrinePayload, VitrinePayloadHost } from './types'
 import { islandFit } from './fit'
-import { captionRoom, glassShift, outlineTop } from './fit'
+import { captionRoom, glassFootOf, glassShift, outlineTop, shutRow } from './fit'
 import { paintSlider } from './slider'
 import { folioDoor } from './folio'
 
@@ -552,6 +552,41 @@ export function createTurntablePayload(options: TurntableOptions): TurntablePayl
       const mid = Math.sqrt(near * far)
       if (filled(mid) > want) near = mid
       else far = mid
+    }
+    // THE CLOSE BUTTON'S ROW STAYS CLEAR on the phone: a machine tall enough that, with its top and foot margins even,
+    // its top would stand up beside the button stands smaller, its top under the row across the whole width; never
+    // smaller than `share.shut` of the window's width (a tall narrow machine keeps its size and its top near the row)
+    const row = host?.narrow && !framed ? shutRow(host) : 0
+    if (row > 0) {
+      const tanV = Math.tan(camera!.fov * DEG / 2), tanH = tanV * w / h, across = still.length ? still : points
+      const tallAt = (distance: number): number => {
+        let low = Infinity, high = -Infinity
+        for (const point of points) {
+          corner.copy(point).sub(centre)
+          const v = corner.dot(up) / (distance - corner.dot(toward))
+          low = Math.min(low, v); high = Math.max(high, v)
+        }
+        return (high - low) / (2 * tanV) * h
+      }
+      const wideAt = (distance: number): number => {
+        let left = Infinity, rightmost = -Infinity
+        for (const point of across) {
+          corner.copy(point).sub(centre)
+          const u = corner.dot(right) / (distance - corner.dot(toward))
+          left = Math.min(left, u); rightmost = Math.max(rightmost, u)
+        }
+        return (rightmost - left) / (2 * tanH)
+      }
+      const room = glassFootOf(host!, fit, captionRoom(host!, captionTexts), captionTexts.length > 0) - 2 * row
+      if (room > 0 && tallAt(far) > room && wideAt(far) > share.shut) {
+        /** the least distance past `from` where `fits` holds */
+        const past = (from: number, fits: (d: number) => boolean): number => {
+          let lo = from, hi = from * 4
+          for (let i = 0; i < 40; i++) { const mid = (lo + hi) / 2; if (fits(mid)) hi = mid; else lo = mid }
+          return hi
+        }
+        far = Math.min(past(far, d => tallAt(d) <= room), past(far, d => wideAt(d) <= share.shut))
+      }
     }
     wholeRef = far
     return far

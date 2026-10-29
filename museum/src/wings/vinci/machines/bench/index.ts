@@ -472,7 +472,8 @@ export function createBench(stack: Stack, onExit: () => void) {
   /** the walker's surfaces at nine moments of its run, once it stands; its pose put back */
   let walkFrame: Vector3[] | null = null;
   function walkPoints(): Vector3[] | null {
-    const period = machine?.period ?? 0;
+    // the whole run the bench plays (the lion's 20 s walk), not one stride of its gait
+    const period = schedule.period ?? 0;
     if (!machine || !(period > 0)) return null;
     const points: Vector3[] = [];
     for (let i = 0; i <= 8; i++) { machine.animate(period * i / 8, 0); points.push(...surfacePoints(machine.object, 160)); }

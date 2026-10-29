@@ -70,8 +70,7 @@ export function glassShift(host: VitrinePayloadHost, fit: VitrineRect, caption: 
   const foot = host.narrow ? rect.top + rect.height : host.banded ? deskStageHeight() : rect.top + rect.height
   const fitFoot = fit.top + fit.height
   const roomed = captioned && (caption?.above ?? 0) > 0
-  // the glass ends at the caption the machine shows at rest; the box still clears the longest step's room below
-  const glassFoot = roomed ? fitFoot + CAPTION_AIR + (caption!.above - (caption!.rest ?? caption!.above)) : foot
+  const glassFoot = glassFootOf(host, fit, caption, captioned)
   // the picture's top on the desk's band and the phone's glass alike: the canvas runs under the close button's row
   const glassTop = host.narrow || host.banded ? 0 : rect.top
   let shift = (glassTop + glassFoot) / 2 - (box.top + box.bottom) / 2
@@ -83,6 +82,23 @@ export function glassShift(host: VitrinePayloadHost, fit: VitrineRect, caption: 
     if (Number.isFinite(under)) shift = Math.max(shift, shut.bottom + SHUT_AIR - under)
   }
   return Math.max(shift, glassTop - box.top)
+}
+
+/** the glass's foot (px): the caption the machine shows at rest, its box still clearing the longest step's room below,
+ * or the window's foot where no caption shows */
+export function glassFootOf(host: VitrinePayloadHost, fit: VitrineRect, caption: CaptionRoom | undefined, captioned: boolean): number {
+  const rect = host.narrow ? host.element.getBoundingClientRect() : host.viewport()
+  const foot = host.narrow ? rect.top + rect.height : host.banded ? deskStageHeight() : rect.top + rect.height
+  const roomed = captioned && (caption?.above ?? 0) > 0
+  return roomed ? fit.top + fit.height + CAPTION_AIR + (caption!.above - (caption!.rest ?? caption!.above)) : foot
+}
+
+/** the phone's close button row over the glass: the button's foot and the air under it (px from the screen's top), 0
+ * where no button stands over the glass */
+export function shutRow(host: VitrinePayloadHost): number {
+  if (!host.narrow) return 0
+  const shut = host.element.closest('.vitrine')?.querySelector('.vitrine-shut')?.getBoundingClientRect()
+  return shut && shut.width > 0 ? shut.bottom + SHUT_AIR : 0
 }
 
 /** The highest point (least y) between x `from` and `to` of the convex outline of `count / 2` canvas points (x, y in
