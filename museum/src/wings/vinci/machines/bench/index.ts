@@ -846,7 +846,10 @@ export function createBench(stack: Stack, onExit: () => void) {
     history.pushState({}, '', `/bench/vinci/machines/${id}${location.search}`);
     void open({ slug: id });
   } }
-  section.onclick = () => { sectionEnabled = !sectionEnabled; machine?.section(sectionEnabled); lampMachine(); compose(); paint(); metrics?.reset(); };
+  section.onclick = () => { sectionEnabled = !sectionEnabled; machine?.section(sectionEnabled); lampMachine();
+    // a machine's own lamps relight its surfaces: the setting's rules for its metal, glass and cloth go back on
+    if (ready && machine) stage?.machine(machine.object);
+    compose(); paint(); metrics?.reset(); };
   previous.onclick = () => navigate(-1);
   next.onclick = () => navigate(1);
   select.onchange = () => { history.pushState({}, '', `/bench/vinci/machines/${select.value}${location.search}`); void open({ slug: select.value }); };
