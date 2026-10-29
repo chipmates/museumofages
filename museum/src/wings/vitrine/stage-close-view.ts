@@ -12,13 +12,15 @@
  * whichever room it was opened. The numbers are in `STAGE`.
  */
 import {
-  Box3, CircleGeometry, Color, DataTexture, DirectionalLight, FloatType, LinearFilter, Mesh, MeshStandardNodeMaterial, PlaneGeometry, RedFormat,
-  Vector3, type Camera, type InstancedMesh, type Node, type Object3D, type Scene,
+  Box3, CanvasTexture, CircleGeometry, Color, DataTexture, DirectionalLight, EquirectangularReflectionMapping, FloatType, LinearFilter, Mesh,
+  MeshStandardNodeMaterial, PlaneGeometry, RedFormat, SRGBColorSpace, Vector3, type Camera, type InstancedMesh, type Node, type Object3D, type Scene,
+  type Texture,
 } from 'three/webgpu'
 import * as TSL from 'three/tsl'
 import type { Grade, KeyLight, Stack } from '../../stack'
 import { IDENTITY } from '../../stack/grade'
 import { kelvinToColour } from '../../stack/light'
+import { bakeSky } from '../../stack/sky'
 import { wideShadowFilter } from '../vinci/machines/screw-shadow'
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -55,8 +57,13 @@ export const STAGE = Object.freeze({
     soft: .01 },
   /** the fill: the sky's and the floor's share, and a weak lamp from the eye itself */
   fill: { sky: '#6d7682', ground: '#40362c', intensity: .36, environment: .2, front: .12, frontHeight: 14, frontKelvin: 5600 },
-  /** the edge light from behind on the far side: weaker than the key, cool, never on the floor */
-  rim: { turn: 155, height: 36, kelvin: 7200, share: .5 },
+  /** the edge lights from behind, each at its bearing from the eye's: weaker than the key, cool, never on the floor;
+   * `cloth` false keeps them off a thin translucent cloth, which they would light through as a lamp lights a shade */
+  rim: { turns: [155] as readonly number[], height: 36, kelvin: 7200, share: .5, cloth: true },
+  /** the room metal and glass mirror: the fill's dark sky alone at 0; else a softbox overhead and two strips behind at
+   * `stripTurn` either side of the eye's back, their radiance over the sky's, turning with the eye; the floor keeps the
+   * dark sky */
+  room: { softbox: 0, strips: 0, stripTurn: 145, stripWide: 14, boxRadius: 34, intensity: .2 },
   /** the vertical lens in degrees: a long lens on the desktop, the phone's upright frame narrower still across */
   lens: { desktop: 24, phone: 40 },
   /** the machine's swept outline's share of the picture's limiting side */
@@ -104,6 +111,8 @@ export interface StageSetting {
   /** a mirror-like surface the edge light must not reach: from behind the machine it stands as a hot spot in a mirror
    * the eye looks down on */
   offRim(material: MeshStandardNodeMaterial): void
+  /** the machine's own surfaces under the setting's rules for them (a thin translucent cloth kept from the edge light) */
+  machine(root: Object3D): void
   dispose(): void
 }
 
@@ -138,13 +147,14 @@ export function createStageSetting(options: {
 
   // ---- the light, in the eye's bearing
   // the probe's own sun disc would stand at a fixed bearing while the rig turns: it carries none
+  const sky = { zenith: S.fill.sky, horizon: '#2a2b2d', ground: S.fill.ground, stars: 0, key: { azimuth: 0, elevation: S.key.height, colour: '#ffffff', size: 1, intensity: 0 } }
+  const studio = S.room.softbox > 0 || S.room.strips > 0 ? bakeRoom(S.room, sky, S.fill.environment / S.room.intensity) : null
   const key = stack.light({ azimuth: 0, elevation: S.key.height, kelvin: S.key.kelvin, lux: S.key.lux, ambient: S.key.ambient,
-    reach: Math.max(24, span * 6), cascades: options.cascades ?? [span * 1.25, span * 3.4],
-    sky: { zenith: S.fill.sky, horizon: '#2a2b2d', ground: S.fill.ground, stars: 0, key: { azimuth: 0, elevation: S.key.height, colour: '#ffffff', size: 1, intensity: 0 } } })
+    reach: Math.max(24, span * 6), cascades: options.cascades ?? [span * 1.25, span * 3.4], sky, ...(studio ? { probe: studio } : {}) })
   key.fill.color.set(S.fill.sky)
   key.fill.groundColor.set(S.fill.ground)
   key.fill.intensity = S.fill.intensity
-  scene.environmentIntensity = S.fill.environment
+  scene.environmentIntensity = studio ? S.room.intensity : S.fill.environment
   // THE KEY'S SOFT EDGE: the five-texel tent's width is set by the near cascade's texel, so the cascade is sized for it
   {
     const map = key.light.shadow.mapSize.x, half = Math.max(span * 1.25, span * S.key.soft * map / 8)
@@ -167,7 +177,7 @@ export function createStageSetting(options: {
     return l
   }
   const front = lamp(S.fill.frontKelvin, S.key.lux / 100 * S.fill.front, 'stage/front')
-  const rim = lamp(S.rim.kelvin, S.key.lux / 100 * S.rim.share, 'stage/rim')
+  const rims = S.rim.turns.map((_, i) => lamp(S.rim.kelvin, S.key.lux / 100 * S.rim.share, `stage/rim-${i}`))
   const distance = Math.max(24, span * 6) * .8
   const place = (light: DirectionalLight, bearing: number, height: number): void => {
     const cos = Math.cos(height)
@@ -190,6 +200,7 @@ export function createStageSetting(options: {
   const wide = Math.max(box.max.x - box.min.x, box.max.z - box.min.z) + grow * 2
   const floorMaterial = new MeshStandardNodeMaterial({ roughness: S.floor.roughness, metalness: 0 })
   floorMaterial.name = 'stage/floor'
+  let floorSky: Texture | null = null
   let albedo: N, shade: N
   {
     const along = positionWorld.xz.sub(vec2(centre.x, centre.z)).length()
@@ -203,6 +214,8 @@ export function createStageSetting(options: {
     floorMaterial.aoNode = shade
     // the edge light from behind would lay a second sheen on the floor toward the eye: the floor takes the key and the fills
     floorMaterial.lightsNode = lights([key.light, key.fill, front])
+    // the floor keeps the fill's dark sky where metal and glass mirror the studio's lamps
+    if (studio) { floorMaterial.envMap = floorSky = bakeSky({ ...sky } as Parameters<typeof bakeSky>[0]); floorMaterial.envMapIntensity = S.fill.environment }
     // THE FLOOR KEEPS OUT OF THE DEPTH THE OCCLUSION READS: a plane seen at a grazing angle toward the horizon reads to
     // the screen's occlusion as a crease and darkens in a band; the shade where the machine stands is painted instead
     floorMaterial.depthWrite = false
@@ -259,6 +272,7 @@ export function createStageSetting(options: {
     material.emissiveNode = albedo.mul(S.floor.bounce)
     material.aoNode = shade
     material.lightsNode = floorMaterial.lightsNode
+    if (floorSky) { material.envMap = floorSky; material.envMapIntensity = S.fill.environment }
     // how far a point lies outside the box, along the floor
     const outside = positionWorld.xz.sub(vec2(c.x, c.z)).abs().sub(vec2(half.x, half.z)).max(0).length()
     material.opacityNode = smoothstep(from, to, outside)
@@ -285,6 +299,13 @@ export function createStageSetting(options: {
     material.lightsNode = floorMaterial.lightsNode
     material.needsUpdate = true
   }
+  function machine(root: Object3D): void {
+    if (S.rim.cloth) return
+    root.traverse(node => {
+      const materials = (node as Mesh).isMesh ? [(node as Mesh).material].flat() : []
+      for (const material of materials) if ((material as { thicknessColorNode?: unknown }).thicknessColorNode) offRim(material as MeshStandardNodeMaterial)
+    })
+  }
 
   let lastYaw = NaN
   function follow(o: { yaw: number; centre?: { x: number; y: number }; picture?: number }): void {
@@ -293,7 +314,9 @@ export function createStageSetting(options: {
       for (const l of cascadesOf) place(l, o.yaw + S.key.turn * DEG, S.key.height * DEG)
       key.direction.copy(cascadesOf[0]!.position).sub(centre).normalize()
       place(front, o.yaw, S.fill.frontHeight * DEG)
-      place(rim, o.yaw + S.rim.turn * DEG, S.rim.height * DEG)
+      rims.forEach((rim, i) => place(rim, o.yaw + S.rim.turns[i]! * DEG, S.rim.height * DEG))
+      // the studio's lamps stand round the eye as the rig does
+      if (studio) scene.environmentRotation.set(0, o.yaw, 0)
     }
     if (o.picture) poolRadius.value = o.picture * S.field.radius
     if (o.centre) poolCentre.value.set(o.centre.x, o.centre.y - (o.picture ?? 1) * S.field.lift)
@@ -304,14 +327,16 @@ export function createStageSetting(options: {
   }
   function dispose(): void {
     key.dispose()
-    for (const l of [front, rim]) { l.removeFromParent(); l.target.removeFromParent(); l.dispose() }
+    studio?.dispose()
+    floorSky?.dispose()
+    for (const l of [front, ...rims]) { l.removeFromParent(); l.target.removeFromParent(); l.dispose() }
     dropVeil()
     floor.removeFromParent()
     floor.geometry.dispose()
     floorMaterial.dispose()
     contactTexture.dispose()
   }
-  return { field, floor, key, follow, air, contact, merge, offRim, dispose }
+  return { field, floor, key, follow, air, contact, merge, offRim, machine, dispose }
 }
 
 /** the points of a body's surfaces, a few hundred a mesh, in world metres: what the contact shade is painted from */
@@ -339,4 +364,55 @@ export function surfacePoints(root: Object3D, perMesh = 600): Vector3[] {
 export function onCanvas(point: Vector3, camera: Camera): { x: number; y: number } {
   const p = point.clone().project(camera)
   return { x: p.x * .5 + .5, y: .5 - p.y * .5 }
+}
+
+/** THE STUDIO AS METAL AND GLASS SEE IT: the fill's dark sky with a softbox overhead and two upright strips behind the
+ * machine, either side of the eye's back (the eye at bearing 0; the scene turns the room with the eye). Iron and glass
+ * mirror what stands round them, so on a dark field they read only by the lamps they reflect. */
+function bakeRoom(room: { softbox: number; strips: number; stripTurn: number; stripWide: number; boxRadius: number },
+  sky: { zenith: string; horizon: string; ground: string }, keep: number): Texture {
+  const W = 512, H = 256
+  const canvas = document.createElement('canvas')
+  canvas.width = W; canvas.height = H
+  const ctx = canvas.getContext('2d')
+  if (!ctx) throw new Error('2d context unavailable')
+  const band = ctx.createLinearGradient(0, 0, 0, H)
+  band.addColorStop(0, sky.zenith); band.addColorStop(.42, sky.zenith); band.addColorStop(.5, sky.horizon)
+  band.addColorStop(.56, sky.ground); band.addColorStop(1, sky.ground)
+  ctx.fillStyle = band
+  ctx.fillRect(0, 0, W, H)
+  // the sky keeps its own radiance under the room's stronger probe: darkened by the ratio, near enough in sRGB
+  ctx.fillStyle = `rgba(0,0,0,${1 - Math.pow(Math.min(1, keep), 1 / 2.2)})`
+  ctx.fillRect(0, 0, W, H)
+  ctx.globalCompositeOperation = 'lighter'
+  // the softbox: a soft disc round the zenith, the top rows of the map
+  const box = Math.min(1, room.softbox)
+  if (box > 0) {
+    const rows = H * room.boxRadius / 180
+    const g = ctx.createLinearGradient(0, 0, 0, rows)
+    g.addColorStop(0, `rgba(255,244,228,${box})`); g.addColorStop(.6, `rgba(255,244,228,${box * .8})`); g.addColorStop(1, 'rgba(255,244,228,0)')
+    ctx.fillStyle = g
+    ctx.fillRect(0, 0, W, rows)
+  }
+  // the strips: upright, from a little under the horizon to well over it, soft at their sides
+  const strip = Math.min(1, room.strips)
+  if (strip > 0) {
+    // three's equirect: a bearing b (the eye at 0, (sin b, cos b) on the floor) stands at u = 0.75 - b / 360
+    for (const b of [180 - room.stripTurn, 180 + room.stripTurn]) {
+      const u = ((.75 - b / 360) % 1 + 1) % 1, cx = u * W, half = W * room.stripWide / 360 / 2
+      const top = H * (.5 - 50 / 180), bottom = H * (.5 + 12 / 180)
+      for (const x of [cx, cx - W, cx + W]) {
+        const g = ctx.createLinearGradient(x - half * 1.6, 0, x + half * 1.6, 0)
+        g.addColorStop(0, 'rgba(238,242,250,0)'); g.addColorStop(.3, `rgba(238,242,250,${strip})`)
+        g.addColorStop(.7, `rgba(238,242,250,${strip})`); g.addColorStop(1, 'rgba(238,242,250,0)')
+        ctx.fillStyle = g
+        ctx.fillRect(x - half * 1.6, top, half * 3.2, bottom - top)
+      }
+    }
+  }
+  const tex = new CanvasTexture(canvas)
+  tex.mapping = EquirectangularReflectionMapping
+  tex.colorSpace = SRGBColorSpace
+  tex.needsUpdate = true
+  return tex
 }

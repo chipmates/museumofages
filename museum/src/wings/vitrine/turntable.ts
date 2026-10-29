@@ -414,8 +414,9 @@ export function createTurntablePayload(options: TurntableOptions): TurntablePayl
     }
     if (outline.length) for (const point of outline) measure(point)
     else for (const x of [rest.min.x, rest.max.x]) for (const y of [rest.min.y, rest.max.y]) for (const z of [rest.min.z, rest.max.z]) measure(new Vector3(x, y, z))
-    // the air round the box the whole view fits: the outline takes the setting's share of the picture
-    return Math.min(distance / stageNumbers().share, fitDistance(radius) * WHOLE_FIT)
+    // the air round the box the whole view fits: the outline takes the setting's share of the picture, every machine by
+    // the same rule (a sphere's fit stands a long or flat machine nearer than its own outline asks)
+    return distance / stageNumbers().share
   }
   /** The eye and its aim, from the body's own metres onto the table, and the
    * point on the eye's own side, past the body and at the eye's height, that
@@ -571,10 +572,14 @@ export function createTurntablePayload(options: TurntableOptions): TurntablePayl
     const { air } = stageNumbers()
     stage?.air(reach + radius * air.near, reach + radius * air.far)
     const w = innerWidth, h = deskStageHeight(), fit = viewportFit()
-    // The work stands in the middle of its own viewport, not of the stage.
+    // THE WORK STANDS IN THE MIDDLE OF ITS OWN VIEWPORT, not of the stage: a shift of the lens written into the
+    // projection itself, since a view offset is the export's to set and clear round every draw
     camera.aspect = w / h
-    camera.setViewOffset(w, h, w / 2 - (fit.left + fit.width / 2), h / 2 - (fit.top + fit.height / 2), w, h)
+    if (camera.view?.enabled) camera.clearViewOffset()
     camera.updateProjectionMatrix()
+    camera.projectionMatrix.elements[8] = -2 * (fit.left + fit.width / 2 - w / 2) / w
+    camera.projectionMatrix.elements[9] = 2 * (fit.top + fit.height / 2 - h / 2) / h
+    camera.projectionMatrixInverse.copy(camera.projectionMatrix).invert()
     // the rig turns with the eye, and the field's pool stands behind the machine where the picture puts it
     camera.updateMatrixWorld()
     stage?.follow({ yaw: view.yaw, centre: onCanvas(view.target, camera), picture: fit.height / h })
@@ -904,6 +909,7 @@ export function createTurntablePayload(options: TurntableOptions): TurntablePayl
     stage = createStageSetting({ stack, scene, span, radius, centre: centre.clone(), floorY: 0, footprint: rest })
     // the shade where it stands is painted from its rest pose: a walker's path is not its foot
     stage.contact(surfacePoints(object))
+    stage.machine(object)
     view.target.copy(centre)
     view.distance = wholeDistance()
     view.yaw = WHOLE.yaw; view.pitch = WHOLE.pitch

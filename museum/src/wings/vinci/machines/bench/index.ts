@@ -805,6 +805,7 @@ export function createBench(stack: Stack, onExit: () => void) {
     }
     // the shade where it stands: the machine, its mounts and the figure, as they stand at this eye's moment
     stage?.contact(surfacePoints(display));
+    stage?.machine(machine.object);
     if(key){
       const towardKey=vec3(key.direction.x,key.direction.y,key.direction.z).mul(clothLift);
       machine.object.traverse(node=>{
