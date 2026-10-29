@@ -13,7 +13,7 @@
  */
 import {
   Box3, CanvasTexture, CircleGeometry, Color, DataTexture, DirectionalLight, EquirectangularReflectionMapping, FloatType, LinearFilter, Mesh,
-  MeshStandardNodeMaterial, PlaneGeometry, RedFormat, SRGBColorSpace, Vector3, type Camera, type InstancedMesh, type Light, type Node, type Object3D, type PerspectiveCamera, type Scene,
+  MeshStandardNodeMaterial, PlaneGeometry, Raycaster, RedFormat, SRGBColorSpace, Vector3, type Camera, type InstancedMesh, type Light, type Node, type Object3D, type PerspectiveCamera, type Scene,
   type Texture,
 } from 'three/webgpu'
 import * as TSL from 'three/tsl'
@@ -185,9 +185,10 @@ export const STAGE = Object.freeze({
      * the key), its height and its share of the key; the thin parts alone take it (`cord`) */
     card: { turn: 40, height: 28, share: .3 },
     /** the scale figure's own fill: a lamp on the key's side that no machine shades, so the figure in a machine's shade
-     * keeps the key's lit side and its shade side (form, never a grey silhouette), and in the open adds to the key's side
-     * without filling the shade side; the figure alone takes it */
-    figure: { turn: -55, height: 30, share: .8 } },
+     * keeps the key's lit side and its shade side (form, never a grey silhouette); the figure alone takes it, at `share`
+     * of the key where the machine hides it from the key and at `open` where it stands in the key's light, so the figure
+     * in the open stays under the lit wood */
+    figure: { turn: -55, height: 30, share: 1, open: .25 } },
   /** the edge lights from behind, each at its bearing from the eye's: weaker than the key, cool, never on the floor;
    * a thin translucent cloth takes them at `cloth` of their strength (a scrim on the lamp), since from behind they light
    * it through as a lamp lights a shade */
@@ -700,6 +701,7 @@ export function createStageSetting(options: {
     // a machine's root is named by its wing and slug (`vinci/<slug>`): the card is keyed by the slug
     const own = S.own[root.name.split('/').pop() ?? '']
     const cloth = S.rim.cloth < 1 ? lights([key.light, key.fill, front, ...scrimmed]) : null
+    machineRoot = root
     thinParts(root)
     root.traverse(node => {
       const materials = (node as Mesh).isMesh ? [(node as Mesh).material].flat() : []
@@ -740,7 +742,29 @@ export function createStageSetting(options: {
     scene.traverse(node => { if ((node as Light).isLight) found.push(node as Light) })
     return found
   }
+  /** HOW MUCH OF THE FIGURE THE MACHINE HIDES FROM THE KEY (0 to 1): rays from its head, chest and hips toward the lamp */
+  let machineRoot: Object3D | null = null, figureRoot: Object3D | null = null, shadeYaw = NaN
+  function figureShade(): number {
+    if (!machineRoot || !figureRoot) return 0
+    machineRoot.updateWorldMatrix(true, true); figureRoot.updateWorldMatrix(true, true)
+    const box = new Box3().setFromObject(figureRoot), tall = box.max.y - box.min.y, middle = box.getCenter(new Vector3())
+    const ray = new Raycaster(), toward = key.direction.clone().normalize()
+    ray.far = span * 8
+    let hidden = 0
+    for (const f of [.85, .6, .35]) {
+      ray.set(new Vector3(middle.x, box.min.y + tall * f, middle.z), toward)
+      if (ray.intersectObject(machineRoot, true).length) hidden++
+    }
+    return hidden / 3
+  }
+  function lightFigure(): void {
+    const { share, open } = S.fill.figure
+    figureLamp.intensity = S.key.lux / 100 * (open + (share - open) * figureShade())
+  }
   function figure(root: Object3D): void {
+    figureRoot = root
+    shadeYaw = lastYaw
+    lightFigure()
     const inScene = sceneLights()
     root.traverse(node => {
       if (!(node as Mesh).isMesh) return
@@ -784,6 +808,8 @@ export function createStageSetting(options: {
       // the studio's lamps stand round the eye as the rig does
       for (const material of mirrors) material.envMapRotation.set(0, o.yaw, 0)
       lastYawSet = o.yaw
+      // a drag turns the yaw every frame: the rays are cast again only past a few degrees
+      if (figureRoot && !(Math.abs(o.yaw - shadeYaw) < 4 * DEG)) { shadeYaw = o.yaw; lightFigure() }
     }
     groundLight.value.copy(key.light.color).multiplyScalar(key.light.intensity * Math.max(0, key.direction.y) / Math.PI)
     if (o.camera) {
