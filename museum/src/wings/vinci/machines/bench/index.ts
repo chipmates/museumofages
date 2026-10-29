@@ -106,11 +106,13 @@ const BENCH_SIZE_WORD: Partial<Record<string, { en: string; de: string }>> = {
 const BRIDGE_BANK_FLOOR = -.02;
 /** metres past the standing bridge where the floor starts over its banks and where it is whole: the bank's own edges
  * lie 7.5 m out and more; laid just over the bank's highest swell. Near, so the banks' lit tops never outshine the poles */
-const BRIDGE_MERGE = [.4, 3.5] as const, BRIDGE_MERGE_ABOVE = .03;
+const BRIDGE_MERGE = [.2, 2.0] as const, BRIDGE_MERGE_ABOVE = .03;
 /** the stream's half width at its level (`STREAM_HALF` in the bridge's build): the setting's floor stays off the water */
 const BRIDGE_CHANNEL = 3.0;
 /** The parachute's uprights alone (not its plinth): a plain grey powder coat in linear albedo. */
 const PARACHUTE_POST = { tone: .16, roughness: .55 };
+/** The compass's stand alone (not its plate): a mid grey powder coat in linear albedo, lighter than the iron it holds. */
+const COMPASS_POST = { tone: .11, roughness: .6 };
 const el = <K extends keyof HTMLElementTagNameMap>(tag: K, cls: string, text?: string): HTMLElementTagNameMap[K] => { const n = document.createElement(tag); n.className = cls; if (text !== undefined)
   n.textContent = text; return n; };
 const localText = (lang: Language, en: string, de: string): string => lang === 'de' ? de : en;
@@ -561,6 +563,15 @@ export function createBench(stack: Stack, onExit: () => void) {
     // grazes, so the compass reads as an outline against nothing. The plate
     // is given the light its top face is standing in.
     if (slug === 'proportional-compass') supportMat.colorNode = supportMat.colorNode!.mul(1.7);
+    if (slug === 'proportional-compass') {
+      // the stand above its plate is today's hardware: a plain grey powder coat, so the black iron of the instrument
+      // stands off it instead of merging with it into one dark shape
+      const post = smoothstep(.001, .004, positionWorld.y.sub(machine.bounds.min.y));
+      supportMat.colorNode = mix(supportMat.colorNode as Node<'vec3'>, vec3(COMPASS_POST.tone, COMPASS_POST.tone, COMPASS_POST.tone * 1.04), post);
+      supportMat.roughnessNode = mix((supportMat.roughnessNode as Node<'float'> | null) ?? float(supportMat.roughness), float(COMPASS_POST.roughness), post);
+      supportMat.metalnessNode = mix((supportMat.metalnessNode as Node<'float'> | null) ?? float(supportMat.metalness), float(0), post);
+      if (supportMat.normalNode) supportMat.normalNode = mix(supportMat.normalNode as Node<'vec3'>, normalView, post).normalize();
+    }
     const finish = BENCH_FINISH[slug];
     if (finish) { supportMat.roughnessNode = float(finish.roughness); supportMat.metalnessNode = float(finish.metalness); supportMat.colorNode = supportMat.colorNode!.mul(finish.tone); }
     if (slug === 'multi-barrel-gun') {
@@ -794,7 +805,8 @@ export function createBench(stack: Stack, onExit: () => void) {
       stage.merge(frameBounds(), BRIDGE_MERGE[0], BRIDGE_MERGE[1], BRIDGE_MERGE_ABOVE, BRIDGE_CHANNEL);
     }
     // the shade where it stands: the machine, its mounts and the figure, as they stand at this eye's moment
-    stage.contact(surfacePoints(display));
+    const reach = frameBounds().getBoundingSphere(new Sphere()).radius * stageNumbers().contact.tight.height;
+    stage.contact(surfacePoints(display, 600, floorLevel() + reach));
     stage.machine(machine.object);
     if (figureGroup) stage.figure(figureGroup);
   }
@@ -851,6 +863,7 @@ export function createBench(stack: Stack, onExit: () => void) {
   section.onclick = () => { sectionEnabled = !sectionEnabled; machine?.section(sectionEnabled); lampMachine();
     // a machine's own lamps relight its surfaces: the setting's rules for its metal, glass and cloth go back on
     if (ready && machine) stage?.machine(machine.object);
+    if (ready && figureGroup) stage?.figure(figureGroup);
     compose(); paint(); metrics?.reset(); };
   previous.onclick = () => navigate(-1);
   next.onclick = () => navigate(1);
