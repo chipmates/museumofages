@@ -770,14 +770,17 @@ export function createTurntablePayload(options: TurntableOptions): TurntablePayl
     if (!host) return
     const u = share()
     const at = stepAt(u)
-    if (slider && document.activeElement !== slider) slider.value = String(Math.round(u * 1000))
+    // A STILL FRAME WRITES NOTHING TO THE PAGE: each write invalidates its style, and the film's box read that follows
+    // lays the whole page out again, every frame, on a phone's slow core
+    const value = String(Math.round(u * 1000)), said = period ? `${state.clock.toFixed(1)} s / ${period} s` : ''
+    if (slider && document.activeElement !== slider && slider.value !== value) slider.value = value
     if (slider) paintSlider(slider)
-    if (slider) slider.setAttribute('aria-valuetext', period ? `${state.clock.toFixed(1)} s / ${period} s` : '')
+    if (slider && slider.getAttribute('aria-valuetext') !== said) slider.setAttribute('aria-valuetext', said)
     if (play) {
       const held = schedule.kind === 'finite' && state.clock >= period
       const text = state.playing ? options.words.pause : held ? options.words.again : options.words.play
       if (play.textContent !== text) play.textContent = text
-      play.setAttribute('aria-pressed', String(state.playing))
+      if (play.getAttribute('aria-pressed') !== String(state.playing)) play.setAttribute('aria-pressed', String(state.playing))
     }
     if (at !== active) {
       active = at
@@ -795,7 +798,11 @@ export function createTurntablePayload(options: TurntableOptions): TurntablePayl
   }
   function paintLeader(): void {
     if (!leader || !leaderLine || !leaderText || !camera || !host) return
-    if (!tapped) { leader.style.display = 'none'; leaderText.hidden = true; return }
+    if (!tapped) {
+      if (leader.style.display !== 'none') leader.style.display = 'none'
+      if (!leaderText.hidden) leaderText.hidden = true
+      return
+    }
     const point = tapped.node.localToWorld(tapped.local.clone()).project(camera)
     const x = (point.x * .5 + .5) * innerWidth, y = (-point.y * .5 + .5) * deskStageHeight()
     const rect = host.viewport()
