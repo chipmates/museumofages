@@ -417,8 +417,8 @@ function bakeRoom(room: { softbox: number; strips: number; stripTurn: number; st
       const top = H * (.5 - 50 / 180), bottom = H * (.5 + 12 / 180)
       for (const x of [cx, cx - W, cx + W]) {
         const g = ctx.createLinearGradient(x - half * 1.6, 0, x + half * 1.6, 0)
-        g.addColorStop(0, 'rgba(238,242,250,0)'); g.addColorStop(.3, `rgba(238,242,250,${strip})`)
-        g.addColorStop(.7, `rgba(238,242,250,${strip})`); g.addColorStop(1, 'rgba(238,242,250,0)')
+        g.addColorStop(0, 'rgba(246,241,233,0)'); g.addColorStop(.3, `rgba(246,241,233,${strip})`)
+        g.addColorStop(.7, `rgba(246,241,233,${strip})`); g.addColorStop(1, 'rgba(246,241,233,0)')
         ctx.fillStyle = g
         ctx.fillRect(x - half * 1.6, top, half * 3.2, bottom - top)
       }
