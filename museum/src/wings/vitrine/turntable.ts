@@ -22,7 +22,7 @@ import { LOOK_RULE } from '../vinci/input'
 import { deskStageHeight } from '../desk-stage'
 import type { VitrinePayload, VitrinePayloadHost } from './types'
 import { islandFit } from './fit'
-import { captionRoom } from './fit'
+import { captionRoom, glassShift } from './fit'
 import { paintSlider } from './slider'
 import { folioDoor } from './folio'
 
@@ -628,6 +628,16 @@ export function createTurntablePayload(options: TurntableOptions): TurntablePayl
     view.distance = a.distance + (b.distance - a.distance) * k
     view.target.lerpVectors(a.target, b.target, k)
   }
+  /** BEFORE THE FIRST CAPTION the machine stands in the middle of the whole window: 1 while no step has begun, easing to 0
+   * over the half second before the first one does, as a function of the clock alone (a recording draws it the same) */
+  const LEAD_S = .5
+  function leadAt(clock: number): number {
+    const first = (starts[0] ?? 0) * period
+    if (!period || first <= 0) return 0
+    const at = schedule.kind === 'loop' ? clock % period : clock
+    const k = Math.min(1, Math.max(0, (at - (first - LEAD_S)) / LEAD_S))
+    return 1 - k * k * (3 - 2 * k)
+  }
   /** How far along the run's views the eye belongs at a clock of the run. */
   function runViewAt(clock: number): number {
     const at = schedule.kind === 'loop' && period ? clock % period : clock
@@ -700,7 +710,16 @@ export function createTurntablePayload(options: TurntableOptions): TurntablePayl
         const x = (at.x * .5 + .5) * w, y = (.5 - at.y * .5) * h
         left = Math.min(left, x); right = Math.max(right, x); top = Math.min(top, y); bottom = Math.max(bottom, y)
       }
-      shift((fit.left + fit.width / 2 - (left + right) / 2) * whole, (fit.top + fit.height / 2 - (top + bottom) / 2) * whole)
+      let down = fit.top + fit.height / 2 - (top + bottom) / 2
+      // THE GLASS'S MIDDLE, not the fit box's: the box sets the size and keeps the caption's room; a recording's box is
+      // placed by its own player
+      if (!framed) {
+        const room = captionRoom(host, captionTexts), drawn = { left, right, top: top + down, bottom: bottom + down }
+        const roomed = glassShift(host, fit, room, drawn, true)
+        const lead = leadAt(state.clock)
+        down += lead > 0 ? roomed + (glassShift(host, fit, room, drawn, false) - roomed) * lead : roomed
+      }
+      shift((fit.left + fit.width / 2 - (left + right) / 2) * whole, down * whole)
     }
     // the rig turns with the eye, and the field's pool stands behind the machine where the picture puts it
     camera.updateMatrixWorld()
@@ -1032,7 +1051,7 @@ export function createTurntablePayload(options: TurntableOptions): TurntablePayl
     stack.setScene(scene, camera, stageGrade(span))
     stage = createStageSetting({ stack, scene, span, radius, centre: centre.clone(), floorY: 0, footprint: rest })
     // the shade where it stands is painted from its rest pose: a walker's path is not its foot
-    stage.contact(surfacePoints(object))
+    stage.contact(surfacePoints(object, 600, radius * stageNumbers().contact.tight.height))
     stage.machine(object)
     view.target.copy(centre)
     view.distance = wholeDistance()

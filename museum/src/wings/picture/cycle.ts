@@ -8,7 +8,7 @@
 import cycleCss from './cycle.css?inline'
 import type { PictureBox, PictureFraming } from './seam'
 import type { VitrinePayload, VitrinePayloadHost } from '../vitrine/types'
-import { captionRoom, islandFit } from '../vitrine/fit'
+import { captionRoom, glassShift, islandFit } from '../vitrine/fit'
 import { deskStageHeight } from '../desk-stage'
 import { paintSlider } from '../vitrine/slider'
 import { folioDoor, type FolioSheet } from '../vitrine/folio'
@@ -337,7 +337,16 @@ export function createCyclePayload(options: {
     }
     if (!sideways) host.caption.style.removeProperty('min-height')
     const cover = sideways ? host.field?.() ?? { left: 0, top: 0, width: innerWidth, height: innerHeight } : grounded ? null : coverOf(host)
-    const next = cycleFit(f, sideways ? clearOf(host) : islandFit(host, captionRoom(host, steps.map(step => step.text))), cover)
+    const room = captionRoom(host, steps.map(step => step.text)), box = sideways ? clearOf(host) : islandFit(host, room)
+    let next = cycleFit(f, box, cover)
+    // upright, the machine stands in the glass's middle as the live island stands it: its box moved, never resized
+    if (!sideways) {
+      const W = f.master[0] / f.dpr, H = f.master[1] / f.dpr
+      const [x0, y0, x1, y1] = f.extent?.box ?? [(W - f.fit[0]) / 2, (H - f.fit[1]) / 2, (W + f.fit[0]) / 2, (H + f.fit[1]) / 2]
+      const down = glassShift(host, box, room, { left: next.left + x0 * next.scale, top: next.top + y0 * next.scale,
+        right: next.left + x1 * next.scale, bottom: next.top + y1 * next.scale }, steps.length > 0)
+      if (Math.abs(down) >= .5) next = cycleFit(f, { ...box, top: box.top + down }, cover)
+    }
     const key = [framing, next.left, next.top, next.width, next.height, cover?.left, cover?.top, cover?.width, cover?.height].join()
     if (key === laid) return
     laid = key
