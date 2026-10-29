@@ -149,7 +149,12 @@
     "what": "un’immagine del film dell’ala. La riproduzione su una parete del cortile del museo, 4,6 per 8,8 metri. La parete è costruita in codice. L’originale è a Milano, nel refettorio di Santa Maria delle Grazie.",
     "alt": "Una riproduzione dell’Ultima Cena occupa una parete chiara in un cortile: una fila di figure a una lunga tavola, in una sala dipinta. Un’immagine del film dell’ala.",
     "src": [
-     "Una scansione ad alta risoluzione che Wikimedia Commons attribuisce ad Haltadefinizione insieme al ministero italiano della cultura, caricata per la prima volta su Commons nel 2007. Il museo usa una copia successiva e ingrandita. Opera di pubblico dominio. Riproduzione da ",
+     "Una ",
+     {
+      "text": "scansione ad alta risoluzione",
+      "href": "https://commons.wikimedia.org/wiki/File:%C3%9Altima_Cena_-_Da_Vinci_5.jpg"
+     },
+     " che Wikimedia Commons attribuisce ad Haltadefinizione insieme al ministero italiano della cultura, caricata per la prima volta su Commons nel 2007. Il museo usa una copia successiva e ingrandita. Opera di pubblico dominio. Riproduzione da ",
      {
       "text": "Wikimedia Commons",
       "href": "https://commons.wikimedia.org/wiki/File:Last_Supper_by_Leonardo_da_Vinci.jpg"

@@ -149,7 +149,12 @@
         "what": "ein Standbild aus dem Film des Flügels. Die Reproduktion an ihrer Wand im Hof des Museums, 4,6 mal 8,8 Meter. Die Wand ist in Code gebaut. Das Original ist in Mailand, im Refektorium von Santa Maria delle Grazie.",
         "alt": "Eine Reproduktion des Abendmahls füllt eine helle Wand in einem Hof: eine Reihe von Figuren an einem langen Tisch in einem gemalten Raum. Ein Standbild aus dem Film des Flügels.",
         "src": [
-          "Ein hochauflösender Scan, der laut Wikimedia Commons von Haltadefinizione in Zusammenarbeit mit dem italienischen Kulturministerium stammt und 2007 erstmals auf Commons erschien. Das Museum nutzt eine spätere, vergrößerte Kopie davon. Gemeinfreies Werk. Reproduktion aus ",
+          "Ein ",
+          {
+            "text": "hochauflösender Scan",
+            "href": "https://commons.wikimedia.org/wiki/File:%C3%9Altima_Cena_-_Da_Vinci_5.jpg"
+          },
+          ", der laut Wikimedia Commons von Haltadefinizione in Zusammenarbeit mit dem italienischen Kulturministerium stammt und 2007 erstmals auf Commons erschien. Das Museum nutzt eine spätere, vergrößerte Kopie davon. Gemeinfreies Werk. Reproduktion aus ",
           {
             "text": "Wikimedia Commons",
             "href": "https://commons.wikimedia.org/wiki/File:Last_Supper_by_Leonardo_da_Vinci.jpg"

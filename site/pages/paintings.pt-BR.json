@@ -949,7 +949,12 @@
        "pic": "supper",
        "alt": "Uma imagem do filme da ala: a reprodução da Última Ceia numa parede clara do pátio, com o rodapé e o chão à frente. Cristo no meio de treze figuras atrás de uma mesa comprida, num salão pintado.",
        "src": [
-        "Uma imagem do filme da ala. A parede traz uma reprodução feita a partir de um escaneamento em alta resolução que o Wikimedia Commons atribui à Haltadefinizione junto com o Ministério da Cultura da Itália, publicado pela primeira vez no Commons em 2007. O museu usa uma cópia posterior e ampliada. Obra em domínio público. Reprodução do ",
+        "Uma imagem do filme da ala. A parede traz uma reprodução feita a partir de um ",
+        {
+         "text": "escaneamento em alta resolução",
+         "href": "https://commons.wikimedia.org/wiki/File:%C3%9Altima_Cena_-_Da_Vinci_5.jpg"
+        },
+        " que o Wikimedia Commons atribui à Haltadefinizione junto com o Ministério da Cultura da Itália, publicado pela primeira vez no Commons em 2007. O museu usa uma cópia posterior e ampliada. Obra em domínio público. Reprodução do ",
         {
          "text": "Wikimedia Commons",
          "href": "https://commons.wikimedia.org/wiki/File:Last_Supper_by_Leonardo_da_Vinci.jpg"
