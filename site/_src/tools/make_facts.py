@@ -49,7 +49,7 @@ HOLDERS = [
      "on loan to National Galleries of Scotland", "Leihgabe an die National Galleries of Scotland"),
     ("griffin", "Kenneth C. Griffin Collection", "Kenneth C. Griffin Collection", "en",
      "on loan to The Metropolitan Museum of Art", "Leihgabe an das Metropolitan Museum of Art"),
-    ("owner", "Private collection", ("Private collection", "Privatsammlung"), None, "present location unconfirmed", "heutiger Aufenthaltsort unbestätigt"),
+    ("owner", "Private collection", ("Owner not publicly confirmed", "Eigentümer nicht öffentlich bestätigt"), None, "present location unconfirmed", "heutiger Aufenthaltsort unbestätigt"),
     ("parma", "Galleria Nazionale di Parma", "Galleria Nazionale di Parma, Complesso della Pilotta", "it", "Parma", "Parma"),
     ("institut", "Bibliothèque de l’Institut de France", "Bibliothèque de l'Institut de France", "fr", "Paris", "Paris"),
     ("bne", "Biblioteca Nacional de España", "Biblioteca Nacional de España", "es", "Madrid", "Madrid"),
