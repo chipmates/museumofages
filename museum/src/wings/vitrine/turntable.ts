@@ -400,7 +400,7 @@ export function createTurntablePayload(options: TurntableOptions): TurntablePayl
    * canvas from any eye every frame */
   let hull: Vector3[] = []
   function hullOf(points: readonly Vector3[]): Vector3[] {
-    const n = 48, best: { at: number; point: Vector3 | null }[] = [], toward: Vector3[] = []
+    const n = 192, best: { at: number; point: Vector3 | null }[] = [], toward: Vector3[] = []
     for (let i = 0; i < n; i++) {
       const y = 1 - (i + .5) / n * 2, r = Math.sqrt(1 - y * y), a = i * 2.399963
       toward.push(new Vector3(Math.cos(a) * r, y, Math.sin(a) * r)); best.push({ at: -Infinity, point: null })
@@ -424,7 +424,8 @@ export function createTurntablePayload(options: TurntableOptions): TurntablePayl
     const up = new Vector3().crossVectors(toward, right).normalize()
     const corner = new Vector3()
     const points = hull.length ? hull : [rest.min.x, rest.max.x].flatMap(x => [rest.min.y, rest.max.y].flatMap(y => [rest.min.z, rest.max.z].map(z => new Vector3(x, y, z))))
-    /** the run's outline on the canvas from this bearing at a distance, as its box's share of the fit box */
+    const { share } = stageNumbers(), [across, upright] = host?.narrow ? share.phone : share.desktop
+    /** the run's outline on the canvas from this bearing at a distance, against its share of the fit box across and up */
     const filled = (distance: number): number => {
       let left = Infinity, rightmost = -Infinity, low = Infinity, high = -Infinity
       for (const point of points) {
@@ -434,10 +435,10 @@ export function createTurntablePayload(options: TurntableOptions): TurntablePayl
         const u = corner.dot(right) / ahead, v = corner.dot(up) / ahead
         left = Math.min(left, u); rightmost = Math.max(rightmost, u); low = Math.min(low, v); high = Math.max(high, v)
       }
-      return Math.max((rightmost - left) / (2 * tanX), (high - low) / (2 * tanY))
+      return Math.max((rightmost - left) / (2 * tanX * across), (high - low) / (2 * tanY * upright))
     }
     // THE ONE RULE: the outline's own box takes the setting's share of the fit box (its place is evened in placeCamera)
-    const { share } = stageNumbers(), want = host?.narrow ? share.phone : share.desktop
+    const want = 1
     let near = radius * .05, far = radius * 400
     for (let i = 0; i < 40; i++) {
       const mid = Math.sqrt(near * far)

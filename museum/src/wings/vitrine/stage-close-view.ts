@@ -43,15 +43,16 @@ export const STAGE = Object.freeze({
     dither: .05,
   },
   /** the floor: matte, a dark warm grey, its own value falling from the machine's foot by radii of the machine */
-  floor: { albedo: [.05, .048, .045] as const, roughness: .93, pool: [.4, 2.6] as const, keep: .2,
+  floor: { albedo: [.05, .048, .045] as const, roughness: .93, pool: [.3, 1.8] as const, keep: .2,
     /** a bounce off the room toward the floor, as a share of the albedo: a soft key's shadow is grey, never a black slab */
     bounce: .6 },
   /** the shade under the machine where it stands: the cells a hand's width round every point near the floor */
   contact: { cells: 96, reach: .14, strength: .55, height: .1 },
   /** the air begins this many radii past the machine's centre and is the field's own colour this many further; the
    * floor also hands itself to the field toward the horizon, over this share of the angle from the horizon down to the
-   * machine's foot (0: by distance alone), so a low eye finds no band where a far floor meets the field */
-  air: { near: 1.0, far: 2.8, horizon: .6 },
+   * machine's foot (0: by distance alone), so a low eye finds no band where a far floor meets the field; past 1 the
+   * hand-off runs on under the machine's foot, a fifth of the field there, so the ramp has no knee where the floor is lit */
+  air: { near: 1.0, far: 2.8, horizon: 1.4 },
   /** the key: turned from the eye's bearing (negative: the eye's left) and raised, warm, soft */
   key: { turn: -50, height: 52, kelvin: 4500, lux: 280, ambient: .55,
     /** the shadow's soft edge as a share of the machine's span, as a broad source high over it gives */
@@ -66,11 +67,12 @@ export const STAGE = Object.freeze({
    * `stripTurn` either side of the eye's back, turning with the eye. Every other surface keeps the fill's dark sky (wood
    * under the strips slides grey), but the scale figure, which takes the room at `figure` of its strength so that in a
    * machine's shade it keeps its form and stays under the lit wood */
-  room: { softbox: .04, strips: 1, stripTurn: 115, stripWide: 8, stripTop: 32, boxRadius: 34, intensity: 5, kelvin: 5000, figure: .3 },
+  room: { softbox: .04, strips: 1, stripTurn: 115, stripWide: 8, stripTop: 32, boxRadius: 34, intensity: 5, kelvin: 5000, figure: .7 },
   /** the vertical lens in degrees: a long lens on the desktop, the phone's upright frame narrower still across */
   lens: { desktop: 24, phone: 40 },
-  /** the machine's swept outline's share of its fit box's limiting side, per device */
-  share: { desktop: .92, phone: .86 },
+  /** the machine's swept outline's share of its fit box, across and upright, per device: the phone's box keeps room for a
+   * four-row caption and is near square, so an upright machine takes more of its height to stand as large in the glass */
+  share: { desktop: [.92, .92] as readonly [number, number], phone: [.86, .94] as readonly [number, number] },
   /** the print: the museum's neutral curve, no split, a light vignette, a tooth that dithers */
   print: { exposure: 1.0, toe: .012, shoulder: .35, vignette: .1, grain: .005 },
 })
@@ -310,6 +312,7 @@ export function createStageSetting(options: {
   }
 
   function offRim(material: MeshStandardNodeMaterial): void {
+    keep(material)
     material.lightsNode = floorMaterial.lightsNode
     material.needsUpdate = true
   }
