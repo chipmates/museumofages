@@ -74,6 +74,9 @@ function keyRim(strength: number): N {
   return grazing.mul(lit).mul(strength)
 }
 
+/** the stream's mirror: its least share facing the eye, and the gain on what it mirrors */
+const MIRROR = { least: 0.05, gain: 1 } as const
+
 export interface BridgeSurfaces {
   pole: Material
   hemp: Material
@@ -333,11 +336,12 @@ export async function bridgeSurfaces(stack: Stack): Promise<BridgeSurfaces> {
   waterTop.userData['benchLamp'] = false
   const mirror = (reflection: N): void => {
     const view = cameraPosition.sub(positionWorld).normalize()
-    const fresnel = float(1).sub(normalWorld.dot(view).abs()).pow(5).mul(0.978).add(0.022)
+    // a dark, still stream mirrors more than its glass-like 2 percent reads: the lit poles over it show softly
+    const fresnel = float(1).sub(normalWorld.dot(view).abs()).pow(5).mul(1 - MIRROR.least).add(MIRROR.least)
     // the ripples shift the mirrored picture a little, as a stream's surface does
     reflection.uvNode = screenUV.flipX().add(normalView.xy.sub(normalViewGeometry.xy).mul(0.08))
     waterTop.colorNode = (water.colorNode as N).mul(float(1).sub(fresnel))
-    waterTop.emissiveNode = reflection.rgb.mul(fresnel.mul(0.8))
+    waterTop.emissiveNode = reflection.rgb.mul(fresnel.mul(MIRROR.gain))
     waterTop.needsUpdate = true
   }
   for (const m of [pole, hemp]) airOut(m)
