@@ -5085,6 +5085,12 @@ class SoftChecks(unittest.TestCase):
         self.assertEqual(build.sentences("Kral VIII. Charles geldi. İtalya uzaktı. Şato yıkıldı.", "tr"),
                          ["Kral VIII. Charles geldi.", "İtalya uzaktı.", "Şato yıkıldı."])
         self.assertEqual(build.sentences("He met Henry VIII. Then he left.", "en"), ["He met Henry VIII.", "Then he left."])
+        # a Turkish line on another language's page takes only the letters the site's cuts lack from the Turkish sans
+        self.assertEqual(lib.guest_faces("/static/", ("en", "de", "fr")), "")
+        guest = lib.guest_faces("/static/", ("en", "tr"))
+        self.assertIn('url("/static/fonts/tr/turkish-sans-400.woff2")', guest)
+        self.assertIn("unicode-range:U+11E,U+11F,U+130,U+15E,U+15F}", guest)
+        self.assertIn(".stub__row:lang(tr),.hint a:lang(tr)", guest)
 
     def test_the_warnings_never_stop_a_build_and_name_their_page(self):
         build = self.build

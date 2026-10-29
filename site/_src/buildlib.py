@@ -435,6 +435,8 @@ LANG_FACES = {"bg": (("Museum Bulgarian Serif", "bg/bulgarian-serif-400.woff2", 
               "tr": (("Museum Turkish Serif", "tr/turkish-serif-400.woff2", "tr_serif"),
                      ("Museum Turkish Sans", "tr/turkish-sans-400.woff2", "tr_sans"))}
 LANG_FIGURES = {"tr": "tr/turkish-serif-400.woff2"}
+# The letters a language's own faces add to the site's cuts (tools/make_fonts.py cuts them in).
+LANG_LETTERS = {"tr": "ĞğİŞş"}
 
 
 def lang_sheet(lang):
@@ -442,6 +444,21 @@ def lang_sheet(lang):
     its faces, and no page of another language loads them for a link in the switcher."""
     path = SRC / "css" / f"lang-{lang}.css"
     return css(f"lang-{lang}") if lang and path.is_file() else ""
+
+
+def guest_faces(static, langs):
+    """For a page that shows a line of another language (the root's 404 row, the English front page's hint): that
+    language's sans for the letters the site's cuts lack only, so a browser fetches it only when one is drawn."""
+    out = ""
+    for lang in langs:
+        if lang not in LANG_LETTERS:
+            continue
+        name, file, _ = LANG_FACES[lang][1]
+        letters = ",".join(f"U+{ord(ch):X}" for ch in sorted(set(LANG_LETTERS[lang])))
+        out += (f'@font-face{{font-family:"{name}";src:url("{static}fonts/{file}") format("woff2");font-weight:400;'
+                f"font-style:normal;font-display:swap;unicode-range:{letters}}}"
+                f'.stub__row:lang({lang}),.hint a:lang({lang}){{font-family:"Moa figures","{name}","Marcellus","Marcellus fallback",sans-serif}}')
+    return out
 
 
 def faces(static, lang=None):

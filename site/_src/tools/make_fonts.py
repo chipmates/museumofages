@@ -38,7 +38,7 @@ from fontTools.ttLib.tables._g_l_y_f import Glyph
 
 HERE = Path(__file__).resolve().parent
 sys.path.insert(0, str(HERE.parent))
-from buildlib import LANG_FACES  # noqa: E402
+from buildlib import LANG_FACES, LANG_LETTERS  # noqa: E402
 FONTS = HERE.parent / "fonts"
 LIST = HERE.parent / "fonts.json"
 # Read only, from outside the repository: MOA_FONT_FULL, the full file, the same revision and the same widths as
@@ -137,7 +137,7 @@ def add_empty(font, point, width):
 
 
 # The letters a language adds to the site's two cuts, by language (buildlib.LANG_FACES names its faces).
-ADD = {"tr": "ĞğİŞş"}
+ADD = LANG_LETTERS
 
 
 def features(font):

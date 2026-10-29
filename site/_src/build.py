@@ -1494,6 +1494,11 @@ def hint_on(c, kind):
     return kind == "home" and c.lang == "en" and len(LISTED) > 2
 
 
+def guests_on(c, kind):
+    """A page that shows a line in each other listed language: the root's 404 page, the English front page's hint."""
+    return (kind == "lost" and c.lang == "en") or hint_on(c, kind)
+
+
 def hint(c, kind):
     """One line on the English front page for a visitor whose browser asks for another listed language, which leads
     to it. No redirect, nothing stored, and off while English and German are the only two."""
@@ -1668,7 +1673,8 @@ def build(out, registry, wing_dirs, mark=None, topics=True, quiet=False, more_pi
             "href.privacy": c.to(c.addr("privacy")), "href.enter": esc(door_of["door"][c.lang]),
             "attr.what_current": ' aria-current="page"' if kind == "what" else "", "attr.imprint_lang": imprint_lang(c),
             "html.nav_wings": R.nav_wings(c, wing), "html.menu_wings": R.menu_wings(c, wing), "html.mark": marker,
-            "css.faces": faces(c.static, c.lang), "page.kind": kind,
+            "css.faces": faces(c.static, c.lang) + (buildlib.guest_faces(c.static, LISTED) if guests_on(c, kind) else ""),
+            "page.kind": kind,
             "svg.sign": signs["block"], "svg.sign_name": signs["name"], "head.icons": icon_links(c.static),
         })
         return w, twin
@@ -2543,6 +2549,19 @@ def check_fonts(site):
         if lost:
             problems.append(f"{lang}: {''.join(lost)!r} ({', '.join(f'U+{ord(c):04X}' for c in lost)}) is in neither of its faces "
                             f"({serif}, {sans} in fonts.json): another typeface would set it")
+    for lang in LISTED:
+        # its lines on another language's page are set in that page's cuts and, for the letters they lack, its own sans
+        if lang in ROOT_404:
+            continue
+        shown = "".join(site.words[lang].get(k, "") for k in ("hint.line", "notfound.p", "notfound.back"))
+        held = cuts["sans"] | {ord(ch) for ch in buildlib.LANG_LETTERS.get(lang, "")}
+        lost = sorted({ch for ch in bind(shown, lang) if ord(ch) not in held} - set("\n\t"))
+        if lost:
+            problems.append(f"{lang}: {''.join(lost)!r} in its line on the root's 404 page or the English front page's hint is in "
+                            "neither the site's sans nor buildlib.LANG_LETTERS: another typeface would set it")
+        extra = {ord(ch) for ch in buildlib.LANG_LETTERS.get(lang, "")} - cuts[face_keys(lang)[1]]
+        if extra:
+            problems.append(f"{lang}: buildlib.LANG_LETTERS names letters its own sans does not hold: run tools/make_fonts.py --lang {lang}")
     for slug, facts in site.facts.items():
         for h in facts.get("holders", []):
             for lang in LANGS:
