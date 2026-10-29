@@ -124,6 +124,34 @@ const EDGE = { share: .04, least: .006 }
  * little nearer. */
 const WHOLE_FIT = .86
 
+/** A SHAPE'S OWN EXTREMES: its farthest vertex along each of a few dozen directions, in its own space, once per shape
+ * and vertex count. A stride through a large mesh's vertices misses its corners (a plank's, a foot's), and a machine is
+ * then drawn wider and lower than it was fitted. */
+const EXTREME_DIRECTIONS = 64
+const extremes = new WeakMap<BufferGeometry, { count: number; points: Vector3[] }>()
+function extremesOf(geometry: BufferGeometry): Vector3[] {
+  const position = geometry.getAttribute('position')
+  if (!position) return []
+  const kept = extremes.get(geometry)
+  if (kept && kept.count === position.count) return kept.points
+  const n = EXTREME_DIRECTIONS, dx = new Float32Array(n), dy = new Float32Array(n), dz = new Float32Array(n)
+  for (let i = 0; i < n; i++) {
+    const y = 1 - (i + .5) / n * 2, r = Math.sqrt(1 - y * y), a = i * 2.399963
+    dx[i] = Math.cos(a) * r; dy[i] = y; dz[i] = Math.sin(a) * r
+  }
+  const best = new Float32Array(n).fill(-Infinity), at = new Int32Array(n).fill(-1)
+  for (let k = 0; k < position.count; k++) {
+    const x = position.getX(k), y = position.getY(k), z = position.getZ(k)
+    for (let i = 0; i < n; i++) {
+      const d = x * dx[i]! + y * dy[i]! + z * dz[i]!
+      if (d > best[i]!) { best[i] = d; at[i] = k }
+    }
+  }
+  const points = [...new Set(at)].filter(k => k >= 0).map(k => new Vector3(position.getX(k), position.getY(k), position.getZ(k)))
+  extremes.set(geometry, { count: position.count, points })
+  return points
+}
+
 /** `via` marks a view whose eye stands inside the body's envelope: the low
  * point outside the body every way into it and out of it passes. */
 interface View { yaw: number; pitch: number; distance: number; target: Vector3; via?: Vector3 | null }
@@ -442,6 +470,7 @@ export function createTurntablePayload(options: TurntableOptions): TurntablePayl
       if (!position) return
       const stride = Math.max(1, Math.ceil(position.count / OUTLINE_PER_PART))
       for (let k = 0; k < position.count; k += stride) points.push(at.fromBufferAttribute(position, k).applyMatrix4(child.matrixWorld).clone())
+      for (const point of extremesOf(child.geometry as BufferGeometry)) points.push(point.clone().applyMatrix4(child.matrixWorld))
     })
     return points
   }
