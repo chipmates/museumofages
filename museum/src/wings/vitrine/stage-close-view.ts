@@ -24,8 +24,8 @@ import { wideShadowFilter } from '../vinci/machines/screw-shadow'
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 type N = any
-const { cameraPosition, exp, float, fog, Fn, fract, interleavedGradientNoise, ivec2, lights, mix, modelWorldMatrix, normalLocal, output, positionLocal,
-  positionWorld, rangeFogFactor, reference, renderGroup, screenCoordinate, shadow, smoothstep, texture, uniform, vec2, vec3, vec4, viewportSize,
+const { cameraPosition, exp, float, fog, Fn, fract, interleavedGradientNoise, ivec2, lights, mix, modelWorldMatrix, normalLocal, normalView, output,
+  positionLocal, positionView, positionWorld, rangeFogFactor, reference, renderGroup, screenCoordinate, shadow, smoothstep, texture, uniform, vec2, vec3, vec4, viewportSize,
   viewportUV } = TSL as unknown as Record<string, N>
 
 /** a shadow map's lit share at the depth `ref` through gathers at these texel offsets (each four texels, the outer rows
@@ -74,6 +74,31 @@ function radiusOf(geometry: import('three/webgpu').BufferGeometry): number {
   const r = found.length >= 6 ? found[found.length >> 1]! : NaN
   radii.set(geometry, { count: position.count, r })
   return r
+}
+
+/** A CORD THAT WINDS ALONG A LINE (a lacing through a hem's eyelets, a whipping): its path, its surface over its own
+ * round, runs longer than its box's diagonal by more than `winds`, and its box is a line (its least side under a tenth
+ * of its longest). Its length in its own metres beside: a material takes the rule of its longest cord */
+const windings = new WeakMap<object, { count: number; length: number; winds: boolean }>()
+function windingOf(geometry: import('three/webgpu').BufferGeometry, r: number, winds: number): { length: number; winds: boolean } {
+  const position = geometry.getAttribute('position')
+  if (!position || !(r > 0)) return { length: 0, winds: false }
+  const kept = windings.get(geometry)
+  if (kept && kept.count === position.count) return kept
+  const index = geometry.getIndex(), corners = index ? index.count : position.count
+  const at = (i: number, out: Vector3): Vector3 => out.fromBufferAttribute(position, index ? index.getX(i) : i)
+  const a = new Vector3(), b = new Vector3(), c = new Vector3()
+  let area = 0
+  for (let t = 0; t + 2 < corners; t += 3) {
+    at(t, a); at(t + 1, b).sub(a); at(t + 2, c).sub(a)
+    area += b.cross(c).length() / 2
+  }
+  if (!geometry.boundingBox) geometry.computeBoundingBox()
+  const size = geometry.boundingBox!.getSize(new Vector3()), sides = [size.x, size.y, size.z].sort((x, y) => x - y)
+  const length = area / (2 * Math.PI * r), diagonal = Math.max(1e-6, size.length())
+  const found = { count: position.count, length, winds: length / diagonal > winds && sides[0]! < sides[2]! * .1 }
+  windings.set(geometry, found)
+  return found
 }
 
 const DEG = Math.PI / 180
@@ -170,7 +195,12 @@ export const STAGE = Object.freeze({
    * thinner, so it reads as one line. A part counts as thin under `most` of the span in radius, read off its own shape.
    * Thin parts take the scale figure's fill card (`fill.figure`) too: a cord a pixel or two across shows only the face
    * toward the eye, which an edge light from behind does not reach, and sinks into the field where the key leaves it */
-  cord: { px: 1.5, most: .004 },
+  cord: { px: 1.5, most: .004,
+    /** a cord that winds along a line keeps its own width (`windingOf`): widened, each turn draws a bead */
+    winds: 1.25,
+    /** a cord under the first width (px) is shaded as a line facing the eye, and from the second as its own round: its
+     * lobes, turning along it, lit in turn by the key, would draw a line a few pixels wide as dashes */
+    face: [3, 6] as readonly [number, number] },
   /** the vertical lens in degrees: a long lens on the desktop, the phone's upright frame narrower still across */
   lens: { desktop: 24, phone: 40 },
   /** the machine's swept outline's share of its fit box, across and upright, per device: the box keeps room for the
@@ -562,16 +592,21 @@ export function createStageSetting(options: {
   const cords = new Map<MeshStandardNodeMaterial, number>()
   function thinParts(root: Object3D): void {
     const most = S.cord.most * span, seen = new Map<MeshStandardNodeMaterial, number>(), thick = new Set<MeshStandardNodeMaterial>()
+    /** each thin material's longest cord, by its length in world metres, and whether that cord winds */
+    const longest = new Map<MeshStandardNodeMaterial, { length: number; winds: boolean }>()
     root.updateMatrixWorld(true)
     root.traverse(node => {
       const mesh = node as Mesh
       if (!mesh.isMesh || node.userData['vitrineOverlay'] || node.userData['vitrineTarget']) return
-      const r = radiusOf(mesh.geometry) * node.matrixWorld.getMaxScaleOnAxis()
+      const local = radiusOf(mesh.geometry), grow = node.matrixWorld.getMaxScaleOnAxis(), r = local * grow
       for (const material of [mesh.material].flat()) {
         const m = material as MeshStandardNodeMaterial
         if (!m.isNodeMaterial || m.positionNode) continue
-        if (Number.isFinite(r) && r < most) seen.set(m, Math.min(seen.get(m) ?? Infinity, r))
-        else thick.add(m)
+        if (Number.isFinite(r) && r < most) {
+          seen.set(m, Math.min(seen.get(m) ?? Infinity, r))
+          const wound = windingOf(mesh.geometry, local, S.cord.winds), length = wound.length * grow
+          if (length > (longest.get(m)?.length ?? -1)) longest.set(m, { length, winds: wound.winds })
+        } else thick.add(m)
       }
     })
     for (const [m, r] of seen) {
@@ -579,9 +614,20 @@ export function createStageSetting(options: {
       cords.set(m, r)
       keep(m)
       const world = modelWorldMatrix.mul(vec4(positionLocal, 1)).xyz
-      const scale = modelWorldMatrix.mul(vec4(normalLocal, 0)).xyz.length().max(1e-6)
-      const push = world.sub(eyeAt).length().mul(pixelAngle).mul(S.cord.px / 2).sub(r).max(0)
-      m.positionNode = positionLocal.add(normalLocal.mul(push.div(scale)))
+      const across = world.sub(eyeAt).length().mul(pixelAngle)
+      if (!longest.get(m)?.winds) {
+        const scale = modelWorldMatrix.mul(vec4(normalLocal, 0)).xyz.length().max(1e-6)
+        const push = across.mul(S.cord.px / 2).sub(r).max(0)
+        m.positionNode = positionLocal.add(normalLocal.mul(push.div(scale)))
+      }
+      // A LINE A FEW PIXELS WIDE IS SHADED AS ONE: toward the eye where it is narrow, its own round where it is wide
+      const [full, none] = S.cord.face
+      if (none > 0) {
+        const wide = float(r * 2).div(positionView.length().mul(pixelAngle).max(1e-9))
+        const facing = float(1).sub(smoothstep(full, none, wide))
+        const own = (m.normalNode as N | null) ?? normalView
+        m.normalNode = mix(own, positionView.normalize().negate(), facing).normalize()
+      }
       m.needsUpdate = true
     }
     // the card, again after a machine's own lamps relit its surfaces
@@ -626,7 +672,7 @@ export function createStageSetting(options: {
     material.needsUpdate = true
   }
   function keep(material: MeshStandardNodeMaterial): void {
-    if (!kept.has(material)) kept.set(material, { lightsNode: material.lightsNode, envMap: material.envMap, envMapIntensity: material.envMapIntensity, envMapRotation: material.envMapRotation.clone(), positionNode: material.positionNode })
+    if (!kept.has(material)) kept.set(material, { lightsNode: material.lightsNode, envMap: material.envMap, envMapIntensity: material.envMapIntensity, envMapRotation: material.envMapRotation.clone(), positionNode: material.positionNode, normalNode: material.normalNode })
   }
   function sceneLights(): Light[] {
     const found: Light[] = []
