@@ -753,6 +753,16 @@ export function createTurntablePayload(options: TurntableOptions): TurntablePayl
     // the rig turns with the eye, and the field's pool stands behind the machine where the picture puts it
     camera.updateMatrixWorld()
     stage?.follow({ yaw: view.yaw, centre: onCanvas(aim, camera), picture: fit.height / h, eye: camera.position, lens: camera.fov * DEG, camera })
+    // THE SHADOWS FOLLOW THE PICTURE: drawn again when the eye, the lens or the machine's clock moved since they were
+    stirred(camera)
+  }
+  const drawnAt = new Float64Array(21).fill(NaN)
+  function stirred(eye: PerspectiveCamera): void {
+    const m = eye.matrixWorld.elements, p = eye.projectionMatrix.elements
+    const now = [...m, p[0]!, p[5]!, p[8]!, p[9]!, state.clock]
+    if (now.every((v, i) => v === drawnAt[i])) return
+    drawnAt.set(now)
+    stage?.stir()
   }
 
   // ---- the words that follow the clock
@@ -1078,7 +1088,7 @@ export function createTurntablePayload(options: TurntableOptions): TurntablePayl
     camera.far = span * 80
     // THE CLOSE VIEW'S OWN STAGE AND PRINT: a machine looks the same from whichever room it was opened
     stack.setScene(scene, camera, stageGrade(span))
-    stage = createStageSetting({ stack, scene, span, radius, centre: centre.clone(), floorY: 0, footprint: rest })
+    stage = createStageSetting({ stack, scene, span, radius, centre: centre.clone(), floorY: 0, footprint: rest, onDemand: true })
     // the shade where it stands is painted from its rest pose: a walker's path is not its foot
     stage.contact(surfacePoints(object, 600, radius * stageNumbers().contact.tight.height))
     stage.machine(object)
@@ -1106,7 +1116,7 @@ export function createTurntablePayload(options: TurntableOptions): TurntablePayl
         carried = runViewAt(state.clock)
         standCarried()
       }
-      if (standing) { body.animate(state.clock, 0); paint() }
+      if (standing) { body.animate(state.clock, 0); stage?.stir(); paint() }
     },
     frame(box) {
       framed = box

@@ -230,6 +230,9 @@ export interface StageSetting {
   ground(material: MeshStandardNodeMaterial): void
   /** the machine's own surfaces under the setting's rules for them (a thin translucent cloth kept from the edge light) */
   machine(root: Object3D): void
+  /** the picture moved (the machine, the eye or the rig): the shadows are drawn again on the next frame. A setting made
+   * `onDemand` draws them only then */
+  stir(): void
   /** the scale figure, the setting's own: it takes the studio's lamps at `room.figure` of their strength */
   figure(root: Object3D): void
   dispose(): void
@@ -248,6 +251,9 @@ export function createStageSetting(options: {
   footprint: Box3
   /** shadow cascades, near and far half-widths in metres */
   cascades?: [number, number]
+  /** the shadows drawn only when `stir` asks: a machine at rest under a still eye keeps its maps, so a still frame
+   * costs one pass over the scene, not five */
+  onDemand?: boolean
 }): StageSetting {
   const { stack, scene, span, radius, centre, floorY } = options
   const S = stageNumbers()
@@ -343,6 +349,10 @@ export function createStageSetting(options: {
   // every directional lamp the key put in the scene (its cascades) turns with it
   const cascadesOf: DirectionalLight[] = []
   scene.traverse(node => { if ((node as DirectionalLight).isDirectionalLight) cascadesOf.push(node as DirectionalLight) })
+  const shadowLamps = [...cascadesOf, groundKey, highKey]
+  function stir(): void { for (const l of shadowLamps) if (l.castShadow) l.shadow.needsUpdate = true }
+  if (options.onDemand) for (const l of shadowLamps) l.shadow.autoUpdate = false
+  stir()
   const lamp = (kelvin: number, intensity: number, name: string): DirectionalLight => {
     const l = new DirectionalLight(kelvinToColour(kelvin).getHex(), intensity)
     l.name = name
@@ -704,7 +714,7 @@ export function createStageSetting(options: {
   function carry(by: Vector3): void {
     walkedBy.value.set(by.x, by.z)
   }
-  return { field, floor, key, follow, air, contact, carry, merge, offRim, ground, machine, figure, dispose }
+  return { field, floor, key, follow, air, contact, carry, merge, offRim, ground, machine, figure, stir, dispose }
 }
 
 /** the points of a body's surfaces, a few hundred a mesh, in world metres: what the contact shade is painted from; under
