@@ -86,7 +86,7 @@ export const STAGE = Object.freeze({
     /** the key's shadow on the floor gives back this share of the light it holds off, from this many radii of the
      * machine's centre to this many (from, to, share): under the machine it keeps its weight, toward the frame's edge
      * it thins as a broad source's shadow of a high part does, never a dark shape cut by the frame */
-    thin: [1.1, 2.4, .6] as readonly [number, number, number] },
+    thin: [1.1, 2.4, .7] as readonly [number, number, number] },
   /** the shade under the machine where it stands: the cells a hand's width round every point near the floor */
   contact: { cells: 96, reach: .14, strength: .55, height: .1,
     /** and a tight line where a foot or a skirt meets the floor: a finer map, a few centimetres of tent, the points
@@ -118,7 +118,7 @@ export const STAGE = Object.freeze({
     /** the same edge on the ground (the floor, a machine's own bank): a broad source's shadow widens with the height of
      * what casts it, and on the ground most of it falls from parts high over the floor; where a part meets the floor
      * the painted contact holds the tight line */
-    ground: .07 },
+    ground: .12 },
   /** the fill: the sky's and the floor's share, and a weak lamp from the eye itself */
   fill: { sky: '#6d7682', ground: '#40362c', intensity: .36, environment: .2, front: .12, frontHeight: 14, frontKelvin: 5600,
     /** the scale figure's own fill (a reflector by the eye, as a photographer sets one for a figure in shade): its bearing
@@ -140,7 +140,9 @@ export const STAGE = Object.freeze({
   own: { 'proportional-compass': { turn: 45, height: 22, share: 1.2 } } as Readonly<Record<string, { turn: number; height: number; share: number }>>,
   /** THE THINNEST PARTS: a cord, a wire or a slender rod drawn under `px` pixels across falls between the pixels and
    * breaks into dots that crawl in motion; its surface is pushed out along its normal to that width, by as much as it is
-   * thinner, so it reads as one line. A part counts as thin under `most` of the span in radius, read off its own shape */
+   * thinner, so it reads as one line. A part counts as thin under `most` of the span in radius, read off its own shape.
+   * Thin parts take the scale figure's fill card (`fill.figure`) too: a cord a pixel or two across shows only the face
+   * toward the eye, which an edge light from behind does not reach, and sinks into the field where the key leaves it */
   cord: { px: 1.5, most: .004 },
   /** the vertical lens in degrees: a long lens on the desktop, the phone's upright frame narrower still across */
   lens: { desktop: 24, phone: 40 },
@@ -360,7 +362,8 @@ export function createStageSetting(options: {
     const near = float(1).sub(smoothstep(radius * S.air.shadeReach[0], radius * S.air.shadeReach[1], along))
     const kept = mix(float(1), groundShadow.mul(shade), near.mul(S.air.shade).mul(holdFar))
     horizonOut = vec4(mix(output.rgb, field.mul(kept), float(1).sub(smoothstep(0, horizonSine, below))), output.a)
-    groundOut = vec4(mix(output.rgb.mul(shade), field.mul(kept), float(1).sub(smoothstep(0, horizonSine, below))), output.a)
+    // a machine's own ground hands itself over only where the eye grazes it: a close eye looks down on the bank it stands over
+    groundOut = vec4(mix(output.rgb.mul(shade), field.mul(kept), float(1).sub(smoothstep(S.air.graze[0], S.air.graze[1], below))), output.a)
     floorMaterial.colorNode = albedo
     // the shadow thins away from the machine: the light it holds off there, given back in part
     const thin = smoothstep(radius * S.floor.thin[0], radius * S.floor.thin[1], along).mul(S.floor.thin[2])
@@ -519,6 +522,13 @@ export function createStageSetting(options: {
       const scale = modelWorldMatrix.mul(vec4(normalLocal, 0)).xyz.length().max(1e-6)
       const push = world.sub(eyeAt).length().mul(pixelAngle).mul(S.cord.px / 2).sub(r).max(0)
       m.positionNode = positionLocal.add(normalLocal.mul(push.div(scale)))
+      m.needsUpdate = true
+    }
+    // the card, again after a machine's own lamps relit its surfaces
+    if (S.fill.figure.share > 0) for (const m of cords.keys()) {
+      const under = (m.lightsNode as unknown as { getLights?(): Light[] } | null)?.getLights?.() ?? sceneLights()
+      if (under.includes(figureLamp)) continue
+      m.lightsNode = lights([...under, figureLamp])
       m.needsUpdate = true
     }
   }
