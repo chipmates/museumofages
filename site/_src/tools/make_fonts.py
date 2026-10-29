@@ -6,6 +6,8 @@
     python3 _src/tools/make_fonts.py --check         say what the two font files hold, write nothing
     python3 _src/tools/make_fonts.py --narrow-space  add the narrow no-break space French takes to both cuts
     python3 _src/tools/make_fonts.py --list          write fonts.json from the font files as they are
+    python3 _src/tools/make_fonts.py --lang tr       cut a language's own faces: the site's two cuts with its letters
+    python3 _src/tools/make_fonts.py --ttf <folder>  write the share pictures' TrueType files there (MOA_FONT_TTF)
 
 The sans was the common Latin cut, which has no Polish letters: a holder's name in Polish fell back to another
 typeface. This cut keeps every letter of the old file and adds the Polish ones. The serif stays as it is: a
@@ -17,6 +19,13 @@ A language's own faces stand in fonts/<code>/ (buildlib.LANG_FACES). fonts.json 
 their keys, so the build checks a language's words against the faces it is set in. The narrow no-break space
 (U+202F) is not in either source font: --narrow-space adds it to each cut as an empty letter as wide as the thin
 space, or half the word space where the font has no thin space. It needs neither outside file.
+
+A language whose letters the two cuts lack but whose typefaces are the site's (Turkish: Ğ ğ İ Ş ş) gets the two cut
+again from the full files with those letters added, under names of their own (--lang): MOA_FONT_FULL names the full
+Marcellus and MOA_SERIF_FULL the full Cardo. Every letter of the site's cut keeps its width, its outline and the
+cut's own features (Cardo's cut sets no kerning), and the step stops if one would not. --ttf writes the TrueType files
+the share pictures are drawn with (make_pictures.py): the site's cuts, or with --lang a language's own, which hold every
+letter of the site's cuts as they are.
 """
 import json
 import os
@@ -71,14 +80,14 @@ def ranges(points):
 SANS_NAME = "Ages Display"
 
 
-def rename(font):
+def rename(font, name=SANS_NAME):
     for record in font["name"].names:
         if record.nameID in (1, 4, 16):
-            record.string = SANS_NAME
+            record.string = name
         elif record.nameID == 3:
-            record.string = f"ChipMates: {SANS_NAME}: 2026"
+            record.string = f"ChipMates: {name}: 2026"
         elif record.nameID == 6:
-            record.string = SANS_NAME.replace(" ", "") + "-Regular"
+            record.string = name.replace(" ", "") + "-Regular"
 
 
 NARROW = 0x202F
@@ -105,7 +114,15 @@ def narrow_space(path):
     if "glyf" not in font:
         raise SystemExit(f"make_fonts: {path.name} has no TrueType outlines, and this step adds a TrueType letter")
     width = font["hmtx"][cmap[0x2009]][0] if 0x2009 in cmap else round(font["hmtx"][cmap[0x20]][0] / 2)
-    name = "uni202F"
+    add_empty(font, NARROW, width)
+    font.flavor = "woff2"
+    font.save(path)
+    return f"{path.name}: U+202F added, {width} units wide of {font['head'].unitsPerEm}"
+
+
+def add_empty(font, point, width):
+    """An empty letter at a code point, this many units wide."""
+    name = f"uni{point:04X}"
     order = font.getGlyphOrder() + [name]
     font.setGlyphOrder(order)
     font["glyf"].glyphs[name] = Glyph()
@@ -113,13 +130,103 @@ def narrow_space(path):
     font["hmtx"].metrics[name] = (width, 0)
     for table in font["cmap"].tables:
         if table.isUnicode():
-            table.cmap[NARROW] = name
+            table.cmap[point] = name
     for tag in ("hdmx", "LTSH", "VDMX"):
         if tag in font:
             del font[tag]
+
+
+# The letters a language adds to the site's two cuts, by language (buildlib.LANG_FACES names its faces).
+ADD = {"tr": "ĞğİŞş"}
+
+
+def features(font):
+    """The layout features a cut carries, so a new cut of the same face sets its letters as the old one does."""
+    tags = set()
+    for tag in ("GSUB", "GPOS"):
+        if tag in font and font[tag].table.FeatureList:
+            tags |= {r.FeatureTag for r in font[tag].table.FeatureList.FeatureRecord}
+    return sorted(tags)
+
+
+def outline(font, glyph):
+    """A letter's drawing: its points, where its contours end and which points lie on the curve."""
+    coords, ends, flags = font["glyf"][glyph].getCoordinates(font["glyf"])
+    return list(coords), list(ends), [f & 1 for f in flags]
+
+
+def unlike(base, cut):
+    """The letters of the site's cut that a new cut sets otherwise: missing, of another width or another drawing."""
+    a, b = base.getBestCmap(), cut.getBestCmap()
+    out = []
+    for point, glyph in sorted(a.items()):
+        if point not in b:
+            out.append(f"U+{point:04X} missing")
+        elif base["hmtx"][glyph][0] != cut["hmtx"][b[point]][0]:
+            out.append(f"U+{point:04X} {base['hmtx'][glyph][0]} wide, now {cut['hmtx'][b[point]][0]}")
+        elif outline(base, glyph) != outline(cut, b[point]):
+            out.append(f"U+{point:04X} drawn otherwise")
+    return out
+
+
+def grow(base_path, full_path, letters, name):
+    """The site's cut made again from the full file with these letters added, under its own name: every letter of
+    the cut at its width, in its drawing and with the cut's features. Stops where the full file would change one."""
+    base, full = TTFont(base_path), TTFont(full_path)
+    for key in ("fontRevision", "unitsPerEm"):
+        if getattr(base["head"], key) != getattr(full["head"], key):
+            raise SystemExit(f"make_fonts: {full_path.name} differs from {base_path.name} in {key}")
+    a, b = base.getBestCmap(), full.getBestCmap()
+    # the narrow space is this tool's own letter (--narrow-space), in no full file
+    own = [p for p in a if p not in b]
+    if [p for p in own if p != NARROW]:
+        raise SystemExit(f"make_fonts: {full_path.name} lacks {[chr(p) for p in own if p != NARROW]} of {base_path.name}")
+    lacking = [c for c in letters if ord(c) not in b]
+    if lacking:
+        raise SystemExit(f"make_fonts: {full_path.name} lacks {lacking}")
+    options = subset.Options()
+    options.flavor = "woff2"
+    options.layout_features = features(base)
+    options.name_IDs = ["*"]
+    options.notdef_outline = True
+    font = subset.load_font(str(full_path), options)
+    cutter = subset.Subsetter(options)
+    cutter.populate(unicodes=sorted((set(a) - set(own)) | {ord(c) for c in letters}))
+    cutter.subset(font)
+    rename(font, name)
+    for point in own:
+        add_empty(font, point, base["hmtx"][a[point]][0])
     font.flavor = "woff2"
-    font.save(path)
-    return f"{path.name}: U+202F added, {width} units wide of {font['head'].unitsPerEm}"
+    moved = unlike(base, font)
+    if moved:
+        raise SystemExit(f"make_fonts: the new cut of {base_path.name} would change {moved[:8]}")
+    return font
+
+
+def lang_faces(lang):
+    """A language's own two faces (buildlib.LANG_FACES), cut from the full files with its letters (ADD)."""
+    if lang not in ADD or lang not in LANG_FACES:
+        raise SystemExit(f"make_fonts: no letters to add for {lang!r} (ADD, and its faces in buildlib.LANG_FACES)")
+    (serif_name, serif_file, _), (sans_name, sans_file, _) = LANG_FACES[lang]
+    for base, var, name, file in ((FONTS / "cardo-400.woff2", "MOA_SERIF_FULL", serif_name, serif_file),
+                                  (FONTS / "marcellus-400.woff2", "MOA_FONT_FULL", sans_name, sans_file)):
+        font = grow(base, outside(var), ADD[lang], name)
+        (FONTS / file).parent.mkdir(parents=True, exist_ok=True)
+        font.save(FONTS / file)
+        print(f"{file}: {(FONTS / file).stat().st_size} bytes, {len(held(FONTS / file))} letters, "
+              f"{ADD[lang]} added, every letter of {base.name} as it was")
+
+
+def ttf(folder, lang=None):
+    """The share pictures' TrueType files (make_pictures.py FACES): the site's cuts unpacked, or a language's own,
+    which set every letter of the site's cuts as those do."""
+    folder.mkdir(parents=True, exist_ok=True)
+    own = {f: file for f, (_, file, _) in zip(("cardo-400", "marcellus-400"), LANG_FACES[lang])} if lang else {}
+    for stem in ("cardo-400", "marcellus-400"):
+        font = TTFont(FONTS / own.get(stem, f"{stem}.woff2"))
+        font.flavor = None
+        font.save(folder / f"{stem}.ttf")
+        print(f"{folder / (stem + '.ttf')}: {len(font.getBestCmap())} letters")
 
 
 def main():
@@ -127,6 +234,14 @@ def main():
     if "--list" in sys.argv:
         write_list(sans, serif)
         print(f"{LIST.name}: written")
+        return
+    lang = sys.argv[sys.argv.index("--lang") + 1] if "--lang" in sys.argv[:-1] else None
+    if "--ttf" in sys.argv[:-1]:
+        ttf(Path(sys.argv[sys.argv.index("--ttf") + 1]), lang)
+        return
+    if lang:
+        lang_faces(lang)
+        write_list(sans, serif)
         return
     if "--narrow-space" in sys.argv:
         for path in (serif, sans):
