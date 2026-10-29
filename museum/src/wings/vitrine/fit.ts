@@ -7,16 +7,15 @@ import type { VitrinePayloadHost, VitrineRect } from './types'
 /** four rows of the longest German step with their padding */
 export const CAPTION_BOX = 104
 
-/** the desk band's island: the box's top in the picture and the caption's foot over the viewport's bottom, px */
+/** the desk band's island: the box's top in the picture, and the room under it for the caption's two rows (the
+ * longest German step's), px */
 export const DESK_FIT = Object.freeze({ top: 10, foot: 72 })
 
 export function islandFit(host: VitrinePayloadHost): VitrineRect {
   const rect = host.narrow ? host.element.getBoundingClientRect() : host.viewport()
   if (host.banded && !host.narrow) {
-    // a look round's numbers, on the dev server only (stage-close-view's probe)
-    const desk = (import.meta.env.DEV ? (globalThis as { __stageProbe?: { fit?: typeof DESK_FIT } }).__stageProbe?.fit : undefined) ?? DESK_FIT
-    const top = Math.min(rect.top, desk.top)
-    return { left: rect.left, top, width: rect.width, height: Math.max(80, rect.top + rect.height - desk.foot - top) }
+    const top = Math.min(rect.top, DESK_FIT.top)
+    return { left: rect.left, top, width: rect.width, height: Math.max(80, rect.top + rect.height - DESK_FIT.foot - top) }
   }
   const foot = host.narrow ? CAPTION_BOX : 118
   return { left: rect.left, top: rect.top, width: rect.width, height: Math.max(80, rect.height - foot) }
