@@ -77,7 +77,7 @@ function keyRim(strength: number): N {
 /** the stream's mirror: its least share facing the eye, and the gain on what it mirrors */
 const MIRROR_BASE = { least: 0.05, gain: 1 }
 /** a look round's numbers for the stream (`globalThis.__stageProbe.stream`), on the dev server only */
-function streamNumbers(): typeof MIRROR_BASE & { ripple?: number; absorb?: number; caustic?: number } {
+function streamNumbers(): typeof MIRROR_BASE & { ripple?: number; absorb?: number; caustic?: number; wave?: number } {
   const probe = import.meta.env.DEV ? (globalThis as { __stageProbe?: { stream?: Record<string, number> } }).__stageProbe?.stream : undefined
   return { ...MIRROR_BASE, ...probe }
 }
@@ -362,13 +362,16 @@ export async function bridgeSurfaces(stack: Stack): Promise<BridgeSurfaces> {
     const clear = depth.mul(float(1).add(float(1).div(cosT))).mul(-(S.absorb ?? 1.6)).exp()
     const grain = mx_noise_float(vec3(seen.x.mul(1.7), seen.y.mul(1.7), 7.7)).mul(0.5).add(0.5)
     const bed = mx(lin('#3a3126'), lin('#55473a'), grain)
-    // the light the surface gathers: a slow net drifting with the stream, its lines kept a few pixels wide and paled as
-    // they would thin, so it never shimmers
-    const cells = mx_worley_noise_vec2(vec3(seen.x.mul(2.2), seen.y.mul(1.4).sub(streamClock.mul(0.1)), streamClock.mul(0.04)))
-    const edge = cells.y.sub(cells.x), w = fwidth(edge).mul(2).max(0.09)
-    const net = float(1).sub(smoothstep(float(0), w, edge)).mul(float(0.09).div(w).min(1))
     const body = water.colorNode as N
-    waterTop.colorNode = mx(body, bed.mul(net.mul(S.caustic ?? 0.6).add(1)), clear)
+    // the light the surface gathers on the bed (a slow net drifting with the stream), only where a look round asks for it
+    const caustic = S.caustic ?? 0
+    let lit: N = bed
+    if (caustic > 0) {
+      const cells = mx_worley_noise_vec2(vec3(seen.x.mul(2.2), seen.y.mul(1.4).sub(streamClock.mul(0.1)), streamClock.mul(0.04)))
+      const edge = cells.y.sub(cells.x), w = fwidth(edge).mul(2).max(0.09)
+      lit = bed.mul(float(1).sub(smoothstep(float(0), w, edge)).mul(float(0.09).div(w).min(1)).mul(caustic).add(1))
+    }
+    waterTop.colorNode = mx(body, lit, clear)
   }
   waterTop.normalNode = water.normalNode
   waterTop.roughnessNode = water.roughnessNode
@@ -379,7 +382,7 @@ export async function bridgeSurfaces(stack: Stack): Promise<BridgeSurfaces> {
     const MIRROR = streamNumbers()
     const fresnel = float(1).sub(normalWorld.dot(view).abs()).pow(5).mul(1 - MIRROR.least).add(MIRROR.least)
     // the ripples shift the mirrored picture a little, as a stream's surface does
-    reflection.uvNode = screenUV.flipX().add(normalView.xy.sub(normalViewGeometry.xy).mul(0.08))
+    reflection.uvNode = screenUV.flipX().add(normalView.xy.sub(normalViewGeometry.xy).mul(MIRROR.wave ?? 0.08))
     waterTop.colorNode = (waterTop.colorNode as N).mul(float(1).sub(fresnel))
     waterTop.emissiveNode = reflection.rgb.mul(fresnel.mul(MIRROR.gain))
     waterTop.needsUpdate = true
