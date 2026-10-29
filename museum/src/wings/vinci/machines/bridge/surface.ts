@@ -309,27 +309,20 @@ export async function bridgeSurfaces(stack: Stack): Promise<BridgeSurfaces> {
     const wet = float(1).sub(smoothstep(BANK.water - 0.02, BANK.water + 0.18, p.y))
     const worn = mx(float(1), smoothstep(0.3, 0.7, runnel).mul(0.22).add(0.86).mul(smoothstep(0.3, 0.7, patch).mul(0.45).add(0.7)).mul(away), slope)
     // THE LIP HAS FORM ALONG ITS LENGTH, so its light breaks as a bank's does: its shoulder slumps and swells over a pace
-    // or two, the turf hanging over it in clumps leaves its own shade under them, stones the bank has worn out of itself
-    // lie in its slope in clusters, and a root runs down it here and there. Drawn in the light alone: the bank's own
-    // profile stays, so the props' feet and the poles laid on it stand where they stood
+    // or two, the turf hanging over it in clumps leaves its own shade under them, and a root runs down it here and there.
+    // Drawn in the light alone: the bank's own profile stays, so the props' feet and the poles laid on it stand where
+    // they stood
     const ax = p.x.abs(), along = p.z.add(p.x.sign().mul(7.3))
     const shoulder = smoothstep(BANK.edge - 0.55, BANK.edge - 0.1, ax).mul(float(1).sub(smoothstep(BANK.lip + 0.02, BANK.lip + 0.3, ax)))
     const slump = mx_noise_float(vec3(along.mul(0.75), ax.mul(0.6), 3.1)).mul(0.65).add(mx_noise_float(vec3(along.mul(1.9), ax.mul(1.4), 8.2)).mul(0.35))
     const bare = smoothstep(0.05, 0.45, mx_noise_float(vec3(along.mul(0.42), 0.5, 5.3)))
-    const cell = mx_worley_noise_vec2(vec3(along.mul(3.6), ax.mul(3.6).add(p.y.mul(2.8)), 1.7))
-    const strewn = smoothstep(0.18, 0.5, mx_noise_float(vec3(along.mul(0.33), 0.2, 9.4))).mul(smoothstep(BANK.toe + 0.45, BANK.edge - 0.35, ax))
-      .mul(float(1).sub(smoothstep(BANK.lip - 0.1, BANK.lip + 0.1, ax)))
-    const stone = smoothstep(0.24, 0.18, cell.x).mul(strewn), stoneDome = smoothstep(0.24, 0.0, cell.x).mul(strewn)
     const under = slope.mul(smoothstep(BANK.edge - 0.62, BANK.edge - 0.32, ax)).mul(float(1).sub(smoothstep(BANK.edge - 0.3, BANK.edge - 0.06, ax)))
       .mul(smoothstep(0.35, 0.55, turf))
     const rootLine = mx_noise_float(vec3(along.mul(1.6), p.y.mul(2.4), 2.2)).abs()
     const root = float(1).sub(smoothstep(0.015, 0.04, rootLine)).mul(smoothstep(0.35, 0.6, mx_noise_float(vec3(along.mul(0.5), 1.1, 4.4))))
-      .mul(slope).mul(smoothstep(BANK.edge - 0.7, BANK.edge - 0.2, ax)).mul(float(1).sub(stone))
+      .mul(slope).mul(smoothstep(BANK.edge - 0.7, BANK.edge - 0.2, ax))
     const formed = mx(float(1), bare.mul(0.2).add(0.92).mul(slump.mul(0.14).add(1)), shoulder).mul(float(1).sub(under.mul(0.3))).mul(float(1).sub(root.mul(0.45)))
     const earthCol = lin('#6a5843').mul(luma(ground.albedo).mul(0.4).add(0.68)).mul(float(1).sub(wet.mul(0.42))).mul(worn).mul(formed)
-    // a stone of the earth's value and greyer: its dome's bump gives it the key's lit and shaded side, so it reads as a
-    // pebble, never a pale smear or a ring
-    const stoneCol = mx(lin('#595247'), lin('#686155'), mx_noise_float(vec3(cell.y.mul(9.0), along.mul(3.0), 6.6)).mul(0.5).add(0.5))
     // the cut face: a section through the bank, darker with depth, its layers
     const cut = float(1).sub(smoothstep(0.2, 0.5, up))
     const strata = sin(p.y.mul(23).add(mx_noise_float(vec3(p.x.mul(0.8), p.y.mul(2), p.z.mul(0.8))).mul(1.3))).mul(0.5).add(0.5)
@@ -340,10 +333,10 @@ export async function bridgeSurfaces(stack: Stack): Promise<BridgeSurfaces> {
     const seatGap = (x: number, y: number): N => vec2(p.x.sub(x), p.y.sub(y)).length().sub(SEAT_R)
     const onSeat = smoothstep(0.0, 0.16, seatGap(SEAT_XY[0][0], SEAT_XY[0][1]).min(seatGap(SEAT_XY[1][0], SEAT_XY[1][1]))).mul(0.5).add(0.5)
     const seatShade = mx(onSeat, float(1), smoothstep(SEAT_HALF - 0.05, SEAT_HALF + 0.12, p.z.abs()))
-    earth.colorNode = airBehind(mx(mx(mx(earthCol, grassCol, grassy.mul(float(1).sub(stone))), stoneCol, stone), sectionCol, cut).mul(mx(float(1), ground.occlusion, 0.55)).mul(seatShade))
+    earth.colorNode = airBehind(mx(mx(earthCol, grassCol, grassy), sectionCol, cut).mul(mx(float(1), ground.occlusion, 0.55)).mul(seatShade))
     earth.roughnessNode = mx(ground.roughness.max(0.85), float(0.55), wet.mul(0.6))
     earth.normalNode = bumped(earth.normalNode ?? normalView, runnel.mul(0.035).add(patch.mul(0.06)).mul(slope)
-      .add(slump.mul(0.1).mul(shoulder)).add(stoneDome.mul(0.07)).add(overhang.mul(0.025)).add(root.mul(0.012)), 1)
+      .add(slump.mul(0.1).mul(shoulder)).add(overhang.mul(0.025)).add(root.mul(0.012)), 1)
     grassMat.dispose()
   }
 
