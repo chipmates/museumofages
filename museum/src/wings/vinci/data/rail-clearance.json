@@ -84,8 +84,8 @@
   },
   {
    "file": "src/wings/vinci/collection/hang.ts",
-   "sha256": "0f84db4b351d0b437105d486b9d3ad7665795d373d247e76e887634c6390dc59",
-   "bytes": 7608,
+   "sha256": "8286844fbc9fe5a3e2f1092979932aa032123b23cb4f0ea47130ff8807a5ae16",
+   "bytes": 7828,
    "unchangedDuringAudit": true
   },
   {
@@ -408,8 +408,8 @@
   },
   {
    "file": "src/wings/vinci/machines/bench/mounts.ts",
-   "sha256": "a8a6c129fe03b9e6ffd1fabe0565382423b4c8dcb926d5158b9841d18c029cb1",
-   "bytes": 2884,
+   "sha256": "fd48024fce10c49822fa8ff6b90dfd0e5e23ec7f51446f59e119ffe8f323f6f0",
+   "bytes": 3195,
    "unchangedDuringAudit": true
   },
   {
@@ -432,8 +432,8 @@
   },
   {
    "file": "src/wings/vinci/machines/data/armoured-car.json",
-   "sha256": "4ed0da9c0990637c463ef50dd0c9429e2428f76d2e54b30a550bbfcbfdd76fd0",
-   "bytes": 23493,
+   "sha256": "d03b1e7a6e874d09346c1e66c31bfd70a476527a26382ab8b823486b788ff279",
+   "bytes": 23053,
    "unchangedDuringAudit": true
   },
   {
@@ -486,8 +486,8 @@
   },
   {
    "file": "src/wings/vinci/machines/data/parachute.json",
-   "sha256": "e023a7373434242085b271251c66282470a8c03a42fbd03b25a3f62670ae6177",
-   "bytes": 466261,
+   "sha256": "8ba348c510b7e016f3ab5f1e7b7c1a590ea6387bf849f441b6eb216692c54e65",
+   "bytes": 466518,
    "unchangedDuringAudit": true
   },
   {
@@ -756,26 +756,26 @@
   }
  ],
  "geometrySha256": [
-  "79db78cb358da62c8a6139f8f841e0f40896a0ecd635aacfd4cabb03a4d81cbb",
-  "636cc971e50c753c39e888c7e60b5a65f5d607ee33dca2d944ddb20e291acf7b",
-  "8ff88a6490b2f1a5be8d966859a5b0bb95a0fc5f0bf02a47f15a7a17c686ca38"
+  "356279088dc20a120fc70477aeb1e61ebff0aa497c7e27780b675c67859141ed",
+  "0b749b6c24e7d329def3d965d650c2fcbc8485348b53d772ffa23320b42e4dee",
+  "f0fdab8809a660339c4cb2c51f1a9d3472a8dcd43ead31c3bcc8e6e8ecb744d7"
  ],
  "geometry": [
   {
    "tier": "hero",
-   "sha256": "79db78cb358da62c8a6139f8f841e0f40896a0ecd635aacfd4cabb03a4d81cbb",
+   "sha256": "356279088dc20a120fc70477aeb1e61ebff0aa497c7e27780b675c67859141ed",
    "quantumM": 0.000001,
    "matchingGeometryToleranceM": 0.000002
   },
   {
    "tier": "standard",
-   "sha256": "636cc971e50c753c39e888c7e60b5a65f5d607ee33dca2d944ddb20e291acf7b",
+   "sha256": "0b749b6c24e7d329def3d965d650c2fcbc8485348b53d772ffa23320b42e4dee",
    "quantumM": 0.000001,
    "matchingGeometryToleranceM": 0.000002
   },
   {
    "tier": "calm",
-   "sha256": "8ff88a6490b2f1a5be8d966859a5b0bb95a0fc5f0bf02a47f15a7a17c686ca38",
+   "sha256": "f0fdab8809a660339c4cb2c51f1a9d3472a8dcd43ead31c3bcc8e6e8ecb744d7",
    "quantumM": 0.000001,
    "matchingGeometryToleranceM": 0.000002
   }
@@ -2937,13 +2937,13 @@
       64.18000030517578
      ],
      "centroid": [
-      -42.10520974670418,
-      -4.405310784853894,
+      -42.105209725415676,
+      -4.4053099872952775,
       44.543067406252156
      ],
      "rms": [
-      43.221395128854724,
-      4.684468158544561,
+      43.221395070584435,
+      4.684467827300899,
       45.379836713140556
      ]
     },
@@ -4622,13 +4622,13 @@
       64.18000030517578
      ],
      "centroid": [
-      -42.10520974670418,
-      -4.405310784853894,
+      -42.105209725415676,
+      -4.4053099872952775,
       44.543067406252156
      ],
      "rms": [
-      43.221395128854724,
-      4.684468158544561,
+      43.221395070584435,
+      4.684467827300899,
       45.379836713140556
      ]
     },
@@ -6031,13 +6031,13 @@
       64.18000030517578
      ],
      "centroid": [
-      -42.10520974670418,
-      -4.405310784853894,
+      -42.105209725415676,
+      -4.4053099872952775,
       44.543067406252156
      ],
      "rms": [
-      43.221395128854724,
-      4.684468158544561,
+      43.221395070584435,
+      4.684467827300899,
       45.379836713140556
      ]
     },
@@ -15049,10 +15049,10 @@
     ],
     "at": [
      -47.439124999999926,
-     -4.8491586999534775,
+     -4.849342783067186,
      41.750499999999995
     ],
-    "fov": 40.074777245521545
+    "fov": 40.15246891975403
    },
    "points": [
     [
@@ -18533,8 +18533,8 @@
      -4.68,
      41.750499999999995
     ],
-    "fov": 51.02774085506853,
-    "shift": -0.5933333333333337
+    "fov": 51.1199303436476,
+    "shift": -0.59305785123967
    },
    "points": [
     [
@@ -18549,7 +18549,7 @@
     ]
    ],
    "roundedLength": 24.084309124731433,
-   "maxNearRadius": 0.3719407774930889,
+   "maxNearRadius": 0.37191078749529416,
    "certifiedBalls": []
   },
   {
