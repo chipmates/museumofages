@@ -107,8 +107,10 @@ const BRIDGE_BANK_FLOOR = -.02;
 /** metres past the standing bridge where the floor starts over its banks and where it is whole: the bank's own edges
  * lie 7.5 m out and more; laid just over the bank's highest swell. Near, so the banks' lit tops never outshine the poles */
 const BRIDGE_MERGE = [.2, 2.0] as const, BRIDGE_MERGE_ABOVE = .03;
-/** the stream's half width at its level (`STREAM_HALF` in the bridge's build): the setting's floor stays off the water */
-const BRIDGE_CHANNEL = 3.0;
+/** the half width the setting's floor stays off along the stream: the water and the bank's whole slope up to its lip
+ * (`BANK.lip` 3.5 in the bridge's plan, wandering .2), since a floor laid over the slope hovers above it and cuts its
+ * top into a band */
+const BRIDGE_CHANNEL = 3.6;
 /** The parachute's uprights alone (not its plinth): a plain grey powder coat in linear albedo. */
 const PARACHUTE_POST = { tone: .16, roughness: .55 };
 /** The compass's stand alone (not its plate): a mid grey powder coat in linear albedo, lighter than the iron it holds. */

@@ -293,13 +293,13 @@ export async function bridgeSurfaces(stack: Stack): Promise<BridgeSurfaces> {
     // THE SLOPE IS NO TURNED PROFILE: runnels the rain cut down it, patches of darker earth along the stream, the
     // lip's turf hanging over its top in tufts; on the level bank and the cut face nothing changes
     const slope = smoothstep(BANK.toe - 0.2, BANK.toe + 0.3, p.x.abs()).mul(float(1).sub(smoothstep(BANK.lip - 0.1, BANK.lip + 0.25, p.x.abs())))
-    const runnel = mx_noise_float(vec3(p.z.mul(5.5), p.y.mul(0.9), p.x.mul(0.4))).mul(0.5).add(0.5)
+    const runnel = mx_noise_float(vec3(p.z.mul(3.2), p.y.mul(0.9), p.x.mul(0.4))).mul(0.5).add(0.5)
     const patch = mx_noise_float(vec3(p.z.mul(0.7), p.x.mul(0.5), 2.7)).mul(0.5).add(0.5)
     const turf = mx_noise_float(vec3(p.z.mul(2.2), p.x.mul(1.1), 6.1)).mul(0.5).add(0.5)
     const overhang = slope.mul(smoothstep(BANK.edge - 0.35, BANK.lip - 0.05, p.x.abs())).mul(smoothstep(0.42, 0.62, turf)).mul(0.85)
     const grassy = smoothstep(0.82, 0.95, up).mul(lip).mul(smoothstep(0.2, 0.55, tufts).mul(0.35).add(0.55)).mul(float(1).sub(trodden.mul(0.6))).max(overhang)
     const wet = float(1).sub(smoothstep(BANK.water - 0.02, BANK.water + 0.18, p.y))
-    const worn = mx(float(1), smoothstep(0.3, 0.7, runnel).mul(0.45).add(0.68).mul(smoothstep(0.3, 0.7, patch).mul(0.4).add(0.72)), slope)
+    const worn = mx(float(1), smoothstep(0.3, 0.7, runnel).mul(0.22).add(0.86).mul(smoothstep(0.3, 0.7, patch).mul(0.45).add(0.7)), slope)
     const earthCol = lin('#6a5843').mul(luma(ground.albedo).mul(0.4).add(0.68)).mul(float(1).sub(wet.mul(0.42))).mul(worn)
     // the cut face: a section through the bank, darker with depth, its layers
     const cut = float(1).sub(smoothstep(0.2, 0.5, up))
