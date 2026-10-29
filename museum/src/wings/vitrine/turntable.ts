@@ -8,16 +8,13 @@
  * tap on the model names the part it lands on.
  */
 import {
-  AdditiveBlending, Box3, BoxGeometry, CircleGeometry, Color, CustomBlending, DstColorFactor, Group, Mesh,
-  MeshBasicNodeMaterial, MeshStandardNodeMaterial, OneFactor, PerspectiveCamera, PointLight, Raycaster, Scene,
+  AdditiveBlending, Box3, BoxGeometry, Color, CustomBlending, DstColorFactor, Group, Mesh,
+  MeshBasicNodeMaterial, OneFactor, PerspectiveCamera, Raycaster, Scene,
   InstancedMesh, Sphere, Vector2, Vector3, ZeroFactor, type BufferGeometry, type Object3D,
 } from 'three/webgpu'
-import {
-  float, fog, fract, fwidth, max, min, mix, mx_noise_float, normalView, positionViewDirection, positionWorld, rangeFogFactor,
-  smoothstep, uniform, vec3,
-} from 'three/tsl'
-import type { Grade, KeyLight, Stack, StackLightOptions } from '../../stack'
-import { createBenchBackdrop } from '../vinci/machines/bench/backdrop'
+import { float, normalView, positionViewDirection, vec3 } from 'three/tsl'
+import type { Grade, Stack, StackLightOptions } from '../../stack'
+import { STAGE, createStageSetting, onCanvas, stageGrade, surfacePoints, type StageSetting } from './stage-close-view'
 import {
   advancePlayback, initialPlayback, type PlaybackSchedule, type PlaybackState,
 } from '../vinci/machines/bench/playback'
@@ -72,6 +69,7 @@ export interface TurntableOptions {
   /** The parts that are this machine's screen: what its demonstration lands
    * on. The light marks them by their edge instead of filling their face. */
   screens?: ReadonlySet<string>
+  /** the wing's rig and print, kept for the caller's record: the island stands under the close view's own (`STAGE`) */
   light: {
     key: StackLightOptions
     fill: { color: string; groundColor: string; intensity: number }
@@ -100,8 +98,8 @@ export interface TurntableOptions {
 }
 
 const DEG = Math.PI / 180
-/** The whole machine three quarters on, the way the bench shows it. */
-const WHOLE = { yaw: 35 * DEG, pitch: 16 * DEG }
+/** The whole machine three quarters on, from a little above a person's eye: a long lens from far off keeps it life size. */
+const WHOLE = { yaw: 35 * DEG, pitch: 10 * DEG }
 const PITCH = { least: 3 * DEG, most: 58 * DEG }
 const EASE_S = .7
 /** A jump of the run's clock is followed by the eye, never cut. */
@@ -124,20 +122,8 @@ const EDGE = { share: .04, least: .006 }
 /** The sphere fit leaves a machine's box corners air; the table stands it a
  * little nearer. */
 const WHOLE_FIT = .86
-/** Air around the box the whole view fits. */
-const WHOLE_MARGIN = 1.04
-/** THE ISLAND'S KEY STANDS ON THE VIEWER'S SIDE. The hour's sun comes from
- * behind the whole view's bearing and left every machine a silhouette in its
- * own shadow; the key keeps the hour's colour and strength and is turned to
- * the whole view, this far round from the eye and this high. */
-const KEY_TURN = -48 * DEG, KEY_HEIGHT = 38 * DEG
-/** THE FLOOR IS THE HALL'S: sealed concrete poured in bays, the saw cuts the
- * hall's own spacing, its tone clouded; it stands under the machine to the
- * fog, so a step and a view read a floor and a horizon, never a void. */
-const FLOOR = { colour: '#77726a', bay: 4.8, cut: .004, cloud: .09, shade: .72 }
-/** The air follows the eye: the fog begins this many spans past the machine's
- * centre and closes this many spans further, measured from the eye it has now. */
-const AIR = { near: .7, far: 4.2 }
+/** Air around the box the whole view fits: the outline takes the setting's share of the picture. */
+const WHOLE_MARGIN = 1 / STAGE.share
 
 /** `via` marks a view whose eye stands inside the body's envelope: the low
  * point outside the body every way into it and out of it passes. */
@@ -163,8 +149,7 @@ export function createTurntablePayload(options: TurntableOptions): TurntablePayl
   const { stack, body, schedule, steps } = options
   const period = schedule.kind === 'static' ? 0 : schedule.period
   let host: VitrinePayloadHost | undefined
-  let scene: Scene | undefined, camera: PerspectiveCamera | undefined, key: KeyLight | undefined
-  let ground: Mesh | undefined, fitting: PointLight | undefined
+  let scene: Scene | undefined, camera: PerspectiveCamera | undefined, stage: StageSetting | undefined
   let lent: { parent: Object3D | null; position: Vector3; quaternion: import('three/webgpu').Quaternion; scale: Vector3; visible: boolean } | undefined
   const shadows = new Map<Mesh, boolean>()
   let state: PlaybackState = { clock: 0, playing: false, fixed: false }
@@ -181,7 +166,6 @@ export function createTurntablePayload(options: TurntableOptions): TurntablePayl
   /** true while the recording draws the machine with no part lit */
   let dark = false
   let framed: { width: number; height: number } | null = null
-  const airNear = uniform(1), airFar = uniform(2)
   const overlays = new Map<string, Mesh[]>()
   /** Geometry the overlay built itself, which it owns and gives back. */
   const owned = new Set<BufferGeometry>()
@@ -333,22 +317,6 @@ export function createTurntablePayload(options: TurntableOptions): TurntablePayl
       }
     }
     overlays.set(id, meshes)
-  }
-
-  /** the floor's surface: the hall's slab in its bays, clouded, cut, in the table's own metres */
-  function floorMaterial(): MeshStandardNodeMaterial {
-    const material = new MeshStandardNodeMaterial({ roughness: .82, metalness: 0 })
-    const base = new Color(FLOOR.colour)
-    const at = positionWorld.xz
-    const cloud = mx_noise_float(at.mul(.21)).mul(.6).add(mx_noise_float(at.mul(.9)).mul(.4))
-    // a saw cut every bay, never thinner than a pixel, so the far floor does not shimmer
-    const cell = fract(at.div(FLOOR.bay).add(.5)).sub(.5).abs().mul(FLOOR.bay)
-    const edge = min(cell.x, cell.y)
-    const width = max(fwidth(edge), float(FLOOR.cut))
-    const cut = float(1).sub(smoothstep(width, width.mul(2), edge))
-    const tone = float(1).add(cloud.mul(FLOOR.cloud))
-    material.colorNode = vec3(base.r, base.g, base.b).mul(tone).mul(mix(float(1), float(FLOOR.shade), cut))
-    return material
   }
 
   // ---- the eye on its bounded orbit
@@ -582,14 +550,16 @@ export function createTurntablePayload(options: TurntableOptions): TurntablePayl
       .multiplyScalar(view.distance).add(view.target)
     camera.lookAt(view.target)
     // the air is measured from the eye it has now, so a view that steps in keeps the machine clear
-    const span = radius * 2, reach = camera.position.distanceTo(centre)
-    airNear.value = reach + span * AIR.near
-    airFar.value = reach + span * AIR.far
+    const reach = camera.position.distanceTo(centre)
+    stage?.air(reach + radius * STAGE.air.near, reach + radius * STAGE.air.far)
     const w = innerWidth, h = deskStageHeight(), fit = viewportFit()
     // The work stands in the middle of its own viewport, not of the stage.
     camera.aspect = w / h
     camera.setViewOffset(w, h, w / 2 - (fit.left + fit.width / 2), h / 2 - (fit.top + fit.height / 2), w, h)
     camera.updateProjectionMatrix()
+    // the rig turns with the eye, and the field's pool stands behind the machine where the picture puts it
+    camera.updateMatrixWorld()
+    stage?.follow({ yaw: view.yaw, centre: onCanvas(view.target, camera), picture: fit.height / h })
   }
 
   // ---- the words that follow the clock
@@ -872,10 +842,7 @@ export function createTurntablePayload(options: TurntableOptions): TurntablePayl
       if (button) button.disabled = entry.id !== 'whole' && (!entry.part || !nodeFor(entry.part))
     }
     scene = new Scene()
-    scene.background = new Color('#1a2026')
-    const backdrop = createBenchBackdrop()
-    scene.backgroundNode = backdrop
-    camera = new PerspectiveCamera(host.narrow ? 40 : 34, innerWidth / deskStageHeight(), .01, 1000)
+    camera = new PerspectiveCamera(host.narrow ? STAGE.lens.phone : STAGE.lens.desktop, innerWidth / deskStageHeight(), .01, 1000)
     const table = new Group()
     table.name = 'vitrine/turntable'
     scene.add(table)
@@ -911,35 +878,17 @@ export function createTurntablePayload(options: TurntableOptions): TurntablePayl
       shadows.set(child, child.castShadow)
       child.castShadow = true
     })
-    ground = new Mesh(new CircleGeometry(span * 30, 96), floorMaterial())
-    ground.rotation.x = -Math.PI / 2
-    ground.receiveShadow = true
-    ground.name = 'vitrine/ground'
-    scene.add(ground)
     camera.near = Math.max(.005, span / 400)
     camera.far = span * 80
-    stack.setScene(scene, camera, options.grade)
-    const reach = span * 3.4
-    // the hour's key, turned to the whole view's bearing: azimuth runs clockwise from -Z
-    const bearing = WHOLE.yaw + KEY_TURN
-    key = stack.light({ ...options.light.key, azimuth: 180 - bearing / DEG, elevation: KEY_HEIGHT / DEG,
-      reach: Math.max(24, span * 6), cascades: [span * 1.25, reach] })
-    key.light.shadow.normalBias = span * .0002
-    key.light.shadow.bias = -span * .00001
-    key.fill.color.set(options.light.fill.color)
-    key.fill.groundColor.set(options.light.fill.groundColor)
-    key.fill.intensity = options.light.fill.intensity
-    scene.environmentIntensity = options.light.environmentIntensity
-    const f = options.light.fitting
-    fitting = new PointLight(f.color, f.intensity, Math.max(f.distance, span * 3), f.decay)
-    fitting.position.set(-span * .35, Math.max(f.height, size.y + 1), span * .45)
-    fitting.castShadow = false
-    scene.add(fitting)
+    // THE CLOSE VIEW'S OWN STAGE AND PRINT: a machine looks the same from whichever room it was opened
+    stack.setScene(scene, camera, stageGrade(span))
+    stage = createStageSetting({ stack, scene, span, radius, centre: centre.clone(), floorY: 0, footprint: rest })
+    // the shade where it stands is painted from its rest pose: a walker's path is not its foot
+    stage.contact(surfacePoints(object))
     view.target.copy(centre)
     view.distance = wholeDistance()
     view.yaw = WHOLE.yaw; view.pitch = WHOLE.pitch
     placeCamera(0)
-    scene.fogNode = fog(backdrop, rangeFogFactor(airNear, airFar))
     standing = true
     host.surface('own')
     active = -2
@@ -1041,14 +990,12 @@ export function createTurntablePayload(options: TurntableOptions): TurntablePayl
         lent = undefined
       }
       if (standing) {
-        key?.dispose()
-        fitting?.dispose()
-        if (ground) { ground.geometry.dispose(); (ground.material as MeshStandardNodeMaterial).dispose() }
+        stage?.dispose()
         scene?.clear()
         options.restore()
       }
       standing = false
-      key = undefined; scene = undefined; camera = undefined; ground = undefined; fitting = undefined
+      stage = undefined; scene = undefined; camera = undefined
       outline = []
       host = undefined
     },
