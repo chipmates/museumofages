@@ -316,10 +316,10 @@ export async function bridgeSurfaces(stack: Stack): Promise<BridgeSurfaces> {
     const shoulder = smoothstep(BANK.edge - 0.55, BANK.edge - 0.1, ax).mul(float(1).sub(smoothstep(BANK.lip + 0.02, BANK.lip + 0.3, ax)))
     const slump = mx_noise_float(vec3(along.mul(0.75), ax.mul(0.6), 3.1)).mul(0.65).add(mx_noise_float(vec3(along.mul(1.9), ax.mul(1.4), 8.2)).mul(0.35))
     const bare = smoothstep(0.05, 0.45, mx_noise_float(vec3(along.mul(0.42), 0.5, 5.3)))
-    const cell = mx_worley_noise_vec2(vec3(along.mul(2.1), ax.mul(2.1).add(p.y.mul(1.6)), 1.7))
-    const strewn = smoothstep(0.08, 0.42, mx_noise_float(vec3(along.mul(0.33), 0.2, 9.4))).mul(smoothstep(BANK.toe + 0.45, BANK.edge - 0.35, ax))
+    const cell = mx_worley_noise_vec2(vec3(along.mul(3.6), ax.mul(3.6).add(p.y.mul(2.8)), 1.7))
+    const strewn = smoothstep(0.18, 0.5, mx_noise_float(vec3(along.mul(0.33), 0.2, 9.4))).mul(smoothstep(BANK.toe + 0.45, BANK.edge - 0.35, ax))
       .mul(float(1).sub(smoothstep(BANK.lip - 0.1, BANK.lip + 0.1, ax)))
-    const stone = smoothstep(0.26, 0.17, cell.x).mul(strewn), stoneDome = smoothstep(0.26, 0.0, cell.x).mul(strewn)
+    const stone = smoothstep(0.24, 0.18, cell.x).mul(strewn), stoneDome = smoothstep(0.24, 0.0, cell.x).mul(strewn)
     const under = slope.mul(smoothstep(BANK.edge - 0.62, BANK.edge - 0.32, ax)).mul(float(1).sub(smoothstep(BANK.edge - 0.3, BANK.edge - 0.06, ax)))
       .mul(smoothstep(0.35, 0.55, turf))
     const rootLine = mx_noise_float(vec3(along.mul(1.6), p.y.mul(2.4), 2.2)).abs()
@@ -327,7 +327,8 @@ export async function bridgeSurfaces(stack: Stack): Promise<BridgeSurfaces> {
       .mul(slope).mul(smoothstep(BANK.edge - 0.7, BANK.edge - 0.2, ax)).mul(float(1).sub(stone))
     const formed = mx(float(1), bare.mul(0.2).add(0.92).mul(slump.mul(0.14).add(1)), shoulder).mul(float(1).sub(under.mul(0.3))).mul(float(1).sub(root.mul(0.45)))
     const earthCol = lin('#6a5843').mul(luma(ground.albedo).mul(0.4).add(0.68)).mul(float(1).sub(wet.mul(0.42))).mul(worn).mul(formed)
-    const stoneCol = mx(lin('#5f584c'), lin('#7a7264'), mx_noise_float(vec3(cell.y.mul(9.0), along.mul(3.0), 6.6)).mul(0.5).add(0.5)).mul(stoneDome.mul(0.25).add(0.8))
+    // a stone a little darker than the earth, its rim in its own shade, so it reads as a pebble, never a pale smear
+    const stoneCol = mx(lin('#4f493f'), lin('#655e52'), mx_noise_float(vec3(cell.y.mul(9.0), along.mul(3.0), 6.6)).mul(0.5).add(0.5)).mul(stoneDome.mul(0.4).add(0.62))
     // the cut face: a section through the bank, darker with depth, its layers
     const cut = float(1).sub(smoothstep(0.2, 0.5, up))
     const strata = sin(p.y.mul(23).add(mx_noise_float(vec3(p.x.mul(0.8), p.y.mul(2), p.z.mul(0.8))).mul(1.3))).mul(0.5).add(0.5)
