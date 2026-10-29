@@ -232,11 +232,17 @@ def note_halves(text, lang):
     return f"<span>{text[:at]}</span> <span>{text[at + 1:]}</span>" if at > 0 else text
 
 
+def entry_note(c):
+    """The note under a door: free entry, and on the pages of a language the wing does not speak, that the museum
+    inside is in another one (languages.json, walk)."""
+    return c.w["hero.entry_note"] + (f' {c.w["hero.door_lang"]}' if c.walk else "")
+
+
 def first(c, kind, slug):
     """The first screen. In the page's order: the lettering on the wall, what hangs there, the words beside it."""
     w, reg, d = c.w, c.wings[slug], c.wd[slug]
     plate, sets = place(c, slug, "landing" if kind == "home" else "wing")
-    note = f'<p class="hero__note">{w["hero.entry_note"]} <a href="{c.to(c.addr("what"))}">{w["hero.what_link"]}</a></p>'
+    note = f'<p class="hero__note">{entry_note(c)} <a href="{c.to(c.addr("what"))}">{w["hero.what_link"]}</a></p>'
     go = f'<div class="hero__go" data-door-watch>{door(c, esc(reg["door"][c.lang]), w["hero.enter"], "top")}{note}</div>'
     if kind == "home":
         head = (
@@ -606,7 +612,7 @@ def closing(c):
     words = (w["closing.p"].replace("{name}", esc(hold_names(reg["name"][c.lang], [reg["name"][c.lang]]))).replace("{place}", esc(reg["shows"]["place"][c.lang]))
              .replace("{day}", esc(day_month(reg["shows"]["day"][c.lang], c.lang))))
     go = (f'<div class="close__go" data-door-watch>{door(c, esc(reg["door"][c.lang]), w["hero.enter"], "end")}'
-          f'<p class="hero__note">{w["hero.entry_note"]}</p></div>')
+          f'<p class="hero__note">{entry_note(c)}</p></div>')
     p = c.wd[c.newest].get("landing", {}).get("close")
     plate = ""
     if p:
@@ -849,7 +855,7 @@ def facts(c, slug):
 def go_in(c, slug):
     """The door at a page's end, with the entry note under it."""
     return (f'<div class="close__go" data-door-watch>{door(c, esc(c.wings[slug]["door"][c.lang]), c.w["hero.enter"], "end")}'
-            f'<p class="hero__note">{c.w["hero.entry_note"]}</p></div>')
+            f'<p class="hero__note">{entry_note(c)}</p></div>')
 
 
 def topics_here(c, slug):

@@ -159,6 +159,9 @@ IMPRINT_PAGE = r"^imprint\.(?!(?:street|city|country|register_court|register_no|
 NO_IMPRINT = {"footer.imprint_elsewhere"}
 # Keys only English and German carry: the short link to the other one, while they are the only two listed.
 TWO_ONLY = {"a11y.lang_switch"}
+# The line that says the museum inside is in another language: on the pages of a language the wing does not speak
+# (languages.json, walk), under the note beside each first door. English and German carry it as the source.
+ELSEWHERE = {"hero.door_lang"}
 # The slot of the line that says a language's words were translated with AI and read by no person yet: only a
 # language whose status is ai carries it, and it is exempt from the rule that says once how the words are made.
 AI_TAG = "ai.tag"
@@ -296,7 +299,7 @@ LIMITS = [
     (r"^film\.(title|watch)$", 28), (r"^film\.(pause|play|sound_on|sound_off)$", 20), (r"^film\.music$", 140),
     (r"(^|:)meta\.title$|page_what\.title$|imprint\.title$", 76), (r"description$", 180), (r"alt$", 300), (r"alt_each$", 90),
     (r"a11y\.lang_switch$", 8), (r"a11y\.", 40), (r"brand\.descriptor$", 20), (r"project\.line$", 48), (r"nav\.enter$|hero\.enter$", 20), (r"nav\.", 22),
-    (r"hero\.name$", 14), (r"hero\.tagline_", 60), (r"hero\.entry_note$", 30), (r"hero\.what_link$", 26),
+    (r"hero\.name$", 14), (r"hero\.tagline_", 60), (r"hero\.entry_note$", 30), (r"hero\.door_lang$", 44), (r"hero\.what_link$", 26),
     (r"today\.", 70), (r"glance\.f\d_term$", 18), (r"glance\.f\d_text$", 56), (r"glance\.publisher$", 120), (r"trust$", 84),
     (r"wings\.heading$|visit\.heading$|closing\.heading$|wingpage\.(holds_h|more_h)$", 32), (r"wings\.lead$", 110), (r"wings\.now$", 80),
     (r"wings\.(to_page|making_h|planned_h)$", 24), (r"wingpage\.(seeit|more_originals)$", 28), (r"wingpage\.more_", 130),
@@ -460,6 +463,8 @@ class Ctx:
         self.__dict__.update(site.__dict__)
         self.site, self.lang, self.here = site, lang, here
         self.deed = L.entries[lang]["deed"]
+        # the language the wing opens in from this language's doors, where it is not this one
+        self.walk = L.entries[lang].get("walk")
         self.w, self.a, self.raw = site.words_html[lang], site.words_attr[lang], site.words[lang]
         self.wd = {slug: both[lang] for slug, both in site.data.items()}
         self.facts = site.facts
@@ -625,6 +630,8 @@ def expected_keys(site, lang):
         keys = {k for k in keys if not re.search(IMPRINT_PAGE, k)} | NO_IMPRINT
     if lang not in ("en", "de"):
         keys -= TWO_ONLY
+        if not L.entries[lang].get("walk"):
+            keys -= ELSEWHERE
     if L.entries[lang]["status"] == "ai":
         keys |= {AI_TAG}
     # the question's words are ask.py's to check: a language holds the card's new set or, until it is translated, the old

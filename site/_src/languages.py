@@ -58,6 +58,8 @@ class Languages:
                 p.append(f"{where}: {code}'s folder {e['folder']!r} is not a folder at the site's root (English has none)")
             if e["status"] not in ("ai", "native"):
                 p.append(f"{where}: {code}'s status is {e['status']!r}, not ai or native")
+            if "walk" in e and e["walk"] not in ("en", "de"):
+                p.append(f"{where}: {code}'s walk is {e['walk']!r}: the wing opens in English or German for a language it lacks")
             if not re.fullmatch(r"[a-z]{2}_[A-Z]{2}", e["og"]):
                 p.append(f"{where}: {code}'s og locale {e['og']!r} is not of the form xx_XX")
             s = e["slugs"]

@@ -1960,7 +1960,7 @@ def render(page, lang, data, shared, out_root):
             values["html.editions"] = editions(block.get("editions", []))
             values["html.checked"] = fill(parts["checked"], {"html.text": checked_html(data["page"]["checked"], lang)})
         elif kind == "close":
-            values.update({"door.text": rich(block["door"]["text"]), "door.note": rich(block["door"]["note"])})
+            values.update({"door.text": rich(block["door"]["text"]), "door.note": rich(door_note(block["door"]["note"], lang))})
         elif kind == "text":
             def points(p):
                 """A short list: a point leads with its own words ([lead, text]) or is its words alone."""
@@ -2347,7 +2347,7 @@ def render(page, lang, data, shared, out_root):
         out = data["top"]["out"]
         values["html.way"] = fill(parts["way:out"], dict(values, text=running(out["text"]), link=rich(out["link"])))
     else:
-        values.update({"top.door.text": rich(data["top"]["door"]["text"]), "top.door.note": rich(data["top"]["door"]["note"]),
+        values.update({"top.door.text": rich(data["top"]["door"]["text"]), "top.door.note": rich(door_note(data["top"]["door"]["note"], lang)),
                        "top.door.leads": rich(data["top"]["door"]["leads"])})
         values["html.way"] = fill(parts["way:door"], values)
     text = with_policy(fill(parts["page"], values))
@@ -2388,6 +2388,14 @@ def primary_words(data):
     if found is None or key not in data["pics"]:
         raise SystemExit(f"{data['page']['id']}: page.primary {key!r} names no picture the page's blocks show with its words")
     return found
+
+
+def door_note(note, lang):
+    """The note under a door, and on the pages of a language the wing does not speak (languages.json, walk) the site's
+    line that the museum inside is in another one (hero.door_lang)."""
+    if not L.entries[lang].get("walk"):
+        return note
+    return note + " " + json.loads((LANG.HERE / f"words.{lang}.json").read_text(encoding="utf-8"))["hero"]["door_lang"]
 
 
 def primary_frame(data, lang):
