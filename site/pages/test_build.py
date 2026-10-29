@@ -62,7 +62,7 @@ class Case(unittest.TestCase):
             shutil.copy(src, self.dir / src.name)
         self.pages = sorted(p.name[:-len(".en.json")] for p in self.dir.glob("*.en.json"))
         # the first page of film pictures and the first page of a wing's works at one scale
-        self.page = next(p for p in self.pages if "topic" not in self.data("en", p)["page"])
+        self.page = next(p for p in self.pages if "frame" in self.data("en", p)["top"])
         self.works_page = next((p for p in self.pages if {b["type"] for b in self.data("en", p)["blocks"]} & {"chart", "works", "table"}), None)
         # the first page that lists its wing's works one by one, by period
         self.list_page = next((p for p in self.pages if any(b["type"] == "periods" for b in self.data("en", p)["blocks"])), None)
@@ -117,6 +117,8 @@ class Case(unittest.TestCase):
         for lang, slug in (("en", "topic"), ("de", "thema")):
             data = self.data(lang)
             data["page"].update({"wing": key, "slug": slug, "id": f"{key}-topic"})
+            # the stand-in wing has no topics of its own
+            data["page"].pop("topic", None)
             if h1:
                 data["top"]["h1"] = h1[lang]
             self.save(lang, data, page="other")
@@ -327,6 +329,7 @@ class Case(unittest.TestCase):
         for lang in ("en", "de"):
             data = self.data(lang)
             data["page"]["wing"] = "nowhere"
+            data["page"].pop("topic", None)
             self.save(lang, data)
         self.fails(r"no such wing")
 
@@ -3973,7 +3976,8 @@ class Built(unittest.TestCase):
         wings = json.loads(REGISTRY.read_text(encoding="utf-8"))
         lists = (HERE.parent / "functions" / "_count" / "lists.js").read_text(encoding="utf-8")
         kinds = json.loads(re.search(r"PAGE_KINDS = Object\.freeze\((\[.*?\])\)", lists).group(1))
-        table = {e["code"]: e for e in json.loads((SITE_SRC / "languages.json").read_text(encoding="utf-8"))["languages"]}
+        languages = json.loads((SITE_SRC / "languages.json").read_text(encoding="utf-8"))
+        table = {e["code"]: e for e in languages["languages"]}
         found = 0
         for key, wing in wings.items():
             if key.startswith("_") or wing.get("state") != "open":
@@ -3981,7 +3985,8 @@ class Built(unittest.TestCase):
             for topic in wing.get("topics", []):
                 kind = topic.get("count") or topic["slug"]["en"].replace("-", "_")
                 self.assertIn(kind, kinds)
-                for lang in topic.get("langs") or ["en", "de"]:
+                # a topic may name a language the site does not build yet
+                for lang in [c for c in topic.get("langs") or ["en", "de"] if c in languages["BUILT"]]:
                     # English and German addresses stand in the registry, the other languages' in languages.json
                     if lang in wing["page"]:
                         page = SITE_BUILT / wing["page"][lang].strip("/") / topic["slug"][lang] / "index.html"
