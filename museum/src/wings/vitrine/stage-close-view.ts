@@ -74,7 +74,8 @@ export const STAGE = Object.freeze({
      * a low eye's floor is mostly field at the machine's foot, and its shadow must not go with it */
     shade: .45,
     /** and keeps it within this many radii of the machine's centre (from, to): further out a shadow on a floor that is
-     * all field reads as a dark wall behind the machine */
+     * all field reads as a dark wall behind the machine. The far eye's alone (as `field.near`): a close eye looking up
+     * into a broad machine finds its shadow's edge carried into the field as an arc across the floor */
     shadeReach: [1.2, 2.2] as readonly [number, number] },
   /** the key: turned from the eye's bearing (negative: the eye's left) and raised, warm, soft */
   key: { turn: -50, height: 52, kelvin: 4500, lux: 280, ambient: .55,
@@ -286,7 +287,7 @@ export function createStageSetting(options: {
     // THE SHADE GOES WITH THE FLOOR INTO THE FIELD: where a low eye's floor is mostly field, the field there is darkened as
     // the floor is, by the key's shadow and the painted contact, so a machine never floats on a shadowless floor
     const near = float(1).sub(smoothstep(radius * S.air.shadeReach[0], radius * S.air.shadeReach[1], along))
-    const kept = mix(float(1), key.shadow.mul(shade), near.mul(S.air.shade))
+    const kept = mix(float(1), key.shadow.mul(shade), near.mul(S.air.shade).mul(holdFar))
     horizonOut = vec4(mix(output.rgb, field.mul(kept), float(1).sub(smoothstep(0, horizonSine, below))), output.a)
     floorMaterial.colorNode = albedo
     floorMaterial.emissiveNode = albedo.mul(S.floor.bounce)
