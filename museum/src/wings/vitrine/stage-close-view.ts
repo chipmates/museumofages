@@ -622,7 +622,9 @@ export function createStageSetting(options: {
       let copy = copies.get(material)
       if (!copy) {
         copy = material.clone() as MeshStandardNodeMaterial
-        copy.name = `${material.name}:winding`
+        // the class stays the name's last word: the bench's rope checks read it there
+        const words = material.name.split(':')
+        copy.name = [...words.slice(0, -1), 'winding', ...words.slice(-1)].join(':')
         copies.set(material, copy)
         plain.add(copy)
       }
