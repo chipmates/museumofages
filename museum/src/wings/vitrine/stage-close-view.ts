@@ -753,9 +753,16 @@ export function createStageSetting(options: {
     let hidden = 0
     for (const f of [.85, .6, .35]) {
       ray.set(new Vector3(middle.x, box.min.y + tall * f, middle.z), toward)
-      if (ray.intersectObject(machineRoot, true).length) hidden++
+      if (ray.intersectObject(machineRoot, true).some(hit => shadows(hit.object))) hidden++
     }
     return hidden / 3
+  }
+  /** a ray finds hidden helpers too (an envelope, a clearance box): only a shown part that casts the key's shadow hides */
+  function shadows(node: Object3D): boolean {
+    if (!node.castShadow) return false
+    for (let n: Object3D | null = node; n && n !== machineRoot?.parent; n = n.parent) if (!n.visible) return false
+    const materials = [(node as Mesh).material].flat()
+    return materials.some(m => m && m.visible !== false && m.colorWrite !== false)
   }
   function lightFigure(): void {
     const { share, open } = S.fill.figure
