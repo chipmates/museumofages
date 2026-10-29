@@ -290,20 +290,30 @@ export async function bridgeSurfaces(stack: Stack): Promise<BridgeSurfaces> {
     const lip = smoothstep(BANK.lip - 0.15, BANK.lip + 0.5, p.x.abs())
     const tufts = mx_noise_float(vec3(p.x.mul(6.5), p.z.mul(6.5), 4.4)).mul(0.22).add(mx_noise_float(vec3(p.x.mul(0.9), p.z.mul(0.9), 1.4)).mul(0.18)).add(0.5)
     const trodden = float(1).sub(smoothstep(1.2, 2.4, vec2(p.x.add(6.3), p.z.mul(0.6)).length()).mul(0.5).add(0.5)).clamp(0, 1)
-    const grassy = smoothstep(0.82, 0.95, up).mul(lip).mul(smoothstep(0.2, 0.55, tufts).mul(0.35).add(0.55)).mul(float(1).sub(trodden.mul(0.6)))
+    // THE SLOPE IS NO TURNED PROFILE: runnels the rain cut down it, patches of darker earth along the stream, the
+    // lip's turf hanging over its top in tufts; on the level bank and the cut face nothing changes
+    const slope = smoothstep(BANK.toe - 0.2, BANK.toe + 0.3, p.x.abs()).mul(float(1).sub(smoothstep(BANK.lip - 0.1, BANK.lip + 0.25, p.x.abs())))
+    const runnel = mx_noise_float(vec3(p.z.mul(5.5), p.y.mul(0.9), p.x.mul(0.4))).mul(0.5).add(0.5)
+    const patch = mx_noise_float(vec3(p.z.mul(0.7), p.x.mul(0.5), 2.7)).mul(0.5).add(0.5)
+    const turf = mx_noise_float(vec3(p.z.mul(2.2), p.x.mul(1.1), 6.1)).mul(0.5).add(0.5)
+    const overhang = slope.mul(smoothstep(BANK.edge - 0.35, BANK.lip - 0.05, p.x.abs())).mul(smoothstep(0.42, 0.62, turf)).mul(0.85)
+    const grassy = smoothstep(0.82, 0.95, up).mul(lip).mul(smoothstep(0.2, 0.55, tufts).mul(0.35).add(0.55)).mul(float(1).sub(trodden.mul(0.6))).max(overhang)
     const wet = float(1).sub(smoothstep(BANK.water - 0.02, BANK.water + 0.18, p.y))
-    const earthCol = lin('#6a5843').mul(luma(ground.albedo).mul(0.4).add(0.68)).mul(float(1).sub(wet.mul(0.42)))
+    const worn = mx(float(1), runnel.mul(0.5).add(0.72).mul(patch.mul(0.45).add(0.78)), slope)
+    const earthCol = lin('#6a5843').mul(luma(ground.albedo).mul(0.4).add(0.68)).mul(float(1).sub(wet.mul(0.42))).mul(worn)
     // the cut face: a section through the bank, darker with depth, its layers
     const cut = float(1).sub(smoothstep(0.2, 0.5, up))
     const strata = sin(p.y.mul(23).add(mx_noise_float(vec3(p.x.mul(0.8), p.y.mul(2), p.z.mul(0.8))).mul(1.3))).mul(0.5).add(0.5)
     const sectionCol = mx(lin('#4f4031'), lin('#6b5a44'), strata.mul(0.5)).mul(luma(ground.albedo).mul(0.5).add(0.6)).mul(smoothstep(BANK.bottom, 0, p.y).mul(0.35).add(0.65))
-    const grassCol = mx(lin('#5d6141'), lin('#6c6847'), tufts).mul(luma(grass.albedo).mul(0.35).add(0.72))
+    // dry turf of an autumn bank, a warm dun under its green: a lawn's olive read as a cloth laid over the ground
+    const grassCol = mx(lin('#56523b'), lin('#625a42'), tufts.mul(0.6).add(0.2)).mul(luma(grass.albedo).mul(0.25).add(0.78))
     // the bank darkens where the seat logs lie on it and round the stakes
     const seatGap = (x: number, y: number): N => vec2(p.x.sub(x), p.y.sub(y)).length().sub(SEAT_R)
     const onSeat = smoothstep(0.0, 0.16, seatGap(SEAT_XY[0][0], SEAT_XY[0][1]).min(seatGap(SEAT_XY[1][0], SEAT_XY[1][1]))).mul(0.5).add(0.5)
     const seatShade = mx(onSeat, float(1), smoothstep(SEAT_HALF - 0.05, SEAT_HALF + 0.12, p.z.abs()))
     earth.colorNode = airBehind(mx(mx(earthCol, grassCol, grassy), sectionCol, cut).mul(mx(float(1), ground.occlusion, 0.55)).mul(seatShade))
     earth.roughnessNode = mx(ground.roughness.max(0.85), float(0.55), wet.mul(0.6))
+    earth.normalNode = bumped(earth.normalNode ?? normalView, runnel.mul(0.035).add(patch.mul(0.06)).mul(slope), 1)
     grassMat.dispose()
   }
 
