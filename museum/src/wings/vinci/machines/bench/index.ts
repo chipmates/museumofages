@@ -28,7 +28,7 @@ import { applyRopeShadowExperiment } from './rope-shadow-proposal';
 import { buildBenchSupports } from './supports';
 import { createBenchMetrics } from './metrics';
 import { BENCH_BACK_PLANE, backPlaneMaterial, buildBackPlane } from './back-plane';
-import { STAGE, createStageSetting, onCanvas, stageGrade, surfacePoints, type StageSetting } from '../../../vitrine/stage-close-view';
+import { STAGE, createStageSetting, onCanvas, stageGrade, stageNumbers, surfacePoints, type StageSetting } from '../../../vitrine/stage-close-view';
 import { createBenchHour, benchHourRecord } from './hour';
 import { BENCH_ABSENCE, holderName, setRegister, withoutCitations } from './registers';
 import { setBenchKey } from '../key';
@@ -490,7 +490,8 @@ export function createBench(stack: Stack, onExit: () => void) {
   function stageAir(distance: number, picture: number) {
     if (!stage) return;
     const radius = frameBounds().getBoundingSphere(new Sphere()).radius;
-    stage.air(distance + radius * STAGE.air.near, distance + radius * STAGE.air.far);
+    const { air } = stageNumbers();
+    stage.air(distance + radius * air.near, distance + radius * air.far);
     camera.updateMatrixWorld();
     stage.follow({ yaw: rigYaw(), centre: onCanvas(frameBounds().getCenter(new Vector3()), camera), picture });
   }
@@ -770,7 +771,7 @@ export function createBench(stack: Stack, onExit: () => void) {
   function lightBench() {
     clothLift = OWN_LIGHT[slug]?.lift ?? .03;
     stage?.dispose(); stage = null; key = null;
-    const turn = rigYaw() + STAGE.key.turn * Math.PI / 180, up = STAGE.key.height * Math.PI / 180;
+    const { key: lamp } = stageNumbers(), turn = rigYaw() + lamp.turn * Math.PI / 180, up = lamp.height * Math.PI / 180;
     setBenchKey(new Vector3(Math.sin(turn) * Math.cos(up), Math.sin(up), Math.cos(turn) * Math.cos(up)));
     if (machine) standStage();
   }

@@ -61,12 +61,28 @@ export const STAGE = Object.freeze({
   lens: { desktop: 24, phone: 40 },
   /** the machine's swept outline's share of the picture's limiting side */
   share: .8,
+  /** the print: the museum's neutral curve, no split, a light vignette, a tooth that dithers */
+  print: { exposure: 1.0, toe: .012, shoulder: .35, vignette: .1, grain: .005 },
 })
 
-/** the print: the museum's neutral curve, no split, a light vignette, a tooth that dithers; its occlusion scaled to the machine */
+type Numbers = typeof STAGE
+/** THE NUMBERS A LOOK ROUND TRIES, on the dev server only: `globalThis.__stageProbe` laid over `STAGE` part by part */
+export function stageNumbers(): Numbers {
+  const probe = import.meta.env.DEV ? (globalThis as { __stageProbe?: Record<string, unknown> }).__stageProbe : undefined
+  if (!probe) return STAGE
+  const out: Record<string, unknown> = { ...STAGE }
+  for (const [part, value] of Object.entries(probe)) {
+    const base = (STAGE as Record<string, unknown>)[part]
+    out[part] = value && typeof value === 'object' && !Array.isArray(value) && base && typeof base === 'object' ? { ...base, ...value } : value
+  }
+  return out as Numbers
+}
+
+/** the print (`STAGE.print`), its occlusion scaled to the machine */
 export function stageGrade(span: number): Grade {
   // the shoulder rolls the linen's top faces off before they clip under the key
-  return { ...IDENTITY, name: 'machine-close-view', exposure: 1.0, toe: .012, shoulder: .35, saturation: 1, vignette: .1, grain: .005,
+  const { exposure, toe, shoulder, vignette, grain } = stageNumbers().print
+  return { ...IDENTITY, name: 'machine-close-view', exposure, toe, shoulder, saturation: 1, vignette, grain,
     ao: { intensity: .9, distance: Math.max(.02, span * .03), thickness: 1 } }
 }
 
@@ -106,7 +122,7 @@ export function createStageSetting(options: {
   cascades?: [number, number]
 }): StageSetting {
   const { stack, scene, span, radius, centre, floorY } = options
-  const S = STAGE
+  const S = stageNumbers()
 
   // ---- the field, in the canvas's own shares (top-left origin), so a pass drawn at another resolution keeps its place
   const poolCentre = uniform(vec2(.5, .45)), poolRadius = uniform(float(S.field.radius))

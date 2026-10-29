@@ -14,7 +14,7 @@ import {
 } from 'three/webgpu'
 import { float, normalView, positionViewDirection, vec3 } from 'three/tsl'
 import type { Grade, Stack, StackLightOptions } from '../../stack'
-import { STAGE, createStageSetting, onCanvas, stageGrade, surfacePoints, type StageSetting } from './stage-close-view'
+import { createStageSetting, onCanvas, stageGrade, stageNumbers, surfacePoints, type StageSetting } from './stage-close-view'
 import {
   advancePlayback, initialPlayback, type PlaybackSchedule, type PlaybackState,
 } from '../vinci/machines/bench/playback'
@@ -122,8 +122,6 @@ const EDGE = { share: .04, least: .006 }
 /** The sphere fit leaves a machine's box corners air; the table stands it a
  * little nearer. */
 const WHOLE_FIT = .86
-/** Air around the box the whole view fits: the outline takes the setting's share of the picture. */
-const WHOLE_MARGIN = 1 / STAGE.share
 
 /** `via` marks a view whose eye stands inside the body's envelope: the low
  * point outside the body every way into it and out of it passes. */
@@ -141,6 +139,18 @@ export interface TurntableFilm {
   pose(clock: number, how: { playing: boolean; lit: boolean }): void
   /** the box the machine is fitted in while recording, centred on the stage; null gives the window's own back */
   frame(box: { width: number; height: number } | null): void
+  /** what the eye frames now, in the stage's CSS pixels: the picture's box, the machine's outline at this moment and the
+   * box its run sweeps; null before the body stands */
+  measure(): TurntableMeasure | null
+}
+
+export interface TurntableMeasure {
+  stage: { width: number; height: number }
+  fit: { left: number; top: number; width: number; height: number }
+  now: { left: number; top: number; right: number; bottom: number }
+  sweep: { left: number; top: number; right: number; bottom: number }
+  fov: number
+  distance: number
 }
 
 export type TurntablePayload = VitrinePayload & { readonly film: TurntableFilm }
@@ -344,25 +354,31 @@ export function createTurntablePayload(options: TurntableOptions): TurntablePayl
   let outline: Vector3[] = []
   const OUTLINE_PER_PART = 360
   function outlineOver(moments: number): Vector3[] {
-    const points: Vector3[] = [], box = new Box3(), at = new Vector3()
+    const points: Vector3[] = []
     for (let i = 0; i < moments; i++) {
       body.animate(period * i / moments, 0)
-      body.object.updateMatrixWorld(true)
-      body.object.traverseVisible(child => {
-        if (!(child instanceof Mesh) || child.userData['vitrineOverlay'] || child.userData['vitrineTarget']) return
-        if (child instanceof InstancedMesh) {
-          box.setFromObject(child, true)
-          for (const x of [box.min.x, box.max.x]) for (const y of [box.min.y, box.max.y]) for (const z of [box.min.z, box.max.z]) points.push(new Vector3(x, y, z))
-          return
-        }
-        const position = (child.geometry as BufferGeometry).getAttribute('position')
-        if (!position) return
-        const stride = Math.max(1, Math.ceil(position.count / OUTLINE_PER_PART))
-        for (let k = 0; k < position.count; k += stride) points.push(at.fromBufferAttribute(position, k).applyMatrix4(child.matrixWorld).clone())
-      })
+      outlineNow(points)
     }
     body.animate(0, 0)
     body.object.updateMatrixWorld(true)
+    return points
+  }
+  /** the outline's points of the pose the body holds now */
+  function outlineNow(points: Vector3[] = []): Vector3[] {
+    const box = new Box3(), at = new Vector3()
+    body.object.updateMatrixWorld(true)
+    body.object.traverseVisible(child => {
+      if (!(child instanceof Mesh) || child.userData['vitrineOverlay'] || child.userData['vitrineTarget']) return
+      if (child instanceof InstancedMesh) {
+        box.setFromObject(child, true)
+        for (const x of [box.min.x, box.max.x]) for (const y of [box.min.y, box.max.y]) for (const z of [box.min.z, box.max.z]) points.push(new Vector3(x, y, z))
+        return
+      }
+      const position = (child.geometry as BufferGeometry).getAttribute('position')
+      if (!position) return
+      const stride = Math.max(1, Math.ceil(position.count / OUTLINE_PER_PART))
+      for (let k = 0; k < position.count; k += stride) points.push(at.fromBufferAttribute(position, k).applyMatrix4(child.matrixWorld).clone())
+    })
     return points
   }
   /** THE BOX THE RUN NEEDS. A machine's rest pose is not its widest moment:
@@ -398,7 +414,8 @@ export function createTurntablePayload(options: TurntableOptions): TurntablePayl
     }
     if (outline.length) for (const point of outline) measure(point)
     else for (const x of [rest.min.x, rest.max.x]) for (const y of [rest.min.y, rest.max.y]) for (const z of [rest.min.z, rest.max.z]) measure(new Vector3(x, y, z))
-    return Math.min(distance * WHOLE_MARGIN, fitDistance(radius) * WHOLE_FIT)
+    // the air round the box the whole view fits: the outline takes the setting's share of the picture
+    return Math.min(distance / stageNumbers().share, fitDistance(radius) * WHOLE_FIT)
   }
   /** The eye and its aim, from the body's own metres onto the table, and the
    * point on the eye's own side, past the body and at the eye's height, that
@@ -551,7 +568,8 @@ export function createTurntablePayload(options: TurntableOptions): TurntablePayl
     camera.lookAt(view.target)
     // the air is measured from the eye it has now, so a view that steps in keeps the machine clear
     const reach = camera.position.distanceTo(centre)
-    stage?.air(reach + radius * STAGE.air.near, reach + radius * STAGE.air.far)
+    const { air } = stageNumbers()
+    stage?.air(reach + radius * air.near, reach + radius * air.far)
     const w = innerWidth, h = deskStageHeight(), fit = viewportFit()
     // The work stands in the middle of its own viewport, not of the stage.
     camera.aspect = w / h
@@ -842,7 +860,8 @@ export function createTurntablePayload(options: TurntableOptions): TurntablePayl
       if (button) button.disabled = entry.id !== 'whole' && (!entry.part || !nodeFor(entry.part))
     }
     scene = new Scene()
-    camera = new PerspectiveCamera(host.narrow ? STAGE.lens.phone : STAGE.lens.desktop, innerWidth / deskStageHeight(), .01, 1000)
+    const { lens } = stageNumbers()
+    camera = new PerspectiveCamera(host.narrow ? lens.phone : lens.desktop, innerWidth / deskStageHeight(), .01, 1000)
     const table = new Group()
     table.name = 'vitrine/turntable'
     scene.add(table)
@@ -916,6 +935,22 @@ export function createTurntablePayload(options: TurntableOptions): TurntablePayl
       carryViews = null
       if (standing && !goal && chosen === 'whole' && !carrying) view.distance = wholeDistance()
       placeCamera(0)
+    },
+    measure() {
+      if (!standing || !camera) return null
+      const w = innerWidth, h = deskStageHeight(), at = new Vector3()
+      camera.updateMatrixWorld()
+      const boxOf = (points: readonly Vector3[]) => {
+        let left = Infinity, top = Infinity, right = -Infinity, bottom = -Infinity
+        for (const point of points) {
+          at.copy(point).project(camera!)
+          const x = (at.x * .5 + .5) * w, y = (.5 - at.y * .5) * h
+          left = Math.min(left, x); right = Math.max(right, x); top = Math.min(top, y); bottom = Math.max(bottom, y)
+        }
+        return { left, top, right, bottom }
+      }
+      return { stage: { width: w, height: h }, fit: viewportFit(), now: boxOf(outlineNow()),
+        sweep: boxOf(outline), fov: camera.fov, distance: view.distance }
     },
   }
 
