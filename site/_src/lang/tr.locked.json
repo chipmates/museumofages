@@ -1,0 +1,20 @@
+{
+  "_note": "THE LOCKED LINES of this language, approved word for word. The build compares the words files with them and stops on any difference. A language without this file is built and checked, never listed. Change a line only with the owner's approval.",
+  "tagline": "3D’de canlandırılan geçmiş çağlar",
+  "tagline_note": "Neyin belgelendiğini ve neyi tahmin ettiğimizi belirtiyoruz.",
+  "trust": "Kâr amacı gütmeyen kuruluş · Açık kaynak · Takip çerezi yok, profilleme yok",
+  "trust_before": "Kâr amacı gütmeyen kuruluş · Takip çerezi yok, profilleme yok",
+  "descriptor": "dijital bir müze",
+  "title": "Museum of Ages: geçmişi 3D’de yeniden kuran dijital bir müze",
+  "mission": "Görmek isteyen herkes için tarihteki yerleri yeniden kuruyoruz.",
+  "purpose": "Kuruluşun amacı eğitimi desteklemektir.",
+  "project": "Bir ChipMates gemeinnützige GmbH projesi",
+  "grades": [
+    "Belgelenmiş",
+    "Çıkarsanmış",
+    "Tahmin edilen",
+    "Bilinmiyor"
+  ],
+  "made": "Her İngilizce ve Almanca metni, yayımlanmadan önce bir kişi okur, düzeltir ve onaylar. Taslaklar, her bilgi için bir kaynak gösteren bir araştırma dosyasından yapay zekâ ile yazılır. Bu Türkçe sürüm, o metinlerden yapay zekâ ile çevrildi. Henüz hiç kimse gözden geçirmedi.",
+  "honesty": "Olduğu gibi, bildiğimiz kadarıyla."
+}

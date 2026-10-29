@@ -30,6 +30,9 @@
                           "ankylosaurus": "anquilossauro", "stegosaurus": "estegossauro", "blue-whale": "baleia-azul"}}},
     {"code": "bg", "folder": "bg/", "html": "bg", "name": "Български", "og": "bg_BG", "deed": "deed.bg", "status": "ai",
      "slugs": {"what": "kakvo-e-tozi-muzey", "imprint": null, "privacy": "poveritelnost",
-               "wings": {"vinci": "leonardo-da-vinchi"}, "topics": {"inventions": "izobreteniya"}}}
+               "wings": {"vinci": "leonardo-da-vinchi"}, "topics": {"inventions": "izobreteniya"}}},
+    {"code": "tr", "folder": "tr/", "html": "tr", "name": "Türkçe", "og": "tr_TR", "deed": "deed.tr", "status": "ai", "slugs_draft": true,
+     "slugs": {"what": "bu-muze-hakkinda", "imprint": null, "privacy": "gizlilik",
+               "wings": {"vinci": "leonardo-da-vinci"}, "topics": {"mona-lisa": "mona-lisa"}}}
   ]
 }
