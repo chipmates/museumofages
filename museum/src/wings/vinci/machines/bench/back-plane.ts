@@ -22,8 +22,9 @@ import {
 import { float, mix, mx_noise_float, smoothstep, uv, vec2, vec3 } from 'three/tsl'
 import type { MaterialSet, Stack } from '../../../../stack'
 
-/** the bench stands its second plane; the wing's hall is not this seat's */
-export const BENCH_BACK_PLANE = true
+/** off: the bench stands in the close view's seamless field (`vitrine/stage-close-view.ts`), where a wall's courses and
+ * its top would be a pattern and a line behind every machine; the grey figure gives the size */
+export const BENCH_BACK_PLANE = false
 
 /** how far behind the platform's centre the wall stands, in metres */
 export const BACK_PLANE_METRES = 12

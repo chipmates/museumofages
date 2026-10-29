@@ -11,6 +11,8 @@ export interface BenchSupportOptions {
   displayBounds: Box3
   ironMaterial: Material
   groundMaterial: Material
+  /** false: no slab under the machine, its mounts standing on the floor itself (the close view's own floor) */
+  plinth?: boolean
 }
 
 export interface BenchSupports {
@@ -77,10 +79,11 @@ export function buildBenchSupports(options: BenchSupportOptions): BenchSupports 
     size: [size.x * 1.08, thick, size.z * 1.08],
     centre: [centre.x, machineBounds.min.y - thick / 2, centre.z],
   }
-  const boxes: MountBox[] = [plinth, ...mountBoxes(slug, 'bench')]
+  const boxes: MountBox[] = [...(options.plinth === false ? [] : [plinth]), ...mountBoxes(slug, 'bench')]
   const inputs: BufferGeometry[] = []
   let merged: BufferGeometry | null = null
-  try {
+  if (!boxes.length) merged = new BufferGeometry()
+  else try {
     for (const box of boxes) {
       const geometry = box === plinth
         ? chamferedSlab(box.size[0], box.size[1], box.size[2], Math.min(thick * .22, span * .004))

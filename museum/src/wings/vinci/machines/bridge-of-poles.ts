@@ -130,13 +130,14 @@ export function build(stack: Stack): ReadyMachineBuild {
     parts.set('kit-lashings', { node: kitLashings, geometry: kitGeometry })
     hang('bank', bankGeometry(), surfaces.earth)
     hang('stream', waterGeometry(), surfaces.water, false)
-    // the stream's level face: one planar pass at half resolution, as the wing's own stream; calm keeps the sky alone
+    // the stream's level face: one planar pass at full resolution (at half, the bank's mirrored lip steps in pixel
+    // pairs along the water's edge); calm keeps the sky alone
     const level = hang('stream-level', new PlaneGeometry(2 * STREAM_HALF, BANK.zMax - BANK.zMin, 1, 1), surfaces.waterTop, false)
     level.rotation.x = -Math.PI / 2
     level.position.set(0, BANK.water, (BANK.zMin + BANK.zMax) / 2)
     level.updateMatrixWorld(true)
     if (stack.tierName() !== 'calm') {
-      reflection = stack.reflector(level, { resolutionScale: 0.5, bounces: false, generateMipmaps: false })
+      reflection = stack.reflector(level, { resolutionScale: 1, bounces: false, generateMipmaps: false })
       surfaces.mirror(reflection.node)
     }
     mounted = true

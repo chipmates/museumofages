@@ -30,7 +30,8 @@ export function buildScaleFigure(): { group: Group; geometry: BufferGeometry; ma
   pieces.push(neck)
   const geometry = mergeGeometries(pieces, false)!
   for (const piece of pieces) piece.dispose()
-  const material = new MeshStandardNodeMaterial({ color: new Color('#8d8f90'), roughness: 0.92, metalness: 0 })
+  // a step under the lit wood's value, so the machine stays the brightest thing in the frame
+  const material = new MeshStandardNodeMaterial({ color: new Color('#6f7173'), roughness: 0.92, metalness: 0 })
   material.name = 'bench:scale-figure'
   const mesh = new Mesh(geometry, material)
   mesh.name = 'vinci/bench/scale-figure'
