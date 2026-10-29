@@ -280,7 +280,7 @@ export function createStageSetting(options: {
   const groundShadow = shadow(groundKey)
   ;(groundKey.shadow as unknown as { shadowNode: unknown }).shadowNode = groundShadow
   /** the key's light on a level floor (linear, Lambert's share), for the shadow's thinning */
-  const groundLight = uniform(vec3(0, 0, 0))
+  const groundLight = uniform(new Color(0, 0, 0))
   /** the eye, and one pixel's angle at it (radians), for the thinnest parts' width */
   const eyeAt = uniform(new Vector3()), pixelAngle = uniform(float(0))
   // every directional lamp the key put in the scene (its cascades) turns with it
