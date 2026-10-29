@@ -800,7 +800,10 @@ export function createBench(stack: Stack, onExit: () => void) {
         if (!/^(bank|stream|stream-level)$/.test(node.name)) return;
         node.userData['stageGround'] = true;
         // ground takes the floor's lights: an edge light grazing the earth's relief draws it as ripples
-        if (node instanceof Mesh && node.material instanceof MeshStandardNodeMaterial) stage!.offRim(node.material);
+        if (node instanceof Mesh && node.material instanceof MeshStandardNodeMaterial) {
+          // the bank recedes into the dark as the setting's floor does; the water keeps its own mirror
+          if (node.name === 'bank') stage!.ground(node.material); else stage!.offRim(node.material);
+        }
         // water shows the poles mirrored, not their shadow: a dark stream takes no crisp lattice on its face
         if (/^stream/.test(node.name)) node.receiveShadow = false;
       });

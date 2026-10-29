@@ -75,7 +75,12 @@ function keyRim(strength: number): N {
 }
 
 /** the stream's mirror: its least share facing the eye, and the gain on what it mirrors */
-const MIRROR = { least: 0.05, gain: 1 } as const
+const MIRROR_BASE = { least: 0.05, gain: 1 }
+/** a look round's numbers for the stream (`globalThis.__stageProbe.stream`), on the dev server only */
+function streamNumbers(): typeof MIRROR_BASE & { ripple?: number; sheen?: number } {
+  const probe = import.meta.env.DEV ? (globalThis as { __stageProbe?: { stream?: Record<string, number> } }).__stageProbe?.stream : undefined
+  return { ...MIRROR_BASE, ...probe }
+}
 
 export interface BridgeSurfaces {
   pole: Material
@@ -332,7 +337,7 @@ export async function bridgeSurfaces(stack: Stack): Promise<BridgeSurfaces> {
     const shallow = smoothstep(3.2, 3.85, p.x.abs()).mul(smoothstep(-0.2, 0.2, p.y.sub(BANK.water - 0.1)))
     const cut = smoothstep(BANK.water - 0.03, BANK.water - 0.3, p.y)
     water.colorNode = mx(mx(lin('#2b2d22'), lin('#423e2d'), shallow), lin('#11140f'), cut)
-    water.normalNode = bumped(normalView, ripple.mul(0.022), 1)
+    water.normalNode = bumped(normalView, ripple.mul(streamNumbers().ripple ?? 0.022), 1)
     water.roughnessNode = float(0.07)
     water.envMapIntensity = 0.42
     // the bench's lamp is for the poles: on the stream it would stand as a hot spot
@@ -349,6 +354,7 @@ export async function bridgeSurfaces(stack: Stack): Promise<BridgeSurfaces> {
   const mirror = (reflection: N): void => {
     const view = cameraPosition.sub(positionWorld).normalize()
     // a dark, still stream mirrors more than its glass-like 2 percent reads: the lit poles over it show softly
+    const MIRROR = streamNumbers()
     const fresnel = float(1).sub(normalWorld.dot(view).abs()).pow(5).mul(1 - MIRROR.least).add(MIRROR.least)
     // the ripples shift the mirrored picture a little, as a stream's surface does
     reflection.uvNode = screenUV.flipX().add(normalView.xy.sub(normalViewGeometry.xy).mul(0.08))

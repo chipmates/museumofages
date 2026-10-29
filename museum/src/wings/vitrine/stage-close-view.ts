@@ -191,6 +191,9 @@ export interface StageSetting {
   /** a mirror-like surface the edge light must not reach: from behind the machine it stands as a hot spot in a mirror
    * the eye looks down on */
   offRim(material: MeshStandardNodeMaterial): void
+  /** a machine's own ground (the bridge's banks): the floor's lights, its painted contact, and its hand-off to the field
+   * where the eye sees it at a grazing angle, so that ground recedes into the dark as the setting's floor does */
+  ground(material: MeshStandardNodeMaterial): void
   /** the machine's own surfaces under the setting's rules for them (a thin translucent cloth kept from the edge light) */
   machine(root: Object3D): void
   /** the scale figure, the setting's own: it takes the studio's lamps at `room.figure` of their strength */
@@ -273,7 +276,9 @@ export function createStageSetting(options: {
     groundKey.shadow.normalBias = 2 * half / map
     ;(groundKey.shadow as unknown as { filterNode: unknown }).filterNode = wideShadowFilter
   }
+  // one shadow node for the lamp's own light and for the shade the floor hands the field: two would each keep a map
   const groundShadow = shadow(groundKey)
+  ;(groundKey.shadow as unknown as { shadowNode: unknown }).shadowNode = groundShadow
   /** the key's light on a level floor (linear, Lambert's share), for the shadow's thinning */
   const groundLight = uniform(vec3(0, 0, 0))
   /** the eye, and one pixel's angle at it (radians), for the thinnest parts' width */
@@ -335,7 +340,7 @@ export function createStageSetting(options: {
   // the floor seen at a grazing angle hands its colour to the field's at the same pixel
   const horizonSine = uniform(float(.05))
   const below = positionWorld.sub(cameraPosition).normalize().y.negate()
-  let albedo: N, shade: N, horizonOut: N
+  let albedo: N, shade: N, horizonOut: N, groundOut: N
   {
     const along = positionWorld.xz.sub(vec2(centre.x, centre.z)).length()
     const fall = mix(float(1), float(S.floor.keep), smoothstep(radius * S.floor.pool[0], radius * S.floor.pool[1], along))
@@ -349,6 +354,7 @@ export function createStageSetting(options: {
     const near = float(1).sub(smoothstep(radius * S.air.shadeReach[0], radius * S.air.shadeReach[1], along))
     const kept = mix(float(1), groundShadow.mul(shade), near.mul(S.air.shade).mul(holdFar))
     horizonOut = vec4(mix(output.rgb, field.mul(kept), float(1).sub(smoothstep(0, horizonSine, below))), output.a)
+    groundOut = vec4(mix(output.rgb.mul(shade), field.mul(kept), float(1).sub(smoothstep(0, horizonSine, below))), output.a)
     floorMaterial.colorNode = albedo
     // the shadow thins away from the machine: the light it holds off there, given back in part
     const thin = smoothstep(radius * S.floor.thin[0], radius * S.floor.thin[1], along).mul(S.floor.thin[2])
@@ -465,6 +471,15 @@ export function createStageSetting(options: {
     keep(material)
     material.lightsNode = floorMaterial.lightsNode
     material.needsUpdate = true
+  }
+  function ground(material: MeshStandardNodeMaterial): void {
+    offRim(material)
+    const was = kept.get(material)!
+    if (!('outputNode' in was) && S.air.horizon > 0) {
+      was.outputNode = material.outputNode
+      material.outputNode = groundOut
+      material.needsUpdate = true
+    }
   }
   function ownCard(own: { turn: number; height: number; share: number }): { lamp: DirectionalLight; turn: number; height: number } {
     const lamp = new DirectionalLight(kelvinToColour(S.fill.frontKelvin).getHex(), S.key.lux / 100 * own.share)
@@ -624,7 +639,7 @@ export function createStageSetting(options: {
   function carry(by: Vector3): void {
     walkedBy.value.set(by.x, by.z)
   }
-  return { field, floor, key, follow, air, contact, carry, merge, offRim, machine, figure, dispose }
+  return { field, floor, key, follow, air, contact, carry, merge, offRim, ground, machine, figure, dispose }
 }
 
 /** the points of a body's surfaces, a few hundred a mesh, in world metres: what the contact shade is painted from; under
