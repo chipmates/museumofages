@@ -114,6 +114,15 @@ const BRIDGE_CHANNEL = 3.6;
 /** The bridge's own eye, with no rig's eye given: it opens in its yard, its rods on both banks out to the stock's bank
  * ends (`STOCK_FOOT` 8.22 in its plan), so the frame takes the yard whole and the bridge rises in its middle. */
 const BRIDGE_YARD = new Box3(new Vector3(-8.5, -.6, -2.3), new Vector3(8.5, 3, 2.3));
+/** That eye looks down on the yard more than a rig's eye does, on the same bearing round the stream: the yard is long
+ * and flat, and from a low eye it stood as a thin strip across the picture. */
+const BRIDGE_YARD_RISE = .62;
+/** Metres past the bridge's middle along the stream (from, to) where its near end runs in under the setting's floor:
+ * the bank is cut square 15 m out, and the yard's eye saw the water end there in an edge. */
+const BRIDGE_CLOSED = [9.5, 12] as const;
+/** A machine that walks is framed, with no rig's eye, by its body over its walk (its surfaces at moments of its run),
+ * not by its envelope's box: the box's empty corners stood the eye far off and left the body small in its frame. */
+const WALKERS: ReadonlySet<string> = new Set(['mechanical-lion']);
 /** The parachute's uprights alone (not its plinth): a plain grey powder coat in linear albedo. */
 const PARACHUTE_POST = { tone: .16, roughness: .55 };
 /** The compass's stand alone (not its plate): a mid grey powder coat in linear albedo, lighter than the iron it holds. */
@@ -432,7 +441,7 @@ export function createBench(stack: Stack, onExit: () => void) {
       direction.set(sectionEnabled ? 1.5 : 1.25, sectionEnabled ? .8 : .5, sectionEnabled ? -.35 : -1.6).normalize();
     if (slug === 'aerial-screw') direction.set(-1.6,.4,.7).normalize();
     if (slug === 'flying-machine') direction.set(1.15,.22,1.6).normalize();
-    if (slug === 'bridge-of-poles') direction.set(-.75,.32,1.6).normalize();
+    if (slug === 'bridge-of-poles') direction.set(-.75,eye ? .32 : BRIDGE_YARD_RISE,1.6).normalize();
     if (slug === 'armoured-car') direction.set(sectionEnabled ? .9 : 1.25, sectionEnabled ? 1.05 : .5, 1.3).normalize();
     if (eye) direction.set(eye.at[0], eye.at[1], eye.at[2]).sub(frameBounds().getCenter(new Vector3())).normalize();
     if (slug === 'flywheel') direction.set(.8,1.2,1.7).normalize();
@@ -447,28 +456,38 @@ export function createBench(stack: Stack, onExit: () => void) {
     return direction;
   }
   /** how far the eye stands off a box on that bearing, at this frame's shape */
-  function eyeDistance(box: Box3, direction: Vector3, mobile: boolean): number {
+  function eyeDistance(box: Box3, direction: Vector3, mobile: boolean, points?: readonly Vector3[]): number {
     const size = box.getSize(new Vector3()), centre = box.getCenter(new Vector3());
     const span = Math.max(size.x, size.y, size.z);
     const right = new Vector3().crossVectors(new Vector3(0, 1, 0), direction).normalize(), up = new Vector3().crossVectors(direction, right).normalize();
     const tanY = Math.tan(17 * Math.PI / 180), tanX = tanY * innerWidth / innerHeight, width = mobile ? .84 : .7, height = slug === 'proportional-compass' ? (mobile ? .38 : .95) : (mobile ? .31 : .8);
-    let distance = span;
-    for (const x of [box.min.x, box.max.x])
-      for (const y of [box.min.y, box.max.y])
-        for (const z of [box.min.z, box.max.z]) {
-          const p = new Vector3(x, y, z).sub(centre), depth = p.dot(direction);
-          distance = Math.max(distance, depth + Math.abs(p.dot(right)) / (tanX * width), depth + Math.abs(p.dot(up)) / (tanY * height));
-        }
+    let distance = points ? 0 : span;
+    const corners = points ?? [box.min.x, box.max.x].flatMap(x => [box.min.y, box.max.y].flatMap(y => [box.min.z, box.max.z].map(z => new Vector3(x, y, z))));
+    for (const corner of corners) {
+      const p = corner.clone().sub(centre), depth = p.dot(direction);
+      distance = Math.max(distance, depth + Math.abs(p.dot(right)) / (tanX * width), depth + Math.abs(p.dot(up)) / (tanY * height));
+    }
     return distance;
+  }
+  /** the walker's surfaces at nine moments of its run, once it stands; its pose put back */
+  let walkFrame: Vector3[] | null = null;
+  function walkPoints(): Vector3[] | null {
+    const period = machine?.period ?? 0;
+    if (!machine || !(period > 0)) return null;
+    const points: Vector3[] = [];
+    for (let i = 0; i <= 8; i++) { machine.animate(period * i / 8, 0); points.push(...surfacePoints(machine.object, 160)); }
+    machine.animate(playbackState.clock, 0);
+    return points.length ? points : null;
   }
   function compose() {
     if (!machine)
       return;
     if (eye && POSED_RIG.has(slug)) { composeEye(eye); return; }
-    const box = closeUp ? focusBounds() : slug === 'bridge-of-poles' && !eye ? BRIDGE_YARD : frameBounds(), size = box.getSize(new Vector3()), centre = box.getCenter(new Vector3()), span = Math.max(size.x, size.y, size.z), mobile = innerWidth <= 1280;
+    const walked = !eye && !closeUp && WALKERS.has(slug) ? walkFrame : null;
+    const box = closeUp ? focusBounds() : slug === 'bridge-of-poles' && !eye ? BRIDGE_YARD : walked ? new Box3().setFromPoints(walked) : frameBounds(), size = box.getSize(new Vector3()), centre = box.getCenter(new Vector3()), span = Math.max(size.x, size.y, size.z), mobile = innerWidth <= 1280;
     const direction = viewDirection();
     const right = new Vector3().crossVectors(new Vector3(0, 1, 0), direction).normalize(), up = new Vector3().crossVectors(direction, right).normalize();
-    const distance = eye ? new Vector3(...eye.at).distanceTo(centre) : eyeDistance(box, direction, mobile);
+    const distance = eye ? new Vector3(...eye.at).distanceTo(centre) : eyeDistance(box, direction, mobile, walked ?? undefined);
     camera.aspect = innerWidth / innerHeight;
     camera.fov = 34;
     camera.near = Math.max(.001, span / 1000);
@@ -810,7 +829,7 @@ export function createBench(stack: Stack, onExit: () => void) {
         // water shows the poles mirrored, not their shadow: a dark stream takes no crisp lattice on its face
         if (/^stream/.test(node.name)) node.receiveShadow = false;
       });
-      stage.merge(frameBounds(), BRIDGE_MERGE[0], BRIDGE_MERGE[1], BRIDGE_MERGE_ABOVE, BRIDGE_CHANNEL);
+      stage.merge(frameBounds(), BRIDGE_MERGE[0], BRIDGE_MERGE[1], BRIDGE_MERGE_ABOVE, BRIDGE_CHANNEL, BRIDGE_CLOSED);
     }
     // the shade where it stands: the machine, its mounts and the figure, as they stand at this eye's moment
     const reach = frameBounds().getBoundingSphere(new Sphere()).radius * stageNumbers().contact.tight.height;
@@ -836,7 +855,7 @@ export function createBench(stack: Stack, onExit: () => void) {
     const requestedEvidence = opts.evidence === undefined ? null : opts.evidence === requested ? recordOf(requested) : partialCatalog.find(record => record.slug === opts.evidence);
     if (opts.evidence !== undefined && !requestedEvidence) throw new Error(`No evidence record for ${requested}: ${opts.evidence}`);
     evidence.close(false);
-    const mine = ++serial; active = true; host.hidden = false; ready = false; loading.hidden = false; clearDisplay(); folioEntry = undefined; folio.replaceChildren(); slug = requested; evidenceRecord = recordOf(slug); lang = controlLanguage(location.search, opts.lang); schedule = playbackSchedule(recordOf(slug).dossier); playbackState = initialPlayback(schedule, { t: opts.t, fixed: document.body.classList.contains('forge'), reducedMotion: reduced.matches }); lastWall = performance.now(); stamp(); closeUp = opts.close ?? false; eye = opts.eye ?? null; sectionEnabled = (slug === 'camera-obscura' || slug === 'mechanical-lion' || slug === 'armoured-car' || slug === 'bridge-of-poles') && (opts.section ?? false); stack.setScene(scene, camera, stageGrade(Math.max(...Object.values(recordOf(slug).dossier.scale_m).filter((v): v is number => typeof v === 'number')))); lightBench(); machine = isShowcaseSlug(slug) ? buildShowcase(slug, stack) : buildBenchMachine(slug, stack); wallFocus = opts.wallFocus; figure = POSED_RIG.has(slug) ? null : opts.figure ?? null; lampProbe = opts.lamp; fillProbe = opts.fill; luxProbe = opts.lux;
+    const mine = ++serial; active = true; host.hidden = false; ready = false; loading.hidden = false; clearDisplay(); folioEntry = undefined; folio.replaceChildren(); slug = requested; walkFrame = null; evidenceRecord = recordOf(slug); lang = controlLanguage(location.search, opts.lang); schedule = playbackSchedule(recordOf(slug).dossier); playbackState = initialPlayback(schedule, { t: opts.t, fixed: document.body.classList.contains('forge'), reducedMotion: reduced.matches }); lastWall = performance.now(); stamp(); closeUp = opts.close ?? false; eye = opts.eye ?? null; sectionEnabled = (slug === 'camera-obscura' || slug === 'mechanical-lion' || slug === 'armoured-car' || slug === 'bridge-of-poles') && (opts.section ?? false); stack.setScene(scene, camera, stageGrade(Math.max(...Object.values(recordOf(slug).dossier.scale_m).filter((v): v is number => typeof v === 'number')))); lightBench(); machine = isShowcaseSlug(slug) ? buildShowcase(slug, stack) : buildBenchMachine(slug, stack); wallFocus = opts.wallFocus; figure = POSED_RIG.has(slug) ? null : opts.figure ?? null; lampProbe = opts.lamp; fillProbe = opts.fill; luxProbe = opts.lux;
     if (opts.figure && POSED_RIG.has(slug)) { sizeFigure = makeFigure(figureMaterial, 'size-figure'); sizeFigure.pose(standingJoints(opts.figure.turn ?? 0, opts.figure.at as [number, number, number])); sizeFigure.group.userData['assetClass'] = 'GENERATED'; figureGroup = sizeFigure.group; display.add(sizeFigure.group); } machine.section(sectionEnabled); display.add(machine.object); standStage(); if (opts.keyProbe === 'off' && key) key.light.intensity = 0; compose(); paint(); await Promise.all([machine.ready, supports(mine), plateFor(mine)]); if (mine !== serial)
     return; machine.animate(playbackState.clock, 0); lampMachine();
     dressStage();
@@ -861,7 +880,7 @@ export function createBench(stack: Stack, onExit: () => void) {
       ropeExperiment = applyRopeShadowExperiment(machine.object, slug, ropeMode, key.direction);
     }
     if (requestedEvidence) evidence.open(requestedEvidence, read);
-    ready = true; loading.hidden = true; metrics?.reset(); stamp(); lastWall = performance.now(); console.log(`[bench] mounted ${slug} period=${recordOf(slug).dossier.motion.period_s} tier=${stack.tierName()}`); }
+    ready = true; loading.hidden = true; if (WALKERS.has(slug)) { walkFrame = walkPoints(); compose(); } metrics?.reset(); stamp(); lastWall = performance.now(); console.log(`[bench] mounted ${slug} period=${recordOf(slug).dossier.motion.period_s} tier=${stack.tierName()}`); }
   function close() { if (!active)
     return; setBenchKey(null); serial++; evidence.close(false); active = false; host.hidden = true; ready = false; clearDisplay(); key?.dispose(); key = null; }
   function navigate(delta: number) { const id = BENCH_SLUGS[(BENCH_SLUGS.indexOf(slug) + delta + BENCH_SLUGS.length) % BENCH_SLUGS.length]; if (id) {

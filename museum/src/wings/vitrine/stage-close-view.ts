@@ -187,7 +187,7 @@ export const STAGE = Object.freeze({
     /** the scale figure's own fill: a lamp on the key's side that no machine shades, so the figure in a machine's shade
      * keeps the key's lit side and its shade side (form, never a grey silhouette), and in the open adds to the key's side
      * without filling the shade side; the figure alone takes it */
-    figure: { turn: -35, height: 30, share: .55 } },
+    figure: { turn: -80, height: 24, share: .6 } },
   /** the edge lights from behind, each at its bearing from the eye's: weaker than the key, cool, never on the floor;
    * a thin translucent cloth takes them at `cloth` of their strength (a scrim on the lamp), since from behind they light
    * it through as a lamp lights a shade */
@@ -276,8 +276,9 @@ export interface StageSetting {
   carry(by: Vector3): void
   /** a machine that brings its own ground (the bridge's banks): the floor laid over it at `above` metres, clear within
    * `from` metres of the box and whole from `to`, so that ground ends in the setting's with no edge; a channel (its
-   * half width across x, metres) keeps the floor off the water that runs out along it */
-  merge(box: Box3, from: number, to: number, above: number, channel?: number): void
+   * half width across x, metres) keeps the floor off the water that runs out along it, and closes under the floor
+   * between `closed` metres (from, to) past the box's middle along +z, where a far eye would see the water cut off */
+  merge(box: Box3, from: number, to: number, above: number, channel?: number, closed?: readonly [number, number]): void
   /** a mirror-like surface the edge light must not reach: from behind the machine it stands as a hot spot in a mirror
    * the eye looks down on */
   offRim(material: MeshStandardNodeMaterial): void
@@ -563,7 +564,7 @@ export function createStageSetting(options: {
   }
 
   let veil: Mesh | null = null
-  function merge(area: Box3, from: number, to: number, above: number, channel = 0): void {
+  function merge(area: Box3, from: number, to: number, above: number, channel = 0, closed?: readonly [number, number]): void {
     dropVeil()
     const c = area.getCenter(new Vector3()), half = area.getSize(new Vector3()).multiplyScalar(.5)
     const material = new MeshStandardNodeMaterial({ roughness: S.floor.roughness, metalness: 0 })
@@ -576,7 +577,9 @@ export function createStageSetting(options: {
     const outside = positionWorld.xz.sub(vec2(c.x, c.z)).abs().sub(vec2(half.x, half.z)).max(0).length()
     const opacity = smoothstep(from, to, outside)
     const graze = smoothstep(S.air.graze[0], S.air.graze[1], below)
-    material.opacityNode = (channel > 0 ? opacity.mul(smoothstep(channel * .92, channel * 1.08, positionWorld.x.sub(c.x).abs())) : opacity).mul(graze)
+    const open = smoothstep(channel * .92, channel * 1.08, positionWorld.x.sub(c.x).abs())
+    const kept = closed ? open.max(smoothstep(closed[0], closed[1], positionWorld.z.sub(c.z))) : open
+    material.opacityNode = (channel > 0 ? opacity.mul(kept) : opacity).mul(graze)
     if (S.air.horizon > 0) material.outputNode = horizonOut
     material.transparent = true
     material.depthWrite = false
@@ -691,7 +694,8 @@ export function createStageSetting(options: {
     }
   }
   function machine(root: Object3D): void {
-    const own = S.own[root.name]
+    // a machine's root is named by its wing and slug (`vinci/<slug>`): the card is keyed by the slug
+    const own = S.own[root.name.split('/').pop() ?? '']
     const cloth = S.rim.cloth < 1 ? lights([key.light, key.fill, front, ...scrimmed]) : null
     thinParts(root)
     root.traverse(node => {
