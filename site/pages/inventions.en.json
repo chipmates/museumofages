@@ -3,6 +3,7 @@
   "page": {
     "id": "vinci-inventions",
     "wing": "vinci",
+    "topic": "inventions",
     "slug": "inventions",
     "published": "2026-10-06",
     "checked": "2026-10-05",

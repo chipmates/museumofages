@@ -173,7 +173,8 @@
         "line": {
           "en": "What Leonardo da Vinci drew, what was ever built and what was older than he was.",
           "de": "Was Leonardo da Vinci zeichnete, was je gebaut wurde und was älter war als er."
-        }
+        },
+        "langs": ["en", "de", "fr", "it", "es", "pt-BR", "bg"]
       },
       {
         "slug": {
