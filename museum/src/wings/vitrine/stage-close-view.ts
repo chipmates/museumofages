@@ -13,7 +13,7 @@
  */
 import {
   Box3, CanvasTexture, CircleGeometry, Color, DataTexture, DirectionalLight, EquirectangularReflectionMapping, FloatType, LinearFilter, Mesh,
-  MeshStandardNodeMaterial, PlaneGeometry, RedFormat, SRGBColorSpace, Vector3, type Camera, type InstancedMesh, type Light, type Node, type Object3D, type Scene,
+  MeshStandardNodeMaterial, PlaneGeometry, RedFormat, SRGBColorSpace, Vector3, type Camera, type InstancedMesh, type Light, type Node, type Object3D, type PerspectiveCamera, type Scene,
   type Texture,
 } from 'three/webgpu'
 import * as TSL from 'three/tsl'
@@ -24,8 +24,32 @@ import { wideShadowFilter } from '../vinci/machines/screw-shadow'
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 type N = any
-const { cameraPosition, exp, float, fog, interleavedGradientNoise, lights, mix, output, positionWorld, rangeFogFactor, screenCoordinate, smoothstep,
-  texture, uniform, vec2, vec3, vec4, viewportSize, viewportUV } = TSL as unknown as Record<string, N>
+const { cameraPosition, exp, float, fog, interleavedGradientNoise, lights, mix, modelWorldMatrix, normalLocal, output, positionLocal, positionWorld,
+  rangeFogFactor, screenCoordinate, shadow, smoothstep, texture, uniform, vec2, vec3, vec4, viewportSize, viewportUV } = TSL as unknown as Record<string, N>
+
+/** A SHAPE'S RADIUS OF TURN: along a tube the normal turns by an edge's length over the radius, so the median of that
+ * ratio over its curved edges is a cord's or a rod's radius (its own metres); NaN for a shape with no curved edge */
+const radii = new WeakMap<object, { count: number; r: number }>()
+function radiusOf(geometry: import('three/webgpu').BufferGeometry): number {
+  const position = geometry.getAttribute('position'), normal = geometry.getAttribute('normal')
+  if (!position || !normal) return NaN
+  const kept = radii.get(geometry)
+  if (kept && kept.count === position.count) return kept.r
+  const index = geometry.getIndex(), corners = index ? index.count : position.count
+  const vertex = (i: number): number => index ? index.getX(i) : i
+  const found: number[] = []
+  const step = Math.max(3, Math.floor(corners / 3 / 4000) * 3)
+  for (let t = 0; t + 2 < corners; t += step) for (let e = 0; e < 3; e++) {
+    const a = vertex(t + e), b = vertex(t + (e + 1) % 3)
+    const dn = Math.hypot(normal.getX(a) - normal.getX(b), normal.getY(a) - normal.getY(b), normal.getZ(a) - normal.getZ(b))
+    if (dn < .3 || dn > 1.9) continue
+    found.push(Math.hypot(position.getX(a) - position.getX(b), position.getY(a) - position.getY(b), position.getZ(a) - position.getZ(b)) / dn)
+  }
+  found.sort((x, y) => x - y)
+  const r = found.length >= 6 ? found[found.length >> 1]! : NaN
+  radii.set(geometry, { count: position.count, r })
+  return r
+}
 
 const DEG = Math.PI / 180
 const smoothstep01 = (x: number, a: number, b: number): number => { const k = Math.min(1, Math.max(0, (x - a) / (b - a))); return k * k * (3 - 2 * k) }
@@ -56,7 +80,11 @@ export const STAGE = Object.freeze({
   /** the floor: matte, a dark warm grey, its own value falling from the machine's foot by radii of the machine */
   floor: { albedo: [.05, .048, .045] as const, roughness: .93, pool: [.3, 1.8] as const, keep: .2,
     /** a bounce off the room toward the floor, as a share of the albedo: a soft key's shadow is grey, never a black slab */
-    bounce: .6 },
+    bounce: .6,
+    /** the key's shadow on the floor gives back this share of the light it holds off, from this many radii of the
+     * machine's centre to this many (from, to, share): under the machine it keeps its weight, toward the frame's edge
+     * it thins as a broad source's shadow of a high part does, never a dark shape cut by the frame */
+    thin: [1.1, 2.4, .6] as readonly [number, number, number] },
   /** the shade under the machine where it stands: the cells a hand's width round every point near the floor */
   contact: { cells: 96, reach: .14, strength: .55, height: .1,
     /** and a tight line where a foot or a skirt meets the floor: a finer map, a few centimetres of tent, the points
@@ -80,7 +108,11 @@ export const STAGE = Object.freeze({
   /** the key: turned from the eye's bearing (negative: the eye's left) and raised, warm, soft */
   key: { turn: -50, height: 52, kelvin: 4500, lux: 280, ambient: .55,
     /** the shadow's soft edge as a share of the machine's span, as a broad source high over it gives */
-    soft: .01 },
+    soft: .01,
+    /** the same edge on the ground (the floor, a machine's own bank): a broad source's shadow widens with the height of
+     * what casts it, and on the ground most of it falls from parts high over the floor; where a part meets the floor
+     * the painted contact holds the tight line */
+    ground: .07 },
   /** the fill: the sky's and the floor's share, and a weak lamp from the eye itself */
   fill: { sky: '#6d7682', ground: '#40362c', intensity: .36, environment: .2, front: .12, frontHeight: 14, frontKelvin: 5600,
     /** the scale figure's own fill (a reflector by the eye, as a photographer sets one for a figure in shade): its bearing
@@ -100,6 +132,10 @@ export const STAGE = Object.freeze({
    * positive the eye's right, its height, its share of the key) that its forged iron alone takes. The compass is all
    * near-black iron on a dark field: under the setting's light its faces and the field meet at one value. */
   own: { 'proportional-compass': { turn: 45, height: 22, share: 1.2 } } as Readonly<Record<string, { turn: number; height: number; share: number }>>,
+  /** THE THINNEST PARTS: a cord, a wire or a slender rod drawn under `px` pixels across falls between the pixels and
+   * breaks into dots that crawl in motion; its surface is pushed out along its normal to that width, by as much as it is
+   * thinner, so it reads as one line. A part counts as thin under `most` of the span in radius, read off its own shape */
+  cord: { px: 1.5, most: .004 },
   /** the vertical lens in degrees: a long lens on the desktop, the phone's upright frame narrower still across */
   lens: { desktop: 24, phone: 40 },
   /** the machine's swept outline's share of its fit box, across and upright, per device: the box keeps room for the
@@ -218,6 +254,30 @@ export function createStageSetting(options: {
   key.light.shadow.bias = -span * .00001
   // a soft key's edge: the five-texel tent in place of the stock three
   ;(key.light.shadow as unknown as { filterNode: unknown }).filterNode = wideShadowFilter
+  // THE KEY ON THE GROUND: the same lamp, its shadow read from a coarser map through the same tent, so the edge is
+  // `key.ground` of the span wide; a lamp outside the scene, which only the ground takes
+  const groundKey = new DirectionalLight()
+  groundKey.name = 'stage/ground-key'
+  groundKey.color = key.light.color
+  // a machine's own level for the key (the car opened) reaches the ground too
+  Object.defineProperty(groundKey, 'intensity', { get: () => key.light.intensity, set: () => undefined, configurable: true })
+  groundKey.castShadow = true
+  {
+    const from = key.light.shadow.camera, half = from.right
+    const map = Math.min(2048, Math.max(256, 2 ** Math.round(Math.log2(2 * half * 6 / (S.key.ground * span)))))
+    groundKey.shadow.mapSize.setScalar(map)
+    const cam = groundKey.shadow.camera
+    cam.left = -half; cam.right = half; cam.top = half; cam.bottom = -half; cam.near = from.near; cam.far = from.far
+    cam.updateProjectionMatrix()
+    groundKey.shadow.bias = key.light.shadow.bias
+    groundKey.shadow.normalBias = 2 * half / map
+    ;(groundKey.shadow as unknown as { filterNode: unknown }).filterNode = wideShadowFilter
+  }
+  const groundShadow = shadow(groundKey)
+  /** the key's light on a level floor (linear, Lambert's share), for the shadow's thinning */
+  const groundLight = uniform(vec3(0, 0, 0))
+  /** the eye, and one pixel's angle at it (radians), for the thinnest parts' width */
+  const eyeAt = uniform(new Vector3()), pixelAngle = uniform(float(0))
   // every directional lamp the key put in the scene (its cascades) turns with it
   const cascadesOf: DirectionalLight[] = []
   scene.traverse(node => { if ((node as DirectionalLight).isDirectionalLight) cascadesOf.push(node as DirectionalLight) })
@@ -287,13 +347,15 @@ export function createStageSetting(options: {
     // THE SHADE GOES WITH THE FLOOR INTO THE FIELD: where a low eye's floor is mostly field, the field there is darkened as
     // the floor is, by the key's shadow and the painted contact, so a machine never floats on a shadowless floor
     const near = float(1).sub(smoothstep(radius * S.air.shadeReach[0], radius * S.air.shadeReach[1], along))
-    const kept = mix(float(1), key.shadow.mul(shade), near.mul(S.air.shade).mul(holdFar))
+    const kept = mix(float(1), groundShadow.mul(shade), near.mul(S.air.shade).mul(holdFar))
     horizonOut = vec4(mix(output.rgb, field.mul(kept), float(1).sub(smoothstep(0, horizonSine, below))), output.a)
     floorMaterial.colorNode = albedo
-    floorMaterial.emissiveNode = albedo.mul(S.floor.bounce)
+    // the shadow thins away from the machine: the light it holds off there, given back in part
+    const thin = smoothstep(radius * S.floor.thin[0], radius * S.floor.thin[1], along).mul(S.floor.thin[2])
+    floorMaterial.emissiveNode = albedo.mul(S.floor.bounce).add(albedo.mul(groundLight).mul(float(1).sub(groundShadow)).mul(thin))
     floorMaterial.aoNode = shade
     // the edge light from behind would lay a second sheen on the floor toward the eye: the floor takes the key and the fills
-    floorMaterial.lightsNode = lights([key.light, key.fill, front])
+    floorMaterial.lightsNode = lights([groundKey, key.fill, front])
     if (S.air.horizon > 0) floorMaterial.outputNode = horizonOut
     // THE FLOOR KEEPS OUT OF THE DEPTH THE OCCLUSION READS: a plane seen at a grazing angle toward the horizon reads to
     // the screen's occlusion as a crease and darkens in a band; the shade where the machine stands is painted instead
@@ -411,9 +473,37 @@ export function createStageSetting(options: {
     if (!Number.isNaN(lastYawSet)) place(lamp, lastYawSet + own.turn * DEG, own.height * DEG)
     return { lamp, turn: own.turn, height: own.height }
   }
+  /** a material used by thin parts alone, and the least radius among them (world metres) */
+  const cords = new Map<MeshStandardNodeMaterial, number>()
+  function thinParts(root: Object3D): void {
+    const most = S.cord.most * span, seen = new Map<MeshStandardNodeMaterial, number>(), thick = new Set<MeshStandardNodeMaterial>()
+    root.updateMatrixWorld(true)
+    root.traverse(node => {
+      const mesh = node as Mesh
+      if (!mesh.isMesh || node.userData['vitrineOverlay'] || node.userData['vitrineTarget']) return
+      const r = radiusOf(mesh.geometry) * node.matrixWorld.getMaxScaleOnAxis()
+      for (const material of [mesh.material].flat()) {
+        const m = material as MeshStandardNodeMaterial
+        if (!m.isNodeMaterial || m.positionNode) continue
+        if (Number.isFinite(r) && r < most) seen.set(m, Math.min(seen.get(m) ?? Infinity, r))
+        else thick.add(m)
+      }
+    })
+    for (const [m, r] of seen) {
+      if (thick.has(m) || cords.has(m)) continue
+      cords.set(m, r)
+      keep(m)
+      const world = modelWorldMatrix.mul(vec4(positionLocal, 1)).xyz
+      const scale = modelWorldMatrix.mul(vec4(normalLocal, 0)).xyz.length().max(1e-6)
+      const push = world.sub(eyeAt).length().mul(pixelAngle).mul(S.cord.px / 2).sub(r).max(0)
+      m.positionNode = positionLocal.add(normalLocal.mul(push.div(scale)))
+      m.needsUpdate = true
+    }
+  }
   function machine(root: Object3D): void {
     const own = S.own[root.name]
     const cloth = S.rim.cloth < 1 ? lights([key.light, key.fill, front, ...scrimmed]) : null
+    thinParts(root)
     root.traverse(node => {
       const materials = (node as Mesh).isMesh ? [(node as Mesh).material].flat() : []
       for (const material of materials) {
@@ -444,7 +534,7 @@ export function createStageSetting(options: {
     material.needsUpdate = true
   }
   function keep(material: MeshStandardNodeMaterial): void {
-    if (!kept.has(material)) kept.set(material, { lightsNode: material.lightsNode, envMap: material.envMap, envMapIntensity: material.envMapIntensity, envMapRotation: material.envMapRotation.clone() })
+    if (!kept.has(material)) kept.set(material, { lightsNode: material.lightsNode, envMap: material.envMap, envMapIntensity: material.envMapIntensity, envMapRotation: material.envMapRotation.clone(), positionNode: material.positionNode })
   }
   function sceneLights(): Light[] {
     const found: Light[] = []
@@ -484,7 +574,7 @@ export function createStageSetting(options: {
     }
     if (o.yaw !== lastYaw) {
       lastYaw = o.yaw
-      for (const l of cascadesOf) place(l, o.yaw + S.key.turn * DEG, S.key.height * DEG)
+      for (const l of [...cascadesOf, groundKey]) place(l, o.yaw + S.key.turn * DEG, S.key.height * DEG)
       key.direction.copy(cascadesOf[0]!.position).sub(centre).normalize()
       place(front, o.yaw, S.fill.frontHeight * DEG)
       rims.forEach((rim, i) => place(rim, o.yaw + S.rim.turns[i]! * DEG, S.rim.height * DEG))
@@ -494,6 +584,13 @@ export function createStageSetting(options: {
       // the studio's lamps stand round the eye as the rig does
       for (const material of mirrors) material.envMapRotation.set(0, o.yaw, 0)
       lastYawSet = o.yaw
+    }
+    groundLight.value.copy(key.light.color).multiplyScalar(key.light.intensity * Math.max(0, key.direction.y) / Math.PI)
+    if (o.camera) {
+      // a pixel's angle at the eye: the projection's vertical scale over the drawing buffer's rows
+      const rows = stack.renderer.domElement.height, scale = (o.camera as PerspectiveCamera).projectionMatrix.elements[5] ?? 0
+      eyeAt.value.copy(o.camera.position)
+      if (rows > 0 && scale > 0) pixelAngle.value = 2 / (scale * rows)
     }
     if (o.picture) poolRadius.value = o.picture * S.field.radius
     if (o.centre) poolCentre.value.set(o.centre.x, o.centre.y - (o.picture ?? 1) * S.field.lift)
@@ -520,6 +617,8 @@ export function createStageSetting(options: {
     contactTexture.dispose()
     tightTexture.dispose()
     figureLamp.dispose()
+    groundKey.shadow.dispose()
+    groundKey.dispose()
     card?.lamp.dispose()
   }
   function carry(by: Vector3): void {
