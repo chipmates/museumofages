@@ -74,10 +74,11 @@ function keyRim(strength: number): N {
   return grazing.mul(lit).mul(strength)
 }
 
-/** the stream's mirror: its least share facing the eye, and the gain on what it mirrors */
-const MIRROR_BASE = { least: 0.05, gain: 1 }
+/** the stream's mirror: its least share facing the eye, the gain on what it mirrors (the poles over a dark stream mirror
+ * dimly, so their shapes show only lifted), and how far the ripples shift the mirrored picture, so the poles waver */
+const MIRROR_BASE = { least: 0.08, gain: 1.6, wave: 0.18 }
 /** a look round's numbers for the stream (`globalThis.__stageProbe.stream`), on the dev server only */
-function streamNumbers(): typeof MIRROR_BASE & { ripple?: number; absorb?: number; caustic?: number; wave?: number } {
+function streamNumbers(): typeof MIRROR_BASE & { ripple?: number; absorb?: number; caustic?: number } {
   const probe = import.meta.env.DEV ? (globalThis as { __stageProbe?: { stream?: Record<string, number> } }).__stageProbe?.stream : undefined
   return { ...MIRROR_BASE, ...probe }
 }
@@ -359,7 +360,8 @@ export async function bridgeSurfaces(stack: Stack): Promise<BridgeSurfaces> {
     // the bed's depth under the level face, the bank's slope rising to it at the waterline
     const depth = float(BANK.water - BANK.bed).mul(float(1).sub(smoothstep(BANK.toe, BANK.toe + 0.6, p.x.abs())))
     const seen = p.xz.sub(toEye.xz.normalize().mul(depth.mul(sinT.div(cosT))))
-    const clear = depth.mul(float(1).add(float(1).div(cosT))).mul(-(S.absorb ?? 1.6)).exp()
+    // a clean dark under a close eye looking straight down: the bed shows, but darkened by the water over it
+    const clear = depth.mul(float(1).add(float(1).div(cosT))).mul(-(S.absorb ?? 2.5)).exp()
     const grain = mx_noise_float(vec3(seen.x.mul(1.7), seen.y.mul(1.7), 7.7)).mul(0.5).add(0.5)
     const bed = mx(lin('#3a3126'), lin('#55473a'), grain)
     const body = water.colorNode as N
@@ -382,7 +384,7 @@ export async function bridgeSurfaces(stack: Stack): Promise<BridgeSurfaces> {
     const MIRROR = streamNumbers()
     const fresnel = float(1).sub(normalWorld.dot(view).abs()).pow(5).mul(1 - MIRROR.least).add(MIRROR.least)
     // the ripples shift the mirrored picture a little, as a stream's surface does
-    reflection.uvNode = screenUV.flipX().add(normalView.xy.sub(normalViewGeometry.xy).mul(MIRROR.wave ?? 0.08))
+    reflection.uvNode = screenUV.flipX().add(normalView.xy.sub(normalViewGeometry.xy).mul(MIRROR.wave))
     waterTop.colorNode = (waterTop.colorNode as N).mul(float(1).sub(fresnel))
     waterTop.emissiveNode = reflection.rgb.mul(fresnel.mul(MIRROR.gain))
     waterTop.needsUpdate = true

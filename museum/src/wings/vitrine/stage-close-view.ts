@@ -132,8 +132,9 @@ export const STAGE = Object.freeze({
     shadeReach: [1.2, 2.2] as readonly [number, number],
     /** a floor laid over a machine's own ground gives way to that ground where the eye grazes it (the sine of the angle
      * under the horizon: gone below the first, whole from the second): the ground's far top runs on as ground behind
-     * its lip, and hands itself to the field as the floor does */
-    graze: [.09, .24] as readonly [number, number] },
+     * its lip, and hands itself to the field as the floor does. From the horizon itself, so a far bank a low eye sees
+     * at a sine near a tenth keeps most of its light and its form */
+    graze: [0, .16] as readonly [number, number] },
   /** the key: turned from the eye's bearing (negative: the eye's left) and raised, warm, soft */
   key: { turn: -50, height: 52, kelvin: 4500, lux: 280, ambient: .55,
     /** the shadow's soft edge as a share of the machine's span, as a broad source high over it gives */
