@@ -206,10 +206,14 @@ export const STAGE = Object.freeze({
   /** the machine's swept outline's share of its fit box, across and upright, per device: the box keeps room for the
    * machine's own longest caption, and the phone's is near square, so an upright machine takes more of its height to
    * stand as large in the glass; on the desk the margin over the machine is what a caption leaves under it, a picture's
-   * twelfth, so its top never stands tight under the window's edge */
-  share: { desktop: [.83, .83] as readonly [number, number], phone: [.885, 1] as readonly [number, number],
+   * twelfth, so its top never stands tight under the window's edge. The phone's glass runs on above the box, under
+   * the close button's row, so an upright machine there may stand a little taller than its box */
+  share: { desktop: [.83, .83] as readonly [number, number], phone: [.885, 1.03] as readonly [number, number],
     /** on the desk a machine with no step stands in the whole picture: its height at most this share of it */
-    most: .82 },
+    most: .82,
+    /** on the phone the share across is the machine's at rest; the sweep of its turning parts (a sail's circle, an
+     * arm) may run this much wider, so a turning machine does not stand smaller than a still one */
+    sweep: 1.05 },
   /** the print: the museum's neutral curve, no split, a light vignette, a tooth that dithers */
   print: { exposure: 1.0, toe: .012, shoulder: .35, vignette: .1, grain: .005 },
 })

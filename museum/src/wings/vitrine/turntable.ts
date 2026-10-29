@@ -22,7 +22,7 @@ import { LOOK_RULE } from '../vinci/input'
 import { deskStageHeight } from '../desk-stage'
 import type { VitrinePayload, VitrinePayloadHost } from './types'
 import { islandFit } from './fit'
-import { captionRoom, glassShift } from './fit'
+import { captionRoom, glassShift, outlineTop } from './fit'
 import { paintSlider } from './slider'
 import { folioDoor } from './folio'
 
@@ -384,6 +384,8 @@ export function createTurntablePayload(options: TurntableOptions): TurntablePayl
    * in its own window. Points of its surfaces over the run, a few hundred a
    * part, in the table's metres. */
   let outline: Vector3[] = []
+  /** how many of the outline's points are the machine at rest (the run's first moment) */
+  let restCount = 0
   const OUTLINE_PER_PART = 360
   const instance = new Matrix4()
   /** the outline over the run; a machine that walks, round the place it has walked to at each moment */
@@ -393,6 +395,7 @@ export function createTurntablePayload(options: TurntableOptions): TurntablePayl
       body.animate(period * i / moments, 0)
       const from = points.length
       outlineNow(points)
+      if (i === 0) restCount = points.length
       if (walk) {
         walkAt(period * i / moments, at)
         for (let k = from; k < points.length; k++) points[k]!.sub(at)
@@ -492,7 +495,7 @@ export function createTurntablePayload(options: TurntableOptions): TurntablePayl
   }
   /** THE OUTLINE'S EXTREMES: its farthest point in each of a few dozen directions, enough to find its box on the
    * canvas from any eye every frame */
-  let hull: Vector3[] = []
+  let hull: Vector3[] = [], restHull: Vector3[] = []
   function hullOf(points: readonly Vector3[]): Vector3[] {
     const n = 192, best: { at: number; point: Vector3 | null }[] = [], toward: Vector3[] = []
     for (let i = 0; i < n; i++) {
@@ -519,6 +522,8 @@ export function createTurntablePayload(options: TurntableOptions): TurntablePayl
     const corner = new Vector3()
     const points = hull.length ? hull : [rest.min.x, rest.max.x].flatMap(x => [rest.min.y, rest.max.y].flatMap(y => [rest.min.z, rest.max.z].map(z => new Vector3(x, y, z))))
     const { share } = stageNumbers(), [across, tall] = host?.narrow ? share.phone : share.desktop
+    // on the phone the machine at rest takes the share across; the run's sweep may reach a little wider than that
+    const sweep = host?.narrow ? share.sweep : 1, still = host?.narrow ? restHull : []
     // on the desk the machine stands at most at `most` of the picture's height, where its box is the whole picture
     const upright = host?.narrow ? tall : Math.min(tall, share.most * h / fit.height)
     /** the run's outline on the canvas from this bearing at a distance, against its share of the fit box across and up */
@@ -531,7 +536,14 @@ export function createTurntablePayload(options: TurntableOptions): TurntablePayl
         const u = corner.dot(right) / ahead, v = corner.dot(up) / ahead
         left = Math.min(left, u); rightmost = Math.max(rightmost, u); low = Math.min(low, v); high = Math.max(high, v)
       }
-      return Math.max((rightmost - left) / (2 * tanX * across), (high - low) / (2 * tanY * upright))
+      let restLeft = Infinity, restRight = -Infinity
+      for (const point of still) {
+        corner.copy(point).sub(centre)
+        const u = corner.dot(right) / (distance - corner.dot(toward))
+        restLeft = Math.min(restLeft, u); restRight = Math.max(restRight, u)
+      }
+      return Math.max((rightmost - left) / (2 * tanX * across * sweep), still.length ? (restRight - restLeft) / (2 * tanX * across) : 0,
+        (high - low) / (2 * tanY * upright))
     }
     // THE ONE RULE: the outline's own box takes the setting's share of the fit box (its place is evened in placeCamera)
     const want = 1
@@ -735,9 +747,12 @@ export function createTurntablePayload(options: TurntableOptions): TurntablePayl
       camera.updateMatrixWorld()
       const at = new Vector3()
       let left = Infinity, right = -Infinity, top = Infinity, bottom = -Infinity
+      if (drawnAcross.length < hull.length * 2) drawnAcross = new Float64Array(hull.length * 2)
+      let k = 0
       for (const point of hull) {
         at.copy(point).add(walked).project(camera)
         const x = (at.x * .5 + .5) * w, y = (.5 - at.y * .5) * h
+        drawnAcross[k++] = x; drawnAcross[k++] = y
         left = Math.min(left, x); right = Math.max(right, x); top = Math.min(top, y); bottom = Math.max(bottom, y)
       }
       let down = fit.top + fit.height / 2 - (top + bottom) / 2
@@ -745,9 +760,10 @@ export function createTurntablePayload(options: TurntableOptions): TurntablePayl
       // placed by its own player
       if (!framed) {
         const room = captionRoom(host, captionTexts), drawn = { left, right, top: top + down, bottom: bottom + down }
-        const roomed = glassShift(host, fit, room, drawn, true)
+        const lift = down, column = (from: number, to: number): number => outlineTop(drawnAcross, k, from, to) + lift
+        const roomed = glassShift(host, fit, room, drawn, true, column)
         const lead = leadAt(state.clock)
-        down += lead > 0 ? roomed + (glassShift(host, fit, room, drawn, false) - roomed) * lead : roomed
+        down += lead > 0 ? roomed + (glassShift(host, fit, room, drawn, false, column) - roomed) * lead : roomed
       }
       shift((fit.left + fit.width / 2 - (left + right) / 2) * whole, down * whole)
     }
@@ -757,6 +773,8 @@ export function createTurntablePayload(options: TurntableOptions): TurntablePayl
     // THE SHADOWS FOLLOW THE PICTURE: drawn again when the eye, the lens or the machine's clock moved since they were
     stirred(camera)
   }
+  /** the whole view's outline on the canvas, x and y in pairs, kept between frames */
+  let drawnAcross = new Float64Array(0)
   const drawnAt = new Float64Array(21).fill(NaN)
   /** the clock the table's matrices were last worked out at */
   let posedAt = NaN
@@ -1088,6 +1106,7 @@ export function createTurntablePayload(options: TurntableOptions): TurntablePayl
     walkOf()
     outline = outlineOver(whole ? (period ? RUN_SAMPLES : 1) : 1)
     hull = hullOf(outline)
+    restHull = hullOf(outline.slice(0, restCount))
     const span = Math.max(size.x, size.y, size.z)
     object.traverse(child => {
       if (!(child instanceof Mesh) || child.userData['vitrineOverlay']) return
@@ -1235,7 +1254,7 @@ export function createTurntablePayload(options: TurntableOptions): TurntablePayl
       }
       standing = false
       stage = undefined; scene = undefined; camera = undefined
-      outline = []; hull = []; wholeRef = 0; walk = null
+      outline = []; hull = []; restHull = []; wholeRef = 0; walk = null
       host = undefined
     },
   }
