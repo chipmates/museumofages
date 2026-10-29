@@ -495,7 +495,7 @@ export function createBench(stack: Stack, onExit: () => void) {
     const { air } = stageNumbers();
     stage.air(distance + radius * air.near, distance + radius * air.far);
     camera.updateMatrixWorld();
-    stage.follow({ yaw: rigYaw(), centre: onCanvas(frameBounds().getCenter(new Vector3()), camera), picture, eye: camera.position, lens: camera.fov * Math.PI / 180 * picture });
+    stage.follow({ yaw: rigYaw(), centre: onCanvas(frameBounds().getCenter(new Vector3()), camera), picture, eye: camera.position, lens: camera.fov * Math.PI / 180 * picture, camera });
   }
   /** the posed rig's fixed eye: the bench's lens, its dock offset and its air, from a given place */
   function composeEye(fixed: NonNullable<BenchOptions['eye']>) {

@@ -36,14 +36,15 @@ export const STAGE = Object.freeze({
     pool: [.052, .048, .044] as const,
     /** the pool's radius as a share of the picture's height, how far above the machine's centre it stands (the same
      * share), and how much darker the frame's top runs */
-    radius: .8, lift: .1, top: .2,
+    radius: .8, lift: .1, top: .35,
     /** the pool is wider than it is tall, as a lamp's spill on a sweep spreads along the floor's line */
-    wide: 1.6,
+    wide: 1.3,
     /** a dither of this share of the value, so an 8-bit gradient of a few levels never bands */
     dither: .05,
-    /** how much of its fall the pool keeps below its centre (0: all of it): a lamp's spill on a cove stays on the
-     * cove down to the floor, so a low eye finds the field no darker just above the floor than beside the machine */
-    below: 0,
+    /** how much of its fall the pool keeps below its centre where the eye stands low enough to see the horizon under
+     * it (0: all of it): a lamp's spill on a cove stays on the cove down to the floor, so a low eye finds the field no
+     * darker just above the floor than beside the machine; an eye looking down sees no field there, and nothing moves */
+    below: 1,
   },
   /** the floor: matte, a dark warm grey, its own value falling from the machine's foot by radii of the machine */
   floor: { albedo: [.05, .048, .045] as const, roughness: .93, pool: [.3, 1.8] as const, keep: .2,
@@ -58,7 +59,7 @@ export const STAGE = Object.freeze({
   air: { near: 1.0, far: 2.8, horizon: 1.4,
     /** the hand-off spans at least this share of the picture's own height in angle: a low eye sees the floor behind
      * the machine in a few rows, and a hand-off of a few rows reads as a band */
-    least: 0 },
+    least: .3 },
   /** the key: turned from the eye's bearing (negative: the eye's left) and raised, warm, soft */
   key: { turn: -50, height: 52, kelvin: 4500, lux: 280, ambient: .55,
     /** the shadow's soft edge as a share of the machine's span, as a broad source high over it gives */
@@ -114,7 +115,7 @@ export interface StageSetting {
   key: KeyLight
   /** the eye's bearing (radians, the eye at sin/cos of it round the machine) turns the rig; the machine's centre on the
    * canvas (shares, top-left origin) and the picture's height as a share of the canvas's place the pool */
-  follow(o: { yaw: number; centre?: { x: number; y: number }; picture?: number; eye?: Vector3; lens?: number }): void
+  follow(o: { yaw: number; centre?: { x: number; y: number }; picture?: number; eye?: Vector3; lens?: number; camera?: Camera }): void
   /** the air's ramp, in metres from the eye */
   air(near: number, far: number): void
   /** the contact shade from points of the machine's surfaces, in world metres */
@@ -154,10 +155,13 @@ export function createStageSetting(options: {
 
   // ---- the field, in the canvas's own shares (top-left origin), so a pass drawn at another resolution keeps its place
   const poolCentre = uniform(vec2(.5, .45)), poolRadius = uniform(float(S.field.radius))
+  /** the horizon's row on the canvas (a share of its height from the top); above the canvas where it is not known */
+  const horizonRow = uniform(float(-1))
   const edge = vec3(...S.field.edge), pool = vec3(...S.field.pool)
   const aspect = viewportSize.x.div(viewportSize.y.max(1))
   const toward = viewportUV.sub(poolCentre).mul(vec2(aspect.div(S.field.wide), 1)).div(poolRadius)
-  const offset = S.field.below > 0 ? vec2(toward.x, mix(toward.y, toward.y.min(0), S.field.below)) : toward
+  const hold = float(S.field.below).mul(smoothstep(poolCentre.y, poolCentre.y.add(.05), horizonRow))
+  const offset = S.field.below > 0 ? vec2(toward.x, mix(toward.y, toward.y.min(0), hold)) : toward
   const glow = exp(offset.dot(offset).mul(-1.7))
   const top = mix(float(1 - S.field.top), float(1), smoothstep(0, .55, viewportUV.y))
   const dither = float(1).add(interleavedGradientNoise(screenCoordinate.xy).sub(.5).mul(S.field.dither))
@@ -367,7 +371,11 @@ export function createStageSetting(options: {
   let lastYaw = NaN, lastYawSet = NaN
   const mirrors = new Set<MeshStandardNodeMaterial>()
   const kept = new Map<MeshStandardNodeMaterial, Partial<MeshStandardNodeMaterial>>()
-  function follow(o: { yaw: number; centre?: { x: number; y: number }; picture?: number; eye?: Vector3; lens?: number }): void {
+  function follow(o: { yaw: number; centre?: { x: number; y: number }; picture?: number; eye?: Vector3; lens?: number; camera?: Camera }): void {
+    if (o.camera) {
+      const ahead = o.camera.getWorldDirection(new Vector3()).setY(0)
+      horizonRow.value = ahead.lengthSq() > 1e-8 ? onCanvas(ahead.normalize().multiplyScalar(1e4).add(o.camera.position), o.camera).y : -1
+    }
     if (o.eye && S.air.horizon > 0) {
       const down = Math.atan2(Math.max(.01, o.eye.y - floorY), Math.hypot(o.eye.x - centre.x, o.eye.z - centre.z))
       horizonSine.value = Math.max(1e-4, Math.sin(Math.max(down * S.air.horizon, (o.lens ?? 0) * S.air.least)))

@@ -704,7 +704,7 @@ export function createTurntablePayload(options: TurntableOptions): TurntablePayl
     }
     // the rig turns with the eye, and the field's pool stands behind the machine where the picture puts it
     camera.updateMatrixWorld()
-    stage?.follow({ yaw: view.yaw, centre: onCanvas(aim, camera), picture: fit.height / h, eye: camera.position, lens: camera.fov * DEG })
+    stage?.follow({ yaw: view.yaw, centre: onCanvas(aim, camera), picture: fit.height / h, eye: camera.position, lens: camera.fov * DEG, camera })
   }
 
   // ---- the words that follow the clock
