@@ -142,8 +142,9 @@ export const STAGE = Object.freeze({
      * with the height of what casts it */
     ground: .12,
     /** the heights over the ground (shares of the span) that part its shadow: under the first a part casts the key's
-     * own edge (a pole lying on a bank stands on its shadow), up to the second half the ground's, above it all */
-    bands: [.1, .4] as readonly [number, number] },
+     * own edge (a pole lying on a bank stands on its shadow), up to the second half the ground's, above it all. A broad
+     * surface across a band's edge shows a seam in its shadow: the parachute's canopy lies wholly above the second */
+    bands: [.07, .3] as readonly [number, number] },
   /** the fill: the sky's and the floor's share, and a weak lamp from the eye itself */
   fill: { sky: '#6d7682', ground: '#40362c', intensity: .36, environment: .2, front: .12, frontHeight: 14, frontKelvin: 5600,
     /** the scale figure's own fill (a reflector by the eye, as a photographer sets one for a figure in shade): its bearing
