@@ -79,8 +79,8 @@ function exhibitNote(work: PictureWork, entries: readonly ResolvedPicturePlate[]
   const current = entries.some(entry => (entry.plate as PolicyPaintingEntry).tier !== undefined)
   switch (work.id) {
     case 'annunciation': return {
-      en: 'The exhibition uses 98 × 217 cm. The Uffizi records 90 × 222 cm. These measurements remain unresolved.',
-      de: 'Die Ausstellung verwendet 98 × 217 cm. Die Uffizien nennen 90 × 222 cm. Diese Maßangaben bleiben ungeklärt.',
+      en: 'The panel hangs here at 98 × 217 cm. One Uffizi record gives that size, and the Uffizi’s own photos have those proportions. The Uffizi’s web page gives 90 × 222 cm.',
+      de: 'Die Tafel hängt hier im Format 98 × 217 cm. Ein Eintrag der Uffizien nennt diese Maße, und die Fotos der Uffizien selbst haben dieses Seitenverhältnis. Die Webseite der Uffizien nennt 90 × 222 cm.',
     }
     case 'virgin-and-child-with-st-anne': return {
       en: 'The original painted field is 113 cm wide. The enlarged support is 130 cm wide.',
