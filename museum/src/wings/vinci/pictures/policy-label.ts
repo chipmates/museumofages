@@ -2,7 +2,7 @@
  * collection JSON stays untouched. Source licences and supplied honesty lines
  * are printed literally; historic register rights are identified as historic.
  */
-import { pictureDisplayWindow } from './registration'
+import { pictureDisplayWindow, pictureFramePart } from './registration'
 import { visitorHolder, visitorNote, visitorSource } from './visitor-copy'
 import type { PictureWork, ResolvedPicturePlate } from './register'
 import type { PolicyPaintingEntry, PolicyPicturePlate } from './policy'
@@ -20,6 +20,8 @@ export interface PicturePolicyLabelText {
     readonly tier: string | null
     readonly honesty: PictureBilingual | null
     readonly licence: string
+    /** the licence's own text, where the record holds its address */
+    readonly licenceUrl: string | null
     readonly url: string | null
     readonly hash: string | null
     readonly relationship: PolicyPicturePlate['relationship']
@@ -145,7 +147,7 @@ export function policyLabelText(work: PictureWork, entries: readonly ResolvedPic
       const e = entry.plate as PolicyPaintingEntry
       return { id: e.id, tier: e.tier ?? null,
         honesty: e.honesty_en && e.honesty_de ? { en: e.honesty_en, de: e.honesty_de } : null,
-        licence: e.licence, url: e.source_url ?? null, hash: e.sha256 ?? null,
+        licence: e.licence, licenceUrl: e.licence_url ?? null, url: e.source_url ?? null, hash: e.sha256 ?? null,
         relationship: (entry as Partial<PolicyPicturePlate>).relationship ?? (entry.face === 'reverse' ? 'reverse' : 'primary') }
     }) }
 }
@@ -155,6 +157,29 @@ function node<K extends keyof HTMLElementTagNameMap>(tag: K, className: string, 
   result.className = className
   result.textContent = text
   return result
+}
+
+/** A Creative Commons licence the line names, as the line writes it. */
+const CC_NAME = /\bCC[ -]?BY(?:[ -](?:NC|SA|ND))*(?:[ -]\d\.\d)?|\bCC0\b|\bPublic Domain Mark(?: \d\.\d)?/
+/** THE CREDIT'S TWO LINKS in the record, each on a line of its own, as the
+ * grave's painting gives them: the licence by its name to its own text, and
+ * the file it credits to its page. Only where the record holds the licence's
+ * address and the line names that licence; the line itself stays as written. */
+function attributionLinks(source: PicturePolicyLabelText['sources'][number]): HTMLElement[] {
+  const deed = source.licenceUrl && /^https:\/\/creativecommons\.org\//.test(source.licenceUrl) ? source.licenceUrl : null
+  const named = deed ? CC_NAME.exec(source.licence)?.[0] : undefined
+  if (!deed || !named) return []
+  const link = (words: string, address: string): HTMLElement => {
+    const line = node('p', 'picture-licence-link'), a = node('a', 'vinci-picture-source', words)
+    a.href = address; a.target = '_blank'; a.rel = 'noopener noreferrer'
+    line.dataset['manifestId'] = source.id
+    line.append(a)
+    return line
+  }
+  const lines = [link(named, deed)]
+  const host = /^https:\/\/([^/?#]+)/.exec(source.url ?? '')?.[1]
+  if (source.url && host) lines.push(link(host === 'commons.wikimedia.org' ? 'Wikimedia Commons' : host, source.url))
+  return lines
 }
 
 /** A label made of two language columns. Grid/block presentation belongs to
@@ -295,6 +320,7 @@ export function createPolicyWorkLabel(work: PictureWork, entries: readonly Resol
     const licence = node('p', 'picture-licence', source.licence)
     licence.dataset['manifestId'] = source.id
     sourceLines.append(licence)
+    if (expanded) for (const line of attributionLinks(source)) sourceLines.append(line)
   }
   label.append(sourceLines)
   if (expanded) {
@@ -400,7 +426,10 @@ export function createPictureRecord(work: PictureWork, entries: readonly Resolve
   root.append(createPolicyWorkLabel(work, entries, true, [], false, evidence))
   const machine = node('details', 'picture-machine-chain')
   machine.append(node('summary', '', 'Complete data / Vollständige Daten'))
-  const chain = (entry: ResolvedPicturePlate) => ({ plate: entry.plate, preview: entry.preview, displayWindow: pictureDisplayWindow(entry.plate) })
+  const chain = (entry: ResolvedPicturePlate) => {
+    const part = pictureFramePart(entry.plate)
+    return { plate: entry.plate, preview: entry.preview, displayWindow: pictureDisplayWindow(entry.plate), ...(part ? { framePart: part } : {}) }
+  }
   machine.append(node('pre', 'picture-source-hash', JSON.stringify({
     collection: work,
     sources: entries.map(chain),
