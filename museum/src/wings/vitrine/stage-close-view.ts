@@ -221,7 +221,7 @@ export const STAGE = Object.freeze({
      * never winds and keeps its own normals, since a sheet shaded as a line facing the eye stands as one flat lamp */
     tube: .2 },
   /** the phone header's scrim as the field under its clear middle takes it: its colour in linear light and its share */
-  header: { scrim: [.0040, .0044, .0052] as const, share: .9 },
+  header: { scrim: [.0040, .0044, .0052] as const, share: .9, ramp: .5 },
   /** the vertical lens in degrees: a long lens on the desktop, the phone's upright frame narrower still across */
   lens: { desktop: 24, phone: 40 },
   /** the machine's swept outline's share of its fit box, across and upright, per device: the box keeps room for the
@@ -347,7 +347,8 @@ export function createStageSetting(options: {
   const tall = float(1).sub(down.div(.55).clamp(0, 1).mul(.2)).mul(float(1).sub(down.sub(.55).div(.45).clamp(0, 1))).mul(headerFoot.sign())
   const across = viewportUV.x.sub(headerStops.x).div(headerStops.y.sub(headerStops.x).max(1e-4)).clamp(0, 1)
     .mul(float(1).sub(viewportUV.x.sub(headerStops.z).div(headerStops.w.sub(headerStops.z).max(1e-4)).clamp(0, 1)))
-  const backdrop = mix(field, vec3(...S.header.scrim), tall.mul(across).mul(S.header.share))
+  // the scrim mixes over the drawn picture, the field here before its print: its half-way share is taken as more
+  const backdrop = mix(field, vec3(...S.header.scrim), tall.mul(across.pow(S.header.ramp)).mul(S.header.share))
   scene.background = new Color().setRGB(S.field.edge[0], S.field.edge[1], S.field.edge[2])
   scene.backgroundNode = backdrop
 
