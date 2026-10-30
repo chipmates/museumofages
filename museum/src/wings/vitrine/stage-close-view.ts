@@ -627,6 +627,8 @@ export function createStageSetting(options: {
   }
   /** a material used by thin parts alone, and the least radius among them (world metres) */
   const cords = new Map<MeshStandardNodeMaterial, number>()
+  /** the surfaces that set their own width and take the card all the same */
+  const cards = new Set<MeshStandardNodeMaterial>()
   /** the copies the winding cords draw from, and every mesh lent one, with the material it is given back */
   const plain = new Set<MeshStandardNodeMaterial>()
   const swapped: { mesh: Mesh; was: MeshStandardNodeMaterial }[] = []
@@ -644,6 +646,8 @@ export function createStageSetting(options: {
       const one = !Array.isArray(mesh.material), sheet = round.curved < S.cord.tube
       for (const material of [mesh.material].flat()) {
         const m = material as MeshStandardNodeMaterial
+        // a surface that sets its own width (a hem's cord) keeps it, and takes the thin parts' card
+        if (m.isNodeMaterial && m.userData['ownWidth'] && !cards.has(m)) { cards.add(m); keep(m); continue }
         if (!m.isNodeMaterial || m.positionNode) continue
         if (!(Number.isFinite(r) && r < most)) { thick.add(m); continue }
         if (sheet) sheets.add(m)
@@ -690,7 +694,7 @@ export function createStageSetting(options: {
       m.needsUpdate = true
     }
     // the card, again after a machine's own lamps relit its surfaces
-    if (S.fill.card.share > 0) for (const m of cords.keys()) {
+    if (S.fill.card.share > 0) for (const m of [...cords.keys(), ...cards]) {
       const under = (m.lightsNode as unknown as { getLights?(): Light[] } | null)?.getLights?.() ?? sceneLights()
       if (under.includes(cordLamp)) continue
       m.lightsNode = lights([...under, cordLamp])
