@@ -50,9 +50,10 @@ export const COLLECTIONS = [
     // restated as superseded by Tier 2, the Last Supper's credit naming the scan its
     // reproduction copies, the Salvator Mundi's owner as not publicly confirmed and the
     // Buccleuch Yarnwinder's size, holder and record from its holder, with its German holder
-    // line reworded; the sealed original does not.
+    // line reworded, and the Last Supper's held scan recorded as no longer the source that
+    // hangs; the sealed original does not.
     originalSHA256: '7e78e1a73fa55cdd58c75c495332ebe0617387e6b72babbea2695bbb8a3a5d02',
-    normalizedSHA256: '6774c637217ccc63e3db04378e02454d90ddd723267eb8a1e168db6bafb184a0',
+    normalizedSHA256: '856f6ef3aa20cf2cdd29c6131b761d758109456fbe0f3e48ffd69cb9e37477f1',
     expected: { works: 30, held_assets: 32, catalogue_mentions: 9 },
   },
 ]

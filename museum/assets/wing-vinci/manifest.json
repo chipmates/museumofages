@@ -3068,7 +3068,7 @@
       "prompt": "Linen-canvas measured fields with 40 mm surrounding exhibition mats and opaque 16 mm backings, using three scales from the manifested CC0 canvas library. Primary source images sit within measured fields; additional faces remain distinct. The unillustrated catalogue sheet is a modern 1.50 by 1.80 m carrier with current bilingual source-absence copy; its historical painting extent remains unmeasured. Sala uses a 1.15m-wide modern documentary carrier with no claim about the unknown painted extent. Source-based arch masks retain a narrow uncertain fringe; no reference-only raster is sampled.",
       "model": "Deterministic TypeScript and TSL procedural geometry",
       "date": "2026-09-09",
-      "sha256": "edf108d2e9121bb5bf58fae54095d2a7c937e14ee8f4aa12f75de4dee7e94459",
+      "sha256": "4e0ea8cd5e05527155e917695b96d86b307c74213416db270b0d518aaede7892",
       "note": "Museum dressing, not documentary imagery. recipe_file=src/wings/vinci/pictures/index.ts production_files=src/wings/vinci/pictures/aperture.ts"
     },
     {
@@ -3081,7 +3081,7 @@
       "prompt": "Metre-local chronological hang at the locked datum, primary source images uniformly contained within measured fields, additional faces kept distinct, and projected bilingual labels under the 9 September 2026 source policy. Preserve immutable measurements and title/attribution wording, current source honesty/licences, and original register wording in dated Sources. Source windows do not authenticate physical corners.",
       "model": "Deterministic TypeScript and TSL procedural geometry",
       "date": "2026-09-09",
-      "sha256": "edf108d2e9121bb5bf58fae54095d2a7c937e14ee8f4aa12f75de4dee7e94459",
+      "sha256": "4e0ea8cd5e05527155e917695b96d86b307c74213416db270b0d518aaede7892",
       "note": "Museum dressing, not documentary imagery. recipe_file=src/wings/vinci/pictures/index.ts"
     },
     {
@@ -3380,10 +3380,10 @@
       "date": "2026-09-14",
       "id": "vinci/pictures/policy-labels",
       "path": "procedural/pictures/policy-labels/*",
-      "prompt": "Compose bilingual museum labels and the four-colour certainty key. Keep labels to a certainty word and title, and reading paragraphs to ordinary bilingual museum language. A close look carries the same label with the certainty word alone on its first line, because the window names the work above it. Preserve each selected source honesty line and licence verbatim in the deliberately opened record, together with immutable collection data and superseded wording. Generated typesetting carries no documentary artwork claim.",
+      "prompt": "Compose bilingual museum labels and the four-colour certainty key. Keep labels to a certainty word and title, and reading paragraphs to ordinary bilingual museum language. A close look carries the same label with the certainty word alone on its first line, because the window names the work above it. Preserve each selected source honesty line and licence verbatim in the deliberately opened record, together with immutable collection data and superseded wording. Where a record holds a Creative Commons licence's address, the opened record links the licence by its name to its text and the credited file to its page. Generated typesetting carries no documentary artwork claim.",
       "model": "Deterministic TypeScript DOM composition",
       "note": "Museum typesetting, not documentary imagery. recipe_file=src/wings/vinci/pictures/policy-label.ts production_files=src/wings/vinci/pictures/policy.ts",
-      "sha256": "282050eed590cf4128a941f67ed16f92fee8fe8db18ab6450c2dee7fd8743125"
+      "sha256": "a6b184eef0445c68ec13933ce9a52bda6dabae4ebd9f17884ee59417677f29af"
     },
     {
       "wing": "vinci",
@@ -3406,10 +3406,10 @@
       "date": "2026-09-10",
       "id": "vinci/pictures/source-display-windows",
       "path": "procedural/pictures/source-display-windows/*",
-      "prompt": "Apply explicitly measured source-hash-bound affine UV windows to remove photographed apparatus around reproductions while preserving raster colour, grain and aspect. Keep complete source views accessible. Record visible-edge uncertainty and distinguish display crops from authenticated physical registrations. Reject clipped sources and source substitutions. No generated image, stretching or reconstructed painting.",
+      "prompt": "Apply explicitly measured source-hash-bound affine UV windows to remove photographed apparatus around reproductions while preserving raster colour, grain and aspect. Keep complete source views accessible. Record visible-edge uncertainty and distinguish display crops from authenticated physical registrations. Reject clipped sources and source substitutions. A plate registered instead to part of an earlier plate's frame, bound to both files' hashes, stands on that part at the frame's own scale and is never enlarged to fill the rest. No generated image, stretching or reconstructed painting.",
       "model": "Manual source-edge observations and deterministic TypeScript UV arithmetic",
       "note": "Museum display windows, not documentary measurements. recipe_file=src/wings/vinci/pictures/registration.ts evidence_file=src/wings/vinci/pictures/bench/w2-source-scale-audit.md",
-      "sha256": "6e02870fc7b043b53e70018e51b0be48848db5704205792ff68c7af11c119cbe"
+      "sha256": "42f8343121f34c0976d15b9194b275eadde244796acf4a615ddc190ffcb5bb01"
     },
     {
       "wing": "vinci",
@@ -3499,12 +3499,12 @@
       "prompt": "Place the picture module sources on every field of the room's holder-sized wall, including the paired panel reverse, and hang the body wall's admitted Windsor sheets each at the size its holder records, the three without a recorded size at a constant area. No field is withheld: the store's register is the only admission decision, and a work it does not admit leaves the wall. The current holder measurement for the Lansdowne Yarnwinder is 37.1 by 49.5 cm while its earlier layout slot preserves neighbouring placements. Place the admitted Last Supper source within the existing 8.8 by 4.6 metre mural field. Source admission, windows, arch shoulders, decoding and transitions are imported unchanged from the picture module. The room openings and fittings supply the light; the hang's works take the picture room's own heads through their tone, each plane carrying its work's slot, and stand in their frames' rebates. All previews remain present: 512 pixel uploads at calm and standard, 1024 at hero, one distance-earned full source outside calm across both walls. Source pixels are never copied into this repository.",
       "model": "Deterministic TypeScript and TSL exhibition placement",
       "date": "2026-09-14",
-      "sha256": "3282145cda582141afddcaa696bafc1b2adbf3b9a50337a2100103a313c1ce9b",
+      "sha256": "6da2cdfe03fb40f34f609f6ec9fbfa56fe6716e4e96950e1a8f2d54ce5d7c59f",
       "note": "Modern exhibition supports, no historical room claim. recipe_file=src/wings/vinci/collection/plates.ts wall_register=src/wings/vinci/collection/body-wall.ts; streaming bytes and displayed licences resolve through the store manifest.",
       "recipe_files": [
         {
           "path": "src/wings/vinci/collection/plates.ts",
-          "sha256": "3282145cda582141afddcaa696bafc1b2adbf3b9a50337a2100103a313c1ce9b"
+          "sha256": "6da2cdfe03fb40f34f609f6ec9fbfa56fe6716e4e96950e1a8f2d54ce5d7c59f"
         },
         {
           "path": "src/wings/vinci/collection/hang.ts",
@@ -3532,7 +3532,7 @@
         },
         {
           "path": "src/wings/vinci/pictures/registration.ts",
-          "sha256": "6e02870fc7b043b53e70018e51b0be48848db5704205792ff68c7af11c119cbe"
+          "sha256": "42f8343121f34c0976d15b9194b275eadde244796acf4a615ddc190ffcb5bb01"
         },
         {
           "path": "src/wings/vinci/pictures/arch-mask.ts",
@@ -3544,7 +3544,7 @@
         },
         {
           "path": "src/wings/vinci/pictures/policy-label.ts",
-          "sha256": "282050eed590cf4128a941f67ed16f92fee8fe8db18ab6450c2dee7fd8743125"
+          "sha256": "a6b184eef0445c68ec13933ce9a52bda6dabae4ebd9f17884ee59417677f29af"
         },
         {
           "path": "src/wings/vinci/index.ts",
