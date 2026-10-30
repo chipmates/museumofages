@@ -658,8 +658,9 @@ export function createTurntablePayload(options: TurntableOptions): TurntablePayl
     if (chosen !== 'whole') { chosen = 'whole'; light(litPart()) }
     // A MACHINE THAT WALKS IS FITTED AT EVERY BEARING THE HAND TURNS IT TO: three times as long as it is wide, broadside
     // it would press against the window's sides at the distance its three-quarter view takes, and fitted broadside it
-    // would stand small in that view
-    if (walk && view.distance >= wholeRef * .95) view.distance = wholeDistance(view)
+    // would stand small in that view. On the phone's narrow frame every machine is: one long one way, turned at the
+    // whole view's distance, ran out at both sides
+    if ((walk || host?.narrow) && view.distance >= wholeRef * .95) view.distance = wholeDistance(view)
     for (const [, button] of viewButtons) button.setAttribute('aria-pressed', 'false')
   }
   const eyeOf = (v: View): Vector3 => {

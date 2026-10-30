@@ -1,4 +1,4 @@
-import { Box3, type BufferGeometry, Color, Group, type Light, Mesh, MeshStandardNodeMaterial, type Node, PerspectiveCamera, type PlaneGeometry, Scene, Sphere, SpotLight, Vector3 } from 'three/webgpu';
+import { Box3, type BufferGeometry, Color, Group, type Light, Matrix4, Mesh, MeshStandardNodeMaterial, type Node, PerspectiveCamera, type PlaneGeometry, Scene, Sphere, type SkinnedMesh, SpotLight, Vector3 } from 'three/webgpu';
 import { kelvinToColour } from '../../../../stack/light';
 import type { Stack, KeyLight, MaterialSet } from '../../../../stack';
 import { float, lights, mix, normalView, positionWorld, smoothstep, uv, vec2, vec3 } from 'three/tsl';
@@ -102,11 +102,13 @@ const BENCH_FINISH: Partial<Record<string, { roughness: number; metalness: numbe
 const BENCH_SIZE_WORD: Partial<Record<string, { en: string; de: string }>> = {
   'bridge-of-poles': { en: 'as it stands', de: 'stehend' },
 };
-/** The bridge stands on its own banks, whose top is at 0: the setting's floor runs a hair under them. */
-const BRIDGE_BANK_FLOOR = -.02;
+/** The bridge stands on its own banks, whose top is at 0 and ripples 1.5 cm either way: the setting's floor runs under
+ * them. At 2 cm a far eye's depth could not part the floor from the ripple's troughs, and it broke through as lit points */
+const BRIDGE_BANK_FLOOR = -.045;
 /** metres past the standing bridge where the floor starts over its banks and where it is whole: the bank's own edges
- * lie 7.5 m out and more; laid just over the bank's highest swell. Near, so the banks' lit tops never outshine the poles */
-const BRIDGE_MERGE = [.2, 2.0] as const, BRIDGE_MERGE_ABOVE = .03;
+ * lie 7.5 m out and more; laid 3 cm over the bank's highest swell (at 1.5 cm a far eye's depth could not part them).
+ * Near, so the banks' lit tops never outshine the poles */
+const BRIDGE_MERGE = [.2, 2.0] as const, BRIDGE_MERGE_ABOVE = .045;
 /** the half width the setting's floor stays off along the stream: the water and the bank's whole slope up to its lip
  * (`BANK.lip` 3.5 in the bridge's plan, wandering .2), since a floor laid over the slope hovers above it and cuts its
  * top into a band */
@@ -114,6 +116,14 @@ const BRIDGE_CHANNEL = 3.6;
 /** The bridge's own eye, with no rig's eye given: it opens in its yard, its rods on both banks out to the stock's bank
  * ends (`STOCK_FOOT` 8.22 in its plan), so the frame takes the yard whole and the bridge rises in its middle. */
 const BRIDGE_YARD = new Box3(new Vector3(-8.5, -.6, -2.3), new Vector3(8.5, 3, 2.3));
+/** On the phone's upright frame the yard's width stood the bridge small, as poles rather than a bridge: there the frame
+ * takes the bridge and its seats, and the rods' stock runs out at the frame's sides. */
+const BRIDGE_YARD_PHONE = new Box3(new Vector3(-6, -.6, -2.3), new Vector3(6, 3, 2.3));
+/** The share of the phone's width the bridge's run may take: framed by its drawn poles at every moment, not a box's
+ * corners, its widest moment (the poles apart on both banks) stands this wide, the built bridge as large as that allows. */
+const BRIDGE_RUN_WIDE = .9;
+/** css px of air under the phone header's words that no machine's top stands up into */
+const HEADER_AIR = 10;
 /** That eye looks down on the yard more than a rig's eye does, on the same bearing round the stream: the yard is long
  * and flat, and from a low eye it stood as a thin strip across the picture. */
 const BRIDGE_YARD_RISE = .62;
@@ -460,7 +470,7 @@ export function createBench(stack: Stack, onExit: () => void) {
     const size = box.getSize(new Vector3()), centre = box.getCenter(new Vector3());
     const span = Math.max(size.x, size.y, size.z);
     const right = new Vector3().crossVectors(new Vector3(0, 1, 0), direction).normalize(), up = new Vector3().crossVectors(direction, right).normalize();
-    const tanY = Math.tan(17 * Math.PI / 180), tanX = tanY * innerWidth / innerHeight, width = mobile ? .84 : .7, height = slug === 'proportional-compass' ? (mobile ? .38 : .95) : (mobile ? .31 : .8);
+    const tanY = Math.tan(17 * Math.PI / 180), tanX = tanY * innerWidth / innerHeight, width = mobile ? (points && slug === 'bridge-of-poles' ? BRIDGE_RUN_WIDE : .84) : .7, height = slug === 'proportional-compass' ? (mobile ? .38 : .95) : (mobile ? .31 : .8);
     let distance = points ? 0 : span;
     const corners = points ?? [box.min.x, box.max.x].flatMap(x => [box.min.y, box.max.y].flatMap(y => [box.min.z, box.max.z].map(z => new Vector3(x, y, z))));
     for (const corner of corners) {
@@ -480,15 +490,55 @@ export function createBench(stack: Stack, onExit: () => void) {
     machine.animate(playbackState.clock, 0);
     return points.length ? points : null;
   }
+  /** THE BRIDGE'S SET OVER ITS RUN, for the phone's default eye: its poles lie apart on the banks before it is built, so
+   * the frame holds every pole, lashing and stake at each half second of the run; its bank and stream are ground. Each
+   * skinned pole by its own box in its bone's frame (a thin pole's box is the pole), the rest by its points */
+  let bridgeFrame: Vector3[] | null = null;
+  function bridgeRun(): Vector3[] | null {
+    const period = schedule.period ?? 0;
+    if (!machine || !(period > 0)) return null;
+    const ground = new Set(['bank', 'stream', 'stream-level']), skinned: { mesh: SkinnedMesh; boxes: Map<number, Box3> }[] = [];
+    const at = new Vector3(), points: Vector3[] = [], m = new Matrix4();
+    // hidden parts too (the section's lashings, a look round's mask): the frame stays one frame
+    machine.object.updateMatrixWorld(true);
+    machine.object.traverse(node => {
+      const mesh = node as Mesh;
+      if (!mesh.isMesh || ground.has(mesh.name) || mesh.userData['stageGround']) return;
+      const position = mesh.geometry.getAttribute('position');
+      if (!(mesh as SkinnedMesh).isSkinnedMesh) {
+        for (let k = 0, stride = Math.max(1, Math.ceil(position.count / 2000)); k < position.count; k += stride) points.push(at.fromBufferAttribute(position, k).applyMatrix4(mesh.matrixWorld).clone());
+        return;
+      }
+      const bone = mesh.geometry.getAttribute('skinIndex'), boxes = new Map<number, Box3>();
+      for (let k = 0; k < position.count; k++) {
+        const i = bone.getX(k), box = boxes.get(i) ?? new Box3();
+        boxes.set(i, box.expandByPoint(at.fromBufferAttribute(position, k)));
+      }
+      skinned.push({ mesh: mesh as SkinnedMesh, boxes });
+    });
+    const steps = Math.ceil(period * 2);
+    for (let s = 0; s <= steps; s++) {
+      machine.animate(Math.min(period, s / 2), 0);
+      machine.object.updateMatrixWorld(true);
+      for (const { mesh, boxes } of skinned) for (const [i, box] of boxes) {
+        const { bones, boneInverses } = mesh.skeleton;
+        m.multiplyMatrices(bones[i]!.matrixWorld, boneInverses[i]!).multiply(mesh.bindMatrix).premultiply(mesh.bindMatrixInverse).premultiply(mesh.matrixWorld);
+        for (const x of [box.min.x, box.max.x]) for (const y of [box.min.y, box.max.y]) for (const z of [box.min.z, box.max.z]) points.push(new Vector3(x, y, z).applyMatrix4(m));
+      }
+    }
+    machine.animate(playbackState.clock, 0);
+    return points.length ? points : null;
+  }
   function compose() {
     if (!machine)
       return;
     if (eye && POSED_RIG.has(slug)) { composeEye(eye); return; }
-    const walked = !eye && !closeUp && WALKERS.has(slug) ? walkFrame : null;
-    const box = closeUp ? focusBounds() : slug === 'bridge-of-poles' && !eye ? BRIDGE_YARD : walked ? new Box3().setFromPoints(walked) : frameBounds(), size = box.getSize(new Vector3()), centre = box.getCenter(new Vector3()), span = Math.max(size.x, size.y, size.z), mobile = innerWidth <= 1280;
+    const mobile = innerWidth <= 1280;
+    const walked = !eye && !closeUp && WALKERS.has(slug) ? walkFrame : !eye && !closeUp && mobile && slug === 'bridge-of-poles' ? bridgeFrame : null;
+    const box = closeUp ? focusBounds() : slug === 'bridge-of-poles' && !eye && !walked ? (mobile ? BRIDGE_YARD_PHONE : BRIDGE_YARD) : walked ? new Box3().setFromPoints(walked) : frameBounds(), size = box.getSize(new Vector3()), centre = box.getCenter(new Vector3()), span = Math.max(size.x, size.y, size.z);
     const direction = viewDirection();
     const right = new Vector3().crossVectors(new Vector3(0, 1, 0), direction).normalize(), up = new Vector3().crossVectors(direction, right).normalize();
-    const distance = eye ? new Vector3(...eye.at).distanceTo(centre) : eyeDistance(box, direction, mobile, walked ?? undefined);
+    let distance = eye ? new Vector3(...eye.at).distanceTo(centre) : eyeDistance(box, direction, mobile, walked ?? undefined);
     camera.aspect = innerWidth / innerHeight;
     camera.fov = 34;
     camera.near = Math.max(.001, span / 1000);
@@ -505,6 +555,30 @@ export function createBench(stack: Stack, onExit: () => void) {
       camera.setViewOffset(innerWidth, innerHeight, 0, innerHeight * (.5 - (top + tall / 2)), innerWidth, innerHeight);
     }
     camera.updateProjectionMatrix();
+    // the bridge's run on the phone: its box's middle is not its drawn middle (the near bundle lies further out than the
+    // far one), so the eye slides across until both side margins match, then stands as near as the wider side allows
+    if (walked && slug === 'bridge-of-poles') {
+      const seen = new Vector3();
+      for (let i = 0; i < 6; i++) {
+        camera.updateMatrixWorld();
+        let lo = Infinity, hi = -Infinity;
+        for (const p of walked) { const x = seen.copy(p).project(camera).x; lo = Math.min(lo, x); hi = Math.max(hi, x); }
+        const mid = (lo + hi) / 2;
+        if (Math.abs(mid) < 1e-3) break;
+        const slide = right.clone().multiplyScalar(mid * distance * Math.tan(camera.fov * Math.PI / 360) * camera.aspect);
+        centre.add(slide);
+        box.translate(slide);
+        distance = eyeDistance(box, direction, mobile, walked);
+        camera.position.copy(centre).addScaledVector(direction, distance);
+        camera.lookAt(centre);
+      }
+    }
+    // THE HEADER'S AIR on the phone: a machine whose drawn top would stand up under the header's words (a lion's tail,
+    // a compass's tips) stands back until it clears them; its box's corners stand above what is drawn, and by them most
+    // machines stood back for nothing. The bridge's yard is its frame, its banks run off the picture. A machine's
+    // surfaces may stand only once it is ready: then the bench asks again (`composeAir`)
+    airFrom = { centre, direction, box, walked, distance };
+    if (mobile && !eye && !closeUp) distance = airFrom.distance = headerAir(distance);
     // The far cascade is a box around the origin, so the floor beyond it took
     // no shadow at all and stood there as a hard edged dark quad. The air
     // now closes inside that box, and the ground hands itself to the air.
@@ -515,9 +589,43 @@ export function createBench(stack: Stack, onExit: () => void) {
     // read through the same depth of it, whatever the sun is doing to it.
     stageAir(distance, eye ? (eye.frame ?? [0, 0, 1, 1])[3] : mobile ? .41 : 1);
   }
+  let airFrom: { centre: Vector3; direction: Vector3; box: Box3; walked: Vector3[] | null; distance: number } | null = null;
+  function headerAir(from: number): number {
+    if (!machine || !airFrom || header.hidden) return from;
+    const { centre, direction, box, walked } = airFrom;
+    let distance = from;
+    const line = (header.getBoundingClientRect().bottom + HEADER_AIR) / innerHeight;
+    const corners = (b: Box3): Vector3[] => [b.min.x, b.max.x].flatMap(x => [b.min.y, b.max.y].flatMap(y => [b.min.z, b.max.z].map(z => new Vector3(x, y, z))));
+    const points = walked ?? (slug === 'bridge-of-poles' ? corners(box) : surfacePoints(machine.object, 600));
+    for (let i = 0; i < 16 && points.length; i++) {
+      camera.updateMatrixWorld();
+      // a loop, not a spread: the bridge's run holds more points than a call takes arguments
+      let top = Infinity;
+      for (const p of points) top = Math.min(top, onCanvas(p, camera).y);
+      if (top >= line) break;
+      distance *= 1 + Math.min(.2, (line - top) * 1.2);
+      camera.position.copy(centre).addScaledVector(direction, distance);
+    }
+    return distance;
+  }
+  /** the header's air again once the machine stands */
+  function composeAir() {
+    if (!airFrom) return;
+    const from = airFrom.distance, distance = headerAir(from);
+    if (distance !== from) { airFrom.distance = distance; stageAir(distance, .41); }
+  }
+  /** the phone header's scrim (bench.css `.bench-header::before`: 20 px past the header either side, from 15 px over its
+   * top, 76 px tall, clearing from 36 to 52 percent across and closing from 57 to 74), in shares of the window */
+  function headerBand() {
+    if (innerWidth > 1280 || getComputedStyle(header).visibility === 'hidden') return null;
+    const r = header.getBoundingClientRect(), left = r.left - 20, wide = r.width + 40;
+    const at = (k: number) => (left + wide * k) / innerWidth;
+    return { foot: (r.top - 15 + 76) / innerHeight, stops: [at(.36), at(.52), at(.57), at(.74)] as const };
+  }
   /** the setting's air from the eye's distance, its rig on the eye's bearing, its pool behind the machine in the picture */
   function stageAir(distance: number, picture: number) {
     if (!stage) return;
+    stage.header(headerBand());
     const radius = frameBounds().getBoundingSphere(new Sphere()).radius;
     const { air } = stageNumbers();
     stage.air(distance + radius * air.near, distance + radius * air.far);
@@ -856,7 +964,7 @@ export function createBench(stack: Stack, onExit: () => void) {
     const requestedEvidence = opts.evidence === undefined ? null : opts.evidence === requested ? recordOf(requested) : partialCatalog.find(record => record.slug === opts.evidence);
     if (opts.evidence !== undefined && !requestedEvidence) throw new Error(`No evidence record for ${requested}: ${opts.evidence}`);
     evidence.close(false);
-    const mine = ++serial; active = true; host.hidden = false; ready = false; loading.hidden = false; clearDisplay(); folioEntry = undefined; folio.replaceChildren(); slug = requested; walkFrame = null; evidenceRecord = recordOf(slug); lang = controlLanguage(location.search, opts.lang); schedule = playbackSchedule(recordOf(slug).dossier); playbackState = initialPlayback(schedule, { t: opts.t, fixed: document.body.classList.contains('forge'), reducedMotion: reduced.matches }); lastWall = performance.now(); stamp(); closeUp = opts.close ?? false; eye = opts.eye ?? null; sectionEnabled = (slug === 'camera-obscura' || slug === 'mechanical-lion' || slug === 'armoured-car' || slug === 'bridge-of-poles') && (opts.section ?? false); stack.setScene(scene, camera, stageGrade(Math.max(...Object.values(recordOf(slug).dossier.scale_m).filter((v): v is number => typeof v === 'number')))); lightBench(); machine = isShowcaseSlug(slug) ? buildShowcase(slug, stack) : buildBenchMachine(slug, stack); wallFocus = opts.wallFocus; figure = POSED_RIG.has(slug) ? null : opts.figure ?? null; lampProbe = opts.lamp; fillProbe = opts.fill; luxProbe = opts.lux;
+    const mine = ++serial; active = true; host.hidden = false; ready = false; loading.hidden = false; clearDisplay(); folioEntry = undefined; folio.replaceChildren(); slug = requested; walkFrame = null; bridgeFrame = null; evidenceRecord = recordOf(slug); lang = controlLanguage(location.search, opts.lang); schedule = playbackSchedule(recordOf(slug).dossier); playbackState = initialPlayback(schedule, { t: opts.t, fixed: document.body.classList.contains('forge'), reducedMotion: reduced.matches }); lastWall = performance.now(); stamp(); closeUp = opts.close ?? false; eye = opts.eye ?? null; sectionEnabled = (slug === 'camera-obscura' || slug === 'mechanical-lion' || slug === 'armoured-car' || slug === 'bridge-of-poles') && (opts.section ?? false); stack.setScene(scene, camera, stageGrade(Math.max(...Object.values(recordOf(slug).dossier.scale_m).filter((v): v is number => typeof v === 'number')))); lightBench(); machine = isShowcaseSlug(slug) ? buildShowcase(slug, stack) : buildBenchMachine(slug, stack); wallFocus = opts.wallFocus; figure = POSED_RIG.has(slug) ? null : opts.figure ?? null; lampProbe = opts.lamp; fillProbe = opts.fill; luxProbe = opts.lux;
     if (opts.figure && POSED_RIG.has(slug)) { sizeFigure = makeFigure(figureMaterial, 'size-figure'); sizeFigure.pose(standingJoints(opts.figure.turn ?? 0, opts.figure.at as [number, number, number])); sizeFigure.group.userData['assetClass'] = 'GENERATED'; figureGroup = sizeFigure.group; display.add(sizeFigure.group); } machine.section(sectionEnabled); display.add(machine.object); standStage(); if (opts.keyProbe === 'off' && key) key.light.intensity = 0; compose(); paint(); await Promise.all([machine.ready, supports(mine), plateFor(mine)]); if (mine !== serial)
     return; machine.animate(playbackState.clock, 0); lampMachine();
     dressStage();
@@ -881,7 +989,7 @@ export function createBench(stack: Stack, onExit: () => void) {
       ropeExperiment = applyRopeShadowExperiment(machine.object, slug, ropeMode, key.direction);
     }
     if (requestedEvidence) evidence.open(requestedEvidence, read);
-    ready = true; loading.hidden = true; if (WALKERS.has(slug)) { walkFrame = walkPoints(); compose(); } metrics?.reset(); stamp(); lastWall = performance.now(); console.log(`[bench] mounted ${slug} period=${recordOf(slug).dossier.motion.period_s} tier=${stack.tierName()}`); }
+    ready = true; loading.hidden = true; if (WALKERS.has(slug)) { walkFrame = walkPoints(); compose(); } else if (slug === 'bridge-of-poles' && innerWidth <= 1280 && !eye && !closeUp) { bridgeFrame = bridgeRun(); compose(); } else if (innerWidth <= 1280 && !eye && !closeUp) composeAir(); metrics?.reset(); stamp(); lastWall = performance.now(); console.log(`[bench] mounted ${slug} period=${recordOf(slug).dossier.motion.period_s} tier=${stack.tierName()}`); }
   function close() { if (!active)
     return; setBenchKey(null); serial++; evidence.close(false); active = false; host.hidden = true; ready = false; clearDisplay(); key?.dispose(); key = null; }
   function navigate(delta: number) { const id = BENCH_SLUGS[(BENCH_SLUGS.indexOf(slug) + delta + BENCH_SLUGS.length) % BENCH_SLUGS.length]; if (id) {

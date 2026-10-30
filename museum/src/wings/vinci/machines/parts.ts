@@ -12,6 +12,7 @@ import { createMutableSweep, geometryForPart, type MutableSweep } from './geomet
 import { benchKeyDirection } from './key'
 import { wearFor, wornSurface } from './wear'
 import { compassFitting } from './instruments'
+import { hemGeometry, hemSurface, isHem } from './parachute-hem'
 import type { Assembly, Dossier, PartSpec } from './types'
 export type { Assembly } from './types'
 /** An assembly with every library set its surfaces were built from. */
@@ -606,6 +607,10 @@ export async function buildParts(stack: Stack, dossier: Dossier): Promise<Dresse
         geometry = sweep.geometry
       } else if (dossier.slug === 'flywheel' && part.id === 'spoke-z') {
         geometry = createFlywheelSpokeArms(part, dossier.parts.find(p => p.id === 'spoke-x')!)
+      } else if (isHem(dossier.slug, part)) {
+        const lacing = geometryForPart(part, stack.tierName(), dossier.slug)
+        geometry = hemGeometry(dossier, part, lacing, stack.tierName())
+        lacing.dispose()
       } else geometry = geometryForPart(part, stack.tierName(), dossier.slug)
       if (!dynamic.has(part.id)) geometryCache.set(signature, geometry)
       geometries.add(geometry)
@@ -641,6 +646,12 @@ export async function buildParts(stack: Stack, dossier: Dossier): Promise<Dresse
       let fitting = materials.get('burnished-fitting')
       if (!fitting) { fitting = await makeSurface(part.material.class, false, false, false, true); materials.set('burnished-fitting', fitting) }
       material = fitting
+    }
+    // the parachute's hem: its bolt rope and lacing on their own copy of the rope's surface
+    if (isHem(dossier.slug, part)) {
+      let hem = materials.get('hem')
+      if (!hem) { hem = hemSurface(await makeSurface(part.material.class) as MeshStandardNodeMaterial); materials.set('hem', hem) }
+      material = hem
     }
     if (dossier.slug === 'inclinometer' && part.id === 'deck') {
       material = createGlassSeatMaterial(material)

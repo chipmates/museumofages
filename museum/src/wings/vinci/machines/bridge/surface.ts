@@ -1,9 +1,9 @@
 /** THE BRIDGE'S SURFACES. Chestnut coppice poles (the species is ours), some
  * in their bark and some peeled with a drawknife, each pole its own tone;
  * the end grain where an axe cut them; hemp lashings, laid three strand and
- * served with a tarred line where they bear on a pole; the bank's packed
- * earth and grass, and the stream. The library's photographs give the grain
- * and the earth; the bark, the facets, the lay and the serving are drawn
+ * served with a tarred line where they bear on a pole, and the stream (the
+ * banks are their own part, `bank.ts`). The library's photographs give the
+ * grain; the bark, the facets, the lay and the serving are drawn
  * here, each faded as one pixel comes to hold more than a stroke of it.
  */
 import { Color, MeshPhysicalNodeMaterial, MeshStandardNodeMaterial, type Material } from 'three/webgpu'
@@ -11,7 +11,7 @@ import { atan, attribute, cameraPosition, cos, float, fwidth, mix, mx_noise_floa
 import type { MaterialSet, Stack } from '../../../../stack'
 import { loadMachineMaterial, materialDressed } from '../parts'
 import { benchKeyDirection } from '../key'
-import { BANK, ROPE_R, SEAT_HALF, SEAT_R, SEAT_XY, VALLEY } from './plan'
+import { BANK, ROPE_R, VALLEY } from './plan'
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 type N = any
@@ -48,7 +48,7 @@ function bumpedBy(base: N, dhdx: N, dhdy: N): N {
 
 /** the air between the bridge and the wall: what lies well behind the bridge's middle, as the eye sees it, loses its
  * value and its colour toward the dusk, so the far bank falls off toward the wall */
-function airBehind(col: N): N {
+export function airBehind(col: N): N {
   const behind = positionWorld.sub(cameraPosition).length().sub(cameraPosition.sub(vec3(0, 1.35, 0)).length())
   return mx(col, vec3(luma(col)).mul(vec3(0.62, 0.68, 0.76)), smoothstep(1, 9, behind).mul(0.55))
 }
@@ -79,6 +79,13 @@ function keyRim(strength: number): N {
  * soft the moving face makes it far off (half its height, a share of the screen's), and the eye's distance in metres
  * over which it softens (the rigs' eyes stand nearer than its start: their mirror stays as it was) */
 const MIRROR_BASE = { least: 0.08, gain: 1.6, wave: 0.18, soft: 0.008, near: 16, far: 23 }
+/** THE CLOSE EYE'S STREAM: an eye a few metres over the water (the bridge's close view) looks down into it, where a
+ * still face shows its bed through less dark water, mirrors the poles over it more and lets its ripples move the
+ * mirror further. By the eye's distance from the bridge's heart, `from` to `to` metres, it hands over to the far eye's
+ * dark mirror: the water a close eye sees lies as far off as the nearest a far eye sees, so the water's own distance
+ * cannot tell them apart; the far eyes keep theirs (and their bar against the tear) */
+const CLOSE = { heart: [0, 2, .5] as const, from: 4.5, to: 7, least: .15, wave: .3, ripple: .03, absorb: 1.6 }
+const nearEye = (): N => float(1).sub(smoothstep(CLOSE.from, CLOSE.to, cameraPosition.sub(vec3(...CLOSE.heart)).length()))
 /** a look round's numbers for the stream (`globalThis.__stageProbe.stream`), on the dev server only */
 function streamNumbers(): typeof MIRROR_BASE & { ripple?: number; absorb?: number; caustic?: number } {
   const probe = import.meta.env.DEV ? (globalThis as { __stageProbe?: { stream?: Record<string, number> } }).__stageProbe?.stream : undefined
@@ -88,7 +95,6 @@ function streamNumbers(): typeof MIRROR_BASE & { ripple?: number; absorb?: numbe
 export interface BridgeSurfaces {
   pole: Material
   hemp: Material
-  earth: Material
   water: Material
   waterTop: Material
   /** hand the level face its planar reflection */
@@ -101,7 +107,7 @@ export interface BridgeSurfaces {
 }
 
 export async function bridgeSurfaces(stack: Stack): Promise<BridgeSurfaces> {
-  const names = ['oak-beams', 'rope', 'earth-packed', 'grass-short'] as const
+  const names = ['oak-beams', 'rope'] as const
   const loaded = await Promise.all(names.map(n => loadMachineMaterial(stack, n)))
   const set = Object.fromEntries(names.map((n, i) => [n, loaded[i]!])) as Record<(typeof names)[number], MaterialSet>
   const sets = new Set<MaterialSet>(loaded)
@@ -284,64 +290,6 @@ export async function bridgeSurfaces(stack: Stack): Promise<BridgeSurfaces> {
     hemp.normalNode = bumped(hemp.normalNode ?? normalView, mx(hLay, hServe, served), 1)
   }
 
-  // ---------------------------------------------------------------- THE BANK
-  const earth = new MeshStandardNodeMaterial({ metalness: 0, roughness: 0.95 })
-  earth.name = `bridge-of-poles:earth:${set['earth-packed'].name}`
-  {
-    const se = set['earth-packed'], sg = set['grass-short']
-    const ground = stack.detail(earth, { ...se, normalStrength: 0.35 }, { uv: uv(), count: 3, maps: maps(se), fade: [12, 90] })
-    const grassMat = new MeshStandardNodeMaterial()
-    const grass = stack.detail(grassMat, sg, { uv: uv().mul(1.3), count: 3, maps: maps(sg), fade: [12, 90] })
-    const p: N = positionWorld
-    const up = normalWorld.y.clamp(0, 1)
-    // grass keeps to the level bank, thins toward the lip and the trodden ground by the pile, never on the cut face
-    const lip = smoothstep(BANK.lip - 0.15, BANK.lip + 0.5, p.x.abs())
-    const tufts = mx_noise_float(vec3(p.x.mul(6.5), p.z.mul(6.5), 4.4)).mul(0.22).add(mx_noise_float(vec3(p.x.mul(0.9), p.z.mul(0.9), 1.4)).mul(0.18)).add(0.5)
-    const trodden = float(1).sub(smoothstep(1.2, 2.4, vec2(p.x.add(6.3), p.z.mul(0.6)).length()).mul(0.5).add(0.5)).clamp(0, 1)
-    // THE SLOPE IS NO TURNED PROFILE: runnels the rain cut down it, patches of darker earth along the stream, the
-    // lip's turf hanging over its top in tufts, and away from the bridge along the stream the slope falls toward the
-    // dark as the setting's floor does beyond its pool; on the level bank and the cut face nothing changes
-    const slope = smoothstep(BANK.toe - 0.2, BANK.toe + 0.3, p.x.abs()).mul(float(1).sub(smoothstep(BANK.lip - 0.1, BANK.lip + 0.25, p.x.abs())))
-    const runnel = mx_noise_float(vec3(p.z.mul(3.2), p.y.mul(0.9), p.x.mul(0.4))).mul(0.5).add(0.5)
-    const patch = mx_noise_float(vec3(p.z.mul(0.7), p.x.mul(0.5), 2.7)).mul(0.5).add(0.5)
-    const turf = mx_noise_float(vec3(p.z.mul(2.2), p.x.mul(1.1), 6.1)).mul(0.5).add(0.5)
-    const overhang = slope.mul(smoothstep(BANK.edge - 0.35, BANK.lip - 0.05, p.x.abs())).mul(smoothstep(0.35, 0.55, turf)).mul(0.85)
-    const away = float(1).sub(smoothstep(2.6, 7.0, p.z.abs()).mul(0.45))
-    const grassy = smoothstep(0.82, 0.95, up).mul(lip).mul(smoothstep(0.2, 0.55, tufts).mul(0.35).add(0.55)).mul(float(1).sub(trodden.mul(0.6))).max(overhang)
-    const wet = float(1).sub(smoothstep(BANK.water - 0.02, BANK.water + 0.18, p.y))
-    const worn = mx(float(1), smoothstep(0.3, 0.7, runnel).mul(0.22).add(0.86).mul(smoothstep(0.3, 0.7, patch).mul(0.45).add(0.7)).mul(away), slope)
-    // THE LIP HAS FORM ALONG ITS LENGTH, so its light breaks as a bank's does: its shoulder slumps and swells over a pace
-    // or two, the turf hanging over it in clumps leaves its own shade under them, and a root runs down it here and there.
-    // Drawn in the light alone: the bank's own profile stays, so the props' feet and the poles laid on it stand where
-    // they stood
-    const ax = p.x.abs(), along = p.z.add(p.x.sign().mul(7.3))
-    const shoulder = smoothstep(BANK.edge - 0.55, BANK.edge - 0.1, ax).mul(float(1).sub(smoothstep(BANK.lip + 0.02, BANK.lip + 0.3, ax)))
-    const slump = mx_noise_float(vec3(along.mul(0.75), ax.mul(0.6), 3.1)).mul(0.65).add(mx_noise_float(vec3(along.mul(1.9), ax.mul(1.4), 8.2)).mul(0.35))
-    const bare = smoothstep(0.05, 0.45, mx_noise_float(vec3(along.mul(0.42), 0.5, 5.3)))
-    const under = slope.mul(smoothstep(BANK.edge - 0.62, BANK.edge - 0.32, ax)).mul(float(1).sub(smoothstep(BANK.edge - 0.3, BANK.edge - 0.06, ax)))
-      .mul(smoothstep(0.35, 0.55, turf))
-    const rootLine = mx_noise_float(vec3(along.mul(1.6), p.y.mul(2.4), 2.2)).abs()
-    const root = float(1).sub(smoothstep(0.015, 0.04, rootLine)).mul(smoothstep(0.35, 0.6, mx_noise_float(vec3(along.mul(0.5), 1.1, 4.4))))
-      .mul(slope).mul(smoothstep(BANK.edge - 0.7, BANK.edge - 0.2, ax))
-    const formed = mx(float(1), bare.mul(0.2).add(0.92).mul(slump.mul(0.14).add(1)), shoulder).mul(float(1).sub(under.mul(0.3))).mul(float(1).sub(root.mul(0.45)))
-    const earthCol = lin('#6a5843').mul(luma(ground.albedo).mul(0.4).add(0.68)).mul(float(1).sub(wet.mul(0.42))).mul(worn).mul(formed)
-    // the cut face: a section through the bank, darker with depth, its layers
-    const cut = float(1).sub(smoothstep(0.2, 0.5, up))
-    const strata = sin(p.y.mul(23).add(mx_noise_float(vec3(p.x.mul(0.8), p.y.mul(2), p.z.mul(0.8))).mul(1.3))).mul(0.5).add(0.5)
-    const sectionCol = mx(lin('#4f4031'), lin('#6b5a44'), strata.mul(0.5)).mul(luma(ground.albedo).mul(0.5).add(0.6)).mul(smoothstep(BANK.bottom, 0, p.y).mul(0.35).add(0.65))
-    // dry turf of an autumn bank, a warm dun under its green: a lawn's olive read as a cloth laid over the ground
-    const grassCol = mx(lin('#56523b'), lin('#625a42'), tufts.mul(0.6).add(0.2)).mul(luma(grass.albedo).mul(0.25).add(0.78))
-    // the bank darkens where the seat logs lie on it and round the stakes
-    const seatGap = (x: number, y: number): N => vec2(p.x.sub(x), p.y.sub(y)).length().sub(SEAT_R)
-    const onSeat = smoothstep(0.0, 0.16, seatGap(SEAT_XY[0][0], SEAT_XY[0][1]).min(seatGap(SEAT_XY[1][0], SEAT_XY[1][1]))).mul(0.5).add(0.5)
-    const seatShade = mx(onSeat, float(1), smoothstep(SEAT_HALF - 0.05, SEAT_HALF + 0.12, p.z.abs()))
-    earth.colorNode = airBehind(mx(mx(earthCol, grassCol, grassy), sectionCol, cut).mul(mx(float(1), ground.occlusion, 0.55)).mul(seatShade))
-    earth.roughnessNode = mx(ground.roughness.max(0.85), float(0.55), wet.mul(0.6))
-    earth.normalNode = bumped(earth.normalNode ?? normalView, runnel.mul(0.035).add(patch.mul(0.06)).mul(slope)
-      .add(slump.mul(0.1).mul(shoulder)).add(overhang.mul(0.025)).add(root.mul(0.012)), 1)
-    grassMat.dispose()
-  }
-
   // ---------------------------------------------------------------- THE STREAM
   const streamClock = uniform(0)
   const water = new MeshStandardNodeMaterial({ metalness: 0, roughness: 0.1 })
@@ -359,7 +307,7 @@ export async function bridgeSurfaces(stack: Stack): Promise<BridgeSurfaces> {
     water.colorNode = mx(mx(lin('#2b2d22'), lin('#423e2d'), shallow), lin('#2c261b'), cut)
     // the cut faces stand away from every lamp: they keep the dusk's own value, so the end reads as ground, not a slot
     water.emissiveNode = lin('#2c261b').mul(0.7)
-    water.normalNode = bumped(normalView, ripple.mul(streamNumbers().ripple ?? 0.022), 1)
+    water.normalNode = bumped(normalView, ripple.mul(mx(float(streamNumbers().ripple ?? 0.022), float(CLOSE.ripple), nearEye())), 1)
     water.roughnessNode = float(0.07)
     water.envMapIntensity = 0.42
     // the bench's lamp is for the poles: on the stream it would stand as a hot spot
@@ -382,7 +330,7 @@ export async function bridgeSurfaces(stack: Stack): Promise<BridgeSurfaces> {
     const depth = float(BANK.water - BANK.bed).mul(float(1).sub(smoothstep(BANK.toe, BANK.toe + 0.6, p.x.abs())))
     const seen = p.xz.sub(toEye.xz.normalize().mul(depth.mul(sinT.div(cosT))))
     // a clean dark under a close eye looking straight down: the bed shows, but darkened by the water over it
-    const clear = depth.mul(float(1).add(float(1).div(cosT))).mul(-(S.absorb ?? 2.5)).exp()
+    const clear = depth.mul(float(1).add(float(1).div(cosT))).mul(mx(float(S.absorb ?? 2.5), float(CLOSE.absorb), nearEye()).negate()).exp()
     const grain = mx_noise_float(vec3(seen.x.mul(1.7), seen.y.mul(1.7), 7.7)).mul(0.5).add(0.5)
     const bed = mx(lin('#3a3126'), lin('#55473a'), grain)
     const body = water.colorNode as N
@@ -403,9 +351,10 @@ export async function bridgeSurfaces(stack: Stack): Promise<BridgeSurfaces> {
     const view = cameraPosition.sub(positionWorld).normalize()
     // a dark, still stream mirrors more than its glass-like 2 percent reads: the lit poles over it show softly
     const MIRROR = streamNumbers()
-    const fresnel = float(1).sub(normalWorld.dot(view).abs()).pow(5).mul(1 - MIRROR.least).add(MIRROR.least)
+    const near = nearEye(), least = mx(float(MIRROR.least), float(CLOSE.least), near)
+    const fresnel = float(1).sub(normalWorld.dot(view).abs()).pow(5).mul(float(1).sub(least)).add(least)
     // the ripples shift the mirrored picture a little, as a stream's surface does
-    const at = screenUV.flipX().add(normalView.xy.sub(normalViewGeometry.xy).mul(MIRROR.wave))
+    const at = screenUV.flipX().add(normalView.xy.sub(normalViewGeometry.xy).mul(mx(float(MIRROR.wave), float(CLOSE.wave), near)))
     reflection.uvNode = at
     // SEEN FROM FAR OFF, A MOVING FACE MIRRORS SOFTLY, most along the eye's way: there a thin pole, mirrored sharp and
     // shifted by ripples finer than itself, broke into a jagged dark sliver with a lit rim, a tear in the water. Five
@@ -429,5 +378,5 @@ export async function bridgeSurfaces(stack: Stack): Promise<BridgeSurfaces> {
     waterTop.needsUpdate = true
   }
   for (const m of [pole, hemp]) airOut(m)
-  return { pole, hemp, earth, water, waterTop, mirror, lashClock: lashClock as unknown as { value: number }, streamClock: streamClock as unknown as { value: number }, sets }
+  return { pole, hemp, water, waterTop, mirror, lashClock: lashClock as unknown as { value: number }, streamClock: streamClock as unknown as { value: number }, sets }
 }

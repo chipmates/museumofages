@@ -154,8 +154,9 @@ export const STAGE = Object.freeze({
    * hand-off runs on under the machine's foot, a fifth of the field there, so the ramp has no knee where the floor is lit */
   air: { near: 1.0, far: 2.8, horizon: 1.4,
     /** the hand-off spans at least this share of the picture's own height in angle: a low eye sees the floor behind
-     * the machine in a few rows, and a hand-off of a few rows reads as a band */
-    least: .5,
+     * the machine in a few rows, and a hand-off of a few rows reads as a band (at half the height the floor's rim
+     * behind the screw's close view still drew a thin warm arc) */
+    least: .8,
     /** how much of the floor's shade (the key's shadow, the painted contact) the field the floor hands itself to keeps:
      * a low eye's floor is mostly field at the machine's foot, and its shadow must not go with it */
     shade: .45,
@@ -220,6 +221,8 @@ export const STAGE = Object.freeze({
     /** a thin shape with fewer of its edges turning than this share is a sheet (a wing's cloth, a sail), not a cord: it
      * never winds and keeps its own normals, since a sheet shaded as a line facing the eye stands as one flat lamp */
     tube: .2 },
+  /** the phone header's scrim as the field under its clear middle takes it: its colour in linear light and its share */
+  header: { scrim: [.0040, .0044, .0052] as const, share: .84, ramp: .5 },
   /** the vertical lens in degrees: a long lens on the desktop, the phone's upright frame narrower still across */
   lens: { desktop: 24, phone: 40 },
   /** the machine's swept outline's share of its fit box, across and upright, per device: the box keeps room for the
@@ -283,6 +286,9 @@ export interface StageSetting {
    * half width across x, metres) keeps the floor off the water that runs out along it, and closes under the floor
    * between `closed` metres (from, to) past the box's middle along +z, where a far eye would see the water cut off */
   merge(box: Box3, from: number, to: number, above: number, channel?: number, closed?: readonly [number, number]): void
+  /** the phone header's scrim on the canvas (shares: its foot, and the stops across where it clears from and to and
+   * closes from and to), or null where no scrim stands */
+  header(band: { foot: number; stops: readonly [number, number, number, number] } | null): void
   /** a mirror-like surface the edge light must not reach: from behind the machine it stands as a hot spot in a mirror
    * the eye looks down on */
   offRim(material: MeshStandardNodeMaterial): void
@@ -334,8 +340,18 @@ export function createStageSetting(options: {
   const top = mix(float(1 - S.field.top), float(1), smoothstep(0, .55, viewportUV.y).max(glow.mul(S.field.spare)))
   const dither = float(1).add(interleavedGradientNoise(screenCoordinate.xy).sub(.5).mul(S.field.dither))
   const field = mix(edge, pool, glow).mul(top).mul(dither)
+  // THE HEADER'S BAND (the phone's): its words stand on a scrim dark at both ends and clear in the middle, so no scrim
+  // lies over a machine's tip; under the clear middle the field alone is darkened as the scrim darkens the ends, and the
+  // top runs evenly dark. Shares of the canvas: the band's foot, and across, the stops where the scrim clears and closes
+  const headerFoot = uniform(float(0)), headerStops = uniform(vec4(0, 0, 0, 0))
+  const down = viewportUV.y.div(headerFoot.max(1e-4))
+  const tall = float(1).sub(down.div(.55).clamp(0, 1).mul(.2)).mul(float(1).sub(down.sub(.55).div(.45).clamp(0, 1))).mul(headerFoot.sign())
+  const across = viewportUV.x.sub(headerStops.x).div(headerStops.y.sub(headerStops.x).max(1e-4)).clamp(0, 1)
+    .mul(float(1).sub(viewportUV.x.sub(headerStops.z).div(headerStops.w.sub(headerStops.z).max(1e-4)).clamp(0, 1)))
+  // the scrim mixes over the drawn picture, the field here before its print: its half-way share is taken as more
+  const backdrop = mix(field, vec3(...S.header.scrim), tall.mul(across.pow(S.header.ramp)).mul(S.header.share))
   scene.background = new Color().setRGB(S.field.edge[0], S.field.edge[1], S.field.edge[2])
-  scene.backgroundNode = field
+  scene.backgroundNode = backdrop
 
   // ---- the light, in the eye's bearing
   // the probe's own sun disc would stand at a fixed bearing while the rig turns: it carries none
@@ -486,9 +502,9 @@ export function createStageSetting(options: {
     const near = float(1).sub(smoothstep(radius * S.air.shadeReach[0], radius * S.air.shadeReach[1], along))
     const side = float(1).sub(smoothstep(S.floor.edge[0], S.floor.edge[1], viewportUV.x.min(viewportUV.x.oneMinus())))
     const kept = mix(float(1), groundShadow.mul(shade), near.mul(S.air.shade).mul(holdFar).mul(side.oneMinus()))
-    horizonOut = vec4(mix(output.rgb, field.mul(kept), float(1).sub(smoothstep(0, horizonSine, below))), output.a)
+    horizonOut = vec4(mix(output.rgb, backdrop.mul(kept), float(1).sub(smoothstep(0, horizonSine, below))), output.a)
     // a machine's own ground hands itself over only where the eye grazes it: a close eye looks down on the bank it stands over
-    groundOut = vec4(mix(output.rgb.mul(shade), field.mul(kept), float(1).sub(smoothstep(S.air.graze[0], S.air.graze[1], below))), output.a)
+    groundOut = vec4(mix(output.rgb.mul(shade), backdrop.mul(kept), float(1).sub(smoothstep(S.air.graze[0], S.air.graze[1], below))), output.a)
     floorMaterial.colorNode = albedo
     // the shadow thins away from the machine: the light it holds off there, given back in part
     const thin = smoothstep(radius * S.floor.thin[0], radius * S.floor.thin[1], along).mul(S.floor.thin[2]).max(side)
@@ -568,6 +584,10 @@ export function createStageSetting(options: {
   }
 
   let veil: Mesh | null = null
+  function header(band: { foot: number; stops: readonly [number, number, number, number] } | null): void {
+    headerFoot.value = band ? band.foot : 0
+    if (band) (headerStops.value as import('three/webgpu').Vector4).set(...band.stops)
+  }
   function merge(area: Box3, from: number, to: number, above: number, channel = 0, closed?: readonly [number, number]): void {
     dropVeil()
     const c = area.getCenter(new Vector3()), half = area.getSize(new Vector3()).multiplyScalar(.5)
@@ -627,6 +647,8 @@ export function createStageSetting(options: {
   }
   /** a material used by thin parts alone, and the least radius among them (world metres) */
   const cords = new Map<MeshStandardNodeMaterial, number>()
+  /** the surfaces that set their own width and take the card all the same */
+  const cards = new Set<MeshStandardNodeMaterial>()
   /** the copies the winding cords draw from, and every mesh lent one, with the material it is given back */
   const plain = new Set<MeshStandardNodeMaterial>()
   const swapped: { mesh: Mesh; was: MeshStandardNodeMaterial }[] = []
@@ -644,6 +666,8 @@ export function createStageSetting(options: {
       const one = !Array.isArray(mesh.material), sheet = round.curved < S.cord.tube
       for (const material of [mesh.material].flat()) {
         const m = material as MeshStandardNodeMaterial
+        // a surface that sets its own width (a hem's cord) keeps it, and takes the thin parts' card
+        if (m.isNodeMaterial && m.userData['ownWidth'] && !cards.has(m)) { cards.add(m); keep(m); continue }
         if (!m.isNodeMaterial || m.positionNode) continue
         if (!(Number.isFinite(r) && r < most)) { thick.add(m); continue }
         if (sheet) sheets.add(m)
@@ -690,7 +714,7 @@ export function createStageSetting(options: {
       m.needsUpdate = true
     }
     // the card, again after a machine's own lamps relit its surfaces
-    if (S.fill.card.share > 0) for (const m of cords.keys()) {
+    if (S.fill.card.share > 0) for (const m of [...cords.keys(), ...cards]) {
       const under = (m.lightsNode as unknown as { getLights?(): Light[] } | null)?.getLights?.() ?? sceneLights()
       if (under.includes(cordLamp)) continue
       m.lightsNode = lights([...under, cordLamp])
@@ -861,7 +885,7 @@ export function createStageSetting(options: {
   function carry(by: Vector3): void {
     walkedBy.value.set(by.x, by.z)
   }
-  return { field, floor, key, follow, air, contact, carry, merge, offRim, ground, machine, figure, stir, dispose }
+  return { field, floor, key, follow, air, contact, carry, merge, header, offRim, ground, machine, figure, stir, dispose }
 }
 
 /** the points of a body's surfaces, a few hundred a mesh, in world metres: what the contact shade is painted from; under
