@@ -236,7 +236,7 @@
   "tag_chart": "Für diese Seite gemacht",
   "crumb_here": "Gemälde",
   "tag_still": "Reproduktion",
-  "still_open": "Ein Standbild aus dem Film des Flügels. Die Wand trägt",
+  "still_open": "Ein Standbild aus dem Film des Flügels. An der Wand ist",
   "burlington_line": "Das Museum kennzeichnet die Reproduktion, nicht die Zeichnung.",
   "salvator_line": "Das Foto, 2017 nach der Restaurierung für Christie's aufgenommen, zeigte den Rahmen. Hier ist es auf das Gemälde beschnitten.",
   "ginevra_front_line": "Die Vorderseite: eine gemeinfreie Reproduktion aus Wikimedia Commons, mit Dank an die National Gallery of Art, Washington, unter CC0.",
@@ -970,15 +970,15 @@
        "pic": "supper",
        "alt": "Ein Standbild aus dem Film des Flügels: die Reproduktion des Abendmahls an einer hellen Wand des Hofs, mit ihrem Sockel und dem Boden davor. Christus in der Mitte von dreizehn Figuren hinter einem langen Tisch, in einem gemalten Saal.",
        "src": [
-        "Ein Standbild aus dem Film des Flügels. Die Wand trägt eine Reproduktion nach einem ",
+        "Ein Standbild aus dem Film des Flügels. An der Wand ist eine Reproduktion des Gemäldes zu sehen. Foto von Mariordo (Mario Roberto Duran Ortiz), 2024, ",
         {
-         "text": "hochauflösenden Scan",
-         "href": "https://commons.wikimedia.org/wiki/File:%C3%9Altima_Cena_-_Da_Vinci_5.jpg"
+         "text": "CC BY-SA 4.0",
+         "href": "https://creativecommons.org/licenses/by-sa/4.0/"
         },
-        ". Laut Wikimedia Commons stammt er von Haltadefinizione in Zusammenarbeit mit dem italienischen Kulturministerium und erschien dort 2007 erstmals. Das Museum nutzt eine spätere, vergrößerte Kopie davon. Gemeinfreies Werk. Reproduktion aus ",
+        ". Vom Museum auf das Gemälde zugeschnitten und entzerrt. Der Ausschnitt und dieses Standbild stehen unter derselben Lizenz. Gemeinfreies Werk. Reproduktion aus ",
         {
          "text": "Wikimedia Commons",
-         "href": "https://commons.wikimedia.org/wiki/File:Last_Supper_by_Leonardo_da_Vinci.jpg"
+         "href": "https://commons.wikimedia.org/wiki/File:2024_04_Da_Vinci_Last_Supper_Milan_7013.jpg"
         },
         ". Das Museum kennzeichnet die Reproduktion, nicht das Gemälde. Kulturelle Nutzung ohne Gewinnabsicht. {museum:it108}"
        ],
