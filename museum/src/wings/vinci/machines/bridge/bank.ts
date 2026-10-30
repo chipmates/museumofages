@@ -21,26 +21,31 @@ function wander(s: number, seed: number): number {
 /** a window along the stream: 1 inside a to b, falling off over `soft` metres either side */
 const window = (z: number, a: number, b: number, soft = .45): number => ease(a - soft, a + soft, z) * (1 - ease(b - soft, b + soft, z))
 
-/** WHERE THE BUILD TOUCHES THE BANK, read off its whole run (the bridge's motion over its period and the groundwork): the
- * far (+1) and near (-1) bank's boxes, |x| from and to, z from and to, in which the ground stays the plan's. The rolled
- * joists' corridors up the stream, the props of the crown joist, the seats with their stakes and the rods' feet, and the
- * rows where a rod or a kit rests over the slope */
-const KEPT: readonly (readonly [number, number, number, number, number])[] = [
-  [1, 2.2, 9, -12.5, -6.6], [1, 2.75, 9, -5.4, -4.6], [1, 2.75, 9, -3.85, -3.15], [1, 3.55, 9, -2.75, 2.35],
-  [1, 2.45, 9, -2.3, -1.2], [1, 2.45, 9, .85, 1.9],
-  [-1, 2.2, 9, -12.5, -6.6], [-1, 3.55, 9, -2.75, 2.35], [-1, 2.45, 9, -2.3, -1.2], [-1, 2.45, 9, -.85, .35],
-  [-1, 2.45, 9, .8, 1.85],
+/** WHERE THE BUILD TOUCHES THE BANK, read off its whole run (the bridge's motion over its period and the groundwork):
+ * each bank's (+1 far, -1 near) boxes, |x| from and to, z from and to. In a `keep` box the ground stays the plan's: the
+ * rolled joists' corridors up the stream, the crown joist's props, the seats with their stakes, and the strips where a
+ * rod lies on the slope as it slides off the bank. In a `dig` box something passes a few centimetres over the slope (a
+ * kit's rods, a rod held over it), so the ground may only sink there, never rise */
+const KEPT: readonly (readonly [number, number, number, number, number, 'keep' | 'dig'])[] = [
+  [1, 2.2, 9, -12.5, -6.6, 'keep'], [1, 3.3, 9, -5.4, -4.6, 'keep'], [1, 3.3, 9, -3.85, -3.15, 'keep'],
+  [1, 2.7, 3.3, -5.4, -4.6, 'dig'], [1, 2.7, 3.3, -3.85, -3.15, 'dig'],
+  [1, 3.6, 9, -2.75, 2.35, 'keep'], [1, 2.45, 9, -1.84, -1.6, 'keep'], [1, 2.45, 9, 1.6, 1.84, 'keep'],
+  [1, 2.45, 9, -1.56, -1.06, 'dig'], [1, 2.45, 9, 1.06, 1.56, 'dig'],
+  [-1, 2.2, 9, -12.5, -6.6, 'keep'], [-1, 3.6, 9, -2.75, 2.35, 'keep'],
+  [-1, 2.45, 9, -1.32, -1.08, 'keep'], [-1, 2.45, 9, -.52, -.28, 'keep'], [-1, 2.45, 9, .28, .52, 'keep'], [-1, 2.45, 9, 1.08, 1.32, 'keep'],
+  [-1, 2.45, 9, -1.84, -1.34, 'dig'], [-1, 2.45, 9, 1.34, 1.84, 'dig'],
 ]
-const EDGE = .14
-function kept(side: number, ax: number, z: number): number {
-  let k = 0
-  for (const [s, a0, a1, z0, z1] of KEPT) {
+const EDGE = .12
+/** how much of the plan's ground a point keeps, and how much of any rise it must give up */
+function kept(side: number, ax: number, z: number): { keep: number; dig: number } {
+  let keep = 0, dig = 0
+  for (const [s, a0, a1, z0, z1, kind] of KEPT) {
     if (s !== side) continue
     const inX = ease(a0 - EDGE, a0, ax) * (1 - ease(a1, a1 + EDGE, ax)), inZ = ease(z0 - EDGE, z0, z) * (1 - ease(z1, z1 + EDGE, z))
-    k = Math.max(k, inX * inZ)
+    if (kind === 'keep') keep = Math.max(keep, inX * inZ); else dig = Math.max(dig, inX * inZ)
   }
   // the bed and the toe under the water, where the props lie and slide, stay the plan's on both banks
-  return Math.max(k, 1 - ease(2.4, 2.62, ax))
+  return { keep: Math.max(keep, 1 - ease(2.4, 2.62, ax)), dig }
 }
 
 /** THE FORMS, each a cross-section (|x| to height) a bank takes somewhere along its length */
@@ -83,8 +88,14 @@ function farForm(ax: number, z: number, base: number): Form {
   // up the stream behind the bridge, between the crown joist's props: a slump and a short cut face
   forms.push([window(z, -6.45, -5.6, .25), { y: slump(ax, 3.72 + .05 * n(1.3, 11), .05), face: ease(3.45, 3.62, ax) * (1 - ease(3.7, 3.8, ax)), gravel: 0, turf: ease(3.75, 3.85, ax) }])
   forms.push([window(z, -4.45, -4.05, .2), { y: cutBank(ax, 3.04, .36), face: ease(2.9, 2.97, ax) * (1 - ease(3.0, 3.04, ax)), gravel: 0, turf: ease(3.02, 3.1, ax) }])
-  // by the bridge, in the rows between its rods: the gravel the builders landed on
-  forms.push([window(z, -1.0, .6, .2), { y: beach(ax, 3.5), face: 0, gravel: ease(2.62, 2.72, ax) * (1 - ease(3.0, 3.1, ax)), turf: ease(3.45, 3.6, ax) }])
+  // by the bridge, between the strips its rods slide down: a slumped shoulder, a cut face, the gravel the builders
+  // landed on, a shelf
+  const bs = 3.52 + .03 * n(2.1, 13)
+  forms.push([window(z, -2.6, -1.95, .2), { y: slump(ax, bs, .04), face: ease(bs - .09, bs - .06, ax) * (1 - ease(bs - .01, bs + .01, ax)), gravel: 0, turf: ease(bs - .01, bs + .06, ax) }])
+  const bf = 3.06 + .03 * n(2.3, 14)
+  forms.push([window(z, -1.45, -.15, .25), { y: cutBank(ax, bf, .3), face: ease(bf - .11, bf - .06, ax) * (1 - ease(bf - .01, bf + .01, ax)), gravel: 0, turf: ease(bf - .005, bf + .05, ax) }])
+  forms.push([window(z, .1, 1.45, .25), { y: beach(ax, 3.45), face: 0, gravel: ease(2.62, 2.72, ax) * (1 - ease(3.0, 3.1, ax)), turf: ease(3.4, 3.55, ax) }])
+  forms.push([window(z, 1.95, 2.6, .2), { y: shelf(ax, 3.5, -.2), face: ease(2.94, 3.02, ax) * (1 - ease(3.08, 3.13, ax)), gravel: 0, turf: ease(3.12, 3.2, ax) }])
   // down the stream toward the visitor: a cut bank, a slumped shoulder, a shelf of turf, a gravel lip
   const f = 3.02 + .045 * n(.9, 21) + .02 * n(2.7, 22), h = .38 + .05 * n(1.1, 23)
   forms.push([window(z, 2.75, 5.0, .4), { y: cutBank(ax, f, h), face: ease(f - .11, f - .06, ax) * (1 - ease(f - .01, f + .01, ax)), gravel: 0, turf: ease(f - .005, f + .05, ax) }])
@@ -100,6 +111,8 @@ function nearForm(ax: number, z: number, base: number): Form {
   const n = (s: number, k: number): number => wander(z * s, k)
   const forms: [number, Form][] = []
   forms.push([window(z, -6.4, -4.4, .35), { y: beach(ax, 3.55 + .04 * n(1, 61)), face: 0, gravel: ease(2.62, 2.72, ax) * (1 - ease(3.0, 3.1, ax)), turf: ease(3.5, 3.65, ax) }])
+  // by the bridge a lower lip, where the builders worked from it
+  forms.push([window(z, -2.6, 2.4, .3), { y: beach(ax, 3.45 + .04 * n(2, 62)), face: 0, gravel: ease(2.62, 2.72, ax) * (1 - ease(3.0, 3.1, ax)), turf: ease(3.4, 3.55, ax) }])
   forms.push([window(z, 2.8, 4.6, .4), { y: beach(ax, 3.6), face: 0, gravel: ease(2.62, 2.72, ax) * (1 - ease(3.0, 3.1, ax)), turf: ease(3.55, 3.7, ax) }])
   const f = 3.0 + .04 * n(1, 71)
   forms.push([window(z, 4.8, 6.6, .4), { y: cutBank(ax, f, .3), face: ease(f - .11, f - .06, ax) * (1 - ease(f - .01, f + .01, ax)), gravel: 0, turf: ease(f - .005, f + .05, ax) }])
@@ -125,10 +138,12 @@ function bankAt(x: number, z: number): Form {
   // past the lip's back and beyond the bank's ends the level ground is the plan's: the forms stay on the channel's sides
   const reach = 1 - ease(4.4, 4.7, ax)
   const along = 1 - ease(11.2, 12.2, z)
-  const free = (1 - kept(side, ax, z)) * reach * along
+  const { keep, dig } = kept(side, ax, z)
+  const free = (1 - keep) * reach * along
   if (free <= 0) return { y: base, face: 0, gravel: 0, turf: 0 }
   const form = side > 0 ? farForm(ax, z, base) : nearForm(ax, z, base)
-  return { y: lerp(base, form.y, free), face: form.face * free, gravel: form.gravel * free, turf: form.turf * free }
+  const y = form.y > base ? lerp(form.y, base, dig) : form.y
+  return { y: lerp(base, y, free), face: form.face * free, gravel: form.gravel * free, turf: form.turf * free }
 }
 
 /** THE STONES at the foot of a face and along the gravel: where each lies (x, z), its radius and its seed; only where
@@ -137,8 +152,8 @@ function stones(): { x: number; z: number; r: number; seed: number }[] {
   const out: { x: number; z: number; r: number; seed: number }[] = []
   const runs: [number, number, number, number][] = [
     // side, z from, z to, how many
-    [1, 2.9, 5.0, 11], [1, 5.4, 7.3, 5], [1, 7.8, 9.2, 4], [1, 9.6, 11.0, 6], [1, -6.35, -5.7, 2], [1, -4.4, -4.1, 2],
-    [-1, 3.0, 4.5, 3], [-1, 4.9, 6.5, 5],
+    [1, 2.9, 5.0, 8], [1, 5.4, 7.3, 3], [1, 7.8, 9.2, 3], [1, 9.6, 11.0, 4], [1, -6.35, -5.7, 2], [1, -4.4, -4.1, 1],
+    [-1, 4.9, 6.5, 4],
   ]
   for (const [side, z0, z1, count] of runs) for (let i = 0; i < count; i++) {
     const seed = hash(side, z0, i, 81)
@@ -147,7 +162,7 @@ function stones(): { x: number; z: number; r: number; seed: number }[] {
     let ax = 2.7
     for (let a = 2.55; a < 3.2; a += .01) if (bankHeight(side * a, z) > BANK.water + .02) { ax = a; break }
     ax += (hash(seed, 83) - .65) * .14
-    out.push({ x: side * ax, z, r: .045 + .07 * hash(seed, 84) ** 1.6, seed })
+    out.push({ x: side * ax, z, r: .035 + .055 * hash(seed, 84) ** 1.6, seed })
   }
   return out
 }
@@ -208,11 +223,11 @@ export function bankGeometry(): BufferGeometry {
   face(xs.map(x => [x, bankHeight(x, Z0), Z0]), [0, 0, -1], p => p[0], true)
   face(zs.map(z => [X, bankHeight(X, z), z]), [1, 0, 0], p => p[2], true)
   face(zs.map(z => [-X, bankHeight(-X, z), z]), [-1, 0, 0], p => p[2], false)
-  // the stones: a rounded lump each, flattened, turned and dented by its seed, sunk two fifths into the ground
+  // the stones: a rounded lump each, flattened, turned and dented by its seed, sunk past its middle into the ground
   for (const s of stones()) {
     const start = position.length / 3, rings = 5, around = 9
     const flat = .55 + .25 * hash(s.seed, 85), long = 1 + .45 * hash(s.seed, 86), turn = Math.PI * 2 * hash(s.seed, 87)
-    const ground = bankHeight(s.x, s.z), cy = ground + s.r * flat * .2
+    const ground = bankHeight(s.x, s.z), cy = ground - s.r * flat * .2
     const at = (i: number, k: number): [number, number, number] => {
       const th = Math.PI * i / rings, ph = Math.PI * 2 * k / around
       const dent = 1 + .12 * (hash(s.seed, i, k % around, 88) - .5)

@@ -64,7 +64,7 @@ export async function bankSurface(stack: Stack): Promise<{ earth: Material; sets
   const rootW = fwidth(rootLine).mul(1.5).max(0.04)
   const root = float(1).sub(smoothstep(rootW.mul(0.25), rootW.mul(0.75), rootLine)).mul(float(0.04).div(rootW))
     .mul(smoothstep(-0.34, -0.06, p.y)).mul(smoothstep(0.3, 0.6, mx_noise_float(vec3(p.z.mul(0.8), 1.7, 5.9)).mul(0.5).add(0.5)))
-  const faceCol = mx(lin('#5f4b37'), lin('#4c3b2b'), loam.mul(0.7)).mul(luma(ground.albedo).mul(0.35).add(0.72))
+  const faceCol = mx(lin('#574837'), lin('#43372b'), loam.mul(0.7)).mul(luma(ground.albedo).mul(0.4).add(0.68))
     .mul(float(1).sub(strata.mul(strataFade).mul(0.14))).mul(float(1).sub(root.mul(0.5)))
   // GRAVEL: pebbles a few centimetres across, each its own tone, the gaps between them dark; one tone far off
   const cells = mx_worley_noise_vec2(vec3(uv().x.mul(22), uv().y.mul(22), 2.2))
@@ -73,7 +73,7 @@ export async function bankSurface(stack: Stack): Promise<{ earth: Material; sets
   const tone = mx_noise_float(vec3(uv().x.mul(22).floor(), uv().y.mul(22).floor(), 9.3)).mul(0.5).add(0.5)
   const gravelCol = mx(lin('#625b4f'), mx(lin('#77705f'), lin('#4f493f'), tone).mul(float(1).sub(gap.mul(0.45))), pebbleSeen)
   // A STONE: grey-brown, mottled, its lower part darker where the ground holds it
-  const stoneCol = mx(lin('#5c574e'), lin('#6e675a'), mx_noise_float(p.mul(9)).mul(0.5).add(0.5)).mul(smoothstep(-0.06, 0.05, normalWorld.y).mul(0.3).add(0.7))
+  const stoneCol = mx(lin('#423f39'), lin('#55504a'), mx_noise_float(p.mul(9)).mul(0.5).add(0.5)).mul(smoothstep(-0.06, 0.05, normalWorld.y).mul(0.3).add(0.7))
   // the cut faces where the model's bank ends: a section through the earth, darker with depth, its layers
   const section = step(BANK.halfX - 0.02, ax).max(step(p.z, BANK.zMin + 0.02)).max(step(BANK.zMax - 0.02, p.z))
   // a natural part steep enough to bare its earth reads as a face, whatever its form
