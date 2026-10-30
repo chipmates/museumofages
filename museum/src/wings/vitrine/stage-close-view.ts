@@ -154,8 +154,9 @@ export const STAGE = Object.freeze({
    * hand-off runs on under the machine's foot, a fifth of the field there, so the ramp has no knee where the floor is lit */
   air: { near: 1.0, far: 2.8, horizon: 1.4,
     /** the hand-off spans at least this share of the picture's own height in angle: a low eye sees the floor behind
-     * the machine in a few rows, and a hand-off of a few rows reads as a band */
-    least: .5,
+     * the machine in a few rows, and a hand-off of a few rows reads as a band (at half the height the floor's rim
+     * behind the screw's close view still drew a thin warm arc) */
+    least: .8,
     /** how much of the floor's shade (the key's shadow, the painted contact) the field the floor hands itself to keeps:
      * a low eye's floor is mostly field at the machine's foot, and its shadow must not go with it */
     shade: .45,
