@@ -27,7 +27,8 @@ const window = (z: number, a: number, b: number, soft = .45): number => ease(a -
  * rod lies on the slope as it slides off the bank. In a `dig` box something passes a few centimetres over the slope (a
  * kit's rods, a rod held over it), so the ground may only sink there, never rise */
 const KEPT: readonly (readonly [number, number, number, number, number, 'keep' | 'dig'])[] = [
-  [1, 2.2, 9, -12.5, -6.6, 'keep'], [1, 3.3, 9, -5.4, -4.6, 'keep'], [1, 3.3, 9, -3.85, -3.15, 'keep'],
+  [1, 2.2, 9, -12.5, -10.75, 'keep'], [1, 3.3, 9, -10.75, -8.45, 'keep'], [1, 2.2, 9, -8.45, -6.6, 'keep'],
+  [1, 3.3, 9, -5.4, -4.6, 'keep'], [1, 3.3, 9, -3.85, -3.15, 'keep'],
   [1, 2.7, 3.3, -5.4, -4.6, 'dig'], [1, 2.7, 3.3, -3.85, -3.15, 'dig'],
   [1, 3.6, 9, -2.75, 2.35, 'keep'], [1, 2.45, 9, -1.84, -1.6, 'keep'], [1, 2.45, 9, 1.6, 1.84, 'keep'],
   [1, 2.45, 9, -1.56, -1.06, 'dig'], [1, 2.45, 9, 1.06, 1.56, 'dig'],
@@ -81,30 +82,39 @@ function beach(ax: number, top: number): number {
 }
 
 interface Form { y: number; face: number; gravel: number; turf: number }
+/** the toe cut back by the water: the plan's own slope above |x| `f`, under it a face, steepest at its top, down to the
+ * water and a little under it. It only ever takes ground away */
+function toeCut(ax: number, f: number, top: number): number {
+  if (ax >= f) return Infinity
+  const foot = f - .07
+  if (ax >= foot) return lerp(BANK.water - .05, top, Math.sqrt((ax - foot) / .07))
+  return BANK.water - .05 - (foot - ax) * .9
+}
 /** the far bank's form at (|x|, z), and what it is made of there: the share of an earth face, of gravel and of turf */
 function farForm(ax: number, z: number, base: number): Form {
   const n = (s: number, k: number): number => wander(z * s, k)
   const forms: [number, Form][] = []
-  // up the stream behind the bridge, between the crown joist's props: a slump and a short cut face
-  forms.push([window(z, -6.45, -5.6, .25), { y: slump(ax, 3.72 + .05 * n(1.3, 11), .05), face: ease(3.45, 3.62, ax) * (1 - ease(3.7, 3.8, ax)), gravel: 0, turf: ease(3.75, 3.85, ax) }])
-  forms.push([window(z, -4.45, -4.05, .2), { y: cutBank(ax, 3.04, .36), face: ease(2.9, 2.97, ax) * (1 - ease(3.0, 3.04, ax)), gravel: 0, turf: ease(3.02, 3.1, ax) }])
-  // by the bridge, between the strips its rods slide down: a slumped shoulder, a cut face, the gravel the builders
-  // landed on, a shelf
-  const bs = 3.52 + .03 * n(2.1, 13)
-  forms.push([window(z, -2.6, -1.95, .2), { y: slump(ax, bs, .04), face: ease(bs - .09, bs - .06, ax) * (1 - ease(bs - .01, bs + .01, ax)), gravel: 0, turf: ease(bs - .01, bs + .06, ax) }])
-  const bf = 3.06 + .03 * n(2.3, 14)
-  forms.push([window(z, -1.45, -.15, .25), { y: cutBank(ax, bf, .3), face: ease(bf - .11, bf - .06, ax) * (1 - ease(bf - .01, bf + .01, ax)), gravel: 0, turf: ease(bf - .005, bf + .05, ax) }])
-  forms.push([window(z, .1, 1.45, .25), { y: beach(ax, 3.45), face: 0, gravel: ease(2.62, 2.72, ax) * (1 - ease(3.0, 3.1, ax)), turf: ease(3.4, 3.55, ax) }])
-  forms.push([window(z, 1.95, 2.6, .2), { y: shelf(ax, 3.5, -.2), face: ease(2.94, 3.02, ax) * (1 - ease(3.08, 3.13, ax)), gravel: 0, turf: ease(3.12, 3.2, ax) }])
+  // up the stream behind the bridge, between the crown joist's props: a slumped shoulder
+  forms.push([window(z, -6.45, -5.6, .3), { y: slump(ax, 3.72 + .05 * n(1.3, 11), .05), face: ease(3.45, 3.62, ax) * (1 - ease(3.7, 3.8, ax)), gravel: 0, turf: ease(3.75, 3.85, ax) }])
+  // under the far seat, between the strips its rods slide down: the gravel the builders landed on
+  forms.push([window(z, .25, 1.3, .3), { y: beach(ax, 3.45), face: 0, gravel: ease(2.62, 2.72, ax) * (1 - ease(3.0, 3.1, ax)), turf: ease(3.4, 3.55, ax) }])
   // down the stream toward the visitor: a cut bank, a slumped shoulder, a shelf of turf, a gravel lip
   const f = 3.02 + .045 * n(.9, 21) + .02 * n(2.7, 22), h = .38 + .05 * n(1.1, 23)
-  forms.push([window(z, 2.75, 5.0, .4), { y: cutBank(ax, f, h), face: ease(f - .11, f - .06, ax) * (1 - ease(f - .01, f + .01, ax)), gravel: 0, turf: ease(f - .005, f + .05, ax) }])
+  forms.push([window(z, 2.85, 5.0, .45), { y: cutBank(ax, f, h), face: ease(f - .11, f - .06, ax) * (1 - ease(f - .01, f + .01, ax)), gravel: 0, turf: ease(f - .005, f + .05, ax) }])
   const s = 3.78 + .06 * n(.8, 31)
-  forms.push([window(z, 5.3, 7.4, .45), { y: slump(ax, s, .05 + .025 * n(1.6, 32)), face: ease(s - .09, s - .06, ax) * (1 - ease(s - .01, s + .01, ax)), gravel: 0, turf: ease(s - .01, s + .06, ax) }])
+  forms.push([window(z, 5.4, 7.4, .5), { y: slump(ax, s, .05 + .025 * n(1.6, 32)), face: ease(s - .09, s - .06, ax) * (1 - ease(s - .01, s + .01, ax)), gravel: 0, turf: ease(s - .01, s + .06, ax) }])
   const l = 3.6 + .05 * n(.9, 41), t = -.22 + .03 * n(1.2, 42)
-  forms.push([window(z, 7.7, 9.3, .4), { y: shelf(ax, l, t), face: ease(2.94, 3.02, ax) * (1 - ease(3.08, 3.13, ax)), gravel: 0, turf: ease(3.12, 3.2, ax) }])
-  forms.push([window(z, 9.6, 12.5, .4), { y: beach(ax, 3.55 + .05 * n(1, 51)), face: 0, gravel: ease(2.62, 2.72, ax) * (1 - ease(3.0, 3.1, ax)), turf: ease(3.5, 3.65, ax) }])
-  return blend(base, forms)
+  forms.push([window(z, 7.8, 9.3, .45), { y: shelf(ax, l, t), face: ease(2.94, 3.02, ax) * (1 - ease(3.08, 3.13, ax)), gravel: 0, turf: ease(3.12, 3.2, ax) }])
+  forms.push([window(z, 9.75, 12.5, .45), { y: beach(ax, 3.55 + .05 * n(1, 51)), face: 0, gravel: ease(2.62, 2.72, ax) * (1 - ease(3.0, 3.1, ax)), turf: ease(3.5, 3.65, ax) }])
+  const form = blend(base, forms)
+  // between the forms the toe is cut back wherever nothing lies on the slope, its face's top wandering along the stream
+  const shown = Math.min(1, forms.reduce((w, [k]) => w + Math.max(0, k), 0))
+  const toe = Math.max(window(z, -10.5, -8.6, .3), window(z, -6.4, -2.1, .3), window(z, -1.38, 1.38, .2), window(z, 2.1, 12.5, .3)) * (1 - shown)
+  if (toe <= 0) return form
+  const tf = 3.08 + .09 * n(.45, 24) + .04 * n(1.6, 25), foot = tf - .07
+  const cut = Math.min(form.y, toeCut(ax, tf, groundY(tf, z)))
+  const face = ease(foot - .03, foot + .01, ax) * (1 - ease(tf - .005, tf + .005, ax))
+  return { y: lerp(form.y, cut, toe), face: lerp(form.face, face, toe), gravel: form.gravel * (1 - toe), turf: lerp(form.turf, ease(tf - .005, tf + .05, ax), toe) }
 }
 /** the near bank, which every eye sees from behind its lip: its lip line and its top change, its face more quietly */
 function nearForm(ax: number, z: number, base: number): Form {

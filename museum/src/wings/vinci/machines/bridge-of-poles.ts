@@ -143,6 +143,11 @@ export function build(stack: Stack): ReadyMachineBuild {
       reflection = stack.reflector(level, { resolutionScale: 1, bounces: false, generateMipmaps: false })
       surfaces.mirror(reflection.node)
     }
+    // a look round may hide named parts (`globalThis.__stageProbe.hide`), on the dev server only
+    if (import.meta.env.DEV) for (const id of (globalThis as { __stageProbe?: { hide?: string[] } }).__stageProbe?.hide ?? []) {
+      const node = object.getObjectByName(id)
+      if (node) node.visible = false
+    }
     mounted = true
     applyPose(time)
     object.updateMatrixWorld(true)
