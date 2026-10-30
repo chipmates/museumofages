@@ -14,13 +14,18 @@ type N = any
 const mx: N = mix
 const lin = (hex: string): N => { const c = new Color(hex); return vec3(c.r, c.g, c.b) }
 const luma = (n: N): N => n.dot(vec3(0.2126, 0.7152, 0.0722))
-/** a height on the surface tilts the shading normal (the surface-gradient bump, from the screen's own derivatives) */
-function bumped(base: N, height: N): N {
+/** heights on the surface tilt the shading normal (the surface-gradient bump, from the screen's own derivatives), each
+ * by its own share: a share taken inside the height would add its own slope where it changes fast (a face's edge), and
+ * the pixels across that edge would tilt as a dotted line */
+function bumped(base: N, heights: readonly (readonly [N, N])[]): N {
   const n = base.normalize()
   const dpx = positionView.dFdx(), dpy = positionView.dFdy()
   const r1 = dpy.cross(n), r2 = n.cross(dpx)
   const det = dpx.dot(r1)
-  const grad = r1.mul(height.dFdx()).add(r2.mul(height.dFdy())).mul(det.sign())
+  const grad = heights.reduce((sum: N, [height, share]) => {
+    const g = r1.mul(height.dFdx()).add(r2.mul(height.dFdy())).mul(share)
+    return sum === null ? g : sum.add(g)
+  }, null).mul(det.sign())
   return n.mul(det.abs()).sub(grad).normalize()
 }
 
@@ -95,11 +100,12 @@ export async function bankSurface(stack: Stack): Promise<{ earth: Material; sets
   earth.colorNode = airBehind(col.mul(mx(float(1), ground.occlusion, 0.55)).mul(seatShade))
   earth.roughnessNode = mx(mx(ground.roughness.max(0.85), float(0.55), wet.mul(0.6)), float(0.8), stoneK)
   // the relief: the plain slope's runnels as before, the face's layers and roots, the pebbles, a stone's dents
-  const relief = runnel.mul(0.035).add(patch.mul(0.06)).mul(slope).mul(float(1).sub(bare)).mul(float(1).sub(gravelK))
-    .add(strata.mul(strataFade).mul(0.004).add(root.mul(0.006)).mul(bare))
-    .add(cells.x.mul(-0.006).mul(pebbleSeen).mul(gravelK))
-    .add(mx_noise_float(p.mul(14)).mul(0.004).mul(stoneK))
-  earth.normalNode = bumped(earth.normalNode ?? normalView, relief)
+  earth.normalNode = bumped(earth.normalNode ?? normalView, [
+    [runnel.mul(0.035).add(patch.mul(0.06)), slope.mul(float(1).sub(bare)).mul(float(1).sub(gravelK))],
+    [strata.mul(strataFade).mul(0.004).add(root.mul(0.006)), bare],
+    [cells.x.mul(-0.006).mul(pebbleSeen), gravelK],
+    [mx_noise_float(p.mul(14)).mul(0.004), stoneK],
+  ])
   grassMat.dispose()
   return { earth, sets: new Set<MaterialSet>([se, sg]) }
 }
