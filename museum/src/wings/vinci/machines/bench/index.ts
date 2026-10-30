@@ -515,19 +515,10 @@ export function createBench(stack: Stack, onExit: () => void) {
     camera.updateProjectionMatrix();
     // THE HEADER'S AIR on the phone: a machine whose drawn top would stand up under the header's words (a lion's tail,
     // a compass's tips) stands back until it clears them; its box's corners stand above what is drawn, and by them most
-    // machines stood back for nothing. The bridge's yard is its frame, its banks run off the picture
-    if (mobile && !eye && !closeUp && !header.hidden) {
-      const line = (header.getBoundingClientRect().bottom + HEADER_AIR) / innerHeight;
-      const corners = (b: Box3): Vector3[] => [b.min.x, b.max.x].flatMap(x => [b.min.y, b.max.y].flatMap(y => [b.min.z, b.max.z].map(z => new Vector3(x, y, z))));
-      const points = walked ?? (slug === 'bridge-of-poles' ? corners(box) : surfacePoints(machine.object, 600));
-      for (let i = 0; i < 16; i++) {
-        camera.updateMatrixWorld();
-        const top = Math.min(...points.map(p => onCanvas(p, camera).y));
-        if (top >= line) break;
-        distance *= 1 + Math.min(.2, (line - top) * 1.2);
-        camera.position.copy(centre).addScaledVector(direction, distance);
-      }
-    }
+    // machines stood back for nothing. The bridge's yard is its frame, its banks run off the picture. A machine's
+    // surfaces may stand only once it is ready: then the bench asks again (`composeAir`)
+    airFrom = { centre, direction, box, walked, distance };
+    if (mobile && !eye && !closeUp) distance = airFrom.distance = headerAir(distance);
     // The far cascade is a box around the origin, so the floor beyond it took
     // no shadow at all and stood there as a hard edged dark quad. The air
     // now closes inside that box, and the ground hands itself to the air.
@@ -537,6 +528,29 @@ export function createBench(stack: Stack, onExit: () => void) {
     // fitted to the wall rather than to the machine, and the wall is always
     // read through the same depth of it, whatever the sun is doing to it.
     stageAir(distance, eye ? (eye.frame ?? [0, 0, 1, 1])[3] : mobile ? .41 : 1);
+  }
+  let airFrom: { centre: Vector3; direction: Vector3; box: Box3; walked: Vector3[] | null; distance: number } | null = null;
+  function headerAir(from: number): number {
+    if (!machine || !airFrom || header.hidden) return from;
+    const { centre, direction, box, walked } = airFrom;
+    let distance = from;
+    const line = (header.getBoundingClientRect().bottom + HEADER_AIR) / innerHeight;
+    const corners = (b: Box3): Vector3[] => [b.min.x, b.max.x].flatMap(x => [b.min.y, b.max.y].flatMap(y => [b.min.z, b.max.z].map(z => new Vector3(x, y, z))));
+    const points = walked ?? (slug === 'bridge-of-poles' ? corners(box) : surfacePoints(machine.object, 600));
+    for (let i = 0; i < 16 && points.length; i++) {
+      camera.updateMatrixWorld();
+      const top = Math.min(...points.map(p => onCanvas(p, camera).y));
+      if (top >= line) break;
+      distance *= 1 + Math.min(.2, (line - top) * 1.2);
+      camera.position.copy(centre).addScaledVector(direction, distance);
+    }
+    return distance;
+  }
+  /** the header's air again once the machine stands */
+  function composeAir() {
+    if (!airFrom) return;
+    const from = airFrom.distance, distance = headerAir(from);
+    if (distance !== from) { airFrom.distance = distance; stageAir(distance, .41); }
   }
   /** the phone header's scrim (bench.css `.bench-header::before`: 20 px past the header either side, from 15 px over its
    * top, 76 px tall, clearing from 36 to 52 percent across and closing from 57 to 74), in shares of the window */
@@ -913,7 +927,7 @@ export function createBench(stack: Stack, onExit: () => void) {
       ropeExperiment = applyRopeShadowExperiment(machine.object, slug, ropeMode, key.direction);
     }
     if (requestedEvidence) evidence.open(requestedEvidence, read);
-    ready = true; loading.hidden = true; if (WALKERS.has(slug)) { walkFrame = walkPoints(); compose(); } metrics?.reset(); stamp(); lastWall = performance.now(); console.log(`[bench] mounted ${slug} period=${recordOf(slug).dossier.motion.period_s} tier=${stack.tierName()}`); }
+    ready = true; loading.hidden = true; if (WALKERS.has(slug)) { walkFrame = walkPoints(); compose(); } else if (innerWidth <= 1280 && !eye && !closeUp) composeAir(); metrics?.reset(); stamp(); lastWall = performance.now(); console.log(`[bench] mounted ${slug} period=${recordOf(slug).dossier.motion.period_s} tier=${stack.tierName()}`); }
   function close() { if (!active)
     return; setBenchKey(null); serial++; evidence.close(false); active = false; host.hidden = true; ready = false; clearDisplay(); key?.dispose(); key = null; }
   function navigate(delta: number) { const id = BENCH_SLUGS[(BENCH_SLUGS.indexOf(slug) + delta + BENCH_SLUGS.length) % BENCH_SLUGS.length]; if (id) {
