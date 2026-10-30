@@ -552,6 +552,24 @@ export function createBench(stack: Stack, onExit: () => void) {
       camera.setViewOffset(innerWidth, innerHeight, 0, innerHeight * (.5 - (top + tall / 2)), innerWidth, innerHeight);
     }
     camera.updateProjectionMatrix();
+    // the bridge's run on the phone: its box's middle is not its drawn middle (the near bundle lies further out than the
+    // far one), so the eye slides across until both side margins match, then stands as near as the wider side allows
+    if (walked && slug === 'bridge-of-poles') {
+      const seen = new Vector3();
+      for (let i = 0; i < 6; i++) {
+        camera.updateMatrixWorld();
+        let lo = Infinity, hi = -Infinity;
+        for (const p of walked) { const x = seen.copy(p).project(camera).x; lo = Math.min(lo, x); hi = Math.max(hi, x); }
+        const mid = (lo + hi) / 2;
+        if (Math.abs(mid) < 1e-3) break;
+        const slide = right.clone().multiplyScalar(mid * distance * Math.tan(camera.fov * Math.PI / 360) * camera.aspect);
+        centre.add(slide);
+        box.translate(slide);
+        distance = eyeDistance(box, direction, mobile, walked);
+        camera.position.copy(centre).addScaledVector(direction, distance);
+        camera.lookAt(centre);
+      }
+    }
     // THE HEADER'S AIR on the phone: a machine whose drawn top would stand up under the header's words (a lion's tail,
     // a compass's tips) stands back until it clears them; its box's corners stand above what is drawn, and by them most
     // machines stood back for nothing. The bridge's yard is its frame, its banks run off the picture. A machine's
