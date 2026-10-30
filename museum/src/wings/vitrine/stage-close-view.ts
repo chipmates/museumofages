@@ -221,7 +221,7 @@ export const STAGE = Object.freeze({
      * never winds and keeps its own normals, since a sheet shaded as a line facing the eye stands as one flat lamp */
     tube: .2 },
   /** the phone header's scrim as the field under its clear middle takes it: its colour in linear light and its share */
-  header: { scrim: [.0040, .0044, .0052] as const, share: .9, ramp: .5 },
+  header: { scrim: [.0040, .0044, .0052] as const, share: .84, ramp: .5 },
   /** the vertical lens in degrees: a long lens on the desktop, the phone's upright frame narrower still across */
   lens: { desktop: 24, phone: 40 },
   /** the machine's swept outline's share of its fit box, across and upright, per device: the box keeps room for the
