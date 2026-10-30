@@ -11,7 +11,7 @@ import { loadManifest, type ManifestIndex } from '../../../manifest'
 import type { Stack, TierName } from '../../../stack'
 import { findEvidencePlates, findPlateEntries, getWork, reproductionCardSize, type PictureWork, type ResolvedPicturePlate } from '../pictures/register'
 import { trueScale } from '../pictures/scale'
-import { pictureDisplayUV, pictureDisplayWindow } from '../pictures/registration'
+import { cardOnFramePart, pictureDisplayUV, pictureDisplayWindow, pictureFramePart } from '../pictures/registration'
 import { ARCH_MASK_MANIFEST_ID, buildArchShoulderGeometry, pictureArchMask } from '../pictures/arch-mask'
 import { createPlateStream, type PlateStream } from '../pictures/stream'
 import { registerVinciStripThumb, releaseVinciStripThumb } from './strip'
@@ -353,7 +353,10 @@ export function mountCollectionPlates(host: Group, stack: Stack, options: Collec
       const registration = pictureDisplayWindow(entry.plate)
       const window = registration ? pictureDisplayUV(registration) : null
       const pixels = window ? { width: window.contentAspect, height: 1 } : entry.pixels
-      const size = reproductionCardSize(work, pixels)
+      // a plate registered to part of an earlier plate's frame stands on that part, at the frame's scale
+      const part = window ? null : pictureFramePart(entry.plate)
+      const onPart = part ? cardOnFramePart(reproductionCardSize(work, { width: part.referenceWidth, height: part.referenceHeight }), part) : null
+      const size = onPart ?? reproductionCardSize(work, pixels)
       const geometry = new PlaneGeometry(size.widthM, size.heightM)
       if (window) {
         const uv = geometry.getAttribute('uv')
@@ -372,6 +375,7 @@ export function mountCollectionPlates(host: Group, stack: Stack, options: Collec
       mesh.name = `vinci/collection-plates/${entry.id}`
       mesh.position.set(...field.position)
       mesh.rotation.y = field.bearing
+      if (onPart) mesh.translateX(onPart.offsetM[0]).translateY(onPart.offsetM[1])
       mesh.visible = false
       // The existing opaque field and frame already cast their own shadows.
       // A transparent source introduces no new caster into the static cache.
@@ -380,7 +384,7 @@ export function mountCollectionPlates(host: Group, stack: Stack, options: Collec
         manifestId: entry.plate.id, asset: entry.plate.id, assetClass: entry.plate.class,
         workId: work.id, face: entry.face, previewId: entry.preview.id,
         measuredField: { widthM: field.width, heightM: field.height, centreY: field.position[1] },
-        sourceWindow: window, physicalRegistration: false, light: 'collection openings and fittings',
+        sourceWindow: window, framePart: part?.part ?? null, physicalRegistration: false, light: 'collection openings and fittings',
       }
       group.add(mesh)
       const texels = stream.allocation()

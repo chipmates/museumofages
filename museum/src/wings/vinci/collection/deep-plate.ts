@@ -15,7 +15,7 @@ import type { VitrineExhibit, VitrineRect } from '../../vitrine'
 import { validatePaintingRecord } from '../pictures/policy'
 import { createWindowWorkLabel, ORIGINAL_REGISTER } from '../pictures/policy-label'
 import type { HangCatalogue } from './catalogue'
-import { pictureDisplayUV, pictureDisplayWindow } from '../pictures/registration'
+import { pictureDisplayUV, pictureDisplayWindow, pictureFramePart } from '../pictures/registration'
 import { plateArchGround } from '../pictures/arch-plate'
 import type { PictureWork, ResolvedPicturePlate } from '../pictures/register'
 import cardsRaw from '../data/cards.json?raw'
@@ -249,6 +249,14 @@ function platePxPerCm(work: PictureWork, plate: ResolvedPicturePlate,
   cut: { left: number; right: number; top: number; bottom: number } | null, scale: number): number | null {
   if (!work.width_cm || !work.height_cm || !(work.width_cm > 0) || !(work.height_cm > 0)) return null
   if (!(scale > 0)) return null
+  // A plate on part of an earlier plate's frame hangs at that frame's scale: the frame is
+  // contained in the work's centimetres, and the plate carries its own pixels per frame pixel.
+  const part = cut ? null : pictureFramePart(plate.plate)
+  if (part) {
+    const [u0, , u1] = part.part
+    const perFramePixel = plate.pixels.width / ((u1 - u0) * part.referenceWidth)
+    return Math.max(part.referenceWidth / work.width_cm, part.referenceHeight / work.height_cm) * perFramePixel * scale
+  }
   // The magnification the rule multiplies is one screen pixel per pixel of
   // the source standing in the window, so a deeper source of the same work
   // carries proportionally more of its own pixels across one centimetre.

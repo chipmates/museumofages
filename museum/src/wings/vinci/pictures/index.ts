@@ -7,7 +7,7 @@ import { buildBakedFrameContact } from './directional-contact'
 import { findPlateEntries, reproductionCardSize, type PictureWork, type ResolvedPicturePlate } from './register'
 import { createPolicyWorkLabel, policyCertainty, policyLabelText } from './policy-label'
 import { isPrintedDocument, type PolicyPaintingEntry } from './policy'
-import { pictureDisplayWindow, pictureDisplayUV } from './registration'
+import { cardOnFramePart, pictureDisplayWindow, pictureDisplayUV, pictureFramePart } from './registration'
 import { pictureArchMask, buildArchShoulderGeometry, ARCH_MASK_MANIFEST_ID } from './arch-mask'
 import { trueScale } from './scale'
 import { createPlateStream } from './stream'
@@ -260,8 +260,14 @@ export function buildHang(stack: Stack, register: readonly PictureWork[], manife
     const height = outline ? size.heightM : catalogue ? PICTURE_CATALOGUE_CARRIER_M.height : 1.1
     const windows = entries.map(entry => { const observation = pictureDisplayWindow(entry.plate); return observation ? pictureDisplayUV(observation) : null })
     const documentCarrier = size === null && entries.length > 0
+    // a plate registered to part of an earlier plate's frame stands on that part, at the frame's scale
+    const parts = entries.map((entry, i) => {
+      const part = windows[i] || documentCarrier ? null : pictureFramePart(entry.plate)
+      return part ? cardOnFramePart(reproductionCardSize(work, { width: part.referenceWidth, height: part.referenceHeight }), part) : null
+    })
     const sizes = entries.map((entry, i) => {
       const pixels = windows[i] ? { width: windows[i]!.contentAspect, height: 1 } : entry.pixels
+      if (parts[i]) return parts[i]!
       if (!documentCarrier) return reproductionCardSize(work, pixels)
       // This is the size of modern document furniture, never a painting extent.
       const factor = Math.min(width / pixels.width, .72 / pixels.height)
@@ -389,7 +395,7 @@ export function buildHang(stack: Stack, register: readonly PictureWork[], manife
       const mesh = new Mesh(geometry, stream.material)
       mesh.name = `reproduction/${entry.id}`
       mesh.castShadow = true
-      mesh.position.set(cardX, y, .023)
+      mesh.position.set(cardX + (parts[i]?.offsetM[0] ?? 0), y + (parts[i]?.offsetM[1] ?? 0), .023)
       mesh.userData['manifestId'] = entry.plate.id
       mesh.visible = false
       wall.add(mesh)

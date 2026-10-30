@@ -293,38 +293,6 @@ export const PICTURE_DISPLAY_WINDOWS: readonly PictureDisplayWindow[] = [
   "note": "Preview inspection identifies a thin photographed frame. The conservative window removes the larger outer frame while retaining its uncertain dark rebate. Photograph perspective and the hidden panel edge remain unregistered."
 },
 {
-  "sourceId": "vinci/painting-plate/last-supper",
-  "sourceSha256": "11c424a90c8277b7bd5d68c4be1e9a5bf300eaf0d62c1b58c7b77b3f7ddcce70",
-  "evidenceId": "vinci/painting-preview/last-supper",
-  "evidenceSha256": "977a2e44b2b521b47a7620c0824f16a3fb54b9fefc59aa90c1e6ddb0d3309097",
-  "referenceWidth": 1024,
-  "referenceHeight": 569,
-  "boundsPx": [
-    0,
-    30,
-    1024,
-    569
-  ],
-  "cornersPx": [
-    [
-      0,
-      37
-    ],
-    [
-      1024,
-      35
-    ],
-    null,
-    null
-  ],
-  "uncertaintyPx": 4,
-  "shape": "rectangle",
-  "extent": "visible-painting-aperture",
-  "approvedForDisplayCrop": false,
-  "physicalRegistration": false,
-  "note": "A non-painted cornice is visible at the top, but the full lower and lateral physical field boundary is not established from this preview. Preserve the doorway loss; do not approve a field crop from an aspect-ratio match alone."
-},
-{
   "sourceId": "vinci/painting-plate/yarnwinder-lansdowne__1992x2401",
   "sourceSha256": "6af4134f6d1952000b4ba7d94319000e866f7c076890e256ae6e3a93171de99a",
   "evidenceId": "vinci/painting-preview/yarnwinder-lansdowne__850x1024",
@@ -408,6 +376,57 @@ export const PICTURE_DISPLAY_WINDOWS: readonly PictureDisplayWindow[] = [
   "note": "The photographed painting continues beyond raster edges, with only partial frame visible. A complete physical rectangle cannot be reconstructed from this clipped source."
 }
 ];
+
+/** A plate registered to a part of a reference frame: the raster of an earlier plate
+ * of the same work. The card stands on that part, at the frame's own scale, so the
+ * painting lands where the frame put it and nothing is enlarged to fill the rest.
+ * Like a window, this is a display registration, not a physical one.
+ */
+export interface PictureFramePart {
+  readonly sourceId: string;
+  readonly sourceSha256: string;
+  /** The reference frame: the earlier plate's pixels and its bytes. */
+  readonly referenceWidth: number;
+  readonly referenceHeight: number;
+  readonly referenceSha256: string;
+  /** Left, top, right, bottom of the frame the plate covers whole, in fractions from its top-left. */
+  readonly part: readonly [number, number, number, number];
+  /** How far the plate's matched points lie from the frame's after the correction, in frame pixels. */
+  readonly residualPx: { readonly median: number; readonly max: number };
+  readonly physicalRegistration: false;
+  readonly note: string;
+}
+
+export const PICTURE_FRAME_PARTS: readonly PictureFramePart[] = [
+{
+  "sourceId": "vinci/painting-plate/last-supper",
+  "sourceSha256": "ba5e51e50bd7a626f4dbcfeebe40e4dea924edbf0b90317ac2169f6b86c3d56b",
+  "referenceWidth": 4096,
+  "referenceHeight": 2275,
+  "referenceSha256": "11c424a90c8277b7bd5d68c4be1e9a5bf300eaf0d62c1b58c7b77b3f7ddcce70",
+  "part": [0.01855, 0, 0.97803, 0.97012],
+  "residualPx": { "median": 4.87, "max": 16.25 },
+  "physicalRegistration": false,
+  "note": "The 2024 photograph, straightened onto the earlier plate's frame by one perspective correction fitted to 680 matched patches. It does not reach the painted field's left, right and lower edges, so it is cut to the part of the frame it covers whole; the wall's bare field shows in the strips it misses."
+},
+];
+
+/** Match exact source identity and bytes, as a window does. */
+export function pictureFramePart(source: Pick<PolicyPaintingEntry, 'id' | 'sha256'>): PictureFramePart | null {
+  return PICTURE_FRAME_PARTS.find(part => part.sourceId === source.id && part.sourceSha256 === source.sha256) ?? null;
+}
+
+/** The card a plate takes on its part of the frame: the frame's own card, cut to the
+ * part, and the part's centre measured from the frame's centre (x right, y up). */
+export function cardOnFramePart(frame: { readonly widthM: number; readonly heightM: number }, part: PictureFramePart):
+{ widthM: number; heightM: number; offsetM: readonly [number, number] } {
+  const [u0, v0, u1, v1] = part.part;
+  if (![u0, v0, u1, v1].every(Number.isFinite) || u0 < 0 || v0 < 0 || u1 > 1 || v1 > 1 || u1 <= u0 || v1 <= v0) {
+    throw new RangeError('A frame part must lie inside its reference frame.');
+  }
+  return { widthM: frame.widthM * (u1 - u0), heightM: frame.heightM * (v1 - v0),
+    offsetM: [frame.widthM * ((u0 + u1) / 2 - .5), -frame.heightM * ((v0 + v1) / 2 - .5)] };
+}
 
 /** Match exact source identity and bytes. A same-work substitute never inherits a crop. */
 export function pictureDisplayWindow(source: Pick<PolicyPaintingEntry, 'id' | 'sha256'>): PictureDisplayWindow | null {
