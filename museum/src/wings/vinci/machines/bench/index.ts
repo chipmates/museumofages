@@ -119,6 +119,9 @@ const BRIDGE_YARD = new Box3(new Vector3(-8.5, -.6, -2.3), new Vector3(8.5, 3, 2
 /** On the phone's upright frame the yard's width stood the bridge small, as poles rather than a bridge: there the frame
  * takes the bridge and its seats, and the rods' stock runs out at the frame's sides. */
 const BRIDGE_YARD_PHONE = new Box3(new Vector3(-6, -.6, -2.3), new Vector3(6, 3, 2.3));
+/** The share of the phone's width the bridge's run may take: framed by its drawn poles at every moment, not a box's
+ * corners, its widest moment (the poles apart on both banks) stands this wide, the built bridge as large as that allows. */
+const BRIDGE_RUN_WIDE = .9;
 /** css px of air under the phone header's words that no machine's top stands up into */
 const HEADER_AIR = 10;
 /** That eye looks down on the yard more than a rig's eye does, on the same bearing round the stream: the yard is long
@@ -467,7 +470,7 @@ export function createBench(stack: Stack, onExit: () => void) {
     const size = box.getSize(new Vector3()), centre = box.getCenter(new Vector3());
     const span = Math.max(size.x, size.y, size.z);
     const right = new Vector3().crossVectors(new Vector3(0, 1, 0), direction).normalize(), up = new Vector3().crossVectors(direction, right).normalize();
-    const tanY = Math.tan(17 * Math.PI / 180), tanX = tanY * innerWidth / innerHeight, width = mobile ? .84 : .7, height = slug === 'proportional-compass' ? (mobile ? .38 : .95) : (mobile ? .31 : .8);
+    const tanY = Math.tan(17 * Math.PI / 180), tanX = tanY * innerWidth / innerHeight, width = mobile ? (points && slug === 'bridge-of-poles' ? BRIDGE_RUN_WIDE : .84) : .7, height = slug === 'proportional-compass' ? (mobile ? .38 : .95) : (mobile ? .31 : .8);
     let distance = points ? 0 : span;
     const corners = points ?? [box.min.x, box.max.x].flatMap(x => [box.min.y, box.max.y].flatMap(y => [box.min.z, box.max.z].map(z => new Vector3(x, y, z))));
     for (const corner of corners) {
