@@ -81,10 +81,11 @@ function keyRim(strength: number): N {
 const MIRROR_BASE = { least: 0.08, gain: 1.6, wave: 0.18, soft: 0.008, near: 16, far: 23 }
 /** THE CLOSE EYE'S STREAM: an eye a few metres over the water (the bridge's close view) looks down into it, where a
  * still face shows its bed through less dark water, mirrors the poles over it more and lets its ripples move the
- * mirror further. From `from` to `to` metres off the water it hands over to the far eye's dark mirror, so the far
- * eyes keep theirs (and their bar against the tear) */
-const CLOSE = { from: 4.5, to: 7, least: .15, wave: .3, ripple: .03, absorb: 1.6 }
-const nearEye = (): N => float(1).sub(smoothstep(CLOSE.from, CLOSE.to, positionWorld.sub(cameraPosition).length()))
+ * mirror further. By the eye's distance from the bridge's heart, `from` to `to` metres, it hands over to the far eye's
+ * dark mirror: the water a close eye sees lies as far off as the nearest a far eye sees, so the water's own distance
+ * cannot tell them apart; the far eyes keep theirs (and their bar against the tear) */
+const CLOSE = { heart: [0, 2, .5] as const, from: 4.5, to: 7, least: .15, wave: .3, ripple: .03, absorb: 1.6 }
+const nearEye = (): N => float(1).sub(smoothstep(CLOSE.from, CLOSE.to, cameraPosition.sub(vec3(...CLOSE.heart)).length()))
 /** a look round's numbers for the stream (`globalThis.__stageProbe.stream`), on the dev server only */
 function streamNumbers(): typeof MIRROR_BASE & { ripple?: number; absorb?: number; caustic?: number } {
   const probe = import.meta.env.DEV ? (globalThis as { __stageProbe?: { stream?: Record<string, number> } }).__stageProbe?.stream : undefined
