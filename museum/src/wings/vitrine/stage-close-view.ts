@@ -220,6 +220,8 @@ export const STAGE = Object.freeze({
     /** a thin shape with fewer of its edges turning than this share is a sheet (a wing's cloth, a sail), not a cord: it
      * never winds and keeps its own normals, since a sheet shaded as a line facing the eye stands as one flat lamp */
     tube: .2 },
+  /** the phone header's scrim as the field under its clear middle takes it: its colour in linear light and its share */
+  header: { scrim: [.0040, .0044, .0052] as const, share: .9 },
   /** the vertical lens in degrees: a long lens on the desktop, the phone's upright frame narrower still across */
   lens: { desktop: 24, phone: 40 },
   /** the machine's swept outline's share of its fit box, across and upright, per device: the box keeps room for the
@@ -283,6 +285,9 @@ export interface StageSetting {
    * half width across x, metres) keeps the floor off the water that runs out along it, and closes under the floor
    * between `closed` metres (from, to) past the box's middle along +z, where a far eye would see the water cut off */
   merge(box: Box3, from: number, to: number, above: number, channel?: number, closed?: readonly [number, number]): void
+  /** the phone header's scrim on the canvas (shares: its foot, and the stops across where it clears from and to and
+   * closes from and to), or null where no scrim stands */
+  header(band: { foot: number; stops: readonly [number, number, number, number] } | null): void
   /** a mirror-like surface the edge light must not reach: from behind the machine it stands as a hot spot in a mirror
    * the eye looks down on */
   offRim(material: MeshStandardNodeMaterial): void
@@ -334,8 +339,17 @@ export function createStageSetting(options: {
   const top = mix(float(1 - S.field.top), float(1), smoothstep(0, .55, viewportUV.y).max(glow.mul(S.field.spare)))
   const dither = float(1).add(interleavedGradientNoise(screenCoordinate.xy).sub(.5).mul(S.field.dither))
   const field = mix(edge, pool, glow).mul(top).mul(dither)
+  // THE HEADER'S BAND (the phone's): its words stand on a scrim dark at both ends and clear in the middle, so no scrim
+  // lies over a machine's tip; under the clear middle the field alone is darkened as the scrim darkens the ends, and the
+  // top runs evenly dark. Shares of the canvas: the band's foot, and across, the stops where the scrim clears and closes
+  const headerFoot = uniform(float(0)), headerStops = uniform(vec4(0, 0, 0, 0))
+  const down = viewportUV.y.div(headerFoot.max(1e-4))
+  const tall = float(1).sub(down.div(.55).clamp(0, 1).mul(.2)).mul(float(1).sub(down.sub(.55).div(.45).clamp(0, 1))).mul(headerFoot.sign())
+  const across = viewportUV.x.sub(headerStops.x).div(headerStops.y.sub(headerStops.x).max(1e-4)).clamp(0, 1)
+    .mul(float(1).sub(viewportUV.x.sub(headerStops.z).div(headerStops.w.sub(headerStops.z).max(1e-4)).clamp(0, 1)))
+  const backdrop = mix(field, vec3(...S.header.scrim), tall.mul(across).mul(S.header.share))
   scene.background = new Color().setRGB(S.field.edge[0], S.field.edge[1], S.field.edge[2])
-  scene.backgroundNode = field
+  scene.backgroundNode = backdrop
 
   // ---- the light, in the eye's bearing
   // the probe's own sun disc would stand at a fixed bearing while the rig turns: it carries none
@@ -486,9 +500,9 @@ export function createStageSetting(options: {
     const near = float(1).sub(smoothstep(radius * S.air.shadeReach[0], radius * S.air.shadeReach[1], along))
     const side = float(1).sub(smoothstep(S.floor.edge[0], S.floor.edge[1], viewportUV.x.min(viewportUV.x.oneMinus())))
     const kept = mix(float(1), groundShadow.mul(shade), near.mul(S.air.shade).mul(holdFar).mul(side.oneMinus()))
-    horizonOut = vec4(mix(output.rgb, field.mul(kept), float(1).sub(smoothstep(0, horizonSine, below))), output.a)
+    horizonOut = vec4(mix(output.rgb, backdrop.mul(kept), float(1).sub(smoothstep(0, horizonSine, below))), output.a)
     // a machine's own ground hands itself over only where the eye grazes it: a close eye looks down on the bank it stands over
-    groundOut = vec4(mix(output.rgb.mul(shade), field.mul(kept), float(1).sub(smoothstep(S.air.graze[0], S.air.graze[1], below))), output.a)
+    groundOut = vec4(mix(output.rgb.mul(shade), backdrop.mul(kept), float(1).sub(smoothstep(S.air.graze[0], S.air.graze[1], below))), output.a)
     floorMaterial.colorNode = albedo
     // the shadow thins away from the machine: the light it holds off there, given back in part
     const thin = smoothstep(radius * S.floor.thin[0], radius * S.floor.thin[1], along).mul(S.floor.thin[2]).max(side)
@@ -568,6 +582,10 @@ export function createStageSetting(options: {
   }
 
   let veil: Mesh | null = null
+  function header(band: { foot: number; stops: readonly [number, number, number, number] } | null): void {
+    headerFoot.value = band ? band.foot : 0
+    if (band) (headerStops.value as import('three/webgpu').Vector4).set(...band.stops)
+  }
   function merge(area: Box3, from: number, to: number, above: number, channel = 0, closed?: readonly [number, number]): void {
     dropVeil()
     const c = area.getCenter(new Vector3()), half = area.getSize(new Vector3()).multiplyScalar(.5)
@@ -865,7 +883,7 @@ export function createStageSetting(options: {
   function carry(by: Vector3): void {
     walkedBy.value.set(by.x, by.z)
   }
-  return { field, floor, key, follow, air, contact, carry, merge, offRim, ground, machine, figure, stir, dispose }
+  return { field, floor, key, follow, air, contact, carry, merge, header, offRim, ground, machine, figure, stir, dispose }
 }
 
 /** the points of a body's surfaces, a few hundred a mesh, in world metres: what the contact shade is painted from; under

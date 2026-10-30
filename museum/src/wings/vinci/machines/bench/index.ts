@@ -517,9 +517,18 @@ export function createBench(stack: Stack, onExit: () => void) {
     // read through the same depth of it, whatever the sun is doing to it.
     stageAir(distance, eye ? (eye.frame ?? [0, 0, 1, 1])[3] : mobile ? .41 : 1);
   }
+  /** the phone header's scrim (bench.css `.bench-header::before`: 20 px past the header either side, from 15 px over its
+   * top, 76 px tall, clearing from 36 to 52 percent across and closing from 57 to 74), in shares of the window */
+  function headerBand() {
+    if (innerWidth > 1280 || getComputedStyle(header).visibility === 'hidden') return null;
+    const r = header.getBoundingClientRect(), left = r.left - 20, wide = r.width + 40;
+    const at = (k: number) => (left + wide * k) / innerWidth;
+    return { foot: (r.top - 15 + 76) / innerHeight, stops: [at(.36), at(.52), at(.57), at(.74)] as const };
+  }
   /** the setting's air from the eye's distance, its rig on the eye's bearing, its pool behind the machine in the picture */
   function stageAir(distance: number, picture: number) {
     if (!stage) return;
+    stage.header(headerBand());
     const radius = frameBounds().getBoundingSphere(new Sphere()).radius;
     const { air } = stageNumbers();
     stage.air(distance + radius * air.near, distance + radius * air.far);
