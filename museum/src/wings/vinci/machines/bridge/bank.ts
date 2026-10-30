@@ -282,17 +282,22 @@ export function bankGeometry(): BufferGeometry {
     for (let i = mid - 1; i >= 0; i--) run[i] = run[i + 1]! - Math.hypot(xs[i + 1]! - xs[i]!, ys[i + 1]!.y - ys[i]!.y)
     xs.forEach((x, i) => { const b = ys[i]!; vertex([x, b.y, z], [0, 1, 0], run[i]! + xs[mid]!, z, [b.face, b.gravel, 0, b.turf]) })
   })
-  // the top's normals from its neighbours across and along (the columns crowd where it bends, so they hold its creases)
-  const P = (i: number, j: number): number => 3 * (Math.min(nz, Math.max(0, j)) * (nx + 1) + Math.min(nx, Math.max(0, i)))
+  // the top's normals: across from the row's own neighbours, along from the rows either side read at the same x (their
+  // columns stand elsewhere where a crease wanders, and a column's neighbour along may lie on the other side of it)
+  const heightIn = (j: number, x: number): number => {
+    const xs = rows[j]!, base = j * (nx + 1)
+    let lo = 0, hi = nx
+    while (hi - lo > 1) { const m = (lo + hi) >> 1; if (xs[m]! <= x) lo = m; else hi = m }
+    const f = (x - xs[lo]!) / Math.max(1e-9, xs[hi]! - xs[lo]!)
+    return lerp(position[3 * (base + lo) + 1]!, position[3 * (base + hi) + 1]!, clamp(f, 0, 1))
+  }
   for (let j = 0; j <= nz; j++) for (let i = 0; i <= nx; i++) {
-    const a = P(i - 1, j), b = P(i + 1, j), c = P(i, j - 1), d = P(i, j + 1)
-    const ux = position[b]! - position[a]!, uy = position[b + 1]! - position[a + 1]!, uz = position[b + 2]! - position[a + 2]!
-    const vx = position[d]! - position[c]!, vy = position[d + 1]! - position[c + 1]!, vz = position[d + 2]! - position[c + 2]!
-    let n0 = vy * uz - vz * uy, n1 = vz * ux - vx * uz, n2 = vx * uy - vy * ux
-    const l = Math.hypot(n0, n1, n2) || 1
-    if (n1 < 0) { n0 = -n0; n1 = -n1; n2 = -n2 }
-    const k = P(i, j)
-    normal[k] = n0 / l; normal[k + 1] = n1 / l; normal[k + 2] = n2 / l
+    const k = 3 * (j * (nx + 1) + i), xs = rows[j]!
+    const i0 = Math.max(0, i - 1), i1 = Math.min(nx, i + 1), j0 = Math.max(0, j - 1), j1 = Math.min(nz, j + 1)
+    const dx = xs[i1]! - xs[i0]!, dyx = position[3 * (j * (nx + 1) + i1) + 1]! - position[3 * (j * (nx + 1) + i0) + 1]!
+    const x = xs[i]!, dz = zs[j1]! - zs[j0]!, dyz = heightIn(j1, x) - heightIn(j0, x)
+    const sx = dyx / dx, sz = dyz / dz, l = Math.hypot(sx, 1, sz)
+    normal[k] = -sx / l; normal[k + 1] = 1 / l; normal[k + 2] = -sz / l
   }
   for (let j = 0; j < nz; j++) for (let i = 0; i < nx; i++) {
     const a = j * (nx + 1) + i, b = a + 1, c = a + nx + 1, d = c + 1
