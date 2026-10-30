@@ -79,6 +79,12 @@ function keyRim(strength: number): N {
  * soft the moving face makes it far off (half its height, a share of the screen's), and the eye's distance in metres
  * over which it softens (the rigs' eyes stand nearer than its start: their mirror stays as it was) */
 const MIRROR_BASE = { least: 0.08, gain: 1.6, wave: 0.18, soft: 0.008, near: 16, far: 23 }
+/** THE CLOSE EYE'S STREAM: an eye a few metres over the water (the bridge's close view) looks down into it, where a
+ * still face shows its bed through less dark water, mirrors the poles over it more and lets its ripples move the
+ * mirror further. From `from` to `to` metres off the water it hands over to the far eye's dark mirror, so the far
+ * eyes keep theirs (and their bar against the tear) */
+const CLOSE = { from: 4.5, to: 7, least: .15, wave: .3, ripple: .03, absorb: 1.6 }
+const nearEye = (): N => float(1).sub(smoothstep(CLOSE.from, CLOSE.to, positionWorld.sub(cameraPosition).length()))
 /** a look round's numbers for the stream (`globalThis.__stageProbe.stream`), on the dev server only */
 function streamNumbers(): typeof MIRROR_BASE & { ripple?: number; absorb?: number; caustic?: number } {
   const probe = import.meta.env.DEV ? (globalThis as { __stageProbe?: { stream?: Record<string, number> } }).__stageProbe?.stream : undefined
@@ -300,7 +306,7 @@ export async function bridgeSurfaces(stack: Stack): Promise<BridgeSurfaces> {
     water.colorNode = mx(mx(lin('#2b2d22'), lin('#423e2d'), shallow), lin('#2c261b'), cut)
     // the cut faces stand away from every lamp: they keep the dusk's own value, so the end reads as ground, not a slot
     water.emissiveNode = lin('#2c261b').mul(0.7)
-    water.normalNode = bumped(normalView, ripple.mul(streamNumbers().ripple ?? 0.022), 1)
+    water.normalNode = bumped(normalView, ripple.mul(mx(float(streamNumbers().ripple ?? 0.022), float(CLOSE.ripple), nearEye())), 1)
     water.roughnessNode = float(0.07)
     water.envMapIntensity = 0.42
     // the bench's lamp is for the poles: on the stream it would stand as a hot spot
@@ -323,7 +329,7 @@ export async function bridgeSurfaces(stack: Stack): Promise<BridgeSurfaces> {
     const depth = float(BANK.water - BANK.bed).mul(float(1).sub(smoothstep(BANK.toe, BANK.toe + 0.6, p.x.abs())))
     const seen = p.xz.sub(toEye.xz.normalize().mul(depth.mul(sinT.div(cosT))))
     // a clean dark under a close eye looking straight down: the bed shows, but darkened by the water over it
-    const clear = depth.mul(float(1).add(float(1).div(cosT))).mul(-(S.absorb ?? 2.5)).exp()
+    const clear = depth.mul(float(1).add(float(1).div(cosT))).mul(mx(float(S.absorb ?? 2.5), float(CLOSE.absorb), nearEye()).negate()).exp()
     const grain = mx_noise_float(vec3(seen.x.mul(1.7), seen.y.mul(1.7), 7.7)).mul(0.5).add(0.5)
     const bed = mx(lin('#3a3126'), lin('#55473a'), grain)
     const body = water.colorNode as N
@@ -344,9 +350,10 @@ export async function bridgeSurfaces(stack: Stack): Promise<BridgeSurfaces> {
     const view = cameraPosition.sub(positionWorld).normalize()
     // a dark, still stream mirrors more than its glass-like 2 percent reads: the lit poles over it show softly
     const MIRROR = streamNumbers()
-    const fresnel = float(1).sub(normalWorld.dot(view).abs()).pow(5).mul(1 - MIRROR.least).add(MIRROR.least)
+    const near = nearEye(), least = mx(float(MIRROR.least), float(CLOSE.least), near)
+    const fresnel = float(1).sub(normalWorld.dot(view).abs()).pow(5).mul(float(1).sub(least)).add(least)
     // the ripples shift the mirrored picture a little, as a stream's surface does
-    const at = screenUV.flipX().add(normalView.xy.sub(normalViewGeometry.xy).mul(MIRROR.wave))
+    const at = screenUV.flipX().add(normalView.xy.sub(normalViewGeometry.xy).mul(mx(float(MIRROR.wave), float(CLOSE.wave), near)))
     reflection.uvNode = at
     // SEEN FROM FAR OFF, A MOVING FACE MIRRORS SOFTLY, most along the eye's way: there a thin pole, mirrored sharp and
     // shifted by ripples finer than itself, broke into a jagged dark sliver with a lit rim, a tear in the water. Five
