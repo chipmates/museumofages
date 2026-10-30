@@ -149,6 +149,8 @@ export function hemSurface(material: MeshStandardNodeMaterial): MeshStandardNode
   const drawn = positionLocal.sub(off.mul(float(1).sub(shown).mul(.2)))
   const widened = positionLocal.add(normalLocal.mul(across.mul(.75).sub(HEM.bolt).max(0)))
   material.positionNode = mix(widened, drawn, lacing)
+  // the shadow pass reads the lamp's camera and its map in these nodes, where a pixel is metres wide: the hem casts as made
+  material.castShadowPositionNode = positionLocal
   // a line a few pixels wide is shaded as one: toward the eye where it is narrow, its own round where it is wide
   const seen = positionView.length().mul(pixel)
   const wide = mix(float(2 * HEM.bolt), float(2 * HEM.cord), lacing).div(seen.max(1e-9))
