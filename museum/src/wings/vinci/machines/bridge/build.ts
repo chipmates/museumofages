@@ -710,48 +710,6 @@ const BONE: Record<string, number> = Object.fromEntries(POLES.map((p, i) => [p.i
 
 // ---------------------------------------------------------------- the bank and the stream
 
-/** The bank, cut square at its edges as a model's ground is: the level banks and the channel on top, the section
- * through the earth on the four sides. UVs in metres. */
-export function bankGeometry(): BufferGeometry {
-  const sheet = new Sheet()
-  const zero: V3 = [0, 0, 0]
-  const X = BANK.halfX, Z0 = BANK.zMin, Z1 = BANK.zMax, h = 0.02
-  // fine across the channel's sides and round the seats, coarse on the level banks and the bed
-  const xs: number[] = []
-  for (let x = -X; x < X - 1e-6;) { xs.push(x); const ax = Math.abs(x); x += ax > 4.8 ? 0.3 : ax > 2.0 ? 0.1 : 0.25 }
-  xs.push(X)
-  const zs: number[] = []
-  for (let z = Z0; z < Z1 - 1e-6;) { zs.push(z); z += Math.abs(z) < 2.2 ? 0.15 : 0.25 }
-  zs.push(Z1)
-  const nx = xs.length - 1, nz = zs.length - 1
-  const top = sheet.position.length / 3
-  for (const z of zs) for (const x of xs) {
-    const y = groundY(x, z)
-    const n = norm([groundY(x - h, z) - groundY(x + h, z), 2 * h, groundY(x, z - h) - groundY(x, z + h)])
-    sheet.vertex([x, y, z], n, x, z, zero, 0)
-  }
-  for (let j = 0; j < nz; j++) for (let i = 0; i < nx; i++) {
-    const a = top + j * (nx + 1) + i, b = a + 1, c = a + nx + 1, d = c + 1
-    sheet.index.push(a, c, b, b, c, d)
-  }
-  const face = (points: V3[], n: V3, u: (p: V3) => number, flip: boolean): void => {
-    const start = sheet.position.length / 3
-    for (const p of points) {
-      sheet.vertex(p, n, u(p), p[1], zero, 0)
-      sheet.vertex([p[0], BANK.bottom, p[2]], n, u(p), BANK.bottom, zero, 0)
-    }
-    for (let i = 0; i + 1 < points.length; i++) {
-      const a = start + 2 * i, b = a + 1, c = a + 2, d = a + 3
-      if (flip) sheet.index.push(a, c, b, b, c, d); else sheet.index.push(a, b, c, b, d, c)
-    }
-  }
-  face(xs.map(x => [x, groundY(x, Z1), Z1] as V3), [0, 0, 1], p => p[0], false)
-  face(xs.map(x => [x, groundY(x, Z0), Z0] as V3), [0, 0, -1], p => p[0], true)
-  face(zs.map(z => [X, groundY(X, z), z] as V3), [1, 0, 0], p => p[2], true)
-  face(zs.map(z => [-X, groundY(-X, z), z] as V3), [-1, 0, 0], p => p[2], false)
-  return sheet.geometry('plain')
-}
-
 /** the stream's half width at its level: the level face is a plane of its own, for the mirror; it runs into the bank's
  * slope on both sides */
 export const STREAM_HALF = 3.0

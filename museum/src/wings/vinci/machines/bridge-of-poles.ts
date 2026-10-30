@@ -25,7 +25,9 @@ import { materialDressed, materialFailure } from './parts'
 import type { ReadyMachineBuild } from './runtime'
 import { BANK, ORDER, PERIOD, POLES, buildClock } from './bridge/plan'
 import { bridgePoses } from './bridge/motion'
-import { LASH_COARSE, LASH_FINE, POLE_COARSE, POLE_FINE, STREAM_HALF, bankGeometry, groundworkGeometry, lashingGeometry, poleGeometry, waterGeometry } from './bridge/build'
+import { LASH_COARSE, LASH_FINE, POLE_COARSE, POLE_FINE, STREAM_HALF, groundworkGeometry, lashingGeometry, poleGeometry, waterGeometry } from './bridge/build'
+import { bankGeometry } from './bridge/bank'
+import { bankSurface } from './bridge/bank-surface'
 import { bridgeSurfaces } from './bridge/surface'
 
 const SLUG = 'bridge-of-poles' as const
@@ -65,10 +67,11 @@ export function build(stack: Stack): ReadyMachineBuild {
   }
 
   async function assemble(): Promise<void> {
-    surfaces = await bridgeSurfaces(stack)
+    const [built, bank] = await Promise.all([bridgeSurfaces(stack), bankSurface(stack)])
+    surfaces = built
     if (disposed) return
-    for (const set of surfaces.sets) sets.add(set)
-    for (const m of [surfaces.pole, surfaces.hemp, surfaces.earth, surfaces.water, surfaces.waterTop]) materials.add(m)
+    for (const set of [...surfaces.sets, ...bank.sets]) sets.add(set)
+    for (const m of [surfaces.pole, surfaces.hemp, bank.earth, surfaces.water, surfaces.waterTop]) materials.add(m)
     const hero = stack.tierName() === 'hero'
     const hang = (id: string, geometry: BufferGeometry, material: Material, cast = true): Mesh => {
       geometries.add(geometry)
@@ -128,7 +131,7 @@ export function build(stack: Stack): ReadyMachineBuild {
     kitLashings.boundingBox = bounds.clone(); kitLashings.boundingSphere = bounds.getBoundingSphere(new Sphere())
     kitLashings.visible = lashed
     parts.set('kit-lashings', { node: kitLashings, geometry: kitGeometry })
-    hang('bank', bankGeometry(), surfaces.earth)
+    hang('bank', bankGeometry(), bank.earth)
     hang('stream', waterGeometry(), surfaces.water, false)
     // the stream's level face: one planar pass at full resolution (at half, the bank's mirrored lip steps in pixel
     // pairs along the water's edge); calm keeps the sky alone
