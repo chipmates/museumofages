@@ -8,7 +8,7 @@
 //   guess and wing link), else ''
 //   8 device class  9 country (both '' on the bare rows: the question's, the guess and the wing link)  10 'probe' or ''
 
-import { SOURCES } from './source.js'
+import { RELOAD, SOURCES } from './source.js'
 import { LANGUAGES, PAGE_KINDS, WING_STOPS } from './lists.js'
 
 export const HOLDS = Object.freeze(['upright', 'sideways', 'wide'])
@@ -93,7 +93,7 @@ export function rowOf(payload, edge) {
   if (spec.start) {
     // whether the visit began on this page: 1 with its source word, 0 without one, or neither when unknown
     if (payload.start === 1) {
-      if (!has(SOURCES, payload.source)) return null
+      if (!has(SOURCES, payload.source) || payload.source === RELOAD) return null
       start = 'start'
       source = payload.source
     } else if (payload.start === 0 || payload.start === undefined) {

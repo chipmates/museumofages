@@ -38,7 +38,7 @@ const PROBE_KEY = 'moa_probe'
 /** the closed list of source words the function takes (site/functions/_count/source.js) */
 const SOURCES: ReadonlySet<string> = new Set([
   'direct', 'search', 'ad_grant', 'ad_paid', 'ad_forum', 'forum', 'code', 'edu', 'wiki', 'news', 'mail', 'award',
-  'assistant', 'social', 'referral',
+  'assistant', 'social', 'referral', 'reload',
 ])
 /** the addresses of links the museum places itself: a prefix in front of the real path */
 const PREFIXES: Readonly<Record<string, string>> = { g: 'ad_grant', p: 'ad_paid', f: 'ad_forum', o: 'forum' }
@@ -59,13 +59,15 @@ try {
 
 /** Where the visit came from, worked out once from the address's path, then
     the door's word in the fragment (`#s=7&via=search`), then the word the edge
-    set on the page: '' when none says (the walk opened from the site itself). */
+    set on the page: '' when none says (the walk opened from the site itself),
+    'reload' when the edge saw the walk loaded again from its own address. A
+    door hands on where a visit began, so its fragment never says 'reload'. */
 export function sourceWord(path: string, hash: string, edge: string | null): string {
   const prefix = /^\/a\/([a-z])\//.exec(path)?.[1]
   const placed = prefix && Object.hasOwn(PREFIXES, prefix) ? PREFIXES[prefix] : undefined
   if (placed) return placed
   const via = /(?:^|[#&])via=([a-z_]+)(?:&|$)/.exec(hash)?.[1]
-  if (via && SOURCES.has(via)) return via
+  if (via && via !== 'reload' && SOURCES.has(via)) return via
   return edge && SOURCES.has(edge) ? edge : ''
 }
 

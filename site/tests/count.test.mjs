@@ -8,7 +8,7 @@ import { fileURLToPath } from 'node:url'
 import vm from 'node:vm'
 import { onRequestPost } from '../functions/v1/funnel.js'
 import { DEVICES, DOORS, HOLDS, LOOKS, STEPS, deviceOf, rowOf } from '../functions/_count/rows.js'
-import { HOST_LISTS, SOURCES, prefixWord, sourceWord } from '../functions/_count/source.js'
+import { HOST_LISTS, RELOAD, SOURCES, prefixWord, sourceWord } from '../functions/_count/source.js'
 import { ASKED_MAKING, LANGUAGES, PAGE_KINDS, UNASKED, WING_STOPS } from '../functions/_count/lists.js'
 
 const at = (rel) => fileURLToPath(new URL(rel, import.meta.url))
@@ -274,6 +274,42 @@ test('the edge\'s word: a referrer from this site means the visit did not begin 
   assert.equal(word('http://127.0.0.1:8611/w/vinci', 'http://127.0.0.1:8611/de/'), '')
 })
 
+// the Referers Chromium and WebKit send, measured on a local serve of the built site, one case each
+test('the edge\'s word: a referrer from this site naming the requested path is a reload, any other keeps \'\'', () => {
+  const WALK = 'https://museumofages.org/w/vinci?film=job&lang=en'
+  // (a) the walk from its wing page, and the door of a placed page
+  assert.equal(word(WALK, 'https://museumofages.org/leonardo-da-vinci/'), '')
+  assert.equal(word(WALK, 'https://museumofages.org/a/g/leonardo-da-vinci/'), '')
+  // (b) from an outside page, or with no Referer
+  assert.equal(word(WALK, 'https://example.com/'), 'referral')
+  assert.equal(word(WALK, null), 'direct')
+  // (c) the browser's reload resends the first Referer: the rule cannot tell it from (a) or (b)
+  assert.equal(word(WALK, 'https://museumofages.org/leonardo-da-vinci/'), '')
+  assert.equal(word(WALK, 'https://example.com/'), 'referral')
+  // (d) the walk's own location.reload(): its own address, never its fragment, is the Referer
+  assert.equal(word(WALK, WALK), 'reload')
+  assert.equal(word('https://museumofages.org/w/vinci?film=job&lang=de', WALK), 'reload')
+  assert.equal(word('https://museumofages.org/w/vinci', 'https://www.museumofages.org/w/vinci?lang=en'), 'reload')
+  assert.equal(word('https://museumofages.org/w/vinci?utm_source=chatgpt.com', WALK), 'reload')
+  assert.equal(word('http://127.0.0.1:5363/w/vinci?film=job&lang=en', 'http://127.0.0.1:5363/w/vinci?film=job&lang=en'), 'reload')
+  // (e) a history step: WebKit resends the first Referer, Chromium sends no request at all
+  assert.equal(word(WALK, 'https://museumofages.org/leonardo-da-vinci/'), '')
+  // (f) home, then a wing page, then its door
+  assert.equal(word('https://museumofages.org/leonardo-da-vinci/', 'https://museumofages.org/'), '')
+  // a page's link to itself loads it again from its own address
+  assert.equal(word('https://museumofages.org/', 'https://museumofages.org/'), 'reload')
+  assert.equal(word('https://museumofages.org/a/g/de/', 'https://museumofages.org/a/g/de/'), 'reload')
+  // near misses keep '' or the outside word: another path, a slash more or less, another host with the same path
+  assert.equal(word('https://museumofages.org/w/vinci', 'https://museumofages.org/w/vinci/'), '')
+  assert.equal(word('https://museumofages.org/w/vinci/', 'https://museumofages.org/w/vinci'), '')
+  assert.equal(word('https://museumofages.org/w/vinci', 'https://museumofages.org/a/g/w/vinci'), '')
+  assert.equal(word('https://museumofages.org/de/', 'https://museumofages.org/de'), '')
+  assert.equal(word('https://museumofages.org/w/vinci', 'https://example.com/w/vinci'), 'referral')
+  assert.equal(word('https://museumofages.org/w/vinci', 'https://museumofages.org.example.com/w/vinci'), 'referral')
+  assert.equal(word('https://museumofages.org/w/vinci', 'https://www.google.com/w/vinci'), 'search')
+  assert.equal(RELOAD, 'reload')
+})
+
 test('the edge\'s word: the kind of the referring place', () => {
   const cases = {
     'https://www.google.com/': 'search', 'https://www.google.de/': 'search', 'https://www.google.co.uk/': 'search',
@@ -288,10 +324,28 @@ test('the edge\'s word: the kind of the referring place', () => {
   for (const [referer, expected] of Object.entries(cases)) assert.equal(word('https://museumofages.org/', referer), expected, referer)
 })
 
-test('every word the edge can give is on the sheet\'s list, and the list is the sheet\'s', () => {
+test('every word the edge can give is on the sheet\'s list, and the list is the sheet\'s sixteen', () => {
   assert.deepEqual([...SOURCES].sort(), ['ad_forum', 'ad_grant', 'ad_paid', 'assistant', 'award', 'code', 'direct', 'edu', 'forum',
-    'mail', 'news', 'referral', 'search', 'social', 'wiki'])
+    'mail', 'news', 'referral', 'reload', 'search', 'social', 'wiki'])
+  assert.equal(SOURCES.length, 16)
+  assert.ok(Object.isFrozen(SOURCES))
   for (const kind of Object.keys(HOST_LISTS)) assert.ok(SOURCES.includes(kind), kind)
+})
+
+test('reload stands where a walk row takes a word, and on no page row', async () => {
+  for (const step of ['museum_arrival', 'museum_use']) assert.equal((await one({ ...GOOD[step], source: RELOAD }))[5], RELOAD)
+  assert.deepEqual(await one({ ...GOOD.museum_stop, stop: 3, source: RELOAD }), ['museum_stop', 'vinci', '3', 'fr', 'sideways', RELOAD, '', 'desktop', 'DE', 'probe'])
+  for (const stop of [1, 2, 4, WING_STOPS.vinci]) await none({ ...GOOD.museum_stop, stop, source: RELOAD })
+  // a page's word says where the visit began, which a reload never is
+  for (const step of STARTED) {
+    const at = { step, page: 'leonardo', language: 'en' }
+    await none({ ...at, start: 1, source: RELOAD })
+    await none({ ...at, start: 0, source: RELOAD })
+    await none({ ...at, source: RELOAD })
+  }
+  // the steps that take no word still drop it unread
+  for (const step of ['museum_welcome', 'museum_skip', 'museum_look', 'door_press']) assert.equal((await one({ ...GOOD[step], source: RELOAD }))[5], '')
+  for (const near of ['Reload', 'reloaded', 'reload ', 'refresh']) await none({ ...GOOD.museum_arrival, source: near })
 })
 
 // the three copies of the closed lists: the function, the pages' script, the walk's module
@@ -375,6 +429,26 @@ test('the third stop takes the visit\'s word by any route: a placed address, the
   edge.walk.countArrival('vinci')
   edge.walk.countStop(3)
   assert.deepEqual(worded(edge.sent), [['museum_arrival', 'forum'], ['stop 3', 'forum']])
+  // the walk loaded again from its own address (its own location.reload()): the edge's reload on all three
+  const again = walkRun({ hash: '#s=2', edge: RELOAD })
+  again.walk.countArrival('vinci')
+  again.walk.countStop(3)
+  again.walk.countStop(4)
+  assert.deepEqual(worded(again.sent), [['museum_arrival', RELOAD], ['stop 3', RELOAD], ['stop 4', null], ['museum_use', RELOAD]])
+  for (const b of again.sent) assert.equal((await one(b))[5], b.source ?? '', JSON.stringify(b))
+  // a door hands on where a visit began, so a fragment's reload is not read: the edge decides
+  const handed = walkRun({ hash: '#s=2&via=reload', edge: '' })
+  handed.walk.countArrival('vinci')
+  handed.walk.countStop(3)
+  assert.deepEqual(worded(handed.sent), [['museum_arrival', null], ['stop 3', null]])
+  const handedOut = walkRun({ hash: '#via=reload', edge: 'search' })
+  handedOut.walk.countArrival('vinci')
+  assert.deepEqual(worded(handedOut.sent), [['museum_arrival', 'search']])
+  // the assistant's word from the edge reaches the walk's rows like any other
+  const assistant = walkRun({ edge: 'assistant' })
+  assistant.walk.countArrival('vinci')
+  assistant.walk.countStop(3)
+  assert.deepEqual(worded(assistant.sent), [['museum_arrival', 'assistant'], ['stop 3', 'assistant']])
   // a walk opened from the site itself has no word: its third stop carries none and still makes a row
   const inside = walkRun({ edge: '' })
   inside.walk.countArrival('vinci')
@@ -578,7 +652,7 @@ test('read, guess and link out: began here with any word on the list, came from 
     const at = { step, page, language: 'de' }
     const bare = STEPS[step].bare === true
     const tail = bare ? ['', ''] : ['desktop', 'DE']
-    for (const source of SOURCES) assert.deepEqual(await one({ ...at, start: 1, source }), [step, page, '', 'de', '', source, 'start', ...tail, ''])
+    for (const source of SOURCES.filter((w) => w !== RELOAD)) assert.deepEqual(await one({ ...at, start: 1, source }), [step, page, '', 'de', '', source, 'start', ...tail, ''])
     assert.deepEqual(await one({ ...at, start: 0 }), [step, page, '', 'de', '', '', 'inside', ...tail, ''])
     assert.deepEqual(await one(at), [step, page, '', 'de', '', '', '', ...tail, ''])
     assert.deepEqual(await one({ ...at, start: 1, source: 'search', probe: 1 }), [step, page, '', 'de', '', 'search', 'start', ...tail, 'probe'])
@@ -677,6 +751,10 @@ test('the pages\' script: the read, the guess and the link out carry the arrival
   const inside = await startRun('')
   assert.deepEqual(inside.sent, steps.map((step) => ({ ...at, step, start: 0 })))
   assert.equal(inside.doors[0].href, '/w/vinci')
+  // a page loaded again from its own address did not begin the visit: as from this site, and its door gets no word
+  const again = await startRun(RELOAD)
+  assert.deepEqual(again.sent, steps.map((step) => ({ ...at, step, start: 0 })))
+  assert.equal(again.doors[0].href, '/w/vinci')
   // no edge stood (no attribute), or a word off the list: neither field on any beacon
   for (const odd of [undefined, 'google', 'Search', 'start']) {
     const r = await startRun(odd)

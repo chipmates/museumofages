@@ -4,8 +4,12 @@
 
 export const SOURCES = Object.freeze([
   'direct', 'search', 'ad_grant', 'ad_paid', 'ad_forum', 'forum', 'code', 'edu', 'wiki', 'news', 'mail', 'award',
-  'assistant', 'social', 'referral',
+  'assistant', 'social', 'referral', 'reload',
 ])
+
+// A page loaded again from its own address. It stands on the walk's rows only: a page's word says where a visit
+// began, which a reload never is.
+export const RELOAD = 'reload'
 
 // The addresses of links we place ourselves: a prefix in front of the real path.
 const PREFIXES = Object.freeze({ g: 'ad_grant', p: 'ad_paid', f: 'ad_forum', o: 'forum' })
@@ -87,13 +91,22 @@ function hostOf(text) {
   }
 }
 
+function pathOf(text) {
+  try {
+    return new URL(text).pathname
+  } catch {
+    return ''
+  }
+}
+
 /**
- * The source word of a page request: '' when the referrer is this site itself (the visit did not begin here),
- * otherwise the path's prefix word, else the referrer's kind, else 'direct'.
+ * The source word of a page request. A referrer from this site itself: 'reload' when it names the requested
+ * path (the page loaded again from its own address, as `location.reload()` sends it), else '' (the visit did
+ * not begin here). Otherwise the path's prefix word, else the referrer's kind, else 'direct'.
  */
 export function sourceWord(url, referer) {
   const here = url.hostname.toLowerCase()
   const from = referer ? hostOf(referer) : ''
-  if (from && (from === here || OWN_HOSTS.includes(from))) return ''
+  if (from && (from === here || OWN_HOSTS.includes(from))) return pathOf(referer) === url.pathname ? 'reload' : ''
   return prefixWord(url.pathname) || (from ? hostWord(from) : 'direct')
 }

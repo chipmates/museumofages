@@ -14,7 +14,7 @@
   var doc = document, win = window, root = doc.documentElement, loc = win.location;
   var HOSTS = ['museumofages.org', 'www.museumofages.org', '127.0.0.1', 'localhost'];
   var SOURCES = ['direct', 'search', 'ad_grant', 'ad_paid', 'ad_forum', 'forum', 'code', 'edu', 'wiki', 'news',
-    'mail', 'award', 'assistant', 'social', 'referral'];
+    'mail', 'award', 'assistant', 'social', 'referral', 'reload'];
   var DOORS = ['top', 'item', 'end'];
   var PROBE = 'moa_probe';
   if (HOSTS.indexOf(loc.hostname) < 0 || !navigator.sendBeacon) return;
@@ -37,10 +37,11 @@
   }
 
   /* where the visit came from, as the edge saw the page request: a word when it began here, empty when it came
-     from this site, no attribute where no edge stood (a local file server) */
+     from this site, reload when it came from this very page, no attribute where no edge stood (a local file server).
+     A page loaded again did not begin the visit, so it counts as one from this site and hands no word on */
   var from = root.getAttribute('data-source');
   var arrival = {};
-  if (from === '') arrival.start = 0;
+  if (from === '' || from === 'reload') arrival.start = 0;
   else if (SOURCES.indexOf(from) >= 0) { arrival.start = 1; arrival.source = from; }
   /* a fresh copy for each beacon that carries them, since send() writes into the object it is given */
   function begun() {
