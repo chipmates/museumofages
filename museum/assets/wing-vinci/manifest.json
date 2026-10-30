@@ -3383,7 +3383,7 @@
       "prompt": "Compose bilingual museum labels and the four-colour certainty key. Keep labels to a certainty word and title, and reading paragraphs to ordinary bilingual museum language. A close look carries the same label with the certainty word alone on its first line, because the window names the work above it. Preserve each selected source honesty line and licence verbatim in the deliberately opened record, together with immutable collection data and superseded wording. Generated typesetting carries no documentary artwork claim.",
       "model": "Deterministic TypeScript DOM composition",
       "note": "Museum typesetting, not documentary imagery. recipe_file=src/wings/vinci/pictures/policy-label.ts production_files=src/wings/vinci/pictures/policy.ts",
-      "sha256": "13ecc7b1452d62f4c32deca27d38df5a03eed5c05aed859941544b7eaa5e5cd1"
+      "sha256": "282050eed590cf4128a941f67ed16f92fee8fe8db18ab6450c2dee7fd8743125"
     },
     {
       "wing": "vinci",
@@ -3461,7 +3461,7 @@
       "prompt": "Bilingual museum readings of the supplied collection and admitted source records. Keep attribution and photographic uncertainty explicit, name collections plainly, and keep exact measurements, licence lines, file identifiers and machine evidence in the deliberately opened complete record. No additional historical claim from generated imagery.",
       "model": "Human-readable text composition from supplied records",
       "note": "Museum wording authorized by window 3. recipe_file=src/wings/vinci/pictures/visitor-copy.ts",
-      "sha256": "cb2fc9f1a9932010d283a684049c10f76c402be13f1123d01e62fed3cd582137"
+      "sha256": "3974f6716584af33c29b17eafdc6172b15d6381d718a30e33142d36a815307c8"
     },
     {
       "wing": "vinci",
@@ -3544,7 +3544,7 @@
         },
         {
           "path": "src/wings/vinci/pictures/policy-label.ts",
-          "sha256": "13ecc7b1452d62f4c32deca27d38df5a03eed5c05aed859941544b7eaa5e5cd1"
+          "sha256": "282050eed590cf4128a941f67ed16f92fee8fe8db18ab6450c2dee7fd8743125"
         },
         {
           "path": "src/wings/vinci/index.ts",

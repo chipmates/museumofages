@@ -49,10 +49,10 @@ export const COLLECTIONS = [
     // own name, a German form of every holder line, the nineteen historic RC decisions
     // restated as superseded by Tier 2, the Last Supper's credit naming the scan its
     // reproduction copies, the Salvator Mundi's owner as not publicly confirmed and the
-    // Buccleuch Yarnwinder's size, holder and record from its holder; the sealed original
-    // does not.
+    // Buccleuch Yarnwinder's size, holder and record from its holder, with its German holder
+    // line reworded; the sealed original does not.
     originalSHA256: '7e78e1a73fa55cdd58c75c495332ebe0617387e6b72babbea2695bbb8a3a5d02',
-    normalizedSHA256: 'f8c82e2438d776a924355a39ce8a17f18ddf1d7494736c818467f1fa1913b10f',
+    normalizedSHA256: '6774c637217ccc63e3db04378e02454d90ddd723267eb8a1e168db6bafb184a0',
     expected: { works: 30, held_assets: 32, catalogue_mentions: 9 },
   },
 ]
