@@ -1514,7 +1514,7 @@
       "rights_class": "RC",
       "plate_file": null,
       "plate_pixels": null,
-      "licence_line": "A high-resolution scan that Wikimedia Commons attributes to Haltadefinizione with the Italian Ministry of Culture, first put on Commons in 2007. The museum uses a later, enlarged copy of it. Public domain work.",
+      "licence_line": "Photograph by Mariordo (Mario Roberto Duran Ortiz), 2024, CC BY-SA 4.0. Cut to the painting and straightened by the museum. The museum's cut is shared under the same licence. Public domain work. Reproduction from Wikimedia Commons. The museum labels the reproduction, not the painting. Non-profit cultural use. Italian Codice dei beni culturali, art. 108 comma 3-bis: exemption for non-profit study, research and promotion of knowledge of the cultural heritage.",
       "absence_reason_en": "Held by Museo del Cenacolo Vinciano, Santa Maria delle Grazie, Milan. Available file: last-supper__santa-maria-delle-grazie__8000x4443.jpg. The museum classified this scan as RC. The supplied terms have not been cleared for this exhibition. Obtain written permission for this reproduction from the holder and the image supplier.",
       "absence_reason_de": "Sammlung: Museo del Cenacolo Vinciano, Santa Maria delle Grazie, Mailand. Vorhandene Datei: last-supper__santa-maria-delle-grazie__8000x4443.jpg. Dieses Museum hat den Scan als RC eingestuft. Seine Nutzungsbedingungen sind für diese Ausstellung nicht geklärt. Eine schriftliche Freigabe des besitzenden Museums und des Bildanbieters würde diese Reproduktion ermöglichen.",
       "label_first_line_en": "Absent. The Last Supper. Leonardo da Vinci.",
@@ -1554,11 +1554,17 @@
           "url": "https://commons.wikimedia.org/wiki/File:Last_Supper_by_Leonardo_da_Vinci.jpg",
           "supports": [
             "held_scan",
-            "rights_class",
-            "licence_line"
+            "rights_class"
           ],
           "local_source": "refs/RIGHTS-CROSSCHECK.md P15",
           "verification": "cross-check governs"
+        },
+        {
+          "url": "https://commons.wikimedia.org/wiki/File:2024_04_Da_Vinci_Last_Supper_Milan_7013.jpg",
+          "supports": [
+            "licence_line"
+          ],
+          "verification": "File page read on 2026-10-29 for the author and the licence. The downloaded original matches its SHA-1."
         }
       ],
       "rights_basis": {
