@@ -102,8 +102,9 @@ const BENCH_FINISH: Partial<Record<string, { roughness: number; metalness: numbe
 const BENCH_SIZE_WORD: Partial<Record<string, { en: string; de: string }>> = {
   'bridge-of-poles': { en: 'as it stands', de: 'stehend' },
 };
-/** The bridge stands on its own banks, whose top is at 0: the setting's floor runs a hair under them. */
-const BRIDGE_BANK_FLOOR = -.02;
+/** The bridge stands on its own banks, whose top is at 0 and ripples 1.5 cm either way: the setting's floor runs under
+ * them. At 2 cm a far eye's depth could not part the floor from the ripple's troughs, and it broke through as lit points */
+const BRIDGE_BANK_FLOOR = -.045;
 /** metres past the standing bridge where the floor starts over its banks and where it is whole: the bank's own edges
  * lie 7.5 m out and more; laid just over the bank's highest swell. Near, so the banks' lit tops never outshine the poles */
 const BRIDGE_MERGE = [.2, 2.0] as const, BRIDGE_MERGE_ABOVE = .03;

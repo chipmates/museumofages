@@ -90,51 +90,81 @@ function toeCut(ax: number, f: number, top: number): number {
   if (ax >= foot) return lerp(BANK.water - .05, top, Math.sqrt((ax - foot) / .07))
   return BANK.water - .05 - (foot - ax) * .9
 }
-/** the far bank's form at (|x|, z), and what it is made of there: the share of an earth face, of gravel and of turf */
-function farForm(ax: number, z: number, base: number): Form {
+/** one form standing along the stream: its share at this row and its cross-section there */
+type Shape = [number, (ax: number) => Form]
+/** a row's forms (all that depend on z alone), kept for the few rows a grid and its normals ask for in turn */
+interface Row { forms: Shape[]; shown: number; toe: number; tf: number; top: number }
+const rows = new Map<number, Row>()
+function rowAt(side: number, z: number): Row {
+  const key = side * 1e4 + z
+  let row = rows.get(key)
+  if (!row) {
+    if (rows.size > 64) rows.clear()
+    row = side > 0 ? farRow(z) : nearRow(z)
+    rows.set(key, row)
+  }
+  return row
+}
+/** the far bank's forms at z, and what each is made of: the share of an earth face, of gravel and of turf */
+function farRow(z: number): Row {
   const n = (s: number, k: number): number => wander(z * s, k)
-  const forms: [number, Form][] = []
+  const forms: Shape[] = []
+  const add = (k: number, shape: () => (ax: number) => Form): void => { if (k > 0) forms.push([k, shape()]) }
   // up the stream behind the bridge, between the crown joist's props: a slumped shoulder
-  forms.push([window(z, -6.45, -5.6, .3), { y: slump(ax, 3.72 + .05 * n(1.3, 11), .05), face: ease(3.45, 3.62, ax) * (1 - ease(3.7, 3.8, ax)), gravel: 0, turf: ease(3.75, 3.85, ax) }])
+  add(window(z, -6.45, -5.6, .3), () => { const s = 3.72 + .05 * n(1.3, 11); return ax => ({ y: slump(ax, s, .05), face: ease(3.45, 3.62, ax) * (1 - ease(3.7, 3.8, ax)), gravel: 0, turf: ease(3.75, 3.85, ax) }) })
   // under the far seat, between the strips its rods slide down: the gravel the builders landed on
-  forms.push([window(z, .25, 1.3, .3), { y: beach(ax, 3.45), face: 0, gravel: ease(2.62, 2.72, ax) * (1 - ease(3.0, 3.1, ax)), turf: ease(3.4, 3.55, ax) }])
+  add(window(z, .25, 1.3, .3), () => ax => ({ y: beach(ax, 3.45), face: 0, gravel: ease(2.62, 2.72, ax) * (1 - ease(3.0, 3.1, ax)), turf: ease(3.4, 3.55, ax) }))
   // down the stream toward the visitor: a cut bank, a slumped shoulder, a shelf of turf, a gravel lip
-  const f = 3.02 + .045 * n(.9, 21) + .02 * n(2.7, 22), h = .38 + .05 * n(1.1, 23)
-  forms.push([window(z, 2.85, 5.0, .45), { y: cutBank(ax, f, h), face: ease(f - .11, f - .06, ax) * (1 - ease(f - .01, f + .01, ax)), gravel: 0, turf: ease(f - .005, f + .05, ax) }])
-  const s = 3.78 + .06 * n(.8, 31)
-  forms.push([window(z, 5.4, 7.4, .5), { y: slump(ax, s, .05 + .025 * n(1.6, 32)), face: ease(s - .09, s - .06, ax) * (1 - ease(s - .01, s + .01, ax)), gravel: 0, turf: ease(s - .01, s + .06, ax) }])
-  const l = 3.6 + .05 * n(.9, 41), t = -.22 + .03 * n(1.2, 42)
-  forms.push([window(z, 7.8, 9.3, .45), { y: shelf(ax, l, t), face: ease(2.94, 3.02, ax) * (1 - ease(3.08, 3.13, ax)), gravel: 0, turf: ease(3.12, 3.2, ax) }])
-  forms.push([window(z, 9.75, 12.5, .45), { y: beach(ax, 3.55 + .05 * n(1, 51)), face: 0, gravel: ease(2.62, 2.72, ax) * (1 - ease(3.0, 3.1, ax)), turf: ease(3.5, 3.65, ax) }])
-  const form = blend(base, forms)
+  add(window(z, 2.85, 5.0, .45), () => {
+    const f = 3.02 + .045 * n(.9, 21) + .02 * n(2.7, 22), h = .38 + .05 * n(1.1, 23)
+    return ax => ({ y: cutBank(ax, f, h), face: ease(f - .11, f - .06, ax) * (1 - ease(f - .01, f + .01, ax)), gravel: 0, turf: ease(f - .005, f + .05, ax) })
+  })
+  add(window(z, 5.4, 7.4, .5), () => {
+    const s = 3.78 + .06 * n(.8, 31), hump = .05 + .025 * n(1.6, 32)
+    return ax => ({ y: slump(ax, s, hump), face: ease(s - .09, s - .06, ax) * (1 - ease(s - .01, s + .01, ax)), gravel: 0, turf: ease(s - .01, s + .06, ax) })
+  })
+  add(window(z, 7.8, 9.3, .45), () => {
+    const l = 3.6 + .05 * n(.9, 41), t = -.22 + .03 * n(1.2, 42)
+    return ax => ({ y: shelf(ax, l, t), face: ease(2.94, 3.02, ax) * (1 - ease(3.08, 3.13, ax)), gravel: 0, turf: ease(3.12, 3.2, ax) })
+  })
+  add(window(z, 9.75, 12.5, .45), () => { const top = 3.55 + .05 * n(1, 51); return ax => ({ y: beach(ax, top), face: 0, gravel: ease(2.62, 2.72, ax) * (1 - ease(3.0, 3.1, ax)), turf: ease(3.5, 3.65, ax) }) })
   // between the forms the toe is cut back wherever nothing lies on the slope, its face's top wandering along the stream
-  const shown = Math.min(1, forms.reduce((w, [k]) => w + Math.max(0, k), 0))
+  const shown = Math.min(1, forms.reduce((w, [k]) => w + k, 0))
   const toe = Math.max(window(z, -10.5, -8.6, .3), window(z, -6.4, -2.1, .3), window(z, -1.38, 1.38, .2), window(z, 2.1, 12.5, .3)) * (1 - shown)
-  if (toe <= 0) return form
-  const tf = 3.08 + .09 * n(.45, 24) + .04 * n(1.6, 25), foot = tf - .07
-  const cut = Math.min(form.y, toeCut(ax, tf, groundY(tf, z)))
-  const face = ease(foot - .03, foot + .01, ax) * (1 - ease(tf - .005, tf + .005, ax))
+  const tf = toe > 0 ? 3.08 + .09 * n(.45, 24) + .04 * n(1.6, 25) : 0
+  return { forms, shown, toe, tf, top: toe > 0 ? groundY(tf, z) : 0 }
+}
+function farForm(ax: number, z: number, base: number): Form {
+  const row = rowAt(1, z)
+  const form = blend(base, row.forms, ax)
+  if (row.toe <= 0) return form
+  const { toe, tf } = row, foot = tf - .07
+  const cut = Math.min(form.y, toeCut(ax, tf, row.top))
+  const face = ease(foot - .03, foot + .01, ax) * (1 - ease(tf - .012, tf + .012, ax))
   return { y: lerp(form.y, cut, toe), face: lerp(form.face, face, toe), gravel: form.gravel * (1 - toe), turf: lerp(form.turf, ease(tf - .005, tf + .05, ax), toe) }
 }
 /** the near bank, which every eye sees from behind its lip: its lip line and its top change, its face more quietly */
-function nearForm(ax: number, z: number, base: number): Form {
+function nearRow(z: number): Row {
   const n = (s: number, k: number): number => wander(z * s, k)
-  const forms: [number, Form][] = []
-  forms.push([window(z, -6.4, -4.4, .35), { y: beach(ax, 3.55 + .04 * n(1, 61)), face: 0, gravel: ease(2.62, 2.72, ax) * (1 - ease(3.0, 3.1, ax)), turf: ease(3.5, 3.65, ax) }])
+  const forms: Shape[] = []
+  const add = (k: number, shape: () => (ax: number) => Form): void => { if (k > 0) forms.push([k, shape()]) }
+  const beachOf = (top: number) => (ax: number): Form => ({ y: beach(ax, top), face: 0, gravel: ease(2.62, 2.72, ax) * (1 - ease(3.0, 3.1, ax)), turf: ease(top - .05, top + .1, ax) })
+  add(window(z, -6.4, -4.4, .35), () => beachOf(3.55 + .04 * n(1, 61)))
   // by the bridge a lower lip, where the builders worked from it
-  forms.push([window(z, -2.6, 2.4, .3), { y: beach(ax, 3.45 + .04 * n(2, 62)), face: 0, gravel: ease(2.62, 2.72, ax) * (1 - ease(3.0, 3.1, ax)), turf: ease(3.4, 3.55, ax) }])
-  forms.push([window(z, 2.8, 4.6, .4), { y: beach(ax, 3.6), face: 0, gravel: ease(2.62, 2.72, ax) * (1 - ease(3.0, 3.1, ax)), turf: ease(3.55, 3.7, ax) }])
-  const f = 3.0 + .04 * n(1, 71)
-  forms.push([window(z, 4.8, 6.6, .4), { y: cutBank(ax, f, .3), face: ease(f - .11, f - .06, ax) * (1 - ease(f - .01, f + .01, ax)), gravel: 0, turf: ease(f - .005, f + .05, ax) }])
-  const s = 3.7 + .05 * n(.9, 72)
-  forms.push([window(z, 6.9, 9.0, .45), { y: slump(ax, s, .04), face: ease(s - .09, s - .06, ax) * (1 - ease(s - .01, s + .01, ax)), gravel: 0, turf: ease(s - .01, s + .06, ax) }])
-  return blend(base, forms)
+  add(window(z, -2.6, 2.4, .3), () => beachOf(3.45 + .04 * n(2, 62)))
+  add(window(z, 2.8, 4.6, .4), () => beachOf(3.6))
+  add(window(z, 4.8, 6.6, .4), () => { const f = 3.0 + .04 * n(1, 71); return ax => ({ y: cutBank(ax, f, .3), face: ease(f - .11, f - .06, ax) * (1 - ease(f - .01, f + .01, ax)), gravel: 0, turf: ease(f - .005, f + .05, ax) }) })
+  add(window(z, 6.9, 9.0, .45), () => { const s = 3.7 + .05 * n(.9, 72); return ax => ({ y: slump(ax, s, .04), face: ease(s - .09, s - .06, ax) * (1 - ease(s - .01, s + .01, ax)), gravel: 0, turf: ease(s - .01, s + .06, ax) }) })
+  return { forms, shown: 0, toe: 0, tf: 0, top: 0 }
+}
+function nearForm(ax: number, z: number, base: number): Form {
+  return blend(base, rowAt(-1, z).forms, ax)
 }
 /** the forms laid over the plan's ground by their windows' shares (the plan's own where none stands) */
-function blend(base: number, forms: [number, Form][]): Form {
+function blend(base: number, forms: Shape[], ax: number): Form {
+  if (!forms.length) return { y: base, face: 0, gravel: 0, turf: 0 }
   let w = 0, y = 0, face = 0, gravel = 0, turf = 0
-  for (const [k, f] of forms) if (k > 0) { w += k; y += k * f.y; face += k * f.face; gravel += k * f.gravel; turf += k * f.turf }
-  if (w <= 0) return { y: base, face: 0, gravel: 0, turf: 0 }
+  for (const [k, shape] of forms) { const f = shape(ax); w += k; y += k * f.y; face += k * f.face; gravel += k * f.gravel; turf += k * f.turf }
   const s = Math.min(1, w)
   return { y: lerp(base, y / w, s), face: face / w * s, gravel: gravel / w * s, turf: turf / w * s }
 }
@@ -143,10 +173,9 @@ function blend(base: number, forms: [number, Form][]): Form {
 export function bankHeight(x: number, z: number): number {
   return bankAt(x, z).y
 }
-let lookFlat = false
 function bankAt(x: number, z: number): Form {
   const ax = Math.abs(x), side = x > 0 ? 1 : -1
-  const base = lookFlat && ax > 4.7 ? 0 : groundY(x, z)
+  const base = groundY(x, z)
   // past the lip's back and beyond the bank's ends the level ground is the plan's: the forms stay on the channel's sides
   const reach = 1 - ease(4.4, 4.7, ax)
   const along = 1 - ease(11.2, 12.2, z)
@@ -183,39 +212,86 @@ function stones(): { x: number; z: number; r: number; seed: number }[] {
  * stand; the section through the earth on the four sides; the stones. UVs in metres: across, the length along the
  * cross-section (so a face is not drawn stretched); along, the stream's z. `aBank`: the share of an earth face, of
  * gravel, of a stone and of turf. */
-export function bankGeometry(look: { flat?: boolean } = {}): BufferGeometry {
-  lookFlat = look.flat ?? false
-  const X = BANK.halfX, Z0 = BANK.zMin, Z1 = BANK.zMax
-  const xs: number[] = []
-  for (let x = -X; x < X - 1e-6;) {
-    xs.push(x)
-    const ax = Math.abs(x)
-    x += x > 0 ? (ax > 4.8 ? .3 : ax > 4.0 ? .1 : ax > 3.2 ? .04 : ax > 2.85 ? .02 : ax > 2.45 ? .04 : ax > 2.0 ? .1 : .25)
-      : (ax > 4.8 ? .3 : ax > 4.0 ? .1 : ax > 2.45 ? .06 : ax > 2.0 ? .1 : .25)
+/** one row's columns across a bank's slope, |x| from `a` to `b`: `count` of them, closest where the cross-section
+ * bends most, so a crease (a face's top, a scarp, a shelf's lip) lies on columns in every row and does not step from
+ * row to row as it wanders along the stream */
+function columns(side: number, z: number, a: number, b: number, count: number): number[] {
+  const step = .006, n = Math.round((b - a) / step)
+  const y = new Float64Array(n + 1)
+  for (let i = 0; i <= n; i++) y[i] = bankHeight(side * (a + i * step), z)
+  // the angle the section turns at each sample, spread over two centimetres either side
+  const turn = new Float64Array(n + 1)
+  for (let i = 1; i < n; i++) turn[i] = Math.abs(Math.atan((y[i + 1]! - y[i]!) / step) - Math.atan((y[i]! - y[i - 1]!) / step))
+  const spread = new Float64Array(n + 1)
+  let total = 0
+  for (let i = 0; i <= n; i++) { let t = 0; for (let k = -3; k <= 3; k++) t += turn[Math.min(n, Math.max(0, i + k))]! * (4 - Math.abs(k)); spread[i] = t / 16; total += spread[i]! }
+  // half the columns spaced evenly, half by the bends (fewer by the bends where the section hardly bends)
+  const bend = .6 * Math.min(1, total / 1.2)
+  const weight = (i: number): number => (1 - bend) / (n + 1) + (total > 0 ? bend * spread[i]! / total : 0)
+  const out: number[] = [], cum = [0]
+  for (let i = 0; i <= n; i++) cum.push(cum[i]! + weight(i))
+  const all = cum[n + 1]!
+  let i = 0
+  for (let j = 0; j < count; j++) {
+    const want = all * j / (count - 1)
+    while (i < n && cum[i + 1]! < want) i++
+    const f = (want - cum[i]!) / Math.max(1e-12, cum[i + 1]! - cum[i]!)
+    out.push(a + Math.min(n, i + f) * step)
   }
-  xs.push(X)
+  out[0] = a; out[count - 1] = b
+  return out
+}
+/** the slope's band on each side, |x| from and to, and its columns (the far bank, where the forms stand, the finer) */
+const BAND: readonly [number, number] = [2.45, 4.0]
+const FAR_COLUMNS = 44, NEAR_COLUMNS = 28
+
+export function bankGeometry(): BufferGeometry {
+  const X = BANK.halfX, Z0 = BANK.zMin, Z1 = BANK.zMax
+  // the even columns off the slopes, either side of each band
+  const even = (from: number, to: number): number[] => {
+    const out: number[] = []
+    for (let x = from; x < to - 1e-6;) { out.push(x); const ax = Math.abs(x); x += ax > 5.95 ? .6 : ax > 4.8 ? .3 : ax > 4.0 - 1e-9 ? .1 : ax > 1.95 ? .1 : .5 }
+    return out
+  }
+  const outer = even(BAND[1], X).concat([X]), inner = even(-BAND[0], BAND[0])
+  const rowXs = (z: number): number[] => [
+    ...outer.slice(1).reverse().map(x => -x),
+    ...columns(-1, z, BAND[0], BAND[1], NEAR_COLUMNS).reverse().map(x => -x),
+    ...inner.slice(1),
+    ...columns(1, z, BAND[0], BAND[1], FAR_COLUMNS),
+    ...outer.slice(1),
+  ]
   const zs: number[] = []
-  for (let z = Z0; z < Z1 - 1e-6;) { zs.push(z); z += z > -7 && z < 11.5 ? .1 : .25 }
+  for (let z = Z0; z < Z1 - 1e-6;) { zs.push(z); z += z > -7 && z < 11.5 ? .12 : .25 }
   zs.push(Z1)
   const position: number[] = [], normal: number[] = [], uvs: number[] = [], form: number[] = [], index: number[] = []
   const vertex = (p: [number, number, number], n: [number, number, number], u: number, v: number, f: [number, number, number, number]): number => {
     position.push(...p); normal.push(...n); uvs.push(u, v); form.push(...f)
     return position.length / 3 - 1
   }
-  const h = .008
-  const normalAt = (x: number, z: number): [number, number, number] => {
-    const nx = bankHeight(x - h, z) - bankHeight(x + h, z), nz = bankHeight(x, z - h) - bankHeight(x, z + h), l = Math.hypot(nx, 2 * h, nz)
-    return [nx / l, 2 * h / l, nz / l]
-  }
-  const nx = xs.length - 1, nz = zs.length - 1
-  for (const z of zs) {
+  const rows = zs.map(rowXs)
+  const nx = rows[0]!.length - 1, nz = zs.length - 1
+  zs.forEach((z, j) => {
+    const xs = rows[j]!
     // the length along the cross-section from the stream's middle, either way, for the UV across
     const ys = xs.map(x => bankAt(x, z))
     const run = new Array<number>(xs.length).fill(0)
     const mid = xs.findIndex(x => x >= 0)
     for (let i = mid + 1; i < xs.length; i++) run[i] = run[i - 1]! + Math.hypot(xs[i]! - xs[i - 1]!, ys[i]!.y - ys[i - 1]!.y)
     for (let i = mid - 1; i >= 0; i--) run[i] = run[i + 1]! - Math.hypot(xs[i + 1]! - xs[i]!, ys[i + 1]!.y - ys[i]!.y)
-    xs.forEach((x, i) => { const b = ys[i]!; vertex([x, b.y, z], normalAt(x, z), run[i]! + xs[mid]!, z, [b.face, b.gravel, 0, b.turf]) })
+    xs.forEach((x, i) => { const b = ys[i]!; vertex([x, b.y, z], [0, 1, 0], run[i]! + xs[mid]!, z, [b.face, b.gravel, 0, b.turf]) })
+  })
+  // the top's normals from its neighbours across and along (the columns crowd where it bends, so they hold its creases)
+  const P = (i: number, j: number): number => 3 * (Math.min(nz, Math.max(0, j)) * (nx + 1) + Math.min(nx, Math.max(0, i)))
+  for (let j = 0; j <= nz; j++) for (let i = 0; i <= nx; i++) {
+    const a = P(i - 1, j), b = P(i + 1, j), c = P(i, j - 1), d = P(i, j + 1)
+    const ux = position[b]! - position[a]!, uy = position[b + 1]! - position[a + 1]!, uz = position[b + 2]! - position[a + 2]!
+    const vx = position[d]! - position[c]!, vy = position[d + 1]! - position[c + 1]!, vz = position[d + 2]! - position[c + 2]!
+    let n0 = vy * uz - vz * uy, n1 = vz * ux - vx * uz, n2 = vx * uy - vy * ux
+    const l = Math.hypot(n0, n1, n2) || 1
+    if (n1 < 0) { n0 = -n0; n1 = -n1; n2 = -n2 }
+    const k = P(i, j)
+    normal[k] = n0 / l; normal[k + 1] = n1 / l; normal[k + 2] = n2 / l
   }
   for (let j = 0; j < nz; j++) for (let i = 0; i < nx; i++) {
     const a = j * (nx + 1) + i, b = a + 1, c = a + nx + 1, d = c + 1
@@ -232,8 +308,8 @@ export function bankGeometry(look: { flat?: boolean } = {}): BufferGeometry {
       if (flip) index.push(a, c, b, b, c, d); else index.push(a, b, c, b, d, c)
     }
   }
-  face(xs.map(x => [x, bankHeight(x, Z1), Z1]), [0, 0, 1], p => p[0], false)
-  face(xs.map(x => [x, bankHeight(x, Z0), Z0]), [0, 0, -1], p => p[0], true)
+  face(rows[nz]!.map(x => [x, bankHeight(x, Z1), Z1]), [0, 0, 1], p => p[0], false)
+  face(rows[0]!.map(x => [x, bankHeight(x, Z0), Z0]), [0, 0, -1], p => p[0], true)
   face(zs.map(z => [X, bankHeight(X, z), z]), [1, 0, 0], p => p[2], true)
   face(zs.map(z => [-X, bankHeight(-X, z), z]), [-1, 0, 0], p => p[2], false)
   // the stones: a rounded lump each, flattened, turned and dented by its seed, sunk past its middle into the ground

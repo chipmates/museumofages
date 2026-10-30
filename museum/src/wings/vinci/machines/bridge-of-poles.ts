@@ -131,7 +131,7 @@ export function build(stack: Stack): ReadyMachineBuild {
     kitLashings.boundingBox = bounds.clone(); kitLashings.boundingSphere = bounds.getBoundingSphere(new Sphere())
     kitLashings.visible = lashed
     parts.set('kit-lashings', { node: kitLashings, geometry: kitGeometry })
-    hang('bank', bankGeometry({ flat: import.meta.env.DEV && Boolean((globalThis as { __stageProbe?: { flat?: boolean } }).__stageProbe?.flat) }), bank.earth)
+    hang('bank', bankGeometry(), bank.earth)
     hang('stream', waterGeometry(), surfaces.water, false)
     // the stream's level face: one planar pass at full resolution (at half, the bank's mirrored lip steps in pixel
     // pairs along the water's edge); calm keeps the sky alone
