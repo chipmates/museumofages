@@ -48,7 +48,9 @@ export async function bankSurface(stack: Stack): Promise<{ earth: Material; sets
   const trodden = float(1).sub(smoothstep(1.2, 2.4, vec2(p.x.add(6.3), p.z.mul(0.6)).length()).mul(0.5).add(0.5)).clamp(0, 1)
   const grassy = smoothstep(0.82, 0.95, up).mul(lip.max(turfK)).mul(smoothstep(0.2, 0.55, tufts).mul(0.35).add(0.55)).mul(float(1).sub(trodden.mul(0.6)))
     .mul(float(1).sub(faceK)).mul(float(1).sub(gravelK))
-  const wet = float(1).sub(smoothstep(BANK.water - 0.02, BANK.water + 0.16, p.y))
+  // the wet band at the waterline, gone where the eye sees it edge on: a slope seen from behind its lip squeezed it into
+  // a dark line a pixel thin that stepped along the bank's edge
+  const wet = float(1).sub(smoothstep(BANK.water - 0.02, BANK.water + 0.16, p.y)).mul(float(1).sub(smoothstep(0.03, 0.08, fwidth(p.y))))
   // the plain slope as round 7 left it: runnels and patches of darker earth
   const slope = smoothstep(BANK.toe - 0.2, BANK.toe + 0.3, ax).mul(float(1).sub(smoothstep(BANK.lip - 0.1, BANK.lip + 0.25, ax)))
   const runnel = mx_noise_float(vec3(p.z.mul(3.2), p.y.mul(0.9), p.x.mul(0.4))).mul(0.5).add(0.5)
@@ -64,8 +66,8 @@ export async function bankSurface(stack: Stack): Promise<{ earth: Material; sets
   const rootW = fwidth(rootLine).mul(1.5).max(0.04)
   const root = float(1).sub(smoothstep(rootW.mul(0.25), rootW.mul(0.75), rootLine)).mul(float(0.04).div(rootW))
     .mul(smoothstep(-0.34, -0.06, p.y)).mul(smoothstep(0.3, 0.6, mx_noise_float(vec3(p.z.mul(0.8), 1.7, 5.9)).mul(0.5).add(0.5)))
-  const faceCol = mx(lin('#574837'), lin('#43372b'), loam.mul(0.7)).mul(luma(ground.albedo).mul(0.4).add(0.68))
-    .mul(float(1).sub(strata.mul(strataFade).mul(0.14))).mul(float(1).sub(root.mul(0.5)))
+  const faceCol = mx(lin('#574837'), lin('#43372b'), loam.mul(0.35)).mul(luma(ground.albedo).mul(0.4).add(0.68))
+    .mul(float(1).sub(strata.mul(strataFade).mul(0.14))).mul(float(1).sub(root.mul(0.25)))
   // GRAVEL: pebbles a few centimetres across, each its own tone, the gaps between them dark; one tone far off
   const cells = mx_worley_noise_vec2(vec3(uv().x.mul(22), uv().y.mul(22), 2.2))
   const pebbleSeen = float(1).sub(smoothstep(0.25, 0.6, fwidth(uv().x.mul(22)).add(fwidth(uv().y.mul(22)))))

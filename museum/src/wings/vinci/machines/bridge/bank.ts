@@ -73,12 +73,14 @@ function shelf(ax: number, l: number, h: number): number {
   if (ax >= 2.9) return lerp(-.5, h - .05, ease(2.9, 3.12, ax))
   return -.5 - (2.9 - ax) * .8
 }
-/** a gravel lip: a gentle bank down to a narrow bar of gravel just above the water */
+/** a gravel lip: a gentle bank down to a narrow bar of gravel that runs on under the water, so the waterline lies on the
+ * bar and never on a slope steeper than an eye looks down */
 function beach(ax: number, top: number): number {
   if (ax >= top) return -.03 * (1 - ease(top, top + .3, ax))
   if (ax >= 3.05) return -.03 - .27 * ease(top, 3.05, ax)
   if (ax >= 2.7) return -.3 - .12 * (3.05 - ax) / .35
-  return -.42 - (2.7 - ax) * .9
+  if (ax >= 2.5) return -.42 - .25 * (2.7 - ax)
+  return -.47 - (2.5 - ax) * .9
 }
 
 interface Form { y: number; face: number; gravel: number; turf: number }
@@ -149,9 +151,8 @@ function nearRow(z: number): Row {
   const forms: Shape[] = []
   const add = (k: number, shape: () => (ax: number) => Form): void => { if (k > 0) forms.push([k, shape()]) }
   const beachOf = (top: number) => (ax: number): Form => ({ y: beach(ax, top), face: 0, gravel: ease(2.62, 2.72, ax) * (1 - ease(3.0, 3.1, ax)), turf: ease(top - .05, top + .1, ax) })
-  add(window(z, -6.4, -4.4, .35), () => beachOf(3.55 + .04 * n(1, 61)))
-  // by the bridge a lower lip, where the builders worked from it
-  add(window(z, -2.6, 2.4, .3), () => beachOf(3.45 + .04 * n(2, 62)))
+  // up the stream and by the bridge a low gravel lip, lowest where the builders worked from it
+  add(window(z, -6.4, 2.4, .3), () => beachOf(3.5 + .05 * n(.8, 61) - .05 * window(z, -2.6, 2.4, .6)))
   add(window(z, 2.8, 4.6, .4), () => beachOf(3.6))
   add(window(z, 4.8, 6.6, .4), () => { const f = 3.0 + .04 * n(1, 71); return ax => ({ y: cutBank(ax, f, .3), face: ease(f - .11, f - .06, ax) * (1 - ease(f - .01, f + .01, ax)), gravel: 0, turf: ease(f - .005, f + .05, ax) }) })
   add(window(z, 6.9, 9.0, .45), () => { const s = 3.7 + .05 * n(.9, 72); return ax => ({ y: slump(ax, s, .04), face: ease(s - .09, s - .06, ax) * (1 - ease(s - .01, s + .01, ax)), gravel: 0, turf: ease(s - .01, s + .06, ax) }) })

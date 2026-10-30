@@ -106,8 +106,9 @@ const BENCH_SIZE_WORD: Partial<Record<string, { en: string; de: string }>> = {
  * them. At 2 cm a far eye's depth could not part the floor from the ripple's troughs, and it broke through as lit points */
 const BRIDGE_BANK_FLOOR = -.045;
 /** metres past the standing bridge where the floor starts over its banks and where it is whole: the bank's own edges
- * lie 7.5 m out and more; laid just over the bank's highest swell. Near, so the banks' lit tops never outshine the poles */
-const BRIDGE_MERGE = [.2, 2.0] as const, BRIDGE_MERGE_ABOVE = .03;
+ * lie 7.5 m out and more; laid 3 cm over the bank's highest swell (at 1.5 cm a far eye's depth could not part them).
+ * Near, so the banks' lit tops never outshine the poles */
+const BRIDGE_MERGE = [.2, 2.0] as const, BRIDGE_MERGE_ABOVE = .045;
 /** the half width the setting's floor stays off along the stream: the water and the bank's whole slope up to its lip
  * (`BANK.lip` 3.5 in the bridge's plan, wandering .2), since a floor laid over the slope hovers above it and cuts its
  * top into a band */
