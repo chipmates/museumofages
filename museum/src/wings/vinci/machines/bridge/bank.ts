@@ -143,8 +143,10 @@ function blend(base: number, forms: [number, Form][]): Form {
 export function bankHeight(x: number, z: number): number {
   return bankAt(x, z).y
 }
+let lookFlat = false
 function bankAt(x: number, z: number): Form {
-  const base = groundY(x, z), ax = Math.abs(x), side = x > 0 ? 1 : -1
+  const ax = Math.abs(x), side = x > 0 ? 1 : -1
+  const base = lookFlat && ax > 4.7 ? 0 : groundY(x, z)
   // past the lip's back and beyond the bank's ends the level ground is the plan's: the forms stay on the channel's sides
   const reach = 1 - ease(4.4, 4.7, ax)
   const along = 1 - ease(11.2, 12.2, z)
@@ -181,7 +183,8 @@ function stones(): { x: number; z: number; r: number; seed: number }[] {
  * stand; the section through the earth on the four sides; the stones. UVs in metres: across, the length along the
  * cross-section (so a face is not drawn stretched); along, the stream's z. `aBank`: the share of an earth face, of
  * gravel, of a stone and of turf. */
-export function bankGeometry(): BufferGeometry {
+export function bankGeometry(look: { flat?: boolean } = {}): BufferGeometry {
+  lookFlat = look.flat ?? false
   const X = BANK.halfX, Z0 = BANK.zMin, Z1 = BANK.zMax
   const xs: number[] = []
   for (let x = -X; x < X - 1e-6;) {

@@ -131,7 +131,7 @@ export function build(stack: Stack): ReadyMachineBuild {
     kitLashings.boundingBox = bounds.clone(); kitLashings.boundingSphere = bounds.getBoundingSphere(new Sphere())
     kitLashings.visible = lashed
     parts.set('kit-lashings', { node: kitLashings, geometry: kitGeometry })
-    hang('bank', bankGeometry(), bank.earth)
+    hang('bank', bankGeometry({ flat: import.meta.env.DEV && Boolean((globalThis as { __stageProbe?: { flat?: boolean } }).__stageProbe?.flat) }), bank.earth)
     hang('stream', waterGeometry(), surfaces.water, false)
     // the stream's level face: one planar pass at full resolution (at half, the bank's mirrored lip steps in pixel
     // pairs along the water's edge); calm keeps the sky alone
@@ -144,9 +144,10 @@ export function build(stack: Stack): ReadyMachineBuild {
       surfaces.mirror(reflection.node)
     }
     // a look round may hide named parts (`globalThis.__stageProbe.hide`), on the dev server only
-    if (import.meta.env.DEV) for (const id of (globalThis as { __stageProbe?: { hide?: string[] } }).__stageProbe?.hide ?? []) {
-      const node = object.getObjectByName(id)
-      if (node) node.visible = false
+    if (import.meta.env.DEV) {
+      const look = (globalThis as { __stageProbe?: { hide?: string[]; nocast?: string[] } }).__stageProbe
+      for (const id of look?.hide ?? []) { const node = object.getObjectByName(id); if (node) node.visible = false }
+      for (const id of look?.nocast ?? []) { const node = object.getObjectByName(id); if (node) node.castShadow = false }
     }
     mounted = true
     applyPose(time)
