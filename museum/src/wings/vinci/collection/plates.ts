@@ -355,7 +355,7 @@ export function mountCollectionPlates(host: Group, stack: Stack, options: Collec
       const pixels = window ? { width: window.contentAspect, height: 1 } : entry.pixels
       // a plate registered to part of an earlier plate's frame stands on that part, at the frame's scale
       const part = window ? null : pictureFramePart(entry.plate)
-      const onPart = part ? cardOnFramePart(reproductionCardSize(work, { width: part.referenceWidth, height: part.referenceHeight }), part) : null
+      const onPart = part ? cardOnFramePart(reproductionCardSize(work, { width: part.referenceWidth, height: part.referenceHeight }), part, entry.pixels) : null
       const size = onPart ?? reproductionCardSize(work, pixels)
       const geometry = new PlaneGeometry(size.widthM, size.heightM)
       if (window) {

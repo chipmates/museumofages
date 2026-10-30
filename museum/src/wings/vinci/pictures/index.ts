@@ -263,7 +263,7 @@ export function buildHang(stack: Stack, register: readonly PictureWork[], manife
     // a plate registered to part of an earlier plate's frame stands on that part, at the frame's scale
     const parts = entries.map((entry, i) => {
       const part = windows[i] || documentCarrier ? null : pictureFramePart(entry.plate)
-      return part ? cardOnFramePart(reproductionCardSize(work, { width: part.referenceWidth, height: part.referenceHeight }), part) : null
+      return part ? cardOnFramePart(reproductionCardSize(work, { width: part.referenceWidth, height: part.referenceHeight }), part, entry.pixels) : null
     })
     const sizes = entries.map((entry, i) => {
       const pixels = windows[i] ? { width: windows[i]!.contentAspect, height: 1 } : entry.pixels

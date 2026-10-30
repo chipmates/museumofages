@@ -416,15 +416,20 @@ export function pictureFramePart(source: Pick<PolicyPaintingEntry, 'id' | 'sha25
   return PICTURE_FRAME_PARTS.find(part => part.sourceId === source.id && part.sourceSha256 === source.sha256) ?? null;
 }
 
-/** The card a plate takes on its part of the frame: the frame's own card, cut to the
- * part, and the part's centre measured from the frame's centre (x right, y up). */
-export function cardOnFramePart(frame: { readonly widthM: number; readonly heightM: number }, part: PictureFramePart):
+/** The card a plate takes on its part of the frame: the part's width of the frame's own
+ * card, the plate's own aspect (its whole pixels never quite match the part's fractions,
+ * and a raster is never stretched), centred on the part's centre measured from the
+ * frame's centre (x right, y up). */
+export function cardOnFramePart(frame: { readonly widthM: number; readonly heightM: number }, part: PictureFramePart,
+  pixels: { readonly width: number; readonly height: number }):
 { widthM: number; heightM: number; offsetM: readonly [number, number] } {
   const [u0, v0, u1, v1] = part.part;
   if (![u0, v0, u1, v1].every(Number.isFinite) || u0 < 0 || v0 < 0 || u1 > 1 || v1 > 1 || u1 <= u0 || v1 <= v0) {
     throw new RangeError('A frame part must lie inside its reference frame.');
   }
-  return { widthM: frame.widthM * (u1 - u0), heightM: frame.heightM * (v1 - v0),
+  if (!(pixels.width > 0) || !(pixels.height > 0)) throw new RangeError('A plate on a frame part needs its pixels.');
+  const widthM = frame.widthM * (u1 - u0);
+  return { widthM, heightM: widthM * pixels.height / pixels.width,
     offsetM: [frame.widthM * ((u0 + u1) / 2 - .5), -frame.heightM * ((v0 + v1) / 2 - .5)] };
 }
 

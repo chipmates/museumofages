@@ -70,13 +70,17 @@ for (const part of PICTURE_FRAME_PARTS) {
   const across = (u1 - u0) * part.referenceWidth, down = (v1 - v0) * part.referenceHeight
   assert(Math.abs(source.width * down / across - source.height) < 1.5, 'The plate keeps its part\'s shape to a pixel')
   assert(source.width <= across && source.height <= down, 'The plate is never larger than its part of the frame')
-  const card = cardOnFramePart({ widthM: 1, heightM: 1 }, part)
-  assert(Math.abs(card.offsetM[0]) + card.widthM / 2 <= .5 + 1e-12 && Math.abs(card.offsetM[1]) + card.heightM / 2 <= .5 + 1e-12)
+  const frame = { widthM: 1, heightM: part.referenceHeight / part.referenceWidth }
+  const card = cardOnFramePart(frame, part, source)
+  assert(Math.abs(card.widthM / card.heightM - source.width / source.height) < 1e-12, 'The card keeps the plate\'s own aspect')
+  assert(Math.abs(card.heightM - frame.heightM * (v1 - v0)) * part.referenceHeight / frame.heightM < 1.5, 'The card fills its part to a frame pixel')
+  assert(Math.abs(card.offsetM[0]) + card.widthM / 2 <= frame.widthM / 2 + 1e-12 && Math.abs(card.offsetM[1]) + card.heightM / 2 <= frame.heightM / 2 + 1e-12)
   parts.push({ sourceId: part.sourceId, sourceSha256: part.sourceSha256, plate: [source.width, source.height],
     referencePixels: [part.referenceWidth, part.referenceHeight], part: part.part, plateToFrame: source.width / across })
   checks.push(`${part.sourceId}: exact source hash, replacement rejection, shape to a pixel, no enlargement, a card inside its frame`)
 }
-assert.throws(() => cardOnFramePart({ widthM: 1, heightM: 1 }, { part: [0, 0, 1.2, 1] }))
+assert.throws(() => cardOnFramePart({ widthM: 1, heightM: 1 }, { part: [0, 0, 1.2, 1] }, { width: 1, height: 1 }))
+assert.throws(() => cardOnFramePart({ widthM: 1, heightM: 1 }, { part: [0, 0, 1, 1] }, { width: 0, height: 1 }))
 const anne = PICTURE_DISPLAY_WINDOWS.find(window => window.sourceId.endsWith('__3081x4096'))
 assert(anne)
 const normal = assessPictureDisplayWindow(anne, { width_cm: 113, height_cm: 168 })
