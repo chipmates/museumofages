@@ -513,11 +513,13 @@ export function createBench(stack: Stack, onExit: () => void) {
       camera.setViewOffset(innerWidth, innerHeight, 0, innerHeight * (.5 - (top + tall / 2)), innerWidth, innerHeight);
     }
     camera.updateProjectionMatrix();
-    // THE HEADER'S AIR on the phone: a machine whose top would stand up under the header's words (a lion's tail, a
-    // compass's tips) stands back until its top clears them
+    // THE HEADER'S AIR on the phone: a machine whose drawn top would stand up under the header's words (a lion's tail,
+    // a compass's tips) stands back until it clears them; its box's corners stand above what is drawn, and by them most
+    // machines stood back for nothing. The bridge's yard is its frame, its banks run off the picture
     if (mobile && !eye && !closeUp && !header.hidden) {
       const line = (header.getBoundingClientRect().bottom + HEADER_AIR) / innerHeight;
-      const points = walked ?? [box.min.x, box.max.x].flatMap(x => [box.min.y, box.max.y].flatMap(y => [box.min.z, box.max.z].map(z => new Vector3(x, y, z))));
+      const corners = (b: Box3): Vector3[] => [b.min.x, b.max.x].flatMap(x => [b.min.y, b.max.y].flatMap(y => [b.min.z, b.max.z].map(z => new Vector3(x, y, z))));
+      const points = walked ?? (slug === 'bridge-of-poles' ? corners(box) : surfacePoints(machine.object, 600));
       for (let i = 0; i < 16; i++) {
         camera.updateMatrixWorld();
         const top = Math.min(...points.map(p => onCanvas(p, camera).y));
