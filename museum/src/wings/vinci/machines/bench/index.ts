@@ -1,4 +1,4 @@
-import { Box3, type BufferGeometry, Color, Group, type Light, Mesh, MeshStandardNodeMaterial, type Node, PerspectiveCamera, type PlaneGeometry, Scene, Sphere, SpotLight, Vector3 } from 'three/webgpu';
+import { Box3, type BufferGeometry, Color, Group, type Light, Matrix4, Mesh, MeshStandardNodeMaterial, type Node, PerspectiveCamera, type PlaneGeometry, Scene, Sphere, type SkinnedMesh, SpotLight, Vector3 } from 'three/webgpu';
 import { kelvinToColour } from '../../../../stack/light';
 import type { Stack, KeyLight, MaterialSet } from '../../../../stack';
 import { float, lights, mix, normalView, positionWorld, smoothstep, uv, vec2, vec3 } from 'three/tsl';
@@ -487,13 +487,52 @@ export function createBench(stack: Stack, onExit: () => void) {
     machine.animate(playbackState.clock, 0);
     return points.length ? points : null;
   }
+  /** THE BRIDGE'S SET OVER ITS RUN, for the phone's default eye: its poles lie apart on the banks before it is built, so
+   * the frame holds every pole, lashing and stake at each half second of the run; its bank and stream are ground. Each
+   * skinned pole by its own box in its bone's frame (a thin pole's box is the pole), the rest by its points */
+  let bridgeFrame: Vector3[] | null = null;
+  function bridgeRun(): Vector3[] | null {
+    const period = schedule.period ?? 0;
+    if (!machine || !(period > 0)) return null;
+    const ground = new Set(['bank', 'stream', 'stream-level']), skinned: { mesh: SkinnedMesh; boxes: Map<number, Box3> }[] = [];
+    const at = new Vector3(), points: Vector3[] = [], m = new Matrix4();
+    // hidden parts too (the section's lashings, a look round's mask): the frame stays one frame
+    machine.object.updateMatrixWorld(true);
+    machine.object.traverse(node => {
+      const mesh = node as Mesh;
+      if (!mesh.isMesh || ground.has(mesh.name) || mesh.userData['stageGround']) return;
+      const position = mesh.geometry.getAttribute('position');
+      if (!(mesh as SkinnedMesh).isSkinnedMesh) {
+        for (let k = 0, stride = Math.max(1, Math.ceil(position.count / 2000)); k < position.count; k += stride) points.push(at.fromBufferAttribute(position, k).applyMatrix4(mesh.matrixWorld).clone());
+        return;
+      }
+      const bone = mesh.geometry.getAttribute('skinIndex'), boxes = new Map<number, Box3>();
+      for (let k = 0; k < position.count; k++) {
+        const i = bone.getX(k), box = boxes.get(i) ?? new Box3();
+        boxes.set(i, box.expandByPoint(at.fromBufferAttribute(position, k)));
+      }
+      skinned.push({ mesh: mesh as SkinnedMesh, boxes });
+    });
+    const steps = Math.ceil(period * 2);
+    for (let s = 0; s <= steps; s++) {
+      machine.animate(Math.min(period, s / 2), 0);
+      machine.object.updateMatrixWorld(true);
+      for (const { mesh, boxes } of skinned) for (const [i, box] of boxes) {
+        const { bones, boneInverses } = mesh.skeleton;
+        m.multiplyMatrices(bones[i]!.matrixWorld, boneInverses[i]!).multiply(mesh.bindMatrix).premultiply(mesh.bindMatrixInverse).premultiply(mesh.matrixWorld);
+        for (const x of [box.min.x, box.max.x]) for (const y of [box.min.y, box.max.y]) for (const z of [box.min.z, box.max.z]) points.push(new Vector3(x, y, z).applyMatrix4(m));
+      }
+    }
+    machine.animate(playbackState.clock, 0);
+    return points.length ? points : null;
+  }
   function compose() {
     if (!machine)
       return;
     if (eye && POSED_RIG.has(slug)) { composeEye(eye); return; }
-    const walked = !eye && !closeUp && WALKERS.has(slug) ? walkFrame : null;
     const mobile = innerWidth <= 1280;
-    const box = closeUp ? focusBounds() : slug === 'bridge-of-poles' && !eye ? (mobile ? BRIDGE_YARD_PHONE : BRIDGE_YARD) : walked ? new Box3().setFromPoints(walked) : frameBounds(), size = box.getSize(new Vector3()), centre = box.getCenter(new Vector3()), span = Math.max(size.x, size.y, size.z);
+    const walked = !eye && !closeUp && WALKERS.has(slug) ? walkFrame : !eye && !closeUp && mobile && slug === 'bridge-of-poles' ? bridgeFrame : null;
+    const box = closeUp ? focusBounds() : slug === 'bridge-of-poles' && !eye && !walked ? (mobile ? BRIDGE_YARD_PHONE : BRIDGE_YARD) : walked ? new Box3().setFromPoints(walked) : frameBounds(), size = box.getSize(new Vector3()), centre = box.getCenter(new Vector3()), span = Math.max(size.x, size.y, size.z);
     const direction = viewDirection();
     const right = new Vector3().crossVectors(new Vector3(0, 1, 0), direction).normalize(), up = new Vector3().crossVectors(direction, right).normalize();
     let distance = eye ? new Vector3(...eye.at).distanceTo(centre) : eyeDistance(box, direction, mobile, walked ?? undefined);
@@ -539,7 +578,9 @@ export function createBench(stack: Stack, onExit: () => void) {
     const points = walked ?? (slug === 'bridge-of-poles' ? corners(box) : surfacePoints(machine.object, 600));
     for (let i = 0; i < 16 && points.length; i++) {
       camera.updateMatrixWorld();
-      const top = Math.min(...points.map(p => onCanvas(p, camera).y));
+      // a loop, not a spread: the bridge's run holds more points than a call takes arguments
+      let top = Infinity;
+      for (const p of points) top = Math.min(top, onCanvas(p, camera).y);
       if (top >= line) break;
       distance *= 1 + Math.min(.2, (line - top) * 1.2);
       camera.position.copy(centre).addScaledVector(direction, distance);
@@ -902,7 +943,7 @@ export function createBench(stack: Stack, onExit: () => void) {
     const requestedEvidence = opts.evidence === undefined ? null : opts.evidence === requested ? recordOf(requested) : partialCatalog.find(record => record.slug === opts.evidence);
     if (opts.evidence !== undefined && !requestedEvidence) throw new Error(`No evidence record for ${requested}: ${opts.evidence}`);
     evidence.close(false);
-    const mine = ++serial; active = true; host.hidden = false; ready = false; loading.hidden = false; clearDisplay(); folioEntry = undefined; folio.replaceChildren(); slug = requested; walkFrame = null; evidenceRecord = recordOf(slug); lang = controlLanguage(location.search, opts.lang); schedule = playbackSchedule(recordOf(slug).dossier); playbackState = initialPlayback(schedule, { t: opts.t, fixed: document.body.classList.contains('forge'), reducedMotion: reduced.matches }); lastWall = performance.now(); stamp(); closeUp = opts.close ?? false; eye = opts.eye ?? null; sectionEnabled = (slug === 'camera-obscura' || slug === 'mechanical-lion' || slug === 'armoured-car' || slug === 'bridge-of-poles') && (opts.section ?? false); stack.setScene(scene, camera, stageGrade(Math.max(...Object.values(recordOf(slug).dossier.scale_m).filter((v): v is number => typeof v === 'number')))); lightBench(); machine = isShowcaseSlug(slug) ? buildShowcase(slug, stack) : buildBenchMachine(slug, stack); wallFocus = opts.wallFocus; figure = POSED_RIG.has(slug) ? null : opts.figure ?? null; lampProbe = opts.lamp; fillProbe = opts.fill; luxProbe = opts.lux;
+    const mine = ++serial; active = true; host.hidden = false; ready = false; loading.hidden = false; clearDisplay(); folioEntry = undefined; folio.replaceChildren(); slug = requested; walkFrame = null; bridgeFrame = null; evidenceRecord = recordOf(slug); lang = controlLanguage(location.search, opts.lang); schedule = playbackSchedule(recordOf(slug).dossier); playbackState = initialPlayback(schedule, { t: opts.t, fixed: document.body.classList.contains('forge'), reducedMotion: reduced.matches }); lastWall = performance.now(); stamp(); closeUp = opts.close ?? false; eye = opts.eye ?? null; sectionEnabled = (slug === 'camera-obscura' || slug === 'mechanical-lion' || slug === 'armoured-car' || slug === 'bridge-of-poles') && (opts.section ?? false); stack.setScene(scene, camera, stageGrade(Math.max(...Object.values(recordOf(slug).dossier.scale_m).filter((v): v is number => typeof v === 'number')))); lightBench(); machine = isShowcaseSlug(slug) ? buildShowcase(slug, stack) : buildBenchMachine(slug, stack); wallFocus = opts.wallFocus; figure = POSED_RIG.has(slug) ? null : opts.figure ?? null; lampProbe = opts.lamp; fillProbe = opts.fill; luxProbe = opts.lux;
     if (opts.figure && POSED_RIG.has(slug)) { sizeFigure = makeFigure(figureMaterial, 'size-figure'); sizeFigure.pose(standingJoints(opts.figure.turn ?? 0, opts.figure.at as [number, number, number])); sizeFigure.group.userData['assetClass'] = 'GENERATED'; figureGroup = sizeFigure.group; display.add(sizeFigure.group); } machine.section(sectionEnabled); display.add(machine.object); standStage(); if (opts.keyProbe === 'off' && key) key.light.intensity = 0; compose(); paint(); await Promise.all([machine.ready, supports(mine), plateFor(mine)]); if (mine !== serial)
     return; machine.animate(playbackState.clock, 0); lampMachine();
     dressStage();
@@ -927,7 +968,7 @@ export function createBench(stack: Stack, onExit: () => void) {
       ropeExperiment = applyRopeShadowExperiment(machine.object, slug, ropeMode, key.direction);
     }
     if (requestedEvidence) evidence.open(requestedEvidence, read);
-    ready = true; loading.hidden = true; if (WALKERS.has(slug)) { walkFrame = walkPoints(); compose(); } else if (innerWidth <= 1280 && !eye && !closeUp) composeAir(); metrics?.reset(); stamp(); lastWall = performance.now(); console.log(`[bench] mounted ${slug} period=${recordOf(slug).dossier.motion.period_s} tier=${stack.tierName()}`); }
+    ready = true; loading.hidden = true; if (WALKERS.has(slug)) { walkFrame = walkPoints(); compose(); } else if (slug === 'bridge-of-poles' && innerWidth <= 1280 && !eye && !closeUp) { bridgeFrame = bridgeRun(); compose(); } else if (innerWidth <= 1280 && !eye && !closeUp) composeAir(); metrics?.reset(); stamp(); lastWall = performance.now(); console.log(`[bench] mounted ${slug} period=${recordOf(slug).dossier.motion.period_s} tier=${stack.tierName()}`); }
   function close() { if (!active)
     return; setBenchKey(null); serial++; evidence.close(false); active = false; host.hidden = true; ready = false; clearDisplay(); key?.dispose(); key = null; }
   function navigate(delta: number) { const id = BENCH_SLUGS[(BENCH_SLUGS.indexOf(slug) + delta + BENCH_SLUGS.length) % BENCH_SLUGS.length]; if (id) {
