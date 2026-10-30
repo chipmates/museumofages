@@ -116,6 +116,11 @@ const BRIDGE_CHANNEL = 3.6;
 /** The bridge's own eye, with no rig's eye given: it opens in its yard, its rods on both banks out to the stock's bank
  * ends (`STOCK_FOOT` 8.22 in its plan), so the frame takes the yard whole and the bridge rises in its middle. */
 const BRIDGE_YARD = new Box3(new Vector3(-8.5, -.6, -2.3), new Vector3(8.5, 3, 2.3));
+/** On the phone's upright frame the yard's width stood the bridge small, as poles rather than a bridge: there the frame
+ * takes the bridge and its seats, and the rods' stock runs out at the frame's sides. */
+const BRIDGE_YARD_PHONE = new Box3(new Vector3(-6, -.6, -2.3), new Vector3(6, 3, 2.3));
+/** css px of air under the phone header's words that no machine's top stands up into */
+const HEADER_AIR = 10;
 /** That eye looks down on the yard more than a rig's eye does, on the same bearing round the stream: the yard is long
  * and flat, and from a low eye it stood as a thin strip across the picture. */
 const BRIDGE_YARD_RISE = .62;
@@ -487,10 +492,11 @@ export function createBench(stack: Stack, onExit: () => void) {
       return;
     if (eye && POSED_RIG.has(slug)) { composeEye(eye); return; }
     const walked = !eye && !closeUp && WALKERS.has(slug) ? walkFrame : null;
-    const box = closeUp ? focusBounds() : slug === 'bridge-of-poles' && !eye ? BRIDGE_YARD : walked ? new Box3().setFromPoints(walked) : frameBounds(), size = box.getSize(new Vector3()), centre = box.getCenter(new Vector3()), span = Math.max(size.x, size.y, size.z), mobile = innerWidth <= 1280;
+    const mobile = innerWidth <= 1280;
+    const box = closeUp ? focusBounds() : slug === 'bridge-of-poles' && !eye ? (mobile ? BRIDGE_YARD_PHONE : BRIDGE_YARD) : walked ? new Box3().setFromPoints(walked) : frameBounds(), size = box.getSize(new Vector3()), centre = box.getCenter(new Vector3()), span = Math.max(size.x, size.y, size.z);
     const direction = viewDirection();
     const right = new Vector3().crossVectors(new Vector3(0, 1, 0), direction).normalize(), up = new Vector3().crossVectors(direction, right).normalize();
-    const distance = eye ? new Vector3(...eye.at).distanceTo(centre) : eyeDistance(box, direction, mobile, walked ?? undefined);
+    let distance = eye ? new Vector3(...eye.at).distanceTo(centre) : eyeDistance(box, direction, mobile, walked ?? undefined);
     camera.aspect = innerWidth / innerHeight;
     camera.fov = 34;
     camera.near = Math.max(.001, span / 1000);
@@ -507,6 +513,19 @@ export function createBench(stack: Stack, onExit: () => void) {
       camera.setViewOffset(innerWidth, innerHeight, 0, innerHeight * (.5 - (top + tall / 2)), innerWidth, innerHeight);
     }
     camera.updateProjectionMatrix();
+    // THE HEADER'S AIR on the phone: a machine whose top would stand up under the header's words (a lion's tail, a
+    // compass's tips) stands back until its top clears them
+    if (mobile && !eye && !closeUp && !header.hidden) {
+      const line = (header.getBoundingClientRect().bottom + HEADER_AIR) / innerHeight;
+      const points = walked ?? [box.min.x, box.max.x].flatMap(x => [box.min.y, box.max.y].flatMap(y => [box.min.z, box.max.z].map(z => new Vector3(x, y, z))));
+      for (let i = 0; i < 16; i++) {
+        camera.updateMatrixWorld();
+        const top = Math.min(...points.map(p => onCanvas(p, camera).y));
+        if (top >= line) break;
+        distance *= 1 + Math.min(.2, (line - top) * 1.2);
+        camera.position.copy(centre).addScaledVector(direction, distance);
+      }
+    }
     // The far cascade is a box around the origin, so the floor beyond it took
     // no shadow at all and stood there as a hard edged dark quad. The air
     // now closes inside that box, and the ground hands itself to the air.
