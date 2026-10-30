@@ -272,7 +272,20 @@
      "title": "L’Ultima Cena nel cortile",
      "kind": "Riproduzione",
      "what": "l’originale è una pittura murale nella sala da pranzo del convento di Santa Maria delle Grazie, a Milano. La parete nel cortile è costruita in codice.",
-     "src": "{museum:supper_credit} {museum:it108}",
+     "src": [
+      "Foto: Mariordo (Mario Roberto Duran Ortiz), 2024, ",
+      {
+       "text": "CC BY-SA 4.0",
+       "href": "https://creativecommons.org/licenses/by-sa/4.0/"
+      },
+      ". Ritaglio sul dipinto e correzione prospettica a cura del museo. Il ritaglio del museo e questa immagine del film sono condivisi con la stessa licenza. Opera di pubblico dominio. Riproduzione da ",
+      {
+       "text": "Wikimedia Commons",
+       "href": "https://commons.wikimedia.org/wiki/File:2024_04_Da_Vinci_Last_Supper_Milan_7013.jpg"
+      },
+      ". Le indicazioni del museo riguardano la riproduzione, non il dipinto. Uso culturale senza scopo di lucro. ",
+      "{museum:it108}"
+     ],
      "alt": "Una riproduzione dell’Ultima Cena riempie una parete chiara in un cortile: una fila di figure a un lungo tavolo in una stanza dipinta. Un’immagine del film del museo."
     }
    ]

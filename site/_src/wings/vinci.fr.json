@@ -272,7 +272,20 @@
      "title": "La Cène dans la cour",
      "kind": "Reproduction",
      "what": "l’original est une peinture murale dans le réfectoire du couvent Santa Maria delle Grazie, à Milan. Le mur de la cour est construit en code.",
-     "src": "{museum:supper_credit} {museum:it108}",
+     "src": [
+      "Photo: Mariordo (Mario Roberto Duran Ortiz), 2024, ",
+      {
+       "text": "CC BY-SA 4.0",
+       "href": "https://creativecommons.org/licenses/by-sa/4.0/"
+      },
+      ". Recadrage sur le tableau et correction de perspective par le musée. La photo recadrée par le musée et cette image du film sont partagées sous la même licence. Œuvre du domaine public. Reproduction issue de ",
+      {
+       "text": "Wikimedia Commons",
+       "href": "https://commons.wikimedia.org/wiki/File:2024_04_Da_Vinci_Last_Supper_Milan_7013.jpg"
+      },
+      ". Les mentions du musée portent sur la reproduction, pas sur le tableau. Usage culturel à but non lucratif. ",
+      "{museum:it108}"
+     ],
      "alt": "Une reproduction de la Cène couvre un mur clair dans une cour: une rangée de personnages à une longue table, dans une pièce peinte. Une image du film du musée."
     }
    ]

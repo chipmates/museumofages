@@ -1040,14 +1040,15 @@ def check_wing_data(site, slug):
 
 def credit_parts_problems(d, path=""):
     """A credit line given as parts holds words and links ({"text", "href"} with an https address), and stands only
-    where the page writes one: under the plate at the walk's end (end.plate.src)."""
+    where the page writes one: under the plate at the walk's end (end.plate.src) and under a room's plate
+    (rooms.<n>.plates.<n>.src, through render.plate_src)."""
     problems = []
     if isinstance(d, dict):
         for k, v in d.items():
             at = f"{path}.{k}" if path else k
             if k == "src" and isinstance(v, list):
-                if at != "end.plate.src":
-                    problems.append(f"{at} is given as parts, which the page writes only for end.plate.src")
+                if not re.fullmatch(r"end\.plate\.src|rooms\.\d+\.plates\.\d+\.src", at):
+                    problems.append(f"{at} is given as parts, which the page writes only for end.plate.src and a room's plates")
                 for i, part in enumerate(v):
                     if isinstance(part, str):
                         continue

@@ -4295,6 +4295,34 @@ class LastYears(unittest.TestCase):
                 checked.append(lang)
         self.assertTrue({"en", "de"} <= set(checked) and len(checked) == len(table["BUILT"]), checked)
 
+    def test_the_wing_pages_supper_still_credits_the_photograph_with_both_links_in_every_language(self):
+        # the court's still shows the Last Supper photograph on its wall: its credit is given as parts (a room's plate,
+        # written through render.credit), so it names the photographer, links the licence and the photograph's file
+        # page of the still's plate record, and ends on the Italian code's line filled in, in every built language
+        plate = next(p for p in json.loads((HERE / "pictures.json").read_text(encoding="utf-8"))["plates"]
+                     if p["name"] == "v-supper")
+        table = json.loads((SITE_SRC / "languages.json").read_text(encoding="utf-8"))
+        texts = json.loads((SITE_SRC / "museum-texts.json").read_text(encoding="utf-8"))
+        lib = _buildlib()
+        plain = lambda text: " ".join(text.replace(" ", " ").replace(" ", " ").split())
+        checked = []
+        for entry in (e for e in table["languages"] if e["code"] in table["BUILT"]):
+            lang = entry["code"]
+            with self.subTest(lang=lang):
+                text = (SITE_BUILT / (entry["folder"] + entry["slugs"]["wings"]["vinci"]) / "index.html").read_text(encoding="utf-8")
+                figure = text[text.index("/v-supper-"):]
+                body = re.search(r'<span class="label__src">(.*?)</span></figcaption>', figure[:figure.index("</figure>")],
+                                 flags=re.S).group(1)
+                self.assertEqual(re.findall(r'<a href="([^"]+)"><span>[^<]+</span></a>', body), [plate["licence_url"], plate["source"]])
+                self.assertEqual(len(re.findall(r"<a\b", body)), 2)
+                self.assertNotIn("{museum:", body)
+                line = plain(html.unescape(re.sub(r"<[^>]+>", "", body)))
+                self.assertIn("Mariordo (Mario Roberto Duran Ortiz), 2024, CC BY-SA 4.0. ", line)
+                museum = texts[lang] if lang in texts else json.loads((SITE_SRC / f"museum-texts.{lang}.json").read_text(encoding="utf-8"))
+                self.assertTrue(line.endswith(plain(lib.space(museum["it108"], lang))), line)
+                checked.append(lang)
+        self.assertTrue({"en", "de"} <= set(checked) and len(checked) == len(table["BUILT"]), checked)
+
     def test_the_paintings_credit_never_breaks_inside_its_number_or_before_its_slash(self):
         # «inv. PDUT1165» and «Paris Musées / Petit Palais» are bound in the data by a no-break space: on the wing
         # page's court and on every label of the death page that credits the painting, in every built language

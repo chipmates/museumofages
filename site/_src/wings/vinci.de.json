@@ -272,7 +272,20 @@
           "title": "Das Abendmahl im Hof",
           "kind": "Reproduktion",
           "what": "das Original ist ein Wandbild im Speisesaal des Klosters Santa Maria delle Grazie in Mailand. Die Wand im Hof ist in Code gebaut.",
-          "src": "{museum:supper_credit} {museum:it108}",
+          "src": [
+            "Foto von Mariordo (Mario Roberto Duran Ortiz), 2024, ",
+            {
+              "text": "CC BY-SA 4.0",
+              "href": "https://creativecommons.org/licenses/by-sa/4.0/"
+            },
+            ". Vom Museum auf das Gemälde zugeschnitten und entzerrt. Der Ausschnitt und dieses Standbild stehen unter derselben Lizenz. Gemeinfreies Werk. Reproduktion aus ",
+            {
+              "text": "Wikimedia Commons",
+              "href": "https://commons.wikimedia.org/wiki/File:2024_04_Da_Vinci_Last_Supper_Milan_7013.jpg"
+            },
+            ". Das Museum kennzeichnet die Reproduktion, nicht das Gemälde. Kulturelle Nutzung ohne Gewinnabsicht. ",
+            "{museum:it108}"
+          ],
           "alt": "Eine Reproduktion des Abendmahls füllt eine helle Wand in einem Hof: eine Reihe von Figuren an einem langen Tisch in einem gemalten Raum. Ein Standbild aus dem Film des Museums."
         }
       ]

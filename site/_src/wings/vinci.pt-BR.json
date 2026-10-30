@@ -272,7 +272,20 @@
      "title": "A Última Ceia no pátio",
      "kind": "Reprodução",
      "what": "o original é uma pintura mural no refeitório do convento de Santa Maria delle Grazie, em Milão. A parede do pátio é construída em código.",
-     "src": "{museum:supper_credit} {museum:it108}",
+     "src": [
+      "Foto: Mariordo (Mario Roberto Duran Ortiz), 2024, ",
+      {
+       "text": "CC BY-SA 4.0",
+       "href": "https://creativecommons.org/licenses/by-sa/4.0/"
+      },
+      ". Recortada para mostrar só a pintura e com a perspectiva corrigida pelo museu. O recorte do museu e esta imagem do filme são compartilhados com a mesma licença. Obra em domínio público. Reprodução do ",
+      {
+       "text": "Wikimedia Commons",
+       "href": "https://commons.wikimedia.org/wiki/File:2024_04_Da_Vinci_Last_Supper_Milan_7013.jpg"
+      },
+      ". A etiqueta do museu vale para a reprodução, não para a pintura. Uso cultural sem fins lucrativos. ",
+      "{museum:it108}"
+     ],
      "alt": "Uma reprodução da Última Ceia ocupa uma parede clara num pátio: uma fileira de figuras numa mesa comprida, numa sala pintada. Uma imagem do filme do museu."
     }
    ]

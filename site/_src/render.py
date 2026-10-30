@@ -381,8 +381,9 @@ def crop_rules(d):
 
 
 def plate_src(c, p):
-    """A plate's credit line. Where the plate names a place on the page for more (src_to), a link to it follows."""
-    src = p.get("src")
+    """A plate's credit line, words or parts (credit). Where the plate names a place on the page for more (src_to), a
+    link to it follows."""
+    src = credit(p.get("src"))
     if src and p.get("src_to"):
         src += f' <a href="#{p["src_to"]}">{c.w["wingpage.more_originals"]}</a>'
     return src
