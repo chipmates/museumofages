@@ -243,12 +243,12 @@ assert.ok(Math.abs(mural.position.x - (SUPPER_WALL.east + SUPPER_WALL.thickness 
 assert.ok(Math.abs(mural.position.y - (COURT.level + SUPPER_WALL.field.sill + SUPPER_WALL.field.height / 2 + muralCard.offsetM[1])) < 1e-12)
 assert.ok(Math.abs(mural.position.z - (-SUPPER_WALL.north - muralCard.offsetM[0])) < 1e-12)
 if (muralPart) {
-  // the plate keeps its own aspect exactly; the part's shape differs from it by under a pixel
+  // the plate keeps its own aspect (to the geometry's float32 positions); the part's shape differs by under a pixel
   const plate = manifest.byId.get(mural.userData.manifestId)
   mural.geometry.computeBoundingBox()
   const muralSize = mural.geometry.boundingBox.getSize(new THREE.Vector3())
-  assert.ok(Math.abs(muralSize.x / muralSize.y - plate.width / plate.height) < 1e-9)
-  assert.ok(Math.abs(muralSize.x - muralCard.widthM) < 1e-9 && Math.abs(muralSize.y - muralCard.heightM) < 1e-9)
+  assert.ok(Math.abs(muralSize.x / muralSize.y - plate.width / plate.height) < 1e-6)
+  assert.ok(Math.abs(muralSize.x - muralCard.widthM) < 1e-6 && Math.abs(muralSize.y - muralCard.heightM) < 1e-6)
   assert.ok(muralSize.x <= SUPPER_WALL.field.width && muralSize.y <= SUPPER_WALL.field.height)
 }
 const near = card => card.position.clone().add(new THREE.Vector3(0, 0, 1).applyEuler(card.rotation))
