@@ -4,7 +4,7 @@
  * draws the store's admitted plates on them, with the policy's own records.
  * Loaded by the hall on demand, so the hall's fabric never waits for it.
  */
-import { Group, Matrix4, Mesh, PlaneGeometry, Vector3 } from 'three/webgpu'
+import { BufferGeometry, DoubleSide, Float32BufferAttribute, Group, LatheGeometry, Matrix4, Mesh, MeshStandardNodeMaterial, PlaneGeometry, SphereGeometry, Vector2, Vector3 } from 'three/webgpu'
 import { vec3 } from 'three/tsl'
 import { loadManifest } from '../../../manifest'
 import { createPlateStream, type PlateStream } from '../pictures/stream'
@@ -43,10 +43,94 @@ export interface HallPlates {
   pending(): number
 }
 
-export function mountHallPlates(host: Group, plates: readonly HallPlate[], hero: boolean): HallPlates {
+/** THE GLASS MODEL OF THE VALVE, ours: nothing of his survives and nobody is
+ * sure he built one. A glass root with its three sinuses on a turned oak
+ * foot, three thin cusps opening and shutting once in a beat, and grass
+ * seeds turning in the water behind them, as he planned to show the flow.
+ * Local metres, y up, the foot's underside at 0. */
+const ROOT = { foot: .028, low: .1, sinus: .13, junction: .17, top: .27, tube: .034, bulge: .052 } as const
+const BEAT_S = 2.6
+function rootRadius(y: number, angle: number): number {
+  const lobe = Math.max(0, Math.cos(3 * angle)) ** 1.5
+  const swell = y < ROOT.low ? 0 : y > ROOT.junction ? 0 : Math.sin(Math.PI * (y - ROOT.low) / (ROOT.junction - ROOT.low))
+  return ROOT.tube + (ROOT.bulge - ROOT.tube) * swell * (.55 + .45 * lobe)
+}
+function glassValve(): { group: Group; beat(t: number): void } {
+  const group = new Group()
+  group.name = 'vinci/house-hall/glass-valve'
+  const oak = new MeshStandardNodeMaterial({ color: '#6a4a2c', roughness: .55, metalness: 0 })
+  const glass = new MeshStandardNodeMaterial({ color: '#e4efec', roughness: .04, metalness: 0, transparent: true, opacity: .2, depthWrite: false, side: DoubleSide })
+  const water = new MeshStandardNodeMaterial({ color: '#cfe0dc', roughness: .1, metalness: 0, transparent: true, opacity: .1, depthWrite: false })
+  const cusp = new MeshStandardNodeMaterial({ color: '#d9cdb4', roughness: .6, metalness: 0, transparent: true, opacity: .78, side: DoubleSide })
+  const seedMat = new MeshStandardNodeMaterial({ color: '#4a3a1c', roughness: .8, metalness: 0 })
+  const foot = new Mesh(new LatheGeometry([[0, 0], [.08, 0], [.084, .006], [.08, .014], [.066, .02], [.062, ROOT.foot], [0, ROOT.foot]].map(([x, y]) => new Vector2(x, y)), 40), oak)
+  group.add(foot)
+  // the root, its three sinuses swelling between the cusps' commissures
+  const A = 60, Y = 30, pos: number[] = [], idx: number[] = []
+  for (let j = 0; j <= Y; j++) for (let i = 0; i <= A; i++) {
+    const y = ROOT.foot + (ROOT.top - ROOT.foot) * j / Y, a = i / A * Math.PI * 2, r = rootRadius(y, a)
+    pos.push(Math.cos(a) * r, y, Math.sin(a) * r)
+  }
+  for (let j = 0; j < Y; j++) for (let i = 0; i < A; i++) { const k = j * (A + 1) + i; idx.push(k, k + A + 1, k + 1, k + 1, k + A + 1, k + A + 2) }
+  const shell = new BufferGeometry()
+  shell.setAttribute('position', new Float32BufferAttribute(pos, 3)); shell.setIndex(idx); shell.computeVertexNormals()
+  const root = new Mesh(shell, glass); root.renderOrder = 2
+  const fill = new Mesh(shell.clone().scale(.96, .97, .96).translate(0, .002, 0), water); fill.renderOrder = 1
+  group.add(fill, root)
+  // the three cusps, hung from the root's wall along their arcs
+  const I = 10, J = 7, cusps: BufferGeometry[] = []
+  for (let k = 0; k < 3; k++) {
+    const g = new BufferGeometry(), ci: number[] = []
+    g.setAttribute('position', new Float32BufferAttribute(new Float32Array((I + 1) * (J + 1) * 3), 3))
+    for (let j = 0; j < J; j++) for (let i = 0; i < I; i++) { const q = j * (I + 1) + i; ci.push(q, q + I + 1, q + 1, q + 1, q + I + 1, q + I + 2) }
+    g.setIndex(ci)
+    cusps.push(g)
+    group.add(new Mesh(g, cusp))
+  }
+  // the seeds, turning in the sinuses behind the cusps
+  const seeds: { mesh: Mesh; lobe: number; phase: number; r: number; y: number }[] = []
+  const seedGeo = new SphereGeometry(.0022, 6, 4).scale(1, .45, .45)
+  for (let n = 0; n < 15; n++) {
+    const mesh = new Mesh(seedGeo, seedMat)
+    seeds.push({ mesh, lobe: n % 3, phase: (n * 2.399) % (Math.PI * 2), r: .006 + (n % 4) * .002, y: ROOT.low + .02 + (n % 5) * .007 })
+    group.add(mesh)
+  }
+  const beat = (t: number): void => {
+    // shut through most of the beat, a quick opening as the flow passes
+    const phase = (t / BEAT_S) % 1, open = phase < .38 ? Math.sin(Math.PI * phase / .38) : 0
+    for (let k = 0; k < 3; k++) {
+      const at = cusps[k]!.getAttribute('position') as Float32BufferAttribute
+      const mid = Math.PI / 3 + k * 2 * Math.PI / 3
+      for (let j = 0; j <= J; j++) for (let i = 0; i <= I; i++) {
+        const s = i / I - .5, t2 = j / J, a = mid + s * 2 * Math.PI / 3 * .97
+        const wall = rootRadius(ROOT.low, a) * .985
+        // the attachment rises toward the commissures; the free edge reaches the
+        // middle when shut and lies back along the wall when open
+        const reach = .97 - .78 * open
+        const r = wall * (1 - t2 * reach * (1 - .25 * Math.abs(s) * 2)), y = ROOT.low + .028 * (2 * Math.abs(s)) ** 2 * (1 - t2) + t2 * (.008 + .03 * open)
+        at.setXYZ(j * (I + 1) + i, Math.cos(a) * r, y, Math.sin(a) * r)
+      }
+      at.needsUpdate = true
+      cusps[k]!.computeVertexNormals()
+    }
+    for (const sd of seeds) {
+      // the swirl behind each cusp turns faster as the cusps begin to shut
+      const a = sd.phase + t * (1.2 + 1.6 * (1 - open)), lobe = Math.PI / 3 + sd.lobe * 2 * Math.PI / 3
+      const cx = Math.cos(lobe) * .04, cz = Math.sin(lobe) * .04
+      sd.mesh.position.set(cx + Math.cos(a) * sd.r * Math.cos(lobe), sd.y + Math.sin(a) * sd.r, cz + Math.cos(a) * sd.r * Math.sin(lobe))
+      sd.mesh.rotation.set(0, -lobe, a)
+    }
+  }
+  beat(0)
+  return { group, beat }
+}
+
+export function mountHallPlates(host: Group, plates: readonly HallPlate[], hero: boolean, valveAt?: V3): HallPlates {
   const group = new Group()
   group.name = 'vinci/house-hall/plates'
   host.add(group)
+  const model = valveAt ? glassValve() : null
+  if (model && valveAt) { model.group.position.copy(world(valveAt)); group.add(model.group) }
   const placed: { plate: HallPlate; stream: PlateStream; at: Vector3 }[] = []
   let loading = true, raised: PlateStream | null = null, switching = false, last = performance.now()
   const ready = loadManifest().then(manifest => {
@@ -92,6 +176,7 @@ export function mountHallPlates(host: Group, plates: readonly HallPlate[], hero:
     tick(eye) {
       const now = performance.now(), dt = Math.min(.1, (now - last) / 1000)
       last = now
+      model?.beat(now / 1000)
       for (const p of placed) p.stream.update(dt)
       if (switching) return
       const at = world(eye)

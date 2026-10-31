@@ -387,7 +387,7 @@ export function mountBodyWall(stack: Stack): BodyWallCabinet {
   // THE GREAT HALL'S PLATES: the anatomy stands in the hall now, which lays
   // out its sheets and the three paintings; this display fetches them
   const host = hallPlateHost()
-  const hallPlates = host ? import('./body-wall-hall').then(m => { const shown = m.mountHallPlates(host.group, host.plates, host.hero); showHallPlates(shown); return shown.ready }) : Promise.resolve()
+  const hallPlates = host ? import('./body-wall-hall').then(m => { const shown = m.mountHallPlates(host.group, host.plates, host.hero, host.valve); showHallPlates(shown); return shown.ready }) : Promise.resolve()
   const ready = Promise.all([...SETS.map(name => stack.materials.load(name)), hallPlates]).then(() => { if (live) owed = 2 }, () => { if (live) owed = 2 })
   function take(bodies: readonly Object3D[]): void {
     if (!probe || !generator) return
