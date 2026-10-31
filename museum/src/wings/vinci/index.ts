@@ -10,6 +10,7 @@ import { foundationPlinthProvenance } from './foundation-plinth'
 import { Box3, Color, FogExp2, DirectionalLight, Group, Mesh, Raycaster, Vector2, Vector3 } from 'three/webgpu'
 import { float, mix, vec3, vec4, dot as nodeDot, positionWorld, cameraPosition, smoothstep, mx_fractal_noise_float, uniform } from 'three/tsl'
 import { SkyMesh } from 'three/addons/objects/SkyMesh.js'
+import { domeClouds } from './dome-clouds'
 import { setRegister, type WingHosts, type WingModule, type WingProgress, type WingReport, type WingStage, type WingStation } from '../frame'
 import { beginVisit, type Visit } from '../visit'
 import { createWingPlan, type WingPlan } from '../plan'
@@ -1048,7 +1049,8 @@ export function createWing():VinciWingModule {
     // r185 implements filterNode; the installed LightShadow type predates it.
     if(!SHADOW_OFF('noplanefilter'))Object.assign(key.light.shadow,{filterNode:createCollectionReceiverPlaneShadowFilter()})
     sky=new SkyMesh();sky.material.fog=false
-    const skyRGB=(sky.material.colorNode as ReturnType<typeof vec4>).rgb
+    // the dome's veil as r185 drew it; SkyMesh's own layer stays at coverage 0
+    const skyRGB=domeClouds(sky,(sky.material.colorNode as ReturnType<typeof vec4>).rgb,positionWorld.sub(cameraPosition).normalize(),.28)
     const skyLuma=nodeDot(skyRGB,vec3(.2126,.7152,.0722))
     // Compress only the assumed atmosphere's bright lobe. The measured
     // solar direction, building irradiance and shadow rig are untouched.
@@ -1078,7 +1080,7 @@ export function createWing():VinciWingModule {
     applyDisplayedHorizonHaze(sky.material,scene.fog as FogExp2,key.direction,hazeLive)
     scene.fogNode=createAerialFog(scene.fog as FogExp2,key.direction,COLLECTION_INDOORS,hazeLive)
     stars=createEveningStars();scene.add(stars.sprite);mieAtRest=sky.mieCoefficient.value
-    sky.scale.setScalar(1800);sky.sunPosition.value.copy(key.direction).multiplyScalar(450000);sky.turbidity.value=4;sky.rayleigh.value=1.4;sky.cloudScale.value=.0006;sky.cloudCoverage.value=.28;sky.cloudDensity.value=.42;sky.cloudElevation.value=.35;sky.cloudSpeed.value=0;scene.add(sky)
+    sky.scale.setScalar(1800);sky.sunPosition.value.copy(key.direction).multiplyScalar(450000);sky.turbidity.value=4;sky.rayleigh.value=1.4;sky.cloudScale.value=.0006;sky.cloudCoverage.value=0;sky.cloudDensity.value=.42;sky.cloudElevation.value=.35;sky.cloudSpeed.value=0;scene.add(sky)
     yield
     const entry=createEntryPassage(stack.tierName())
     shell=createShell(stack.tierName(),stack.materials)
