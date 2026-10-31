@@ -267,10 +267,10 @@ function authoredStationPose(id:VinciStationId, narrow:boolean):Pose {
   // THE ANATOMY'S CABINET IN THE GREAT HALL, square on from the room: the
   // desktop stands 3.7 m off the partition and takes the case whole with the
   // corner and the sheet apart at its right; the phone stands 4.4 m off, the
-  // hang four fifths of its width, the case's middle lifted to a third of the
-  // height by the shift lens.
+  // hang four fifths of its width, ten degrees down: the grid's walk runs
+  // from this eye, and a wall's run takes no shift its sheets do not.
   if(id==='body'){const toWall=hallPoint(0,-1,0).sub(hallPoint(0,0,0)),heading=Math.atan2(toWall.x,-toWall.z)*180/Math.PI
-    if(narrow){const eye=hallPoint(2.1,4.43,1.67);return {...aimedFrom({eye,at:eye,fov:90.5},heading,0,90.5),shift:-.43}}
+    if(narrow){const eye=hallPoint(2.1,4.43,1.6);return aimedFrom({eye,at:eye,fov:90.5},heading,-10,90.5)}
     const eye=hallPoint(2.1,3.75,1.65);return aimedFrom({eye,at:eye,fov:58},heading,-6,58)}
   const room=COLLECTION_STATION_ROOMS[id]
   // THE TIMELINE'S FIRST EYE stands north of its room's view: 0.6 m off the
