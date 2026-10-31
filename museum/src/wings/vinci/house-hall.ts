@@ -838,12 +838,12 @@ export function createHouseHall(tier: TierName, library?: MaterialLibrary): Hous
   group.userData['manifestId'] = houseHallProvenance.manifestId
   const triangles = s.v.length / 3
   group.userData['triangles'] = triangles
-  // the anatomy's sheets and the three paintings: fetched once the fabric stands
-  const plates = platesOut
-  let shown: HallPlates | null = null
-  void import('./collection/body-wall-hall').then(m => { shown = m.mountHallPlates(group, plates, hero) })
-  const refreshSun = (eye: V3, changed: boolean): void => { sun?.refresh(eye, changed); shown?.tick(eye) }
-  return { group, triangles, patches: PATCHES.length, refreshSun, pending: () => shown?.pending() ?? 1 }
+  // the anatomy's sheets and the three paintings: laid out here, fetched by
+  // the anatomy's display module once the wing stands (`body-wall-hall.ts`)
+  plateHost = { group, plates: platesOut, hero }
+  platesShown = null
+  const refreshSun = (eye: V3, changed: boolean): void => { sun?.refresh(eye, changed); platesShown?.tick(eye) }
+  return { group, triangles, patches: PATCHES.length, refreshSun, pending: () => platesShown?.pending() ?? 0 }
 }
 
 /* ---- the sun's shadow inside the hall ---- */
@@ -1250,8 +1250,13 @@ export const hallPoint = (u: number, v: number, z: number): Vector3 => { const q
 
 /** A direction of the hall's frame in east, north, up. */
 const uvDir = (du: number, dv: number, dz = 0): V3 => [U[0] * du + V[0] * dv, U[1] * du + V[1] * dv, dz]
-/** The plates the build lays out, which the hall then fetches. */
+/** The plates the build lays out; the hall's group and tier they are drawn
+ * in; and the drawn set, which the hall's frame tick drives. */
 let platesOut: HallPlate[] = []
+let plateHost: { group: Group; plates: readonly HallPlate[]; hero: boolean } | null = null
+let platesShown: HallPlates | null = null
+export const hallPlateHost = (): typeof plateHost => plateHost
+export const showHallPlates = (shown: HallPlates): void => { platesShown = shown }
 
 type WallSide = 'A' | 'D'
 /** A box on a wall: a along it, d off it, z from the floor. Faces hidden on
@@ -1376,9 +1381,9 @@ const placeOf = (id: string, fallback: V2): { u: number; v: number; size: V3 } =
   return { u: q[0], v: q[1], size: f?.size_m ?? [1, 1, 1] }
 }
 const TABLE = placeOf('hall-table', [4.4, 3.9])
-/** the bench stands on the table's east side: on the west it stood where the
- * anatomy's eyes stand */
-const BENCH = { ...placeOf('hall-bench', [2.9, 3.9]), u: TABLE.u + TABLE.size[0] / 2 + .45 }
+/** the bench stands on the table's east side, north of the lion's tail: on
+ * the west it stood where the anatomy's eyes stand */
+const BENCH = { ...placeOf('hall-bench', [2.9, 3.9]), u: TABLE.u + TABLE.size[0] / 2 + .45, v: TABLE.v + .5 }
 
 /** Every piece is a type of the period, built to the dimensions of the
  * museum object its label cites; none is documented in this house. */
@@ -1397,8 +1402,10 @@ function furnish(s: Sink, hero: boolean): void {
   // and a glazed dish at the table's north end; its sunlit south end carries
   // the two instruments the house builds (hall-table-pieces.ts)
   const top = FLOOR_Z + TABLE.size[2]
-  for (const [k, dv] of [[0, -.35], [1, .35]] as [number, number][]) candlestick(s, P(TABLE.u - .08, TABLE.v + dv, top), 93 + k)
-  jug(s, P(TABLE.u + .18, TABLE.v - .02, top), 95)
+  // the candlesticks and the jug toward the north end, clear of the way the
+  // walk crosses the room to the anatomy's cabinet
+  for (const [k, dv] of [[0, -.35], [1, .35]] as [number, number][]) candlestick(s, P(TABLE.u - .08, TABLE.v + .9 + dv, top), 93 + k)
+  jug(s, P(TABLE.u + .18, TABLE.v + .88, top), 95)
   dish(s, P(TABLE.u + .06, TABLE.v + 1.05, top), 96)
   // on the chest between the windows: a brass basin and its ewer, for the
   // washing of hands at table

@@ -51,9 +51,10 @@ function lifeIds(built: ReadonlySet<string>): { places: string[]; cuts: Set<numb
  * none where the leg is a wall's run. */
 function leg(from: string, to: string): readonly [string, string] | null {
   if (from === VINCI_LISA_STOP || to === VINCI_LISA_STOP) return null
-  const room = VINCI_HOUSE_DOOR.station
-  if (to === room && from !== room) return [from, VINCI_HOUSE_DOOR.inward]
-  if (from === room && to !== room) return [VINCI_HOUSE_DOOR.outward, to]
+  // the great hall holds its own stop, the anatomy's cabinet and the sheet apart
+  const inside = (id: string): boolean => id === VINCI_HOUSE_DOOR.station || id === VINCI_VALVE.station || id === VINCI_VALVE.place
+  if (inside(to) && !inside(from)) return [from, VINCI_HOUSE_DOOR.inward]
+  if (inside(from) && !inside(to)) return [VINCI_HOUSE_DOOR.outward, to]
   return [from, to]
 }
 

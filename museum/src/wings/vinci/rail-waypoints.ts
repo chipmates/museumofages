@@ -218,9 +218,12 @@ export const railDoorways: readonly RailWaypoint[] = [
   [PICTURE_TO_GALLERY, (FACE.pictureWallNorth + FACE.pictureWallSouth) / 2, INSIDE],
 ]
 /** Where a station's walks leave from and arrive on, next to its eye. */
-const PORCHES: Readonly<Record<string, RailWaypoint>> = { 'reading-table': READING_PORCH }
+/** The hall's step inside its door is its porch both ways now that the
+ * anatomy's stops stand in the room: the walk back to the door's eye comes
+ * round the lion by it, as the walk out always did. */
+const PORCHES: Readonly<Record<string, RailWaypoint>> = { 'reading-table': READING_PORCH, hall: HALL_INSIDE }
 /** Where a station's walks go first when they leave, and never come back by. */
-const STEPS_OUT: Readonly<Record<string, readonly RailWaypoint[]>> = { hall: [HALL_INSIDE] }
+const STEPS_OUT: Readonly<Record<string, readonly RailWaypoint[]>> = {}
 /** Turns a walk between two stations leaves out, by its pair either way. The
  * body wall's walk to the display wall comes round the picture room's corner
  * and crosses the apron to the display wall's eye straight: the step onto

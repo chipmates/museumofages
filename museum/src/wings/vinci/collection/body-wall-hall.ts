@@ -37,6 +37,8 @@ const REACH = { sheet: 1.9, painting: 3.2 } as const
 const world = (p: V3): Vector3 => new Vector3(p[0], p[2], -p[1])
 
 export interface HallPlates {
+  /** settles once every plate's preview has arrived or failed */
+  ready: Promise<void>
   tick(eye: V3): void
   pending(): number
 }
@@ -47,7 +49,7 @@ export function mountHallPlates(host: Group, plates: readonly HallPlate[], hero:
   host.add(group)
   const placed: { plate: HallPlate; stream: PlateStream; at: Vector3 }[] = []
   let loading = true, raised: PlateStream | null = null, switching = false, last = performance.now()
-  void loadManifest().then(manifest => {
+  const ready = loadManifest().then(manifest => {
     const sheets = new Map(bodySheetSources(manifest).map(source => [source.sheet.id, source]))
     for (const plate of plates) {
       let stream: PlateStream, geometry: PlaneGeometry
@@ -83,8 +85,10 @@ export function mountHallPlates(host: Group, plates: readonly HallPlate[], hero:
       placed.push({ plate, stream, at: world(plate.centre) })
     }
     group.updateMatrixWorld(true)
-  }).finally(() => { loading = false })
+    return Promise.all(placed.map(p => p.stream.ready)).then(() => undefined)
+  }).catch(() => undefined).finally(() => { loading = false })
   return {
+    ready,
     tick(eye) {
       const now = performance.now(), dt = Math.min(.1, (now - last) / 1000)
       last = now

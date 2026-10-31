@@ -30,6 +30,7 @@ import {
 } from './body-wall-plan'
 import { BODY_PLATE, washToward } from './body-wall-light'
 import { anisotropicFootprint, reliefNormal, resolved } from '../../../stack/detail'
+import { hallPlateHost, showHallPlates } from '../house-hall'
 
 // The node overload boundary stays local to this file.
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -383,7 +384,11 @@ export function mountBodyWall(stack: Stack): BodyWallCabinet {
     }
   }
 
-  const ready = Promise.all(SETS.map(name => stack.materials.load(name))).then(() => { if (live) owed = 2 }, () => { if (live) owed = 2 })
+  // THE GREAT HALL'S PLATES: the anatomy stands in the hall now, which lays
+  // out its sheets and the three paintings; this display fetches them
+  const host = hallPlateHost()
+  const hallPlates = host ? import('./body-wall-hall').then(m => { const shown = m.mountHallPlates(host.group, host.plates, host.hero); showHallPlates(shown); return shown.ready }) : Promise.resolve()
+  const ready = Promise.all([...SETS.map(name => stack.materials.load(name)), hallPlates]).then(() => { if (live) owed = 2 }, () => { if (live) owed = 2 })
   function take(bodies: readonly Object3D[]): void {
     if (!probe || !generator) return
     let scene: Object3D = group
