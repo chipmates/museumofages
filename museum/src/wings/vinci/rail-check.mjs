@@ -54,6 +54,7 @@ const {vinciExhibitRecords,vinciApproachPose:approachPose}=await load(path.join(
 const EXHIBITS=vinciExhibitRecords()
 const {VINCI_HOUSE_DOOR:DOOR}=await load(path.join(wing,'walk-places.ts'))
 const {vinciWalkPoseOf}=await load(path.join(wing,'walk-poses.ts'))
+const {vinciDoorBetween}=await load(path.join(wing,'walk.ts'))
 const authorityFactories=[
   ['shell','shell','createShell',false],['terrain','ground','createGround',false],
   ['gate-passage','gate-passage','createGatePassage',false],
@@ -342,10 +343,12 @@ for(const phone of [false,true]) {
     const walks=[]
     let clock=0
     for(let i=0;i<ids.length;i++) {
-      // THE HOUSE'S DOOR IS CROSSED BY A CUT: the walk ends at the door's
-      // inward pose and the hall is placed; out of it, the door's outward
-      // pose is placed and the walk begins there
-      if(ids[i]===DOOR.station){
+      // THE HOUSE'S DOOR IS CROSSED BY A CUT, by the walk's own rule for every
+      // stop the hall's room holds: a leg in ends at the door's inward pose and
+      // the stop is placed; a leg out places the door's outward pose and the
+      // walk begins there
+      const crossing=vinciDoorBetween(ids[i-1],ids[i])
+      if(crossing?.way==='in'){
         h.at(clock);h.place(DOOR.inward);h.at(clock+=.005)
         const seconds=h.rail.navigation.legSeconds
         for(let sample=1;sample<240;sample++)h.at(clock+sample*seconds/240)
@@ -354,7 +357,7 @@ for(const phone of [false,true]) {
         h.set(ids[i],true);h.at(clock);endpoint(h,ids[i]);clock+=.05
         continue
       }
-      if(ids[i-1]===DOOR.station){h.place(DOOR.outward,true);h.at(clock);clock+=.05}
+      if(crossing?.way==='out'){h.place(DOOR.outward,true);h.at(clock);clock+=.05}
       h.at(clock);h.set(ids[i]);h.at(clock+=.005)
       const metres=h.rail.navigation.legMetres,seconds=h.rail.navigation.legSeconds
       const samples=Math.max(240,Math.ceil(seconds/.005))
