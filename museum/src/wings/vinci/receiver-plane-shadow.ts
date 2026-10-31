@@ -1,12 +1,12 @@
 /** Receiver-plane PCF for the wing's opaque mineral and modern collection
- * receivers. Other materials retain the native PCFSoftShadowFilter. */
+ * receivers. Other materials keep the native PCFShadowFilter (soft from r186). */
 import * as TSL from 'three/tsl'
 
-// The installed r185 runtime accepts one structured filter argument; the
+// The runtime accepts one structured filter argument; the
 // vendored declaration still describes the older positional signature.
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 type N = any
-const { Fn, float, fract, length, PCFSoftShadowFilter, reference, renderGroup,
+const { Fn, float, fract, length, PCFShadowFilter, reference, renderGroup,
   positionWorld, texture, vec2, vec3, vec4 } = TSL as unknown as Record<string, N>
 
 export function createCollectionReceiverPlaneShadowFilter(): N {
@@ -14,10 +14,10 @@ export function createCollectionReceiverPlaneShadowFilter(): N {
     const { depthTexture, shadowCoord, shadow, depthLayer } = inputs
     const name = builder.material.name as string
     if (name !== 'vinci/collection/three-scale-architecture' && name !== 'vinci/collection/filtered-cast-concrete' && name !== 'vinci/brick' && name !== 'vinci/stone') {
-      return PCFSoftShadowFilter({ depthTexture, shadowCoord, shadow, depthLayer })
+      return PCFShadowFilter({ depthTexture, shadowCoord, shadow, depthLayer })
     }
     const size = reference('mapSize', 'vec2', shadow).setGroup(renderGroup)
-    // Copy the input: the native PCFSoft implementation mutates its UV.
+    // Copy the input: a native filter may mutate its UV.
     const coord = shadowCoord.toVar()
     // Fit the physical surface before normalBias. The material's shading
     // normal already contains procedural derivatives; differentiating that

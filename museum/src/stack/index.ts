@@ -22,7 +22,7 @@
    Everything else (the scene graph, the animation, the story) belongs to the
    wing and the stack never asks about it. */
 
-import { PCFSoftShadowMap, Vector2, WebGPURenderer, type Camera, type Mesh, type Scene } from 'three/webgpu'
+import { PCFShadowMap, Vector2, WebGPURenderer, type Camera, type Mesh, type Scene } from 'three/webgpu'
 import { createCostMeter, frameBytes, type CostReading } from './cost'
 import { createLedger, type Ledger } from './ledger'
 import { applyDetail, type DetailNodes, type DetailScales } from './detail'
@@ -168,7 +168,8 @@ export async function createStack(opts: StackOptions = {}): Promise<Stack> {
   renderer.setPixelRatio(Math.min(devicePixelRatio, ratioCap))
   renderer.setSize(innerWidth, innerHeight)
   renderer.shadowMap.enabled = true
-  renderer.shadowMap.type = PCFSoftShadowMap
+  // three r186 removed PCFSoftShadowMap from this renderer; PCFShadowMap is its soft filter now
+  renderer.shadowMap.type = PCFShadowMap
   /* the post chain runs several render passes per frame and three clears its
      counters at the top of each one: without this the meter would report the
      cost of the last fullscreen quad and call it the frame */
