@@ -33,6 +33,7 @@ import { createModelLibrary, type ModelLibrary } from './models'
 import { loadHDRI, type SkyProbe } from './hdri'
 import { createPost, samplesFor, type PostChain } from './post'
 import { createReflector, type Reflection, type ReflectorOptions } from './reflector'
+import { drawShadowsOncePerFrame } from './shadow-once'
 import { loadBakedGI, type BakedGI } from './gi'
 import { planVolumetrics, type Volumetrics, type VolumetricOptions } from './volumetric'
 import { maxFromQuery, pickTier, readAdapter, TIER_MAX, TIERS, tierFromQuery, type Tier, type TierName } from './tier'
@@ -170,6 +171,7 @@ export async function createStack(opts: StackOptions = {}): Promise<Stack> {
   renderer.shadowMap.enabled = true
   // three r186 removed PCFSoftShadowMap from this renderer; PCFShadowMap is its soft filter now
   renderer.shadowMap.type = PCFShadowMap
+  drawShadowsOncePerFrame()
   /* the post chain runs several render passes per frame and three clears its
      counters at the top of each one: without this the meter would report the
      cost of the last fullscreen quad and call it the frame */
