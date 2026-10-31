@@ -11,7 +11,7 @@
    resolution on a polished stone floor is indistinguishable from one at full
    resolution, because stone is not a mirror. */
 
-import { Object3D, Source, ViewportTextureNode, type Mesh, type Scene, type Texture } from 'three/webgpu'
+import { Object3D, TextureSource, ViewportTextureNode, type Mesh, type Scene, type Texture } from 'three/webgpu'
 import * as TSL from 'three/tsl'
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -30,7 +30,7 @@ ViewportTextureNode.prototype.getTextureForReference = function (reference = nul
   const texture = perTarget.call(this, reference)
   if (reference !== null && !ownCopies.has(texture)) {
     ownCopies.add(texture)
-    texture.source = new Source({ width: 0, height: 0 })
+    texture.source = new TextureSource({ width: 0, height: 0 })
   }
   return texture
 }
