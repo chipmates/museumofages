@@ -20,7 +20,7 @@
 import {
   AdditiveBlending, Color, CubeCamera, CubeRenderTarget, CustomBlending, CylinderGeometry, DirectionalLight, DoubleSide, DstColorFactor, Float32BufferAttribute, FrontSide,
   Group, HalfFloatType, Matrix4, Mesh, MeshBasicNodeMaterial, MeshStandardNodeMaterial, Object3D, PMREMGenerator, PlaneGeometry,
-  OneFactor, Quaternion, RectAreaLight, RectAreaLightNode, SpotLight, Vector3, ZeroFactor, type BufferGeometry, type Light, type Material, type RenderTarget, type Scene,
+  OneFactor, Quaternion, RectAreaLight, RectAreaLightNode, SpotLight, Vector3, ZeroFactor, type BufferGeometry, type Light, type Material, type Scene,
 } from 'three/webgpu'
 import * as TSL from 'three/tsl'
 import { lights as lightsOf, output, pmremTexture } from 'three/tsl'
@@ -508,7 +508,7 @@ export function mountPictureRoom(stack: Stack): PictureRoom {
 
   // THE ROOM'S BOUNCE: a probe at the room's middle, taken turned by the
   // scene's own environment turn and re-taken into the same target
-  let generator: PMREMGenerator | undefined, probe: { camera: CubeCamera; target: CubeRenderTarget; pmrem: RenderTarget } | undefined
+  let generator: PMREMGenerator | undefined, probe: { camera: CubeCamera; target: CubeRenderTarget; pmrem: CubeRenderTarget } | undefined
   let env: N
   let reflection: ((direction: N, roughness: N) => N) | null = null
   if (!calm) {

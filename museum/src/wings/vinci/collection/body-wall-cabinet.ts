@@ -14,7 +14,7 @@
 import {
   Color, CubeCamera, CubeRenderTarget, DoubleSide, FrontSide, Group, HalfFloatType, Mesh, MeshBasicNodeMaterial,
   MeshStandardNodeMaterial, Object3D, PMREMGenerator, RectAreaLight, RectAreaLightNode, SpotLight, SpotLightNode, type BufferGeometry,
-  type Material, type RenderTarget, type Scene,
+  type Material, type Scene,
 } from 'three/webgpu'
 import { RectAreaLightTexturesLib } from 'three/addons/lights/RectAreaLightTexturesLib.js'
 import * as TSL from 'three/tsl'
@@ -250,7 +250,7 @@ export function mountBodyWall(stack: Stack): BodyWallCabinet {
 
   // THE CABINET'S BOUNCE: a probe before the hang, taken turned by the
   // scene's own environment turn and re-taken into the same target
-  let generator: PMREMGenerator | undefined, probe: { camera: CubeCamera; target: CubeRenderTarget; pmrem: RenderTarget } | undefined
+  let generator: PMREMGenerator | undefined, probe: { camera: CubeCamera; target: CubeRenderTarget; pmrem: CubeRenderTarget } | undefined
   let env: N
   if (!calm) {
     generator = new PMREMGenerator(stack.renderer)

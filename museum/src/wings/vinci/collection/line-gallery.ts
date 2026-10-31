@@ -16,7 +16,7 @@
 import {
   Color, CubeCamera, CubeRenderTarget, CustomBlending, DirectionalLight, DoubleSide, FrontSide, Group, HalfFloatType, Mesh,
   MeshBasicNodeMaterial, MeshStandardNodeMaterial, Object3D, OneFactor, OneMinusSrcAlphaFactor, PMREMGenerator, RectAreaLight,
-  RectAreaLightNode, SpotLight, type BufferGeometry, type Light, type Material, type RenderTarget, type Scene,
+  RectAreaLightNode, SpotLight, type BufferGeometry, type Light, type Material, type Scene,
 } from 'three/webgpu'
 import * as TSL from 'three/tsl'
 import { lights as lightsOf, pmremTexture } from 'three/tsl'
@@ -432,7 +432,7 @@ export function mountLineGallery(stack: Stack): LineGallery {
   // THE ROOM'S BOUNCE: a probe at the gallery's middle, taken turned by the
   // scene's own environment turn and re-taken into the same target, so no
   // surface that reads it is ever rebuilt
-  let generator: PMREMGenerator | undefined, probe: { camera: CubeCamera; target: CubeRenderTarget; pmrem: RenderTarget } | undefined
+  let generator: PMREMGenerator | undefined, probe: { camera: CubeCamera; target: CubeRenderTarget; pmrem: CubeRenderTarget } | undefined
   let env: N
   if (!calm) {
     generator = new PMREMGenerator(stack.renderer)

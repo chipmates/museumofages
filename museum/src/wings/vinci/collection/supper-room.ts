@@ -14,7 +14,7 @@
 import {
   BufferGeometry, Color, CubeCamera, CubeRenderTarget, Float32BufferAttribute, FrontSide, Group, HalfFloatType, Mesh,
   MeshBasicNodeMaterial, MeshStandardNodeMaterial, PMREMGenerator, RectAreaLight, RectAreaLightNode, type Light, type Material,
-  type Object3D, type RenderTarget, type Scene,
+  type Object3D, type Scene,
 } from 'three/webgpu'
 import * as TSL from 'three/tsl'
 import { lights as lightsOf, pmremTexture } from 'three/tsl'
@@ -532,7 +532,7 @@ export function mountSupperRoom(stack: Stack): SupperRoom {
   // THE BOUNCE: a probe in each volume, turned by the scene's own
   // environment turn and re-taken into the same target
   let generator: PMREMGenerator | undefined
-  type Probe = { camera: CubeCamera; target: CubeRenderTarget; pmrem: RenderTarget }
+  type Probe = { camera: CubeCamera; target: CubeRenderTarget; pmrem: CubeRenderTarget }
   const probes: Partial<Record<'bay' | 'nave', Probe>> = {}
   const env: Record<'bay' | 'nave', N> = { bay: null, nave: null }
   for (const zone of ['bay', 'nave'] as const) {

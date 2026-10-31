@@ -19,7 +19,7 @@
 import {
   BackSide, BufferGeometry, Color, CubeCamera, CubeRenderTarget, CylinderGeometry, DoubleSide,
   Group, HalfFloatType, LatheGeometry, Matrix4, Mesh, MeshBasicNodeMaterial, MeshStandardNodeMaterial, Object3D,
-  PMREMGenerator, Quaternion, RectAreaLight, SpotLight, Vector2, Vector3, type Light, type Material, type RenderTarget, type Scene,
+  PMREMGenerator, Quaternion, RectAreaLight, SpotLight, Vector2, Vector3, type Light, type Material, type Scene,
 } from 'three/webgpu'
 import * as TSL from 'three/tsl'
 import { mergeGeometries } from 'three/addons/utils/BufferGeometryUtils.js'
@@ -178,7 +178,7 @@ export function mountReadingRoom(stack: Stack, host: Object3D): ReadingRoom {
     v3(R.front + 1.1, T.north, FLOOR + 1.5),
   ]
   let generator: PMREMGenerator | undefined
-  const probes: { camera: CubeCamera; target: CubeRenderTarget; pmrem: RenderTarget }[] = []
+  const probes: { camera: CubeCamera; target: CubeRenderTarget; pmrem: CubeRenderTarget }[] = []
   const gain = 1 / Math.max(.01, scene.environmentIntensity)
   let envIn: N, envOut: N
   if (tier !== 'calm') {
