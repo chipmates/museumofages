@@ -17,6 +17,10 @@ import type { VinciStationId } from './content'
 // while a sunlit face or a lit work keeps its value. It is the print, and no
 // light in the scene moves.
 export const PRINT={...GRADES['first-station'],name:'clos-luce-1517',exposure:.94,lift:[.012,.014,.018] as [number,number,number],toe:.06,split:.055,saturation:.9,vignette:.15,grain:.007,bloom:{strength:0,radius:.1,threshold:10,warmth:1}}
+/** THE HALL AND THE BODY WALL AT THE LEVEL THEY WERE APPROVED. Under three
+ * r187 they print darker (diffuse light loses its Fresnel share, cube probes
+ * filter narrower, shadow edges spread); these gains hold each room's median. */
+const R187_HOLD={hall:1.06,body:1.02}
 // THE SHADED FRONTS. At this hour the sun stands low in the south-west and
 // every exterior stop but the garden looks at a face in the house's own shade.
 // Printed at the sunlit exposure, under the wing's toe, such a view reads as
@@ -25,7 +29,7 @@ export const PRINT={...GRADES['first-station'],name:'clos-luce-1517',exposure:.9
  * under a clerestory and two fittings, and the outdoor exposure left them a
  * stop and a half under. The eye opens at the door, as a camera does. */
 export const STATION_EXPOSURE:Partial<Record<VinciStationId,number>>={arrival:1.45,study:1.4,chamber:1.4,courtyard:1.55,oratory:1.5,hall:2.2,
-  'picture-room':1.34,'picture-room-west':1.34,'reading-table':0.4,'line-early':1.3,flight:1.55,works:1.55,body:1.4,'supper-wall':1.85,
+  'picture-room':1.34,'picture-room-west':1.34,'reading-table':0.4,'line-early':1.3,flight:1.55*R187_HOLD.hall,works:1.55*R187_HOLD.hall,body:1.4*R187_HOLD.body,'supper-wall':1.85,
   // the grave court stands in its walls' shade: the eye opens on the shade
   grave:1.85}
 /** THE TOE WHERE A ROOM IS ALL SHADE. The reading booth has one lamp and one

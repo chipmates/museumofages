@@ -146,6 +146,9 @@ function figuresInFrame(): number[] {
 }
 
 /* light: the sun's key with a shadow fitted round each view, and the sky's fill */
+/** From three r187 a dielectric's diffuse light loses its Fresnel share: the
+ * grey blocks keep the level they were approved at by this gain on both lights. */
+const LIGHT_HOLD = 1.04
 const sunLight = new DirectionalLight(new Color(1.0, 0.86, 0.7), 3.2)
 sunLight.castShadow = true
 sunLight.shadow.mapSize.set(8192, 8192)
@@ -163,11 +166,11 @@ function setHour(hour: number): void {
   const el = Math.asin(v[1]) / D2R
   // the key fades into the haze below a few degrees; the sky dims after sunset
   const k = Math.min(1, Math.max(0, (el + 0.5) / 6))
-  sunLight.intensity = 3.2 * k
+  sunLight.intensity = 3.2 * k * LIGHT_HOLD
   sunLight.color.setRGB(1.0, 0.72 + 0.14 * Math.min(1, el / 20), 0.5 + 0.2 * Math.min(1, el / 20))
   const day = Math.min(1, Math.max(0.18, (el + 6) / 14))
   uDay.value = day
-  fill.intensity = 1.4 * day
+  fill.intensity = 1.4 * day * LIGHT_HOLD
   ;(uHaze.value as Color).setRGB(0.72 * day, 0.64 * day, 0.54 * day)
 }
 
