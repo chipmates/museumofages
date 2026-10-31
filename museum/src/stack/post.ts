@@ -292,8 +292,7 @@ export function createPost(
     // a hand-written vertex path, so a normal buffer would be a guess
     aoPass = (gtao as unknown as N)(depth, null, camera)
     aoPass.resolutionScale = tier.ao.scale
-    aoPass.distanceExponent.value = 1
-    aoPass.distanceFallOff.value = 1
+    // from r186 the distance model is quadratic ray stepping; its old exponent and fall-off are read by nothing
     aoPass.radius.value = first.ao.distance
     aoPass.thickness.value = first.ao.thickness
     aoPass.scale.value = 1
