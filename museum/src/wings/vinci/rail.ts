@@ -16,7 +16,7 @@ import { COURT, FACE, FLOOR, OPENING, SUPPER_WALL } from './collection/layout'
 import { railAccessWaypoints, railCollectionStairWaypoints, railDoorTurns, railGateWaypoints, railDoorways, railGardenPorch, railPairTurns, railEyeHeightM, railPorchStands, railReadingPorch, railSide, type RailSide, type RailWaypoint } from './rail-waypoints'
 import { fittedRailFov, assertRailProjection, setRailShift } from './rail-projection'
 import type { RailGeometryAuthority } from './rail-proof'
-import { hallView } from './house-hall'
+import { hallPoint, hallView } from './house-hall'
 import { uprightPose } from './upright'
 
 /** `shift` is the phone's shift lens (`rail-projection.ts`), absent where the
@@ -264,7 +264,14 @@ function authoredStationPose(id:VinciStationId, narrow:boolean):Pose {
   // THE BODY WALL'S PHONE STANDS SQUARE ON THE HANG. Looking eight degrees
   // down, the soffit takes a tenth of the picture over the lining's head and
   // the drawers under the grid end a little above the card.
-  if(id==='body'&&narrow) return aimedFrom(BODY_PHONE,-90,-8,64)
+  // THE ANATOMY'S CABINET IN THE GREAT HALL, square on from the room: the
+  // desktop stands 3.3 m off the partition and takes the case whole with the
+  // corner and the sheet apart at its right; the phone stands 4.4 m off, the
+  // hang four fifths of its width, the case's middle lifted to a third of the
+  // height by the shift lens.
+  if(id==='body'){const toWall=hallPoint(0,-1,0).sub(hallPoint(0,0,0)),heading=Math.atan2(toWall.x,-toWall.z)*180/Math.PI
+    if(narrow){const eye=hallPoint(2.1,4.43,1.62);return {...aimedFrom({eye,at:eye,fov:90.5},heading,0,90.5),shift:-.34}}
+    const eye=hallPoint(2.1,3.3,1.65);return aimedFrom({eye,at:eye,fov:58},heading,3,58)}
   const room=COLLECTION_STATION_ROOMS[id]
   // THE TIMELINE'S FIRST EYE stands north of its room's view: 0.6 m off the
   // gallery's end wall, every walk in turned round with that wall filling the frame.

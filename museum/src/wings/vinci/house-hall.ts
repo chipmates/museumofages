@@ -19,6 +19,12 @@ import { SHADOW_ONLY_LAYER } from '../../stack/light'
 import type { TierName } from '../../stack/tier'
 import type { MaterialLibrary } from '../../stack/materials'
 import { HALL_LION } from './collection/stands'
+import { mountedSheets, plateOf, sheetFace, type MountedSheet } from './collection/body-wall-plan'
+import { BODY_WALL_CENTRE, type BodyMount } from './collection/body-wall'
+import { FLOOR as PAVILION_FLOOR } from './collection/layout'
+import { getWork } from './pictures/register'
+import { trueScale } from './pictures/scale'
+import type { HallPlate, HallPlates } from './collection/body-wall-hall'
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 type N = any
@@ -182,7 +188,7 @@ const DOOR_H = Math.max(KITCHEN_DOOR.height_m, LINK_DOOR.height_m)
 /* ---- the sink: one mesh, every surface a kind the material reads ---- */
 
 /** Surface kinds, read by the material. */
-export const K = { TILE: 0, JOINT: 1, PLASTER: 2, OAK: 3, STONE: 4, BRICK: 5, IRON: 6, BRASS: 7, GLAZE: 8, ASH: 9, CHAR: 10, WAX: 11, WEATHERED: 12, REVEAL: 13, CLOTH: 14, EARTH: 15, CANDLE: 16 } as const
+export const K = { TILE: 0, JOINT: 1, PLASTER: 2, OAK: 3, STONE: 4, BRICK: 5, IRON: 6, BRASS: 7, GLAZE: 8, ASH: 9, CHAR: 10, WAX: 11, WEATHERED: 12, REVEAL: 13, CLOTH: 14, EARTH: 15, CANDLE: 16, LINEN: 17, MAT: 18, PANEL: 19 } as const
 interface Vertex { p: V3; n: V3; t: V2; kind: number; seed: number; wear: number; soot: number; lit: number; cast: boolean; fixed?: [number, number] }
 class Sink {
   v: Vertex[] = []
@@ -795,7 +801,9 @@ export const houseHallProvenance = {
 export interface HouseHall { group: Group; triangles: number; patches: number
   /** called every frame: `changed` when what casts may have changed; the
    * hall's own sun shadow is redrawn once the eye (east, north, up) is near */
-  refreshSun?: (eye: V3, changed: boolean) => void }
+  refreshSun?: (eye: V3, changed: boolean) => void
+  /** the plates the hall still fetches (its sheets and paintings) */
+  pending?: () => number }
 
 /** Build the hall. `cell` is the lining grid the light is baked on. */
 /** The vertex bake is what the lighter tier reads; the hero tier lights every
@@ -805,6 +813,7 @@ export function createHouseHall(tier: TierName, library?: MaterialLibrary): Hous
   const hero = tier === 'hero'
   bakeVertices = !hero
   const s = new Sink()
+  platesOut = []
   buildHallShell(s, hero)
   buildLink(s, hero)
   s.lit = 2
@@ -829,7 +838,12 @@ export function createHouseHall(tier: TierName, library?: MaterialLibrary): Hous
   group.userData['manifestId'] = houseHallProvenance.manifestId
   const triangles = s.v.length / 3
   group.userData['triangles'] = triangles
-  return { group, triangles, patches: PATCHES.length, ...(sun ? { refreshSun: sun.refresh } : {}) }
+  // the anatomy's sheets and the three paintings: fetched once the fabric stands
+  const plates = platesOut
+  let shown: HallPlates | null = null
+  void import('./collection/body-wall-hall').then(m => { shown = m.mountHallPlates(group, plates, hero) })
+  const refreshSun = (eye: V3, changed: boolean): void => { sun?.refresh(eye, changed); shown?.tick(eye) }
+  return { group, triangles, patches: PATCHES.length, refreshSun, pending: () => shown?.pending() ?? 1 }
 }
 
 /* ---- the sun's shadow inside the hall ---- */
@@ -1187,6 +1201,174 @@ function floorWear(q: V2): number {
 
 /* ---- the things of the period ---- */
 
+/* ---- the anatomy and the three paintings, for the 1517 visit ---- */
+
+/** THE ANATOMY'S CABINET, the museum's present-day display (in 1517 the
+ * sheets were loose; single mounts date from the nineteenth century): the old
+ * wing's 28 sheets in its standard mounts, at its own grid and spacing, on the
+ * kitchen partition west of the door, the one run of this room that holds the
+ * grid's 3.23 m. Its plan chest is the old wing's ledge. Hall frame, heights
+ * from the floor. */
+export const HALL_CABINET = { u0: .25, u1: 3.85, centre: 2.1, deep: .52, ledge: .952, upper: .3, top: 2.98 } as const
+/** the linen ground and the sheets' face, off the partition's plaster */
+const LINEN_D = .031, SHEET_D = .034
+/** the mat over a sheet and the frame's lip over the mat, as the old wing's */
+const MAT_FACE = .0035, FRAME_LIP = .008, FRAME_FACE = .017
+/** THE SHEET APART stands round the corner on the west wall's south pier,
+ * facing the room, its glass model on a stand under it: the old wing's niche
+ * does not fit beside the hang on this wall. */
+export const HALL_VALVE = { v: .97, z: 1.7, board: [.62, 1.32, 1.26, 2.14] as const, stand: { u0: .05, u1: .45, v0: .74, v1: 1.2, top: .95 } } as const
+/** THE THREE PAINTINGS AS SHOWN, never hung: each on a plain easel between
+ * the back windows, turned to the eye that reads them. */
+export const HALL_PAINTINGS_EYE: V2 = [6.6, 3.9]
+const EASEL_LEAN = 10 * Math.PI / 180, PANEL_THICK = .022
+const EASELS: readonly { id: string; u: number; v: number; ledge: number }[] = [
+  { id: 'mona-lisa', u: 2.95, v: 6.75, ledge: .8 },
+  { id: 'virgin-and-child-with-st-anne', u: 4.05, v: 7.05, ledge: .5 },
+  { id: 'saint-john-the-baptist', u: 5.1, v: 6.65, ledge: .82 },
+]
+
+/** The old wing's grid read in this room: its north runs to the visitor's
+ * right, which on this wall is -u; its heights from its own floor. */
+const gridU = (north: number): number => HALL_CABINET.centre - (north - BODY_WALL_CENTRE)
+const gridZ = (height: number): number => height - PAVILION_FLOOR
+/** A point of the old wing's cabinet (three's axes) carried onto the partition
+ * here, the sheets' face at the same depth off its linen: the eyes that read
+ * the sheets stand where they stood before the grid. */
+export function hallFromPavilion(p: Vector3, mount: BodyMount): Vector3 {
+  const off = SHEET_D + (p.x - sheetFace(mount))
+  // the sheet apart stands on the west pier: its wall's north is this room's +v
+  const q = mount.row === 'vortex'
+    ? P(off, HALL_VALVE.v + (-p.z - mount.north), FLOOR_Z + HALL_VALVE.z + (p.y - mount.datum))
+    : P(gridU(-p.z), off, FLOOR_Z + gridZ(p.y))
+  return new Vector3(q[0], q[2], -q[1])
+}
+/** The sheet apart in this room: its middle on the pier, and the stand's top. */
+export const HALL_VALVE_SHEET = { face: SHEET_D, v: HALL_VALVE.v, z: HALL_VALVE.z, standTop: HALL_VALVE.stand.top }
+/** The hall's frame as world points, for the eyes the rail stands here. */
+export const hallPoint = (u: number, v: number, z: number): Vector3 => { const q = P(u, v, FLOOR_Z + z); return new Vector3(q[0], q[2], -q[1]) }
+
+/** A direction of the hall's frame in east, north, up. */
+const uvDir = (du: number, dv: number, dz = 0): V3 => [U[0] * du + V[0] * dv, U[1] * du + V[1] * dv, dz]
+/** The plates the build lays out, which the hall then fetches. */
+let platesOut: HallPlate[] = []
+
+type WallSide = 'A' | 'D'
+/** A box on a wall: a along it, d off it, z from the floor. Faces hidden on
+ * a neighbour are named by where they lie, so no two faces share a plane. */
+function wallBox(s: Sink, w: WallSide, a0: number, a1: number, d0: number, d1: number, z0: number, z1: number, kind: number, seed: number,
+  hide: { back?: boolean; a0?: boolean; a1?: boolean; z0?: boolean; z1?: boolean } = {}): void {
+  const along = w === 'A' ? 'x' : 'y', depth = w === 'A' ? 'y' : 'x'
+  const skip = `${hide.back ? `-${depth}` : ''}${hide.a0 ? `-${along}` : ''}${hide.a1 ? `+${along}` : ''}${hide.z0 ? '-z' : ''}${hide.z1 ? '+z' : ''}`
+  if (w === 'A') hbox(s, a0, a1, d0, d1, z0, z1, kind, seed, skip)
+  else hbox(s, d0, d1, a0, a1, z0, z1, kind, seed, skip)
+}
+type Rect = [number, number, number, number]
+/** A sheet in the old wing's standard mount: the oak frame's four members on
+ * the linen, the mat round its window, the plate a mat's depth behind. */
+function mountedSheet(s: Sink, w: WallSide, frame: Rect, window: Rect, seed: number): void {
+  const [a0, a1, z0, z1] = frame, f = FRAME_FACE, dMat = SHEET_D + MAT_FACE, dLip = dMat + FRAME_LIP
+  wallBox(s, w, a0, a1, LINEN_D, dLip, z1 - f, z1, K.WAX, seed, { back: true })
+  wallBox(s, w, a0, a1, LINEN_D, dLip, z0, z0 + f, K.WAX, seed, { back: true })
+  wallBox(s, w, a0, a0 + f, LINEN_D, dLip, z0 + f, z1 - f, K.WAX, seed, { back: true, z0: true, z1: true })
+  wallBox(s, w, a1 - f, a1, LINEN_D, dLip, z0 + f, z1 - f, K.WAX, seed, { back: true, z0: true, z1: true })
+  const [b0, b1, y0, y1] = window, m0 = a0 + f, m1 = a1 - f, n0 = z0 + f, n1 = z1 - f
+  wallBox(s, w, m0, m1, LINEN_D, dMat, y1, n1, K.MAT, seed, { back: true, a0: true, a1: true, z1: true })
+  wallBox(s, w, m0, m1, LINEN_D, dMat, n0, y0, K.MAT, seed, { back: true, a0: true, a1: true, z0: true })
+  wallBox(s, w, m0, b0, LINEN_D, dMat, y0, y1, K.MAT, seed, { back: true, a0: true, z0: true, z1: true })
+  wallBox(s, w, b1, m1, LINEN_D, dMat, y0, y1, K.MAT, seed, { back: true, a1: true, z0: true, z1: true })
+}
+/** The old wing's frame and window of a sheet, along this room's wall. */
+function gridRects(m: MountedSheet, along: (north: number) => number, up: (height: number) => number): { frame: Rect; window: Rect } {
+  const r = (n0: number, n1: number, z0: number, z1: number): Rect => { const a = along(n0), b = along(n1); return [Math.min(a, b), Math.max(a, b), up(z0), up(z1)] }
+  return { frame: r(m.frame.south, m.frame.north, m.frame.bottom, m.frame.top), window: r(m.window.south, m.window.north, m.window.bottom, m.window.top) }
+}
+
+function cabinet(s: Sink): void {
+  const { u0, u1, deep, ledge, upper, top } = HALL_CABINET, toe = .08, stile = .035, joint = .006, board = .032
+  // THE PLAN CHEST: a toe set back, the carcass, the top board a finger over,
+  // four stacks of six drawers between oak stiles, a bronze pull on each
+  hbox(s, u0 + .05, u1 - .05, .005, deep - .07, 0, toe, K.WAX, 120, '+z')
+  hbox(s, u0, u1, .005, deep - .012, toe, ledge - board, K.WAX, 121, '+z')
+  hbox(s, u0 - .015, u1 + .015, .005, deep + .008, ledge - board, ledge, K.WAX, 122)
+  const stacks = 4, rows = 6, w = (u1 - u0 - (stacks + 1) * stile) / stacks, h = (ledge - board - toe - (rows + 1) * joint) / rows
+  for (let i = 0; i <= stacks; i++) hbox(s, u0 + i * (w + stile), u0 + i * (w + stile) + stile, deep - .012, deep, toe, ledge - board, K.WAX, 123, '-y-z+z')
+  for (let i = 0; i < stacks; i++) {
+    const a = u0 + stile + i * (w + stile)
+    hbox(s, a, a + w, deep - .012, deep - .004, toe, toe + joint, K.WAX, 124, '-y-x+x-z')
+    for (let j = 0; j < rows; j++) {
+      const z = toe + joint + j * (h + joint)
+      hbox(s, a + .002, a + w - .002, deep - .012, deep - .003, z, z + h, K.WAX, 130 + i * rows + j, '-y')
+      hbox(s, a + w / 2 - .045, a + w / 2 + .045, deep - .003, deep + .009, z + h * .58, z + h * .58 + .014, K.BRASS, 160 + j, '-y')
+    }
+  }
+  // THE UPPER CASE: the back, the linen ground the frames hang on, the sides,
+  // a head board over the top course and the cornice
+  hbox(s, u0, u1, .005, LINEN_D - .006, ledge, top - .05, K.WAX, 125, '-z+z')
+  hbox(s, u0 + .05, u1 - .05, LINEN_D - .006, LINEN_D, ledge, top - .09, K.LINEN, 126, '-y-x+x-z+z')
+  for (const [a, b] of [[u0, u0 + .05], [u1 - .05, u1]] as V2[]) hbox(s, a, b, LINEN_D - .006, upper, ledge, top - .05, K.WAX, 127, '-z+z-y')
+  hbox(s, u0 + .05, u1 - .05, LINEN_D - .006, upper, top - .09, top - .05, K.WAX, 128, '-x+x+z-y')
+  hbox(s, u0 - .03, u1 + .03, .005, upper + .035, top - .05, top, K.WAX, 129)
+  // the sheets in the old wing's order: column 0 at the visitor's left
+  for (const [k, m] of mountedSheets().entries()) {
+    if (m.mount.row === 'vortex') continue
+    const { frame, window } = gridRects(m, gridU, gridZ)
+    mountedSheet(s, 'A', frame, window, 200 + k)
+    const plate = plateOf(m.mount)
+    platesOut.push({ kind: 'sheet', id: m.mount.id, centre: P(gridU(m.mount.north), SHEET_D, FLOOR_Z + gridZ(m.mount.datum)),
+      right: [-U[0], -U[1], 0], up: [0, 0, 1], normal: [V[0], V[1], 0], width: plate.width, height: plate.height })
+  }
+}
+
+/** THE SHEET APART on the west wall's pier, and the museum's stand under it. */
+function valvePier(s: Sink): void {
+  const m = mountedSheets().find(x => x.mount.row === 'vortex')
+  if (!m) return
+  const [b0, b1, z0, z1] = HALL_VALVE.board
+  wallBox(s, 'D', b0, b1, .005, LINEN_D - .006, z0, z1, K.WAX, 140)
+  wallBox(s, 'D', b0 + .03, b1 - .03, LINEN_D - .006, LINEN_D, z0 + .03, z1 - .03, K.LINEN, 141, { back: true })
+  const along = (n: number): number => HALL_VALVE.v + (n - m.mount.north), up = (h: number): number => HALL_VALVE.z + (h - m.mount.datum)
+  const { frame, window } = gridRects(m, along, up)
+  mountedSheet(s, 'D', frame, window, 142)
+  const plate = plateOf(m.mount)
+  platesOut.push({ kind: 'sheet', id: m.mount.id, centre: P(SHEET_D, HALL_VALVE.v, FLOOR_Z + HALL_VALVE.z),
+    right: [V[0], V[1], 0], up: [0, 0, 1], normal: [U[0], U[1], 0], width: plate.width, height: plate.height })
+  const { u0, u1, v0, v1, top } = HALL_VALVE.stand, leg = .035, inset = .03
+  hbox(s, u0, u1, v0, v1, top - .025, top, K.WAX, 143)
+  hbox(s, u0 + inset, u1 - inset, v0 + inset, v1 - inset, top - .1, top - .025, K.WAX, 144, '+z')
+  for (const [a, b] of [[u0 + inset, v0 + inset], [u1 - inset - leg, v0 + inset], [u0 + inset, v1 - inset - leg], [u1 - inset - leg, v1 - inset - leg]] as V2[])
+    hbox(s, a, a + leg, b, b + leg, 0, top - .1, K.WAX, 145, '+z')
+}
+
+/** A PLAIN EASEL OF THE TIME (ours): two front legs leaning back, a back leg,
+ * a ledge the panel stands on and a bar at the top; the panel on it. */
+function easel(s: Sink, e: { id: string; u: number; v: number; ledge: number }, seed: number): void {
+  const size = trueScale(getWork(e.id))
+  if (!size) return
+  const W = size.widthM, H = size.heightM, t = Math.tan(EASEL_LEAN), c = Math.cos(EASEL_LEAN), sn = Math.sin(EASEL_LEAN)
+  const d = Math.hypot(HALL_PAINTINGS_EYE[0] - e.u, HALL_PAINTINGS_EYE[1] - e.v)
+  const n: V2 = [(HALL_PAINTINGS_EYE[0] - e.u) / d, (HALL_PAINTINGS_EYE[1] - e.v) / d], r: V2 = [-n[1], n[0]]
+  const top = e.ledge + H * c + .14, spread = W / 2 + .07
+  // a point of the easel: across (r), toward the eye (n), height from the floor
+  const at = (x: number, y: number, z: number): V3 => [e.u + r[0] * x + n[0] * y, e.v + r[1] * x + n[1] * y, z]
+  for (const x of [-spread, spread]) post(s, at(x, e.ledge * t, 0), at(x, -(top - e.ledge) * t, top), .042, K.WAX, seed)
+  post(s, at(0, -(top - .06 - e.ledge) * t - .04, top - .06), at(0, -(top - e.ledge) * t - .04 - .75, 0), .036, K.WAX, seed + 1)
+  // the bar over the panel and the ledge it stands on, both across the legs
+  const bar = (z: number, deep: number, tall: number, k: number): void => {
+    const y = -(z - e.ledge) * t, ctr = P(...uvAt(at(0, y + deep / 2, 0)), FLOOR_Z + z + tall / 2)
+    s.box(ctr, scale(uvDir(r[0], r[1]), spread + .05), scale(uvDir(n[0], n[1]), deep / 2), [0, 0, tall / 2], K.WAX, k)
+  }
+  bar(top - .1, .04, .05, seed + 2)
+  bar(e.ledge - .045, .085, .045, seed + 3)
+  // THE PANEL, its back on the legs and its foot on the ledge
+  const N = uvDir(n[0] * c, n[1] * c, sn), Up = uvDir(-n[0] * sn, -n[1] * sn, c), R = uvDir(r[0], r[1])
+  const foot = P(...uvAt(at(0, .0225 + PANEL_THICK / 2, 0)), FLOOR_Z + e.ledge)
+  const centre = add(foot, scale(Up, H / 2))
+  s.box(centre, scale(R, W / 2), scale(Up, H / 2), scale(N, PANEL_THICK / 2), K.PANEL, seed + 4)
+  platesOut.push({ kind: 'painting', id: e.id, centre: add(centre, scale(N, PANEL_THICK / 2 + .0008)), right: R, up: Up, normal: N })
+}
+const uvAt = (p: V3): V2 => [p[0], p[1]]
+
 /** A-FURNITURE's table and bench, where the dossier places them. */
 const placeOf = (id: string, fallback: V2): { u: number; v: number; size: V3 } => {
   const f = HALL.furnishings?.find(x => x.id === id)
@@ -1194,7 +1376,9 @@ const placeOf = (id: string, fallback: V2): { u: number; v: number; size: V3 } =
   return { u: q[0], v: q[1], size: f?.size_m ?? [1, 1, 1] }
 }
 const TABLE = placeOf('hall-table', [4.4, 3.9])
-const BENCH = placeOf('hall-bench', [2.9, 3.9])
+/** the bench stands on the table's east side: on the west it stood where the
+ * anatomy's eyes stand */
+const BENCH = { ...placeOf('hall-bench', [2.9, 3.9]), u: TABLE.u + TABLE.size[0] / 2 + .45 }
 
 /** Every piece is a type of the period, built to the dimensions of the
  * museum object its label cites; none is documented in this house. */
@@ -1203,9 +1387,12 @@ function furnish(s: Sink, hero: boolean): void {
   bench(s)
   chest(s, hero)
   boxChair(s)
-  stool(s, TABLE.u + .78, TABLE.v - .75, .12, 91)
-  // the second stool stands clear of the trestle's stretcher as the door sees it
-  stool(s, TABLE.u + .8, TABLE.v + .3, -.2, 92)
+  // the stools on the window side, where the bench stood
+  stool(s, TABLE.u - .78, TABLE.v - .75, .12, 91)
+  stool(s, TABLE.u - .8, TABLE.v + .3, -.2, 92)
+  cabinet(s)
+  valvePier(s)
+  for (const [k, e] of EASELS.entries()) easel(s, e, 170 + k * 5)
   // on the table: two brass candlesticks, their candles never lit, a jug,
   // and a glazed dish at the table's north end; its sunlit south end carries
   // the two instruments the house builds (hall-table-pieces.ts)
@@ -2450,7 +2637,12 @@ function hallMaterial(perPixel: boolean, library?: MaterialLibrary, sunShadow?: 
     .mul(is(K.STONE).add(is(K.TILE).mul(.45)))
   tuffJ = mix(tuffJ, ashC, spill.mul(.55))
   tileColour = mix(tileColour, ashC.mul(.8), spill.mul(.4))
-  const clean = silvered.mul(is(K.WEATHERED)).add(wax.mul(is(K.WAX))).add(candle.mul(is(K.CANDLE))).add(brass.mul(is(K.BRASS))).add(glaze.mul(is(K.GLAZE))).add(earth.mul(is(K.EARTH))).add(cloth.mul(is(K.CLOTH))).add(tileColour.mul(is(K.TILE))).add(joint.mul(is(K.JOINT))).add(plaster.mul(is(K.PLASTER).add(is(K.REVEAL)))).add(oak.mul(is(K.OAK)))
+  // THE MUSEUM'S DISPLAY: the cabinet's dark linen ground, the mats' pale
+  // board, and the bare poplar of the painted panels' edges
+  const linenC = vec3(.075, .066, .056).mul(mx_noise_float(vec3(T.x.mul(140), T.y.mul(140), seed)).mul(.04).add(1))
+  const matC = vec3(.60, .56, .48).mul(mx_noise_float(Wp.mul(40)).mul(.025).add(1))
+  const panelC = vec3(.36, .29, .19).mul(grain.mul(.6).add(1))
+  const clean = linenC.mul(is(K.LINEN)).add(matC.mul(is(K.MAT))).add(panelC.mul(is(K.PANEL))).add(silvered.mul(is(K.WEATHERED))).add(wax.mul(is(K.WAX))).add(candle.mul(is(K.CANDLE))).add(brass.mul(is(K.BRASS))).add(glaze.mul(is(K.GLAZE))).add(earth.mul(is(K.EARTH))).add(cloth.mul(is(K.CLOTH))).add(tileColour.mul(is(K.TILE))).add(joint.mul(is(K.JOINT))).add(plaster.mul(is(K.PLASTER).add(is(K.REVEAL)))).add(oak.mul(is(K.OAK)))
     .add(tuffJ.mul(is(K.STONE))).add(brickHot.mul(is(K.BRICK))).add(iron.mul(is(K.IRON))).add(ashC.mul(is(K.ASH))).add(charC.mul(is(K.CHAR)))
   // soot: carried by the surface, gathered in blotches and rising streaks
   // THE BREAST OVER THE OPENING. A fire that draws badly rolls its smoke out

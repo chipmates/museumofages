@@ -82,6 +82,8 @@ const WALL = FACE.hallPartitionEast + .033
  * contact line by a hand's width, so no sheet is read over the ledge. */
 const SILL = FLOOR + 1.047
 const CENTRE = -52.6
+/** where the grid's middle stands along the old wing's wall, for a room that carries it whole */
+export const BODY_WALL_CENTRE = CENTRE
 /** What the carrier's moulding adds beyond the sheet on each side. */
 const MOULDING = .028
 /** The clear interval the tightest pair of neighbours keeps, across a course

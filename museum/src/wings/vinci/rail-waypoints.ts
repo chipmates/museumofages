@@ -118,7 +118,8 @@ export function railSide(stationId: string): RailSide {
   // The walk's own poses (walk-poses.ts): the house door's two stand on the
   // threshold steps, the heart valve's before its niche by the body wall.
   if (stationId === 'hall-door-in' || stationId === 'hall-door-out') return 'house-door'
-  if (stationId === 'body-valve') return 'valve-niche'
+  // the anatomy stands in the great hall: its cabinet and the sheet apart
+  if (stationId === 'body-valve' || stationId === 'body') return 'great-hall'
   // the walk's start stands on the terrace's top landing, over the stair
   if (stationId === 'stair-head') return 'terrace'
   // The hall's eye stands in the great hall's own door, one storey above the
@@ -131,7 +132,7 @@ export function railSide(stationId: string): RailSide {
   // head and came back down the same stair to reach its own ground.
   if (stationId === 'garden') return 'apron'
   if (stationId === 'picture-room' || stationId === 'picture-room-west') return 'picture-room'
-  if (['line-early', 'reading-table', 'body'].includes(stationId)) return 'long-gallery'
+  if (['line-early', 'reading-table'].includes(stationId)) return 'long-gallery'
   if (['flight', 'works'].includes(stationId)) return 'mechanism-hall'
   if (stationId === 'supper-wall') return 'exhibit-court'
   if (stationId === 'grave') return 'grave-court'

@@ -22,6 +22,7 @@ import { vinciApproachPose } from './collection/approaches'
 import { FRAME_FRONT, mountedSheets } from './collection/body-wall-plan'
 import { VINCI_VALVE, type VinciWalkPoseId } from './walk-places'
 import { railCollectionStairWaypoints } from './rail-waypoints'
+import { HALL_VALVE_SHEET, hallPoint } from './house-hall'
 import { uprightPose } from './upright'
 
 export { VINCI_HOUSE_DOOR, VINCI_STAIR_HEAD, VINCI_VALVE, VINCI_WALK_POSE_IDS, isVinciWalkPose, type VinciWalkPoseId } from './walk-places'
@@ -71,7 +72,9 @@ function doorPose(id: 'hall-door-in' | 'hall-door-out', narrow: boolean): WalkPo
  * its horizontal field on wider pictures (`rail-projection.ts`). The phone
  * keeps its approach: the sheet already takes three fifths of its picture. */
 const VALVE_FILL = .57, VALVE_MIDDLE = .47, DESK_PICTURE_ASPECT = 1440 / 708, RAIL_ASPECT = 1280 / 720
-function valveDesktopPose(pose: WalkPose): WalkPose {
+/** The old wing's valve stop, before its niche in the gallery: kept for that
+ * wall, which no walk stands at since the anatomy moved into the great hall. */
+export function valveDesktopPose(pose: WalkPose): WalkPose {
   const sheet = mountedSheets().find(entry => `sheet/${entry.mount.id}` === VINCI_VALVE.exhibit)
   if (!sheet) return pose
   const eye = pose.eye, middle = world(FRAME_FRONT, sheet.mount.north, sheet.mount.datum)
@@ -111,13 +114,23 @@ function stairHeadPose(narrow: boolean): WalkPose {
     at: world(eye[0] + Math.sin(bearing) * level, eye[1] + Math.cos(bearing) * level, eye[2] + Math.sin(pitch) * STAIR_HEAD_REACH_M) }
 }
 
+/** THE SHEET APART IN THE GREAT HALL, on the west pier with the glass model
+ * on the stand under it: the eye square to the pier, the sheet and the stand
+ * one subject. The desktop stands 1.5 m off, the case's end and the window
+ * beside; the phone 1.0 m off, the frame two fifths of its width, the pair
+ * lifted toward a third of the height by the shift lens, the gaze level. */
+function hallValvePose(narrow: boolean): WalkPose {
+  const s = HALL_VALVE_SHEET
+  if (narrow) {
+    const eye = hallPoint(s.face + 1, s.v, 1.6)
+    return { eye, at: hallPoint(s.face, s.v, 1.6), fov: 88, shift: -.5 }
+  }
+  return { eye: hallPoint(s.face + 1.5, s.v, 1.65), at: hallPoint(s.face, s.v, (s.standTop + s.z + .2) / 2), fov: 44 }
+}
+
 /** The pose one of the walk's own places stands at. */
 export function vinciWalkPoseOf(id: VinciWalkPoseId, narrow: boolean): WalkPose {
   if (id === 'stair-head') return stairHeadPose(narrow)
-  if (id === 'body-valve') {
-    const pose = vinciApproachPose(VINCI_VALVE.exhibit, narrow)
-    if (!pose) throw new Error(`${VINCI_VALVE.exhibit}: no viewing eye for the valve's stop`)
-    return narrow ? uprightPose(id, pose) : valveDesktopPose(pose)
-  }
+  if (id === 'body-valve') return hallValvePose(narrow)
   return doorPose(id, narrow)
 }

@@ -20,6 +20,7 @@ import { COURT, FLOOR, GRAVE_ORIGIN, SUPPER_WALL, VINCI_READING_TABLE } from './
 import { HALL_LION, HALL_LION_REST, HALL_TABLE, HALL_TABLE_PIECES, HALL_TABLE_PIECE_SLUGS, STANDS, isHallTablePiece, standOf, standLevel, type HallTablePiece } from './stands'
 import { dossiers, type MachineSlug } from '../machines/catalog'
 import { bodyWallOrder } from './wall'
+import { hallFromPavilion } from '../house-hall'
 import { studySupport } from '../inner-court'
 
 /** `shift` is the phone's shift lens (`rail-projection.ts`), absent where the
@@ -471,7 +472,11 @@ function otherKinds(): Placed[] {
     const field: Field = { east: mount.east, north: mount.north, datum: mount.datum,
       width: mount.width, height: mount.height, eye: EYE,
       nearest: distance, furthest: { desktop: distance, phone: distance } }
-    add(`sheet/${mount.id}`, 'sheet', BODY_STATION, narrow => eastFacingApproach(field, narrow))
+    // the grid now stands in the great hall: the old wing's eye, carried there
+    add(`sheet/${mount.id}`, 'sheet', BODY_STATION, narrow => {
+      const pose = eastFacingApproach(field, narrow)
+      return { ...pose, eye: hallFromPavilion(pose.eye, mount), at: hallFromPavilion(pose.at, mount) }
+    })
   }
   for (const slug of VINCI_MACHINE_ROW) {
     if (slug === 'mechanical-lion') add(`machine/${slug}`, 'machine', 'hall', lionPose)

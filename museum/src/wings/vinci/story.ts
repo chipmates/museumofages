@@ -132,7 +132,7 @@ export const vinciStory: readonly VinciStoryStop[] = [
   },
   {
     id: "body",
-    order: 6,
+    order: 13.1,
     kind: "station",
     built: true,
     quiet: false,
@@ -146,7 +146,7 @@ export const vinciStory: readonly VinciStoryStop[] = [
   },
   {
     id: "body-valve",
-    order: 7,
+    order: 13.2,
     kind: "station",
     built: false,
     quiet: false,

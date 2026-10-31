@@ -164,11 +164,14 @@ export function vinciWalkPose(stop: VinciWalkStop, narrow: boolean): Pose {
  * outward pose and walks on from there. */
 export function vinciDoorBetween(from: VinciStationId | string | undefined, to: VinciStationId | string):
   { door: typeof VINCI_HOUSE_DOOR; way: 'in' | 'out' } | undefined {
-  const room = VINCI_HOUSE_DOOR.station
-  if (to === room && from !== room) return { door: VINCI_HOUSE_DOOR, way: 'in' }
-  if (from === room && to !== room) return { door: VINCI_HOUSE_DOOR, way: 'out' }
+  const inside = (id: string | undefined): boolean => id !== undefined && VINCI_HALL_STOPS.has(id)
+  if (inside(to) && !inside(from)) return { door: VINCI_HOUSE_DOOR, way: 'in' }
+  if (inside(from) && !inside(to)) return { door: VINCI_HOUSE_DOOR, way: 'out' }
   return undefined
 }
+/** THE STOPS THE GREAT HALL HOLDS: its own, the anatomy's cabinet and the
+ * sheet apart, walked between inside the room. */
+export const VINCI_HALL_STOPS: ReadonlySet<string> = new Set([VINCI_HOUSE_DOOR.station, VINCI_VALVE.station, VINCI_VALVE.place])
 
 /** HOW LONG A CHAPTER'S TITLE STANDS, when it is not waiting for a press.
  * The law counts a reading from the characters at the pace the visitor set,
