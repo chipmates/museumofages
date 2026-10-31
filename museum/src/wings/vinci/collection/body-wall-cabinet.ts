@@ -172,6 +172,8 @@ class WasherLightNode extends SpotNode {
     return super.getSpotAttenuation(builder, angleCosine).mul(washToward(positionWorld, (this.light as unknown as WasherLight).optic))
   }
 }
+// a light class names its node class itself from r187 (the library would hand it the inherited spot node)
+WasherLight.registerNode(WasherLightNode as unknown as Parameters<typeof WasherLight.registerNode>[0])
 
 export interface BodyWallCabinet {
   group: Group
@@ -198,8 +200,6 @@ export function mountBodyWall(stack: Stack): BodyWallCabinet {
   // live engine only draws is left out of the rig
   const built: { light: SpotLight | RectAreaLight; spec: BodyLight }[] = []
   RectAreaLightNode.setLTC(RectAreaLightTexturesLib.init())
-  const library = (stack.renderer as unknown as { library: { getLightNodeClass(c: unknown): unknown; addLight(n: unknown, c: unknown): void } }).library
-  if (!library.getLightNodeClass(WasherLight)) library.addLight(WasherLightNode, WasherLight)
   for (const spec of BODY_LIGHTS) {
     if (spec.engine === false) continue
     if (spec.kind === 'area') {
