@@ -20,7 +20,7 @@ import { COURT, FLOOR, GRAVE_ORIGIN, SUPPER_WALL, VINCI_READING_TABLE } from './
 import { HALL_LION, HALL_LION_REST, HALL_TABLE, HALL_TABLE_PIECES, HALL_TABLE_PIECE_SLUGS, STANDS, isHallTablePiece, standOf, standLevel, type HallTablePiece } from './stands'
 import { dossiers, type MachineSlug } from '../machines/catalog'
 import { bodyWallOrder } from './wall'
-import { hallFromPavilion } from '../house-hall'
+import { hallFromPavilion, hallSheetDatum } from '../house-hall'
 import { studySupport } from '../inner-court'
 
 /** `shift` is the phone's shift lens (`rail-projection.ts`), absent where the
@@ -468,8 +468,8 @@ function otherKinds(): Placed[] {
   // column from sharing a standing place, so the wall's own run has a leg
   // between every pair of neighbours.
   for (const mount of bodyWallOrder()) {
-    const distance = SHEET_NEAREST_M + SHEET_STEP_BACK * Math.abs(mount.datum - EYE)
-    const field: Field = { east: mount.east, north: mount.north, datum: mount.datum,
+    const distance = SHEET_NEAREST_M + SHEET_STEP_BACK * Math.abs(hallSheetDatum(mount) - EYE)
+    const field: Field = { east: mount.east, north: mount.north, datum: hallSheetDatum(mount),
       width: mount.width, height: mount.height, eye: EYE,
       nearest: distance, furthest: { desktop: distance, phone: distance } }
     // the grid now stands in the great hall: the old wing's eye, carried there

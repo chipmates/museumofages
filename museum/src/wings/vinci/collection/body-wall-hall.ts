@@ -130,7 +130,7 @@ export function mountHallPlates(host: Group, plates: readonly HallPlate[], hero:
   group.name = 'vinci/house-hall/plates'
   host.add(group)
   const model = valveAt ? glassValve() : null
-  if (model && valveAt) { model.group.position.copy(world(valveAt)); group.add(model.group) }
+  if (model && valveAt) { model.group.position.copy(world(valveAt)); model.group.scale.setScalar(1.5); group.add(model.group) }
   const placed: { plate: HallPlate; stream: PlateStream; at: Vector3 }[] = []
   let loading = true, raised: PlateStream | null = null, switching = false, last = performance.now()
   const ready = loadManifest().then(manifest => {

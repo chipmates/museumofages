@@ -1208,9 +1208,12 @@ function floorWear(q: V2): number {
  * sheets were loose; single mounts date from the nineteenth century): the old
  * wing's 28 sheets in its standard mounts, at its own grid and spacing, on the
  * kitchen partition west of the door, the one run of this room that holds the
- * grid's 3.23 m. Its plan chest is the old wing's ledge. Hall frame, heights
+ * grid's 3.23 m. The first main beam lands on this wall at u 2.95 on a corbel
+ * from 2.42 m up, so the grid stands half a metre lower than the old wing's,
+ * its top course under the corbel, on a low plan chest. Hall frame, heights
  * from the floor. */
-export const HALL_CABINET = { u0: .25, u1: 3.85, centre: 2.1, deep: .52, ledge: .952, upper: .3, top: 2.98 } as const
+export const HALL_GRID_DROP = .5
+export const HALL_CABINET = { u0: .25, u1: 3.85, centre: 2.1, deep: .52, ledge: .452, upper: .3, top: 2.405 } as const
 /** the linen ground and the sheets' face, off the partition's plaster */
 const LINEN_D = .031, SHEET_D = .034
 /** the mat over a sheet and the frame's lip over the mat, as the old wing's */
@@ -1218,7 +1221,7 @@ const MAT_FACE = .0035, FRAME_LIP = .008, FRAME_FACE = .017
 /** THE SHEET APART stands round the corner on the west wall's south pier,
  * facing the room, its glass model on a stand under it: the old wing's niche
  * does not fit beside the hang on this wall. */
-export const HALL_VALVE = { v: .97, z: 1.7, board: [.62, 1.32, 1.26, 2.14] as const, stand: { u0: .05, u1: .45, v0: .74, v1: 1.2, top: .95 } } as const
+export const HALL_VALVE = { v: .97, z: 1.7, board: [.74, 1.2, 1.43, 1.97] as const, stand: { u0: .05, u1: .45, v0: .74, v1: 1.2, top: .95 } } as const
 /** THE THREE PAINTINGS AS SHOWN, never hung: each on a plain easel between
  * the back windows, turned to the eye that reads them. */
 export const HALL_PAINTINGS_EYE: V2 = [6.6, 3.9]
@@ -1232,18 +1235,20 @@ const EASELS: readonly { id: string; u: number; v: number; ledge: number }[] = [
 /** The old wing's grid read in this room: its north runs to the visitor's
  * right, which on this wall is -u; its heights from its own floor. */
 const gridU = (north: number): number => HALL_CABINET.centre - (north - BODY_WALL_CENTRE)
-const gridZ = (height: number): number => height - PAVILION_FLOOR
+const gridZ = (height: number): number => height - PAVILION_FLOOR - HALL_GRID_DROP
 /** A point of the old wing's cabinet (three's axes) carried onto the partition
  * here, the sheets' face at the same depth off its linen: the eyes that read
  * the sheets stand where they stood before the grid. */
 export function hallFromPavilion(p: Vector3, mount: BodyMount): Vector3 {
-  const off = SHEET_D + (p.x - sheetFace(mount))
+  const off = SHEET_D + (p.x - sheetFace(mount)), z = FLOOR_Z + p.y - PAVILION_FLOOR
   // the sheet apart stands on the west pier: its wall's north is this room's +v
-  const q = mount.row === 'vortex'
-    ? P(off, HALL_VALVE.v + (-p.z - mount.north), FLOOR_Z + HALL_VALVE.z + (p.y - mount.datum))
-    : P(gridU(-p.z), off, FLOOR_Z + gridZ(p.y))
+  const q = mount.row === 'vortex' ? P(off, HALL_VALVE.v + (-p.z - mount.north), z) : P(gridU(-p.z), off, z)
   return new Vector3(q[0], q[2], -q[1])
 }
+/** Where a sheet's middle stands in this room, as a height of the old wing's
+ * frame: its eye is solved there, a visitor's eye height kept. */
+export const hallSheetDatum = (mount: BodyMount): number =>
+  mount.row === 'vortex' ? PAVILION_FLOOR + HALL_VALVE.z : mount.datum - HALL_GRID_DROP
 /** The sheet apart in this room: its middle on the pier, and the stand's top. */
 export const HALL_VALVE_SHEET = { face: SHEET_D, v: HALL_VALVE.v, z: HALL_VALVE.z, standTop: HALL_VALVE.stand.top }
 /** The hall's frame as world points, for the eyes the rail stands here. */
@@ -1297,7 +1302,7 @@ function cabinet(s: Sink): void {
   hbox(s, u0 + .05, u1 - .05, .005, deep - .07, 0, toe, K.OAK, 120, '+z')
   hbox(s, u0, u1, .005, deep - .012, toe, ledge - board, K.OAK, 121, '+z')
   hbox(s, u0 - .015, u1 + .015, .005, deep + .008, ledge - board, ledge, K.OAK, 122)
-  const stacks = 4, rows = 6, w = (u1 - u0 - (stacks + 1) * stile) / stacks, h = (ledge - board - toe - (rows + 1) * joint) / rows
+  const stacks = 4, rows = 2, w = (u1 - u0 - (stacks + 1) * stile) / stacks, h = (ledge - board - toe - (rows + 1) * joint) / rows
   for (let i = 0; i <= stacks; i++) hbox(s, u0 + i * (w + stile), u0 + i * (w + stile) + stile, deep - .012, deep, toe, ledge - board, K.OAK, 123, '-y-z+z')
   for (let i = 0; i < stacks; i++) {
     const a = u0 + stile + i * (w + stile)
@@ -1308,13 +1313,12 @@ function cabinet(s: Sink): void {
       hbox(s, a + w / 2 - .045, a + w / 2 + .045, deep - .003, deep + .009, z + h * .58, z + h * .58 + .014, K.BRASS, 160 + j, '-y')
     }
   }
-  // THE UPPER CASE: the back, the linen ground the frames hang on, the sides,
-  // a head board over the top course and the cornice
-  hbox(s, u0, u1, .005, LINEN_D - .006, ledge, top - .05, K.OAK, 125, '-z+z')
-  hbox(s, u0 + .05, u1 - .05, LINEN_D - .006, LINEN_D, ledge, top - .09, K.LINEN, 126, '-y-x+x-z+z')
-  for (const [a, b] of [[u0, u0 + .05], [u1 - .05, u1]] as V2[]) hbox(s, a, b, LINEN_D - .006, upper, ledge, top - .05, K.OAK, 127, '-z+z-y')
-  hbox(s, u0 + .05, u1 - .05, LINEN_D - .006, upper, top - .09, top - .05, K.OAK, 128, '-x+x+z-y')
-  hbox(s, u0 - .03, u1 + .03, .005, upper + .035, top - .05, top, K.OAK, 129)
+  // THE UPPER CASE: the back, the linen ground the frames hang on, the sides
+  // and a top board a hand under the beam's corbel
+  hbox(s, u0, u1, .005, LINEN_D - .006, ledge, top - .03, K.OAK, 125, '-z+z')
+  hbox(s, u0 + .05, u1 - .05, LINEN_D - .006, LINEN_D, ledge, top - .03, K.LINEN, 126, '-y-x+x-z+z')
+  for (const [a, b] of [[u0, u0 + .05], [u1 - .05, u1]] as V2[]) hbox(s, a, b, LINEN_D - .006, upper, ledge, top - .03, K.OAK, 127, '-z+z-y')
+  hbox(s, u0 - .02, u1 + .02, .005, upper + .02, top - .03, top, K.OAK, 129)
   // the sheets in the old wing's order: column 0 at the visitor's left
   for (const [k, m] of mountedSheets().entries()) {
     if (m.mount.row === 'vortex') continue
