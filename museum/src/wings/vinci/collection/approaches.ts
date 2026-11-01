@@ -386,18 +386,17 @@ function tablePiecePose(slug: HallTablePiece, narrow: boolean): ApproachPose {
     readingLens(Math.max(y, x, z), reach), narrow)
 }
 
-/** THE LION'S CLOSE LOOK. The desktop walks straight in from the hall's door
- * along the doorway's axis to the lion's open flank, square on, the
- * south-west window behind it. The phone, whose field across stays at 40
- * degrees, holds the whole lion only from three metres or more, which the
- * room gives only in its south-east corner: it narrows its field there to
- * the lion's chest and open flank at a three-quarter turn, the eye a little
- * lower as a visitor bends to it, four degrees down (more and the room's
- * verticals lean past a degree and a half), its shift lens lifting the
- * body's middle to about a third of the height. Its eye stands 0.58 m off
- * both walls of the corner, outside the walk's envelope from the held frame.
- * In the lion's own frame, +z its nose and +x its left. */
-const LION_EYE = { desktop: { x: 2.496, z: -.092 }, phone: { x: 2.044, z: 1.909 } }
+/** THE LION'S CLOSE LOOK. The lion faces the hall's door across the room,
+ * and the close look is walked straight in from the door: the table's south
+ * end and the bench leave a free way only south of them, so both eyes meet
+ * the lion nearly head on, a little to its open left flank, the eye 2.7 m
+ * (desktop) and 2.95 m (phone, whose field across stays at 40 degrees) off
+ * its middle, each outside its walk's envelope from the table's corner. The
+ * phone's eye is a little lower as a visitor bends to it, four degrees down
+ * (more and the room's verticals lean past a degree and a half), its shift
+ * lens lifting the body's middle to about a third of the height. In the
+ * lion's own frame, +z its nose and +x its left. */
+const LION_EYE = { desktop: { x: .19, z: 2.67 }, phone: { x: .04, z: 2.95 } }
 const LION_PHONE = { fov: 76.45, pitch: 4, shift: -.69, aimZ: .35, eye: 1.55 }
 function lionPose(narrow: boolean): ApproachPose {
   const b = HALL_LION.bearing * Math.PI / 180, cos = Math.cos(b), sin = Math.sin(b)
